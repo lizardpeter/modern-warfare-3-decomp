@@ -613,6 +613,16 @@ LAB_820b6af8:
   820B6B28  EBE1FFF0             ld r31,-0x10(r1)
   820B6B2C  4E800020             blr
 
+; 820B6B30  FUN_820b6b30  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/initialize.cpp:568)
+  820B6B30  3D607FC8             lis r11,0x7fc8
+  820B6B34  39400007             li r10,0x7
+  820B6B38  914B3214             stw r10,0x3214(r11)
+  820B6B3C  7C0006AC             eieio
+  820B6B40  39400800             li r10,0x800
+  820B6B44  914B3408             stw r10,0x3408(r11)
+  820B6B48  7C0006AC             eieio
+  820B6B4C  4E800020             blr
+
 ; 820B6B50  FUN_820b6b50  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/initialize.cpp:601)
   820B6B50  7D8802A6             mfspr r12,LR
   820B6B54  9181FFF8             stw r12,-0x8(r1)

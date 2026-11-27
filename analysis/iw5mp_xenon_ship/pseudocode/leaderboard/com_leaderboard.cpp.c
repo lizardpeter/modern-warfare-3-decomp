@@ -567,6 +567,33 @@ void FUN_823adc18(int param_1,undefined8 param_2,int param_3,int *param_4)
 }
 
 
+// 823ADF60  FUN_823adf60  (leaderboard/com_leaderboard.cpp:608)
+
+undefined8 FUN_823adf60(int param_1,int param_2)
+
+{
+  ulonglong uVar1;
+  ulonglong uVar2;
+  
+  uVar1 = *(ulonglong *)(param_1 + 0x20);
+  uVar2 = *(ulonglong *)(param_2 + 0x20);
+  if (uVar1 == 0) {
+    if (uVar2 != 0) {
+      return 1;
+    }
+  }
+  else {
+    if ((uVar2 == 0) || (uVar1 < uVar2)) {
+      return 0xffffffffffffffff;
+    }
+    if (uVar2 < uVar1) {
+      return 1;
+    }
+  }
+  return 0;
+}
+
+
 // 823AED58  FUN_823aed58  (leaderboard/com_leaderboard.cpp:642)
 
 /* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
@@ -2054,6 +2081,44 @@ void FUN_823ae848(undefined8 param_1,undefined8 param_2)
   uVar1 = FUN_823ae760(param_2,param_1);
   FUN_823b21b0(param_1,uVar1);
   return;
+}
+
+
+// 823AE880  FUN_823ae880  (leaderboard/com_leaderboard.cpp:2162)
+
+void FUN_823ae880(int param_1,int param_2,undefined8 param_3,undefined8 param_4)
+
+{
+  uint uVar1;
+  int iVar2;
+  
+  iVar2 = 0xfffe - *(uint *)(param_1 + 4);
+  uVar1 = -(uint)(iVar2 != 0);
+  FUN_823b1d50(param_1,*(undefined4 *)(((uVar1 & *(uint *)(param_1 + 4)) + 0x1c) * 4 + param_2),
+               uVar1,param_4,-iVar2);
+  return;
+}
+
+
+// 823AE8B0  FUN_823ae8b0  (leaderboard/com_leaderboard.cpp:2174)
+
+undefined8 FUN_823ae8b0(undefined8 param_1,int param_2,undefined8 param_3)
+
+{
+  uint uVar1;
+  uint uVar2;
+  undefined8 uVar3;
+  
+  uVar1 = *(uint *)(DAT_83b510c4 + 0x10);
+  if ((-1 < (int)uVar1) && (uVar2 = *(uint *)(DAT_83b510c4 + 0xc), -1 < (int)uVar2)) {
+    uVar3 = FUN_823b1da8(param_1,*(undefined4 *)
+                                  (((-(uint)(uVar2 != 0xfffe) & uVar2) + 0x1c) * 4 + param_2),
+                         *(undefined4 *)
+                          (((0xfffe - ((uVar1 != 0xfffe) + 0xfffe) & uVar1) + 0x1c) * 4 + param_2),
+                         param_3);
+    return uVar3;
+  }
+  return 0xffffffff82070df0;
 }
 
 

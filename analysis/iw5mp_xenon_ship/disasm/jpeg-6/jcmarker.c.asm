@@ -1110,6 +1110,9 @@ LAB_82445e74:
   82445EAC  38210070             addi r1,r1,0x70
   82445EB0  4810265C             b 0x8254850c
 
+; 82445EB8  thunk_FUN_82444e60  (jpeg-6/jcmarker.c:452)
+  82445EB8  4BFFEFA8             b 0x82444e60
+
 ; 82445EC0  FUN_82445ec0  (jpeg-6/jcmarker.c:470)
   82445EC0  7D8802A6             mfspr r12,LR
   82445EC4  9181FFF8             stw r12,-0x8(r1)

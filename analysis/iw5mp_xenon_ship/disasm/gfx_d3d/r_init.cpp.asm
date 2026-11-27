@@ -505,6 +505,15 @@ LAB_823febf8:
   823FEC9C  EBE1FFF0             ld r31,-0x10(r1)
   823FECA0  4E800020             blr
 
+; 823FECA8  FUN_823feca8  (gfx_d3d/r_init.cpp:1979)
+  823FECA8  FF011000             fcmpu cr6,f1,f2
+  823FECAC  39600001             li r11,0x1
+  823FECB0  41980008             blt cr6,0x823fecb8
+  823FECB4  39600000             li r11,0x0
+LAB_823fecb8:
+  823FECB8  5563063E             rlwinm r3,r11,0x0,0x18,0x1f
+  823FECBC  4E800020             blr
+
 ; 823FFA50  FUN_823ffa50  (gfx_d3d/r_init.cpp:1985)
   823FFA50  7D8802A6             mfspr r12,LR
   823FFA54  48148A65             bl 0x825484b8
@@ -1422,6 +1431,16 @@ LAB_823ff41c:
   823FF428  7D8803A6             mtspr LR,r12
   823FF42C  EBE1FFF0             ld r31,-0x10(r1)
   823FF430  4E800020             blr
+
+; 823FF438  FUN_823ff438  (gfx_d3d/r_init.cpp:3327)
+  823FF438  3D6083CA             lis r11,-0x7c36
+  823FF43C  394BCB00             subi r10,r11,0x3500
+  823FF440  816A2608             lwz r11,0x2608(r10)
+  823FF444  2B0B0000             cmplwi cr6,r11,0x0
+  823FF448  4D9A0020             beqlr cr6
+  823FF44C  3D608205             lis r11,-0x7dfb
+  823FF450  386B86D0             subi r3,r11,0x7930
+  823FF454  4BF58984             b 0x82357dd8
 
 ; 823FF460  FUN_823ff460  (gfx_d3d/r_init.cpp:3363)
   823FF460  7D8802A6             mfspr r12,LR

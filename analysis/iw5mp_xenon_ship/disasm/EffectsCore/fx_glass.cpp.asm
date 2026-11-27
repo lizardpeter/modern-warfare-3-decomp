@@ -601,6 +601,26 @@ LAB_82203844:
   82203544  EBE1FFF0             ld r31,-0x10(r1)
   82203548  4E800020             blr
 
+; 82203550  FUN_82203550  (EffectsCore/fx_glass.cpp:265)
+  82203550  A163000E             lhz r11,0xe(r3)
+  82203554  A144000E             lhz r10,0xe(r4)
+  82203558  7D2A5810             subfc r9,r10,r11
+  8220355C  7CE84110             subfe r7,r8,r8
+  82203560  54E307FE             rlwinm r3,r7,0x0,0x1f,0x1f
+  82203564  4E800020             blr
+
+; 82203588  FUN_82203588  (EffectsCore/fx_glass.cpp:277)
+  82203588  81242000             lwz r9,0x2000(r4)
+  8220358C  54AB2834             rlwinm r11,r5,0x5,0x0,0x1a
+  82203590  81430038             lwz r10,0x38(r3)
+  82203594  5528103A             rlwinm r8,r9,0x2,0x0,0x1d
+  82203598  7CEA5A14             add r7,r10,r11
+  8220359C  7CE8212E             stwx r7,r8,r4
+  822035A0  81642000             lwz r11,0x2000(r4)
+  822035A4  38CB0001             addi r6,r11,0x1
+  822035A8  90C42000             stw r6,0x2000(r4)
+  822035AC  4E800020             blr
+
 ; 82203F28  FUN_82203f28  (EffectsCore/fx_glass.cpp:284)
   82203F28  7D8802A6             mfspr r12,LR
   82203F2C  4834457D             bl 0x825484a8
@@ -720,6 +740,10 @@ LAB_822040bc:
 LAB_822040d8:
   822040D8  382120A0             addi r1,r1,0x20a0
   822040DC  4834441C             b 0x825484f8
+
+; 82203D10  FUN_82203d10  (EffectsCore/fx_glass.cpp:355)
+  82203D10  7CA42B78             or r4,r5,r5
+  82203D14  4BFFFF3C             b 0x82203c50
 
 ; 822040E0  FUN_822040e0  (EffectsCore/fx_glass.cpp:361)
   822040E0  7D8802A6             mfspr r12,LR
@@ -921,6 +945,93 @@ LAB_82203a74:
   82203A9C  912B0008             stw r9,0x8(r11)
   82203AA0  990B0069             stb r8,0x69(r11)
   82203AA4  4BFFFDBC             b 0x82203860
+
+; 82203AA8  FUN_82203aa8  (EffectsCore/fx_glass.cpp:583)
+  82203AA8  81630038             lwz r11,0x38(r3)
+  82203AAC  54AA2834             rlwinm r10,r5,0x5,0x0,0x1a
+  82203AB0  7D6B5214             add r11,r11,r10
+  82203AB4  A12B001A             lhz r9,0x1a(r11)
+  82203AB8  552807BC             rlwinm r8,r9,0x0,0x1e,0x1e
+  82203ABC  2B080000             cmplwi cr6,r8,0x0
+  82203AC0  4D9A0020             beqlr cr6
+  82203AC4  810B0008             lwz r8,0x8(r11)
+  82203AC8  C00B001C             lfs f0,0x1c(r11)
+  82203ACC  3D608202             lis r11,-0x7dfe
+  82203AD0  81230034             lwz r9,0x34(r3)
+  82203AD4  2B080000             cmplwi cr6,r8,0x0
+  82203AD8  396BC1EC             subi r11,r11,0x3e14
+  82203ADC  7D295214             add r9,r9,r10
+  82203AE0  C1AB0000             lfs f13,0x0(r11)
+  82203AE4  419A0010             beq cr6,0x82203af4
+  82203AE8  3D4082D7             lis r10,-0x7d29
+  82203AEC  814A06D4             lwz r10,0x6d4(r10)
+  82203AF0  4800000C             b 0x82203afc
+LAB_82203af4:
+  82203AF4  3D4082D7             lis r10,-0x7d29
+  82203AF8  814A0714             lwz r10,0x714(r10)
+LAB_82203afc:
+  82203AFC  C18A0008             lfs f12,0x8(r10)
+  82203B00  ED606024             fdivs f11,f0,f12
+  82203B04  EC0B0372             fmuls f0,f11,f13
+  82203B08  FF006800             fcmpu cr6,f0,f13
+  82203B0C  40990008             ble cr6,0x82203b14
+  82203B10  FC006890             fmr f0,f13
+LAB_82203b14:
+  82203B14  81642004             lwz r11,0x2004(r4)
+  82203B18  C1A90018             lfs f13,0x18(r9)
+  82203B1C  C1890010             lfs f12,0x10(r9)
+  82203B20  3D408202             lis r10,-0x7dfe
+  82203B24  C1690014             lfs f11,0x14(r9)
+  82203B28  C14B0008             lfs f10,0x8(r11)
+  82203B2C  ED2D5028             fsubs f9,f13,f10
+  82203B30  C10B0000             lfs f8,0x0(r11)
+  82203B34  ECEC4028             fsubs f7,f12,f8
+  82203B38  C0CB0004             lfs f6,0x4(r11)
+  82203B3C  ECAB3028             fsubs f5,f11,f6
+  82203B40  C18AC1D4             lfs f12,-0x3e2c(r10)
+  82203B44  EC890272             fmuls f4,f9,f9
+  82203B48  EC6721FA             fmadds f3,f7,f7,f4
+  82203B4C  EDA5197A             fmadds f13,f5,f5,f3
+  82203B50  FF0D6000             fcmpu cr6,f13,f12
+  82203B54  4098005C             bge cr6,0x82203bb0
+  82203B58  EDA0682C             fsqrts f13,f13
+  82203B5C  3D608202             lis r11,-0x7dfe
+  82203B60  C18BC1E8             lfs f12,-0x3e18(r11)
+  82203B64  FF0D6000             fcmpu cr6,f13,f12
+  82203B68  40980014             bge cr6,0x82203b7c
+  82203B6C  3D608202             lis r11,-0x7dfe
+  82203B70  C1ABC1E4             lfs f13,-0x3e1c(r11)
+  82203B74  EC00682A             fadds f0,f0,f13
+  82203B78  48000038             b 0x82203bb0
+LAB_82203b7c:
+  82203B7C  3D608202             lis r11,-0x7dfe
+  82203B80  C16BC1E0             lfs f11,-0x3e20(r11)
+  82203B84  FF0D5800             fcmpu cr6,f13,f11
+  82203B88  40980028             bge cr6,0x82203bb0
+  82203B8C  ED4D6028             fsubs f10,f13,f12
+  82203B90  3D608202             lis r11,-0x7dfe
+  82203B94  3D408205             lis r10,-0x7dfb
+  82203B98  3D208202             lis r9,-0x7dfe
+  82203B9C  C1ABC1DC             lfs f13,-0x3e24(r11)
+  82203BA0  C18A8128             lfs f12,-0x7ed8(r10)
+  82203BA4  C169C1E4             lfs f11,-0x3e1c(r9)
+  82203BA8  ED2A637C             fnmsubs f9,f10,f13,f12
+  82203BAC  EC0902FA             fmadds f0,f9,f11,f0
+LAB_82203bb0:
+  82203BB0  81642000             lwz r11,0x2000(r4)
+  82203BB4  FC00065E             fctidz f0,f0
+  82203BB8  D801FFF0             stfd f0,-0x10(r1)
+  82203BBC  A101FFF6             lhz r8,-0xa(r1)
+  82203BC0  5569103A             rlwinm r9,r11,0x2,0x0,0x1d
+  82203BC4  7CA9232E             sthx r5,r9,r4
+  82203BC8  80E42000             lwz r7,0x2000(r4)
+  82203BCC  54EB103A             rlwinm r11,r7,0x2,0x0,0x1d
+  82203BD0  7CCB2214             add r6,r11,r4
+  82203BD4  B1060002             sth r8,0x2(r6)
+  82203BD8  81642000             lwz r11,0x2000(r4)
+  82203BDC  38AB0001             addi r5,r11,0x1
+  82203BE0  90A42000             stw r5,0x2000(r4)
+  82203BE4  4E800020             blr
 
 ; 82203DB0  FUN_82203db0  (EffectsCore/fx_glass.cpp:660)
   82203DB0  7D8802A6             mfspr r12,LR
@@ -1177,6 +1288,18 @@ LAB_82203670:
   82203670  382100C0             addi r1,r1,0xc0
   82203674  48344E84             b 0x825484f8
 
+; 82203678  FUN_82203678  (EffectsCore/fx_glass.cpp:787)
+  82203678  81430038             lwz r10,0x38(r3)
+  8220367C  54AB2834             rlwinm r11,r5,0x5,0x0,0x1a
+  82203680  7D6A5A14             add r11,r10,r11
+  82203684  A14B000C             lhz r10,0xc(r11)
+  82203688  7F0A2040             cmplw cr6,r10,r4
+  8220368C  4C9A0020             bnelr cr6
+  82203690  A14B001A             lhz r10,0x1a(r11)
+  82203694  61490001             ori r9,r10,0x1
+  82203698  B12B001A             sth r9,0x1a(r11)
+  8220369C  4E800020             blr
+
 ; 82203BE8  FUN_82203be8  (EffectsCore/fx_glass.cpp:799)
   82203BE8  3D6082D8             lis r11,-0x7d28
   82203BEC  3D408220             lis r10,-0x7de0
@@ -1186,6 +1309,16 @@ LAB_82203670:
   82203BFC  386B0004             addi r3,r11,0x4
   82203C00  48000768             b 0x82204368
 
+; 82203D68  FUN_82203d68  (EffectsCore/fx_glass.cpp:806)
+  82203D68  81630038             lwz r11,0x38(r3)
+  82203D6C  54AA2834             rlwinm r10,r5,0x5,0x0,0x1a
+  82203D70  7D6B5214             add r11,r11,r10
+  82203D74  A14B000C             lhz r10,0xc(r11)
+  82203D78  7F0A2040             cmplw cr6,r10,r4
+  82203D7C  4C9A0020             bnelr cr6
+  82203D80  7CA42B78             or r4,r5,r5
+  82203D84  4BFFFECC             b 0x82203c50
+
 ; 82203D90  FUN_82203d90  (EffectsCore/fx_glass.cpp:818)
   82203D90  3D6082D8             lis r11,-0x7d28
   82203D94  3D408220             lis r10,-0x7de0
@@ -1194,6 +1327,19 @@ LAB_82203670:
   82203DA0  38AA3D68             addi r5,r10,0x3d68
   82203DA4  386B0004             addi r3,r11,0x4
   82203DA8  480005C0             b 0x82204368
+
+; 822036A0  FUN_822036a0  (EffectsCore/fx_glass.cpp:832)
+  822036A0  81630038             lwz r11,0x38(r3)
+  822036A4  54AA2834             rlwinm r10,r5,0x5,0x0,0x1a
+  822036A8  81240000             lwz r9,0x0(r4)
+  822036AC  7D0B5214             add r8,r11,r10
+  822036B0  A0E8000C             lhz r7,0xc(r8)
+  822036B4  7F074840             cmplw cr6,r7,r9
+  822036B8  4C9A0020             bnelr cr6
+  822036BC  39600001             li r11,0x1
+  822036C0  90A40004             stw r5,0x4(r4)
+  822036C4  99640008             stb r11,0x8(r4)
+  822036C8  4E800020             blr
 
 ; 82203C08  FUN_82203c08  (EffectsCore/fx_glass.cpp:846)
   82203C08  7D8802A6             mfspr r12,LR

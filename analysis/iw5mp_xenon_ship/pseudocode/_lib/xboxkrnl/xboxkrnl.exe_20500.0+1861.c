@@ -768,6 +768,30 @@ void FUN_825701d4(void)
 }
 
 
+// 825701E4  FUN_825701e4  (line unknown)
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void FUN_825701e4(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+// 825701F4  FUN_825701f4  (line unknown)
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void FUN_825701f4(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
 // 82570204  FUN_82570204  (line unknown)
 
 /* WARNING: Control flow encountered bad instruction data */
@@ -1260,6 +1284,18 @@ void FUN_82570494(void)
 }
 
 
+// 825704A4  FUN_825704a4  (line unknown)
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void FUN_825704a4(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
 // 825704B4  FUN_825704b4  (line unknown)
 
 /* WARNING: Control flow encountered bad instruction data */
@@ -1272,11 +1308,35 @@ void FUN_825704b4(void)
 }
 
 
+// 825704C4  FUN_825704c4  (line unknown)
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void FUN_825704c4(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
 // 825704D4  FUN_825704d4  (line unknown)
 
 /* WARNING: Control flow encountered bad instruction data */
 
 void FUN_825704d4(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+// 825704E4  FUN_825704e4  (line unknown)
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void FUN_825704e4(void)
 
 {
                     /* WARNING: Bad instruction - Truncating control flow here */

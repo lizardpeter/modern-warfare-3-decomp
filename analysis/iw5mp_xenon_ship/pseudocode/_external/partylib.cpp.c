@@ -115,3 +115,13 @@ undefined8 FUN_82529b00(void)
   return 0x78;
 }
 
+
+// 8256FA68  FUN_8256fa68  (line unknown)
+
+void FUN_8256fa68(void)
+
+{
+  FUN_82529a38(0xffffffff83efd0b0);
+  return;
+}
+

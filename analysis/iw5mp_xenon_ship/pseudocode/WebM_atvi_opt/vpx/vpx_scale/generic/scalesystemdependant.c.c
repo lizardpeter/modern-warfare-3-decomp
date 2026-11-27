@@ -5,27 +5,27 @@
 void FUN_824c8920(void)
 
 {
-  DAT_83ee9bd4 = &LAB_824c85e0;
+  DAT_83ee9bd4 = FUN_824c85e0;
   DAT_83ee9bb0 = FUN_824c82f8;
-  DAT_83ee9bbc = &LAB_824c8538;
-  DAT_83ee9bd0 = &LAB_824c8598;
+  DAT_83ee9bbc = FUN_824c8538;
+  DAT_83ee9bd0 = FUN_824c8598;
   DAT_83ee9bac = FUN_824c8240;
-  DAT_83ee9bc0 = &LAB_824c8138;
-  DAT_83ee9bc4 = &LAB_824c8388;
-  DAT_83ee9bb8 = &LAB_824c84d0;
-  DAT_83ee9bb4 = &LAB_824c8450;
-  DAT_83ee9bc8 = &LAB_824c7ff8;
-  DAT_83ee9ba4 = &LAB_824c8090;
-  DAT_83ee9ba8 = &LAB_824c80f0;
-  DAT_83ee9bcc = &LAB_824c7dc0;
+  DAT_83ee9bc0 = FUN_824c8138;
+  DAT_83ee9bc4 = FUN_824c8388;
+  DAT_83ee9bb8 = FUN_824c84d0;
+  DAT_83ee9bb4 = FUN_824c8450;
+  DAT_83ee9bc8 = FUN_824c7ff8;
+  DAT_83ee9ba4 = FUN_824c8090;
+  DAT_83ee9ba8 = FUN_824c80f0;
+  DAT_83ee9bcc = FUN_824c7dc0;
   DAT_83ee9b9c = FUN_824c7ec0;
-  DAT_83ee9ba0 = &LAB_824c7f70;
+  DAT_83ee9ba0 = FUN_824c7f70;
   DAT_83ee9bd8 = FUN_824c86b0;
   DAT_83ee9bdc = FUN_824c87d8;
-  DAT_83ee9be0 = &LAB_824c88a0;
-  DAT_83ee9be4 = &LAB_824c88b8;
-  DAT_83ee9be8 = &LAB_824c8870;
-  DAT_83ee9bec = &LAB_824c8760;
+  DAT_83ee9be0 = FUN_824c88a0;
+  DAT_83ee9be4 = FUN_824c88b8;
+  DAT_83ee9be8 = FUN_824c8870;
+  DAT_83ee9bec = FUN_824c8760;
   DAT_83ee9bf0 = FUN_824c8608;
   DAT_83effff0 = FUN_824c9db8;
   DAT_83effff8 = FUN_824ca1d8;

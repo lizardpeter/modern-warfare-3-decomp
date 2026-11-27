@@ -265,6 +265,16 @@ void FUN_82269100(int param_1,int param_2)
 }
 
 
+// 822691D0  FUN_822691d0  (game/g_trigger.cpp:403)
+
+void FUN_822691d0(int param_1)
+
+{
+  *(char *)(param_1 + 0x16d) = (*(char *)(param_1 + 0x16d) != '\x03') + '\x02';
+  return;
+}
+
+
 // 822691F0  FUN_822691f0  (game/g_trigger.cpp:422)
 
 void FUN_822691f0(int param_1)
@@ -350,6 +360,16 @@ void FUN_82269398(int param_1,undefined8 param_2,int param_3,undefined8 param_4)
       }
     }
   }
+  return;
+}
+
+
+// 82269450  FUN_82269450  (game/g_trigger.cpp:617)
+
+void FUN_82269450(int param_1,undefined8 param_2)
+
+{
+  FUN_82269398(param_1,param_2,(ulonglong)*(uint *)(param_1 + 0x1b0) + 1,0xffffffffffffffff);
   return;
 }
 

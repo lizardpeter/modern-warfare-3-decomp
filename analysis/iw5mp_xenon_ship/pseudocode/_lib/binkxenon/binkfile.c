@@ -243,6 +243,21 @@ LAB_8257a920:
 }
 
 
+// 8257A9C8  FUN_8257a9c8  (line unknown)
+
+ulonglong FUN_8257a9c8(undefined8 param_1,longlong param_2)
+
+{
+  ulonglong uVar1;
+  
+  uVar1 = (param_2 + 0x1ffffU & 0xfffe0000) + 0x1000;
+  if (0x40fff < uVar1) {
+    return uVar1;
+  }
+  return 0x41000;
+}
+
+
 // 8257A9F0  FUN_8257a9f0  (line unknown)
 
 /* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
@@ -460,7 +475,7 @@ undefined8 FUN_8257ae10(undefined4 *param_1,undefined8 param_2,ulonglong param_3
   }
   *param_1 = FUN_8257a490;
   param_1[1] = FUN_8257a630;
-  param_1[2] = &LAB_8257a9c8;
+  param_1[2] = FUN_8257a9c8;
   param_1[3] = FUN_8257a9f0;
   param_1[4] = FUN_8257aae8;
   param_1[5] = FUN_8257aa80;

@@ -418,6 +418,11 @@ LAB_822c09e4:
   822C09F4  EBE1FFF0             ld r31,-0x10(r1)
   822C09F8  4E800020             blr
 
+; 822C0A00  FUN_822c0a00  (server_mp/sv_ccmds_mp.cpp:802)
+  822C0A00  38800000             li r4,0x0
+  822C0A04  38600000             li r3,0x0
+  822C0A08  4BFFFF78             b 0x822c0980
+
 ; 822C0A10  FUN_822c0a10  (server_mp/sv_ccmds_mp.cpp:844)
   822C0A10  7D8802A6             mfspr r12,LR
   822C0A14  9181FFF8             stw r12,-0x8(r1)
@@ -751,6 +756,9 @@ LAB_822c0eac:
 LAB_822c0ed8:
   822C0ED8  38210080             addi r1,r1,0x80
   822C0EDC  48287630             b 0x8254850c
+
+; 822C0EE0  thunk_FUN_822c0e30  (server_mp/sv_ccmds_mp.cpp:2063)
+  822C0EE0  4BFFFF50             b 0x822c0e30
 
 ; 822C0EE8  FUN_822c0ee8  (server_mp/sv_ccmds_mp.cpp:2120)
   822C0EE8  7D8802A6             mfspr r12,LR

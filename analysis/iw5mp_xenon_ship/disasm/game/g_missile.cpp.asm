@@ -3076,6 +3076,12 @@ LAB_82244c24:
   82244C2C  CBE1FF60             lfd f31,-0xa0(r1)
   82244C30  483038A0             b 0x825484d0
 
+; 82244C38  FUN_82244c38  (game/g_missile.cpp:1241)
+  82244C38  81630008             lwz r11,0x8(r3)
+  82244C3C  556A0314             rlwinm r10,r11,0x0,0xc,0xa
+  82244C40  91430008             stw r10,0x8(r3)
+  82244C44  4E800020             blr
+
 ; 82244C48  FUN_82244c48  (game/g_missile.cpp:1249)
   82244C48  7D8802A6             mfspr r12,LR
   82244C4C  48303849             bl 0x82548494

@@ -406,6 +406,23 @@ void FUN_82460430(void)
 }
 
 
+// 82460498  FUN_82460498  (client_demo/cl_demo_filesystem.cpp:846)
+
+longlong FUN_82460498(uint *param_1,uint *param_2)
+
+{
+  uint uVar1;
+  uint uVar2;
+  
+  uVar1 = *param_1;
+  uVar2 = *param_2;
+  if ((int)uVar1 < (int)uVar2) {
+    return 1;
+  }
+  return (ulonglong)(uVar1 >> 0x1f) - ((ulonglong)(uVar2 >> 0x1f) + (ulonglong)(uVar2 < uVar1));
+}
+
+
 // 824604F0  FUN_824604f0  (client_demo/cl_demo_filesystem.cpp:883)
 
 void FUN_824604f0(int param_1,undefined8 param_2,int param_3)

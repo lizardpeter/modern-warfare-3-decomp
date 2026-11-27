@@ -29,6 +29,17 @@ LAB_8253f6a8:
   8253F6AC  38210070             addi r1,r1,0x70
   8253F6B0  48008E5C             b 0x8254850c
 
+; 8253F6B8  FUN_8253f6b8  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdrichpresence/bdrichpresenceinfo.cpp:20)
+  8253F6B8  3860002C             li r3,0x2c
+  8253F6BC  4E800020             blr
+
+; 8253F6C0  FUN_8253f6c0  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdrichpresence/bdrichpresenceinfo.cpp:25)
+  8253F6C0  7C6B1B78             or r11,r3,r3
+  8253F6C4  7C832378             or r3,r4,r4
+  8253F6C8  388B0005             addi r4,r11,0x5
+  8253F6CC  80AB0028             lwz r5,0x28(r11)
+  8253F6D0  4BFEB940             b 0x8252b010
+
 ; 8253F6E0  FUN_8253f6e0  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdrichpresence/bdrichpresenceinfo.cpp:30)
   8253F6E0  7D8802A6             mfspr r12,LR
   8253F6E4  48008DD5             bl 0x825484b8

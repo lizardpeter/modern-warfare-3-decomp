@@ -168,6 +168,17 @@ void FUN_8244d7e8(int param_1,int *param_2,int param_3,int *param_4,longlong par
 }
 
 
+// 8244D870  FUN_8244d870  (jpeg-6/jdcolor.c:204)
+
+void FUN_8244d870(int param_1,undefined4 *param_2,undefined8 param_3,undefined8 param_4,
+                 undefined8 param_5)
+
+{
+  FUN_8245be18(*param_2,param_3,param_4,0,param_5,*(undefined4 *)(param_1 + 100));
+  return;
+}
+
+
 // 8244D890  FUN_8244d890  (jpeg-6/jdcolor.c:220)
 
 void FUN_8244d890(int param_1,int *param_2,int param_3,int param_4,longlong param_5)
@@ -325,7 +336,7 @@ LAB_8244da90:
     param_1[0x1b] = 1;
     if ((param_1[0xc] == 1) || (param_1[0xc] == 3)) {
       iVar4 = 1;
-      puVar2[1] = &LAB_8244d870;
+      puVar2[1] = FUN_8244d870;
       if (1 < param_1[0xb]) {
         iVar3 = 0x54;
         do {

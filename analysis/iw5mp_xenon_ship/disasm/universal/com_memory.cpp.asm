@@ -597,6 +597,10 @@ LAB_82314650:
   82314674  916A0004             stw r11,0x4(r10)
   82314678  4E800020             blr
 
+; 823156E8  FUN_823156e8  (universal/com_memory.cpp:2692)
+  823156E8  38800020             li r4,0x20
+  823156EC  4BFFEF94             b 0x82314680
+
 ; 82314680  FUN_82314680  (universal/com_memory.cpp:2718)
   82314680  7D8802A6             mfspr r12,LR
   82314684  9181FFF8             stw r12,-0x8(r1)

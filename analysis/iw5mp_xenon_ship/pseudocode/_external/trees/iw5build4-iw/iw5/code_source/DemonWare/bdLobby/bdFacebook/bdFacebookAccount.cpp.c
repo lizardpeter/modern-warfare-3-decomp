@@ -49,6 +49,15 @@ LAB_8253ed6c:
 }
 
 
+// 8253ECA8  FUN_8253eca8  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdfacebook/bdfacebookaccount.cpp:30)
+
+undefined8 FUN_8253eca8(void)
+
+{
+  return 0x90;
+}
+
+
 // 8253ECB0  FUN_8253ecb0  (line unknown)
 
 undefined4 * FUN_8253ecb0(undefined4 *param_1,ulonglong param_2)

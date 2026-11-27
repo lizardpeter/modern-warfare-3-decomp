@@ -4344,6 +4344,9 @@ LAB_821298ec:
   821298EC  38210090             addi r1,r1,0x90
   821298F0  4841EC10             b 0x82548500
 
+; 821298F8  thunk_FUN_824088e0  (cgame_mp/cg_main_mp.cpp:2277)
+  821298F8  482DEFE8             b 0x824088e0
+
 ; 82129900  FUN_82129900  (cgame_mp/cg_main_mp.cpp:2283)
   82129900  2F040002             cmpwi cr6,r4,0x2
   82129904  419A0038             beq cr6,0x8212993c
@@ -4824,6 +4827,9 @@ LAB_82129f88:
   82129FF0  EBC1FFE8             ld r30,-0x18(r1)
   82129FF4  EBE1FFF0             ld r31,-0x10(r1)
   82129FF8  4E800020             blr
+
+; 8212A000  thunk_FUN_8229df18  (cgame_mp/cg_main_mp.cpp:2542)
+  8212A000  48173F18             b 0x8229df18
 
 ; 8212A798  FUN_8212a798  (cgame_mp/cg_main_mp.cpp:2554)
   8212A798  7D8802A6             mfspr r12,LR
@@ -5700,3 +5706,6 @@ LAB_8212a35c:
   8212A514  C00B0040             lfs f0,0x40(r11)
   8212A518  7C0A1D2E             stfsx f0,r10,r3
   8212A51C  4E800020             blr
+
+; 8212A520  thunk_FUN_823156e0  (cgame_mp/cg_main_mp.cpp:3286)
+  8212A520  481EB1C0             b 0x823156e0

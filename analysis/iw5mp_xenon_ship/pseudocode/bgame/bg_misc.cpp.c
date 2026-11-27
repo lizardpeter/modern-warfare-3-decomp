@@ -2213,7 +2213,7 @@ void FUN_820e12a8(uint param_1)
   }
                     /* WARNING: Could not recover jumptable at 0x820e12e4. Too many branches */
                     /* WARNING: Treating indirect jump as call */
-  (*(code *)(&PTR_LAB_825911d4)[((param_1 & 0xff) + (param_1 & 0xff) * 2) * 2])(uVar1);
+  (*(code *)(&PTR_FUN_825911d4)[((param_1 & 0xff) + (param_1 & 0xff) * 2) * 2])(uVar1);
   return;
 }
 

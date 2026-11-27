@@ -97,6 +97,9 @@
   8226639C  EBE1FFF0             ld r31,-0x10(r1)
   822663A0  4E800020             blr
 
+; 822663A8  thunk_FUN_822b8a20  (game_mp/g_spawn_mp.cpp:52)
+  822663A8  48052678             b 0x822b8a20
+
 ; 822663B0  FUN_822663b0  (game_mp/g_spawn_mp.cpp:164)
   822663B0  7D8802A6             mfspr r12,LR
   822663B4  9181FFF8             stw r12,-0x8(r1)

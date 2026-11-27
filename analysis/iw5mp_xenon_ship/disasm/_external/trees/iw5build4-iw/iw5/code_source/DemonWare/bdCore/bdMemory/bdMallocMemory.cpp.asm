@@ -377,3 +377,8 @@ LAB_8252c840:
   8252C878  EBC1FFE8             ld r30,-0x18(r1)
   8252C87C  EBE1FFF0             ld r31,-0x10(r1)
   8252C880  4E800020             blr
+
+; 8256FA78  FUN_8256fa78  (line unknown)
+  8256FA78  3D6083F0             lis r11,-0x7c10
+  8256FA7C  386BD4B8             subi r3,r11,0x2b48
+  8256FA80  4BFBD158             b 0x8252cbd8

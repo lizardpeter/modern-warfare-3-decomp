@@ -75,6 +75,12 @@
 LAB_8251c0f4:
   8251C0F4  4802C3EC             b 0x825484e0
 
+; 8251A8C8  FUN_8251a8c8  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/engine.c:115)
+  8251A8C8  81630000             lwz r11,0x0(r3)
+  8251A8CC  39400000             li r10,0x0
+  8251A8D0  914B0444             stw r10,0x444(r11)
+  8251A8D4  4E800020             blr
+
 ; 8251A8D8  FUN_8251a8d8  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/engine.c:140)
   8251A8D8  7D8802A6             mfspr r12,LR
   8251A8DC  4802DBD1             bl 0x825484ac
@@ -1321,6 +1327,18 @@ LAB_8251bac0:
   8251BACC  38210080             addi r1,r1,0x80
   8251BAD0  4802CA34             b 0x82548504
 
+; 8251AF70  FUN_8251af70  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/engine.c:2067)
+  8251AF70  3963052C             addi r11,r3,0x52c
+LAB_8251af74:
+  8251AF74  7D2000A6             mfmsr r9
+  8251AF78  7DA10164             mtmsrd r13,1
+  8251AF7C  7D405828             lwarx r10,0,r11
+  8251AF80  7C80592D             stwcx. r4,0,r11
+  8251AF84  7D210164             mtmsrd r9,1
+  8251AF88  4082FFEC             bne 0x8251af74
+  8251AF8C  38600000             li r3,0x0
+  8251AF90  4E800020             blr
+
 ; 8251AF98  FUN_8251af98  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/engine.c:2095)
   8251AF98  7D8802A6             mfspr r12,LR
   8251AF9C  4802D521             bl 0x825484bc
@@ -1588,6 +1606,21 @@ LAB_8251b118:
   8251B124  38210080             addi r1,r1,0x80
   8251B128  4802D3E0             b 0x82548508
 
+; 8251B130  FUN_8251b130  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/engine.c:2474)
+  8251B130  39640116             addi r11,r4,0x116
+  8251B134  556B103A             rlwinm r11,r11,0x2,0x0,0x1d
+  8251B138  7D6B182E             lwzx r11,r11,r3
+  8251B13C  2B0B0000             cmplwi cr6,r11,0x0
+  8251B140  419A0018             beq cr6,0x8251b158
+  8251B144  816B0004             lwz r11,0x4(r11)
+  8251B148  2B0B0000             cmplwi cr6,r11,0x0
+  8251B14C  419A000C             beq cr6,0x8251b158
+  8251B150  806B0090             lwz r3,0x90(r11)
+  8251B154  4E800020             blr
+LAB_8251b158:
+  8251B158  38600000             li r3,0x0
+  8251B15C  4E800020             blr
+
 ; 8251BD00  FUN_8251bd00  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/engine.c:2514)
   8251BD00  7D8802A6             mfspr r12,LR
   8251BD04  4802C7B5             bl 0x825484b8
@@ -1677,6 +1710,10 @@ LAB_8251be30:
   8251BE38  7FE3FB78             or r3,r31,r31
   8251BE3C  382100A0             addi r1,r1,0xa0
   8251BE40  4802C6B8             b 0x825484f8
+
+; 8251B160  FUN_8251b160  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/engine.c:2656)
+  8251B160  806304F4             lwz r3,0x4f4(r3)
+  8251B164  4E800020             blr
 
 ; 8251B168  FUN_8251b168  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/engine.c:2696)
   8251B168  7D8802A6             mfspr r12,LR

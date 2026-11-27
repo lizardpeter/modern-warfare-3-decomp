@@ -873,6 +873,16 @@ void FUN_8234a7c8(void)
 }
 
 
+// 8234A918  FUN_8234a918  (xenon/snd_driver.cpp:1672)
+
+undefined8 FUN_8234a918(undefined8 param_1,undefined4 *param_2)
+
+{
+  *param_2 = 0x1c8;
+  return 0;
+}
+
+
 // 8234A928  FUN_8234a928  (xenon/snd_driver.cpp:1682)
 
 undefined8 FUN_8234a928(undefined8 param_1,int *param_2,undefined4 *param_3)
@@ -1886,6 +1896,16 @@ void FUN_8234bd80(void)
 }
 
 
+// 8234BDF0  FUN_8234bdf0  (xenon/snd_driver.cpp:2526)
+
+undefined8 FUN_8234bdf0(undefined8 param_1,undefined4 *param_2)
+
+{
+  *param_2 = 8;
+  return 0;
+}
+
+
 // 8234BE00  FUN_8234be00  (xenon/snd_driver.cpp:2536)
 
 undefined8 FUN_8234be00(undefined8 param_1,int *param_2,undefined4 *param_3)
@@ -1934,21 +1954,21 @@ void FUN_8234be68(void)
   local_7c = local_90;
   local_68 = local_60;
   DAT_838f210c = 0;
-  DAT_838f2110 = &LAB_824fe070;
-  DAT_838f2114 = &LAB_824fe098;
+  DAT_838f2110 = FUN_824fe070;
+  DAT_838f2114 = FUN_824fe098;
   DAT_838f2118 = 0x1000000;
-  DAT_838f211c = &LAB_824fdce8;
+  DAT_838f211c = FUN_824fdce8;
   DAT_838f2120 = FUN_824fdd78;
   DAT_838f2124 = 0x2000000;
-  DAT_838f2128 = &LAB_824fcdc0;
+  DAT_838f2128 = FUN_824fcdc0;
   DAT_838f212c = FUN_824fce48;
   DAT_838f2130 = 0x3000000;
-  DAT_838f2134 = &LAB_824fae08;
+  DAT_838f2134 = FUN_824fae08;
   DAT_838f2138 = FUN_824fca78;
   local_88[0] = 4;
   DAT_838f213c = 4;
   DAT_838f2144 = FUN_8234be00;
-  DAT_838f2140 = &LAB_8234bdf0;
+  DAT_838f2140 = FUN_8234bdf0;
   local_84 = 0;
   local_80 = 1;
   FUN_824f0d38(local_70);
@@ -1956,7 +1976,7 @@ void FUN_8234be68(void)
   DAT_838f3f7c = 0x3f800000;
   local_78[0] = 1;
   DAT_838f3f88 = FUN_8234a928;
-  DAT_838f3f84 = &LAB_8234a918;
+  DAT_838f3f84 = FUN_8234a918;
   local_74 = &DAT_838f3f80;
   FUN_824f0cb0(local_78);
   return;

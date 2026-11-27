@@ -171,6 +171,15 @@ void FUN_821f5a00(void)
 }
 
 
+// 821F5A50  FUN_821f5a50  (database/db_streaming_tabulate.cpp:192)
+
+longlong FUN_821f5a50(ushort *param_1,ushort *param_2)
+
+{
+  return (ulonglong)*param_1 - (ulonglong)*param_2;
+}
+
+
 // 821F5A60  FUN_821f5a60  (database/db_streaming_tabulate.cpp:198)
 
 /* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
@@ -654,6 +663,126 @@ void FUN_821f6688(double param_1,float *param_2,undefined8 param_3,int *param_4)
       } while (lVar14 != 0);
     }
   }
+  return;
+}
+
+
+// 8256C1A8  FUN_8256c1a8  (database/db_streaming_tabulate.cpp:875)
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void FUN_8256c1a8(void)
+
+{
+  _DAT_82d5e540 = 0x80000000;
+  uRam82d5e544 = 0x40000000;
+  uRam82d5e548 = 0x20000000;
+  uRam82d5e54c = 0x10000000;
+  return;
+}
+
+
+// 8256C1C8  FUN_8256c1c8  (database/db_streaming_tabulate.cpp:876)
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void FUN_8256c1c8(void)
+
+{
+  _DAT_82d5e580 = 0x8000000;
+  uRam82d5e584 = 0x4000000;
+  uRam82d5e588 = 0x2000000;
+  uRam82d5e58c = 0x1000000;
+  return;
+}
+
+
+// 8256C1E8  FUN_8256c1e8  (database/db_streaming_tabulate.cpp:877)
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void FUN_8256c1e8(void)
+
+{
+  _DAT_82d5e520 = 0x800000;
+  uRam82d5e524 = 0x400000;
+  uRam82d5e528 = 0x200000;
+  uRam82d5e52c = 0x100000;
+  return;
+}
+
+
+// 8256C208  FUN_8256c208  (database/db_streaming_tabulate.cpp:878)
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void FUN_8256c208(void)
+
+{
+  _DAT_82d5e550 = 0x80000;
+  uRam82d5e554 = 0x40000;
+  uRam82d5e558 = 0x20000;
+  uRam82d5e55c = 0x10000;
+  return;
+}
+
+
+// 8256C228  FUN_8256c228  (database/db_streaming_tabulate.cpp:879)
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void FUN_8256c228(void)
+
+{
+  _DAT_82d5e560 = 0x8000;
+  uRam82d5e564 = 0x4000;
+  uRam82d5e568 = 0x2000;
+  uRam82d5e56c = 0x1000;
+  return;
+}
+
+
+// 8256C248  FUN_8256c248  (database/db_streaming_tabulate.cpp:880)
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void FUN_8256c248(void)
+
+{
+  _DAT_82d5e530 = 0x800;
+  uRam82d5e534 = 0x400;
+  uRam82d5e538 = 0x200;
+  uRam82d5e53c = 0x100;
+  return;
+}
+
+
+// 8256C268  FUN_8256c268  (database/db_streaming_tabulate.cpp:881)
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void FUN_8256c268(void)
+
+{
+  _DAT_82d5e570 = 0x80;
+  uRam82d5e574 = 0x40;
+  uRam82d5e578 = 0x20;
+  uRam82d5e57c = 0x10;
+  return;
+}
+
+
+// 8256C288  FUN_8256c288  (database/db_streaming_tabulate.cpp:882)
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void FUN_8256c288(void)
+
+{
+  _DAT_82d5e590 = 8;
+  uRam82d5e594 = 4;
+  uRam82d5e598 = 2;
+  uRam82d5e59c = 1;
   return;
 }
 

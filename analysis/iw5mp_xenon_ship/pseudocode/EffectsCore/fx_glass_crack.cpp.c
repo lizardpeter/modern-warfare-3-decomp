@@ -3924,6 +3924,19 @@ void FUN_82208bd8(double param_1,int param_2,int param_3,int param_4,float *para
 }
 
 
+// 82208F68  FUN_82208f68  (EffectsCore/fx_glass_crack.cpp:2942)
+
+bool FUN_82208f68(ushort *param_1,ushort *param_2)
+
+{
+  int iVar1;
+  
+  iVar1 = *(int *)(*(int *)(DAT_82d7073c + 0x3e94) + 0x38);
+  return *(float *)((uint)*param_2 * 0x20 + iVar1 + 0x1c) <
+         *(float *)((uint)*param_1 * 0x20 + iVar1 + 0x1c);
+}
+
+
 // 8220A800  FUN_8220a800  (EffectsCore/fx_glass_crack.cpp:2947)
 
 /* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */

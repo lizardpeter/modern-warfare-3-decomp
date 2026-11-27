@@ -2113,6 +2113,72 @@ void FUN_82182530(char param_1)
 }
 
 
+// 82182660  FUN_82182660  (client/gamerprofile.cpp:3390)
+
+void FUN_82182660(void)
+
+{
+  FUN_82182530(1);
+  return;
+}
+
+
+// 82182668  FUN_82182668  (client/gamerprofile.cpp:3396)
+
+void FUN_82182668(void)
+
+{
+  FUN_82182530(0);
+  return;
+}
+
+
+// 82182670  FUN_82182670  (client/gamerprofile.cpp:3402)
+
+void FUN_82182670(void)
+
+{
+  (&DAT_827010fd)[*(int *)(&DAT_82febe74 + DAT_82febe50 * 4) * 0xca8] =
+       (&DAT_827010fd)[*(int *)(&DAT_82febe74 + DAT_82febe50 * 4) * 0xca8] == '\0';
+  return;
+}
+
+
+// 821826B0  FUN_821826b0  (client/gamerprofile.cpp:3415)
+
+void FUN_821826b0(void)
+
+{
+  (&DAT_827010ff)[*(int *)(&DAT_82febe74 + DAT_82febe50 * 4) * 0xca8] =
+       (&DAT_827010ff)[*(int *)(&DAT_82febe74 + DAT_82febe50 * 4) * 0xca8] == '\0';
+  return;
+}
+
+
+// 821826F0  FUN_821826f0  (client/gamerprofile.cpp:3430)
+
+void FUN_821826f0(void)
+
+{
+  (&DAT_82701100)[*(int *)(&DAT_82febe74 + DAT_82febe50 * 4) * 0xca8] =
+       (&DAT_82701100)[*(int *)(&DAT_82febe74 + DAT_82febe50 * 4) * 0xca8] == '\0';
+  return;
+}
+
+
+// 82182730  FUN_82182730  (client/gamerprofile.cpp:3445)
+
+void FUN_82182730(void)
+
+{
+  if ((&DAT_827010f8)[*(int *)(&DAT_82febe74 + DAT_82febe50 * 4) * 0xca8] != '\0') {
+    return;
+  }
+  (&DAT_827010f8)[*(int *)(&DAT_82febe74 + DAT_82febe50 * 4) * 0xca8] = 1;
+  return;
+}
+
+
 // 82182770  FUN_82182770  (client/gamerprofile.cpp:3515)
 
 void FUN_82182770(void)
@@ -2177,6 +2243,48 @@ void FUN_82182828(void)
     }
   }
   (&DAT_827010fe)[iVar2 * 0xca8] = bVar6;
+  return;
+}
+
+
+// 821828E0  FUN_821828e0  (client/gamerprofile.cpp:3616)
+
+void FUN_821828e0(void)
+
+{
+  return;
+}
+
+
+// 821828E8  FUN_821828e8  (client/gamerprofile.cpp:3640)
+
+void FUN_821828e8(void)
+
+{
+  return;
+}
+
+
+// 821828F0  FUN_821828f0  (client/gamerprofile.cpp:3870)
+
+void FUN_821828f0(void)
+
+{
+  if ((&DAT_827013b4)[*(int *)(&DAT_82febe74 + DAT_82febe50 * 4) * 0xca8] != '\0') {
+    return;
+  }
+  (&DAT_827013b4)[*(int *)(&DAT_82febe74 + DAT_82febe50 * 4) * 0xca8] = 1;
+  return;
+}
+
+
+// 82182930  FUN_82182930  (client/gamerprofile.cpp:3888)
+
+void FUN_82182930(void)
+
+{
+  (&DAT_82701914)[*(int *)(&DAT_82febe74 + DAT_82febe50 * 4) * 0xca8] =
+       (&DAT_82701914)[*(int *)(&DAT_82febe74 + DAT_82febe50 * 4) * 0xca8] == '\0';
   return;
 }
 

@@ -326,6 +326,37 @@ undefined8 FUN_82400ad8(double param_1,int param_2,float *param_3)
 }
 
 
+// 82400B40  FUN_82400b40  (gfx_d3d/r_light.cpp:359)
+
+undefined8 FUN_82400b40(ulonglong param_1,longlong param_2)
+
+{
+  undefined8 uVar1;
+  
+  if (*(char *)(DAT_83c51e2c + 8) == '\0') {
+    return 0;
+  }
+  uVar1 = FUN_82400a48(param_2 + 4,
+                       (ulonglong)*(uint *)(DAT_83c9f108 + 0x280) + (param_1 & 0x7ffffff) * 0x20);
+  return uVar1;
+}
+
+
+// 82400B80  FUN_82400b80  (gfx_d3d/r_light.cpp:374)
+
+undefined8 FUN_82400b80(int param_1,int *param_2)
+
+{
+  undefined8 uVar1;
+  
+  if (*(char *)(*param_2 + param_1) == '\0') {
+    return 0;
+  }
+  uVar1 = FUN_82400a48(param_2 + 1,*(int *)(DAT_83c9f108 + 0x280) + param_1 * 0x20);
+  return uVar1;
+}
+
+
 // 82400C00  FUN_82400c00  (gfx_d3d/r_light.cpp:400)
 
 void FUN_82400c00(int param_1,float *param_2)
@@ -480,6 +511,15 @@ void FUN_82400e00(int param_1,float *param_2)
 }
 
 
+// 82401030  FUN_82401030  (gfx_d3d/r_light.cpp:456)
+
+undefined1 FUN_82401030(int param_1,int *param_2)
+
+{
+  return *(undefined1 *)(*param_2 + param_1);
+}
+
+
 // 82401040  FUN_82401040  (gfx_d3d/r_light.cpp:470)
 
 /* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
@@ -553,6 +593,33 @@ void FUN_824010e0(undefined8 param_1,undefined8 param_2,undefined8 param_3,int p
     FUN_823e01b8(local_c4,local_bc,&local_d0);
   }
   return;
+}
+
+
+// 824011F0  FUN_824011f0  (gfx_d3d/r_light.cpp:568)
+
+undefined1 FUN_824011f0(int param_1,char *param_2)
+
+{
+  if (*param_2 == '\0') {
+    return *(undefined1 *)(DAT_83c9fb38 + param_1);
+  }
+  return 1;
+}
+
+
+// 82401218  FUN_82401218  (gfx_d3d/r_light.cpp:587)
+
+undefined8 FUN_82401218(int param_1,char *param_2)
+
+{
+  undefined8 uVar1;
+  
+  if ((*param_2 == '\0') && (*(char *)(DAT_83c9fb38 + param_1) == '\0')) {
+    return 0;
+  }
+  uVar1 = FUN_82400a48(0xffffffff83c9fb3c,*(int *)(DAT_83c9f108 + 0x278) + param_1 * 0x24);
+  return uVar1;
 }
 
 

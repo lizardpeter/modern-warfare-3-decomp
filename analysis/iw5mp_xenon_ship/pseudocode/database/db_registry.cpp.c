@@ -68,6 +68,33 @@ void FUN_821e9fd0(longlong param_1)
 }
 
 
+// 821EA0C0  FUN_821ea0c0  (database/db_registry.cpp:807)
+
+void FUN_821ea0c0(void)
+
+{
+  return;
+}
+
+
+// 821EA0C8  FUN_821ea0c8  (database/db_registry.cpp:813)
+
+void FUN_821ea0c8(void)
+
+{
+  return;
+}
+
+
+// 821EA0D0  FUN_821ea0d0  (database/db_registry.cpp:822)
+
+void FUN_821ea0d0(void)
+
+{
+  return;
+}
+
+
 // 821ECAF8  FUN_821ecaf8  (database/db_registry.cpp:831)
 
 void FUN_821ecaf8(undefined4 *param_1,longlong param_2)
@@ -111,6 +138,1555 @@ void FUN_821ecb30(undefined4 *param_1,ulonglong param_2)
   }
   *(undefined4 *)
    ((int)param_1 + (int)((param_2 + (param_2 & 0x1fffffff) * 8 & 0xffffffff) << 3) + -0x44) = 0;
+  return;
+}
+
+
+// 821ECB70  FUN_821ecb70  (database/db_registry.cpp:831)
+
+void FUN_821ecb70(undefined4 *param_1,longlong param_2)
+
+{
+  longlong lVar1;
+  int *piVar2;
+  
+  piVar2 = param_1 + 1;
+  lVar1 = param_2 + -1;
+  *param_1 = piVar2;
+  if (0 < lVar1) {
+    do {
+      *piVar2 = (int)(piVar2 + 0x16);
+      lVar1 = lVar1 + -1;
+      piVar2 = piVar2 + 0x16;
+    } while (lVar1 != 0);
+  }
+  param_1[(int)param_2 * 0x16 + -0x15] = 0;
+  return;
+}
+
+
+// 821ECBA8  FUN_821ecba8  (database/db_registry.cpp:831)
+
+void FUN_821ecba8(undefined4 *param_1,ulonglong param_2)
+
+{
+  longlong lVar1;
+  int *piVar2;
+  
+  piVar2 = param_1 + 1;
+  lVar1 = param_2 - 1;
+  *param_1 = piVar2;
+  if (0 < lVar1) {
+    do {
+      *piVar2 = (int)(piVar2 + 9);
+      lVar1 = lVar1 + -1;
+      piVar2 = piVar2 + 9;
+    } while (lVar1 != 0);
+  }
+  *(undefined4 *)
+   ((int)param_1 + (int)((param_2 + (param_2 & 0x1fffffff) * 8 & 0xffffffff) << 2) + -0x20) = 0;
+  return;
+}
+
+
+// 821ECBE8  FUN_821ecbe8  (database/db_registry.cpp:831)
+
+void FUN_821ecbe8(undefined4 *param_1,longlong param_2)
+
+{
+  longlong lVar1;
+  int *piVar2;
+  
+  piVar2 = param_1 + 1;
+  lVar1 = param_2 + -1;
+  *param_1 = piVar2;
+  if (0 < lVar1) {
+    do {
+      *piVar2 = (int)(piVar2 + 0x49);
+      lVar1 = lVar1 + -1;
+      piVar2 = piVar2 + 0x49;
+    } while (lVar1 != 0);
+  }
+  param_1[(int)param_2 * 0x49 + -0x48] = 0;
+  return;
+}
+
+
+// 821ECC20  FUN_821ecc20  (database/db_registry.cpp:831)
+
+void FUN_821ecc20(undefined4 *param_1,longlong param_2)
+
+{
+  longlong lVar1;
+  int *piVar2;
+  
+  piVar2 = param_1 + 2;
+  lVar1 = param_2 + -1;
+  *param_1 = piVar2;
+  if (0 < lVar1) {
+    do {
+      *piVar2 = (int)(piVar2 + 0x16);
+      lVar1 = lVar1 + -1;
+      piVar2 = piVar2 + 0x16;
+    } while (lVar1 != 0);
+  }
+  param_1[(int)param_2 * 0x16 + -0x14] = 0;
+  return;
+}
+
+
+// 821ECC58  FUN_821ecc58  (database/db_registry.cpp:831)
+
+void FUN_821ecc58(undefined4 *param_1,ulonglong param_2)
+
+{
+  longlong lVar1;
+  int *piVar2;
+  
+  piVar2 = param_1 + 1;
+  lVar1 = param_2 - 1;
+  *param_1 = piVar2;
+  if (0 < lVar1) {
+    do {
+      *piVar2 = (int)(piVar2 + 4);
+      lVar1 = lVar1 + -1;
+      piVar2 = piVar2 + 4;
+    } while (lVar1 != 0);
+  }
+  *(undefined4 *)((int)param_1 + (int)((param_2 & 0xffffffff) << 4) + -0xc) = 0;
+  return;
+}
+
+
+// 821ECC90  FUN_821ecc90  (database/db_registry.cpp:831)
+
+void FUN_821ecc90(undefined4 *param_1,ulonglong param_2)
+
+{
+  longlong lVar1;
+  int *piVar2;
+  
+  piVar2 = param_1 + 1;
+  lVar1 = param_2 - 1;
+  *param_1 = piVar2;
+  if (0 < lVar1) {
+    do {
+      *piVar2 = (int)(piVar2 + 0x28);
+      lVar1 = lVar1 + -1;
+      piVar2 = piVar2 + 0x28;
+    } while (lVar1 != 0);
+  }
+  *(undefined4 *)
+   ((int)param_1 + (int)((param_2 + (param_2 & 0x3fffffff) * 4 & 0xffffffff) << 5) + -0x9c) = 0;
+  return;
+}
+
+
+// 821ECCD0  FUN_821eccd0  (database/db_registry.cpp:831)
+
+void FUN_821eccd0(undefined4 *param_1,longlong param_2)
+
+{
+  longlong lVar1;
+  int *piVar2;
+  
+  piVar2 = param_1 + 1;
+  lVar1 = param_2 + -1;
+  *param_1 = piVar2;
+  if (0 < lVar1) {
+    do {
+      *piVar2 = (int)(piVar2 + 0x1c);
+      lVar1 = lVar1 + -1;
+      piVar2 = piVar2 + 0x1c;
+    } while (lVar1 != 0);
+  }
+  param_1[(int)param_2 * 0x1c + -0x1b] = 0;
+  return;
+}
+
+
+// 821ECD08  FUN_821ecd08  (database/db_registry.cpp:831)
+
+void FUN_821ecd08(undefined4 *param_1,ulonglong param_2)
+
+{
+  longlong lVar1;
+  int *piVar2;
+  
+  piVar2 = param_1 + 1;
+  lVar1 = param_2 - 1;
+  *param_1 = piVar2;
+  if (0 < lVar1) {
+    do {
+      *piVar2 = (int)(piVar2 + 3);
+      lVar1 = lVar1 + -1;
+      piVar2 = piVar2 + 3;
+    } while (lVar1 != 0);
+  }
+  *(undefined4 *)
+   ((int)param_1 + (int)((param_2 + (param_2 & 0x7fffffff) * 2 & 0xffffffff) << 2) + -8) = 0;
+  return;
+}
+
+
+// 821ECD48  FUN_821ecd48  (database/db_registry.cpp:831)
+
+void FUN_821ecd48(undefined4 *param_1,longlong param_2)
+
+{
+  longlong lVar1;
+  int *piVar2;
+  
+  piVar2 = param_1 + 1;
+  lVar1 = param_2 + -1;
+  *param_1 = piVar2;
+  if (0 < lVar1) {
+    do {
+      *piVar2 = (int)(piVar2 + 0x22);
+      lVar1 = lVar1 + -1;
+      piVar2 = piVar2 + 0x22;
+    } while (lVar1 != 0);
+  }
+  param_1[(int)param_2 * 0x22 + -0x21] = 0;
+  return;
+}
+
+
+// 821ECD80  FUN_821ecd80  (database/db_registry.cpp:831)
+
+void FUN_821ecd80(undefined4 *param_1,ulonglong param_2)
+
+{
+  longlong lVar1;
+  int *piVar2;
+  
+  piVar2 = param_1 + 1;
+  lVar1 = param_2 - 1;
+  *param_1 = piVar2;
+  if (0 < lVar1) {
+    do {
+      *piVar2 = (int)(piVar2 + 0x28);
+      lVar1 = lVar1 + -1;
+      piVar2 = piVar2 + 0x28;
+    } while (lVar1 != 0);
+  }
+  *(undefined4 *)
+   ((int)param_1 + (int)((param_2 + (param_2 & 0x3fffffff) * 4 & 0xffffffff) << 5) + -0x9c) = 0;
+  return;
+}
+
+
+// 821ECDC0  FUN_821ecdc0  (database/db_registry.cpp:831)
+
+void FUN_821ecdc0(undefined4 *param_1,ulonglong param_2)
+
+{
+  longlong lVar1;
+  int *piVar2;
+  
+  piVar2 = param_1 + 1;
+  lVar1 = param_2 - 1;
+  *param_1 = piVar2;
+  if (0 < lVar1) {
+    do {
+      *piVar2 = (int)(piVar2 + 0x18);
+      lVar1 = lVar1 + -1;
+      piVar2 = piVar2 + 0x18;
+    } while (lVar1 != 0);
+  }
+  *(undefined4 *)
+   ((int)param_1 + (int)((param_2 + (param_2 & 0x7fffffff) * 2 & 0xffffffff) << 5) + -0x5c) = 0;
+  return;
+}
+
+
+// 821ECE00  FUN_821ece00  (database/db_registry.cpp:831)
+
+void FUN_821ece00(undefined4 *param_1,ulonglong param_2)
+
+{
+  longlong lVar1;
+  int *piVar2;
+  
+  piVar2 = param_1 + 1;
+  lVar1 = param_2 - 1;
+  *param_1 = piVar2;
+  if (0 < lVar1) {
+    do {
+      *piVar2 = (int)(piVar2 + 6);
+      lVar1 = lVar1 + -1;
+      piVar2 = piVar2 + 6;
+    } while (lVar1 != 0);
+  }
+  *(undefined4 *)
+   ((int)param_1 + (int)((param_2 + (param_2 & 0x7fffffff) * 2 & 0xffffffff) << 3) + -0x14) = 0;
+  return;
+}
+
+
+// 821ECE40  FUN_821ece40  (database/db_registry.cpp:831)
+
+void FUN_821ece40(undefined4 *param_1,ulonglong param_2)
+
+{
+  longlong lVar1;
+  int *piVar2;
+  
+  piVar2 = param_1 + 1;
+  lVar1 = param_2 - 1;
+  *param_1 = piVar2;
+  if (0 < lVar1) {
+    do {
+      *piVar2 = (int)(piVar2 + 6);
+      lVar1 = lVar1 + -1;
+      piVar2 = piVar2 + 6;
+    } while (lVar1 != 0);
+  }
+  *(undefined4 *)
+   ((int)param_1 + (int)((param_2 + (param_2 & 0x7fffffff) * 2 & 0xffffffff) << 3) + -0x14) = 0;
+  return;
+}
+
+
+// 821ECE80  FUN_821ece80  (database/db_registry.cpp:831)
+
+void FUN_821ece80(undefined4 *param_1,ulonglong param_2)
+
+{
+  longlong lVar1;
+  int *piVar2;
+  
+  piVar2 = param_1 + 1;
+  lVar1 = param_2 - 1;
+  *param_1 = piVar2;
+  if (0 < lVar1) {
+    do {
+      *piVar2 = (int)(piVar2 + 3);
+      lVar1 = lVar1 + -1;
+      piVar2 = piVar2 + 3;
+    } while (lVar1 != 0);
+  }
+  *(undefined4 *)
+   ((int)param_1 + (int)((param_2 + (param_2 & 0x7fffffff) * 2 & 0xffffffff) << 2) + -8) = 0;
+  return;
+}
+
+
+// 821ECEC0  FUN_821ecec0  (database/db_registry.cpp:831)
+
+void FUN_821ecec0(undefined4 *param_1,longlong param_2)
+
+{
+  longlong lVar1;
+  int *piVar2;
+  
+  piVar2 = param_1 + 1;
+  lVar1 = param_2 + -1;
+  *param_1 = piVar2;
+  if (0 < lVar1) {
+    do {
+      *piVar2 = (int)(piVar2 + 0x2f);
+      lVar1 = lVar1 + -1;
+      piVar2 = piVar2 + 0x2f;
+    } while (lVar1 != 0);
+  }
+  param_1[(int)param_2 * 0x2f + -0x2e] = 0;
+  return;
+}
+
+
+// 821ECEF8  FUN_821ecef8  (database/db_registry.cpp:831)
+
+void FUN_821ecef8(undefined4 *param_1,ulonglong param_2)
+
+{
+  longlong lVar1;
+  int *piVar2;
+  
+  piVar2 = param_1 + 1;
+  lVar1 = param_2 - 1;
+  *param_1 = piVar2;
+  if (0 < lVar1) {
+    do {
+      *piVar2 = (int)(piVar2 + 2);
+      lVar1 = lVar1 + -1;
+      piVar2 = piVar2 + 2;
+    } while (lVar1 != 0);
+  }
+  *(undefined4 *)((int)param_1 + (int)((param_2 & 0xffffffff) << 3) + -4) = 0;
+  return;
+}
+
+
+// 821ECF30  FUN_821ecf30  (database/db_registry.cpp:831)
+
+void FUN_821ecf30(undefined4 *param_1,longlong param_2)
+
+{
+  longlong lVar1;
+  int *piVar2;
+  
+  piVar2 = param_1 + 1;
+  lVar1 = param_2 + -1;
+  *param_1 = piVar2;
+  if (0 < lVar1) {
+    do {
+      *piVar2 = (int)(piVar2 + 0x29);
+      lVar1 = lVar1 + -1;
+      piVar2 = piVar2 + 0x29;
+    } while (lVar1 != 0);
+  }
+  param_1[(int)param_2 * 0x29 + -0x28] = 0;
+  return;
+}
+
+
+// 821ECF68  FUN_821ecf68  (database/db_registry.cpp:831)
+
+void FUN_821ecf68(undefined4 *param_1,longlong param_2)
+
+{
+  longlong lVar1;
+  int *piVar2;
+  
+  piVar2 = param_1 + 1;
+  lVar1 = param_2 + -1;
+  *param_1 = piVar2;
+  if (0 < lVar1) {
+    do {
+      *piVar2 = (int)(piVar2 + 0x1e9);
+      lVar1 = lVar1 + -1;
+      piVar2 = piVar2 + 0x1e9;
+    } while (lVar1 != 0);
+  }
+  param_1[(int)param_2 * 0x1e9 + -0x1e8] = 0;
+  return;
+}
+
+
+// 821ECFA0  FUN_821ecfa0  (database/db_registry.cpp:831)
+
+void FUN_821ecfa0(undefined4 *param_1,ulonglong param_2)
+
+{
+  longlong lVar1;
+  int *piVar2;
+  
+  piVar2 = param_1 + 1;
+  lVar1 = param_2 - 1;
+  *param_1 = piVar2;
+  if (0 < lVar1) {
+    do {
+      *piVar2 = (int)(piVar2 + 2);
+      lVar1 = lVar1 + -1;
+      piVar2 = piVar2 + 2;
+    } while (lVar1 != 0);
+  }
+  *(undefined4 *)((int)param_1 + (int)((param_2 & 0xffffffff) << 3) + -4) = 0;
+  return;
+}
+
+
+// 821ECFD8  FUN_821ecfd8  (database/db_registry.cpp:831)
+
+void FUN_821ecfd8(undefined4 *param_1,longlong param_2)
+
+{
+  longlong lVar1;
+  int *piVar2;
+  
+  piVar2 = param_1 + 1;
+  lVar1 = param_2 + -1;
+  *param_1 = piVar2;
+  if (0 < lVar1) {
+    do {
+      *piVar2 = (int)(piVar2 + 0xd);
+      lVar1 = lVar1 + -1;
+      piVar2 = piVar2 + 0xd;
+    } while (lVar1 != 0);
+  }
+  param_1[(int)param_2 * 0xd + -0xc] = 0;
+  return;
+}
+
+
+// 821ED010  FUN_821ed010  (database/db_registry.cpp:831)
+
+void FUN_821ed010(undefined4 *param_1,ulonglong param_2)
+
+{
+  longlong lVar1;
+  int *piVar2;
+  
+  piVar2 = param_1 + 1;
+  lVar1 = param_2 - 1;
+  *param_1 = piVar2;
+  if (0 < lVar1) {
+    do {
+      *piVar2 = (int)(piVar2 + 2);
+      lVar1 = lVar1 + -1;
+      piVar2 = piVar2 + 2;
+    } while (lVar1 != 0);
+  }
+  *(undefined4 *)((int)param_1 + (int)((param_2 & 0xffffffff) << 3) + -4) = 0;
+  return;
+}
+
+
+// 821ED048  FUN_821ed048  (database/db_registry.cpp:831)
+
+void FUN_821ed048(undefined4 *param_1,ulonglong param_2)
+
+{
+  longlong lVar1;
+  int *piVar2;
+  
+  piVar2 = param_1 + 1;
+  lVar1 = param_2 - 1;
+  *param_1 = piVar2;
+  if (0 < lVar1) {
+    do {
+      *piVar2 = (int)(piVar2 + 2);
+      lVar1 = lVar1 + -1;
+      piVar2 = piVar2 + 2;
+    } while (lVar1 != 0);
+  }
+  *(undefined4 *)((int)param_1 + (int)((param_2 & 0xffffffff) << 3) + -4) = 0;
+  return;
+}
+
+
+// 821ED080  FUN_821ed080  (database/db_registry.cpp:831)
+
+void FUN_821ed080(undefined4 *param_1,ulonglong param_2)
+
+{
+  longlong lVar1;
+  int *piVar2;
+  
+  piVar2 = param_1 + 1;
+  lVar1 = param_2 - 1;
+  *param_1 = piVar2;
+  if (0 < lVar1) {
+    do {
+      *piVar2 = (int)(piVar2 + 4);
+      lVar1 = lVar1 + -1;
+      piVar2 = piVar2 + 4;
+    } while (lVar1 != 0);
+  }
+  *(undefined4 *)((int)param_1 + (int)((param_2 & 0xffffffff) << 4) + -0xc) = 0;
+  return;
+}
+
+
+// 821ED0B8  FUN_821ed0b8  (database/db_registry.cpp:831)
+
+void FUN_821ed0b8(undefined4 *param_1,ulonglong param_2)
+
+{
+  longlong lVar1;
+  int *piVar2;
+  
+  piVar2 = param_1 + 1;
+  lVar1 = param_2 - 1;
+  *param_1 = piVar2;
+  if (0 < lVar1) {
+    do {
+      *piVar2 = (int)(piVar2 + 6);
+      lVar1 = lVar1 + -1;
+      piVar2 = piVar2 + 6;
+    } while (lVar1 != 0);
+  }
+  *(undefined4 *)
+   ((int)param_1 + (int)((param_2 + (param_2 & 0x7fffffff) * 2 & 0xffffffff) << 3) + -0x14) = 0;
+  return;
+}
+
+
+// 821ED0F8  FUN_821ed0f8  (database/db_registry.cpp:831)
+
+void FUN_821ed0f8(undefined4 *param_1,ulonglong param_2)
+
+{
+  longlong lVar1;
+  int *piVar2;
+  
+  piVar2 = param_1 + 1;
+  lVar1 = param_2 - 1;
+  *param_1 = piVar2;
+  if (0 < lVar1) {
+    do {
+      *piVar2 = (int)(piVar2 + 4);
+      lVar1 = lVar1 + -1;
+      piVar2 = piVar2 + 4;
+    } while (lVar1 != 0);
+  }
+  *(undefined4 *)((int)param_1 + (int)((param_2 & 0xffffffff) << 4) + -0xc) = 0;
+  return;
+}
+
+
+// 821ED130  FUN_821ed130  (database/db_registry.cpp:831)
+
+void FUN_821ed130(undefined4 *param_1,ulonglong param_2)
+
+{
+  longlong lVar1;
+  int *piVar2;
+  
+  piVar2 = param_1 + 1;
+  lVar1 = param_2 - 1;
+  *param_1 = piVar2;
+  if (0 < lVar1) {
+    do {
+      *piVar2 = (int)(piVar2 + 8);
+      lVar1 = lVar1 + -1;
+      piVar2 = piVar2 + 8;
+    } while (lVar1 != 0);
+  }
+  *(undefined4 *)((int)param_1 + (int)((param_2 & 0xffffffff) << 5) + -0x1c) = 0;
+  return;
+}
+
+
+// 821ED168  FUN_821ed168  (database/db_registry.cpp:831)
+
+void FUN_821ed168(undefined4 *param_1,ulonglong param_2)
+
+{
+  longlong lVar1;
+  int *piVar2;
+  
+  piVar2 = param_1 + 1;
+  lVar1 = param_2 - 1;
+  *param_1 = piVar2;
+  if (0 < lVar1) {
+    do {
+      *piVar2 = (int)(piVar2 + 3);
+      lVar1 = lVar1 + -1;
+      piVar2 = piVar2 + 3;
+    } while (lVar1 != 0);
+  }
+  *(undefined4 *)
+   ((int)param_1 + (int)((param_2 + (param_2 & 0x7fffffff) * 2 & 0xffffffff) << 2) + -8) = 0;
+  return;
+}
+
+
+// 821ED1A8  FUN_821ed1a8  (database/db_registry.cpp:831)
+
+void FUN_821ed1a8(undefined4 *param_1,longlong param_2)
+
+{
+  longlong lVar1;
+  int *piVar2;
+  
+  piVar2 = param_1 + 1;
+  lVar1 = param_2 + -1;
+  *param_1 = piVar2;
+  if (0 < lVar1) {
+    do {
+      *piVar2 = (int)(piVar2 + 0x1c);
+      lVar1 = lVar1 + -1;
+      piVar2 = piVar2 + 0x1c;
+    } while (lVar1 != 0);
+  }
+  param_1[(int)param_2 * 0x1c + -0x1b] = 0;
+  return;
+}
+
+
+// 821ED1E0  FUN_821ed1e0  (database/db_registry.cpp:831)
+
+void FUN_821ed1e0(undefined4 *param_1,longlong param_2)
+
+{
+  longlong lVar1;
+  int *piVar2;
+  
+  piVar2 = param_1 + 1;
+  lVar1 = param_2 + -1;
+  *param_1 = piVar2;
+  if (0 < lVar1) {
+    do {
+      *piVar2 = (int)(piVar2 + 0xff);
+      lVar1 = lVar1 + -1;
+      piVar2 = piVar2 + 0xff;
+    } while (lVar1 != 0);
+  }
+  param_1[(int)param_2 * 0xff + -0xfe] = 0;
+  return;
+}
+
+
+// 821ED240  FUN_821ed240  (database/db_registry.cpp:850)
+
+int FUN_821ed240(int *param_1)
+
+{
+  int *piVar1;
+  
+  piVar1 = (int *)*param_1;
+  if (piVar1 != (int *)0x0) {
+    *param_1 = *piVar1;
+    return (int)piVar1;
+  }
+  return 0;
+}
+
+
+// 821ED268  FUN_821ed268  (database/db_registry.cpp:850)
+
+int FUN_821ed268(int *param_1)
+
+{
+  int *piVar1;
+  
+  piVar1 = (int *)*param_1;
+  if (piVar1 != (int *)0x0) {
+    *param_1 = *piVar1;
+    return (int)piVar1;
+  }
+  return 0;
+}
+
+
+// 821ED290  FUN_821ed290  (database/db_registry.cpp:850)
+
+int FUN_821ed290(int *param_1)
+
+{
+  int *piVar1;
+  
+  piVar1 = (int *)*param_1;
+  if (piVar1 != (int *)0x0) {
+    *param_1 = *piVar1;
+    return (int)piVar1;
+  }
+  return 0;
+}
+
+
+// 821ED2B8  FUN_821ed2b8  (database/db_registry.cpp:850)
+
+int FUN_821ed2b8(int *param_1)
+
+{
+  int *piVar1;
+  
+  piVar1 = (int *)*param_1;
+  if (piVar1 != (int *)0x0) {
+    *param_1 = *piVar1;
+    return (int)piVar1;
+  }
+  return 0;
+}
+
+
+// 821ED2E0  FUN_821ed2e0  (database/db_registry.cpp:850)
+
+int FUN_821ed2e0(int *param_1)
+
+{
+  int *piVar1;
+  
+  piVar1 = (int *)*param_1;
+  if (piVar1 != (int *)0x0) {
+    *param_1 = *piVar1;
+    return (int)piVar1;
+  }
+  return 0;
+}
+
+
+// 821ED308  FUN_821ed308  (database/db_registry.cpp:850)
+
+int FUN_821ed308(int *param_1)
+
+{
+  int *piVar1;
+  
+  piVar1 = (int *)*param_1;
+  if (piVar1 != (int *)0x0) {
+    *param_1 = *piVar1;
+    return (int)piVar1;
+  }
+  return 0;
+}
+
+
+// 821ED330  FUN_821ed330  (database/db_registry.cpp:850)
+
+int FUN_821ed330(int *param_1)
+
+{
+  int *piVar1;
+  
+  piVar1 = (int *)*param_1;
+  if (piVar1 != (int *)0x0) {
+    *param_1 = *piVar1;
+    return (int)piVar1;
+  }
+  return 0;
+}
+
+
+// 821ED358  FUN_821ed358  (database/db_registry.cpp:850)
+
+int FUN_821ed358(int *param_1)
+
+{
+  int *piVar1;
+  
+  piVar1 = (int *)*param_1;
+  if (piVar1 != (int *)0x0) {
+    *param_1 = *piVar1;
+    return (int)piVar1;
+  }
+  return 0;
+}
+
+
+// 821ED380  FUN_821ed380  (database/db_registry.cpp:850)
+
+int FUN_821ed380(int *param_1)
+
+{
+  int *piVar1;
+  
+  piVar1 = (int *)*param_1;
+  if (piVar1 != (int *)0x0) {
+    *param_1 = *piVar1;
+    return (int)piVar1;
+  }
+  return 0;
+}
+
+
+// 821ED3A8  FUN_821ed3a8  (database/db_registry.cpp:850)
+
+int FUN_821ed3a8(int *param_1)
+
+{
+  int *piVar1;
+  
+  piVar1 = (int *)*param_1;
+  if (piVar1 != (int *)0x0) {
+    *param_1 = *piVar1;
+    return (int)piVar1;
+  }
+  return 0;
+}
+
+
+// 821ED3D0  FUN_821ed3d0  (database/db_registry.cpp:850)
+
+int FUN_821ed3d0(int *param_1)
+
+{
+  int *piVar1;
+  
+  piVar1 = (int *)*param_1;
+  if (piVar1 != (int *)0x0) {
+    *param_1 = *piVar1;
+    return (int)piVar1;
+  }
+  return 0;
+}
+
+
+// 821ED3F8  FUN_821ed3f8  (database/db_registry.cpp:850)
+
+int FUN_821ed3f8(int *param_1)
+
+{
+  int *piVar1;
+  
+  piVar1 = (int *)*param_1;
+  if (piVar1 != (int *)0x0) {
+    *param_1 = *piVar1;
+    return (int)piVar1;
+  }
+  return 0;
+}
+
+
+// 821ED420  FUN_821ed420  (database/db_registry.cpp:850)
+
+int FUN_821ed420(int *param_1)
+
+{
+  int *piVar1;
+  
+  piVar1 = (int *)*param_1;
+  if (piVar1 != (int *)0x0) {
+    *param_1 = *piVar1;
+    return (int)piVar1;
+  }
+  return 0;
+}
+
+
+// 821ED448  FUN_821ed448  (database/db_registry.cpp:850)
+
+int FUN_821ed448(int *param_1)
+
+{
+  int *piVar1;
+  
+  piVar1 = (int *)*param_1;
+  if (piVar1 != (int *)0x0) {
+    *param_1 = *piVar1;
+    return (int)piVar1;
+  }
+  return 0;
+}
+
+
+// 821ED470  FUN_821ed470  (database/db_registry.cpp:850)
+
+int FUN_821ed470(int *param_1)
+
+{
+  int *piVar1;
+  
+  piVar1 = (int *)*param_1;
+  if (piVar1 != (int *)0x0) {
+    *param_1 = *piVar1;
+    return (int)piVar1;
+  }
+  return 0;
+}
+
+
+// 821ED498  FUN_821ed498  (database/db_registry.cpp:850)
+
+int FUN_821ed498(int *param_1)
+
+{
+  int *piVar1;
+  
+  piVar1 = (int *)*param_1;
+  if (piVar1 != (int *)0x0) {
+    *param_1 = *piVar1;
+    return (int)piVar1;
+  }
+  return 0;
+}
+
+
+// 821ED4C0  FUN_821ed4c0  (database/db_registry.cpp:850)
+
+int FUN_821ed4c0(int *param_1)
+
+{
+  int *piVar1;
+  
+  piVar1 = (int *)*param_1;
+  if (piVar1 != (int *)0x0) {
+    *param_1 = *piVar1;
+    return (int)piVar1;
+  }
+  return 0;
+}
+
+
+// 821ED4E8  FUN_821ed4e8  (database/db_registry.cpp:850)
+
+int FUN_821ed4e8(int *param_1)
+
+{
+  int *piVar1;
+  
+  piVar1 = (int *)*param_1;
+  if (piVar1 != (int *)0x0) {
+    *param_1 = *piVar1;
+    return (int)piVar1;
+  }
+  return 0;
+}
+
+
+// 821ED510  FUN_821ed510  (database/db_registry.cpp:850)
+
+int FUN_821ed510(int *param_1)
+
+{
+  int *piVar1;
+  
+  piVar1 = (int *)*param_1;
+  if (piVar1 != (int *)0x0) {
+    *param_1 = *piVar1;
+    return (int)piVar1;
+  }
+  return 0;
+}
+
+
+// 821ED538  FUN_821ed538  (database/db_registry.cpp:850)
+
+int FUN_821ed538(int *param_1)
+
+{
+  int *piVar1;
+  
+  piVar1 = (int *)*param_1;
+  if (piVar1 != (int *)0x0) {
+    *param_1 = *piVar1;
+    return (int)piVar1;
+  }
+  return 0;
+}
+
+
+// 821ED560  FUN_821ed560  (database/db_registry.cpp:850)
+
+int FUN_821ed560(int *param_1)
+
+{
+  int *piVar1;
+  
+  piVar1 = (int *)*param_1;
+  if (piVar1 != (int *)0x0) {
+    *param_1 = *piVar1;
+    return (int)piVar1;
+  }
+  return 0;
+}
+
+
+// 821ED588  FUN_821ed588  (database/db_registry.cpp:850)
+
+int FUN_821ed588(int *param_1)
+
+{
+  int *piVar1;
+  
+  piVar1 = (int *)*param_1;
+  if (piVar1 != (int *)0x0) {
+    *param_1 = *piVar1;
+    return (int)piVar1;
+  }
+  return 0;
+}
+
+
+// 821ED5B0  FUN_821ed5b0  (database/db_registry.cpp:850)
+
+int FUN_821ed5b0(int *param_1)
+
+{
+  int *piVar1;
+  
+  piVar1 = (int *)*param_1;
+  if (piVar1 != (int *)0x0) {
+    *param_1 = *piVar1;
+    return (int)piVar1;
+  }
+  return 0;
+}
+
+
+// 821ED5D8  FUN_821ed5d8  (database/db_registry.cpp:850)
+
+int FUN_821ed5d8(int *param_1)
+
+{
+  int *piVar1;
+  
+  piVar1 = (int *)*param_1;
+  if (piVar1 != (int *)0x0) {
+    *param_1 = *piVar1;
+    return (int)piVar1;
+  }
+  return 0;
+}
+
+
+// 821ED600  FUN_821ed600  (database/db_registry.cpp:850)
+
+int FUN_821ed600(int *param_1)
+
+{
+  int *piVar1;
+  
+  piVar1 = (int *)*param_1;
+  if (piVar1 != (int *)0x0) {
+    *param_1 = *piVar1;
+    return (int)piVar1;
+  }
+  return 0;
+}
+
+
+// 821ED628  FUN_821ed628  (database/db_registry.cpp:850)
+
+int FUN_821ed628(int *param_1)
+
+{
+  int *piVar1;
+  
+  piVar1 = (int *)*param_1;
+  if (piVar1 != (int *)0x0) {
+    *param_1 = *piVar1;
+    return (int)piVar1;
+  }
+  return 0;
+}
+
+
+// 821ED650  FUN_821ed650  (database/db_registry.cpp:850)
+
+int FUN_821ed650(int *param_1)
+
+{
+  int *piVar1;
+  
+  piVar1 = (int *)*param_1;
+  if (piVar1 != (int *)0x0) {
+    *param_1 = *piVar1;
+    return (int)piVar1;
+  }
+  return 0;
+}
+
+
+// 821ED678  FUN_821ed678  (database/db_registry.cpp:850)
+
+int FUN_821ed678(int *param_1)
+
+{
+  int *piVar1;
+  
+  piVar1 = (int *)*param_1;
+  if (piVar1 != (int *)0x0) {
+    *param_1 = *piVar1;
+    return (int)piVar1;
+  }
+  return 0;
+}
+
+
+// 821ED6A0  FUN_821ed6a0  (database/db_registry.cpp:850)
+
+int FUN_821ed6a0(int *param_1)
+
+{
+  int *piVar1;
+  
+  piVar1 = (int *)*param_1;
+  if (piVar1 != (int *)0x0) {
+    *param_1 = *piVar1;
+    return (int)piVar1;
+  }
+  return 0;
+}
+
+
+// 821ED6C8  FUN_821ed6c8  (database/db_registry.cpp:850)
+
+int FUN_821ed6c8(int *param_1)
+
+{
+  int *piVar1;
+  
+  piVar1 = (int *)*param_1;
+  if (piVar1 != (int *)0x0) {
+    *param_1 = *piVar1;
+    return (int)piVar1;
+  }
+  return 0;
+}
+
+
+// 821ED6F0  FUN_821ed6f0  (database/db_registry.cpp:876)
+
+void FUN_821ed6f0(undefined4 *param_1,undefined4 *param_2)
+
+{
+  undefined4 uVar1;
+  
+  uVar1 = *param_1;
+  *param_1 = param_2;
+  *param_2 = uVar1;
+  return;
+}
+
+
+// 821ED700  FUN_821ed700  (database/db_registry.cpp:876)
+
+void FUN_821ed700(undefined4 *param_1,undefined4 *param_2)
+
+{
+  undefined4 uVar1;
+  
+  uVar1 = *param_1;
+  *param_1 = param_2;
+  *param_2 = uVar1;
+  return;
+}
+
+
+// 821ED710  FUN_821ed710  (database/db_registry.cpp:876)
+
+void FUN_821ed710(undefined4 *param_1,undefined4 *param_2)
+
+{
+  undefined4 uVar1;
+  
+  uVar1 = *param_1;
+  *param_1 = param_2;
+  *param_2 = uVar1;
+  return;
+}
+
+
+// 821ED720  FUN_821ed720  (database/db_registry.cpp:876)
+
+void FUN_821ed720(undefined4 *param_1,undefined4 *param_2)
+
+{
+  undefined4 uVar1;
+  
+  uVar1 = *param_1;
+  *param_1 = param_2;
+  *param_2 = uVar1;
+  return;
+}
+
+
+// 821ED730  FUN_821ed730  (database/db_registry.cpp:876)
+
+void FUN_821ed730(undefined4 *param_1,undefined4 *param_2)
+
+{
+  undefined4 uVar1;
+  
+  uVar1 = *param_1;
+  *param_1 = param_2;
+  *param_2 = uVar1;
+  return;
+}
+
+
+// 821ED740  FUN_821ed740  (database/db_registry.cpp:876)
+
+void FUN_821ed740(undefined4 *param_1,undefined4 *param_2)
+
+{
+  undefined4 uVar1;
+  
+  uVar1 = *param_1;
+  *param_1 = param_2;
+  *param_2 = uVar1;
+  return;
+}
+
+
+// 821ED750  FUN_821ed750  (database/db_registry.cpp:876)
+
+void FUN_821ed750(undefined4 *param_1,undefined4 *param_2)
+
+{
+  undefined4 uVar1;
+  
+  uVar1 = *param_1;
+  *param_1 = param_2;
+  *param_2 = uVar1;
+  return;
+}
+
+
+// 821ED760  FUN_821ed760  (database/db_registry.cpp:876)
+
+void FUN_821ed760(undefined4 *param_1,undefined4 *param_2)
+
+{
+  undefined4 uVar1;
+  
+  uVar1 = *param_1;
+  *param_1 = param_2;
+  *param_2 = uVar1;
+  return;
+}
+
+
+// 821ED770  FUN_821ed770  (database/db_registry.cpp:876)
+
+void FUN_821ed770(undefined4 *param_1,undefined4 *param_2)
+
+{
+  undefined4 uVar1;
+  
+  uVar1 = *param_1;
+  *param_1 = param_2;
+  *param_2 = uVar1;
+  return;
+}
+
+
+// 821ED780  FUN_821ed780  (database/db_registry.cpp:876)
+
+void FUN_821ed780(undefined4 *param_1,undefined4 *param_2)
+
+{
+  undefined4 uVar1;
+  
+  uVar1 = *param_1;
+  *param_1 = param_2;
+  *param_2 = uVar1;
+  return;
+}
+
+
+// 821ED790  FUN_821ed790  (database/db_registry.cpp:876)
+
+void FUN_821ed790(undefined4 *param_1,undefined4 *param_2)
+
+{
+  undefined4 uVar1;
+  
+  uVar1 = *param_1;
+  *param_1 = param_2;
+  *param_2 = uVar1;
+  return;
+}
+
+
+// 821ED7A0  FUN_821ed7a0  (database/db_registry.cpp:876)
+
+void FUN_821ed7a0(undefined4 *param_1,undefined4 *param_2)
+
+{
+  undefined4 uVar1;
+  
+  uVar1 = *param_1;
+  *param_1 = param_2;
+  *param_2 = uVar1;
+  return;
+}
+
+
+// 821ED7B0  FUN_821ed7b0  (database/db_registry.cpp:876)
+
+void FUN_821ed7b0(undefined4 *param_1,undefined4 *param_2)
+
+{
+  undefined4 uVar1;
+  
+  uVar1 = *param_1;
+  *param_1 = param_2;
+  *param_2 = uVar1;
+  return;
+}
+
+
+// 821ED7C0  FUN_821ed7c0  (database/db_registry.cpp:876)
+
+void FUN_821ed7c0(undefined4 *param_1,undefined4 *param_2)
+
+{
+  undefined4 uVar1;
+  
+  uVar1 = *param_1;
+  *param_1 = param_2;
+  *param_2 = uVar1;
+  return;
+}
+
+
+// 821ED7D0  FUN_821ed7d0  (database/db_registry.cpp:876)
+
+void FUN_821ed7d0(undefined4 *param_1,undefined4 *param_2)
+
+{
+  undefined4 uVar1;
+  
+  uVar1 = *param_1;
+  *param_1 = param_2;
+  *param_2 = uVar1;
+  return;
+}
+
+
+// 821ED7E0  FUN_821ed7e0  (database/db_registry.cpp:876)
+
+void FUN_821ed7e0(undefined4 *param_1,undefined4 *param_2)
+
+{
+  undefined4 uVar1;
+  
+  uVar1 = *param_1;
+  *param_1 = param_2;
+  *param_2 = uVar1;
+  return;
+}
+
+
+// 821ED7F0  FUN_821ed7f0  (database/db_registry.cpp:876)
+
+void FUN_821ed7f0(undefined4 *param_1,undefined4 *param_2)
+
+{
+  undefined4 uVar1;
+  
+  uVar1 = *param_1;
+  *param_1 = param_2;
+  *param_2 = uVar1;
+  return;
+}
+
+
+// 821ED800  FUN_821ed800  (database/db_registry.cpp:876)
+
+void FUN_821ed800(undefined4 *param_1,undefined4 *param_2)
+
+{
+  undefined4 uVar1;
+  
+  uVar1 = *param_1;
+  *param_1 = param_2;
+  *param_2 = uVar1;
+  return;
+}
+
+
+// 821ED810  FUN_821ed810  (database/db_registry.cpp:876)
+
+void FUN_821ed810(undefined4 *param_1,undefined4 *param_2)
+
+{
+  undefined4 uVar1;
+  
+  uVar1 = *param_1;
+  *param_1 = param_2;
+  *param_2 = uVar1;
+  return;
+}
+
+
+// 821ED820  FUN_821ed820  (database/db_registry.cpp:876)
+
+void FUN_821ed820(undefined4 *param_1,undefined4 *param_2)
+
+{
+  undefined4 uVar1;
+  
+  uVar1 = *param_1;
+  *param_1 = param_2;
+  *param_2 = uVar1;
+  return;
+}
+
+
+// 821ED830  FUN_821ed830  (database/db_registry.cpp:876)
+
+void FUN_821ed830(undefined4 *param_1,undefined4 *param_2)
+
+{
+  undefined4 uVar1;
+  
+  uVar1 = *param_1;
+  *param_1 = param_2;
+  *param_2 = uVar1;
+  return;
+}
+
+
+// 821ED840  FUN_821ed840  (database/db_registry.cpp:876)
+
+void FUN_821ed840(undefined4 *param_1,undefined4 *param_2)
+
+{
+  undefined4 uVar1;
+  
+  uVar1 = *param_1;
+  *param_1 = param_2;
+  *param_2 = uVar1;
+  return;
+}
+
+
+// 821ED850  FUN_821ed850  (database/db_registry.cpp:876)
+
+void FUN_821ed850(undefined4 *param_1,undefined4 *param_2)
+
+{
+  undefined4 uVar1;
+  
+  uVar1 = *param_1;
+  *param_1 = param_2;
+  *param_2 = uVar1;
+  return;
+}
+
+
+// 821ED860  FUN_821ed860  (database/db_registry.cpp:876)
+
+void FUN_821ed860(undefined4 *param_1,undefined4 *param_2)
+
+{
+  undefined4 uVar1;
+  
+  uVar1 = *param_1;
+  *param_1 = param_2;
+  *param_2 = uVar1;
+  return;
+}
+
+
+// 821ED870  FUN_821ed870  (database/db_registry.cpp:876)
+
+void FUN_821ed870(undefined4 *param_1,undefined4 *param_2)
+
+{
+  undefined4 uVar1;
+  
+  uVar1 = *param_1;
+  *param_1 = param_2;
+  *param_2 = uVar1;
+  return;
+}
+
+
+// 821ED880  FUN_821ed880  (database/db_registry.cpp:876)
+
+void FUN_821ed880(undefined4 *param_1,undefined4 *param_2)
+
+{
+  undefined4 uVar1;
+  
+  uVar1 = *param_1;
+  *param_1 = param_2;
+  *param_2 = uVar1;
+  return;
+}
+
+
+// 821ED890  FUN_821ed890  (database/db_registry.cpp:876)
+
+void FUN_821ed890(undefined4 *param_1,undefined4 *param_2)
+
+{
+  undefined4 uVar1;
+  
+  uVar1 = *param_1;
+  *param_1 = param_2;
+  *param_2 = uVar1;
+  return;
+}
+
+
+// 821ED8A0  FUN_821ed8a0  (database/db_registry.cpp:876)
+
+void FUN_821ed8a0(undefined4 *param_1,undefined4 *param_2)
+
+{
+  undefined4 uVar1;
+  
+  uVar1 = *param_1;
+  *param_1 = param_2;
+  *param_2 = uVar1;
   return;
 }
 
@@ -1151,6 +2727,51 @@ void FUN_821ee790(undefined8 param_1,undefined8 param_2)
 }
 
 
+// 821EA288  FUN_821ea288  (database/db_registry.cpp:1716)
+
+undefined8 FUN_821ea288(int *param_1,int *param_2,int param_3)
+
+{
+  int iVar1;
+  uint uVar2;
+  int iVar3;
+  int iVar4;
+  ulonglong uVar5;
+  
+  if ((param_3 != 0) && (param_3 != 3)) {
+    iVar4 = *param_2;
+    iVar1 = *param_1;
+    *(undefined4 *)(iVar1 + 0x68) = *(undefined4 *)(iVar4 + 0x68);
+    *(undefined4 *)(iVar1 + 0x6c) = *(undefined4 *)(iVar4 + 0x6c);
+    *(undefined4 *)(iVar1 + 0x70) = *(undefined4 *)(iVar4 + 0x70);
+    *(undefined4 *)(iVar1 + 0x74) = *(undefined4 *)(iVar4 + 0x74);
+    param_1[0x13] = param_2[0x13];
+    param_1[0x14] = param_2[0x14];
+    param_1[0x15] = param_2[0x15];
+    param_1[0x16] = param_2[0x16];
+    uVar2 = param_2[0x2d];
+    if (param_1[0x2d] <= param_2[0x2d]) {
+      uVar2 = param_1[0x2d];
+    }
+    uVar5 = (ulonglong)uVar2;
+    if (0 < (int)uVar2) {
+      iVar4 = 0;
+      do {
+        uVar5 = uVar5 - 1;
+        iVar1 = *(int *)(iVar4 + param_2[0x2e]);
+        iVar3 = *(int *)(iVar4 + param_1[0x2e]);
+        iVar4 = iVar4 + 4;
+        *(undefined4 *)(iVar3 + 0x48) = *(undefined4 *)(iVar1 + 0x48);
+        *(undefined4 *)(iVar3 + 0x4c) = *(undefined4 *)(iVar1 + 0x4c);
+        *(undefined4 *)(iVar3 + 0x50) = *(undefined4 *)(iVar1 + 0x50);
+        *(undefined4 *)(iVar3 + 0x54) = *(undefined4 *)(iVar1 + 0x54);
+      } while (uVar5 != 0);
+    }
+  }
+  return 1;
+}
+
+
 // 821EE7A0  FUN_821ee7a0  (database/db_registry.cpp:1751)
 
 void FUN_821ee7a0(undefined4 *param_1)
@@ -1253,6 +2874,15 @@ void FUN_821ee940(undefined8 param_1,undefined8 param_2)
 {
   FUN_821eb968(0x1b,param_1,param_2);
   return;
+}
+
+
+// 821EA360  FUN_821ea360  (database/db_registry.cpp:1814)
+
+undefined8 FUN_821ea360(void)
+
+{
+  return 1;
 }
 
 
@@ -1720,7 +3350,7 @@ ulonglong FUN_821ea3f8(int param_1)
   char in_RESERVE;
   byte in_cr0;
   
-  uVar1 = (*(code *)(&PTR_LAB_825939d8)[param_1])((&PTR_DAT_82593b38)[param_1]);
+  uVar1 = (*(code *)(&PTR_FUN_825939d8)[param_1])((&PTR_DAT_82593b38)[param_1]);
   if ((uVar1 & 0xffffffff) == 0) {
     sync(1);
     do {
@@ -1835,7 +3465,7 @@ void FUN_821ea660(int *param_1)
 {
   int iVar1;
   
-  (*(code *)(&PTR_LAB_82593a88)[*param_1])((&PTR_DAT_82593b38)[*param_1],param_1[1]);
+  (*(code *)(&PTR_FUN_82593a88)[*param_1])((&PTR_DAT_82593b38)[*param_1],param_1[1]);
   iVar1 = (int)DAT_82879274 + 0x7d5dd8c8;
   DAT_82879274 = param_1;
   *(short *)((int)param_1 + 0xe) = (short)(iVar1 >> 4);
@@ -2497,7 +4127,7 @@ void FUN_821eb2e8(int *param_1)
     iVar7 = *param_1;
     puVar4 = (&PTR_DAT_82593b38)[iVar7];
   }
-  (*(code *)(&PTR_LAB_82593a88)[iVar7])(puVar4,param_1[1]);
+  (*(code *)(&PTR_FUN_82593a88)[iVar7])(puVar4,param_1[1]);
   piVar9 = DAT_82879274 + 0x1f577632;
   DAT_82879274 = param_1;
   *(short *)((int)param_1 + 0xe) = (short)((int)piVar9 >> 4);
@@ -3673,7 +5303,7 @@ LAB_821ec168:
                                *(undefined4 *)(&DAT_82a2273c + iVar4),1);
             if (iVar7 != 0) goto LAB_821ec168;
           }
-          (*(code *)(&PTR_LAB_82593a88)[*piVar10])
+          (*(code *)(&PTR_FUN_82593a88)[*piVar10])
                     ((&PTR_DAT_82593b38)[*piVar10],*(undefined4 *)(&DAT_82a2273c + iVar3));
           piVar8 = DAT_82879274 + 0x1f577632;
           DAT_82879274 = piVar10;
@@ -3730,7 +5360,7 @@ LAB_821ec168:
           goto LAB_821ec220;
         }
         *puVar11 = *(ushort *)(&DAT_82a22742 + iVar4);
-        (*(code *)(&PTR_LAB_82593a88)[*piVar12])
+        (*(code *)(&PTR_FUN_82593a88)[*piVar12])
                   ((&PTR_DAT_82593b38)[*piVar12],*(undefined4 *)(&DAT_82a2273c + iVar4));
         piVar10 = DAT_82879274 + 0x1f577632;
         DAT_82879274 = piVar12;
@@ -3748,7 +5378,7 @@ LAB_821ec220:
               (**(code **)(&DAT_82593df8 + *piVar12 * 4))(*(undefined4 *)(&DAT_82a2273c + iVar3));
             }
             *puVar11 = *(ushort *)(&DAT_82a22744 + iVar3);
-            (*(code *)(&PTR_LAB_82593a88)[*piVar12])
+            (*(code *)(&PTR_FUN_82593a88)[*piVar12])
                       ((&PTR_DAT_82593b38)[*piVar12],*(undefined4 *)(&DAT_82a2273c + iVar3));
             piVar10 = DAT_82879274 + 0x1f577632;
             DAT_82879274 = piVar12;
@@ -3813,7 +5443,7 @@ void FUN_821ec358(void)
       iVar3 = (uint)uVar1 * 0x10;
       DAT_82cbd4f4 = DAT_82cbd4f4 + -1;
       uVar1 = *(ushort *)(&DAT_82a22742 + iVar3);
-      (*(code *)(&PTR_LAB_82593a88)[*(int *)(&DAT_82a22738 + iVar3)])
+      (*(code *)(&PTR_FUN_82593a88)[*(int *)(&DAT_82a22738 + iVar3)])
                 ((&PTR_DAT_82593b38)[*(int *)(&DAT_82a22738 + iVar3)],
                  *(undefined4 *)(&DAT_82a2273c + iVar3));
       puVar2 = DAT_82879274 + 0x7d5dd8c8;
@@ -4131,7 +5761,7 @@ void FUN_821ec710(void)
         if (((&DAT_82a22741)[iVar7] & 3) == 0) {
           DAT_82cbd4f4 = DAT_82cbd4f4 + -1;
           *puVar6 = *(ushort *)(&DAT_82a22742 + iVar7);
-          (*(code *)(&PTR_LAB_82593a88)[*piVar9])
+          (*(code *)(&PTR_FUN_82593a88)[*piVar9])
                     ((&PTR_DAT_82593b38)[*piVar9],*(undefined4 *)(&DAT_82a2273c + iVar7));
           piVar5 = DAT_82879274 + 0x1f577632;
           DAT_82879274 = piVar9;

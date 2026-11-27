@@ -509,6 +509,11 @@ LAB_820a2f78:
   820A2FB4  F9630010             std r11,0x10(r3)
   820A2FB8  4E800020             blr
 
+; 820A2FC0  FUN_820a2fc0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:404)
+  820A2FC0  81632948             lwz r11,0x2948(r3)
+  820A2FC4  5563077E             rlwinm r3,r11,0x0,0x1d,0x1f
+  820A2FC8  4E800020             blr
+
 ; 820A2FD0  FUN_820a2fd0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:413)
   820A2FD0  81632948             lwz r11,0x2948(r3)
   820A2FD4  508B1D78             rlwimi r11,r4,0x3,0x15,0x1c
@@ -517,6 +522,11 @@ LAB_820a2f78:
   820A2FE0  616B0040             ori r11,r11,0x40
   820A2FE4  F9630010             std r11,0x10(r3)
   820A2FE8  4E800020             blr
+
+; 820A2FF0  FUN_820a2ff0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:430)
+  820A2FF0  81632948             lwz r11,0x2948(r3)
+  820A2FF4  5563EE3E             rlwinm r3,r11,0x1d,0x18,0x1f
+  820A2FF8  4E800020             blr
 
 ; 820A3000  FUN_820a3000  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:444)
   820A3000  8163293C             lwz r11,0x293c(r3)
@@ -528,6 +538,11 @@ LAB_820a2f78:
   820A3018  656B0004             oris r11,r11,0x4
   820A301C  F9630010             std r11,0x10(r3)
   820A3020  4E800020             blr
+
+; 820A3028  FUN_820a3028  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:456)
+  820A3028  8163293C             lwz r11,0x293c(r3)
+  820A302C  5563EFFE             rlwinm r3,r11,0x1d,0x1f,0x1f
+  820A3030  4E800020             blr
 
 ; 820A3038  FUN_820a3038  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:510)
   820A3038  81632F7C             lwz r11,0x2f7c(r3)
@@ -564,6 +579,218 @@ LAB_820a3080:
   820A30AC  616B0001             ori r11,r11,0x1
   820A30B0  F9630010             std r11,0x10(r3)
   820A30B4  4E800020             blr
+
+; 820A30B8  FUN_820a30b8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:524)
+  820A30B8  81632F7C             lwz r11,0x2f7c(r3)
+  820A30BC  55630FFE             rlwinm r3,r11,0x1,0x1f,0x1f
+  820A30C0  4E800020             blr
+
+; 820A30C8  FUN_820a30c8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:533)
+  820A30C8  81432F78             lwz r10,0x2f78(r3)
+  820A30CC  81632F7C             lwz r11,0x2f7c(r3)
+  820A30D0  508A2E34             rlwimi r10,r4,0x5,0x18,0x1a
+  820A30D4  55690001             rlwinm. r9,r11,0x0,0x0,0x0
+  820A30D8  91432F78             stw r10,0x2f78(r3)
+  820A30DC  4D820020             beqlr
+  820A30E0  556A0043             rlwinm. r10,r11,0x0,0x1,0x1
+  820A30E4  81632F78             lwz r11,0x2f78(r3)
+  820A30E8  40820024             bne 0x820a310c
+  820A30EC  716A1010             andi. r10,r11,0x1010
+  820A30F0  55692336             rlwinm r9,r11,0x4,0xc,0x1b
+  820A30F4  556B043E             rlwinm r11,r11,0x0,0x10,0x1f
+  820A30F8  7D4A4B78             or r10,r10,r9
+  820A30FC  554A601E             rlwinm r10,r10,0xc,0x0,0xf
+  820A3100  554A0314             rlwinm r10,r10,0x0,0xc,0xa
+  820A3104  554A0104             rlwinm r10,r10,0x0,0x4,0x2
+  820A3108  7D4B5B78             or r11,r10,r11
+LAB_820a310c:
+  820A310C  91632938             stw r11,0x2938(r3)
+  820A3110  91632958             stw r11,0x2958(r3)
+  820A3114  9163295C             stw r11,0x295c(r3)
+  820A3118  91632960             stw r11,0x2960(r3)
+  820A311C  E9630010             ld r11,0x10(r3)
+  820A3120  616B0400             ori r11,r11,0x400
+  820A3124  F9630010             std r11,0x10(r3)
+  820A3128  616B0004             ori r11,r11,0x4
+  820A312C  F9630010             std r11,0x10(r3)
+  820A3130  616B0002             ori r11,r11,0x2
+  820A3134  F9630010             std r11,0x10(r3)
+  820A3138  616B0001             ori r11,r11,0x1
+  820A313C  F9630010             std r11,0x10(r3)
+  820A3140  4E800020             blr
+
+; 820A3148  FUN_820a3148  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:549)
+  820A3148  81632F78             lwz r11,0x2f78(r3)
+  820A314C  5563DF7E             rlwinm r3,r11,0x1b,0x1d,0x1f
+  820A3150  4E800020             blr
+
+; 820A3158  FUN_820a3158  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:558)
+  820A3158  81432F78             lwz r10,0x2f78(r3)
+  820A315C  81632F7C             lwz r11,0x2f7c(r3)
+  820A3160  508A06FE             rlwimi r10,r4,0x0,0x1b,0x1f
+  820A3164  55690001             rlwinm. r9,r11,0x0,0x0,0x0
+  820A3168  91432F78             stw r10,0x2f78(r3)
+  820A316C  4D820020             beqlr
+  820A3170  556A0043             rlwinm. r10,r11,0x0,0x1,0x1
+  820A3174  81632F78             lwz r11,0x2f78(r3)
+  820A3178  40820024             bne 0x820a319c
+  820A317C  716A1010             andi. r10,r11,0x1010
+  820A3180  55692336             rlwinm r9,r11,0x4,0xc,0x1b
+  820A3184  556B043E             rlwinm r11,r11,0x0,0x10,0x1f
+  820A3188  7D4A4B78             or r10,r10,r9
+  820A318C  554A601E             rlwinm r10,r10,0xc,0x0,0xf
+  820A3190  554A0314             rlwinm r10,r10,0x0,0xc,0xa
+  820A3194  554A0104             rlwinm r10,r10,0x0,0x4,0x2
+  820A3198  7D4B5B78             or r11,r10,r11
+LAB_820a319c:
+  820A319C  91632938             stw r11,0x2938(r3)
+  820A31A0  91632958             stw r11,0x2958(r3)
+  820A31A4  9163295C             stw r11,0x295c(r3)
+  820A31A8  91632960             stw r11,0x2960(r3)
+  820A31AC  E9630010             ld r11,0x10(r3)
+  820A31B0  616B0400             ori r11,r11,0x400
+  820A31B4  F9630010             std r11,0x10(r3)
+  820A31B8  616B0004             ori r11,r11,0x4
+  820A31BC  F9630010             std r11,0x10(r3)
+  820A31C0  616B0002             ori r11,r11,0x2
+  820A31C4  F9630010             std r11,0x10(r3)
+  820A31C8  616B0001             ori r11,r11,0x1
+  820A31CC  F9630010             std r11,0x10(r3)
+  820A31D0  4E800020             blr
+
+; 820A31D8  FUN_820a31d8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:574)
+  820A31D8  81632F78             lwz r11,0x2f78(r3)
+  820A31DC  556306FE             rlwinm r3,r11,0x0,0x1b,0x1f
+  820A31E0  4E800020             blr
+
+; 820A31E8  FUN_820a31e8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:583)
+  820A31E8  81432F78             lwz r10,0x2f78(r3)
+  820A31EC  81632F7C             lwz r11,0x2f7c(r3)
+  820A31F0  508A44EE             rlwimi r10,r4,0x8,0x13,0x17
+  820A31F4  55690001             rlwinm. r9,r11,0x0,0x0,0x0
+  820A31F8  91432F78             stw r10,0x2f78(r3)
+  820A31FC  4D820020             beqlr
+  820A3200  556A0043             rlwinm. r10,r11,0x0,0x1,0x1
+  820A3204  81632F78             lwz r11,0x2f78(r3)
+  820A3208  40820024             bne 0x820a322c
+  820A320C  716A1010             andi. r10,r11,0x1010
+  820A3210  55692336             rlwinm r9,r11,0x4,0xc,0x1b
+  820A3214  556B043E             rlwinm r11,r11,0x0,0x10,0x1f
+  820A3218  7D4A4B78             or r10,r10,r9
+  820A321C  554A601E             rlwinm r10,r10,0xc,0x0,0xf
+  820A3220  554A0314             rlwinm r10,r10,0x0,0xc,0xa
+  820A3224  554A0104             rlwinm r10,r10,0x0,0x4,0x2
+  820A3228  7D4B5B78             or r11,r10,r11
+LAB_820a322c:
+  820A322C  91632938             stw r11,0x2938(r3)
+  820A3230  91632958             stw r11,0x2958(r3)
+  820A3234  9163295C             stw r11,0x295c(r3)
+  820A3238  91632960             stw r11,0x2960(r3)
+  820A323C  E9630010             ld r11,0x10(r3)
+  820A3240  616B0400             ori r11,r11,0x400
+  820A3244  F9630010             std r11,0x10(r3)
+  820A3248  616B0004             ori r11,r11,0x4
+  820A324C  F9630010             std r11,0x10(r3)
+  820A3250  616B0002             ori r11,r11,0x2
+  820A3254  F9630010             std r11,0x10(r3)
+  820A3258  616B0001             ori r11,r11,0x1
+  820A325C  F9630010             std r11,0x10(r3)
+  820A3260  4E800020             blr
+
+; 820A3268  FUN_820a3268  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:599)
+  820A3268  81632F78             lwz r11,0x2f78(r3)
+  820A326C  5563C6FE             rlwinm r3,r11,0x18,0x1b,0x1f
+  820A3270  4E800020             blr
+
+; 820A3278  FUN_820a3278  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:608)
+  820A3278  81432F78             lwz r10,0x2f78(r3)
+  820A327C  81632F7C             lwz r11,0x2f7c(r3)
+  820A3280  508AAA14             rlwimi r10,r4,0x15,0x8,0xa
+  820A3284  55690001             rlwinm. r9,r11,0x0,0x0,0x0
+  820A3288  91432F78             stw r10,0x2f78(r3)
+  820A328C  4D820020             beqlr
+  820A3290  556B0043             rlwinm. r11,r11,0x0,0x1,0x1
+  820A3294  4D820020             beqlr
+  820A3298  554B003E             rlwinm r11,r10,0x0,0x0,0x1f
+  820A329C  91632938             stw r11,0x2938(r3)
+  820A32A0  91632958             stw r11,0x2958(r3)
+  820A32A4  9163295C             stw r11,0x295c(r3)
+  820A32A8  91632960             stw r11,0x2960(r3)
+  820A32AC  E9630010             ld r11,0x10(r3)
+  820A32B0  616B0400             ori r11,r11,0x400
+  820A32B4  F9630010             std r11,0x10(r3)
+  820A32B8  616B0004             ori r11,r11,0x4
+  820A32BC  F9630010             std r11,0x10(r3)
+  820A32C0  616B0002             ori r11,r11,0x2
+  820A32C4  F9630010             std r11,0x10(r3)
+  820A32C8  616B0001             ori r11,r11,0x1
+  820A32CC  F9630010             std r11,0x10(r3)
+  820A32D0  4E800020             blr
+
+; 820A32D8  FUN_820a32d8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:623)
+  820A32D8  81632F78             lwz r11,0x2f78(r3)
+  820A32DC  55635F7E             rlwinm r3,r11,0xb,0x1d,0x1f
+  820A32E0  4E800020             blr
+
+; 820A32E8  FUN_820a32e8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:632)
+  820A32E8  81432F78             lwz r10,0x2f78(r3)
+  820A32EC  81632F7C             lwz r11,0x2f7c(r3)
+  820A32F0  508A82DE             rlwimi r10,r4,0x10,0xb,0xf
+  820A32F4  55690001             rlwinm. r9,r11,0x0,0x0,0x0
+  820A32F8  91432F78             stw r10,0x2f78(r3)
+  820A32FC  4D820020             beqlr
+  820A3300  556B0043             rlwinm. r11,r11,0x0,0x1,0x1
+  820A3304  4D820020             beqlr
+  820A3308  554B003E             rlwinm r11,r10,0x0,0x0,0x1f
+  820A330C  91632938             stw r11,0x2938(r3)
+  820A3310  91632958             stw r11,0x2958(r3)
+  820A3314  9163295C             stw r11,0x295c(r3)
+  820A3318  91632960             stw r11,0x2960(r3)
+  820A331C  E9630010             ld r11,0x10(r3)
+  820A3320  616B0400             ori r11,r11,0x400
+  820A3324  F9630010             std r11,0x10(r3)
+  820A3328  616B0004             ori r11,r11,0x4
+  820A332C  F9630010             std r11,0x10(r3)
+  820A3330  616B0002             ori r11,r11,0x2
+  820A3334  F9630010             std r11,0x10(r3)
+  820A3338  616B0001             ori r11,r11,0x1
+  820A333C  F9630010             std r11,0x10(r3)
+  820A3340  4E800020             blr
+
+; 820A3348  FUN_820a3348  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:647)
+  820A3348  A1632F78             lhz r11,0x2f78(r3)
+  820A334C  556306FE             rlwinm r3,r11,0x0,0x1b,0x1f
+  820A3350  4E800020             blr
+
+; 820A3358  FUN_820a3358  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:656)
+  820A3358  81432F78             lwz r10,0x2f78(r3)
+  820A335C  81632F7C             lwz r11,0x2f7c(r3)
+  820A3360  508AC0CE             rlwimi r10,r4,0x18,0x3,0x7
+  820A3364  55690001             rlwinm. r9,r11,0x0,0x0,0x0
+  820A3368  91432F78             stw r10,0x2f78(r3)
+  820A336C  4D820020             beqlr
+  820A3370  556B0043             rlwinm. r11,r11,0x0,0x1,0x1
+  820A3374  4D820020             beqlr
+  820A3378  554B003E             rlwinm r11,r10,0x0,0x0,0x1f
+  820A337C  91632938             stw r11,0x2938(r3)
+  820A3380  91632958             stw r11,0x2958(r3)
+  820A3384  9163295C             stw r11,0x295c(r3)
+  820A3388  91632960             stw r11,0x2960(r3)
+  820A338C  E9630010             ld r11,0x10(r3)
+  820A3390  616B0400             ori r11,r11,0x400
+  820A3394  F9630010             std r11,0x10(r3)
+  820A3398  616B0004             ori r11,r11,0x4
+  820A339C  F9630010             std r11,0x10(r3)
+  820A33A0  616B0002             ori r11,r11,0x2
+  820A33A4  F9630010             std r11,0x10(r3)
+  820A33A8  616B0001             ori r11,r11,0x1
+  820A33AC  F9630010             std r11,0x10(r3)
+  820A33B0  4E800020             blr
+
+; 820A33B8  FUN_820a33b8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:671)
+  820A33B8  89632F78             lbz r11,0x2f78(r3)
+  820A33BC  556306FE             rlwinm r3,r11,0x0,0x1b,0x1f
+  820A33C0  4E800020             blr
 
 ; 820A33C8  FUN_820a33c8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:680)
   820A33C8  81632F7C             lwz r11,0x2f7c(r3)
@@ -602,6 +829,11 @@ LAB_820a3414:
   820A3444  F9630010             std r11,0x10(r3)
   820A3448  4E800020             blr
 
+; 820A3450  FUN_820a3450  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:692)
+  820A3450  81632F7C             lwz r11,0x2f7c(r3)
+  820A3454  556317FE             rlwinm r3,r11,0x2,0x1f,0x1f
+  820A3458  4E800020             blr
+
 ; 820A3460  FUN_820a3460  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:701)
   820A3460  788B0020             rldicl r11,r4,0x0,0x20
   820A3464  F961FFF0             std r11,-0x10(r1)
@@ -618,6 +850,18 @@ LAB_820a3414:
   820A3490  F9630010             std r11,0x10(r3)
   820A3494  4E800020             blr
 
+; 820A3498  FUN_820a3498  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:712)
+  820A3498  3D608208             lis r11,-0x7df8
+  820A349C  C1832904             lfs f12,0x2904(r3)
+  820A34A0  396B9280             subi r11,r11,0x6d80
+  820A34A4  C00B0180             lfs f0,0x180(r11)
+  820A34A8  C1AB002C             lfs f13,0x2c(r11)
+  820A34AC  EC0C683A             fmadds f0,f12,f0,f13
+  820A34B0  FC00065E             fctidz f0,f0
+  820A34B4  D801FFF0             stfd f0,-0x10(r1)
+  820A34B8  8061FFF4             lwz r3,-0xc(r1)
+  820A34BC  4E800020             blr
+
 ; 820A34C0  FUN_820a34c0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:721)
   820A34C0  8163293C             lwz r11,0x293c(r3)
   820A34C4  51640038             rlwimi r4,r11,0x0,0x0,0x1c
@@ -626,6 +870,146 @@ LAB_820a3414:
   820A34D0  616B0200             ori r11,r11,0x200
   820A34D4  F9630010             std r11,0x10(r3)
   820A34D8  4E800020             blr
+
+; 820A34E0  FUN_820a34e0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:732)
+  820A34E0  8163293C             lwz r11,0x293c(r3)
+  820A34E4  5563077E             rlwinm r3,r11,0x0,0x1d,0x1f
+  820A34E8  4E800020             blr
+
+; 820A34F0  FUN_820a34f0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:741)
+  820A34F0  548B463E             rlwinm r11,r4,0x8,0x18,0x1f
+  820A34F4  5489C63E             rlwinm r9,r4,0x18,0x18,0x1f
+  820A34F8  F961FFF0             std r11,-0x10(r1)
+  820A34FC  C9A1FFF0             lfd f13,-0x10(r1)
+  820A3500  F921FFF0             std r9,-0x10(r1)
+  820A3504  C801FFF0             lfd f0,-0x10(r1)
+  820A3508  548A863E             rlwinm r10,r4,0x10,0x18,0x1f
+  820A350C  548B063E             rlwinm r11,r4,0x0,0x18,0x1f
+  820A3510  F941FFF8             std r10,-0x8(r1)
+  820A3514  C981FFF8             lfd f12,-0x8(r1)
+  820A3518  F961FFF8             std r11,-0x8(r1)
+  820A351C  C961FFF8             lfd f11,-0x8(r1)
+  820A3520  FD605E9C             fcfid f11,f11
+  820A3524  3D408208             lis r10,-0x7df8
+  820A3528  FD40069C             fcfid f10,f0
+  820A352C  396A9280             subi r11,r10,0x6d80
+  820A3530  FD80669C             fcfid f12,f12
+  820A3534  3980000F             li r12,0xf
+  820A3538  FDA06E9C             fcfid f13,f13
+  820A353C  FD605818             frsp f11,f11
+  820A3540  798C0F86             rldicr r12,r12,0x21,0x1e
+  820A3544  C00B003C             lfs f0,0x3c(r11)
+  820A3548  FD405018             frsp f10,f10
+  820A354C  FD806018             frsp f12,f12
+  820A3550  FDA06818             frsp f13,f13
+  820A3554  ED6B0032             fmuls f11,f11,f0
+  820A3558  D16328E8             stfs f11,0x28e8(r3)
+  820A355C  ED6A0032             fmuls f11,f10,f0
+  820A3560  D16328E4             stfs f11,0x28e4(r3)
+  820A3564  ED8C0032             fmuls f12,f12,f0
+  820A3568  D18328E0             stfs f12,0x28e0(r3)
+  820A356C  EC0D0032             fmuls f0,f13,f0
+  820A3570  D00328EC             stfs f0,0x28ec(r3)
+  820A3574  E9630010             ld r11,0x10(r3)
+  820A3578  7D6B6378             or r11,r11,r12
+  820A357C  F9630010             std r11,0x10(r3)
+  820A3580  4E800020             blr
+
+; 820A3588  FUN_820a3588  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:755)
+  820A3588  3D608208             lis r11,-0x7df8
+  820A358C  C18328E4             lfs f12,0x28e4(r3)
+  820A3590  C16328E8             lfs f11,0x28e8(r3)
+  820A3594  396B9280             subi r11,r11,0x6d80
+  820A3598  C14328E0             lfs f10,0x28e0(r3)
+  820A359C  C12328EC             lfs f9,0x28ec(r3)
+  820A35A0  C1AB002C             lfs f13,0x2c(r11)
+  820A35A4  C00B0180             lfs f0,0x180(r11)
+  820A35A8  ED8C683A             fmadds f12,f12,f0,f13
+  820A35AC  ED6B683A             fmadds f11,f11,f0,f13
+  820A35B0  ED4A683A             fmadds f10,f10,f0,f13
+  820A35B4  EC09683A             fmadds f0,f9,f0,f13
+  820A35B8  FDA0665E             fctidz f13,f12
+  820A35BC  D9A1FFF0             stfd f13,-0x10(r1)
+  820A35C0  8161FFF4             lwz r11,-0xc(r1)
+  820A35C4  FDA05E5E             fctidz f13,f11
+  820A35C8  D9A1FFF0             stfd f13,-0x10(r1)
+  820A35CC  8061FFF4             lwz r3,-0xc(r1)
+  820A35D0  FDA0565E             fctidz f13,f10
+  820A35D4  D9A1FFF0             stfd f13,-0x10(r1)
+  820A35D8  FC00065E             fctidz f0,f0
+  820A35DC  D801FFF8             stfd f0,-0x8(r1)
+  820A35E0  8141FFF4             lwz r10,-0xc(r1)
+  820A35E4  8121FFFC             lwz r9,-0x4(r1)
+  820A35E8  512A402E             rlwimi r10,r9,0x8,0x0,0x17
+  820A35EC  514B402E             rlwimi r11,r10,0x8,0x0,0x17
+  820A35F0  5163402E             rlwimi r3,r11,0x8,0x0,0x17
+  820A35F4  4E800020             blr
+
+; 820A35F8  FUN_820a35f8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:769)
+  820A35F8  816329B8             lwz r11,0x29b8(r3)
+  820A35FC  39800001             li r12,0x1
+  820A3600  508B556A             rlwimi r11,r4,0xa,0x15,0x15
+  820A3604  798C2FE6             rldicr r12,r12,0x25,0x3f
+  820A3608  916329B8             stw r11,0x29b8(r3)
+  820A360C  E9630020             ld r11,0x20(r3)
+  820A3610  7D6B6378             or r11,r11,r12
+  820A3614  F9630020             std r11,0x20(r3)
+  820A3618  4E800020             blr
+
+; 820A3620  FUN_820a3620  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:781)
+  820A3620  816329B8             lwz r11,0x29b8(r3)
+  820A3624  5563B7FE             rlwinm r3,r11,0x16,0x1f,0x1f
+  820A3628  4E800020             blr
+
+; 820A3630  FUN_820a3630  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:790)
+  820A3630  3D608208             lis r11,-0x7df8
+  820A3634  9081001C             stw r4,0x1c(r1)
+  820A3638  C1A1001C             lfs f13,0x1c(r1)
+  820A363C  39800001             li r12,0x1
+  820A3640  396B9280             subi r11,r11,0x6d80
+  820A3644  798CA7E6             rldicr r12,r12,0x34,0x3f
+  820A3648  C00B0034             lfs f0,0x34(r11)
+  820A364C  EC0D0032             fmuls f0,f13,f0
+  820A3650  FC00065E             fctidz f0,f0
+  820A3654  D801FFF0             stfd f0,-0x10(r1)
+  820A3658  8161FFF4             lwz r11,-0xc(r1)
+  820A365C  B163296E             sth r11,0x296e(r3)
+  820A3660  E9630018             ld r11,0x18(r3)
+  820A3664  7D6B6378             or r11,r11,r12
+  820A3668  F9630018             std r11,0x18(r3)
+  820A366C  4E800020             blr
+
+; 820A3670  FUN_820a3670  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:804)
+  820A3670  A163296E             lhz r11,0x296e(r3)
+  820A3674  3D408208             lis r10,-0x7df8
+  820A3678  7D6B07B4             extsw r11,r11
+  820A367C  394A9280             subi r10,r10,0x6d80
+  820A3680  F961FFF0             std r11,-0x10(r1)
+  820A3684  C801FFF0             lfd f0,-0x10(r1)
+  820A3688  FC00069C             fcfid f0,f0
+  820A368C  FDA00018             frsp f13,f0
+  820A3690  C00A0174             lfs f0,0x174(r10)
+  820A3694  EC0D0032             fmuls f0,f13,f0
+  820A3698  D001FFF0             stfs f0,-0x10(r1)
+  820A369C  8061FFF0             lwz r3,-0x10(r1)
+  820A36A0  4E800020             blr
+
+; 820A36A8  FUN_820a36a8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:815)
+  820A36A8  81635EC8             lwz r11,0x5ec8(r3)
+  820A36AC  2B040000             cmplwi cr6,r4,0x0
+  820A36B0  419A000C             beq cr6,0x820a36bc
+  820A36B4  616B0001             ori r11,r11,0x1
+  820A36B8  48000008             b 0x820a36c0
+LAB_820a36bc:
+  820A36BC  556B003C             rlwinm r11,r11,0x0,0x0,0x1e
+LAB_820a36c0:
+  820A36C0  91635EC8             stw r11,0x5ec8(r3)
+  820A36C4  4E800020             blr
+
+; 820A36C8  FUN_820a36c8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:828)
+  820A36C8  81635EC8             lwz r11,0x5ec8(r3)
+  820A36CC  556307FE             rlwinm r3,r11,0x0,0x1f,0x1f
+  820A36D0  4E800020             blr
 
 ; 820A36D8  FUN_820a36d8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:839)
   820A36D8  816331A0             lwz r11,0x31a0(r3)
@@ -643,6 +1027,10 @@ LAB_820a3414:
   820A3708  F9630010             std r11,0x10(r3)
   820A370C  4E800020             blr
 
+; 820A3710  FUN_820a3710  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:859)
+  820A3710  80632F94             lwz r3,0x2f94(r3)
+  820A3714  4E800020             blr
+
 ; 820A3718  FUN_820a3718  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:868)
   820A3718  81632934             lwz r11,0x2934(r3)
   820A371C  508B177A             rlwimi r11,r4,0x2,0x1d,0x1d
@@ -651,6 +1039,11 @@ LAB_820a3414:
   820A3728  616B0800             ori r11,r11,0x800
   820A372C  F9630010             std r11,0x10(r3)
   820A3730  4E800020             blr
+
+; 820A3738  FUN_820a3738  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:879)
+  820A3738  81632934             lwz r11,0x2934(r3)
+  820A373C  5563F7FE             rlwinm r3,r11,0x1e,0x1f,0x1f
+  820A3740  4E800020             blr
 
 ; 820A3748  FUN_820a3748  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:888)
   820A3748  81632934             lwz r11,0x2934(r3)
@@ -662,6 +1055,11 @@ LAB_820a3414:
   820A3760  656B0002             oris r11,r11,0x2
   820A3764  F9630010             std r11,0x10(r3)
   820A3768  4E800020             blr
+
+; 820A3770  FUN_820a3770  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:900)
+  820A3770  81632934             lwz r11,0x2934(r3)
+  820A3774  5563E77E             rlwinm r3,r11,0x1c,0x1d,0x1f
+  820A3778  4E800020             blr
 
 ; 820A3780  FUN_820a3780  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:909)
   820A3780  816331A0             lwz r11,0x31a0(r3)
@@ -679,6 +1077,10 @@ LAB_820a3414:
   820A37B0  F9630010             std r11,0x10(r3)
   820A37B4  4E800020             blr
 
+; 820A37B8  FUN_820a37b8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:928)
+  820A37B8  80632F98             lwz r3,0x2f98(r3)
+  820A37BC  4E800020             blr
+
 ; 820A37C0  FUN_820a37c0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:937)
   820A37C0  81632934             lwz r11,0x2934(r3)
   820A37C4  508B3E30             rlwimi r11,r4,0x7,0x18,0x18
@@ -690,6 +1092,11 @@ LAB_820a3414:
   820A37DC  F9630010             std r11,0x10(r3)
   820A37E0  4E800020             blr
 
+; 820A37E8  FUN_820a37e8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:949)
+  820A37E8  81632934             lwz r11,0x2934(r3)
+  820A37EC  5563CFFE             rlwinm r3,r11,0x19,0x1f,0x1f
+  820A37F0  4E800020             blr
+
 ; 820A37F8  FUN_820a37f8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:958)
   820A37F8  81632934             lwz r11,0x2934(r3)
   820A37FC  508B456E             rlwimi r11,r4,0x8,0x15,0x17
@@ -698,6 +1105,11 @@ LAB_820a3414:
   820A3808  616B0800             ori r11,r11,0x800
   820A380C  F9630010             std r11,0x10(r3)
   820A3810  4E800020             blr
+
+; 820A3818  FUN_820a3818  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:969)
+  820A3818  81632934             lwz r11,0x2934(r3)
+  820A381C  5563C77E             rlwinm r3,r11,0x18,0x1d,0x1f
+  820A3820  4E800020             blr
 
 ; 820A3828  FUN_820a3828  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:978)
   820A3828  81632934             lwz r11,0x2934(r3)
@@ -710,6 +1122,11 @@ LAB_820a3414:
   820A3844  F9630010             std r11,0x10(r3)
   820A3848  4E800020             blr
 
+; 820A3850  FUN_820a3850  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:990)
+  820A3850  81632934             lwz r11,0x2934(r3)
+  820A3854  5563AF7E             rlwinm r3,r11,0x15,0x1d,0x1f
+  820A3858  4E800020             blr
+
 ; 820A3860  FUN_820a3860  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:999)
   820A3860  81632934             lwz r11,0x2934(r3)
   820A3864  508B8B1C             rlwimi r11,r4,0x11,0xc,0xe
@@ -721,6 +1138,11 @@ LAB_820a3414:
   820A387C  F9630010             std r11,0x10(r3)
   820A3880  4E800020             blr
 
+; 820A3888  FUN_820a3888  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1011)
+  820A3888  81632934             lwz r11,0x2934(r3)
+  820A388C  55637F7E             rlwinm r3,r11,0xf,0x1d,0x1f
+  820A3890  4E800020             blr
+
 ; 820A3898  FUN_820a3898  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1020)
   820A3898  81632934             lwz r11,0x2934(r3)
   820A389C  508B73E2             rlwimi r11,r4,0xe,0xf,0x11
@@ -730,6 +1152,11 @@ LAB_820a3414:
   820A38AC  F9630010             std r11,0x10(r3)
   820A38B0  4E800020             blr
 
+; 820A38B8  FUN_820a38b8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1031)
+  820A38B8  81632934             lwz r11,0x2934(r3)
+  820A38BC  5563977E             rlwinm r3,r11,0x12,0x1d,0x1f
+  820A38C0  4E800020             blr
+
 ; 820A38C8  FUN_820a38c8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1040)
   820A38C8  81632934             lwz r11,0x2934(r3)
   820A38CC  508BA256             rlwimi r11,r4,0x14,0x9,0xb
@@ -738,6 +1165,11 @@ LAB_820a3414:
   820A38D8  616B0800             ori r11,r11,0x800
   820A38DC  F9630010             std r11,0x10(r3)
   820A38E0  4E800020             blr
+
+; 820A38E8  FUN_820a38e8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1051)
+  820A38E8  81632934             lwz r11,0x2934(r3)
+  820A38EC  5563677E             rlwinm r3,r11,0xc,0x1d,0x1f
+  820A38F0  4E800020             blr
 
 ; 820A38F8  FUN_820a38f8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1060)
   820A38F8  81632934             lwz r11,0x2934(r3)
@@ -750,6 +1182,11 @@ LAB_820a3414:
   820A3914  F9630010             std r11,0x10(r3)
   820A3918  4E800020             blr
 
+; 820A3920  FUN_820a3920  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1072)
+  820A3920  81632934             lwz r11,0x2934(r3)
+  820A3924  55634F7E             rlwinm r3,r11,0x9,0x1d,0x1f
+  820A3928  4E800020             blr
+
 ; 820A3930  FUN_820a3930  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1081)
   820A3930  81632934             lwz r11,0x2934(r3)
   820A3934  508BE804             rlwimi r11,r4,0x1d,0x0,0x2
@@ -761,6 +1198,11 @@ LAB_820a3414:
   820A394C  F9630010             std r11,0x10(r3)
   820A3950  4E800020             blr
 
+; 820A3958  FUN_820a3958  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1093)
+  820A3958  81632934             lwz r11,0x2934(r3)
+  820A395C  55631F7E             rlwinm r3,r11,0x3,0x1d,0x1f
+  820A3960  4E800020             blr
+
 ; 820A3968  FUN_820a3968  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1102)
   820A3968  81632934             lwz r11,0x2934(r3)
   820A396C  508BD0CA             rlwimi r11,r4,0x1a,0x3,0x5
@@ -770,10 +1212,109 @@ LAB_820a3414:
   820A397C  F9630010             std r11,0x10(r3)
   820A3980  4E800020             blr
 
+; 820A3988  FUN_820a3988  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1113)
+  820A3988  81632934             lwz r11,0x2934(r3)
+  820A398C  5563377E             rlwinm r3,r11,0x6,0x1d,0x1f
+  820A3990  4E800020             blr
+
+; 820A3998  FUN_820a3998  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1122)
+  820A3998  98832903             stb r4,0x2903(r3)
+  820A399C  E9630010             ld r11,0x10(r3)
+  820A39A0  656B1000             oris r11,r11,0x1000
+  820A39A4  F9630010             std r11,0x10(r3)
+  820A39A8  4E800020             blr
+
+; 820A39B0  FUN_820a39b0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1133)
+  820A39B0  88632903             lbz r3,0x2903(r3)
+  820A39B4  4E800020             blr
+
+; 820A39B8  FUN_820a39b8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1142)
+  820A39B8  98832902             stb r4,0x2902(r3)
+  820A39BC  E9630010             ld r11,0x10(r3)
+  820A39C0  656B1000             oris r11,r11,0x1000
+  820A39C4  F9630010             std r11,0x10(r3)
+  820A39C8  4E800020             blr
+
+; 820A39D0  FUN_820a39d0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1153)
+  820A39D0  88632902             lbz r3,0x2902(r3)
+  820A39D4  4E800020             blr
+
+; 820A39D8  FUN_820a39d8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1162)
+  820A39D8  98832901             stb r4,0x2901(r3)
+  820A39DC  E9630010             ld r11,0x10(r3)
+  820A39E0  656B1000             oris r11,r11,0x1000
+  820A39E4  F9630010             std r11,0x10(r3)
+  820A39E8  4E800020             blr
+
+; 820A39F0  FUN_820a39f0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1173)
+  820A39F0  88632901             lbz r3,0x2901(r3)
+  820A39F4  4E800020             blr
+
+; 820A39F8  FUN_820a39f8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1182)
+  820A39F8  988328FF             stb r4,0x28ff(r3)
+  820A39FC  E9630010             ld r11,0x10(r3)
+  820A3A00  656B2000             oris r11,r11,0x2000
+  820A3A04  F9630010             std r11,0x10(r3)
+  820A3A08  4E800020             blr
+
+; 820A3A10  FUN_820a3a10  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1193)
+  820A3A10  886328FF             lbz r3,0x28ff(r3)
+  820A3A14  4E800020             blr
+
+; 820A3A18  FUN_820a3a18  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1202)
+  820A3A18  988328FE             stb r4,0x28fe(r3)
+  820A3A1C  E9630010             ld r11,0x10(r3)
+  820A3A20  656B2000             oris r11,r11,0x2000
+  820A3A24  F9630010             std r11,0x10(r3)
+  820A3A28  4E800020             blr
+
+; 820A3A30  FUN_820a3a30  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1213)
+  820A3A30  886328FE             lbz r3,0x28fe(r3)
+  820A3A34  4E800020             blr
+
+; 820A3A38  FUN_820a3a38  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1222)
+  820A3A38  988328FD             stb r4,0x28fd(r3)
+  820A3A3C  E9630010             ld r11,0x10(r3)
+  820A3A40  656B2000             oris r11,r11,0x2000
+  820A3A44  F9630010             std r11,0x10(r3)
+  820A3A48  4E800020             blr
+
+; 820A3A50  FUN_820a3a50  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1233)
+  820A3A50  886328FD             lbz r3,0x28fd(r3)
+  820A3A54  4E800020             blr
+
+; 820A3A58  FUN_820a3a58  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1242)
+  820A3A58  81632944             lwz r11,0x2944(r3)
+  820A3A5C  21440000             subfic r10,r4,0x0
+  820A3A60  39201000             li r9,0x1000
+  820A3A64  7D4A5110             subfe r10,r10,r10
+  820A3A68  556B0032             rlwinm r11,r11,0x0,0x0,0x19
+  820A3A6C  7D4A4838             and r10,r10,r9
+  820A3A70  7D6B2378             or r11,r11,r4
+  820A3A74  39800001             li r12,0x1
+  820A3A78  914328B4             stw r10,0x28b4(r3)
+  820A3A7C  91632944             stw r11,0x2944(r3)
+  820A3A80  E9430010             ld r10,0x10(r3)
+  820A3A84  614A0080             ori r10,r10,0x80
+  820A3A88  798C67E6             rldicr r12,r12,0x2c,0x3f
+  820A3A8C  F9430010             std r10,0x10(r3)
+  820A3A90  7D4B6378             or r11,r10,r12
+  820A3A94  F9630010             std r11,0x10(r3)
+  820A3A98  4E800020             blr
+
+; 820A3AA0  FUN_820a3aa0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1264)
+  820A3AA0  81632944             lwz r11,0x2944(r3)
+  820A3AA4  556306BE             rlwinm r3,r11,0x0,0x1a,0x1f
+  820A3AA8  4E800020             blr
+
 ; 820A3AB0  FUN_820a3ab0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1273)
   820A3AB0  90832F80             stw r4,0x2f80(r3)
   820A3AB4  3883327C             addi r4,r3,0x327c
   820A3AB8  480017F8             b 0x820a52b0
+
+; 820A3AC0  FUN_820a3ac0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1287)
+  820A3AC0  80632F80             lwz r3,0x2f80(r3)
+  820A3AC4  4E800020             blr
 
 ; 820A3AC8  FUN_820a3ac8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1296)
   820A3AC8  3D608208             lis r11,-0x7df8
@@ -822,6 +1363,16 @@ LAB_820a3b28:
   820A3B64  F9630010             std r11,0x10(r3)
   820A3B68  4E800020             blr
 
+; 820A3B70  FUN_820a3b70  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1325)
+  820A3B70  3D608208             lis r11,-0x7df8
+  820A3B74  C1A32A50             lfs f13,0x2a50(r3)
+  820A3B78  396B9280             subi r11,r11,0x6d80
+  820A3B7C  C00B017C             lfs f0,0x17c(r11)
+  820A3B80  EC0D0032             fmuls f0,f13,f0
+  820A3B84  D001FFF0             stfs f0,-0x10(r1)
+  820A3B88  8061FFF0             lwz r3,-0x10(r1)
+  820A3B8C  4E800020             blr
+
 ; 820A3B90  FUN_820a3b90  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1338)
   820A3B90  3D608208             lis r11,-0x7df8
   820A3B94  C1832A50             lfs f12,0x2a50(r3)
@@ -867,6 +1418,38 @@ LAB_820a3be8:
   820A3C24  F9630010             std r11,0x10(r3)
   820A3C28  4E800020             blr
 
+; 820A3C30  FUN_820a3c30  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1363)
+  820A3C30  C0032A54             lfs f0,0x2a54(r3)
+  820A3C34  D001FFF0             stfs f0,-0x10(r1)
+  820A3C38  8061FFF0             lwz r3,-0x10(r1)
+  820A3C3C  4E800020             blr
+
+; 820A3C40  FUN_820a3c40  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1374)
+  820A3C40  81632948             lwz r11,0x2948(r3)
+  820A3C44  508B7C20             rlwimi r11,r4,0xf,0x10,0x10
+  820A3C48  91632948             stw r11,0x2948(r3)
+  820A3C4C  E9630010             ld r11,0x10(r3)
+  820A3C50  616B0040             ori r11,r11,0x40
+  820A3C54  F9630010             std r11,0x10(r3)
+  820A3C58  4E800020             blr
+
+; 820A3C60  FUN_820a3c60  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1385)
+  820A3C60  81632948             lwz r11,0x2948(r3)
+  820A3C64  55638FFE             rlwinm r3,r11,0x11,0x1f,0x1f
+  820A3C68  4E800020             blr
+
+; 820A3C70  FUN_820a3c70  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1394)
+  820A3C70  548B043E             rlwinm r11,r4,0x0,0x10,0x1f
+  820A3C74  91632A00             stw r11,0x2a00(r3)
+  820A3C78  E9630020             ld r11,0x20(r3)
+  820A3C7C  656B0008             oris r11,r11,0x8
+  820A3C80  F9630020             std r11,0x20(r3)
+  820A3C84  4E800020             blr
+
+; 820A3C88  FUN_820a3c88  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1406)
+  820A3C88  80632A00             lwz r3,0x2a00(r3)
+  820A3C8C  4E800020             blr
+
 ; 820A3C90  FUN_820a3c90  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1415)
   820A3C90  81633190             lwz r11,0x3190(r3)
   820A3C94  39800001             li r12,0x1
@@ -883,6 +1466,651 @@ LAB_820a3be8:
   820A3CC0  F9630010             std r11,0x10(r3)
   820A3CC4  4E800020             blr
 
+; 820A3CC8  FUN_820a3cc8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1433)
+  820A3CC8  80632F84             lwz r3,0x2f84(r3)
+  820A3CCC  4E800020             blr
+
+; 820A3CD0  FUN_820a3cd0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1442)
+  820A3CD0  81633194             lwz r11,0x3194(r3)
+  820A3CD4  39800001             li r12,0x1
+  820A3CD8  812328DC             lwz r9,0x28dc(r3)
+  820A3CDC  216B0000             subfic r11,r11,0x0
+  820A3CE0  90832F88             stw r4,0x2f88(r3)
+  820A3CE4  798C2FE6             rldicr r12,r12,0x25,0x3f
+  820A3CE8  7D6B5910             subfe r11,r11,r11
+  820A3CEC  7D6B2038             and r11,r11,r4
+  820A3CF0  51692636             rlwimi r9,r11,0x4,0x18,0x1b
+  820A3CF4  912328DC             stw r9,0x28dc(r3)
+  820A3CF8  E9630010             ld r11,0x10(r3)
+  820A3CFC  7D6B6378             or r11,r11,r12
+  820A3D00  F9630010             std r11,0x10(r3)
+  820A3D04  4E800020             blr
+
+; 820A3D08  FUN_820a3d08  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1460)
+  820A3D08  80632F88             lwz r3,0x2f88(r3)
+  820A3D0C  4E800020             blr
+
+; 820A3D10  FUN_820a3d10  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1469)
+  820A3D10  81633198             lwz r11,0x3198(r3)
+  820A3D14  39800001             li r12,0x1
+  820A3D18  812328DC             lwz r9,0x28dc(r3)
+  820A3D1C  216B0000             subfic r11,r11,0x0
+  820A3D20  90832F8C             stw r4,0x2f8c(r3)
+  820A3D24  798C2FE6             rldicr r12,r12,0x25,0x3f
+  820A3D28  7D6B5910             subfe r11,r11,r11
+  820A3D2C  7D6B2038             and r11,r11,r4
+  820A3D30  5169452E             rlwimi r9,r11,0x8,0x14,0x17
+  820A3D34  912328DC             stw r9,0x28dc(r3)
+  820A3D38  E9630010             ld r11,0x10(r3)
+  820A3D3C  7D6B6378             or r11,r11,r12
+  820A3D40  F9630010             std r11,0x10(r3)
+  820A3D44  4E800020             blr
+
+; 820A3D48  FUN_820a3d48  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1487)
+  820A3D48  80632F8C             lwz r3,0x2f8c(r3)
+  820A3D4C  4E800020             blr
+
+; 820A3D50  FUN_820a3d50  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1496)
+  820A3D50  8163319C             lwz r11,0x319c(r3)
+  820A3D54  39800001             li r12,0x1
+  820A3D58  812328DC             lwz r9,0x28dc(r3)
+  820A3D5C  216B0000             subfic r11,r11,0x0
+  820A3D60  90832F90             stw r4,0x2f90(r3)
+  820A3D64  798C2FE6             rldicr r12,r12,0x25,0x3f
+  820A3D68  7D6B5910             subfe r11,r11,r11
+  820A3D6C  7D6B2038             and r11,r11,r4
+  820A3D70  51696426             rlwimi r9,r11,0xc,0x10,0x13
+  820A3D74  912328DC             stw r9,0x28dc(r3)
+  820A3D78  E9630010             ld r11,0x10(r3)
+  820A3D7C  7D6B6378             or r11,r11,r12
+  820A3D80  F9630010             std r11,0x10(r3)
+  820A3D84  4E800020             blr
+
+; 820A3D88  FUN_820a3d88  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1514)
+  820A3D88  80632F90             lwz r3,0x2f90(r3)
+  820A3D8C  4E800020             blr
+
+; 820A3D90  FUN_820a3d90  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1523)
+  820A3D90  90832F9C             stw r4,0x2f9c(r3)
+  820A3D94  4E800020             blr
+
+; 820A3D98  FUN_820a3d98  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1533)
+  820A3D98  80632F9C             lwz r3,0x2f9c(r3)
+  820A3D9C  4E800020             blr
+
+; 820A3DA0  FUN_820a3da0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1542)
+  820A3DA0  3D608208             lis r11,-0x7df8
+  820A3DA4  9081001C             stw r4,0x1c(r1)
+  820A3DA8  C001001C             lfs f0,0x1c(r1)
+  820A3DAC  39800001             li r12,0x1
+  820A3DB0  396B9280             subi r11,r11,0x6d80
+  820A3DB4  D0032FA4             stfs f0,0x2fa4(r3)
+  820A3DB8  C1AB0034             lfs f13,0x34(r11)
+  820A3DBC  798CB7E6             rldicr r12,r12,0x36,0x3f
+  820A3DC0  EC000372             fmuls f0,f0,f13
+  820A3DC4  FC00001E             fctiwz f0,f0
+  820A3DC8  D801FFF0             stfd f0,-0x10(r1)
+  820A3DCC  8161FFF4             lwz r11,-0xc(r1)
+  820A3DD0  556B043E             rlwinm r11,r11,0x0,0x10,0x1f
+  820A3DD4  B1632966             sth r11,0x2966(r3)
+  820A3DD8  B1632964             sth r11,0x2964(r3)
+  820A3DDC  E9630018             ld r11,0x18(r3)
+  820A3DE0  7D6B6378             or r11,r11,r12
+  820A3DE4  F9630018             std r11,0x18(r3)
+  820A3DE8  4E800020             blr
+
+; 820A3DF0  FUN_820a3df0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1562)
+  820A3DF0  C0032FA4             lfs f0,0x2fa4(r3)
+  820A3DF4  D001FFF0             stfs f0,-0x10(r1)
+  820A3DF8  8061FFF0             lwz r3,-0x10(r1)
+  820A3DFC  4E800020             blr
+
+; 820A3E00  FUN_820a3e00  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1573)
+  820A3E00  3D608208             lis r11,-0x7df8
+  820A3E04  9081001C             stw r4,0x1c(r1)
+  820A3E08  C001001C             lfs f0,0x1c(r1)
+  820A3E0C  39800001             li r12,0x1
+  820A3E10  396B9280             subi r11,r11,0x6d80
+  820A3E14  D0032FA8             stfs f0,0x2fa8(r3)
+  820A3E18  C1AB0198             lfs f13,0x198(r11)
+  820A3E1C  798CAFE6             rldicr r12,r12,0x35,0x3f
+  820A3E20  EC000372             fmuls f0,f0,f13
+  820A3E24  FC00001E             fctiwz f0,f0
+  820A3E28  D801FFF0             stfd f0,-0x10(r1)
+  820A3E2C  8161FFF4             lwz r11,-0xc(r1)
+  820A3E30  B163296A             sth r11,0x296a(r3)
+  820A3E34  E9630018             ld r11,0x18(r3)
+  820A3E38  7D6B6378             or r11,r11,r12
+  820A3E3C  F9630018             std r11,0x18(r3)
+  820A3E40  4E800020             blr
+
+; 820A3E48  FUN_820a3e48  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1592)
+  820A3E48  C0032FA8             lfs f0,0x2fa8(r3)
+  820A3E4C  D001FFF0             stfs f0,-0x10(r1)
+  820A3E50  8061FFF0             lwz r3,-0x10(r1)
+  820A3E54  4E800020             blr
+
+; 820A3E58  FUN_820a3e58  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1603)
+  820A3E58  3D608208             lis r11,-0x7df8
+  820A3E5C  9081001C             stw r4,0x1c(r1)
+  820A3E60  C001001C             lfs f0,0x1c(r1)
+  820A3E64  39800001             li r12,0x1
+  820A3E68  396B9280             subi r11,r11,0x6d80
+  820A3E6C  D0032FAC             stfs f0,0x2fac(r3)
+  820A3E70  C1AB0198             lfs f13,0x198(r11)
+  820A3E74  798CAFE6             rldicr r12,r12,0x35,0x3f
+  820A3E78  EC000372             fmuls f0,f0,f13
+  820A3E7C  FC00001E             fctiwz f0,f0
+  820A3E80  D801FFF0             stfd f0,-0x10(r1)
+  820A3E84  8161FFF4             lwz r11,-0xc(r1)
+  820A3E88  B1632968             sth r11,0x2968(r3)
+  820A3E8C  E9630018             ld r11,0x18(r3)
+  820A3E90  7D6B6378             or r11,r11,r12
+  820A3E94  F9630018             std r11,0x18(r3)
+  820A3E98  4E800020             blr
+
+; 820A3EA0  FUN_820a3ea0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1622)
+  820A3EA0  C0032FAC             lfs f0,0x2fac(r3)
+  820A3EA4  D001FFF0             stfs f0,-0x10(r1)
+  820A3EA8  8061FFF0             lwz r3,-0x10(r1)
+  820A3EAC  4E800020             blr
+
+; 820A3EB0  FUN_820a3eb0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1678)
+  820A3EB0  8163292C             lwz r11,0x292c(r3)
+  820A3EB4  556B0036             rlwinm r11,r11,0x0,0x0,0x1b
+  820A3EB8  7D6B2378             or r11,r11,r4
+  820A3EBC  9163292C             stw r11,0x292c(r3)
+  820A3EC0  E9630010             ld r11,0x10(r3)
+  820A3EC4  616B2000             ori r11,r11,0x2000
+  820A3EC8  F9630010             std r11,0x10(r3)
+  820A3ECC  4E800020             blr
+
+; 820A3ED0  FUN_820a3ed0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1679)
+  820A3ED0  8163292C             lwz r11,0x292c(r3)
+  820A3ED4  548A2036             rlwinm r10,r4,0x4,0x0,0x1b
+  820A3ED8  556B072E             rlwinm r11,r11,0x0,0x1c,0x17
+  820A3EDC  7D6B5378             or r11,r11,r10
+  820A3EE0  9163292C             stw r11,0x292c(r3)
+  820A3EE4  E9630010             ld r11,0x10(r3)
+  820A3EE8  616B2000             ori r11,r11,0x2000
+  820A3EEC  F9630010             std r11,0x10(r3)
+  820A3EF0  4E800020             blr
+
+; 820A3EF8  FUN_820a3ef8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1680)
+  820A3EF8  8163292C             lwz r11,0x292c(r3)
+  820A3EFC  548A402E             rlwinm r10,r4,0x8,0x0,0x17
+  820A3F00  556B0626             rlwinm r11,r11,0x0,0x18,0x13
+  820A3F04  7D6B5378             or r11,r11,r10
+  820A3F08  9163292C             stw r11,0x292c(r3)
+  820A3F0C  E9630010             ld r11,0x10(r3)
+  820A3F10  616B2000             ori r11,r11,0x2000
+  820A3F14  F9630010             std r11,0x10(r3)
+  820A3F18  4E800020             blr
+
+; 820A3F20  FUN_820a3f20  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1681)
+  820A3F20  8163292C             lwz r11,0x292c(r3)
+  820A3F24  548A6026             rlwinm r10,r4,0xc,0x0,0x13
+  820A3F28  556B051E             rlwinm r11,r11,0x0,0x14,0xf
+  820A3F2C  7D6B5378             or r11,r11,r10
+  820A3F30  9163292C             stw r11,0x292c(r3)
+  820A3F34  E9630010             ld r11,0x10(r3)
+  820A3F38  616B2000             ori r11,r11,0x2000
+  820A3F3C  F9630010             std r11,0x10(r3)
+  820A3F40  4E800020             blr
+
+; 820A3F48  FUN_820a3f48  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1682)
+  820A3F48  8163292C             lwz r11,0x292c(r3)
+  820A3F4C  548A801E             rlwinm r10,r4,0x10,0x0,0xf
+  820A3F50  556B0416             rlwinm r11,r11,0x0,0x10,0xb
+  820A3F54  7D6B5378             or r11,r11,r10
+  820A3F58  9163292C             stw r11,0x292c(r3)
+  820A3F5C  E9630010             ld r11,0x10(r3)
+  820A3F60  616B2000             ori r11,r11,0x2000
+  820A3F64  F9630010             std r11,0x10(r3)
+  820A3F68  4E800020             blr
+
+; 820A3F70  FUN_820a3f70  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1683)
+  820A3F70  8163292C             lwz r11,0x292c(r3)
+  820A3F74  548AA016             rlwinm r10,r4,0x14,0x0,0xb
+  820A3F78  556B030E             rlwinm r11,r11,0x0,0xc,0x7
+  820A3F7C  7D6B5378             or r11,r11,r10
+  820A3F80  9163292C             stw r11,0x292c(r3)
+  820A3F84  E9630010             ld r11,0x10(r3)
+  820A3F88  616B2000             ori r11,r11,0x2000
+  820A3F8C  F9630010             std r11,0x10(r3)
+  820A3F90  4E800020             blr
+
+; 820A3F98  FUN_820a3f98  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1684)
+  820A3F98  8163292C             lwz r11,0x292c(r3)
+  820A3F9C  548AC00E             rlwinm r10,r4,0x18,0x0,0x7
+  820A3FA0  556B0206             rlwinm r11,r11,0x0,0x8,0x3
+  820A3FA4  7D6B5378             or r11,r11,r10
+  820A3FA8  9163292C             stw r11,0x292c(r3)
+  820A3FAC  E9630010             ld r11,0x10(r3)
+  820A3FB0  616B2000             ori r11,r11,0x2000
+  820A3FB4  F9630010             std r11,0x10(r3)
+  820A3FB8  4E800020             blr
+
+; 820A3FC0  FUN_820a3fc0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1685)
+  820A3FC0  8163292C             lwz r11,0x292c(r3)
+  820A3FC4  508BE006             rlwimi r11,r4,0x1c,0x0,0x3
+  820A3FC8  9163292C             stw r11,0x292c(r3)
+  820A3FCC  E9630010             ld r11,0x10(r3)
+  820A3FD0  616B2000             ori r11,r11,0x2000
+  820A3FD4  F9630010             std r11,0x10(r3)
+  820A3FD8  4E800020             blr
+
+; 820A3FE0  FUN_820a3fe0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1687)
+  820A3FE0  81632930             lwz r11,0x2930(r3)
+  820A3FE4  556B0036             rlwinm r11,r11,0x0,0x0,0x1b
+  820A3FE8  7D6B2378             or r11,r11,r4
+  820A3FEC  91632930             stw r11,0x2930(r3)
+  820A3FF0  E9630010             ld r11,0x10(r3)
+  820A3FF4  616B1000             ori r11,r11,0x1000
+  820A3FF8  F9630010             std r11,0x10(r3)
+  820A3FFC  4E800020             blr
+
+; 820A4000  FUN_820a4000  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1688)
+  820A4000  81632930             lwz r11,0x2930(r3)
+  820A4004  548A2036             rlwinm r10,r4,0x4,0x0,0x1b
+  820A4008  556B072E             rlwinm r11,r11,0x0,0x1c,0x17
+  820A400C  7D6B5378             or r11,r11,r10
+  820A4010  91632930             stw r11,0x2930(r3)
+  820A4014  E9630010             ld r11,0x10(r3)
+  820A4018  616B1000             ori r11,r11,0x1000
+  820A401C  F9630010             std r11,0x10(r3)
+  820A4020  4E800020             blr
+
+; 820A4028  FUN_820a4028  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1689)
+  820A4028  81632930             lwz r11,0x2930(r3)
+  820A402C  548A402E             rlwinm r10,r4,0x8,0x0,0x17
+  820A4030  556B0626             rlwinm r11,r11,0x0,0x18,0x13
+  820A4034  7D6B5378             or r11,r11,r10
+  820A4038  91632930             stw r11,0x2930(r3)
+  820A403C  E9630010             ld r11,0x10(r3)
+  820A4040  616B1000             ori r11,r11,0x1000
+  820A4044  F9630010             std r11,0x10(r3)
+  820A4048  4E800020             blr
+
+; 820A4050  FUN_820a4050  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1690)
+  820A4050  81632930             lwz r11,0x2930(r3)
+  820A4054  548A6026             rlwinm r10,r4,0xc,0x0,0x13
+  820A4058  556B051E             rlwinm r11,r11,0x0,0x14,0xf
+  820A405C  7D6B5378             or r11,r11,r10
+  820A4060  91632930             stw r11,0x2930(r3)
+  820A4064  E9630010             ld r11,0x10(r3)
+  820A4068  616B1000             ori r11,r11,0x1000
+  820A406C  F9630010             std r11,0x10(r3)
+  820A4070  4E800020             blr
+
+; 820A4078  FUN_820a4078  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1691)
+  820A4078  81632930             lwz r11,0x2930(r3)
+  820A407C  548A801E             rlwinm r10,r4,0x10,0x0,0xf
+  820A4080  556B0416             rlwinm r11,r11,0x0,0x10,0xb
+  820A4084  7D6B5378             or r11,r11,r10
+  820A4088  91632930             stw r11,0x2930(r3)
+  820A408C  E9630010             ld r11,0x10(r3)
+  820A4090  616B1000             ori r11,r11,0x1000
+  820A4094  F9630010             std r11,0x10(r3)
+  820A4098  4E800020             blr
+
+; 820A40A0  FUN_820a40a0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1692)
+  820A40A0  81632930             lwz r11,0x2930(r3)
+  820A40A4  548AA016             rlwinm r10,r4,0x14,0x0,0xb
+  820A40A8  556B030E             rlwinm r11,r11,0x0,0xc,0x7
+  820A40AC  7D6B5378             or r11,r11,r10
+  820A40B0  91632930             stw r11,0x2930(r3)
+  820A40B4  E9630010             ld r11,0x10(r3)
+  820A40B8  616B1000             ori r11,r11,0x1000
+  820A40BC  F9630010             std r11,0x10(r3)
+  820A40C0  4E800020             blr
+
+; 820A40C8  FUN_820a40c8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1693)
+  820A40C8  81632930             lwz r11,0x2930(r3)
+  820A40CC  548AC00E             rlwinm r10,r4,0x18,0x0,0x7
+  820A40D0  556B0206             rlwinm r11,r11,0x0,0x8,0x3
+  820A40D4  7D6B5378             or r11,r11,r10
+  820A40D8  91632930             stw r11,0x2930(r3)
+  820A40DC  E9630010             ld r11,0x10(r3)
+  820A40E0  616B1000             ori r11,r11,0x1000
+  820A40E4  F9630010             std r11,0x10(r3)
+  820A40E8  4E800020             blr
+
+; 820A40F0  FUN_820a40f0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1694)
+  820A40F0  81632930             lwz r11,0x2930(r3)
+  820A40F4  508BE006             rlwimi r11,r4,0x1c,0x0,0x3
+  820A40F8  91632930             stw r11,0x2930(r3)
+  820A40FC  E9630010             ld r11,0x10(r3)
+  820A4100  616B1000             ori r11,r11,0x1000
+  820A4104  F9630010             std r11,0x10(r3)
+  820A4108  4E800020             blr
+
+; 820A4110  FUN_820a4110  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1696)
+  820A4110  8163292C             lwz r11,0x292c(r3)
+  820A4114  5563073E             rlwinm r3,r11,0x0,0x1c,0x1f
+  820A4118  4E800020             blr
+
+; 820A4120  FUN_820a4120  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1697)
+  820A4120  8163292C             lwz r11,0x292c(r3)
+  820A4124  5563E73E             rlwinm r3,r11,0x1c,0x1c,0x1f
+  820A4128  4E800020             blr
+
+; 820A4130  FUN_820a4130  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1698)
+  820A4130  8163292C             lwz r11,0x292c(r3)
+  820A4134  5563C73E             rlwinm r3,r11,0x18,0x1c,0x1f
+  820A4138  4E800020             blr
+
+; 820A4140  FUN_820a4140  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1699)
+  820A4140  8163292C             lwz r11,0x292c(r3)
+  820A4144  5563A73E             rlwinm r3,r11,0x14,0x1c,0x1f
+  820A4148  4E800020             blr
+
+; 820A4150  FUN_820a4150  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1700)
+  820A4150  A163292C             lhz r11,0x292c(r3)
+  820A4154  5563073E             rlwinm r3,r11,0x0,0x1c,0x1f
+  820A4158  4E800020             blr
+
+; 820A4160  FUN_820a4160  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1701)
+  820A4160  8163292C             lwz r11,0x292c(r3)
+  820A4164  5563673E             rlwinm r3,r11,0xc,0x1c,0x1f
+  820A4168  4E800020             blr
+
+; 820A4170  FUN_820a4170  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1702)
+  820A4170  8963292C             lbz r11,0x292c(r3)
+  820A4174  5563073E             rlwinm r3,r11,0x0,0x1c,0x1f
+  820A4178  4E800020             blr
+
+; 820A4180  FUN_820a4180  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1703)
+  820A4180  8163292C             lwz r11,0x292c(r3)
+  820A4184  5563273E             rlwinm r3,r11,0x4,0x1c,0x1f
+  820A4188  4E800020             blr
+
+; 820A4190  FUN_820a4190  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1705)
+  820A4190  81632930             lwz r11,0x2930(r3)
+  820A4194  5563073E             rlwinm r3,r11,0x0,0x1c,0x1f
+  820A4198  4E800020             blr
+
+; 820A41A0  FUN_820a41a0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1706)
+  820A41A0  81632930             lwz r11,0x2930(r3)
+  820A41A4  5563E73E             rlwinm r3,r11,0x1c,0x1c,0x1f
+  820A41A8  4E800020             blr
+
+; 820A41B0  FUN_820a41b0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1707)
+  820A41B0  81632930             lwz r11,0x2930(r3)
+  820A41B4  5563C73E             rlwinm r3,r11,0x18,0x1c,0x1f
+  820A41B8  4E800020             blr
+
+; 820A41C0  FUN_820a41c0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1708)
+  820A41C0  81632930             lwz r11,0x2930(r3)
+  820A41C4  5563A73E             rlwinm r3,r11,0x14,0x1c,0x1f
+  820A41C8  4E800020             blr
+
+; 820A41D0  FUN_820a41d0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1709)
+  820A41D0  A1632930             lhz r11,0x2930(r3)
+  820A41D4  5563073E             rlwinm r3,r11,0x0,0x1c,0x1f
+  820A41D8  4E800020             blr
+
+; 820A41E0  FUN_820a41e0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1710)
+  820A41E0  81632930             lwz r11,0x2930(r3)
+  820A41E4  5563673E             rlwinm r3,r11,0xc,0x1c,0x1f
+  820A41E8  4E800020             blr
+
+; 820A41F0  FUN_820a41f0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1711)
+  820A41F0  89632930             lbz r11,0x2930(r3)
+  820A41F4  5563073E             rlwinm r3,r11,0x0,0x1c,0x1f
+  820A41F8  4E800020             blr
+
+; 820A4200  FUN_820a4200  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1712)
+  820A4200  81632930             lwz r11,0x2930(r3)
+  820A4204  5563273E             rlwinm r3,r11,0x4,0x1c,0x1f
+  820A4208  4E800020             blr
+
+; 820A4210  FUN_820a4210  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1719)
+  820A4210  2B040000             cmplwi cr6,r4,0x0
+  820A4214  3960043F             li r11,0x43f
+  820A4218  409A0008             bne cr6,0x820a4220
+  820A421C  39600400             li r11,0x400
+LAB_820a4220:
+  820A4220  9163294C             stw r11,0x294c(r3)
+  820A4224  7C8B0034             cntlzw r11,r4
+  820A4228  81432944             lwz r10,0x2944(r3)
+  820A422C  556BDFFE             rlwinm r11,r11,0x1b,0x1f,0x1f
+  820A4230  516A83DE             rlwimi r10,r11,0x10,0xf,0xf
+  820A4234  91432944             stw r10,0x2944(r3)
+  820A4238  E9630010             ld r11,0x10(r3)
+  820A423C  616B0020             ori r11,r11,0x20
+  820A4240  F9630010             std r11,0x10(r3)
+  820A4244  616B0080             ori r11,r11,0x80
+  820A4248  F9630010             std r11,0x10(r3)
+  820A424C  4E800020             blr
+
+; 820A4250  FUN_820a4250  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1749)
+  820A4250  8163294C             lwz r11,0x294c(r3)
+  820A4254  556307FE             rlwinm r3,r11,0x0,0x1f,0x1f
+  820A4258  4E800020             blr
+
+; 820A4260  FUN_820a4260  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1819)
+  820A4260  81633190             lwz r11,0x3190(r3)
+  820A4264  90832FF8             stw r4,0x2ff8(r3)
+  820A4268  2B0B0000             cmplwi cr6,r11,0x0
+  820A426C  4D9A0020             beqlr cr6
+  820A4270  81032884             lwz r8,0x2884(r3)
+  820A4274  550B873E             rlwinm r11,r8,0x10,0x1c,0x1f
+  820A4278  2B0B0002             cmplwi cr6,r11,0x2
+  820A427C  419A001C             beq cr6,0x820a4298
+  820A4280  2B0B0003             cmplwi cr6,r11,0x3
+  820A4284  419A0014             beq cr6,0x820a4298
+  820A4288  2B0B000A             cmplwi cr6,r11,0xa
+  820A428C  419A000C             beq cr6,0x820a4298
+  820A4290  2B0B000C             cmplwi cr6,r11,0xc
+  820A4294  4C9A0020             bnelr cr6
+LAB_820a4298:
+  820A4298  550A6FFE             rlwinm r10,r8,0xd,0x1f,0x1f
+  820A429C  7D4A2279             xor. r10,r10,r4
+  820A42A0  4D820020             beqlr
+  820A42A4  5569F87E             rlwinm r9,r11,0x1f,0x1,0x1f
+  820A42A8  3944FFFF             subi r10,r4,0x1
+  820A42AC  396B0003             addi r11,r11,0x3
+  820A42B0  7D4750F8             nor r7,r10,r10
+  820A42B4  3929FFFD             subi r9,r9,0x3
+  820A42B8  556B881C             rlwinm r11,r11,0x11,0x0,0xe
+  820A42BC  54E7801E             rlwinm r7,r7,0x10,0x0,0xf
+  820A42C0  7D2A5038             and r10,r9,r10
+  820A42C4  7CEB5838             and r11,r7,r11
+  820A42C8  554A801E             rlwinm r10,r10,0x10,0x0,0xf
+  820A42CC  39800001             li r12,0x1
+  820A42D0  7D6B5378             or r11,r11,r10
+  820A42D4  798CC7E6             rldicr r12,r12,0x38,0x3f
+  820A42D8  510B0416             rlwimi r11,r8,0x0,0x10,0xb
+  820A42DC  91632884             stw r11,0x2884(r3)
+  820A42E0  E9630010             ld r11,0x10(r3)
+  820A42E4  7D6B6378             or r11,r11,r12
+  820A42E8  F9630010             std r11,0x10(r3)
+  820A42EC  4E800020             blr
+
+; 820A42F0  FUN_820a42f0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1827)
+  820A42F0  80632FF8             lwz r3,0x2ff8(r3)
+  820A42F4  4E800020             blr
+
+; 820A42F8  FUN_820a42f8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1836)
+  820A42F8  81633194             lwz r11,0x3194(r3)
+  820A42FC  90832FFC             stw r4,0x2ffc(r3)
+  820A4300  2B0B0000             cmplwi cr6,r11,0x0
+  820A4304  4D9A0020             beqlr cr6
+  820A4308  8103288C             lwz r8,0x288c(r3)
+  820A430C  550B873E             rlwinm r11,r8,0x10,0x1c,0x1f
+  820A4310  2B0B0002             cmplwi cr6,r11,0x2
+  820A4314  419A001C             beq cr6,0x820a4330
+  820A4318  2B0B0003             cmplwi cr6,r11,0x3
+  820A431C  419A0014             beq cr6,0x820a4330
+  820A4320  2B0B000A             cmplwi cr6,r11,0xa
+  820A4324  419A000C             beq cr6,0x820a4330
+  820A4328  2B0B000C             cmplwi cr6,r11,0xc
+  820A432C  4C9A0020             bnelr cr6
+LAB_820a4330:
+  820A4330  550A6FFE             rlwinm r10,r8,0xd,0x1f,0x1f
+  820A4334  7D4A2279             xor. r10,r10,r4
+  820A4338  4D820020             beqlr
+  820A433C  5569F87E             rlwinm r9,r11,0x1f,0x1,0x1f
+  820A4340  3944FFFF             subi r10,r4,0x1
+  820A4344  396B0003             addi r11,r11,0x3
+  820A4348  7D4750F8             nor r7,r10,r10
+  820A434C  3929FFFD             subi r9,r9,0x3
+  820A4350  556B881C             rlwinm r11,r11,0x11,0x0,0xe
+  820A4354  54E7801E             rlwinm r7,r7,0x10,0x0,0xf
+  820A4358  7D2A5038             and r10,r9,r10
+  820A435C  7CEB5838             and r11,r7,r11
+  820A4360  554A801E             rlwinm r10,r10,0x10,0x0,0xf
+  820A4364  39800001             li r12,0x1
+  820A4368  7D6B5378             or r11,r11,r10
+  820A436C  798CB7E6             rldicr r12,r12,0x36,0x3f
+  820A4370  510B0416             rlwimi r11,r8,0x0,0x10,0xb
+  820A4374  9163288C             stw r11,0x288c(r3)
+  820A4378  E9630010             ld r11,0x10(r3)
+  820A437C  7D6B6378             or r11,r11,r12
+  820A4380  F9630010             std r11,0x10(r3)
+  820A4384  4E800020             blr
+
+; 820A4388  FUN_820a4388  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1844)
+  820A4388  80632FFC             lwz r3,0x2ffc(r3)
+  820A438C  4E800020             blr
+
+; 820A4390  FUN_820a4390  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1853)
+  820A4390  81633198             lwz r11,0x3198(r3)
+  820A4394  90833000             stw r4,0x3000(r3)
+  820A4398  2B0B0000             cmplwi cr6,r11,0x0
+  820A439C  4D9A0020             beqlr cr6
+  820A43A0  81032890             lwz r8,0x2890(r3)
+  820A43A4  550B873E             rlwinm r11,r8,0x10,0x1c,0x1f
+  820A43A8  2B0B0002             cmplwi cr6,r11,0x2
+  820A43AC  419A001C             beq cr6,0x820a43c8
+  820A43B0  2B0B0003             cmplwi cr6,r11,0x3
+  820A43B4  419A0014             beq cr6,0x820a43c8
+  820A43B8  2B0B000A             cmplwi cr6,r11,0xa
+  820A43BC  419A000C             beq cr6,0x820a43c8
+  820A43C0  2B0B000C             cmplwi cr6,r11,0xc
+  820A43C4  4C9A0020             bnelr cr6
+LAB_820a43c8:
+  820A43C8  550A6FFE             rlwinm r10,r8,0xd,0x1f,0x1f
+  820A43CC  7D4A2279             xor. r10,r10,r4
+  820A43D0  4D820020             beqlr
+  820A43D4  5569F87E             rlwinm r9,r11,0x1f,0x1,0x1f
+  820A43D8  3944FFFF             subi r10,r4,0x1
+  820A43DC  396B0003             addi r11,r11,0x3
+  820A43E0  7D4750F8             nor r7,r10,r10
+  820A43E4  3929FFFD             subi r9,r9,0x3
+  820A43E8  556B881C             rlwinm r11,r11,0x11,0x0,0xe
+  820A43EC  54E7801E             rlwinm r7,r7,0x10,0x0,0xf
+  820A43F0  7D2A5038             and r10,r9,r10
+  820A43F4  7CEB5838             and r11,r7,r11
+  820A43F8  554A801E             rlwinm r10,r10,0x10,0x0,0xf
+  820A43FC  39800001             li r12,0x1
+  820A4400  7D6B5378             or r11,r11,r10
+  820A4404  798CAFE6             rldicr r12,r12,0x35,0x3f
+  820A4408  510B0416             rlwimi r11,r8,0x0,0x10,0xb
+  820A440C  91632890             stw r11,0x2890(r3)
+  820A4410  E9630010             ld r11,0x10(r3)
+  820A4414  7D6B6378             or r11,r11,r12
+  820A4418  F9630010             std r11,0x10(r3)
+  820A441C  4E800020             blr
+
+; 820A4420  FUN_820a4420  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1861)
+  820A4420  80633000             lwz r3,0x3000(r3)
+  820A4424  4E800020             blr
+
+; 820A4428  FUN_820a4428  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1870)
+  820A4428  8163319C             lwz r11,0x319c(r3)
+  820A442C  90833004             stw r4,0x3004(r3)
+  820A4430  2B0B0000             cmplwi cr6,r11,0x0
+  820A4434  4D9A0020             beqlr cr6
+  820A4438  81032894             lwz r8,0x2894(r3)
+  820A443C  550B873E             rlwinm r11,r8,0x10,0x1c,0x1f
+  820A4440  2B0B0002             cmplwi cr6,r11,0x2
+  820A4444  419A001C             beq cr6,0x820a4460
+  820A4448  2B0B0003             cmplwi cr6,r11,0x3
+  820A444C  419A0014             beq cr6,0x820a4460
+  820A4450  2B0B000A             cmplwi cr6,r11,0xa
+  820A4454  419A000C             beq cr6,0x820a4460
+  820A4458  2B0B000C             cmplwi cr6,r11,0xc
+  820A445C  4C9A0020             bnelr cr6
+LAB_820a4460:
+  820A4460  550A6FFE             rlwinm r10,r8,0xd,0x1f,0x1f
+  820A4464  7D4A2279             xor. r10,r10,r4
+  820A4468  4D820020             beqlr
+  820A446C  5569F87E             rlwinm r9,r11,0x1f,0x1,0x1f
+  820A4470  3944FFFF             subi r10,r4,0x1
+  820A4474  396B0003             addi r11,r11,0x3
+  820A4478  7D4750F8             nor r7,r10,r10
+  820A447C  3929FFFD             subi r9,r9,0x3
+  820A4480  556B881C             rlwinm r11,r11,0x11,0x0,0xe
+  820A4484  54E7801E             rlwinm r7,r7,0x10,0x0,0xf
+  820A4488  7D2A5038             and r10,r9,r10
+  820A448C  7CEB5838             and r11,r7,r11
+  820A4490  554A801E             rlwinm r10,r10,0x10,0x0,0xf
+  820A4494  39800001             li r12,0x1
+  820A4498  7D6B5378             or r11,r11,r10
+  820A449C  798CA7E6             rldicr r12,r12,0x34,0x3f
+  820A44A0  510B0416             rlwimi r11,r8,0x0,0x10,0xb
+  820A44A4  91632894             stw r11,0x2894(r3)
+  820A44A8  E9630010             ld r11,0x10(r3)
+  820A44AC  7D6B6378             or r11,r11,r12
+  820A44B0  F9630010             std r11,0x10(r3)
+  820A44B4  4E800020             blr
+
+; 820A44B8  FUN_820a44b8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1878)
+  820A44B8  80633004             lwz r3,0x3004(r3)
+  820A44BC  4E800020             blr
+
+; 820A44C0  FUN_820a44c0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1887)
+  820A44C0  9081001C             stw r4,0x1c(r1)
+  820A44C4  C001001C             lfs f0,0x1c(r1)
+  820A44C8  D0032980             stfs f0,0x2980(r3)
+  820A44CC  39800001             li r12,0x1
+  820A44D0  E9430018             ld r10,0x18(r3)
+  820A44D4  798C7FE6             rldicr r12,r12,0x2f,0x3f
+  820A44D8  7D4B6378             or r11,r10,r12
+  820A44DC  F9630018             std r11,0x18(r3)
+  820A44E0  4E800020             blr
+
+; 820A44E8  FUN_820a44e8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1900)
+  820A44E8  C0032980             lfs f0,0x2980(r3)
+  820A44EC  D001FFF0             stfs f0,-0x10(r1)
+  820A44F0  8061FFF0             lwz r3,-0x10(r1)
+  820A44F4  4E800020             blr
+
+; 820A44F8  FUN_820a44f8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1911)
+  820A44F8  9081001C             stw r4,0x1c(r1)
+  820A44FC  C001001C             lfs f0,0x1c(r1)
+  820A4500  D003297C             stfs f0,0x297c(r3)
+  820A4504  39800001             li r12,0x1
+  820A4508  E9430018             ld r10,0x18(r3)
+  820A450C  798C87E6             rldicr r12,r12,0x30,0x3f
+  820A4510  7D4B6378             or r11,r10,r12
+  820A4514  F9630018             std r11,0x18(r3)
+  820A4518  4E800020             blr
+
+; 820A4520  FUN_820a4520  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1924)
+  820A4520  C003297C             lfs f0,0x297c(r3)
+  820A4524  D001FFF0             stfs f0,-0x10(r1)
+  820A4528  8061FFF0             lwz r3,-0x10(r1)
+  820A452C  4E800020             blr
+
+; 820A4530  FUN_820a4530  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1935)
+  820A4530  81632978             lwz r11,0x2978(r3)
+  820A4534  39800001             li r12,0x1
+  820A4538  5164003A             rlwimi r4,r11,0x0,0x0,0x1d
+  820A453C  798C8FE6             rldicr r12,r12,0x31,0x3f
+  820A4540  90832978             stw r4,0x2978(r3)
+  820A4544  E9630018             ld r11,0x18(r3)
+  820A4548  7D6B6378             or r11,r11,r12
+  820A454C  F9630018             std r11,0x18(r3)
+  820A4550  4E800020             blr
+
+; 820A4558  FUN_820a4558  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1946)
+  820A4558  81632978             lwz r11,0x2978(r3)
+  820A455C  556307BE             rlwinm r3,r11,0x0,0x1e,0x1f
+  820A4560  4E800020             blr
+
 ; 820A4568  FUN_820a4568  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1955)
   820A4568  816329C0             lwz r11,0x29c0(r3)
   820A456C  39800001             li r12,0x1
@@ -893,6 +2121,239 @@ LAB_820a3be8:
   820A4580  7D6B6378             or r11,r11,r12
   820A4584  F9630020             std r11,0x20(r3)
   820A4588  4E800020             blr
+
+; 820A4590  FUN_820a4590  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1966)
+  820A4590  816329C0             lwz r11,0x29c0(r3)
+  820A4594  556307FE             rlwinm r3,r11,0x0,0x1f,0x1f
+  820A4598  4E800020             blr
+
+; 820A45A0  FUN_820a45a0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1975)
+  820A45A0  81632948             lwz r11,0x2948(r3)
+  820A45A4  508BAA94             rlwimi r11,r4,0x15,0xa,0xa
+  820A45A8  91632948             stw r11,0x2948(r3)
+  820A45AC  E9630010             ld r11,0x10(r3)
+  820A45B0  616B0040             ori r11,r11,0x40
+  820A45B4  F9630010             std r11,0x10(r3)
+  820A45B8  4E800020             blr
+
+; 820A45C0  FUN_820a45c0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1986)
+  820A45C0  81632948             lwz r11,0x2948(r3)
+  820A45C4  55635FFE             rlwinm r3,r11,0xb,0x1f,0x1f
+  820A45C8  4E800020             blr
+
+; 820A45D0  FUN_820a45d0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1995)
+  820A45D0  39800001             li r12,0x1
+  820A45D4  908328D8             stw r4,0x28d8(r3)
+  820A45D8  E9430010             ld r10,0x10(r3)
+  820A45DC  798C37E6             rldicr r12,r12,0x26,0x3f
+  820A45E0  7D4B6378             or r11,r10,r12
+  820A45E4  F9630010             std r11,0x10(r3)
+  820A45E8  4E800020             blr
+
+; 820A45F0  FUN_820a45f0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2006)
+  820A45F0  806328D8             lwz r3,0x28d8(r3)
+  820A45F4  4E800020             blr
+
+; 820A45F8  FUN_820a45f8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2015)
+  820A45F8  8163293C             lwz r11,0x293c(r3)
+  820A45FC  508B26F6             rlwimi r11,r4,0x4,0x1b,0x1b
+  820A4600  9163293C             stw r11,0x293c(r3)
+  820A4604  E9630010             ld r11,0x10(r3)
+  820A4608  616B0200             ori r11,r11,0x200
+  820A460C  F9630010             std r11,0x10(r3)
+  820A4610  4E800020             blr
+
+; 820A4618  FUN_820a4618  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2026)
+  820A4618  8163293C             lwz r11,0x293c(r3)
+  820A461C  5563E7FE             rlwinm r3,r11,0x1c,0x1f,0x1f
+  820A4620  4E800020             blr
+
+; 820A4628  FUN_820a4628  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2035)
+  820A4628  8163293C             lwz r11,0x293c(r3)
+  820A462C  508BC00E             rlwimi r11,r4,0x18,0x0,0x7
+  820A4630  9163293C             stw r11,0x293c(r3)
+  820A4634  E9630010             ld r11,0x10(r3)
+  820A4638  616B0200             ori r11,r11,0x200
+  820A463C  F9630010             std r11,0x10(r3)
+  820A4640  4E800020             blr
+
+; 820A4648  FUN_820a4648  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2050)
+  820A4648  8863293C             lbz r3,0x293c(r3)
+  820A464C  4E800020             blr
+
+; 820A4650  FUN_820a4650  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2064)
+  820A4650  9081001C             stw r4,0x1c(r1)
+  820A4654  C001001C             lfs f0,0x1c(r1)
+  820A4658  D00329CC             stfs f0,0x29cc(r3)
+  820A465C  39800001             li r12,0x1
+  820A4660  E9430020             ld r10,0x20(r3)
+  820A4664  798C07E6             rldicr r12,r12,0x20,0x3f
+  820A4668  7D4B6378             or r11,r10,r12
+  820A466C  F9630020             std r11,0x20(r3)
+  820A4670  4E800020             blr
+
+; 820A4678  FUN_820a4678  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2076)
+  820A4678  806329CC             lwz r3,0x29cc(r3)
+  820A467C  4E800020             blr
+
+; 820A4680  FUN_820a4680  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2087)
+  820A4680  9081001C             stw r4,0x1c(r1)
+  820A4684  C001001C             lfs f0,0x1c(r1)
+  820A4688  D00329C4             stfs f0,0x29c4(r3)
+  820A468C  39800001             li r12,0x1
+  820A4690  E9430020             ld r10,0x20(r3)
+  820A4694  798C17E6             rldicr r12,r12,0x22,0x3f
+  820A4698  7D4B6378             or r11,r10,r12
+  820A469C  F9630020             std r11,0x20(r3)
+  820A46A0  4E800020             blr
+
+; 820A46A8  FUN_820a46a8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2099)
+  820A46A8  806329C4             lwz r3,0x29c4(r3)
+  820A46AC  4E800020             blr
+
+; 820A46B0  FUN_820a46b0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2110)
+  820A46B0  9081001C             stw r4,0x1c(r1)
+  820A46B4  C001001C             lfs f0,0x1c(r1)
+  820A46B8  D00329D0             stfs f0,0x29d0(r3)
+  820A46BC  E9630020             ld r11,0x20(r3)
+  820A46C0  656B8000             oris r11,r11,0x8000
+  820A46C4  F9630020             std r11,0x20(r3)
+  820A46C8  4E800020             blr
+
+; 820A46D0  FUN_820a46d0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2122)
+  820A46D0  806329D0             lwz r3,0x29d0(r3)
+  820A46D4  4E800020             blr
+
+; 820A46D8  FUN_820a46d8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2133)
+  820A46D8  9081001C             stw r4,0x1c(r1)
+  820A46DC  C001001C             lfs f0,0x1c(r1)
+  820A46E0  D00329C8             stfs f0,0x29c8(r3)
+  820A46E4  39800001             li r12,0x1
+  820A46E8  E9430020             ld r10,0x20(r3)
+  820A46EC  798C0FE6             rldicr r12,r12,0x21,0x3f
+  820A46F0  7D4B6378             or r11,r10,r12
+  820A46F4  F9630020             std r11,0x20(r3)
+  820A46F8  4E800020             blr
+
+; 820A4700  FUN_820a4700  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2145)
+  820A4700  806329C8             lwz r3,0x29c8(r3)
+  820A4704  4E800020             blr
+
+; 820A4708  FUN_820a4708  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2156)
+  820A4708  81632F7C             lwz r11,0x2f7c(r3)
+  820A470C  508BA256             rlwimi r11,r4,0x14,0x9,0xb
+  820A4710  91632F7C             stw r11,0x2f7c(r3)
+  820A4714  E9630010             ld r11,0x10(r3)
+  820A4718  656B0002             oris r11,r11,0x2
+  820A471C  F9630010             std r11,0x10(r3)
+  820A4720  4E800020             blr
+
+; 820A4728  FUN_820a4728  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2168)
+  820A4728  81632F7C             lwz r11,0x2f7c(r3)
+  820A472C  5563677E             rlwinm r3,r11,0xc,0x1d,0x1f
+  820A4730  4E800020             blr
+
+; 820A4738  FUN_820a4738  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2179)
+  820A4738  81632F7C             lwz r11,0x2f7c(r3)
+  820A473C  89432B3F             lbz r10,0x2b3f(r3)
+  820A4740  508B8B1C             rlwimi r11,r4,0x11,0xc,0xe
+  820A4744  554A06B5             rlwinm. r10,r10,0x0,0x1a,0x1a
+  820A4748  91632F7C             stw r11,0x2f7c(r3)
+  820A474C  40820024             bne 0x820a4770
+  820A4750  556B031C             rlwinm r11,r11,0x0,0xc,0xe
+  820A4754  3D400004             lis r10,0x4
+  820A4758  7F0B5040             cmplw cr6,r11,r10
+  820A475C  409A0014             bne cr6,0x820a4770
+  820A4760  E9630028             ld r11,0x28(r3)
+  820A4764  3980FEFF             li r12,-0x101
+  820A4768  7D6B6038             and r11,r11,r12
+  820A476C  4800000C             b 0x820a4778
+LAB_820a4770:
+  820A4770  E9630028             ld r11,0x28(r3)
+  820A4774  616B0100             ori r11,r11,0x100
+LAB_820a4778:
+  820A4778  F9630028             std r11,0x28(r3)
+  820A477C  E9630010             ld r11,0x10(r3)
+  820A4780  616B0100             ori r11,r11,0x100
+  820A4784  F9630010             std r11,0x10(r3)
+  820A4788  4E800020             blr
+
+; 820A4790  FUN_820a4790  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2193)
+  820A4790  81632F7C             lwz r11,0x2f7c(r3)
+  820A4794  55637F7E             rlwinm r3,r11,0xf,0x1d,0x1f
+  820A4798  4E800020             blr
+
+; 820A47A0  FUN_820a47a0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2204)
+  820A47A0  81632940             lwz r11,0x2940(r3)
+  820A47A4  508B1F38             rlwimi r11,r4,0x3,0x1c,0x1c
+  820A47A8  91632940             stw r11,0x2940(r3)
+  820A47AC  E9630010             ld r11,0x10(r3)
+  820A47B0  616B0100             ori r11,r11,0x100
+  820A47B4  F9630010             std r11,0x10(r3)
+  820A47B8  4E800020             blr
+
+; 820A47C0  FUN_820a47c0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2216)
+  820A47C0  81632940             lwz r11,0x2940(r3)
+  820A47C4  5563EFFE             rlwinm r3,r11,0x1d,0x1f,0x1f
+  820A47C8  4E800020             blr
+
+; 820A47D0  FUN_820a47d0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2227)
+  820A47D0  81632940             lwz r11,0x2940(r3)
+  820A47D4  508B177A             rlwimi r11,r4,0x2,0x1d,0x1d
+  820A47D8  91632940             stw r11,0x2940(r3)
+  820A47DC  E9630010             ld r11,0x10(r3)
+  820A47E0  616B0100             ori r11,r11,0x100
+  820A47E4  F9630010             std r11,0x10(r3)
+  820A47E8  4E800020             blr
+
+; 820A47F0  FUN_820a47f0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2239)
+  820A47F0  81632940             lwz r11,0x2940(r3)
+  820A47F4  5563F7FE             rlwinm r3,r11,0x1e,0x1f,0x1f
+  820A47F8  4E800020             blr
+
+; 820A4800  FUN_820a4800  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2250)
+  820A4800  81632940             lwz r11,0x2940(r3)
+  820A4804  508B2EB4             rlwimi r11,r4,0x5,0x1a,0x1a
+  820A4808  91632940             stw r11,0x2940(r3)
+  820A480C  E9630010             ld r11,0x10(r3)
+  820A4810  616B0100             ori r11,r11,0x100
+  820A4814  F9630010             std r11,0x10(r3)
+  820A4818  4E800020             blr
+
+; 820A4820  FUN_820a4820  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2261)
+  820A4820  81632940             lwz r11,0x2940(r3)
+  820A4824  5563DFFE             rlwinm r3,r11,0x1b,0x1f,0x1f
+  820A4828  4E800020             blr
+
+; 820A4830  FUN_820a4830  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2272)
+  820A4830  98832942             stb r4,0x2942(r3)
+  820A4834  E9630010             ld r11,0x10(r3)
+  820A4838  616B0100             ori r11,r11,0x100
+  820A483C  F9630010             std r11,0x10(r3)
+  820A4840  4E800020             blr
+
+; 820A4848  FUN_820a4848  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2283)
+  820A4848  88632942             lbz r3,0x2942(r3)
+  820A484C  4E800020             blr
+
+; 820A4850  FUN_820a4850  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2294)
+  820A4850  90833630             stw r4,0x3630(r3)
+  820A4854  4E800020             blr
+
+; 820A4858  FUN_820a4858  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2312)
+  820A4858  80633630             lwz r3,0x3630(r3)
+  820A485C  4E800020             blr
+
+; 820A4860  FUN_820a4860  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2333)
+  820A4860  81632F7C             lwz r11,0x2f7c(r3)
+  820A4864  508BB890             rlwimi r11,r4,0x17,0x2,0x8
+  820A4868  91632F7C             stw r11,0x2f7c(r3)
+  820A486C  4E800020             blr
+
+; 820A4870  FUN_820a4870  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2343)
+  820A4870  81632F7C             lwz r11,0x2f7c(r3)
+  820A4874  55634E7E             rlwinm r3,r11,0x9,0x19,0x1f
+  820A4878  4E800020             blr
 
 ; 820A4880  FUN_820a4880  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2355)
   820A4880  7D8802A6             mfspr r12,LR
@@ -946,6 +2407,21 @@ LAB_820a3be8:
   820A4940  F9630018             std r11,0x18(r3)
   820A4944  484A3BC8             b 0x8254850c
 
+; 820A4948  FUN_820a4948  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2388)
+  820A4948  39640030             addi r11,r4,0x30
+  820A494C  1D6B0018             mulli r11,r11,0x18
+  820A4950  7D6B1A14             add r11,r11,r3
+  820A4954  814B0010             lwz r10,0x10(r11)
+  820A4958  812B000C             lwz r9,0xc(r11)
+  820A495C  554BAFFE             rlwinm r11,r10,0x15,0x1f,0x1f
+  820A4960  552A5D7E             rlwinm r10,r9,0xb,0x15,0x1f
+  820A4964  396BFFFF             subi r11,r11,0x1
+  820A4968  7D4A5838             and r10,r10,r11
+  820A496C  7D6B58F8             nor r11,r11,r11
+  820A4970  516A077A             rlwimi r10,r11,0x0,0x1d,0x1d
+  820A4974  5543077E             rlwinm r3,r10,0x0,0x1d,0x1f
+  820A4978  4E800020             blr
+
 ; 820A4980  FUN_820a4980  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2405)
   820A4980  FBC1FFF0             std r30,-0x10(r1)
   820A4984  FBE1FFF8             std r31,-0x8(r1)
@@ -984,6 +2460,12 @@ LAB_820a3be8:
   820A4A08  EBC1FFF0             ld r30,-0x10(r1)
   820A4A0C  EBE1FFF8             ld r31,-0x8(r1)
   820A4A10  4E800020             blr
+
+; 820A4A18  FUN_820a4a18  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2426)
+  820A4A18  7D632214             add r11,r3,r4
+  820A4A1C  896B2A8A             lbz r11,0x2a8a(r11)
+  820A4A20  5563FFFE             rlwinm r3,r11,0x1f,0x1f,0x1f
+  820A4A24  4E800020             blr
 
 ; 820A4A28  FUN_820a4a28  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2439)
   820A4A28  7D8802A6             mfspr r12,LR
@@ -1037,6 +2519,21 @@ LAB_820a3be8:
   820A4AE8  F9630018             std r11,0x18(r3)
   820A4AEC  484A3A20             b 0x8254850c
 
+; 820A4AF0  FUN_820a4af0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2473)
+  820A4AF0  39640030             addi r11,r4,0x30
+  820A4AF4  1D6B0018             mulli r11,r11,0x18
+  820A4AF8  7D6B1A14             add r11,r11,r3
+  820A4AFC  814B0010             lwz r10,0x10(r11)
+  820A4B00  812B000C             lwz r9,0xc(r11)
+  820A4B04  554BB7FE             rlwinm r11,r10,0x16,0x1f,0x1f
+  820A4B08  552A6CFE             rlwinm r10,r9,0xd,0x13,0x1f
+  820A4B0C  396BFFFF             subi r11,r11,0x1
+  820A4B10  7D4A5838             and r10,r10,r11
+  820A4B14  7D6B58F8             nor r11,r11,r11
+  820A4B18  516A077A             rlwimi r10,r11,0x0,0x1d,0x1d
+  820A4B1C  5543077E             rlwinm r3,r10,0x0,0x1d,0x1f
+  820A4B20  4E800020             blr
+
 ; 820A4B28  FUN_820a4b28  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2490)
   820A4B28  FBC1FFF0             std r30,-0x10(r1)
   820A4B2C  FBE1FFF8             std r31,-0x8(r1)
@@ -1073,6 +2570,36 @@ LAB_820a3be8:
   820A4BA8  EBC1FFF0             ld r30,-0x10(r1)
   820A4BAC  EBE1FFF8             ld r31,-0x8(r1)
   820A4BB0  4E800020             blr
+
+; 820A4BB8  FUN_820a4bb8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2511)
+  820A4BB8  7D632214             add r11,r3,r4
+  820A4BBC  896B2A8A             lbz r11,0x2a8a(r11)
+  820A4BC0  556307FE             rlwinm r3,r11,0x0,0x1f,0x1f
+  820A4BC4  4E800020             blr
+
+; 820A4BC8  FUN_820a4bc8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2524)
+  820A4BC8  39640030             addi r11,r4,0x30
+  820A4BCC  39440020             addi r10,r4,0x20
+  820A4BD0  1D6B0018             mulli r11,r11,0x18
+  820A4BD4  7D6B1A14             add r11,r11,r3
+  820A4BD8  39200001             li r9,0x1
+  820A4BDC  794A0020             rldicl r10,r10,0x0,0x20
+  820A4BE0  7929FFE6             rldicr r9,r9,0x3f,0x3f
+  820A4BE4  810B000C             lwz r8,0xc(r11)
+  820A4BE8  7D2A5436             srd r10,r9,r10
+  820A4BEC  50A8B9D0             rlwimi r8,r5,0x17,0x7,0x8
+  820A4BF0  910B000C             stw r8,0xc(r11)
+  820A4BF4  E9630018             ld r11,0x18(r3)
+  820A4BF8  7D4B5B78             or r11,r10,r11
+  820A4BFC  F9630018             std r11,0x18(r3)
+  820A4C00  4E800020             blr
+
+; 820A4C08  FUN_820a4c08  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2540)
+  820A4C08  1D640018             mulli r11,r4,0x18
+  820A4C0C  7D6B1A14             add r11,r11,r3
+  820A4C10  816B048C             lwz r11,0x48c(r11)
+  820A4C14  55634FBE             rlwinm r3,r11,0x9,0x1e,0x1f
+  820A4C18  4E800020             blr
 
 ; 820A4C20  FUN_820a4c20  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2555)
   820A4C20  FBC1FFF0             std r30,-0x10(r1)
@@ -1113,6 +2640,12 @@ LAB_820a3be8:
   820A4CAC  EBE1FFF8             ld r31,-0x8(r1)
   820A4CB0  4E800020             blr
 
+; 820A4CB8  FUN_820a4cb8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2578)
+  820A4CB8  7D632214             add r11,r3,r4
+  820A4CBC  896B2A8A             lbz r11,0x2a8a(r11)
+  820A4CC0  5563F7FE             rlwinm r3,r11,0x1e,0x1f,0x1f
+  820A4CC4  4E800020             blr
+
 ; 820A4CC8  FUN_820a4cc8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2591)
   820A4CC8  39640030             addi r11,r4,0x30
   820A4CCC  1D6B0018             mulli r11,r11,0x18
@@ -1143,6 +2676,57 @@ LAB_820a4d24:
   820A4D28  98AB2A70             stb r5,0x2a70(r11)
   820A4D2C  4E800020             blr
 
+; 820A4D30  FUN_820a4d30  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2616)
+  820A4D30  7D632214             add r11,r3,r4
+  820A4D34  886B2A70             lbz r3,0x2a70(r11)
+  820A4D38  4E800020             blr
+
+; 820A4D40  FUN_820a4d40  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2629)
+  820A4D40  90A10024             stw r5,0x24(r1)
+  820A4D44  3D608208             lis r11,-0x7df8
+  820A4D48  39440030             addi r10,r4,0x30
+  820A4D4C  392B9280             subi r9,r11,0x6d80
+  820A4D50  1D6A0018             mulli r11,r10,0x18
+  820A4D54  C0090178             lfs f0,0x178(r9)
+  820A4D58  7D6B1A14             add r11,r11,r3
+  820A4D5C  39440020             addi r10,r4,0x20
+  820A4D60  39200001             li r9,0x1
+  820A4D64  794A0020             rldicl r10,r10,0x0,0x20
+  820A4D68  7929FFE6             rldicr r9,r9,0x3f,0x3f
+  820A4D6C  810B0014             lwz r8,0x14(r11)
+  820A4D70  7D2A5436             srd r10,r9,r10
+  820A4D74  C1A10024             lfs f13,0x24(r1)
+  820A4D78  EC0D0032             fmuls f0,f13,f0
+  820A4D7C  FC00065E             fctidz f0,f0
+  820A4D80  D801FFF0             stfd f0,-0x10(r1)
+  820A4D84  8121FFF4             lwz r9,-0xc(r1)
+  820A4D88  51282DF4             rlwimi r8,r9,0x5,0x17,0x1a
+  820A4D8C  910B0014             stw r8,0x14(r11)
+  820A4D90  E9630018             ld r11,0x18(r3)
+  820A4D94  7D4B5B78             or r11,r10,r11
+  820A4D98  F9630018             std r11,0x18(r3)
+  820A4D9C  4E800020             blr
+
+; 820A4DA0  FUN_820a4da0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2650)
+  820A4DA0  1D640018             mulli r11,r4,0x18
+  820A4DA4  7D6B1A14             add r11,r11,r3
+  820A4DA8  3D408208             lis r10,-0x7df8
+  820A4DAC  394A9280             subi r10,r10,0x6d80
+  820A4DB0  816B0494             lwz r11,0x494(r11)
+  820A4DB4  556BB810             rlwinm r11,r11,0x17,0x0,0x8
+  820A4DB8  7D6BE670             srawi r11,r11,0x1c
+  820A4DBC  7D6B07B4             extsw r11,r11
+  820A4DC0  F961FFF0             std r11,-0x10(r1)
+  820A4DC4  C801FFF0             lfd f0,-0x10(r1)
+  820A4DC8  FDA0069C             fcfid f13,f0
+  820A4DCC  C00A0174             lfs f0,0x174(r10)
+  820A4DD0  FDA06818             frsp f13,f13
+  820A4DD4  EC0D0032             fmuls f0,f13,f0
+  820A4DD8  FC000050             fneg f0,f0
+  820A4DDC  D001FFF0             stfs f0,-0x10(r1)
+  820A4DE0  8061FFF0             lwz r3,-0x10(r1)
+  820A4DE4  4E800020             blr
+
 ; 820A4DE8  FUN_820a4de8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2667)
   820A4DE8  90A10024             stw r5,0x24(r1)
   820A4DEC  3D608208             lis r11,-0x7df8
@@ -1169,6 +2753,127 @@ LAB_820a4d24:
   820A4E40  F9630018             std r11,0x18(r3)
   820A4E44  4E800020             blr
 
+; 820A4E48  FUN_820a4e48  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2688)
+  820A4E48  1D640018             mulli r11,r4,0x18
+  820A4E4C  7D6B1A14             add r11,r11,r3
+  820A4E50  3D408208             lis r10,-0x7df8
+  820A4E54  394A9280             subi r10,r10,0x6d80
+  820A4E58  816B0490             lwz r11,0x490(r11)
+  820A4E5C  556B502A             rlwinm r11,r11,0xa,0x0,0x15
+  820A4E60  7D6BB670             srawi r11,r11,0x16
+  820A4E64  7D6B07B4             extsw r11,r11
+  820A4E68  F961FFF0             std r11,-0x10(r1)
+  820A4E6C  C801FFF0             lfd f0,-0x10(r1)
+  820A4E70  FDA0069C             fcfid f13,f0
+  820A4E74  C00A0170             lfs f0,0x170(r10)
+  820A4E78  FDA06818             frsp f13,f13
+  820A4E7C  EC0D0032             fmuls f0,f13,f0
+  820A4E80  D001FFF0             stfs f0,-0x10(r1)
+  820A4E84  8061FFF0             lwz r3,-0x10(r1)
+  820A4E88  4E800020             blr
+
+; 820A4E90  FUN_820a4e90  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2705)
+  820A4E90  39640C7E             addi r11,r4,0xc7e
+  820A4E94  556B103A             rlwinm r11,r11,0x2,0x0,0x1d
+  820A4E98  7D6B182E             lwzx r11,r11,r3
+  820A4E9C  2B0B0000             cmplwi cr6,r11,0x0
+  820A4EA0  419A0050             beq cr6,0x820a4ef0
+  820A4EA4  816B002C             lwz r11,0x2c(r11)
+  820A4EA8  39440030             addi r10,r4,0x30
+  820A4EAC  556BF73E             rlwinm r11,r11,0x1e,0x1c,0x1f
+  820A4EB0  1D4A0018             mulli r10,r10,0x18
+  820A4EB4  7D4A1A14             add r10,r10,r3
+  820A4EB8  7F0B2840             cmplw cr6,r11,r5
+  820A4EBC  41990008             bgt cr6,0x820a4ec4
+  820A4EC0  7CAB2B78             or r11,r5,r5
+LAB_820a4ec4:
+  820A4EC4  812A0010             lwz r9,0x10(r10)
+  820A4EC8  39040020             addi r8,r4,0x20
+  820A4ECC  38E00001             li r7,0x1
+  820A4ED0  516916BA             rlwimi r9,r11,0x2,0x1a,0x1d
+  820A4ED4  78EBFFE6             rldicr r11,r7,0x3f,0x3f
+  820A4ED8  912A0010             stw r9,0x10(r10)
+  820A4EDC  790A0020             rldicl r10,r8,0x0,0x20
+  820A4EE0  7D6B5436             srd r11,r11,r10
+  820A4EE4  E9430018             ld r10,0x18(r3)
+  820A4EE8  7D6B5378             or r11,r11,r10
+  820A4EEC  F9630018             std r11,0x18(r3)
+LAB_820a4ef0:
+  820A4EF0  7D632214             add r11,r3,r4
+  820A4EF4  98AB2FC4             stb r5,0x2fc4(r11)
+  820A4EF8  4E800020             blr
+
+; 820A4F00  FUN_820a4f00  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2734)
+  820A4F00  7D632214             add r11,r3,r4
+  820A4F04  886B2FC4             lbz r3,0x2fc4(r11)
+  820A4F08  4E800020             blr
+
+; 820A4F10  FUN_820a4f10  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2747)
+  820A4F10  39640C7E             addi r11,r4,0xc7e
+  820A4F14  556B103A             rlwinm r11,r11,0x2,0x0,0x1d
+  820A4F18  7D6B182E             lwzx r11,r11,r3
+  820A4F1C  2B0B0000             cmplwi cr6,r11,0x0
+  820A4F20  419A0050             beq cr6,0x820a4f70
+  820A4F24  816B002C             lwz r11,0x2c(r11)
+  820A4F28  39440030             addi r10,r4,0x30
+  820A4F2C  556BD73E             rlwinm r11,r11,0x1a,0x1c,0x1f
+  820A4F30  1D4A0018             mulli r10,r10,0x18
+  820A4F34  7D4A1A14             add r10,r10,r3
+  820A4F38  7F0B2840             cmplw cr6,r11,r5
+  820A4F3C  41980008             blt cr6,0x820a4f44
+  820A4F40  7CAB2B78             or r11,r5,r5
+LAB_820a4f44:
+  820A4F44  812A0010             lwz r9,0x10(r10)
+  820A4F48  39040020             addi r8,r4,0x20
+  820A4F4C  38E00001             li r7,0x1
+  820A4F50  516935B2             rlwimi r9,r11,0x6,0x16,0x19
+  820A4F54  78EBFFE6             rldicr r11,r7,0x3f,0x3f
+  820A4F58  912A0010             stw r9,0x10(r10)
+  820A4F5C  790A0020             rldicl r10,r8,0x0,0x20
+  820A4F60  7D6B5436             srd r11,r11,r10
+  820A4F64  E9430018             ld r10,0x18(r3)
+  820A4F68  7D6B5378             or r11,r11,r10
+  820A4F6C  F9630018             std r11,0x18(r3)
+LAB_820a4f70:
+  820A4F70  7D632214             add r11,r3,r4
+  820A4F74  98AB2FDE             stb r5,0x2fde(r11)
+  820A4F78  4E800020             blr
+
+; 820A4F80  FUN_820a4f80  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2776)
+  820A4F80  7D632214             add r11,r3,r4
+  820A4F84  886B2FDE             lbz r3,0x2fde(r11)
+  820A4F88  4E800020             blr
+
+; 820A4F90  FUN_820a4f90  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2789)
+  820A4F90  39640030             addi r11,r4,0x30
+  820A4F94  3145FFFF             subic r10,r5,0x1
+  820A4F98  1D6B0018             mulli r11,r11,0x18
+  820A4F9C  7D6B1A14             add r11,r11,r3
+  820A4FA0  7D4A2910             subfe r10,r10,r5
+  820A4FA4  39240020             addi r9,r4,0x20
+  820A4FA8  39000001             li r8,0x1
+  820A4FAC  79290020             rldicl r9,r9,0x0,0x20
+  820A4FB0  80EB0014             lwz r7,0x14(r11)
+  820A4FB4  7908FFE6             rldicr r8,r8,0x3f,0x3f
+  820A4FB8  50EA003A             rlwimi r10,r7,0x0,0x0,0x1d
+  820A4FBC  914B0014             stw r10,0x14(r11)
+  820A4FC0  7D0B4C36             srd r11,r8,r9
+  820A4FC4  E9430018             ld r10,0x18(r3)
+  820A4FC8  7D6B5378             or r11,r11,r10
+  820A4FCC  F9630018             std r11,0x18(r3)
+  820A4FD0  4E800020             blr
+
+; 820A4FD8  FUN_820a4fd8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2809)
+  820A4FD8  1D640018             mulli r11,r4,0x18
+  820A4FDC  7D6B1A14             add r11,r11,r3
+  820A4FE0  3940FFFF             li r10,-0x1
+  820A4FE4  816B0494             lwz r11,0x494(r11)
+  820A4FE8  556B07BE             rlwinm r11,r11,0x0,0x1e,0x1f
+  820A4FEC  216B0000             subfic r11,r11,0x0
+  820A4FF0  7D6B5910             subfe r11,r11,r11
+  820A4FF4  7D635038             and r3,r11,r10
+  820A4FF8  4E800020             blr
+
 ; 820A5000  FUN_820a5000  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2824)
   820A5000  39640030             addi r11,r4,0x30
   820A5004  39440020             addi r10,r4,0x20
@@ -1185,6 +2890,13 @@ LAB_820a4d24:
   820A5030  F9630018             std r11,0x18(r3)
   820A5034  4E800020             blr
 
+; 820A5038  FUN_820a5038  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2840)
+  820A5038  39640030             addi r11,r4,0x30
+  820A503C  1D6B0018             mulli r11,r11,0x18
+  820A5040  7D6B182E             lwzx r11,r11,r3
+  820A5044  5563B77E             rlwinm r3,r11,0x16,0x1d,0x1f
+  820A5048  4E800020             blr
+
 ; 820A5050  FUN_820a5050  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2855)
   820A5050  39640030             addi r11,r4,0x30
   820A5054  39440020             addi r10,r4,0x20
@@ -1200,6 +2912,160 @@ LAB_820a4d24:
   820A507C  7D6B5378             or r11,r11,r10
   820A5080  F9630018             std r11,0x18(r3)
   820A5084  4E800020             blr
+
+; 820A5088  FUN_820a5088  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2871)
+  820A5088  39640030             addi r11,r4,0x30
+  820A508C  1D6B0018             mulli r11,r11,0x18
+  820A5090  7D6B182E             lwzx r11,r11,r3
+  820A5094  55639F7E             rlwinm r3,r11,0x13,0x1d,0x1f
+  820A5098  4E800020             blr
+
+; 820A50A0  FUN_820a50a0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2886)
+  820A50A0  39640030             addi r11,r4,0x30
+  820A50A4  39440020             addi r10,r4,0x20
+  820A50A8  1D6B0018             mulli r11,r11,0x18
+  820A50AC  7D2B182E             lwzx r9,r11,r3
+  820A50B0  50A9835E             rlwimi r9,r5,0x10,0xd,0xf
+  820A50B4  39000001             li r8,0x1
+  820A50B8  7D2B192E             stwx r9,r11,r3
+  820A50BC  794B0020             rldicl r11,r10,0x0,0x20
+  820A50C0  790AFFE6             rldicr r10,r8,0x3f,0x3f
+  820A50C4  7D4B5C36             srd r11,r10,r11
+  820A50C8  E9430018             ld r10,0x18(r3)
+  820A50CC  7D6B5378             or r11,r11,r10
+  820A50D0  F9630018             std r11,0x18(r3)
+  820A50D4  4E800020             blr
+
+; 820A50D8  FUN_820a50d8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2902)
+  820A50D8  39640030             addi r11,r4,0x30
+  820A50DC  1D6B0018             mulli r11,r11,0x18
+  820A50E0  7D6B1A2E             lhzx r11,r11,r3
+  820A50E4  5563077E             rlwinm r3,r11,0x0,0x1d,0x1f
+  820A50E8  4E800020             blr
+
+; 820A50F0  FUN_820a50f0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2917)
+  820A50F0  39640030             addi r11,r4,0x30
+  820A50F4  39440020             addi r10,r4,0x20
+  820A50F8  1D6B0018             mulli r11,r11,0x18
+  820A50FC  7D6B1A14             add r11,r11,r3
+  820A5100  39200001             li r9,0x1
+  820A5104  794A0020             rldicl r10,r10,0x0,0x20
+  820A5108  7929FFE6             rldicr r9,r9,0x3f,0x3f
+  820A510C  810B0014             lwz r8,0x14(r11)
+  820A5110  7D2A5436             srd r10,r9,r10
+  820A5114  50A81EF8             rlwimi r8,r5,0x3,0x1b,0x1c
+  820A5118  910B0014             stw r8,0x14(r11)
+  820A511C  E9630018             ld r11,0x18(r3)
+  820A5120  7D4B5B78             or r11,r10,r11
+  820A5124  F9630018             std r11,0x18(r3)
+  820A5128  4E800020             blr
+
+; 820A5130  FUN_820a5130  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2933)
+  820A5130  1D640018             mulli r11,r4,0x18
+  820A5134  7D6B1A14             add r11,r11,r3
+  820A5138  816B0494             lwz r11,0x494(r11)
+  820A513C  5563EFBE             rlwinm r3,r11,0x1d,0x1e,0x1f
+  820A5140  4E800020             blr
+
+; 820A5148  FUN_820a5148  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2948)
+  820A5148  39640030             addi r11,r4,0x30
+  820A514C  39440020             addi r10,r4,0x20
+  820A5150  1D6B0018             mulli r11,r11,0x18
+  820A5154  7D6B1A14             add r11,r11,r3
+  820A5158  39200001             li r9,0x1
+  820A515C  794A0020             rldicl r10,r10,0x0,0x20
+  820A5160  7929FFE6             rldicr r9,r9,0x3f,0x3f
+  820A5164  810B0010             lwz r8,0x10(r11)
+  820A5168  7D2A5436             srd r10,r9,r10
+  820A516C  50A8B152             rlwimi r8,r5,0x16,0x5,0x9
+  820A5170  910B0010             stw r8,0x10(r11)
+  820A5174  E9630018             ld r11,0x18(r3)
+  820A5178  7D4B5B78             or r11,r10,r11
+  820A517C  F9630018             std r11,0x18(r3)
+  820A5180  4E800020             blr
+
+; 820A5188  FUN_820a5188  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2964)
+  820A5188  1D640018             mulli r11,r4,0x18
+  820A518C  7D6B1A14             add r11,r11,r3
+  820A5190  816B0490             lwz r11,0x490(r11)
+  820A5194  556B2834             rlwinm r11,r11,0x5,0x0,0x1a
+  820A5198  7D63DE70             srawi r3,r11,0x1b
+  820A519C  4E800020             blr
+
+; 820A51A0  FUN_820a51a0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2979)
+  820A51A0  39640030             addi r11,r4,0x30
+  820A51A4  39440020             addi r10,r4,0x20
+  820A51A8  1D6B0018             mulli r11,r11,0x18
+  820A51AC  7D6B1A14             add r11,r11,r3
+  820A51B0  39200001             li r9,0x1
+  820A51B4  794A0020             rldicl r10,r10,0x0,0x20
+  820A51B8  7929FFE6             rldicr r9,r9,0x3f,0x3f
+  820A51BC  810B0010             lwz r8,0x10(r11)
+  820A51C0  7D2A5436             srd r10,r9,r10
+  820A51C4  50A8D808             rlwimi r8,r5,0x1b,0x0,0x4
+  820A51C8  910B0010             stw r8,0x10(r11)
+  820A51CC  E9630018             ld r11,0x18(r3)
+  820A51D0  7D4B5B78             or r11,r10,r11
+  820A51D4  F9630018             std r11,0x18(r3)
+  820A51D8  4E800020             blr
+
+; 820A51E0  FUN_820a51e0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2995)
+  820A51E0  1D640018             mulli r11,r4,0x18
+  820A51E4  7D6B1A14             add r11,r11,r3
+  820A51E8  816B0490             lwz r11,0x490(r11)
+  820A51EC  7D63DE70             srawi r3,r11,0x1b
+  820A51F0  4E800020             blr
+
+; 820A51F8  FUN_820a51f8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:3010)
+  820A51F8  39640030             addi r11,r4,0x30
+  820A51FC  39440020             addi r10,r4,0x20
+  820A5200  1D6B0018             mulli r11,r11,0x18
+  820A5204  7D6B1A14             add r11,r11,r3
+  820A5208  39200001             li r9,0x1
+  820A520C  794A0020             rldicl r10,r10,0x0,0x20
+  820A5210  7929FFE6             rldicr r9,r9,0x3f,0x3f
+  820A5214  810B0014             lwz r8,0x14(r11)
+  820A5218  7D2A5436             srd r10,r9,r10
+  820A521C  50A8177A             rlwimi r8,r5,0x2,0x1d,0x1d
+  820A5220  910B0014             stw r8,0x14(r11)
+  820A5224  E9630018             ld r11,0x18(r3)
+  820A5228  7D4B5B78             or r11,r10,r11
+  820A522C  F9630018             std r11,0x18(r3)
+  820A5230  4E800020             blr
+
+; 820A5238  FUN_820a5238  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:3026)
+  820A5238  1D640018             mulli r11,r4,0x18
+  820A523C  7D6B1A14             add r11,r11,r3
+  820A5240  816B0494             lwz r11,0x494(r11)
+  820A5244  5563F7FE             rlwinm r3,r11,0x1e,0x1f,0x1f
+  820A5248  4E800020             blr
+
+; 820A5250  FUN_820a5250  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:3041)
+  820A5250  39640030             addi r11,r4,0x30
+  820A5254  7CAA0034             cntlzw r10,r5
+  820A5258  1D6B0018             mulli r11,r11,0x18
+  820A525C  7D6B1A14             add r11,r11,r3
+  820A5260  554ADFFE             rlwinm r10,r10,0x1b,0x1f,0x1f
+  820A5264  39240020             addi r9,r4,0x20
+  820A5268  39000001             li r8,0x1
+  820A526C  79290020             rldicl r9,r9,0x0,0x20
+  820A5270  80EB0004             lwz r7,0x4(r11)
+  820A5274  7908FFE6             rldicr r8,r8,0x3f,0x3f
+  820A5278  51475D28             rlwimi r7,r10,0xb,0x14,0x14
+  820A527C  90EB0004             stw r7,0x4(r11)
+  820A5280  7D0B4C36             srd r11,r8,r9
+  820A5284  E9430018             ld r10,0x18(r3)
+  820A5288  7D6B5378             or r11,r11,r10
+  820A528C  F9630018             std r11,0x18(r3)
+  820A5290  4E800020             blr
+
+; 820A5298  FUN_820a5298  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:3057)
+  820A5298  1D640018             mulli r11,r4,0x18
+  820A529C  7D6B1A14             add r11,r11,r3
+  820A52A0  816B0484             lwz r11,0x484(r11)
+  820A52A4  7D6B58F8             nor r11,r11,r11
+  820A52A8  5563AFFE             rlwinm r3,r11,0x15,0x1f,0x1f
+  820A52AC  4E800020             blr
 
 ; 820A52B0  FUN_820a52b0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:3726)
   820A52B0  7D8802A6             mfspr r12,LR

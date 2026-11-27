@@ -20,6 +20,17 @@ void FUN_8249c608(undefined8 param_1,ulonglong param_2,ulonglong param_3,undefin
 }
 
 
+// 8249C690  FUN_8249c690  (WebM_atvi_opt/vpx/vp8/common/loopfilter.c:46)
+
+void FUN_8249c690(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+                 undefined8 param_5,longlong param_6)
+
+{
+  FUN_8249ef20(param_1,param_4,param_6 + 0x30,param_6,param_6 + 0x40,2);
+  return;
+}
+
+
 // 8249C6A8  FUN_8249c6a8  (WebM_atvi_opt/vpx/vp8/common/loopfilter.c:57)
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
@@ -36,6 +47,17 @@ void FUN_8249c6a8(undefined8 param_1,ulonglong param_2,ulonglong param_3,undefin
   if ((param_3 & 0xffffffff) != 0) {
     FUN_8249ea38(param_3,param_5,param_6 + 0x80,param_6 + 0x50,param_6 + 0x90,1);
   }
+  return;
+}
+
+
+// 8249C730  FUN_8249c730  (WebM_atvi_opt/vpx/vp8/common/loopfilter.c:70)
+
+void FUN_8249c730(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+                 undefined8 param_5,longlong param_6)
+
+{
+  FUN_8249eff0(param_1,param_4,param_6 + 0x30,param_6,param_6 + 0x40,2);
   return;
 }
 

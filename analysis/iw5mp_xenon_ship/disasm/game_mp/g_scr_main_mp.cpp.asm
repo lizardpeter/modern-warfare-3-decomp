@@ -914,6 +914,12 @@ LAB_8225d9c0:
   8225DA64  382100A0             addi r1,r1,0xa0
   8225DA68  482EAA9C             b 0x82548504
 
+; 8225DA70  FUN_8225da70  (game_mp/g_scr_main_mp.cpp:585)
+  8225DA70  4E800020             blr
+
+; 8225DA78  FUN_8225da78  (game_mp/g_scr_main_mp.cpp:593)
+  8225DA78  4E800020             blr
+
 ; 8225DA80  FUN_8225da80  (game_mp/g_scr_main_mp.cpp:616)
   8225DA80  7D8802A6             mfspr r12,LR
   8225DA84  9181FFF8             stw r12,-0x8(r1)
@@ -1675,6 +1681,9 @@ LAB_8225e528:
   8225E538  EBE1FFF0             ld r31,-0x10(r1)
   8225E53C  4E800020             blr
 
+; 8225E540  thunk_FUN_822b8a20  (game_mp/g_scr_main_mp.cpp:1168)
+  8225E540  4805A4E0             b 0x822b8a20
+
 ; 8225E548  FUN_8225e548  (game_mp/g_scr_main_mp.cpp:1185)
   8225E548  7D8802A6             mfspr r12,LR
   8225E54C  9181FFF8             stw r12,-0x8(r1)
@@ -1834,6 +1843,13 @@ LAB_8225e76c:
   8225E778  7D8803A6             mtspr LR,r12
   8225E77C  EBE1FFF0             ld r31,-0x10(r1)
   8225E780  4E800020             blr
+
+; 8225E788  FUN_8225e788  (game_mp/g_scr_main_mp.cpp:1290)
+  8225E788  4E800020             blr
+
+; 8225E790  FUN_8225e790  (game_mp/g_scr_main_mp.cpp:1330)
+  8225E790  386007FE             li r3,0x7fe
+  8225E794  4805C9DC             b 0x822bb170
 
 ; 8225E798  FUN_8225e798  (game_mp/g_scr_main_mp.cpp:1349)
   8225E798  7D8802A6             mfspr r12,LR
@@ -2025,6 +2041,12 @@ LAB_8225ea40:
   8225EA48  8181FFF8             lwz r12,-0x8(r1)
   8225EA4C  7D8803A6             mtspr LR,r12
   8225EA50  4E800020             blr
+
+; 8225EA58  FUN_8225ea58  (game_mp/g_scr_main_mp.cpp:1485)
+  8225EA58  3D6082FC             lis r11,-0x7d04
+  8225EA5C  394B3F80             addi r10,r11,0x3f80
+  8225EA60  806A04B4             lwz r3,0x4b4(r10)
+  8225EA64  4805C70C             b 0x822bb170
 
 ; 8225EA68  FUN_8225ea68  (game_mp/g_scr_main_mp.cpp:1501)
   8225EA68  7D8802A6             mfspr r12,LR
@@ -2474,6 +2496,9 @@ LAB_8225f0e8:
   8225F0F8  7D8803A6             mtspr LR,r12
   8225F0FC  EBE1FFF0             ld r31,-0x10(r1)
   8225F100  4E800020             blr
+
+; 8225F108  FUN_8225f108  (game_mp/g_scr_main_mp.cpp:1821)
+  8225F108  4E800020             blr
 
 ; 8225F110  FUN_8225f110  (game_mp/g_scr_main_mp.cpp:1845)
   8225F110  7D8802A6             mfspr r12,LR
@@ -2992,6 +3017,10 @@ LAB_8225f7a4:
   8225F7D4  7D8803A6             mtspr LR,r12
   8225F7D8  EBE1FFF0             ld r31,-0x10(r1)
   8225F7DC  4E800020             blr
+
+; 8225F7E0  FUN_8225f7e0  (game_mp/g_scr_main_mp.cpp:2232)
+  8225F7E0  38600001             li r3,0x1
+  8225F7E4  4BFFFE64             b 0x8225f648
 
 ; 8225F7E8  FUN_8225f7e8  (game_mp/g_scr_main_mp.cpp:2238)
   8225F7E8  7D8802A6             mfspr r12,LR
@@ -3657,6 +3686,9 @@ LAB_82260140:
   82260154  EBE1FFF0             ld r31,-0x10(r1)
   82260158  4E800020             blr
 
+; 82260160  FUN_82260160  (game_mp/g_scr_main_mp.cpp:2606)
+  82260160  4E800020             blr
+
 ; 82260168  FUN_82260168  (game_mp/g_scr_main_mp.cpp:2623)
   82260168  7D8802A6             mfspr r12,LR
   8226016C  9181FFF8             stw r12,-0x8(r1)
@@ -3691,6 +3723,9 @@ LAB_822601cc:
   822601DC  7D8803A6             mtspr LR,r12
   822601E0  4E800020             blr
 
+; 822601E8  FUN_822601e8  (game_mp/g_scr_main_mp.cpp:2661)
+  822601E8  4E800020             blr
+
 ; 822601F0  FUN_822601f0  (game_mp/g_scr_main_mp.cpp:2682)
   822601F0  7D8802A6             mfspr r12,LR
   822601F4  482E82C9             bl 0x825484bc
@@ -3723,6 +3758,9 @@ LAB_82260248:
   82260254  4806B38D             bl 0x822cb5e0
   82260258  38210070             addi r1,r1,0x70
   8226025C  482E82B0             b 0x8254850c
+
+; 82260260  FUN_82260260  (game_mp/g_scr_main_mp.cpp:2711)
+  82260260  4E800020             blr
 
 ; 82260268  FUN_82260268  (game_mp/g_scr_main_mp.cpp:2830)
   82260268  7D8802A6             mfspr r12,LR
@@ -4653,6 +4691,11 @@ LAB_82261018:
   82261018  38210080             addi r1,r1,0x80
   8226101C  482E74EC             b 0x82548508
 
+; 82261020  FUN_82261020  (game_mp/g_scr_main_mp.cpp:3498)
+  82261020  3D608202             lis r11,-0x7dfe
+  82261024  386B16D8             addi r3,r11,0x16d8
+  82261028  4805A2F8             b 0x822bb320
+
 ; 82261030  FUN_82261030  (game_mp/g_scr_main_mp.cpp:3513)
   82261030  7D8802A6             mfspr r12,LR
   82261034  9181FFF8             stw r12,-0x8(r1)
@@ -5061,6 +5104,26 @@ LAB_822615e8:
   8226160C  EBE1FFF0             ld r31,-0x10(r1)
   82261610  4E800020             blr
 
+; 82261618  FUN_82261618  (game_mp/g_scr_main_mp.cpp:3827)
+  82261618  3860FFFD             li r3,-0x3
+  8226161C  48059B54             b 0x822bb170
+
+; 82261620  FUN_82261620  (game_mp/g_scr_main_mp.cpp:3842)
+  82261620  38600003             li r3,0x3
+  82261624  48059B4C             b 0x822bb170
+
+; 82261628  FUN_82261628  (game_mp/g_scr_main_mp.cpp:3857)
+  82261628  38600000             li r3,0x0
+  8226162C  48059B44             b 0x822bb170
+
+; 82261630  FUN_82261630  (game_mp/g_scr_main_mp.cpp:3872)
+  82261630  38600002             li r3,0x2
+  82261634  48059B3C             b 0x822bb170
+
+; 82261638  FUN_82261638  (game_mp/g_scr_main_mp.cpp:3887)
+  82261638  38600003             li r3,0x3
+  8226163C  48059B34             b 0x822bb170
+
 ; 82261640  FUN_82261640  (game_mp/g_scr_main_mp.cpp:3903)
   82261640  7D8802A6             mfspr r12,LR
   82261644  9181FFF8             stw r12,-0x8(r1)
@@ -5186,6 +5249,12 @@ LAB_822617c8:
   822617E4  7D8803A6             mtspr LR,r12
   822617E8  EBE1FFF0             ld r31,-0x10(r1)
   822617EC  4E800020             blr
+
+; 822617F0  FUN_822617f0  (game_mp/g_scr_main_mp.cpp:3972)
+  822617F0  3D608202             lis r11,-0x7dfe
+  822617F4  38600000             li r3,0x0
+  822617F8  388B16E0             addi r4,r11,0x16e0
+  822617FC  48022344             b 0x82283b40
 
 ; 82261800  FUN_82261800  (game_mp/g_scr_main_mp.cpp:3994)
   82261800  7D8802A6             mfspr r12,LR

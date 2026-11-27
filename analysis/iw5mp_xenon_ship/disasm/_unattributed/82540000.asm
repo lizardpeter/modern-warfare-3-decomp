@@ -657,6 +657,9 @@
   82549FB8  13EB60CF             lvx128 v127,r11,r12
   82549FBC  4E800020             blr
 
+; 8254A04C  FUN_8254a04c  (line unknown)
+  8254A04C  8207B1E0             lwz r16,-0x4e20(r7)
+
 ; 8254A11C  FUN_8254a11c  (line unknown)
   8254A11C  7D8802A6             mfspr r12,LR
   8254A120  9181FFF8             stw r12,-0x8(r1)

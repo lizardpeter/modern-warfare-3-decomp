@@ -143,7 +143,7 @@ undefined4 * FUN_8234f628(undefined4 *param_1)
   double dVar3;
   double dVar4;
   
-  *param_1 = &PTR_LAB_82037e48;
+  *param_1 = &PTR_FUN_82037e48;
   puVar2 = param_1 + 6;
   lVar1 = 5;
   dVar3 = 20000.0;
@@ -164,6 +164,47 @@ undefined4 * FUN_8234f628(undefined4 *param_1)
   param_1[3] = 0;
   *(undefined1 *)(param_1 + 5) = 0;
   return param_1;
+}
+
+
+// 8234EB18  FUN_8234eb18  (xenon/snd_eq.cpp:154)
+
+void FUN_8234eb18(int param_1)
+
+{
+  *(int *)(param_1 + 4) = *(int *)(param_1 + 4) + 1;
+  return;
+}
+
+
+// 8234EB30  FUN_8234eb30  (xenon/snd_eq.cpp:160)
+
+void FUN_8234eb30(int param_1)
+
+{
+  *(int *)(param_1 + 4) = *(int *)(param_1 + 4) + -1;
+  return;
+}
+
+
+// 8234EB48  FUN_8234eb48  (xenon/snd_eq.cpp:174)
+
+undefined8 FUN_8234eb48(undefined8 param_1,undefined4 *param_2)
+
+{
+  *param_2 = 0;
+  return 0;
+}
+
+
+// 8234EB58  FUN_8234eb58  (xenon/snd_eq.cpp:182)
+
+undefined8 FUN_8234eb58(undefined8 param_1,undefined1 *param_2)
+
+{
+  *param_2 = 1;
+  *(undefined2 *)(param_2 + 2) = 0;
+  return 0;
 }
 
 
@@ -547,8 +588,67 @@ void FUN_8234f610(undefined4 *param_1)
 
 {
   param_1[1] = 1;
-  *param_1 = &PTR_LAB_82037e2c;
+  *param_1 = &PTR_FUN_82037e2c;
   return;
+}
+
+
+// 8234F138  FUN_8234f138  (xenon/snd_eq.cpp:488)
+
+void FUN_8234f138(int param_1)
+
+{
+  *(int *)(param_1 + 4) = *(int *)(param_1 + 4) + 1;
+  return;
+}
+
+
+// 8234F150  FUN_8234f150  (xenon/snd_eq.cpp:495)
+
+void FUN_8234f150(int param_1)
+
+{
+  *(int *)(param_1 + 4) = *(int *)(param_1 + 4) + -1;
+  return;
+}
+
+
+// 8234F168  FUN_8234f168  (xenon/snd_eq.cpp:504)
+
+undefined8 FUN_8234f168(undefined8 param_1,undefined1 *param_2)
+
+{
+  *param_2 = 2;
+  *(undefined2 *)(param_2 + 2) = 0;
+  return 0;
+}
+
+
+// 8234F180  FUN_8234f180  (xenon/snd_eq.cpp:513)
+
+undefined8 FUN_8234f180(void)
+
+{
+  return 0xffffffff80004005;
+}
+
+
+// 8234F190  FUN_8234f190  (xenon/snd_eq.cpp:519)
+
+undefined8 FUN_8234f190(void)
+
+{
+  return 0xffffffff80004005;
+}
+
+
+// 8234F1A0  FUN_8234f1a0  (xenon/snd_eq.cpp:525)
+
+undefined8 FUN_8234f1a0(undefined8 param_1,undefined4 *param_2)
+
+{
+  *param_2 = 0;
+  return 0;
 }
 
 

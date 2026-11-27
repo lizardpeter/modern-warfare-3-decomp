@@ -305,6 +305,15 @@ void FUN_820a2fa0(int param_1,uint param_2)
 }
 
 
+// 820A2FC0  FUN_820a2fc0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:404)
+
+uint FUN_820a2fc0(int param_1)
+
+{
+  return *(uint *)(param_1 + 0x2948) & 7;
+}
+
+
 // 820A2FD0  FUN_820a2fd0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:413)
 
 void FUN_820a2fd0(int param_1,uint param_2)
@@ -313,6 +322,15 @@ void FUN_820a2fd0(int param_1,uint param_2)
   *(uint *)(param_1 + 0x2948) = (param_2 & 0xff) << 3 | *(uint *)(param_1 + 0x2948) & 0xfffff807;
   *(ulonglong *)(param_1 + 0x10) = *(ulonglong *)(param_1 + 0x10) | 0x40;
   return;
+}
+
+
+// 820A2FF0  FUN_820a2ff0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:430)
+
+uint FUN_820a2ff0(int param_1)
+
+{
+  return *(uint *)(param_1 + 0x2948) >> 3 & 0xff;
 }
 
 
@@ -328,6 +346,15 @@ void FUN_820a3000(int param_1,uint param_2)
   *(ulonglong *)(param_1 + 0x10) = uVar1 | 0x200;
   *(ulonglong *)(param_1 + 0x10) = uVar1 | 0x40200;
   return;
+}
+
+
+// 820A3028  FUN_820a3028  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:456)
+
+uint FUN_820a3028(int param_1)
+
+{
+  return *(uint *)(param_1 + 0x293c) >> 3 & 1;
 }
 
 
@@ -362,6 +389,243 @@ void FUN_820a3038(int param_1,int param_2)
 }
 
 
+// 820A30B8  FUN_820a30b8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:524)
+
+uint FUN_820a30b8(int param_1)
+
+{
+  return *(uint *)(param_1 + 0x2f7c) >> 0x1f;
+}
+
+
+// 820A30C8  FUN_820a30c8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:533)
+
+void FUN_820a30c8(int param_1,uint param_2)
+
+{
+  uint uVar2;
+  ulonglong uVar1;
+  
+  *(uint *)(param_1 + 0x2f78) = (param_2 & 7) << 5 | *(uint *)(param_1 + 0x2f78) & 0xffffff1f;
+  if ((*(uint *)(param_1 + 0x2f7c) & 0x80000000) == 0) {
+    return;
+  }
+  uVar2 = *(uint *)(param_1 + 0x2f78);
+  if ((*(uint *)(param_1 + 0x2f7c) & 0x40000000) == 0) {
+    uVar2 = (uVar2 & 0x1010 | (uVar2 & 0xefef) << 4) << 0xc | uVar2 & 0xffff;
+  }
+  *(uint *)(param_1 + 0x2938) = uVar2;
+  *(uint *)(param_1 + 0x2958) = uVar2;
+  *(uint *)(param_1 + 0x295c) = uVar2;
+  *(uint *)(param_1 + 0x2960) = uVar2;
+  uVar1 = *(ulonglong *)(param_1 + 0x10);
+  *(ulonglong *)(param_1 + 0x10) = uVar1 | 0x400;
+  *(ulonglong *)(param_1 + 0x10) = uVar1 | 0x404;
+  *(ulonglong *)(param_1 + 0x10) = uVar1 | 0x406;
+  *(ulonglong *)(param_1 + 0x10) = uVar1 | 0x407;
+  return;
+}
+
+
+// 820A3148  FUN_820a3148  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:549)
+
+uint FUN_820a3148(int param_1)
+
+{
+  return *(uint *)(param_1 + 0x2f78) >> 5 & 7;
+}
+
+
+// 820A3158  FUN_820a3158  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:558)
+
+void FUN_820a3158(int param_1,uint param_2)
+
+{
+  uint uVar2;
+  ulonglong uVar1;
+  
+  *(uint *)(param_1 + 0x2f78) = param_2 & 0x1f | *(uint *)(param_1 + 0x2f78) & 0xffffffe0;
+  if ((*(uint *)(param_1 + 0x2f7c) & 0x80000000) == 0) {
+    return;
+  }
+  uVar2 = *(uint *)(param_1 + 0x2f78);
+  if ((*(uint *)(param_1 + 0x2f7c) & 0x40000000) == 0) {
+    uVar2 = (uVar2 & 0x1010 | (uVar2 & 0xefef) << 4) << 0xc | uVar2 & 0xffff;
+  }
+  *(uint *)(param_1 + 0x2938) = uVar2;
+  *(uint *)(param_1 + 0x2958) = uVar2;
+  *(uint *)(param_1 + 0x295c) = uVar2;
+  *(uint *)(param_1 + 0x2960) = uVar2;
+  uVar1 = *(ulonglong *)(param_1 + 0x10);
+  *(ulonglong *)(param_1 + 0x10) = uVar1 | 0x400;
+  *(ulonglong *)(param_1 + 0x10) = uVar1 | 0x404;
+  *(ulonglong *)(param_1 + 0x10) = uVar1 | 0x406;
+  *(ulonglong *)(param_1 + 0x10) = uVar1 | 0x407;
+  return;
+}
+
+
+// 820A31D8  FUN_820a31d8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:574)
+
+uint FUN_820a31d8(int param_1)
+
+{
+  return *(uint *)(param_1 + 0x2f78) & 0x1f;
+}
+
+
+// 820A31E8  FUN_820a31e8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:583)
+
+void FUN_820a31e8(int param_1,uint param_2)
+
+{
+  uint uVar2;
+  ulonglong uVar1;
+  
+  *(uint *)(param_1 + 0x2f78) = (param_2 & 0x1f) << 8 | *(uint *)(param_1 + 0x2f78) & 0xffffe0ff;
+  if ((*(uint *)(param_1 + 0x2f7c) & 0x80000000) == 0) {
+    return;
+  }
+  uVar2 = *(uint *)(param_1 + 0x2f78);
+  if ((*(uint *)(param_1 + 0x2f7c) & 0x40000000) == 0) {
+    uVar2 = (uVar2 & 0x1010 | (uVar2 & 0xefef) << 4) << 0xc | uVar2 & 0xffff;
+  }
+  *(uint *)(param_1 + 0x2938) = uVar2;
+  *(uint *)(param_1 + 0x2958) = uVar2;
+  *(uint *)(param_1 + 0x295c) = uVar2;
+  *(uint *)(param_1 + 0x2960) = uVar2;
+  uVar1 = *(ulonglong *)(param_1 + 0x10);
+  *(ulonglong *)(param_1 + 0x10) = uVar1 | 0x400;
+  *(ulonglong *)(param_1 + 0x10) = uVar1 | 0x404;
+  *(ulonglong *)(param_1 + 0x10) = uVar1 | 0x406;
+  *(ulonglong *)(param_1 + 0x10) = uVar1 | 0x407;
+  return;
+}
+
+
+// 820A3268  FUN_820a3268  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:599)
+
+uint FUN_820a3268(int param_1)
+
+{
+  return *(uint *)(param_1 + 0x2f78) >> 8 & 0x1f;
+}
+
+
+// 820A3278  FUN_820a3278  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:608)
+
+void FUN_820a3278(int param_1,uint param_2)
+
+{
+  uint uVar1;
+  ulonglong uVar2;
+  
+  uVar1 = (param_2 & 7) << 0x15 | *(uint *)(param_1 + 0x2f78) & 0xff1fffff;
+  *(uint *)(param_1 + 0x2f78) = uVar1;
+  if ((*(uint *)(param_1 + 0x2f7c) & 0x80000000) == 0) {
+    return;
+  }
+  if ((*(uint *)(param_1 + 0x2f7c) & 0x40000000) == 0) {
+    return;
+  }
+  *(uint *)(param_1 + 0x2938) = uVar1;
+  *(uint *)(param_1 + 0x2958) = uVar1;
+  *(uint *)(param_1 + 0x295c) = uVar1;
+  *(uint *)(param_1 + 0x2960) = uVar1;
+  uVar2 = *(ulonglong *)(param_1 + 0x10);
+  *(ulonglong *)(param_1 + 0x10) = uVar2 | 0x400;
+  *(ulonglong *)(param_1 + 0x10) = uVar2 | 0x404;
+  *(ulonglong *)(param_1 + 0x10) = uVar2 | 0x406;
+  *(ulonglong *)(param_1 + 0x10) = uVar2 | 0x407;
+  return;
+}
+
+
+// 820A32D8  FUN_820a32d8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:623)
+
+uint FUN_820a32d8(int param_1)
+
+{
+  return *(uint *)(param_1 + 0x2f78) >> 0x15 & 7;
+}
+
+
+// 820A32E8  FUN_820a32e8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:632)
+
+void FUN_820a32e8(int param_1,uint param_2)
+
+{
+  uint uVar1;
+  ulonglong uVar2;
+  
+  uVar1 = (param_2 & 0x1f) << 0x10 | *(uint *)(param_1 + 0x2f78) & 0xffe0ffff;
+  *(uint *)(param_1 + 0x2f78) = uVar1;
+  if ((*(uint *)(param_1 + 0x2f7c) & 0x80000000) == 0) {
+    return;
+  }
+  if ((*(uint *)(param_1 + 0x2f7c) & 0x40000000) == 0) {
+    return;
+  }
+  *(uint *)(param_1 + 0x2938) = uVar1;
+  *(uint *)(param_1 + 0x2958) = uVar1;
+  *(uint *)(param_1 + 0x295c) = uVar1;
+  *(uint *)(param_1 + 0x2960) = uVar1;
+  uVar2 = *(ulonglong *)(param_1 + 0x10);
+  *(ulonglong *)(param_1 + 0x10) = uVar2 | 0x400;
+  *(ulonglong *)(param_1 + 0x10) = uVar2 | 0x404;
+  *(ulonglong *)(param_1 + 0x10) = uVar2 | 0x406;
+  *(ulonglong *)(param_1 + 0x10) = uVar2 | 0x407;
+  return;
+}
+
+
+// 820A3348  FUN_820a3348  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:647)
+
+ushort FUN_820a3348(int param_1)
+
+{
+  return *(ushort *)(param_1 + 0x2f78) & 0x1f;
+}
+
+
+// 820A3358  FUN_820a3358  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:656)
+
+void FUN_820a3358(int param_1,uint param_2)
+
+{
+  uint uVar1;
+  ulonglong uVar2;
+  
+  uVar1 = (param_2 & 0x1f) << 0x18 | *(uint *)(param_1 + 0x2f78) & 0xe0ffffff;
+  *(uint *)(param_1 + 0x2f78) = uVar1;
+  if ((*(uint *)(param_1 + 0x2f7c) & 0x80000000) == 0) {
+    return;
+  }
+  if ((*(uint *)(param_1 + 0x2f7c) & 0x40000000) == 0) {
+    return;
+  }
+  *(uint *)(param_1 + 0x2938) = uVar1;
+  *(uint *)(param_1 + 0x2958) = uVar1;
+  *(uint *)(param_1 + 0x295c) = uVar1;
+  *(uint *)(param_1 + 0x2960) = uVar1;
+  uVar2 = *(ulonglong *)(param_1 + 0x10);
+  *(ulonglong *)(param_1 + 0x10) = uVar2 | 0x400;
+  *(ulonglong *)(param_1 + 0x10) = uVar2 | 0x404;
+  *(ulonglong *)(param_1 + 0x10) = uVar2 | 0x406;
+  *(ulonglong *)(param_1 + 0x10) = uVar2 | 0x407;
+  return;
+}
+
+
+// 820A33B8  FUN_820a33b8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:671)
+
+byte FUN_820a33b8(int param_1)
+
+{
+  return *(byte *)(param_1 + 0x2f78) & 0x1f;
+}
+
+
 // 820A33C8  FUN_820a33c8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:680)
 
 void FUN_820a33c8(int param_1,uint param_2)
@@ -393,6 +657,15 @@ void FUN_820a33c8(int param_1,uint param_2)
 }
 
 
+// 820A3450  FUN_820a3450  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:692)
+
+uint FUN_820a3450(int param_1)
+
+{
+  return *(uint *)(param_1 + 0x2f7c) >> 0x1e & 1;
+}
+
+
 // 820A3460  FUN_820a3460  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:701)
 
 void FUN_820a3460(int param_1,uint param_2)
@@ -404,6 +677,15 @@ void FUN_820a3460(int param_1,uint param_2)
 }
 
 
+// 820A3498  FUN_820a3498  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:712)
+
+ulonglong FUN_820a3498(int param_1)
+
+{
+  return (longlong)(*(float *)(param_1 + 0x2904) * 255.0 + 0.5) & 0xffffffff;
+}
+
+
 // 820A34C0  FUN_820a34c0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:721)
 
 void FUN_820a34c0(int param_1,uint param_2)
@@ -412,6 +694,108 @@ void FUN_820a34c0(int param_1,uint param_2)
   *(uint *)(param_1 + 0x293c) = *(uint *)(param_1 + 0x293c) & 0xfffffff8 | param_2 & 7;
   *(ulonglong *)(param_1 + 0x10) = *(ulonglong *)(param_1 + 0x10) | 0x200;
   return;
+}
+
+
+// 820A34E0  FUN_820a34e0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:732)
+
+uint FUN_820a34e0(int param_1)
+
+{
+  return *(uint *)(param_1 + 0x293c) & 7;
+}
+
+
+// 820A34F0  FUN_820a34f0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:741)
+
+void FUN_820a34f0(int param_1,ulonglong param_2)
+
+{
+  *(float *)(param_1 + 0x28e8) = (float)(param_2 & 0xff) * 0.003921569;
+  *(float *)(param_1 + 0x28e4) = (float)((param_2 & 0xffffffff) >> 8 & 0xff) * 0.003921569;
+  *(float *)(param_1 + 0x28e0) = (float)((param_2 & 0xffffffff) >> 0x10 & 0xff) * 0.003921569;
+  *(float *)(param_1 + 0x28ec) = (float)((param_2 & 0xffffffff) >> 0x18) * 0.003921569;
+  *(ulonglong *)(param_1 + 0x10) = *(ulonglong *)(param_1 + 0x10) | 0x1e00000000;
+  return;
+}
+
+
+// 820A3588  FUN_820a3588  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:755)
+
+ulonglong FUN_820a3588(int param_1)
+
+{
+  return ((((longlong)(*(float *)(param_1 + 0x28ec) * 255.0 + 0.5) & 0xffU) << 8 |
+          (longlong)(*(float *)(param_1 + 0x28e0) * 255.0 + 0.5) & 0xffU) << 8 |
+         (longlong)(*(float *)(param_1 + 0x28e4) * 255.0 + 0.5) & 0xffU) << 8 |
+         (longlong)(*(float *)(param_1 + 0x28e8) * 255.0 + 0.5) & 0xffU;
+}
+
+
+// 820A35F8  FUN_820a35f8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:769)
+
+void FUN_820a35f8(int param_1,uint param_2)
+
+{
+  *(uint *)(param_1 + 0x29b8) = (param_2 & 1) << 10 | *(uint *)(param_1 + 0x29b8) & 0xfffffbff;
+  *(ulonglong *)(param_1 + 0x20) = *(ulonglong *)(param_1 + 0x20) | 0x2000000000;
+  return;
+}
+
+
+// 820A3620  FUN_820a3620  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:781)
+
+uint FUN_820a3620(int param_1)
+
+{
+  return *(uint *)(param_1 + 0x29b8) >> 10 & 1;
+}
+
+
+// 820A3630  FUN_820a3630  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:790)
+
+void FUN_820a3630(int param_1,float param_2)
+
+{
+  *(short *)(param_1 + 0x296e) = (short)(longlong)(param_2 * 8.0);
+  *(ulonglong *)(param_1 + 0x18) = *(ulonglong *)(param_1 + 0x18) | 0x10000000000000;
+  return;
+}
+
+
+// 820A3670  FUN_820a3670  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:804)
+
+float FUN_820a3670(int param_1)
+
+{
+  return (float)*(ushort *)(param_1 + 0x296e) * 0.125;
+}
+
+
+// 820A36A8  FUN_820a36a8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:815)
+
+void FUN_820a36a8(int param_1,int param_2)
+
+{
+  uint uVar1;
+  
+  if (param_2 == 0) {
+    uVar1 = *(uint *)(param_1 + 0x5ec8) & 0xfffffffe;
+  }
+  else {
+    uVar1 = *(uint *)(param_1 + 0x5ec8) | 1;
+  }
+  *(uint *)(param_1 + 0x5ec8) = uVar1;
+  return;
+}
+
+
+// 820A36C8  FUN_820a36c8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:828)
+
+uint FUN_820a36c8(int param_1)
+
+{
+  return *(uint *)(param_1 + 0x5ec8) & 1;
 }
 
 
@@ -433,6 +817,15 @@ void FUN_820a36d8(int param_1,uint param_2)
 }
 
 
+// 820A3710  FUN_820a3710  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:859)
+
+undefined4 FUN_820a3710(int param_1)
+
+{
+  return *(undefined4 *)(param_1 + 0x2f94);
+}
+
+
 // 820A3718  FUN_820a3718  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:868)
 
 void FUN_820a3718(int param_1,uint param_2)
@@ -441,6 +834,15 @@ void FUN_820a3718(int param_1,uint param_2)
   *(uint *)(param_1 + 0x2934) = (param_2 & 1) << 2 | *(uint *)(param_1 + 0x2934) & 0xfffffffb;
   *(ulonglong *)(param_1 + 0x10) = *(ulonglong *)(param_1 + 0x10) | 0x800;
   return;
+}
+
+
+// 820A3738  FUN_820a3738  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:879)
+
+uint FUN_820a3738(int param_1)
+
+{
+  return *(uint *)(param_1 + 0x2934) >> 2 & 1;
 }
 
 
@@ -456,6 +858,15 @@ void FUN_820a3748(int param_1,uint param_2)
   *(ulonglong *)(param_1 + 0x10) = uVar1 | 0x800;
   *(ulonglong *)(param_1 + 0x10) = uVar1 | 0x20800;
   return;
+}
+
+
+// 820A3770  FUN_820a3770  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:900)
+
+uint FUN_820a3770(int param_1)
+
+{
+  return *(uint *)(param_1 + 0x2934) >> 4 & 7;
 }
 
 
@@ -477,6 +888,15 @@ void FUN_820a3780(int param_1,uint param_2)
 }
 
 
+// 820A37B8  FUN_820a37b8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:928)
+
+undefined4 FUN_820a37b8(int param_1)
+
+{
+  return *(undefined4 *)(param_1 + 0x2f98);
+}
+
+
 // 820A37C0  FUN_820a37c0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:937)
 
 void FUN_820a37c0(int param_1,uint param_2)
@@ -492,6 +912,15 @@ void FUN_820a37c0(int param_1,uint param_2)
 }
 
 
+// 820A37E8  FUN_820a37e8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:949)
+
+uint FUN_820a37e8(int param_1)
+
+{
+  return *(uint *)(param_1 + 0x2934) >> 7 & 1;
+}
+
+
 // 820A37F8  FUN_820a37f8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:958)
 
 void FUN_820a37f8(int param_1,uint param_2)
@@ -500,6 +929,15 @@ void FUN_820a37f8(int param_1,uint param_2)
   *(uint *)(param_1 + 0x2934) = (param_2 & 7) << 8 | *(uint *)(param_1 + 0x2934) & 0xfffff8ff;
   *(ulonglong *)(param_1 + 0x10) = *(ulonglong *)(param_1 + 0x10) | 0x800;
   return;
+}
+
+
+// 820A3818  FUN_820a3818  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:969)
+
+uint FUN_820a3818(int param_1)
+
+{
+  return *(uint *)(param_1 + 0x2934) >> 8 & 7;
 }
 
 
@@ -518,6 +956,15 @@ void FUN_820a3828(int param_1,uint param_2)
 }
 
 
+// 820A3850  FUN_820a3850  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:990)
+
+uint FUN_820a3850(int param_1)
+
+{
+  return *(uint *)(param_1 + 0x2934) >> 0xb & 7;
+}
+
+
 // 820A3860  FUN_820a3860  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:999)
 
 void FUN_820a3860(int param_1,uint param_2)
@@ -533,6 +980,15 @@ void FUN_820a3860(int param_1,uint param_2)
 }
 
 
+// 820A3888  FUN_820a3888  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1011)
+
+uint FUN_820a3888(int param_1)
+
+{
+  return *(uint *)(param_1 + 0x2934) >> 0x11 & 7;
+}
+
+
 // 820A3898  FUN_820a3898  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1020)
 
 void FUN_820a3898(int param_1,uint param_2)
@@ -544,6 +1000,15 @@ void FUN_820a3898(int param_1,uint param_2)
 }
 
 
+// 820A38B8  FUN_820a38b8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1031)
+
+uint FUN_820a38b8(int param_1)
+
+{
+  return *(uint *)(param_1 + 0x2934) >> 0xe & 7;
+}
+
+
 // 820A38C8  FUN_820a38c8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1040)
 
 void FUN_820a38c8(int param_1,uint param_2)
@@ -552,6 +1017,15 @@ void FUN_820a38c8(int param_1,uint param_2)
   *(uint *)(param_1 + 0x2934) = (param_2 & 7) << 0x14 | *(uint *)(param_1 + 0x2934) & 0xff8fffff;
   *(ulonglong *)(param_1 + 0x10) = *(ulonglong *)(param_1 + 0x10) | 0x800;
   return;
+}
+
+
+// 820A38E8  FUN_820a38e8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1051)
+
+uint FUN_820a38e8(int param_1)
+
+{
+  return *(uint *)(param_1 + 0x2934) >> 0x14 & 7;
 }
 
 
@@ -570,6 +1044,15 @@ void FUN_820a38f8(int param_1,uint param_2)
 }
 
 
+// 820A3920  FUN_820a3920  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1072)
+
+uint FUN_820a3920(int param_1)
+
+{
+  return *(uint *)(param_1 + 0x2934) >> 0x17 & 7;
+}
+
+
 // 820A3930  FUN_820a3930  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1081)
 
 void FUN_820a3930(int param_1,int param_2)
@@ -585,6 +1068,15 @@ void FUN_820a3930(int param_1,int param_2)
 }
 
 
+// 820A3958  FUN_820a3958  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1093)
+
+uint FUN_820a3958(int param_1)
+
+{
+  return *(uint *)(param_1 + 0x2934) >> 0x1d;
+}
+
+
 // 820A3968  FUN_820a3968  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1102)
 
 void FUN_820a3968(int param_1,uint param_2)
@@ -596,6 +1088,160 @@ void FUN_820a3968(int param_1,uint param_2)
 }
 
 
+// 820A3988  FUN_820a3988  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1113)
+
+uint FUN_820a3988(int param_1)
+
+{
+  return *(uint *)(param_1 + 0x2934) >> 0x1a & 7;
+}
+
+
+// 820A3998  FUN_820a3998  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1122)
+
+void FUN_820a3998(int param_1,undefined1 param_2)
+
+{
+  *(undefined1 *)(param_1 + 0x2903) = param_2;
+  *(ulonglong *)(param_1 + 0x10) = *(ulonglong *)(param_1 + 0x10) | 0x10000000;
+  return;
+}
+
+
+// 820A39B0  FUN_820a39b0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1133)
+
+undefined1 FUN_820a39b0(int param_1)
+
+{
+  return *(undefined1 *)(param_1 + 0x2903);
+}
+
+
+// 820A39B8  FUN_820a39b8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1142)
+
+void FUN_820a39b8(int param_1,undefined1 param_2)
+
+{
+  *(undefined1 *)(param_1 + 0x2902) = param_2;
+  *(ulonglong *)(param_1 + 0x10) = *(ulonglong *)(param_1 + 0x10) | 0x10000000;
+  return;
+}
+
+
+// 820A39D0  FUN_820a39d0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1153)
+
+undefined1 FUN_820a39d0(int param_1)
+
+{
+  return *(undefined1 *)(param_1 + 0x2902);
+}
+
+
+// 820A39D8  FUN_820a39d8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1162)
+
+void FUN_820a39d8(int param_1,undefined1 param_2)
+
+{
+  *(undefined1 *)(param_1 + 0x2901) = param_2;
+  *(ulonglong *)(param_1 + 0x10) = *(ulonglong *)(param_1 + 0x10) | 0x10000000;
+  return;
+}
+
+
+// 820A39F0  FUN_820a39f0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1173)
+
+undefined1 FUN_820a39f0(int param_1)
+
+{
+  return *(undefined1 *)(param_1 + 0x2901);
+}
+
+
+// 820A39F8  FUN_820a39f8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1182)
+
+void FUN_820a39f8(int param_1,undefined1 param_2)
+
+{
+  *(undefined1 *)(param_1 + 0x28ff) = param_2;
+  *(ulonglong *)(param_1 + 0x10) = *(ulonglong *)(param_1 + 0x10) | 0x20000000;
+  return;
+}
+
+
+// 820A3A10  FUN_820a3a10  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1193)
+
+undefined1 FUN_820a3a10(int param_1)
+
+{
+  return *(undefined1 *)(param_1 + 0x28ff);
+}
+
+
+// 820A3A18  FUN_820a3a18  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1202)
+
+void FUN_820a3a18(int param_1,undefined1 param_2)
+
+{
+  *(undefined1 *)(param_1 + 0x28fe) = param_2;
+  *(ulonglong *)(param_1 + 0x10) = *(ulonglong *)(param_1 + 0x10) | 0x20000000;
+  return;
+}
+
+
+// 820A3A30  FUN_820a3a30  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1213)
+
+undefined1 FUN_820a3a30(int param_1)
+
+{
+  return *(undefined1 *)(param_1 + 0x28fe);
+}
+
+
+// 820A3A38  FUN_820a3a38  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1222)
+
+void FUN_820a3a38(int param_1,undefined1 param_2)
+
+{
+  *(undefined1 *)(param_1 + 0x28fd) = param_2;
+  *(ulonglong *)(param_1 + 0x10) = *(ulonglong *)(param_1 + 0x10) | 0x20000000;
+  return;
+}
+
+
+// 820A3A50  FUN_820a3a50  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1233)
+
+undefined1 FUN_820a3a50(int param_1)
+
+{
+  return *(undefined1 *)(param_1 + 0x28fd);
+}
+
+
+// 820A3A58  FUN_820a3a58  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1242)
+
+void FUN_820a3a58(int param_1,longlong param_2)
+
+{
+  ulonglong uVar1;
+  
+  *(uint *)(param_1 + 0x28b4) = -(uint)(param_2 != 0) & 0x1000;
+  *(uint *)(param_1 + 0x2944) = *(uint *)(param_1 + 0x2944) & 0xffffffc0 | (uint)param_2;
+  uVar1 = *(ulonglong *)(param_1 + 0x10);
+  *(ulonglong *)(param_1 + 0x10) = uVar1 | 0x80;
+  *(ulonglong *)(param_1 + 0x10) = uVar1 | 0x100000000080;
+  return;
+}
+
+
+// 820A3AA0  FUN_820a3aa0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1264)
+
+uint FUN_820a3aa0(int param_1)
+
+{
+  return *(uint *)(param_1 + 0x2944) & 0x3f;
+}
+
+
 // 820A3AB0  FUN_820a3ab0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1273)
 
 void FUN_820a3ab0(int param_1,undefined4 param_2)
@@ -604,6 +1250,15 @@ void FUN_820a3ab0(int param_1,undefined4 param_2)
   *(undefined4 *)(param_1 + 0x2f80) = param_2;
   FUN_820a52b0(param_1,param_1 + 0x327c);
   return;
+}
+
+
+// 820A3AC0  FUN_820a3ac0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1287)
+
+undefined4 FUN_820a3ac0(int param_1)
+
+{
+  return *(undefined4 *)(param_1 + 0x2f80);
 }
 
 
@@ -637,6 +1292,15 @@ void FUN_820a3ac8(int param_1,float param_2)
 }
 
 
+// 820A3B70  FUN_820a3b70  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1325)
+
+float FUN_820a3b70(int param_1)
+
+{
+  return *(float *)(param_1 + 0x2a50) * 0.0625;
+}
+
+
 // 820A3B90  FUN_820a3b90  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1338)
 
 void FUN_820a3b90(int param_1,float param_2)
@@ -666,6 +1330,55 @@ void FUN_820a3b90(int param_1,float param_2)
 }
 
 
+// 820A3C30  FUN_820a3c30  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1363)
+
+undefined4 FUN_820a3c30(int param_1)
+
+{
+  return *(undefined4 *)(param_1 + 0x2a54);
+}
+
+
+// 820A3C40  FUN_820a3c40  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1374)
+
+void FUN_820a3c40(int param_1,uint param_2)
+
+{
+  *(uint *)(param_1 + 0x2948) = (param_2 & 1) << 0xf | *(uint *)(param_1 + 0x2948) & 0xffff7fff;
+  *(ulonglong *)(param_1 + 0x10) = *(ulonglong *)(param_1 + 0x10) | 0x40;
+  return;
+}
+
+
+// 820A3C60  FUN_820a3c60  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1385)
+
+uint FUN_820a3c60(int param_1)
+
+{
+  return *(uint *)(param_1 + 0x2948) >> 0xf & 1;
+}
+
+
+// 820A3C70  FUN_820a3c70  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1394)
+
+void FUN_820a3c70(int param_1,uint param_2)
+
+{
+  *(uint *)(param_1 + 0x2a00) = param_2 & 0xffff;
+  *(ulonglong *)(param_1 + 0x20) = *(ulonglong *)(param_1 + 0x20) | 0x80000;
+  return;
+}
+
+
+// 820A3C88  FUN_820a3c88  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1406)
+
+undefined4 FUN_820a3c88(int param_1)
+
+{
+  return *(undefined4 *)(param_1 + 0x2a00);
+}
+
+
 // 820A3C90  FUN_820a3c90  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1415)
 
 void FUN_820a3c90(int param_1,uint param_2)
@@ -680,6 +1393,733 @@ void FUN_820a3c90(int param_1,uint param_2)
 }
 
 
+// 820A3CC8  FUN_820a3cc8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1433)
+
+undefined4 FUN_820a3cc8(int param_1)
+
+{
+  return *(undefined4 *)(param_1 + 0x2f84);
+}
+
+
+// 820A3CD0  FUN_820a3cd0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1442)
+
+void FUN_820a3cd0(int param_1,uint param_2)
+
+{
+  *(uint *)(param_1 + 0x2f88) = param_2;
+  *(uint *)(param_1 + 0x28dc) =
+       (-(uint)(*(int *)(param_1 + 0x3194) != 0) & param_2 & 0xf) << 4 |
+       *(uint *)(param_1 + 0x28dc) & 0xffffff0f;
+  *(ulonglong *)(param_1 + 0x10) = *(ulonglong *)(param_1 + 0x10) | 0x2000000000;
+  return;
+}
+
+
+// 820A3D08  FUN_820a3d08  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1460)
+
+undefined4 FUN_820a3d08(int param_1)
+
+{
+  return *(undefined4 *)(param_1 + 0x2f88);
+}
+
+
+// 820A3D10  FUN_820a3d10  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1469)
+
+void FUN_820a3d10(int param_1,uint param_2)
+
+{
+  *(uint *)(param_1 + 0x2f8c) = param_2;
+  *(uint *)(param_1 + 0x28dc) =
+       (-(uint)(*(int *)(param_1 + 0x3198) != 0) & param_2 & 0xf) << 8 |
+       *(uint *)(param_1 + 0x28dc) & 0xfffff0ff;
+  *(ulonglong *)(param_1 + 0x10) = *(ulonglong *)(param_1 + 0x10) | 0x2000000000;
+  return;
+}
+
+
+// 820A3D48  FUN_820a3d48  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1487)
+
+undefined4 FUN_820a3d48(int param_1)
+
+{
+  return *(undefined4 *)(param_1 + 0x2f8c);
+}
+
+
+// 820A3D50  FUN_820a3d50  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1496)
+
+void FUN_820a3d50(int param_1,uint param_2)
+
+{
+  *(uint *)(param_1 + 0x2f90) = param_2;
+  *(uint *)(param_1 + 0x28dc) =
+       (-(uint)(*(int *)(param_1 + 0x319c) != 0) & param_2 & 0xf) << 0xc |
+       *(uint *)(param_1 + 0x28dc) & 0xffff0fff;
+  *(ulonglong *)(param_1 + 0x10) = *(ulonglong *)(param_1 + 0x10) | 0x2000000000;
+  return;
+}
+
+
+// 820A3D88  FUN_820a3d88  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1514)
+
+undefined4 FUN_820a3d88(int param_1)
+
+{
+  return *(undefined4 *)(param_1 + 0x2f90);
+}
+
+
+// 820A3D90  FUN_820a3d90  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1523)
+
+void FUN_820a3d90(int param_1,undefined4 param_2)
+
+{
+  *(undefined4 *)(param_1 + 0x2f9c) = param_2;
+  return;
+}
+
+
+// 820A3D98  FUN_820a3d98  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1533)
+
+undefined4 FUN_820a3d98(int param_1)
+
+{
+  return *(undefined4 *)(param_1 + 0x2f9c);
+}
+
+
+// 820A3DA0  FUN_820a3da0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1542)
+
+void FUN_820a3da0(int param_1,float param_2)
+
+{
+  undefined2 uVar1;
+  
+  *(float *)(param_1 + 0x2fa4) = param_2;
+  uVar1 = (undefined2)(int)(param_2 * 8.0);
+  *(undefined2 *)(param_1 + 0x2966) = uVar1;
+  *(undefined2 *)(param_1 + 0x2964) = uVar1;
+  *(ulonglong *)(param_1 + 0x18) = *(ulonglong *)(param_1 + 0x18) | 0x40000000000000;
+  return;
+}
+
+
+// 820A3DF0  FUN_820a3df0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1562)
+
+undefined4 FUN_820a3df0(int param_1)
+
+{
+  return *(undefined4 *)(param_1 + 0x2fa4);
+}
+
+
+// 820A3E00  FUN_820a3e00  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1573)
+
+void FUN_820a3e00(int param_1,float param_2)
+
+{
+  *(float *)(param_1 + 0x2fa8) = param_2;
+  *(short *)(param_1 + 0x296a) = (short)(int)(param_2 * 16.0);
+  *(ulonglong *)(param_1 + 0x18) = *(ulonglong *)(param_1 + 0x18) | 0x20000000000000;
+  return;
+}
+
+
+// 820A3E48  FUN_820a3e48  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1592)
+
+undefined4 FUN_820a3e48(int param_1)
+
+{
+  return *(undefined4 *)(param_1 + 0x2fa8);
+}
+
+
+// 820A3E58  FUN_820a3e58  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1603)
+
+void FUN_820a3e58(int param_1,float param_2)
+
+{
+  *(float *)(param_1 + 0x2fac) = param_2;
+  *(short *)(param_1 + 0x2968) = (short)(int)(param_2 * 16.0);
+  *(ulonglong *)(param_1 + 0x18) = *(ulonglong *)(param_1 + 0x18) | 0x20000000000000;
+  return;
+}
+
+
+// 820A3EA0  FUN_820a3ea0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1622)
+
+undefined4 FUN_820a3ea0(int param_1)
+
+{
+  return *(undefined4 *)(param_1 + 0x2fac);
+}
+
+
+// 820A3EB0  FUN_820a3eb0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1678)
+
+void FUN_820a3eb0(int param_1,uint param_2)
+
+{
+  *(uint *)(param_1 + 0x292c) = *(uint *)(param_1 + 0x292c) & 0xfffffff0 | param_2;
+  *(ulonglong *)(param_1 + 0x10) = *(ulonglong *)(param_1 + 0x10) | 0x2000;
+  return;
+}
+
+
+// 820A3ED0  FUN_820a3ed0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1679)
+
+void FUN_820a3ed0(int param_1,int param_2)
+
+{
+  *(uint *)(param_1 + 0x292c) = *(uint *)(param_1 + 0x292c) & 0xffffff0f | param_2 << 4;
+  *(ulonglong *)(param_1 + 0x10) = *(ulonglong *)(param_1 + 0x10) | 0x2000;
+  return;
+}
+
+
+// 820A3EF8  FUN_820a3ef8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1680)
+
+void FUN_820a3ef8(int param_1,int param_2)
+
+{
+  *(uint *)(param_1 + 0x292c) = *(uint *)(param_1 + 0x292c) & 0xfffff0ff | param_2 << 8;
+  *(ulonglong *)(param_1 + 0x10) = *(ulonglong *)(param_1 + 0x10) | 0x2000;
+  return;
+}
+
+
+// 820A3F20  FUN_820a3f20  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1681)
+
+void FUN_820a3f20(int param_1,int param_2)
+
+{
+  *(uint *)(param_1 + 0x292c) = *(uint *)(param_1 + 0x292c) & 0xffff0fff | param_2 << 0xc;
+  *(ulonglong *)(param_1 + 0x10) = *(ulonglong *)(param_1 + 0x10) | 0x2000;
+  return;
+}
+
+
+// 820A3F48  FUN_820a3f48  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1682)
+
+void FUN_820a3f48(int param_1,int param_2)
+
+{
+  *(uint *)(param_1 + 0x292c) = *(uint *)(param_1 + 0x292c) & 0xfff0ffff | param_2 << 0x10;
+  *(ulonglong *)(param_1 + 0x10) = *(ulonglong *)(param_1 + 0x10) | 0x2000;
+  return;
+}
+
+
+// 820A3F70  FUN_820a3f70  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1683)
+
+void FUN_820a3f70(int param_1,int param_2)
+
+{
+  *(uint *)(param_1 + 0x292c) = *(uint *)(param_1 + 0x292c) & 0xff0fffff | param_2 << 0x14;
+  *(ulonglong *)(param_1 + 0x10) = *(ulonglong *)(param_1 + 0x10) | 0x2000;
+  return;
+}
+
+
+// 820A3F98  FUN_820a3f98  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1684)
+
+void FUN_820a3f98(int param_1,int param_2)
+
+{
+  *(uint *)(param_1 + 0x292c) = *(uint *)(param_1 + 0x292c) & 0xf0ffffff | param_2 << 0x18;
+  *(ulonglong *)(param_1 + 0x10) = *(ulonglong *)(param_1 + 0x10) | 0x2000;
+  return;
+}
+
+
+// 820A3FC0  FUN_820a3fc0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1685)
+
+void FUN_820a3fc0(int param_1,int param_2)
+
+{
+  *(uint *)(param_1 + 0x292c) = param_2 << 0x1c | *(uint *)(param_1 + 0x292c) & 0xfffffff;
+  *(ulonglong *)(param_1 + 0x10) = *(ulonglong *)(param_1 + 0x10) | 0x2000;
+  return;
+}
+
+
+// 820A3FE0  FUN_820a3fe0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1687)
+
+void FUN_820a3fe0(int param_1,uint param_2)
+
+{
+  *(uint *)(param_1 + 0x2930) = *(uint *)(param_1 + 0x2930) & 0xfffffff0 | param_2;
+  *(ulonglong *)(param_1 + 0x10) = *(ulonglong *)(param_1 + 0x10) | 0x1000;
+  return;
+}
+
+
+// 820A4000  FUN_820a4000  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1688)
+
+void FUN_820a4000(int param_1,int param_2)
+
+{
+  *(uint *)(param_1 + 0x2930) = *(uint *)(param_1 + 0x2930) & 0xffffff0f | param_2 << 4;
+  *(ulonglong *)(param_1 + 0x10) = *(ulonglong *)(param_1 + 0x10) | 0x1000;
+  return;
+}
+
+
+// 820A4028  FUN_820a4028  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1689)
+
+void FUN_820a4028(int param_1,int param_2)
+
+{
+  *(uint *)(param_1 + 0x2930) = *(uint *)(param_1 + 0x2930) & 0xfffff0ff | param_2 << 8;
+  *(ulonglong *)(param_1 + 0x10) = *(ulonglong *)(param_1 + 0x10) | 0x1000;
+  return;
+}
+
+
+// 820A4050  FUN_820a4050  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1690)
+
+void FUN_820a4050(int param_1,int param_2)
+
+{
+  *(uint *)(param_1 + 0x2930) = *(uint *)(param_1 + 0x2930) & 0xffff0fff | param_2 << 0xc;
+  *(ulonglong *)(param_1 + 0x10) = *(ulonglong *)(param_1 + 0x10) | 0x1000;
+  return;
+}
+
+
+// 820A4078  FUN_820a4078  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1691)
+
+void FUN_820a4078(int param_1,int param_2)
+
+{
+  *(uint *)(param_1 + 0x2930) = *(uint *)(param_1 + 0x2930) & 0xfff0ffff | param_2 << 0x10;
+  *(ulonglong *)(param_1 + 0x10) = *(ulonglong *)(param_1 + 0x10) | 0x1000;
+  return;
+}
+
+
+// 820A40A0  FUN_820a40a0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1692)
+
+void FUN_820a40a0(int param_1,int param_2)
+
+{
+  *(uint *)(param_1 + 0x2930) = *(uint *)(param_1 + 0x2930) & 0xff0fffff | param_2 << 0x14;
+  *(ulonglong *)(param_1 + 0x10) = *(ulonglong *)(param_1 + 0x10) | 0x1000;
+  return;
+}
+
+
+// 820A40C8  FUN_820a40c8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1693)
+
+void FUN_820a40c8(int param_1,int param_2)
+
+{
+  *(uint *)(param_1 + 0x2930) = *(uint *)(param_1 + 0x2930) & 0xf0ffffff | param_2 << 0x18;
+  *(ulonglong *)(param_1 + 0x10) = *(ulonglong *)(param_1 + 0x10) | 0x1000;
+  return;
+}
+
+
+// 820A40F0  FUN_820a40f0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1694)
+
+void FUN_820a40f0(int param_1,int param_2)
+
+{
+  *(uint *)(param_1 + 0x2930) = param_2 << 0x1c | *(uint *)(param_1 + 0x2930) & 0xfffffff;
+  *(ulonglong *)(param_1 + 0x10) = *(ulonglong *)(param_1 + 0x10) | 0x1000;
+  return;
+}
+
+
+// 820A4110  FUN_820a4110  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1696)
+
+uint FUN_820a4110(int param_1)
+
+{
+  return *(uint *)(param_1 + 0x292c) & 0xf;
+}
+
+
+// 820A4120  FUN_820a4120  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1697)
+
+uint FUN_820a4120(int param_1)
+
+{
+  return *(uint *)(param_1 + 0x292c) >> 4 & 0xf;
+}
+
+
+// 820A4130  FUN_820a4130  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1698)
+
+uint FUN_820a4130(int param_1)
+
+{
+  return *(uint *)(param_1 + 0x292c) >> 8 & 0xf;
+}
+
+
+// 820A4140  FUN_820a4140  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1699)
+
+uint FUN_820a4140(int param_1)
+
+{
+  return *(uint *)(param_1 + 0x292c) >> 0xc & 0xf;
+}
+
+
+// 820A4150  FUN_820a4150  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1700)
+
+ushort FUN_820a4150(int param_1)
+
+{
+  return *(ushort *)(param_1 + 0x292c) & 0xf;
+}
+
+
+// 820A4160  FUN_820a4160  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1701)
+
+uint FUN_820a4160(int param_1)
+
+{
+  return *(uint *)(param_1 + 0x292c) >> 0x14 & 0xf;
+}
+
+
+// 820A4170  FUN_820a4170  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1702)
+
+byte FUN_820a4170(int param_1)
+
+{
+  return *(byte *)(param_1 + 0x292c) & 0xf;
+}
+
+
+// 820A4180  FUN_820a4180  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1703)
+
+uint FUN_820a4180(int param_1)
+
+{
+  return *(uint *)(param_1 + 0x292c) >> 0x1c;
+}
+
+
+// 820A4190  FUN_820a4190  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1705)
+
+uint FUN_820a4190(int param_1)
+
+{
+  return *(uint *)(param_1 + 0x2930) & 0xf;
+}
+
+
+// 820A41A0  FUN_820a41a0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1706)
+
+uint FUN_820a41a0(int param_1)
+
+{
+  return *(uint *)(param_1 + 0x2930) >> 4 & 0xf;
+}
+
+
+// 820A41B0  FUN_820a41b0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1707)
+
+uint FUN_820a41b0(int param_1)
+
+{
+  return *(uint *)(param_1 + 0x2930) >> 8 & 0xf;
+}
+
+
+// 820A41C0  FUN_820a41c0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1708)
+
+uint FUN_820a41c0(int param_1)
+
+{
+  return *(uint *)(param_1 + 0x2930) >> 0xc & 0xf;
+}
+
+
+// 820A41D0  FUN_820a41d0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1709)
+
+ushort FUN_820a41d0(int param_1)
+
+{
+  return *(ushort *)(param_1 + 0x2930) & 0xf;
+}
+
+
+// 820A41E0  FUN_820a41e0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1710)
+
+uint FUN_820a41e0(int param_1)
+
+{
+  return *(uint *)(param_1 + 0x2930) >> 0x14 & 0xf;
+}
+
+
+// 820A41F0  FUN_820a41f0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1711)
+
+byte FUN_820a41f0(int param_1)
+
+{
+  return *(byte *)(param_1 + 0x2930) & 0xf;
+}
+
+
+// 820A4200  FUN_820a4200  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1712)
+
+uint FUN_820a4200(int param_1)
+
+{
+  return *(uint *)(param_1 + 0x2930) >> 0x1c;
+}
+
+
+// 820A4210  FUN_820a4210  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1719)
+
+void FUN_820a4210(int param_1,int param_2)
+
+{
+  undefined4 uVar2;
+  ulonglong uVar1;
+  
+  uVar2 = 0x43f;
+  if (param_2 == 0) {
+    uVar2 = 0x400;
+  }
+  *(undefined4 *)(param_1 + 0x294c) = uVar2;
+  *(uint *)(param_1 + 0x2944) =
+       (uint)(param_2 == 0) << 0x10 | *(uint *)(param_1 + 0x2944) & 0xfffeffff;
+  uVar1 = *(ulonglong *)(param_1 + 0x10);
+  *(ulonglong *)(param_1 + 0x10) = uVar1 | 0x20;
+  *(ulonglong *)(param_1 + 0x10) = uVar1 | 0xa0;
+  return;
+}
+
+
+// 820A4250  FUN_820a4250  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1749)
+
+uint FUN_820a4250(int param_1)
+
+{
+  return *(uint *)(param_1 + 0x294c) & 1;
+}
+
+
+// 820A4260  FUN_820a4260  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1819)
+
+void FUN_820a4260(int param_1,ulonglong param_2)
+
+{
+  uint uVar1;
+  ulonglong uVar2;
+  
+  *(int *)(param_1 + 0x2ff8) = (int)param_2;
+  if (*(int *)(param_1 + 0x3190) == 0) {
+    return;
+  }
+  uVar1 = *(uint *)(param_1 + 0x2884);
+  uVar2 = (ulonglong)(uVar1 >> 0x10) & 0xf;
+  if ((((uVar2 != 2) && (uVar2 != 3)) && (uVar2 != 10)) && (uVar2 != 0xc)) {
+    return;
+  }
+  if (((ulonglong)(uVar1 >> 0x13) & 1) == param_2) {
+    return;
+  }
+  *(uint *)(param_1 + 0x2884) =
+       uVar1 & 0xfff0ffff |
+       ((uint)((~(param_2 - 1) & 0xffffffff) << 0x10) & ((int)uVar2 + 3) * 0x20000 |
+       (uint)(((uVar2 >> 1) - 3 & param_2 - 1 & 0xffffffff) << 0x10)) & 0xf0000;
+  *(ulonglong *)(param_1 + 0x10) = *(ulonglong *)(param_1 + 0x10) | 0x100000000000000;
+  return;
+}
+
+
+// 820A42F0  FUN_820a42f0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1827)
+
+undefined4 FUN_820a42f0(int param_1)
+
+{
+  return *(undefined4 *)(param_1 + 0x2ff8);
+}
+
+
+// 820A42F8  FUN_820a42f8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1836)
+
+void FUN_820a42f8(int param_1,ulonglong param_2)
+
+{
+  uint uVar1;
+  ulonglong uVar2;
+  
+  *(int *)(param_1 + 0x2ffc) = (int)param_2;
+  if (*(int *)(param_1 + 0x3194) == 0) {
+    return;
+  }
+  uVar1 = *(uint *)(param_1 + 0x288c);
+  uVar2 = (ulonglong)(uVar1 >> 0x10) & 0xf;
+  if ((((uVar2 != 2) && (uVar2 != 3)) && (uVar2 != 10)) && (uVar2 != 0xc)) {
+    return;
+  }
+  if (((ulonglong)(uVar1 >> 0x13) & 1) == param_2) {
+    return;
+  }
+  *(uint *)(param_1 + 0x288c) =
+       uVar1 & 0xfff0ffff |
+       ((uint)((~(param_2 - 1) & 0xffffffff) << 0x10) & ((int)uVar2 + 3) * 0x20000 |
+       (uint)(((uVar2 >> 1) - 3 & param_2 - 1 & 0xffffffff) << 0x10)) & 0xf0000;
+  *(ulonglong *)(param_1 + 0x10) = *(ulonglong *)(param_1 + 0x10) | 0x40000000000000;
+  return;
+}
+
+
+// 820A4388  FUN_820a4388  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1844)
+
+undefined4 FUN_820a4388(int param_1)
+
+{
+  return *(undefined4 *)(param_1 + 0x2ffc);
+}
+
+
+// 820A4390  FUN_820a4390  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1853)
+
+void FUN_820a4390(int param_1,ulonglong param_2)
+
+{
+  uint uVar1;
+  ulonglong uVar2;
+  
+  *(int *)(param_1 + 0x3000) = (int)param_2;
+  if (*(int *)(param_1 + 0x3198) == 0) {
+    return;
+  }
+  uVar1 = *(uint *)(param_1 + 0x2890);
+  uVar2 = (ulonglong)(uVar1 >> 0x10) & 0xf;
+  if ((((uVar2 != 2) && (uVar2 != 3)) && (uVar2 != 10)) && (uVar2 != 0xc)) {
+    return;
+  }
+  if (((ulonglong)(uVar1 >> 0x13) & 1) == param_2) {
+    return;
+  }
+  *(uint *)(param_1 + 0x2890) =
+       uVar1 & 0xfff0ffff |
+       ((uint)((~(param_2 - 1) & 0xffffffff) << 0x10) & ((int)uVar2 + 3) * 0x20000 |
+       (uint)(((uVar2 >> 1) - 3 & param_2 - 1 & 0xffffffff) << 0x10)) & 0xf0000;
+  *(ulonglong *)(param_1 + 0x10) = *(ulonglong *)(param_1 + 0x10) | 0x20000000000000;
+  return;
+}
+
+
+// 820A4420  FUN_820a4420  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1861)
+
+undefined4 FUN_820a4420(int param_1)
+
+{
+  return *(undefined4 *)(param_1 + 0x3000);
+}
+
+
+// 820A4428  FUN_820a4428  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1870)
+
+void FUN_820a4428(int param_1,ulonglong param_2)
+
+{
+  uint uVar1;
+  ulonglong uVar2;
+  
+  *(int *)(param_1 + 0x3004) = (int)param_2;
+  if (*(int *)(param_1 + 0x319c) == 0) {
+    return;
+  }
+  uVar1 = *(uint *)(param_1 + 0x2894);
+  uVar2 = (ulonglong)(uVar1 >> 0x10) & 0xf;
+  if ((((uVar2 != 2) && (uVar2 != 3)) && (uVar2 != 10)) && (uVar2 != 0xc)) {
+    return;
+  }
+  if (((ulonglong)(uVar1 >> 0x13) & 1) == param_2) {
+    return;
+  }
+  *(uint *)(param_1 + 0x2894) =
+       uVar1 & 0xfff0ffff |
+       ((uint)((~(param_2 - 1) & 0xffffffff) << 0x10) & ((int)uVar2 + 3) * 0x20000 |
+       (uint)(((uVar2 >> 1) - 3 & param_2 - 1 & 0xffffffff) << 0x10)) & 0xf0000;
+  *(ulonglong *)(param_1 + 0x10) = *(ulonglong *)(param_1 + 0x10) | 0x10000000000000;
+  return;
+}
+
+
+// 820A44B8  FUN_820a44b8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1878)
+
+undefined4 FUN_820a44b8(int param_1)
+
+{
+  return *(undefined4 *)(param_1 + 0x3004);
+}
+
+
+// 820A44C0  FUN_820a44c0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1887)
+
+void FUN_820a44c0(int param_1,undefined4 param_2)
+
+{
+  *(undefined4 *)(param_1 + 0x2980) = param_2;
+  *(ulonglong *)(param_1 + 0x18) = *(ulonglong *)(param_1 + 0x18) | 0x800000000000;
+  return;
+}
+
+
+// 820A44E8  FUN_820a44e8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1900)
+
+undefined4 FUN_820a44e8(int param_1)
+
+{
+  return *(undefined4 *)(param_1 + 0x2980);
+}
+
+
+// 820A44F8  FUN_820a44f8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1911)
+
+void FUN_820a44f8(int param_1,undefined4 param_2)
+
+{
+  *(undefined4 *)(param_1 + 0x297c) = param_2;
+  *(ulonglong *)(param_1 + 0x18) = *(ulonglong *)(param_1 + 0x18) | 0x1000000000000;
+  return;
+}
+
+
+// 820A4520  FUN_820a4520  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1924)
+
+undefined4 FUN_820a4520(int param_1)
+
+{
+  return *(undefined4 *)(param_1 + 0x297c);
+}
+
+
+// 820A4530  FUN_820a4530  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1935)
+
+void FUN_820a4530(int param_1,uint param_2)
+
+{
+  *(uint *)(param_1 + 0x2978) = *(uint *)(param_1 + 0x2978) & 0xfffffffc | param_2 & 3;
+  *(ulonglong *)(param_1 + 0x18) = *(ulonglong *)(param_1 + 0x18) | 0x2000000000000;
+  return;
+}
+
+
+// 820A4558  FUN_820a4558  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1946)
+
+uint FUN_820a4558(int param_1)
+
+{
+  return *(uint *)(param_1 + 0x2978) & 3;
+}
+
+
 // 820A4568  FUN_820a4568  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1955)
 
 void FUN_820a4568(int param_1,uint param_2)
@@ -688,6 +2128,342 @@ void FUN_820a4568(int param_1,uint param_2)
   *(uint *)(param_1 + 0x29c0) = *(uint *)(param_1 + 0x29c0) & 0xfffffffe | param_2 & 1;
   *(ulonglong *)(param_1 + 0x20) = *(ulonglong *)(param_1 + 0x20) | 0x800000000;
   return;
+}
+
+
+// 820A4590  FUN_820a4590  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1966)
+
+uint FUN_820a4590(int param_1)
+
+{
+  return *(uint *)(param_1 + 0x29c0) & 1;
+}
+
+
+// 820A45A0  FUN_820a45a0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1975)
+
+void FUN_820a45a0(int param_1,uint param_2)
+
+{
+  *(uint *)(param_1 + 0x2948) = (param_2 & 1) << 0x15 | *(uint *)(param_1 + 0x2948) & 0xffdfffff;
+  *(ulonglong *)(param_1 + 0x10) = *(ulonglong *)(param_1 + 0x10) | 0x40;
+  return;
+}
+
+
+// 820A45C0  FUN_820a45c0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1986)
+
+uint FUN_820a45c0(int param_1)
+
+{
+  return *(uint *)(param_1 + 0x2948) >> 0x15 & 1;
+}
+
+
+// 820A45D0  FUN_820a45d0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1995)
+
+void FUN_820a45d0(int param_1,undefined4 param_2)
+
+{
+  *(undefined4 *)(param_1 + 0x28d8) = param_2;
+  *(ulonglong *)(param_1 + 0x10) = *(ulonglong *)(param_1 + 0x10) | 0x4000000000;
+  return;
+}
+
+
+// 820A45F0  FUN_820a45f0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2006)
+
+undefined4 FUN_820a45f0(int param_1)
+
+{
+  return *(undefined4 *)(param_1 + 0x28d8);
+}
+
+
+// 820A45F8  FUN_820a45f8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2015)
+
+void FUN_820a45f8(int param_1,uint param_2)
+
+{
+  *(uint *)(param_1 + 0x293c) = (param_2 & 1) << 4 | *(uint *)(param_1 + 0x293c) & 0xffffffef;
+  *(ulonglong *)(param_1 + 0x10) = *(ulonglong *)(param_1 + 0x10) | 0x200;
+  return;
+}
+
+
+// 820A4618  FUN_820a4618  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2026)
+
+uint FUN_820a4618(int param_1)
+
+{
+  return *(uint *)(param_1 + 0x293c) >> 4 & 1;
+}
+
+
+// 820A4628  FUN_820a4628  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2035)
+
+void FUN_820a4628(int param_1,int param_2)
+
+{
+  *(uint *)(param_1 + 0x293c) = param_2 << 0x18 | *(uint *)(param_1 + 0x293c) & 0xffffff;
+  *(ulonglong *)(param_1 + 0x10) = *(ulonglong *)(param_1 + 0x10) | 0x200;
+  return;
+}
+
+
+// 820A4648  FUN_820a4648  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2050)
+
+undefined1 FUN_820a4648(int param_1)
+
+{
+  return *(undefined1 *)(param_1 + 0x293c);
+}
+
+
+// 820A4650  FUN_820a4650  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2064)
+
+void FUN_820a4650(int param_1,undefined4 param_2)
+
+{
+  *(undefined4 *)(param_1 + 0x29cc) = param_2;
+  *(ulonglong *)(param_1 + 0x20) = *(ulonglong *)(param_1 + 0x20) | 0x100000000;
+  return;
+}
+
+
+// 820A4678  FUN_820a4678  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2076)
+
+undefined4 FUN_820a4678(int param_1)
+
+{
+  return *(undefined4 *)(param_1 + 0x29cc);
+}
+
+
+// 820A4680  FUN_820a4680  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2087)
+
+void FUN_820a4680(int param_1,undefined4 param_2)
+
+{
+  *(undefined4 *)(param_1 + 0x29c4) = param_2;
+  *(ulonglong *)(param_1 + 0x20) = *(ulonglong *)(param_1 + 0x20) | 0x400000000;
+  return;
+}
+
+
+// 820A46A8  FUN_820a46a8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2099)
+
+undefined4 FUN_820a46a8(int param_1)
+
+{
+  return *(undefined4 *)(param_1 + 0x29c4);
+}
+
+
+// 820A46B0  FUN_820a46b0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2110)
+
+void FUN_820a46b0(int param_1,undefined4 param_2)
+
+{
+  *(undefined4 *)(param_1 + 0x29d0) = param_2;
+  *(ulonglong *)(param_1 + 0x20) = *(ulonglong *)(param_1 + 0x20) | 0x80000000;
+  return;
+}
+
+
+// 820A46D0  FUN_820a46d0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2122)
+
+undefined4 FUN_820a46d0(int param_1)
+
+{
+  return *(undefined4 *)(param_1 + 0x29d0);
+}
+
+
+// 820A46D8  FUN_820a46d8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2133)
+
+void FUN_820a46d8(int param_1,undefined4 param_2)
+
+{
+  *(undefined4 *)(param_1 + 0x29c8) = param_2;
+  *(ulonglong *)(param_1 + 0x20) = *(ulonglong *)(param_1 + 0x20) | 0x200000000;
+  return;
+}
+
+
+// 820A4700  FUN_820a4700  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2145)
+
+undefined4 FUN_820a4700(int param_1)
+
+{
+  return *(undefined4 *)(param_1 + 0x29c8);
+}
+
+
+// 820A4708  FUN_820a4708  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2156)
+
+void FUN_820a4708(int param_1,uint param_2)
+
+{
+  *(uint *)(param_1 + 0x2f7c) = (param_2 & 7) << 0x14 | *(uint *)(param_1 + 0x2f7c) & 0xff8fffff;
+  *(ulonglong *)(param_1 + 0x10) = *(ulonglong *)(param_1 + 0x10) | 0x20000;
+  return;
+}
+
+
+// 820A4728  FUN_820a4728  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2168)
+
+uint FUN_820a4728(int param_1)
+
+{
+  return *(uint *)(param_1 + 0x2f7c) >> 0x14 & 7;
+}
+
+
+// 820A4738  FUN_820a4738  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2179)
+
+void FUN_820a4738(int param_1,uint param_2)
+
+{
+  ulonglong uVar1;
+  
+  *(uint *)(param_1 + 0x2f7c) = (param_2 & 7) << 0x11 | *(uint *)(param_1 + 0x2f7c) & 0xfff1ffff;
+  if (((*(byte *)(param_1 + 0x2b3f) & 0x20) == 0) && ((param_2 & 7) == 2)) {
+    uVar1 = *(ulonglong *)(param_1 + 0x28) & 0xfffffffffffffeff;
+  }
+  else {
+    uVar1 = *(ulonglong *)(param_1 + 0x28) | 0x100;
+  }
+  *(ulonglong *)(param_1 + 0x28) = uVar1;
+  *(ulonglong *)(param_1 + 0x10) = *(ulonglong *)(param_1 + 0x10) | 0x100;
+  return;
+}
+
+
+// 820A4790  FUN_820a4790  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2193)
+
+uint FUN_820a4790(int param_1)
+
+{
+  return *(uint *)(param_1 + 0x2f7c) >> 0x11 & 7;
+}
+
+
+// 820A47A0  FUN_820a47a0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2204)
+
+void FUN_820a47a0(int param_1,uint param_2)
+
+{
+  *(uint *)(param_1 + 0x2940) = (param_2 & 1) << 3 | *(uint *)(param_1 + 0x2940) & 0xfffffff7;
+  *(ulonglong *)(param_1 + 0x10) = *(ulonglong *)(param_1 + 0x10) | 0x100;
+  return;
+}
+
+
+// 820A47C0  FUN_820a47c0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2216)
+
+uint FUN_820a47c0(int param_1)
+
+{
+  return *(uint *)(param_1 + 0x2940) >> 3 & 1;
+}
+
+
+// 820A47D0  FUN_820a47d0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2227)
+
+void FUN_820a47d0(int param_1,uint param_2)
+
+{
+  *(uint *)(param_1 + 0x2940) = (param_2 & 1) << 2 | *(uint *)(param_1 + 0x2940) & 0xfffffffb;
+  *(ulonglong *)(param_1 + 0x10) = *(ulonglong *)(param_1 + 0x10) | 0x100;
+  return;
+}
+
+
+// 820A47F0  FUN_820a47f0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2239)
+
+uint FUN_820a47f0(int param_1)
+
+{
+  return *(uint *)(param_1 + 0x2940) >> 2 & 1;
+}
+
+
+// 820A4800  FUN_820a4800  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2250)
+
+void FUN_820a4800(int param_1,uint param_2)
+
+{
+  *(uint *)(param_1 + 0x2940) = (param_2 & 1) << 5 | *(uint *)(param_1 + 0x2940) & 0xffffffdf;
+  *(ulonglong *)(param_1 + 0x10) = *(ulonglong *)(param_1 + 0x10) | 0x100;
+  return;
+}
+
+
+// 820A4820  FUN_820a4820  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2261)
+
+uint FUN_820a4820(int param_1)
+
+{
+  return *(uint *)(param_1 + 0x2940) >> 5 & 1;
+}
+
+
+// 820A4830  FUN_820a4830  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2272)
+
+void FUN_820a4830(int param_1,undefined1 param_2)
+
+{
+  *(undefined1 *)(param_1 + 0x2942) = param_2;
+  *(ulonglong *)(param_1 + 0x10) = *(ulonglong *)(param_1 + 0x10) | 0x100;
+  return;
+}
+
+
+// 820A4848  FUN_820a4848  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2283)
+
+undefined1 FUN_820a4848(int param_1)
+
+{
+  return *(undefined1 *)(param_1 + 0x2942);
+}
+
+
+// 820A4850  FUN_820a4850  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2294)
+
+void FUN_820a4850(int param_1,undefined4 param_2)
+
+{
+  *(undefined4 *)(param_1 + 0x3630) = param_2;
+  return;
+}
+
+
+// 820A4858  FUN_820a4858  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2312)
+
+undefined4 FUN_820a4858(int param_1)
+
+{
+  return *(undefined4 *)(param_1 + 0x3630);
+}
+
+
+// 820A4860  FUN_820a4860  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2333)
+
+void FUN_820a4860(int param_1,uint param_2)
+
+{
+  *(uint *)(param_1 + 0x2f7c) = (param_2 & 0x7f) << 0x17 | *(uint *)(param_1 + 0x2f7c) & 0xc07fffff;
+  return;
+}
+
+
+// 820A4870  FUN_820a4870  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2343)
+
+uint FUN_820a4870(int param_1)
+
+{
+  return *(uint *)(param_1 + 0x2f7c) >> 0x17 & 0x7f;
 }
 
 
@@ -731,6 +2507,19 @@ void FUN_820a4880(int param_1,int param_2,ulonglong param_3)
 }
 
 
+// 820A4948  FUN_820a4948  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2388)
+
+uint FUN_820a4948(int param_1,int param_2)
+
+{
+  uint uVar1;
+  
+  param_1 = (param_2 + 0x30) * 0x18 + param_1;
+  uVar1 = (*(uint *)(param_1 + 0x10) >> 0xb & 1) - 1;
+  return ~uVar1 & 4 | *(uint *)(param_1 + 0xc) >> 0x15 & uVar1 & 3;
+}
+
+
 // 820A4980  FUN_820a4980  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2405)
 
 void FUN_820a4980(int param_1,int param_2,ulonglong param_3)
@@ -755,6 +2544,15 @@ void FUN_820a4980(int param_1,int param_2,ulonglong param_3)
   *(ulonglong *)(param_1 + 0x18) =
        0x8000000000000000U >> (param_2 + 0x20U & 0x7f) | *(ulonglong *)(param_1 + 0x18);
   return;
+}
+
+
+// 820A4A18  FUN_820a4a18  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2426)
+
+byte FUN_820a4a18(int param_1,int param_2)
+
+{
+  return *(byte *)(param_1 + param_2 + 0x2a8a) >> 1 & 1;
 }
 
 
@@ -798,6 +2596,19 @@ void FUN_820a4a28(int param_1,int param_2,ulonglong param_3)
 }
 
 
+// 820A4AF0  FUN_820a4af0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2473)
+
+uint FUN_820a4af0(int param_1,int param_2)
+
+{
+  uint uVar1;
+  
+  param_1 = (param_2 + 0x30) * 0x18 + param_1;
+  uVar1 = (*(uint *)(param_1 + 0x10) >> 10 & 1) - 1;
+  return ~uVar1 & 4 | *(uint *)(param_1 + 0xc) >> 0x13 & uVar1 & 3;
+}
+
+
 // 820A4B28  FUN_820a4b28  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2490)
 
 void FUN_820a4b28(int param_1,int param_2,ulonglong param_3)
@@ -820,6 +2631,39 @@ void FUN_820a4b28(int param_1,int param_2,ulonglong param_3)
   *(ulonglong *)(param_1 + 0x18) =
        0x8000000000000000U >> (param_2 + 0x20U & 0x7f) | *(ulonglong *)(param_1 + 0x18);
   return;
+}
+
+
+// 820A4BB8  FUN_820a4bb8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2511)
+
+byte FUN_820a4bb8(int param_1,int param_2)
+
+{
+  return *(byte *)(param_1 + param_2 + 0x2a8a) & 1;
+}
+
+
+// 820A4BC8  FUN_820a4bc8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2524)
+
+void FUN_820a4bc8(int param_1,int param_2,uint param_3)
+
+{
+  int iVar1;
+  
+  iVar1 = (param_2 + 0x30) * 0x18 + param_1;
+  *(uint *)(iVar1 + 0xc) = (param_3 & 3) << 0x17 | *(uint *)(iVar1 + 0xc) & 0xfe7fffff;
+  *(ulonglong *)(param_1 + 0x18) =
+       0x8000000000000000U >> (param_2 + 0x20U & 0x7f) | *(ulonglong *)(param_1 + 0x18);
+  return;
+}
+
+
+// 820A4C08  FUN_820a4c08  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2540)
+
+uint FUN_820a4c08(int param_1,int param_2)
+
+{
+  return *(uint *)(param_2 * 0x18 + param_1 + 0x48c) >> 0x17 & 3;
 }
 
 
@@ -850,6 +2694,15 @@ void FUN_820a4c20(int param_1,int param_2,ulonglong param_3)
 }
 
 
+// 820A4CB8  FUN_820a4cb8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2578)
+
+byte FUN_820a4cb8(int param_1,int param_2)
+
+{
+  return *(byte *)(param_1 + param_2 + 0x2a8a) >> 2 & 1;
+}
+
+
 // 820A4CC8  FUN_820a4cc8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2591)
 
 void FUN_820a4cc8(int param_1,int param_2,int param_3)
@@ -866,6 +2719,44 @@ void FUN_820a4cc8(int param_1,int param_2,int param_3)
   }
   *(char *)(param_1 + param_2 + 0x2a70) = (char)param_3;
   return;
+}
+
+
+// 820A4D30  FUN_820a4d30  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2616)
+
+undefined1 FUN_820a4d30(int param_1,int param_2)
+
+{
+  return *(undefined1 *)(param_1 + param_2 + 0x2a70);
+}
+
+
+// 820A4D40  FUN_820a4d40  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2629)
+
+void FUN_820a4d40(int param_1,int param_2,float param_3)
+
+{
+  int iVar1;
+  undefined4 uStack_c;
+  
+  iVar1 = (param_2 + 0x30) * 0x18 + param_1;
+  uStack_c = (uint)(longlong)(param_3 * -8.0);
+  *(uint *)(iVar1 + 0x14) = (uStack_c & 0xf) << 5 | *(uint *)(iVar1 + 0x14) & 0xfffffe1f;
+  *(ulonglong *)(param_1 + 0x18) =
+       0x8000000000000000U >> (param_2 + 0x20U & 0x7f) | *(ulonglong *)(param_1 + 0x18);
+  return;
+}
+
+
+// 820A4DA0  FUN_820a4da0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2650)
+
+float FUN_820a4da0(int param_1,int param_2)
+
+{
+  uint uVar1;
+  
+  uVar1 = *(uint *)(param_2 * 0x18 + param_1 + 0x494);
+  return -((float)(longlong)((int)(uVar1 << 0x17 | uVar1 >> 9) >> 0x1c) * 0.125);
 }
 
 
@@ -886,6 +2777,108 @@ void FUN_820a4de8(int param_1,int param_2,float param_3)
 }
 
 
+// 820A4E48  FUN_820a4e48  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2688)
+
+float FUN_820a4e48(int param_1,int param_2)
+
+{
+  uint uVar1;
+  
+  uVar1 = *(uint *)(param_2 * 0x18 + param_1 + 0x490);
+  return (float)(longlong)((int)(uVar1 << 10 | uVar1 >> 0x16) >> 0x16) * 0.03125;
+}
+
+
+// 820A4E90  FUN_820a4e90  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2705)
+
+void FUN_820a4e90(int param_1,int param_2,uint param_3)
+
+{
+  int iVar1;
+  uint uVar2;
+  
+  iVar1 = *(int *)((param_2 + 0xc7e) * 4 + param_1);
+  if (iVar1 != 0) {
+    uVar2 = *(uint *)(iVar1 + 0x2c) >> 2 & 0xf;
+    iVar1 = (param_2 + 0x30) * 0x18 + param_1;
+    if (uVar2 <= param_3) {
+      uVar2 = param_3;
+    }
+    *(uint *)(iVar1 + 0x10) = (uVar2 & 0xf) << 2 | *(uint *)(iVar1 + 0x10) & 0xffffffc3;
+    *(ulonglong *)(param_1 + 0x18) =
+         0x8000000000000000U >> (param_2 + 0x20U & 0x7f) | *(ulonglong *)(param_1 + 0x18);
+  }
+  *(char *)(param_1 + param_2 + 0x2fc4) = (char)param_3;
+  return;
+}
+
+
+// 820A4F00  FUN_820a4f00  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2734)
+
+undefined1 FUN_820a4f00(int param_1,int param_2)
+
+{
+  return *(undefined1 *)(param_1 + param_2 + 0x2fc4);
+}
+
+
+// 820A4F10  FUN_820a4f10  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2747)
+
+void FUN_820a4f10(int param_1,int param_2,uint param_3)
+
+{
+  int iVar1;
+  uint uVar2;
+  
+  iVar1 = *(int *)((param_2 + 0xc7e) * 4 + param_1);
+  if (iVar1 != 0) {
+    uVar2 = *(uint *)(iVar1 + 0x2c) >> 6 & 0xf;
+    iVar1 = (param_2 + 0x30) * 0x18 + param_1;
+    if (param_3 <= uVar2) {
+      uVar2 = param_3;
+    }
+    *(uint *)(iVar1 + 0x10) = (uVar2 & 0xf) << 6 | *(uint *)(iVar1 + 0x10) & 0xfffffc3f;
+    *(ulonglong *)(param_1 + 0x18) =
+         0x8000000000000000U >> (param_2 + 0x20U & 0x7f) | *(ulonglong *)(param_1 + 0x18);
+  }
+  *(char *)(param_1 + param_2 + 0x2fde) = (char)param_3;
+  return;
+}
+
+
+// 820A4F80  FUN_820a4f80  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2776)
+
+undefined1 FUN_820a4f80(int param_1,int param_2)
+
+{
+  return *(undefined1 *)(param_1 + param_2 + 0x2fde);
+}
+
+
+// 820A4F90  FUN_820a4f90  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2789)
+
+void FUN_820a4f90(int param_1,int param_2,longlong param_3)
+
+{
+  int iVar1;
+  
+  iVar1 = (param_2 + 0x30) * 0x18 + param_1;
+  *(uint *)(iVar1 + 0x14) = *(uint *)(iVar1 + 0x14) & 0xfffffffc | (uint)(param_3 != 0);
+  *(ulonglong *)(param_1 + 0x18) =
+       0x8000000000000000U >> (param_2 + 0x20U & 0x7f) | *(ulonglong *)(param_1 + 0x18);
+  return;
+}
+
+
+// 820A4FD8  FUN_820a4fd8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2809)
+
+longlong FUN_820a4fd8(int param_1,int param_2)
+
+{
+  return -(ulonglong)((*(uint *)(param_2 * 0x18 + param_1 + 0x494) & 3) != 0);
+}
+
+
 // 820A5000  FUN_820a5000  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2824)
 
 void FUN_820a5000(int param_1,int param_2,uint param_3)
@@ -901,6 +2894,15 @@ void FUN_820a5000(int param_1,int param_2,uint param_3)
 }
 
 
+// 820A5038  FUN_820a5038  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2840)
+
+uint FUN_820a5038(int param_1,int param_2)
+
+{
+  return *(uint *)((param_2 + 0x30) * 0x18 + param_1) >> 10 & 7;
+}
+
+
 // 820A5050  FUN_820a5050  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2855)
 
 void FUN_820a5050(int param_1,int param_2,uint param_3)
@@ -913,6 +2915,162 @@ void FUN_820a5050(int param_1,int param_2,uint param_3)
   *(ulonglong *)(param_1 + 0x18) =
        0x8000000000000000U >> (param_2 + 0x20U & 0x7f) | *(ulonglong *)(param_1 + 0x18);
   return;
+}
+
+
+// 820A5088  FUN_820a5088  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2871)
+
+uint FUN_820a5088(int param_1,int param_2)
+
+{
+  return *(uint *)((param_2 + 0x30) * 0x18 + param_1) >> 0xd & 7;
+}
+
+
+// 820A50A0  FUN_820a50a0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2886)
+
+void FUN_820a50a0(int param_1,int param_2,uint param_3)
+
+{
+  int iVar1;
+  
+  iVar1 = (param_2 + 0x30) * 0x18;
+  *(uint *)(iVar1 + param_1) = (param_3 & 7) << 0x10 | *(uint *)(iVar1 + param_1) & 0xfff8ffff;
+  *(ulonglong *)(param_1 + 0x18) =
+       0x8000000000000000U >> (param_2 + 0x20U & 0x7f) | *(ulonglong *)(param_1 + 0x18);
+  return;
+}
+
+
+// 820A50D8  FUN_820a50d8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2902)
+
+ushort FUN_820a50d8(int param_1,int param_2)
+
+{
+  return *(ushort *)((param_2 + 0x30) * 0x18 + param_1) & 7;
+}
+
+
+// 820A50F0  FUN_820a50f0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2917)
+
+void FUN_820a50f0(int param_1,int param_2,uint param_3)
+
+{
+  int iVar1;
+  
+  iVar1 = (param_2 + 0x30) * 0x18 + param_1;
+  *(uint *)(iVar1 + 0x14) = (param_3 & 3) << 3 | *(uint *)(iVar1 + 0x14) & 0xffffffe7;
+  *(ulonglong *)(param_1 + 0x18) =
+       0x8000000000000000U >> (param_2 + 0x20U & 0x7f) | *(ulonglong *)(param_1 + 0x18);
+  return;
+}
+
+
+// 820A5130  FUN_820a5130  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2933)
+
+uint FUN_820a5130(int param_1,int param_2)
+
+{
+  return *(uint *)(param_2 * 0x18 + param_1 + 0x494) >> 3 & 3;
+}
+
+
+// 820A5148  FUN_820a5148  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2948)
+
+void FUN_820a5148(int param_1,int param_2,uint param_3)
+
+{
+  int iVar1;
+  
+  iVar1 = (param_2 + 0x30) * 0x18 + param_1;
+  *(uint *)(iVar1 + 0x10) = (param_3 & 0x1f) << 0x16 | *(uint *)(iVar1 + 0x10) & 0xf83fffff;
+  *(ulonglong *)(param_1 + 0x18) =
+       0x8000000000000000U >> (param_2 + 0x20U & 0x7f) | *(ulonglong *)(param_1 + 0x18);
+  return;
+}
+
+
+// 820A5188  FUN_820a5188  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2964)
+
+int FUN_820a5188(int param_1,int param_2)
+
+{
+  uint uVar1;
+  
+  uVar1 = *(uint *)(param_2 * 0x18 + param_1 + 0x490);
+  return (int)(uVar1 << 5 | uVar1 >> 0x1b) >> 0x1b;
+}
+
+
+// 820A51A0  FUN_820a51a0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2979)
+
+void FUN_820a51a0(int param_1,int param_2,int param_3)
+
+{
+  int iVar1;
+  
+  iVar1 = (param_2 + 0x30) * 0x18 + param_1;
+  *(uint *)(iVar1 + 0x10) = param_3 << 0x1b | *(uint *)(iVar1 + 0x10) & 0x7ffffff;
+  *(ulonglong *)(param_1 + 0x18) =
+       0x8000000000000000U >> (param_2 + 0x20U & 0x7f) | *(ulonglong *)(param_1 + 0x18);
+  return;
+}
+
+
+// 820A51E0  FUN_820a51e0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2995)
+
+int FUN_820a51e0(int param_1,int param_2)
+
+{
+  return *(int *)(param_2 * 0x18 + param_1 + 0x490) >> 0x1b;
+}
+
+
+// 820A51F8  FUN_820a51f8  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:3010)
+
+void FUN_820a51f8(int param_1,int param_2,uint param_3)
+
+{
+  int iVar1;
+  
+  iVar1 = (param_2 + 0x30) * 0x18 + param_1;
+  *(uint *)(iVar1 + 0x14) = (param_3 & 1) << 2 | *(uint *)(iVar1 + 0x14) & 0xfffffffb;
+  *(ulonglong *)(param_1 + 0x18) =
+       0x8000000000000000U >> (param_2 + 0x20U & 0x7f) | *(ulonglong *)(param_1 + 0x18);
+  return;
+}
+
+
+// 820A5238  FUN_820a5238  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:3026)
+
+uint FUN_820a5238(int param_1,int param_2)
+
+{
+  return *(uint *)(param_2 * 0x18 + param_1 + 0x494) >> 2 & 1;
+}
+
+
+// 820A5250  FUN_820a5250  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:3041)
+
+void FUN_820a5250(int param_1,int param_2,int param_3)
+
+{
+  int iVar1;
+  
+  iVar1 = (param_2 + 0x30) * 0x18 + param_1;
+  *(uint *)(iVar1 + 4) = (uint)(param_3 == 0) << 0xb | *(uint *)(iVar1 + 4) & 0xfffff7ff;
+  *(ulonglong *)(param_1 + 0x18) =
+       0x8000000000000000U >> (param_2 + 0x20U & 0x7f) | *(ulonglong *)(param_1 + 0x18);
+  return;
+}
+
+
+// 820A5298  FUN_820a5298  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:3057)
+
+ulonglong FUN_820a5298(int param_1,int param_2)
+
+{
+  return (~(ulonglong)*(uint *)(param_2 * 0x18 + param_1 + 0x484) & 0xffffffff) >> 0xb & 1;
 }
 
 

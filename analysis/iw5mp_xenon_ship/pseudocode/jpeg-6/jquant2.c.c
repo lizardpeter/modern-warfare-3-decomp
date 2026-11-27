@@ -1277,6 +1277,15 @@ void FUN_8245ba08(int param_1)
 }
 
 
+// 8245BA48  FUN_8245ba48  (jpeg-6/jquant2.c:1157)
+
+void FUN_8245ba48(void)
+
+{
+  return;
+}
+
+
 // 8245BA50  FUN_8245ba50  (jpeg-6/jquant2.c:1168)
 
 /* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
@@ -1306,7 +1315,7 @@ void FUN_8245ba50(int *param_1,char param_2)
       pcVar5 = FUN_8245b348;
     }
     *(code **)(iVar1 + 4) = pcVar5;
-    *(undefined **)(iVar1 + 8) = &DAT_8245ba48;
+    *(code **)(iVar1 + 8) = FUN_8245ba48;
     iVar3 = param_1[0x1e];
     if (iVar3 < 1) {
       *(undefined4 *)(*param_1 + 0x14) = 0x38;
@@ -1351,6 +1360,16 @@ void FUN_8245ba50(int *param_1,char param_2)
 }
 
 
+// 8245BBF0  FUN_8245bbf0  (jpeg-6/jquant2.c:1231)
+
+void FUN_8245bbf0(int param_1)
+
+{
+  *(undefined1 *)(*(int *)(param_1 + 0x1b0) + 0x1c) = 1;
+  return;
+}
+
+
 // 8245BC00  FUN_8245bc00  (jpeg-6/jquant2.c:1245)
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
@@ -1367,7 +1386,7 @@ void FUN_8245bc00(int *param_1)
   param_1[0x6c] = (int)puVar1;
   puVar1[8] = 0;
   *puVar1 = FUN_8245ba50;
-  puVar1[3] = &LAB_8245bbf0;
+  puVar1[3] = FUN_8245bbf0;
   puVar1[10] = 0;
   if (param_1[0x1b] != 3) {
     *(undefined4 *)(*param_1 + 0x14) = 0x2f;

@@ -183,6 +183,25 @@ LAB_8240a034:
 }
 
 
+// 82409028  FUN_82409028  (gfx_d3d/r_model_lighting.cpp:501)
+
+undefined1 FUN_82409028(int *param_1)
+
+{
+  return *(undefined1 *)(*(int *)(DAT_83c9f108 + 0x220) + *param_1);
+}
+
+
+// 82409050  FUN_82409050  (gfx_d3d/r_model_lighting.cpp:518)
+
+void FUN_82409050(int param_1)
+
+{
+  FUN_8240fd48((double)*(float *)(param_1 + 0xc));
+  return;
+}
+
+
 // 8240A1F0  FUN_8240a1f0  (gfx_d3d/r_model_lighting.cpp:529)
 
 void FUN_8240a1f0(undefined8 param_1,undefined4 param_2,undefined8 param_3,undefined8 param_4)

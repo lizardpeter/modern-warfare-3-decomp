@@ -347,6 +347,22 @@ LAB_825740d8:
   825740DC  382100F0             addi r1,r1,0xf0
   825740E0  4BFD4420             b 0x82548500
 
+; 825740E8  FUN_825740e8  (line unknown)
+  825740E8  816300FC             lwz r11,0xfc(r3)
+  825740EC  814300F8             lwz r10,0xf8(r3)
+  825740F0  812300DC             lwz r9,0xdc(r3)
+  825740F4  7D0A5A14             add r8,r10,r11
+  825740F8  7F084840             cmplw cr6,r8,r9
+  825740FC  40990008             ble cr6,0x82574104
+  82574100  7D6A4850             subf r11,r10,r9
+LAB_82574104:
+  82574104  812300D8             lwz r9,0xd8(r3)
+  82574108  38600001             li r3,0x1
+  8257410C  7D495214             add r10,r9,r10
+  82574110  91440000             stw r10,0x0(r4)
+  82574114  91650000             stw r11,0x0(r5)
+  82574118  4E800020             blr
+
 ; 82574120  FUN_82574120  (line unknown)
   82574120  7D8802A6             mfspr r12,LR
   82574124  4BFD4391             bl 0x825484b4
@@ -459,6 +475,23 @@ LAB_825742b0:
   825742B8  8181FFF8             lwz r12,-0x8(r1)
   825742BC  7D8803A6             mtspr LR,r12
   825742C0  4E800020             blr
+
+; 825742C8  FUN_825742c8  (line unknown)
+  825742C8  2F047FFF             cmpwi cr6,r4,0x7fff
+  825742CC  40990008             ble cr6,0x825742d4
+  825742D0  38807FFF             li r4,0x7fff
+LAB_825742d4:
+  825742D4  908300E8             stw r4,0xe8(r3)
+  825742D8  4BFFF918             b 0x82573bf0
+
+; 825742E0  FUN_825742e0  (line unknown)
+  825742E0  3D600001             lis r11,0x1
+  825742E4  7F045800             cmpw cr6,r4,r11
+  825742E8  40990008             ble cr6,0x825742f0
+  825742EC  3C800001             lis r4,0x1
+LAB_825742f0:
+  825742F0  908300EC             stw r4,0xec(r3)
+  825742F4  4BFFF8FC             b 0x82573bf0
 
 ; 825742F8  FUN_825742f8  (line unknown)
   825742F8  7D8802A6             mfspr r12,LR
@@ -914,3 +947,8 @@ LAB_825748d8:
   82574970  914B4CA8             stw r10,0x4ca8(r11)
   82574974  38210100             addi r1,r1,0x100
   82574978  4BFD3B80             b 0x825484f8
+
+; 82574980  FUN_82574980  (line unknown)
+  82574980  3D608257             lis r11,-0x7da9
+  82574984  386B46C0             addi r3,r11,0x46c0
+  82574988  4E800020             blr

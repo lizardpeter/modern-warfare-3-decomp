@@ -79,10 +79,28 @@ LAB_82531c18:
   82531C28  383F0070             addi r1,r31,0x70
   82531C2C  480168E0             b 0x8254850c
 
+; 82531B20  FUN_82531b20  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdfacebook/bdfacebooktag.cpp:36)
+  82531B20  38600018             li r3,0x18
+  82531B24  4E800020             blr
+
 ; 82531B28  FUN_82531b28  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdtags/bdtag.cpp:47)
   82531B28  F8830008             std r4,0x8(r3)
   82531B2C  F8A30010             std r5,0x10(r3)
   82531B30  4E800020             blr
+
+; 82531B38  FUN_82531b38  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdtags/bdtag.cpp:53)
+  82531B38  E9630008             ld r11,0x8(r3)
+  82531B3C  2F2BFFFF             cmpdi cr6,r11,-0x1
+  82531B40  419A0014             beq cr6,0x82531b54
+  82531B44  E9630010             ld r11,0x10(r3)
+  82531B48  2F2BFFFF             cmpdi cr6,r11,-0x1
+  82531B4C  39600001             li r11,0x1
+  82531B50  409A0008             bne cr6,0x82531b58
+LAB_82531b54:
+  82531B54  39600000             li r11,0x0
+LAB_82531b58:
+  82531B58  5563063E             rlwinm r3,r11,0x0,0x18,0x1f
+  82531B5C  4E800020             blr
 
 ; 82531B60  FUN_82531b60  (line unknown)
   82531B60  7D8802A6             mfspr r12,LR

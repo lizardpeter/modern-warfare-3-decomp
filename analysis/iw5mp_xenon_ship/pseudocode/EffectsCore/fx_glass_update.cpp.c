@@ -225,6 +225,32 @@ LAB_82212528:
 }
 
 
+// 82212540  FUN_82212540  (EffectsCore/fx_glass_update.cpp:209)
+
+void FUN_82212540(int *param_1,undefined8 param_2,int param_3)
+
+{
+  int iVar1;
+  int *piVar2;
+  
+  piVar2 = (int *)(param_1[0xf] + param_3 * 0x24);
+  if (piVar2[1] != 0) {
+    FUN_82212438();
+    return;
+  }
+  iVar1 = *piVar2;
+  if (*param_1 <= iVar1) {
+    return;
+  }
+  if (iVar1 < *param_1 + -5000) {
+    FUN_82203c50();
+    return;
+  }
+  FUN_82211fa0(param_1,param_3);
+  return;
+}
+
+
 // 82212590  FUN_82212590  (EffectsCore/fx_glass_update.cpp:243)
 
 void FUN_82212590(void)

@@ -4016,7 +4016,7 @@ va	name	namespace	type	source	block	datatype	length
 8201CC5C	DAT_8201cc5c	Global	Label	DEFAULT	.rdata	/undefined4	4
 8201CC60	DAT_8201cc60	Global	Label	DEFAULT	.rdata	/undefined	1
 8201CC64	DAT_8201cc64	Global	Label	DEFAULT	.rdata	/undefined	1
-8201CC68	PTR_LAB_8201cc68	Global	Label	DEFAULT	.rdata	/pointer	4
+8201CC68	PTR_thunk_FUN_822b8a20_8201cc68	Global	Label	DEFAULT	.rdata	/pointer	4
 8201CC6C	PTR_FUN_8201cc6c	Global	Label	DEFAULT	.rdata	/pointer	4
 8201CC70	PTR_DAT_8201cc70	Global	Label	DEFAULT	.rdata	/pointer	4
 8201CC74	DAT_8201cc74	Global	Label	DEFAULT	.rdata	/undefined4	4
@@ -4067,7 +4067,7 @@ va	name	namespace	type	source	block	datatype	length
 8201D6B0	DAT_8201d6b0	Global	Label	DEFAULT	.rdata	/undefined4	4
 8201D6B4	PTR_FUN_8201d6b4	Global	Label	DEFAULT	.rdata	/pointer	4
 8201D6BC	DAT_8201d6bc	Global	Label	DEFAULT	.rdata	/undefined4	4
-8201D6C0	PTR_LAB_8201d6c0	Global	Label	DEFAULT	.rdata	/pointer	4
+8201D6C0	PTR_FUN_8201d6c0	Global	Label	DEFAULT	.rdata	/pointer	4
 8201D878	DAT_8201d878	Global	Label	DEFAULT	.rdata	/undefined4	4
 8201D87C	DAT_8201d87c	Global	Label	DEFAULT	.rdata	/undefined	1
 8201D884	s_%c_%i_%i_8201d884	Global	Label	DEFAULT	.rdata	/string	9
@@ -4154,6 +4154,8 @@ va	name	namespace	type	source	block	datatype	length
 8201DD84	DAT_8201dd84	Global	Label	DEFAULT	.rdata	/undefined4	4
 8201DD88	DAT_8201dd88	Global	Label	DEFAULT	.rdata	/undefined4	4
 8201DD8C	DAT_8201dd8c	Global	Label	DEFAULT	.rdata	/undefined4	4
+8201DD90	DAT_8201dd90	Global	Label	DEFAULT	.rdata	/undefined	1
+8201DD94	DAT_8201dd94	Global	Label	DEFAULT	.rdata	/undefined	1
 8201DD98	DAT_8201dd98	Global	Label	DEFAULT	.rdata	/undefined	1
 8201DD9C	DAT_8201dd9c	Global	Label	DEFAULT	.rdata	/undefined	1
 8201DDA0	PTR_DAT_8201dda0	Global	Label	DEFAULT	.rdata	/pointer	4
@@ -4513,6 +4515,7 @@ va	name	namespace	type	source	block	datatype	length
 820216C8	DAT_820216c8	Global	Label	DEFAULT	.rdata	/undefined8	8
 820216D0	s_skills_820216d0	Global	Label	DEFAULT	.rdata	/string	7
 820216D8	s_IW5_MP_820216d8	Global	Label	DEFAULT	.rdata	/string	7
+820216E0	s_xpartydisbandafterround_820216e0	Global	Label	DEFAULT	.rdata	/string	28
 820216FC	DAT_820216fc	Global	Label	DEFAULT	.rdata	/undefined	1
 82021704	s_maps/mp/gametypes/%s.txt_82021704	Global	Label	DEFAULT	.rdata	/string	25
 82021720	DAT_82021720	Global	Label	DEFAULT	.rdata	/undefined	1
@@ -4526,7 +4529,7 @@ va	name	namespace	type	source	block	datatype	length
 82021848	DAT_82021848	Global	Label	DEFAULT	.rdata	/undefined4	4
 8202184C	PTR_FUN_8202184c	Global	Label	DEFAULT	.rdata	/pointer	4
 82021854	DAT_82021854	Global	Label	DEFAULT	.rdata	/undefined4	4
-82021858	PTR_LAB_82021858	Global	Label	DEFAULT	.rdata	/pointer	4
+82021858	PTR_FUN_82021858	Global	Label	DEFAULT	.rdata	/pointer	4
 82021980	s_script_vehicle_collmap_82021980	Global	Label	DEFAULT	.rdata	/string	23
 82021998	s_script_origin_82021998	Global	Label	DEFAULT	.rdata	/string	14
 820219A8	s_script_model_820219a8	Global	Label	DEFAULT	.rdata	/string	13
@@ -4551,7 +4554,7 @@ va	name	namespace	type	source	block	datatype	length
 82021ABC	DAT_82021abc	Global	Label	DEFAULT	.rdata	/undefined4	4
 82021AC0	DAT_82021ac0	Global	Label	DEFAULT	.rdata	/undefined4	4
 82021AC4	DAT_82021ac4	Global	Label	DEFAULT	.rdata	/undefined4	4
-82021AC8	PTR_LAB_82021ac8	Global	Label	DEFAULT	.rdata	/pointer	4
+82021AC8	PTR_thunk_FUN_822b8a20_82021ac8	Global	Label	DEFAULT	.rdata	/pointer	4
 82021ACC	DAT_82021acc	Global	Label	DEFAULT	.rdata	/undefined	1
 82021AD0	PTR_DAT_82021ad0	Global	Label	DEFAULT	.rdata	/pointer	4
 82021AD4	DAT_82021ad4	Global	Label	DEFAULT	.rdata	/undefined4	4
@@ -4559,7 +4562,7 @@ va	name	namespace	type	source	block	datatype	length
 82021ADC	DAT_82021adc	Global	Label	DEFAULT	.rdata	/undefined4	4
 82021AE8	PTR_DAT_82021ae8	Global	Label	DEFAULT	.rdata	/pointer	4
 82021C20	PTR_s_trigger_use_touch_82021c20	Global	Label	DEFAULT	.rdata	/pointer	4
-82021C24	PTR_LAB_82021c24	Global	Label	DEFAULT	.rdata	/pointer	4
+82021C24	PTR_thunk_FUN_822699b0_82021c24	Global	Label	DEFAULT	.rdata	/pointer	4
 82021C28	PTR_s_trigger_use_82021c28	Global	Label	DEFAULT	.rdata	/undefined *	4
 82021C98	PTR_s_info_notnull_82021c98	Global	Label	DEFAULT	.rdata	/pointer	4
 82021C9C	PTR_FUN_82021c9c	Global	Label	DEFAULT	.rdata	/pointer	4
@@ -7306,8 +7309,8 @@ va	name	namespace	type	source	block	datatype	length
 82037DD0	s_Percentage_of_sound_volume_that_i_82037dd0	Global	Label	DEFAULT	.rdata	/string	51
 82037E04	s_snd_omnidirectionalPercentage_82037e04	Global	Label	DEFAULT	.rdata	/string	30
 82037E28	DAT_82037e28	Global	Label	DEFAULT	.rdata	/undefined4	4
-82037E2C	PTR_LAB_82037e2c	Global	Label	DEFAULT	.rdata	/undefined *	4
-82037E48	PTR_LAB_82037e48	Global	Label	DEFAULT	.rdata	/undefined *	4
+82037E2C	PTR_FUN_82037e2c	Global	Label	DEFAULT	.rdata	/undefined *	4
+82037E48	PTR_FUN_82037e48	Global	Label	DEFAULT	.rdata	/undefined *	4
 82037E64	s_Unknown_session_task_type_%i_82037e64	Global	Label	DEFAULT	.rdata	/string	30
 82037E84	s_Friends_Init_82037e84	Global	Label	DEFAULT	.rdata	/string	13
 82037E94	s_XBOXLIVE_OFFLINE_82037e94	Global	Label	DEFAULT	.rdata	/string	17
@@ -7579,11 +7582,11 @@ va	name	namespace	type	source	block	datatype	length
 8203AAA8	DAT_8203aaa8	Global	Label	DEFAULT	.rdata	/undefined	1
 8203AAAC	s_Vehicle_xmodel_'%s'_is_lacking_a_8203aaab+1	Global	Label	DEFAULT	.rdata		
 8203AADC	DAT_8203aadc	Global	Label	DEFAULT	.rdata	/undefined4	4
-8203AAE0	PTR_LAB_8203aae0	Global	Label	DEFAULT	.rdata	/pointer	4
-8203AAEC	PTR_LAB_8203aaec	Global	Label	DEFAULT	.rdata	/pointer	4
+8203AAE0	PTR_FUN_8203aae0	Global	Label	DEFAULT	.rdata	/pointer	4
+8203AAEC	PTR_FUN_8203aaec	Global	Label	DEFAULT	.rdata	/pointer	4
 8203AAF8	PTR_FUN_8203aaf8	Global	Label	DEFAULT	.rdata	/undefined *	4
 8203AB20	PTR_FUN_8203ab20	Global	Label	DEFAULT	.rdata	/undefined *	4
-8203AB48	PTR_LAB_8203ab48	Global	Label	DEFAULT	.rdata	/pointer	4
+8203AB48	PTR_FUN_8203ab48	Global	Label	DEFAULT	.rdata	/pointer	4
 8203AB54	DAT_8203ab54	Global	Label	DEFAULT	.rdata	/undefined4	4
 8203AB58	DAT_8203ab58	Global	Label	DEFAULT	.rdata	/undefined4	4
 8203AB5C	PTR_FUN_8203ab5c	Global	Label	DEFAULT	.rdata	/pointer	4
@@ -7888,8 +7891,8 @@ va	name	namespace	type	source	block	datatype	length
 8203D7DC	DAT_8203d7dc	Global	Label	DEFAULT	.rdata	/undefined4	4
 8203D7E0	DAT_8203d7e0	Global	Label	DEFAULT	.rdata	/undefined	1
 8203D7E4	DAT_8203d7e4	Global	Label	DEFAULT	.rdata	/undefined	1
-8203D7E8	PTR_LAB_8203d7e8	Global	Label	DEFAULT	.rdata	/pointer	4
-8203D7EC	PTR_LAB_8203d7ec	Global	Label	DEFAULT	.rdata	/pointer	4
+8203D7E8	PTR_thunk_FUN_822b8a20_8203d7e8	Global	Label	DEFAULT	.rdata	/pointer	4
+8203D7EC	PTR_FUN_8203d7ec	Global	Label	DEFAULT	.rdata	/pointer	4
 8203D7F0	PTR_DAT_8203d7f0	Global	Label	DEFAULT	.rdata	/pointer	4
 8203D7F4	DAT_8203d7f4	Global	Label	DEFAULT	.rdata	/undefined4	4
 8203D8B0	DAT_8203d8b0	Global	Label	DEFAULT	.rdata	/undefined4	4
@@ -8012,12 +8015,12 @@ va	name	namespace	type	source	block	datatype	length
 8203E950	DAT_8203e950	Global	Label	DEFAULT	.rdata	/undefined4	4
 8203E954	DAT_8203e954	Global	Label	DEFAULT	.rdata	/undefined1	1
 8203E958	DAT_8203e958	Global	Label	DEFAULT	.rdata	/undefined4	4
-8203E95C	PTR_LAB_8203e95c	Global	Label	DEFAULT	.rdata	/pointer	4
+8203E95C	PTR_FUN_8203e95c	Global	Label	DEFAULT	.rdata	/pointer	4
 8203E960	DAT_8203e960	Global	Label	DEFAULT	.rdata	/undefined4	4
 8203E964	DAT_8203e964	Global	Label	DEFAULT	.rdata	/undefined1	1
 8203E968	DAT_8203e968	Global	Label	DEFAULT	.rdata	/undefined4	4
 8203E96C	PTR_FUN_8203e96c	Global	Label	DEFAULT	.rdata	/pointer	4
-8203E97C	PTR_LAB_8203e97c	Global	Label	DEFAULT	.rdata	/pointer	4
+8203E97C	PTR_FUN_8203e97c	Global	Label	DEFAULT	.rdata	/pointer	4
 8203EAB0	s_dw_conn_id:_%llx_%s_8203eab0	Global	Label	DEFAULT	.rdata	/string	20
 8203EAC8	s_Xbox_360_Error_%llx_while_trying_8203eac8	Global	Label	DEFAULT	.rdata	/string	64
 8203EB08	s_MW3_-_DW_ATVI_LSP_8203eb08	Global	Label	DEFAULT	.rdata	/string	18
@@ -9060,6 +9063,7 @@ va	name	namespace	type	source	block	datatype	length
 8204860C	s_$black_8204860c	Global	Label	DEFAULT	.rdata	/string	7
 820486C8	DAT_820486c8	Global	Label	DEFAULT	.rdata	/undefined	1
 820486CC	DAT_820486cc	Global	Label	DEFAULT	.rdata	/undefined	1
+820486D0	s_Cannot_unload_bsp_while_it_is_in_820486cf+1	Global	Label	DEFAULT	.rdata		
 820486F8	DAT_820486f8	Global	Label	DEFAULT	.rdata	/undefined4	4
 820487A0	s_dyn_light_820487a0	Global	Label	DEFAULT	.rdata	/string	10
 820488F4	s_watersheeting_color_distort_blur_820488f4	Global	Label	DEFAULT	.rdata	/string	33
@@ -10294,16 +10298,16 @@ va	name	namespace	type	source	block	datatype	length
 8205A540	DAT_8205a540	Global	Label	DEFAULT	.rdata	/undefined	1
 8205A550	DAT_8205a550	Global	Label	DEFAULT	.rdata	/undefined	1
 8205A560	DAT_8205a560	Global	Label	DEFAULT	.rdata	/undefined4	4
-8205A564	PTR_LAB_8205a564	Global	Label	DEFAULT	.rdata	/pointer	4
-8205A568	PTR_LAB_8205a568	Global	Label	DEFAULT	.rdata	/pointer	4
+8205A564	PTR_FUN_8205a564	Global	Label	DEFAULT	.rdata	/pointer	4
+8205A568	PTR_FUN_8205a568	Global	Label	DEFAULT	.rdata	/pointer	4
 8205A56C	DAT_8205a56c	Global	Label	DEFAULT	.rdata	/undefined4	4
-8205A570	PTR_LAB_8205a570	Global	Label	DEFAULT	.rdata	/pointer	4
+8205A570	PTR_FUN_8205a570	Global	Label	DEFAULT	.rdata	/pointer	4
 8205A574	PTR_FUN_8205a574	Global	Label	DEFAULT	.rdata	/pointer	4
 8205A578	DAT_8205a578	Global	Label	DEFAULT	.rdata	/undefined4	4
-8205A57C	PTR_LAB_8205a57c	Global	Label	DEFAULT	.rdata	/pointer	4
+8205A57C	PTR_FUN_8205a57c	Global	Label	DEFAULT	.rdata	/pointer	4
 8205A580	PTR_FUN_8205a580	Global	Label	DEFAULT	.rdata	/pointer	4
 8205A584	DAT_8205a584	Global	Label	DEFAULT	.rdata	/undefined4	4
-8205A588	PTR_LAB_8205a588	Global	Label	DEFAULT	.rdata	/pointer	4
+8205A588	PTR_FUN_8205a588	Global	Label	DEFAULT	.rdata	/pointer	4
 8205A58C	PTR_FUN_8205a58c	Global	Label	DEFAULT	.rdata	/pointer	4
 8205A590	DAT_8205a590	Global	Label	DEFAULT	.rdata	/undefined	1
 8205A594	PTR_DAT_8205a594	Global	Label	DEFAULT	.rdata	/pointer	4
@@ -10312,12 +10316,12 @@ va	name	namespace	type	source	block	datatype	length
 8205A5F8	DAT_8205a5f8	Global	Label	DEFAULT	.rdata	/undefined	1
 8205A628	DAT_8205a628	Global	Label	DEFAULT	.rdata	/undefined	1
 8205A648	PTR_FUN_8205a648	Global	Label	DEFAULT	.rdata	/pointer	4
-8205A650	PTR_LAB_8205a650	Global	Label	DEFAULT	.rdata	/undefined *	4
-8205A6B0	PTR_LAB_8205a6b0	Global	Label	DEFAULT	.rdata	/undefined *	4
-8205A6D8	PTR_LAB_8205a6d8	Global	Label	DEFAULT	.rdata	/undefined *	4
+8205A650	PTR_FUN_8205a650	Global	Label	DEFAULT	.rdata	/undefined *	4
+8205A6B0	PTR_FUN_8205a6b0	Global	Label	DEFAULT	.rdata	/undefined *	4
+8205A6D8	PTR_FUN_8205a6d8	Global	Label	DEFAULT	.rdata	/undefined *	4
 8205A754	DAT_8205a754	Global	Label	DEFAULT	.rdata	/undefined4	4
 8205A758	PTR_FUN_8205a758	Global	Label	DEFAULT	.rdata	/undefined *	4
-8205A76C	PTR_LAB_8205a76c	Global	Label	DEFAULT	.rdata	/undefined *	4
+8205A76C	PTR_FUN_8205a76c	Global	Label	DEFAULT	.rdata	/undefined *	4
 8205A784	PTR_FUN_8205a784	Global	Label	DEFAULT	.rdata	/undefined *	4
 8205A798	PTR_FUN_8205a798	Global	Label	DEFAULT	.rdata	/pointer	4
 8205A7A4	PTR_FUN_8205a7a4	Global	Label	DEFAULT	.rdata	/pointer	4
@@ -10334,17 +10338,17 @@ va	name	namespace	type	source	block	datatype	length
 8205A8CC	PTR_FUN_8205a8cc	Global	Label	DEFAULT	.rdata	/pointer	4
 8205A8D0	DAT_8205a8d0	Global	Label	DEFAULT	.rdata	/undefined	1
 8205A8D4	DAT_8205a8d4	Global	Label	DEFAULT	.rdata	/undefined4	4
-8205A8D8	PTR_LAB_8205a8d8	Global	Label	DEFAULT	.rdata	/undefined *	4
-8205A8F4	PTR_LAB_8205a8f4	Global	Label	DEFAULT	.rdata	/undefined *	4
-8205A914	PTR_LAB_8205a914	Global	Label	DEFAULT	.rdata	/pointer	4
+8205A8D8	PTR_FUN_8205a8d8	Global	Label	DEFAULT	.rdata	/undefined *	4
+8205A8F4	PTR_FUN_8205a8f4	Global	Label	DEFAULT	.rdata	/undefined *	4
+8205A914	PTR_FUN_8205a914	Global	Label	DEFAULT	.rdata	/pointer	4
 8205A920	PTR_FUN_8205a920	Global	Label	DEFAULT	.rdata	/pointer	4
-8205A930	PTR_LAB_8205a930	Global	Label	DEFAULT	.rdata	/undefined *	4
+8205A930	PTR_FUN_8205a930	Global	Label	DEFAULT	.rdata	/undefined *	4
 8205A954	PTR_FUN_8205a954	Global	Label	DEFAULT	.rdata	/pointer	4
-8205A960	PTR_LAB_8205a960	Global	Label	DEFAULT	.rdata	/undefined *	4
+8205A960	PTR_FUN_8205a960	Global	Label	DEFAULT	.rdata	/undefined *	4
 8205A994	PTR_FUN_8205a994	Global	Label	DEFAULT	.rdata	/pointer	4
-8205A9A0	PTR_LAB_8205a9a0	Global	Label	DEFAULT	.rdata	/pointer	4
+8205A9A0	PTR_FUN_8205a9a0	Global	Label	DEFAULT	.rdata	/pointer	4
 8205A9AC	PTR_FUN_8205a9ac	Global	Label	DEFAULT	.rdata	/pointer	4
-8205A9C0	PTR_LAB_8205a9c0	Global	Label	DEFAULT	.rdata	/undefined *	4
+8205A9C0	PTR_FUN_8205a9c0	Global	Label	DEFAULT	.rdata	/undefined *	4
 8205AA20	PTR_FUN_8205aa20	Global	Label	DEFAULT	.rdata	/undefined *	4
 8205AA48	DAT_8205aa48	Global	Label	DEFAULT	.rdata	/undefined2	2
 8205AA4C	DAT_8205aa4c	Global	Label	DEFAULT	.rdata	/undefined4	4
@@ -10376,10 +10380,10 @@ va	name	namespace	type	source	block	datatype	length
 8205AE70	DAT_8205ae70	Global	Label	DEFAULT	.rdata	/undefined	1
 8205AE80	PTR_FUN_8205ae80	Global	Label	DEFAULT	.rdata	/pointer	4
 8205AE8C	PTR_FUN_8205ae8c	Global	Label	DEFAULT	.rdata	/undefined *	4
-8205AED8	PTR_LAB_8205aed8	Global	Label	DEFAULT	.rdata	/undefined *	4
-8205AEEC	PTR_LAB_8205aeec	Global	Label	DEFAULT	.rdata	/undefined *	4
-8205AF00	PTR_LAB_8205af00	Global	Label	DEFAULT	.rdata	/undefined *	4
-8205AF18	PTR_LAB_8205af18	Global	Label	DEFAULT	.rdata	/undefined *	4
+8205AED8	PTR_FUN_8205aed8	Global	Label	DEFAULT	.rdata	/undefined *	4
+8205AEEC	PTR_FUN_8205aeec	Global	Label	DEFAULT	.rdata	/undefined *	4
+8205AF00	PTR_FUN_8205af00	Global	Label	DEFAULT	.rdata	/undefined *	4
+8205AF18	PTR_FUN_8205af18	Global	Label	DEFAULT	.rdata	/undefined *	4
 8205AF30	PTR_FUN_8205af30	Global	Label	DEFAULT	.rdata	/undefined *	4
 8205AF8C	DAT_8205af8c	Global	Label	DEFAULT	.rdata	/undefined4	4
 8205AF90	DAT_8205af90	Global	Label	DEFAULT	.rdata	/undefined4	4
@@ -10459,14 +10463,14 @@ va	name	namespace	type	source	block	datatype	length
 8205BD30	DAT_8205bd30	Global	Label	DEFAULT	.rdata	/undefined8	8
 8205BD38	DAT_8205bd38	Global	Label	DEFAULT	.rdata	/undefined	1
 8205BD3C	DAT_8205bd3c	Global	Label	DEFAULT	.rdata	/undefined4	4
-8205BD40	PTR_LAB_8205bd40	Global	Label	DEFAULT	.rdata	/undefined *	4
-8205BDA0	PTR_LAB_8205bda0	Global	Label	DEFAULT	.rdata	/undefined *	4
-8205BDC8	PTR_LAB_8205bdc8	Global	Label	DEFAULT	.rdata	/undefined *	4
+8205BD40	PTR_FUN_8205bd40	Global	Label	DEFAULT	.rdata	/undefined *	4
+8205BDA0	PTR_FUN_8205bda0	Global	Label	DEFAULT	.rdata	/undefined *	4
+8205BDC8	PTR_FUN_8205bdc8	Global	Label	DEFAULT	.rdata	/undefined *	4
 8205BE40	DAT_8205be40	Global	Label	DEFAULT	.rdata	/undefined	1
 8205C318	DAT_8205c318	Global	Label	DEFAULT	.rdata	/undefined4	4
 8205C7E8	DAT_8205c7e8	Global	Label	DEFAULT	.rdata	/undefined4	4
-8205D18C	PTR_LAB_8205d18c	Global	Label	DEFAULT	.rdata	/pointer	4
-8205D190	PTR_LAB_8205d190	Global	Label	DEFAULT	.rdata	/pointer	4
+8205D18C	PTR_FUN_8205d18c	Global	Label	DEFAULT	.rdata	/pointer	4
+8205D190	PTR_FUN_8205d190	Global	Label	DEFAULT	.rdata	/pointer	4
 8205D194	DAT_8205d194	Global	Label	DEFAULT	.rdata	/undefined4	4
 8205D198	DAT_8205d198	Global	Label	DEFAULT	.rdata	/undefined4	4
 8205D1A0	DAT_8205d1a0	Global	Label	DEFAULT	.rdata	/undefined8	8
@@ -11044,6 +11048,9 @@ va	name	namespace	type	source	block	datatype	length
 820695B8	s_bdSessionInvite::deserialize_820695b8	Global	Label	DEFAULT	.rdata	/string	29
 820695D8	s_c:\trees\iw5build4-iw\iw5\code_s_820695d8	Global	Label	DEFAULT	.rdata	/string	90
 82069688	PTR_FUN_82069688	Global	Label	DEFAULT	.rdata	/pointer	4
+82069740	s_core/taskbytebuffer_82069740	Global	Label	DEFAULT	.rdata	/string	20
+82069754	s_bdTaskByteBuffer::allocateBuffer_82069754	Global	Label	DEFAULT	.rdata	/string	36
+82069778	s_c:\trees\iw5build4-iw\iw5\code_s_82069778	Global	Label	DEFAULT	.rdata	/string	100
 820697DC	PTR_FUN_820697dc	Global	Label	DEFAULT	.rdata	/pointer	4
 82069870	s_Destination_URL_was_not_of_expec_82069870	Global	Label	DEFAULT	.rdata	/string	46
 820698A0	s_c:\trees\iw5build4-iw\iw5\code_s_820698a0	Global	Label	DEFAULT	.rdata	/string	88
@@ -11757,7 +11764,9 @@ va	name	namespace	type	source	block	datatype	length
 820793E8	DAT_820793e8	Global	Label	DEFAULT	.rdata	/undefined8	8
 820793F0	DAT_820793f0	Global	Label	DEFAULT	.rdata	/undefined4	4
 820793F4	DAT_820793f4	Global	Label	DEFAULT	.rdata	/undefined4	4
+820793F8	DAT_820793f8	Global	Label	DEFAULT	.rdata	/undefined4	4
 820793FC	DAT_820793fc	Global	Label	DEFAULT	.rdata	/undefined4	4
+82079400	DAT_82079400	Global	Label	DEFAULT	.rdata	/undefined4	4
 82079404	DAT_82079404	Global	Label	DEFAULT	.rdata	/undefined4	4
 82079408	DAT_82079408	Global	Label	DEFAULT	.rdata	/undefined8	8
 82079410	DAT_82079410	Global	Label	DEFAULT	.rdata	/undefined4	4
@@ -11980,71 +11989,27 @@ va	name	namespace	type	source	block	datatype	length
 8209D0E1	DAT_8209d0e1	Global	Label	DEFAULT	BINKBSS	/undefined	1
 8209D0E2	DAT_8209d0e2	Global	Label	DEFAULT	BINKBSS	/undefined	1
 8209D11F	DAT_8209d11f	Global	Label	DEFAULT	BINKBSS	/undefined	1
-820A5038	LAB_820a5038	Global	Label	DEFAULT	.text		
-820A5088	LAB_820a5088	Global	Label	DEFAULT	.text		
-820B6B30	LAB_820b6b30	Global	Label	DEFAULT	.text		
-820B9998	LAB_820b9998	Global	Label	DEFAULT	.text		
-820BBB28	LAB_820bbb28	Global	Label	DEFAULT	.text		
-820BBC18	LAB_820bbc18	Global	Label	DEFAULT	.text		
-820BBC30	LAB_820bbc30	Global	Label	DEFAULT	.text		
-820BF9F0	LAB_820bf9f0	Global	Label	DEFAULT	.text		
-820C0588	LAB_820c0588	Global	Label	DEFAULT	.text		
-820C5C28	LAB_820c5c28	Global	Label	DEFAULT	.text		
-820C5C3C	LAB_820c5c3c	Global	Label	DEFAULT	.text		
-820C5C48	LAB_820c5c48	Global	Label	DEFAULT	.text		
-820C5C6C	LAB_820c5c6c	Global	Label	DEFAULT	.text		
-820C5C88	LAB_820c5c88	Global	Label	DEFAULT	.text		
-820C5CAC	LAB_820c5cac	Global	Label	DEFAULT	.text		
-820C5CB8	LAB_820c5cb8	Global	Label	DEFAULT	.text		
-820C5D58	LAB_820c5d58	Global	Label	DEFAULT	.text		
-820C5D8C	LAB_820c5d8c	Global	Label	DEFAULT	.text		
-820C5D94	LAB_820c5d94	Global	Label	DEFAULT	.text		
-820C5DA0	LAB_820c5da0	Global	Label	DEFAULT	.text		
-820C5DB4	LAB_820c5db4	Global	Label	DEFAULT	.text		
-820C5DD4	LAB_820c5dd4	Global	Label	DEFAULT	.text		
-820C5DE8	LAB_820c5de8	Global	Label	DEFAULT	.text		
-820C5F40	LAB_820c5f40	Global	Label	DEFAULT	.text		
-820C5F54	LAB_820c5f54	Global	Label	DEFAULT	.text		
-820C5F74	LAB_820c5f74	Global	Label	DEFAULT	.text		
-820C5F84	LAB_820c5f84	Global	Label	DEFAULT	.text		
-820C6A78	LAB_820c6a78	Global	Label	DEFAULT	.text		
 820C76E0	switchdataD_820c76e0	switchD_820c76dc	Label	ANALYSIS	.text	/pointer	4
 820C903C	switchdataD_820c903c	switchD_820c9038	Label	ANALYSIS	.text	/pointer	4
 820C9690	switchdataD_820c9690	switchD_820c968c	Label	ANALYSIS	.text	/pointer	4
 820C9A20	switchdataD_820c9a20	switchD_820c9a1c	Label	ANALYSIS	.text	/pointer	4
 820DED18	switchdataD_820ded18	switchD_820ded14	Label	ANALYSIS	.text	/pointer	4
 820DF240	switchdataD_820df240	switchD_820df23c	Label	ANALYSIS	.text	/pointer	4
-820E2030	LAB_820e2030	Global	Label	DEFAULT	.text		
-820E206C	LAB_820e206c	Global	Label	DEFAULT	.text		
-820E2078	LAB_820e2078	Global	Label	DEFAULT	.text		
-820E20B4	LAB_820e20b4	Global	Label	DEFAULT	.text		
-820E20C0	LAB_820e20c0	Global	Label	DEFAULT	.text		
 820F43EC	switchdataD_820f43ec	switchD_820f43e8	Label	ANALYSIS	.text	/pointer	4
 820F440C	PTR_caseD_8_820f440c	Global	Label	DEFAULT	.text	/pointer	4
 820F4414	PTR_caseD_8_820f4414	Global	Label	DEFAULT	.text	/pointer	4
 820F5570	switchdataD_820f5570	switchD_820f556c	Label	ANALYSIS	.text	/pointer	4
-820F6DF0	LAB_820f6df0	Global	Label	DEFAULT	.text		
-820F6DF4	LAB_820f6df4	Global	Label	DEFAULT	.text		
 820F99F4	switchdataD_820f99f4	switchD_820f99f0	Label	ANALYSIS	.text	/pointer	4
 820F9A54	switchdataD_820f9a54	switchD_820f9a50	Label	ANALYSIS	.text	/pointer	4
-821116D8	DAT_821116d8	Global	Label	DEFAULT	.text	/undefined	1
-821116E0	DAT_821116e0	Global	Label	DEFAULT	.text	/undefined	1
 8211C240	switchdataD_8211c240	switchD_8211c23c	Label	ANALYSIS	.text	/pointer	4
 8211E12C	switchdataD_8211e12c	switchD_8211e128	Label	ANALYSIS	.text	/pointer	4
 8212231C	switchdataD_8212231c	switchD_82122318	Label	ANALYSIS	.text	/pointer	4
 8212241C	switchdataD_8212241c	switchD_82122418	Label	ANALYSIS	.text	/pointer	4
 82122C38	switchdataD_82122c38	switchD_82122c34	Label	ANALYSIS	.text	/pointer	4
 82124314	switchdataD_82124314	switchD_82124310	Label	ANALYSIS	.text	/pointer	4
-821243F0	LAB_821243f0	Global	Label	DEFAULT	.text		
-8212441C	LAB_8212441c	Global	Label	DEFAULT	.text		
-821298F8	LAB_821298f8	Global	Label	DEFAULT	.text		
-8212A000	LAB_8212a000	Global	Label	DEFAULT	.text		
-8212A520	LAB_8212a520	Global	Label	DEFAULT	.text		
 82132984	switchdataD_82132984	switchD_82132980	Label	ANALYSIS	.text	/pointer	4
 821333DC	switchdataD_821333dc	switchD_821333d8	Label	ANALYSIS	.text	/pointer	4
 82136EDC	switchdataD_82136edc	switchD_82136ed8	Label	ANALYSIS	.text	/pointer	4
-82138830	LAB_82138830	Global	Label	DEFAULT	.text		
-82138834	LAB_82138834	Global	Label	DEFAULT	.text		
 8213B66C	switchdataD_8213b66c	switchD_8213b668	Label	ANALYSIS	.text	/pointer	4
 821420A8	switchdataD_821420a8	switchD_821420a4	Label	ANALYSIS	.text	/pointer	4
 82144388	switchdataD_82144388	switchD_82144384	Label	ANALYSIS	.text	/pointer	4
@@ -12052,417 +12017,18 @@ va	name	namespace	type	source	block	datatype	length
 82155318	switchdataD_82155318	switchD_82155314	Label	ANALYSIS	.text	/pointer	4
 82156314	switchdataD_82156314	switchD_82156310	Label	ANALYSIS	.text	/pointer	4
 8215BC70	switchdataD_8215bc70	switchD_8215bc6c	Label	ANALYSIS	.text	/pointer	4
-82162CF0	LAB_82162cf0	Global	Label	DEFAULT	.text		
-821668A8	LAB_821668a8	Global	Label	DEFAULT	.text		
-821668E8	LAB_821668e8	Global	Label	DEFAULT	.text		
-821668F4	LAB_821668f4	Global	Label	DEFAULT	.text		
-82166900	LAB_82166900	Global	Label	DEFAULT	.text		
-82166910	DAT_82166910	Global	Label	DEFAULT	.text	/undefined	1
 8216DD10	switchdataD_8216dd10	switchD_8216dd0c	Label	ANALYSIS	.text	/pointer	4
-8216EF30	LAB_8216ef30	Global	Label	DEFAULT	.text		
-8216EF64	LAB_8216ef64	Global	Label	DEFAULT	.text		
-8216EF7C	LAB_8216ef7c	Global	Label	DEFAULT	.text		
 8216FEF8	switchdataD_8216fef8	switchD_8216fef4	Label	ANALYSIS	.text	/pointer	4
 82170000	switchdataD_82170000	switchD_8216fffc	Label	ANALYSIS	.text	/pointer	4
-82171928	LAB_82171928	Global	Label	DEFAULT	.text		
-8217198C	LAB_8217198c	Global	Label	DEFAULT	.text		
-82172BD8	LAB_82172bd8	Global	Label	DEFAULT	.text		
-82172BF8	LAB_82172bf8	Global	Label	DEFAULT	.text		
-82173268	LAB_82173268	Global	Label	DEFAULT	.text		
-82173288	DAT_82173288	Global	Label	DEFAULT	.text	/undefined	1
-82173290	DAT_82173290	Global	Label	DEFAULT	.text	/undefined	1
-82173340	LAB_82173340	Global	Label	DEFAULT	.text		
-821734D0	LAB_821734d0	Global	Label	DEFAULT	.text		
-82177270	DAT_82177270	Global	Label	DEFAULT	.text	/undefined	1
-82177278	LAB_82177278	Global	Label	DEFAULT	.text		
-82177910	LAB_82177910	Global	Label	DEFAULT	.text		
-82177930	LAB_82177930	Global	Label	DEFAULT	.text		
-82177A20	LAB_82177a20	Global	Label	DEFAULT	.text		
 8217C0E0	switchdataD_8217c0e0	switchD_8217c0dc	Label	ANALYSIS	.text	/pointer	4
-82182660	LAB_82182660	Global	Label	DEFAULT	.text		
-82182668	LAB_82182668	Global	Label	DEFAULT	.text		
-82182670	LAB_82182670	Global	Label	DEFAULT	.text		
-821826B0	LAB_821826b0	Global	Label	DEFAULT	.text		
-821826F0	LAB_821826f0	Global	Label	DEFAULT	.text		
-82182730	LAB_82182730	Global	Label	DEFAULT	.text		
-821828E0	DAT_821828e0	Global	Label	DEFAULT	.text	/undefined	1
-821828E8	DAT_821828e8	Global	Label	DEFAULT	.text	/undefined	1
-821828F0	LAB_821828f0	Global	Label	DEFAULT	.text		
-82182930	LAB_82182930	Global	Label	DEFAULT	.text		
-821867D8	LAB_821867d8	Global	Label	DEFAULT	.text		
 8218DCD0	switchdataD_8218dcd0	switchD_8218dccc	Label	ANALYSIS	.text	/pointer	4
 8219B878	switchdataD_8219b878	switchD_8219b874	Label	ANALYSIS	.text	/pointer	4
-8219C398	LAB_8219c398	Global	Label	DEFAULT	.text		
-8219C3C4	LAB_8219c3c4	Global	Label	DEFAULT	.text		
-8219C598	LAB_8219c598	Global	Label	DEFAULT	.text		
-8219C5DC	LAB_8219c5dc	Global	Label	DEFAULT	.text		
-8219C5F8	LAB_8219c5f8	Global	Label	DEFAULT	.text		
-8219C968	LAB_8219c968	Global	Label	DEFAULT	.text		
 821A1F1C	switchdataD_821a1f1c	switchD_821a1f18	Label	ANALYSIS	.text	/pointer	4
 821A20BC	switchdataD_821a20bc	switchD_821a20b8	Label	ANALYSIS	.text	/pointer	4
 821A22D0	switchdataD_821a22d0	switchD_821a22cc	Label	ANALYSIS	.text	/pointer	4
 821A243C	switchdataD_821a243c	switchD_821a2438	Label	ANALYSIS	.text	/pointer	4
-821A3780	LAB_821a3780	Global	Label	DEFAULT	.text		
-821A3BC8	LAB_821a3bc8	Global	Label	DEFAULT	.text		
-821A7270	LAB_821a7270	Global	Label	DEFAULT	.text		
-821A7280	LAB_821a7280	Global	Label	DEFAULT	.text		
-821A7290	LAB_821a7290	Global	Label	DEFAULT	.text		
-821A72A0	LAB_821a72a0	Global	Label	DEFAULT	.text		
-821A72B0	LAB_821a72b0	Global	Label	DEFAULT	.text		
-821A72C0	LAB_821a72c0	Global	Label	DEFAULT	.text		
-821A72D0	LAB_821a72d0	Global	Label	DEFAULT	.text		
-821A72E0	LAB_821a72e0	Global	Label	DEFAULT	.text		
-821A72F0	LAB_821a72f0	Global	Label	DEFAULT	.text		
-821A7300	LAB_821a7300	Global	Label	DEFAULT	.text		
-821A7310	LAB_821a7310	Global	Label	DEFAULT	.text		
-821A7320	LAB_821a7320	Global	Label	DEFAULT	.text		
-821A7330	LAB_821a7330	Global	Label	DEFAULT	.text		
-821A7340	LAB_821a7340	Global	Label	DEFAULT	.text		
-821A7350	LAB_821a7350	Global	Label	DEFAULT	.text		
-821A7360	LAB_821a7360	Global	Label	DEFAULT	.text		
-821A7370	LAB_821a7370	Global	Label	DEFAULT	.text		
-821A7380	LAB_821a7380	Global	Label	DEFAULT	.text		
-821A7390	LAB_821a7390	Global	Label	DEFAULT	.text		
-821A73A0	LAB_821a73a0	Global	Label	DEFAULT	.text		
-821A73B0	LAB_821a73b0	Global	Label	DEFAULT	.text		
-821A73C0	LAB_821a73c0	Global	Label	DEFAULT	.text		
-821A73D0	LAB_821a73d0	Global	Label	DEFAULT	.text		
-821A73E0	LAB_821a73e0	Global	Label	DEFAULT	.text		
-821A73F0	LAB_821a73f0	Global	Label	DEFAULT	.text		
-821A7400	LAB_821a7400	Global	Label	DEFAULT	.text		
-821A7410	LAB_821a7410	Global	Label	DEFAULT	.text		
-821A7420	LAB_821a7420	Global	Label	DEFAULT	.text		
-821A7430	LAB_821a7430	Global	Label	DEFAULT	.text		
-821A7440	LAB_821a7440	Global	Label	DEFAULT	.text		
-821A7450	LAB_821a7450	Global	Label	DEFAULT	.text		
-821A7460	LAB_821a7460	Global	Label	DEFAULT	.text		
-821A7470	LAB_821a7470	Global	Label	DEFAULT	.text		
-821A7480	LAB_821a7480	Global	Label	DEFAULT	.text		
-821A7490	LAB_821a7490	Global	Label	DEFAULT	.text		
-821A74A0	LAB_821a74a0	Global	Label	DEFAULT	.text		
-821A74B0	LAB_821a74b0	Global	Label	DEFAULT	.text		
-821A74C0	LAB_821a74c0	Global	Label	DEFAULT	.text		
-821A74D0	LAB_821a74d0	Global	Label	DEFAULT	.text		
-821A74E0	LAB_821a74e0	Global	Label	DEFAULT	.text		
-821A74F0	LAB_821a74f0	Global	Label	DEFAULT	.text		
-821A7500	LAB_821a7500	Global	Label	DEFAULT	.text		
-821A7510	LAB_821a7510	Global	Label	DEFAULT	.text		
-821A7520	LAB_821a7520	Global	Label	DEFAULT	.text		
-821A7530	LAB_821a7530	Global	Label	DEFAULT	.text		
-821A7540	LAB_821a7540	Global	Label	DEFAULT	.text		
-821A7550	LAB_821a7550	Global	Label	DEFAULT	.text		
-821A7560	LAB_821a7560	Global	Label	DEFAULT	.text		
-821A7570	LAB_821a7570	Global	Label	DEFAULT	.text		
-821A7580	LAB_821a7580	Global	Label	DEFAULT	.text		
-821A7590	LAB_821a7590	Global	Label	DEFAULT	.text		
-821A75A0	LAB_821a75a0	Global	Label	DEFAULT	.text		
-821A75B0	LAB_821a75b0	Global	Label	DEFAULT	.text		
-821A75C0	LAB_821a75c0	Global	Label	DEFAULT	.text		
-821A75D0	LAB_821a75d0	Global	Label	DEFAULT	.text		
-821A75E0	LAB_821a75e0	Global	Label	DEFAULT	.text		
-821A75F0	LAB_821a75f0	Global	Label	DEFAULT	.text		
-821A7600	LAB_821a7600	Global	Label	DEFAULT	.text		
-821A7610	LAB_821a7610	Global	Label	DEFAULT	.text		
-821A7620	LAB_821a7620	Global	Label	DEFAULT	.text		
-821A7630	LAB_821a7630	Global	Label	DEFAULT	.text		
-821A7640	LAB_821a7640	Global	Label	DEFAULT	.text		
-821A7650	LAB_821a7650	Global	Label	DEFAULT	.text		
-821A7660	LAB_821a7660	Global	Label	DEFAULT	.text		
-821A7670	LAB_821a7670	Global	Label	DEFAULT	.text		
-821A7680	LAB_821a7680	Global	Label	DEFAULT	.text		
-821A7690	LAB_821a7690	Global	Label	DEFAULT	.text		
-821A76A0	LAB_821a76a0	Global	Label	DEFAULT	.text		
-821A76B0	LAB_821a76b0	Global	Label	DEFAULT	.text		
-821A76C0	LAB_821a76c0	Global	Label	DEFAULT	.text		
-821A76D0	LAB_821a76d0	Global	Label	DEFAULT	.text		
-821A76E0	LAB_821a76e0	Global	Label	DEFAULT	.text		
-821A76F0	LAB_821a76f0	Global	Label	DEFAULT	.text		
-821A7700	LAB_821a7700	Global	Label	DEFAULT	.text		
-821A7710	LAB_821a7710	Global	Label	DEFAULT	.text		
-821A7720	LAB_821a7720	Global	Label	DEFAULT	.text		
-821A7730	LAB_821a7730	Global	Label	DEFAULT	.text		
-821A7740	LAB_821a7740	Global	Label	DEFAULT	.text		
-821A77E0	LAB_821a77e0	Global	Label	DEFAULT	.text		
-821A77E8	LAB_821a77e8	Global	Label	DEFAULT	.text		
-821A77F0	LAB_821a77f0	Global	Label	DEFAULT	.text		
-821A77F8	LAB_821a77f8	Global	Label	DEFAULT	.text		
-821A7800	LAB_821a7800	Global	Label	DEFAULT	.text		
-821A7808	LAB_821a7808	Global	Label	DEFAULT	.text		
-821A7810	LAB_821a7810	Global	Label	DEFAULT	.text		
-821A7818	LAB_821a7818	Global	Label	DEFAULT	.text		
-821A7820	LAB_821a7820	Global	Label	DEFAULT	.text		
-821A7828	LAB_821a7828	Global	Label	DEFAULT	.text		
-821A7830	LAB_821a7830	Global	Label	DEFAULT	.text		
-821A7838	LAB_821a7838	Global	Label	DEFAULT	.text		
-821A7840	LAB_821a7840	Global	Label	DEFAULT	.text		
-821A7848	LAB_821a7848	Global	Label	DEFAULT	.text		
-821A7850	LAB_821a7850	Global	Label	DEFAULT	.text		
-821A7858	LAB_821a7858	Global	Label	DEFAULT	.text		
-821A7860	LAB_821a7860	Global	Label	DEFAULT	.text		
-821A7868	LAB_821a7868	Global	Label	DEFAULT	.text		
-821A7870	LAB_821a7870	Global	Label	DEFAULT	.text		
-821A7878	LAB_821a7878	Global	Label	DEFAULT	.text		
-821A7880	LAB_821a7880	Global	Label	DEFAULT	.text		
-821A7888	LAB_821a7888	Global	Label	DEFAULT	.text		
-821A7890	LAB_821a7890	Global	Label	DEFAULT	.text		
-821A7898	LAB_821a7898	Global	Label	DEFAULT	.text		
-821A78A0	LAB_821a78a0	Global	Label	DEFAULT	.text		
-821A78A8	LAB_821a78a8	Global	Label	DEFAULT	.text		
-821A78B0	LAB_821a78b0	Global	Label	DEFAULT	.text		
-821A78B8	LAB_821a78b8	Global	Label	DEFAULT	.text		
-821A78C0	LAB_821a78c0	Global	Label	DEFAULT	.text		
-821A78C8	LAB_821a78c8	Global	Label	DEFAULT	.text		
-821A78D0	LAB_821a78d0	Global	Label	DEFAULT	.text		
-821A78D8	LAB_821a78d8	Global	Label	DEFAULT	.text		
-821A78E0	LAB_821a78e0	Global	Label	DEFAULT	.text		
-821A78E8	LAB_821a78e8	Global	Label	DEFAULT	.text		
-821A78F0	LAB_821a78f0	Global	Label	DEFAULT	.text		
-821A78F8	LAB_821a78f8	Global	Label	DEFAULT	.text		
-821A7900	LAB_821a7900	Global	Label	DEFAULT	.text		
-821A7908	LAB_821a7908	Global	Label	DEFAULT	.text		
-821A7910	LAB_821a7910	Global	Label	DEFAULT	.text		
-821A8A38	LAB_821a8a38	Global	Label	DEFAULT	.text		
-821EA0C0	LAB_821ea0c0	Global	Label	DEFAULT	.text		
-821EA0C8	LAB_821ea0c8	Global	Label	DEFAULT	.text		
-821EA0D0	LAB_821ea0d0	Global	Label	DEFAULT	.text		
-821ECB70	LAB_821ecb70	Global	Label	DEFAULT	.text		
-821ECB84	LAB_821ecb84	Global	Label	DEFAULT	.text		
-821ECB94	LAB_821ecb94	Global	Label	DEFAULT	.text		
-821ECBA8	LAB_821ecba8	Global	Label	DEFAULT	.text		
-821ECBBC	LAB_821ecbbc	Global	Label	DEFAULT	.text		
-821ECBCC	LAB_821ecbcc	Global	Label	DEFAULT	.text		
-821ECBE8	LAB_821ecbe8	Global	Label	DEFAULT	.text		
-821ECBFC	LAB_821ecbfc	Global	Label	DEFAULT	.text		
-821ECC0C	LAB_821ecc0c	Global	Label	DEFAULT	.text		
-821ECC20	LAB_821ecc20	Global	Label	DEFAULT	.text		
-821ECC34	LAB_821ecc34	Global	Label	DEFAULT	.text		
-821ECC44	LAB_821ecc44	Global	Label	DEFAULT	.text		
-821ECC58	LAB_821ecc58	Global	Label	DEFAULT	.text		
-821ECC6C	LAB_821ecc6c	Global	Label	DEFAULT	.text		
-821ECC7C	LAB_821ecc7c	Global	Label	DEFAULT	.text		
-821ECC90	LAB_821ecc90	Global	Label	DEFAULT	.text		
-821ECCA4	LAB_821ecca4	Global	Label	DEFAULT	.text		
-821ECCB4	LAB_821eccb4	Global	Label	DEFAULT	.text		
-821ECCD0	LAB_821eccd0	Global	Label	DEFAULT	.text		
-821ECCE4	LAB_821ecce4	Global	Label	DEFAULT	.text		
-821ECCF4	LAB_821eccf4	Global	Label	DEFAULT	.text		
-821ECD08	LAB_821ecd08	Global	Label	DEFAULT	.text		
-821ECD1C	LAB_821ecd1c	Global	Label	DEFAULT	.text		
-821ECD2C	LAB_821ecd2c	Global	Label	DEFAULT	.text		
-821ECD48	LAB_821ecd48	Global	Label	DEFAULT	.text		
-821ECD5C	LAB_821ecd5c	Global	Label	DEFAULT	.text		
-821ECD6C	LAB_821ecd6c	Global	Label	DEFAULT	.text		
-821ECD80	LAB_821ecd80	Global	Label	DEFAULT	.text		
-821ECD94	LAB_821ecd94	Global	Label	DEFAULT	.text		
-821ECDA4	LAB_821ecda4	Global	Label	DEFAULT	.text		
-821ECDC0	LAB_821ecdc0	Global	Label	DEFAULT	.text		
-821ECDD4	LAB_821ecdd4	Global	Label	DEFAULT	.text		
-821ECDE4	LAB_821ecde4	Global	Label	DEFAULT	.text		
-821ECE00	LAB_821ece00	Global	Label	DEFAULT	.text		
-821ECE14	LAB_821ece14	Global	Label	DEFAULT	.text		
-821ECE24	LAB_821ece24	Global	Label	DEFAULT	.text		
-821ECE40	LAB_821ece40	Global	Label	DEFAULT	.text		
-821ECE54	LAB_821ece54	Global	Label	DEFAULT	.text		
-821ECE64	LAB_821ece64	Global	Label	DEFAULT	.text		
-821ECE80	LAB_821ece80	Global	Label	DEFAULT	.text		
-821ECE94	LAB_821ece94	Global	Label	DEFAULT	.text		
-821ECEA4	LAB_821ecea4	Global	Label	DEFAULT	.text		
-821ECEC0	LAB_821ecec0	Global	Label	DEFAULT	.text		
-821ECED4	LAB_821eced4	Global	Label	DEFAULT	.text		
-821ECEE4	LAB_821ecee4	Global	Label	DEFAULT	.text		
-821ECEF8	LAB_821ecef8	Global	Label	DEFAULT	.text		
-821ECF0C	LAB_821ecf0c	Global	Label	DEFAULT	.text		
-821ECF1C	LAB_821ecf1c	Global	Label	DEFAULT	.text		
-821ECF30	LAB_821ecf30	Global	Label	DEFAULT	.text		
-821ECF44	LAB_821ecf44	Global	Label	DEFAULT	.text		
-821ECF54	LAB_821ecf54	Global	Label	DEFAULT	.text		
-821ECF68	LAB_821ecf68	Global	Label	DEFAULT	.text		
-821ECF7C	LAB_821ecf7c	Global	Label	DEFAULT	.text		
-821ECF8C	LAB_821ecf8c	Global	Label	DEFAULT	.text		
-821ECFA0	LAB_821ecfa0	Global	Label	DEFAULT	.text		
-821ECFB4	LAB_821ecfb4	Global	Label	DEFAULT	.text		
-821ECFC4	LAB_821ecfc4	Global	Label	DEFAULT	.text		
-821ECFD8	LAB_821ecfd8	Global	Label	DEFAULT	.text		
-821ECFEC	LAB_821ecfec	Global	Label	DEFAULT	.text		
-821ECFFC	LAB_821ecffc	Global	Label	DEFAULT	.text		
-821ED010	LAB_821ed010	Global	Label	DEFAULT	.text		
-821ED024	LAB_821ed024	Global	Label	DEFAULT	.text		
-821ED034	LAB_821ed034	Global	Label	DEFAULT	.text		
-821ED048	LAB_821ed048	Global	Label	DEFAULT	.text		
-821ED05C	LAB_821ed05c	Global	Label	DEFAULT	.text		
-821ED06C	LAB_821ed06c	Global	Label	DEFAULT	.text		
-821ED080	LAB_821ed080	Global	Label	DEFAULT	.text		
-821ED094	LAB_821ed094	Global	Label	DEFAULT	.text		
-821ED0A4	LAB_821ed0a4	Global	Label	DEFAULT	.text		
-821ED0B8	LAB_821ed0b8	Global	Label	DEFAULT	.text		
-821ED0CC	LAB_821ed0cc	Global	Label	DEFAULT	.text		
-821ED0DC	LAB_821ed0dc	Global	Label	DEFAULT	.text		
-821ED0F8	LAB_821ed0f8	Global	Label	DEFAULT	.text		
-821ED10C	LAB_821ed10c	Global	Label	DEFAULT	.text		
-821ED11C	LAB_821ed11c	Global	Label	DEFAULT	.text		
-821ED130	LAB_821ed130	Global	Label	DEFAULT	.text		
-821ED144	LAB_821ed144	Global	Label	DEFAULT	.text		
-821ED154	LAB_821ed154	Global	Label	DEFAULT	.text		
-821ED168	LAB_821ed168	Global	Label	DEFAULT	.text		
-821ED17C	LAB_821ed17c	Global	Label	DEFAULT	.text		
-821ED18C	LAB_821ed18c	Global	Label	DEFAULT	.text		
-821ED1A8	LAB_821ed1a8	Global	Label	DEFAULT	.text		
-821ED1BC	LAB_821ed1bc	Global	Label	DEFAULT	.text		
-821ED1CC	LAB_821ed1cc	Global	Label	DEFAULT	.text		
-821ED1E0	LAB_821ed1e0	Global	Label	DEFAULT	.text		
-821ED1F4	LAB_821ed1f4	Global	Label	DEFAULT	.text		
-821ED204	LAB_821ed204	Global	Label	DEFAULT	.text		
-821ED240	LAB_821ed240	Global	Label	DEFAULT	.text		
-821ED25C	LAB_821ed25c	Global	Label	DEFAULT	.text		
-821ED268	LAB_821ed268	Global	Label	DEFAULT	.text		
-821ED284	LAB_821ed284	Global	Label	DEFAULT	.text		
-821ED290	LAB_821ed290	Global	Label	DEFAULT	.text		
-821ED2AC	LAB_821ed2ac	Global	Label	DEFAULT	.text		
-821ED2B8	LAB_821ed2b8	Global	Label	DEFAULT	.text		
-821ED2D4	LAB_821ed2d4	Global	Label	DEFAULT	.text		
-821ED2E0	LAB_821ed2e0	Global	Label	DEFAULT	.text		
-821ED2FC	LAB_821ed2fc	Global	Label	DEFAULT	.text		
-821ED308	LAB_821ed308	Global	Label	DEFAULT	.text		
-821ED324	LAB_821ed324	Global	Label	DEFAULT	.text		
-821ED330	LAB_821ed330	Global	Label	DEFAULT	.text		
-821ED34C	LAB_821ed34c	Global	Label	DEFAULT	.text		
-821ED358	LAB_821ed358	Global	Label	DEFAULT	.text		
-821ED374	LAB_821ed374	Global	Label	DEFAULT	.text		
-821ED380	LAB_821ed380	Global	Label	DEFAULT	.text		
-821ED39C	LAB_821ed39c	Global	Label	DEFAULT	.text		
-821ED3A8	LAB_821ed3a8	Global	Label	DEFAULT	.text		
-821ED3C4	LAB_821ed3c4	Global	Label	DEFAULT	.text		
-821ED3D0	LAB_821ed3d0	Global	Label	DEFAULT	.text		
-821ED3EC	LAB_821ed3ec	Global	Label	DEFAULT	.text		
-821ED3F8	LAB_821ed3f8	Global	Label	DEFAULT	.text		
-821ED414	LAB_821ed414	Global	Label	DEFAULT	.text		
-821ED420	LAB_821ed420	Global	Label	DEFAULT	.text		
-821ED43C	LAB_821ed43c	Global	Label	DEFAULT	.text		
-821ED448	LAB_821ed448	Global	Label	DEFAULT	.text		
-821ED464	LAB_821ed464	Global	Label	DEFAULT	.text		
-821ED470	LAB_821ed470	Global	Label	DEFAULT	.text		
-821ED48C	LAB_821ed48c	Global	Label	DEFAULT	.text		
-821ED498	LAB_821ed498	Global	Label	DEFAULT	.text		
-821ED4B4	LAB_821ed4b4	Global	Label	DEFAULT	.text		
-821ED4C0	LAB_821ed4c0	Global	Label	DEFAULT	.text		
-821ED4DC	LAB_821ed4dc	Global	Label	DEFAULT	.text		
-821ED4E8	LAB_821ed4e8	Global	Label	DEFAULT	.text		
-821ED504	LAB_821ed504	Global	Label	DEFAULT	.text		
-821ED510	LAB_821ed510	Global	Label	DEFAULT	.text		
-821ED52C	LAB_821ed52c	Global	Label	DEFAULT	.text		
-821ED538	LAB_821ed538	Global	Label	DEFAULT	.text		
-821ED554	LAB_821ed554	Global	Label	DEFAULT	.text		
-821ED560	LAB_821ed560	Global	Label	DEFAULT	.text		
-821ED57C	LAB_821ed57c	Global	Label	DEFAULT	.text		
-821ED588	LAB_821ed588	Global	Label	DEFAULT	.text		
-821ED5A4	LAB_821ed5a4	Global	Label	DEFAULT	.text		
-821ED5B0	LAB_821ed5b0	Global	Label	DEFAULT	.text		
-821ED5CC	LAB_821ed5cc	Global	Label	DEFAULT	.text		
-821ED5D8	LAB_821ed5d8	Global	Label	DEFAULT	.text		
-821ED5F4	LAB_821ed5f4	Global	Label	DEFAULT	.text		
-821ED600	LAB_821ed600	Global	Label	DEFAULT	.text		
-821ED61C	LAB_821ed61c	Global	Label	DEFAULT	.text		
-821ED628	LAB_821ed628	Global	Label	DEFAULT	.text		
-821ED644	LAB_821ed644	Global	Label	DEFAULT	.text		
-821ED650	LAB_821ed650	Global	Label	DEFAULT	.text		
-821ED66C	LAB_821ed66c	Global	Label	DEFAULT	.text		
-821ED678	LAB_821ed678	Global	Label	DEFAULT	.text		
-821ED694	LAB_821ed694	Global	Label	DEFAULT	.text		
-821ED6A0	LAB_821ed6a0	Global	Label	DEFAULT	.text		
-821ED6BC	LAB_821ed6bc	Global	Label	DEFAULT	.text		
-821ED6C8	LAB_821ed6c8	Global	Label	DEFAULT	.text		
-821ED6E4	LAB_821ed6e4	Global	Label	DEFAULT	.text		
-821ED6F0	LAB_821ed6f0	Global	Label	DEFAULT	.text		
-821ED700	LAB_821ed700	Global	Label	DEFAULT	.text		
-821ED710	LAB_821ed710	Global	Label	DEFAULT	.text		
-821ED720	LAB_821ed720	Global	Label	DEFAULT	.text		
-821ED730	LAB_821ed730	Global	Label	DEFAULT	.text		
-821ED740	LAB_821ed740	Global	Label	DEFAULT	.text		
-821ED750	LAB_821ed750	Global	Label	DEFAULT	.text		
-821ED760	LAB_821ed760	Global	Label	DEFAULT	.text		
-821ED770	LAB_821ed770	Global	Label	DEFAULT	.text		
-821ED780	LAB_821ed780	Global	Label	DEFAULT	.text		
-821ED790	LAB_821ed790	Global	Label	DEFAULT	.text		
-821ED7A0	LAB_821ed7a0	Global	Label	DEFAULT	.text		
-821ED7B0	LAB_821ed7b0	Global	Label	DEFAULT	.text		
-821ED7C0	LAB_821ed7c0	Global	Label	DEFAULT	.text		
-821ED7D0	LAB_821ed7d0	Global	Label	DEFAULT	.text		
-821ED7E0	LAB_821ed7e0	Global	Label	DEFAULT	.text		
-821ED7F0	LAB_821ed7f0	Global	Label	DEFAULT	.text		
-821ED800	LAB_821ed800	Global	Label	DEFAULT	.text		
-821ED810	LAB_821ed810	Global	Label	DEFAULT	.text		
-821ED820	LAB_821ed820	Global	Label	DEFAULT	.text		
-821ED830	LAB_821ed830	Global	Label	DEFAULT	.text		
-821ED840	LAB_821ed840	Global	Label	DEFAULT	.text		
-821ED850	LAB_821ed850	Global	Label	DEFAULT	.text		
-821ED860	LAB_821ed860	Global	Label	DEFAULT	.text		
-821ED870	LAB_821ed870	Global	Label	DEFAULT	.text		
-821ED880	LAB_821ed880	Global	Label	DEFAULT	.text		
-821ED890	LAB_821ed890	Global	Label	DEFAULT	.text		
-821ED8A0	LAB_821ed8a0	Global	Label	DEFAULT	.text		
-821F56B0	LAB_821f56b0	Global	Label	DEFAULT	.text		
-821F56D8	LAB_821f56d8	Global	Label	DEFAULT	.text		
-821F5708	LAB_821f5708	Global	Label	DEFAULT	.text		
-821F5718	LAB_821f5718	Global	Label	DEFAULT	.text		
-821F5790	LAB_821f5790	Global	Label	DEFAULT	.text		
-821F57A0	LAB_821f57a0	Global	Label	DEFAULT	.text		
-821F57A8	LAB_821f57a8	Global	Label	DEFAULT	.text		
-821F5A50	LAB_821f5a50	Global	Label	DEFAULT	.text		
-821FA4E0	LAB_821fa4e0	Global	Label	DEFAULT	.text		
-821FA4F8	LAB_821fa4f8	Global	Label	DEFAULT	.text		
-82203550	LAB_82203550	Global	Label	DEFAULT	.text		
-82203588	LAB_82203588	Global	Label	DEFAULT	.text		
-82203678	LAB_82203678	Global	Label	DEFAULT	.text		
-822036A0	LAB_822036a0	Global	Label	DEFAULT	.text		
-82203AA8	LAB_82203aa8	Global	Label	DEFAULT	.text		
-82203AF4	LAB_82203af4	Global	Label	DEFAULT	.text		
-82203AFC	LAB_82203afc	Global	Label	DEFAULT	.text		
-82203B14	LAB_82203b14	Global	Label	DEFAULT	.text		
-82203B7C	LAB_82203b7c	Global	Label	DEFAULT	.text		
-82203BB0	LAB_82203bb0	Global	Label	DEFAULT	.text		
-82203D10	LAB_82203d10	Global	Label	DEFAULT	.text		
-82203D68	LAB_82203d68	Global	Label	DEFAULT	.text		
-82208F68	LAB_82208f68	Global	Label	DEFAULT	.text		
-82208FA8	LAB_82208fa8	Global	Label	DEFAULT	.text		
-8220BB78	LAB_8220bb78	Global	Label	DEFAULT	.text		
-8220BBC8	LAB_8220bbc8	Global	Label	DEFAULT	.text		
-8220BC04	LAB_8220bc04	Global	Label	DEFAULT	.text		
-8220BC0C	LAB_8220bc0c	Global	Label	DEFAULT	.text		
-8220BC2C	LAB_8220bc2c	Global	Label	DEFAULT	.text		
-8220F710	LAB_8220f710	Global	Label	DEFAULT	.text		
-8220F728	LAB_8220f728	Global	Label	DEFAULT	.text		
-82210F80	LAB_82210f80	Global	Label	DEFAULT	.text		
-82210F98	LAB_82210f98	Global	Label	DEFAULT	.text		
-82212540	LAB_82212540	Global	Label	DEFAULT	.text		
-82212568	LAB_82212568	Global	Label	DEFAULT	.text		
-82212588	LAB_82212588	Global	Label	DEFAULT	.text		
-8221F840	LAB_8221f840	Global	Label	DEFAULT	.text		
-8221F878	LAB_8221f878	Global	Label	DEFAULT	.text		
-8221F884	LAB_8221f884	Global	Label	DEFAULT	.text		
 822287FC	switchdataD_822287fc	switchD_822287f8	Label	ANALYSIS	.text	/pointer	4
-8222B978	LAB_8222b978	Global	Label	DEFAULT	.text		
-82232D60	LAB_82232d60	Global	Label	DEFAULT	.text		
-82235B08	LAB_82235b08	Global	Label	DEFAULT	.text		
-82235B0C	LAB_82235b0c	Global	Label	DEFAULT	.text		
-8223FF48	LAB_8223ff48	Global	Label	DEFAULT	.text		
-8223FF50	LAB_8223ff50	Global	Label	DEFAULT	.text		
-8223FF58	LAB_8223ff58	Global	Label	DEFAULT	.text		
-8223FFE8	LAB_8223ffe8	Global	Label	DEFAULT	.text		
-82240230	LAB_82240230	Global	Label	DEFAULT	.text		
-8224025C	LAB_8224025c	Global	Label	DEFAULT	.text		
-82240264	LAB_82240264	Global	Label	DEFAULT	.text		
-82240270	LAB_82240270	Global	Label	DEFAULT	.text		
-82240278	LAB_82240278	Global	Label	DEFAULT	.text		
-822402A8	LAB_822402a8	Global	Label	DEFAULT	.text		
-822402B0	LAB_822402b0	Global	Label	DEFAULT	.text		
 82240C98	switchdataD_82240c98	switchD_82240c94	Label	ANALYSIS	.text	/pointer	4
-8224D7A8	DAT_8224d7a8	Global	Label	DEFAULT	.text	/undefined	1
-8224D7B0	DAT_8224d7b0	Global	Label	DEFAULT	.text	/undefined	1
-822597C0	LAB_822597c0	Global	Label	DEFAULT	.text		
-8225982C	LAB_8225982c	Global	Label	DEFAULT	.text		
-82263D18	LAB_82263d18	Global	Label	DEFAULT	.text		
-822644E0	LAB_822644e0	Global	Label	DEFAULT	.text		
-822663A8	LAB_822663a8	Global	Label	DEFAULT	.text		
 82266600	switchdataD_82266600	switchD_822665fc	Label	ANALYSIS	.text	/pointer	4
 82266614	PTR_caseD_5_82266614	Global	Label	DEFAULT	.text	/pointer	4
 8226718C	switchdataD_8226718c	switchD_82267188	Label	ANALYSIS	.text	/pointer	4
@@ -12471,59 +12037,15 @@ va	name	namespace	type	source	block	datatype	length
 82267410	PTR_caseD_5_82267410	Global	Label	DEFAULT	.text	/pointer	4
 82267724	switchdataD_82267724	switchD_82267720	Label	ANALYSIS	.text	/pointer	4
 82267834	switchdataD_82267834	switchD_82267830	Label	ANALYSIS	.text	/pointer	4
-82269B60	LAB_82269b60	Global	Label	DEFAULT	.text		
-82269B68	LAB_82269b68	Global	Label	DEFAULT	.text		
-8226B570	LAB_8226b570	Global	Label	DEFAULT	.text		
-8226B5B0	LAB_8226b5b0	Global	Label	DEFAULT	.text		
-8226B5F0	LAB_8226b5f0	Global	Label	DEFAULT	.text		
-8226E968	LAB_8226e968	Global	Label	DEFAULT	.text		
-8226E9A0	LAB_8226e9a0	Global	Label	DEFAULT	.text		
-8226E9BC	LAB_8226e9bc	Global	Label	DEFAULT	.text		
-822707D0	LAB_822707d0	Global	Label	DEFAULT	.text		
 82271458	switchdataD_82271458	switchD_82271454	Label	ANALYSIS	.text	/pointer	4
 82272124	switchdataD_82272124	switchD_82272120	Label	ANALYSIS	.text	/pointer	4
 82272510	switchdataD_82272510	switchD_8227250c	Label	ANALYSIS	.text	/pointer	4
 822727F8	LAB_822727f8	Global	Label	DEFAULT	.text		
 82272804	LAB_82272804	Global	Label	DEFAULT	.text		
 82272940	switchdataD_82272940	switchD_8227293c	Label	ANALYSIS	.text	/pointer	4
-8227E5D8	LAB_8227e5d8	Global	Label	DEFAULT	.text		
-8227E610	LAB_8227e610	Global	Label	DEFAULT	.text		
-8227FE98	LAB_8227fe98	Global	Label	DEFAULT	.text		
-82283DA0	DAT_82283da0	Global	Label	DEFAULT	.text	/undefined	1
-82288880	LAB_82288880	Global	Label	DEFAULT	.text		
-822888B0	LAB_822888b0	Global	Label	DEFAULT	.text		
-822888B8	LAB_822888b8	Global	Label	DEFAULT	.text		
-822888C8	LAB_822888c8	Global	Label	DEFAULT	.text		
-822888F8	LAB_822888f8	Global	Label	DEFAULT	.text		
-82288900	LAB_82288900	Global	Label	DEFAULT	.text		
-8228A080	LAB_8228a080	Global	Label	DEFAULT	.text		
-8228A5E8	LAB_8228a5e8	Global	Label	DEFAULT	.text		
-8228A608	LAB_8228a608	Global	Label	DEFAULT	.text		
-8228A61C	LAB_8228a61c	Global	Label	DEFAULT	.text		
-8228A654	LAB_8228a654	Global	Label	DEFAULT	.text		
-8228A660	LAB_8228a660	Global	Label	DEFAULT	.text		
-8228A674	LAB_8228a674	Global	Label	DEFAULT	.text		
-8228A6AC	LAB_8228a6ac	Global	Label	DEFAULT	.text		
-8228AF78	LAB_8228af78	Global	Label	DEFAULT	.text		
-8228B430	LAB_8228b430	Global	Label	DEFAULT	.text		
-8228C3B0	LAB_8228c3b0	Global	Label	DEFAULT	.text		
-8228C3DC	LAB_8228c3dc	Global	Label	DEFAULT	.text		
-8228C3F4	LAB_8228c3f4	Global	Label	DEFAULT	.text		
-822906B0	LAB_822906b0	Global	Label	DEFAULT	.text		
-822906C0	LAB_822906c0	Global	Label	DEFAULT	.text		
-82293AC8	LAB_82293ac8	Global	Label	DEFAULT	.text		
 82294390	switchdataD_82294390	switchD_8229438c	Label	ANALYSIS	.text	/pointer	4
 82294A7C	switchdataD_82294a7c	switchD_82294a78	Label	ANALYSIS	.text	/pointer	4
-82295A98	DAT_82295a98	Global	Label	DEFAULT	.text	/undefined	1
-82295AA0	DAT_82295aa0	Global	Label	DEFAULT	.text	/undefined	1
-82296098	LAB_82296098	Global	Label	DEFAULT	.text		
-82298F30	LAB_82298f30	Global	Label	DEFAULT	.text		
-8229C648	LAB_8229c648	Global	Label	DEFAULT	.text		
 8229E828	switchdataD_8229e828	switchD_8229e824	Label	ANALYSIS	.text	/pointer	4
-8229EC10	LAB_8229ec10	Global	Label	DEFAULT	.text		
-8229EC18	LAB_8229ec18	Global	Label	DEFAULT	.text		
-8229EEC0	DAT_8229eec0	Global	Label	DEFAULT	.text	/undefined	1
-8229FC80	LAB_8229fc80	Global	Label	DEFAULT	.text		
 822A13E4	switchdataD_822a13e4	switchD_822a13e0	Label	ANALYSIS	.text	/pointer	4
 822A2D10	switchdataD_822a2d10	switchD_822a2d0c	Label	ANALYSIS	.text	/pointer	4
 822A8738	switchdataD_822a8738	switchD_822a8734	Label	ANALYSIS	.text	/pointer	4
@@ -12536,51 +12058,15 @@ va	name	namespace	type	source	block	datatype	length
 822BBB58	switchdataD_822bbb58	switchD_822bbb54	Label	ANALYSIS	.text	/pointer	4
 822BC138	switchdataD_822bc138	switchD_822bc134	Label	ANALYSIS	.text	/pointer	4
 822BCCF0	switchdataD_822bccf0	switchD_822bccec	Label	ANALYSIS	.text	/pointer	4
-822C0A00	LAB_822c0a00	Global	Label	DEFAULT	.text		
-822C0EE0	LAB_822c0ee0	Global	Label	DEFAULT	.text		
-822C4E68	LAB_822c4e68	Global	Label	DEFAULT	.text		
-822C4E70	LAB_822c4e70	Global	Label	DEFAULT	.text		
 822C7D9C	switchdataD_822c7d9c	switchD_822c7d98	Label	ANALYSIS	.text	/pointer	4
-822C93B8	LAB_822c93b8	Global	Label	DEFAULT	.text		
-822CCC28	LAB_822ccc28	Global	Label	DEFAULT	.text		
-822CCC70	LAB_822ccc70	Global	Label	DEFAULT	.text		
 822D3F80	switchdataD_822d3f80	switchD_822d3f7c	Label	ANALYSIS	.text	/pointer	4
 822DCAE4	switchdataD_822dcae4	switchD_822dcae0	Label	ANALYSIS	.text	/pointer	4
 822DCB9C	switchdataD_822dcb9c	switchD_822dcb98	Label	ANALYSIS	.text	/pointer	4
 822E0224	switchdataD_822e0224	switchD_822e0220	Label	ANALYSIS	.text	/pointer	4
 822E06DC	switchdataD_822e06dc	switchD_822e06d8	Label	ANALYSIS	.text	/pointer	4
-822E73D0	LAB_822e73d0	Global	Label	DEFAULT	.text		
-822E7838	LAB_822e7838	Global	Label	DEFAULT	.text		
 822E9438	switchdataD_822e9438	switchD_822e9434	Label	ANALYSIS	.text	/pointer	4
 822EA0C0	switchdataD_822ea0c0	switchD_822ea0bc	Label	ANALYSIS	.text	/pointer	4
 822EE4B8	switchdataD_822ee4b8	switchD_822ee4b4	Label	ANALYSIS	.text	/pointer	4
-822F6358	LAB_822f6358	Global	Label	DEFAULT	.text		
-822F6D70	LAB_822f6d70	Global	Label	DEFAULT	.text		
-822F6D80	LAB_822f6d80	Global	Label	DEFAULT	.text		
-822F6E88	LAB_822f6e88	Global	Label	DEFAULT	.text		
-822F6EA0	LAB_822f6ea0	Global	Label	DEFAULT	.text		
-822F8FD0	LAB_822f8fd0	Global	Label	DEFAULT	.text		
-822F9448	LAB_822f9448	Global	Label	DEFAULT	.text		
-822F9468	LAB_822f9468	Global	Label	DEFAULT	.text		
-822F9488	LAB_822f9488	Global	Label	DEFAULT	.text		
-822F94A8	LAB_822f94a8	Global	Label	DEFAULT	.text		
-822F94C8	LAB_822f94c8	Global	Label	DEFAULT	.text		
-822F94E8	LAB_822f94e8	Global	Label	DEFAULT	.text		
-822F9508	LAB_822f9508	Global	Label	DEFAULT	.text		
-822F9518	LAB_822f9518	Global	Label	DEFAULT	.text		
-822F9528	LAB_822f9528	Global	Label	DEFAULT	.text		
-822FAF70	LAB_822faf70	Global	Label	DEFAULT	.text		
-822FAF78	LAB_822faf78	Global	Label	DEFAULT	.text		
-822FAF90	LAB_822faf90	Global	Label	DEFAULT	.text		
-822FAF98	LAB_822faf98	Global	Label	DEFAULT	.text		
-822FC778	LAB_822fc778	Global	Label	DEFAULT	.text		
-822FC780	LAB_822fc780	Global	Label	DEFAULT	.text		
-822FC988	LAB_822fc988	Global	Label	DEFAULT	.text		
-822FCB60	LAB_822fcb60	Global	Label	DEFAULT	.text		
-822FCC58	LAB_822fcc58	Global	Label	DEFAULT	.text		
-822FCC70	LAB_822fcc70	Global	Label	DEFAULT	.text		
-822FD498	LAB_822fd498	Global	Label	DEFAULT	.text		
-822FD4A0	LAB_822fd4a0	Global	Label	DEFAULT	.text		
 822FE5E0	switchdataD_822fe5e0	switchD_822fe5dc	Label	ANALYSIS	.text	/pointer	4
 82302644	switchdataD_82302644	switchD_82302640	Label	ANALYSIS	.text	/pointer	4
 8230795C	switchdataD_8230795c	switchD_82307958	Label	ANALYSIS	.text	/pointer	4
@@ -12592,7 +12078,6 @@ va	name	namespace	type	source	block	datatype	length
 8230A10C	switchdataD_8230a10c	switchD_8230a108	Label	ANALYSIS	.text	/pointer	4
 8230A2F0	switchdataD_8230a2f0	switchD_8230a2ec	Label	ANALYSIS	.text	/pointer	4
 8230B47C	switchdataD_8230b47c	switchD_8230b478	Label	ANALYSIS	.text	/pointer	4
-823156E8	LAB_823156e8	Global	Label	DEFAULT	.text		
 82315900	switchdataD_82315900	switchD_823158fc	Label	ANALYSIS	.text	/pointer	4
 82315C14	switchdataD_82315c14	switchD_82315c10	Label	ANALYSIS	.text	/pointer	4
 82317B68	switchdataD_82317b68	switchD_82317b64	Label	ANALYSIS	.text	/pointer	4
@@ -12612,91 +12097,16 @@ va	name	namespace	type	source	block	datatype	length
 823257F0	switchdataD_823257f0	switchD_823257ec	Label	ANALYSIS	.text	/pointer	4
 82325B48	switchdataD_82325b48	switchD_82325b44	Label	ANALYSIS	.text	/pointer	4
 823286FC	switchdataD_823286fc	switchD_823286f8	Label	ANALYSIS	.text	/pointer	4
-82328F78	LAB_82328f78	Global	Label	DEFAULT	.text		
-8232AC80	LAB_8232ac80	Global	Label	DEFAULT	.text		
 8232BCF0	switchdataD_8232bcf0	switchD_8232bcec	Label	ANALYSIS	.text	/pointer	4
-8232DD38	LAB_8232dd38	Global	Label	DEFAULT	.text		
-8232DD50	DAT_8232dd50	Global	Label	DEFAULT	.text	/undefined	1
-8232DD58	LAB_8232dd58	Global	Label	DEFAULT	.text		
-8232DD68	DAT_8232dd68	Global	Label	DEFAULT	.text	/undefined	1
-8232DD70	LAB_8232dd70	Global	Label	DEFAULT	.text		
-8232DDA8	DAT_8232dda8	Global	Label	DEFAULT	.text	/undefined	1
-8232DDB0	LAB_8232ddb0	Global	Label	DEFAULT	.text		
-8232DE20	DAT_8232de20	Global	Label	DEFAULT	.text	/undefined	1
-8232DE28	LAB_8232de28	Global	Label	DEFAULT	.text		
-8232DE58	LAB_8232de58	Global	Label	DEFAULT	.text		
-8232DE68	LAB_8232de68	Global	Label	DEFAULT	.text		
-8232DE98	LAB_8232de98	Global	Label	DEFAULT	.text		
 8232F438	switchdataD_8232f438	switchD_8232f434	Label	ANALYSIS	.text	/pointer	4
-8232F6C0	LAB_8232f6c0	Global	Label	DEFAULT	.text		
-8232F6D8	LAB_8232f6d8	Global	Label	DEFAULT	.text		
-823325F0	LAB_823325f0	Global	Label	DEFAULT	.text		
-8234A918	LAB_8234a918	Global	Label	DEFAULT	.text		
-8234BDF0	LAB_8234bdf0	Global	Label	DEFAULT	.text		
-8234EB18	LAB_8234eb18	Global	Label	DEFAULT	.text		
-8234EB30	LAB_8234eb30	Global	Label	DEFAULT	.text		
-8234EB48	LAB_8234eb48	Global	Label	DEFAULT	.text		
-8234EB58	LAB_8234eb58	Global	Label	DEFAULT	.text		
-8234F138	LAB_8234f138	Global	Label	DEFAULT	.text		
-8234F150	LAB_8234f150	Global	Label	DEFAULT	.text		
-8234F168	LAB_8234f168	Global	Label	DEFAULT	.text		
-8234F180	LAB_8234f180	Global	Label	DEFAULT	.text		
-8234F190	LAB_8234f190	Global	Label	DEFAULT	.text		
-8234F1A0	LAB_8234f1a0	Global	Label	DEFAULT	.text		
 8235EB60	switchdataD_8235eb60	switchD_8235eb5c	Label	ANALYSIS	.text	/pointer	4
 8235F69C	switchdataD_8235f69c	switchD_8235f698	Label	ANALYSIS	.text	/pointer	4
 823604D0	switchdataD_823604d0	switchD_823604cc	Label	ANALYSIS	.text	/pointer	4
-82363620	LAB_82363620	Global	Label	DEFAULT	.text		
-82370268	LAB_82370268	Global	Label	DEFAULT	.text		
-82370288	LAB_82370288	Global	Label	DEFAULT	.text		
-8237BAE0	LAB_8237bae0	Global	Label	DEFAULT	.text		
-8237BBE8	LAB_8237bbe8	Global	Label	DEFAULT	.text		
-8237BF30	LAB_8237bf30	Global	Label	DEFAULT	.text		
-8237D1E0	LAB_8237d1e0	Global	Label	DEFAULT	.text		
-8237D610	LAB_8237d610	Global	Label	DEFAULT	.text		
-8237D644	LAB_8237d644	Global	Label	DEFAULT	.text		
-8237D654	LAB_8237d654	Global	Label	DEFAULT	.text		
-8237D66C	LAB_8237d66c	Global	Label	DEFAULT	.text		
-8237D678	LAB_8237d678	Global	Label	DEFAULT	.text		
-8237D680	LAB_8237d680	Global	Label	DEFAULT	.text		
-8237D6A8	LAB_8237d6a8	Global	Label	DEFAULT	.text		
-8237D6D0	LAB_8237d6d0	Global	Label	DEFAULT	.text		
-8237D6E4	LAB_8237d6e4	Global	Label	DEFAULT	.text		
-8237D718	LAB_8237d718	Global	Label	DEFAULT	.text		
-8237D730	LAB_8237d730	Global	Label	DEFAULT	.text		
-8237D75C	LAB_8237d75c	Global	Label	DEFAULT	.text		
-82382958	LAB_82382958	Global	Label	DEFAULT	.text		
-8239ACD0	LAB_8239acd0	Global	Label	DEFAULT	.text		
-8239ACE0	LAB_8239ace0	Global	Label	DEFAULT	.text		
-8239B4E8	LAB_8239b4e8	Global	Label	DEFAULT	.text		
-8239B548	LAB_8239b548	Global	Label	DEFAULT	.text		
-8239B558	LAB_8239b558	Global	Label	DEFAULT	.text		
 8239C290	switchdataD_8239c290	switchD_8239c28c	Label	ANALYSIS	.text	/pointer	4
-8239D428	LAB_8239d428	Global	Label	DEFAULT	.text		
-8239D448	LAB_8239d448	Global	Label	DEFAULT	.text		
-8239D570	LAB_8239d570	Global	Label	DEFAULT	.text		
-8239D800	LAB_8239d800	Global	Label	DEFAULT	.text		
-8239D808	LAB_8239d808	Global	Label	DEFAULT	.text		
-8239D840	LAB_8239d840	Global	Label	DEFAULT	.text		
-8239D84C	LAB_8239d84c	Global	Label	DEFAULT	.text		
 823A55F0	switchdataD_823a55f0	switchD_823a55ec	Label	ANALYSIS	.text	/pointer	4
 823A5604	PTR_caseD_5_823a5604	Global	Label	DEFAULT	.text	/pointer	4
 823A5818	switchdataD_823a5818	switchD_823a5814	Label	ANALYSIS	.text	/pointer	4
 823A582C	PTR_caseD_5_823a582c	Global	Label	DEFAULT	.text	/pointer	4
-823A8FB0	LAB_823a8fb0	Global	Label	DEFAULT	.text		
-823A8FB8	LAB_823a8fb8	Global	Label	DEFAULT	.text		
-823ACD90	LAB_823acd90	Global	Label	DEFAULT	.text		
-823ACDF4	LAB_823acdf4	Global	Label	DEFAULT	.text		
-823AD7F0	LAB_823ad7f0	Global	Label	DEFAULT	.text		
-823ADF60	LAB_823adf60	Global	Label	DEFAULT	.text		
-823ADF78	LAB_823adf78	Global	Label	DEFAULT	.text		
-823ADF80	LAB_823adf80	Global	Label	DEFAULT	.text		
-823ADF88	LAB_823adf88	Global	Label	DEFAULT	.text		
-823ADF90	LAB_823adf90	Global	Label	DEFAULT	.text		
-823ADF9C	LAB_823adf9c	Global	Label	DEFAULT	.text		
-823AE880	LAB_823ae880	Global	Label	DEFAULT	.text		
-823AE8B0	LAB_823ae8b0	Global	Label	DEFAULT	.text		
-823AE91C	LAB_823ae91c	Global	Label	DEFAULT	.text		
 823B08FC	switchdataD_823b08fc	switchD_823b08f8	Label	ANALYSIS	.text	/pointer	4
 823B0AC0	switchdataD_823b0ac0	switchD_823b0abc	Label	ANALYSIS	.text	/pointer	4
 823B4C7C	LAB_823b4c7c	Global	Label	DEFAULT	.text		
@@ -12711,234 +12121,37 @@ va	name	namespace	type	source	block	datatype	length
 823B4CE8	LAB_823b4ce8	Global	Label	DEFAULT	.text		
 823B4D54	switchdataD_823b4d54	switchD_823b4d50	Label	ANALYSIS	.text	/pointer	4
 823B5C28	switchdataD_823b5c28	switchD_823b5c24	Label	ANALYSIS	.text	/pointer	4
-823BA450	LAB_823ba450	Global	Label	DEFAULT	.text		
-823BA484	LAB_823ba484	Global	Label	DEFAULT	.text		
-823BA628	LAB_823ba628	Global	Label	DEFAULT	.text		
-823BDB88	LAB_823bdb88	Global	Label	DEFAULT	.text		
-823BDB90	LAB_823bdb90	Global	Label	DEFAULT	.text		
-823BDB98	LAB_823bdb98	Global	Label	DEFAULT	.text		
-823BDBA8	LAB_823bdba8	Global	Label	DEFAULT	.text		
-823BDBB0	LAB_823bdbb0	Global	Label	DEFAULT	.text		
-823BDBC0	LAB_823bdbc0	Global	Label	DEFAULT	.text		
-823BDBC8	LAB_823bdbc8	Global	Label	DEFAULT	.text		
-823BDBD8	LAB_823bdbd8	Global	Label	DEFAULT	.text		
-823BDBE0	LAB_823bdbe0	Global	Label	DEFAULT	.text		
 823C0100	switchdataD_823c0100	switchD_823c00fc	Label	ANALYSIS	.text	/pointer	4
-823CE140	LAB_823ce140	Global	Label	DEFAULT	.text		
-823CE8C8	LAB_823ce8c8	Global	Label	DEFAULT	.text		
 823D1DC8	switchdataD_823d1dc8	switchD_823d1dc4	Label	ANALYSIS	.text	/pointer	4
-823D2A38	LAB_823d2a38	Global	Label	DEFAULT	.text		
-823D2A58	LAB_823d2a58	Global	Label	DEFAULT	.text		
-823D2A60	LAB_823d2a60	Global	Label	DEFAULT	.text		
-823D2A70	LAB_823d2a70	Global	Label	DEFAULT	.text		
-823D2A8C	LAB_823d2a8c	Global	Label	DEFAULT	.text		
-823D44B8	LAB_823d44b8	Global	Label	DEFAULT	.text		
 823D4558	switchdataD_823d4558	switchD_823d4554	Label	ANALYSIS	.text	/pointer	4
-823E34D0	LAB_823e34d0	Global	Label	DEFAULT	.text		
-823E3870	LAB_823e3870	Global	Label	DEFAULT	.text		
-823E38B0	LAB_823e38b0	Global	Label	DEFAULT	.text		
-823E49B0	LAB_823e49b0	Global	Label	DEFAULT	.text		
-823E49C8	DAT_823e49c8	Global	Label	DEFAULT	.text	/undefined	1
 823F21C0	switchdataD_823f21c0	switchD_823f21bc	Label	ANALYSIS	.text	/pointer	4
-823F5DB0	LAB_823f5db0	Global	Label	DEFAULT	.text		
-823F5DC8	LAB_823f5dc8	Global	Label	DEFAULT	.text		
-823F5DD8	LAB_823f5dd8	Global	Label	DEFAULT	.text		
-823F5E0C	LAB_823f5e0c	Global	Label	DEFAULT	.text		
-823F5E14	LAB_823f5e14	Global	Label	DEFAULT	.text		
-823FECA8	LAB_823feca8	Global	Label	DEFAULT	.text		
-823FECB8	LAB_823fecb8	Global	Label	DEFAULT	.text		
-82400B80	LAB_82400b80	Global	Label	DEFAULT	.text		
-82400B98	LAB_82400b98	Global	Label	DEFAULT	.text		
-82401030	LAB_82401030	Global	Label	DEFAULT	.text		
-824011F0	LAB_824011f0	Global	Label	DEFAULT	.text		
-8240120C	LAB_8240120c	Global	Label	DEFAULT	.text		
-82401218	LAB_82401218	Global	Label	DEFAULT	.text		
-82401244	LAB_82401244	Global	Label	DEFAULT	.text		
-82402930	LAB_82402930	Global	Label	DEFAULT	.text		
-82402970	LAB_82402970	Global	Label	DEFAULT	.text		
-82402990	LAB_82402990	Global	Label	DEFAULT	.text		
-824066E8	LAB_824066e8	Global	Label	DEFAULT	.text		
-824088D0	LAB_824088d0	Global	Label	DEFAULT	.text		
-824088D8	LAB_824088d8	Global	Label	DEFAULT	.text		
-82409028	LAB_82409028	Global	Label	DEFAULT	.text		
-82409048	LAB_82409048	Global	Label	DEFAULT	.text		
-82409050	LAB_82409050	Global	Label	DEFAULT	.text		
-824106B0	DAT_824106b0	Global	Label	DEFAULT	.text	/undefined	1
-824106B8	DAT_824106b8	Global	Label	DEFAULT	.text	/undefined	1
 8241D7D0	switchdataD_8241d7d0	switchD_8241d7cc	Label	ANALYSIS	.text	/pointer	4
 824207B4	switchdataD_824207b4	switchD_824207b0	Label	ANALYSIS	.text	/pointer	4
-824282D8	LAB_824282d8	Global	Label	DEFAULT	.text		
-82428308	LAB_82428308	Global	Label	DEFAULT	.text		
-82428368	LAB_82428368	Global	Label	DEFAULT	.text		
-82428430	LAB_82428430	Global	Label	DEFAULT	.text		
-8242846C	LAB_8242846c	Global	Label	DEFAULT	.text		
-82428474	LAB_82428474	Global	Label	DEFAULT	.text		
-82428490	LAB_82428490	Global	Label	DEFAULT	.text		
-824284AC	LAB_824284ac	Global	Label	DEFAULT	.text		
-82428620	LAB_82428620	Global	Label	DEFAULT	.text		
-82428640	LAB_82428640	Global	Label	DEFAULT	.text		
-82428668	LAB_82428668	Global	Label	DEFAULT	.text		
-824288C8	LAB_824288c8	Global	Label	DEFAULT	.text		
-82428904	LAB_82428904	Global	Label	DEFAULT	.text		
-82428910	LAB_82428910	Global	Label	DEFAULT	.text		
-82428958	LAB_82428958	Global	Label	DEFAULT	.text		
 82428E08	switchdataD_82428e08	switchD_82428e04	Label	ANALYSIS	.text	/pointer	4
-82429380	LAB_82429380	Global	Label	DEFAULT	.text		
-824294F0	LAB_824294f0	Global	Label	DEFAULT	.text		
-82429520	LAB_82429520	Global	Label	DEFAULT	.text		
-8242A730	LAB_8242a730	Global	Label	DEFAULT	.text		
-8242A74C	LAB_8242a74c	Global	Label	DEFAULT	.text		
-8242D210	LAB_8242d210	Global	Label	DEFAULT	.text		
-8242D608	LAB_8242d608	Global	Label	DEFAULT	.text		
-8242FE60	LAB_8242fe60	Global	Label	DEFAULT	.text		
-82432790	LAB_82432790	Global	Label	DEFAULT	.text		
-82432928	LAB_82432928	Global	Label	DEFAULT	.text		
-82432AC8	LAB_82432ac8	Global	Label	DEFAULT	.text		
-82432DC8	LAB_82432dc8	Global	Label	DEFAULT	.text		
-82432EF0	LAB_82432ef0	Global	Label	DEFAULT	.text		
-82433028	LAB_82433028	Global	Label	DEFAULT	.text		
-82433160	LAB_82433160	Global	Label	DEFAULT	.text		
-824332C0	LAB_824332c0	Global	Label	DEFAULT	.text		
-82433408	LAB_82433408	Global	Label	DEFAULT	.text		
-82433430	LAB_82433430	Global	Label	DEFAULT	.text		
-82433458	LAB_82433458	Global	Label	DEFAULT	.text		
-82433470	LAB_82433470	Global	Label	DEFAULT	.text		
-82433490	LAB_82433490	Global	Label	DEFAULT	.text		
-824334B0	LAB_824334b0	Global	Label	DEFAULT	.text		
-824334D0	LAB_824334d0	Global	Label	DEFAULT	.text		
-824334F8	LAB_824334f8	Global	Label	DEFAULT	.text		
-82433560	LAB_82433560	Global	Label	DEFAULT	.text		
-82433570	LAB_82433570	Global	Label	DEFAULT	.text		
-82433598	LAB_82433598	Global	Label	DEFAULT	.text		
-82433730	LAB_82433730	Global	Label	DEFAULT	.text		
-82433740	LAB_82433740	Global	Label	DEFAULT	.text		
-82433768	LAB_82433768	Global	Label	DEFAULT	.text		
-8243E888	DAT_8243e888	Global	Label	DEFAULT	.text	/undefined	1
 82441CA0	DAT_82441ca0	Global	Label	DEFAULT	.text	/undefined4	4
 82444D28	DAT_82444d28	Global	Label	DEFAULT	.text	/undefined4	4
 82444D3C	DAT_82444d3c	Global	Label	DEFAULT	.text	/undefined4	4
-82445EB8	LAB_82445eb8	Global	Label	DEFAULT	.text		
 82449F50	DAT_82449f50	Global	Label	DEFAULT	.text	/undefined4	4
 82449F54	DAT_82449f54	Global	Label	DEFAULT	.text	/undefined4	4
 82449F64	DAT_82449f64	Global	Label	DEFAULT	.text	/undefined4	4
 8244B654	switchdataD_8244b654	switchD_8244b650	Label	ANALYSIS	.text	/pointer	4
-8244C320	LAB_8244c320	Global	Label	DEFAULT	.text		
-8244C330	LAB_8244c330	Global	Label	DEFAULT	.text		
-8244C358	DAT_8244c358	Global	Label	DEFAULT	.text	/undefined	1
-8244C3F0	LAB_8244c3f0	Global	Label	DEFAULT	.text		
-8244C418	LAB_8244c418	Global	Label	DEFAULT	.text		
-8244C448	LAB_8244c448	Global	Label	DEFAULT	.text		
-8244C460	LAB_8244c460	Global	Label	DEFAULT	.text		
-8244C710	LAB_8244c710	Global	Label	DEFAULT	.text		
-8244D870	LAB_8244d870	Global	Label	DEFAULT	.text		
 8244D9E8	DAT_8244d9e8	Global	Label	DEFAULT	.text	/undefined4	4
-8244F580	LAB_8244f580	Global	Label	DEFAULT	.text		
-8244FBE8	LAB_8244fbe8	Global	Label	DEFAULT	.text		
 82451D48	switchdataD_82451d48	switchD_82451d44	Label	ANALYSIS	.text	/pointer	4
-82452138	LAB_82452138	Global	Label	DEFAULT	.text		
-82452F30	LAB_82452f30	Global	Label	DEFAULT	.text		
 82454840	DAT_82454840	Global	Label	DEFAULT	.text	/undefined4	4
 82454854	DAT_82454854	Global	Label	DEFAULT	.text	/undefined4	4
-82454990	LAB_82454990	Global	Label	DEFAULT	.text		
-82454998	LAB_82454998	Global	Label	DEFAULT	.text		
-82454A80	LAB_82454a80	Global	Label	DEFAULT	.text		
-82454A98	LAB_82454a98	Global	Label	DEFAULT	.text		
-82454AB4	LAB_82454ab4	Global	Label	DEFAULT	.text		
-82454ACC	LAB_82454acc	Global	Label	DEFAULT	.text		
-82458300	LAB_82458300	Global	Label	DEFAULT	.text		
-8245A258	DAT_8245a258	Global	Label	DEFAULT	.text	/undefined	1
-8245A260	LAB_8245a260	Global	Label	DEFAULT	.text		
-8245BA48	DAT_8245ba48	Global	Label	DEFAULT	.text	/undefined	1
-8245BBF0	LAB_8245bbf0	Global	Label	DEFAULT	.text		
-8245C100	LAB_8245c100	Global	Label	DEFAULT	.text		
-82460498	LAB_82460498	Global	Label	DEFAULT	.text		
-824604B0	LAB_824604b0	Global	Label	DEFAULT	.text		
 8246745C	switchdataD_8246745c	switchD_82467458	Label	ANALYSIS	.text	/pointer	4
 824675F4	switchdataD_824675f4	switchD_824675f0	Label	ANALYSIS	.text	/pointer	4
 8246A690	switchdataD_8246a690	switchD_8246a68c	Label	ANALYSIS	.text	/pointer	4
 8246D848	switchdataD_8246d848	switchD_8246d844	Label	ANALYSIS	.text	/pointer	4
 8246E36C	switchdataD_8246e36c	switchD_8246e368	Label	ANALYSIS	.text	/pointer	4
 8246F170	switchdataD_8246f170	switchD_8246f16c	Label	ANALYSIS	.text	/pointer	4
-82470098	LAB_82470098	Global	Label	DEFAULT	.text		
-824702A8	LAB_824702a8	Global	Label	DEFAULT	.text		
-82476C80	LAB_82476c80	Global	Label	DEFAULT	.text		
 82477D30	switchdataD_82477d30	switchD_82477d2c	Label	ANALYSIS	.text	/pointer	4
-8247A5F8	LAB_8247a5f8	Global	Label	DEFAULT	.text		
-8247A610	LAB_8247a610	Global	Label	DEFAULT	.text		
-8247A808	LAB_8247a808	Global	Label	DEFAULT	.text		
-8247A818	LAB_8247a818	Global	Label	DEFAULT	.text		
-8247A828	LAB_8247a828	Global	Label	DEFAULT	.text		
-8247A838	LAB_8247a838	Global	Label	DEFAULT	.text		
-8248D268	LAB_8248d268	Global	Label	DEFAULT	.text		
-8248D650	LAB_8248d650	Global	Label	DEFAULT	.text		
-8248D848	LAB_8248d848	Global	Label	DEFAULT	.text		
-8248D9C4	LAB_8248d9c4	Global	Label	DEFAULT	.text		
-8248DA08	LAB_8248da08	Global	Label	DEFAULT	.text		
-8248DBC8	LAB_8248dbc8	Global	Label	DEFAULT	.text		
-8248E018	LAB_8248e018	Global	Label	DEFAULT	.text		
-82490348	LAB_82490348	Global	Label	DEFAULT	.text		
-824904C8	LAB_824904c8	Global	Label	DEFAULT	.text		
-82490588	LAB_82490588	Global	Label	DEFAULT	.text		
-82490AE8	LAB_82490ae8	Global	Label	DEFAULT	.text		
-82490DA8	LAB_82490da8	Global	Label	DEFAULT	.text		
-82491438	LAB_82491438	Global	Label	DEFAULT	.text		
-82491788	LAB_82491788	Global	Label	DEFAULT	.text		
-82491BE8	LAB_82491be8	Global	Label	DEFAULT	.text		
-82491E28	LAB_82491e28	Global	Label	DEFAULT	.text		
-824923B8	LAB_824923b8	Global	Label	DEFAULT	.text		
-82492688	LAB_82492688	Global	Label	DEFAULT	.text		
-82492BE8	LAB_82492be8	Global	Label	DEFAULT	.text		
-82492EA8	LAB_82492ea8	Global	Label	DEFAULT	.text		
-82493538	LAB_82493538	Global	Label	DEFAULT	.text		
-82493888	LAB_82493888	Global	Label	DEFAULT	.text		
-82493A58	LAB_82493a58	Global	Label	DEFAULT	.text		
-82493B48	LAB_82493b48	Global	Label	DEFAULT	.text		
-82493DD0	LAB_82493dd0	Global	Label	DEFAULT	.text		
-82493F18	LAB_82493f18	Global	Label	DEFAULT	.text		
-82494478	LAB_82494478	Global	Label	DEFAULT	.text		
-82494738	LAB_82494738	Global	Label	DEFAULT	.text		
-82494DC8	LAB_82494dc8	Global	Label	DEFAULT	.text		
-82495118	LAB_82495118	Global	Label	DEFAULT	.text		
-82495578	LAB_82495578	Global	Label	DEFAULT	.text		
-824957B8	LAB_824957b8	Global	Label	DEFAULT	.text		
-82495D48	LAB_82495d48	Global	Label	DEFAULT	.text		
-82496018	LAB_82496018	Global	Label	DEFAULT	.text		
-82496578	LAB_82496578	Global	Label	DEFAULT	.text		
-82496838	LAB_82496838	Global	Label	DEFAULT	.text		
-82496EC8	LAB_82496ec8	Global	Label	DEFAULT	.text		
 82498E18	switchdataD_82498e18	switchD_82498e14	Label	ANALYSIS	.text	/pointer	4
-8249BF90	LAB_8249bf90	Global	Label	DEFAULT	.text		
-8249BFF8	LAB_8249bff8	Global	Label	DEFAULT	.text		
-8249C008	LAB_8249c008	Global	Label	DEFAULT	.text		
-8249C018	LAB_8249c018	Global	Label	DEFAULT	.text		
-8249C02C	LAB_8249c02c	Global	Label	DEFAULT	.text		
-8249C038	LAB_8249c038	Global	Label	DEFAULT	.text		
-8249C060	LAB_8249c060	Global	Label	DEFAULT	.text		
-8249C368	LAB_8249c368	Global	Label	DEFAULT	.text		
-8249C690	LAB_8249c690	Global	Label	DEFAULT	.text		
-8249C730	LAB_8249c730	Global	Label	DEFAULT	.text		
-824A0EA8	LAB_824a0ea8	Global	Label	DEFAULT	.text		
-824A0EBC	LAB_824a0ebc	Global	Label	DEFAULT	.text		
-824A0ED8	LAB_824a0ed8	Global	Label	DEFAULT	.text		
-824A0EE4	LAB_824a0ee4	Global	Label	DEFAULT	.text		
-824A0F04	LAB_824a0f04	Global	Label	DEFAULT	.text		
-824A0F10	LAB_824a0f10	Global	Label	DEFAULT	.text		
-824A0F30	LAB_824a0f30	Global	Label	DEFAULT	.text		
-824A0F3C	LAB_824a0f3c	Global	Label	DEFAULT	.text		
-824A0F5C	LAB_824a0f5c	Global	Label	DEFAULT	.text		
-824A0F68	LAB_824a0f68	Global	Label	DEFAULT	.text		
-824A1298	LAB_824a1298	Global	Label	DEFAULT	.text		
-824A12A8	LAB_824a12a8	Global	Label	DEFAULT	.text		
-824A12D8	LAB_824a12d8	Global	Label	DEFAULT	.text		
-824A1360	LAB_824a1360	Global	Label	DEFAULT	.text		
 824A34E4	switchdataD_824a34e4	switchD_824a34e0	Label	ANALYSIS	.text	/pointer	4
 824AA688	LAB_824aa688	Global	Label	DEFAULT	.text		
 824AA7B0	LAB_824aa7b0	Global	Label	DEFAULT	.text		
 824AA7CC	LAB_824aa7cc	Global	Label	DEFAULT	.text		
 824AA86C	LAB_824aa86c	Global	Label	DEFAULT	.text		
-824BB4C0	LAB_824bb4c0	Global	Label	DEFAULT	.text		
-824BD040	LAB_824bd040	Global	Label	DEFAULT	.text		
-824BD05C	LAB_824bd05c	Global	Label	DEFAULT	.text		
 824C5598	LAB_824c5598	Global	Label	DEFAULT	.text		
 824C55B0	LAB_824c55b0	Global	Label	DEFAULT	.text		
 824C55C8	LAB_824c55c8	Global	Label	DEFAULT	.text		
@@ -12953,459 +12166,10 @@ va	name	namespace	type	source	block	datatype	length
 824C5B80	LAB_824c5b80	Global	Label	DEFAULT	.text		
 824C5B8C	LAB_824c5b8c	Global	Label	DEFAULT	.text		
 824C6E98	switchdataD_824c6e98	switchD_824c6e94	Label	ANALYSIS	.text	/pointer	4
-824C7DC0	LAB_824c7dc0	Global	Label	DEFAULT	.text		
-824C7DE0	LAB_824c7de0	Global	Label	DEFAULT	.text		
-824C7E60	LAB_824c7e60	Global	Label	DEFAULT	.text		
-824C7F70	LAB_824c7f70	Global	Label	DEFAULT	.text		
-824C7F90	LAB_824c7f90	Global	Label	DEFAULT	.text		
-824C7FF8	LAB_824c7ff8	Global	Label	DEFAULT	.text		
-824C8018	LAB_824c8018	Global	Label	DEFAULT	.text		
-824C8064	LAB_824c8064	Global	Label	DEFAULT	.text		
-824C8090	LAB_824c8090	Global	Label	DEFAULT	.text		
-824C80AC	LAB_824c80ac	Global	Label	DEFAULT	.text		
-824C80F0	LAB_824c80f0	Global	Label	DEFAULT	.text		
-824C8104	LAB_824c8104	Global	Label	DEFAULT	.text		
-824C8138	LAB_824c8138	Global	Label	DEFAULT	.text		
-824C815C	LAB_824c815c	Global	Label	DEFAULT	.text		
-824C81DC	LAB_824c81dc	Global	Label	DEFAULT	.text		
-824C8388	LAB_824c8388	Global	Label	DEFAULT	.text		
-824C83AC	LAB_824c83ac	Global	Label	DEFAULT	.text		
-824C840C	LAB_824c840c	Global	Label	DEFAULT	.text		
-824C8450	LAB_824c8450	Global	Label	DEFAULT	.text		
-824C8470	LAB_824c8470	Global	Label	DEFAULT	.text		
-824C84D0	LAB_824c84d0	Global	Label	DEFAULT	.text		
-824C84EC	LAB_824c84ec	Global	Label	DEFAULT	.text		
-824C8538	LAB_824c8538	Global	Label	DEFAULT	.text		
-824C8554	LAB_824c8554	Global	Label	DEFAULT	.text		
-824C8584	LAB_824c8584	Global	Label	DEFAULT	.text		
-824C8598	LAB_824c8598	Global	Label	DEFAULT	.text		
-824C85B4	LAB_824c85b4	Global	Label	DEFAULT	.text		
-824C85E0	LAB_824c85e0	Global	Label	DEFAULT	.text		
-824C85F4	LAB_824c85f4	Global	Label	DEFAULT	.text		
-824C8760	LAB_824c8760	Global	Label	DEFAULT	.text		
-824C8784	LAB_824c8784	Global	Label	DEFAULT	.text		
-824C8870	LAB_824c8870	Global	Label	DEFAULT	.text		
-824C8890	LAB_824c8890	Global	Label	DEFAULT	.text		
-824C88A0	LAB_824c88a0	Global	Label	DEFAULT	.text		
-824C88B8	LAB_824c88b8	Global	Label	DEFAULT	.text		
-824C88D4	LAB_824c88d4	Global	Label	DEFAULT	.text		
 824C9474	switchdataD_824c9474	switchD_824c9470	Label	ANALYSIS	.text	/pointer	4
 824C952C	switchdataD_824c952c	switchD_824c9528	Label	ANALYSIS	.text	/pointer	4
 824D7854	switchdataD_824d7854	switchD_824d7850	Label	ANALYSIS	.text	/pointer	4
-824DA2E0	LAB_824da2e0	Global	Label	DEFAULT	.text		
-824DEC50	LAB_824dec50	Global	Label	DEFAULT	.text		
-824F1678	LAB_824f1678	Global	Label	DEFAULT	.text		
-824F1680	LAB_824f1680	Global	Label	DEFAULT	.text		
-824F1688	LAB_824f1688	Global	Label	DEFAULT	.text		
-824F1690	LAB_824f1690	Global	Label	DEFAULT	.text		
-824F1698	LAB_824f1698	Global	Label	DEFAULT	.text		
-824F16D8	LAB_824f16d8	Global	Label	DEFAULT	.text		
-824F16E8	LAB_824f16e8	Global	Label	DEFAULT	.text		
-824F1848	LAB_824f1848	Global	Label	DEFAULT	.text		
-824F1858	LAB_824f1858	Global	Label	DEFAULT	.text		
-824F18F8	LAB_824f18f8	Global	Label	DEFAULT	.text		
-824F1908	LAB_824f1908	Global	Label	DEFAULT	.text		
-824F1960	LAB_824f1960	Global	Label	DEFAULT	.text		
-824F1B10	LAB_824f1b10	Global	Label	DEFAULT	.text		
-824F2498	LAB_824f2498	Global	Label	DEFAULT	.text		
-824F24A0	LAB_824f24a0	Global	Label	DEFAULT	.text		
-824F24A8	LAB_824f24a8	Global	Label	DEFAULT	.text		
-824F24B0	LAB_824f24b0	Global	Label	DEFAULT	.text		
-824F24B8	LAB_824f24b8	Global	Label	DEFAULT	.text		
-824F24C0	LAB_824f24c0	Global	Label	DEFAULT	.text		
-824F24C8	LAB_824f24c8	Global	Label	DEFAULT	.text		
-824F24D0	LAB_824f24d0	Global	Label	DEFAULT	.text		
-824F24D8	LAB_824f24d8	Global	Label	DEFAULT	.text		
-824F24E0	LAB_824f24e0	Global	Label	DEFAULT	.text		
-824F24E8	LAB_824f24e8	Global	Label	DEFAULT	.text		
-824F24F0	LAB_824f24f0	Global	Label	DEFAULT	.text		
-824F2BC0	LAB_824f2bc0	Global	Label	DEFAULT	.text		
-824F2BC8	LAB_824f2bc8	Global	Label	DEFAULT	.text		
-824F2BD0	LAB_824f2bd0	Global	Label	DEFAULT	.text		
-824F4880	LAB_824f4880	Global	Label	DEFAULT	.text		
-824F4890	LAB_824f4890	Global	Label	DEFAULT	.text		
-824F4AB0	LAB_824f4ab0	Global	Label	DEFAULT	.text		
-824F7648	LAB_824f7648	Global	Label	DEFAULT	.text		
-824F7670	LAB_824f7670	Global	Label	DEFAULT	.text		
-824F7684	LAB_824f7684	Global	Label	DEFAULT	.text		
-824F76A4	LAB_824f76a4	Global	Label	DEFAULT	.text		
-824F76A8	LAB_824f76a8	Global	Label	DEFAULT	.text		
-824F76BC	LAB_824f76bc	Global	Label	DEFAULT	.text		
-824F76D0	LAB_824f76d0	Global	Label	DEFAULT	.text		
-824F76FC	LAB_824f76fc	Global	Label	DEFAULT	.text		
-824F7710	LAB_824f7710	Global	Label	DEFAULT	.text		
-824F7730	LAB_824f7730	Global	Label	DEFAULT	.text		
-824F7734	LAB_824f7734	Global	Label	DEFAULT	.text		
-824F7748	LAB_824f7748	Global	Label	DEFAULT	.text		
-824F7958	LAB_824f7958	Global	Label	DEFAULT	.text		
-824F796C	LAB_824f796c	Global	Label	DEFAULT	.text		
-824F79B8	LAB_824f79b8	Global	Label	DEFAULT	.text		
-824F79C8	LAB_824f79c8	Global	Label	DEFAULT	.text		
-824F7E18	LAB_824f7e18	Global	Label	DEFAULT	.text		
-824F7F28	LAB_824f7f28	Global	Label	DEFAULT	.text		
-824F7F4C	LAB_824f7f4c	Global	Label	DEFAULT	.text		
-824F7F54	LAB_824f7f54	Global	Label	DEFAULT	.text		
-824F8348	LAB_824f8348	Global	Label	DEFAULT	.text		
-824F8358	LAB_824f8358	Global	Label	DEFAULT	.text		
-824F8368	LAB_824f8368	Global	Label	DEFAULT	.text		
-824F8388	LAB_824f8388	Global	Label	DEFAULT	.text		
-824F8ED8	LAB_824f8ed8	Global	Label	DEFAULT	.text		
-824F8EE8	LAB_824f8ee8	Global	Label	DEFAULT	.text		
-824F9240	LAB_824f9240	Global	Label	DEFAULT	.text		
-824FAE08	LAB_824fae08	Global	Label	DEFAULT	.text		
-824FC788	LAB_824fc788	Global	Label	DEFAULT	.text		
-824FCA20	LAB_824fca20	Global	Label	DEFAULT	.text		
-824FCD30	LAB_824fcd30	Global	Label	DEFAULT	.text		
-824FCD38	LAB_824fcd38	Global	Label	DEFAULT	.text		
-824FCD50	LAB_824fcd50	Global	Label	DEFAULT	.text		
-824FCDC0	LAB_824fcdc0	Global	Label	DEFAULT	.text		
-824FD028	LAB_824fd028	Global	Label	DEFAULT	.text		
-824FD054	LAB_824fd054	Global	Label	DEFAULT	.text		
-824FD080	LAB_824fd080	Global	Label	DEFAULT	.text		
-824FD0A8	LAB_824fd0a8	Global	Label	DEFAULT	.text		
-824FD0B8	LAB_824fd0b8	Global	Label	DEFAULT	.text		
-824FD0D0	LAB_824fd0d0	Global	Label	DEFAULT	.text		
-824FD0E0	LAB_824fd0e0	Global	Label	DEFAULT	.text		
-824FD0F0	LAB_824fd0f0	Global	Label	DEFAULT	.text		
-824FDCE8	LAB_824fdce8	Global	Label	DEFAULT	.text		
-824FDD10	LAB_824fdd10	Global	Label	DEFAULT	.text		
-824FDD30	LAB_824fdd30	Global	Label	DEFAULT	.text		
-824FDD38	LAB_824fdd38	Global	Label	DEFAULT	.text		
-824FDD48	LAB_824fdd48	Global	Label	DEFAULT	.text		
-824FDD50	LAB_824fdd50	Global	Label	DEFAULT	.text		
-824FDD58	LAB_824fdd58	Global	Label	DEFAULT	.text		
-824FE070	LAB_824fe070	Global	Label	DEFAULT	.text		
-824FE080	LAB_824fe080	Global	Label	DEFAULT	.text		
-824FE08C	LAB_824fe08c	Global	Label	DEFAULT	.text		
-824FE098	LAB_824fe098	Global	Label	DEFAULT	.text		
-824FE0A8	LAB_824fe0a8	Global	Label	DEFAULT	.text		
-824FE0B4	LAB_824fe0b4	Global	Label	DEFAULT	.text		
-824FE128	LAB_824fe128	Global	Label	DEFAULT	.text		
-824FE130	LAB_824fe130	Global	Label	DEFAULT	.text		
-825092B8	LAB_825092b8	Global	Label	DEFAULT	.text		
-82509300	LAB_82509300	Global	Label	DEFAULT	.text		
-82509320	LAB_82509320	Global	Label	DEFAULT	.text		
-82509330	LAB_82509330	Global	Label	DEFAULT	.text		
-82509360	LAB_82509360	Global	Label	DEFAULT	.text		
-82509428	LAB_82509428	Global	Label	DEFAULT	.text		
-82509450	LAB_82509450	Global	Label	DEFAULT	.text		
-82509458	LAB_82509458	Global	Label	DEFAULT	.text		
-8250949C	LAB_8250949c	Global	Label	DEFAULT	.text		
-825094C4	LAB_825094c4	Global	Label	DEFAULT	.text		
-825094D4	LAB_825094d4	Global	Label	DEFAULT	.text		
-82509504	LAB_82509504	Global	Label	DEFAULT	.text		
-82509614	LAB_82509614	Global	Label	DEFAULT	.text		
-8250963C	LAB_8250963c	Global	Label	DEFAULT	.text		
-8250BB48	LAB_8250bb48	Global	Label	DEFAULT	.text		
-8250BB98	LAB_8250bb98	Global	Label	DEFAULT	.text		
-8250BBF0	LAB_8250bbf0	Global	Label	DEFAULT	.text		
-8250BC00	LAB_8250bc00	Global	Label	DEFAULT	.text		
-8250BC1C	LAB_8250bc1c	Global	Label	DEFAULT	.text		
-8250BC48	LAB_8250bc48	Global	Label	DEFAULT	.text		
-8250BDEC	LAB_8250bdec	Global	Label	DEFAULT	.text		
-8250BE0C	LAB_8250be0c	Global	Label	DEFAULT	.text		
-8250BE28	LAB_8250be28	Global	Label	DEFAULT	.text		
-8250BE50	LAB_8250be50	Global	Label	DEFAULT	.text		
-8250BE60	LAB_8250be60	Global	Label	DEFAULT	.text		
-8250BE64	LAB_8250be64	Global	Label	DEFAULT	.text		
-8250C088	LAB_8250c088	Global	Label	DEFAULT	.text		
-8250C0D8	LAB_8250c0d8	Global	Label	DEFAULT	.text		
-8250C124	LAB_8250c124	Global	Label	DEFAULT	.text		
-8250C134	LAB_8250c134	Global	Label	DEFAULT	.text		
-8250C16C	LAB_8250c16c	Global	Label	DEFAULT	.text		
-8250C1F0	LAB_8250c1f0	Global	Label	DEFAULT	.text		
-8250C210	LAB_8250c210	Global	Label	DEFAULT	.text		
-8250C248	LAB_8250c248	Global	Label	DEFAULT	.text		
-8250C25C	LAB_8250c25c	Global	Label	DEFAULT	.text		
-8250F258	LAB_8250f258	Global	Label	DEFAULT	.text		
-8250F268	LAB_8250f268	Global	Label	DEFAULT	.text		
-8250F880	LAB_8250f880	Global	Label	DEFAULT	.text		
-8250F9F0	LAB_8250f9f0	Global	Label	DEFAULT	.text		
-8250F9F8	LAB_8250f9f8	Global	Label	DEFAULT	.text		
-8250FA08	LAB_8250fa08	Global	Label	DEFAULT	.text		
-8250FA10	LAB_8250fa10	Global	Label	DEFAULT	.text		
-8250FA80	LAB_8250fa80	Global	Label	DEFAULT	.text		
-82510A28	LAB_82510a28	Global	Label	DEFAULT	.text		
-82510A4C	LAB_82510a4c	Global	Label	DEFAULT	.text		
-82510A70	LAB_82510a70	Global	Label	DEFAULT	.text		
-82510A94	LAB_82510a94	Global	Label	DEFAULT	.text		
-82510AB8	LAB_82510ab8	Global	Label	DEFAULT	.text		
-82510AD4	LAB_82510ad4	Global	Label	DEFAULT	.text		
-82510AF0	LAB_82510af0	Global	Label	DEFAULT	.text		
-82510B0C	LAB_82510b0c	Global	Label	DEFAULT	.text		
 82513630	switchdataD_82513630	switchD_8251362c	Label	ANALYSIS	.text	/pointer	4
-82513828	LAB_82513828	Global	Label	DEFAULT	.text		
-82513830	LAB_82513830	Global	Label	DEFAULT	.text		
-82513838	LAB_82513838	Global	Label	DEFAULT	.text		
-82513878	LAB_82513878	Global	Label	DEFAULT	.text		
-825138E8	LAB_825138e8	Global	Label	DEFAULT	.text		
-825138F0	LAB_825138f0	Global	Label	DEFAULT	.text		
-825138F8	LAB_825138f8	Global	Label	DEFAULT	.text		
-82513CA0	LAB_82513ca0	Global	Label	DEFAULT	.text		
-82513CA8	LAB_82513ca8	Global	Label	DEFAULT	.text		
-82513CB0	LAB_82513cb0	Global	Label	DEFAULT	.text		
-82513CB8	LAB_82513cb8	Global	Label	DEFAULT	.text		
-82513CC0	LAB_82513cc0	Global	Label	DEFAULT	.text		
-82513CC8	LAB_82513cc8	Global	Label	DEFAULT	.text		
-82513CD0	LAB_82513cd0	Global	Label	DEFAULT	.text		
-82513CD8	LAB_82513cd8	Global	Label	DEFAULT	.text		
-82513CE0	LAB_82513ce0	Global	Label	DEFAULT	.text		
-82513CE8	LAB_82513ce8	Global	Label	DEFAULT	.text		
-82513CF0	LAB_82513cf0	Global	Label	DEFAULT	.text		
-82513CF8	LAB_82513cf8	Global	Label	DEFAULT	.text		
-82514018	LAB_82514018	Global	Label	DEFAULT	.text		
-82514020	LAB_82514020	Global	Label	DEFAULT	.text		
-82514228	LAB_82514228	Global	Label	DEFAULT	.text		
-82516520	LAB_82516520	Global	Label	DEFAULT	.text		
-82519598	LAB_82519598	Global	Label	DEFAULT	.text		
-82519A20	LAB_82519a20	Global	Label	DEFAULT	.text		
-82519A30	LAB_82519a30	Global	Label	DEFAULT	.text		
-82519A40	LAB_82519a40	Global	Label	DEFAULT	.text		
-82519A50	LAB_82519a50	Global	Label	DEFAULT	.text		
-82519A70	LAB_82519a70	Global	Label	DEFAULT	.text		
-82519A78	LAB_82519a78	Global	Label	DEFAULT	.text		
-82519A80	LAB_82519a80	Global	Label	DEFAULT	.text		
-82519F80	LAB_82519f80	Global	Label	DEFAULT	.text		
-82519F90	LAB_82519f90	Global	Label	DEFAULT	.text		
-8251A600	LAB_8251a600	Global	Label	DEFAULT	.text		
-8251A610	LAB_8251a610	Global	Label	DEFAULT	.text		
-8251A618	LAB_8251a618	Global	Label	DEFAULT	.text		
-8251A640	LAB_8251a640	Global	Label	DEFAULT	.text		
-8251A644	LAB_8251a644	Global	Label	DEFAULT	.text		
-8251A668	LAB_8251a668	Global	Label	DEFAULT	.text		
-8251A66C	LAB_8251a66c	Global	Label	DEFAULT	.text		
-8251A690	LAB_8251a690	Global	Label	DEFAULT	.text		
-8251A6A8	LAB_8251a6a8	Global	Label	DEFAULT	.text		
-8251A6B0	LAB_8251a6b0	Global	Label	DEFAULT	.text		
-8251A6CC	LAB_8251a6cc	Global	Label	DEFAULT	.text		
-8251A6D8	LAB_8251a6d8	Global	Label	DEFAULT	.text		
-8251A6E8	LAB_8251a6e8	Global	Label	DEFAULT	.text		
-8251A8C8	LAB_8251a8c8	Global	Label	DEFAULT	.text		
-8251AF70	LAB_8251af70	Global	Label	DEFAULT	.text		
-8251AF74	LAB_8251af74	Global	Label	DEFAULT	.text		
-8251B130	LAB_8251b130	Global	Label	DEFAULT	.text		
-8251B158	LAB_8251b158	Global	Label	DEFAULT	.text		
-8251B160	LAB_8251b160	Global	Label	DEFAULT	.text		
-8251D678	LAB_8251d678	Global	Label	DEFAULT	.text		
-8251D740	LAB_8251d740	Global	Label	DEFAULT	.text		
-82531B20	LAB_82531b20	Global	Label	DEFAULT	.text		
-82531B38	LAB_82531b38	Global	Label	DEFAULT	.text		
-82531B54	LAB_82531b54	Global	Label	DEFAULT	.text		
-82531B58	LAB_82531b58	Global	Label	DEFAULT	.text		
-82535798	LAB_82535798	Global	Label	DEFAULT	.text		
-825357A0	LAB_825357a0	Global	Label	DEFAULT	.text		
-82537A80	LAB_82537a80	Global	Label	DEFAULT	.text		
-8253A440	LAB_8253a440	Global	Label	DEFAULT	.text		
-8253CCD8	LAB_8253ccd8	Global	Label	DEFAULT	.text		
-8253CE80	LAB_8253ce80	Global	Label	DEFAULT	.text		
-8253EDF8	LAB_8253edf8	Global	Label	DEFAULT	.text		
-82545820	LAB_82545820	Global	Label	DEFAULT	.text		
-82545A58	LAB_82545a58	Global	Label	DEFAULT	.text		
-8254F458	LAB_8254f458	Global	Label	DEFAULT	.text		
-8254F47C	LAB_8254f47c	Global	Label	DEFAULT	.text		
-8254F490	LAB_8254f490	Global	Label	DEFAULT	.text		
-8254F4A4	LAB_8254f4a4	Global	Label	DEFAULT	.text		
-8254F4B8	LAB_8254f4b8	Global	Label	DEFAULT	.text		
-8254F4C0	LAB_8254f4c0	Global	Label	DEFAULT	.text		
-8254F4C4	LAB_8254f4c4	Global	Label	DEFAULT	.text		
-8254F4F0	LAB_8254f4f0	Global	Label	DEFAULT	.text		
-8254F4F4	LAB_8254f4f4	Global	Label	DEFAULT	.text		
-8254F508	LAB_8254f508	Global	Label	DEFAULT	.text		
-8254F588	LAB_8254f588	Global	Label	DEFAULT	.text		
-8254F590	LAB_8254f590	Global	Label	DEFAULT	.text		
-8254F598	DAT_8254f598	Global	Label	DEFAULT	.text	/undefined	1
-825500A8	LAB_825500a8	Global	Label	DEFAULT	.text		
-825500D8	LAB_825500d8	Global	Label	DEFAULT	.text		
-825500EC	LAB_825500ec	Global	Label	DEFAULT	.text		
-825500F0	LAB_825500f0	Global	Label	DEFAULT	.text		
-825500F8	LAB_825500f8	Global	Label	DEFAULT	.text		
-82550124	LAB_82550124	Global	Label	DEFAULT	.text		
-8255013C	LAB_8255013c	Global	Label	DEFAULT	.text		
-82550144	LAB_82550144	Global	Label	DEFAULT	.text		
-82557D70	LAB_82557d70	Global	Label	DEFAULT	.text		
-82560C38	LAB_82560c38	Global	Label	DEFAULT	.text		
-82560C48	LAB_82560c48	Global	Label	DEFAULT	.text		
-82560ED8	LAB_82560ed8	Global	Label	DEFAULT	.text		
-82560F08	LAB_82560f08	Global	Label	DEFAULT	.text		
-8256A600	LAB_8256a600	Global	Label	DEFAULT	.text		
-8256BEF8	LAB_8256bef8	Global	Label	DEFAULT	.text		
-8256BF90	LAB_8256bf90	Global	Label	DEFAULT	.text		
-8256C028	LAB_8256c028	Global	Label	DEFAULT	.text		
-8256C0C0	LAB_8256c0c0	Global	Label	DEFAULT	.text		
-8256C1A8	LAB_8256c1a8	Global	Label	DEFAULT	.text		
-8256C1C8	LAB_8256c1c8	Global	Label	DEFAULT	.text		
-8256C1E8	LAB_8256c1e8	Global	Label	DEFAULT	.text		
-8256C208	LAB_8256c208	Global	Label	DEFAULT	.text		
-8256C228	LAB_8256c228	Global	Label	DEFAULT	.text		
-8256C248	LAB_8256c248	Global	Label	DEFAULT	.text		
-8256C268	LAB_8256c268	Global	Label	DEFAULT	.text		
-8256C288	LAB_8256c288	Global	Label	DEFAULT	.text		
-8256C2F8	LAB_8256c2f8	Global	Label	DEFAULT	.text		
-8256C310	LAB_8256c310	Global	Label	DEFAULT	.text		
-8256C420	LAB_8256c420	Global	Label	DEFAULT	.text		
-8256C540	LAB_8256c540	Global	Label	DEFAULT	.text		
-8256C558	LAB_8256c558	Global	Label	DEFAULT	.text		
-8256C7E8	LAB_8256c7e8	Global	Label	DEFAULT	.text		
-8256C808	LAB_8256c808	Global	Label	DEFAULT	.text		
-8256C828	LAB_8256c828	Global	Label	DEFAULT	.text		
-8256C848	LAB_8256c848	Global	Label	DEFAULT	.text		
-8256C868	LAB_8256c868	Global	Label	DEFAULT	.text		
-8256C888	LAB_8256c888	Global	Label	DEFAULT	.text		
-8256C8A8	LAB_8256c8a8	Global	Label	DEFAULT	.text		
-8256C8C8	LAB_8256c8c8	Global	Label	DEFAULT	.text		
-8256C8E8	LAB_8256c8e8	Global	Label	DEFAULT	.text		
-8256C908	LAB_8256c908	Global	Label	DEFAULT	.text		
-8256C928	LAB_8256c928	Global	Label	DEFAULT	.text		
-8256C948	LAB_8256c948	Global	Label	DEFAULT	.text		
-8256C968	LAB_8256c968	Global	Label	DEFAULT	.text		
-8256C988	LAB_8256c988	Global	Label	DEFAULT	.text		
-8256C9A8	LAB_8256c9a8	Global	Label	DEFAULT	.text		
-8256C9C8	LAB_8256c9c8	Global	Label	DEFAULT	.text		
-8256C9E8	LAB_8256c9e8	Global	Label	DEFAULT	.text		
-8256CA08	LAB_8256ca08	Global	Label	DEFAULT	.text		
-8256CA28	LAB_8256ca28	Global	Label	DEFAULT	.text		
-8256CA48	LAB_8256ca48	Global	Label	DEFAULT	.text		
-8256CA68	LAB_8256ca68	Global	Label	DEFAULT	.text		
-8256CA88	LAB_8256ca88	Global	Label	DEFAULT	.text		
-8256CAA8	LAB_8256caa8	Global	Label	DEFAULT	.text		
-8256CAC8	LAB_8256cac8	Global	Label	DEFAULT	.text		
-8256CAE8	LAB_8256cae8	Global	Label	DEFAULT	.text		
-8256CB08	LAB_8256cb08	Global	Label	DEFAULT	.text		
-8256CB28	LAB_8256cb28	Global	Label	DEFAULT	.text		
-8256CB48	LAB_8256cb48	Global	Label	DEFAULT	.text		
-8256CB68	LAB_8256cb68	Global	Label	DEFAULT	.text		
-8256CB88	LAB_8256cb88	Global	Label	DEFAULT	.text		
-8256CBA8	LAB_8256cba8	Global	Label	DEFAULT	.text		
-8256CBC8	LAB_8256cbc8	Global	Label	DEFAULT	.text		
-8256CBE8	LAB_8256cbe8	Global	Label	DEFAULT	.text		
-8256CC08	LAB_8256cc08	Global	Label	DEFAULT	.text		
-8256CC28	LAB_8256cc28	Global	Label	DEFAULT	.text		
-8256CC48	LAB_8256cc48	Global	Label	DEFAULT	.text		
-8256CC68	LAB_8256cc68	Global	Label	DEFAULT	.text		
-8256CC88	LAB_8256cc88	Global	Label	DEFAULT	.text		
-8256CCA8	LAB_8256cca8	Global	Label	DEFAULT	.text		
-8256CCC8	LAB_8256ccc8	Global	Label	DEFAULT	.text		
-8256CCE8	LAB_8256cce8	Global	Label	DEFAULT	.text		
-8256CD08	LAB_8256cd08	Global	Label	DEFAULT	.text		
-8256CD28	LAB_8256cd28	Global	Label	DEFAULT	.text		
-8256CD48	LAB_8256cd48	Global	Label	DEFAULT	.text		
-8256CD68	LAB_8256cd68	Global	Label	DEFAULT	.text		
-8256CD88	LAB_8256cd88	Global	Label	DEFAULT	.text		
-8256CDA8	LAB_8256cda8	Global	Label	DEFAULT	.text		
-8256CDC8	LAB_8256cdc8	Global	Label	DEFAULT	.text		
-8256CDE8	LAB_8256cde8	Global	Label	DEFAULT	.text		
-8256CE08	LAB_8256ce08	Global	Label	DEFAULT	.text		
-8256CE28	LAB_8256ce28	Global	Label	DEFAULT	.text		
-8256CE48	LAB_8256ce48	Global	Label	DEFAULT	.text		
-8256CE68	LAB_8256ce68	Global	Label	DEFAULT	.text		
-8256CE88	LAB_8256ce88	Global	Label	DEFAULT	.text		
-8256CEA8	LAB_8256cea8	Global	Label	DEFAULT	.text		
-8256CEC8	LAB_8256cec8	Global	Label	DEFAULT	.text		
-8256CEE8	LAB_8256cee8	Global	Label	DEFAULT	.text		
-8256CF08	LAB_8256cf08	Global	Label	DEFAULT	.text		
-8256CF28	LAB_8256cf28	Global	Label	DEFAULT	.text		
-8256CF48	LAB_8256cf48	Global	Label	DEFAULT	.text		
-8256CF68	LAB_8256cf68	Global	Label	DEFAULT	.text		
-8256CF88	LAB_8256cf88	Global	Label	DEFAULT	.text		
-8256CFA8	LAB_8256cfa8	Global	Label	DEFAULT	.text		
-8256CFC8	LAB_8256cfc8	Global	Label	DEFAULT	.text		
-8256CFE8	LAB_8256cfe8	Global	Label	DEFAULT	.text		
-8256D008	LAB_8256d008	Global	Label	DEFAULT	.text		
-8256D028	LAB_8256d028	Global	Label	DEFAULT	.text		
-8256D048	LAB_8256d048	Global	Label	DEFAULT	.text		
-8256D068	LAB_8256d068	Global	Label	DEFAULT	.text		
-8256D088	LAB_8256d088	Global	Label	DEFAULT	.text		
-8256D0A8	LAB_8256d0a8	Global	Label	DEFAULT	.text		
-8256D0C8	LAB_8256d0c8	Global	Label	DEFAULT	.text		
-8256D0E8	LAB_8256d0e8	Global	Label	DEFAULT	.text		
-8256D108	LAB_8256d108	Global	Label	DEFAULT	.text		
-8256D128	LAB_8256d128	Global	Label	DEFAULT	.text		
-8256D148	LAB_8256d148	Global	Label	DEFAULT	.text		
-8256D168	LAB_8256d168	Global	Label	DEFAULT	.text		
-8256D188	LAB_8256d188	Global	Label	DEFAULT	.text		
-8256D1A8	LAB_8256d1a8	Global	Label	DEFAULT	.text		
-8256D1C8	LAB_8256d1c8	Global	Label	DEFAULT	.text		
-8256D1E0	LAB_8256d1e0	Global	Label	DEFAULT	.text		
-8256D1F8	LAB_8256d1f8	Global	Label	DEFAULT	.text		
-8256D210	LAB_8256d210	Global	Label	DEFAULT	.text		
-8256D228	LAB_8256d228	Global	Label	DEFAULT	.text		
-8256D240	LAB_8256d240	Global	Label	DEFAULT	.text		
-8256D258	LAB_8256d258	Global	Label	DEFAULT	.text		
-8256D270	LAB_8256d270	Global	Label	DEFAULT	.text		
-8256D288	LAB_8256d288	Global	Label	DEFAULT	.text		
-8256D2A0	LAB_8256d2a0	Global	Label	DEFAULT	.text		
-8256D570	LAB_8256d570	Global	Label	DEFAULT	.text		
-8256D588	LAB_8256d588	Global	Label	DEFAULT	.text		
-8256D5A0	LAB_8256d5a0	Global	Label	DEFAULT	.text		
-8256D5B8	LAB_8256d5b8	Global	Label	DEFAULT	.text		
-8256D5D0	LAB_8256d5d0	Global	Label	DEFAULT	.text		
-8256D5E8	LAB_8256d5e8	Global	Label	DEFAULT	.text		
-8256D600	LAB_8256d600	Global	Label	DEFAULT	.text		
-8256D618	LAB_8256d618	Global	Label	DEFAULT	.text		
-8256D628	LAB_8256d628	Global	Label	DEFAULT	.text		
-8256D640	LAB_8256d640	Global	Label	DEFAULT	.text		
-8256D8E0	LAB_8256d8e0	Global	Label	DEFAULT	.text		
-8256D8F8	LAB_8256d8f8	Global	Label	DEFAULT	.text		
-8256D980	LAB_8256d980	Global	Label	DEFAULT	.text		
-8256D9E8	LAB_8256d9e8	Global	Label	DEFAULT	.text		
-8256DA78	LAB_8256da78	Global	Label	DEFAULT	.text		
-8256DAB0	LAB_8256dab0	Global	Label	DEFAULT	.text		
-8256DB80	LAB_8256db80	Global	Label	DEFAULT	.text		
-8256DB90	LAB_8256db90	Global	Label	DEFAULT	.text		
-8256DC20	LAB_8256dc20	Global	Label	DEFAULT	.text		
-8256DD18	LAB_8256dd18	Global	Label	DEFAULT	.text		
-8256DD50	LAB_8256dd50	Global	Label	DEFAULT	.text		
-8256DDE8	LAB_8256dde8	Global	Label	DEFAULT	.text		
-8256DE20	LAB_8256de20	Global	Label	DEFAULT	.text		
-8256DEC0	LAB_8256dec0	Global	Label	DEFAULT	.text		
-8256DED8	LAB_8256ded8	Global	Label	DEFAULT	.text		
-8256DEF0	LAB_8256def0	Global	Label	DEFAULT	.text		
-8256DFC8	LAB_8256dfc8	Global	Label	DEFAULT	.text		
-8256DFD8	LAB_8256dfd8	Global	Label	DEFAULT	.text		
-8256E100	LAB_8256e100	Global	Label	DEFAULT	.text		
-8256E190	LAB_8256e190	Global	Label	DEFAULT	.text		
-8256E1C8	LAB_8256e1c8	Global	Label	DEFAULT	.text		
-8256E238	LAB_8256e238	Global	Label	DEFAULT	.text		
-8256E250	LAB_8256e250	Global	Label	DEFAULT	.text		
-8256E260	LAB_8256e260	Global	Label	DEFAULT	.text		
-8256E280	LAB_8256e280	Global	Label	DEFAULT	.text		
-8256E458	LAB_8256e458	Global	Label	DEFAULT	.text		
-8256E5B0	LAB_8256e5b0	Global	Label	DEFAULT	.text		
-8256E820	LAB_8256e820	Global	Label	DEFAULT	.text		
-8256E8B8	LAB_8256e8b8	Global	Label	DEFAULT	.text		
-8256E8C8	LAB_8256e8c8	Global	Label	DEFAULT	.text		
-8256E928	LAB_8256e928	Global	Label	DEFAULT	.text		
-8256E938	LAB_8256e938	Global	Label	DEFAULT	.text		
-8256E9D8	LAB_8256e9d8	Global	Label	DEFAULT	.text		
-8256E9E8	LAB_8256e9e8	Global	Label	DEFAULT	.text		
-8256E9F8	LAB_8256e9f8	Global	Label	DEFAULT	.text		
-8256EA08	LAB_8256ea08	Global	Label	DEFAULT	.text		
-8256EA18	LAB_8256ea18	Global	Label	DEFAULT	.text		
-8256EA28	LAB_8256ea28	Global	Label	DEFAULT	.text		
-8256EA38	LAB_8256ea38	Global	Label	DEFAULT	.text		
-8256EB90	LAB_8256eb90	Global	Label	DEFAULT	.text		
-8256EBA0	LAB_8256eba0	Global	Label	DEFAULT	.text		
-8256EBB0	LAB_8256ebb0	Global	Label	DEFAULT	.text		
-8256ECB0	LAB_8256ecb0	Global	Label	DEFAULT	.text		
-8256ECC0	LAB_8256ecc0	Global	Label	DEFAULT	.text		
-8256ECD0	LAB_8256ecd0	Global	Label	DEFAULT	.text		
-8256ECE0	LAB_8256ece0	Global	Label	DEFAULT	.text		
-8256ECF0	LAB_8256ecf0	Global	Label	DEFAULT	.text		
-8256ED50	LAB_8256ed50	Global	Label	DEFAULT	.text		
-8256ED60	LAB_8256ed60	Global	Label	DEFAULT	.text		
-8256ED70	LAB_8256ed70	Global	Label	DEFAULT	.text		
-8256ED80	LAB_8256ed80	Global	Label	DEFAULT	.text		
-8256EFE0	LAB_8256efe0	Global	Label	DEFAULT	.text		
-8256F3C8	LAB_8256f3c8	Global	Label	DEFAULT	.text		
-8256F568	LAB_8256f568	Global	Label	DEFAULT	.text		
-8256F578	LAB_8256f578	Global	Label	DEFAULT	.text		
-8256F588	LAB_8256f588	Global	Label	DEFAULT	.text		
-8256F598	LAB_8256f598	Global	Label	DEFAULT	.text		
-8256F9D8	LAB_8256f9d8	Global	Label	DEFAULT	.text		
-8256FA38	LAB_8256fa38	Global	Label	DEFAULT	.text		
-8256FA50	LAB_8256fa50	Global	Label	DEFAULT	.text		
-8256FA68	LAB_8256fa68	Global	Label	DEFAULT	.text		
-8256FA78	LAB_8256fa78	Global	Label	DEFAULT	.text		
 8256FAD4	LAB_8256fad4	Global	Label	DEFAULT	.text	/undefined	1
 8256FAE4	LAB_8256fae4	Global	Label	DEFAULT	.text	/undefined	1
 8256FAF4	LAB_8256faf4	Global	Label	DEFAULT	.text	/undefined	1
@@ -13425,7 +12189,6 @@ va	name	namespace	type	source	block	datatype	length
 8256FCE4	LAB_8256fce4	Global	Label	DEFAULT	.text	/undefined	1
 8256FD84	LAB_8256fd84	Global	Label	DEFAULT	.text	/undefined	1
 82570364	LAB_82570364	Global	Label	DEFAULT	.text	/undefined	1
-825704E4	DAT_825704e4	Global	Label	DEFAULT	.text	/undefined	1
 82570634	LAB_82570634	Global	Label	DEFAULT	.text	/undefined	1
 82570644	LAB_82570644	Global	Label	DEFAULT	.text	/undefined	1
 82570654	LAB_82570654	Global	Label	DEFAULT	.text	/undefined	1
@@ -13461,24 +12224,8 @@ va	name	namespace	type	source	block	datatype	length
 82570854	LAB_82570854	Global	Label	DEFAULT	.text	/undefined	1
 82570864	LAB_82570864	Global	Label	DEFAULT	.text	/undefined	1
 825708E4	LAB_825708e4	Global	Label	DEFAULT	.text	/undefined	1
-82571348	LAB_82571348	Global	Label	DEFAULT	BINK		
-8257137C	LAB_8257137c	Global	Label	DEFAULT	BINK		
-82571394	LAB_82571394	Global	Label	DEFAULT	BINK		
-825713E8	LAB_825713e8	Global	Label	DEFAULT	BINK		
-825713F8	LAB_825713f8	Global	Label	DEFAULT	BINK		
-82571408	LAB_82571408	Global	Label	DEFAULT	BINK		
-82571418	LAB_82571418	Global	Label	DEFAULT	BINK		
-82571420	LAB_82571420	Global	Label	DEFAULT	BINK		
-825740E8	LAB_825740e8	Global	Label	DEFAULT	BINK		
-82574104	LAB_82574104	Global	Label	DEFAULT	BINK		
-825742C8	LAB_825742c8	Global	Label	DEFAULT	BINK		
-825742D4	LAB_825742d4	Global	Label	DEFAULT	BINK		
-825742E0	LAB_825742e0	Global	Label	DEFAULT	BINK		
-825742F0	LAB_825742f0	Global	Label	DEFAULT	BINK		
-82574980	LAB_82574980	Global	Label	DEFAULT	BINK		
 82578370	switchdataD_82578370	switchD_8257836c	Label	ANALYSIS	BINK	/pointer	4
 8257847C	switchdataD_8257847c	switchD_82578478	Label	ANALYSIS	BINK	/pointer	4
-8257A9C8	LAB_8257a9c8	Global	Label	DEFAULT	BINK		
 8258042C	switchdataD_8258042c	switchD_82580428	Label	ANALYSIS	BINK	/pointer	4
 82580870	switchdataD_82580870	switchD_8258086c	Label	ANALYSIS	BINK	/pointer	4
 82580E08	switchdataD_82580e08	switchD_82580e04	Label	ANALYSIS	BINK	/pointer	4
@@ -13540,9 +12287,9 @@ va	name	namespace	type	source	block	datatype	length
 825911C0	PTR_FUN_825911c0	Global	Label	DEFAULT	.data	/pointer	4
 825911C4	DAT_825911c4	Global	Label	DEFAULT	.data	/undefined	1
 825911C8	PTR_FUN_825911c8	Global	Label	DEFAULT	.data	/pointer	4
-825911CC	PTR_LAB_825911cc	Global	Label	DEFAULT	.data	/pointer	4
-825911D0	PTR_LAB_825911d0	Global	Label	DEFAULT	.data	/pointer	4
-825911D4	PTR_LAB_825911d4	Global	Label	DEFAULT	.data	/undefined *	4
+825911CC	PTR_FUN_825911cc	Global	Label	DEFAULT	.data	/pointer	4
+825911D0	PTR_FUN_825911d0	Global	Label	DEFAULT	.data	/pointer	4
+825911D4	PTR_FUN_825911d4	Global	Label	DEFAULT	.data	/undefined *	4
 82591208	PTR_FUN_82591208	Global	Label	DEFAULT	.data	/pointer	4
 8259120C	switchdataD_8259120c	switchD_820eba10	Label	ANALYSIS	.data	/pointer	4
 82591210	PTR_FUN_82591210	Global	Label	DEFAULT	.data	/pointer	4
@@ -13652,9 +12399,9 @@ va	name	namespace	type	source	block	datatype	length
 82593264	DAT_82593264	Global	Label	DEFAULT	.data	/undefined	1
 825933E8	DAT_825933e8	Global	Label	DEFAULT	.data	/undefined4	4
 825934A0	PTR_s_physpreset_825934a0	Global	Label	DEFAULT	.data	/undefined *	4
-82593550	PTR_LAB_82593550	Global	Label	DEFAULT	.data	/undefined *	4
-82593600	PTR_LAB_82593600	Global	Label	DEFAULT	.data	/undefined *	4
-825936B0	PTR_LAB_825936b0	Global	Label	DEFAULT	.data	/undefined *	4
+82593550	PTR_FUN_82593550	Global	Label	DEFAULT	.data	/undefined *	4
+82593600	PTR_FUN_82593600	Global	Label	DEFAULT	.data	/undefined *	4
+825936B0	PTR_FUN_825936b0	Global	Label	DEFAULT	.data	/undefined *	4
 82593760	DAT_82593760	Global	Label	DEFAULT	.data	/undefined4	4
 825937D8	DAT_825937d8	Global	Label	DEFAULT	.data	/undefined4	4
 825937DC	DAT_825937dc	Global	Label	DEFAULT	.data	/undefined4	4
@@ -13671,8 +12418,8 @@ va	name	namespace	type	source	block	datatype	length
 8259387C	DAT_8259387c	Global	Label	DEFAULT	.data	/undefined4	4
 82593928	PTR_FUN_82593928	Global	Label	DEFAULT	.data	/pointer	4
 8259392C	PTR_FUN_8259392c	Global	Label	DEFAULT	.data	/undefined *	4
-825939D8	PTR_LAB_825939d8	Global	Label	DEFAULT	.data	/undefined *	4
-82593A88	PTR_LAB_82593a88	Global	Label	DEFAULT	.data	/undefined *	4
+825939D8	PTR_FUN_825939d8	Global	Label	DEFAULT	.data	/undefined *	4
+82593A88	PTR_FUN_82593a88	Global	Label	DEFAULT	.data	/undefined *	4
 82593B38	PTR_DAT_82593b38	Global	Label	DEFAULT	.data	/pointer	4
 82593B3C	PTR_DAT_82593b3c	Global	Label	DEFAULT	.data	/undefined *	4
 82593BE8	PTR_s_default_82593be8	Global	Label	DEFAULT	.data	/undefined *	4
@@ -13699,6 +12446,11 @@ va	name	namespace	type	source	block	datatype	length
 825941E8	PTR_DAT_825941e8	Global	Label	DEFAULT	.data	/pointer	4
 825941EC	PTR_DAT_825941ec	Global	Label	DEFAULT	.data	/undefined *	4
 82594228	PTR_s_Debug_82594228	Global	Label	DEFAULT	.data	/undefined *	4
+82594240	PTR_s_default_82594240	Global	Label	DEFAULT	.data	/undefined *	4
+82594260	PTR_DAT_82594260	Global	Label	DEFAULT	.data	/undefined *	4
+8259426C	PTR_DAT_8259426c	Global	Label	DEFAULT	.data	/undefined *	4
+82594278	PTR_s_subleft_82594278	Global	Label	DEFAULT	.data	/undefined *	4
+825942A4	PTR_s_subtop_825942a4	Global	Label	DEFAULT	.data	/undefined *	4
 82594318	DAT_82594318	Global	Label	DEFAULT	.data	/undefined	1
 8259431C	DAT_8259431c	Global	Label	DEFAULT	.data	/undefined	1
 82594320	DAT_82594320	Global	Label	DEFAULT	.data	/undefined	1
@@ -13717,10 +12469,10 @@ va	name	namespace	type	source	block	datatype	length
 825946A8	PTR_DAT_825946a8	Global	Label	DEFAULT	.data	/pointer	4
 825946AC	PTR_DAT_825946ac	Global	Label	DEFAULT	.data	/undefined *	4
 825946C0	DAT_825946c0	Global	Label	DEFAULT	.data	/undefined4	4
-825946C4	PTR_DAT_825946c4	Global	Label	DEFAULT	.data	/pointer	4
+825946C4	PTR_FUN_825946c4	Global	Label	DEFAULT	.data	/pointer	4
 825946C8	DAT_825946c8	Global	Label	DEFAULT	.data	/undefined4	4
 825946CC	DAT_825946cc	Global	Label	DEFAULT	.data	/undefined4	4
-825946D0	PTR_DAT_825946d0	Global	Label	DEFAULT	.data	/pointer	4
+825946D0	PTR_FUN_825946d0	Global	Label	DEFAULT	.data	/pointer	4
 825946D4	DAT_825946d4	Global	Label	DEFAULT	.data	/undefined4	4
 82594FB0	DAT_82594fb0	Global	Label	DEFAULT	.data	/undefined4	4
 82594FB4	PTR_FUN_82594fb4	Global	Label	DEFAULT	.data	/pointer	4
@@ -13954,13 +12706,13 @@ va	name	namespace	type	source	block	datatype	length
 8259AF30	PTR_DAT_8259af30	Global	Label	DEFAULT	.data	/undefined *	4
 8259AF44	PTR_DAT_8259af44	Global	Label	DEFAULT	.data	/pointer	4
 8259AF48	PTR_DAT_8259af48	Global	Label	DEFAULT	.data	/pointer	4
-8259AF58	PTR_LAB_8259af58	Global	Label	DEFAULT	.data	/pointer	4
+8259AF58	PTR_FUN_8259af58	Global	Label	DEFAULT	.data	/pointer	4
 8259AF5C	PTR_FUN_8259af5c	Global	Label	DEFAULT	.data	/pointer	4
-8259AF60	PTR_LAB_8259af60	Global	Label	DEFAULT	.data	/pointer	4
-8259AF64	PTR_LAB_8259af64	Global	Label	DEFAULT	.data	/pointer	4
-8259AF68	PTR_LAB_8259af68	Global	Label	DEFAULT	.data	/pointer	4
-8259AF6C	PTR_LAB_8259af6c	Global	Label	DEFAULT	.data	/pointer	4
-8259AF70	PTR_LAB_8259af70	Global	Label	DEFAULT	.data	/undefined *	4
+8259AF60	PTR_thunk_FUN_823a8e20_8259af60	Global	Label	DEFAULT	.data	/pointer	4
+8259AF64	PTR_FUN_8259af64	Global	Label	DEFAULT	.data	/pointer	4
+8259AF68	PTR_FUN_8259af68	Global	Label	DEFAULT	.data	/pointer	4
+8259AF6C	PTR_FUN_8259af6c	Global	Label	DEFAULT	.data	/pointer	4
+8259AF70	PTR_FUN_8259af70	Global	Label	DEFAULT	.data	/undefined *	4
 8259B054	PTR_s_first_person_8259b054	Global	Label	DEFAULT	.data	/pointer	4
 8259B064	DAT_8259b064	Global	Label	DEFAULT	.data	/undefined4	4
 8259B068	DAT_8259b068	Global	Label	DEFAULT	.data	/undefined4	4
@@ -14032,9 +12784,9 @@ va	name	namespace	type	source	block	datatype	length
 825A4740	DAT_825a4740	Global	Label	DEFAULT	.data	/undefined	1
 825A47B0	DAT_825a47b0	Global	Label	DEFAULT	.data	/undefined	1
 825A4AB8	DAT_825a4ab8	Global	Label	DEFAULT	.data	/undefined	1
-825A4BD4	PTR_LAB_825a4bd4	Global	Label	DEFAULT	.data	/pointer	4
-825A4BD8	PTR_LAB_825a4bd8	Global	Label	DEFAULT	.data	/pointer	4
-825A4BE0	PTR_LAB_825a4be0	Global	Label	DEFAULT	.data	/pointer	4
+825A4BD4	PTR_FUN_825a4bd4	Global	Label	DEFAULT	.data	/pointer	4
+825A4BD8	PTR_FUN_825a4bd8	Global	Label	DEFAULT	.data	/pointer	4
+825A4BE0	PTR_FUN_825a4be0	Global	Label	DEFAULT	.data	/pointer	4
 825A4BEC	DAT_825a4bec	Global	Label	DEFAULT	.data	/undefined4	4
 825A4C3C	PTR_s_R_RENDERTARGET_SAVED_SCREEN_825a4c3c	Global	Label	DEFAULT	.data	/undefined *	4
 825A4C78	DAT_825a4c78	Global	Label	DEFAULT	.data	/undefined1	1
@@ -14046,7 +12798,7 @@ va	name	namespace	type	source	block	datatype	length
 825A4DBF	DAT_825a4dbf	Global	Label	DEFAULT	.data	/undefined1	1
 825A4DC0	DAT_825a4dc0	Global	Label	DEFAULT	.data	/undefined	1
 825A4DC1	DAT_825a4dc1	Global	Label	DEFAULT	.data	/undefined	1
-825A4DE8	PTR_LAB_825a4de8	Global	Label	DEFAULT	.data	/pointer	4
+825A4DE8	PTR_FUN_825a4de8	Global	Label	DEFAULT	.data	/pointer	4
 825A4E70	DAT_825a4e70	Global	Label	DEFAULT	.data	/undefined	1
 825A4EF8	PTR_s_Debug_825a4ef8	Global	Label	DEFAULT	.data	/undefined *	4
 825A4F0C	PTR_DAT_825a4f0c	Global	Label	DEFAULT	.data	/undefined *	4
@@ -14159,10 +12911,10 @@ va	name	namespace	type	source	block	datatype	length
 825A7140	DAT_825a7140	Global	Label	DEFAULT	.data	/undefined4	4
 825A7144	PTR_s_MENU_MATCHRULES_DATAREADERROR_825a7144	Global	Label	DEFAULT	.data	/pointer	4
 825A7180	DAT_825a7180	Global	Label	DEFAULT	.data	/undefined	1
-825A7190	PTR_LAB_825a7190	Global	Label	DEFAULT	.data	/undefined *	4
-825A71B0	PTR_LAB_825a71b0	Global	Label	DEFAULT	.data	/undefined *	4
-825A71D0	PTR_LAB_825a71d0	Global	Label	DEFAULT	.data	/undefined *	4
-825A71F0	PTR_LAB_825a71f0	Global	Label	DEFAULT	.data	/undefined *	4
+825A7190	PTR_FUN_825a7190	Global	Label	DEFAULT	.data	/undefined *	4
+825A71B0	PTR_FUN_825a71b0	Global	Label	DEFAULT	.data	/undefined *	4
+825A71D0	PTR_FUN_825a71d0	Global	Label	DEFAULT	.data	/undefined *	4
+825A71F0	PTR_FUN_825a71f0	Global	Label	DEFAULT	.data	/undefined *	4
 825A7210	DAT_825a7210	Global	Label	DEFAULT	.data	/undefined	1
 825A7214	DAT_825a7214	Global	Label	DEFAULT	.data	/undefined	1
 825A7218	DAT_825a7218	Global	Label	DEFAULT	.data	/undefined4	4
@@ -14202,7 +12954,7 @@ va	name	namespace	type	source	block	datatype	length
 825A7BD8	DAT_825a7bd8	Global	Label	DEFAULT	.data	/undefined	1
 825A7BF4	DAT_825a7bf4	Global	Label	DEFAULT	.data	/undefined	1
 825A7C04	DAT_825a7c04	Global	Label	DEFAULT	.data	/undefined	1
-825A7C14	PTR_LAB_825a7c14	Global	Label	DEFAULT	.data	/pointer	4
+825A7C14	PTR_thunk_FUN_824de430_825a7c14	Global	Label	DEFAULT	.data	/pointer	4
 825A7C38	DAT_825a7c38	Global	Label	DEFAULT	.data	/undefined	1
 825A7C4C	DAT_825a7c4c	Global	Label	DEFAULT	.data	/undefined4	4
 825A7C50	DAT_825a7c50	Global	Label	DEFAULT	.data	/undefined4	4
@@ -14250,7 +13002,7 @@ va	name	namespace	type	source	block	datatype	length
 825AF064	PTR_FUN_825af064	Global	Label	DEFAULT	.data	/undefined *	4
 825AF08C	PTR_FUN_825af08c	Global	Label	DEFAULT	.data	/undefined *	4
 825AF0AC	PTR_FUN_825af0ac	Global	Label	DEFAULT	.data	/pointer	4
-825AF0B4	PTR_LAB_825af0b4	Global	Label	DEFAULT	.data	/undefined *	4
+825AF0B4	PTR_FUN_825af0b4	Global	Label	DEFAULT	.data	/undefined *	4
 825AF0D0	PTR_FUN_825af0d0	Global	Label	DEFAULT	.data	/undefined *	4
 825AF0DC	DAT_825af0dc	Global	Label	DEFAULT	.data	/undefined4	4
 825AF0F0	PTR_FUN_825af0f0	Global	Label	DEFAULT	.data	/pointer	4
@@ -14467,10 +13219,10 @@ va	name	namespace	type	source	block	datatype	length
 825B1CB4	PTR_FUN_825b1cb4	Global	Label	DEFAULT	.data	/pointer	4
 825B1CB8	PTR_FUN_825b1cb8	Global	Label	DEFAULT	.data	/pointer	4
 825B1CBC	DAT_825b1cbc	Global	Label	DEFAULT	.data	/undefined4	4
-825B2168	PTR_LAB_825b2168	Global	Label	DEFAULT	.data	/pointer	4
+825B2168	PTR_FUN_825b2168	Global	Label	DEFAULT	.data	/pointer	4
 825B216C	PTR_FUN_825b216c	Global	Label	DEFAULT	.data	/pointer	4
 825B2170	DAT_825b2170	Global	Label	DEFAULT	.data	/undefined4	4
-825B2174	PTR_LAB_825b2174	Global	Label	DEFAULT	.data	/pointer	4
+825B2174	PTR_FUN_825b2174	Global	Label	DEFAULT	.data	/pointer	4
 825B2178	PTR_FUN_825b2178	Global	Label	DEFAULT	.data	/pointer	4
 825B217C	DAT_825b217c	Global	Label	DEFAULT	.data	/undefined4	4
 825B225C	DAT_825b225c	Global	Label	DEFAULT	.data	/undefined4	4
@@ -21774,6 +20526,8 @@ va	name	namespace	type	source	block	datatype	length
 83A7D550	DAT_83a7d550	Global	Label	DEFAULT	.data	/undefined	1
 83A7D568	DAT_83a7d568	Global	Label	DEFAULT	.data	/undefined	1
 83A7D56C	DAT_83a7d56c	Global	Label	DEFAULT	.data	/undefined	1
+83A7D570	DAT_83a7d570	Global	Label	DEFAULT	.data	/undefined	1
+83A7D574	DAT_83a7d574	Global	Label	DEFAULT	.data	/undefined	1
 83A7D578	DAT_83a7d578	Global	Label	DEFAULT	.data	/undefined	1
 83A7D5E0	DAT_83a7d5e0	Global	Label	DEFAULT	.data	/undefined4	4
 83A7D5E4	DAT_83a7d5e4	Global	Label	DEFAULT	.data	/undefined4	4
@@ -26320,6 +25074,7 @@ va	name	namespace	type	source	block	datatype	length
 83EFD76C	DAT_83efd76c	Global	Label	DEFAULT	.data	/undefined4	4
 83EFD770	DAT_83efd770	Global	Label	DEFAULT	.data	/undefined4	4
 83EFD774	DAT_83efd774	Global	Label	DEFAULT	.data	/undefined4	4
+83EFD788	DAT_83efd788	Global	Label	DEFAULT	.data	/undefined4	4
 83EFD794	DAT_83efd794	Global	Label	DEFAULT	.data	/undefined	1
 83EFD798	DAT_83efd798	Global	Label	DEFAULT	.data	/undefined	1
 83EFD79C	DAT_83efd79c	Global	Label	DEFAULT	.data	/undefined4	4
@@ -26463,6 +25218,7 @@ va	name	namespace	type	source	block	datatype	length
 83F00A64	DAT_83f00a64	Global	Label	DEFAULT	.data	/undefined4	4
 83F00B60	DAT_83f00b60	Global	Label	DEFAULT	.data	/undefined4	4
 83F00B64	DAT_83f00b64	Global	Label	DEFAULT	.data	/undefined4	4
+83F00B68	DAT_83f00b68	Global	Label	DEFAULT	.data	/undefined4	4
 83F00B6C	DAT_83f00b6c	Global	Label	DEFAULT	.data	/undefined4	4
 83F00B70	DAT_83f00b70	Global	Label	DEFAULT	.data	/undefined4	4
 83F00B74	DAT_83f00b74	Global	Label	DEFAULT	.data	/undefined4	4

@@ -252,6 +252,22 @@ LAB_82370224:
   82370230  388BE7D8             subi r4,r11,0x1828
   82370234  4BFBBDDC             b 0x8232c010
 
+; 82370268  FUN_82370268  (physics/phys_ode.cpp:452)
+  82370268  81630010             lwz r11,0x10(r3)
+  8237026C  814B0054             lwz r10,0x54(r11)
+  82370270  2F0A0003             cmpwi cr6,r10,0x3
+  82370274  409A0014             bne cr6,0x82370288
+  82370278  3D6083A8             lis r11,-0x7c58
+  8237027C  396BAC00             subi r11,r11,0x5400
+  82370280  388B1490             addi r4,r11,0x1490
+  82370284  4BFBBD8C             b 0x8232c010
+LAB_82370288:
+  82370288  3D60839E             lis r11,-0x7c62
+  8237028C  394BC380             subi r10,r11,0x3c80
+  82370290  3D6A000A             addis r11,r10,0xa
+  82370294  388BE7C0             subi r4,r11,0x1840
+  82370298  4BFBBD78             b 0x8232c010
+
 ; 82370300  FUN_82370300  (physics/phys_ode.cpp:488)
   82370300  7D8802A6             mfspr r12,LR
   82370304  9181FFF8             stw r12,-0x8(r1)
@@ -7453,3 +7469,8 @@ LAB_82376eec:
   82376F0C  EBC1FFE8             ld r30,-0x18(r1)
   82376F10  EBE1FFF0             ld r31,-0x10(r1)
   82376F14  4E800020             blr
+
+; 8256EA28  FUN_8256ea28  (line unknown)
+  8256EA28  3D608393             lis r11,-0x7c6d
+  8256EA2C  386BD180             subi r3,r11,0x2e80
+  8256EA30  4BE084A0             b 0x82376ed0

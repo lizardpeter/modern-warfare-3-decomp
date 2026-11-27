@@ -59,6 +59,28 @@ void FUN_82454858(int param_1,int param_2,int *param_3,undefined8 param_4,longlo
 }
 
 
+// 82454990  FUN_82454990  (jpeg-6/jdsample.c:159)
+
+void FUN_82454990(undefined8 param_1,undefined8 param_2,undefined4 param_3,undefined4 *param_4)
+
+{
+  *param_4 = param_3;
+  return;
+}
+
+
+// 82454998  FUN_82454998  (jpeg-6/jdsample.c:172)
+
+void FUN_82454998(void)
+
+{
+  undefined4 *in_r6;
+  
+  *in_r6 = 0;
+  return;
+}
+
+
 // 824549A8  FUN_824549a8  (jpeg-6/jdsample.c:191)
 
 /* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
@@ -119,6 +141,43 @@ void FUN_824549a8(int param_1,int param_2,int *param_3,undefined4 *param_4)
       puVar11 = puVar11 + uVar10;
     } while (iVar12 < *(int *)(param_1 + 0x11c));
   }
+  return;
+}
+
+
+// 82454A80  FUN_82454a80  (jpeg-6/jdsample.c:235)
+
+void FUN_82454a80(int param_1,undefined8 param_2,int param_3,undefined4 *param_4)
+
+{
+  undefined1 uVar1;
+  int iVar2;
+  undefined1 *puVar3;
+  undefined1 *puVar4;
+  undefined1 *puVar5;
+  
+  iVar2 = 0;
+  param_4 = (undefined4 *)*param_4;
+  if (*(int *)(param_1 + 0x11c) < 1) {
+    return;
+  }
+  param_3 = param_3 - (int)param_4;
+  do {
+    puVar5 = (undefined1 *)*param_4;
+    puVar4 = puVar5 + *(int *)(param_1 + 100);
+    if (puVar5 < puVar4) {
+      puVar3 = (undefined1 *)(*(int *)(param_3 + (int)param_4) + -1);
+      do {
+        puVar3 = puVar3 + 1;
+        uVar1 = *puVar3;
+        *puVar5 = uVar1;
+        puVar5[1] = uVar1;
+        puVar5 = puVar5 + 2;
+      } while (puVar5 < puVar4);
+    }
+    iVar2 = iVar2 + 1;
+    param_4 = param_4 + 1;
+  } while (iVar2 < *(int *)(param_1 + 0x11c));
   return;
 }
 
@@ -330,11 +389,11 @@ void FUN_82454de8(int *param_1)
       uVar2 = (iVar5 * iVar3) / iVar4;
       if (*(char *)(piVar14 + 3) == '\0') {
         bVar8 = false;
-        *puVar15 = &LAB_82454998;
+        *puVar15 = FUN_82454998;
       }
       else if ((uVar2 == uVar6) && (uVar1 == uVar7)) {
         bVar8 = false;
-        *puVar15 = &LAB_82454990;
+        *puVar15 = FUN_82454990;
       }
       else if (uVar2 << 1 == uVar6) {
         if (uVar1 == uVar7) {
@@ -342,7 +401,7 @@ void FUN_82454de8(int *param_1)
             *puVar15 = FUN_82454b88;
           }
           else {
-            *puVar15 = &LAB_82454a80;
+            *puVar15 = FUN_82454a80;
           }
         }
         else {

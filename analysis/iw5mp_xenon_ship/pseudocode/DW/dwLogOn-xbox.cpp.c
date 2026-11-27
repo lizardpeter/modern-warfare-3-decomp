@@ -20,6 +20,26 @@ void FUN_8256d880(void)
 }
 
 
+// 8256D8E0  FUN_8256d8e0  (DW/dwLogOn-xbox.cpp:54)
+
+void FUN_8256d8e0(void)
+
+{
+  undefined4 *puVar1;
+  longlong lVar2;
+  
+  lVar2 = 0x20;
+  puVar1 = (undefined4 *)0x83ba2250;
+  do {
+    puVar1 = puVar1 + 0x28;
+    *puVar1 = 0;
+    lVar2 = lVar2 + -1;
+  } while (lVar2 != 0);
+  FUN_8254a428(0xffffffff8256ed50);
+  return;
+}
+
+
 // 823BDDB8  FUN_823bddb8  (DW/dwLogOn-xbox.cpp:57)
 
 void FUN_823bddb8(int param_1)
@@ -530,6 +550,16 @@ void FUN_8256ed00(void)
     FUN_8252b338(lVar2);
     lVar1 = lVar1 + -1;
   } while (-1 < lVar1);
+  return;
+}
+
+
+// 8256ED50  FUN_8256ed50  (line unknown)
+
+void FUN_8256ed50(void)
+
+{
+  FUN_82289210(0xffffffff83ba22e0);
   return;
 }
 

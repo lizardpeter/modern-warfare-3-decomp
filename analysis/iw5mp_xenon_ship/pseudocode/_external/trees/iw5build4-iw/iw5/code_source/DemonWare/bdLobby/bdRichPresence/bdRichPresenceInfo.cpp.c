@@ -22,6 +22,25 @@ undefined4 * FUN_8253f650(undefined4 *param_1,ulonglong param_2,uint param_3)
 }
 
 
+// 8253F6B8  FUN_8253f6b8  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdrichpresence/bdrichpresenceinfo.cpp:20)
+
+undefined8 FUN_8253f6b8(void)
+
+{
+  return 0x2c;
+}
+
+
+// 8253F6C0  FUN_8253f6c0  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdrichpresence/bdrichpresenceinfo.cpp:25)
+
+void FUN_8253f6c0(int param_1,undefined8 param_2)
+
+{
+  FUN_8252b010(param_2,param_1 + 5,*(undefined4 *)(param_1 + 0x28));
+  return;
+}
+
+
 // 8253F6E0  FUN_8253f6e0  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdrichpresence/bdrichpresenceinfo.cpp:30)
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */

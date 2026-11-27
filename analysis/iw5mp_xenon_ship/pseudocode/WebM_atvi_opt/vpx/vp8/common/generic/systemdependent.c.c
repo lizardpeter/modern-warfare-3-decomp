@@ -8,15 +8,15 @@
 void FUN_824a4848(int param_1)
 
 {
-  *(undefined1 **)(param_1 + 0x6c88) = &LAB_8249bf90;
+  *(code **)(param_1 + 0x6c88) = FUN_8249bf90;
   *(code **)(param_1 + 0x6c8c) = FUN_8249bae0;
-  *(undefined1 **)(param_1 + 0x6c90) = &LAB_8249bff8;
-  *(undefined1 **)(param_1 + 0x6c94) = &LAB_8249c368;
-  *(undefined1 **)(param_1 + 0x6c98) = &LAB_8249c060;
-  *(undefined1 **)(param_1 + 0x6c9c) = &LAB_824a1298;
-  *(undefined1 **)(param_1 + 0x6ca0) = &LAB_824a12d8;
-  *(undefined1 **)(param_1 + 0x6ca4) = &LAB_824a1360;
-  *(undefined1 **)(param_1 + 0x6ca8) = &LAB_824a0ea8;
+  *(code **)(param_1 + 0x6c90) = FUN_8249bff8;
+  *(code **)(param_1 + 0x6c94) = FUN_8249c368;
+  *(code **)(param_1 + 0x6c98) = FUN_8249c060;
+  *(code **)(param_1 + 0x6c9c) = FUN_824a1298;
+  *(code **)(param_1 + 0x6ca0) = FUN_824a12d8;
+  *(code **)(param_1 + 0x6ca4) = FUN_824a1360;
+  *(code **)(param_1 + 0x6ca8) = FUN_824a0ea8;
   *(code **)(param_1 + 0x6cac) = FUN_824a10a0;
   *(code **)(param_1 + 0x6cb0) = FUN_824a0f88;
   *(code **)(param_1 + 0x6cb4) = FUN_824a1208;
@@ -33,9 +33,9 @@ void FUN_824a4848(int param_1)
   *(code **)(param_1 + 0x6ce0) = FUN_8249c8c8;
   *(code **)(param_1 + 0x6ce4) = FUN_8249c608;
   *(code **)(param_1 + 0x6ce8) = FUN_8249c748;
-  *(undefined1 **)(param_1 + 0x6cec) = &LAB_8249c730;
+  *(code **)(param_1 + 0x6cec) = FUN_8249c730;
   *(code **)(param_1 + 0x6cf0) = FUN_8249c998;
-  *(undefined1 **)(param_1 + 0x6cf4) = &LAB_8249c690;
+  *(code **)(param_1 + 0x6cf4) = FUN_8249c690;
   *(code **)(param_1 + 0x6cf8) = FUN_8249c838;
   *(code **)(param_1 + 0x6cfc) = FUN_8249fa80;
   *(code **)(param_1 + 0x6d08) = FUN_824a0248;

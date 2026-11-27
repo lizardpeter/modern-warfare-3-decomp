@@ -1345,6 +1345,16 @@ LAB_822448c0:
 }
 
 
+// 82244C38  FUN_82244c38  (game/g_missile.cpp:1241)
+
+void FUN_82244c38(int param_1)
+
+{
+  *(uint *)(param_1 + 8) = *(uint *)(param_1 + 8) & 0xffefffff;
+  return;
+}
+
+
 // 82244C48  FUN_82244c48  (game/g_missile.cpp:1249)
 
 /* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */

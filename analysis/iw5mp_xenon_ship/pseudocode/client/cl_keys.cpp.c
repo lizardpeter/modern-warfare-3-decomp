@@ -743,6 +743,32 @@ void FUN_8216ee98(void)
 }
 
 
+// 8216EF30  FUN_8216ef30  (client/cl_keys.cpp:1853)
+
+void FUN_8216ef30(void)
+
+{
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  longlong lVar4;
+  
+  iVar2 = 0;
+  lVar4 = 0x100;
+  iVar3 = 0;
+  iVar1 = *(int *)(&DAT_82febe54 + DAT_82febe50 * 4);
+  do {
+    if (iVar2 != -1) {
+      *(undefined4 *)(&DAT_82659e0c + iVar1 * 0xd28 + iVar3) = 0;
+    }
+    iVar2 = iVar2 + 1;
+    iVar3 = iVar3 + 0xc;
+    lVar4 = lVar4 + -1;
+  } while (lVar4 != 0);
+  return;
+}
+
+
 // 8216EF90  FUN_8216ef90  (client/cl_keys.cpp:1869)
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */

@@ -314,6 +314,11 @@ LAB_8250f23c:
   8250F24C  EBE1FFF0             ld r31,-0x10(r1)
   8250F250  4E800020             blr
 
+; 8250F258  FUN_8250f258  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/rendervoice.cpp:397)
+  8250F258  3D6083F0             lis r11,-0x7c10
+  8250F25C  806BCF7C             lwz r3,-0x3084(r11)
+  8250F260  4BFE6B98             b 0x824f5df8
+
 ; 8250F4A8  FUN_8250f4a8  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/rendervoice.cpp:424)
   8250F4A8  7D8802A6             mfspr r12,LR
   8250F4AC  9181FFF8             stw r12,-0x8(r1)

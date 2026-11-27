@@ -196,6 +196,41 @@ LAB_823f5d7c:
   823F5D7C  38210080             addi r1,r1,0x80
   823F5D80  48152784             b 0x82548504
 
+; 823F5DB0  FUN_823f5db0  (gfx_d3d/r_drawsurf.cpp:283)
+  823F5DB0  81230010             lwz r9,0x10(r3)
+  823F5DB4  81040010             lwz r8,0x10(r4)
+  823F5DB8  89690005             lbz r11,0x5(r9)
+  823F5DBC  89480005             lbz r10,0x5(r8)
+  823F5DC0  7F0B5040             cmplw cr6,r11,r10
+  823F5DC4  419A0014             beq cr6,0x823f5dd8
+LAB_823f5dc8:
+  823F5DC8  7D6A5810             subfc r11,r10,r11
+  823F5DCC  7D2A5110             subfe r9,r10,r10
+  823F5DD0  552307FE             rlwinm r3,r9,0x0,0x1f,0x1f
+  823F5DD4  4E800020             blr
+LAB_823f5dd8:
+  823F5DD8  89630016             lbz r11,0x16(r3)
+  823F5DDC  89440016             lbz r10,0x16(r4)
+  823F5DE0  7F0B5040             cmplw cr6,r11,r10
+  823F5DE4  409AFFE4             bne cr6,0x823f5dc8
+  823F5DE8  E9690008             ld r11,0x8(r9)
+  823F5DEC  E9480008             ld r10,0x8(r8)
+  823F5DF0  796B1D22             rldicl r11,r11,0x23,0x34
+  823F5DF4  794A1D22             rldicl r10,r10,0x23,0x34
+  823F5DF8  7F2B5040             cmpld cr6,r11,r10
+  823F5DFC  419A0018             beq cr6,0x823f5e14
+  823F5E00  39600001             li r11,0x1
+  823F5E04  41980008             blt cr6,0x823f5e0c
+  823F5E08  39600000             li r11,0x0
+LAB_823f5e0c:
+  823F5E0C  5563063E             rlwinm r3,r11,0x0,0x18,0x1f
+  823F5E10  4E800020             blr
+LAB_823f5e14:
+  823F5E14  7D641810             subfc r11,r4,r3
+  823F5E18  7D2A5110             subfe r9,r10,r10
+  823F5E1C  552307FE             rlwinm r3,r9,0x0,0x1f,0x1f
+  823F5E20  4E800020             blr
+
 ; 823F5E28  FUN_823f5e28  (gfx_d3d/r_drawsurf.cpp:310)
   823F5E28  7F032000             cmpw cr6,r3,r4
   823F5E2C  40980018             bge cr6,0x823f5e44

@@ -102,6 +102,15 @@ undefined8 FUN_82210e58(int param_1,int param_2,undefined8 param_3)
 }
 
 
+// 82210F80  FUN_82210f80  (EffectsCore/fx_glass_trace.cpp:137)
+
+bool FUN_82210f80(int param_1,int param_2)
+
+{
+  return *(float *)(param_1 + 8) < *(float *)(param_2 + 8);
+}
+
+
 // 82210FA0  FUN_82210fa0  (EffectsCore/fx_glass_trace.cpp:143)
 
 /* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */

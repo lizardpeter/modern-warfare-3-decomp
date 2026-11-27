@@ -1891,6 +1891,121 @@ FUN_824d0c80(double param_1,undefined8 param_2,double param_3,double param_4,int
 }
 
 
+// 824D0FE0  FUN_824d0fe0  (snd.cpp:2872)
+
+void FUN_824d0fe0(double param_1,int param_2,undefined8 param_3,int param_4)
+
+{
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  
+  if (param_4 < 1) {
+    param_4 = 1;
+  }
+  fVar1 = (float)((double)*(float *)(param_2 + 0x60) * param_1);
+  fVar2 = 2.0;
+  if (fVar1 - 2.0 < 0.0) {
+    fVar2 = fVar1;
+  }
+  fVar3 = 0.001;
+  if (0.001 - fVar1 < 0.0) {
+    fVar3 = fVar2;
+  }
+  *(float *)(param_2 + 0x68) = fVar3;
+  *(float *)(param_2 + 0x6c) = (fVar3 - *(float *)(param_2 + 100)) / (float)(longlong)param_4;
+  return;
+}
+
+
+// 824D1048  FUN_824d1048  (snd.cpp:2878)
+
+void FUN_824d1048(double param_1,int param_2,undefined8 param_3,int param_4)
+
+{
+  double dVar1;
+  double dVar2;
+  
+  if (param_4 < 1) {
+    param_4 = 1;
+  }
+  dVar2 = 2.0;
+  if ((float)(param_1 - 2.0) < 0.0) {
+    dVar2 = param_1;
+  }
+  dVar1 = 0.0010000000474974513;
+  if ((float)(0.0010000000474974513 - param_1) < 0.0) {
+    dVar1 = dVar2;
+  }
+  *(float *)(param_2 + 0x68) = (float)dVar1;
+  *(float *)(param_2 + 0x6c) =
+       (float)(dVar1 - (double)*(float *)(param_2 + 100)) / (float)(longlong)param_4;
+  return;
+}
+
+
+// 824D10A0  FUN_824d10a0  (snd.cpp:2884)
+
+void FUN_824d10a0(double param_1,int param_2,undefined8 param_3,int param_4)
+
+{
+  double dVar1;
+  double dVar2;
+  double dVar3;
+  
+  dVar2 = 4.0;
+  if ((float)(param_1 - 4.0) < 0.0) {
+    dVar2 = param_1;
+  }
+  dVar3 = 0.0;
+  if (-param_1 < 0.0) {
+    dVar3 = dVar2;
+  }
+  if (param_4 < 1) {
+    param_4 = 1;
+  }
+  dVar3 = (double)(float)((double)*(float *)(param_2 + 0x48) * dVar3);
+  dVar2 = 1.0;
+  if ((float)(dVar3 - 1.0) < 0.0) {
+    dVar2 = dVar3;
+  }
+  dVar1 = 0.0;
+  if (-dVar3 < 0.0) {
+    dVar1 = dVar2;
+  }
+  *(float *)(param_2 + 0x58) = (float)dVar1;
+  *(float *)(param_2 + 0x5c) =
+       (float)(dVar1 - (double)*(float *)(param_2 + 0x54)) / (float)(longlong)param_4;
+  return;
+}
+
+
+// 824D1120  FUN_824d1120  (snd.cpp:2895)
+
+void FUN_824d1120(double param_1,int param_2,undefined8 param_3,int param_4)
+
+{
+  double dVar1;
+  double dVar2;
+  
+  if (param_4 < 1) {
+    param_4 = 1;
+  }
+  dVar2 = 1.0;
+  if ((float)(param_1 - 1.0) < 0.0) {
+    dVar2 = param_1;
+  }
+  dVar1 = 0.0;
+  if (-param_1 < 0.0) {
+    dVar1 = dVar2;
+  }
+  *(float *)(param_2 + 0x58) = (float)dVar1;
+  *(float *)(param_2 + 0x5c) =
+       (float)(dVar1 - (double)*(float *)(param_2 + 0x54)) / (float)(longlong)param_4;
+  return;
+}
+
+
 // 824D1178  FUN_824d1178  (snd.cpp:2905)
 
 /* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */

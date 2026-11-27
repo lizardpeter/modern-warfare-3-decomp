@@ -6,6 +6,10 @@
   82544938  91630000             stw r11,0x0(r3)
   8254493C  4E800020             blr
 
+; 82544988  FUN_82544988  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdlobbyconnectionlistener.cpp:21)
+  82544988  7C832378             or r3,r4,r4
+  8254498C  4801C73C             b 0x825610c8
+
 ; 82544940  FUN_82544940  (line unknown)
   82544940  7D8802A6             mfspr r12,LR
   82544944  9181FFF8             stw r12,-0x8(r1)

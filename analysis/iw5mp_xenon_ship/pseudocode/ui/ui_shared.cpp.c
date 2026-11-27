@@ -2045,6 +2045,16 @@ void FUN_822f8f70(undefined8 param_1,undefined8 param_2,undefined8 param_3,code 
 }
 
 
+// 822F8FD0  FUN_822f8fd0  (ui/ui_shared.cpp:2033)
+
+void FUN_822f8fd0(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+
+{
+  FUN_82283b40(param_1,param_3);
+  return;
+}
+
+
 // 822F8FD8  FUN_822f8fd8  (ui/ui_shared.cpp:2039)
 
 void FUN_822f8fd8(undefined4 *param_1,undefined8 param_2,undefined8 param_3)
@@ -2460,6 +2470,96 @@ bool FUN_822f93e0(undefined8 param_1,undefined8 param_2)
   dVar1 = (double)FUN_82549618();
   dVar2 = (double)FUN_82549618(param_2);
   return ABS((float)(dVar1 - dVar2)) < 1e-05;
+}
+
+
+// 822F9448  FUN_822f9448  (ui/ui_shared.cpp:2157)
+
+void FUN_822f9448(undefined4 *param_1,undefined8 param_2,undefined8 param_3)
+
+{
+  FUN_822f91a0(*param_1,param_3,0xffffffff822f9368,0xffffffff822f8fd0);
+  return;
+}
+
+
+// 822F9468  FUN_822f9468  (ui/ui_shared.cpp:2163)
+
+void FUN_822f9468(undefined4 *param_1,undefined8 param_2,undefined8 param_3)
+
+{
+  FUN_822f91a0(*param_1,param_3,0xffffffff822f9390,0xffffffff822f8fd0);
+  return;
+}
+
+
+// 822F9488  FUN_822f9488  (ui/ui_shared.cpp:2169)
+
+void FUN_822f9488(undefined4 *param_1,undefined8 param_2,undefined8 param_3)
+
+{
+  FUN_822f91a0(*param_1,param_3,0xffffffff822f93e0,0xffffffff822f8fd0);
+  return;
+}
+
+
+// 822F94A8  FUN_822f94a8  (ui/ui_shared.cpp:2175)
+
+void FUN_822f94a8(undefined4 *param_1,undefined8 param_2,undefined8 param_3)
+
+{
+  FUN_822f91a0(*param_1,param_3,0xffffffff822f9368,0xffffffff82284ed8);
+  return;
+}
+
+
+// 822F94C8  FUN_822f94c8  (ui/ui_shared.cpp:2181)
+
+void FUN_822f94c8(undefined4 *param_1,undefined8 param_2,undefined8 param_3)
+
+{
+  FUN_822f91a0(*param_1,param_3,0xffffffff822f9390,0xffffffff82284ed8);
+  return;
+}
+
+
+// 822F94E8  FUN_822f94e8  (ui/ui_shared.cpp:2187)
+
+void FUN_822f94e8(undefined4 *param_1,undefined8 param_2,undefined8 param_3)
+
+{
+  FUN_822f91a0(*param_1,param_3,0xffffffff822f93e0,0xffffffff82284ed8);
+  return;
+}
+
+
+// 822F9508  FUN_822f9508  (ui/ui_shared.cpp:2193)
+
+void FUN_822f9508(undefined4 *param_1,undefined8 param_2,undefined8 param_3)
+
+{
+  FUN_822f9260(*param_1,param_2,param_3,0xffffffff822f9368);
+  return;
+}
+
+
+// 822F9518  FUN_822f9518  (ui/ui_shared.cpp:2199)
+
+void FUN_822f9518(undefined4 *param_1,undefined8 param_2,undefined8 param_3)
+
+{
+  FUN_822f9260(*param_1,param_2,param_3,0xffffffff822f9390);
+  return;
+}
+
+
+// 822F9528  FUN_822f9528  (ui/ui_shared.cpp:2205)
+
+void FUN_822f9528(undefined4 *param_1,undefined8 param_2,undefined8 param_3)
+
+{
+  FUN_822f9260(*param_1,param_2,param_3,0xffffffff822f93e0);
+  return;
 }
 
 
@@ -4131,6 +4231,26 @@ void FUN_822fae20(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 }
 
 
+// 822FAF70  FUN_822faf70  (ui/ui_shared.cpp:3232)
+
+void FUN_822faf70(undefined4 *param_1)
+
+{
+  FUN_82289bf0(*param_1);
+  return;
+}
+
+
+// 822FAF78  FUN_822faf78  (ui/ui_shared.cpp:3239)
+
+void FUN_822faf78(undefined4 *param_1)
+
+{
+  FUN_8228fb48(*param_1);
+  return;
+}
+
+
 // 822FAFA0  FUN_822fafa0  (ui/ui_shared.cpp:3276)
 
 /* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
@@ -5221,6 +5341,24 @@ void FUN_822fc6d0(undefined4 *param_1)
 }
 
 
+// 822FC778  FUN_822fc778  (ui/ui_shared.cpp:3904)
+
+void FUN_822fc778(void)
+
+{
+  return;
+}
+
+
+// 822FC780  FUN_822fc780  (ui/ui_shared.cpp:3927)
+
+void FUN_822fc780(void)
+
+{
+  return;
+}
+
+
 // 822FC788  FUN_822fc788  (ui/ui_shared.cpp:4016)
 
 void FUN_822fc788(undefined4 *param_1)
@@ -5293,6 +5431,16 @@ void FUN_822fc908(undefined4 *param_1)
     FUN_8229a988(0xffffffff82025108);
     FUN_822eb678(*param_1,0xffffffff8201669c);
   }
+  return;
+}
+
+
+// 822FC988  FUN_822fc988  (ui/ui_shared.cpp:4118)
+
+void FUN_822fc988(void)
+
+{
+  DAT_837050d0 = DAT_837050c8;
   return;
 }
 
@@ -5498,6 +5646,26 @@ void FUN_822fcbe0(undefined4 *param_1)
     FUN_82285028(*param_1,uVar1);
     FUN_82327f80(DAT_83094d00,0xffffffff82070df0);
   }
+  return;
+}
+
+
+// 822FCC58  FUN_822fcc58  (ui/ui_shared.cpp:4456)
+
+void FUN_822fcc58(void)
+
+{
+  FUN_82327f80(DAT_83094d00,0xffffffff82070df0);
+  return;
+}
+
+
+// 822FCC70  FUN_822fcc70  (ui/ui_shared.cpp:4464)
+
+void FUN_822fcc70(undefined8 param_1,int param_2)
+
+{
+  FUN_8230ad58(param_1,*(undefined4 *)(param_2 + 0x134));
   return;
 }
 
@@ -5817,6 +5985,24 @@ void FUN_822fd400(undefined4 *param_1,undefined8 param_2,undefined8 param_3)
     FUN_8228b798(auStack_430,0xffffffff82034a24,local_410,0);
     FUN_8228b338(uVar1);
   }
+  return;
+}
+
+
+// 822FD498  FUN_822fd498  (ui/ui_shared.cpp:4806)
+
+void FUN_822fd498(void)
+
+{
+  return;
+}
+
+
+// 822FD4A0  FUN_822fd4a0  (ui/ui_shared.cpp:4837)
+
+void FUN_822fd4a0(void)
+
+{
   return;
 }
 

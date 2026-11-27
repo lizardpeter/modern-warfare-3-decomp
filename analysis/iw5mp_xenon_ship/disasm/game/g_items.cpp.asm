@@ -1142,6 +1142,12 @@ LAB_8223c0e8:
   8223C114  38210070             addi r1,r1,0x70
   8223C118  4830C3F4             b 0x8254850c
 
+; 8223EA90  FUN_8223ea90  (game/g_items.cpp:661)
+  8223EA90  39600001             li r11,0x1
+  8223EA94  7CA62B78             or r6,r5,r5
+  8223EA98  9963016C             stb r11,0x16c(r3)
+  8223EA9C  4BFFFE7C             b 0x8223e918
+
 ; 8223E918  FUN_8223e918  (game/g_items.cpp:673)
   8223E918  7D8802A6             mfspr r12,LR
   8223E91C  48309B91             bl 0x825484ac

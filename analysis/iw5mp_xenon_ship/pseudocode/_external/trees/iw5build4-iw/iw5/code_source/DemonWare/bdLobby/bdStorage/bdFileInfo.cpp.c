@@ -104,6 +104,15 @@ LAB_8252dad0:
 }
 
 
+// 8252D930  FUN_8252d930  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdstorage/bdfileinfo.cpp:51)
+
+undefined8 FUN_8252d930(void)
+
+{
+  return 0xb0;
+}
+
+
 // 8252D938  FUN_8252d938  (line unknown)
 
 undefined4 * FUN_8252d938(undefined4 *param_1,ulonglong param_2)

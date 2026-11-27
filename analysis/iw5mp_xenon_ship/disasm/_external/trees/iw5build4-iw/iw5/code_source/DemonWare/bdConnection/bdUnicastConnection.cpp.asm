@@ -233,6 +233,26 @@ LAB_825611d8:
   825611F4  EBE1FFF0             ld r31,-0x10(r1)
   825611F8  4E800020             blr
 
+; 82560ED8  FUN_82560ed8  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdunicastconnection.cpp:188)
+  82560ED8  814300B0             lwz r10,0xb0(r3)
+  82560EDC  7C6B1B78             or r11,r3,r3
+  82560EE0  2F0A0000             cmpwi cr6,r10,0x0
+  82560EE4  4C990020             blelr cr6
+  82560EE8  2F0A0002             cmpwi cr6,r10,0x2
+  82560EEC  4099001C             ble cr6,0x82560f08
+  82560EF0  2F0A0003             cmpwi cr6,r10,0x3
+  82560EF4  4C9A0020             bnelr cr6
+  82560EF8  39400004             li r10,0x4
+  82560EFC  386300F0             addi r3,r3,0xf0
+  82560F00  914B00B0             stw r10,0xb0(r11)
+  82560F04  4BFFD454             b 0x8255e358
+LAB_82560f08:
+  82560F08  814B0000             lwz r10,0x0(r11)
+  82560F0C  7D635B78             or r3,r11,r11
+  82560F10  816A001C             lwz r11,0x1c(r10)
+  82560F14  7D6903A6             mtspr CTR,r11
+  82560F18  4E800420             bctr
+
 ; 82561208  FUN_82561208  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdunicastconnection.cpp:206)
   82561208  7D8802A6             mfspr r12,LR
   8256120C  4BFE72A5             bl 0x825484b0

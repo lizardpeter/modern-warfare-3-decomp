@@ -884,6 +884,15 @@ FUN_8237b728(undefined8 param_1,undefined8 param_2,uint param_3,undefined4 param
 }
 
 
+// 8237BAE0  FUN_8237bae0  (physics/phys_world_collision.cpp:966)
+
+undefined8 FUN_8237bae0(void)
+
+{
+  return 0xffffffff8237b728;
+}
+
+
 // 8237BAF0  FUN_8237baf0  (physics/phys_world_collision.cpp:975)
 
 void FUN_8237baf0(void)
@@ -892,7 +901,7 @@ void FUN_8237baf0(void)
   ulonglong local_20 [2];
   undefined4 local_10;
   
-  local_20[0] = ZEXT48(&LAB_8237bae0);
+  local_20[0] = ZEXT48(FUN_8237bae0);
   local_20[1] = 0x8238295800000000;
   local_10 = 0;
   FUN_8237d060(local_20);
@@ -930,6 +939,21 @@ void FUN_8237bb90(undefined8 param_1,float *param_2)
   param_2[3] = fVar1;
   param_2[4] = fVar1;
   param_2[5] = fVar1;
+  return;
+}
+
+
+// 8237BBE8  FUN_8237bbe8  (physics/phys_world_collision.cpp:1021)
+
+void FUN_8237bbe8(undefined8 param_1,undefined4 *param_2)
+
+{
+  *param_2 = 0xff7fffff;
+  param_2[1] = 0xff7fffff;
+  param_2[2] = 0xff7fffff;
+  param_2[3] = 0x7f7fffff;
+  param_2[4] = 0x7f7fffff;
+  param_2[5] = 0x7f7fffff;
   return;
 }
 
@@ -1106,6 +1130,15 @@ void FUN_8237be28(undefined8 param_1,int param_2)
     lVar10 = lVar10 + -1;
   } while (lVar10 != 0);
   return;
+}
+
+
+// 8237BF30  FUN_8237bf30  (physics/phys_world_collision.cpp:1128)
+
+undefined8 FUN_8237bf30(void)
+
+{
+  return 0;
 }
 
 

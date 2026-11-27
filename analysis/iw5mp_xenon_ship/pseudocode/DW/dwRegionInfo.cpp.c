@@ -11,6 +11,16 @@ void FUN_8256d948(void)
 }
 
 
+// 8256D980  FUN_8256d980  (DW/dwRegionInfo.cpp:23)
+
+void FUN_8256d980(void)
+
+{
+  FUN_8254a428(0xffffffff8256ed80);
+  return;
+}
+
+
 // 823C0B68  FUN_823c0b68  (DW/dwRegionInfo.cpp:64)
 
 void FUN_823c0b68(void)
@@ -398,6 +408,26 @@ void FUN_823c0d40(void)
                  ((((((((local_c0[uVar11] << 2 | local_c0[iVar3]) << 2 | local_c0[iVar4]) << 2 |
                       local_c0[iVar5]) << 2 | local_c0[iVar6]) << 2 | local_c0[iVar7]) << 2 |
                    local_c0[iVar8]) << 2 | local_c0[iVar9]) << 2 | local_c0[iVar10]) << 2;
+  return;
+}
+
+
+// 8256ED70  FUN_8256ed70  (line unknown)
+
+void FUN_8256ed70(void)
+
+{
+  FUN_82537a80(0xffffffff83ba3d9c);
+  return;
+}
+
+
+// 8256ED80  FUN_8256ed80  (line unknown)
+
+void FUN_8256ed80(void)
+
+{
+  FUN_82186890(0xffffffff83ba3eb8);
   return;
 }
 

@@ -31,6 +31,20 @@ void FUN_8256e0c8(void)
 }
 
 
+// 8256E100  FUN_8256e100  (online/live_anticheat.cpp:461)
+
+void FUN_8256e100(void)
+
+{
+  DAT_83c1de2c = 0;
+  DAT_83c1de30 = 0;
+  DAT_83c1de34 = 0;
+  DAT_83c1de38 = 0;
+  FUN_8254a428(0xffffffff8256f740);
+  return;
+}
+
+
 // 8256E138  FUN_8256e138  (online/live_anticheat.cpp:467)
 
 void FUN_8256e138(void)
@@ -47,6 +61,34 @@ void FUN_8256e138(void)
     lVar1 = lVar1 + 0x44;
   } while (-1 < lVar2);
   FUN_8254a428(0xffffffff8256f6f0);
+  return;
+}
+
+
+// 8256E190  FUN_8256e190  (online/live_anticheat.cpp:468)
+
+void FUN_8256e190(void)
+
+{
+  DAT_83c30880 = 0;
+  DAT_83c30884 = 0;
+  DAT_83c30888 = 0;
+  DAT_83c3088c = 0;
+  FUN_8254a428(0xffffffff8256f7d0);
+  return;
+}
+
+
+// 8256E1C8  FUN_8256e1c8  (online/live_anticheat.cpp:494)
+
+void FUN_8256e1c8(void)
+
+{
+  DAT_83c1de1c = 0;
+  DAT_83c1de20 = 0;
+  DAT_83c1de24 = 0;
+  DAT_83c1de28 = 0;
+  FUN_8254a428(0xffffffff8256f860);
   return;
 }
 

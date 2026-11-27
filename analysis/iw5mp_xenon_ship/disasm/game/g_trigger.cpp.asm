@@ -485,6 +485,16 @@ LAB_822691c8:
   822691C8  382100B0             addi r1,r1,0xb0
   822691CC  482DF33C             b 0x82548508
 
+; 822691D0  FUN_822691d0  (game/g_trigger.cpp:403)
+  822691D0  8963016D             lbz r11,0x16d(r3)
+  822691D4  396BFFFD             subi r11,r11,0x3
+  822691D8  7D6A0034             cntlzw r10,r11
+  822691DC  5549DFFE             rlwinm r9,r10,0x1b,0x1f,0x1f
+  822691E0  692B0001             xori r11,r9,0x1
+  822691E4  390B0002             addi r8,r11,0x2
+  822691E8  9903016D             stb r8,0x16d(r3)
+  822691EC  4E800020             blr
+
 ; 822691F0  FUN_822691f0  (game/g_trigger.cpp:422)
   822691F0  7D8802A6             mfspr r12,LR
   822691F4  9181FFF8             stw r12,-0x8(r1)
@@ -657,6 +667,12 @@ LAB_82269438:
   82269440  7D8803A6             mtspr LR,r12
   82269444  EBE1FFF0             ld r31,-0x10(r1)
   82269448  4E800020             blr
+
+; 82269450  FUN_82269450  (game/g_trigger.cpp:617)
+  82269450  816301B0             lwz r11,0x1b0(r3)
+  82269454  38C0FFFF             li r6,-0x1
+  82269458  38AB0001             addi r5,r11,0x1
+  8226945C  4BFFFF3C             b 0x82269398
 
 ; 82269460  FUN_82269460  (game/g_trigger.cpp:628)
   82269460  7D8802A6             mfspr r12,LR
@@ -1135,3 +1151,9 @@ LAB_82269b38:
 LAB_82269b54:
   82269B54  38210490             addi r1,r1,0x490
   82269B58  482DE9AC             b 0x82548504
+
+; 82269B60  thunk_FUN_822699b0  (game/g_trigger.cpp:927)
+  82269B60  4BFFFE50             b 0x822699b0
+
+; 82269B68  thunk_FUN_822699b0  (game/g_trigger.cpp:933)
+  82269B68  4BFFFE48             b 0x822699b0

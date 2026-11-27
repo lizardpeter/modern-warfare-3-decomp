@@ -6138,6 +6138,27 @@ LAB_82208f58:
   82208F60  CBE1FF78             lfd f31,-0x88(r1)
   82208F64  4833F578             b 0x825484dc
 
+; 82208F68  FUN_82208f68  (EffectsCore/fx_glass_crack.cpp:2942)
+  82208F68  3D6082D7             lis r11,-0x7d29
+  82208F6C  A1430000             lhz r10,0x0(r3)
+  82208F70  A1240000             lhz r9,0x0(r4)
+  82208F74  554A283E             rlwinm r10,r10,0x5,0x0,0x1f
+  82208F78  5529283E             rlwinm r9,r9,0x5,0x0,0x1f
+  82208F7C  816B073C             lwz r11,0x73c(r11)
+  82208F80  810B3E94             lwz r8,0x3e94(r11)
+  82208F84  81680038             lwz r11,0x38(r8)
+  82208F88  7CEA5A14             add r7,r10,r11
+  82208F8C  7CC95A14             add r6,r9,r11
+  82208F90  39600001             li r11,0x1
+  82208F94  C007001C             lfs f0,0x1c(r7)
+  82208F98  C1A6001C             lfs f13,0x1c(r6)
+  82208F9C  FF006800             fcmpu cr6,f0,f13
+  82208FA0  41990008             bgt cr6,0x82208fa8
+  82208FA4  39600000             li r11,0x0
+LAB_82208fa8:
+  82208FA8  5563063E             rlwinm r3,r11,0x0,0x18,0x1f
+  82208FAC  4E800020             blr
+
 ; 8220A800  FUN_8220a800  (EffectsCore/fx_glass_crack.cpp:2947)
   8220A800  7D8802A6             mfspr r12,LR
   8220A804  4833DC9D             bl 0x825484a0

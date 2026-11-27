@@ -152,6 +152,17 @@ LAB_82210f74:
   82210F78  382100D0             addi r1,r1,0xd0
   82210F7C  48337580             b 0x825484fc
 
+; 82210F80  FUN_82210f80  (EffectsCore/fx_glass_trace.cpp:137)
+  82210F80  C0030008             lfs f0,0x8(r3)
+  82210F84  39600001             li r11,0x1
+  82210F88  C1A40008             lfs f13,0x8(r4)
+  82210F8C  FF006800             fcmpu cr6,f0,f13
+  82210F90  41980008             blt cr6,0x82210f98
+  82210F94  39600000             li r11,0x0
+LAB_82210f98:
+  82210F98  5563063E             rlwinm r3,r11,0x0,0x18,0x1f
+  82210F9C  4E800020             blr
+
 ; 82210FA0  FUN_82210fa0  (EffectsCore/fx_glass_trace.cpp:143)
   82210FA0  7D8802A6             mfspr r12,LR
   82210FA4  48337505             bl 0x825484a8

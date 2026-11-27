@@ -25,6 +25,12 @@
   82533458  91630000             stw r11,0x0(r3)
   8253345C  4BFFDFD4             b 0x82531430
 
+; 82533460  FUN_82533460  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdfileid.cpp:22)
+  82533460  7C6B1B78             or r11,r3,r3
+  82533464  7C832378             or r3,r4,r4
+  82533468  E88B0008             ld r4,0x8(r11)
+  8253346C  4BFF7174             b 0x8252a5e0
+
 ; 825334D0  FUN_825334d0  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdfileid.cpp:27)
   825334D0  7D8802A6             mfspr r12,LR
   825334D4  48014FE9             bl 0x825484bc

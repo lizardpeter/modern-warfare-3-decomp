@@ -35,6 +35,15 @@ void FUN_821771e0(void)
 }
 
 
+// 82177270  FUN_82177270  (client_mp/cl_main_xenon_mp.cpp:90)
+
+void FUN_82177270(void)
+
+{
+  return;
+}
+
+
 // 82177288  FUN_82177288  (client_mp/cl_main_xenon_mp.cpp:111)
 
 void FUN_82177288(void)
@@ -515,6 +524,16 @@ void FUN_82177738(void)
 }
 
 
+// 82177910  FUN_82177910  (client_mp/cl_main_xenon_mp.cpp:489)
+
+void FUN_82177910(void)
+
+{
+  FUN_823531e8(*(undefined4 *)(&DAT_82febe74 + DAT_82febe50 * 4));
+  return;
+}
+
+
 // 82177938  FUN_82177938  (client_mp/cl_main_xenon_mp.cpp:535)
 
 void FUN_82177938(void)
@@ -543,6 +562,16 @@ void FUN_821779a8(void)
   }
   uVar1 = FUN_82548f30(*(undefined4 *)(*(int *)(&DAT_82febeb4 + DAT_82febe50 * 4) + 4));
   FUN_82184930(uVar1,1);
+  return;
+}
+
+
+// 82177A20  FUN_82177a20  (client_mp/cl_main_xenon_mp.cpp:654)
+
+void FUN_82177a20(void)
+
+{
+  FUN_8218ed38(*(undefined4 *)(&DAT_82febe74 + DAT_82febe50 * 4));
   return;
 }
 

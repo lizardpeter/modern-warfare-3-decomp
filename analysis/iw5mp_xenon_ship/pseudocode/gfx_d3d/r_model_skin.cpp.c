@@ -40,6 +40,21 @@ void FUN_8240aa60(longlong param_1,undefined8 param_2,uint param_3,uint param_4,
 }
 
 
+// 8256E260  FUN_8256e260  (gfx_d3d/r_model_skin.cpp:857)
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void FUN_8256e260(void)
+
+{
+  _DAT_83cafff0 = 0x10100001;
+  uRam83cafff4 = 0x10100001;
+  uRam83cafff8 = 0x10100001;
+  uRam83cafffc = 0x10111213;
+  return;
+}
+
+
 // 8240AB98  FUN_8240ab98  (gfx_d3d/r_model_skin.cpp:861)
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */

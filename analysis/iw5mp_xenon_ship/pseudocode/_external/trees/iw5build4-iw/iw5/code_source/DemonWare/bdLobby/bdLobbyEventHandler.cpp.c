@@ -10,6 +10,26 @@ void FUN_82535738(undefined4 *param_1)
 }
 
 
+// 82535798  FUN_82535798  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdlobbyeventhandler.cpp:89)
+
+void FUN_82535798(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+
+{
+  FUN_82531430(param_3);
+  return;
+}
+
+
+// 825357A0  FUN_825357a0  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdlobbyeventhandler.cpp:94)
+
+void FUN_825357a0(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+
+{
+  FUN_82186890(param_3);
+  return;
+}
+
+
 // 82535750  FUN_82535750  (line unknown)
 
 undefined4 * FUN_82535750(undefined4 *param_1,ulonglong param_2)

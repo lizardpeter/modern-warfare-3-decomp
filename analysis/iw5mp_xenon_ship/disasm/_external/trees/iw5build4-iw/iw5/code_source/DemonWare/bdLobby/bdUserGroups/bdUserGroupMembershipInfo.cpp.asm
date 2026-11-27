@@ -94,6 +94,10 @@ LAB_8253ffac:
   8253FFB8  383F0070             addi r1,r31,0x70
   8253FFBC  48008550             b 0x8254850c
 
+; 8253CCE8  FUN_8253cce8  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdmessaging/bdmailheader.cpp:31)
+  8253CCE8  38600060             li r3,0x60
+  8253CCEC  4E800020             blr
+
 ; 8253FE78  FUN_8253fe78  (line unknown)
   8253FE78  7D8802A6             mfspr r12,LR
   8253FE7C  9181FFF8             stw r12,-0x8(r1)

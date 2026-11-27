@@ -21,6 +21,12 @@
   8253CCCC  EBE1FFF0             ld r31,-0x10(r1)
   8253CCD0  4E800020             blr
 
+; 8253CCD8  FUN_8253ccd8  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdteams/bdteammember.cpp:19)
+  8253CCD8  3D608206             lis r11,-0x7dfa
+  8253CCDC  396B6E98             addi r11,r11,0x6e98
+  8253CCE0  91630000             stw r11,0x0(r3)
+  8253CCE4  4BFF474C             b 0x82531430
+
 ; 8253CD50  FUN_8253cd50  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdteams/bdteammember.cpp:26)
   8253CD50  7D8802A6             mfspr r12,LR
   8253CD54  4800B769             bl 0x825484bc

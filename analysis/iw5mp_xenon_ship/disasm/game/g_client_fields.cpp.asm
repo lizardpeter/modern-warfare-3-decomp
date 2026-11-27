@@ -42,6 +42,22 @@ LAB_8222b024:
   8222B034  EBE1FFF0             ld r31,-0x10(r1)
   8222B038  4E800020             blr
 
+; 8222B040  FUN_8222b040  (game/g_client_fields.cpp:52)
+  8222B040  816334C4             lwz r11,0x34c4(r3)
+  8222B044  2F0B0000             cmpwi cr6,r11,0x0
+  8222B048  409A0014             bne cr6,0x8222b05c
+  8222B04C  3D6082FE             lis r11,-0x7d02
+  8222B050  394B4000             addi r10,r11,0x4000
+  8222B054  A06A01FC             lhz r3,0x1fc(r10)
+  8222B058  48090368             b 0x822bb3c0
+LAB_8222b05c:
+  8222B05C  2F0B0001             cmpwi cr6,r11,0x1
+  8222B060  4C9A0020             bnelr cr6
+  8222B064  3D6082FE             lis r11,-0x7d02
+  8222B068  394B4000             addi r10,r11,0x4000
+  8222B06C  A06A01FE             lhz r3,0x1fe(r10)
+  8222B070  48090350             b 0x822bb3c0
+
 ; 8222B078  FUN_8222b078  (game/g_client_fields.cpp:65)
   8222B078  7D8802A6             mfspr r12,LR
   8222B07C  4831D43D             bl 0x825484b8
@@ -99,6 +115,35 @@ LAB_8222b138:
   8222B138  4808D8E9             bl 0x822b8a20
   8222B13C  38210080             addi r1,r1,0x80
   8222B140  4831D3C8             b 0x82548508
+
+; 8222B148  FUN_8222b148  (game/g_client_fields.cpp:114)
+  8222B148  816333D4             lwz r11,0x33d4(r3)
+  8222B14C  2B0B0003             cmplwi cr6,r11,0x3
+  8222B150  4D990020             bgtlr cr6
+  8222B154  7D6903A6             mtspr CTR,r11
+  8222B158  2F0B0000             cmpwi cr6,r11,0x0
+  8222B15C  419A003C             beq cr6,0x8222b198
+  8222B160  42400018             bdz 0x8222b178
+  8222B164  42000024             bdnz 0x8222b188
+  8222B168  3D6082FE             lis r11,-0x7d02
+  8222B16C  394B4000             addi r10,r11,0x4000
+  8222B170  A06A000C             lhz r3,0xc(r10)
+  8222B174  4809024C             b 0x822bb3c0
+LAB_8222b178:
+  8222B178  3D6082FE             lis r11,-0x7d02
+  8222B17C  394B4000             addi r10,r11,0x4000
+  8222B180  A06A0014             lhz r3,0x14(r10)
+  8222B184  4809023C             b 0x822bb3c0
+LAB_8222b188:
+  8222B188  3D6082FE             lis r11,-0x7d02
+  8222B18C  394B4000             addi r10,r11,0x4000
+  8222B190  A06A01F2             lhz r3,0x1f2(r10)
+  8222B194  4809022C             b 0x822bb3c0
+LAB_8222b198:
+  8222B198  3D6082FE             lis r11,-0x7d02
+  8222B19C  394B4000             addi r10,r11,0x4000
+  8222B1A0  A06A007A             lhz r3,0x7a(r10)
+  8222B1A4  4809021C             b 0x822bb3c0
 
 ; 8222B1B0  FUN_8222b1b0  (game/g_client_fields.cpp:141)
   8222B1B0  7D8802A6             mfspr r12,LR
@@ -164,6 +209,35 @@ LAB_8222b284:
   8222B290  7D8803A6             mtspr LR,r12
   8222B294  EBE1FFF0             ld r31,-0x10(r1)
   8222B298  4E800020             blr
+
+; 8222B2A0  FUN_8222b2a0  (game/g_client_fields.cpp:177)
+  8222B2A0  81633300             lwz r11,0x3300(r3)
+  8222B2A4  2B0B0003             cmplwi cr6,r11,0x3
+  8222B2A8  4D990020             bgtlr cr6
+  8222B2AC  7D6903A6             mtspr CTR,r11
+  8222B2B0  2F0B0000             cmpwi cr6,r11,0x0
+  8222B2B4  405A001C             bdzf 4*cr6+eq,0x8222b2d0
+  8222B2B8  405A0028             bdzf 4*cr6+eq,0x8222b2e0
+  8222B2BC  409A0034             bne cr6,0x8222b2f0
+  8222B2C0  3D6082FE             lis r11,-0x7d02
+  8222B2C4  394B4000             addi r10,r11,0x4000
+  8222B2C8  A06A01F0             lhz r3,0x1f0(r10)
+  8222B2CC  480900F4             b 0x822bb3c0
+LAB_8222b2d0:
+  8222B2D0  3D6082FE             lis r11,-0x7d02
+  8222B2D4  394B4000             addi r10,r11,0x4000
+  8222B2D8  A06A002C             lhz r3,0x2c(r10)
+  8222B2DC  480900E4             b 0x822bb3c0
+LAB_8222b2e0:
+  8222B2E0  3D6082FE             lis r11,-0x7d02
+  8222B2E4  394B4000             addi r10,r11,0x4000
+  8222B2E8  A06A01F2             lhz r3,0x1f2(r10)
+  8222B2EC  480900D4             b 0x822bb3c0
+LAB_8222b2f0:
+  8222B2F0  3D6082FE             lis r11,-0x7d02
+  8222B2F4  394B4000             addi r10,r11,0x4000
+  8222B2F8  A06A01E4             lhz r3,0x1e4(r10)
+  8222B2FC  480900C4             b 0x822bb3c0
 
 ; 8222B308  FUN_8222b308  (game/g_client_fields.cpp:205)
   8222B308  7D8802A6             mfspr r12,LR
@@ -477,6 +551,43 @@ LAB_8222b758:
   8222B768  EBE1FFF0             ld r31,-0x10(r1)
   8222B76C  4E800020             blr
 
+; 8222B770  FUN_8222b770  (game/g_client_fields.cpp:414)
+  8222B770  3D6082FC             lis r11,-0x7d04
+  8222B774  3D4082DB             lis r10,-0x7d25
+  8222B778  39203980             li r9,0x3980
+  8222B77C  394A6B80             addi r10,r10,0x6b80
+  8222B780  816B3F80             lwz r11,0x3f80(r11)
+  8222B784  390A0098             addi r8,r10,0x98
+  8222B788  7CEB1850             subf r7,r11,r3
+  8222B78C  7D674BD6             divw r11,r7,r9
+  8222B790  556A103A             rlwinm r10,r11,0x2,0x0,0x1d
+  8222B794  7CCB5214             add r6,r11,r10
+  8222B798  54C53830             rlwinm r5,r6,0x7,0x0,0x18
+  8222B79C  7D65402E             lwzx r11,r5,r8
+  8222B7A0  2F0B0001             cmpwi cr6,r11,0x1
+  8222B7A4  419A003C             beq cr6,0x8222b7e0
+  8222B7A8  2F0B0002             cmpwi cr6,r11,0x2
+  8222B7AC  419A0024             beq cr6,0x8222b7d0
+  8222B7B0  2F0B0003             cmpwi cr6,r11,0x3
+  8222B7B4  3D6082FE             lis r11,-0x7d02
+  8222B7B8  394B4000             addi r10,r11,0x4000
+  8222B7BC  419A000C             beq cr6,0x8222b7c8
+  8222B7C0  A06A007A             lhz r3,0x7a(r10)
+  8222B7C4  4808FBFC             b 0x822bb3c0
+LAB_8222b7c8:
+  8222B7C8  A06A01F2             lhz r3,0x1f2(r10)
+  8222B7CC  4808FBF4             b 0x822bb3c0
+LAB_8222b7d0:
+  8222B7D0  3D6082FE             lis r11,-0x7d02
+  8222B7D4  394B4000             addi r10,r11,0x4000
+  8222B7D8  A06A000C             lhz r3,0xc(r10)
+  8222B7DC  4808FBE4             b 0x822bb3c0
+LAB_8222b7e0:
+  8222B7E0  3D6082FE             lis r11,-0x7d02
+  8222B7E4  394B4000             addi r10,r11,0x4000
+  8222B7E8  A06A0014             lhz r3,0x14(r10)
+  8222B7EC  4808FBD4             b 0x822bb3c0
+
 ; 8222B7F0  FUN_8222b7f0  (game/g_client_fields.cpp:440)
   8222B7F0  7D8802A6             mfspr r12,LR
   8222B7F4  9181FFF8             stw r12,-0x8(r1)
@@ -532,6 +643,10 @@ LAB_8222b758:
   8222B8B0  EBE1FFF0             ld r31,-0x10(r1)
   8222B8B4  4E800020             blr
 
+; 8222B8B8  FUN_8222b8b8  (game/g_client_fields.cpp:478)
+  8222B8B8  80633314             lwz r3,0x3314(r3)
+  8222B8BC  4808F8B4             b 0x822bb170
+
 ; 8222B8C0  FUN_8222b8c0  (game/g_client_fields.cpp:485)
   8222B8C0  7D8802A6             mfspr r12,LR
   8222B8C4  9181FFF8             stw r12,-0x8(r1)
@@ -582,6 +697,9 @@ LAB_8222b960:
   8222B96C  7D8803A6             mtspr LR,r12
   8222B970  EBE1FFF0             ld r31,-0x10(r1)
   8222B974  4E800020             blr
+
+; 8222B978  thunk_FUN_822b8a20  (game/g_client_fields.cpp:514)
+  8222B978  4808D0A8             b 0x822b8a20
 
 ; 8222B980  FUN_8222b980  (game/g_client_fields.cpp:892)
   8222B980  7D8802A6             mfspr r12,LR

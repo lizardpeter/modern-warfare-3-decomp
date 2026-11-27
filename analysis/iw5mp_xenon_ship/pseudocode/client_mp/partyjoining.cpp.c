@@ -1333,6 +1333,24 @@ void FUN_8219c330(int param_1,undefined4 *param_2)
 }
 
 
+// 8219C398  FUN_8219c398  (client_mp/partyjoining.cpp:1785)
+
+void FUN_8219c398(int param_1,undefined4 *param_2)
+
+{
+  if (param_1 < (int)param_2[0x876]) {
+    return;
+  }
+  if (0 < (int)param_2[0x877]) {
+    param_2[0x877] = param_2[0x877] + -1;
+    *param_2 = 1;
+    return;
+  }
+  param_2[0x878] = "EXE_HOSTUNREACH";
+  return;
+}
+
+
 // 8219C3D8  FUN_8219c3d8  (client_mp/partyjoining.cpp:1794)
 
 void FUN_8219c3d8(int param_1,undefined4 *param_2)
@@ -1416,6 +1434,33 @@ void FUN_8219c4f0(undefined8 param_1,undefined4 *param_2)
   uVar2 = 9;
 LAB_8219c580:
   *param_2 = uVar2;
+  return;
+}
+
+
+// 8219C598  FUN_8219c598  (client_mp/partyjoining.cpp:1872)
+
+void FUN_8219c598(undefined8 param_1,uint *param_2)
+
+{
+  uint uVar1;
+  
+  uVar1 = *param_2;
+  if (param_2[((int)uVar1 >> 0x1f) + (uint)(8 < uVar1) + 0xac] == 0) {
+    return;
+  }
+  if (param_2[((int)uVar1 >> 0x1f) + (uint)(8 < uVar1) + 0xac] != 1) {
+    param_2[0x878] = (uint)"XBOXLIVE_CANTJOINSESSION";
+    return;
+  }
+  if (uVar1 == 6) {
+    *param_2 = 9;
+    return;
+  }
+  if (uVar1 != 0xc) {
+    return;
+  }
+  *param_2 = 0xf;
   return;
 }
 
@@ -1588,6 +1633,16 @@ void FUN_8219c918(undefined8 param_1,undefined4 *param_2)
     uVar1 = 0x10;
   }
   *param_2 = uVar1;
+  return;
+}
+
+
+// 8219C968  FUN_8219c968  (client_mp/partyjoining.cpp:2070)
+
+void FUN_8219c968(undefined8 param_1,undefined4 *param_2)
+
+{
+  *param_2 = 0x10;
   return;
 }
 

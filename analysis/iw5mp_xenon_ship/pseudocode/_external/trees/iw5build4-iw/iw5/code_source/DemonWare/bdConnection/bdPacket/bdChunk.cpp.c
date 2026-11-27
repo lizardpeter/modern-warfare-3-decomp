@@ -86,6 +86,18 @@ LAB_8256a7a4:
 }
 
 
+// 8256A600  FUN_8256a600  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdpacket/bdchunk.cpp:73)
+
+void FUN_8256a600(int *param_1)
+
+{
+                    /* WARNING: Could not recover jumptable at 0x8256a614. Too many branches */
+                    /* WARNING: Treating indirect jump as call */
+  (**(code **)(*param_1 + 8))(param_1,0,0);
+  return;
+}
+
+
 // 8256A618  FUN_8256a618  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdpacket/bdchunk.cpp:79)
 
 longlong FUN_8256a618(int param_1)

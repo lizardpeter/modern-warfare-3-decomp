@@ -244,3 +244,13 @@ void FUN_8252c780(short *param_1)
   return;
 }
 
+
+// 8256FA78  FUN_8256fa78  (line unknown)
+
+void FUN_8256fa78(void)
+
+{
+  FUN_8252cbd8(0xffffffff83efd4b8);
+  return;
+}
+

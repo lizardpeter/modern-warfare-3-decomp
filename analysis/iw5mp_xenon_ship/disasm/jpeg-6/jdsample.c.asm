@@ -87,6 +87,15 @@ LAB_82454988:
   82454988  382100B0             addi r1,r1,0xb0
   8245498C  480F3B64             b 0x825484f0
 
+; 82454990  FUN_82454990  (jpeg-6/jdsample.c:159)
+  82454990  90A60000             stw r5,0x0(r6)
+  82454994  4E800020             blr
+
+; 82454998  FUN_82454998  (jpeg-6/jdsample.c:172)
+  82454998  39600000             li r11,0x0
+  8245499C  91660000             stw r11,0x0(r6)
+  824549A0  4E800020             blr
+
 ; 824549A8  FUN_824549a8  (jpeg-6/jdsample.c:191)
   824549A8  7D8802A6             mfspr r12,LR
   824549AC  480F3AFD             bl 0x825484a8
@@ -149,6 +158,36 @@ LAB_82454a5c:
 LAB_82454a74:
   82454A74  382100A0             addi r1,r1,0xa0
   82454A78  480F3A80             b 0x825484f8
+
+; 82454A80  FUN_82454a80  (jpeg-6/jdsample.c:235)
+  82454A80  8163011C             lwz r11,0x11c(r3)
+  82454A84  38800000             li r4,0x0
+  82454A88  80E60000             lwz r7,0x0(r6)
+  82454A8C  2F0B0000             cmpwi cr6,r11,0x0
+  82454A90  4C990020             blelr cr6
+  82454A94  7CC72850             subf r6,r7,r5
+LAB_82454a98:
+  82454A98  81670000             lwz r11,0x0(r7)
+  82454A9C  81430064             lwz r10,0x64(r3)
+  82454AA0  7D06382E             lwzx r8,r6,r7
+  82454AA4  7D2A5A14             add r9,r10,r11
+  82454AA8  7F0B4840             cmplw cr6,r11,r9
+  82454AAC  40980020             bge cr6,0x82454acc
+  82454AB0  3908FFFF             subi r8,r8,0x1
+LAB_82454ab4:
+  82454AB4  8D480001             lbzu r10,0x1(r8)
+  82454AB8  994B0000             stb r10,0x0(r11)
+  82454ABC  9D4B0001             stbu r10,0x1(r11)
+  82454AC0  396B0001             addi r11,r11,0x1
+  82454AC4  7F0B4840             cmplw cr6,r11,r9
+  82454AC8  4198FFEC             blt cr6,0x82454ab4
+LAB_82454acc:
+  82454ACC  8163011C             lwz r11,0x11c(r3)
+  82454AD0  38840001             addi r4,r4,0x1
+  82454AD4  38E70004             addi r7,r7,0x4
+  82454AD8  7F045800             cmpw cr6,r4,r11
+  82454ADC  4198FFBC             blt cr6,0x82454a98
+  82454AE0  4E800020             blr
 
 ; 82454AE8  FUN_82454ae8  (jpeg-6/jdsample.c:263)
   82454AE8  7D8802A6             mfspr r12,LR

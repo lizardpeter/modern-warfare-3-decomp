@@ -190,6 +190,34 @@ void FUN_823f5cb8(void)
 }
 
 
+// 823F5DB0  FUN_823f5db0  (gfx_d3d/r_drawsurf.cpp:283)
+
+bool FUN_823f5db0(uint param_1,uint param_2)
+
+{
+  byte bVar2;
+  ulonglong uVar1;
+  byte bVar4;
+  ulonglong uVar3;
+  
+  bVar4 = *(byte *)(*(int *)(param_1 + 0x10) + 5);
+  bVar2 = *(byte *)(*(int *)(param_2 + 0x10) + 5);
+  if (bVar4 == bVar2) {
+    bVar4 = *(byte *)(param_1 + 0x16);
+    bVar2 = *(byte *)(param_2 + 0x16);
+    if (bVar4 == bVar2) {
+      uVar3 = *(ulonglong *)(*(int *)(param_1 + 0x10) + 8) >> 0x1d & 0xfff;
+      uVar1 = *(ulonglong *)(*(int *)(param_2 + 0x10) + 8) >> 0x1d & 0xfff;
+      if (uVar3 != uVar1) {
+        return uVar3 < uVar1;
+      }
+      return (bool)(-(param_1 < param_2) & 1);
+    }
+  }
+  return (bool)(-(bVar4 < bVar2) & 1);
+}
+
+
 // 823F5E28  FUN_823f5e28  (gfx_d3d/r_drawsurf.cpp:310)
 
 longlong FUN_823f5e28(longlong param_1,longlong param_2)

@@ -370,6 +370,18 @@ LAB_8257a9bc:
   8257A9C0  382100B0             addi r1,r1,0xb0
   8257A9C4  4BFCDB2C             b 0x825484f0
 
+; 8257A9C8  FUN_8257a9c8  (line unknown)
+  8257A9C8  3D440002             addis r10,r4,0x2
+  8257A9CC  3D600004             lis r11,0x4
+  8257A9D0  394AFFFF             subi r10,r10,0x1
+  8257A9D4  616B1000             ori r11,r11,0x1000
+  8257A9D8  554A001C             rlwinm r10,r10,0x0,0x0,0xe
+  8257A9DC  386A1000             addi r3,r10,0x1000
+  8257A9E0  7F035840             cmplw cr6,r3,r11
+  8257A9E4  4C980020             bgelr cr6
+  8257A9E8  7D635B78             or r3,r11,r11
+  8257A9EC  4E800020             blr
+
 ; 8257A9F0  FUN_8257a9f0  (line unknown)
   8257A9F0  7D8802A6             mfspr r12,LR
   8257A9F4  4BFCDAC1             bl 0x825484b4

@@ -791,6 +791,16 @@ ulonglong FUN_824992a8(int param_1,ulonglong param_2,longlong param_3,ulonglong 
 }
 
 
+// 82499670  FUN_82499670  (WebM_atvi_opt/vpx/vp8/vp8_cx_iface.c:798)
+
+void FUN_82499670(longlong param_1)
+
+{
+  FUN_824c6b88(param_1 + 0x298);
+  return;
+}
+
+
 // 82499678  FUN_82499678  (WebM_atvi_opt/vpx/vp8/vp8_cx_iface.c:805)
 
 undefined8 FUN_82499678(int param_1,undefined8 param_2,int param_3)
@@ -832,6 +842,24 @@ undefined8 FUN_824996e8(int param_1,undefined8 param_2,int param_3)
     uVar2 = 0;
   }
   return uVar2;
+}
+
+
+// 82499758  FUN_82499758  (WebM_atvi_opt/vpx/vp8/vp8_cx_iface.c:845)
+
+undefined8 FUN_82499758(int param_1,undefined8 param_2,int param_3)
+
+{
+  undefined4 *puVar1;
+  
+  puVar1 = *(undefined4 **)((param_3 + 7U & 0xfffffff8) + 4);
+  if (puVar1 != (undefined4 *)0x0) {
+    *(undefined4 *)(param_1 + 0x288) = *puVar1;
+    *(undefined4 *)(param_1 + 0x28c) = puVar1[1];
+    *(undefined4 *)(param_1 + 0x290) = puVar1[2];
+    return 0;
+  }
+  return 8;
 }
 
 
@@ -1022,5 +1050,16 @@ undefined8 FUN_82499ac0(int param_1,int param_2)
   }
   *(uint *)(param_1 + 0x28) = *(uint *)(param_1 + 0x28) | 2;
   return 0;
+}
+
+
+// 82499BA0  FUN_82499ba0  (WebM_atvi_opt/vpx/vp8/vp8_cx_iface.c:1177)
+
+void FUN_82499ba0(int param_1)
+
+{
+  *(undefined4 *)(param_1 + 0x28) = 0;
+  FUN_824992a8();
+  return;
 }
 

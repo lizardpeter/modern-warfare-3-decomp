@@ -907,6 +907,15 @@ ulonglong FUN_822c9300(void)
 }
 
 
+// 822C93B8  FUN_822c93b8  (server_mp/sv_main_mp.cpp:1603)
+
+longlong FUN_822c93b8(uint *param_1,uint *param_2)
+
+{
+  return (ulonglong)*param_1 - (ulonglong)*param_2;
+}
+
+
 // 822C93C8  FUN_822c93c8  (server_mp/sv_main_mp.cpp:1616)
 
 /* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */

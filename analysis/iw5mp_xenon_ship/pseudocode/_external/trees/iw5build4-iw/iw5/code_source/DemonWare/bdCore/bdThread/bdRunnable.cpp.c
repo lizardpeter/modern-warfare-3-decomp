@@ -21,6 +21,16 @@ void FUN_8255e868(undefined4 *param_1)
 }
 
 
+// 8255E878  FUN_8255e878  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdthread/bdrunnable.cpp:21)
+
+void FUN_8255e878(int param_1)
+
+{
+  *(undefined1 *)(param_1 + 4) = 1;
+  return;
+}
+
+
 // 8255E888  FUN_8255e888  (line unknown)
 
 undefined4 * FUN_8255e888(undefined4 *param_1,ulonglong param_2)

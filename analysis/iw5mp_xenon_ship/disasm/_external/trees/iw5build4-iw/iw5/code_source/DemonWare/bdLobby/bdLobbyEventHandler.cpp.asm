@@ -6,6 +6,14 @@
   82535740  91630000             stw r11,0x0(r3)
   82535744  4E800020             blr
 
+; 82535798  FUN_82535798  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdlobbyeventhandler.cpp:89)
+  82535798  7CA32B78             or r3,r5,r5
+  8253579C  4BFFBC94             b 0x82531430
+
+; 825357A0  FUN_825357a0  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdlobbyeventhandler.cpp:94)
+  825357A0  7CA32B78             or r3,r5,r5
+  825357A4  4BC510EC             b 0x82186890
+
 ; 82535750  FUN_82535750  (line unknown)
   82535750  7D8802A6             mfspr r12,LR
   82535754  9181FFF8             stw r12,-0x8(r1)

@@ -1223,6 +1223,10 @@ LAB_82499664:
   82499668  382101A0             addi r1,r1,0x1a0
   8249966C  480AEE80             b 0x825484ec
 
+; 82499670  FUN_82499670  (WebM_atvi_opt/vpx/vp8/vp8_cx_iface.c:798)
+  82499670  38630298             addi r3,r3,0x298
+  82499674  4802D514             b 0x824c6b88
+
 ; 82499678  FUN_82499678  (WebM_atvi_opt/vpx/vp8/vp8_cx_iface.c:805)
   82499678  7D8802A6             mfspr r12,LR
   8249967C  9181FFF8             stw r12,-0x8(r1)
@@ -1284,6 +1288,25 @@ LAB_8249973c:
   82499748  EBC1FFE8             ld r30,-0x18(r1)
   8249974C  EBE1FFF0             ld r31,-0x10(r1)
   82499750  4E800020             blr
+
+; 82499758  FUN_82499758  (WebM_atvi_opt/vpx/vp8/vp8_cx_iface.c:845)
+  82499758  39650007             addi r11,r5,0x7
+  8249975C  7C6A1B78             or r10,r3,r3
+  82499760  55690038             rlwinm r9,r11,0x0,0x0,0x1c
+  82499764  81690004             lwz r11,0x4(r9)
+  82499768  2B0B0000             cmplwi cr6,r11,0x0
+  8249976C  419A0024             beq cr6,0x82499790
+  82499770  812B0000             lwz r9,0x0(r11)
+  82499774  38600000             li r3,0x0
+  82499778  912A0288             stw r9,0x288(r10)
+  8249977C  810B0004             lwz r8,0x4(r11)
+  82499780  910A028C             stw r8,0x28c(r10)
+  82499784  80EB0008             lwz r7,0x8(r11)
+  82499788  90EA0290             stw r7,0x290(r10)
+  8249978C  4E800020             blr
+LAB_82499790:
+  82499790  38600008             li r3,0x8
+  82499794  4E800020             blr
 
 ; 82499798  FUN_82499798  (WebM_atvi_opt/vpx/vp8/vp8_cx_iface.c:867)
   82499798  7D8802A6             mfspr r12,LR
@@ -1567,3 +1590,11 @@ LAB_82499b70:
   82499B94  7D8803A6             mtspr LR,r12
   82499B98  EBE1FFF0             ld r31,-0x10(r1)
   82499B9C  4E800020             blr
+
+; 82499BA0  FUN_82499ba0  (WebM_atvi_opt/vpx/vp8/vp8_cx_iface.c:1177)
+  82499BA0  81430028             lwz r10,0x28(r3)
+  82499BA4  39600000             li r11,0x0
+  82499BA8  5549FFFE             rlwinm r9,r10,0x1f,0x1f,0x1f
+  82499BAC  91630028             stw r11,0x28(r3)
+  82499BB0  7D273B78             or r7,r9,r7
+  82499BB4  4BFFF6F4             b 0x824992a8

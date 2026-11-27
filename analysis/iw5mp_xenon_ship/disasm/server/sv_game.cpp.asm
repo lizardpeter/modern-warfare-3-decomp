@@ -479,6 +479,12 @@ LAB_822c4dbc:
   822C4E60  38840E88             addi r4,r4,0xe88
   822C4E64  482838CC             b 0x82548730
 
+; 822C4E68  thunk_FUN_823156e0  (server/sv_game.cpp:481)
+  822C4E68  48050878             b 0x823156e0
+
+; 822C4E70  thunk_FUN_823156e0  (server/sv_game.cpp:487)
+  822C4E70  48050870             b 0x823156e0
+
 ; 822C4E78  FUN_822c4e78  (server/sv_game.cpp:499)
   822C4E78  3D60822C             lis r11,-0x7dd4
   822C4E7C  3D40822C             lis r10,-0x7dd4

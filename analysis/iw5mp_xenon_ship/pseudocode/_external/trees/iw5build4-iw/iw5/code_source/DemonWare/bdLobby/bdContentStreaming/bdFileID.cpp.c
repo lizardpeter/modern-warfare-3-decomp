@@ -23,6 +23,16 @@ void FUN_82533450(undefined4 *param_1)
 }
 
 
+// 82533460  FUN_82533460  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdfileid.cpp:22)
+
+void FUN_82533460(int param_1,undefined8 param_2)
+
+{
+  FUN_8252a5e0(param_2,*(undefined8 *)(param_1 + 8));
+  return;
+}
+
+
 // 825334D0  FUN_825334d0  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdfileid.cpp:27)
 
 /* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */

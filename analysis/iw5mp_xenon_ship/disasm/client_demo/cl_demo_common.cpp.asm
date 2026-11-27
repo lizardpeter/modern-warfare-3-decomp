@@ -1094,6 +1094,22 @@ LAB_8245dbd0:
   8245DBD0  38210070             addi r1,r1,0x70
   8245DBD4  480EA938             b 0x8254850c
 
+; 8245C100  FUN_8245c100  (client_demo/cl_demo_common.cpp:845)
+  8245C100  3D6082FF             lis r11,-0x7d01
+  8245C104  396BBE50             subi r11,r11,0x41b0
+  8245C108  392B0044             addi r9,r11,0x44
+  8245C10C  814B0000             lwz r10,0x0(r11)
+  8245C110  554A103A             rlwinm r10,r10,0x2,0x0,0x1d
+  8245C114  7D0A482E             lwzx r8,r10,r9
+  8245C118  2F080002             cmpwi cr6,r8,0x2
+  8245C11C  4C9A0020             bnelr cr6
+  8245C120  392B0064             addi r9,r11,0x64
+  8245C124  390B0004             addi r8,r11,0x4
+  8245C128  7CEA482E             lwzx r7,r10,r9
+  8245C12C  7C6A402E             lwzx r3,r10,r8
+  8245C130  80870004             lwz r4,0x4(r7)
+  8245C134  4801006C             b 0x8246c1a0
+
 ; 8245C140  FUN_8245c140  (client_demo/cl_demo_common.cpp:889)
   8245C140  38600005             li r3,0x5
   8245C144  4E800020             blr

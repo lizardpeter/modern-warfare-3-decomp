@@ -660,6 +660,38 @@ LAB_8237c9b8:
   8237D040  38210080             addi r1,r1,0x80
   8237D044  481CB4C4             b 0x82548508
 
+; 8237CA60  FUN_8237ca60  (physics/ode/src/collision_kernel.cpp:550)
+  8237CA60  81630004             lwz r11,0x4(r3)
+  8237CA64  3D4083A8             lis r10,-0x7c58
+  8237CA68  3883002C             addi r4,r3,0x2c
+  8237CA6C  396BFFFD             subi r11,r11,0x3
+  8237CA70  392AD568             subi r9,r10,0x2a98
+  8237CA74  556A103A             rlwinm r10,r11,0x2,0x0,0x1d
+  8237CA78  39290008             addi r9,r9,0x8
+  8237CA7C  7D0B5214             add r8,r11,r10
+  8237CA80  5507103A             rlwinm r7,r8,0x2,0x0,0x1d
+  8237CA84  7CC7482E             lwzx r6,r7,r9
+  8237CA88  7CC903A6             mtspr CTR,r6
+  8237CA8C  4E800420             bctr
+
+; 8237CA90  FUN_8237ca90  (physics/ode/src/collision_kernel.cpp:556)
+  8237CA90  81630004             lwz r11,0x4(r3)
+  8237CA94  3D4083A8             lis r10,-0x7c58
+  8237CA98  396BFFFD             subi r11,r11,0x3
+  8237CA9C  394AD568             subi r10,r10,0x2a98
+  8237CAA0  5569103A             rlwinm r9,r11,0x2,0x0,0x1d
+  8237CAA4  7D2B4A14             add r9,r11,r9
+  8237CAA8  552B103A             rlwinm r11,r9,0x2,0x0,0x1d
+  8237CAAC  7D6B5214             add r11,r11,r10
+  8237CAB0  816B000C             lwz r11,0xc(r11)
+  8237CAB4  2B0B0000             cmplwi cr6,r11,0x0
+  8237CAB8  419A000C             beq cr6,0x8237cac4
+  8237CABC  7D6903A6             mtspr CTR,r11
+  8237CAC0  4E800420             bctr
+LAB_8237cac4:
+  8237CAC4  38600001             li r3,0x1
+  8237CAC8  4E800020             blr
+
 ; 8237D048  FUN_8237d048  (physics/ode/src/collision_kernel.cpp:565)
   8237D048  3D608205             lis r11,-0x7dfb
   8237D04C  C00B80F0             lfs f0,-0x7f10(r11)
@@ -902,3 +934,9 @@ LAB_8237d1d4:
   8237CCA8  9149D868             stw r10,-0x2798(r9)
   8237CCAC  91680004             stw r11,0x4(r8)
   8237CCB0  4E800020             blr
+
+; 8237D1E0  FUN_8237d1e0  (line unknown)
+  8237D1E0  3D608204             lis r11,-0x7dfc
+  8237D1E4  394BAAE0             subi r10,r11,0x5520
+  8237D1E8  91430000             stw r10,0x0(r3)
+  8237D1EC  4E800020             blr

@@ -1584,6 +1584,25 @@ LAB_82452034:
 }
 
 
+// 82452138  FUN_82452138  (jpeg-6/jdmarker.c:1243)
+
+void FUN_82452138(int param_1)
+
+{
+  int iVar1;
+  
+  iVar1 = *(int *)(param_1 + 0x19c);
+  *(undefined4 *)(param_1 + 0xcc) = 0;
+  *(undefined4 *)(param_1 + 0x84) = 0;
+  *(undefined4 *)(param_1 + 0x184) = 0;
+  *(undefined1 *)(iVar1 + 0xc) = 0;
+  *(undefined1 *)(iVar1 + 0xd) = 0;
+  *(undefined4 *)(iVar1 + 0x14) = 0;
+  *(undefined4 *)(iVar1 + 0xa0) = 0;
+  return;
+}
+
+
 // 82452160  FUN_82452160  (jpeg-6/jdmarker.c:1263)
 
 void FUN_82452160(int param_1)
@@ -1597,7 +1616,7 @@ void FUN_82452160(int param_1)
   puVar2 = (undefined4 *)(*(code *)**(undefined4 **)(param_1 + 4))(param_1,0,0xa8);
   *(undefined4 **)(param_1 + 0x19c) = puVar2;
   puVar2[1] = FUN_82451b80;
-  *puVar2 = &LAB_82452138;
+  *puVar2 = FUN_82452138;
   puVar2[0x17] = 0;
   puVar2[2] = FUN_82451ef0;
   puVar3 = puVar2 + 0x17;

@@ -733,6 +733,15 @@ LAB_82476c68:
   82476C78  EBE1FFF0             ld r31,-0x10(r1)
   82476C7C  4E800020             blr
 
+; 82476C80  FUN_82476c80  (mjpeg/mjpeg.cpp:385)
+  82476C80  3D6083EE             lis r11,-0x7c12
+  82476C84  394BFA1C             subi r10,r11,0x5e4
+  82476C88  806BFA1C             lwz r3,-0x5e4(r11)
+  82476C8C  816A0004             lwz r11,0x4(r10)
+  82476C90  216B0001             subfic r11,r11,0x1
+  82476C94  916A0004             stw r11,0x4(r10)
+  82476C98  48069E18             b 0x824e0ab0
+
 ; 82476CA0  FUN_82476ca0  (mjpeg/mjpeg.cpp:392)
   82476CA0  7D8802A6             mfspr r12,LR
   82476CA4  480D1815             bl 0x825484b8

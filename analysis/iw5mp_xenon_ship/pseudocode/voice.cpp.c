@@ -225,6 +225,72 @@ void FUN_82510990(int param_1,undefined4 *param_2,undefined8 param_3,undefined1 
 }
 
 
+// 82510A28  FUN_82510a28  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/voice.cpp:375)
+
+undefined8
+FUN_82510a28(int param_1,uint param_2,undefined8 param_3,undefined8 param_4,undefined8 param_5)
+
+{
+  int *piVar1;
+  undefined8 uVar2;
+  
+  if ((uint)*(byte *)(param_1 + 0x3c) <= (param_2 & 0xff)) {
+    return 0xffffffff80070057;
+  }
+  piVar1 = *(int **)((param_2 & 0xff) * 8 + *(int *)(param_1 + 0x24));
+                    /* WARNING: Could not recover jumptable at 0x82510a6c. Too many branches */
+                    /* WARNING: Treating indirect jump as call */
+  uVar2 = (**(code **)(*piVar1 + 0xc))(piVar1,param_3,param_4,param_5);
+  return uVar2;
+}
+
+
+// 82510A70  FUN_82510a70  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/voice.cpp:416)
+
+undefined8
+FUN_82510a70(int param_1,uint param_2,undefined8 param_3,undefined8 param_4,undefined8 param_5)
+
+{
+  int *piVar1;
+  undefined8 uVar2;
+  
+  if ((uint)*(byte *)(param_1 + 0x3c) <= (param_2 & 0xff)) {
+    return 0xffffffff80070057;
+  }
+  piVar1 = *(int **)((param_2 & 0xff) * 8 + *(int *)(param_1 + 0x24));
+                    /* WARNING: Could not recover jumptable at 0x82510ab4. Too many branches */
+                    /* WARNING: Treating indirect jump as call */
+  uVar2 = (**(code **)(*piVar1 + 0x10))(piVar1,param_3,param_4,param_5);
+  return uVar2;
+}
+
+
+// 82510AB8  FUN_82510ab8  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/voice.cpp:453)
+
+undefined8 FUN_82510ab8(int param_1,uint param_2,undefined1 *param_3)
+
+{
+  if ((uint)*(byte *)(param_1 + 0x3c) <= (param_2 & 0xff)) {
+    return 0xffffffff80070057;
+  }
+  *param_3 = *(undefined1 *)((param_2 & 0xff) * 8 + *(int *)(param_1 + 0x24) + 5);
+  return 0;
+}
+
+
+// 82510AF0  FUN_82510af0  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/voice.cpp:490)
+
+undefined8 FUN_82510af0(int param_1,uint param_2,undefined1 param_3)
+
+{
+  if ((uint)*(byte *)(param_1 + 0x3c) <= (param_2 & 0xff)) {
+    return 0xffffffff80070057;
+  }
+  *(undefined1 *)((param_2 & 0xff) * 8 + *(int *)(param_1 + 0x24) + 5) = param_3;
+  return 0;
+}
+
+
 // 825106F0  FUN_825106f0  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/voice.cpp:525)
 
 undefined8 FUN_825106f0(int *param_1)

@@ -3442,6 +3442,10 @@ LAB_8229dcb8:
   8229C63C  7D8803A6             mtspr LR,r12
   8229C640  4E800020             blr
 
+; 8229C648  FUN_8229c648  (qcommon/common.cpp:6478)
+  8229C648  38800005             li r4,0x5
+  8229C64C  48011A7C             b 0x822ae0c8
+
 ; 8229C650  FUN_8229c650  (qcommon/common.cpp:6490)
   8229C650  3D60822A             lis r11,-0x7dd6
   8229C654  388BC648             subi r4,r11,0x39b8

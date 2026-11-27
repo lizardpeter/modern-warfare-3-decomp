@@ -2747,3 +2747,37 @@ LAB_8226e950:
   8226E95C  8181FFF8             lwz r12,-0x8(r1)
   8226E960  7D8803A6             mtspr LR,r12
   8226E964  4E800020             blr
+
+; 8226E968  FUN_8226e968  (game/g_weapon.cpp:2118)
+  8226E968  812300F8             lwz r9,0xf8(r3)
+  8226E96C  7C6A1B78             or r10,r3,r3
+  8226E970  38600000             li r3,0x0
+  8226E974  552804A8             rlwinm r8,r9,0x0,0x12,0x14
+  8226E978  396007FF             li r11,0x7ff
+  8226E97C  2F080000             cmpwi cr6,r8,0x0
+  8226E980  419A0020             beq cr6,0x8226e9a0
+  8226E984  816A01B8             lwz r11,0x1b8(r10)
+  8226E988  2F0B0000             cmpwi cr6,r11,0x0
+  8226E98C  4D9A0020             beqlr cr6
+  8226E990  816A01BC             lwz r11,0x1bc(r10)
+  8226E994  2F0B07FF             cmpwi cr6,r11,0x7ff
+  8226E998  409A0024             bne cr6,0x8226e9bc
+  8226E99C  4E800020             blr
+LAB_8226e9a0:
+  8226E9A0  812A0010             lwz r9,0x10(r10)
+  8226E9A4  55280318             rlwinm r8,r9,0x0,0xc,0xc
+  8226E9A8  2F080000             cmpwi cr6,r8,0x0
+  8226E9AC  419A0010             beq cr6,0x8226e9bc
+  8226E9B0  816A0050             lwz r11,0x50(r10)
+  8226E9B4  2F0B07FF             cmpwi cr6,r11,0x7ff
+  8226E9B8  4D9A0020             beqlr cr6
+LAB_8226e9bc:
+  8226E9BC  3D2082FC             lis r9,-0x7d04
+  8226E9C0  556A103A             rlwinm r10,r11,0x2,0x0,0x1d
+  8226E9C4  39093F80             addi r8,r9,0x3f80
+  8226E9C8  7CEB5214             add r7,r11,r10
+  8226E9CC  54EA3830             rlwinm r10,r7,0x7,0x0,0x18
+  8226E9D0  81680004             lwz r11,0x4(r8)
+  8226E9D4  7D6A5A14             add r11,r10,r11
+  8226E9D8  806B00C8             lwz r3,0xc8(r11)
+  8226E9DC  4E800020             blr

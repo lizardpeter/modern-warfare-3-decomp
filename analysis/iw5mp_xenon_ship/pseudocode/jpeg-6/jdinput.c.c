@@ -233,6 +233,16 @@ void FUN_8244f360(int param_1)
 }
 
 
+// 8244F580  FUN_8244f580  (jpeg-6/jdinput.c:272)
+
+void FUN_8244f580(int param_1)
+
+{
+  **(undefined4 **)(param_1 + 0x198) = FUN_8244f3d0;
+  return;
+}
+
+
 // 8244F3D0  FUN_8244f3d0  (jpeg-6/jdinput.c:289)
 
 /* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
@@ -311,7 +321,7 @@ void FUN_8244f598(int param_1)
   puVar1[1] = FUN_8244f500;
   *(undefined1 *)(puVar1 + 4) = 0;
   puVar1[2] = FUN_8244f360;
-  puVar1[3] = &LAB_8244f580;
+  puVar1[3] = FUN_8244f580;
   *(undefined1 *)((int)puVar1 + 0x11) = 0;
   *(undefined1 *)(puVar1 + 5) = 1;
   return;

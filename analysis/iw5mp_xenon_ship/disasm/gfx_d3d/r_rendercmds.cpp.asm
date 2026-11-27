@@ -315,6 +315,12 @@ LAB_82410688:
   824106A8  EBE1FFF0             ld r31,-0x10(r1)
   824106AC  4E800020             blr
 
+; 824106B0  FUN_824106b0  (gfx_d3d/r_rendercmds.cpp:490)
+  824106B0  4E800020             blr
+
+; 824106B8  FUN_824106b8  (gfx_d3d/r_rendercmds.cpp:495)
+  824106B8  4E800020             blr
+
 ; 824106C0  FUN_824106c0  (gfx_d3d/r_rendercmds.cpp:562)
   824106C0  7D8802A6             mfspr r12,LR
   824106C4  48137DBD             bl 0x82548480

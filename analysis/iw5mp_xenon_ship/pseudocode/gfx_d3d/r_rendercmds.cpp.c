@@ -240,6 +240,24 @@ longlong FUN_82410628(undefined8 param_1,undefined8 param_2,uint *param_3,longlo
 }
 
 
+// 824106B0  FUN_824106b0  (gfx_d3d/r_rendercmds.cpp:490)
+
+void FUN_824106b0(void)
+
+{
+  return;
+}
+
+
+// 824106B8  FUN_824106b8  (gfx_d3d/r_rendercmds.cpp:495)
+
+void FUN_824106b8(void)
+
+{
+  return;
+}
+
+
 // 824106C0  FUN_824106c0  (gfx_d3d/r_rendercmds.cpp:562)
 
 /* WARNING: Function: __savegprlr_14 replaced with injection: xenon_save_restore */

@@ -78,6 +78,26 @@ undefined8 FUN_82560c20(int param_1)
 }
 
 
+// 82560C38  FUN_82560c38  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdconnection.cpp:74)
+
+void FUN_82560c38(int param_1)
+
+{
+  *(undefined4 *)(param_1 + 0x20) = 3;
+  return;
+}
+
+
+// 82560C48  FUN_82560c48  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdconnection.cpp:79)
+
+void FUN_82560c48(int param_1)
+
+{
+  *(undefined4 *)(param_1 + 0x20) = 4;
+  return;
+}
+
+
 // 82560DF8  FUN_82560df8  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdconnection.cpp:86)
 
 void FUN_82560df8(undefined4 *param_1)

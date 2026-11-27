@@ -25,6 +25,23 @@ void FUN_8222afa8(int param_1)
 }
 
 
+// 8222B040  FUN_8222b040  (game/g_client_fields.cpp:52)
+
+void FUN_8222b040(int param_1)
+
+{
+  if (*(int *)(param_1 + 0x34c4) == 0) {
+    FUN_822bb3c0(DAT_82fe41fc);
+    return;
+  }
+  if (*(int *)(param_1 + 0x34c4) != 1) {
+    return;
+  }
+  FUN_822bb3c0(DAT_82fe41fe);
+  return;
+}
+
+
 // 8222B078  FUN_8222b078  (game/g_client_fields.cpp:65)
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
@@ -64,6 +81,34 @@ LAB_8222b138:
 }
 
 
+// 8222B148  FUN_8222b148  (game/g_client_fields.cpp:114)
+
+void FUN_8222b148(int param_1)
+
+{
+  uint uVar1;
+  
+  uVar1 = *(uint *)(param_1 + 0x33d4);
+  if (3 < uVar1) {
+    return;
+  }
+  if (uVar1 == 0) {
+    FUN_822bb3c0(DAT_82fe407a);
+    return;
+  }
+  if (uVar1 == 1) {
+    FUN_822bb3c0(DAT_82fe4014);
+    return;
+  }
+  if (uVar1 == 2) {
+    FUN_822bb3c0(DAT_82fe400c);
+    return;
+  }
+  FUN_822bb3c0(DAT_82fe41f2);
+  return;
+}
+
+
 // 8222B1B0  FUN_8222b1b0  (game/g_client_fields.cpp:141)
 
 void FUN_8222b1b0(int param_1)
@@ -90,6 +135,34 @@ void FUN_8222b1b0(int param_1)
     return;
   }
   FUN_822b8a20();
+  return;
+}
+
+
+// 8222B2A0  FUN_8222b2a0  (game/g_client_fields.cpp:177)
+
+void FUN_8222b2a0(int param_1)
+
+{
+  uint uVar1;
+  
+  uVar1 = *(uint *)(param_1 + 0x3300);
+  if (3 < uVar1) {
+    return;
+  }
+  if (uVar1 == 1) {
+    FUN_822bb3c0(DAT_82fe402c);
+    return;
+  }
+  if (uVar1 == 2) {
+    FUN_822bb3c0(DAT_82fe41f2);
+    return;
+  }
+  if (uVar1 == 0) {
+    FUN_822bb3c0(DAT_82fe41f0);
+    return;
+  }
+  FUN_822bb3c0(DAT_82fe41e4);
   return;
 }
 
@@ -275,6 +348,31 @@ void FUN_8222b668(int param_1)
 }
 
 
+// 8222B770  FUN_8222b770  (game/g_client_fields.cpp:414)
+
+void FUN_8222b770(int param_1)
+
+{
+  int iVar1;
+  
+  iVar1 = *(int *)(&DAT_82db6c18 + ((param_1 - DAT_82fc3f80) / 0x3980) * 0x280);
+  if (iVar1 == 1) {
+    FUN_822bb3c0(DAT_82fe4014);
+    return;
+  }
+  if (iVar1 != 2) {
+    if (iVar1 != 3) {
+      FUN_822bb3c0(DAT_82fe407a);
+      return;
+    }
+    FUN_822bb3c0(DAT_82fe41f2);
+    return;
+  }
+  FUN_822bb3c0(DAT_82fe400c);
+  return;
+}
+
+
 // 8222B7F0  FUN_8222b7f0  (game/g_client_fields.cpp:440)
 
 void FUN_8222b7f0(int param_1)
@@ -307,6 +405,16 @@ void FUN_8222b880(int param_1)
   
   iVar1 = FUN_822ba1e8(0);
   *(int *)(param_1 + 0x34b0) = iVar1 + 0x19;
+  return;
+}
+
+
+// 8222B8B8  FUN_8222b8b8  (game/g_client_fields.cpp:478)
+
+void FUN_8222b8b8(int param_1)
+
+{
+  FUN_822bb170(*(undefined4 *)(param_1 + 0x3314));
   return;
 }
 
@@ -366,10 +474,10 @@ void FUN_8222b980(void)
 void FUN_8222b9e0(undefined8 param_1,int param_2)
 
 {
-  if ((code *)(&PTR_LAB_8201cc68)[param_2 * 6] != (code *)0x0) {
+  if ((code *)(&PTR_thunk_FUN_822b8a20_8201cc68)[param_2 * 6] != (code *)0x0) {
                     /* WARNING: Could not recover jumptable at 0x8222ba08. Too many branches */
                     /* WARNING: Treating indirect jump as call */
-    (*(code *)(&PTR_LAB_8201cc68)[param_2 * 6])();
+    (*(code *)(&PTR_thunk_FUN_822b8a20_8201cc68)[param_2 * 6])();
     return;
   }
   FUN_822676e8(param_1,*(undefined4 *)(&DAT_8201cc64 + param_2 * 0x18),

@@ -2483,6 +2483,36 @@ LAB_822c27f0:
   822C2800  EBE1FFF0             ld r31,-0x10(r1)
   822C2804  4E800020             blr
 
+; 822C2808  FUN_822c2808  (server_mp/sv_client_mp.cpp:2548)
+  822C2808  3D600003             lis r11,0x3
+  822C280C  39400000             li r10,0x0
+  822C2810  616B52CC             ori r11,r11,0x52cc
+  822C2814  7D4359AE             stbx r10,r3,r11
+  822C2818  4E800020             blr
+
+; 822C2820  FUN_822c2820  (server_mp/sv_client_mp.cpp:2587)
+  822C2820  3D608201             lis r11,-0x7dff
+  822C2824  38A00001             li r5,0x1
+  822C2828  388B4454             addi r4,r11,0x4454
+  822C282C  4BFFF524             b 0x822c1d50
+
+; 822C2830  FUN_822c2830  (server_mp/sv_client_mp.cpp:2597)
+  822C2830  3D608348             lis r11,-0x7cb8
+  822C2834  3D400020             lis r10,0x20
+  822C2838  392BFF00             subi r9,r11,0x100
+  822C283C  61485E90             ori r8,r10,0x5e90
+  822C2840  3CE00006             lis r7,0x6
+  822C2844  3CA08202             lis r5,-0x7dfe
+  822C2848  60EA8B00             ori r10,r7,0x8b00
+  822C284C  38C00059             li r6,0x59
+  822C2850  7D69402E             lwzx r11,r9,r8
+  822C2854  38A5D5FC             subi r5,r5,0x2a04
+  822C2858  38800001             li r4,0x1
+  822C285C  7D2B1850             subf r9,r11,r3
+  822C2860  38600000             li r3,0x0
+  822C2864  7CE953D6             divw r7,r9,r10
+  822C2868  48005A10             b 0x822c8278
+
 ; 822C2898  FUN_822c2898  (server_mp/sv_client_mp.cpp:2790)
   822C2898  7D8802A6             mfspr r12,LR
   822C289C  48285C19             bl 0x825484b4

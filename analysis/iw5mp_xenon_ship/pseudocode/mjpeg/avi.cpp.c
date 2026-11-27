@@ -1680,6 +1680,16 @@ void FUN_824702c0(undefined8 param_1,undefined8 param_2,undefined8 param_3,undef
 }
 
 
+// 824702A8  FUN_824702a8  (mjpeg/avi.cpp:431)
+
+void FUN_824702a8(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+
+{
+  FUN_82471ed8(DAT_83edf860,param_1,param_2,param_3);
+  return;
+}
+
+
 // 82470308  FUN_82470308  (mjpeg/avi.cpp:441)
 
 void FUN_82470308(void)

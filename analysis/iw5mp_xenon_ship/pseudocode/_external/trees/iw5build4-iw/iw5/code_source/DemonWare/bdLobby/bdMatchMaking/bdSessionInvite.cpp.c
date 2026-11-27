@@ -86,6 +86,15 @@ LAB_82544d54:
 }
 
 
+// 82544BC0  FUN_82544bc0  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdmatchmaking/bdsessioninvite.cpp:45)
+
+undefined8 FUN_82544bc0(void)
+
+{
+  return 0x460;
+}
+
+
 // 82544C40  FUN_82544c40  (line unknown)
 
 undefined8 FUN_82544c40(undefined8 param_1,ulonglong param_2)

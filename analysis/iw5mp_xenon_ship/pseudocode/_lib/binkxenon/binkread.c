@@ -356,6 +356,27 @@ LAB_825712f4:
 }
 
 
+// 82571348  FUN_82571348  (line unknown)
+
+longlong FUN_82571348(int param_1,uint param_2)
+
+{
+  ulonglong uVar1;
+  
+  if (*(int *)(param_1 + -0xe4) == 0) {
+    uVar1 = (ulonglong)(uint)((*(int *)(param_1 + -0xb8) + 1) * 100) /
+            (ulonglong)(*(int *)(param_1 + -0xbc) + 1);
+    if (uVar1 < 0x32) {
+      return -1 - uVar1;
+    }
+    if ((ulonglong)*(uint *)(param_1 + 0x140) != (ulonglong)param_2) {
+      return -0x80000000 - (ulonglong)*(uint *)(param_1 + 0x140);
+    }
+  }
+  return 0;
+}
+
+
 // 825713A0  FUN_825713a0  (line unknown)
 
 void FUN_825713a0(int param_1,undefined4 param_2)
@@ -364,6 +385,48 @@ void FUN_825713a0(int param_1,undefined4 param_2)
   (**(code **)(param_1 + -0xf4))(param_1 + -0x104);
   *(undefined4 *)(param_1 + 0x140) = param_2;
   return;
+}
+
+
+// 825713E8  FUN_825713e8  (line unknown)
+
+void FUN_825713e8(longlong param_1)
+
+{
+  FUN_82575240(DAT_83f0120c,param_1 + 0x104);
+  return;
+}
+
+
+// 825713F8  FUN_825713f8  (line unknown)
+
+void FUN_825713f8(longlong param_1)
+
+{
+  FUN_825751e8(DAT_83f0120c,param_1 + 0x104);
+  return;
+}
+
+
+// 82571408  FUN_82571408  (line unknown)
+
+void FUN_82571408(longlong param_1)
+
+{
+  FUN_82575270(DAT_83f0120c,param_1 + 0x104);
+  return;
+}
+
+
+// 82571420  FUN_82571420  (line unknown)
+
+longlong FUN_82571420(int param_1,uint param_2)
+
+{
+  if ((ulonglong)*(uint *)(param_1 + -4) != (ulonglong)param_2) {
+    return -1 - (ulonglong)*(uint *)(param_1 + -4);
+  }
+  return 0;
 }
 
 
@@ -948,10 +1011,10 @@ LAB_82571f80:
              (FUN_825751c0(), DAT_83f0120c != 0)))))) {
           FUN_82574fb0(DAT_83f0120c,iVar3 + 500,0xffffffff82571348,0xffffffff825713a0);
         }
-        *(undefined1 **)(iVar3 + 0x1ec) = &LAB_82571408;
-        *(undefined1 **)(iVar3 + 0x1e4) = &LAB_825713e8;
-        *(undefined1 **)(iVar3 + 0x1e8) = &LAB_825713f8;
-        *(undefined1 **)(iVar3 + 0x1f0) = &LAB_82571418;
+        *(code **)(iVar3 + 0x1ec) = FUN_82571408;
+        *(code **)(iVar3 + 0x1e4) = FUN_825713e8;
+        *(code **)(iVar3 + 0x1e8) = FUN_825713f8;
+        *(code **)(iVar3 + 0x1f0) = thunk_FUN_82575338;
         if ((*(int *)(iVar3 + 0xe8) == 0) && ((param_2 & 0x200000) == 0)) {
           do {
             iVar6 = (**(code **)(iVar3 + 0x100))(iVar3 + 0xf0);

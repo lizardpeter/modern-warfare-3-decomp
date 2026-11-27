@@ -26,6 +26,20 @@ LAB_8256d8a4:
   8256D8D4  EBE1FFF0             ld r31,-0x10(r1)
   8256D8D8  4E800020             blr
 
+; 8256D8E0  FUN_8256d8e0  (DW/dwLogOn-xbox.cpp:54)
+  8256D8E0  39400020             li r10,0x20
+  8256D8E4  3D6083BA             lis r11,-0x7c46
+  8256D8E8  396B22E0             addi r11,r11,0x22e0
+  8256D8EC  7D4903A6             mtspr CTR,r10
+  8256D8F0  396BFF70             subi r11,r11,0x90
+  8256D8F4  39400000             li r10,0x0
+LAB_8256d8f8:
+  8256D8F8  954B00A0             stwu r10,0xa0(r11)
+  8256D8FC  4200FFFC             bdnz 0x8256d8f8
+  8256D900  3D608257             lis r11,-0x7da9
+  8256D904  386BED50             subi r3,r11,0x12b0
+  8256D908  4BFDCB20             b 0x8254a428
+
 ; 823BDDB8  FUN_823bddb8  (DW/dwLogOn-xbox.cpp:57)
   823BDDB8  7D8802A6             mfspr r12,LR
   823BDDBC  9181FFF8             stw r12,-0x8(r1)
@@ -797,3 +811,8 @@ LAB_8256ed24:
   8256ED44  EBC1FFE8             ld r30,-0x18(r1)
   8256ED48  EBE1FFF0             ld r31,-0x10(r1)
   8256ED4C  4E800020             blr
+
+; 8256ED50  FUN_8256ed50  (line unknown)
+  8256ED50  3D6083BA             lis r11,-0x7c46
+  8256ED54  386B22E0             addi r3,r11,0x22e0
+  8256ED58  4BD1A4B8             b 0x82289210

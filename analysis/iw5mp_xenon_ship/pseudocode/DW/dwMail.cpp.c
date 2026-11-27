@@ -1306,3 +1306,13 @@ void FUN_823c0460(int param_1)
   return;
 }
 
+
+// 8256ED60  FUN_8256ed60  (line unknown)
+
+void FUN_8256ed60(void)
+
+{
+  FUN_823c0460(0xffffffff83ba3758);
+  return;
+}
+

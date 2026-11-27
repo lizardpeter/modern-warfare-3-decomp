@@ -636,6 +636,20 @@ LAB_8246041c:
   82460490  EBE1FFF0             ld r31,-0x10(r1)
   82460494  4E800020             blr
 
+; 82460498  FUN_82460498  (client_demo/cl_demo_filesystem.cpp:846)
+  82460498  81630000             lwz r11,0x0(r3)
+  8246049C  81440000             lwz r10,0x0(r4)
+  824604A0  7F0B5000             cmpw cr6,r11,r10
+  824604A4  4098000C             bge cr6,0x824604b0
+  824604A8  38600001             li r3,0x1
+  824604AC  4E800020             blr
+LAB_824604b0:
+  824604B0  7D2B5010             subfc r9,r11,r10
+  824604B4  55680FFE             rlwinm r8,r11,0x1,0x1f,0x1f
+  824604B8  55470FFE             rlwinm r7,r10,0x1,0x1f,0x1f
+  824604BC  7C674110             subfe r3,r7,r8
+  824604C0  4E800020             blr
+
 ; 824604F0  FUN_824604f0  (client_demo/cl_demo_filesystem.cpp:883)
   824604F0  7D8802A6             mfspr r12,LR
   824604F4  9181FFF8             stw r12,-0x8(r1)

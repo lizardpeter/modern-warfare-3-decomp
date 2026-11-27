@@ -91,6 +91,27 @@ LAB_82544e58:
   82544E84  EBE1FFF0             ld r31,-0x10(r1)
   82544E88  4E800020             blr
 
+; 825450C0  FUN_825450c0  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdremotetaskmanager/bdtaskbytebuffer.cpp:77)
+  825450C0  8163001C             lwz r11,0x1c(r3)
+  825450C4  2B0B0000             cmplwi cr6,r11,0x0
+  825450C8  419A0038             beq cr6,0x82545100
+  825450CC  3D008207             lis r8,-0x7df9
+  825450D0  3D608206             lis r11,-0x7dfa
+  825450D4  3D408207             lis r10,-0x7df9
+  825450D8  3CA08207             lis r5,-0x7df9
+  825450DC  3C808206             lis r4,-0x7dfa
+  825450E0  38C89778             subi r6,r8,0x6888
+  825450E4  392B1F38             addi r9,r11,0x1f38
+  825450E8  38EA9754             subi r7,r10,0x68ac
+  825450EC  38A59740             subi r5,r5,0x68c0
+  825450F0  38841DCC             addi r4,r4,0x1dcc
+  825450F4  39000050             li r8,0x50
+  825450F8  38600001             li r3,0x1
+  825450FC  48018EDC             b 0x8255dfd8
+LAB_82545100:
+  82545100  80830008             lwz r4,0x8(r3)
+  82545104  4BFFFDB4             b 0x82544eb8
+
 ; 82544DD0  FUN_82544dd0  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdremotetaskmanager/bdtaskbytebuffer.cpp:94)
   82544DD0  2B040005             cmplwi cr6,r4,0x5
   82544DD4  41980008             blt cr6,0x82544ddc

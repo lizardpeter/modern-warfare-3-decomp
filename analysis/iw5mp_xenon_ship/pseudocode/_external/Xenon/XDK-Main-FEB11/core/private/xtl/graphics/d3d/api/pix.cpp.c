@@ -1326,6 +1326,16 @@ void FUN_820bf8c0(int param_1,ulonglong param_2,int param_3,undefined8 param_4,u
 }
 
 
+// 820BF9F0  FUN_820bf9f0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/pix.cpp:1334)
+
+void FUN_820bf9f0(int param_1)
+
+{
+  *(byte *)(param_1 + 0x2b3f) = *(byte *)(param_1 + 0x2b3f) | 4;
+  return;
+}
+
+
 // 820BFA00  FUN_820bfa00  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/pix.cpp:1374)
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
@@ -1859,7 +1869,7 @@ void FUN_820c0590(int param_1)
   undefined4 local_5c;
   undefined4 local_58;
   undefined4 local_54;
-  undefined1 *local_48;
+  code *local_48;
   int local_44;
   uint local_38;
   undefined4 local_34;
@@ -1874,7 +1884,7 @@ void FUN_820c0590(int param_1)
   }
   FUN_82548530(&local_5c,0,0x3c);
   local_60 = *(undefined4 *)(param_1 + 0x41c8);
-  local_48 = &LAB_820c0588;
+  local_48 = thunk_FUN_820ad0d8;
   local_5c = 0x5014;
   local_54 = 4;
   local_28 = FUN_820bdc28;
@@ -2047,7 +2057,7 @@ void FUN_820c0978(int param_1)
 
 {
   code *pcVar1;
-  undefined1 *local_20;
+  code *local_20;
   int local_1c;
   
   if (_DAT_00010266 == (int *)0x0) {
@@ -2060,7 +2070,7 @@ void FUN_820c0978(int param_1)
   }
   (*pcVar1)(0x1c,0xffffffff820c06f8);
 LAB_820c09e0:
-  local_20 = &LAB_820bf9f0;
+  local_20 = FUN_820bf9f0;
   local_1c = param_1;
   if (_DAT_00010059 != 0) {
     (**(code **)(_DAT_00010059 + 0x18))(0x42,&local_20);
@@ -2082,13 +2092,13 @@ LAB_820c09e0:
 void FUN_820c0a68(undefined4 param_1)
 
 {
-  undefined1 *local_20;
+  code *local_20;
   undefined4 local_1c;
   
   if (_DAT_00010059 != 0) {
     (**(code **)(_DAT_00010059 + 0x18))(0x1c,0);
   }
-  local_20 = &LAB_820bf9f0;
+  local_20 = FUN_820bf9f0;
   local_1c = param_1;
   if (_DAT_00010059 != 0) {
     (**(code **)(_DAT_00010059 + 0x18))(0x41,&local_20);

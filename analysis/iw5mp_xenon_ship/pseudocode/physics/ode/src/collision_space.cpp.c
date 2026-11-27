@@ -76,7 +76,7 @@ void FUN_8237de18(undefined4 *param_1)
 {
   *param_1 = &PTR_FUN_8203aaf8;
   FUN_8237d410();
-  *param_1 = &PTR_LAB_8203aae0;
+  *param_1 = &PTR_FUN_8203aae0;
   return;
 }
 
@@ -170,6 +170,101 @@ void FUN_8237d4a0(int param_1)
       lVar6 = lVar6 + -1;
     } while (lVar6 != 0);
   }
+  return;
+}
+
+
+// 8237D610  FUN_8237d610  (physics/ode/src/collision_space.cpp:172)
+
+int FUN_8237d610(int param_1,int param_2)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  if ((*(int *)(param_1 + 0x5c) != 0) && (*(int *)(param_1 + 0x58) == param_2 + -1)) {
+    iVar1 = *(int *)(*(int *)(param_1 + 0x5c) + 0x20);
+    *(int *)(param_1 + 0x58) = param_2;
+    *(int *)(param_1 + 0x5c) = iVar1;
+    return iVar1;
+  }
+  iVar1 = *(int *)(param_1 + 0x50);
+  iVar2 = 0;
+  if (0 < param_2) {
+    do {
+      if (iVar1 == 0) {
+        return 0;
+      }
+      iVar2 = iVar2 + 1;
+      iVar1 = *(int *)(iVar1 + 0x20);
+    } while (iVar2 < param_2);
+  }
+  *(int *)(param_1 + 0x5c) = iVar1;
+  *(int *)(param_1 + 0x58) = param_2;
+  return iVar1;
+}
+
+
+// 8237D680  FUN_8237d680  (physics/ode/src/collision_space.cpp:192)
+
+void FUN_8237d680(int param_1,int param_2)
+
+{
+  undefined4 uVar1;
+  
+  *(int *)(param_2 + 0x28) = param_1;
+  uVar1 = *(undefined4 *)(param_1 + 0x50);
+  *(int **)(param_2 + 0x24) = (int *)(param_1 + 0x50);
+  *(undefined4 *)(param_2 + 0x20) = uVar1;
+  if (*(int *)(param_1 + 0x50) != 0) {
+    *(int *)(*(int *)(param_1 + 0x50) + 0x24) = param_2 + 0x20;
+  }
+  *(int *)(param_1 + 0x50) = param_2;
+  *(undefined4 *)(param_1 + 0x5c) = 0;
+  *(int *)(param_1 + 0x4c) = *(int *)(param_1 + 0x4c) + 1;
+  *(uint *)(param_2 + 8) = *(uint *)(param_2 + 8) | 3;
+  FUN_8237d310();
+  return;
+}
+
+
+// 8237D6D0  FUN_8237d6d0  (physics/ode/src/collision_space.cpp:215)
+
+void FUN_8237d6d0(int param_1,int param_2)
+
+{
+  if (*(int *)(param_2 + 0x20) != 0) {
+    *(undefined4 *)(*(int *)(param_2 + 0x20) + 0x24) = *(undefined4 *)(param_2 + 0x24);
+  }
+  **(undefined4 **)(param_2 + 0x24) = *(undefined4 *)(param_2 + 0x20);
+  *(int *)(param_1 + 0x4c) = *(int *)(param_1 + 0x4c) + -1;
+  *(undefined4 *)(param_2 + 0x20) = 0;
+  *(undefined4 *)(param_2 + 0x24) = 0;
+  *(undefined4 *)(param_2 + 0x28) = 0;
+  *(undefined4 *)(param_1 + 0x5c) = 0;
+  FUN_8237d310();
+  return;
+}
+
+
+// 8237D718  FUN_8237d718  (physics/ode/src/collision_space.cpp:239)
+
+void FUN_8237d718(int param_1,int param_2)
+
+{
+  undefined4 *puVar1;
+  
+  puVar1 = (undefined4 *)(param_2 + 0x20);
+  if (*(int *)(param_2 + 0x20) != 0) {
+    *(undefined4 *)(*(int *)(param_2 + 0x20) + 0x24) = *(undefined4 *)(param_2 + 0x24);
+  }
+  **(undefined4 **)(param_2 + 0x24) = *puVar1;
+  *puVar1 = *(undefined4 *)(param_1 + 0x50);
+  *(int **)(param_2 + 0x24) = (int *)(param_1 + 0x50);
+  if (*(int *)(param_1 + 0x50) != 0) {
+    *(undefined4 **)(*(int *)(param_1 + 0x50) + 0x24) = puVar1;
+  }
+  *(int *)(param_1 + 0x50) = param_2;
   return;
 }
 
@@ -458,7 +553,7 @@ undefined4 * FUN_8237df58(undefined4 *param_1)
 {
   *param_1 = &PTR_FUN_8203aaf8;
   FUN_8237d410();
-  *param_1 = &PTR_LAB_8203aae0;
+  *param_1 = &PTR_FUN_8203aae0;
   return param_1;
 }
 

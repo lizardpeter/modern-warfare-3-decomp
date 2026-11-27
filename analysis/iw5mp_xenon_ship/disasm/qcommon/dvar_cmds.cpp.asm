@@ -419,6 +419,12 @@ LAB_8229ebf4:
   8229EC04  382100A0             addi r1,r1,0xa0
   8229EC08  482A98F0             b 0x825484f8
 
+; 8229EC10  thunk_FUN_8229e9f0  (qcommon/dvar_cmds.cpp:282)
+  8229EC10  4BFFFDE0             b 0x8229e9f0
+
+; 8229EC18  thunk_FUN_8229e9f0  (qcommon/dvar_cmds.cpp:296)
+  8229EC18  4BFFFDD8             b 0x8229e9f0
+
 ; 8229EC20  FUN_8229ec20  (qcommon/dvar_cmds.cpp:329)
   8229EC20  7D8802A6             mfspr r12,LR
   8229EC24  9181FFF8             stw r12,-0x8(r1)
@@ -607,6 +613,9 @@ LAB_8229eeac:
   8229EEB0  8181FFF8             lwz r12,-0x8(r1)
   8229EEB4  7D8803A6             mtspr LR,r12
   8229EEB8  4E800020             blr
+
+; 8229EEC0  FUN_8229eec0  (qcommon/dvar_cmds.cpp:681)
+  8229EEC0  4E800020             blr
 
 ; 8229EEC8  FUN_8229eec8  (qcommon/dvar_cmds.cpp:695)
   8229EEC8  7D8802A6             mfspr r12,LR

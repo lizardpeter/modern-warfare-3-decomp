@@ -298,6 +298,23 @@ void FUN_8221f738(undefined8 param_1,int param_2,undefined4 param_3)
 }
 
 
+// 8221F840  FUN_8221f840  (EffectsCore/fx_update_api.cpp:357)
+
+bool FUN_8221f840(int param_1)
+
+{
+  if (*(int *)(param_1 + 0x10) == 0) {
+    if (*(char *)(param_1 + 0x14) != *(char *)(*(int *)(param_1 + 0xc) + 3)) {
+      *(undefined4 *)(param_1 + 0x10) = 0;
+      return true;
+    }
+    sync(1);
+    *(undefined4 *)(param_1 + 0x10) = 1;
+  }
+  return *(int *)(param_1 + 0x10) == 0;
+}
+
+
 // 8221F898  FUN_8221f898  (EffectsCore/fx_update_api.cpp:366)
 
 bool FUN_8221f898(int param_1)

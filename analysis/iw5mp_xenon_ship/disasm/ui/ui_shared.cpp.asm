@@ -3017,6 +3017,10 @@ LAB_822f8fc8:
   822F8FC8  38210470             addi r1,r1,0x470
   822F8FCC  4824F540             b 0x8254850c
 
+; 822F8FD0  FUN_822f8fd0  (ui/ui_shared.cpp:2033)
+  822F8FD0  7CA42B78             or r4,r5,r5
+  822F8FD4  4BF8AB6C             b 0x82283b40
+
 ; 822F8FD8  FUN_822f8fd8  (ui/ui_shared.cpp:2039)
   822F8FD8  7D8802A6             mfspr r12,LR
   822F8FDC  9181FFF8             stw r12,-0x8(r1)
@@ -3695,6 +3699,78 @@ LAB_822f942c:
   822F943C  CBE1FFE8             lfd f31,-0x18(r1)
   822F9440  EBE1FFF0             ld r31,-0x10(r1)
   822F9444  4E800020             blr
+
+; 822F9448  FUN_822f9448  (ui/ui_shared.cpp:2157)
+  822F9448  3D608230             lis r11,-0x7dd0
+  822F944C  80630000             lwz r3,0x0(r3)
+  822F9450  3D408230             lis r10,-0x7dd0
+  822F9454  7CA42B78             or r4,r5,r5
+  822F9458  38CB8FD0             subi r6,r11,0x7030
+  822F945C  38AA9368             subi r5,r10,0x6c98
+  822F9460  4BFFFD40             b 0x822f91a0
+
+; 822F9468  FUN_822f9468  (ui/ui_shared.cpp:2163)
+  822F9468  3D608230             lis r11,-0x7dd0
+  822F946C  80630000             lwz r3,0x0(r3)
+  822F9470  3D408230             lis r10,-0x7dd0
+  822F9474  7CA42B78             or r4,r5,r5
+  822F9478  38CB8FD0             subi r6,r11,0x7030
+  822F947C  38AA9390             subi r5,r10,0x6c70
+  822F9480  4BFFFD20             b 0x822f91a0
+
+; 822F9488  FUN_822f9488  (ui/ui_shared.cpp:2169)
+  822F9488  3D608230             lis r11,-0x7dd0
+  822F948C  80630000             lwz r3,0x0(r3)
+  822F9490  3D408230             lis r10,-0x7dd0
+  822F9494  7CA42B78             or r4,r5,r5
+  822F9498  38CB8FD0             subi r6,r11,0x7030
+  822F949C  38AA93E0             subi r5,r10,0x6c20
+  822F94A0  4BFFFD00             b 0x822f91a0
+
+; 822F94A8  FUN_822f94a8  (ui/ui_shared.cpp:2175)
+  822F94A8  3D608228             lis r11,-0x7dd8
+  822F94AC  80630000             lwz r3,0x0(r3)
+  822F94B0  3D408230             lis r10,-0x7dd0
+  822F94B4  7CA42B78             or r4,r5,r5
+  822F94B8  38CB4ED8             addi r6,r11,0x4ed8
+  822F94BC  38AA9368             subi r5,r10,0x6c98
+  822F94C0  4BFFFCE0             b 0x822f91a0
+
+; 822F94C8  FUN_822f94c8  (ui/ui_shared.cpp:2181)
+  822F94C8  3D608228             lis r11,-0x7dd8
+  822F94CC  80630000             lwz r3,0x0(r3)
+  822F94D0  3D408230             lis r10,-0x7dd0
+  822F94D4  7CA42B78             or r4,r5,r5
+  822F94D8  38CB4ED8             addi r6,r11,0x4ed8
+  822F94DC  38AA9390             subi r5,r10,0x6c70
+  822F94E0  4BFFFCC0             b 0x822f91a0
+
+; 822F94E8  FUN_822f94e8  (ui/ui_shared.cpp:2187)
+  822F94E8  3D608228             lis r11,-0x7dd8
+  822F94EC  80630000             lwz r3,0x0(r3)
+  822F94F0  3D408230             lis r10,-0x7dd0
+  822F94F4  7CA42B78             or r4,r5,r5
+  822F94F8  38CB4ED8             addi r6,r11,0x4ed8
+  822F94FC  38AA93E0             subi r5,r10,0x6c20
+  822F9500  4BFFFCA0             b 0x822f91a0
+
+; 822F9508  FUN_822f9508  (ui/ui_shared.cpp:2193)
+  822F9508  3D608230             lis r11,-0x7dd0
+  822F950C  80630000             lwz r3,0x0(r3)
+  822F9510  38CB9368             subi r6,r11,0x6c98
+  822F9514  4BFFFD4C             b 0x822f9260
+
+; 822F9518  FUN_822f9518  (ui/ui_shared.cpp:2199)
+  822F9518  3D608230             lis r11,-0x7dd0
+  822F951C  80630000             lwz r3,0x0(r3)
+  822F9520  38CB9390             subi r6,r11,0x6c70
+  822F9524  4BFFFD3C             b 0x822f9260
+
+; 822F9528  FUN_822f9528  (ui/ui_shared.cpp:2205)
+  822F9528  3D608230             lis r11,-0x7dd0
+  822F952C  80630000             lwz r3,0x0(r3)
+  822F9530  38CB93E0             subi r6,r11,0x6c20
+  822F9534  4BFFFD2C             b 0x822f9260
 
 ; 822F9538  FUN_822f9538  (ui/ui_shared.cpp:2211)
   822F9538  7D8802A6             mfspr r12,LR
@@ -6597,6 +6673,20 @@ LAB_822faf48:
   822FAF68  EBE1FFF0             ld r31,-0x10(r1)
   822FAF6C  4E800020             blr
 
+; 822FAF70  FUN_822faf70  (ui/ui_shared.cpp:3232)
+  822FAF70  80630000             lwz r3,0x0(r3)
+  822FAF74  4BF8EC7C             b 0x82289bf0
+
+; 822FAF78  FUN_822faf78  (ui/ui_shared.cpp:3239)
+  822FAF78  80630000             lwz r3,0x0(r3)
+  822FAF7C  4BF94BCC             b 0x8228fb48
+
+; 822FAF90  thunk_FUN_8228ef78  (ui/ui_shared.cpp:3262)
+  822FAF90  4BF93FE8             b 0x8228ef78
+
+; 822FAF98  thunk_FUN_8228f208  (ui/ui_shared.cpp:3269)
+  822FAF98  4BF94270             b 0x8228f208
+
 ; 822FAFA0  FUN_822fafa0  (ui/ui_shared.cpp:3276)
   822FAFA0  7D8802A6             mfspr r12,LR
   822FAFA4  4824D519             bl 0x825484bc
@@ -8396,6 +8486,12 @@ LAB_822fc764:
   822FC770  EBE1FFF0             ld r31,-0x10(r1)
   822FC774  4E800020             blr
 
+; 822FC778  FUN_822fc778  (ui/ui_shared.cpp:3904)
+  822FC778  4E800020             blr
+
+; 822FC780  FUN_822fc780  (ui/ui_shared.cpp:3927)
+  822FC780  4E800020             blr
+
 ; 822FC788  FUN_822fc788  (ui/ui_shared.cpp:4016)
   822FC788  7D8802A6             mfspr r12,LR
   822FC78C  9181FFF8             stw r12,-0x8(r1)
@@ -8531,6 +8627,17 @@ LAB_822fc96c:
   822FC978  EBC1FFE8             ld r30,-0x18(r1)
   822FC97C  EBE1FFF0             ld r31,-0x10(r1)
   822FC980  4E800020             blr
+
+; 822FC988  FUN_822fc988  (ui/ui_shared.cpp:4118)
+  822FC988  3D60836B             lis r11,-0x7c95
+  822FC98C  3D400005             lis r10,0x5
+  822FC990  392BDD08             subi r9,r11,0x22f8
+  822FC994  614873C0             ori r8,r10,0x73c0
+  822FC998  3CE00005             lis r7,0x5
+  822FC99C  60E673C8             ori r6,r7,0x73c8
+  822FC9A0  7D69402A             ldx r11,r9,r8
+  822FC9A4  7D69312A             stdx r11,r9,r6
+  822FC9A8  4E800020             blr
 
 ; 822FC9B0  FUN_822fc9b0  (ui/ui_shared.cpp:4125)
   822FC9B0  7D8802A6             mfspr r12,LR
@@ -8781,6 +8888,9 @@ LAB_82308a24:
   82308A24  38210080             addi r1,r1,0x80
   82308A28  4823FAE0             b 0x82548508
 
+; 822FCB60  thunk_FUN_8218bfd0  (ui/ui_shared.cpp:4317)
+  822FCB60  4BE8F470             b 0x8218bfd0
+
 ; 82308A30  FUN_82308a30  (ui/ui_shared.cpp:4324)
   82308A30  7D8802A6             mfspr r12,LR
   82308A34  4823FA85             bl 0x825484b8
@@ -8912,6 +9022,17 @@ LAB_822fcc3c:
   822FCC48  EBC1FFE8             ld r30,-0x18(r1)
   822FCC4C  EBE1FFF0             ld r31,-0x10(r1)
   822FCC50  4E800020             blr
+
+; 822FCC58  FUN_822fcc58  (ui/ui_shared.cpp:4456)
+  822FCC58  3D608309             lis r11,-0x7cf7
+  822FCC5C  3D408207             lis r10,-0x7df9
+  822FCC60  388A0DF0             addi r4,r10,0xdf0
+  822FCC64  806B4D00             lwz r3,0x4d00(r11)
+  822FCC68  4802B318             b 0x82327f80
+
+; 822FCC70  FUN_822fcc70  (ui/ui_shared.cpp:4464)
+  822FCC70  80840134             lwz r4,0x134(r4)
+  822FCC74  4800E0E4             b 0x8230ad58
 
 ; 822FCC78  FUN_822fcc78  (ui/ui_shared.cpp:4470)
   822FCC78  7D8802A6             mfspr r12,LR
@@ -9490,6 +9611,12 @@ LAB_822fd480:
   822FD488  7D8803A6             mtspr LR,r12
   822FD48C  EBE1FFF0             ld r31,-0x10(r1)
   822FD490  4E800020             blr
+
+; 822FD498  FUN_822fd498  (ui/ui_shared.cpp:4806)
+  822FD498  4E800020             blr
+
+; 822FD4A0  FUN_822fd4a0  (ui/ui_shared.cpp:4837)
+  822FD4A0  4E800020             blr
 
 ; 822FD4A8  FUN_822fd4a8  (ui/ui_shared.cpp:4868)
   822FD4A8  7D8802A6             mfspr r12,LR

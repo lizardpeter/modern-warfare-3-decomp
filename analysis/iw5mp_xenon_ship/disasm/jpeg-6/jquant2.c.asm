@@ -1580,6 +1580,9 @@ LAB_8245b9f4:
   8245BA40  EBE1FFF0             ld r31,-0x10(r1)
   8245BA44  4E800020             blr
 
+; 8245BA48  FUN_8245ba48  (jpeg-6/jquant2.c:1157)
+  8245BA48  4E800020             blr
+
 ; 8245BA50  FUN_8245ba50  (jpeg-6/jquant2.c:1168)
   8245BA50  7D8802A6             mfspr r12,LR
   8245BA54  480ECA61             bl 0x825484b4
@@ -1698,6 +1701,12 @@ LAB_8245bbd0:
 LAB_8245bbe8:
   8245BBE8  38210080             addi r1,r1,0x80
   8245BBEC  480EC918             b 0x82548504
+
+; 8245BBF0  FUN_8245bbf0  (jpeg-6/jquant2.c:1231)
+  8245BBF0  816301B0             lwz r11,0x1b0(r3)
+  8245BBF4  39400001             li r10,0x1
+  8245BBF8  994B001C             stb r10,0x1c(r11)
+  8245BBFC  4E800020             blr
 
 ; 8245BC00  FUN_8245bc00  (jpeg-6/jquant2.c:1245)
   8245BC00  7D8802A6             mfspr r12,LR

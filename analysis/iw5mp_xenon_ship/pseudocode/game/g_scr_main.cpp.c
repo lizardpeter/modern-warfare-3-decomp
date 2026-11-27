@@ -344,6 +344,24 @@ LAB_8224d790:
 }
 
 
+// 8224D7A8  FUN_8224d7a8  (game/g_scr_main.cpp:587)
+
+void FUN_8224d7a8(void)
+
+{
+  return;
+}
+
+
+// 8224D7B0  FUN_8224d7b0  (game/g_scr_main.cpp:614)
+
+void FUN_8224d7b0(void)
+
+{
+  return;
+}
+
+
 // 8224D7D0  FUN_8224d7d0  (game/g_scr_main.cpp:721)
 
 /* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
@@ -402,6 +420,24 @@ void FUN_8224d830(ulonglong param_1,char *param_2)
   if (!bVar1) {
     FUN_822b8a20();
   }
+  return;
+}
+
+
+// 8224D8C0  FUN_8224d8c0  (game/g_scr_main.cpp:783)
+
+void FUN_8224d8c0(void)
+
+{
+  return;
+}
+
+
+// 8224D8C8  FUN_8224d8c8  (game/g_scr_main.cpp:844)
+
+void FUN_8224d8c8(void)
+
+{
   return;
 }
 
@@ -856,6 +892,16 @@ void FUN_8224e080(void)
     FUN_822b8a20();
   }
   FUN_822bb430(auStack_20);
+  return;
+}
+
+
+// 8224E120  FUN_8224e120  (game/g_scr_main.cpp:1554)
+
+void FUN_8224e120(void)
+
+{
+  FUN_822bb170(DAT_82fc4428);
   return;
 }
 
@@ -2012,6 +2058,15 @@ void FUN_8224f628(uint param_1)
 }
 
 
+// 8224F6A8  FUN_8224f6a8  (game/g_scr_main.cpp:2588)
+
+void FUN_8224f6a8(void)
+
+{
+  return;
+}
+
+
 // 8224F6B0  FUN_8224f6b0  (game/g_scr_main.cpp:2605)
 
 void FUN_8224f6b0(uint param_1)
@@ -2704,6 +2759,26 @@ void FUN_82250220(uint param_1,undefined4 param_2)
     FUN_822b8a20();
   }
   *(undefined4 *)(puVar2 + 0xb) = param_2;
+  return;
+}
+
+
+// 822502E8  FUN_822502e8  (game/g_scr_main.cpp:3115)
+
+void FUN_822502e8(undefined8 param_1)
+
+{
+  FUN_82250220(param_1,1);
+  return;
+}
+
+
+// 822502F0  FUN_822502f0  (game/g_scr_main.cpp:3131)
+
+void FUN_822502f0(undefined8 param_1)
+
+{
+  FUN_82250220(param_1,0);
   return;
 }
 
@@ -4199,6 +4274,26 @@ LAB_82251808:
 }
 
 
+// 82251880  FUN_82251880  (game/g_scr_main.cpp:4257)
+
+void FUN_82251880(undefined8 param_1)
+
+{
+  FUN_822516e8(param_1,0);
+  return;
+}
+
+
+// 82251888  FUN_82251888  (game/g_scr_main.cpp:4277)
+
+void FUN_82251888(undefined8 param_1)
+
+{
+  FUN_822516e8(param_1,1);
+  return;
+}
+
+
 // 82251890  FUN_82251890  (game/g_scr_main.cpp:4293)
 
 void FUN_82251890(uint param_1)
@@ -4452,6 +4547,36 @@ void FUN_82251a58(uint param_1,int param_2)
     return;
   }
   FUN_8226f9e8(puVar7);
+  return;
+}
+
+
+// 82251E00  FUN_82251e00  (game/g_scr_main.cpp:4515)
+
+void FUN_82251e00(undefined8 param_1)
+
+{
+  FUN_82251a58(param_1,0);
+  return;
+}
+
+
+// 82251E08  FUN_82251e08  (game/g_scr_main.cpp:4539)
+
+void FUN_82251e08(undefined8 param_1)
+
+{
+  FUN_82251a58(param_1,1);
+  return;
+}
+
+
+// 82251E10  FUN_82251e10  (game/g_scr_main.cpp:4563)
+
+void FUN_82251e10(undefined8 param_1)
+
+{
+  FUN_82251a58(param_1,2);
   return;
 }
 
@@ -4873,6 +4998,15 @@ void FUN_822525a8(uint param_1)
   *(undefined4 *)(iVar1 + 0x3680) = *(undefined4 *)(iVar1 + 0x3688);
   *(undefined4 *)(iVar1 + 0x3694) = *(undefined4 *)(iVar1 + 0x369c);
   *(undefined4 *)(iVar1 + 0x3698) = *(undefined4 *)(iVar1 + 0x36a0);
+  return;
+}
+
+
+// 82252798  FUN_82252798  (game/g_scr_main.cpp:5007)
+
+void FUN_82252798(void)
+
+{
   return;
 }
 
@@ -7489,6 +7623,26 @@ void FUN_82255730(uint param_1,undefined8 param_2)
 }
 
 
+// 82255808  FUN_82255808  (game/g_scr_main.cpp:7766)
+
+void FUN_82255808(undefined8 param_1)
+
+{
+  FUN_82255730(param_1,0x65);
+  return;
+}
+
+
+// 82255810  FUN_82255810  (game/g_scr_main.cpp:7785)
+
+void FUN_82255810(undefined8 param_1)
+
+{
+  FUN_82255730(param_1,0x67);
+  return;
+}
+
+
 // 82255818  FUN_82255818  (game/g_scr_main.cpp:7794)
 
 void FUN_82255818(undefined8 param_1)
@@ -8655,6 +8809,16 @@ void FUN_82256f70(void)
 }
 
 
+// 82256FF0  FUN_82256ff0  (game/g_scr_main.cpp:9164)
+
+void FUN_82256ff0(void)
+
+{
+  FUN_82256dc0(0);
+  return;
+}
+
+
 // 82256FF8  FUN_82256ff8  (game/g_scr_main.cpp:9187)
 
 void FUN_82256ff8(undefined4 param_1)
@@ -8802,6 +8966,26 @@ void FUN_82257260(undefined4 param_1,undefined8 param_2,undefined8 param_3,undef
   FUN_822ba9a8(0,auStack_30);
   FUN_82236d18(0x3ff0000000000000,lVar3,uVar2,auStack_30,param_4,0,param_2);
   FUN_822bb1a8();
+  return;
+}
+
+
+// 82257300  FUN_82257300  (game/g_scr_main.cpp:9328)
+
+void FUN_82257300(undefined8 param_1)
+
+{
+  FUN_82257260(param_1,0x802011);
+  return;
+}
+
+
+// 82257310  FUN_82257310  (game/g_scr_main.cpp:9346)
+
+void FUN_82257310(undefined8 param_1)
+
+{
+  FUN_82257260(param_1,0x801);
   return;
 }
 
@@ -10299,6 +10483,33 @@ void FUN_82259368(void)
 }
 
 
+// 82259408  FUN_82259408  (game/g_scr_main.cpp:11074)
+
+void FUN_82259408(void)
+
+{
+  return;
+}
+
+
+// 82259410  FUN_82259410  (game/g_scr_main.cpp:11096)
+
+void FUN_82259410(void)
+
+{
+  return;
+}
+
+
+// 82259418  FUN_82259418  (game/g_scr_main.cpp:11118)
+
+void FUN_82259418(void)
+
+{
+  return;
+}
+
+
 // 82259420  FUN_82259420  (game/g_scr_main.cpp:11141)
 
 void FUN_82259420(void)
@@ -10325,6 +10536,60 @@ void FUN_82259420(void)
   *(float *)(iVar1 + 0x3630) = *(float *)(iVar1 + 0x1c) - local_20;
   *(float *)(iVar1 + 0x3634) = *(float *)(iVar1 + 0x20) - local_1c;
   *(float *)(iVar1 + 0x3638) = *(float *)(iVar1 + 0x24) - local_18;
+  return;
+}
+
+
+// 822594D8  FUN_822594d8  (game/g_scr_main.cpp:11173)
+
+void FUN_822594d8(void)
+
+{
+  return;
+}
+
+
+// 822594E0  FUN_822594e0  (game/g_scr_main.cpp:11282)
+
+void FUN_822594e0(void)
+
+{
+  return;
+}
+
+
+// 822594F0  FUN_822594f0  (game/g_scr_main.cpp:11385)
+
+void FUN_822594f0(void)
+
+{
+  return;
+}
+
+
+// 822594F8  FUN_822594f8  (game/g_scr_main.cpp:11404)
+
+void FUN_822594f8(void)
+
+{
+  return;
+}
+
+
+// 82259500  FUN_82259500  (game/g_scr_main.cpp:11421)
+
+void FUN_82259500(void)
+
+{
+  return;
+}
+
+
+// 82259508  FUN_82259508  (game/g_scr_main.cpp:11503)
+
+void FUN_82259508(void)
+
+{
   return;
 }
 
@@ -10458,6 +10723,20 @@ void FUN_82259768(void)
   uVar2 = FUN_822bacf8(1);
   FUN_822b3d28(uVar1,uVar2);
   return;
+}
+
+
+// 822597C0  FUN_822597c0  (game/g_scr_main.cpp:11719)
+
+bool FUN_822597c0(float *param_1,float *param_2)
+
+{
+  return (DAT_82fe0a80 - param_1[1]) * (DAT_82fe0a80 - param_1[1]) +
+         (DAT_82fe0a7c - *param_1) * (DAT_82fe0a7c - *param_1) +
+         (DAT_82fe0a84 - param_1[2]) * (DAT_82fe0a84 - param_1[2]) <
+         (DAT_82fe0a80 - param_2[1]) * (DAT_82fe0a80 - param_2[1]) +
+         (DAT_82fe0a7c - *param_2) * (DAT_82fe0a7c - *param_2) +
+         (DAT_82fe0a84 - param_2[2]) * (DAT_82fe0a84 - param_2[2]);
 }
 
 

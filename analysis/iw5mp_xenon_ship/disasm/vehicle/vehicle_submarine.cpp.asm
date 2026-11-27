@@ -639,6 +639,40 @@ LAB_823acd3c:
   823ACD88  4819B895             bl 0x8254861c
   823ACD8C  4819B750             b 0x825484dc
 
+; 823ACD90  FUN_823acd90  (vehicle/vehicle_submarine.cpp:437)
+  823ACD90  C0030004             lfs f0,0x4(r3)
+  823ACD94  3D608205             lis r11,-0x7dfb
+  823ACD98  C1A40004             lfs f13,0x4(r4)
+  823ACD9C  ED8D0032             fmuls f12,f13,f0
+  823ACDA0  C0030000             lfs f0,0x0(r3)
+  823ACDA4  C1A40000             lfs f13,0x0(r4)
+  823ACDA8  C1430008             lfs f10,0x8(r3)
+  823ACDAC  C1240008             lfs f9,0x8(r4)
+  823ACDB0  C16B80F0             lfs f11,-0x7f10(r11)
+  823ACDB4  ED0D603A             fmadds f8,f13,f0,f12
+  823ACDB8  ED8942BA             fmadds f12,f9,f10,f8
+  823ACDBC  FF0C5800             fcmpu cr6,f12,f11
+  823ACDC0  40980034             bge cr6,0x823acdf4
+  823ACDC4  FD806050             fneg f12,f12
+  823ACDC8  ED6D033A             fmadds f11,f13,f12,f0
+  823ACDCC  D1650000             stfs f11,0x0(r5)
+  823ACDD0  C1440004             lfs f10,0x4(r4)
+  823ACDD4  C1230004             lfs f9,0x4(r3)
+  823ACDD8  ED0A4B3A             fmadds f8,f10,f12,f9
+  823ACDDC  D1050004             stfs f8,0x4(r5)
+  823ACDE0  C0E40008             lfs f7,0x8(r4)
+  823ACDE4  C0C30008             lfs f6,0x8(r3)
+  823ACDE8  ECA7333A             fmadds f5,f7,f12,f6
+  823ACDEC  D0A50008             stfs f5,0x8(r5)
+  823ACDF0  4E800020             blr
+LAB_823acdf4:
+  823ACDF4  D0050000             stfs f0,0x0(r5)
+  823ACDF8  C0030004             lfs f0,0x4(r3)
+  823ACDFC  D0050004             stfs f0,0x4(r5)
+  823ACE00  C1A30008             lfs f13,0x8(r3)
+  823ACE04  D1A50008             stfs f13,0x8(r5)
+  823ACE08  4E800020             blr
+
 ; 823ACE10  FUN_823ace10  (vehicle/vehicle_submarine.cpp:452)
   823ACE10  7D8802A6             mfspr r12,LR
   823ACE14  4819B6A9             bl 0x825484bc

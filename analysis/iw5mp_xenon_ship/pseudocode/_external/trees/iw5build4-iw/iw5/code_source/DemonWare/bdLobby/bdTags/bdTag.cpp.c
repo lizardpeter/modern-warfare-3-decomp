@@ -61,6 +61,15 @@ LAB_82531c18:
 }
 
 
+// 82531B20  FUN_82531b20  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdfacebook/bdfacebooktag.cpp:36)
+
+undefined8 FUN_82531b20(void)
+
+{
+  return 0x18;
+}
+
+
 // 82531B28  FUN_82531b28  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdtags/bdtag.cpp:47)
 
 void FUN_82531b28(int param_1,undefined8 param_2,undefined8 param_3)
@@ -69,6 +78,20 @@ void FUN_82531b28(int param_1,undefined8 param_2,undefined8 param_3)
   *(undefined8 *)(param_1 + 8) = param_2;
   *(undefined8 *)(param_1 + 0x10) = param_3;
   return;
+}
+
+
+// 82531B38  FUN_82531b38  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdtags/bdtag.cpp:53)
+
+undefined8 FUN_82531b38(int param_1)
+
+{
+  undefined8 uVar1;
+  
+  if ((*(longlong *)(param_1 + 8) == -1) || (uVar1 = 1, *(longlong *)(param_1 + 0x10) == -1)) {
+    uVar1 = 0;
+  }
+  return uVar1;
 }
 
 

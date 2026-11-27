@@ -175,6 +175,20 @@ void FUN_82298ea8(int param_1)
 }
 
 
+// 82298F30  FUN_82298f30  (qcommon/com_storage_remoteupload.cpp:226)
+
+void FUN_82298f30(int param_1)
+
+{
+  *(undefined1 *)((int)&DAT_83093888 + param_1) = 1;
+  DAT_8309387c = 0;
+  DAT_83093880 = 0;
+  DAT_8309388c = 0;
+  DAT_83093910 = -(uint)(DAT_83093910 == 0) & DAT_83093910;
+  return;
+}
+
+
 // 82299248  FUN_82299248  (qcommon/com_storage_remoteupload.cpp:239)
 
 /* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
@@ -205,7 +219,7 @@ void FUN_82299248(undefined8 param_1,undefined8 param_2)
   DAT_83093a10 = &DAT_83093a20;
   DAT_83093a14 = 2;
   DAT_83093a1c = FUN_82298ea8;
-  DAT_83093a18 = &LAB_82298f30;
+  DAT_83093a18 = FUN_82298f30;
   DAT_83093a08 = param_2;
   FUN_82296198(param_1);
   uVar1 = FUN_82299d60(0xffffffff830917c8,param_1,5);

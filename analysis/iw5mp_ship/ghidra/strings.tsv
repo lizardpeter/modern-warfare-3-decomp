@@ -253,6 +253,7 @@ va	type	value
 14045C298	string	attachment
 14045C2A8	string	attachmentRestricted
 14045C2C8	string	deathstreak
+14045C2D4	string	perks
 14045C2E8	string	perkRestricted
 14045C300	string	assaultStreaks
 14045C310	string	streaktype_assault
@@ -1139,6 +1140,7 @@ va	type	value
 140464150	string	The size of the full map's border, filled by the CG_PLAYER_FULLMAP_BORDER ownerdraw
 1404641A8	string	cg_hudMapBorderWidth
 1404641C0	string	Compass ownerdraw had width or height of 0
+140464200	string	%.1fm
 140464257	string	?%s_Spectator
 140464268	string	%s_Free
 140464270	string	%s_Axis
@@ -1613,6 +1615,7 @@ va	type	value
 140468A79	string	CG_CanSeePlayer: Couldn't find [j_head] on player 
 140468AB1	string	CG_CanSeePlayer: Couldn't find [j_mainroot] on player 
 140468AE8	string	%.0f %.0f %.0f %.0f : %.0f %i %i [%i] 
+140468B10	string	52.61.79.6d.65.4c.6f.76.65.73.53.61.72.61.68 
 140468B40	string	%i %i %i %X 
 140468B9B	string	=fff?WEAPON_FRAGGRENADE
 140468BB8	string	WEAPON_SMOKEGRENADE
@@ -2106,6 +2109,8 @@ va	type	value
 14046CEA0	string	code/glass_shatter_piece
 14046CEC0	string	code/glass_shatter_64x64
 14046CEE0	string	code/glass_shatter_32x32
+14046CF10	string	ui_mp/hud_720.txt
+14046CF28	string	ui_mp/hud_480.txt
 14046CF3C	string	white
 14046CF48	string	fonts/smallDevFont
 14046CF60	string	fonts/bigDevFont
@@ -2169,7 +2174,7 @@ va	type	value
 14046D6F0	string	+speed_throw
 14046D700	string	+speed
 14046D708	string	toggleads
-14046D714	string	+melee
+14046D715	string	melee
 14046D720	string	+melee_breath
 14046D730	string	+melee_zoom
 14046D740	string	+attack
@@ -2239,6 +2244,7 @@ va	type	value
 14046E028	string	scoreboard team name
 14046E040	string	g_TeamName_Allies
 14046E058	string	CGAME_SPECTATORS
+14046E06C	string	( %i )
 14046E078	string	voice_off
 14046E088	string	g_ScoresColor
 14046E098	string	black
@@ -2321,6 +2327,7 @@ va	type	value
 14046E97E	string	EXE_ERR_RELIABLE_CYCLED_OUT
 14046E9BE	string	EXE_ERR_NOT_RECEIVED
 14046E9D8	string	EXE_SERVER_DISCONNECTED
+14046E9F0	string	J_Spine4
 14046EA00	string	tag_weapon_left
 14046EA10	string	CGAME_PLAYERRENAMES
 14046EA28	string	%s^7 %s %s
@@ -2659,6 +2666,7 @@ va	type	value
 140471738	string	cl_demo_keyboardcomplete
 140471754	string	.demo
 140471760	string	%s.demo
+140471768	string	demo/%s
 140471770	string	GAME_REPLAY_FILE
 140471788	string	EXE_ERR_INVALID_DEMO_FILE
 1404717A9	string	Exe Mode Mismatch. Demo's Mode: %s Current Mode: %s
@@ -2927,6 +2935,7 @@ va	type	value
 1404734F8	string	Default pitch
 140473508	string	m_pitch
 140473510	string	Default yaw
+14047351C	string	m_yaw
 140473528	string	Forward speed in units per second
 140473550	string	m_forward
 140473560	string	Sideways motion in units per second
@@ -3022,6 +3031,7 @@ va	type	value
 140473D78	string	RECORDING %s: %llik
 140473D91	string	SCR_DrawScreenField: bad clcState
 140473DB8	string	[%s]%s
+140473DC0	string	[^3%s^%c]%s
 140473DD0	string	%iihear %i
 140473DDC	string	ihear
 140473DE8	string	%icanthear %i
@@ -3472,6 +3482,7 @@ va	type	value
 140477D28	string	patch_%s
 140477D34	string	%s.ff
 140477D3C	string	patch
+140477D44	string	_load
 140477D50	string	MENU_CONTENT_NOT_AVAILABLE
 140477D70	string	Failed to create database thread
 140477D98	string	Could not load default asset for asset type '%s'
@@ -3872,12 +3883,15 @@ va	type	value
 14047CC08	string	%c %i 1
 14047CC10	string	%c %i %i %i
 14047CC20	string	Client Dvar Value
+14047CC38	string	%c %s "%s"
 14047CC48	string	%c %g %g %g
 14047CC58	string	%c %i %g %g
 14047CC68	string	%c %i %i %g
 14047CC78	string	%c %i "%s" %g %g %g
 14047CC90	string	nightvision
 14047CCA0	string	%c "%s" 0
+14047CCAC	string	JKLMN
+14047CCB8	string	%c "%s" %i
 14047CCC8	string	%c %i %f %i %i
 14047D840	string	The amount of damage a piece of glass must take to look damaged
 14047D880	string	glass_damageToWeaken
@@ -3914,6 +3928,7 @@ va	type	value
 14047E240	string	Hud Elem String
 14047E250	string	setClock
 14047E260	string	setClockUp
+14047E2B8	string	Weapon;%s;%d;%s;%s 
 14047E2D0	string	weapon_%s
 14047E2E1	string	No world model loaded for entity %i with model %s
 14047E321	string	Too many different hintstring values on weapons. Max allowed is %i different strings
@@ -4561,6 +4576,7 @@ va	type	value
 140484460	string	player status icon
 140484478	string	minimap icon
 140484488	string	mp anim
+140484490	string	team fx
 140484498	string	"%s" %i
 1404844A0	string	Announcement
 1404844B0	string	%c "%s" 2
@@ -4737,6 +4753,7 @@ va	type	value
 140485FE8	string	not_in_game
 140485FF8	string	playing_mp
 140486008	string	playing_sp
+140486014	string	lobby
 14048601C	string	party
 140486028	string	not_playing
 140486038	string	playing_so
@@ -5267,8 +5284,10 @@ va	type	value
 14048B428	string	Couldn't load image '%s' to recover from a lost device
 14048B460	string	No way to recover image '%s' from a lost device
 14048B490	string	failed to load image '%s'
+14048B4AC	string	$black
 14048B4B8	string	$black_3d
 14048B4C8	string	$black_cube
+14048B4D4	string	$gray
 14048B4E0	string	$identitynormalmap
 14048B4F8	string	sys_sysMB
 14048B508	string	<water>
@@ -5748,6 +5767,7 @@ va	type	value
 14049D6E0	string	%i%s %02i%s %02i%s
 14049D6F8	string	%02i%s %02i%s
 14049D708	string	MENU_SECONDS_ABBREVIATION
+14049D724	string	%.2f%s
 14049D730	string	%i%s %02i%s %02i%s %04.1f%s
 14049D750	string	%02i%s %02i%s %04.1f%s
 14049D768	string	%02i%s %04.1f%s
@@ -5801,6 +5821,8 @@ va	type	value
 14049E200	string	EXE_ONLINE_TEMP_BAN_PLAYER
 14049E220	string	EXE_FEATURE_PERM_BAN_PLAYER
 14049E240	string	EXE_FEATURE_TEMP_BAN_PLAYER
+14049E260	string	%s  %s  %s: %d
+14049E270	string	%s  %s
 14049E278	string	challengeState
 14049E288	string	popup_gettingdata
 14049E2A0	string	popup_connecting_gdk
@@ -5891,14 +5913,17 @@ va	type	value
 14049EFF8	string	RCR:%d:%d 
 14049F014	string	What?
 14049F1BE	string	#<Physics constraint force mixing magic parameter.
+14049F1F8	string	phys_cfm
 14049F208	string	Physics error reduction magic parameter.
 14049F238	string	phys_erp
 14049F248	string	Physics maximum correcting velocity magic parameter.
+14049F280	string	phys_mcv
 14049F290	string	Physics maximum correcting velocity magic parameter (for ragdoll).
 14049F2D8	string	phys_mcv_ragdoll
 14049F2F0	string	Physics maximum correcting velocity magic parameter (for vehicles).
 14049F338	string	phys_mcv_vehicle
 14049F350	string	Physics contact surface level magic parameter.
+14049F380	string	phys_csl
 14049F390	string	Physics gravity in units/sec^2.
 14049F3B0	string	phys_gravity
 14049F3C0	string	Physics gravity used by ragdolls in units/sec^2.
@@ -5908,6 +5933,7 @@ va	type	value
 14049F460	string	Scale of the effective offset from the center of mass for the bullet impacts.
 14049F4B0	string	phys_bulletSpinScale
 14049F4C8	string	Number of iterations that QuickStep performs per step.
+14049F500	string	phys_qsi
 14049F510	string	ODE solver reorder constraints
 14049F530	string	phys_reorderConst
 14049F550	string	Make all contacts joints between an object and the world: no object-object contacts
@@ -6153,6 +6179,7 @@ va	type	value
 1404A1978	string	Error during initialization: %s 
 1404A19A0	string	// generated by Infinity Ward, do not modify 
 1404A19D1	string	Problem loading your configuration files; please launch Modern Warfare 3 again.
+1404A1A40	string	iotd-%s.jpg
 1404A1A60	string	specOps
 1404A1A68	string	private
 1404A1A70	string	splitscreen
@@ -6336,6 +6363,9 @@ va	type	value
 1404A2E70	string	weapon_sniper
 1404A2E80	string	weapon_shotgun
 1404A2E90	string	weapon_riot
+1404A2EA0	string	iw5_ak47
+1404A2EB5	string	w5_m4
+1404A2EC1	string	w5_m16
 1404A2ED0	string	specialty_bling
 1404A2EE0	string	specialty_overkillpro
 1404A2EF8	string	marine
@@ -6362,6 +6392,7 @@ va	type	value
 1404A3138	string	RCCheck
 1404A3140	string	EXM_%lld
 1404A3150	string	%s_error_%lld
+1404A3160	string	%s_%lld
 1404A3168	string	%s\\%s%s
 1404A3178	string	popup_writingdata
 1404A3190	string	TaskManager_ConstructTaskSet: MAX_TASK_SETS exceeded.
@@ -6521,6 +6552,7 @@ va	type	value
 1404A93B0	string	error EXE_BAD_CHALLENGE
 1404A93C8	string	error EXE_ERR_UNREGISTERED_CONNECTION
 1404A93F0	string	error EXE_SERVERISFULL
+1404A9408	string	error %s
 1404A9418	string	disconnect %s
 1404A9428	string	EXE_LEFTGAME
 1404A9450	string	Invalid line in the config string csv - config string indices must only go up, but it went down and is now %i (line %i) - check the bottom of the file to see if it's corrupt
@@ -7187,6 +7219,7 @@ va	type	value
 1404AF3C4	string	number
 1404AF3CC	string	rounds
 1404AF3D8	string	partyteams
+1404AF3E4	string	nojip
 1404AF3F0	string	XBOXLIVE_PARTYENDED
 1404AF408	string	history
 1404AF410	string	timestamp
@@ -7206,6 +7239,7 @@ va	type	value
 1404AF558	string	stuckwarning
 1404AF568	string	scoreboard
 1404AF578	string	%i%s %i%s %i%s
+1404AF588	string	%2i:%02i
 1404AF598	string	Illegal localized string reference: %s must start with a '@'.
 1404AF5E0	string	Illegal localized string reference: %s must contain only alpha-numeric characters and underscores
 1404AF650	string	Expecting localized string reference after '@' at parameter %i.
@@ -7219,6 +7253,16 @@ va	type	value
 1404AF7A0	string	^3%s^7
 1404AF7A8	string	[%s]^%c%s^7
 1404AF7B8	string	^%c%s^7
+1404AF7C0	string	clanlvl_0
+1404AF7D0	string	clanlvl_1
+1404AF7E0	string	clanlvl_2
+1404AF7F0	string	clanlvl_3
+1404AF800	string	clanlvl_4
+1404AF810	string	clanlvl_5
+1404AF820	string	clanlvl_6
+1404AF830	string	clanlvl_7
+1404AF840	string	clanlvl_8
+1404AF850	string	clanlvl_9
 1404AF860	string	missionsohighestdifficulty
 1404AF87C	string	%s: %i
 1404AF888	string	MENU_WAITING_FOR_HOST_TO_START
@@ -7560,6 +7604,7 @@ va	type	value
 1404B1740	string	category
 1404B1750	string	include
 1404B1758	string	recipe
+1404B1768	string	abbrv
 1404B1770	string	description
 1404B1780	string	teambased
 1404B1790	string	hardcore
@@ -7786,9 +7831,12 @@ va	type	value
 1404B3A70	string	main_specops
 1404B3A80	string	screenshot 
 1404B3A90	string	%d:%d:%d
+1404B3AA0	string	%02d:%02d:%02d
 1404B3AB0	string	FAKE_INTRO_SECONDS
 1404B3AC8	string	FAKE_INTRO_TIME
 1404B3AD8	string	NOT USING CINEMATIC_SUBTITLES
+1404B3AF8	string	EXE_YES
+1404B3B00	string	EXE_NO
 1404B3B08	string	+sprint_zoom
 1404B3B18	string	KEY_OR
 1404B3B20	string	%s %s %s
@@ -7804,6 +7852,7 @@ va	type	value
 1404B3C38	string	DLC_MAPS
 1404B3C48	string	DLC_MAPSTORE
 1404B3C94	string	scale
+1404B3C9C	string	<NULL>
 1404B3CA8	string	ARENA_BUFFER_SIZE exceeded
 1404B3CC8	string	mp/basemaps.arena
 1404B3CE0	string	longname
@@ -8180,7 +8229,6 @@ va	type	value
 1404B62B0	string	FS_ListFilteredFiles
 1404B62D0	string	raw_shared
 1404B62DC	string	devraw
-1404B62E8	string	          
 1404B6338	string	IWD modified.
 1404B6348	string	Too many IWDs
 1404B6360	string	No IWD files found in /main
@@ -8823,6 +8871,7 @@ va	type	value
 1404BDA08	string	localization_spanish.txt
 1404BDA28	string	localization.txt
 1404BDA40	string	localization
+1404BDA50	string	zone\\dlc\\
 1404BDA60	string	zone\\%s\\
 1404BDA70	string	WIN_CONFIGURE_UPDATED_TITLE
 1404BDA90	string	WIN_CONFIGURE_UPDATED_BODY
@@ -9196,6 +9245,8 @@ va	type	value
 1404C5B30	string	ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/
 1404C5C18	string	windows
 1404C5C58	unicode	ddd',' dd MMM yyyy
+1404C5C80	unicode	HH':'mm':'ss
+1404C5CA0	unicode	yyyy-MM-dd
 1404C5CB8	string	%3c, %2d %3c %4d %2d:%2d:%2d %3c
 1404C5D10	string	%4d-%2d-%2dT%2d:%2d:%2dZ
 1404C5D30	string	%8dT%2d:%2d:%2dZ
@@ -9208,6 +9259,8 @@ va	type	value
 1404C5EE0	string	XBL CONDITION
 1404C5EF0	unicode	ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789
 1404C6DC0	unicode	%s %s GMT
+1404C6DD8	unicode	.%07ld
+1404C6DE8	unicode	%sT%sZ%s
 1404C6E00	string	0123456789ABCDEFuuuuuuuubtnufruuuuuuuuuuuuuuuuuu
 1404C7044	string	Title
 1404C7050	string	MultiplayerManager
@@ -10440,6 +10493,7 @@ va	type	value
 1404D6878	string	stun.eu.demonware.net
 1404D6890	string	stun.jp.demonware.net
 1404D68A8	string	stun.au.demonware.net
+1404D68C0	string	239.255.255.250:1900
 1404D68E0	string	M-SEARCH * HTTP/1.1  MX: 1  HOST: 239.255.255.250:1900  MAN: "ssdp:discover"  ST: urn:schemas-upnp-org:service:%s    
 1404D6958	string	UPnP disabled.
 1404D6968	string	bdUPnP::init
@@ -10449,6 +10503,7 @@ va	type	value
 1404D6A30	string	Cannot start class unless at least one local common addr is supplied..
 1404D6A80	string	Cannot initialize class unless it is in the uninitialized state (%d).
 1404D6AC8	string	Pumping an uninitialized device has no effect.
+1404D6AF8	string	bdUPnP::pump
 1404D6B08	string	UPnP failed to start discovery
 1404D6B28	string	UPnP failed to setup discovery socket
 1404D6B50	string	Device discovery timed out after %fs. Using cached device

@@ -36,6 +36,17 @@ void FUN_82186890(uint *param_1)
 }
 
 
+// 821867D8  FUN_821867d8  (DW/leaderboardinfo.h:61)
+
+void FUN_821867d8(undefined4 *param_1)
+
+{
+  *param_1 = &PTR_FUN_82017960;
+  FUN_8252cd48();
+  return;
+}
+
+
 // 821867E8  FUN_821867e8  (DW/leaderboardinfo.h:64)
 
 /* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
@@ -120,6 +131,15 @@ ulonglong FUN_82186970(longlong param_1,uint *param_2)
     }
   }
   return uVar3;
+}
+
+
+// 82186828  FUN_82186828  (DW/leaderboardinfo.h:84)
+
+undefined8 FUN_82186828(void)
+
+{
+  return 0x98;
 }
 
 

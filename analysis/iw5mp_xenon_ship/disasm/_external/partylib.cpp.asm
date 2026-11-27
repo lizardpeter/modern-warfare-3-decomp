@@ -152,3 +152,8 @@ LAB_82529af8:
 LAB_82529b20:
   82529B20  38600078             li r3,0x78
   82529B24  4E800020             blr
+
+; 8256FA68  FUN_8256fa68  (line unknown)
+  8256FA68  3D6083F0             lis r11,-0x7c10
+  8256FA6C  386BD0B0             subi r3,r11,0x2f50
+  8256FA70  4BFB9FC8             b 0x82529a38

@@ -111,6 +111,22 @@ undefined8 FUN_824f4a30(undefined8 param_1,int *param_2,undefined8 param_3)
 }
 
 
+// 824F4880  FUN_824f4880  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/effectmanager.h:148)
+
+void FUN_824f4880(int param_1,int *param_2)
+
+{
+  int iVar1;
+  
+  iVar1 = param_1 + 8;
+  if (param_1 == 0) {
+    iVar1 = 0;
+  }
+  *param_2 = iVar1;
+  return;
+}
+
+
 // 824F4778  FUN_824f4778  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/framebuffer.cpp:149)
 
 /* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
@@ -126,7 +142,7 @@ undefined4 * FUN_824f4778(undefined4 *param_1,char *param_2,int *param_3)
   ulonglong uVar5;
   
   param_1[1] = 1;
-  *param_1 = &PTR_LAB_8205a76c;
+  *param_1 = &PTR_FUN_8205a76c;
   cVar1 = *param_2;
   *(char *)(param_1 + 2) = cVar1;
   param_1[8] = *(undefined4 *)(param_2 + 0x10);
@@ -216,6 +232,16 @@ undefined8 FUN_824f4720(int param_1,undefined4 *param_2)
   param_2[1] = *(undefined4 *)(param_1 + 0x18);
   param_2[2] = *(undefined4 *)(param_1 + 0x1c);
   return 0;
+}
+
+
+// 824F4AB0  FUN_824f4ab0  (line unknown)
+
+void FUN_824f4ab0(undefined4 *param_1)
+
+{
+  *param_1 = &PTR_FUN_8205a758;
+  return;
 }
 
 

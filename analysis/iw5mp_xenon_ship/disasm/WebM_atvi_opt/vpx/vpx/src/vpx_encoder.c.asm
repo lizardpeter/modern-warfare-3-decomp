@@ -366,3 +366,26 @@ LAB_824c6b6c:
   824C6B78  7D8803A6             mtspr LR,r12
   824C6B7C  EBE1FFF0             ld r31,-0x10(r1)
   824C6B80  4E800020             blr
+
+; 824C6B88  FUN_824c6b88  (WebM_atvi_opt/vpx/vpx/src/vpx_encoder.c:299)
+  824C6B88  81640000             lwz r11,0x0(r4)
+  824C6B8C  2B0B0000             cmplwi cr6,r11,0x0
+  824C6B90  409A000C             bne cr6,0x824c6b9c
+  824C6B94  39630008             addi r11,r3,0x8
+  824C6B98  91640000             stw r11,0x0(r4)
+LAB_824c6b9c:
+  824C6B9C  81640000             lwz r11,0x0(r4)
+  824C6BA0  39200088             li r9,0x88
+  824C6BA4  81030000             lwz r8,0x0(r3)
+  824C6BA8  7D435850             subf r10,r3,r11
+  824C6BAC  38EAFFF8             subi r7,r10,0x8
+  824C6BB0  7CC74BD6             divw r6,r7,r9
+  824C6BB4  7F064040             cmplw cr6,r6,r8
+  824C6BB8  40980014             bge cr6,0x824c6bcc
+  824C6BBC  394B0088             addi r10,r11,0x88
+  824C6BC0  7D635B78             or r3,r11,r11
+  824C6BC4  91440000             stw r10,0x0(r4)
+  824C6BC8  4E800020             blr
+LAB_824c6bcc:
+  824C6BCC  38600000             li r3,0x0
+  824C6BD0  4E800020             blr

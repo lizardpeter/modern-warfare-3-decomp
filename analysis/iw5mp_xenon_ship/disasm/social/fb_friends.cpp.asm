@@ -29,6 +29,21 @@ LAB_8256dcd0:
   8256DD10  EBE1FFF0             ld r31,-0x10(r1)
   8256DD14  4E800020             blr
 
+; 8256DD18  FUN_8256dd18  (social/fb_friends.cpp:88)
+  8256DD18  3CE083BE             lis r7,-0x7c42
+  8256DD1C  39600000             li r11,0x0
+  8256DD20  38C777A0             addi r6,r7,0x77a0
+  8256DD24  39400000             li r10,0x0
+  8256DD28  39200000             li r9,0x0
+  8256DD2C  39000000             li r8,0x0
+  8256DD30  916777A0             stw r11,0x77a0(r7)
+  8256DD34  3CA08257             lis r5,-0x7da9
+  8256DD38  91460004             stw r10,0x4(r6)
+  8256DD3C  91260008             stw r9,0x8(r6)
+  8256DD40  3865F240             subi r3,r5,0xdc0
+  8256DD44  9106000C             stw r8,0xc(r6)
+  8256DD48  4BFDC6E0             b 0x8254a428
+
 ; 823CDF48  FUN_823cdf48  (social/fb_friends.cpp:102)
   823CDF48  7D8802A6             mfspr r12,LR
   823CDF4C  9181FFF8             stw r12,-0x8(r1)

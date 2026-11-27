@@ -107,6 +107,9 @@ LAB_8232ac6c:
   8232A06C  7D8803A6             mtspr LR,r12
   8232A070  4E800020             blr
 
+; 8232AC80  thunk_FUN_8232a600  (universal/memfile.cpp:95)
+  8232AC80  4BFFF980             b 0x8232a600
+
 ; 8232B098  FUN_8232b098  (universal/memfile.cpp:258)
   8232B098  3D408233             lis r10,-0x7dcd
   8232B09C  90830004             stw r4,0x4(r3)

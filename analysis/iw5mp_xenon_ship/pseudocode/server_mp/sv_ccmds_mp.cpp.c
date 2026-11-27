@@ -252,6 +252,16 @@ void FUN_822c0980(undefined8 param_1,undefined8 param_2)
 }
 
 
+// 822C0A00  FUN_822c0a00  (server_mp/sv_ccmds_mp.cpp:802)
+
+void FUN_822c0a00(void)
+
+{
+  FUN_822c0980(0,0);
+  return;
+}
+
+
 // 822C0A10  FUN_822c0a10  (server_mp/sv_ccmds_mp.cpp:844)
 
 void FUN_822c0a10(void)

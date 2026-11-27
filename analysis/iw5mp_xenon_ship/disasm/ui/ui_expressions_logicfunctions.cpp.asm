@@ -40,6 +40,400 @@
   822E30D8  EBE1FFF0             ld r31,-0x10(r1)
   822E30DC  4E800020             blr
 
+; 822E30E0  FUN_822e30e0  (ui/ui_expressions_logicfunctions.cpp:30)
+  822E30E0  39600000             li r11,0x0
+  822E30E4  91650000             stw r11,0x0(r5)
+  822E30E8  81430004             lwz r10,0x4(r3)
+  822E30EC  81240004             lwz r9,0x4(r4)
+  822E30F0  7D0A4850             subf r8,r10,r9
+  822E30F4  7D070034             cntlzw r7,r8
+  822E30F8  54E6DFFE             rlwinm r6,r7,0x1b,0x1f,0x1f
+  822E30FC  90C50004             stw r6,0x4(r5)
+  822E3100  4E800020             blr
+
+; 822E3108  FUN_822e3108  (ui/ui_expressions_logicfunctions.cpp:38)
+  822E3108  39600000             li r11,0x0
+  822E310C  91650000             stw r11,0x0(r5)
+  822E3110  81430004             lwz r10,0x4(r3)
+  822E3114  81240004             lwz r9,0x4(r4)
+  822E3118  7D0A4850             subf r8,r10,r9
+  822E311C  30E8FFFF             subic r7,r8,0x1
+  822E3120  7CC74110             subfe r6,r7,r8
+  822E3124  90C50004             stw r6,0x4(r5)
+  822E3128  4E800020             blr
+
+; 822E3130  FUN_822e3130  (ui/ui_expressions_logicfunctions.cpp:46)
+  822E3130  39600000             li r11,0x0
+  822E3134  91650000             stw r11,0x0(r5)
+  822E3138  C0040004             lfs f0,0x4(r4)
+  822E313C  81430004             lwz r10,0x4(r3)
+  822E3140  7D4907B4             extsw r9,r10
+  822E3144  F921FFF0             std r9,-0x10(r1)
+  822E3148  C9A1FFF0             lfd f13,-0x10(r1)
+  822E314C  FD806E9C             fcfid f12,f13
+  822E3150  FD606018             frsp f11,f12
+  822E3154  FF0B0000             fcmpu cr6,f11,f0
+  822E3158  409A0008             bne cr6,0x822e3160
+  822E315C  39600001             li r11,0x1
+LAB_822e3160:
+  822E3160  91650004             stw r11,0x4(r5)
+  822E3164  4E800020             blr
+
+; 822E3168  FUN_822e3168  (ui/ui_expressions_logicfunctions.cpp:54)
+  822E3168  39600000             li r11,0x0
+  822E316C  91650000             stw r11,0x0(r5)
+  822E3170  C0030004             lfs f0,0x4(r3)
+  822E3174  81440004             lwz r10,0x4(r4)
+  822E3178  7D4907B4             extsw r9,r10
+  822E317C  F921FFF0             std r9,-0x10(r1)
+  822E3180  C9A1FFF0             lfd f13,-0x10(r1)
+  822E3184  FD806E9C             fcfid f12,f13
+  822E3188  FD606018             frsp f11,f12
+  822E318C  FF0B0000             fcmpu cr6,f11,f0
+  822E3190  409A0008             bne cr6,0x822e3198
+  822E3194  39600001             li r11,0x1
+LAB_822e3198:
+  822E3198  91650004             stw r11,0x4(r5)
+  822E319C  4E800020             blr
+
+; 822E31A0  FUN_822e31a0  (ui/ui_expressions_logicfunctions.cpp:59)
+  822E31A0  39600000             li r11,0x0
+  822E31A4  91650000             stw r11,0x0(r5)
+  822E31A8  C0030004             lfs f0,0x4(r3)
+  822E31AC  C1A40004             lfs f13,0x4(r4)
+  822E31B0  FF006800             fcmpu cr6,f0,f13
+  822E31B4  409A0008             bne cr6,0x822e31bc
+  822E31B8  39600001             li r11,0x1
+LAB_822e31bc:
+  822E31BC  91650004             stw r11,0x4(r5)
+  822E31C0  4E800020             blr
+
+; 822E31C8  FUN_822e31c8  (ui/ui_expressions_logicfunctions.cpp:67)
+  822E31C8  39600000             li r11,0x0
+  822E31CC  91650000             stw r11,0x0(r5)
+  822E31D0  C0040004             lfs f0,0x4(r4)
+  822E31D4  81430004             lwz r10,0x4(r3)
+  822E31D8  7D4907B4             extsw r9,r10
+  822E31DC  F921FFF0             std r9,-0x10(r1)
+  822E31E0  C9A1FFF0             lfd f13,-0x10(r1)
+  822E31E4  FD806E9C             fcfid f12,f13
+  822E31E8  FD606018             frsp f11,f12
+  822E31EC  FF0B0000             fcmpu cr6,f11,f0
+  822E31F0  419A0008             beq cr6,0x822e31f8
+  822E31F4  39600001             li r11,0x1
+LAB_822e31f8:
+  822E31F8  91650004             stw r11,0x4(r5)
+  822E31FC  4E800020             blr
+
+; 822E3200  FUN_822e3200  (ui/ui_expressions_logicfunctions.cpp:75)
+  822E3200  39600000             li r11,0x0
+  822E3204  91650000             stw r11,0x0(r5)
+  822E3208  C0030004             lfs f0,0x4(r3)
+  822E320C  81440004             lwz r10,0x4(r4)
+  822E3210  7D4907B4             extsw r9,r10
+  822E3214  F921FFF0             std r9,-0x10(r1)
+  822E3218  C9A1FFF0             lfd f13,-0x10(r1)
+  822E321C  FD806E9C             fcfid f12,f13
+  822E3220  FD606018             frsp f11,f12
+  822E3224  FF0B0000             fcmpu cr6,f11,f0
+  822E3228  419A0008             beq cr6,0x822e3230
+  822E322C  39600001             li r11,0x1
+LAB_822e3230:
+  822E3230  91650004             stw r11,0x4(r5)
+  822E3234  4E800020             blr
+
+; 822E3238  FUN_822e3238  (ui/ui_expressions_logicfunctions.cpp:80)
+  822E3238  39600000             li r11,0x0
+  822E323C  91650000             stw r11,0x0(r5)
+  822E3240  C0030004             lfs f0,0x4(r3)
+  822E3244  C1A40004             lfs f13,0x4(r4)
+  822E3248  FF006800             fcmpu cr6,f0,f13
+  822E324C  419A0008             beq cr6,0x822e3254
+  822E3250  39600001             li r11,0x1
+LAB_822e3254:
+  822E3254  91650004             stw r11,0x4(r5)
+  822E3258  4E800020             blr
+
+; 822E3260  FUN_822e3260  (ui/ui_expressions_logicfunctions.cpp:88)
+  822E3260  39600000             li r11,0x0
+  822E3264  91650000             stw r11,0x0(r5)
+  822E3268  81430004             lwz r10,0x4(r3)
+  822E326C  81240004             lwz r9,0x4(r4)
+  822E3270  7D095010             subfc r8,r9,r10
+  822E3274  7D275238             eqv r7,r9,r10
+  822E3278  54E60FFE             rlwinm r6,r7,0x1,0x1f,0x1f
+  822E327C  7C860194             addze r4,r6
+  822E3280  548307FE             rlwinm r3,r4,0x0,0x1f,0x1f
+  822E3284  90650004             stw r3,0x4(r5)
+  822E3288  4E800020             blr
+
+; 822E3290  FUN_822e3290  (ui/ui_expressions_logicfunctions.cpp:96)
+  822E3290  39600000             li r11,0x0
+  822E3294  91650000             stw r11,0x0(r5)
+  822E3298  C0040004             lfs f0,0x4(r4)
+  822E329C  81430004             lwz r10,0x4(r3)
+  822E32A0  7D4907B4             extsw r9,r10
+  822E32A4  F921FFF0             std r9,-0x10(r1)
+  822E32A8  C9A1FFF0             lfd f13,-0x10(r1)
+  822E32AC  FD806E9C             fcfid f12,f13
+  822E32B0  FD606018             frsp f11,f12
+  822E32B4  FF0B0000             fcmpu cr6,f11,f0
+  822E32B8  40980008             bge cr6,0x822e32c0
+  822E32BC  39600001             li r11,0x1
+LAB_822e32c0:
+  822E32C0  91650004             stw r11,0x4(r5)
+  822E32C4  4E800020             blr
+
+; 822E32C8  FUN_822e32c8  (ui/ui_expressions_logicfunctions.cpp:104)
+  822E32C8  39600000             li r11,0x0
+  822E32CC  91650000             stw r11,0x0(r5)
+  822E32D0  C0030004             lfs f0,0x4(r3)
+  822E32D4  81440004             lwz r10,0x4(r4)
+  822E32D8  7D4907B4             extsw r9,r10
+  822E32DC  F921FFF0             std r9,-0x10(r1)
+  822E32E0  C9A1FFF0             lfd f13,-0x10(r1)
+  822E32E4  FD806E9C             fcfid f12,f13
+  822E32E8  FD606018             frsp f11,f12
+  822E32EC  FF005800             fcmpu cr6,f0,f11
+  822E32F0  40980008             bge cr6,0x822e32f8
+  822E32F4  39600001             li r11,0x1
+LAB_822e32f8:
+  822E32F8  91650004             stw r11,0x4(r5)
+  822E32FC  4E800020             blr
+
+; 822E3300  FUN_822e3300  (ui/ui_expressions_logicfunctions.cpp:112)
+  822E3300  39600000             li r11,0x0
+  822E3304  91650000             stw r11,0x0(r5)
+  822E3308  C0030004             lfs f0,0x4(r3)
+  822E330C  C1A40004             lfs f13,0x4(r4)
+  822E3310  FF006800             fcmpu cr6,f0,f13
+  822E3314  40980008             bge cr6,0x822e331c
+  822E3318  39600001             li r11,0x1
+LAB_822e331c:
+  822E331C  91650004             stw r11,0x4(r5)
+  822E3320  4E800020             blr
+
+; 822E3328  FUN_822e3328  (ui/ui_expressions_logicfunctions.cpp:120)
+  822E3328  39600000             li r11,0x0
+  822E332C  91650000             stw r11,0x0(r5)
+  822E3330  81430004             lwz r10,0x4(r3)
+  822E3334  81240004             lwz r9,0x4(r4)
+  822E3338  7D28FE70             srawi r8,r9,0x1f
+  822E333C  55470FFE             rlwinm r7,r10,0x1,0x1f,0x1f
+  822E3340  7CCA4810             subfc r6,r10,r9
+  822E3344  7D674114             adde r11,r7,r8
+  822E3348  91650004             stw r11,0x4(r5)
+  822E334C  4E800020             blr
+
+; 822E3350  FUN_822e3350  (ui/ui_expressions_logicfunctions.cpp:128)
+  822E3350  39600000             li r11,0x0
+  822E3354  91650000             stw r11,0x0(r5)
+  822E3358  C0030004             lfs f0,0x4(r3)
+  822E335C  81440004             lwz r10,0x4(r4)
+  822E3360  7D4907B4             extsw r9,r10
+  822E3364  F921FFF0             std r9,-0x10(r1)
+  822E3368  C9A1FFF0             lfd f13,-0x10(r1)
+  822E336C  FD806E9C             fcfid f12,f13
+  822E3370  FD606018             frsp f11,f12
+  822E3374  FF005800             fcmpu cr6,f0,f11
+  822E3378  41980008             blt cr6,0x822e3380
+  822E337C  39600001             li r11,0x1
+LAB_822e3380:
+  822E3380  91650004             stw r11,0x4(r5)
+  822E3384  4E800020             blr
+
+; 822E3388  FUN_822e3388  (ui/ui_expressions_logicfunctions.cpp:136)
+  822E3388  39600000             li r11,0x0
+  822E338C  91650000             stw r11,0x0(r5)
+  822E3390  C0040004             lfs f0,0x4(r4)
+  822E3394  81430004             lwz r10,0x4(r3)
+  822E3398  7D4907B4             extsw r9,r10
+  822E339C  F921FFF0             std r9,-0x10(r1)
+  822E33A0  C9A1FFF0             lfd f13,-0x10(r1)
+  822E33A4  FD806E9C             fcfid f12,f13
+  822E33A8  FD606018             frsp f11,f12
+  822E33AC  FF005800             fcmpu cr6,f0,f11
+  822E33B0  41980008             blt cr6,0x822e33b8
+  822E33B4  39600001             li r11,0x1
+LAB_822e33b8:
+  822E33B8  91650004             stw r11,0x4(r5)
+  822E33BC  4E800020             blr
+
+; 822E33C0  FUN_822e33c0  (ui/ui_expressions_logicfunctions.cpp:141)
+  822E33C0  39600000             li r11,0x0
+  822E33C4  91650000             stw r11,0x0(r5)
+  822E33C8  C0030004             lfs f0,0x4(r3)
+  822E33CC  81440004             lwz r10,0x4(r4)
+  822E33D0  7D4907B4             extsw r9,r10
+  822E33D4  F921FFF0             std r9,-0x10(r1)
+  822E33D8  C9A1FFF0             lfd f13,-0x10(r1)
+  822E33DC  FD806E9C             fcfid f12,f13
+  822E33E0  FD606018             frsp f11,f12
+  822E33E4  FF005800             fcmpu cr6,f0,f11
+  822E33E8  41990008             bgt cr6,0x822e33f0
+  822E33EC  39600001             li r11,0x1
+LAB_822e33f0:
+  822E33F0  91650004             stw r11,0x4(r5)
+  822E33F4  4E800020             blr
+
+; 822E33F8  FUN_822e33f8  (ui/ui_expressions_logicfunctions.cpp:149)
+  822E33F8  39600000             li r11,0x0
+  822E33FC  91650000             stw r11,0x0(r5)
+  822E3400  C0030004             lfs f0,0x4(r3)
+  822E3404  C1A40004             lfs f13,0x4(r4)
+  822E3408  FF006800             fcmpu cr6,f0,f13
+  822E340C  41990008             bgt cr6,0x822e3414
+  822E3410  39600001             li r11,0x1
+LAB_822e3414:
+  822E3414  91650004             stw r11,0x4(r5)
+  822E3418  4E800020             blr
+
+; 822E3420  FUN_822e3420  (ui/ui_expressions_logicfunctions.cpp:157)
+  822E3420  39600000             li r11,0x0
+  822E3424  91650000             stw r11,0x0(r5)
+  822E3428  81440004             lwz r10,0x4(r4)
+  822E342C  81230004             lwz r9,0x4(r3)
+  822E3430  7D095010             subfc r8,r9,r10
+  822E3434  7D275238             eqv r7,r9,r10
+  822E3438  54E60FFE             rlwinm r6,r7,0x1,0x1f,0x1f
+  822E343C  7C860194             addze r4,r6
+  822E3440  548307FE             rlwinm r3,r4,0x0,0x1f,0x1f
+  822E3444  90650004             stw r3,0x4(r5)
+  822E3448  4E800020             blr
+
+; 822E3450  FUN_822e3450  (ui/ui_expressions_logicfunctions.cpp:162)
+  822E3450  39600000             li r11,0x0
+  822E3454  91650000             stw r11,0x0(r5)
+  822E3458  C0040004             lfs f0,0x4(r4)
+  822E345C  81430004             lwz r10,0x4(r3)
+  822E3460  7D4907B4             extsw r9,r10
+  822E3464  F921FFF0             std r9,-0x10(r1)
+  822E3468  C9A1FFF0             lfd f13,-0x10(r1)
+  822E346C  FD806E9C             fcfid f12,f13
+  822E3470  FD606018             frsp f11,f12
+  822E3474  FF005800             fcmpu cr6,f0,f11
+  822E3478  40980008             bge cr6,0x822e3480
+  822E347C  39600001             li r11,0x1
+LAB_822e3480:
+  822E3480  91650004             stw r11,0x4(r5)
+  822E3484  4E800020             blr
+
+; 822E3488  FUN_822e3488  (ui/ui_expressions_logicfunctions.cpp:167)
+  822E3488  39600000             li r11,0x0
+  822E348C  91650000             stw r11,0x0(r5)
+  822E3490  C0030004             lfs f0,0x4(r3)
+  822E3494  81440004             lwz r10,0x4(r4)
+  822E3498  7D4907B4             extsw r9,r10
+  822E349C  F921FFF0             std r9,-0x10(r1)
+  822E34A0  C9A1FFF0             lfd f13,-0x10(r1)
+  822E34A4  FD806E9C             fcfid f12,f13
+  822E34A8  FD606018             frsp f11,f12
+  822E34AC  FF005800             fcmpu cr6,f0,f11
+  822E34B0  40990008             ble cr6,0x822e34b8
+  822E34B4  39600001             li r11,0x1
+LAB_822e34b8:
+  822E34B8  91650004             stw r11,0x4(r5)
+  822E34BC  4E800020             blr
+
+; 822E34C0  FUN_822e34c0  (ui/ui_expressions_logicfunctions.cpp:175)
+  822E34C0  39600000             li r11,0x0
+  822E34C4  91650000             stw r11,0x0(r5)
+  822E34C8  C0030004             lfs f0,0x4(r3)
+  822E34CC  C1A40004             lfs f13,0x4(r4)
+  822E34D0  FF006800             fcmpu cr6,f0,f13
+  822E34D4  40990008             ble cr6,0x822e34dc
+  822E34D8  39600001             li r11,0x1
+LAB_822e34dc:
+  822E34DC  91650004             stw r11,0x4(r5)
+  822E34E0  4E800020             blr
+
+; 822E34E8  FUN_822e34e8  (ui/ui_expressions_logicfunctions.cpp:183)
+  822E34E8  39600000             li r11,0x0
+  822E34EC  91650000             stw r11,0x0(r5)
+  822E34F0  81440004             lwz r10,0x4(r4)
+  822E34F4  81230004             lwz r9,0x4(r3)
+  822E34F8  7D28FE70             srawi r8,r9,0x1f
+  822E34FC  55470FFE             rlwinm r7,r10,0x1,0x1f,0x1f
+  822E3500  7CCA4810             subfc r6,r10,r9
+  822E3504  7D674114             adde r11,r7,r8
+  822E3508  91650004             stw r11,0x4(r5)
+  822E350C  4E800020             blr
+
+; 822E3510  FUN_822e3510  (ui/ui_expressions_logicfunctions.cpp:191)
+  822E3510  39600000             li r11,0x0
+  822E3514  91650000             stw r11,0x0(r5)
+  822E3518  C0040004             lfs f0,0x4(r4)
+  822E351C  81430004             lwz r10,0x4(r3)
+  822E3520  7D4907B4             extsw r9,r10
+  822E3524  F921FFF0             std r9,-0x10(r1)
+  822E3528  C9A1FFF0             lfd f13,-0x10(r1)
+  822E352C  FD806E9C             fcfid f12,f13
+  822E3530  FD606018             frsp f11,f12
+  822E3534  FF0B0000             fcmpu cr6,f11,f0
+  822E3538  41980008             blt cr6,0x822e3540
+  822E353C  39600001             li r11,0x1
+LAB_822e3540:
+  822E3540  91650004             stw r11,0x4(r5)
+  822E3544  4E800020             blr
+
+; 822E3548  FUN_822e3548  (ui/ui_expressions_logicfunctions.cpp:199)
+  822E3548  39600000             li r11,0x0
+  822E354C  91650000             stw r11,0x0(r5)
+  822E3550  C0030004             lfs f0,0x4(r3)
+  822E3554  C1A40004             lfs f13,0x4(r4)
+  822E3558  FF006800             fcmpu cr6,f0,f13
+  822E355C  41980008             blt cr6,0x822e3564
+  822E3560  39600001             li r11,0x1
+LAB_822e3564:
+  822E3564  91650004             stw r11,0x4(r5)
+  822E3568  4E800020             blr
+
+; 822E3570  FUN_822e3570  (ui/ui_expressions_logicfunctions.cpp:207)
+  822E3570  39600000             li r11,0x0
+  822E3574  91650000             stw r11,0x0(r5)
+  822E3578  81430004             lwz r10,0x4(r3)
+  822E357C  81640004             lwz r11,0x4(r4)
+  822E3580  7D4A5A14             add r10,r10,r11
+  822E3584  91450004             stw r10,0x4(r5)
+  822E3588  4E800020             blr
+
+; 822E3590  FUN_822e3590  (ui/ui_expressions_logicfunctions.cpp:215)
+  822E3590  39600001             li r11,0x1
+  822E3594  91650000             stw r11,0x0(r5)
+  822E3598  C0040004             lfs f0,0x4(r4)
+  822E359C  81430004             lwz r10,0x4(r3)
+  822E35A0  7D4907B4             extsw r9,r10
+  822E35A4  F921FFF0             std r9,-0x10(r1)
+  822E35A8  C9A1FFF0             lfd f13,-0x10(r1)
+  822E35AC  FD806E9C             fcfid f12,f13
+  822E35B0  FD606018             frsp f11,f12
+  822E35B4  ED4B002A             fadds f10,f11,f0
+  822E35B8  D1450004             stfs f10,0x4(r5)
+  822E35BC  4E800020             blr
+
+; 822E35C0  FUN_822e35c0  (ui/ui_expressions_logicfunctions.cpp:223)
+  822E35C0  39600001             li r11,0x1
+  822E35C4  91650000             stw r11,0x0(r5)
+  822E35C8  C0030004             lfs f0,0x4(r3)
+  822E35CC  81440004             lwz r10,0x4(r4)
+  822E35D0  7D4907B4             extsw r9,r10
+  822E35D4  F921FFF0             std r9,-0x10(r1)
+  822E35D8  C9A1FFF0             lfd f13,-0x10(r1)
+  822E35DC  FD806E9C             fcfid f12,f13
+  822E35E0  FD606018             frsp f11,f12
+  822E35E4  ED4B002A             fadds f10,f11,f0
+  822E35E8  D1450004             stfs f10,0x4(r5)
+  822E35EC  4E800020             blr
+
+; 822E35F0  FUN_822e35f0  (ui/ui_expressions_logicfunctions.cpp:228)
+  822E35F0  39600001             li r11,0x1
+  822E35F4  91650000             stw r11,0x0(r5)
+  822E35F8  C0030004             lfs f0,0x4(r3)
+  822E35FC  C1A40004             lfs f13,0x4(r4)
+  822E3600  ED80682A             fadds f12,f0,f13
+  822E3604  D1850004             stfs f12,0x4(r5)
+  822E3608  4E800020             blr
+
 ; 822E3610  FUN_822e3610  (ui/ui_expressions_logicfunctions.cpp:236)
   822E3610  7D8802A6             mfspr r12,LR
   822E3614  9181FFF8             stw r12,-0x8(r1)
@@ -188,6 +582,199 @@
   822E3838  EBC1FFE8             ld r30,-0x18(r1)
   822E383C  EBE1FFF0             ld r31,-0x10(r1)
   822E3840  4E800020             blr
+
+; 822E3848  FUN_822e3848  (ui/ui_expressions_logicfunctions.cpp:323)
+  822E3848  39600000             li r11,0x0
+  822E384C  91650000             stw r11,0x0(r5)
+  822E3850  81430004             lwz r10,0x4(r3)
+  822E3854  81240004             lwz r9,0x4(r4)
+  822E3858  7D095050             subf r8,r9,r10
+  822E385C  91050004             stw r8,0x4(r5)
+  822E3860  4E800020             blr
+
+; 822E3868  FUN_822e3868  (ui/ui_expressions_logicfunctions.cpp:331)
+  822E3868  39600001             li r11,0x1
+  822E386C  91650000             stw r11,0x0(r5)
+  822E3870  C0040004             lfs f0,0x4(r4)
+  822E3874  81430004             lwz r10,0x4(r3)
+  822E3878  7D4907B4             extsw r9,r10
+  822E387C  F921FFF0             std r9,-0x10(r1)
+  822E3880  C9A1FFF0             lfd f13,-0x10(r1)
+  822E3884  FD806E9C             fcfid f12,f13
+  822E3888  FD606018             frsp f11,f12
+  822E388C  ED4B0028             fsubs f10,f11,f0
+  822E3890  D1450004             stfs f10,0x4(r5)
+  822E3894  4E800020             blr
+
+; 822E3898  FUN_822e3898  (ui/ui_expressions_logicfunctions.cpp:339)
+  822E3898  39600001             li r11,0x1
+  822E389C  91650000             stw r11,0x0(r5)
+  822E38A0  C0030004             lfs f0,0x4(r3)
+  822E38A4  81440004             lwz r10,0x4(r4)
+  822E38A8  7D4907B4             extsw r9,r10
+  822E38AC  F921FFF0             std r9,-0x10(r1)
+  822E38B0  C9A1FFF0             lfd f13,-0x10(r1)
+  822E38B4  FD806E9C             fcfid f12,f13
+  822E38B8  FD606018             frsp f11,f12
+  822E38BC  ED405828             fsubs f10,f0,f11
+  822E38C0  D1450004             stfs f10,0x4(r5)
+  822E38C4  4E800020             blr
+
+; 822E38C8  FUN_822e38c8  (ui/ui_expressions_logicfunctions.cpp:347)
+  822E38C8  39600001             li r11,0x1
+  822E38CC  91650000             stw r11,0x0(r5)
+  822E38D0  C0030004             lfs f0,0x4(r3)
+  822E38D4  C1A40004             lfs f13,0x4(r4)
+  822E38D8  ED806828             fsubs f12,f0,f13
+  822E38DC  D1850004             stfs f12,0x4(r5)
+  822E38E0  4E800020             blr
+
+; 822E38E8  FUN_822e38e8  (ui/ui_expressions_logicfunctions.cpp:357)
+  822E38E8  39600000             li r11,0x0
+  822E38EC  91650000             stw r11,0x0(r5)
+  822E38F0  81430004             lwz r10,0x4(r3)
+  822E38F4  81240004             lwz r9,0x4(r4)
+  822E38F8  7D0A49D6             mullw r8,r10,r9
+  822E38FC  91050004             stw r8,0x4(r5)
+  822E3900  4E800020             blr
+
+; 822E3908  FUN_822e3908  (ui/ui_expressions_logicfunctions.cpp:365)
+  822E3908  39600001             li r11,0x1
+  822E390C  91650000             stw r11,0x0(r5)
+  822E3910  C0040004             lfs f0,0x4(r4)
+  822E3914  81430004             lwz r10,0x4(r3)
+  822E3918  7D4907B4             extsw r9,r10
+  822E391C  F921FFF0             std r9,-0x10(r1)
+  822E3920  C9A1FFF0             lfd f13,-0x10(r1)
+  822E3924  FD806E9C             fcfid f12,f13
+  822E3928  FD606018             frsp f11,f12
+  822E392C  ED4B0032             fmuls f10,f11,f0
+  822E3930  D1450004             stfs f10,0x4(r5)
+  822E3934  4E800020             blr
+
+; 822E3938  FUN_822e3938  (ui/ui_expressions_logicfunctions.cpp:373)
+  822E3938  39600001             li r11,0x1
+  822E393C  91650000             stw r11,0x0(r5)
+  822E3940  C0030004             lfs f0,0x4(r3)
+  822E3944  81440004             lwz r10,0x4(r4)
+  822E3948  7D4907B4             extsw r9,r10
+  822E394C  F921FFF0             std r9,-0x10(r1)
+  822E3950  C9A1FFF0             lfd f13,-0x10(r1)
+  822E3954  FD806E9C             fcfid f12,f13
+  822E3958  FD606018             frsp f11,f12
+  822E395C  ED4B0032             fmuls f10,f11,f0
+  822E3960  D1450004             stfs f10,0x4(r5)
+  822E3964  4E800020             blr
+
+; 822E3968  FUN_822e3968  (ui/ui_expressions_logicfunctions.cpp:378)
+  822E3968  39600001             li r11,0x1
+  822E396C  91650000             stw r11,0x0(r5)
+  822E3970  C0030004             lfs f0,0x4(r3)
+  822E3974  C1A40004             lfs f13,0x4(r4)
+  822E3978  ED800372             fmuls f12,f0,f13
+  822E397C  D1850004             stfs f12,0x4(r5)
+  822E3980  4E800020             blr
+
+; 822E3988  FUN_822e3988  (ui/ui_expressions_logicfunctions.cpp:388)
+  822E3988  39600001             li r11,0x1
+  822E398C  91650000             stw r11,0x0(r5)
+  822E3990  81640004             lwz r11,0x4(r4)
+  822E3994  2F0B0000             cmpwi cr6,r11,0x0
+  822E3998  419A003C             beq cr6,0x822e39d4
+  822E399C  81430004             lwz r10,0x4(r3)
+  822E39A0  7D6907B4             extsw r9,r11
+  822E39A4  7D4807B4             extsw r8,r10
+  822E39A8  F921FFF0             std r9,-0x10(r1)
+  822E39AC  C801FFF0             lfd f0,-0x10(r1)
+  822E39B0  FDA0069C             fcfid f13,f0
+  822E39B4  F901FFF0             std r8,-0x10(r1)
+  822E39B8  C981FFF0             lfd f12,-0x10(r1)
+  822E39BC  FD60669C             fcfid f11,f12
+  822E39C0  FD406818             frsp f10,f13
+  822E39C4  FD205818             frsp f9,f11
+  822E39C8  ED095024             fdivs f8,f9,f10
+  822E39CC  D1050004             stfs f8,0x4(r5)
+  822E39D0  4E800020             blr
+LAB_822e39d4:
+  822E39D4  3D608205             lis r11,-0x7dfb
+  822E39D8  C00B80F0             lfs f0,-0x7f10(r11)
+  822E39DC  D0050004             stfs f0,0x4(r5)
+  822E39E0  4E800020             blr
+
+; 822E39E8  FUN_822e39e8  (ui/ui_expressions_logicfunctions.cpp:399)
+  822E39E8  3D608205             lis r11,-0x7dfb
+  822E39EC  39400001             li r10,0x1
+  822E39F0  91450000             stw r10,0x0(r5)
+  822E39F4  C0040004             lfs f0,0x4(r4)
+  822E39F8  C1AB80F0             lfs f13,-0x7f10(r11)
+  822E39FC  FF006800             fcmpu cr6,f0,f13
+  822E3A00  419A0028             beq cr6,0x822e3a28
+  822E3A04  81630004             lwz r11,0x4(r3)
+  822E3A08  7D6A07B4             extsw r10,r11
+  822E3A0C  F941FFF0             std r10,-0x10(r1)
+  822E3A10  C9A1FFF0             lfd f13,-0x10(r1)
+  822E3A14  FD806E9C             fcfid f12,f13
+  822E3A18  FD606018             frsp f11,f12
+  822E3A1C  ED4B0024             fdivs f10,f11,f0
+  822E3A20  D1450004             stfs f10,0x4(r5)
+  822E3A24  4E800020             blr
+LAB_822e3a28:
+  822E3A28  D1A50004             stfs f13,0x4(r5)
+  822E3A2C  4E800020             blr
+
+; 822E3A30  FUN_822e3a30  (ui/ui_expressions_logicfunctions.cpp:410)
+  822E3A30  39600001             li r11,0x1
+  822E3A34  91650000             stw r11,0x0(r5)
+  822E3A38  81640004             lwz r11,0x4(r4)
+  822E3A3C  2F0B0000             cmpwi cr6,r11,0x0
+  822E3A40  419A0028             beq cr6,0x822e3a68
+  822E3A44  7D6B07B4             extsw r11,r11
+  822E3A48  C0030004             lfs f0,0x4(r3)
+  822E3A4C  F961FFF0             std r11,-0x10(r1)
+  822E3A50  C9A1FFF0             lfd f13,-0x10(r1)
+  822E3A54  FD806E9C             fcfid f12,f13
+  822E3A58  FD606018             frsp f11,f12
+  822E3A5C  ED405824             fdivs f10,f0,f11
+  822E3A60  D1450004             stfs f10,0x4(r5)
+  822E3A64  4E800020             blr
+LAB_822e3a68:
+  822E3A68  3D608205             lis r11,-0x7dfb
+  822E3A6C  C00B80F0             lfs f0,-0x7f10(r11)
+  822E3A70  D0050004             stfs f0,0x4(r5)
+  822E3A74  4E800020             blr
+
+; 822E3A78  FUN_822e3a78  (ui/ui_expressions_logicfunctions.cpp:421)
+  822E3A78  3D608205             lis r11,-0x7dfb
+  822E3A7C  39400001             li r10,0x1
+  822E3A80  91450000             stw r10,0x0(r5)
+  822E3A84  C0040004             lfs f0,0x4(r4)
+  822E3A88  C1AB80F0             lfs f13,-0x7f10(r11)
+  822E3A8C  FF006800             fcmpu cr6,f0,f13
+  822E3A90  419A0014             beq cr6,0x822e3aa4
+  822E3A94  C1A30004             lfs f13,0x4(r3)
+  822E3A98  ED8D0024             fdivs f12,f13,f0
+  822E3A9C  D1850004             stfs f12,0x4(r5)
+  822E3AA0  4E800020             blr
+LAB_822e3aa4:
+  822E3AA4  D1A50004             stfs f13,0x4(r5)
+  822E3AA8  4E800020             blr
+
+; 822E3AB0  FUN_822e3ab0  (ui/ui_expressions_logicfunctions.cpp:434)
+  822E3AB0  39600000             li r11,0x0
+  822E3AB4  91650000             stw r11,0x0(r5)
+  822E3AB8  81640004             lwz r11,0x4(r4)
+  822E3ABC  2F0B0000             cmpwi cr6,r11,0x0
+  822E3AC0  419A001C             beq cr6,0x822e3adc
+  822E3AC4  81430004             lwz r10,0x4(r3)
+  822E3AC8  7D2A5BD6             divw r9,r10,r11
+  822E3ACC  7D0959D6             mullw r8,r9,r11
+  822E3AD0  7CE85050             subf r7,r8,r10
+  822E3AD4  90E50004             stw r7,0x4(r5)
+  822E3AD8  4E800020             blr
+LAB_822e3adc:
+  822E3ADC  81630004             lwz r11,0x4(r3)
+  822E3AE0  91650004             stw r11,0x4(r5)
+  822E3AE4  4E800020             blr
 
 ; 822E3AE8  FUN_822e3ae8  (ui/ui_expressions_logicfunctions.cpp:445)
   822E3AE8  7D8802A6             mfspr r12,LR

@@ -1225,6 +1225,33 @@ LAB_8216ef18:
   8216EF24  EBE1FFF0             ld r31,-0x10(r1)
   8216EF28  4E800020             blr
 
+; 8216EF30  FUN_8216ef30  (client/cl_keys.cpp:1853)
+  8216EF30  3D4082FF             lis r10,-0x7d01
+  8216EF34  39200100             li r9,0x100
+  8216EF38  396ABE50             subi r11,r10,0x41b0
+  8216EF3C  38C00000             li r6,0x0
+  8216EF40  390B0004             addi r8,r11,0x4
+  8216EF44  814ABE50             lwz r10,-0x41b0(r10)
+  8216EF48  7CC73378             or r7,r6,r6
+  8216EF4C  7D2903A6             mtspr CTR,r9
+  8216EF50  7CCB3378             or r11,r6,r6
+  8216EF54  5545103A             rlwinm r5,r10,0x2,0x0,0x1d
+  8216EF58  3D408266             lis r10,-0x7d9a
+  8216EF5C  7D25402E             lwzx r9,r5,r8
+  8216EF60  390A9CE0             subi r8,r10,0x6320
+LAB_8216ef64:
+  8216EF64  2F07FFFF             cmpwi cr6,r7,-0x1
+  8216EF68  419A0014             beq cr6,0x8216ef7c
+  8216EF6C  1D490D28             mulli r10,r9,0xd28
+  8216EF70  7D4A5A14             add r10,r10,r11
+  8216EF74  38A8012C             addi r5,r8,0x12c
+  8216EF78  7CCA292E             stwx r6,r10,r5
+LAB_8216ef7c:
+  8216EF7C  38E70001             addi r7,r7,0x1
+  8216EF80  396B000C             addi r11,r11,0xc
+  8216EF84  4200FFE0             bdnz 0x8216ef64
+  8216EF88  4E800020             blr
+
 ; 8216EF90  FUN_8216ef90  (client/cl_keys.cpp:1869)
   8216EF90  7D8802A6             mfspr r12,LR
   8216EF94  483D9525             bl 0x825484b8

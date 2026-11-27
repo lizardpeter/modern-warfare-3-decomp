@@ -1703,6 +1703,15 @@ void FUN_8227e520(float *param_1,undefined8 param_2,undefined8 param_3,undefined
 }
 
 
+// 8227E5D8  FUN_8227e5d8  (qcommon/cm_trace.cpp:2043)
+
+undefined8 FUN_8227e5d8(void)
+
+{
+  return 1;
+}
+
+
 // 8227E5E0  FUN_8227e5e0  (qcommon/cm_trace.cpp:2049)
 
 void FUN_8227e5e0(void)
@@ -1710,6 +1719,15 @@ void FUN_8227e5e0(void)
 {
   FUN_8227e520();
   return;
+}
+
+
+// 8227E610  FUN_8227e610  (qcommon/cm_trace.cpp:2058)
+
+undefined8 FUN_8227e610(void)
+
+{
+  return 0;
 }
 
 
@@ -1738,7 +1756,7 @@ void FUN_8227e618(float *param_1,float *param_2,float *param_3,float *param_4,un
   float fVar14;
   float fVar15;
   double dVar16;
-  undefined1 *local_e0 [2];
+  code *local_e0 [2];
   float local_d8;
   float local_d4;
   float local_d0;
@@ -1776,7 +1794,7 @@ void FUN_8227e618(float *param_1,float *param_2,float *param_3,float *param_4,un
   local_98 = 0;
   local_90 = param_4[4];
   local_8c = param_4[5];
-  local_e0[0] = &LAB_8227e610;
+  local_e0[0] = FUN_8227e610;
   local_d4 = (fVar4 + fVar3) * 0.0 + fVar8;
   dVar16 = (double)*param_1;
   local_d0 = (fVar5 + fVar6) * 0.0 + fVar9;
@@ -2748,7 +2766,7 @@ void FUN_8227fc78(undefined8 param_1,float *param_2,float *param_3,float *param_
   double dVar4;
   double dVar5;
   double dVar6;
-  undefined1 *local_d0 [2];
+  code *local_d0 [2];
   float local_c8;
   float local_c4;
   float local_c0;
@@ -2776,7 +2794,7 @@ void FUN_8227fc78(undefined8 param_1,float *param_2,float *param_3,float *param_
   local_c4 = (param_3[1] + param_4[1]) - param_7[1];
   dVar4 = (double)local_c4;
   local_94 = param_4[3];
-  local_d0[0] = &LAB_8227e610;
+  local_d0[0] = FUN_8227e610;
   local_90 = param_4[4];
   local_8c = param_4[5];
   local_b8 = (*param_2 + *param_4) - *param_7;
@@ -2849,7 +2867,7 @@ void FUN_8227fea0(int *param_1)
   undefined8 *puVar2;
   longlong lVar3;
   double dVar4;
-  undefined1 *local_80 [2];
+  code *local_80 [2];
   undefined8 uStack_78;
   float local_70 [12];
   int local_40;
@@ -2864,7 +2882,7 @@ void FUN_8227fea0(int *param_1)
     param_1[0x38] = (int)(param_1 + 0x48);
   }
   puVar2 = &uStack_78;
-  local_80[0] = &LAB_8227fe98;
+  local_80[0] = thunk_FUN_821213b8;
   lVar3 = 9;
   do {
     puVar2 = puVar2 + 1;

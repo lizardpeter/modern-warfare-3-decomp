@@ -469,6 +469,20 @@ void FUN_82263a58(int param_1)
 }
 
 
+// 82263AA0  FUN_82263aa0  (game/g_scr_mover.cpp:418)
+
+void FUN_82263aa0(int param_1)
+
+{
+  if ((*(uint *)(param_1 + 0x184) & 0x8000000) == 0) {
+    FUN_822bb430(0xffffffff82036468);
+    return;
+  }
+  FUN_822bb430(param_1 + 0x1c4);
+  return;
+}
+
+
 // 82263B38  FUN_82263b38  (game/g_scr_mover.cpp:447)
 
 void FUN_82263b38(int param_1)
@@ -520,6 +534,34 @@ void FUN_82263c48(int param_1)
   *(undefined4 *)(param_1 + 0x30) = 0;
   *(uint *)(param_1 + 0x184) = *(uint *)(param_1 + 0x184) | 0x1000;
   FUN_822d1350(param_1);
+  return;
+}
+
+
+// 82263D18  FUN_82263d18  (game/g_scr_mover.cpp:519)
+
+void FUN_82263d18(int param_1)
+
+{
+  *(undefined1 *)(param_1 + 0x102) = 0;
+  *(undefined1 *)(param_1 + 0x16d) = 5;
+  *(undefined4 *)(param_1 + 4) = 6;
+  *(undefined4 *)(param_1 + 0x5c) = 0;
+  *(undefined4 *)(param_1 + 0x60) = 0;
+  *(undefined4 *)(param_1 + 0xd8) = 0xff;
+  *(undefined4 *)(param_1 + 0x54) = 0x7ff;
+  *(undefined4 *)(param_1 + 0x18) = *(undefined4 *)(param_1 + 0x138);
+  *(undefined4 *)(param_1 + 0x1c) = *(undefined4 *)(param_1 + 0x13c);
+  *(undefined4 *)(param_1 + 0x20) = *(undefined4 *)(param_1 + 0x140);
+  *(undefined4 *)(param_1 + 0xc) = 0;
+  *(undefined4 *)(param_1 + 0x3c) = *(undefined4 *)(param_1 + 0x144);
+  *(undefined4 *)(param_1 + 0x40) = *(undefined4 *)(param_1 + 0x148);
+  *(undefined4 *)(param_1 + 0x44) = *(undefined4 *)(param_1 + 0x14c);
+  *(undefined4 *)(param_1 + 0x30) = 0;
+  *(undefined4 *)(param_1 + 0x11c) = 0x2080;
+  *(byte *)(param_1 + 0x102) = *(byte *)(param_1 + 0x102) | 4;
+  *(uint *)(param_1 + 0x184) = *(uint *)(param_1 + 0x184) | 0x1000;
+  FUN_8226bb18(param_1,1);
   return;
 }
 
@@ -822,6 +864,36 @@ void FUN_82264390(uint param_1,int param_2)
 }
 
 
+// 822644E0  FUN_822644e0  (game/g_scr_mover.cpp:768)
+
+void FUN_822644e0(undefined8 param_1)
+
+{
+  FUN_82264390(param_1,0);
+  return;
+}
+
+
+// 822644E8  FUN_822644e8  (game/g_scr_mover.cpp:788)
+
+void FUN_822644e8(undefined8 param_1)
+
+{
+  FUN_82264390(param_1,1);
+  return;
+}
+
+
+// 822644F0  FUN_822644f0  (game/g_scr_mover.cpp:808)
+
+void FUN_822644f0(undefined8 param_1)
+
+{
+  FUN_82264390(param_1,2);
+  return;
+}
+
+
 // 822644F8  FUN_822644f8  (game/g_scr_mover.cpp:828)
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
@@ -977,6 +1049,36 @@ void FUN_82264660(uint param_1,ulonglong param_2)
 }
 
 
+// 82264860  FUN_82264860  (game/g_scr_mover.cpp:902)
+
+void FUN_82264860(undefined8 param_1)
+
+{
+  FUN_82264660(param_1,1);
+  return;
+}
+
+
+// 82264868  FUN_82264868  (game/g_scr_mover.cpp:919)
+
+void FUN_82264868(undefined8 param_1)
+
+{
+  FUN_82264660(param_1,2);
+  return;
+}
+
+
+// 82264870  FUN_82264870  (game/g_scr_mover.cpp:936)
+
+void FUN_82264870(undefined8 param_1)
+
+{
+  FUN_82264660(param_1,0);
+  return;
+}
+
+
 // 82264878  FUN_82264878  (game/g_scr_mover.cpp:942)
 
 void FUN_82264878(uint param_1,int param_2)
@@ -1019,6 +1121,36 @@ void FUN_82264878(uint param_1,int param_2)
   local_28 = local_40[2];
   FUN_82263170((double)local_48[0],(double)local_4c,(double)local_50,puVar2 + 6,local_40);
   FUN_822d1350(puVar2);
+  return;
+}
+
+
+// 822649A8  FUN_822649a8  (game/g_scr_mover.cpp:976)
+
+void FUN_822649a8(undefined8 param_1)
+
+{
+  FUN_82264878(param_1,0);
+  return;
+}
+
+
+// 822649B0  FUN_822649b0  (game/g_scr_mover.cpp:996)
+
+void FUN_822649b0(undefined8 param_1)
+
+{
+  FUN_82264878(param_1,1);
+  return;
+}
+
+
+// 822649B8  FUN_822649b8  (game/g_scr_mover.cpp:1016)
+
+void FUN_822649b8(undefined8 param_1)
+
+{
+  FUN_82264878(param_1,2);
   return;
 }
 

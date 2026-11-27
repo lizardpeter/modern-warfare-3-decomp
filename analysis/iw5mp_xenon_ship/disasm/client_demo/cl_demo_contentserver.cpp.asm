@@ -2075,3 +2075,8 @@ LAB_8245fd94:
   8245FDB4  EBC1FFE8             ld r30,-0x18(r1)
   8245FDB8  EBE1FFF0             ld r31,-0x10(r1)
   8245FDBC  4E800020             blr
+
+; 8256F9D8  FUN_8256f9d8  (line unknown)
+  8256F9D8  3D6083EC             lis r11,-0x7c14
+  8256F9DC  386BC0B0             subi r3,r11,0x3f50
+  8256F9E0  4BEF0398             b 0x8245fd78

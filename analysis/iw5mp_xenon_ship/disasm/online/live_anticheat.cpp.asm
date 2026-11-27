@@ -42,6 +42,21 @@ LAB_8256e08c:
   8256E0F8  7D8803A6             mtspr LR,r12
   8256E0FC  4E800020             blr
 
+; 8256E100  FUN_8256e100  (online/live_anticheat.cpp:461)
+  8256E100  3CE083C2             lis r7,-0x7c3e
+  8256E104  39600000             li r11,0x0
+  8256E108  38C7DE2C             subi r6,r7,0x21d4
+  8256E10C  39400000             li r10,0x0
+  8256E110  39200000             li r9,0x0
+  8256E114  39000000             li r8,0x0
+  8256E118  9167DE2C             stw r11,-0x21d4(r7)
+  8256E11C  3CA08257             lis r5,-0x7da9
+  8256E120  91460004             stw r10,0x4(r6)
+  8256E124  91260008             stw r9,0x8(r6)
+  8256E128  3865F740             subi r3,r5,0x8c0
+  8256E12C  9106000C             stw r8,0xc(r6)
+  8256E130  4BFDC2F8             b 0x8254a428
+
 ; 8256E138  FUN_8256e138  (online/live_anticheat.cpp:467)
   8256E138  7D8802A6             mfspr r12,LR
   8256E13C  9181FFF8             stw r12,-0x8(r1)
@@ -66,6 +81,36 @@ LAB_8256e158:
   8256E184  EBC1FFE8             ld r30,-0x18(r1)
   8256E188  EBE1FFF0             ld r31,-0x10(r1)
   8256E18C  4E800020             blr
+
+; 8256E190  FUN_8256e190  (online/live_anticheat.cpp:468)
+  8256E190  3CE083C3             lis r7,-0x7c3d
+  8256E194  39600000             li r11,0x0
+  8256E198  38C70880             addi r6,r7,0x880
+  8256E19C  39400000             li r10,0x0
+  8256E1A0  39200000             li r9,0x0
+  8256E1A4  39000000             li r8,0x0
+  8256E1A8  91670880             stw r11,0x880(r7)
+  8256E1AC  3CA08257             lis r5,-0x7da9
+  8256E1B0  91460004             stw r10,0x4(r6)
+  8256E1B4  91260008             stw r9,0x8(r6)
+  8256E1B8  3865F7D0             subi r3,r5,0x830
+  8256E1BC  9106000C             stw r8,0xc(r6)
+  8256E1C0  4BFDC268             b 0x8254a428
+
+; 8256E1C8  FUN_8256e1c8  (online/live_anticheat.cpp:494)
+  8256E1C8  3CE083C2             lis r7,-0x7c3e
+  8256E1CC  39600000             li r11,0x0
+  8256E1D0  38C7DE1C             subi r6,r7,0x21e4
+  8256E1D4  39400000             li r10,0x0
+  8256E1D8  39200000             li r9,0x0
+  8256E1DC  39000000             li r8,0x0
+  8256E1E0  9167DE1C             stw r11,-0x21e4(r7)
+  8256E1E4  3CA08257             lis r5,-0x7da9
+  8256E1E8  91460004             stw r10,0x4(r6)
+  8256E1EC  91260008             stw r9,0x8(r6)
+  8256E1F0  3865F860             subi r3,r5,0x7a0
+  8256E1F4  9106000C             stw r8,0xc(r6)
+  8256E1F8  4BFDC230             b 0x8254a428
 
 ; 823D6DA0  FUN_823d6da0  (online/live_anticheat.cpp:745)
   823D6DA0  7D8802A6             mfspr r12,LR

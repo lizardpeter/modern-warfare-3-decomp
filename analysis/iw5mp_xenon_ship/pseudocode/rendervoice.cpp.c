@@ -181,6 +181,16 @@ void FUN_8250f1f8(int param_1,undefined4 *param_2)
 }
 
 
+// 8250F258  FUN_8250f258  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/rendervoice.cpp:397)
+
+void FUN_8250f258(void)
+
+{
+  FUN_824f5df8(DAT_83efcf7c);
+  return;
+}
+
+
 // 8250F4A8  FUN_8250f4a8  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/rendervoice.cpp:424)
 
 undefined8 FUN_8250f4a8(int param_1)

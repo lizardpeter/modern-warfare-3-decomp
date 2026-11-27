@@ -15,26 +15,26 @@ ulonglong FUN_821a58d0(longlong param_1)
 
 {
   ulonglong uVar1;
-  undefined1 **ppuVar2;
+  code **ppcVar2;
   longlong lVar3;
   undefined1 auStack_50 [8];
-  undefined1 *local_48;
-  undefined1 *local_44;
+  code *local_48;
+  code *local_44;
   undefined4 local_40;
   undefined4 uStack_3c;
-  undefined1 **local_38;
+  code **local_38;
   undefined4 local_34;
-  undefined1 **local_30;
+  code **local_30;
   undefined4 local_2c;
   
-  ppuVar2 = &local_48;
+  ppcVar2 = &local_48;
   lVar3 = 6;
-  local_48 = &LAB_8251a600;
-  local_44 = &LAB_82519a20;
+  local_48 = FUN_8251a600;
+  local_44 = FUN_82519a20;
   do {
-    ppuVar2 = ppuVar2 + 2;
-    ppuVar2[0] = (undefined1 *)0x0;
-    ppuVar2[1] = (undefined1 *)0x0;
+    ppcVar2 = ppcVar2 + 2;
+    ppcVar2[0] = (code *)0x0;
+    ppcVar2[1] = (code *)0x0;
     lVar3 = lVar3 + -1;
   } while (lVar3 != 0);
   uStack_3c = 4;

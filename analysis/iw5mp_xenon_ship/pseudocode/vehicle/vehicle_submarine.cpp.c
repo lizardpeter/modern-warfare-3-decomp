@@ -413,6 +413,30 @@ void FUN_823ac840(undefined4 *param_1,float *param_2,float *param_3,float *param
 }
 
 
+// 823ACD90  FUN_823acd90  (vehicle/vehicle_submarine.cpp:437)
+
+void FUN_823acd90(float *param_1,float *param_2,float *param_3)
+
+{
+  float fVar1;
+  float fVar2;
+  
+  fVar1 = *param_1;
+  fVar2 = param_2[2] * param_1[2] + *param_2 * fVar1 + param_2[1] * param_1[1];
+  if (fVar2 < 0.0) {
+    fVar2 = -fVar2;
+    *param_3 = *param_2 * fVar2 + fVar1;
+    param_3[1] = param_2[1] * fVar2 + param_1[1];
+    param_3[2] = param_2[2] * fVar2 + param_1[2];
+    return;
+  }
+  *param_3 = fVar1;
+  param_3[1] = param_1[1];
+  param_3[2] = param_1[2];
+  return;
+}
+
+
 // 823ACE10  FUN_823ace10  (vehicle/vehicle_submarine.cpp:452)
 
 /* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
@@ -439,7 +463,7 @@ FUN_823ace10(double param_1,undefined4 *param_2,undefined4 param_3,undefined4 pa
   undefined4 *local_38;
   undefined4 local_34;
   undefined4 local_30;
-  undefined1 *local_2c;
+  code *local_2c;
   undefined4 local_28;
   
   local_34 = *param_2;
@@ -452,7 +476,7 @@ FUN_823ace10(double param_1,undefined4 *param_2,undefined4 param_3,undefined4 pa
   local_58 = 0x3f800000;
   local_3f = 0;
   local_3e = 1;
-  local_2c = &LAB_823acd90;
+  local_2c = FUN_823acd90;
   local_4c = param_3;
   local_48 = param_4;
   local_44 = param_5;
@@ -597,7 +621,7 @@ void FUN_823acfb8(int *param_1)
   float *local_d8;
   undefined4 local_d4;
   undefined4 local_d0;
-  undefined1 *local_cc;
+  code *local_cc;
   uint local_c8;
   float local_c0 [48];
   
@@ -759,7 +783,7 @@ LAB_823ad558:
   local_d8 = &local_118;
   local_df = 0;
   local_de = 1;
-  local_cc = &LAB_823acd90;
+  local_cc = FUN_823acd90;
   local_d4 = *puVar3;
   local_d0 = puVar3[99];
   cVar8 = FUN_82267c60(&local_f0);

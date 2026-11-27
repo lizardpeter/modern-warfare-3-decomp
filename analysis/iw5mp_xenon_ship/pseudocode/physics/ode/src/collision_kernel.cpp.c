@@ -233,7 +233,7 @@ ulonglong FUN_8237c500(int param_1,int param_2,undefined8 param_3,int param_4,in
 undefined4 * FUN_8237cf18(undefined4 *param_1,ulonglong param_2,int param_3,undefined8 param_4)
 
 {
-  *param_1 = &PTR_LAB_8203aae0;
+  *param_1 = &PTR_FUN_8203aae0;
   FUN_8237cd88();
   param_1[1] = 0xffffffff;
   param_1[2] = 0xb;
@@ -469,9 +469,38 @@ undefined4 * FUN_8237cfe0(undefined4 *param_1,int param_2,undefined8 param_3)
   iVar1 = (param_2 + -3) * 0x14;
   FUN_8237cf18(param_1,param_3,(&DAT_83a7d578)[iVar1]);
   param_1[1] = param_2;
-  *param_1 = &PTR_LAB_8203aaec;
+  *param_1 = &PTR_FUN_8203aaec;
   FUN_82548530(param_1 + 0x13,0,*(undefined4 *)(&DAT_83a7d568 + iVar1));
   return param_1;
+}
+
+
+// 8237CA60  FUN_8237ca60  (physics/ode/src/collision_kernel.cpp:550)
+
+void FUN_8237ca60(int param_1)
+
+{
+                    /* WARNING: Could not recover jumptable at 0x8237ca8c. Too many branches */
+                    /* WARNING: Treating indirect jump as call */
+  (**(code **)(&DAT_83a7d570 + (*(int *)(param_1 + 4) + -3) * 0x14))(param_1,param_1 + 0x2c);
+  return;
+}
+
+
+// 8237CA90  FUN_8237ca90  (physics/ode/src/collision_kernel.cpp:556)
+
+undefined8 FUN_8237ca90(int param_1)
+
+{
+  undefined8 uVar1;
+  
+  if (*(code **)(&DAT_83a7d574 + (*(int *)(param_1 + 4) + -3) * 0x14) != (code *)0x0) {
+                    /* WARNING: Could not recover jumptable at 0x8237cac0. Too many branches */
+                    /* WARNING: Treating indirect jump as call */
+    uVar1 = (**(code **)(&DAT_83a7d574 + (*(int *)(param_1 + 4) + -3) * 0x14))();
+    return uVar1;
+  }
+  return 1;
 }
 
 
@@ -622,7 +651,7 @@ void FUN_8237d0e0(undefined4 *param_1,int param_2,undefined8 param_3,undefined8 
     iVar1 = (param_2 + -3) * 0x14;
     FUN_8237cf18(param_1,param_3,(&DAT_83a7d578)[iVar1],param_4);
     param_1[1] = param_2;
-    *param_1 = &PTR_LAB_8203aaec;
+    *param_1 = &PTR_FUN_8203aaec;
     FUN_82548530(param_1 + 0x13,0,*(undefined4 *)(&DAT_83a7d568 + iVar1));
   }
   FUN_82333510(0x10);
@@ -644,7 +673,7 @@ void FUN_8237d170(undefined4 *param_1,int param_2,undefined8 param_3)
     iVar1 = (param_2 + -3) * 0x14;
     FUN_8237cf18(param_1,param_3,(&DAT_83a7d578)[iVar1]);
     param_1[1] = param_2;
-    *param_1 = &PTR_LAB_8203aaec;
+    *param_1 = &PTR_FUN_8203aaec;
     FUN_82548530(param_1 + 0x13,0,*(undefined4 *)(&DAT_83a7d568 + iVar1));
   }
   return;
@@ -658,6 +687,16 @@ void FUN_8237cc98(void)
 {
   DAT_83a7d868 = 0;
   DAT_83a7d86c = 0;
+  return;
+}
+
+
+// 8237D1E0  FUN_8237d1e0  (line unknown)
+
+void FUN_8237d1e0(undefined4 *param_1)
+
+{
+  *param_1 = &PTR_FUN_8203aae0;
   return;
 }
 

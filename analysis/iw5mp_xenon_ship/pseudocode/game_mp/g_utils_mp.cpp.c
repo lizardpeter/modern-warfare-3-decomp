@@ -1837,6 +1837,40 @@ void FUN_8226b518(int param_1,undefined4 *param_2)
 }
 
 
+// 8226B570  FUN_8226b570  (game_mp/g_utils_mp.cpp:1575)
+
+undefined8 FUN_8226b570(undefined8 param_1,int param_2,undefined4 *param_3)
+
+{
+  *param_3 = (&DAT_82db6cb8)[param_2 * 0xa0];
+  param_3[1] = (&DAT_82db6cbc)[param_2 * 0xa0];
+  param_3[2] = (&DAT_82db6cc0)[param_2 * 0xa0];
+  return 1;
+}
+
+
+// 8226B5B0  FUN_8226b5b0  (game_mp/g_utils_mp.cpp:1587)
+
+undefined8 FUN_8226b5b0(undefined8 param_1,int param_2,undefined4 *param_3)
+
+{
+  param_2 = param_2 * 0x280;
+  *param_3 = *(undefined4 *)(&DAT_82db6ba4 + param_2);
+  param_3[1] = *(undefined4 *)(&DAT_82db6ba8 + param_2);
+  param_3[2] = *(undefined4 *)(&DAT_82db6bac + param_2);
+  return 1;
+}
+
+
+// 8226B5F0  FUN_8226b5f0  (game_mp/g_utils_mp.cpp:1599)
+
+longlong FUN_8226b5f0(undefined8 param_1,ulonglong param_2)
+
+{
+  return (param_2 + (param_2 & 0x3fffffff) * 4 & 0x1ffffff) * 0x80 + -0x7d249480;
+}
+
+
 // 8226B610  FUN_8226b610  (game_mp/g_utils_mp.cpp:1606)
 
 bool FUN_8226b610(int param_1,int param_2)

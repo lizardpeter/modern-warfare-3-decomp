@@ -298,6 +298,9 @@ LAB_82239280:
   82239330  EBE1FFF0             ld r31,-0x10(r1)
   82239334  4E800020             blr
 
+; 82239338  thunk_FUN_822b8a20  (game/g_hudelem.cpp:702)
+  82239338  4807F6E8             b 0x822b8a20
+
 ; 82239340  FUN_82239340  (game/g_hudelem.cpp:708)
   82239340  7D8802A6             mfspr r12,LR
   82239344  4830F179             bl 0x825484bc
@@ -349,6 +352,17 @@ LAB_822393f8:
   8223940C  EBE1FFF0             ld r31,-0x10(r1)
   82239410  4E800020             blr
 
+; 82239418  FUN_82239418  (game/g_hudelem.cpp:742)
+  82239418  816300A4             lwz r11,0xa4(r3)
+  8223941C  556A07FE             rlwinm r10,r11,0x0,0x1f,0x1f
+  82239420  2F0A0000             cmpwi cr6,r10,0x0
+  82239424  419A000C             beq cr6,0x82239430
+  82239428  38600001             li r3,0x1
+  8223942C  48081D0C             b 0x822bb138
+LAB_82239430:
+  82239430  38600000             li r3,0x0
+  82239434  48081D04             b 0x822bb138
+
 ; 82239438  FUN_82239438  (game/g_hudelem.cpp:748)
   82239438  7D8802A6             mfspr r12,LR
   8223943C  9181FFF8             stw r12,-0x8(r1)
@@ -376,6 +390,17 @@ LAB_82239480:
   82239490  EBC1FFE8             ld r30,-0x18(r1)
   82239494  EBE1FFF0             ld r31,-0x10(r1)
   82239498  4E800020             blr
+
+; 822394A0  FUN_822394a0  (game/g_hudelem.cpp:754)
+  822394A0  816300A4             lwz r11,0xa4(r3)
+  822394A4  556A05EE             rlwinm r10,r11,0x0,0x17,0x17
+  822394A8  2F0A0000             cmpwi cr6,r10,0x0
+  822394AC  419A000C             beq cr6,0x822394b8
+  822394B0  38600001             li r3,0x1
+  822394B4  48081C84             b 0x822bb138
+LAB_822394b8:
+  822394B8  38600000             li r3,0x0
+  822394BC  48081C7C             b 0x822bb138
 
 ; 822394C0  FUN_822394c0  (game/g_hudelem.cpp:760)
   822394C0  7D8802A6             mfspr r12,LR
@@ -405,6 +430,17 @@ LAB_82239508:
   8223951C  EBE1FFF0             ld r31,-0x10(r1)
   82239520  4E800020             blr
 
+; 82239528  FUN_82239528  (game/g_hudelem.cpp:766)
+  82239528  816300A4             lwz r11,0xa4(r3)
+  8223952C  556A07BC             rlwinm r10,r11,0x0,0x1e,0x1e
+  82239530  2F0A0000             cmpwi cr6,r10,0x0
+  82239534  419A000C             beq cr6,0x82239540
+  82239538  38600001             li r3,0x1
+  8223953C  48081BFC             b 0x822bb138
+LAB_82239540:
+  82239540  38600000             li r3,0x0
+  82239544  48081BF4             b 0x822bb138
+
 ; 82239548  FUN_82239548  (game/g_hudelem.cpp:772)
   82239548  7D8802A6             mfspr r12,LR
   8223954C  9181FFF8             stw r12,-0x8(r1)
@@ -433,6 +469,17 @@ LAB_82239590:
   822395A4  EBE1FFF0             ld r31,-0x10(r1)
   822395A8  4E800020             blr
 
+; 822395B0  FUN_822395b0  (game/g_hudelem.cpp:778)
+  822395B0  816300A4             lwz r11,0xa4(r3)
+  822395B4  556A077A             rlwinm r10,r11,0x0,0x1d,0x1d
+  822395B8  2F0A0000             cmpwi cr6,r10,0x0
+  822395BC  419A000C             beq cr6,0x822395c8
+  822395C0  38600001             li r3,0x1
+  822395C4  48081B74             b 0x822bb138
+LAB_822395c8:
+  822395C8  38600000             li r3,0x0
+  822395CC  48081B6C             b 0x822bb138
+
 ; 822395D0  FUN_822395d0  (game/g_hudelem.cpp:799)
   822395D0  7D8802A6             mfspr r12,LR
   822395D4  9181FFF8             stw r12,-0x8(r1)
@@ -460,6 +507,17 @@ LAB_82239618:
   82239628  EBC1FFE8             ld r30,-0x18(r1)
   8223962C  EBE1FFF0             ld r31,-0x10(r1)
   82239630  4E800020             blr
+
+; 82239638  FUN_82239638  (game/g_hudelem.cpp:805)
+  82239638  816300A4             lwz r11,0xa4(r3)
+  8223963C  556A0528             rlwinm r10,r11,0x0,0x14,0x14
+  82239640  2F0A0000             cmpwi cr6,r10,0x0
+  82239644  419A000C             beq cr6,0x82239650
+  82239648  38600001             li r3,0x1
+  8223964C  48081AEC             b 0x822bb138
+LAB_82239650:
+  82239650  38600000             li r3,0x0
+  82239654  48081AE4             b 0x822bb138
 
 ; 82239658  FUN_82239658  (game/g_hudelem.cpp:811)
   82239658  7D8802A6             mfspr r12,LR
@@ -511,6 +569,17 @@ LAB_822396f8:
   82239708  EBC1FFE8             ld r30,-0x18(r1)
   8223970C  EBE1FFF0             ld r31,-0x10(r1)
   82239710  4E800020             blr
+
+; 82239718  FUN_82239718  (game/g_hudelem.cpp:831)
+  82239718  816300A4             lwz r11,0xa4(r3)
+  8223971C  556A04E6             rlwinm r10,r11,0x0,0x13,0x13
+  82239720  2F0A0000             cmpwi cr6,r10,0x0
+  82239724  419A000C             beq cr6,0x82239730
+  82239728  38600001             li r3,0x1
+  8223972C  48081A0C             b 0x822bb138
+LAB_82239730:
+  82239730  38600000             li r3,0x0
+  82239734  48081A04             b 0x822bb138
 
 ; 82239738  FUN_82239738  (game/g_hudelem.cpp:838)
   82239738  7D8802A6             mfspr r12,LR
@@ -844,6 +913,141 @@ LAB_82239c10:
   82239C24  CBE1FFE8             lfd f31,-0x18(r1)
   82239C28  EBE1FFF0             ld r31,-0x10(r1)
   82239C2C  4E800020             blr
+
+; 82239C30  FUN_82239c30  (game/g_hudelem.cpp:949)
+  82239C30  3D608202             lis r11,-0x7dfe
+  82239C34  548A2834             rlwinm r10,r4,0x5,0x0,0x1a
+  82239C38  396BDD80             subi r11,r11,0x2280
+  82239C3C  3D208259             lis r9,-0x7da7
+  82239C40  38C00008             li r6,0x8
+  82239C44  38A94240             addi r5,r9,0x4240
+  82239C48  7C8A5A14             add r4,r10,r11
+  82239C4C  4BFFF564             b 0x822391b0
+
+; 82239C50  FUN_82239c50  (game/g_hudelem.cpp:955)
+  82239C50  3D608202             lis r11,-0x7dfe
+  82239C54  548A2834             rlwinm r10,r4,0x5,0x0,0x1a
+  82239C58  396BDD80             subi r11,r11,0x2280
+  82239C5C  3D208259             lis r9,-0x7da7
+  82239C60  7D6A5A14             add r11,r10,r11
+  82239C64  39094240             addi r8,r9,0x4240
+  82239C68  80EB0008             lwz r7,0x8(r11)
+  82239C6C  80CB0014             lwz r6,0x14(r11)
+  82239C70  80AB0010             lwz r5,0x10(r11)
+  82239C74  7C87182E             lwzx r4,r7,r3
+  82239C78  7C833630             sraw r3,r4,r6
+  82239C7C  7C6B2838             and r11,r3,r5
+  82239C80  556A103A             rlwinm r10,r11,0x2,0x0,0x1d
+  82239C84  7C6A402E             lwzx r3,r10,r8
+  82239C88  48081698             b 0x822bb320
+
+; 82239C90  FUN_82239c90  (game/g_hudelem.cpp:961)
+  82239C90  3D608202             lis r11,-0x7dfe
+  82239C94  548A2834             rlwinm r10,r4,0x5,0x0,0x1a
+  82239C98  396BDD80             subi r11,r11,0x2280
+  82239C9C  3D208259             lis r9,-0x7da7
+  82239CA0  38C00003             li r6,0x3
+  82239CA4  38A94260             addi r5,r9,0x4260
+  82239CA8  7C8A5A14             add r4,r10,r11
+  82239CAC  4BFFF504             b 0x822391b0
+
+; 82239CB0  FUN_82239cb0  (game/g_hudelem.cpp:967)
+  82239CB0  3D608202             lis r11,-0x7dfe
+  82239CB4  548A2834             rlwinm r10,r4,0x5,0x0,0x1a
+  82239CB8  396BDD80             subi r11,r11,0x2280
+  82239CBC  3D208259             lis r9,-0x7da7
+  82239CC0  7D6A5A14             add r11,r10,r11
+  82239CC4  39094260             addi r8,r9,0x4260
+  82239CC8  80EB0008             lwz r7,0x8(r11)
+  82239CCC  80CB0014             lwz r6,0x14(r11)
+  82239CD0  80AB0010             lwz r5,0x10(r11)
+  82239CD4  7C87182E             lwzx r4,r7,r3
+  82239CD8  7C833630             sraw r3,r4,r6
+  82239CDC  7C6B2838             and r11,r3,r5
+  82239CE0  556A103A             rlwinm r10,r11,0x2,0x0,0x1d
+  82239CE4  7C6A402E             lwzx r3,r10,r8
+  82239CE8  48081638             b 0x822bb320
+
+; 82239CF0  FUN_82239cf0  (game/g_hudelem.cpp:973)
+  82239CF0  3D608202             lis r11,-0x7dfe
+  82239CF4  548A2834             rlwinm r10,r4,0x5,0x0,0x1a
+  82239CF8  396BDD80             subi r11,r11,0x2280
+  82239CFC  3D208259             lis r9,-0x7da7
+  82239D00  38C00003             li r6,0x3
+  82239D04  38A9426C             addi r5,r9,0x426c
+  82239D08  7C8A5A14             add r4,r10,r11
+  82239D0C  4BFFF4A4             b 0x822391b0
+
+; 82239D10  FUN_82239d10  (game/g_hudelem.cpp:979)
+  82239D10  3D608202             lis r11,-0x7dfe
+  82239D14  548A2834             rlwinm r10,r4,0x5,0x0,0x1a
+  82239D18  396BDD80             subi r11,r11,0x2280
+  82239D1C  3D208259             lis r9,-0x7da7
+  82239D20  7D6A5A14             add r11,r10,r11
+  82239D24  3909426C             addi r8,r9,0x426c
+  82239D28  80EB0008             lwz r7,0x8(r11)
+  82239D2C  80CB0014             lwz r6,0x14(r11)
+  82239D30  80AB0010             lwz r5,0x10(r11)
+  82239D34  7C87182E             lwzx r4,r7,r3
+  82239D38  7C833630             sraw r3,r4,r6
+  82239D3C  7C6B2838             and r11,r3,r5
+  82239D40  556A103A             rlwinm r10,r11,0x2,0x0,0x1d
+  82239D44  7C6A402E             lwzx r3,r10,r8
+  82239D48  480815D8             b 0x822bb320
+
+; 82239D50  FUN_82239d50  (game/g_hudelem.cpp:985)
+  82239D50  3D608202             lis r11,-0x7dfe
+  82239D54  548A2834             rlwinm r10,r4,0x5,0x0,0x1a
+  82239D58  396BDD80             subi r11,r11,0x2280
+  82239D5C  3D208259             lis r9,-0x7da7
+  82239D60  38C0000B             li r6,0xb
+  82239D64  38A94278             addi r5,r9,0x4278
+  82239D68  7C8A5A14             add r4,r10,r11
+  82239D6C  4BFFF444             b 0x822391b0
+
+; 82239D70  FUN_82239d70  (game/g_hudelem.cpp:991)
+  82239D70  3D608202             lis r11,-0x7dfe
+  82239D74  548A2834             rlwinm r10,r4,0x5,0x0,0x1a
+  82239D78  396BDD80             subi r11,r11,0x2280
+  82239D7C  3D208259             lis r9,-0x7da7
+  82239D80  7D6A5A14             add r11,r10,r11
+  82239D84  39094278             addi r8,r9,0x4278
+  82239D88  80EB0008             lwz r7,0x8(r11)
+  82239D8C  80CB0014             lwz r6,0x14(r11)
+  82239D90  80AB0010             lwz r5,0x10(r11)
+  82239D94  7C87182E             lwzx r4,r7,r3
+  82239D98  7C833630             sraw r3,r4,r6
+  82239D9C  7C6B2838             and r11,r3,r5
+  82239DA0  556A103A             rlwinm r10,r11,0x2,0x0,0x1d
+  82239DA4  7C6A402E             lwzx r3,r10,r8
+  82239DA8  48081578             b 0x822bb320
+
+; 82239DB0  FUN_82239db0  (game/g_hudelem.cpp:997)
+  82239DB0  3D608202             lis r11,-0x7dfe
+  82239DB4  548A2834             rlwinm r10,r4,0x5,0x0,0x1a
+  82239DB8  396BDD80             subi r11,r11,0x2280
+  82239DBC  3D208259             lis r9,-0x7da7
+  82239DC0  38C0000B             li r6,0xb
+  82239DC4  38A942A4             addi r5,r9,0x42a4
+  82239DC8  7C8A5A14             add r4,r10,r11
+  82239DCC  4BFFF3E4             b 0x822391b0
+
+; 82239DD0  FUN_82239dd0  (game/g_hudelem.cpp:1003)
+  82239DD0  3D608202             lis r11,-0x7dfe
+  82239DD4  548A2834             rlwinm r10,r4,0x5,0x0,0x1a
+  82239DD8  396BDD80             subi r11,r11,0x2280
+  82239DDC  3D208259             lis r9,-0x7da7
+  82239DE0  7D6A5A14             add r11,r10,r11
+  82239DE4  390942A4             addi r8,r9,0x42a4
+  82239DE8  80EB0008             lwz r7,0x8(r11)
+  82239DEC  80CB0014             lwz r6,0x14(r11)
+  82239DF0  80AB0010             lwz r5,0x10(r11)
+  82239DF4  7C87182E             lwzx r4,r7,r3
+  82239DF8  7C833630             sraw r3,r4,r6
+  82239DFC  7C6B2838             and r11,r3,r5
+  82239E00  556A103A             rlwinm r10,r11,0x2,0x0,0x1d
+  82239E04  7C6A402E             lwzx r3,r10,r8
+  82239E08  48081518             b 0x822bb320
 
 ; 82239E10  FUN_82239e10  (game/g_hudelem.cpp:1115)
   82239E10  3D608202             lis r11,-0x7dfe
@@ -1502,6 +1706,22 @@ LAB_8223a6d0:
   8223A72C  CBE1FFB0             lfd f31,-0x50(r1)
   8223A730  4830DDC8             b 0x825484f8
 
+; 8223A738  FUN_8223a738  (game/g_hudelem.cpp:1556)
+  8223A738  38800005             li r4,0x5
+  8223A73C  4BFFFD5C             b 0x8223a498
+
+; 8223A740  FUN_8223a740  (game/g_hudelem.cpp:1573)
+  8223A740  38800006             li r4,0x6
+  8223A744  4BFFFD54             b 0x8223a498
+
+; 8223A748  FUN_8223a748  (game/g_hudelem.cpp:1590)
+  8223A748  38800007             li r4,0x7
+  8223A74C  4BFFFD4C             b 0x8223a498
+
+; 8223A750  FUN_8223a750  (game/g_hudelem.cpp:1607)
+  8223A750  38800008             li r4,0x8
+  8223A754  4BFFFD44             b 0x8223a498
+
 ; 8223A758  FUN_8223a758  (game/g_hudelem.cpp:1624)
   8223A758  7D8802A6             mfspr r12,LR
   8223A75C  9181FFF8             stw r12,-0x8(r1)
@@ -1627,6 +1847,14 @@ LAB_8223a8d4:
   8223A91C  915F0000             stw r10,0x0(r31)
   8223A920  38210080             addi r1,r1,0x80
   8223A924  4830DBE8             b 0x8254850c
+
+; 8223A928  FUN_8223a928  (game/g_hudelem.cpp:1662)
+  8223A928  3880000B             li r4,0xb
+  8223A92C  4BFFFC84             b 0x8223a5b0
+
+; 8223A930  FUN_8223a930  (game/g_hudelem.cpp:1683)
+  8223A930  3880000C             li r4,0xc
+  8223A934  4BFFFC7C             b 0x8223a5b0
 
 ; 8223A938  FUN_8223a938  (game/g_hudelem.cpp:1700)
   8223A938  7D8802A6             mfspr r12,LR

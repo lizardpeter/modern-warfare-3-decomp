@@ -238,6 +238,45 @@ LAB_8220b95c:
 }
 
 
+// 8220BB78  FUN_8220bb78  (EffectsCore/fx_glass_crack_shard.cpp:298)
+
+ulonglong FUN_8220bb78(int param_1,int param_2)
+
+{
+  uint uVar1;
+  uint uVar2;
+  uint uVar3;
+  uint uVar4;
+  ulonglong uVar5;
+  ulonglong uVar6;
+  uint *puVar7;
+  uint *puVar8;
+  
+  puVar8 = (uint *)(param_1 * 0xc + DAT_82d70744);
+  puVar7 = (uint *)(param_2 * 0xc + DAT_82d70744);
+  uVar1 = *puVar8;
+  uVar2 = *puVar7;
+  if (uVar1 != uVar2) {
+    return ((~(ulonglong)(uVar2 ^ uVar1) & 0xffffffff) >> 0x1f) + (ulonglong)(uVar2 <= uVar1) & 1;
+  }
+  uVar1 = puVar7[2];
+  uVar2 = puVar8[1];
+  uVar3 = puVar7[1];
+  uVar4 = puVar8[2];
+  if ((longlong)(int)uVar2 * (longlong)(int)uVar1 != (longlong)(int)uVar4 * (longlong)(int)uVar3) {
+    return (ulonglong)
+           ((longlong)(int)uVar2 * (longlong)(int)uVar1 <
+           (longlong)(int)uVar4 * (longlong)(int)uVar3);
+  }
+  if (uVar4 != 0) {
+    return ((~(ulonglong)(uVar1 ^ uVar4) & 0xffffffff) >> 0x1f) + (ulonglong)(uVar1 <= uVar4) & 1;
+  }
+  uVar6 = ((ulonglong)uVar3 ^ (longlong)((int)uVar3 >> 0x1f)) - (longlong)((int)uVar3 >> 0x1f);
+  uVar5 = ((ulonglong)uVar2 ^ (longlong)((int)uVar2 >> 0x1f)) - (longlong)((int)uVar2 >> 0x1f);
+  return ((~(uVar6 ^ uVar5) & 0xffffffff) >> 0x1f) + (ulonglong)(uVar6 <= uVar5) & 1;
+}
+
+
 // 8220BCB8  FUN_8220bcb8  (EffectsCore/fx_glass_crack_shard.cpp:346)
 
 void FUN_8220bcb8(int param_1,int param_2,uint param_3,uint param_4,int param_5)

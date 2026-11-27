@@ -108,6 +108,14 @@ LAB_8256a7b4:
   8256A7C4  EBE1FFF0             ld r31,-0x10(r1)
   8256A7C8  4E800020             blr
 
+; 8256A600  FUN_8256a600  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdpacket/bdchunk.cpp:73)
+  8256A600  81630000             lwz r11,0x0(r3)
+  8256A604  38A00000             li r5,0x0
+  8256A608  38800000             li r4,0x0
+  8256A60C  816B0008             lwz r11,0x8(r11)
+  8256A610  7D6903A6             mtspr CTR,r11
+  8256A614  4E800420             bctr
+
 ; 8256A618  FUN_8256a618  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdpacket/bdchunk.cpp:79)
   8256A618  81630008             lwz r11,0x8(r3)
   8256A61C  396BFFFE             subi r11,r11,0x2

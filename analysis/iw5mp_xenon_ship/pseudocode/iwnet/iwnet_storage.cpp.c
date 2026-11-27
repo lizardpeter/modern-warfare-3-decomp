@@ -38,6 +38,16 @@ void FUN_823ba060(int param_1,undefined8 param_2)
 }
 
 
+// 823BA0B8  FUN_823ba0b8  (iwnet/iwnet_storage.cpp:94)
+
+void FUN_823ba0b8(void)
+
+{
+  FUN_823b9d20(0xb);
+  return;
+}
+
+
 // 823BA0C0  FUN_823ba0c0  (iwnet/iwnet_storage.cpp:101)
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
@@ -198,6 +208,25 @@ void FUN_823ba3c0(int param_1,int *param_2)
 }
 
 
+// 823BA450  FUN_823ba450  (iwnet/iwnet_storage.cpp:274)
+
+void FUN_823ba450(int param_1)
+
+{
+  int iVar1;
+  
+  *(int *)(*(int *)(param_1 + 0xc) + 0x58) = *(int *)(*(int *)(param_1 + 0xc) + 0x58) + 0x400;
+  if (*(uint *)(*(int *)(param_1 + 0xc) + 0x48) < *(uint *)(*(int *)(param_1 + 0xc) + 0x58)) {
+    iVar1 = *(int *)(param_1 + 0xc);
+    *(undefined4 *)(iVar1 + 0x58) = *(undefined4 *)(iVar1 + 0x48);
+  }
+  iVar1 = *(int *)(param_1 + 0xc);
+  FUN_823b99a0(*(undefined4 *)(param_1 + 0x10),
+               (*(int *)(iVar1 + 0x48) == *(int *)(iVar1 + 0x58)) + '\x02');
+  return;
+}
+
+
 // 823BA4A8  FUN_823ba4a8  (iwnet/iwnet_storage.cpp:291)
 
 void FUN_823ba4a8(int param_1)
@@ -269,6 +298,48 @@ void FUN_823ba550(int param_1,int *param_2)
   }
   *(undefined4 *)(iVar3 + 0x5c) = 2;
   *(undefined4 *)(iVar3 + 0x60) = 3;
+  return;
+}
+
+
+// 823BA628  FUN_823ba628  (iwnet/iwnet_storage.cpp:423)
+
+void FUN_823ba628(int param_1)
+
+{
+  int iVar1;
+  
+  iVar1 = *(int *)(param_1 + 0xc);
+  *(undefined4 *)(iVar1 + 0x5c) = 2;
+  *(undefined4 *)(iVar1 + 0x60) = 0;
+  return;
+}
+
+
+// 823BA7D8  FUN_823ba7d8  (iwnet/iwnet_storage.cpp:431)
+
+void FUN_823ba7d8(int param_1)
+
+{
+  int iVar1;
+  
+  iVar1 = *(int *)(param_1 + 0xc);
+  *(undefined4 *)(iVar1 + 0x5c) = 2;
+  *(undefined4 *)(iVar1 + 0x60) = 3;
+  return;
+}
+
+
+// 823BA7F0  FUN_823ba7f0  (iwnet/iwnet_storage.cpp:431)
+
+void FUN_823ba7f0(int param_1)
+
+{
+  int iVar1;
+  
+  iVar1 = *(int *)(param_1 + 0xc);
+  *(undefined4 *)(iVar1 + 0x5c) = 2;
+  *(undefined4 *)(iVar1 + 0x60) = 1;
   return;
 }
 

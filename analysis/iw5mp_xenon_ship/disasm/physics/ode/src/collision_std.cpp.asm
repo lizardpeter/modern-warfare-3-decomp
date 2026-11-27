@@ -33,6 +33,70 @@
   8237E014  EBE1FFF0             ld r31,-0x10(r1)
   8237E018  4E800020             blr
 
+; 8237E020  FUN_8237e020  (physics/ode/src/collision_std.cpp:66)
+  8237E020  8163001C             lwz r11,0x1c(r3)
+  8237E024  C1A30050             lfs f13,0x50(r3)
+  8237E028  C0030054             lfs f0,0x54(r3)
+  8237E02C  3D408200             lis r10,-0x7e00
+  8237E030  C183004C             lfs f12,0x4c(r3)
+  8237E034  81230018             lwz r9,0x18(r3)
+  8237E038  C16B0004             lfs f11,0x4(r11)
+  8237E03C  C14B0008             lfs f10,0x8(r11)
+  8237E040  ED2B0372             fmuls f9,f11,f13
+  8237E044  ED0A0032             fmuls f8,f10,f0
+  8237E048  C0EB0010             lfs f7,0x10(r11)
+  8237E04C  C0CB0014             lfs f6,0x14(r11)
+  8237E050  ECA70332             fmuls f5,f7,f12
+  8237E054  EC860372             fmuls f4,f6,f13
+  8237E058  C16B0024             lfs f11,0x24(r11)
+  8237E05C  C06B0000             lfs f3,0x0(r11)
+  8237E060  ECEB0372             fmuls f7,f11,f13
+  8237E064  C04B0020             lfs f2,0x20(r11)
+  8237E068  EC230332             fmuls f1,f3,f12
+  8237E06C  ED420332             fmuls f10,f2,f12
+  8237E070  C0CB0018             lfs f6,0x18(r11)
+  8237E074  EC660032             fmuls f3,f6,f0
+  8237E078  C04B0028             lfs f2,0x28(r11)
+  8237E07C  EDA20032             fmuls f13,f2,f0
+  8237E080  C00A0B40             lfs f0,0xb40(r10)
+  8237E084  C1890000             lfs f12,0x0(r9)
+  8237E088  FD604A10             fabs f11,f9
+  8237E08C  FD204210             fabs f9,f8
+  8237E090  FD002A10             fabs f8,f5
+  8237E094  FCC02210             fabs f6,f4
+  8237E098  FC403A10             fabs f2,f7
+  8237E09C  FCA00A10             fabs f5,f1
+  8237E0A0  FC805210             fabs f4,f10
+  8237E0A4  FC201A10             fabs f1,f3
+  8237E0A8  FDA06A10             fabs f13,f13
+  8237E0AC  ED6B482A             fadds f11,f11,f9
+  8237E0B0  ED48302A             fadds f10,f8,f6
+  8237E0B4  ED24102A             fadds f9,f4,f2
+  8237E0B8  ED0B282A             fadds f8,f11,f5
+  8237E0BC  ECEA082A             fadds f7,f10,f1
+  8237E0C0  ECC9682A             fadds f6,f9,f13
+  8237E0C4  ECA80032             fmuls f5,f8,f0
+  8237E0C8  EC870032             fmuls f4,f7,f0
+  8237E0CC  EC660032             fmuls f3,f6,f0
+  8237E0D0  EC4C2828             fsubs f2,f12,f5
+  8237E0D4  D043002C             stfs f2,0x2c(r3)
+  8237E0D8  C0290000             lfs f1,0x0(r9)
+  8237E0DC  EC01282A             fadds f0,f1,f5
+  8237E0E0  D0030030             stfs f0,0x30(r3)
+  8237E0E4  C1A90004             lfs f13,0x4(r9)
+  8237E0E8  ED8D2028             fsubs f12,f13,f4
+  8237E0EC  D1830034             stfs f12,0x34(r3)
+  8237E0F0  C1690004             lfs f11,0x4(r9)
+  8237E0F4  ED4B202A             fadds f10,f11,f4
+  8237E0F8  D1430038             stfs f10,0x38(r3)
+  8237E0FC  C1290008             lfs f9,0x8(r9)
+  8237E100  ED091828             fsubs f8,f9,f3
+  8237E104  D103003C             stfs f8,0x3c(r3)
+  8237E108  C0E90008             lfs f7,0x8(r9)
+  8237E10C  ECC3382A             fadds f6,f3,f7
+  8237E110  D0C30040             stfs f6,0x40(r3)
+  8237E114  4E800020             blr
+
 ; 8237E118  FUN_8237e118  (physics/ode/src/collision_std.cpp:83)
   8237E118  7D8802A6             mfspr r12,LR
   8237E11C  481CA3A1             bl 0x825484bc

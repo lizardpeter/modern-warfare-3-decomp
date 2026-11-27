@@ -1559,6 +1559,15 @@ void FUN_821fa368(int param_1,int param_2,undefined8 param_3)
 }
 
 
+// 821FA4E0  FUN_821fa4e0  (DynEntity/DynEntity_client.cpp:1510)
+
+bool FUN_821fa4e0(float *param_1,float *param_2)
+
+{
+  return *param_1 < *param_2;
+}
+
+
 // 821FA500  FUN_821fa500  (DynEntity/DynEntity_client.cpp:1519)
 
 /* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */

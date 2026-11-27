@@ -1388,6 +1388,144 @@ void FUN_82509150(uint *param_1)
 }
 
 
+// 825092B8  FUN_825092b8  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/nativesrc.inl:127)
+
+void FUN_825092b8(uint *param_1)
+
+{
+  float fVar1;
+  ulonglong uVar2;
+  float fVar3;
+  byte *pbVar4;
+  ulonglong uVar5;
+  int iVar6;
+  float *pfVar7;
+  ulonglong uVar8;
+  ulonglong uVar9;
+  uint uVar10;
+  longlong lVar11;
+  
+  fVar1 = (float)param_1[9];
+  uVar8 = (ulonglong)param_1[1] - (ulonglong)param_1[2];
+  uVar5 = (ulonglong)param_1[6] - (ulonglong)param_1[7];
+  lVar11 = (longlong)(int)(uint)*(byte *)((int)param_1 + 0xd) * (longlong)(int)param_1[2] +
+           (ulonglong)*param_1;
+  pfVar7 = (float *)(param_1[7] * 4 + param_1[5]);
+  iVar6 = (int)uVar5;
+  if (iVar6 <= (int)uVar8) {
+    uVar8 = uVar5;
+  }
+  uVar9 = 0;
+  uVar5 = ((uVar8 & 0x3fffffff) * 4 + 0x7f & 0xffffffff) >> 7;
+  if (uVar5 != 0) {
+    uVar2 = 0;
+    do {
+      dataCacheBlockTouch((uVar2 & 0xffffff80) + lVar11);
+      uVar9 = uVar9 + 1;
+      uVar2 = (uVar9 & 0xffffffff) << 7;
+      uVar5 = uVar5 - 1;
+    } while (uVar5 != 0);
+  }
+  fVar3 = (float)param_1[10] - fVar1;
+  do {
+    pbVar4 = (byte *)lVar11;
+    uVar8 = uVar8 - 1;
+    pfVar7[0x300] = ((float)pbVar4[3] - 128.0) * 0.0078125 * fVar1;
+    pfVar7[0x200] = ((float)pbVar4[2] - 128.0) * 0.0078125 * fVar1;
+    pfVar7[0x100] = ((float)pbVar4[1] - 128.0) * 0.0078125 * fVar1;
+    lVar11 = lVar11 + 4;
+    *pfVar7 = ((float)*pbVar4 - 128.0) * 0.0078125 * fVar1;
+    pfVar7 = pfVar7 + 1;
+    fVar1 = fVar3 / (float)(longlong)iVar6 + fVar1;
+  } while (uVar8 != 0);
+  trapWord(6,(ulonglong)*(byte *)((int)param_1 + 0xd),0);
+  uVar8 = (lVar11 - (ulonglong)*param_1 & 0xffffffff) / (ulonglong)*(byte *)((int)param_1 + 0xd);
+  uVar10 = (uint)uVar8;
+  if (param_1[1] <= uVar8) {
+    uVar10 = param_1[1];
+  }
+  param_1[9] = (uint)fVar1;
+  param_1[2] = uVar10;
+  uVar10 = (int)pfVar7 - param_1[5] >> 2;
+  if (uVar10 < param_1[6]) {
+    param_1[7] = uVar10;
+    return;
+  }
+  param_1[7] = param_1[6];
+  return;
+}
+
+
+// 82509458  FUN_82509458  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/nativesrc.inl:127)
+
+void FUN_82509458(uint *param_1)
+
+{
+  float fVar1;
+  ulonglong uVar2;
+  float fVar3;
+  byte *pbVar4;
+  ulonglong uVar5;
+  int iVar6;
+  ulonglong uVar7;
+  ulonglong uVar8;
+  uint uVar9;
+  float *pfVar10;
+  longlong lVar11;
+  
+  fVar1 = (float)param_1[9];
+  uVar7 = (ulonglong)param_1[1] - (ulonglong)param_1[2];
+  uVar5 = (ulonglong)param_1[6] - (ulonglong)param_1[7];
+  lVar11 = (longlong)(int)(uint)*(byte *)((int)param_1 + 0xd) * (longlong)(int)param_1[2] +
+           (ulonglong)*param_1;
+  pfVar10 = (float *)(param_1[7] * 4 + param_1[5]);
+  iVar6 = (int)uVar5;
+  if (iVar6 <= (int)uVar7) {
+    uVar7 = uVar5;
+  }
+  uVar8 = 0;
+  uVar5 = ((uVar7 + (uVar7 & 0x7fffffff) * 2 & 0x7fffffff) * 2 + 0x7f & 0xffffffff) >> 7;
+  if (uVar5 != 0) {
+    uVar2 = 0;
+    do {
+      dataCacheBlockTouch((uVar2 & 0xffffff80) + lVar11);
+      uVar8 = uVar8 + 1;
+      uVar2 = (uVar8 & 0xffffffff) << 7;
+      uVar5 = uVar5 - 1;
+    } while (uVar5 != 0);
+  }
+  fVar3 = (float)param_1[10] - fVar1;
+  do {
+    pbVar4 = (byte *)lVar11;
+    uVar7 = uVar7 - 1;
+    pfVar10[0x500] = ((float)pbVar4[5] - 128.0) * 0.0078125 * fVar1;
+    pfVar10[0x400] = ((float)pbVar4[4] - 128.0) * 0.0078125 * fVar1;
+    pfVar10[0x300] = ((float)pbVar4[3] - 128.0) * 0.0078125 * fVar1;
+    pfVar10[0x200] = ((float)pbVar4[2] - 128.0) * 0.0078125 * fVar1;
+    pfVar10[0x100] = ((float)pbVar4[1] - 128.0) * 0.0078125 * fVar1;
+    lVar11 = lVar11 + 6;
+    *pfVar10 = ((float)*pbVar4 - 128.0) * 0.0078125 * fVar1;
+    pfVar10 = pfVar10 + 1;
+    fVar1 = fVar3 / (float)(longlong)iVar6 + fVar1;
+  } while (uVar7 != 0);
+  trapWord(6,(ulonglong)*(byte *)((int)param_1 + 0xd),0);
+  uVar7 = (lVar11 - (ulonglong)*param_1 & 0xffffffff) / (ulonglong)*(byte *)((int)param_1 + 0xd);
+  uVar9 = (uint)uVar7;
+  if (param_1[1] <= uVar7) {
+    uVar9 = param_1[1];
+  }
+  param_1[9] = (uint)fVar1;
+  param_1[2] = uVar9;
+  uVar9 = (int)pfVar10 - param_1[5] >> 2;
+  if (uVar9 < param_1[6]) {
+    param_1[7] = uVar9;
+    return;
+  }
+  param_1[7] = param_1[6];
+  return;
+}
+
+
 // 82509648  FUN_82509648  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/nativesrc.inl:127)
 
 void FUN_82509648(uint *param_1)
@@ -3185,6 +3323,137 @@ void FUN_8250b898(uint *param_1)
 }
 
 
+// 8250BB48  FUN_8250bb48  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/doublesrc.inl:153)
+
+void FUN_8250bb48(uint *param_1)
+
+{
+  float fVar1;
+  float fVar2;
+  ulonglong uVar3;
+  float fVar4;
+  float fVar5;
+  float fVar6;
+  float *pfVar7;
+  byte *pbVar8;
+  uint uVar11;
+  ulonglong uVar9;
+  int iVar12;
+  ulonglong uVar10;
+  float *pfVar13;
+  ulonglong uVar14;
+  longlong lVar15;
+  uint uVar16;
+  float *pfVar17;
+  float *pfVar18;
+  longlong lVar19;
+  
+  fVar1 = (float)param_1[9];
+  pfVar17 = (float *)(param_1 + 0xd);
+  uVar11 = param_1[6] - param_1[7];
+  uVar14 = (ulonglong)param_1[1] - (ulonglong)param_1[2];
+  uVar9 = (longlong)((int)uVar11 >> 1) + (ulonglong)((int)uVar11 < 0 && (uVar11 & 1) != 0);
+  lVar15 = (longlong)(int)(uint)*(byte *)((int)param_1 + 0xd) * (longlong)(int)param_1[2] +
+           (ulonglong)*param_1;
+  pfVar18 = (float *)(param_1[7] * 4 + param_1[5]);
+  iVar12 = (int)uVar9;
+  if (iVar12 <= (int)uVar14) {
+    uVar14 = uVar9;
+  }
+  uVar9 = ((uVar14 + (uVar14 & 0x7fffffff) * 2 & 0x7fffffff) * 2 + 0x7f & 0xffffffff) >> 7;
+  uVar10 = 0;
+  fVar5 = ((float)param_1[10] - fVar1) / (float)(longlong)iVar12;
+  if (uVar9 != 0) {
+    uVar3 = 0;
+    do {
+      dataCacheBlockTouch((uVar3 & 0xffffff80) + lVar15);
+      uVar10 = uVar10 + 1;
+      uVar3 = (uVar10 & 0xffffffff) << 7;
+      uVar9 = uVar9 - 1;
+    } while (uVar9 != 0);
+  }
+  pfVar13 = (float *)(param_1 + 0xc);
+  lVar19 = 6;
+  do {
+    pfVar7 = pfVar13 + 1;
+    pfVar13 = pfVar13 + 1;
+    *pfVar13 = ((float)*(byte *)pfVar7 - 128.0) * 0.0078125;
+    lVar19 = lVar19 + -1;
+  } while (lVar19 != 0);
+  do {
+    pbVar8 = (byte *)lVar15;
+    fVar2 = (float)param_1[0x12];
+    fVar4 = fVar5 + fVar1;
+    uVar14 = uVar14 - 1;
+    fVar6 = ((float)pbVar8[5] - 128.0) * 0.0078125;
+    param_1[0x12] = (uint)fVar6;
+    pfVar18[0x500] = (fVar6 + fVar2) * fVar1 * 0.5;
+    pfVar18[0x501] = fVar4 * fVar6;
+    fVar2 = (float)param_1[0x11];
+    fVar6 = ((float)pbVar8[4] - 128.0) * 0.0078125;
+    param_1[0x11] = (uint)fVar6;
+    pfVar18[0x400] = (fVar6 + fVar2) * fVar1 * 0.5;
+    pfVar18[0x401] = fVar4 * fVar6;
+    fVar2 = (float)param_1[0x10];
+    fVar6 = ((float)pbVar8[3] - 128.0) * 0.0078125;
+    param_1[0x10] = (uint)fVar6;
+    pfVar18[0x300] = (fVar6 + fVar2) * fVar1 * 0.5;
+    pfVar18[0x301] = fVar4 * fVar6;
+    fVar2 = (float)param_1[0xf];
+    fVar6 = ((float)pbVar8[2] - 128.0) * 0.0078125;
+    param_1[0xf] = (uint)fVar6;
+    pfVar18[0x200] = (fVar6 + fVar2) * fVar1 * 0.5;
+    pfVar18[0x201] = fVar4 * fVar6;
+    fVar2 = (float)param_1[0xe];
+    fVar6 = ((float)pbVar8[1] - 128.0) * 0.0078125;
+    param_1[0xe] = (uint)fVar6;
+    pfVar18[0x100] = (fVar6 + fVar2) * fVar1 * 0.5;
+    pfVar18[0x101] = fVar4 * fVar6;
+    fVar2 = *pfVar17;
+    lVar15 = lVar15 + 6;
+    fVar6 = ((float)*pbVar8 - 128.0) * 0.0078125;
+    *pfVar17 = fVar6;
+    fVar2 = (fVar6 + fVar2) * fVar1;
+    fVar1 = fVar5 * 2.0 + fVar1;
+    *pfVar18 = fVar2 * 0.5;
+    pfVar18[1] = fVar4 * fVar6;
+    pfVar18 = pfVar18 + 2;
+  } while (uVar14 != 0);
+  trapWord(6,(ulonglong)*(byte *)((int)param_1 + 0xd),0);
+  uVar14 = (lVar15 - (ulonglong)*param_1 & 0xffffffff) / (ulonglong)*(byte *)((int)param_1 + 0xd);
+  uVar11 = (uint)uVar14;
+  if (param_1[1] <= uVar14) {
+    uVar11 = param_1[1];
+  }
+  param_1[2] = uVar11;
+  uVar11 = (int)pfVar18 - param_1[5] >> 2;
+  uVar16 = param_1[6];
+  if (uVar11 < param_1[6]) {
+    uVar16 = uVar11;
+  }
+  param_1[9] = (uint)fVar1;
+  param_1[7] = uVar16;
+  lVar15 = 6;
+  do {
+    iVar12 = 0x80 - (int)(*pfVar17 * -128.0);
+    if (iVar12 < 0xff) {
+      if (iVar12 < 1) {
+        *(undefined1 *)pfVar17 = 0;
+      }
+      else {
+        *(char *)pfVar17 = (char)iVar12;
+      }
+    }
+    else {
+      *(undefined1 *)pfVar17 = 0xff;
+    }
+    pfVar17 = pfVar17 + 1;
+    lVar15 = lVar15 + -1;
+  } while (lVar15 != 0);
+  return;
+}
+
+
 // 8250BE70  FUN_8250be70  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/doublesrc.inl:153)
 
 /* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
@@ -3297,6 +3566,97 @@ void FUN_8250be70(uint *param_1)
       uVar6 = uVar6 - 1;
     } while (uVar6 != 0);
   }
+  return;
+}
+
+
+// 8250C088  FUN_8250c088  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/doublesrc.inl:153)
+
+void FUN_8250c088(uint *param_1)
+
+{
+  float fVar1;
+  float fVar2;
+  ulonglong uVar3;
+  float fVar4;
+  float fVar5;
+  float fVar6;
+  uint uVar7;
+  float *pfVar8;
+  ulonglong uVar9;
+  ulonglong uVar10;
+  int iVar12;
+  ulonglong uVar11;
+  longlong lVar13;
+  ushort *puVar14;
+  uint uVar15;
+  
+  fVar1 = (float)param_1[9];
+  uVar7 = param_1[6] - param_1[7];
+  uVar9 = (ulonglong)param_1[1] - (ulonglong)param_1[2];
+  uVar10 = (longlong)((int)uVar7 >> 1) + (ulonglong)((int)uVar7 < 0 && (uVar7 & 1) != 0);
+  lVar13 = ((longlong)(int)(uint)*(byte *)((int)param_1 + 0xd) * (longlong)(int)param_1[2] &
+           0x7fffffffU) * 2 + (ulonglong)*param_1;
+  pfVar8 = (float *)(param_1[7] * 4 + param_1[5]);
+  iVar12 = (int)uVar10;
+  if (iVar12 <= (int)uVar9) {
+    uVar9 = uVar10;
+  }
+  uVar11 = 0;
+  uVar10 = ((uVar9 & 0x7fffffff) * 2 + 0x7f & 0xffffffff) >> 7;
+  fVar5 = ((float)param_1[10] - fVar1) / (float)(longlong)iVar12;
+  if (uVar10 != 0) {
+    uVar3 = 0;
+    do {
+      dataCacheBlockTouch((uVar3 & 0xffffff80) + lVar13);
+      uVar11 = uVar11 + 1;
+      uVar3 = (uVar11 & 0xffffffff) << 7;
+      uVar10 = uVar10 - 1;
+    } while (uVar10 != 0);
+  }
+  param_1[0xd] = (uint)((float)(longlong)
+                               (short)(*(ushort *)(param_1 + 0xd) << 8 |
+                                      *(ushort *)(param_1 + 0xd) >> 8) * 3.0517578e-05);
+  do {
+    puVar14 = (ushort *)lVar13;
+    fVar2 = (float)param_1[0xd];
+    fVar4 = fVar5 + fVar1;
+    uVar9 = uVar9 - 1;
+    lVar13 = lVar13 + 2;
+    fVar6 = (float)(longlong)(short)(*puVar14 << 8 | *puVar14 >> 8) * 3.0517578e-05;
+    param_1[0xd] = (uint)fVar6;
+    fVar2 = (fVar6 + fVar2) * fVar1;
+    fVar1 = fVar5 * 2.0 + fVar1;
+    *pfVar8 = fVar2 * 0.5;
+    pfVar8[1] = fVar4 * fVar6;
+    pfVar8 = pfVar8 + 2;
+  } while (uVar9 != 0);
+  uVar9 = (ulonglong)*(byte *)((int)param_1 + 0xd) << 1;
+  trapWord(6,uVar9,0);
+  uVar9 = (lVar13 - (ulonglong)*param_1 & 0xffffffff) / uVar9;
+  uVar7 = param_1[1];
+  if (uVar9 < param_1[1]) {
+    uVar7 = (uint)uVar9;
+  }
+  param_1[2] = uVar7;
+  uVar7 = (int)pfVar8 - param_1[5] >> 2;
+  uVar15 = param_1[6];
+  if (uVar7 < param_1[6]) {
+    uVar15 = uVar7;
+  }
+  param_1[9] = (uint)fVar1;
+  param_1[7] = uVar15;
+  uVar7 = (uint)((float)param_1[0xd] * 32768.0);
+  if (0x7ffe < (int)uVar7) {
+    *(undefined2 *)(param_1 + 0xd) = 0xff7f;
+    return;
+  }
+  if ((int)uVar7 < -0x7fff) {
+    *(undefined2 *)(param_1 + 0xd) = 0x80;
+    return;
+  }
+  *(ushort *)(param_1 + 0xd) =
+       (ushort)(((ulonglong)uVar7 & 0xffff) << 8) | (ushort)(((ulonglong)uVar7 & 0xffff) >> 8);
   return;
 }
 

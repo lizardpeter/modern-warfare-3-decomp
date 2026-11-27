@@ -143,6 +143,15 @@ LAB_82270770:
 }
 
 
+// 822707D0  FUN_822707d0  (game/player_use.cpp:277)
+
+int FUN_822707d0(int param_1,int param_2)
+
+{
+  return (int)(*(float *)(param_1 + 4) - *(float *)(param_2 + 4));
+}
+
+
 // 82270818  FUN_82270818  (game/player_use.cpp:301)
 
 undefined8 FUN_82270818(undefined8 param_1,int param_2)

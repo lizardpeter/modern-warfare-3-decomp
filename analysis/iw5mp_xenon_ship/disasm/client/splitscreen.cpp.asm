@@ -1068,6 +1068,20 @@ LAB_821a376c:
   821A3778  EBE1FFF0             ld r31,-0x10(r1)
   821A377C  4E800020             blr
 
+; 821A3780  FUN_821a3780  (client/splitscreen.cpp:835)
+  821A3780  3D6082FF             lis r11,-0x7d01
+  821A3784  396BBE50             subi r11,r11,0x41b0
+  821A3788  392B0044             addi r9,r11,0x44
+  821A378C  814B0000             lwz r10,0x0(r11)
+  821A3790  554A103A             rlwinm r10,r10,0x2,0x0,0x1d
+  821A3794  7D0A482E             lwzx r8,r10,r9
+  821A3798  2F080002             cmpwi cr6,r8,0x2
+  821A379C  4C9A0020             bnelr cr6
+  821A37A0  396B0064             addi r11,r11,0x64
+  821A37A4  7D4A582E             lwzx r10,r10,r11
+  821A37A8  806A0004             lwz r3,0x4(r10)
+  821A37AC  4BFFFF6C             b 0x821a3718
+
 ; 821A37B8  FUN_821a37b8  (client/splitscreen.cpp:849)
   821A37B8  7D8802A6             mfspr r12,LR
   821A37BC  9181FFF8             stw r12,-0x8(r1)
@@ -1451,6 +1465,16 @@ LAB_821a46e4:
   821A46F8  EBC1FFE8             ld r30,-0x18(r1)
   821A46FC  EBE1FFF0             ld r31,-0x10(r1)
   821A4700  4E800020             blr
+
+; 821A3BC8  FUN_821a3bc8  (client/splitscreen.cpp:1068)
+  821A3BC8  3D408272             lis r10,-0x7d8e
+  821A3BCC  3960FFFF             li r11,-0x1
+  821A3BD0  392A9698             subi r9,r10,0x6968
+  821A3BD4  916A9698             stw r11,-0x6968(r10)
+  821A3BD8  91690004             stw r11,0x4(r9)
+  821A3BDC  91690008             stw r11,0x8(r9)
+  821A3BE0  9169000C             stw r11,0xc(r9)
+  821A3BE4  4E800020             blr
 
 ; 821A4708  FUN_821a4708  (client/splitscreen.cpp:1074)
   821A4708  7D8802A6             mfspr r12,LR

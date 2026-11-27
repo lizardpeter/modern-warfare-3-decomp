@@ -68,6 +68,21 @@ void FUN_82544e18(undefined4 *param_1)
 }
 
 
+// 825450C0  FUN_825450c0  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdremotetaskmanager/bdtaskbytebuffer.cpp:77)
+
+void FUN_825450c0(int param_1)
+
+{
+  if (*(int *)(param_1 + 0x1c) != 0) {
+    FUN_8255dfd8(1,0xffffffff82061dcc,0xffffffff82069740,0xffffffff82069778,0xffffffff82069754,0x50,
+                 0xffffffff82061f38);
+    return;
+  }
+  FUN_82544eb8(param_1,*(undefined4 *)(param_1 + 8));
+  return;
+}
+
+
 // 82544DD0  FUN_82544dd0  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdremotetaskmanager/bdtaskbytebuffer.cpp:94)
 
 void FUN_82544dd0(int param_1,uint param_2)

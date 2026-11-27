@@ -2725,6 +2725,24 @@ void FUN_82230730(undefined4 param_1)
 }
 
 
+// 82230808  FUN_82230808  (game/g_client_script_cmd.cpp:2637)
+
+void FUN_82230808(void)
+
+{
+  return;
+}
+
+
+// 82230810  FUN_82230810  (game/g_client_script_cmd.cpp:2701)
+
+void FUN_82230810(void)
+
+{
+  return;
+}
+
+
 // 82230818  FUN_82230818  (game/g_client_script_cmd.cpp:2754)
 
 void FUN_82230818(uint param_1)
@@ -3362,6 +3380,46 @@ void FUN_822314a0(uint param_1,int param_2)
 }
 
 
+// 822315E0  FUN_822315e0  (game/g_client_script_cmd.cpp:3414)
+
+void FUN_822315e0(undefined8 param_1)
+
+{
+  FUN_822314a0(param_1,0);
+  return;
+}
+
+
+// 822315E8  FUN_822315e8  (game/g_client_script_cmd.cpp:3430)
+
+void FUN_822315e8(undefined8 param_1)
+
+{
+  FUN_822314a0(param_1,1);
+  return;
+}
+
+
+// 822315F0  FUN_822315f0  (game/g_client_script_cmd.cpp:3446)
+
+void FUN_822315f0(undefined8 param_1)
+
+{
+  FUN_822314a0(param_1,2);
+  return;
+}
+
+
+// 822315F8  FUN_822315f8  (game/g_client_script_cmd.cpp:3462)
+
+void FUN_822315f8(undefined8 param_1)
+
+{
+  FUN_822314a0(param_1,4);
+  return;
+}
+
+
 // 82231600  FUN_82231600  (game/g_client_script_cmd.cpp:3490)
 
 /* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
@@ -3551,6 +3609,56 @@ void FUN_82231888(uint param_1,int param_2)
 }
 
 
+// 822319B0  FUN_822319b0  (game/g_client_script_cmd.cpp:3651)
+
+void FUN_822319b0(undefined8 param_1)
+
+{
+  FUN_82231888(param_1,0);
+  return;
+}
+
+
+// 822319B8  FUN_822319b8  (game/g_client_script_cmd.cpp:3700)
+
+void FUN_822319b8(undefined8 param_1)
+
+{
+  FUN_82231888(param_1,1);
+  return;
+}
+
+
+// 822319C0  FUN_822319c0  (game/g_client_script_cmd.cpp:3717)
+
+void FUN_822319c0(undefined8 param_1)
+
+{
+  FUN_82231888(param_1,2);
+  return;
+}
+
+
+// 822319C8  FUN_822319c8  (game/g_client_script_cmd.cpp:3734)
+
+void FUN_822319c8(undefined8 param_1)
+
+{
+  FUN_82231888(param_1,3);
+  return;
+}
+
+
+// 822319D0  FUN_822319d0  (game/g_client_script_cmd.cpp:3751)
+
+void FUN_822319d0(undefined8 param_1)
+
+{
+  FUN_82231888(param_1,4);
+  return;
+}
+
+
 // 822319D8  FUN_822319d8  (game/g_client_script_cmd.cpp:3768)
 
 void FUN_822319d8(uint param_1)
@@ -3586,6 +3694,35 @@ void FUN_822319d8(uint param_1)
   }
   uVar1 = FUN_8232e948(dVar3,0xffffffff8201d6a0,0x69,(int)(dVar4 * 1000.0),dVar3,0,1);
   FUN_822c4780(*(undefined4 *)(puVar2 + 0x12),1,uVar1);
+  return;
+}
+
+
+// 82231AF0  FUN_82231af0  (game/g_client_script_cmd.cpp:3805)
+
+void FUN_82231af0(void)
+
+{
+  FUN_822bb320(0xffffffff82070df0);
+  return;
+}
+
+
+// 82231B00  FUN_82231b00  (game/g_client_script_cmd.cpp:3835)
+
+void FUN_82231b00(void)
+
+{
+  FUN_822bb320(0xffffffff82070df0);
+  return;
+}
+
+
+// 82231B10  FUN_82231b10  (game/g_client_script_cmd.cpp:3959)
+
+void FUN_82231b10(void)
+
+{
   return;
 }
 
@@ -3973,6 +4110,24 @@ void FUN_822321f8(uint param_1)
   iVar1 = *(int *)(puVar3 + 0x2b);
   *(undefined4 *)(iVar1 + 0x3440) = 0;
   *(undefined4 *)(iVar1 + 0x3444) = 0;
+  return;
+}
+
+
+// 822322A8  FUN_822322a8  (game/g_client_script_cmd.cpp:4532)
+
+void FUN_822322a8(void)
+
+{
+  return;
+}
+
+
+// 822322B0  FUN_822322b0  (game/g_client_script_cmd.cpp:4554)
+
+void FUN_822322b0(void)
+
+{
   return;
 }
 

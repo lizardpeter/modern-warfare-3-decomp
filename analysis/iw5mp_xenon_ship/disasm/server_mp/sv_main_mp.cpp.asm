@@ -1675,6 +1675,12 @@ LAB_822c9390:
   822C93AC  54C307FE             rlwinm r3,r6,0x0,0x1f,0x1f
   822C93B0  4E800020             blr
 
+; 822C93B8  FUN_822c93b8  (server_mp/sv_main_mp.cpp:1603)
+  822C93B8  81630000             lwz r11,0x0(r3)
+  822C93BC  81440000             lwz r10,0x0(r4)
+  822C93C0  7C6A5850             subf r3,r10,r11
+  822C93C4  4E800020             blr
+
 ; 822C93C8  FUN_822c93c8  (server_mp/sv_main_mp.cpp:1616)
   822C93C8  7D8802A6             mfspr r12,LR
   822C93CC  4827F0D5             bl 0x825484a0

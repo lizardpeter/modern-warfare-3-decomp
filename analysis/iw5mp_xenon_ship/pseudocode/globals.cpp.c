@@ -133,3 +133,23 @@ LAB_824f1050:
   return 0;
 }
 
+
+// 8256FA38  FUN_8256fa38  (line unknown)
+
+void FUN_8256fa38(void)
+
+{
+  PTR_PTR_825a7e60 = (undefined *)&PTR_FUN_8205a648;
+  return;
+}
+
+
+// 8256FA50  FUN_8256fa50  (line unknown)
+
+void FUN_8256fa50(void)
+
+{
+  PTR_PTR_825a7e80 = (undefined *)&PTR_FUN_8205a648;
+  return;
+}
+

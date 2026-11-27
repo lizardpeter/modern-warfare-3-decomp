@@ -161,6 +161,16 @@ LAB_82332588:
   823325E8  7C6A5910             subfe r3,r10,r11
   823325EC  4E800020             blr
 
+; 823325F0  FUN_823325f0  (universal/streamfile.cpp:166)
+  823325F0  3163FFFF             subic r11,r3,0x1
+  823325F4  3D40838C             lis r10,-0x7c74
+  823325F8  7D094910             subfe r8,r9,r9
+  823325FC  38EA9514             subi r7,r10,0x6aec
+  82332600  7D0B2038             and r11,r8,r4
+  82332604  906A9514             stw r3,-0x6aec(r10)
+  82332608  9167002C             stw r11,0x2c(r7)
+  8233260C  4E800020             blr
+
 ; 82332610  FUN_82332610  (universal/streamfile.cpp:173)
   82332610  7D8802A6             mfspr r12,LR
   82332614  48215EA1             bl 0x825484b4

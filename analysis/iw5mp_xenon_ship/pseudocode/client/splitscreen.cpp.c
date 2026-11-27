@@ -825,6 +825,19 @@ void FUN_821a3718(void)
 }
 
 
+// 821A3780  FUN_821a3780  (client/splitscreen.cpp:835)
+
+void FUN_821a3780(void)
+
+{
+  if (*(int *)(&DAT_82febe94 + DAT_82febe50 * 4) != 2) {
+    return;
+  }
+  FUN_821a3718(*(undefined4 *)(*(int *)(&DAT_82febeb4 + DAT_82febe50 * 4) + 4));
+  return;
+}
+
+
 // 821A37B8  FUN_821a37b8  (client/splitscreen.cpp:849)
 
 void FUN_821a37b8(undefined8 param_1,ulonglong param_2)
@@ -1069,6 +1082,19 @@ void FUN_821a45e0(void)
   }
   FUN_82352f28();
   FUN_821a42c8();
+  return;
+}
+
+
+// 821A3BC8  FUN_821a3bc8  (client/splitscreen.cpp:1068)
+
+void FUN_821a3bc8(void)
+
+{
+  DAT_82719698 = 0xffffffff;
+  DAT_8271969c = 0xffffffff;
+  DAT_827196a0 = 0xffffffff;
+  DAT_827196a4 = 0xffffffff;
   return;
 }
 

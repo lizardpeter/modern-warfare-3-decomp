@@ -949,6 +949,15 @@ void FUN_82162c40(int param_1)
 }
 
 
+// 82162CF0  FUN_82162cf0  (cgame/cg_world.cpp:1139)
+
+bool FUN_82162cf0(void)
+
+{
+  return *(int *)(DAT_8264e9a4 + 0x2c) == 2;
+}
+
+
 // 82162D10  FUN_82162d10  (cgame/cg_world.cpp:1145)
 
 void FUN_82162d10(int param_1)
@@ -1150,7 +1159,7 @@ void FUN_82162fe0(float *param_1,float *param_2,float *param_3,float *param_4,un
   undefined1 local_187;
   undefined1 local_186;
   undefined1 local_185;
-  undefined1 *local_184;
+  code *local_184;
   undefined4 local_180;
   undefined4 local_17c;
   undefined4 local_178;
@@ -1183,7 +1192,7 @@ void FUN_82162fe0(float *param_1,float *param_2,float *param_3,float *param_4,un
   undefined4 local_74;
   undefined4 local_70;
   
-  local_184 = &LAB_8227fe98;
+  local_184 = thunk_FUN_821213b8;
   FUN_8227e520();
   dVar1 = 0.0;
   if (*param_1 != 0.0) {

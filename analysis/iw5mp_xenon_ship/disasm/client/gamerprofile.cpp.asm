@@ -3355,6 +3355,83 @@ LAB_82182658:
   82182658  38210080             addi r1,r1,0x80
   8218265C  483C5EA8             b 0x82548504
 
+; 82182660  FUN_82182660  (client/gamerprofile.cpp:3390)
+  82182660  38600001             li r3,0x1
+  82182664  4BFFFECC             b 0x82182530
+
+; 82182668  FUN_82182668  (client/gamerprofile.cpp:3396)
+  82182668  38600000             li r3,0x0
+  8218266C  4BFFFEC4             b 0x82182530
+
+; 82182670  FUN_82182670  (client/gamerprofile.cpp:3402)
+  82182670  3D2082FF             lis r9,-0x7d01
+  82182674  3D008270             lis r8,-0x7d90
+  82182678  3969BE50             subi r11,r9,0x41b0
+  8218267C  394810B8             addi r10,r8,0x10b8
+  82182680  38EB0024             addi r7,r11,0x24
+  82182684  8169BE50             lwz r11,-0x41b0(r9)
+  82182688  5566103A             rlwinm r6,r11,0x2,0x0,0x1d
+  8218268C  7CA6382E             lwzx r5,r6,r7
+  82182690  1D650CA8             mulli r11,r5,0xca8
+  82182694  7D6B5214             add r11,r11,r10
+  82182698  888B0045             lbz r4,0x45(r11)
+  8218269C  7C830034             cntlzw r3,r4
+  821826A0  546ADFFE             rlwinm r10,r3,0x1b,0x1f,0x1f
+  821826A4  994B0045             stb r10,0x45(r11)
+  821826A8  4E800020             blr
+
+; 821826B0  FUN_821826b0  (client/gamerprofile.cpp:3415)
+  821826B0  3D2082FF             lis r9,-0x7d01
+  821826B4  3D008270             lis r8,-0x7d90
+  821826B8  3969BE50             subi r11,r9,0x41b0
+  821826BC  394810B8             addi r10,r8,0x10b8
+  821826C0  38EB0024             addi r7,r11,0x24
+  821826C4  8169BE50             lwz r11,-0x41b0(r9)
+  821826C8  5566103A             rlwinm r6,r11,0x2,0x0,0x1d
+  821826CC  7CA6382E             lwzx r5,r6,r7
+  821826D0  1D650CA8             mulli r11,r5,0xca8
+  821826D4  7D6B5214             add r11,r11,r10
+  821826D8  888B0047             lbz r4,0x47(r11)
+  821826DC  7C830034             cntlzw r3,r4
+  821826E0  546ADFFE             rlwinm r10,r3,0x1b,0x1f,0x1f
+  821826E4  994B0047             stb r10,0x47(r11)
+  821826E8  4E800020             blr
+
+; 821826F0  FUN_821826f0  (client/gamerprofile.cpp:3430)
+  821826F0  3D2082FF             lis r9,-0x7d01
+  821826F4  3D008270             lis r8,-0x7d90
+  821826F8  3969BE50             subi r11,r9,0x41b0
+  821826FC  394810B8             addi r10,r8,0x10b8
+  82182700  38EB0024             addi r7,r11,0x24
+  82182704  8169BE50             lwz r11,-0x41b0(r9)
+  82182708  5566103A             rlwinm r6,r11,0x2,0x0,0x1d
+  8218270C  7CA6382E             lwzx r5,r6,r7
+  82182710  1D650CA8             mulli r11,r5,0xca8
+  82182714  7D6B5214             add r11,r11,r10
+  82182718  888B0048             lbz r4,0x48(r11)
+  8218271C  7C830034             cntlzw r3,r4
+  82182720  546ADFFE             rlwinm r10,r3,0x1b,0x1f,0x1f
+  82182724  994B0048             stb r10,0x48(r11)
+  82182728  4E800020             blr
+
+; 82182730  FUN_82182730  (client/gamerprofile.cpp:3445)
+  82182730  3D2082FF             lis r9,-0x7d01
+  82182734  3D008270             lis r8,-0x7d90
+  82182738  3969BE50             subi r11,r9,0x41b0
+  8218273C  394810B8             addi r10,r8,0x10b8
+  82182740  38EB0024             addi r7,r11,0x24
+  82182744  8169BE50             lwz r11,-0x41b0(r9)
+  82182748  5566103A             rlwinm r6,r11,0x2,0x0,0x1d
+  8218274C  7CA6382E             lwzx r5,r6,r7
+  82182750  1D650CA8             mulli r11,r5,0xca8
+  82182754  7D6B5214             add r11,r11,r10
+  82182758  888B0040             lbz r4,0x40(r11)
+  8218275C  2B040000             cmplwi cr6,r4,0x0
+  82182760  4C9A0020             bnelr cr6
+  82182764  39400001             li r10,0x1
+  82182768  994B0040             stb r10,0x40(r11)
+  8218276C  4E800020             blr
+
 ; 82182770  FUN_82182770  (client/gamerprofile.cpp:3515)
   82182770  7D8802A6             mfspr r12,LR
   82182774  9181FFF8             stw r12,-0x8(r1)
@@ -3458,6 +3535,47 @@ LAB_821828c8:
   821828D4  EBC1FFE8             ld r30,-0x18(r1)
   821828D8  EBE1FFF0             ld r31,-0x10(r1)
   821828DC  4E800020             blr
+
+; 821828E0  FUN_821828e0  (client/gamerprofile.cpp:3616)
+  821828E0  4E800020             blr
+
+; 821828E8  FUN_821828e8  (client/gamerprofile.cpp:3640)
+  821828E8  4E800020             blr
+
+; 821828F0  FUN_821828f0  (client/gamerprofile.cpp:3870)
+  821828F0  3D2082FF             lis r9,-0x7d01
+  821828F4  3D008270             lis r8,-0x7d90
+  821828F8  3969BE50             subi r11,r9,0x41b0
+  821828FC  394810B8             addi r10,r8,0x10b8
+  82182900  38EB0024             addi r7,r11,0x24
+  82182904  8169BE50             lwz r11,-0x41b0(r9)
+  82182908  5566103A             rlwinm r6,r11,0x2,0x0,0x1d
+  8218290C  7CA6382E             lwzx r5,r6,r7
+  82182910  1D650CA8             mulli r11,r5,0xca8
+  82182914  7D6B5214             add r11,r11,r10
+  82182918  888B02FC             lbz r4,0x2fc(r11)
+  8218291C  2B040000             cmplwi cr6,r4,0x0
+  82182920  4C9A0020             bnelr cr6
+  82182924  39400001             li r10,0x1
+  82182928  994B02FC             stb r10,0x2fc(r11)
+  8218292C  4E800020             blr
+
+; 82182930  FUN_82182930  (client/gamerprofile.cpp:3888)
+  82182930  3D2082FF             lis r9,-0x7d01
+  82182934  3D008270             lis r8,-0x7d90
+  82182938  3969BE50             subi r11,r9,0x41b0
+  8218293C  394810B8             addi r10,r8,0x10b8
+  82182940  38EB0024             addi r7,r11,0x24
+  82182944  8169BE50             lwz r11,-0x41b0(r9)
+  82182948  5566103A             rlwinm r6,r11,0x2,0x0,0x1d
+  8218294C  7CA6382E             lwzx r5,r6,r7
+  82182950  1D650CA8             mulli r11,r5,0xca8
+  82182954  7D6B5214             add r11,r11,r10
+  82182958  888B085C             lbz r4,0x85c(r11)
+  8218295C  7C830034             cntlzw r3,r4
+  82182960  546ADFFE             rlwinm r10,r3,0x1b,0x1f,0x1f
+  82182964  994B085C             stb r10,0x85c(r11)
+  82182968  4E800020             blr
 
 ; 82182970  FUN_82182970  (client/gamerprofile.cpp:3903)
   82182970  7D8802A6             mfspr r12,LR

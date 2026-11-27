@@ -208,6 +208,46 @@ LAB_823bdd88:
   823BDDA8  EBE1FFF0             ld r31,-0x10(r1)
   823BDDAC  4E800020             blr
 
+; 823BDB88  FUN_823bdb88  (DW/dwlobbyeventhandler.h:50)
+  823BDB88  38600000             li r3,0x0
+  823BDB8C  4800144C             b 0x823befd8
+
+; 823BDBA8  FUN_823bdba8  (DW/dwlobbyeventhandler.h:50)
+  823BDBA8  38600001             li r3,0x1
+  823BDBAC  4800142C             b 0x823befd8
+
+; 823BDBC0  FUN_823bdbc0  (DW/dwlobbyeventhandler.h:50)
+  823BDBC0  38600002             li r3,0x2
+  823BDBC4  48001414             b 0x823befd8
+
+; 823BDBD8  FUN_823bdbd8  (DW/dwlobbyeventhandler.h:50)
+  823BDBD8  38600003             li r3,0x3
+  823BDBDC  480013FC             b 0x823befd8
+
+; 823BDB90  FUN_823bdb90  (DW/dwlobbyeventhandler.h:57)
+  823BDB90  7C832378             or r3,r4,r4
+  823BDB94  4801B534             b 0x823d90c8
+
+; 823BDB98  FUN_823bdb98  (DW/dwlobbyeventhandler.h:64)
+  823BDB98  7CC43378             or r4,r6,r6
+  823BDB9C  38600000             li r3,0x0
+  823BDBA0  48013BD0             b 0x823d1770
+
+; 823BDBB0  FUN_823bdbb0  (DW/dwlobbyeventhandler.h:64)
+  823BDBB0  7CC43378             or r4,r6,r6
+  823BDBB4  38600001             li r3,0x1
+  823BDBB8  48013BB8             b 0x823d1770
+
+; 823BDBC8  FUN_823bdbc8  (DW/dwlobbyeventhandler.h:64)
+  823BDBC8  7CC43378             or r4,r6,r6
+  823BDBCC  38600002             li r3,0x2
+  823BDBD0  48013BA0             b 0x823d1770
+
+; 823BDBE0  FUN_823bdbe0  (DW/dwlobbyeventhandler.h:64)
+  823BDBE0  7CC43378             or r4,r6,r6
+  823BDBE4  38600003             li r3,0x3
+  823BDBE8  48013B88             b 0x823d1770
+
 ; 823BDB38  FUN_823bdb38  (line unknown)
   823BDB38  7D8802A6             mfspr r12,LR
   823BDB3C  9181FFF8             stw r12,-0x8(r1)
@@ -230,3 +270,23 @@ LAB_823bdb70:
   823BDB7C  EBC1FFE8             ld r30,-0x18(r1)
   823BDB80  EBE1FFF0             ld r31,-0x10(r1)
   823BDB84  4E800020             blr
+
+; 8256ECC0  FUN_8256ecc0  (line unknown)
+  8256ECC0  3D6083BA             lis r11,-0x7c46
+  8256ECC4  386BFA14             subi r3,r11,0x5ec
+  8256ECC8  4BFC6A70             b 0x82535738
+
+; 8256ECD0  FUN_8256ecd0  (line unknown)
+  8256ECD0  3D6083BA             lis r11,-0x7c46
+  8256ECD4  386BFA18             subi r3,r11,0x5e8
+  8256ECD8  4BFC6A60             b 0x82535738
+
+; 8256ECE0  FUN_8256ece0  (line unknown)
+  8256ECE0  3D6083BA             lis r11,-0x7c46
+  8256ECE4  386BFA10             subi r3,r11,0x5f0
+  8256ECE8  4BFC6A50             b 0x82535738
+
+; 8256ECF0  FUN_8256ecf0  (line unknown)
+  8256ECF0  3D6083BA             lis r11,-0x7c46
+  8256ECF4  386BFA1C             subi r3,r11,0x5e4
+  8256ECF8  4BFC6A40             b 0x82535738

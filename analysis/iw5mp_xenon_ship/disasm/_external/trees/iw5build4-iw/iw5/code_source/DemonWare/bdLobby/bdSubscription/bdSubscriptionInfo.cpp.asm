@@ -90,6 +90,10 @@ LAB_8253cb30:
   8253CB40  383F0070             addi r1,r31,0x70
   8253CB44  4800B9C8             b 0x8254850c
 
+; 8253CA10  FUN_8253ca10  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdsubscription/bdsubscriptioninfo.cpp:37)
+  8253CA10  38600020             li r3,0x20
+  8253CA14  4E800020             blr
+
 ; 8253CA18  FUN_8253ca18  (line unknown)
   8253CA18  7D8802A6             mfspr r12,LR
   8253CA1C  9181FFF8             stw r12,-0x8(r1)

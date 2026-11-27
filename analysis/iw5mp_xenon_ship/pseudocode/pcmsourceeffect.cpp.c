@@ -42,9 +42,9 @@ undefined4 * FUN_82514118(undefined4 *param_1,int param_2,undefined8 param_3)
   undefined4 uVar2;
   
   FUN_824fe0c0(param_1 + 1);
-  *param_1 = &PTR_LAB_8205bdc8;
-  param_1[1] = &PTR_LAB_8205bda0;
-  param_1[4] = &PTR_LAB_8205bd40;
+  *param_1 = &PTR_FUN_8205bdc8;
+  param_1[1] = &PTR_FUN_8205bda0;
+  param_1[4] = &PTR_FUN_8205bd40;
   FUN_82548530(param_1 + 0x2e,0,0x4c);
   param_1[0x41] = 0;
   param_1[0x44] = 0;
@@ -91,6 +91,16 @@ void FUN_82513860(longlong param_1)
 {
   FUN_824fe338(param_1 + 0x10);
   return;
+}
+
+
+// 82513878  FUN_82513878  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.h:160)
+
+undefined8 FUN_82513878(int param_1,int *param_2)
+
+{
+  *param_2 = (uint)*(ushort *)(param_1 + 0x6c) * *(int *)(param_1 + 0x78);
+  return 0;
 }
 
 
@@ -654,15 +664,135 @@ LAB_825143a8:
 }
 
 
+// 82513828  FUN_82513828  (line unknown)
+
+void FUN_82513828(longlong param_1)
+
+{
+  FUN_82513900(param_1 + -4);
+  return;
+}
+
+
+// 82513830  FUN_82513830  (line unknown)
+
+void FUN_82513830(longlong param_1)
+
+{
+  FUN_82513900(param_1 + -0x10);
+  return;
+}
+
+
 // 82513900  FUN_82513900  (line unknown)
 
 undefined4 * FUN_82513900(undefined4 *param_1)
 
 {
-  *param_1 = &PTR_LAB_8205bdc8;
-  param_1[1] = &PTR_LAB_8205bda0;
-  param_1[4] = &PTR_LAB_8205bd40;
+  *param_1 = &PTR_FUN_8205bdc8;
+  param_1[1] = &PTR_FUN_8205bda0;
+  param_1[4] = &PTR_FUN_8205bd40;
   FUN_824fe138(param_1 + 1);
   return param_1;
+}
+
+
+// 82513CA8  FUN_82513ca8  (line unknown)
+
+void FUN_82513ca8(longlong param_1)
+
+{
+  FUN_82513958(param_1 + -0x10);
+  return;
+}
+
+
+// 82513CB8  FUN_82513cb8  (line unknown)
+
+void FUN_82513cb8(longlong param_1)
+
+{
+  FUN_825139b8(param_1 + -0x10);
+  return;
+}
+
+
+// 82513CC8  FUN_82513cc8  (line unknown)
+
+void FUN_82513cc8(longlong param_1)
+
+{
+  FUN_82513898(param_1 + -0x10);
+  return;
+}
+
+
+// 82513CD0  FUN_82513cd0  (line unknown)
+
+void FUN_82513cd0(longlong param_1)
+
+{
+  FUN_82513860(param_1 + -0x10);
+  return;
+}
+
+
+// 82513CE0  FUN_82513ce0  (line unknown)
+
+void FUN_82513ce0(longlong param_1)
+
+{
+  FUN_82513a80(param_1 + -0x10);
+  return;
+}
+
+
+// 82513CE8  FUN_82513ce8  (line unknown)
+
+void FUN_82513ce8(longlong param_1)
+
+{
+  FUN_82513b98(param_1 + -0x10);
+  return;
+}
+
+
+// 82513CF0  FUN_82513cf0  (line unknown)
+
+void FUN_82513cf0(longlong param_1)
+
+{
+  FUN_82513858(param_1 + -0x10);
+  return;
+}
+
+
+// 82513CF8  FUN_82513cf8  (line unknown)
+
+void FUN_82513cf8(longlong param_1)
+
+{
+  FUN_82513850(param_1 + -0x10);
+  return;
+}
+
+
+// 82514018  FUN_82514018  (line unknown)
+
+void FUN_82514018(longlong param_1)
+
+{
+  FUN_82513dd0(param_1 + -0x10);
+  return;
+}
+
+
+// 82514020  FUN_82514020  (line unknown)
+
+void FUN_82514020(longlong param_1)
+
+{
+  FUN_82513ec8(param_1 + -0x10);
+  return;
 }
 

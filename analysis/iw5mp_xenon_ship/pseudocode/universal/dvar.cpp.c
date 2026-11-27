@@ -3883,6 +3883,19 @@ bool FUN_82328e30(undefined4 *param_1,uint param_2,undefined4 param_3,undefined8
 }
 
 
+// 82328F78  FUN_82328f78  (universal/dvar.cpp:3039)
+
+void FUN_82328f78(int param_1)
+
+{
+  if ((*(ushort *)(param_1 + 4) & 0x80) == 0) {
+    return;
+  }
+  DAT_8377b46c = DAT_8377b46c + 1;
+  return;
+}
+
+
 // 823293F8  FUN_823293f8  (universal/dvar.cpp:3046)
 
 undefined4 FUN_823293f8(void)
@@ -3917,5 +3930,18 @@ undefined4 FUN_82329440(void)
   DAT_8377b464 = 0;
   FUN_82329258(0xffffffff82328fa0,0);
   return DAT_8377b464;
+}
+
+
+// 82328FE0  FUN_82328fe0  (universal/dvar.cpp:3069)
+
+void FUN_82328fe0(int param_1)
+
+{
+  if ((*(ushort *)(param_1 + 4) & 0x80) == 0) {
+    return;
+  }
+  DAT_8377b46c = DAT_8377b46c + 1;
+  return;
 }
 

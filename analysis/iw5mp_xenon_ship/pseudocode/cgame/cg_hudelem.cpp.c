@@ -1477,6 +1477,24 @@ void FUN_82124218(undefined8 param_1,int *param_2)
 }
 
 
+// 821243F0  FUN_821243f0  (cgame/cg_hudelem.cpp:1673)
+
+undefined8 FUN_821243f0(int *param_1,int *param_2)
+
+{
+  float fVar1;
+  
+  fVar1 = *(float *)(*param_1 + 0x88) - *(float *)(*param_2 + 0x88);
+  if (fVar1 < 0.0) {
+    return 0xffffffffffffffff;
+  }
+  if (0.0 < fVar1) {
+    return 1;
+  }
+  return 0;
+}
+
+
 // 82124430  FUN_82124430  (cgame/cg_hudelem.cpp:1687)
 
 int FUN_82124430(int param_1,int param_2)

@@ -72,6 +72,24 @@ void FUN_821115e8(undefined8 param_1)
 }
 
 
+// 821116D8  FUN_821116d8  (cgame_mp/cg_consolecmds_mp.cpp:320)
+
+void FUN_821116d8(void)
+
+{
+  return;
+}
+
+
+// 821116E0  FUN_821116e0  (cgame_mp/cg_consolecmds_mp.cpp:326)
+
+void FUN_821116e0(void)
+
+{
+  return;
+}
+
+
 // 821116E8  FUN_821116e8  (cgame_mp/cg_consolecmds_mp.cpp:427)
 
 void FUN_821116e8(void)

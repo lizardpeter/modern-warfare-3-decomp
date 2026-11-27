@@ -12,8 +12,39 @@ FUN_8237dfa0(double param_1,double param_2,double param_3,undefined4 *param_4,un
   param_4[0x14] = (float)param_2;
   param_4[0x15] = (float)param_3;
   param_4[1] = 0;
-  *param_4 = &PTR_LAB_8203ab48;
+  *param_4 = &PTR_FUN_8203ab48;
   return param_4;
+}
+
+
+// 8237E020  FUN_8237e020  (physics/ode/src/collision_std.cpp:66)
+
+void FUN_8237e020(int param_1)
+
+{
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float *pfVar4;
+  float *pfVar5;
+  float fVar6;
+  float fVar7;
+  
+  pfVar4 = *(float **)(param_1 + 0x1c);
+  fVar1 = *(float *)(param_1 + 0x50);
+  fVar2 = *(float *)(param_1 + 0x54);
+  fVar3 = *(float *)(param_1 + 0x4c);
+  pfVar5 = *(float **)(param_1 + 0x18);
+  fVar6 = (ABS(pfVar4[1] * fVar1) + ABS(pfVar4[2] * fVar2) + ABS(*pfVar4 * fVar3)) * 0.5;
+  fVar7 = (ABS(pfVar4[4] * fVar3) + ABS(pfVar4[5] * fVar1) + ABS(pfVar4[6] * fVar2)) * 0.5;
+  fVar1 = (ABS(pfVar4[8] * fVar3) + ABS(pfVar4[9] * fVar1) + ABS(pfVar4[10] * fVar2)) * 0.5;
+  *(float *)(param_1 + 0x2c) = *pfVar5 - fVar6;
+  *(float *)(param_1 + 0x30) = *pfVar5 + fVar6;
+  *(float *)(param_1 + 0x34) = pfVar5[1] - fVar7;
+  *(float *)(param_1 + 0x38) = pfVar5[1] + fVar7;
+  *(float *)(param_1 + 0x3c) = pfVar5[2] - fVar1;
+  *(float *)(param_1 + 0x40) = fVar1 + pfVar5[2];
+  return;
 }
 
 

@@ -2402,6 +2402,58 @@ LAB_820e37bc:
   820E3898  CBE1FFF0             lfd f31,-0x10(r1)
   820E389C  4E800020             blr
 
+; 820E2030  FUN_820e2030  (cgame_mp/cg_local_mp.h:1758)
+  820E2030  546B5828             rlwinm r11,r3,0xb,0x0,0x14
+  820E2034  3D208263             lis r9,-0x7d9d
+  820E2038  7D0B2214             add r8,r11,r4
+  820E203C  1D4801EC             mulli r10,r8,0x1ec
+  820E2040  8169C438             lwz r11,-0x3bc8(r9)
+  820E2044  7D6A5A15             add. r11,r10,r11
+  820E2048  41820024             beq 0x820e206c
+  820E204C  C00B0014             lfs f0,0x14(r11)
+  820E2050  38600001             li r3,0x1
+  820E2054  D0050000             stfs f0,0x0(r5)
+  820E2058  C1AB0018             lfs f13,0x18(r11)
+  820E205C  D1A50004             stfs f13,0x4(r5)
+  820E2060  C18B001C             lfs f12,0x1c(r11)
+  820E2064  D1850008             stfs f12,0x8(r5)
+  820E2068  4E800020             blr
+LAB_820e206c:
+  820E206C  38600000             li r3,0x0
+  820E2070  4E800020             blr
+
+; 820E2078  FUN_820e2078  (cgame_mp/cg_local_mp.h:1774)
+  820E2078  546B5828             rlwinm r11,r3,0xb,0x0,0x14
+  820E207C  3D208263             lis r9,-0x7d9d
+  820E2080  7D0B2214             add r8,r11,r4
+  820E2084  1D4801EC             mulli r10,r8,0x1ec
+  820E2088  8169C438             lwz r11,-0x3bc8(r9)
+  820E208C  7D6A5A15             add. r11,r10,r11
+  820E2090  41820024             beq 0x820e20b4
+  820E2094  C00B00E8             lfs f0,0xe8(r11)
+  820E2098  38600001             li r3,0x1
+  820E209C  D0050000             stfs f0,0x0(r5)
+  820E20A0  C1AB00EC             lfs f13,0xec(r11)
+  820E20A4  D1A50004             stfs f13,0x4(r5)
+  820E20A8  C18B00F0             lfs f12,0xf0(r11)
+  820E20AC  D1850008             stfs f12,0x8(r5)
+  820E20B0  4E800020             blr
+LAB_820e20b4:
+  820E20B4  38600000             li r3,0x0
+  820E20B8  4E800020             blr
+
+; 820E20C0  FUN_820e20c0  (cgame_mp/cg_local_mp.h:1790)
+  820E20C0  546B5828             rlwinm r11,r3,0xb,0x0,0x14
+  820E20C4  3D208263             lis r9,-0x7d9d
+  820E20C8  7D0B2214             add r8,r11,r4
+  820E20CC  1D4801EC             mulli r10,r8,0x1ec
+  820E20D0  8169C438             lwz r11,-0x3bc8(r9)
+  820E20D4  7D6A5A15             add. r11,r10,r11
+  820E20D8  386B00C4             addi r3,r11,0xc4
+  820E20DC  4C820020             bnelr
+  820E20E0  38600000             li r3,0x0
+  820E20E4  4E800020             blr
+
 ; 820E38A0  FUN_820e38a0  (bgame/bg_pmove.cpp:1820)
   820E38A0  7D8802A6             mfspr r12,LR
   820E38A4  9181FFF8             stw r12,-0x8(r1)

@@ -94,6 +94,16 @@ undefined4 * FUN_824f8ef0(undefined4 *param_1,int param_2,undefined8 param_3)
 }
 
 
+// 824F8ED8  FUN_824f8ed8  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/voice.h:153)
+
+undefined8 FUN_824f8ed8(int param_1,undefined1 *param_2)
+
+{
+  *param_2 = *(undefined1 *)(param_1 + 0x3d);
+  return 0;
+}
+
+
 // 824F8DC0  FUN_824f8dc0  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/submixvoice.cpp:155)
 
 /* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */

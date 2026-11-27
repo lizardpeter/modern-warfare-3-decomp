@@ -37,6 +37,12 @@
   82537A74  EBE1FFF0             ld r31,-0x10(r1)
   82537A78  4E800020             blr
 
+; 82537A80  FUN_82537a80  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bddml/bddmlinfo.cpp:23)
+  82537A80  3D608206             lis r11,-0x7dfa
+  82537A84  396B5948             addi r11,r11,0x5948
+  82537A88  91630000             stw r11,0x0(r3)
+  82537A8C  4BFF99A4             b 0x82531430
+
 ; 82537AF8  FUN_82537af8  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bddml/bddmlinfo.cpp:28)
   82537AF8  7D8802A6             mfspr r12,LR
   82537AFC  480109C1             bl 0x825484bc
@@ -113,6 +119,10 @@ LAB_82537be4:
   82537BF0  7FC3F378             or r3,r30,r30
   82537BF4  383F0070             addi r1,r31,0x70
   82537BF8  48010914             b 0x8254850c
+
+; 82537A90  FUN_82537a90  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bddml/bddmlinfo.cpp:41)
+  82537A90  38600114             li r3,0x114
+  82537A94  4E800020             blr
 
 ; 82537A98  FUN_82537a98  (line unknown)
   82537A98  7D8802A6             mfspr r12,LR

@@ -30,6 +30,15 @@ bool FUN_82531cb8(longlong param_1,undefined4 *param_2)
 }
 
 
+// 82531CA8  FUN_82531ca8  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdtitleutilities/bdtimestamp.cpp:25)
+
+undefined8 FUN_82531ca8(void)
+
+{
+  return 8;
+}
+
+
 // 82544A68  FUN_82544a68  (line unknown)
 
 undefined8 FUN_82544a68(undefined8 param_1,ulonglong param_2)

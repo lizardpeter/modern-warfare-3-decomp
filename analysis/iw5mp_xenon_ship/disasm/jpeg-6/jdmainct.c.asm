@@ -461,6 +461,18 @@ LAB_8244fbdc:
   8244FBDC  382100A0             addi r1,r1,0xa0
   8244FBE0  480F8918             b 0x825484f8
 
+; 8244FBE8  FUN_8244fbe8  (jpeg-6/jdmainct.c:462)
+  8244FBE8  81630194             lwz r11,0x194(r3)
+  8244FBEC  7CC93378             or r9,r6,r6
+  8244FBF0  7CA82B78             or r8,r5,r5
+  8244FBF4  7C872378             or r7,r4,r4
+  8244FBF8  38C00000             li r6,0x0
+  8244FBFC  38A00000             li r5,0x0
+  8244FC00  814B0004             lwz r10,0x4(r11)
+  8244FC04  38800000             li r4,0x0
+  8244FC08  7D4903A6             mtspr CTR,r10
+  8244FC0C  4E800420             bctr
+
 ; 8244FCC8  FUN_8244fcc8  (jpeg-6/jdmainct.c:477)
   8244FCC8  7D8802A6             mfspr r12,LR
   8244FCCC  480F87E9             bl 0x825484b4

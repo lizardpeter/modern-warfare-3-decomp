@@ -9,6 +9,16 @@ bool FUN_82232d48(int param_1)
 }
 
 
+// 82232D60  FUN_82232d60  (game_mp/g_client_script_cmd_mp.cpp:75)
+
+void FUN_82232d60(void)
+
+{
+  FUN_822bb170(0);
+  return;
+}
+
+
 // 82232D68  FUN_82232d68  (game_mp/g_client_script_cmd_mp.cpp:114)
 
 void FUN_82232d68(uint param_1)
@@ -628,6 +638,19 @@ void FUN_82233c30(uint param_1)
 }
 
 
+// 82233CB0  FUN_82233cb0  (game_mp/g_client_script_cmd_mp.cpp:682)
+
+void FUN_82233cb0(int param_1)
+
+{
+  *(undefined4 *)(param_1 + 0x11c) = 0x4000000;
+  *(undefined1 *)(param_1 + 0x102) = 0;
+  *(uint *)(param_1 + 8) = *(uint *)(param_1 + 8) & 0xffefffff;
+  FUN_822d1350();
+  return;
+}
+
+
 // 82233CD0  FUN_82233cd0  (game_mp/g_client_script_cmd_mp.cpp:703)
 
 /* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
@@ -764,6 +787,24 @@ void FUN_82233f40(uint param_1)
   uVar1 = 0;
 LAB_82233fd4:
   FUN_822bb170(uVar1);
+  return;
+}
+
+
+// 82233FF0  FUN_82233ff0  (game_mp/g_client_script_cmd_mp.cpp:836)
+
+void FUN_82233ff0(void)
+
+{
+  return;
+}
+
+
+// 82233FF8  FUN_82233ff8  (game_mp/g_client_script_cmd_mp.cpp:864)
+
+void FUN_82233ff8(void)
+
+{
   return;
 }
 

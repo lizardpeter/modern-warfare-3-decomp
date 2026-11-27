@@ -1633,3 +1633,10 @@ LAB_8238b33c:
 ; 8238B488  FUN_8238b488  (physics/ode/src/ode.cpp:1728)
   8238B488  D0230058             stfs f1,0x58(r3)
   8238B48C  4E800020             blr
+
+; 8256EA38  FUN_8256ea38  (line unknown)
+  8256EA38  3D608204             lis r11,-0x7dfc
+  8256EA3C  3D4083A8             lis r10,-0x7c58
+  8256EA40  396BAAE0             subi r11,r11,0x5520
+  8256EA44  916AD880             stw r11,-0x2780(r10)
+  8256EA48  4E800020             blr

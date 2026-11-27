@@ -1209,6 +1209,15 @@ undefined4 * FUN_8253b788(undefined4 *param_1,int param_2,undefined8 param_3,und
 }
 
 
+// 8253A440  FUN_8253a440  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdcontentstreaming.cpp:904)
+
+undefined8 FUN_8253a440(void)
+
+{
+  return 0xff;
+}
+
+
 // 8253A448  FUN_8253a448  (line unknown)
 
 undefined4 * FUN_8253a448(undefined4 *param_1,ulonglong param_2)

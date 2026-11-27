@@ -100,6 +100,15 @@ LAB_8252cf9c:
 }
 
 
+// 8252CDC0  FUN_8252cdc0  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdstats/bdstatsinfo.cpp:56)
+
+undefined8 FUN_8252cdc0(void)
+
+{
+  return 0x70;
+}
+
+
 // 8252CDC8  FUN_8252cdc8  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdstats/bdstatsinfo.cpp:66)
 
 undefined4 * FUN_8252cdc8(undefined4 *param_1)

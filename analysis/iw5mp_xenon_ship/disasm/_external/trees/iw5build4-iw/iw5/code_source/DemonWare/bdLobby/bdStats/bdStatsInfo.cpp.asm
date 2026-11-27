@@ -141,6 +141,10 @@ LAB_8252cfd8:
   8252CFE4  383F0070             addi r1,r31,0x70
   8252CFE8  4801B524             b 0x8254850c
 
+; 8252CDC0  FUN_8252cdc0  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdstats/bdstatsinfo.cpp:56)
+  8252CDC0  38600070             li r3,0x70
+  8252CDC4  4E800020             blr
+
 ; 8252CDC8  FUN_8252cdc8  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdstats/bdstatsinfo.cpp:66)
   8252CDC8  7D8802A6             mfspr r12,LR
   8252CDCC  9181FFF8             stw r12,-0x8(r1)

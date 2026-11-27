@@ -80,6 +80,15 @@ LAB_8253cb30:
 }
 
 
+// 8253CA10  FUN_8253ca10  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdsubscription/bdsubscriptioninfo.cpp:37)
+
+undefined8 FUN_8253ca10(void)
+
+{
+  return 0x20;
+}
+
+
 // 8253CA18  FUN_8253ca18  (line unknown)
 
 undefined4 * FUN_8253ca18(undefined4 *param_1,ulonglong param_2)

@@ -75,6 +75,9 @@ LAB_824f9130:
   824F9134  382100B0             addi r1,r1,0xb0
   824F9138  4804F3D0             b 0x82548508
 
+; 824F8EE8  thunk_FUN_82510268  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/submixvoice.h:90)
+  824F8EE8  48017380             b 0x82510268
+
 ; 824F8EF0  FUN_824f8ef0  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/submixvoice.cpp:125)
   824F8EF0  7D8802A6             mfspr r12,LR
   824F8EF4  4804F5C1             bl 0x825484b4
@@ -146,6 +149,12 @@ LAB_824f8ff0:
   824F8FF0  7FA3EB78             or r3,r29,r29
   824F8FF4  38210080             addi r1,r1,0x80
   824F8FF8  4804F50C             b 0x82548504
+
+; 824F8ED8  FUN_824f8ed8  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/voice.h:153)
+  824F8ED8  8963003D             lbz r11,0x3d(r3)
+  824F8EDC  38600000             li r3,0x0
+  824F8EE0  99640000             stb r11,0x0(r4)
+  824F8EE4  4E800020             blr
 
 ; 824F8DC0  FUN_824f8dc0  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/submixvoice.cpp:155)
   824F8DC0  7D8802A6             mfspr r12,LR

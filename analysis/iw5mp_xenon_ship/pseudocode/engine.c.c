@@ -9,29 +9,39 @@ void FUN_8251bfd8(int *param_1)
 
 {
   if (*param_1 == 0) {
-    *param_1 = (int)&LAB_8251a640;
+    *param_1 = (int)FUN_8251a640;
     param_1[1] = (int)FUN_8251b828;
     param_1[2] = (int)FUN_8251ae08;
     param_1[3] = (int)FUN_8251ae90;
     param_1[4] = (int)FUN_8251af00;
     param_1[5] = (int)FUN_8251b9f8;
     param_1[6] = (int)FUN_8251ba68;
-    param_1[7] = (int)&LAB_8251af70;
+    param_1[7] = (int)FUN_8251af70;
     param_1[8] = (int)FUN_8251af98;
     param_1[9] = (int)FUN_8251b050;
     param_1[10] = (int)FUN_8251bad8;
     param_1[0xb] = (int)FUN_8251bbe0;
     param_1[0xc] = (int)FUN_8251bc40;
     param_1[0xd] = (int)FUN_8251b0d8;
-    param_1[0xe] = (int)&LAB_8251b130;
+    param_1[0xe] = (int)FUN_8251b130;
     param_1[0xf] = (int)FUN_8251bd00;
     param_1[0x10] = (int)FUN_8251bd58;
     param_1[0x11] = (int)FUN_8251bdc0;
-    param_1[0x12] = (int)&LAB_8251b160;
+    param_1[0x12] = (int)FUN_8251b160;
     param_1[0x13] = (int)FUN_8251b168;
     param_1[0x14] = (int)FUN_8251be48;
     param_1[0x15] = (int)FUN_8251beb8;
   }
+  return;
+}
+
+
+// 8251A8C8  FUN_8251a8c8  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/engine.c:115)
+
+void FUN_8251a8c8(int *param_1)
+
+{
+  *(undefined4 *)(*param_1 + 0x444) = 0;
   return;
 }
 
@@ -82,7 +92,7 @@ void FUN_8251a8d8(int param_1,int param_2)
   undefined1 local_65;
   undefined1 local_60;
   undefined1 *local_58;
-  undefined1 *local_50;
+  code *local_50;
   int local_48;
   
   local_f0[0] = 0;
@@ -175,7 +185,7 @@ void FUN_8251a8d8(int param_1,int param_2)
     local_66 = 4;
     local_65 = 1;
     local_60 = 1;
-    local_50 = &LAB_8251a8c8;
+    local_50 = FUN_8251a8c8;
     local_48 = param_1;
     FUN_824f0d40(local_a0,param_1 + 0x40);
   }
@@ -961,6 +971,26 @@ undefined8 FUN_8251ba68(longlong param_1,undefined8 param_2,undefined8 param_3,u
 }
 
 
+// 8251AF70  FUN_8251af70  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/engine.c:2067)
+
+undefined8 FUN_8251af70(longlong param_1,undefined8 param_2)
+
+{
+  undefined4 uVar1;
+  char in_RESERVE;
+  byte in_cr0;
+  
+  do {
+    if (in_RESERVE != '\0') {
+      uVar1 = storeWordConditionalIndexed(param_2,0,param_1 + 0x52c);
+      *(undefined4 *)(param_1 + 0x52c) = uVar1;
+      in_cr0 = 2;
+    }
+  } while (!(bool)(in_cr0 >> 1 & 1));
+  return 0;
+}
+
+
 // 8251AF98  FUN_8251af98  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/engine.c:2095)
 
 /* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
@@ -1158,6 +1188,21 @@ undefined8 FUN_8251b0d8(int param_1,int param_2)
 }
 
 
+// 8251B130  FUN_8251b130  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/engine.c:2474)
+
+undefined4 FUN_8251b130(int param_1,int param_2)
+
+{
+  int iVar1;
+  
+  iVar1 = *(int *)((param_2 + 0x116) * 4 + param_1);
+  if ((iVar1 != 0) && (iVar1 = *(int *)(iVar1 + 4), iVar1 != 0)) {
+    return *(undefined4 *)(iVar1 + 0x90);
+  }
+  return 0;
+}
+
+
 // 8251BD00  FUN_8251bd00  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/engine.c:2514)
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
@@ -1230,6 +1275,15 @@ FUN_8251bdc0(longlong param_1,undefined8 param_2,undefined8 param_3,undefined8 p
 }
 
 
+// 8251B160  FUN_8251b160  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/engine.c:2656)
+
+undefined4 FUN_8251b160(int param_1)
+
+{
+  return *(undefined4 *)(param_1 + 0x4f4);
+}
+
+
 // 8251B168  FUN_8251b168  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/engine.c:2696)
 
 /* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
@@ -1248,7 +1302,7 @@ FUN_8251b168(int param_1,int param_2,undefined8 param_3,undefined8 param_4,undef
     uVar2 = 0xffffffff80070057;
   }
   else {
-    uVar2 = FUN_8251f8e0(iVar1,&LAB_8251a600,param_3,param_4,param_5);
+    uVar2 = FUN_8251f8e0(iVar1,FUN_8251a600,param_3,param_4,param_5);
   }
   FUN_8256fe04(param_1 + 0x4f8);
   return uVar2;
@@ -1334,25 +1388,25 @@ void FUN_8251bf28(int param_1)
   FUN_824dd2d0(lVar1);
   piVar3 = (int *)FUN_8255ca88(0);
   if (*piVar3 == 0) {
-    *piVar3 = (int)&LAB_8251a640;
+    *piVar3 = (int)FUN_8251a640;
     piVar3[1] = (int)FUN_8251b828;
     piVar3[2] = (int)FUN_8251ae08;
     piVar3[3] = (int)FUN_8251ae90;
     piVar3[4] = (int)FUN_8251af00;
     piVar3[5] = (int)FUN_8251b9f8;
     piVar3[6] = (int)FUN_8251ba68;
-    piVar3[7] = (int)&LAB_8251af70;
+    piVar3[7] = (int)FUN_8251af70;
     piVar3[8] = (int)FUN_8251af98;
     piVar3[9] = (int)FUN_8251b050;
     piVar3[10] = (int)FUN_8251bad8;
     piVar3[0xb] = (int)FUN_8251bbe0;
     piVar3[0xc] = (int)FUN_8251bc40;
     piVar3[0xd] = (int)FUN_8251b0d8;
-    piVar3[0xe] = (int)&LAB_8251b130;
+    piVar3[0xe] = (int)FUN_8251b130;
     piVar3[0xf] = (int)FUN_8251bd00;
     piVar3[0x10] = (int)FUN_8251bd58;
     piVar3[0x11] = (int)FUN_8251bdc0;
-    piVar3[0x12] = (int)&LAB_8251b160;
+    piVar3[0x12] = (int)FUN_8251b160;
     piVar3[0x13] = (int)FUN_8251b168;
     piVar3[0x14] = (int)FUN_8251be48;
     piVar3[0x15] = (int)FUN_8251beb8;

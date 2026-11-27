@@ -185,6 +185,87 @@ LAB_824f7b20:
   824F7B34  EBE1FFF0             ld r31,-0x10(r1)
   824F7B38  4E800020             blr
 
+; 824F7648  FUN_824f7648  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/effectmanager.cpp:260)
+  824F7648  89440000             lbz r10,0x0(r4)
+  824F764C  7C6B1B78             or r11,r3,r3
+  824F7650  7C832378             or r3,r4,r4
+  824F7654  2B0A007F             cmplwi cr6,r10,0x7f
+  824F7658  41990018             bgt cr6,0x824f7670
+  824F765C  812B0008             lwz r9,0x8(r11)
+  824F7660  7F0A4840             cmplw cr6,r10,r9
+  824F7664  40980040             bge cr6,0x824f76a4
+  824F7668  812B000C             lwz r9,0xc(r11)
+  824F766C  48000018             b 0x824f7684
+LAB_824f7670:
+  824F7670  812B0010             lwz r9,0x10(r11)
+  824F7674  394AFF80             subi r10,r10,0x80
+  824F7678  7F0A4840             cmplw cr6,r10,r9
+  824F767C  40980028             bge cr6,0x824f76a4
+  824F7680  812B0014             lwz r9,0x14(r11)
+LAB_824f7684:
+  824F7684  554B1838             rlwinm r11,r10,0x3,0x0,0x1c
+  824F7688  7D6B4A14             add r11,r11,r9
+  824F768C  814B0004             lwz r10,0x4(r11)
+  824F7690  2B0A0000             cmplwi cr6,r10,0x0
+  824F7694  419A0010             beq cr6,0x824f76a4
+  824F7698  814B0000             lwz r10,0x0(r11)
+  824F769C  2B0A0000             cmplwi cr6,r10,0x0
+  824F76A0  409A0008             bne cr6,0x824f76a8
+LAB_824f76a4:
+  824F76A4  39600000             li r11,0x0
+LAB_824f76a8:
+  824F76A8  2B0B0000             cmplwi cr6,r11,0x0
+  824F76AC  409A0010             bne cr6,0x824f76bc
+  824F76B0  3C608000             lis r3,-0x8000
+  824F76B4  60634001             ori r3,r3,0x4001
+  824F76B8  4E800020             blr
+LAB_824f76bc:
+  824F76BC  816B0000             lwz r11,0x0(r11)
+  824F76C0  7CA42B78             or r4,r5,r5
+  824F76C4  7D6903A6             mtspr CTR,r11
+  824F76C8  4E800420             bctr
+
+; 824F76D0  FUN_824f76d0  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/effectmanager.cpp:296)
+  824F76D0  7C6B1B78             or r11,r3,r3
+  824F76D4  7C832378             or r3,r4,r4
+  824F76D8  7CA42B78             or r4,r5,r5
+  824F76DC  89430000             lbz r10,0x0(r3)
+  824F76E0  2B0A007F             cmplwi cr6,r10,0x7f
+  824F76E4  41990018             bgt cr6,0x824f76fc
+  824F76E8  812B0008             lwz r9,0x8(r11)
+  824F76EC  7F0A4840             cmplw cr6,r10,r9
+  824F76F0  40980040             bge cr6,0x824f7730
+  824F76F4  812B000C             lwz r9,0xc(r11)
+  824F76F8  48000018             b 0x824f7710
+LAB_824f76fc:
+  824F76FC  812B0010             lwz r9,0x10(r11)
+  824F7700  394AFF80             subi r10,r10,0x80
+  824F7704  7F0A4840             cmplw cr6,r10,r9
+  824F7708  40980028             bge cr6,0x824f7730
+  824F770C  812B0014             lwz r9,0x14(r11)
+LAB_824f7710:
+  824F7710  554B1838             rlwinm r11,r10,0x3,0x0,0x1c
+  824F7714  7D6B4A14             add r11,r11,r9
+  824F7718  814B0004             lwz r10,0x4(r11)
+  824F771C  2B0A0000             cmplwi cr6,r10,0x0
+  824F7720  419A0010             beq cr6,0x824f7730
+  824F7724  814B0000             lwz r10,0x0(r11)
+  824F7728  2B0A0000             cmplwi cr6,r10,0x0
+  824F772C  409A0008             bne cr6,0x824f7734
+LAB_824f7730:
+  824F7730  39600000             li r11,0x0
+LAB_824f7734:
+  824F7734  2B0B0000             cmplwi cr6,r11,0x0
+  824F7738  409A0010             bne cr6,0x824f7748
+  824F773C  3C608000             lis r3,-0x8000
+  824F7740  60634001             ori r3,r3,0x4001
+  824F7744  4E800020             blr
+LAB_824f7748:
+  824F7748  816B0004             lwz r11,0x4(r11)
+  824F774C  7CC53378             or r5,r6,r6
+  824F7750  7D6903A6             mtspr CTR,r11
+  824F7754  4E800420             bctr
+
 ; 824F7758  FUN_824f7758  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/effectmanager.cpp:329)
   824F7758  7D8802A6             mfspr r12,LR
   824F775C  48050D51             bl 0x825484ac
@@ -325,6 +406,41 @@ LAB_824f7948:
   824F7948  7F23CB78             or r3,r25,r25
   824F794C  38210090             addi r1,r1,0x90
   824F7950  48050BAC             b 0x825484fc
+
+; 824F7958  FUN_824f7958  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/effectmanager.cpp:430)
+  824F7958  89640000             lbz r11,0x0(r4)
+  824F795C  39000000             li r8,0x0
+  824F7960  7D094378             or r9,r8,r8
+  824F7964  2B0B0000             cmplwi cr6,r11,0x0
+  824F7968  419A0060             beq cr6,0x824f79c8
+LAB_824f796c:
+  824F796C  81640004             lwz r11,0x4(r4)
+  824F7970  81430010             lwz r10,0x10(r3)
+  824F7974  7D6958AE             lbzx r11,r9,r11
+  824F7978  396BFF80             subi r11,r11,0x80
+  824F797C  7F0B5040             cmplw cr6,r11,r10
+  824F7980  40980038             bge cr6,0x824f79b8
+  824F7984  81430014             lwz r10,0x14(r3)
+  824F7988  556B1838             rlwinm r11,r11,0x3,0x0,0x1c
+  824F798C  7D6B5214             add r11,r11,r10
+  824F7990  814B0004             lwz r10,0x4(r11)
+  824F7994  2B0A0000             cmplwi cr6,r10,0x0
+  824F7998  419A0020             beq cr6,0x824f79b8
+  824F799C  814B0000             lwz r10,0x0(r11)
+  824F79A0  2B0A0000             cmplwi cr6,r10,0x0
+  824F79A4  419A0014             beq cr6,0x824f79b8
+  824F79A8  2B0B0000             cmplwi cr6,r11,0x0
+  824F79AC  419A000C             beq cr6,0x824f79b8
+  824F79B0  910B0000             stw r8,0x0(r11)
+  824F79B4  910B0004             stw r8,0x4(r11)
+LAB_824f79b8:
+  824F79B8  89640000             lbz r11,0x0(r4)
+  824F79BC  39290001             addi r9,r9,0x1
+  824F79C0  7F095840             cmplw cr6,r9,r11
+  824F79C4  4198FFA8             blt cr6,0x824f796c
+LAB_824f79c8:
+  824F79C8  38600000             li r3,0x0
+  824F79CC  4E800020             blr
 
 ; 824F7B40  FUN_824f7b40  (line unknown)
   824F7B40  7D8802A6             mfspr r12,LR

@@ -183,6 +183,32 @@ uint * FUN_82561190(uint *param_1,uint *param_2,undefined1 param_3)
 }
 
 
+// 82560ED8  FUN_82560ed8  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdunicastconnection.cpp:188)
+
+void FUN_82560ed8(int *param_1)
+
+{
+  int iVar1;
+  
+  iVar1 = param_1[0x2c];
+  if (iVar1 < 1) {
+    return;
+  }
+  if (2 < iVar1) {
+    if (iVar1 != 3) {
+      return;
+    }
+    param_1[0x2c] = 4;
+    FUN_8255e358(param_1 + 0x3c);
+    return;
+  }
+                    /* WARNING: Could not recover jumptable at 0x82560f18. Too many branches */
+                    /* WARNING: Treating indirect jump as call */
+  (**(code **)(*param_1 + 0x1c))(param_1);
+  return;
+}
+
+
 // 82561208  FUN_82561208  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdunicastconnection.cpp:206)
 
 /* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */

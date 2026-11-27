@@ -5605,6 +5605,17 @@ LAB_82328f60:
   82328F70  38214090             addi r1,r1,0x4090
   82328F74  4821F588             b 0x825484fc
 
+; 82328F78  FUN_82328f78  (universal/dvar.cpp:3039)
+  82328F78  A1630004             lhz r11,0x4(r3)
+  82328F7C  556A0630             rlwinm r10,r11,0x0,0x18,0x18
+  82328F80  2B0A0000             cmplwi cr6,r10,0x0
+  82328F84  4D9A0020             beqlr cr6
+  82328F88  3D408378             lis r10,-0x7c88
+  82328F8C  816AB46C             lwz r11,-0x4b94(r10)
+  82328F90  396B0001             addi r11,r11,0x1
+  82328F94  916AB46C             stw r11,-0x4b94(r10)
+  82328F98  4E800020             blr
+
 ; 823293F8  FUN_823293f8  (universal/dvar.cpp:3046)
   823293F8  7D8802A6             mfspr r12,LR
   823293FC  9181FFF8             stw r12,-0x8(r1)
@@ -5661,3 +5672,14 @@ LAB_82328fd0:
   82329478  7D8803A6             mtspr LR,r12
   8232947C  EBE1FFF0             ld r31,-0x10(r1)
   82329480  4E800020             blr
+
+; 82328FE0  FUN_82328fe0  (universal/dvar.cpp:3069)
+  82328FE0  A1630004             lhz r11,0x4(r3)
+  82328FE4  556A0630             rlwinm r10,r11,0x0,0x18,0x18
+  82328FE8  2B0A0000             cmplwi cr6,r10,0x0
+  82328FEC  4D9A0020             beqlr cr6
+  82328FF0  3D408378             lis r10,-0x7c88
+  82328FF4  816AB46C             lwz r11,-0x4b94(r10)
+  82328FF8  396B0001             addi r11,r11,0x1
+  82328FFC  916AB46C             stw r11,-0x4b94(r10)
+  82329000  4E800020             blr

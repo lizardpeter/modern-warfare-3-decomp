@@ -65,6 +65,16 @@ LAB_82560c6c:
   82560C2C  914B0020             stw r10,0x20(r11)
   82560C30  4E800020             blr
 
+; 82560C38  FUN_82560c38  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdconnection.cpp:74)
+  82560C38  39600003             li r11,0x3
+  82560C3C  91630020             stw r11,0x20(r3)
+  82560C40  4E800020             blr
+
+; 82560C48  FUN_82560c48  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdconnection.cpp:79)
+  82560C48  39600004             li r11,0x4
+  82560C4C  91630020             stw r11,0x20(r3)
+  82560C50  4E800020             blr
+
 ; 82560DF8  FUN_82560df8  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdconnection.cpp:86)
   82560DF8  FBE1FFF8             std r31,-0x8(r1)
   82560DFC  3BE1FFE0             subi r31,r1,0x20

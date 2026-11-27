@@ -1956,6 +1956,24 @@ LAB_8219c380:
   8219C390  EBE1FFF0             ld r31,-0x10(r1)
   8219C394  4E800020             blr
 
+; 8219C398  FUN_8219c398  (client_mp/partyjoining.cpp:1785)
+  8219C398  816421D8             lwz r11,0x21d8(r4)
+  8219C39C  7F035800             cmpw cr6,r3,r11
+  8219C3A0  4D980020             bltlr cr6
+  8219C3A4  816421DC             lwz r11,0x21dc(r4)
+  8219C3A8  2F0B0000             cmpwi cr6,r11,0x0
+  8219C3AC  40990018             ble cr6,0x8219c3c4
+  8219C3B0  396BFFFF             subi r11,r11,0x1
+  8219C3B4  39400001             li r10,0x1
+  8219C3B8  916421DC             stw r11,0x21dc(r4)
+  8219C3BC  91440000             stw r10,0x0(r4)
+  8219C3C0  4E800020             blr
+LAB_8219c3c4:
+  8219C3C4  3D608201             lis r11,-0x7dff
+  8219C3C8  394B60C8             addi r10,r11,0x60c8
+  8219C3CC  914421E0             stw r10,0x21e0(r4)
+  8219C3D0  4E800020             blr
+
 ; 8219C3D8  FUN_8219c3d8  (client_mp/partyjoining.cpp:1794)
   8219C3D8  7D8802A6             mfspr r12,LR
   8219C3DC  9181FFF8             stw r12,-0x8(r1)
@@ -2085,6 +2103,37 @@ LAB_8219c584:
   8219C58C  7D8803A6             mtspr LR,r12
   8219C590  EBE1FFF0             ld r31,-0x10(r1)
   8219C594  4E800020             blr
+
+; 8219C598  FUN_8219c598  (client_mp/partyjoining.cpp:1872)
+  8219C598  81640000             lwz r11,0x0(r4)
+  8219C59C  39400009             li r10,0x9
+  8219C5A0  7D69FE70             srawi r9,r11,0x1f
+  8219C5A4  55480FFE             rlwinm r8,r10,0x1,0x1f,0x1f
+  8219C5A8  7CEA5810             subfc r7,r10,r11
+  8219C5AC  7D484914             adde r10,r8,r9
+  8219C5B0  38CA00AC             addi r6,r10,0xac
+  8219C5B4  54C5103A             rlwinm r5,r6,0x2,0x0,0x1d
+  8219C5B8  7D45202E             lwzx r10,r5,r4
+  8219C5BC  2F0A0000             cmpwi cr6,r10,0x0
+  8219C5C0  4D9A0020             beqlr cr6
+  8219C5C4  2F0A0001             cmpwi cr6,r10,0x1
+  8219C5C8  419A0014             beq cr6,0x8219c5dc
+  8219C5CC  3D608201             lis r11,-0x7dff
+  8219C5D0  394B7BB4             addi r10,r11,0x7bb4
+  8219C5D4  914421E0             stw r10,0x21e0(r4)
+  8219C5D8  4E800020             blr
+LAB_8219c5dc:
+  8219C5DC  2F0B0006             cmpwi cr6,r11,0x6
+  8219C5E0  419A0018             beq cr6,0x8219c5f8
+  8219C5E4  2F0B000C             cmpwi cr6,r11,0xc
+  8219C5E8  4C9A0020             bnelr cr6
+  8219C5EC  3960000F             li r11,0xf
+  8219C5F0  91640000             stw r11,0x0(r4)
+  8219C5F4  4E800020             blr
+LAB_8219c5f8:
+  8219C5F8  39600009             li r11,0x9
+  8219C5FC  91640000             stw r11,0x0(r4)
+  8219C600  4E800020             blr
 
 ; 8219C608  FUN_8219c608  (client_mp/partyjoining.cpp:1896)
   8219C608  7D8802A6             mfspr r12,LR
@@ -2334,6 +2383,11 @@ LAB_8219c950:
   8219C95C  7D8803A6             mtspr LR,r12
   8219C960  EBE1FFF0             ld r31,-0x10(r1)
   8219C964  4E800020             blr
+
+; 8219C968  FUN_8219c968  (client_mp/partyjoining.cpp:2070)
+  8219C968  39600010             li r11,0x10
+  8219C96C  91640000             stw r11,0x0(r4)
+  8219C970  4E800020             blr
 
 ; 8219C978  FUN_8219c978  (client_mp/partyjoining.cpp:2079)
   8219C978  7D8802A6             mfspr r12,LR

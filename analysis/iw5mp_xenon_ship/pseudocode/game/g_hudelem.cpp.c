@@ -303,6 +303,20 @@ void FUN_822393b0(int param_1,int param_2)
 }
 
 
+// 82239418  FUN_82239418  (game/g_hudelem.cpp:742)
+
+void FUN_82239418(int param_1)
+
+{
+  if ((*(uint *)(param_1 + 0xa4) & 1) != 0) {
+    FUN_822bb138(1);
+    return;
+  }
+  FUN_822bb138(0);
+  return;
+}
+
+
 // 82239438  FUN_82239438  (game/g_hudelem.cpp:748)
 
 void FUN_82239438(int param_1,int param_2)
@@ -321,6 +335,20 @@ void FUN_82239438(int param_1,int param_2)
     uVar4 = uVar2 & 0xfffffeff;
   }
   *(uint *)(iVar1 + param_1) = uVar4;
+  return;
+}
+
+
+// 822394A0  FUN_822394a0  (game/g_hudelem.cpp:754)
+
+void FUN_822394a0(int param_1)
+
+{
+  if ((*(uint *)(param_1 + 0xa4) & 0x100) != 0) {
+    FUN_822bb138(1);
+    return;
+  }
+  FUN_822bb138(0);
   return;
 }
 
@@ -347,6 +375,20 @@ void FUN_822394c0(int param_1,int param_2)
 }
 
 
+// 82239528  FUN_82239528  (game/g_hudelem.cpp:766)
+
+void FUN_82239528(int param_1)
+
+{
+  if ((*(uint *)(param_1 + 0xa4) & 2) != 0) {
+    FUN_822bb138(1);
+    return;
+  }
+  FUN_822bb138(0);
+  return;
+}
+
+
 // 82239548  FUN_82239548  (game/g_hudelem.cpp:772)
 
 void FUN_82239548(int param_1,int param_2)
@@ -369,6 +411,20 @@ void FUN_82239548(int param_1,int param_2)
 }
 
 
+// 822395B0  FUN_822395b0  (game/g_hudelem.cpp:778)
+
+void FUN_822395b0(int param_1)
+
+{
+  if ((*(uint *)(param_1 + 0xa4) & 4) != 0) {
+    FUN_822bb138(1);
+    return;
+  }
+  FUN_822bb138(0);
+  return;
+}
+
+
 // 822395D0  FUN_822395d0  (game/g_hudelem.cpp:799)
 
 void FUN_822395d0(int param_1,int param_2)
@@ -387,6 +443,20 @@ void FUN_822395d0(int param_1,int param_2)
     uVar4 = uVar2 & 0xfffff7ff;
   }
   *(uint *)(iVar1 + param_1) = uVar4;
+  return;
+}
+
+
+// 82239638  FUN_82239638  (game/g_hudelem.cpp:805)
+
+void FUN_82239638(int param_1)
+
+{
+  if ((*(uint *)(param_1 + 0xa4) & 0x800) != 0) {
+    FUN_822bb138(1);
+    return;
+  }
+  FUN_822bb138(0);
   return;
 }
 
@@ -422,6 +492,20 @@ void FUN_822396b0(int param_1,int param_2)
     uVar4 = uVar2 & 0xffffefff;
   }
   *(uint *)(iVar1 + param_1) = uVar4;
+  return;
+}
+
+
+// 82239718  FUN_82239718  (game/g_hudelem.cpp:831)
+
+void FUN_82239718(int param_1)
+
+{
+  if ((*(uint *)(param_1 + 0xa4) & 0x1000) != 0) {
+    FUN_822bb138(1);
+    return;
+  }
+  FUN_822bb138(0);
   return;
 }
 
@@ -653,6 +737,121 @@ void FUN_82239bb8(int param_1)
     FUN_822b8a20();
   }
   *(float *)(param_1 + 0x14) = (float)dVar1;
+  return;
+}
+
+
+// 82239C30  FUN_82239c30  (game/g_hudelem.cpp:949)
+
+void FUN_82239c30(undefined8 param_1,ulonglong param_2)
+
+{
+  FUN_822391b0(param_1,(param_2 & 0x7ffffff) * 0x20 + -0x7dfe2280,0xffffffff82594240,8);
+  return;
+}
+
+
+// 82239C50  FUN_82239c50  (game/g_hudelem.cpp:955)
+
+void FUN_82239c50(int param_1,int param_2)
+
+{
+  FUN_822bb320((&PTR_s_default_82594240)
+               [*(int *)((&DAT_8201dd88)[param_2 * 8] + param_1) >>
+                (*(uint *)(&DAT_8201dd94 + param_2 * 0x20) & 0x3f) &
+                *(uint *)(&DAT_8201dd90 + param_2 * 0x20)]);
+  return;
+}
+
+
+// 82239C90  FUN_82239c90  (game/g_hudelem.cpp:961)
+
+void FUN_82239c90(undefined8 param_1,ulonglong param_2)
+
+{
+  FUN_822391b0(param_1,(param_2 & 0x7ffffff) * 0x20 + -0x7dfe2280,0xffffffff82594260,3);
+  return;
+}
+
+
+// 82239CB0  FUN_82239cb0  (game/g_hudelem.cpp:967)
+
+void FUN_82239cb0(int param_1,int param_2)
+
+{
+  FUN_822bb320((&PTR_DAT_82594260)
+               [*(int *)((&DAT_8201dd88)[param_2 * 8] + param_1) >>
+                (*(uint *)(&DAT_8201dd94 + param_2 * 0x20) & 0x3f) &
+                *(uint *)(&DAT_8201dd90 + param_2 * 0x20)]);
+  return;
+}
+
+
+// 82239CF0  FUN_82239cf0  (game/g_hudelem.cpp:973)
+
+void FUN_82239cf0(undefined8 param_1,ulonglong param_2)
+
+{
+  FUN_822391b0(param_1,(param_2 & 0x7ffffff) * 0x20 + -0x7dfe2280,0xffffffff8259426c,3);
+  return;
+}
+
+
+// 82239D10  FUN_82239d10  (game/g_hudelem.cpp:979)
+
+void FUN_82239d10(int param_1,int param_2)
+
+{
+  FUN_822bb320((&PTR_DAT_8259426c)
+               [*(int *)((&DAT_8201dd88)[param_2 * 8] + param_1) >>
+                (*(uint *)(&DAT_8201dd94 + param_2 * 0x20) & 0x3f) &
+                *(uint *)(&DAT_8201dd90 + param_2 * 0x20)]);
+  return;
+}
+
+
+// 82239D50  FUN_82239d50  (game/g_hudelem.cpp:985)
+
+void FUN_82239d50(undefined8 param_1,ulonglong param_2)
+
+{
+  FUN_822391b0(param_1,(param_2 & 0x7ffffff) * 0x20 + -0x7dfe2280,0xffffffff82594278,0xb);
+  return;
+}
+
+
+// 82239D70  FUN_82239d70  (game/g_hudelem.cpp:991)
+
+void FUN_82239d70(int param_1,int param_2)
+
+{
+  FUN_822bb320((&PTR_s_subleft_82594278)
+               [*(int *)((&DAT_8201dd88)[param_2 * 8] + param_1) >>
+                (*(uint *)(&DAT_8201dd94 + param_2 * 0x20) & 0x3f) &
+                *(uint *)(&DAT_8201dd90 + param_2 * 0x20)]);
+  return;
+}
+
+
+// 82239DB0  FUN_82239db0  (game/g_hudelem.cpp:997)
+
+void FUN_82239db0(undefined8 param_1,ulonglong param_2)
+
+{
+  FUN_822391b0(param_1,(param_2 & 0x7ffffff) * 0x20 + -0x7dfe2280,0xffffffff825942a4,0xb);
+  return;
+}
+
+
+// 82239DD0  FUN_82239dd0  (game/g_hudelem.cpp:1003)
+
+void FUN_82239dd0(int param_1,int param_2)
+
+{
+  FUN_822bb320((&PTR_s_subtop_825942a4)
+               [*(int *)((&DAT_8201dd88)[param_2 * 8] + param_1) >>
+                (*(uint *)(&DAT_8201dd94 + param_2 * 0x20) & 0x3f) &
+                *(uint *)(&DAT_8201dd90 + param_2 * 0x20)]);
   return;
 }
 
@@ -1147,6 +1346,46 @@ void FUN_8223a5b0(uint param_1,int param_2)
 }
 
 
+// 8223A738  FUN_8223a738  (game/g_hudelem.cpp:1556)
+
+void FUN_8223a738(undefined8 param_1)
+
+{
+  FUN_8223a498(param_1,5);
+  return;
+}
+
+
+// 8223A740  FUN_8223a740  (game/g_hudelem.cpp:1573)
+
+void FUN_8223a740(undefined8 param_1)
+
+{
+  FUN_8223a498(param_1,6);
+  return;
+}
+
+
+// 8223A748  FUN_8223a748  (game/g_hudelem.cpp:1590)
+
+void FUN_8223a748(undefined8 param_1)
+
+{
+  FUN_8223a498(param_1,7);
+  return;
+}
+
+
+// 8223A750  FUN_8223a750  (game/g_hudelem.cpp:1607)
+
+void FUN_8223a750(undefined8 param_1)
+
+{
+  FUN_8223a498(param_1,8);
+  return;
+}
+
+
 // 8223A758  FUN_8223a758  (game/g_hudelem.cpp:1624)
 
 void FUN_8223a758(uint param_1)
@@ -1240,6 +1479,26 @@ void FUN_8223a850(uint param_1)
   puVar2[0x1f] = 0;
   puVar2[0x21] = 0;
   *puVar2 = 10;
+  return;
+}
+
+
+// 8223A928  FUN_8223a928  (game/g_hudelem.cpp:1662)
+
+void FUN_8223a928(undefined8 param_1)
+
+{
+  FUN_8223a5b0(param_1,0xb);
+  return;
+}
+
+
+// 8223A930  FUN_8223a930  (game/g_hudelem.cpp:1683)
+
+void FUN_8223a930(undefined8 param_1)
+
+{
+  FUN_8223a5b0(param_1,0xc);
   return;
 }
 

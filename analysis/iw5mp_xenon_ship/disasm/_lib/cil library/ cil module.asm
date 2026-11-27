@@ -2047,6 +2047,52 @@ LAB_820c5c0c:
   820C5C20  7D8803A6             mtspr LR,r12
   820C5C24  4E800020             blr
 
+; 820C5C28  FUN_820c5c28  (line unknown)
+  820C5C28  81630000             lwz r11,0x0(r3)
+  820C5C2C  2F0B0000             cmpwi cr6,r11,0x0
+  820C5C30  409A000C             bne cr6,0x820c5c3c
+  820C5C34  38600000             li r3,0x0
+  820C5C38  4E800020             blr
+LAB_820c5c3c:
+  820C5C3C  2F0B0002             cmpwi cr6,r11,0x2
+  820C5C40  41980008             blt cr6,0x820c5c48
+  820C5C44  39600002             li r11,0x2
+LAB_820c5c48:
+  820C5C48  396BFFFF             subi r11,r11,0x1
+  820C5C4C  8143000C             lwz r10,0xc(r3)
+  820C5C50  5569103A             rlwinm r9,r11,0x2,0x0,0x1d
+  820C5C54  356BFFFF             subic. r11,r11,0x1
+  820C5C58  7C69502E             lwzx r3,r9,r10
+  820C5C5C  4D800020             bltlr
+  820C5C60  392B0001             addi r9,r11,0x1
+  820C5C64  556B103A             rlwinm r11,r11,0x2,0x0,0x1d
+  820C5C68  7D2903A6             mtspr CTR,r9
+LAB_820c5c6c:
+  820C5C6C  7D2B502E             lwzx r9,r11,r10
+  820C5C70  5468E006             rlwinm r8,r3,0x1c,0x0,0x3
+  820C5C74  396BFFFC             subi r11,r11,0x4
+  820C5C78  7D234378             or r3,r9,r8
+  820C5C7C  4200FFF0             bdnz 0x820c5c6c
+  820C5C80  4E800020             blr
+
+; 820C5C88  FUN_820c5c88  (line unknown)
+  820C5C88  81630000             lwz r11,0x0(r3)
+  820C5C8C  7F045800             cmpw cr6,r4,r11
+  820C5C90  4098001C             bge cr6,0x820c5cac
+  820C5C94  2F040000             cmpwi cr6,r4,0x0
+  820C5C98  41980014             blt cr6,0x820c5cac
+  820C5C9C  8163000C             lwz r11,0xc(r3)
+  820C5CA0  548A103A             rlwinm r10,r4,0x2,0x0,0x1d
+  820C5CA4  7C6B502E             lwzx r3,r11,r10
+  820C5CA8  4E800020             blr
+LAB_820c5cac:
+  820C5CAC  38600000             li r3,0x0
+  820C5CB0  4E800020             blr
+
+; 820C5CB8  FUN_820c5cb8  (line unknown)
+  820C5CB8  80630000             lwz r3,0x0(r3)
+  820C5CBC  4E800020             blr
+
 ; 820C5CC0  FUN_820c5cc0  (line unknown)
   820C5CC0  7D8802A6             mfspr r12,LR
   820C5CC4  9181FFF8             stw r12,-0x8(r1)
@@ -2092,6 +2138,52 @@ LAB_820c5d44:
   820C5D4C  8181FFF8             lwz r12,-0x8(r1)
   820C5D50  7D8803A6             mtspr LR,r12
   820C5D54  4E800020             blr
+
+; 820C5D58  FUN_820c5d58  (line unknown)
+  820C5D58  81630008             lwz r11,0x8(r3)
+  820C5D5C  2F0B0001             cmpwi cr6,r11,0x1
+  820C5D60  419A0034             beq cr6,0x820c5d94
+  820C5D64  81630000             lwz r11,0x0(r3)
+  820C5D68  2F0B0001             cmpwi cr6,r11,0x1
+  820C5D6C  41990020             bgt cr6,0x820c5d8c
+  820C5D70  8163000C             lwz r11,0xc(r3)
+  820C5D74  816B0000             lwz r11,0x0(r11)
+  820C5D78  7F0B2040             cmplw cr6,r11,r4
+  820C5D7C  41990010             bgt cr6,0x820c5d8c
+  820C5D80  41980014             blt cr6,0x820c5d94
+  820C5D84  38600000             li r3,0x0
+  820C5D88  4E800020             blr
+LAB_820c5d8c:
+  820C5D8C  38600001             li r3,0x1
+  820C5D90  4E800020             blr
+LAB_820c5d94:
+  820C5D94  3860FFFF             li r3,-0x1
+  820C5D98  4E800020             blr
+
+; 820C5DA0  FUN_820c5da0  (line unknown)
+  820C5DA0  81630000             lwz r11,0x0(r3)
+  820C5DA4  2F0B0000             cmpwi cr6,r11,0x0
+  820C5DA8  409A000C             bne cr6,0x820c5db4
+  820C5DAC  38600000             li r3,0x0
+  820C5DB0  4E800020             blr
+LAB_820c5db4:
+  820C5DB4  8143000C             lwz r10,0xc(r3)
+  820C5DB8  5569103A             rlwinm r9,r11,0x2,0x0,0x1d
+  820C5DBC  1D6B001C             mulli r11,r11,0x1c
+  820C5DC0  7D495214             add r10,r9,r10
+  820C5DC4  386BFFE4             subi r3,r11,0x1c
+  820C5DC8  816AFFFC             lwz r11,-0x4(r10)
+  820C5DCC  2B0B0000             cmplwi cr6,r11,0x0
+  820C5DD0  4D9A0020             beqlr cr6
+LAB_820c5dd4:
+  820C5DD4  556BF87E             rlwinm r11,r11,0x1f,0x1,0x1f
+  820C5DD8  38630001             addi r3,r3,0x1
+  820C5DDC  2B0B0000             cmplwi cr6,r11,0x0
+  820C5DE0  409AFFF4             bne cr6,0x820c5dd4
+  820C5DE4  4E800020             blr
+
+; 820C5DE8  thunk_FUN_820cb678  (line unknown)
+  820C5DE8  48005890             b 0x820cb678
 
 ; 820C5DF0  FUN_820c5df0  (line unknown)
   820C5DF0  7D8802A6             mfspr r12,LR
@@ -2188,6 +2280,35 @@ LAB_820c5f24:
   820C5F34  8181FFF8             lwz r12,-0x8(r1)
   820C5F38  7D8803A6             mtspr LR,r12
   820C5F3C  4E800020             blr
+
+; 820C5F40  FUN_820c5f40  (line unknown)
+  820C5F40  81630000             lwz r11,0x0(r3)
+  820C5F44  2F0B0000             cmpwi cr6,r11,0x0
+  820C5F48  409A000C             bne cr6,0x820c5f54
+  820C5F4C  39400000             li r10,0x0
+  820C5F50  48000034             b 0x820c5f84
+LAB_820c5f54:
+  820C5F54  8143000C             lwz r10,0xc(r3)
+  820C5F58  5569103A             rlwinm r9,r11,0x2,0x0,0x1d
+  820C5F5C  1D6B001C             mulli r11,r11,0x1c
+  820C5F60  7D295214             add r9,r9,r10
+  820C5F64  394BFFE4             subi r10,r11,0x1c
+  820C5F68  8169FFFC             lwz r11,-0x4(r9)
+  820C5F6C  2B0B0000             cmplwi cr6,r11,0x0
+  820C5F70  419A0014             beq cr6,0x820c5f84
+LAB_820c5f74:
+  820C5F74  556BF87E             rlwinm r11,r11,0x1f,0x1,0x1f
+  820C5F78  394A0001             addi r10,r10,0x1
+  820C5F7C  2B0B0000             cmplwi cr6,r11,0x0
+  820C5F80  409AFFF4             bne cr6,0x820c5f74
+LAB_820c5f84:
+  820C5F84  554B077E             rlwinm r11,r10,0x0,0x1d,0x1f
+  820C5F88  312BFFFF             subic r9,r11,0x1
+  820C5F8C  7D695910             subfe r11,r9,r11
+  820C5F90  7D481E70             srawi r8,r10,0x3
+  820C5F94  7D480194             addze r10,r8
+  820C5F98  7C6B5214             add r3,r11,r10
+  820C5F9C  4E800020             blr
 
 ; 820C5FA0  FUN_820c5fa0  (line unknown)
   820C5FA0  7D8802A6             mfspr r12,LR
@@ -2981,6 +3102,9 @@ LAB_820c6a58:
   820C6A68  8181FFF8             lwz r12,-0x8(r1)
   820C6A6C  7D8803A6             mtspr LR,r12
   820C6A70  4E800020             blr
+
+; 820C6A78  thunk_FUN_823333f8  (line unknown)
+  820C6A78  4826C980             b 0x823333f8
 
 ; 820C6A80  FUN_820c6a80  (line unknown)
   820C6A80  7D8802A6             mfspr r12,LR

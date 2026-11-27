@@ -51,6 +51,52 @@ LAB_8216689c:
   8216689C  7D435378             or r3,r10,r10
   821668A0  4827EFC8             b 0x823e5868
 
+; 821668A8  FUN_821668a8  (client/cl_cin.cpp:68)
+  821668A8  3D6082FF             lis r11,-0x7d01
+  821668AC  3D208259             lis r9,-0x7da7
+  821668B0  396BBE50             subi r11,r11,0x41b0
+  821668B4  39400001             li r10,0x1
+  821668B8  390B0044             addi r8,r11,0x44
+  821668BC  99492008             stb r10,0x2008(r9)
+  821668C0  814B0000             lwz r10,0x0(r11)
+  821668C4  554A103A             rlwinm r10,r10,0x2,0x0,0x1d
+  821668C8  7CEA402E             lwzx r7,r10,r8
+  821668CC  2F070001             cmpwi cr6,r7,0x1
+  821668D0  40990030             ble cr6,0x82166900
+  821668D4  392B0064             addi r9,r11,0x64
+  821668D8  7D0A482E             lwzx r8,r10,r9
+  821668DC  80880004             lwz r4,0x4(r8)
+  821668E0  2B040000             cmplwi cr6,r4,0x0
+  821668E4  419A0010             beq cr6,0x821668f4
+LAB_821668e8:
+  821668E8  89240000             lbz r9,0x0(r4)
+  821668EC  2B090000             cmplwi cr6,r9,0x0
+  821668F0  4D9A0020             beqlr cr6
+LAB_821668f4:
+  821668F4  396B0004             addi r11,r11,0x4
+  821668F8  7C6A582E             lwzx r3,r10,r11
+  821668FC  4BFFFEF4             b 0x821667f0
+LAB_82166900:
+  82166900  3D208207             lis r9,-0x7df9
+  82166904  38890DF0             addi r4,r9,0xdf0
+  82166908  4BFFFFE0             b 0x821668e8
+
+; 82166910  FUN_82166910  (client/cl_cin.cpp:95)
+  82166910  3D2082FF             lis r9,-0x7d01
+  82166914  3D008270             lis r8,-0x7d90
+  82166918  3969BE50             subi r11,r9,0x41b0
+  8216691C  3948BF50             subi r10,r8,0x40b0
+  82166920  38EB0004             addi r7,r11,0x4
+  82166924  8169BE50             lwz r11,-0x41b0(r9)
+  82166928  38CA005C             addi r6,r10,0x5c
+  8216692C  5565103A             rlwinm r5,r11,0x2,0x0,0x1d
+  82166930  7C85382E             lwzx r4,r5,r7
+  82166934  1C6401E4             mulli r3,r4,0x1e4
+  82166938  7D63302E             lwzx r11,r3,r6
+  8216693C  2F0B000A             cmpwi cr6,r11,0xa
+  82166940  4D9A0020             beqlr cr6
+  82166944  4BFFFF64             b 0x821668a8
+
 ; 82166BC0  FUN_82166bc0  (client/cl_cin.cpp:143)
   82166BC0  7D8802A6             mfspr r12,LR
   82166BC4  9181FFF8             stw r12,-0x8(r1)

@@ -862,6 +862,10 @@ LAB_823c2180:
   823C219C  EBE1FFF0             ld r31,-0x10(r1)
   823C21A0  4E800020             blr
 
+; 823C1668  FUN_823c1668  (DW/dwStats.cpp:480)
+  823C1668  38600020             li r3,0x20
+  823C166C  4E800020             blr
+
 ; 823C21A8  FUN_823c21a8  (DW/dwStats.cpp:486)
   823C21A8  7D8802A6             mfspr r12,LR
   823C21AC  4818630D             bl 0x825484b8

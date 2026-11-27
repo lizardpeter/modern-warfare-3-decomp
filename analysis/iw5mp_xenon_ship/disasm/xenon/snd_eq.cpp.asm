@@ -246,6 +246,34 @@ LAB_8234f668:
   8234F6B4  CBE1FFD0             lfd f31,-0x30(r1)
   8234F6B8  481F8E50             b 0x82548508
 
+; 8234EB18  FUN_8234eb18  (xenon/snd_eq.cpp:154)
+  8234EB18  81630004             lwz r11,0x4(r3)
+  8234EB1C  7C6A1B78             or r10,r3,r3
+  8234EB20  386B0001             addi r3,r11,0x1
+  8234EB24  906A0004             stw r3,0x4(r10)
+  8234EB28  4E800020             blr
+
+; 8234EB30  FUN_8234eb30  (xenon/snd_eq.cpp:160)
+  8234EB30  81630004             lwz r11,0x4(r3)
+  8234EB34  7C6A1B78             or r10,r3,r3
+  8234EB38  386BFFFF             subi r3,r11,0x1
+  8234EB3C  906A0004             stw r3,0x4(r10)
+  8234EB40  4E800020             blr
+
+; 8234EB48  FUN_8234eb48  (xenon/snd_eq.cpp:174)
+  8234EB48  39600000             li r11,0x0
+  8234EB4C  38600000             li r3,0x0
+  8234EB50  91640000             stw r11,0x0(r4)
+  8234EB54  4E800020             blr
+
+; 8234EB58  FUN_8234eb58  (xenon/snd_eq.cpp:182)
+  8234EB58  39600001             li r11,0x1
+  8234EB5C  39400000             li r10,0x0
+  8234EB60  99640000             stb r11,0x0(r4)
+  8234EB64  38600000             li r3,0x0
+  8234EB68  B1440002             sth r10,0x2(r4)
+  8234EB6C  4E800020             blr
+
 ; 8234EB70  FUN_8234eb70  (xenon/snd_eq.cpp:191)
   8234EB70  7D8802A6             mfspr r12,LR
   8234EB74  481F9941             bl 0x825484b4
@@ -785,6 +813,44 @@ LAB_8234f128:
   8234F61C  91430004             stw r10,0x4(r3)
   8234F620  91230000             stw r9,0x0(r3)
   8234F624  4E800020             blr
+
+; 8234F138  FUN_8234f138  (xenon/snd_eq.cpp:488)
+  8234F138  81630004             lwz r11,0x4(r3)
+  8234F13C  7C6A1B78             or r10,r3,r3
+  8234F140  386B0001             addi r3,r11,0x1
+  8234F144  906A0004             stw r3,0x4(r10)
+  8234F148  4E800020             blr
+
+; 8234F150  FUN_8234f150  (xenon/snd_eq.cpp:495)
+  8234F150  81630004             lwz r11,0x4(r3)
+  8234F154  7C6A1B78             or r10,r3,r3
+  8234F158  386BFFFF             subi r3,r11,0x1
+  8234F15C  906A0004             stw r3,0x4(r10)
+  8234F160  4E800020             blr
+
+; 8234F168  FUN_8234f168  (xenon/snd_eq.cpp:504)
+  8234F168  39600002             li r11,0x2
+  8234F16C  39400000             li r10,0x0
+  8234F170  99640000             stb r11,0x0(r4)
+  8234F174  38600000             li r3,0x0
+  8234F178  B1440002             sth r10,0x2(r4)
+  8234F17C  4E800020             blr
+
+; 8234F180  FUN_8234f180  (xenon/snd_eq.cpp:513)
+  8234F180  3C608000             lis r3,-0x8000
+  8234F184  60634005             ori r3,r3,0x4005
+  8234F188  4E800020             blr
+
+; 8234F190  FUN_8234f190  (xenon/snd_eq.cpp:519)
+  8234F190  3C608000             lis r3,-0x8000
+  8234F194  60634005             ori r3,r3,0x4005
+  8234F198  4E800020             blr
+
+; 8234F1A0  FUN_8234f1a0  (xenon/snd_eq.cpp:525)
+  8234F1A0  39600000             li r11,0x0
+  8234F1A4  38600000             li r3,0x0
+  8234F1A8  91640000             stw r11,0x0(r4)
+  8234F1AC  4E800020             blr
 
 ; 8234F1B0  FUN_8234f1b0  (xenon/snd_eq.cpp:533)
   8234F1B0  7D8802A6             mfspr r12,LR

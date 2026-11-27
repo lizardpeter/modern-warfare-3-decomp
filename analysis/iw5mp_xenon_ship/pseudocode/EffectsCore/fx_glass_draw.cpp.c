@@ -1195,6 +1195,15 @@ void FUN_822103c8(int param_1,longlong param_2,int param_3)
 }
 
 
+// 8220F710  FUN_8220f710  (EffectsCore/fx_glass_draw.cpp:1145)
+
+bool FUN_8220f710(int param_1,int param_2)
+
+{
+  return *(float *)(param_2 + 4) < *(float *)(param_1 + 4);
+}
+
+
 // 82210948  FUN_82210948  (EffectsCore/fx_glass_draw.cpp:1151)
 
 /* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */

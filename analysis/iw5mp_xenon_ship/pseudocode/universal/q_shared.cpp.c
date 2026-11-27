@@ -299,6 +299,134 @@ void FUN_8232dcf8(void)
 }
 
 
+// 8232DD38  FUN_8232dd38  (universal/q_shared.cpp:456)
+
+int FUN_8232dd38(uint param_1)
+
+{
+  return (param_1 & 0xff) * 0x100 + ((int)(short)param_1 >> 8 & 0xffU);
+}
+
+
+// 8232DD50  FUN_8232dd50  (universal/q_shared.cpp:467)
+
+void FUN_8232dd50(void)
+
+{
+  return;
+}
+
+
+// 8232DD58  FUN_8232dd58  (universal/q_shared.cpp:472)
+
+longlong FUN_8232dd58(ulonglong param_1)
+
+{
+  return (param_1 & 0xff) * 0x100 + ((param_1 & 0xffffffff) >> 8 & 0xff);
+}
+
+
+// 8232DD68  FUN_8232dd68  (universal/q_shared.cpp:483)
+
+void FUN_8232dd68(void)
+
+{
+  return;
+}
+
+
+// 8232DD70  FUN_8232dd70  (universal/q_shared.cpp:489)
+
+int FUN_8232dd70(uint param_1)
+
+{
+  return (((param_1 & 0xff) * 0x100 + ((int)param_1 >> 8 & 0xffU)) * 0x100 +
+         ((int)param_1 >> 0x10 & 0xffU)) * 0x100 + ((int)param_1 >> 0x18 & 0xffU);
+}
+
+
+// 8232DDA8  FUN_8232dda8  (universal/q_shared.cpp:502)
+
+void FUN_8232dda8(void)
+
+{
+  return;
+}
+
+
+// 8232DDB0  FUN_8232ddb0  (universal/q_shared.cpp:508)
+
+longlong FUN_8232ddb0(ulonglong param_1)
+
+{
+  return (((((((param_1 & 0xff) * 0x100 + (param_1 >> 8 & 0xff)) * 0x100 + (param_1 >> 0x10 & 0xff))
+             * 0x100 + (param_1 >> 0x18 & 0xff)) * 0x100 + (param_1 >> 0x20 & 0xff)) * 0x100 +
+          (param_1 >> 0x28 & 0xff)) * 0x100 + (param_1 >> 0x30 & 0xff)) * 0x100 + (param_1 >> 0x38);
+}
+
+
+// 8232DE20  FUN_8232de20  (universal/q_shared.cpp:525)
+
+void FUN_8232de20(void)
+
+{
+  return;
+}
+
+
+// 8232DE28  FUN_8232de28  (universal/q_shared.cpp:531)
+
+double FUN_8232de28(undefined4 param_1)
+
+{
+  undefined1 uStack00000014;
+  undefined1 uStack00000015;
+  undefined1 uStack00000016;
+  
+  uStack00000016 = (undefined1)((uint)param_1 >> 8);
+  uStack00000015 = (undefined1)((uint)param_1 >> 0x10);
+  uStack00000014 = (undefined1)((uint)param_1 >> 0x18);
+  return (double)(float)CONCAT31(CONCAT21(CONCAT11((char)param_1,uStack00000016),uStack00000015),
+                                 uStack00000014);
+}
+
+
+// 8232DE58  FUN_8232de58  (universal/q_shared.cpp:549)
+
+double FUN_8232de58(float param_1)
+
+{
+  return (double)param_1;
+}
+
+
+// 8232DE68  FUN_8232de68  (universal/q_shared.cpp:555)
+
+undefined4 FUN_8232de68(double param_1)
+
+{
+  float fVar1;
+  undefined1 local_10;
+  undefined1 uStack_f;
+  undefined1 uStack_e;
+  
+  fVar1 = (float)param_1;
+  uStack_e = (undefined1)((uint)fVar1 >> 8);
+  uStack_f = (undefined1)((uint)fVar1 >> 0x10);
+  local_10 = (undefined1)((uint)fVar1 >> 0x18);
+  return CONCAT31(CONCAT21(CONCAT11(SUB41(fVar1,0),uStack_e),uStack_f),local_10);
+}
+
+
+// 8232DE98  FUN_8232de98  (universal/q_shared.cpp:573)
+
+float FUN_8232de98(double param_1)
+
+{
+  return (float)param_1;
+}
+
+
 // 8232DF68  FUN_8232df68  (universal/q_shared.cpp:616)
 
 /* WARNING: Removing unreachable block (ram,0x8232df8c) */
@@ -306,13 +434,13 @@ void FUN_8232dcf8(void)
 void FUN_8232df68(void)
 
 {
-  DAT_83883c94 = &DAT_8232dd50;
-  DAT_83883c8c = &DAT_8232dd68;
-  DAT_83883c98 = &DAT_8232dda8;
-  DAT_83883c88 = &LAB_8232ddb0;
-  DAT_83883c84 = &DAT_8232de20;
-  DAT_83883c80 = &LAB_8232de28;
-  DAT_83883c90 = &LAB_8232de68;
+  DAT_83883c94 = FUN_8232dd50;
+  DAT_83883c8c = FUN_8232dd68;
+  DAT_83883c98 = FUN_8232dda8;
+  DAT_83883c88 = FUN_8232ddb0;
+  DAT_83883c84 = FUN_8232de20;
+  DAT_83883c80 = FUN_8232de28;
+  DAT_83883c90 = FUN_8232de68;
   return;
 }
 
@@ -1405,6 +1533,18 @@ void FUN_8232f3f0(int param_1,int param_2,undefined8 param_3,undefined1 *param_4
     *(undefined4 *)(*(int *)(param_2 + 4) + param_1) = uVar3;
   }
   return;
+}
+
+
+// 8232F6C0  FUN_8232f6c0  (universal/q_shared.cpp:1773)
+
+ulonglong FUN_8232f6c0(int param_1,int param_2)
+
+{
+  if (*(uint *)(param_1 + 0xc) < *(uint *)(param_2 + 0xc)) {
+    return 0xffffffffffffffff;
+  }
+  return -(ulonglong)(*(uint *)(param_2 + 0xc) < *(uint *)(param_1 + 0xc)) & 1;
 }
 
 

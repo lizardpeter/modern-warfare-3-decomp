@@ -178,6 +178,15 @@ void FUN_8229fba0(int *param_1)
 }
 
 
+// 8229FC80  FUN_8229fc80  (qcommon/huffman.cpp:222)
+
+longlong FUN_8229fc80(int *param_1,int *param_2)
+
+{
+  return (ulonglong)*(uint *)(*param_1 + 0xc) - (ulonglong)*(uint *)(*param_2 + 0xc);
+}
+
+
 // 8229FC98  FUN_8229fc98  (qcommon/huffman.cpp:227)
 
 /* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */

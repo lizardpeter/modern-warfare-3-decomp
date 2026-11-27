@@ -1386,3 +1386,13 @@ void FUN_8245fd78(longlong param_1)
   return;
 }
 
+
+// 8256F9D8  FUN_8256f9d8  (line unknown)
+
+void FUN_8256f9d8(void)
+
+{
+  FUN_8245fd78(0xffffffff83ebc0b0);
+  return;
+}
+

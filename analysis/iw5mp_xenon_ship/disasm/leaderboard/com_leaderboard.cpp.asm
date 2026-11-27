@@ -786,6 +786,30 @@ LAB_823adf48:
   823ADF48  38210180             addi r1,r1,0x180
   823ADF4C  4819A584             b 0x825484d0
 
+; 823ADF60  FUN_823adf60  (leaderboard/com_leaderboard.cpp:608)
+  823ADF60  E9430020             ld r10,0x20(r3)
+  823ADF64  E9640020             ld r11,0x20(r4)
+  823ADF68  2B2A0000             cmpldi cr6,r10,0x0
+  823ADF6C  409A0014             bne cr6,0x823adf80
+  823ADF70  2B2B0000             cmpldi cr6,r11,0x0
+  823ADF74  409A0028             bne cr6,0x823adf9c
+LAB_823adf78:
+  823ADF78  38600000             li r3,0x0
+  823ADF7C  4E800020             blr
+LAB_823adf80:
+  823ADF80  2B2B0000             cmpldi cr6,r11,0x0
+  823ADF84  409A000C             bne cr6,0x823adf90
+LAB_823adf88:
+  823ADF88  3860FFFF             li r3,-0x1
+  823ADF8C  4E800020             blr
+LAB_823adf90:
+  823ADF90  7F2A5840             cmpld cr6,r10,r11
+  823ADF94  4198FFF4             blt cr6,0x823adf88
+  823ADF98  4099FFE0             ble cr6,0x823adf78
+LAB_823adf9c:
+  823ADF9C  38600001             li r3,0x1
+  823ADFA0  4E800020             blr
+
 ; 823AED58  FUN_823aed58  (leaderboard/com_leaderboard.cpp:642)
   823AED58  7D8802A6             mfspr r12,LR
   823AED5C  48199761             bl 0x825484bc
@@ -2927,6 +2951,52 @@ LAB_823ae7c4:
   823AE874  8181FFF8             lwz r12,-0x8(r1)
   823AE878  7D8803A6             mtspr LR,r12
   823AE87C  4E800020             blr
+
+; 823AE880  FUN_823ae880  (leaderboard/com_leaderboard.cpp:2162)
+  823AE880  3D600000             lis r11,0x0
+  823AE884  81430004             lwz r10,0x4(r3)
+  823AE888  6169FFFE             ori r9,r11,0xfffe
+  823AE88C  7D0A4850             subf r8,r10,r9
+  823AE890  20E80000             subfic r7,r8,0x0
+  823AE894  7CA63110             subfe r5,r6,r6
+  823AE898  7CAB5038             and r11,r5,r10
+  823AE89C  396B001C             addi r11,r11,0x1c
+  823AE8A0  556A103A             rlwinm r10,r11,0x2,0x0,0x1d
+  823AE8A4  7C8A202E             lwzx r4,r10,r4
+  823AE8A8  480034A8             b 0x823b1d50
+
+; 823AE8B0  FUN_823ae8b0  (leaderboard/com_leaderboard.cpp:2174)
+  823AE8B0  3D6083B5             lis r11,-0x7c4b
+  823AE8B4  7CA62B78             or r6,r5,r5
+  823AE8B8  394BC0B8             subi r10,r11,0x3f48
+  823AE8BC  816A500C             lwz r11,0x500c(r10)
+  823AE8C0  814B0010             lwz r10,0x10(r11)
+  823AE8C4  2F0A0000             cmpwi cr6,r10,0x0
+  823AE8C8  41980054             blt cr6,0x823ae91c
+  823AE8CC  812B000C             lwz r9,0xc(r11)
+  823AE8D0  2F090000             cmpwi cr6,r9,0x0
+  823AE8D4  41980048             blt cr6,0x823ae91c
+  823AE8D8  3D600000             lis r11,0x0
+  823AE8DC  616BFFFE             ori r11,r11,0xfffe
+  823AE8E0  7D0A5850             subf r8,r10,r11
+  823AE8E4  7CE95850             subf r7,r9,r11
+  823AE8E8  20A80000             subfic r5,r8,0x0
+  823AE8EC  7D0B5910             subfe r8,r11,r11
+  823AE8F0  20E70000             subfic r7,r7,0x0
+  823AE8F4  7D0B5038             and r11,r8,r10
+  823AE8F8  7D452910             subfe r10,r5,r5
+  823AE8FC  390B001C             addi r8,r11,0x1c
+  823AE900  7D4B4838             and r11,r10,r9
+  823AE904  5507103A             rlwinm r7,r8,0x2,0x0,0x1d
+  823AE908  38AB001C             addi r5,r11,0x1c
+  823AE90C  54AB103A             rlwinm r11,r5,0x2,0x0,0x1d
+  823AE910  7CA7202E             lwzx r5,r7,r4
+  823AE914  7C8B202E             lwzx r4,r11,r4
+  823AE918  48003490             b 0x823b1da8
+LAB_823ae91c:
+  823AE91C  3D608207             lis r11,-0x7df9
+  823AE920  386B0DF0             addi r3,r11,0xdf0
+  823AE924  4E800020             blr
 
 ; 823AE928  FUN_823ae928  (leaderboard/com_leaderboard.cpp:2193)
   823AE928  7D8802A6             mfspr r12,LR

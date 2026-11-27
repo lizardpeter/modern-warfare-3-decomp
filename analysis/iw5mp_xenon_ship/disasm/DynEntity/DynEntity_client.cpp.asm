@@ -2466,6 +2466,17 @@ LAB_821fa4cc:
   821FA4D4  CBE1FFC0             lfd f31,-0x40(r1)
   821FA4D8  4834E028             b 0x82548500
 
+; 821FA4E0  FUN_821fa4e0  (DynEntity/DynEntity_client.cpp:1510)
+  821FA4E0  C0030000             lfs f0,0x0(r3)
+  821FA4E4  39600001             li r11,0x1
+  821FA4E8  C1A40000             lfs f13,0x0(r4)
+  821FA4EC  FF006800             fcmpu cr6,f0,f13
+  821FA4F0  41980008             blt cr6,0x821fa4f8
+  821FA4F4  39600000             li r11,0x0
+LAB_821fa4f8:
+  821FA4F8  5563063E             rlwinm r3,r11,0x0,0x18,0x1f
+  821FA4FC  4E800020             blr
+
 ; 821FA500  FUN_821fa500  (DynEntity/DynEntity_client.cpp:1519)
   821FA500  7D8802A6             mfspr r12,LR
   821FA504  4834DF9D             bl 0x825484a0

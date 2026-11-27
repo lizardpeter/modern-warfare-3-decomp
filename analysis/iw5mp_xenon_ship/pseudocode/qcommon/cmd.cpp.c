@@ -171,6 +171,15 @@ void FUN_82283cd0(int param_1,char *param_2)
 }
 
 
+// 82283DA0  FUN_82283da0  (qcommon/cmd.cpp:360)
+
+void FUN_82283da0(void)
+
+{
+  return;
+}
+
+
 // 82284950  FUN_82284950  (qcommon/cmd.cpp:373)
 
 /* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
@@ -1147,7 +1156,7 @@ LAB_82284dc4:
       return;
     }
   }
-  else if (pcVar3 == (code *)&DAT_82283da0) {
+  else if (pcVar3 == FUN_82283da0) {
     FUN_822cb1f0();
     FUN_8229d070();
     FUN_82284950(param_3);

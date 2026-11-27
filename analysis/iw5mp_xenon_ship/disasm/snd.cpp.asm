@@ -3139,6 +3139,118 @@ LAB_824d0ef8:
   824D0F3C  48077719             bl 0x82548654
   824D0F40  480775B0             b 0x825484f0
 
+; 824D0FE0  FUN_824d0fe0  (snd.cpp:2872)
+  824D0FE0  C0030060             lfs f0,0x60(r3)
+  824D0FE4  7CAB2B78             or r11,r5,r5
+  824D0FE8  2F050001             cmpwi cr6,r5,0x1
+  824D0FEC  40980008             bge cr6,0x824d0ff4
+  824D0FF0  39600001             li r11,0x1
+LAB_824d0ff4:
+  824D0FF4  ED800072             fmuls f12,f0,f1
+  824D0FF8  3D408200             lis r10,-0x7e00
+  824D0FFC  3D208200             lis r9,-0x7e00
+  824D1000  C1630064             lfs f11,0x64(r3)
+  824D1004  7D6807B4             extsw r8,r11
+  824D1008  F901FFF0             std r8,-0x10(r1)
+  824D100C  C941FFF0             lfd f10,-0x10(r1)
+  824D1010  C00A1B7C             lfs f0,0x1b7c(r10)
+  824D1014  FD20569C             fcfid f9,f10
+  824D1018  ED0C0028             fsubs f8,f12,f0
+  824D101C  C1A90CAC             lfs f13,0xcac(r9)
+  824D1020  ECED6028             fsubs f7,f13,f12
+  824D1024  FCC04818             frsp f6,f9
+  824D1028  FCA8602E             fsel f5,f8,f0,f12
+  824D102C  FC872B6E             fsel f4,f7,f13,f5
+  824D1030  D0830068             stfs f4,0x68(r3)
+  824D1034  EC645828             fsubs f3,f4,f11
+  824D1038  EC433024             fdivs f2,f3,f6
+  824D103C  D043006C             stfs f2,0x6c(r3)
+  824D1040  4E800020             blr
+
+; 824D1048  FUN_824d1048  (snd.cpp:2878)
+  824D1048  2F050001             cmpwi cr6,r5,0x1
+  824D104C  40980008             bge cr6,0x824d1054
+  824D1050  38A00001             li r5,0x1
+LAB_824d1054:
+  824D1054  3D608200             lis r11,-0x7e00
+  824D1058  C1830064             lfs f12,0x64(r3)
+  824D105C  3D408200             lis r10,-0x7e00
+  824D1060  7CA907B4             extsw r9,r5
+  824D1064  F921FFF0             std r9,-0x10(r1)
+  824D1068  C961FFF0             lfd f11,-0x10(r1)
+  824D106C  C00B1B7C             lfs f0,0x1b7c(r11)
+  824D1070  FD405E9C             fcfid f10,f11
+  824D1074  ED210028             fsubs f9,f1,f0
+  824D1078  C1AA0CAC             lfs f13,0xcac(r10)
+  824D107C  ED0D0828             fsubs f8,f13,f1
+  824D1080  FCE05018             frsp f7,f10
+  824D1084  FCC9082E             fsel f6,f9,f0,f1
+  824D1088  FCA8336E             fsel f5,f8,f13,f6
+  824D108C  D0A30068             stfs f5,0x68(r3)
+  824D1090  EC856028             fsubs f4,f5,f12
+  824D1094  EC643824             fdivs f3,f4,f7
+  824D1098  D063006C             stfs f3,0x6c(r3)
+  824D109C  4E800020             blr
+
+; 824D10A0  FUN_824d10a0  (snd.cpp:2884)
+  824D10A0  3D408200             lis r10,-0x7e00
+  824D10A4  FD600850             fneg f11,f1
+  824D10A8  3D208205             lis r9,-0x7dfb
+  824D10AC  C1830048             lfs f12,0x48(r3)
+  824D10B0  7CAB2B78             or r11,r5,r5
+  824D10B4  2F050001             cmpwi cr6,r5,0x1
+  824D10B8  C00A1B6C             lfs f0,0x1b6c(r10)
+  824D10BC  ED410028             fsubs f10,f1,f0
+  824D10C0  C1A980F0             lfs f13,-0x7f10(r9)
+  824D10C4  FD2A082E             fsel f9,f10,f0,f1
+  824D10C8  FC0B4B6E             fsel f0,f11,f13,f9
+  824D10CC  40980008             bge cr6,0x824d10d4
+  824D10D0  39600001             li r11,0x1
+LAB_824d10d4:
+  824D10D4  ED8C0032             fmuls f12,f12,f0
+  824D10D8  3D408205             lis r10,-0x7dfb
+  824D10DC  7D6907B4             extsw r9,r11
+  824D10E0  C1630054             lfs f11,0x54(r3)
+  824D10E4  F921FFF0             std r9,-0x10(r1)
+  824D10E8  C941FFF0             lfd f10,-0x10(r1)
+  824D10EC  FD20569C             fcfid f9,f10
+  824D10F0  C00A8128             lfs f0,-0x7ed8(r10)
+  824D10F4  FD006050             fneg f8,f12
+  824D10F8  ECEC0028             fsubs f7,f12,f0
+  824D10FC  FCC04818             frsp f6,f9
+  824D1100  FCA7602E             fsel f5,f7,f0,f12
+  824D1104  FC882B6E             fsel f4,f8,f13,f5
+  824D1108  D0830058             stfs f4,0x58(r3)
+  824D110C  EC645828             fsubs f3,f4,f11
+  824D1110  EC433024             fdivs f2,f3,f6
+  824D1114  D043005C             stfs f2,0x5c(r3)
+  824D1118  4E800020             blr
+
+; 824D1120  FUN_824d1120  (snd.cpp:2895)
+  824D1120  2F050001             cmpwi cr6,r5,0x1
+  824D1124  40980008             bge cr6,0x824d112c
+  824D1128  38A00001             li r5,0x1
+LAB_824d112c:
+  824D112C  3D608205             lis r11,-0x7dfb
+  824D1130  FD800850             fneg f12,f1
+  824D1134  3D408205             lis r10,-0x7dfb
+  824D1138  C1630054             lfs f11,0x54(r3)
+  824D113C  7CA907B4             extsw r9,r5
+  824D1140  F921FFF0             std r9,-0x10(r1)
+  824D1144  C941FFF0             lfd f10,-0x10(r1)
+  824D1148  C00B8128             lfs f0,-0x7ed8(r11)
+  824D114C  FD20569C             fcfid f9,f10
+  824D1150  ED010028             fsubs f8,f1,f0
+  824D1154  C1AA80F0             lfs f13,-0x7f10(r10)
+  824D1158  FCE04818             frsp f7,f9
+  824D115C  FCC8082E             fsel f6,f8,f0,f1
+  824D1160  FCAC336E             fsel f5,f12,f13,f6
+  824D1164  D0A30058             stfs f5,0x58(r3)
+  824D1168  EC855828             fsubs f4,f5,f11
+  824D116C  EC643824             fdivs f3,f4,f7
+  824D1170  D063005C             stfs f3,0x5c(r3)
+  824D1174  4E800020             blr
+
 ; 824D1178  FUN_824d1178  (snd.cpp:2905)
   824D1178  7D8802A6             mfspr r12,LR
   824D117C  48077339             bl 0x825484b4

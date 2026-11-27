@@ -398,3 +398,18 @@ bool FUN_82382e78(float *param_1,float *param_2,float *param_3,float *param_4,fl
   return false;
 }
 
+
+// 82382958  FUN_82382958  (physics/ode/src/collision_util.cpp:325)
+
+void FUN_82382958(undefined8 param_1,undefined4 *param_2)
+
+{
+  *param_2 = 0xff7fffff;
+  param_2[1] = 0x7f7fffff;
+  param_2[2] = 0xff7fffff;
+  param_2[3] = 0x7f7fffff;
+  param_2[4] = 0xff7fffff;
+  param_2[5] = 0x7f7fffff;
+  return;
+}
+

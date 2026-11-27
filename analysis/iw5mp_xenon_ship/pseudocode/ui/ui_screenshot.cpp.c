@@ -20,6 +20,19 @@ longlong FUN_822f62a8(uint param_1,uint param_2,int param_3,undefined8 param_4,i
 }
 
 
+// 822F6358  FUN_822f6358  (ui/ui_screenshot.cpp:161)
+
+void FUN_822f6358(undefined1 *param_1,undefined1 param_2,undefined1 param_3,undefined1 param_4)
+
+{
+  param_1[1] = param_2;
+  param_1[2] = param_3;
+  *param_1 = 0xff;
+  param_1[3] = param_4;
+  return;
+}
+
+
 // 822F6370  FUN_822f6370  (ui/ui_screenshot.cpp:177)
 
 longlong FUN_822f6370(ushort param_1,ushort param_2,int param_3,int param_4)
@@ -475,6 +488,29 @@ void FUN_822f6aa8(undefined8 param_1,undefined8 param_2,float *param_3,undefined
 }
 
 
+// 822F6D70  FUN_822f6d70  (ui/ui_screenshot.cpp:698)
+
+void FUN_822f6d70(void)
+
+{
+  DAT_8373edc8 = 2;
+  return;
+}
+
+
+// 822F6D80  FUN_822f6d80  (ui/ui_screenshot.cpp:710)
+
+void FUN_822f6d80(void)
+
+{
+  if (DAT_8373edc8 == 0) {
+    return;
+  }
+  DAT_8373edc8 = 4;
+  return;
+}
+
+
 // 822F6DA0  FUN_822f6da0  (ui/ui_screenshot.cpp:724)
 
 /* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
@@ -493,8 +529,8 @@ void FUN_822f6da0(undefined8 param_1,undefined8 param_2,uint param_3)
   undefined4 local_44;
   undefined4 local_40;
   undefined1 local_38;
-  undefined1 *local_2c;
-  undefined1 *local_28;
+  code *local_2c;
+  code *local_28;
   
   puVar3 = &uStack_58;
   lVar4 = 6;
@@ -513,9 +549,9 @@ void FUN_822f6da0(undefined8 param_1,undefined8 param_2,uint param_3)
     DAT_8373edc8 = 1;
     if ((param_3 != 0) && (param_3 < 0x100000)) {
       local_40 = 0x100000;
-      local_2c = &LAB_822f6d70;
+      local_2c = FUN_822f6d70;
       local_38 = 0;
-      local_28 = &LAB_822f6d80;
+      local_28 = FUN_822f6d80;
       DAT_8373ede0 = DAT_8373f014;
       local_44 = DAT_8373f014;
       DAT_8373edd0 = param_3;
@@ -526,6 +562,29 @@ void FUN_822f6da0(undefined8 param_1,undefined8 param_2,uint param_3)
     }
     DAT_8373edc8 = 4;
   }
+  return;
+}
+
+
+// 822F6E88  FUN_822f6e88  (ui/ui_screenshot.cpp:774)
+
+void FUN_822f6e88(void)
+
+{
+  DAT_8373ede4 = 2;
+  return;
+}
+
+
+// 822F6EA0  FUN_822f6ea0  (ui/ui_screenshot.cpp:784)
+
+void FUN_822f6ea0(void)
+
+{
+  if (DAT_8373ede4 == 0) {
+    return;
+  }
+  DAT_8373ede4 = 4;
   return;
 }
 

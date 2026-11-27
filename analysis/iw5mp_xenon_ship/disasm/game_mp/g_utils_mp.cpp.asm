@@ -2578,6 +2578,49 @@ LAB_8226c3d8:
   8226B568  D123014C             stfs f9,0x14c(r3)
   8226B56C  4E800020             blr
 
+; 8226B570  FUN_8226b570  (game_mp/g_utils_mp.cpp:1575)
+  8226B570  548B103A             rlwinm r11,r4,0x2,0x0,0x1d
+  8226B574  3D4082DB             lis r10,-0x7d25
+  8226B578  7D245A14             add r9,r4,r11
+  8226B57C  394A6B80             addi r10,r10,0x6b80
+  8226B580  552B3830             rlwinm r11,r9,0x7,0x0,0x18
+  8226B584  394A0138             addi r10,r10,0x138
+  8226B588  38600001             li r3,0x1
+  8226B58C  7D6B5214             add r11,r11,r10
+  8226B590  C00B0000             lfs f0,0x0(r11)
+  8226B594  D0050000             stfs f0,0x0(r5)
+  8226B598  C1AB0004             lfs f13,0x4(r11)
+  8226B59C  D1A50004             stfs f13,0x4(r5)
+  8226B5A0  C18B0008             lfs f12,0x8(r11)
+  8226B5A4  D1850008             stfs f12,0x8(r5)
+  8226B5A8  4E800020             blr
+
+; 8226B5B0  FUN_8226b5b0  (game_mp/g_utils_mp.cpp:1587)
+  8226B5B0  548B103A             rlwinm r11,r4,0x2,0x0,0x1d
+  8226B5B4  3D4082DB             lis r10,-0x7d25
+  8226B5B8  7D245A14             add r9,r4,r11
+  8226B5BC  394A6B80             addi r10,r10,0x6b80
+  8226B5C0  552B3830             rlwinm r11,r9,0x7,0x0,0x18
+  8226B5C4  394A0024             addi r10,r10,0x24
+  8226B5C8  38600001             li r3,0x1
+  8226B5CC  7D6B5214             add r11,r11,r10
+  8226B5D0  C00B0000             lfs f0,0x0(r11)
+  8226B5D4  D0050000             stfs f0,0x0(r5)
+  8226B5D8  C1AB0004             lfs f13,0x4(r11)
+  8226B5DC  D1A50004             stfs f13,0x4(r5)
+  8226B5E0  C18B0008             lfs f12,0x8(r11)
+  8226B5E4  D1850008             stfs f12,0x8(r5)
+  8226B5E8  4E800020             blr
+
+; 8226B5F0  FUN_8226b5f0  (game_mp/g_utils_mp.cpp:1599)
+  8226B5F0  548B103A             rlwinm r11,r4,0x2,0x0,0x1d
+  8226B5F4  3D4082DB             lis r10,-0x7d25
+  8226B5F8  7D245A14             add r9,r4,r11
+  8226B5FC  394A6B80             addi r10,r10,0x6b80
+  8226B600  552B3830             rlwinm r11,r9,0x7,0x0,0x18
+  8226B604  7C6B5214             add r3,r11,r10
+  8226B608  4E800020             blr
+
 ; 8226B610  FUN_8226b610  (game_mp/g_utils_mp.cpp:1606)
   8226B610  7D8802A6             mfspr r12,LR
   8226B614  9181FFF8             stw r12,-0x8(r1)

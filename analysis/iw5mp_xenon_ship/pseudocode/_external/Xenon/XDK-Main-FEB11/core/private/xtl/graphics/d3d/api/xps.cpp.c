@@ -941,6 +941,18 @@ undefined8 FUN_820b9800(uint *param_1)
 }
 
 
+// 820B9998  FUN_820b9998  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/xps.cpp:1848)
+
+void FUN_820b9998(undefined8 param_1,int param_2,undefined4 param_3)
+
+{
+  *(undefined4 *)(((*(uint *)(param_2 + 0x54) & 3) + 0x17) * 4 + param_2) = param_3;
+  *(int *)(param_2 + 0x54) = *(int *)(param_2 + 0x54) + 1;
+  FUN_82570044(param_2 + 0x3c,1,0);
+  return;
+}
+
+
 // 820B99D0  FUN_820b99d0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/xps.cpp:2121)
 
 /* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */

@@ -14,6 +14,17 @@ undefined4 * FUN_82545838(undefined4 *param_1)
 }
 
 
+// 82545820  FUN_82545820  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdprecopyresult.cpp:18)
+
+void FUN_82545820(undefined4 *param_1)
+
+{
+  *param_1 = &PTR_FUN_82069970;
+  FUN_82531430();
+  return;
+}
+
+
 // 825458E8  FUN_825458e8  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdprecopyresult.cpp:22)
 
 /* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
@@ -71,6 +82,15 @@ LAB_8254599c:
 LAB_825459c4:
   FUN_82186890(param_2);
   return uVar5;
+}
+
+
+// 82545830  FUN_82545830  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdprecopyresult.cpp:31)
+
+undefined8 FUN_82545830(void)
+
+{
+  return 0x18c;
 }
 
 

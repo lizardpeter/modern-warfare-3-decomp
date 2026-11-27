@@ -57,6 +57,9 @@ LAB_824dd970:
   824DD980  EBE1FFF0             ld r31,-0x10(r1)
   824DD984  4E800020             blr
 
+; 824DEC50  thunk_FUN_824de430  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/pathmisc.c:434)
+  824DEC50  4BFFF7E0             b 0x824de430
+
 ; 824DE430  FUN_824de430  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/pathmisc.c:444)
   824DE430  7D8802A6             mfspr r12,LR
   824DE434  4806A089             bl 0x825484bc

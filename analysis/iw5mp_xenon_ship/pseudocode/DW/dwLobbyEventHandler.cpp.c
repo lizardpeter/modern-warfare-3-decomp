@@ -168,6 +168,104 @@ void FUN_823bdd40(undefined8 param_1,undefined8 param_2,uint *param_3)
 }
 
 
+// 823BDB88  FUN_823bdb88  (DW/dwlobbyeventhandler.h:50)
+
+void FUN_823bdb88(void)
+
+{
+  FUN_823befd8(0);
+  return;
+}
+
+
+// 823BDBA8  FUN_823bdba8  (DW/dwlobbyeventhandler.h:50)
+
+void FUN_823bdba8(void)
+
+{
+  FUN_823befd8(1);
+  return;
+}
+
+
+// 823BDBC0  FUN_823bdbc0  (DW/dwlobbyeventhandler.h:50)
+
+void FUN_823bdbc0(void)
+
+{
+  FUN_823befd8(2);
+  return;
+}
+
+
+// 823BDBD8  FUN_823bdbd8  (DW/dwlobbyeventhandler.h:50)
+
+void FUN_823bdbd8(void)
+
+{
+  FUN_823befd8(3);
+  return;
+}
+
+
+// 823BDB90  FUN_823bdb90  (DW/dwlobbyeventhandler.h:57)
+
+void FUN_823bdb90(undefined8 param_1,undefined8 param_2)
+
+{
+  FUN_823d90c8(param_2);
+  return;
+}
+
+
+// 823BDB98  FUN_823bdb98  (DW/dwlobbyeventhandler.h:64)
+
+void FUN_823bdb98(void)
+
+{
+  undefined8 in_r6;
+  
+  FUN_823d1770(0,in_r6);
+  return;
+}
+
+
+// 823BDBB0  FUN_823bdbb0  (DW/dwlobbyeventhandler.h:64)
+
+void FUN_823bdbb0(void)
+
+{
+  undefined8 in_r6;
+  
+  FUN_823d1770(1,in_r6);
+  return;
+}
+
+
+// 823BDBC8  FUN_823bdbc8  (DW/dwlobbyeventhandler.h:64)
+
+void FUN_823bdbc8(void)
+
+{
+  undefined8 in_r6;
+  
+  FUN_823d1770(2,in_r6);
+  return;
+}
+
+
+// 823BDBE0  FUN_823bdbe0  (DW/dwlobbyeventhandler.h:64)
+
+void FUN_823bdbe0(void)
+
+{
+  undefined8 in_r6;
+  
+  FUN_823d1770(3,in_r6);
+  return;
+}
+
+
 // 823BDB38  FUN_823bdb38  (line unknown)
 
 undefined8 FUN_823bdb38(undefined8 param_1,ulonglong param_2)
@@ -178,5 +276,45 @@ undefined8 FUN_823bdb38(undefined8 param_1,ulonglong param_2)
     FUN_82529e70(param_1);
   }
   return param_1;
+}
+
+
+// 8256ECC0  FUN_8256ecc0  (line unknown)
+
+void FUN_8256ecc0(void)
+
+{
+  FUN_82535738(0xffffffff83b9fa14);
+  return;
+}
+
+
+// 8256ECD0  FUN_8256ecd0  (line unknown)
+
+void FUN_8256ecd0(void)
+
+{
+  FUN_82535738(0xffffffff83b9fa18);
+  return;
+}
+
+
+// 8256ECE0  FUN_8256ece0  (line unknown)
+
+void FUN_8256ece0(void)
+
+{
+  FUN_82535738(0xffffffff83b9fa10);
+  return;
+}
+
+
+// 8256ECF0  FUN_8256ecf0  (line unknown)
+
+void FUN_8256ecf0(void)
+
+{
+  FUN_82535738(0xffffffff83b9fa1c);
+  return;
 }
 

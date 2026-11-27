@@ -4113,6 +4113,22 @@ caseD_15f:
   822E73C0  38600001             li r3,0x1
   822E73C4  4E800020             blr
 
+; 822E73D0  FUN_822e73d0  (ui_mp/ui_main_mp.cpp:2599)
+  822E73D0  3D00836A             lis r8,-0x7c96
+  822E73D4  80E40000             lwz r7,0x0(r4)
+  822E73D8  3D60836B             lis r11,-0x7c95
+  822E73DC  80C30000             lwz r6,0x0(r3)
+  822E73E0  3D400005             lis r10,0x5
+  822E73E4  3D200005             lis r9,0x5
+  822E73E8  388BDD08             subi r4,r11,0x22f8
+  822E73EC  61437834             ori r3,r10,0x7834
+  822E73F0  816851E0             lwz r11,0x51e0(r8)
+  822E73F4  612A7830             ori r10,r9,0x7830
+  822E73F8  7CA4182E             lwzx r5,r4,r3
+  822E73FC  7C84502E             lwzx r4,r4,r10
+  822E7400  806B0008             lwz r3,0x8(r11)
+  822E7404  4BE95CAC             b 0x8217d0b0
+
 ; 822E7460  FUN_822e7460  (ui_mp/ui_main_mp.cpp:2880)
   822E7460  7D8802A6             mfspr r12,LR
   822E7464  9181FFF8             stw r12,-0x8(r1)
@@ -4431,6 +4447,9 @@ LAB_822e7820:
   822E7828  7D8803A6             mtspr LR,r12
   822E782C  EBE1FFF0             ld r31,-0x10(r1)
   822E7830  4E800020             blr
+
+; 822E7838  thunk_FUN_82172760  (ui_mp/ui_main_mp.cpp:3461)
+  822E7838  4BE8AF28             b 0x82172760
 
 ; 822EE7C0  FUN_822ee7c0  (ui_mp/ui_main_mp.cpp:3472)
   822EE7C0  7D8802A6             mfspr r12,LR

@@ -119,6 +119,10 @@ LAB_82544d90:
   82544D9C  383F0080             addi r1,r31,0x80
   82544DA0  4800376C             b 0x8254850c
 
+; 82544BC0  FUN_82544bc0  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdmatchmaking/bdsessioninvite.cpp:45)
+  82544BC0  38600460             li r3,0x460
+  82544BC4  4E800020             blr
+
 ; 82544C40  FUN_82544c40  (line unknown)
   82544C40  7D8802A6             mfspr r12,LR
   82544C44  9181FFF8             stw r12,-0x8(r1)

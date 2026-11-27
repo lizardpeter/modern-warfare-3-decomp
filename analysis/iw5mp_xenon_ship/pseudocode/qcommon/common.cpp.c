@@ -1927,6 +1927,16 @@ void FUN_8229c5b0(void)
 }
 
 
+// 8229C648  FUN_8229c648  (qcommon/common.cpp:6478)
+
+void FUN_8229c648(undefined8 param_1)
+
+{
+  FUN_822ae0c8(param_1,5);
+  return;
+}
+
+
 // 8229C650  FUN_8229c650  (qcommon/common.cpp:6490)
 
 void FUN_8229c650(undefined8 param_1)

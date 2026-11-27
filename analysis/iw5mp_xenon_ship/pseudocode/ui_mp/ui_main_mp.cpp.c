@@ -2022,6 +2022,16 @@ undefined8 FUN_822e73c0(void)
 }
 
 
+// 822E73D0  FUN_822e73d0  (ui_mp/ui_main_mp.cpp:2599)
+
+void FUN_822e73d0(undefined4 *param_1,undefined4 *param_2)
+
+{
+  FUN_8217d0b0(*(undefined4 *)(DAT_836a51e0 + 8),DAT_83705538,DAT_8370553c,*param_1,*param_2);
+  return;
+}
+
+
 // 822E7460  FUN_822e7460  (ui_mp/ui_main_mp.cpp:2880)
 
 undefined8 FUN_822e7460(longlong param_1,int param_2)

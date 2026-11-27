@@ -1450,6 +1450,11 @@ LAB_8237bad4:
   8237BAD8  38210170             addi r1,r1,0x170
   8237BADC  481CCA28             b 0x82548504
 
+; 8237BAE0  FUN_8237bae0  (physics/phys_world_collision.cpp:966)
+  8237BAE0  3D608238             lis r11,-0x7dc8
+  8237BAE4  386BB728             subi r3,r11,0x48d8
+  8237BAE8  4E800020             blr
+
 ; 8237BAF0  FUN_8237baf0  (physics/phys_world_collision.cpp:975)
   8237BAF0  7D8802A6             mfspr r12,LR
   8237BAF4  9181FFF8             stw r12,-0x8(r1)
@@ -1515,6 +1520,19 @@ LAB_8237bad4:
   8237BBDC  7D8803A6             mtspr LR,r12
   8237BBE0  EBE1FFF0             ld r31,-0x10(r1)
   8237BBE4  4E800020             blr
+
+; 8237BBE8  FUN_8237bbe8  (physics/phys_world_collision.cpp:1021)
+  8237BBE8  3D608200             lis r11,-0x7e00
+  8237BBEC  3D408200             lis r10,-0x7e00
+  8237BBF0  C00B65B0             lfs f0,0x65b0(r11)
+  8237BBF4  C1AA1F74             lfs f13,0x1f74(r10)
+  8237BBF8  D0040000             stfs f0,0x0(r4)
+  8237BBFC  D0040004             stfs f0,0x4(r4)
+  8237BC00  D0040008             stfs f0,0x8(r4)
+  8237BC04  D1A4000C             stfs f13,0xc(r4)
+  8237BC08  D1A40010             stfs f13,0x10(r4)
+  8237BC0C  D1A40014             stfs f13,0x14(r4)
+  8237BC10  4E800020             blr
 
 ; 8237BC18  FUN_8237bc18  (physics/phys_world_collision.cpp:1031)
   8237BC18  7D8802A6             mfspr r12,LR
@@ -1721,6 +1739,10 @@ LAB_8237bef8:
   8237BF24  4200FFD4             bdnz 0x8237bef8
   8237BF28  382100B0             addi r1,r1,0xb0
   8237BF2C  481CC5E0             b 0x8254850c
+
+; 8237BF30  FUN_8237bf30  (physics/phys_world_collision.cpp:1128)
+  8237BF30  38600000             li r3,0x0
+  8237BF34  4E800020             blr
 
 ; 8237BF38  FUN_8237bf38  (physics/phys_world_collision.cpp:1134)
   8237BF38  7D8802A6             mfspr r12,LR

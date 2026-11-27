@@ -39,6 +39,12 @@ LAB_82186904:
   82186910  EBE1FFF0             ld r31,-0x10(r1)
   82186914  4E800020             blr
 
+; 821867D8  FUN_821867d8  (DW/leaderboardinfo.h:61)
+  821867D8  3D608201             lis r11,-0x7dff
+  821867DC  394B7960             addi r10,r11,0x7960
+  821867E0  91430000             stw r10,0x0(r3)
+  821867E4  483A6564             b 0x8252cd48
+
 ; 821867E8  FUN_821867e8  (DW/leaderboardinfo.h:64)
   821867E8  7D8802A6             mfspr r12,LR
   821867EC  483C1CD1             bl 0x825484bc
@@ -130,6 +136,10 @@ LAB_82186a68:
   82186A68  7FA3EB78             or r3,r29,r29
   82186A6C  38210080             addi r1,r1,0x80
   82186A70  483C1A98             b 0x82548508
+
+; 82186828  FUN_82186828  (DW/leaderboardinfo.h:84)
+  82186828  38600098             li r3,0x98
+  8218682C  4E800020             blr
 
 ; 8256C170  FUN_8256c170  (client/newsfeed.cpp:140)
   8256C170  7D8802A6             mfspr r12,LR

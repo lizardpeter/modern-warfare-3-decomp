@@ -25,6 +25,16 @@ undefined4 * FUN_825449f8(undefined4 *param_1,longlong param_2)
 }
 
 
+// 82544A50  FUN_82544a50  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdmatchmaking/bdsessionid.cpp:33)
+
+void FUN_82544a50(longlong param_1,undefined8 param_2)
+
+{
+  FUN_8252b010(param_2,param_1 + 4,8);
+  return;
+}
+
+
 // 82544AC0  FUN_82544ac0  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdanticheat/bdconsoleid.cpp:40)
 
 /* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
@@ -41,5 +51,14 @@ undefined8 FUN_82544ac0(longlong param_1,undefined4 *param_2)
   uVar1 = FUN_8252aa80(*param_2,param_1 + 4,local_30);
   FUN_82186890(param_2);
   return uVar1;
+}
+
+
+// 82545CD8  FUN_82545cd8  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdanticheat/bdconsoleid.cpp:46)
+
+undefined8 FUN_82545cd8(void)
+
+{
+  return 0xc;
 }
 

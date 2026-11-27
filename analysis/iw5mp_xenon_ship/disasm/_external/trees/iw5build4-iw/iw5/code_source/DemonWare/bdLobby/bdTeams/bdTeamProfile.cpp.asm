@@ -40,6 +40,10 @@
   8253CC54  383F0070             addi r1,r31,0x70
   8253CC58  4800B8B4             b 0x8254850c
 
+; 82531C58  FUN_82531c58  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdfileid.cpp:35)
+  82531C58  38600010             li r3,0x10
+  82531C5C  4E800020             blr
+
 ; 8253CBC0  FUN_8253cbc0  (line unknown)
   8253CBC0  7D8802A6             mfspr r12,LR
   8253CBC4  9181FFF8             stw r12,-0x8(r1)

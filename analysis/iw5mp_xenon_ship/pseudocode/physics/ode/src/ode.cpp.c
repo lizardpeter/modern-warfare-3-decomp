@@ -6,7 +6,7 @@ void FUN_8256d3b8(void)
 
 {
   FUN_8237cf18(0xffffffff83a7d880,0,0,0);
-  DAT_83a7d880 = &PTR_LAB_8203aaec;
+  DAT_83a7d880 = &PTR_FUN_8203aaec;
   FUN_8254a428(0xffffffff8256ea38);
   return;
 }
@@ -1373,6 +1373,16 @@ void FUN_8238b488(double param_1,int param_2)
 
 {
   *(float *)(param_2 + 0x58) = (float)param_1;
+  return;
+}
+
+
+// 8256EA38  FUN_8256ea38  (line unknown)
+
+void FUN_8256ea38(void)
+
+{
+  DAT_83a7d880 = &PTR_FUN_8203aae0;
   return;
 }
 

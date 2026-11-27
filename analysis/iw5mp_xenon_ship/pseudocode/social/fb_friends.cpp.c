@@ -20,6 +20,20 @@ void FUN_8256dcb0(void)
 }
 
 
+// 8256DD18  FUN_8256dd18  (social/fb_friends.cpp:88)
+
+void FUN_8256dd18(void)
+
+{
+  DAT_83be77a0 = 0;
+  DAT_83be77a4 = 0;
+  DAT_83be77a8 = 0;
+  DAT_83be77ac = 0;
+  FUN_8254a428(0xffffffff8256f240);
+  return;
+}
+
+
 // 823CDF48  FUN_823cdf48  (social/fb_friends.cpp:102)
 
 void FUN_823cdf48(void)

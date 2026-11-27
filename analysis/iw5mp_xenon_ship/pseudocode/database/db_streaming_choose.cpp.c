@@ -13,6 +13,55 @@ longlong FUN_821f5118(ulonglong param_1,int *param_2)
 }
 
 
+// 821F56B0  FUN_821f56b0  (database/db_streaming_choose.cpp:60)
+
+byte FUN_821f56b0(int param_1,int param_2)
+
+{
+  return -(*(uint *)(param_1 * 4 + DAT_82d5e2e0) < *(uint *)(param_2 * 4 + DAT_82d5e2e0)) & 1;
+}
+
+
+// 821F56D8  FUN_821f56d8  (database/db_streaming_choose.cpp:66)
+
+ulonglong FUN_821f56d8(ulonglong param_1,ulonglong param_2)
+
+{
+  if ((ulonglong)*(uint *)(&DAT_83c82600 + (int)((param_1 & 0xffffffff) << 2)) -
+      (ulonglong)*(uint *)(&DAT_83c82600 + (int)((param_2 & 0xffffffff) << 2)) != 0) {
+    return ((ulonglong)*(uint *)(&DAT_83c82600 + (int)((param_1 & 0xffffffff) << 2)) -
+            (ulonglong)*(uint *)(&DAT_83c82600 + (int)((param_2 & 0xffffffff) << 2)) & 0xffffffff)
+           >> 0x1f;
+  }
+  return -(ulonglong)(param_1 < param_2) & 1;
+}
+
+
+// 821F5718  FUN_821f5718  (database/db_streaming_choose.cpp:78)
+
+ulonglong FUN_821f5718(uint param_1,uint param_2)
+
+{
+  int iVar1;
+  int iVar2;
+  ulonglong uVar3;
+  
+  iVar1 = param_1 * 0x40 + (param_1 / 0x10c0) * -0x42ff4;
+  iVar2 = param_2 * 0x40 + (param_2 / 0x10c0) * -0x42ff4;
+  uVar3 = (ulonglong)*(uint *)(&DAT_82d16d08 + iVar1) - (ulonglong)*(uint *)(&DAT_82d16d08 + iVar2);
+  if (uVar3 == 0) {
+    return -(ulonglong)(*(uint *)(&DAT_82d16d00 + iVar1) < *(uint *)(&DAT_82d16d00 + iVar2)) & 1;
+  }
+  if ((ulonglong)*(uint *)(&DAT_82d16d08 + iVar1) == (ulonglong)DAT_82d5e2e4) {
+    return 1;
+  }
+  if ((ulonglong)*(uint *)(&DAT_82d16d08 + iVar2) == (ulonglong)DAT_82d5e2e4) {
+    return 0;
+  }
+  return (uVar3 & 0xffffffff) >> 0x1f;
+}
+
+
 // 821F5150  FUN_821f5150  (database/db_streaming_choose.cpp:107)
 
 /* WARNING: Function: __savegprlr_14 replaced with injection: xenon_save_restore */

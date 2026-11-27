@@ -3844,6 +3844,16 @@ undefined8 FUN_824e27b8(int param_1)
 }
 
 
+// 824E4B58  FUN_824e4b58  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/driver.c:971)
+
+void FUN_824e4b58(void)
+
+{
+  FUN_824e3900(0xffffffff83efceb8,1);
+  return;
+}
+
+
 // 824E5B08  FUN_824e5b08  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/allocsup.c:979)
 
 /* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */

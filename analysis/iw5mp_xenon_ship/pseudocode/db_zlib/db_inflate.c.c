@@ -62,7 +62,7 @@ undefined8 FUN_8246ef88(int param_1,uint param_2,char *param_3,int param_4)
     *(code **)(param_1 + 0x20) = FUN_82470058;
   }
   if (*(int *)(param_1 + 0x24) == 0) {
-    *(undefined1 **)(param_1 + 0x24) = &LAB_82470098;
+    *(code **)(param_1 + 0x24) = FUN_82470098;
   }
   iVar1 = (**(code **)(param_1 + 0x20))(*(undefined4 *)(param_1 + 0x28),1,0x14);
   *(int *)(param_1 + 0x1c) = iVar1;

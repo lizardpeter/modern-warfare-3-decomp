@@ -10,6 +10,16 @@ void FUN_82544930(undefined4 *param_1)
 }
 
 
+// 82544988  FUN_82544988  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdlobbyconnectionlistener.cpp:21)
+
+void FUN_82544988(undefined8 param_1,undefined8 param_2)
+
+{
+  FUN_825610c8(param_2);
+  return;
+}
+
+
 // 82544940  FUN_82544940  (line unknown)
 
 undefined4 * FUN_82544940(undefined4 *param_1,ulonglong param_2)

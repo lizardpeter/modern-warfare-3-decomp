@@ -293,6 +293,23 @@ LAB_823e32dc:
   823E32DC  38210090             addi r1,r1,0x90
   823E32E0  48165220             b 0x82548500
 
+; 823E34D0  FUN_823e34d0  (gfx_d3d/r_bsp_load_obj.cpp:6004)
+  823E34D0  548A083C             rlwinm r10,r4,0x1,0x0,0x1e
+  823E34D4  81630224             lwz r11,0x224(r3)
+  823E34D8  7D445214             add r10,r4,r10
+  823E34DC  554A103A             rlwinm r10,r10,0x2,0x0,0x1d
+  823E34E0  7D6B5214             add r11,r11,r10
+  823E34E4  814B0004             lwz r10,0x4(r11)
+  823E34E8  2B0A0000             cmplwi cr6,r10,0x0
+  823E34EC  4D9A0020             beqlr cr6
+  823E34F0  A12B0000             lhz r9,0x0(r11)
+  823E34F4  5527083E             rlwinm r7,r9,0x1,0x0,0x1f
+  823E34F8  7CA7532E             sthx r5,r7,r10
+  823E34FC  A14B0000             lhz r10,0x0(r11)
+  823E3500  38CA0001             addi r6,r10,0x1
+  823E3504  B0CB0000             sth r6,0x0(r11)
+  823E3508  4E800020             blr
+
 ; 823E32E8  FUN_823e32e8  (gfx_d3d/r_bsp_load_obj.cpp:6017)
   823E32E8  7D8802A6             mfspr r12,LR
   823E32EC  481651B9             bl 0x825484a4

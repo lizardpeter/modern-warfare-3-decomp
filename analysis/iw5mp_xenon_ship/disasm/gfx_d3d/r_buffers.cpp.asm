@@ -329,6 +329,30 @@ LAB_823e3e8c:
   823E3EC4  38210090             addi r1,r1,0x90
   823E3EC8  48164638             b 0x82548500
 
+; 823E3870  FUN_823e3870  (gfx_d3d/r_buffers.cpp:609)
+  823E3870  C0030004             lfs f0,0x4(r3)
+  823E3874  C1A40004             lfs f13,0x4(r4)
+  823E3878  ED800032             fmuls f12,f0,f0
+  823E387C  ED6D0372             fmuls f11,f13,f13
+  823E3880  C1430000             lfs f10,0x0(r3)
+  823E3884  C1240000             lfs f9,0x0(r4)
+  823E3888  C1030008             lfs f8,0x8(r3)
+  823E388C  C0E40008             lfs f7,0x8(r4)
+  823E3890  ECCA62BA             fmadds f6,f10,f10,f12
+  823E3894  ECA95A7A             fmadds f5,f9,f9,f11
+  823E3898  EC08323A             fmadds f0,f8,f8,f6
+  823E389C  EDA729FA             fmadds f13,f7,f7,f5
+  823E38A0  FF006800             fcmpu cr6,f0,f13
+  823E38A4  4098000C             bge cr6,0x823e38b0
+  823E38A8  3860FFFF             li r3,-0x1
+  823E38AC  4E800020             blr
+LAB_823e38b0:
+  823E38B0  FF006800             fcmpu cr6,f0,f13
+  823E38B4  38600000             li r3,0x0
+  823E38B8  4D9A0020             beqlr cr6
+  823E38BC  38600001             li r3,0x1
+  823E38C0  4E800020             blr
+
 ; 823E38E0  FUN_823e38e0  (gfx_d3d/r_buffers.cpp:641)
   823E38E0  7D8802A6             mfspr r12,LR
   823E38E4  48164BAD             bl 0x82548490

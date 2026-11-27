@@ -240,6 +240,15 @@ LAB_824066b0:
 ; 824066E0  FUN_824066e0  (gfx_d3d/r_material.cpp:1607)
   824066E0  4E800020             blr
 
+; 824066E8  FUN_824066e8  (gfx_d3d/r_material.cpp:1787)
+  824066E8  81640C00             lwz r11,0xc00(r4)
+  824066EC  556A103A             rlwinm r10,r11,0x2,0x0,0x1d
+  824066F0  7C6A212E             stwx r3,r10,r4
+  824066F4  81640C00             lwz r11,0xc00(r4)
+  824066F8  392B0001             addi r9,r11,0x1
+  824066FC  91240C00             stw r9,0xc00(r4)
+  82406700  4E800020             blr
+
 ; 82406708  FUN_82406708  (gfx_d3d/r_material.cpp:1819)
   82406708  7D8802A6             mfspr r12,LR
   8240670C  9181FFF8             stw r12,-0x8(r1)

@@ -187,6 +187,26 @@ void FUN_823e3e30(void)
 }
 
 
+// 823E3870  FUN_823e3870  (gfx_d3d/r_buffers.cpp:609)
+
+undefined8 FUN_823e3870(float *param_1,float *param_2)
+
+{
+  float fVar1;
+  float fVar2;
+  
+  fVar1 = param_1[2] * param_1[2] + *param_1 * *param_1 + param_1[1] * param_1[1];
+  fVar2 = param_2[2] * param_2[2] + *param_2 * *param_2 + param_2[1] * param_2[1];
+  if (fVar1 < fVar2) {
+    return 0xffffffffffffffff;
+  }
+  if (fVar1 == fVar2) {
+    return 0;
+  }
+  return 1;
+}
+
+
 // 823E38E0  FUN_823e38e0  (gfx_d3d/r_buffers.cpp:641)
 
 /* WARNING: Function: __savegprlr_18 replaced with injection: xenon_save_restore */

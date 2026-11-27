@@ -268,6 +268,15 @@ LAB_82427f3c:
   82427F50  382100D0             addi r1,r1,0xd0
   82427F54  4812058C             b 0x825484e0
 
+; 8256E280  FUN_8256e280  (gfx_d3d/r_water.cpp:451)
+  8256E280  3D608205             lis r11,-0x7dfb
+  8256E284  3D4083E8             lis r10,-0x7c18
+  8256E288  392BB8D0             subi r9,r11,0x4730
+  8256E28C  390AF000             subi r8,r10,0x1000
+  8256E290  13E048C7             lvx128 v63,0,r9
+  8256E294  13E041C7             stvx128 v63,0,r8
+  8256E298  4E800020             blr
+
 ; 82427F58  FUN_82427f58  (gfx_d3d/r_water.cpp:455)
   82427F58  7D8802A6             mfspr r12,LR
   82427F5C  48120561             bl 0x825484bc

@@ -442,6 +442,16 @@ void FUN_82314668(void)
 }
 
 
+// 823156E8  FUN_823156e8  (universal/com_memory.cpp:2692)
+
+void FUN_823156e8(undefined8 param_1)
+
+{
+  FUN_82314680(param_1,0x20);
+  return;
+}
+
+
 // 82314680  FUN_82314680  (universal/com_memory.cpp:2718)
 
 longlong FUN_82314680(longlong param_1,longlong param_2)

@@ -52,6 +52,20 @@ void FUN_82452e10(int param_1)
 }
 
 
+// 82452F30  FUN_82452f30  (jpeg-6/jdmerge.c:127)
+
+void FUN_82452f30(int param_1)
+
+{
+  int iVar1;
+  
+  iVar1 = *(int *)(param_1 + 0x1a8);
+  *(undefined1 *)(iVar1 + 0x24) = 0;
+  *(undefined4 *)(iVar1 + 0x2c) = *(undefined4 *)(param_1 + 0x68);
+  return;
+}
+
+
 // 82452F48  FUN_82452f48  (jpeg-6/jdmerge.c:150)
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
@@ -285,7 +299,7 @@ void FUN_824533e8(int param_1)
   puVar1 = (undefined4 *)(*(code *)**(undefined4 **)(param_1 + 4))(param_1,1,0x30);
   *(undefined4 **)(param_1 + 0x1a8) = puVar1;
   *(undefined1 *)(puVar1 + 2) = 0;
-  *puVar1 = &LAB_82452f30;
+  *puVar1 = FUN_82452f30;
   iVar3 = *(int *)(param_1 + 0x6c) * *(int *)(param_1 + 100);
   puVar1[10] = iVar3;
   if (*(int *)(param_1 + 0x11c) == 2) {

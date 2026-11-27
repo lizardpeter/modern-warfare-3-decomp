@@ -57,7 +57,7 @@ undefined8 FUN_8254e478(void)
       uVar4 = FUN_824dee10();
       *puVar3 = uVar4;
       puVar3[1] = 0xffffffff;
-      DAT_83efd500 = &LAB_82557d70;
+      DAT_83efd500 = FUN_82557d70;
       FUN_824e9fc0(0xffffffff83efd4f8,1);
       return 1;
     }

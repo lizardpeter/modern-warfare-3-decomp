@@ -330,6 +330,15 @@ LAB_822707bc:
   822707C8  EBE1FFF0             ld r31,-0x10(r1)
   822707CC  4E800020             blr
 
+; 822707D0  FUN_822707d0  (game/player_use.cpp:277)
+  822707D0  C0030004             lfs f0,0x4(r3)
+  822707D4  C1A40004             lfs f13,0x4(r4)
+  822707D8  ED806828             fsubs f12,f0,f13
+  822707DC  FD60601E             fctiwz f11,f12
+  822707E0  D961FFF0             stfd f11,-0x10(r1)
+  822707E4  8061FFF4             lwz r3,-0xc(r1)
+  822707E8  4E800020             blr
+
 ; 82270818  FUN_82270818  (game/player_use.cpp:301)
   82270818  7D8802A6             mfspr r12,LR
   8227081C  9181FFF8             stw r12,-0x8(r1)

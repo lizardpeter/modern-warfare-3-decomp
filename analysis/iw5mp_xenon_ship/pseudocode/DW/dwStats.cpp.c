@@ -606,6 +606,15 @@ LAB_823c2180:
 }
 
 
+// 823C1668  FUN_823c1668  (DW/dwStats.cpp:480)
+
+undefined8 FUN_823c1668(void)
+
+{
+  return 0x20;
+}
+
+
 // 823C21A8  FUN_823c21a8  (DW/dwStats.cpp:486)
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */

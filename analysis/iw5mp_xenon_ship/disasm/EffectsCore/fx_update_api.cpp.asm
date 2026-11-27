@@ -420,6 +420,31 @@ LAB_8221f7e0:
   8221F7F0  EBE1FFF0             ld r31,-0x10(r1)
   8221F7F4  4E800020             blr
 
+; 8221F840  FUN_8221f840  (EffectsCore/fx_update_api.cpp:357)
+  8221F840  81630010             lwz r11,0x10(r3)
+  8221F844  2F0B0000             cmpwi cr6,r11,0x0
+  8221F848  409A003C             bne cr6,0x8221f884
+  8221F84C  8163000C             lwz r11,0xc(r3)
+  8221F850  89230014             lbz r9,0x14(r3)
+  8221F854  890B0003             lbz r8,0x3(r11)
+  8221F858  7F094040             cmplw cr6,r9,r8
+  8221F85C  419A001C             beq cr6,0x8221f878
+  8221F860  39600000             li r11,0x0
+  8221F864  91630010             stw r11,0x10(r3)
+  8221F868  556B003E             rlwinm r11,r11,0x0,0x0,0x1f
+  8221F86C  7D6A0034             cntlzw r10,r11
+  8221F870  5543DFFE             rlwinm r3,r10,0x1b,0x1f,0x1f
+  8221F874  4E800020             blr
+LAB_8221f878:
+  8221F878  7C2004AC             sync 0x1
+  8221F87C  39600001             li r11,0x1
+  8221F880  91630010             stw r11,0x10(r3)
+LAB_8221f884:
+  8221F884  81630010             lwz r11,0x10(r3)
+  8221F888  7D6A0034             cntlzw r10,r11
+  8221F88C  5543DFFE             rlwinm r3,r10,0x1b,0x1f,0x1f
+  8221F890  4E800020             blr
+
 ; 8221F898  FUN_8221f898  (EffectsCore/fx_update_api.cpp:366)
   8221F898  7D8802A6             mfspr r12,LR
   8221F89C  9181FFF8             stw r12,-0x8(r1)

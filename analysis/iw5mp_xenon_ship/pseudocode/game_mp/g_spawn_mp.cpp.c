@@ -613,8 +613,8 @@ undefined8 FUN_82267a30(int param_1,uint param_2)
   }
   else {
     if ((param_2 & 0xe000) != 0x8000) {
-      if ((code *)(&PTR_LAB_82021ac8)[param_2 * 6] != (code *)0x0) {
-        (*(code *)(&PTR_LAB_82021ac8)[param_2 * 6])();
+      if ((code *)(&PTR_thunk_FUN_822b8a20_82021ac8)[param_2 * 6] != (code *)0x0) {
+        (*(code *)(&PTR_thunk_FUN_822b8a20_82021ac8)[param_2 * 6])();
         return 1;
       }
       FUN_822676e8(&DAT_82db6b80 + param_1 * 0x50,(&DAT_82021ac4)[param_2 * 6],

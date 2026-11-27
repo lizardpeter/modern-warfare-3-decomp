@@ -1645,3 +1645,32 @@ void FUN_8226e920(double param_1,double param_2,undefined8 param_3)
   return;
 }
 
+
+// 8226E968  FUN_8226e968  (game/g_weapon.cpp:2118)
+
+undefined4 FUN_8226e968(int param_1)
+
+{
+  undefined4 uVar1;
+  int iVar2;
+  
+  uVar1 = 0;
+  iVar2 = 0x7ff;
+  if ((*(uint *)(param_1 + 0xf8) & 0x3800) == 0) {
+    if (((*(uint *)(param_1 + 0x10) & 0x80000) != 0) &&
+       (iVar2 = *(int *)(param_1 + 0x50), iVar2 == 0x7ff)) {
+      return uVar1;
+    }
+  }
+  else {
+    if (*(int *)(param_1 + 0x1b8) == 0) {
+      return uVar1;
+    }
+    iVar2 = *(int *)(param_1 + 0x1bc);
+    if (iVar2 == 0x7ff) {
+      return uVar1;
+    }
+  }
+  return *(undefined4 *)(iVar2 * 0x280 + DAT_82fc3f84 + 200);
+}
+

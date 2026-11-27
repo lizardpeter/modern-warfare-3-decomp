@@ -52,6 +52,13 @@
   82544A48  EBE1FFF0             ld r31,-0x10(r1)
   82544A4C  4E800020             blr
 
+; 82544A50  FUN_82544a50  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdmatchmaking/bdsessionid.cpp:33)
+  82544A50  7C6B1B78             or r11,r3,r3
+  82544A54  7C832378             or r3,r4,r4
+  82544A58  38A00008             li r5,0x8
+  82544A5C  388B0004             addi r4,r11,0x4
+  82544A60  4BFE65B0             b 0x8252b010
+
 ; 82544AC0  FUN_82544ac0  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdanticheat/bdconsoleid.cpp:40)
   82544AC0  7D8802A6             mfspr r12,LR
   82544AC4  480039F9             bl 0x825484bc
@@ -72,3 +79,7 @@
   82544B00  7FA3EB78             or r3,r29,r29
   82544B04  383F0080             addi r1,r31,0x80
   82544B08  48003A04             b 0x8254850c
+
+; 82545CD8  FUN_82545cd8  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdanticheat/bdconsoleid.cpp:46)
+  82545CD8  3860000C             li r3,0xc
+  82545CDC  4E800020             blr

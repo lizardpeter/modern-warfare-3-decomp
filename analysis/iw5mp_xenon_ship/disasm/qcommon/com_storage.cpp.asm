@@ -22,6 +22,11 @@
   8256C418  EBE1FFF0             ld r31,-0x10(r1)
   8256C41C  4E800020             blr
 
+; 8256C420  FUN_8256c420  (qcommon/com_storage.cpp:146)
+  8256C420  3D608257             lis r11,-0x7da9
+  8256C424  386BE8B8             subi r3,r11,0x1748
+  8256C428  4BFDE000             b 0x8254a428
+
 ; 8256C430  FUN_8256c430  (qcommon/com_storage.cpp:147)
   8256C430  7D8802A6             mfspr r12,LR
   8256C434  9181FFF8             stw r12,-0x8(r1)
@@ -95,6 +100,20 @@ LAB_8256c504:
   8256C530  EBC1FFE8             ld r30,-0x18(r1)
   8256C534  EBE1FFF0             ld r31,-0x10(r1)
   8256C538  4E800020             blr
+
+; 8256C540  FUN_8256c540  (qcommon/com_storage.cpp:177)
+  8256C540  39400020             li r10,0x20
+  8256C544  3D608309             lis r11,-0x7cf7
+  8256C548  396B17C8             addi r11,r11,0x17c8
+  8256C54C  7D4903A6             mtspr CTR,r10
+  8256C550  396BFF70             subi r11,r11,0x90
+  8256C554  39400000             li r10,0x0
+LAB_8256c558:
+  8256C558  954B00A0             stwu r10,0xa0(r11)
+  8256C55C  4200FFFC             bdnz 0x8256c558
+  8256C560  3D608257             lis r11,-0x7da9
+  8256C564  386BE8C8             subi r3,r11,0x1738
+  8256C568  4BFDDEC0             b 0x8254a428
 
 ; 8256C570  FUN_8256c570  (qcommon/com_storage.cpp:188)
   8256C570  7D8802A6             mfspr r12,LR
@@ -1772,6 +1791,12 @@ LAB_8228a068:
   8228A074  EBE1FFF0             ld r31,-0x10(r1)
   8228A078  4E800020             blr
 
+; 8228A080  FUN_8228a080  (qcommon/com_storage.cpp:1481)
+  8228A080  3D608207             lis r11,-0x7df9
+  8228A084  38600000             li r3,0x0
+  8228A088  388B0DF0             addi r4,r11,0xdf0
+  8228A08C  4BFFFEFC             b 0x82289f88
+
 ; 82295340  FUN_82295340  (qcommon/com_storage.cpp:1488)
   82295340  7D8802A6             mfspr r12,LR
   82295344  9181FFF8             stw r12,-0x8(r1)
@@ -2522,6 +2547,16 @@ LAB_82293aa0:
   82293AC0  EBE1FFF0             ld r31,-0x10(r1)
   82293AC4  4E800020             blr
 
+; 82293AC8  FUN_82293ac8  (qcommon/com_storage.cpp:2102)
+  82293AC8  3D4082FF             lis r10,-0x7d01
+  82293ACC  38800001             li r4,0x1
+  82293AD0  396ABE50             subi r11,r10,0x41b0
+  82293AD4  392B0024             addi r9,r11,0x24
+  82293AD8  816ABE50             lwz r11,-0x41b0(r10)
+  82293ADC  5568103A             rlwinm r8,r11,0x2,0x0,0x1d
+  82293AE0  7C68482E             lwzx r3,r8,r9
+  82293AE4  4BFFFF14             b 0x822939f8
+
 ; 8228A288  FUN_8228a288  (qcommon/com_storage.cpp:2108)
   8228A288  7D8802A6             mfspr r12,LR
   8228A28C  482BE22D             bl 0x825484b8
@@ -3212,6 +3247,68 @@ LAB_8228a568:
   8228A59C  7D8803A6             mtspr LR,r12
   8228A5A0  4E800020             blr
 
+; 8228A5E8  FUN_8228a5e8  (qcommon/com_storage.cpp:2440)
+  8228A5E8  3D4082FF             lis r10,-0x7d01
+  8228A5EC  396ABE50             subi r11,r10,0x41b0
+  8228A5F0  392B0044             addi r9,r11,0x44
+  8228A5F4  816ABE50             lwz r11,-0x41b0(r10)
+  8228A5F8  5568103A             rlwinm r8,r11,0x2,0x0,0x1d
+  8228A5FC  7D68482E             lwzx r11,r8,r9
+  8228A600  386B0001             addi r3,r11,0x1
+  8228A604  4E800020             blr
+
+; 8228A608  FUN_8228a608  (qcommon/com_storage.cpp:2446)
+  8228A608  2F030001             cmpwi cr6,r3,0x1
+  8228A60C  409A0010             bne cr6,0x8228a61c
+  8228A610  3D608202             lis r11,-0x7dfe
+  8228A614  386B3B88             addi r3,r11,0x3b88
+  8228A618  4E800020             blr
+LAB_8228a61c:
+  8228A61C  3D6082FF             lis r11,-0x7d01
+  8228A620  3923FFFF             subi r9,r3,0x1
+  8228A624  396BBE50             subi r11,r11,0x41b0
+  8228A628  390B0044             addi r8,r11,0x44
+  8228A62C  814B0000             lwz r10,0x0(r11)
+  8228A630  554A103A             rlwinm r10,r10,0x2,0x0,0x1d
+  8228A634  7CEA402E             lwzx r7,r10,r8
+  8228A638  7F093800             cmpw cr6,r9,r7
+  8228A63C  40980018             bge cr6,0x8228a654
+  8228A640  396B0064             addi r11,r11,0x64
+  8228A644  5529103A             rlwinm r9,r9,0x2,0x0,0x1d
+  8228A648  7D0A582E             lwzx r8,r10,r11
+  8228A64C  7C68482E             lwzx r3,r8,r9
+  8228A650  4E800020             blr
+LAB_8228a654:
+  8228A654  3D608207             lis r11,-0x7df9
+  8228A658  386B0DF0             addi r3,r11,0xdf0
+  8228A65C  4E800020             blr
+
+; 8228A660  FUN_8228a660  (qcommon/com_storage.cpp:2455)
+  8228A660  2F030001             cmpwi cr6,r3,0x1
+  8228A664  409A0010             bne cr6,0x8228a674
+  8228A668  3D608202             lis r11,-0x7dfe
+  8228A66C  386B3B98             addi r3,r11,0x3b98
+  8228A670  4E800020             blr
+LAB_8228a674:
+  8228A674  3D6082FF             lis r11,-0x7d01
+  8228A678  3923FFFF             subi r9,r3,0x1
+  8228A67C  396BBE50             subi r11,r11,0x41b0
+  8228A680  390B0044             addi r8,r11,0x44
+  8228A684  814B0000             lwz r10,0x0(r11)
+  8228A688  554A103A             rlwinm r10,r10,0x2,0x0,0x1d
+  8228A68C  7CEA402E             lwzx r7,r10,r8
+  8228A690  7F093800             cmpw cr6,r9,r7
+  8228A694  40980018             bge cr6,0x8228a6ac
+  8228A698  396B0064             addi r11,r11,0x64
+  8228A69C  5529103A             rlwinm r9,r9,0x2,0x0,0x1d
+  8228A6A0  7D0A582E             lwzx r8,r10,r11
+  8228A6A4  7C68482E             lwzx r3,r8,r9
+  8228A6A8  4E800020             blr
+LAB_8228a6ac:
+  8228A6AC  3D608207             lis r11,-0x7df9
+  8228A6B0  386B0DF0             addi r3,r11,0xdf0
+  8228A6B4  4E800020             blr
+
 ; 82290548  FUN_82290548  (qcommon/com_storage.cpp:2465)
   82290548  7D8802A6             mfspr r12,LR
   8229054C  482B7F71             bl 0x825484bc
@@ -3309,6 +3406,16 @@ LAB_82290680:
 LAB_822906a8:
   822906A8  38210090             addi r1,r1,0x90
   822906AC  482B7E60             b 0x8254850c
+
+; 822906B0  FUN_822906b0  (qcommon/com_storage.cpp:2510)
+  822906B0  3D608229             lis r11,-0x7dd7
+  822906B4  386BA608             subi r3,r11,0x59f8
+  822906B8  4BFFFE90             b 0x82290548
+
+; 822906C0  FUN_822906c0  (qcommon/com_storage.cpp:2515)
+  822906C0  3D608229             lis r11,-0x7dd7
+  822906C4  386BA660             subi r3,r11,0x59a0
+  822906C8  4BFFFE80             b 0x82290548
 
 ; 8228A6C0  FUN_8228a6c0  (qcommon/com_storage.cpp:2851)
   8228A6C0  7D8802A6             mfspr r12,LR
@@ -4271,6 +4378,15 @@ LAB_8228af28:
   8228AF6C  7D8803A6             mtspr LR,r12
   8228AF70  4E800020             blr
 
+; 8228AF78  FUN_8228af78  (qcommon/com_storage.cpp:3385)
+  8228AF78  3D208307             lis r9,-0x7cf9
+  8228AF7C  3D008305             lis r8,-0x7cfb
+  8228AF80  39600000             li r11,0x0
+  8228AF84  39400000             li r10,0x0
+  8228AF88  9169C450             stw r11,-0x3bb0(r9)
+  8228AF8C  914827EC             stw r10,0x27ec(r8)
+  8228AF90  4E800020             blr
+
 ; 82293AE8  FUN_82293ae8  (qcommon/com_storage.cpp:3409)
   82293AE8  7D8802A6             mfspr r12,LR
   82293AEC  9181FFF8             stw r12,-0x8(r1)
@@ -5009,6 +5125,15 @@ LAB_82294cc0:
   82294DA4  EBC1FFE8             ld r30,-0x18(r1)
   82294DA8  EBE1FFF0             ld r31,-0x10(r1)
   82294DAC  4E800020             blr
+
+; 8228B430  FUN_8228b430  (qcommon/com_storage.cpp:3865)
+  8228B430  3D4082FF             lis r10,-0x7d01
+  8228B434  396ABE50             subi r11,r10,0x41b0
+  8228B438  392B0024             addi r9,r11,0x24
+  8228B43C  816ABE50             lwz r11,-0x41b0(r10)
+  8228B440  5568103A             rlwinm r8,r11,0x2,0x0,0x1d
+  8228B444  7C68482E             lwzx r3,r8,r9
+  8228B448  4BFFECE8             b 0x8228a130
 
 ; 8228B450  FUN_8228b450  (qcommon/com_storage.cpp:3872)
   8228B450  7D8802A6             mfspr r12,LR
@@ -6641,6 +6766,31 @@ LAB_8228c338:
   8228C3A0  3D608307             lis r11,-0x7cf9
   8228C3A4  886BC454             lbz r3,-0x3bac(r11)
   8228C3A8  4E800020             blr
+
+; 8228C3B0  FUN_8228c3b0  (qcommon/com_storage.cpp:4811)
+  8228C3B0  81640004             lwz r11,0x4(r4)
+  8228C3B4  81430004             lwz r10,0x4(r3)
+  8228C3B8  55680FFE             rlwinm r8,r11,0x1,0x1f,0x1f
+  8228C3BC  55490FFE             rlwinm r9,r10,0x1,0x1f,0x1f
+  8228C3C0  7F094040             cmplw cr6,r9,r8
+  8228C3C4  419A0018             beq cr6,0x8228c3dc
+  8228C3C8  21690000             subfic r11,r9,0x0
+  8228C3CC  7D4B5910             subfe r10,r11,r11
+  8228C3D0  554B003C             rlwinm r11,r10,0x0,0x0,0x1e
+  8228C3D4  386B0001             addi r3,r11,0x1
+  8228C3D8  4E800020             blr
+LAB_8228c3dc:
+  8228C3DC  556B007E             rlwinm r11,r11,0x0,0x1,0x1f
+  8228C3E0  554A007E             rlwinm r10,r10,0x0,0x1,0x1f
+  8228C3E4  7F0A5840             cmplw cr6,r10,r11
+  8228C3E8  419A000C             beq cr6,0x8228c3f4
+  8228C3EC  7C6B5050             subf r3,r11,r10
+  8228C3F0  4E800020             blr
+LAB_8228c3f4:
+  8228C3F4  81630000             lwz r11,0x0(r3)
+  8228C3F8  81440000             lwz r10,0x0(r4)
+  8228C3FC  7C6A5850             subf r3,r10,r11
+  8228C400  4E800020             blr
 
 ; 82291348  FUN_82291348  (qcommon/com_storage.cpp:4837)
   82291348  7D8802A6             mfspr r12,LR
@@ -13337,6 +13487,11 @@ LAB_8256e7ac:
   8256E814  EBE1FFF0             ld r31,-0x10(r1)
   8256E818  4E800020             blr
 
+; 8256E820  FUN_8256e820  (line unknown)
+  8256E820  3D608309             lis r11,-0x7cf7
+  8256E824  386B0EF0             addi r3,r11,0xef0
+  8256E828  4BFC2C08             b 0x82531430
+
 ; 8256E830  FUN_8256e830  (line unknown)
   8256E830  7D8802A6             mfspr r12,LR
   8256E834  9181FFF8             stw r12,-0x8(r1)
@@ -13374,3 +13529,14 @@ LAB_8256e88c:
   8256E8AC  4BFC4BA5             bl 0x82533450
   8256E8B0  38210070             addi r1,r1,0x70
   8256E8B4  4BFD9C58             b 0x8254850c
+
+; 8256E8B8  FUN_8256e8b8  (line unknown)
+  8256E8B8  3D608309             lis r11,-0x7cf7
+  8256E8BC  396B0D70             addi r11,r11,0xd70
+  8256E8C0  386B0008             addi r3,r11,0x8
+  8256E8C4  4BC17FCC             b 0x82186890
+
+; 8256E8C8  FUN_8256e8c8  (line unknown)
+  8256E8C8  3D608309             lis r11,-0x7cf7
+  8256E8CC  386B17C8             addi r3,r11,0x17c8
+  8256E8D0  4BD1A940             b 0x82289210

@@ -1416,6 +1416,16 @@ void FUN_8242d1b0(int *param_1)
 }
 
 
+// 8242D210  FUN_8242d210  (gfx_d3d/rb_backend.cpp:1389)
+
+void FUN_8242d210(int *param_1)
+
+{
+  *param_1 = (uint)*(ushort *)(*param_1 + 2) + *param_1;
+  return;
+}
+
+
 // 8242D238  FUN_8242d238  (gfx_d3d/rb_backend.cpp:1413)
 
 undefined8 FUN_8242d238(int *param_1)
@@ -1933,6 +1943,54 @@ bool FUN_824336e8(int param_1)
 }
 
 
+// 82433560  FUN_82433560  (gfx_d3d/rb_backend.cpp:1767)
+
+void FUN_82433560(int param_1)
+
+{
+  *(undefined4 *)(param_1 + 0x10) = *(undefined4 *)(param_1 + 8);
+  return;
+}
+
+
+// 82433730  FUN_82433730  (gfx_d3d/rb_backend.cpp:1767)
+
+void FUN_82433730(int param_1)
+
+{
+  *(undefined4 *)(param_1 + 0x2c) = *(undefined4 *)(param_1 + 0x24);
+  return;
+}
+
+
+// 82433570  FUN_82433570  (gfx_d3d/rb_backend.cpp:1777)
+
+bool FUN_82433570(int param_1)
+
+{
+  int iVar1;
+  
+  iVar1 = *(int *)(param_1 + 8);
+  *(int *)(param_1 + 0xc) = iVar1;
+  *(int *)(param_1 + 8) = *(int *)(param_1 + 0x10);
+  return iVar1 != *(int *)(param_1 + 0x10);
+}
+
+
+// 82433740  FUN_82433740  (gfx_d3d/rb_backend.cpp:1777)
+
+bool FUN_82433740(int param_1)
+
+{
+  int iVar1;
+  
+  iVar1 = *(int *)(param_1 + 0x24);
+  *(int *)(param_1 + 0x28) = iVar1;
+  *(int *)(param_1 + 0x24) = *(int *)(param_1 + 0x2c);
+  return iVar1 != *(int *)(param_1 + 0x2c);
+}
+
+
 // 8242D318  FUN_8242d318  (gfx_d3d/rb_backend.cpp:1794)
 
 void FUN_8242d318(undefined8 param_1)
@@ -2088,6 +2146,138 @@ void FUN_8242d4f8(int param_1,int param_2)
 }
 
 
+// 82432790  FUN_82432790  (gfx_d3d/rb_backend.cpp:2000)
+
+ulonglong FUN_82432790(int param_1)
+
+{
+  ulonglong uVar1;
+  ulonglong uVar2;
+  
+  uVar2 = *(ulonglong *)
+           ((uint)*(ushort *)(*(int *)(param_1 + 8) + 2) * 8 + *(int *)(DAT_83c9f2c8 + 0x5c));
+  uVar1 = uVar2 >> 0x1d;
+  return (((ulonglong)(byte)(&DAT_83ea6580)[(uint)((uVar1 & 0xfff) << 0x12) >> 0x12] & 0x3f) << 0x14
+         | (uVar2 >> 0x2c & 0xff) << 8) << 5 | uVar1 & 0xfff;
+}
+
+
+// 82432928  FUN_82432928  (gfx_d3d/rb_backend.cpp:2000)
+
+ulonglong FUN_82432928(int param_1)
+
+{
+  ulonglong uVar1;
+  ulonglong uVar2;
+  
+  uVar2 = *(ulonglong *)
+           ((uint)*(ushort *)(*(int *)(param_1 + 0x14) + 2) * 8 + *(int *)(DAT_83c9f2c8 + 0x5c));
+  uVar1 = uVar2 >> 0x1d;
+  return ((((ulonglong)(byte)(&DAT_83ea6580)[(uint)((uVar1 & 0xfff) << 0x12) >> 0x12] & 0x3f) << 5 |
+          2) << 0xf | (uVar2 >> 0x2c & 0xff) << 8) << 5 | uVar1 & 0xfff;
+}
+
+
+// 82432AC8  FUN_82432ac8  (gfx_d3d/rb_backend.cpp:2000)
+
+uint FUN_82432ac8(int param_1)
+
+{
+  uint uVar1;
+  
+  uVar1 = (uint)**(ushort **)(param_1 + 0x24);
+  return ((((byte)(&DAT_83ea6580)[uVar1 & 0xfff] & 0x3f) << 5 | 4) << 0xf |
+         (uint)*(byte *)(*(ushort **)(param_1 + 0x24) + 1) << 8) << 5 | uVar1 & 0xfff;
+}
+
+
+// 82432DC8  FUN_82432dc8  (gfx_d3d/rb_backend.cpp:2000)
+
+ulonglong FUN_82432dc8(int param_1)
+
+{
+  uint uVar1;
+  ulonglong uVar2;
+  
+  uVar1 = **(uint **)(param_1 + 0x3c);
+  uVar2 = (ulonglong)uVar1;
+  return ((((ulonglong)(byte)(&DAT_83ea6580)[uVar1 >> 0x12] & 0x3f) << 5 | uVar2 & 0x1e) << 0xf |
+         uVar2 & 0xff00) << 5 | ((ulonglong)(uVar1 >> 0xd) & 0x1ffe0 | uVar2 & 0x20000) >> 5;
+}
+
+
+// 82432EF0  FUN_82432ef0  (gfx_d3d/rb_backend.cpp:2000)
+
+ulonglong FUN_82432ef0(int param_1)
+
+{
+  uint uVar1;
+  ulonglong uVar2;
+  
+  uVar1 = **(uint **)(param_1 + 0x44);
+  uVar2 = (ulonglong)uVar1;
+  return ((((ulonglong)(byte)(&DAT_83ea6580)[uVar1 >> 0x12] & 0x3f) << 5 | uVar2 & 0x1e) << 0xf |
+         uVar2 & 0xff00) << 5 | ((ulonglong)(uVar1 >> 0xd) & 0x1ffe0 | uVar2 & 0x20000) >> 5;
+}
+
+
+// 82433028  FUN_82433028  (gfx_d3d/rb_backend.cpp:2000)
+
+ulonglong FUN_82433028(int param_1)
+
+{
+  uint uVar1;
+  ulonglong uVar2;
+  
+  uVar1 = **(uint **)(param_1 + 0x50);
+  uVar2 = (ulonglong)uVar1;
+  return ((((ulonglong)(byte)(&DAT_83ea6580)[uVar1 >> 0x12] & 0x3f) << 5 | uVar2 & 0x1e) << 0xf |
+         uVar2 & 0xff00) << 5 | ((ulonglong)(uVar1 >> 0xd) & 0x1ffe0 | uVar2 & 0x20000) >> 5;
+}
+
+
+// 82433160  FUN_82433160  (gfx_d3d/rb_backend.cpp:2000)
+
+ulonglong FUN_82433160(int param_1)
+
+{
+  ulonglong uVar1;
+  ushort local_10;
+  byte bStack_d;
+  
+  local_10 = (ushort)((uint)**(undefined4 **)(param_1 + 0x5c) >> 0x10);
+  bStack_d = (byte)**(undefined4 **)(param_1 + 0x5c);
+  uVar1 = ((ulonglong)local_10 & 0x7fff) << 0x11;
+  return (((ulonglong)(byte)(&DAT_83ea6580)[(uint)((uVar1 & 0x7fffffff) << 1) >> 0x12] & 0x3f) << 5
+         | ((ulonglong)bStack_d & 0xf) << 1) << 0x14 | ((uVar1 & 0x7fffffff) >> 0xc & 0x1ffe0) >> 5;
+}
+
+
+// 824332C0  FUN_824332c0  (gfx_d3d/rb_backend.cpp:2000)
+
+uint FUN_824332c0(int param_1)
+
+{
+  uint uVar1;
+  
+  uVar1 = **(uint **)(param_1 + 100) >> 0x10;
+  return (((byte)(&DAT_83ea6580)[uVar1 & 0x3fff] & 0x3f) << 5 | 0x14) << 0x14 | uVar1 & 0xfff;
+}
+
+
+// 8242D608  FUN_8242d608  (gfx_d3d/rb_backend.cpp:2024)
+
+ulonglong FUN_8242d608(int param_1)
+
+{
+  ulonglong uVar1;
+  
+  uVar1 = **(ulonglong **)(param_1 + 0x30);
+  return ((((uVar1 >> 0x39 & 0x3f) << 4 | uVar1 >> 0x35 & 0xf) << 8 | uVar1 >> 0x2c & 0xff) << 1 |
+         uVar1 >> 0x2b & 1) << 0xc | uVar1 >> 0x1d & 0x700000fff;
+}
+
+
 // 82433C20  FUN_82433c20  (gfx_d3d/rb_backend.cpp:2043)
 
 /* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
@@ -2110,7 +2300,7 @@ void FUN_82433c20(int param_1,int param_2)
          (uint)((((ulonglong)(byte)(&DAT_83ea6580)[(uint)((uVar1 & 0xfff) << 0x12) >> 0x12] & 0x3f)
                  << 0x14 | (uVar2 >> 0x2c & 0xff) << 8) << 5) | (uint)((uVar1 & 0xfff) << 5) >> 5;
     *(int *)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x2a4) = param_2;
-    *(undefined1 **)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x2a8) = &LAB_82432790;
+    *(code **)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x2a8) = FUN_82432790;
     *(code **)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x2ac) = FUN_82432800;
     *(undefined4 *)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x2b0) = 0;
     *(undefined4 *)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x2b4) = 0;
@@ -2144,7 +2334,7 @@ void FUN_82433d48(int param_1,int param_2)
                   << 5 | 2) << 0xf | (uVar2 >> 0x2c & 0xff) << 8) << 5) |
          (uint)((uVar1 & 0xfff) << 5) >> 5;
     *(int *)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x2a4) = param_2;
-    *(undefined1 **)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x2a8) = &LAB_82432928;
+    *(code **)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x2a8) = FUN_82432928;
     *(code **)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x2ac) = FUN_824329a0;
     *(undefined4 *)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x2b0) = 0;
     *(undefined4 *)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x2b4) = 0;
@@ -2174,7 +2364,7 @@ void FUN_82433e70(int param_1,int param_2)
           | 4) << 0xf | (uint)*(byte *)(puVar1 + 1) << 8) << 5 |
          (uint)(((ulonglong)*puVar1 & 0xfff) << 5) >> 5;
     *(int *)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x2a4) = param_2;
-    *(undefined1 **)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x2a8) = &LAB_82432ac8;
+    *(code **)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x2a8) = FUN_82432ac8;
     *(code **)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x2ac) = FUN_82432b28;
     *(undefined4 *)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x2b0) = 0;
     *(undefined4 *)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x2b4) = 0;
@@ -2202,7 +2392,7 @@ void FUN_82433f80(int param_1,int param_2)
          (uint)(((((uVar2 >> 0x39 & 0x3f) << 4 | uVar2 >> 0x35 & 0xf) << 8 | uVar2 >> 0x2c & 0xff)
                  << 1 | uVar2 >> 0x2b & 1) << 0xc) | (uint)(uVar2 >> 0x1d) & 0xfff;
     *(int *)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x2a4) = param_2;
-    *(undefined1 **)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x2a8) = &LAB_8242d608;
+    *(code **)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x2a8) = FUN_8242d608;
     *(code **)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x2ac) = FUN_82432c30;
     *(undefined4 *)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x2b0) = 0;
     *(undefined4 *)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x2b4) = 0;
@@ -2230,7 +2420,7 @@ void FUN_82434068(int param_1,int param_2)
          ((((byte)(&DAT_83ea6580)[uVar2 >> 0x12] & 0x3f) << 5 | uVar2 & 0x1e) << 0xf |
          uVar2 & 0xff00) << 5 | (uVar2 >> 0xd & 0x1ffe0 | uVar2 & 0x20000) >> 5;
     *(int *)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x2a4) = param_2;
-    *(undefined1 **)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x2a8) = &LAB_82432dc8;
+    *(code **)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x2a8) = FUN_82432dc8;
     *(code **)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x2ac) = FUN_82432e10;
     *(undefined4 *)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x2b0) = 0;
     *(undefined4 *)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x2b4) = 0;
@@ -2258,7 +2448,7 @@ void FUN_82434168(int param_1,int param_2)
          ((((byte)(&DAT_83ea6580)[uVar2 >> 0x12] & 0x3f) << 5 | uVar2 & 0x1e) << 0xf |
          uVar2 & 0xff00) << 5 | (uVar2 >> 0xd & 0x1ffe0 | uVar2 & 0x20000) >> 5;
     *(int *)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x2a4) = param_2;
-    *(undefined1 **)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x2a8) = &LAB_82432ef0;
+    *(code **)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x2a8) = FUN_82432ef0;
     *(code **)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x2ac) = FUN_82432f38;
     *(undefined4 *)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x2b0) = 0;
     *(undefined4 *)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x2b4) = 0;
@@ -2286,7 +2476,7 @@ void FUN_82434268(int param_1,int param_2)
          ((((byte)(&DAT_83ea6580)[uVar2 >> 0x12] & 0x3f) << 5 | uVar2 & 0x1e) << 0xf |
          uVar2 & 0xff00) << 5 | (uVar2 >> 0xd & 0x1ffe0 | uVar2 & 0x20000) >> 5;
     *(int *)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x2a4) = param_2;
-    *(undefined1 **)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x2a8) = &LAB_82433028;
+    *(code **)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x2a8) = FUN_82433028;
     *(code **)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x2ac) = FUN_82433070;
     *(undefined4 *)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x2b0) = 0;
     *(undefined4 *)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x2b4) = 0;
@@ -2321,7 +2511,7 @@ void FUN_82434368(int param_1,int param_2)
          (((byte)(&DAT_83ea6580)[(uint)((uVar3 & 0x7fffffff) << 1) >> 0x12] & 0x3f) << 5 |
          (uVar2 & 0xf) << 1) << 0x14 | ((uint)((uVar3 & 0x7fffffff) >> 0xc) & 0x1ffe0) >> 5;
     *(int *)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x2a4) = param_2;
-    *(undefined1 **)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x2a8) = &LAB_82433160;
+    *(code **)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x2a8) = FUN_82433160;
     *(code **)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x2ac) = FUN_824331c0;
     *(undefined4 *)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x2b0) = 0;
     *(undefined4 *)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x2b4) = 0;
@@ -2352,7 +2542,7 @@ void FUN_82434480(int param_1,int param_2)
          (((byte)(&DAT_83ea6580)[(uint)(((ulonglong)local_30 & 0x3fff) << 0x12) >> 0x12] & 0x3f) <<
           5 | 0x14) << 0x14 | (uint)(((ulonglong)local_30 & 0xfff) << 5) >> 5;
     *(int *)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x2a4) = param_2;
-    *(undefined1 **)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x2a8) = &LAB_824332c0;
+    *(code **)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x2a8) = FUN_824332c0;
     *(code **)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x2ac) = FUN_82433318;
     *(undefined4 *)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x2b0) = 0;
     *(undefined4 *)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x2b4) = 0;
@@ -2360,6 +2550,100 @@ void FUN_82434480(int param_1,int param_2)
     *(int *)(param_1 + 4) = *(int *)(param_1 + 4) + 1;
   }
   return;
+}
+
+
+// 82433408  FUN_82433408  (gfx_d3d/rb_backend.cpp:2073)
+
+ulonglong FUN_82433408(int param_1)
+
+{
+  return *(ulonglong *)
+          ((uint)*(ushort *)(*(int *)(param_1 + 8) + 2) * 8 + *(int *)(DAT_83c9f2c8 + 0x5c)) >> 0x39
+         & 0x3f;
+}
+
+
+// 82433430  FUN_82433430  (gfx_d3d/rb_backend.cpp:2073)
+
+undefined1 FUN_82433430(int param_1)
+
+{
+  return (&DAT_83ea6580)[**(uint **)(param_1 + 0x24) >> 0x10 & 0xfff];
+}
+
+
+// 82433458  FUN_82433458  (gfx_d3d/rb_backend.cpp:2073)
+
+ulonglong FUN_82433458(int param_1)
+
+{
+  return **(ulonglong **)(param_1 + 0x30) >> 0x39 & 0x3f;
+}
+
+
+// 82433470  FUN_82433470  (gfx_d3d/rb_backend.cpp:2073)
+
+undefined1 FUN_82433470(int param_1)
+
+{
+  return (&DAT_83ea6580)[**(uint **)(param_1 + 0x3c) >> 0x12];
+}
+
+
+// 82433490  FUN_82433490  (gfx_d3d/rb_backend.cpp:2073)
+
+undefined1 FUN_82433490(int param_1)
+
+{
+  return (&DAT_83ea6580)[**(uint **)(param_1 + 0x44) >> 0x12];
+}
+
+
+// 824334B0  FUN_824334b0  (gfx_d3d/rb_backend.cpp:2073)
+
+undefined1 FUN_824334b0(int param_1)
+
+{
+  return (&DAT_83ea6580)[**(uint **)(param_1 + 0x50) >> 0x12];
+}
+
+
+// 824334D0  FUN_824334d0  (gfx_d3d/rb_backend.cpp:2073)
+
+undefined1 FUN_824334d0(int param_1)
+
+{
+  return (&DAT_83ea6580)[**(uint **)(param_1 + 0x5c) >> 0x10];
+}
+
+
+// 824334F8  FUN_824334f8  (gfx_d3d/rb_backend.cpp:2073)
+
+undefined1 FUN_824334f8(int param_1)
+
+{
+  return (&DAT_83ea6580)[**(ushort **)(param_1 + 100)];
+}
+
+
+// 82433598  FUN_82433598  (gfx_d3d/rb_backend.cpp:2073)
+
+ulonglong FUN_82433598(int param_1)
+
+{
+  return *(ulonglong *)
+          ((uint)*(ushort *)(*(int *)(param_1 + 8) + 2) * 8 + *(int *)(DAT_83c9f2c8 + 0x5c)) >> 0x39
+         & 0x3f;
+}
+
+
+// 82433768  FUN_82433768  (gfx_d3d/rb_backend.cpp:2073)
+
+undefined1 FUN_82433768(int param_1)
+
+{
+  return (&DAT_83ea6580)[**(uint **)(param_1 + 0x24) >> 0x10 & 0xfff];
 }
 
 
@@ -2400,7 +2684,7 @@ void FUN_82434588(int param_1,undefined4 param_2)
                ((uint)*(ushort *)(*(int *)(param_1 + 0x10) + 2) * 8 + *(int *)(DAT_83c9f2c8 + 0x5c))
              >> 0x39) & 0x3f;
   *(undefined4 *)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x7c) = param_2;
-  *(undefined1 **)((*(int *)(param_1 + 4) + 4) * 0x20 + param_1) = &LAB_82433408;
+  *(code **)((*(int *)(param_1 + 4) + 4) * 0x20 + param_1) = FUN_82433408;
   *(code **)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x84) = FUN_82432800;
   *(int *)(param_1 + 4) = *(int *)(param_1 + 4) + 1;
   return;
@@ -2421,7 +2705,7 @@ void FUN_82434658(int param_1,undefined4 param_2)
   *(uint *)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x78) =
        (uint)(byte)(&DAT_83ea6580)[**(uint **)(param_1 + 0x2c) >> 0x10 & 0xfff];
   *(undefined4 *)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x7c) = param_2;
-  *(undefined1 **)((*(int *)(param_1 + 4) + 4) * 0x20 + param_1) = &LAB_82433430;
+  *(code **)((*(int *)(param_1 + 4) + 4) * 0x20 + param_1) = FUN_82433430;
   *(code **)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x84) = FUN_82432b28;
   *(int *)(param_1 + 4) = *(int *)(param_1 + 4) + 1;
   return;
@@ -2442,7 +2726,7 @@ void FUN_82434720(int param_1,undefined4 param_2)
   *(uint *)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x78) =
        (uint)((ulonglong)**(undefined8 **)(param_1 + 0x38) >> 0x39) & 0x3f;
   *(undefined4 *)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x7c) = param_2;
-  *(undefined1 **)((*(int *)(param_1 + 4) + 4) * 0x20 + param_1) = &LAB_82433458;
+  *(code **)((*(int *)(param_1 + 4) + 4) * 0x20 + param_1) = FUN_82433458;
   *(code **)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x84) = FUN_82432c30;
   *(int *)(param_1 + 4) = *(int *)(param_1 + 4) + 1;
   return;
@@ -2463,7 +2747,7 @@ void FUN_824347d8(int param_1,undefined4 param_2)
   *(uint *)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x78) =
        (uint)(byte)(&DAT_83ea6580)[**(uint **)(param_1 + 0x44) >> 0x12];
   *(undefined4 *)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x7c) = param_2;
-  *(undefined1 **)((*(int *)(param_1 + 4) + 4) * 0x20 + param_1) = &LAB_82433470;
+  *(code **)((*(int *)(param_1 + 4) + 4) * 0x20 + param_1) = FUN_82433470;
   *(code **)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x84) = FUN_82432e10;
   *(int *)(param_1 + 4) = *(int *)(param_1 + 4) + 1;
   return;
@@ -2484,7 +2768,7 @@ void FUN_824348a0(int param_1,undefined4 param_2)
   *(uint *)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x78) =
        (uint)(byte)(&DAT_83ea6580)[**(uint **)(param_1 + 0x4c) >> 0x12];
   *(undefined4 *)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x7c) = param_2;
-  *(undefined1 **)((*(int *)(param_1 + 4) + 4) * 0x20 + param_1) = &LAB_82433490;
+  *(code **)((*(int *)(param_1 + 4) + 4) * 0x20 + param_1) = FUN_82433490;
   *(code **)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x84) = FUN_82432f38;
   *(int *)(param_1 + 4) = *(int *)(param_1 + 4) + 1;
   return;
@@ -2505,7 +2789,7 @@ void FUN_82434968(int param_1,undefined4 param_2)
   *(uint *)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x78) =
        (uint)(byte)(&DAT_83ea6580)[**(uint **)(param_1 + 0x58) >> 0x12];
   *(undefined4 *)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x7c) = param_2;
-  *(undefined1 **)((*(int *)(param_1 + 4) + 4) * 0x20 + param_1) = &LAB_824334b0;
+  *(code **)((*(int *)(param_1 + 4) + 4) * 0x20 + param_1) = FUN_824334b0;
   *(code **)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x84) = FUN_82433070;
   *(int *)(param_1 + 4) = *(int *)(param_1 + 4) + 1;
   return;
@@ -2526,7 +2810,7 @@ void FUN_82434a30(int param_1,undefined4 param_2)
   *(uint *)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x78) =
        (uint)(byte)(&DAT_83ea6580)[**(uint **)(param_1 + 100) >> 0x10];
   *(undefined4 *)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x7c) = param_2;
-  *(undefined1 **)((*(int *)(param_1 + 4) + 4) * 0x20 + param_1) = &LAB_824334d0;
+  *(code **)((*(int *)(param_1 + 4) + 4) * 0x20 + param_1) = FUN_824334d0;
   *(code **)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x84) = FUN_824331c0;
   *(int *)(param_1 + 4) = *(int *)(param_1 + 4) + 1;
   return;
@@ -2547,7 +2831,7 @@ void FUN_82434af8(int param_1,undefined4 param_2)
   *(uint *)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x78) =
        (uint)(byte)(&DAT_83ea6580)[**(ushort **)(param_1 + 0x6c)];
   *(undefined4 *)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x7c) = param_2;
-  *(undefined1 **)((*(int *)(param_1 + 4) + 4) * 0x20 + param_1) = &LAB_824334f8;
+  *(code **)((*(int *)(param_1 + 4) + 4) * 0x20 + param_1) = FUN_824334f8;
   *(code **)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x84) = FUN_82433318;
   *(int *)(param_1 + 4) = *(int *)(param_1 + 4) + 1;
   return;
@@ -2563,15 +2847,15 @@ void FUN_82434bb8(int param_1,undefined4 param_2)
     return;
   }
   *(code **)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x88) = FUN_82433518;
-  *(undefined1 **)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x8c) = &LAB_82433560;
-  *(undefined1 **)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x90) = &LAB_82433570;
+  *(code **)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x8c) = FUN_82433560;
+  *(code **)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x90) = FUN_82433570;
   *(uint *)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x78) =
        (uint)((ulonglong)
               *(undefined8 *)
                ((uint)*(ushort *)(*(int *)(param_1 + 0x10) + 2) * 8 + *(int *)(DAT_83c9f2c8 + 0x5c))
              >> 0x39) & 0x3f;
   *(undefined4 *)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x7c) = param_2;
-  *(undefined1 **)((*(int *)(param_1 + 4) + 4) * 0x20 + param_1) = &LAB_82433598;
+  *(code **)((*(int *)(param_1 + 4) + 4) * 0x20 + param_1) = FUN_82433598;
   *(code **)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x84) = FUN_824335c0;
   *(int *)(param_1 + 4) = *(int *)(param_1 + 4) + 1;
   return;
@@ -2587,12 +2871,12 @@ void FUN_82434c98(int param_1,undefined4 param_2)
     return;
   }
   *(code **)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x88) = FUN_824336e8;
-  *(undefined1 **)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x8c) = &LAB_82433730;
-  *(undefined1 **)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x90) = &LAB_82433740;
+  *(code **)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x8c) = FUN_82433730;
+  *(code **)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x90) = FUN_82433740;
   *(uint *)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x78) =
        (uint)(byte)(&DAT_83ea6580)[**(uint **)(param_1 + 0x2c) >> 0x10 & 0xfff];
   *(undefined4 *)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x7c) = param_2;
-  *(undefined1 **)((*(int *)(param_1 + 4) + 4) * 0x20 + param_1) = &LAB_82433768;
+  *(code **)((*(int *)(param_1 + 4) + 4) * 0x20 + param_1) = FUN_82433768;
   *(code **)(*(int *)(param_1 + 4) * 0x20 + param_1 + 0x84) = FUN_82433790;
   *(int *)(param_1 + 4) = *(int *)(param_1 + 4) + 1;
   return;
@@ -4343,6 +4627,44 @@ void FUN_8242fdc8(int *param_1)
   DAT_83ebad10 = DAT_83ebad10 + 1;
   DAT_83eba7b8 = *(undefined4 *)(iVar1 + 0xc);
   DAT_83eba7bc = *(undefined4 *)(iVar1 + 0x10);
+  *param_1 = (uint)*(ushort *)(*param_1 + 2) + *param_1;
+  return;
+}
+
+
+// 8242FE60  FUN_8242fe60  (gfx_d3d/rb_backend.cpp:4426)
+
+void FUN_8242fe60(int *param_1)
+
+{
+  int iVar1;
+  
+  iVar1 = *param_1;
+  DAT_83eba548 = *(undefined4 *)(iVar1 + 0xc);
+  DAT_83eba544 = *(undefined4 *)(iVar1 + 8);
+  DAT_83eba540 = *(undefined4 *)(iVar1 + 4);
+  DAT_83ebacc2 = DAT_83ebacc2 + 1;
+  DAT_83ebacc0 = DAT_83ebacc0 + 1;
+  DAT_83ebacc4 = DAT_83ebacc4 + 1;
+  DAT_83eba54c = 0;
+  DAT_83ebacc6 = DAT_83ebacc6 + 1;
+  DAT_83eba538 = *(undefined4 *)(iVar1 + 0x18);
+  DAT_83eba534 = *(undefined4 *)(iVar1 + 0x14);
+  DAT_83eba530 = *(undefined4 *)(iVar1 + 0x10);
+  DAT_83ebacc8 = DAT_83ebacc8 + 1;
+  DAT_83eba53c = 0;
+  DAT_83eba558 = *(undefined4 *)(iVar1 + 0x24);
+  DAT_83eba554 = *(undefined4 *)(iVar1 + 0x20);
+  DAT_83eba550 = *(undefined4 *)(iVar1 + 0x1c);
+  DAT_83eba55c = 0;
+  DAT_83eba568 = *(undefined4 *)(iVar1 + 0x30);
+  DAT_83eba564 = *(undefined4 *)(iVar1 + 0x2c);
+  DAT_83eba560 = *(undefined4 *)(iVar1 + 0x28);
+  DAT_83eba56c = 0;
+  DAT_83eba578 = *(undefined4 *)(iVar1 + 0x3c);
+  DAT_83eba574 = *(undefined4 *)(iVar1 + 0x38);
+  DAT_83eba570 = *(undefined4 *)(iVar1 + 0x34);
+  DAT_83eba57c = 0;
   *param_1 = (uint)*(ushort *)(*param_1 + 2) + *param_1;
   return;
 }

@@ -1254,6 +1254,12 @@ LAB_8234a8dc:
 LAB_8234a914:
   8234A914  481FDBE0             b 0x825484f4
 
+; 8234A918  FUN_8234a918  (xenon/snd_driver.cpp:1672)
+  8234A918  396001C8             li r11,0x1c8
+  8234A91C  38600000             li r3,0x0
+  8234A920  91640000             stw r11,0x0(r4)
+  8234A924  4E800020             blr
+
 ; 8234A928  FUN_8234a928  (xenon/snd_driver.cpp:1682)
   8234A928  7D8802A6             mfspr r12,LR
   8234A92C  9181FFF8             stw r12,-0x8(r1)
@@ -2707,6 +2713,12 @@ LAB_8234bdd4:
   8234BDE0  EBC1FFE8             ld r30,-0x18(r1)
   8234BDE4  EBE1FFF0             ld r31,-0x10(r1)
   8234BDE8  4E800020             blr
+
+; 8234BDF0  FUN_8234bdf0  (xenon/snd_driver.cpp:2526)
+  8234BDF0  39600008             li r11,0x8
+  8234BDF4  38600000             li r3,0x0
+  8234BDF8  91640000             stw r11,0x0(r4)
+  8234BDFC  4E800020             blr
 
 ; 8234BE00  FUN_8234be00  (xenon/snd_driver.cpp:2536)
   8234BE00  7D8802A6             mfspr r12,LR

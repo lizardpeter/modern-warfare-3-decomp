@@ -204,6 +204,20 @@ void FUN_82370208(undefined8 param_1,int param_2)
 }
 
 
+// 82370268  FUN_82370268  (physics/phys_ode.cpp:452)
+
+void FUN_82370268(int param_1)
+
+{
+  if (*(int *)(*(int *)(param_1 + 0x10) + 0x54) == 3) {
+    FUN_8232c010(param_1,0xffffffff83a7c090);
+    return;
+  }
+  FUN_8232c010(param_1,0xffffffff83a7ab40);
+  return;
+}
+
+
 // 82370300  FUN_82370300  (physics/phys_ode.cpp:488)
 
 void FUN_82370300(undefined8 param_1,undefined4 *param_2)
@@ -4507,6 +4521,16 @@ void FUN_82376ed0(longlong param_1)
     FUN_8237de18(param_1);
     lVar1 = lVar1 + -1;
   } while (-1 < lVar1);
+  return;
+}
+
+
+// 8256EA28  FUN_8256ea28  (line unknown)
+
+void FUN_8256ea28(void)
+
+{
+  FUN_82376ed0(0xffffffff8392d180);
   return;
 }
 

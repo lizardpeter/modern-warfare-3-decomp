@@ -1112,6 +1112,26 @@ void FUN_821718d8(void)
 }
 
 
+// 82171928  FUN_82171928  (client_mp/cl_main_mp.cpp:2075)
+
+void FUN_82171928(void)
+
+{
+  if (DAT_827141e4 == 0) {
+    return;
+  }
+  if (DAT_827141dc == 0) {
+    return;
+  }
+  if (9 < (int)(&DAT_826fbfac)[*(int *)(&DAT_82febe54 + DAT_82febe50 * 4) * 0x79]) {
+    FUN_82170430(*(int *)(&DAT_82febe54 + DAT_82febe50 * 4),0xffffffff820150ac);
+    return;
+  }
+  FUN_821997a0();
+  return;
+}
+
+
 // 82171998  FUN_82171998  (client_mp/cl_main_mp.cpp:2155)
 
 void FUN_82171998(undefined8 param_1)
@@ -2786,6 +2806,26 @@ void FUN_82172b88(void)
 }
 
 
+// 82172BD8  FUN_82172bd8  (client_mp/cl_main_mp.cpp:5492)
+
+void FUN_82172bd8(void)
+
+{
+  FUN_8218eeb0(*(undefined4 *)(&DAT_82febe74 + DAT_82febe50 * 4));
+  return;
+}
+
+
+// 82172BF8  FUN_82172bf8  (client_mp/cl_main_mp.cpp:5498)
+
+void FUN_82172bf8(void)
+
+{
+  FUN_82352f38(*(undefined4 *)(&DAT_82febe74 + DAT_82febe50 * 4));
+  return;
+}
+
+
 // 82172C18  FUN_82172c18  (client_mp/cl_main_mp.cpp:5504)
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
@@ -3043,6 +3083,34 @@ void FUN_821731d0(undefined8 param_1)
 }
 
 
+// 82173268  FUN_82173268  (client_mp/cl_main_mp.cpp:5784)
+
+void FUN_82173268(void)
+
+{
+  FUN_821731d0(*(undefined4 *)(&DAT_82febe74 + DAT_82febe50 * 4));
+  return;
+}
+
+
+// 82173288  FUN_82173288  (client_mp/cl_main_mp.cpp:5790)
+
+void FUN_82173288(void)
+
+{
+  return;
+}
+
+
+// 82173290  FUN_82173290  (client_mp/cl_main_mp.cpp:5798)
+
+void FUN_82173290(void)
+
+{
+  return;
+}
+
+
 // 82173298  FUN_82173298  (client_mp/cl_main_mp.cpp:5806)
 
 void FUN_82173298(void)
@@ -3092,6 +3160,16 @@ void FUN_82173348(void)
   FUN_82284630(0xffffffff82015354,0xffffffff82173298,0xffffffff826fc72c);
   FUN_82284630(0xffffffff8201533c,0xffffffff82173308,0xffffffff826fc720);
   FUN_82284630(0xffffffff8201531c,0xffffffff82173340,0xffffffff826fc714);
+  return;
+}
+
+
+// 821734D0  FUN_821734d0  (client_mp/cl_main_mp.cpp:5898)
+
+void FUN_821734d0(void)
+
+{
+  FUN_82303450(0);
   return;
 }
 

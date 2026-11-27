@@ -1537,6 +1537,15 @@ LAB_82162b58:
   82162CE8  EBE1FFF0             ld r31,-0x10(r1)
   82162CEC  4E800020             blr
 
+; 82162CF0  FUN_82162cf0  (cgame/cg_world.cpp:1139)
+  82162CF0  3D608265             lis r11,-0x7d9b
+  82162CF4  816BE9A4             lwz r11,-0x165c(r11)
+  82162CF8  816B002C             lwz r11,0x2c(r11)
+  82162CFC  394BFFFE             subi r10,r11,0x2
+  82162D00  7D490034             cntlzw r9,r10
+  82162D04  5523DFFE             rlwinm r3,r9,0x1b,0x1f,0x1f
+  82162D08  4E800020             blr
+
 ; 82162D10  FUN_82162d10  (cgame/cg_world.cpp:1145)
   82162D10  7D8802A6             mfspr r12,LR
   82162D14  9181FFF8             stw r12,-0x8(r1)

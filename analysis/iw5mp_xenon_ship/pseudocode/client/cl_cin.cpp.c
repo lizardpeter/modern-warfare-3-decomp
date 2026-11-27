@@ -34,6 +34,45 @@ void FUN_82166868(int param_1,undefined8 param_2,undefined8 param_3,ulonglong pa
 }
 
 
+// 821668A8  FUN_821668a8  (client/cl_cin.cpp:68)
+
+void FUN_821668a8(void)
+
+{
+  int iVar1;
+  char *pcVar2;
+  
+  DAT_82592008 = 1;
+  iVar1 = DAT_82febe50 * 4;
+  if (*(int *)(&DAT_82febe94 + iVar1) < 2) {
+    pcVar2 = "";
+  }
+  else {
+    pcVar2 = *(char **)(*(int *)(&DAT_82febeb4 + iVar1) + 4);
+    if (pcVar2 == (char *)0x0) goto LAB_821668f4;
+  }
+  if (*pcVar2 == '\0') {
+    return;
+  }
+LAB_821668f4:
+  FUN_821667f0(*(undefined4 *)(&DAT_82febe54 + iVar1));
+  return;
+}
+
+
+// 82166910  FUN_82166910  (client/cl_cin.cpp:95)
+
+void FUN_82166910(void)
+
+{
+  if ((&DAT_826fbfac)[*(int *)(&DAT_82febe54 + DAT_82febe50 * 4) * 0x79] == 10) {
+    return;
+  }
+  FUN_821668a8();
+  return;
+}
+
+
 // 82166BC0  FUN_82166bc0  (client/cl_cin.cpp:143)
 
 void FUN_82166bc0(undefined8 param_1)

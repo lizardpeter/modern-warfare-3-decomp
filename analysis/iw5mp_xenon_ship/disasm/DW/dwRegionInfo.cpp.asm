@@ -15,6 +15,11 @@
   8256D974  7D8803A6             mtspr LR,r12
   8256D978  4E800020             blr
 
+; 8256D980  FUN_8256d980  (DW/dwRegionInfo.cpp:23)
+  8256D980  3D608257             lis r11,-0x7da9
+  8256D984  386BED80             subi r3,r11,0x1280
+  8256D988  4BFDCAA0             b 0x8254a428
+
 ; 823C0B68  FUN_823c0b68  (DW/dwRegionInfo.cpp:64)
   823C0B68  7D8802A6             mfspr r12,LR
   823C0B6C  9181FFF8             stw r12,-0x8(r1)
@@ -712,3 +717,14 @@ LAB_823c0c90:
   823C1008  7D4B1B78             or r11,r10,r3
   823C100C  917F3D90             stw r11,0x3d90(r31)
   823C1010  481874F0             b 0x82548500
+
+; 8256ED70  FUN_8256ed70  (line unknown)
+  8256ED70  3D6083BA             lis r11,-0x7c46
+  8256ED74  386B3D9C             addi r3,r11,0x3d9c
+  8256ED78  4BFC8D08             b 0x82537a80
+
+; 8256ED80  FUN_8256ed80  (line unknown)
+  8256ED80  3D6083BA             lis r11,-0x7c46
+  8256ED84  396B3EB0             addi r11,r11,0x3eb0
+  8256ED88  386B0008             addi r3,r11,0x8
+  8256ED8C  4BC17B04             b 0x82186890

@@ -1970,3 +1970,8 @@ LAB_823c0494:
   823C04AC  4BDC63E5             bl 0x82186890
   823C04B0  38210070             addi r1,r1,0x70
   823C04B4  48188058             b 0x8254850c
+
+; 8256ED60  FUN_8256ed60  (line unknown)
+  8256ED60  3D6083BA             lis r11,-0x7c46
+  8256ED64  386B3758             addi r3,r11,0x3758
+  8256ED68  4BE516F8             b 0x823c0460

@@ -446,10 +446,10 @@ void FUN_822415c0(undefined4 param_1,undefined8 param_2,undefined8 param_3,int p
   DAT_82fc6788 = 0;
   DAT_82f7cf58 = FUN_822c4e78;
   DAT_82f7cf60 = 0;
-  DAT_82f7cf5c = &LAB_8223ff48;
-  DAT_82f7cf68 = &LAB_8223ff50;
-  DAT_82f7cf64 = &LAB_8223ff58;
-  DAT_82f7cf6c = &LAB_8223ffe8;
+  DAT_82f7cf5c = thunk_FUN_8229e238;
+  DAT_82f7cf68 = thunk_FUN_8229df98;
+  DAT_82f7cf64 = thunk_FUN_8229e340;
+  DAT_82f7cf6c = thunk_FUN_823156e8;
   DAT_82f7cf54 = 1;
   FUN_820db7b8(0xffffffff8223ffe8);
   FUN_82374a98();
@@ -638,6 +638,45 @@ void FUN_822401a0(void)
     DAT_82fc4448 = 0;
   }
   return;
+}
+
+
+// 82240230  FUN_82240230  (game_mp/g_main_mp.cpp:1606)
+
+ulonglong FUN_82240230(int *param_1,int *param_2)
+
+{
+  uint uVar1;
+  uint uVar2;
+  
+  uVar2 = *param_1 * 0x3980 + DAT_82fc3f80;
+  uVar1 = *param_2 * 0x3980 + DAT_82fc3f80;
+  if (*(int *)(uVar2 + 0x332c) == 1) {
+    return 1;
+  }
+  if (*(int *)(uVar1 + 0x332c) != 1) {
+    if (*(int *)(uVar2 + 0x33d4) == 3) {
+      if (*(int *)(uVar1 + 0x33d4) != 3) {
+        return 1;
+      }
+      if (uVar1 <= uVar2) {
+        return -(ulonglong)(uVar1 < uVar2) & 1;
+      }
+    }
+    else if ((*(int *)(uVar1 + 0x33d4) != 3) &&
+            (*(int *)(uVar2 + 0x3318) <= *(int *)(uVar1 + 0x3318))) {
+      if (*(int *)(uVar2 + 0x3318) < *(int *)(uVar1 + 0x3318)) {
+        return 1;
+      }
+      uVar2 = *(uint *)(uVar2 + 0x331c);
+      uVar1 = *(uint *)(uVar1 + 0x331c);
+      if ((int)uVar1 <= (int)uVar2) {
+        return ((~(ulonglong)(uVar2 ^ uVar1) & 0xffffffff) >> 0x1f) + (ulonglong)(uVar2 <= uVar1) &
+               1;
+      }
+    }
+  }
+  return 0xffffffffffffffff;
 }
 
 

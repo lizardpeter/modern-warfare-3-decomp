@@ -873,6 +873,41 @@ void FUN_822ccb48(int param_1,undefined8 param_2)
 }
 
 
+// 822CCC28  FUN_822ccc28  (server_mp/sv_migration.cpp:1202)
+
+void FUN_822ccc28(int param_1)
+
+{
+  if (param_1 != DAT_836932e4) {
+    return;
+  }
+  if ((&DAT_83692fb4)[param_1 * 6] != 2) {
+    return;
+  }
+  if (DAT_83692fb0 != 2) {
+    return;
+  }
+  FUN_822cbb70();
+  return;
+}
+
+
+// 822CCC70  FUN_822ccc70  (server_mp/sv_migration.cpp:1214)
+
+void FUN_822ccc70(int param_1)
+
+{
+  if ((&DAT_83692fb4)[param_1 * 6] != 2) {
+    return;
+  }
+  if (DAT_83692fb0 != 4) {
+    return;
+  }
+  (&DAT_83692fb4)[param_1 * 6] = 0;
+  return;
+}
+
+
 // 822CCCB0  FUN_822cccb0  (server_mp/sv_migration.cpp:1240)
 
 /* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */

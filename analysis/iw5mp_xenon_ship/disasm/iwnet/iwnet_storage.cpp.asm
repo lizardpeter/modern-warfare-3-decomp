@@ -38,6 +38,10 @@ LAB_823ba078:
   823BA0B0  38210070             addi r1,r1,0x70
   823BA0B4  4818E458             b 0x8254850c
 
+; 823BA0B8  FUN_823ba0b8  (iwnet/iwnet_storage.cpp:94)
+  823BA0B8  3860000B             li r3,0xb
+  823BA0BC  4BFFFC64             b 0x823b9d20
+
 ; 823BA0C0  FUN_823ba0c0  (iwnet/iwnet_storage.cpp:101)
   823BA0C0  7D8802A6             mfspr r12,LR
   823BA0C4  4818E3F5             bl 0x825484b8
@@ -260,6 +264,31 @@ LAB_823ba434:
   823BA444  EBE1FFF0             ld r31,-0x10(r1)
   823BA448  4E800020             blr
 
+; 823BA450  FUN_823ba450  (iwnet/iwnet_storage.cpp:274)
+  823BA450  8163000C             lwz r11,0xc(r3)
+  823BA454  38A3000C             addi r5,r3,0xc
+  823BA458  814B0058             lwz r10,0x58(r11)
+  823BA45C  394A0400             addi r10,r10,0x400
+  823BA460  914B0058             stw r10,0x58(r11)
+  823BA464  8123000C             lwz r9,0xc(r3)
+  823BA468  81090058             lwz r8,0x58(r9)
+  823BA46C  80E90048             lwz r7,0x48(r9)
+  823BA470  7F083840             cmplw cr6,r8,r7
+  823BA474  40990010             ble cr6,0x823ba484
+  823BA478  81650000             lwz r11,0x0(r5)
+  823BA47C  814B0048             lwz r10,0x48(r11)
+  823BA480  914B0058             stw r10,0x58(r11)
+LAB_823ba484:
+  823BA484  81650000             lwz r11,0x0(r5)
+  823BA488  80630010             lwz r3,0x10(r3)
+  823BA48C  814B0048             lwz r10,0x48(r11)
+  823BA490  812B0058             lwz r9,0x58(r11)
+  823BA494  7D095050             subf r8,r9,r10
+  823BA498  7D070034             cntlzw r7,r8
+  823BA49C  54EBDFFE             rlwinm r11,r7,0x1b,0x1f,0x1f
+  823BA4A0  388B0002             addi r4,r11,0x2
+  823BA4A4  4BFFF4FC             b 0x823b99a0
+
 ; 823BA4A8  FUN_823ba4a8  (iwnet/iwnet_storage.cpp:291)
   823BA4A8  8163000C             lwz r11,0xc(r3)
   823BA4AC  39400002             li r10,0x2
@@ -363,6 +392,30 @@ LAB_823ba5bc:
   823BA618  4BFFF389             bl 0x823b99a0
   823BA61C  38210080             addi r1,r1,0x80
   823BA620  4818DEE4             b 0x82548504
+
+; 823BA628  FUN_823ba628  (iwnet/iwnet_storage.cpp:423)
+  823BA628  8163000C             lwz r11,0xc(r3)
+  823BA62C  39400002             li r10,0x2
+  823BA630  39200000             li r9,0x0
+  823BA634  914B005C             stw r10,0x5c(r11)
+  823BA638  912B0060             stw r9,0x60(r11)
+  823BA63C  4E800020             blr
+
+; 823BA7D8  FUN_823ba7d8  (iwnet/iwnet_storage.cpp:431)
+  823BA7D8  8163000C             lwz r11,0xc(r3)
+  823BA7DC  39400002             li r10,0x2
+  823BA7E0  39200003             li r9,0x3
+  823BA7E4  914B005C             stw r10,0x5c(r11)
+  823BA7E8  912B0060             stw r9,0x60(r11)
+  823BA7EC  4E800020             blr
+
+; 823BA7F0  FUN_823ba7f0  (iwnet/iwnet_storage.cpp:431)
+  823BA7F0  8163000C             lwz r11,0xc(r3)
+  823BA7F4  39400002             li r10,0x2
+  823BA7F8  39200001             li r9,0x1
+  823BA7FC  914B005C             stw r10,0x5c(r11)
+  823BA800  912B0060             stw r9,0x60(r11)
+  823BA804  4E800020             blr
 
 ; 823BA808  FUN_823ba808  (iwnet/iwnet_storage.cpp:462)
   823BA808  7D8802A6             mfspr r12,LR

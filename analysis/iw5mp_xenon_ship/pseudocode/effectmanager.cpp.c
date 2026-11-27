@@ -171,6 +171,82 @@ undefined4 * FUN_824f7a28(undefined4 *param_1,int *param_2,int *param_3)
 }
 
 
+// 824F7648  FUN_824f7648  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/effectmanager.cpp:260)
+
+undefined8 FUN_824f7648(int param_1,byte *param_2,undefined8 param_3)
+
+{
+  int iVar1;
+  undefined8 uVar2;
+  uint uVar3;
+  int *piVar4;
+  
+  uVar3 = (uint)*param_2;
+  if (uVar3 < 0x80) {
+    if (uVar3 < *(uint *)(param_1 + 8)) {
+      iVar1 = *(int *)(param_1 + 0xc);
+LAB_824f7684:
+      piVar4 = (int *)(uVar3 * 8 + iVar1);
+      if ((piVar4[1] != 0) && (*piVar4 != 0)) goto LAB_824f76a8;
+    }
+  }
+  else {
+    uVar3 = uVar3 - 0x80;
+    if (uVar3 < *(uint *)(param_1 + 0x10)) {
+      iVar1 = *(int *)(param_1 + 0x14);
+      goto LAB_824f7684;
+    }
+  }
+  piVar4 = (int *)0x0;
+LAB_824f76a8:
+  if (piVar4 == (int *)0x0) {
+    return 0xffffffff80004001;
+  }
+                    /* WARNING: Could not recover jumptable at 0x824f76c8. Too many branches */
+                    /* WARNING: Treating indirect jump as call */
+  uVar2 = (*(code *)*piVar4)(param_2,param_3);
+  return uVar2;
+}
+
+
+// 824F76D0  FUN_824f76d0  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/effectmanager.cpp:296)
+
+undefined8 FUN_824f76d0(int param_1,byte *param_2,undefined8 param_3,undefined8 param_4)
+
+{
+  int iVar1;
+  undefined8 uVar2;
+  uint uVar3;
+  int *piVar4;
+  
+  uVar3 = (uint)*param_2;
+  if (uVar3 < 0x80) {
+    if (uVar3 < *(uint *)(param_1 + 8)) {
+      iVar1 = *(int *)(param_1 + 0xc);
+LAB_824f7710:
+      piVar4 = (int *)(uVar3 * 8 + iVar1);
+      if ((piVar4[1] != 0) && (*piVar4 != 0)) goto LAB_824f7734;
+    }
+  }
+  else {
+    uVar3 = uVar3 - 0x80;
+    if (uVar3 < *(uint *)(param_1 + 0x10)) {
+      iVar1 = *(int *)(param_1 + 0x14);
+      goto LAB_824f7710;
+    }
+  }
+  piVar4 = (int *)0x0;
+LAB_824f7734:
+  if (piVar4 == (int *)0x0) {
+    return 0xffffffff80004001;
+  }
+                    /* WARNING: Could not recover jumptable at 0x824f7754. Too many branches */
+                    /* WARNING: Treating indirect jump as call */
+  uVar2 = (*(code *)piVar4[1])(param_2,param_3,param_4);
+  return uVar2;
+}
+
+
 // 824F7758  FUN_824f7758  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/effectmanager.cpp:329)
 
 /* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
@@ -257,6 +333,32 @@ LAB_824f7824:
     return 0xffffffff8007000e;
   }
   return 0xffffffff8007000e;
+}
+
+
+// 824F7958  FUN_824f7958  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/effectmanager.cpp:430)
+
+undefined8 FUN_824f7958(int param_1,byte *param_2)
+
+{
+  uint uVar1;
+  uint uVar2;
+  int *piVar3;
+  
+  uVar1 = 0;
+  if (*param_2 != 0) {
+    do {
+      uVar2 = *(byte *)(uVar1 + *(int *)(param_2 + 4)) - 0x80;
+      if ((((uVar2 < *(uint *)(param_1 + 0x10)) &&
+           (piVar3 = (int *)(uVar2 * 8 + *(int *)(param_1 + 0x14)), piVar3[1] != 0)) &&
+          (*piVar3 != 0)) && (piVar3 != (int *)0x0)) {
+        *piVar3 = 0;
+        piVar3[1] = 0;
+      }
+      uVar1 = uVar1 + 1;
+    } while (uVar1 < *param_2);
+  }
+  return 0;
 }
 
 

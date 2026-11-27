@@ -1958,6 +1958,9 @@ LAB_8222e86c:
   8222E884  EBE1FFF0             ld r31,-0x10(r1)
   8222E888  4E800020             blr
 
+; 8222E890  thunk_FUN_822b8a20  (game/g_client_script_cmd.cpp:1199)
+  8222E890  4808A190             b 0x822b8a20
+
 ; 8222E898  FUN_8222e898  (game/g_client_script_cmd.cpp:1235)
   8222E898  7D8802A6             mfspr r12,LR
   8222E89C  9181FFF8             stw r12,-0x8(r1)
@@ -4190,6 +4193,12 @@ LAB_8223075c:
   822307FC  CBE1FFF0             lfd f31,-0x10(r1)
   82230800  4E800020             blr
 
+; 82230808  FUN_82230808  (game/g_client_script_cmd.cpp:2637)
+  82230808  4E800020             blr
+
+; 82230810  FUN_82230810  (game/g_client_script_cmd.cpp:2701)
+  82230810  4E800020             blr
+
 ; 82230818  FUN_82230818  (game/g_client_script_cmd.cpp:2754)
   82230818  7D8802A6             mfspr r12,LR
   8223081C  9181FFF8             stw r12,-0x8(r1)
@@ -5160,6 +5169,22 @@ LAB_822315c8:
   822315D4  382104A0             addi r1,r1,0x4a0
   822315D8  48316F1C             b 0x825484f4
 
+; 822315E0  FUN_822315e0  (game/g_client_script_cmd.cpp:3414)
+  822315E0  38800000             li r4,0x0
+  822315E4  4BFFFEBC             b 0x822314a0
+
+; 822315E8  FUN_822315e8  (game/g_client_script_cmd.cpp:3430)
+  822315E8  38800001             li r4,0x1
+  822315EC  4BFFFEB4             b 0x822314a0
+
+; 822315F0  FUN_822315f0  (game/g_client_script_cmd.cpp:3446)
+  822315F0  38800002             li r4,0x2
+  822315F4  4BFFFEAC             b 0x822314a0
+
+; 822315F8  FUN_822315f8  (game/g_client_script_cmd.cpp:3462)
+  822315F8  38800004             li r4,0x4
+  822315FC  4BFFFEA4             b 0x822314a0
+
 ; 82231600  FUN_82231600  (game/g_client_script_cmd.cpp:3490)
   82231600  7D8802A6             mfspr r12,LR
   82231604  48316E9D             bl 0x825484a0
@@ -5421,6 +5446,26 @@ LAB_8223193c:
   822319A4  38210080             addi r1,r1,0x80
   822319A8  48316B60             b 0x82548508
 
+; 822319B0  FUN_822319b0  (game/g_client_script_cmd.cpp:3651)
+  822319B0  38800000             li r4,0x0
+  822319B4  4BFFFED4             b 0x82231888
+
+; 822319B8  FUN_822319b8  (game/g_client_script_cmd.cpp:3700)
+  822319B8  38800001             li r4,0x1
+  822319BC  4BFFFECC             b 0x82231888
+
+; 822319C0  FUN_822319c0  (game/g_client_script_cmd.cpp:3717)
+  822319C0  38800002             li r4,0x2
+  822319C4  4BFFFEC4             b 0x82231888
+
+; 822319C8  FUN_822319c8  (game/g_client_script_cmd.cpp:3734)
+  822319C8  38800003             li r4,0x3
+  822319CC  4BFFFEBC             b 0x82231888
+
+; 822319D0  FUN_822319d0  (game/g_client_script_cmd.cpp:3751)
+  822319D0  38800004             li r4,0x4
+  822319D4  4BFFFEB4             b 0x82231888
+
 ; 822319D8  FUN_822319d8  (game/g_client_script_cmd.cpp:3768)
   822319D8  7D8802A6             mfspr r12,LR
   822319DC  9181FFF8             stw r12,-0x8(r1)
@@ -5496,6 +5541,19 @@ LAB_82231a94:
   82231AE4  EBC1FFE8             ld r30,-0x18(r1)
   82231AE8  EBE1FFF0             ld r31,-0x10(r1)
   82231AEC  4E800020             blr
+
+; 82231AF0  FUN_82231af0  (game/g_client_script_cmd.cpp:3805)
+  82231AF0  3D608207             lis r11,-0x7df9
+  82231AF4  386B0DF0             addi r3,r11,0xdf0
+  82231AF8  48089828             b 0x822bb320
+
+; 82231B00  FUN_82231b00  (game/g_client_script_cmd.cpp:3835)
+  82231B00  3D608207             lis r11,-0x7df9
+  82231B04  386B0DF0             addi r3,r11,0xdf0
+  82231B08  48089818             b 0x822bb320
+
+; 82231B10  FUN_82231b10  (game/g_client_script_cmd.cpp:3959)
+  82231B10  4E800020             blr
 
 ; 82231B18  FUN_82231b18  (game/g_client_script_cmd.cpp:4232)
   82231B18  7D8802A6             mfspr r12,LR
@@ -6030,6 +6088,12 @@ LAB_82232270:
   8223229C  EBC1FFE8             ld r30,-0x18(r1)
   822322A0  EBE1FFF0             ld r31,-0x10(r1)
   822322A4  4E800020             blr
+
+; 822322A8  FUN_822322a8  (game/g_client_script_cmd.cpp:4532)
+  822322A8  4E800020             blr
+
+; 822322B0  FUN_822322b0  (game/g_client_script_cmd.cpp:4554)
+  822322B0  4E800020             blr
 
 ; 822322B8  FUN_822322b8  (game/g_client_script_cmd.cpp:4575)
   822322B8  7D8802A6             mfspr r12,LR

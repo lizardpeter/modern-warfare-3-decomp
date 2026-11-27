@@ -1884,14 +1884,14 @@ void FUN_8212a830(int param_1,undefined4 param_2,undefined4 param_3,undefined4 p
   FUN_82165ba0(param_1,0);
   *(undefined4 *)(iVar15 + 0x3334) = param_4;
   *(undefined1 *)(iVar15 + 0x765b0) = 0;
-  *(undefined1 **)(iVar15 + 0xfde70) = &LAB_821298f8;
+  *(code **)(iVar15 + 0xfde70) = thunk_FUN_824088e0;
   *(code **)(iVar15 + 0xfde74) = FUN_82129f90;
   *(code **)(iVar15 + 0xfde78) = FUN_82129950;
   *(undefined4 *)(iVar15 + 0x76e68) = 1;
   *(undefined4 *)(iVar15 + 0xfde6c) = 0;
-  *(undefined1 **)(iVar15 + 0xfde80) = &LAB_8212a000;
+  *(code **)(iVar15 + 0xfde80) = thunk_FUN_8229df18;
   *(code **)(iVar15 + 0xfde7c) = FUN_8229e2c8;
-  *(undefined1 **)(iVar15 + 0xfde84) = &LAB_8212a520;
+  *(code **)(iVar15 + 0xfde84) = thunk_FUN_823156e0;
   *(undefined4 *)(iVar15 + 0x76e74) = 1;
   *(undefined4 *)(iVar14 + 0x1c) = param_2;
   *(undefined4 *)(iVar14 + 0x18) = param_3;

@@ -174,6 +174,15 @@ LAB_8244d864:
   8244D868  EBE1FFF8             ld r31,-0x8(r1)
   8244D86C  4E800020             blr
 
+; 8244D870  FUN_8244d870  (jpeg-6/jdcolor.c:204)
+  8244D870  7CAB2B78             or r11,r5,r5
+  8244D874  81030064             lwz r8,0x64(r3)
+  8244D878  80640000             lwz r3,0x0(r4)
+  8244D87C  7CC53378             or r5,r6,r6
+  8244D880  38C00000             li r6,0x0
+  8244D884  7D645B78             or r4,r11,r11
+  8244D888  4800E590             b 0x8245be18
+
 ; 8244D890  FUN_8244d890  (jpeg-6/jdcolor.c:220)
   8244D890  FBE1FFF8             std r31,-0x8(r1)
   8244D894  80630064             lwz r3,0x64(r3)

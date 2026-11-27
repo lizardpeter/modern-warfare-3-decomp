@@ -41,3 +41,13 @@ bool FUN_82285288(char *param_1,float *param_2)
   return true;
 }
 
+
+// 82285588  FUN_82285588  (qcommon/com_bsp.cpp:88)
+
+void FUN_82285588(int param_1)
+
+{
+  *(undefined4 *)(param_1 + 4) = 0;
+  return;
+}
+

@@ -117,6 +117,17 @@ bool FUN_823325e0(int *param_1)
 }
 
 
+// 823325F0  FUN_823325f0  (universal/streamfile.cpp:166)
+
+void FUN_823325f0(longlong param_1,uint param_2)
+
+{
+  DAT_838b9514 = (int)param_1;
+  DAT_838b9540 = -(uint)(param_1 == 0) & param_2;
+  return;
+}
+
+
 // 82332610  FUN_82332610  (universal/streamfile.cpp:173)
 
 /* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */

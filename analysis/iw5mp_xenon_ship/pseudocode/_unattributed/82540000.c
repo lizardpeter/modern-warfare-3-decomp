@@ -21898,6 +21898,61 @@ void __restvmx_127(void)
 }
 
 
+// 8254A04C  FUN_8254a04c  (line unknown)
+
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
+ulonglong FUN_8254a04c(longlong param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+                      undefined8 param_5,undefined8 param_6,undefined8 param_7,undefined8 param_8)
+
+{
+  undefined4 uVar1;
+  undefined4 *puVar5;
+  ulonglong uVar2;
+  longlong lVar3;
+  undefined8 uVar4;
+  uint uVar6;
+  undefined4 uStack00000014;
+  undefined8 uStack00000018;
+  undefined8 uStack00000020;
+  undefined8 uStack00000028;
+  undefined8 uStack00000030;
+  undefined8 uStack00000038;
+  undefined8 uStack00000040;
+  undefined8 uStack00000048;
+  
+  uStack00000014 = (undefined4)param_1;
+  uStack00000018 = param_2;
+  uStack00000020 = param_3;
+  uStack00000028 = param_4;
+  uStack00000030 = param_5;
+  uStack00000038 = param_6;
+  uStack00000040 = param_7;
+  uStack00000048 = param_8;
+  if (param_1 == 0) {
+    puVar5 = (undefined4 *)FUN_82551268();
+    *puVar5 = 0x16;
+    FUN_825510f8();
+    uVar2 = 0xffffffffffffffff;
+  }
+  else {
+    lVar3 = FUN_8254d708();
+    FUN_8254d8f0(1,lVar3 + 0x20);
+    lVar3 = FUN_8254d708();
+    uVar4 = FUN_82553350(lVar3 + 0x20);
+    uVar1 = uStack00000014;
+    lVar3 = FUN_8254d708();
+    uVar6 = FUN_825505b8(lVar3 + 0x20,uVar1,0,&stack0x00000018);
+    lVar3 = FUN_8254d708();
+    FUN_82553440(uVar4,lVar3 + 0x20);
+    FUN_8254a11c();
+    uVar2 = (ulonglong)uVar6;
+  }
+  return uVar2;
+}
+
+
 // 8254A11C  FUN_8254a11c  (line unknown)
 
 void FUN_8254a11c(void)

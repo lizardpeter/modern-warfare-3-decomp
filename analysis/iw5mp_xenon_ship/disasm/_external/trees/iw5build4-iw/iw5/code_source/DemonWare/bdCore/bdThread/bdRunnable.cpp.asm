@@ -14,6 +14,11 @@
   8255E870  91630000             stw r11,0x0(r3)
   8255E874  4E800020             blr
 
+; 8255E878  FUN_8255e878  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdthread/bdrunnable.cpp:21)
+  8255E878  39600001             li r11,0x1
+  8255E87C  99630004             stb r11,0x4(r3)
+  8255E880  4E800020             blr
+
 ; 8255E888  FUN_8255e888  (line unknown)
   8255E888  7D8802A6             mfspr r12,LR
   8255E88C  9181FFF8             stw r12,-0x8(r1)

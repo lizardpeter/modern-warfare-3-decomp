@@ -1667,6 +1667,10 @@ LAB_8253b818:
   8253B860  383F00A0             addi r1,r31,0xa0
   8253B864  4800CC9C             b 0x82548500
 
+; 8253A440  FUN_8253a440  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdcontentstreaming.cpp:904)
+  8253A440  386000FF             li r3,0xff
+  8253A444  4E800020             blr
+
 ; 8253A448  FUN_8253a448  (line unknown)
   8253A448  7D8802A6             mfspr r12,LR
   8253A44C  9181FFF8             stw r12,-0x8(r1)

@@ -22,6 +22,12 @@
   82545A50  EBE1FFF0             ld r31,-0x10(r1)
   82545A54  4E800020             blr
 
+; 82545A58  FUN_82545a58  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdurl.cpp:20)
+  82545A58  3D608207             lis r11,-0x7df9
+  82545A5C  396B99D8             subi r11,r11,0x6628
+  82545A60  91630000             stw r11,0x0(r3)
+  82545A64  4BFEB9CC             b 0x82531430
+
 ; 82545AD0  FUN_82545ad0  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdurl.cpp:24)
   82545AD0  7D8802A6             mfspr r12,LR
   82545AD4  480029E9             bl 0x825484bc
@@ -77,6 +83,10 @@ LAB_82545b78:
   82545B84  7FC3F378             or r3,r30,r30
   82545B88  383F0070             addi r1,r31,0x70
   82545B8C  48002980             b 0x8254850c
+
+; 82545A68  FUN_82545a68  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdurl.cpp:35)
+  82545A68  38600210             li r3,0x210
+  82545A6C  4E800020             blr
 
 ; 82545A70  FUN_82545a70  (line unknown)
   82545A70  7D8802A6             mfspr r12,LR

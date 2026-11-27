@@ -104,6 +104,15 @@ LAB_824f4aa0:
   824F4AA8  38210070             addi r1,r1,0x70
   824F4AAC  48053A60             b 0x8254850c
 
+; 824F4880  FUN_824f4880  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/effectmanager.h:148)
+  824F4880  2B030000             cmplwi cr6,r3,0x0
+  824F4884  39630008             addi r11,r3,0x8
+  824F4888  409A0008             bne cr6,0x824f4890
+  824F488C  39600000             li r11,0x0
+LAB_824f4890:
+  824F4890  91640000             stw r11,0x0(r4)
+  824F4894  4E800020             blr
+
 ; 824F4778  FUN_824f4778  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/framebuffer.cpp:149)
   824F4778  7D8802A6             mfspr r12,LR
   824F477C  48053D41             bl 0x825484bc
@@ -264,6 +273,12 @@ LAB_824f49a4:
   824F4738  810B001C             lwz r8,0x1c(r11)
   824F473C  91040008             stw r8,0x8(r4)
   824F4740  4E800020             blr
+
+; 824F4AB0  FUN_824f4ab0  (line unknown)
+  824F4AB0  3D608206             lis r11,-0x7dfa
+  824F4AB4  394BA758             subi r10,r11,0x58a8
+  824F4AB8  91430000             stw r10,0x0(r3)
+  824F4ABC  4E800020             blr
 
 ; 824FADB0  FUN_824fadb0  (line unknown)
   824FADB0  7D8802A6             mfspr r12,LR

@@ -655,7 +655,7 @@ void FUN_824b59a8(int param_1)
   }
   else if (*(int *)(param_1 + 0x2f0ac) == 0) {
     if (*(int *)(param_1 + 0x2f0a8) == 0) {
-      pcVar10 = (code *)&LAB_824bb4c0;
+      pcVar10 = FUN_824bb4c0;
     }
     else {
       pcVar10 = FUN_824b3260;
@@ -672,7 +672,7 @@ void FUN_824b59a8(int param_1)
     *(undefined4 *)(param_1 + 0x1afc0) = 0;
   }
   if (*(int *)(param_1 + 0x1e724) != 0) {
-    *(undefined4 *)(param_1 + 0x301e0) = &LAB_824bb4c0;
+    *(undefined4 *)(param_1 + 0x301e0) = FUN_824bb4c0;
   }
   return;
 }

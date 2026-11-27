@@ -278,6 +278,21 @@ void FUN_82427d60(longlong param_1,longlong param_2,int param_3)
 }
 
 
+// 8256E280  FUN_8256e280  (gfx_d3d/r_water.cpp:451)
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void FUN_8256e280(void)
+
+{
+  _DAT_83e7f000 = 0x3070b0f;
+  uRam83e7f004 = 0x13171b1f;
+  uRam83e7f008 = 0;
+  uRam83e7f00c = 0;
+  return;
+}
+
+
 // 82427F58  FUN_82427f58  (gfx_d3d/r_water.cpp:455)
 
 /* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */

@@ -28,6 +28,318 @@ void FUN_822e3098(int param_1,int param_2,undefined4 *param_3)
 }
 
 
+// 822E30E0  FUN_822e30e0  (ui/ui_expressions_logicfunctions.cpp:30)
+
+void FUN_822e30e0(int param_1,int param_2,undefined4 *param_3)
+
+{
+  *param_3 = 0;
+  param_3[1] = (uint)LZCOUNT(*(int *)(param_2 + 4) - *(int *)(param_1 + 4)) >> 5;
+  return;
+}
+
+
+// 822E3108  FUN_822e3108  (ui/ui_expressions_logicfunctions.cpp:38)
+
+void FUN_822e3108(int param_1,int param_2,undefined4 *param_3)
+
+{
+  *param_3 = 0;
+  param_3[1] = (uint)(*(int *)(param_2 + 4) != *(int *)(param_1 + 4));
+  return;
+}
+
+
+// 822E3130  FUN_822e3130  (ui/ui_expressions_logicfunctions.cpp:46)
+
+void FUN_822e3130(int param_1,int param_2,undefined4 *param_3)
+
+{
+  *param_3 = 0;
+  param_3[1] = (uint)((float)(longlong)*(int *)(param_1 + 4) == *(float *)(param_2 + 4));
+  return;
+}
+
+
+// 822E3168  FUN_822e3168  (ui/ui_expressions_logicfunctions.cpp:54)
+
+void FUN_822e3168(int param_1,int param_2,undefined4 *param_3)
+
+{
+  *param_3 = 0;
+  param_3[1] = (uint)((float)(longlong)*(int *)(param_2 + 4) == *(float *)(param_1 + 4));
+  return;
+}
+
+
+// 822E31A0  FUN_822e31a0  (ui/ui_expressions_logicfunctions.cpp:59)
+
+void FUN_822e31a0(int param_1,int param_2,undefined4 *param_3)
+
+{
+  *param_3 = 0;
+  param_3[1] = (uint)(*(float *)(param_1 + 4) == *(float *)(param_2 + 4));
+  return;
+}
+
+
+// 822E31C8  FUN_822e31c8  (ui/ui_expressions_logicfunctions.cpp:67)
+
+void FUN_822e31c8(int param_1,int param_2,undefined4 *param_3)
+
+{
+  *param_3 = 0;
+  param_3[1] = (uint)((float)(longlong)*(int *)(param_1 + 4) != *(float *)(param_2 + 4));
+  return;
+}
+
+
+// 822E3200  FUN_822e3200  (ui/ui_expressions_logicfunctions.cpp:75)
+
+void FUN_822e3200(int param_1,int param_2,undefined4 *param_3)
+
+{
+  *param_3 = 0;
+  param_3[1] = (uint)((float)(longlong)*(int *)(param_2 + 4) != *(float *)(param_1 + 4));
+  return;
+}
+
+
+// 822E3238  FUN_822e3238  (ui/ui_expressions_logicfunctions.cpp:80)
+
+void FUN_822e3238(int param_1,int param_2,undefined4 *param_3)
+
+{
+  *param_3 = 0;
+  param_3[1] = (uint)(*(float *)(param_1 + 4) != *(float *)(param_2 + 4));
+  return;
+}
+
+
+// 822E3260  FUN_822e3260  (ui/ui_expressions_logicfunctions.cpp:88)
+
+void FUN_822e3260(int param_1,int param_2,undefined4 *param_3)
+
+{
+  *param_3 = 0;
+  param_3[1] = (int)((~(ulonglong)(*(uint *)(param_2 + 4) ^ *(uint *)(param_1 + 4)) & 0xffffffff) >>
+                    0x1f) + (uint)(*(uint *)(param_2 + 4) <= *(uint *)(param_1 + 4)) & 1;
+  return;
+}
+
+
+// 822E3290  FUN_822e3290  (ui/ui_expressions_logicfunctions.cpp:96)
+
+void FUN_822e3290(int param_1,int param_2,undefined4 *param_3)
+
+{
+  *param_3 = 0;
+  param_3[1] = (uint)((float)(longlong)*(int *)(param_1 + 4) < *(float *)(param_2 + 4));
+  return;
+}
+
+
+// 822E32C8  FUN_822e32c8  (ui/ui_expressions_logicfunctions.cpp:104)
+
+void FUN_822e32c8(int param_1,int param_2,undefined4 *param_3)
+
+{
+  *param_3 = 0;
+  param_3[1] = (uint)(*(float *)(param_1 + 4) < (float)(longlong)*(int *)(param_2 + 4));
+  return;
+}
+
+
+// 822E3300  FUN_822e3300  (ui/ui_expressions_logicfunctions.cpp:112)
+
+void FUN_822e3300(int param_1,int param_2,undefined4 *param_3)
+
+{
+  *param_3 = 0;
+  param_3[1] = (uint)(*(float *)(param_1 + 4) < *(float *)(param_2 + 4));
+  return;
+}
+
+
+// 822E3328  FUN_822e3328  (ui/ui_expressions_logicfunctions.cpp:120)
+
+void FUN_822e3328(int param_1,int param_2,undefined4 *param_3)
+
+{
+  *param_3 = 0;
+  param_3[1] = (((int)*(uint *)(param_2 + 4) >> 0x1f) - ((int)*(uint *)(param_1 + 4) >> 0x1f)) +
+               (uint)(*(uint *)(param_1 + 4) <= *(uint *)(param_2 + 4));
+  return;
+}
+
+
+// 822E3350  FUN_822e3350  (ui/ui_expressions_logicfunctions.cpp:128)
+
+void FUN_822e3350(int param_1,int param_2,undefined4 *param_3)
+
+{
+  *param_3 = 0;
+  param_3[1] = (uint)((float)(longlong)*(int *)(param_2 + 4) <= *(float *)(param_1 + 4));
+  return;
+}
+
+
+// 822E3388  FUN_822e3388  (ui/ui_expressions_logicfunctions.cpp:136)
+
+void FUN_822e3388(int param_1,int param_2,undefined4 *param_3)
+
+{
+  *param_3 = 0;
+  param_3[1] = (uint)((float)(longlong)*(int *)(param_1 + 4) <= *(float *)(param_2 + 4));
+  return;
+}
+
+
+// 822E33C0  FUN_822e33c0  (ui/ui_expressions_logicfunctions.cpp:141)
+
+void FUN_822e33c0(int param_1,int param_2,undefined4 *param_3)
+
+{
+  *param_3 = 0;
+  param_3[1] = (uint)(*(float *)(param_1 + 4) <= (float)(longlong)*(int *)(param_2 + 4));
+  return;
+}
+
+
+// 822E33F8  FUN_822e33f8  (ui/ui_expressions_logicfunctions.cpp:149)
+
+void FUN_822e33f8(int param_1,int param_2,undefined4 *param_3)
+
+{
+  *param_3 = 0;
+  param_3[1] = (uint)(*(float *)(param_1 + 4) <= *(float *)(param_2 + 4));
+  return;
+}
+
+
+// 822E3420  FUN_822e3420  (ui/ui_expressions_logicfunctions.cpp:157)
+
+void FUN_822e3420(int param_1,int param_2,undefined4 *param_3)
+
+{
+  *param_3 = 0;
+  param_3[1] = (int)((~(ulonglong)(*(uint *)(param_1 + 4) ^ *(uint *)(param_2 + 4)) & 0xffffffff) >>
+                    0x1f) + (uint)(*(uint *)(param_1 + 4) <= *(uint *)(param_2 + 4)) & 1;
+  return;
+}
+
+
+// 822E3450  FUN_822e3450  (ui/ui_expressions_logicfunctions.cpp:162)
+
+void FUN_822e3450(int param_1,int param_2,undefined4 *param_3)
+
+{
+  *param_3 = 0;
+  param_3[1] = (uint)(*(float *)(param_2 + 4) < (float)(longlong)*(int *)(param_1 + 4));
+  return;
+}
+
+
+// 822E3488  FUN_822e3488  (ui/ui_expressions_logicfunctions.cpp:167)
+
+void FUN_822e3488(int param_1,int param_2,undefined4 *param_3)
+
+{
+  *param_3 = 0;
+  param_3[1] = (uint)((float)(longlong)*(int *)(param_2 + 4) < *(float *)(param_1 + 4));
+  return;
+}
+
+
+// 822E34C0  FUN_822e34c0  (ui/ui_expressions_logicfunctions.cpp:175)
+
+void FUN_822e34c0(int param_1,int param_2,undefined4 *param_3)
+
+{
+  *param_3 = 0;
+  param_3[1] = (uint)(*(float *)(param_2 + 4) < *(float *)(param_1 + 4));
+  return;
+}
+
+
+// 822E34E8  FUN_822e34e8  (ui/ui_expressions_logicfunctions.cpp:183)
+
+void FUN_822e34e8(int param_1,int param_2,undefined4 *param_3)
+
+{
+  *param_3 = 0;
+  param_3[1] = (((int)*(uint *)(param_1 + 4) >> 0x1f) - ((int)*(uint *)(param_2 + 4) >> 0x1f)) +
+               (uint)(*(uint *)(param_2 + 4) <= *(uint *)(param_1 + 4));
+  return;
+}
+
+
+// 822E3510  FUN_822e3510  (ui/ui_expressions_logicfunctions.cpp:191)
+
+void FUN_822e3510(int param_1,int param_2,undefined4 *param_3)
+
+{
+  *param_3 = 0;
+  param_3[1] = (uint)(*(float *)(param_2 + 4) <= (float)(longlong)*(int *)(param_1 + 4));
+  return;
+}
+
+
+// 822E3548  FUN_822e3548  (ui/ui_expressions_logicfunctions.cpp:199)
+
+void FUN_822e3548(int param_1,int param_2,undefined4 *param_3)
+
+{
+  *param_3 = 0;
+  param_3[1] = (uint)(*(float *)(param_2 + 4) <= *(float *)(param_1 + 4));
+  return;
+}
+
+
+// 822E3570  FUN_822e3570  (ui/ui_expressions_logicfunctions.cpp:207)
+
+void FUN_822e3570(int param_1,int param_2,undefined4 *param_3)
+
+{
+  *param_3 = 0;
+  param_3[1] = *(int *)(param_1 + 4) + *(int *)(param_2 + 4);
+  return;
+}
+
+
+// 822E3590  FUN_822e3590  (ui/ui_expressions_logicfunctions.cpp:215)
+
+void FUN_822e3590(int param_1,int param_2,undefined4 *param_3)
+
+{
+  *param_3 = 1;
+  param_3[1] = (float)(longlong)*(int *)(param_1 + 4) + *(float *)(param_2 + 4);
+  return;
+}
+
+
+// 822E35C0  FUN_822e35c0  (ui/ui_expressions_logicfunctions.cpp:223)
+
+void FUN_822e35c0(int param_1,int param_2,undefined4 *param_3)
+
+{
+  *param_3 = 1;
+  param_3[1] = (float)(longlong)*(int *)(param_2 + 4) + *(float *)(param_1 + 4);
+  return;
+}
+
+
+// 822E35F0  FUN_822e35f0  (ui/ui_expressions_logicfunctions.cpp:228)
+
+void FUN_822e35f0(int param_1,int param_2,undefined4 *param_3)
+
+{
+  *param_3 = 1;
+  param_3[1] = *(float *)(param_1 + 4) + *(float *)(param_2 + 4);
+  return;
+}
+
+
 // 822E3610  FUN_822e3610  (ui/ui_expressions_logicfunctions.cpp:236)
 
 void FUN_822e3610(int param_1,int param_2,undefined4 *param_3)
@@ -117,6 +429,172 @@ void FUN_822e37c8(int param_1,int param_2,undefined4 *param_3)
   uVar1 = FUN_822d46f0();
   FUN_8232e7b0(uVar1,0x100,0xffffffff8202eff4,auStack_120,(double)*(float *)(param_2 + 4));
   param_3[1] = (int)uVar1;
+  return;
+}
+
+
+// 822E3848  FUN_822e3848  (ui/ui_expressions_logicfunctions.cpp:323)
+
+void FUN_822e3848(int param_1,int param_2,undefined4 *param_3)
+
+{
+  *param_3 = 0;
+  param_3[1] = *(int *)(param_1 + 4) - *(int *)(param_2 + 4);
+  return;
+}
+
+
+// 822E3868  FUN_822e3868  (ui/ui_expressions_logicfunctions.cpp:331)
+
+void FUN_822e3868(int param_1,int param_2,undefined4 *param_3)
+
+{
+  *param_3 = 1;
+  param_3[1] = (float)(longlong)*(int *)(param_1 + 4) - *(float *)(param_2 + 4);
+  return;
+}
+
+
+// 822E3898  FUN_822e3898  (ui/ui_expressions_logicfunctions.cpp:339)
+
+void FUN_822e3898(int param_1,int param_2,undefined4 *param_3)
+
+{
+  *param_3 = 1;
+  param_3[1] = *(float *)(param_1 + 4) - (float)(longlong)*(int *)(param_2 + 4);
+  return;
+}
+
+
+// 822E38C8  FUN_822e38c8  (ui/ui_expressions_logicfunctions.cpp:347)
+
+void FUN_822e38c8(int param_1,int param_2,undefined4 *param_3)
+
+{
+  *param_3 = 1;
+  param_3[1] = *(float *)(param_1 + 4) - *(float *)(param_2 + 4);
+  return;
+}
+
+
+// 822E38E8  FUN_822e38e8  (ui/ui_expressions_logicfunctions.cpp:357)
+
+void FUN_822e38e8(int param_1,int param_2,undefined4 *param_3)
+
+{
+  *param_3 = 0;
+  param_3[1] = *(int *)(param_1 + 4) * *(int *)(param_2 + 4);
+  return;
+}
+
+
+// 822E3908  FUN_822e3908  (ui/ui_expressions_logicfunctions.cpp:365)
+
+void FUN_822e3908(int param_1,int param_2,undefined4 *param_3)
+
+{
+  *param_3 = 1;
+  param_3[1] = (float)(longlong)*(int *)(param_1 + 4) * *(float *)(param_2 + 4);
+  return;
+}
+
+
+// 822E3938  FUN_822e3938  (ui/ui_expressions_logicfunctions.cpp:373)
+
+void FUN_822e3938(int param_1,int param_2,undefined4 *param_3)
+
+{
+  *param_3 = 1;
+  param_3[1] = (float)(longlong)*(int *)(param_2 + 4) * *(float *)(param_1 + 4);
+  return;
+}
+
+
+// 822E3968  FUN_822e3968  (ui/ui_expressions_logicfunctions.cpp:378)
+
+void FUN_822e3968(int param_1,int param_2,undefined4 *param_3)
+
+{
+  *param_3 = 1;
+  param_3[1] = *(float *)(param_1 + 4) * *(float *)(param_2 + 4);
+  return;
+}
+
+
+// 822E3988  FUN_822e3988  (ui/ui_expressions_logicfunctions.cpp:388)
+
+void FUN_822e3988(int param_1,int param_2,undefined4 *param_3)
+
+{
+  *param_3 = 1;
+  if (*(int *)(param_2 + 4) != 0) {
+    param_3[1] = (float)(longlong)*(int *)(param_1 + 4) / (float)(longlong)*(int *)(param_2 + 4);
+    return;
+  }
+  param_3[1] = 0;
+  return;
+}
+
+
+// 822E39E8  FUN_822e39e8  (ui/ui_expressions_logicfunctions.cpp:399)
+
+void FUN_822e39e8(int param_1,int param_2,undefined4 *param_3)
+
+{
+  *param_3 = 1;
+  if (*(float *)(param_2 + 4) != 0.0) {
+    param_3[1] = (float)(longlong)*(int *)(param_1 + 4) / *(float *)(param_2 + 4);
+    return;
+  }
+  param_3[1] = 0;
+  return;
+}
+
+
+// 822E3A30  FUN_822e3a30  (ui/ui_expressions_logicfunctions.cpp:410)
+
+void FUN_822e3a30(int param_1,int param_2,undefined4 *param_3)
+
+{
+  *param_3 = 1;
+  if (*(int *)(param_2 + 4) != 0) {
+    param_3[1] = *(float *)(param_1 + 4) / (float)(longlong)*(int *)(param_2 + 4);
+    return;
+  }
+  param_3[1] = 0;
+  return;
+}
+
+
+// 822E3A78  FUN_822e3a78  (ui/ui_expressions_logicfunctions.cpp:421)
+
+void FUN_822e3a78(int param_1,int param_2,undefined4 *param_3)
+
+{
+  *param_3 = 1;
+  if (*(float *)(param_2 + 4) != 0.0) {
+    param_3[1] = *(float *)(param_1 + 4) / *(float *)(param_2 + 4);
+    return;
+  }
+  param_3[1] = 0;
+  return;
+}
+
+
+// 822E3AB0  FUN_822e3ab0  (ui/ui_expressions_logicfunctions.cpp:434)
+
+void FUN_822e3ab0(int param_1,int param_2,undefined4 *param_3)
+
+{
+  int iVar1;
+  
+  *param_3 = 0;
+  iVar1 = *(int *)(param_2 + 4);
+  if (iVar1 != 0) {
+    param_3[1] = *(int *)(param_1 + 4) - (*(int *)(param_1 + 4) / iVar1) * iVar1;
+    return;
+  }
+  param_3[1] = *(undefined4 *)(param_1 + 4);
   return;
 }
 

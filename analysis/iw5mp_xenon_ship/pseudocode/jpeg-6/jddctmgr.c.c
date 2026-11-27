@@ -49,7 +49,7 @@ int * FUN_8244dc40(int *param_1)
         if (((iVar1 == 5) || (iVar1 == 6)) || (iVar1 == 7)) goto LAB_8244dd4c;
         if (iVar1 == 1) {
           uVar13 = 0;
-          pcVar12 = (code *)&LAB_82458300;
+          pcVar12 = FUN_82458300;
         }
         else {
           uVar2 = param_1[0x13];

@@ -1777,6 +1777,35 @@ LAB_8217190c:
   82171920  38210070             addi r1,r1,0x70
   82171924  483D6BE8             b 0x8254850c
 
+; 82171928  FUN_82171928  (client_mp/cl_main_mp.cpp:2075)
+  82171928  3D608271             lis r11,-0x7d8f
+  8217192C  386B22F0             addi r3,r11,0x22f0
+  82171930  81631EF4             lwz r11,0x1ef4(r3)
+  82171934  2F0B0000             cmpwi cr6,r11,0x0
+  82171938  4D9A0020             beqlr cr6
+  8217193C  81631EEC             lwz r11,0x1eec(r3)
+  82171940  2F0B0000             cmpwi cr6,r11,0x0
+  82171944  4D9A0020             beqlr cr6
+  82171948  3D2082FF             lis r9,-0x7d01
+  8217194C  3D008270             lis r8,-0x7d90
+  82171950  3969BE50             subi r11,r9,0x41b0
+  82171954  3948BF50             subi r10,r8,0x40b0
+  82171958  38EB0004             addi r7,r11,0x4
+  8217195C  8169BE50             lwz r11,-0x41b0(r9)
+  82171960  38CA005C             addi r6,r10,0x5c
+  82171964  5565103A             rlwinm r5,r11,0x2,0x0,0x1d
+  82171968  7D65382E             lwzx r11,r5,r7
+  8217196C  1C8B01E4             mulli r4,r11,0x1e4
+  82171970  7D44302E             lwzx r10,r4,r6
+  82171974  2F0A000A             cmpwi cr6,r10,0xa
+  82171978  41980014             blt cr6,0x8217198c
+  8217197C  3D408201             lis r10,-0x7dff
+  82171980  7D635B78             or r3,r11,r11
+  82171984  388A50AC             addi r4,r10,0x50ac
+  82171988  4BFFEAA8             b 0x82170430
+LAB_8217198c:
+  8217198C  48027E14             b 0x821997a0
+
 ; 82171998  FUN_82171998  (client_mp/cl_main_mp.cpp:2155)
   82171998  7D8802A6             mfspr r12,LR
   8217199C  9181FFF8             stw r12,-0x8(r1)
@@ -4928,6 +4957,24 @@ LAB_82172bc4:
   82172BCC  7D8803A6             mtspr LR,r12
   82172BD0  4E800020             blr
 
+; 82172BD8  FUN_82172bd8  (client_mp/cl_main_mp.cpp:5492)
+  82172BD8  3D4082FF             lis r10,-0x7d01
+  82172BDC  396ABE50             subi r11,r10,0x41b0
+  82172BE0  392B0024             addi r9,r11,0x24
+  82172BE4  816ABE50             lwz r11,-0x41b0(r10)
+  82172BE8  5568103A             rlwinm r8,r11,0x2,0x0,0x1d
+  82172BEC  7C68482E             lwzx r3,r8,r9
+  82172BF0  4801C2C0             b 0x8218eeb0
+
+; 82172BF8  FUN_82172bf8  (client_mp/cl_main_mp.cpp:5498)
+  82172BF8  3D4082FF             lis r10,-0x7d01
+  82172BFC  396ABE50             subi r11,r10,0x41b0
+  82172C00  392B0024             addi r9,r11,0x24
+  82172C04  816ABE50             lwz r11,-0x41b0(r10)
+  82172C08  5568103A             rlwinm r8,r11,0x2,0x0,0x1d
+  82172C0C  7C68482E             lwzx r3,r8,r9
+  82172C10  481E0328             b 0x82352f38
+
 ; 82172C18  FUN_82172c18  (client_mp/cl_main_mp.cpp:5504)
   82172C18  7D8802A6             mfspr r12,LR
   82172C1C  483D589D             bl 0x825484b8
@@ -5369,6 +5416,21 @@ LAB_8217324c:
   8217325C  EBE1FFF0             ld r31,-0x10(r1)
   82173260  4E800020             blr
 
+; 82173268  FUN_82173268  (client_mp/cl_main_mp.cpp:5784)
+  82173268  3D4082FF             lis r10,-0x7d01
+  8217326C  396ABE50             subi r11,r10,0x41b0
+  82173270  392B0024             addi r9,r11,0x24
+  82173274  816ABE50             lwz r11,-0x41b0(r10)
+  82173278  5568103A             rlwinm r8,r11,0x2,0x0,0x1d
+  8217327C  7C68482E             lwzx r3,r8,r9
+  82173280  4BFFFF50             b 0x821731d0
+
+; 82173288  FUN_82173288  (client_mp/cl_main_mp.cpp:5790)
+  82173288  4E800020             blr
+
+; 82173290  FUN_82173290  (client_mp/cl_main_mp.cpp:5798)
+  82173290  4E800020             blr
+
 ; 82173298  FUN_82173298  (client_mp/cl_main_mp.cpp:5806)
   82173298  7D8802A6             mfspr r12,LR
   8217329C  9181FFF8             stw r12,-0x8(r1)
@@ -5414,6 +5476,9 @@ LAB_821732ec:
   82173334  8181FFF8             lwz r12,-0x8(r1)
   82173338  7D8803A6             mtspr LR,r12
   8217333C  4E800020             blr
+
+; 82173340  thunk_FUN_823da670  (client_mp/cl_main_mp.cpp:5830)
+  82173340  48267330             b 0x823da670
 
 ; 82173348  FUN_82173348  (client_mp/cl_main_mp.cpp:5847)
   82173348  7D8802A6             mfspr r12,LR
@@ -5514,6 +5579,10 @@ LAB_821732ec:
   821734C4  8181FFF8             lwz r12,-0x8(r1)
   821734C8  7D8803A6             mtspr LR,r12
   821734CC  4E800020             blr
+
+; 821734D0  FUN_821734d0  (client_mp/cl_main_mp.cpp:5898)
+  821734D0  38600000             li r3,0x0
+  821734D4  4818FF7C             b 0x82303450
 
 ; 821734D8  FUN_821734d8  (client_mp/cl_main_mp.cpp:5904)
   821734D8  7D8802A6             mfspr r12,LR

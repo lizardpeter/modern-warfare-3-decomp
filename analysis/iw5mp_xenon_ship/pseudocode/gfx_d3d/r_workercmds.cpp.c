@@ -12,6 +12,33 @@ undefined1 FUN_824282b0(void)
 }
 
 
+// 8242A730  FUN_8242a730  (gfx_d3d/r_workercmds.cpp:289)
+
+undefined8 FUN_8242a730(void)
+
+{
+  undefined8 uVar1;
+  
+  if (0 < DAT_83e8d38c) {
+    return 1;
+  }
+  uVar1 = FUN_820ad190(*(undefined4 *)(DAT_83cb0480 + 0x1574));
+  return uVar1;
+}
+
+
+// 824282D8  FUN_824282d8  (gfx_d3d/r_workercmds.cpp:298)
+
+undefined8 FUN_824282d8(void)
+
+{
+  if (((DAT_83e8d58c < 1) && (DAT_83e8d78c < 1)) && (DAT_83e8da0c < 1)) {
+    return 0;
+  }
+  return 1;
+}
+
+
 // 82428310  FUN_82428310  (gfx_d3d/r_workercmds.cpp:309)
 
 ulonglong FUN_82428310(void)
@@ -24,6 +51,15 @@ ulonglong FUN_82428310(void)
     return 1;
   }
   return (-(ulonglong)DAT_83e8d38c & ~(ulonglong)DAT_83e8d38c & 0xffffffff) >> 0x1f;
+}
+
+
+// 82428368  FUN_82428368  (gfx_d3d/r_workercmds.cpp:319)
+
+ulonglong FUN_82428368(void)
+
+{
+  return (-(ulonglong)DAT_83e8d48c & ~(ulonglong)DAT_83e8d48c & 0xffffffff) >> 0x1f;
 }
 
 
@@ -61,6 +97,30 @@ undefined8 FUN_824283d8(void)
 }
 
 
+// 82428430  FUN_82428430  (gfx_d3d/r_workercmds.cpp:353)
+
+ulonglong FUN_82428430(uint *param_1)
+
+{
+  uint uVar1;
+  
+  uVar1 = *param_1;
+  if (3 < uVar1) {
+    return (-(ulonglong)DAT_83e8dc8c & ~(ulonglong)DAT_83e8dc8c & 0xffffffff) >> 0x1f;
+  }
+  if (uVar1 == 1) {
+    return 0;
+  }
+  if (uVar1 == 2) {
+    return (-(ulonglong)DAT_83e8db8c & ~(ulonglong)DAT_83e8db8c & 0xffffffff) >> 0x1f;
+  }
+  if (uVar1 == 0) {
+    return (-(ulonglong)DAT_83e8d40c & ~(ulonglong)DAT_83e8d40c & 0xffffffff) >> 0x1f;
+  }
+  return (-(ulonglong)DAT_83e8dc0c & ~(ulonglong)DAT_83e8dc0c & 0xffffffff) >> 0x1f;
+}
+
+
 // 824284C8  FUN_824284c8  (gfx_d3d/r_workercmds.cpp:390)
 
 bool FUN_824284c8(int *param_1)
@@ -73,6 +133,42 @@ bool FUN_824284c8(int *param_1)
   }
   iVar1 = FUN_823e6258(param_1[2]);
   return iVar1 == 0;
+}
+
+
+// 82428520  FUN_82428520  (gfx_d3d/r_workercmds.cpp:408)
+
+void FUN_82428520(void)
+
+{
+  DAT_83e74380 = 0;
+  return;
+}
+
+
+// 82428530  FUN_82428530  (gfx_d3d/r_workercmds.cpp:415)
+
+bool FUN_82428530(void)
+
+{
+  ulonglong uVar1;
+  char in_RESERVE;
+  byte in_cr0;
+  
+  do {
+    uVar1 = (ulonglong)DAT_83e74380;
+    if (DAT_83e74380 != 0) {
+      if (in_RESERVE != '\0') {
+        DAT_83e74380 = storeWordConditionalIndexed(uVar1,0,0xffffffff83e74380);
+      }
+      return uVar1 != 0;
+    }
+    if (in_RESERVE != '\0') {
+      DAT_83e74380 = storeWordConditionalIndexed(1,0,0xffffffff83e74380);
+      in_cr0 = 2;
+    }
+  } while (!(bool)(in_cr0 >> 1 & 1));
+  return false;
 }
 
 
@@ -97,6 +193,30 @@ undefined8 FUN_82428588(void)
   }
   uVar1 = FUN_820ad190(*(undefined4 *)(DAT_83cb0480 + 0x1574));
   return uVar1;
+}
+
+
+// 82428620  FUN_82428620  (gfx_d3d/r_workercmds.cpp:452)
+
+ulonglong FUN_82428620(void)
+
+{
+  return (-(ulonglong)DAT_83e8d88c & ~(ulonglong)DAT_83e8d88c & 0xffffffff) >> 0x1f;
+}
+
+
+// 82428640  FUN_82428640  (gfx_d3d/r_workercmds.cpp:460)
+
+undefined8 FUN_82428640(void)
+
+{
+  undefined8 uVar1;
+  
+  if ((DAT_83e8d88c < 1) && (DAT_83e8d90c < 1)) {
+    uVar1 = FUN_82428588(0);
+    return uVar1;
+  }
+  return 1;
 }
 
 
@@ -205,6 +325,31 @@ ulonglong FUN_82428740(uint *param_1)
     }
   }
   if ((((iVar5 < 1) && (iVar4 < 1)) && (iVar3 < 1)) && ((iVar2 < 1 && (iVar6 < 1)))) {
+    return 0;
+  }
+  return 1;
+}
+
+
+// 824288C8  FUN_824288c8  (gfx_d3d/r_workercmds.cpp:547)
+
+undefined8 FUN_824288c8(void)
+
+{
+  if ((((DAT_83e8cf0c < 1) && (DAT_83e8cf8c < 1)) && (DAT_83e8d00c < 1)) && (DAT_83e8d08c < 1)) {
+    return 0;
+  }
+  return 1;
+}
+
+
+// 82428910  FUN_82428910  (gfx_d3d/r_workercmds.cpp:556)
+
+undefined8 FUN_82428910(void)
+
+{
+  if ((((DAT_83e8cf0c < 1) && (DAT_83e8cf8c < 1)) && (DAT_83e8d00c < 1)) &&
+     ((DAT_83e8d08c < 1 && (DAT_83e8d80c < 1)))) {
     return 0;
   }
   return 1;
@@ -587,7 +732,7 @@ undefined8 FUN_82429030(ulonglong param_1,int param_2)
     }
   }
   iVar6 = (int)((param_1 & 0x3fffffff) << 2);
-  if (*(int *)((int)&PTR_LAB_825a4de8 + iVar6) == 0) {
+  if (*(int *)((int)&PTR_FUN_825a4de8 + iVar6) == 0) {
     if ((param_2 != 0) && (8 < (int)*puVar11)) {
       do {
         uVar1 = *puVar11;
@@ -674,7 +819,7 @@ LAB_8242936c:
   sync(1);
   uVar1 = *puVar9;
   lVar13 = (longlong)(int)uVar1 * (longlong)(int)uVar2 + (ulonglong)puVar9[6];
-  iVar7 = (**(code **)((int)&PTR_LAB_825a4de8 + iVar6))(lVar13);
+  iVar7 = (**(code **)((int)&PTR_FUN_825a4de8 + iVar6))(lVar13);
   do {
     if (iVar7 != 0) {
       do {
@@ -723,8 +868,18 @@ LAB_8242936c:
     }
     uVar1 = *puVar9;
     lVar13 = (longlong)(int)uVar1 * (longlong)(int)uVar2 + (ulonglong)puVar9[6];
-    iVar7 = (**(code **)((int)&PTR_LAB_825a4de8 + iVar6))(lVar13);
+    iVar7 = (**(code **)((int)&PTR_FUN_825a4de8 + iVar6))(lVar13);
   } while( true );
+}
+
+
+// 82429380  FUN_82429380  (gfx_d3d/r_workercmds.cpp:1300)
+
+ulonglong FUN_82429380(void)
+
+{
+  return ((ulonglong)(uint)(&DAT_83e8cd8c)[DAT_825a4d30 * 0x20] |
+         ~-(ulonglong)(uint)(&DAT_83e8cd8c)[DAT_825a4d30 * 0x20] & 0xffffffff) >> 0x1f;
 }
 
 
@@ -844,6 +999,16 @@ ulonglong FUN_824294c8(int param_1)
 }
 
 
+// 824294F0  FUN_824294f0  (gfx_d3d/r_workercmds.cpp:1377)
+
+ulonglong FUN_824294f0(void)
+
+{
+  return ((ulonglong)(uint)(&DAT_83e8cd8c)[DAT_825a4d34 * 0x20] |
+         ~-(ulonglong)(uint)(&DAT_83e8cd8c)[DAT_825a4d34 * 0x20] & 0xffffffff) >> 0x1f;
+}
+
+
 // 8242A830  FUN_8242a830  (gfx_d3d/r_workercmds.cpp:1383)
 
 void FUN_8242a830(ulonglong param_1)
@@ -881,6 +1046,17 @@ void FUN_8242a830(ulonglong param_1)
   }
   DAT_825a4d34 = 0xffffffff;
   return;
+}
+
+
+// 82429520  FUN_82429520  (gfx_d3d/r_workercmds.cpp:1413)
+
+bool FUN_82429520(void)
+
+{
+  int *in_r13;
+  
+  return **(int **)(*in_r13 + 0x38) == 0;
 }
 
 
@@ -1662,7 +1838,7 @@ void FUN_8242a280(ulonglong param_1,undefined8 param_2)
           in_cr0 = 2;
         }
       } while (!(bool)(in_cr0 >> 1 & 1));
-      pcVar4 = *(code **)((int)&PTR_LAB_825a4de8 + iVar6);
+      pcVar4 = *(code **)((int)&PTR_FUN_825a4de8 + iVar6);
       if ((pcVar4 == (code *)0x0) || (iVar8 = (*pcVar4)(param_2), iVar8 == 0)) {
         FUN_82428d78(param_1,param_2);
         return;

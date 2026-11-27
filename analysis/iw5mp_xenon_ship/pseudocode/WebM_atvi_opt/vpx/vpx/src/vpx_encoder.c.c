@@ -225,3 +225,22 @@ undefined8 FUN_824c6b10(uint *param_1,undefined8 param_2)
   return 1;
 }
 
+
+// 824C6B88  FUN_824c6b88  (WebM_atvi_opt/vpx/vpx/src/vpx_encoder.c:299)
+
+int FUN_824c6b88(uint *param_1,int *param_2)
+
+{
+  int iVar1;
+  
+  if (*param_2 == 0) {
+    *param_2 = (int)(param_1 + 2);
+  }
+  iVar1 = *param_2;
+  if ((uint)(((iVar1 - (int)param_1) + -8) / 0x88) < *param_1) {
+    *param_2 = iVar1 + 0x88;
+    return iVar1;
+  }
+  return 0;
+}
+

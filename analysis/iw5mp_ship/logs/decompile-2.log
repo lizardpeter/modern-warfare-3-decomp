@@ -1,18 +1,18 @@
-2026-11-27 06:19:15 INFO  (LoggingInitialization) Using log config file: jar:file:/opt/ghidra/Ghidra/Framework/Generic/lib/Generic.jar!/generic.log4j.xml  
-2026-11-27 06:19:15 INFO  (LoggingInitialization) Using log file: /tmp/out/decompile-2.log  
-2026-11-27 06:19:15 DEBUG (GhidraObjectInputFilter) Including serial input filter: FileSystem/data/client.rmi.serial.filter  
-2026-11-27 06:19:15 INFO  (Preferences) Loading user preferences: /home/runner/.config/ghidra/ghidra_12.1.4_PUBLIC/preferences  
-2026-11-27 06:19:15 INFO  (ClassSearcher) Searching for classes...  
-2026-11-27 06:19:16 INFO  (ClassSearcher) Class search complete (604 ms)  
-2026-11-27 06:19:16 INFO  (DefaultSSLContextInitializer) Initializing SSL Context  
-2026-11-27 06:19:16 INFO  (SecureRandomFactory) Initializing Random Number Generator...  
-2026-11-27 06:19:16 INFO  (SecureRandomFactory) Random Number Generator initialization complete: NativePRNGNonBlocking  
-2026-11-27 06:19:16 INFO  (DefaultTrustManagerFactory) Trust manager disabled, cacerts have not been set  
-2026-11-27 06:19:16 INFO  (FileCacheMaintenanceDaemon) Starting cache cleanup: /var/tmp/runner-ghidra/fscache2  
-2026-11-27 06:19:16 INFO  (FileCacheMaintenanceDaemon) Finished cache cleanup, estimated storage used: 0  
-2026-11-27 06:19:17 INFO  (AnalyzeHeadless) Headless startup complete (3067 ms)  
-2026-11-27 06:19:17 INFO  (ClassSearcher) Class searcher loaded 59 extension points (20 false positives)  
-2026-11-27 06:19:17 INFO  (HeadlessAnalyzer) HEADLESS Script Paths:
+2026-11-27 17:50:06 INFO  (LoggingInitialization) Using log config file: jar:file:/opt/ghidra/Ghidra/Framework/Generic/lib/Generic.jar!/generic.log4j.xml  
+2026-11-27 17:50:06 INFO  (LoggingInitialization) Using log file: /tmp/out/decompile-2.log  
+2026-11-27 17:50:06 DEBUG (GhidraObjectInputFilter) Including serial input filter: FileSystem/data/client.rmi.serial.filter  
+2026-11-27 17:50:06 INFO  (Preferences) Loading user preferences: /home/runner/.config/ghidra/ghidra_12.1.4_PUBLIC/preferences  
+2026-11-27 17:50:06 INFO  (ClassSearcher) Searching for classes...  
+2026-11-27 17:50:07 INFO  (ClassSearcher) Class search complete (1029 ms)  
+2026-11-27 17:50:07 INFO  (DefaultSSLContextInitializer) Initializing SSL Context  
+2026-11-27 17:50:07 INFO  (SecureRandomFactory) Initializing Random Number Generator...  
+2026-11-27 17:50:07 INFO  (SecureRandomFactory) Random Number Generator initialization complete: NativePRNGNonBlocking  
+2026-11-27 17:50:07 INFO  (DefaultTrustManagerFactory) Trust manager disabled, cacerts have not been set  
+2026-11-27 17:50:07 INFO  (FileCacheMaintenanceDaemon) Starting cache cleanup: /var/tmp/runner-ghidra/fscache2  
+2026-11-27 17:50:07 INFO  (FileCacheMaintenanceDaemon) Finished cache cleanup, estimated storage used: 0  
+2026-11-27 17:50:08 INFO  (AnalyzeHeadless) Headless startup complete (2747 ms)  
+2026-11-27 17:50:08 INFO  (ClassSearcher) Class searcher loaded 59 extension points (20 false positives)  
+2026-11-27 17:50:08 INFO  (HeadlessAnalyzer) HEADLESS Script Paths:
     /opt/ghidra/Ghidra/Features/SystemEmulation/ghidra_scripts
     /opt/ghidra/Ghidra/Features/GnuDemangler/ghidra_scripts
     /home/runner/work/modern-warfare-3-decomp/modern-warfare-3-decomp/tools/ghidra
@@ -36,17 +36,14 @@
     /opt/ghidra/Ghidra/Features/FileFormats/ghidra_scripts
     /opt/ghidra/Ghidra/Features/BSim/ghidra_scripts
     /opt/ghidra/Ghidra/Features/BytePatterns/ghidra_scripts  
-2026-11-27 06:19:17 INFO  (HeadlessAnalyzer) HEADLESS: execution starts  
-2026-11-27 06:19:17 INFO  (HeadlessAnalyzer) Opening existing project: /tmp/proj/iw5  
-2026-11-27 06:19:17 DEBUG (DefaultProjectManager) No tools found; Installing default tools  
-2026-11-27 06:19:17 DEBUG (DefaultProjectManager) 	no recent project directories found  
-2026-11-27 06:19:17 INFO  (HeadlessProject) Opening project: /tmp/proj/iw5  
-2026-11-27 06:19:19 INFO  (HeadlessAnalyzer) REPORT: Processing read-only project file: /iw5mp_ship.exe  
-2026-11-27 06:19:19 INFO  (HeadlessAnalyzer) REPORT: Execute script: Decompile.java '/tmp/out/decomp-2.jsonl' '2' '6' '90'   
-2026-11-27 06:19:20 INFO  (HeadlessAnalyzer) SCRIPT: /home/runner/work/modern-warfare-3-decomp/modern-warfare-3-decomp/tools/ghidra/Decompile.java  
-2026-11-27 06:19:27 INFO  (GhidraScript) Decompile.java> shard 2: 1000 ok, 0 failed, 7s  
-2026-11-27 06:19:28 WARN  (DecompileCallback) Decompiling 14019d7b0, pcode error at 14019d7c9: Unable to resolve constructor at 14019d7c9  
-2026-11-27 06:19:33 INFO  (GhidraScript) Decompile.java> shard 2: 2000 ok, 0 failed, 13s  
-2026-11-27 06:19:34 WARN  (DecompileCallback) Decompiling 1402fba94: Unable to read bytes at ram:14f0f0f00  
-2026-11-27 06:19:38 INFO  (GhidraScript) Decompile.java> shard 2: 3000 ok, 0 failed, 18s  
-2026-11-27 06:19:39 INFO  (GhidraScript) Decompile.java> shard 2 done: 3266 ok, 0 failed  
+2026-11-27 17:50:08 INFO  (HeadlessAnalyzer) HEADLESS: execution starts  
+2026-11-27 17:50:08 INFO  (HeadlessAnalyzer) Opening existing project: /tmp/proj/iw5  
+2026-11-27 17:50:08 DEBUG (DefaultProjectManager) No tools found; Installing default tools  
+2026-11-27 17:50:08 DEBUG (DefaultProjectManager) 	no recent project directories found  
+2026-11-27 17:50:08 INFO  (HeadlessProject) Opening project: /tmp/proj/iw5  
+2026-11-27 17:50:10 INFO  (HeadlessAnalyzer) REPORT: Processing read-only project file: /iw5mp_ship.exe  
+2026-11-27 17:50:10 INFO  (HeadlessAnalyzer) REPORT: Execute script: Decompile.java '/tmp/out/decomp-2.jsonl' '2' '6' '90'   
+2026-11-27 17:50:12 INFO  (HeadlessAnalyzer) SCRIPT: /home/runner/work/modern-warfare-3-decomp/modern-warfare-3-decomp/tools/ghidra/Decompile.java  
+2026-11-27 17:50:27 INFO  (GhidraScript) Decompile.java> shard 2: 1000 ok, 0 failed, 14s  
+2026-11-27 17:50:45 INFO  (GhidraScript) Decompile.java> shard 2: 2000 ok, 0 failed, 32s  
+2026-11-27 17:50:48 INFO  (GhidraScript) Decompile.java> shard 2 done: 2370 ok, 0 failed  

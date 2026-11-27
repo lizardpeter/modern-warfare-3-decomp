@@ -13,6 +13,17 @@ undefined4 * FUN_8253edb0(undefined4 *param_1)
 }
 
 
+// 8253EDF8  FUN_8253edf8  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdfacebook/bdfacebookfriend.cpp:18)
+
+void FUN_8253edf8(undefined4 *param_1)
+
+{
+  *param_1 = &PTR_FUN_82067838;
+  FUN_82531430();
+  return;
+}
+
+
 // 8253EE70  FUN_8253ee70  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdfacebook/bdfacebookfriend.cpp:22)
 
 /* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
@@ -65,6 +76,15 @@ LAB_8253ef14:
 LAB_8253ef48:
   FUN_82186890(param_2);
   return uVar3;
+}
+
+
+// 8253EE08  FUN_8253ee08  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdfacebook/bdfacebookfriend.cpp:36)
+
+undefined8 FUN_8253ee08(void)
+
+{
+  return 0x120;
 }
 
 

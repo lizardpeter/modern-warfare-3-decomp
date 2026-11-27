@@ -36,7 +36,7 @@ FUN_8235e670(int param_1,undefined8 param_2,int param_3,uint param_4,int param_5
           *(code **)(param_1 + 0x20) = FUN_823635e0;
         }
         if (*(int *)(param_1 + 0x24) == 0) {
-          *(undefined1 **)(param_1 + 0x24) = &LAB_82363620;
+          *(code **)(param_1 + 0x24) = FUN_82363620;
         }
         bVar1 = (int)param_4 < 0;
         if (bVar1) {

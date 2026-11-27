@@ -207,6 +207,17 @@ void FUN_824066e0(void)
 }
 
 
+// 824066E8  FUN_824066e8  (gfx_d3d/r_material.cpp:1787)
+
+void FUN_824066e8(undefined4 param_1,int param_2)
+
+{
+  *(undefined4 *)(*(int *)(param_2 + 0xc00) * 4 + param_2) = param_1;
+  *(int *)(param_2 + 0xc00) = *(int *)(param_2 + 0xc00) + 1;
+  return;
+}
+
+
 // 82406708  FUN_82406708  (gfx_d3d/r_material.cpp:1819)
 
 void FUN_82406708(code *param_1)

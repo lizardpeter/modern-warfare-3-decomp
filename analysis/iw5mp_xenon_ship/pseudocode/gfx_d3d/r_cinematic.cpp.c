@@ -429,6 +429,25 @@ LAB_823e48b4:
 }
 
 
+// 823E49B0  FUN_823e49b0  (gfx_d3d/r_cinematic.cpp:1146)
+
+void FUN_823e49b0(undefined8 param_1)
+
+{
+  FUN_823e3f30(0xffffffff83c489dc,param_1,0x20);
+  return;
+}
+
+
+// 823E49C8  FUN_823e49c8  (gfx_d3d/r_cinematic.cpp:1152)
+
+void FUN_823e49c8(void)
+
+{
+  return;
+}
+
+
 // 823E49D0  FUN_823e49d0  (gfx_d3d/r_cinematic.cpp:1157)
 
 undefined8 FUN_823e49d0(void)

@@ -682,6 +682,17 @@ LAB_823e49a0:
   823E49A4  382100B0             addi r1,r1,0xb0
   823E49A8  48163B64             b 0x8254850c
 
+; 823E49B0  FUN_823e49b0  (gfx_d3d/r_cinematic.cpp:1146)
+  823E49B0  3D6083C5             lis r11,-0x7c3b
+  823E49B4  7C641B78             or r4,r3,r3
+  823E49B8  396B83D8             subi r11,r11,0x7c28
+  823E49BC  38A00020             li r5,0x20
+  823E49C0  386B0604             addi r3,r11,0x604
+  823E49C4  4BFFF56C             b 0x823e3f30
+
+; 823E49C8  FUN_823e49c8  (gfx_d3d/r_cinematic.cpp:1152)
+  823E49C8  4E800020             blr
+
 ; 823E49D0  FUN_823e49d0  (gfx_d3d/r_cinematic.cpp:1157)
   823E49D0  7D8802A6             mfspr r12,LR
   823E49D4  9181FFF8             stw r12,-0x8(r1)

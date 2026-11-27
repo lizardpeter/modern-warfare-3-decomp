@@ -1832,6 +1832,17 @@ LAB_8221051c:
   8221051C  382100C0             addi r1,r1,0xc0
   82210520  48337FCC             b 0x825484ec
 
+; 8220F710  FUN_8220f710  (EffectsCore/fx_glass_draw.cpp:1145)
+  8220F710  C0030004             lfs f0,0x4(r3)
+  8220F714  39600001             li r11,0x1
+  8220F718  C1A40004             lfs f13,0x4(r4)
+  8220F71C  FF006800             fcmpu cr6,f0,f13
+  8220F720  41990008             bgt cr6,0x8220f728
+  8220F724  39600000             li r11,0x0
+LAB_8220f728:
+  8220F728  5563063E             rlwinm r3,r11,0x0,0x18,0x1f
+  8220F72C  4E800020             blr
+
 ; 82210948  FUN_82210948  (EffectsCore/fx_glass_draw.cpp:1151)
   82210948  7D8802A6             mfspr r12,LR
   8221094C  48337B4D             bl 0x82548498

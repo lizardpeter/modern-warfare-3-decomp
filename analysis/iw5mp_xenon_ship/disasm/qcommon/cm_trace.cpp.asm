@@ -2511,6 +2511,10 @@ LAB_8227e448:
   8227E5CC  CBE1FFC0             lfd f31,-0x40(r1)
   8227E5D0  482C9F30             b 0x82548500
 
+; 8227E5D8  FUN_8227e5d8  (qcommon/cm_trace.cpp:2043)
+  8227E5D8  38600001             li r3,0x1
+  8227E5DC  4E800020             blr
+
 ; 8227E5E0  FUN_8227e5e0  (qcommon/cm_trace.cpp:2049)
   8227E5E0  7D8802A6             mfspr r12,LR
   8227E5E4  9181FFF8             stw r12,-0x8(r1)
@@ -2524,6 +2528,10 @@ LAB_8227e448:
   8227E604  8181FFF8             lwz r12,-0x8(r1)
   8227E608  7D8803A6             mtspr LR,r12
   8227E60C  4E800020             blr
+
+; 8227E610  FUN_8227e610  (qcommon/cm_trace.cpp:2058)
+  8227E610  38600000             li r3,0x0
+  8227E614  4E800020             blr
 
 ; 8227E618  FUN_8227e618  (qcommon/cm_trace.cpp:2072)
   8227E618  7D8802A6             mfspr r12,LR
@@ -4190,6 +4198,9 @@ LAB_8227fe04:
   8227FE88  3D6082FE             lis r11,-0x7d02
   8227FE8C  386B5D00             addi r3,r11,0x5d00
   8227FE90  4E800020             blr
+
+; 8227FE98  thunk_FUN_821213b8  (qcommon/cm_trace.cpp:3105)
+  8227FE98  4BEA1520             b 0x821213b8
 
 ; 8227FEA0  FUN_8227fea0  (qcommon/cm_trace.cpp:3127)
   8227FEA0  7D8802A6             mfspr r12,LR

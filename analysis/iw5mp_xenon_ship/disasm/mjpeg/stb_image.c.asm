@@ -4082,6 +4082,27 @@ LAB_8247a5e4:
   8247A5F0  7C832378             or r3,r4,r4
   8247A5F4  4E800020             blr
 
+; 8247A5F8  FUN_8247a5f8  (mjpeg/stb_image.c:1855)
+  8247A5F8  7CAB2B78             or r11,r5,r5
+  8247A5FC  2F060000             cmpwi cr6,r6,0x0
+  8247A600  4C990020             blelr cr6
+  8247A604  7CC903A6             mtspr CTR,r6
+  8247A608  7CE52050             subf r7,r5,r4
+  8247A60C  7CC51850             subf r6,r5,r3
+LAB_8247a610:
+  8247A610  7D4758AE             lbzx r10,r7,r11
+  8247A614  892B0000             lbz r9,0x0(r11)
+  8247A618  5548083E             rlwinm r8,r10,0x1,0x0,0x1f
+  8247A61C  7D4A4214             add r10,r10,r8
+  8247A620  7D4A4A14             add r10,r10,r9
+  8247A624  394A0002             addi r10,r10,0x2
+  8247A628  7D491670             srawi r9,r10,0x2
+  8247A62C  5528063E             rlwinm r8,r9,0x0,0x18,0x1f
+  8247A630  7D0659AE             stbx r8,r6,r11
+  8247A634  396B0001             addi r11,r11,0x1
+  8247A638  4200FFD8             bdnz 0x8247a610
+  8247A63C  4E800020             blr
+
 ; 8247A640  FUN_8247a640  (mjpeg/stb_image.c:1865)
   8247A640  FBE1FFF8             std r31,-0x8(r1)
   8247A644  2F060001             cmpwi cr6,r6,0x1
@@ -4204,6 +4225,28 @@ LAB_8247a7e8:
   8247A7F8  9928FFFF             stb r9,-0x1(r8)
   8247A7FC  EBE1FFF8             ld r31,-0x8(r1)
   8247A800  4E800020             blr
+
+; 8247A808  FUN_8247a808  (mjpeg/stb_image.c:1919)
+  8247A808  39400000             li r10,0x0
+  8247A80C  2F060000             cmpwi cr6,r6,0x0
+  8247A810  4C990020             blelr cr6
+  8247A814  7C691B78             or r9,r3,r3
+LAB_8247a818:
+  8247A818  39600000             li r11,0x0
+  8247A81C  2F070000             cmpwi cr6,r7,0x0
+  8247A820  40990018             ble cr6,0x8247a838
+  8247A824  7CE903A6             mtspr CTR,r7
+LAB_8247a828:
+  8247A828  7D0A20AE             lbzx r8,r10,r4
+  8247A82C  7D0959AE             stbx r8,r9,r11
+  8247A830  396B0001             addi r11,r11,0x1
+  8247A834  4200FFF4             bdnz 0x8247a828
+LAB_8247a838:
+  8247A838  394A0001             addi r10,r10,0x1
+  8247A83C  7D293A14             add r9,r9,r7
+  8247A840  7F0A3000             cmpw cr6,r10,r6
+  8247A844  4198FFD4             blt cr6,0x8247a818
+  8247A848  4E800020             blr
 
 ; 8247A850  FUN_8247a850  (mjpeg/stb_image.c:1932)
   8247A850  FBC1FFF0             std r30,-0x10(r1)

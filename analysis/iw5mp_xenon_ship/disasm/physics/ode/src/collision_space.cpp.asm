@@ -295,6 +295,106 @@ LAB_8237d5c0:
   8237D5D0  EBE1FFF0             ld r31,-0x10(r1)
   8237D5D4  4E800020             blr
 
+; 8237D610  FUN_8237d610  (physics/ode/src/collision_space.cpp:172)
+  8237D610  8163005C             lwz r11,0x5c(r3)
+  8237D614  7C6A1B78             or r10,r3,r3
+  8237D618  2B0B0000             cmplwi cr6,r11,0x0
+  8237D61C  419A0028             beq cr6,0x8237d644
+  8237D620  81230058             lwz r9,0x58(r3)
+  8237D624  3904FFFF             subi r8,r4,0x1
+  8237D628  7F094000             cmpw cr6,r9,r8
+  8237D62C  409A0018             bne cr6,0x8237d644
+  8237D630  816B0020             lwz r11,0x20(r11)
+  8237D634  908A0058             stw r4,0x58(r10)
+  8237D638  9163005C             stw r11,0x5c(r3)
+  8237D63C  5563003E             rlwinm r3,r11,0x0,0x0,0x1f
+  8237D640  4E800020             blr
+LAB_8237d644:
+  8237D644  806A0050             lwz r3,0x50(r10)
+  8237D648  39600000             li r11,0x0
+  8237D64C  2F040000             cmpwi cr6,r4,0x0
+  8237D650  4099001C             ble cr6,0x8237d66c
+LAB_8237d654:
+  8237D654  2B030000             cmplwi cr6,r3,0x0
+  8237D658  419A0020             beq cr6,0x8237d678
+  8237D65C  396B0001             addi r11,r11,0x1
+  8237D660  80630020             lwz r3,0x20(r3)
+  8237D664  7F0B2000             cmpw cr6,r11,r4
+  8237D668  4198FFEC             blt cr6,0x8237d654
+LAB_8237d66c:
+  8237D66C  906A005C             stw r3,0x5c(r10)
+  8237D670  908A0058             stw r4,0x58(r10)
+  8237D674  4E800020             blr
+LAB_8237d678:
+  8237D678  38600000             li r3,0x0
+  8237D67C  4E800020             blr
+
+; 8237D680  FUN_8237d680  (physics/ode/src/collision_space.cpp:192)
+  8237D680  90640028             stw r3,0x28(r4)
+  8237D684  39630050             addi r11,r3,0x50
+  8237D688  81230050             lwz r9,0x50(r3)
+  8237D68C  39440020             addi r10,r4,0x20
+  8237D690  91640024             stw r11,0x24(r4)
+  8237D694  91240020             stw r9,0x20(r4)
+  8237D698  81230050             lwz r9,0x50(r3)
+  8237D69C  2B090000             cmplwi cr6,r9,0x0
+  8237D6A0  419A0008             beq cr6,0x8237d6a8
+  8237D6A4  91490024             stw r10,0x24(r9)
+LAB_8237d6a8:
+  8237D6A8  908B0000             stw r4,0x0(r11)
+  8237D6AC  39400000             li r10,0x0
+  8237D6B0  8163004C             lwz r11,0x4c(r3)
+  8237D6B4  392B0001             addi r9,r11,0x1
+  8237D6B8  9143005C             stw r10,0x5c(r3)
+  8237D6BC  9123004C             stw r9,0x4c(r3)
+  8237D6C0  81040008             lwz r8,0x8(r4)
+  8237D6C4  61070003             ori r7,r8,0x3
+  8237D6C8  90E40008             stw r7,0x8(r4)
+  8237D6CC  4BFFFC44             b 0x8237d310
+
+; 8237D6D0  FUN_8237d6d0  (physics/ode/src/collision_space.cpp:215)
+  8237D6D0  81640020             lwz r11,0x20(r4)
+  8237D6D4  2B0B0000             cmplwi cr6,r11,0x0
+  8237D6D8  419A000C             beq cr6,0x8237d6e4
+  8237D6DC  81440024             lwz r10,0x24(r4)
+  8237D6E0  914B0024             stw r10,0x24(r11)
+LAB_8237d6e4:
+  8237D6E4  81440024             lwz r10,0x24(r4)
+  8237D6E8  39600000             li r11,0x0
+  8237D6EC  81240020             lwz r9,0x20(r4)
+  8237D6F0  912A0000             stw r9,0x0(r10)
+  8237D6F4  8143004C             lwz r10,0x4c(r3)
+  8237D6F8  390AFFFF             subi r8,r10,0x1
+  8237D6FC  9103004C             stw r8,0x4c(r3)
+  8237D700  91640020             stw r11,0x20(r4)
+  8237D704  91640024             stw r11,0x24(r4)
+  8237D708  91640028             stw r11,0x28(r4)
+  8237D70C  9163005C             stw r11,0x5c(r3)
+  8237D710  4BFFFC00             b 0x8237d310
+
+; 8237D718  FUN_8237d718  (physics/ode/src/collision_space.cpp:239)
+  8237D718  81640020             lwz r11,0x20(r4)
+  8237D71C  39440020             addi r10,r4,0x20
+  8237D720  2B0B0000             cmplwi cr6,r11,0x0
+  8237D724  419A000C             beq cr6,0x8237d730
+  8237D728  81240024             lwz r9,0x24(r4)
+  8237D72C  912B0024             stw r9,0x24(r11)
+LAB_8237d730:
+  8237D730  81240024             lwz r9,0x24(r4)
+  8237D734  39630050             addi r11,r3,0x50
+  8237D738  810A0000             lwz r8,0x0(r10)
+  8237D73C  91090000             stw r8,0x0(r9)
+  8237D740  80E30050             lwz r7,0x50(r3)
+  8237D744  90EA0000             stw r7,0x0(r10)
+  8237D748  91640024             stw r11,0x24(r4)
+  8237D74C  81230050             lwz r9,0x50(r3)
+  8237D750  2B090000             cmplwi cr6,r9,0x0
+  8237D754  419A0008             beq cr6,0x8237d75c
+  8237D758  91490024             stw r10,0x24(r9)
+LAB_8237d75c:
+  8237D75C  908B0000             stw r4,0x0(r11)
+  8237D760  4E800020             blr
+
 ; 8237DE60  FUN_8237de60  (physics/ode/src/collision_space.cpp:259)
   8237DE60  7D8802A6             mfspr r12,LR
   8237DE64  9181FFF8             stw r12,-0x8(r1)

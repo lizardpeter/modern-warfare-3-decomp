@@ -128,6 +128,10 @@
 
 ; 825701D4  FUN_825701d4  (line unknown)
 
+; 825701E4  FUN_825701e4  (line unknown)
+
+; 825701F4  FUN_825701f4  (line unknown)
+
 ; 82570204  FUN_82570204  (line unknown)
 
 ; 82570214  FUN_82570214  (line unknown)
@@ -210,9 +214,15 @@
 
 ; 82570494  FUN_82570494  (line unknown)
 
+; 825704A4  FUN_825704a4  (line unknown)
+
 ; 825704B4  FUN_825704b4  (line unknown)
 
+; 825704C4  FUN_825704c4  (line unknown)
+
 ; 825704D4  FUN_825704d4  (line unknown)
+
+; 825704E4  FUN_825704e4  (line unknown)
 
 ; 825704F4  FUN_825704f4  (line unknown)
 

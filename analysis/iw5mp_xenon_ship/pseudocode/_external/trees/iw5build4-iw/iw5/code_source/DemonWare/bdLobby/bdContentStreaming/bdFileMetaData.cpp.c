@@ -262,6 +262,15 @@ LAB_8252d6a8:
 }
 
 
+// 8252D2C0  FUN_8252d2c0  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdfilemetadata.cpp:94)
+
+undefined8 FUN_8252d2c0(void)
+
+{
+  return 0x790;
+}
+
+
 // 8252D3D0  FUN_8252d3d0  (line unknown)
 
 undefined8 FUN_8252d3d0(undefined8 param_1,ulonglong param_2)

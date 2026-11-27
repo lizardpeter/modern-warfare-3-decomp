@@ -43,6 +43,12 @@ LAB_8217725c:
   82177268  EBE1FFF0             ld r31,-0x10(r1)
   8217726C  4E800020             blr
 
+; 82177270  FUN_82177270  (client_mp/cl_main_xenon_mp.cpp:90)
+  82177270  4E800020             blr
+
+; 82177278  thunk_FUN_82351300  (client_mp/cl_main_xenon_mp.cpp:96)
+  82177278  481DA088             b 0x82351300
+
 ; 82177288  FUN_82177288  (client_mp/cl_main_xenon_mp.cpp:111)
   82177288  4E800020             blr
 
@@ -894,6 +900,18 @@ LAB_82177904:
   82177904  382100E0             addi r1,r1,0xe0
   82177908  483D0BF0             b 0x825484f8
 
+; 82177910  FUN_82177910  (client_mp/cl_main_xenon_mp.cpp:489)
+  82177910  3D4082FF             lis r10,-0x7d01
+  82177914  396ABE50             subi r11,r10,0x41b0
+  82177918  392B0024             addi r9,r11,0x24
+  8217791C  816ABE50             lwz r11,-0x41b0(r10)
+  82177920  5568103A             rlwinm r8,r11,0x2,0x0,0x1d
+  82177924  7C68482E             lwzx r3,r8,r9
+  82177928  481DB8C0             b 0x823531e8
+
+; 82177930  thunk_FUN_823dc1f0  (client_mp/cl_main_xenon_mp.cpp:495)
+  82177930  482648C0             b 0x823dc1f0
+
 ; 82177938  FUN_82177938  (client_mp/cl_main_xenon_mp.cpp:535)
   82177938  7D8802A6             mfspr r12,LR
   8217793C  9181FFF8             stw r12,-0x8(r1)
@@ -955,6 +973,15 @@ LAB_821779f4:
   82177A10  8181FFF8             lwz r12,-0x8(r1)
   82177A14  7D8803A6             mtspr LR,r12
   82177A18  4E800020             blr
+
+; 82177A20  FUN_82177a20  (client_mp/cl_main_xenon_mp.cpp:654)
+  82177A20  3D4082FF             lis r10,-0x7d01
+  82177A24  396ABE50             subi r11,r10,0x41b0
+  82177A28  392B0024             addi r9,r11,0x24
+  82177A2C  816ABE50             lwz r11,-0x41b0(r10)
+  82177A30  5568103A             rlwinm r8,r11,0x2,0x0,0x1d
+  82177A34  7C68482E             lwzx r3,r8,r9
+  82177A38  48017300             b 0x8218ed38
 
 ; 82177A40  FUN_82177a40  (client_mp/cl_main_xenon_mp.cpp:694)
   82177A40  7D8802A6             mfspr r12,LR

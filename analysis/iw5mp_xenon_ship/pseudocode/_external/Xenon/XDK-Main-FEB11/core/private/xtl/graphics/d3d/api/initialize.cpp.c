@@ -417,6 +417,21 @@ LAB_820b6af8:
 }
 
 
+// 820B6B30  FUN_820b6b30  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/initialize.cpp:568)
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void FUN_820b6b30(void)
+
+{
+  _DAT_7fc83214 = 7;
+  enforceInOrderExecutionIO();
+  _DAT_7fc83408 = 0x800;
+  enforceInOrderExecutionIO();
+  return;
+}
+
+
 // 820B6B50  FUN_820b6b50  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/initialize.cpp:601)
 
 /* WARNING: Globals starting with '_' overlap smaller symbols at the same address */

@@ -397,6 +397,13 @@ LAB_8244f358:
   8244F3C4  EBE1FFF0             ld r31,-0x10(r1)
   8244F3C8  4E800020             blr
 
+; 8244F580  FUN_8244f580  (jpeg-6/jdinput.c:272)
+  8244F580  81630198             lwz r11,0x198(r3)
+  8244F584  3D408245             lis r10,-0x7dbb
+  8244F588  392AF3D0             subi r9,r10,0xc30
+  8244F58C  912B0000             stw r9,0x0(r11)
+  8244F590  4E800020             blr
+
 ; 8244F3D0  FUN_8244f3d0  (jpeg-6/jdinput.c:289)
   8244F3D0  7D8802A6             mfspr r12,LR
   8244F3D4  480F90E9             bl 0x825484bc

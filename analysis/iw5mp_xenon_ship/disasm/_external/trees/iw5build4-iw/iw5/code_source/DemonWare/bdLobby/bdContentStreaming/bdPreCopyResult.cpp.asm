@@ -21,6 +21,12 @@
   8254587C  EBE1FFF0             ld r31,-0x10(r1)
   82545880  4E800020             blr
 
+; 82545820  FUN_82545820  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdprecopyresult.cpp:18)
+  82545820  3D608207             lis r11,-0x7df9
+  82545824  396B9970             subi r11,r11,0x6690
+  82545828  91630000             stw r11,0x0(r3)
+  8254582C  4BFEBC04             b 0x82531430
+
 ; 825458E8  FUN_825458e8  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdprecopyresult.cpp:22)
   825458E8  7D8802A6             mfspr r12,LR
   825458EC  48002BC9             bl 0x825484b4
@@ -91,6 +97,10 @@ LAB_825459c4:
   825459D0  7FC3F378             or r3,r30,r30
   825459D4  383F0090             addi r1,r31,0x90
   825459D8  48002B2C             b 0x82548504
+
+; 82545830  FUN_82545830  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdprecopyresult.cpp:31)
+  82545830  3860018C             li r3,0x18c
+  82545834  4E800020             blr
 
 ; 82545888  FUN_82545888  (line unknown)
   82545888  7D8802A6             mfspr r12,LR

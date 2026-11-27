@@ -58,6 +58,10 @@ LAB_8253ed6c:
   8253ED7C  383F0070             addi r1,r31,0x70
   8253ED80  4800978C             b 0x8254850c
 
+; 8253ECA8  FUN_8253eca8  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdfacebook/bdfacebookaccount.cpp:30)
+  8253ECA8  38600090             li r3,0x90
+  8253ECAC  4E800020             blr
+
 ; 8253ECB0  FUN_8253ecb0  (line unknown)
   8253ECB0  7D8802A6             mfspr r12,LR
   8253ECB4  9181FFF8             stw r12,-0x8(r1)

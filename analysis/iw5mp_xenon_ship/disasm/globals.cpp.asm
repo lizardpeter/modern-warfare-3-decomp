@@ -240,3 +240,17 @@ LAB_824f10c0:
   824F10E0  7CE33038             and r3,r7,r6
   824F10E4  38210070             addi r1,r1,0x70
   824F10E8  48057424             b 0x8254850c
+
+; 8256FA38  FUN_8256fa38  (line unknown)
+  8256FA38  3D608206             lis r11,-0x7dfa
+  8256FA3C  3D40825A             lis r10,-0x7da6
+  8256FA40  396BA648             subi r11,r11,0x59b8
+  8256FA44  916A7E60             stw r11,0x7e60(r10)
+  8256FA48  4E800020             blr
+
+; 8256FA50  FUN_8256fa50  (line unknown)
+  8256FA50  3D608206             lis r11,-0x7dfa
+  8256FA54  3D40825A             lis r10,-0x7da6
+  8256FA58  396BA648             subi r11,r11,0x59b8
+  8256FA5C  916A7E80             stw r11,0x7e80(r10)
+  8256FA60  4E800020             blr

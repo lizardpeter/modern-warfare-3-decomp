@@ -349,6 +349,113 @@ LAB_8232dcf0:
   8232DD00  7D4903A6             mtspr CTR,r10
   8232DD04  4E800420             bctr
 
+; 8232DD38  FUN_8232dd38  (universal/q_shared.cpp:456)
+  8232DD38  7C6A0734             extsh r10,r3
+  8232DD3C  546B442E             rlwinm r11,r3,0x8,0x10,0x17
+  8232DD40  7D494670             srawi r9,r10,0x8
+  8232DD44  552A063E             rlwinm r10,r9,0x0,0x18,0x1f
+  8232DD48  7C6B5214             add r3,r11,r10
+  8232DD4C  4E800020             blr
+
+; 8232DD50  FUN_8232dd50  (universal/q_shared.cpp:467)
+  8232DD50  4E800020             blr
+
+; 8232DD58  FUN_8232dd58  (universal/q_shared.cpp:472)
+  8232DD58  546B442E             rlwinm r11,r3,0x8,0x10,0x17
+  8232DD5C  546AC63E             rlwinm r10,r3,0x18,0x18,0x1f
+  8232DD60  7C6B5214             add r3,r11,r10
+  8232DD64  4E800020             blr
+
+; 8232DD68  FUN_8232dd68  (universal/q_shared.cpp:483)
+  8232DD68  4E800020             blr
+
+; 8232DD70  FUN_8232dd70  (universal/q_shared.cpp:489)
+  8232DD70  7C6A4670             srawi r10,r3,0x8
+  8232DD74  546B442E             rlwinm r11,r3,0x8,0x10,0x17
+  8232DD78  554A063E             rlwinm r10,r10,0x0,0x18,0x1f
+  8232DD7C  7C698670             srawi r9,r3,0x10
+  8232DD80  7D0B5214             add r8,r11,r10
+  8232DD84  552A063E             rlwinm r10,r9,0x0,0x18,0x1f
+  8232DD88  550B402E             rlwinm r11,r8,0x8,0x0,0x17
+  8232DD8C  7C67C670             srawi r7,r3,0x18
+  8232DD90  7CCB5214             add r6,r11,r10
+  8232DD94  54EA063E             rlwinm r10,r7,0x0,0x18,0x1f
+  8232DD98  54CB402E             rlwinm r11,r6,0x8,0x0,0x17
+  8232DD9C  7C6B5214             add r3,r11,r10
+  8232DDA0  4E800020             blr
+
+; 8232DDA8  FUN_8232dda8  (universal/q_shared.cpp:502)
+  8232DDA8  4E800020             blr
+
+; 8232DDB0  FUN_8232ddb0  (universal/q_shared.cpp:508)
+  8232DDB0  786AC202             rldicl r10,r3,0x38,0x8
+  8232DDB4  546B442E             rlwinm r11,r3,0x8,0x10,0x17
+  8232DDB8  554A063E             rlwinm r10,r10,0x0,0x18,0x1f
+  8232DDBC  78678402             rldicl r7,r3,0x30,0x10
+  8232DDC0  7CCB5214             add r6,r11,r10
+  8232DDC4  54EA063E             rlwinm r10,r7,0x0,0x18,0x1f
+  8232DDC8  78CB45E4             rldicr r11,r6,0x8,0x37
+  8232DDCC  78644602             rldicl r4,r3,0x28,0x18
+  8232DDD0  7D6B5214             add r11,r11,r10
+  8232DDD4  548A063E             rlwinm r10,r4,0x0,0x18,0x1f
+  8232DDD8  796B45E4             rldicr r11,r11,0x8,0x37
+  8232DDDC  78690022             rldicl r9,r3,0x20,0x20
+  8232DDE0  7D0B5214             add r8,r11,r10
+  8232DDE4  552A063E             rlwinm r10,r9,0x0,0x18,0x1f
+  8232DDE8  790B45E4             rldicr r11,r8,0x8,0x37
+  8232DDEC  7866C220             rldicl r6,r3,0x18,0x28
+  8232DDF0  7CAB5214             add r5,r11,r10
+  8232DDF4  54CA063E             rlwinm r10,r6,0x0,0x18,0x1f
+  8232DDF8  78AB45E4             rldicr r11,r5,0x8,0x37
+  8232DDFC  78698420             rldicl r9,r3,0x10,0x30
+  8232DE00  7D0B5214             add r8,r11,r10
+  8232DE04  552A063E             rlwinm r10,r9,0x0,0x18,0x1f
+  8232DE08  790B45E4             rldicr r11,r8,0x8,0x37
+  8232DE0C  78664620             rldicl r6,r3,0x8,0x38
+  8232DE10  7CAB5214             add r5,r11,r10
+  8232DE14  78AB45E4             rldicr r11,r5,0x8,0x37
+  8232DE18  7C6B3214             add r3,r11,r6
+  8232DE1C  4E800020             blr
+
+; 8232DE20  FUN_8232de20  (universal/q_shared.cpp:525)
+  8232DE20  4E800020             blr
+
+; 8232DE28  FUN_8232de28  (universal/q_shared.cpp:531)
+  8232DE28  90610014             stw r3,0x14(r1)
+  8232DE2C  89410016             lbz r10,0x16(r1)
+  8232DE30  89210015             lbz r9,0x15(r1)
+  8232DE34  89010014             lbz r8,0x14(r1)
+  8232DE38  89610017             lbz r11,0x17(r1)
+  8232DE3C  9961FFF0             stb r11,-0x10(r1)
+  8232DE40  9941FFF1             stb r10,-0xf(r1)
+  8232DE44  9921FFF2             stb r9,-0xe(r1)
+  8232DE48  9901FFF3             stb r8,-0xd(r1)
+  8232DE4C  C021FFF0             lfs f1,-0x10(r1)
+  8232DE50  4E800020             blr
+
+; 8232DE58  FUN_8232de58  (universal/q_shared.cpp:549)
+  8232DE58  9061FFF0             stw r3,-0x10(r1)
+  8232DE5C  C021FFF0             lfs f1,-0x10(r1)
+  8232DE60  4E800020             blr
+
+; 8232DE68  FUN_8232de68  (universal/q_shared.cpp:555)
+  8232DE68  D021FFF0             stfs f1,-0x10(r1)
+  8232DE6C  8941FFF2             lbz r10,-0xe(r1)
+  8232DE70  8921FFF1             lbz r9,-0xf(r1)
+  8232DE74  8961FFF3             lbz r11,-0xd(r1)
+  8232DE78  8901FFF0             lbz r8,-0x10(r1)
+  8232DE7C  9961FFF0             stb r11,-0x10(r1)
+  8232DE80  9941FFF1             stb r10,-0xf(r1)
+  8232DE84  9921FFF2             stb r9,-0xe(r1)
+  8232DE88  9901FFF3             stb r8,-0xd(r1)
+  8232DE8C  8061FFF0             lwz r3,-0x10(r1)
+  8232DE90  4E800020             blr
+
+; 8232DE98  FUN_8232de98  (universal/q_shared.cpp:573)
+  8232DE98  D0210014             stfs f1,0x14(r1)
+  8232DE9C  80610014             lwz r3,0x14(r1)
+  8232DEA0  4E800020             blr
+
 ; 8232DF68  FUN_8232df68  (universal/q_shared.cpp:616)
   8232DF68  39600001             li r11,0x1
   8232DF6C  39400000             li r10,0x0
@@ -1927,6 +2034,19 @@ caseD_e:
 default:
   8232F660  38212070             addi r1,r1,0x2070
   8232F664  48218EA8             b 0x8254850c
+
+; 8232F6C0  FUN_8232f6c0  (universal/q_shared.cpp:1773)
+  8232F6C0  8163000C             lwz r11,0xc(r3)
+  8232F6C4  8144000C             lwz r10,0xc(r4)
+  8232F6C8  7F0B5040             cmplw cr6,r11,r10
+  8232F6CC  4098000C             bge cr6,0x8232f6d8
+  8232F6D0  3860FFFF             li r3,-0x1
+  8232F6D4  4E800020             blr
+LAB_8232f6d8:
+  8232F6D8  7D6B5010             subfc r11,r11,r10
+  8232F6DC  7D2A5110             subfe r9,r10,r10
+  8232F6E0  552307FE             rlwinm r3,r9,0x0,0x1f,0x1f
+  8232F6E4  4E800020             blr
 
 ; 8232F6E8  FUN_8232f6e8  (universal/q_shared.cpp:1783)
   8232F6E8  7D8802A6             mfspr r12,LR

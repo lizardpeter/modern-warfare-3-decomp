@@ -37,6 +37,14 @@ LAB_8249c684:
   8249C684  38210080             addi r1,r1,0x80
   8249C688  480ABE80             b 0x82548508
 
+; 8249C690  FUN_8249c690  (WebM_atvi_opt/vpx/vp8/common/loopfilter.c:46)
+  8249C690  7CC43378             or r4,r6,r6
+  8249C694  7D064378             or r6,r8,r8
+  8249C698  38E80040             addi r7,r8,0x40
+  8249C69C  39000002             li r8,0x2
+  8249C6A0  38A60030             addi r5,r6,0x30
+  8249C6A4  4800287C             b 0x8249ef20
+
 ; 8249C6A8  FUN_8249c6a8  (WebM_atvi_opt/vpx/vp8/common/loopfilter.c:57)
   8249C6A8  7D8802A6             mfspr r12,LR
   8249C6AC  480ABE0D             bl 0x825484b8
@@ -73,6 +81,14 @@ LAB_8249c700:
 LAB_8249c724:
   8249C724  38210080             addi r1,r1,0x80
   8249C728  480ABDE0             b 0x82548508
+
+; 8249C730  FUN_8249c730  (WebM_atvi_opt/vpx/vp8/common/loopfilter.c:70)
+  8249C730  7CC43378             or r4,r6,r6
+  8249C734  7D064378             or r6,r8,r8
+  8249C738  38E80040             addi r7,r8,0x40
+  8249C73C  39000002             li r8,0x2
+  8249C740  38A60030             addi r5,r6,0x30
+  8249C744  480028AC             b 0x8249eff0
 
 ; 8249C748  FUN_8249c748  (WebM_atvi_opt/vpx/vp8/common/loopfilter.c:81)
   8249C748  7D8802A6             mfspr r12,LR

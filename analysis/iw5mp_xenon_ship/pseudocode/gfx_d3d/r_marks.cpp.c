@@ -154,6 +154,35 @@ undefined4 FUN_82402658(int param_1,int param_2,undefined8 param_3,float *param_
 }
 
 
+// 82402930  FUN_82402930  (gfx_d3d/r_marks.cpp:407)
+
+bool FUN_82402930(int param_1,int param_2)
+
+{
+  int iVar1;
+  
+  iVar1 = *(int *)(*(int *)(DAT_83c9f2c8 + 0x50) + param_1 * 0x18 + 0x10);
+  if ((*(byte *)(iVar1 + 4) & 5) != 0) {
+    return false;
+  }
+  return *(uint *)(param_2 + 0x10) == (*(uint *)(iVar1 + 0x10) & *(uint *)(param_2 + 0x10));
+}
+
+
+// 82402990  FUN_82402990  (gfx_d3d/r_marks.cpp:415)
+
+longlong FUN_82402990(int param_1)
+
+{
+  ulonglong uVar1;
+  longlong lVar2;
+  
+  uVar1 = (ulonglong)*(ushort *)(*(int *)(DAT_83c9f2c8 + 0x58) + param_1 * 0x2c + 0x22);
+  lVar2 = uVar1 - 1;
+  return lVar2 - ((uVar1 - 2) + (ulonglong)(lVar2 == 0));
+}
+
+
 // 82404260  FUN_82404260  (gfx_d3d/r_marks.cpp:422)
 
 /* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */

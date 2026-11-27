@@ -1418,6 +1418,41 @@ LAB_822ccc14:
   822CCC20  EBE1FFF0             ld r31,-0x10(r1)
   822CCC24  4E800020             blr
 
+; 822CCC28  FUN_822ccc28  (server_mp/sv_migration.cpp:1202)
+  822CCC28  3D608369             lis r11,-0x7c97
+  822CCC2C  396B2FB0             addi r11,r11,0x2fb0
+  822CCC30  814B0334             lwz r10,0x334(r11)
+  822CCC34  7F035000             cmpw cr6,r3,r10
+  822CCC38  4C9A0020             bnelr cr6
+  822CCC3C  546A083C             rlwinm r10,r3,0x1,0x0,0x1e
+  822CCC40  392B0004             addi r9,r11,0x4
+  822CCC44  7D035214             add r8,r3,r10
+  822CCC48  55071838             rlwinm r7,r8,0x3,0x0,0x1c
+  822CCC4C  7CC7482E             lwzx r6,r7,r9
+  822CCC50  2F060002             cmpwi cr6,r6,0x2
+  822CCC54  4C9A0020             bnelr cr6
+  822CCC58  816B0000             lwz r11,0x0(r11)
+  822CCC5C  2F0B0002             cmpwi cr6,r11,0x2
+  822CCC60  4C9A0020             bnelr cr6
+  822CCC64  4BFFEF0C             b 0x822cbb70
+
+; 822CCC70  FUN_822ccc70  (server_mp/sv_migration.cpp:1214)
+  822CCC70  546B083C             rlwinm r11,r3,0x1,0x0,0x1e
+  822CCC74  3D408369             lis r10,-0x7c97
+  822CCC78  7D235A14             add r9,r3,r11
+  822CCC7C  396A2FB0             addi r11,r10,0x2fb0
+  822CCC80  552A1838             rlwinm r10,r9,0x3,0x0,0x1c
+  822CCC84  392B0004             addi r9,r11,0x4
+  822CCC88  7D0A482E             lwzx r8,r10,r9
+  822CCC8C  2F080002             cmpwi cr6,r8,0x2
+  822CCC90  4C9A0020             bnelr cr6
+  822CCC94  816B0000             lwz r11,0x0(r11)
+  822CCC98  2F0B0004             cmpwi cr6,r11,0x4
+  822CCC9C  4C9A0020             bnelr cr6
+  822CCCA0  39600000             li r11,0x0
+  822CCCA4  7D6A492E             stwx r11,r10,r9
+  822CCCA8  4E800020             blr
+
 ; 822CCCB0  FUN_822cccb0  (server_mp/sv_migration.cpp:1240)
   822CCCB0  7D8802A6             mfspr r12,LR
   822CCCB4  4827B7F9             bl 0x825484ac

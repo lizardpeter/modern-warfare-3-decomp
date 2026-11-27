@@ -357,6 +357,15 @@ void FUN_8229ee60(void)
 }
 
 
+// 8229EEC0  FUN_8229eec0  (qcommon/dvar_cmds.cpp:681)
+
+void FUN_8229eec0(void)
+
+{
+  return;
+}
+
+
 // 8229EEC8  FUN_8229eec8  (qcommon/dvar_cmds.cpp:695)
 
 void FUN_8229eec8(undefined4 param_1)

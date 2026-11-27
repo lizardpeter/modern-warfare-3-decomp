@@ -39,6 +39,10 @@
   82531CF8  383F0070             addi r1,r31,0x70
   82531CFC  48016810             b 0x8254850c
 
+; 82531CA8  FUN_82531ca8  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdtitleutilities/bdtimestamp.cpp:25)
+  82531CA8  38600008             li r3,0x8
+  82531CAC  4E800020             blr
+
 ; 82544A68  FUN_82544a68  (line unknown)
   82544A68  7D8802A6             mfspr r12,LR
   82544A6C  9181FFF8             stw r12,-0x8(r1)

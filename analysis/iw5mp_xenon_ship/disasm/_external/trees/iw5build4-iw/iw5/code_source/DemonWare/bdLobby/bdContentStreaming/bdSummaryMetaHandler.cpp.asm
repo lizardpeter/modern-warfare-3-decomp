@@ -56,6 +56,10 @@ LAB_825457dc:
   825457EC  383F0070             addi r1,r31,0x70
   825457F0  48002D1C             b 0x8254850c
 
+; 82545718  FUN_82545718  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdsummarymetahandler.cpp:28)
+  82545718  38600184             li r3,0x184
+  8254571C  4E800020             blr
+
 ; 82545720  FUN_82545720  (line unknown)
   82545720  7D8802A6             mfspr r12,LR
   82545724  9181FFF8             stw r12,-0x8(r1)

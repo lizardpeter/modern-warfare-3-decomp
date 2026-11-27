@@ -49,6 +49,15 @@ LAB_82533a50:
 }
 
 
+// 82533998  FUN_82533998  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdtitleutilities/bduserinfo.cpp:30)
+
+undefined8 FUN_82533998(void)
+
+{
+  return 0x50;
+}
+
+
 // 825339A0  FUN_825339a0  (line unknown)
 
 undefined4 * FUN_825339a0(undefined4 *param_1,ulonglong param_2)

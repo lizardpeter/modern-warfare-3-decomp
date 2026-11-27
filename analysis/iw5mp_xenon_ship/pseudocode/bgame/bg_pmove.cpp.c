@@ -100,7 +100,7 @@ undefined8 FUN_820e22c0(uint param_1)
   ulonglong uVar1;
   undefined8 uVar2;
   
-  if ((code *)(&PTR_LAB_825911cc)[((param_1 & 0xff) + (param_1 & 0xff) * 2) * 2] != (code *)0x0) {
+  if ((code *)(&PTR_FUN_825911cc)[((param_1 & 0xff) + (param_1 & 0xff) * 2) * 2] != (code *)0x0) {
     if ((param_1 & 0xff) == 0) {
       uVar1 = (ulonglong)DAT_82627b1c;
     }
@@ -109,7 +109,7 @@ undefined8 FUN_820e22c0(uint param_1)
     }
                     /* WARNING: Could not recover jumptable at 0x820e2304. Too many branches */
                     /* WARNING: Treating indirect jump as call */
-    uVar2 = (*(code *)(&PTR_LAB_825911cc)[((param_1 & 0xff) + (param_1 & 0xff) * 2) * 2])(uVar1);
+    uVar2 = (*(code *)(&PTR_FUN_825911cc)[((param_1 & 0xff) + (param_1 & 0xff) * 2) * 2])(uVar1);
     return uVar2;
   }
   return 0;
@@ -124,7 +124,7 @@ undefined8 FUN_820e2310(uint param_1)
   ulonglong uVar1;
   undefined8 uVar2;
   
-  if ((code *)(&PTR_LAB_825911d0)[((param_1 & 0xff) + (param_1 & 0xff) * 2) * 2] != (code *)0x0) {
+  if ((code *)(&PTR_FUN_825911d0)[((param_1 & 0xff) + (param_1 & 0xff) * 2) * 2] != (code *)0x0) {
     if ((param_1 & 0xff) == 0) {
       uVar1 = (ulonglong)DAT_82627b1c;
     }
@@ -133,7 +133,7 @@ undefined8 FUN_820e2310(uint param_1)
     }
                     /* WARNING: Could not recover jumptable at 0x820e2354. Too many branches */
                     /* WARNING: Treating indirect jump as call */
-    uVar2 = (*(code *)(&PTR_LAB_825911d0)[((param_1 & 0xff) + (param_1 & 0xff) * 2) * 2])(uVar1);
+    uVar2 = (*(code *)(&PTR_FUN_825911d0)[((param_1 & 0xff) + (param_1 & 0xff) * 2) * 2])(uVar1);
     return uVar2;
   }
   return 0;
@@ -1380,6 +1380,57 @@ void FUN_820e3660(int *param_1,float *param_2)
 }
 
 
+// 820E2030  FUN_820e2030  (cgame_mp/cg_local_mp.h:1758)
+
+undefined8 FUN_820e2030(int param_1,int param_2,undefined4 *param_3)
+
+{
+  int iVar1;
+  
+  iVar1 = (param_1 * 0x800 + param_2) * 0x1ec + DAT_8262c438;
+  if (iVar1 != 0) {
+    *param_3 = *(undefined4 *)(iVar1 + 0x14);
+    param_3[1] = *(undefined4 *)(iVar1 + 0x18);
+    param_3[2] = *(undefined4 *)(iVar1 + 0x1c);
+    return 1;
+  }
+  return 0;
+}
+
+
+// 820E2078  FUN_820e2078  (cgame_mp/cg_local_mp.h:1774)
+
+undefined8 FUN_820e2078(int param_1,int param_2,undefined4 *param_3)
+
+{
+  int iVar1;
+  
+  iVar1 = (param_1 * 0x800 + param_2) * 0x1ec + DAT_8262c438;
+  if (iVar1 != 0) {
+    *param_3 = *(undefined4 *)(iVar1 + 0xe8);
+    param_3[1] = *(undefined4 *)(iVar1 + 0xec);
+    param_3[2] = *(undefined4 *)(iVar1 + 0xf0);
+    return 1;
+  }
+  return 0;
+}
+
+
+// 820E20C0  FUN_820e20c0  (cgame_mp/cg_local_mp.h:1790)
+
+longlong FUN_820e20c0(ulonglong param_1,longlong param_2)
+
+{
+  longlong lVar1;
+  
+  lVar1 = ((param_1 & 0x1fffff) * 0x800 + param_2) * 0x1ec + (ulonglong)DAT_8262c438;
+  if (lVar1 != 0) {
+    return lVar1 + 0xc4;
+  }
+  return 0;
+}
+
+
 // 820E38A0  FUN_820e38a0  (bgame/bg_pmove.cpp:1820)
 
 /* WARNING: Function: __savefpr_27 replaced with injection: xenon_save_restore */
@@ -1897,7 +1948,7 @@ void FUN_820e8ba0(int *param_1,int param_2)
       else {
         uVar3 = 0xffffffffffffffff;
       }
-      iVar4 = (*(code *)(&PTR_LAB_825911d4)[(uint)*(byte *)(param_1 + 0x4d) * 6])(uVar3,uVar6);
+      iVar4 = (*(code *)(&PTR_FUN_825911d4)[(uint)*(byte *)(param_1 + 0x4d) * 6])(uVar3,uVar6);
       if ((iVar4 != 0) &&
          (((iVar4 = *(int *)(iVar4 + 4), iVar4 == 0xc || (iVar4 == 0xb)) ||
           (bVar2 = false, iVar4 == 0xe)))) {
@@ -4277,14 +4328,14 @@ undefined8 FUN_820e72d8(int *param_1)
   float local_18;
   
   iVar1 = *param_1;
-  if ((code *)(&PTR_LAB_825911cc)[(uint)*(byte *)(param_1 + 0x4d) * 6] != (code *)0x0) {
+  if ((code *)(&PTR_FUN_825911cc)[(uint)*(byte *)(param_1 + 0x4d) * 6] != (code *)0x0) {
     if (*(byte *)(param_1 + 0x4d) == 0) {
       uVar2 = (ulonglong)DAT_82627b1c;
     }
     else {
       uVar2 = 0xffffffffffffffff;
     }
-    iVar3 = (*(code *)(&PTR_LAB_825911cc)[(uint)*(byte *)(param_1 + 0x4d) * 6])
+    iVar3 = (*(code *)(&PTR_FUN_825911cc)[(uint)*(byte *)(param_1 + 0x4d) * 6])
                       (uVar2,*(undefined4 *)(iVar1 + 0x4e4),&local_30);
     if (iVar3 != 0) {
       local_20 = local_30 - *(float *)(iVar1 + 0x1c);

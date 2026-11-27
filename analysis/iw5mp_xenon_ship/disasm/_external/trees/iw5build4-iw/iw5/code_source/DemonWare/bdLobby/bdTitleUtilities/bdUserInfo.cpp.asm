@@ -55,6 +55,10 @@ LAB_82533a50:
   82533A60  383F0070             addi r1,r31,0x70
   82533A64  48014AA8             b 0x8254850c
 
+; 82533998  FUN_82533998  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdtitleutilities/bduserinfo.cpp:30)
+  82533998  38600050             li r3,0x50
+  8253399C  4E800020             blr
+
 ; 825339A0  FUN_825339a0  (line unknown)
   825339A0  7D8802A6             mfspr r12,LR
   825339A4  9181FFF8             stw r12,-0x8(r1)

@@ -14,6 +14,17 @@ undefined4 * FUN_8253cc88(undefined4 *param_1)
 }
 
 
+// 8253CCD8  FUN_8253ccd8  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdteams/bdteammember.cpp:19)
+
+void FUN_8253ccd8(undefined4 *param_1)
+
+{
+  *param_1 = &PTR_FUN_82066e98;
+  FUN_82531430();
+  return;
+}
+
+
 // 8253CD50  FUN_8253cd50  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdteams/bdteammember.cpp:26)
 
 /* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */

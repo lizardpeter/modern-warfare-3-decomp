@@ -815,6 +815,28 @@ void FUN_8245a0f8(int *param_1)
 }
 
 
+// 8245A258  FUN_8245a258  (jpeg-6/jquant1.c:799)
+
+void FUN_8245a258(void)
+
+{
+  return;
+}
+
+
+// 8245A260  FUN_8245a260  (jpeg-6/jquant1.c:811)
+
+void FUN_8245a260(int *param_1)
+
+{
+  *(undefined4 *)(*param_1 + 0x14) = 0x2e;
+                    /* WARNING: Could not recover jumptable at 0x8245a278. Too many branches */
+                    /* WARNING: Treating indirect jump as call */
+  (**(code **)*param_1)();
+  return;
+}
+
+
 // 8245A280  FUN_8245a280  (jpeg-6/jquant1.c:822)
 
 void FUN_8245a280(int *param_1)
@@ -826,8 +848,8 @@ void FUN_8245a280(int *param_1)
   param_1[0x6c] = (int)puVar1;
   puVar1[0x11] = 0;
   *puVar1 = FUN_8245a0f8;
-  puVar1[2] = &DAT_8245a258;
-  puVar1[3] = &LAB_8245a260;
+  puVar1[2] = FUN_8245a258;
+  puVar1[3] = FUN_8245a260;
   puVar1[0xd] = 0;
   if (4 < param_1[0x1b]) {
     *(undefined4 *)(*param_1 + 0x14) = 0x37;

@@ -201,6 +201,23 @@ void FUN_823e31d0(int param_1)
 }
 
 
+// 823E34D0  FUN_823e34d0  (gfx_d3d/r_bsp_load_obj.cpp:6004)
+
+void FUN_823e34d0(int param_1,int param_2,undefined2 param_3)
+
+{
+  ushort *puVar1;
+  
+  puVar1 = (ushort *)(*(int *)(param_1 + 0x224) + param_2 * 0xc);
+  if (*(int *)(puVar1 + 2) == 0) {
+    return;
+  }
+  *(undefined2 *)((uint)*puVar1 * 2 + *(int *)(puVar1 + 2)) = param_3;
+  *puVar1 = *puVar1 + 1;
+  return;
+}
+
+
 // 823E32E8  FUN_823e32e8  (gfx_d3d/r_bsp_load_obj.cpp:6017)
 
 /* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */

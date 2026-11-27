@@ -213,6 +213,12 @@ LAB_821f5a38:
   821F5A48  7D8803A6             mtspr LR,r12
   821F5A4C  4E800020             blr
 
+; 821F5A50  FUN_821f5a50  (database/db_streaming_tabulate.cpp:192)
+  821F5A50  A1630000             lhz r11,0x0(r3)
+  821F5A54  A1440000             lhz r10,0x0(r4)
+  821F5A58  7C6A5850             subf r3,r10,r11
+  821F5A5C  4E800020             blr
+
 ; 821F5A60  FUN_821f5a60  (database/db_streaming_tabulate.cpp:198)
   821F5A60  7D8802A6             mfspr r12,LR
   821F5A64  48352A3D             bl 0x825484a0
@@ -936,6 +942,78 @@ LAB_821f6ad4:
   821F6AD8  3981FF98             subi r12,r1,0x68
   821F6ADC  48351B71             bl 0x8254864c
   821F6AE0  48351A08             b 0x825484e8
+
+; 8256C1A8  FUN_8256c1a8  (database/db_streaming_tabulate.cpp:875)
+  8256C1A8  3D608202             lis r11,-0x7dfe
+  8256C1AC  3D4082D6             lis r10,-0x7d2a
+  8256C1B0  392BAC60             subi r9,r11,0x53a0
+  8256C1B4  390AE540             subi r8,r10,0x1ac0
+  8256C1B8  13E048C7             lvx128 v63,0,r9
+  8256C1BC  13E041C7             stvx128 v63,0,r8
+  8256C1C0  4E800020             blr
+
+; 8256C1C8  FUN_8256c1c8  (database/db_streaming_tabulate.cpp:876)
+  8256C1C8  3D608202             lis r11,-0x7dfe
+  8256C1CC  3D4082D6             lis r10,-0x7d2a
+  8256C1D0  392BAC70             subi r9,r11,0x5390
+  8256C1D4  390AE580             subi r8,r10,0x1a80
+  8256C1D8  13E048C7             lvx128 v63,0,r9
+  8256C1DC  13E041C7             stvx128 v63,0,r8
+  8256C1E0  4E800020             blr
+
+; 8256C1E8  FUN_8256c1e8  (database/db_streaming_tabulate.cpp:877)
+  8256C1E8  3D608202             lis r11,-0x7dfe
+  8256C1EC  3D4082D6             lis r10,-0x7d2a
+  8256C1F0  392BAC80             subi r9,r11,0x5380
+  8256C1F4  390AE520             subi r8,r10,0x1ae0
+  8256C1F8  13E048C7             lvx128 v63,0,r9
+  8256C1FC  13E041C7             stvx128 v63,0,r8
+  8256C200  4E800020             blr
+
+; 8256C208  FUN_8256c208  (database/db_streaming_tabulate.cpp:878)
+  8256C208  3D608202             lis r11,-0x7dfe
+  8256C20C  3D4082D6             lis r10,-0x7d2a
+  8256C210  392BAC90             subi r9,r11,0x5370
+  8256C214  390AE550             subi r8,r10,0x1ab0
+  8256C218  13E048C7             lvx128 v63,0,r9
+  8256C21C  13E041C7             stvx128 v63,0,r8
+  8256C220  4E800020             blr
+
+; 8256C228  FUN_8256c228  (database/db_streaming_tabulate.cpp:879)
+  8256C228  3D608202             lis r11,-0x7dfe
+  8256C22C  3D4082D6             lis r10,-0x7d2a
+  8256C230  392BACA0             subi r9,r11,0x5360
+  8256C234  390AE560             subi r8,r10,0x1aa0
+  8256C238  13E048C7             lvx128 v63,0,r9
+  8256C23C  13E041C7             stvx128 v63,0,r8
+  8256C240  4E800020             blr
+
+; 8256C248  FUN_8256c248  (database/db_streaming_tabulate.cpp:880)
+  8256C248  3D608202             lis r11,-0x7dfe
+  8256C24C  3D4082D6             lis r10,-0x7d2a
+  8256C250  392BACB0             subi r9,r11,0x5350
+  8256C254  390AE530             subi r8,r10,0x1ad0
+  8256C258  13E048C7             lvx128 v63,0,r9
+  8256C25C  13E041C7             stvx128 v63,0,r8
+  8256C260  4E800020             blr
+
+; 8256C268  FUN_8256c268  (database/db_streaming_tabulate.cpp:881)
+  8256C268  3D608202             lis r11,-0x7dfe
+  8256C26C  3D4082D6             lis r10,-0x7d2a
+  8256C270  392BACC0             subi r9,r11,0x5340
+  8256C274  390AE570             subi r8,r10,0x1a90
+  8256C278  13E048C7             lvx128 v63,0,r9
+  8256C27C  13E041C7             stvx128 v63,0,r8
+  8256C280  4E800020             blr
+
+; 8256C288  FUN_8256c288  (database/db_streaming_tabulate.cpp:882)
+  8256C288  3D608202             lis r11,-0x7dfe
+  8256C28C  3D4082D6             lis r10,-0x7d2a
+  8256C290  392BACD0             subi r9,r11,0x5330
+  8256C294  390AE590             subi r8,r10,0x1a70
+  8256C298  13E048C7             lvx128 v63,0,r9
+  8256C29C  13E041C7             stvx128 v63,0,r8
+  8256C2A0  4E800020             blr
 
 ; 821F6098  FUN_821f6098  (database/db_streaming_tabulate.cpp:886)
   821F6098  7D8802A6             mfspr r12,LR

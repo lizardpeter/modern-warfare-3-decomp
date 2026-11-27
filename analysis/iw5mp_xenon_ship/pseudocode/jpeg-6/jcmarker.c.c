@@ -776,7 +776,7 @@ void FUN_82446328(int param_1)
   puVar1[3] = FUN_82446160;
   puVar1[4] = FUN_824461a0;
   puVar1[5] = FUN_82445e38;
-  puVar1[6] = &LAB_82445eb8;
+  puVar1[6] = thunk_FUN_82444e60;
   puVar1[7] = 0;
   return;
 }

@@ -1855,6 +1855,249 @@ LAB_825092a8:
   825092AC  EBE1FFF8             ld r31,-0x8(r1)
   825092B0  4E800020             blr
 
+; 825092B8  FUN_825092b8  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/nativesrc.inl:127)
+  825092B8  81430008             lwz r10,0x8(r3)
+  825092BC  C0030024             lfs f0,0x24(r3)
+  825092C0  8923000D             lbz r9,0xd(r3)
+  825092C4  80C3001C             lwz r6,0x1c(r3)
+  825092C8  80A30004             lwz r5,0x4(r3)
+  825092CC  7D2951D6             mullw r9,r9,r10
+  825092D0  80830018             lwz r4,0x18(r3)
+  825092D4  81630000             lwz r11,0x0(r3)
+  825092D8  81030014             lwz r8,0x14(r3)
+  825092DC  54C7103A             rlwinm r7,r6,0x2,0x0,0x1d
+  825092E0  7D4A2850             subf r10,r10,r5
+  825092E4  7CC62050             subf r6,r6,r4
+  825092E8  7D695A14             add r11,r9,r11
+  825092EC  7D274214             add r9,r7,r8
+  825092F0  7F0A3000             cmpw cr6,r10,r6
+  825092F4  7D485378             or r8,r10,r10
+  825092F8  41980008             blt cr6,0x82509300
+  825092FC  7CC83378             or r8,r6,r6
+LAB_82509300:
+  82509300  5507103A             rlwinm r7,r8,0x2,0x0,0x1d
+  82509304  39400000             li r10,0x0
+  82509308  38E7007F             addi r7,r7,0x7f
+  8250930C  54E7C9FE             rlwinm r7,r7,0x19,0x7,0x1f
+  82509310  2B070000             cmplwi cr6,r7,0x0
+  82509314  419A001C             beq cr6,0x82509330
+  82509318  7CE903A6             mtspr CTR,r7
+  8250931C  55473830             rlwinm r7,r10,0x7,0x0,0x18
+LAB_82509320:
+  82509320  7C075A2C             dcbt r7,r11
+  82509324  394A0001             addi r10,r10,0x1
+  82509328  55473830             rlwinm r7,r10,0x7,0x0,0x18
+  8250932C  4200FFF4             bdnz 0x82509320
+LAB_82509330:
+  82509330  7CCA07B4             extsw r10,r6
+  82509334  C1A30028             lfs f13,0x28(r3)
+  82509338  ED8D0028             fsubs f12,f13,f0
+  8250933C  3CE08202             lis r7,-0x7dfe
+  82509340  F941FFE0             std r10,-0x20(r1)
+  82509344  C961FFE0             lfd f11,-0x20(r1)
+  82509348  FD405E9C             fcfid f10,f11
+  8250934C  3D408205             lis r10,-0x7dfb
+  82509350  FD205018             frsp f9,f10
+  82509354  C1A7C1E8             lfs f13,-0x3e18(r7)
+  82509358  ED6C4824             fdivs f11,f12,f9
+  8250935C  C18A961C             lfs f12,-0x69e4(r10)
+LAB_82509360:
+  82509360  88EB0003             lbz r7,0x3(r11)
+  82509364  3508FFFF             subic. r8,r8,0x1
+  82509368  F8E1FFE0             std r7,-0x20(r1)
+  8250936C  C941FFE0             lfd f10,-0x20(r1)
+  82509370  FD20569C             fcfid f9,f10
+  82509374  FD004818             frsp f8,f9
+  82509378  ECE86828             fsubs f7,f8,f13
+  8250937C  ECC70332             fmuls f6,f7,f12
+  82509380  ECA60032             fmuls f5,f6,f0
+  82509384  D0A90C00             stfs f5,0xc00(r9)
+  82509388  88AB0002             lbz r5,0x2(r11)
+  8250938C  F8A1FFE8             std r5,-0x18(r1)
+  82509390  C881FFE8             lfd f4,-0x18(r1)
+  82509394  FC60269C             fcfid f3,f4
+  82509398  FC401818             frsp f2,f3
+  8250939C  EC226828             fsubs f1,f2,f13
+  825093A0  ED410332             fmuls f10,f1,f12
+  825093A4  ED2A0032             fmuls f9,f10,f0
+  825093A8  D1290800             stfs f9,0x800(r9)
+  825093AC  894B0001             lbz r10,0x1(r11)
+  825093B0  F941FFF0             std r10,-0x10(r1)
+  825093B4  C901FFF0             lfd f8,-0x10(r1)
+  825093B8  FCE0469C             fcfid f7,f8
+  825093BC  FCC03818             frsp f6,f7
+  825093C0  ECA66828             fsubs f5,f6,f13
+  825093C4  EC850332             fmuls f4,f5,f12
+  825093C8  EC640032             fmuls f3,f4,f0
+  825093CC  D0690400             stfs f3,0x400(r9)
+  825093D0  88CB0000             lbz r6,0x0(r11)
+  825093D4  396B0004             addi r11,r11,0x4
+  825093D8  F8C1FFF8             std r6,-0x8(r1)
+  825093DC  C841FFF8             lfd f2,-0x8(r1)
+  825093E0  FC20169C             fcfid f1,f2
+  825093E4  FD400818             frsp f10,f1
+  825093E8  ED2A6828             fsubs f9,f10,f13
+  825093EC  ED090332             fmuls f8,f9,f12
+  825093F0  ECE80032             fmuls f7,f8,f0
+  825093F4  D0E90000             stfs f7,0x0(r9)
+  825093F8  39290004             addi r9,r9,0x4
+  825093FC  EC0B002A             fadds f0,f11,f0
+  82509400  4082FF60             bne 0x82509360
+  82509404  81430000             lwz r10,0x0(r3)
+  82509408  8903000D             lbz r8,0xd(r3)
+  8250940C  7CEA5850             subf r7,r10,r11
+  82509410  81630004             lwz r11,0x4(r3)
+  82509414  0CC80000             twllei r8,0x0
+  82509418  7D474396             divwu r10,r7,r8
+  8250941C  7F0A5840             cmplw cr6,r10,r11
+  82509420  41980008             blt cr6,0x82509428
+  82509424  7D6A5B78             or r10,r11,r11
+LAB_82509428:
+  82509428  81630014             lwz r11,0x14(r3)
+  8250942C  D0030024             stfs f0,0x24(r3)
+  82509430  91430008             stw r10,0x8(r3)
+  82509434  7D4B4850             subf r10,r11,r9
+  82509438  81630018             lwz r11,0x18(r3)
+  8250943C  554AF0BE             rlwinm r10,r10,0x1e,0x2,0x1f
+  82509440  7F0A5840             cmplw cr6,r10,r11
+  82509444  4098000C             bge cr6,0x82509450
+  82509448  9143001C             stw r10,0x1c(r3)
+  8250944C  4E800020             blr
+LAB_82509450:
+  82509450  9163001C             stw r11,0x1c(r3)
+  82509454  4E800020             blr
+
+; 82509458  FUN_82509458  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/nativesrc.inl:127)
+  82509458  81030008             lwz r8,0x8(r3)
+  8250945C  C0030024             lfs f0,0x24(r3)
+  82509460  88E3000D             lbz r7,0xd(r3)
+  82509464  80C3001C             lwz r6,0x1c(r3)
+  82509468  80A30004             lwz r5,0x4(r3)
+  8250946C  7D4741D6             mullw r10,r7,r8
+  82509470  80830018             lwz r4,0x18(r3)
+  82509474  81630000             lwz r11,0x0(r3)
+  82509478  81230014             lwz r9,0x14(r3)
+  8250947C  54C7103A             rlwinm r7,r6,0x2,0x0,0x1d
+  82509480  7D082850             subf r8,r8,r5
+  82509484  7CC62050             subf r6,r6,r4
+  82509488  7D6A5A14             add r11,r10,r11
+  8250948C  7D474A14             add r10,r7,r9
+  82509490  7F083000             cmpw cr6,r8,r6
+  82509494  41980008             blt cr6,0x8250949c
+  82509498  7CC83378             or r8,r6,r6
+LAB_8250949c:
+  8250949C  5507083C             rlwinm r7,r8,0x1,0x0,0x1e
+  825094A0  39200000             li r9,0x0
+  825094A4  7CE83A14             add r7,r8,r7
+  825094A8  54E7083C             rlwinm r7,r7,0x1,0x0,0x1e
+  825094AC  38A7007F             addi r5,r7,0x7f
+  825094B0  54A7C9FE             rlwinm r7,r5,0x19,0x7,0x1f
+  825094B4  2B070000             cmplwi cr6,r7,0x0
+  825094B8  419A001C             beq cr6,0x825094d4
+  825094BC  7CE903A6             mtspr CTR,r7
+  825094C0  55273830             rlwinm r7,r9,0x7,0x0,0x18
+LAB_825094c4:
+  825094C4  7C075A2C             dcbt r7,r11
+  825094C8  39290001             addi r9,r9,0x1
+  825094CC  55273830             rlwinm r7,r9,0x7,0x0,0x18
+  825094D0  4200FFF4             bdnz 0x825094c4
+LAB_825094d4:
+  825094D4  7CC907B4             extsw r9,r6
+  825094D8  C1A30028             lfs f13,0x28(r3)
+  825094DC  ED8D0028             fsubs f12,f13,f0
+  825094E0  3CE08202             lis r7,-0x7dfe
+  825094E4  F921FFD0             std r9,-0x30(r1)
+  825094E8  C961FFD0             lfd f11,-0x30(r1)
+  825094EC  FD405E9C             fcfid f10,f11
+  825094F0  3D208205             lis r9,-0x7dfb
+  825094F4  FD205018             frsp f9,f10
+  825094F8  C1A7C1E8             lfs f13,-0x3e18(r7)
+  825094FC  ED6C4824             fdivs f11,f12,f9
+  82509500  C189961C             lfs f12,-0x69e4(r9)
+LAB_82509504:
+  82509504  88EB0005             lbz r7,0x5(r11)
+  82509508  3508FFFF             subic. r8,r8,0x1
+  8250950C  F8E1FFD0             std r7,-0x30(r1)
+  82509510  C941FFD0             lfd f10,-0x30(r1)
+  82509514  FD20569C             fcfid f9,f10
+  82509518  FD004818             frsp f8,f9
+  8250951C  ECE86828             fsubs f7,f8,f13
+  82509520  ECC70332             fmuls f6,f7,f12
+  82509524  ECA60032             fmuls f5,f6,f0
+  82509528  D0AA1400             stfs f5,0x1400(r10)
+  8250952C  88AB0004             lbz r5,0x4(r11)
+  82509530  F8A1FFD8             std r5,-0x28(r1)
+  82509534  C881FFD8             lfd f4,-0x28(r1)
+  82509538  FC60269C             fcfid f3,f4
+  8250953C  FC401818             frsp f2,f3
+  82509540  EC226828             fsubs f1,f2,f13
+  82509544  ED410332             fmuls f10,f1,f12
+  82509548  ED2A0032             fmuls f9,f10,f0
+  8250954C  D12A1000             stfs f9,0x1000(r10)
+  82509550  892B0003             lbz r9,0x3(r11)
+  82509554  F921FFE0             std r9,-0x20(r1)
+  82509558  C901FFE0             lfd f8,-0x20(r1)
+  8250955C  FCE0469C             fcfid f7,f8
+  82509560  FCC03818             frsp f6,f7
+  82509564  ECA66828             fsubs f5,f6,f13
+  82509568  EC850332             fmuls f4,f5,f12
+  8250956C  EC640032             fmuls f3,f4,f0
+  82509570  D06A0C00             stfs f3,0xc00(r10)
+  82509574  88CB0002             lbz r6,0x2(r11)
+  82509578  F8C1FFE8             std r6,-0x18(r1)
+  8250957C  C841FFE8             lfd f2,-0x18(r1)
+  82509580  FC20169C             fcfid f1,f2
+  82509584  FD400818             frsp f10,f1
+  82509588  ED2A6828             fsubs f9,f10,f13
+  8250958C  ED090332             fmuls f8,f9,f12
+  82509590  ECE80032             fmuls f7,f8,f0
+  82509594  D0EA0800             stfs f7,0x800(r10)
+  82509598  888B0001             lbz r4,0x1(r11)
+  8250959C  F881FFF0             std r4,-0x10(r1)
+  825095A0  C8C1FFF0             lfd f6,-0x10(r1)
+  825095A4  FCA0369C             fcfid f5,f6
+  825095A8  FC802818             frsp f4,f5
+  825095AC  EC646828             fsubs f3,f4,f13
+  825095B0  EC430332             fmuls f2,f3,f12
+  825095B4  EC220032             fmuls f1,f2,f0
+  825095B8  D02A0400             stfs f1,0x400(r10)
+  825095BC  88EB0000             lbz r7,0x0(r11)
+  825095C0  396B0006             addi r11,r11,0x6
+  825095C4  F8E1FFF8             std r7,-0x8(r1)
+  825095C8  C941FFF8             lfd f10,-0x8(r1)
+  825095CC  FD20569C             fcfid f9,f10
+  825095D0  FD004818             frsp f8,f9
+  825095D4  ECE86828             fsubs f7,f8,f13
+  825095D8  ECC70332             fmuls f6,f7,f12
+  825095DC  ECA60032             fmuls f5,f6,f0
+  825095E0  D0AA0000             stfs f5,0x0(r10)
+  825095E4  394A0004             addi r10,r10,0x4
+  825095E8  EC0B002A             fadds f0,f11,f0
+  825095EC  4082FF18             bne 0x82509504
+  825095F0  81230000             lwz r9,0x0(r3)
+  825095F4  8903000D             lbz r8,0xd(r3)
+  825095F8  7CE95850             subf r7,r9,r11
+  825095FC  81630004             lwz r11,0x4(r3)
+  82509600  0CC80000             twllei r8,0x0
+  82509604  7D274396             divwu r9,r7,r8
+  82509608  7F095840             cmplw cr6,r9,r11
+  8250960C  41980008             blt cr6,0x82509614
+  82509610  7D695B78             or r9,r11,r11
+LAB_82509614:
+  82509614  81030014             lwz r8,0x14(r3)
+  82509618  D0030024             stfs f0,0x24(r3)
+  8250961C  81630018             lwz r11,0x18(r3)
+  82509620  7CE85050             subf r7,r8,r10
+  82509624  91230008             stw r9,0x8(r3)
+  82509628  54EAF0BE             rlwinm r10,r7,0x1e,0x2,0x1f
+  8250962C  7F0A5840             cmplw cr6,r10,r11
+  82509630  4098000C             bge cr6,0x8250963c
+  82509634  9143001C             stw r10,0x1c(r3)
+  82509638  4E800020             blr
+LAB_8250963c:
+  8250963C  9163001C             stw r11,0x1c(r3)
+  82509640  4E800020             blr
+
 ; 82509648  FUN_82509648  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/nativesrc.inl:127)
   82509648  FBE1FFF8             std r31,-0x8(r1)
   8250964C  81630008             lwz r11,0x8(r3)
@@ -4419,6 +4662,221 @@ LAB_8250bb38:
   8250BB40  EBE1FFF8             ld r31,-0x8(r1)
   8250BB44  4E800020             blr
 
+; 8250BB48  FUN_8250bb48  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/doublesrc.inl:153)
+  8250BB48  8163001C             lwz r11,0x1c(r3)
+  8250BB4C  C0030024             lfs f0,0x24(r3)
+  8250BB50  81230018             lwz r9,0x18(r3)
+  8250BB54  39430034             addi r10,r3,0x34
+  8250BB58  81030008             lwz r8,0x8(r3)
+  8250BB5C  5565103A             rlwinm r5,r11,0x2,0x0,0x1d
+  8250BB60  7CEB4850             subf r7,r11,r9
+  8250BB64  88C3000D             lbz r6,0xd(r3)
+  8250BB68  80830004             lwz r4,0x4(r3)
+  8250BB6C  7CE70E70             srawi r7,r7,0x1
+  8250BB70  81630000             lwz r11,0x0(r3)
+  8250BB74  7D2641D6             mullw r9,r6,r8
+  8250BB78  80C30014             lwz r6,0x14(r3)
+  8250BB7C  7D082050             subf r8,r8,r4
+  8250BB80  7CE70194             addze r7,r7
+  8250BB84  7D295A14             add r9,r9,r11
+  8250BB88  7D653214             add r11,r5,r6
+  8250BB8C  7F083800             cmpw cr6,r8,r7
+  8250BB90  41980008             blt cr6,0x8250bb98
+  8250BB94  7CE83B78             or r8,r7,r7
+LAB_8250bb98:
+  8250BB98  7CE607B4             extsw r6,r7
+  8250BB9C  C1A30028             lfs f13,0x28(r3)
+  8250BBA0  ED8D0028             fsubs f12,f13,f0
+  8250BBA4  5507083C             rlwinm r7,r8,0x1,0x0,0x1e
+  8250BBA8  F8C1FFD0             std r6,-0x30(r1)
+  8250BBAC  C961FFD0             lfd f11,-0x30(r1)
+  8250BBB0  FD405E9C             fcfid f10,f11
+  8250BBB4  7CA83A14             add r5,r8,r7
+  8250BBB8  FD205018             frsp f9,f10
+  8250BBBC  54A7083C             rlwinm r7,r5,0x1,0x0,0x1e
+  8250BBC0  3C808200             lis r4,-0x7e00
+  8250BBC4  38E7007F             addi r7,r7,0x7f
+  8250BBC8  38A00000             li r5,0x0
+  8250BBCC  54E6C9FE             rlwinm r6,r7,0x19,0x7,0x1f
+  8250BBD0  7CA72B78             or r7,r5,r5
+  8250BBD4  C1A41B7C             lfs f13,0x1b7c(r4)
+  8250BBD8  2B060000             cmplwi cr6,r6,0x0
+  8250BBDC  ED4C4824             fdivs f10,f12,f9
+  8250BBE0  ED2A0372             fmuls f9,f10,f13
+  8250BBE4  419A001C             beq cr6,0x8250bc00
+  8250BBE8  7CC903A6             mtspr CTR,r6
+  8250BBEC  54A63830             rlwinm r6,r5,0x7,0x0,0x18
+LAB_8250bbf0:
+  8250BBF0  7C064A2C             dcbt r6,r9
+  8250BBF4  38E70001             addi r7,r7,0x1
+  8250BBF8  54E63830             rlwinm r6,r7,0x7,0x0,0x18
+  8250BBFC  4200FFF4             bdnz 0x8250bbf0
+LAB_8250bc00:
+  8250BC00  38C00006             li r6,0x6
+  8250BC04  3C808202             lis r4,-0x7dfe
+  8250BC08  38EAFFFC             subi r7,r10,0x4
+  8250BC0C  7CC903A6             mtspr CTR,r6
+  8250BC10  3CC08205             lis r6,-0x7dfb
+  8250BC14  C1A4C1E8             lfs f13,-0x3e18(r4)
+  8250BC18  C186961C             lfs f12,-0x69e4(r6)
+LAB_8250bc1c:
+  8250BC1C  88C70004             lbz r6,0x4(r7)
+  8250BC20  F8C1FFD0             std r6,-0x30(r1)
+  8250BC24  C961FFD0             lfd f11,-0x30(r1)
+  8250BC28  FD005E9C             fcfid f8,f11
+  8250BC2C  FCE04018             frsp f7,f8
+  8250BC30  ECC76828             fsubs f6,f7,f13
+  8250BC34  ECA60332             fmuls f5,f6,f12
+  8250BC38  D4A70004             stfsu f5,0x4(r7)
+  8250BC3C  4200FFE0             bdnz 0x8250bc1c
+  8250BC40  3CE08200             lis r7,-0x7e00
+  8250BC44  C1670B40             lfs f11,0xb40(r7)
+LAB_8250bc48:
+  8250BC48  88C90005             lbz r6,0x5(r9)
+  8250BC4C  C10A0014             lfs f8,0x14(r10)
+  8250BC50  ECEA002A             fadds f7,f10,f0
+  8250BC54  3508FFFF             subic. r8,r8,0x1
+  8250BC58  F8C1FFD0             std r6,-0x30(r1)
+  8250BC5C  C8C1FFD0             lfd f6,-0x30(r1)
+  8250BC60  FCA0369C             fcfid f5,f6
+  8250BC64  FC802818             frsp f4,f5
+  8250BC68  EC646828             fsubs f3,f4,f13
+  8250BC6C  EC430332             fmuls f2,f3,f12
+  8250BC70  D04A0014             stfs f2,0x14(r10)
+  8250BC74  EC22402A             fadds f1,f2,f8
+  8250BC78  ED0700B2             fmuls f8,f7,f2
+  8250BC7C  ECC10032             fmuls f6,f1,f0
+  8250BC80  ECA602F2             fmuls f5,f6,f11
+  8250BC84  D0AB1400             stfs f5,0x1400(r11)
+  8250BC88  D10B1404             stfs f8,0x1404(r11)
+  8250BC8C  88E90004             lbz r7,0x4(r9)
+  8250BC90  F8E1FFD8             std r7,-0x28(r1)
+  8250BC94  C04A0010             lfs f2,0x10(r10)
+  8250BC98  C881FFD8             lfd f4,-0x28(r1)
+  8250BC9C  FC60269C             fcfid f3,f4
+  8250BCA0  FC201818             frsp f1,f3
+  8250BCA4  ED016828             fsubs f8,f1,f13
+  8250BCA8  ECC80332             fmuls f6,f8,f12
+  8250BCAC  D0CA0010             stfs f6,0x10(r10)
+  8250BCB0  ECA6102A             fadds f5,f6,f2
+  8250BCB4  EC6701B2             fmuls f3,f7,f6
+  8250BCB8  EC850032             fmuls f4,f5,f0
+  8250BCBC  EC4402F2             fmuls f2,f4,f11
+  8250BCC0  D04B1000             stfs f2,0x1000(r11)
+  8250BCC4  D06B1004             stfs f3,0x1004(r11)
+  8250BCC8  88890003             lbz r4,0x3(r9)
+  8250BCCC  F881FFE0             std r4,-0x20(r1)
+  8250BCD0  C0CA000C             lfs f6,0xc(r10)
+  8250BCD4  C821FFE0             lfd f1,-0x20(r1)
+  8250BCD8  FD000E9C             fcfid f8,f1
+  8250BCDC  FCA04018             frsp f5,f8
+  8250BCE0  EC856828             fsubs f4,f5,f13
+  8250BCE4  EC640332             fmuls f3,f4,f12
+  8250BCE8  D06A000C             stfs f3,0xc(r10)
+  8250BCEC  EC43302A             fadds f2,f3,f6
+  8250BCF0  ED0700F2             fmuls f8,f7,f3
+  8250BCF4  EC220032             fmuls f1,f2,f0
+  8250BCF8  ECC102F2             fmuls f6,f1,f11
+  8250BCFC  D0CB0C00             stfs f6,0xc00(r11)
+  8250BD00  D10B0C04             stfs f8,0xc04(r11)
+  8250BD04  88C90002             lbz r6,0x2(r9)
+  8250BD08  F8C1FFE8             std r6,-0x18(r1)
+  8250BD0C  C06A0008             lfs f3,0x8(r10)
+  8250BD10  C8A1FFE8             lfd f5,-0x18(r1)
+  8250BD14  FC802E9C             fcfid f4,f5
+  8250BD18  FC402018             frsp f2,f4
+  8250BD1C  EC226828             fsubs f1,f2,f13
+  8250BD20  ED010332             fmuls f8,f1,f12
+  8250BD24  D10A0008             stfs f8,0x8(r10)
+  8250BD28  ECC8182A             fadds f6,f8,f3
+  8250BD2C  EC870232             fmuls f4,f7,f8
+  8250BD30  ECA60032             fmuls f5,f6,f0
+  8250BD34  EC6502F2             fmuls f3,f5,f11
+  8250BD38  D06B0800             stfs f3,0x800(r11)
+  8250BD3C  D08B0804             stfs f4,0x804(r11)
+  8250BD40  88E90001             lbz r7,0x1(r9)
+  8250BD44  F8E1FFF0             std r7,-0x10(r1)
+  8250BD48  C10A0004             lfs f8,0x4(r10)
+  8250BD4C  C841FFF0             lfd f2,-0x10(r1)
+  8250BD50  FC20169C             fcfid f1,f2
+  8250BD54  FCC00818             frsp f6,f1
+  8250BD58  ECA66828             fsubs f5,f6,f13
+  8250BD5C  EC850332             fmuls f4,f5,f12
+  8250BD60  D08A0004             stfs f4,0x4(r10)
+  8250BD64  EC64402A             fadds f3,f4,f8
+  8250BD68  EC270132             fmuls f1,f7,f4
+  8250BD6C  EC430032             fmuls f2,f3,f0
+  8250BD70  ED0202F2             fmuls f8,f2,f11
+  8250BD74  D10B0400             stfs f8,0x400(r11)
+  8250BD78  D02B0404             stfs f1,0x404(r11)
+  8250BD7C  88890000             lbz r4,0x0(r9)
+  8250BD80  C0CA0000             lfs f6,0x0(r10)
+  8250BD84  39290006             addi r9,r9,0x6
+  8250BD88  F881FFF8             std r4,-0x8(r1)
+  8250BD8C  C8A1FFF8             lfd f5,-0x8(r1)
+  8250BD90  FC802E9C             fcfid f4,f5
+  8250BD94  FC602018             frsp f3,f4
+  8250BD98  EC436828             fsubs f2,f3,f13
+  8250BD9C  EC220332             fmuls f1,f2,f12
+  8250BDA0  D02A0000             stfs f1,0x0(r10)
+  8250BDA4  ED01302A             fadds f8,f1,f6
+  8250BDA8  ECE70072             fmuls f7,f7,f1
+  8250BDAC  ECC80032             fmuls f6,f8,f0
+  8250BDB0  EC09002A             fadds f0,f9,f0
+  8250BDB4  ECA602F2             fmuls f5,f6,f11
+  8250BDB8  D0AB0000             stfs f5,0x0(r11)
+  8250BDBC  D0EB0004             stfs f7,0x4(r11)
+  8250BDC0  396B0008             addi r11,r11,0x8
+  8250BDC4  4082FE84             bne 0x8250bc48
+  8250BDC8  81030000             lwz r8,0x0(r3)
+  8250BDCC  88E3000D             lbz r7,0xd(r3)
+  8250BDD0  7CC84850             subf r6,r8,r9
+  8250BDD4  81230004             lwz r9,0x4(r3)
+  8250BDD8  0CC70000             twllei r7,0x0
+  8250BDDC  7D063B96             divwu r8,r6,r7
+  8250BDE0  7F084840             cmplw cr6,r8,r9
+  8250BDE4  41980008             blt cr6,0x8250bdec
+  8250BDE8  7D284B78             or r8,r9,r9
+LAB_8250bdec:
+  8250BDEC  80E30014             lwz r7,0x14(r3)
+  8250BDF0  81230018             lwz r9,0x18(r3)
+  8250BDF4  7CC75850             subf r6,r7,r11
+  8250BDF8  91030008             stw r8,0x8(r3)
+  8250BDFC  54CBF0BE             rlwinm r11,r6,0x1e,0x2,0x1f
+  8250BE00  7F0B4840             cmplw cr6,r11,r9
+  8250BE04  40980008             bge cr6,0x8250be0c
+  8250BE08  7D695B78             or r9,r11,r11
+LAB_8250be0c:
+  8250BE0C  39600006             li r11,0x6
+  8250BE10  D0030024             stfs f0,0x24(r3)
+  8250BE14  9123001C             stw r9,0x1c(r3)
+  8250BE18  392000FF             li r9,0xff
+  8250BE1C  7D6903A6             mtspr CTR,r11
+  8250BE20  3D608206             lis r11,-0x7dfa
+  8250BE24  C00BAD08             lfs f0,-0x52f8(r11)
+LAB_8250be28:
+  8250BE28  C1AA0000             lfs f13,0x0(r10)
+  8250BE2C  ED8D0032             fmuls f12,f13,f0
+  8250BE30  FD60601E             fctiwz f11,f12
+  8250BE34  D961FFF8             stfd f11,-0x8(r1)
+  8250BE38  8161FFFC             lwz r11,-0x4(r1)
+  8250BE3C  216B0080             subfic r11,r11,0x80
+  8250BE40  2F0B00FF             cmpwi cr6,r11,0xff
+  8250BE44  4198000C             blt cr6,0x8250be50
+  8250BE48  992A0000             stb r9,0x0(r10)
+  8250BE4C  48000018             b 0x8250be64
+LAB_8250be50:
+  8250BE50  2F0B0000             cmpwi cr6,r11,0x0
+  8250BE54  4199000C             bgt cr6,0x8250be60
+  8250BE58  98AA0000             stb r5,0x0(r10)
+  8250BE5C  48000008             b 0x8250be64
+LAB_8250be60:
+  8250BE60  996A0000             stb r11,0x0(r10)
+LAB_8250be64:
+  8250BE64  394A0004             addi r10,r10,0x4
+  8250BE68  4200FFC0             bdnz 0x8250be28
+  8250BE6C  4E800020             blr
+
 ; 8250BE70  FUN_8250be70  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/doublesrc.inl:153)
   8250BE70  7D8802A6             mfspr r12,LR
   8250BE74  4803C649             bl 0x825484bc
@@ -4567,6 +5025,138 @@ LAB_8250c07c:
   8250C080  4200FFB8             bdnz 0x8250c038
 LAB_8250c084:
   8250C084  4803C488             b 0x8254850c
+
+; 8250C088  FUN_8250c088  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/doublesrc.inl:153)
+  8250C088  8163001C             lwz r11,0x1c(r3)
+  8250C08C  C0030024             lfs f0,0x24(r3)
+  8250C090  81430018             lwz r10,0x18(r3)
+  8250C094  81230008             lwz r9,0x8(r3)
+  8250C098  5566103A             rlwinm r6,r11,0x2,0x0,0x1d
+  8250C09C  8903000D             lbz r8,0xd(r3)
+  8250C0A0  7CAB5050             subf r5,r11,r10
+  8250C0A4  80830004             lwz r4,0x4(r3)
+  8250C0A8  7D4849D6             mullw r10,r8,r9
+  8250C0AC  81630000             lwz r11,0x0(r3)
+  8250C0B0  80E30014             lwz r7,0x14(r3)
+  8250C0B4  7CA50E70             srawi r5,r5,0x1
+  8250C0B8  5548083C             rlwinm r8,r10,0x1,0x0,0x1e
+  8250C0BC  7D292050             subf r9,r9,r4
+  8250C0C0  7D450194             addze r10,r5
+  8250C0C4  7D685A14             add r11,r8,r11
+  8250C0C8  7D063A14             add r8,r6,r7
+  8250C0CC  7F095000             cmpw cr6,r9,r10
+  8250C0D0  41980008             blt cr6,0x8250c0d8
+  8250C0D4  7D495378             or r9,r10,r10
+LAB_8250c0d8:
+  8250C0D8  7D4707B4             extsw r7,r10
+  8250C0DC  C1A30028             lfs f13,0x28(r3)
+  8250C0E0  ED6D0028             fsubs f11,f13,f0
+  8250C0E4  552A083C             rlwinm r10,r9,0x1,0x0,0x1e
+  8250C0E8  F8E1FFF0             std r7,-0x10(r1)
+  8250C0EC  C941FFF0             lfd f10,-0x10(r1)
+  8250C0F0  FD20569C             fcfid f9,f10
+  8250C0F4  3CC08200             lis r6,-0x7e00
+  8250C0F8  FD004818             frsp f8,f9
+  8250C0FC  38AA007F             addi r5,r10,0x7f
+  8250C100  C1861B7C             lfs f12,0x1b7c(r6)
+  8250C104  39400000             li r10,0x0
+  8250C108  54A7C9FE             rlwinm r7,r5,0x19,0x7,0x1f
+  8250C10C  2B070000             cmplwi cr6,r7,0x0
+  8250C110  EDAB4024             fdivs f13,f11,f8
+  8250C114  ED8D0332             fmuls f12,f13,f12
+  8250C118  419A001C             beq cr6,0x8250c134
+  8250C11C  7CE903A6             mtspr CTR,r7
+  8250C120  55473830             rlwinm r7,r10,0x7,0x0,0x18
+LAB_8250c124:
+  8250C124  7C075A2C             dcbt r7,r11
+  8250C128  394A0001             addi r10,r10,0x1
+  8250C12C  55473830             rlwinm r7,r10,0x7,0x0,0x18
+  8250C130  4200FFF4             bdnz 0x8250c124
+LAB_8250c134:
+  8250C134  A1430034             lhz r10,0x34(r3)
+  8250C138  3CE08200             lis r7,-0x7e00
+  8250C13C  5546C63E             rlwinm r6,r10,0x18,0x18,0x1f
+  8250C140  5146442E             rlwimi r6,r10,0x8,0x10,0x17
+  8250C144  3D408200             lis r10,-0x7e00
+  8250C148  C147795C             lfs f10,0x795c(r7)
+  8250C14C  7CC40734             extsh r4,r6
+  8250C150  F881FFF0             std r4,-0x10(r1)
+  8250C154  C961FFF0             lfd f11,-0x10(r1)
+  8250C158  FD205E9C             fcfid f9,f11
+  8250C15C  FD004818             frsp f8,f9
+  8250C160  C16A0B40             lfs f11,0xb40(r10)
+  8250C164  ECE802B2             fmuls f7,f8,f10
+  8250C168  D0E30034             stfs f7,0x34(r3)
+LAB_8250c16c:
+  8250C16C  A14B0000             lhz r10,0x0(r11)
+  8250C170  C1230034             lfs f9,0x34(r3)
+  8250C174  ED0D002A             fadds f8,f13,f0
+  8250C178  3529FFFF             subic. r9,r9,0x1
+  8250C17C  5547C63E             rlwinm r7,r10,0x18,0x18,0x1f
+  8250C180  396B0002             addi r11,r11,0x2
+  8250C184  5147442E             rlwimi r7,r10,0x8,0x10,0x17
+  8250C188  7CE50734             extsh r5,r7
+  8250C18C  F8A1FFF0             std r5,-0x10(r1)
+  8250C190  C8E1FFF0             lfd f7,-0x10(r1)
+  8250C194  FCC03E9C             fcfid f6,f7
+  8250C198  FCA03018             frsp f5,f6
+  8250C19C  EC8502B2             fmuls f4,f5,f10
+  8250C1A0  D0830034             stfs f4,0x34(r3)
+  8250C1A4  EC64482A             fadds f3,f4,f9
+  8250C1A8  EC480132             fmuls f2,f8,f4
+  8250C1AC  EC230032             fmuls f1,f3,f0
+  8250C1B0  EC0C002A             fadds f0,f12,f0
+  8250C1B4  ED2102F2             fmuls f9,f1,f11
+  8250C1B8  D1280000             stfs f9,0x0(r8)
+  8250C1BC  D0480004             stfs f2,0x4(r8)
+  8250C1C0  39080008             addi r8,r8,0x8
+  8250C1C4  4082FFA8             bne 0x8250c16c
+  8250C1C8  8943000D             lbz r10,0xd(r3)
+  8250C1CC  81230000             lwz r9,0x0(r3)
+  8250C1D0  5547083E             rlwinm r7,r10,0x1,0x0,0x1f
+  8250C1D4  81430004             lwz r10,0x4(r3)
+  8250C1D8  7CC95850             subf r6,r9,r11
+  8250C1DC  0CC70000             twllei r7,0x0
+  8250C1E0  7D663B96             divwu r11,r6,r7
+  8250C1E4  7F0B5040             cmplw cr6,r11,r10
+  8250C1E8  40980008             bge cr6,0x8250c1f0
+  8250C1EC  7D6A5B78             or r10,r11,r11
+LAB_8250c1f0:
+  8250C1F0  81630014             lwz r11,0x14(r3)
+  8250C1F4  91430008             stw r10,0x8(r3)
+  8250C1F8  7D4B4050             subf r10,r11,r8
+  8250C1FC  81630018             lwz r11,0x18(r3)
+  8250C200  554AF0BE             rlwinm r10,r10,0x1e,0x2,0x1f
+  8250C204  7F0A5840             cmplw cr6,r10,r11
+  8250C208  40980008             bge cr6,0x8250c210
+  8250C20C  7D4B5378             or r11,r10,r10
+LAB_8250c210:
+  8250C210  3D408203             lis r10,-0x7dfd
+  8250C214  D0030024             stfs f0,0x24(r3)
+  8250C218  9163001C             stw r11,0x1c(r3)
+  8250C21C  C1A30034             lfs f13,0x34(r3)
+  8250C220  C00ADBD4             lfs f0,-0x242c(r10)
+  8250C224  ED8D0032             fmuls f12,f13,f0
+  8250C228  FD60601E             fctiwz f11,f12
+  8250C22C  D961FFF0             stfd f11,-0x10(r1)
+  8250C230  8161FFF4             lwz r11,-0xc(r1)
+  8250C234  2F0B7FFF             cmpwi cr6,r11,0x7fff
+  8250C238  41980010             blt cr6,0x8250c248
+  8250C23C  3960FF7F             li r11,-0x81
+  8250C240  B1630034             sth r11,0x34(r3)
+  8250C244  4E800020             blr
+LAB_8250c248:
+  8250C248  2F0B8000             cmpwi cr6,r11,-0x8000
+  8250C24C  41990010             bgt cr6,0x8250c25c
+  8250C250  39600080             li r11,0x80
+  8250C254  B1630034             sth r11,0x34(r3)
+  8250C258  4E800020             blr
+LAB_8250c25c:
+  8250C25C  556B043E             rlwinm r11,r11,0x0,0x10,0x1f
+  8250C260  556AC63E             rlwinm r10,r11,0x18,0x18,0x1f
+  8250C264  516A442E             rlwimi r10,r11,0x8,0x10,0x17
+  8250C268  B1430034             sth r10,0x34(r3)
+  8250C26C  4E800020             blr
 
 ; 8250C270  FUN_8250c270  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/doublesrc.inl:153)
   8250C270  FBE1FFF8             std r31,-0x8(r1)

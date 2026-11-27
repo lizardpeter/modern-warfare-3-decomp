@@ -20,6 +20,12 @@
   8253EDF0  EBE1FFF0             ld r31,-0x10(r1)
   8253EDF4  4E800020             blr
 
+; 8253EDF8  FUN_8253edf8  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdfacebook/bdfacebookfriend.cpp:18)
+  8253EDF8  3D608206             lis r11,-0x7dfa
+  8253EDFC  396B7838             addi r11,r11,0x7838
+  8253EE00  91630000             stw r11,0x0(r3)
+  8253EE04  4BFF262C             b 0x82531430
+
 ; 8253EE70  FUN_8253ee70  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdfacebook/bdfacebookfriend.cpp:22)
   8253EE70  7D8802A6             mfspr r12,LR
   8253EE74  48009649             bl 0x825484bc
@@ -89,6 +95,10 @@ LAB_8253ef48:
   8253EF54  7FC3F378             or r3,r30,r30
   8253EF58  383F0070             addi r1,r31,0x70
   8253EF5C  480095B0             b 0x8254850c
+
+; 8253EE08  FUN_8253ee08  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdfacebook/bdfacebookfriend.cpp:36)
+  8253EE08  38600120             li r3,0x120
+  8253EE0C  4E800020             blr
 
 ; 8253EE10  FUN_8253ee10  (line unknown)
   8253EE10  7D8802A6             mfspr r12,LR

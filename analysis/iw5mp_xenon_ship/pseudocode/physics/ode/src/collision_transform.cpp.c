@@ -48,7 +48,7 @@ void FUN_823801a8(undefined4 *param_1)
   if ((param_1[0x13] != 0) && (param_1[0x14] != 0)) {
     FUN_8237c7d0();
   }
-  *param_1 = &PTR_LAB_8203aae0;
+  *param_1 = &PTR_FUN_8203aae0;
   return;
 }
 
@@ -298,7 +298,7 @@ undefined4 * FUN_82380880(undefined4 *param_1)
   if ((param_1[0x13] != 0) && (param_1[0x14] != 0)) {
     FUN_8237c7d0();
   }
-  *param_1 = &PTR_LAB_8203aae0;
+  *param_1 = &PTR_FUN_8203aae0;
   return param_1;
 }
 

@@ -103,3 +103,14 @@ LAB_824554f0:
   } while( true );
 }
 
+
+// 82455550  FUN_82455550  (jpeg-6/jerror.c:218)
+
+void FUN_82455550(int *param_1)
+
+{
+  *(undefined4 *)(*param_1 + 0x6c) = 0;
+  *(undefined4 *)(*param_1 + 0x14) = 0;
+  return;
+}
+

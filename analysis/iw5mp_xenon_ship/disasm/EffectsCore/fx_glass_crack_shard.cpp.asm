@@ -294,6 +294,69 @@ LAB_8220ba6c:
   8220BA6C  7CA32B78             or r3,r5,r5
   8220BA70  4833CA90             b 0x82548500
 
+; 8220BB78  FUN_8220bb78  (EffectsCore/fx_glass_crack_shard.cpp:298)
+  8220BB78  546B083C             rlwinm r11,r3,0x1,0x0,0x1e
+  8220BB7C  3D0082D7             lis r8,-0x7d29
+  8220BB80  548A083C             rlwinm r10,r4,0x1,0x0,0x1e
+  8220BB84  7CE35A14             add r7,r3,r11
+  8220BB88  7CC45214             add r6,r4,r10
+  8220BB8C  54EB103A             rlwinm r11,r7,0x2,0x0,0x1d
+  8220BB90  81480744             lwz r10,0x744(r8)
+  8220BB94  54C9103A             rlwinm r9,r6,0x2,0x0,0x1d
+  8220BB98  7D6B5214             add r11,r11,r10
+  8220BB9C  7D495214             add r10,r9,r10
+  8220BBA0  812B0000             lwz r9,0x0(r11)
+  8220BBA4  810A0000             lwz r8,0x0(r10)
+  8220BBA8  7F094000             cmpw cr6,r9,r8
+  8220BBAC  419A001C             beq cr6,0x8220bbc8
+  8220BBB0  7D684810             subfc r11,r8,r9
+  8220BBB4  7D0A4A38             eqv r10,r8,r9
+  8220BBB8  55490FFE             rlwinm r9,r10,0x1,0x1f,0x1f
+  8220BBBC  7D090194             addze r8,r9
+  8220BBC0  550307FE             rlwinm r3,r8,0x0,0x1f,0x1f
+  8220BBC4  4E800020             blr
+LAB_8220bbc8:
+  8220BBC8  812A0008             lwz r9,0x8(r10)
+  8220BBCC  810B0004             lwz r8,0x4(r11)
+  8220BBD0  814A0004             lwz r10,0x4(r10)
+  8220BBD4  7D2707B4             extsw r7,r9
+  8220BBD8  816B0008             lwz r11,0x8(r11)
+  8220BBDC  7D0607B4             extsw r6,r8
+  8220BBE0  7D4507B4             extsw r5,r10
+  8220BBE4  7D6407B4             extsw r4,r11
+  8220BBE8  7CE639D2             mulld r7,r6,r7
+  8220BBEC  7CC429D2             mulld r6,r4,r5
+  8220BBF0  7F273000             cmpd cr6,r7,r6
+  8220BBF4  419A0018             beq cr6,0x8220bc0c
+  8220BBF8  39600001             li r11,0x1
+  8220BBFC  41980008             blt cr6,0x8220bc04
+  8220BC00  39600000             li r11,0x0
+LAB_8220bc04:
+  8220BC04  5563063E             rlwinm r3,r11,0x0,0x18,0x1f
+  8220BC08  4E800020             blr
+LAB_8220bc0c:
+  8220BC0C  2F0B0000             cmpwi cr6,r11,0x0
+  8220BC10  419A001C             beq cr6,0x8220bc2c
+  8220BC14  7D495810             subfc r10,r9,r11
+  8220BC18  7D295A38             eqv r9,r9,r11
+  8220BC1C  55280FFE             rlwinm r8,r9,0x1,0x1f,0x1f
+  8220BC20  7CE80194             addze r7,r8
+  8220BC24  54E307FE             rlwinm r3,r7,0x0,0x1f,0x1f
+  8220BC28  4E800020             blr
+LAB_8220bc2c:
+  8220BC2C  7D4BFE70             srawi r11,r10,0x1f
+  8220BC30  7D09FE70             srawi r9,r8,0x1f
+  8220BC34  7D475A78             xor r7,r10,r11
+  8220BC38  7D064A78             xor r6,r8,r9
+  8220BC3C  7CAB3850             subf r5,r11,r7
+  8220BC40  7C893050             subf r4,r9,r6
+  8220BC44  7C652010             subfc r3,r5,r4
+  8220BC48  7CAB2238             eqv r11,r5,r4
+  8220BC4C  556A0FFE             rlwinm r10,r11,0x1,0x1f,0x1f
+  8220BC50  7D2A0194             addze r9,r10
+  8220BC54  552307FE             rlwinm r3,r9,0x0,0x1f,0x1f
+  8220BC58  4E800020             blr
+
 ; 8220BCB8  FUN_8220bcb8  (EffectsCore/fx_glass_crack_shard.cpp:346)
   8220BCB8  FBE1FFF8             std r31,-0x8(r1)
   8220BCBC  7F053040             cmplw cr6,r5,r6

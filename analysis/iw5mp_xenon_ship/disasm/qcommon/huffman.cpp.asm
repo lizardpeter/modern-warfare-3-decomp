@@ -234,6 +234,14 @@ LAB_8229fb8c:
   8229FC24  EBE1FFF0             ld r31,-0x10(r1)
   8229FC28  4E800020             blr
 
+; 8229FC80  FUN_8229fc80  (qcommon/huffman.cpp:222)
+  8229FC80  81630000             lwz r11,0x0(r3)
+  8229FC84  81440000             lwz r10,0x0(r4)
+  8229FC88  812B000C             lwz r9,0xc(r11)
+  8229FC8C  810A000C             lwz r8,0xc(r10)
+  8229FC90  7C684850             subf r3,r8,r9
+  8229FC94  4E800020             blr
+
 ; 8229FC98  FUN_8229fc98  (qcommon/huffman.cpp:227)
   8229FC98  7D8802A6             mfspr r12,LR
   8229FC9C  482A87F9             bl 0x82548494

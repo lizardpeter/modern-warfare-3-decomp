@@ -40,6 +40,15 @@ undefined8 FUN_8253cc20(longlong param_1,undefined4 *param_2)
 }
 
 
+// 82531C58  FUN_82531c58  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdfileid.cpp:35)
+
+undefined8 FUN_82531c58(void)
+
+{
+  return 0x10;
+}
+
+
 // 8253CBC0  FUN_8253cbc0  (line unknown)
 
 undefined4 * FUN_8253cbc0(undefined4 *param_1,ulonglong param_2)

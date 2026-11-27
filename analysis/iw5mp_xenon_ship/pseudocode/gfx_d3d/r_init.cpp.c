@@ -328,6 +328,15 @@ void FUN_823fec20(int param_1)
 }
 
 
+// 823FECA8  FUN_823feca8  (gfx_d3d/r_init.cpp:1979)
+
+bool FUN_823feca8(double param_1,double param_2)
+
+{
+  return param_1 < param_2;
+}
+
+
 // 823FFA50  FUN_823ffa50  (gfx_d3d/r_init.cpp:1985)
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
@@ -959,6 +968,19 @@ void FUN_823ff350(int param_1)
     FUN_824102a8();
   }
   FUN_823e65e0();
+  return;
+}
+
+
+// 823FF438  FUN_823ff438  (gfx_d3d/r_init.cpp:3327)
+
+void FUN_823ff438(void)
+
+{
+  if (DAT_83c9f108 == 0) {
+    return;
+  }
+  FUN_82357dd8(0xffffffff820486d0);
   return;
 }
 

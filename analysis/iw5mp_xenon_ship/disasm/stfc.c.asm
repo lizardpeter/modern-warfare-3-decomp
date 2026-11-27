@@ -5336,6 +5336,12 @@ LAB_824e2830:
   824E2838  38210070             addi r1,r1,0x70
   824E283C  48065CD0             b 0x8254850c
 
+; 824E4B58  FUN_824e4b58  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/driver.c:971)
+  824E4B58  3D6083F0             lis r11,-0x7c10
+  824E4B5C  38800001             li r4,0x1
+  824E4B60  386BCEB8             subi r3,r11,0x3148
+  824E4B64  4BFFED9C             b 0x824e3900
+
 ; 824E5B08  FUN_824e5b08  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/allocsup.c:979)
   824E5B08  7D8802A6             mfspr r12,LR
   824E5B0C  48062989             bl 0x82548494

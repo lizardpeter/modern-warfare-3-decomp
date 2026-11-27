@@ -95,7 +95,7 @@ void FUN_8232b208(undefined4 *param_1,undefined4 param_2,undefined4 param_3,unde
   param_1[5] = 0;
   param_1[6] = 0;
   *(undefined1 *)((int)param_1 + 0x1e) = param_5;
-  param_1[8] = &LAB_8232ac80;
+  param_1[8] = thunk_FUN_8232a600;
   FUN_8232b0e0(param_1,0);
   return;
 }
@@ -357,7 +357,7 @@ void FUN_8232a3c8(void)
 bool FUN_8232aea8(int param_1)
 
 {
-  return *(undefined1 **)(param_1 + 0x20) == &LAB_8232ac80;
+  return *(code **)(param_1 + 0x20) == thunk_FUN_8232a600;
 }
 
 

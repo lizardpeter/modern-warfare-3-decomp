@@ -354,6 +354,22 @@ LAB_8240a1e0:
   8240A1E4  382100B0             addi r1,r1,0xb0
   8240A1E8  4813E304             b 0x825484ec
 
+; 82409028  FUN_82409028  (gfx_d3d/r_model_lighting.cpp:501)
+  82409028  3D6083CA             lis r11,-0x7c36
+  8240902C  81430000             lwz r10,0x0(r3)
+  82409030  392BCB00             subi r9,r11,0x3500
+  82409034  81692608             lwz r11,0x2608(r9)
+  82409038  810B0220             lwz r8,0x220(r11)
+  8240903C  7C6850AE             lbzx r3,r8,r10
+  82409040  4E800020             blr
+
+; 82409048  thunk_FUN_8240fc38  (gfx_d3d/r_model_lighting.cpp:509)
+  82409048  48006BF0             b 0x8240fc38
+
+; 82409050  FUN_82409050  (gfx_d3d/r_model_lighting.cpp:518)
+  82409050  C023000C             lfs f1,0xc(r3)
+  82409054  48006CF4             b 0x8240fd48
+
 ; 8240A1F0  FUN_8240a1f0  (gfx_d3d/r_model_lighting.cpp:529)
   8240A1F0  7D8802A6             mfspr r12,LR
   8240A1F4  9181FFF8             stw r12,-0x8(r1)

@@ -42,6 +42,15 @@
   8240AAF8  EBE1FFF8             ld r31,-0x8(r1)
   8240AAFC  4E800020             blr
 
+; 8256E260  FUN_8256e260  (gfx_d3d/r_model_skin.cpp:857)
+  8256E260  3D608205             lis r11,-0x7dfb
+  8256E264  3D4083CB             lis r10,-0x7c35
+  8256E268  392B9840             subi r9,r11,0x67c0
+  8256E26C  390AFFF0             subi r8,r10,0x10
+  8256E270  13E048C7             lvx128 v63,0,r9
+  8256E274  13E041C7             stvx128 v63,0,r8
+  8256E278  4E800020             blr
+
 ; 8240AB98  FUN_8240ab98  (gfx_d3d/r_model_skin.cpp:861)
   8240AB98  7D8802A6             mfspr r12,LR
   8240AB9C  4813D91D             bl 0x825484b8

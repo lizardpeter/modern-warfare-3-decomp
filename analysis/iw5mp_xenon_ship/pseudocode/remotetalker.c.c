@@ -623,7 +623,7 @@ undefined8 FUN_8251d208(int param_1,ushort *param_2,undefined8 param_3)
   undefined8 uVar2;
   
   uVar2 = 0xffffffff80004005;
-  lVar1 = FUN_8251c920(param_1,&LAB_8251a600);
+  lVar1 = FUN_8251c920(param_1,FUN_8251a600);
   if (lVar1 != 0) {
     if (*(uint *)(param_1 + 0x44) != (*param_2 & 1)) {
       *(uint *)(param_1 + 0x44) = *param_2 & 1;

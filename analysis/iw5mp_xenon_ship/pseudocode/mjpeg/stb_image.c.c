@@ -2866,6 +2866,27 @@ undefined8 FUN_8247a5f0(undefined8 param_1,undefined8 param_2)
 }
 
 
+// 8247A5F8  FUN_8247a5f8  (mjpeg/stb_image.c:1855)
+
+void FUN_8247a5f8(int param_1,int param_2,byte *param_3,longlong param_4)
+
+{
+  if ((int)param_4 < 1) {
+    return;
+  }
+  param_2 = param_2 - (int)param_3;
+  param_1 = param_1 - (int)param_3;
+  do {
+    param_3[param_1] =
+         (byte)((int)((uint)param_3[param_2] + (uint)param_3[param_2] * 2 + (uint)*param_3 + 2) >> 2
+               );
+    param_3 = param_3 + 1;
+    param_4 = param_4 + -1;
+  } while (param_4 != 0);
+  return;
+}
+
+
 // 8247A640  FUN_8247a640  (mjpeg/stb_image.c:1865)
 
 void FUN_8247a640(byte *param_1,byte *param_2,undefined8 param_3,int param_4)
@@ -2947,6 +2968,36 @@ void FUN_8247a720(undefined1 *param_1,byte *param_2,byte *param_3,longlong param
     } while (param_4 != 0);
   }
   param_1[iVar4 * 2 + -1] = (char)(iVar7 + 2 >> 2);
+  return;
+}
+
+
+// 8247A808  FUN_8247a808  (mjpeg/stb_image.c:1919)
+
+void FUN_8247a808(int param_1,int param_2,undefined8 param_3,int param_4,int param_5)
+
+{
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  
+  iVar1 = 0;
+  if (param_4 < 1) {
+    return;
+  }
+  do {
+    iVar2 = 0;
+    iVar3 = param_5;
+    if (0 < param_5) {
+      do {
+        *(undefined1 *)(param_1 + iVar2) = *(undefined1 *)(iVar1 + param_2);
+        iVar2 = iVar2 + 1;
+        iVar3 = iVar3 + -1;
+      } while (iVar3 != 0);
+    }
+    iVar1 = iVar1 + 1;
+    param_1 = param_1 + param_5;
+  } while (iVar1 < param_4);
   return;
 }
 
@@ -3221,7 +3272,7 @@ int FUN_8247ac10(uint *param_1,uint *param_2,uint *param_3,uint *param_4,uint pa
         }
         else {
           if (uVar7 != 2) goto LAB_8247ad90;
-          pcVar10 = (code *)&LAB_8247a5f8;
+          pcVar10 = FUN_8247a5f8;
         }
       }
       else {
@@ -3237,7 +3288,7 @@ LAB_8247ad90:
         }
         else {
 LAB_8247adc0:
-          pcVar10 = (code *)&LAB_8247a808;
+          pcVar10 = FUN_8247a808;
         }
       }
       iVar8 = iVar8 + 1;
@@ -3434,7 +3485,7 @@ longlong FUN_8247b080(uint *param_1,longlong param_2,ulonglong param_3,ulonglong
           }
           else {
             if (iVar7 != 2) goto LAB_8247b198;
-            pcVar6 = (code *)&LAB_8247a5f8;
+            pcVar6 = FUN_8247a5f8;
           }
         }
         else {
@@ -3450,7 +3501,7 @@ LAB_8247b198:
           }
           else {
 LAB_8247b1c8:
-            pcVar6 = (code *)&LAB_8247a808;
+            pcVar6 = FUN_8247a808;
           }
         }
         iVar2 = iVar2 + 1;

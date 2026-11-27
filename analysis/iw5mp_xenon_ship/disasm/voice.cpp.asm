@@ -322,6 +322,81 @@ LAB_82510a20:
   82510A20  38210080             addi r1,r1,0x80
   82510A24  48037AE8             b 0x8254850c
 
+; 82510A28  FUN_82510a28  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/voice.cpp:375)
+  82510A28  8943003C             lbz r10,0x3c(r3)
+  82510A2C  548B063E             rlwinm r11,r4,0x0,0x18,0x1f
+  82510A30  7CA92B78             or r9,r5,r5
+  82510A34  7CC53378             or r5,r6,r6
+  82510A38  7F0B5040             cmplw cr6,r11,r10
+  82510A3C  41980010             blt cr6,0x82510a4c
+  82510A40  3C608007             lis r3,-0x7ff9
+  82510A44  60630057             ori r3,r3,0x57
+  82510A48  4E800020             blr
+LAB_82510a4c:
+  82510A4C  81430024             lwz r10,0x24(r3)
+  82510A50  556B1838             rlwinm r11,r11,0x3,0x0,0x1c
+  82510A54  7CE63B78             or r6,r7,r7
+  82510A58  7D244B78             or r4,r9,r9
+  82510A5C  7C6B502E             lwzx r3,r11,r10
+  82510A60  81630000             lwz r11,0x0(r3)
+  82510A64  814B000C             lwz r10,0xc(r11)
+  82510A68  7D4903A6             mtspr CTR,r10
+  82510A6C  4E800420             bctr
+
+; 82510A70  FUN_82510a70  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/voice.cpp:416)
+  82510A70  8943003C             lbz r10,0x3c(r3)
+  82510A74  548B063E             rlwinm r11,r4,0x0,0x18,0x1f
+  82510A78  7CA92B78             or r9,r5,r5
+  82510A7C  7CC53378             or r5,r6,r6
+  82510A80  7F0B5040             cmplw cr6,r11,r10
+  82510A84  41980010             blt cr6,0x82510a94
+  82510A88  3C608007             lis r3,-0x7ff9
+  82510A8C  60630057             ori r3,r3,0x57
+  82510A90  4E800020             blr
+LAB_82510a94:
+  82510A94  81430024             lwz r10,0x24(r3)
+  82510A98  556B1838             rlwinm r11,r11,0x3,0x0,0x1c
+  82510A9C  7CE63B78             or r6,r7,r7
+  82510AA0  7D244B78             or r4,r9,r9
+  82510AA4  7C6B502E             lwzx r3,r11,r10
+  82510AA8  81630000             lwz r11,0x0(r3)
+  82510AAC  814B0010             lwz r10,0x10(r11)
+  82510AB0  7D4903A6             mtspr CTR,r10
+  82510AB4  4E800420             bctr
+
+; 82510AB8  FUN_82510ab8  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/voice.cpp:453)
+  82510AB8  8943003C             lbz r10,0x3c(r3)
+  82510ABC  548B063E             rlwinm r11,r4,0x0,0x18,0x1f
+  82510AC0  7F0B5040             cmplw cr6,r11,r10
+  82510AC4  41980010             blt cr6,0x82510ad4
+  82510AC8  3C608007             lis r3,-0x7ff9
+  82510ACC  60630057             ori r3,r3,0x57
+  82510AD0  4E800020             blr
+LAB_82510ad4:
+  82510AD4  81430024             lwz r10,0x24(r3)
+  82510AD8  556B1838             rlwinm r11,r11,0x3,0x0,0x1c
+  82510ADC  38600000             li r3,0x0
+  82510AE0  7D6B5214             add r11,r11,r10
+  82510AE4  896B0005             lbz r11,0x5(r11)
+  82510AE8  99650000             stb r11,0x0(r5)
+  82510AEC  4E800020             blr
+
+; 82510AF0  FUN_82510af0  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/voice.cpp:490)
+  82510AF0  8943003C             lbz r10,0x3c(r3)
+  82510AF4  548B063E             rlwinm r11,r4,0x0,0x18,0x1f
+  82510AF8  7F0B5040             cmplw cr6,r11,r10
+  82510AFC  41980010             blt cr6,0x82510b0c
+  82510B00  3C608007             lis r3,-0x7ff9
+  82510B04  60630057             ori r3,r3,0x57
+  82510B08  4E800020             blr
+LAB_82510b0c:
+  82510B0C  81430024             lwz r10,0x24(r3)
+  82510B10  556B1838             rlwinm r11,r11,0x3,0x0,0x1c
+  82510B14  38600000             li r3,0x0
+  82510B18  7D6B5214             add r11,r11,r10
+  82510B1C  98AB0005             stb r5,0x5(r11)
+  82510B20  4E800020             blr
+
 ; 825106F0  FUN_825106f0  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/voice.cpp:525)
   825106F0  7D8802A6             mfspr r12,LR
   825106F4  9181FFF8             stw r12,-0x8(r1)

@@ -255,6 +255,26 @@ LAB_82298f18:
   82298F24  EBE1FFF0             ld r31,-0x10(r1)
   82298F28  4E800020             blr
 
+; 82298F30  FUN_82298f30  (qcommon/com_storage_remoteupload.cpp:226)
+  82298F30  3D608309             lis r11,-0x7cf7
+  82298F34  39000001             li r8,0x1
+  82298F38  38EB3888             addi r7,r11,0x3888
+  82298F3C  3CC08309             lis r6,-0x7cf7
+  82298F40  3CA08309             lis r5,-0x7cf7
+  82298F44  39400000             li r10,0x0
+  82298F48  39200000             li r9,0x0
+  82298F4C  7D0719AE             stbx r8,r7,r3
+  82298F50  39000000             li r8,0x0
+  82298F54  81670088             lwz r11,0x88(r7)
+  82298F58  308BFFFF             subic r4,r11,0x1
+  82298F5C  7C831910             subfe r4,r3,r3
+  82298F60  9146387C             stw r10,0x387c(r6)
+  82298F64  91253880             stw r9,0x3880(r5)
+  82298F68  7C8B5838             and r11,r4,r11
+  82298F6C  99070004             stb r8,0x4(r7)
+  82298F70  91670088             stw r11,0x88(r7)
+  82298F74  4E800020             blr
+
 ; 82299248  FUN_82299248  (qcommon/com_storage_remoteupload.cpp:239)
   82299248  7D8802A6             mfspr r12,LR
   8229924C  482AF269             bl 0x825484b4

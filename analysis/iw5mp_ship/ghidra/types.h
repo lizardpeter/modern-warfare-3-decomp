@@ -1975,9 +1975,14 @@ typedef struct tMIXERCONTROLDETAILS *LPMIXERCONTROLDETAILS;
 
 typedef struct tagMIXERCAPSA *LPMIXERCAPSA;
 
-typedef struct MemBlock MemBlock, *PMemBlock;
+typedef struct REFMINIPDB2 REFMINIPDB2, *PREFMINIPDB2;
 
-struct MemBlock { /* PlaceHolder Structure */
+struct REFMINIPDB2 { /* PlaceHolder Structure */
+};
+
+typedef struct MRECmpImpl MRECmpImpl, *PMRECmpImpl;
+
+struct MRECmpImpl { /* PlaceHolder Structure */
 };
 
 typedef struct _Mbstatet _Mbstatet, *P_Mbstatet;
@@ -1985,9 +1990,9 @@ typedef struct _Mbstatet _Mbstatet, *P_Mbstatet;
 struct _Mbstatet { /* PlaceHolder Structure */
 };
 
-typedef struct MRECmpImpl MRECmpImpl, *PMRECmpImpl;
+typedef struct MemBlock MemBlock, *PMemBlock;
 
-struct MRECmpImpl { /* PlaceHolder Structure */
+struct MemBlock { /* PlaceHolder Structure */
 };
 
 typedef struct basic_ostream<wchar_t,struct_std::char_traits<wchar_t>_> basic_ostream<wchar_t,struct_std::char_traits<wchar_t>_>, *Pbasic_ostream<wchar_t,struct_std::char_traits<wchar_t>_>;
@@ -2018,6 +2023,11 @@ struct codecvt_base { /* PlaceHolder Structure */
 typedef struct basic_ostream<wchar_t,std::char_traits<wchar_t>_> basic_ostream<wchar_t,std::char_traits<wchar_t>_>, *Pbasic_ostream<wchar_t,std::char_traits<wchar_t>_>;
 
 struct basic_ostream<wchar_t,std::char_traits<wchar_t>_> { /* PlaceHolder Structure */
+};
+
+typedef struct pair<REFMINIPDB2*___ptr64*___ptr64,REFMINIPDB2*___ptr64*___ptr64> pair<REFMINIPDB2*___ptr64*___ptr64,REFMINIPDB2*___ptr64*___ptr64>, *Ppair<REFMINIPDB2*___ptr64*___ptr64,REFMINIPDB2*___ptr64*___ptr64>;
+
+struct pair<REFMINIPDB2*___ptr64*___ptr64,REFMINIPDB2*___ptr64*___ptr64> { /* PlaceHolder Structure */
 };
 
 typedef struct basic_streambuf<wchar_t,struct_std::char_traits<wchar_t>_> basic_streambuf<wchar_t,struct_std::char_traits<wchar_t>_>, *Pbasic_streambuf<wchar_t,struct_std::char_traits<wchar_t>_>;

@@ -2577,6 +2577,14 @@ LAB_82470368:
   824702FC  7D8803A6             mtspr LR,r12
   82470300  4E800020             blr
 
+; 824702A8  FUN_824702a8  (mjpeg/avi.cpp:431)
+  824702A8  3D6083EE             lis r11,-0x7c12
+  824702AC  7CA62B78             or r6,r5,r5
+  824702B0  7C852378             or r5,r4,r4
+  824702B4  7C641B78             or r4,r3,r3
+  824702B8  806BF860             lwz r3,-0x7a0(r11)
+  824702BC  48001C1C             b 0x82471ed8
+
 ; 82470308  FUN_82470308  (mjpeg/avi.cpp:441)
   82470308  3D6083EE             lis r11,-0x7c12
   8247030C  806BF860             lwz r3,-0x7a0(r11)

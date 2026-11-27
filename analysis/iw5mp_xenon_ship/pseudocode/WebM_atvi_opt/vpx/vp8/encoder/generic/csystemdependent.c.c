@@ -63,7 +63,7 @@ void FUN_824c5610(int param_1)
   *(undefined4 *)(param_1 + 0x3059c) = 0;
   *(undefined1 **)(param_1 + 0x30594) = &LAB_824aa7b0;
   *(code **)(param_1 + 0x305a4) = FUN_824b3ea8;
-  DAT_83f00680 = &LAB_824bd040;
+  DAT_83f00680 = FUN_824bd040;
   FUN_824976f0();
   return;
 }

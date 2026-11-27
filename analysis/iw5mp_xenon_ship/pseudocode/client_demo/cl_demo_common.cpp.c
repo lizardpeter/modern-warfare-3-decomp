@@ -491,6 +491,23 @@ void FUN_8245dac8(void)
 }
 
 
+// 8245C100  FUN_8245c100  (client_demo/cl_demo_common.cpp:845)
+
+void FUN_8245c100(void)
+
+{
+  int iVar1;
+  
+  iVar1 = DAT_82febe50 * 4;
+  if (*(int *)(&DAT_82febe94 + iVar1) != 2) {
+    return;
+  }
+  FUN_8246c1a0(*(undefined4 *)(&DAT_82febe54 + iVar1),
+               *(undefined4 *)(*(int *)(&DAT_82febeb4 + iVar1) + 4));
+  return;
+}
+
+
 // 8245C140  FUN_8245c140  (client_demo/cl_demo_common.cpp:889)
 
 undefined8 FUN_8245c140(void)

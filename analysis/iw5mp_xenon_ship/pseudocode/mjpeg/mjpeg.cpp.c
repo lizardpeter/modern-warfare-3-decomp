@@ -257,7 +257,7 @@ void FUN_824768d8(void)
                (longlong)
                (int)(((int)DAT_83edfa00 >> 1) +
                     (uint)((int)DAT_83edfa00 < 0 && (DAT_83edfa00 & 1) != 0)));
-  DAT_83edfa18 = &LAB_824702a8;
+  DAT_83edfa18 = FUN_824702a8;
   return;
 }
 
@@ -396,6 +396,17 @@ void FUN_82476c18(void)
       FUN_824dd2c8(10);
     } while (DAT_83edfa25 != '\0');
   }
+  return;
+}
+
+
+// 82476C80  FUN_82476c80  (mjpeg/mjpeg.cpp:385)
+
+void FUN_82476c80(void)
+
+{
+  DAT_83edfa20 = 1 - DAT_83edfa20;
+  FUN_824e0ab0(DAT_83edfa1c);
   return;
 }
 

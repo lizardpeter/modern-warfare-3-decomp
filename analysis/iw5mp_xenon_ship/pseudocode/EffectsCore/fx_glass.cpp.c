@@ -408,6 +408,26 @@ void FUN_82203510(int param_1)
 }
 
 
+// 82203550  FUN_82203550  (EffectsCore/fx_glass.cpp:265)
+
+byte FUN_82203550(int param_1,int param_2)
+
+{
+  return -(*(ushort *)(param_1 + 0xe) < *(ushort *)(param_2 + 0xe)) & 1;
+}
+
+
+// 82203588  FUN_82203588  (EffectsCore/fx_glass.cpp:277)
+
+void FUN_82203588(int param_1,int param_2,int param_3)
+
+{
+  *(int *)(*(int *)(param_2 + 0x2000) * 4 + param_2) = *(int *)(param_1 + 0x38) + param_3 * 0x20;
+  *(int *)(param_2 + 0x2000) = *(int *)(param_2 + 0x2000) + 1;
+  return;
+}
+
+
 // 82203F28  FUN_82203f28  (EffectsCore/fx_glass.cpp:284)
 
 /* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
@@ -491,6 +511,16 @@ void FUN_82203f28(int param_1)
     FUN_82548670((uVar5 & 0x3fffffff) * 4 + (ulonglong)*(uint *)(param_1 + 0x40),
                  uVar4 * 4 + (ulonglong)*(uint *)(param_1 + 0x40),(uVar10 & 0x3fffffff) << 2);
   }
+  return;
+}
+
+
+// 82203D10  FUN_82203d10  (EffectsCore/fx_glass.cpp:355)
+
+void FUN_82203d10(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+
+{
+  FUN_82203c50(param_1,param_3);
   return;
 }
 
@@ -638,6 +668,58 @@ void FUN_82203a80(void)
   DAT_82d80548 = 0;
   DAT_82d805a9 = 1;
   FUN_82203860(0xffffffff82d80544);
+  return;
+}
+
+
+// 82203AA8  FUN_82203aa8  (EffectsCore/fx_glass.cpp:583)
+
+void FUN_82203aa8(int param_1,int param_2,int param_3)
+
+{
+  int iVar1;
+  float *pfVar2;
+  float fVar3;
+  float fVar4;
+  float fVar5;
+  float fVar6;
+  int iVar7;
+  int iVar8;
+  undefined2 uStack_a;
+  
+  iVar8 = *(int *)(param_1 + 0x38) + param_3 * 0x20;
+  if ((*(ushort *)(iVar8 + 0x1a) & 2) != 0) {
+    iVar7 = *(int *)(param_1 + 0x34) + param_3 * 0x20;
+    iVar1 = DAT_82d70714;
+    if (*(int *)(iVar8 + 8) != 0) {
+      iVar1 = DAT_82d706d4;
+    }
+    fVar3 = (*(float *)(iVar8 + 0x1c) / *(float *)(iVar1 + 8)) * 32767.0;
+    if (32767.0 < fVar3) {
+      fVar3 = 32767.0;
+    }
+    pfVar2 = *(float **)(param_2 + 0x2004);
+    fVar4 = *(float *)(iVar7 + 0x18) - pfVar2[2];
+    fVar5 = *(float *)(iVar7 + 0x10) - *pfVar2;
+    fVar6 = *(float *)(iVar7 + 0x14) - pfVar2[1];
+    fVar4 = fVar6 * fVar6 + fVar5 * fVar5 + fVar4 * fVar4;
+    if (fVar4 < 262144.0) {
+      fVar4 = SQRT(fVar4);
+      if (128.0 <= fVar4) {
+        if (fVar4 < 512.0) {
+          fVar3 = -((fVar4 - 128.0) * 0.0026041667 - 1.0) * 16383.75 + fVar3;
+        }
+      }
+      else {
+        fVar3 = fVar3 + 16383.75;
+      }
+    }
+    uStack_a = (undefined2)(longlong)fVar3;
+    *(short *)(*(int *)(param_2 + 0x2000) * 4 + param_2) = (short)param_3;
+    *(undefined2 *)(*(int *)(param_2 + 0x2000) * 4 + param_2 + 2) = uStack_a;
+    *(int *)(param_2 + 0x2000) = *(int *)(param_2 + 0x2000) + 1;
+    return;
+  }
   return;
 }
 
@@ -801,6 +883,22 @@ void FUN_822035b0(undefined8 param_1,undefined8 param_2,undefined4 *param_3)
 }
 
 
+// 82203678  FUN_82203678  (EffectsCore/fx_glass.cpp:787)
+
+void FUN_82203678(int param_1,uint param_2,int param_3)
+
+{
+  int iVar1;
+  
+  iVar1 = *(int *)(param_1 + 0x38) + param_3 * 0x20;
+  if (*(ushort *)(iVar1 + 0xc) != param_2) {
+    return;
+  }
+  *(ushort *)(iVar1 + 0x1a) = *(ushort *)(iVar1 + 0x1a) | 1;
+  return;
+}
+
+
 // 82203BE8  FUN_82203be8  (EffectsCore/fx_glass.cpp:799)
 
 void FUN_82203be8(undefined8 param_1)
@@ -811,12 +909,39 @@ void FUN_82203be8(undefined8 param_1)
 }
 
 
+// 82203D68  FUN_82203d68  (EffectsCore/fx_glass.cpp:806)
+
+void FUN_82203d68(int param_1,uint param_2,int param_3)
+
+{
+  if (*(ushort *)(*(int *)(param_1 + 0x38) + param_3 * 0x20 + 0xc) != param_2) {
+    return;
+  }
+  FUN_82203c50(param_1,param_3);
+  return;
+}
+
+
 // 82203D90  FUN_82203d90  (EffectsCore/fx_glass.cpp:818)
 
 void FUN_82203d90(undefined8 param_1)
 
 {
   FUN_82204368(0xffffffff82d80544,param_1,0xffffffff82203d68);
+  return;
+}
+
+
+// 822036A0  FUN_822036a0  (EffectsCore/fx_glass.cpp:832)
+
+void FUN_822036a0(int param_1,uint *param_2,uint param_3)
+
+{
+  if ((uint)*(ushort *)(*(int *)(param_1 + 0x38) + param_3 * 0x20 + 0xc) != *param_2) {
+    return;
+  }
+  param_2[1] = param_3;
+  *(undefined1 *)(param_2 + 2) = 1;
   return;
 }
 

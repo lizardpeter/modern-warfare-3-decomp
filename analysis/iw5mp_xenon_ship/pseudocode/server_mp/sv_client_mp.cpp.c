@@ -1336,6 +1336,36 @@ void FUN_822c2750(int *param_1,undefined8 param_2)
 }
 
 
+// 822C2808  FUN_822c2808  (server_mp/sv_client_mp.cpp:2548)
+
+void FUN_822c2808(int param_1)
+
+{
+  *(undefined1 *)(param_1 + 0x352cc) = 0;
+  return;
+}
+
+
+// 822C2820  FUN_822c2820  (server_mp/sv_client_mp.cpp:2587)
+
+void FUN_822c2820(undefined8 param_1)
+
+{
+  FUN_822c1d50(param_1,0xffffffff82014454,1);
+  return;
+}
+
+
+// 822C2830  FUN_822c2830  (server_mp/sv_client_mp.cpp:2597)
+
+void FUN_822c2830(int param_1)
+
+{
+  FUN_822c8278(0,1,0xffffffff8201d5fc,0x59,(param_1 - DAT_83685d90) / 0x68b00);
+  return;
+}
+
+
 // 822C2898  FUN_822c2898  (server_mp/sv_client_mp.cpp:2790)
 
 /* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */

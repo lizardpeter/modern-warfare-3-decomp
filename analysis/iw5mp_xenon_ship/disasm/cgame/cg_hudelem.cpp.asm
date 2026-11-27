@@ -2879,6 +2879,25 @@ default:
   8212439C  EBE1FFF0             ld r31,-0x10(r1)
   821243A0  4E800020             blr
 
+; 821243F0  FUN_821243f0  (cgame/cg_hudelem.cpp:1673)
+  821243F0  81630000             lwz r11,0x0(r3)
+  821243F4  3D408205             lis r10,-0x7dfb
+  821243F8  81240000             lwz r9,0x0(r4)
+  821243FC  C00B0088             lfs f0,0x88(r11)
+  82124400  C1A90088             lfs f13,0x88(r9)
+  82124404  EC006828             fsubs f0,f0,f13
+  82124408  C1AA80F0             lfs f13,-0x7f10(r10)
+  8212440C  FF006800             fcmpu cr6,f0,f13
+  82124410  4098000C             bge cr6,0x8212441c
+  82124414  3860FFFF             li r3,-0x1
+  82124418  4E800020             blr
+LAB_8212441c:
+  8212441C  FF006800             fcmpu cr6,f0,f13
+  82124420  38600001             li r3,0x1
+  82124424  4D990020             bgtlr cr6
+  82124428  38600000             li r3,0x0
+  8212442C  4E800020             blr
+
 ; 82124430  FUN_82124430  (cgame/cg_hudelem.cpp:1687)
   82124430  7D8802A6             mfspr r12,LR
   82124434  9181FFF8             stw r12,-0x8(r1)

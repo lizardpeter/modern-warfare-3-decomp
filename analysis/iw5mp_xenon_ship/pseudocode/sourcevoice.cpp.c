@@ -95,6 +95,26 @@ undefined8 FUN_824f8040(int param_1,int *param_2)
 }
 
 
+// 824F8348  FUN_824f8348  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/voice.h:147)
+
+undefined8 FUN_824f8348(int param_1,undefined4 *param_2)
+
+{
+  *param_2 = *(undefined4 *)(param_1 + 0x30);
+  return 0;
+}
+
+
+// 824F8358  FUN_824f8358  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/voice.h:186)
+
+undefined8 FUN_824f8358(int param_1,undefined1 *param_2)
+
+{
+  *param_2 = *(undefined1 *)(param_1 + 0xc);
+  return 0;
+}
+
+
 // 824F8628  FUN_824f8628  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/sourcevoice.cpp:191)
 
 /* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
@@ -141,6 +161,15 @@ undefined4 * FUN_824f8628(undefined4 *param_1)
     }
   }
   return param_1;
+}
+
+
+// 824F8388  FUN_824f8388  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/sourcevoice.h:208)
+
+undefined8 FUN_824f8388(void)
+
+{
+  return 0xffffffff80004005;
 }
 
 
@@ -200,6 +229,17 @@ void FUN_824f81f0(undefined4 *param_1)
   }
   FUN_825101c8(param_1);
   return;
+}
+
+
+// 824F8368  FUN_824f8368  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/voice.h:247)
+
+undefined8 FUN_824f8368(int param_1,undefined4 *param_2)
+
+{
+  *param_2 = *(undefined4 *)(param_1 + 0x34);
+  param_2[1] = *(undefined4 *)(param_1 + 0x38);
+  return 0;
 }
 
 
@@ -569,6 +609,17 @@ undefined8 FUN_824f7d30(int param_1,byte *param_2)
 }
 
 
+// 824F7E18  FUN_824f7e18  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/sourcevoice.cpp:707)
+
+undefined4 FUN_824f7e18(void)
+
+{
+  int in_r13;
+  
+  return *(undefined4 *)((uint)*(byte *)(in_r13 + 0x10c) * 8 + DAT_83efcf7c + 0xc);
+}
+
+
 // 824F7E38  FUN_824f7e38  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/sourcevoice.cpp:735)
 
 /* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
@@ -594,6 +645,27 @@ undefined8 FUN_824f7e38(int *param_1,undefined8 param_2)
     }
   }
   return uVar2;
+}
+
+
+// 824F7F28  FUN_824f7f28  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/sourcevoice.cpp:816)
+
+void FUN_824f7f28(int param_1)
+
+{
+  float fVar1;
+  
+  if (*(byte *)(param_1 + 0x90) < 2) {
+    fVar1 = *(float *)((*(byte *)(param_1 + 0x90) + 0x21) * 4 + DAT_83efcf7c);
+  }
+  else {
+    fVar1 = 1.0;
+  }
+                    /* WARNING: Could not recover jumptable at 0x824f7f70. Too many branches */
+                    /* WARNING: Treating indirect jump as call */
+  (**(code **)(**(int **)(param_1 + 0x4c) + 0x58))
+            ((double)(*(float *)(param_1 + 0x8c) * fVar1),*(int **)(param_1 + 0x4c));
+  return;
 }
 
 

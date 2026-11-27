@@ -121,6 +121,15 @@ LAB_82514290:
   82513860  38630010             addi r3,r3,0x10
   82513864  4BFEAAD4             b 0x824fe338
 
+; 82513878  FUN_82513878  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.h:160)
+  82513878  7C6B1B78             or r11,r3,r3
+  8251387C  A143006C             lhz r10,0x6c(r3)
+  82513880  38600000             li r3,0x0
+  82513884  812B0078             lwz r9,0x78(r11)
+  82513888  7D0A49D6             mullw r8,r10,r9
+  8251388C  91040000             stw r8,0x0(r4)
+  82513890  4E800020             blr
+
 ; 82513D00  FUN_82513d00  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.h:167)
   82513D00  7D8802A6             mfspr r12,LR
   82513D04  480347B1             bl 0x825484b4
@@ -1078,6 +1087,14 @@ LAB_8251499c:
   825149A0  CBE1FFA0             lfd f31,-0x60(r1)
   825149A4  48033B4C             b 0x825484f0
 
+; 82513828  FUN_82513828  (line unknown)
+  82513828  3863FFFC             subi r3,r3,0x4
+  8251382C  480000D4             b 0x82513900
+
+; 82513830  FUN_82513830  (line unknown)
+  82513830  3863FFF0             subi r3,r3,0x10
+  82513834  480000CC             b 0x82513900
+
 ; 82513900  FUN_82513900  (line unknown)
   82513900  7D8802A6             mfspr r12,LR
   82513904  9181FFF8             stw r12,-0x8(r1)
@@ -1101,3 +1118,43 @@ LAB_8251499c:
   8251394C  7D8803A6             mtspr LR,r12
   82513950  EBE1FFF0             ld r31,-0x10(r1)
   82513954  4E800020             blr
+
+; 82513CA8  FUN_82513ca8  (line unknown)
+  82513CA8  3863FFF0             subi r3,r3,0x10
+  82513CAC  4BFFFCAC             b 0x82513958
+
+; 82513CB8  FUN_82513cb8  (line unknown)
+  82513CB8  3863FFF0             subi r3,r3,0x10
+  82513CBC  4BFFFCFC             b 0x825139b8
+
+; 82513CC8  FUN_82513cc8  (line unknown)
+  82513CC8  3863FFF0             subi r3,r3,0x10
+  82513CCC  4BFFFBCC             b 0x82513898
+
+; 82513CD0  FUN_82513cd0  (line unknown)
+  82513CD0  3863FFF0             subi r3,r3,0x10
+  82513CD4  4BFFFB8C             b 0x82513860
+
+; 82513CE0  FUN_82513ce0  (line unknown)
+  82513CE0  3863FFF0             subi r3,r3,0x10
+  82513CE4  4BFFFD9C             b 0x82513a80
+
+; 82513CE8  FUN_82513ce8  (line unknown)
+  82513CE8  3863FFF0             subi r3,r3,0x10
+  82513CEC  4BFFFEAC             b 0x82513b98
+
+; 82513CF0  FUN_82513cf0  (line unknown)
+  82513CF0  3863FFF0             subi r3,r3,0x10
+  82513CF4  4BFFFB64             b 0x82513858
+
+; 82513CF8  FUN_82513cf8  (line unknown)
+  82513CF8  3863FFF0             subi r3,r3,0x10
+  82513CFC  4BFFFB54             b 0x82513850
+
+; 82514018  FUN_82514018  (line unknown)
+  82514018  3863FFF0             subi r3,r3,0x10
+  8251401C  4BFFFDB4             b 0x82513dd0
+
+; 82514020  FUN_82514020  (line unknown)
+  82514020  3863FFF0             subi r3,r3,0x10
+  82514024  4BFFFEA4             b 0x82513ec8

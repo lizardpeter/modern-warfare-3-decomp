@@ -234,3 +234,16 @@ void FUN_82457d90(int param_1,int param_2,int param_3,int *param_4,int param_5)
   return;
 }
 
+
+// 82458300  FUN_82458300  (jpeg-6/jidctred.c:382)
+
+void FUN_82458300(int param_1,int param_2,short *param_3,int *param_4,int param_5)
+
+{
+  *(undefined1 *)(*param_4 + param_5) =
+       *(undefined1 *)
+        ((**(int **)(param_2 + 0x50) * (int)*param_3 + 4 >> 3 & 0x3ffU) + *(int *)(param_1 + 0x128)
+        + 0x80);
+  return;
+}
+

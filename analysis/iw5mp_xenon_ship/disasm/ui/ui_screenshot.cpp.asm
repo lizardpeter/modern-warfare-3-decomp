@@ -46,6 +46,14 @@
   822F6350  EBE1FFF8             ld r31,-0x8(r1)
   822F6354  4E800020             blr
 
+; 822F6358  FUN_822f6358  (ui/ui_screenshot.cpp:161)
+  822F6358  396000FF             li r11,0xff
+  822F635C  98830001             stb r4,0x1(r3)
+  822F6360  98A30002             stb r5,0x2(r3)
+  822F6364  99630000             stb r11,0x0(r3)
+  822F6368  98C30003             stb r6,0x3(r3)
+  822F636C  4E800020             blr
+
 ; 822F6370  FUN_822f6370  (ui/ui_screenshot.cpp:177)
   822F6370  7CCA07B4             extsw r10,r6
   822F6374  7CA807B4             extsw r8,r5
@@ -906,6 +914,21 @@ LAB_822f6d60:
   822F6D68  482518ED             bl 0x82548654
   822F6D6C  48251794             b 0x82548500
 
+; 822F6D70  FUN_822f6d70  (ui/ui_screenshot.cpp:698)
+  822F6D70  3D408374             lis r10,-0x7c8c
+  822F6D74  39600002             li r11,0x2
+  822F6D78  916AEDC8             stw r11,-0x1238(r10)
+  822F6D7C  4E800020             blr
+
+; 822F6D80  FUN_822f6d80  (ui/ui_screenshot.cpp:710)
+  822F6D80  3D608374             lis r11,-0x7c8c
+  822F6D84  814BEDC8             lwz r10,-0x1238(r11)
+  822F6D88  2F0A0000             cmpwi cr6,r10,0x0
+  822F6D8C  4D9A0020             beqlr cr6
+  822F6D90  39400004             li r10,0x4
+  822F6D94  914BEDC8             stw r10,-0x1238(r11)
+  822F6D98  4E800020             blr
+
 ; 822F6DA0  FUN_822f6da0  (ui/ui_screenshot.cpp:724)
   822F6DA0  7D8802A6             mfspr r12,LR
   822F6DA4  48251719             bl 0x825484bc
@@ -969,6 +992,23 @@ LAB_822f6e78:
 LAB_822f6e80:
   822F6E80  382100A0             addi r1,r1,0xa0
   822F6E84  48251688             b 0x8254850c
+
+; 822F6E88  FUN_822f6e88  (ui/ui_screenshot.cpp:774)
+  822F6E88  3D408374             lis r10,-0x7c8c
+  822F6E8C  39600002             li r11,0x2
+  822F6E90  392AEDC8             subi r9,r10,0x1238
+  822F6E94  9169001C             stw r11,0x1c(r9)
+  822F6E98  4E800020             blr
+
+; 822F6EA0  FUN_822f6ea0  (ui/ui_screenshot.cpp:784)
+  822F6EA0  3D608374             lis r11,-0x7c8c
+  822F6EA4  396BEDC8             subi r11,r11,0x1238
+  822F6EA8  814B001C             lwz r10,0x1c(r11)
+  822F6EAC  2F0A0000             cmpwi cr6,r10,0x0
+  822F6EB0  4D9A0020             beqlr cr6
+  822F6EB4  39400004             li r10,0x4
+  822F6EB8  914B001C             stw r10,0x1c(r11)
+  822F6EBC  4E800020             blr
 
 ; 822F6EC0  FUN_822f6ec0  (ui/ui_screenshot.cpp:797)
   822F6EC0  7D8802A6             mfspr r12,LR

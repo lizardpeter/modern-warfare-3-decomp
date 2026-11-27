@@ -254,6 +254,9 @@ LAB_82283d90:
   82283D98  38210070             addi r1,r1,0x70
   82283D9C  482C4770             b 0x8254850c
 
+; 82283DA0  FUN_82283da0  (qcommon/cmd.cpp:360)
+  82283DA0  4E800020             blr
+
 ; 82284950  FUN_82284950  (qcommon/cmd.cpp:373)
   82284950  7D8802A6             mfspr r12,LR
   82284954  482C3B61             bl 0x825484b4

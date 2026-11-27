@@ -1240,6 +1240,22 @@ LAB_820b998c:
   820B9990  382100B0             addi r1,r1,0xb0
   820B9994  4848EB60             b 0x825484f4
 
+; 820B9998  FUN_820b9998  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/xps.cpp:1848)
+  820B9998  81440054             lwz r10,0x54(r4)
+  820B999C  7C8B2378             or r11,r4,r4
+  820B99A0  7CA92B78             or r9,r5,r5
+  820B99A4  554A07BE             rlwinm r10,r10,0x0,0x1e,0x1f
+  820B99A8  38A00000             li r5,0x0
+  820B99AC  394A0017             addi r10,r10,0x17
+  820B99B0  38800001             li r4,0x1
+  820B99B4  554A103A             rlwinm r10,r10,0x2,0x0,0x1d
+  820B99B8  386B003C             addi r3,r11,0x3c
+  820B99BC  7D2A592E             stwx r9,r10,r11
+  820B99C0  814B0054             lwz r10,0x54(r11)
+  820B99C4  394A0001             addi r10,r10,0x1
+  820B99C8  914B0054             stw r10,0x54(r11)
+  820B99CC  484B6678             b 0x82570044
+
 ; 820B99D0  FUN_820b99d0  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/xps.cpp:2121)
   820B99D0  7D8802A6             mfspr r12,LR
   820B99D4  4848EADD             bl 0x825484b0

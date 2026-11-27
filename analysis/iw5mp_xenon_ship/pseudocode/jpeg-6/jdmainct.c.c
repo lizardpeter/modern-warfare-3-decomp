@@ -254,7 +254,7 @@ void FUN_8244fc10(int *param_1,int param_2)
     *(undefined4 *)(iVar1 + 0x34) = 0;
   }
   else if (param_2 == 2) {
-    *(undefined1 **)(iVar1 + 4) = &LAB_8244fbe8;
+    *(code **)(iVar1 + 4) = FUN_8244fbe8;
   }
   else {
     *(undefined4 *)(*param_1 + 0x14) = 4;
@@ -355,6 +355,18 @@ LAB_8244fb4c:
     *(undefined4 *)(iVar1 + 0x44) = 2;
     *(int *)(iVar1 + 0x48) = iVar3 + 2;
   }
+  return;
+}
+
+
+// 8244FBE8  FUN_8244fbe8  (jpeg-6/jdmainct.c:462)
+
+void FUN_8244fbe8(int param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
+
+{
+                    /* WARNING: Could not recover jumptable at 0x8244fc0c. Too many branches */
+                    /* WARNING: Treating indirect jump as call */
+  (**(code **)(*(int *)(param_1 + 0x194) + 4))(param_1,0,0,0,param_2,param_3,param_4);
   return;
 }
 

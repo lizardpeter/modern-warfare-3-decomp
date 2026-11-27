@@ -146,6 +146,12 @@ LAB_821116c0:
   821116CC  EBE1FFF0             ld r31,-0x10(r1)
   821116D0  4E800020             blr
 
+; 821116D8  FUN_821116d8  (cgame_mp/cg_consolecmds_mp.cpp:320)
+  821116D8  4E800020             blr
+
+; 821116E0  FUN_821116e0  (cgame_mp/cg_consolecmds_mp.cpp:326)
+  821116E0  4E800020             blr
+
 ; 821116E8  FUN_821116e8  (cgame_mp/cg_consolecmds_mp.cpp:427)
   821116E8  7D8802A6             mfspr r12,LR
   821116EC  9181FFF8             stw r12,-0x8(r1)

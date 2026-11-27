@@ -734,3 +734,16 @@ LAB_82383274:
   8238327C  8181FFF8             lwz r12,-0x8(r1)
   82383280  7D8803A6             mtspr LR,r12
   82383284  4E800020             blr
+
+; 82382958  FUN_82382958  (physics/ode/src/collision_util.cpp:325)
+  82382958  3D608200             lis r11,-0x7e00
+  8238295C  3D408200             lis r10,-0x7e00
+  82382960  C00B65B0             lfs f0,0x65b0(r11)
+  82382964  C1AA1F74             lfs f13,0x1f74(r10)
+  82382968  D0040000             stfs f0,0x0(r4)
+  8238296C  D1A40004             stfs f13,0x4(r4)
+  82382970  D0040008             stfs f0,0x8(r4)
+  82382974  D1A4000C             stfs f13,0xc(r4)
+  82382978  D0040010             stfs f0,0x10(r4)
+  8238297C  D1A40014             stfs f13,0x14(r4)
+  82382980  4E800020             blr

@@ -652,6 +652,17 @@ undefined8 FUN_8223c0b0(undefined8 param_1,int param_2,undefined4 *param_3)
 }
 
 
+// 8223EA90  FUN_8223ea90  (game/g_items.cpp:661)
+
+void FUN_8223ea90(int param_1)
+
+{
+  *(undefined1 *)(param_1 + 0x16c) = 1;
+  FUN_8223e918();
+  return;
+}
+
+
 // 8223E918  FUN_8223e918  (game/g_items.cpp:673)
 
 /* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
