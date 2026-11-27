@@ -183,6 +183,9 @@ jobs:
               fi
             fi
           fi
+          # Xbox 360: functions at code addresses still outside every function after analysis (leaf callbacks and
+          # table entries; tools/inventory.py code_refs.tsv), before the exports
+          if [ "$arch" = "ppc" ]; then args+=(-postScript SeedCodeRefs.java "$a"); fi
           /opt/ghidra/support/analyzeHeadless /tmp/proj iw5 \
             -import /tmp/in/${{ matrix.build }}.exe \
             -scriptPath tools/ghidra \

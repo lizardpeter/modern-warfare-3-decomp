@@ -11,7 +11,7 @@
 // shared return. As separate functions none of them has a return of its own, so Ghidra's "Non-Returning Functions -
 // Discovered" analyzer marks them non-returning and every caller ends at its prologue's `bl __savegprlr_NN` (8,396
 // functions of iw5mp_xenon cut to 8 bytes in the first run). They are marked returning here, and that analyzer is
-// turned off for PowerPC builds, so it can't flip them back. Known non-returning functions are still applied.
+// turned off (for every build: it misfires on the x64 Store build too). Known non-returning functions still apply.
 // With the Xenon language they also get its "xenon_save_restore" call fixup, so the decompiler doesn't show them as
 // calls returning a value (tools/ghidra/xenon/build_language.py). The helpers come from xenon_helpers.tsv (found by
 // their code, so blind analyses get them too) as well as the PDB and MAP; every entry is labelled with its name, so
@@ -73,7 +73,11 @@ public class ApplySymbols extends GhidraScript {
 		Map<Long, String> names = new LinkedHashMap<>();
 		Map<Long, String> fallback = new HashMap<>();
 		for (Map<String, String> r : rows(new File(dir, "pdata.tsv"))) {
-			names.putIfAbsent(Long.parseLong(r.get("va"), 16), null);
+			// a chained entry (x64 part_of) is a separated part of its parent function, not a function: Ghidra joins
+			// it to the parent by flow
+			if (r.getOrDefault("part_of", "").isEmpty()) {
+				names.putIfAbsent(Long.parseLong(r.get("va"), 16), null);
+			}
 		}
 		for (Map<String, String> r : blind ? rows(new File("-")) : rows(new File(dir, "map/publics.tsv"))) {
 			if (r.getOrDefault("flags", "").contains("f")) {
@@ -96,11 +100,13 @@ public class ApplySymbols extends GhidraScript {
 		boolean fixup = ppc && java.util.Arrays.asList(
 			currentProgram.getCompilerSpec().getPcodeInjectLibrary().getCallFixupNames())
 				.contains(SAVE_RESTORE_FIXUP);
-		if (ppc) {
-			setAnalysisOption(currentProgram, "Non-Returning Functions - Discovered", "false");
-			println("PowerPC: Non-Returning Functions - Discovered turned off (register save/restore helpers)" +
-				(fixup ? "; call fixup " + SAVE_RESTORE_FIXUP : ""));
-		}
+		// Every build: the analyzer's guesses cascade. On PowerPC it took the save/restore helpers for non-returning;
+		// on the x64 Store build it marked memcpy, memset, free, sqrtf, __chkstk and hundreds of game functions
+		// non-returning (one function with 1,353 callers that ends in a plain ret), cutting every caller short.
+		// Ghidra's list of known non-returning functions (exit, longjmp, _CxxThrowException, ...) still applies.
+		setAnalysisOption(currentProgram, "Non-Returning Functions - Discovered", "false");
+		println("Non-Returning Functions - Discovered turned off" +
+			(fixup ? "; PowerPC save/restore call fixup " + SAVE_RESTORE_FIXUP : ""));
 		int created = 0, named = 0, failed = 0, helpers = 0;
 		for (Map.Entry<Long, String> e : names.entrySet()) {
 			if (monitor.isCancelled()) {

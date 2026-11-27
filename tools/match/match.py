@@ -27,6 +27,7 @@ Methods, in the order they run:
   callee     propagation: a matched pair's unmatched callees pair up when each side has exactly one
              candidate with the same matched-callee signature, or exactly one unmatched callee
   caller     the same, upwards through callers
+  calls      the only unmatched function on each side calling the same set of (at least two) matched functions
   votes      the same pairing from many callers' gaps of equal length (hubs called from everywhere)
   order      within a matched pair, the one unmatched callee on each side between the same two matched calls
              (link-time code generation inlines calls but keeps the order of the rest)
@@ -48,6 +49,9 @@ ROOT = Path(__file__).resolve().parents[2]
 csv.field_size_limit(1 << 30)
 
 
+XENON_HELPER = re.compile(r"__(save|rest)(gprlr|gpr|fpr|vmx)(_\d+)?$")
+
+
 def read_tsv(path):
     with open(path, newline="") as f:
         return list(csv.DictReader(f, delimiter="\t", quoting=csv.QUOTE_NONE))
@@ -62,9 +66,25 @@ class Build:
         for r in rows:
             if r.get("thunk_of"):
                 continue
+            # the Xenon register save/restore helpers are compiler plumbing called from nearly every prologue and
+            # epilogue, not calls of the source: in the call graph they make unrelated functions look alike, and the
+            # x64 target has nothing like them. Named in every Xenon analysis, blind ones included (ApplySymbols)
+            if XENON_HELPER.match(r.get("ghidra_name") or "") or XENON_HELPER.match(r.get("pdb_name") or ""):
+                continue
             va = int(r["va"], 16)
             self.fn[va] = {"va": va, "size": int(r["size"] or 0),
                            "name": r.get("pdb_name") or r.get("ghidra_name", ""), "source": r.get("source", "")}
+        # code ranges to scan per function: on x64, .pdata gives each function's true extent and its separated
+        # (chained) parts, independent of how far Ghidra's flow got; elsewhere the function's own extent
+        self.ranges = {va: [(va, f["size"])] for va, f in self.fn.items()}
+        pdata = a / "pdata.tsv"
+        if pdata.exists():
+            for r in read_tsv(pdata):
+                va, n, parent = int(r["va"], 16), int(r["size"]), r.get("part_of")
+                if parent and int(parent, 16) in self.fn:
+                    self.ranges[int(parent, 16)].append((va, n))
+                elif not parent and va in self.fn and n > self.fn[va]["size"]:
+                    self.ranges[va][0] = (va, n)
         self.starts = sorted(self.fn)
         self.callees = collections.defaultdict(set)
         self.callers = collections.defaultdict(set)
@@ -249,13 +269,15 @@ class Build:
         mask = 0xFFFFFFFFFFFFFFFF if x64 else 0xFFFFFFFF
         ret_regs = {X86.X86_REG_EAX, X86.X86_REG_RAX}
         code_lo, code_hi = tva, tva + len(tdata)
+        def code(va):
+            for start, n in self.ranges[va]:
+                off = start - tva
+                if 0 <= off < len(tdata) and n > 0:
+                    yield from md.disasm(tdata[off:off + n], start)
         for va, f in self.fn.items():
-            off = va - tva
-            if off < 0 or off >= len(tdata) or f["size"] <= 0:
-                continue
             recent = []  # last few address operands: ("s", string) or ("f", function)
             call_strings = None  # the strings loaded for the last call, until its result is stored
-            for ins in md.disasm(tdata[off:off + f["size"]], va):
+            for ins in code(va):
                 if ins.mnemonic.startswith("call"):
                     call_strings = [x for k, x in recent if k == "s"]
                 if ins.mnemonic.startswith("call") or ins.mnemonic.startswith("j"):
@@ -563,6 +585,27 @@ def main():
                                   f"{direction} of {ref.fn[r]['name']} with the same {len(sig[0])} matched callees "
                                   f"and {len(sig[1])} matched callers"):
                             added += 1
+        # the same set of matched callees anywhere in the graph: an unmatched function calling at least two matched
+        # functions, and the only unmatched function on each side calling exactly that set, is the same function
+        # (reaches islands no matched caller or callee touches yet)
+        tsets = collections.defaultdict(list)
+        for x in tgt.fn:
+            if x not in match:
+                k = frozenset(match[c][0] for c in tgt.callees[x] if c in match)
+                if len(k) >= 2:
+                    tsets[k].append(x)
+        rsets = collections.defaultdict(list)
+        for y in ref.fn:
+            if y not in matched_ref:
+                k = frozenset(c for c in ref.callees[y] if c in matched_ref)
+                if len(k) >= 2:
+                    rsets[k].append(y)
+        for k, xs in tsets.items():
+            ys = rsets.get(k, [])
+            if len(xs) == 1 and len(ys) == 1:
+                if accept(xs[0], ys[0], "calls", min(0.90, 0.70 + 0.04 * len(k)),
+                          f"the only unmatched function on each side calling the same {len(k)} matched functions"):
+                    added += 1
         # call order: within a matched pair, the calls between two calls to already matched functions are the same
         # calls in the same order, except those the target inlined. One unmatched callee on each side between the
         # same two anchors pairs up.

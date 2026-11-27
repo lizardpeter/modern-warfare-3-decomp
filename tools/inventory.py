@@ -13,9 +13,11 @@ absolute start address and a packed word (prolog length, function length in inst
 flags); Xenon code lists nearly every function there, leaves included. Entries whose unwind info
 is chained (UNW_FLAG_CHAININFO) are separated-out parts of another function and are listed with `part_of`, not counted
 as functions. Leaf functions that never touch the stack have no entry; Ghidra's inventory supersedes this table.
-Xbox 360 builds also get xenon_helpers.tsv: the compiler's register save/restore helpers, found by their code.
+Xbox 360 builds also get xenon_helpers.tsv (the compiler's register save/restore helpers, found by their code) and
+code_refs.tsv (code addresses referred to outside every .pdata function: leaf function candidates).
 """
 import argparse
+import bisect
 import hashlib
 import json
 import struct
@@ -73,8 +75,9 @@ def main():
     if machine == 0x8664:
         write_pdata(pe, out.parent / "pdata.tsv")
     elif machine == 0x1F2:
-        write_pdata_xenon(pe, out.parent / "pdata.tsv")
+        rows = write_pdata_xenon(pe, out.parent / "pdata.tsv")
         write_xenon_helpers(pe, out.parent / "xenon_helpers.tsv")
+        write_xenon_code_refs(pe, rows, out.parent / "code_refs.tsv")
 
 
 def write_pdata(pe, path):
@@ -141,6 +144,68 @@ def write_pdata_xenon(pe, path):
         for va, size in sorted(rows):
             f.write(f"{va:08X}\t{size}\t\n")
     print(f"{path}: {len(rows):,} functions")
+    return sorted(rows)
+
+
+def write_xenon_code_refs(pe, pdata, path):
+    """Code addresses the image refers to outside every .pdata function: the starts of leaf functions (no unwind
+    data, so no .pdata entry) that Ghidra's PowerPC analysis doesn't reach because nothing calls them directly. Found
+    from the exe alone, three ways:
+      call     a `bl` target
+      address  built by `lis rX, hi` + `addi rY, rX, lo` (a callback passed by address: Cmd_AddCommand(..., Func))
+      pointer  a 4-byte word in a data section (function tables)
+    SeedCodeRefs.java creates functions from them after Ghidra's own analysis (call targets anywhere, the others only
+    where no function covers them; docs/xbox360.md)."""
+    base = pe.OPTIONAL_HEADER.ImageBase
+    code = [(base + s.VirtualAddress, base + s.VirtualAddress + s.Misc_VirtualSize, s) for s in pe.sections
+            if s.Characteristics & 0x20000000]
+    starts = [va for va, _ in pdata]
+    ends = {va: va + size for va, size in pdata}
+
+    def outside_pdata(v):
+        if v % 4 or not any(lo <= v < hi for lo, hi, _ in code):
+            return False
+        i = bisect.bisect_right(starts, v) - 1
+        return i < 0 or v >= ends[starts[i]]
+
+    sext = lambda x: x - 0x10000 if x & 0x8000 else x
+    how = {}
+    for lo, hi, s in code:
+        words = struct.unpack_from(f">{(hi - lo) // 4}I", xenon_read(pe, lo - base, hi - lo))
+        pending = {}  # register -> high half from lis, in straight-line code
+        for i, w in enumerate(words):
+            op, rd, ra = w >> 26, (w >> 21) & 31, (w >> 16) & 31
+            if op == 18:
+                if w & 1:
+                    disp = (w & 0x03FFFFFC) - (0x04000000 if w & 0x02000000 else 0)
+                    how.setdefault((disp if w & 2 else lo + 4 * i + disp) & 0xFFFFFFFF, "call")
+                pending.clear()
+                continue
+            if op in (16, 19):
+                pending.clear()
+                continue
+            if op == 15 and ra == 0:
+                pending[rd] = (w & 0xFFFF) << 16
+                continue
+            if op == 14 and ra in pending:
+                how.setdefault((pending[ra] + sext(w & 0xFFFF)) & 0xFFFFFFFF, "address")
+            if op in (7, 8, 12, 13, 14, 15) or 32 <= op <= 46 or op == 58:
+                pending.pop(rd, None)
+            if op in (20, 21, 23, 24, 25, 26, 27, 28, 29, 30, 31):
+                pending.pop(ra, None)
+                pending.pop(rd, None)
+    for s in pe.sections:
+        if s.Characteristics & 0x20000000 or not s.SizeOfRawData:
+            continue
+        n = min(s.SizeOfRawData, s.Misc_VirtualSize) // 4
+        for w in struct.unpack_from(f">{n}I", pe.__data__, s.PointerToRawData):
+            how.setdefault(w, "pointer")
+    rows = sorted((v, h) for v, h in how.items() if outside_pdata(v))
+    with open(path, "w", newline="\n") as f:
+        f.write("va\thow\n")
+        for v, h in rows:
+            f.write(f"{v:08X}\t{h}\n")
+    print(f"{path}: {len(rows):,} code addresses outside .pdata functions")
 
 
 
