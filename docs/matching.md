@@ -19,20 +19,27 @@ ground-truth pair. Stages, in order:
    `{name, ..., function}` table entry.
 4. **callee / caller**: call-graph propagation from matched pairs, with structural checks.
 
-### What has to change for PowerPC (before the first run)
+### The PowerPC scan
 
-The reference scan disassembles with capstone in x86 or x64 mode, chosen from the PE machine type. The Xbox 360
-builds need a PowerPC scan (capstone `CS_ARCH_PPC`, big-endian, 32-bit addresses):
+`Build._scan_ppc` reads the Xbox 360 builds (machine 0x1F2) with its own decoder; capstone isn't needed and doesn't
+know VMX128. It gives the same tables as the x86/x64 scan, so everything downstream is shared:
 
-- **data references** are built in two instructions: `lis rX, hi` then `addi`/`ori`/a load or store `rY, lo(rX)`
-  (`hi` adjusted for the sign of `lo` with `addi`/loads). Track `lis` per register within a basic block.
-- **calls** are `bl target`; tail calls are `b target` at the end of a function; indirect calls go through `mtctr`
-  / `bctrl` (no target).
-- **constants**: integer immediates are at most 16 bits per instruction (`li`, `lis`+`ori` for 32-bit); floats are
-  loaded from memory, as on x64, so match float constants by value read from the referenced data.
-- **tables**: pointers are 4 bytes, big-endian.
+- **data references**: `lis rX, hi` followed by `addi`/`ori rY, rX, lo` or a D/DS-form load or store `lo(rX)`.
+  The pending high half is tracked per register in straight-line code; a write to the register drops it, a call
+  (`bl`, `bcl`, `bctrl`, `bclrl`) drops the volatile ones (r0, r3-r12), other branches drop all.
+- **registrations**: strings and a function address loaded between two calls (`Cmd_AddCommand("name", Func)`), and
+  `stw r3, lo(rX)` after a call for `g = Dvar_Register*("name", ...)`.
+- **constants**: 32-bit values built by `lis` + `ori`/`addi` that aren't image addresses (16-bit immediates are
+  below the distinctiveness threshold anyway). Float constants are loaded from memory on both architectures and are
+  not compared by value yet.
+- **tables**: 4-byte big-endian pointers.
+- Sections are read through their headers as written, never with pefile's `get_data` (docs/xbox360.md).
 
-Everything downstream of the scan (uniqueness, propagation, scoring) is architecture-neutral.
+Checked on `iw5mp_xenon` against its PDB: assert and format strings land in the functions that own them, command
+registrations pair the right names (`"viewpos"` → `CG_Viewpos_f`), and 1,641 of the 1,706 globals stored from
+dvar registrations are the PDB variable of that dvar's name (the rest are keyed by the description string, which
+loses a match but doesn't make a wrong one). The x86/x64 scan was refactored around it and gives identical tables
+on `iw5mp_ship`.
 
 ### Validation
 

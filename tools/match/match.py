@@ -8,8 +8,8 @@ builds, which is how the matcher is validated against ground truth: tools/match/
 
 Reads analysis/<build>/functions.tsv and ghidra/callgraph.tsv for both builds, and the two original exes
 (from DIR, default originals/, fetched with tools/fetch_originals.py; an Arxan-protected build must be its
-unpacked image) and disassembles every function (x86 or x64, from the PE header) to find its references to strings and its distinctive
-immediates.
+unpacked image, an Xbox 360 build the PE unpacked from its XEX) and disassembles every function (x86, x64 or Xenon
+PowerPC, from the PE header) to find its references to strings and its distinctive immediates.
 
 Writes analysis/<target>/match/functions.tsv (generated; never hand-edit):
   target_va  ref_va  ref_name  source  method  confidence  evidence
@@ -91,28 +91,27 @@ class Build:
         x64 code reaches data RIP-relatively (lea rcx, [rip+disp]); x86 code by absolute address, as an immediate
         (push offset aName) or a base-less memory operand. Both resolve to the same string and function
         identities, so an x86 reference matches an x64 target (docs/matching.md)."""
-        import capstone
         pe = pefile.PE(str(exe), fast_load=True)
         base = pe.OPTIONAL_HEADER.ImageBase
         size = pe.OPTIONAL_HEADER.SizeOfImage
-        x64 = pe.FILE_HEADER.Machine == 0x8664
-        ptr, ptrfmt = (8, "<Q") if x64 else (4, "<I")
+        machine = pe.FILE_HEADER.Machine
+        x64 = machine == 0x8664
+        ppc = machine == 0x1F2
+        ptr, ptrfmt = (8, "<Q") if x64 else (4, ">I") if ppc else (4, "<I")
         secs = {s.Name.rstrip(b"\0"): s for s in pe.sections}
+
+        def sec_data(s):
+            # through the section header as written: pefile's get_data rounds addresses to SectionAlignment first,
+            # which Xbox 360 sections don't follow (docs/xbox360.md)
+            return pe.__data__[s.PointerToRawData:s.PointerToRawData + min(s.SizeOfRawData, s.Misc_VirtualSize)]
         strs = {}
         for name in (b".rdata", b".data"):
             s = secs.get(name)
             if not s:
                 continue
-            d, va = s.get_data(), base + s.VirtualAddress
+            d, va = sec_data(s), base + s.VirtualAddress
             for m in re.finditer(rb"[\x20-\x7e\t\n\r]{5,}\x00", d):
                 strs[va + m.start()] = m.group()[:-1]
-        text = secs[b".text"]
-        tva, tdata = base + text.VirtualAddress, text.get_data()
-        md = capstone.Cs(capstone.CS_ARCH_X86, capstone.CS_MODE_64 if x64 else capstone.CS_MODE_32)
-        md.detail = True
-        X86 = capstone.x86
-        rip = X86.X86_REG_RIP
-        mask = 0xFFFFFFFFFFFFFFFF if x64 else 0xFFFFFFFF
         self.str_refs = collections.defaultdict(set)    # string -> {function}
         self.fn_strs = collections.defaultdict(set)     # function -> {string}
         self.const_refs = collections.defaultdict(set)  # immediate -> {function}
@@ -121,6 +120,133 @@ class Build:
         self.fn_globals = collections.defaultdict(set)  # function -> {data address it reads or writes}
         self.global_refs = collections.defaultdict(set)
         self.named_data = collections.defaultdict(set)  # string -> {global}: g = Register("name", ...)
+        if ppc:
+            self._scan_ppc(pe, base, size, strs)
+        else:
+            self._scan_x86(pe, base, size, x64, secs, strs)
+        self._scan_tables(secs, sec_data, ptr, ptrfmt, strs)
+
+    def _note_constant(self, va, v, mask):
+        """A distinctive immediate: not small, not a power of two or low-bit mask, not a small negative."""
+        if v < 0x10000 or v > mask - 0xFFFF or 0xFFFF0000 <= v <= 0xFFFFFFFF:
+            return
+        if v & (v - 1) == 0 or (v + 1) & v == 0:
+            return  # powers of two and low-bit masks are everywhere
+        self.const_refs[v].add(va)
+        self.fn_consts[va].add(v)
+
+    def _note_address(self, va, target, base, size, code_lo, code_hi, strs, recent, loads_function):
+        """A data or code address the function va builds or accesses. Returns the updated recent list."""
+        if base <= target < base + size and not code_lo <= target < code_hi and target not in strs:
+            self.fn_globals[va].add(target)
+            self.global_refs[target].add(va)
+        s = strs.get(target)
+        if s is not None:
+            self.str_refs[s].add(va)
+            self.fn_strs[va].add(s)
+            recent.append(("s", s))
+        elif target in self.fn and loads_function:
+            recent.append(("f", target))
+        kinds = {k for k, _ in recent[-4:]}
+        if kinds == {"s", "f"}:
+            names = [x for k, x in recent[-4:] if k == "s"]
+            funcs = [x for k, x in recent[-4:] if k == "f"]
+            if len(names) == 1 and len(funcs) == 1:
+                self.named[names[0]].add(funcs[0])
+                return []
+        return recent
+
+    def _registered_global(self, call_strings, g, strs):
+        """g = Register("name", ...): the call's only string, or its only identifier-like one
+        (Dvar_Register*("name", ..., "description"))."""
+        names = call_strings if len(call_strings) == 1 else \
+            [x for x in call_strings if re.fullmatch(rb"[A-Za-z_][A-Za-z0-9_]{2,}", x)]
+        if len(names) == 1 and g not in strs:
+            self.named_data[names[0]].add(g)
+
+    def _scan_ppc(self, pe, base, size, strs):
+        """Xbox 360 (PowerPC, big-endian, 32-bit addresses). A data address is built in two instructions:
+        `lis rX, hi` then `addi rY, rX, lo` / `ori rY, rX, lo`, or used as `lwz/stw/lfs/... rY, lo(rX)` (lo signed,
+        so hi is pre-adjusted for addi and D-form displacements). The scan tracks the pending high half per register
+        within straight-line code: an instruction writing a register drops it, a call drops the volatile registers
+        (r0, r3-r12), any other branch drops all of them. 32-bit constants are built the same way (lis + ori/addi)
+        and are distinctive when they aren't addresses in the image. A registration's result is stored by
+        `stw r3, lo(rX)` after the call (r3 holds the return value). Instructions are decoded by hand: only the
+        integer forms that write general registers matter, and VMX128 (which capstone doesn't decode) writes none."""
+        mask = 0xFFFFFFFF
+        code = [(base + s.VirtualAddress, base + s.VirtualAddress + s.Misc_VirtualSize, s) for s in pe.sections
+                if s.Characteristics & 0x20000000]
+        code_lo = min(lo for lo, _, _ in code)
+        code_hi = max(hi for _, hi, _ in code)
+        sext = lambda x: x - 0x10000 if x & 0x8000 else x
+        D_LOADS = {32, 34, 40, 42, 46, 48, 50}            # lwz lbz lhz lha lmw lfs lfd (+ update forms below)
+        D_UPDATE = {33, 35, 37, 39, 41, 43, 45, 49, 51, 53, 55}
+        D_MEM = set(range(32, 56)) | {58, 62}             # every D/DS-form load or store: base register rA
+        WRITES_RD = {7, 8, 12, 13, 14, 15} | {32, 33, 34, 35, 40, 41, 42, 43, 46, 58}
+        WRITES_RA = {20, 21, 23, 24, 25, 26, 27, 28, 29, 30}
+        VOLATILE = {0} | set(range(3, 13))
+        for va, f in self.fn.items():
+            if f["size"] <= 0:
+                continue
+            sec = next((s for lo, hi, s in code if lo <= va < hi), None)
+            if sec is None:
+                continue
+            off = sec.PointerToRawData + va - base - sec.VirtualAddress
+            words = struct.unpack_from(f">{f['size'] // 4}I", pe.__data__, off)
+            hi = {}           # register -> pending high half (already shifted)
+            recent = []
+            call_strings = None
+            for w in words:
+                op = w >> 26
+                rd, ra = (w >> 21) & 31, (w >> 16) & 31
+                imm = w & 0xFFFF
+                if op == 18 or op == 16 or (op == 19 and ((w >> 1) & 0x3FF) in (16, 528)):
+                    if w & 1:  # bl / bcl / bclrl / bcctrl: a call
+                        call_strings = [x for k, x in recent if k == "s"]
+                        for r in VOLATILE:
+                            hi.pop(r, None)
+                    else:
+                        hi.clear()
+                    recent = []  # a registration's arguments are loaded between two calls
+                    continue
+                if op == 15 and ra == 0:  # lis rD, imm
+                    hi[rd] = (imm << 16) & mask
+                    continue
+                target = None
+                if op in (14, 24) and ra in hi:  # addi / ori rX, rA(lis), lo
+                    v = (hi[ra] + sext(imm)) & mask if op == 14 else hi[ra] | imm
+                    if base <= v < base + size:
+                        target = v
+                    else:
+                        self._note_constant(va, v, mask)
+                elif op in D_MEM and ra in hi:
+                    d = sext(imm & ~3 if op in (58, 62) else imm)
+                    target = (hi[ra] + d) & mask
+                    # the result of the last call stored to a global: g = Register("name", ...)
+                    if op == 36 and rd == 3 and call_strings is not None:
+                        self._registered_global(call_strings, target, strs)
+                        call_strings = None
+                if target is not None:
+                    recent = self._note_address(va, target, base, size, code_lo, code_hi, strs, recent,
+                                                loads_function=op == 14)
+                # registers this instruction writes lose their pending high half
+                if op in WRITES_RD or (op == 58 and w & 3 == 1):
+                    hi.pop(rd, None)
+                if op in WRITES_RA or op in D_UPDATE or (op in (58, 62) and w & 3 == 1):
+                    hi.pop(ra, None)
+                if op == 31:  # X-form: destination is rD or rA depending on the instruction
+                    hi.pop(rd, None)
+                    hi.pop(ra, None)
+
+    def _scan_x86(self, pe, base, size, x64, secs, strs):
+        import capstone
+        text = secs[b".text"]
+        tva, tdata = base + text.VirtualAddress, text.get_data()
+        md = capstone.Cs(capstone.CS_ARCH_X86, capstone.CS_MODE_64 if x64 else capstone.CS_MODE_32)
+        md.detail = True
+        X86 = capstone.x86
+        rip = X86.X86_REG_RIP
+        mask = 0xFFFFFFFFFFFFFFFF if x64 else 0xFFFFFFFF
         ret_regs = {X86.X86_REG_EAX, X86.X86_REG_RAX}
         code_lo, code_hi = tva, tva + len(tdata)
         for va, f in self.fn.items():
@@ -139,12 +265,7 @@ class Build:
                     if src.type == X86.X86_OP_REG and src.reg in ret_regs and dst.type == X86.X86_OP_MEM \
                             and dst.mem.index == 0 and ((x64 and dst.mem.base == rip) or (not x64 and dst.mem.base == 0)):
                         g = (ins.address + ins.size + dst.mem.disp) if x64 else dst.mem.disp & mask
-                        # the registered name: the call's only string, or its only identifier-like one
-                        # (Dvar_Register*("name", ..., "description"))
-                        names = call_strings if len(call_strings) == 1 else \
-                            [x for x in call_strings if re.fullmatch(rb"[A-Za-z_][A-Za-z0-9_]{2,}", x)]
-                        if len(names) == 1 and g not in strs:
-                            self.named_data[names[0]].add(g)
+                        self._registered_global(call_strings, g, strs)
                         call_strings = None
                 for op in ins.operands:
                     target = None
@@ -159,40 +280,21 @@ class Build:
                             if not x64:
                                 target = v  # x86: push offset / mov reg, offset
                         else:
-                            if v < 0x10000 or v > mask - 0xFFFF:
-                                continue
-                            if 0xFFFF0000 <= v <= 0xFFFFFFFF:
-                                continue  # small negative 32-bit values
-                            if v & (v - 1) == 0 or (v + 1) & v == 0:
-                                continue  # powers of two and low-bit masks are everywhere
-                            self.const_refs[v].add(va)
-                            self.fn_consts[va].add(v)
+                            self._note_constant(va, v, mask)
                             continue
                     if target is None:
                         continue
-                    if base <= target < base + size and not code_lo <= target < code_hi and target not in strs:
-                        self.fn_globals[va].add(target)
-                        self.global_refs[target].add(va)
-                    s = strs.get(target)
-                    if s is not None:
-                        self.str_refs[s].add(va)
-                        self.fn_strs[va].add(s)
-                        recent.append(("s", s))
-                    elif target in self.fn and (ins.mnemonic in ("lea", "push", "mov")):
-                        recent.append(("f", target))
-                    kinds = {k for k, _ in recent[-4:]}
-                    if kinds == {"s", "f"}:
-                        names = [x for k, x in recent[-4:] if k == "s"]
-                        funcs = [x for k, x in recent[-4:] if k == "f"]
-                        if len(names) == 1 and len(funcs) == 1:
-                            self.named[names[0]].add(funcs[0])
-                            recent = []
-        # data tables of {const char *name; ...; function pointer} (script built-ins, command and callback tables)
+                    recent = self._note_address(va, target, base, size, code_lo, code_hi, strs, recent,
+                                                loads_function=ins.mnemonic in ("lea", "push", "mov"))
+
+    def _scan_tables(self, secs, sec_data, ptr, ptrfmt, strs):
+        """Data tables of {const char *name; ...; function pointer} (script built-ins, command and callback
+        tables)."""
         for name in (b".rdata", b".data"):
             sec = secs.get(name)
             if not sec:
                 continue
-            d = sec.get_data()
+            d = sec_data(sec)
             for i in range(0, len(d) - 4 * ptr, ptr):
                 sv = struct.unpack_from(ptrfmt, d, i)[0]
                 st = strs.get(sv)

@@ -6,8 +6,6 @@ lists what must be decompiled first.
 
 ## Tooling
 
-- **PowerPC reference scan in `tools/match/match.py`** (docs/matching.md). Needs: nothing; first step after the
-  Ghidra analyses of `iw5mp_xenon` and `iw5mp_ship` are committed.
 - **Differential harness** for the Store build, from black-ops-2-decomp's (docs/verification.md).
 
 ## Enhanced build
