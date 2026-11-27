@@ -1,0 +1,3 @@
+type	reason
+huff_entropy_decoder	libjpeg defines two different savable_state structs (jdhuff.c 16 bytes, jdphuff.c 20) with the same name and unique name; a forward reference can't say which, and Ghidra uses one for both (a type-variants.txt type)
+_s__RTTIBaseClassArray	compiler RTTI type made only of a zero-length array; Ghidra can't give a zero-length-array structure the PDB's 4-byte size

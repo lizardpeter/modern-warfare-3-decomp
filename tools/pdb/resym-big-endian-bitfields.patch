@@ -1,0 +1,315 @@
+diff --git a/resym_core/src/pdb_types/class.rs b/resym_core/src/pdb_types/class.rs
+index 6248c52..14b219a 100644
+--- a/resym_core/src/pdb_types/class.rs
++++ b/resym_core/src/pdb_types/class.rs
+@@ -6,6 +6,7 @@ use super::{
+     fmt_struct_fields_recursive, is_unnamed_type,
+     primitive_types::PrimitiveReconstructionFlavor,
+     resolve_complete_type_index, type_bitfield_info, type_name, type_size,
++    type_bitfield_base_size, with_bitfield_allocation_order,
+     union::Union,
+     DataFormatConfiguration, Field, Method, NeededTypeSet, ReconstructibleTypeData, Result,
+     ResymCoreError, TypeForwarder,
+@@ -267,6 +268,9 @@ impl<'p> Class<'p> {
+                     offset: data.offset,
+                     size: type_size,
+                     bitfield_info: type_bitfield_info,
++                    alloc_bit_offset: type_bitfield_info.map(|b| b.0).unwrap_or(0),
++                    lsb_first: true,
++                    bitfield_base_size: type_bitfield_base_size(type_finder, complete_type_index)?,
+                     access,
+                 });
+             }
+@@ -476,7 +480,12 @@ impl ReconstructibleTypeData for Class<'_> {
+         }
+ 
+         // Dump fields while detecting unnamed structs and unions
+-        fmt_struct_fields_recursive(fmt_configuration, &self.fields, 1, f)?;
++        fmt_struct_fields_recursive(
++            fmt_configuration,
++            &with_bitfield_allocation_order(&self.fields),
++            1,
++            f,
++        )?;
+ 
+         // Static fields
+         for field in &self.static_fields {
+diff --git a/resym_core/src/pdb_types/field.rs b/resym_core/src/pdb_types/field.rs
+index 5e6cf81..fda5139 100644
+--- a/resym_core/src/pdb_types/field.rs
++++ b/resym_core/src/pdb_types/field.rs
+@@ -12,6 +12,13 @@ pub struct Field<'p> {
+     /// Offset and size of the field in bits, within the current type's size (0 means LSB).
+     /// Present only for bitfield members.
+     pub bitfield_info: Option<(u8, u8)>,
++    /// Bit-field members: offset in allocation order (see `with_bitfield_allocation_order`), used to group
++    /// bit-fields and fill gaps between them. Equal to the bit position on little-endian PDBs.
++    pub alloc_bit_offset: u8,
++    /// Bit-field members: whether the field's run is allocated from the least significant bit.
++    pub lsb_first: bool,
++    /// Bit-field members: size in bytes of the base type (`size` is 0 for bit-fields).
++    pub bitfield_base_size: usize,
+     pub access: FieldAccess,
+ }
+ 
+diff --git a/resym_core/src/pdb_types/mod.rs b/resym_core/src/pdb_types/mod.rs
+index 3d92e82..dd8522a 100644
+--- a/resym_core/src/pdb_types/mod.rs
++++ b/resym_core/src/pdb_types/mod.rs
+@@ -376,6 +376,17 @@ pub fn type_bitfield_info(
+     Ok(bitfield_info)
+ }
+ 
++/// Return the size in bytes of a bit-field type's base type, or 0 if the type isn't a bit-field.
++pub fn type_bitfield_base_size(
++    type_finder: &pdb::TypeFinder,
++    type_index: pdb::TypeIndex,
++) -> Result<usize> {
++    match type_finder.find(type_index)?.parse()? {
++        pdb::TypeData::Bitfield(data) => type_size(type_finder, data.underlying_type),
++        _ => Ok(0),
++    }
++}
++
+ /// Return the type's size in bytes.
+ pub fn type_size(type_finder: &pdb::TypeFinder, type_index: pdb::TypeIndex) -> Result<usize> {
+     let size = match type_finder.find(type_index)?.parse()? {
+@@ -838,14 +849,35 @@ fn fmt_struct_fields_recursive(
+         if union_range.is_empty() {
+             let field = &fields[union_range.start];
+ 
+-            // Check if we need to add padding, following a bit-field member
+-            if let Some((field_bit_offset, _)) = field.bitfield_info {
++            // A run of bit-fields that doesn't start at its storage unit's first bit (in allocation order)
++            // begins with padding
++            if field.bitfield_info.is_some()
++                && field.alloc_bit_offset > 0
++                && last_field.map_or(true, |last| {
++                    last.offset != field.offset || last.bitfield_info.is_none()
++                })
++            {
++                writeln!(
++                    f,
++                    "{}/* {:#06x} */ {} : {}; /* BitPos={} */",
++                    &indentation,
++                    field.offset,
++                    field.type_left,
++                    field.alloc_bit_offset,
++                    bit_position(field, 0, field.alloc_bit_offset)
++                )?;
++            }
++
++            // Check if we need to add padding, following a bit-field member. Offsets are in allocation
++            // order (see `with_bitfield_allocation_order`); BitPos comments give the PDB's bit position.
++            if field.bitfield_info.is_some() {
+                 if let Some(last_field) = last_field {
+-                    if let Some((last_bit_offset, last_bit_size)) = last_field.bitfield_info {
+-                        let potential_padding_bit_offset = last_bit_offset + last_bit_size;
++                    if let Some((_, last_bit_size)) = last_field.bitfield_info {
++                        let potential_padding_bit_offset = last_field.alloc_bit_offset + last_bit_size;
+                         if field.offset == last_field.offset {
+                             // Padding within the same allocation unit
+-                            let bit_offset_delta = field_bit_offset - potential_padding_bit_offset;
++                            let bit_offset_delta = i16::from(field.alloc_bit_offset)
++                                - i16::from(potential_padding_bit_offset);
+                             // Add padding if needed
+                             if bit_offset_delta > 0 {
+                                 writeln!(
+@@ -855,7 +887,11 @@ fn fmt_struct_fields_recursive(
+                                     last_field.offset,
+                                     last_field.type_left,
+                                     bit_offset_delta,
+-                                    potential_padding_bit_offset
++                                    bit_position(
++                                        field,
++                                        potential_padding_bit_offset,
++                                        bit_offset_delta as u8
++                                    )
+                                 )?;
+                             }
+                         } else {
+@@ -868,7 +904,7 @@ fn fmt_struct_fields_recursive(
+                                 &indentation,
+                                 last_field.offset,
+                                 last_field.type_left,
+-                                potential_padding_bit_offset
++                                bit_position(last_field, potential_padding_bit_offset, 0)
+                             )?;
+                         }
+                     }
+@@ -906,6 +942,71 @@ fn fmt_struct_fields_recursive(
+     Ok(())
+ }
+ 
++/// Bit-fields in allocation order. A PDB records a bit-field's position from the least significant bit of its
++/// base type, and lists members in declaration order. Big-endian compilers (the Xbox 360's MSVC) allocate from the
++/// most significant bit, except where a type was declared with `#pragma bitfield_order(lsb_to_msb)`, so a run of
++/// bit-fields sharing one storage unit (same offset and size) whose positions decrease was allocated from the most
++/// significant bit. Grouping bit-fields into unnamed structs and filling gaps work in allocation order; BitPos
++/// comments keep the PDB's position. A single bit-field takes the order of the type's other runs. Little-endian
++/// PDBs (positions always increase) are unchanged.
++pub(crate) fn with_bitfield_allocation_order<'p>(fields: &[Field<'p>]) -> Vec<Field<'p>> {
++    let mut out = fields.to_vec();
++    let mut runs: Vec<Range<usize>> = vec![];
++    let mut type_lsb_first: Option<bool> = None;
++    let position = |f: &Field| f.bitfield_info.map(|b| b.0).unwrap_or(0);
++    let mut i = 0;
++    while i < out.len() {
++        if out[i].bitfield_info.is_none() {
++            i += 1;
++            continue;
++        }
++        let mut end = i + 1;
++        while end < out.len()
++            && out[end].bitfield_info.is_some()
++            && out[end].offset == out[i].offset
++            && out[end].bitfield_base_size == out[i].bitfield_base_size
++        {
++            end += 1;
++        }
++        if end - i > 1 && type_lsb_first.is_none() {
++            type_lsb_first = Some(position(&out[i + 1]) > position(&out[i]));
++        }
++        runs.push(i..end);
++        i = end;
++    }
++    for run in runs {
++        let lsb_first = if run.len() > 1 {
++            position(&out[run.start + 1]) > position(&out[run.start])
++        } else {
++            type_lsb_first.unwrap_or(true)
++        };
++        for k in run {
++            let (pos, bits) = out[k].bitfield_info.unwrap_or_default();
++            out[k].lsb_first = lsb_first;
++            out[k].alloc_bit_offset = if lsb_first {
++                pos
++            } else {
++                ((out[k].bitfield_base_size * 8) as u8)
++                    .saturating_sub(pos)
++                    .saturating_sub(bits)
++            };
++        }
++    }
++    out
++}
++
++/// The PDB bit position (from the least significant bit) of `bits` bits at `alloc_offset` in allocation order,
++/// in the run `field` belongs to.
++fn bit_position(field: &Field, alloc_offset: u8, bits: u8) -> u8 {
++    if field.lsb_first {
++        alloc_offset
++    } else {
++        ((field.bitfield_base_size * 8) as u8)
++            .saturating_sub(alloc_offset)
++            .saturating_sub(bits)
++    }
++}
++
+ fn find_unnamed_unions_in_struct(fields: &[Field]) -> Vec<Range<usize>> {
+     let mut unions_found: Vec<Range<usize>> = vec![];
+     // Temporary map of unions and fields that'll be used to compute the list
+@@ -950,7 +1051,7 @@ fn find_unnamed_unions_in_struct(fields: &[Field]) -> Vec<Range<usize>> {
+             }
+         } else {
+             match unions_found_temp
+-                .get_mut(&(field.offset, field.bitfield_info.unwrap_or_default().0))
++                .get_mut(&(field.offset, field.alloc_bit_offset))
+             {
+                 Some(union_info) => {
+                     // Second step of the "state machine", two fields share the
+@@ -980,7 +1081,7 @@ fn find_unnamed_unions_in_struct(fields: &[Field]) -> Vec<Range<usize>> {
+                     // First step of the "state machine".
+                     // Each field is a potential new union
+                     unions_found_temp.insert(
+-                        (field.offset, field.bitfield_info.unwrap_or_default().0),
++                        (field.offset, field.alloc_bit_offset),
+                         (Range { start: i, end: i }, field.size as u64),
+                     );
+                 }
+@@ -1063,13 +1164,13 @@ fn find_unnamed_structs_in_unions(fields: &[Field]) -> Vec<Range<usize>> {
+     let field_count = fields.len();
+     let union_offset = fields[0].offset;
+     let mut previous_field_offset = fields[0].offset;
+-    let mut previous_field_bit_offset = fields[0].bitfield_info.unwrap_or_default().0;
++    let mut previous_field_bit_offset = fields[0].alloc_bit_offset;
+     for (i, field) in fields.iter().enumerate() {
+         // The field offset is lower than the offset of the previous field
+         // -> "close" the struct
+         if previous_field_offset > field.offset
+             || (field.offset == previous_field_offset
+-                && previous_field_bit_offset > field.bitfield_info.unwrap_or_default().0)
++                && previous_field_bit_offset > field.alloc_bit_offset)
+         {
+             if let Some(last_found_struct_range) = structs_found.pop() {
+                 // "Merge" previous field with the struct
+@@ -1085,7 +1186,7 @@ fn find_unnamed_structs_in_unions(fields: &[Field]) -> Vec<Range<usize>> {
+                 // Declare a new struct only if its length is greater than 1.
+                 if i > last_found_struct_range.start
+                     && (field.offset != previous_field_offset
+-                        || field.bitfield_info.unwrap_or_default().0 != previous_field_bit_offset)
++                        || field.alloc_bit_offset != previous_field_bit_offset)
+                 {
+                     // "Merge" previous field with the struct
+                     structs_found.push(Range {
+@@ -1098,13 +1199,19 @@ fn find_unnamed_structs_in_unions(fields: &[Field]) -> Vec<Range<usize>> {
+             }
+         }
+ 
+-        // Regular field, may be the beginning of a struct
+-        if field.offset == union_offset && field.bitfield_info.unwrap_or_default().0 == 0 {
++        // Regular field, may be the beginning of a struct; so may the first bit-field of a run that doesn't
++        // start at its storage unit's first bit (the struct then begins with padding)
++        let starts_bitfield_run = field.bitfield_info.is_some()
++            && (i == 0
++                || fields[i - 1].offset != field.offset
++                || fields[i - 1].bitfield_info.is_none()
++                || fields[i - 1].alloc_bit_offset >= field.alloc_bit_offset);
++        if field.offset == union_offset && (field.alloc_bit_offset == 0 || starts_bitfield_run) {
+             structs_found.push(Range { start: i, end: i });
+         }
+ 
+         previous_field_offset = field.offset;
+-        previous_field_bit_offset = field.bitfield_info.unwrap_or_default().0;
++        previous_field_bit_offset = field.alloc_bit_offset;
+     }
+ 
+     structs_found
+diff --git a/resym_core/src/pdb_types/union.rs b/resym_core/src/pdb_types/union.rs
+index dd91d28..5c0c85a 100644
+--- a/resym_core/src/pdb_types/union.rs
++++ b/resym_core/src/pdb_types/union.rs
+@@ -6,7 +6,8 @@ use super::{
+     field::{FieldAccess, StaticField},
+     fmt_union_fields_recursive, is_unnamed_type,
+     primitive_types::PrimitiveReconstructionFlavor,
+-    resolve_complete_type_index, type_bitfield_info, type_name, type_size, DataFormatConfiguration,
++    resolve_complete_type_index, type_bitfield_info, type_name, type_size,
++    type_bitfield_base_size, with_bitfield_allocation_order, DataFormatConfiguration,
+     Field, Method, NeededTypeSet, ReconstructibleTypeData, TypeForwarder,
+ };
+ use crate::error::{Result, ResymCoreError};
+@@ -211,6 +212,9 @@ impl<'p> Union<'p> {
+                     offset: data.offset,
+                     size: type_size,
+                     bitfield_info: type_bitfield_info,
++                    alloc_bit_offset: type_bitfield_info.map(|b| b.0).unwrap_or(0),
++                    lsb_first: true,
++                    bitfield_base_size: type_bitfield_base_size(type_finder, complete_type_index)?,
+                     access,
+                 });
+             }
+@@ -348,7 +352,12 @@ impl ReconstructibleTypeData for Union<'_> {
+         }
+ 
+         // Dump fields while detecting unnamed structs and unions
+-        fmt_union_fields_recursive(fmt_configuration, &self.fields, 1, f)?;
++        fmt_union_fields_recursive(
++            fmt_configuration,
++            &with_bitfield_allocation_order(&self.fields),
++            1,
++            f,
++        )?;
+ 
+         // Static fields
+         for field in &self.static_fields {

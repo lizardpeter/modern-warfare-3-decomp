@@ -72,7 +72,7 @@ jobs:
         if: steps.has.outputs.pdb == 'yes'
         with:
           path: ~/.cargo/bin/resymc
-          key: resymc-5be09381-${{ runner.os }}-${{ hashFiles('tools/pdb/resym-depth-map.patch') }}
+          key: resymc-5be09381-${{ runner.os }}-${{ hashFiles('tools/pdb/resym-*.patch') }}
       - name: Install llvm-pdbutil and resymc
         if: steps.has.outputs.pdb == 'yes'
         run: |
@@ -86,6 +86,8 @@ jobs:
             # with tools/pdb/resym-depth-map.patch: upstream's type depth pass is exponential on large PDBs
             git clone -q https://github.com/ergrelet/resym /tmp/resym && git -C /tmp/resym checkout -q 5be09381
             git -C /tmp/resym apply "$GITHUB_WORKSPACE/tools/pdb/resym-depth-map.patch"
+            # and tools/pdb/resym-big-endian-bitfields.patch: Xbox 360 bit-fields (docs/xbox360.md)
+            git -C /tmp/resym apply "$GITHUB_WORKSPACE/tools/pdb/resym-big-endian-bitfields.patch"
             if ! CFLAGS="-std=gnu17" cargo +1.97.0 install --locked --path /tmp/resym/resymc > /tmp/resymc.log 2>&1; then
               tail -40 /tmp/resymc.log
               echo "::error::resymc build failed: $(grep -m3 -E '^error' /tmp/resymc.log | tr '\n' ' ' | cut -c1-900)"

@@ -5,6 +5,9 @@
 #    composite with bit-fields in iw5mp_xenon's PDB (and every type they use) exactly as the PDB lays it out, on
 #    the Xenon language (big-endian) and on x86 (little-endian, so the patches can't regress PC PDBs)
 #    (pdb_layouts.py, TestPdbLayouts.java)
+#  - pdb-applied: the PDB analyzer itself, end to end: iw5mp_xenon imported with only PDB Universal enabled, every
+#    named composite and enum it created compared with the PDB (pdb_layouts.py applied, DumpPdbTypes.java); known
+#    differences, each with its reason, are in pdb_known.tsv
 # Runs when the language or the Ghidra setup changes.
 name: xenon-language
 
@@ -94,3 +97,34 @@ jobs:
             echo "== $lang"
             python3 tools/ghidra/xenon/pdb_layouts.py check /tmp/cases.json "$out"
           done
+
+  pdb-applied:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with: { distribution: temurin, java-version: "21" }
+      - name: Install Ghidra, patched, with the Xenon language
+        env: { GH_TOKEN: "${{ github.token }}" }
+        run: |
+          gh release download "$GHIDRA_TAG" --repo NationalSecurityAgency/ghidra --pattern 'ghidra_*_PUBLIC_*.zip' --dir /tmp
+          unzip -q /tmp/ghidra_*.zip -d /opt && mv /opt/ghidra_* /opt/ghidra
+          tools/ghidra/patch_ghidra.sh /opt/ghidra "$GHIDRA_TAG"
+          python3 tools/ghidra/xenon/build_language.py /opt/ghidra
+          sed -i -E 's/^#?MAXMEM(_DEFAULT)?=.*/MAXMEM\1=13G/' /opt/ghidra/support/analyzeHeadless
+      - name: Apply iw5mp_xenon's PDB
+        run: |
+          python3 -m pip install -q --break-system-packages cryptography pefile
+          python3 tools/fetch_originals.py iw5mp_xenon /tmp/in
+          mkdir -p /tmp/proj /tmp/scripts && cp tools/ghidra/PrepPdb.java tools/ghidra/xenon/OnlyPdb.java tools/ghidra/xenon/DumpPdbTypes.java /tmp/scripts/
+          /opt/ghidra/support/analyzeHeadless /tmp/proj t -import /tmp/in/iw5mp_xenon.exe \
+            -processor PowerPC:BE:64:Xenon-32addr -scriptPath /tmp/scripts \
+            -preScript OnlyPdb.java -preScript PrepPdb.java /tmp/in/iw5mp_xenon.pdb \
+            -postScript DumpPdbTypes.java /tmp/applied.json -deleteProject -log /tmp/applied.log
+          grep -E "PDB Universal  |Exception" /tmp/applied.log || true
+      - name: Compare with the PDB
+        run: |
+          sudo apt-get install -y -q llvm >/dev/null
+          export PATH="$(ls -d /usr/lib/llvm-*/bin | sort -V | tail -1):$PATH"
+          python3 tools/ghidra/xenon/pdb_layouts.py applied /tmp/in/iw5mp_xenon.pdb /tmp/applied.json

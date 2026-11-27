@@ -9,9 +9,12 @@ Pass `-` for a file the build doesn't have (e.g. a server build with an EXE and 
 
 Needs llvm-pdbutil (apt install llvm) and resymc
 built from resym 5be09381 with tools/pdb/resym-depth-map.patch applied (upstream's type depth pass is exponential on
-large PDBs and never finishes on the T6 servers in black-ops-2-decomp):
+large PDBs and never finishes on the T6 servers in black-ops-2-decomp) and tools/pdb/resym-big-endian-bitfields.patch
+(upstream groups bit-fields assuming positions increase in declaration order; Xbox 360 MSVC allocates from the most
+significant bit, so it dropped members such as six of Weapon's seven; docs/xbox360.md):
     git clone https://github.com/ergrelet/resym && git -C resym checkout 5be09381
-    git -C resym apply tools/pdb/resym-depth-map.patch && cargo install --locked --path resym/resymc
+    git -C resym apply tools/pdb/resym-depth-map.patch tools/pdb/resym-big-endian-bitfields.patch
+    cargo install --locked --path resym/resymc
 
 Writes:
   analysis/<build>/pdb/sections.tsv    section index, name, virtual address, virtual size

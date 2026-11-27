@@ -1,0 +1,18 @@
+diff -ru a/Ghidra/Features/PDB/src/main/java/ghidra/app/util/pdb/pdbapplicator/EnumTypeApplier.java b/Ghidra/Features/PDB/src/main/java/ghidra/app/util/pdb/pdbapplicator/EnumTypeApplier.java
+--- a/Ghidra/Features/PDB/src/main/java/ghidra/app/util/pdb/pdbapplicator/EnumTypeApplier.java
++++ b/Ghidra/Features/PDB/src/main/java/ghidra/app/util/pdb/pdbapplicator/EnumTypeApplier.java
+@@ -96,7 +96,13 @@
+ 		AbstractEnumMsType definedEnum =
+ 			(AbstractEnumMsType) applicator.getMappedTypeRecord(type.getRecordNumber());
+ 
+-		// Note that we do not need to check on underlying data types, as there are none.
++		// The underlying type (a primitive) sets the enum's length and signedness: it must be
++		// available first. getDataType() returns null for a primitive no applier has produced yet,
++		// and the enum would silently become one byte (e.g. the Xbox 360's D3D::MEMORYREGION, an int
++		// enum used as a bit-field base at bit 28). Schedule it and retry, as other appliers do.
++		if (applicator.getDataTypeOrSchedule(definedEnum.getUnderlyingRecordNumber()) == null) {
++			return false;
++		}
+ 
+ 		EnumDataType enumDataType = createEmptyEnum(definedEnum);
+ 		applyEnumMsType(enumDataType, definedEnum);

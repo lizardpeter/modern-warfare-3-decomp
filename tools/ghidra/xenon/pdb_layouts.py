@@ -5,7 +5,12 @@
                                                                        they use, from the PDB's type records
     (analyzeHeadless ... -postScript TestPdbLayouts.java <cases.json> <ghidra.json>)
     python3 tools/ghidra/xenon/pdb_layouts.py check <cases.json> <ghidra.json>
+    python3 tools/ghidra/xenon/pdb_layouts.py applied <pdb> <dump.json>   after Ghidra's PDB analyzer applied the
+                                                                       PDB (DumpPdbTypes.java wrote dump.json):
+                                                                       every named composite and enum
 
+`applied` is the end-to-end check: what the analyzer itself created (sizes, members, bit-fields, enum lengths)
+against the PDB, for every named type defined once (types with several definitions and anonymous ones aside).
 `cases` reads the PDB with llvm-pdbutil. TestPdbLayouts.java rebuilds each composite in a program of the Xenon
 language with Ghidra's own reconstruction (DefaultCompositeMember.applyDataTypeMembers, the call
 CompositeTypeApplier makes) and writes the result. `check` compares every member with the PDB: the size of each
@@ -72,9 +77,11 @@ class Reader:
                                      if r["kind"] in ("LF_STRUCTURE", "LF_CLASS", "LF_UNION") and not self.forward(r))
         self.shared = {u for u, n in unique.items() if n > 1}
         self.defs = {}
+        self.first = {}  # shared unique name -> key of its first definition, for forward references
         for k, r in recs.items():
             if r["kind"] in ("LF_STRUCTURE", "LF_CLASS", "LF_UNION") and not self.forward(r):
                 self.defs.setdefault(self.key(r), k)
+                self.first.setdefault(self.unique(r), self.key(r))
 
     @staticmethod
     def unique(r):
@@ -83,7 +90,10 @@ class Reader:
 
     def key(self, r):
         u = self.unique(r)
-        return f"{u}#{self.ids[id(r)]}" if u in self.shared and not self.forward(r) else u
+        if u not in self.shared:
+            return u
+        # a forward reference to a shared name means the type of that name: its first definition
+        return self.first.get(u, u) if self.forward(r) else f"{u}#{self.ids[id(r)]}"
 
     @staticmethod
     def forward(r):
@@ -130,12 +140,22 @@ class Reader:
                 continue
             m = re.match(r"- LF_MEMBER \[name = `(.*?)`, Type = (0x[0-9A-F]+(?: \(.*?\))?), offset = (\d+)", l)
             if not m:
-                if l.startswith(("- LF_STMEMBER", "- LF_NESTTYPE", "- LF_ONEMETHOD", "- LF_METHOD")):
+                # static members, nested types and methods have no storage; base classes and vtable pointers are
+                # laid out apart from the data members (CppCompositeType.createMembersOnlyClassLayout applies only
+                # these, at their offsets in the class), so the case is the data members alone
+                if l.startswith(("- LF_STMEMBER", "- LF_NESTTYPE", "- LF_ONEMETHOD", "- LF_METHOD", "- LF_BCLASS",
+                                 "- LF_VFUNCTAB", "- LF_VBCLASS", "- LF_IVBCLASS")):
                     continue
-                raise KeyError(f"member record {l[:30]}")  # base classes, vtables: not a C layout case
+                raise KeyError(f"member record {l[:30]}")
             members.append({"name": m.group(1), "offset": int(m.group(3)), "type": self.type_of(m.group(2))})
         return {"name": name, "display": r["name"], "union": r["kind"] == "LF_UNION", "size": size,
                 "members": members}
+
+
+def addressable(name):
+    """Types Ghidra files under their plain name path: not anonymous, templates, function-local (f::__l2::T) or in
+    an anonymous namespace"""
+    return "<" not in name and "::__l" not in name and "anonymous-namespace" not in name
 
 
 def deps(t):
@@ -193,6 +213,36 @@ def leaves(layout, case):
     return out
 
 
+def compare(case, g, big_endian):
+    """Problems in Ghidra's layout `g` of PDB composite `case` (empty if it matches)."""
+    problems = []
+    if g["size"] != case["size"]:
+        problems.append(f"size {g['size']} != {case['size']}")
+    lv = leaves(g, case)
+    for m in case["members"]:
+        places = lv.get(m["name"], [])
+        t = m["type"]
+        if t["kind"] == "bitfield":
+            base = t["base"]["size"]
+            want = (m["offset"], t["pos"], t["bits"])
+
+            def as_pdb(p):  # Ghidra's minimal storage and shift -> PDB container and LSB position
+                # storage bytes [o, o+n) inside the base type that starts at the PDB member offset; the shift
+                # counts from the storage's least significant byte: its last byte on big-endian, first on little
+                o, n, shift = p["offset"], p["storage"], p["bitOffset"]
+                if big_endian:
+                    last = o + n - 1 - m["offset"]
+                    return (m["offset"], (base - 1 - last) * 8 + shift, p["bits"])
+                return (m["offset"], (o - m["offset"]) * 8 + shift, p["bits"])
+            if not any(p.get("bitfield") and as_pdb(p) == want for p in places):
+                problems.append(f"{m['name']}: want byte {want[0]} bit {want[1]}:{want[2]}, got " +
+                                ", ".join(f"byte {p['offset']} {p.get('storage')}B shift {p.get('bitOffset')}"
+                                          f" bits {p.get('bits')}" for p in places))
+        elif not any(p["offset"] == m["offset"] and not p.get("bitfield") for p in places):
+            problems.append(f"{m['name']}: want offset {m['offset']}, got {[p['offset'] for p in places]}")
+    return problems
+
+
 def check(cases_path, ghidra_path):
     cases_ = {c["name"]: c for c in json.load(open(cases_path))["composites"]}
     ghidra = json.load(open(ghidra_path))
@@ -205,33 +255,10 @@ def check(cases_path, ghidra_path):
             bad.append(f"{name}: {g and g.get('error') or 'missing'}")
             continue
         checked += 1
-        problems = []
-        if g["size"] != case["size"]:
-            problems.append(f"size {g['size']} != {case['size']}")
-        lv = leaves(g, case)
-        for m in case["members"]:
-            places = lv.get(m["name"], [])
-            t = m["type"]
-            if t["kind"] == "bitfield":
-                base = t["base"]["size"]
-                want = (m["offset"], t["pos"], t["bits"])
-
-                def as_pdb(p):  # Ghidra's minimal storage and shift -> PDB container and LSB position
-                    # storage bytes [o, o+n) inside the base type that starts at the PDB member offset; the shift
-                    # counts from the storage's least significant byte: its last byte on big-endian, first on little
-                    o, n, shift = p["offset"], p["storage"], p["bitOffset"]
-                    if big_endian:
-                        last = o + n - 1 - m["offset"]
-                        return (m["offset"], (base - 1 - last) * 8 + shift, p["bits"])
-                    return (m["offset"], (o - m["offset"]) * 8 + shift, p["bits"])
-                if not any(p.get("bitfield") and as_pdb(p) == want for p in places):
-                    problems.append(f"{m['name']}: want byte {want[0]} bit {want[1]}:{want[2]}, got " +
-                                    ", ".join(f"byte {p['offset']} {p.get('storage')}B shift {p.get('bitOffset')}"
-                                              f" bits {p.get('bits')}" for p in places))
-            elif not any(p["offset"] == m["offset"] and not p.get("bitfield") for p in places):
-                problems.append(f"{m['name']}: want offset {m['offset']}, got {[p['offset'] for p in places]}")
+        problems = compare(case, g, big_endian)
         if problems:
-            bad.append(f"{case.get('display', name)}: " + "; ".join(problems[:4]) + (f" (+{len(problems) - 4})" if len(problems) > 4 else ""))
+            bad.append(f"{case.get('display', name)}: " + "; ".join(problems[:4]) +
+                       (f" (+{len(problems) - 4})" if len(problems) > 4 else ""))
     print(f"{checked - sum(1 for b in bad if 'missing' not in b and 'error' not in b)} of {len(cases_)} composites "
           f"match the PDB")
     for b in bad[:60]:
@@ -239,8 +266,65 @@ def check(cases_path, ghidra_path):
     return 1 if bad else 0
 
 
+def applied(pdb, dump_path):
+    """Every named PDB composite and enum defined once, against the types the PDB analyzer created."""
+    rd = Reader(parse(pdb))
+    dump = json.load(open(dump_path))
+    big_endian = dump.get("bigEndian", True)
+    root = "/" + pdb.replace("\\", "/").split("/")[-1]
+    path = lambda display: root + "/" + display.replace("::", "/")
+    got = {g["path"]: g for g in dump["composites"]}
+    enums = {e["path"]: e["size"] for e in dump["enums"]}
+    names = collections.Counter(r["name"] for r in rd.recs.values()
+                                if r["kind"] in ("LF_STRUCTURE", "LF_CLASS", "LF_UNION", "LF_ENUM")
+                                and not rd.forward(r))
+    bad, checked, skipped = [], 0, 0
+    for key, k in rd.defs.items():
+        r = rd.recs[k]
+        if names[r["name"]] != 1 or not addressable(r["name"]):
+            skipped += 1  # several definitions of the name, or not addressable by name
+            continue
+        try:
+            case = rd.composite(key)
+        except KeyError:
+            skipped += 1
+            continue
+        g = got.get(path(r["name"]))
+        if g is None:
+            bad.append(f"{r['name']}: not created")
+            continue
+        checked += 1
+        problems = compare(case, g, big_endian)
+        if problems:
+            bad.append(f"{r['name']}: " + "; ".join(problems[:3]) + (f" (+{len(problems) - 3})" if len(problems) > 3
+                                                                      else ""))
+    enum_bad, enum_checked = [], 0
+    for k, r in rd.recs.items():
+        if r["kind"] != "LF_ENUM" or rd.forward(r) or names[r["name"]] != 1 or not addressable(r["name"]):
+            continue
+        under = rd.type_of(typeref(r, "underlying type"))
+        size = enums.get(path(r["name"]))
+        enum_checked += 1
+        if size != under["size"]:
+            enum_bad.append(f"enum {r['name']}: size {size}, PDB {under['size']} ({under['name']})")
+    known_path = __import__("pathlib").Path(__file__).with_name("pdb_known.tsv")
+    known = dict(l.split("\t", 1) for l in known_path.read_text().splitlines()[1:] if l)
+    unexplained = [b for b in enum_bad + bad if b.split(":")[0].removeprefix("enum ") not in known]
+    print(f"{checked - len(bad)} of {checked} composites match the PDB ({skipped} not checked by name); "
+          f"{enum_checked - len(enum_bad)} of {enum_checked} enums have the PDB's size")
+    for b in enum_bad + bad:
+        name = b.split(":")[0].removeprefix("enum ")
+        print(("  known: " if name in known else "  ") + b[:300])
+        if name in known:
+            print("         " + known[name].strip())
+    print(f"{len(unexplained)} unexplained difference(s)")
+    return 1 if unexplained else 0
+
+
 if __name__ == "__main__":
     if sys.argv[1] == "cases":
         cases(sys.argv[2], sys.argv[3])
+    elif sys.argv[1] == "applied":
+        sys.exit(applied(sys.argv[2], sys.argv[3]))
     else:
         sys.exit(check(sys.argv[2], sys.argv[3]))

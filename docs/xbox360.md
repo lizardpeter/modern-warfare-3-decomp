@@ -72,8 +72,8 @@ words, which no PowerPC defines (data in `.text`).
 
 ### Ghidra's PDB analyzer
 
-Ghidra's PDB Universal analyzer reads these PDBs without CodeView (the PDB is given to it explicitly). Two Ghidra
-bugs kept it from applying them; both are fixed by patches to the installed release
+Ghidra's PDB Universal analyzer reads these PDBs without CodeView (the PDB is given to it explicitly). Three Ghidra
+bugs kept it from applying them; all are fixed by patches to the installed release
 (`tools/ghidra/patches/`, applied by `tools/ghidra/patch_ghidra.sh` in CI), still present on Ghidra master as of
 2026-11-25.
 
@@ -108,18 +108,44 @@ order, or the target's default), gives padding fillers their run's order, and le
 can't place directly (bits 0-2 of a big-endian byte, say) inside a structure, as it already did for zero-length
 arrays.
 
-`tools/ghidra/xenon/pdb_layouts.py` tests it in a minute instead of a four-hour analysis: every composite with
-bit-fields in `iw5mp_xenon`'s PDB and every type they use (2,530; 32 C++ classes with bases or vtables aside) is
-rebuilt with Ghidra's own reconstruction (`TestPdbLayouts.java`) and compared with the PDB, member by member and
-bit by bit:
+**Enum sizes** (`pdb-enum-underlying-type.patch`). With the bit-fields fixed, the analyzer stopped two seconds in
+("Negative values not permitted when defining bitfield"): `D3D::MEMORYREGION`, an `int` enum used as a bit-field
+base at bit 28, had been created one byte long. `EnumTypeApplier` takes an enum's length from its underlying type
+with `getDataType()`, which returns null for a primitive no applier has produced yet, and then falls back to one
+byte; whether that happens depends on the order types are processed. Every enum processed early came out one byte
+long, which also mislays every structure holding one. The applier now asks with `getDataTypeOrSchedule()` and
+retries once the underlying type exists, as the other appliers do.
+
+With all three patches the PDB step applies the whole PDB in 15 minutes (on an 8 GB machine; the 3 h 40 m before was
+the analyzer fighting the broken bit-field layouts). End to end (`pdb_layouts.py applied`: iw5mp_xenon imported with
+only the PDB analyzer, everything it created compared with the PDB), 7,181 of the 7,183 named composites defined
+once and all 1,131 such enums match; the two differences, a libjpeg name defined twice and a compiler RTTI type, are
+in `tools/ghidra/xenon/pdb_known.tsv` with their reasons, and any other difference fails CI.
+
+`tools/ghidra/xenon/pdb_layouts.py` tests the reconstruction in a minute: every composite with bit-fields in
+`iw5mp_xenon`'s PDB and every type they use (2,651, C++ classes included: their data members, as
+`createMembersOnlyClassLayout` applies them) is rebuilt with Ghidra's own reconstruction (`TestPdbLayouts.java`)
+and compared with the PDB, member by member and bit by bit:
 
 | | stock Ghidra 12.1.4 | patched |
 |---|---|---|
-| big-endian (Xenon language) | 617 of 2,530 | 2,530 of 2,530 |
-| little-endian (x86) | 1,744 of 2,530 | 2,530 of 2,530 |
+| big-endian (Xenon language) | 617 of 2,530 | 2,651 of 2,651 |
+| little-endian (x86) | 1,744 of 2,530 | 2,651 of 2,651 |
 
-On little-endian no composite stock Ghidra rebuilt correctly is changed, so PC PDBs can't regress.
-`xenon-language.yml` runs the test on both.
+(The stock runs predate the C++ classes being in the case set.) On little-endian no composite stock Ghidra rebuilt
+correctly is changed, so PC PDBs can't regress. `xenon-language.yml` runs the test on both, and `pdb_layouts.py
+applied` checks what the analyzer itself created end to end (below).
+
+### Our own PDB extraction
+
+`pdb/types.h` (resymc, `tools/pdb/extract.py`) had the same blind spot: resym groups bit-fields into unnamed structs
+assuming positions increase in declaration order and each run starts at bit 0. It dropped six of `Weapon`'s seven
+fields and printed some types empty (`GPUFLOW_RETURN`). `tools/pdb/resym-big-endian-bitfields.patch` gives each run
+its allocation order the same way, starts an unnamed struct at a run that begins above bit 0, and adds that run's
+leading padding. Of the 346 named types with bit-fields, 323 had every member before; all 346 do now (one,
+`RefString`, has a second definition in the PDB without bit-fields, which `types.h` shows). `types.h` keeps the
+Xbox 360 declaration order: a run allocated from the most significant bit (`Weapon`) must be declared in reverse,
+ascending `BitPos`, for the x64 Store build, whose MSVC allocates from the least significant bit.
 
 `ApplySymbols.java` still runs first: it creates and names every function the PDB, MAP and `.pdata` know, from
 `analysis/<build>/pdb` and `map` (tools/pdb/extract.py, llvm-pdbutil and resymc), independently of Ghidra's PDB
