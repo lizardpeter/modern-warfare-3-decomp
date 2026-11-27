@@ -1,0 +1,294 @@
+# Xbox 360 (Xenon) extensions to PowerPC: VMX128 and the Cell/Xenon vector load/store additions.
+#
+# Included by ppc_xenon.slaspec, which tools/ghidra/xenon/build_language.py generates from the installed Ghidra's
+# own PowerPC files with every opcode-4 instruction Xenon doesn't have removed (POWER9 maddhd/maddld, SPE brinc,
+# AltiVec after ISA 2.03). With those gone, SLEIGH's most-specific-pattern rule picks the same instruction as
+# Xenon's decode order (docs/xbox360.md, tests in tools/ghidra/xenon/TestXenon.java).
+#
+# Encodings and semantics: Xenia (https://github.com/xenia-project/xenia, BSD-3-Clause), ppc_decode_data.h,
+# ppc_opcode_lookup_gen.cc, ppc_emit_altivec.cc. Bit positions here are LSB-0, as in Ghidra's PowerPC files.
+#
+# VMX128 has 128 vector registers. v0..v31 are AltiVec's (Ghidra's vs32..vs63, reached through the vrD/vrA/vrB
+# subtables); v32..v127 are added here. Register numbers are split across the word: VD128 = VD128l | VD128h << 5,
+# VA128 = VA128l | VA128h << 5 | VA128H << 6, VB128 = VB128l | VB128h << 5.
+#
+# As in Ghidra's altivec.sinc, arithmetic is modelled with named p-code operations (reusing altivec.sinc's where the operation is the same); moves, logic, loads and stores
+# are real p-code so data flow and memory references survive into the decompiler.
+
+define register offset=0x4400 size=16 [
+	v32  v33  v34  v35  v36  v37  v38  v39  v40  v41  v42  v43  v44  v45  v46  v47
+	v48  v49  v50  v51  v52  v53  v54  v55  v56  v57  v58  v59  v60  v61  v62  v63
+	v64  v65  v66  v67  v68  v69  v70  v71  v72  v73  v74  v75  v76  v77  v78  v79
+	v80  v81  v82  v83  v84  v85  v86  v87  v88  v89  v90  v91  v92  v93  v94  v95
+	v96  v97  v98  v99  v100 v101 v102 v103 v104 v105 v106 v107 v108 v109 v110 v111
+	v112 v113 v114 v115 v116 v117 v118 v119 v120 v121 v122 v123 v124 v125 v126 v127
+];
+
+define token xenon_instr(32)
+	x_op=(26,31)
+	x_b0_1=(0,1)
+	x_b0_3=(0,3)
+	x_b4=(4,4)
+	x_b4_5=(4,5)
+	x_b4_10=(4,10)
+	x_b5=(5,5)
+	x_b6=(6,6)
+	x_b6_7=(6,7)
+	x_b6_8=(6,8)
+	x_b6_9=(6,9)
+	x_b7_9=(7,9)
+	x_b8_10=(8,10)
+	x_b9=(9,9)
+	x_b9_10=(9,10)
+	x_b10=(10,10)
+	x_b21_25=(21,25)
+	vd128h=(2,3)
+	vd128l_1=(21,25)
+	vd128l_2=(21,25)
+	vd128l_3=(21,25)
+	va128h=(5,5)
+	va128H=(10,10)
+	va128l_1=(16,20)
+	va128l_2=(16,20)
+	va128l_3=(16,20)
+	vb128h=(0,1)
+	vb128l_1=(11,15)
+	vb128l_2=(11,15)
+	vb128l_3=(11,15)
+	vc128=(6,8)
+	x_uimm5=(16,20)
+	x_simm5=(16,20) signed
+	x_sh4=(6,9)
+	x_z=(6,7)
+	x_permh=(6,8)
+	x_perml=(16,20)
+	x_rc6=(6,6)
+;
+
+attach variables [ vd128l_1 va128l_1 vb128l_1 ] [
+	v32  v33  v34  v35  v36  v37  v38  v39  v40  v41  v42  v43  v44  v45  v46  v47
+	v48  v49  v50  v51  v52  v53  v54  v55  v56  v57  v58  v59  v60  v61  v62  v63 ];
+attach variables [ vd128l_2 va128l_2 vb128l_2 ] [
+	v64  v65  v66  v67  v68  v69  v70  v71  v72  v73  v74  v75  v76  v77  v78  v79
+	v80  v81  v82  v83  v84  v85  v86  v87  v88  v89  v90  v91  v92  v93  v94  v95 ];
+attach variables [ vd128l_3 va128l_3 vb128l_3 ] [
+	v96  v97  v98  v99  v100 v101 v102 v103 v104 v105 v106 v107 v108 v109 v110 v111
+	v112 v113 v114 v115 v116 v117 v118 v119 v120 v121 v122 v123 v124 v125 v126 v127 ];
+
+# 7-bit register operands
+vD128: vrD      is vd128h=0 & vrD      { export vrD; }
+vD128: vd128l_1 is vd128h=1 & vd128l_1 { export vd128l_1; }
+vD128: vd128l_2 is vd128h=2 & vd128l_2 { export vd128l_2; }
+vD128: vd128l_3 is vd128h=3 & vd128l_3 { export vd128l_3; }
+
+vA128: vrA      is va128H=0 & va128h=0 & vrA      { export vrA; }
+vA128: va128l_1 is va128H=0 & va128h=1 & va128l_1 { export va128l_1; }
+vA128: va128l_2 is va128H=1 & va128h=0 & va128l_2 { export va128l_2; }
+vA128: va128l_3 is va128H=1 & va128h=1 & va128l_3 { export va128l_3; }
+
+vB128: vrB      is vb128h=0 & vrB      { export vrB; }
+vB128: vb128l_1 is vb128h=1 & vb128l_1 { export vb128l_1; }
+vB128: vb128l_2 is vb128h=2 & vb128l_2 { export vb128l_2; }
+vB128: vb128l_3 is vb128h=3 & vb128l_3 { export vb128l_3; }
+
+# vperm128's control register is 3 bits: v0..v7
+vC128: "v"^vc128 is vc128 & vc128=0 { export vs32; }
+vC128: "v"^vc128 is vc128 & vc128=1 { export vs33; }
+vC128: "v"^vc128 is vc128 & vc128=2 { export vs34; }
+vC128: "v"^vc128 is vc128 & vc128=3 { export vs35; }
+vC128: "v"^vc128 is vc128 & vc128=4 { export vs36; }
+vC128: "v"^vc128 is vc128 & vc128=5 { export vs37; }
+vC128: "v"^vc128 is vc128 & vc128=6 { export vs38; }
+vC128: "v"^vc128 is vc128 & vc128=7 { export vs39; }
+
+# effective addresses
+xIndexedEA: RA_OR_ZERO,B is RA_OR_ZERO & B { tmp:$(REGISTER_SIZE) = RA_OR_ZERO + B; export tmp; }
+
+define pcodeop loadVectorLeftIndexed;
+define pcodeop loadVectorRightIndexed;
+define pcodeop storeVectorLeftIndexed;
+define pcodeop storeVectorRightIndexed;
+define pcodeop dataCacheBlockClearToZero128;
+define pcodeop vectorMultiplySum3FloatingPoint;
+define pcodeop vectorMultiplySum4FloatingPoint;
+define pcodeop vectorPermuteWordImmediate;
+define pcodeop vectorPackD3Dtype;
+define pcodeop vectorUnpackD3Dtype;
+define pcodeop vectorRotateLeftImmediateAndMaskInsert;
+define pcodeop vectorMultiplyFloatingPoint;
+define pcodeop vectorRoundToFloatingPointIntegerTowardPlusInfinity;
+define pcodeop vectorMultiplyAddFloatingPoint128;
+define pcodeop vectorNegativeMultiplySubtractFloatingPoint128;
+define pcodeop vectorAddFloatingPoint128;
+define pcodeop vectorSubtractFloatingPoint128;
+define pcodeop vectorMaximumFloatingPoint128;
+define pcodeop vectorMinimumFloatingPoint128;
+define pcodeop vectorMergeHighWord128;
+define pcodeop vectorMergeLowWord128;
+define pcodeop vectorPermute128;
+define pcodeop vectorRotateLeftWord128;
+define pcodeop vectorShiftLeftWord128;
+define pcodeop vectorShiftRightAlgebraicWord128;
+define pcodeop vectorShiftRightWord128;
+define pcodeop vectorCompareEqualFloatingPoint128;
+define pcodeop vectorCompareGreaterOrEqualFloatingPoint128;
+define pcodeop vectorCompareGreaterThanFloatingPoint128;
+define pcodeop vectorCompareBoundsFloatingPoint128;
+define pcodeop vectorCompareEqualUnsignedWord128;
+define pcodeop vectorConvertToSignedFixedPointWordSaturate128;
+define pcodeop vectorConvertToUnsignedFixedPointWordSaturate128;
+define pcodeop vectorConvertFromSignedFixedPointWord128;
+define pcodeop vectorConvertFromUnsignedFixedPointWord128;
+define pcodeop vectorReciprocalEstimateFloatingPoint128;
+define pcodeop vectorReciprocalSquareRootEstimateFloatingPoint128;
+define pcodeop vector2RaisedToTheExponentEstimateFloatingPoint128;
+define pcodeop vectorLog2EstimateFloatingPoint128;
+
+# ---------------------------------------------------------------------------------------------------------------
+# Cell/Xenon additions to opcode 31 (X-form): load/store vector left/right, and dcbz128
+# ---------------------------------------------------------------------------------------------------------------
+
+:lvlx vrD,xIndexedEA   is OP=31 & vrD & xIndexedEA & XOP_1_10=519 & Rc=0 { vrD = loadVectorLeftIndexed(xIndexedEA); }
+:lvlxl vrD,xIndexedEA  is OP=31 & vrD & xIndexedEA & XOP_1_10=775 & Rc=0 { vrD = loadVectorLeftIndexed(xIndexedEA); }
+:lvrx vrD,xIndexedEA   is OP=31 & vrD & xIndexedEA & XOP_1_10=551 & Rc=0 { vrD = loadVectorRightIndexed(xIndexedEA); }
+:lvrxl vrD,xIndexedEA  is OP=31 & vrD & xIndexedEA & XOP_1_10=807 & Rc=0 { vrD = loadVectorRightIndexed(xIndexedEA); }
+:stvlx vrS,xIndexedEA  is OP=31 & vrS & xIndexedEA & XOP_1_10=647 & Rc=0 { storeVectorLeftIndexed(vrS, xIndexedEA); }
+:stvlxl vrS,xIndexedEA is OP=31 & vrS & xIndexedEA & XOP_1_10=903 & Rc=0 { storeVectorLeftIndexed(vrS, xIndexedEA); }
+:stvrx vrS,xIndexedEA  is OP=31 & vrS & xIndexedEA & XOP_1_10=679 & Rc=0 { storeVectorRightIndexed(vrS, xIndexedEA); }
+:stvrxl vrS,xIndexedEA is OP=31 & vrS & xIndexedEA & XOP_1_10=935 & Rc=0 { storeVectorRightIndexed(vrS, xIndexedEA); }
+
+# dcbz with bit 21 set clears a 128-byte block
+:dcbz128 xIndexedEA is OP=31 & x_b21_25=1 & xIndexedEA & XOP_1_10=1014 & Rc=0 {
+	dataCacheBlockClearToZero128(xIndexedEA);
+}
+
+# ---------------------------------------------------------------------------------------------------------------
+# Opcode 4, VX128_1: loads and stores (bits 0-1 = 3, bits 4-10 select)
+# ---------------------------------------------------------------------------------------------------------------
+
+:lvsl128 vD128,xIndexedEA   is OP=4 & x_b0_1=3 & x_b4_10=0x00 & vD128 & xIndexedEA { vD128 = loadVectorForShiftLeft(xIndexedEA); }
+:lvsr128 vD128,xIndexedEA   is OP=4 & x_b0_1=3 & x_b4_10=0x04 & vD128 & xIndexedEA { vD128 = loadVectorForShiftRight(xIndexedEA); }
+:lvewx128 vD128,xIndexedEA  is OP=4 & x_b0_1=3 & x_b4_10=0x08 & vD128 & xIndexedEA { vD128 = loadVectorElementWordIndexed(xIndexedEA); }
+:lvx128 vD128,xIndexedEA    is OP=4 & x_b0_1=3 & x_b4_10=0x0C & vD128 & xIndexedEA {
+	ea:$(REGISTER_SIZE) = xIndexedEA & 0xfffffffffffffff0;
+	vD128 = *[ram]:16 ea;
+}
+:stvewx128 vD128,xIndexedEA is OP=4 & x_b0_1=3 & x_b4_10=0x18 & vD128 & xIndexedEA { storeVectorElementWordIndexed(vD128, xIndexedEA); }
+:stvx128 vD128,xIndexedEA   is OP=4 & x_b0_1=3 & x_b4_10=0x1C & vD128 & xIndexedEA {
+	ea:$(REGISTER_SIZE) = xIndexedEA & 0xfffffffffffffff0;
+	*[ram]:16 ea = vD128;
+}
+:lvxl128 vD128,xIndexedEA   is OP=4 & x_b0_1=3 & x_b4_10=0x2C & vD128 & xIndexedEA {
+	ea:$(REGISTER_SIZE) = xIndexedEA & 0xfffffffffffffff0;
+	vD128 = *[ram]:16 ea;
+}
+:stvxl128 vD128,xIndexedEA  is OP=4 & x_b0_1=3 & x_b4_10=0x3C & vD128 & xIndexedEA {
+	ea:$(REGISTER_SIZE) = xIndexedEA & 0xfffffffffffffff0;
+	*[ram]:16 ea = vD128;
+}
+:lvlx128 vD128,xIndexedEA   is OP=4 & x_b0_1=3 & x_b4_10=0x40 & vD128 & xIndexedEA { vD128 = loadVectorLeftIndexed(xIndexedEA); }
+:lvrx128 vD128,xIndexedEA   is OP=4 & x_b0_1=3 & x_b4_10=0x44 & vD128 & xIndexedEA { vD128 = loadVectorRightIndexed(xIndexedEA); }
+:stvlx128 vD128,xIndexedEA  is OP=4 & x_b0_1=3 & x_b4_10=0x50 & vD128 & xIndexedEA { storeVectorLeftIndexed(vD128, xIndexedEA); }
+:stvrx128 vD128,xIndexedEA  is OP=4 & x_b0_1=3 & x_b4_10=0x54 & vD128 & xIndexedEA { storeVectorRightIndexed(vD128, xIndexedEA); }
+:lvlxl128 vD128,xIndexedEA  is OP=4 & x_b0_1=3 & x_b4_10=0x60 & vD128 & xIndexedEA { vD128 = loadVectorLeftIndexed(xIndexedEA); }
+:lvrxl128 vD128,xIndexedEA  is OP=4 & x_b0_1=3 & x_b4_10=0x64 & vD128 & xIndexedEA { vD128 = loadVectorRightIndexed(xIndexedEA); }
+:stvlxl128 vD128,xIndexedEA is OP=4 & x_b0_1=3 & x_b4_10=0x70 & vD128 & xIndexedEA { storeVectorLeftIndexed(vD128, xIndexedEA); }
+:stvrxl128 vD128,xIndexedEA is OP=4 & x_b0_1=3 & x_b4_10=0x74 & vD128 & xIndexedEA { storeVectorRightIndexed(vD128, xIndexedEA); }
+
+# Opcode 4, VX128_5: the fallback when nothing else on opcode 4 matches (bit 4 set)
+:vsldoi128 vD128,vA128,vB128,x_sh4 is OP=4 & x_b4=1 & vD128 & vA128 & vB128 & x_sh4 {
+	vD128 = vectorShiftLeftDoubleByOctetImmediate(vA128, vB128, x_sh4:1);
+}
+
+# ---------------------------------------------------------------------------------------------------------------
+# Opcode 5: VX128 (bits 6-9 and 4 select) and vperm128 (bit 9 = 0, bit 4 = 0, 3-bit vC)
+# ---------------------------------------------------------------------------------------------------------------
+
+:vperm128 vD128,vA128,vB128,vC128 is OP=5 & x_b9=0 & x_b4=0 & vD128 & vA128 & vB128 & vC128 {
+	vD128 = vectorPermute128(vA128, vB128, vC128);
+}
+
+:vaddfp128 vD128,vA128,vB128    is OP=5 & x_b6_9=0x0 & x_b4=1 & vD128 & vA128 & vB128 { vD128 = vectorAddFloatingPoint128(vA128, vB128); }
+:vsubfp128 vD128,vA128,vB128    is OP=5 & x_b6_9=0x1 & x_b4=1 & vD128 & vA128 & vB128 { vD128 = vectorSubtractFloatingPoint128(vA128, vB128); }
+:vmulfp128 vD128,vA128,vB128    is OP=5 & x_b6_9=0x2 & x_b4=1 & vD128 & vA128 & vB128 { vD128 = vectorMultiplyFloatingPoint(vA128, vB128); }
+# (VD) <- (VA) * (VB) + (VD)
+:vmaddfp128 vD128,vA128,vB128   is OP=5 & x_b6_9=0x3 & x_b4=1 & vD128 & vA128 & vB128 { vD128 = vectorMultiplyAddFloatingPoint128(vA128, vB128, vD128); }
+# (VD) <- (VA) * (VD) + (VB)
+:vmaddcfp128 vD128,vA128,vB128  is OP=5 & x_b6_9=0x4 & x_b4=1 & vD128 & vA128 & vB128 { vD128 = vectorMultiplyAddFloatingPoint128(vA128, vD128, vB128); }
+# (VD) <- -((VA) * (VB) - (VD))
+:vnmsubfp128 vD128,vA128,vB128  is OP=5 & x_b6_9=0x5 & x_b4=1 & vD128 & vA128 & vB128 { vD128 = vectorNegativeMultiplySubtractFloatingPoint128(vA128, vB128, vD128); }
+:vmsum3fp128 vD128,vA128,vB128  is OP=5 & x_b6_9=0x6 & x_b4=1 & vD128 & vA128 & vB128 { vD128 = vectorMultiplySum3FloatingPoint(vA128, vB128); }
+:vmsum4fp128 vD128,vA128,vB128  is OP=5 & x_b6_9=0x7 & x_b4=1 & vD128 & vA128 & vB128 { vD128 = vectorMultiplySum4FloatingPoint(vA128, vB128); }
+:vpkshss128 vD128,vA128,vB128   is OP=5 & x_b6_9=0x8 & x_b4=0 & vD128 & vA128 & vB128 { vD128 = vectorPackSignedHalfWordSignedSaturate(vA128, vB128); }
+:vand128 vD128,vA128,vB128      is OP=5 & x_b6_9=0x8 & x_b4=1 & vD128 & vA128 & vB128 { vD128 = vA128 & vB128; }
+:vpkshus128 vD128,vA128,vB128   is OP=5 & x_b6_9=0x9 & x_b4=0 & vD128 & vA128 & vB128 { vD128 = vectorPackSignedHalfWordUnsignedSaturate(vA128, vB128); }
+:vandc128 vD128,vA128,vB128     is OP=5 & x_b6_9=0x9 & x_b4=1 & vD128 & vA128 & vB128 { vD128 = vA128 & ~vB128; }
+:vpkswss128 vD128,vA128,vB128   is OP=5 & x_b6_9=0xA & x_b4=0 & vD128 & vA128 & vB128 { vD128 = vectorPackSignedWordSignedSaturate(vA128, vB128); }
+:vnor128 vD128,vA128,vB128      is OP=5 & x_b6_9=0xA & x_b4=1 & vD128 & vA128 & vB128 { vD128 = ~(vA128 | vB128); }
+:vpkswus128 vD128,vA128,vB128   is OP=5 & x_b6_9=0xB & x_b4=0 & vD128 & vA128 & vB128 { vD128 = vectorPackSignedWordUnsignedSaturate(vA128, vB128); }
+:vor128 vD128,vA128,vB128       is OP=5 & x_b6_9=0xB & x_b4=1 & vD128 & vA128 & vB128 { vD128 = vA128 | vB128; }
+:vpkuhum128 vD128,vA128,vB128   is OP=5 & x_b6_9=0xC & x_b4=0 & vD128 & vA128 & vB128 { vD128 = vectorPackUnsignedHalfWordUnsignedModulo(vA128, vB128); }
+:vxor128 vD128,vA128,vB128      is OP=5 & x_b6_9=0xC & x_b4=1 & vD128 & vA128 & vB128 { vD128 = vA128 ^ vB128; }
+:vpkuhus128 vD128,vA128,vB128   is OP=5 & x_b6_9=0xD & x_b4=0 & vD128 & vA128 & vB128 { vD128 = vectorPackUnsignedHalfWordUnsignedSaturate(vA128, vB128); }
+# (VD) <- ((VA) & ~(VD)) | ((VB) & (VD))
+:vsel128 vD128,vA128,vB128      is OP=5 & x_b6_9=0xD & x_b4=1 & vD128 & vA128 & vB128 { vD128 = (vA128 & ~vD128) | (vB128 & vD128); }
+:vpkuwum128 vD128,vA128,vB128   is OP=5 & x_b6_9=0xE & x_b4=0 & vD128 & vA128 & vB128 { vD128 = vectorPackUnsignedWordUnsignedModulo(vA128, vB128); }
+:vslo128 vD128,vA128,vB128      is OP=5 & x_b6_9=0xE & x_b4=1 & vD128 & vA128 & vB128 { vD128 = vectorShiftLeftByOctet(vA128, vB128); }
+:vpkuwus128 vD128,vA128,vB128   is OP=5 & x_b6_9=0xF & x_b4=0 & vD128 & vA128 & vB128 { vD128 = vectorPackUnsignedWordUnsignedSaturate(vA128, vB128); }
+:vsro128 vD128,vA128,vB128      is OP=5 & x_b6_9=0xF & x_b4=1 & vD128 & vA128 & vB128 { vD128 = vectorShiftRightByOctet(vA128, vB128); }
+
+# ---------------------------------------------------------------------------------------------------------------
+# Opcode 6
+# ---------------------------------------------------------------------------------------------------------------
+
+# VX128_P: bits 10-9 = 01, bits 5-4 = 01; 8-bit permute = PERMl | PERMh << 5
+xPerm: imm is x_permh & x_perml [ imm = x_perml | (x_permh << 5); ] { export *[const]:1 imm; }
+:vpermwi128 vD128,vB128,xPerm is OP=6 & x_b9_10=1 & x_b4_5=1 & vD128 & vB128 & xPerm {
+	vD128 = vectorPermuteWordImmediate(vB128, xPerm);
+}
+
+# VX128_4: bits 10-8 = 110 / 111, bits 5-4 = 01
+:vpkd3d128 vD128,vB128,x_uimm5,x_z is OP=6 & x_b8_10=6 & x_b4_5=1 & vD128 & vB128 & x_uimm5 & x_z {
+	vD128 = vectorPackD3Dtype(vD128, vB128, x_uimm5:1, x_z:1);
+}
+:vrlimi128 vD128,vB128,x_uimm5,x_z is OP=6 & x_b8_10=7 & x_b4_5=1 & vD128 & vB128 & x_uimm5 & x_z {
+	vD128 = vectorRotateLeftImmediateAndMaskInsert(vD128, vB128, x_uimm5:1, x_z:1);
+}
+
+# VX128_3: bits 10-4 select
+:vcfpsxws128 vD128,vB128,x_simm5 is OP=6 & x_b4_10=0x23 & vD128 & vB128 & x_simm5 { vD128 = vectorConvertToSignedFixedPointWordSaturate128(vB128, x_simm5:1); }
+:vcfpuxws128 vD128,vB128,x_uimm5 is OP=6 & x_b4_10=0x27 & vD128 & vB128 & x_uimm5 { vD128 = vectorConvertToUnsignedFixedPointWordSaturate128(vB128, x_uimm5:1); }
+:vcsxwfp128 vD128,vB128,x_simm5  is OP=6 & x_b4_10=0x2B & vD128 & vB128 & x_simm5 { vD128 = vectorConvertFromSignedFixedPointWord128(vB128, x_simm5:1); }
+:vcuxwfp128 vD128,vB128,x_uimm5  is OP=6 & x_b4_10=0x2F & vD128 & vB128 & x_uimm5 { vD128 = vectorConvertFromUnsignedFixedPointWord128(vB128, x_uimm5:1); }
+:vrfim128 vD128,vB128      is OP=6 & x_b4_10=0x33 & vD128 & vB128 { vD128 = vectorRoundToFloatingPointIntegerTowardMinusInfinity(vB128); }
+:vrfin128 vD128,vB128      is OP=6 & x_b4_10=0x37 & vD128 & vB128 { vD128 = vectorRoundToFloatingPointIntegerNearest(vB128); }
+:vrfip128 vD128,vB128      is OP=6 & x_b4_10=0x3B & vD128 & vB128 { vD128 = vectorRoundToFloatingPointIntegerTowardPlusInfinity(vB128); }
+:vrfiz128 vD128,vB128      is OP=6 & x_b4_10=0x3F & vD128 & vB128 { vD128 = vectorRoundToFloatingPointIntegerTowardZero(vB128); }
+:vrefp128 vD128,vB128      is OP=6 & x_b4_10=0x63 & vD128 & vB128 { vD128 = vectorReciprocalEstimateFloatingPoint128(vB128); }
+:vrsqrtefp128 vD128,vB128  is OP=6 & x_b4_10=0x67 & vD128 & vB128 { vD128 = vectorReciprocalSquareRootEstimateFloatingPoint128(vB128); }
+:vexptefp128 vD128,vB128   is OP=6 & x_b4_10=0x6B & vD128 & vB128 { vD128 = vector2RaisedToTheExponentEstimateFloatingPoint128(vB128); }
+:vlogefp128 vD128,vB128    is OP=6 & x_b4_10=0x6F & vD128 & vB128 { vD128 = vectorLog2EstimateFloatingPoint128(vB128); }
+:vspltw128 vD128,vB128,x_uimm5   is OP=6 & x_b4_10=0x73 & vD128 & vB128 & x_uimm5 { vD128 = vectorSplatWord(vB128, x_uimm5:1); }
+:vspltisw128 vD128,x_simm5       is OP=6 & x_b4_10=0x77 & vD128 & x_simm5 { vD128 = vectorSplatImmediateSignedWord(x_simm5:1); }
+:vupkd3d128 vD128,vB128,x_uimm5  is OP=6 & x_b4_10=0x7F & vD128 & vB128 & x_uimm5 { vD128 = vectorUnpackD3Dtype(vB128, x_uimm5:1); }
+
+# VX128_R: compares; bits 9-7 and 4 select, Rc in bit 6 sets cr6
+xRc128: ""   is x_rc6=0 { }
+xRc128: "."  is x_rc6=1 { }
+:vcmpeqfp128^xRc128 vD128,vA128,vB128  is OP=6 & x_b7_9=0 & x_b4=0 & xRc128 & vD128 & vA128 & vB128 { vD128 = vectorCompareEqualFloatingPoint128(vA128, vB128); }
+:vcmpgefp128^xRc128 vD128,vA128,vB128  is OP=6 & x_b7_9=1 & x_b4=0 & xRc128 & vD128 & vA128 & vB128 { vD128 = vectorCompareGreaterOrEqualFloatingPoint128(vA128, vB128); }
+:vcmpgtfp128^xRc128 vD128,vA128,vB128  is OP=6 & x_b7_9=2 & x_b4=0 & xRc128 & vD128 & vA128 & vB128 { vD128 = vectorCompareGreaterThanFloatingPoint128(vA128, vB128); }
+:vcmpbfp128^xRc128 vD128,vA128,vB128   is OP=6 & x_b7_9=3 & x_b4=0 & xRc128 & vD128 & vA128 & vB128 { vD128 = vectorCompareBoundsFloatingPoint128(vA128, vB128); }
+:vcmpequw128^xRc128 vD128,vA128,vB128  is OP=6 & x_b7_9=4 & x_b4=0 & xRc128 & vD128 & vA128 & vB128 { vD128 = vectorCompareEqualUnsignedWord128(vA128, vB128); }
+
+# VX128: bits 9-6 and 4 select
+:vrlw128 vD128,vA128,vB128    is OP=6 & x_b6_9=0x1 & x_b4=1 & vD128 & vA128 & vB128 { vD128 = vectorRotateLeftWord128(vA128, vB128); }
+:vslw128 vD128,vA128,vB128    is OP=6 & x_b6_9=0x3 & x_b4=1 & vD128 & vA128 & vB128 { vD128 = vectorShiftLeftWord128(vA128, vB128); }
+:vsraw128 vD128,vA128,vB128   is OP=6 & x_b6_9=0x5 & x_b4=1 & vD128 & vA128 & vB128 { vD128 = vectorShiftRightAlgebraicWord128(vA128, vB128); }
+:vsrw128 vD128,vA128,vB128    is OP=6 & x_b6_9=0x7 & x_b4=1 & vD128 & vA128 & vB128 { vD128 = vectorShiftRightWord128(vA128, vB128); }
+:vmaxfp128 vD128,vA128,vB128  is OP=6 & x_b6_9=0xA & x_b4=0 & vD128 & vA128 & vB128 { vD128 = vectorMaximumFloatingPoint128(vA128, vB128); }
+:vminfp128 vD128,vA128,vB128  is OP=6 & x_b6_9=0xB & x_b4=0 & vD128 & vA128 & vB128 { vD128 = vectorMinimumFloatingPoint128(vA128, vB128); }
+:vmrghw128 vD128,vA128,vB128  is OP=6 & x_b6_9=0xC & x_b4=0 & vD128 & vA128 & vB128 { vD128 = vectorMergeHighWord128(vA128, vB128); }
+:vmrglw128 vD128,vA128,vB128  is OP=6 & x_b6_9=0xD & x_b4=0 & vD128 & vA128 & vB128 { vD128 = vectorMergeLowWord128(vA128, vB128); }
+:vupkhsb128 vD128,vB128       is OP=6 & x_b6_9=0xE & x_b4=0 & vD128 & vB128 { vD128 = vectorUnpackHighSignedByte(vB128); }
+:vupklsb128 vD128,vB128       is OP=6 & x_b6_9=0xF & x_b4=0 & vD128 & vB128 { vD128 = vectorUnpackLowSignedByte(vB128); }

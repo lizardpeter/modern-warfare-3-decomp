@@ -15,6 +15,9 @@ on:
     paths:
       - target.toml
       - tools/ghidra/**
+      # the Xenon language has its own test workflow (xenon-language.yml); adopting a change re-runs analysis
+      # through target.toml
+      - '!tools/ghidra/xenon/**'
       - tools/pdb/**
       - tools/fetch_originals.py
       - tools/unpack/**

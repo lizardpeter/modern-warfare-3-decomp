@@ -1,0 +1,57 @@
+# The Xbox 360 (Xenon) Ghidra language: build it into the pinned Ghidra release (tools/ghidra/xenon/build_language.py)
+# and check every Xenon vector instruction in Xenia's table decodes as Xenia decodes it, registers included
+# (tools/ghidra/xenon/test_words.py, TestXenon.java). Runs when the language or the Ghidra setup changes.
+name: xenon-language
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - tools/ghidra/xenon/**
+      - tools/ghidra/patches/**
+      - tools/ghidra/patch_ghidra.sh
+      - .github/workflows/xenon-language.yml
+
+env:
+  GHIDRA_TAG: Ghidra_12.1.4_build
+  # Xenia's PowerPC instruction table (BSD-3-Clause), pinned
+  XENIA_COMMIT: 95a5c3ee250f80c3b9d139658649d9ffb6db3eec
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with: { distribution: temurin, java-version: "21" }
+      - name: Install Ghidra
+        env: { GH_TOKEN: "${{ github.token }}" }
+        run: |
+          gh release download "$GHIDRA_TAG" --repo NationalSecurityAgency/ghidra --pattern 'ghidra_*_PUBLIC_*.zip' --dir /tmp
+          unzip -q /tmp/ghidra_*.zip -d /opt && mv /opt/ghidra_* /opt/ghidra
+          tools/ghidra/patch_ghidra.sh /opt/ghidra "$GHIDRA_TAG"
+      - name: Build the Xenon language
+        run: python3 tools/ghidra/xenon/build_language.py /opt/ghidra 2>&1 | tee /tmp/build.log
+      - name: Decode Xenia's table
+        run: |
+          curl -fsSL "https://raw.githubusercontent.com/xenia-project/xenia/$XENIA_COMMIT/tools/ppc-instructions.xml" -o /tmp/ppc-instructions.xml
+          python3 tools/ghidra/xenon/test_words.py make /tmp/ppc-instructions.xml /tmp/xt
+          mkdir -p /tmp/proj
+          /opt/ghidra/support/analyzeHeadless /tmp/proj t -import /tmp/xt/words.bin \
+            -loader BinaryLoader -loader-baseAddr 0x82000000 \
+            -processor PowerPC:BE:64:Xenon-32addr -noanalysis -deleteProject \
+            -scriptPath tools/ghidra/xenon -postScript TestXenon.java /tmp/xt/ghidra.tsv \
+            -log /tmp/xt/headless.log
+          python3 tools/ghidra/xenon/test_words.py check /tmp/xt/expected.tsv /tmp/xt/ghidra.tsv | tee /tmp/xt/result.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: xenon-language
+          path: |
+            /tmp/build.log
+            /tmp/xt/result.txt
+            /tmp/xt/ghidra.tsv
+            /tmp/xt/headless.log
+            /opt/ghidra/Ghidra/Processors/PowerPC/data/languages/ppc_xenon_be.slaspec
+          retention-days: 5
