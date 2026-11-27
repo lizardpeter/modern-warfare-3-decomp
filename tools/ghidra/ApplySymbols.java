@@ -3,6 +3,13 @@
 // names the Xbox 360 (PowerPC) references even where Ghidra's own PDB analyzer can't use their PDBs (an Xbox 360 exe
 // has no CodeView record to match), and it seeds disassembly at every known entry.
 // Args: <analysis/<build>> (reads pdb/functions.tsv, map/publics.tsv and pdata.tsv, whichever exist)
+//
+// PowerPC (Xbox 360) only: the compiler's register save/restore helpers (__savegprlr_14 .. _31, __restgprlr_*,
+// __savefpr_*, __restfpr_*, __savevmx_*, __restvmx_*) are chains of 4-byte entry points that fall through into one
+// shared return. As separate functions none of them has a return of its own, so Ghidra's "Non-Returning Functions -
+// Discovered" analyzer marks them non-returning and every caller ends at its prologue's `bl __savegprlr_NN` (8,396
+// functions of iw5mp_xenon cut to 8 bytes in the first run). They are marked returning here, and that analyzer is
+// turned off for PowerPC builds, so it can't flip them back. Known non-returning functions are still applied.
 //@category IW5
 import java.io.BufferedReader;
 import java.io.File;
@@ -17,6 +24,7 @@ import ghidra.program.model.address.Address;
 import ghidra.program.model.listing.Function;
 import ghidra.program.model.mem.MemoryBlock;
 import ghidra.program.model.symbol.SourceType;
+import java.util.regex.Pattern;
 
 public class ApplySymbols extends GhidraScript {
 
@@ -41,6 +49,9 @@ public class ApplySymbols extends GhidraScript {
 		return out;
 	}
 
+	private static final Pattern XENON_HELPER =
+		Pattern.compile("^__(save|rest)(gprlr|gpr|fpr|vmx)(_\\d+)?$");
+
 	private static String clean(String name) {
 		return name.replaceAll("\\s+", "_");
 	}
@@ -64,7 +75,12 @@ public class ApplySymbols extends GhidraScript {
 		for (Map<String, String> r : rows(new File(dir, "pdb/functions.tsv"))) {
 			names.put(Long.parseLong(r.get("va"), 16), r.get("name"));
 		}
-		int created = 0, named = 0, failed = 0;
+		boolean ppc = currentProgram.getLanguage().getProcessor().toString().equals("PowerPC");
+		if (ppc) {
+			setAnalysisOption(currentProgram, "Non-Returning Functions - Discovered", "false");
+			println("PowerPC: Non-Returning Functions - Discovered turned off (register save/restore helpers)");
+		}
+		int created = 0, named = 0, failed = 0, helpers = 0;
 		for (Map.Entry<Long, String> e : names.entrySet()) {
 			if (monitor.isCancelled()) {
 				break;
@@ -90,6 +106,10 @@ public class ApplySymbols extends GhidraScript {
 					f.setName(clean(name), SourceType.IMPORTED);
 					named++;
 				}
+				if (ppc && f != null && name != null && XENON_HELPER.matcher(name).matches()) {
+					f.setNoReturn(false);
+					helpers++;
+				}
 			}
 			catch (Exception ex) {
 				failed++;
@@ -98,7 +118,7 @@ public class ApplySymbols extends GhidraScript {
 				}
 			}
 		}
-		println(String.format("ApplySymbols: %d addresses, %d functions created, %d named, %d failed", names.size(),
-			created, named, failed));
+		println(String.format("ApplySymbols: %d addresses, %d functions created, %d named, %d failed, %d save/restore helpers",
+			names.size(), created, named, failed, helpers));
 	}
 }

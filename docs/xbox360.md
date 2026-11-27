@@ -46,10 +46,22 @@ rendering code) are not in Ghidra's PowerPC language: those instructions disasse
 use them stop decompiling at the first one. A VMX128 SLEIGH extension is on the roadmap; until then, read those
 functions from the disassembly and the PDB's line tables.
 
-Ghidra's own PDB analyzer matches a PDB to a program through CodeView, which these exes lack, so it may not apply
-the PDB. `ApplySymbols.java` doesn't depend on it: before analysis it creates and names every function the PDB,
+Ghidra's own PDB analyzer can't use these PDBs: on `iw5mp_xenon` (Ghidra 12.1.4) it fails at once with an
+`ArrayIndexOutOfBoundsException` in PDB Universal, after composite-depth errors on the GPU packet types, so no PDB
+types or prototypes reach the Ghidra project. `ApplySymbols.java` doesn't depend on it: before analysis it creates and names every function the PDB,
 MAP and `.pdata` know, from `analysis/<build>/pdb` and `map` (tools/pdb/extract.py, which reads the PDB with
-llvm-pdbutil and resymc and needs no CodeView). Types come from `pdb/types.h` either way.
+llvm-pdbutil and resymc and needs no CodeView). Types and prototypes are in `pdb/types.h` and `pdb/functions.tsv`;
+applying them to the Ghidra project (so pseudocode is typed) is on the roadmap.
+
+### Register save/restore helpers
+
+The compiler saves and restores registers through `__savegprlr_14`..`_31`, `__restgprlr_*`, `__savefpr_*`,
+`__restfpr_*`, `__savevmx_*`, `__restvmx_*`: chains of 4-byte entries falling through into one shared `blr`, called
+from nearly every prologue (`mflr r12; bl __savegprlr_NN`) and epilogue. As separate functions none has a return
+of its own, so Ghidra's "Non-Returning Functions - Discovered" analyzer marks them non-returning and every caller
+stops after its prologue: the first run cut 8,396 `iw5mp_xenon` functions to 8 bytes and dropped 3,493 more.
+`ApplySymbols.java` marks the helpers returning and turns that analyzer off for PowerPC builds (known non-returning
+functions are still applied). Check after each Xbox 360 analysis that Ghidra's sizes agree with the PDB's.
 
 ## Layouts
 
