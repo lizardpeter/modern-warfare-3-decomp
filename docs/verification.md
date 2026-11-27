@@ -51,6 +51,14 @@ branch, so `vectoyaw` returns +0.0 where `if (yaw < 0) yaw += 360` would keep -0
 select (`-length >= 0 ? 1 : length`) whose NaN behaviour Ghidra's rendering of the Xbox code hides. Each of those
 changed back fails its test. The harness models `atan2` and `floor` (doubles in XMM registers).
 
+Third: the mouse's command side in `src/client_mp/cl_input.cpp`: `CL_GetMouseMovementWithSensitivity` (with
+`CL_GetMouseMovement` inlined) and `CL_MouseMove` (900 inputs including infinite dvars and NaN movement), with
+`ClampChar`. Read the Store's instructions for float clamps and selects, not only Ghidra's pseudocode: its speed cap
+is `minss`/`maxss`, which pass a NaN movement through, and Ghidra renders the pair as `<=` comparisons that would
+clamp it. Written as `cap < mx ? cap : mx` and `-cap > capped ? -cap : capped`, clang gives the same results.
+Pass stack addresses out of `observe` signatures: a callee's pointer to the caller's local differs between the two
+builds' frames.
+
 Reconstruct in the reference's original order: each function tagged `// <reference VA>  <file>:<line>` with the
 Store VA once identified. Control flow follows the reference; where the Store build differs (13 years of patches,
 the PC platform layer), the Store build is the truth.

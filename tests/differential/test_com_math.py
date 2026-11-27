@@ -70,6 +70,7 @@ def pairs():
 
 
 CASES = [
+    {"name": "ClampChar", "ret": "char", "inputs": [[v] for v in list(range(-300, 300)) + [-2**31, 2**31 - 1, 1000, -1000]]},
     {"name": "Vec2Normalize", "ret": "float", "inputs": [[v] for v in vectors(2)]},
     {"name": "vectoyaw", "ret": "float", "inputs": [[v] for v in vectors(2)]},
     {"name": "vectosignedyaw", "ret": "float", "inputs": [[v] for v in vectors(2)]},

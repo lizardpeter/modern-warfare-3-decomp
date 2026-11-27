@@ -30,3 +30,5 @@ iw5mp_ship	140306B30	matches	src/universal/com_math.cpp	AddPointToBounds2D
 iw5mp_ship	140306DA0	matches	src/universal/com_math.cpp	AxisClear
 iw5mp_ship	140306DD0	matches	src/universal/com_math.cpp	AxisCopy
 iw5mp_ship	1400C90F0	matches	src/client_mp/cl_input.cpp	CL_GetMouseMovementWithSensitivity
+iw5mp_ship	1400C9640	matches	src/client_mp/cl_input.cpp	CL_MouseMove
+iw5mp_ship	1403075C0	matches	src/universal/com_math.cpp	ClampChar

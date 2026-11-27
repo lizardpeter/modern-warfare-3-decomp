@@ -9,6 +9,7 @@ typedef vec_t vec3_t[3];
 #define YAW 1
 #define ROLL 2
 
+signed char ClampChar(const int i);
 vec_t Vec2Normalize(vec2_t v);
 float vectoyaw(const vec2_t vec);
 float vectosignedyaw(const vec2_t vec);

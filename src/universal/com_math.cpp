@@ -13,6 +13,16 @@
 // atan2 results are scaled in double by this float (57.2957763671875) and rounded to float once
 #define RAD2DEG (180.0f / M_PI)
 
+// 825D8600  universal/com_math.cpp:584  Store 1403075C0
+signed char ClampChar(const int i)
+{
+	if (i < -128)
+		return -128;
+	if (i > 127)
+		return 127;
+	return (signed char)i;
+}
+
 // 825D8AB8  universal/com_math.cpp:813  Store 14030B160
 vec_t Vec2Normalize(vec2_t v)
 {
