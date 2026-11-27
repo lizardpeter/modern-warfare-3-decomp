@@ -29,6 +29,7 @@ jobs:
         env: { GH_TOKEN: "${{ github.token }}" }
         run: |
           gh release download "$GHIDRA_TAG" --repo NationalSecurityAgency/ghidra --pattern 'ghidra_*_PUBLIC_*.zip' --dir /tmp
+          ls -l /tmp/ghidra_*.zip; sha256sum /tmp/ghidra_*.zip
           unzip -q /tmp/ghidra_*.zip -d /opt && mv /opt/ghidra_* /opt/ghidra
           tools/ghidra/patch_ghidra.sh /opt/ghidra "$GHIDRA_TAG"
       - name: Build the Xenon language

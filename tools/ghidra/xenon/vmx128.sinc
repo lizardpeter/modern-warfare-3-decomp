@@ -56,6 +56,7 @@ define token xenon_instr(32)
 	vb128l_2=(11,15)
 	vb128l_3=(11,15)
 	vc128=(6,8)
+	vc128n=(6,8)
 	x_uimm5=(16,20)
 	x_simm5=(16,20) signed
 	x_sh4=(6,9)
@@ -65,6 +66,7 @@ define token xenon_instr(32)
 	x_rc6=(6,6)
 ;
 
+attach variables [ vc128 ] [ vs32 vs33 vs34 vs35 vs36 vs37 vs38 vs39 ];
 attach variables [ vd128l_1 va128l_1 vb128l_1 ] [
 	v32  v33  v34  v35  v36  v37  v38  v39  v40  v41  v42  v43  v44  v45  v46  v47
 	v48  v49  v50  v51  v52  v53  v54  v55  v56  v57  v58  v59  v60  v61  v62  v63 ];
@@ -91,15 +93,8 @@ vB128: vb128l_1 is vb128h=1 & vb128l_1 { export vb128l_1; }
 vB128: vb128l_2 is vb128h=2 & vb128l_2 { export vb128l_2; }
 vB128: vb128l_3 is vb128h=3 & vb128l_3 { export vb128l_3; }
 
-# vperm128's control register is 3 bits: v0..v7
-vC128: "v"^vc128 is vc128 & vc128=0 { export vs32; }
-vC128: "v"^vc128 is vc128 & vc128=1 { export vs33; }
-vC128: "v"^vc128 is vc128 & vc128=2 { export vs34; }
-vC128: "v"^vc128 is vc128 & vc128=3 { export vs35; }
-vC128: "v"^vc128 is vc128 & vc128=4 { export vs36; }
-vC128: "v"^vc128 is vc128 & vc128=5 { export vs37; }
-vC128: "v"^vc128 is vc128 & vc128=6 { export vs38; }
-vC128: "v"^vc128 is vc128 & vc128=7 { export vs39; }
+# vperm128's control register is 3 bits: v0..v7 (vs32..vs39), shown by number
+vC128: "v"^vc128n is vc128 & vc128n { export vc128; }
 
 # effective addresses
 xIndexedEA: RA_OR_ZERO,B is RA_OR_ZERO & B { tmp:$(REGISTER_SIZE) = RA_OR_ZERO + B; export tmp; }
