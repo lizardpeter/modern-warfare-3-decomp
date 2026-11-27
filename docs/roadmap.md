@@ -6,7 +6,7 @@ lists what must be decompiled first.
 
 ## Tooling
 
-- **Differential harness** for the Store build, from black-ops-2-decomp's (docs/verification.md).
+- (Differential harness: in place, docs/verification.md.)
 
 ## Enhanced build
 

@@ -1,8 +1,9 @@
 name: Checks
 
 # Every push: the XEX unpacker still reproduces the pinned PE of every Xbox 360 build, records/ claims only what the
-# evidence shows, and the generated STATUS.md and graph import set are current. Reconstruction builds and
-# differential tests join here with the first reconstructed file (docs/verification.md).
+# evidence shows, and the generated STATUS.md and graph import set are current; the reconstruction builds against
+# the Store exe and passes its differential tests, with no record claiming more than they show
+# (docs/verification.md).
 on: [push, pull_request, workflow_dispatch]
 
 permissions:
@@ -35,3 +36,25 @@ jobs:
           python3 tools/graph/sync.py >/dev/null
           git status --porcelain STATUS.md analysis/graph
           git diff --exit-code STATUS.md analysis/graph
+
+  reconstruction:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Toolchain
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y -q clang lld llvm
+          pip install -q -r tests/differential/requirements.txt
+      - name: Store exe
+        run: |
+          for b in $(python3 -c "import tomllib; print(' '.join(b['id'] for b in tomllib.load(open('target.toml','rb'))['build'] if b.get('kind') == 'retail' and b['id'].startswith('iw5mp')))"); do
+            python3 tools/fetch_originals.py "$b" /tmp/originals --only exe
+          done
+      - name: Build (compiles)
+        run: IW5_ORIGINALS=/tmp/originals python3 tools/build_recon.py
+      - name: Differential tests (matches)
+        run: IW5_ORIGINALS=/tmp/originals python3 tests/differential/run.py --check-records

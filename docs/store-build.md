@@ -34,6 +34,15 @@ section is the GDK's build marker.
   switch jump tables, which MSVC x64 places in `.text` after the function and Ghidra rightly keeps out of the body.
   14,220 functions in all, 0 decompile failures.
 
+## Code layout
+
+A source file's functions sit together, roughly in alphabetical order of name: `q_shared.cpp`'s run at
+`14031A760`-`14031BDA0` goes `Com_sprintf`, `I_CleanChar`, `I_CleanStr`, `I_DrawStrlen`, `I_iscsym`, `I_isdigit`,
+`I_isforfilename`, `I_islower`, `I_strcmp`, ... `Info_NextPair`, `Info_SetValueForKey`, ..., `Swap_Init`, `va`.
+Functions inlined everywhere (`I_isupper`, `I_isalpha`, `I_isalnum`) or unused (`I_strupr`) are absent. So the gaps
+between identified functions are where to look for the rest of a file, and reading decides (`semantic+differential`
+in `records/names.tsv`); the position alone identifies nothing.
+
 ## What the port changed (from the imports and strings so far)
 
 - **Renderer:** still **Direct3D 9** (`d3d9.dll`), unlike BO2's Store build (D3D11). Audio through `DSOUND` and
