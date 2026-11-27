@@ -1,0 +1,137 @@
+2026-11-27 06:19:25 INFO  (LoggingInitialization) Using log config file: jar:file:/opt/ghidra/Ghidra/Framework/Generic/lib/Generic.jar!/generic.log4j.xml  
+2026-11-27 06:19:25 INFO  (LoggingInitialization) Using log file: /tmp/out/decompile-5.log  
+2026-11-27 06:19:25 DEBUG (GhidraObjectInputFilter) Including serial input filter: FileSystem/data/client.rmi.serial.filter  
+2026-11-27 06:19:25 INFO  (Preferences) Loading user preferences: /home/runner/.config/ghidra/ghidra_12.1.4_PUBLIC/preferences  
+2026-11-27 06:19:25 INFO  (ClassSearcher) Searching for classes...  
+2026-11-27 06:19:25 INFO  (ClassSearcher) Class search complete (701 ms)  
+2026-11-27 06:19:26 INFO  (DefaultSSLContextInitializer) Initializing SSL Context  
+2026-11-27 06:19:27 INFO  (SecureRandomFactory) Initializing Random Number Generator...  
+2026-11-27 06:19:27 INFO  (SecureRandomFactory) Random Number Generator initialization complete: NativePRNGNonBlocking  
+2026-11-27 06:19:27 INFO  (DefaultTrustManagerFactory) Trust manager disabled, cacerts have not been set  
+2026-11-27 06:19:27 INFO  (FileCacheMaintenanceDaemon) Starting cache cleanup: /var/tmp/runner-ghidra/fscache2  
+2026-11-27 06:19:27 INFO  (FileCacheMaintenanceDaemon) Finished cache cleanup, estimated storage used: 0  
+2026-11-27 06:19:27 INFO  (AnalyzeHeadless) Headless startup complete (3801 ms)  
+2026-11-27 06:19:27 INFO  (ClassSearcher) Class searcher loaded 59 extension points (20 false positives)  
+2026-11-27 06:19:28 INFO  (HeadlessAnalyzer) HEADLESS Script Paths:
+    /opt/ghidra/Ghidra/Features/SystemEmulation/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/GnuDemangler/ghidra_scripts
+    /home/runner/work/modern-warfare-3-decomp/modern-warfare-3-decomp/tools/ghidra
+    /opt/ghidra/Ghidra/Features/WildcardAssembler/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/DATA/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/DecompilerDependent/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/JVM/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger-rmi-trace/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/MicrosoftCodeAnalyzer/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/VersionTracking/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PyGhidra/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/SwiftDemangler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Base/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/Atmel/ghidra_scripts
+    /opt/ghidra/Ghidra/Debug/Debugger/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/Decompiler/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FunctionID/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/PDB/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/8051/ghidra_scripts
+    /opt/ghidra/Ghidra/Processors/PIC/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/FileFormats/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BSim/ghidra_scripts
+    /opt/ghidra/Ghidra/Features/BytePatterns/ghidra_scripts  
+2026-11-27 06:19:28 INFO  (HeadlessAnalyzer) HEADLESS: execution starts  
+2026-11-27 06:19:28 INFO  (HeadlessAnalyzer) Opening existing project: /tmp/proj/iw5  
+2026-11-27 06:19:28 DEBUG (DefaultProjectManager) No tools found; Installing default tools  
+2026-11-27 06:19:28 DEBUG (DefaultProjectManager) 	no recent project directories found  
+2026-11-27 06:19:28 INFO  (HeadlessProject) Opening project: /tmp/proj/iw5  
+2026-11-27 06:19:29 INFO  (HeadlessAnalyzer) REPORT: Processing read-only project file: /iw5mp_xenon.exe  
+2026-11-27 06:19:29 INFO  (HeadlessAnalyzer) REPORT: Execute script: Decompile.java '/tmp/out/decomp-5.jsonl' '5' '6' '90'   
+2026-11-27 06:19:31 INFO  (HeadlessAnalyzer) SCRIPT: /home/runner/work/modern-warfare-3-decomp/modern-warfare-3-decomp/tools/ghidra/Decompile.java  
+2026-11-27 06:19:36 INFO  (GhidraScript) Decompile.java> shard 5: 1000 ok, 0 failed, 4s  
+2026-11-27 06:19:36 WARN  (DecompileCallback) Decompiling 82415838, pcode error at 824158b0: Unable to resolve constructor at 824158b0  
+2026-11-27 06:19:36 WARN  (DecompileCallback) Decompiling 824169f8, pcode error at 82416a04: Unable to resolve constructor at 82416a04  
+2026-11-27 06:19:39 WARN  (DecompileCallback) Decompiling 82517358, pcode error at 825173cc: Unable to resolve constructor at 825173cc  
+2026-11-27 06:19:40 INFO  (GhidraScript) Decompile.java> shard 5: 2000 ok, 0 failed, 8s  
+2026-11-27 06:19:41 WARN  (DecompileCallback) Decompiling 8261c4b0, pcode error at 8261c884: Unable to resolve constructor at 8261c884  
+2026-11-27 06:19:41 WARN  (DecompileCallback) Decompiling 8261f618, pcode error at 8261f714: Unable to resolve constructor at 8261f714  
+2026-11-27 06:19:41 WARN  (DecompileCallback) Decompiling 826407c8, pcode error at 826408bc: Unable to resolve constructor at 826408bc  
+2026-11-27 06:19:42 WARN  (DecompileCallback) Decompiling 8269d4d0, pcode error at 8269d4d4: Unable to resolve constructor at 8269d4d4  
+2026-11-27 06:19:43 INFO  (GhidraScript) Decompile.java> shard 5: 3000 ok, 0 failed, 12s  
+2026-11-27 06:19:44 WARN  (DecompileCallback) Decompiling 82736360, pcode error at 82736360: Unable to resolve constructor at 82736360  
+2026-11-27 06:19:44 WARN  (DecompileCallback) Decompiling 82737dc0, pcode error at 82737dc0: Unable to resolve constructor at 82737dc0  
+2026-11-27 06:19:44 WARN  (DecompileCallback) Decompiling 8275c840, pcode error at 8275c840: Unable to resolve constructor at 8275c840  
+2026-11-27 06:19:44 WARN  (DecompileCallback) Decompiling 8275e0b0, pcode error at 8275e184: Unable to resolve constructor at 8275e184  
+2026-11-27 06:19:45 WARN  (DecompileCallback) Decompiling 828045b8, pcode error at 828045b8: Unable to resolve constructor at 828045b8  
+2026-11-27 06:19:45 WARN  (DecompileCallback) Decompiling 82804de8, pcode error at 82804e24: Unable to resolve constructor at 82804e24  
+2026-11-27 06:19:45 WARN  (DecompileCallback) Decompiling 82806070, pcode error at 828060b8: Unable to resolve constructor at 828060b8  
+2026-11-27 06:19:45 WARN  (DecompileCallback) Decompiling 828078a8, pcode error at 828078bc: Unable to resolve constructor at 828078bc  
+2026-11-27 06:19:45 WARN  (DecompileCallback) Decompiling 82808fc8, pcode error at 82808fec: Unable to resolve constructor at 82808fec  
+2026-11-27 06:19:45 WARN  (DecompileCallback) Decompiling 8280a918, pcode error at 8280a944: Unable to resolve constructor at 8280a944  
+2026-11-27 06:19:45 WARN  (DecompileCallback) Decompiling 8280b858, pcode error at 8280b880: Unable to resolve constructor at 8280b880  
+2026-11-27 06:19:45 WARN  (DecompileCallback) Decompiling 8280d128, pcode error at 8280d14c: Unable to resolve constructor at 8280d14c  
+2026-11-27 06:19:46 WARN  (DecompileCallback) Decompiling 828766d0, pcode error at 82876800: Unable to resolve constructor at 82876800  
+2026-11-27 06:19:46 WARN  (DecompileCallback) Decompiling 8288ddc8, pcode error at 8288de78: Unable to resolve constructor at 8288de78  
+2026-11-27 06:19:46 WARN  (DecompileCallback) Decompiling 828b6630, pcode error at 828b6774: Unable to resolve constructor at 828b6774  
+2026-11-27 06:19:46 WARN  (DecompileCallback) Decompiling 828b6630, pcode error at 828b66f8: Unable to resolve constructor at 828b66f8  
+2026-11-27 06:19:47 WARN  (DecompileCallback) Decompiling 828ec050, pcode error at 828ec154: Unable to resolve constructor at 828ec154  
+2026-11-27 06:19:47 INFO  (GhidraScript) Decompile.java> shard 5: 4000 ok, 0 failed, 15s  
+2026-11-27 06:19:47 WARN  (DecompileCallback) Decompiling 82918054, pcode error at 82918058: Unable to resolve constructor at 82918058  
+2026-11-27 06:19:47 WARN  (DecompileCallback) Decompiling 8291c9e8, pcode error at 829422e4: Unable to resolve constructor at 829422e4  
+2026-11-27 06:19:48 WARN  (DecompileCallback) Decompiling 8293d480, pcode error at 8293d494: Unable to resolve constructor at 8293d494  
+2026-11-27 06:19:48 WARN  (DecompileCallback) Decompiling 8293daa0, pcode error at 8293dab4: Unable to resolve constructor at 8293dab4  
+2026-11-27 06:19:48 WARN  (DecompileCallback) Decompiling 8293db60, pcode error at 8293db74: Unable to resolve constructor at 8293db74  
+2026-11-27 06:19:48 WARN  (DecompileCallback) Decompiling 8293dc20, pcode error at 8293dc34: Unable to resolve constructor at 8293dc34  
+2026-11-27 06:19:48 WARN  (DecompileCallback) Decompiling 8293dce0, pcode error at 8293dcf4: Unable to resolve constructor at 8293dcf4  
+2026-11-27 06:19:48 WARN  (DecompileCallback) Decompiling 8293dda0, pcode error at 8293ddb4: Unable to resolve constructor at 8293ddb4  
+2026-11-27 06:19:48 WARN  (DecompileCallback) Decompiling 8293de60, pcode error at 8293de74: Unable to resolve constructor at 8293de74  
+2026-11-27 06:19:48 WARN  (DecompileCallback) Decompiling 8293df20, pcode error at 8293df34: Unable to resolve constructor at 8293df34  
+2026-11-27 06:19:48 WARN  (DecompileCallback) Decompiling 8293dfe0, pcode error at 8293dff4: Unable to resolve constructor at 8293dff4  
+2026-11-27 06:19:48 WARN  (DecompileCallback) Decompiling 8293e0a0, pcode error at 8293e0b4: Unable to resolve constructor at 8293e0b4  
+2026-11-27 06:19:48 WARN  (DecompileCallback) Decompiling 8293e160, pcode error at 8293e174: Unable to resolve constructor at 8293e174  
+2026-11-27 06:19:48 WARN  (DecompileCallback) Decompiling 8293e220, pcode error at 8293e234: Unable to resolve constructor at 8293e234  
+2026-11-27 06:19:48 WARN  (DecompileCallback) Decompiling 8293e2e0, pcode error at 8293e2f4: Unable to resolve constructor at 8293e2f4  
+2026-11-27 06:19:48 WARN  (DecompileCallback) Decompiling 8293e3a0, pcode error at 8293e3b4: Unable to resolve constructor at 8293e3b4  
+2026-11-27 06:19:48 WARN  (DecompileCallback) Decompiling 82941244, pcode error at 82941244: Unable to resolve constructor at 82941244  
+2026-11-27 06:19:48 WARN  (DecompileCallback) Decompiling 829412a4, pcode error at 829412a4: Unable to resolve constructor at 829412a4  
+2026-11-27 06:19:48 WARN  (DecompileCallback) Decompiling 82941304, pcode error at 82941304: Unable to resolve constructor at 82941304  
+2026-11-27 06:19:48 WARN  (DecompileCallback) Decompiling 82941364, pcode error at 82941364: Unable to resolve constructor at 82941364  
+2026-11-27 06:19:48 WARN  (DecompileCallback) Decompiling 829413c4, pcode error at 829413c4: Unable to resolve constructor at 829413c4  
+2026-11-27 06:19:48 WARN  (DecompileCallback) Decompiling 82941424, pcode error at 82941424: Unable to resolve constructor at 82941424  
+2026-11-27 06:19:48 WARN  (DecompileCallback) Decompiling 82941484, pcode error at 82941484: Unable to resolve constructor at 82941484  
+2026-11-27 06:19:48 WARN  (DecompileCallback) Decompiling 829414e4, pcode error at 829414e4: Unable to resolve constructor at 829414e4  
+2026-11-27 06:19:48 WARN  (DecompileCallback) Decompiling 82941544, pcode error at 82941544: Unable to resolve constructor at 82941544  
+2026-11-27 06:19:48 WARN  (DecompileCallback) Decompiling 829415a4, pcode error at 829415a4: Unable to resolve constructor at 829415a4  
+2026-11-27 06:19:48 WARN  (DecompileCallback) Decompiling 82941604, pcode error at 82941604: Unable to resolve constructor at 82941604  
+2026-11-27 06:19:48 WARN  (DecompileCallback) Decompiling 82941664, pcode error at 82941664: Unable to resolve constructor at 82941664  
+2026-11-27 06:19:48 WARN  (DecompileCallback) Decompiling 829416c4, pcode error at 829416c4: Unable to resolve constructor at 829416c4  
+2026-11-27 06:19:48 WARN  (DecompileCallback) Decompiling 82941724, pcode error at 82941724: Unable to resolve constructor at 82941724  
+2026-11-27 06:19:48 WARN  (DecompileCallback) Decompiling 82941784, pcode error at 82941784: Unable to resolve constructor at 82941784  
+2026-11-27 06:19:48 WARN  (DecompileCallback) Decompiling 829417e4, pcode error at 829417e4: Unable to resolve constructor at 829417e4  
+2026-11-27 06:19:48 WARN  (DecompileCallback) Decompiling 82941844, pcode error at 82941844: Unable to resolve constructor at 82941844  
+2026-11-27 06:19:48 WARN  (DecompileCallback) Decompiling 829418a4, pcode error at 829418a4: Unable to resolve constructor at 829418a4  
+2026-11-27 06:19:48 WARN  (DecompileCallback) Decompiling 82941904, pcode error at 82941904: Unable to resolve constructor at 82941904  
+2026-11-27 06:19:48 WARN  (DecompileCallback) Decompiling 82941964, pcode error at 82941964: Unable to resolve constructor at 82941964  
+2026-11-27 06:19:48 WARN  (DecompileCallback) Decompiling 829419c4, pcode error at 829419c4: Unable to resolve constructor at 829419c4  
+2026-11-27 06:19:48 WARN  (DecompileCallback) Decompiling 82941a24, pcode error at 82941a24: Unable to resolve constructor at 82941a24  
+2026-11-27 06:19:48 WARN  (DecompileCallback) Decompiling 82941a84, pcode error at 82941a84: Unable to resolve constructor at 82941a84  
+2026-11-27 06:19:48 WARN  (DecompileCallback) Decompiling 82941ae4, pcode error at 82941ae4: Unable to resolve constructor at 82941ae4  
+2026-11-27 06:19:48 WARN  (DecompileCallback) Decompiling 82941b44, pcode error at 82941b44: Unable to resolve constructor at 82941b44  
+2026-11-27 06:19:48 WARN  (DecompileCallback) Decompiling 82941ba4, pcode error at 82941ba4: Unable to resolve constructor at 82941ba4  
+2026-11-27 06:19:48 WARN  (DecompileCallback) Decompiling 82941c04, pcode error at 82941c04: Unable to resolve constructor at 82941c04  
+2026-11-27 06:19:48 WARN  (DecompileCallback) Decompiling 82941c64, pcode error at 82941c64: Unable to resolve constructor at 82941c64  
+2026-11-27 06:19:48 WARN  (DecompileCallback) Decompiling 82941cc4, pcode error at 82941cc4: Unable to resolve constructor at 82941cc4  
+2026-11-27 06:19:48 WARN  (DecompileCallback) Decompiling 82941d24, pcode error at 82941d24: Unable to resolve constructor at 82941d24  
+2026-11-27 06:19:48 WARN  (DecompileCallback) Decompiling 82941d84, pcode error at 82941d84: Unable to resolve constructor at 82941d84  
+2026-11-27 06:19:48 WARN  (DecompileCallback) Decompiling 82941de4, pcode error at 82941de4: Unable to resolve constructor at 82941de4  
+2026-11-27 06:19:48 WARN  (DecompileCallback) Decompiling 82941e44, pcode error at 82941e44: Unable to resolve constructor at 82941e44  
+2026-11-27 06:19:48 WARN  (DecompileCallback) Decompiling 82941ea4, pcode error at 82941ea4: Unable to resolve constructor at 82941ea4  
+2026-11-27 06:19:48 WARN  (DecompileCallback) Decompiling 82941f04, pcode error at 82941f04: Unable to resolve constructor at 82941f04  
+2026-11-27 06:19:48 WARN  (DecompileCallback) Decompiling 82941f64, pcode error at 82941f64: Unable to resolve constructor at 82941f64  
+2026-11-27 06:19:48 WARN  (DecompileCallback) Decompiling 82941fc4, pcode error at 82941fc4: Unable to resolve constructor at 82941fc4  
+2026-11-27 06:19:48 WARN  (DecompileCallback) Decompiling 82942024, pcode error at 82942024: Unable to resolve constructor at 82942024  
+2026-11-27 06:19:48 WARN  (DecompileCallback) Decompiling 82942084, pcode error at 82942084: Unable to resolve constructor at 82942084  
+2026-11-27 06:19:48 WARN  (DecompileCallback) Decompiling 829420e4, pcode error at 829420e4: Unable to resolve constructor at 829420e4  
+2026-11-27 06:19:48 WARN  (DecompileCallback) Decompiling 82942144, pcode error at 82942144: Unable to resolve constructor at 82942144  
+2026-11-27 06:19:48 WARN  (DecompileCallback) Decompiling 829421a4, pcode error at 829421a4: Unable to resolve constructor at 829421a4  
+2026-11-27 06:19:48 WARN  (DecompileCallback) Decompiling 82942204, pcode error at 82942204: Unable to resolve constructor at 82942204  
+2026-11-27 06:19:48 WARN  (DecompileCallback) Decompiling 82942264, pcode error at 82942264: Unable to resolve constructor at 82942264  
+2026-11-27 06:19:48 WARN  (DecompileCallback) Decompiling 829422c4, pcode error at 829422c4: Unable to resolve constructor at 829422c4  
+2026-11-27 06:19:48 WARN  (DecompileCallback) Decompiling 82942324, pcode error at 82942324: Unable to resolve constructor at 82942324  
+2026-11-27 06:19:48 INFO  (GhidraScript) Decompile.java> shard 5 done: 4346 ok, 0 failed  

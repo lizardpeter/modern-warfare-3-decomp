@@ -22,15 +22,27 @@
     },
     {
       "file": "iw5/functions-iw5mp_ship.jsonl",
-      "sha256": "d2aa34112d84abeab4ba46fb88324c213d8270f297d538d01dd8d41d5c52c72c",
-      "rows": 11507,
+      "sha256": "8e63479769837ec345bdaa20ec614b3e03ccd1d1caa2516b3846f138694a47d2",
+      "rows": 19870,
       "cypher": "UNWIND {{ROWS}} AS r MATCH (b:Build {id:r.build}) MERGE (fn:Function {key:r.key}) SET fn.name = coalesce(fn.name, r.name), fn.symbol = r.symbol MERGE (fi:FunctionInstance {id:r.id}) SET fi.build=r.build, fi.va=r.va, fi.size=r.size, fi.status=r.status, fi.type=r.type, fi.src=r.src, fi.bytes_sha256=r.sha MERGE (fi)-[:INSTANCE_OF]->(fn) MERGE (fi)-[:IN_BUILD]->(b) WITH fn, r WHERE r.source <> '' MATCH (sf:SourceFile {path:r.source}) MERGE (fn)-[d:DEFINED_IN]->(sf) SET d.line=r.line"
     },
     {
       "file": "iw5/functions-iw5mp_xenon.jsonl",
-      "sha256": "20fb8ac9f678e4763121827b9e3d9f0af661d5987289036516286f12be161ca1",
-      "rows": 33773,
+      "sha256": "2a10e7cf7b3e8c4257c3215df4116e7ada0d83c2756539c7f6ded339af77d342",
+      "rows": 29912,
       "cypher": "UNWIND {{ROWS}} AS r MATCH (b:Build {id:r.build}) MERGE (fn:Function {key:r.key}) SET fn.name = coalesce(fn.name, r.name), fn.symbol = r.symbol MERGE (fi:FunctionInstance {id:r.id}) SET fi.build=r.build, fi.va=r.va, fi.size=r.size, fi.status=r.status, fi.type=r.type, fi.src=r.src, fi.bytes_sha256=r.sha MERGE (fi)-[:INSTANCE_OF]->(fn) MERGE (fi)-[:IN_BUILD]->(b) WITH fn, r WHERE r.source <> '' MATCH (sf:SourceFile {path:r.source}) MERGE (fn)-[d:DEFINED_IN]->(sf) SET d.line=r.line"
+    },
+    {
+      "file": "iw5/calls-iw5mp_ship.jsonl",
+      "sha256": "c8a77d2849406c48300139a117e0036073eb8aa1e830ee4bac7ee755d2c349a6",
+      "rows": 46884,
+      "cypher": "UNWIND {{ROWS}} AS r MATCH (a:FunctionInstance {id:r.caller}) MATCH (c:FunctionInstance {id:r.callee}) MERGE (a)-[e:CALLS]->(c) SET e.kind=r.kind"
+    },
+    {
+      "file": "iw5/calls-iw5mp_xenon.jsonl",
+      "sha256": "9366973a4fa7ede6d3fe5d7a2c84e6bda6561d3166aaa3f4ec7baa1ff8382ef5",
+      "rows": 50977,
+      "cypher": "UNWIND {{ROWS}} AS r MATCH (a:FunctionInstance {id:r.caller}) MATCH (c:FunctionInstance {id:r.callee}) MERGE (a)-[e:CALLS]->(c) SET e.kind=r.kind"
     }
   ]
 }
