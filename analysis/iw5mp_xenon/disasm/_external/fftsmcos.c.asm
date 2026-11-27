@@ -130,15 +130,57 @@ LAB_828c7668:
   828C76E4  D3A10060             stfs f29,0x60(r1)
   828C76E8  D3A10064             stfs f29,0x64(r1)
   828C76EC  D3A10068             stfs f29,0x68(r1)
-  828C76F0  13E040C7             vcmpequd v31,v0,v8
+  828C76F0  13E040C7             lvx128 v63,0,r8
   828C76F4  D3A1006C             stfs f29,0x6c(r1)
+LAB_828c76f8:
   828C76F8  39210050             addi r9,r1,0x50
-  828C76FC  13C050C7             vcmpequd v30,v0,v10
+  828C76FC  13C050C7             lvx128 v62,0,r10
   828C7700  39010060             addi r8,r1,0x60
   828C7704  38E00004             li r7,0x4
   828C7708  394A0010             addi r10,r10,0x10
-  828C770C  13A048C7             vcmpequd v29,v0,v9
+  828C770C  13A048C7             lvx128 v61,0,r9
+  828C7710  17DEE8B5             vmulfp128 v62,v62,v61
+  828C7714  13A040C7             lvx128 v61,0,r8
+  828C7718  17DEF8B5             vmulfp128 v62,v62,v63
+  828C771C  17DEE8B5             vmulfp128 v62,v62,v61
+  828C7720  1BC0F235             vcfpsxws128 v62,v62,0x0
+  828C7724  17DEF2A5             vpkswss128 v62,v62,v62
+  828C7728  1BA0F735             vspltw128 v61,v62,0x0
+  828C772C  1BC1F735             vspltw128 v62,v62,0x1
+  828C7730  13A05987             stvewx128 v61,0,r11
+  828C7734  13CB3987             stvewx128 v62,r11,r7
+  828C7738  396B0008             addi r11,r11,0x8
+  828C773C  4200FFBC             bdnz 0x828c76f8
+  828C7740  48000034             b 0x828c7774
 LAB_828c7744:
   828C7744  7F6BDB78             or r11,r27,r27
-  828C7748  13E050C7             vcmpequd v31,v0,v10
+LAB_828c7748:
+  828C7748  13E050C7             lvx128 v63,0,r10
   828C774C  39200004             li r9,0x4
+  828C7750  1BE0FA35             vcfpsxws128 v63,v63,0x0
+  828C7754  394A0010             addi r10,r10,0x10
+  828C7758  17FFFAA5             vpkswss128 v63,v63,v63
+  828C775C  1BC0FF35             vspltw128 v62,v63,0x0
+  828C7760  1BE1FF35             vspltw128 v63,v63,0x1
+  828C7764  13C05987             stvewx128 v62,0,r11
+  828C7768  13EB4987             stvewx128 v63,r11,r9
+  828C776C  396B0008             addi r11,r11,0x8
+  828C7770  4200FFD8             bdnz 0x828c7748
+LAB_828c7774:
+  828C7774  39400028             li r10,0x28
+  828C7778  396101B0             addi r11,r1,0x1b0
+  828C777C  392105BC             addi r9,r1,0x5bc
+  828C7780  390BFFFC             subi r8,r11,0x4
+  828C7784  7F4BD378             or r11,r26,r26
+  828C7788  7D4903A6             mtspr CTR,r10
+LAB_828c778c:
+  828C778C  C4080004             lfsu f0,0x4(r8)
+  828C7790  C5A90004             lfsu f13,0x4(r9)
+  828C7794  D00B0000             stfs f0,0x0(r11)
+  828C7798  D5AB0004             stfsu f13,0x4(r11)
+  828C779C  396B0004             addi r11,r11,0x4
+  828C77A0  4200FFEC             bdnz 0x828c778c
+  828C77A4  38210A30             addi r1,r1,0xa30
+  828C77A8  3981FFC0             subi r12,r1,0x40
+  828C77AC  4804F039             bl 0x829167e4
+  828C77B0  4804EF4C             b 0x829166fc

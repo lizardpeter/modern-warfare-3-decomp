@@ -7,13 +7,13 @@
 void abort(void)
 
 {
-  _PHNDLR p_Var1;
+  _func___cdecl_void_int *p_Var1;
   
   p_Var1 = __get_sigabrt();
-  if (p_Var1 != (_PHNDLR)0x0) {
+  if (p_Var1 != (_func___cdecl_void_int *)0x0) {
     raise(0x16);
   }
-  if ((DAT_829b03d0 & 2) != 0) {
+  if ((__abort_behavior & 2) != 0) {
     _call_reportfault(3,0x40000015,1);
   }
                     /* WARNING: Subroutine does not return */
@@ -23,13 +23,13 @@ void abort(void)
 
 // 8291C608  _set_abort_behavior  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/abort.c:113)
 
-uint _set_abort_behavior(uint _Flags,uint _Mask)
+uint _set_abort_behavior(uint param_1,uint param_2)
 
 {
   uint uVar1;
   
-  uVar1 = DAT_829b03d0;
-  DAT_829b03d0 = DAT_829b03d0 & ~_Mask | _Flags & _Mask;
+  uVar1 = __abort_behavior;
+  __abort_behavior = __abort_behavior & ~param_2 | param_1 & param_2;
   return uVar1;
 }
 

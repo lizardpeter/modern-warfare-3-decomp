@@ -1322,7 +1322,7 @@ LAB_82719310:
   82719310  382100F0             addi r1,r1,0xf0
   82719314  481FD3CC             b 0x829166e0
 
-; 82719640  GfxGetBspSurfListCameraLitInterfaceBase::PerVisibleDrawSurfCallback  (gfx_d3d/r_add_bsp.cpp:558)
+; 82719640  PerVisibleDrawSurfCallback  (gfx_d3d/r_add_bsp.cpp:558)
   82719640  7D8802A6             mfspr r12,LR
   82719644  481FD069             bl 0x829166ac
   82719648  8143001C             lwz r10,0x1c(r3)
@@ -2151,7 +2151,7 @@ LAB_82719510:
   82719638  38210070             addi r1,r1,0x70
   8271963C  481FD0D0             b 0x8291670c
 
-; 82719850  std::_Adjust_heap<GfxSurface_*_*,int,GfxSurface_*>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2502)
+; 82719850  _Adjust_heap<GfxSurface_*_*,int,GfxSurface_*>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2502)
   82719850  39640001             addi r11,r4,0x1
   82719854  7C882378             or r8,r4,r4
   82719858  556B083C             rlwinm r11,r11,0x1,0x0,0x1e
@@ -2212,7 +2212,7 @@ LAB_82719914:
   8271991C  7D6A192E             stwx r11,r10,r3
   82719920  4E800020             blr
 
-; 82719928  std::_Make_heap<GfxSurface_*_*,int,GfxSurface_*>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2631)
+; 82719928  _Make_heap<GfxSurface_*_*,int,GfxSurface_*>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2631)
   82719928  FBC1FFF0             std r30,-0x10(r1)
   8271992C  FBE1FFF8             std r31,-0x8(r1)
   82719930  7D632050             subf r11,r3,r4
@@ -2289,7 +2289,7 @@ LAB_82719a28:
   82719A2C  EBE1FFF8             ld r31,-0x8(r1)
   82719A30  4E800020             blr
 
-; 82719E58  std::_Sort_heap<GfxSurface_*_*>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2683)
+; 82719E58  _Sort_heap<GfxSurface_*_*>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2683)
   82719E58  7D8802A6             mfspr r12,LR
   82719E5C  481FC861             bl 0x829166bc
   82719E60  9421FF80             stwu r1,-0x80(r1)
@@ -2318,7 +2318,7 @@ LAB_82719eb4:
   82719EB4  38210080             addi r1,r1,0x80
   82719EB8  481FC854             b 0x8291670c
 
-; 82719A38  std::_Insertion_sort1<GfxSurface_*_*,GfxSurface_*>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3493)
+; 82719A38  _Insertion_sort1<GfxSurface_*_*,GfxSurface_*>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3493)
   82719A38  7D8802A6             mfspr r12,LR
   82719A3C  481FCC79             bl 0x829166b4
   82719A40  9421FF80             stwu r1,-0x80(r1)
@@ -2367,7 +2367,7 @@ LAB_82719ad4:
   82719AD4  38210080             addi r1,r1,0x80
   82719AD8  481FCC2C             b 0x82916704
 
-; 82719AE0  std::_Median<GfxSurface_*_*>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3535)
+; 82719AE0  _Median<GfxSurface_*_*>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3535)
   82719AE0  7D632850             subf r11,r3,r5
   82719AE4  7D6B1670             srawi r11,r11,0x2
   82719AE8  2F0B0028             cmpwi cr6,r11,0x28
@@ -2487,7 +2487,7 @@ LAB_82719c64:
   82719C78  91630000             stw r11,0x0(r3)
   82719C7C  4E800020             blr
 
-; 82719C80  std::_Unguarded_partition<GfxSurface_*_*>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3551)
+; 82719C80  _Unguarded_partition<GfxSurface_*_*>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3551)
   82719C80  7D8802A6             mfspr r12,LR
   82719C84  481FCA35             bl 0x829166b8
   82719C88  9421FF80             stwu r1,-0x80(r1)
@@ -2624,7 +2624,7 @@ LAB_82719e44:
   82719E50  38210080             addi r1,r1,0x80
   82719E54  481FC8B4             b 0x82916708
 
-; 82719EC0  std::_Sort<GfxSurface_*_*,int>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3609)
+; 82719EC0  _Sort<GfxSurface_*_*,int>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3609)
   82719EC0  7D8802A6             mfspr r12,LR
   82719EC4  481FC7F1             bl 0x829166b4
   82719EC8  9421FF70             stwu r1,-0x90(r1)

@@ -2,20 +2,20 @@
 
 // 828A4E48  CompareFileTime  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/comparefiletime.c:44)
 
-LONG CompareFileTime(FILETIME *lpFileTime1,FILETIME *lpFileTime2)
+long CompareFileTime(_FILETIME *param_1,_FILETIME *param_2)
 
 {
-  LONG LVar1;
+  long lVar1;
   
-  if ((ulonglong)*lpFileTime1 < (ulonglong)*lpFileTime2) {
-    LVar1 = -1;
+  if ((ulonglong)*param_1 < (ulonglong)*param_2) {
+    lVar1 = -1;
   }
-  else if ((ulonglong)*lpFileTime2 < (ulonglong)*lpFileTime1) {
-    LVar1 = 1;
+  else if ((ulonglong)*param_2 < (ulonglong)*param_1) {
+    lVar1 = 1;
   }
   else {
-    LVar1 = 0;
+    lVar1 = 0;
   }
-  return LVar1;
+  return lVar1;
 }
 

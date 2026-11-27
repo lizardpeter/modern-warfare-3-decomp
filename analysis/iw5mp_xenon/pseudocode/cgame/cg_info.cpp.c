@@ -2,85 +2,79 @@
 
 // 822D42D8  CG_IsShowingProgress_FastFile  (cgame/cg_info.cpp:37)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 bool CG_IsShowingProgress_FastFile(void)
 
 {
-  double dVar1;
+  float fVar1;
   
-  dVar1 = (double)DB_GetLoadedFraction();
-  return 0.0 < dVar1;
+  fVar1 = DB_GetLoadedFraction();
+  return 0.0 < fVar1;
 }
 
 
 // 822D4318  CG_IsShowingProgress  (cgame/cg_info.cpp:44)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 bool CG_IsShowingProgress(void)
 
 {
-  double dVar1;
+  float fVar1;
   
-  dVar1 = (double)DB_GetLoadedFraction();
-  return 0.0 < dVar1;
+  fVar1 = DB_GetLoadedFraction();
+  return 0.0 < fVar1;
 }
 
 
 // 822D4358  CG_DrawInformation  (cgame/cg_info.cpp:50)
 
-void CG_DrawInformation(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void CG_DrawInformation(LocalClientNum_t param_1)
 
 {
-  uint uVar1;
-  undefined8 uVar2;
-  char cVar5;
-  char cVar6;
-  int iVar4;
-  undefined8 uVar3;
-  undefined8 uVar7;
-  undefined8 uVar8;
+  LocalClientNum_t LVar1;
+  bool bVar6;
+  bool bVar7;
+  ScreenPlacement *pSVar2;
+  Font_s *pFVar3;
+  char *pcVar4;
+  int iVar5;
+  double dVar8;
   double dVar9;
-  double dVar10;
+  float fVar10;
   
-  uVar2 = __savegprlr_28();
-  cVar5 = CL_IsServerLoadingMap();
-  if (cVar5 == '\0') {
-    uVar7 = 0;
+  LVar1 = __savegprlr_28(param_1);
+  bVar6 = CL_IsServerLoadingMap();
+  if (bVar6) {
+    bVar7 = CL_IsWaitingOnServerToLoadMap(LVar1);
+    if (bVar7) goto LAB_822d43c4;
+    CG_CloseScriptMenu(LVar1,false);
+    UI_CloseAllMenus(LVar1);
+    SND_StopSounds(SND_STOP_ALL);
+    bVar7 = true;
   }
   else {
-    cVar6 = CL_IsWaitingOnServerToLoadMap(uVar2);
-    if (cVar6 != '\0') goto LAB_822d43c4;
-    CG_CloseScriptMenu(uVar2,0);
-    UI_CloseAllMenus(uVar2);
-    SND_StopSounds(0);
-    uVar7 = 1;
+    bVar7 = false;
   }
-  CL_SetWaitingOnServerToLoadMap(uVar2,uVar7);
+  CL_SetWaitingOnServerToLoadMap(LVar1,bVar7);
 LAB_822d43c4:
-  UI_DrawMapLevelshot(uVar2);
-  dVar9 = (double)DB_GetLoadedFraction();
-  if (((dVar9 <= 0.0) && (cVar5 != '\0')) && (DAT_82aa1aa0 != '\0')) {
-    uVar2 = ScrPlace_GetActivePlacement(uVar2);
+  UI_DrawMapLevelshot(LVar1);
+  fVar10 = DB_GetLoadedFraction();
+  if (((fVar10 <= 0.0) && (bVar6)) && (g_waitingForServer != false)) {
+    pSVar2 = ScrPlace_GetActivePlacement(LVar1);
     dVar9 = 0.5;
-    uVar7 = UI_GetFontHandle(0x3fe0000000000000,uVar2,0);
-    iVar4 = Sys_Milliseconds();
-    uVar1 = iVar4 / 500 & 3;
-    if (uVar1 == 1) {
-      uVar8 = 0xffffffff820185b4;
-    }
-    else if (uVar1 == 2) {
-      uVar8 = 0xffffffff820185b8;
-    }
-    else if (uVar1 == 3) {
-      uVar8 = 0xffffffff820185bc;
-    }
-    else {
-      uVar8 = 0xffffffff820068af;
-    }
-    uVar3 = UI_SafeTranslateString(0xffffffff82018598);
-    iVar4 = UI_TextWidth(dVar9,uVar3,0,uVar7);
-    dVar10 = (double)(longlong)iVar4;
-    uVar8 = va(0xffffffff82013790,uVar3,uVar8);
-    UI_DrawText((double)(float)((double)(float)(640.0 - dVar10) * dVar9),0x407b700000000000,dVar9,
-                uVar2,uVar8,0x7fffffff,uVar7,0xffffffff82020000,0xffffffff82000000,0,0);
+    pFVar3 = UI_GetFontHandle(pSVar2,0,0.5);
+    Sys_Milliseconds();
+    pcVar4 = UI_SafeTranslateString("CGAME_WAITINGFORSERVERLOAD");
+    iVar5 = UI_TextWidth(pcVar4,0,pFVar3,(float)dVar9);
+    dVar8 = (double)(longlong)iVar5;
+    pcVar4 = va("%s%s");
+    UI_DrawText(pSVar2,pcVar4,0x7fffffff,pFVar3,(float)((double)(float)(640.0 - dVar8) * dVar9),
+                439.0,-0x7dfe0000,-0x7e000000,(float)dVar9,(float *)0x0,0);
   }
   __restgprlr_28();
   return;

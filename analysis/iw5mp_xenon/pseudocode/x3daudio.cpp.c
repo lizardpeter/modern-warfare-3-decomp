@@ -2,109 +2,112 @@
 
 // 828F2550  X3DAudioInitialize  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/audio/x3daudio/source/x3daudio.cpp:101)
 
-void X3DAudioInitialize(double param_1,ulonglong param_2,undefined8 param_3,uint *param_4)
+void X3DAudioInitialize(uint param_1,float param_2,uchar *param_3)
 
 {
-  uint uVar1;
+  ulonglong uVar1;
+  uint *in_r5;
   
-  uVar1 = (uint)param_2;
-  *param_4 = uVar1;
-  param_4[2] = 0xffffffff;
-  if ((param_2 & 8) != 0) {
-    param_4[2] = (uVar1 >> 2 & 1) + (uVar1 >> 1 & 1) + (uVar1 & 1);
+  uVar1 = (ulonglong)(int)param_1;
+  *in_r5 = param_1;
+  in_r5[2] = 0xffffffff;
+  if ((param_1 & 8) != 0) {
+    in_r5[2] = (param_1 >> 2 & 1) + (param_1 >> 1 & 1) + (param_1 & 1);
   }
-  param_4[1] = 0;
+  in_r5[1] = 0;
   do {
-    param_2 = param_2 - 1 & param_2;
-    param_4[1] = param_4[1] + 1;
-  } while (param_2 != 0);
-  param_4[3] = (uint)(float)param_1;
-  param_4[4] = (int)(float)param_1 - 1;
+    uVar1 = uVar1 - 1 & uVar1;
+    in_r5[1] = in_r5[1] + 1;
+  } while (uVar1 != 0);
+  in_r5[3] = (uint)param_2;
+  in_r5[4] = (int)param_2 - 1;
   return;
 }
 
 
 // 828F25D0  CalculateEmitterToListenerAngle  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/audio/x3daudio/source/x3daudio.cpp:234)
 
-double CalculateEmitterToListenerAngle
-                 (undefined8 param_1,longlong param_2,longlong param_3,int param_4)
+float CalculateEmitterToListenerAngle
+                (X3DAUDIO_HANDLE_PRIVATE *param_1,X3DAUDIO_LISTENER *param_2,
+                X3DAUDIO_EMITTER *param_3,X3DAUDIO_DSP_SETTINGS *param_4)
 
 {
-  float fVar1;
+  double dVar1;
   double dVar2;
-  double _X;
-  undefined1 auStack_38 [32];
+  float fVar3;
+  _D3DVECTOR a_Stack_38 [2];
   
-  fVar1 = 0.0;
-  if (1.1920929e-07 < *(float *)(param_4 + 0x24)) {
-    X3DAUDIO__SubtractVector(param_2 + 0x18,param_3 + 0x1c,auStack_38);
-    dVar2 = (double)X3DAUDIO__DotProduct(auStack_38,param_3 + 4);
-    fVar1 = (float)(dVar2 / (double)*(float *)(param_4 + 0x24));
+  fVar3 = 0.0;
+  if (1.1920929e-07 < param_4->EmitterToListenerDistance) {
+    X3DAUDIO::SubtractVector(&param_2->Position,&param_3->Position,a_Stack_38);
+    fVar3 = X3DAUDIO::DotProduct(a_Stack_38,&param_3->OrientFront);
+    fVar3 = fVar3 / param_4->EmitterToListenerDistance;
   }
-  _X = (double)fVar1;
-  dVar2 = acos(_X);
-  *(float *)(param_4 + 0x20) = (float)dVar2;
-  return _X;
+  dVar2 = (double)fVar3;
+  dVar1 = acos(dVar2);
+  param_4->EmitterToListenerAngle = (float)dVar1;
+  return (float)dVar2;
 }
 
 
 // 828F2680  CalculateDistanceCurveValue  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/audio/x3daudio/source/x3daudio.cpp:286)
 
-double CalculateDistanceCurveValue(double param_1,int *param_2)
+float CalculateDistanceCurveValue(X3DAUDIO_DISTANCE_CURVE *param_1,float param_2)
 
 {
   uint uVar1;
   int iVar2;
-  int iVar3;
-  uint uVar4;
-  float *pfVar5;
+  uint uVar3;
+  X3DAUDIO_DISTANCE_CURVE_POINT *pXVar4;
   
-  uVar1 = param_2[1];
-  uVar4 = 1;
+  uVar1 = param_1->PointCount;
+  uVar3 = 1;
   if (1 < uVar1) {
     if (3 < (int)(uVar1 - 1)) {
-      iVar3 = *param_2;
+      pXVar4 = param_1->pPoints;
       iVar2 = 8;
       do {
-        if (param_1 < (double)*(float *)(iVar2 + iVar3)) goto LAB_828f2760;
-        if (param_1 < (double)*(float *)(iVar2 + iVar3 + 8)) {
-          uVar4 = uVar4 + 1;
+        if (param_2 < *(float *)((int)&pXVar4->Distance + iVar2)) goto LAB_828f2760;
+        if (param_2 < *(float *)((int)&pXVar4[1].Distance + iVar2)) {
+          uVar3 = uVar3 + 1;
           goto LAB_828f2760;
         }
-        if (param_1 < (double)*(float *)(iVar2 + 0x18 + iVar3 + -8)) {
-          uVar4 = uVar4 + 2;
+        if (param_2 < *(float *)((int)&pXVar4[2].Distance + iVar2)) {
+          uVar3 = uVar3 + 2;
           goto LAB_828f2760;
         }
-        if (param_1 < (double)*(float *)(iVar2 + 0x18 + iVar3)) {
-          uVar4 = uVar4 + 3;
+        if (param_2 < *(float *)((int)&pXVar4[3].Distance + iVar2)) {
+          uVar3 = uVar3 + 3;
           goto LAB_828f2760;
         }
-        uVar4 = uVar4 + 4;
+        uVar3 = uVar3 + 4;
         iVar2 = iVar2 + 0x20;
-      } while (uVar4 < uVar1 - 3);
+      } while (uVar3 < uVar1 - 3);
     }
-    if (uVar1 <= uVar4) goto LAB_828f27c8;
-    iVar3 = uVar4 << 3;
+    if (uVar1 <= uVar3) goto LAB_828f27c8;
+    iVar2 = uVar3 << 3;
     do {
-      if (param_1 < (double)*(float *)(iVar3 + *param_2)) break;
-      uVar4 = uVar4 + 1;
-      iVar3 = iVar3 + 8;
-    } while (uVar4 < uVar1);
+      if (param_2 < *(float *)((int)&param_1->pPoints->Distance + iVar2)) break;
+      uVar3 = uVar3 + 1;
+      iVar2 = iVar2 + 8;
+    } while (uVar3 < uVar1);
   }
 LAB_828f2760:
-  if (uVar4 < uVar1) {
-    pfVar5 = (float *)(uVar4 * 8 + *param_2);
-    return (double)(((pfVar5[1] - pfVar5[-1]) / (float)((double)*pfVar5 - (double)pfVar5[-2])) *
-                    (float)(param_1 - (double)pfVar5[-2]) + pfVar5[-1]);
+  if (uVar3 < uVar1) {
+    pXVar4 = param_1->pPoints + uVar3;
+    return ((pXVar4->DSPSetting - pXVar4[-1].DSPSetting) / (pXVar4->Distance - pXVar4[-1].Distance))
+           * (param_2 - pXVar4[-1].Distance) + pXVar4[-1].DSPSetting;
   }
 LAB_828f27c8:
-  return (double)*(float *)(uVar1 * 8 + *param_2 + -4);
+  return param_1->pPoints[uVar1 - 1].DSPSetting;
 }
 
 
 // 828F27E8  CalculateDistanceCurves  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/audio/x3daudio/source/x3daudio.cpp:377)
 
-void CalculateDistanceCurves(undefined8 param_1,int param_2,ulonglong param_3,int *param_4)
+void CalculateDistanceCurves
+               (X3DAUDIO_HANDLE_PRIVATE *param_1,X3DAUDIO_EMITTER *param_2,uint param_3,
+               X3DAUDIO_DSP_SETTINGS *param_4)
 
 {
   longlong lVar1;
@@ -119,177 +122,191 @@ void CalculateDistanceCurves(undefined8 param_1,int param_2,ulonglong param_3,in
   double dVar10;
   double dVar11;
   double dVar12;
-  undefined8 *local_50;
-  float local_4c;
+  float fVar13;
+  X3DAUDIO_DISTANCE_CURVE local_50;
   float local_48;
   float local_44;
-  undefined8 local_40;
+  X3DAUDIO_DISTANCE_CURVE_POINT local_40;
   float local_38;
   float local_34;
   
-  iVar2 = __savegprlr_28();
-  dVar9 = 0.0;
-  dVar11 = 1.0;
-  dVar10 = 0.75;
-  dVar12 = (double)((float)param_4[9] / *(float *)(param_2 + 0x5c));
-  if ((param_3 & 4) != 0) {
-    if (*(int *)(param_2 + 0x50) == 0) {
-      local_50 = &local_40;
-      local_4c = 2.8026e-45;
+  uVar5 = (ulonglong)(int)param_3;
+  iVar2 = __savegprlr_28(param_1);
+  dVar8 = 0.0;
+  dVar10 = 1.0;
+  dVar9 = 0.75;
+  fVar13 = param_4->EmitterToListenerDistance / param_2->CurveDistanceScaler;
+  dVar11 = (double)fVar13;
+  if ((uVar5 & 4) != 0) {
+    if (param_2->pLPFDirectCurve == (X3DAUDIO_DISTANCE_CURVE *)0x0) {
+      local_50.pPoints = &local_40;
+      local_50.PointCount = 2;
       local_38 = 1.0;
       local_34 = 0.75;
-      local_40 = 0x3f800000;
-      dVar8 = (double)CalculateDistanceCurveValue(dVar12,&local_50);
+      local_40.Distance = 0.0;
+      local_40.DSPSetting = 1.0;
+      fVar13 = CalculateDistanceCurveValue(&local_50,fVar13);
     }
     else {
-      dVar8 = (double)CalculateDistanceCurveValue(dVar12);
+      fVar13 = CalculateDistanceCurveValue(param_2->pLPFDirectCurve,fVar13);
     }
-    param_4[4] = (int)(float)dVar8;
+    param_4->LPFDirectCoefficient = fVar13;
   }
-  if ((param_3 & 8) != 0) {
-    if (*(int *)(param_2 + 0x54) == 0) {
-      local_38 = (float)dVar11;
-      local_50 = &local_40;
-      local_4c = 2.8026e-45;
-      local_34 = (float)dVar10;
-      local_40 = CONCAT44((float)dVar9,(float)dVar10);
-      dVar10 = (double)CalculateDistanceCurveValue(dVar12,&local_50);
+  if ((uVar5 & 8) != 0) {
+    if (param_2->pLPFReverbCurve == (X3DAUDIO_DISTANCE_CURVE *)0x0) {
+      local_38 = (float)dVar10;
+      local_50.pPoints = &local_40;
+      local_50.PointCount = 2;
+      local_34 = (float)dVar9;
+      local_40.Distance = (float)dVar8;
+      local_40.DSPSetting = (float)dVar9;
+      fVar13 = CalculateDistanceCurveValue(&local_50,(float)dVar11);
     }
     else {
-      dVar10 = (double)CalculateDistanceCurveValue(dVar12);
+      fVar13 = CalculateDistanceCurveValue(param_2->pLPFReverbCurve,(float)dVar11);
     }
-    param_4[5] = (int)(float)dVar10;
+    param_4->LPFReverbCoefficient = fVar13;
   }
-  if ((param_3 & 0x10) != 0) {
-    if (*(int *)(param_2 + 0x58) == 0) {
-      local_50 = (undefined8 *)(float)dVar9;
-      local_4c = (float)dVar11;
-      local_48 = (float)dVar11;
-      local_44 = (float)dVar9;
-      local_40 = CONCAT44(&local_50,2);
-      dVar10 = (double)CalculateDistanceCurveValue(dVar12,&local_40);
+  if ((uVar5 & 0x10) != 0) {
+    if (param_2->pReverbCurve == (X3DAUDIO_DISTANCE_CURVE *)0x0) {
+      local_50.pPoints = (X3DAUDIO_DISTANCE_CURVE_POINT *)(float)dVar8;
+      local_50.PointCount = (uint)(float)dVar10;
+      local_48 = (float)dVar10;
+      local_44 = (float)dVar8;
+      local_40.Distance = (float)&local_50;
+      local_40.DSPSetting = 2.8026e-45;
+      local_50.pPoints =
+           (X3DAUDIO_DISTANCE_CURVE_POINT *)
+           CalculateDistanceCurveValue((X3DAUDIO_DISTANCE_CURVE *)&local_40,(float)dVar11);
     }
     else {
-      dVar10 = (double)CalculateDistanceCurveValue(dVar12);
+      local_50.pPoints =
+           (X3DAUDIO_DISTANCE_CURVE_POINT *)
+           CalculateDistanceCurveValue(param_2->pReverbCurve,(float)dVar11);
     }
-    local_50 = (undefined8 *)(float)dVar10;
-    param_4[6] = (int)local_50;
+    param_4->ReverbLevel = (float)local_50.pPoints;
   }
-  if ((param_3 & 1) != 0) {
-    if (*(int *)(param_2 + 0x48) == 0) {
-      dVar10 = dVar11;
-      if (dVar11 < dVar12) {
-        dVar10 = (double)(float)(dVar11 / dVar12);
+  if ((uVar5 & 1) != 0) {
+    if (param_2->pVolumeCurve == (X3DAUDIO_DISTANCE_CURVE *)0x0) {
+      dVar9 = dVar10;
+      if (dVar10 < dVar11) {
+        dVar9 = (double)(float)(dVar10 / dVar11);
       }
     }
     else {
-      dVar10 = (double)CalculateDistanceCurveValue(dVar12);
+      fVar13 = CalculateDistanceCurveValue(param_2->pVolumeCurve,(float)dVar11);
+      dVar9 = (double)fVar13;
     }
-    if (*(int *)(param_2 + 0x3c) == 1) {
-      *(float *)*param_4 = (float)dVar10;
+    if (param_2->ChannelCount == 1) {
+      *param_4->pMatrixCoefficients = (float)dVar9;
       uVar6 = 1;
-      if (1 < (uint)param_4[3]) {
+      if (1 < param_4->DstChannelCount) {
         do {
-          iVar4 = param_4[2] * uVar6;
+          iVar4 = param_4->SrcChannelCount * uVar6;
           uVar6 = uVar6 + 1;
-          *(float *)(iVar4 * 4 + *param_4) = (float)dVar9;
-        } while (uVar6 < (uint)param_4[3]);
+          param_4->pMatrixCoefficients[iVar4] = (float)dVar8;
+        } while (uVar6 < param_4->DstChannelCount);
       }
-      if ((param_3 & 0x20000) != 0) {
-        if (*(int *)(param_2 + 0x4c) == 0) {
-          if (dVar11 < dVar12) {
-            dVar11 = (double)(float)(dVar11 / dVar12);
+      if ((uVar5 & 0x20000) != 0) {
+        if (param_2->pLFECurve == (X3DAUDIO_DISTANCE_CURVE *)0x0) {
+          if (dVar10 < dVar11) {
+            dVar10 = (double)(float)(dVar10 / dVar11);
           }
-          *(float *)(*(int *)(iVar2 + 8) * 4 + *param_4) = (float)dVar11;
+          param_4->pMatrixCoefficients[*(int *)(iVar2 + 8)] = (float)dVar10;
           __restgprlr_28();
           return;
         }
-        dVar11 = (double)CalculateDistanceCurveValue(dVar12);
-        *(float *)(*(int *)(iVar2 + 8) * 4 + *param_4) = (float)dVar11;
+        fVar13 = CalculateDistanceCurveValue(param_2->pLFECurve,(float)dVar11);
+        param_4->pMatrixCoefficients[*(int *)(iVar2 + 8)] = fVar13;
         __restgprlr_28();
         return;
       }
     }
     else {
       uVar7 = 0;
-      dVar8 = 6.2831854820251465;
-      if (*(int *)(param_2 + 0x3c) != 0) {
+      dVar12 = 6.2831854820251465;
+      if (param_2->ChannelCount != 0) {
         iVar4 = 0;
         do {
           uVar6 = 0;
-          if (param_4[3] != 0) {
+          if (param_4->DstChannelCount != 0) {
             do {
               lVar3 = (longlong)(int)uVar6;
               uVar6 = uVar6 + 1;
-              *(float *)((int)((param_4[2] * lVar3 + uVar7 & 0xffffffff) << 2) + *param_4) =
-                   (float)dVar9;
-            } while (uVar6 < (uint)param_4[3]);
+              *(float *)((int)(((int)param_4->SrcChannelCount * lVar3 + uVar7 & 0xffffffff) << 2) +
+                        (int)param_4->pMatrixCoefficients) = (float)dVar8;
+            } while (uVar6 < param_4->DstChannelCount);
           }
-          if (*(float *)(iVar4 + *(int *)(param_2 + 0x44)) == 6.2831855) {
+          if (*(float *)(iVar4 + (int)param_2->pChannelAzimuths) == 6.2831855) {
             if (*(int *)(iVar2 + 8) != -1) break;
           }
           else {
-            *(float *)(iVar4 + *param_4) = (float)dVar10;
+            *(float *)(iVar4 + (int)param_4->pMatrixCoefficients) = (float)dVar9;
           }
           uVar7 = uVar7 + 1;
           iVar4 = iVar4 + 4;
-        } while ((uVar7 & 0xffffffff) < (ulonglong)*(uint *)(param_2 + 0x3c));
+        } while ((uVar7 & 0xffffffff) < (ulonglong)param_2->ChannelCount);
       }
-      if ((uVar7 & 0xffffffff) < (ulonglong)*(uint *)(param_2 + 0x3c)) {
-        if (*(int *)(param_2 + 0x4c) == 0) {
-          if (dVar11 < dVar12) {
-            dVar11 = (double)(float)(dVar11 / dVar12);
+      if ((uVar7 & 0xffffffff) < (ulonglong)param_2->ChannelCount) {
+        if (param_2->pLFECurve == (X3DAUDIO_DISTANCE_CURVE *)0x0) {
+          if (dVar10 < dVar11) {
+            dVar10 = (double)(float)(dVar10 / dVar11);
           }
         }
         else {
-          dVar11 = (double)CalculateDistanceCurveValue(dVar12);
+          fVar13 = CalculateDistanceCurveValue(param_2->pLFECurve,(float)dVar11);
+          dVar10 = (double)fVar13;
         }
         uVar5 = uVar7 + 1;
-        *(float *)((int)(((longlong)param_4[2] * (longlong)*(int *)(iVar2 + 8) + uVar7 & 0xffffffff)
-                        << 2) + *param_4) = (float)dVar11;
-        if ((uVar5 & 0xffffffff) < (ulonglong)*(uint *)(param_2 + 0x3c)) {
+        *(float *)((int)(((longlong)(int)param_4->SrcChannelCount * (longlong)*(int *)(iVar2 + 8) +
+                          uVar7 & 0xffffffff) << 2) + (int)param_4->pMatrixCoefficients) =
+             (float)dVar10;
+        if ((uVar5 & 0xffffffff) < (ulonglong)param_2->ChannelCount) {
           lVar3 = (uVar5 & 0x3fffffff) << 2;
           do {
             uVar6 = 0;
-            if (param_4[3] != 0) {
+            if (param_4->DstChannelCount != 0) {
               do {
                 lVar1 = (longlong)(int)uVar6;
                 uVar6 = uVar6 + 1;
-                *(float *)((int)((param_4[2] * lVar1 + uVar5 & 0xffffffff) << 2) + *param_4) =
-                     (float)dVar9;
-              } while (uVar6 < (uint)param_4[3]);
+                *(float *)((int)(((int)param_4->SrcChannelCount * lVar1 + uVar5 & 0xffffffff) << 2)
+                          + (int)param_4->pMatrixCoefficients) = (float)dVar8;
+              } while (uVar6 < param_4->DstChannelCount);
             }
-            if ((double)*(float *)((int)lVar3 + *(int *)(param_2 + 0x44)) == dVar8) {
-              *(float *)((int)(((longlong)param_4[2] * (longlong)*(int *)(iVar2 + 8) + uVar5 &
-                               0xffffffff) << 2) + *param_4) = (float)dVar11;
+            if ((double)*(float *)((int)lVar3 + (int)param_2->pChannelAzimuths) == dVar12) {
+              *(float *)((int)(((longlong)(int)param_4->SrcChannelCount *
+                                (longlong)*(int *)(iVar2 + 8) + uVar5 & 0xffffffff) << 2) +
+                        (int)param_4->pMatrixCoefficients) = (float)dVar10;
             }
             else {
-              *(float *)((int)lVar3 + *param_4) = (float)dVar10;
+              *(float *)((int)lVar3 + (int)param_4->pMatrixCoefficients) = (float)dVar9;
             }
             uVar5 = uVar5 + 1;
             lVar3 = lVar3 + 4;
-          } while ((uVar5 & 0xffffffff) < (ulonglong)*(uint *)(param_2 + 0x3c));
+          } while ((uVar5 & 0xffffffff) < (ulonglong)param_2->ChannelCount);
           __restgprlr_28();
           return;
         }
       }
-      else if ((param_3 & 0x20000) != 0) {
-        if (*(int *)(param_2 + 0x4c) == 0) {
-          if (dVar11 < dVar12) {
-            dVar11 = (double)(float)(dVar11 / dVar12);
+      else if ((uVar5 & 0x20000) != 0) {
+        if (param_2->pLFECurve == (X3DAUDIO_DISTANCE_CURVE *)0x0) {
+          if (dVar10 < dVar11) {
+            dVar10 = (double)(float)(dVar10 / dVar11);
           }
         }
         else {
-          dVar11 = (double)CalculateDistanceCurveValue(dVar12);
+          fVar13 = CalculateDistanceCurveValue(param_2->pLFECurve,(float)dVar11);
+          dVar10 = (double)fVar13;
         }
-        local_40 = (ulonglong)(uint)param_4[2];
+        local_40.Distance = 0.0;
+        local_40.DSPSetting = (float)param_4->SrcChannelCount;
         uVar6 = 0;
-        if (local_40 != 0) {
+        if (local_40 != (X3DAUDIO_DISTANCE_CURVE_POINT)0x0) {
           do {
-            iVar4 = param_4[2] * *(int *)(iVar2 + 8) + uVar6;
+            iVar4 = param_4->SrcChannelCount * *(int *)(iVar2 + 8) + uVar6;
             uVar6 = uVar6 + 1;
-            *(float *)(iVar4 * 4 + *param_4) = (float)(dVar11 / (double)local_40);
-          } while (uVar6 < (uint)param_4[2]);
+            param_4->pMatrixCoefficients[iVar4] = (float)(dVar10 / (double)(longlong)local_40);
+          } while (uVar6 < param_4->SrcChannelCount);
         }
       }
     }
@@ -302,118 +319,117 @@ void CalculateDistanceCurves(undefined8 param_1,int param_2,ulonglong param_3,in
 // 828F2CA0  CalculateEmitterCone  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/audio/x3daudio/source/x3daudio.cpp:534)
 
 void CalculateEmitterCone
-               (undefined8 param_1,longlong param_2,longlong param_3,ulonglong param_4,int *param_5)
+               (X3DAUDIO_HANDLE_PRIVATE *param_1,X3DAUDIO_LISTENER *param_2,
+               X3DAUDIO_EMITTER *param_3,uint param_4,X3DAUDIO_DSP_SETTINGS *param_5)
 
 {
-  float *pfVar1;
+  X3DAUDIO_CONE *pXVar1;
   float fVar2;
-  float fVar3;
-  int iVar4;
-  int *piVar5;
+  int iVar3;
+  ulonglong uVar4;
+  double dVar5;
   double dVar6;
   double dVar7;
   double dVar8;
   double dVar9;
   double dVar10;
-  double dVar11;
-  undefined1 auStack_68 [104];
+  float fVar11;
+  _D3DVECTOR a_Stack_68 [8];
   
-  __savegprlr_28();
-  iVar4 = __savefpr_26();
-  piVar5 = (int *)param_3;
-  pfVar1 = (float *)*piVar5;
-  dVar8 = 0.0;
-  dVar7 = dVar8;
-  dVar9 = dVar8;
-  if (pfVar1[1] == 0.0) {
-    if ((param_4 & 1) != 0) {
-      dVar9 = (double)pfVar1[3];
+  uVar4 = (ulonglong)(int)param_4;
+  __savegprlr_28(param_1);
+  iVar3 = __savefpr_26();
+  pXVar1 = param_3->pCone;
+  dVar7 = 0.0;
+  dVar6 = dVar7;
+  dVar8 = dVar7;
+  if (pXVar1->OuterAngle == 0.0) {
+    if ((uVar4 & 1) != 0) {
+      dVar8 = (double)pXVar1->OuterVolume;
     }
-    if ((param_4 & 0xc) != 0) {
-      dVar7 = (double)pfVar1[5];
+    if ((uVar4 & 0xc) != 0) {
+      dVar6 = (double)pXVar1->OuterLPF;
     }
-    if ((param_4 & 0x10) != 0) {
-      dVar8 = (double)pfVar1[7];
+    if ((uVar4 & 0x10) != 0) {
+      dVar7 = (double)pXVar1->OuterReverb;
+    }
+  }
+  else if ((pXVar1->InnerAngle == 6.2831855) ||
+          (param_5->EmitterToListenerDistance <= 1.1920929e-07)) {
+    if ((uVar4 & 1) != 0) {
+      dVar8 = (double)pXVar1->InnerVolume;
+    }
+    if ((uVar4 & 0xc) != 0) {
+      dVar6 = (double)pXVar1->InnerLPF;
+    }
+    if ((uVar4 & 0x10) != 0) {
+      dVar7 = (double)pXVar1->InnerReverb;
     }
   }
   else {
-    if (*pfVar1 != 6.2831855) {
-      if (1.1920929e-07 < (float)param_5[9]) {
-        X3DAUDIO__SubtractVector(param_2 + 0x18,param_3 + 0x1c,auStack_68);
-        dVar6 = (double)X3DAUDIO__DotProduct(auStack_68,param_3 + 4);
-        dVar10 = 0.5;
-        dVar11 = (double)(float)(dVar6 / (double)(float)param_5[9]);
-        dVar6 = cos((double)(*(float *)*piVar5 * 0.5));
-        dVar6 = (double)(float)dVar6;
-        if (dVar11 < dVar6) {
-          dVar10 = cos((double)(float)((double)*(float *)(*piVar5 + 4) * dVar10));
-          if ((double)(float)dVar10 < dVar11) {
-            fVar3 = (float)(dVar11 - dVar6) / (float)((double)(float)dVar10 - dVar6);
-            if ((param_4 & 1) != 0) {
-              fVar2 = *(float *)(*piVar5 + 8);
-              dVar9 = (double)((*(float *)(*piVar5 + 0xc) - fVar2) * fVar3 + fVar2);
-            }
-            if ((param_4 & 0xc) != 0) {
-              fVar2 = *(float *)(*piVar5 + 0x10);
-              dVar7 = (double)((*(float *)(*piVar5 + 0x14) - fVar2) * fVar3 + fVar2);
-            }
-            if ((param_4 & 0x10) != 0) {
-              fVar2 = *(float *)(*piVar5 + 0x18);
-              dVar8 = (double)((*(float *)(*piVar5 + 0x1c) - fVar2) * fVar3 + fVar2);
-            }
-          }
-          else {
-            if ((param_4 & 1) != 0) {
-              dVar9 = (double)*(float *)(*piVar5 + 0xc);
-            }
-            if ((param_4 & 0xc) != 0) {
-              dVar7 = (double)*(float *)(*piVar5 + 0x14);
-            }
-            if ((param_4 & 0x10) != 0) {
-              dVar8 = (double)*(float *)(*piVar5 + 0x1c);
-            }
-          }
+    X3DAUDIO::SubtractVector(&param_2->Position,&param_3->Position,a_Stack_68);
+    fVar11 = X3DAUDIO::DotProduct(a_Stack_68,&param_3->OrientFront);
+    dVar9 = 0.5;
+    dVar10 = (double)(fVar11 / param_5->EmitterToListenerDistance);
+    dVar5 = cos((double)(param_3->pCone->InnerAngle * 0.5));
+    dVar5 = (double)(float)dVar5;
+    if (dVar10 < dVar5) {
+      dVar9 = cos((double)(float)((double)param_3->pCone->OuterAngle * dVar9));
+      if ((double)(float)dVar9 < dVar10) {
+        fVar11 = (float)(dVar10 - dVar5) / (float)((double)(float)dVar9 - dVar5);
+        if ((uVar4 & 1) != 0) {
+          fVar2 = param_3->pCone->InnerVolume;
+          dVar8 = (double)((param_3->pCone->OuterVolume - fVar2) * fVar11 + fVar2);
         }
-        else {
-          if ((param_4 & 1) != 0) {
-            dVar9 = (double)*(float *)(*piVar5 + 8);
-          }
-          if ((param_4 & 0xc) != 0) {
-            dVar7 = (double)*(float *)(*piVar5 + 0x10);
-          }
-          if ((param_4 & 0x10) != 0) {
-            dVar8 = (double)*(float *)(*piVar5 + 0x18);
-          }
+        if ((uVar4 & 0xc) != 0) {
+          fVar2 = param_3->pCone->InnerLPF;
+          dVar6 = (double)((param_3->pCone->OuterLPF - fVar2) * fVar11 + fVar2);
         }
-        goto LAB_828f2f84;
+        if ((uVar4 & 0x10) != 0) {
+          fVar2 = param_3->pCone->InnerReverb;
+          dVar7 = (double)((param_3->pCone->OuterReverb - fVar2) * fVar11 + fVar2);
+        }
+      }
+      else {
+        if ((uVar4 & 1) != 0) {
+          dVar8 = (double)param_3->pCone->OuterVolume;
+        }
+        if ((uVar4 & 0xc) != 0) {
+          dVar6 = (double)param_3->pCone->OuterLPF;
+        }
+        if ((uVar4 & 0x10) != 0) {
+          dVar7 = (double)param_3->pCone->OuterReverb;
+        }
       }
     }
-    if ((param_4 & 1) != 0) {
-      dVar9 = (double)pfVar1[2];
-    }
-    if ((param_4 & 0xc) != 0) {
-      dVar7 = (double)pfVar1[4];
-    }
-    if ((param_4 & 0x10) != 0) {
-      dVar8 = (double)pfVar1[6];
-    }
-  }
-LAB_828f2f84:
-  if ((param_4 & 1) != 0) {
-    *(float *)*param_5 = (float)((double)*(float *)*param_5 * dVar9);
-    if (*(int *)(iVar4 + 8) != -1) {
-      iVar4 = *(int *)(iVar4 + 8) * 4;
-      *(float *)(iVar4 + *param_5) = (float)((double)*(float *)(iVar4 + *param_5) * dVar9);
+    else {
+      if ((uVar4 & 1) != 0) {
+        dVar8 = (double)param_3->pCone->InnerVolume;
+      }
+      if ((uVar4 & 0xc) != 0) {
+        dVar6 = (double)param_3->pCone->InnerLPF;
+      }
+      if ((uVar4 & 0x10) != 0) {
+        dVar7 = (double)param_3->pCone->InnerReverb;
+      }
     }
   }
-  if ((param_4 & 4) != 0) {
-    param_5[4] = (int)(float)((double)(float)param_5[4] * dVar7);
+  if ((uVar4 & 1) != 0) {
+    *param_5->pMatrixCoefficients = (float)((double)*param_5->pMatrixCoefficients * dVar8);
+    iVar3 = *(int *)(iVar3 + 8);
+    if (iVar3 != -1) {
+      param_5->pMatrixCoefficients[iVar3] =
+           (float)((double)param_5->pMatrixCoefficients[iVar3] * dVar8);
+    }
   }
-  if ((param_4 & 8) != 0) {
-    param_5[5] = (int)(float)((double)(float)param_5[5] * dVar7);
+  if ((uVar4 & 4) != 0) {
+    param_5->LPFDirectCoefficient = (float)((double)param_5->LPFDirectCoefficient * dVar6);
   }
-  if ((param_4 & 0x10) != 0) {
-    param_5[6] = (int)(float)((double)(float)param_5[6] * dVar8);
+  if ((uVar4 & 8) != 0) {
+    param_5->LPFReverbCoefficient = (float)((double)param_5->LPFReverbCoefficient * dVar6);
+  }
+  if ((uVar4 & 0x10) != 0) {
+    param_5->ReverbLevel = (float)((double)param_5->ReverbLevel * dVar7);
   }
   __restfpr_26();
   __restgprlr_28();
@@ -424,14 +440,15 @@ LAB_828f2f84:
 // 828F3048  CalculateListenerCone  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/audio/x3daudio/source/x3daudio.cpp:684)
 
 void CalculateListenerCone
-               (undefined8 param_1,longlong param_2,longlong param_3,ulonglong param_4,int *param_5)
+               (X3DAUDIO_HANDLE_PRIVATE *param_1,X3DAUDIO_LISTENER *param_2,
+               X3DAUDIO_EMITTER *param_3,uint param_4,X3DAUDIO_DSP_SETTINGS *param_5)
 
 {
-  float fVar1;
+  X3DAUDIO_CONE *pXVar1;
   float fVar2;
   int iVar3;
   int iVar4;
-  int iVar5;
+  ulonglong uVar5;
   float *pfVar6;
   uint uVar7;
   int iVar8;
@@ -445,149 +462,146 @@ void CalculateListenerCone
   double dVar16;
   double dVar17;
   double dVar18;
-  undefined1 auStack_88 [136];
+  float fVar19;
+  _D3DVECTOR a_Stack_88 [11];
   
-  __savegprlr_27();
-  iVar5 = __savefpr_24();
-  iVar4 = (int)param_2;
-  pfVar6 = *(float **)(iVar4 + 0x30);
+  uVar5 = (ulonglong)(int)param_4;
+  __savegprlr_27(param_1);
+  iVar3 = __savefpr_24();
+  pXVar1 = param_2->pCone;
   dVar14 = 0.0;
   dVar11 = 6.2831854820251465;
   dVar10 = dVar14;
   dVar12 = dVar14;
   dVar13 = dVar14;
-  if (pfVar6[1] == 0.0) {
-    if ((param_4 & 1) != 0) {
-      dVar13 = (double)pfVar6[3];
+  if (pXVar1->OuterAngle == 0.0) {
+    if ((uVar5 & 1) != 0) {
+      dVar13 = (double)pXVar1->OuterVolume;
     }
-    if ((param_4 & 0xc) != 0) {
-      dVar12 = (double)pfVar6[5];
+    if ((uVar5 & 0xc) != 0) {
+      dVar12 = (double)pXVar1->OuterLPF;
     }
-    if ((param_4 & 0x10) != 0) {
-      dVar10 = (double)pfVar6[7];
+    if ((uVar5 & 0x10) != 0) {
+      dVar10 = (double)pXVar1->OuterReverb;
+    }
+  }
+  else if ((pXVar1->InnerAngle == 6.2831855) ||
+          (param_5->EmitterToListenerDistance <= 1.1920929e-07)) {
+    if ((uVar5 & 1) != 0) {
+      dVar13 = (double)pXVar1->InnerVolume;
+    }
+    if ((uVar5 & 0xc) != 0) {
+      dVar12 = (double)pXVar1->InnerLPF;
+    }
+    if ((uVar5 & 0x10) != 0) {
+      dVar10 = (double)pXVar1->InnerReverb;
     }
   }
   else {
-    if (*pfVar6 != 6.2831855) {
-      if (1.1920929e-07 < (float)param_5[9]) {
-        dVar15 = dVar14;
-        X3DAUDIO__SubtractVector(param_3 + 0x1c,param_2 + 0x18,auStack_88);
-        dVar10 = (double)X3DAUDIO__DotProduct(auStack_88,param_2);
-        dVar16 = 0.5;
-        dVar18 = (double)(float)(dVar10 / (double)(float)param_5[9]);
-        dVar10 = cos((double)(**(float **)(iVar4 + 0x30) * 0.5));
-        dVar17 = (double)(float)dVar10;
-        if (dVar18 < dVar17) {
-          dVar16 = cos((double)(float)((double)*(float *)(*(int *)(iVar4 + 0x30) + 4) * dVar16));
-          dVar10 = dVar14;
-          dVar14 = dVar15;
-          if ((double)(float)dVar16 < dVar18) {
-            fVar2 = (float)(dVar18 - dVar17) / (float)((double)(float)dVar16 - dVar17);
-            if ((param_4 & 1) != 0) {
-              fVar1 = *(float *)(*(int *)(iVar4 + 0x30) + 8);
-              dVar13 = (double)((*(float *)(*(int *)(iVar4 + 0x30) + 0xc) - fVar1) * fVar2 + fVar1);
-            }
-            if ((param_4 & 0xc) != 0) {
-              fVar1 = *(float *)(*(int *)(iVar4 + 0x30) + 0x10);
-              dVar12 = (double)((*(float *)(*(int *)(iVar4 + 0x30) + 0x14) - fVar1) * fVar2 + fVar1)
-              ;
-            }
-            if ((param_4 & 0x10) != 0) {
-              fVar1 = *(float *)(*(int *)(iVar4 + 0x30) + 0x18);
-              dVar10 = (double)((*(float *)(*(int *)(iVar4 + 0x30) + 0x1c) - fVar1) * fVar2 + fVar1)
-              ;
-            }
-          }
-          else {
-            if ((param_4 & 1) != 0) {
-              dVar13 = (double)*(float *)(*(int *)(iVar4 + 0x30) + 0xc);
-            }
-            if ((param_4 & 0xc) != 0) {
-              dVar12 = (double)*(float *)(*(int *)(iVar4 + 0x30) + 0x14);
-            }
-            if ((param_4 & 0x10) != 0) {
-              dVar10 = (double)*(float *)(*(int *)(iVar4 + 0x30) + 0x1c);
-            }
-          }
+    dVar15 = dVar14;
+    X3DAUDIO::SubtractVector(&param_3->Position,&param_2->Position,a_Stack_88);
+    fVar19 = X3DAUDIO::DotProduct(a_Stack_88,&param_2->OrientFront);
+    dVar16 = 0.5;
+    dVar18 = (double)(fVar19 / param_5->EmitterToListenerDistance);
+    dVar10 = cos((double)(param_2->pCone->InnerAngle * 0.5));
+    dVar17 = (double)(float)dVar10;
+    if (dVar18 < dVar17) {
+      dVar16 = cos((double)(float)((double)param_2->pCone->OuterAngle * dVar16));
+      dVar10 = dVar14;
+      dVar14 = dVar15;
+      if ((double)(float)dVar16 < dVar18) {
+        fVar19 = (float)(dVar18 - dVar17) / (float)((double)(float)dVar16 - dVar17);
+        if ((uVar5 & 1) != 0) {
+          fVar2 = param_2->pCone->InnerVolume;
+          dVar13 = (double)((param_2->pCone->OuterVolume - fVar2) * fVar19 + fVar2);
         }
-        else {
-          if ((param_4 & 1) != 0) {
-            dVar13 = (double)*(float *)(*(int *)(iVar4 + 0x30) + 8);
-          }
-          if ((param_4 & 0xc) != 0) {
-            dVar12 = (double)*(float *)(*(int *)(iVar4 + 0x30) + 0x10);
-          }
-          dVar10 = dVar14;
-          dVar14 = dVar15;
-          if ((param_4 & 0x10) != 0) {
-            dVar10 = (double)*(float *)(*(int *)(iVar4 + 0x30) + 0x18);
-          }
+        if ((uVar5 & 0xc) != 0) {
+          fVar2 = param_2->pCone->InnerLPF;
+          dVar12 = (double)((param_2->pCone->OuterLPF - fVar2) * fVar19 + fVar2);
         }
-        goto LAB_828f3330;
+        if ((uVar5 & 0x10) != 0) {
+          fVar2 = param_2->pCone->InnerReverb;
+          dVar10 = (double)((param_2->pCone->OuterReverb - fVar2) * fVar19 + fVar2);
+        }
+      }
+      else {
+        if ((uVar5 & 1) != 0) {
+          dVar13 = (double)param_2->pCone->OuterVolume;
+        }
+        if ((uVar5 & 0xc) != 0) {
+          dVar12 = (double)param_2->pCone->OuterLPF;
+        }
+        if ((uVar5 & 0x10) != 0) {
+          dVar10 = (double)param_2->pCone->OuterReverb;
+        }
       }
     }
-    if ((param_4 & 1) != 0) {
-      dVar13 = (double)pfVar6[2];
-    }
-    if ((param_4 & 0xc) != 0) {
-      dVar12 = (double)pfVar6[4];
-    }
-    if ((param_4 & 0x10) != 0) {
-      dVar10 = (double)pfVar6[6];
+    else {
+      if ((uVar5 & 1) != 0) {
+        dVar13 = (double)param_2->pCone->InnerVolume;
+      }
+      if ((uVar5 & 0xc) != 0) {
+        dVar12 = (double)param_2->pCone->InnerLPF;
+      }
+      dVar10 = dVar14;
+      dVar14 = dVar15;
+      if ((uVar5 & 0x10) != 0) {
+        dVar10 = (double)param_2->pCone->InnerReverb;
+      }
     }
   }
-LAB_828f3330:
-  if ((param_4 & 1) != 0) {
-    iVar4 = (int)param_3;
+  if ((uVar5 & 1) != 0) {
     uVar9 = 0;
     uVar7 = 0;
-    if (*(int *)(iVar4 + 0x3c) != 0) {
+    if (param_3->ChannelCount != 0) {
       iVar8 = 0;
       do {
         uVar9 = uVar9 + 1;
-        pfVar6 = (float *)(iVar8 + *param_5);
+        pfVar6 = (float *)(iVar8 + (int)param_5->pMatrixCoefficients);
         iVar8 = iVar8 + 4;
         *pfVar6 = (float)((double)*pfVar6 * dVar13);
-        uVar7 = *(uint *)(iVar4 + 0x3c);
+        uVar7 = param_3->ChannelCount;
       } while (uVar9 < uVar7);
     }
-    if (*(int *)(iVar5 + 8) != -1) {
+    iVar8 = *(int *)(iVar3 + 8);
+    if (iVar8 != -1) {
       if (uVar7 == 1) {
-        iVar4 = *(int *)(iVar5 + 8) * 4;
-        *(float *)(iVar4 + *param_5) = (float)(dVar13 * (double)*(float *)(iVar4 + *param_5));
+        param_5->pMatrixCoefficients[iVar8] =
+             (float)(dVar13 * (double)param_5->pMatrixCoefficients[iVar8]);
       }
       else {
         uVar9 = 0;
         if (uVar7 != 0) {
           iVar8 = 0;
           do {
-            if ((double)*(float *)(iVar8 + *(int *)(iVar4 + 0x44)) == dVar11) {
-              iVar3 = (param_5[2] * *(int *)(iVar5 + 8) + uVar9) * 4;
-              *(float *)(iVar3 + *param_5) = (float)((double)*(float *)(iVar3 + *param_5) * dVar13);
+            if ((double)*(float *)(iVar8 + (int)param_3->pChannelAzimuths) == dVar11) {
+              iVar4 = param_5->SrcChannelCount * *(int *)(iVar3 + 8) + uVar9;
+              param_5->pMatrixCoefficients[iVar4] =
+                   (float)((double)param_5->pMatrixCoefficients[iVar4] * dVar13);
             }
             uVar9 = uVar9 + 1;
             iVar8 = iVar8 + 4;
-          } while (uVar9 < *(uint *)(iVar4 + 0x3c));
+          } while (uVar9 < param_3->ChannelCount);
         }
       }
     }
   }
-  if ((param_4 & 4) != 0) {
-    fVar2 = (float)param_5[4];
-    param_5[4] = (int)(float)((double)fVar2 - dVar12);
-    if ((double)(float)((double)fVar2 - dVar12) < dVar14) {
-      param_5[4] = (int)(float)dVar14;
+  if ((uVar5 & 4) != 0) {
+    fVar19 = (float)((double)param_5->LPFDirectCoefficient - dVar12);
+    param_5->LPFDirectCoefficient = fVar19;
+    if ((double)fVar19 < dVar14) {
+      param_5->LPFDirectCoefficient = (float)dVar14;
     }
   }
-  if ((param_4 & 8) != 0) {
-    fVar2 = (float)param_5[5];
-    param_5[5] = (int)(float)((double)fVar2 - dVar12);
-    if ((double)(float)((double)fVar2 - dVar12) < dVar14) {
-      param_5[5] = (int)(float)dVar14;
+  if ((uVar5 & 8) != 0) {
+    fVar19 = (float)((double)param_5->LPFReverbCoefficient - dVar12);
+    param_5->LPFReverbCoefficient = fVar19;
+    if ((double)fVar19 < dVar14) {
+      param_5->LPFReverbCoefficient = (float)dVar14;
     }
   }
-  if ((param_4 & 0x10) != 0) {
-    param_5[6] = (int)(float)((double)(float)param_5[6] * dVar10);
+  if ((uVar5 & 0x10) != 0) {
+    param_5->ReverbLevel = (float)((double)param_5->ReverbLevel * dVar10);
   }
   __restfpr_24();
   __restgprlr_27();
@@ -597,45 +611,45 @@ LAB_828f3330:
 
 // 828F34A8  CalculateDopplerFactor  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/audio/x3daudio/source/x3daudio.cpp:847)
 
-void CalculateDopplerFactor(undefined8 param_1,longlong param_2,longlong param_3,int param_4)
+void CalculateDopplerFactor
+               (X3DAUDIO_HANDLE_PRIVATE *param_1,X3DAUDIO_LISTENER *param_2,
+               X3DAUDIO_EMITTER *param_3,X3DAUDIO_DSP_SETTINGS *param_4)
 
 {
   float fVar1;
   float fVar2;
-  float fVar3;
-  float fVar4;
-  int iVar5;
-  double dVar6;
-  double dVar7;
-  double dVar8;
-  undefined1 auStack_48 [72];
+  int iVar3;
+  double dVar4;
+  double dVar5;
+  float fVar6;
+  float fVar7;
+  _D3DVECTOR a_Stack_48 [6];
   
-  iVar5 = __savegprlr_28();
-  dVar6 = 0.0;
-  fVar1 = 1.0;
-  dVar7 = dVar6;
-  if (1.1920929e-07 < *(float *)(param_4 + 0x24)) {
-    X3DAUDIO__SubtractVector(param_2 + 0x18,param_3 + 0x1c,auStack_48);
-    dVar7 = (double)X3DAUDIO__DotProduct(auStack_48,param_2 + 0x24);
-    dVar7 = (double)(float)(dVar7 / (double)*(float *)(param_4 + 0x24));
-    dVar6 = (double)X3DAUDIO__DotProduct(auStack_48,param_3 + 0x28);
-    fVar3 = *(float *)(iVar5 + 0x10);
-    dVar8 = (double)*(float *)((int)param_3 + 0x60);
-    fVar1 = (float)(dVar8 * dVar7);
-    dVar6 = (double)(float)(dVar6 / (double)*(float *)(param_4 + 0x24));
-    fVar2 = (float)(dVar8 * dVar6);
-    fVar4 = fVar3;
-    if ((fVar1 <= fVar3) && (fVar4 = fVar1, fVar1 < -fVar3)) {
-      fVar4 = -fVar3;
+  iVar3 = __savegprlr_28(param_1);
+  dVar4 = 0.0;
+  fVar6 = 1.0;
+  dVar5 = dVar4;
+  if (1.1920929e-07 < param_4->EmitterToListenerDistance) {
+    X3DAUDIO::SubtractVector(&param_2->Position,&param_3->Position,a_Stack_48);
+    fVar6 = X3DAUDIO::DotProduct(a_Stack_48,&param_2->Velocity);
+    dVar5 = (double)(fVar6 / param_4->EmitterToListenerDistance);
+    fVar7 = X3DAUDIO::DotProduct(a_Stack_48,&param_3->Velocity);
+    fVar1 = *(float *)(iVar3 + 0x10);
+    fVar6 = (float)((double)param_3->DopplerScaler * dVar5);
+    dVar4 = (double)(fVar7 / param_4->EmitterToListenerDistance);
+    fVar7 = (float)((double)param_3->DopplerScaler * dVar4);
+    fVar2 = fVar1;
+    if ((fVar6 <= fVar1) && (fVar2 = fVar6, fVar6 < -fVar1)) {
+      fVar2 = -fVar1;
     }
-    if ((fVar3 < fVar2) || (fVar3 = -fVar3, fVar2 < fVar3)) {
-      fVar2 = fVar3;
+    if ((fVar1 < fVar7) || (fVar1 = -fVar1, fVar7 < fVar1)) {
+      fVar7 = fVar1;
     }
-    fVar1 = (*(float *)(iVar5 + 0xc) - fVar4) / (*(float *)(iVar5 + 0xc) - fVar2);
+    fVar6 = (*(float *)(iVar3 + 0xc) - fVar2) / (*(float *)(iVar3 + 0xc) - fVar7);
   }
-  *(float *)(param_4 + 0x1c) = fVar1;
-  *(float *)(param_4 + 0x28) = (float)dVar6;
-  *(float *)(param_4 + 0x2c) = (float)dVar7;
+  param_4->DopplerFactor = fVar6;
+  param_4->EmitterVelocityComponent = (float)dVar4;
+  param_4->ListenerVelocityComponent = (float)dVar5;
   __restgprlr_28();
   return;
 }
@@ -643,7 +657,8 @@ void CalculateDopplerFactor(undefined8 param_1,longlong param_2,longlong param_3
 
 // 828F35E8  DistributeSignal  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/audio/x3daudio/source/x3daudio.cpp:928)
 
-void DistributeSignal(undefined8 param_1,double param_2)
+void DistributeSignal(X3DAUDIO_HANDLE_PRIVATE *param_1,float param_2,float param_3,uint param_4,
+                     X3DAUDIO_DSP_SETTINGS *param_5,uint param_6)
 
 {
   bool bVar1;
@@ -653,21 +668,21 @@ void DistributeSignal(undefined8 param_1,double param_2)
   uint uVar5;
   float fVar6;
   uint *puVar7;
-  ulonglong in_r6;
+  ulonglong uVar8;
   int *in_r7;
-  undefined4 *puVar8;
+  undefined4 *puVar9;
   ulonglong in_r8;
-  uint uVar9;
-  int iVar10;
-  uint uVar11;
+  uint uVar10;
+  int iVar11;
   uint uVar12;
-  float *pfVar13;
-  uint uVar14;
+  uint uVar13;
+  float *pfVar14;
   uint uVar15;
   uint uVar16;
+  uint uVar17;
   double extraout_f1;
-  double dVar17;
   double dVar18;
+  double dVar19;
   undefined4 local_140;
   undefined4 local_13c;
   undefined4 local_138;
@@ -722,12 +737,14 @@ void DistributeSignal(undefined8 param_1,double param_2)
   undefined4 local_3c;
   undefined4 local_38;
   
-  puVar7 = (uint *)__savegprlr_28();
+  dVar19 = (double)param_3;
+  uVar8 = (ulonglong)(int)param_6;
+  puVar7 = (uint *)__savegprlr_28((double)param_2,param_1,param_4,param_5);
   uVar5 = *puVar7;
   local_130 = 0xbfc90fdb;
   local_12c = 0x3fc90fdb;
-  puVar8 = (undefined4 *)0x0;
-  uVar9 = 0;
+  puVar9 = (undefined4 *)0x0;
+  uVar10 = 0;
   local_128 = 0xbf490fdb;
   local_124 = 0x3f490fdb;
   local_120 = 0x40490fdb;
@@ -781,76 +798,76 @@ void DistributeSignal(undefined8 param_1,double param_2)
   local_38 = 0x3fc90fdb;
   if (uVar5 < 0x40) {
     if (uVar5 == 0x3f) {
-      puVar8 = &local_f0;
-      uVar9 = 5;
-      if ((in_r6 & 0x10000) != 0) {
-        puVar8 = &local_140;
-        uVar9 = 4;
+      puVar9 = &local_f0;
+      uVar10 = 5;
+      if ((uVar8 & 0x10000) != 0) {
+        puVar9 = &local_140;
+        uVar10 = 4;
       }
     }
     else if (uVar5 < 0xc) {
       if ((uVar5 == 0xb) || (uVar5 == 3)) {
-        puVar8 = &local_130;
-        uVar9 = 2;
+        puVar9 = &local_130;
+        uVar10 = 2;
       }
       else if (uVar5 == 4) {
-        iVar10 = (int)((in_r8 & 0xffffffff) << 2);
-        *(float *)(iVar10 + *in_r7) = (float)(extraout_f1 + (double)*(float *)(iVar10 + *in_r7));
+        iVar11 = (int)((in_r8 & 0xffffffff) << 2);
+        *(float *)(iVar11 + *in_r7) = (float)(extraout_f1 + (double)*(float *)(iVar11 + *in_r7));
         __restgprlr_28();
         return;
       }
     }
     else if ((uVar5 == 0x33) || (uVar5 == 0x3b)) {
-      puVar8 = &local_140;
-      uVar9 = 4;
+      puVar9 = &local_140;
+      uVar10 = 4;
     }
     goto LAB_828f3860;
   }
   if (uVar5 < 0x610) {
     if (uVar5 == 0x60f) {
-      puVar8 = &local_d0;
-      uVar9 = 5;
-      if ((in_r6 & 0x10000) != 0) {
-        puVar8 = &local_100;
-        uVar9 = 4;
+      puVar9 = &local_d0;
+      uVar10 = 5;
+      if ((uVar8 & 0x10000) != 0) {
+        puVar9 = &local_100;
+        uVar10 = 4;
       }
       goto LAB_828f3860;
     }
     if (uVar5 != 0xff) {
       if (uVar5 == 0x107) {
-        puVar8 = &local_110;
-        uVar9 = 4;
-        if ((in_r6 & 0x10000) != 0) {
-          puVar8 = &local_128;
-          uVar9 = 3;
+        puVar9 = &local_110;
+        uVar10 = 4;
+        if ((uVar8 & 0x10000) != 0) {
+          puVar9 = &local_128;
+          uVar10 = 3;
         }
       }
       goto LAB_828f3860;
     }
-    puVar8 = &local_70;
-    uVar9 = 7;
-    if ((in_r6 & 0x10000) == 0) goto LAB_828f3860;
-    puVar8 = &local_90;
+    puVar9 = &local_70;
+    uVar10 = 7;
+    if ((uVar8 & 0x10000) == 0) goto LAB_828f3860;
+    puVar9 = &local_90;
   }
   else {
     if (uVar5 != 0x63f) goto LAB_828f3860;
-    puVar8 = &local_50;
-    uVar9 = 7;
-    if ((in_r6 & 0x10000) == 0) goto LAB_828f3860;
-    puVar8 = &local_b0;
+    puVar9 = &local_50;
+    uVar10 = 7;
+    if ((uVar8 & 0x10000) == 0) goto LAB_828f3860;
+    puVar9 = &local_b0;
   }
-  uVar9 = 6;
+  uVar10 = 6;
 LAB_828f3860:
-  uVar15 = 0xffffffff;
-  fVar6 = 4.0;
   uVar16 = 0xffffffff;
+  fVar6 = 4.0;
+  uVar17 = 0xffffffff;
   fVar3 = -4.0;
-  uVar11 = 0;
-  if (3 < uVar9) {
-    uVar12 = 2;
-    pfVar13 = (float *)(puVar8 + 2);
+  uVar12 = 0;
+  if (3 < uVar10) {
+    uVar13 = 2;
+    pfVar14 = (float *)(puVar9 + 2);
     do {
-      fVar2 = (float)(param_2 - (double)pfVar13[-2]);
+      fVar2 = (float)(dVar19 - (double)pfVar14[-2]);
       if (fVar2 <= 3.1415927) {
         if (fVar2 < -3.1415927) {
           fVar2 = fVar2 + 6.2831855;
@@ -859,12 +876,12 @@ LAB_828f3860:
       else {
         fVar2 = fVar2 - 6.2831855;
       }
-      if ((((0.0 < fVar2) || (fVar4 = fVar2, uVar14 = uVar11, fVar2 <= fVar3)) &&
-          (fVar4 = fVar3, uVar14 = uVar15, 0.0 <= fVar2)) && (fVar2 < fVar6)) {
+      if ((((0.0 < fVar2) || (fVar4 = fVar2, uVar15 = uVar12, fVar2 <= fVar3)) &&
+          (fVar4 = fVar3, uVar15 = uVar16, 0.0 <= fVar2)) && (fVar2 < fVar6)) {
         fVar6 = fVar2;
-        uVar16 = uVar11;
+        uVar17 = uVar12;
       }
-      fVar3 = (float)(param_2 - (double)pfVar13[-1]);
+      fVar3 = (float)(dVar19 - (double)pfVar14[-1]);
       if (fVar3 <= 3.1415927) {
         if (fVar3 < -3.1415927) {
           fVar3 = fVar3 + 6.2831855;
@@ -875,15 +892,15 @@ LAB_828f3860:
       }
       if ((0.0 < fVar3) || (fVar3 <= fVar4)) {
         if ((0.0 <= fVar3) && (fVar3 < fVar6)) {
-          uVar16 = uVar12 - 1;
+          uVar17 = uVar13 - 1;
           fVar6 = fVar3;
         }
       }
       else {
-        uVar14 = uVar12 - 1;
+        uVar15 = uVar13 - 1;
         fVar4 = fVar3;
       }
-      fVar2 = (float)(param_2 - (double)*pfVar13);
+      fVar2 = (float)(dVar19 - (double)*pfVar14);
       if (fVar2 <= 3.1415927) {
         if (fVar2 < -3.1415927) {
           fVar2 = fVar2 + 6.2831855;
@@ -892,12 +909,12 @@ LAB_828f3860:
       else {
         fVar2 = fVar2 - 6.2831855;
       }
-      if (((0.0 < fVar2) || (fVar3 = fVar2, uVar15 = uVar12, fVar2 <= fVar4)) &&
-         ((fVar3 = fVar4, uVar15 = uVar14, 0.0 <= fVar2 && (fVar2 < fVar6)))) {
+      if (((0.0 < fVar2) || (fVar3 = fVar2, uVar16 = uVar13, fVar2 <= fVar4)) &&
+         ((fVar3 = fVar4, uVar16 = uVar15, 0.0 <= fVar2 && (fVar2 < fVar6)))) {
         fVar6 = fVar2;
-        uVar16 = uVar12;
+        uVar17 = uVar13;
       }
-      fVar2 = (float)(param_2 - (double)pfVar13[1]);
+      fVar2 = (float)(dVar19 - (double)pfVar14[1]);
       if (fVar2 <= 3.1415927) {
         if (fVar2 < -3.1415927) {
           fVar2 = fVar2 + 6.2831855;
@@ -908,26 +925,26 @@ LAB_828f3860:
       }
       if ((0.0 < fVar2) || (fVar2 <= fVar3)) {
         if ((0.0 <= fVar2) && (fVar2 < fVar6)) {
-          uVar16 = uVar12 + 1;
+          uVar17 = uVar13 + 1;
           fVar6 = fVar2;
         }
       }
       else {
-        uVar15 = uVar12 + 1;
+        uVar16 = uVar13 + 1;
         fVar3 = fVar2;
       }
-      uVar11 = uVar11 + 4;
-      pfVar13 = pfVar13 + 4;
       uVar12 = uVar12 + 4;
-    } while (uVar11 < uVar9 - 3);
+      pfVar14 = pfVar14 + 4;
+      uVar13 = uVar13 + 4;
+    } while (uVar12 < uVar10 - 3);
   }
-  if (uVar11 < uVar9) {
-    iVar10 = uVar9 - uVar11;
-    pfVar13 = (float *)(puVar8 + uVar11);
+  if (uVar12 < uVar10) {
+    iVar11 = uVar10 - uVar12;
+    pfVar14 = (float *)(puVar9 + uVar12);
     fVar2 = fVar3;
-    uVar9 = uVar15;
+    uVar10 = uVar16;
     do {
-      fVar4 = (float)(param_2 - (double)*pfVar13);
+      fVar4 = (float)(dVar19 - (double)*pfVar14);
       if (fVar4 <= 3.1415927) {
         if (fVar4 < -3.1415927) {
           fVar4 = fVar4 + 6.2831855;
@@ -936,17 +953,17 @@ LAB_828f3860:
       else {
         fVar4 = fVar4 - 6.2831855;
       }
-      if ((((0.0 < fVar4) || (fVar3 = fVar4, uVar15 = uVar11, fVar4 <= fVar2)) &&
-          (fVar3 = fVar2, uVar15 = uVar9, 0.0 <= fVar4)) && (fVar4 < fVar6)) {
+      if ((((0.0 < fVar4) || (fVar3 = fVar4, uVar16 = uVar12, fVar4 <= fVar2)) &&
+          (fVar3 = fVar2, uVar16 = uVar10, 0.0 <= fVar4)) && (fVar4 < fVar6)) {
         fVar6 = fVar4;
-        uVar16 = uVar11;
+        uVar17 = uVar12;
       }
-      uVar11 = uVar11 + 1;
-      pfVar13 = pfVar13 + 1;
-      iVar10 = iVar10 + -1;
+      uVar12 = uVar12 + 1;
+      pfVar14 = pfVar14 + 1;
+      iVar11 = iVar11 + -1;
       fVar2 = fVar3;
-      uVar9 = uVar15;
-    } while (iVar10 != 0);
+      uVar10 = uVar16;
+    } while (iVar11 != 0);
   }
   if (fVar3 < 0.0) {
     fVar3 = -fVar3;
@@ -954,54 +971,54 @@ LAB_828f3860:
   if (fVar6 < 0.0) {
     fVar6 = -fVar6;
   }
-  if ((uVar15 == 0xffffffff) || (uVar16 == 0xffffffff)) {
+  if ((uVar16 == 0xffffffff) || (uVar17 == 0xffffffff)) {
+    uVar17 = 0;
     uVar16 = 0;
-    uVar15 = 0;
   }
-  if ((in_r6 & 0x10000) != 0) {
-    if (1 < (int)uVar15) {
-      uVar15 = uVar15 + 1;
-    }
+  if ((uVar8 & 0x10000) != 0) {
     if (1 < (int)uVar16) {
       uVar16 = uVar16 + 1;
+    }
+    if (1 < (int)uVar17) {
+      uVar17 = uVar17 + 1;
     }
   }
   if (puVar7[2] != 0xffffffff) {
     if ((uVar5 & 4) == 0) {
-      if (1 < (int)uVar15) {
-        uVar15 = uVar15 + 1;
+      if (1 < (int)uVar16) {
+        uVar16 = uVar16 + 1;
       }
-      bVar1 = 1 < (int)uVar16;
+      bVar1 = 1 < (int)uVar17;
     }
     else {
-      if (2 < (int)uVar15) {
-        uVar15 = uVar15 + 1;
+      if (2 < (int)uVar16) {
+        uVar16 = uVar16 + 1;
       }
-      bVar1 = 2 < (int)uVar16;
+      bVar1 = 2 < (int)uVar17;
     }
     if (bVar1) {
-      uVar16 = uVar16 + 1;
+      uVar17 = uVar17 + 1;
     }
   }
   if (1.1920929e-07 <= fVar3) {
     if (1.1920929e-07 <= fVar6) {
-      dVar18 = extraout_f1;
-      dVar17 = tan((double)((fVar3 * 1.5707964) / (fVar6 + fVar3)));
-      iVar10 = (int)(((longlong)(int)uVar15 * (longlong)in_r7[2] + in_r8 & 0xffffffff) << 2);
-      fVar3 = (float)(dVar18 / (double)((float)dVar17 + 1.0));
-      *(float *)(iVar10 + *in_r7) = fVar3 + *(float *)(iVar10 + *in_r7);
-      iVar10 = (int)(((longlong)(int)uVar16 * (longlong)in_r7[2] + in_r8 & 0xffffffff) << 2);
-      *(float *)(iVar10 + *in_r7) = (float)dVar17 * fVar3 + *(float *)(iVar10 + *in_r7);
+      dVar19 = extraout_f1;
+      dVar18 = tan((double)((fVar3 * 1.5707964) / (fVar6 + fVar3)));
+      iVar11 = (int)(((longlong)(int)uVar16 * (longlong)in_r7[2] + in_r8 & 0xffffffff) << 2);
+      fVar3 = (float)(dVar19 / (double)((float)dVar18 + 1.0));
+      *(float *)(iVar11 + *in_r7) = fVar3 + *(float *)(iVar11 + *in_r7);
+      iVar11 = (int)(((longlong)(int)uVar17 * (longlong)in_r7[2] + in_r8 & 0xffffffff) << 2);
+      *(float *)(iVar11 + *in_r7) = (float)dVar18 * fVar3 + *(float *)(iVar11 + *in_r7);
       __restgprlr_28();
       return;
     }
-    iVar10 = (int)(((longlong)in_r7[2] * (longlong)(int)uVar16 + in_r8 & 0xffffffff) << 2);
-    *(float *)(iVar10 + *in_r7) = (float)(extraout_f1 + (double)*(float *)(iVar10 + *in_r7));
+    iVar11 = (int)(((longlong)in_r7[2] * (longlong)(int)uVar17 + in_r8 & 0xffffffff) << 2);
+    *(float *)(iVar11 + *in_r7) = (float)(extraout_f1 + (double)*(float *)(iVar11 + *in_r7));
     __restgprlr_28();
     return;
   }
-  iVar10 = (int)(((longlong)in_r7[2] * (longlong)(int)uVar15 + in_r8 & 0xffffffff) << 2);
-  *(float *)(iVar10 + *in_r7) = (float)((double)*(float *)(iVar10 + *in_r7) + extraout_f1);
+  iVar11 = (int)(((longlong)in_r7[2] * (longlong)(int)uVar16 + in_r8 & 0xffffffff) << 2);
+  *(float *)(iVar11 + *in_r7) = (float)((double)*(float *)(iVar11 + *in_r7) + extraout_f1);
   __restgprlr_28();
   return;
 }
@@ -1010,7 +1027,8 @@ LAB_828f3860:
 // 828F3C08  CalculateMatrixCoefficients  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/audio/x3daudio/source/x3daudio.cpp:1173)
 
 void CalculateMatrixCoefficients
-               (undefined8 param_1,longlong param_2,int param_3,ulonglong param_4,int *param_5)
+               (X3DAUDIO_HANDLE_PRIVATE *param_1,X3DAUDIO_LISTENER *param_2,
+               X3DAUDIO_EMITTER *param_3,uint param_4,X3DAUDIO_DSP_SETTINGS *param_5)
 
 {
   float fVar1;
@@ -1021,15 +1039,15 @@ void CalculateMatrixCoefficients
   float fVar6;
   float fVar7;
   int iVar8;
-  int iVar9;
-  uint uVar10;
-  uint uVar11;
-  uint uVar12;
-  int iVar13;
-  ulonglong uVar14;
-  double dVar15;
-  double dVar16;
-  double dVar17;
+  X3DAUDIO_HANDLE_PRIVATE *pXVar9;
+  _D3DVECTOR *p_Var10;
+  X3DAUDIO_DSP_SETTINGS *pXVar11;
+  ulonglong uVar12;
+  uint uVar13;
+  uint uVar14;
+  uint uVar15;
+  int iVar16;
+  ulonglong uVar17;
   double dVar18;
   double dVar19;
   double dVar20;
@@ -1045,171 +1063,173 @@ void CalculateMatrixCoefficients
   double dVar30;
   double dVar31;
   double dVar32;
-  float local_120;
-  float local_11c;
-  float local_118;
-  float local_110;
-  float local_10c;
-  float local_108;
-  float local_100;
-  float local_fc;
-  float local_f8;
-  float local_f0;
-  float local_ec;
-  float local_e8;
-  float local_e0;
+  double dVar33;
+  double dVar34;
+  double dVar35;
+  _D3DVECTOR local_120;
+  _D3DVECTOR local_110;
+  _D3DVECTOR local_100;
+  undefined1 local_f0 [20];
   float local_dc;
   float local_d8;
   
-  __savegprlr_24();
-  iVar9 = __savefpr_15();
-  memcpy(&local_120,(void *)param_2,0xc);
-  X3DAUDIO__CrossProduct(param_2 + 0xc,&local_120,&local_100);
-  X3DAUDIO__CrossProduct(&local_120,&local_100,&local_e0);
-  uVar10 = *(uint *)(param_3 + 0x3c);
-  dVar26 = 0.0;
-  dVar20 = dVar26;
-  dVar21 = dVar26;
-  dVar22 = dVar26;
-  if (1 < uVar10) {
-    fVar4 = *(float *)(param_3 + 0x40);
-    dVar21 = (double)(*(float *)(param_3 + 8) * fVar4);
-    dVar22 = (double)(*(float *)(param_3 + 4) * fVar4);
-    dVar20 = (double)(*(float *)(param_3 + 0xc) * fVar4);
+  uVar12 = (ulonglong)(int)param_4;
+  __savegprlr_24(param_1);
+  pXVar9 = (X3DAUDIO_HANDLE_PRIVATE *)__savefpr_15();
+  memcpy();
+  X3DAUDIO::CrossProduct(&param_2->OrientTop,&local_120,&local_100);
+  X3DAUDIO::CrossProduct(&local_120,&local_100,(_D3DVECTOR *)(local_f0 + 0x10));
+  uVar13 = param_3->ChannelCount;
+  dVar29 = 0.0;
+  dVar23 = dVar29;
+  dVar24 = dVar29;
+  dVar25 = dVar29;
+  if (1 < uVar13) {
+    fVar4 = param_3->ChannelRadius;
+    dVar24 = (double)((param_3->OrientFront).y * fVar4);
+    dVar25 = (double)((param_3->OrientFront).x * fVar4);
+    dVar23 = (double)((param_3->OrientFront).z * fVar4);
   }
-  uVar14 = 0;
-  if (uVar10 != 0) {
-    dVar19 = 3.5762786865234375e-07;
-    dVar17 = 0.5;
-    dVar23 = 3.1415927410125732;
-    dVar24 = 2.0;
-    dVar25 = 1.5707963705062866;
-    iVar13 = 0;
-    dVar27 = 1.1920928955078125e-07;
-    dVar28 = 1.0;
-    dVar18 = 6.2831854820251465;
+  uVar17 = 0;
+  if (uVar13 != 0) {
+    dVar22 = 3.5762786865234375e-07;
+    dVar20 = 0.5;
+    dVar26 = 3.1415927410125732;
+    dVar27 = 2.0;
+    dVar28 = 1.5707963705062866;
+    iVar16 = 0;
+    dVar30 = 1.1920928955078125e-07;
+    dVar31 = 1.0;
+    dVar21 = 6.2831854820251465;
     do {
-      if ((uVar10 < 2) ||
-         (dVar15 = (double)*(float *)(iVar13 + *(int *)(param_3 + 0x44)), dVar15 == dVar18)) {
-        memcpy(&local_110,(float *)(param_3 + 0x1c),0xc);
+      if ((uVar13 < 2) ||
+         (dVar18 = (double)*(float *)(iVar16 + (int)param_3->pChannelAzimuths), dVar18 == dVar21)) {
+        memcpy();
       }
       else {
-        dVar15 = cos(dVar15);
-        dVar31 = (double)(float)dVar15;
-        dVar15 = sin((double)*(float *)(iVar13 + *(int *)(param_3 + 0x44)));
-        fVar5 = *(float *)(param_3 + 0x18);
-        fVar3 = (float)dVar15;
-        fVar6 = *(float *)(param_3 + 0x14);
-        dVar15 = (double)(float)(dVar28 - dVar31);
-        fVar7 = *(float *)(param_3 + 0x10);
-        fVar4 = (float)((double)(fVar6 * fVar7) * dVar15);
-        fVar1 = (float)((double)(fVar6 * fVar5) * dVar15);
-        fVar2 = (float)((double)(fVar7 * fVar5) * dVar15);
-        local_110 = (float)((double)(fVar6 * fVar3 + fVar2) * dVar20 +
-                           (double)(float)((double)(float)((double)(fVar7 * fVar7) * dVar15 + dVar31
-                                                          ) * dVar22 +
-                                          (double)(float)((double)(fVar4 - fVar5 * fVar3) * dVar21))
-                           ) + *(float *)(param_3 + 0x1c);
-        local_10c = (float)((double)(fVar5 * fVar3 + fVar4) * dVar22 +
-                           (double)(float)((double)(float)((double)(fVar6 * fVar6) * dVar15 + dVar31
-                                                          ) * dVar21 +
-                                          (double)(float)((double)(fVar1 - fVar7 * fVar3) * dVar20))
-                           ) + *(float *)(param_3 + 0x20);
-        local_108 = (float)((double)(fVar2 - fVar6 * fVar3) * dVar22 +
-                           (double)(float)((double)(float)((double)(fVar5 * fVar5) * dVar15 + dVar31
-                                                          ) * dVar20 +
-                                          (double)(float)((double)(fVar7 * fVar3 + fVar1) * dVar21))
-                           ) + *(float *)(param_3 + 0x24);
+        dVar18 = cos(dVar18);
+        dVar34 = (double)(float)dVar18;
+        dVar18 = sin((double)*(float *)(iVar16 + (int)param_3->pChannelAzimuths));
+        fVar5 = (param_3->OrientTop).z;
+        fVar3 = (float)dVar18;
+        fVar6 = (param_3->OrientTop).y;
+        dVar18 = (double)(float)(dVar31 - dVar34);
+        fVar7 = (param_3->OrientTop).x;
+        fVar4 = (float)((double)(fVar6 * fVar7) * dVar18);
+        fVar1 = (float)((double)(fVar6 * fVar5) * dVar18);
+        fVar2 = (float)((double)(fVar7 * fVar5) * dVar18);
+        local_110.x = (float)((double)(fVar6 * fVar3 + fVar2) * dVar23 +
+                             (double)(float)((double)(float)((double)(fVar7 * fVar7) * dVar18 +
+                                                            dVar34) * dVar25 +
+                                            (double)(float)((double)(fVar4 - fVar5 * fVar3) * dVar24
+                                                           ))) + (param_3->Position).x;
+        local_110.y = (float)((double)(fVar5 * fVar3 + fVar4) * dVar25 +
+                             (double)(float)((double)(float)((double)(fVar6 * fVar6) * dVar18 +
+                                                            dVar34) * dVar24 +
+                                            (double)(float)((double)(fVar1 - fVar7 * fVar3) * dVar23
+                                                           ))) + (param_3->Position).y;
+        local_110.z = (float)((double)(fVar2 - fVar6 * fVar3) * dVar25 +
+                             (double)(float)((double)(float)((double)(fVar5 * fVar5) * dVar18 +
+                                                            dVar34) * dVar23 +
+                                            (double)(float)((double)(fVar7 * fVar3 + fVar1) * dVar24
+                                                           ))) + (param_3->Position).z;
       }
-      if ((*(uint *)(param_3 + 0x3c) < 2) ||
-         ((double)*(float *)(*(int *)(param_3 + 0x44) + iVar13) != dVar18)) {
-        X3DAUDIO__SubtractVector(&local_110,param_2 + 0x18,&local_f0);
-        dVar31 = (double)*(float *)(iVar13 + *param_5);
-        dVar15 = (double)(local_f0 * local_100 + local_e8 * local_f8 + local_ec * local_fc);
-        *(float *)(iVar13 + *param_5) = (float)dVar26;
-        dVar29 = (double)(local_e0 * local_f0 + local_d8 * local_e8 + local_dc * local_ec);
-        dVar16 = (double)(local_120 * local_f0 + local_118 * local_e8 + local_11c * local_ec);
-        dVar32 = (double)SQRT((float)(dVar16 * dVar16 + (double)(float)(dVar15 * dVar15)));
-        if (dVar27 < dVar32) {
-          dVar15 = atan2(dVar15,dVar16);
-          dVar30 = (double)(float)dVar15;
-          dVar16 = sin((double)*(float *)(param_3 + 0x38));
-          dVar15 = dVar31;
-          if (dVar32 < (double)(float)((double)(float)dVar16 * dVar29 +
-                                      (double)*(float *)(param_3 + 0x34))) {
-            dVar15 = sin((double)*(float *)(param_3 + 0x38));
-            dVar15 = (double)(float)((double)(float)dVar15 * dVar29 +
-                                    (double)*(float *)(param_3 + 0x34));
-            dVar15 = tan((double)((float)((double)(float)(dVar15 - dVar32) * dVar25) /
-                                 (float)(dVar15 * dVar24)));
-            dVar29 = (double)(float)dVar15;
-            dVar16 = (double)(float)(dVar31 / (double)(float)(dVar29 + dVar28));
-            dVar15 = dVar31;
-            DistributeSignal(dVar16,dVar30,iVar9);
-            dVar30 = (double)(float)(dVar30 + dVar23);
-            dVar31 = (double)(float)(dVar16 * dVar29);
+      if ((param_3->ChannelCount < 2) ||
+         ((double)*(float *)((int)param_3->pChannelAzimuths + iVar16) != dVar21)) {
+        pXVar11 = (X3DAUDIO_DSP_SETTINGS *)local_f0;
+        p_Var10 = &param_2->Position;
+        X3DAUDIO::SubtractVector(&local_110,p_Var10,(_D3DVECTOR *)pXVar11);
+        dVar34 = (double)*(float *)(iVar16 + (int)param_5->pMatrixCoefficients);
+        dVar18 = (double)((float)local_f0._0_4_ * local_100.x +
+                         (float)local_f0._8_4_ * local_100.z + (float)local_f0._4_4_ * local_100.y);
+        *(float *)(iVar16 + (int)param_5->pMatrixCoefficients) = (float)dVar29;
+        dVar32 = (double)((float)local_f0._16_4_ * (float)local_f0._0_4_ +
+                         local_d8 * (float)local_f0._8_4_ + local_dc * (float)local_f0._4_4_);
+        dVar19 = (double)(local_120.x * (float)local_f0._0_4_ +
+                         local_120.z * (float)local_f0._8_4_ + local_120.y * (float)local_f0._4_4_);
+        dVar35 = (double)SQRT((float)(dVar19 * dVar19 + (double)(float)(dVar18 * dVar18)));
+        if (dVar30 < dVar35) {
+          dVar18 = atan2(dVar18,dVar19);
+          dVar33 = (double)(float)dVar18;
+          dVar19 = sin((double)param_3->InnerRadiusAngle);
+          dVar18 = dVar34;
+          if (dVar35 < (double)(float)((double)(float)dVar19 * dVar32 + (double)param_3->InnerRadius
+                                      )) {
+            dVar18 = sin((double)param_3->InnerRadiusAngle);
+            dVar18 = (double)(float)((double)(float)dVar18 * dVar32 + (double)param_3->InnerRadius);
+            dVar18 = tan((double)((float)((double)(float)(dVar18 - dVar35) * dVar28) /
+                                 (float)(dVar18 * dVar27)));
+            dVar32 = (double)(float)dVar18;
+            fVar4 = (float)(dVar34 / (double)(float)(dVar32 + dVar31));
+            dVar19 = (double)fVar4;
+            dVar18 = dVar34;
+            DistributeSignal(pXVar9,fVar4,(float)dVar33,(uint)p_Var10,pXVar11,(uint)uVar12);
+            dVar33 = (double)(float)(dVar33 + dVar26);
+            dVar34 = (double)(float)(dVar19 * dVar32);
           }
-          DistributeSignal(dVar31,dVar30,iVar9);
-          dVar31 = (double)(float)((double)*(float *)(param_3 + 0x34) * dVar17);
-          if (dVar31 < dVar19) {
-            dVar31 = dVar19;
+          DistributeSignal(pXVar9,(float)dVar34,(float)dVar33,(uint)p_Var10,pXVar11,(uint)uVar12);
+          dVar34 = (double)(float)((double)param_3->InnerRadius * dVar20);
+          if (dVar34 < dVar22) {
+            dVar34 = dVar22;
           }
-          if (dVar32 <= dVar31) {
-            uVar10 = param_5[3];
-            uVar11 = uVar10;
-            if (*(int *)(iVar9 + 8) != -1) {
-              uVar11 = uVar10 - 1;
+          if (dVar35 <= dVar34) {
+            uVar13 = param_5->DstChannelCount;
+            uVar14 = uVar13;
+            if (pXVar9->u32FinalMixLFEChannelIndex != 0xffffffff) {
+              uVar14 = uVar13 - 1;
             }
-            if ((param_4 & 0x10000) != 0) {
-              uVar11 = uVar11 - 1;
+            if ((uVar12 & 0x10000) != 0) {
+              uVar14 = uVar14 - 1;
             }
-            uVar12 = 0;
-            dVar31 = (double)(float)((double)(float)(dVar32 - dVar27) / dVar31);
-            if (uVar10 != 0) {
+            uVar15 = 0;
+            dVar34 = (double)(float)((double)(float)(dVar35 - dVar30) / dVar34);
+            if (uVar13 != 0) {
               do {
-                if ((uVar12 != *(uint *)(iVar9 + 8)) &&
-                   ((uVar12 != 2 || ((param_4 & 0x10000) == 0)))) {
-                  iVar8 = (int)(((longlong)param_5[2] * (longlong)(int)uVar12 + uVar14 & 0xffffffff)
-                               << 2);
-                  *(float *)(iVar8 + *param_5) =
-                       (float)((double)*(float *)(iVar8 + *param_5) * dVar31);
-                  iVar8 = (int)(((longlong)param_5[2] * (longlong)(int)uVar12 + uVar14 & 0xffffffff)
-                               << 2);
-                  *(float *)(iVar8 + *param_5) =
-                       (float)(dVar28 - dVar31) * (float)(dVar15 / (double)uVar11) +
-                       *(float *)(iVar8 + *param_5);
+                if ((uVar15 != pXVar9->u32FinalMixLFEChannelIndex) &&
+                   ((uVar15 != 2 || ((uVar12 & 0x10000) == 0)))) {
+                  iVar8 = (int)(((longlong)(int)param_5->SrcChannelCount * (longlong)(int)uVar15 +
+                                 uVar17 & 0xffffffff) << 2);
+                  *(float *)(iVar8 + (int)param_5->pMatrixCoefficients) =
+                       (float)((double)*(float *)(iVar8 + (int)param_5->pMatrixCoefficients) *
+                              dVar34);
+                  iVar8 = (int)(((longlong)(int)param_5->SrcChannelCount * (longlong)(int)uVar15 +
+                                 uVar17 & 0xffffffff) << 2);
+                  *(float *)(iVar8 + (int)param_5->pMatrixCoefficients) =
+                       (float)(dVar31 - dVar34) * (float)(dVar18 / (double)uVar14) +
+                       *(float *)(iVar8 + (int)param_5->pMatrixCoefficients);
                 }
-                uVar12 = uVar12 + 1;
-              } while (uVar12 < (uint)param_5[3]);
+                uVar15 = uVar15 + 1;
+              } while (uVar15 < param_5->DstChannelCount);
             }
           }
         }
         else {
-          uVar10 = param_5[3];
-          uVar11 = uVar10;
-          if (*(int *)(iVar9 + 8) != -1) {
-            uVar11 = uVar10 - 1;
+          uVar13 = param_5->DstChannelCount;
+          uVar14 = uVar13;
+          if (pXVar9->u32FinalMixLFEChannelIndex != 0xffffffff) {
+            uVar14 = uVar13 - 1;
           }
-          if ((param_4 & 0x10000) != 0) {
-            uVar11 = uVar11 - 1;
+          if ((uVar12 & 0x10000) != 0) {
+            uVar14 = uVar14 - 1;
           }
-          uVar12 = 0;
-          if (uVar10 != 0) {
+          uVar15 = 0;
+          if (uVar13 != 0) {
             do {
-              if ((uVar12 != *(uint *)(iVar9 + 8)) && ((uVar12 != 2 || ((param_4 & 0x10000) == 0))))
-              {
-                *(float *)((int)(((longlong)param_5[2] * (longlong)(int)uVar12 + uVar14 & 0xffffffff
-                                 ) << 2) + *param_5) = (float)(dVar31 / (double)uVar11);
+              if ((uVar15 != pXVar9->u32FinalMixLFEChannelIndex) &&
+                 ((uVar15 != 2 || ((uVar12 & 0x10000) == 0)))) {
+                *(float *)((int)(((longlong)(int)param_5->SrcChannelCount * (longlong)(int)uVar15 +
+                                  uVar17 & 0xffffffff) << 2) + (int)param_5->pMatrixCoefficients) =
+                     (float)(dVar34 / (double)uVar14);
               }
-              uVar12 = uVar12 + 1;
-            } while (uVar12 < (uint)param_5[3]);
+              uVar15 = uVar15 + 1;
+            } while (uVar15 < param_5->DstChannelCount);
           }
         }
       }
-      uVar10 = *(uint *)(param_3 + 0x3c);
-      uVar14 = uVar14 + 1;
-      iVar13 = iVar13 + 4;
-    } while ((uVar14 & 0xffffffff) < (ulonglong)uVar10);
+      uVar13 = param_3->ChannelCount;
+      uVar17 = uVar17 + 1;
+      iVar16 = iVar16 + 4;
+    } while ((uVar17 & 0xffffffff) < (ulonglong)uVar13);
   }
   __restfpr_15();
   __restgprlr_24();
@@ -1219,51 +1239,48 @@ void CalculateMatrixCoefficients
 
 // 828F4128  CalculateDelay  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/audio/x3daudio/source/x3daudio.cpp:1325)
 
-void CalculateDelay(undefined8 param_1,longlong param_2,int param_3,int param_4)
+void CalculateDelay(X3DAUDIO_HANDLE_PRIVATE *param_1,X3DAUDIO_LISTENER *param_2,
+                   X3DAUDIO_EMITTER *param_3,X3DAUDIO_DSP_SETTINGS *param_4)
 
 {
-  double dVar1;
+  longlong lVar1;
   double dVar2;
-  double _Y;
-  float local_80;
-  float local_7c;
-  float local_78;
-  float local_70;
-  float local_6c;
-  float local_68;
-  float local_60;
-  float local_5c;
-  float local_58;
-  undefined1 auStack_50 [16];
-  undefined1 auStack_40 [64];
+  double dVar3;
+  double dVar4;
+  _D3DVECTOR local_80;
+  _D3DVECTOR local_70;
+  _D3DVECTOR local_60;
+  _D3DVECTOR _Stack_50;
+  _D3DVECTOR a_Stack_40 [5];
   
-  __savegprlr_29();
-  memcpy(&local_80,(void *)param_2,0xc);
-  X3DAUDIO__CrossProduct(param_2 + 0xc,&local_80,&local_70);
-  X3DAUDIO__CrossProduct(&local_80,&local_70,auStack_40);
-  memcpy(auStack_50,(void *)(param_3 + 0x1c),0xc);
-  X3DAUDIO__SubtractVector(auStack_50,param_2 + 0x18,&local_60);
-  _Y = (double)(local_60 * local_70 + local_58 * local_68 + local_5c * local_6c);
-  dVar1 = (double)(local_80 * local_60 + local_78 * local_58 + local_7c * local_5c);
-  if ((((_Y <= 1.1920928955078125e-07) && (dVar1 <= 1.1920928955078125e-07)) &&
-      (-1.1920928955078125e-07 <= _Y)) && (-1.1920928955078125e-07 <= dVar1)) {
-    **(undefined4 **)(param_4 + 4) = 0;
-    *(undefined4 *)(*(int *)(param_4 + 4) + 4) = 0;
+  lVar1 = (longlong)(int)param_2;
+  __savegprlr_29(param_1,lVar1,param_3);
+  memcpy();
+  X3DAUDIO::CrossProduct((_D3DVECTOR *)((int)lVar1 + 0xc),&local_80,&local_70);
+  X3DAUDIO::CrossProduct(&local_80,&local_70,a_Stack_40);
+  memcpy();
+  X3DAUDIO::SubtractVector(&_Stack_50,(_D3DVECTOR *)((int)lVar1 + 0x18),&local_60);
+  dVar4 = (double)(local_60.x * local_70.x + local_60.z * local_70.z + local_60.y * local_70.y);
+  dVar2 = (double)(local_80.x * local_60.x + local_80.z * local_60.z + local_80.y * local_60.y);
+  if ((((dVar4 <= 1.1920928955078125e-07) && (dVar2 <= 1.1920928955078125e-07)) &&
+      (-1.1920928955078125e-07 <= dVar4)) && (-1.1920928955078125e-07 <= dVar2)) {
+    *param_4->pDelayTimes = 0.0;
+    param_4->pDelayTimes[1] = 0.0;
     __restgprlr_29();
     return;
   }
-  dVar1 = atan2(_Y,dVar1);
-  dVar2 = 0.0;
-  if (0.0 < _Y) {
-    dVar1 = sin((double)(float)dVar1);
-    **(float **)(param_4 + 4) = (float)dVar1;
-    *(float *)(*(int *)(param_4 + 4) + 4) = (float)dVar2;
+  dVar2 = atan2(dVar4,dVar2);
+  dVar3 = 0.0;
+  if (0.0 < dVar4) {
+    dVar2 = sin((double)(float)dVar2);
+    *param_4->pDelayTimes = (float)dVar2;
+    param_4->pDelayTimes[1] = (float)dVar3;
     __restgprlr_29();
     return;
   }
-  **(undefined4 **)(param_4 + 4) = 0;
-  dVar1 = sin(-(double)(float)dVar1);
-  *(float *)(*(int *)(param_4 + 4) + 4) = (float)dVar1;
+  *param_4->pDelayTimes = 0.0;
+  dVar2 = sin(-(double)(float)dVar2);
+  param_4->pDelayTimes[1] = (float)dVar2;
   __restgprlr_29();
   return;
 }
@@ -1271,38 +1288,42 @@ void CalculateDelay(undefined8 param_1,longlong param_2,int param_3,int param_4)
 
 // 828F4298  X3DAudioCalculate  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/audio/x3daudio/source/x3daudio.cpp:1448)
 
-void X3DAudioCalculate(undefined8 param_1,longlong param_2,longlong param_3,ulonglong param_4,
-                      undefined8 param_5)
+void X3DAudioCalculate(uchar *param_1,X3DAUDIO_LISTENER *param_2,X3DAUDIO_EMITTER *param_3,
+                      uint param_4,X3DAUDIO_DSP_SETTINGS *param_5)
 
 {
-  undefined8 uVar1;
-  double dVar2;
-  undefined1 auStack_48 [72];
+  X3DAUDIO_HANDLE_PRIVATE *pXVar1;
+  uint uVar2;
+  ulonglong uVar3;
+  float fVar4;
+  _D3DVECTOR a_Stack_48 [6];
   
-  uVar1 = __savegprlr_27();
-  X3DAUDIO__SubtractVector(param_2 + 0x18,param_3 + 0x1c,auStack_48);
-  dVar2 = (double)X3DAUDIO__Magnitude(auStack_48);
-  *(float *)((int)param_5 + 0x24) = (float)dVar2;
-  if ((param_4 & 0x40) != 0) {
-    CalculateEmitterToListenerAngle(uVar1,param_2,param_3,param_5);
+  uVar3 = (ulonglong)(int)param_4;
+  pXVar1 = (X3DAUDIO_HANDLE_PRIVATE *)__savegprlr_27(param_1);
+  X3DAUDIO::SubtractVector(&param_2->Position,&param_3->Position,a_Stack_48);
+  fVar4 = X3DAUDIO::Magnitude(a_Stack_48);
+  param_5->EmitterToListenerDistance = fVar4;
+  if ((uVar3 & 0x40) != 0) {
+    CalculateEmitterToListenerAngle(pXVar1,param_2,param_3,param_5);
   }
-  if ((param_4 & 0x1d) != 0) {
-    CalculateDistanceCurves(uVar1,param_3,param_4,param_5);
-    if ((((int *)param_3)[0xf] == 1) && (*(int *)param_3 != 0)) {
-      CalculateEmitterCone(uVar1,param_2,param_3,param_4,param_5);
+  if ((uVar3 & 0x1d) != 0) {
+    uVar2 = (uint)uVar3;
+    CalculateDistanceCurves(pXVar1,param_3,uVar2,param_5);
+    if ((param_3->ChannelCount == 1) && (param_3->pCone != (X3DAUDIO_CONE *)0x0)) {
+      CalculateEmitterCone(pXVar1,param_2,param_3,uVar2,param_5);
     }
-    if (*(int *)((int)param_2 + 0x30) != 0) {
-      CalculateListenerCone(uVar1,param_2,param_3,param_4,param_5);
+    if (param_2->pCone != (X3DAUDIO_CONE *)0x0) {
+      CalculateListenerCone(pXVar1,param_2,param_3,uVar2,param_5);
     }
-    if ((param_4 & 1) != 0) {
-      CalculateMatrixCoefficients(uVar1,param_2,param_3,param_4,param_5);
+    if ((uVar3 & 1) != 0) {
+      CalculateMatrixCoefficients(pXVar1,param_2,param_3,uVar2,param_5);
     }
   }
-  if ((param_4 & 2) != 0) {
-    CalculateDelay(uVar1,param_2,param_3,param_5);
+  if ((uVar3 & 2) != 0) {
+    CalculateDelay(pXVar1,param_2,param_3,param_5);
   }
-  if ((param_4 & 0x20) != 0) {
-    CalculateDopplerFactor(uVar1,param_2,param_3,param_5);
+  if ((uVar3 & 0x20) != 0) {
+    CalculateDopplerFactor(pXVar1,param_2,param_3,param_5);
   }
   __restgprlr_27();
   return;

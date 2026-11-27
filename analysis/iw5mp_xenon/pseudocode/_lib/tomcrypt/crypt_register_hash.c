@@ -2,45 +2,45 @@
 
 // 82252800  register_hash  (line unknown)
 
-int register_hash(byte *param_1)
+longlong register_hash(byte *param_1)
 
 {
   byte bVar1;
   byte bVar2;
-  byte *pbVar3;
+  longlong lVar3;
   byte *pbVar4;
   byte *pbVar5;
   byte *pbVar6;
-  int iVar7;
+  byte *pbVar7;
   
-  pbVar6 = (byte *)&DAT_84896148;
-  iVar7 = 0;
-  pbVar3 = pbVar6;
+  pbVar7 = &hash_descriptor;
+  lVar3 = 0;
+  pbVar4 = pbVar7;
   do {
-    pbVar4 = param_1;
-    pbVar5 = pbVar3;
+    pbVar5 = param_1;
+    pbVar6 = pbVar4;
     do {
-      bVar1 = *pbVar5;
-      bVar2 = *pbVar4;
+      bVar1 = *pbVar6;
+      bVar2 = *pbVar5;
       if ((ulonglong)bVar1 - (ulonglong)bVar2 != 0) break;
+      pbVar6 = pbVar6 + 1;
       pbVar5 = pbVar5 + 1;
-      pbVar4 = pbVar4 + 1;
-    } while (pbVar5 != pbVar3 + 0x68);
+    } while (pbVar6 != pbVar4 + 0x68);
     if ((int)((ulonglong)bVar1 - (ulonglong)bVar2) == 0) {
-      return iVar7;
+      return lVar3;
     }
-    pbVar3 = pbVar3 + 0x68;
-    iVar7 = iVar7 + 1;
-    if (-0x7b7691b9 < (int)pbVar3) {
-      iVar7 = 0;
+    pbVar4 = pbVar4 + 0x68;
+    lVar3 = lVar3 + 1;
+    if (-0x7b7691b9 < (int)pbVar4) {
+      lVar3 = 0;
       do {
-        if (*(int *)pbVar6 == 0) {
-          memcpy(&DAT_84896148 + iVar7 * 0x1a,param_1,0x68);
-          return iVar7;
+        if (*(int *)pbVar7 == 0) {
+          memcpy();
+          return lVar3;
         }
-        pbVar6 = pbVar6 + 0x68;
-        iVar7 = iVar7 + 1;
-      } while ((int)pbVar6 < -0x7b7691b8);
+        pbVar7 = pbVar7 + 0x68;
+        lVar3 = lVar3 + 1;
+      } while ((int)pbVar7 < -0x7b7691b8);
       return -1;
     }
   } while( true );

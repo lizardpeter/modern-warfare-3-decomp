@@ -2,77 +2,83 @@
 
 // 82723E78  R_AABBTreeStaticGeo_r  (gfx_d3d/r_collision.cpp:33)
 
-void R_AABBTreeStaticGeo_r(undefined8 param_1,longlong param_2)
+void R_AABBTreeStaticGeo_r(GfxAabbTree *param_1,R_CollInfo *param_2)
 
 {
-  longlong lVar1;
-  int *piVar2;
-  uint uVar3;
-  ushort *puVar4;
+  R_CollInfo *pRVar1;
+  uint uVar2;
+  ushort *puVar3;
+  float fVar4;
   float fVar5;
   float fVar6;
   float fVar7;
-  float fVar8;
-  float *pfVar9;
+  float *pfVar8;
+  longlong lVar9;
   ulonglong uVar10;
   ulonglong uVar11;
   ulonglong uVar12;
   int iVar13;
+  GfxAabbTree *pGVar14;
   
-  pfVar9 = (float *)__savegprlr_27();
-  if (pfVar9 == (float *)0x0) {
-    MyAssertHandler(0xffffffff821bbaa8,0x4b7,0,0xffffffff82000f98,0xffffffff8207c284);
+  lVar9 = (longlong)(int)param_2;
+  pfVar8 = (float *)__savegprlr_27(param_1);
+  if (pfVar8 == (float *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\../universal/bounds_inline.h"
+                    ,0x4b7,0,"%s");
   }
-  if ((param_2 + 8U & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821bbaa8,0x4b8,0,0xffffffff82000f98,0xffffffff82012c64);
+  if ((lVar9 + 8U & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\../universal/bounds_inline.h"
+                    ,0x4b8,0,"%s");
   }
-  piVar2 = (int *)param_2;
-  fVar8 = 0.0;
-  fVar5 = ABS(*(float *)(param_2 + 8U) - *pfVar9) - pfVar9[3];
-  fVar6 = ABS((float)piVar2[3] - pfVar9[1]) - pfVar9[4];
-  fVar7 = ABS((float)piVar2[4] - pfVar9[2]) - pfVar9[5];
+  pRVar1 = (R_CollInfo *)lVar9;
+  fVar7 = 0.0;
+  fVar4 = ABS(*(float *)(lVar9 + 8U) - *pfVar8) - pfVar8[3];
+  fVar5 = ABS((pRVar1->sphere).origin[1] - pfVar8[1]) - pfVar8[4];
+  fVar6 = ABS((pRVar1->sphere).origin[2] - pfVar8[2]) - pfVar8[5];
+  if (fVar4 < 0.0) {
+    fVar4 = fVar7;
+  }
   if (fVar5 < 0.0) {
-    fVar5 = fVar8;
+    fVar5 = fVar7;
   }
   if (fVar6 < 0.0) {
-    fVar6 = fVar8;
+    fVar6 = fVar7;
   }
-  if (fVar7 < 0.0) {
-    fVar7 = fVar8;
-  }
-  if (fVar7 * fVar7 + fVar6 * fVar6 + fVar5 * fVar5 <= (float)piVar2[6]) {
-    uVar11 = (ulonglong)*(ushort *)(pfVar9 + 6);
+  if (fVar6 * fVar6 + fVar5 * fVar5 + fVar4 * fVar4 <= (pRVar1->sphere).radiusSq) {
+    uVar11 = (ulonglong)*(ushort *)(pfVar8 + 6);
     if (uVar11 == 0) {
-      uVar12 = (ulonglong)*(ushort *)(pfVar9 + 7);
+      uVar12 = (ulonglong)*(ushort *)(pfVar8 + 7);
       uVar11 = uVar12;
-      for (uVar10 = (ulonglong)*(ushort *)((int)pfVar9 + 0x1a); uVar10 != 0; uVar10 = uVar10 - 1) {
-        lVar1 = uVar11 << 2;
-        uVar3 = (uint)((uVar12 & 0xffffffff) >> 3) & 0x1ffffffc;
+      for (uVar10 = (ulonglong)*(ushort *)((int)pfVar8 + 0x1a); uVar10 != 0; uVar10 = uVar10 - 1) {
+        lVar9 = uVar11 << 2;
+        uVar2 = (uint)((uVar12 & 0xffffffff) >> 3) & 0x1ffffffc;
         uVar12 = uVar12 + 1;
         uVar11 = uVar12 & 0xffffffff;
-        *(uint *)(uVar3 + *piVar2) =
-             *(uint *)((int)&DAT_82992400 + ((uint)lVar1 & 0x7c)) | *(uint *)(uVar3 + *piVar2);
+        *(uint *)(uVar2 + (int)pRVar1->bspSetBits) =
+             *(uint *)(&g_bitShift + ((uint)lVar9 & 0x7c)) |
+             *(uint *)(uVar2 + (int)pRVar1->bspSetBits);
       }
-      uVar11 = (ulonglong)*(ushort *)((int)pfVar9 + 0x1e);
+      uVar11 = (ulonglong)*(ushort *)((int)pfVar8 + 0x1e);
       if (uVar11 != 0) {
         iVar13 = 0;
         do {
-          puVar4 = (ushort *)(iVar13 + (int)pfVar9[8]);
+          puVar3 = (ushort *)(iVar13 + (int)pfVar8[8]);
           iVar13 = iVar13 + 2;
-          uVar3 = *puVar4 >> 3 & 0x1ffffffc;
-          *(uint *)(uVar3 + piVar2[1]) =
-               (&DAT_82992400)[*puVar4 & 0x1f] | *(uint *)(uVar3 + piVar2[1]);
+          uVar2 = *puVar3 >> 3 & 0x1ffffffc;
+          *(uint *)(uVar2 + (int)pRVar1->smodelSetBits) =
+               *(uint *)(&g_bitShift + (*puVar3 & 0x1f) * 4) |
+               *(uint *)(uVar2 + (int)pRVar1->smodelSetBits);
           uVar11 = uVar11 - 1;
         } while (uVar11 != 0);
       }
     }
     else {
-      iVar13 = (int)pfVar9[9] + (int)pfVar9;
+      pGVar14 = (GfxAabbTree *)((int)pfVar8[9] + (int)pfVar8);
       if (uVar11 != 0) {
         do {
-          R_AABBTreeStaticGeo_r(iVar13,param_2);
+          R_AABBTreeStaticGeo_r(pGVar14,pRVar1);
           uVar11 = uVar11 - 1;
-          iVar13 = iVar13 + 0x28;
+          pGVar14 = pGVar14 + 1;
         } while (uVar11 != 0);
         __restgprlr_27();
         return;
@@ -86,34 +92,35 @@ void R_AABBTreeStaticGeo_r(undefined8 param_1,longlong param_2)
 
 // 82724040  R_SphereStaticGeo_r  (gfx_d3d/r_collision.cpp:141)
 
-void R_SphereStaticGeo_r(undefined8 param_1,undefined8 param_2)
+void R_SphereStaticGeo_r(mnode_t *param_1,R_CollInfo *param_2)
 
 {
-  int iVar1;
+  float fVar1;
   int iVar2;
   float fVar3;
   ushort *puVar4;
   ulonglong uVar5;
   longlong lVar6;
-  float *pfVar7;
+  cplane_s *pcVar7;
   ulonglong uVar8;
   
-  puVar4 = (ushort *)__savegprlr_27();
+  puVar4 = (ushort *)__savegprlr_27(param_1);
   uVar5 = (ulonglong)*puVar4;
-  uVar8 = (ulonglong)DAT_84617878;
+  uVar8 = (ulonglong)(uint)g_worldCellCountPlusOne;
   lVar6 = uVar5 - uVar8;
-  iVar2 = (int)param_2;
   if (-1 < lVar6) {
     do {
-      pfVar7 = (float *)((int)lVar6 * 0x14 + DAT_84618180);
-      fVar3 = (pfVar7[2] * *(float *)(iVar2 + 0x10) +
-              pfVar7[1] * *(float *)(iVar2 + 0xc) + *pfVar7 * *(float *)(iVar2 + 8)) - pfVar7[3];
-      if (*(float *)(iVar2 + 0x14) <= fVar3) {
+      fVar1 = (param_2->sphere).radius;
+      pcVar7 = g_worldPlanes + (int)lVar6;
+      fVar3 = (pcVar7->normal[2] * (param_2->sphere).origin[2] +
+              pcVar7->normal[1] * (param_2->sphere).origin[1] +
+              pcVar7->normal[0] * (param_2->sphere).origin[0]) - pcVar7->dist;
+      if (fVar1 <= fVar3) {
         puVar4 = puVar4 + 2;
       }
       else {
-        if (-*(float *)(iVar2 + 0x14) < fVar3) {
-          R_SphereStaticGeo_r(puVar4 + 2,param_2);
+        if (-fVar1 < fVar3) {
+          R_SphereStaticGeo_r((mnode_t *)(puVar4 + 2),param_2);
         }
         puVar4 = puVar4 + puVar4[1];
       }
@@ -122,10 +129,10 @@ void R_SphereStaticGeo_r(undefined8 param_1,undefined8 param_2)
     } while (-1 < lVar6);
   }
   if ((int)uVar5 != 0) {
-    iVar1 = (((int)(uVar5 - 1) >> 5) + 7) * 4;
-    *(uint *)(iVar1 + iVar2) =
-         *(uint *)((int)&DAT_82992400 + ((uint)((uVar5 - 1 & 0xffffffff) << 2) & 0x7c)) |
-         *(uint *)(iVar1 + iVar2);
+    iVar2 = (int)(uVar5 - 1) >> 5;
+    param_2->cellBits[iVar2] =
+         *(uint *)(&g_bitShift + ((uint)((uVar5 - 1 & 0xffffffff) << 2) & 0x7c)) |
+         param_2->cellBits[iVar2];
   }
   __restgprlr_27();
   return;
@@ -134,161 +141,191 @@ void R_SphereStaticGeo_r(undefined8 param_1,undefined8 param_2)
 
 // 82724130  R_SphereSurfaces  (gfx_d3d/r_collision.cpp:274)
 
-void R_SphereSurfaces(undefined8 param_1,longlong param_2,undefined4 *param_3,undefined4 param_4,
-                     int *param_5,int param_6,int *param_7,ulonglong param_8)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+void R_SphereSurfaces(Sphere *param_1,uint *param_2,_func___cdecl_int_int_void_ptr **param_3,
+                     void *param_4,GfxSurface ***param_5,uint param_6,uint *param_7,uint param_8)
 
 {
   ushort uVar1;
-  int iVar2;
-  int iVar3;
-  int iVar4;
+  GfxSurfaceBounds *pGVar2;
+  ushort *puVar3;
+  GfxSurface *pGVar4;
   ulonglong uVar5;
-  float *pfVar6;
+  _func___cdecl_int_int_void_ptr **pp_Var6;
   int iVar7;
   ulonglong uVar8;
   uint uVar9;
-  ulonglong uVar10;
-  float *pfVar11;
-  uint uVar12;
-  double dVar13;
+  longlong lVar10;
+  ulonglong uVar11;
+  GfxSurfaceBounds *pGVar12;
+  uint uVar13;
   double dVar14;
   double dVar15;
   double dVar16;
+  double dVar17;
+  Sphere *pSStack00000014;
+  _func___cdecl_int_int_void_ptr **pp_Stack00000024;
+  void *pvStack0000002c;
+  uint uStack0000003c;
   
-  pfVar6 = (float *)__savegprlr();
-  if (DAT_846178cc == 0) {
-    MyAssertHandler(0xffffffff821bbb08,0x11f,0,0xffffffff82000f98,0xffffffff821b8f14);
+  uVar11 = (ulonglong)(int)param_8;
+  lVar10 = (longlong)(int)param_2;
+  __savegprlr();
+  pSStack00000014 = param_1;
+  pp_Stack00000024 = param_3;
+  pvStack0000002c = param_4;
+  uStack0000003c = param_6;
+  if (g_worldDpvs == (GfxWorldDpvsStatic *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_collision.cpp",0x11f
+                    ,0,"%s");
   }
   Profile_Begin(0xcc);
-  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff8217eda4);
+  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"R_SphereSurfaces");
   uVar8 = 0;
-  iVar2 = *(int *)(DAT_846178cc + 0x54);
-  uVar5 = ((ulonglong)*(uint *)(DAT_846178cc + 4) + 0x1f & 0xffffffff) >> 5;
-  iVar3 = *(int *)(DAT_846178cc + 0x48);
-  iVar4 = *(int *)(DAT_846178cc + 0x50);
+  pGVar2 = g_worldDpvs->surfacesBounds;
+  uVar5 = ((ulonglong)g_worldDpvs->staticSurfaceCount + 0x1f & 0xffffffff) >> 5;
+  puVar3 = g_worldDpvs->sortedSurfIndex;
+  pGVar4 = g_worldDpvs->surfaces;
   *param_7 = 0;
-  if ((param_8 & 0xffffffff) == 1) {
+  if ((uVar11 & 0xffffffff) == 1) {
     if (uVar5 != 0) {
-      dVar16 = 0.0;
+      dVar17 = 0.0;
       do {
-        uVar9 = *(uint *)param_2;
-        uVar10 = LZCOUNT(uVar9);
-        if (uVar10 < 0x20) {
+        uVar9 = *(uint *)lVar10;
+        uVar11 = LZCOUNT(uVar9);
+        if (uVar11 < 0x20) {
           do {
-            if (0x20 < uVar10) {
-              MyAssertHandler(0xffffffff82003018,0x475,0,0xffffffff8205cbd0,uVar10,0x21);
+            if (0x20 < uVar11) {
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.h"
+                              ,0x475,0,"count doesn\'t index 33\n\t%i not in [0, %i)");
             }
-            uVar12 = *(uint *)((int)&DAT_82992400 + (int)(uVar10 << 2));
-            if ((uVar12 & uVar9) == 0) {
+            uVar13 = *(uint *)(&g_bitShift + (int)(uVar11 << 2));
+            if ((uVar13 & uVar9) == 0) {
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_collision.cpp"
-                              ,0x13a,0,0xffffffff82000f98,0xffffffff8205cd08);
+                              ,0x13a,0,"%s");
             }
-            uVar9 = uVar9 & ~uVar12;
+            uVar9 = uVar9 & ~uVar13;
             uVar1 = *(ushort *)
-                     ((int)(((uVar8 & 0x7ffffff) * 0x20 + uVar10 & 0xffffffff) << 1) + iVar3);
-            pfVar11 = (float *)((uint)uVar1 * 0x20 + iVar2);
-            if (pfVar11 == (float *)0x0) {
-              MyAssertHandler(0xffffffff821bbaa8,0x4b7,0,0xffffffff82000f98,0xffffffff8207c284);
+                     ((int)(((uVar8 & 0x7ffffff) * 0x20 + uVar11 & 0xffffffff) << 1) + (int)puVar3);
+            pGVar12 = pGVar2 + uVar1;
+            if (pGVar12 == (GfxSurfaceBounds *)0x0) {
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\../universal/bounds_inline.h"
+                              ,0x4b7,0,"%s");
             }
-            if (pfVar6 == (float *)0x0) {
-              MyAssertHandler(0xffffffff821bbaa8,0x4b8,0,0xffffffff82000f98,0xffffffff82012c64);
+            if (pSStack00000014 == (Sphere *)0x0) {
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\../universal/bounds_inline.h"
+                              ,0x4b8,0,"%s");
             }
-            dVar15 = (double)(ABS(*pfVar6 - *pfVar11) - pfVar11[3]);
-            dVar14 = (double)(ABS(pfVar6[1] - pfVar11[1]) - pfVar11[4]);
-            dVar13 = (double)(ABS(pfVar6[2] - pfVar11[2]) - pfVar11[5]);
+            dVar16 = (double)(ABS(pSStack00000014->origin[0] - (pGVar12->bounds).midPoint[0]) -
+                             (pGVar12->bounds).halfSize[0]);
+            dVar15 = (double)(ABS(pSStack00000014->origin[1] - (pGVar12->bounds).midPoint[1]) -
+                             (pGVar12->bounds).halfSize[1]);
+            dVar14 = (double)(ABS(pSStack00000014->origin[2] - (pGVar12->bounds).midPoint[2]) -
+                             (pGVar12->bounds).halfSize[2]);
+            if (dVar16 < 0.0) {
+              dVar16 = dVar17;
+            }
             if (dVar15 < 0.0) {
-              dVar15 = dVar16;
+              dVar15 = dVar17;
             }
             if (dVar14 < 0.0) {
-              dVar14 = dVar16;
+              dVar14 = dVar17;
             }
-            if (dVar13 < 0.0) {
-              dVar13 = dVar16;
-            }
-            if (((float)(dVar13 * dVar13 +
-                        (double)(float)(dVar14 * dVar14 + (double)(float)(dVar15 * dVar15))) <=
-                 pfVar6[4]) && (iVar7 = (*(code *)*param_3)((uint)uVar1,param_4), iVar7 != 0)) {
-              if (*param_7 == param_6) break;
-              *(uint *)(*param_7 * 4 + *param_5) = (uint)uVar1 * 0x18 + iVar4;
+            if (((float)(dVar14 * dVar14 +
+                        (double)(float)(dVar15 * dVar15 + (double)(float)(dVar16 * dVar16))) <=
+                 pSStack00000014->radiusSq) &&
+               (iVar7 = (**pp_Stack00000024)((uint)uVar1,pvStack0000002c), iVar7 != 0)) {
+              if (*param_7 == uStack0000003c) break;
+              (*param_5)[*param_7] = pGVar4 + uVar1;
               *param_7 = *param_7 + 1;
             }
-            uVar10 = LZCOUNT(uVar9);
-          } while (uVar10 < 0x20);
+            uVar11 = LZCOUNT(uVar9);
+          } while (uVar11 < 0x20);
         }
         uVar8 = uVar8 + 1;
-        param_2 = param_2 + 4;
+        lVar10 = lVar10 + 4;
       } while ((uVar8 & 0xffffffff) < uVar5);
     }
   }
   else {
-    if ((param_8 & 0xffffffff) != 2) {
-      MyAssertHandler(0xffffffff821bbb08,0x14f,0,0xffffffff82000f98,0xffffffff821bbaf8);
+    if ((uVar11 & 0xffffffff) != 2) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_collision.cpp",
+                      0x14f,0,"%s");
     }
     param_7[1] = 0;
     if (uVar5 != 0) {
-      dVar16 = 0.0;
+      dVar17 = 0.0;
       do {
-        uVar9 = *(uint *)param_2;
-        uVar10 = LZCOUNT(uVar9);
-        if (uVar10 < 0x20) {
+        uVar9 = *(uint *)lVar10;
+        uVar11 = LZCOUNT(uVar9);
+        if (uVar11 < 0x20) {
           do {
-            if (0x20 < uVar10) {
-              MyAssertHandler(0xffffffff82003018,0x475,0,0xffffffff8205cbd0,uVar10,0x21);
+            if (0x20 < uVar11) {
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.h"
+                              ,0x475,0,"count doesn\'t index 33\n\t%i not in [0, %i)");
             }
-            uVar12 = *(uint *)((int)&DAT_82992400 + (int)(uVar10 << 2));
-            if ((uVar12 & uVar9) == 0) {
+            uVar13 = *(uint *)(&g_bitShift + (int)(uVar11 << 2));
+            if ((uVar13 & uVar9) == 0) {
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_collision.cpp"
-                              ,0x160,0,0xffffffff82000f98,0xffffffff8205cd08);
+                              ,0x160,0,"%s");
             }
-            uVar9 = uVar9 & ~uVar12;
+            uVar9 = uVar9 & ~uVar13;
             uVar1 = *(ushort *)
-                     ((int)(((uVar8 & 0x7ffffff) * 0x20 + uVar10 & 0xffffffff) << 1) + iVar3);
-            uVar12 = (uint)uVar1;
-            pfVar11 = (float *)(uVar12 * 0x20 + iVar2);
-            if (pfVar11 == (float *)0x0) {
-              MyAssertHandler(0xffffffff821bbaa8,0x4b7,0,0xffffffff82000f98,0xffffffff8207c284);
+                     ((int)(((uVar8 & 0x7ffffff) * 0x20 + uVar11 & 0xffffffff) << 1) + (int)puVar3);
+            uVar13 = (uint)uVar1;
+            pGVar12 = pGVar2 + uVar13;
+            if (pGVar12 == (GfxSurfaceBounds *)0x0) {
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\../universal/bounds_inline.h"
+                              ,0x4b7,0,"%s");
             }
-            if (pfVar6 == (float *)0x0) {
-              MyAssertHandler(0xffffffff821bbaa8,0x4b8,0,0xffffffff82000f98,0xffffffff82012c64);
+            if (pSStack00000014 == (Sphere *)0x0) {
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\../universal/bounds_inline.h"
+                              ,0x4b8,0,"%s");
             }
-            dVar15 = (double)(ABS(*pfVar6 - *pfVar11) - pfVar11[3]);
-            dVar14 = (double)(ABS(pfVar6[1] - pfVar11[1]) - pfVar11[4]);
-            dVar13 = (double)(ABS(pfVar6[2] - pfVar11[2]) - pfVar11[5]);
+            pp_Var6 = pp_Stack00000024;
+            dVar16 = (double)(ABS(pSStack00000014->origin[0] - (pGVar12->bounds).midPoint[0]) -
+                             (pGVar12->bounds).halfSize[0]);
+            dVar15 = (double)(ABS(pSStack00000014->origin[1] - (pGVar12->bounds).midPoint[1]) -
+                             (pGVar12->bounds).halfSize[1]);
+            dVar14 = (double)(ABS(pSStack00000014->origin[2] - (pGVar12->bounds).midPoint[2]) -
+                             (pGVar12->bounds).halfSize[2]);
+            if (dVar16 < 0.0) {
+              dVar16 = dVar17;
+            }
             if (dVar15 < 0.0) {
-              dVar15 = dVar16;
+              dVar15 = dVar17;
             }
             if (dVar14 < 0.0) {
-              dVar14 = dVar16;
+              dVar14 = dVar17;
             }
-            if (dVar13 < 0.0) {
-              dVar13 = dVar16;
-            }
-            if ((float)(dVar13 * dVar13 +
-                       (double)(float)(dVar14 * dVar14 + (double)(float)(dVar15 * dVar15))) <=
-                pfVar6[4]) {
-              iVar7 = (*(code *)*param_3)(uVar12,param_4);
+            if ((float)(dVar14 * dVar14 +
+                       (double)(float)(dVar15 * dVar15 + (double)(float)(dVar16 * dVar16))) <=
+                pSStack00000014->radiusSq) {
+              iVar7 = (**pp_Stack00000024)(uVar13,pvStack0000002c);
               if (iVar7 != 0) {
-                if (*param_7 == param_6) break;
-                *(uint *)(*param_7 * 4 + *param_5) = (uint)uVar1 * 0x18 + iVar4;
+                if (*param_7 == uStack0000003c) break;
+                (*param_5)[*param_7] = pGVar4 + uVar1;
                 *param_7 = *param_7 + 1;
               }
-              iVar7 = (*(code *)param_3[1])(uVar12,param_4);
+              iVar7 = (*pp_Var6[1])(uVar13,pvStack0000002c);
               if (iVar7 != 0) {
-                if (param_7[1] == param_6) break;
-                *(uint *)(param_7[1] * 4 + param_5[1]) = (uint)uVar1 * 0x18 + iVar4;
+                if (param_7[1] == uStack0000003c) break;
+                param_5[1][param_7[1]] = pGVar4 + uVar1;
                 param_7[1] = param_7[1] + 1;
               }
             }
-            uVar10 = LZCOUNT(uVar9);
-          } while (uVar10 < 0x20);
+            uVar11 = LZCOUNT(uVar9);
+          } while (uVar11 < 0x20);
         }
         uVar8 = uVar8 + 1;
-        param_2 = param_2 + 4;
+        lVar10 = lVar10 + 4;
       } while ((uVar8 & 0xffffffff) < uVar5);
     }
   }
   PIXEndNamedEvent();
-  Profile_EndInternal(0);
+  Profile_EndInternal((double *)0x0);
   __restgprlr();
   return;
 }
@@ -296,159 +333,187 @@ void R_SphereSurfaces(undefined8 param_1,longlong param_2,undefined4 *param_3,un
 
 // 82724690  R_SetupSphereStaticGeo  (gfx_d3d/r_collision.cpp:387)
 
-void R_SetupSphereStaticGeo(void)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+void R_SetupSphereStaticGeo(R_CollInfo *param_1)
 
 {
   uint uVar1;
   uint uVar2;
-  undefined4 *puVar3;
-  void *pvVar4;
-  uint *_Dst;
-  ulonglong uVar5;
-  uint uVar6;
-  ulonglong uVar7;
+  R_CollInfo *pRVar3;
+  int iVar4;
+  uint *puVar5;
+  ulonglong uVar6;
+  uint uVar7;
+  ulonglong uVar8;
   
-  puVar3 = (undefined4 *)__savegprlr_17();
+  pRVar3 = (R_CollInfo *)__savegprlr_17(param_1);
   Profile_Begin(0xcb);
-  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff821bbbb4);
-  if (DAT_8461818c == (int *)0x0) {
-    MyAssertHandler(0xffffffff821bbb08,0x194,0,0xffffffff82000f98,0xffffffff821bbba0);
+  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"R_SetupSphereStaticGeo0");
+  if (g_worldDpvsPlanes == (GfxWorldDpvsPlanes *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_collision.cpp",0x194
+                    ,0,"%s");
   }
-  if (0x400 < *DAT_8461818c) {
-    MyAssertHandler(0xffffffff821bbb08,0x195,0,0xffffffff821bbb4c,0xffffffff821bbb74);
+  if (0x400 < g_worldDpvsPlanes->cellCount) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_collision.cpp",0x195
+                    ,0,"%s\n\t(g_worldDpvsPlanes->cellCount) = %i");
   }
-  _Dst = puVar3 + 7;
-  uVar2 = *DAT_8461818c + 0x1f >> 5;
-  memset(_Dst,0,uVar2 << 2);
-  R_SphereStaticGeo_r(DAT_8461818c[2],puVar3);
+  puVar5 = pRVar3->cellBits;
+  uVar2 = g_worldDpvsPlanes->cellCount + 0x1f >> 5;
+  memset();
+  R_SphereStaticGeo_r((mnode_t *)g_worldDpvsPlanes->nodes,pRVar3);
   PIXEndNamedEvent();
-  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff821bbbb4);
-  memset((void *)*puVar3,0,DAT_846178cc[1] + 0x1fU >> 3 & 0x1ffffffc);
-  pvVar4 = memset((void *)puVar3[1],0,*DAT_846178cc + 0x1fU >> 3 & 0x1ffffffc);
-  uVar5 = 0;
+  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"R_SetupSphereStaticGeo0");
+  memset();
+  memset();
+  uVar6 = 0;
   if (uVar2 != 0) {
     do {
-      uVar6 = *_Dst;
-      uVar7 = LZCOUNT(uVar6);
-      if (uVar7 < 0x20) {
+      uVar7 = *puVar5;
+      uVar8 = LZCOUNT(uVar7);
+      if (uVar8 < 0x20) {
         do {
-          if (0x20 < uVar7) {
-            MyAssertHandler(0xffffffff82003018,0x475,0,0xffffffff8205cbd0,uVar7,0x21);
+          if (0x20 < uVar8) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.h",
+                            0x475,0,"count doesn\'t index 33\n\t%i not in [0, %i)");
           }
-          uVar1 = *(uint *)((int)&DAT_82992400 + (int)(uVar7 << 2));
-          if ((uVar1 & uVar6) == 0) {
-            MyAssertHandler(0xffffffff821bbb08,0x1bf,0,0xffffffff82000f98,0xffffffff8205cd08);
+          uVar1 = *(uint *)(&g_bitShift + (int)(uVar8 << 2));
+          if ((uVar1 & uVar7) == 0) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_collision.cpp"
+                            ,0x1bf,0,"%s");
           }
-          uVar6 = uVar6 & ~uVar1;
-          pvVar4 = (void *)R_AABBTreeStaticGeo_r
-                                     (*(undefined4 *)
-                                       ((int)(((uVar5 & 0x7ffffff) * 0x20 + uVar7 & 0xffffffff) << 2
-                                             ) + DAT_84613754),puVar3);
-          uVar7 = LZCOUNT(uVar6);
-        } while (uVar7 < 0x20);
+          uVar7 = uVar7 & ~uVar1;
+          R_AABBTreeStaticGeo_r
+                    (*(GfxAabbTree **)
+                      ((int)&g_worldAabbTrees->aabbTree +
+                      (int)(((uVar6 & 0x7ffffff) * 0x20 + uVar8 & 0xffffffff) << 2)),pRVar3);
+          uVar8 = LZCOUNT(uVar7);
+        } while (uVar8 < 0x20);
       }
-      uVar5 = uVar5 + 1;
-      _Dst = _Dst + 1;
-    } while ((uVar5 & 0xffffffff) < (ulonglong)uVar2);
+      uVar6 = uVar6 + 1;
+      puVar5 = puVar5 + 1;
+    } while ((uVar6 & 0xffffffff) < (ulonglong)uVar2);
   }
-  PIXEndNamedEvent(pvVar4);
-  Profile_EndInternal(0);
-  __restgprlr_17();
+  PIXEndNamedEvent();
+  iVar4 = Profile_EndInternal((double *)0x0);
+  __restgprlr_17(iVar4);
   return;
 }
 
 
 // 82724890  R_SphereStaticModels  (gfx_d3d/r_collision.cpp:473)
 
-void R_SphereStaticModels
-               (undefined8 param_1,longlong param_2,code *param_3,undefined4 param_4,int param_5,
-               int param_6)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+uint R_SphereStaticModels
+               (Sphere *param_1,uint *param_2,_func___cdecl_int_int_void_ptr *param_3,void *param_4,
+               ushort *param_5,uint param_6)
 
 {
-  uint uVar1;
+  GfxStaticModelInst *pGVar1;
   uint uVar2;
   uint uVar3;
-  float *pfVar4;
-  int iVar5;
-  ulonglong uVar6;
-  int iVar7;
-  undefined2 *puVar8;
-  uint uVar9;
-  ulonglong uVar10;
+  ulonglong uVar4;
+  float *pfVar5;
+  int iVar6;
+  uint uVar7;
+  ulonglong uVar8;
+  ushort *puVar9;
+  uint uVar10;
   ulonglong uVar11;
   longlong lVar12;
-  float *pfVar13;
-  double dVar14;
-  double dVar15;
+  ulonglong uVar13;
+  longlong lVar14;
+  float *pfVar15;
   double dVar16;
   double dVar17;
+  double dVar18;
+  double dVar19;
+  _func___cdecl_int_int_void_ptr *p_Stack00000024;
+  void *pvStack0000002c;
+  ushort *puStack00000034;
+  uint uStack0000003c;
   
-  pfVar4 = (float *)__savegprlr();
-  if (DAT_846178cc == (int *)0x0) {
-    MyAssertHandler(0xffffffff821bbb08,0x1e4,0,0xffffffff82000f98,0xffffffff821b8f14);
+  lVar12 = (longlong)(int)param_2;
+  uVar4 = (ulonglong)(int)param_1;
+  __savegprlr();
+  p_Stack00000024 = param_3;
+  pvStack0000002c = param_4;
+  puStack00000034 = param_5;
+  uStack0000003c = param_6;
+  if (g_worldDpvs == (GfxWorldDpvsStatic *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_collision.cpp",0x1e4
+                    ,0,"%s");
   }
   Profile_Begin(0xcd);
-  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff8217ed8c);
-  iVar7 = 0;
-  uVar6 = 0;
-  uVar1 = DAT_846178cc[0x13];
-  uVar3 = *DAT_846178cc + 0x1fU >> 5;
+  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"R_SphereStaticModels");
+  uVar7 = 0;
+  uVar8 = 0;
+  pGVar1 = g_worldDpvs->smodelInsts;
+  uVar3 = g_worldDpvs->smodelCount + 0x1f >> 5;
   if (uVar3 != 0) {
-    dVar17 = 0.0;
+    dVar19 = 0.0;
     do {
-      uVar9 = *(uint *)param_2;
-      uVar11 = LZCOUNT(uVar9);
-      if (uVar11 < 0x20) {
-        puVar8 = (undefined2 *)(iVar7 * 2 + param_5 + -2);
+      uVar10 = *(uint *)lVar12;
+      uVar13 = LZCOUNT(uVar10);
+      if (uVar13 < 0x20) {
+        puVar9 = puStack00000034 + (uVar7 - 1);
         do {
-          uVar10 = (uVar6 & 0x7ffffff) * 0x20 + uVar11;
-          if (0x20 < uVar11) {
-            MyAssertHandler(0xffffffff82003018,0x475,0,0xffffffff8205cbd0,uVar11,0x21);
+          uVar11 = (uVar8 & 0x7ffffff) * 0x20 + uVar13;
+          if (0x20 < uVar13) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.h",
+                            0x475,0,"count doesn\'t index 33\n\t%i not in [0, %i)");
           }
-          uVar2 = *(uint *)((int)&DAT_82992400 + (int)(uVar11 << 2));
-          if ((uVar2 & uVar9) == 0) {
+          uVar2 = *(uint *)(&g_bitShift + (int)(uVar13 << 2));
+          if ((uVar2 & uVar10) == 0) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_collision.cpp"
-                            ,0x1fa,0,0xffffffff82000f98,0xffffffff8205cd08);
+                            ,0x1fa,0,"%s");
           }
-          uVar9 = uVar9 & ~uVar2;
-          lVar12 = (uVar10 + (uVar10 & 0x1fffffff) * 8 & 0x3fffffff) * 4 + (ulonglong)uVar1;
-          if (lVar12 == 0) {
-            MyAssertHandler(0xffffffff821bbaa8,0x4b7,0,0xffffffff82000f98,0xffffffff8207c284);
+          uVar10 = uVar10 & ~uVar2;
+          lVar14 = (uVar11 + (uVar11 & 0x1fffffff) * 8 & 0x3fffffff) * 4 + ZEXT48(pGVar1);
+          if (lVar14 == 0) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\../universal/bounds_inline.h"
+                            ,0x4b7,0,"%s");
           }
-          if (pfVar4 == (float *)0x0) {
-            MyAssertHandler(0xffffffff821bbaa8,0x4b8,0,0xffffffff82000f98,0xffffffff82012c64);
+          if ((uVar4 & 0xffffffff) == 0) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\../universal/bounds_inline.h"
+                            ,0x4b8,0,"%s");
           }
-          pfVar13 = (float *)lVar12;
-          dVar16 = (double)(ABS(*pfVar4 - *pfVar13) - pfVar13[3]);
-          dVar15 = (double)(ABS(pfVar4[1] - pfVar13[1]) - pfVar13[4]);
-          dVar14 = (double)(ABS(pfVar4[2] - pfVar13[2]) - pfVar13[5]);
+          pfVar5 = (float *)uVar4;
+          pfVar15 = (float *)lVar14;
+          dVar18 = (double)(ABS(*pfVar5 - *pfVar15) - pfVar15[3]);
+          dVar17 = (double)(ABS(pfVar5[1] - pfVar15[1]) - pfVar15[4]);
+          dVar16 = (double)(ABS(pfVar5[2] - pfVar15[2]) - pfVar15[5]);
+          if (dVar18 < 0.0) {
+            dVar18 = dVar19;
+          }
+          if (dVar17 < 0.0) {
+            dVar17 = dVar19;
+          }
           if (dVar16 < 0.0) {
-            dVar16 = dVar17;
+            dVar16 = dVar19;
           }
-          if (dVar15 < 0.0) {
-            dVar15 = dVar17;
+          if (((float)(dVar16 * dVar16 +
+                      (double)(float)(dVar17 * dVar17 + (double)(float)(dVar18 * dVar18))) <=
+               pfVar5[4]) && (iVar6 = (*p_Stack00000024)((int)uVar11,pvStack0000002c), iVar6 != 0))
+          {
+            if (uVar7 == uStack0000003c) break;
+            uVar7 = uVar7 + 1;
+            puVar9 = puVar9 + 1;
+            *puVar9 = (ushort)uVar11;
           }
-          if (dVar14 < 0.0) {
-            dVar14 = dVar17;
-          }
-          if (((float)(dVar14 * dVar14 +
-                      (double)(float)(dVar15 * dVar15 + (double)(float)(dVar16 * dVar16))) <=
-               pfVar4[4]) && (iVar5 = (*param_3)(uVar10,param_4), iVar5 != 0)) {
-            if (iVar7 == param_6) break;
-            iVar7 = iVar7 + 1;
-            puVar8 = puVar8 + 1;
-            *puVar8 = (short)uVar10;
-          }
-          uVar11 = LZCOUNT(uVar9);
-        } while (uVar11 < 0x20);
+          uVar13 = LZCOUNT(uVar10);
+        } while (uVar13 < 0x20);
       }
-      uVar6 = uVar6 + 1;
-      param_2 = param_2 + 4;
-    } while ((uVar6 & 0xffffffff) < (ulonglong)uVar3);
+      uVar8 = uVar8 + 1;
+      lVar12 = lVar12 + 4;
+    } while ((uVar8 & 0xffffffff) < (ulonglong)uVar3);
   }
   PIXEndNamedEvent();
-  Profile_EndInternal(0);
-  __restgprlr(iVar7);
-  return;
+  Profile_EndInternal((double *)0x0);
+  __restgprlr();
+  return uVar7;
 }
 

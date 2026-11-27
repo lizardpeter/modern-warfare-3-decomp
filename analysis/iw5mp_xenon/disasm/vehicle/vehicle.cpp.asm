@@ -9625,52 +9625,8 @@ LAB_826b3204:
   826B3224  398C3234             addi r12,r12,0x3234
   826B3228  7C0C002E             lwzx r0,r12,r0
   826B322C  7C0903A6             mtspr CTR,r0
-switchD:
   826B3230  4E800420             bctr
-caseD_0:
-  826B326C  817F0094             lwz r11,0x94(r31)
-  826B3270  2F0B0000             cmpwi cr6,r11,0x0
-  826B3274  409A008C             bne cr6,0x826b3300
-  826B3278  572B07BC             rlwinm r11,r25,0x0,0x1e,0x1e
-  826B327C  2F0B0000             cmpwi cr6,r11,0x0
-  826B3280  419A0010             beq cr6,0x826b3290
-  826B3284  817F0098             lwz r11,0x98(r31)
-  826B3288  2F0B0000             cmpwi cr6,r11,0x0
-  826B328C  409A0074             bne cr6,0x826b3300
-LAB_826b3290:
-  826B3290  38600001             li r3,0x1
-  826B3294  38210090             addi r1,r1,0x90
-  826B3298  48263464             b 0x829166fc
-caseD_3:
-  826B329C  7F44D378             or r4,r26,r26
-  826B32A0  7F63DB78             or r3,r27,r27
-  826B32A4  4BBEA725             bl 0x8229d9c8
-  826B32A8  2F030006             cmpwi cr6,r3,0x6
-  826B32AC  409A0018             bne cr6,0x826b32c4
-  826B32B0  817F00A8             lwz r11,0xa8(r31)
-  826B32B4  7D6A0034             cntlzw r10,r11
-  826B32B8  5543DFFE             rlwinm r3,r10,0x1b,0x1f,0x1f
-  826B32BC  38210090             addi r1,r1,0x90
-  826B32C0  4826343C             b 0x829166fc
-LAB_826b32c4:
-  826B32C4  817F009C             lwz r11,0x9c(r31)
-  826B32C8  7D6A0034             cntlzw r10,r11
-  826B32CC  5543DFFE             rlwinm r3,r10,0x1b,0x1f,0x1f
-  826B32D0  38210090             addi r1,r1,0x90
-  826B32D4  48263428             b 0x829166fc
-caseD_5:
-  826B32D8  817F00A0             lwz r11,0xa0(r31)
-  826B32DC  7D6A0034             cntlzw r10,r11
-  826B32E0  5543DFFE             rlwinm r3,r10,0x1b,0x1f,0x1f
-  826B32E4  38210090             addi r1,r1,0x90
-  826B32E8  48263414             b 0x829166fc
-caseD_6:
-  826B32EC  817F00A4             lwz r11,0xa4(r31)
-  826B32F0  7D6A0034             cntlzw r10,r11
-  826B32F4  5543DFFE             rlwinm r3,r10,0x1b,0x1f,0x1f
-  826B32F8  38210090             addi r1,r1,0x90
-  826B32FC  48263400             b 0x829166fc
-caseD_2:
+LAB_826b3300:
   826B3300  38600000             li r3,0x0
   826B3304  38210090             addi r1,r1,0x90
   826B3308  482633F4             b 0x829166fc

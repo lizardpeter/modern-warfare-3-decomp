@@ -2,26 +2,22 @@
 
 // 8291D100  memchr  (<external>/bt/278379/vctools/crt/xb/xbox/memchrp.asm:51)
 
-void * memchr(void *_Buf,int _Val,size_t _MaxCount)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void memchr(void)
 
 {
+  byte *in_r3;
+  uint in_r4;
+  longlong in_r5;
   longlong lVar1;
   
-  if (_MaxCount != 0) {
-    lVar1 = (longlong)(int)_MaxCount + -1;
-    if ((uint)*(byte *)_Buf == _Val) {
-      return _Buf;
-    }
-    if (_MaxCount != 1) {
-      do {
-        _Buf = (void *)((int)_Buf + 1);
-        lVar1 = lVar1 + -1;
-      } while (lVar1 != 0 && (uint)*(byte *)_Buf != _Val);
-      if ((uint)*(byte *)_Buf == _Val) {
-        return _Buf;
-      }
-    }
+  if ((((int)in_r5 != 0) && (lVar1 = in_r5 + -1, *in_r3 != in_r4)) && ((int)in_r5 != 1)) {
+    do {
+      in_r3 = in_r3 + 1;
+      lVar1 = lVar1 + -1;
+    } while (lVar1 != 0 && *in_r3 != in_r4);
   }
-  return (void *)0x0;
+  return;
 }
 

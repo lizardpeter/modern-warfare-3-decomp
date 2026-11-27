@@ -606,13 +606,52 @@ LAB_828d6044:
   828D6050  38E00020             li r7,0x20
   828D6054  7C691B78             or r9,r3,r3
   828D6058  39400010             li r10,0x10
+LAB_828d605c:
   828D605C  81680008             lwz r11,0x8(r8)
   828D6060  7D695A14             add r11,r9,r11
   828D6064  38CB0010             addi r6,r11,0x10
   828D6068  80AB0040             lwz r5,0x40(r11)
-  828D606C  13E550C7             vcmpequd v31,v5,v10
-  828D6070  13C538C7             vcmpequd v30,v5,v7
-  828D6074  13A028C7             vcmpequd v29,v0,v5
+  828D606C  13E550C7             lvx128 v63,r5,r10
+  828D6070  13C538C7             lvx128 v62,r5,r7
+  828D6074  13A028C7             lvx128 v61,0,r5
+  828D6078  13A059C7             stvx128 v61,0,r11
+  828D607C  814B0000             lwz r10,0x0(r11)
+  828D6080  555F67FE             rlwinm r31,r10,0xc,0x1f,0x1f
+  828D6084  13E031C7             stvx128 v63,0,r6
+  828D6088  13CB39C7             stvx128 v62,r11,r7
+  828D608C  554567BE             rlwinm r5,r10,0xc,0x1e,0x1f
+  828D6090  2B1F0000             cmplwi cr6,r31,0x0
+  828D6094  409A001C             bne cr6,0x828d60b0
+  828D6098  554A0026             rlwinm r10,r10,0x0,0x0,0x13
+  828D609C  906B0014             stw r3,0x14(r11)
+  828D60A0  914B0000             stw r10,0x0(r11)
+  828D60A4  81480008             lwz r10,0x8(r8)
+  828D60A8  7D495214             add r10,r9,r10
+  828D60AC  906A0054             stw r3,0x54(r10)
+LAB_828d60b0:
+  828D60B0  54AA07BC             rlwinm r10,r5,0x0,0x1e,0x1e
+  828D60B4  2B0A0000             cmplwi cr6,r10,0x0
+  828D60B8  409A0020             bne cr6,0x828d60d8
+  828D60BC  814B0004             lwz r10,0x4(r11)
+  828D60C0  906B0018             stw r3,0x18(r11)
+  828D60C4  554A0026             rlwinm r10,r10,0x0,0x0,0x13
+  828D60C8  914B0004             stw r10,0x4(r11)
+  828D60CC  81680008             lwz r11,0x8(r8)
+  828D60D0  7D695A14             add r11,r9,r11
+  828D60D4  906B0058             stw r3,0x58(r11)
+LAB_828d60d8:
+  828D60D8  2B050000             cmplwi cr6,r5,0x0
+  828D60DC  409A0010             bne cr6,0x828d60ec
+  828D60E0  81660000             lwz r11,0x0(r6)
+  828D60E4  556A007E             rlwinm r10,r11,0x0,0x1,0x1f
+  828D60E8  91460000             stw r10,0x0(r6)
+LAB_828d60ec:
+  828D60EC  81680000             lwz r11,0x0(r8)
+  828D60F0  38840001             addi r4,r4,0x1
+  828D60F4  39290060             addi r9,r9,0x60
+  828D60F8  7F045840             cmplw cr6,r4,r11
+  828D60FC  39400010             li r10,0x10
+  828D6100  4198FF5C             blt cr6,0x828d605c
 LAB_828d6104:
   828D6104  81680004             lwz r11,0x4(r8)
   828D6108  656A0002             oris r10,r11,0x2
@@ -663,14 +702,21 @@ LAB_828d6180:
   828D619C  38E00010             li r7,0x10
   828D61A0  38C00020             li r6,0x20
   828D61A4  39400000             li r10,0x0
+LAB_828d61a8:
   828D61A8  81680008             lwz r11,0x8(r8)
   828D61AC  39290001             addi r9,r9,0x1
   828D61B0  7D6A5A14             add r11,r10,r11
   828D61B4  394A0060             addi r10,r10,0x60
   828D61B8  80AB0040             lwz r5,0x40(r11)
-  828D61BC  13EB38C7             vcmpequd v31,v11,v7
-  828D61C0  13CB30C7             vcmpequd v30,v11,v6
-  828D61C4  13A058C7             vcmpequd v29,v0,v11
+  828D61BC  13EB38C7             lvx128 v63,r11,r7
+  828D61C0  13CB30C7             lvx128 v62,r11,r6
+  828D61C4  13A058C7             lvx128 v61,0,r11
+  828D61C8  13A029C7             stvx128 v61,0,r5
+  828D61CC  13E539C7             stvx128 v63,r5,r7
+  828D61D0  13C531C7             stvx128 v62,r5,r6
+  828D61D4  80880000             lwz r4,0x0(r8)
+  828D61D8  7F092040             cmplw cr6,r9,r4
+  828D61DC  4198FFCC             blt cr6,0x828d61a8
 LAB_828d61e0:
   828D61E0  81680000             lwz r11,0x0(r8)
   828D61E4  39400000             li r10,0x0

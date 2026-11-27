@@ -7,7 +7,7 @@ void __unwind_71807(void)
 {
   int in_r12;
   
-  bdReferencable___bdReferencable(*(undefined4 *)(in_r12 + 0x14));
+  bdReferencable::~bdReferencable(*(bdReferencable **)(in_r12 + 0x14));
   return;
 }
 
@@ -19,7 +19,8 @@ void __unwind_71808(void)
 {
   int in_r12;
   
-  bdReference<bdCommonAddr>___bdReference<bdCommonAddr>((ulonglong)*(uint *)(in_r12 + 0x14) + 8);
+  bdReference<bdCommonAddr>::~bdReference<bdCommonAddr>
+            ((bdReference<bdCommonAddr> *)(*(int *)(in_r12 + 0x14) + 8));
   return;
 }
 
@@ -31,7 +32,8 @@ void __unwind_71809(void)
 {
   int in_r12;
   
-  bdReference<bdAddrHandle>___bdReference<bdAddrHandle>((ulonglong)*(uint *)(in_r12 + 0x14) + 0xc);
+  bdReference<bdAddrHandle>::~bdReference<bdAddrHandle>
+            ((bdReference<bdAddrHandle> *)(*(int *)(in_r12 + 0x14) + 0xc));
   return;
 }
 
@@ -43,7 +45,7 @@ void __unwind_71885(void)
 {
   int in_r12;
   
-  bdReferencable___bdReferencable(*(undefined4 *)(in_r12 + 0x14));
+  bdReferencable::~bdReferencable(*(bdReferencable **)(in_r12 + 0x14));
   return;
 }
 
@@ -55,7 +57,8 @@ void __unwind_71886(void)
 {
   int in_r12;
   
-  bdReference<bdCommonAddr>___bdReference<bdCommonAddr>((ulonglong)*(uint *)(in_r12 + 0x14) + 8);
+  bdReference<bdCommonAddr>::~bdReference<bdCommonAddr>
+            ((bdReference<bdCommonAddr> *)(*(int *)(in_r12 + 0x14) + 8));
   return;
 }
 
@@ -67,7 +70,8 @@ void __unwind_71887(void)
 {
   int in_r12;
   
-  bdReference<bdAddrHandle>___bdReference<bdAddrHandle>((ulonglong)*(uint *)(in_r12 + 0x14) + 0xc);
+  bdReference<bdAddrHandle>::~bdReference<bdAddrHandle>
+            ((bdReference<bdAddrHandle> *)(*(int *)(in_r12 + 0x14) + 0xc));
   return;
 }
 

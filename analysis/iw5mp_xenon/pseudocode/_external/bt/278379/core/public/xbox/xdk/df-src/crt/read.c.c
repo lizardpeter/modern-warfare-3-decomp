@@ -2,94 +2,95 @@
 
 // 829255C8  _read  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/read.c:79)
 
-int _read(int _FileHandle,void *_DstBuf,uint _MaxCharCount)
+int _read(int param_1,void *param_2,uint param_3)
 
 {
-  uint _Filehandle;
-  ulong *puVar2;
-  int *piVar3;
-  ulonglong uVar1;
-  int iVar4;
+  int iVar1;
+  uint uVar3;
+  ulong *puVar4;
+  int *piVar5;
+  ulonglong uVar2;
+  int iVar6;
   uint uStack00000014;
   uint local_50;
   
-  uVar1 = (ulonglong)(int)_MaxCharCount;
-  _Filehandle = __savegprlr_24(_FileHandle);
-  uStack00000014 = _Filehandle;
-  if (_Filehandle == 0xfffffffe) {
-    puVar2 = __doserrno();
-    *puVar2 = 0;
-    piVar3 = _errno();
-    uVar1 = 0xffffffffffffffff;
-    *piVar3 = 9;
+  uVar2 = (ulonglong)(int)param_3;
+  uVar3 = __savegprlr_24(param_1);
+  uStack00000014 = uVar3;
+  if (uVar3 == 0xfffffffe) {
+    puVar4 = __doserrno();
+    *puVar4 = 0;
+    piVar5 = _errno();
+    uVar2 = 0xffffffffffffffff;
+    *piVar5 = 9;
     goto LAB_82925710;
   }
-  if (((int)_Filehandle < 0) || (DAT_84897db0 <= _Filehandle)) {
+  if (((int)uVar3 < 0) || ((uint)_nhandle <= uVar3)) {
 LAB_8292562c:
-    puVar2 = __doserrno();
-    *puVar2 = 0;
-    piVar3 = _errno();
-    iVar4 = 9;
+    puVar4 = __doserrno();
+    *puVar4 = 0;
+    piVar5 = _errno();
+    iVar6 = 9;
   }
   else {
-    iVar4 = (_Filehandle & 0x1f) * 0x48;
-    if ((*(byte *)((&DAT_84897dc0)[(int)_Filehandle >> 5] + iVar4 + 4) & 1) == 0) goto LAB_8292562c;
-    if (uVar1 < 0x80000000) {
-      __lock_fhandle(_Filehandle);
-      if ((*(byte *)((&DAT_84897dc0)[(int)_Filehandle >> 5] + iVar4 + 4) & 1) == 0) {
-        piVar3 = _errno();
-        *piVar3 = 9;
-        puVar2 = __doserrno();
-        *puVar2 = 0;
+    iVar6 = ((int)uVar3 >> 5) * 4;
+    iVar1 = (uVar3 & 0x1f) * 0x48;
+    if ((*(byte *)(*(int *)(&__pioinfo + iVar6) + iVar1 + 4) & 1) == 0) goto LAB_8292562c;
+    if (uVar2 < 0x80000000) {
+      __lock_fhandle(uVar3);
+      if ((*(byte *)(*(int *)(&__pioinfo + iVar6) + iVar1 + 4) & 1) == 0) {
+        piVar5 = _errno();
+        *piVar5 = 9;
+        puVar4 = __doserrno();
+        *puVar4 = 0;
         local_50 = 0xffffffff;
       }
       else {
-        local_50 = _read_nolock(_Filehandle,_DstBuf,(uint)uVar1);
+        local_50 = _read_nolock(uVar3,param_2,(uint)uVar2);
       }
       FUN_82925738();
-      uVar1 = (ulonglong)local_50;
+      uVar2 = (ulonglong)local_50;
       goto LAB_82925710;
     }
-    puVar2 = __doserrno();
-    *puVar2 = 0;
-    piVar3 = _errno();
-    iVar4 = 0x16;
+    puVar4 = __doserrno();
+    *puVar4 = 0;
+    piVar5 = _errno();
+    iVar6 = 0x16;
   }
-  *piVar3 = iVar4;
+  *piVar5 = iVar6;
   _invalid_parameter_noinfo();
-  uVar1 = 0xffffffffffffffff;
+  uVar2 = 0xffffffffffffffff;
 LAB_82925710:
-  iVar4 = __restgprlr_24(uVar1);
-  return iVar4;
+  iVar6 = __restgprlr_24(uVar2);
+  return iVar6;
 }
 
 
 // 82924FA8  _read_nolock  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/read.c:113)
 
-int _read_nolock(int _FileHandle,void *_DstBuf,uint _MaxCharCount)
+int _read_nolock(int param_1,void *param_2,uint param_3)
 
 {
   char cVar1;
   int iVar2;
-  uint uVar3;
-  ulong *puVar4;
-  int *piVar5;
-  void *pvVar6;
-  BOOL BVar7;
-  DWORD DVar8;
+  uint uVar4;
+  ulong *puVar5;
+  int *piVar6;
+  void *pvVar7;
+  long64 lVar3;
+  int iVar8;
   ulong uVar9;
   int iVar10;
   ulonglong uVar11;
   ulonglong uVar12;
   ulonglong uVar13;
-  byte bVar16;
+  byte bVar15;
   longlong lVar14;
-  int iVar15;
-  char cVar18;
-  undefined1 *puVar17;
-  longlong lVar19;
-  ulonglong uVar20;
-  LPCSTR lpMultiByteStr;
+  char cVar17;
+  undefined1 *puVar16;
+  longlong lVar18;
+  ulonglong uVar19;
+  char *pcVar20;
   longlong lVar21;
   ulonglong uVar22;
   ulonglong uVar23;
@@ -98,141 +99,141 @@ int _read_nolock(int _FileHandle,void *_DstBuf,uint _MaxCharCount)
   char local_80 [4];
   uint local_7c [31];
   
-  uVar13 = (ulonglong)(int)_MaxCharCount;
-  uVar11 = (ulonglong)(int)_DstBuf;
-  uVar3 = __savegprlr_18(_FileHandle);
-  lVar19 = -2;
-  if (uVar3 == 0xfffffffe) {
-    puVar4 = __doserrno();
-    *puVar4 = 0;
-    puVar4 = (ulong *)_errno();
+  uVar13 = (ulonglong)(int)param_3;
+  uVar11 = (ulonglong)(int)param_2;
+  uVar4 = __savegprlr_18(param_1);
+  lVar18 = -2;
+  if (uVar4 == 0xfffffffe) {
+    puVar5 = __doserrno();
+    *puVar5 = 0;
+    puVar5 = (ulong *)_errno();
     uVar9 = 9;
 LAB_82924fe4:
-    *puVar4 = uVar9;
+    *puVar5 = uVar9;
     lVar21 = -1;
     goto LAB_829255b8;
   }
-  if (((int)uVar3 < 0) || (DAT_84897db0 <= uVar3)) {
+  if (((int)uVar4 < 0) || ((uint)_nhandle <= uVar4)) {
 LAB_8292500c:
-    puVar4 = __doserrno();
-    *puVar4 = 0;
-    piVar5 = _errno();
+    puVar5 = __doserrno();
+    *puVar5 = 0;
+    piVar6 = _errno();
     iVar10 = 9;
   }
   else {
-    iVar10 = (int)uVar3 >> 5;
-    iVar2 = (uVar3 & 0x1f) * 0x48;
-    bVar16 = *(byte *)(iVar2 + (&DAT_84897dc0)[iVar10] + 4);
-    if ((bVar16 & 1) == 0) goto LAB_8292500c;
+    iVar10 = ((int)uVar4 >> 5) * 4;
+    iVar2 = (uVar4 & 0x1f) * 0x48;
+    bVar15 = *(byte *)(iVar2 + *(int *)(&__pioinfo + iVar10) + 4);
+    if ((bVar15 & 1) == 0) goto LAB_8292500c;
     if ((uVar13 & 0xffffffff) < 0x80000000) {
       lVar21 = 0;
-      if (((uVar13 & 0xffffffff) == 0) || ((bVar16 & 2) != 0)) {
+      if (((uVar13 & 0xffffffff) == 0) || ((bVar15 & 2) != 0)) {
         lVar21 = 0;
         goto LAB_829255b8;
       }
       if ((uVar11 & 0xffffffff) != 0) {
-        cVar18 = *(char *)(iVar2 + (&DAT_84897dc0)[iVar10] + 0x28) >> 1;
-        if (cVar18 == '\x01') {
+        cVar17 = *(char *)(iVar2 + *(int *)(&__pioinfo + iVar10) + 0x28) >> 1;
+        if (cVar17 == '\x01') {
           if ((~uVar13 & 1) == 0) goto LAB_829250a8;
           uVar24 = (uVar13 & 0xffffffff) >> 1;
           if (uVar24 < 4) {
             uVar24 = 4;
           }
-          pvVar6 = malloc((size_t)uVar24);
-          if ((longlong)(int)pvVar6 == 0) {
-            piVar5 = _errno();
-            *piVar5 = 0xc;
-            puVar4 = __doserrno();
+          pvVar7 = malloc((uint)uVar24);
+          if ((longlong)(int)pvVar7 == 0) {
+            piVar6 = _errno();
+            *piVar6 = 0xc;
+            puVar5 = __doserrno();
             uVar9 = 8;
             goto LAB_82924fe4;
           }
-          lVar14 = _lseeki64_nolock(uVar3,0,1);
-          *(longlong *)(iVar2 + (&DAT_84897dc0)[iVar10] + 0x30) = lVar14;
-          uVar20 = (longlong)(int)pvVar6;
+          lVar3 = _lseeki64_nolock(uVar4,0,1);
+          *(long64 *)(iVar2 + *(int *)(&__pioinfo + iVar10) + 0x30) = lVar3;
+          uVar19 = (longlong)(int)pvVar7;
         }
         else {
-          uVar20 = uVar11;
+          uVar19 = uVar11;
           uVar24 = uVar13;
-          if (cVar18 == '\x02') {
+          if (cVar17 == '\x02') {
             if ((~uVar13 & 1) == 0) goto LAB_829250a8;
             uVar24 = uVar13 & 0xfffffffe;
           }
         }
-        lpMultiByteStr = (LPCSTR)uVar20;
-        uVar12 = uVar20;
+        pcVar20 = (char *)uVar19;
+        uVar12 = uVar19;
         uVar23 = uVar24;
-        if ((((*(byte *)(iVar2 + (&DAT_84897dc0)[iVar10] + 4) & 0x48) != 0) &&
-            (cVar1 = *(char *)(iVar2 + (&DAT_84897dc0)[iVar10] + 5), cVar1 != '\n')) &&
+        if ((((*(byte *)(iVar2 + *(int *)(&__pioinfo + iVar10) + 4) & 0x48) != 0) &&
+            (cVar1 = *(char *)(iVar2 + *(int *)(&__pioinfo + iVar10) + 5), cVar1 != '\n')) &&
            ((uVar24 & 0xffffffff) != 0)) {
-          *lpMultiByteStr = cVar1;
-          uVar12 = uVar20 + 1;
+          *pcVar20 = cVar1;
+          uVar12 = uVar19 + 1;
           lVar21 = 1;
-          *(undefined1 *)(iVar2 + (&DAT_84897dc0)[iVar10] + 5) = 10;
+          *(undefined1 *)(iVar2 + *(int *)(&__pioinfo + iVar10) + 5) = 10;
           uVar23 = uVar24 - 1;
-          if (((cVar18 != '\0') &&
-              (cVar1 = *(char *)(iVar2 + (&DAT_84897dc0)[iVar10] + 0x29), cVar1 != '\n')) &&
+          if (((cVar17 != '\0') &&
+              (cVar1 = *(char *)(iVar2 + *(int *)(&__pioinfo + iVar10) + 0x29), cVar1 != '\n')) &&
              ((uVar23 & 0xffffffff) != 0)) {
             *(char *)uVar12 = cVar1;
-            uVar12 = uVar20 + 2;
+            uVar12 = uVar19 + 2;
             lVar21 = 2;
-            *(undefined1 *)(iVar2 + (&DAT_84897dc0)[iVar10] + 0x29) = 10;
+            *(undefined1 *)(iVar2 + *(int *)(&__pioinfo + iVar10) + 0x29) = 10;
             uVar23 = uVar24 - 2;
-            if (((cVar18 == '\x01') &&
-                (cVar1 = *(char *)(iVar2 + (&DAT_84897dc0)[iVar10] + 0x2a), cVar1 != '\n')) &&
+            if (((cVar17 == '\x01') &&
+                (cVar1 = *(char *)(iVar2 + *(int *)(&__pioinfo + iVar10) + 0x2a), cVar1 != '\n')) &&
                ((uVar23 & 0xffffffff) != 0)) {
               *(char *)uVar12 = cVar1;
-              uVar12 = uVar20 + 3;
+              uVar12 = uVar19 + 3;
               lVar21 = 3;
-              *(undefined1 *)(iVar2 + (&DAT_84897dc0)[iVar10] + 0x2a) = 10;
+              *(undefined1 *)(iVar2 + *(int *)(&__pioinfo + iVar10) + 0x2a) = 10;
               uVar23 = uVar24 - 3;
             }
           }
         }
-        BVar7 = ReadFile(*(HANDLE *)(iVar2 + (&DAT_84897dc0)[iVar10]),(LPVOID)uVar12,(DWORD)uVar23,
-                         local_7c,(LPOVERLAPPED)0x0);
-        if (((BVar7 == 0) || ((int)local_7c[0] < 0)) ||
+        iVar8 = ReadFile(*(void **)(iVar2 + *(int *)(&__pioinfo + iVar10)),(void *)uVar12,
+                         (ulong)uVar23,local_7c,(_OVERLAPPED *)0x0);
+        if (((iVar8 == 0) || ((int)local_7c[0] < 0)) ||
            ((uVar23 & 0xffffffff) < (ulonglong)local_7c[0])) {
           uVar9 = GetLastError();
           if (uVar9 == 5) {
-            piVar5 = _errno();
-            *piVar5 = 9;
-            puVar4 = __doserrno();
+            piVar6 = _errno();
+            *piVar6 = 9;
+            puVar5 = __doserrno();
             uVar9 = 5;
 LAB_82925474:
-            *puVar4 = uVar9;
+            *puVar5 = uVar9;
           }
           else {
             if (uVar9 == 0x6d) {
-              lVar19 = 0;
+              lVar18 = 0;
               goto LAB_8292553c;
             }
 LAB_82925534:
             _dosmaperr(uVar9);
           }
-          lVar19 = -1;
+          lVar18 = -1;
         }
         else {
           lVar21 = (ulonglong)local_7c[0] + lVar21;
-          iVar15 = iVar2 + (&DAT_84897dc0)[iVar10];
-          if ((*(byte *)(iVar15 + 4) & 0x80) != 0) {
-            if ((local_7c[0] == 0) || (*lpMultiByteStr != '\n')) {
-              bVar16 = *(byte *)(iVar15 + 4) & 0xfb;
+          iVar8 = iVar2 + *(int *)(&__pioinfo + iVar10);
+          if ((*(byte *)(iVar8 + 4) & 0x80) != 0) {
+            if ((local_7c[0] == 0) || (*pcVar20 != '\n')) {
+              bVar15 = *(byte *)(iVar8 + 4) & 0xfb;
             }
             else {
-              bVar16 = *(byte *)(iVar15 + 4) | 4;
+              bVar15 = *(byte *)(iVar8 + 4) | 4;
             }
-            uVar23 = uVar20 + lVar21;
-            *(byte *)(iVar15 + 4) = bVar16;
-            uVar12 = uVar20;
-            uVar24 = uVar20;
-            if ((uVar20 & 0xffffffff) < (uVar23 & 0xffffffff)) {
+            uVar23 = uVar19 + lVar21;
+            *(byte *)(iVar8 + 4) = bVar15;
+            uVar12 = uVar19;
+            uVar24 = uVar19;
+            if ((uVar19 & 0xffffffff) < (uVar23 & 0xffffffff)) {
               do {
                 cVar1 = *(char *)uVar12;
                 pcVar25 = (char *)uVar24;
                 if (cVar1 == '\x1a') {
-                  iVar15 = iVar2 + (&DAT_84897dc0)[iVar10];
-                  if ((*(byte *)(iVar15 + 4) & 0x40) == 0) {
-                    *(byte *)(iVar15 + 4) = *(byte *)(iVar15 + 4) | 2;
+                  iVar8 = iVar2 + *(int *)(&__pioinfo + iVar10);
+                  if ((*(byte *)(iVar8 + 4) & 0x40) == 0) {
+                    *(byte *)(iVar8 + 4) = *(byte *)(iVar8 + 4) | 2;
                   }
                   else {
                     *pcVar25 = '\x1a';
@@ -253,26 +254,26 @@ LAB_82925534:
                     goto LAB_829253c0;
                   }
                   uVar22 = uVar12 + 1;
-                  BVar7 = ReadFile(*(HANDLE *)(iVar2 + (&DAT_84897dc0)[iVar10]),local_80,1,local_7c,
-                                   (LPOVERLAPPED)0x0);
-                  if (((BVar7 == 0) && (DVar8 = GetLastError(), DVar8 != 0)) || (local_7c[0] == 0))
+                  iVar8 = ReadFile(*(void **)(iVar2 + *(int *)(&__pioinfo + iVar10)),local_80,1,
+                                   local_7c,(_OVERLAPPED *)0x0);
+                  if (((iVar8 == 0) && (uVar9 = GetLastError(), uVar9 != 0)) || (local_7c[0] == 0))
                   {
 LAB_829253bc:
                     *pcVar25 = '\r';
                     goto LAB_829253c0;
                   }
-                  if ((*(byte *)(iVar2 + (&DAT_84897dc0)[iVar10] + 4) & 0x48) != 0) {
+                  if ((*(byte *)(iVar2 + *(int *)(&__pioinfo + iVar10) + 4) & 0x48) != 0) {
                     if (local_80[0] == '\n') goto LAB_8292536c;
                     *pcVar25 = '\r';
-                    *(char *)(iVar2 + (&DAT_84897dc0)[iVar10] + 5) = local_80[0];
+                    *(char *)(iVar2 + *(int *)(&__pioinfo + iVar10) + 5) = local_80[0];
                     goto LAB_829253c0;
                   }
-                  if (((uVar24 & 0xffffffff) == (uVar20 & 0xffffffff)) && (local_80[0] == '\n')) {
+                  if (((uVar24 & 0xffffffff) == (uVar19 & 0xffffffff)) && (local_80[0] == '\n')) {
 LAB_8292536c:
                     *pcVar25 = '\n';
                     goto LAB_829253c0;
                   }
-                  _lseeki64_nolock(uVar3,-1,1);
+                  _lseeki64_nolock(uVar4,-1,1);
                   if (local_80[0] != '\n') goto LAB_829253bc;
                 }
                 else {
@@ -284,81 +285,81 @@ LAB_829253c0:
                 uVar12 = uVar22;
               } while ((uVar22 & 0xffffffff) < (uVar23 & 0xffffffff));
             }
-            lVar21 = uVar24 - uVar20;
-            if ((cVar18 == '\x01') && ((int)lVar21 != 0)) {
-              bVar16 = *(byte *)(uVar24 - 1);
-              if ((bVar16 & 0x80) != 0) {
+            lVar21 = uVar24 - uVar19;
+            if ((cVar17 == '\x01') && ((int)lVar21 != 0)) {
+              bVar15 = *(byte *)(uVar24 - 1);
+              if ((bVar15 & 0x80) != 0) {
                 lVar14 = 1;
-                cVar18 = (&DAT_829b0ab0)[bVar16];
+                cVar17 = _lookuptrailbytes[bVar15];
                 uVar24 = uVar24 - 1;
-                while (((iVar15 = (int)lVar14, cVar18 == '\0' && (iVar15 < 5)) &&
-                       ((uVar20 & 0xffffffff) <= (uVar24 & 0xffffffff)))) {
+                while (((iVar8 = (int)lVar14, cVar17 == '\0' && (iVar8 < 5)) &&
+                       ((uVar19 & 0xffffffff) <= (uVar24 & 0xffffffff)))) {
                   uVar24 = uVar24 - 1;
-                  bVar16 = *(byte *)uVar24;
+                  bVar15 = *(byte *)uVar24;
                   lVar14 = lVar14 + 1;
-                  cVar18 = (&DAT_829b0ab0)[bVar16];
+                  cVar17 = _lookuptrailbytes[bVar15];
                 }
-                if (cVar18 == '\0') {
-                  puVar4 = (ulong *)_errno();
+                if (cVar17 == '\0') {
+                  puVar5 = (ulong *)_errno();
                   uVar9 = 0x2a;
                   goto LAB_82925474;
                 }
-                if (cVar18 + 1 == iVar15) {
+                if (cVar17 + 1 == iVar8) {
                   uVar24 = lVar14 + uVar24;
                 }
-                else if ((*(byte *)(iVar2 + (&DAT_84897dc0)[iVar10] + 4) & 0x48) == 0) {
-                  _lseeki64_nolock(uVar3,(longlong)-iVar15,1);
+                else if ((*(byte *)(iVar2 + *(int *)(&__pioinfo + iVar10) + 4) & 0x48) == 0) {
+                  _lseeki64_nolock(uVar4,(longlong)-iVar8,1);
                 }
                 else {
-                  *(byte *)(iVar2 + (&DAT_84897dc0)[iVar10] + 5) = bVar16;
+                  *(byte *)(iVar2 + *(int *)(&__pioinfo + iVar10) + 5) = bVar15;
                   lVar21 = uVar24 + 1;
-                  if (1 < iVar15) {
-                    puVar17 = (undefined1 *)lVar21;
+                  if (1 < iVar8) {
+                    puVar16 = (undefined1 *)lVar21;
                     lVar21 = uVar24 + 2;
-                    *(undefined1 *)(iVar2 + (&DAT_84897dc0)[iVar10] + 0x29) = *puVar17;
+                    *(undefined1 *)(iVar2 + *(int *)(&__pioinfo + iVar10) + 0x29) = *puVar16;
                   }
-                  if (iVar15 == 3) {
-                    puVar17 = (undefined1 *)lVar21;
+                  if (iVar8 == 3) {
+                    puVar16 = (undefined1 *)lVar21;
                     lVar21 = lVar21 + 1;
-                    *(undefined1 *)(iVar2 + (&DAT_84897dc0)[iVar10] + 0x2a) = *puVar17;
+                    *(undefined1 *)(iVar2 + *(int *)(&__pioinfo + iVar10) + 0x2a) = *puVar16;
                   }
                   uVar24 = lVar21 - lVar14;
                 }
               }
-              uVar3 = MultiByteToWideChar(0xfde9,0,lpMultiByteStr,(int)(uVar24 - uVar20),
-                                          (LPWSTR)uVar11,(uint)uVar13 >> 1);
-              if ((longlong)(int)uVar3 == 0) {
+              uVar4 = MultiByteToWideChar(0xfde9,0,pcVar20,(int)(uVar24 - uVar19),(ushort *)uVar11,
+                                          (uint)uVar13 >> 1);
+              if ((longlong)(int)uVar4 == 0) {
                 uVar9 = GetLastError();
                 lVar21 = 0;
                 goto LAB_82925534;
               }
-              lVar21 = ((ulonglong)uVar3 & 0x7fffffff) << 1;
-              *(uint *)(iVar2 + (&DAT_84897dc0)[iVar10] + 0x38) =
-                   (uint)(uVar24 - uVar20 != (longlong)(int)uVar3);
+              lVar21 = ((ulonglong)uVar4 & 0x7fffffff) << 1;
+              *(uint *)(iVar2 + *(int *)(&__pioinfo + iVar10) + 0x38) =
+                   (uint)(uVar24 - uVar19 != (longlong)(int)uVar4);
             }
           }
         }
 LAB_8292553c:
-        if ((uVar20 & 0xffffffff) != (uVar11 & 0xffffffff)) {
-          free(lpMultiByteStr);
+        if ((uVar19 & 0xffffffff) != (uVar11 & 0xffffffff)) {
+          free(pcVar20);
         }
-        if ((int)lVar19 != -2) {
-          lVar21 = lVar19;
+        if ((int)lVar18 != -2) {
+          lVar21 = lVar18;
         }
         goto LAB_829255b8;
       }
 LAB_829250a8:
-      puVar4 = __doserrno();
-      *puVar4 = 0;
+      puVar5 = __doserrno();
+      *puVar5 = 0;
     }
     else {
-      puVar4 = __doserrno();
-      *puVar4 = 0;
+      puVar5 = __doserrno();
+      *puVar5 = 0;
     }
-    piVar5 = _errno();
+    piVar6 = _errno();
     iVar10 = 0x16;
   }
-  *piVar5 = iVar10;
+  *piVar6 = iVar10;
   _invalid_parameter_noinfo();
   lVar21 = -1;
 LAB_829255b8:

@@ -220,7 +220,98 @@ LAB_828ca2fc:
   828CA334  7D2A4B78             or r10,r9,r9
   828CA338  392101F0             addi r9,r1,0x1f0
   828CA33C  39010060             addi r8,r1,0x60
-  828CA340  13E058C7             vcmpequd v31,v0,v11
+  828CA340  13E058C7             lvx128 v63,0,r11
+  828CA344  13E039C7             stvx128 v63,0,r7
+  828CA348  13C0F8C7             lvx128 v62,0,r31
+  828CA34C  4BFFFE35             bl 0x828ca180
+  828CA350  39610060             addi r11,r1,0x60
+  828CA354  39410050             addi r10,r1,0x50
+  828CA358  3D208200             lis r9,-0x7e00
+  828CA35C  3BE00000             li r31,0x0
+  828CA360  3BA00000             li r29,0x0
+  828CA364  13A05C07             lvlx128 v61,0,r11
+  828CA368  2C030000             cmpwi r3,0x0
+  828CA36C  1BE8EF15             vrlimi128 v63,v61,0x8,0x0
+  828CA370  C00913F8             lfs f0,0x13f8(r9)
+  828CA374  1BE0FEF5             vlogefp128 v63,v63
+  828CA378  17FFF035             vaddfp128 v63,v63,v62
+  828CA37C  1BE0FEB5             vexptefp128 v63,v63
+  828CA380  13E051C7             stvx128 v63,0,r10
+  828CA384  C1A10050             lfs f13,0x50(r1)
+  828CA388  4081007C             ble 0x828ca404
+  828CA38C  3D608200             lis r11,-0x7e00
+  828CA390  3B600000             li r27,0x0
+  828CA394  7C7A1B78             or r26,r3,r3
+  828CA398  C3CB0F18             lfs f30,0xf18(r11)
+LAB_828ca39c:
+  828CA39C  396101F0             addi r11,r1,0x1f0
+  828CA3A0  7FBFEB78             or r31,r29,r29
+  828CA3A4  7FFB5C2E             lfsx f31,r27,r11
+  828CA3A8  EC1F002A             fadds f0,f31,f0
+  828CA3AC  EC00F7BA             fmadds f0,f0,f30,f30
+  828CA3B0  FC00001E             fctiwz f0,f0
+  828CA3B4  D8010050             stfd f0,0x50(r1)
+  828CA3B8  83A10054             lwz r29,0x54(r1)
+  828CA3BC  7F1FE800             cmpw cr6,r31,r29
+  828CA3C0  4098002C             bge cr6,0x828ca3ec
+  828CA3C4  57EB103A             rlwinm r11,r31,0x2,0x0,0x1d
+  828CA3C8  7FDFE850             subf r30,r31,r29
+  828CA3CC  7C8BE214             add r4,r11,r28
+  828CA3D0  57CB103A             rlwinm r11,r30,0x2,0x0,0x1d
+  828CA3D4  38640004             addi r3,r4,0x4
+  828CA3D8  396BFFFF             subi r11,r11,0x1
+  828CA3DC  D1A40000             stfs f13,0x0(r4)
+  828CA3E0  5565003A             rlwinm r5,r11,0x0,0x0,0x1d
+  828CA3E4  4804CA05             bl 0x82916de8
+  828CA3E8  7FFEFA14             add r31,r30,r31
+LAB_828ca3ec:
+  828CA3EC  39610060             addi r11,r1,0x60
+  828CA3F0  FC00F890             fmr f0,f31
+  828CA3F4  375AFFFF             subic. r26,r26,0x1
+  828CA3F8  7DBB5C2E             lfsx f13,r27,r11
+  828CA3FC  3B7B0004             addi r27,r27,0x4
+  828CA400  4082FF9C             bne 0x828ca39c
+LAB_828ca404:
+  828CA404  FC00E81E             fctiwz f0,f29
+  828CA408  D8010050             stfd f0,0x50(r1)
+  828CA40C  81610054             lwz r11,0x54(r1)
+  828CA410  7FCBEA14             add r30,r11,r29
+  828CA414  2F1E0100             cmpwi cr6,r30,0x100
+  828CA418  40990008             ble cr6,0x828ca420
+  828CA41C  3BC00100             li r30,0x100
+LAB_828ca420:
+  828CA420  7F1FF000             cmpw cr6,r31,r30
+  828CA424  40980028             bge cr6,0x828ca44c
+  828CA428  57EB103A             rlwinm r11,r31,0x2,0x0,0x1d
+  828CA42C  7D5FF050             subf r10,r31,r30
+  828CA430  7C8BE214             add r4,r11,r28
+  828CA434  554B103A             rlwinm r11,r10,0x2,0x0,0x1d
+  828CA438  38640004             addi r3,r4,0x4
+  828CA43C  396BFFFF             subi r11,r11,0x1
+  828CA440  D1A40000             stfs f13,0x0(r4)
+  828CA444  5565003A             rlwinm r5,r11,0x0,0x0,0x1d
+  828CA448  4804C9A1             bl 0x82916de8
+LAB_828ca44c:
+  828CA44C  2F1E0100             cmpwi cr6,r30,0x100
+  828CA450  40980030             bge cr6,0x828ca480
+  828CA454  217E0100             subfic r11,r30,0x100
+  828CA458  57CA103A             rlwinm r10,r30,0x2,0x0,0x1d
+  828CA45C  7D4AE214             add r10,r10,r28
+  828CA460  7D6903A6             mtspr CTR,r11
+  828CA464  3D608201             lis r11,-0x7dff
+  828CA468  394AFFFC             subi r10,r10,0x4
+  828CA46C  C00BD0D8             lfs f0,-0x2f28(r11)
+LAB_828ca470:
+  828CA470  C1AA0000             lfs f13,0x0(r10)
+  828CA474  EDAD0032             fmuls f13,f13,f0
+  828CA478  D5AA0004             stfsu f13,0x4(r10)
+  828CA47C  4200FFF4             bdnz 0x828ca470
+LAB_828ca480:
+  828CA480  38210640             addi r1,r1,0x640
+  828CA484  CBA1FFB0             lfd f29,-0x50(r1)
+  828CA488  CBC1FFB8             lfd f30,-0x48(r1)
+  828CA48C  CBE1FFC0             lfd f31,-0x40(r1)
+  828CA490  4804C270             b 0x82916700
 
 ; 828CA498  PeakPick  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/libspeech.c:504)
   828CA498  39640001             addi r11,r4,0x1

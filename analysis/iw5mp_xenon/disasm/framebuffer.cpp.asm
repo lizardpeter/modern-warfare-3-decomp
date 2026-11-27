@@ -69,7 +69,7 @@ LAB_828d1d84:
   828D1D8C  91640000             stw r11,0x0(r4)
   828D1D90  4E800020             blr
 
-; 828D1B20  XAUDIO::CFrameBuffer::AddRef  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/framebuffer.h:105)
+; 828D1B20  AddRef  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/framebuffer.h:105)
   828D1B20  81630004             lwz r11,0x4(r3)
   828D1B24  7C6A1B78             or r10,r3,r3
   828D1B28  386B0001             addi r3,r11,0x1
@@ -111,7 +111,7 @@ LAB_828d1e08:
   828D1E10  38210070             addi r1,r1,0x70
   828D1E14  480448F8             b 0x8291670c
 
-; 828D1B38  XAUDIO::CFrameBuffer::Release  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/framebuffer.h:110)
+; 828D1B38  Release  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/framebuffer.h:110)
   828D1B38  7D8802A6             mfspr r12,LR
   828D1B3C  9181FFF8             stw r12,-0x8(r1)
   828D1B40  9421FFA0             stwu r1,-0x60(r1)
@@ -135,7 +135,7 @@ LAB_828d1b78:
   828D1B84  7D8803A6             mtspr LR,r12
   828D1B88  4E800020             blr
 
-; 828D1B90  XAUDIO::CFrameBuffer::QueryInterface  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/framebuffer.h:127)
+; 828D1B90  QueryInterface  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/framebuffer.h:127)
   828D1B90  2B030000             cmplwi cr6,r3,0x0
   828D1B94  39630008             addi r11,r3,0x8
   828D1B98  409A0008             bne cr6,0x828d1ba0
@@ -144,7 +144,7 @@ LAB_828d1ba0:
   828D1BA0  91640000             stw r11,0x0(r4)
   828D1BA4  4E800020             blr
 
-; 828D1A18  XAUDIO::CFrameBuffer::CFrameBuffer  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/framebuffer.cpp:149)
+; 828D1A18  CFrameBuffer  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/framebuffer.cpp:149)
   828D1A18  7D8802A6             mfspr r12,LR
   828D1A1C  48044CA1             bl 0x829166bc
   828D1A20  9421FF90             stwu r1,-0x70(r1)
@@ -214,7 +214,7 @@ LAB_828d1b00:
   828D1B18  38210070             addi r1,r1,0x70
   828D1B1C  48044BF0             b 0x8291670c
 
-; 828D1BA8  XAUDIO::CFrameBuffer::Prepare  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/framebuffer.cpp:228)
+; 828D1BA8  Prepare  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/framebuffer.cpp:228)
   828D1BA8  7D8802A6             mfspr r12,LR
   828D1BAC  9181FFF8             stw r12,-0x8(r1)
   828D1BB0  FBC1FFE8             std r30,-0x18(r1)
@@ -294,7 +294,7 @@ LAB_828d1cb4:
   828D1CC4  EBE1FFF0             ld r31,-0x10(r1)
   828D1CC8  4E800020             blr
 
-; 828D19C0  XAUDIO::CFrameBuffer::GetProcessingData  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/framebuffer.cpp:362)
+; 828D19C0  GetProcessingData  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/framebuffer.cpp:362)
   828D19C0  81430014             lwz r10,0x14(r3)
   828D19C4  7C6B1B78             or r11,r3,r3
   828D19C8  38600000             li r3,0x0
@@ -305,7 +305,7 @@ LAB_828d1cb4:
   828D19DC  91040008             stw r8,0x8(r4)
   828D19E0  4E800020             blr
 
-; 828D1CD0  XAUDIO::CObjectRefCount::`scalar_deleting_destructor'  (line unknown)
+; 828D1CD0  `scalar_deleting_destructor'  (line unknown)
   828D1CD0  7D8802A6             mfspr r12,LR
   828D1CD4  9181FFF8             stw r12,-0x8(r1)
   828D1CD8  FBE1FFF0             std r31,-0x10(r1)
@@ -330,7 +330,7 @@ LAB_828d1d10:
   828D1D20  EBE1FFF0             ld r31,-0x10(r1)
   828D1D24  4E800020             blr
 
-; 828D1E18  XAUDIO::CFrameBuffer::`scalar_deleting_destructor'  (line unknown)
+; 828D1E18  `scalar_deleting_destructor'  (line unknown)
   828D1E18  3D608220             lis r11,-0x7de0
   828D1E1C  394B7330             addi r10,r11,0x7330
   828D1E20  91430000             stw r10,0x0(r3)

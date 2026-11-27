@@ -2,50 +2,59 @@
 
 // 825B42E8  PlaylistStack_GetHead  (ui/ui_playlists.cpp:205)
 
-longlong PlaylistStack_GetHead(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+PlaylistUIStackItem * PlaylistStack_GetHead(void)
 
 {
-  if (DAT_8400ba58 == 0) {
-    return 0;
+  if (s_playlistUIStack.count == 0) {
+    return (PlaylistUIStackItem *)0x0;
   }
-  return ((ulonglong)DAT_8400ba58 & 0x1fffffff) * 8 + -0x7bff45ac;
+  return (PlaylistUIStackItem *)(gametypes[0x3f].abbrvName + s_playlistUIStack.count * 8 + 0x14);
 }
 
 
 // 825B8110  PlaylistStack_Push  (ui/ui_playlists.cpp:213)
 
-void PlaylistStack_Push(int param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void PlaylistStack_Push(uint param_1)
 
 {
   uint uVar1;
-  char cVar2;
+  bool bVar2;
   
-  if (DAT_8400ba58 == 0) {
+  if (s_playlistUIStack.count == 0) {
     if (param_1 == 0) goto LAB_825b8144;
 LAB_825b820c:
-    MyAssertHandler(0xffffffff8216d8e0,0xd6,0,0xffffffff82000f98,0xffffffff8216f158);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",0xd6,0,
+                    "%s");
   }
   else if (param_1 == 0) goto LAB_825b820c;
-  if (2 < DAT_8400ba58) {
-    Com_PrintError(0xd,0xffffffff8216f100);
+  if (2 < s_playlistUIStack.count) {
+    Com_PrintError(0xd,
+                   "Playlist UI - Tried to open another playlist menu but already at the max number."
+                  );
     return;
   }
 LAB_825b8144:
-  uVar1 = DAT_8400ba58;
-  if ((&DAT_8400ba5c)[DAT_8400ba58 * 2] != param_1) {
-    (&DAT_8400ba5c)[DAT_8400ba58 * 2] = param_1;
-    (&DAT_8400ba60)[uVar1 * 2] = 0;
+  uVar1 = s_playlistUIStack.count;
+  if (s_playlistUIStack.stack[s_playlistUIStack.count].category != param_1) {
+    s_playlistUIStack.stack[s_playlistUIStack.count].category = param_1;
+    s_playlistUIStack.stack[uVar1].selected = 0;
   }
-  DAT_8400ba58 = DAT_8400ba58 + 1;
-  cVar2 = Menu_IsMenuOpenAndVisible(0,0xffffffff8216f1bc);
-  if (cVar2 != '\0') {
-    UI_CloseMenu(0,0xffffffff8216f1bc);
+  s_playlistUIStack.count = s_playlistUIStack.count + 1;
+  bVar2 = Menu_IsMenuOpenAndVisible(LOCAL_CLIENT_0,"popup_findgame");
+  if (bVar2) {
+    UI_CloseMenu(LOCAL_CLIENT_0,"popup_findgame");
   }
-  UI_OpenMenu(0,0xffffffff8216f1bc);
-  if ((DAT_8400ba58 != 0) && ((uint *)(&DAT_8400ba54 + DAT_8400ba58 * 8) != (uint *)0x0)) {
+  UI_OpenMenu(LOCAL_CLIENT_0,"popup_findgame");
+  if ((s_playlistUIStack.count != 0) &&
+     (gametypes[0x3f].abbrvName + s_playlistUIStack.count * 8 + 0x14 != (char *)0x0)) {
     Dvar_SetStringByName
-              (0xffffffff8216ecd4,
-               (ulonglong)*(uint *)(&DAT_8400ba54 + DAT_8400ba58 * 8) * 0x20c + -0x7c011ca8);
+              ("playlist_title",
+               categories[*(int *)(gametypes[0x3f].abbrvName + s_playlistUIStack.count * 8 + 0x14)].
+               name);
   }
   return;
 }
@@ -53,17 +62,20 @@ LAB_825b8144:
 
 // 825B8250  PlaylistStack_Pop  (ui/ui_playlists.cpp:239)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 void PlaylistStack_Pop(void)
 
 {
-  if (DAT_8400ba58 == 0) {
-    Com_PrintError(0xd,0xffffffff8216f1cc);
+  if (s_playlistUIStack.count == 0) {
+    Com_PrintError(0xd,"Playlist UI - Tried to popStack while stack was already empty.");
   }
   else {
-    DAT_8400ba58 = DAT_8400ba58 + -1;
-    UI_CloseMenu(0,0xffffffff8216f1bc);
-    if (DAT_8400ba58 != 0) {
-      UI_OpenMenu(0,0xffffffff8216f1bc);
+    s_playlistUIStack.count = s_playlistUIStack.count - 1;
+    UI_CloseMenu(LOCAL_CLIENT_0,"popup_findgame");
+    if (s_playlistUIStack.count != 0) {
+      UI_OpenMenu(LOCAL_CLIENT_0,"popup_findgame");
       PlaylistFeeder_UpdateCategoryTitle();
     }
   }
@@ -73,18 +85,23 @@ void PlaylistStack_Pop(void)
 
 // 825B82D8  PlaylistStack_Clear  (ui/ui_playlists.cpp:257)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 void PlaylistStack_Clear(void)
 
 {
   __savegprlr_28();
-  while (DAT_8400ba58 != 0) {
-    DAT_8400ba58 = DAT_8400ba58 + -1;
-    UI_CloseMenu(0,0xffffffff8216f1bc);
-    if ((DAT_8400ba58 == 0) || (UI_OpenMenu(0,0xffffffff8216f1bc), DAT_8400ba58 == 0)) break;
-    if ((uint *)(&DAT_8400ba54 + DAT_8400ba58 * 8) != (uint *)0x0) {
+  while (s_playlistUIStack.count != 0) {
+    s_playlistUIStack.count = s_playlistUIStack.count - 1;
+    UI_CloseMenu(LOCAL_CLIENT_0,"popup_findgame");
+    if ((s_playlistUIStack.count == 0) ||
+       (UI_OpenMenu(LOCAL_CLIENT_0,"popup_findgame"), s_playlistUIStack.count == 0)) break;
+    if (gametypes[0x3f].abbrvName + s_playlistUIStack.count * 8 + 0x14 != (char *)0x0) {
       Dvar_SetStringByName
-                (0xffffffff8216ecd4,
-                 (ulonglong)*(uint *)(&DAT_8400ba54 + DAT_8400ba58 * 8) * 0x20c + -0x7c011ca8);
+                ("playlist_title",
+                 categories
+                 [*(int *)(gametypes[0x3f].abbrvName + s_playlistUIStack.count * 8 + 0x14)].name);
     }
   }
   __restgprlr_28();
@@ -94,35 +111,40 @@ void PlaylistStack_Clear(void)
 
 // 825B4318  PlaylistStringBuffer_GetTail  (ui/ui_playlists.cpp:264)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 char * PlaylistStringBuffer_GetTail(void)
 
 {
   char cVar1;
   char *pcVar2;
   
-  pcVar2 = DAT_84009c48;
-  if (DAT_84009c48 != (char *)0x0) {
+  pcVar2 = playlistStringBuffer.tail;
+  if (playlistStringBuffer.tail != (char *)0x0) {
     do {
       cVar1 = *pcVar2;
       pcVar2 = pcVar2 + 1;
     } while (cVar1 != '\0');
-    if ((int)pcVar2 - (int)DAT_84009c48 != 1) {
-      MyAssertHandler(0xffffffff8216d8e0,0x10d,0,0xffffffff82000f98,0xffffffff8216d920);
+    if ((int)pcVar2 - (int)playlistStringBuffer.tail != 1) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",0x10d,0
+                      ,"%s");
     }
-    DAT_84009c48 = DAT_84009c48 + 1;
-    return DAT_84009c48;
+    playlistStringBuffer.tail = playlistStringBuffer.tail + 1;
+    return playlistStringBuffer.tail;
   }
-  DAT_84009c48 = &DAT_83ff0c48;
-  return &DAT_83ff0c48;
+  playlistStringBuffer.tail = playlistStringBuffer.buffer;
+  return playlistStringBuffer.buffer;
 }
 
 
 // 825B43E8  PlaylistStringBuffer_GetRemainingAfterTail  (ui/ui_playlists.cpp:277)
 
-longlong PlaylistStringBuffer_GetRemainingAfterTail(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int PlaylistStringBuffer_GetRemainingAfterTail(void)
 
 {
-  return -0x7bff63b9 - (ulonglong)DAT_84009c48;
+  return -0x7bff63b9 - (int)playlistStringBuffer.tail;
 }
 
 
@@ -131,262 +153,275 @@ longlong PlaylistStringBuffer_GetRemainingAfterTail(void)
 void PlaylistStringBuffer_MoveTail(int param_1)
 
 {
-  if (DAT_84009c48 == (undefined *)0x0) {
-    DAT_84009c48 = &DAT_83ff0c48;
+  if (playlistStringBuffer.tail == (char *)0x0) {
+    playlistStringBuffer.tail = playlistStringBuffer.buffer;
   }
-  if ((int)&DAT_84009c47 - (int)DAT_84009c48 < param_1) {
-    MyAssertHandler(0xffffffff8216d8e0,0x11e,0,0xffffffff82000f98,0xffffffff8216d94c);
+  if (-0x7bff63b9 - (int)playlistStringBuffer.tail < param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",0x11e,0,
+                    "%s");
   }
-  DAT_84009c48 = DAT_84009c48 + param_1;
+  playlistStringBuffer.tail = playlistStringBuffer.tail + param_1;
   return;
 }
 
 
 // 825B44D8  HavePlaylists  (ui/ui_playlists.cpp:292)
 
-ulonglong HavePlaylists(undefined8 param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+bool HavePlaylists(int param_1)
 
 {
-  ulonglong uVar1;
-  int iVar2;
-  char cVar3;
+  bool bVar3;
+  bool bVar4;
+  LocalClientNum_t LVar1;
+  connstate_t cVar2;
   
-  uVar1 = LiveStorage_DoWeHavePlaylists();
-  if ((uVar1 & 0xff) != 0) {
-    uVar1 = LiveStorage_DoWeHaveFFotD();
+  bVar3 = LiveStorage_DoWeHavePlaylists();
+  bVar4 = false;
+  if (bVar3) {
+    bVar4 = LiveStorage_DoWeHaveFFotD();
   }
-  if ((uVar1 & 0xff) == 0) {
-    CL_LocalClientNumFromControllerIndex(param_1);
-    if (((*(char *)(DAT_84253bb8 + 0xc) == '\0') &&
-        (iVar2 = CL_GetLocalClientConnectionState(), iVar2 < 3)) &&
-       (cVar3 = ShowPopupGettingData(param_1), cVar3 != '\0')) {
-      Live_SyncOnlineDataPopupStarted(param_1,4);
-    }
+  if ((((bVar4 == false) &&
+       (LVar1 = CL_LocalClientNumFromControllerIndex(param_1),
+       (xblive_privatematch->current).enabled == false)) &&
+      (cVar2 = CL_GetLocalClientConnectionState(LVar1), (int)cVar2 < 3)) &&
+     (bVar3 = ShowPopupGettingData(param_1), bVar3)) {
+    Live_SyncOnlineDataPopupStarted(param_1,4);
   }
-  return uVar1;
+  return bVar4;
 }
 
 
 // 825B93E8  Playlist_CountEntries  (ui/ui_playlists.cpp:338)
 
-undefined2 Playlist_CountEntries(void)
+int Playlist_CountEntries(int param_1,int param_2)
 
 {
   int iVar1;
   
-  iVar1 = Playlist_GetPlaylistIdForNum();
-  return (&DAT_83fea892)[iVar1 * 0xbc];
+  iVar1 = Playlist_GetPlaylistIdForNum(param_1,param_2);
+  return (int)playlists[iVar1].numEntries;
 }
 
 
 // 825B4580  CustomGameTypes_GetGametypeCount  (ui/ui_playlists.cpp:348)
 
-longlong CustomGameTypes_GetGametypeCount(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int CustomGameTypes_GetGametypeCount(void)
 
 {
-  return (ulonglong)DAT_84009c54 + 1;
+  return numGametypes + 1;
 }
 
 
 // 825B4590  Playlist_FindGametypeIndex  (ui/ui_playlists.cpp:354)
 
-void Playlist_FindGametypeIndex(void)
+int Playlist_FindGametypeIndex(char *param_1)
 
 {
-  undefined8 uVar1;
+  char *pcVar1;
   int iVar2;
-  longlong lVar3;
+  char *pcVar3;
   longlong lVar4;
   
-  uVar1 = __savegprlr_28();
+  pcVar1 = (char *)__savegprlr_28(param_1);
   lVar4 = 0;
-  if ((ulonglong)DAT_84009c54 != 0xffffffffffffffff) {
-    lVar3 = -0x7bff6398;
+  if ((ulonglong)(uint)numGametypes != 0xffffffffffffffff) {
+    pcVar3 = gametypes[0].internalName;
     do {
-      iVar2 = I_stricmp(lVar3,uVar1);
+      iVar2 = I_stricmp(pcVar3,pcVar1);
       if (iVar2 == 0) {
-        __restgprlr_28(lVar4);
-        return;
+        iVar2 = __restgprlr_28(lVar4);
+        return iVar2;
       }
       lVar4 = lVar4 + 1;
-      lVar3 = lVar3 + 0x78;
-    } while ((int)lVar4 < (int)(DAT_84009c54 + 1));
+      pcVar3 = pcVar3 + 0x78;
+    } while ((int)lVar4 < numGametypes + 1);
   }
-  Com_PrintError(0x10,0xffffffff8216d984,uVar1);
-  __restgprlr_28(0xffffffffffffffff);
-  return;
+  Com_PrintError(0x10,"Unknown gametype name \'%s\'\n");
+  iVar2 = __restgprlr_28(0xffffffffffffffff);
+  return iVar2;
 }
 
 
 // 825B4618  Playlist_FindGametypeIndex  (ui/ui_playlists.cpp:368)
 
-longlong Playlist_FindGametypeIndex(longlong param_1)
+playlistGametype * Playlist_FindGametypeIndex(int param_1)
 
 {
-  return param_1 * 0x78 + -0x7bff63a8;
+  return gametypes + param_1;
 }
 
 
 // 825B4630  Playlist_FindMapIndex  (ui/ui_playlists.cpp:374)
 
-void Playlist_FindMapIndex(void)
+int Playlist_FindMapIndex(char *param_1)
 
 {
-  undefined8 uVar1;
+  char *pcVar1;
   int iVar2;
-  undefined4 *puVar3;
+  playlistMapInfo *ppVar3;
   ulonglong uVar4;
   
-  uVar1 = __savegprlr_28();
-  puVar3 = &DAT_83fe8518;
+  pcVar1 = (char *)__savegprlr_28(param_1);
+  ppVar3 = &maps;
   uVar4 = 0;
-  if (DAT_83fe8718 != 0) {
+  if (maps.numEntries != '\0') {
     do {
-      iVar2 = I_stricmp(*puVar3,uVar1);
+      iVar2 = I_stricmp(ppVar3->name[0],pcVar1);
       if (iVar2 == 0) {
-        __restgprlr_28(uVar4);
-        return;
+        iVar2 = __restgprlr_28(uVar4);
+        return iVar2;
       }
       uVar4 = uVar4 + 1;
-      puVar3 = puVar3 + 1;
-    } while ((uVar4 & 0xffffffff) < (ulonglong)DAT_83fe8718);
+      ppVar3 = (playlistMapInfo *)(ppVar3->name + 1);
+    } while ((uVar4 & 0xffffffff) < (ulonglong)maps.numEntries);
   }
-  __restgprlr_28(0xff);
-  return;
+  iVar2 = __restgprlr_28(0xff);
+  return iVar2;
 }
 
 
 // 825B46A0  Playlist_FindMap  (ui/ui_playlists.cpp:384)
 
-undefined4 Playlist_FindMap(uint param_1)
+char * Playlist_FindMap(uint param_1)
 
 {
-  if (param_1 < DAT_83fe8718) {
-    return (&DAT_83fe8518)[param_1];
+  if (param_1 < maps.numEntries) {
+    return maps.name[param_1];
   }
-  return 0;
+  return (char *)0x0;
 }
 
 
 // 825B46C8  CustomGameTypes_GetGametypeLocalizedName  (ui/ui_playlists.cpp:392)
 
-longlong CustomGameTypes_GetGametypeLocalizedName(longlong param_1)
+char * CustomGameTypes_GetGametypeLocalizedName(int param_1)
 
 {
-  if (((int)param_1 < 0) || (0x3f < (int)param_1)) {
-    MyAssertHandler(0xffffffff8216d8e0,0x189,0,0xffffffff82000f98,0xffffffff8216d9a0);
+  if ((param_1 < 0) || (0x3f < param_1)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",0x189,0,
+                    "%s");
   }
-  return param_1 * 0x78 + -0x7bff6388;
+  return gametypes[param_1].localizedName;
 }
 
 
 // 825B4738  CustomGameTypes_GetGametypeInternalName  (ui/ui_playlists.cpp:400)
 
-longlong CustomGameTypes_GetGametypeInternalName(longlong param_1)
+char * CustomGameTypes_GetGametypeInternalName(int param_1)
 
 {
-  if (((int)param_1 < 0) || (0x3f < (int)param_1)) {
-    MyAssertHandler(0xffffffff8216d8e0,0x191,0,0xffffffff82000f98,0xffffffff8216d9a0);
+  if ((param_1 < 0) || (0x3f < param_1)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",0x191,0,
+                    "%s");
   }
-  return param_1 * 0x78 + -0x7bff6398;
+  return gametypes[param_1].internalName;
 }
 
 
 // 825B47A8  CustomGameTypes_IsHardcore  (ui/ui_playlists.cpp:408)
 
-undefined1 CustomGameTypes_IsHardcore(int param_1)
+bool CustomGameTypes_IsHardcore(int param_1)
 
 {
   if ((param_1 < 0) || (0x3f < param_1)) {
-    MyAssertHandler(0xffffffff8216d8e0,0x199,0,0xffffffff82000f98,0xffffffff8216d9a0);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",0x199,0,
+                    "%s");
   }
-  return (&DAT_84009cce)[param_1 * 0x78];
+  return gametypes[param_1].hardcore;
 }
 
 
 // 825B4818  ParseIntRange  (ui/ui_playlists.cpp:415)
 
-void ParseIntRange(undefined8 param_1,ulonglong param_2,longlong param_3,longlong param_4,
-                  undefined8 param_5)
+int ParseIntRange(char *param_1,char **param_2,int param_3,int param_4,int param_5)
 
 {
-  ulonglong uVar1;
-  char *_Str;
-  longlong lVar2;
-  undefined8 uVar4;
-  int iVar3;
+  int iVar2;
+  char *pcVar3;
+  longlong lVar1;
+  ulonglong uVar4;
+  longlong lVar5;
+  longlong lVar6;
   
-  uVar1 = __savegprlr_25();
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8216d8e0,0x1a3,0,0xffffffff82000f98,0xffffffff8216da94);
+  lVar6 = (longlong)param_4;
+  lVar5 = (longlong)param_3;
+  uVar4 = (ulonglong)(int)param_2;
+  iVar2 = __savegprlr_25(param_1);
+  if (iVar2 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",0x1a3,0,
+                    "%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8216d8e0,0x1a4,0,0xffffffff82000f98,0xffffffff8216da8c);
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",0x1a4,0,
+                    "%s");
   }
-  _Str = (char *)Com_ParseOnLine(param_2);
-  if (*_Str == '\0') {
-    Com_PrintError(0x10,0xffffffff8216da48,param_5,uVar1,uVar1);
-    __restgprlr_25(param_3);
-    return;
+  pcVar3 = Com_ParseOnLine((char **)uVar4);
+  if (*pcVar3 == '\0') {
+    Com_PrintError(0x10,"Playlist error: line %i: Expected \'%s\' number after \'%s\' command\n");
+    iVar2 = __restgprlr_25(lVar5);
+    return iVar2;
   }
-  iVar3 = atoi(_Str);
-  lVar2 = (longlong)iVar3;
-  if (iVar3 < (int)param_3) {
-    uVar4 = 0xffffffff8216da0c;
-    param_4 = param_3;
+  iVar2 = atoi(pcVar3);
+  lVar1 = (longlong)iVar2;
+  if (iVar2 < (int)lVar5) {
+    pcVar3 = "Playlist error: line %i: \'%s\' number (%i) must be >= %i, \n";
+    lVar6 = lVar5;
   }
   else {
-    if (iVar3 <= (int)param_4) goto LAB_825b4920;
-    uVar4 = 0xffffffff8216d9d0;
+    if (iVar2 <= (int)lVar6) goto LAB_825b4920;
+    pcVar3 = "Playlist error: line %i: \'%s\' number (%i) must be <= %i, \n";
   }
-  Com_PrintError(0x10,uVar4,param_5,uVar1,param_4,param_4);
-  lVar2 = param_4;
+  Com_PrintError(0x10,pcVar3);
+  lVar1 = lVar6;
 LAB_825b4920:
-  __restgprlr_25(lVar2);
-  return;
+  iVar2 = __restgprlr_25(lVar1);
+  return iVar2;
 }
 
 
 // 825B4930  Playlist_ParsePlaylists  (ui/ui_playlists.cpp:446)
 
-void Playlist_ParsePlaylists(void)
+void Playlist_ParsePlaylists(char *param_1)
 
 {
-  ushort uVar1;
+  char cVar1;
+  ushort uVar2;
+  playlistMapInfo *ppVar3;
+  char *pcVar4;
   int iVar5;
-  void *pvVar6;
+  char *pcVar6;
   int iVar7;
-  char *pcVar8;
-  ulonglong uVar2;
-  undefined4 uVar9;
+  uint uVar8;
+  int iVar9;
   int iVar10;
-  undefined8 uVar3;
-  char cVar14;
-  int iVar11;
-  uint uVar12;
-  char *pcVar13;
-  ulonglong uVar4;
+  char *pcVar11;
+  char *pcVar12;
+  byte bVar13;
+  uchar *puVar14;
   int iVar15;
   short *psVar16;
-  ushort *puVar17;
-  ushort *puVar18;
-  char *pcVar19;
-  char *pcVar20;
-  char *pcVar21;
-  char *pcVar22;
-  char *pcVar23;
+  char **ppcVar17;
+  uchar uVar22;
+  char **ppcVar18;
+  ushort *puVar19;
+  ushort *puVar20;
+  categoryInfo *pcVar21;
   char *pcVar24;
+  ulonglong uVar23;
   ushort *puVar25;
-  char *pcVar26;
-  undefined8 uVar27;
-  undefined8 uVar28;
-  uint uVar29;
-  undefined *puVar30;
-  ushort *puVar31;
-  char *pcVar32;
-  longlong lVar33;
-  int local_a10;
-  undefined *local_a0c;
+  uint uVar26;
+  categoryInfo *pcVar27;
+  StringBuffer *pSVar28;
+  playlistMapInfo *ppVar29;
+  char *pcVar30;
+  undefined1 *puVar31;
+  longlong lVar32;
+  char *local_a10;
+  StringBuffer *local_a0c;
   char *local_a08;
   char *local_a04;
   char *local_a00;
@@ -396,21 +431,21 @@ void Playlist_ParsePlaylists(void)
   char *local_9f0;
   char *local_9ec;
   char *local_9e8;
-  char *local_9e4;
+  playlistMapInfo *local_9e4;
   char *local_9e0;
   int local_9dc;
   char *local_9d8;
-  undefined *local_9d4;
+  char *local_9d4;
   char *local_9d0;
   char *local_9cc;
   ushort *local_9c8;
-  undefined *local_9c4;
-  char *local_9c0;
+  char *local_9c4;
+  categoryInfo *local_9c0;
   char *local_9bc;
   char *local_9b8;
   char *local_9b4;
   char *local_9b0;
-  undefined *local_9ac;
+  char *local_9ac;
   char *local_9a8;
   char *local_9a4;
   uint local_9a0;
@@ -431,7 +466,7 @@ void Playlist_ParsePlaylists(void)
   char *local_960;
   int local_95c;
   char *local_958;
-  undefined *local_954;
+  char *local_954;
   char *local_950;
   char *local_94c;
   char *local_948;
@@ -451,7 +486,7 @@ void Playlist_ParsePlaylists(void)
   char *local_910;
   char *local_90c;
   char *local_908;
-  undefined *local_904;
+  char *local_904;
   char *local_900;
   char *local_8fc;
   char *local_8f8;
@@ -472,45 +507,46 @@ void Playlist_ParsePlaylists(void)
   undefined8 local_8b8;
   undefined8 local_8b0;
   undefined8 local_8a8;
-  undefined1 auStack_8a0 [2208];
+  char acStack_8a0 [2208];
   
-  iVar5 = __savegprlr();
-  local_9c8 = (ushort *)&DAT_84009c50;
-  local_9e4 = (char *)&DAT_83fe8518;
+  __savegprlr();
+  local_9c8 = &s_playlistEntryCount;
+  local_9e4 = &maps;
   local_998 = 0;
   local_924 = 0;
-  DAT_84009c54 = 0xffffffff;
+  numGametypes = -1;
   local_9d0 = (char *)0x0;
   local_95c = 0;
   local_9f4 = 0;
   local_9dc = 0;
-  memset(&DAT_83fea720,0,0x3c38);
-  local_9c0 = &DAT_83fee358;
-  memset(&DAT_83fee358,0,0x28f0);
-  memset(&DAT_84009c58,0,0x1e00);
-  local_a0c = &DAT_83ff0c48;
-  pvVar6 = memset(&DAT_83ff0c48,0,0x19004);
-  DAT_84009c4c = PlaylistStringBuffer_GetTail(pvVar6);
-  memset(&DAT_83fe8518,0,0x204);
-  memset(auStack_8a0,0,0x800);
-  DAT_84009c50._0_2_ = 0;
+  memset();
+  local_9c0 = categories;
+  memset();
+  memset();
+  local_a0c = &playlistStringBuffer;
+  memset();
+  DAT_84009c4c = PlaylistStringBuffer_GetTail();
+  memset();
+  memset();
+  s_playlistEntryCount = 0;
   local_9a0 = 0;
-  Com_BeginParseSession(0xffffffff8216ec88);
+  Com_BeginParseSession("playlists");
   Com_SetSpaceDelimited(1);
   local_9d8 = (char *)0x1;
-  local_a10 = iVar5;
-  local_8ec = (char *)Com_ParseOnLine(&local_a10);
-  pcVar22 = local_9c0;
-  puVar25 = local_9c8;
-  pcVar20 = local_9d0;
-  pcVar21 = local_9d8;
-  pcVar19 = local_9e4;
-  puVar31 = (ushort *)&DAT_84009c50;
-  pcVar26 = &DAT_83fee358;
-  pcVar32 = (char *)&DAT_83fe8518;
-  puVar30 = &DAT_83ff0c48;
-  pcVar8 = (char *)0x0;
-  if (local_a10 != 0) {
+  local_a10 = param_1;
+  pcVar4 = Com_ParseOnLine(&local_a10);
+  pcVar21 = local_9c0;
+  puVar20 = local_9c8;
+  pcVar11 = local_9d0;
+  pcVar30 = local_9d8;
+  ppVar3 = local_9e4;
+  pcVar6 = (char *)0x0;
+  puVar25 = &s_playlistEntryCount;
+  pSVar28 = &playlistStringBuffer;
+  pcVar27 = categories;
+  ppVar29 = &maps;
+  local_8ec = pcVar4;
+  if (local_a10 != (char *)0x0) {
     local_8f8 = "%s\n\t(playlists[playlistNum].firstEntry) = %i";
     local_900 = "(playlists[playlistNum].firstEntry == 0)";
     local_908 = "line %i: Invalid line in playlist %i - invalid weight \'%s\' for map\n";
@@ -525,7 +561,7 @@ void Playlist_ParsePlaylists(void)
     local_928 = "image";
     local_930 = 
     "Playlist error: line %i: Stray \'requiredDlcPack\' line outside of playlist block\n";
-    local_9d4 = &DAT_8205c59c;
+    local_9d4 = "dlc";
     local_938 = "Playlist error: line %i: Stray \'numrounds\' line outside of playlist block\n";
     local_940 = "numrounds";
     local_948 = "Playlist error: line %i: Stray \'minparty\' line outside of playlist block\n";
@@ -566,9 +602,9 @@ void Playlist_ParsePlaylists(void)
     local_8b0 = 0xffffffff82030000;
     local_8a8 = 0xffffffff82170000;
     local_8c0 = 0xffffffff82030000;
-    local_954 = &DAT_82021a74;
-    local_904 = &DAT_82003740;
-    local_9ac = &DAT_8216e4ec;
+    local_954 = "name";
+    local_904 = "set";
+    local_9ac = "rule";
     local_8dc = "Playlist error: line %i: Expected script name after script command\n";
     local_964 = "Playlist error: line %i: Stray \'script\' line outside of gametype block\n";
     local_90c = "script";
@@ -585,253 +621,219 @@ void Playlist_ParsePlaylists(void)
     local_990 = 0x8216e19482170000;
     local_9f0 = "Playlist error: line %i: Invalid category letter %c after category command\n";
     local_8c8 = "Playlist error: line %i: Expected category letter after category command\n";
-    local_9c4 = &DAT_8216e0f0;
+    local_9c4 = "TOP";
     local_a04 = "category";
     local_9cc = "Playlist error: line %i: Invalid playlist number %i after playlist command\n";
     local_9e8 = "Playlist error: line %i: More than %i gametypes specified in playlist\n";
-    uVar27 = 0xffffffff820337c4;
     local_9ec = "Playlist error: line %i: Expected playlist number after playlist command\n";
-    uVar28 = 0xffffffff8203373c;
     local_9d8 = "Playlist error: line %i: Invalid version number %i after version command\n";
     local_9d0 = "Playlist error: line %i: Expected version number after version command\n";
     local_9c8 = (ushort *)0x8208cee4;
-    local_9c0 = "Playlist error: line %i: Expected protocol number after protocol command\n";
-    local_9e4 = "protocol";
-    uVar29 = local_9a0;
-    iVar5 = local_95c;
+    local_9c0 = (categoryInfo *)0x8216de60;
+    local_9e4 = (playlistMapInfo *)0x82032520;
+    uVar26 = local_9a0;
+    iVar10 = local_95c;
     iVar15 = local_924;
-    iVar10 = local_998;
-    pcVar13 = local_8ec;
+    iVar7 = local_998;
     do {
-      puVar31 = puVar25;
-      pcVar26 = pcVar22;
-      pcVar32 = pcVar19;
-      if (*pcVar13 == '\0') {
+      puVar25 = puVar20;
+      pcVar27 = pcVar21;
+      ppVar29 = ppVar3;
+      if (*pcVar4 == '\0') {
 LAB_825b6304:
         Com_SkipRestOfLine(&local_a10);
       }
       else {
-        iVar7 = I_stricmp(pcVar13,local_9e4);
-        if (iVar7 == 0) {
-          pcVar8 = (char *)Com_ParseOnLine(&local_a10);
-          if (pcVar8 == (char *)0x0) {
-            Com_PrintError(0x10,local_9c0,pcVar21);
-            pcVar20 = pcVar20 + 1;
+        iVar5 = I_stricmp(pcVar4,(char *)local_9e4);
+        if (iVar5 == 0) {
+          pcVar6 = Com_ParseOnLine(&local_a10);
+          if (pcVar6 == (char *)0x0) {
+            Com_PrintError(0x10,local_9c0->name);
+            pcVar11 = pcVar11 + 1;
           }
           else {
-            iVar7 = atoi(pcVar8);
-            if (iVar7 != 0) {
-              Com_PrintError(0x10,0xffffffff8216ddf8,pcVar21,iVar7,0);
+            iVar5 = atoi(pcVar6);
+            if (iVar5 != 0) {
+              Com_PrintError(0x10,
+                             "Playlist error: Protocol number %i does not match expected %i, you may need to update your exes.\n"
+                            );
               goto LAB_825b63a4;
             }
           }
           goto LAB_825b6304;
         }
-        iVar7 = I_stricmp(pcVar13,local_9c8);
-        if (iVar7 == 0) {
-          pcVar8 = (char *)Com_ParseOnLine(&local_a10);
-          if (pcVar8 == (char *)0x0) {
-            Com_PrintError(0x10,local_9d0,pcVar21);
-            pcVar20 = pcVar20 + 1;
+        iVar5 = I_stricmp(pcVar4,(char *)local_9c8);
+        if (iVar5 == 0) {
+          pcVar6 = Com_ParseOnLine(&local_a10);
+          if (pcVar6 == (char *)0x0) {
+            Com_PrintError(0x10,local_9d0);
+            pcVar11 = pcVar11 + 1;
           }
           else {
-            iVar7 = atoi(pcVar8);
-            if (iVar7 < 0) {
-              Com_PrintError(0x10,local_9d8,pcVar21);
-              pcVar20 = pcVar20 + 1;
+            iVar5 = atoi(pcVar6);
+            if (iVar5 < 0) {
+              Com_PrintError(0x10,local_9d8);
+              pcVar11 = pcVar11 + 1;
             }
             else {
-              *(int *)(pcVar22 + -0x5c3c) = iVar7;
+              *(int *)&pcVar21[-0x2e].entries[0x11].num = iVar5;
             }
           }
           goto LAB_825b6304;
         }
-        iVar7 = I_stricmp(pcVar13,0xffffffff820337c4);
-        if (iVar7 == 0) {
-          uVar2 = Com_ParseOnLine(&local_a10);
-          if ((uVar2 & 0xffffffff) == 0) {
-            Com_PrintError(0x10,local_9e0,pcVar21);
-            pcVar20 = pcVar20 + 1;
+        iVar5 = I_stricmp(pcVar4,"gametype");
+        if (iVar5 == 0) {
+          pcVar6 = Com_ParseOnLine(&local_a10);
+          if (pcVar6 == (char *)0x0) {
+            Com_PrintError(0x10,local_9e0);
+            pcVar11 = pcVar11 + 1;
           }
           else {
-            iVar7 = *(int *)(puVar25 + 2);
-            if (iVar7 < 0x3f) {
-              if (-1 < iVar7) {
-                if (*(char *)(puVar25 + iVar7 * 0x3c + 4) == '\0') {
-                  Com_PrintError(0x10,0xffffffff8216dfd8,puVar25 + iVar7 * 0x3c + 0x14);
-                  iVar7 = *(int *)(puVar25 + 2);
-                  pcVar20 = pcVar20 + 1;
+            iVar5 = *(int *)(puVar20 + 2);
+            if (iVar5 < 0x3f) {
+              if (-1 < iVar5) {
+                if (*(char *)(puVar20 + iVar5 * 0x3c + 4) == '\0') {
+                  Com_PrintError(0x10,"Playlist error: gametype %s has no script definition\n");
+                  iVar5 = *(int *)(puVar20 + 2);
+                  pcVar11 = pcVar11 + 1;
                 }
-                if (*(char *)(puVar25 + iVar7 * 0x3c + 0x14) == '\0') {
-                  Com_PrintError(0x10,0xffffffff8216e010,puVar25 + iVar7 * 0x3c + 0xc);
-                  iVar7 = *(int *)(puVar25 + 2);
-                  pcVar20 = pcVar20 + 1;
+                if (*(char *)(puVar20 + iVar5 * 0x3c + 0x14) == '\0') {
+                  Com_PrintError(0x10,"Playlist error: gametype %s has no localized name\n");
+                  iVar5 = *(int *)(puVar20 + 2);
+                  pcVar11 = pcVar11 + 1;
                 }
               }
               local_9dc = 0;
-              *(int *)(puVar25 + 2) = iVar7 + 1;
-              uVar29 = 1;
-              iVar5 = 0;
-              I_strncpyz(puVar25 + (iVar7 + 1) * 0x3c + 0xc,uVar2,0x10);
-              iVar7 = *(int *)(puVar25 + 2);
-              uVar9 = PlaylistStringBuffer_GetTail();
-              *(undefined4 *)(puVar25 + iVar7 * 0x3c + 0x3c) = uVar9;
-              *(undefined1 *)(puVar25 + iVar7 * 0x3c + 4) = 0;
-              *(undefined1 *)(puVar25 + iVar7 * 0x3c + 0x3e) = 0xff;
-              *(undefined1 *)(puVar25 + iVar7 * 0x3c + 0x14) = 0;
-              *(undefined1 *)((int)puVar25 + iVar7 * 0x78 + 0x7d) = 0;
-              *(undefined1 *)(puVar25 + iVar7 * 0x3c + 0x3f) = 0;
+              *(int *)(puVar20 + 2) = iVar5 + 1;
+              uVar26 = 1;
+              iVar10 = 0;
+              I_strncpyz((char *)(puVar20 + (iVar5 + 1) * 0x3c + 0xc),pcVar6,0x10);
+              iVar5 = *(int *)(puVar20 + 2);
+              pcVar6 = PlaylistStringBuffer_GetTail();
+              *(char **)(puVar20 + iVar5 * 0x3c + 0x3c) = pcVar6;
+              *(undefined1 *)(puVar20 + iVar5 * 0x3c + 4) = 0;
+              *(undefined1 *)(puVar20 + iVar5 * 0x3c + 0x3e) = 0xff;
+              *(undefined1 *)(puVar20 + iVar5 * 0x3c + 0x14) = 0;
+              *(undefined1 *)((int)puVar20 + iVar5 * 0x78 + 0x7d) = 0;
+              *(undefined1 *)(puVar20 + iVar5 * 0x3c + 0x3f) = 0;
             }
             else {
-              Com_PrintError(0x10,local_9e8,pcVar21,0x40);
-              pcVar20 = pcVar20 + 1;
+              Com_PrintError(0x10,local_9e8);
+              pcVar11 = pcVar11 + 1;
             }
           }
           goto LAB_825b6304;
         }
-        iVar7 = I_stricmp(pcVar13,0xffffffff8203373c);
-        if (iVar7 == 0) {
-          pcVar8 = (char *)Com_ParseOnLine(&local_a10);
-          if (pcVar8 == (char *)0x0) {
-            Com_PrintError(0x10,local_9ec,pcVar21);
-            pcVar20 = pcVar20 + 1;
+        iVar5 = I_stricmp(pcVar4,"playlist");
+        if (iVar5 == 0) {
+          pcVar6 = Com_ParseOnLine(&local_a10);
+          if (pcVar6 == (char *)0x0) {
+            Com_PrintError(0x10,local_9ec);
+            pcVar11 = pcVar11 + 1;
           }
           else {
-            uVar29 = 2;
-            iVar10 = atoi(pcVar8);
-            if ((iVar10 < 0) || (0x28 < iVar10)) {
-              Com_PrintError(0x10,local_9cc,pcVar21,iVar10);
-              pcVar20 = pcVar20 + 1;
+            uVar26 = 2;
+            iVar7 = atoi(pcVar6);
+            if ((iVar7 < 0) || (0x28 < iVar7)) {
+              Com_PrintError(0x10,local_9cc);
+              pcVar11 = pcVar11 + 1;
             }
             else {
               local_9f4 = 0;
-              iVar7 = iVar10 * 0x178;
-              iVar5 = 0;
-              pcVar19[iVar7 + 0x2348] = '\0';
-              uVar9 = PlaylistStringBuffer_GetTail();
-              (pcVar19 + iVar7 + 0x237a)[0] = '\0';
-              (pcVar19 + iVar7 + 0x237a)[1] = '\0';
-              pcVar19[iVar7 + 0x237d] = '\x01';
-              (pcVar19 + iVar7 + 0x2378)[0] = '\0';
-              (pcVar19 + iVar7 + 0x2378)[1] = '\0';
-              pcVar8 = pcVar19 + iVar7 + 0x2374;
-              pcVar8[0] = '\0';
-              pcVar8[1] = '\0';
-              pcVar8[2] = '\0';
-              pcVar8[3] = '\0';
-              pcVar8 = pcVar19 + iVar7 + 0x236c;
-              pcVar8[0] = '\0';
-              pcVar8[1] = '\0';
-              pcVar8[2] = '\0';
-              pcVar8[3] = '\0';
-              pcVar8 = pcVar19 + iVar7 + 0x2370;
-              pcVar8[0] = '\0';
-              pcVar8[1] = '\0';
-              pcVar8[2] = '\0';
-              pcVar8[3] = '\0';
-              pcVar19[iVar7 + 0x237c] = '\x01';
-              pcVar19[iVar7 + 0x237e] = '\0';
-              *(undefined4 *)(pcVar19 + iVar7 + 0x2368) = uVar9;
+              iVar5 = iVar7 * 0x178;
+              iVar10 = 0;
+              *(undefined1 *)(ppVar3[0x11].name + iVar7 * 0x5e + 0x41) = 0;
+              pcVar6 = PlaylistStringBuffer_GetTail();
+              *(undefined2 *)((int)ppVar3[0x11].name + iVar5 + 0x136) = 0;
+              *(undefined1 *)((int)ppVar3[0x11].name + iVar5 + 0x139) = 1;
+              *(undefined2 *)(ppVar3[0x11].name + iVar7 * 0x5e + 0x4d) = 0;
+              ppVar3[0x11].name[iVar7 * 0x5e + 0x4c] = (char *)0x0;
+              ppVar3[0x11].name[iVar7 * 0x5e + 0x4a] = (char *)0x0;
+              ppVar3[0x11].name[iVar7 * 0x5e + 0x4b] = (char *)0x0;
+              *(undefined1 *)(ppVar3[0x11].name + iVar7 * 0x5e + 0x4e) = 1;
+              *(undefined1 *)((int)ppVar3[0x11].name + iVar5 + 0x13a) = 0;
+              ppVar3[0x11].name[iVar7 * 0x5e + 0x49] = pcVar6;
             }
           }
           goto LAB_825b6304;
         }
-        iVar7 = I_stricmp(pcVar13,local_a04);
-        if (iVar7 == 0) {
-          pcVar8 = (char *)Com_ParseOnLine(&local_a10);
-          if (pcVar8 == (char *)0x0) {
+        iVar5 = I_stricmp(pcVar4,local_a04);
+        if (iVar5 == 0) {
+          pcVar6 = Com_ParseOnLine(&local_a10);
+          if (pcVar6 == (char *)0x0) {
 LAB_825b52bc:
-            Com_PrintError(0x10,local_8c8,pcVar21);
-            pcVar20 = pcVar20 + 1;
+            Com_PrintError(0x10,local_8c8);
+            pcVar11 = pcVar11 + 1;
           }
           else {
-            iVar7 = I_strcmp(pcVar8,local_9c4);
-            pcVar13 = pcVar8;
-            if (iVar7 == 0) {
+            iVar5 = I_strcmp(pcVar6,local_9c4);
+            pcVar4 = pcVar6;
+            if (iVar5 == 0) {
               iVar15 = 0;
             }
             else {
               do {
-                cVar14 = *pcVar13;
-                pcVar13 = pcVar13 + 1;
-              } while (cVar14 != '\0');
-              if ((int)pcVar13 - (int)pcVar8 != 2) goto LAB_825b52bc;
-              iVar15 = *pcVar8 + -0x40;
+                cVar1 = *pcVar4;
+                pcVar4 = pcVar4 + 1;
+              } while (cVar1 != '\0');
+              if ((int)pcVar4 - (int)pcVar6 != 2) goto LAB_825b52bc;
+              iVar15 = *pcVar6 + -0x40;
             }
-            uVar29 = 3;
+            uVar26 = 3;
             if ((iVar15 < 0) || (0x13 < iVar15)) {
-              Com_PrintError(0x10,local_9f0,pcVar21,*pcVar8);
-              pcVar20 = pcVar20 + 1;
+              Com_PrintError(0x10,local_9f0);
+              pcVar11 = pcVar11 + 1;
             }
             else {
-              iVar7 = iVar15 * 0x20c;
               local_9f4 = 0;
-              iVar5 = 0;
-              pcVar22[iVar7 + 0x140] = '\0';
-              pcVar22[iVar7 + 0x200] = '\0';
-              pcVar8 = pcVar22 + iVar7 + 0x204;
-              pcVar8[0] = '\0';
-              pcVar8[1] = '\0';
-              pcVar8[2] = '\0';
-              pcVar8[3] = '\0';
-              pcVar8 = pcVar22 + iVar7 + 0x208;
-              pcVar8[0] = '\0';
-              pcVar8[1] = '\0';
-              pcVar8[2] = '\0';
-              pcVar8[3] = '\0';
+              iVar10 = 0;
+              pcVar21[iVar15].image[0] = '\0';
+              pcVar21[iVar15].numEntries = '\0';
+              pcVar21[iVar15].unlockXp = 0;
+              pcVar21[iVar15].requiredDLCMask = 0;
             }
           }
           goto LAB_825b6304;
         }
-        iVar7 = I_stricmp(pcVar13,local_990._0_4_);
-        if (iVar7 == 0) {
-          if (uVar29 == 3) {
+        iVar5 = I_stricmp(pcVar4,local_990._0_4_);
+        if (iVar5 == 0) {
+          if (uVar26 == 3) {
             Com_SetSpaceDelimited(0);
-            if ((byte)pcVar22[iVar15 * 0x20c + 0x200] < 0x14) {
+            if (pcVar21[iVar15].numEntries < 0x14) {
               do {
-                pcVar8 = (char *)Com_ParseOnLine(&local_a10);
-                if ((pcVar8 == (char *)0x0) || (*pcVar8 == '\0')) goto LAB_825b545c;
-                if (*pcVar8 != ',') {
-                  iVar7 = atoi(pcVar8);
-                  pcVar13 = pcVar8;
-                  if (iVar7 < 1) {
+                pcVar6 = Com_ParseOnLine(&local_a10);
+                if ((pcVar6 == (char *)0x0) || (*pcVar6 == '\0')) goto LAB_825b545c;
+                if (*pcVar6 != ',') {
+                  iVar5 = atoi(pcVar6);
+                  pcVar4 = pcVar6;
+                  if (iVar5 < 1) {
                     do {
-                      cVar14 = *pcVar13;
-                      pcVar13 = pcVar13 + 1;
-                    } while (cVar14 != '\0');
-                    pcVar23 = local_914;
-                    if (((((int)pcVar13 - (int)pcVar8 != 2) ||
-                         (lVar33 = (longlong)*pcVar8 + -0x40, pcVar23 = local_97c, lVar33 < 1)) ||
-                        (0x13 < (int)lVar33)) || (pcVar23 = local_8e4, iVar15 != 0))
+                      cVar1 = *pcVar4;
+                      pcVar4 = pcVar4 + 1;
+                    } while (cVar1 != '\0');
+                    pcVar12 = local_914;
+                    if (((((int)pcVar4 - (int)pcVar6 != 2) ||
+                         (lVar32 = (longlong)*pcVar6 + -0x40, pcVar12 = local_97c, lVar32 < 1)) ||
+                        (0x13 < (int)lVar32)) || (pcVar12 = local_8e4, iVar15 != 0))
                     goto LAB_825b544c;
-                    pcVar8 = pcVar22 + ((byte)pcVar22[0x200] + 0x2c) * 8;
-                    pcVar8[0] = '\0';
-                    pcVar8[1] = '\0';
-                    pcVar8[2] = '\0';
-                    pcVar8[3] = '\x01';
-                    pcVar22[(uint)(byte)pcVar22[0x200] * 8 + 0x164] = (char)lVar33;
-                    pcVar22[0x200] = pcVar22[0x200] + '\x01';
+                    pcVar21->entries[pcVar21->numEntries].type = CATEGORY;
+                    pcVar21->entries[pcVar21->numEntries].num = (uchar)lVar32;
+                    pcVar21->numEntries = pcVar21->numEntries + '\x01';
                   }
                   else {
-                    pcVar23 = local_984;
-                    if (0x28 < iVar7) {
+                    pcVar12 = local_984;
+                    if (0x28 < iVar5) {
 LAB_825b544c:
-                      Com_PrintError(0x10,pcVar23,pcVar21);
-                      pcVar20 = pcVar20 + 1;
+                      Com_PrintError(0x10,pcVar12);
+                      pcVar11 = pcVar11 + 1;
                       goto LAB_825b545c;
                     }
-                    pcVar8 = pcVar22 + ((byte)pcVar22[iVar15 * 0x20c + 0x200] + 0x2c) * 8 +
-                                       iVar15 * 0x20c;
-                    pcVar8[0] = '\0';
-                    pcVar8[1] = '\0';
-                    pcVar8[2] = '\0';
-                    pcVar8[3] = '\0';
-                    pcVar22[(uint)(byte)pcVar22[iVar15 * 0x20c + 0x200] * 8 + iVar15 * 0x20c + 0x164
-                           ] = (char)iVar7;
-                    pcVar22[iVar15 * 0x20c + 0x200] = pcVar22[iVar15 * 0x20c + 0x200] + '\x01';
+                    pcVar21[iVar15].entries[pcVar21[iVar15].numEntries].type = PLAYLIST;
+                    pcVar21[iVar15].entries[pcVar21[iVar15].numEntries].num = (uchar)iVar5;
+                    pcVar21[iVar15].numEntries = pcVar21[iVar15].numEntries + '\x01';
                   }
                 }
-              } while ((byte)pcVar22[iVar15 * 0x20c + 0x200] < 0x14);
+              } while (pcVar21[iVar15].numEntries < 0x14);
               Com_SkipRestOfLine(&local_a10);
               Com_SetSpaceDelimited(1);
             }
@@ -842,517 +844,513 @@ LAB_825b545c:
             }
             goto LAB_825b630c;
           }
-          Com_PrintError(0x10,local_91c,pcVar21);
-          pcVar20 = pcVar20 + 1;
+          Com_PrintError(0x10,local_91c);
+          pcVar11 = pcVar11 + 1;
           goto LAB_825b6304;
         }
-        iVar7 = I_stricmp(pcVar13,local_974);
-        if (iVar7 == 0) {
-          if (uVar29 == 1) {
-            pcVar8 = (char *)Com_ParseOnLine(&local_a10);
-            if (pcVar8 == (char *)0x0) {
-              Com_PrintError(0x10,local_96c,pcVar21);
-              pcVar20 = pcVar20 + 1;
+        iVar5 = I_stricmp(pcVar4,local_974);
+        if (iVar5 == 0) {
+          if (uVar26 == 1) {
+            pcVar6 = Com_ParseOnLine(&local_a10);
+            if (pcVar6 == (char *)0x0) {
+              Com_PrintError(0x10,local_96c);
+              pcVar11 = pcVar11 + 1;
             }
             else {
-              iVar7 = atoi(pcVar8);
-              *(char *)(puVar25 + *(int *)(puVar25 + 2) * 0x3c + 0x3e) = (char)iVar7;
+              iVar5 = atoi(pcVar6);
+              *(char *)(puVar20 + *(int *)(puVar20 + 2) * 0x3c + 0x3e) = (char)iVar5;
             }
           }
           else {
-            Com_PrintError(0x10,local_8d0,pcVar21);
-            pcVar20 = pcVar20 + 1;
+            Com_PrintError(0x10,local_8d0);
+            pcVar11 = pcVar11 + 1;
           }
           goto LAB_825b6304;
         }
-        iVar7 = I_stricmp(pcVar13,local_90c);
-        if (iVar7 == 0) {
-          if (uVar29 == 1) {
-            uVar2 = Com_ParseOnLine(&local_a10);
-            if ((uVar2 & 0xffffffff) == 0) {
-              Com_PrintError(0x10,local_8dc,pcVar21);
-              pcVar20 = pcVar20 + 1;
+        iVar5 = I_stricmp(pcVar4,local_90c);
+        if (iVar5 == 0) {
+          if (uVar26 == 1) {
+            pcVar6 = Com_ParseOnLine(&local_a10);
+            if (pcVar6 == (char *)0x0) {
+              Com_PrintError(0x10,local_8dc);
+              pcVar11 = pcVar11 + 1;
             }
             else {
-              I_strncpyz(puVar25 + *(int *)(puVar25 + 2) * 0x3c + 4,uVar2,0x10);
+              I_strncpyz((char *)(puVar20 + *(int *)(puVar20 + 2) * 0x3c + 4),pcVar6,0x10);
             }
           }
           else {
-            Com_PrintError(0x10,local_964,pcVar21);
-            pcVar20 = pcVar20 + 1;
+            Com_PrintError(0x10,local_964);
+            pcVar11 = pcVar11 + 1;
           }
           goto LAB_825b6304;
         }
-        iVar7 = I_stricmp(pcVar13,local_9ac);
-        if ((iVar7 == 0) || (iVar7 = I_stricmp(pcVar13,local_904), iVar7 == 0)) {
-          pcVar13 = (char *)Com_ParseRestOfLine(&local_a10);
-          pcVar8 = pcVar13;
+        iVar5 = I_stricmp(pcVar4,local_9ac);
+        if ((iVar5 == 0) || (iVar5 = I_stricmp(pcVar4,local_904), iVar5 == 0)) {
+          pcVar4 = Com_ParseRestOfLine(&local_a10);
+          pcVar6 = pcVar4;
           do {
-            cVar14 = *pcVar8;
-            pcVar8 = pcVar8 + 1;
-          } while (cVar14 != '\0');
-          iVar7 = (int)pcVar8 - (int)pcVar13;
-          if (uVar29 == 0) {
-            if (iVar7 < (int)(local_a0c + (0x18fff - *(int *)(local_a0c + 0x19000)))) {
-              pcVar8 = *(char **)(puVar25 + -2);
-              pcVar23 = pcVar8;
+            cVar1 = *pcVar6;
+            pcVar6 = pcVar6 + 1;
+          } while (cVar1 != '\0');
+          iVar5 = (int)pcVar6 - (int)pcVar4;
+          if (uVar26 == 0) {
+            if (iVar5 < (int)local_a0c + (0x18fff - (int)local_a0c->tail)) {
+              pcVar6 = *(char **)(puVar20 + -2);
+              pcVar12 = pcVar6;
               do {
-                pcVar24 = pcVar23;
-                pcVar23 = pcVar24 + 1;
+                pcVar24 = pcVar12;
+                pcVar12 = pcVar24 + 1;
               } while (*pcVar24 != '\0');
               do {
-                cVar14 = *pcVar13;
-                pcVar13 = pcVar13 + 1;
-                *pcVar24 = cVar14;
+                cVar1 = *pcVar4;
+                pcVar4 = pcVar4 + 1;
+                *pcVar24 = cVar1;
                 pcVar24 = pcVar24 + 1;
-              } while (cVar14 != '\0');
+              } while (cVar1 != '\0');
               do {
-                pcVar23 = pcVar8;
-                pcVar8 = pcVar23 + 1;
-                pcVar13 = local_a00;
-              } while (*pcVar23 != '\0');
+                pcVar12 = pcVar6;
+                pcVar4 = local_a00;
+                pcVar6 = pcVar12 + 1;
+              } while (*pcVar12 != '\0');
               do {
-                cVar14 = *pcVar13;
-                *pcVar23 = cVar14;
-                pcVar23 = pcVar23 + 1;
-                pcVar13 = pcVar13 + 1;
-              } while (cVar14 != '\0');
+                cVar1 = *pcVar4;
+                *pcVar12 = cVar1;
+                pcVar12 = pcVar12 + 1;
+                pcVar4 = pcVar4 + 1;
+              } while (cVar1 != '\0');
 LAB_825b6300:
-              PlaylistStringBuffer_MoveTail();
+              PlaylistStringBuffer_MoveTail(iVar5);
               goto LAB_825b6304;
             }
-            Com_PrintError(0x10,0xffffffff8216dc88,pcVar13,0x19000);
+            Com_PrintError(0x10,
+                           "Adding \'%s\' to global rules would exceed %i bytes of shared rules buffer space\n"
+                          );
           }
-          else if (uVar29 == 1) {
-            iVar11 = *(int *)(puVar25 + 2);
-            if (iVar7 < (int)(local_a0c + (0x18fff - *(int *)(local_a0c + 0x19000)))) {
-              pcVar8 = *(char **)(puVar25 + iVar11 * 0x3c + 0x3c);
+          else if (uVar26 == 1) {
+            iVar9 = *(int *)(puVar20 + 2);
+            if (iVar5 < (int)local_a0c + (0x18fff - (int)local_a0c->tail)) {
+              pcVar6 = *(char **)(puVar20 + iVar9 * 0x3c + 0x3c);
               do {
-                pcVar23 = pcVar8;
-                pcVar8 = pcVar23 + 1;
-              } while (*pcVar23 != '\0');
+                pcVar12 = pcVar6;
+                pcVar6 = pcVar12 + 1;
+              } while (*pcVar12 != '\0');
               do {
-                cVar14 = *pcVar13;
-                pcVar13 = pcVar13 + 1;
-                *pcVar23 = cVar14;
-                pcVar23 = pcVar23 + 1;
-              } while (cVar14 != '\0');
-              pcVar8 = *(char **)(puVar25 + iVar11 * 0x3c + 0x3c);
+                cVar1 = *pcVar4;
+                pcVar4 = pcVar4 + 1;
+                *pcVar12 = cVar1;
+                pcVar12 = pcVar12 + 1;
+              } while (cVar1 != '\0');
+              pcVar6 = *(char **)(puVar20 + iVar9 * 0x3c + 0x3c);
               do {
-                pcVar23 = pcVar8;
-                pcVar8 = pcVar23 + 1;
-                pcVar13 = local_a00;
-              } while (*pcVar23 != '\0');
+                pcVar12 = pcVar6;
+                pcVar4 = local_a00;
+                pcVar6 = pcVar12 + 1;
+              } while (*pcVar12 != '\0');
               do {
-                cVar14 = *pcVar13;
-                *pcVar23 = cVar14;
-                pcVar23 = pcVar23 + 1;
-                pcVar13 = pcVar13 + 1;
-              } while (cVar14 != '\0');
+                cVar1 = *pcVar4;
+                *pcVar12 = cVar1;
+                pcVar12 = pcVar12 + 1;
+                pcVar4 = pcVar4 + 1;
+              } while (cVar1 != '\0');
               goto LAB_825b6300;
             }
-            Com_PrintError(0x10,0xffffffff8216dcd8,pcVar13,puVar25 + iVar11 * 0x3c + 0xc,0x19000);
+            Com_PrintError(0x10,
+                           "Adding \'%s\' to gametype %s rules would exceed %i bytes of shared rules buffer space\n"
+                          );
           }
-          else if (uVar29 < 3) {
-            if (iVar7 < (int)(local_a0c + (0x18fff - *(int *)(local_a0c + 0x19000)))) {
-              pcVar8 = *(char **)(pcVar19 + iVar10 * 0x178 + 0x2368);
+          else if (uVar26 < 3) {
+            if (iVar5 < (int)local_a0c + (0x18fff - (int)local_a0c->tail)) {
+              pcVar6 = ppVar3[0x11].name[iVar7 * 0x5e + 0x49];
               do {
-                pcVar23 = pcVar8;
-                pcVar8 = pcVar23 + 1;
-              } while (*pcVar23 != '\0');
+                pcVar12 = pcVar6;
+                pcVar6 = pcVar12 + 1;
+              } while (*pcVar12 != '\0');
               do {
-                cVar14 = *pcVar13;
-                pcVar13 = pcVar13 + 1;
-                *pcVar23 = cVar14;
-                pcVar23 = pcVar23 + 1;
-              } while (cVar14 != '\0');
-              pcVar8 = *(char **)(pcVar19 + iVar10 * 0x178 + 0x2368);
+                cVar1 = *pcVar4;
+                pcVar4 = pcVar4 + 1;
+                *pcVar12 = cVar1;
+                pcVar12 = pcVar12 + 1;
+              } while (cVar1 != '\0');
+              pcVar6 = ppVar3[0x11].name[iVar7 * 0x5e + 0x49];
               do {
-                pcVar23 = pcVar8;
-                pcVar8 = pcVar23 + 1;
-                pcVar13 = local_a00;
-              } while (*pcVar23 != '\0');
+                pcVar12 = pcVar6;
+                pcVar4 = local_a00;
+                pcVar6 = pcVar12 + 1;
+              } while (*pcVar12 != '\0');
               do {
-                cVar14 = *pcVar13;
-                *pcVar23 = cVar14;
-                pcVar23 = pcVar23 + 1;
-                pcVar13 = pcVar13 + 1;
-              } while (cVar14 != '\0');
+                cVar1 = *pcVar4;
+                *pcVar12 = cVar1;
+                pcVar12 = pcVar12 + 1;
+                pcVar4 = pcVar4 + 1;
+              } while (cVar1 != '\0');
               goto LAB_825b6300;
             }
-            Com_PrintError(0x10,0xffffffff8216dd30,pcVar13,iVar10,0x19000);
+            Com_PrintError(0x10,
+                           "Adding \'%s\' to playlist %i rules would exceed %i bytes of shared rules buffer space\n"
+                          );
           }
           else {
-            Com_PrintError(0x10,0xffffffff8216dd88,pcVar21);
+            Com_PrintError(0x10,
+                           "Playlist error: line %i: Unexpected rule command while not parsing a gametype, playlist, nor global block\n"
+                          );
           }
 LAB_825b63a4:
           Com_SkipRestOfLine(&local_a10);
-          puVar30 = local_a0c;
-          pcVar8 = pcVar20 + 1;
+          pcVar6 = pcVar11 + 1;
+          pSVar28 = local_a0c;
           break;
         }
-        iVar7 = I_stricmp(pcVar13,local_954);
-        if (iVar7 == 0) {
-          uVar2 = Com_ParseOnLine(&local_a10);
-          if ((uVar2 & 0xffffffff) == 0) {
+        iVar5 = I_stricmp(pcVar4,local_954);
+        if (iVar5 == 0) {
+          pcVar6 = Com_ParseOnLine(&local_a10);
+          if (pcVar6 == (char *)0x0) {
             Com_PrintError(0x10,local_8cc);
-            pcVar20 = pcVar20 + 1;
+            pcVar11 = pcVar11 + 1;
           }
           else {
-            SEH_GetCurrentLanguage();
-            uVar3 = SEH_GetLanguageName();
-            iVar7 = I_stricmp(uVar2,uVar3);
-            if (iVar7 == 0) {
-              uVar2 = Com_ParseOnLine(&local_a10);
-              if ((uVar2 & 0xffffffff) == 0) {
-                uVar3 = uVar28;
-                if (uVar29 != 2) {
-                  uVar3 = uVar27;
-                }
-                Com_PrintError(0x10,local_9fc,pcVar21,uVar3);
-                pcVar20 = pcVar20 + 1;
+            iVar5 = SEH_GetCurrentLanguage();
+            pcVar4 = SEH_GetLanguageName(iVar5);
+            iVar5 = I_stricmp(pcVar6,pcVar4);
+            if (iVar5 == 0) {
+              pcVar6 = Com_ParseOnLine(&local_a10);
+              if (pcVar6 == (char *)0x0) {
+                Com_PrintError(0x10,local_9fc);
+                pcVar11 = pcVar11 + 1;
               }
               else {
-                iVar5 = 1;
+                iVar10 = 1;
 LAB_825b5628:
-                if (uVar29 == 1) {
-                  I_strncpyz(puVar25 + *(int *)(puVar25 + 2) * 0x3c + 0x14,uVar2,0x40);
+                if (uVar26 == 1) {
+                  I_strncpyz((char *)(puVar20 + *(int *)(puVar20 + 2) * 0x3c + 0x14),pcVar6,0x40);
                 }
-                else if (uVar29 == 2) {
-                  I_strncpyz(pcVar19 + iVar10 * 0x178 + 0x2208,uVar2,0x40);
+                else if (uVar26 == 2) {
+                  I_strncpyz((char *)(ppVar3[0x10].name + iVar7 * 0x5e + 0x72),pcVar6,0x40);
                 }
-                else if (uVar29 == 3) {
-                  I_strncpyz(pcVar22 + iVar15 * 0x20c,uVar2,0x40);
+                else if (uVar26 == 3) {
+                  I_strncpyz(pcVar21[iVar15].name,pcVar6,0x40);
                 }
                 else {
-                  Com_PrintError(0x10,local_9f8,pcVar21);
-                  pcVar20 = pcVar20 + 1;
+                  Com_PrintError(0x10,local_9f8);
+                  pcVar11 = pcVar11 + 1;
                 }
               }
             }
-            else if ((iVar5 == 0) && (iVar7 = I_stricmp(local_a08,uVar2), iVar7 == 0)) {
-              uVar2 = Com_ParseOnLine(&local_a10);
-              if ((uVar2 & 0xffffffff) != 0) goto LAB_825b5628;
-              uVar3 = uVar28;
-              if (uVar29 != 2) {
-                uVar3 = uVar27;
-              }
-              Com_PrintError(0x10,local_9fc,pcVar21,uVar3);
-              pcVar20 = pcVar20 + 1;
+            else if ((iVar10 == 0) && (iVar5 = I_stricmp(local_a08,pcVar6), iVar5 == 0)) {
+              pcVar6 = Com_ParseOnLine(&local_a10);
+              if (pcVar6 != (char *)0x0) goto LAB_825b5628;
+              Com_PrintError(0x10,local_9fc);
+              pcVar11 = pcVar11 + 1;
             }
           }
           goto LAB_825b6304;
         }
-        iVar7 = I_stricmp(pcVar13,local_94c);
-        if (iVar7 == 0) {
-          uVar2 = Com_ParseOnLine(&local_a10);
-          if ((uVar2 & 0xffffffff) == 0) {
+        iVar5 = I_stricmp(pcVar4,local_94c);
+        if (iVar5 == 0) {
+          pcVar6 = Com_ParseOnLine(&local_a10);
+          if (pcVar6 == (char *)0x0) {
             Com_PrintError(0x10,local_8fc);
-            pcVar20 = pcVar20 + 1;
+            pcVar11 = pcVar11 + 1;
           }
           else {
-            SEH_GetCurrentLanguage();
-            uVar3 = SEH_GetLanguageName();
-            iVar7 = I_stricmp(uVar2,uVar3);
-            if (iVar7 == 0) {
-              uVar2 = Com_ParseOnLine(&local_a10);
-              if ((uVar2 & 0xffffffff) == 0) {
-                uVar3 = uVar28;
-                if (uVar29 != 2) {
-                  uVar3 = uVar27;
-                }
-                Com_PrintError(0x10,local_9b0,pcVar21,uVar3);
-                pcVar20 = pcVar20 + 1;
+            iVar5 = SEH_GetCurrentLanguage();
+            pcVar4 = SEH_GetLanguageName(iVar5);
+            iVar5 = I_stricmp(pcVar6,pcVar4);
+            if (iVar5 == 0) {
+              pcVar6 = Com_ParseOnLine(&local_a10);
+              if (pcVar6 == (char *)0x0) {
+                Com_PrintError(0x10,local_9b0);
+                pcVar11 = pcVar11 + 1;
               }
               else {
                 local_9dc = 1;
 LAB_825b5790:
-                I_strncpyz(puVar25 + *(int *)(puVar25 + 2) * 0x3c + 0x34,uVar2,0x10);
+                I_strncpyz((char *)(puVar20 + *(int *)(puVar20 + 2) * 0x3c + 0x34),pcVar6,0x10);
               }
             }
-            else if ((local_9dc == 0) && (iVar7 = I_stricmp(local_a08,uVar2), iVar7 == 0)) {
-              uVar2 = Com_ParseOnLine(&local_a10);
-              if ((uVar2 & 0xffffffff) != 0) goto LAB_825b5790;
-              uVar3 = uVar28;
-              if (uVar29 != 2) {
-                uVar3 = uVar27;
-              }
-              Com_PrintError(0x10,local_9b0,pcVar21,uVar3);
-              pcVar20 = pcVar20 + 1;
+            else if ((local_9dc == 0) && (iVar5 = I_stricmp(local_a08,pcVar6), iVar5 == 0)) {
+              pcVar6 = Com_ParseOnLine(&local_a10);
+              if (pcVar6 != (char *)0x0) goto LAB_825b5790;
+              Com_PrintError(0x10,local_9b0);
+              pcVar11 = pcVar11 + 1;
             }
           }
           goto LAB_825b6304;
         }
-        iVar7 = I_stricmp(pcVar13,local_944);
-        if (iVar7 == 0) {
-          uVar2 = Com_ParseOnLine(&local_a10);
-          if ((uVar2 & 0xffffffff) == 0) {
-            Com_PrintError(0x10,local_8d4,pcVar21);
-            pcVar20 = pcVar20 + 1;
+        iVar5 = I_stricmp(pcVar4,local_944);
+        if (iVar5 == 0) {
+          pcVar6 = Com_ParseOnLine(&local_a10);
+          if (pcVar6 == (char *)0x0) {
+            Com_PrintError(0x10,local_8d4);
+            pcVar11 = pcVar11 + 1;
           }
           else {
-            SEH_GetCurrentLanguage();
-            uVar3 = SEH_GetLanguageName();
-            iVar7 = I_stricmp(uVar2,uVar3);
-            if (iVar7 == 0) {
-              uVar2 = Com_ParseOnLine(&local_a10);
-              if ((uVar2 & 0xffffffff) == 0) {
-                Com_PrintError(0x10,local_9b4,pcVar21);
-                pcVar20 = pcVar20 + 1;
+            iVar5 = SEH_GetCurrentLanguage();
+            pcVar4 = SEH_GetLanguageName(iVar5);
+            iVar5 = I_stricmp(pcVar6,pcVar4);
+            if (iVar5 == 0) {
+              pcVar6 = Com_ParseOnLine(&local_a10);
+              if (pcVar6 == (char *)0x0) {
+                Com_PrintError(0x10,local_9b4);
+                pcVar11 = pcVar11 + 1;
               }
               else {
                 local_9f4 = 1;
 LAB_825b5898:
-                if (uVar29 == 2) {
-                  iVar7 = iVar10 * 0x178;
-                  pcVar8 = pcVar19 + 0x2248;
+                if (uVar26 == 2) {
+                  iVar5 = iVar7 * 0x178;
+                  ppcVar17 = ppVar3[0x11].name + 1;
                 }
                 else {
-                  if (uVar29 != 3) {
-                    Com_PrintError(0x10,local_9b8,pcVar21);
-                    pcVar20 = pcVar20 + 1;
+                  if (uVar26 != 3) {
+                    Com_PrintError(0x10,local_9b8);
+                    pcVar11 = pcVar11 + 1;
                     goto LAB_825b6304;
                   }
-                  iVar7 = iVar15 * 0x20c;
-                  pcVar8 = pcVar22 + 0x40;
+                  iVar5 = iVar15 * 0x20c;
+                  ppcVar17 = (char **)pcVar21->description;
                 }
-                I_strncpyz(pcVar8 + iVar7,uVar2,0x100);
+                I_strncpyz((char *)((int)ppcVar17 + iVar5),pcVar6,0x100);
 LAB_825b5930:
-                pcVar8 = strstr(pcVar19 + iVar10 * 0x178 + 0x2248,local_9bc);
-                while (pcVar8 != (char *)0x0) {
-                  *pcVar8 = '\n';
-                  if ((int)(pcVar8 + (iVar10 * -0x178 - (int)(pcVar19 + 0x2248)) + 2) < 0x100) {
-                    memmove(pcVar8 + 1,pcVar8 + 2,
-                            (size_t)(pcVar19 + (iVar10 * 0x178 - (int)pcVar8) + 0x2346));
+                pcVar6 = strstr((char *)(ppVar3[0x11].name + iVar7 * 0x5e + 1),local_9bc);
+                while (pcVar6 != (char *)0x0) {
+                  *pcVar6 = '\n';
+                  if ((int)(pcVar6 + (iVar7 * -0x178 - (int)(ppVar3[0x11].name + 1)) + 2) < 0x100) {
+                    memmove();
                   }
                   else {
-                    pcVar8[1] = pcVar8[2];
+                    pcVar6[1] = pcVar6[2];
                   }
-                  pcVar8 = strstr(pcVar19 + iVar10 * 0x178 + 0x2248,local_9bc);
+                  pcVar6 = strstr((char *)(ppVar3[0x11].name + iVar7 * 0x5e + 1),local_9bc);
                 }
               }
             }
             else {
-              if ((local_9f4 != 0) || (iVar7 = I_stricmp(local_a08,uVar2), iVar7 != 0))
+              if ((local_9f4 != 0) || (iVar5 = I_stricmp(local_a08,pcVar6), iVar5 != 0))
               goto LAB_825b5930;
-              uVar2 = Com_ParseOnLine(&local_a10);
-              if ((uVar2 & 0xffffffff) != 0) goto LAB_825b5898;
-              Com_PrintError(0x10,local_9b4,pcVar21);
-              pcVar20 = pcVar20 + 1;
+              pcVar6 = Com_ParseOnLine(&local_a10);
+              if (pcVar6 != (char *)0x0) goto LAB_825b5898;
+              Com_PrintError(0x10,local_9b4);
+              pcVar11 = pcVar11 + 1;
             }
           }
           goto LAB_825b6304;
         }
-        iVar7 = I_stricmp(pcVar13,local_93c);
-        if (iVar7 == 0) {
+        iVar5 = I_stricmp(pcVar4,local_93c);
+        if (iVar5 == 0) {
           Com_SkipRestOfLine(&local_a10);
-          if (uVar29 == 1) {
-            *(undefined1 *)((int)puVar25 + *(int *)(puVar25 + 2) * 0x78 + 0x7d) = 1;
+          if (uVar26 == 1) {
+            *(undefined1 *)((int)puVar20 + *(int *)(puVar20 + 2) * 0x78 + 0x7d) = 1;
           }
           else {
-            Com_PrintError(0x10,local_8f4,pcVar21);
-            pcVar20 = pcVar20 + 1;
+            Com_PrintError(0x10,local_8f4);
+            pcVar11 = pcVar11 + 1;
           }
         }
         else {
-          iVar7 = I_stricmp(pcVar13,local_934);
-          if (iVar7 == 0) {
+          iVar5 = I_stricmp(pcVar4,local_934);
+          if (iVar5 == 0) {
             Com_SkipRestOfLine(&local_a10);
-            if (uVar29 == 1) {
-              *(undefined1 *)(puVar25 + *(int *)(puVar25 + 2) * 0x3c + 0x3f) = 1;
+            if (uVar26 == 1) {
+              *(undefined1 *)(puVar20 + *(int *)(puVar20 + 2) * 0x3c + 0x3f) = 1;
             }
             else {
-              Com_PrintError(0x10,local_8c4,pcVar21);
-              pcVar20 = pcVar20 + 1;
+              Com_PrintError(0x10,local_8c4);
+              pcVar11 = pcVar11 + 1;
             }
           }
           else {
-            iVar7 = I_stricmp(pcVar13,local_92c);
-            if (iVar7 == 0) {
+            iVar5 = I_stricmp(pcVar4,local_92c);
+            if (iVar5 == 0) {
               Com_SkipRestOfLine(&local_a10);
-              Com_PrintError(0x10,local_9a8,pcVar21);
-              pcVar20 = pcVar20 + 1;
+              Com_PrintError(0x10,local_9a8);
+              pcVar11 = pcVar11 + 1;
             }
             else {
-              iVar7 = I_stricmp(pcVar13,local_9a4);
-              if (iVar7 == 0) {
+              iVar5 = I_stricmp(pcVar4,local_9a4);
+              if (iVar5 == 0) {
                 Com_SkipRestOfLine(&local_a10);
-                if (uVar29 == 2) {
-                  *(uint *)(pcVar19 + iVar10 * 0x178 + 0x2374) =
-                       *(uint *)(pcVar19 + iVar10 * 0x178 + 0x2374) | 1;
+                if (uVar26 == 2) {
+                  ppVar3[0x11].name[iVar7 * 0x5e + 0x4c] =
+                       (char *)((uint)ppVar3[0x11].name[iVar7 * 0x5e + 0x4c] | 1);
                 }
                 else {
-                  Com_PrintError(0x10,local_99c,pcVar21);
-                  pcVar20 = pcVar20 + 1;
+                  Com_PrintError(0x10,local_99c);
+                  pcVar11 = pcVar11 + 1;
                 }
               }
               else {
-                iVar7 = I_stricmp(pcVar13,local_994);
-                if (iVar7 == 0) {
+                iVar5 = I_stricmp(pcVar4,local_994);
+                if (iVar5 == 0) {
                   Com_SkipRestOfLine(&local_a10);
-                  if (uVar29 == 2) {
-                    *(uint *)(pcVar19 + iVar10 * 0x178 + 0x2374) =
-                         *(uint *)(pcVar19 + iVar10 * 0x178 + 0x2374) | 4;
+                  if (uVar26 == 2) {
+                    ppVar3[0x11].name[iVar7 * 0x5e + 0x4c] =
+                         (char *)((uint)ppVar3[0x11].name[iVar7 * 0x5e + 0x4c] | 4);
                   }
                   else {
-                    Com_PrintError(0x10,local_988,pcVar21);
-                    pcVar20 = pcVar20 + 1;
+                    Com_PrintError(0x10,local_988);
+                    pcVar11 = pcVar11 + 1;
                   }
                 }
                 else {
-                  iVar7 = I_stricmp(pcVar13,local_980);
-                  pcVar8 = local_970;
-                  if (iVar7 != 0) {
-                    iVar7 = I_stricmp(pcVar13,local_970);
-                    pcVar23 = local_960;
-                    if (iVar7 == 0) {
-                      if (uVar29 == 2) {
-                        uVar9 = ParseIntRange(pcVar8,&local_a10,0,0x7fffffff,pcVar21);
-                        *(undefined4 *)(pcVar19 + iVar10 * 0x178 + 0x236c) = uVar9;
+                  iVar5 = I_stricmp(pcVar4,local_980);
+                  pcVar6 = local_970;
+                  if (iVar5 != 0) {
+                    iVar5 = I_stricmp(pcVar4,local_970);
+                    pcVar12 = local_960;
+                    if (iVar5 == 0) {
+                      if (uVar26 == 2) {
+                        pcVar6 = (char *)ParseIntRange(pcVar6,&local_a10,0,0x7fffffff,(int)pcVar30);
+                        ppVar3[0x11].name[iVar7 * 0x5e + 0x4a] = pcVar6;
                       }
-                      else if (uVar29 == 3) {
-                        uVar9 = ParseIntRange(pcVar8,&local_a10,0,0x7fffffff,pcVar21);
-                        *(undefined4 *)(pcVar22 + iVar15 * 0x20c + 0x204) = uVar9;
+                      else if (uVar26 == 3) {
+                        uVar8 = ParseIntRange(pcVar6,&local_a10,0,0x7fffffff,(int)pcVar30);
+                        pcVar21[iVar15].unlockXp = uVar8;
                       }
                       else {
-                        Com_PrintError(0x10,local_968,pcVar21);
-                        pcVar20 = pcVar20 + 1;
+                        Com_PrintError(0x10,local_968);
+                        pcVar11 = pcVar11 + 1;
                       }
                     }
                     else {
-                      iVar7 = I_stricmp(pcVar13,local_960);
-                      pcVar8 = local_950;
-                      if (iVar7 == 0) {
-                        if (uVar29 == 2) {
-                          cVar14 = ParseIntRange(pcVar23,&local_a10,1,0x12,pcVar21);
-                          pcVar19[iVar10 * 0x178 + 0x237c] = cVar14;
+                      iVar5 = I_stricmp(pcVar4,local_960);
+                      pcVar6 = local_950;
+                      if (iVar5 == 0) {
+                        if (uVar26 == 2) {
+                          iVar5 = ParseIntRange(pcVar12,&local_a10,1,0x12,(int)pcVar30);
+                          *(char *)(ppVar3[0x11].name + iVar7 * 0x5e + 0x4e) = (char)iVar5;
                         }
                         else {
-                          Com_PrintError(0x10,local_958,pcVar21);
-                          pcVar20 = pcVar20 + 1;
+                          Com_PrintError(0x10,local_958);
+                          pcVar11 = pcVar11 + 1;
                         }
                       }
                       else {
-                        iVar7 = I_stricmp(pcVar13,local_950);
-                        pcVar23 = local_940;
-                        if (iVar7 == 0) {
-                          if (uVar29 == 2) {
-                            cVar14 = ParseIntRange(pcVar8,&local_a10,1,0x12,pcVar21);
-                            pcVar19[iVar10 * 0x178 + 0x237d] = cVar14;
+                        iVar5 = I_stricmp(pcVar4,local_950);
+                        pcVar12 = local_940;
+                        if (iVar5 == 0) {
+                          if (uVar26 == 2) {
+                            iVar5 = ParseIntRange(pcVar6,&local_a10,1,0x12,(int)pcVar30);
+                            *(char *)((int)ppVar3[0x11].name + iVar7 * 0x178 + 0x139) = (char)iVar5;
                           }
                           else {
-                            Com_PrintError(0x10,local_948,pcVar21);
-                            pcVar20 = pcVar20 + 1;
+                            Com_PrintError(0x10,local_948);
+                            pcVar11 = pcVar11 + 1;
                           }
                         }
                         else {
-                          iVar7 = I_stricmp(pcVar13,local_940);
-                          if (iVar7 == 0) {
-                            if (uVar29 == 2) {
-                              cVar14 = ParseIntRange(pcVar23,&local_a10,1,0x7fffffff,pcVar21);
-                              pcVar19[iVar10 * 0x178 + 0x237e] = cVar14;
+                          iVar5 = I_stricmp(pcVar4,local_940);
+                          if (iVar5 == 0) {
+                            if (uVar26 == 2) {
+                              iVar5 = ParseIntRange(pcVar12,&local_a10,1,0x7fffffff,(int)pcVar30);
+                              *(char *)((int)ppVar3[0x11].name + iVar7 * 0x178 + 0x13a) =
+                                   (char)iVar5;
                             }
                             else {
-                              Com_PrintError(0x10,local_938,pcVar21);
-                              pcVar20 = pcVar20 + 1;
+                              Com_PrintError(0x10,local_938);
+                              pcVar11 = pcVar11 + 1;
                             }
                           }
                           else {
-                            iVar7 = I_stricmp(pcVar13,local_9d4);
-                            if (iVar7 == 0) {
-                              if (uVar29 == 2) {
-                                iVar7 = iVar10 * 0x178;
-                                pcVar8 = pcVar19 + 0x2370;
+                            iVar5 = I_stricmp(pcVar4,local_9d4);
+                            if (iVar5 == 0) {
+                              if (uVar26 == 2) {
+                                iVar5 = iVar7 * 0x178;
+                                ppcVar17 = ppVar3[0x11].name + 0x4b;
                               }
                               else {
-                                if (uVar29 != 3) {
-                                  Com_PrintError(0x10,local_930,pcVar21);
-                                  pcVar20 = pcVar20 + 1;
+                                if (uVar26 != 3) {
+                                  Com_PrintError(0x10,local_930);
+                                  pcVar11 = pcVar11 + 1;
                                   goto LAB_825b6304;
                                 }
-                                iVar7 = iVar15 * 0x20c;
-                                pcVar8 = pcVar22 + 0x208;
+                                iVar5 = iVar15 * 0x20c;
+                                ppcVar17 = (char **)&pcVar21->requiredDLCMask;
                               }
-                              iVar11 = ParseIntRange(local_9d4,&local_a10,1,0x7fffffff,pcVar21);
-                              *(uint *)(pcVar8 + iVar7) =
-                                   1 << (iVar11 + 1U & 0x3f) | *(uint *)(pcVar8 + iVar7);
+                              iVar9 = ParseIntRange(local_9d4,&local_a10,1,0x7fffffff,(int)pcVar30);
+                              *(uint *)((int)ppcVar17 + iVar5) =
+                                   1 << (iVar9 + 1U & 0x3f) | *(uint *)((int)ppcVar17 + iVar5);
                             }
                             else {
-                              iVar7 = I_stricmp(pcVar13,local_928);
-                              if (iVar7 != 0) {
+                              iVar5 = I_stricmp(pcVar4,local_928);
+                              if (iVar5 != 0) {
                                 Com_UngetToken();
                                 Com_SetCSV(1);
-                                if (*puVar25 < 0x800) {
-                                  pcVar13 = pcVar22 + (uint)*puVar25 * 4 + -0x5c38;
-                                  pcVar8 = (char *)Com_ParseOnLine(&local_a10);
-                                  if ((pcVar8 == (char *)0x0) || (*pcVar8 == '\0')) {
-                                    Com_PrintError(0x10,local_8d8,pcVar21,iVar10);
-                                    pcVar20 = pcVar20 + 1;
+                                if (*puVar20 < 0x800) {
+                                  puVar31 = (undefined1 *)
+                                            ((int)pcVar21 + (uint)*puVar20 * 4 + -0x5c38);
+                                  pcVar6 = Com_ParseOnLine(&local_a10);
+                                  if ((pcVar6 == (char *)0x0) || (*pcVar6 == '\0')) {
+                                    Com_PrintError(0x10,local_8d8);
+                                    pcVar11 = pcVar11 + 1;
                                     Com_SkipRestOfLine(&local_a10);
                                     Com_SetCSV(0);
                                   }
                                   else {
-                                    uVar12 = Playlist_FindMapIndex();
-                                    if (uVar12 == 0xff) {
-                                      I_strncpyz(auStack_8a0 + (uint)(byte)pcVar19[0x200] * 0x10,
-                                                 pcVar8,0x10);
-                                      *(undefined1 **)(pcVar19 + (uint)(byte)pcVar19[0x200] * 4) =
-                                           auStack_8a0 + (uint)(byte)pcVar19[0x200] * 0x10;
-                                      uVar12 = (uint)(byte)pcVar19[0x200];
-                                      pcVar19[0x200] = pcVar19[0x200] + 1;
+                                    uVar8 = Playlist_FindMapIndex(pcVar6);
+                                    if (uVar8 == 0xff) {
+                                      I_strncpyz(acStack_8a0 + (uint)ppVar3->numEntries * 0x10,
+                                                 pcVar6,0x10);
+                                      ppVar3->name[ppVar3->numEntries] =
+                                           acStack_8a0 + (uint)ppVar3->numEntries * 0x10;
+                                      uVar8 = (uint)ppVar3->numEntries;
+                                      ppVar3->numEntries = ppVar3->numEntries + 1;
                                     }
-                                    *pcVar13 = (char)uVar12;
-                                    pcVar8 = (char *)Com_ParseOnLine(&local_a10);
-                                    if ((pcVar8 == (char *)0x0) || (*pcVar8 == '\0')) {
-                                      Com_PrintError(0x10,local_8e0,pcVar21,iVar10);
-                                      pcVar20 = pcVar20 + 1;
+                                    *puVar31 = (char)uVar8;
+                                    pcVar6 = Com_ParseOnLine(&local_a10);
+                                    if ((pcVar6 == (char *)0x0) || (*pcVar6 == '\0')) {
+                                      Com_PrintError(0x10,local_8e0);
+                                      pcVar11 = pcVar11 + 1;
                                       Com_SkipRestOfLine(&local_a10);
                                       Com_SetCSV(0);
                                     }
                                     else {
-                                      iVar7 = Playlist_FindGametypeIndex();
-                                      if (iVar7 < 0) {
-                                        Com_PrintError(0x10,local_910,pcVar21,pcVar8,iVar10);
-                                        pcVar20 = pcVar20 + 1;
+                                      iVar5 = Playlist_FindGametypeIndex(pcVar6);
+                                      if (iVar5 < 0) {
+                                        Com_PrintError(0x10,local_910);
+                                        pcVar11 = pcVar11 + 1;
                                         Com_SkipRestOfLine(&local_a10);
                                         Com_SetCSV(0);
                                       }
                                       else {
-                                        pcVar13[1] = (char)iVar7;
-                                        pcVar8 = (char *)Com_ParseOnLine(&local_a10);
-                                        if ((pcVar8 == (char *)0x0) || (*pcVar8 == '\0')) {
-                                          Com_PrintError(0x10,local_8e8,pcVar21,iVar10);
-                                          pcVar20 = pcVar20 + 1;
+                                        puVar31[1] = (char)iVar5;
+                                        pcVar6 = Com_ParseOnLine(&local_a10);
+                                        if ((pcVar6 == (char *)0x0) || (*pcVar6 == '\0')) {
+                                          Com_PrintError(0x10,local_8e8);
+                                          pcVar11 = pcVar11 + 1;
                                           Com_SkipRestOfLine(&local_a10);
                                           Com_SetCSV(0);
                                         }
                                         else {
-                                          uVar12 = atoi(pcVar8);
-                                          pcVar13[2] = (char)uVar12;
-                                          if ((uVar12 & 0xff) == 0) {
-                                            Com_PrintError(0x10,local_908,pcVar21,iVar10,pcVar8);
-                                            pcVar20 = pcVar20 + 1;
+                                          uVar8 = atoi(pcVar6);
+                                          puVar31[2] = (char)uVar8;
+                                          if ((uVar8 & 0xff) == 0) {
+                                            Com_PrintError(0x10,local_908);
+                                            pcVar11 = pcVar11 + 1;
                                             Com_SkipRestOfLine(&local_a10);
                                             Com_SetCSV(0);
                                           }
                                           else {
                                             Com_SkipRestOfLine(&local_a10);
                                             Com_SetCSV(0);
-                                            iVar7 = iVar10 * 0x178;
-                                            if (*(short *)(pcVar19 + iVar7 + 0x237a) == 0) {
-                                              if (*(short *)(pcVar19 + iVar7 + 0x2378) != 0) {
-                                                MyAssertHandler(local_8f0,0x50b,0,local_8f8,
-                                                                local_900);
+                                            iVar5 = iVar7 * 0x178;
+                                            if (*(short *)((int)ppVar3[0x11].name + iVar5 + 0x136)
+                                                == 0) {
+                                              if (*(short *)(ppVar3[0x11].name + iVar7 * 0x5e + 0x4d
+                                                            ) != 0) {
+                                                MyAssertHandler(local_8f0,0x50b,0,local_8f8);
                                               }
-                                              uVar1 = *puVar25;
-                                              *(ushort *)(pcVar19 + iVar7 + 0x2378) = uVar1;
+                                              uVar2 = *puVar20;
+                                              *(ushort *)(ppVar3[0x11].name + iVar7 * 0x5e + 0x4d) =
+                                                   uVar2;
                                             }
                                             else {
-                                              uVar1 = *puVar25;
+                                              uVar2 = *puVar20;
                                             }
-                                            *(short *)(pcVar19 + iVar7 + 0x237a) =
-                                                 *(short *)(pcVar19 + iVar7 + 0x237a) + 1;
-                                            *puVar25 = uVar1 + 1;
+                                            *(short *)((int)ppVar3[0x11].name + iVar5 + 0x136) =
+                                                 *(short *)((int)ppVar3[0x11].name + iVar5 + 0x136)
+                                                 + 1;
+                                            *puVar20 = uVar2 + 1;
                                           }
                                         }
                                       }
@@ -1360,23 +1358,24 @@ LAB_825b5930:
                                   }
                                 }
                                 else {
-                                  Com_PrintError(0x10,local_918,pcVar21,0x800,iVar10);
-                                  pcVar20 = pcVar20 + 1;
+                                  Com_PrintError(0x10,local_918);
+                                  pcVar11 = pcVar11 + 1;
                                   Com_SkipRestOfLine(&local_a10);
                                   Com_SetCSV(0);
                                 }
                                 goto LAB_825b630c;
                               }
-                              uVar3 = Com_ParseOnLine(&local_a10);
-                              if (uVar29 == 2) {
-                                I_strncpyz(pcVar19 + iVar10 * 0x178 + 0x2348,uVar3,0x20);
+                              pcVar6 = Com_ParseOnLine(&local_a10);
+                              if (uVar26 == 2) {
+                                I_strncpyz((char *)(ppVar3[0x11].name + iVar7 * 0x5e + 0x41),pcVar6,
+                                           0x20);
                               }
-                              else if (uVar29 == 3) {
-                                I_strncpyz(pcVar22 + iVar15 * 0x20c + 0x140,uVar3,0x20);
+                              else if (uVar26 == 3) {
+                                I_strncpyz(pcVar21[iVar15].image,pcVar6,0x20);
                               }
                               else {
-                                Com_PrintError(0x10,local_920,pcVar21);
-                                pcVar20 = pcVar20 + 1;
+                                Com_PrintError(0x10,local_920);
+                                pcVar11 = pcVar11 + 1;
                               }
                             }
                           }
@@ -1386,13 +1385,13 @@ LAB_825b5930:
                     goto LAB_825b6304;
                   }
                   Com_SkipRestOfLine(&local_a10);
-                  if (uVar29 == 2) {
-                    *(uint *)(pcVar19 + iVar10 * 0x178 + 0x2374) =
-                         *(uint *)(pcVar19 + iVar10 * 0x178 + 0x2374) | 2;
+                  if (uVar26 == 2) {
+                    ppVar3[0x11].name[iVar7 * 0x5e + 0x4c] =
+                         (char *)((uint)ppVar3[0x11].name[iVar7 * 0x5e + 0x4c] | 2);
                   }
                   else {
-                    Com_PrintError(0x10,local_978,pcVar21);
-                    pcVar20 = pcVar20 + 1;
+                    Com_PrintError(0x10,local_978);
+                    pcVar11 = pcVar11 + 1;
                   }
                 }
               }
@@ -1401,205 +1400,172 @@ LAB_825b5930:
         }
       }
 LAB_825b630c:
-      pcVar21 = pcVar21 + 1;
-      pcVar13 = (char *)Com_ParseOnLine(&local_a10);
-      puVar30 = local_a0c;
-      pcVar8 = pcVar20;
-    } while (local_a10 != 0);
+      pcVar30 = pcVar30 + 1;
+      pcVar4 = Com_ParseOnLine(&local_a10);
+      pcVar6 = pcVar11;
+      pSVar28 = local_a0c;
+    } while (local_a10 != (char *)0x0);
   }
   Com_EndParseSession();
-  uVar29 = 0;
-  if (pcVar32[0x200] != '\0') {
-    pcVar19 = pcVar32 + -4;
+  uVar26 = 0;
+  if (ppVar29->numEntries != '\0') {
+    puVar14 = &ppVar29[-1].numEntries;
     do {
-      pcVar21 = *(char **)(pcVar19 + 4);
-      pcVar20 = pcVar21;
+      pcVar30 = *(char **)(puVar14 + 4);
+      pcVar11 = pcVar30;
       do {
-        cVar14 = *pcVar20;
-        pcVar20 = pcVar20 + 1;
-      } while (cVar14 != '\0');
-      if ((int)(puVar30 + (0x18fff - *(int *)(puVar30 + 0x19000))) <=
-          (int)(pcVar20 + (-1 - (int)pcVar21))) {
-        Com_PrintError(0x10,0xffffffff8216dc08);
-        pcVar8 = pcVar8 + 1;
+        cVar1 = *pcVar11;
+        pcVar11 = pcVar11 + 1;
+      } while (cVar1 != '\0');
+      if ((int)pSVar28 + (0x18fff - (int)pSVar28->tail) <= (int)(pcVar11 + (-1 - (int)pcVar30))) {
+        Com_PrintError(0x10,"Not enough room in string buffer for map names after adding rules\n");
+        pcVar6 = pcVar6 + 1;
         break;
       }
-      iVar5 = Live_GetMapIndex();
-      if (iVar5 < 0) {
-        Com_PrintWarning(0x10,0xffffffff8216dc4c,*(undefined4 *)(pcVar19 + 4));
+      iVar10 = Live_GetMapIndex(pcVar30);
+      if (iVar10 < 0) {
+        Com_PrintWarning(0x10,"Playlist_ParsePlaylists: Map %s is not in presence data\n");
       }
-      uVar27 = PlaylistStringBuffer_GetTail();
-      I_strncpyz(uVar27,*(undefined4 *)(pcVar19 + 4),0x10);
-      pcVar19 = pcVar19 + 4;
-      *(int *)pcVar19 = (int)uVar27;
-      PlaylistStringBuffer_MoveTail(pcVar20 + (-1 - (int)pcVar21));
-      uVar29 = uVar29 + 1;
-    } while (uVar29 < (byte)pcVar32[0x200]);
+      pcVar4 = PlaylistStringBuffer_GetTail();
+      I_strncpyz(pcVar4,*(char **)(puVar14 + 4),0x10);
+      puVar14 = puVar14 + 4;
+      *(char **)puVar14 = pcVar4;
+      PlaylistStringBuffer_MoveTail((int)(pcVar11 + (-1 - (int)pcVar30)));
+      uVar26 = uVar26 + 1;
+    } while (uVar26 < ppVar29->numEntries);
   }
-  if (pcVar26[0x200] == '\0') {
-    cVar14 = '\x01';
-    pcVar19 = pcVar26 + 0x40c;
-    lVar33 = 0x13;
-    uVar2 = 0;
+  if (pcVar27->numEntries == '\0') {
+    uVar22 = '\x01';
+    puVar14 = &pcVar27[1].numEntries;
+    lVar32 = 0x13;
+    uVar23 = 0;
     do {
-      if (*pcVar19 != '\0') {
-        pcVar21 = pcVar26 + (int)(uVar2 << 3) + 0x160;
-        pcVar21[0] = '\0';
-        pcVar21[1] = '\0';
-        pcVar21[2] = '\0';
-        pcVar21[3] = '\x01';
-        pcVar26[(uint)(byte)pcVar26[0x200] * 8 + 0x164] = cVar14;
-        uVar2 = (ulonglong)(byte)(pcVar26[0x200] + 1U);
-        pcVar26[0x200] = pcVar26[0x200] + 1U;
+      if (*puVar14 != '\0') {
+        *(undefined4 *)((int)&pcVar27->entries[0].type + (int)(uVar23 << 3)) = 1;
+        pcVar27->entries[pcVar27->numEntries].num = uVar22;
+        bVar13 = pcVar27->numEntries + 1;
+        uVar23 = (ulonglong)bVar13;
+        pcVar27->numEntries = bVar13;
       }
-      cVar14 = cVar14 + '\x01';
-      pcVar19 = pcVar19 + 0x20c;
-      lVar33 = lVar33 + -1;
-    } while (lVar33 != 0);
-    if (uVar2 == 0) {
-      psVar16 = (short *)(pcVar32 + 0x266a);
-      iVar5 = 3;
+      uVar22 = uVar22 + '\x01';
+      puVar14 = puVar14 + 0x20c;
+      lVar32 = lVar32 + -1;
+    } while (lVar32 != 0);
+    if (uVar23 == 0) {
+      psVar16 = (short *)((int)ppVar29[0x13].name + 0x1e);
+      iVar10 = 3;
       do {
-        cVar14 = (char)iVar5;
+        uVar22 = (uchar)iVar10;
         if (psVar16[-0xbc] != 0) {
-          pcVar19 = pcVar26 + (int)(uVar2 << 3) + 0x160;
-          pcVar19[0] = '\0';
-          pcVar19[1] = '\0';
-          pcVar19[2] = '\0';
-          pcVar19[3] = '\0';
-          pcVar26[(uint)(byte)pcVar26[0x200] * 8 + 0x164] = cVar14 + -2;
-          uVar2 = (ulonglong)(byte)(pcVar26[0x200] + 1U);
-          pcVar26[0x200] = pcVar26[0x200] + 1U;
+          *(undefined4 *)((int)&pcVar27->entries[0].type + (int)(uVar23 << 3)) = 0;
+          pcVar27->entries[pcVar27->numEntries].num = uVar22 + 0xfe;
+          bVar13 = pcVar27->numEntries + 1;
+          uVar23 = (ulonglong)bVar13;
+          pcVar27->numEntries = bVar13;
         }
         if (*psVar16 != 0) {
-          pcVar19 = pcVar26 + (int)(uVar2 << 3) + 0x160;
-          pcVar19[0] = '\0';
-          pcVar19[1] = '\0';
-          pcVar19[2] = '\0';
-          pcVar19[3] = '\0';
-          pcVar26[(uint)(byte)pcVar26[0x200] * 8 + 0x164] = cVar14 + -1;
-          uVar2 = (ulonglong)(byte)(pcVar26[0x200] + 1U);
-          pcVar26[0x200] = pcVar26[0x200] + 1U;
+          *(undefined4 *)((int)&pcVar27->entries[0].type + (int)(uVar23 << 3)) = 0;
+          pcVar27->entries[pcVar27->numEntries].num = uVar22 + 0xff;
+          bVar13 = pcVar27->numEntries + 1;
+          uVar23 = (ulonglong)bVar13;
+          pcVar27->numEntries = bVar13;
         }
         if (psVar16[0xbc] != 0) {
-          pcVar19 = pcVar26 + (int)(uVar2 << 3) + 0x160;
-          pcVar19[0] = '\0';
-          pcVar19[1] = '\0';
-          pcVar19[2] = '\0';
-          pcVar19[3] = '\0';
-          pcVar26[(uint)(byte)pcVar26[0x200] * 8 + 0x164] = cVar14;
-          uVar2 = (ulonglong)(byte)(pcVar26[0x200] + 1U);
-          pcVar26[0x200] = pcVar26[0x200] + 1U;
+          *(undefined4 *)((int)&pcVar27->entries[0].type + (int)(uVar23 << 3)) = 0;
+          pcVar27->entries[pcVar27->numEntries].num = uVar22;
+          bVar13 = pcVar27->numEntries + 1;
+          uVar23 = (ulonglong)bVar13;
+          pcVar27->numEntries = bVar13;
         }
         if (psVar16[0x178] != 0) {
-          pcVar19 = pcVar26 + (int)(uVar2 << 3) + 0x160;
-          pcVar19[0] = '\0';
-          pcVar19[1] = '\0';
-          pcVar19[2] = '\0';
-          pcVar19[3] = '\0';
-          pcVar26[(uint)(byte)pcVar26[0x200] * 8 + 0x164] = cVar14 + '\x01';
-          uVar2 = (ulonglong)(byte)(pcVar26[0x200] + 1U);
-          pcVar26[0x200] = pcVar26[0x200] + 1U;
+          *(undefined4 *)((int)&pcVar27->entries[0].type + (int)(uVar23 << 3)) = 0;
+          pcVar27->entries[pcVar27->numEntries].num = uVar22 + '\x01';
+          bVar13 = pcVar27->numEntries + 1;
+          uVar23 = (ulonglong)bVar13;
+          pcVar27->numEntries = bVar13;
         }
         if (psVar16[0x234] != 0) {
-          pcVar19 = pcVar26 + (int)(uVar2 << 3) + 0x160;
-          pcVar19[0] = '\0';
-          pcVar19[1] = '\0';
-          pcVar19[2] = '\0';
-          pcVar19[3] = '\0';
-          pcVar26[(uint)(byte)pcVar26[0x200] * 8 + 0x164] = cVar14 + '\x02';
-          uVar2 = (ulonglong)(byte)(pcVar26[0x200] + 1U);
-          pcVar26[0x200] = pcVar26[0x200] + 1U;
+          *(undefined4 *)((int)&pcVar27->entries[0].type + (int)(uVar23 << 3)) = 0;
+          pcVar27->entries[pcVar27->numEntries].num = uVar22 + '\x02';
+          bVar13 = pcVar27->numEntries + 1;
+          uVar23 = (ulonglong)bVar13;
+          pcVar27->numEntries = bVar13;
         }
         psVar16 = psVar16 + 0x3ac;
-        iVar15 = iVar5 + 3;
-        iVar5 = iVar5 + 5;
+        iVar15 = iVar10 + 3;
+        iVar10 = iVar10 + 5;
       } while (iVar15 < 0x29);
     }
-    if (uVar2 == 0) {
-      Com_PrintError(0x10,0xffffffff8216dbd0);
-      pcVar8 = pcVar8 + 1;
+    if (uVar23 == 0) {
+      Com_PrintError(0x10,"Playlist Error: No entries in the root category\n");
+      pcVar6 = pcVar6 + 1;
     }
-    uVar4 = SEH_LocalizeTextMessage(0xffffffff8216dbb4,0xffffffff8216dba4,1);
-    uVar2 = 0xffffffff8216dbb4;
-    if ((uVar4 & 0xffffffff) != 0) {
-      uVar2 = uVar4;
+    pcVar11 = SEH_LocalizeTextMessage("MENU_PLAYERMATCH_PLAYLISTS","playlist title",LOCMSG_NOERR);
+    pcVar30 = "MENU_PLAYERMATCH_PLAYLISTS";
+    if (pcVar11 != (char *)0x0) {
+      pcVar30 = pcVar11;
     }
-    I_strncpyz(pcVar26,uVar2,0x40);
+    I_strncpyz(pcVar27->name,pcVar30,0x40);
   }
-  if (0 < (int)pcVar8) {
-    Com_Error(0,0xffffffff8216db74,pcVar8);
+  if (0 < (int)pcVar6) {
+    Com_Error(ERR_FATAL,"\x15There were %i error(s) parsing the playlist.\n");
   }
-  pcVar19 = (char *)0x0;
-  pcVar32 = pcVar32 + 0x2248;
-  lVar33 = 0x29;
+  ppcVar17 = ppVar29[0x11].name + 1;
+  lVar32 = 0x29;
   do {
-    pcVar20 = pcVar32 + -0x40;
-    pcVar21 = pcVar20;
+    pcVar30 = (char *)(ppcVar17 + -0x10);
     do {
-      cVar14 = *pcVar21;
-      pcVar21 = pcVar21 + 1;
-    } while (cVar14 != '\0');
-    pcVar22 = pcVar32;
+      cVar1 = *pcVar30;
+      pcVar30 = pcVar30 + 1;
+      ppcVar18 = ppcVar17;
+    } while (cVar1 != '\0');
     do {
-      cVar14 = *pcVar22;
-      pcVar22 = pcVar22 + 1;
-    } while (cVar14 != '\0');
-    iVar5 = -(int)pcVar32;
-    pcVar32 = pcVar32 + 0x178;
-    pcVar19 = pcVar21 + (int)(pcVar22 + (int)(pcVar19 + (iVar5 - (int)pcVar20)));
-    lVar33 = lVar33 + -1;
-  } while (lVar33 != 0);
-  lVar33 = 0x20;
-  puVar25 = puVar31 + 0xc;
+      cVar1 = *(char *)ppcVar18;
+      ppcVar18 = (char **)((int)ppcVar18 + 1);
+    } while (cVar1 != '\0');
+    ppcVar17 = ppcVar17 + 0x5e;
+    lVar32 = lVar32 + -1;
+  } while (lVar32 != 0);
+  puVar25 = puVar25 + 0xc;
+  lVar32 = 0x20;
   do {
-    puVar31 = puVar25 + 8;
+    puVar20 = puVar25 + 8;
     do {
-      cVar14 = *(char *)puVar31;
-      puVar31 = (ushort *)((int)puVar31 + 1);
-    } while (cVar14 != '\0');
-    puVar17 = puVar25;
+      cVar1 = *(char *)puVar20;
+      puVar20 = (ushort *)((int)puVar20 + 1);
+      puVar19 = puVar25;
+    } while (cVar1 != '\0');
     do {
-      cVar14 = *(char *)puVar17;
-      puVar17 = (ushort *)((int)puVar17 + 1);
-    } while (cVar14 != '\0');
-    puVar18 = puVar25 + 0x28;
+      cVar1 = *(char *)puVar19;
+      puVar19 = (ushort *)((int)puVar19 + 1);
+    } while (cVar1 != '\0');
+    puVar20 = puVar25 + 0x28;
     do {
-      cVar14 = *(char *)puVar18;
-      puVar18 = (ushort *)((int)puVar18 + 1);
-    } while (cVar14 != '\0');
-    pcVar19 = (char *)((int)puVar31 +
-                      (int)((int)puVar17 +
-                           (int)((int)puVar18 +
-                                (int)(pcVar19 +
-                                     ((-(int)(puVar25 + 0x28) - (int)puVar25) - (int)(puVar25 + 8)))
-                                )));
-    lVar33 = lVar33 + -1;
+      cVar1 = *(char *)puVar20;
+      puVar20 = (ushort *)((int)puVar20 + 1);
+    } while (cVar1 != '\0');
     puVar25 = puVar25 + 0x3c;
-  } while (lVar33 != 0);
-  pcVar26 = pcVar26 + 0x40;
-  lVar33 = 0x14;
+    lVar32 = lVar32 + -1;
+  } while (lVar32 != 0);
+  pcVar30 = pcVar27->description;
+  lVar32 = 0x14;
   do {
-    pcVar20 = pcVar26 + -0x40;
-    pcVar21 = pcVar20;
+    pcVar21 = (categoryInfo *)(pcVar30 + -0x40);
     do {
-      cVar14 = *pcVar21;
-      pcVar21 = pcVar21 + 1;
-    } while (cVar14 != '\0');
-    pcVar22 = pcVar26;
+      pcVar11 = pcVar21->name;
+      pcVar21 = (categoryInfo *)(pcVar21->name + 1);
+      pcVar6 = pcVar30;
+    } while (*pcVar11 != '\0');
     do {
-      cVar14 = *pcVar22;
-      pcVar22 = pcVar22 + 1;
-    } while (cVar14 != '\0');
-    iVar5 = -(int)pcVar26;
-    pcVar26 = pcVar26 + 0x20c;
-    pcVar19 = pcVar21 + (int)(pcVar22 + (int)(pcVar19 + (iVar5 - (int)pcVar20)));
-    lVar33 = lVar33 + -1;
-  } while (lVar33 != 0);
-  Com_Printf(0xe,0xffffffff8216db30,
-             (*(int *)(puVar30 + 0x19000) - (int)(puVar30 + 0x18fff)) + 0x19000);
-  Com_Printf(0xe,0xffffffff8216dae8,pcVar19,0x5840);
-  Com_Printf(0xe,0xffffffff8216daa0,0x21530);
+      cVar1 = *pcVar6;
+      pcVar6 = pcVar6 + 1;
+    } while (cVar1 != '\0');
+    pcVar30 = pcVar30 + 0x20c;
+    lVar32 = lVar32 + -1;
+  } while (lVar32 != 0);
+  Com_Printf(0xe,"Playlist: There are %i/%i bytes of the playlist string buffer used\n");
+  Com_Printf(0xe,"Playlist: There are %d/%d bytes of static char arrays being used\n");
+  Com_Printf(0xe,"Playlist: Total memory footprint of data is approximately %d bytes\n");
   __restgprlr();
   return;
 }
@@ -1607,64 +1573,75 @@ LAB_825b630c:
 
 // 825B6870  PlaylistFeeder_ClampIndex  (ui/ui_playlists.cpp:1402)
 
-void PlaylistFeeder_ClampIndex(undefined8 param_1,ulonglong param_2)
+int PlaylistFeeder_ClampIndex(PlaylistUIStackItem *param_1,uint param_2)
 
 {
   uint *puVar2;
+  int iVar3;
   ulonglong uVar1;
-  ulonglong uVar3;
+  ulonglong uVar4;
+  ulonglong uVar5;
   
-  puVar2 = (uint *)__savegprlr_29();
+  uVar4 = (ulonglong)(int)param_2;
+  puVar2 = (uint *)__savegprlr_29(param_1);
   if (puVar2 == (uint *)0x0) {
-    MyAssertHandler(0xffffffff8216d8e0,0x57b,0,0xffffffff82000f98,0xffffffff8200e050);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",0x57b,0,
+                    "%s");
   }
   if (0x13 < *puVar2) {
-    MyAssertHandler(0xffffffff8216d8e0,0x57c,0,0xffffffff8216ec94,*puVar2,0x14);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",0x57c,0,
+                    "item->category doesn\'t index MAX_CATEGORIES\n\t%i not in [0, %i)");
   }
-  uVar3 = (ulonglong)(byte)(&DAT_83fee558)[*puVar2 * 0x20c];
-  if (uVar3 == 0) {
-    __restgprlr_29(0);
-    return;
+  uVar5 = (ulonglong)categories[*puVar2].numEntries;
+  if (uVar5 == 0) {
+    iVar3 = __restgprlr_29(0);
+    return iVar3;
   }
-  uVar1 = uVar3 - 1;
-  if ((param_2 & 0xffffffff) < uVar3) {
-    uVar1 = param_2;
+  uVar1 = uVar5 - 1;
+  if ((uVar4 & 0xffffffff) < uVar5) {
+    uVar1 = uVar4;
   }
-  __restgprlr_29(uVar1);
-  return;
+  iVar3 = __restgprlr_29(uVar1);
+  return iVar3;
 }
 
 
 // 825B6920  Playlist_GetPlaylistCount  (ui/ui_playlists.cpp:1415)
 
-longlong Playlist_GetPlaylistCount(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int Playlist_GetPlaylistCount(void)
 
 {
-  longlong lVar1;
-  short *psVar2;
+  int iVar1;
+  ushort *puVar2;
   longlong lVar3;
   
-  lVar1 = 0;
-  psVar2 = &DAT_83fea892;
+  iVar1 = 0;
+  puVar2 = &playlists[0].numEntries;
   lVar3 = 0x29;
   do {
-    if (*psVar2 != 0) {
-      lVar1 = lVar1 + 1;
+    if (*puVar2 != 0) {
+      iVar1 = iVar1 + 1;
     }
-    psVar2 = psVar2 + 0xbc;
+    puVar2 = puVar2 + 0xbc;
     lVar3 = lVar3 + -1;
   } while (lVar3 != 0);
-  return lVar1;
+  return iVar1;
 }
 
 
 // 825B6958  PlaylistFeeder_GetCount  (ui/ui_playlists.cpp:1430)
 
-undefined1 PlaylistFeeder_GetCount(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int PlaylistFeeder_GetCount(void)
 
 {
-  if ((DAT_8400ba58 != 0) && ((int *)(&DAT_8400ba54 + DAT_8400ba58 * 8) != (int *)0x0)) {
-    return (&DAT_83fee558)[*(int *)(&DAT_8400ba54 + DAT_8400ba58 * 8) * 0x20c];
+  if ((s_playlistUIStack.count != 0) &&
+     (gametypes[0x3f].abbrvName + s_playlistUIStack.count * 8 + 0x14 != (char *)0x0)) {
+    return (int)categories[*(int *)(gametypes[0x3f].abbrvName + s_playlistUIStack.count * 8 + 0x14)]
+                .numEntries;
   }
   return 0;
 }
@@ -1672,25 +1649,30 @@ undefined1 PlaylistFeeder_GetCount(void)
 
 // 825B69A8  PlaylistFeeder_UpdateCategoryTitle  (ui/ui_playlists.cpp:1441)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void PlaylistFeeder_UpdateCategoryTitle(void)
 
 {
-  if (DAT_8400ba58 == 0) {
+  if (s_playlistUIStack.count == 0) {
     return;
   }
-  if ((uint *)(&DAT_8400ba54 + DAT_8400ba58 * 8) == (uint *)0x0) {
+  if (gametypes[0x3f].abbrvName + s_playlistUIStack.count * 8 + 0x14 == (char *)0x0) {
     return;
   }
   Dvar_SetStringByName
-            (0xffffffff8216ecd4,
-             (ulonglong)*(uint *)(&DAT_8400ba54 + DAT_8400ba58 * 8) * 0x20c + -0x7c011ca8);
+            ("playlist_title",
+             categories[*(int *)(gametypes[0x3f].abbrvName + s_playlistUIStack.count * 8 + 0x14)].
+             name);
   return;
 }
 
 
 // 825B8388  PlaylistFeeder_OpenMenu  (ui/ui_playlists.cpp:1452)
 
-void PlaylistFeeder_OpenMenu(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void PlaylistFeeder_OpenMenu(LocalClientNum_t param_1,uint param_2)
 
 {
   PlaylistStack_Push(param_2);
@@ -1700,7 +1682,9 @@ void PlaylistFeeder_OpenMenu(undefined8 param_1,undefined8 param_2)
 
 // 825B8390  PlaylistFeeder_CloseMenu  (ui/ui_playlists.cpp:1457)
 
-void PlaylistFeeder_CloseMenu(undefined8 param_1,int param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void PlaylistFeeder_CloseMenu(LocalClientNum_t param_1,int param_2)
 
 {
   if (param_2 != 0) {
@@ -1714,56 +1698,59 @@ void PlaylistFeeder_CloseMenu(undefined8 param_1,int param_2)
 
 // 825B83A0  PlaylistFeeder_DoAction  (ui/ui_playlists.cpp:1465)
 
-void PlaylistFeeder_DoAction(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void PlaylistFeeder_DoAction(LocalClientNum_t param_1)
 
 {
   byte bVar1;
-  int iVar2;
-  undefined8 uVar3;
+  uint *puVar2;
+  LocalClientNum_t LVar4;
   uint uVar5;
-  undefined8 uVar4;
   int iVar6;
-  int *piVar7;
-  undefined4 local_40;
-  undefined4 uStack_3c;
-  undefined4 local_38;
-  undefined4 local_34;
+  uint uVar7;
+  PartyActiveClient PVar3;
+  PlaylistUIStackItem *pPVar8;
+  LocalClientNum_t local_40;
+  uint uStack_3c;
+  PartyActiveClient local_38 [7];
   
-  uVar3 = __savegprlr_28();
-  if (DAT_8400ba58 != 0) {
-    iVar6 = DAT_8400ba58 * 2;
-    piVar7 = (int *)(&DAT_8400ba54 + DAT_8400ba58 * 8);
-    if (piVar7 != (int *)0x0) {
-      uVar5 = PlaylistFeeder_ClampIndex(piVar7,(&DAT_8400ba58)[iVar6]);
-      iVar2 = *piVar7;
-      (&DAT_8400ba58)[iVar6] = uVar5;
-      iVar6 = iVar2 * 0x20c;
-      if (uVar5 < (byte)(&DAT_83fee558)[iVar6]) {
-        iVar6 = uVar5 * 8 + iVar6;
-        if ((&DAT_83fee4b8)[iVar2 * 0x83 + uVar5 * 2] == 0) {
-          Dvar_SetInt(DAT_82aa1adc,0);
-          bVar1 = (&DAT_83fee4bc)[iVar6];
-          if ((&DAT_83fea892)[(uint)bVar1 * 0xbc] != 0) {
-            uVar4 = CL_ControllerIndexFromClientNum(uVar3);
-            uVar4 = Playlist_GetPlaylistNumForId(uVar4,bVar1);
-            Dvar_SetInt(DAT_82aa1adc,uVar4);
+  LVar4 = __savegprlr_28(param_1);
+  if (s_playlistUIStack.count != 0) {
+    puVar2 = &s_playlistUIStack.stack[s_playlistUIStack.count - 1].selected;
+    pPVar8 = (PlaylistUIStackItem *)(gametypes[0x3f].abbrvName + s_playlistUIStack.count * 8 + 0x14)
+    ;
+    if (pPVar8 != (PlaylistUIStackItem *)0x0) {
+      uVar5 = PlaylistFeeder_ClampIndex(pPVar8,*puVar2);
+      uVar7 = pPVar8->category;
+      *puVar2 = uVar5;
+      if (uVar5 < categories[uVar7].numEntries) {
+        if (categories[uVar7].entries[uVar5].type == PLAYLIST) {
+          Dvar_SetInt(playlist,0);
+          bVar1 = categories[uVar7].entries[uVar5].num;
+          if (playlists[bVar1].numEntries != 0) {
+            iVar6 = CL_ControllerIndexFromClientNum(LVar4);
+            iVar6 = Playlist_GetPlaylistNumForId(iVar6,(uint)bVar1);
+            Dvar_SetInt(playlist,iVar6);
           }
-          uVar4 = CL_ControllerIndexFromClientNum(uVar3);
-          uVar4 = Party_GetMainActiveClient(0xffffffff82b55118,uVar4);
-          uStack_3c = (undefined4)uVar4;
-          local_40 = (undefined4)((ulonglong)uVar4 >> 0x20);
-          Cbuf_ExecuteBuffer(local_40,uStack_3c,0xffffffff82032578);
-          Cbuf_ExecuteBuffer(local_40,uStack_3c,0xffffffff8203465c);
-          iVar6 = Party_GetSecondaryActiveClient(0xffffffff82b55118,&local_38);
+          uVar7 = CL_ControllerIndexFromClientNum(LVar4);
+          PVar3 = Party_GetMainActiveClient(&g_partyData,uVar7);
+          uStack_3c = PVar3.localControllerIndex;
+          local_40 = PVar3.localClientNum;
+          Cbuf_ExecuteBuffer(local_40,uStack_3c,"xstartlobby");
+          Cbuf_ExecuteBuffer(local_40,uStack_3c,"updategamerprofile");
+          iVar6 = Party_GetSecondaryActiveClient(&g_partyData,local_38);
           if (iVar6 != 0) {
-            Cbuf_ExecuteBuffer(local_38,local_34,0xffffffff8203465c);
+            Cbuf_ExecuteBuffer(local_38[0].localClientNum,local_38[0].localControllerIndex,
+                               "updategamerprofile");
           }
           PlaylistStack_Clear();
-          UI_OpenMenu(uVar3,0xffffffff8203bbd8);
+          UI_OpenMenu(LVar4,"menu_xboxlive_lobby");
           __restgprlr_28();
           return;
         }
-        PlaylistStack_Push((&DAT_83fee4bc)[iVar6]);
+        PlaylistStack_Push((uint)categories[uVar7].entries[uVar5].num);
       }
     }
   }
@@ -1774,214 +1761,246 @@ void PlaylistFeeder_DoAction(void)
 
 // 825B69F8  PlaylistFeeder_GetItemName  (ui/ui_playlists.cpp:1514)
 
-void PlaylistFeeder_GetItemName(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+char * PlaylistFeeder_GetItemName(LocalClientNum_t param_1,uint param_2)
 
 {
-  char cVar1;
+  int iVar1;
+  LocalClientNum_t LVar2;
   int iVar3;
-  ulonglong uVar2;
+  char *pcVar4;
+  bool bVar5;
+  ulonglong uVar6;
+  ulonglong uVar7;
   
-  __savegprlr_29();
-  CL_ControllerIndexFromClientNum();
-  if ((DAT_8400ba58 != 0) && ((int *)(&DAT_8400ba54 + DAT_8400ba58 * 8) != (int *)0x0)) {
-    iVar3 = *(int *)(&DAT_8400ba54 + DAT_8400ba58 * 8) * 0x20c;
-    if (((param_2 & 0xffffffff) < (ulonglong)(byte)(&DAT_83fee558)[iVar3]) &&
-       (cVar1 = HavePlaylists(), cVar1 != '\0')) {
-      uVar2 = (ulonglong)(byte)(&DAT_83fee358)[(int)((param_2 & 0xffffffff) << 3) + iVar3 + 0x164];
-      if (*(int *)(&DAT_83fee358 + (int)((param_2 + 0x2c & 0xffffffff) << 3) + iVar3) == 1) {
-        __restgprlr_29(uVar2 * 0x20c + -0x7c011ca8);
-        return;
-      }
-      __restgprlr_29(uVar2 * 0x178 + -0x7c0158e0);
-      return;
+  uVar6 = (ulonglong)(int)param_2;
+  LVar2 = __savegprlr_29(param_1);
+  iVar3 = CL_ControllerIndexFromClientNum(LVar2);
+  if ((((s_playlistUIStack.count != 0) &&
+       (gametypes[0x3f].abbrvName + s_playlistUIStack.count * 8 + 0x14 != (char *)0x0)) &&
+      (iVar1 = *(int *)(gametypes[0x3f].abbrvName + s_playlistUIStack.count * 8 + 0x14),
+      (uVar6 & 0xffffffff) < (ulonglong)categories[iVar1].numEntries)) &&
+     (bVar5 = HavePlaylists(iVar3), bVar5)) {
+    uVar7 = (ulonglong)(&categories[iVar1].entries[0].num)[(int)((uVar6 & 0xffffffff) << 3)];
+    if (*(int *)(categories[iVar1].name + (int)((uVar6 + 0x2c & 0xffffffff) << 3)) == 1) {
+      pcVar4 = (char *)__restgprlr_29(uVar7 * 0x20c + -0x7c011ca8);
+      return pcVar4;
     }
+    pcVar4 = (char *)__restgprlr_29(uVar7 * 0x178 + -0x7c0158e0);
+    return pcVar4;
   }
-  __restgprlr_29(0);
-  return;
+  pcVar4 = (char *)__restgprlr_29(0);
+  return pcVar4;
 }
 
 
 // 825B6AB8  PlaylistFeeder_GetItemDesc  (ui/ui_playlists.cpp:1537)
 
-void PlaylistFeeder_GetItemDesc(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+char * PlaylistFeeder_GetItemDesc(LocalClientNum_t param_1,uint param_2)
 
 {
-  char cVar1;
+  int iVar1;
+  LocalClientNum_t LVar2;
   int iVar3;
-  ulonglong uVar2;
+  char *pcVar4;
+  bool bVar5;
+  ulonglong uVar6;
+  ulonglong uVar7;
   
-  __savegprlr_29();
-  CL_ControllerIndexFromClientNum();
-  if ((DAT_8400ba58 != 0) && ((int *)(&DAT_8400ba54 + DAT_8400ba58 * 8) != (int *)0x0)) {
-    iVar3 = *(int *)(&DAT_8400ba54 + DAT_8400ba58 * 8) * 0x20c;
-    if (((param_2 & 0xffffffff) < (ulonglong)(byte)(&DAT_83fee558)[iVar3]) &&
-       (cVar1 = HavePlaylists(), cVar1 != '\0')) {
-      uVar2 = (ulonglong)(byte)(&DAT_83fee358)[(int)((param_2 & 0xffffffff) << 3) + iVar3 + 0x164];
-      if (*(int *)(&DAT_83fee358 + (int)((param_2 + 0x2c & 0xffffffff) << 3) + iVar3) == 1) {
-        __restgprlr_29(uVar2 * 0x20c + -0x7c011c68);
-        return;
-      }
-      __restgprlr_29(uVar2 * 0x178 + -0x7c0158a0);
-      return;
+  uVar6 = (ulonglong)(int)param_2;
+  LVar2 = __savegprlr_29(param_1);
+  iVar3 = CL_ControllerIndexFromClientNum(LVar2);
+  if ((((s_playlistUIStack.count != 0) &&
+       (gametypes[0x3f].abbrvName + s_playlistUIStack.count * 8 + 0x14 != (char *)0x0)) &&
+      (iVar1 = *(int *)(gametypes[0x3f].abbrvName + s_playlistUIStack.count * 8 + 0x14),
+      (uVar6 & 0xffffffff) < (ulonglong)categories[iVar1].numEntries)) &&
+     (bVar5 = HavePlaylists(iVar3), bVar5)) {
+    uVar7 = (ulonglong)(&categories[iVar1].entries[0].num)[(int)((uVar6 & 0xffffffff) << 3)];
+    if (*(int *)(categories[iVar1].name + (int)((uVar6 + 0x2c & 0xffffffff) << 3)) == 1) {
+      pcVar4 = (char *)__restgprlr_29(uVar7 * 0x20c + -0x7c011c68);
+      return pcVar4;
     }
+    pcVar4 = (char *)__restgprlr_29(uVar7 * 0x178 + -0x7c0158a0);
+    return pcVar4;
   }
-  __restgprlr_29(0);
-  return;
+  pcVar4 = (char *)__restgprlr_29(0);
+  return pcVar4;
 }
 
 
 // 825B6B80  PlaylistFeeder_GetItemImage  (ui/ui_playlists.cpp:1560)
 
-void PlaylistFeeder_GetItemImage(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+char * PlaylistFeeder_GetItemImage(LocalClientNum_t param_1,uint param_2)
 
 {
-  char cVar1;
+  int iVar1;
+  LocalClientNum_t LVar2;
   int iVar3;
-  ulonglong uVar2;
+  char *pcVar4;
+  bool bVar5;
+  ulonglong uVar6;
+  ulonglong uVar7;
   
-  __savegprlr_29();
-  CL_ControllerIndexFromClientNum();
-  if ((DAT_8400ba58 != 0) && ((int *)(&DAT_8400ba54 + DAT_8400ba58 * 8) != (int *)0x0)) {
-    iVar3 = *(int *)(&DAT_8400ba54 + DAT_8400ba58 * 8) * 0x20c;
-    if (((param_2 & 0xffffffff) < (ulonglong)(byte)(&DAT_83fee558)[iVar3]) &&
-       (cVar1 = HavePlaylists(), cVar1 != '\0')) {
-      uVar2 = (ulonglong)(byte)(&DAT_83fee358)[(int)((param_2 & 0xffffffff) << 3) + iVar3 + 0x164];
-      if (*(int *)(&DAT_83fee358 + (int)((param_2 + 0x2c & 0xffffffff) << 3) + iVar3) == 1) {
-        __restgprlr_29(uVar2 * 0x20c + -0x7c011b68);
-        return;
-      }
-      __restgprlr_29(uVar2 * 0x178 + -0x7c0157a0);
-      return;
+  uVar6 = (ulonglong)(int)param_2;
+  LVar2 = __savegprlr_29(param_1);
+  iVar3 = CL_ControllerIndexFromClientNum(LVar2);
+  if ((((s_playlistUIStack.count != 0) &&
+       (gametypes[0x3f].abbrvName + s_playlistUIStack.count * 8 + 0x14 != (char *)0x0)) &&
+      (iVar1 = *(int *)(gametypes[0x3f].abbrvName + s_playlistUIStack.count * 8 + 0x14),
+      (uVar6 & 0xffffffff) < (ulonglong)categories[iVar1].numEntries)) &&
+     (bVar5 = HavePlaylists(iVar3), bVar5)) {
+    uVar7 = (ulonglong)(&categories[iVar1].entries[0].num)[(int)((uVar6 & 0xffffffff) << 3)];
+    if (*(int *)(categories[iVar1].name + (int)((uVar6 + 0x2c & 0xffffffff) << 3)) == 1) {
+      pcVar4 = (char *)__restgprlr_29(uVar7 * 0x20c + -0x7c011b68);
+      return pcVar4;
     }
+    pcVar4 = (char *)__restgprlr_29(uVar7 * 0x178 + -0x7c0157a0);
+    return pcVar4;
   }
-  __restgprlr_29(0);
-  return;
+  pcVar4 = (char *)__restgprlr_29(0);
+  return pcVar4;
 }
 
 
 // 825B8518  PlaylistFeeder_DoubleClick  (ui/ui_playlists.cpp:1583)
 
-void PlaylistFeeder_DoubleClick(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+bool PlaylistFeeder_DoubleClick(LocalClientNum_t param_1,uint param_2)
 
 {
-  undefined8 uVar1;
-  ulonglong uVar2;
-  char cVar3;
-  int *piVar4;
+  LocalClientNum_t LVar1;
+  int iVar2;
+  undefined1 uVar4;
+  uint uVar3;
+  bool bVar5;
+  PlaylistUIStackItem *pPVar6;
   
-  __savegprlr_29();
-  uVar1 = CL_ControllerIndexFromClientNum();
-  if (DAT_8400ba58 != 0) {
-    piVar4 = (int *)(&DAT_8400ba54 + DAT_8400ba58 * 8);
-    if (piVar4 != (int *)0x0) {
-      uVar2 = PlaylistFeeder_ClampIndex(piVar4,param_2);
-      if ((uVar2 & 0xffffffff) < (ulonglong)(byte)(&DAT_83fee558)[*piVar4 * 0x20c]) {
-        cVar3 = PlaylistFeeder_DoWeHaveRequiredDLC(uVar1,uVar2);
-        if (cVar3 == '\0') {
-          Live_ShowMarketplaceUI();
-        }
-        else {
-          cVar3 = PlaylistFeeder_DoesEveryoneHaveRequiredDLC(uVar1,uVar2);
-          if (cVar3 != '\0') {
-            cVar3 = PlaylistFeeder_AnyRequiredMapPacksEnabled(uVar1,uVar2);
-            __restgprlr_29(cVar3 == '\0');
-            return;
+  LVar1 = __savegprlr_29(param_1);
+  iVar2 = CL_ControllerIndexFromClientNum(LVar1);
+  if (s_playlistUIStack.count != 0) {
+    pPVar6 = (PlaylistUIStackItem *)(gametypes[0x3f].abbrvName + s_playlistUIStack.count * 8 + 0x14)
+    ;
+    if (pPVar6 != (PlaylistUIStackItem *)0x0) {
+      uVar3 = PlaylistFeeder_ClampIndex(pPVar6,param_2);
+      if (uVar3 < categories[pPVar6->category].numEntries) {
+        bVar5 = PlaylistFeeder_DoWeHaveRequiredDLC(iVar2,uVar3);
+        if (bVar5) {
+          bVar5 = PlaylistFeeder_DoesEveryoneHaveRequiredDLC(iVar2,uVar3);
+          if (bVar5) {
+            bVar5 = PlaylistFeeder_AnyRequiredMapPacksEnabled(iVar2,uVar3);
+            uVar4 = __restgprlr_29(!bVar5);
+            return (bool)uVar4;
           }
         }
-        __restgprlr_29(1);
-        return;
+        else {
+          Live_ShowMarketplaceUI(iVar2);
+        }
+        uVar4 = __restgprlr_29(1);
+        return (bool)uVar4;
       }
     }
   }
-  __restgprlr_29(0);
-  return;
+  uVar4 = __restgprlr_29(0);
+  return (bool)uVar4;
 }
 
 
 // 825B9420  PlaylistFeeder_ItemEnabled  (ui/ui_playlists.cpp:1613)
 
-void PlaylistFeeder_ItemEnabled(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+bool PlaylistFeeder_ItemEnabled(LocalClientNum_t param_1,uint param_2)
 
 {
-  undefined8 uVar1;
-  ulonglong uVar2;
-  undefined8 uVar3;
-  undefined8 uVar4;
-  undefined8 uVar5;
+  uint uVar1;
+  <unnamed_type_type> <Var2;
+  LocalClientNum_t LVar3;
+  uint uVar4;
+  int iVar5;
   int iVar6;
-  char cVar7;
-  int *piVar9;
-  longlong lVar8;
+  int iVar7;
+  PlaylistLockState PVar8;
+  bool bVar10;
+  int iVar9;
+  undefined1 uVar11;
+  int iVar12;
+  PlaylistUIStackItem *pPVar13;
   
-  uVar1 = __savegprlr_27();
-  if (DAT_8400ba58 != 0) {
-    piVar9 = (int *)(&DAT_8400ba54 + DAT_8400ba58 * 8);
-    if (piVar9 != (int *)0x0) {
-      uVar2 = PlaylistFeeder_ClampIndex(piVar9);
-      iVar6 = *piVar9 * 0x20c;
-      if ((uVar2 & 0xffffffff) < (ulonglong)(byte)(&DAT_83fee558)[iVar6]) {
-        iVar6 = (int)uVar2 * 8 + iVar6;
-        if (((&DAT_83fee4b8)[*piVar9 * 0x83 + (int)uVar2 * 2] != 0) ||
-           ((&DAT_83fea892)[(uint)(byte)(&DAT_83fee4bc)[iVar6] * 0xbc] != 0)) {
-          if ((&DAT_83fee4b8)[*piVar9 * 0x83 + (int)uVar2 * 2] == 1) {
-            if ((&DAT_83fee558)[(uint)(byte)(&DAT_83fee4bc)[iVar6] * 0x20c] == '\0')
-            goto LAB_825b95ac;
-          }
-          uVar3 = CL_ControllerIndexFromClientNum(uVar1);
-          uVar4 = GetPartyMemberCount();
-          uVar1 = 1;
-          if (1 < (int)uVar4) {
-            uVar1 = uVar4;
-          }
-          uVar4 = Live_GetPrestigeMP(uVar3);
-          uVar5 = Live_GetXpMP(uVar3);
-          iVar6 = PlaylistFeeder_IsLocked(uVar3,uVar2,uVar5,uVar4,uVar1);
-          if (iVar6 == 0) {
-LAB_825b95b8:
-            __restgprlr_27(1);
-            return;
-          }
-          lVar8 = 0;
-          do {
-            if ((((int)uVar3 != (int)lVar8) &&
-                (cVar7 = CL_IsSplitscreenControllerActive(lVar8), cVar7 != '\0')) &&
-               (cVar7 = Live_UserIsGuest(lVar8), cVar7 == '\0')) {
-              uVar4 = Live_GetPrestigeMP(lVar8);
-              uVar5 = Live_GetXpMP(lVar8);
-              iVar6 = PlaylistFeeder_IsLocked(lVar8,uVar2,uVar5,uVar4,uVar1);
-              if (iVar6 == 0) goto LAB_825b95b8;
-            }
-            lVar8 = lVar8 + 1;
-          } while ((int)lVar8 < 4);
+  LVar3 = __savegprlr_27(param_1);
+  if ((s_playlistUIStack.count != 0) &&
+     (pPVar13 = (PlaylistUIStackItem *)
+                (gametypes[0x3f].abbrvName + s_playlistUIStack.count * 8 + 0x14),
+     pPVar13 != (PlaylistUIStackItem *)0x0)) {
+    uVar4 = PlaylistFeeder_ClampIndex(pPVar13,param_2);
+    uVar1 = pPVar13->category;
+    if (uVar4 < categories[uVar1].numEntries) {
+      <Var2 = categories[uVar1].entries[uVar4].type;
+      if (((<Var2 != PLAYLIST) || (playlists[categories[uVar1].entries[uVar4].num].numEntries != 0))
+         && ((<Var2 != CATEGORY ||
+             (categories[categories[uVar1].entries[uVar4].num].numEntries != '\0')))) {
+        iVar5 = CL_ControllerIndexFromClientNum(LVar3);
+        iVar6 = GetPartyMemberCount();
+        iVar12 = 1;
+        if (1 < iVar6) {
+          iVar12 = iVar6;
         }
+        iVar6 = Live_GetPrestigeMP(iVar5);
+        iVar7 = Live_GetXpMP(iVar5);
+        PVar8 = PlaylistFeeder_IsLocked(iVar5,uVar4,iVar7,iVar6,iVar12);
+        if (PVar8 == PLS_UNLOCKED) {
+LAB_825b95b8:
+          uVar11 = __restgprlr_27(1);
+          return (bool)uVar11;
+        }
+        iVar6 = 0;
+        do {
+          if (((iVar5 != iVar6) && (bVar10 = CL_IsSplitscreenControllerActive(iVar6), bVar10)) &&
+             (bVar10 = Live_UserIsGuest(iVar6), !bVar10)) {
+            iVar7 = Live_GetPrestigeMP(iVar6);
+            iVar9 = Live_GetXpMP(iVar6);
+            PVar8 = PlaylistFeeder_IsLocked(iVar6,uVar4,iVar9,iVar7,iVar12);
+            if (PVar8 == PLS_UNLOCKED) goto LAB_825b95b8;
+          }
+          iVar6 = iVar6 + 1;
+        } while (iVar6 < 4);
       }
     }
   }
-LAB_825b95ac:
-  __restgprlr_27(0);
-  return;
+  uVar11 = __restgprlr_27(0);
+  return (bool)uVar11;
 }
 
 
 // 825B6C48  PlaylistFeeder_GetItemPlaylistId  (ui/ui_playlists.cpp:1657)
 
-undefined1 PlaylistFeeder_GetItemPlaylistId(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+int PlaylistFeeder_GetItemPlaylistId(LocalClientNum_t param_1,uint param_2)
 
 {
-  char cVar2;
   uint uVar1;
-  int iVar3;
-  int *piVar4;
+  int iVar2;
+  bool bVar4;
+  uint uVar3;
+  PlaylistUIStackItem *pPVar5;
   
-  CL_ControllerIndexFromClientNum();
-  cVar2 = HavePlaylists();
-  if (((cVar2 != '\0') && (DAT_8400ba58 != 0)) &&
-     (piVar4 = (int *)(&DAT_8400ba54 + DAT_8400ba58 * 8), piVar4 != (int *)0x0)) {
-    uVar1 = PlaylistFeeder_ClampIndex(piVar4,param_2);
-    iVar3 = *piVar4 * 0x20c;
-    if ((uVar1 < (byte)(&DAT_83fee558)[iVar3]) && ((&DAT_83fee4b8)[*piVar4 * 0x83 + uVar1 * 2] == 0)
-       ) {
-      return (&DAT_83fee4bc)[uVar1 * 8 + iVar3];
+  iVar2 = CL_ControllerIndexFromClientNum(param_1);
+  bVar4 = HavePlaylists(iVar2);
+  if (((bVar4) && (s_playlistUIStack.count != 0)) &&
+     (pPVar5 = (PlaylistUIStackItem *)
+               (gametypes[0x3f].abbrvName + s_playlistUIStack.count * 8 + 0x14),
+     pPVar5 != (PlaylistUIStackItem *)0x0)) {
+    uVar3 = PlaylistFeeder_ClampIndex(pPVar5,param_2);
+    uVar1 = pPVar5->category;
+    if ((uVar3 < categories[uVar1].numEntries) &&
+       (categories[uVar1].entries[uVar3].type == PLAYLIST)) {
+      return (uint)categories[uVar1].entries[uVar3].num;
     }
   }
   return 0;
@@ -1990,71 +2009,80 @@ undefined1 PlaylistFeeder_GetItemPlaylistId(undefined8 param_1,undefined8 param_
 
 // 825B6D08  PlaylistFeeder_GetActivePlayersCount  (ui/ui_playlists.cpp:1680)
 
-void PlaylistFeeder_GetActivePlayersCount(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+int PlaylistFeeder_GetActivePlayersCount(LocalClientNum_t param_1,uint param_2)
 
 {
-  char cVar3;
-  uint uVar2;
-  longlong lVar1;
-  int iVar4;
-  int iVar5;
-  longlong lVar6;
-  int *piVar7;
+  byte bVar1;
+  LocalClientNum_t LVar2;
+  int iVar3;
+  bool bVar7;
+  uint uVar4;
+  char *pcVar5;
+  uint uVar6;
+  longlong lVar8;
+  PlaylistUIStackItem *pPVar9;
+  categoryEntry *pcVar10;
   
-  __savegprlr_27();
-  CL_ControllerIndexFromClientNum();
-  cVar3 = HavePlaylists();
-  if ((cVar3 != '\0') && (DAT_8400ba58 != 0)) {
-    piVar7 = (int *)(&DAT_8400ba54 + DAT_8400ba58 * 8);
-    if (piVar7 != (int *)0x0) {
-      uVar2 = PlaylistFeeder_ClampIndex(piVar7,param_2);
-      iVar4 = *piVar7 * 0x20c;
-      if (uVar2 < (byte)(&DAT_83fee558)[iVar4]) {
-        iVar4 = uVar2 * 8 + iVar4;
-        if ((&DAT_83fee4b8)[*piVar7 * 0x83 + uVar2 * 2] == 0) {
-          va(0xffffffff8216ece4,(&DAT_83fee4bc)[iVar4]);
-          ComGroups_GetCount();
-          __restgprlr_27();
-          return;
-        }
-        lVar6 = 0;
-        uVar2 = 0;
-        iVar5 = (uint)(byte)(&DAT_83fee4bc)[iVar4] * 0x20c;
-        if ((&DAT_83fee558)[iVar5] != '\0') {
-          piVar7 = &DAT_83fee4b8 + (uint)(byte)(&DAT_83fee4bc)[iVar4] * 0x83;
-          do {
-            if (*piVar7 != 1) {
-              va(0xffffffff8216ece4,*(undefined1 *)(piVar7 + 1));
-              lVar1 = ComGroups_GetCount();
-              lVar6 = lVar1 + lVar6;
-            }
-            uVar2 = uVar2 + 1;
-            piVar7 = piVar7 + 2;
-          } while (uVar2 < (byte)(&DAT_83fee558)[iVar5]);
-        }
-        __restgprlr_27(lVar6);
-        return;
+  LVar2 = __savegprlr_27(param_1);
+  iVar3 = CL_ControllerIndexFromClientNum(LVar2);
+  bVar7 = HavePlaylists(iVar3);
+  if (((bVar7) && (s_playlistUIStack.count != 0)) &&
+     (pPVar9 = (PlaylistUIStackItem *)
+               (gametypes[0x3f].abbrvName + s_playlistUIStack.count * 8 + 0x14),
+     pPVar9 != (PlaylistUIStackItem *)0x0)) {
+    uVar4 = PlaylistFeeder_ClampIndex(pPVar9,param_2);
+    uVar6 = pPVar9->category;
+    if (uVar4 < categories[uVar6].numEntries) {
+      if (categories[uVar6].entries[uVar4].type == PLAYLIST) {
+        pcVar5 = va("playlist/%d");
+        uVar6 = ComGroups_GetCount(pcVar5);
+        iVar3 = __restgprlr_27(uVar6);
+        return iVar3;
       }
+      bVar1 = categories[uVar6].entries[uVar4].num;
+      lVar8 = 0;
+      uVar6 = 0;
+      if (categories[bVar1].numEntries != '\0') {
+        pcVar10 = categories[bVar1].entries;
+        do {
+          if (pcVar10->type != CATEGORY) {
+            pcVar5 = va("playlist/%d");
+            uVar4 = ComGroups_GetCount(pcVar5);
+            lVar8 = (int)uVar4 + lVar8;
+          }
+          uVar6 = uVar6 + 1;
+          pcVar10 = pcVar10 + 1;
+        } while (uVar6 < categories[bVar1].numEntries);
+      }
+      iVar3 = __restgprlr_27(lVar8);
+      return iVar3;
     }
   }
-  __restgprlr_27(0);
-  return;
+  iVar3 = __restgprlr_27(0);
+  return iVar3;
 }
 
 
 // 825B6E30  PlaylistFeeder_GetSelectedIndex  (ui/ui_playlists.cpp:1720)
 
-undefined8 PlaylistFeeder_GetSelectedIndex(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+int PlaylistFeeder_GetSelectedIndex(LocalClientNum_t param_1)
 
 {
-  int iVar1;
-  undefined8 uVar2;
+  uint *puVar1;
+  uint uVar2;
   
-  if (DAT_8400ba58 != 0) {
-    iVar1 = DAT_8400ba58 * 2;
-    if (&DAT_8400ba54 + DAT_8400ba58 * 8 != (undefined *)0x0) {
-      uVar2 = PlaylistFeeder_ClampIndex(&DAT_8400ba54 + DAT_8400ba58 * 8,(&DAT_8400ba58)[iVar1]);
-      (&DAT_8400ba58)[iVar1] = (int)uVar2;
+  if (s_playlistUIStack.count != 0) {
+    puVar1 = &s_playlistUIStack.stack[s_playlistUIStack.count - 1].selected;
+    if ((PlaylistUIStackItem *)(gametypes[0x3f].abbrvName + s_playlistUIStack.count * 8 + 0x14) !=
+        (PlaylistUIStackItem *)0x0) {
+      uVar2 = PlaylistFeeder_ClampIndex
+                        ((PlaylistUIStackItem *)
+                         (gametypes[0x3f].abbrvName + s_playlistUIStack.count * 8 + 0x14),*puVar1);
+      *puVar1 = uVar2;
       return uVar2;
     }
   }
@@ -2064,55 +2092,58 @@ undefined8 PlaylistFeeder_GetSelectedIndex(void)
 
 // 825B95C8  PlaylistFeeder_ItemColor  (ui/ui_playlists.cpp:1731)
 
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 void PlaylistFeeder_ItemColor
-               (undefined8 param_1,int param_2,undefined8 param_3,undefined8 param_4,
-               ulonglong param_5)
+               (LocalClientNum_t param_1,itemDef_t *param_2,uint param_3,float *param_4,bool param_5
+               )
 
 {
-  int iVar1;
-  undefined8 uVar2;
+  uint uVar1;
+  LocalClientNum_t LVar2;
   uint uVar3;
-  char cVar4;
-  undefined4 *puVar5;
-  int *piVar6;
+  bool bVar4;
+  ulonglong uVar5;
+  PlaylistUIStackItem *pPVar6;
   
-  uVar2 = __savegprlr_26();
-  if (DAT_8400ba58 != 0) {
-    piVar6 = (int *)(&DAT_8400ba54 + DAT_8400ba58 * 8);
-    if (piVar6 != (int *)0x0) {
-      uVar3 = PlaylistFeeder_ClampIndex(piVar6,param_3);
-      iVar1 = *piVar6;
-      if (uVar3 < (byte)(&DAT_83fee558)[iVar1 * 0x20c]) {
-        cVar4 = PlaylistFeeder_ItemEnabled(uVar2,uVar3);
-        if ((&DAT_83fee4b8)[iVar1 * 0x83 + uVar3 * 2] == 0) {
-          puVar5 = (undefined4 *)param_4;
-          if (cVar4 == '\0') {
-            if ((param_5 & 0xff) == 0) {
-              *puVar5 = *(undefined4 *)(param_2 + 0x9c);
-              puVar5[1] = *(undefined4 *)(param_2 + 0xa0);
-              puVar5[2] = *(undefined4 *)(param_2 + 0xa4);
-              puVar5[3] = *(undefined4 *)(param_2 + 0xa8);
-            }
-            else {
-              *puVar5 = 0;
-              puVar5[1] = 0;
-              puVar5[2] = 0;
-              puVar5[3] = 0x3f800000;
-            }
-          }
-          else {
-            *puVar5 = *(undefined4 *)(param_2 + 0x5c);
-            puVar5[1] = *(undefined4 *)(param_2 + 0x60);
-            puVar5[2] = *(undefined4 *)(param_2 + 100);
-            puVar5[3] = *(undefined4 *)(param_2 + 0x68);
-          }
+  uVar5 = (ulonglong)param_5;
+  LVar2 = __savegprlr_26(param_1);
+  if ((s_playlistUIStack.count != 0) &&
+     (pPVar6 = (PlaylistUIStackItem *)
+               (gametypes[0x3f].abbrvName + s_playlistUIStack.count * 8 + 0x14),
+     pPVar6 != (PlaylistUIStackItem *)0x0)) {
+    uVar3 = PlaylistFeeder_ClampIndex(pPVar6,param_3);
+    uVar1 = pPVar6->category;
+    if (uVar3 < categories[uVar1].numEntries) {
+      bVar4 = PlaylistFeeder_ItemEnabled(LVar2,uVar3);
+      if (categories[uVar1].entries[uVar3].type == PLAYLIST) {
+        if (bVar4) {
+          *param_4 = (param_2->window).foreColor[0];
+          param_4[1] = (param_2->window).foreColor[1];
+          param_4[2] = (param_2->window).foreColor[2];
+          param_4[3] = (param_2->window).foreColor[3];
+        }
+        else if ((uVar5 & 0xff) == 0) {
+          *param_4 = (param_2->window).disableColor[0];
+          param_4[1] = (param_2->window).disableColor[1];
+          param_4[2] = (param_2->window).disableColor[2];
+          param_4[3] = (param_2->window).disableColor[3];
         }
         else {
-          Dvar_GetUnpackedColor((&DAT_83f71e58)[cVar4 != '\0'],param_4);
+          *param_4 = 0.0;
+          param_4[1] = 0.0;
+          param_4[2] = 0.0;
+          param_4[3] = 1.0;
         }
-        if (((param_5 & 0xff) != 0) && (cVar4 != '\0')) {
-          UI_FeederGetColorPulsed(uVar2,param_4);
-        }
+      }
+      else {
+        Dvar_GetUnpackedColor(ui_playlistCategoryColor[bVar4],param_4);
+      }
+      if (((uVar5 & 0xff) != 0) && (bVar4)) {
+        UI_FeederGetColorPulsed(LVar2,param_4);
       }
     }
   }
@@ -2123,23 +2154,28 @@ void PlaylistFeeder_ItemColor
 
 // 825B6EA8  PlaylistFeeder_OverrideCursorPos  (ui/ui_playlists.cpp:1770)
 
-void PlaylistFeeder_OverrideCursorPos(int param_1,int param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+
+void PlaylistFeeder_OverrideCursorPos(LocalClientNum_t param_1,itemDef_t *param_2)
 
 {
   byte bVar1;
   uint uVar2;
   uint *puVar3;
-  int *piVar4;
+  char *pcVar4;
   
-  if (DAT_8400ba58 == 0) {
+  if (s_playlistUIStack.count == 0) {
     return;
   }
-  puVar3 = (uint *)(&DAT_8400ba58 + DAT_8400ba58 * 2);
-  piVar4 = (int *)(&DAT_8400ba54 + DAT_8400ba58 * 8);
-  if (piVar4 == (int *)0x0) {
+  puVar3 = &s_playlistUIStack.stack[s_playlistUIStack.count - 1].selected;
+  pcVar4 = gametypes[0x3f].abbrvName + s_playlistUIStack.count * 8 + 0x14;
+  if (pcVar4 == (char *)0x0) {
     return;
   }
-  bVar1 = (&DAT_83fee558)[*piVar4 * 0x20c];
+  bVar1 = categories[*(int *)pcVar4].numEntries;
   uVar2 = (uint)bVar1;
   if (bVar1 != 0) {
     if (*puVar3 < (uint)bVar1) goto LAB_825b6f04;
@@ -2147,61 +2183,68 @@ void PlaylistFeeder_OverrideCursorPos(int param_1,int param_2)
   }
   *puVar3 = uVar2;
 LAB_825b6f04:
-  *(uint *)((param_1 + 0x5f) * 4 + param_2) = *puVar3;
-  if ((&DAT_83fee4b8)[*piVar4 * 0x83 + *puVar3 * 2] == 0) {
-    Dvar_SetFloat(0x3ff0000000000000,DAT_83fe742c);
+  param_2->cursorPos[param_1] = *puVar3;
+  if (categories[*(int *)pcVar4].entries[*puVar3].type == PLAYLIST) {
+    Dvar_SetFloat(ui_playlistActionButtonAlpha,1.0);
     return;
   }
-  Dvar_SetFloat(0,DAT_83fe742c);
+  Dvar_SetFloat(ui_playlistActionButtonAlpha,0.0);
   return;
 }
 
 
 // 825B6F60  PlaylistFeeder_Selected  (ui/ui_playlists.cpp:1799)
 
-void PlaylistFeeder_Selected(undefined4 param_1)
+void PlaylistFeeder_Selected(uint param_1)
 
 {
-  if (DAT_8400ba58 == 0) {
+  if (s_playlistUIStack.count == 0) {
     return;
   }
-  if (DAT_8400ba58 * 8 == 0x7bff45ac) {
+  if (s_playlistUIStack.count * 8 == 0x7bff45ac) {
     return;
   }
-  (&DAT_8400ba58)[DAT_8400ba58 * 2] = param_1;
+  s_playlistUIStack.stack[s_playlistUIStack.count - 1].selected = param_1;
   return;
 }
 
 
 // 825B85F8  PlaylistFeeder_GetFirstPlaylistNum  (ui/ui_playlists.cpp:1809)
 
-undefined8 PlaylistFeeder_GetFirstPlaylistNum(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int PlaylistFeeder_GetFirstPlaylistNum(void)
 
 {
-  undefined1 uVar1;
-  byte bVar2;
-  char cVar4;
-  undefined8 uVar3;
+  byte bVar1;
+  uchar uVar2;
+  bool bVar4;
+  int iVar3;
+  uint uVar5;
   
-  cVar4 = LiveStorage_DoWeHavePlaylists();
-  if (cVar4 != '\0') {
-    if (DAT_83fee558 == '\0') {
-      MyAssertHandler(0xffffffff8216d8e0,0x717,0,0xffffffff8216f248,0);
+  bVar4 = LiveStorage_DoWeHavePlaylists();
+  if (bVar4) {
+    if (categories[0].numEntries == '\0') {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",0x717,0
+                      ,"0 doesn\'t index categories[0].numEntries\n\t%i not in [0, %i)");
     }
-    bVar2 = DAT_83fee4bc;
-    if (DAT_83fee4b8 == 0) {
-      uVar3 = CL_GetFirstActiveControllerIndex();
-      uVar3 = Playlist_GetPlaylistNumForId(uVar3,bVar2);
-      return uVar3;
+    uVar2 = categories[0].entries[0].num;
+    if (categories[0].entries[0].type == PLAYLIST) {
+      iVar3 = CL_GetFirstActiveControllerIndex();
+      iVar3 = Playlist_GetPlaylistNumForId(iVar3,(uint)uVar2);
+      return iVar3;
     }
-    if (0x13 < DAT_83fee4bc) {
-      MyAssertHandler(0xffffffff8216d8e0,0x721,0,0xffffffff8216f20c,DAT_83fee4bc,0x14);
+    uVar5 = (uint)categories[0].entries[0].num;
+    if (0x13 < uVar5) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",0x721,0
+                      ,"entry->num doesn\'t index MAX_CATEGORIES\n\t%i not in [0, %i)");
+      uVar5 = (uint)categories[0].entries[0].num;
     }
-    if ((&DAT_83fee4b8)[(uint)DAT_83fee4bc * 0x83] == 0) {
-      uVar1 = (&DAT_83fee4bc)[(uint)DAT_83fee4bc * 0x20c];
-      uVar3 = CL_GetFirstActiveControllerIndex();
-      uVar3 = Playlist_GetPlaylistNumForId(uVar3,uVar1);
-      return uVar3;
+    if (categories[uVar5].entries[0].type == PLAYLIST) {
+      bVar1 = categories[uVar5].entries[0].num;
+      iVar3 = CL_GetFirstActiveControllerIndex();
+      iVar3 = Playlist_GetPlaylistNumForId(iVar3,(uint)bVar1);
+      return iVar3;
     }
   }
   return 0;
@@ -2210,124 +2253,127 @@ undefined8 PlaylistFeeder_GetFirstPlaylistNum(void)
 
 // 825B6F90  PlaylistFeeder_SetInitialSelectedCategory  (ui/ui_playlists.cpp:1838)
 
-void PlaylistFeeder_SetInitialSelectedCategory(uint param_1)
+void PlaylistFeeder_SetInitialSelectedCategory(int param_1)
 
 {
-  int *piVar1;
+  categoryEntry *pcVar1;
   
-  DAT_8400ba60 = 0;
-  if (DAT_83fee558 != 0) {
-    piVar1 = &DAT_83fee4b8;
+  s_playlistUIStack.stack[0].selected = 0;
+  if (categories[0].numEntries != 0) {
+    pcVar1 = categories[0].entries;
     do {
-      if ((*piVar1 == 1) && (*(byte *)(piVar1 + 1) == param_1)) {
-        DAT_8400ba5c = 0;
+      if ((pcVar1->type == CATEGORY) && ((uint)pcVar1->num == param_1)) {
+        s_playlistUIStack.stack[0].category = 0;
         return;
       }
-      DAT_8400ba60 = DAT_8400ba60 + 1;
-      piVar1 = piVar1 + 2;
-    } while (DAT_8400ba60 < (int)(uint)DAT_83fee558);
+      s_playlistUIStack.stack[0].selected = s_playlistUIStack.stack[0].selected + 1;
+      pcVar1 = pcVar1 + 1;
+    } while ((int)s_playlistUIStack.stack[0].selected < (int)(uint)categories[0].numEntries);
   }
-  DAT_8400ba5c = 0;
-  DAT_8400ba60 = 0;
-  DAT_8400ba64 = 0;
-  DAT_8400ba68 = 0;
+  s_playlistUIStack.stack[0].category = 0;
+  s_playlistUIStack.stack[0].selected = 0;
+  s_playlistUIStack.stack[1].category = 0;
+  s_playlistUIStack.stack[1].selected = 0;
   return;
 }
 
 
 // 825B9738  PlaylistFeeder_SetInitialSelected  (ui/ui_playlists.cpp:1861)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 void PlaylistFeeder_SetInitialSelected(void)
 
 {
-  undefined4 uVar1;
-  char cVar4;
-  undefined8 uVar2;
-  uint uVar3;
-  longlong lVar5;
-  int iVar6;
-  int iVar7;
+  bool bVar3;
+  int iVar1;
+  uint uVar2;
+  int iVar4;
   
-  cVar4 = LiveStorage_DoWeHavePlaylists();
-  if (cVar4 != '\0') {
+  bVar3 = LiveStorage_DoWeHavePlaylists();
+  if (bVar3) {
     Playlist_ValidatePlaylistNum();
-    uVar1 = *(undefined4 *)(DAT_82aa1adc + 0xc);
-    uVar2 = CL_ControllerIndexFromClientNum(0);
-    uVar3 = Playlist_GetPlaylistIdForNum(uVar2,uVar1);
-    lVar5 = 0;
-    iVar6 = 0;
+    iVar4 = (playlist->current).integer;
+    iVar1 = CL_ControllerIndexFromClientNum(LOCAL_CLIENT_0);
+    uVar2 = Playlist_GetPlaylistIdForNum(iVar1,iVar4);
+    s_playlistUIStack.stack[1].category = 0;
+    iVar4 = 0;
     do {
-      DAT_8400ba68 = 0;
-      if ((byte)(&DAT_83fee558)[iVar6] != 0) {
-        iVar7 = 0;
+      s_playlistUIStack.stack[1].selected = 0;
+      if (*(uchar *)((int)(categories[0].entries + 0x14) + iVar4) != 0) {
+        iVar1 = 0;
         do {
-          if ((*(int *)((int)&DAT_83fee4b8 + iVar6 + iVar7) == 0) &&
-             ((byte)(&DAT_83fee4bc)[iVar6 + iVar7] == uVar3)) {
-            DAT_8400ba64 = (int)lVar5;
-            if (DAT_8400ba64 == 0) {
-              DAT_8400ba5c = 0;
-              DAT_8400ba60 = DAT_8400ba68;
-              DAT_8400ba64 = 0;
-              DAT_8400ba68 = 0;
+          if ((*(int *)((int)&categories[0].entries[0].type + iVar4 + iVar1) == 0) &&
+             ((&categories[0].entries[0].num)[iVar4 + iVar1] == uVar2)) {
+            if (s_playlistUIStack.stack[1].category == 0) {
+              s_playlistUIStack.stack[0].category = 0;
+              s_playlistUIStack.stack[0].selected = s_playlistUIStack.stack[1].selected;
+              s_playlistUIStack.stack[1].category = 0;
+              s_playlistUIStack.stack[1].selected = 0;
               return;
             }
-            PlaylistFeeder_SetInitialSelectedCategory(lVar5);
+            PlaylistFeeder_SetInitialSelectedCategory(s_playlistUIStack.stack[1].category);
             return;
           }
-          DAT_8400ba68 = DAT_8400ba68 + 1;
-          iVar7 = iVar7 + 8;
-        } while (DAT_8400ba68 < (int)(uint)(byte)(&DAT_83fee558)[iVar6]);
+          s_playlistUIStack.stack[1].selected = s_playlistUIStack.stack[1].selected + 1;
+          iVar1 = iVar1 + 8;
+        } while ((int)s_playlistUIStack.stack[1].selected <
+                 (int)(uint)*(uchar *)((int)(categories[0].entries + 0x14) + iVar4));
       }
-      iVar6 = iVar6 + 0x20c;
-      lVar5 = lVar5 + 1;
-    } while (iVar6 < 0x28f0);
+      iVar4 = iVar4 + 0x20c;
+      s_playlistUIStack.stack[1].category = s_playlistUIStack.stack[1].category + 1;
+    } while (iVar4 < 0x28f0);
   }
-  DAT_8400ba5c = 0;
-  DAT_8400ba60 = 0;
-  DAT_8400ba64 = 0;
-  DAT_8400ba68 = 0;
+  s_playlistUIStack.stack[0].category = 0;
+  s_playlistUIStack.stack[0].selected = 0;
+  s_playlistUIStack.stack[1].category = 0;
+  s_playlistUIStack.stack[1].selected = 0;
   return;
 }
 
 
 // 825B86F0  Playlist_ValidatePlaylistNum  (ui/ui_playlists.cpp:1908)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Playlist_ValidatePlaylistNum(void)
 
 {
-  char cVar3;
+  bool bVar3;
+  int iVar1;
   int iVar2;
-  undefined8 uVar1;
-  short *psVar4;
+  ushort *puVar4;
   int iVar5;
   longlong lVar6;
   
-  cVar3 = LiveStorage_DoWeHavePlaylists();
-  if (cVar3 == '\0') {
-    MyAssertHandler(0xffffffff8216d8e0,0x77a,0,0xffffffff82000f98,0xffffffff8216f284);
+  bVar3 = LiveStorage_DoWeHavePlaylists();
+  if (!bVar3) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",0x77a,0,
+                    "%s");
   }
-  iVar5 = 0;
-  psVar4 = &DAT_83fea892;
+  iVar2 = 0;
+  puVar4 = &playlists[0].numEntries;
   lVar6 = 0x29;
   do {
-    if (*psVar4 != 0) {
-      iVar5 = iVar5 + 1;
+    if (*puVar4 != 0) {
+      iVar2 = iVar2 + 1;
     }
-    psVar4 = psVar4 + 0xbc;
+    puVar4 = puVar4 + 0xbc;
     lVar6 = lVar6 + -1;
   } while (lVar6 != 0);
-  lVar6 = 0;
+  iVar5 = 0;
   do {
-    iVar2 = GamerProfile_GetPlaylistNum(lVar6);
-    if ((iVar5 <= iVar2) || (iVar2 = GamerProfile_GetPlaylistNum(lVar6), iVar2 < 0)) {
-      uVar1 = PlaylistFeeder_GetFirstPlaylistNum();
-      GamerProfile_SetPlaylistNum(lVar6,uVar1);
+    iVar1 = GamerProfile_GetPlaylistNum(iVar5);
+    if ((iVar2 <= iVar1) || (iVar1 = GamerProfile_GetPlaylistNum(iVar5), iVar1 < 0)) {
+      iVar1 = PlaylistFeeder_GetFirstPlaylistNum();
+      GamerProfile_SetPlaylistNum(iVar5,iVar1);
     }
-    lVar6 = lVar6 + 1;
-  } while ((int)lVar6 < 4);
-  if (iVar5 <= *(int *)(DAT_82aa1adc + 0xc)) {
-    uVar1 = PlaylistFeeder_GetFirstPlaylistNum();
-    Dvar_SetInt(DAT_82aa1adc,uVar1);
+    iVar5 = iVar5 + 1;
+  } while (iVar5 < 4);
+  if (iVar2 <= (playlist->current).integer) {
+    iVar2 = PlaylistFeeder_GetFirstPlaylistNum();
+    Dvar_SetInt(playlist,iVar2);
   }
   return;
 }
@@ -2335,46 +2381,41 @@ void Playlist_ValidatePlaylistNum(void)
 
 // 825B87E8  Playlist_GetPlaylistIdForNum  (ui/ui_playlists.cpp:1935)
 
-longlong Playlist_GetPlaylistIdForNum(undefined8 param_1,undefined8 param_2)
+int Playlist_GetPlaylistIdForNum(int param_1,int param_2)
 
 {
-  char cVar3;
-  longlong lVar1;
-  undefined8 uVar2;
+  bool bVar3;
+  int iVar1;
+  char *pcVar2;
   int iVar4;
-  short *psVar5;
+  ushort *puVar5;
   longlong lVar6;
   
-  cVar3 = HavePlaylists();
-  if (cVar3 != '\0') {
+  bVar3 = HavePlaylists(param_1);
+  if (bVar3) {
     Playlist_ValidatePlaylistNum();
     iVar4 = 0;
-    lVar1 = 0;
-    psVar5 = &DAT_83fea892;
+    iVar1 = 0;
+    puVar5 = &playlists[0].numEntries;
     do {
-      if (*psVar5 != 0) {
-        if (iVar4 == (int)param_2) {
-          return lVar1;
+      if (*puVar5 != 0) {
+        if (iVar4 == param_2) {
+          return iVar1;
         }
         iVar4 = iVar4 + 1;
       }
-      psVar5 = psVar5 + 0xbc;
-      lVar1 = lVar1 + 1;
-    } while ((int)psVar5 < -0x7c011b36);
-    cVar3 = Sys_IsMainThread(lVar1);
-    if ((cVar3 != '\0') && (DAT_84013128 == 0)) {
-      lVar1 = 0;
-      psVar5 = &DAT_83fea892;
+      puVar5 = puVar5 + 0xbc;
+      iVar1 = iVar1 + 1;
+    } while ((int)puVar5 < -0x7c011b36);
+    bVar3 = Sys_IsMainThread();
+    if ((bVar3) && (alwaysfails == 0)) {
       lVar6 = 0x29;
       do {
-        if (*psVar5 != 0) {
-          lVar1 = lVar1 + 1;
-        }
-        psVar5 = psVar5 + 0xbc;
         lVar6 = lVar6 + -1;
       } while (lVar6 != 0);
-      uVar2 = va(0xffffffff8216f2a4,param_2,lVar1);
-      MyAssertHandler(0xffffffff8216d8e0,0x7a3,0,uVar2);
+      pcVar2 = va("Invalid playlist number %i, there are only %i playlists");
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",0x7a3,0
+                      ,pcVar2);
     }
   }
   return 0;
@@ -2383,35 +2424,37 @@ longlong Playlist_GetPlaylistIdForNum(undefined8 param_1,undefined8 param_2)
 
 // 825B7018  Playlist_GetPlaylistNumForId  (ui/ui_playlists.cpp:1962)
 
-ulonglong Playlist_GetPlaylistNumForId(undefined8 param_1,longlong param_2)
+int Playlist_GetPlaylistNumForId(int param_1,int param_2)
 
 {
-  char cVar2;
-  ulonglong uVar1;
-  short *psVar3;
-  longlong lVar4;
+  bool bVar2;
+  uint uVar1;
+  ushort *puVar3;
+  ulonglong uVar4;
+  longlong lVar5;
   
-  cVar2 = HavePlaylists();
-  if (cVar2 == '\0') {
-    uVar1 = 0;
+  bVar2 = HavePlaylists(param_1);
+  if (bVar2) {
+    uVar4 = 0;
+    if (0x28 < param_2) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",0x7b2,0
+                      ,"%s");
+    }
+    if (0 < param_2) {
+      puVar3 = &playlists[0].numEntries;
+      lVar5 = (longlong)param_2;
+      do {
+        if (*puVar3 != 0) {
+          uVar4 = uVar4 + 1;
+        }
+        puVar3 = puVar3 + 0xbc;
+        lVar5 = lVar5 + -1;
+      } while (lVar5 != 0);
+    }
+    uVar1 = -(uint)!CARRY8((longlong)param_2 - uVar4,uVar4 ^ 0x80000000) & (uint)uVar4;
   }
   else {
     uVar1 = 0;
-    if (0x28 < (int)param_2) {
-      MyAssertHandler(0xffffffff8216d8e0,0x7b2,0,0xffffffff82000f98,0xffffffff8216ecf0);
-    }
-    if (0 < (int)param_2) {
-      psVar3 = &DAT_83fea892;
-      lVar4 = param_2;
-      do {
-        if (*psVar3 != 0) {
-          uVar1 = uVar1 + 1;
-        }
-        psVar3 = psVar3 + 0xbc;
-        lVar4 = lVar4 + -1;
-      } while (lVar4 != 0);
-    }
-    uVar1 = -(ulonglong)!CARRY8(param_2 - uVar1,uVar1 ^ 0x80000000) & uVar1;
   }
   return uVar1;
 }
@@ -2419,390 +2462,413 @@ ulonglong Playlist_GetPlaylistNumForId(undefined8 param_1,longlong param_2)
 
 // 825B70D8  Playlist_GetPlaylistName  (ui/ui_playlists.cpp:1984)
 
-longlong Playlist_GetPlaylistName(undefined8 param_1,longlong param_2)
+char * Playlist_GetPlaylistName(int param_1,int param_2)
 
 {
-  char cVar2;
-  longlong lVar1;
+  bool bVar2;
+  playlistInfo *ppVar1;
   
-  if (((int)param_2 < 0) || (0x28 < (int)param_2)) {
-    MyAssertHandler(0xffffffff8216d8e0,0x7c1,0,0xffffffff8216ed0c,0xffffffff8216ed24,param_2);
+  if ((param_2 < 0) || (0x28 < param_2)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",0x7c1,0,
+                    "%s\n\t(playlistId) = %i");
   }
-  cVar2 = HavePlaylists(param_1);
-  if (cVar2 == '\0') {
-    lVar1 = 0;
+  bVar2 = HavePlaylists(param_1);
+  if (bVar2) {
+    ppVar1 = playlists + param_2;
   }
   else {
-    lVar1 = param_2 * 0x178 + -0x7c0158e0;
+    ppVar1 = (playlistInfo *)0x0;
   }
-  return lVar1;
+  return ppVar1->name;
 }
 
 
 // 825B7170  Playlist_GetPlaylistDescription  (ui/ui_playlists.cpp:1995)
 
-longlong Playlist_GetPlaylistDescription(undefined8 param_1,longlong param_2)
+char * Playlist_GetPlaylistDescription(int param_1,int param_2)
 
 {
-  char cVar2;
-  longlong lVar1;
+  bool bVar2;
+  char *pcVar1;
   
-  if (((int)param_2 < 0) || (0x28 < (int)param_2)) {
-    MyAssertHandler(0xffffffff8216d8e0,0x7cc,0,0xffffffff8216ed0c,0xffffffff8216ed24,param_2);
+  if ((param_2 < 0) || (0x28 < param_2)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",0x7cc,0,
+                    "%s\n\t(playlistId) = %i");
   }
-  cVar2 = HavePlaylists(param_1);
-  if (cVar2 == '\0') {
-    lVar1 = -0x7dff9751;
+  bVar2 = HavePlaylists(param_1);
+  if (bVar2) {
+    pcVar1 = playlists[param_2].description;
   }
   else {
-    lVar1 = param_2 * 0x178 + -0x7c0158a0;
+    pcVar1 = "";
   }
-  return lVar1;
+  return pcVar1;
 }
 
 
 // 825B88E0  PlaylistFeeder_IsLocked  (ui/ui_playlists.cpp:2006)
 
-void PlaylistFeeder_IsLocked
-               (undefined8 param_1,undefined8 param_2,ulonglong param_3,int param_4,
-               undefined8 param_5)
+PlaylistLockState
+PlaylistFeeder_IsLocked(int param_1,uint param_2,int param_3,int param_4,int param_5)
 
 {
-  undefined8 uVar1;
-  char cVar3;
-  ulonglong uVar2;
-  int iVar4;
-  int iVar5;
-  int *piVar6;
+  byte bVar1;
+  uint uVar2;
+  int iVar3;
+  bool bVar6;
+  PlaylistLockState PVar4;
+  uint uVar5;
+  ulonglong uVar7;
+  PlaylistUIStackItem *pPVar8;
   
-  uVar1 = __savegprlr_26();
-  iVar4 = (int)param_5;
-  if ((iVar4 < 1) || (0x12 < iVar4)) {
-    MyAssertHandler(0xffffffff8216d8e0,0x7d9,0,0xffffffff8216f2dc,param_5,1,0x12);
+  uVar7 = (ulonglong)param_3;
+  iVar3 = __savegprlr_26(param_1);
+  if ((param_5 < 1) || (0x12 < param_5)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",0x7d9,0,
+                    "partyCount not in [1, MAX_CLIENTS]\n\t%i not in [%i, %i]");
   }
-  cVar3 = HavePlaylists(uVar1);
-  if ((cVar3 != '\0') && (DAT_8400ba58 != 0)) {
-    piVar6 = (int *)(&DAT_8400ba54 + DAT_8400ba58 * 8);
-    if (piVar6 != (int *)0x0) {
-      uVar2 = PlaylistFeeder_ClampIndex(piVar6,param_2);
-      iVar5 = *piVar6 * 0x20c;
-      if ((uVar2 & 0xffffffff) < (ulonglong)(byte)(&DAT_83fee558)[iVar5]) {
-        iVar5 = (int)uVar2 * 8 + iVar5;
-        param_3 = ((param_3 & 0xffffffff) >> 0x1f) - 1 & param_3;
-        if ((&DAT_83fee4b8)[*piVar6 * 0x83 + (int)uVar2 * 2] == 0) {
-          iVar5 = (uint)(byte)(&DAT_83fee4bc)[iVar5] * 0x178;
-          if (param_4 == 0) {
-            if ((0 < *(int *)(&DAT_83fea884 + iVar5)) &&
-               ((int)param_3 < *(int *)(&DAT_83fea884 + iVar5))) goto LAB_825b8a08;
-          }
-          if ((int)(uint)(byte)(&DAT_83fea894)[iVar5] < iVar4) {
-            __restgprlr_26(3);
-            return;
-          }
-          if (iVar4 < (int)(uint)(byte)(&DAT_83fea895)[iVar5]) {
-            __restgprlr_26(4);
-            return;
-          }
+  bVar6 = HavePlaylists(iVar3);
+  if (((bVar6) && (s_playlistUIStack.count != 0)) &&
+     (pPVar8 = (PlaylistUIStackItem *)
+               (gametypes[0x3f].abbrvName + s_playlistUIStack.count * 8 + 0x14),
+     pPVar8 != (PlaylistUIStackItem *)0x0)) {
+    uVar5 = PlaylistFeeder_ClampIndex(pPVar8,param_2);
+    uVar2 = pPVar8->category;
+    if (uVar5 < categories[uVar2].numEntries) {
+      uVar7 = ((uVar7 & 0xffffffff) >> 0x1f) - 1 & uVar7;
+      if (categories[uVar2].entries[uVar5].type == PLAYLIST) {
+        bVar1 = categories[uVar2].entries[uVar5].num;
+        if (param_4 == 0) {
+          if ((0 < playlists[bVar1].unlockXp) && ((int)uVar7 < playlists[bVar1].unlockXp))
+          goto LAB_825b8a08;
         }
-        else if (((param_4 == 0) &&
-                 ((&DAT_83fee55c)[(uint)(byte)(&DAT_83fee4bc)[iVar5] * 0x83] != 0)) &&
-                ((param_3 & 0xffffffff) <
-                 (ulonglong)(uint)(&DAT_83fee55c)[(uint)(byte)(&DAT_83fee4bc)[iVar5] * 0x83])) {
-LAB_825b8a08:
-          __restgprlr_26(2);
-          return;
+        if ((int)(uint)playlists[bVar1].maxPartySize < param_5) {
+          PVar4 = __restgprlr_26(3);
+          return PVar4;
         }
-        cVar3 = PlaylistFeeder_DoWeHaveRequiredDLC(uVar1,uVar2);
-        if (cVar3 == '\0') {
-          __restgprlr_26(0);
-          return;
+        if (param_5 < (int)(uint)playlists[bVar1].minPartySize) {
+          PVar4 = __restgprlr_26(4);
+          return PVar4;
         }
-        cVar3 = PlaylistFeeder_DoesEveryoneHaveRequiredDLC(uVar1,uVar2);
-        if (cVar3 == '\0') {
-          __restgprlr_26(5);
-          return;
-        }
-        cVar3 = PlaylistFeeder_AnyRequiredMapPacksEnabled(uVar1,uVar2);
-        __restgprlr_26(-(cVar3 == '\0') & 5);
-        return;
       }
+      else if (((param_4 == 0) && (categories[categories[uVar2].entries[uVar5].num].unlockXp != 0))
+              && ((uVar7 & 0xffffffff) <
+                  (ulonglong)categories[categories[uVar2].entries[uVar5].num].unlockXp)) {
+LAB_825b8a08:
+        PVar4 = __restgprlr_26(2);
+        return PVar4;
+      }
+      bVar6 = PlaylistFeeder_DoWeHaveRequiredDLC(iVar3,uVar5);
+      if (!bVar6) {
+        PVar4 = __restgprlr_26(0);
+        return PVar4;
+      }
+      bVar6 = PlaylistFeeder_DoesEveryoneHaveRequiredDLC(iVar3,uVar5);
+      if (!bVar6) {
+        PVar4 = __restgprlr_26(5);
+        return PVar4;
+      }
+      bVar6 = PlaylistFeeder_AnyRequiredMapPacksEnabled(iVar3,uVar5);
+      PVar4 = __restgprlr_26(-!bVar6 & 5);
+      return PVar4;
     }
   }
-  __restgprlr_26(1);
-  return;
+  PVar4 = __restgprlr_26(1);
+  return PVar4;
 }
 
 
 // 825B7210  Playlist_GetEntry  (ui/ui_playlists.cpp:2062)
 
-void Playlist_GetEntry(undefined8 param_1,ulonglong param_2)
+playlistEntry * Playlist_GetEntry(uint param_1,uint param_2)
 
 {
-  int iVar1;
-  ulonglong uVar2;
+  uint uVar1;
+  playlistEntry *ppVar2;
+  ulonglong uVar3;
   
-  uVar2 = __savegprlr_27();
-  if (0x28 < (uVar2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8216d8e0,0x80f,0,0xffffffff8216ee24,uVar2,0x29);
+  uVar3 = (ulonglong)(int)param_2;
+  uVar1 = __savegprlr_27(param_1);
+  if (0x28 < uVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",0x80f,0,
+                    "playlistId doesn\'t index MAX_PLAYLISTS\n\t%i not in [0, %i)");
   }
-  iVar1 = (int)uVar2 * 0x178;
-  if (DAT_84009c50._0_2_ <= *(ushort *)(&DAT_83fea890 + iVar1)) {
-    MyAssertHandler(0xffffffff8216d8e0,0x812,0,0xffffffff8216edd8);
+  if (s_playlistEntryCount <= playlists[uVar1].firstEntry) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",0x812,0,
+                    "playlist->firstEntry doesn\'t index s_playlistEntryCount\n\t%i not in [0, %i)")
+    ;
   }
-  if ((ulonglong)(ushort)(&DAT_83fea892)[(int)uVar2 * 0xbc] <= (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8216d8e0,0x813,0,0xffffffff8216ed94,param_2);
+  if ((ulonglong)playlists[uVar1].numEntries <= (uVar3 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",0x813,0,
+                    "entryNum doesn\'t index playlist->numEntries\n\t%i not in [0, %i)");
   }
-  param_2 = *(ushort *)(&DAT_83fea890 + iVar1) + param_2;
-  if ((ulonglong)DAT_84009c50._0_2_ <= (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8216d8e0,0x816,0,0xffffffff8216ed50,param_2);
+  uVar3 = playlists[uVar1].firstEntry + uVar3;
+  if ((ulonglong)s_playlistEntryCount <= (uVar3 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",0x816,0,
+                    "entryIndex doesn\'t index s_playlistEntryCount\n\t%i not in [0, %i)");
   }
-  __restgprlr_27((param_2 & 0x3fffffff) * 4 + -0x7c0178e0);
-  return;
+  ppVar2 = (playlistEntry *)__restgprlr_27((uVar3 & 0x3fffffff) * 4 + -0x7c0178e0);
+  return ppVar2;
 }
 
 
 // 825B7300  Playlist_GetMapPacksUsedByPlaylist  (ui/ui_playlists.cpp:2076)
 
-void Playlist_GetMapPacksUsedByPlaylist(void)
+int Playlist_GetMapPacksUsedByPlaylist(int param_1)
 
 {
-  undefined8 uVar1;
-  byte *pbVar5;
-  ulonglong uVar2;
-  ulonglong uVar3;
-  undefined8 uVar4;
-  ulonglong uVar7;
-  longlong lVar8;
-  undefined4 uVar6;
+  uint uVar1;
+  playlistEntry *ppVar2;
+  uint uVar3;
+  uint uVar5;
+  int iVar6;
+  uint uVar7;
+  uint uVar8;
+  char *pcVar4;
   
-  uVar1 = __savegprlr_23();
+  uVar1 = __savegprlr_23(param_1);
   uVar7 = 0;
-  lVar8 = 0;
-  if ((&DAT_83fea892)[(int)uVar1 * 0xbc] != 0) {
+  uVar8 = 0;
+  if (playlists[uVar1].numEntries != 0) {
     do {
-      pbVar5 = (byte *)Playlist_GetEntry(uVar1,lVar8);
-      if (*pbVar5 < DAT_83fe8718) {
-        uVar6 = (&DAT_83fe8518)[*pbVar5];
+      ppVar2 = Playlist_GetEntry(uVar1,uVar8);
+      if (ppVar2->mapindex < maps.numEntries) {
+        pcVar4 = maps.name[ppVar2->mapindex];
       }
       else {
-        uVar6 = 0;
+        pcVar4 = (char *)0x0;
       }
-      uVar2 = Live_GetMapIndex(uVar6);
-      if ((int)uVar2 < 0) {
+      uVar3 = Live_GetMapIndex(pcVar4);
+      if ((int)uVar3 < 0) {
         uVar7 = uVar7 | 2;
       }
       else {
-        uVar3 = Live_GetMapCount();
-        if ((uVar3 & 0xffffffff) <= (uVar2 & 0xffffffff)) {
-          uVar4 = Live_GetMapCount();
-          MyAssertHandler(0xffffffff8216d8e0,0x82b,0,0xffffffff8216ee60,uVar2,uVar4);
+        uVar5 = Live_GetMapCount();
+        if (uVar5 <= uVar3) {
+          Live_GetMapCount();
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",
+                          0x82b,0,"mapIndex doesn\'t index Live_GetMapCount()\n\t%i not in [0, %i)")
+          ;
         }
-        uVar2 = Live_GetMapSource(uVar2);
-        uVar7 = uVar2 | uVar7;
+        uVar3 = Live_GetMapSource(uVar3);
+        uVar7 = uVar3 | uVar7;
       }
-      lVar8 = lVar8 + 1;
-    } while ((int)lVar8 < (int)(uint)(ushort)(&DAT_83fea892)[(int)uVar1 * 0xbc]);
+      uVar8 = uVar8 + 1;
+    } while ((int)uVar8 < (int)(uint)playlists[uVar1].numEntries);
   }
-  __restgprlr_23(uVar7);
-  return;
+  iVar6 = __restgprlr_23(uVar7);
+  return iVar6;
 }
 
 
 // 825B73E0  PlaylistFeeder_DoWeHaveRequiredDLC  (ui/ui_playlists.cpp:2102)
 
-void PlaylistFeeder_DoWeHaveRequiredDLC(undefined8 param_1,undefined8 param_2)
+bool PlaylistFeeder_DoWeHaveRequiredDLC(int param_1,uint param_2)
 
 {
-  int iVar1;
-  uint uVar2;
-  int iVar3;
-  char cVar7;
+  int iVar2;
+  bool bVar6;
+  undefined1 uVar7;
+  uint uVar3;
+  uint uVar4;
   uint uVar5;
-  uint uVar6;
-  undefined8 uVar4;
+  undefined8 uVar1;
   int iVar8;
-  undefined4 *puVar9;
-  int *piVar10;
+  uint uVar9;
+  PlaylistUIStackItem *pPVar10;
   
-  __savegprlr_29();
-  cVar7 = HavePlaylists();
-  if (cVar7 == '\0') {
-    MyAssertHandler(0xffffffff8216d8e0,0x839,0,0xffffffff82000f98,0xffffffff8216eea0);
+  iVar2 = __savegprlr_29(param_1);
+  bVar6 = HavePlaylists(iVar2);
+  if (!bVar6) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",0x839,0,
+                    "%s");
   }
-  if (DAT_8400ba58 == 0) {
+  if ((s_playlistUIStack.count == 0) ||
+     (pPVar10 = (PlaylistUIStackItem *)
+                (gametypes[0x3f].abbrvName + s_playlistUIStack.count * 8 + 0x14),
+     pPVar10 == (PlaylistUIStackItem *)0x0)) {
 LAB_825b744c:
-    __restgprlr_29(0);
-    return;
+    uVar7 = __restgprlr_29(0);
+    return (bool)uVar7;
   }
-  piVar10 = (int *)(&DAT_8400ba54 + DAT_8400ba58 * 8);
-  if (piVar10 == (int *)0x0) goto LAB_825b744c;
-  uVar5 = PlaylistFeeder_ClampIndex(piVar10,param_2);
-  iVar1 = *piVar10;
-  if ((byte)(&DAT_83fee558)[iVar1 * 0x20c] <= uVar5) goto LAB_825b744c;
-  iVar3 = uVar5 * 8 + iVar1 * 0x20c;
-  if ((&DAT_83fee4b8)[iVar1 * 0x83 + uVar5 * 2] == 0) {
-    puVar9 = (undefined4 *)&DAT_83fea888;
-    iVar8 = (uint)(byte)(&DAT_83fee4bc)[iVar3] * 0x178;
+  uVar3 = PlaylistFeeder_ClampIndex(pPVar10,param_2);
+  uVar5 = pPVar10->category;
+  if (categories[uVar5].numEntries <= uVar3) goto LAB_825b744c;
+  uVar9 = (uint)categories[uVar5].entries[uVar3].num;
+  if (categories[uVar5].entries[uVar3].type == PLAYLIST) {
+    iVar8 = -0x7c015778;
+    iVar2 = uVar9 * 0x178;
   }
   else {
-    iVar8 = (uint)(byte)(&DAT_83fee4bc)[iVar3] * 0x20c;
-    puVar9 = &DAT_83fee560;
+    iVar2 = uVar9 * 0x20c;
+    iVar8 = -0x7c011aa0;
   }
-  uVar2 = *(uint *)(iVar8 + (int)puVar9);
-  uVar6 = Content_GetAvailableContentPacks();
-  if ((uVar2 & ~uVar6) != 0) goto LAB_825b744c;
-  if ((&DAT_83fee4b8)[iVar1 * 0x83 + uVar5 * 2] == 0) {
-    uVar5 = Playlist_GetMapPacksUsedByPlaylist((&DAT_83fee4bc)[iVar3]);
-    uVar4 = 0;
-    if ((uVar5 & uVar6) == 0) goto LAB_825b7504;
+  uVar9 = *(uint *)(iVar2 + iVar8);
+  uVar4 = Content_GetAvailableContentPacks();
+  if ((uVar9 & ~uVar4) != 0) goto LAB_825b744c;
+  if (categories[uVar5].entries[uVar3].type == PLAYLIST) {
+    uVar5 = Playlist_GetMapPacksUsedByPlaylist((uint)categories[uVar5].entries[uVar3].num);
+    uVar1 = 0;
+    if ((uVar5 & uVar4) == 0) goto LAB_825b7504;
   }
-  uVar4 = 1;
+  uVar1 = 1;
 LAB_825b7504:
-  __restgprlr_29(uVar4);
-  return;
+  uVar7 = __restgprlr_29(uVar1);
+  return (bool)uVar7;
 }
 
 
 // 825B7510  PlaylistFeeder_DoesEveryoneHaveRequiredDLC  (ui/ui_playlists.cpp:2140)
 
-void PlaylistFeeder_DoesEveryoneHaveRequiredDLC(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+bool PlaylistFeeder_DoesEveryoneHaveRequiredDLC(int param_1,uint param_2)
 
 {
-  int iVar1;
-  uint uVar2;
-  int iVar3;
-  char cVar7;
+  int iVar2;
+  bool bVar6;
+  undefined1 uVar7;
+  uint uVar3;
+  uint uVar4;
   uint uVar5;
-  uint uVar6;
-  undefined8 uVar4;
+  undefined8 uVar1;
   int iVar8;
-  undefined4 *puVar9;
-  int *piVar10;
+  uint uVar9;
+  PlaylistUIStackItem *pPVar10;
   
-  __savegprlr_29();
-  cVar7 = HavePlaylists();
-  if (cVar7 == '\0') {
-    MyAssertHandler(0xffffffff8216d8e0,0x85d,0,0xffffffff82000f98,0xffffffff8216eea0);
+  iVar2 = __savegprlr_29(param_1);
+  bVar6 = HavePlaylists(iVar2);
+  if (!bVar6) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",0x85d,0,
+                    "%s");
   }
-  if (DAT_8400ba58 == 0) {
+  if (s_playlistUIStack.count == 0) {
 LAB_825b757c:
-    __restgprlr_29(0);
-    return;
+    uVar7 = __restgprlr_29(0);
+    return (bool)uVar7;
   }
-  piVar10 = (int *)(&DAT_8400ba54 + DAT_8400ba58 * 8);
-  if (piVar10 == (int *)0x0) goto LAB_825b757c;
-  uVar5 = PlaylistFeeder_ClampIndex(piVar10,param_2);
-  iVar1 = *piVar10;
-  if ((byte)(&DAT_83fee558)[iVar1 * 0x20c] <= uVar5) goto LAB_825b757c;
-  iVar3 = uVar5 * 8 + iVar1 * 0x20c;
-  if ((&DAT_83fee4b8)[iVar1 * 0x83 + uVar5 * 2] == 0) {
-    puVar9 = (undefined4 *)&DAT_83fea888;
-    iVar8 = (uint)(byte)(&DAT_83fee4bc)[iVar3] * 0x178;
+  pPVar10 = (PlaylistUIStackItem *)(gametypes[0x3f].abbrvName + s_playlistUIStack.count * 8 + 0x14);
+  if (pPVar10 == (PlaylistUIStackItem *)0x0) goto LAB_825b757c;
+  uVar3 = PlaylistFeeder_ClampIndex(pPVar10,param_2);
+  uVar5 = pPVar10->category;
+  if (categories[uVar5].numEntries <= uVar3) goto LAB_825b757c;
+  uVar9 = (uint)categories[uVar5].entries[uVar3].num;
+  if (categories[uVar5].entries[uVar3].type == PLAYLIST) {
+    iVar8 = -0x7c015778;
+    iVar2 = uVar9 * 0x178;
   }
   else {
-    iVar8 = (uint)(byte)(&DAT_83fee4bc)[iVar3] * 0x20c;
-    puVar9 = &DAT_83fee560;
+    iVar2 = uVar9 * 0x20c;
+    iVar8 = -0x7c011aa0;
   }
-  uVar2 = *(uint *)(iVar8 + (int)puVar9);
-  uVar6 = Live_CurrentFullPartyMapPackFlags(0xffffffff82b55118);
-  if ((uVar2 & ~uVar6) != 0) goto LAB_825b757c;
-  if ((&DAT_83fee4b8)[iVar1 * 0x83 + uVar5 * 2] == 0) {
-    uVar5 = Playlist_GetMapPacksUsedByPlaylist((&DAT_83fee4bc)[iVar3]);
-    uVar4 = 0;
-    if ((uVar5 & uVar6) == 0) goto LAB_825b763c;
+  uVar9 = *(uint *)(iVar2 + iVar8);
+  uVar4 = Live_CurrentFullPartyMapPackFlags(&g_partyData);
+  if ((uVar9 & ~uVar4) != 0) goto LAB_825b757c;
+  if (categories[uVar5].entries[uVar3].type == PLAYLIST) {
+    uVar5 = Playlist_GetMapPacksUsedByPlaylist((uint)categories[uVar5].entries[uVar3].num);
+    uVar1 = 0;
+    if ((uVar5 & uVar4) == 0) goto LAB_825b763c;
   }
-  uVar4 = 1;
+  uVar1 = 1;
 LAB_825b763c:
-  __restgprlr_29(uVar4);
-  return;
+  uVar7 = __restgprlr_29(uVar1);
+  return (bool)uVar7;
 }
 
 
 // 825B7648  PlaylistFeeder_AnyRequiredMapPacksEnabled  (ui/ui_playlists.cpp:2176)
 
-void PlaylistFeeder_AnyRequiredMapPacksEnabled(void)
+bool PlaylistFeeder_AnyRequiredMapPacksEnabled(int param_1,uint param_2)
 
 {
-  undefined8 uVar1;
+  int iVar1;
+  undefined1 uVar5;
+  uint uVar2;
+  bool bVar6;
+  uint uVar3;
   uint uVar4;
-  char cVar5;
-  ulonglong uVar2;
-  ulonglong uVar3;
-  int iVar6;
-  int *piVar7;
+  PlaylistUIStackItem *pPVar7;
   
-  uVar1 = __savegprlr_29();
-  if (DAT_8400ba58 != 0) {
-    piVar7 = (int *)(&DAT_8400ba54 + DAT_8400ba58 * 8);
-    if (piVar7 != (int *)0x0) {
-      uVar4 = PlaylistFeeder_ClampIndex(piVar7);
-      iVar6 = *piVar7 * 0x20c;
-      if (uVar4 < (byte)(&DAT_83fee558)[iVar6]) {
-        iVar6 = uVar4 * 8 + iVar6;
-        if ((&DAT_83fee4b8)[*piVar7 * 0x83 + uVar4 * 2] != 0) {
-          __restgprlr_29(1);
-          return;
+  iVar1 = __savegprlr_29(param_1);
+  if (s_playlistUIStack.count != 0) {
+    pPVar7 = (PlaylistUIStackItem *)(gametypes[0x3f].abbrvName + s_playlistUIStack.count * 8 + 0x14)
+    ;
+    if (pPVar7 != (PlaylistUIStackItem *)0x0) {
+      uVar2 = PlaylistFeeder_ClampIndex(pPVar7,param_2);
+      uVar4 = pPVar7->category;
+      if (uVar2 < categories[uVar4].numEntries) {
+        if (categories[uVar4].entries[uVar2].type != PLAYLIST) {
+          uVar5 = __restgprlr_29(1);
+          return (bool)uVar5;
         }
-        if (0x28 < (byte)(&DAT_83fee4bc)[iVar6]) {
-          MyAssertHandler(0xffffffff8216d8e0,0x88f,0,0xffffffff8216eec4,(&DAT_83fee4bc)[iVar6],0x29)
-          ;
+        if (0x28 < categories[uVar4].entries[uVar2].num) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",
+                          0x88f,0,"entry->num doesn\'t index MAX_PLAYLISTS\n\t%i not in [0, %i)");
         }
-        cVar5 = HavePlaylists(uVar1);
-        if (cVar5 == '\0') {
-          MyAssertHandler(0xffffffff8216d8e0,0x890,0,0xffffffff82000f98,0xffffffff8216eea0);
+        bVar6 = HavePlaylists(iVar1);
+        if (!bVar6) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",
+                          0x890,0,"%s");
         }
-        uVar2 = Content_GetEnabledContentPacks();
-        uVar3 = Playlist_GetMapPacksUsedByPlaylist((&DAT_83fee4bc)[iVar6]);
-        __restgprlr_29((uVar3 & uVar2) != 0);
-        return;
+        uVar3 = Content_GetEnabledContentPacks();
+        uVar4 = Playlist_GetMapPacksUsedByPlaylist((uint)categories[uVar4].entries[uVar2].num);
+        uVar5 = __restgprlr_29((uVar4 & uVar3) != 0);
+        return (bool)uVar5;
       }
     }
   }
-  __restgprlr_29(0);
-  return;
+  uVar5 = __restgprlr_29(0);
+  return (bool)uVar5;
 }
 
 
 // 825B7768  Playlist_ResetWeights  (ui/ui_playlists.cpp:2205)
 
-void Playlist_ResetWeights(void)
+void Playlist_ResetWeights(int param_1)
 
 {
   ushort uVar1;
-  int iVar2;
-  ulonglong uVar3;
+  uint uVar2;
+  uint uVar3;
   uint uVar4;
-  uint uVar5;
   
-  uVar3 = __savegprlr_20();
-  if (DAT_82aa1a88 != 2) {
-    Com_DPrintf(0x10,0xffffffff8216ef00);
-    iVar2 = (int)uVar3;
-    uVar4 = 0;
-    if ((&DAT_83fea892)[iVar2 * 0xbc] != 0) {
+  uVar2 = __savegprlr_20(param_1);
+  if (g_generateAllMaps != 2) {
+    Com_DPrintf(0x10,"Playlists: Resetting all weights to their default.\n");
+    uVar3 = 0;
+    if (playlists[uVar2].numEntries != 0) {
       do {
-        if (0x28 < (uVar3 & 0xffffffff)) {
-          MyAssertHandler(0xffffffff8216d8e0,0x80f,0,0xffffffff8216ee24,uVar3,0x29);
+        if (0x28 < uVar2) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",
+                          0x80f,0,"playlistId doesn\'t index MAX_PLAYLISTS\n\t%i not in [0, %i)");
         }
-        if (DAT_84009c50._0_2_ <= *(ushort *)(&DAT_83fea890 + iVar2 * 0x178)) {
-          MyAssertHandler(0xffffffff8216d8e0,0x812,0,0xffffffff8216edd8);
+        if (s_playlistEntryCount <= playlists[uVar2].firstEntry) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",
+                          0x812,0,
+                          "playlist->firstEntry doesn\'t index s_playlistEntryCount\n\t%i not in [0, %i)"
+                         );
         }
-        if ((ushort)(&DAT_83fea892)[iVar2 * 0xbc] <= uVar4) {
-          MyAssertHandler(0xffffffff8216d8e0,0x813,0,0xffffffff8216ed94,uVar4);
+        if (playlists[uVar2].numEntries <= uVar3) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",
+                          0x813,0,
+                          "entryNum doesn\'t index playlist->numEntries\n\t%i not in [0, %i)");
         }
-        uVar5 = *(ushort *)(&DAT_83fea890 + iVar2 * 0x178) + uVar4;
-        if (DAT_84009c50._0_2_ <= uVar5) {
-          MyAssertHandler(0xffffffff8216d8e0,0x816,0,0xffffffff8216ed50,uVar5);
+        uVar4 = playlists[uVar2].firstEntry + uVar3;
+        if (s_playlistEntryCount <= uVar4) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",
+                          0x816,0,
+                          "entryIndex doesn\'t index s_playlistEntryCount\n\t%i not in [0, %i)");
         }
-        uVar1 = (&DAT_83fea892)[iVar2 * 0xbc];
-        uVar4 = uVar4 + 1;
-        (&DAT_83fe8723)[uVar5 * 4] = (&DAT_83fe8722)[uVar5 * 4];
-      } while ((int)uVar4 < (int)(uint)uVar1);
+        uVar1 = playlists[uVar2].numEntries;
+        uVar3 = uVar3 + 1;
+        s_playlistEntries[uVar4].remainingWeight = s_playlistEntries[uVar4].fullWeight;
+      } while ((int)uVar3 < (int)(uint)uVar1);
     }
     __restgprlr_20();
     return;
   }
-  Com_PrintWarning(0x10,0xffffffff8216ef34);
+  Com_PrintWarning(0x10,"Playlists: Not resetting weights, generateAllMaps is running.\n");
   __restgprlr_20();
   return;
 }
@@ -2810,143 +2876,143 @@ void Playlist_ResetWeights(void)
 
 // 825B78C8  Playlist_CalcTotalWeights  (ui/ui_playlists.cpp:2228)
 
-void Playlist_CalcTotalWeights(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+int Playlist_CalcTotalWeights(int param_1,int param_2)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  byte *pbVar4;
-  byte *pbVar5;
-  undefined8 uVar3;
-  char cVar6;
+  uint uVar1;
+  playlistEntry *ppVar2;
+  playlistEntry *ppVar3;
+  PartyData *pPVar4;
+  bool bVar6;
+  int iVar5;
   longlong lVar7;
-  int iVar8;
-  longlong lVar9;
-  undefined4 uVar10;
+  uint uVar8;
+  char *pcVar9;
   
-  uVar2 = __savegprlr_22();
+  uVar1 = __savegprlr_22(param_1);
   lVar7 = 0;
-  if (0x28 < (uVar2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8216d8e0,0x8bc,0,0xffffffff8216ee24,uVar2,0x29);
+  if (0x28 < uVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",0x8bc,0,
+                    "playlistId doesn\'t index MAX_PLAYLISTS\n\t%i not in [0, %i)");
   }
-  iVar8 = (int)param_2;
-  iVar1 = (int)uVar2;
-  if ((DAT_82aa1a88 == 0) && (-1 < iVar8)) {
-    if (iVar8 < (int)(uint)(ushort)(&DAT_83fea892)[iVar1 * 0xbc]) {
-      pbVar4 = (byte *)Playlist_GetEntry(uVar2,param_2);
-      goto LAB_825b795c;
-    }
+  if (((g_generateAllMaps == 0) && (-1 < param_2)) &&
+     (param_2 < (int)(uint)playlists[uVar1].numEntries)) {
+    ppVar2 = Playlist_GetEntry(uVar1,param_2);
   }
-  pbVar4 = (byte *)0x0;
-LAB_825b795c:
-  lVar9 = 0;
-  if ((&DAT_83fea892)[iVar1 * 0xbc] != 0) {
+  else {
+    ppVar2 = (playlistEntry *)0x0;
+  }
+  uVar8 = 0;
+  if (playlists[uVar1].numEntries != 0) {
     do {
-      if ((int)lVar9 != iVar8) {
-        pbVar5 = (byte *)Playlist_GetEntry(uVar2,lVar9);
-        if ((pbVar4 == (byte *)0x0) || (*pbVar5 != *pbVar4)) {
-          if (*pbVar5 < DAT_83fe8718) {
-            uVar10 = (&DAT_83fe8518)[*pbVar5];
-          }
-          else {
-            uVar10 = 0;
-          }
-          uVar3 = Lobby_GetPartyData();
-          cVar6 = PartyHost_MapIsAcceptable(uVar3,uVar10);
-          if (cVar6 != '\0') {
-            lVar7 = (ulonglong)pbVar5[3] + lVar7;
-          }
+      if ((uVar8 != param_2) &&
+         ((ppVar3 = Playlist_GetEntry(uVar1,uVar8), ppVar2 == (playlistEntry *)0x0 ||
+          (ppVar3->mapindex != ppVar2->mapindex)))) {
+        if (ppVar3->mapindex < maps.numEntries) {
+          pcVar9 = maps.name[ppVar3->mapindex];
+        }
+        else {
+          pcVar9 = (char *)0x0;
+        }
+        pPVar4 = Lobby_GetPartyData();
+        bVar6 = PartyHost_MapIsAcceptable(pPVar4,pcVar9);
+        if (bVar6) {
+          lVar7 = (ulonglong)ppVar3->remainingWeight + lVar7;
         }
       }
-      lVar9 = lVar9 + 1;
-    } while ((int)lVar9 < (int)(uint)(ushort)(&DAT_83fea892)[iVar1 * 0xbc]);
+      uVar8 = uVar8 + 1;
+    } while ((int)uVar8 < (int)(uint)playlists[uVar1].numEntries);
   }
-  __restgprlr_22(lVar7);
-  return;
+  iVar5 = __restgprlr_22(lVar7);
+  return iVar5;
 }
 
 
 // 825B7A08  Playlist_FindEntryByWeight  (ui/ui_playlists.cpp:2276)
 
-void Playlist_FindEntryByWeight(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+int Playlist_FindEntryByWeight(int param_1,int param_2,int param_3)
 
 {
-  ulonglong uVar1;
-  byte *pbVar3;
-  byte *pbVar4;
-  undefined8 uVar2;
-  char cVar6;
+  uint uVar1;
+  playlistEntry *ppVar2;
+  playlistEntry *ppVar3;
+  PartyData *pPVar4;
+  bool bVar6;
   int iVar5;
-  int iVar7;
+  longlong lVar7;
   longlong lVar8;
-  longlong lVar9;
-  undefined4 uVar10;
+  char *pcVar9;
   
-  uVar1 = __savegprlr_21();
-  if (0x28 < (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8216d8e0,0x8ea,0,0xffffffff8216ee24,uVar1,0x29);
+  uVar1 = __savegprlr_21(param_1);
+  if (0x28 < uVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",0x8ea,0,
+                    "playlistId doesn\'t index MAX_PLAYLISTS\n\t%i not in [0, %i)");
+  }
+  lVar7 = 0;
+  if (((g_generateAllMaps == 0) && (-1 < param_3)) &&
+     (param_3 < (int)(uint)playlists[uVar1].numEntries)) {
+    ppVar2 = Playlist_GetEntry(uVar1,param_3);
+  }
+  else {
+    ppVar2 = (playlistEntry *)0x0;
   }
   lVar8 = 0;
-  iVar7 = (int)param_3;
-  iVar5 = (int)uVar1;
-  if ((DAT_82aa1a88 == 0) && (-1 < iVar7)) {
-    if (iVar7 < (int)(uint)(ushort)(&DAT_83fea892)[iVar5 * 0xbc]) {
-      pbVar3 = (byte *)Playlist_GetEntry(uVar1,param_3);
-      goto LAB_825b7aa0;
-    }
-  }
-  pbVar3 = (byte *)0x0;
-LAB_825b7aa0:
-  lVar9 = 0;
-  if ((&DAT_83fea892)[iVar5 * 0xbc] != 0) {
+  if (playlists[uVar1].numEntries != 0) {
     do {
-      if ((int)lVar9 != iVar7) {
-        pbVar4 = (byte *)Playlist_GetEntry(uVar1,lVar9);
-        if ((pbVar3 == (byte *)0x0) || (*pbVar4 != *pbVar3)) {
-          if (*pbVar4 < DAT_83fe8718) {
-            uVar10 = (&DAT_83fe8518)[*pbVar4];
-          }
-          else {
-            uVar10 = 0;
-          }
-          uVar2 = Lobby_GetPartyData();
-          cVar6 = PartyHost_MapIsAcceptable(uVar2,uVar10);
-          if ((cVar6 != '\0') && (lVar8 = (ulonglong)pbVar4[3] + lVar8, (int)param_2 < (int)lVar8))
-          {
-            __restgprlr_21(lVar9);
-            return;
-          }
+      if (((uint)lVar8 != param_3) &&
+         ((ppVar3 = Playlist_GetEntry(uVar1,(uint)lVar8), ppVar2 == (playlistEntry *)0x0 ||
+          (ppVar3->mapindex != ppVar2->mapindex)))) {
+        if (ppVar3->mapindex < maps.numEntries) {
+          pcVar9 = maps.name[ppVar3->mapindex];
+        }
+        else {
+          pcVar9 = (char *)0x0;
+        }
+        pPVar4 = Lobby_GetPartyData();
+        bVar6 = PartyHost_MapIsAcceptable(pPVar4,pcVar9);
+        if ((bVar6) && (lVar7 = (ulonglong)ppVar3->remainingWeight + lVar7, param_2 < (int)lVar7)) {
+          iVar5 = __restgprlr_21(lVar8);
+          return iVar5;
         }
       }
-      lVar9 = lVar9 + 1;
-    } while ((int)lVar9 < (int)(uint)(ushort)(&DAT_83fea892)[iVar5 * 0xbc]);
+      lVar8 = lVar8 + 1;
+    } while ((int)lVar8 < (int)(uint)playlists[uVar1].numEntries);
   }
   iVar5 = Playlist_CalcTotalWeights(uVar1,param_3);
   if (iVar5 == 0) {
-    __restgprlr_21();
-    return;
+    iVar5 = __restgprlr_21();
+    return iVar5;
   }
-  uVar2 = Playlist_CalcTotalWeights(uVar1,param_3);
-  Com_Error(1,0xffffffff8216ef78,param_2,uVar1,uVar2);
-  __restgprlr_21(lVar8);
-  return;
+  Playlist_CalcTotalWeights(uVar1,param_3);
+  Com_Error(ERR_DROP,
+            "Invalid selectedWeight of %i for playlist %i, total weight for this playlist is %i");
+  iVar5 = __restgprlr_21(lVar7);
+  return iVar5;
 }
 
 
 // 825B7BA0  Playlist_MarkEntryPlayed  (ui/ui_playlists.cpp:2329)
 
-void Playlist_MarkEntryPlayed(undefined8 param_1,undefined8 param_2)
+void Playlist_MarkEntryPlayed(int param_1,int param_2)
 
 {
-  int iVar1;
+  playlistEntry *ppVar1;
   
-  iVar1 = Playlist_GetEntry();
-  if (*(char *)(iVar1 + 3) == '\0') {
-    Com_PrintWarning(0x10,0xffffffff8216f018);
+  ppVar1 = Playlist_GetEntry(param_1,param_2);
+  if (ppVar1->remainingWeight == '\0') {
+    Com_PrintWarning(0x10,
+                     "Trying to mark playlistId %i, entry %i as played but it\'s already reached its quota for this playlist\n"
+                    );
   }
   else {
-    *(char *)(iVar1 + 3) = *(char *)(iVar1 + 3) + -1;
-    Com_DPrintf(0x10,0xffffffff8216efd0,param_1,param_2);
+    ppVar1->remainingWeight = ppVar1->remainingWeight + 0xff;
+    Com_DPrintf(0x10,"Marking playlistId %i, entry %i as played. Remaining weight is %i\n");
   }
   return;
 }
@@ -2954,109 +3020,118 @@ void Playlist_MarkEntryPlayed(undefined8 param_1,undefined8 param_2)
 
 // 825B8AE0  Playlist_HandleMapVoteSucceeded  (ui/ui_playlists.cpp:2344)
 
-void Playlist_HandleMapVoteSucceeded(undefined8 param_1,undefined8 param_2)
+void Playlist_HandleMapVoteSucceeded(int param_1,int param_2)
 
 {
-  undefined8 uVar1;
+  int iVar1;
   
-  uVar1 = Playlist_GetPlaylistIdForNum(param_1,*(undefined4 *)(DAT_82aa1adc + 0xc));
-  Com_Printf(0x10,0xffffffff8216f314);
-  Playlist_MarkEntryPlayed(uVar1,param_2);
+  iVar1 = Playlist_GetPlaylistIdForNum(param_1,(playlist->current).integer);
+  Com_Printf(0x10,"Updating weighting for alternate map due to vote success.\n");
+  Playlist_MarkEntryPlayed(iVar1,param_2);
   return;
 }
 
 
 // 825B8B40  Playlist_ChooseEntry  (ui/ui_playlists.cpp:2354)
 
-void Playlist_ChooseEntry(undefined8 param_1,undefined8 param_2,ulonglong param_3)
+int Playlist_ChooseEntry(int param_1,int param_2,bool param_3)
 
 {
-  undefined8 uVar1;
+  int iVar1;
+  void *pvVar2;
   int iVar3;
   int iVar4;
-  undefined8 uVar2;
+  longlong lVar5;
+  int iVar6;
+  ulonglong uVar7;
   
-  uVar1 = __savegprlr_22();
-  iVar3 = Playlist_GetPlaylistIdForNum(uVar1,*(undefined4 *)(DAT_82aa1adc + 0xc));
-  if ((&DAT_83fea892)[iVar3 * 0xbc] == 0) {
-    Com_Error(1,0xffffffff8216f468,&DAT_83fea720 + iVar3 * 0x178);
-    __restgprlr_22(0xffffffffffffffff);
-    return;
+  uVar7 = (ulonglong)param_3;
+  lVar5 = (longlong)param_2;
+  iVar1 = __savegprlr_22(param_1);
+  iVar1 = Playlist_GetPlaylistIdForNum(iVar1,(playlist->current).integer);
+  if (playlists[iVar1].numEntries == 0) {
+    Com_Error(ERR_DROP,"Playlist %s has no entries\n");
+    iVar1 = __restgprlr_22(0xffffffffffffffff);
+    return iVar1;
   }
-  if (DAT_82aa1a88 == 1) {
-    Playlist_ResetWeights(iVar3);
-    DAT_82aa1a88 = 2;
-    uVar1 = FS_FOpenFileWrite(0xffffffff8216f458);
-    FS_Printf(uVar1,0xffffffff8205de34);
-    FS_FCloseFile(uVar1);
+  if (g_generateAllMaps == 1) {
+    Playlist_ResetWeights(iVar1);
+    g_generateAllMaps = 2;
+    pvVar2 = FS_FOpenFileWrite("allmaps_start");
+    FS_Printf(pvVar2,"hi");
+    FS_FCloseFile(pvVar2);
   }
-  uVar1 = Playlist_CalcTotalWeights(iVar3,param_2);
-  if ((int)uVar1 == 0) {
-    if ((*(uint *)(&DAT_83fea88c + iVar3 * 0x178) & 4) != 0) {
-      if ((param_3 & 0xff) == 0) {
-        __restgprlr_22(param_2);
-        return;
+  iVar6 = (int)lVar5;
+  iVar3 = Playlist_CalcTotalWeights(iVar1,iVar6);
+  if (iVar3 == 0) {
+    if ((playlists[iVar1].flags & 4U) != 0) {
+      if ((uVar7 & 0xff) == 0) {
+        iVar1 = __restgprlr_22(lVar5);
+        return iVar1;
       }
-      if (DAT_82aa1a88 != 0) {
-        if (DAT_82aa1a88 != 2) {
-          MyAssertHandler(0xffffffff8216d8e0,0x959,0,0xffffffff8216f438,DAT_82aa1a88,2);
+      if (g_generateAllMaps != 0) {
+        if (g_generateAllMaps != 2) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",
+                          0x959,0,"g_generateAllMaps == 2\n\t%i, %i");
         }
-        DAT_82aa1a88 = 0;
-        uVar1 = FS_FOpenFileWrite(0xffffffff8216f428);
-        FS_Printf(uVar1,0xffffffff8205de34);
-        FS_FCloseFile(uVar1);
+        g_generateAllMaps = 0;
+        pvVar2 = FS_FOpenFileWrite("allmaps_finish");
+        FS_Printf(pvVar2,"hi");
+        FS_FCloseFile(pvVar2);
       }
-      Com_Error(1,0xffffffff8216f414);
+      Com_Error(ERR_DROP,"\x15Playlist complete\n");
     }
-    Playlist_ResetWeights(iVar3);
-    uVar1 = Playlist_CalcTotalWeights(iVar3,param_2);
+    Playlist_ResetWeights(iVar1);
+    iVar3 = Playlist_CalcTotalWeights(iVar1,iVar6);
   }
   iVar4 = rand();
-  uVar2 = Playlist_FindEntryByWeight
-                    (iVar3,(ulonglong)((longlong)iVar4 * (longlong)(int)uVar1) >> 0xf & 0xffffffff,
-                     param_2);
-  if ((int)(uint)(ushort)(&DAT_83fea892)[iVar3 * 0xbc] <= (int)uVar2) {
-    MyAssertHandler(0xffffffff8216d8e0,0x972,0,0xffffffff8216f3c8,0xffffffff8216f3e0,uVar2);
+  iVar3 = Playlist_FindEntryByWeight
+                    (iVar1,(int)((ulonglong)((longlong)iVar4 * (longlong)iVar3) >> 0xf),iVar6);
+  if ((int)(uint)playlists[iVar1].numEntries <= iVar3) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",0x972,0,
+                    "%s\n\t(itemSelected) = %i");
   }
-  Com_DPrintf(0x10,0xffffffff8216f350,param_2,uVar2,iVar3,uVar1);
-  if ((param_3 & 0xff) != 0) {
-    Playlist_MarkEntryPlayed(iVar3,uVar2);
+  Com_DPrintf(0x10,
+              "Last playlist entry we played was %i, this time it\'s %i for playlistId %i. We choose from a pool of %i total weight.\n"
+             );
+  if ((uVar7 & 0xff) != 0) {
+    Playlist_MarkEntryPlayed(iVar1,iVar3);
   }
-  __restgprlr_22(uVar2);
-  return;
+  iVar1 = __restgprlr_22(iVar3);
+  return iVar1;
 }
 
 
 // 825B8D58  Playlist_MigrateHost  (ui/ui_playlists.cpp:2430)
 
-void Playlist_MigrateHost(undefined8 param_1,int param_2,undefined8 param_3)
+void Playlist_MigrateHost(int param_1,uchar *param_2,int param_3)
 
 {
-  char cVar1;
-  undefined8 uVar2;
-  int iVar3;
-  int iVar4;
+  int iVar1;
+  uint uVar2;
+  playlistEntry *ppVar3;
   
-  uVar2 = __savegprlr_25();
-  uVar2 = Playlist_GetPlaylistIdForNum(uVar2,*(undefined4 *)(DAT_82aa1adc + 0xc));
-  Playlist_ResetWeights();
-  Com_DPrintf(0x10,0xffffffff8216f488,param_3,uVar2);
-  iVar4 = 0;
-  if (0 < (int)param_3) {
+  iVar1 = __savegprlr_25(param_1);
+  uVar2 = Playlist_GetPlaylistIdForNum(iVar1,(playlist->current).integer);
+  Playlist_ResetWeights(uVar2);
+  Com_DPrintf(0x10,"Playlists: Migrating host: copying %i states for playlistId %i.\n");
+  iVar1 = 0;
+  if (0 < param_3) {
     do {
-      cVar1 = *(char *)(iVar4 + param_2);
-      if (cVar1 != -1) {
-        iVar3 = Playlist_GetEntry(uVar2,cVar1);
-        if (*(char *)(iVar3 + 3) == '\0') {
-          Com_PrintWarning(0x10,0xffffffff8216f018);
+      if (param_2[iVar1] != 0xff) {
+        ppVar3 = Playlist_GetEntry(uVar2,(uint)param_2[iVar1]);
+        if (ppVar3->remainingWeight == '\0') {
+          Com_PrintWarning(0x10,
+                           "Trying to mark playlistId %i, entry %i as played but it\'s already reached its quota for this playlist\n"
+                          );
         }
         else {
-          *(char *)(iVar3 + 3) = *(char *)(iVar3 + 3) + -1;
-          Com_DPrintf(0x10,0xffffffff8216efd0,uVar2,cVar1);
+          ppVar3->remainingWeight = ppVar3->remainingWeight + 0xff;
+          Com_DPrintf(0x10,"Marking playlistId %i, entry %i as played. Remaining weight is %i\n");
         }
       }
-      iVar4 = iVar4 + 1;
-    } while (iVar4 < (int)param_3);
+      iVar1 = iVar1 + 1;
+    } while (iVar1 < param_3);
   }
   __restgprlr_25();
   return;
@@ -3065,45 +3140,48 @@ void Playlist_MigrateHost(undefined8 param_1,int param_2,undefined8 param_3)
 
 // 825B8E20  Playlist_SetDVarsForVoteEntry  (ui/ui_playlists.cpp:2447)
 
-void Playlist_SetDVarsForVoteEntry(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+void Playlist_SetDVarsForVoteEntry(int param_1,int param_2,int param_3)
 
 {
-  int iVar1;
-  undefined8 uVar2;
-  byte *pbVar3;
-  undefined4 uVar4;
-  int iVar5;
-  undefined1 *puVar6;
+  byte bVar1;
+  int iVar2;
+  uint uVar3;
+  playlistEntry *ppVar4;
+  ulonglong uVar5;
+  char *pcVar6;
+  ulonglong uVar7;
   
-  uVar2 = __savegprlr_27();
-  if (1 < (param_3 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8216d8e0,0x994,0,0xffffffff8216f564,param_3,2);
+  uVar7 = (ulonglong)param_3;
+  uVar5 = (ulonglong)param_2;
+  iVar2 = __savegprlr_27(param_1);
+  if (1 < (uVar7 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",0x994,0,
+                    "index doesn\'t index NUM_MAP_VOTE_ENTRIES\n\t%i not in [0, %i)");
   }
-  if (0x7ff < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8216d8e0,0x995,0,0xffffffff8216f52c,param_2,0x800);
+  if (0x7ff < (uVar5 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",0x995,0,
+                    "entryNum doesn\'t index MAX_ENTRIES\n\t%i not in [0, %i)");
   }
-  uVar2 = Playlist_GetPlaylistIdForNum(uVar2,*(undefined4 *)(DAT_82aa1adc + 0xc));
-  pbVar3 = (byte *)Playlist_GetEntry(uVar2,param_2);
-  iVar5 = (uint)pbVar3[1] * 0x78;
-  puVar6 = &DAT_84009c58 + iVar5;
-  if (*pbVar3 < DAT_83fe8718) {
-    uVar4 = (&DAT_83fe8518)[*pbVar3];
+  uVar3 = Playlist_GetPlaylistIdForNum(iVar2,(playlist->current).integer);
+  ppVar4 = Playlist_GetEntry(uVar3,(uint)uVar5);
+  bVar1 = ppVar4->gametype;
+  if (ppVar4->mapindex < maps.numEntries) {
+    pcVar6 = maps.name[ppVar4->mapindex];
   }
   else {
-    uVar4 = 0;
+    pcVar6 = (char *)0x0;
   }
-  iVar1 = (int)((param_3 + (param_3 & 0x7fffffff) * 2 & 0x3fffffff) << 2);
-  Dvar_SetStringByName
-            (*(undefined4 *)((int)&PTR_s_ui_mapvote_entrya_mapname_8216aaac + iVar1),uVar4);
-  if (puVar6 == (undefined1 *)0x0) {
-    MyAssertHandler(0xffffffff8216d8e0,0x99f,0,0xffffffff82000f98,0xffffffff8216f51c);
+  iVar2 = (int)((uVar7 + (uVar7 & 0x7fffffff) * 2 & 0xffffffff) << 2);
+  Dvar_SetStringByName(*(char **)((int)&g_mapVoteInfo[0].uiMapnameDVar + iVar2),pcVar6);
+  if (gametypes + bVar1 == (playlistGametype *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",0x99f,0,
+                    "%s");
   }
-  Com_DPrintf(0x10,0xffffffff8216f4d0,param_3,
-              *(undefined4 *)((int)&PTR_s_ui_mapvote_entrya_gametype_8216aab0 + iVar1),
-              &DAT_84009c78 + iVar5,puVar6);
+  Com_DPrintf(0x10,
+              "Playlists: Setting up mapvote %d =[%s] gametype \'%s\' (running script \'%s\')\n");
   Dvar_SetStringByName
-            (*(undefined4 *)((int)&PTR_s_ui_mapvote_entrya_gametype_8216aab0 + iVar1),puVar6);
-  Dvar_SetBoolByName(0xffffffff82022f98,(&DAT_84009cce)[iVar5]);
+            (*(char **)((int)&g_mapVoteInfo[0].uiGameTypeDVar + iVar2),gametypes[bVar1].scriptName);
+  Dvar_SetBoolByName("g_hardcore",*(bool *)((uint)bVar1 * 0x78 + -0x7bff6332));
   __restgprlr_27();
   return;
 }
@@ -3111,80 +3189,82 @@ void Playlist_SetDVarsForVoteEntry(undefined8 param_1,ulonglong param_2,ulonglon
 
 // 825B8F78  Playlist_RunRules  (ui/ui_playlists.cpp:2472)
 
-void Playlist_RunRules(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void Playlist_RunRules(int param_1,int param_2)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
-  int iVar4;
-  byte *pbVar5;
-  int iVar6;
+  int iVar1;
+  LocalClientNum_t LVar2;
+  uint uVar3;
+  playlistEntry *ppVar4;
+  dvar_t *pdVar5;
+  GameStateInfo *pGVar6;
   int iVar7;
-  undefined8 uVar3;
-  uint uVar8;
-  int iVar9;
-  undefined1 *puVar10;
-  undefined4 uVar11;
-  undefined1 *puVar12;
+  char *pcVar8;
+  uint uVar9;
+  playlistGametype *ppVar10;
   
-  uVar1 = __savegprlr_21();
-  uVar2 = CL_LocalClientNumFromControllerIndex();
-  iVar4 = Playlist_GetPlaylistIdForNum(uVar1,*(undefined4 *)(DAT_82aa1adc + 0xc));
-  pbVar5 = (byte *)Playlist_GetEntry(iVar4,param_2);
-  uVar8 = (uint)pbVar5[1];
-  iVar9 = uVar8 * 0x78;
-  puVar12 = &DAT_84009c58 + iVar9;
-  if (*pbVar5 < DAT_83fe8718) {
-    uVar11 = (&DAT_83fe8518)[*pbVar5];
+  iVar1 = __savegprlr_21(param_1);
+  LVar2 = CL_LocalClientNumFromControllerIndex(iVar1);
+  uVar3 = Playlist_GetPlaylistIdForNum(iVar1,(playlist->current).integer);
+  ppVar4 = Playlist_GetEntry(uVar3,param_2);
+  uVar9 = (uint)ppVar4->gametype;
+  ppVar10 = gametypes + uVar9;
+  if (ppVar4->mapindex < maps.numEntries) {
+    pcVar8 = maps.name[ppVar4->mapindex];
   }
   else {
-    uVar11 = 0;
+    pcVar8 = (char *)0x0;
   }
-  iVar4 = iVar4 * 0x178;
-  Com_DPrintf(0x10,0xffffffff8216f6c0,&DAT_83fea720 + iVar4,uVar11);
-  iVar6 = Dvar_FindVar(0xffffffff8216f6b0);
-  if ((iVar6 == 0) || (**(char **)(iVar6 + 0xc) == '\0')) {
-    Dvar_SetStringByName(0xffffffff8216f6b0,*(undefined4 *)(DAT_83f71e10 + 0xc));
+  Com_DPrintf(0x10,"Playlists: Setting up rules for the \'%s\' playlist, for entry \'%s\'.\n");
+  pdVar5 = Dvar_FindVar("ui_oldmapname");
+  if ((pdVar5 == (dvar_t *)0x0) || (*(pdVar5->current).string == '\0')) {
+    Dvar_SetStringByName("ui_oldmapname",(ui_mapname->current).string);
   }
-  Dvar_SetStringByName(0xffffffff8202c6bc,uVar11);
-  if (puVar12 == (undefined1 *)0x0) {
-    MyAssertHandler(0xffffffff8216d8e0,0x9bf,0,0xffffffff82000f98,0xffffffff8216f51c);
+  Dvar_SetStringByName("ui_mapname",pcVar8);
+  if (ppVar10 == (playlistGametype *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",0x9bf,0,
+                    "%s");
   }
-  puVar10 = &DAT_84009c78 + iVar9;
-  Com_DPrintf(0x10,0xffffffff8216f674,puVar10,puVar12);
-  iVar6 = GameStateInfo_Get();
-  if ((&DAT_84009ccc)[iVar9] == -1) {
-    *(undefined4 *)(iVar6 + 4) = 0;
-    Dvar_SetStringByName(0xffffffff8202c6b0,puVar12);
-    Dvar_SetBoolByName(0xffffffff82022f98,(&DAT_84009cce)[iVar9]);
+  Com_DPrintf(0x10,"Playlists: Setting up gametype \'%s\' (running script \'%s\')\n");
+  pGVar6 = GameStateInfo_Get();
+  if (gametypes[uVar9].recipeIndex == 0xff) {
+    pGVar6->usingRecipe = 0;
+    Dvar_SetStringByName("ui_gametype",ppVar10->scriptName);
+    Dvar_SetBoolByName("g_hardcore",*(bool *)(uVar9 * 0x78 + -0x7bff6332));
   }
   else {
-    Com_DPrintf(0x10,0xffffffff8216f618,puVar10,puVar12);
-    if (*(int *)(iVar6 + 8) == 0) {
-      MyAssertHandler(0xffffffff8216d8e0,0x9c8,0,0xffffffff82000f98,0xffffffff82042524);
+    Com_DPrintf(0x10,
+                "Playlists: Setting up gametype \'%s\' (loading recipe defaults \'%s\' with delta from \'%d\')\n"
+               );
+    if (pGVar6->matchRules == (MatchRules *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",0x9c8,0
+                      ,"%s");
     }
     iVar7 = LoadMatchRulesFromPlaylists
-                      (*(undefined4 *)(iVar6 + 8),puVar12,(&DAT_84009ccc)[iVar9],uVar1);
+                      (pGVar6->matchRules,ppVar10->scriptName,(uint)gametypes[uVar9].recipeIndex,
+                       iVar1);
     if (iVar7 == 0) {
-      Com_Error(1,0xffffffff8216f604);
+      Com_Error(ERR_DROP,"Invalid playlist\n");
     }
-    uVar3 = BG_MatchRulesData_GetGameType(*(undefined4 *)(iVar6 + 8));
-    Dvar_SetStringByName(0xffffffff8202c6b0,uVar3);
-    *(undefined4 *)(iVar6 + 4) = 1;
+    pcVar8 = BG_MatchRulesData_GetGameType(pGVar6->matchRules);
+    Dvar_SetStringByName("ui_gametype",pcVar8);
+    pGVar6->usingRecipe = 1;
   }
-  Cmd_ExecuteSingleCommand(uVar2,uVar1,0xffffffff820495d8);
+  Cmd_ExecuteSingleCommand(LVar2,iVar1,"exec default_xboxlive.cfg");
   if (*DAT_84009c4c != '\0') {
-    Cbuf_ExecuteBuffer(uVar2,uVar1);
+    Cbuf_ExecuteBuffer(LVar2,iVar1,DAT_84009c4c);
   }
-  Cbuf_ExecuteBuffer(uVar2,uVar1,*(undefined4 *)(&DAT_83fea880 + iVar4));
-  if (*(char *)(&DAT_84009cc8)[uVar8 * 0x1e] != '\0') {
-    Com_DPrintf(0x10,0xffffffff8216f5c8,puVar10);
-    Cbuf_ExecuteBuffer(uVar2,uVar1,(&DAT_84009cc8)[uVar8 * 0x1e]);
+  Cbuf_ExecuteBuffer(LVar2,iVar1,playlists[uVar3].rules);
+  if (*gametypes[uVar9].rules != '\0') {
+    Com_DPrintf(0x10,"Playlists: Running custom game rules for gametype %s: %s\n");
+    Cbuf_ExecuteBuffer(LVar2,iVar1,gametypes[uVar9].rules);
   }
-  Dvar_SetBool(DAT_82b58f8c,(&DAT_84009ccd)[iVar9]);
-  Dvar_SetStringByName(0xffffffff8216cba0,&DAT_83fea720 + iVar4);
-  Dvar_SetStringByName(0xffffffff8216cb90,&DAT_83fea860 + iVar4);
-  Com_DPrintf(0x10,0xffffffff8216f5a0);
+  Dvar_SetBool(party_teambased,*(bool *)(uVar9 * 0x78 + -0x7bff6333));
+  Dvar_SetStringByName("playlist_name",playlists[uVar3].name);
+  Dvar_SetStringByName("playlist_image",playlists[uVar3].image);
+  Com_DPrintf(0x10,"Playlists: Finished setting up rules.\n");
   __restgprlr_21();
   return;
 }
@@ -3192,93 +3272,111 @@ void Playlist_RunRules(undefined8 param_1,undefined8 param_2)
 
 // 825B9248  Playlist_GetLocalizedGametypeName  (ui/ui_playlists.cpp:2542)
 
-void Playlist_GetLocalizedGametypeName(undefined8 param_1,ulonglong param_2)
+char * Playlist_GetLocalizedGametypeName(int param_1,int param_2)
 
 {
-  undefined8 uVar1;
-  ulonglong uVar2;
-  int iVar3;
-  longlong lVar4;
+  int iVar1;
+  uint uVar2;
+  playlistEntry *ppVar3;
+  char *pcVar4;
+  ulonglong uVar5;
+  longlong lVar6;
   
-  uVar1 = __savegprlr_29();
-  uVar2 = Playlist_GetPlaylistIdForNum(uVar1,*(undefined4 *)(DAT_82aa1adc + 0xc));
-  if (0x28 < (uVar2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8216d8e0,0x9f5,0,0xffffffff8216ee24,uVar2,0x29);
+  uVar5 = (ulonglong)param_2;
+  iVar1 = __savegprlr_29(param_1);
+  uVar2 = Playlist_GetPlaylistIdForNum(iVar1,(playlist->current).integer);
+  if (0x28 < uVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",0x9f5,0,
+                    "playlistId doesn\'t index MAX_PLAYLISTS\n\t%i not in [0, %i)");
   }
-  if (0x7ff < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8216d8e0,0x9f6,0,0xffffffff8216f52c,param_2,0x800);
+  if (0x7ff < (uVar5 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",0x9f6,0,
+                    "entryNum doesn\'t index MAX_ENTRIES\n\t%i not in [0, %i)");
   }
-  iVar3 = Playlist_GetEntry(uVar2,param_2);
-  lVar4 = (ulonglong)*(byte *)(iVar3 + 1) * 0x78;
-  if (lVar4 == 0x7bff63a8) {
-    MyAssertHandler(0xffffffff8216d8e0,0x9fa,0,0xffffffff82000f98,0xffffffff8216f51c);
+  ppVar3 = Playlist_GetEntry(uVar2,(uint)uVar5);
+  lVar6 = (ulonglong)ppVar3->gametype * 0x78;
+  if (lVar6 == 0x7bff63a8) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",0x9fa,0,
+                    "%s");
   }
-  __restgprlr_29(lVar4 + -0x7bff6388);
-  return;
+  pcVar4 = (char *)__restgprlr_29(lVar6 + -0x7bff6388);
+  return pcVar4;
 }
 
 
 // 825B9318  Playlist_GetLocalizedGametypeAbbrv  (ui/ui_playlists.cpp:2559)
 
-void Playlist_GetLocalizedGametypeAbbrv(undefined8 param_1,ulonglong param_2)
+char * Playlist_GetLocalizedGametypeAbbrv(int param_1,int param_2)
 
 {
-  undefined8 uVar1;
-  ulonglong uVar2;
-  int iVar3;
-  longlong lVar4;
+  int iVar1;
+  uint uVar2;
+  playlistEntry *ppVar3;
+  char *pcVar4;
+  ulonglong uVar5;
+  longlong lVar6;
   
-  uVar1 = __savegprlr_29();
-  uVar2 = Playlist_GetPlaylistIdForNum(uVar1,*(undefined4 *)(DAT_82aa1adc + 0xc));
-  if (0x28 < (uVar2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8216d8e0,0xa06,0,0xffffffff8216ee24,uVar2,0x29);
+  uVar5 = (ulonglong)param_2;
+  iVar1 = __savegprlr_29(param_1);
+  uVar2 = Playlist_GetPlaylistIdForNum(iVar1,(playlist->current).integer);
+  if (0x28 < uVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",0xa06,0,
+                    "playlistId doesn\'t index MAX_PLAYLISTS\n\t%i not in [0, %i)");
   }
-  if (0x7ff < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8216d8e0,0xa07,0,0xffffffff8216f52c,param_2,0x800);
+  if (0x7ff < (uVar5 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",0xa07,0,
+                    "entryNum doesn\'t index MAX_ENTRIES\n\t%i not in [0, %i)");
   }
-  iVar3 = Playlist_GetEntry(uVar2,param_2);
-  lVar4 = (ulonglong)*(byte *)(iVar3 + 1) * 0x78;
-  if (lVar4 == 0x7bff63a8) {
-    MyAssertHandler(0xffffffff8216d8e0,0xa0b,0,0xffffffff82000f98,0xffffffff8216f51c);
+  ppVar3 = Playlist_GetEntry(uVar2,(uint)uVar5);
+  lVar6 = (ulonglong)ppVar3->gametype * 0x78;
+  if (lVar6 == 0x7bff63a8) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",0xa0b,0,
+                    "%s");
   }
-  __restgprlr_29(lVar4 + -0x7bff6348);
-  return;
+  pcVar4 = (char *)__restgprlr_29(lVar6 + -0x7bff6348);
+  return pcVar4;
 }
 
 
 // 825B7C20  Playlist_GetVersionNumber  (ui/ui_playlists.cpp:2577)
 
-undefined4 Playlist_GetVersionNumber(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+uint Playlist_GetVersionNumber(void)
 
 {
-  return DAT_83fe871c;
+  return playlist_versionNum;
 }
 
 
 // 825B7C30  PlaylistFeeder_GetUnlockXp  (ui/ui_playlists.cpp:2583)
 
-undefined4 PlaylistFeeder_GetUnlockXp(undefined8 param_1,ulonglong param_2)
+int PlaylistFeeder_GetUnlockXp(int param_1,uint param_2)
 
 {
-  char cVar2;
-  uint uVar1;
-  int iVar3;
-  int *piVar4;
+  byte bVar1;
+  uint uVar2;
+  bool bVar4;
+  uint uVar3;
+  PlaylistUIStackItem *pPVar5;
   
-  if (0x28 < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8216d8e0,0xa18,0,0xffffffff8216f080,param_2,0x29);
+  if (0x28 < param_2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",0xa18,0,
+                    "index doesn\'t index MAX_PLAYLISTS\n\t%i not in [0, %i)");
   }
-  cVar2 = HavePlaylists(param_1);
-  if (((cVar2 != '\0') && (DAT_8400ba58 != 0)) &&
-     (piVar4 = (int *)(&DAT_8400ba54 + DAT_8400ba58 * 8), piVar4 != (int *)0x0)) {
-    uVar1 = PlaylistFeeder_ClampIndex(piVar4,param_2);
-    iVar3 = *piVar4 * 0x20c;
-    if (uVar1 < (byte)(&DAT_83fee558)[iVar3]) {
-      if ((&DAT_83fee4b8)[*piVar4 * 0x83 + uVar1 * 2] == 1) {
-        return (&DAT_83fee55c)[(uint)(byte)(&DAT_83fee4bc)[uVar1 * 8 + iVar3] * 0x83];
+  bVar4 = HavePlaylists(param_1);
+  if (((bVar4) && (s_playlistUIStack.count != 0)) &&
+     (pPVar5 = (PlaylistUIStackItem *)
+               (gametypes[0x3f].abbrvName + s_playlistUIStack.count * 8 + 0x14),
+     pPVar5 != (PlaylistUIStackItem *)0x0)) {
+    uVar3 = PlaylistFeeder_ClampIndex(pPVar5,param_2);
+    uVar2 = pPVar5->category;
+    if (uVar3 < categories[uVar2].numEntries) {
+      bVar1 = categories[uVar2].entries[uVar3].num;
+      if (categories[uVar2].entries[uVar3].type == CATEGORY) {
+        return categories[bVar1].unlockXp;
       }
-      return *(undefined4 *)(&DAT_83fea884 + (uint)(byte)(&DAT_83fee4bc)[uVar1 * 8 + iVar3] * 0x178)
-      ;
+      return playlists[bVar1].unlockXp;
     }
   }
   return 0x7fffffff;
@@ -3287,135 +3385,144 @@ undefined4 PlaylistFeeder_GetUnlockXp(undefined8 param_1,ulonglong param_2)
 
 // 825B7D50  Playlist_GetMaxPartySize  (ui/ui_playlists.cpp:2607)
 
-undefined1 Playlist_GetMaxPartySize(undefined8 param_1,ulonglong param_2)
+int Playlist_GetMaxPartySize(int param_1,int param_2)
 
 {
-  char cVar1;
-  undefined1 uVar2;
+  bool bVar2;
+  uint uVar1;
   
-  if (0x28 < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8216d8e0,0xa30,0,0xffffffff8216ee24,param_2,0x29);
+  if (0x28 < (uint)param_2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",0xa30,0,
+                    "playlistId doesn\'t index MAX_PLAYLISTS\n\t%i not in [0, %i)");
   }
-  cVar1 = HavePlaylists(param_1);
-  if (cVar1 == '\0') {
-    uVar2 = 0;
+  bVar2 = HavePlaylists(param_1);
+  if (bVar2) {
+    uVar1 = (uint)playlists[param_2].maxPartySize;
   }
   else {
-    uVar2 = (&DAT_83fea894)[(int)param_2 * 0x178];
+    uVar1 = 0;
   }
-  return uVar2;
+  return uVar1;
 }
 
 
 // 825B7DE0  Playlist_GetMinPartySize  (ui/ui_playlists.cpp:2618)
 
-undefined1 Playlist_GetMinPartySize(undefined8 param_1,ulonglong param_2)
+int Playlist_GetMinPartySize(int param_1,int param_2)
 
 {
-  char cVar1;
-  undefined1 uVar2;
+  bool bVar2;
+  uint uVar1;
   
-  if (0x28 < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8216d8e0,0xa3b,0,0xffffffff8216ee24,param_2,0x29);
+  if (0x28 < (uint)param_2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",0xa3b,0,
+                    "playlistId doesn\'t index MAX_PLAYLISTS\n\t%i not in [0, %i)");
   }
-  cVar1 = HavePlaylists(param_1);
-  if (cVar1 == '\0') {
-    uVar2 = 0;
+  bVar2 = HavePlaylists(param_1);
+  if (bVar2) {
+    uVar1 = (uint)playlists[param_2].minPartySize;
   }
   else {
-    uVar2 = (&DAT_83fea895)[(int)param_2 * 0x178];
+    uVar1 = 0;
   }
-  return uVar2;
+  return uVar1;
 }
 
 
 // 825B7E70  Playlist_GetNumRounds  (ui/ui_playlists.cpp:2629)
 
-undefined1 Playlist_GetNumRounds(undefined8 param_1,ulonglong param_2)
+int Playlist_GetNumRounds(int param_1,int param_2)
 
 {
-  char cVar1;
-  undefined1 uVar2;
+  bool bVar2;
+  uint uVar1;
   
-  if (0x28 < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8216d8e0,0xa46,0,0xffffffff8216ee24,param_2,0x29);
+  if (0x28 < (uint)param_2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",0xa46,0,
+                    "playlistId doesn\'t index MAX_PLAYLISTS\n\t%i not in [0, %i)");
   }
-  cVar1 = HavePlaylists(param_1);
-  if (cVar1 == '\0') {
-    uVar2 = 0;
+  bVar2 = HavePlaylists(param_1);
+  if (bVar2) {
+    uVar1 = (uint)playlists[param_2].numRounds;
   }
   else {
-    uVar2 = (&DAT_83fea896)[(int)param_2 * 0x178];
+    uVar1 = 0;
   }
-  return uVar2;
+  return uVar1;
 }
 
 
 // 825B7F00  Playlist_JoinInProgressDisabled  (ui/ui_playlists.cpp:2640)
 
-uint Playlist_JoinInProgressDisabled(undefined8 param_1,ulonglong param_2)
+bool Playlist_JoinInProgressDisabled(int param_1,int param_2)
 
 {
-  char cVar2;
-  uint uVar1;
+  bool bVar1;
   
-  if (0x28 < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8216d8e0,0xa51,0,0xffffffff8216ee24,param_2,0x29);
+  if (0x28 < (uint)param_2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",0xa51,0,
+                    "playlistId doesn\'t index MAX_PLAYLISTS\n\t%i not in [0, %i)");
   }
-  cVar2 = HavePlaylists(param_1);
-  if (cVar2 == '\0') {
-    uVar1 = 0;
+  bVar1 = HavePlaylists(param_1);
+  if (bVar1) {
+    bVar1 = (bool)((byte)playlists[param_2].flags & 1);
   }
   else {
-    uVar1 = *(uint *)(&DAT_83fea88c + (int)param_2 * 0x178) & 1;
+    bVar1 = false;
   }
-  return uVar1;
+  return bVar1;
 }
 
 
 // 825B7F98  Playlist_PartyBasedTeams  (ui/ui_playlists.cpp:2651)
 
-uint Playlist_PartyBasedTeams(undefined8 param_1,ulonglong param_2)
+bool Playlist_PartyBasedTeams(int param_1,int param_2)
 
 {
-  char cVar2;
-  uint uVar1;
+  bool bVar1;
   
-  if (0x28 < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8216d8e0,0xa5c,0,0xffffffff8216ee24,param_2,0x29);
+  if (0x28 < (uint)param_2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",0xa5c,0,
+                    "playlistId doesn\'t index MAX_PLAYLISTS\n\t%i not in [0, %i)");
   }
-  cVar2 = HavePlaylists(param_1);
-  if (cVar2 == '\0') {
-    uVar1 = 0;
+  bVar1 = HavePlaylists(param_1);
+  if (bVar1) {
+    bVar1 = (bool)((byte)((uint)playlists[param_2].flags >> 1) & 1);
   }
   else {
-    uVar1 = *(uint *)(&DAT_83fea88c + (int)param_2 * 0x178) >> 1 & 1;
+    bVar1 = false;
   }
-  return uVar1;
+  return bVar1;
 }
 
 
 // 825B8030  PlaylistFeeder_ItemImage  (ui/ui_playlists.cpp:2661)
 
-undefined8 PlaylistFeeder_ItemImage(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+Material * PlaylistFeeder_ItemImage(LocalClientNum_t param_1,int param_2)
 
 {
-  int iVar2;
-  undefined8 uVar1;
-  uint *puVar3;
+  int iVar1;
+  Material *pMVar2;
+  PlaylistUIStackItem *pPVar3;
   
-  if ((DAT_8400ba58 != 0) &&
-     (puVar3 = (uint *)(&DAT_8400ba54 + DAT_8400ba58 * 8), puVar3 != (uint *)0x0)) {
-    iVar2 = PlaylistFeeder_ClampIndex(puVar3);
-    if (0x13 < *puVar3) {
-      MyAssertHandler(0xffffffff8216d8e0,0xa6b,0,0xffffffff8216f0c0,*puVar3,0x14);
+  if ((s_playlistUIStack.count != 0) &&
+     (pPVar3 = (PlaylistUIStackItem *)
+               (gametypes[0x3f].abbrvName + s_playlistUIStack.count * 8 + 0x14),
+     pPVar3 != (PlaylistUIStackItem *)0x0)) {
+    iVar1 = PlaylistFeeder_ClampIndex(pPVar3,param_2);
+    if (0x13 < pPVar3->category) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",0xa6b,0
+                      ,"head->category doesn\'t index MAX_CATEGORIES\n\t%i not in [0, %i)");
     }
-    if ((iVar2 < (int)(uint)(byte)(&DAT_83fee558)[*puVar3 * 0x20c]) &&
-       ((&DAT_83fee4b8)[*puVar3 * 0x83 + iVar2 * 2] != 0)) {
-      uVar1 = Material_RegisterHandle(0xffffffff8216f0b8,3);
-      return uVar1;
+    if ((iVar1 < (int)(uint)categories[pPVar3->category].numEntries) &&
+       (categories[pPVar3->category].entries[iVar1].type != PLAYLIST)) {
+      pMVar2 = Material_RegisterHandle("more",3);
+      return pMVar2;
     }
   }
-  return 0;
+  return (Material *)0x0;
 }
 

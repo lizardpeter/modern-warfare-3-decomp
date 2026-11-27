@@ -2,30 +2,35 @@
 
 // 822F04E0  BG_Player_DoControllers  (cgame_mp/cg_pose_mp.cpp:16)
 
-void BG_Player_DoControllers(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+void BG_Player_DoControllers(CEntPlayerInfo *param_1,DObj *param_2,int *param_3)
 
 {
-  uint *puVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
+  float *pfVar1;
+  int *piVar2;
+  float *pfVar3;
   int iVar4;
   
-  puVar1 = (uint *)__savegprlr_23();
-  uVar2 = (ulonglong)*puVar1;
-  if (uVar2 == 0) {
-    MyAssertHandler(0xffffffff82021568,0x15,0,0xffffffff82000f98,0xffffffff82021560);
+  piVar2 = (int *)__savegprlr_23(param_1);
+  pfVar1 = (float *)*piVar2;
+  if (pfVar1 == (float *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_pose_mp.cpp",0x15,
+                    0,"%s");
   }
   iVar4 = 0;
-  uVar3 = uVar2;
+  pfVar3 = pfVar1;
   do {
-    if (*(char *)((int)puVar1 + iVar4 + 4) == -2) {
-      MyAssertHandler(0xffffffff82021568,0x19,0,0xffffffff82000f98,0xffffffff82021538);
+    if (*(char *)((int)piVar2 + iVar4 + 4) == -2) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_pose_mp.cpp",
+                      0x19,0,"%s");
     }
-    DObjSetControlTagAngles(param_2,param_3,*(undefined1 *)((int)puVar1 + iVar4 + 4),uVar3);
+    DObjSetControlTagAngles(param_2,param_3,(uint)*(byte *)((int)piVar2 + iVar4 + 4),pfVar3);
     iVar4 = iVar4 + 1;
-    uVar3 = uVar3 + 0xc;
+    pfVar3 = pfVar3 + 3;
   } while (iVar4 < 4);
-  DObjSetLocalTag(param_2,param_3,0,uVar2 + 0x3c,uVar2 + 0x30);
+  DObjSetLocalTag(param_2,param_3,0,pfVar1 + 0xf,pfVar1 + 0xc);
   __restgprlr_23();
   return;
 }
@@ -33,111 +38,375 @@ void BG_Player_DoControllers(undefined8 param_1,undefined8 param_2,undefined8 pa
 
 // 822F05B0  CG_Player_DoControllers  (cgame_mp/cg_pose_mp.cpp:34)
 
-void CG_Player_DoControllers(int param_1)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+void CG_Player_DoControllers(cpose_t *param_1,DObj *param_2,int *param_3)
 
 {
-  if (*(int *)(param_1 + 0x2c) == 0) {
+  if ((param_1->field9_0x2c).player.control == (clientControllers_t *)0x0) {
     return;
   }
-  BG_Player_DoControllers();
+  BG_Player_DoControllers(&(param_1->field9_0x2c).player,param_2,param_3);
   return;
 }
 
 
 // 822F05C8  CG_Vehicle_DoControllers  (cgame_mp/cg_pose_mp.cpp:43)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
 
-void CG_Vehicle_DoControllers(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+void CG_Vehicle_DoControllers(cpose_t *param_1,DObj *param_2,int *param_3)
 
 {
-  int iVar1;
+  byte bVar1;
+  ulonglong uVar2;
+  int iVar3;
+  DObj *pDVar4;
+  XModel *pXVar5;
+  DObjAnimMat *pDVar6;
+  int iVar7;
+  int *piVar8;
+  ulonglong uVar9;
+  float *pfVar10;
+  longlong lVar11;
+  int iVar12;
+  ulonglong uVar13;
+  double dVar14;
+  undefined1 auVar15 [16];
+  undefined1 auVar16 [16];
+  undefined1 auVar17 [16];
+  undefined1 auVar18 [16];
+  undefined1 auVar19 [16];
+  undefined1 auVar20 [16];
+  undefined1 auVar21 [16];
+  undefined1 auVar22 [16];
+  undefined1 auVar23 [16];
+  undefined1 auVar24 [16];
+  undefined1 auVar25 [16];
+  undefined1 auVar26 [16];
+  undefined1 auVar27 [16];
   float local_1a0 [4];
-  undefined4 local_190;
+  float local_190;
   float local_18c;
   undefined4 local_188;
   float local_180 [4];
-  undefined4 local_170;
+  float local_170;
   float local_16c;
   undefined4 local_168;
-  undefined1 auStack_150 [336];
+  undefined1 local_160 [16];
+  undefined1 local_150 [16];
+  undefined1 local_140 [16];
+  undefined1 local_130 [16];
   
-  __savegprlr_19();
+  uVar9 = (ulonglong)(int)param_3;
+  uVar13 = (ulonglong)(int)param_2;
+  uVar2 = ZEXT48(&stack0x00000000);
+  __savegprlr_19(param_1);
   __savefpr_28();
-  iVar1 = __savevmx_119();
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff82021568,0x3f,0,0xffffffff82000f98,0xffffffff82013bec);
+  iVar3 = __savevmx_119();
+  if (iVar3 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_pose_mp.cpp",0x3f,
+                    0,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82021568,0x40,0,0xffffffff82000f98,0xffffffff820040b4);
+  if ((uVar13 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_pose_mp.cpp",0x40,
+                    0,"%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82021568,0x41,0,0xffffffff82000f98,0xffffffff820215fc);
+  if ((uVar9 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_pose_mp.cpp",0x41,
+                    0,"%s");
   }
-  local_170 = 0;
+  dVar14 = 0.0;
+  local_170 = 0.0;
   local_168 = 0;
   local_1a0[1] = 0.0;
   local_1a0[2] = 0.0;
   local_180[1] = 0.0;
-  local_190 = 0;
+  local_190 = 0.0;
   local_188 = 0;
-  local_1a0[0] = (float)(longlong)*(short *)(iVar1 + 0x32) * 0.005493164;
-  local_180[0] = (float)(longlong)*(short *)(iVar1 + 0x2c) * 0.005493164;
-  local_180[2] = (float)(longlong)*(short *)(iVar1 + 0x30) * 0.005493164;
-  if (*(char *)(iVar1 + 2) == '\f') {
-    local_1a0[2] = *(float *)(iVar1 + 0x34);
+  local_1a0[0] = (float)(longlong)*(short *)(iVar3 + 0x32) * 0.005493164;
+  local_180[0] = (float)(longlong)*(short *)(iVar3 + 0x2c) * 0.005493164;
+  local_180[2] = (float)(longlong)*(short *)(iVar3 + 0x30) * 0.005493164;
+  if (*(char *)(iVar3 + 2) == '\f') {
+    local_1a0[2] = *(float *)(iVar3 + 0x34);
   }
-  local_18c = (float)(longlong)*(short *)(iVar1 + 0x38) * 0.005493164;
-  local_16c = (float)(longlong)*(short *)(iVar1 + 0x2e) * 0.005493164;
-  DObjSetLocalTag(param_2,param_3,*(undefined1 *)(iVar1 + 0x58),0xffffffff82179fd8,local_180);
-  DObjSetLocalTag(param_2,param_3,*(undefined1 *)(iVar1 + 0x59),0xffffffff82179fd8,&local_170);
-  DObjSetLocalTag(param_2,param_3,*(undefined1 *)(iVar1 + 0x5a),0xffffffff82179fd8,local_1a0);
-  AnglesToAxis(iVar1 + 0x20,auStack_150);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  local_18c = (float)(longlong)*(short *)(iVar3 + 0x38) * 0.005493164;
+  local_16c = (float)(longlong)*(short *)(iVar3 + 0x2e) * 0.005493164;
+  pDVar4 = (DObj *)uVar13;
+  piVar8 = (int *)uVar9;
+  DObjSetLocalTag(pDVar4,piVar8,(uint)*(byte *)(iVar3 + 0x58),vec3_origin,local_180);
+  DObjSetLocalTag(pDVar4,piVar8,(uint)*(byte *)(iVar3 + 0x59),vec3_origin,&local_170);
+  DObjSetLocalTag(pDVar4,piVar8,(uint)*(byte *)(iVar3 + 0x5a),vec3_origin,local_1a0);
+  AnglesToAxis((float *)(iVar3 + 0x20),(float (*) [3])local_150);
+  auVar21 = vectorSplatImmediateSignedWord(0);
+  auVar20 = vectorUnpackD3Dtype(auVar21,4);
+  auVar21 = vectorShiftLeftDoubleByOctetImmediate(local_150,local_140,0xc);
+  auVar23 = vectorRotateLeftImmediateAndMaskInsert(local_150,auVar20,1,3);
+  auVar19 = loadVectorRightIndexed(uVar2 - 0x11c);
+  auVar18 = loadVectorLeftIndexed(uVar2 - 300);
+  auVar17 = loadVectorRightIndexed(uVar2 - 0x128);
+  auVar27 = vectorRotateLeftImmediateAndMaskInsert(auVar21,auVar20,1,3);
+  auVar21 = loadVectorLeftIndexed(uVar2 - 0x138);
+  auVar25 = vectorShiftLeftDoubleByOctetImmediate(local_140,local_130,8);
+  auVar26 = vectorRotateLeftImmediateAndMaskInsert(auVar25,auVar20,1,3);
+  auVar22 = vectorRotateLeftImmediateAndMaskInsert(auVar20,local_130,0xe,1);
+  auVar25 = vectorMergeHighWord128(auVar23,auVar26);
+  auVar24 = (auVar21 | auVar17) & (undefined1  [16])g_keepXYZ.field0_0x0;
+  auVar20 = vectorMergeLowWord128(auVar23,auVar26);
+  auVar19 = (auVar18 | auVar19) & (undefined1  [16])g_keepXYZ.field0_0x0;
+  auVar17 = vectorMergeHighWord128(auVar27,(undefined1  [16])g_one.field0_0x0);
+  auVar21 = vectorMergeLowWord128(auVar27,(undefined1  [16])g_one.field0_0x0);
+  auVar18 = vectorMergeHighWord128(auVar25,auVar17);
+  auVar17 = vectorMergeLowWord128(auVar25,auVar17);
+  auVar21 = vectorMergeHighWord128(auVar20,auVar21);
+  pXVar5 = DObjGetModel(pDVar4,0);
+  pDVar6 = XModelGetBasePose(pXVar5);
+  if (pDVar6 == (DObjAnimMat *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_pose_mp.cpp",0x62,
+                    0,"%s");
+  }
+  iVar12 = 0;
+  do {
+    bVar1 = *(byte *)(iVar3 + 0x4c + iVar12);
+    uVar13 = (ulonglong)bVar1;
+    if (uVar13 < 0xfe) {
+      iVar7 = DObjSetRotTransIndex(pDVar4,piVar8,(uint)bVar1);
+      if (iVar7 != 0) {
+        lVar11 = uVar13 * 0x20 + (longlong)(int)pDVar6;
+        auVar25 = loadVectorLeftIndexed(lVar11 + 0x10);
+        auVar20 = loadVectorRightIndexed(lVar11 + 0x20);
+        auVar16 = (auVar25 | auVar20) & (undefined1  [16])g_keepXYZ.field0_0x0;
+        auVar20 = vectorSplatWord(auVar16,2);
+        auVar15 = vectorSplatWord(auVar16,1);
+        auVar25 = vectorSplatWord(auVar16,0);
+        auVar20 = vectorMultiplyAddFloatingPoint128(auVar26,auVar20,auVar22);
+        auVar20 = vectorMultiplyAddFloatingPoint128(auVar15,auVar27,auVar20);
+        auVar20 = vectorMultiplyAddFloatingPoint128(auVar25,auVar23,auVar20);
+        auVar15 = loadVectorLeftIndexed(uVar2 - 0x1b0);
+        auVar25 = loadVectorLeftIndexed(0xffffffff8200189c);
+        auVar25 = vectorSplatWord(auVar25,0);
+        auVar20 = vectorMultiplyAddFloatingPoint128(auVar25,auVar24,auVar20);
+        auVar25 = vectorSplatWord(auVar15,0);
+        auVar20 = vectorMultiplyAddFloatingPoint128(auVar25,auVar24,auVar20);
+        auVar25 = vectorSubtractFloatingPoint128(auVar20,auVar19);
+        auVar15 = vectorSplatWord(auVar25,2);
+        auVar20 = vectorSplatWord(auVar25,1);
+        auVar25 = vectorSplatWord(auVar25,0);
+        auVar15 = vectorMultiplyFloatingPoint(auVar15,auVar21);
+        auVar20 = vectorMultiplyAddFloatingPoint128(auVar17,auVar20,auVar15);
+        auVar20 = vectorMultiplyAddFloatingPoint128(auVar25,auVar18,auVar20);
+        local_160 = vectorSubtractFloatingPoint128(auVar20,auVar16);
+        if (((double)local_18c == dVar14) || ((iVar12 != 0 && (iVar12 != 1)))) {
+          pfVar10 = (float *)0x0;
+        }
+        else {
+          pfVar10 = &local_190;
+        }
+        DObjSetLocalTagInternal(pDVar4,(float *)local_160,pfVar10,(uint)bVar1);
+      }
+    }
+    else if ((uVar13 != 0xfe) && (uVar13 != 0xff)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_pose_mp.cpp",
+                      0x69,0,"%s\n\t(boneIndex) = %i");
+    }
+    iVar12 = iVar12 + 1;
+  } while (iVar12 < 6);
+  __restvmx_119();
+  __restfpr_28();
+  __restgprlr_19();
+  return;
 }
 
 
 // 822F04D0  __lvx  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/vectorintrinsics.h:98)
 
-/* WARNING: Control flow encountered bad instruction data */
-
-void __lvx(void)
+__vector4 * __lvx(__vector4 *__return_storage_ptr__,void *param_1,int param_2)
 
 {
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  return __return_storage_ptr__;
 }
 
 
 // 822F04D8  __stvx  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/vectorintrinsics.h:104)
 
-/* WARNING: Control flow encountered bad instruction data */
-
-void __stvx(void)
+void __stvx(__vector4 param_1,void *param_2,int param_3)
 
 {
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  undefined4 *puVar1;
+  undefined4 in_vr1_32_0;
+  undefined4 in_vr1_32_1;
+  undefined4 in_vr1_32_2;
+  undefined4 in_vr1_32_3;
+  
+  puVar1 = (undefined4 *)((int)param_2 + param_3 & 0xfffffff0);
+  *puVar1 = in_vr1_32_0;
+  puVar1[1] = in_vr1_32_1;
+  puVar1[2] = in_vr1_32_2;
+  puVar1[3] = in_vr1_32_3;
+  return;
 }
 
 
 // 822F0A30  CG_Turret_DoControllers  (cgame_mp/cg_pose_mp.cpp:141)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Restarted to delay deadcode elimination for space: stack */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
 
-void CG_Turret_DoControllers(void)
+void CG_Turret_DoControllers(cpose_t *param_1,DObj *param_2,int *param_3)
 
 {
-  __savegprlr_26();
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  float *pfVar1;
+  int iVar2;
+  double dVar3;
+  double dVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  undefined1 auVar9 [16];
+  undefined1 auVar10 [16];
+  undefined1 auVar11 [16];
+  undefined1 auVar12 [16];
+  undefined1 auVar13 [16];
+  undefined1 auVar14 [16];
+  undefined1 auVar15 [16];
+  float fVar16;
+  float local_d0;
+  float local_cc;
+  float local_c8;
+  float local_c0;
+  float fStack_bc;
+  float fStack_b8;
+  undefined1 local_b0 [16];
+  undefined1 local_a0 [16];
+  undefined1 local_90 [16];
+  
+  iVar2 = __savegprlr_26(param_1);
+  dVar8 = 0.0;
+  if (*(char *)(iVar2 + 0x39) == '\0') {
+    if (*(char *)(iVar2 + 0x38) == '\0') {
+      dVar4 = (double)*(float *)(iVar2 + 0x2c);
+      dVar7 = (double)*(float *)(iVar2 + 0x30);
+    }
+    else {
+      if (*(int *)(iVar2 + 0x2c) == 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_pose_mp.cpp",
+                        0xcc,0,"%s");
+      }
+      pfVar1 = *(float **)(iVar2 + 0x2c);
+      fVar16 = AngleSubtract(*pfVar1,*(float *)(iVar2 + 0x20));
+      dVar4 = (double)fVar16;
+      fVar16 = AngleSubtract(pfVar1[1],*(float *)(iVar2 + 0x24));
+      dVar7 = (double)fVar16;
+    }
+  }
+  else {
+    if (*(char *)(iVar2 + 0x38) == '\0') {
+      local_d0 = *(float *)(iVar2 + 0x2c);
+      local_cc = *(float *)(iVar2 + 0x30);
+      dVar7 = dVar8;
+    }
+    else {
+      if (*(int *)(iVar2 + 0x2c) == 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_pose_mp.cpp",
+                        0xa4,0,"%s");
+      }
+      local_d0 = **(float **)(iVar2 + 0x2c);
+      local_cc = (*(float **)(iVar2 + 0x2c))[1];
+      dVar7 = dVar8;
+    }
+    local_c8 = (float)dVar7;
+    AnglesToAxis((float *)(iVar2 + 0x20),(float (*) [3])local_b0);
+    auVar14 = vectorSplatImmediateSignedWord(0);
+    auVar13 = vectorUnpackD3Dtype(auVar14,4);
+    auVar14 = vectorShiftLeftDoubleByOctetImmediate(local_a0,local_90,8);
+    auVar14 = vectorRotateLeftImmediateAndMaskInsert(auVar14,auVar13,1,3);
+    auVar11 = vectorShiftLeftDoubleByOctetImmediate(local_b0,local_a0,0xc);
+    auVar15 = vectorRotateLeftImmediateAndMaskInsert(local_b0,auVar13,1,3);
+    auVar12 = vectorRotateLeftImmediateAndMaskInsert(auVar11,auVar13,1,3);
+    AnglesToAxis(&local_d0,(float (*) [3])local_b0);
+    auVar13 = vectorMergeLowWord128(auVar15,auVar14);
+    auVar10 = vectorMergeHighWord128(auVar15,auVar14);
+    auVar11 = loadVectorRightIndexed(ZEXT48(&stack0x00000000) - 0xa0);
+    auVar14 = loadVectorLeftIndexed(ZEXT48(&stack0x00000000) - 0xb0);
+    auVar9 = (auVar14 | auVar11) & (undefined1  [16])g_keepXYZ.field0_0x0;
+    auVar14 = vectorMergeLowWord128(auVar12,(undefined1  [16])g_one.field0_0x0);
+    auVar15 = vectorMergeHighWord128(auVar12,(undefined1  [16])g_one.field0_0x0);
+    auVar13 = vectorMergeHighWord128(auVar13,auVar14);
+    auVar11 = vectorSplatWord(auVar9,2);
+    auVar14 = vectorMergeLowWord128(auVar10,auVar15);
+    auVar12 = vectorSplatWord(auVar9,1);
+    auVar15 = vectorMergeHighWord128(auVar10,auVar15);
+    auVar13 = vectorMultiplyFloatingPoint(auVar11,auVar13);
+    auVar11 = vectorSplatWord(auVar9,0);
+    auVar14 = vectorMultiplyAddFloatingPoint(auVar12,auVar14,auVar13);
+    auVar14 = vectorMultiplyAddFloatingPoint(auVar11,auVar15,auVar14);
+    fStack_bc = auVar14._4_4_;
+    dVar4 = (double)fStack_bc;
+    local_c0 = auVar14._0_4_;
+    dVar6 = (double)local_c0;
+    fStack_b8 = auVar14._8_4_;
+    dVar8 = dVar7;
+    if ((dVar4 == dVar7) && (dVar6 == dVar7)) {
+      fVar16 = 90.0;
+      if (-fStack_b8 < 0.0) {
+        fVar16 = 270.0;
+      }
+      dVar4 = (double)fVar16;
+    }
+    else {
+      dVar3 = atan2(dVar4,dVar6);
+      dVar5 = 360.0;
+      dVar7 = dVar8;
+      if ((double)((float)dVar3 * 57.295776) < 0.0) {
+        dVar7 = dVar5;
+      }
+      dVar7 = (double)(float)(dVar7 + (double)((float)dVar3 * 57.295776));
+      dVar6 = atan2((double)fStack_b8,
+                    (double)SQRT((float)(dVar6 * dVar6 + (double)(float)(dVar4 * dVar4))));
+      dVar4 = dVar8;
+      if ((double)((float)dVar6 * -57.295776) < 0.0) {
+        dVar4 = dVar5;
+      }
+      dVar4 = (double)(float)(dVar4 + (double)((float)dVar6 * -57.295776));
+    }
+  }
+  local_d0 = (float)dVar8;
+  local_c8 = (float)dVar8;
+  local_cc = (float)dVar7;
+  if (*(char *)(iVar2 + 0x3c) != -1) {
+    if (*(char *)(iVar2 + 0x3c) == -2) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_pose_mp.cpp",
+                      0xde,0,"%s");
+    }
+    DObjSetLocalTag(param_2,param_3,(uint)*(byte *)(iVar2 + 0x3c),vec3_origin,&local_d0);
+    local_cc = (float)dVar8;
+  }
+  local_d0 = (float)dVar4;
+  DObjSetLocalTag(param_2,param_3,(uint)*(byte *)(iVar2 + 0x3a),vec3_origin,&local_d0);
+  DObjSetLocalTag(param_2,param_3,(uint)*(byte *)(iVar2 + 0x3b),vec3_origin,&local_d0);
+  local_d0 = *(float *)(iVar2 + 0x34);
+  local_cc = (float)dVar8;
+  DObjSetLocalTag(param_2,param_3,(uint)*(byte *)(iVar2 + 0x3d),vec3_origin,&local_d0);
+  local_c8 = *(float *)(iVar2 + 0x40);
+  local_d0 = (float)dVar8;
+  local_cc = (float)dVar8;
+  DObjSetLocalTag(param_2,param_3,(uint)*(byte *)(iVar2 + 0x3e),vec3_origin,&local_d0);
+  __restgprlr_26();
+  return;
 }
 
 
 // 822F0DC8  CG_DoBaseOriginController  (cgame_mp/cg_pose_mp.cpp:247)
 
-void CG_DoBaseOriginController(undefined8 param_1,undefined8 param_2,longlong param_3)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CG_DoBaseOriginController(cpose_t *param_1,DObj *param_2,int *param_3)
 
 {
   float fVar1;
@@ -146,22 +415,24 @@ void CG_DoBaseOriginController(undefined8 param_1,undefined8 param_2,longlong pa
   float fVar4;
   ulonglong uVar5;
   uint uVar6;
-  float fVar7;
-  int iVar8;
+  int iVar7;
+  float fVar8;
   int iVar9;
-  int iVar10;
-  ulonglong uVar11;
-  uint uVar12;
-  uint uVar13;
-  longlong lVar14;
-  float *pfVar15;
-  double dVar16;
-  double dVar17;
+  uint uVar10;
+  DObjAnimMat *pDVar11;
+  int iVar12;
+  longlong lVar13;
+  ulonglong uVar14;
+  uint uVar15;
+  int iVar16;
+  float *pfVar17;
   double dVar18;
   double dVar19;
   double dVar20;
   double dVar21;
   double dVar22;
+  double dVar23;
+  double dVar24;
   float local_128;
   float local_124;
   float local_120;
@@ -169,14 +440,7 @@ void CG_DoBaseOriginController(undefined8 param_1,undefined8 param_2,longlong pa
   float local_10c;
   float local_108;
   float local_104;
-  float local_100;
-  float local_fc;
-  float local_f8;
-  float local_f4;
-  float local_f0;
-  float local_ec;
-  float local_e8;
-  float local_e4;
+  DObjAnimMat local_100;
   undefined4 local_e0;
   undefined4 local_dc;
   undefined4 local_d8;
@@ -184,32 +448,34 @@ void CG_DoBaseOriginController(undefined8 param_1,undefined8 param_2,longlong pa
   undefined4 local_d0;
   uint local_cc [51];
   
-  __savegprlr_20();
-  iVar8 = __savefpr_23();
-  iVar9 = DObjGetRootBoneCount(param_2);
-  if (iVar9 == 0) {
-    MyAssertHandler(0xffffffff82021568,0x106,0,0xffffffff82000f98,0xffffffff8202165c);
+  lVar13 = (longlong)(int)param_3;
+  __savegprlr_20(param_1);
+  iVar9 = __savefpr_23();
+  uVar10 = DObjGetRootBoneCount(param_2);
+  if (uVar10 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_pose_mp.cpp",0x106
+                    ,0,"%s");
   }
-  uVar13 = iVar9 - 1;
-  uVar6 = (int)uVar13 >> 5;
-  uVar12 = 0;
-  iVar9 = (int)param_3;
+  uVar10 = uVar10 - 1;
+  uVar6 = (int)uVar10 >> 5;
+  uVar15 = 0;
+  iVar7 = (int)lVar13;
   if (uVar6 != 0) {
     do {
-      if (*(int *)param_3 != -1) goto LAB_822f0e7c;
-      uVar12 = uVar12 + 1;
-      param_3 = param_3 + 4;
-    } while (uVar12 < uVar6);
+      if (*(int *)lVar13 != -1) goto LAB_822f0e7c;
+      uVar15 = uVar15 + 1;
+      lVar13 = lVar13 + 4;
+    } while (uVar15 < uVar6);
   }
-  if ((0xffffffffU >> (uVar13 & 0x1f) + 1 | *(uint *)(uVar6 * 4 + iVar9)) != 0xffffffff) {
+  if ((0xffffffffU >> (uVar10 & 0x1f) + 1 | *(uint *)(uVar6 * 4 + iVar7)) != 0xffffffff) {
 LAB_822f0e7c:
-    iVar10 = DObjGetRotTransArray(param_2);
-    if (iVar10 != 0) {
-      AnglesToQuat(iVar8 + 0x20,&local_110);
-      uVar11 = 0xffffffff80000000;
+    pDVar11 = DObjGetRotTransArray(param_2);
+    if (pDVar11 != (DObjAnimMat *)0x0) {
+      AnglesToQuat((float *)(iVar9 + 0x20),&local_110);
+      uVar14 = 0xffffffff80000000;
       local_e0 = 0;
       local_dc = 0;
-      lVar14 = 0;
+      iVar16 = 0;
       local_cc[0] = 0x80000000;
       local_d8 = 0;
       local_d4 = 0;
@@ -219,95 +485,103 @@ LAB_822f0e7c:
       local_cc[3] = 0;
       local_cc[4] = 0;
       local_cc[5] = 0;
-      dVar19 = (double)*(float *)(DAT_82a3d5f8 + 0x4c);
-      dVar18 = (double)*(float *)(DAT_82a3d5f8 + 0x50);
-      dVar17 = (double)*(float *)(DAT_82a3d5f8 + 0x54);
-      if (-1 < (int)uVar13) {
-        dVar22 = 1.0;
-        dVar20 = 2.0;
-        pfVar15 = (float *)(iVar10 + 0xc);
-        dVar21 = 1e-06;
+      dVar21 = (double)g_activeRefDef->viewOffset[0];
+      dVar20 = (double)g_activeRefDef->viewOffset[1];
+      dVar19 = (double)g_activeRefDef->viewOffset[2];
+      if (-1 < (int)uVar10) {
+        dVar24 = 1.0;
+        dVar22 = 2.0;
+        pfVar17 = pDVar11->quat + 3;
+        dVar23 = 1e-06;
         do {
-          iVar10 = (int)lVar14 >> 5;
-          if ((*(uint *)(iVar10 * 4 + iVar9) & (uint)uVar11) == 0) {
-            iVar10 = DObjSetRotTransIndex(param_2,local_cc + -iVar10,lVar14);
-            if (iVar10 == 0) {
-              local_100 = local_110;
-              local_fc = local_10c;
-              local_f8 = local_108;
-              local_f4 = local_104;
-              DObjSetTrans(&local_100,iVar8 + 0x14);
-              dVar16 = (double)(local_100 * local_100 +
-                               local_fc * local_fc + local_f4 * local_f4 + local_f8 * local_f8);
-              if (dVar16 <= dVar21) {
-                local_f4 = (float)dVar22;
-                dVar16 = dVar20;
+          if ((*(uint *)((iVar16 >> 5) * 4 + iVar7) & (uint)uVar14) == 0) {
+            iVar12 = DObjSetRotTransIndex(param_2,(int *)(local_cc + -(iVar16 >> 5)),iVar16);
+            if (iVar12 == 0) {
+              local_100.quat[0] = local_110;
+              local_100.quat[1] = local_10c;
+              local_100.quat[2] = local_108;
+              local_100.quat[3] = local_104;
+              DObjSetTrans(&local_100,(float *)(iVar9 + 0x14));
+              dVar18 = (double)(local_100.quat[0] * local_100.quat[0] +
+                               local_100.quat[1] * local_100.quat[1] +
+                               local_100.quat[3] * local_100.quat[3] +
+                               local_100.quat[2] * local_100.quat[2]);
+              if (dVar18 <= dVar23) {
+                local_100.quat[3] = (float)dVar24;
+                dVar18 = dVar22;
               }
               else {
-                dVar16 = (double)(float)(dVar20 / dVar16);
+                dVar18 = (double)(float)(dVar22 / dVar18);
               }
-              local_e4 = (float)dVar16;
-              if (((uint)(float)dVar16 & 0x7f800000) == 0x7f800000) {
-                MyAssertHandler(0xffffffff82015a60,0x2fa,0,0xffffffff82000f98,0xffffffff820159d4);
+              local_100.transWeight = (float)dVar18;
+              if (((uint)(float)dVar18 & 0x7f800000) == 0x7f800000) {
+                MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\../xanim/xanim_public.h"
+                                ,0x2fa,0,"%s");
               }
-              fVar1 = pfVar15[-1];
-              fVar2 = pfVar15[-2];
-              fVar3 = pfVar15[-3];
-              fVar4 = *pfVar15;
-              pfVar15[-2] = fVar4 * local_10c +
+              fVar1 = pfVar17[-1];
+              fVar2 = pfVar17[-2];
+              fVar3 = ((DObjAnimMat *)(pfVar17 + -3))->quat[0];
+              fVar4 = *pfVar17;
+              pfVar17[-2] = fVar4 * local_10c +
                             local_108 * fVar3 + (local_104 * fVar2 - fVar1 * local_110);
-              pfVar15[-1] = fVar4 * local_108 +
+              pfVar17[-1] = fVar4 * local_108 +
                             -(local_10c * fVar3 - (local_104 * fVar1 + fVar2 * local_110));
-              pfVar15[-3] = -(local_108 * fVar2 -
-                             (local_10c * fVar1 + fVar4 * local_110 + local_104 * fVar3));
-              *pfVar15 = -(local_108 * fVar1 -
+              ((DObjAnimMat *)(pfVar17 + -3))->quat[0] =
+                   -(local_108 * fVar2 - (local_10c * fVar1 + fVar4 * local_110 + local_104 * fVar3)
+                    );
+              *pfVar17 = -(local_108 * fVar1 -
                           -(local_10c * fVar2 - (fVar4 * local_104 - fVar3 * local_110)));
-              if ((((((uint)local_100 & 0x7f800000) == 0x7f800000) ||
-                   (((uint)local_fc & 0x7f800000) == 0x7f800000)) ||
-                  (((uint)local_f8 & 0x7f800000) == 0x7f800000)) ||
-                 (((uint)local_f4 & 0x7f800000) == 0x7f800000)) {
-                MyAssertHandler(0xffffffff82015a60,0x205,0,0xffffffff82000f98,0xffffffff820159f0);
+              if ((((((uint)local_100.quat[0] & 0x7f800000) == 0x7f800000) ||
+                   (((uint)local_100.quat[1] & 0x7f800000) == 0x7f800000)) ||
+                  (((uint)local_100.quat[2] & 0x7f800000) == 0x7f800000)) ||
+                 (((uint)local_100.quat[3] & 0x7f800000) == 0x7f800000)) {
+                MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\../xanim/xanim_public.h"
+                                ,0x205,0,"%s");
               }
-              if (((uint)local_e4 & 0x7f800000) == 0x7f800000) {
-                MyAssertHandler(0xffffffff82015a60,0x206,0,0xffffffff82000f98,0xffffffff820159d4);
+              if (((uint)local_100.transWeight & 0x7f800000) == 0x7f800000) {
+                MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\../xanim/xanim_public.h"
+                                ,0x206,0,"%s");
               }
-              fVar3 = local_e4 * local_fc;
-              fVar4 = local_e4 * local_100;
-              fVar2 = local_f8 * local_e4 * local_f8;
-              fVar7 = local_f4 * local_e4 * local_f8;
-              fVar1 = (local_fc * fVar4 - fVar7) * pfVar15[2] +
-                      pfVar15[1] * (float)(dVar22 - (double)(fVar2 + local_fc * fVar3)) +
-                      pfVar15[3] * (local_f4 * fVar3 + local_f8 * fVar4) + local_f0;
-              fVar2 = (float)(dVar22 - (double)(fVar2 + fVar4 * local_100)) * pfVar15[2] +
-                      pfVar15[1] * (fVar7 + local_fc * fVar4) +
-                      pfVar15[3] * (local_f8 * fVar3 - local_f4 * fVar4) + local_ec;
-              fVar3 = (local_f8 * fVar3 + local_f4 * fVar4) * pfVar15[2] +
-                      pfVar15[1] * (local_f8 * fVar4 - local_f4 * fVar3) +
-                      pfVar15[3] * (float)(dVar22 - (double)(local_fc * fVar3 + fVar4 * local_100))
-                      + local_e8;
+              fVar3 = local_100.transWeight * local_100.quat[1];
+              fVar4 = local_100.transWeight * local_100.quat[0];
+              fVar2 = local_100.quat[2] * local_100.transWeight * local_100.quat[2];
+              fVar8 = local_100.quat[3] * local_100.transWeight * local_100.quat[2];
+              fVar1 = (local_100.quat[1] * fVar4 - fVar8) * pfVar17[2] +
+                      pfVar17[1] * (float)(dVar24 - (double)(fVar2 + local_100.quat[1] * fVar3)) +
+                      pfVar17[3] * (local_100.quat[3] * fVar3 + local_100.quat[2] * fVar4) +
+                      local_100.trans[0];
+              fVar2 = (float)(dVar24 - (double)(fVar2 + fVar4 * local_100.quat[0])) * pfVar17[2] +
+                      pfVar17[1] * (fVar8 + local_100.quat[1] * fVar4) +
+                      pfVar17[3] * (local_100.quat[2] * fVar3 - local_100.quat[3] * fVar4) +
+                      local_100.trans[1];
+              fVar3 = (local_100.quat[2] * fVar3 + local_100.quat[3] * fVar4) * pfVar17[2] +
+                      pfVar17[1] * (local_100.quat[2] * fVar4 - local_100.quat[3] * fVar3) +
+                      pfVar17[3] *
+                      (float)(dVar24 - (double)(local_100.quat[1] * fVar3 +
+                                               fVar4 * local_100.quat[0])) + local_100.trans[2];
             }
             else {
-              pfVar15[-3] = local_110;
-              pfVar15[-2] = local_10c;
-              pfVar15[-1] = local_108;
-              *pfVar15 = local_104;
-              fVar1 = *(float *)(iVar8 + 0x14);
-              fVar2 = *(float *)(iVar8 + 0x18);
-              fVar3 = *(float *)(iVar8 + 0x1c);
+              ((DObjAnimMat *)(pfVar17 + -3))->quat[0] = local_110;
+              pfVar17[-2] = local_10c;
+              pfVar17[-1] = local_108;
+              *pfVar17 = local_104;
+              fVar1 = *(float *)(iVar9 + 0x14);
+              fVar2 = *(float *)(iVar9 + 0x18);
+              fVar3 = *(float *)(iVar9 + 0x1c);
             }
-            local_128 = (float)((double)fVar1 - dVar19);
-            local_124 = (float)((double)fVar2 - dVar18);
-            local_120 = (float)((double)fVar3 - dVar17);
-            DObjSetTrans(pfVar15 + -3,&local_128);
-            uVar11 = (ulonglong)local_cc[0];
+            local_128 = (float)((double)fVar1 - dVar21);
+            local_124 = (float)((double)fVar2 - dVar20);
+            local_120 = (float)((double)fVar3 - dVar19);
+            DObjSetTrans((DObjAnimMat *)(pfVar17 + -3),&local_128);
+            uVar14 = (ulonglong)local_cc[0];
           }
-          lVar14 = lVar14 + 1;
-          uVar5 = (uVar11 & 0xffffffff) << 0x1f;
-          uVar11 = (uVar11 & 0xffffffff) >> 1;
-          local_cc[0] = (uint)uVar5 | (uint)uVar11;
-          uVar11 = uVar5 & 0xffffffff | uVar11;
-          pfVar15 = pfVar15 + 8;
-        } while ((int)lVar14 <= (int)uVar13);
+          iVar16 = iVar16 + 1;
+          uVar5 = (uVar14 & 0xffffffff) << 0x1f;
+          uVar14 = (uVar14 & 0xffffffff) >> 1;
+          local_cc[0] = (uint)uVar5 | (uint)uVar14;
+          uVar14 = uVar5 & 0xffffffff | uVar14;
+          pfVar17 = pfVar17 + 8;
+        } while (iVar16 <= (int)uVar10);
       }
     }
   }
@@ -319,103 +593,131 @@ LAB_822f0e7c:
 
 // 822F1278  CG_DoControllers  (cgame_mp/cg_pose_mp.cpp:324)
 
-void CG_DoControllers(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+void CG_DoControllers(cpose_t *param_1,DObj *param_2,int *param_3)
 
 {
-  int iVar1;
-  undefined1 auStack_40 [64];
+  cpose_t *pcVar1;
+  int iVar2;
+  int aiStack_40 [16];
   
-  iVar1 = __savegprlr_29();
+  pcVar1 = (cpose_t *)__savegprlr_29(param_1);
   Profile_Begin(0x13e);
-  DObjGetSetBones(param_2,auStack_40);
-  switch(*(undefined1 *)(iVar1 + 2)) {
-  case 1:
-    if (*(int *)(iVar1 + 0x2c) != 0) {
-      BG_Player_DoControllers(iVar1 + 0x2c,param_2,param_3);
+  DObjGetSetBones(param_2,aiStack_40);
+  switch(pcVar1->eType) {
+  case '\x01':
+    if ((pcVar1->field9_0x2c).player.control != (clientControllers_t *)0x0) {
+      BG_Player_DoControllers(&(pcVar1->field9_0x2c).player,param_2,param_3);
     }
     break;
-  case 0xb:
-    CG_Turret_DoControllers(iVar1,param_2,param_3);
+  case '\v':
+    CG_Turret_DoControllers(pcVar1,param_2,param_3);
     break;
-  case 0xc:
-  case 0xe:
-    CG_Vehicle_DoControllers(iVar1,param_2,param_3);
+  case '\f':
+  case '\x0e':
+    CG_Vehicle_DoControllers(pcVar1,param_2,param_3);
   }
-  CG_DoBaseOriginController(iVar1,param_2,auStack_40);
-  if ((*(char *)(iVar1 + 4) != '\0') && ((*(int *)(iVar1 + 8) != 0 || (*(int *)(iVar1 + 0xc) != 0)))
-     ) {
-    Ragdoll_DoControllers(iVar1,param_2,param_3);
+  CG_DoBaseOriginController(pcVar1,param_2,aiStack_40);
+  if ((pcVar1->isRagdoll != '\0') &&
+     ((pcVar1->ragdollHandle != 0 || (pcVar1->killcamRagdollHandle != 0)))) {
+    Ragdoll_DoControllers(pcVar1,param_2,param_3);
   }
-  Profile_EndInternal(0);
-  __restgprlr_29();
+  iVar2 = Profile_EndInternal((double *)0x0);
+  __restgprlr_29(iVar2);
   return;
 }
 
 
 // 822F13A0  CG_DObjCalcPose  (cgame_mp/cg_pose_mp.cpp:359)
 
-void CG_DObjCalcPose(undefined8 param_1,ulonglong param_2,undefined8 param_3)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+DObjAnimMat * CG_DObjCalcPose(cpose_t *param_1,DObj *param_2,int *param_3)
 
 {
-  ulonglong uVar1;
+  cpose_t *pcVar1;
   int iVar2;
-  undefined4 local_40 [16];
+  DObjAnimMat *pDVar4;
+  ulonglong uVar5;
+  DObjAnimMat *local_40 [16];
+  DObj *pDVar3;
   
-  uVar1 = __savegprlr_27();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82021568,0x16a,0,0xffffffff82000f98,0xffffffff820040b4);
+  uVar5 = (ulonglong)(int)param_2;
+  pcVar1 = (cpose_t *)__savegprlr_27(param_1);
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_pose_mp.cpp",0x16a
+                    ,0,"%s");
   }
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82021568,0x16b,0,0xffffffff82000f98,0xffffffff82013bec);
+  if (pcVar1 == (cpose_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_pose_mp.cpp",0x16b
+                    ,0,"%s");
   }
-  iVar2 = CL_DObjCreateSkelForBones(param_2,param_3,local_40);
+  pDVar3 = (DObj *)uVar5;
+  iVar2 = CL_DObjCreateSkelForBones(pDVar3,param_3,local_40);
   if (iVar2 == 0) {
-    DObjCompleteHierarchyBits(param_2,param_3);
-    CG_DoControllers(uVar1,param_2,param_3);
-    DObjCalcSkel(param_2,param_3);
+    DObjCompleteHierarchyBits(pDVar3,param_3);
+    CG_DoControllers(pcVar1,pDVar3,param_3);
+    DObjCalcSkel(pDVar3,param_3);
   }
-  __restgprlr_27(local_40[0]);
-  return;
+  pDVar4 = (DObjAnimMat *)__restgprlr_27(local_40[0]);
+  return pDVar4;
 }
 
 
 // 822F1460  CG_DObjCalcPoseForMark  (cgame_mp/cg_pose_mp.cpp:395)
 
-void CG_DObjCalcPoseForMark(undefined8 param_1,ulonglong param_2,undefined8 param_3)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+DObjAnimMat * CG_DObjCalcPoseForMark(cpose_t *param_1,DObj *param_2,int *param_3)
 
 {
-  ulonglong uVar1;
+  cpose_t *pcVar1;
   int iVar2;
-  undefined4 local_40 [16];
+  XAnimTree *pXVar4;
+  DObjAnimMat *pDVar5;
+  ulonglong uVar6;
+  DObjAnimMat *local_40 [16];
+  DObj *pDVar3;
   
-  uVar1 = __savegprlr_27();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82021568,0x18e,0,0xffffffff82000f98,0xffffffff820040b4);
+  uVar6 = (ulonglong)(int)param_2;
+  pcVar1 = (cpose_t *)__savegprlr_27(param_1);
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_pose_mp.cpp",0x18e
+                    ,0,"%s");
   }
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82021568,399,0,0xffffffff82000f98,0xffffffff82013bec);
+  if (pcVar1 == (cpose_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_pose_mp.cpp",399,0
+                    ,"%s");
   }
-  iVar2 = CL_DObjCreateSkelForBones(param_2,param_3,local_40);
+  pDVar3 = (DObj *)uVar6;
+  iVar2 = CL_DObjCreateSkelForBones(pDVar3,param_3,local_40);
   if (iVar2 == 0) {
-    iVar2 = DObjGetTree(param_2);
-    if (iVar2 != 0) {
-      __restgprlr_27(0);
-      return;
+    pXVar4 = DObjGetTree(pDVar3);
+    if (pXVar4 != (XAnimTree *)0x0) {
+      pDVar5 = (DObjAnimMat *)__restgprlr_27(0);
+      return pDVar5;
     }
-    DObjCompleteHierarchyBits(param_2,param_3);
-    CG_DoControllers(uVar1,param_2,param_3);
-    DObjCalcSkelNoAnim(param_2,param_3);
+    DObjCompleteHierarchyBits(pDVar3,param_3);
+    CG_DoControllers(pcVar1,pDVar3,param_3);
+    DObjCalcSkelNoAnim(pDVar3,param_3);
   }
-  __restgprlr_27(local_40[0]);
-  return;
+  pDVar5 = (DObjAnimMat *)__restgprlr_27(local_40[0]);
+  return pDVar5;
 }
 
 
 // 822F1538  CG_GetPoseLightingHandle  (cgame_mp/cg_pose_mp.cpp:434)
 
-void CG_GetPoseLightingHandle(void)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+ushort * CG_GetPoseLightingHandle(cpose_t *param_1)
 
 {
-  return;
+  return &param_1->lightingHandle;
 }
 

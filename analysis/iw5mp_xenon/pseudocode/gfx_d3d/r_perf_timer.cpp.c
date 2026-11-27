@@ -2,86 +2,97 @@
 
 // 82760DA8  R_Perf_GetTotalTime  (gfx_d3d/r_perf_timer.cpp:6)
 
-longlong R_Perf_GetTotalTime(int param_1)
+uint R_Perf_GetTotalTime(PerfTimer *param_1)
 
 {
   uint *puVar1;
-  longlong lVar2;
+  uint uVar2;
   
-  lVar2 = 0;
-  if (param_1 == 0) {
-    return lVar2;
+  uVar2 = 0;
+  if (param_1 == (PerfTimer *)0x0) {
+    return 0;
   }
   do {
-    puVar1 = (uint *)(param_1 + 4);
-    param_1 = *(int *)(param_1 + 0xc);
-    lVar2 = (ulonglong)*puVar1 + lVar2;
-  } while (param_1 != 0);
-  return lVar2;
+    puVar1 = &param_1->totalTime;
+    param_1 = param_1->nextSibling;
+    uVar2 = *puVar1 + uVar2;
+  } while (param_1 != (PerfTimer *)0x0);
+  return uVar2;
 }
 
 
 // 82760DD0  R_Perf_GetTimerAverageAndMaxMs  (gfx_d3d/r_perf_timer.cpp:20)
 
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
 void R_Perf_GetTimerAverageAndMaxMs
-               (undefined8 param_1,ulonglong param_2,longlong param_3,float *param_4,float *param_5)
+               (PerfTimerFrameHistory *param_1,PerfTimerStyle *param_2,uint param_3,float *param_4,
+               float *param_5)
 
 {
   uint uVar1;
   uint *puVar2;
   uint *puVar4;
   longlong lVar3;
-  int iVar5;
+  ulonglong uVar5;
   longlong lVar6;
   int iVar7;
-  double dVar8;
-  double dVar9;
+  longlong lVar8;
+  int iVar9;
+  double dVar10;
+  double dVar11;
   
-  puVar4 = (uint *)__savegprlr_25();
+  lVar6 = (longlong)(int)param_3;
+  uVar5 = (ulonglong)(int)param_2;
+  puVar4 = (uint *)__savegprlr_25(param_1);
   *param_4 = 0.0;
   *param_5 = 0.0;
   if (puVar4 == (uint *)0x0) {
-    MyAssertHandler(0xffffffff821ca4a0,0x1d,0,0xffffffff82000f98,0xffffffff821c39fc);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_perf_timer.cpp",0x1d
+                    ,0,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821ca4a0,0x1e,0,0xffffffff82000f98,0xffffffff821ca490);
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_perf_timer.cpp",0x1e
+                    ,0,"%s");
   }
   if (puVar4[1] < 0x3d) {
-    MyAssertHandler(0xffffffff821ca4a0,0x1f,0,0xffffffff82000f98,0xffffffff821ca448);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_perf_timer.cpp",0x1f
+                    ,0,"%s");
   }
   if (0x50 < puVar4[1]) {
-    MyAssertHandler(0xffffffff821ca4a0,0x20,0,0xffffffff82000f98,0xffffffff821ca410);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_perf_timer.cpp",0x20
+                    ,0,"%s");
   }
-  iVar7 = 0;
-  lVar6 = 0;
+  iVar9 = 0;
+  lVar8 = 0;
   do {
     uVar1 = puVar4[1];
     trapWord(6,(ulonglong)uVar1,0);
-    iVar5 = *(int *)((int)(((((ulonglong)*puVar4 - lVar6) -
+    iVar7 = *(int *)((int)(((((ulonglong)*puVar4 - lVar8) -
                             (longlong)
-                            (int)(((ulonglong)*puVar4 - lVar6 & 0xffffffff) / (ulonglong)uVar1) *
-                            (longlong)(int)uVar1) * 0x52 + param_3 + 4 & 0xffffffff) << 2) +
+                            (int)(((ulonglong)*puVar4 - lVar8 & 0xffffffff) / (ulonglong)uVar1) *
+                            (longlong)(int)uVar1) * 0x52 + lVar6 + 4 & 0xffffffff) << 2) +
                     (int)puVar4);
-    if (iVar5 != 0) {
+    if (iVar7 != 0) {
       lVar3 = 0;
       do {
-        puVar2 = (uint *)(iVar5 + 4);
-        iVar5 = *(int *)(iVar5 + 0xc);
+        puVar2 = (uint *)(iVar7 + 4);
+        iVar7 = *(int *)(iVar7 + 0xc);
         lVar3 = (ulonglong)*puVar2 + lVar3;
-      } while (iVar5 != 0);
-      dVar8 = (double)(**(code **)((int)param_2 + 0x14))(lVar3);
-      iVar7 = iVar7 + 1;
-      dVar9 = dVar8;
-      if ((float)(dVar8 - (double)*param_5) < 0.0) {
-        dVar9 = (double)*param_5;
+      } while (iVar7 != 0);
+      dVar10 = (double)(**(code **)((int)uVar5 + 0x14))(lVar3);
+      iVar9 = iVar9 + 1;
+      dVar11 = dVar10;
+      if ((float)(dVar10 - (double)*param_5) < 0.0) {
+        dVar11 = (double)*param_5;
       }
-      *param_5 = (float)dVar9;
-      *param_4 = (float)((double)*param_4 + dVar8);
+      *param_5 = (float)dVar11;
+      *param_4 = (float)((double)*param_4 + dVar10);
     }
-    lVar6 = lVar6 + 1;
-  } while ((int)lVar6 < 0x3c);
-  if (iVar7 != 0) {
-    *param_4 = *param_4 / (float)(longlong)iVar7;
+    lVar8 = lVar8 + 1;
+  } while ((int)lVar8 < 0x3c);
+  if (iVar9 != 0) {
+    *param_4 = *param_4 / (float)(longlong)iVar9;
   }
   __restgprlr_25();
   return;
@@ -90,50 +101,60 @@ void R_Perf_GetTimerAverageAndMaxMs
 
 // 82760F68  R_Perf_GetFrameAverageAndMaxMs  (gfx_d3d/r_perf_timer.cpp:52)
 
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
 void R_Perf_GetFrameAverageAndMaxMs
-               (undefined8 param_1,ulonglong param_2,float *param_3,float *param_4)
+               (PerfTimerFrameHistory *param_1,PerfTimerStyle *param_2,float *param_3,float *param_4
+               )
 
 {
   uint uVar1;
   int *piVar2;
-  int iVar3;
-  double dVar4;
+  ulonglong uVar3;
+  int iVar4;
   double dVar5;
+  double dVar6;
   
-  piVar2 = (int *)__savegprlr_25();
+  uVar3 = (ulonglong)(int)param_2;
+  piVar2 = (int *)__savegprlr_25(param_1);
   *param_3 = 0.0;
   *param_4 = 0.0;
   if (piVar2 == (int *)0x0) {
-    MyAssertHandler(0xffffffff821ca4a0,0x3c,0,0xffffffff82000f98,0xffffffff821c39fc);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_perf_timer.cpp",0x3c
+                    ,0,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821ca4a0,0x3d,0,0xffffffff82000f98,0xffffffff821ca490);
+  if ((uVar3 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_perf_timer.cpp",0x3d
+                    ,0,"%s");
   }
   if ((uint)piVar2[1] < 0x3d) {
-    MyAssertHandler(0xffffffff821ca4a0,0x3e,0,0xffffffff82000f98,0xffffffff821ca448);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_perf_timer.cpp",0x3e
+                    ,0,"%s");
   }
   if (0x50 < (uint)piVar2[1]) {
-    MyAssertHandler(0xffffffff821ca4a0,0x3f,0,0xffffffff82000f98,0xffffffff821ca410);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_perf_timer.cpp",0x3f
+                    ,0,"%s");
   }
-  iVar3 = 0;
+  iVar4 = 0;
   do {
     uVar1 = piVar2[1];
     trapWord(6,(ulonglong)uVar1,0);
-    dVar4 = (double)(**(code **)((int)param_2 + 0x14))
-                              ((piVar2 + ((*piVar2 - iVar3) -
-                                         ((uint)(*piVar2 - iVar3) / uVar1) * uVar1) * 0x52)[3]);
-    iVar3 = iVar3 + 1;
-    dVar5 = dVar4;
-    if ((float)(dVar4 - (double)*param_4) < 0.0) {
-      dVar5 = (double)*param_4;
+    dVar5 = (double)(**(code **)((int)uVar3 + 0x14))
+                              ((piVar2 + ((*piVar2 - iVar4) -
+                                         ((uint)(*piVar2 - iVar4) / uVar1) * uVar1) * 0x52)[3]);
+    iVar4 = iVar4 + 1;
+    dVar6 = dVar5;
+    if ((float)(dVar5 - (double)*param_4) < 0.0) {
+      dVar6 = (double)*param_4;
     }
-    *param_4 = (float)dVar5;
-    *param_3 = (float)((double)*param_3 + dVar4);
-  } while (iVar3 < 0x3c);
-  if (iVar3 == 0) {
-    MyAssertHandler(0xffffffff821ca4a0,0x48,0,0xffffffff82000f98,0xffffffff821c8018);
+    *param_4 = (float)dVar6;
+    *param_3 = (float)((double)*param_3 + dVar5);
+  } while (iVar4 < 0x3c);
+  if (iVar4 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_perf_timer.cpp",0x48
+                    ,0,"%s");
   }
-  *param_3 = *param_3 / (float)(longlong)iVar3;
+  *param_3 = *param_3 / (float)(longlong)iVar4;
   __restgprlr_25();
   return;
 }
@@ -141,265 +162,23 @@ void R_Perf_GetFrameAverageAndMaxMs
 
 // 827610E8  R_Perf_ResetDraw  (gfx_d3d/r_perf_timer.cpp:79)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void R_Perf_ResetDraw(void)
 
 {
-  DAT_84628694 = 0;
+  s_topY = 0.0;
   return;
 }
 
 
 // 82761100  R_Perf_DrawTimers  (gfx_d3d/r_perf_timer.cpp:88)
-
-void R_Perf_DrawTimers(undefined8 param_1,ulonglong param_2)
-
-{
-  undefined4 uVar1;
-  undefined4 uVar2;
-  undefined4 *puVar3;
-  uint *puVar4;
-  uint *puVar5;
-  bool bVar6;
-  bool bVar7;
-  undefined4 *puVar8;
-  uint *puVar10;
-  longlong lVar9;
-  int iVar11;
-  uint *puVar12;
-  ulonglong uVar13;
-  int iVar14;
-  ulonglong uVar15;
-  float *pfVar16;
-  uint uVar17;
-  uint *puVar18;
-  int iVar19;
-  double dVar20;
-  undefined8 uVar21;
-  double dVar22;
-  double dVar23;
-  double dVar24;
-  double dVar25;
-  undefined8 uVar26;
-  double dVar27;
-  double dVar28;
-  double dVar29;
-  double dVar30;
-  double dVar31;
-  double dVar32;
-  double dVar33;
-  double dVar34;
-  double dVar35;
-  undefined8 uVar36;
-  double dVar37;
-  float local_154;
-  int local_150;
-  undefined4 *local_14c;
-  float local_148;
-  float local_144;
-  undefined *local_140;
-  char *local_13c;
-  longlong local_138 [39];
-  
-  __savegprlr();
-  puVar10 = (uint *)__savefpr();
-  local_13c = "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_perf_timer.cpp";
-  local_140 = &DAT_82000f98;
-  if (puVar10 == (uint *)0x0) {
-    MyAssertHandler(0xffffffff821ca4a0,0x6f,0,0xffffffff82000f98,0xffffffff821c39fc);
-  }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821ca4a0,0x70,0,0xffffffff82000f98,0xffffffff821ca490);
-  }
-  if (puVar10[1] <= *puVar10) {
-    MyAssertHandler(0xffffffff821ca4a0,0x71,0,0xffffffff82000f98,0xffffffff821ca618);
-  }
-  puVar3 = (undefined4 *)param_2;
-  iVar11 = puVar3[7];
-  local_138[0] = (longlong)iVar11;
-  dVar27 = (double)(float)puVar3[0xc];
-  uVar26 = 0x4049000000000000;
-  pfVar16 = (float *)&DAT_84628684;
-  iVar19 = puVar3[3];
-  dVar25 = (double)(float)puVar3[0xb];
-  bVar6 = puVar3[4] == 1;
-  local_14c = &DAT_84628684;
-  dVar23 = (double)((float)puVar3[10] + DAT_84628694);
-  dVar28 = (double)(((float)local_138[0] + 0.5) * (float)puVar3[1] + 50.0);
-  dVar24 = (double)((float)(dVar28 + dVar27) - 50.0);
-  if ((iVar19 == 0) || (bVar7 = false, iVar19 == 1)) {
-    bVar7 = true;
-  }
-  puVar5 = puVar10 + *puVar10 * 0x52;
-  local_150 = iVar11;
-  if (puVar3[5] == 0) {
-    MyAssertHandler(0xffffffff821ca4a0,0x8d,0,0xffffffff82000f98,0xffffffff821ca600);
-  }
-  dVar20 = (double)(*(code *)puVar3[5])(puVar5[3]);
-  dVar35 = dVar23;
-  R_Perf_GetFrameAverageAndMaxMs(puVar10,param_2,&local_144,local_138);
-  if (puVar3[3] == 5) {
-    MyAssertHandler(0xffffffff821ca4a0,0x96,0,0xffffffff82000f98,0xffffffff821ca5cc);
-  }
-  if (puVar3[4] == 3) {
-    MyAssertHandler(0xffffffff821ca4a0,0x97,0,0xffffffff82000f98,0xffffffff821ca598);
-  }
-  dVar30 = 2.0;
-  dVar29 = 4.0;
-  dVar37 = 1.0;
-  uVar36 = 0;
-  if ((puVar3[4] != 2) && (uVar17 = 0, puVar3[0xd] != 0)) {
-    dVar34 = (double)(float)((double)(float)(dVar20 * dVar27) / dVar25);
-    do {
-      if (3 < uVar17) {
-        MyAssertHandler(0xffffffff821ca4a0,0x9d,0,0xffffffff82000f98,0xffffffff821ca57c);
-      }
-      *pfVar16 = (float)dVar35;
-      RB_DrawStretchPic(uVar26,dVar35,dVar24,(double)(float)puVar3[2],uVar36,uVar36,dVar37,dVar37,
-                        DAT_8461652c);
-      RB_DrawStretchPic(dVar28,(double)(float)(dVar35 + dVar30),dVar34,
-                        (double)(float)((double)(float)puVar3[2] - dVar29),uVar36,uVar36,dVar37,
-                        dVar37,DAT_8461652c);
-      uVar17 = uVar17 + 1;
-      pfVar16 = pfVar16 + 1;
-      dVar35 = (double)(float)((double)(float)((double)(float)puVar3[2] + dVar35) + dVar30);
-    } while (uVar17 < (uint)puVar3[0xd]);
-  }
-  if (0x50 < (uint)puVar3[6]) {
-    MyAssertHandler(0xffffffff821ca4a0,0xab,0,0xffffffff82000f98,0xffffffff821ca54c);
-  }
-  uVar13 = 0;
-  if (puVar3[6] != 0) {
-    iVar14 = 0;
-    do {
-      puVar18 = *(uint **)((int)puVar5 + iVar14 + 0x10);
-      if ((*(char *)((int)puVar18 + 0x12) == '\0') &&
-         ((bVar7 || ((*(char *)((int)puVar18 + 0x11) != '\0' &&
-                     (((iVar19 == 2 || ((iVar19 == 3 && (puVar18[2] == 0)))) ||
-                      ((iVar19 == 4 && (*(char *)(puVar18 + 4) == '\0')))))))))) {
-        uVar2 = *(undefined4 *)(puVar3[8] + iVar14);
-        R_Perf_GetTimerAverageAndMaxMs(puVar10,param_2,uVar13,&local_154,&local_148);
-        lVar9 = 0;
-        puVar12 = puVar18;
-        do {
-          puVar4 = puVar12 + 1;
-          puVar12 = (uint *)puVar12[3];
-          lVar9 = (ulonglong)*puVar4 + lVar9;
-        } while (puVar12 != (uint *)0x0);
-        uVar21 = (*(code *)puVar3[5])(lVar9);
-        if (puVar3[4] == 2) {
-          uVar21 = va(0xffffffff821ca534,iVar11,uVar2,uVar21,(double)local_154,(double)local_148);
-          Com_Printf(8,0xffffffff82004d30,uVar21);
-        }
-        else {
-          dVar34 = (double)local_148;
-          if ((puVar3[3] != 0) &&
-             (RB_DrawStretchPic(uVar26,dVar35,dVar24,(double)(float)puVar3[2],uVar36,uVar36,dVar37,
-                                dVar37,DAT_8461652c), !bVar6)) {
-            RB_DrawStretchPic((double)(float)((double)(float)((double)(float)((double)(float)(dVar34
-                                                                                             * 
-                                                  dVar27) / dVar25) + dVar28) - dVar37),dVar35,
-                              dVar30,(double)(float)puVar3[2],uVar36,uVar36,dVar37,dVar37,
-                              DAT_8461652c);
-          }
-          uVar15 = 0;
-          dVar31 = (double)(float)(dVar37 / dVar25);
-          dVar32 = dVar28;
-          do {
-            dVar22 = (double)(*(code *)puVar3[5])((ulonglong)*puVar18 - (ulonglong)puVar5[2]);
-            dVar33 = (double)(float)((double)(float)(dVar22 * dVar27) * dVar31 + dVar28);
-            dVar22 = (double)(*(code *)puVar3[5])(puVar18[1]);
-            dVar22 = (double)(float)((double)(float)(dVar22 * dVar27) * dVar31);
-            if (bVar6) {
-              dVar32 = dVar33;
-            }
-            if (3 < *(byte *)((int)puVar18 + 0x13)) {
-              MyAssertHandler(local_13c,0xf1,0,local_140,0xffffffff821ca4f4);
-            }
-            RB_DrawStretchPic(dVar33,(double)(float)local_14c[*(byte *)((int)puVar18 + 0x13)],dVar22
-                              ,(double)(float)((double)(float)puVar3[2] - dVar29),uVar36,uVar36,
-                              dVar37,dVar37,DAT_8461652c);
-            if (puVar3[3] != 0) {
-              RB_DrawStretchPic(dVar32,(double)(float)(dVar35 + dVar30),dVar22,
-                                (double)(float)((double)(float)puVar3[2] - dVar29),uVar36,uVar36,
-                                dVar37,dVar37,DAT_8461652c);
-            }
-            puVar18 = (uint *)puVar18[3];
-            if (puVar18 != (uint *)0x0) {
-              RB_DrawStretchPic(dVar32,dVar35,dVar37,(double)(float)puVar3[2],uVar36,uVar36,dVar37,
-                                dVar37,DAT_8461652c);
-            }
-            dVar32 = (double)(float)(dVar22 + dVar32);
-            uVar15 = uVar15 + 1;
-          } while (puVar18 != (uint *)0x0);
-          if (puVar3[3] != 0) {
-            uVar1 = *puVar3;
-            dVar32 = (double)(float)puVar3[2];
-            if ((uVar15 & 0xffffffff) < 2) {
-              uVar21 = va(0xffffffff821ca534,local_150,uVar2,uVar21,(double)local_154,dVar34);
-            }
-            else {
-              uVar21 = va(0xffffffff821ca518,local_150,uVar2,uVar21,(double)local_154,dVar34,uVar15)
-              ;
-            }
-            RB_DrawText(uVar26,(double)(float)(dVar32 + dVar35),uVar21,uVar1);
-          }
-          dVar35 = (double)(float)((double)(float)((double)(float)puVar3[2] + dVar35) + dVar30);
-          iVar11 = local_150;
-        }
-      }
-      uVar13 = uVar13 + 1;
-      iVar14 = iVar14 + 4;
-    } while ((uVar13 & 0xffffffff) < (ulonglong)(uint)puVar3[6]);
-  }
-  if (((uint *)puVar3[0xe] == (uint *)0x0) || (uVar17 = *(uint *)puVar3[0xe], uVar17 == 0)) {
-    uVar13 = 0xffffffff821ca4ec;
-  }
-  else {
-    uVar13 = (ulonglong)uVar17;
-  }
-  dVar24 = (double)local_138[0]._0_4_;
-  uVar21 = va(dVar20,(double)local_144,dVar24,0xffffffff821ca534,iVar11,uVar13,dVar20,
-              (double)local_144,dVar24);
-  if (puVar3[4] == 2) {
-    Com_Printf(8,0xffffffff82035128,uVar21);
-  }
-  else {
-    RB_DrawText(uVar26,(double)(float)((double)(float)puVar3[2] + dVar23),uVar21,*puVar3);
-  }
-  puVar8 = local_14c;
-  uVar17 = 1;
-  if (1 < (uint)puVar3[0xd]) {
-    iVar19 = 4;
-    do {
-      if ((puVar3[0xe] != 0) && (iVar14 = *(int *)(iVar19 + puVar3[0xe]), iVar14 != 0)) {
-        uVar21 = va(0xffffffff821ca4e4,iVar11,iVar14);
-        RB_DrawText(uVar26,(double)(*(float *)(iVar19 + (int)puVar8) + (float)puVar3[2]),uVar21,
-                    *puVar3);
-      }
-      uVar17 = uVar17 + 1;
-      iVar19 = iVar19 + 4;
-    } while (uVar17 < (uint)puVar3[0xd]);
-  }
-  if ((!bVar6) && (puVar3[4] != 2)) {
-    RB_DrawStretchPic((double)(float)((double)(float)((double)(float)((double)(float)(dVar24 * 
-                                                  dVar27) / dVar25) + dVar28) - dVar37),dVar23,
-                      dVar30,(double)(float)puVar3[2],uVar36,uVar36,dVar37,dVar37,DAT_8461652c);
-  }
-  iVar11 = R_HasDeviceOwnership();
-  if (iVar11 == 0) {
-    MyAssertHandler(0xffffffff821ca3d0,0xaf,0,local_140,0xffffffff8217d420);
-  }
-  if (DAT_8483400c != 0) {
-    RB_EndTessSurface();
-  }
-  puVar8[4] = (float)dVar35;
-  __restfpr();
-  __restgprlr();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
 
 // 82760D38  RB_EndSurfaceIfNeeded  (gfx_d3d/rb_backend.h:173)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void RB_EndSurfaceIfNeeded(void)
 
@@ -408,9 +187,10 @@ void RB_EndSurfaceIfNeeded(void)
   
   iVar1 = R_HasDeviceOwnership();
   if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff821ca3d0,0xaf,0,0xffffffff82000f98,0xffffffff8217d420);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.h",0xaf,0,
+                    "%s");
   }
-  if (DAT_8483400c != 0) {
+  if (tess.vertexCount != 0) {
     RB_EndTessSurface();
   }
   return;

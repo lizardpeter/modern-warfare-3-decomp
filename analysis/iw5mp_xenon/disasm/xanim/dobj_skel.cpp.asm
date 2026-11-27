@@ -98,6 +98,8 @@ LAB_8261a594:
   8261A5A8  482FC134             b 0x829166dc
 
 ; 8261A440  __stvx  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/vectorintrinsics.h:104)
+  8261A440  102321C3             stvx128 v1,r3,r4
+  8261A444  4E800020             blr
 
 ; 8261A5B0  CalcSkelDuplicateBones  (xanim/dobj_skel.cpp:118)
   8261A5B0  7D8802A6             mfspr r12,LR
@@ -2145,8 +2147,20 @@ LAB_8261c85c:
   8261C870  7D063838             and r6,r8,r7
   8261C874  2B060000             cmplwi cr6,r6,0x0
   8261C878  409A003C             bne cr6,0x8261c8b4
-  8261C87C  13F4F447             vcmpneh. v31,v20,v30
-  8261C880  13C0F407             vcmpneb. v30,v0,v30
+  8261C87C  13F4F447             lvrx128 v63,r20,r30
+  8261C880  13C0F407             lvlx128 v62,0,r30
+  8261C884  13BFFA35             vsldoi128 v61,v63,v63,0x8
+  8261C888  1380B407             lvlx128 v60,0,r22
+  8261C88C  1B60E735             vspltw128 v59,v60,0x0
+  8261C890  175EEAF5             vor128 v58,v62,v61
+  8261C894  1B20D7A5             vupkhsb128 v57,v58
+  8261C898  1B00CAB5             vcsxwfp128 v56,v57,0x0
+  8261C89C  16FBC0B5             vmulfp128 v55,v59,v56
+  8261C8A0  12E0E1C7             stvx128 v55,0,r28
+  8261C8A4  D3FFFFF8             stfs f31,-0x8(r31)
+  8261C8A8  D3FFFFFC             stfs f31,-0x4(r31)
+  8261C8AC  D3FF0000             stfs f31,0x0(r31)
+  8261C8B0  D3FF0004             stfs f31,0x4(r31)
 LAB_8261c8b4:
   8261C8B4  375AFFFF             subic. r26,r26,0x1
   8261C8B8  3B9C0020             addi r28,r28,0x20

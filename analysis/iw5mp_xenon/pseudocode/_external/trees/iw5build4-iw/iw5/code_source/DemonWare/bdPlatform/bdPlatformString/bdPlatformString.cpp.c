@@ -2,82 +2,87 @@
 
 // 828F4E90  bdStrGetToken  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdplatform/bdplatformstring/bdplatformstring.cpp:18)
 
-void bdStrGetToken(undefined8 param_1,char *param_2,undefined8 param_3,ulonglong param_4,
-                  ulonglong param_5)
+uint bdStrGetToken(char *param_1,char *param_2,char *param_3,uint param_4,char **param_5)
 
 {
-  ulonglong uVar1;
-  size_t sVar2;
-  size_t sVar3;
-  ulonglong uVar4;
-  longlong lVar5;
+  char *pcVar1;
+  uint uVar2;
+  uint uVar3;
+  uint uVar4;
+  ulonglong uVar5;
+  ulonglong uVar6;
+  longlong lVar7;
   
-  uVar1 = __savegprlr_25();
-  lVar5 = 0;
-  if ((uVar1 & 0xffffffff) != 0) {
-    sVar2 = strspn((char *)uVar1,param_2);
-    sVar3 = strcspn((char *)((longlong)(int)sVar2 + uVar1),param_2);
-    lVar5 = (longlong)(int)sVar3;
-    uVar4 = lVar5 + 1U;
-    if ((param_4 & 0xffffffff) <= (lVar5 + 1U & 0xffffffff)) {
-      uVar4 = param_4;
+  uVar6 = (ulonglong)(int)param_5;
+  uVar5 = (ulonglong)(int)param_4;
+  pcVar1 = (char *)__savegprlr_25(param_1);
+  lVar7 = 0;
+  if (pcVar1 != (char *)0x0) {
+    uVar2 = strspn(pcVar1,param_2);
+    uVar3 = strcspn(pcVar1 + uVar2,param_2);
+    lVar7 = (longlong)(int)uVar3;
+    uVar4 = (uint)(lVar7 + 1U);
+    if ((uVar5 & 0xffffffff) <= (lVar7 + 1U & 0xffffffff)) {
+      uVar4 = (uint)uVar5;
     }
-    bdStrlcpy(param_3,(longlong)(int)sVar2 + uVar1,uVar4);
-    if ((param_5 & 0xffffffff) != 0) {
-      *(undefined4 *)param_5 = (char *)uVar1 + sVar2 + sVar3;
+    bdStrlcpy(param_3,pcVar1 + uVar2,uVar4);
+    if ((uVar6 & 0xffffffff) != 0) {
+      *(undefined4 *)uVar6 = pcVar1 + uVar2 + uVar3;
     }
   }
-  __restgprlr_25(lVar5);
-  return;
+  uVar4 = __restgprlr_25(lVar7);
+  return uVar4;
 }
 
 
 // 828F4F18  bdDelimSubstr  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdplatform/bdplatformstring/bdplatformstring.cpp:45)
 
-void bdDelimSubstr(undefined8 param_1,undefined4 param_2,undefined8 param_3)
+bool bdDelimSubstr(char *param_1,char *param_2,char *param_3)
 
 {
-  ulonglong uVar1;
+  uint uVar1;
   uint uVar2;
-  int iVar3;
-  undefined8 *puVar4;
-  bool bVar5;
-  longlong lVar6;
-  undefined4 in_stack_00000014;
-  undefined4 in_stack_0000001c;
+  char *pcVar3;
+  undefined1 uVar4;
+  undefined8 *puVar5;
+  bool bVar6;
+  longlong lVar7;
+  char *pcStack00000014;
+  char *pcStack0000001c;
   undefined8 uStack_a8;
   char local_a0 [56];
   undefined8 uStack_68;
   char local_60 [96];
   
-  in_stack_00000014 = __savegprlr_29();
-  bVar5 = true;
-  in_stack_0000001c = param_2;
+  pcStack0000001c = param_2;
+  pcStack00000014 = (char *)__savegprlr_29(param_1);
+  bVar6 = true;
   do {
-    puVar4 = &uStack_68;
-    lVar6 = 8;
+    puVar5 = &uStack_68;
+    lVar7 = 8;
     do {
-      puVar4 = puVar4 + 1;
-      *puVar4 = 0;
-      lVar6 = lVar6 + -1;
-    } while (lVar6 != 0);
-    uVar1 = bdStrGetToken(in_stack_0000001c,param_3,local_60,0x40,&stack0x0000001c);
-    if (((uVar1 & 0xffffffff) < 0x40) && (uVar1 != 0)) {
-      puVar4 = &uStack_a8;
-      lVar6 = 8;
+      puVar5 = puVar5 + 1;
+      *puVar5 = 0;
+      lVar7 = lVar7 + -1;
+    } while (lVar7 != 0);
+    uVar1 = bdStrGetToken(pcStack0000001c,param_3,local_60,0x40,&stack0x0000001c);
+    if ((uVar1 < 0x40) && (uVar1 != 0)) {
+      puVar5 = &uStack_a8;
+      lVar7 = 8;
       do {
-        puVar4 = puVar4 + 1;
-        *puVar4 = 0;
-        lVar6 = lVar6 + -1;
-      } while (lVar6 != 0);
-      uVar2 = bdStrGetToken(in_stack_00000014,param_3,local_a0,0x40,&stack0x00000014);
+        puVar5 = puVar5 + 1;
+        *puVar5 = 0;
+        lVar7 = lVar7 + -1;
+      } while (lVar7 != 0);
+      uVar2 = bdStrGetToken(pcStack00000014,param_3,local_a0,0x40,&stack0x00000014);
       if (uVar2 < 0x40) {
-        iVar3 = _stricmp(local_60,local_a0);
-        bVar5 = iVar3 == 0;
+        pcVar3 = local_60;
+        _stricmp();
+        bVar6 = pcVar3 == (char *)0x0;
       }
     }
-  } while ((bVar5 != false) && (uVar1 != 0));
-  __restgprlr_29(bVar5);
-  return;
+  } while ((bVar6 != false) && (uVar1 != 0));
+  uVar4 = __restgprlr_29(bVar6);
+  return (bool)uVar4;
 }
 

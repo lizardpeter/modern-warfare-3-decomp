@@ -2,78 +2,116 @@
 
 // 826139A8  TRACK_xenon_common  (universal/xenon_common.cpp:31)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void TRACK_xenon_common(void)
 
 {
-  track_static_alloc_internal(0xffffffff841db448,0x508,0xffffffff821843f4,10);
+  track_static_alloc_internal(s_criticalSection,0x508,"s_criticalSection",10);
+  return;
+}
+
+
+// 826139C8  Sys_Mkdir  (universal/xenon_common.cpp:46)
+
+void Sys_Mkdir(char *param_1)
+
+{
+  int iVar1;
+  ulong uVar2;
+  
+  iVar1 = CreateDirectoryA(param_1,(void *)0x0);
+  if (iVar1 == 0) {
+    uVar2 = GetLastError();
+  }
+  else {
+    uVar2 = 0;
+  }
+  if (uVar2 != 0) {
+    _dosmaperr(uVar2);
+  }
   return;
 }
 
 
 // 826139D0  Sys_Cwd  (universal/xenon_common.cpp:57)
 
-undefined8 Sys_Cwd(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+char * Sys_Cwd(void)
 
 {
-  return 0xffffffff82994630;
+  return cwd;
 }
 
 
 // 82613B48  Sys_GetMapZoneDir  (universal/xenon_common.cpp:69)
 
-undefined8 Sys_GetMapZoneDir(void)
+char * Sys_GetMapZoneDir(char *param_1)
 
 {
-  return 0xffffffff820068af;
+  return "";
 }
 
 
 // 826139E0  Sys_GetZoneDir  (universal/xenon_common.cpp:80)
 
-undefined8 Sys_GetZoneDir(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+char * Sys_GetZoneDir(void)
 
 {
-  return 0xffffffff820068af;
+  return "";
 }
 
 
 // 826139F0  Sys_GetDiscDir  (universal/xenon_common.cpp:91)
 
-undefined8 Sys_GetDiscDir(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+char * Sys_GetDiscDir(void)
 
 {
-  return 0xffffffff820068af;
+  return "";
 }
 
 
 // 82613A00  Sys_DefaultCDPath  (universal/xenon_common.cpp:102)
 
-undefined8 Sys_DefaultCDPath(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+char * Sys_DefaultCDPath(void)
 
 {
-  return 0xffffffff820068af;
+  return "";
 }
 
 
 // 82613A10  Sys_DefaultHomePath  (universal/xenon_common.cpp:113)
 
-undefined8 Sys_DefaultHomePath(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+char * Sys_DefaultHomePath(void)
 
 {
-  return 0;
+  return (char *)0x0;
 }
 
 
 // 82613A18  Sys_DefaultInstallPath  (universal/xenon_common.cpp:124)
 
-undefined8 Sys_DefaultInstallPath(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+char * Sys_DefaultInstallPath(void)
 
 {
-  return 0xffffffff82994630;
+  return cwd;
 }
 
 
 // 82613A28  Sys_InitializeCriticalSections  (universal/xenon_common.cpp:131)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Sys_InitializeCriticalSections(void)
 
@@ -91,26 +129,28 @@ void Sys_InitializeCriticalSections(void)
 
 // 82613A78  Sys_EnterCriticalSection  (universal/xenon_common.cpp:140)
 
-void Sys_EnterCriticalSection(ulonglong param_1)
+void Sys_EnterCriticalSection(CriticalSection param_1)
 
 {
-  if (0x2d < (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82184408,0x8d,0,0xffffffff82184450,param_1,0x2e);
+  if (CRITSECT_DEVICE_OWNER < param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\xenon_common.cpp",
+                    0x8d,0,"critSect doesn\'t index CRITSECT_COUNT\n\t%i not in [0, %i)");
   }
-  RtlEnterCriticalSection(param_1 * 0x1c + -0x7be24bb8);
+  RtlEnterCriticalSection((longlong)(int)param_1 * 0x1c + -0x7be24bb8);
   return;
 }
 
 
 // 82613AE0  Sys_LeaveCriticalSection  (universal/xenon_common.cpp:147)
 
-void Sys_LeaveCriticalSection(ulonglong param_1)
+void Sys_LeaveCriticalSection(CriticalSection param_1)
 
 {
-  if (0x2d < (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82184408,0x94,0,0xffffffff82184450,param_1,0x2e);
+  if (CRITSECT_DEVICE_OWNER < param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\xenon_common.cpp",
+                    0x94,0,"critSect doesn\'t index CRITSECT_COUNT\n\t%i not in [0, %i)");
   }
-  RtlLeaveCriticalSection(param_1 * 0x1c + -0x7be24bb8);
+  RtlLeaveCriticalSection((longlong)(int)param_1 * 0x1c + -0x7be24bb8);
   return;
 }
 

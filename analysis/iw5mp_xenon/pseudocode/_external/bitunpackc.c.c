@@ -2,7 +2,7 @@
 
 // 828CB290  BitUnpackCBuffer  (<external>/Xenon/mar09/core/private/xam/codecs/nci/dec/src/bitunpackc.c:98)
 
-void BitUnpackCBuffer(undefined8 param_1,byte *param_2,longlong param_3)
+void BitUnpackCBuffer(C_BUFFER_TYPE *param_1,uchar *param_2,int param_3)
 
 {
   byte bVar1;
@@ -11,23 +11,25 @@ void BitUnpackCBuffer(undefined8 param_1,byte *param_2,longlong param_3)
   ushort *puVar4;
   byte *pbVar5;
   int *piVar6;
-  ulonglong uVar7;
-  byte *pbVar8;
-  int iVar9;
+  longlong lVar7;
+  ulonglong uVar8;
+  byte *pbVar9;
+  int iVar10;
   
-  piVar6 = (int *)__savegprlr_29();
+  lVar7 = (longlong)param_3;
+  piVar6 = (int *)__savegprlr_29(param_1);
   puVar4 = (ushort *)piVar6[2];
   pbVar5 = (byte *)piVar6[3];
-  iVar9 = (1 << ((uint)param_3 & 0x3f)) + -1;
+  iVar10 = (1 << ((uint)lVar7 & 0x3f)) + -1;
   bVar1 = *pbVar5;
-  pbVar8 = (byte *)((uint)*puVar4 + *piVar6);
+  pbVar9 = (byte *)((uint)*puVar4 + *piVar6);
   uVar2 = *(ushort *)(piVar6 + 1);
-  uVar7 = (ulonglong)bVar1 + param_3;
-  if ((uVar7 & 0xfffffff8) == 0) {
-    *param_2 = (byte)iVar9 & *pbVar8 >> (bVar1 & 0x3f);
-    if ((int)uVar7 == 8) {
+  uVar8 = (ulonglong)bVar1 + lVar7;
+  if ((uVar8 & 0xfffffff8) == 0) {
+    *param_2 = (byte)iVar10 & *pbVar9 >> (bVar1 & 0x3f);
+    if ((int)uVar8 == 8) {
       uVar3 = *puVar4;
-      uVar7 = 0;
+      uVar8 = 0;
       *puVar4 = uVar3 + 1;
       if (uVar2 <= (ushort)(uVar3 + 1)) {
         *puVar4 = 0;
@@ -35,19 +37,19 @@ void BitUnpackCBuffer(undefined8 param_1,byte *param_2,longlong param_3)
     }
   }
   else {
-    *param_2 = *pbVar8 >> (bVar1 & 0x3f);
-    pbVar8 = pbVar8 + 1;
+    *param_2 = *pbVar9 >> (bVar1 & 0x3f);
+    pbVar9 = pbVar9 + 1;
     uVar3 = *puVar4;
     *puVar4 = uVar3 + 1;
     if (uVar2 <= (ushort)(uVar3 + 1)) {
       *puVar4 = 0;
-      pbVar8 = (byte *)*piVar6;
+      pbVar9 = (byte *)*piVar6;
     }
-    uVar7 = uVar7 - 8;
-    *param_2 = (byte)((iVar9 >> (8 - bVar1 & 0x3f) & (uint)*pbVar8) << (8 - bVar1 & 0x3f)) |
+    uVar8 = uVar8 - 8;
+    *param_2 = (byte)((iVar10 >> (8 - bVar1 & 0x3f) & (uint)*pbVar9) << (8 - bVar1 & 0x3f)) |
                *param_2;
   }
-  *pbVar5 = (byte)uVar7;
+  *pbVar5 = (byte)uVar8;
   __restgprlr_29();
   return;
 }

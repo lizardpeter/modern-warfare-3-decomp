@@ -2,80 +2,115 @@
 
 // 828A27F0  XMemSet  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/xmemset.c:31)
 
-/* WARNING: Control flow encountered bad instruction data */
-
-void XMemSet(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+void * XMemSet(void *param_1,int param_2,ulong param_3)
 
 {
+  uint uVar1;
   undefined8 in_r0;
-  longlong lVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
+  longlong lVar2;
+  void *pvVar3;
   ulonglong uVar4;
-  int iVar5;
-  undefined1 auVar6 [16];
-  undefined1 auVar7 [16];
+  ulonglong uVar5;
+  longlong lVar6;
+  longlong lVar7;
+  int iVar8;
+  ulonglong uVar9;
+  ulonglong uVar10;
+  ulonglong uVar11;
+  undefined1 auVar12 [16];
+  undefined1 auVar13 [16];
+  undefined1 auVar14 [16];
   
-  lVar1 = __savegprlr_29();
-  if ((param_3 & 0xffffffff) < 0x10) {
-    iVar5 = 0;
-    if ((param_3 & 0xffffffff) != 0) {
+  uVar9 = (ulonglong)(int)param_3;
+  uVar11 = (ulonglong)param_2;
+  lVar2 = __savegprlr_29(param_1);
+  if ((uVar9 & 0xffffffff) < 0x10) {
+    iVar8 = 0;
+    if ((uVar9 & 0xffffffff) != 0) {
       do {
-        *(char *)(iVar5 + (int)lVar1) = (char)param_2;
-        iVar5 = iVar5 + 1;
-        param_3 = param_3 - 1;
-      } while (param_3 != 0);
+        *(char *)(iVar8 + (int)lVar2) = (char)uVar11;
+        iVar8 = iVar8 + 1;
+        uVar9 = uVar9 - 1;
+      } while (uVar9 != 0);
     }
-    __restgprlr_29(lVar1);
-    return;
   }
-  auVar6 = vectorSplatImmediateSignedByte(4);
-  loadVectorForShiftLeft(in_r0,param_2);
-  auVar7 = loadVectorForShiftLeft(in_r0,(longlong)((int)param_2 >> 4));
-  uVar3 = (ulonglong)(uint)((int)-lVar1 >> 4) & 7;
-  vectorShiftLeftIntegerByte(auVar7,auVar6);
-  if ((-lVar1 & 0xfU) == 0) {
-    uVar2 = (param_3 & 0xffffffff) >> 4;
-    if (uVar2 < uVar3) {
-      uVar3 = uVar2;
+  else {
+    auVar12 = vectorSplatImmediateSignedByte(4);
+    auVar14 = loadVectorForShiftLeft(in_r0,uVar11);
+    uVar10 = -lVar2 & 0xf;
+    auVar13 = loadVectorForShiftLeft(in_r0,(longlong)((int)uVar11 >> 4));
+    uVar5 = (ulonglong)(uint)((int)-lVar2 >> 4) & 7;
+    auVar12 = vectorShiftLeftIntegerByte(auVar13,auVar12);
+    auVar12 = (auVar14 | auVar12) >> 0x78;
+    auVar12 = auVar12 & (undefined1  [16])0xff | auVar12 << 8 | auVar12 << 0x10 | auVar12 << 0x18 |
+              auVar12 << 0x20 | auVar12 << 0x28 | auVar12 << 0x30 | auVar12 << 0x38 |
+              auVar12 << 0x40 | auVar12 << 0x48 | auVar12 << 0x50 | auVar12 << 0x58 |
+              auVar12 << 0x60 | auVar12 << 0x68 | auVar12 << 0x70 | auVar12 << 0x78;
+    lVar7 = lVar2;
+    if (uVar10 != 0) {
+      storeVectorLeftIndexed(auVar12,lVar2);
+      uVar9 = uVar9 - uVar10;
+      lVar7 = uVar10 + lVar2;
     }
-    if (uVar3 != 0) {
-                    /* WARNING: Bad instruction - Truncating control flow here */
-      halt_baddata();
+    uVar10 = (uVar9 & 0xffffffff) >> 4;
+    if (uVar10 < uVar5) {
+      uVar5 = uVar10;
     }
-    uVar3 = (param_3 & 0xffffffff) >> 7;
-    uVar2 = uVar3;
-    if ((param_2 & 0xff) == 0) {
-      for (; uVar2 != 0; uVar2 = uVar2 - 1) {
-        dataCacheBlockClearToZero(lVar1);
-        lVar1 = lVar1 + 0x80;
+    uVar4 = (ulonglong)(uint)s_16;
+    for (uVar10 = uVar5; uVar10 != 0; uVar10 = uVar10 - 1) {
+      *(undefined1 (*) [16])((uint)lVar7 & 0xfffffff0) = auVar12;
+      lVar7 = uVar4 + lVar7;
+    }
+    uVar9 = uVar9 + uVar5 * -0x10;
+    uVar10 = (uVar9 & 0xffffffff) >> 7;
+    uVar5 = uVar10;
+    if ((uVar11 & 0xff) == 0) {
+      for (; uVar5 != 0; uVar5 = uVar5 - 1) {
+        dataCacheBlockClearToZero128(lVar7);
+        lVar7 = lVar7 + 0x80;
       }
     }
     else {
-      if (3 < uVar3) {
-        uVar2 = 4;
+      uVar11 = uVar10;
+      if (3 < uVar10) {
+        uVar11 = 4;
       }
-      uVar4 = 0;
-      for (; uVar2 != 0; uVar2 = uVar2 - 1) {
-        dataCacheBlockClearToZero((uVar4 & 0x1ffffff) * 0x80 + lVar1);
-        uVar4 = uVar4 + 1;
+      uVar5 = 0;
+      for (; uVar11 != 0; uVar11 = uVar11 - 1) {
+        dataCacheBlockClearToZero128((uVar5 & 0x1ffffff) * 0x80 + lVar7);
+        uVar5 = uVar5 + 1;
       }
-      if (uVar3 != 0) {
-        if (4 < uVar3) {
-          dataCacheBlockClearToZero(lVar1 + 0x200);
+      lVar6 = 0;
+      for (uVar11 = uVar10; uVar11 != 0; uVar11 = uVar11 - 1) {
+        if ((lVar6 + 4U & 0xffffffff) < uVar10) {
+          dataCacheBlockClearToZero128(lVar7 + 0x200);
         }
-                    /* WARNING: Bad instruction - Truncating control flow here */
-        halt_baddata();
+        uVar1 = (uint)lVar7;
+        *(undefined1 (*) [16])(uVar1 & 0xfffffff0) = auVar12;
+        *(undefined1 (*) [16])(uVar1 + 0x10 & 0xfffffff0) = auVar12;
+        *(undefined1 (*) [16])(uVar1 + 0x20 & 0xfffffff0) = auVar12;
+        *(undefined1 (*) [16])(uVar1 + 0x30 & 0xfffffff0) = auVar12;
+        lVar6 = lVar6 + 1;
+        *(undefined1 (*) [16])(uVar1 + 0x40 & 0xfffffff0) = auVar12;
+        *(undefined1 (*) [16])(uVar1 + 0x50 & 0xfffffff0) = auVar12;
+        *(undefined1 (*) [16])(uVar1 + 0x60 & 0xfffffff0) = auVar12;
+        *(undefined1 (*) [16])(uVar1 + 0x70 & 0xfffffff0) = auVar12;
+        lVar7 = lVar7 + 0x80;
       }
     }
-    if ((param_3 + uVar3 * -0x80 & 0xffffffff) < 0x10) {
-                    /* WARNING: Bad instruction - Truncating control flow here */
-      halt_baddata();
+    uVar9 = uVar9 + uVar10 * -0x80;
+    if (0xf < (uVar9 & 0xffffffff)) {
+      uVar11 = (uVar9 & 0xffffffff) >> 4;
+      do {
+        *(undefined1 (*) [16])((uint)lVar7 & 0xfffffff0) = auVar12;
+        lVar7 = uVar4 + lVar7;
+        uVar9 = uVar9 - 0x10;
+        uVar11 = uVar11 - 1;
+      } while (uVar11 != 0);
     }
-                    /* WARNING: Bad instruction - Truncating control flow here */
-    halt_baddata();
+    storeVectorRightIndexed(auVar12,lVar7 + uVar9);
   }
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  pvVar3 = (void *)__restgprlr_29(lVar2);
+  return pvVar3;
 }
 

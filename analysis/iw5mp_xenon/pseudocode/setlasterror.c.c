@@ -2,10 +2,10 @@
 
 // 828ABE30  SetLastError  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/setlasterror.c:51)
 
-void SetLastError(DWORD dwErrCode)
+void SetLastError(ulong param_1)
 
 {
-  RtlSetLastError(dwErrCode);
+  RtlSetLastError(param_1);
   return;
 }
 

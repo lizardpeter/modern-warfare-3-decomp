@@ -2,7 +2,7 @@
 
 // 82927BF8  strcpy_s  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/tcscpy_s.inl:13)
 
-errno_t strcpy_s(char *_Dst,rsize_t _SizeInBytes,char *_Src)
+int strcpy_s(char *param_1,uint param_2,char *param_3)
 
 {
   char cVar1;
@@ -10,32 +10,32 @@ errno_t strcpy_s(char *_Dst,rsize_t _SizeInBytes,char *_Src)
   ulonglong uVar3;
   int iVar4;
   
-  uVar3 = (ulonglong)(int)_SizeInBytes;
-  if ((_Dst == (char *)0x0) || (_SizeInBytes == 0)) {
+  uVar3 = (ulonglong)(int)param_2;
+  if ((param_1 == (char *)0x0) || (param_2 == 0)) {
     piVar2 = _errno();
     *piVar2 = 0x16;
     _invalid_parameter_noinfo();
     iVar4 = 0x16;
   }
   else {
-    if (_Src == (char *)0x0) {
-      *_Dst = '\0';
+    if (param_3 == (char *)0x0) {
+      *param_1 = '\0';
       piVar2 = _errno();
       iVar4 = 0x16;
     }
     else {
-      iVar4 = (int)_Dst - (int)_Src;
+      iVar4 = (int)param_1 - (int)param_3;
       do {
-        cVar1 = *_Src;
-        _Src[iVar4] = cVar1;
-        _Src = _Src + 1;
+        cVar1 = *param_3;
+        param_3[iVar4] = cVar1;
+        param_3 = param_3 + 1;
         if (cVar1 == '\0') break;
         uVar3 = uVar3 - 1;
       } while (uVar3 != 0);
       if ((uVar3 & 0xffffffff) != 0) {
         return 0;
       }
-      *_Dst = '\0';
+      *param_1 = '\0';
       piVar2 = _errno();
       iVar4 = 0x22;
     }

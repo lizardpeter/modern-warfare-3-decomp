@@ -2,28 +2,28 @@
 
 // 829184F0  strchr  (<external>/bt/278379/vctools/crt/xb/xbox/strchrp.asm:47)
 
-char * strchr(char *_Str,int _Val)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void strchr(void)
 
 {
+  byte *in_r3;
+  uint in_r4;
   uint uVar1;
   
-  uVar1 = (uint)(byte)*_Str;
-  if (_Val == 0) {
+  uVar1 = (uint)*in_r3;
+  if (in_r4 == 0) {
     while (uVar1 != 0) {
-      _Str = _Str + 1;
-      uVar1 = (uint)(byte)*_Str;
+      in_r3 = in_r3 + 1;
+      uVar1 = (uint)*in_r3;
     }
   }
   else {
-    while (uVar1 != 0) {
-      if (uVar1 == _Val) {
-        return (char *)(byte *)_Str;
-      }
-      _Str = _Str + 1;
-      uVar1 = (uint)(byte)*_Str;
+    while ((uVar1 != 0 && (uVar1 != in_r4))) {
+      in_r3 = in_r3 + 1;
+      uVar1 = (uint)*in_r3;
     }
-    _Str = (char *)0x0;
   }
-  return _Str;
+  return;
 }
 

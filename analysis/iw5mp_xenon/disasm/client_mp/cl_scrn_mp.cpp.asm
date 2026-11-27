@@ -403,109 +403,12 @@ LAB_823539b8:
   823539E0  398C39F0             addi r12,r12,0x39f0
   823539E4  7C0C002E             lwzx r0,r12,r0
   823539E8  7C0903A6             mtspr CTR,r0
-switchD:
   823539EC  4E800420             bctr
-caseD_1:
-  82353A1C  3D608200             lis r11,-0x7e00
-  82353A20  3D408218             lis r10,-0x7de8
-  82353A24  38C00000             li r6,0x0
-  82353A28  388A17D8             addi r4,r10,0x17d8
-  82353A2C  3860000F             li r3,0xf
-  82353A30  C02B13F8             lfs f1,0x13f8(r11)
-  82353A34  484161FD             bl 0x82769c30
-  82353A38  7FE3FB78             or r3,r31,r31
-  82353A3C  4BFDA0D5             bl 0x8232db10
-  82353A40  48000198             b 0x82353bd8
-caseD_2:
-  82353A44  3D608200             lis r11,-0x7e00
-  82353A48  3D408218             lis r10,-0x7de8
-  82353A4C  38C00000             li r6,0x0
-  82353A50  388A17D8             addi r4,r10,0x17d8
-  82353A54  3860000F             li r3,0xf
-  82353A58  C02B13F8             lfs f1,0x13f8(r11)
-  82353A5C  484161D5             bl 0x82769c30
-  82353A60  7FE3FB78             or r3,r31,r31
-  82353A64  4BFF4C0D             bl 0x82348670
-  82353A68  48000170             b 0x82353bd8
-caseD_0:
-  82353A6C  3D608200             lis r11,-0x7e00
-  82353A70  3D408218             lis r10,-0x7de8
-  82353A74  38C00000             li r6,0x0
-  82353A78  388A17D8             addi r4,r10,0x17d8
-  82353A7C  3860000F             li r3,0xf
-  82353A80  C02B13F8             lfs f1,0x13f8(r11)
-  82353A84  484161AD             bl 0x82769c30
-  82353A88  38600000             li r3,0x0
-  82353A8C  484FDD65             bl 0x828517f0
-  82353A90  481C6E01             bl 0x8251a890
-  82353A94  5469063E             rlwinm r9,r3,0x0,0x18,0x1f
-  82353A98  2B090000             cmplwi cr6,r9,0x0
-  82353A9C  409A003C             bne cr6,0x82353ad8
-  82353AA0  48048E41             bl 0x8239c8e0
-  82353AA4  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
-  82353AA8  2B0B0000             cmplwi cr6,r11,0x0
-  82353AAC  419A012C             beq cr6,0x82353bd8
-  82353AB0  3D608203             lis r11,-0x7dfd
-  82353AB4  3D408200             lis r10,-0x7e00
-  82353AB8  3D208203             lis r9,-0x7dfd
-  82353ABC  38EB6514             addi r7,r11,0x6514
-  82353AC0  38CA0F98             addi r6,r10,0xf98
-  82353AC4  386964D0             addi r3,r9,0x64d0
-  82353AC8  38A00000             li r5,0x0
-  82353ACC  38800177             li r4,0x177
-  82353AD0  48280A31             bl 0x825d4500
-  82353AD4  48000104             b 0x82353bd8
-LAB_82353ad8:
-  82353AD8  48048C79             bl 0x8239c750
-  82353ADC  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
-  82353AE0  2B0B0000             cmplwi cr6,r11,0x0
-  82353AE4  409A00F4             bne cr6,0x82353bd8
-  82353AE8  3D608203             lis r11,-0x7dfd
-  82353AEC  3D408200             lis r10,-0x7e00
-  82353AF0  3D208203             lis r9,-0x7dfd
-  82353AF4  38EB1C9C             addi r7,r11,0x1c9c
-  82353AF8  38CA0F98             addi r6,r10,0xf98
-  82353AFC  386964D0             addi r3,r9,0x64d0
-  82353B00  38A00000             li r5,0x0
-  82353B04  3880017A             li r4,0x17a
-  82353B08  482809F9             bl 0x825d4500
-  82353B0C  480000CC             b 0x82353bd8
-caseD_3:
-  82353B10  3D608200             lis r11,-0x7e00
-  82353B14  3D408218             lis r10,-0x7de8
-  82353B18  38C00000             li r6,0x0
-  82353B1C  388A17D8             addi r4,r10,0x17d8
-  82353B20  3860000F             li r3,0xf
-  82353B24  C02B13F8             lfs f1,0x13f8(r11)
-  82353B28  48416109             bl 0x82769c30
-  82353B2C  7FE3FB78             or r3,r31,r31
-  82353B30  4825FC01             bl 0x825b3730
-  82353B34  7FE3FB78             or r3,r31,r31
-  82353B38  4825F8E1             bl 0x825b3418
-  82353B3C  480000C4             b 0x82353c00
-caseD_a:
-  82353B40  481C6C71             bl 0x8251a7b0
-  82353B44  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
-  82353B48  2B0B0000             cmplwi cr6,r11,0x0
-  82353B4C  419A002C             beq cr6,0x82353b78
-  82353B50  484171D1             bl 0x8276ad20
-  82353B54  2F030000             cmpwi cr6,r3,0x0
-  82353B58  419A0020             beq cr6,0x82353b78
-  82353B5C  3D608200             lis r11,-0x7e00
-  82353B60  3D408218             lis r10,-0x7de8
-  82353B64  38C00000             li r6,0x0
-  82353B68  388A17D8             addi r4,r10,0x17d8
-  82353B6C  3860000F             li r3,0xf
-  82353B70  C02B13F8             lfs f1,0x13f8(r11)
-  82353B74  484160BD             bl 0x82769c30
-LAB_82353b78:
-  82353B78  4BFFF971             bl 0x823534e8
-  82353B7C  4800005C             b 0x82353bd8
 LAB_82353b80:
   82353B80  2B1E000A             cmplwi cr6,r30,0xa
   82353B84  41980038             blt cr6,0x82353bbc
   82353B88  419A0018             beq cr6,0x82353ba0
-default:
+LAB_82353b8c:
   82353B8C  3D608203             lis r11,-0x7dfd
   82353B90  38600000             li r3,0x0
   82353B94  388B64AC             addi r4,r11,0x64ac

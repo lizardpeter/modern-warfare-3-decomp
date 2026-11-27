@@ -2,70 +2,80 @@
 
 // 825459E0  TempMemoryReset  (script/scr_tempmemory.cpp:13)
 
-void TempMemoryReset(undefined4 param_1)
+void TempMemoryReset(HunkUser *param_1)
 
 {
-  DAT_838fba14 = param_1;
+  g_user = param_1;
   return;
 }
 
 
 // 825459F0  TempMalloc  (script/scr_tempmemory.cpp:19)
 
-void TempMalloc(undefined8 param_1)
+char * TempMalloc(int param_1)
 
 {
-  Hunk_UserAlloc(DAT_838fba14,param_1,1);
-  return;
+  char *pcVar1;
+  
+  pcVar1 = Hunk_UserAlloc(g_user,param_1,1);
+  return pcVar1;
 }
 
 
 // 82545A08  TempMallocAlign  (script/scr_tempmemory.cpp:25)
 
-void TempMallocAlign(undefined8 param_1)
+char * TempMallocAlign(int param_1)
 
 {
-  Hunk_UserAllocAlign(DAT_838fba14,param_1);
-  return;
+  char *pcVar1;
+  
+  pcVar1 = Hunk_UserAllocAlign(g_user,param_1);
+  return pcVar1;
 }
 
 
 // 82545A18  TempMallocAlign32  (script/scr_tempmemory.cpp:47)
 
-void TempMallocAlign32(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+char * TempMallocAlign32(void)
 
 {
-  Hunk_UserAllocAlign32(DAT_838fba14,0);
-  return;
+  char *pcVar1;
+  
+  pcVar1 = Hunk_UserAllocAlign32(g_user,0);
+  return pcVar1;
 }
 
 
 // 82545A28  TempMallocAlignStrict  (script/scr_tempmemory.cpp:53)
 
-void TempMallocAlignStrict(undefined8 param_1)
+char * TempMallocAlignStrict(int param_1)
 
 {
-  Hunk_UserAllocAlignStrict(DAT_838fba14,param_1);
-  return;
+  char *pcVar1;
+  
+  pcVar1 = Hunk_UserAllocAlignStrict(g_user,param_1);
+  return pcVar1;
 }
 
 
 // 82545A38  TempMemorySetPos  (script/scr_tempmemory.cpp:75)
 
-void TempMemorySetPos(undefined8 param_1)
+void TempMemorySetPos(char *param_1)
 
 {
-  Hunk_UserSetPos(DAT_838fba14,param_1);
+  Hunk_UserSetPos(g_user,param_1);
   return;
 }
 
 
 // 82545A48  TempMallocSetAlign  (script/scr_tempmemory.cpp:81)
 
-void TempMallocSetAlign(undefined8 param_1)
+void TempMallocSetAlign(int param_1)
 
 {
-  Hunk_UserAlloc(DAT_838fba14,0,param_1);
+  Hunk_UserAlloc(g_user,0,param_1);
   return;
 }
 

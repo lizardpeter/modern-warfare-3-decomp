@@ -2,80 +2,64 @@
 
 // 8291AD28  fprintf  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/fprintf.c:49)
 
-int fprintf(FILE *_File,char *_Format,...)
+int fprintf(_iobuf *param_1,char *param_2)
 
 {
-  FILE *_File_00;
-  int *piVar2;
+  _iobuf *p_Var2;
+  int *piVar3;
   ulonglong uVar1;
-  uint uVar3;
-  int iVar4;
-  longlong lVar5;
-  undefined8 in_r5;
-  undefined8 in_r6;
-  undefined8 in_r7;
-  undefined8 in_r8;
-  undefined8 in_r9;
-  undefined *puVar6;
-  undefined8 in_r10;
-  undefined *puVar7;
-  undefined8 in_stack_00000020;
-  undefined8 in_stack_00000028;
-  undefined8 in_stack_00000030;
-  undefined8 in_stack_00000038;
-  undefined8 in_stack_00000040;
-  undefined8 in_stack_00000048;
+  uint uVar4;
+  int iVar5;
+  longlong lVar6;
+  ioinfo *piVar7;
+  ioinfo *piVar8;
+  char *pcStack0000001c;
   uint local_30;
   
-  lVar5 = (longlong)(int)_Format;
-  _File_00 = (FILE *)__savegprlr_29(_File);
-  iVar4 = 0;
+  lVar6 = (longlong)(int)param_2;
+  p_Var2 = (_iobuf *)__savegprlr_29(param_1);
+  pcStack0000001c = (char *)lVar6;
+  iVar5 = 0;
   local_30 = 0;
-  in_stack_00000020 = in_r5;
-  in_stack_00000028 = in_r6;
-  in_stack_00000030 = in_r7;
-  in_stack_00000038 = in_r8;
-  in_stack_00000040 = in_r9;
-  in_stack_00000048 = in_r10;
-  if ((_File_00 == (FILE *)0x0) || (lVar5 == 0)) {
-    piVar2 = _errno();
-    *piVar2 = 0x16;
+  if ((p_Var2 == (_iobuf *)0x0) || (lVar6 == 0)) {
+    piVar3 = _errno();
+    *piVar3 = 0x16;
     _invalid_parameter_noinfo();
     uVar1 = 0xffffffffffffffff;
     goto LAB_8291aeb0;
   }
-  _lock_file(_File_00);
-  if ((_File_00->_flag & 0x40U) == 0) {
-    uVar3 = _fileno(_File_00);
-    if ((uVar3 == 0xffffffff) || (uVar3 == 0xfffffffe)) {
-      puVar6 = &DAT_829b0a68;
+  _lock_file(p_Var2);
+  if ((p_Var2->_flag & 0x40U) == 0) {
+    uVar4 = _fileno(p_Var2);
+    if ((uVar4 == 0xffffffff) || (uVar4 == 0xfffffffe)) {
+      piVar7 = &__badioinfo;
     }
     else {
-      puVar6 = (undefined *)((&DAT_84897dc0)[(int)uVar3 >> 5] + (uVar3 & 0x1f) * 0x48);
+      piVar7 = (ioinfo *)(*(int *)(&__pioinfo + ((int)uVar4 >> 5) * 4) + (uVar4 & 0x1f) * 0x48);
     }
-    puVar7 = &DAT_829b0a68;
-    if ((puVar6[0x28] & 0xfe) == 0) {
-      if ((uVar3 != 0xffffffff) && (uVar3 != 0xfffffffe)) {
-        puVar7 = (undefined *)((&DAT_84897dc0)[(int)uVar3 >> 5] + (uVar3 & 0x1f) * 0x48);
+    piVar8 = &__badioinfo;
+    if (((piVar7->field5_0x28).unicode & 0xfe) == 0) {
+      if ((uVar4 != 0xffffffff) && (uVar4 != 0xfffffffe)) {
+        piVar8 = (ioinfo *)(*(int *)(&__pioinfo + ((int)uVar4 >> 5) * 4) + (uVar4 & 0x1f) * 0x48);
       }
-      if ((puVar7[0x28] & 1) == 0) goto LAB_8291ae68;
+      if (((piVar8->field5_0x28).unicode & 1) == 0) goto LAB_8291ae68;
     }
-    piVar2 = _errno();
-    *piVar2 = 0x16;
+    piVar3 = _errno();
+    *piVar3 = 0x16;
     _invalid_parameter_noinfo();
-    iVar4 = -1;
+    iVar5 = -1;
     local_30 = 0xffffffff;
   }
 LAB_8291ae68:
-  if (iVar4 == 0) {
-    iVar4 = _stbuf(_File_00);
-    local_30 = _output_l(_File_00,(char *)lVar5,(_locale_t)0x0,(va_list)&stack0x00000020);
-    _ftbuf(iVar4,_File_00);
+  if (iVar5 == 0) {
+    iVar5 = _stbuf(p_Var2);
+    local_30 = _output_l(p_Var2,pcStack0000001c,(localeinfo_struct *)0x0,&stack0x00000020);
+    _ftbuf(iVar5,p_Var2);
   }
   FUN_8291aeb8();
   uVar1 = (ulonglong)local_30;
 LAB_8291aeb0:
-  iVar4 = __restgprlr_29(uVar1);
-  return iVar4;
+  iVar5 = __restgprlr_29(uVar1);
+  return iVar5;
 }
 

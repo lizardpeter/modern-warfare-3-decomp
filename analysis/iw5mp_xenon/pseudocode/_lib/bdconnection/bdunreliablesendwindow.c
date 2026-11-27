@@ -5,9 +5,9 @@
 void __unwind_72450(void)
 
 {
-  longlong in_r12;
+  int in_r12;
   
-  bdReference<bdDataChunk>___bdReference<bdDataChunk>(in_r12 + -0x60);
+  bdReference<bdDataChunk>::~bdReference<bdDataChunk>((bdReference<bdDataChunk> *)(in_r12 + -0x60));
   return;
 }
 
@@ -19,7 +19,8 @@ void __unwind_72572(void)
 {
   int in_r12;
   
-  bdReference<bdDataChunk>___bdReference<bdDataChunk>(*(undefined4 *)(in_r12 + 0x1c));
+  bdReference<bdDataChunk>::~bdReference<bdDataChunk>(*(bdReference<bdDataChunk> **)(in_r12 + 0x1c))
+  ;
   return;
 }
 

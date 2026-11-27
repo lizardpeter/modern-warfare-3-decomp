@@ -2,47 +2,54 @@
 
 // 82747250  Image_GetMipmapResolution  (gfx_d3d/r_image_load_common.cpp:32)
 
-void Image_GetMipmapResolution
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,ulonglong param_4,
-               ulonglong param_5)
+void Image_GetMipmapResolution(int param_1,int param_2,int param_3,ushort *param_4,ushort *param_5)
 
 {
-  undefined8 uVar1;
-  uint uVar2;
-  uint uVar3;
+  uint uVar1;
+  ulonglong uVar2;
+  ulonglong uVar3;
+  uint uVar4;
   
-  uVar1 = __savegprlr_25();
-  if ((int)(uint)uVar1 < 1) {
-    MyAssertHandler(0xffffffff821c53f8,0x21,0,0xffffffff821c53cc,0xffffffff821c53e4,uVar1);
+  uVar3 = (ulonglong)(int)param_5;
+  uVar2 = (ulonglong)(int)param_4;
+  uVar1 = __savegprlr_25(param_1);
+  if ((int)uVar1 < 1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_load_common.cpp"
+                    ,0x21,0,"%s\n\t(baseWidth) = %i");
   }
-  if ((int)(uint)param_2 < 1) {
-    MyAssertHandler(0xffffffff821c53f8,0x22,0,0xffffffff821c53a0,0xffffffff821c53b8,param_2);
+  if (param_2 < 1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_load_common.cpp"
+                    ,0x22,0,"%s\n\t(baseHeight) = %i");
   }
-  uVar3 = (uint)param_3;
-  if ((int)uVar3 < 0) {
-    MyAssertHandler(0xffffffff821c53f8,0x23,0,0xffffffff821c537c,0xffffffff821c5390,param_3);
+  if (param_3 < 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_load_common.cpp"
+                    ,0x23,0,"%s\n\t(mipmap) = %i");
   }
-  if ((param_4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821c53f8,0x24,0,0xffffffff82000f98,0xffffffff821c5370);
+  if ((uVar2 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_load_common.cpp"
+                    ,0x24,0,"%s");
   }
-  if ((param_5 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821c53f8,0x25,0,0xffffffff82000f98,0xffffffff821c5364);
+  if ((uVar3 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_load_common.cpp"
+                    ,0x25,0,"%s");
   }
-  uVar2 = (uint)uVar1 >> (uVar3 & 0x3f);
-  if ((int)uVar2 < 2) {
-    uVar2 = 1;
+  uVar1 = uVar1 >> (param_3 & 0x3fU);
+  if ((int)uVar1 < 2) {
+    uVar1 = 1;
   }
-  uVar3 = (uint)param_2 >> (uVar3 & 0x3f);
-  *(short *)param_4 = (short)uVar2;
-  if ((int)uVar3 < 2) {
-    uVar3 = 1;
+  uVar4 = (uint)param_2 >> (param_3 & 0x3fU);
+  *(short *)uVar2 = (short)uVar1;
+  if ((int)uVar4 < 2) {
+    uVar4 = 1;
   }
-  *(short *)param_5 = (short)uVar3;
-  if (*(short *)param_4 == 0) {
-    MyAssertHandler(0xffffffff821c53f8,0x29,1,0xffffffff821c533c,0xffffffff821c5354);
+  *(short *)uVar3 = (short)uVar4;
+  if (*(short *)uVar2 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_load_common.cpp"
+                    ,0x29,1,"%s\n\t(*mipWidth) = %i");
   }
-  if (*(short *)param_5 == 0) {
-    MyAssertHandler(0xffffffff821c53f8,0x2a,1,0xffffffff821c5310,0xffffffff821c5328);
+  if (*(short *)uVar3 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_load_common.cpp"
+                    ,0x2a,1,"%s\n\t(*mipHeight) = %i");
   }
   __restgprlr_25();
   return;
@@ -51,11 +58,12 @@ void Image_GetMipmapResolution
 
 // 827473D8  Image_GetPlatformScreenWidth  (gfx_d3d/r_image_load_common.cpp:47)
 
-undefined8 Image_GetPlatformScreenWidth(undefined8 param_1,undefined8 param_2)
+int Image_GetPlatformScreenWidth(int param_1,int param_2)
 
 {
-  if ((int)param_1 != 0) {
-    MyAssertHandler(0xffffffff821c53f8,0x35,0,0xffffffff821c5444,0xffffffff821c5458,param_1);
+  if (param_1 != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_load_common.cpp"
+                    ,0x35,0,"%s\n\t(platform) = %i");
   }
   return param_2;
 }
@@ -63,11 +71,12 @@ undefined8 Image_GetPlatformScreenWidth(undefined8 param_1,undefined8 param_2)
 
 // 82747438  Image_GetPlatformScreenHeight  (gfx_d3d/r_image_load_common.cpp:59)
 
-undefined8 Image_GetPlatformScreenHeight(undefined8 param_1,undefined8 param_2)
+int Image_GetPlatformScreenHeight(int param_1,int param_2)
 
 {
-  if ((int)param_1 != 0) {
-    MyAssertHandler(0xffffffff821c53f8,0x41,0,0xffffffff821c5444,0xffffffff821c5458,param_1);
+  if (param_1 != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_load_common.cpp"
+                    ,0x41,0,"%s\n\t(platform) = %i");
   }
   return param_2;
 }
@@ -75,67 +84,85 @@ undefined8 Image_GetPlatformScreenHeight(undefined8 param_1,undefined8 param_2)
 
 // 82747498  Image_TrackMemory  (gfx_d3d/r_image_load_common.cpp:89)
 
-void Image_TrackMemory(int param_1,int param_2,undefined4 param_3)
+void Image_TrackMemory(GfxImage *param_1,int param_2,int param_3)
 
 {
-  *(undefined4 *)((param_2 + 0xf) * 4 + param_1) = param_3;
+  *(int *)(param_1 + (param_2 + 0xf) * 4) = param_3;
   return;
 }
 
 
 // 82747DF8  Image_TrackFullscreenTexture  (gfx_d3d/r_image_load_common.cpp:104)
 
+/* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
+
 void Image_TrackFullscreenTexture
-               (int param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-               undefined8 param_5)
+               (GfxImage *param_1,int param_2,int param_3,int param_4,_D3DFORMAT param_5)
 
 {
-  undefined4 uVar1;
-  undefined2 local_20;
-  undefined2 local_1e [3];
+  uint uVar1;
+  ushort local_20;
+  ushort local_1e [3];
   
   Image_GetMipmapResolution(param_2,param_3,param_4,local_1e,&local_20);
-  uVar1 = Image_GetCardMemoryAmount(3,param_5,local_1e[0],local_20,1);
-  *(undefined4 *)(param_1 + 0x3c) = uVar1;
+  uVar1 = Image_GetCardMemoryAmount(3,param_5,(uint)local_1e[0],(uint)local_20,1);
+  *(uint *)(param_1 + 0x3c) = uVar1;
   return;
 }
 
 
 // 82747E60  Image_TrackTexture  (gfx_d3d/r_image_load_common.cpp:124)
 
-void Image_TrackTexture(undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4,
-                       undefined8 param_5,undefined8 param_6)
+/* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
+
+void Image_TrackTexture(GfxImage *param_1,int param_2,_D3DFORMAT param_3,int param_4,int param_5,
+                       int param_6)
 
 {
   ulonglong uVar1;
   int iVar2;
-  int iVar3;
-  ulonglong uVar4;
-  undefined1 auStack_140 [192];
-  undefined1 auStack_80 [128];
+  ulonglong uVar3;
+  uint uVar4;
+  uint *in_stack_fffffe58;
+  D3DTexture *in_stack_fffffe5c;
+  uint *in_stack_fffffe60;
+  uint *in_stack_fffffe64;
+  D3DLineTexture aDStack_140 [3];
+  D3DCubeTexture aDStack_80 [2];
   
-  iVar2 = __savegprlr_25();
-  uVar1 = param_2 & 0x30000;
-  uVar4 = (param_2 & 0xffffffff) >> 1 & 1;
+  uVar3 = (ulonglong)param_2;
+  iVar2 = __savegprlr_25(param_1);
+  uVar1 = uVar3 & 0x30000;
+  uVar4 = (uint)uVar3 >> 1 & 1;
   if (uVar1 == 0x10000) {
-    iVar3 = XGSetCubeTextureHeader(param_4,uVar4,0,param_3,0,0,0xffffffffffffffff,auStack_80);
+    uVar4 = XGSetCubeTextureHeader
+                      (param_4,uVar4,0,param_3,0,0,0xffffffff,aDStack_80,in_stack_fffffe58,
+                       (uint *)in_stack_fffffe5c);
   }
   else if (uVar1 == 0x20000) {
-    iVar3 = XGSetVolumeTextureHeader(param_4,param_5,param_6,uVar4,0,param_3,0,0);
+    uVar4 = XGSetVolumeTextureHeader
+                      (param_4,param_5,param_6,uVar4,0,param_3,0,0,(uint)in_stack_fffffe58,
+                       (D3DVolumeTexture *)in_stack_fffffe5c,in_stack_fffffe60,in_stack_fffffe64);
   }
   else if (uVar1 == 0x30000) {
-    iVar3 = XGSetLineTextureHeader(param_4,uVar4,0,param_3,0,0,0xffffffffffffffff,auStack_140);
+    uVar4 = XGSetLineTextureHeader
+                      (param_4,uVar4,0,param_3,0,0,0xffffffff,aDStack_140,in_stack_fffffe58,
+                       (uint *)in_stack_fffffe5c);
   }
   else {
     if (uVar1 != 0) {
-      MyAssertHandler(0xffffffff821c53f8,0x14b,1,0xffffffff82000f98,0xffffffff821c547c);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_load_common.cpp"
+                      ,0x14b,1,"%s");
     }
-    iVar3 = XGSetTextureHeader(param_4,param_5,uVar4,0,param_3,0,0,0xffffffffffffffff);
+    uVar4 = XGSetTextureHeader(param_4,param_5,uVar4,0,param_3,0,0,0xffffffff,
+                               (uint)in_stack_fffffe58,in_stack_fffffe5c,in_stack_fffffe60,
+                               in_stack_fffffe64);
   }
-  if ((*(int *)(iVar2 + 0x3c) != 0) && (*(int *)(iVar2 + 0x3c) != iVar3)) {
-    MyAssertHandler(0xffffffff821c53f8,0x94,0,0xffffffff82000f98,0xffffffff821c5638);
+  if ((*(uint *)(iVar2 + 0x3c) != 0) && (*(uint *)(iVar2 + 0x3c) != uVar4)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_load_common.cpp"
+                    ,0x94,0,"%s");
   }
-  *(int *)(iVar2 + 0x3c) = iVar3;
+  *(uint *)(iVar2 + 0x3c) = uVar4;
   __restgprlr_25();
   return;
 }
@@ -143,359 +170,232 @@ void Image_TrackTexture(undefined8 param_1,ulonglong param_2,undefined8 param_3,
 
 // 827474A8  Image_GetCardMemoryAmount  (gfx_d3d/r_image_load_common.cpp:313)
 
-void Image_GetCardMemoryAmount
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-               undefined8 param_5)
+/* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
+
+uint Image_GetCardMemoryAmount
+               (uint param_1,_D3DFORMAT param_2,uint param_3,uint param_4,uint param_5)
 
 {
-  ulonglong uVar1;
-  ulonglong uVar2;
-  undefined1 auStack_120 [192];
-  undefined1 auStack_60 [96];
+  uint uVar1;
+  uint uVar2;
+  uint *in_stack_fffffe78;
+  D3DTexture *in_stack_fffffe7c;
+  uint *in_stack_fffffe80;
+  uint *in_stack_fffffe84;
+  D3DLineTexture aDStack_120 [3];
+  D3DCubeTexture DStack_60;
   
-  uVar2 = __savegprlr_28();
-  uVar1 = uVar2 & 0x30000;
-  uVar2 = (uVar2 & 0xffffffff) >> 1 & 1;
-  if (uVar1 == 0x10000) {
-    XGSetCubeTextureHeader(param_3,uVar2,0,param_2,0,0,0xffffffffffffffff,auStack_60);
-    __restgprlr_28();
-    return;
+  uVar1 = __savegprlr_28(param_1);
+  uVar2 = uVar1 & 0x30000;
+  uVar1 = uVar1 >> 1 & 1;
+  if (uVar2 == 0x10000) {
+    uVar2 = XGSetCubeTextureHeader
+                      (param_3,uVar1,0,param_2,0,0,0xffffffff,&DStack_60,in_stack_fffffe78,
+                       (uint *)in_stack_fffffe7c);
+    uVar2 = __restgprlr_28(uVar2);
+    return uVar2;
   }
-  if (uVar1 != 0x20000) {
-    if (uVar1 != 0x30000) {
-      if (uVar1 != 0) {
-        MyAssertHandler(0xffffffff821c53f8,0x14b,1,0xffffffff82000f98,0xffffffff821c547c);
+  if (uVar2 != 0x20000) {
+    if (uVar2 != 0x30000) {
+      if (uVar2 != 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_load_common.cpp"
+                        ,0x14b,1,"%s");
       }
-      XGSetTextureHeader(param_3,param_4,uVar2,0,param_2,0,0,0xffffffffffffffff);
-      __restgprlr_28();
-      return;
+      uVar2 = XGSetTextureHeader(param_3,param_4,uVar1,0,param_2,0,0,0xffffffff,
+                                 (uint)in_stack_fffffe78,in_stack_fffffe7c,in_stack_fffffe80,
+                                 in_stack_fffffe84);
+      uVar2 = __restgprlr_28(uVar2);
+      return uVar2;
     }
-    XGSetLineTextureHeader(param_3,uVar2,0,param_2,0,0,0xffffffffffffffff,auStack_120);
-    __restgprlr_28();
-    return;
+    uVar2 = XGSetLineTextureHeader
+                      (param_3,uVar1,0,param_2,0,0,0xffffffff,aDStack_120,in_stack_fffffe78,
+                       (uint *)in_stack_fffffe7c);
+    uVar2 = __restgprlr_28(uVar2);
+    return uVar2;
   }
-  XGSetVolumeTextureHeader(param_3,param_4,param_5,uVar2,0,param_2,0,0);
-  __restgprlr_28();
-  return;
+  uVar2 = XGSetVolumeTextureHeader
+                    (param_3,param_4,param_5,uVar1,0,param_2,0,0,(uint)in_stack_fffffe78,
+                     (D3DVolumeTexture *)in_stack_fffffe7c,in_stack_fffffe80,in_stack_fffffe84);
+  uVar2 = __restgprlr_28(uVar2);
+  return uVar2;
 }
 
 
 // 82747618  Image_MipLevelBaseAddress  (gfx_d3d/r_image_load_common.cpp:742)
-
-void Image_MipLevelBaseAddress
-               (undefined8 param_1,undefined8 param_2,ulonglong param_3,undefined8 param_4,
-               ulonglong param_5)
-
-{
-  undefined2 uVar1;
-  undefined2 uVar2;
-  undefined2 uVar3;
-  int iVar9;
-  ulonglong uVar4;
-  longlong lVar5;
-  longlong lVar6;
-  longlong lVar7;
-  undefined8 uVar8;
-  undefined4 local_70;
-  
-  iVar9 = __savegprlr_20();
-  uVar1 = *(undefined2 *)(iVar9 + 0x40);
-  uVar2 = *(undefined2 *)(iVar9 + 0x42);
-  uVar3 = *(undefined2 *)(iVar9 + 0x44);
-  if ((param_5 & 0xffffffff) == 0) {
-    XGGetMipLevelOffset(param_2,param_4);
-    __restgprlr_20();
-    return;
-  }
-  uVar4 = XGGetMipTailBaseLevel(uVar1,uVar2,0);
-  if ((uVar4 & 0xffffffff) < (param_5 & 0xffffffff)) {
-    lVar6 = XGGetMipLevelOffset(param_2,param_4,uVar4);
-    lVar7 = XGGetMipTailLevelOffset(uVar1,uVar2,uVar3,uVar4,param_3 & 0x3f,1,0);
-    lVar5 = XGGetMipTailLevelOffset(uVar1,uVar2,uVar3,param_5,param_3 & 0x3f,1,0);
-    lVar5 = lVar5 + (lVar6 - lVar7);
-  }
-  else {
-    lVar5 = XGGetMipLevelOffset(param_2,param_4,param_5);
-  }
-  if ((uVar4 & 0xffffffff) != 0) {
-    if (*(char *)(iVar9 + 0x38) == '\x03') {
-      XGSetTextureHeader(uVar1,uVar2,0,0,param_3,0,0,0xffffffffffffffff);
-    }
-    else {
-      if (*(char *)(iVar9 + 0x38) != '\x05') {
-        MyAssertHandler(0xffffffff821c53f8,0x30e,0,0xffffffff8205d150,0xffffffff821c55cc);
-      }
-      XGSetCubeTextureHeader(uVar1,0,0,param_3,0,0,0xffffffffffffffff,0);
-    }
-    lVar5 = (ulonglong)local_70 + lVar5;
-  }
-  if (((int)lVar5 < 0) || (*(int *)(iVar9 + 0x3c) <= (int)lVar5)) {
-    uVar8 = va(0xffffffff821c5508,param_5,param_2,param_4,param_5,uVar1,uVar2,uVar3);
-    MyAssertHandler(0xffffffff821c53f8,0x318,0,0xffffffff820011f4,0xffffffff821c54b8,uVar8);
-  }
-  __restgprlr_20(lVar5);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GPUTEXTURE_FETCH_CONSTANT_s_0_s_0
 
 // 82747850  Image_Upload2D_CopyData_Xbox  (gfx_d3d/r_image_load_common.cpp:801)
-
-void Image_Upload2D_CopyData_Xbox
-               (undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4,
-               ulonglong param_5)
-
-{
-  ushort uVar1;
-  int iVar3;
-  longlong lVar2;
-  void *pvVar4;
-  ulonglong uVar5;
-  uint uVar6;
-  longlong lVar7;
-  int iVar8;
-  ulonglong uVar9;
-  int iVar10;
-  uint local_b0;
-  uint local_ac [3];
-  undefined1 auStack_a0 [52];
-  uint local_6c;
-  
-  iVar3 = __savegprlr_22();
-  if (*(int *)(iVar3 + 0x48) == 0) {
-    MyAssertHandler(0xffffffff821c53f8,0x32e,0,0xffffffff82000f98,0xffffffff8205d778);
-  }
-  lVar2 = Image_MipLevelBaseAddress(iVar3,iVar3,param_2,param_3,param_4);
-  uVar1 = *(ushort *)(iVar3 + 0x40) >> ((uint)param_4 & 0x3f);
-  uVar5 = lVar2 + (ulonglong)*(uint *)(iVar3 + 0x48);
-  uVar6 = 1;
-  if (1 < uVar1) {
-    uVar6 = (uint)uVar1;
-  }
-  uVar1 = *(ushort *)(iVar3 + 0x42) >> ((uint)param_4 & 0x3f);
-  uVar9 = (ulonglong)uVar1;
-  if (uVar1 < 2) {
-    uVar9 = 1;
-  }
-  if ((param_5 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821c53f8,0x333,0,0xffffffff82000f98,0xffffffff82181e84);
-  }
-  if ((uVar5 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821c53f8,0x334,0,0xffffffff82000f98,0xffffffff82012428);
-  }
-  param_2 = param_2 & 0x3f;
-  XGGetBlockDimensions(param_2,&local_b0,local_ac);
-  lVar7 = (ulonglong)(uVar6 - 1) / (ulonglong)local_b0 + 1;
-  trapWord(6,(ulonglong)local_b0,0);
-  trapWord(6,(ulonglong)local_ac[0],0);
-  lVar2 = (uVar9 - 1 & 0xffffffff) / (ulonglong)local_ac[0] + 1;
-  uVar9 = ((longlong)(int)((byte)(&DAT_82013140)[(int)param_2] * local_b0) *
-           (longlong)(int)local_ac[0] & 0xffffffffU) >> 3;
-  XGGetTextureDesc(iVar3,param_4,auStack_a0);
-  iVar8 = (int)lVar7;
-  iVar10 = (int)uVar9;
-  if ((local_6c & 1) == 0) {
-    pvVar4 = memcpy((void *)uVar5,(void *)param_5,(int)lVar2 * iVar8 * iVar10);
-    __restgprlr_22(pvVar4);
-    return;
-  }
-  if ((local_6c & 2) != 0) {
-    XGTileTextureLevel(*(undefined2 *)(iVar3 + 0x40),*(undefined2 *)(iVar3 + 0x42),param_4,param_2,0
-                       ,uVar5,0,param_5);
-    __restgprlr_22();
-    return;
-  }
-  XGTileSurface(uVar5,lVar7,lVar2,0,param_5,(longlong)iVar8 * (longlong)iVar10,0,uVar9);
-  __restgprlr_22();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GPUTEXTURE_FETCH_CONSTANT_s_0_s_0
 
 // 82747A48  Image_Upload3D_CopyData_Xbox  (gfx_d3d/r_image_load_common.cpp:919)
-
-void Image_Upload3D_CopyData_Xbox
-               (undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4)
-
-{
-  byte bVar1;
-  ushort uVar2;
-  uint uVar3;
-  int iVar5;
-  longlong lVar4;
-  ushort uVar6;
-  uint uVar7;
-  uint uVar8;
-  undefined1 auStack_90 [52];
-  uint local_5c;
-  
-  iVar5 = __savegprlr_23();
-  uVar3 = (uint)param_3;
-  uVar2 = *(ushort *)(iVar5 + 0x40) >> (uVar3 & 0x3f);
-  uVar8 = 1;
-  if (1 < uVar2) {
-    uVar8 = (uint)uVar2;
-  }
-  uVar2 = *(ushort *)(iVar5 + 0x42) >> (uVar3 & 0x3f);
-  uVar7 = (uint)uVar2;
-  if (uVar2 < 2) {
-    uVar7 = 1;
-  }
-  uVar2 = *(ushort *)(iVar5 + 0x44) >> (uVar3 & 0x3f);
-  uVar6 = 1;
-  if (1 < uVar2) {
-    uVar6 = uVar2;
-  }
-  lVar4 = Image_MipLevelBaseAddress(iVar5,iVar5,param_2,0,param_3);
-  lVar4 = lVar4 + (ulonglong)*(uint *)(iVar5 + 0x48);
-  bVar1 = (&DAT_82013140)[(int)(param_2 & 0x3f)];
-  XGGetTextureDesc(iVar5,param_3,auStack_90);
-  if ((local_5c & 1) == 0) {
-    MyAssertHandler(0xffffffff821c53f8,0x3ab,0,0xffffffff82000f98,0xffffffff821c55f0);
-  }
-  if ((local_5c & 2) != 0) {
-    XGTileVolumeTextureLevel
-              (*(undefined2 *)(iVar5 + 0x40),*(undefined2 *)(iVar5 + 0x42),
-               *(undefined2 *)(iVar5 + 0x44),param_3,param_2 & 0x3f,0,lVar4);
-    __restgprlr_23();
-    return;
-  }
-  XGTileVolume(lVar4,uVar8,uVar7,uVar6,0,param_4,
-               (longlong)(int)(uint)(bVar1 >> 3) * (longlong)(int)uVar8,
-               (longlong)(int)((bVar1 >> 3) * uVar7) * (longlong)(int)uVar8);
-  __restgprlr_23();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GPUTEXTURE_FETCH_CONSTANT_s_0_s_0
 
 // 82747BC0  Image_UploadData  (gfx_d3d/r_image_load_common.cpp:957)
 
-void Image_UploadData(int param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-                     undefined8 param_5)
+/* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
+
+void Image_UploadData(GfxImage *param_1,_D3DFORMAT param_2,_D3DCUBEMAP_FACES param_3,uint param_4,
+                     uchar *param_5)
 
 {
-  if (*(char *)(param_1 + 0x38) == '\x04') {
+  if (param_1[0x38] == (GfxImage)0x4) {
     Image_Upload3D_CopyData_Xbox(param_1,param_2,param_4,param_5);
     return;
   }
-  Image_Upload2D_CopyData_Xbox();
+  Image_Upload2D_CopyData_Xbox(param_1,param_2,param_3,param_4,param_5);
   return;
 }
 
 
 // 82747BE8  Image_AllocCubePixels_Xbox  (gfx_d3d/r_image_load_common.cpp:1006)
 
-void Image_AllocCubePixels_Xbox(int param_1,undefined8 param_2,undefined8 param_3)
+/* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
+
+void Image_AllocCubePixels_Xbox(GfxImage *param_1,int param_2,_D3DFORMAT param_3)
 
 {
-  undefined8 uVar1;
-  undefined4 uVar2;
+  uint uVar1;
+  void *pvVar2;
+  uint *in_stack_ffffff98;
+  uint *in_stack_ffffff9c;
   
   uVar1 = XGSetCubeTextureHeader
-                    (*(undefined2 *)(param_1 + 0x40),param_2,0,param_3,0,0,0xffffffffffffffff,
-                     param_1);
-  uVar2 = Image_PhysicalAlloc(uVar1,*(undefined4 *)(param_1 + 0x6c));
-  *(undefined4 *)(param_1 + 0x48) = uVar2;
+                    ((uint)*(ushort *)(param_1 + 0x40),param_2,0,param_3,0,0,0xffffffff,
+                     (D3DCubeTexture *)param_1,in_stack_ffffff98,in_stack_ffffff9c);
+  pvVar2 = Image_PhysicalAlloc(uVar1,*(char **)(param_1 + 0x6c));
+  *(void **)(param_1 + 0x48) = pvVar2;
   return;
 }
 
 
 // 82747C48  Image_Alloc3DPixels_Xbox  (gfx_d3d/r_image_load_common.cpp:1015)
 
-void Image_Alloc3DPixels_Xbox(int param_1,undefined8 param_2,undefined8 param_3)
+/* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
+
+void Image_Alloc3DPixels_Xbox(GfxImage *param_1,int param_2,_D3DFORMAT param_3)
 
 {
-  undefined8 uVar1;
-  undefined4 uVar2;
+  uint uVar1;
+  void *pvVar2;
+  uint in_stack_ffffff78;
+  D3DVolumeTexture *in_stack_ffffff7c;
+  uint *in_stack_ffffff80;
+  uint *in_stack_ffffff84;
   
   uVar1 = XGSetVolumeTextureHeader
-                    (*(undefined2 *)(param_1 + 0x40),*(undefined2 *)(param_1 + 0x42),
-                     *(undefined2 *)(param_1 + 0x44),param_2,0,param_3,0,0);
-  uVar2 = Image_PhysicalAlloc(uVar1,*(undefined4 *)(param_1 + 0x6c));
-  *(undefined4 *)(param_1 + 0x48) = uVar2;
+                    ((uint)*(ushort *)(param_1 + 0x40),(uint)*(ushort *)(param_1 + 0x42),
+                     (uint)*(ushort *)(param_1 + 0x44),param_2,0,param_3,0,0,in_stack_ffffff78,
+                     in_stack_ffffff7c,in_stack_ffffff80,in_stack_ffffff84);
+  pvVar2 = Image_PhysicalAlloc(uVar1,*(char **)(param_1 + 0x6c));
+  *(void **)(param_1 + 0x48) = pvVar2;
   return;
 }
 
 
 // 82747CC0  Image_Alloc2DPixels_Xbox  (gfx_d3d/r_image_load_common.cpp:1024)
 
-void Image_Alloc2DPixels_Xbox(int param_1,undefined8 param_2,undefined8 param_3)
+/* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
+
+void Image_Alloc2DPixels_Xbox(GfxImage *param_1,int param_2,_D3DFORMAT param_3)
 
 {
-  undefined8 uVar1;
-  undefined4 uVar2;
+  uint uVar1;
+  void *pvVar2;
+  uint in_stack_ffffff78;
+  D3DTexture *in_stack_ffffff7c;
+  uint *in_stack_ffffff80;
+  uint *in_stack_ffffff84;
   
-  uVar1 = XGSetTextureHeader(*(undefined2 *)(param_1 + 0x40),*(undefined2 *)(param_1 + 0x42),param_2
-                             ,0,param_3,0,0,0xffffffffffffffff);
-  uVar2 = Image_PhysicalAlloc(uVar1,*(undefined4 *)(param_1 + 0x6c));
-  *(undefined4 *)(param_1 + 0x48) = uVar2;
+  uVar1 = XGSetTextureHeader((uint)*(ushort *)(param_1 + 0x40),(uint)*(ushort *)(param_1 + 0x42),
+                             param_2,0,param_3,0,0,0xffffffff,in_stack_ffffff78,in_stack_ffffff7c,
+                             in_stack_ffffff80,in_stack_ffffff84);
+  pvVar2 = Image_PhysicalAlloc(uVar1,*(char **)(param_1 + 0x6c));
+  *(void **)(param_1 + 0x48) = pvVar2;
   return;
 }
 
 
 // 82747D38  Image_Alloc1DPixels_Xbox  (gfx_d3d/r_image_load_common.cpp:1033)
 
-void Image_Alloc1DPixels_Xbox(int param_1,undefined8 param_2,undefined8 param_3)
+/* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
+
+void Image_Alloc1DPixels_Xbox(GfxImage *param_1,int param_2,_D3DFORMAT param_3)
 
 {
-  undefined8 uVar1;
-  undefined4 uVar2;
+  uint uVar1;
+  void *pvVar2;
+  uint *in_stack_ffffff98;
+  uint *in_stack_ffffff9c;
   
   uVar1 = XGSetLineTextureHeader
-                    (*(undefined2 *)(param_1 + 0x40),param_2,0,param_3,0,0,0xffffffffffffffff,
-                     param_1);
-  uVar2 = Image_PhysicalAlloc(uVar1,*(undefined4 *)(param_1 + 0x6c));
-  *(undefined4 *)(param_1 + 0x48) = uVar2;
+                    ((uint)*(ushort *)(param_1 + 0x40),param_2,0,param_3,0,0,0xffffffff,
+                     (D3DLineTexture *)param_1,in_stack_ffffff98,in_stack_ffffff9c);
+  pvVar2 = Image_PhysicalAlloc(uVar1,*(char **)(param_1 + 0x6c));
+  *(void **)(param_1 + 0x48) = pvVar2;
   return;
 }
 
 
 // 82748008  Image_Setup  (gfx_d3d/r_image_load_common.cpp:1210)
 
-void Image_Setup(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-                ulonglong param_5,undefined8 param_6)
+/* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
+
+void Image_Setup(GfxImage *param_1,int param_2,int param_3,int param_4,int param_5,
+                _D3DFORMAT param_6,char *param_7)
 
 {
   uint uVar1;
-  int iVar2;
-  ulonglong uVar3;
+  uint uVar2;
+  GfxImage *pGVar3;
+  uint uVar4;
+  ulonglong uVar5;
   
-  iVar2 = __savegprlr_23();
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff821c53f8,0x4bf,0,0xffffffff82000f98,0xffffffff82058d58);
+  uVar5 = (ulonglong)param_5;
+  pGVar3 = (GfxImage *)__savegprlr_23(param_1);
+  if (pGVar3 == (GfxImage *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_load_common.cpp"
+                    ,0x4bf,0,"%s");
   }
-  *(short *)(iVar2 + 0x40) = (short)param_2;
-  *(short *)(iVar2 + 0x42) = (short)param_3;
-  *(short *)(iVar2 + 0x44) = (short)param_4;
-  if (*(int *)(iVar2 + 0x3c) != 0) {
-    MyAssertHandler(0xffffffff821c53f8,0x4c6,0,0xffffffff82000f98,0xffffffff821c56d0);
+  *(short *)(pGVar3 + 0x40) = (short)param_2;
+  *(short *)(pGVar3 + 0x42) = (short)param_3;
+  *(short *)(pGVar3 + 0x44) = (short)param_4;
+  if (*(int *)(pGVar3 + 0x3c) != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_load_common.cpp"
+                    ,0x4c6,0,"%s");
   }
-  uVar1 = (uint)param_5 & 0x30000;
-  uVar3 = (param_5 & 0xffffffff) >> 1 & 1;
-  if ((param_5 & 0x30000) == 0) {
-    *(undefined1 *)(iVar2 + 0x38) = 3;
-    Image_Alloc2DPixels_Xbox(iVar2,uVar3,param_6);
+  uVar1 = (uint)uVar5;
+  uVar2 = uVar1 & 0x30000;
+  uVar4 = uVar1 >> 1 & 1;
+  if ((uVar5 & 0x30000) == 0) {
+    pGVar3[0x38] = (GfxImage)0x3;
+    Image_Alloc2DPixels_Xbox(pGVar3,uVar4,param_6);
   }
-  else if (uVar1 == 0x10000) {
-    *(undefined1 *)(iVar2 + 0x38) = 5;
-    Image_AllocCubePixels_Xbox(iVar2,uVar3,param_6);
+  else if (uVar2 == 0x10000) {
+    pGVar3[0x38] = (GfxImage)0x5;
+    Image_AllocCubePixels_Xbox(pGVar3,uVar4,param_6);
   }
-  else if (uVar1 == 0x20000) {
-    *(undefined1 *)(iVar2 + 0x38) = 4;
-    Image_Alloc3DPixels_Xbox(iVar2,uVar3,param_6);
+  else if (uVar2 == 0x20000) {
+    pGVar3[0x38] = (GfxImage)0x4;
+    Image_Alloc3DPixels_Xbox(pGVar3,uVar4,param_6);
   }
   else {
-    if (uVar1 != 0x30000) {
-      MyAssertHandler(0xffffffff821c53f8,0x517,1,0xffffffff82000f98,0xffffffff821c5694);
+    if (uVar2 != 0x30000) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_load_common.cpp"
+                      ,0x517,1,"%s");
     }
-    *(undefined1 *)(iVar2 + 0x38) = 2;
-    Image_Alloc1DPixels_Xbox(iVar2,uVar3,param_6);
+    pGVar3[0x38] = (GfxImage)0x2;
+    Image_Alloc1DPixels_Xbox(pGVar3,uVar4,param_6);
   }
-  Image_TrackTexture(iVar2,param_5,param_6,param_2,param_3,param_4);
-  if ((param_5 & 0x10000000) != 0) {
-    *(byte *)(iVar2 + 0x3b) = *(byte *)(iVar2 + 0x3b) | 8;
+  Image_TrackTexture(pGVar3,uVar1,param_6,param_2,param_3,param_4);
+  if ((uVar5 & 0x10000000) != 0) {
+    pGVar3[0x3b] = (GfxImage)((byte)pGVar3[0x3b] | 8);
     __restgprlr_23();
     return;
   }
-  *(byte *)(iVar2 + 0x3b) = *(byte *)(iVar2 + 0x3b) & 0xf7;
+  pGVar3[0x3b] = (GfxImage)((byte)pGVar3[0x3b] & 0xf7);
   __restgprlr_23();
   return;
 }
@@ -503,20 +403,26 @@ void Image_Setup(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefi
 
 // 827481A8  Image_SetupAndLoad  (gfx_d3d/r_image_load_common.cpp:1357)
 
-void Image_SetupAndLoad(undefined8 param_1,undefined2 param_2,undefined2 param_3,undefined2 param_4,
-                       ulonglong param_5,undefined4 param_6)
+/* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
+
+void Image_SetupAndLoad(GfxImage *param_1,int param_2,int param_3,int param_4,int param_5,
+                       _D3DFORMAT param_6,char *param_7)
 
 {
-  int iVar1;
+  GfxImage *pGVar1;
+  ulonglong uVar2;
+  int iVar3;
   
-  iVar1 = __savegprlr_26();
-  Image_Setup();
-  *(undefined4 *)(iVar1 + 0x34) = param_6;
-  *(undefined2 *)(iVar1 + 0x40) = param_2;
-  *(byte *)(iVar1 + 0x46) = (byte)((param_5 & 0xffffffff) >> 1) & 1;
-  *(undefined2 *)(iVar1 + 0x42) = param_3;
-  *(undefined2 *)(iVar1 + 0x44) = param_4;
-  Load_Texture(iVar1);
+  iVar3 = (int)(char)param_6;
+  uVar2 = (ulonglong)param_5;
+  pGVar1 = (GfxImage *)__savegprlr_26(param_1);
+  Image_Setup(pGVar1,param_2,param_3,param_4,(int)uVar2,(_D3DFORMAT)iVar3,param_7);
+  *(int *)(pGVar1 + 0x34) = iVar3;
+  *(short *)(pGVar1 + 0x40) = (short)param_2;
+  pGVar1[0x46] = (GfxImage)((byte)((uVar2 & 0xffffffff) >> 1) & 1);
+  *(short *)(pGVar1 + 0x42) = (short)param_3;
+  *(short *)(pGVar1 + 0x44) = (short)param_4;
+  Load_Texture(pGVar1);
   __restgprlr_26();
   return;
 }
@@ -524,12 +430,13 @@ void Image_SetupAndLoad(undefined8 param_1,undefined2 param_2,undefined2 param_3
 
 // 82747D98  Image_CubemapFace  (gfx_d3d/r_image_load_common.cpp:1401)
 
-ulonglong Image_CubemapFace(ulonglong param_1)
+_D3DCUBEMAP_FACES Image_CubemapFace(uint param_1)
 
 {
-  if (5 < (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821c53f8,0x580,0,0xffffffff821c560c,0xffffffff821c5624,param_1);
+  if (5 < param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_load_common.cpp"
+                    ,0x580,0,"%s\n\t(faceIndex) = %i");
   }
-  return param_1;
+  return (_D3DCUBEMAP_FACES)param_1;
 }
 

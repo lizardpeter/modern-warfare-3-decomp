@@ -102,7 +102,7 @@ bool FUN_829245e8(undefined4 *param_1)
 void FUN_8292478c(void)
 
 {
-  RtlLeaveCriticalSection(uRam829b0990);
+  RtlLeaveCriticalSection(_locktable[10].lock);
   return;
 }
 
@@ -252,12 +252,12 @@ void FUN_82926728(void)
 void FUN_82926d34(void)
 
 {
-  _ptiddata p_Var1;
+  _tiddata *p_Var1;
   
   p_Var1 = _getptd();
-  if (0 < (int)p_Var1->_purecall) {
+  if (0 < p_Var1->_ProcessingThrow) {
     p_Var1 = _getptd();
-    p_Var1->_purecall = (void *)((int)p_Var1->_purecall + -1);
+    p_Var1->_ProcessingThrow = p_Var1->_ProcessingThrow + -1;
   }
   return;
 }
@@ -265,11 +265,13 @@ void FUN_82926d34(void)
 
 // 82926D74  FUN_82926d74  (line unknown)
 
-void FUN_82926d74(void)
+int FUN_82926d74(_EXCEPTION_POINTERS *param_1)
 
 {
-  __FrameUnwindFilter();
-  return;
+  int iVar1;
+  
+  iVar1 = __FrameUnwindFilter(param_1);
+  return iVar1;
 }
 
 
@@ -381,7 +383,7 @@ void FUN_8292a3a4(void)
   if (*(int *)(in_r12 + -0x20) != 0) {
     if (*(int *)(in_r12 + -0x1c) != 0) {
       uVar2 = *puVar1;
-      iVar3 = (&DAT_84897dc0)[(int)uVar2 >> 5] + (uVar2 & 0x1f) * 0x48;
+      iVar3 = *(int *)(&__pioinfo + ((int)uVar2 >> 5) * 4) + (uVar2 & 0x1f) * 0x48;
       *(byte *)(iVar3 + 4) = *(byte *)(iVar3 + 4) & 0xfe;
     }
     _unlock_fhandle(*puVar1);
@@ -401,7 +403,7 @@ void FUN_8292a3c4(void)
   
   if (*(int *)(in_r12 + -0x20) != 0) {
     if (*(int *)(in_r12 + -0x1c) != 0) {
-      iVar1 = (&DAT_84897dc0)[(int)*unaff_r30 >> 5] + (*unaff_r30 & 0x1f) * 0x48;
+      iVar1 = *(int *)(&__pioinfo + ((int)*unaff_r30 >> 5) * 4) + (*unaff_r30 & 0x1f) * 0x48;
       *(byte *)(iVar1 + 4) = *(byte *)(iVar1 + 4) & 0xfe;
     }
     _unlock_fhandle(*unaff_r30);

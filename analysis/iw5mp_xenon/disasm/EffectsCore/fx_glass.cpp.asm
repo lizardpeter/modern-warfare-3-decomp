@@ -2546,7 +2546,7 @@ LAB_8241d688:
   8241DFDC  386B0004             addi r3,r11,0x4
   8241DFE0  48000D00             b 0x8241ece0
 
-; 8241F1B8  std::_Partition<PiecePriority_*,PartitionPriorityPred>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2267)
+; 8241F1B8  _Partition<PiecePriority_*,PartitionPriorityPred>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2267)
   8241F1B8  7F032040             cmplw cr6,r3,r4
   8241F1BC  4D9A0020             beqlr cr6
   8241F1C0  54AB043E             rlwinm r11,r5,0x0,0x10,0x1f
@@ -2574,7 +2574,7 @@ LAB_8241f1e0:
   8241F210  91440000             stw r10,0x0(r4)
   8241F214  4BFFFFA4             b 0x8241f1b8
 
-; 8241EDA0  std::_Push_heap<FxGlassPieceState_*_*,int,FxGlassPieceState_*,bool_(__cdecl*)(FxGlassPieceState_const_*,FxGlassPieceState_const_*)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2455)
+; 8241EDA0  _Push_heap<FxGlassPieceState_*_*,int,FxGlassPieceState_*,bool_(__cdecl*)(FxGlassPieceState_const_*,FxGlassPieceState_const_*)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2455)
   8241EDA0  7D8802A6             mfspr r12,LR
   8241EDA4  484F7909             bl 0x829166ac
   8241EDA8  9421FF70             stwu r1,-0x90(r1)
@@ -2613,7 +2613,7 @@ LAB_8241ee18:
   8241EE24  38210090             addi r1,r1,0x90
   8241EE28  484F78D4             b 0x829166fc
 
-; 8241EE30  std::_Adjust_heap<FxGlassPieceState_*_*,int,FxGlassPieceState_*,bool_(__cdecl*)(FxGlassPieceState_const_*,FxGlassPieceState_const_*)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2565)
+; 8241EE30  _Adjust_heap<FxGlassPieceState_*_*,int,FxGlassPieceState_*,bool_(__cdecl*)(FxGlassPieceState_const_*,FxGlassPieceState_const_*)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2565)
   8241EE30  7D8802A6             mfspr r12,LR
   8241EE34  484F7879             bl 0x829166ac
   8241EE38  9421FF70             stwu r1,-0x90(r1)
@@ -2689,7 +2689,7 @@ LAB_8241ef2c:
   8241EF38  38210090             addi r1,r1,0x90
   8241EF3C  484F77C0             b 0x829166fc
 
-; 8241EF40  std::_Make_heap<FxGlassPieceState_*_*,int,FxGlassPieceState_*,bool_(__cdecl*)(FxGlassPieceState_const_*,FxGlassPieceState_const_*)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2658)
+; 8241EF40  _Make_heap<FxGlassPieceState_*_*,int,FxGlassPieceState_*,bool_(__cdecl*)(FxGlassPieceState_const_*,FxGlassPieceState_const_*)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2658)
   8241EF40  7D8802A6             mfspr r12,LR
   8241EF44  484F7765             bl 0x829166a8
   8241EF48  9421FF60             stwu r1,-0xa0(r1)
@@ -2756,7 +2756,7 @@ LAB_8241f024:
   8241F024  382100A0             addi r1,r1,0xa0
   8241F028  484F76D0             b 0x829166f8
 
-; 8241F530  std::_Sort_heap<FxGlassPieceState_*_*,bool_(__cdecl*)(FxGlassPieceState_const_*,FxGlassPieceState_const_*)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2700)
+; 8241F530  _Sort_heap<FxGlassPieceState_*_*,bool_(__cdecl*)(FxGlassPieceState_const_*,FxGlassPieceState_const_*)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2700)
   8241F530  7D8802A6             mfspr r12,LR
   8241F534  484F7185             bl 0x829166b8
   8241F538  9421FF80             stwu r1,-0x80(r1)
@@ -2787,7 +2787,7 @@ LAB_8241f594:
   8241F594  38210080             addi r1,r1,0x80
   8241F598  484F7170             b 0x82916708
 
-; 8241F030  std::_Insertion_sort1<FxGlassPieceState_*_*,bool_(__cdecl*)(FxGlassPieceState_const_*,FxGlassPieceState_const_*),FxGlassPieceState_*>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3650)
+; 8241F030  _Insertion_sort1<FxGlassPieceState_*_*,bool_(__cdecl*)(FxGlassPieceState_const_*,FxGlassPieceState_const_*),FxGlassPieceState_*>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3650)
   8241F030  7D8802A6             mfspr r12,LR
   8241F034  484F7675             bl 0x829166a8
   8241F038  9421FF60             stwu r1,-0xa0(r1)
@@ -2850,7 +2850,7 @@ LAB_8241f104:
   8241F104  382100A0             addi r1,r1,0xa0
   8241F108  484F75F0             b 0x829166f8
 
-; 8241F110  std::_Med3<FxGlassPieceState_*_*,bool_(__cdecl*)(FxGlassPieceState_const_*,FxGlassPieceState_const_*)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3683)
+; 8241F110  _Med3<FxGlassPieceState_*_*,bool_(__cdecl*)(FxGlassPieceState_const_*,FxGlassPieceState_const_*)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3683)
   8241F110  7D8802A6             mfspr r12,LR
   8241F114  484F75A5             bl 0x829166b8
   8241F118  9421FF80             stwu r1,-0x80(r1)
@@ -2897,7 +2897,7 @@ LAB_8241f1b0:
   8241F1B0  38210080             addi r1,r1,0x80
   8241F1B4  484F7554             b 0x82916708
 
-; 8241F218  std::_Median<FxGlassPieceState_*_*,bool_(__cdecl*)(FxGlassPieceState_const_*,FxGlassPieceState_const_*)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3695)
+; 8241F218  _Median<FxGlassPieceState_*_*,bool_(__cdecl*)(FxGlassPieceState_const_*,FxGlassPieceState_const_*)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3695)
   8241F218  7D8802A6             mfspr r12,LR
   8241F21C  484F7495             bl 0x829166b0
   8241F220  9421FF70             stwu r1,-0x90(r1)
@@ -2942,7 +2942,7 @@ LAB_8241f2ac:
   8241F2B8  38210090             addi r1,r1,0x90
   8241F2BC  484F7444             b 0x82916700
 
-; 8241F2C0  std::_Unguarded_partition<FxGlassPieceState_*_*,bool_(__cdecl*)(FxGlassPieceState_const_*,FxGlassPieceState_const_*)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3712)
+; 8241F2C0  _Unguarded_partition<FxGlassPieceState_*_*,bool_(__cdecl*)(FxGlassPieceState_const_*,FxGlassPieceState_const_*)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3712)
   8241F2C0  7D8802A6             mfspr r12,LR
   8241F2C4  484F73E1             bl 0x829166a4
   8241F2C8  9421FF60             stwu r1,-0xa0(r1)
@@ -3116,7 +3116,7 @@ LAB_8241f518:
   8241F524  382100A0             addi r1,r1,0xa0
   8241F528  484F71CC             b 0x829166f4
 
-; 8241F5A0  std::_Sort<FxGlassPieceState_*_*,int,bool_(__cdecl*)(FxGlassPieceState_const_*,FxGlassPieceState_const_*)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3771)
+; 8241F5A0  _Sort<FxGlassPieceState_*_*,int,bool_(__cdecl*)(FxGlassPieceState_const_*,FxGlassPieceState_const_*)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3771)
   8241F5A0  7D8802A6             mfspr r12,LR
   8241F5A4  484F710D             bl 0x829166b0
   8241F5A8  9421FF70             stwu r1,-0x90(r1)

@@ -2,215 +2,251 @@
 
 // 8229FAE0  BG_CalculateWeaponMovement_VerticalBobFactor  (bgame/bg_weapons_view.cpp:17)
 
-double BG_CalculateWeaponMovement_VerticalBobFactor(double param_1,double param_2,int param_3)
+/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
+
+float BG_CalculateWeaponMovement_VerticalBobFactor
+                (playerState_s *param_1,float param_2,float param_3)
 
 {
   int iVar1;
-  double dVar2;
+  dvar_t *pdVar2;
   double dVar3;
   double dVar4;
+  double dVar5;
   
-  if (*(int *)(param_3 + 0x164) == 0xb) {
-    dVar4 = (double)(float)((double)*(float *)(DAT_829c5630 + 0x10) * param_2);
+  dVar4 = (double)param_2;
+  iVar1 = (param_1->field0_0x0).viewHeightTarget;
+  if (iVar1 == 0xb) {
+    dVar5 = (double)((bg_weaponBobAmplitudeProne->current).vector[1] * param_3);
   }
   else {
-    iVar1 = DAT_829c548c;
-    if ((*(int *)(param_3 + 0x164) == 0x28) ||
-       (iVar1 = DAT_829c7e80, (*(uint *)(param_3 + 0xc) & 0x4000) == 0)) {
-      dVar4 = (double)(float)((double)((1.0 - *(float *)(param_3 + 0x378)) *
-                                      *(float *)(iVar1 + 0x10)) * param_2);
+    pdVar2 = bg_weaponBobAmplitudeDucked;
+    if ((iVar1 == 0x28) ||
+       (pdVar2 = bg_weaponBobAmplitudeStanding,
+       (*(uint *)&(param_1->field0_0x0).field_0xc & 0x4000) == 0)) {
+      dVar5 = (double)((1.0 - *(float *)&param_1->field_0x378) * (pdVar2->current).vector[1] *
+                      param_3);
     }
     else {
-      dVar4 = (double)(float)((double)*(float *)(DAT_829c7dac + 0x10) * param_2);
+      dVar5 = (double)((bg_weaponBobAmplitudeSprinting->current).vector[1] * param_3);
     }
   }
-  if ((double)*(float *)(DAT_829c54b8 + 0xc) < dVar4) {
-    dVar4 = (double)*(float *)(DAT_829c54b8 + 0xc);
+  if ((double)(bg_weaponBobMax->current).value < dVar5) {
+    dVar5 = (double)(bg_weaponBobMax->current).value;
   }
-  dVar2 = sin((double)(float)(param_1 * 2.0));
-  dVar3 = (double)(float)dVar2;
-  dVar2 = sin((double)(float)(param_1 * 4.0 + 1.5707963705062866));
-  return (double)((float)((double)(float)((double)(float)dVar2 * 0.20000000298023224 + dVar3) *
-                         dVar4) * 0.75);
+  dVar3 = sin((double)(float)(dVar4 * 2.0));
+  dVar3 = (double)(float)dVar3;
+  dVar4 = sin((double)(float)(dVar4 * 4.0 + 1.5707963705062866));
+  return (float)((double)(float)((double)(float)dVar4 * 0.20000000298023224 + dVar3) * dVar5) * 0.75
+  ;
 }
 
 
 // 8229FC00  BG_CalculateWeaponMovement_HorizontalBobFactor  (bgame/bg_weapons_view.cpp:37)
 
-double BG_CalculateWeaponMovement_HorizontalBobFactor(double param_1,double param_2,int param_3)
+/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
+
+float BG_CalculateWeaponMovement_HorizontalBobFactor
+                (playerState_s *param_1,float param_2,float param_3)
 
 {
   int iVar1;
-  double dVar2;
+  dvar_t *pdVar2;
   double dVar3;
+  double dVar4;
   
-  if (*(int *)(param_3 + 0x164) == 0xb) {
-    dVar3 = (double)(float)((double)*(float *)(DAT_829c5630 + 0xc) * param_2);
+  iVar1 = (param_1->field0_0x0).viewHeightTarget;
+  if (iVar1 == 0xb) {
+    dVar4 = (double)((bg_weaponBobAmplitudeProne->current).value * param_3);
   }
   else {
-    iVar1 = DAT_829c548c;
-    if ((*(int *)(param_3 + 0x164) == 0x28) ||
-       (iVar1 = DAT_829c7e80, (*(uint *)(param_3 + 0xc) & 0x4000) == 0)) {
-      dVar3 = (double)(float)((double)((1.0 - *(float *)(param_3 + 0x378)) * *(float *)(iVar1 + 0xc)
-                                      ) * param_2);
+    pdVar2 = bg_weaponBobAmplitudeDucked;
+    if ((iVar1 == 0x28) ||
+       (pdVar2 = bg_weaponBobAmplitudeStanding,
+       (*(uint *)&(param_1->field0_0x0).field_0xc & 0x4000) == 0)) {
+      dVar4 = (double)((1.0 - *(float *)&param_1->field_0x378) * (pdVar2->current).value * param_3);
     }
     else {
-      dVar3 = (double)(float)((double)*(float *)(DAT_829c7dac + 0xc) * param_2);
+      dVar4 = (double)((bg_weaponBobAmplitudeSprinting->current).value * param_3);
     }
   }
-  if ((double)*(float *)(DAT_829c54b8 + 0xc) < dVar3) {
-    dVar3 = (double)*(float *)(DAT_829c54b8 + 0xc);
+  if ((double)(bg_weaponBobMax->current).value < dVar4) {
+    dVar4 = (double)(bg_weaponBobMax->current).value;
   }
-  dVar2 = sin(param_1);
-  return (double)(float)((double)(float)dVar2 * dVar3);
+  dVar3 = sin((double)param_2);
+  return (float)((double)(float)dVar3 * dVar4);
 }
 
 
 // 8229FCD0  BG_AdjustTargScaleForADSTime  (bgame/bg_weapons_view.cpp:61)
 
-double BG_AdjustTargScaleForADSTime(double param_1,int *param_2)
+/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
+
+float BG_AdjustTargScaleForADSTime(playerState_s *param_1,float param_2)
 
 {
-  double dVar1;
+  Weapon WVar1;
   double dVar2;
   double dVar3;
+  double dVar4;
+  double dVar5;
   float local_30 [2];
   float local_28 [6];
   
-  dVar3 = 1.0;
-  if ((float)param_2[0xde] == 1.0) {
-    BG_GetADSIdleLerpTime(param_2[0xdc],(uint)param_2[0xdd] >> 0xf & 1,local_28,local_30);
+  dVar2 = (double)param_2;
+  dVar5 = 1.0;
+  if (*(float *)&param_1->field_0x378 == 1.0) {
+    WVar1.data = 0;
+    WVar1._4_4_ = *(uint *)&param_1->field_0x370;
+    BG_GetADSIdleLerpTime
+              (WVar1,(bool)((byte)(*(uint *)&param_1->field_0x374 >> 0xf) & 1),local_28,local_30);
     if (local_30[0] != 0.0) {
-      dVar2 = (double)(((float)(longlong)(*param_2 - param_2[0x49]) * 0.001 - local_28[0]) /
+      dVar4 = (double)(((float)(longlong)
+                               (*(int *)&param_1->field0_0x0 -
+                               (param_1->field0_0x0).pe.timeADSCameUp) * 0.001 - local_28[0]) /
                       local_30[0]);
-      if ((float)(dVar2 - dVar3) < 0.0) {
-        dVar3 = dVar2;
+      if ((float)(dVar4 - dVar5) < 0.0) {
+        dVar5 = dVar4;
       }
-      dVar1 = 0.0;
-      if (-dVar2 < 0.0) {
-        dVar1 = dVar3;
+      dVar3 = 0.0;
+      if (-dVar4 < 0.0) {
+        dVar3 = dVar5;
       }
-      return (double)(float)(dVar1 * param_1);
+      dVar5 = (double)(float)(dVar3 * dVar2);
+      goto LAB_8229fd90;
     }
   }
-  else if ((float)param_2[0xde] != 0.0) {
-    return 0.0;
+  else {
+    dVar5 = 0.0;
+    if (*(float *)&param_1->field_0x378 != 0.0) goto LAB_8229fd90;
   }
-  return param_1;
+  dVar5 = dVar2;
+LAB_8229fd90:
+  return (float)dVar5;
 }
 
 
 // 8229FDB0  BG_GetIdleTargScale  (bgame/bg_weapons_view.cpp:107)
 
-double BG_GetIdleTargScale(int param_1)
+/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
+
+float BG_GetIdleTargScale(playerState_s *param_1)
 
 {
-  undefined8 uVar1;
-  char cVar2;
-  undefined8 uVar3;
-  double dVar4;
+  Weapon WVar1;
+  bool bVar2;
   float local_30;
   float local_2c;
-  undefined1 auStack_28 [4];
-  undefined1 auStack_24 [12];
+  float fStack_28;
+  float afStack_24 [3];
   
-  uVar1 = BG_GetViewmodelWeapon();
-  if ((param_1 == 0) || (uVar3 = 1, (*(uint *)(param_1 + 0x374) & 0x8000) == 0)) {
-    uVar3 = 0;
+  WVar1 = BG_GetViewmodelWeapon(param_1);
+  if ((param_1 == (playerState_s *)0x0) ||
+     (bVar2 = true, (*(uint *)&param_1->field_0x374 & 0x8000) == 0)) {
+    bVar2 = false;
   }
-  BG_GetHipIdleValues(param_1 + 0x4ec,uVar1,uVar3,&local_30,&local_2c,auStack_24,auStack_28);
-  if ((param_1 == 0) || (uVar3 = 1, (*(uint *)(param_1 + 0x374) & 0x8000) == 0)) {
-    uVar3 = 0;
+  BG_GetHipIdleValues(param_1->perks,WVar1,bVar2,&local_30,&local_2c,afStack_24,&fStack_28);
+  if ((param_1 == (playerState_s *)0x0) ||
+     (bVar2 = true, (*(uint *)&param_1->field_0x374 & 0x8000) == 0)) {
+    bVar2 = false;
   }
-  cVar2 = BG_IsAimDownSight(uVar1,uVar3);
-  if (cVar2 == '\0') {
-    dVar4 = (double)local_30;
-    if (dVar4 == 0.0) {
-      dVar4 = 80.0;
-    }
+  bVar2 = BG_IsAimDownSight(WVar1,bVar2);
+  if (bVar2) {
+    local_30 = BG_AdjustTargScaleForADSTime
+                         (param_1,(local_2c - local_30) * *(float *)&param_1->field_0x378 + local_30
+                         );
   }
-  else {
-    dVar4 = (double)BG_AdjustTargScaleForADSTime
-                              ((double)((local_2c - local_30) * *(float *)(param_1 + 0x378) +
-                                       local_30),param_1);
+  else if (local_30 == 0.0) {
+    local_30 = 80.0;
   }
-  return dVar4;
+  return local_30;
 }
 
 
 // 8229FEA0  BG_ComputeAndApplyWeaponMovement_IdleAngles  (bgame/bg_weapons_view.cpp:150)
 
-void BG_ComputeAndApplyWeaponMovement_IdleAngles(undefined8 param_1,float *param_2)
+/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void BG_ComputeAndApplyWeaponMovement_IdleAngles(weaponState_t *param_1,float *param_2)
 
 {
-  float fVar1;
-  int iVar2;
-  int *piVar4;
-  undefined8 uVar3;
-  int iVar5;
-  undefined8 uVar6;
+  playerState_s *ppVar1;
+  uint uVar2;
+  undefined4 *puVar4;
+  Weapon WVar3;
+  ADSOverlay *pAVar5;
+  bool bVar6;
   double dVar7;
   double dVar8;
   double dVar9;
   double dVar10;
   double dVar11;
   double dVar12;
+  float fVar13;
+  float fVar14;
   
-  __savegprlr_27();
-  piVar4 = (int *)__savefpr_28();
-  iVar2 = *piVar4;
+  __savegprlr_27(param_1);
+  puVar4 = (undefined4 *)__savefpr_28();
+  ppVar1 = (playerState_s *)*puVar4;
   dVar12 = 0.0;
-  if (-(double)(float)piVar4[2] < 0.0) {
-    dVar12 = (double)(float)piVar4[2];
+  if (-(double)(float)puVar4[2] < 0.0) {
+    dVar12 = (double)(float)puVar4[2];
   }
-  uVar3 = BG_GetViewmodelWeapon(iVar2);
-  if ((iVar2 == 0) || (uVar6 = 1, (*(uint *)(iVar2 + 0x374) & 0x8000) == 0)) {
-    uVar6 = 0;
+  WVar3 = BG_GetViewmodelWeapon(ppVar1);
+  if ((ppVar1 == (playerState_s *)0x0) ||
+     (bVar6 = true, (*(uint *)&ppVar1->field_0x374 & 0x8000) == 0)) {
+    bVar6 = false;
   }
-  dVar9 = (double)BG_GetIdleTargScale(iVar2);
-  dVar7 = (double)*(float *)(iVar2 + 0x220);
-  dVar10 = 1.0;
+  fVar13 = BG_GetIdleTargScale(ppVar1);
+  fVar14 = (ppVar1->field0_0x0).holdBreathScale;
+  dVar9 = 1.0;
   dVar11 = 0.5;
-  if (1.0 < dVar7) {
-    dVar7 = (double)((float)(dVar7 - 1.0) * 0.5 + 1.0);
+  if (1.0 < fVar14) {
+    fVar14 = (fVar14 - 1.0) * 0.5 + 1.0;
   }
-  dVar9 = (double)(float)(dVar7 * dVar9);
-  dVar7 = dVar10;
-  if ((*(uint *)(iVar2 + 0xf8) & 8) == 0) {
-    if ((*(uint *)(iVar2 + 0xf8) & 4) != 0) {
-      dVar10 = (double)BG_IdleCrouchFactor(uVar3,uVar6);
+  uVar2 = (ppVar1->field0_0x0).eFlags;
+  dVar8 = (double)(fVar14 * fVar13);
+  dVar10 = dVar9;
+  if ((uVar2 & 8) == 0) {
+    if ((uVar2 & 4) != 0) {
+      fVar14 = BG_IdleCrouchFactor(WVar3,bVar6);
+      dVar9 = (double)fVar14;
     }
   }
   else {
-    dVar10 = (double)BG_IdleProneFactor(uVar3,uVar6);
+    fVar14 = BG_IdleProneFactor(WVar3,bVar6);
+    dVar9 = (double)fVar14;
   }
-  dVar8 = (double)(float)piVar4[3];
-  if (dVar10 != dVar8) {
-    if (dVar10 <= dVar8) {
-      dVar12 = -(double)(float)(dVar12 * dVar11 - (double)(float)piVar4[3]);
-      piVar4[3] = (int)(float)dVar12;
-      if (dVar10 <= dVar12) goto LAB_8229ffb4;
+  dVar7 = (double)(float)puVar4[3];
+  if (dVar9 != dVar7) {
+    if (dVar9 <= dVar7) {
+      dVar12 = -(double)(float)(dVar12 * dVar11 - (double)(float)puVar4[3]);
+      puVar4[3] = (float)dVar12;
+      if (dVar9 <= dVar12) goto LAB_8229ffb4;
     }
     else {
-      fVar1 = (float)(dVar12 * dVar11 + dVar8);
-      piVar4[3] = (int)fVar1;
-      if ((double)fVar1 <= dVar10) goto LAB_8229ffb4;
+      fVar14 = (float)(dVar12 * dVar11 + dVar7);
+      puVar4[3] = fVar14;
+      if ((double)fVar14 <= dVar9) goto LAB_8229ffb4;
     }
-    piVar4[3] = (int)(float)dVar10;
+    puVar4[3] = (float)dVar9;
   }
 LAB_8229ffb4:
-  dVar12 = (double)(float)((double)(float)piVar4[3] * dVar9);
-  iVar5 = BG_GetOverlay(uVar3,uVar6);
-  if (*(int *)(iVar5 + 0x10) != 0) {
-    dVar12 = (double)(float)((double)(float)(dVar7 - (double)*(float *)(iVar2 + 0x378)) * dVar12);
+  dVar12 = (double)(float)((double)(float)puVar4[3] * dVar8);
+  pAVar5 = BG_GetOverlay(WVar3,bVar6);
+  if (pAVar5->reticle != WEAPOVERLAYRETICLE_NONE) {
+    dVar12 = (double)(float)((double)(float)(dVar10 - (double)*(float *)&ppVar1->field_0x378) *
+                            dVar12);
   }
-  dVar7 = sin((double)((float)(longlong)*(int *)(iVar2 + 0x4d4) * 0.0005));
-  dVar9 = 0.009999999776482582;
-  param_2[2] = (float)((double)(float)dVar7 * dVar12) * 0.01 + param_2[2];
-  dVar7 = sin((double)((float)(longlong)*(int *)(iVar2 + 0x4d4) * 0.0007));
-  param_2[1] = (float)((double)(float)((double)(float)dVar7 * dVar12) * dVar9 + (double)param_2[1]);
-  dVar7 = sin((double)((float)(longlong)*(int *)(iVar2 + 0x4d4) * 0.001));
-  *param_2 = (float)((double)(float)((double)(float)dVar7 * dVar12) * dVar9 + (double)*param_2);
+  dVar9 = sin((double)((float)(longlong)*(int *)&ppVar1->field_0x4d4 * 0.0005));
+  dVar11 = 0.009999999776482582;
+  param_2[2] = (float)((double)(float)dVar9 * dVar12) * 0.01 + param_2[2];
+  dVar9 = sin((double)((float)(longlong)*(int *)&ppVar1->field_0x4d4 * 0.0007));
+  param_2[1] = (float)((double)(float)((double)(float)dVar9 * dVar12) * dVar11 + (double)param_2[1])
+  ;
+  dVar9 = sin((double)((float)(longlong)*(int *)&ppVar1->field_0x4d4 * 0.001));
+  *param_2 = (float)((double)(float)((double)(float)dVar9 * dVar12) * dVar11 + (double)*param_2);
   __restfpr_28();
   __restgprlr_27();
   return;
@@ -219,58 +255,60 @@ LAB_8229ffb4:
 
 // 822A00B0  BG_ComputeAndApplyWeaponMovement_DamageKickAngles  (bgame/bg_weapons_view.cpp:229)
 
-void BG_ComputeAndApplyWeaponMovement_DamageKickAngles(undefined8 param_1,float *param_2)
+/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void BG_ComputeAndApplyWeaponMovement_DamageKickAngles(weaponState_t *param_1,float *param_2)
 
 {
-  float fVar1;
-  int iVar2;
-  int *piVar4;
-  undefined8 uVar3;
-  int iVar5;
+  playerState_s *ppVar1;
+  undefined4 *puVar3;
+  Weapon WVar2;
+  ADSOverlay *pAVar4;
+  double dVar5;
   double dVar6;
   double dVar7;
   double dVar8;
   double dVar9;
   double dVar10;
   double dVar11;
-  double dVar12;
+  float fVar12;
   
-  __savegprlr_29();
-  piVar4 = (int *)__savefpr_26();
-  if (piVar4[5] != 0) {
-    iVar2 = *piVar4;
-    uVar3 = BG_GetViewmodelWeapon(iVar2);
-    dVar12 = 1.0;
-    dVar10 = 0.5;
-    dVar9 = 0.0;
-    dVar11 = (double)((*(float *)(iVar2 + 0x378) + 1.0) * 0.5);
-    dVar8 = (double)(float)(dVar11 * 100.0);
-    dVar7 = (double)(float)(dVar11 * 400.0);
-    if (*(float *)(iVar2 + 0x378) != 0.0) {
-      iVar5 = BG_GetOverlay(uVar3,*(uint *)(iVar2 + 0x374) >> 0xf & 1);
-      if (*(int *)(iVar5 + 0x10) != 0) {
-        dVar11 = (double)(float)(-(double)(float)((double)*(float *)(iVar2 + 0x378) * 0.75 - dVar12)
-                                * dVar11);
-      }
+  __savegprlr_29(param_1);
+  puVar3 = (undefined4 *)__savefpr_26();
+  if (puVar3[5] != 0) {
+    ppVar1 = (playerState_s *)*puVar3;
+    WVar2 = BG_GetViewmodelWeapon(ppVar1);
+    dVar11 = 1.0;
+    dVar9 = 0.5;
+    dVar8 = 0.0;
+    dVar10 = (double)((*(float *)&ppVar1->field_0x378 + 1.0) * 0.5);
+    dVar7 = (double)(float)(dVar10 * 100.0);
+    dVar6 = (double)(float)(dVar10 * 400.0);
+    if ((*(float *)&ppVar1->field_0x378 != 0.0) &&
+       (pAVar4 = BG_GetOverlay(WVar2,(bool)((byte)(*(uint *)&ppVar1->field_0x374 >> 0xf) & 1)),
+       pAVar4->reticle != WEAPOVERLAYRETICLE_NONE)) {
+      dVar10 = (double)(float)(-(double)(float)((double)*(float *)&ppVar1->field_0x378 * 0.75 -
+                                               dVar11) * dVar10);
     }
-    dVar6 = (double)(longlong)(piVar4[4] - piVar4[5]);
-    if (dVar6 < dVar8) {
-      dVar7 = (double)GetLeanFraction((double)(float)(dVar6 / dVar8));
-      fVar1 = (float)(dVar7 * dVar11);
-      *param_2 = (float)((double)((float)piVar4[6] * fVar1) * dVar10 + (double)*param_2);
-      param_2[1] = -((float)piVar4[7] * fVar1 - param_2[1]);
-      param_2[2] = (float)((double)((float)piVar4[7] * fVar1) * dVar10 + (double)param_2[2]);
+    dVar5 = (double)(longlong)(int)(puVar3[4] - puVar3[5]);
+    if (dVar5 < dVar7) {
+      fVar12 = GetLeanFraction((float)(dVar5 / dVar7));
+      fVar12 = (float)((double)fVar12 * dVar10);
+      *param_2 = (float)((double)((float)puVar3[6] * fVar12) * dVar9 + (double)*param_2);
+      param_2[1] = -((float)puVar3[7] * fVar12 - param_2[1]);
+      param_2[2] = (float)((double)((float)puVar3[7] * fVar12) * dVar9 + (double)param_2[2]);
       __restfpr_26();
       __restgprlr_29();
       return;
     }
-    dVar7 = (double)(float)(dVar12 - (double)(float)((double)(float)(dVar6 - dVar8) / dVar7));
-    if (dVar9 < dVar7) {
-      dVar7 = (double)GetLeanFraction((double)(float)(dVar12 - dVar7));
-      fVar1 = (float)((double)(float)(dVar12 - dVar7) * dVar11);
-      *param_2 = (float)((double)((float)piVar4[6] * fVar1) * dVar10 + (double)*param_2);
-      param_2[1] = -((float)piVar4[7] * fVar1 - param_2[1]);
-      param_2[2] = (float)((double)((float)piVar4[7] * fVar1) * dVar10 + (double)param_2[2]);
+    dVar6 = (double)(float)(dVar11 - (double)(float)((double)(float)(dVar5 - dVar7) / dVar6));
+    if (dVar8 < dVar6) {
+      fVar12 = GetLeanFraction((float)(dVar11 - dVar6));
+      fVar12 = (float)((double)(float)(dVar11 - (double)fVar12) * dVar10);
+      *param_2 = (float)((double)((float)puVar3[6] * fVar12) * dVar9 + (double)*param_2);
+      param_2[1] = -((float)puVar3[7] * fVar12 - param_2[1]);
+      param_2[2] = (float)((double)((float)puVar3[7] * fVar12) * dVar9 + (double)param_2[2]);
     }
   }
   __restfpr_26();
@@ -281,26 +319,32 @@ void BG_ComputeAndApplyWeaponMovement_DamageKickAngles(undefined8 param_1,float 
 
 // 822A0240  BG_ApplyWeaponMovement_BaseAngles  (bgame/bg_weapons_view.cpp:278)
 
-void BG_ApplyWeaponMovement_BaseAngles(undefined8 param_1,ulonglong param_2)
+/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
+
+void BG_ApplyWeaponMovement_BaseAngles(weaponState_t *param_1,float *param_2)
 
 {
   float fVar1;
   int *piVar2;
-  float *pfVar3;
+  ulonglong uVar3;
+  float *pfVar4;
   
-  piVar2 = (int *)__savegprlr_28();
+  uVar3 = (ulonglong)(int)param_2;
+  piVar2 = (int *)__savegprlr_28(param_1);
   if (piVar2 == (int *)0x0) {
-    MyAssertHandler(0xffffffff8200f620,0x11a,0,0xffffffff82000f98,0xffffffff8200f61c);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_view.cpp",
+                    0x11a,0,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8200f620,0x11b,0,0xffffffff82000f98,0xffffffff8200f60c);
+  if ((uVar3 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_view.cpp",
+                    0x11b,0,"%s");
   }
   fVar1 = -(*(float *)(*piVar2 + 0x378) * 2.0 - 1.0);
   if (0.0 < fVar1) {
-    pfVar3 = (float *)param_2;
-    *pfVar3 = (float)piVar2[8] * fVar1 + *pfVar3;
-    pfVar3[1] = (float)piVar2[9] * fVar1 + pfVar3[1];
-    pfVar3[2] = (float)piVar2[10] * fVar1 + pfVar3[2];
+    pfVar4 = (float *)uVar3;
+    *pfVar4 = (float)piVar2[8] * fVar1 + *pfVar4;
+    pfVar4[1] = (float)piVar2[9] * fVar1 + pfVar4[1];
+    pfVar4[2] = (float)piVar2[10] * fVar1 + pfVar4[2];
   }
   __restgprlr_28();
   return;
@@ -309,26 +353,32 @@ void BG_ApplyWeaponMovement_BaseAngles(undefined8 param_1,ulonglong param_2)
 
 // 822A0310  BG_ApplyWeaponMovement_BaseOrigin  (bgame/bg_weapons_view.cpp:295)
 
-void BG_ApplyWeaponMovement_BaseOrigin(undefined8 param_1,ulonglong param_2)
+/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
+
+void BG_ApplyWeaponMovement_BaseOrigin(weaponState_t *param_1,float *param_2)
 
 {
   float fVar1;
   int *piVar2;
-  float *pfVar3;
+  ulonglong uVar3;
+  float *pfVar4;
   
-  piVar2 = (int *)__savegprlr_28();
+  uVar3 = (ulonglong)(int)param_2;
+  piVar2 = (int *)__savegprlr_28(param_1);
   if (piVar2 == (int *)0x0) {
-    MyAssertHandler(0xffffffff8200f620,299,0,0xffffffff82000f98,0xffffffff8200f61c);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_view.cpp",299
+                    ,0,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8200f620,300,0,0xffffffff82000f98,0xffffffff8200f664);
+  if ((uVar3 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_view.cpp",300
+                    ,0,"%s");
   }
   fVar1 = -(*(float *)(*piVar2 + 0x378) * 2.0 - 1.0);
   if (0.0 < fVar1) {
-    pfVar3 = (float *)param_2;
-    *pfVar3 = (float)piVar2[0xb] * fVar1 + *pfVar3;
-    pfVar3[1] = (float)piVar2[0xc] * fVar1 + pfVar3[1];
-    pfVar3[2] = (float)piVar2[0xd] * fVar1 + pfVar3[2];
+    pfVar4 = (float *)uVar3;
+    *pfVar4 = (float)piVar2[0xb] * fVar1 + *pfVar4;
+    pfVar4[1] = (float)piVar2[0xc] * fVar1 + pfVar4[1];
+    pfVar4[2] = (float)piVar2[0xd] * fVar1 + pfVar4[2];
   }
   __restgprlr_28();
   return;
@@ -337,7 +387,9 @@ void BG_ApplyWeaponMovement_BaseOrigin(undefined8 param_1,ulonglong param_2)
 
 // 822A03E0  BG_ApplyWeaponMovement_SwayAngles  (bgame/bg_weapons_view.cpp:312)
 
-void BG_ApplyWeaponMovement_SwayAngles(undefined8 param_1,float *param_2)
+/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
+
+void BG_ApplyWeaponMovement_SwayAngles(weaponState_t *param_1,float *param_2)
 
 {
   int iVar1;
@@ -347,7 +399,7 @@ void BG_ApplyWeaponMovement_SwayAngles(undefined8 param_1,float *param_2)
   double dVar5;
   double dVar6;
   
-  iVar1 = __savefpr_28();
+  iVar1 = __savefpr_28(param_1);
   dVar6 = 0.0027777778450399637;
   dVar5 = 0.5;
   dVar3 = (double)((*param_2 - *(float *)(iVar1 + 0x50)) * 0.0027777778);
@@ -364,57 +416,65 @@ void BG_ApplyWeaponMovement_SwayAngles(undefined8 param_1,float *param_2)
 
 // 822A0490  BG_ApplyWeaponMovement_SwayOrigin  (bgame/bg_weapons_view.cpp:319)
 
-void BG_ApplyWeaponMovement_SwayOrigin(int param_1,int param_2)
+/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
+
+void BG_ApplyWeaponMovement_SwayOrigin(weaponState_t *param_1,float *param_2)
 
 {
-  *(float *)(param_2 + 4) = *(float *)(param_2 + 4) - *(float *)(param_1 + 0x60);
-  *(float *)(param_2 + 8) = *(float *)(param_1 + 100) + *(float *)(param_2 + 8);
+  param_2[1] = param_2[1] - param_1->swayOrigin[1];
+  param_2[2] = param_1->swayOrigin[2] + param_2[2];
   return;
 }
 
 
 // 822A04B8  BG_ApplyWeaponMovement_RecoilAngles  (bgame/bg_weapons_view.cpp:366)
 
-void BG_ApplyWeaponMovement_RecoilAngles(int param_1,float *param_2)
+/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
+
+void BG_ApplyWeaponMovement_RecoilAngles(weaponState_t *param_1,float *param_2)
 
 {
-  *param_2 = *(float *)(param_1 + 0x38) + *param_2;
-  param_2[1] = *(float *)(param_1 + 0x3c) + param_2[1];
-  param_2[2] = *(float *)(param_1 + 0x40) + param_2[2];
+  *param_2 = param_1->recoilAngles[0] + *param_2;
+  param_2[1] = param_1->recoilAngles[1] + param_2[1];
+  param_2[2] = param_1->recoilAngles[2] + param_2[2];
   return;
 }
 
 
 // 822A04F0  BG_ApplyWeaponMovement_BobAngles  (bgame/bg_weapons_view.cpp:372)
 
-void BG_ApplyWeaponMovement_BobAngles(undefined8 param_1,float *param_2)
+/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void BG_ApplyWeaponMovement_BobAngles(weaponState_t *param_1,float *param_2)
 
 {
-  int iVar1;
+  playerState_s *ppVar1;
   float fVar2;
-  int *piVar4;
-  undefined8 uVar3;
-  int iVar5;
-  undefined8 uVar6;
+  undefined4 *puVar4;
+  Weapon WVar3;
+  ADSOverlay *pAVar5;
+  bool bVar6;
   
-  piVar4 = (int *)__savegprlr_29();
-  iVar1 = *piVar4;
-  uVar3 = BG_GetViewmodelWeapon(iVar1);
-  if ((iVar1 == 0) || (uVar6 = 1, (*(uint *)(iVar1 + 0x374) & 0x8000) == 0)) {
-    uVar6 = 0;
+  puVar4 = (undefined4 *)__savegprlr_29(param_1);
+  ppVar1 = (playerState_s *)*puVar4;
+  WVar3 = BG_GetViewmodelWeapon(ppVar1);
+  if ((ppVar1 == (playerState_s *)0x0) ||
+     (bVar6 = true, (*(uint *)&ppVar1->field_0x374 & 0x8000) == 0)) {
+    bVar6 = false;
   }
-  iVar5 = BG_GetOverlay(uVar3,uVar6);
-  if (*(int *)(iVar5 + 0x10) != 0) {
-    fVar2 = 1.0 - *(float *)(iVar1 + 0x378);
-    *param_2 = (float)piVar4[0x1d] * fVar2 + *param_2;
-    param_2[1] = (float)piVar4[0x1e] * fVar2 + param_2[1];
-    param_2[2] = (float)piVar4[0x1f] * fVar2 + param_2[2];
+  pAVar5 = BG_GetOverlay(WVar3,bVar6);
+  if (pAVar5->reticle != WEAPOVERLAYRETICLE_NONE) {
+    fVar2 = 1.0 - *(float *)&ppVar1->field_0x378;
+    *param_2 = (float)puVar4[0x1d] * fVar2 + *param_2;
+    param_2[1] = (float)puVar4[0x1e] * fVar2 + param_2[1];
+    param_2[2] = (float)puVar4[0x1f] * fVar2 + param_2[2];
     __restgprlr_29();
     return;
   }
-  *param_2 = (float)piVar4[0x1d] + *param_2;
-  param_2[1] = (float)piVar4[0x1e] + param_2[1];
-  param_2[2] = (float)piVar4[0x1f] + param_2[2];
+  *param_2 = (float)puVar4[0x1d] + *param_2;
+  param_2[1] = (float)puVar4[0x1e] + param_2[1];
+  param_2[2] = (float)puVar4[0x1f] + param_2[2];
   __restgprlr_29();
   return;
 }
@@ -422,98 +482,112 @@ void BG_ApplyWeaponMovement_BobAngles(undefined8 param_1,float *param_2)
 
 // 822A05C8  BG_ApplyWeaponMovement_BobOrigin  (bgame/bg_weapons_view.cpp:387)
 
-void BG_ApplyWeaponMovement_BobOrigin(longlong param_1,undefined4 *param_2)
+/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
+
+void BG_ApplyWeaponMovement_BobOrigin(weaponState_t *param_1,float *param_2)
 
 {
-  undefined4 local_50;
-  undefined4 local_4c;
-  undefined4 local_48;
-  undefined1 auStack_40 [48];
+  float local_50;
+  float local_4c;
+  float local_48;
+  float afStack_40 [12];
   
   local_50 = *param_2;
   local_4c = param_2[1];
   local_48 = param_2[2];
-  AnglesToAxis(param_1 + 0x74,auStack_40);
-  MatrixTransformVector(&local_50,auStack_40,param_2);
+  AnglesToAxis(param_1->bobAngles,(float (*) [3])afStack_40);
+  MatrixTransformVector(&local_50,(float (*) [3])afStack_40,param_2);
   return;
 }
 
 
 // 822A0628  BG_CalculateWeaponMovement_Base_Internal_Stance  (bgame/bg_weapons_view.cpp:398)
 
+/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
 void BG_CalculateWeaponMovement_Base_Internal_Stance
-               (undefined8 param_1,int param_2,float *param_3,float *param_4)
+               (weaponState_t *param_1,int param_2,float *param_3,float *param_4)
 
 {
-  int iVar1;
+  playerState_s *ppVar1;
   uint uVar2;
   int iVar3;
-  float fVar4;
-  int *piVar6;
-  undefined8 uVar5;
-  uint uVar7;
-  char cVar8;
-  undefined8 uVar9;
+  int iVar4;
+  undefined4 *puVar7;
+  Weapon WVar5;
+  Weapon WVar6;
+  bool bVar8;
+  bool bVar9;
   int iVar10;
   double dVar11;
+  float fVar12;
   
-  piVar6 = (int *)__savegprlr_20();
-  if (piVar6 == (int *)0x0) {
-    MyAssertHandler(0xffffffff8200f620,0x199,0,0xffffffff82000f98,0xffffffff8200f61c);
+  puVar7 = (undefined4 *)__savegprlr_20(param_1);
+  if (puVar7 == (undefined4 *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_view.cpp",
+                    0x199,0,"%s");
   }
-  iVar1 = *piVar6;
-  if ((iVar1 == 0) || (uVar9 = 1, (*(uint *)(iVar1 + 0x374) & 0x8000) == 0)) {
-    uVar9 = 0;
+  ppVar1 = (playerState_s *)*puVar7;
+  if ((ppVar1 == (playerState_s *)0x0) ||
+     (bVar9 = true, (*(uint *)&ppVar1->field_0x374 & 0x8000) == 0)) {
+    bVar9 = false;
   }
-  iVar10 = *(int *)(iVar1 + 0x390);
-  uVar5 = BG_GetViewmodelWeapon(iVar1);
-  uVar7 = BG_GetAlternateWeapon(uVar5,uVar9);
-  uVar2 = *(uint *)(iVar1 + 0xf8);
-  iVar3 = (&DAT_829d84a0)[uVar7 & 0xff];
+  iVar10 = *(int *)&ppVar1->field_0x390;
+  WVar5 = BG_GetViewmodelWeapon(ppVar1);
+  WVar6 = BG_GetAlternateWeapon(WVar5,bVar9);
+  uVar2 = (ppVar1->field0_0x0).eFlags;
+  iVar4 = *(int *)((int)bg_weaponDefs + ((uint)(((ulonglong)WVar6 & 0xffffffff) << 2) & 0x3fc));
   if (iVar10 == 1) {
-    iVar10 = *(int *)(iVar3 + 0x38c);
+    iVar10 = *(int *)(iVar4 + 0x38c);
   }
   else {
-    iVar10 = *(int *)(iVar3 + 0x2c8);
+    iVar10 = *(int *)(iVar4 + 0x2c8);
   }
   dVar11 = 1.0;
   if (param_2 != 0) {
-    if (*(int *)(iVar1 + 0x24c) == 0x1d) {
-      fVar4 = (float)(longlong)*(int *)(iVar1 + 0x240) / (float)(longlong)iVar10;
+    iVar3 = (ppVar1->field0_0x0).weapState[0].weaponState;
+    if (iVar3 == 0x1d) {
+      fVar12 = (float)(longlong)(ppVar1->field0_0x0).weapState[0].weaponTime /
+               (float)(longlong)iVar10;
     }
     else {
-      if (*(int *)(iVar1 + 0x24c) != 0x1e) {
-        MyAssertHandler(0xffffffff8200f620,0x1b0,0,0xffffffff82000f98,0xffffffff8200f678);
+      if (iVar3 != 0x1e) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_view.cpp"
+                        ,0x1b0,0,"%s");
       }
-      fVar4 = (float)(longlong)*(int *)(iVar1 + 0x240) / (float)(longlong)iVar10;
+      fVar12 = (float)(longlong)(ppVar1->field0_0x0).weapState[0].weaponTime /
+               (float)(longlong)iVar10;
     }
-    if (DAT_82961b44 <= fVar4) {
-      if (DAT_82961b40 <= fVar4) {
+    if (MYLERP_END <= fVar12) {
+      if (MYLERP_START <= fVar12) {
         dVar11 = 0.0;
       }
       else {
-        dVar11 = (double)(float)(dVar11 - (double)((fVar4 - DAT_82961b44) /
-                                                  (DAT_82961b40 - DAT_82961b44)));
+        dVar11 = (double)(float)(dVar11 - (double)((fVar12 - MYLERP_END) /
+                                                  (MYLERP_START - MYLERP_END)));
       }
     }
   }
   if ((uVar2 >> 2 & 1) == 0) {
     if ((uVar2 >> 3 & 1) == 0) goto LAB_822a0854;
-    *param_3 = (float)((double)*(float *)(iVar3 + 0x194) * dVar11 + (double)*param_3);
-    param_3[1] = (float)((double)*(float *)(iVar3 + 0x198) * dVar11 + (double)param_3[1]);
-    dVar11 = (double)*(float *)(iVar3 + 0x19c) * dVar11 + (double)param_3[2];
+    *param_3 = (float)((double)*(float *)(iVar4 + 0x194) * dVar11 + (double)*param_3);
+    param_3[1] = (float)((double)*(float *)(iVar4 + 0x198) * dVar11 + (double)param_3[1]);
+    dVar11 = (double)*(float *)(iVar4 + 0x19c) * dVar11 + (double)param_3[2];
   }
   else {
-    *param_3 = (float)(dVar11 * (double)*(float *)(iVar3 + 0x170) + (double)*param_3);
-    param_3[1] = (float)((double)*(float *)(iVar3 + 0x174) * dVar11 + (double)param_3[1]);
-    dVar11 = (double)*(float *)(iVar3 + 0x178) * dVar11 + (double)param_3[2];
+    *param_3 = (float)(dVar11 * (double)*(float *)(iVar4 + 0x170) + (double)*param_3);
+    param_3[1] = (float)((double)*(float *)(iVar4 + 0x174) * dVar11 + (double)param_3[1]);
+    dVar11 = (double)*(float *)(iVar4 + 0x178) * dVar11 + (double)param_3[2];
   }
   param_3[2] = (float)dVar11;
 LAB_822a0854:
-  cVar8 = BG_IsAimDownSight(uVar5,uVar9);
-  if (cVar8 != '\0') {
-    dVar11 = (double)BG_ADSAimPitch(uVar5,uVar9);
-    *param_4 = (float)(dVar11 * (double)*(float *)(iVar1 + 0x378) + (double)*param_4);
+  bVar8 = BG_IsAimDownSight(WVar5,bVar9);
+  if (bVar8) {
+    fVar12 = BG_ADSAimPitch(WVar5,bVar9);
+    *param_4 = fVar12 * *(float *)&ppVar1->field_0x378 + *param_4;
   }
   __restgprlr_20();
   return;
@@ -522,23 +596,29 @@ LAB_822a0854:
 
 // 822A0898  BG_CalculateWeaponMovement_Base_Internal_Movement  (bgame/bg_weapons_view.cpp:458)
 
+/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
 void BG_CalculateWeaponMovement_Base_Internal_Movement
-               (undefined8 param_1,undefined8 param_2,float *param_3,float *param_4)
+               (weaponState_t *param_1,float param_2,float *param_3,float *param_4)
 
 {
   float fVar1;
-  float fVar2;
+  int iVar2;
   float fVar3;
-  int iVar4;
-  int iVar5;
-  float fVar6;
-  int *piVar8;
-  undefined8 uVar7;
+  playerState_s *ppVar4;
+  uint uVar5;
+  int iVar6;
+  undefined4 *puVar8;
+  Weapon WVar7;
+  float *in_r6;
   uint uVar9;
-  uint uVar10;
-  undefined8 uVar11;
+  bool bVar10;
+  float *pfVar11;
   float *pfVar12;
-  float *pfVar13;
+  undefined1 *puVar13;
   double extraout_f1;
   double dVar14;
   double dVar15;
@@ -547,86 +627,87 @@ void BG_CalculateWeaponMovement_Base_Internal_Movement
   float local_88;
   float local_84;
   
-  __savegprlr_24();
-  piVar8 = (int *)__savefpr_26();
-  iVar4 = *piVar8;
+  __savegprlr_24((double)param_2,param_1,param_3);
+  puVar8 = (undefined4 *)__savefpr_26();
+  ppVar4 = (playerState_s *)*puVar8;
   dVar17 = extraout_f1;
-  uVar7 = BG_GetViewmodelWeapon(iVar4);
-  if ((iVar4 == 0) || (uVar11 = 1, (*(uint *)(iVar4 + 0x374) & 0x8000) == 0)) {
-    uVar11 = 0;
+  WVar7 = BG_GetViewmodelWeapon(ppVar4);
+  if ((ppVar4 == (playerState_s *)0x0) ||
+     (bVar10 = true, (*(uint *)&ppVar4->field_0x374 & 0x8000) == 0)) {
+    bVar10 = false;
   }
-  uVar9 = BG_GetAlternateWeapon(uVar7,uVar11);
-  iVar5 = (&DAT_829d84a0)[uVar9 & 0xff];
-  if ((*(uint *)(iVar4 + 0xf8) >> 3 & 1) == 0) {
-    if ((*(uint *)(iVar4 + 0xf8) >> 2 & 1) == 0) {
-      pfVar13 = (float *)(iVar5 + 0x140);
-      pfVar12 = (float *)(iVar5 + 0x14c);
+  WVar7 = BG_GetAlternateWeapon(WVar7,bVar10);
+  uVar5 = (ppVar4->field0_0x0).eFlags;
+  iVar6 = *(int *)((int)bg_weaponDefs + ((uint)(((ulonglong)WVar7 & 0xffffffff) << 2) & 0x3fc));
+  if ((uVar5 >> 3 & 1) == 0) {
+    if ((uVar5 >> 2 & 1) == 0) {
+      pfVar12 = (float *)(iVar6 + 0x140);
+      pfVar11 = (float *)(iVar6 + 0x14c);
     }
     else {
-      pfVar13 = (float *)(iVar5 + 0x17c);
-      pfVar12 = (float *)(iVar5 + 0x188);
+      pfVar12 = (float *)(iVar6 + 0x17c);
+      pfVar11 = (float *)(iVar6 + 0x188);
     }
   }
   else {
-    pfVar13 = (float *)(iVar5 + 0x1a0);
-    pfVar12 = (float *)(iVar5 + 0x1ac);
+    pfVar12 = (float *)(iVar6 + 0x1a0);
+    pfVar11 = (float *)(iVar6 + 0x1ac);
   }
   dVar16 = 1.0;
   dVar15 = 0.0;
-  uVar7 = 0x3ff0000000000000;
-  uVar11 = 0;
-  dVar14 = (double)((float)((double)(float)piVar8[1] - dVar17) /
-                   (float)((double)(longlong)*(int *)(iVar4 + 0x5c) - dVar17));
+  dVar14 = (double)((float)((double)(float)puVar8[1] - dVar17) /
+                   (float)((double)(longlong)(ppVar4->field0_0x0).speed - dVar17));
   dVar17 = dVar16;
   if ((float)(dVar14 - 1.0) < 0.0) {
     dVar17 = dVar14;
   }
   if ((dVar17 < 0.0) || (1.0 < dVar17)) {
-    MyAssertHandler(dVar17,0,0x3ff0000000000000,0xffffffff8200f620,0x1f0,1,0xffffffff8200f7a0,dVar17
-                    ,0,0x3ff0000000000000);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_view.cpp",
+                    0x1f0,1,"speedFrac not in [0.0f, 1.0f]\n\t%g not in [%g, %g]");
   }
-  dVar14 = (double)(float)(dVar16 - (double)*(float *)(iVar4 + 0x378));
+  dVar14 = (double)(float)(dVar16 - (double)*(float *)&ppVar4->field_0x378);
   if ((dVar14 < dVar15) || (dVar16 < dVar14)) {
-    MyAssertHandler(dVar14,uVar11,uVar7,0xffffffff8200f620,500,1,0xffffffff8200f76c,dVar14,uVar11,
-                    uVar7);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_view.cpp",500
+                    ,1,"angleWeight not in [0.0f, 1.0f]\n\t%g not in [%g, %g]");
   }
   fVar1 = (float)(dVar14 * dVar17);
-  *param_3 = (float)((double)*pfVar13 * dVar17 + (double)*param_3);
-  param_3[1] = (float)((double)pfVar13[1] * dVar17 + (double)param_3[1]);
-  param_3[2] = (float)((double)pfVar13[2] * dVar17 + (double)param_3[2]);
-  *param_4 = *pfVar12 * fVar1 + *param_4;
-  param_4[1] = pfVar12[1] * fVar1 + param_4[1];
-  param_4[2] = pfVar12[2] * fVar1 + param_4[2];
-  BG_GetPlayerViewDirection(iVar4,0,&local_88,0);
-  if ((double)(float)piVar8[1] <= dVar15) {
-    MyAssertHandler(0xffffffff8200f620,0x1fc,0,0xffffffff82000f98,0xffffffff8200f758);
+  *param_4 = (float)((double)*pfVar12 * dVar17 + (double)*param_4);
+  param_4[1] = (float)((double)pfVar12[1] * dVar17 + (double)param_4[1]);
+  param_4[2] = (float)((double)pfVar12[2] * dVar17 + (double)param_4[2]);
+  *in_r6 = *pfVar11 * fVar1 + *in_r6;
+  in_r6[1] = pfVar11[1] * fVar1 + in_r6[1];
+  in_r6[2] = pfVar11[2] * fVar1 + in_r6[2];
+  BG_GetPlayerViewDirection(ppVar4,(float *)0x0,&local_88,(float *)0x0);
+  if ((double)(float)puVar8[1] <= dVar15) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_view.cpp",
+                    0x1fc,0,"%s");
   }
-  fVar1 = (float)piVar8[1];
-  fVar2 = *(float *)(iVar4 + 0x28);
-  fVar2 = fVar2 * fVar2;
-  fVar3 = *(float *)(iVar4 + 0x2c);
-  fVar6 = SQRT(fVar3 * fVar3 + fVar2);
-  uVar10 = ((((-0x40000000 - (int)fVar6) * 2 & (int)fVar6 >> 0x1f) -
-            ((-0x40000000 - (int)fVar1) * 2 & (int)fVar1 >> 0x1f)) - (int)fVar1) + (int)fVar6;
-  uVar9 = (int)uVar10 >> 0x1f;
-  if (8 < (int)((uVar10 ^ uVar9) - uVar9)) {
-    MyAssertHandler(0xffffffff8200f620,0x1fd,0,0xffffffff8200f718,
-                    (double)SQRT(fVar3 * fVar3 + fVar2),(double)fVar1);
+  puVar13 = &(ppVar4->field0_0x0).field_0x28;
+  iVar2 = puVar8[1];
+  fVar1 = *(float *)puVar13;
+  fVar3 = *(float *)&(ppVar4->field0_0x0).field_0x2c;
+  fVar1 = SQRT(fVar3 * fVar3 + fVar1 * fVar1);
+  uVar9 = ((((-0x40000000 - (int)fVar1) * 2 & (int)fVar1 >> 0x1f) -
+           ((-0x40000000 - iVar2) * 2 & iVar2 >> 0x1f)) - iVar2) + (int)fVar1;
+  uVar5 = (int)uVar9 >> 0x1f;
+  if (8 < (int)((uVar9 ^ uVar5) - uVar5)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_view.cpp",
+                    0x1fd,0,"AlmostEqual(Vec2Length( ps->velocity ), ws->xyspeed)\n\t%g, %g");
   }
-  dVar17 = (double)(float)((double)((*(float *)(iVar4 + 0x28) * local_88 +
-                                    local_84 * *(float *)(iVar4 + 0x2c)) / (float)piVar8[1]) *
-                          dVar17);
+  dVar17 = (double)(float)((double)((*(float *)puVar13 * local_88 +
+                                    local_84 * *(float *)&(ppVar4->field0_0x0).field_0x2c) /
+                                   (float)puVar8[1]) * dVar17);
   if ((dVar17 < -1.0099999904632568) || (1.0099999904632568 < dVar17)) {
-    MyAssertHandler(dVar17,0xffffffff8200f620,0x1ff,1,0xffffffff8200f6c4,dVar17,0xbff028f5c0000000,
-                    0x3ff028f5c0000000);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_view.cpp",
+                    0x1ff,1,"strafeFrac not in [-1.01f, 1.01f]\n\t%g not in [%g, %g]");
   }
   fVar1 = (float)(dVar17 * dVar14);
-  *param_3 = (float)((double)*(float *)(iVar5 + 0x158) * dVar17 + (double)*param_3);
-  param_3[1] = (float)((double)*(float *)(iVar5 + 0x15c) * dVar17 + (double)param_3[1]);
-  param_3[2] = (float)((double)*(float *)(iVar5 + 0x160) * dVar17 + (double)param_3[2]);
-  *param_4 = *(float *)(iVar5 + 0x164) * fVar1 + *param_4;
-  param_4[1] = *(float *)(iVar5 + 0x168) * fVar1 + param_4[1];
-  param_4[2] = *(float *)(iVar5 + 0x16c) * fVar1 + param_4[2];
+  *param_4 = (float)((double)*(float *)(iVar6 + 0x158) * dVar17 + (double)*param_4);
+  param_4[1] = (float)((double)*(float *)(iVar6 + 0x15c) * dVar17 + (double)param_4[1]);
+  param_4[2] = (float)((double)*(float *)(iVar6 + 0x160) * dVar17 + (double)param_4[2]);
+  *in_r6 = *(float *)(iVar6 + 0x164) * fVar1 + *in_r6;
+  in_r6[1] = *(float *)(iVar6 + 0x168) * fVar1 + in_r6[1];
+  in_r6[2] = *(float *)(iVar6 + 0x16c) * fVar1 + in_r6[2];
   __restfpr_26();
   __restgprlr_24();
   return;
@@ -635,8 +716,13 @@ void BG_CalculateWeaponMovement_Base_Internal_Movement
 
 // 822A0C80  BG_CalculateWeaponMovement_Base_Internal_Save  (bgame/bg_weapons_view.cpp:519)
 
+/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
 void BG_CalculateWeaponMovement_Base_Internal_Save
-               (undefined8 param_1,ulonglong param_2,ulonglong param_3)
+               (weaponState_t *param_1,float *param_2,float *param_3)
 
 {
   float fVar1;
@@ -644,47 +730,55 @@ void BG_CalculateWeaponMovement_Base_Internal_Save
   float fVar3;
   float fVar4;
   float fVar5;
-  int iVar6;
+  playerState_s *ppVar6;
   int iVar7;
-  int *piVar9;
-  undefined8 uVar8;
-  uint uVar10;
+  undefined4 *puVar9;
+  Weapon WVar8;
+  ulonglong uVar10;
   float *pfVar11;
-  float *pfVar12;
-  undefined8 uVar13;
-  double dVar14;
+  ulonglong uVar12;
+  float *pfVar13;
+  bool bVar14;
   double dVar15;
   double dVar16;
   double dVar17;
   double dVar18;
+  double dVar19;
   
-  __savegprlr_26();
-  piVar9 = (int *)__savefpr_26();
-  if (piVar9 == (int *)0x0) {
-    MyAssertHandler(0xffffffff8200f620,0x212,0,0xffffffff82000f98,0xffffffff8200f61c);
+  uVar12 = (ulonglong)(int)param_3;
+  uVar10 = (ulonglong)(int)param_2;
+  __savegprlr_26(param_1);
+  puVar9 = (undefined4 *)__savefpr_26();
+  if (puVar9 == (undefined4 *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_view.cpp",
+                    0x212,0,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8200f620,0x213,0,0xffffffff82000f98,0xffffffff8200f84c);
+  if ((uVar10 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_view.cpp",
+                    0x213,0,"%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8200f620,0x214,0,0xffffffff82000f98,0xffffffff8200f83c);
+  if ((uVar12 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_view.cpp",
+                    0x214,0,"%s");
   }
-  iVar6 = *piVar9;
-  if (iVar6 == 0) {
-    MyAssertHandler(0xffffffff8200f620,0x216,0,0xffffffff82000f98,0xffffffff82001fdc);
+  ppVar6 = (playerState_s *)*puVar9;
+  if (ppVar6 == (playerState_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_view.cpp",
+                    0x216,0,"%s");
   }
-  uVar8 = BG_GetViewmodelWeapon(iVar6);
-  if ((iVar6 == 0) || (uVar13 = 1, (*(uint *)(iVar6 + 0x374) & 0x8000) == 0)) {
-    uVar13 = 0;
+  WVar8 = BG_GetViewmodelWeapon(ppVar6);
+  if ((ppVar6 == (playerState_s *)0x0) ||
+     (bVar14 = true, (*(uint *)&ppVar6->field_0x374 & 0x8000) == 0)) {
+    bVar14 = false;
   }
-  uVar10 = BG_GetAlternateWeapon(uVar8,uVar13);
-  dVar15 = 0.0;
-  iVar7 = (&DAT_829d84a0)[uVar10 & 0xff];
-  dVar14 = dVar15;
-  if (-(double)(float)piVar9[2] < 0.0) {
-    dVar14 = (double)(float)piVar9[2];
+  WVar8 = BG_GetAlternateWeapon(WVar8,bVar14);
+  dVar16 = 0.0;
+  iVar7 = *(int *)((int)bg_weaponDefs + ((uint)(((ulonglong)WVar8 & 0xffffffff) << 2) & 0x3fc));
+  dVar15 = dVar16;
+  if (-(double)(float)puVar9[2] < 0.0) {
+    dVar15 = (double)(float)puVar9[2];
   }
-  if ((*(uint *)(iVar6 + 0xf8) >> 3 & 1) == 0) {
+  if (((uint)(ppVar6->field0_0x0).eFlags >> 3 & 1) == 0) {
     fVar1 = *(float *)(iVar7 + 0x1b8);
     fVar2 = *(float *)(iVar7 + 0x1cc);
   }
@@ -692,42 +786,37 @@ void BG_CalculateWeaponMovement_Base_Internal_Save
     fVar1 = *(float *)(iVar7 + 0x1bc);
     fVar2 = *(float *)(iVar7 + 0x1d0);
   }
-  dVar18 = 1.0;
-  uVar8 = 0x3ff0000000000000;
-  uVar13 = 0;
-  dVar17 = (double)(float)((double)fVar1 * dVar14);
-  if ((float)(1.0 - (double)(float)((double)fVar1 * dVar14)) < 0.0) {
-    dVar17 = dVar18;
+  dVar19 = 1.0;
+  dVar18 = (double)(float)((double)fVar1 * dVar15);
+  if ((float)(1.0 - (double)(float)((double)fVar1 * dVar15)) < 0.0) {
+    dVar18 = dVar19;
   }
-  dVar16 = (double)(float)((double)fVar2 * dVar14);
-  if ((float)(1.0 - (double)(float)((double)fVar2 * dVar14)) < 0.0) {
-    dVar16 = dVar18;
+  dVar17 = (double)(float)((double)fVar2 * dVar15);
+  if ((float)(1.0 - (double)(float)((double)fVar2 * dVar15)) < 0.0) {
+    dVar17 = dVar19;
   }
-  if ((dVar17 < 0.0) || (1.0 < dVar17)) {
-    MyAssertHandler(dVar17,0,0x3ff0000000000000,0xffffffff8200f620,0x22c,1,0xffffffff8200f808,dVar17
-                    ,0,0x3ff0000000000000);
+  if ((dVar18 < 0.0) || (1.0 < dVar18)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_view.cpp",
+                    0x22c,1,"originRate not in [0.0f, 1.0f]\n\t%g not in [%g, %g]");
   }
-  if ((dVar16 < dVar15) || (dVar18 < dVar16)) {
-    MyAssertHandler(dVar16,uVar13,uVar8,0xffffffff8200f620,0x22d,1,0xffffffff8200f7d4,dVar16,uVar13,
-                    uVar8);
+  if ((dVar17 < dVar16) || (dVar19 < dVar17)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_view.cpp",
+                    0x22d,1,"angleRate not in [0.0f, 1.0f]\n\t%g not in [%g, %g]");
   }
-  pfVar11 = (float *)param_2;
+  pfVar11 = (float *)uVar10;
   fVar1 = pfVar11[1];
   fVar2 = pfVar11[2];
-  pfVar12 = (float *)param_3;
-  fVar3 = *pfVar12;
-  fVar4 = pfVar12[1];
-  fVar5 = pfVar12[2];
-  piVar9[0xb] = (int)(float)((double)(float)((double)*pfVar11 - (double)(float)piVar9[0xb]) * dVar17
-                            + (double)(float)piVar9[0xb]);
-  piVar9[0xc] = (int)(float)((double)(fVar1 - (float)piVar9[0xc]) * dVar17 +
-                            (double)(float)piVar9[0xc]);
-  piVar9[0xd] = (int)(float)((double)(fVar2 - (float)piVar9[0xd]) * dVar17 +
-                            (double)(float)piVar9[0xd]);
-  piVar9[8] = (int)(float)((double)(fVar3 - (float)piVar9[8]) * dVar16 + (double)(float)piVar9[8]);
-  piVar9[9] = (int)(float)((double)(fVar4 - (float)piVar9[9]) * dVar16 + (double)(float)piVar9[9]);
-  piVar9[10] = (int)(float)((double)(fVar5 - (float)piVar9[10]) * dVar16 + (double)(float)piVar9[10]
-                           );
+  pfVar13 = (float *)uVar12;
+  fVar3 = *pfVar13;
+  fVar4 = pfVar13[1];
+  fVar5 = pfVar13[2];
+  puVar9[0xb] = (float)((double)(float)((double)*pfVar11 - (double)(float)puVar9[0xb]) * dVar18 +
+                       (double)(float)puVar9[0xb]);
+  puVar9[0xc] = (float)((double)(fVar1 - (float)puVar9[0xc]) * dVar18 + (double)(float)puVar9[0xc]);
+  puVar9[0xd] = (float)((double)(fVar2 - (float)puVar9[0xd]) * dVar18 + (double)(float)puVar9[0xd]);
+  puVar9[8] = (float)((double)(fVar3 - (float)puVar9[8]) * dVar17 + (double)(float)puVar9[8]);
+  puVar9[9] = (float)((double)(fVar4 - (float)puVar9[9]) * dVar17 + (double)(float)puVar9[9]);
+  puVar9[10] = (float)((double)(fVar5 - (float)puVar9[10]) * dVar17 + (double)(float)puVar9[10]);
   __restfpr_26();
   __restgprlr_26();
   return;
@@ -736,79 +825,86 @@ void BG_CalculateWeaponMovement_Base_Internal_Save
 
 // 822A0F28  BG_CalculateWeaponMovement_Base  (bgame/bg_weapons_view.cpp:569)
 
-void BG_CalculateWeaponMovement_Base(void)
+/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void BG_CalculateWeaponMovement_Base(weaponState_t *param_1)
 
 {
-  int iVar1;
-  int iVar2;
-  bool bVar3;
+  playerState_s *ppVar1;
+  uint uVar2;
+  int iVar3;
   bool bVar4;
-  int *piVar6;
-  undefined8 uVar5;
-  uint uVar7;
-  undefined8 uVar8;
+  bool bVar5;
+  weaponState_t *pwVar7;
+  Weapon WVar6;
+  float *pfVar8;
   uint uVar9;
   uint uVar10;
-  int iVar11;
+  float *pfVar11;
   double dVar12;
-  undefined4 local_68;
-  undefined4 local_64;
-  undefined4 local_60;
-  undefined4 local_58;
-  undefined4 local_54;
-  undefined4 local_50;
+  float local_68 [4];
+  float local_58 [22];
   
-  piVar6 = (int *)__savegprlr_25();
-  iVar1 = *piVar6;
-  uVar5 = BG_GetViewmodelWeapon(iVar1);
-  if ((iVar1 == 0) || (uVar8 = 1, (*(uint *)(iVar1 + 0x374) & 0x8000) == 0)) {
-    uVar8 = 0;
+  pwVar7 = (weaponState_t *)__savegprlr_25(param_1);
+  ppVar1 = pwVar7->ps;
+  WVar6 = BG_GetViewmodelWeapon(ppVar1);
+  if ((ppVar1 == (playerState_s *)0x0) ||
+     (pfVar8 = (float *)0x1, (*(uint *)&ppVar1->field_0x374 & 0x8000) == 0)) {
+    pfVar8 = (float *)0x0;
   }
-  uVar7 = BG_GetAlternateWeapon(uVar5,uVar8);
-  uVar10 = *(uint *)(iVar1 + 0xf8) >> 3 & 1;
-  uVar9 = *(uint *)(iVar1 + 0xf8) >> 2 & 1;
-  local_58 = 0;
-  iVar2 = (&DAT_829d84a0)[uVar7 & 0xff];
-  local_54 = 0;
-  local_50 = 0;
-  local_68 = 0;
-  local_64 = 0;
-  local_60 = 0;
+  WVar6 = BG_GetAlternateWeapon(WVar6,SUB41(pfVar8,0));
+  uVar9 = (ppVar1->field0_0x0).eFlags;
+  uVar10 = uVar9 >> 3 & 1;
+  uVar9 = uVar9 >> 2 & 1;
+  local_58[0] = 0.0;
+  iVar3 = *(int *)((int)bg_weaponDefs + ((uint)(((ulonglong)WVar6 & 0xffffffff) << 2) & 0x3fc));
+  local_58[1] = 0.0;
+  local_58[2] = 0.0;
+  local_68[0] = 0.0;
+  local_68[1] = 0.0;
+  local_68[2] = 0.0;
   if (uVar10 == 0) {
     if (uVar9 == 0) {
-      dVar12 = (double)*(float *)(iVar2 + 0x1c0);
+      dVar12 = (double)*(float *)(iVar3 + 0x1c0);
     }
     else {
-      dVar12 = (double)*(float *)(iVar2 + 0x1c4);
+      dVar12 = (double)*(float *)(iVar3 + 0x1c4);
     }
   }
   else {
-    dVar12 = (double)*(float *)(iVar2 + 0x1c8);
+    dVar12 = (double)*(float *)(iVar3 + 0x1c8);
   }
   if (dVar12 < 0.0) {
-    MyAssertHandler(dVar12,0xffffffff8200f620,600,1,0xffffffff8200f858,0xffffffff8200f86c,dVar12);
+    pfVar8 = (float *)0x258;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_view.cpp",600
+                    ,1,"%s\n\t(minSpeed) = %g");
   }
-  if (dVar12 < (double)(float)piVar6[1]) {
-    bVar3 = true;
-    if (dVar12 < (double)(longlong)*(int *)(iVar1 + 0x5c)) goto LAB_822a103c;
-  }
-  bVar3 = false;
-LAB_822a103c:
-  iVar2 = *(int *)(iVar1 + 0x24c);
-  if ((iVar2 == 8) || (bVar4 = false, *(int *)(iVar1 + 0x268) == 8)) {
+  if (dVar12 < (double)pwVar7->xyspeed) {
     bVar4 = true;
+    if (dVar12 < (double)(longlong)(ppVar1->field0_0x0).speed) goto LAB_822a103c;
   }
-  if ((iVar2 == 0x1d) || (iVar11 = 0, iVar2 == 0x1e)) {
-    iVar11 = 1;
+  bVar4 = false;
+LAB_822a103c:
+  iVar3 = (ppVar1->field0_0x0).weapState[0].weaponState;
+  if ((iVar3 == 8) || (bVar5 = false, (ppVar1->field0_0x0).weapState[1].weaponState == 8)) {
+    bVar5 = true;
   }
-  uVar7 = *(uint *)(iVar1 + 0xc);
-  if (((uVar10 != 0) || (uVar9 != 0)) && ((!bVar3 || ((iVar11 == 0 || (uVar10 == 0)))))) {
-    BG_CalculateWeaponMovement_Base_Internal_Stance(piVar6,iVar11,&local_58,&local_68);
+  if ((iVar3 == 0x1d) || (pfVar11 = (float *)0x0, iVar3 == 0x1e)) {
+    pfVar11 = (float *)0x1;
   }
-  if ((((bVar3) && ((uVar7 >> 3 & 1) == 0)) && (!bVar4)) && (iVar11 == 0)) {
-    BG_CalculateWeaponMovement_Base_Internal_Movement(dVar12,piVar6);
+  uVar2 = *(uint *)&(ppVar1->field0_0x0).field_0xc;
+  if (((uVar10 != 0) || (uVar9 != 0)) && ((!bVar4 || ((pfVar11 == (float *)0x0 || (uVar10 == 0))))))
+  {
+    pfVar8 = pfVar11;
+    BG_CalculateWeaponMovement_Base_Internal_Stance(pwVar7,(int)pfVar11,local_58,local_68);
   }
-  BG_CalculateWeaponMovement_Base_Internal_Save(piVar6,&local_58,&local_68);
+  if ((((bVar4) && ((uVar2 >> 3 & 1) == 0)) && (!bVar5)) && (pfVar11 == (float *)0x0)) {
+    BG_CalculateWeaponMovement_Base_Internal_Movement(pwVar7,(float)dVar12,pfVar8,local_58);
+  }
+  BG_CalculateWeaponMovement_Base_Internal_Save(pwVar7,local_58,local_68);
   __restgprlr_25();
   return;
 }
@@ -816,7 +912,12 @@ LAB_822a103c:
 
 // 822A1108  BG_CalculateWeaponMovement_Sway  (bgame/bg_weapons_view.cpp:625)
 
-void BG_CalculateWeaponMovement_Sway(void)
+/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void BG_CalculateWeaponMovement_Sway(weaponState_t *param_1)
 
 {
   float fVar1;
@@ -824,15 +925,15 @@ void BG_CalculateWeaponMovement_Sway(void)
   float fVar3;
   float fVar4;
   float fVar5;
-  float fVar6;
+  playerState_s *ppVar6;
   int iVar7;
-  int iVar8;
-  int *piVar10;
-  undefined8 uVar9;
-  uint uVar11;
-  char cVar13;
-  int iVar12;
-  undefined8 uVar14;
+  undefined4 *puVar10;
+  Weapon WVar8;
+  Weapon WVar9;
+  bool bVar12;
+  ADSOverlay *pAVar11;
+  bool bVar14;
+  int iVar13;
   double dVar15;
   double dVar16;
   double dVar17;
@@ -845,73 +946,76 @@ void BG_CalculateWeaponMovement_Sway(void)
   double dVar24;
   double dVar25;
   double dVar26;
+  float fVar27;
   float local_88;
   float local_84;
   float local_80;
   
-  __savegprlr_27();
-  piVar10 = (int *)__savefpr_23();
+  __savegprlr_27(param_1);
+  puVar10 = (undefined4 *)__savefpr_23();
   dVar19 = 0.0;
-  if (0.0 < (float)piVar10[2]) {
-    iVar7 = *piVar10;
-    if ((iVar7 == 0) || (uVar14 = 1, (*(uint *)(iVar7 + 0x374) & 0x8000) == 0)) {
-      uVar14 = 0;
+  if (0.0 < (float)puVar10[2]) {
+    ppVar6 = (playerState_s *)*puVar10;
+    if ((ppVar6 == (playerState_s *)0x0) ||
+       (bVar14 = true, (*(uint *)&ppVar6->field_0x374 & 0x8000) == 0)) {
+      bVar14 = false;
     }
-    uVar9 = BG_GetViewmodelWeapon(iVar7);
-    uVar11 = BG_GetAlternateWeapon(uVar9,uVar14);
-    iVar8 = (&DAT_829d84a0)[uVar11 & 0xff];
-    cVar13 = BG_IsAimDownSight(uVar9,uVar14);
+    WVar8 = BG_GetViewmodelWeapon(ppVar6);
+    WVar9 = BG_GetAlternateWeapon(WVar8,bVar14);
+    iVar7 = *(int *)((int)bg_weaponDefs + ((uint)(((ulonglong)WVar9 & 0xffffffff) << 2) & 0x3fc));
+    bVar12 = BG_IsAimDownSight(WVar8,bVar14);
     dVar24 = 1.0;
-    if (cVar13 == '\0') {
-      fVar1 = *(float *)(iVar8 + 0x484);
-      fVar2 = *(float *)(iVar8 + 0x488);
-      fVar3 = *(float *)(iVar8 + 0x48c);
-      fVar4 = *(float *)(iVar8 + 0x490);
-      fVar5 = *(float *)(iVar8 + 0x494);
-      fVar6 = *(float *)(iVar8 + 0x498);
+    if (bVar12) {
+      if ((dVar19 < (double)*(float *)&ppVar6->field_0x378) &&
+         (pAVar11 = BG_GetOverlay(WVar8,bVar14), pAVar11->reticle != WEAPOVERLAYRETICLE_NONE))
+      goto LAB_822a13e4;
+      dVar15 = (double)*(float *)&ppVar6->field_0x378;
+      fVar27 = (float)(dVar24 - dVar15) * *(float *)(iVar7 + 0x484) +
+               (float)((double)*(float *)(iVar7 + 0x4a0) * dVar15);
+      fVar1 = (float)(dVar24 - dVar15) * *(float *)(iVar7 + 0x488) +
+              (float)((double)*(float *)(iVar7 + 0x4a4) * dVar15);
+      fVar2 = (float)(dVar24 - dVar15) * *(float *)(iVar7 + 0x48c) +
+              (float)((double)*(float *)(iVar7 + 0x4a8) * dVar15);
+      fVar3 = (float)(dVar24 - dVar15) * *(float *)(iVar7 + 0x490) +
+              (float)((double)*(float *)(iVar7 + 0x4ac) * dVar15);
+      fVar4 = (float)(dVar24 - dVar15) * *(float *)(iVar7 + 0x494) +
+              (float)((double)*(float *)(iVar7 + 0x4b0) * dVar15);
+      fVar5 = (float)(dVar24 - dVar15) * *(float *)(iVar7 + 0x498) +
+              (float)((double)*(float *)(iVar7 + 0x4b4) * dVar15);
     }
     else {
-      if ((dVar19 < (double)*(float *)(iVar7 + 0x378)) &&
-         (iVar12 = BG_GetOverlay(uVar9,uVar14), *(int *)(iVar12 + 0x10) != 0)) goto LAB_822a13e4;
-      dVar15 = (double)*(float *)(iVar7 + 0x378);
-      fVar1 = (float)(dVar24 - dVar15) * *(float *)(iVar8 + 0x484) +
-              (float)((double)*(float *)(iVar8 + 0x4a0) * dVar15);
-      fVar2 = (float)(dVar24 - dVar15) * *(float *)(iVar8 + 0x488) +
-              (float)((double)*(float *)(iVar8 + 0x4a4) * dVar15);
-      fVar3 = (float)(dVar24 - dVar15) * *(float *)(iVar8 + 0x48c) +
-              (float)((double)*(float *)(iVar8 + 0x4a8) * dVar15);
-      fVar4 = (float)(dVar24 - dVar15) * *(float *)(iVar8 + 0x490) +
-              (float)((double)*(float *)(iVar8 + 0x4ac) * dVar15);
-      fVar5 = (float)(dVar24 - dVar15) * *(float *)(iVar8 + 0x494) +
-              (float)((double)*(float *)(iVar8 + 0x4b0) * dVar15);
-      fVar6 = (float)(dVar24 - dVar15) * *(float *)(iVar8 + 0x498) +
-              (float)((double)*(float *)(iVar8 + 0x4b4) * dVar15);
+      fVar27 = *(float *)(iVar7 + 0x484);
+      fVar1 = *(float *)(iVar7 + 0x488);
+      fVar2 = *(float *)(iVar7 + 0x48c);
+      fVar3 = *(float *)(iVar7 + 0x490);
+      fVar4 = *(float *)(iVar7 + 0x494);
+      fVar5 = *(float *)(iVar7 + 0x498);
     }
-    dVar15 = (double)fVar1;
-    dVar25 = (double)fVar2;
-    dVar23 = (double)fVar3;
-    dVar22 = (double)fVar4;
-    dVar21 = (double)fVar5;
-    dVar20 = (double)fVar6;
-    iVar12 = (piVar10[0x21] - piVar10[4]) + piVar10[0x20];
-    dVar16 = (double)(longlong)iVar12;
+    dVar15 = (double)fVar27;
+    dVar25 = (double)fVar1;
+    dVar23 = (double)fVar2;
+    dVar22 = (double)fVar3;
+    dVar21 = (double)fVar4;
+    dVar20 = (double)fVar5;
+    iVar13 = (puVar10[0x21] - puVar10[4]) + puVar10[0x20];
+    dVar16 = (double)(longlong)iVar13;
     dVar26 = dVar24;
     if (dVar19 < dVar16) {
       dVar19 = dVar24;
-      if (iVar12 < piVar10[0x22]) {
-        dVar19 = (double)(float)(dVar16 / (double)(longlong)piVar10[0x22]);
+      if (iVar13 < (int)puVar10[0x22]) {
+        dVar19 = (double)(float)(dVar16 / (double)(longlong)(int)puVar10[0x22]);
       }
       dVar26 = (double)(float)((double)(float)((double)(float)(-(double)(float)(dVar19 * 2.0 - 3.0)
                                                               * dVar19) * dVar19) *
-                               (double)(float)((double)*(float *)(iVar8 + 0x49c) - dVar24) + dVar24)
+                               (double)(float)((double)*(float *)(iVar7 + 0x49c) - dVar24) + dVar24)
       ;
     }
-    AnglesSubtract(iVar7 + 0x158,piVar10 + 0x1a,&local_88);
+    AnglesSubtract((ppVar6->field0_0x0).viewangles,(float *)(puVar10 + 0x1a),&local_88);
     dVar16 = -dVar15;
-    fVar1 = (float)(dVar24 / (double)((float)piVar10[2] * 60.0));
-    dVar18 = (double)(fVar1 * local_84);
-    dVar24 = (double)(fVar1 * local_88);
-    local_80 = local_80 * fVar1;
+    fVar27 = (float)(dVar24 / (double)((float)puVar10[2] * 60.0));
+    dVar18 = (double)(fVar27 * local_84);
+    dVar24 = (double)(fVar27 * local_88);
+    local_80 = local_80 * fVar27;
     dVar19 = dVar15;
     if ((float)(dVar18 - dVar15) < 0.0) {
       dVar19 = dVar18;
@@ -928,24 +1032,21 @@ void BG_CalculateWeaponMovement_Sway(void)
       dVar16 = dVar15;
     }
     local_88 = (float)dVar16;
-    dVar24 = (double)(float)((double)(float)(dVar26 * dVar20) * dVar16);
-    dVar19 = (double)DiffTrack((double)(float)((double)(float)(dVar26 * dVar21) * dVar17),
-                               (double)(float)piVar10[0x18],dVar25);
-    piVar10[0x18] = (int)(float)dVar19;
-    dVar19 = (double)DiffTrack(dVar24,(double)(float)piVar10[0x19],dVar25,(double)(float)piVar10[2])
-    ;
-    piVar10[0x19] = (int)(float)dVar19;
+    dVar19 = (double)(float)((double)(float)(dVar26 * dVar20) * dVar16);
+    fVar27 = DiffTrack((float)((double)(float)(dVar26 * dVar21) * dVar17),(float)puVar10[0x18],
+                       (float)dVar25,(float)puVar10[2]);
+    puVar10[0x18] = fVar27;
+    fVar27 = DiffTrack((float)dVar19,(float)puVar10[0x19],(float)dVar25,(float)puVar10[2]);
+    puVar10[0x19] = fVar27;
     local_88 = (float)(dVar26 * dVar23) * local_88;
     local_84 = (float)(dVar26 * dVar22) * local_84;
-    dVar19 = (double)DiffTrackAngle((double)local_88,(double)(float)piVar10[0x14],dVar25,
-                                    (double)(float)piVar10[2]);
-    piVar10[0x14] = (int)(float)dVar19;
-    dVar19 = (double)DiffTrackAngle((double)local_84,(double)(float)piVar10[0x15],dVar25,
-                                    (double)(float)piVar10[2]);
-    piVar10[0x15] = (int)(float)dVar19;
-    piVar10[0x1a] = *(int *)(iVar7 + 0x158);
-    piVar10[0x1b] = *(int *)(iVar7 + 0x15c);
-    piVar10[0x1c] = *(int *)(iVar7 + 0x160);
+    fVar27 = DiffTrackAngle(local_88,(float)puVar10[0x14],(float)dVar25,(float)puVar10[2]);
+    puVar10[0x14] = fVar27;
+    fVar27 = DiffTrackAngle(local_84,(float)puVar10[0x15],(float)dVar25,(float)puVar10[2]);
+    puVar10[0x15] = fVar27;
+    puVar10[0x1a] = (ppVar6->field0_0x0).viewangles[0];
+    puVar10[0x1b] = (ppVar6->field0_0x0).viewangles[1];
+    puVar10[0x1c] = (ppVar6->field0_0x0).viewangles[2];
   }
 LAB_822a13e4:
   __restfpr_23();
@@ -956,132 +1057,162 @@ LAB_822a13e4:
 
 // 822A13F8  BG_CalculateWeaponMovement_Recoil_Internal_SingleAngle  (bgame/bg_weapons_view.cpp:718)
 
-undefined8
-BG_CalculateWeaponMovement_Recoil_Internal_SingleAngle
-          (double param_1,double param_2,double param_3,double param_4,double param_5,double param_6
-          ,float *param_7,float *param_8)
+int BG_CalculateWeaponMovement_Recoil_Internal_SingleAngle
+              (float *param_1,float *param_2,float param_3,float param_4,float param_5,float param_6
+              ,float param_7,float param_8)
 
 {
   float fVar1;
-  undefined8 uVar2;
-  double dVar3;
   
-  uVar2 = 0;
-  if ((ABS(*param_7) < 0.25) && (ABS(*param_8) < 1.0)) {
-    *param_7 = 0.0;
-    *param_8 = 0.0;
+  if ((ABS(*param_1) < 0.25) && (ABS(*param_2) < 1.0)) {
+    *param_1 = 0.0;
+    *param_2 = 0.0;
     return 1;
   }
-  fVar1 = (float)((double)*param_8 * param_1 + (double)*param_7);
-  dVar3 = (double)fVar1;
-  *param_7 = fVar1;
-  if (dVar3 <= param_2) {
-    if ((dVar3 < -param_2) && (*param_7 = (float)-param_2, *param_8 < 0.0)) goto LAB_822a1498;
+  fVar1 = *param_2 * param_3 + *param_1;
+  *param_1 = fVar1;
+  if (fVar1 <= param_4) {
+    if ((fVar1 < -param_4) && (*param_1 = -param_4, *param_2 < 0.0)) goto LAB_822a1498;
   }
   else {
-    *param_7 = (float)param_2;
-    if (0.0 < *param_8) {
+    *param_1 = param_4;
+    if (0.0 < *param_2) {
 LAB_822a1498:
-      *param_8 = 0.0;
+      *param_2 = 0.0;
     }
   }
-  if (*param_7 <= 0.0) {
-    if (*param_7 < 0.0) {
-      fVar1 = (float)(param_1 * param_3 + (double)*param_8);
+  if (*param_1 <= 0.0) {
+    if (*param_1 < 0.0) {
+      fVar1 = param_3 * param_5 + *param_2;
       goto LAB_822a14c4;
     }
   }
   else {
-    fVar1 = -(float)(param_1 * param_3 - (double)*param_8);
+    fVar1 = -(param_3 * param_5 - *param_2);
 LAB_822a14c4:
-    *param_8 = fVar1;
+    *param_2 = fVar1;
   }
-  dVar3 = -(double)(float)((double)(float)((double)*param_8 * param_1) * param_5 - (double)*param_8)
-  ;
-  *param_8 = (float)dVar3;
-  if (dVar3 <= 0.0) {
-    fVar1 = (float)(param_1 * param_6 + dVar3);
-    *param_8 = fVar1;
+  fVar1 = -(*param_2 * param_3 * param_7 - *param_2);
+  *param_2 = fVar1;
+  if (fVar1 <= 0.0) {
+    fVar1 = param_3 * param_8 + fVar1;
+    *param_2 = fVar1;
     if (fVar1 <= 0.0) goto LAB_822a1510;
   }
   else {
-    fVar1 = -(float)(param_1 * param_6 - dVar3);
-    *param_8 = fVar1;
+    fVar1 = -(param_3 * param_8 - fVar1);
+    *param_2 = fVar1;
     if (0.0 <= fVar1) goto LAB_822a1510;
   }
-  *param_8 = 0.0;
+  *param_2 = 0.0;
 LAB_822a1510:
-  if (param_4 < (double)*param_8) {
-    *param_8 = (float)param_4;
-    return uVar2;
+  if (param_6 < *param_2) {
+    *param_2 = param_6;
+    return 0;
   }
-  if ((double)*param_8 < -param_4) {
-    *param_8 = (float)-param_4;
-    return uVar2;
+  if (*param_2 < -param_6) {
+    *param_2 = -param_6;
+    return 0;
   }
-  return uVar2;
+  return 0;
 }
 
 
 // 822A1538  BG_CalculateWeaponMovement_Recoil  (bgame/bg_weapons_view.cpp:783)
 
-void BG_CalculateWeaponMovement_Recoil(void)
+/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void BG_CalculateWeaponMovement_Recoil(weaponState_t *param_1)
 
 {
-  int iVar1;
-  longlong lVar2;
-  undefined8 uVar3;
-  uint uVar4;
-  char cVar7;
-  int iVar5;
-  int iVar6;
-  longlong lVar8;
-  longlong lVar9;
+  float fVar1;
+  playerState_s *ppVar2;
+  int iVar3;
+  longlong lVar4;
+  Weapon WVar5;
+  Weapon WVar6;
+  bool bVar9;
+  int iVar7;
+  int iVar8;
   longlong lVar10;
-  undefined8 uVar11;
-  undefined8 extraout_f1;
-  double dVar12;
+  longlong lVar11;
+  longlong lVar12;
   double dVar13;
   double dVar14;
   double dVar15;
-  undefined1 local_50 [4];
-  undefined1 local_4c [4];
-  undefined1 local_48 [4];
-  undefined1 local_44 [4];
-  undefined1 local_40 [4];
-  undefined1 local_3c [60];
+  double dVar16;
+  double dVar17;
+  double dVar18;
+  double dVar19;
+  double dVar20;
+  double dVar21;
+  double dVar22;
+  double dVar23;
+  double dVar24;
+  double dVar25;
+  float *in_stack_ffffff58;
+  float *in_stack_ffffff5c;
+  float local_50;
+  float local_4c;
+  float local_48;
+  float local_44;
+  float local_40;
+  float local_3c;
+  float local_38;
+  float local_34;
   
-  lVar2 = __savegprlr_27();
-  iVar1 = *(int *)lVar2;
-  if ((iVar1 == 0) || (uVar11 = 1, (*(uint *)(iVar1 + 0x374) & 0x8000) == 0)) {
-    uVar11 = 0;
+  lVar4 = __savegprlr_27(param_1);
+  ppVar2 = (playerState_s *)*(undefined4 *)lVar4;
+  if ((ppVar2 == (playerState_s *)0x0) ||
+     (bVar9 = true, (*(uint *)&ppVar2->field_0x374 & 0x8000) == 0)) {
+    bVar9 = false;
   }
-  uVar3 = BG_GetViewmodelWeapon(iVar1);
-  uVar4 = BG_GetAlternateWeapon(uVar3,uVar11);
-  iVar1 = (&DAT_829d84a0)[uVar4 & 0xff];
-  BG_GetGunKickSpeed(uVar3,uVar11,local_50,local_4c,local_48,local_44,local_40,local_3c);
-  cVar7 = BG_IsAimDownSight(uVar3,uVar11);
-  if (cVar7 != '\0') {
-    dVar14 = (double)(float)((int *)lVar2)[2];
-    dVar13 = 0.0;
-    if (0.0 < dVar14) {
-      lVar10 = lVar2 + 0x44;
-      lVar9 = lVar2 + 0x38;
-      lVar8 = lVar2 + 0x48;
-      lVar2 = lVar2 + 0x3c;
-      dVar12 = 0.004999999888241291;
+  WVar5 = BG_GetViewmodelWeapon(ppVar2);
+  WVar6 = BG_GetAlternateWeapon(WVar5,bVar9);
+  iVar3 = *(int *)((int)bg_weaponDefs + ((uint)(((ulonglong)WVar6 & 0xffffffff) << 2) & 0x3fc));
+  BG_GetGunKickSpeed(WVar5,bVar9,&local_50,&local_4c,&local_48,&local_44,&local_40,&local_3c,
+                     in_stack_ffffff58,in_stack_ffffff5c);
+  bVar9 = BG_IsAimDownSight(WVar5,bVar9);
+  if (bVar9) {
+    fVar1 = *(float *)&ppVar2->field_0x378;
+    dVar24 = (double)(float)((undefined4 *)lVar4)[2];
+    dVar23 = 0.0;
+    dVar16 = (double)((local_3c - local_4c) * fVar1 + local_4c);
+    dVar14 = (double)((local_40 - local_50) * fVar1 + local_50);
+    dVar18 = (double)((local_38 - local_48) * fVar1 + local_48);
+    dVar20 = (double)((local_34 - local_44) * fVar1 + local_44);
+    if (0.0 < dVar24) {
+      lVar12 = lVar4 + 0x44;
+      lVar11 = lVar4 + 0x38;
+      lVar10 = lVar4 + 0x48;
+      lVar4 = lVar4 + 0x3c;
+      dVar22 = 0.004999999888241291;
       do {
-        dVar15 = dVar13;
-        if (dVar12 < dVar14) {
-          dVar15 = dVar14 - dVar12;
-          dVar14 = dVar12;
-          dVar15 = (double)(float)dVar15;
+        dVar25 = dVar23;
+        if (dVar22 < dVar24) {
+          dVar25 = dVar24 - dVar22;
+          dVar24 = dVar22;
+          dVar25 = (double)(float)dVar25;
         }
-        iVar5 = BG_CalculateWeaponMovement_Recoil_Internal_SingleAngle
-                          (dVar14,(double)*(float *)(iVar1 + 0x474),lVar9,lVar10);
-        iVar6 = BG_CalculateWeaponMovement_Recoil_Internal_SingleAngle
-                          (extraout_f1,(double)*(float *)(iVar1 + 0x478),lVar2,lVar8);
-      } while (((iVar6 == 0) || (iVar5 == 0)) && (dVar14 = dVar15, dVar13 < dVar15));
+        dVar13 = (double)(float)dVar24;
+        dVar15 = (double)(float)dVar14;
+        dVar17 = (double)(float)dVar16;
+        dVar21 = (double)(float)dVar20;
+        dVar19 = (double)(float)dVar18;
+        iVar7 = BG_CalculateWeaponMovement_Recoil_Internal_SingleAngle
+                          ((float *)lVar11,(float *)lVar12,(float)dVar24,*(float *)(iVar3 + 0x474),
+                           (float)dVar14,(float)dVar16,(float)dVar18,(float)dVar20);
+        dVar14 = (double)(float)dVar15;
+        dVar16 = (double)(float)dVar17;
+        dVar20 = (double)(float)dVar21;
+        dVar18 = (double)(float)dVar19;
+        iVar8 = BG_CalculateWeaponMovement_Recoil_Internal_SingleAngle
+                          ((float *)lVar4,(float *)lVar10,(float)dVar13,*(float *)(iVar3 + 0x478),
+                           (float)dVar15,(float)dVar17,(float)dVar19,(float)dVar21);
+      } while (((iVar8 == 0) || (iVar7 == 0)) && (dVar24 = dVar25, dVar23 < dVar25));
     }
   }
   __restgprlr_27();
@@ -1091,22 +1222,25 @@ void BG_CalculateWeaponMovement_Recoil(void)
 
 // 8229FA18  MatrixTransformVector  (universal/com_math.h:841)
 
-void MatrixTransformVector(undefined8 param_1,float *param_2,ulonglong param_3)
+void MatrixTransformVector(float *param_1,float (*param_2) [3],float *param_3)
 
 {
   float *pfVar1;
   ulonglong uVar2;
-  float *pfVar3;
+  ulonglong uVar3;
+  float *pfVar4;
   
-  uVar2 = __savegprlr_29();
-  if ((uVar2 & 0xffffffff) == (param_3 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82003018,0x34a,0,0xffffffff82000f98,0xffffffff8200c480);
+  uVar3 = (ulonglong)(int)param_3;
+  uVar2 = __savegprlr_29(param_1);
+  if ((uVar2 & 0xffffffff) == (uVar3 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.h",0x34a,0,
+                    "%s");
   }
   pfVar1 = (float *)uVar2;
-  pfVar3 = (float *)param_3;
-  *pfVar3 = *pfVar1 * *param_2 + param_2[6] * pfVar1[2] + param_2[3] * pfVar1[1];
-  pfVar3[1] = param_2[4] * pfVar1[1] + param_2[1] * *pfVar1 + param_2[7] * pfVar1[2];
-  pfVar3[2] = param_2[5] * pfVar1[1] + param_2[2] * *pfVar1 + param_2[8] * pfVar1[2];
+  pfVar4 = (float *)uVar3;
+  *pfVar4 = *pfVar1 * (*param_2)[0] + param_2[2][0] * pfVar1[2] + param_2[1][0] * pfVar1[1];
+  pfVar4[1] = param_2[1][1] * pfVar1[1] + (*param_2)[1] * *pfVar1 + param_2[2][1] * pfVar1[2];
+  pfVar4[2] = param_2[1][2] * pfVar1[1] + (*param_2)[2] * *pfVar1 + param_2[2][2] * pfVar1[2];
   __restgprlr_29();
   return;
 }
@@ -1114,42 +1248,47 @@ void MatrixTransformVector(undefined8 param_1,float *param_2,ulonglong param_3)
 
 // 822A16B0  BG_CalculateWeaponMovement_Bob  (bgame/bg_weapons_view.cpp:847)
 
-void BG_CalculateWeaponMovement_Bob(void)
+/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
+
+void BG_CalculateWeaponMovement_Bob(weaponState_t *param_1)
 
 {
-  int iVar1;
+  playerState_s *ppVar1;
   float fVar2;
-  int *piVar4;
-  undefined8 uVar3;
+  undefined4 *puVar4;
+  Weapon WVar3;
   double dVar5;
   double dVar6;
   double dVar7;
-  double dVar8;
+  float fVar8;
   
-  piVar4 = (int *)__savegprlr_29();
-  iVar1 = *piVar4;
-  dVar7 = (double)(*(float *)(DAT_829c54a4 + 0xc) * (float)piVar4[1]);
-  dVar6 = (double)(*(float *)(DAT_829c7e8c + 0xc) * 3.1415927 +
-                   (float)(*(uint *)(iVar1 + 0x18) & 0xff) * 0.024639944 + 6.2831855 + 6.2831855);
-  dVar5 = (double)BG_CalculateWeaponMovement_VerticalBobFactor(dVar6,dVar7,iVar1);
-  dVar8 = -1.0;
-  piVar4[0x1d] = (int)(float)(dVar5 * -1.0);
-  dVar5 = (double)BG_CalculateWeaponMovement_HorizontalBobFactor(dVar6,dVar7,iVar1);
-  piVar4[0x1e] = (int)(float)(dVar5 * dVar8);
-  dVar5 = (double)BG_CalculateWeaponMovement_HorizontalBobFactor
-                            ((double)(float)(dVar6 - 0.4712389409542084),
-                             (double)(float)((double)*(float *)(DAT_829c7e24 + 0xc) * dVar7),iVar1);
-  if (-dVar5 < 0.0) {
-    dVar5 = 0.0;
+  puVar4 = (undefined4 *)__savegprlr_29(param_1);
+  ppVar1 = (playerState_s *)*puVar4;
+  fVar8 = (bg_weaponBobAmplitudeBase->current).value * (float)puVar4[1];
+  dVar6 = (double)fVar8;
+  fVar2 = (bg_weaponBobLag->current).value * 3.1415927 +
+          (float)(*(uint *)&(ppVar1->field0_0x0).field_0x18 & 0xff) * 0.024639944 + 6.2831855 +
+          6.2831855;
+  dVar5 = (double)fVar2;
+  fVar8 = BG_CalculateWeaponMovement_VerticalBobFactor(ppVar1,fVar2,fVar8);
+  dVar7 = -1.0;
+  puVar4[0x1d] = fVar8 * -1.0;
+  fVar8 = BG_CalculateWeaponMovement_HorizontalBobFactor(ppVar1,(float)dVar5,(float)dVar6);
+  puVar4[0x1e] = (float)((double)fVar8 * dVar7);
+  fVar8 = BG_CalculateWeaponMovement_HorizontalBobFactor
+                    (ppVar1,(float)(dVar5 - 0.4712389409542084),
+                     (float)((double)(bg_weaponBobAmplitudeRoll->current).value * dVar6));
+  if (-fVar8 < 0.0) {
+    fVar8 = 0.0;
   }
-  piVar4[0x1f] = (int)(float)dVar5;
-  if (0.0 < *(float *)(iVar1 + 0x378)) {
-    uVar3 = BG_GetViewmodelWeapon(iVar1);
-    dVar5 = (double)BG_ADSBobFactor(uVar3,*(uint *)(iVar1 + 0x374) >> 0xf & 1);
-    fVar2 = -((float)(1.0 - dVar5) * *(float *)(iVar1 + 0x378) - 1.0);
-    piVar4[0x1d] = (int)((float)piVar4[0x1d] * fVar2);
-    piVar4[0x1e] = (int)(fVar2 * (float)piVar4[0x1e]);
-    piVar4[0x1f] = (int)(fVar2 * (float)piVar4[0x1f]);
+  puVar4[0x1f] = fVar8;
+  if (0.0 < *(float *)&ppVar1->field_0x378) {
+    WVar3 = BG_GetViewmodelWeapon(ppVar1);
+    fVar8 = BG_ADSBobFactor(WVar3,(bool)((byte)(*(uint *)&ppVar1->field_0x374 >> 0xf) & 1));
+    fVar8 = -((1.0 - fVar8) * *(float *)&ppVar1->field_0x378 - 1.0);
+    puVar4[0x1d] = (float)puVar4[0x1d] * fVar8;
+    puVar4[0x1e] = fVar8 * (float)puVar4[0x1e];
+    puVar4[0x1f] = fVar8 * (float)puVar4[0x1f];
   }
   __restgprlr_29();
   return;
@@ -1158,17 +1297,19 @@ void BG_CalculateWeaponMovement_Bob(void)
 
 // 822A1810  BG_SetWeaponMovementAngles  (bgame/bg_weapons_view.cpp:879)
 
-void BG_SetWeaponMovementAngles(int param_1,float *param_2)
+/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
+
+void BG_SetWeaponMovementAngles(weaponState_t *param_1,float *param_2)
 
 {
   *param_2 = 0.0;
   param_2[1] = 0.0;
   param_2[2] = 0.0;
-  BG_ApplyWeaponMovement_BaseAngles();
+  BG_ApplyWeaponMovement_BaseAngles(param_1,param_2);
   BG_ApplyWeaponMovement_SwayAngles(param_1,param_2);
-  *param_2 = *(float *)(param_1 + 0x38) + *param_2;
-  param_2[1] = *(float *)(param_1 + 0x3c) + param_2[1];
-  param_2[2] = *(float *)(param_1 + 0x40) + param_2[2];
+  *param_2 = param_1->recoilAngles[0] + *param_2;
+  param_2[1] = param_1->recoilAngles[1] + param_2[1];
+  param_2[2] = param_1->recoilAngles[2] + param_2[2];
   BG_ApplyWeaponMovement_BobAngles(param_1,param_2);
   BG_ComputeAndApplyWeaponMovement_IdleAngles(param_1,param_2);
   BG_ComputeAndApplyWeaponMovement_DamageKickAngles(param_1,param_2);
@@ -1178,46 +1319,54 @@ void BG_SetWeaponMovementAngles(int param_1,float *param_2)
 
 // 822A18C0  BG_SetWeaponMovementOrigin  (bgame/bg_weapons_view.cpp:896)
 
-void BG_SetWeaponMovementOrigin(int param_1,undefined4 *param_2)
+/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
+
+void BG_SetWeaponMovementOrigin(weaponState_t *param_1,float *param_2)
 
 {
-  undefined4 local_50;
+  float local_50;
   float local_4c;
   float local_48;
-  undefined1 auStack_40 [40];
+  float afStack_40 [10];
   
-  *param_2 = 0;
-  param_2[1] = 0;
-  param_2[2] = 0;
-  BG_ApplyWeaponMovement_BaseOrigin();
-  local_4c = (float)param_2[1] - *(float *)(param_1 + 0x60);
+  *param_2 = 0.0;
+  param_2[1] = 0.0;
+  param_2[2] = 0.0;
+  BG_ApplyWeaponMovement_BaseOrigin(param_1,param_2);
+  local_4c = param_2[1] - param_1->swayOrigin[1];
   param_2[1] = local_4c;
-  local_48 = *(float *)(param_1 + 100) + (float)param_2[2];
+  local_48 = param_1->swayOrigin[2] + param_2[2];
   param_2[2] = local_48;
   local_50 = *param_2;
-  AnglesToAxis(param_1 + 0x74,auStack_40);
-  MatrixTransformVector(&local_50,auStack_40,param_2);
+  AnglesToAxis(param_1->bobAngles,(float (*) [3])afStack_40);
+  MatrixTransformVector(&local_50,(float (*) [3])afStack_40,param_2);
   return;
 }
 
 
 // 822A1960  BG_CalculateWeaponMovement  (bgame/bg_weapons_view.cpp:909)
 
-void BG_CalculateWeaponMovement(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
+
+void BG_CalculateWeaponMovement(weaponState_t *param_1,float *param_2,float *param_3)
 
 {
-  undefined8 uVar1;
+  weaponState_t *pwVar1;
+  ulonglong uVar2;
+  ulonglong uVar3;
   
-  uVar1 = __savegprlr_29();
-  BG_CalculateWeaponMovement_Base();
-  BG_CalculateWeaponMovement_Sway(uVar1);
-  BG_CalculateWeaponMovement_Recoil(uVar1);
-  BG_CalculateWeaponMovement_Bob(uVar1);
-  if ((param_3 & 0xffffffff) != 0) {
-    BG_SetWeaponMovementAngles(uVar1,param_3);
+  uVar3 = (ulonglong)(int)param_3;
+  uVar2 = (ulonglong)(int)param_2;
+  pwVar1 = (weaponState_t *)__savegprlr_29(param_1);
+  BG_CalculateWeaponMovement_Base(pwVar1);
+  BG_CalculateWeaponMovement_Sway(pwVar1);
+  BG_CalculateWeaponMovement_Recoil(pwVar1);
+  BG_CalculateWeaponMovement_Bob(pwVar1);
+  if ((uVar3 & 0xffffffff) != 0) {
+    BG_SetWeaponMovementAngles(pwVar1,(float *)uVar3);
   }
-  if ((param_2 & 0xffffffff) != 0) {
-    BG_SetWeaponMovementOrigin(uVar1,param_2);
+  if ((uVar2 & 0xffffffff) != 0) {
+    BG_SetWeaponMovementOrigin(pwVar1,(float *)uVar2);
   }
   __restgprlr_29();
   return;
@@ -1226,143 +1375,167 @@ void BG_CalculateWeaponMovement(undefined8 param_1,ulonglong param_2,ulonglong p
 
 // 822A19C8  BG_CalculateViewMovement_VerticalBobFactor  (bgame/bg_weapons_view.cpp:928)
 
-double BG_CalculateViewMovement_VerticalBobFactor(double param_1,double param_2,int param_3)
+/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
+
+float BG_CalculateViewMovement_VerticalBobFactor(playerState_s *param_1,float param_2,float param_3)
 
 {
   int iVar1;
-  double dVar3;
+  dvar_t *pdVar2;
   double dVar4;
   double dVar5;
-  int iVar2;
+  double dVar6;
+  dvar_t *pdVar3;
   
-  if (param_3 == 0) {
-    MyAssertHandler(0xffffffff8200f620,0x3a3,0,0xffffffff82000f98,0xffffffff82001fdc);
+  dVar5 = (double)param_2;
+  dVar6 = (double)param_3;
+  if (param_1 == (playerState_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_view.cpp",
+                    0x3a3,0,"%s");
   }
-  if (*(int *)(param_3 + 0x164) == 0xb) {
-    dVar5 = (double)(float)((double)*(float *)(DAT_829c7d18 + 0x10) * param_2);
+  iVar1 = (param_1->field0_0x0).viewHeightTarget;
+  if (iVar1 == 0xb) {
+    dVar6 = (double)(float)((double)(bg_viewBobAmplitudeProne->current).vector[1] * dVar6);
   }
   else {
-    iVar1 = DAT_829c4068;
-    iVar2 = DAT_829c403c;
-    if ((*(int *)(param_3 + 0x164) == 0x28) ||
-       (iVar1 = DAT_829c54b4, iVar2 = DAT_829c55f0, (*(uint *)(param_3 + 0xc) & 0x4000) == 0)) {
-      dVar5 = (double)(float)((double)((1.0 - *(float *)(param_3 + 0x378)) *
-                                       *(float *)(iVar1 + 0x10) +
-                                      *(float *)(iVar2 + 0x10) * *(float *)(param_3 + 0x378)) *
-                             param_2);
+    pdVar2 = bg_viewBobAmplitudeDucked;
+    pdVar3 = bg_viewBobAmplitudeDuckedAds;
+    if ((iVar1 == 0x28) ||
+       (pdVar2 = bg_viewBobAmplitudeStanding, pdVar3 = bg_viewBobAmplitudeStandingAds,
+       (*(uint *)&(param_1->field0_0x0).field_0xc & 0x4000) == 0)) {
+      dVar6 = (double)(float)((double)((1.0 - *(float *)&param_1->field_0x378) *
+                                       (pdVar2->current).vector[1] +
+                                      (pdVar3->current).vector[1] * *(float *)&param_1->field_0x378)
+                             * dVar6);
     }
     else {
-      dVar5 = (double)(float)((double)*(float *)(DAT_829c7d7c + 0x10) * param_2);
+      dVar6 = (double)(float)((double)(bg_viewBobAmplitudeSprinting->current).vector[1] * dVar6);
     }
   }
-  if ((uint *)(param_3 + 0x4ec) == (uint *)0x0) {
-    MyAssertHandler(0xffffffff82000fa8,0x4f,0,0xffffffff82000f98,0xffffffff82000f9c);
+  if (param_1->perks == (uint *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\../bgame/bg_perks.h",
+                    0x4f,0,"%s");
   }
-  if ((*(uint *)(param_3 + 0x4ec) & 0x2000) != 0) {
-    dVar5 = (double)(float)((double)*(float *)(DAT_829d7eac + 0xc) * dVar5);
+  if ((param_1->perks[0] & 0x2000) != 0) {
+    dVar6 = (double)(float)((double)(perk_lightWeightViewBobScale->current).value * dVar6);
   }
-  if ((double)*(float *)(DAT_829c7e78 + 0xc) < dVar5) {
-    dVar5 = (double)*(float *)(DAT_829c7e78 + 0xc);
+  if ((double)(bg_viewBobMax->current).value < dVar6) {
+    dVar6 = (double)(bg_viewBobMax->current).value;
   }
-  dVar3 = sin((double)(float)(param_1 * 2.0));
-  dVar4 = (double)(float)dVar3;
-  dVar3 = sin((double)(float)(param_1 * 4.0 + 1.5707963705062866));
-  return (double)((float)((double)(float)((double)(float)dVar3 * 0.20000000298023224 + dVar4) *
-                         dVar5) * 0.75);
+  dVar4 = sin((double)(float)(dVar5 * 2.0));
+  dVar4 = (double)(float)dVar4;
+  dVar5 = sin((double)(float)(dVar5 * 4.0 + 1.5707963705062866));
+  return (float)((double)(float)((double)(float)dVar5 * 0.20000000298023224 + dVar4) * dVar6) * 0.75
+  ;
 }
 
 
 // 822A1B90  BG_CalculateViewMovement_HorizontalBobFactor  (bgame/bg_weapons_view.cpp:962)
 
-double BG_CalculateViewMovement_HorizontalBobFactor(double param_1,double param_2,int param_3)
+/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
+
+float BG_CalculateViewMovement_HorizontalBobFactor
+                (playerState_s *param_1,float param_2,float param_3)
 
 {
   int iVar1;
-  double dVar3;
+  dvar_t *pdVar2;
   double dVar4;
-  int iVar2;
+  double dVar5;
+  dvar_t *pdVar3;
   
-  if (param_3 == 0) {
-    MyAssertHandler(0xffffffff8200f620,0x3c5,0,0xffffffff82000f98,0xffffffff82001fdc);
+  dVar5 = (double)param_3;
+  dVar4 = (double)param_2;
+  if (param_1 == (playerState_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_view.cpp",
+                    0x3c5,0,"%s");
   }
-  if (*(int *)(param_3 + 0x164) == 0xb) {
-    dVar4 = (double)(float)((double)*(float *)(DAT_829c7d18 + 0xc) * param_2);
+  iVar1 = (param_1->field0_0x0).viewHeightTarget;
+  if (iVar1 == 0xb) {
+    dVar5 = (double)(float)((double)(bg_viewBobAmplitudeProne->current).value * dVar5);
   }
   else {
-    iVar1 = DAT_829c4068;
-    iVar2 = DAT_829c403c;
-    if ((*(int *)(param_3 + 0x164) == 0x28) ||
-       (iVar1 = DAT_829c54b4, iVar2 = DAT_829c55f0, (*(uint *)(param_3 + 0xc) & 0x4000) == 0)) {
-      dVar4 = (double)(float)((double)((1.0 - *(float *)(param_3 + 0x378)) * *(float *)(iVar1 + 0xc)
-                                      + *(float *)(iVar2 + 0xc) * *(float *)(param_3 + 0x378)) *
-                             param_2);
+    pdVar2 = bg_viewBobAmplitudeDucked;
+    pdVar3 = bg_viewBobAmplitudeDuckedAds;
+    if ((iVar1 == 0x28) ||
+       (pdVar2 = bg_viewBobAmplitudeStanding, pdVar3 = bg_viewBobAmplitudeStandingAds,
+       (*(uint *)&(param_1->field0_0x0).field_0xc & 0x4000) == 0)) {
+      dVar5 = (double)(float)((double)((1.0 - *(float *)&param_1->field_0x378) *
+                                       (pdVar2->current).value +
+                                      (pdVar3->current).value * *(float *)&param_1->field_0x378) *
+                             dVar5);
     }
     else {
-      dVar4 = (double)(float)((double)*(float *)(DAT_829c7d7c + 0xc) * param_2);
+      dVar5 = (double)(float)((double)(bg_viewBobAmplitudeSprinting->current).value * dVar5);
     }
   }
-  if ((uint *)(param_3 + 0x4ec) == (uint *)0x0) {
-    MyAssertHandler(0xffffffff82000fa8,0x4f,0,0xffffffff82000f98,0xffffffff82000f9c);
+  if (param_1->perks == (uint *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\../bgame/bg_perks.h",
+                    0x4f,0,"%s");
   }
-  if ((*(uint *)(param_3 + 0x4ec) & 0x2000) != 0) {
-    dVar4 = (double)(float)((double)*(float *)(DAT_829d7eac + 0xc) * dVar4);
+  if ((param_1->perks[0] & 0x2000) != 0) {
+    dVar5 = (double)(float)((double)(perk_lightWeightViewBobScale->current).value * dVar5);
   }
-  if ((double)*(float *)(DAT_829c7e78 + 0xc) < dVar4) {
-    dVar4 = (double)*(float *)(DAT_829c7e78 + 0xc);
+  if ((double)(bg_viewBobMax->current).value < dVar5) {
+    dVar5 = (double)(bg_viewBobMax->current).value;
   }
-  dVar3 = sin(param_1);
-  return (double)(float)((double)(float)dVar3 * dVar4);
+  dVar4 = sin(dVar4);
+  return (float)((double)(float)dVar4 * dVar5);
 }
 
 
 // 822A1D18  BG_CalculateViewMovement_Angles_DamageKick  (bgame/bg_weapons_view.cpp:996)
 
-void BG_CalculateViewMovement_Angles_DamageKick(undefined8 param_1,float *param_2)
+/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void BG_CalculateViewMovement_Angles_DamageKick(viewState_t *param_1,float *param_2)
 
 {
-  float fVar1;
-  int iVar2;
-  int *piVar4;
-  undefined8 uVar3;
-  int iVar5;
-  undefined8 uVar6;
+  playerState_s *ppVar1;
+  undefined4 *puVar3;
+  Weapon WVar2;
+  ADSOverlay *pAVar4;
+  bool bVar5;
+  double dVar6;
   double dVar7;
   double dVar8;
   double dVar9;
-  double dVar10;
+  float fVar10;
   
-  __savegprlr_28();
-  piVar4 = (int *)__savefpr_28();
-  if (piVar4[1] != 0) {
-    iVar2 = *piVar4;
-    if ((iVar2 == 0) || (uVar6 = 1, (*(uint *)(iVar2 + 0x374) & 0x8000) == 0)) {
-      uVar6 = 0;
+  __savegprlr_28(param_1);
+  puVar3 = (undefined4 *)__savefpr_28();
+  if (puVar3[1] != 0) {
+    ppVar1 = (playerState_s *)*puVar3;
+    if ((ppVar1 == (playerState_s *)0x0) ||
+       (bVar5 = true, (*(uint *)&ppVar1->field_0x374 & 0x8000) == 0)) {
+      bVar5 = false;
     }
-    uVar3 = BG_GetViewmodelWeapon(iVar2);
-    dVar9 = 0.5;
-    dVar10 = 1.0;
-    dVar8 = 0.0;
-    dVar7 = -(double)(*(float *)(iVar2 + 0x378) * 0.5 - 1.0);
-    if ((*(float *)(iVar2 + 0x378) != 0.0) &&
-       (iVar5 = BG_GetOverlay(uVar3,uVar6), *(int *)(iVar5 + 0x10) != 0)) {
-      dVar7 = (double)(float)((double)(float)((double)*(float *)(iVar2 + 0x378) * dVar9 + dVar10) *
-                             dVar7);
+    WVar2 = BG_GetViewmodelWeapon(ppVar1);
+    dVar8 = 0.5;
+    dVar9 = 1.0;
+    dVar7 = 0.0;
+    dVar6 = -(double)(*(float *)&ppVar1->field_0x378 * 0.5 - 1.0);
+    if ((*(float *)&ppVar1->field_0x378 != 0.0) &&
+       (pAVar4 = BG_GetOverlay(WVar2,bVar5), pAVar4->reticle != WEAPOVERLAYRETICLE_NONE)) {
+      dVar6 = (double)(float)((double)(float)((double)*(float *)&ppVar1->field_0x378 * dVar8 + dVar9
+                                             ) * dVar6);
     }
-    fVar1 = (float)(longlong)(piVar4[2] - piVar4[1]);
-    if (fVar1 < 100.0) {
-      dVar8 = (double)GetLeanFraction((double)(fVar1 * 0.01));
-      *param_2 = (float)piVar4[3] * (float)(dVar8 * dVar7) + *param_2;
-      param_2[2] = (float)piVar4[4] * (float)(dVar8 * dVar7) + param_2[2];
+    fVar10 = (float)(longlong)(int)(puVar3[2] - puVar3[1]);
+    if (fVar10 < 100.0) {
+      fVar10 = GetLeanFraction(fVar10 * 0.01);
+      *param_2 = (float)puVar3[3] * (float)((double)fVar10 * dVar6) + *param_2;
+      param_2[2] = (float)puVar3[4] * (float)((double)fVar10 * dVar6) + param_2[2];
       __restfpr_28();
       __restgprlr_28();
       return;
     }
-    dVar9 = -(double)(float)((double)(fVar1 - 100.0) * 0.0024999999441206455 - dVar10);
-    if (dVar8 < dVar9) {
-      dVar8 = (double)GetLeanFraction((double)(float)(dVar10 - dVar9));
-      fVar1 = (float)((double)(float)(dVar10 - dVar8) * dVar7);
-      *param_2 = (float)piVar4[3] * fVar1 + *param_2;
-      param_2[2] = (float)piVar4[4] * fVar1 + param_2[2];
+    dVar8 = -(double)(float)((double)(fVar10 - 100.0) * 0.0024999999441206455 - dVar9);
+    if (dVar7 < dVar8) {
+      fVar10 = GetLeanFraction((float)(dVar9 - dVar8));
+      fVar10 = (float)((double)(float)(dVar9 - (double)fVar10) * dVar6);
+      *param_2 = (float)puVar3[3] * fVar10 + *param_2;
+      param_2[2] = (float)puVar3[4] * fVar10 + param_2[2];
     }
   }
   __restfpr_28();
@@ -1373,88 +1546,100 @@ void BG_CalculateViewMovement_Angles_DamageKick(undefined8 param_1,float *param_
 
 // 822A1E80  BG_ShouldIncrementViewMovementIdleTime  (bgame/bg_weapons_view.cpp:1040)
 
-undefined8 BG_ShouldIncrementViewMovementIdleTime(int param_1,undefined8 param_2)
+/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+bool BG_ShouldIncrementViewMovementIdleTime(playerState_s *param_1,Weapon param_2)
 
 {
-  int iVar1;
-  undefined8 uVar2;
+  ADSOverlay *pAVar1;
+  bool bVar2;
   
-  if (param_1 != 0) {
-    uVar2 = 1;
-    if ((*(uint *)(param_1 + 0x374) & 0x8000) != 0) goto LAB_822a1eb8;
+  if ((param_1 == (playerState_s *)0x0) ||
+     (bVar2 = true, (*(uint *)&param_1->field_0x374 & 0x8000) == 0)) {
+    bVar2 = false;
   }
-  uVar2 = 0;
-LAB_822a1eb8:
-  iVar1 = BG_GetOverlay(param_2,uVar2);
-  if ((*(int *)(iVar1 + 0x10) == 0) || (uVar2 = 1, *(float *)(param_1 + 0x378) == 0.0)) {
-    uVar2 = 0;
+  pAVar1 = BG_GetOverlay(param_2,bVar2);
+  if ((pAVar1->reticle == WEAPOVERLAYRETICLE_NONE) ||
+     (bVar2 = true, *(float *)&param_1->field_0x378 == 0.0)) {
+    bVar2 = false;
   }
-  return uVar2;
+  return bVar2;
 }
 
 
 // 822A1F00  BG_CalculateViewMovement_Angles_Idle  (bgame/bg_weapons_view.cpp:1046)
 
-void BG_CalculateViewMovement_Angles_Idle(undefined8 param_1,float *param_2)
+/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void BG_CalculateViewMovement_Angles_Idle(viewState_t *param_1,float *param_2)
 
 {
-  float fVar1;
-  int iVar2;
-  int *piVar4;
-  undefined8 uVar3;
-  char cVar6;
-  int iVar5;
-  undefined8 uVar7;
+  playerState_s *ppVar1;
+  uint uVar2;
+  undefined4 *puVar4;
+  Weapon WVar3;
+  bool bVar6;
+  ADSOverlay *pAVar5;
+  bool bVar7;
   double dVar8;
   double dVar9;
   double dVar10;
+  float fVar11;
   
-  piVar4 = (int *)__savegprlr_27();
-  iVar2 = *piVar4;
-  if ((iVar2 == 0) || (uVar7 = 1, (*(uint *)(iVar2 + 0x374) & 0x8000) == 0)) {
-    uVar7 = 0;
+  puVar4 = (undefined4 *)__savegprlr_27(param_1);
+  ppVar1 = (playerState_s *)*puVar4;
+  if ((ppVar1 == (playerState_s *)0x0) ||
+     (bVar7 = true, (*(uint *)&ppVar1->field_0x374 & 0x8000) == 0)) {
+    bVar7 = false;
   }
-  uVar3 = BG_GetViewmodelWeapon(iVar2);
-  cVar6 = BG_ShouldIncrementViewMovementIdleTime(iVar2,uVar3);
-  if (cVar6 == '\0') goto LAB_822a20f8;
-  dVar9 = (double)BG_GetIdleTargScale(iVar2);
-  if ((*(uint *)(iVar2 + 0xf8) & 8) == 0) {
-    if ((*(uint *)(iVar2 + 0xf8) & 4) == 0) {
+  WVar3 = BG_GetViewmodelWeapon(ppVar1);
+  bVar6 = BG_ShouldIncrementViewMovementIdleTime(ppVar1,WVar3);
+  if (!bVar6) goto LAB_822a20f8;
+  fVar11 = BG_GetIdleTargScale(ppVar1);
+  dVar9 = (double)fVar11;
+  uVar2 = (ppVar1->field0_0x0).eFlags;
+  if ((uVar2 & 8) == 0) {
+    if ((uVar2 & 4) == 0) {
       dVar10 = 1.0;
     }
     else {
-      dVar10 = (double)BG_IdleCrouchFactor(uVar3,uVar7);
+      fVar11 = BG_IdleCrouchFactor(WVar3,bVar7);
+      dVar10 = (double)fVar11;
     }
   }
   else {
-    dVar10 = (double)BG_IdleProneFactor(uVar3,uVar7);
+    fVar11 = BG_IdleProneFactor(WVar3,bVar7);
+    dVar10 = (double)fVar11;
   }
-  iVar5 = BG_GetOverlay(uVar3,uVar7);
-  if ((*(int *)(iVar5 + 0x10) == 0) || (*(float *)(iVar2 + 0x378) == 0.0)) {
-    MyAssertHandler(0xffffffff8200f620,0x435,0,0xffffffff82000f98,0xffffffff8200f888);
+  pAVar5 = BG_GetOverlay(WVar3,bVar7);
+  if ((pAVar5->reticle == WEAPOVERLAYRETICLE_NONE) || (*(float *)&ppVar1->field_0x378 == 0.0)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_view.cpp",
+                    0x435,0,"%s");
   }
-  dVar8 = (double)(float)piVar4[7];
+  dVar8 = (double)(float)puVar4[7];
   if (dVar10 != dVar8) {
     if (dVar10 <= dVar8) {
-      dVar8 = -(double)(float)((double)(float)piVar4[6] * 0.5 - (double)(float)piVar4[7]);
-      piVar4[7] = (int)(float)dVar8;
+      dVar8 = -(double)(float)((double)(float)puVar4[6] * 0.5 - (double)(float)puVar4[7]);
+      puVar4[7] = (float)dVar8;
       if (dVar8 < dVar10) goto LAB_822a205c;
     }
     else {
-      fVar1 = (float)((double)(float)piVar4[6] * 0.5 + dVar8);
-      piVar4[7] = (int)fVar1;
-      if (dVar10 < (double)fVar1) {
+      fVar11 = (float)((double)(float)puVar4[6] * 0.5 + dVar8);
+      puVar4[7] = fVar11;
+      if (dVar10 < (double)fVar11) {
 LAB_822a205c:
-        piVar4[7] = (int)(float)dVar10;
+        puVar4[7] = (float)dVar10;
       }
     }
   }
-  dVar10 = (double)((float)((double)(float)piVar4[7] * dVar9) * *(float *)(iVar2 + 0x378) *
-                   *(float *)(iVar2 + 0x220));
-  dVar9 = sin((double)((float)(longlong)*(int *)(iVar2 + 0x4d4) * 0.0007));
+  dVar10 = (double)((float)((double)(float)puVar4[7] * dVar9) * *(float *)&ppVar1->field_0x378 *
+                   (ppVar1->field0_0x0).holdBreathScale);
+  dVar9 = sin((double)((float)(longlong)*(int *)&ppVar1->field_0x4d4 * 0.0007));
   dVar8 = 0.009999999776482582;
   param_2[1] = (float)((double)(float)dVar9 * dVar10) * 0.01 + param_2[1];
-  dVar9 = sin((double)((float)(longlong)*(int *)(iVar2 + 0x4d4) * 0.001));
+  dVar9 = sin((double)((float)(longlong)*(int *)&ppVar1->field_0x4d4 * 0.001));
   *param_2 = (float)((double)(float)((double)(float)dVar9 * dVar10) * dVar8 + (double)*param_2);
 LAB_822a20f8:
   __restgprlr_27();
@@ -1464,55 +1649,64 @@ LAB_822a20f8:
 
 // 822A2108  BG_CalculateViewMovement_Angles_Bob  (bgame/bg_weapons_view.cpp:1109)
 
-void BG_CalculateViewMovement_Angles_Bob(undefined8 param_1,float *param_2)
+/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void BG_CalculateViewMovement_Angles_Bob(viewState_t *param_1,float *param_2)
 
 {
-  int iVar1;
-  int *piVar3;
-  undefined8 uVar2;
-  int iVar4;
-  undefined8 uVar5;
-  double dVar6;
+  playerState_s *ppVar1;
+  float fVar2;
+  undefined4 *puVar4;
+  Weapon WVar3;
+  ADSOverlay *pAVar5;
+  bool bVar6;
   double dVar7;
   double dVar8;
   double dVar9;
   double dVar10;
+  double dVar11;
+  float fVar12;
   
-  __savegprlr_27();
-  piVar3 = (int *)__savefpr_27();
-  iVar1 = *piVar3;
-  if ((iVar1 == 0) || (uVar5 = 1, (*(uint *)(iVar1 + 0x374) & 0x8000) == 0)) {
-    uVar5 = 0;
+  __savegprlr_27(param_1);
+  puVar4 = (undefined4 *)__savefpr_27();
+  ppVar1 = (playerState_s *)*puVar4;
+  if ((ppVar1 == (playerState_s *)0x0) ||
+     (bVar6 = true, (*(uint *)&ppVar1->field_0x374 & 0x8000) == 0)) {
+    bVar6 = false;
   }
-  uVar2 = BG_GetViewmodelWeapon(iVar1);
-  iVar4 = BG_GetOverlay(uVar2,uVar5);
-  if (*(int *)(iVar4 + 0x10) != 0) {
-    dVar8 = (double)(*(float *)(DAT_829c54a4 + 0xc) * (float)piVar3[5]);
-    dVar7 = (double)(*(float *)(DAT_829c7e8c + 0xc) * 3.1415927 +
-                     (float)(*(uint *)(iVar1 + 0x18) & 0xff) * 0.024639944 + 6.2831855 + 6.2831855);
-    dVar6 = (double)BG_CalculateViewMovement_VerticalBobFactor(dVar7,dVar8,iVar1);
-    dVar10 = -1.0;
-    dVar9 = (double)(float)(dVar6 * -1.0);
-    dVar6 = (double)BG_CalculateViewMovement_HorizontalBobFactor(dVar7,dVar8,iVar1);
-    dVar10 = (double)(float)(dVar6 * dVar10);
-    dVar6 = (double)BG_CalculateViewMovement_HorizontalBobFactor
-                              ((double)(float)(dVar7 - 0.4712389409542084),
-                               (double)(float)((double)*(float *)(DAT_829c7e24 + 0xc) * dVar8),iVar1
-                              );
-    dVar7 = (double)*(float *)(iVar1 + 0x378);
-    if (-dVar6 < 0.0) {
-      dVar6 = 0.0;
+  WVar3 = BG_GetViewmodelWeapon(ppVar1);
+  pAVar5 = BG_GetOverlay(WVar3,bVar6);
+  if (pAVar5->reticle != WEAPOVERLAYRETICLE_NONE) {
+    fVar12 = (bg_weaponBobAmplitudeBase->current).value * (float)puVar4[5];
+    dVar9 = (double)fVar12;
+    fVar2 = (bg_weaponBobLag->current).value * 3.1415927 +
+            (float)(*(uint *)&(ppVar1->field0_0x0).field_0x18 & 0xff) * 0.024639944 + 6.2831855 +
+            6.2831855;
+    dVar8 = (double)fVar2;
+    fVar12 = BG_CalculateViewMovement_VerticalBobFactor(ppVar1,fVar2,fVar12);
+    dVar11 = -1.0;
+    dVar10 = (double)(fVar12 * -1.0);
+    fVar12 = BG_CalculateViewMovement_HorizontalBobFactor(ppVar1,(float)dVar8,(float)dVar9);
+    dVar11 = (double)(float)((double)fVar12 * dVar11);
+    fVar12 = BG_CalculateViewMovement_HorizontalBobFactor
+                       (ppVar1,(float)(dVar8 - 0.4712389409542084),
+                        (float)((double)(bg_weaponBobAmplitudeRoll->current).value * dVar9));
+    dVar9 = (double)*(float *)&ppVar1->field_0x378;
+    dVar8 = (double)fVar12;
+    if (-(double)fVar12 < 0.0) {
+      dVar8 = 0.0;
     }
-    if (dVar7 != 0.0) {
-      dVar8 = (double)BG_ADSBobFactor(uVar2,uVar5);
-      dVar8 = -(double)(float)((double)(float)(1.0 - dVar8) * dVar7 - 1.0);
-      dVar9 = (double)(float)(dVar9 * dVar8);
-      dVar10 = (double)(float)(dVar10 * dVar8);
-      dVar6 = (double)(float)(dVar6 * dVar8);
+    if (dVar9 != 0.0) {
+      fVar12 = BG_ADSBobFactor(WVar3,bVar6);
+      dVar7 = -(double)(float)((double)(1.0 - fVar12) * dVar9 - 1.0);
+      dVar10 = (double)(float)(dVar10 * dVar7);
+      dVar11 = (double)(float)(dVar11 * dVar7);
+      dVar8 = (double)(float)(dVar8 * dVar7);
     }
-    *param_2 = *param_2 + (float)(dVar7 * dVar9);
-    param_2[1] = (float)(dVar7 * dVar10) + param_2[1];
-    param_2[2] = (float)(dVar7 * dVar6) + param_2[2];
+    *param_2 = *param_2 + (float)(dVar9 * dVar10);
+    param_2[1] = (float)(dVar9 * dVar11) + param_2[1];
+    param_2[2] = (float)(dVar9 * dVar8) + param_2[2];
   }
   __restfpr_27();
   __restgprlr_27();
@@ -1522,31 +1716,32 @@ void BG_CalculateViewMovement_Angles_Bob(undefined8 param_1,float *param_2)
 
 // 822A22A0  BG_CalculateViewMovement_Angles_AdsBob  (bgame/bg_weapons_view.cpp:1155)
 
-void BG_CalculateViewMovement_Angles_AdsBob(undefined8 param_1,float *param_2)
+/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
+
+void BG_CalculateViewMovement_Angles_AdsBob(viewState_t *param_1,float *param_2)
 
 {
-  int iVar1;
-  int *piVar3;
-  undefined8 uVar2;
+  playerState_s *ppVar1;
+  undefined4 *puVar3;
+  Weapon WVar2;
   double dVar4;
   double dVar5;
-  double dVar6;
+  float fVar6;
   
-  piVar3 = (int *)__savegprlr_29();
-  iVar1 = *piVar3;
-  dVar5 = 0.0;
-  if ((0.0 < *(float *)(iVar1 + 0x378)) && ((*(uint *)(iVar1 + 0xf8) & 0x3800) == 0)) {
-    uVar2 = BG_GetViewmodelWeapon(iVar1);
-    dVar4 = (double)BG_ADSViewBobMult(uVar2,*(uint *)(iVar1 + 0x374) >> 0xf & 1);
-    if (dVar5 < dVar4) {
-      dVar6 = (double)(float)((double)*(float *)(iVar1 + 0x378) * dVar4);
-      dVar4 = (double)((float)(*(uint *)(iVar1 + 0x18) & 0xff) * 0.024639944 + 6.2831855);
-      dVar5 = (double)BG_CalculateViewMovement_VerticalBobFactor
-                                (dVar4,(double)(float)piVar3[5],iVar1);
-      *param_2 = -(float)(dVar5 * dVar6 - (double)*param_2);
-      dVar5 = (double)BG_CalculateViewMovement_HorizontalBobFactor
-                                (dVar4,(double)(float)piVar3[5],iVar1);
-      param_2[1] = -(float)(dVar5 * dVar6 - (double)param_2[1]);
+  puVar3 = (undefined4 *)__savegprlr_29(param_1);
+  ppVar1 = (playerState_s *)*puVar3;
+  dVar4 = 0.0;
+  if ((0.0 < *(float *)&ppVar1->field_0x378) && (((ppVar1->field0_0x0).eFlags & 0x3800U) == 0)) {
+    WVar2 = BG_GetViewmodelWeapon(ppVar1);
+    fVar6 = BG_ADSViewBobMult(WVar2,(bool)((byte)(*(uint *)&ppVar1->field_0x374 >> 0xf) & 1));
+    if (dVar4 < (double)fVar6) {
+      dVar5 = (double)(float)((double)*(float *)&ppVar1->field_0x378 * (double)fVar6);
+      fVar6 = (float)(*(uint *)&(ppVar1->field0_0x0).field_0x18 & 0xff) * 0.024639944 + 6.2831855;
+      dVar4 = (double)fVar6;
+      fVar6 = BG_CalculateViewMovement_VerticalBobFactor(ppVar1,fVar6,(float)puVar3[5]);
+      *param_2 = -(float)((double)fVar6 * dVar5 - (double)*param_2);
+      fVar6 = BG_CalculateViewMovement_HorizontalBobFactor(ppVar1,(float)dVar4,(float)puVar3[5]);
+      param_2[1] = -(float)((double)fVar6 * dVar5 - (double)param_2[1]);
     }
   }
   __restgprlr_29();
@@ -1556,15 +1751,18 @@ void BG_CalculateViewMovement_Angles_AdsBob(undefined8 param_1,float *param_2)
 
 // 822A2380  BG_CalculateViewMovement_Angles  (bgame/bg_weapons_view.cpp:1179)
 
-void BG_CalculateViewMovement_Angles(ulonglong param_1,undefined4 *param_2)
+/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
+
+void BG_CalculateViewMovement_Angles(viewState_t *param_1,float *param_2)
 
 {
-  if ((param_1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8200f620,0x49c,0,0xffffffff82000f98,0xffffffff8200f900);
+  if (param_1 == (viewState_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_view.cpp",
+                    0x49c,0,"%s");
   }
-  *param_2 = 0;
-  param_2[1] = 0;
-  param_2[2] = 0;
+  *param_2 = 0.0;
+  param_2[1] = 0.0;
+  param_2[2] = 0.0;
   BG_CalculateViewMovement_Angles_DamageKick(param_1,param_2);
   BG_CalculateViewMovement_Angles_Idle(param_1,param_2);
   BG_CalculateViewMovement_Angles_Bob(param_1,param_2);

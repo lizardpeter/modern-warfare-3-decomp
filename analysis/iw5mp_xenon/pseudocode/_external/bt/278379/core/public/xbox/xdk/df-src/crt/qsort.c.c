@@ -2,7 +2,7 @@
 
 // 82917A30  qsort  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/qsort.c:102)
 
-void qsort(void *_Base,size_t _NumOfElements,size_t _SizeOfElements,_PtFuncCompare *_PtFuncCompare)
+void qsort(void *param_1,uint param_2,uint param_3,_func___cdecl_int_void_ptr_void_ptr *param_4)
 
 {
   undefined1 uVar1;
@@ -29,10 +29,10 @@ void qsort(void *_Base,size_t _NumOfElements,size_t _SizeOfElements,_PtFuncCompa
   uint local_154 [32];
   uint local_d4 [53];
   
-  uVar9 = (ulonglong)(int)_PtFuncCompare;
-  uVar8 = (ulonglong)(int)_SizeOfElements;
-  uVar18 = (ulonglong)(int)_NumOfElements;
-  uVar5 = __savegprlr_22(_Base);
+  uVar9 = (ulonglong)(int)param_4;
+  uVar8 = (ulonglong)(int)param_3;
+  uVar18 = (ulonglong)(int)param_2;
+  uVar5 = __savegprlr_22(param_1);
   if (((((uVar5 & 0xffffffff) == 0) && ((uVar18 & 0xffffffff) != 0)) || ((uVar8 & 0xffffffff) == 0))
      || ((uVar9 & 0xffffffff) == 0)) {
     piVar6 = _errno();

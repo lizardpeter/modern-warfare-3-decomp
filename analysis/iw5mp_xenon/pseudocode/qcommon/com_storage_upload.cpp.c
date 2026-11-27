@@ -2,138 +2,143 @@
 
 // 824F4620  Com_BlockChecksum32  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/common/checksum.h:9)
 
-void Com_BlockChecksum32(undefined8 param_1,undefined8 param_2)
+uint Com_BlockChecksum32(void *param_1,uint param_2)
 
 {
-  Com_BlockChecksumKey32(param_1,param_2,0);
-  return;
+  uint uVar1;
+  
+  uVar1 = Com_BlockChecksumKey32(param_1,param_2,0);
+  return uVar1;
 }
 
 
 // 824F4628  LiveStorage_DoWeNeedOnlineStatsWrite  (qcommon/com_storage_upload.cpp:41)
 
-void LiveStorage_DoWeNeedOnlineStatsWrite(void)
+bool LiveStorage_DoWeNeedOnlineStatsWrite(int param_1)
 
 {
   int iVar1;
-  int iVar2;
-  char cVar3;
-  longlong lVar4;
+  StatsSource SVar2;
+  bool bVar3;
+  undefined1 uVar4;
+  longlong lVar5;
   
-  iVar1 = __savegprlr_28();
-  lVar4 = 0;
-  iVar2 = LiveStorage_GetActiveStatsSource();
-  if (((&DAT_836398d1)[iVar2 * 0x3005 + iVar1 * 0x9238] != '\0') && (iVar2 == 0)) {
+  iVar1 = __savegprlr_28(param_1);
+  lVar5 = 0;
+  SVar2 = LiveStorage_GetActiveStatsSource(iVar1);
+  if ((controllerStatData[iVar1].playerStats[SVar2].onlineStatWritePending != false) &&
+     (SVar2 == STATS_ONLINE)) {
     iVar1 = Sys_Milliseconds();
-    if ((DAT_8365e004 == 0) ||
-       (cVar3 = Live_GetShouldDemonwareRetry((iVar1 - DAT_8365e008) / 1000,DAT_8365e004,0x3c),
-       cVar3 != '\0')) {
-      lVar4 = 1;
+    if ((g_NumUploadUserStatsAttempts == 0) ||
+       (bVar3 = Live_GetShouldDemonwareRetry
+                          ((iVar1 - g_LastUploadUserStatsAttemptTime) / 1000,
+                           g_NumUploadUserStatsAttempts,0x3c), bVar3)) {
+      lVar5 = 1;
     }
-    if (lVar4 != 0) {
-      DAT_8365e004 = DAT_8365e004 + 1;
-      DAT_8365e008 = iVar1;
-      __restgprlr_28(lVar4);
-      return;
+    if (lVar5 != 0) {
+      g_NumUploadUserStatsAttempts = g_NumUploadUserStatsAttempts + 1;
+      g_LastUploadUserStatsAttemptTime = iVar1;
+      uVar4 = __restgprlr_28(lVar5);
+      return (bool)uVar4;
     }
   }
-  __restgprlr_28(0);
-  return;
+  uVar4 = __restgprlr_28(0);
+  return (bool)uVar4;
 }
 
 
 // 824F46F0  LiveStorage_UploadStats  (qcommon/com_storage_upload.cpp:77)
 
-void LiveStorage_UploadStats(void)
+void LiveStorage_UploadStats(int param_1)
 
 {
-  undefined8 uVar1;
-  char cVar5;
-  int iVar2;
-  undefined4 uVar3;
+  ulong uVar1;
+  bool bVar5;
+  _XUSER_SIGNIN_STATE _Var6;
+  uint uVar2;
+  overlappedTask *poVar3;
   int iVar4;
-  int iVar6;
-  undefined4 *puVar7;
+  dwFileTask **ppdVar7;
   
-  uVar1 = __savegprlr_27();
-  iVar6 = (int)uVar1 * 0x9238;
-  if ((&DAT_836398d0)[iVar6] == '\0') {
-    Com_Printf(6,0xffffffff8208b3a8,uVar1);
+  uVar1 = __savegprlr_27(param_1);
+  if (controllerStatData[uVar1].playerStats[0].statsFetched == false) {
+    Com_Printf(6,"Not uploading stats: stats not fetched (cont %i) will NOT retry.\n");
     __restgprlr_27();
     return;
   }
-  if ((&DAT_836398d2)[iVar6] == '\0') {
-    Com_Printf(6,0xffffffff8208b360,uVar1);
+  if (controllerStatData[uVar1].playerStats[0].statWriteNeeded == false) {
+    Com_Printf(6,"Not uploading stats: no statWriteNeeded (cont %i) will NOT retry.\n");
     __restgprlr_27();
     return;
   }
-  if ((&DAT_8363c8da)[iVar6] != '\0') {
-    Com_Printf(6,0xffffffff8208b318,uVar1);
+  if (controllerStatData[uVar1].writeStatsBufferInUse != false) {
+    Com_Printf(6,"Not uploading stats: writeStatsBufferInUse (cont %i) will NOT retry.\n");
     __restgprlr_27();
     return;
   }
-  cVar5 = Live_IsUserSignedInToLive(uVar1);
-  if (cVar5 != '\0') {
-    cVar5 = Live_IsUserSignedInToDemonware(uVar1);
-    if (cVar5 == '\0') {
-      Com_Printf(6,0xffffffff8208b288,uVar1);
-      (&DAT_836398d1)[iVar6] = 1;
+  bVar5 = Live_IsUserSignedInToLive(uVar1);
+  if (bVar5) {
+    bVar5 = Live_IsUserSignedInToDemonware(uVar1);
+    if (!bVar5) {
+      Com_Printf(6,"Not uploading stats: not connected to Demon Ware (cont %i) will retry.\n");
+      controllerStatData[uVar1].playerStats[0].onlineStatWritePending = true;
       __restgprlr_27();
       return;
     }
-    iVar2 = XUserGetSigninState(uVar1);
-    if (iVar2 == 2) {
-      cVar5 = Sys_IsMainThread();
-      if (cVar5 == '\0') {
-        MyAssertHandler(0xffffffff8208b238,0x7e,0,0xffffffff82000f98,0xffffffff82010b48);
+    _Var6 = XUserGetSigninState(uVar1);
+    if (_Var6 == eXUserSigninState_SignedInToLive) {
+      bVar5 = Sys_IsMainThread();
+      if (!bVar5) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage_upload.cpp"
+                        ,0x7e,0,"%s");
       }
-      (&DAT_8363c8da)[iVar6] = 1;
+      controllerStatData[uVar1].writeStatsBufferInUse = true;
       sync(1);
-      memcpy(&DAT_8363c8dc + iVar6,&DAT_836368d0 + iVar6,0x3000);
-      uVar3 = Com_BlockChecksumKey32(iVar6 + -0x7c9c3720,0x2ffc,0);
-      *(undefined4 *)(&DAT_8363c8dc + iVar6) = uVar3;
-      iVar2 = TaskManager_GetOpenTaskSlot(0xffffffff8365bc38,uVar1,7);
-      if (iVar2 == 0) {
-        Com_PrintWarning(0x10,0xffffffff8208b1fc);
-        (&DAT_836398d1)[iVar6] = 1;
-        (&DAT_8363c8da)[iVar6] = 0;
+      memcpy();
+      uVar2 = Com_BlockChecksumKey32(controllerStatData[uVar1].writeStatsBuffer + 4,0x2ffc,0);
+      *(uint *)controllerStatData[uVar1].writeStatsBuffer = uVar2;
+      poVar3 = TaskManager_GetOpenTaskSlot(&storageTasks,uVar1,7);
+      if (poVar3 == (overlappedTask *)0x0) {
+        Com_PrintWarning(0x10,"Couldn\'t allocate task for storage upload, will retry.\n");
+        controllerStatData[uVar1].playerStats[0].onlineStatWritePending = true;
+        controllerStatData[uVar1].writeStatsBufferInUse = false;
         __restgprlr_27();
         return;
       }
-      puVar7 = &DAT_8363fb04 + (int)uVar1 * 0x248e;
-      *(char **)*puVar7 = "mpdata";
-      *(undefined4 *)(iVar2 + 0x98) = *puVar7;
-      if ((&DAT_8363fb00)[iVar6] == '\0') {
-        iVar4 = dwUpdateFile(iVar2,*puVar7,&DAT_8363c8dc + iVar6,0x3000);
+      ppdVar7 = &controllerStatData[uVar1].fileTask;
+      (*ppdVar7)->m_filename = "mpdata";
+      poVar3->data = *ppdVar7;
+      if (controllerStatData[uVar1].createFile == false) {
+        iVar4 = dwUpdateFile(poVar3,*ppdVar7,controllerStatData[uVar1].writeStatsBuffer,0x3000);
         if (iVar4 == 0) {
-          Com_Printf(6,0xffffffff8208b1b4);
-          TaskManager_ClearTask(iVar2);
-          (&DAT_836398d1)[iVar6] = 1;
-          (&DAT_8363c8da)[iVar6] = 0;
+          Com_Printf(6,"dwUpdateFile failed, will retry.\n");
+          TaskManager_ClearTask(poVar3);
+          controllerStatData[uVar1].playerStats[0].onlineStatWritePending = true;
+          controllerStatData[uVar1].writeStatsBufferInUse = false;
           __restgprlr_27();
           return;
         }
       }
       else {
-        iVar4 = dwCreateFile();
+        iVar4 = dwCreateFile(poVar3,*ppdVar7,controllerStatData[uVar1].writeStatsBuffer,0x3000);
         if (iVar4 == 0) {
-          Com_Printf(6,0xffffffff8208b1d8);
-          TaskManager_ClearTask(iVar2);
-          (&DAT_836398d1)[iVar6] = 1;
-          (&DAT_8363c8da)[iVar6] = 0;
+          Com_Printf(6,"dwCreateFile failed, will retry.\n");
+          TaskManager_ClearTask(poVar3);
+          controllerStatData[uVar1].playerStats[0].onlineStatWritePending = true;
+          controllerStatData[uVar1].writeStatsBufferInUse = false;
           __restgprlr_27();
           return;
         }
       }
-      Com_Printf(0x10,0xffffffff8208b188,uVar1);
-      (&DAT_836398d2)[iVar6] = 0;
-      (&DAT_836398d3)[iVar6] = 0;
+      Com_Printf(0x10,"Beginning stats upload for controller %i\n");
+      controllerStatData[uVar1].playerStats[0].statWriteNeeded = false;
+      controllerStatData[uVar1].playerStats[0].firstTimeRunning = false;
       __restgprlr_27();
       return;
     }
   }
-  Com_Printf(6,0xffffffff8208b2d0,uVar1);
-  (&DAT_836398d1)[iVar6] = 1;
+  Com_Printf(6,"Not uploading stats: not connected to live (cont %i) will retry.\n");
+  controllerStatData[uVar1].playerStats[0].onlineStatWritePending = true;
   __restgprlr_27();
   return;
 }
@@ -141,59 +146,64 @@ void LiveStorage_UploadStats(void)
 
 // 824F4998  LiveStorage_StatsWriteComplete  (qcommon/com_storage_upload.cpp:258)
 
-void LiveStorage_StatsWriteComplete(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+taskCompleteResults LiveStorage_StatsWriteComplete(int param_1)
 
 {
-  int iVar2;
-  undefined8 uVar1;
+  byte bVar1;
+  overlappedTask *poVar2;
   int iVar3;
+  taskCompleteResults tVar4;
   
-  iVar2 = __savegprlr_25();
-  iVar3 = iVar2 * 0xa0;
-  if ((&DAT_8365bcd4)[iVar3] == '\0') {
-    MyAssertHandler(0xffffffff8208b238,0x10a,0,0xffffffff82000f98,0xffffffff820851b0);
+  iVar3 = __savegprlr_25(param_1);
+  poVar2 = storageTasks.tasks + iVar3;
+  if (storageTasks.tasks[iVar3].active == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage_upload.cpp"
+                    ,0x10a,0,"%s");
   }
-  if ((&DAT_8365bcd0)[iVar2 * 0x28] != 7) {
-    MyAssertHandler(0xffffffff8208b238,0x10b,0,0xffffffff82000f98,0xffffffff8208b47c);
+  if (storageTasks.tasks[iVar3].type != 7) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage_upload.cpp"
+                    ,0x10b,0,"%s");
   }
-  iVar2 = (uint)(byte)(&DAT_8365bcd5)[iVar3] * 0x9238;
-  if ((&DAT_8363fb00)[iVar2] == '\0') {
-    uVar1 = dwUpdateFileComplete
-                      (&DAT_8365bc40 + iVar3,
-                       (&DAT_8363fb04)[(uint)(byte)(&DAT_8365bcd5)[iVar3] * 0x248e]);
+  bVar1 = storageTasks.tasks[iVar3].controllerIndex;
+  if (controllerStatData[bVar1].createFile == false) {
+    tVar4 = dwUpdateFileComplete(poVar2,controllerStatData[bVar1].fileTask);
   }
   else {
-    uVar1 = dwCreateFileComplete();
-    if ((int)uVar1 == 1) {
-      (&DAT_8363fb00)[iVar2] = '\0';
+    tVar4 = dwCreateFileComplete(poVar2,controllerStatData[bVar1].fileTask);
+    if (tVar4 == TASK_COMPLETE) {
+      controllerStatData[bVar1].createFile = false;
       goto LAB_824f4a78;
     }
   }
-  if ((int)uVar1 == 0) {
-    __restgprlr_25(0);
-    return;
+  if (tVar4 == TASK_NOTCOMPLETE) {
+    tVar4 = __restgprlr_25(0);
+    return tVar4;
   }
 LAB_824f4a78:
-  if ((&DAT_8363c8da)[iVar2] == '\0') {
-    MyAssertHandler(0xffffffff8208b238,0x120,0,0xffffffff82000f98,0xffffffff8208b454);
+  if (controllerStatData[bVar1].writeStatsBufferInUse == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage_upload.cpp"
+                    ,0x120,0,"%s");
   }
-  (&DAT_8363c8da)[iVar2] = 0;
+  controllerStatData[bVar1].writeStatsBufferInUse = false;
   sync(1);
-  UI_CloseMenu(0,0xffffffff8208b440);
-  TaskManager_ClearTask(&DAT_8365bc40 + iVar3);
-  if ((int)uVar1 == 2) {
-    Com_PrintError(0x10,0xffffffff8208b418);
-    (&DAT_836398d2)[iVar2] = 1;
-    (&DAT_836398d1)[iVar2] = 1;
-    __restgprlr_25(2);
-    return;
+  UI_CloseMenu(LOCAL_CLIENT_0,"popup_writingdata");
+  TaskManager_ClearTask(poVar2);
+  if (tVar4 == TASK_ERROR) {
+    Com_PrintError(0x10,"Unable to write persistent stats data\n");
+    controllerStatData[bVar1].playerStats[0].statWriteNeeded = true;
+    controllerStatData[bVar1].playerStats[0].onlineStatWritePending = true;
+    tVar4 = __restgprlr_25(2);
+    return tVar4;
   }
-  if ((int)uVar1 != 1) {
-    MyAssertHandler(0xffffffff8208b238,0x131,0,0xffffffff82058ff0,0xffffffff8208ad4c,uVar1);
+  if (tVar4 != TASK_COMPLETE) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage_upload.cpp"
+                    ,0x131,0,"%s\n\t(result) = %i");
   }
-  Com_Printf(0x10,0xffffffff8208b3ec);
-  (&DAT_836398d1)[iVar2] = 0;
-  __restgprlr_25(1);
-  return;
+  Com_Printf(0x10,"Successfully wrote persistent stats data\n");
+  controllerStatData[bVar1].playerStats[0].onlineStatWritePending = false;
+  tVar4 = __restgprlr_25(1);
+  return tVar4;
 }
 

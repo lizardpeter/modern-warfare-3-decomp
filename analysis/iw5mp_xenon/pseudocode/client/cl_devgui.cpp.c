@@ -2,7 +2,9 @@
 
 // 82336CC8  CL_DevGuiFrame  (client/cl_devgui.cpp:46)
 
-void CL_DevGuiFrame(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CL_DevGuiFrame(LocalClientNum_t param_1)
 
 {
   return;
@@ -11,14 +13,17 @@ void CL_DevGuiFrame(void)
 
 // 82336CD0  CL_CreateDevGui  (client/cl_devgui.cpp:176)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 void CL_CreateDevGui(void)
 
 {
   R_CreateDevGui();
-  Cbuf_InsertText(0,0xffffffff8202e740);
-  Cbuf_InsertText(0,0xffffffff8202e730);
-  Cbuf_InsertText(0,0xffffffff8202e71c);
-  Cbuf_InsertText(0,0xffffffff8202e708);
+  Cbuf_InsertText(LOCAL_CLIENT_0,"exec devgui_main");
+  Cbuf_InsertText(LOCAL_CLIENT_0,"exec devgui_mp");
+  Cbuf_InsertText(LOCAL_CLIENT_0,"exec devgui_maps_mp");
+  Cbuf_InsertText(LOCAL_CLIENT_0,"exec devgui_xenon");
   Com_InitSoundDevGuiGraphs();
   CG_InitVisionSetsMenu();
   return;
@@ -26,6 +31,8 @@ void CL_CreateDevGui(void)
 
 
 // 82336D38  CL_DestroyDevGui  (client/cl_devgui.cpp:218)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void CL_DestroyDevGui(void)
 

@@ -9,7 +9,8 @@ void __unwind_72170(void)
   
   if ((*(uint *)(in_r12 + -0x30) & 1) != 0) {
     *(uint *)(in_r12 + -0x30) = *(uint *)(in_r12 + -0x30) & 0xfffffffe;
-    bdReference<bdDataChunk>___bdReference<bdDataChunk>(*(undefined4 *)(in_r12 + 0x14));
+    bdReference<bdDataChunk>::~bdReference<bdDataChunk>
+              (*(bdReference<bdDataChunk> **)(in_r12 + 0x14));
   }
   return;
 }
@@ -22,7 +23,8 @@ void __unwind_72272(void)
 {
   int in_r12;
   
-  bdReference<bdDataChunk>___bdReference<bdDataChunk>(*(undefined4 *)(in_r12 + 0x1c));
+  bdReference<bdDataChunk>::~bdReference<bdDataChunk>(*(bdReference<bdDataChunk> **)(in_r12 + 0x1c))
+  ;
   return;
 }
 

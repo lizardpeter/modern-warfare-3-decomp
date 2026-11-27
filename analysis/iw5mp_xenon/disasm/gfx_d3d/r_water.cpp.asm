@@ -11,8 +11,12 @@
   82789194  4BD7960C             b 0x825027a0
 
 ; 82789168  __lvx  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/vectorintrinsics.h:98)
+  82789168  102320C3             lvx128 v1,r3,r4
+  8278916C  4E800020             blr
 
 ; 82789170  __stvx  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/vectorintrinsics.h:104)
+  82789170  102321C3             stvx128 v1,r3,r4
+  82789174  4E800020             blr
 
 ; 82789198  WaterFrequenciesAtTime  (gfx_d3d/r_water.cpp:291)
   82789198  7D8802A6             mfspr r12,LR
@@ -263,21 +267,58 @@ LAB_827894fc:
   8278952C  3B600000             li r27,0x0
   82789530  22FF0010             subfic r23,r31,0x10
   82789534  3B0B0001             addi r24,r11,0x1
+LAB_82789538:
   82789538  7D77CA14             add r11,r23,r25
   8278953C  39000000             li r8,0x0
   82789540  556AE13E             rlwinm r10,r11,0x1c,0x4,0x1f
   82789544  7F29CB78             or r9,r25,r25
   82789548  7D79EA14             add r11,r25,r29
   8278954C  7D4903A6             mtspr CTR,r10
+LAB_82789550:
   82789550  7D5B4214             add r10,r27,r8
-  82789554  13E048C7             vcmpequd v31,v0,v9
-  82789558  13C358C7             vcmpequd v30,v3,v11
+  82789554  13E048C7             lvx128 v63,0,r9
+  82789558  13C358C7             lvx128 v62,r3,r11
   8278955C  39080010             addi r8,r8,0x10
   82789560  7CEAE214             add r7,r10,r28
-  82789564  13A058C7             vcmpequd v29,v0,v11
+  82789564  13A058C7             lvx128 v61,0,r11
   82789568  7CCAEA14             add r6,r10,r29
-  8278956C  139E58C7             vcmpequd v28,v30,v11
+  8278956C  139E58C7             lvx128 v60,r30,r11
   82789570  7CAAD214             add r5,r10,r26
+  82789574  1B7FEB25             vmrghw128 v59,v63,v61
+  82789578  134AF8C7             lvx128 v58,r10,r31
+  8278957C  1B3EE325             vmrghw128 v57,v62,v60
+  82789580  1B1FEB65             vmrglw128 v56,v63,v61
+  82789584  12E7F8C7             lvx128 v55,r7,r31
+  82789588  1ADEE365             vmrglw128 v54,v62,v60
+  8278958C  12A6F8C7             lvx128 v53,r6,r31
+  82789590  1285F8C7             lvx128 v52,r5,r31
+  82789594  1A7BCB25             vmrghw128 v51,v59,v57
+  82789598  1A5AAB25             vmrghw128 v50,v58,v53
+  8278959C  1A37A325             vmrghw128 v49,v55,v52
+  827895A0  1A1AAB65             vmrglw128 v48,v58,v53
+  827895A4  19F7A365             vmrglw128 v47,v55,v52
+  827895A8  19DBCB65             vmrglw128 v46,v59,v57
+  827895AC  19B28B25             vmrghw128 v45,v50,v49
+  827895B0  19928B65             vmrglw128 v44,v50,v49
+  827895B4  19707B25             vmrghw128 v43,v48,v47
+  827895B8  19507B65             vmrglw128 v42,v48,v47
+  827895BC  1938B325             vmrghw128 v41,v56,v54
+  827895C0  1918B365             vmrglw128 v40,v56,v54
+  827895C4  11A049C7             stvx128 v45,0,r9
+  827895C8  7D244A14             add r9,r4,r9
+  827895CC  118359C7             stvx128 v44,r3,r11
+  827895D0  116059C7             stvx128 v43,0,r11
+  827895D4  115E59C7             stvx128 v42,r30,r11
+  827895D8  7D645A14             add r11,r4,r11
+  827895DC  126AF9C7             stvx128 v51,r10,r31
+  827895E0  11C7F9C7             stvx128 v46,r7,r31
+  827895E4  1126F9C7             stvx128 v41,r6,r31
+  827895E8  1105F9C7             stvx128 v40,r5,r31
+  827895EC  4200FF64             bdnz 0x82789550
+  827895F0  3718FFFF             subic. r24,r24,0x1
+  827895F4  7F7B2214             add r27,r27,r4
+  827895F8  3B390010             addi r25,r25,0x10
+  827895FC  4082FF3C             bne 0x82789538
 LAB_82789600:
   82789600  382100A0             addi r1,r1,0xa0
   82789604  4818D0F0             b 0x829166f4
@@ -443,7 +484,9 @@ LAB_8278981c:
   8293F5F4  3D408480             lis r10,-0x7b80
   8293F5F8  392B3CD0             addi r9,r11,0x3cd0
   8293F5FC  390A9A00             subi r8,r10,0x6600
-  8293F600  13E048C7             vcmpequd v31,v0,v9
+  8293F600  13E048C7             lvx128 v63,0,r9
+  8293F604  13E041C7             stvx128 v63,0,r8
+  8293F608  4E800020             blr
 
 ; 82789838  WaterPixelsFromAmplitudes  (gfx_d3d/r_water.cpp:455)
   82789838  7D8802A6             mfspr r12,LR
@@ -561,8 +604,89 @@ LAB_827899b0:
   827899D8  38E83E40             addi r7,r8,0x3e40
   827899DC  ED606024             fdivs f11,f0,f12
   827899E0  D1610050             stfs f11,0x50(r1)
-  827899E4  13E04C07             vcmpneb. v31,v0,v9
-  827899E8  13C03C07             vcmpneb. v30,v0,v7
+  827899E4  13E04C07             lvlx128 v63,0,r9
+  827899E8  13C03C07             lvlx128 v62,0,r7
+  827899EC  1BA0F735             vspltw128 v61,v62,0x0
+  827899F0  1BC0FF35             vspltw128 v62,v63,0x0
+  827899F4  419A012C             beq cr6,0x82789b20
+  827899F8  397EFFFF             subi r11,r30,0x1
+  827899FC  3CA08405             lis r5,-0x7bfb
+  82789A00  5569E13E             rlwinm r9,r11,0x1c,0x4,0x1f
+  82789A04  3C808480             lis r4,-0x7b80
+  82789A08  38C90001             addi r6,r9,0x1
+  82789A0C  3C608218             lis r3,-0x7de8
+  82789A10  3FC08405             lis r30,-0x7bfb
+  82789A14  3BA5F790             subi r29,r5,0x870
+  82789A18  38849A00             subi r4,r4,0x6600
+  82789A1C  7CC903A6             mtspr CTR,r6
+  82789A20  3CC08405             lis r6,-0x7bfb
+  82789A24  3863A050             subi r3,r3,0x5fb0
+  82789A28  38C6F820             subi r6,r6,0x7e0
+  82789A2C  3BDEF600             subi r30,r30,0xa00
+  82789A30  1060E8C3             lvx128 v3,0,r29
+  82789A34  10E020C3             lvx128 v7,0,r4
+  82789A38  38E0FFF0             li r7,-0x10
+  82789A3C  395C0030             addi r10,r28,0x30
+  82789A40  13E018C7             lvx128 v63,0,r3
+  82789A44  397B0010             addi r11,r27,0x10
+  82789A48  11A030C3             lvx128 v13,0,r6
+  82789A4C  7D3BE050             subf r9,r27,r28
+  82789A50  1000F0C3             lvx128 v0,0,r30
+  82789A54  3900FFD0             li r8,-0x30
+  82789A58  38A00010             li r5,0x10
+  82789A5C  38C00020             li r6,0x20
+LAB_82789a60:
+  82789A60  118A40C3             lvx128 v12,r10,r8
+  82789A64  114C032E             vmaddfp v10,v12,v12,v0
+  82789A68  118958C3             lvx128 v12,r9,r11
+  82789A6C  112C032E             vmaddfp v9,v12,v12,v0
+  82789A70  116A38C3             lvx128 v11,r10,r7
+  82789A74  110B02EE             vmaddfp v8,v11,v11,v0
+  82789A78  116050C3             lvx128 v11,0,r10
+  82789A7C  10CB02EE             vmaddfp v6,v11,v11,v0
+  82789A80  118B38C3             lvx128 v12,r11,r7
+  82789A84  394A0040             addi r10,r10,0x40
+  82789A88  116C532E             vmaddfp v11,v12,v12,v10
+  82789A8C  118058C3             lvx128 v12,0,r11
+  82789A90  114C4B2E             vmaddfp v10,v12,v12,v9
+  82789A94  118B28C3             lvx128 v12,r11,r5
+  82789A98  112C432E             vmaddfp v9,v12,v12,v8
+  82789A9C  118B30C3             lvx128 v12,r11,r6
+  82789AA0  118C332E             vmaddfp v12,v12,v12,v6
+  82789AA4  396B0040             addi r11,r11,0x40
+  82789AA8  10C0594A             vrsqrtefp v6,v11
+  82789AAC  10A0514A             vrsqrtefp v5,v10
+  82789AB0  1080494A             vrsqrtefp v4,v9
+  82789AB4  1100614A             vrsqrtefp v8,v12
+  82789AB8  116B69AE             vmaddfp v11,v11,v6,v13
+  82789ABC  114A696E             vmaddfp v10,v10,v5,v13
+  82789AC0  1129692E             vmaddfp v9,v9,v4,v13
+  82789AC4  118C6A2E             vmaddfp v12,v12,v8,v13
+  82789AC8  178BF095             vmulfp128 v60,v11,v62
+  82789ACC  176AF095             vmulfp128 v59,v10,v62
+  82789AD0  1749F095             vmulfp128 v58,v9,v62
+  82789AD4  172CF095             vmulfp128 v57,v12,v62
+  82789AD8  1B1FE2E5             vminfp128 v56,v63,v60
+  82789ADC  1AFFDAE5             vminfp128 v55,v63,v59
+  82789AE0  1ADFD2E5             vminfp128 v54,v63,v58
+  82789AE4  1ABFCAE5             vminfp128 v53,v63,v57
+  82789AE8  1698E8B5             vmulfp128 v52,v56,v61
+  82789AEC  1677E8B5             vmulfp128 v51,v55,v61
+  82789AF0  1656E8B5             vmulfp128 v50,v54,v61
+  82789AF4  1635E8B5             vmulfp128 v49,v53,v61
+  82789AF8  1A00A275             vcfpuxws128 v48,v52,0x0
+  82789AFC  19E09A75             vcfpuxws128 v47,v51,0x0
+  82789B00  19C09275             vcfpuxws128 v46,v50,0x0
+  82789B04  19A08A75             vcfpuxws128 v45,v49,0x0
+  82789B08  159079E5             vperm128 v44,v48,v47,v7
+  82789B0C  156E69E5             vperm128 v43,v46,v45,v7
+  82789B10  154C58E5             vperm128 v42,v44,v43,v3
+  82789B14  1140F9C7             stvx128 v42,0,r31
+  82789B18  3BFF0010             addi r31,r31,0x10
+  82789B1C  4200FF44             bdnz 0x82789a60
+LAB_82789b20:
+  82789B20  38210090             addi r1,r1,0x90
+  82789B24  4818CBDC             b 0x82916700
 
 ; 82789B28  GenerateMipMaps  (gfx_d3d/r_water.cpp:588)
   82789B28  7D8802A6             mfspr r12,LR

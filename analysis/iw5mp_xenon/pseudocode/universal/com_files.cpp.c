@@ -2,17 +2,19 @@
 
 // 825D59B0  FS_AllocMem  (universal/com_files.cpp:407)
 
-void FS_AllocMem(undefined8 param_1)
+void * FS_AllocMem(int param_1)
 
 {
-  Z_VirtualAlloc(param_1,0xffffffff82174d08,0);
-  return;
+  void *pvVar1;
+  
+  pvVar1 = Z_VirtualAlloc(param_1,"FS_AllocMem",0);
+  return pvVar1;
 }
 
 
 // 825D59C0  FS_FreeMem  (universal/com_files.cpp:419)
 
-void FS_FreeMem(undefined8 param_1)
+void FS_FreeMem(void *param_1)
 
 {
   Z_VirtualFree(param_1,0);
@@ -22,29 +24,27 @@ void FS_FreeMem(undefined8 param_1)
 
 // 825D77B8  FS_CheckRemotePCShare  (universal/com_files.cpp:440)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void FS_CheckRemotePCShare(void)
 
 {
   bool bVar1;
-  HANDLE hObject;
+  _iobuf *p_Var2;
   
-  if (DAT_8401596c != 0) {
-    if (*(char **)(DAT_8401596c + 0xc) != (char *)0x0) {
-      bVar1 = true;
-      if (**(char **)(DAT_8401596c + 0xc) != '\0') goto LAB_825d7800;
-    }
+  if (((rpcn == (dvar_t *)0x0) || ((rpcn->current).string == (char *)0x0)) ||
+     (bVar1 = true, *(rpcn->current).string == '\0')) {
+    bVar1 = false;
   }
-  bVar1 = false;
-LAB_825d7800:
   if (bVar1) {
-    hObject = (HANDLE)FS_FOpenFileWriteRemote(0xffffffff82175060,0);
-    if (hObject == (HANDLE)0x0) {
-      Dvar_Reset(DAT_8401596c,0);
-      Com_PrintError(7,0xffffffff82175034);
+    p_Var2 = FS_FOpenFileWriteRemote("RFS_Test",(char *)0x0);
+    if (p_Var2 == (_iobuf *)0x0) {
+      Dvar_Reset(rpcn,DVAR_SOURCE_INTERNAL);
+      Com_PrintError(7,"Remote sharing test failed, turning off.\n");
     }
     else {
-      FS_FileClose(hObject);
-      FS_DeleteRemote(0xffffffff82175060);
+      FS_FileClose(p_Var2);
+      FS_DeleteRemote("RFS_Test");
     }
   }
   return;
@@ -53,341 +53,342 @@ LAB_825d7800:
 
 // 825D6EF8  FS_InitRemotePCPath_FromStoredUser  (universal/com_files.cpp:462)
 
-ulonglong FS_InitRemotePCPath_FromStoredUser(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void FS_InitRemotePCPath_FromStoredUser(void)
 
 {
-  undefined8 uVar1;
-  ulonglong uVar2;
-  BOOL BVar3;
-  undefined1 auStack_210 [256];
-  undefined1 auStack_110 [256];
+  char *pcVar1;
+  _iobuf *p_Var2;
+  char acStack_210 [256];
+  char acStack_110 [256];
   
-  uVar1 = Sys_DefaultInstallPath();
-  FS_BuildOSPathForThread(uVar1,0xffffffff820068af,0xffffffff82174fe8,auStack_210);
-  uVar2 = FS_FileOpenReadText(auStack_210);
-  if ((uVar2 & 0xffffffff) != 0) {
-    FS_FileRead(auStack_110,0x100,uVar2);
-    Dvar_SetFromString(DAT_8401596c,auStack_110);
-    BVar3 = FS_FileClose((HANDLE)uVar2);
-    uVar2 = (ulonglong)BVar3;
+  pcVar1 = Sys_DefaultInstallPath();
+  FS_BuildOSPathForThread(pcVar1,"","RFS_User",acStack_210);
+  p_Var2 = FS_FileOpenReadText(acStack_210);
+  if (p_Var2 != (_iobuf *)0x0) {
+    FS_FileRead(acStack_110,0x100,p_Var2);
+    Dvar_SetFromString(rpcn,acStack_110);
+    FS_FileClose(p_Var2);
   }
-  return uVar2;
+  return;
 }
 
 
 // 825D6F78  FS_InitRemotePCPath_StoreUser  (universal/com_files.cpp:480)
 
-ulonglong FS_InitRemotePCPath_StoreUser(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void FS_InitRemotePCPath_StoreUser(void)
 
 {
   char cVar1;
   char *pcVar2;
-  undefined8 uVar3;
-  ulonglong uVar4;
-  BOOL BVar5;
-  char *pcVar6;
-  undefined1 auStack_110 [256];
+  _iobuf *p_Var3;
+  char *pcVar4;
+  char acStack_110 [256];
   
-  uVar3 = Sys_DefaultInstallPath();
-  FS_BuildOSPathForThread(uVar3,0xffffffff820068af,0xffffffff82174fe8,auStack_110);
-  uVar4 = FS_FileOpenWriteText(auStack_110);
-  if ((uVar4 & 0xffffffff) != 0) {
-    pcVar2 = *(char **)(DAT_8401596c + 0xc);
-    pcVar6 = pcVar2;
+  pcVar2 = Sys_DefaultInstallPath();
+  FS_BuildOSPathForThread(pcVar2,"","RFS_User",acStack_110);
+  p_Var3 = FS_FileOpenWriteText(acStack_110);
+  if (p_Var3 != (_iobuf *)0x0) {
+    pcVar2 = (rpcn->current).string;
+    pcVar4 = pcVar2;
     do {
-      cVar1 = *pcVar6;
-      pcVar6 = pcVar6 + 1;
+      cVar1 = *pcVar4;
+      pcVar4 = pcVar4 + 1;
     } while (cVar1 != '\0');
-    FS_FileWrite(pcVar2,(int)pcVar6 - (int)pcVar2,uVar4);
-    BVar5 = FS_FileClose((HANDLE)uVar4);
-    uVar4 = (ulonglong)BVar5;
+    FS_FileWrite(pcVar2,(int)pcVar4 - (int)pcVar2,p_Var3);
+    FS_FileClose(p_Var3);
   }
-  return uVar4;
+  return;
 }
 
 
 // 825D7870  FS_InitRemotePCPaths  (universal/com_files.cpp:496)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void FS_InitRemotePCPaths(void)
 
 {
   bool bVar1;
-  undefined8 uVar2;
+  char *pcVar2;
   
-  DAT_8401596c = Dvar_RegisterString(0xffffffff821750e4,0xffffffff820068af,0,0xffffffff821750ec);
-  DAT_84014950 = Dvar_RegisterString(0xffffffff821750dc,0xffffffff821750a0,0,0xffffffff821750ac);
-  if (((DAT_8401596c == 0) || (*(char **)(DAT_8401596c + 0xc) == (char *)0x0)) ||
-     (bVar1 = true, **(char **)(DAT_8401596c + 0xc) == '\0')) {
+  rpcn = Dvar_RegisterString("rpcn","",0,"Remote PC Name for writing output files");
+  rpcd = Dvar_RegisterString("rpcd","xenonOutput",0,"Remote PC directory for writing output files");
+  if (((rpcn == (dvar_t *)0x0) || ((rpcn->current).string == (char *)0x0)) ||
+     (bVar1 = true, *(rpcn->current).string == '\0')) {
     bVar1 = false;
   }
   if (!bVar1) {
     FS_InitRemotePCPath_FromStoredUser();
   }
   FS_CheckRemotePCShare();
-  if (((DAT_8401596c == 0) || (*(char **)(DAT_8401596c + 0xc) == (char *)0x0)) ||
-     (bVar1 = true, **(char **)(DAT_8401596c + 0xc) == '\0')) {
+  if (((rpcn == (dvar_t *)0x0) || ((rpcn->current).string == (char *)0x0)) ||
+     (bVar1 = true, *(rpcn->current).string == '\0')) {
     bVar1 = false;
   }
   if (bVar1) {
     FS_InitRemotePCPath_StoreUser();
-    uVar2 = 0xffffffff82175088;
+    pcVar2 = "Remote Share: Enabled.\n";
   }
   else {
-    DAT_8401596c = 0;
-    uVar2 = 0xffffffff8217506c;
+    rpcn = (dvar_t *)0x0;
+    pcVar2 = "Remote Share: Disabled.\n";
   }
-  Com_Printf(7,uVar2);
+  Com_Printf(7,pcVar2);
   return;
 }
 
 
 // 825D59C8  FS_IsUsingRemotePCSharing  (universal/com_files.cpp:519)
 
-undefined8 FS_IsUsingRemotePCSharing(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+bool FS_IsUsingRemotePCSharing(void)
 
 {
-  undefined8 uVar1;
+  bool bVar1;
   
-  if (((DAT_8401596c == 0) || (*(char **)(DAT_8401596c + 0xc) == (char *)0x0)) ||
-     (uVar1 = 1, **(char **)(DAT_8401596c + 0xc) == '\0')) {
-    uVar1 = 0;
+  if (((rpcn == (dvar_t *)0x0) || ((rpcn->current).string == (char *)0x0)) ||
+     (bVar1 = true, *(rpcn->current).string == '\0')) {
+    bVar1 = false;
   }
-  return uVar1;
+  return bVar1;
 }
 
 
 // 825D5A08  FS_GetRemotePCPath  (universal/com_files.cpp:527)
 
-undefined8 FS_GetRemotePCPath(ulonglong param_1)
+char * FS_GetRemotePCPath(char *param_1)
 
 {
-  if ((param_1 & 0xffffffff) == 0) {
-    param_1 = (ulonglong)*(uint *)(DAT_84014950 + 0xc);
-  }
-  Com_sprintf(0xffffffff84015980,0x100,0xffffffff82174d14,*(undefined4 *)(DAT_8401596c + 0xc),
-              param_1);
-  return 0xffffffff84015980;
+  Com_sprintf(fullPath,0x100,"net:\\smb\\%s\\%s");
+  return fullPath;
 }
 
 
 // 825D7010  FS_CopyFileToRemotePCShare  (universal/com_files.cpp:540)
 
-void FS_CopyFileToRemotePCShare(void)
+void FS_CopyFileToRemotePCShare(char *param_1)
 
 {
   bool bVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
-  undefined8 uVar4;
-  BOOL BVar5;
-  CHAR aCStack_220 [256];
-  CHAR aCStack_120 [288];
+  char *pcVar2;
+  char *pcVar3;
+  char acStack_220 [256];
+  char acStack_120 [288];
   
-  uVar2 = __savegprlr_29();
-  uVar3 = uVar2;
-  if ((uVar2 & 0xffffffff) == 0) {
-    uVar3 = MyAssertHandler(0xffffffff82174d28,0x21d,0,0xffffffff82000f98,0xffffffff8208e528);
+  pcVar2 = (char *)__savegprlr_29(param_1);
+  if (pcVar2 == (char *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_files.cpp",0x21d
+                    ,0,"%s");
   }
-  if (((DAT_8401596c == 0) || (*(char **)(DAT_8401596c + 0xc) == (char *)0x0)) ||
-     (bVar1 = true, **(char **)(DAT_8401596c + 0xc) == '\0')) {
+  if (((rpcn == (dvar_t *)0x0) || ((rpcn->current).string == (char *)0x0)) ||
+     (bVar1 = true, *(rpcn->current).string == '\0')) {
     bVar1 = false;
   }
   if (bVar1) {
-    uVar4 = Sys_DefaultInstallPath();
-    FS_BuildOSPathForThread(uVar4,0xffffffff820068af,uVar2,aCStack_120);
-    Com_sprintf(0xffffffff84015980,0x100,0xffffffff82174d14,*(undefined4 *)(DAT_8401596c + 0xc),
-                *(undefined4 *)(DAT_84014950 + 0xc));
-    FS_BuildOSPathForThread(0xffffffff84015980,0xffffffff820068af,uVar2,aCStack_220);
-    FS_CreatePath(aCStack_220);
-    BVar5 = CopyFileA(aCStack_120,aCStack_220,0);
-    uVar3 = (ulonglong)BVar5;
+    pcVar3 = Sys_DefaultInstallPath();
+    FS_BuildOSPathForThread(pcVar3,"",pcVar2,acStack_120);
+    Com_sprintf(fullPath,0x100,"net:\\smb\\%s\\%s");
+    FS_BuildOSPathForThread(fullPath,"",pcVar2,acStack_220);
+    FS_CreatePath(acStack_220);
+    CopyFileA(acStack_120,acStack_220,0);
   }
-  __restgprlr_29(uVar3);
+  __restgprlr_29();
   return;
 }
 
 
 // 825D7110  FS_FOpenFileReadRemote  (universal/com_files.cpp:560)
 
-void FS_FOpenFileReadRemote(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+int FS_FOpenFileReadRemote(char *param_1,char *param_2,void **param_3)
 
 {
-  ulonglong uVar1;
-  HANDLE pvVar2;
-  CHAR aCStack_130 [304];
+  char *pcVar1;
+  _iobuf *p_Var2;
+  int iVar3;
+  ulonglong uVar4;
+  char acStack_130 [304];
   
-  uVar1 = __savegprlr_27();
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82174d28,0x234,0,0xffffffff82000f98,0xffffffff82059864);
+  uVar4 = (ulonglong)(int)param_3;
+  pcVar1 = (char *)__savegprlr_27(param_1);
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_files.cpp",0x234
+                    ,0,"%s");
   }
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82174d28,0x235,0,0xffffffff82000f98,0xffffffff8215192c);
+  if (pcVar1 == (char *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_files.cpp",0x235
+                    ,0,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    param_2 = (ulonglong)*(uint *)(DAT_84014950 + 0xc);
+  Com_sprintf(fullPath,0x100,"net:\\smb\\%s\\%s");
+  FS_BuildOSPathForThread(fullPath,"",pcVar1,acStack_130);
+  p_Var2 = CreateFileA(acStack_130,0x80000000,0,(void *)0x0,3,0,(void *)0x0);
+  if (p_Var2 == (_iobuf *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_files.cpp",0x23b
+                    ,0,"%s");
   }
-  Com_sprintf(0xffffffff84015980,0x100,0xffffffff82174d14,*(undefined4 *)(DAT_8401596c + 0xc),
-              param_2);
-  FS_BuildOSPathForThread(0xffffffff84015980,0xffffffff820068af,uVar1,aCStack_130);
-  pvVar2 = CreateFileA(aCStack_130,0x80000000,0,(LPSECURITY_ATTRIBUTES)0x0,3,0,(HANDLE)0x0);
-  if (pvVar2 == (HANDLE)0x0) {
-    MyAssertHandler(0xffffffff82174d28,0x23b,0,0xffffffff82000f98,0xffffffff8200fdb0);
+  else if (p_Var2 == (_iobuf *)0xffffffff) {
+    *(undefined4 *)uVar4 = 0;
+    iVar3 = __restgprlr_27(0xffffffffffffffff);
+    return iVar3;
   }
-  else if (pvVar2 == (HANDLE)0xffffffff) {
-    *(undefined4 *)param_3 = 0;
-    __restgprlr_27(0xffffffffffffffff);
-    return;
+  *(undefined4 *)uVar4 = p_Var2;
+  if (p_Var2 == (_iobuf *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_files.cpp",0x3f7
+                    ,0,"%s");
   }
-  *(undefined4 *)param_3 = pvVar2;
-  if (pvVar2 == (HANDLE)0x0) {
-    MyAssertHandler(0xffffffff82174d28,0x3f7,0,0xffffffff82000f98,0xffffffff8207057c);
-  }
-  FS_FileGetFileSize(pvVar2);
-  __restgprlr_27();
-  return;
+  iVar3 = FS_FileGetFileSize(p_Var2);
+  iVar3 = __restgprlr_27(iVar3);
+  return iVar3;
 }
 
 
 // 825D7278  FS_ReadRemoteFile  (universal/com_files.cpp:583)
 
-void FS_ReadRemoteFile(undefined8 param_1,undefined8 param_2,ulonglong param_3)
+int FS_ReadRemoteFile(char *param_1,char *param_2,void **param_3)
 
 {
   char *pcVar1;
-  int iVar2;
+  uint uVar2;
   int iVar3;
-  HANDLE local_30 [12];
+  void *pvVar4;
+  ulonglong uVar5;
+  _iobuf *local_30 [12];
   
-  pcVar1 = (char *)__savegprlr_28();
+  uVar5 = (ulonglong)(int)param_3;
+  pcVar1 = (char *)__savegprlr_28(param_1);
   if ((pcVar1 == (char *)0x0) || (*pcVar1 == '\0')) {
-    Com_Error(0,0xffffffff82174f8c);
+    Com_Error(ERR_FATAL,"\x15FS_ReadFile with empty name\n");
   }
-  iVar2 = FS_FOpenFileReadRemote(pcVar1,param_2,local_30);
-  if (local_30[0] == (HANDLE)0x0) {
-    if ((param_3 & 0xffffffff) != 0) {
-      *(int *)param_3 = 0;
+  uVar2 = FS_FOpenFileReadRemote(pcVar1,param_2,local_30);
+  if (local_30[0] == (_iobuf *)0x0) {
+    if ((uVar5 & 0xffffffff) != 0) {
+      *(undefined4 *)uVar5 = 0;
     }
-    __restgprlr_28(0xffffffffffffffff);
-    return;
+    iVar3 = __restgprlr_28(0xffffffffffffffff);
+    return iVar3;
   }
-  if ((param_3 & 0xffffffff) != 0) {
-    iVar3 = Z_VirtualAlloc(iVar2 + 1,0xffffffff82174d08,0);
-    *(int *)param_3 = iVar3;
-    FS_FileRead(iVar3,iVar2,local_30[0]);
-    *(undefined1 *)(iVar2 + iVar3) = 0;
+  if ((uVar5 & 0xffffffff) != 0) {
+    pvVar4 = Z_VirtualAlloc(uVar2 + 1,"FS_AllocMem",0);
+    *(undefined4 *)uVar5 = pvVar4;
+    FS_FileRead(pvVar4,uVar2,local_30[0]);
+    *(undefined1 *)(uVar2 + (int)pvVar4) = 0;
   }
   FS_FileClose(local_30[0]);
-  __restgprlr_28(iVar2);
-  return;
+  iVar3 = __restgprlr_28(uVar2);
+  return iVar3;
 }
 
 
 // 825D7340  FS_FOpenFileWriteRemote  (universal/com_files.cpp:629)
 
-void FS_FOpenFileWriteRemote(undefined8 param_1,ulonglong param_2)
+void * FS_FOpenFileWriteRemote(char *param_1,char *param_2)
 
 {
-  ulonglong uVar1;
+  char *pcVar1;
   int iVar2;
-  HANDLE pvVar3;
-  HANDLE pvVar4;
-  CHAR aCStack_130 [304];
+  void *pvVar3;
+  void *pvVar4;
+  char acStack_130 [304];
   
-  uVar1 = __savegprlr_28();
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82174d28,0x279,0,0xffffffff82000f98,0xffffffff8215192c);
+  pcVar1 = (char *)__savegprlr_28(param_1);
+  if (pcVar1 == (char *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_files.cpp",0x279
+                    ,0,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    param_2 = (ulonglong)*(uint *)(DAT_84014950 + 0xc);
+  Com_sprintf(fullPath,0x100,"net:\\smb\\%s\\%s");
+  FS_BuildOSPathForThread(fullPath,"",pcVar1,acStack_130);
+  iVar2 = FS_CreatePath(acStack_130);
+  if (iVar2 != 0) {
+    pvVar3 = (void *)__restgprlr_28(0);
+    return pvVar3;
   }
-  Com_sprintf(0xffffffff84015980,0x100,0xffffffff82174d14,*(undefined4 *)(DAT_8401596c + 0xc),
-              param_2);
-  FS_BuildOSPathForThread(0xffffffff84015980,0xffffffff820068af,uVar1,aCStack_130);
-  iVar2 = FS_CreatePath(aCStack_130);
-  if (iVar2 == 0) {
-    pvVar3 = CreateFileA(aCStack_130,0xc0000000,1,(LPSECURITY_ATTRIBUTES)0x0,2,0,(HANDLE)0x0);
-    if (pvVar3 != (HANDLE)0x0) {
-      pvVar4 = (HANDLE)0x0;
-      if (pvVar3 != (HANDLE)0xffffffff) {
-        pvVar4 = pvVar3;
-      }
-      __restgprlr_28(pvVar4);
-      return;
-    }
-    MyAssertHandler(0xffffffff82174d28,0x283,0,0xffffffff82000f98,0xffffffff8200fdb0);
-    __restgprlr_28(0);
-    return;
+  pvVar3 = CreateFileA(acStack_130,0xc0000000,1,(void *)0x0,2,0,(void *)0x0);
+  if (pvVar3 == (void *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_files.cpp",0x283
+                    ,0,"%s");
+    pvVar3 = (void *)__restgprlr_28(0);
+    return pvVar3;
   }
-  __restgprlr_28(0);
-  return;
+  pvVar4 = (void *)0x0;
+  if (pvVar3 != (void *)0xffffffff) {
+    pvVar4 = pvVar3;
+  }
+  pvVar3 = (void *)__restgprlr_28(pvVar4);
+  return pvVar3;
 }
 
 
 // 825D7470  FS_WriteRemoteFile  (universal/com_files.cpp:649)
 
-void FS_WriteRemoteFile(undefined8 param_1,ulonglong param_2,ulonglong param_3,undefined8 param_4)
+int FS_WriteRemoteFile(char *param_1,char *param_2,void *param_3,int param_4)
 
 {
-  ulonglong uVar1;
-  ulonglong uVar2;
+  char *pcVar1;
+  _iobuf *p_Var2;
   int iVar3;
+  uint uVar4;
+  ulonglong uVar5;
   
-  uVar1 = __savegprlr_26();
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82174d28,0x28f,0,0xffffffff82000f98,0xffffffff82174da0);
+  uVar5 = (ulonglong)(int)param_3;
+  pcVar1 = (char *)__savegprlr_26(param_1);
+  if (pcVar1 == (char *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_files.cpp",0x28f
+                    ,0,"%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82174d28,0x290,0,0xffffffff82000f98,0xffffffff8200e484);
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_files.cpp",0x290
+                    ,0,"%s");
   }
-  uVar2 = FS_FOpenFileWriteRemote(uVar1,param_2);
-  if ((uVar2 & 0xffffffff) != 0) {
-    iVar3 = FS_FileWrite(param_3,param_4,uVar2);
-    FS_FileClose((HANDLE)uVar2);
-    if (iVar3 != (int)param_4) {
-      FS_Delete(uVar1);
-      __restgprlr_26(0);
-      return;
-    }
-    __restgprlr_26(1);
-    return;
+  p_Var2 = FS_FOpenFileWriteRemote(pcVar1,param_2);
+  if (p_Var2 == (_iobuf *)0x0) {
+    Com_Printf(10,"Failed to open %s (remoteDir=\"%s\")\n");
+    iVar3 = __restgprlr_26(0);
+    return iVar3;
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    param_2 = 0xffffffff82175018;
+  uVar4 = FS_FileWrite((void *)uVar5,param_4,p_Var2);
+  FS_FileClose(p_Var2);
+  if (uVar4 == param_4) {
+    iVar3 = __restgprlr_26(1);
+    return iVar3;
   }
-  Com_Printf(10,0xffffffff82174ff4,uVar1,param_2);
-  __restgprlr_26(0);
-  return;
+  FS_Delete(pcVar1);
+  iVar3 = __restgprlr_26(0);
+  return iVar3;
 }
 
 
 // 825D7578  FS_DeleteRemote  (universal/com_files.cpp:677)
 
-longlong FS_DeleteRemote(char *param_1)
+int FS_DeleteRemote(char *param_1)
 
 {
-  longlong lVar1;
-  int iVar2;
+  int iVar1;
   char acStack_120 [264];
   
   if (param_1 == (char *)0x0) {
-    MyAssertHandler(0xffffffff82174d28,0x2aa,0,0xffffffff82000f98,0xffffffff8215192c);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_files.cpp",0x2aa
+                    ,0,"%s");
   }
   if (*param_1 == '\0') {
-    lVar1 = 0;
+    iVar1 = 0;
   }
   else {
-    Com_sprintf(0xffffffff84015980,0x100,0xffffffff82174d14,*(undefined4 *)(DAT_8401596c + 0xc),
-                *(undefined4 *)(DAT_84014950 + 0xc));
-    FS_BuildOSPathForThread(0xffffffff84015980,0xffffffff820068af,param_1,acStack_120);
-    iVar2 = remove(acStack_120);
-    lVar1 = (longlong)iVar2 + 1;
-    lVar1 = lVar1 - ((longlong)iVar2 + (ulonglong)(lVar1 == 0));
+    Com_sprintf(fullPath,0x100,"net:\\smb\\%s\\%s");
+    FS_BuildOSPathForThread(fullPath,"",param_1,acStack_120);
+    iVar1 = remove(acStack_120);
+    iVar1 = (int)((longlong)iVar1 + 1) - (iVar1 + (uint)((longlong)iVar1 + 1 == 0));
   }
-  return lVar1;
+  return iVar1;
 }
 
 
 // 825D5A70  FS_CheckFileSystemStarted  (universal/com_files.cpp:701)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void FS_CheckFileSystemStarted(void)
 
@@ -398,75 +399,87 @@ void FS_CheckFileSystemStarted(void)
 
 // 825D5A78  FS_ShouldCheckImageCRC  (universal/com_files.cpp:786)
 
-undefined8 FS_ShouldCheckImageCRC(void)
+bool FS_ShouldCheckImageCRC(char *param_1)
 
 {
-  return 0;
+  return false;
 }
 
 
 // 825D7990  FS_HashFileNameInternal  (universal/com_files.cpp:841)
 
-void FS_HashFileNameInternal(undefined8 param_1,longlong param_2,ulonglong param_3)
+long FS_HashFileNameInternal(char *param_1,int param_2,bool param_3)
 
 {
   int iVar1;
   char *pcVar2;
   int iVar3;
-  char *pcVar4;
-  ulonglong uVar5;
+  long lVar4;
+  longlong lVar5;
+  ulonglong uVar6;
+  char *pcVar7;
+  ulonglong uVar8;
   
-  pcVar2 = (char *)__savegprlr_27();
-  uVar5 = 0;
+  uVar6 = (ulonglong)param_3;
+  lVar5 = (longlong)param_2;
+  pcVar2 = (char *)__savegprlr_27(param_1,lVar5);
+  uVar8 = 0;
   if (*pcVar2 != '\0') {
     iVar1 = 0x77 - (int)pcVar2;
     do {
       iVar3 = tolower((int)*pcVar2);
-      if (((param_3 & 0xff) != 0) && (iVar3 == 0x2e)) break;
+      if (((uVar6 & 0xff) != 0) && (iVar3 == 0x2e)) break;
       if (iVar3 == 0x5c) {
         iVar3 = 0x2f;
       }
-      pcVar4 = pcVar2 + iVar1;
+      pcVar7 = pcVar2 + iVar1;
       pcVar2 = pcVar2 + 1;
-      uVar5 = (longlong)(int)pcVar4 * (longlong)iVar3 + uVar5;
+      uVar8 = (longlong)(int)pcVar7 * (longlong)iVar3 + uVar8;
     } while (*pcVar2 != '\0');
   }
-  __restgprlr_27(((longlong)((int)((int)(uint)uVar5 >> 10 ^ (uint)uVar5) >> 10) ^ uVar5) &
-                 param_2 - 1U);
-  return;
+  lVar4 = __restgprlr_27(((longlong)((int)((int)(uint)uVar8 >> 10 ^ (uint)uVar8) >> 10) ^ uVar8) &
+                         lVar5 - 1U);
+  return lVar4;
 }
 
 
 // 825D5A80  FS_HashFileName  (universal/com_files.cpp:869)
 
-void FS_HashFileName(undefined8 param_1,undefined8 param_2)
+long FS_HashFileName(char *param_1,int param_2)
 
 {
-  FS_HashFileNameInternal(param_1,param_2,1);
-  return;
+  long lVar1;
+  
+  lVar1 = FS_HashFileNameInternal(param_1,param_2,true);
+  return lVar1;
 }
 
 
 // 825D5A88  FS_HashFileNameWithExtension  (universal/com_files.cpp:875)
 
-void FS_HashFileNameWithExtension(undefined8 param_1,undefined8 param_2)
+long FS_HashFileNameWithExtension(char *param_1,int param_2)
 
 {
-  FS_HashFileNameInternal(param_1,param_2,0);
-  return;
+  long lVar1;
+  
+  lVar1 = FS_HashFileNameInternal(param_1,param_2,false);
+  return lVar1;
 }
 
 
 // 825D5A90  FS_filelength  (universal/com_files.cpp:1014)
 
-void FS_filelength(ulonglong param_1)
+int FS_filelength(void *param_1)
 
 {
-  if ((param_1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82174d28,0x3f7,0,0xffffffff82000f98,0xffffffff8207057c);
+  int iVar1;
+  
+  if (param_1 == (void *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_files.cpp",0x3f7
+                    ,0,"%s");
   }
-  FS_FileGetFileSize(param_1);
-  return;
+  iVar1 = FS_FileGetFileSize(param_1);
+  return iVar1;
 }
 
 
@@ -509,60 +522,127 @@ LAB_825d5b48:
 
 // 825D5B60  FS_BuildOSPathForThread  (universal/com_files.cpp:1056)
 
-void FS_BuildOSPathForThread
-               (undefined8 param_1,longlong param_2,ulonglong param_3,ulonglong param_4)
+void FS_BuildOSPathForThread(char *param_1,char *param_2,char *param_3,char *param_4)
 
 {
   char cVar1;
-  size_t _Size;
-  size_t _Size_00;
-  size_t _Size_01;
   int iVar2;
-  char *_Src;
-  void *_Dst;
-  char *pcVar5;
-  longlong lVar3;
-  ulonglong uVar4;
+  char *pcVar3;
+  longlong lVar4;
+  ulonglong uVar5;
+  ulonglong uVar6;
+  char *pcVar9;
+  longlong lVar7;
+  ulonglong uVar8;
   
-  _Src = (char *)__savegprlr_25();
-  if (_Src == (char *)0x0) {
-    MyAssertHandler(0xffffffff82174d28,0x425,0,0xffffffff82000f98,0xffffffff8205de28);
+  uVar6 = (ulonglong)(int)param_4;
+  uVar5 = (ulonglong)(int)param_3;
+  lVar4 = (longlong)(int)param_2;
+  pcVar3 = (char *)__savegprlr_25(param_1);
+  if (pcVar3 == (char *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_files.cpp",0x425
+                    ,0,"%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82174d28,0x426,0,0xffffffff82000f98,0xffffffff82174da0);
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_files.cpp",0x426
+                    ,0,"%s");
   }
-  pcVar5 = _Src;
-  if ((param_4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82174d28,0x427,0,0xffffffff82000f98,0xffffffff82174d98);
+  pcVar9 = pcVar3;
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_files.cpp",0x427
+                    ,0,"%s");
   }
   do {
-    cVar1 = *pcVar5;
-    pcVar5 = pcVar5 + 1;
+    cVar1 = *pcVar9;
+    pcVar9 = pcVar9 + 1;
   } while (cVar1 != '\0');
-  iVar2 = (int)pcVar5 - (int)_Src;
-  _Size_00 = iVar2 - 1;
-  lVar3 = param_2;
+  pcVar9 = pcVar9 + (-1 - (int)pcVar3);
+  lVar7 = lVar4;
   do {
-    pcVar5 = (char *)lVar3;
-    lVar3 = lVar3 + 1;
-  } while (*pcVar5 != '\0');
-  _Size = ((int)lVar3 - (int)(void *)param_2) - 1;
-  uVar4 = param_3;
+    pcVar3 = (char *)lVar7;
+    lVar7 = lVar7 + 1;
+  } while (*pcVar3 != '\0');
+  iVar2 = (int)lVar7 - (int)lVar4;
+  uVar8 = uVar5;
   do {
-    pcVar5 = (char *)uVar4;
-    uVar4 = uVar4 + 1;
-  } while (*pcVar5 != '\0');
-  _Size_01 = (int)uVar4 - (int)(void *)param_3;
-  if (0xff < (int)(_Size_01 + _Size + _Size_00 + 1)) {
-    Com_Error(0,0xffffffff82174d6c);
+    pcVar3 = (char *)uVar8;
+    uVar8 = uVar8 + 1;
+  } while (*pcVar3 != '\0');
+  if (0xff < (int)(pcVar9 + ((int)uVar8 - (int)uVar5) + iVar2)) {
+    Com_Error(ERR_FATAL,"\x15FS_BuildOSPath: os path length exceeded\n");
   }
-  _Dst = (void *)param_4;
-  memcpy(_Dst,_Src,_Size_00);
-  *(undefined1 *)(_Size_00 + (int)_Dst) = 0x2f;
-  memcpy((void *)((int)_Dst + iVar2),(void *)param_2,_Size);
-  *(undefined1 *)((int)_Dst + _Size + _Size_00 + 1) = 0x2f;
-  memcpy((void *)((int)_Dst + _Size + _Size_00 + 2),(void *)param_3,_Size_01);
-  FS_ReplaceSeparators(param_4);
+  memcpy();
+  pcVar3 = (char *)uVar6;
+  pcVar3[(int)pcVar9] = '/';
+  memcpy();
+  pcVar3[(int)(pcVar9 + iVar2)] = '/';
+  memcpy();
+  FS_ReplaceSeparators(pcVar3);
+  __restgprlr_25();
+  return;
+}
+
+
+// 825D5CD8  FS_BuildOSPath  (universal/com_files.cpp:1100)
+
+/* void __cdecl FS_BuildOSPath(char const *,char const *,char const *,char * const) */
+
+void FS_BuildOSPath(char *param_1,char *param_2,char *param_3,char *param_4)
+
+{
+  char cVar1;
+  int iVar2;
+  char *pcVar3;
+  longlong lVar4;
+  ulonglong uVar5;
+  ulonglong uVar6;
+  char *pcVar9;
+  longlong lVar7;
+  ulonglong uVar8;
+  
+  uVar6 = (ulonglong)(int)param_4;
+  uVar5 = (ulonglong)(int)param_3;
+  lVar4 = (longlong)(int)param_2;
+  pcVar3 = (char *)__savegprlr_25(param_1);
+  if (pcVar3 == (char *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_files.cpp",0x425
+                    ,0,"%s");
+  }
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_files.cpp",0x426
+                    ,0,"%s");
+  }
+  pcVar9 = pcVar3;
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_files.cpp",0x427
+                    ,0,"%s");
+  }
+  do {
+    cVar1 = *pcVar9;
+    pcVar9 = pcVar9 + 1;
+  } while (cVar1 != '\0');
+  pcVar9 = pcVar9 + (-1 - (int)pcVar3);
+  lVar7 = lVar4;
+  do {
+    pcVar3 = (char *)lVar7;
+    lVar7 = lVar7 + 1;
+  } while (*pcVar3 != '\0');
+  iVar2 = (int)lVar7 - (int)lVar4;
+  uVar8 = uVar5;
+  do {
+    pcVar3 = (char *)uVar8;
+    uVar8 = uVar8 + 1;
+  } while (*pcVar3 != '\0');
+  if (0xff < (int)(pcVar9 + ((int)uVar8 - (int)uVar5) + iVar2)) {
+    Com_Error(ERR_FATAL,"\x15FS_BuildOSPath: os path length exceeded\n");
+  }
+  memcpy();
+  pcVar3 = (char *)uVar6;
+  pcVar3[(int)pcVar9] = '/';
+  memcpy();
+  pcVar3[(int)(pcVar9 + iVar2)] = '/';
+  memcpy();
+  FS_ReplaceSeparators(pcVar3);
   __restgprlr_25();
   return;
 }
@@ -570,256 +650,342 @@ void FS_BuildOSPathForThread
 
 // 825D5CE0  FS_CreatePath  (universal/com_files.cpp:1107)
 
-void FS_CreatePath(void)
+int FS_CreatePath(char *param_1)
 
 {
   char cVar1;
-  char *_Str;
   char *pcVar2;
+  char *pcVar3;
+  int iVar4;
   
-  _Str = (char *)__savegprlr_28();
-  pcVar2 = strstr(_Str,"..");
-  if ((pcVar2 == (char *)0x0) && (pcVar2 = strstr(_Str,"::"), pcVar2 == (char *)0x0)) {
-    pcVar2 = _Str + 1;
-    cVar1 = _Str[1];
+  pcVar2 = (char *)__savegprlr_28(param_1);
+  pcVar3 = strstr(pcVar2,"..");
+  if ((pcVar3 == (char *)0x0) && (pcVar3 = strstr(pcVar2,"::"), pcVar3 == (char *)0x0)) {
+    pcVar3 = pcVar2 + 1;
+    cVar1 = pcVar2[1];
     while (cVar1 != '\0') {
-      if (*pcVar2 == '\\') {
-        *pcVar2 = '\0';
-        Sys_Mkdir(_Str);
-        *pcVar2 = '\\';
+      if (*pcVar3 == '\\') {
+        *pcVar3 = '\0';
+        Sys_Mkdir(pcVar2);
+        *pcVar3 = '\\';
       }
-      pcVar2 = pcVar2 + 1;
-      cVar1 = *pcVar2;
+      pcVar3 = pcVar3 + 1;
+      cVar1 = *pcVar3;
     }
-    __restgprlr_28(0);
-    return;
+    iVar4 = __restgprlr_28(0);
+    return iVar4;
   }
-  Com_PrintWarning(10,0xffffffff82174da8,_Str);
-  __restgprlr_28(1);
-  return;
+  Com_PrintWarning(10,"WARNING: refusing to create relative path \"%s\"\n");
+  iVar4 = __restgprlr_28(1);
+  return iVar4;
 }
 
 
 // 825D5D88  FS_FCloseFile  (universal/com_files.cpp:1296)
 
-ulonglong FS_FCloseFile(ulonglong param_1)
+void FS_FCloseFile(void *param_1)
 
 {
-  BOOL BVar1;
-  
-  if ((param_1 & 0xffffffff) == 0) {
-    return param_1;
+  if (param_1 == (void *)0x0) {
+    return;
   }
-  BVar1 = FS_FileClose((HANDLE)param_1);
-  return (longlong)BVar1;
+  FS_FileClose(param_1);
+  return;
 }
 
 
 // 825D7648  FS_FCloseLogFile  (universal/com_files.cpp:1311)
 
-ulonglong FS_FCloseLogFile(ulonglong param_1)
+void FS_FCloseLogFile(void *param_1)
 
 {
-  BOOL BVar1;
-  
-  if ((param_1 & 0xffffffff) != 0) {
-    FS_FinishAsyncronousWrites();
-    BVar1 = FS_FileClose((HANDLE)param_1);
-    param_1 = (ulonglong)BVar1;
+  if (param_1 != (void *)0x0) {
+    FS_FinishAsyncronousWrites(param_1);
+    FS_FileClose(param_1);
   }
-  return param_1;
+  return;
 }
 
 
 // 825D5D98  FS_FOpenFileWrite  (universal/com_files.cpp:1394)
 
-undefined8 FS_FOpenFileWrite(undefined8 param_1)
+void * FS_FOpenFileWrite(char *param_1)
 
 {
-  undefined8 uVar1;
+  char *pcVar1;
   int iVar2;
-  undefined1 auStack_110 [256];
+  _iobuf *p_Var3;
+  char acStack_110 [256];
   
-  uVar1 = Sys_DefaultInstallPath();
-  FS_BuildOSPathForThread(uVar1,0xffffffff820068af,param_1,auStack_110);
-  iVar2 = FS_CreatePath(auStack_110);
+  pcVar1 = Sys_DefaultInstallPath();
+  FS_BuildOSPathForThread(pcVar1,"",param_1,acStack_110);
+  iVar2 = FS_CreatePath(acStack_110);
   if (iVar2 != 0) {
-    return 0;
+    return (void *)0x0;
   }
-  uVar1 = FS_FileOpenWriteBinary(auStack_110);
-  return uVar1;
+  p_Var3 = FS_FileOpenWriteBinary(acStack_110);
+  return p_Var3;
 }
 
 
 // 825D7688  FS_FOpenTextFileWrite  (universal/com_files.cpp:1450)
 
-undefined8 FS_FOpenTextFileWrite(undefined8 param_1)
+void * FS_FOpenTextFileWrite(char *param_1)
 
 {
   bool bVar1;
-  undefined8 uVar2;
-  int iVar3;
-  undefined1 auStack_110 [256];
+  void *pvVar2;
+  char *pcVar3;
+  int iVar4;
+  _iobuf *p_Var5;
+  char acStack_110 [256];
   
-  if (DAT_8401596c != 0) {
-    if (*(char **)(DAT_8401596c + 0xc) != (char *)0x0) {
-      bVar1 = true;
-      if (**(char **)(DAT_8401596c + 0xc) != '\0') goto LAB_825d76d0;
-    }
+  if (((rpcn == (dvar_t *)0x0) || ((rpcn->current).string == (char *)0x0)) ||
+     (bVar1 = true, *(rpcn->current).string == '\0')) {
+    bVar1 = false;
   }
-  bVar1 = false;
-LAB_825d76d0:
   if (bVar1) {
-    uVar2 = FS_FOpenFileWriteRemote(param_1,0);
-    return uVar2;
+    pvVar2 = FS_FOpenFileWriteRemote(param_1,(char *)0x0);
+    return pvVar2;
   }
-  uVar2 = Sys_DefaultInstallPath();
-  FS_BuildOSPathForThread(uVar2,0xffffffff820068af,param_1,auStack_110);
-  iVar3 = FS_CreatePath(auStack_110);
-  if (iVar3 != 0) {
-    return 0;
+  pcVar3 = Sys_DefaultInstallPath();
+  FS_BuildOSPathForThread(pcVar3,"",param_1,acStack_110);
+  iVar4 = FS_CreatePath(acStack_110);
+  if (iVar4 != 0) {
+    return (void *)0x0;
   }
-  uVar2 = FS_FileOpenWriteText(auStack_110);
-  return uVar2;
+  p_Var5 = FS_FileOpenWriteText(acStack_110);
+  return p_Var5;
 }
 
 
 // 825D5E08  FS_FRotate  (universal/com_files.cpp:1472)
 
-void FS_FRotate(undefined8 param_1)
+void FS_FRotate(char *param_1)
 
 {
-  undefined8 uVar1;
-  undefined1 auStack_110 [256];
+  char *pcVar1;
+  char acStack_110 [256];
   
-  uVar1 = Sys_DefaultInstallPath();
-  FS_BuildOSPathForThread(uVar1,0xffffffff820068af,param_1,auStack_110);
-  FS_FileRotate(auStack_110);
+  pcVar1 = Sys_DefaultInstallPath();
+  FS_BuildOSPathForThread(pcVar1,"",param_1,acStack_110);
+  FS_FileRotate(acStack_110);
   return;
 }
 
 
 // 825D5E50  FS_FOpenFileAppend  (universal/com_files.cpp:1526)
 
-undefined8 FS_FOpenFileAppend(undefined8 param_1)
+void * FS_FOpenFileAppend(char *param_1)
 
 {
-  int iVar1;
-  bool bVar2;
-  undefined8 uVar3;
-  undefined1 auStack_120 [264];
+  bool bVar1;
+  char *pcVar2;
+  int iVar3;
+  _iobuf *p_Var4;
+  char acStack_120 [264];
   
-  if ((DAT_8401596c != 0) && (*(char **)(DAT_8401596c + 0xc) != (char *)0x0)) {
-    bVar2 = true;
-    if (**(char **)(DAT_8401596c + 0xc) != '\0') goto LAB_825d5e9c;
+  if (((rpcn == (dvar_t *)0x0) || ((rpcn->current).string == (char *)0x0)) ||
+     (bVar1 = true, *(rpcn->current).string == '\0')) {
+    bVar1 = false;
   }
-  bVar2 = false;
-LAB_825d5e9c:
-  if (bVar2) {
-    uVar3 = 0xffffffff84015980;
-    Com_sprintf(0xffffffff84015980,0x100,0xffffffff82174d14,*(undefined4 *)(DAT_8401596c + 0xc),
-                *(undefined4 *)(DAT_84014950 + 0xc));
+  if (bVar1) {
+    pcVar2 = fullPath;
+    Com_sprintf(fullPath,0x100,"net:\\smb\\%s\\%s");
   }
   else {
-    uVar3 = Sys_DefaultInstallPath();
+    pcVar2 = Sys_DefaultInstallPath();
   }
-  FS_BuildOSPathForThread(uVar3,0xffffffff820068af,param_1,auStack_120);
-  iVar1 = FS_CreatePath(auStack_120);
-  if (iVar1 == 0) {
-    uVar3 = FS_FileOpenAppendText(auStack_120);
+  FS_BuildOSPathForThread(pcVar2,"",param_1,acStack_120);
+  iVar3 = FS_CreatePath(acStack_120);
+  if (iVar3 == 0) {
+    p_Var4 = FS_FileOpenAppendText(acStack_120);
   }
   else {
-    uVar3 = 0;
+    p_Var4 = (_iobuf *)0x0;
   }
-  return uVar3;
+  return p_Var4;
 }
 
 
 // 825D5F30  FS_FOpenFileReadForThread  (universal/com_files.cpp:2065)
 
-undefined8 FS_FOpenFileReadForThread(undefined8 param_1,int *param_2)
+int FS_FOpenFileReadForThread(char *param_1,void **param_2)
 
 {
-  undefined8 uVar1;
-  int iVar2;
-  undefined1 auStack_120 [264];
+  char *pcVar1;
+  _iobuf *p_Var2;
+  int iVar3;
+  char acStack_120 [264];
   
-  if (param_2 == (int *)0x0) {
-    MyAssertHandler(0xffffffff82174d28,0x814,0,0xffffffff82000f98,0xffffffff82059864);
+  if (param_2 == (void **)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_files.cpp",0x814
+                    ,0,"%s");
   }
-  uVar1 = Sys_DefaultInstallPath();
-  FS_BuildOSPathForThread(uVar1,0xffffffff820068af,param_1,auStack_120);
-  iVar2 = FS_FileOpenReadBinary(auStack_120);
-  *param_2 = iVar2;
-  if (iVar2 == 0) {
-    uVar1 = 0xffffffffffffffff;
+  pcVar1 = Sys_DefaultInstallPath();
+  FS_BuildOSPathForThread(pcVar1,"",param_1,acStack_120);
+  p_Var2 = FS_FileOpenReadBinary(acStack_120);
+  *param_2 = p_Var2;
+  if (p_Var2 == (_iobuf *)0x0) {
+    iVar3 = -1;
   }
   else {
-    uVar1 = FS_FileGetFileSize();
+    iVar3 = FS_FileGetFileSize(p_Var2);
   }
-  return uVar1;
+  return iVar3;
+}
+
+
+// 825D5FC8  FS_FOpenFileReadStream  (universal/com_files.cpp:2081)
+
+/* int __cdecl FS_FOpenFileReadStream(char const *,void * *) */
+
+int FS_FOpenFileReadStream(char *param_1,void **param_2)
+
+{
+  char *pcVar1;
+  _iobuf *p_Var2;
+  int iVar3;
+  char acStack_120 [264];
+  
+  if (param_2 == (void **)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_files.cpp",0x814
+                    ,0,"%s");
+  }
+  pcVar1 = Sys_DefaultInstallPath();
+  FS_BuildOSPathForThread(pcVar1,"",param_1,acStack_120);
+  p_Var2 = FS_FileOpenReadBinary(acStack_120);
+  *param_2 = p_Var2;
+  if (p_Var2 == (_iobuf *)0x0) {
+    iVar3 = -1;
+  }
+  else {
+    iVar3 = FS_FileGetFileSize(p_Var2);
+  }
+  return iVar3;
+}
+
+
+// 825D5FD0  FS_FOpenFileReadDatabase  (universal/com_files.cpp:2091)
+
+/* int __cdecl FS_FOpenFileReadDatabase(char const *,void * *) */
+
+int FS_FOpenFileReadDatabase(char *param_1,void **param_2)
+
+{
+  char *pcVar1;
+  _iobuf *p_Var2;
+  int iVar3;
+  char acStack_120 [264];
+  
+  if (param_2 == (void **)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_files.cpp",0x814
+                    ,0,"%s");
+  }
+  pcVar1 = Sys_DefaultInstallPath();
+  FS_BuildOSPathForThread(pcVar1,"",param_1,acStack_120);
+  p_Var2 = FS_FileOpenReadBinary(acStack_120);
+  *param_2 = p_Var2;
+  if (p_Var2 == (_iobuf *)0x0) {
+    iVar3 = -1;
+  }
+  else {
+    iVar3 = FS_FileGetFileSize(p_Var2);
+  }
+  return iVar3;
 }
 
 
 // 825D5FD8  FS_FOpenFileRead  (universal/com_files.cpp:2105)
 
-void FS_FOpenFileRead(void)
+int FS_FOpenFileRead(char *param_1,void **param_2)
 
 {
-  DAT_8401495c = 1;
-  FS_FOpenFileReadForThread();
-  return;
+  int iVar1;
+  
+  com_fileAccessed = 1;
+  iVar1 = FS_FOpenFileReadForThread(param_1,param_2);
+  return iVar1;
+}
+
+
+// 825D5FE8  FS_FOpenFileReadCurrentThread  (universal/com_files.cpp:2117)
+
+/* int __cdecl FS_FOpenFileReadCurrentThread(char const *,void * *) */
+
+int FS_FOpenFileReadCurrentThread(char *param_1,void **param_2)
+
+{
+  char *pcVar1;
+  _iobuf *p_Var2;
+  int iVar3;
+  char acStack_120 [264];
+  
+  if (param_2 == (void **)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_files.cpp",0x814
+                    ,0,"%s");
+  }
+  pcVar1 = Sys_DefaultInstallPath();
+  FS_BuildOSPathForThread(pcVar1,"",param_1,acStack_120);
+  p_Var2 = FS_FileOpenReadBinary(acStack_120);
+  *param_2 = p_Var2;
+  if (p_Var2 == (_iobuf *)0x0) {
+    iVar3 = -1;
+  }
+  else {
+    iVar3 = FS_FileGetFileSize(p_Var2);
+  }
+  return iVar3;
 }
 
 
 // 825D5FF0  FS_Delete  (universal/com_files.cpp:2178)
 
-longlong FS_Delete(char *param_1)
+int FS_Delete(char *param_1)
 
 {
-  undefined8 uVar1;
+  char *pcVar1;
   int iVar2;
-  longlong lVar3;
   char acStack_110 [256];
   
   if (param_1 == (char *)0x0) {
-    MyAssertHandler(0xffffffff82174d28,0x888,0,0xffffffff82000f98,0xffffffff8215192c);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_files.cpp",0x888
+                    ,0,"%s");
   }
   if (*param_1 == '\0') {
     return 0;
   }
-  uVar1 = Sys_DefaultInstallPath();
-  FS_BuildOSPathForThread(uVar1,0xffffffff820068af,param_1,acStack_110);
+  pcVar1 = Sys_DefaultInstallPath();
+  FS_BuildOSPathForThread(pcVar1,"",param_1,acStack_110);
   iVar2 = remove(acStack_110);
-  lVar3 = (longlong)iVar2 + 1;
-  return lVar3 - ((longlong)iVar2 + (ulonglong)(lVar3 == 0));
+  return (int)((longlong)iVar2 + 1) - (iVar2 + (uint)((longlong)iVar2 + 1 == 0));
 }
 
 
 // 825D6098  FS_Read  (universal/com_files.cpp:2328)
 
-undefined8 FS_Read(undefined8 param_1,undefined8 param_2,int param_3)
+int FS_Read(void *param_1,int param_2,void *param_3)
 
 {
-  undefined8 uVar1;
+  uint uVar1;
   
-  if (param_3 == 0) {
+  if (param_3 == (void *)0x0) {
     return 0;
   }
-  uVar1 = FS_FileRead();
+  uVar1 = FS_FileRead(param_1,param_2,param_3);
   return uVar1;
 }
 
 
 // 825D60B0  FS_Write  (universal/com_files.cpp:2421)
 
-undefined8 FS_Write(undefined8 param_1,undefined8 param_2,int param_3)
+int FS_Write(void *param_1,int param_2,void *param_3)
 
 {
-  undefined8 uVar1;
+  uint uVar1;
   
-  if (param_3 != 0) {
-    uVar1 = FS_FileWrite();
+  if (param_3 != (void *)0x0) {
+    uVar1 = FS_FileWrite(param_1,param_2,param_3);
     return uVar1;
   }
   return 0;
@@ -828,372 +994,389 @@ undefined8 FS_Write(undefined8 param_1,undefined8 param_2,int param_3)
 
 // 825D60C8  LogWriteThread  (universal/com_files.cpp:2438)
 
-void LogWriteThread(void)
+ulong LogWriteThread(void *param_1)
 
 {
-  uint uVar1;
-  DWORD DVar2;
-  BOOL BVar3;
-  FILE *pFVar4;
-  ulonglong uVar5;
-  uint local_70 [28];
+  ulong uVar1;
+  int iVar2;
+  ulong uVar3;
+  _iobuf *p_Var4;
+  ulong local_70 [28];
   
-  __savegprlr_21();
+  __savegprlr_21(param_1);
   do {
-    DVar2 = WaitForSingleObject(DAT_8401494c,0xffffffff);
-    if (DVar2 != 0) {
-      MyAssertHandler(0xffffffff82174d28,0x98f,0,0xffffffff82174e08,0xffffffff82174ddc,DVar2);
+    uVar1 = WaitForSingleObject(g_writeLogEvent,0xffffffff);
+    if (uVar1 != 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_files.cpp",
+                      0x98f,0,"%s\n\t(res) = %i");
     }
     uVar1 = DAT_84014948;
-    uVar5 = (ulonglong)DAT_84014948;
-    BVar3 = WriteFile(DAT_84014940,&DAT_84014968,DAT_84014948,local_70,(LPOVERLAPPED)0x0);
-    if (BVar3 == 0) {
-      DVar2 = GetLastError();
-      if (DVar2 != 0) {
-        pFVar4 = __iob_func();
-        fprintf(pFVar4 + 2,"Error %i from log file write\n",DVar2);
-      }
+    iVar2 = WriteFile(s_logFile,fileWriteBuffer,DAT_84014948,local_70,(_OVERLAPPED *)0x0);
+    if ((iVar2 == 0) && (uVar3 = GetLastError(), uVar3 != 0)) {
+      p_Var4 = __iob_func();
+      fprintf(p_Var4 + 2,"Error %i from log file write\n");
     }
-    if (local_70[0] != uVar5) {
-      pFVar4 = __iob_func();
-      fprintf(pFVar4 + 2,"Failed trying to write %i bytes to the logfile\n",uVar5);
+    if (local_70[0] != uVar1) {
+      p_Var4 = __iob_func();
+      fprintf(p_Var4 + 2,"Failed trying to write %i bytes to the logfile\n");
     }
-    DAT_84014958 = uVar1;
-    SetEvent(DAT_84015968);
+    s_logBytesWritten = uVar1;
+    SetEvent(g_writeLogCompleteEvent);
   } while( true );
 }
 
 
 // 825D61B8  DemoWriteThread  (universal/com_files.cpp:2476)
 
-void DemoWriteThread(void)
+ulong DemoWriteThread(void *param_1)
 
 {
-  DWORD DVar1;
-  BOOL BVar2;
-  DWORD DVar3;
-  DWORD local_60 [24];
+  ulong uVar1;
+  int iVar2;
+  ulong uVar3;
+  ulong local_60 [24];
   
-  __savegprlr_22();
+  __savegprlr_22(param_1);
   do {
-    DVar1 = WaitForSingleObject(DAT_84015974,0xffffffff);
-    if (DVar1 != 0) {
-      MyAssertHandler(0xffffffff82174d28,0x9b5,0,0xffffffff82174e08,0xffffffff82174ddc,DVar1);
+    uVar1 = WaitForSingleObject(g_writeDemoEvent,0xffffffff);
+    if (uVar1 != 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_files.cpp",
+                      0x9b5,0,"%s\n\t(res) = %i");
     }
-    DVar1 = DAT_8401597c;
-    BVar2 = WriteFile(DAT_84015978,&DAT_84013940,DAT_8401597c,local_60,(LPOVERLAPPED)0x0);
-    if (BVar2 == 0) {
-      DVar3 = GetLastError();
-      if (DVar3 != 0) {
-        Com_PrintWarning(7,0xffffffff82174e68,DVar3);
-      }
+    uVar1 = DAT_8401597c;
+    iVar2 = WriteFile(DAT_84015978,demoWriteBuffer,DAT_8401597c,local_60,(_OVERLAPPED *)0x0);
+    if ((iVar2 == 0) && (uVar3 = GetLastError(), uVar3 != 0)) {
+      Com_PrintWarning(7,"Error %i from demo file write\n");
     }
-    if (local_60[0] != DVar1) {
-      Com_PrintWarning(7,0xffffffff82174e88,DVar1);
+    if (local_60[0] != uVar1) {
+      Com_PrintWarning(7,"Failed trying to write %i bytes to the demo\n");
     }
-    DAT_84014964 = DVar1;
-    SetEvent(DAT_84015970);
+    DAT_84014964 = uVar1;
+    SetEvent(g_writeDemoCompleteEvent);
   } while( true );
 }
 
 
 // 825D62A0  FS_WriteLog  (universal/com_files.cpp:2520)
 
-void FS_WriteLog(undefined8 param_1,longlong param_2,ulonglong param_3)
+int FS_WriteLog(void *param_1,int param_2,void *param_3)
 
 {
-  undefined8 uVar1;
-  DWORD DVar3;
-  undefined8 uVar2;
-  size_t _Size;
-  DWORD dwMilliseconds;
-  ulonglong uVar4;
-  ulonglong uVar5;
+  void *pvVar2;
+  ulong uVar3;
+  int iVar4;
+  uint uVar5;
+  longlong lVar1;
+  ulong uVar6;
+  _iobuf *p_Var7;
+  ulonglong uVar8;
+  ulonglong uVar9;
+  uint uVar10;
   uint local_50 [20];
   
-  uVar1 = __savegprlr_25();
-  if (((DAT_8401494c == (HANDLE)0x0) || ((param_3 & 0xffffffff) == 0)) ||
-     (_Size = (size_t)param_2, _Size == 0)) {
-    param_2 = 0;
+  uVar8 = (ulonglong)(int)param_3;
+  lVar1 = (longlong)param_2;
+  pvVar2 = (void *)__savegprlr_25(param_1);
+  if (((g_writeLogEvent == (void *)0x0) || ((uVar8 & 0xffffffff) == 0)) ||
+     (uVar5 = (uint)lVar1, uVar5 == 0)) {
+    lVar1 = 0;
     goto LAB_825d64e8;
   }
-  if ((int)_Size < 1) {
-    MyAssertHandler(0xffffffff82174d28,0x9e8,0,0xffffffff82151828,0xffffffff82174f28,param_2);
+  if ((int)uVar5 < 1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_files.cpp",0x9e8
+                    ,0,"%s\n\t(len) = %i");
   }
-  if (*(int *)(DAT_8365e154 + 0xc) != 1) {
-    FS_FileWrite(uVar1,param_2,param_3);
-    __restgprlr_25();
-    return;
+  p_Var7 = (_iobuf *)uVar8;
+  if ((com_logfile->current).integer != 1) {
+    uVar5 = FS_FileWrite(pvVar2,uVar5,p_Var7);
+    iVar4 = __restgprlr_25(uVar5);
+    return iVar4;
   }
   if (DAT_84014944 == '\0') {
 LAB_825d63d8:
-    uVar4 = (ulonglong)DAT_84014948;
+    uVar8 = (ulonglong)DAT_84014948;
   }
   else {
-    dwMilliseconds = 0x1000 - ((0xfff < (ulonglong)DAT_84014948 + param_2) + 0x1000);
-    DVar3 = WaitForSingleObject(DAT_84015968,dwMilliseconds);
-    if (DVar3 != 0) {
-      if (dwMilliseconds == 0xffffffff) {
-        MyAssertHandler(0xffffffff82174d28,0xa0e,0,0xffffffff82174e08,0xffffffff82174f10,DVar3);
+    uVar6 = 0x1000 - ((0xfff < (ulonglong)DAT_84014948 + lVar1) + 0x1000);
+    uVar3 = WaitForSingleObject(g_writeLogCompleteEvent,uVar6);
+    if (uVar3 != 0) {
+      if (uVar6 == 0xffffffff) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_files.cpp",
+                        0xa0e,0,"%s\n\t(res) = %i");
       }
       goto LAB_825d63d8;
     }
-    uVar4 = (ulonglong)DAT_84014948;
-    uVar5 = (ulonglong)DAT_84014958;
-    if (uVar5 < uVar4) {
-      memmove(&DAT_84014968,&DAT_84014968 + DAT_84014958,DAT_84014948 - DAT_84014958);
-      uVar4 = (ulonglong)DAT_84014948;
-      uVar5 = (ulonglong)DAT_84014958;
+    uVar8 = (ulonglong)DAT_84014948;
+    uVar9 = (ulonglong)s_logBytesWritten;
+    if (uVar9 < uVar8) {
+      memmove();
+      uVar8 = (ulonglong)DAT_84014948;
+      uVar9 = (ulonglong)s_logBytesWritten;
     }
-    uVar4 = uVar4 - uVar5;
-    DAT_84014948 = (uint)uVar4;
+    uVar8 = uVar8 - uVar9;
+    DAT_84014948 = (uint)uVar8;
     DAT_84014944 = '\0';
   }
-  if ((DAT_84014944 == '\0') && (0xfff < (uVar4 + param_2 & 0xffffffff))) {
-    WriteFile((HANDLE)param_3,&DAT_84014968,(DWORD)uVar4,local_50,(LPOVERLAPPED)0x0);
+  if ((DAT_84014944 == '\0') && (0xfff < (uVar8 + lVar1 & 0xffffffff))) {
+    WriteFile(p_Var7,fileWriteBuffer,(ulong)uVar8,local_50,(_OVERLAPPED *)0x0);
     if (local_50[0] != DAT_84014948) {
-      Com_PrintWarning(7,0xffffffff82174e38);
+      Com_PrintWarning(7,"Failed trying to write %i bytes to the logfile\n");
     }
-    uVar4 = 0;
+    uVar8 = 0;
     DAT_84014948 = 0;
   }
-  if (0xfff < (uVar4 + param_2 & 0xffffffff)) {
-    uVar2 = va(0xffffffff82174eec,uVar4,param_2);
-    MyAssertHandler(0xffffffff82174d28,0xa1b,0,0xffffffff820011f4,0xffffffff82174eb8,uVar2);
-    uVar4 = (ulonglong)DAT_84014948;
+  uVar10 = (uint)uVar8;
+  if (0xfff < (uVar8 + lVar1 & 0xffffffff)) {
+    va("fileWriteBufferPos is %i, len is %i");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_files.cpp",0xa1b
+                    ,0,"%s\n\t%s");
+    uVar10 = DAT_84014948;
   }
-  memcpy(&DAT_84014968 + (int)uVar4,(void *)uVar1,_Size);
-  DAT_84014948 = (int)uVar4 + _Size;
-  local_50[0] = _Size;
+  memcpy();
+  DAT_84014948 = uVar10 + uVar5;
+  local_50[0] = uVar5;
   if (DAT_84014944 == '\0') {
-    DAT_84014940 = (HANDLE)param_3;
-    SetEvent(DAT_8401494c);
+    s_logFile = p_Var7;
+    SetEvent(g_writeLogEvent);
     DAT_84014944 = 1;
-    __restgprlr_25(local_50[0]);
-    return;
+    iVar4 = __restgprlr_25(local_50[0]);
+    return iVar4;
   }
 LAB_825d64e8:
-  __restgprlr_25(param_2);
-  return;
+  iVar4 = __restgprlr_25(lVar1);
+  return iVar4;
 }
 
 
 // 825D64F0  FS_WriteToDemo  (universal/com_files.cpp:2611)
 
-void FS_WriteToDemo(undefined8 param_1,longlong param_2,ulonglong param_3)
+int FS_WriteToDemo(void *param_1,int param_2,void *param_3)
 
 {
-  void *_Src;
-  DWORD DVar2;
-  undefined8 uVar1;
-  size_t _Size;
-  DWORD dwMilliseconds;
-  ulonglong uVar3;
-  ulonglong uVar4;
+  ulong uVar1;
+  int iVar2;
+  longlong lVar3;
+  ulong uVar4;
+  ulong uVar5;
+  ulonglong uVar6;
+  ulonglong uVar7;
+  ulonglong uVar8;
+  uint uVar9;
   uint local_40 [16];
   
-  _Src = (void *)__savegprlr_26();
-  if (((param_3 & 0xffffffff) == 0) || (_Size = (size_t)param_2, _Size == 0)) {
-    __restgprlr_26(0);
-    return;
+  uVar6 = (ulonglong)(int)param_3;
+  lVar3 = (longlong)param_2;
+  __savegprlr_26(param_1);
+  if (((uVar6 & 0xffffffff) == 0) || (uVar4 = (ulong)lVar3, uVar4 == 0)) {
+    iVar2 = __restgprlr_26(0);
+    return iVar2;
   }
-  if ((int)_Size < 1) {
-    MyAssertHandler(0xffffffff82174d28,0xa3d,0,0xffffffff82151828,0xffffffff82174f28,param_2);
+  if ((int)uVar4 < 1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_files.cpp",0xa3d
+                    ,0,"%s\n\t(len) = %i");
   }
   if (DAT_84014945 != '\0') {
-    dwMilliseconds = 0x1000 - ((0xfff < (ulonglong)DAT_8401597c + param_2) + 0x1000);
-    DVar2 = WaitForSingleObject(DAT_84015970,dwMilliseconds);
-    if (DVar2 == 0) {
-      uVar3 = (ulonglong)DAT_8401597c;
-      uVar4 = (ulonglong)DAT_84014964;
-      if (uVar4 < uVar3) {
-        memmove(&DAT_84013940,&DAT_84013940 + DAT_84014964,DAT_8401597c - DAT_84014964);
-        uVar3 = (ulonglong)DAT_8401597c;
-        uVar4 = (ulonglong)DAT_84014964;
+    uVar5 = 0x1000 - ((0xfff < (ulonglong)DAT_8401597c + lVar3) + 0x1000);
+    uVar1 = WaitForSingleObject(g_writeDemoCompleteEvent,uVar5);
+    if (uVar1 == 0) {
+      uVar7 = (ulonglong)DAT_8401597c;
+      uVar8 = (ulonglong)DAT_84014964;
+      if (uVar8 < uVar7) {
+        memmove();
+        uVar7 = (ulonglong)DAT_8401597c;
+        uVar8 = (ulonglong)DAT_84014964;
       }
-      uVar3 = uVar3 - uVar4;
-      DAT_8401597c = (uint)uVar3;
+      uVar7 = uVar7 - uVar8;
+      DAT_8401597c = (uint)uVar7;
       DAT_84014945 = '\0';
       goto LAB_825d6604;
     }
-    if (dwMilliseconds == 0xffffffff) {
-      MyAssertHandler(0xffffffff82174d28,0xa52,0,0xffffffff82174e08,0xffffffff82174f10,DVar2);
+    if (uVar5 == 0xffffffff) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_files.cpp",
+                      0xa52,0,"%s\n\t(res) = %i");
     }
   }
-  uVar3 = (ulonglong)DAT_8401597c;
+  uVar7 = (ulonglong)DAT_8401597c;
 LAB_825d6604:
-  if ((DAT_84014945 == '\0') && (0xfff < (uVar3 + param_2 & 0xffffffff))) {
-    WriteFile((HANDLE)param_3,&DAT_84013940,(DWORD)uVar3,local_40,(LPOVERLAPPED)0x0);
+  if ((DAT_84014945 == '\0') && (0xfff < (uVar7 + lVar3 & 0xffffffff))) {
+    WriteFile((void *)uVar6,demoWriteBuffer,(ulong)uVar7,local_40,(_OVERLAPPED *)0x0);
     if (local_40[0] != DAT_8401597c) {
-      Com_PrintWarning(7,0xffffffff82174e38);
+      Com_PrintWarning(7,"Failed trying to write %i bytes to the logfile\n");
     }
-    uVar3 = 0;
+    uVar7 = 0;
     DAT_8401597c = 0;
   }
-  if (0xfff < (uVar3 + param_2 & 0xffffffff)) {
-    uVar1 = va(0xffffffff82174eec,uVar3,param_2);
-    MyAssertHandler(0xffffffff82174d28,0xa5f,0,0xffffffff820011f4,0xffffffff82174f34,uVar1);
-    uVar3 = (ulonglong)DAT_8401597c;
+  uVar9 = (uint)uVar7;
+  if (0xfff < (uVar7 + lVar3 & 0xffffffff)) {
+    va("fileWriteBufferPos is %i, len is %i");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_files.cpp",0xa5f
+                    ,0,"%s\n\t%s");
+    uVar9 = DAT_8401597c;
   }
-  memcpy(&DAT_84013940 + (int)uVar3,_Src,_Size);
-  DAT_8401597c = (int)uVar3 + _Size;
-  local_40[0] = _Size;
+  memcpy();
+  DAT_8401597c = uVar9 + uVar4;
+  local_40[0] = uVar4;
   if (DAT_84014945 == '\0') {
-    DAT_84015978 = (HANDLE)param_3;
-    SetEvent(DAT_84015974);
+    DAT_84015978 = (void *)uVar6;
+    SetEvent(g_writeDemoEvent);
     DAT_84014945 = '\x01';
   }
-  __restgprlr_26(local_40[0]);
-  return;
+  iVar2 = __restgprlr_26(local_40[0]);
+  return iVar2;
 }
 
 
 // 825D6700  FS_FinishAsyncronousWrites  (universal/com_files.cpp:2681)
 
-HANDLE FS_FinishAsyncronousWrites(HANDLE param_1)
+void FS_FinishAsyncronousWrites(void *param_1)
 
 {
-  HANDLE pvVar2;
-  undefined8 uVar1;
-  DWORD aDStack_20 [2];
+  ulong uVar1;
+  char *pcVar2;
+  ulong auStack_20 [2];
   
-  pvVar2 = param_1;
   if (DAT_84014944 != '\0') {
-    pvVar2 = (HANDLE)WaitForSingleObject(DAT_84015968,0xffffffff);
-    if (pvVar2 == (HANDLE)0x0) {
-      if (DAT_84014958 < DAT_84014948) {
-        pvVar2 = memmove(&DAT_84014968,&DAT_84014968 + DAT_84014958,DAT_84014948 - DAT_84014958);
+    uVar1 = WaitForSingleObject(g_writeLogCompleteEvent,0xffffffff);
+    if (uVar1 == 0) {
+      if (s_logBytesWritten < DAT_84014948) {
+        memmove();
       }
-      DAT_84014948 = DAT_84014948 - DAT_84014958;
+      DAT_84014948 = DAT_84014948 - s_logBytesWritten;
       DAT_84014944 = '\0';
     }
-    else if (DAT_84013128 == 0) {
-      uVar1 = va(0xffffffff82174f68,pvVar2);
-      pvVar2 = (HANDLE)MyAssertHandler(0xffffffff82174d28,0xa8b,0,uVar1);
+    else if (alwaysfails == 0) {
+      pcVar2 = va("WaitForSingleObject() returned %i");
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_files.cpp",
+                      0xa8b,0,pcVar2);
     }
     if (DAT_84014948 != 0) {
-      pvVar2 = (HANDLE)WriteFile(param_1,&DAT_84014968,DAT_84014948,aDStack_20,(LPOVERLAPPED)0x0);
+      WriteFile(param_1,fileWriteBuffer,DAT_84014948,auStack_20,(_OVERLAPPED *)0x0);
       DAT_84014948 = 0;
     }
   }
-  return pvVar2;
+  return;
 }
 
 
 // 825D67F8  FS_FinishAsyncronousDemoWrites  (universal/com_files.cpp:2732)
 
-HANDLE FS_FinishAsyncronousDemoWrites(HANDLE param_1)
+void FS_FinishAsyncronousDemoWrites(void *param_1)
 
 {
-  HANDLE pvVar2;
-  undefined8 uVar1;
-  DWORD aDStack_20 [2];
+  ulong uVar1;
+  char *pcVar2;
+  ulong auStack_20 [2];
   
-  pvVar2 = param_1;
   if (DAT_84014945 != '\0') {
-    pvVar2 = (HANDLE)WaitForSingleObject(DAT_84015970,0xffffffff);
-    if (pvVar2 == (HANDLE)0x0) {
+    uVar1 = WaitForSingleObject(g_writeDemoCompleteEvent,0xffffffff);
+    if (uVar1 == 0) {
       if (DAT_84014964 < DAT_8401597c) {
-        pvVar2 = memmove(&DAT_84013940,&DAT_84013940 + DAT_84014964,DAT_8401597c - DAT_84014964);
+        memmove();
       }
       DAT_8401597c = DAT_8401597c - DAT_84014964;
       DAT_84014945 = '\0';
     }
-    else if (DAT_84013128 == 0) {
-      uVar1 = va(0xffffffff82174f68,pvVar2);
-      pvVar2 = (HANDLE)MyAssertHandler(0xffffffff82174d28,0xabd,0,uVar1);
+    else if (alwaysfails == 0) {
+      pcVar2 = va("WaitForSingleObject() returned %i");
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_files.cpp",
+                      0xabd,0,pcVar2);
     }
     if (DAT_8401597c != 0) {
-      pvVar2 = (HANDLE)WriteFile(param_1,&DAT_84013940,DAT_8401597c,aDStack_20,(LPOVERLAPPED)0x0);
+      WriteFile(param_1,demoWriteBuffer,DAT_8401597c,auStack_20,(_OVERLAPPED *)0x0);
       DAT_8401597c = 0;
     }
   }
-  return pvVar2;
+  return;
 }
 
 
 // 825D68F0  FS_Printf  (universal/com_files.cpp:2781)
 
-/* WARNING: Restarted to delay deadcode elimination for space: stack */
-
-int FS_Printf(ulonglong param_1,char *param_2,undefined8 param_3,undefined8 param_4,
-             undefined8 param_5,undefined8 param_6,undefined8 param_7,undefined8 param_8)
+void FS_Printf(void *param_1,char *param_2)
 
 {
   char cVar1;
-  int iVar2;
-  char *pcVar3;
+  char *pcVar2;
   char *pcStack0000001c;
-  undefined8 uStack00000020;
-  undefined8 uStack00000028;
-  undefined8 uStack00000030;
-  undefined8 uStack00000038;
-  undefined8 uStack00000040;
-  undefined8 uStack00000048;
   char local_1010 [4096];
   
-  uStack00000020 = param_3;
-  uStack00000028 = param_4;
-  uStack00000030 = param_5;
-  uStack00000038 = param_6;
-  uStack00000040 = param_7;
-  uStack00000048 = param_8;
   pcStack0000001c = param_2;
-  iVar2 = _vsnprintf(local_1010,0x1000,param_2,(va_list)&stack0x00000020);
-  pcVar3 = local_1010;
+  _vsnprintf(local_1010,0x1000,param_2,&stack0x00000020);
+  pcVar2 = local_1010;
   do {
-    cVar1 = *pcVar3;
-    pcVar3 = pcVar3 + 1;
+    cVar1 = *pcVar2;
+    pcVar2 = pcVar2 + 1;
   } while (cVar1 != '\0');
-  if ((param_1 & 0xffffffff) != 0) {
-    iVar2 = FS_FileWrite(local_1010,pcVar3 + (-1 - (int)local_1010),param_1);
+  if (param_1 != (void *)0x0) {
+    FS_FileWrite(local_1010,(uint)(pcVar2 + (-1 - (int)local_1010)),param_1);
   }
+  return;
+}
+
+
+// 825D6990  FS_Seek  (universal/com_files.cpp:2897)
+
+int FS_Seek(void *param_1,long param_2,int param_3)
+
+{
+  void *pvVar1;
+  int iVar2;
+  
+  pvVar1 = (void *)__savegprlr_29(param_1);
+  ProfLoad_BeginTrackedValue(MAP_PROFILE_FILE_SEEK);
+  iVar2 = FileWrapper_Seek(pvVar1,param_2,param_3);
+  ProfLoad_EndTrackedValue(MAP_PROFILE_FILE_SEEK);
+  iVar2 = __restgprlr_29(iVar2);
   return iVar2;
 }
 
 
 // 825D6998  FS_ReadFile  (universal/com_files.cpp:2916)
 
-void FS_ReadFile(undefined8 param_1,ulonglong param_2)
+int FS_ReadFile(char *param_1,void **param_2)
 
 {
   char *pcVar1;
-  int iVar2;
+  uint uVar2;
   int iVar3;
-  HANDLE local_30 [12];
+  void *pvVar4;
+  ulonglong uVar5;
+  _iobuf *local_30 [12];
   
-  pcVar1 = (char *)__savegprlr_28();
+  uVar5 = (ulonglong)(int)param_2;
+  pcVar1 = (char *)__savegprlr_28(param_1);
   if ((pcVar1 == (char *)0x0) || (*pcVar1 == '\0')) {
-    Com_Error(0,0xffffffff82174f8c);
+    Com_Error(ERR_FATAL,"\x15FS_ReadFile with empty name\n");
   }
-  DAT_8401495c = 1;
-  iVar2 = FS_FOpenFileReadForThread(pcVar1,local_30);
-  if (local_30[0] == (HANDLE)0x0) {
-    if ((param_2 & 0xffffffff) != 0) {
-      *(int *)param_2 = 0;
+  com_fileAccessed = 1;
+  uVar2 = FS_FOpenFileReadForThread(pcVar1,local_30);
+  if (local_30[0] == (_iobuf *)0x0) {
+    if ((uVar5 & 0xffffffff) != 0) {
+      *(undefined4 *)uVar5 = 0;
     }
-    __restgprlr_28(0xffffffffffffffff);
-    return;
+    iVar3 = __restgprlr_28(0xffffffffffffffff);
+    return iVar3;
   }
-  if ((param_2 & 0xffffffff) != 0) {
-    iVar3 = Z_VirtualAlloc(iVar2 + 1,0xffffffff82174d08,0);
-    *(int *)param_2 = iVar3;
-    FS_FileRead(iVar3,iVar2,local_30[0]);
-    *(undefined1 *)(iVar2 + iVar3) = 0;
+  if ((uVar5 & 0xffffffff) != 0) {
+    pvVar4 = Z_VirtualAlloc(uVar2 + 1,"FS_AllocMem",0);
+    *(undefined4 *)uVar5 = pvVar4;
+    FS_FileRead(pvVar4,uVar2,local_30[0]);
+    *(undefined1 *)(uVar2 + (int)pvVar4) = 0;
   }
   FS_FileClose(local_30[0]);
-  __restgprlr_28(iVar2);
-  return;
+  iVar3 = __restgprlr_28(uVar2);
+  return iVar3;
 }
 
 
 // 825D6A60  FS_FreeFile  (universal/com_files.cpp:2964)
 
-void FS_FreeFile(ulonglong param_1)
+void FS_FreeFile(void *param_1)
 
 {
-  if ((param_1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82174d28,0xb97,0,0xffffffff82000f98,0xffffffff8200e484);
+  if (param_1 == (void *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_files.cpp",0xb97
+                    ,0,"%s");
   }
   Z_VirtualFree(param_1,0);
   return;
@@ -1202,47 +1385,52 @@ void FS_FreeFile(ulonglong param_1)
 
 // 825D6AC0  FS_WriteFile  (universal/com_files.cpp:3005)
 
-void FS_WriteFile(undefined8 param_1,ulonglong param_2,undefined8 param_3)
+int FS_WriteFile(char *param_1,void *param_2,int param_3)
 
 {
-  ulonglong uVar1;
-  ulonglong uVar2;
+  char *pcVar1;
+  _iobuf *p_Var2;
   int iVar3;
+  uint uVar4;
+  ulonglong uVar5;
   
-  uVar1 = __savegprlr_27();
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82174d28,0xbc3,0,0xffffffff82000f98,0xffffffff8215192c);
+  uVar5 = (ulonglong)(int)param_2;
+  pcVar1 = (char *)__savegprlr_27(param_1);
+  if (pcVar1 == (char *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_files.cpp",0xbc3
+                    ,0,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82174d28,0xbc4,0,0xffffffff82000f98,0xffffffff8200e484);
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_files.cpp",0xbc4
+                    ,0,"%s");
   }
-  uVar2 = FS_FOpenFileWrite(uVar1);
-  if ((uVar2 & 0xffffffff) == 0) {
-    Com_Printf(10,0xffffffff82174fac,uVar1);
-    __restgprlr_27(0);
-    return;
+  p_Var2 = FS_FOpenFileWrite(pcVar1);
+  if (p_Var2 == (_iobuf *)0x0) {
+    Com_Printf(10,"Failed to open %s\n");
+    iVar3 = __restgprlr_27(0);
+    return iVar3;
   }
-  iVar3 = FS_FileWrite(param_2,param_3,uVar2);
-  FS_FileClose((HANDLE)uVar2);
-  if (iVar3 == (int)param_3) {
-    __restgprlr_27(1);
-    return;
+  uVar4 = FS_FileWrite((void *)uVar5,param_3,p_Var2);
+  FS_FileClose(p_Var2);
+  if (uVar4 == param_3) {
+    iVar3 = __restgprlr_27(1);
+    return iVar3;
   }
-  FS_Delete(uVar1);
-  __restgprlr_27(0);
-  return;
+  FS_Delete(pcVar1);
+  iVar3 = __restgprlr_27(0);
+  return iVar3;
 }
 
 
 // 825D6BA8  FS_FreeFileList  (universal/com_files.cpp:3615)
 
-void FS_FreeFileList(int param_1)
+void FS_FreeFileList(char **param_1,int param_2)
 
 {
-  if (param_1 == 0) {
+  if (param_1 == (char **)0x0) {
     return;
   }
-  Hunk_UserDestroy(*(undefined4 *)(param_1 + -4));
+  Hunk_UserDestroy((HunkUser *)param_1[-1]);
   return;
 }
 
@@ -1267,10 +1455,12 @@ void FS_ConvertPath(char *param_1)
 
 // 825D6C00  FS_InitFilesystem  (universal/com_files.cpp:4775)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void FS_InitFilesystem(void)
 
 {
-  Com_StartupVariable(0xffffffff82164748);
+  Com_StartupVariable("loc_language");
   SEH_InitLanguage();
   return;
 }
@@ -1278,62 +1468,62 @@ void FS_InitFilesystem(void)
 
 // 825D6C30  FS_InitLogThread  (universal/com_files.cpp:4786)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void FS_InitLogThread(void)
 
 {
-  CreateThread((LPSECURITY_ATTRIBUTES)0x0,0,LogWriteThread,(LPVOID)0x0,0,(LPDWORD)0x0);
-  DAT_8401494c = CreateEventA((LPSECURITY_ATTRIBUTES)0x0,0,0,(LPCSTR)0x0);
-  DAT_84015968 = CreateEventA((LPSECURITY_ATTRIBUTES)0x0,0,0,(LPCSTR)0x0);
-  CreateThread((LPSECURITY_ATTRIBUTES)0x0,0,DemoWriteThread,(LPVOID)0x0,0,(LPDWORD)0x0);
-  DAT_84015974 = CreateEventA((LPSECURITY_ATTRIBUTES)0x0,0,0,(LPCSTR)0x0);
-  DAT_84015970 = CreateEventA((LPSECURITY_ATTRIBUTES)0x0,0,0,(LPCSTR)0x0);
+  CreateThread((void *)0x0,0,LogWriteThread,(void *)0x0,0,(ulong *)0x0);
+  g_writeLogEvent = CreateEventA((void *)0x0,0,0,(char *)0x0);
+  g_writeLogCompleteEvent = CreateEventA((void *)0x0,0,0,(char *)0x0);
+  CreateThread((void *)0x0,0,DemoWriteThread,(void *)0x0,0,(ulong *)0x0);
+  g_writeDemoEvent = CreateEventA((void *)0x0,0,0,(char *)0x0);
+  g_writeDemoCompleteEvent = CreateEventA((void *)0x0,0,0,(char *)0x0);
   return;
 }
 
 
 // 825D6D00  FS_FOpenFileByMode  (universal/com_files.cpp:4945)
 
-undefined8 FS_FOpenFileByMode(undefined8 param_1,int *param_2,longlong param_3)
+int FS_FOpenFileByMode(char *param_1,void **param_2,fsMode_t param_3)
 
 {
-  bool bVar1;
-  undefined8 uVar2;
-  int iVar3;
+  int iVar1;
+  void *pvVar2;
   
-  if ((uint)param_3 < 4) {
-    bVar1 = (uint)param_3 != 0;
-    if (param_3 == 1 && bVar1) {
-      iVar3 = FS_FOpenFileWrite();
-      uVar2 = 0;
-      *param_2 = iVar3;
-      if (iVar3 == 0) {
-        uVar2 = 0xffffffffffffffff;
+  if (param_3 < 4) {
+    if (param_3 == FS_WRITE) {
+      pvVar2 = FS_FOpenFileWrite(param_1);
+      iVar1 = 0;
+      *param_2 = pvVar2;
+      if (pvVar2 == (void *)0x0) {
+        iVar1 = -1;
       }
     }
-    else if ((param_3 == 2 && bVar1) || (bVar1)) {
-      iVar3 = FS_FOpenFileAppend();
-      uVar2 = 0;
-      *param_2 = iVar3;
-      if (iVar3 == 0) {
-        uVar2 = 0xffffffffffffffff;
+    else if ((param_3 == FS_APPEND) || (param_3 != FS_READ)) {
+      pvVar2 = FS_FOpenFileAppend(param_1);
+      iVar1 = 0;
+      *param_2 = pvVar2;
+      if (pvVar2 == (void *)0x0) {
+        iVar1 = -1;
       }
     }
     else {
-      DAT_8401495c = 1;
-      uVar2 = FS_FOpenFileReadForThread(param_1,param_2);
+      com_fileAccessed = 1;
+      iVar1 = FS_FOpenFileReadForThread(param_1,param_2);
     }
   }
   else {
-    Com_Error(0,0xffffffff82174fc0);
-    uVar2 = 0x1b39;
+    Com_Error(ERR_FATAL,"\x15FSH_FOpenFile: bad mode");
+    iVar1 = 0x1b39;
   }
-  return uVar2;
+  return iVar1;
 }
 
 
 // 825D6DC0  FS_Flush  (universal/com_files.cpp:5047)
 
-void FS_Flush(void)
+void FS_Flush(void *param_1)
 
 {
   return;
@@ -1342,69 +1532,74 @@ void FS_Flush(void)
 
 // 825D6DC8  Com_IsMpMap  (universal/com_files.cpp:5055)
 
-bool Com_IsMpMap(undefined8 param_1)
+bool Com_IsMpMap(char *param_1)
 
 {
   int iVar1;
   
-  iVar1 = I_strnicmp(param_1,0xffffffff82174fdc,3);
+  iVar1 = I_strnicmp(param_1,"mp_",3);
   return iVar1 == 0;
 }
 
 
 // 825D7758  Com_GetBspFilename  (universal/com_files.cpp:5061)
 
-void Com_GetBspFilename(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+void Com_GetBspFilename(char *param_1,int param_2,char *param_3)
 
 {
-  undefined4 uStack00000024;
+  char *pcStack00000024;
   
-  uStack00000024 = (undefined4)param_3;
+  pcStack00000024 = param_3;
   Com_IsAddonMap(param_3,&stack0x00000024);
-  Com_sprintf(param_1,param_2,0xffffffff82175020,uStack00000024);
+  Com_sprintf(param_1,param_2,"maps/mp/%s.d3dbsp");
   return;
 }
 
 
 // 825D6E00  Com_IsAddonMap  (universal/com_files.cpp:5100)
 
-void Com_IsAddonMap(undefined8 param_1,ulonglong param_2)
+bool Com_IsAddonMap(char *param_1,char **param_2)
 
 {
   ulonglong uVar1;
   int iVar2;
-  char *pcVar3;
-  uint uVar4;
-  longlong lVar5;
-  uint *puVar6;
+  undefined1 uVar3;
+  ulonglong uVar4;
+  uint uVar5;
+  ulonglong uVar6;
+  char *pcVar7;
+  uint *puVar8;
   
-  uVar1 = __savegprlr_26();
+  uVar4 = (ulonglong)(int)param_2;
+  uVar1 = __savegprlr_26(param_1);
   if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82174d28,0x13f2,0,0xffffffff82000f98,0xffffffff82174fe0);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_files.cpp",
+                    0x13f2,0,"%s");
   }
-  uVar4 = 0;
-  puVar6 = &DAT_829923c4;
+  uVar5 = 0;
+  puVar8 = &g_addonMapDefs[0].prefixLen;
   do {
-    iVar2 = I_strnicmp(uVar1,puVar6[-1],*puVar6);
+    iVar2 = I_strnicmp((char *)uVar1,((AddonMapDef *)(puVar8 + -1))->prefix,*puVar8);
     if (iVar2 == 0) {
-      lVar5 = *puVar6 + uVar1;
-      pcVar3 = strchr((char *)lVar5,0x5f);
-      if ((puVar6[1] == 0) || (pcVar3 != (char *)0x0)) {
-        if ((param_2 & 0xffffffff) != 0) {
-          if ((puVar6[1] != 0) && (iVar2 = I_strnicmp(lVar5,0xffffffff82174fdc,3), iVar2 != 0)) {
-            lVar5 = (longlong)(int)pcVar3 + 1;
+      uVar6 = *puVar8 + uVar1;
+      pcVar7 = (char *)uVar6;
+      strchr();
+      if ((puVar8[1] == 0) || ((uVar6 & 0xffffffff) != 0)) {
+        if ((uVar4 & 0xffffffff) != 0) {
+          if ((puVar8[1] != 0) && (iVar2 = I_strnicmp(pcVar7,"mp_",3), iVar2 != 0)) {
+            pcVar7 = (char *)((int)uVar6 + 1);
           }
-          *(undefined4 *)param_2 = (int)lVar5;
+          *(undefined4 *)uVar4 = pcVar7;
         }
-        __restgprlr_26(1);
-        return;
+        uVar3 = __restgprlr_26(1);
+        return (bool)uVar3;
       }
     }
-    uVar4 = uVar4 + 0xc;
-    puVar6 = puVar6 + 3;
-    if (0x17 < uVar4) {
-      __restgprlr_26(0);
-      return;
+    uVar5 = uVar5 + 0xc;
+    puVar8 = puVar8 + 3;
+    if (0x17 < uVar5) {
+      uVar3 = __restgprlr_26(0);
+      return (bool)uVar3;
     }
   } while( true );
 }

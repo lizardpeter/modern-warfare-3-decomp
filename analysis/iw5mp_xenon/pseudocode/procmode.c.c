@@ -2,69 +2,70 @@
 
 // 828BFCD8  ProcModeStart  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/procmode.c:33)
 
-undefined8 ProcModeStart(int param_1)
+undefined4 ProcModeStart(PROCMODE *param_1)
 
 {
-  *(undefined4 *)((*(int *)(param_1 + 0xc) + 4) * 4 + *(int *)(param_1 + 8)) = 1;
-  *(undefined4 *)(param_1 + 0x18) = 1;
+  param_1->Codec->Running[param_1->QueueIndex] = 1;
+  param_1->Running = 1;
   return 0;
 }
 
 
 // 828BFD00  ProcModeStop  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/procmode.c:51)
 
-undefined8 ProcModeStop(int param_1)
+undefined4 ProcModeStop(PROCMODE *param_1)
 
 {
-  *(undefined4 *)(param_1 + 0x18) = 0;
-  *(undefined4 *)((*(int *)(param_1 + 0xc) + 4) * 4 + *(int *)(param_1 + 8)) = 0;
+  param_1->Running = 0;
+  param_1->Codec->Running[param_1->QueueIndex] = 0;
   return 0;
 }
 
 
 // 828BFCB8  ProcModeGetNotificationData  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/procmode.c:72)
 
-undefined8 ProcModeGetNotificationData(void)
+undefined4
+ProcModeGetNotificationData(PROCMODE *param_1,uchar *param_2,ulong *param_3,ulong *param_4)
 
 {
-  return 0xffffffff80004001;
+  return 0x80004001;
 }
 
 
 // 828BFCC8  ProcModeSetOutputVoice  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/procmode.c:111)
 
-undefined8 ProcModeSetOutputVoice(void)
+undefined4 ProcModeSetOutputVoice(PROCMODE *param_1,void *param_2)
 
 {
-  return 0xffffffff80004001;
+  return 0x80004001;
 }
 
 
 // 828BFD28  ProcModeIsDataInCodec  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/procmode.c:127)
 
-bool ProcModeIsDataInCodec(int param_1)
+int ProcModeIsDataInCodec(PROCMODE *param_1)
 
 {
-  int iVar1;
-  longlong lVar2;
+  CODEC_PROCESSOR *pCVar1;
+  ulong uVar2;
   uint uVar3;
   int *piVar4;
   
-  if ((*(int *)(param_1 + 0x18) != 1) || (iVar1 = *(int *)(param_1 + 8), iVar1 == 0)) {
-    return false;
+  if ((param_1->Running != 1) || (pCVar1 = param_1->Codec, pCVar1 == (CODEC_PROCESSOR *)0x0)) {
+    return 0;
   }
   uVar3 = 0;
-  piVar4 = (int *)(iVar1 + 0x10);
-  while ((piVar4[-2] == 0 || (*piVar4 != 1))) {
+  piVar4 = pCVar1->Running;
+  while (((PACKET_PROCESSOR *)piVar4[-2] == (PACKET_PROCESSOR *)0x0 || (*piVar4 != 1))) {
     uVar3 = uVar3 + 1;
     piVar4 = piVar4 + 1;
     if (1 < uVar3) {
-      lVar2 = 0;
+      uVar2 = 0;
 LAB_828bfd80:
-      return lVar2 != 0;
+      return (uint)(uVar2 != 0);
     }
   }
-  lVar2 = PacketQueueLength((ulonglong)*(uint *)(iVar1 + 4) + 8);
+  uVar2 = PacketQueueLength(&pCVar1->InputPackets->InFlight);
   goto LAB_828bfd80;
 }
 

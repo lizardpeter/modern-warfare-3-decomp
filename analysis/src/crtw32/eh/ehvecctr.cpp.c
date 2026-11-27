@@ -3,20 +3,26 @@
 // 8291DB70  `eh_vector_constructor_iterator'  (line unknown)
 
 void _eh_vector_constructor_iterator_
-               (undefined8 param_1,undefined8 param_2,int param_3,code *param_4)
+               (void *param_1,uint param_2,int param_3,_func___cdecl_void_void_ptr *param_4,
+               _func___cdecl_void_void_ptr *param_5)
 
 {
   longlong lVar1;
-  undefined4 uVar2;
-  undefined4 uVar3;
-  int iVar4;
+  longlong lVar2;
+  int iVar3;
+  undefined4 uStack00000014;
+  undefined4 uStack0000001c;
+  _func___cdecl_void_void_ptr *p_Stack00000034;
   
-  uVar3 = (undefined4)param_2;
-  uVar2 = (undefined4)((ulonglong)param_2 >> 0x20);
-  lVar1 = __savegprlr_26();
-  for (iVar4 = 0; iVar4 < param_3; iVar4 = iVar4 + 1) {
-    (*param_4)(lVar1);
-    lVar1 = lVar1 + CONCAT44(uVar2,uVar3);
+  lVar2 = (longlong)(int)param_2;
+  p_Stack00000034 = param_5;
+  lVar1 = __savegprlr_26(param_1);
+  uStack00000014 = (undefined4)lVar1;
+  uStack0000001c = (undefined4)lVar2;
+  for (iVar3 = 0; iVar3 < param_3; iVar3 = iVar3 + 1) {
+    (*param_4)((void *)lVar1);
+    lVar1 = lVar1 + lVar2;
+    uStack00000014 = (undefined4)lVar1;
   }
   FUN_8291dc20();
   __restgprlr_26();

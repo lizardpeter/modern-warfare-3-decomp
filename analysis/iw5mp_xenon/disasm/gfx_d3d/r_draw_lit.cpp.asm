@@ -590,69 +590,8 @@ LAB_82734a74:
   82734A90  398C4AA0             addi r12,r12,0x4aa0
   82734A94  7C0C002E             lwzx r0,r12,r0
   82734A98  7C0903A6             mtspr CTR,r0
-switchD:
   82734A9C  4E800420             bctr
-caseD_18:
-  82734B3C  38DDFFE8             subi r6,r29,0x18
-  82734B40  7FC5F378             or r5,r30,r30
-  82734B44  7FE3FB78             or r3,r31,r31
-  82734B48  48066E81             bl 0x8279b9c8
-  82734B4C  480000B4             b 0x82734c00
-caseD_19:
-  82734B50  38DDFFE8             subi r6,r29,0x18
-  82734B54  7FC5F378             or r5,r30,r30
-  82734B58  7FE3FB78             or r3,r31,r31
-  82734B5C  48066FED             bl 0x8279bb48
-  82734B60  480000A0             b 0x82734c00
-caseD_26:
-  82734B64  7FC5F378             or r5,r30,r30
-  82734B68  7FE3FB78             or r3,r31,r31
-  82734B6C  4806714D             bl 0x8279bcb8
-  82734B70  48000090             b 0x82734c00
-caseD_0:
-  82734B74  7FA6EB78             or r6,r29,r29
-  82734B78  7FC5F378             or r5,r30,r30
-  82734B7C  7FE3FB78             or r3,r31,r31
-  82734B80  4BFFFA59             bl 0x827345d8
-  82734B84  4800007C             b 0x82734c00
-caseD_1:
-  82734B88  7FA6EB78             or r6,r29,r29
-  82734B8C  7FC5F378             or r5,r30,r30
-  82734B90  7FE3FB78             or r3,r31,r31
-  82734B94  4BFFF705             bl 0x82734298
-  82734B98  48000068             b 0x82734c00
-caseD_e:
-  82734B9C  7FC5F378             or r5,r30,r30
-  82734BA0  7FE3FB78             or r3,r31,r31
-  82734BA4  4BFFFBA5             bl 0x82734748
-  82734BA8  48000058             b 0x82734c00
-caseD_f:
-  82734BAC  7FC5F378             or r5,r30,r30
-  82734BB0  7FE3FB78             or r3,r31,r31
-  82734BB4  4BFFFCD5             bl 0x82734888
-  82734BB8  48000048             b 0x82734c00
-caseD_10:
-  82734BBC  7FC5F378             or r5,r30,r30
-  82734BC0  7FE3FB78             or r3,r31,r31
-  82734BC4  4BFFF885             bl 0x82734448
-  82734BC8  48000038             b 0x82734c00
-caseD_11:
-  82734BCC  7FC6F378             or r6,r30,r30
-  82734BD0  38BDFFEF             subi r5,r29,0x11
-  82734BD4  7FE3FB78             or r3,r31,r31
-  82734BD8  48003129             bl 0x82737d00
-  82734BDC  48000024             b 0x82734c00
-caseD_13:
-  82734BE0  7FC5F378             or r5,r30,r30
-  82734BE4  7FE3FB78             or r3,r31,r31
-  82734BE8  4BFFF4C9             bl 0x827340b0
-  82734BEC  48000014             b 0x82734c00
-caseD_14:
-  82734BF0  7FC6F378             or r6,r30,r30
-  82734BF4  38BDFFEC             subi r5,r29,0x14
-  82734BF8  7FE3FB78             or r3,r31,r31
-  82734BFC  48077675             bl 0x827ac270
-default:
+LAB_82734c00:
   82734C00  7FC3F378             or r3,r30,r30
   82734C04  4BFEDBBD             bl 0x827227c0
   82734C08  817B0000             lwz r11,0x0(r27)

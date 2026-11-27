@@ -2,7 +2,9 @@
 
 // 8277A4D0  R_GetSunDvarCount  (gfx_d3d/r_sky.cpp:71)
 
-undefined8 R_GetSunDvarCount(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+uint R_GetSunDvarCount(void)
 
 {
   return 0x15;
@@ -11,183 +13,237 @@ undefined8 R_GetSunDvarCount(void)
 
 // 8277A4D8  R_RegisterSunDvars  (gfx_d3d/r_sky.cpp:77)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void R_RegisterSunDvars(void)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
-  undefined8 uVar3;
-  undefined8 uVar4;
-  undefined8 uVar5;
-  undefined8 uVar6;
-  undefined8 uVar7;
-  undefined8 uVar8;
-  undefined8 uVar9;
+  ushort uVar1;
+  char *pcVar2;
+  IMAGE_DOS_HEADER *pIVar3;
+  complex_s *pcVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
   
   __savefpr_23();
-  DAT_847eeb08 = Dvar_RegisterString(0xffffffff821cf04c,0xffffffff821bf9fc,0,0xffffffff821cf460);
-  uVar9 = 0;
-  DAT_847eeb54 = Dvar_RegisterFloat(0x4030000000000000,0,0x408f400000000000,0xffffffff821cf038);
-  DAT_847eeb4c = Dvar_RegisterString(0xffffffff821cf024,0xffffffff821cf3fc,0,0xffffffff821cf408);
-  uVar6 = 0x40c3880000000000;
-  DAT_847eeb04 = Dvar_RegisterFloat(uVar9,uVar9,0x40c3880000000000,0xffffffff821cf010);
-  uVar8 = 0x4056800000000000;
-  DAT_847eeb44 = Dvar_RegisterFloat(0x4046800000000000,uVar9,0x4056800000000000,0xffffffff821ceff8);
-  DAT_847eeb48 = Dvar_RegisterFloat(0x40a3880000000000,uVar9,uVar6,0xffffffff821cefe4);
-  DAT_847eeb34 = Dvar_RegisterFloat(0x4000000000000000,uVar9,uVar8,0xffffffff821cefcc);
-  uVar7 = 0x3ff0000000000000;
-  DAT_847eeb2c = Dvar_RegisterFloat(0x3ff0000000000000,uVar9,0x3ff0000000000000,0xffffffff821cefb4);
-  uVar5 = 0x404e000000000000;
-  DAT_847eeb20 = Dvar_RegisterFloat(uVar7,uVar9,0x404e000000000000,0xffffffff821cefa0);
-  DAT_847eeb28 = Dvar_RegisterFloat(uVar7,uVar9,uVar5,0xffffffff821cef8c);
-  uVar4 = 0x403e000000000000;
-  DAT_847eeb0c = Dvar_RegisterFloat(0x403e000000000000,uVar9,uVar8,0xffffffff821cef74);
-  uVar3 = 0x4014000000000000;
-  DAT_847eeb38 = Dvar_RegisterFloat(0x4014000000000000,uVar9,uVar8,0xffffffff821cef5c);
-  uVar2 = 0x3fe8000000000000;
-  DAT_847eeb30 = Dvar_RegisterFloat(0x3fe8000000000000,uVar9,uVar7,0xffffffff821cef44);
-  uVar1 = 0x3fe0000000000000;
-  DAT_847eeb24 = Dvar_RegisterFloat(0x3fe0000000000000,uVar9,uVar5,0xffffffff821cef30);
-  uVar6 = 0x4008000000000000;
-  DAT_847eeb10 = Dvar_RegisterFloat(0x4008000000000000,uVar9,uVar5,0xffffffff821cef1c);
-  DAT_847eeb40 = Dvar_RegisterFloat(uVar4,uVar9,uVar8,0xffffffff821cef04);
-  DAT_847eeb3c = Dvar_RegisterFloat(uVar3,uVar9,uVar8,0xffffffff821ceeec);
-  DAT_847eeb58 = Dvar_RegisterFloat(uVar2,uVar9,uVar7,0xffffffff821ceed4);
-  DAT_847eeb18 = Dvar_RegisterFloat(uVar1,uVar9,uVar5,0xffffffff821ceec0);
-  DAT_847eeb1c = Dvar_RegisterFloat(uVar6,uVar9,uVar5,0xffffffff821ceeac);
-  DAT_847eeb14 = Dvar_RegisterVec3(uVar9,uVar9,uVar9,0xc076800000000000,0x4076800000000000,
-                                   0xffffffff821cee98);
+  r_sunsprite_shader =
+       Dvar_RegisterString("r_sunsprite_shader","sun",0,
+                           "name for static sprite; can be any material");
+  dVar13 = 0.0;
+  r_sunsprite_size =
+       Dvar_RegisterFloat("r_sunsprite_size",16.0,0.0,1000.0,0,IMAGE_DOS_HEADER_82000000.e_magic);
+  r_sunflare_shader =
+       Dvar_RegisterString("r_sunflare_shader","sun_flare",0,
+                           "name for flare effect; can be any material");
+  pcVar2 = "is[0] )";
+  uVar1 = 0;
+  dVar10 = 10000.0;
+  r_sunflare_min_size =
+       Dvar_RegisterFloat("r_sunflare_min_size",(float)dVar13,(float)dVar13,10000.0,0,"is[0] )");
+  dVar12 = 90.0;
+  r_sunflare_min_angle =
+       Dvar_RegisterFloat("r_sunflare_min_angle",45.0,(float)dVar13,90.0,uVar1,pcVar2);
+  pcVar2 = "c\\cgame_mp\\cg_local_mp.h";
+  uVar1 = 0;
+  r_sunflare_max_size =
+       Dvar_RegisterFloat("r_sunflare_max_size",2500.0,(float)dVar13,(float)dVar10,0,
+                          "c\\cgame_mp\\cg_local_mp.h");
+  r_sunflare_max_angle =
+       Dvar_RegisterFloat("r_sunflare_max_angle",2.0,(float)dVar13,(float)dVar12,uVar1,pcVar2);
+  pIVar3 = &IMAGE_DOS_HEADER_82000000;
+  uVar1 = 0;
+  dVar11 = 1.0;
+  r_sunflare_max_alpha =
+       Dvar_RegisterFloat("r_sunflare_max_alpha",1.0,(float)dVar13,1.0,0,
+                          IMAGE_DOS_HEADER_82000000.e_magic);
+  dVar9 = 60.0;
+  r_sunflare_fadein =
+       Dvar_RegisterFloat("r_sunflare_fadein",(float)dVar11,(float)dVar13,60.0,uVar1,pIVar3->e_magic
+                         );
+  pcVar4 = waterGlobStatic.fftTrigTable + 0x40;
+  uVar1 = 0;
+  r_sunflare_fadeout =
+       Dvar_RegisterFloat("r_sunflare_fadeout",(float)dVar11,(float)dVar13,(float)dVar9,0,
+                          (char *)(waterGlobStatic.fftTrigTable + 0x40));
+  dVar8 = 30.0;
+  r_sunblind_min_angle =
+       Dvar_RegisterFloat("r_sunblind_min_angle",30.0,(float)dVar13,(float)dVar12,uVar1,
+                          (char *)pcVar4);
+  pcVar4 = waterGlobStatic.fftTrigTable + 0x40;
+  uVar1 = 0;
+  dVar7 = 5.0;
+  r_sunblind_max_angle =
+       Dvar_RegisterFloat("r_sunblind_max_angle",5.0,(float)dVar13,(float)dVar12,0,
+                          (char *)(waterGlobStatic.fftTrigTable + 0x40));
+  dVar6 = 0.75;
+  r_sunblind_max_darken =
+       Dvar_RegisterFloat("r_sunblind_max_darken",0.75,(float)dVar13,(float)dVar11,uVar1,
+                          (char *)pcVar4);
+  pIVar3 = &IMAGE_DOS_HEADER_82000000;
+  uVar1 = 0;
+  dVar5 = 0.5;
+  r_sunblind_fadein =
+       Dvar_RegisterFloat("r_sunblind_fadein",0.5,(float)dVar13,(float)dVar9,0,
+                          IMAGE_DOS_HEADER_82000000.e_magic);
+  dVar10 = 3.0;
+  r_sunblind_fadeout =
+       Dvar_RegisterFloat("r_sunblind_fadeout",3.0,(float)dVar13,(float)dVar9,uVar1,pIVar3->e_magic)
+  ;
+  pcVar2 = "is[0] )";
+  uVar1 = 0;
+  r_sunglare_min_angle =
+       Dvar_RegisterFloat("r_sunglare_min_angle",(float)dVar8,(float)dVar13,(float)dVar12,0,
+                          "is[0] )");
+  r_sunglare_max_angle =
+       Dvar_RegisterFloat("r_sunglare_max_angle",(float)dVar7,(float)dVar13,(float)dVar12,uVar1,
+                          pcVar2);
+  pcVar2 = "is[0] )";
+  r_sunglare_max_lighten =
+       Dvar_RegisterFloat("r_sunglare_max_lighten",(float)dVar6,(float)dVar13,(float)dVar11,uVar1,
+                          "is[0] )");
+  uVar1 = 0;
+  r_sunglare_fadein =
+       Dvar_RegisterFloat("r_sunglare_fadein",(float)dVar5,(float)dVar13,(float)dVar9,0,pcVar2);
+  r_sunglare_fadeout =
+       Dvar_RegisterFloat("r_sunglare_fadeout",(float)dVar10,(float)dVar13,(float)dVar9,uVar1,pcVar2
+                         );
+  r_sun_fx_position =
+       Dvar_RegisterVec3("r_sun_fx_position",(float)dVar13,(float)dVar13,(float)dVar13,-360.0,360.0,
+                         0,IMAGE_DOS_HEADER_82000000.e_magic);
   __restfpr_23();
   return;
 }
 
 
 // 8277A910  R_SetSunFlarePosition  (gfx_d3d/r_sky.cpp:107)
-
-void R_SetSunFlarePosition(undefined8 param_1)
-
-{
-  ulonglong uVar1;
-  
-  uVar1 = (ulonglong)DAT_8461658c;
-  if (uVar1 == 0) {
-    MyAssertHandler(0xffffffff821cf48c,0x6d,0,0xffffffff82000f98,0xffffffff821b9c84);
-    uVar1 = (ulonglong)DAT_8461658c;
-  }
-  AngleVectors(param_1,uVar1 + 0x1b4,0,0);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
 
 // 8277A990  R_SetSunFromDvars  (gfx_d3d/r_sky.cpp:116)
 
-void R_SetSunFromDvars(undefined1 *param_1)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void R_SetSunFromDvars(sunflare_t *param_1)
 
 {
   char *pcVar1;
-  undefined4 uVar2;
+  Material *pMVar2;
   double dVar3;
   double dVar4;
   double dVar5;
   double dVar6;
   
-  if (param_1 == (undefined1 *)0x0) {
-    MyAssertHandler(0xffffffff821cf48c,0x75,0,0xffffffff82000f98,0xffffffff821bf9fc);
+  if (param_1 == (sunflare_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_sky.cpp",0x75,0,"%s"
+                   );
   }
-  pcVar1 = *(char **)(DAT_847eeb08 + 0xc);
+  pcVar1 = (r_sunsprite_shader->current).string;
   if ((pcVar1 == (char *)0x0) || (*pcVar1 == '\0')) {
-    *(undefined4 *)(param_1 + 4) = 0;
+    param_1->spriteMaterial = (Material *)0x0;
   }
   else {
-    uVar2 = Material_RegisterHandle(pcVar1,6);
-    *(undefined4 *)(param_1 + 4) = uVar2;
+    pMVar2 = Material_RegisterHandle(pcVar1,6);
+    param_1->spriteMaterial = pMVar2;
   }
-  *(undefined4 *)(param_1 + 0xc) = *(undefined4 *)(DAT_847eeb54 + 0xc);
-  pcVar1 = *(char **)(DAT_847eeb4c + 0xc);
+  param_1->spriteSize = (float)(r_sunsprite_size->current).integer;
+  pcVar1 = (r_sunflare_shader->current).string;
   if ((pcVar1 == (char *)0x0) || (*pcVar1 == '\0')) {
-    *(undefined4 *)(param_1 + 8) = 0;
+    param_1->flareMaterial = (Material *)0x0;
   }
   else {
-    uVar2 = Material_RegisterHandle(pcVar1,6);
-    *(undefined4 *)(param_1 + 8) = uVar2;
+    pMVar2 = Material_RegisterHandle(pcVar1,6);
+    param_1->flareMaterial = pMVar2;
   }
   dVar6 = 0.5;
   dVar5 = 0.01745329238474369;
-  *(float *)(param_1 + 0x10) = *(float *)(DAT_847eeb04 + 0xc) * 0.5;
-  dVar3 = cos((double)(*(float *)(DAT_847eeb44 + 0xc) * 0.017453292));
-  *(float *)(param_1 + 0x14) = (float)dVar3;
-  *(float *)(param_1 + 0x18) = (float)((double)*(float *)(DAT_847eeb48 + 0xc) * dVar6);
-  dVar3 = cos((double)(float)((double)*(float *)(DAT_847eeb34 + 0xc) * dVar5));
-  *(float *)(param_1 + 0x1c) = (float)dVar3;
-  *(undefined4 *)(param_1 + 0x20) = *(undefined4 *)(DAT_847eeb2c + 0xc);
+  param_1->flareMinSize = (r_sunflare_min_size->current).value * 0.5;
+  dVar3 = cos((double)((r_sunflare_min_angle->current).value * 0.017453292));
+  param_1->flareMinDot = (float)dVar3;
+  param_1->flareMaxSize = (float)((double)(r_sunflare_max_size->current).value * dVar6);
+  dVar3 = cos((double)(float)((double)(r_sunflare_max_angle->current).value * dVar5));
+  param_1->flareMaxDot = (float)dVar3;
+  param_1->flareMaxAlpha = (float)(r_sunflare_max_alpha->current).integer;
   dVar4 = 1000.0;
-  dVar3 = floor((double)(float)((double)(*(float *)(DAT_847eeb20 + 0xc) * 1000.0) + dVar6));
-  *(int *)(param_1 + 0x24) = (int)dVar3;
-  dVar3 = floor((double)(float)((double)(float)((double)*(float *)(DAT_847eeb28 + 0xc) * dVar4) +
-                               dVar6));
-  *(int *)(param_1 + 0x28) = (int)dVar3;
-  dVar3 = cos((double)(float)((double)*(float *)(DAT_847eeb0c + 0xc) * dVar5));
-  *(float *)(param_1 + 0x2c) = (float)dVar3;
-  dVar3 = cos((double)(float)((double)*(float *)(DAT_847eeb38 + 0xc) * dVar5));
-  *(float *)(param_1 + 0x30) = (float)dVar3;
-  *(undefined4 *)(param_1 + 0x34) = *(undefined4 *)(DAT_847eeb30 + 0xc);
-  dVar3 = floor((double)(float)((double)(float)((double)*(float *)(DAT_847eeb24 + 0xc) * dVar4) +
-                               dVar6));
-  *(int *)(param_1 + 0x38) = (int)dVar3;
-  dVar3 = floor((double)(float)((double)(float)((double)*(float *)(DAT_847eeb10 + 0xc) * dVar4) +
-                               dVar6));
-  *(int *)(param_1 + 0x3c) = (int)dVar3;
-  dVar3 = cos((double)(float)((double)*(float *)(DAT_847eeb40 + 0xc) * dVar5));
-  *(float *)(param_1 + 0x40) = (float)dVar3;
-  dVar3 = cos((double)(float)((double)*(float *)(DAT_847eeb3c + 0xc) * dVar5));
-  *(float *)(param_1 + 0x44) = (float)dVar3;
-  *(undefined4 *)(param_1 + 0x48) = *(undefined4 *)(DAT_847eeb58 + 0xc);
-  dVar3 = floor((double)(float)((double)(float)((double)*(float *)(DAT_847eeb18 + 0xc) * dVar4) +
-                               dVar6));
-  *(int *)(param_1 + 0x4c) = (int)dVar3;
-  dVar3 = floor((double)(float)((double)(float)((double)*(float *)(DAT_847eeb1c + 0xc) * dVar4) +
-                               dVar6));
-  *(int *)(param_1 + 0x50) = (int)dVar3;
-  AngleVectors((ulonglong)DAT_847eeb14 + 0xc,param_1 + 0x54,0,0);
-  *param_1 = 1;
+  dVar3 = floor((double)(float)((double)((r_sunflare_fadein->current).value * 1000.0) + dVar6));
+  param_1->flareFadeInTime = (int)dVar3;
+  dVar3 = floor((double)(float)((double)(float)((double)(r_sunflare_fadeout->current).value * dVar4)
+                               + dVar6));
+  param_1->flareFadeOutTime = (int)dVar3;
+  dVar3 = cos((double)(float)((double)(r_sunblind_min_angle->current).value * dVar5));
+  param_1->blindMinDot = (float)dVar3;
+  dVar3 = cos((double)(float)((double)(r_sunblind_max_angle->current).value * dVar5));
+  param_1->blindMaxDot = (float)dVar3;
+  param_1->blindMaxDarken = (float)(r_sunblind_max_darken->current).integer;
+  dVar3 = floor((double)(float)((double)(float)((double)(r_sunblind_fadein->current).value * dVar4)
+                               + dVar6));
+  param_1->blindFadeInTime = (int)dVar3;
+  dVar3 = floor((double)(float)((double)(float)((double)(r_sunblind_fadeout->current).value * dVar4)
+                               + dVar6));
+  param_1->blindFadeOutTime = (int)dVar3;
+  dVar3 = cos((double)(float)((double)(r_sunglare_min_angle->current).value * dVar5));
+  param_1->glareMinDot = (float)dVar3;
+  dVar3 = cos((double)(float)((double)(r_sunglare_max_angle->current).value * dVar5));
+  param_1->glareMaxDot = (float)dVar3;
+  param_1->glareMaxLighten = (float)(r_sunglare_max_lighten->current).integer;
+  dVar3 = floor((double)(float)((double)(float)((double)(r_sunglare_fadein->current).value * dVar4)
+                               + dVar6));
+  param_1->glareFadeInTime = (int)dVar3;
+  dVar3 = floor((double)(float)((double)(float)((double)(r_sunglare_fadeout->current).value * dVar4)
+                               + dVar6));
+  param_1->glareFadeOutTime = (int)dVar3;
+  AngleVectors(&(r_sun_fx_position->current).value,param_1->sunFxPosition,(float *)0x0,(float *)0x0)
+  ;
+  param_1->hasValidData = true;
   return;
 }
 
 
 // 8277ACB8  R_LoadSunThroughDvars  (gfx_d3d/r_sky.cpp:158)
 
-void R_LoadSunThroughDvars(undefined8 param_1,ulonglong param_2)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void R_LoadSunThroughDvars(char *param_1,sunflare_t *param_2)
 
 {
-  ulonglong uVar1;
-  undefined8 uVar2;
-  char cVar4;
-  int iVar3;
-  undefined4 local_30 [12];
+  int iVar1;
+  char *pcVar2;
+  bool bVar3;
+  ulonglong uVar4;
+  char *local_30 [12];
   
-  uVar1 = __savegprlr_28();
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821cf48c,0xa3,0,0xffffffff82000f98,0xffffffff821cf4fc);
+  uVar4 = (ulonglong)(int)param_2;
+  iVar1 = __savegprlr_28(param_1);
+  if (iVar1 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_sky.cpp",0xa3,0,"%s"
+                   );
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821cf48c,0xa4,0,0xffffffff82000f98,0xffffffff821bf9fc);
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_sky.cpp",0xa4,0,"%s"
+                   );
   }
-  uVar2 = va(0xffffffff821cf4f0,uVar1);
-  cVar4 = FS_IsUsingRemotePCSharing();
-  if (cVar4 == '\0') {
-    iVar3 = FS_ReadFile(uVar2,local_30);
+  pcVar2 = va("sun/%s.sun");
+  bVar3 = FS_IsUsingRemotePCSharing();
+  if (bVar3) {
+    iVar1 = FS_ReadRemoteFile(pcVar2,(char *)0x0,local_30);
   }
   else {
-    iVar3 = FS_ReadRemoteFile(uVar2,0,local_30);
+    iVar1 = FS_ReadFile(pcVar2,local_30);
   }
-  if (iVar3 < 0) {
-    Com_Printf(8,0xffffffff821cf4c8,uVar2);
+  if (iVar1 < 0) {
+    Com_Printf(8,"WARNING: couldn\'t load sun file \'%s\'\n");
     __restgprlr_28();
     return;
   }
-  iVar3 = Com_LoadDvarsFromBuffer(0xffffffff829a2e80,0x15,local_30[0],uVar2);
-  if (iVar3 != 0) {
-    R_SetSunFromDvars(param_2);
+  iVar1 = Com_LoadDvarsFromBuffer(sunDvarNames,0x15,local_30[0],pcVar2);
+  if (iVar1 != 0) {
+    R_SetSunFromDvars((sunflare_t *)uVar4);
   }
   FS_FreeFile(local_30[0]);
   __restgprlr_28();
@@ -196,66 +252,40 @@ void R_LoadSunThroughDvars(undefined8 param_1,ulonglong param_2)
 
 
 // 8277ADC0  R_Cmd_LoadSun  (gfx_d3d/r_sky.cpp:195)
-
-void R_Cmd_LoadSun(void)
-
-{
-  int iVar2;
-  char cVar3;
-  undefined8 uVar1;
-  ulonglong uVar4;
-  
-  iVar2 = Cmd_Argc();
-  if (iVar2 != 2) {
-    Com_Printf(8,0xffffffff821cf568);
-    return;
-  }
-  cVar3 = Dvar_GetBool(0xffffffff82072aa0);
-  if (cVar3 == '\0') {
-    Com_Printf(8,0xffffffff821cf534);
-    return;
-  }
-  uVar4 = (ulonglong)DAT_8461658c;
-  if (uVar4 == 0) {
-    Com_Printf(8,0xffffffff821cf504);
-    return;
-  }
-  uVar1 = Cmd_Argv(1);
-  R_LoadSunThroughDvars(uVar1,uVar4 + 0x160);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
 
 // 8277AEA0  R_SaveSunFromDvars  (gfx_d3d/r_sky.cpp:220)
 
-void R_SaveSunFromDvars(undefined8 param_1)
+void R_SaveSunFromDvars(char *param_1)
 
 {
+  char cVar1;
   int iVar2;
-  char cVar3;
-  undefined8 uVar1;
-  char *pcVar4;
+  bool bVar4;
+  char *pcVar3;
+  char *pcVar5;
   char local_2010 [8192];
   
-  iVar2 = Com_SaveDvarsToBuffer(0xffffffff829a2e80,0x15,local_2010,0x2000);
+  iVar2 = Com_SaveDvarsToBuffer(sunDvarNames,0x15,local_2010,0x2000);
   if (iVar2 != 0) {
-    cVar3 = FS_IsUsingRemotePCSharing();
-    pcVar4 = local_2010;
-    if (cVar3 != '\0') {
+    bVar4 = FS_IsUsingRemotePCSharing();
+    pcVar5 = local_2010;
+    if (bVar4) {
       do {
-        cVar3 = *pcVar4;
-        pcVar4 = pcVar4 + 1;
-      } while (cVar3 != '\0');
-      uVar1 = va(0xffffffff821cf4f0,param_1);
-      FS_WriteRemoteFile(uVar1,0,local_2010,pcVar4 + (-1 - (int)local_2010));
+        cVar1 = *pcVar5;
+        pcVar5 = pcVar5 + 1;
+      } while (cVar1 != '\0');
+      pcVar3 = va("sun/%s.sun");
+      FS_WriteRemoteFile(pcVar3,(char *)0x0,local_2010,(int)(pcVar5 + (-1 - (int)local_2010)));
       return;
     }
     do {
-      cVar3 = *pcVar4;
-      pcVar4 = pcVar4 + 1;
-    } while (cVar3 != '\0');
-    uVar1 = va(0xffffffff821cf4f0,param_1);
-    FS_WriteFile(uVar1,local_2010,pcVar4 + (-1 - (int)local_2010));
+      cVar1 = *pcVar5;
+      pcVar5 = pcVar5 + 1;
+    } while (cVar1 != '\0');
+    pcVar3 = va("sun/%s.sun");
+    FS_WriteFile(pcVar3,local_2010,(int)(pcVar5 + (-1 - (int)local_2010)));
   }
   return;
 }
@@ -263,51 +293,56 @@ void R_SaveSunFromDvars(undefined8 param_1)
 
 // 8277AF90  R_Cmd_SaveSun  (gfx_d3d/r_sky.cpp:236)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void R_Cmd_SaveSun(void)
 
 {
   int iVar1;
+  char *pcVar2;
   
   iVar1 = Cmd_Argc();
   if (iVar1 != 2) {
-    Com_Printf(8,0xffffffff821cf5b0);
+    Com_Printf(8,"USAGE: r_savesun <sunname>\n  sunname must not have an extension\n");
     return;
   }
-  Cmd_Argv(1);
-  R_SaveSunFromDvars();
+  pcVar2 = Cmd_Argv(1);
+  R_SaveSunFromDvars(pcVar2);
   return;
 }
 
 
 // 8277AFE8  R_FlushSun  (gfx_d3d/r_sky.cpp:249)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void R_FlushSun(void)
 
 {
-  DAT_8484c754 = 0;
-  DAT_8484c75c = 0;
-  DAT_8484c758 = 0;
-  DAT_8484c778 = 0;
-  DAT_8484c750 = 0;
-  DAT_8484c794 = 0;
-  DAT_8484c764 = 0;
-  DAT_8484c7b0 = 0;
-  DAT_8484c760 = 0;
-  DAT_8484c770 = 0;
-  DAT_8484c774 = 0;
-  DAT_8484c76c = 0;
-  DAT_8484c780 = 0;
-  DAT_8484c77c = 0;
-  DAT_8484c78c = 0;
-  DAT_8484c790 = 0;
-  DAT_8484c788 = 0;
-  DAT_8484c79c = 0;
-  DAT_8484c798 = 0;
-  DAT_8484c7a8 = 0;
-  DAT_8484c7ac = 0;
-  DAT_8484c7a4 = 0;
-  DAT_8484c7b8 = 0;
-  DAT_8484c7b4 = 0;
+  sunFlareArray[0].currentBlind = 0.0;
+  sunFlareArray[0].lastTime = 0;
+  sunFlareArray[0].currentGlare = 0.0;
+  sunFlareArray[1].lastTime = 0;
+  sunFlareArray[0].flareIntensity = 0.0;
+  sunFlareArray[2].lastTime = 0;
+  sunFlareArray[0].lastDot = 0.0;
+  sunFlareArray[3].lastTime = 0;
+  sunFlareArray[0].lastVisibility = 0.0;
+  sunFlareArray[1].currentBlind = 0.0;
+  sunFlareArray[1].currentGlare = 0.0;
+  sunFlareArray[1].flareIntensity = 0.0;
+  sunFlareArray[1].lastDot = 0.0;
+  sunFlareArray[1].lastVisibility = 0.0;
+  sunFlareArray[2].currentBlind = 0.0;
+  sunFlareArray[2].currentGlare = 0.0;
+  sunFlareArray[2].flareIntensity = 0.0;
+  sunFlareArray[2].lastDot = 0.0;
+  sunFlareArray[2].lastVisibility = 0.0;
+  sunFlareArray[3].currentBlind = 0.0;
+  sunFlareArray[3].currentGlare = 0.0;
+  sunFlareArray[3].flareIntensity = 0.0;
+  sunFlareArray[3].lastDot = 0.0;
+  sunFlareArray[3].lastVisibility = 0.0;
   return;
 }
 

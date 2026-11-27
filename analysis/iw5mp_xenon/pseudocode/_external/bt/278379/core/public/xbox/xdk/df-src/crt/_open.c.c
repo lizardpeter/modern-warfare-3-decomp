@@ -2,7 +2,7 @@
 
 // 829227B8  _openfile  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/_open.c:58)
 
-FILE * _openfile(char *_Filename,char *_Mode,int _ShFlag,FILE *_File)
+_iobuf * _openfile(char *param_1,char *param_2,int param_3,_iobuf *param_4)
 
 {
   char cVar1;
@@ -11,80 +11,80 @@ FILE * _openfile(char *_Filename,char *_Mode,int _ShFlag,FILE *_File)
   bool bVar4;
   bool bVar5;
   bool bVar6;
-  char *_Filename_00;
-  int *piVar8;
+  char *pcVar8;
+  int *piVar9;
   longlong lVar7;
-  errno_t eVar9;
-  FILE *pFVar10;
-  longlong lVar11;
-  uint _OpenFlag;
+  int iVar10;
+  _iobuf *p_Var11;
   longlong lVar12;
   uint uVar13;
+  longlong lVar14;
+  uint uVar15;
   int local_30 [12];
   
-  lVar7 = (longlong)(int)_File;
-  lVar11 = (longlong)(int)_Mode;
-  _Filename_00 = (char *)__savegprlr_29(_Filename);
+  lVar7 = (longlong)(int)param_4;
+  lVar12 = (longlong)(int)param_2;
+  pcVar8 = (char *)__savegprlr_29(param_1);
   bVar6 = false;
   bVar5 = false;
-  cVar1 = *(char *)lVar11;
+  cVar1 = *(char *)lVar12;
   while (cVar1 == ' ') {
-    lVar11 = lVar11 + 1;
-    cVar1 = *(char *)lVar11;
+    lVar12 = lVar12 + 1;
+    cVar1 = *(char *)lVar12;
   }
   if (cVar1 == 'a') {
-    _OpenFlag = 0x109;
+    uVar13 = 0x109;
   }
   else {
     if (cVar1 == 'r') {
-      _OpenFlag = 0;
-      uVar13 = DAT_848960a0 | 1;
+      uVar13 = 0;
+      uVar15 = _commode | 1;
       goto LAB_82922848;
     }
     if (cVar1 != 'w') goto LAB_82922814;
-    _OpenFlag = 0x301;
+    uVar13 = 0x301;
   }
-  uVar13 = DAT_848960a0 | 2;
+  uVar15 = _commode | 2;
 LAB_82922848:
   bVar4 = true;
 LAB_82922978:
-  lVar11 = lVar11 + 1;
-  bVar2 = *(byte *)lVar11;
-  lVar12 = (longlong)(char)bVar2;
-  if ((lVar12 == 0) || (!bVar4)) goto LAB_82922990;
+  lVar12 = lVar12 + 1;
+  bVar2 = *(byte *)lVar12;
+  lVar14 = (longlong)(char)bVar2;
+  if ((lVar14 == 0) || (!bVar4)) goto LAB_82922990;
   if (bVar2 < 0x54) {
     if (bVar2 == 0x53) {
       if (!bVar5) {
         bVar5 = true;
-        _OpenFlag = _OpenFlag | 0x20;
+        uVar13 = uVar13 | 0x20;
         goto LAB_82922978;
       }
     }
     else {
       if (bVar2 == 0x20) goto LAB_82922978;
       if (bVar2 == 0x2b) {
-        if ((_OpenFlag & 2) == 0) {
-          _OpenFlag = _OpenFlag & 0xfffffffe | 2;
-          uVar13 = uVar13 & 0xfffffffc | 0x80;
+        if ((uVar13 & 2) == 0) {
+          uVar13 = uVar13 & 0xfffffffe | 2;
+          uVar15 = uVar15 & 0xfffffffc | 0x80;
           goto LAB_82922978;
         }
       }
       else if (bVar2 != 0x2c) {
         if (bVar2 == 0x44) {
-          if ((_OpenFlag & 0x40) == 0) {
-            _OpenFlag = _OpenFlag | 0x40;
+          if ((uVar13 & 0x40) == 0) {
+            uVar13 = uVar13 | 0x40;
             goto LAB_82922978;
           }
         }
         else {
           if (bVar2 == 0x4e) {
-            _OpenFlag = _OpenFlag | 0x80;
+            uVar13 = uVar13 | 0x80;
             goto LAB_82922978;
           }
           if (bVar2 != 0x52) goto LAB_82922814;
           if (!bVar5) {
             bVar5 = true;
-            _OpenFlag = _OpenFlag | 0x10;
+            uVar13 = uVar13 | 0x10;
             goto LAB_82922978;
           }
         }
@@ -93,33 +93,33 @@ LAB_82922978:
   }
   else {
     if (bVar2 == 0x54) {
-      if ((_OpenFlag & 0x1000) != 0) goto LAB_8292296c;
-      _OpenFlag = _OpenFlag | 0x1000;
+      if ((uVar13 & 0x1000) != 0) goto LAB_8292296c;
+      uVar13 = uVar13 | 0x1000;
       goto LAB_82922978;
     }
     if (bVar2 == 0x62) {
-      if ((_OpenFlag & 0xc000) == 0) {
-        _OpenFlag = _OpenFlag | 0x8000;
+      if ((uVar13 & 0xc000) == 0) {
+        uVar13 = uVar13 | 0x8000;
         goto LAB_82922978;
       }
     }
     else if (bVar2 == 99) {
       if (!bVar6) {
         bVar6 = true;
-        uVar13 = uVar13 | 0x4000;
+        uVar15 = uVar15 | 0x4000;
         goto LAB_82922978;
       }
     }
     else {
       if (bVar2 != 0x6e) {
         if (bVar2 != 0x74) goto LAB_82922814;
-        if ((_OpenFlag & 0xc000) != 0) goto LAB_8292296c;
-        _OpenFlag = _OpenFlag | 0x4000;
+        if ((uVar13 & 0xc000) != 0) goto LAB_8292296c;
+        uVar13 = uVar13 | 0x4000;
         goto LAB_82922978;
       }
       if (!bVar6) {
         bVar6 = true;
-        uVar13 = uVar13 & 0xffffbfff;
+        uVar15 = uVar15 & 0xffffbfff;
         goto LAB_82922978;
       }
     }
@@ -128,16 +128,16 @@ LAB_8292296c:
   bVar4 = false;
   goto LAB_82922978;
 LAB_82922990:
-  while ((int)lVar12 == 0x20) {
-    lVar11 = lVar11 + 1;
-    lVar12 = (longlong)*(char *)lVar11;
+  while ((int)lVar14 == 0x20) {
+    lVar12 = lVar12 + 1;
+    lVar14 = (longlong)*(char *)lVar12;
   }
-  if ((int)lVar12 == 0) {
-    eVar9 = _sopen_s(local_30,_Filename_00,_OpenFlag,_ShFlag,0x180);
-    if (eVar9 == 0) {
-      DAT_84895df8 = DAT_84895df8 + 1;
+  if ((int)lVar14 == 0) {
+    iVar10 = _sopen_s(local_30,pcVar8,uVar13,param_3,0x180);
+    if (iVar10 == 0) {
+      _cflush = _cflush + 1;
       puVar3 = (undefined4 *)lVar7;
-      puVar3[3] = uVar13;
+      puVar3[3] = uVar15;
       puVar3[1] = 0;
       *puVar3 = 0;
       puVar3[2] = 0;
@@ -148,13 +148,13 @@ LAB_82922990:
   }
   else {
 LAB_82922814:
-    piVar8 = _errno();
-    *piVar8 = 0x16;
+    piVar9 = _errno();
+    *piVar9 = 0x16;
     _invalid_parameter_noinfo();
   }
   lVar7 = 0;
 LAB_829229f0:
-  pFVar10 = (FILE *)__restgprlr_29(lVar7);
-  return pFVar10;
+  p_Var11 = (_iobuf *)__restgprlr_29(lVar7);
+  return p_Var11;
 }
 

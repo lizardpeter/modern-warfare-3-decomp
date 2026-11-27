@@ -2,7 +2,7 @@
 
 // 828CA040  NellyDurbin  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/libspeech.c:66)
 
-void NellyDurbin(float *param_1,uint param_2,float *param_3,int param_4,float *param_5)
+void NellyDurbin(float *param_1,int param_2,float *param_3,float *param_4,float *param_5)
 
 {
   float fVar1;
@@ -22,7 +22,7 @@ void NellyDurbin(float *param_1,uint param_2,float *param_3,int param_4,float *p
   if (fVar1 == 0.0) {
     fVar1 = 1e-37;
   }
-  if ((param_2 & 1) == 0) {
+  if ((param_2 & 1U) == 0) {
     pfVar6 = local_60;
     pfVar9 = param_3;
   }
@@ -33,9 +33,9 @@ void NellyDurbin(float *param_1,uint param_2,float *param_3,int param_4,float *p
   lVar7 = 0;
   *pfVar6 = 1.0;
   *pfVar9 = 1.0;
-  if (0 < (int)param_2) {
+  if (0 < param_2) {
     iVar4 = 0;
-    pfVar11 = (float *)(param_4 + -4);
+    pfVar11 = param_4 + -1;
     do {
       pfVar10 = pfVar6;
       fVar2 = 0.0;
@@ -77,7 +77,7 @@ void NellyDurbin(float *param_1,uint param_2,float *param_3,int param_4,float *p
       param_1 = param_1 + 1;
       pfVar6 = pfVar9;
       pfVar9 = pfVar10;
-    } while ((int)lVar7 < (int)param_2);
+    } while ((int)lVar7 < param_2);
   }
   *param_5 = fVar1;
   return;
@@ -86,131 +86,218 @@ void NellyDurbin(float *param_1,uint param_2,float *param_3,int param_4,float *p
 
 // 828CA180  NellySeevocPeaksFast  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/libspeech.c:162)
 
-void NellySeevocPeaksFast
-               (undefined8 param_1,longlong param_2,longlong param_3,int param_4,undefined8 param_5,
-               int param_6,longlong param_7,int param_8)
+int NellySeevocPeaksFast
+              (float *param_1,float *param_2,float *param_3,int param_4,float param_5,float *param_6
+              ,float *param_7,int param_8)
 
 {
   int iVar1;
   float fVar2;
-  float *pfVar3;
-  int iVar4;
+  int iVar3;
+  float *pfVar4;
   int iVar5;
-  float *pfVar6;
-  uint uVar7;
+  int iVar6;
+  longlong lVar7;
   longlong lVar8;
-  uint uVar9;
-  double dVar10;
+  float *pfVar9;
+  longlong lVar10;
+  uint uVar11;
+  longlong lVar12;
+  int in_r10;
+  uint uVar13;
+  double dVar14;
   double extraout_f1;
-  double dVar11;
-  double dVar12;
+  double dVar15;
+  double dVar16;
   
-  iVar4 = __savegprlr_29();
-  pfVar6 = (float *)param_3;
-  fVar2 = *pfVar6;
-  iVar5 = 0;
-  dVar10 = (double)(float)(extraout_f1 * 0.5);
-  dVar11 = (double)(float)(dVar10 + extraout_f1);
-  lVar8 = param_3;
-  for (uVar9 = 0; ((double)fVar2 < dVar10 && ((int)uVar9 < param_4)); uVar9 = uVar9 + 1) {
-    lVar8 = lVar8 + 4;
-    fVar2 = *(float *)lVar8;
+  lVar10 = (longlong)param_8;
+  lVar8 = (longlong)(int)param_3;
+  lVar7 = (longlong)(int)param_2;
+  iVar5 = __savegprlr_29((double)param_5,param_1);
+  pfVar9 = (float *)lVar8;
+  fVar2 = *pfVar9;
+  iVar6 = 0;
+  dVar14 = (double)(float)(extraout_f1 * 0.5);
+  dVar15 = (double)(float)(dVar14 + extraout_f1);
+  lVar12 = lVar8;
+  for (uVar13 = 0; ((double)fVar2 < dVar14 && ((int)uVar13 < param_4)); uVar13 = uVar13 + 1) {
+    lVar12 = lVar12 + 4;
+    fVar2 = *(float *)lVar12;
   }
-  if (dVar10 < (double)(float)(256.0 - dVar10)) {
-    param_6 = param_6 - (int)param_7;
-    dVar12 = dVar10;
+  if (dVar14 < (double)(float)(256.0 - dVar14)) {
+    iVar3 = (int)param_7 - (int)lVar10;
+    dVar16 = dVar14;
     do {
-      if (param_8 <= iVar5) break;
-      pfVar3 = (float *)param_7;
-      if ((param_4 <= (int)uVar9) ||
-         (lVar8 = ((ulonglong)uVar9 & 0x3fffffff) * 4,
-         dVar11 <= (double)*(float *)((int)lVar8 + (int)pfVar6))) {
+      if (in_r10 <= iVar6) break;
+      pfVar4 = (float *)lVar10;
+      if ((param_4 <= (int)uVar13) ||
+         (lVar12 = ((ulonglong)uVar13 & 0x3fffffff) * 4,
+         dVar15 <= (double)*(float *)((int)lVar12 + (int)pfVar9))) {
 LAB_828ca274:
-        iVar1 = (int)((float)(dVar11 + dVar12) * 0.5 + 0.5);
-        dVar11 = (double)(longlong)iVar1;
-        *(float *)(param_6 + (int)pfVar3) = *(float *)(iVar1 * 4 + iVar4) + 1e-06;
+        iVar1 = (int)((float)(dVar15 + dVar16) * 0.5 + 0.5);
+        dVar15 = (double)(longlong)iVar1;
+        *(float *)(iVar3 + (int)pfVar4) = *(float *)(iVar1 * 4 + iVar5) + 1e-06;
       }
       else {
-        lVar8 = lVar8 + param_2;
-        uVar7 = uVar9;
+        lVar12 = lVar12 + lVar7;
+        uVar11 = uVar13;
         fVar2 = 0.0;
         do {
-          if (param_4 <= (int)uVar7) break;
-          if (fVar2 < *(float *)lVar8) {
-            uVar9 = uVar7;
-            fVar2 = *(float *)lVar8;
+          if (param_4 <= (int)uVar11) break;
+          if (fVar2 < *(float *)lVar12) {
+            uVar13 = uVar11;
+            fVar2 = *(float *)lVar12;
           }
-          lVar8 = lVar8 + 4;
-          uVar7 = uVar7 + 1;
-        } while ((double)*(float *)((int)pfVar6 + ((int)lVar8 - (int)param_2)) < dVar11);
+          lVar12 = lVar12 + 4;
+          uVar11 = uVar11 + 1;
+        } while ((double)*(float *)((int)pfVar9 + ((int)lVar12 - (int)lVar7)) < dVar15);
         if (fVar2 <= 0.0) goto LAB_828ca274;
-        *(float *)(param_6 + (int)pfVar3) = fVar2;
-        dVar11 = (double)pfVar6[uVar9];
+        *(float *)(iVar3 + (int)pfVar4) = fVar2;
+        dVar15 = (double)pfVar9[uVar13];
       }
-      dVar12 = (double)(float)(dVar10 + dVar11);
-      *pfVar3 = (float)dVar11;
-      dVar11 = (double)(float)(dVar12 + extraout_f1);
-      if (256.0 < (double)(float)(dVar12 + extraout_f1)) {
-        dVar11 = 256.0;
+      dVar16 = (double)(float)(dVar14 + dVar15);
+      *pfVar4 = (float)dVar15;
+      dVar15 = (double)(float)(dVar16 + extraout_f1);
+      if (256.0 < (double)(float)(dVar16 + extraout_f1)) {
+        dVar15 = 256.0;
       }
-      iVar5 = iVar5 + 1;
-      lVar8 = ((ulonglong)uVar9 & 0x3fffffff) * 4 + param_3;
-      param_7 = param_7 + 4;
-      fVar2 = *(float *)lVar8;
-      for (; ((double)fVar2 < dVar12 && ((int)uVar9 < param_4)); uVar9 = uVar9 + 1) {
-        lVar8 = lVar8 + 4;
-        fVar2 = *(float *)lVar8;
+      iVar6 = iVar6 + 1;
+      lVar12 = ((ulonglong)uVar13 & 0x3fffffff) * 4 + lVar8;
+      lVar10 = lVar10 + 4;
+      fVar2 = *(float *)lVar12;
+      for (; ((double)fVar2 < dVar16 && ((int)uVar13 < param_4)); uVar13 = uVar13 + 1) {
+        lVar12 = lVar12 + 4;
+        fVar2 = *(float *)lVar12;
       }
-    } while (dVar12 < (double)(float)(256.0 - dVar10));
+    } while (dVar16 < (double)(float)(256.0 - dVar14));
   }
-  __restgprlr_29();
-  return;
+  iVar5 = __restgprlr_29();
+  return iVar5;
 }
 
 
 // 828CA300  NellySeevocFlattop  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/libspeech.c:298)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Restarted to delay deadcode elimination for space: stack */
 
-void NellySeevocFlattop(void)
+void NellySeevocFlattop(float *param_1,float *param_2,float *param_3,int param_4,float *param_5,
+                       float param_6,int param_7)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs43 [16];
+  uint uVar1;
+  float fVar2;
+  float *pfVar3;
+  int iVar4;
+  longlong lVar5;
+  longlong lVar6;
+  longlong lVar7;
+  ulonglong uVar8;
+  ulonglong uVar9;
+  ulonglong uVar10;
+  double dVar11;
+  double extraout_f1;
+  double dVar12;
+  double dVar13;
+  double dVar14;
+  undefined1 auVar15 [16];
+  undefined1 auVar16 [16];
+  undefined1 auVar17 [16];
+  undefined1 local_5f0 [16];
+  float local_5e0 [100];
+  float local_450 [276];
   
-  __savegprlr_26();
-  altv207_13(in_vs32,in_vs43);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  lVar5 = (longlong)(int)param_5;
+  pfVar3 = (float *)__savegprlr_26((double)param_6,param_1);
+  local_5f0 = ___vmx_3f8000003f8000003f8000003f800000;
+  dVar12 = extraout_f1;
+  auVar17 = ___vmx_bd4ccccdbd4ccccdbd4ccccdbd4ccccd;
+  auVar16 = ___vmx_3f8000003f8000003f8000003f800000;
+  iVar4 = NellySeevocPeaksFast
+                    (pfVar3,param_2,param_3,param_4,(float)extraout_f1,(float *)local_5f0,local_5e0,
+                     (int)local_450);
+  lVar7 = (longlong)iVar4;
+  uVar10 = 0;
+  uVar8 = 0;
+  auVar15 = loadVectorLeftIndexed(ZEXT48(&stack0x00000000) - 0x5e0);
+  auVar16 = vectorRotateLeftImmediateAndMaskInsert(auVar16,auVar15,8,0);
+  dVar11 = 0.0;
+  auVar16 = vectorLog2EstimateFloatingPoint128(auVar16);
+  auVar17 = vectorAddFloatingPoint128(auVar16,auVar17);
+  local_5f0 = vector2RaisedToTheExponentEstimateFloatingPoint128(auVar17);
+  fVar2 = (float)local_5f0._0_4_;
+  if (0 < iVar4) {
+    iVar4 = 0;
+    dVar13 = 0.5;
+    uVar9 = uVar8;
+    do {
+      dVar14 = (double)*(float *)((int)local_450 + iVar4);
+      uVar1 = (uint)((double)(float)(dVar14 + dVar11) * dVar13 + dVar13);
+      uVar8 = (ulonglong)uVar1;
+      uVar10 = uVar9;
+      dVar11 = dVar14;
+      if ((int)uVar9 < (int)uVar1) {
+        *(float *)((int)(uVar9 << 2) + (int)lVar5) = fVar2;
+        _blkmov();
+        uVar10 = (uVar8 - uVar9) + uVar9;
+        dVar11 = dVar14;
+      }
+      lVar7 = lVar7 + -1;
+      fVar2 = *(float *)((int)local_5e0 + iVar4);
+      iVar4 = iVar4 + 4;
+      uVar9 = uVar8;
+    } while (lVar7 != 0);
+  }
+  uVar8 = (uint)(int)dVar12 + uVar8;
+  if (0x100 < (int)uVar8) {
+    uVar8 = 0x100;
+  }
+  if ((int)uVar10 < (int)uVar8) {
+    *(float *)((int)((uVar10 & 0xffffffff) << 2) + (int)lVar5) = fVar2;
+    _blkmov();
+  }
+  if ((int)uVar8 < 0x100) {
+    lVar6 = 0x100 - uVar8;
+    lVar7 = (uVar8 & 0x3fffffff) * 4 + lVar5 + -4;
+    do {
+      pfVar3 = (float *)lVar7;
+      lVar7 = lVar7 + 4;
+      *(float *)lVar7 = *pfVar3 * 0.999;
+      lVar6 = lVar6 + -1;
+    } while (lVar6 != 0);
+  }
+  __restgprlr_26();
+  return;
 }
 
 
 // 828CA498  PeakPick  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/libspeech.c:504)
 
-void PeakPick(int param_1,int param_2,int param_3,int param_4,int param_5,int *param_6)
+void PeakPick(float *param_1,int param_2,int param_3,int param_4,int *param_5,int *param_6)
 
 {
   int *piVar1;
   int iVar2;
   float *pfVar3;
+  int iVar4;
   
-  param_2 = param_2 + 1;
+  iVar4 = param_2 + 1;
   iVar2 = 0;
-  if (param_2 < param_3 + -1) {
-    piVar1 = (int *)(param_5 + -4);
-    pfVar3 = (float *)(param_2 * 4 + param_1);
+  if (iVar4 < param_3 + -1) {
+    piVar1 = param_5 + -1;
+    pfVar3 = param_1 + iVar4;
     do {
       if ((pfVar3[-1] <= *pfVar3) && (pfVar3[1] < *pfVar3)) {
         iVar2 = iVar2 + 1;
         piVar1 = piVar1 + 1;
-        *piVar1 = param_2;
-        param_2 = param_2 + 1;
+        *piVar1 = iVar4;
+        iVar4 = iVar4 + 1;
         pfVar3 = pfVar3 + 1;
         if (iVar2 == param_4) break;
       }
-      param_2 = param_2 + 1;
+      iVar4 = iVar4 + 1;
       pfVar3 = pfVar3 + 1;
-    } while (param_2 < param_3 + -1);
+    } while (iVar4 < param_3 + -1);
   }
   *param_6 = iVar2;
   return;
@@ -219,29 +306,29 @@ void PeakPick(int param_1,int param_2,int param_3,int param_4,int param_5,int *p
 
 // 828CA508  QuadraticPeak  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/libspeech.c:588)
 
-void QuadraticPeak(double param_1,double param_2,double param_3)
+float QuadraticPeak(float param_1,float param_2,float param_3,float *param_4)
 
 {
+  float fVar1;
+  float fVar2;
+  float fVar3;
   float *in_r6;
-  double dVar1;
-  double dVar2;
-  double dVar3;
   
-  dVar2 = 0.0;
-  dVar1 = (double)(float)((double)(float)(param_1 + param_3) * 0.5 - param_2);
-  dVar3 = (double)((float)(param_3 - param_1) * 0.5);
-  if (dVar1 != 0.0) {
-    dVar2 = -(double)(float)(dVar3 / (double)(float)(dVar1 * 2.0));
+  fVar1 = 0.0;
+  fVar2 = (param_1 + param_3) * 0.5 - param_2;
+  fVar3 = (param_3 - param_1) * 0.5;
+  if (fVar2 != 0.0) {
+    fVar1 = -(fVar3 / (fVar2 * 2.0));
   }
-  *in_r6 = (float)((double)(float)(dVar2 * dVar1 + dVar3) * dVar2 + param_2);
-  return;
+  *in_r6 = (fVar1 * fVar2 + fVar3) * fVar1 + param_2;
+  return fVar1;
 }
 
 
 // 828CA558  NellySTFTpeaks  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/libspeech.c:661)
 
-void NellySTFTpeaks(undefined8 param_1,undefined8 param_2,longlong param_3,longlong param_4,
-                   int param_5,undefined8 param_6,undefined8 param_7)
+void NellySTFTpeaks(float *param_1,float *param_2,float *param_3,float *param_4,float *param_5,
+                   int *param_6,int param_7)
 
 {
   float fVar1;
@@ -250,50 +337,56 @@ void NellySTFTpeaks(undefined8 param_1,undefined8 param_2,longlong param_3,longl
   int iVar4;
   float fVar5;
   float fVar6;
-  float *pfVar7;
-  int iVar8;
+  int iVar7;
+  float *pfVar8;
   float *pfVar9;
   longlong lVar10;
-  ulonglong uVar11;
+  float *pfVar11;
+  longlong lVar12;
+  longlong lVar13;
+  ulonglong uVar14;
   int aiStack_1c0 [112];
   
-  __savegprlr_27();
-  NellyMagSq();
-  PeakPick(param_3,0,0x100,param_7,aiStack_1c0,param_6);
-  uVar3 = *(uint *)param_6;
-  iVar8 = (int)param_4;
+  lVar13 = (longlong)(int)param_4;
+  lVar10 = (longlong)(int)param_3;
+  pfVar9 = (float *)__savegprlr_27(param_1);
+  pfVar11 = (float *)lVar10;
+  NellyMagSq(pfVar9,param_2,0x100,pfVar11);
+  PeakPick(pfVar11,0,0x100,param_7,aiStack_1c0,param_6);
+  uVar3 = *param_6;
+  iVar7 = (int)lVar13;
   if (0 < (int)uVar3) {
-    uVar11 = (ulonglong)uVar3;
-    lVar10 = param_4;
+    uVar14 = (ulonglong)uVar3;
+    lVar12 = lVar13;
     do {
-      pfVar7 = (float *)lVar10;
-      iVar4 = *(int *)(((int)aiStack_1c0 - iVar8) + (int)pfVar7);
-      pfVar9 = (float *)(iVar4 * 4 + (int)param_3);
-      fVar5 = (pfVar9[-1] + pfVar9[1]) * 0.5 - *pfVar9;
-      fVar1 = (pfVar9[1] - pfVar9[-1]) * 0.5;
+      pfVar9 = (float *)lVar12;
+      iVar4 = *(int *)(((int)aiStack_1c0 - iVar7) + (int)pfVar9);
+      pfVar8 = pfVar11 + iVar4;
+      fVar5 = (pfVar8[-1] + pfVar8[1]) * 0.5 - *pfVar8;
+      fVar1 = (pfVar8[1] - pfVar8[-1]) * 0.5;
       fVar6 = 0.0;
       if (fVar5 != 0.0) {
         fVar6 = -(fVar1 / (fVar5 * 2.0));
       }
-      *pfVar7 = (fVar6 * fVar5 + fVar1) * fVar6 + *pfVar9;
-      *(float *)((param_5 - iVar8) + (int)pfVar7) = (float)(longlong)iVar4 + fVar6;
-      lVar10 = lVar10 + 4;
-      uVar11 = uVar11 - 1;
-    } while (uVar11 != 0);
+      *pfVar9 = (fVar6 * fVar5 + fVar1) * fVar6 + *pfVar8;
+      *(float *)(((int)param_5 - iVar7) + (int)pfVar9) = (float)(longlong)iVar4 + fVar6;
+      lVar12 = lVar12 + 4;
+      uVar14 = uVar14 - 1;
+    } while (uVar14 != 0);
   }
   if ((int)uVar3 < 4) {
     fVar1 = 7.0;
-    lVar10 = 0x24;
+    lVar12 = 0x24;
     do {
-      param_3 = param_3 + 0x1c;
-      uVar2 = *(undefined4 *)param_3;
-      *(float *)((int)(undefined4 *)param_4 + (param_5 - iVar8)) = fVar1;
+      lVar10 = lVar10 + 0x1c;
+      uVar2 = *(undefined4 *)lVar10;
+      *(float *)((int)(undefined4 *)lVar13 + ((int)param_5 - iVar7)) = fVar1;
       fVar1 = fVar1 + 7.0;
-      *(undefined4 *)param_4 = uVar2;
-      param_4 = param_4 + 4;
-      lVar10 = lVar10 + -1;
-    } while (lVar10 != 0);
-    *(uint *)param_6 = 0x24;
+      *(undefined4 *)lVar13 = uVar2;
+      lVar13 = lVar13 + 4;
+      lVar12 = lVar12 + -1;
+    } while (lVar12 != 0);
+    *param_6 = 0x24;
   }
   __restgprlr_27();
   return;
@@ -302,35 +395,36 @@ void NellySTFTpeaks(undefined8 param_1,undefined8 param_2,longlong param_3,longl
 
 // 828CA698  BandExpand  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/libspeech.c:769)
 
-void BandExpand(double param_1,int param_2,int param_3,longlong param_4)
+void BandExpand(float *param_1,float *param_2,int param_3,float param_4)
 
 {
   float fVar1;
   float *pfVar2;
   float *pfVar3;
+  longlong lVar4;
   
   fVar1 = 1.0;
-  if ((int)param_4 < 0) {
+  if (param_3 < 0) {
     return;
   }
-  param_4 = param_4 + 1;
-  pfVar3 = (float *)(param_2 + -4);
-  pfVar2 = (float *)(param_3 + -4);
+  lVar4 = (longlong)param_3 + 1;
+  pfVar3 = param_1 + -1;
+  pfVar2 = param_2 + -1;
   do {
     pfVar3 = pfVar3 + 1;
     pfVar2 = pfVar2 + 1;
-    *pfVar2 = (float)((double)*pfVar3 * (double)fVar1);
-    fVar1 = (float)((double)fVar1 * param_1);
-    param_4 = param_4 + -1;
-  } while (param_4 != 0);
+    *pfVar2 = *pfVar3 * fVar1;
+    fVar1 = fVar1 * param_4;
+    lVar4 = lVar4 + -1;
+  } while (lVar4 != 0);
   return;
 }
 
 
 // 828CA6D0  NellySquareLawPeaks  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/libspeech.c:839)
 
-void NellySquareLawPeaks(undefined8 param_1,longlong param_2,ulonglong param_3,undefined8 param_4,
-                        longlong param_5,longlong param_6,int *param_7,ulonglong param_8)
+void NellySquareLawPeaks(float *param_1,float *param_2,int param_3,float param_4,float *param_5,
+                        float *param_6,int *param_7,int param_8)
 
 {
   float fVar1;
@@ -339,96 +433,105 @@ void NellySquareLawPeaks(undefined8 param_1,longlong param_2,ulonglong param_3,u
   int iVar4;
   float *pfVar5;
   int iVar6;
-  int iVar7;
-  longlong lVar8;
+  ulonglong uVar7;
+  int iVar8;
   longlong lVar9;
-  ulonglong uVar10;
-  float *pfVar11;
-  ulonglong uVar12;
-  longlong lVar13;
-  ulonglong uVar14;
+  longlong lVar10;
+  ulonglong in_r10;
+  longlong lVar11;
+  longlong lVar12;
+  ulonglong uVar13;
+  longlong lVar14;
+  float *pfVar15;
+  ulonglong uVar16;
+  longlong lVar17;
+  ulonglong uVar18;
   
-  iVar6 = __savegprlr_27();
-  uVar12 = param_8;
-  if ((int)param_3 <= (int)param_8) {
-    uVar12 = param_3;
+  lVar12 = (longlong)(int)param_7;
+  lVar14 = (longlong)(int)param_6;
+  uVar7 = (ulonglong)param_3;
+  lVar11 = (longlong)(int)param_2;
+  iVar6 = __savegprlr_27((double)param_4,param_1,lVar11,uVar7,param_5);
+  uVar16 = in_r10;
+  if ((int)uVar7 <= (int)in_r10) {
+    uVar16 = uVar7;
   }
-  iVar4 = (int)param_5;
-  iVar7 = (int)param_2;
-  iVar3 = (int)param_6;
-  uVar10 = 0;
-  if (0 < (int)uVar12) {
-    lVar8 = param_5;
-    uVar14 = uVar12;
+  iVar4 = (int)lVar14;
+  iVar8 = (int)lVar11;
+  iVar3 = (int)lVar12;
+  uVar13 = 0;
+  if (0 < (int)uVar16) {
+    lVar9 = lVar14;
+    uVar18 = uVar16;
     do {
-      puVar2 = (undefined4 *)lVar8;
+      puVar2 = (undefined4 *)lVar9;
       *puVar2 = *(undefined4 *)((iVar6 - iVar4) + (int)puVar2);
       *(undefined4 *)((iVar3 - iVar4) + (int)puVar2) =
-           *(undefined4 *)((iVar7 - iVar4) + (int)puVar2);
-      lVar8 = lVar8 + 4;
-      uVar14 = uVar14 - 1;
-      uVar10 = uVar12;
-    } while (uVar14 != 0);
-  }
-  lVar8 = param_3 - 1;
-  if ((int)(param_8 - uVar10) < (int)(param_3 - 1)) {
-    lVar8 = param_8 - uVar10;
-  }
-  if (0 < (int)lVar8) {
-    pfVar11 = (float *)(iVar6 + -4);
-    lVar13 = (uVar10 & 0x3fffffff) * 4 + param_6;
-    uVar10 = lVar8 + uVar10;
-    lVar9 = param_2;
-    do {
+           *(undefined4 *)((iVar8 - iVar4) + (int)puVar2);
       lVar9 = lVar9 + 4;
-      pfVar5 = (float *)lVar9;
-      pfVar11 = pfVar11 + 1;
-      *(float *)((iVar4 - iVar3) + (int)(float *)lVar13) =
-           *(float *)((iVar6 - iVar7) + (int)pfVar5) * *pfVar11;
-      *(float *)lVar13 = *pfVar5 - pfVar5[-1];
-      lVar13 = lVar13 + 4;
-      lVar8 = lVar8 + -1;
-    } while (lVar8 != 0);
+      uVar18 = uVar18 - 1;
+      uVar13 = uVar16;
+    } while (uVar18 != 0);
   }
-  lVar8 = param_3 - 2;
-  if ((int)(param_8 - uVar10) < (int)(param_3 - 2)) {
-    lVar8 = param_8 - uVar10;
+  lVar9 = uVar7 - 1;
+  if ((int)(in_r10 - uVar13) < (int)(uVar7 - 1)) {
+    lVar9 = in_r10 - uVar13;
   }
-  if (0 < (int)lVar8) {
-    pfVar11 = (float *)(iVar6 + -4);
-    lVar9 = (uVar10 & 0x3fffffff) * 4 + param_6;
-    param_2 = param_2 + 8;
-    uVar10 = lVar8 + uVar10;
+  if (0 < (int)lVar9) {
+    pfVar15 = (float *)(iVar6 + -4);
+    lVar17 = (uVar13 & 0x3fffffff) * 4 + lVar12;
+    uVar13 = lVar9 + uVar13;
+    lVar10 = lVar11;
     do {
-      pfVar5 = (float *)param_2;
-      pfVar11 = pfVar11 + 1;
-      *(float *)((int)(float *)lVar9 + (iVar4 - iVar3)) =
-           *(float *)((int)pfVar5 + (iVar6 - iVar7)) * *pfVar11;
-      param_2 = param_2 + 4;
-      *(float *)lVar9 = *pfVar5 - pfVar5[-2];
-      lVar9 = lVar9 + 4;
-      lVar8 = lVar8 + -1;
-    } while (lVar8 != 0);
+      lVar10 = lVar10 + 4;
+      pfVar5 = (float *)lVar10;
+      pfVar15 = pfVar15 + 1;
+      *(float *)((iVar4 - iVar3) + (int)(float *)lVar17) =
+           *(float *)((iVar6 - iVar8) + (int)pfVar5) * *pfVar15;
+      *(float *)lVar17 = *pfVar5 - pfVar5[-1];
+      lVar17 = lVar17 + 4;
+      lVar9 = lVar9 + -1;
+    } while (lVar9 != 0);
   }
-  iVar6 = (int)uVar10;
-  *param_7 = iVar6;
+  lVar9 = uVar7 - 2;
+  if ((int)(in_r10 - uVar13) < (int)(uVar7 - 2)) {
+    lVar9 = in_r10 - uVar13;
+  }
+  if (0 < (int)lVar9) {
+    pfVar15 = (float *)(iVar6 + -4);
+    lVar10 = (uVar13 & 0x3fffffff) * 4 + lVar12;
+    lVar11 = lVar11 + 8;
+    uVar13 = lVar9 + uVar13;
+    do {
+      pfVar5 = (float *)lVar11;
+      pfVar15 = pfVar15 + 1;
+      *(float *)((int)(float *)lVar10 + (iVar4 - iVar3)) =
+           *(float *)((int)pfVar5 + (iVar6 - iVar8)) * *pfVar15;
+      lVar11 = lVar11 + 4;
+      *(float *)lVar10 = *pfVar5 - pfVar5[-2];
+      lVar10 = lVar10 + 4;
+      lVar9 = lVar9 + -1;
+    } while (lVar9 != 0);
+  }
+  iVar6 = (int)uVar13;
+  *(int *)param_8 = iVar6;
   if (9 < iVar6) {
-    iVar7 = 0;
+    iVar8 = 0;
     if (0 < iVar6) {
-      iVar7 = 0;
+      iVar8 = 0;
       do {
-        fVar1 = *(float *)param_5;
+        fVar1 = *(float *)lVar14;
         if (0.05 < fVar1) {
-          *(float *)((int)(undefined4 *)param_6 + (iVar4 - iVar3)) = fVar1;
-          iVar7 = iVar7 + 1;
-          *(undefined4 *)param_6 = *(undefined4 *)((int)(float *)param_5 + (iVar3 - iVar4));
-          param_6 = param_6 + 4;
+          *(float *)((int)(undefined4 *)lVar12 + (iVar4 - iVar3)) = fVar1;
+          iVar8 = iVar8 + 1;
+          *(undefined4 *)lVar12 = *(undefined4 *)((int)(float *)lVar14 + (iVar3 - iVar4));
+          lVar12 = lVar12 + 4;
         }
-        param_5 = param_5 + 4;
-        uVar10 = uVar10 - 1;
-      } while (uVar10 != 0);
+        lVar14 = lVar14 + 4;
+        uVar13 = uVar13 - 1;
+      } while (uVar13 != 0);
     }
-    *param_7 = iVar7;
+    *(int *)param_8 = iVar8;
   }
   __restgprlr_27();
   return;

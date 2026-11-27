@@ -2,49 +2,55 @@
 
 // 8280F390  writeHeader  (WebM_atvi_opt/vpx/libmkv/WebMElement.c:27)
 
-void writeHeader(undefined8 param_1)
+void writeHeader(EbmlGlobal *param_1)
 
 {
-  undefined1 auStack_20 [16];
+  uchar *apuStack_20 [4];
   
-  Ebml_StartSubElement(param_1,auStack_20,0x1a45dfa3);
+  Ebml_StartSubElement(param_1,apuStack_20,0x1a45dfa3);
   Ebml_SerializeUnsigned(param_1,0x4286,1);
   Ebml_SerializeUnsigned(param_1,0x42f7,1);
   Ebml_SerializeUnsigned(param_1,0x42f2,4);
   Ebml_SerializeUnsigned(param_1,0x42f3,8);
-  Ebml_SerializeString(param_1,0x4282,0xffffffff821e64e0);
+  Ebml_SerializeString(param_1,0x4282,"webm");
   Ebml_SerializeUnsigned(param_1,0x4287,2);
   Ebml_SerializeUnsigned(param_1,0x4285,2);
-  Ebml_EndSubElement(param_1,auStack_20);
+  Ebml_EndSubElement(param_1,apuStack_20);
   return;
 }
 
 
 // 8280F448  writeSimpleBlock  (WebM_atvi_opt/vpx/libmkv/WebMElement.c:43)
 
-void writeSimpleBlock(undefined8 param_1,byte param_2,undefined2 param_3,longlong param_4,
-                     ulonglong param_5,byte param_6,undefined8 param_7,undefined8 param_8)
+void writeSimpleBlock(EbmlGlobal *param_1,uchar param_2,short param_3,int param_4,uchar param_5,
+                     int param_6,uchar *param_7,ulong param_8)
 
 {
-  undefined8 uVar1;
-  byte in_stack_0000001f;
-  undefined2 in_stack_00000026;
+  EbmlGlobal *pEVar1;
+  longlong lVar2;
+  ulonglong uVar3;
+  byte bVar4;
+  byte bStack0000001f;
+  short sStack00000026;
   byte local_30 [4];
   uint local_2c [11];
   
-  uVar1 = __savegprlr_29();
-  local_30[0] = (byte)((param_5 & 0xffffffff) << 1) | -(param_4 != 0) & 0x80U | param_6;
-  local_2c[0] = (int)param_8 + 4;
-  in_stack_0000001f = param_2;
-  in_stack_00000026 = param_3;
-  Ebml_WriteID(uVar1,0xa3);
+  bVar4 = (byte)param_6;
+  uVar3 = (ulonglong)(char)param_5;
+  lVar2 = (longlong)param_4;
+  bStack0000001f = param_2;
+  sStack00000026 = param_3;
+  pEVar1 = (EbmlGlobal *)__savegprlr_29(param_1);
+  local_30[0] = (byte)((uVar3 & 0xffffffff) << 1) | -(lVar2 != 0) & 0x80U | bVar4;
+  local_2c[0] = param_8 + 4;
+  Ebml_WriteID(pEVar1,0xa3);
   local_2c[0] = local_2c[0] | 0x10000000;
-  Ebml_Serialize(uVar1,local_2c,4);
-  in_stack_0000001f = in_stack_0000001f | 0x80;
-  Ebml_Write(uVar1,&stack0x0000001f,1);
-  Ebml_Serialize(uVar1,&stack0x00000026,2);
-  Ebml_Write(uVar1,local_30,1);
-  Ebml_Write(uVar1,param_7,param_8);
+  Ebml_Serialize(pEVar1,local_2c,4);
+  bStack0000001f = bStack0000001f | 0x80;
+  Ebml_Write(pEVar1,&stack0x0000001f,1);
+  Ebml_Serialize(pEVar1,&stack0x00000026,2);
+  Ebml_Write(pEVar1,local_30,1);
+  Ebml_Write(pEVar1,param_7,param_8);
   __restgprlr_29();
   return;
 }
@@ -52,52 +58,53 @@ void writeSimpleBlock(undefined8 param_1,byte param_2,undefined2 param_3,longlon
 
 // 8280F510  generateTrackID  (WebM_atvi_opt/vpx/libmkv/WebMElement.c:58)
 
-ulonglong generateTrackID(ulonglong param_1)
+ulong64 generateTrackID(uint param_1)
 
 {
-  __time64_t _Var1;
+  long64 lVar1;
   int iVar2;
   int iVar3;
   
-  _Var1 = _time64((__time64_t *)0x0);
+  lVar1 = _time64((long64 *)0x0);
   iVar2 = rand();
   iVar3 = rand();
-  return (longlong)iVar3 + ((longlong)iVar2 << 0x20) ^ _Var1 * (param_1 & 0xffffffff);
+  return (longlong)iVar3 + ((longlong)iVar2 << 0x20) ^ lVar1 * (ulonglong)param_1;
 }
 
 
 // 8280F568  writeVideoTrack  (WebM_atvi_opt/vpx/libmkv/WebMElement.c:72)
 
-void writeVideoTrack(undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4,
-                    undefined8 param_5,undefined8 param_6)
+void writeVideoTrack(EbmlGlobal *param_1,uint param_2,int param_3,char *param_4,uint param_5,
+                    uint param_6,double param_7)
 
 {
-  undefined8 uVar1;
-  __time64_t _Var2;
+  EbmlGlobal *pEVar2;
+  long64 lVar1;
   uint uVar3;
-  undefined8 extraout_f1;
-  undefined8 uVar4;
-  undefined1 auStack_50 [8];
-  undefined1 auStack_48 [72];
+  longlong lVar4;
+  double extraout_f1;
+  double dVar5;
+  uchar *apuStack_50 [2];
+  uchar *apuStack_48 [18];
   
-  uVar1 = __savegprlr_26();
-  uVar4 = extraout_f1;
-  Ebml_StartSubElement(uVar1,auStack_48,0xae);
-  Ebml_SerializeUnsigned(uVar1,0xd7,param_2);
-  _Var2 = _time64((__time64_t *)0x0);
+  lVar4 = (longlong)(int)param_2;
+  pEVar2 = (EbmlGlobal *)__savegprlr_26(param_1,lVar4,param_3);
+  dVar5 = extraout_f1;
+  Ebml_StartSubElement(pEVar2,apuStack_48,0xae);
+  Ebml_SerializeUnsigned(pEVar2,0xd7,(ulong)lVar4);
+  lVar1 = _time64((long64 *)0x0);
   rand();
   uVar3 = rand();
-  Ebml_SerializeUnsigned
-            (uVar1,0x73c5,(ulonglong)uVar3 ^ _Var2 * (param_2 & 0xffffffff) & 0xffffffff);
-  Ebml_SerializeString(uVar1,0x258688,0xffffffff821e6540);
-  Ebml_SerializeUnsigned(uVar1,0x83,1);
-  Ebml_SerializeString(uVar1,0x86,param_4);
-  Ebml_StartSubElement(uVar1,auStack_50,0xe0);
-  Ebml_SerializeUnsigned(uVar1,0xb0,param_5);
-  Ebml_SerializeUnsigned(uVar1,0xba,param_6);
-  Ebml_SerializeFloat(uVar4,uVar1,0x2383e3);
-  Ebml_EndSubElement(uVar1,auStack_50);
-  Ebml_EndSubElement(uVar1,auStack_48);
+  Ebml_SerializeUnsigned(pEVar2,0x73c5,uVar3 ^ (int)lVar1 * (ulong)lVar4);
+  Ebml_SerializeString(pEVar2,0x258688,"VP8");
+  Ebml_SerializeUnsigned(pEVar2,0x83,1);
+  Ebml_SerializeString(pEVar2,0x86,param_4);
+  Ebml_StartSubElement(pEVar2,apuStack_50,0xe0);
+  Ebml_SerializeUnsigned(pEVar2,0xb0,param_5);
+  Ebml_SerializeUnsigned(pEVar2,0xba,param_6);
+  Ebml_SerializeFloat(pEVar2,0x2383e3,dVar5);
+  Ebml_EndSubElement(pEVar2,apuStack_50);
+  Ebml_EndSubElement(pEVar2,apuStack_48);
   __restgprlr_26();
   return;
 }
@@ -105,36 +112,40 @@ void writeVideoTrack(undefined8 param_1,ulonglong param_2,undefined8 param_3,und
 
 // 8280F688  writeAudioTrack  (WebM_atvi_opt/vpx/libmkv/WebMElement.c:96)
 
-void writeAudioTrack(undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4,
-                    undefined8 param_5,undefined8 param_6,undefined8 param_7,undefined8 param_8)
+void writeAudioTrack(EbmlGlobal *param_1,uint param_2,int param_3,char *param_4,double param_5,
+                    uint param_6,uchar *param_7,ulong param_8)
 
 {
-  undefined8 uVar1;
-  __time64_t _Var2;
+  EbmlGlobal *pEVar2;
+  long64 lVar1;
   uint uVar3;
-  undefined8 extraout_f1;
-  undefined8 uVar4;
-  undefined1 auStack_60 [8];
-  undefined1 auStack_58 [88];
+  longlong lVar4;
+  longlong lVar5;
+  ulong in_r10;
+  double extraout_f1;
+  double dVar6;
+  uchar *apuStack_60 [2];
+  uchar *apuStack_58 [22];
   
-  uVar1 = __savegprlr_25();
-  uVar4 = extraout_f1;
-  Ebml_StartSubElement(uVar1,auStack_58,0xae);
-  Ebml_SerializeUnsigned(uVar1,0xd7,param_2);
-  _Var2 = _time64((__time64_t *)0x0);
+  lVar5 = (longlong)(int)param_4;
+  lVar4 = (longlong)(int)param_2;
+  pEVar2 = (EbmlGlobal *)__savegprlr_25(param_1,lVar4,param_3,lVar5,param_6);
+  dVar6 = extraout_f1;
+  Ebml_StartSubElement(pEVar2,apuStack_58,0xae);
+  Ebml_SerializeUnsigned(pEVar2,0xd7,(ulong)lVar4);
+  lVar1 = _time64((long64 *)0x0);
   rand();
   uVar3 = rand();
-  Ebml_SerializeUnsigned
-            (uVar1,0x73c5,(ulonglong)uVar3 ^ _Var2 * (param_2 & 0xffffffff) & 0xffffffff);
-  Ebml_SerializeUnsigned(uVar1,0x83,2);
-  Ebml_SerializeString(uVar1,0x86,param_4);
-  Ebml_SerializeData(uVar1,0x63a2,param_7,param_8);
-  Ebml_SerializeString(uVar1,0x258688,0xffffffff821e6544);
-  Ebml_StartSubElement(uVar1,auStack_60,0xe1);
-  Ebml_SerializeFloat(uVar4,uVar1,0xb5);
-  Ebml_SerializeUnsigned(uVar1,0x9f,param_6);
-  Ebml_EndSubElement(uVar1,auStack_60);
-  Ebml_EndSubElement(uVar1,auStack_58);
+  Ebml_SerializeUnsigned(pEVar2,0x73c5,uVar3 ^ (int)lVar1 * (ulong)lVar4);
+  Ebml_SerializeUnsigned(pEVar2,0x83,2);
+  Ebml_SerializeString(pEVar2,0x86,(char *)lVar5);
+  Ebml_SerializeData(pEVar2,0x63a2,(uchar *)param_8,in_r10);
+  Ebml_SerializeString(pEVar2,0x258688,"VORBIS");
+  Ebml_StartSubElement(pEVar2,apuStack_60,0xe1);
+  Ebml_SerializeFloat(pEVar2,0xb5,dVar6);
+  Ebml_SerializeUnsigned(pEVar2,0x9f,(ulong)param_7);
+  Ebml_EndSubElement(pEVar2,apuStack_60);
+  Ebml_EndSubElement(pEVar2,apuStack_58);
   __restgprlr_25();
   return;
 }
@@ -142,22 +153,42 @@ void writeAudioTrack(undefined8 param_1,ulonglong param_2,undefined8 param_3,und
 
 // 8280F7B0  writeSegmentInformation  (WebM_atvi_opt/vpx/libmkv/WebMElement.c:123)
 
-void writeSegmentInformation(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+void writeSegmentInformation(EbmlGlobal *param_1,EbmlLoc *param_2,ulong param_3,double param_4)
 
 {
-  undefined8 uVar1;
+  EbmlGlobal *pEVar1;
   double extraout_f1;
   double dVar2;
   
-  uVar1 = __savegprlr_29();
+  pEVar1 = (EbmlGlobal *)__savegprlr_29(param_1);
   dVar2 = extraout_f1;
-  Ebml_StartSubElement();
-  Ebml_SerializeUnsigned(uVar1,0x2ad7b1,param_3);
-  Ebml_SerializeFloat(dVar2 * 1000.0,uVar1,0x4489);
-  Ebml_SerializeString(uVar1,0x4d80,0xffffffff821e6568);
-  Ebml_SerializeString(uVar1,0x5741,0xffffffff821e654c);
-  Ebml_EndSubElement(uVar1,param_2);
+  Ebml_StartSubElement(pEVar1,(uchar **)param_2,0x1549a966);
+  Ebml_SerializeUnsigned(pEVar1,0x2ad7b1,param_3);
+  Ebml_SerializeFloat(pEVar1,0x4489,dVar2 * 1000.0);
+  Ebml_SerializeString(pEVar1,0x4d80,"QTmuxingAppLibWebM-0.0.1");
+  Ebml_SerializeString(pEVar1,0x5741,"QTwritingAppLibWebM-0.0.1");
+  Ebml_EndSubElement(pEVar1,(uchar **)param_2);
   __restgprlr_29();
   return;
+}
+
+
+// 8280F388  time  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/time.inl:128)
+
+long64 time(long64 *param_1)
+
+{
+  ulonglong uVar1;
+  _FILETIME a_Stack_20 [2];
+  
+  GetSystemTimeAsFileTime(a_Stack_20);
+  uVar1 = ((longlong)a_Stack_20[0] + 0xfe624e212ac18000U) / 10000000;
+  if (0x793406fff < uVar1) {
+    uVar1 = 0xffffffffffffffff;
+  }
+  if (param_1 != (long64 *)0x0) {
+    *param_1 = uVar1;
+  }
+  return uVar1;
 }
 

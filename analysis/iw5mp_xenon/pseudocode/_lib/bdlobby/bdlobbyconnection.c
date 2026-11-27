@@ -7,7 +7,7 @@ void __unwind_79893(void)
 {
   int in_r12;
   
-  bdReferencable___bdReferencable(*(undefined4 *)(in_r12 + 0x14));
+  bdReferencable::~bdReferencable(*(bdReferencable **)(in_r12 + 0x14));
   return;
 }
 
@@ -19,7 +19,7 @@ void __unwind_79938(void)
 {
   int in_r12;
   
-  bdTaskByteBuffer__operator_delete(*(undefined4 *)(in_r12 + -0x3c));
+  bdMemory::__3bdTaskByteBuffer__SAXPAX_Z(*(void **)(in_r12 + -0x3c));
   return;
 }
 
@@ -29,9 +29,10 @@ void __unwind_79938(void)
 void __unwind_79939(void)
 
 {
-  longlong in_r12;
+  int in_r12;
   
-  bdReference<bdTaskByteBuffer>___bdReference<bdTaskByteBuffer>(in_r12 + -0x3c);
+  bdReference<bdTaskByteBuffer>::~bdReference<bdTaskByteBuffer>
+            ((bdReference<bdTaskByteBuffer> *)(in_r12 + -0x3c));
   return;
 }
 
@@ -43,7 +44,8 @@ void __unwind_80052(void)
 {
   int in_r12;
   
-  bdReference<bdTaskByteBuffer>___bdReference<bdTaskByteBuffer>(*(undefined4 *)(in_r12 + 0x1c));
+  bdReference<bdTaskByteBuffer>::~bdReference<bdTaskByteBuffer>
+            (*(bdReference<bdTaskByteBuffer> **)(in_r12 + 0x1c));
   return;
 }
 
@@ -55,7 +57,7 @@ void __unwind_80053(void)
 {
   int in_r12;
   
-  bdReferencable___bdReferencable(*(undefined4 *)(in_r12 + 0x14));
+  bdReferencable::~bdReferencable(*(bdReferencable **)(in_r12 + 0x14));
   return;
 }
 
@@ -67,7 +69,8 @@ void __unwind_80054(void)
 {
   int in_r12;
   
-  bdReference<bdByteBuffer>___bdReference<bdByteBuffer>((ulonglong)*(uint *)(in_r12 + 0x14) + 8);
+  bdReference<bdByteBuffer>::~bdReference<bdByteBuffer>
+            ((bdReference<bdByteBuffer> *)(*(int *)(in_r12 + 0x14) + 8));
   return;
 }
 
@@ -79,7 +82,7 @@ void __unwind_80166(void)
 {
   int in_r12;
   
-  bdReferencable___bdReferencable(*(undefined4 *)(in_r12 + 0x14));
+  bdReferencable::~bdReferencable(*(bdReferencable **)(in_r12 + 0x14));
   return;
 }
 
@@ -91,7 +94,7 @@ void __unwind_80333(void)
 {
   int in_r12;
   
-  bdTaskByteBuffer__operator_delete(*(undefined4 *)(in_r12 + -0x50));
+  bdMemory::__3bdTaskByteBuffer__SAXPAX_Z(*(void **)(in_r12 + -0x50));
   return;
 }
 
@@ -103,7 +106,7 @@ void __unwind_80334(void)
 {
   int in_r12;
   
-  bdPendingBufferTransfer__operator_delete(*(undefined4 *)(in_r12 + -0x4c));
+  bdMemory::__3bdPendingBufferTransfer__SAXPAX_Z(*(void **)(in_r12 + -0x4c));
   return;
 }
 
@@ -115,7 +118,7 @@ void __unwind_80575(void)
 {
   int in_r12;
   
-  bdSingletonRegistryImpl__operator_delete(*(undefined4 *)(in_r12 + -0x2c));
+  bdMemory::__3bdSingletonRegistryImpl__SAXPAX_Z(*(void **)(in_r12 + -0x2c));
   return;
 }
 
@@ -127,7 +130,7 @@ void __unwind_80667(void)
 {
   int in_r12;
   
-  bdNetImpl__operator_delete(*(undefined4 *)(in_r12 + -0x20));
+  bdMemory::__3bdNetImpl__SAXPAX_Z(*(void **)(in_r12 + -0x20));
   return;
 }
 
@@ -139,7 +142,7 @@ void __unwind_81003(void)
 {
   int in_r12;
   
-  bdAddr___bdAddr(*(undefined4 *)(in_r12 + 0x1c));
+  bdAddr::~bdAddr(*(bdAddr **)(in_r12 + 0x1c));
   return;
 }
 
@@ -151,7 +154,7 @@ void __unwind_81004(void)
 {
   int in_r12;
   
-  bdReferencable___bdReferencable(*(undefined4 *)(in_r12 + 0x14));
+  bdReferencable::~bdReferencable(*(bdReferencable **)(in_r12 + 0x14));
   return;
 }
 
@@ -163,7 +166,8 @@ void __unwind_81005(void)
 {
   int in_r12;
   
-  bdReference<bdCommonAddr>___bdReference<bdCommonAddr>((ulonglong)*(uint *)(in_r12 + 0x14) + 8);
+  bdReference<bdCommonAddr>::~bdReference<bdCommonAddr>
+            ((bdReference<bdCommonAddr> *)(*(int *)(in_r12 + 0x14) + 8));
   return;
 }
 
@@ -175,8 +179,8 @@ void __unwind_81006(void)
 {
   int in_r12;
   
-  bdReference<bdTaskByteBuffer>___bdReference<bdTaskByteBuffer>
-            ((ulonglong)*(uint *)(in_r12 + 0x14) + 0x28);
+  bdReference<bdTaskByteBuffer>::~bdReference<bdTaskByteBuffer>
+            ((bdReference<bdTaskByteBuffer> *)(*(int *)(in_r12 + 0x14) + 0x28));
   return;
 }
 
@@ -188,8 +192,8 @@ void __unwind_81007(void)
 {
   int in_r12;
   
-  bdReference<bdPendingBufferTransfer>___bdReference<bdPendingBufferTransfer>
-            ((ulonglong)*(uint *)(in_r12 + 0x14) + 0x2c);
+  bdReference<bdPendingBufferTransfer>::~bdReference<bdPendingBufferTransfer>
+            ((bdReference<bdPendingBufferTransfer> *)(*(int *)(in_r12 + 0x14) + 0x2c));
   return;
 }
 
@@ -201,8 +205,8 @@ void __unwind_81008(void)
 {
   int in_r12;
   
-  bdQueue<bdPendingBufferTransfer>___bdQueue<bdPendingBufferTransfer>
-            ((ulonglong)*(uint *)(in_r12 + 0x14) + 0x30);
+  bdLinkedList<bdPendingBufferTransfer>::__1__bdQueue_VbdPendingBufferTransfer____QAA_XZ
+            ((bdLinkedList<bdPendingBufferTransfer> *)(*(int *)(in_r12 + 0x14) + 0x30));
   return;
 }
 
@@ -214,7 +218,7 @@ void __unwind_81009(void)
 {
   int in_r12;
   
-  bdStreamSocket___bdStreamSocket((ulonglong)*(uint *)(in_r12 + 0x14) + 0x3c);
+  bdStreamSocket::~bdStreamSocket((bdStreamSocket *)(*(int *)(in_r12 + 0x14) + 0x3c));
   return;
 }
 
@@ -226,7 +230,7 @@ void __unwind_81010(void)
 {
   int in_r12;
   
-  bdAddr___bdAddr((ulonglong)*(uint *)(in_r12 + 0x14) + 0x50);
+  bdAddr::~bdAddr((bdAddr *)(*(int *)(in_r12 + 0x14) + 0x50));
   return;
 }
 
@@ -238,7 +242,7 @@ void __unwind_81086(void)
 {
   int in_r12;
   
-  bdReferencable___bdReferencable(*(undefined4 *)(in_r12 + 0x14));
+  bdReferencable::~bdReferencable(*(bdReferencable **)(in_r12 + 0x14));
   return;
 }
 
@@ -250,7 +254,8 @@ void __unwind_81087(void)
 {
   int in_r12;
   
-  bdReference<bdCommonAddr>___bdReference<bdCommonAddr>((ulonglong)*(uint *)(in_r12 + 0x14) + 8);
+  bdReference<bdCommonAddr>::~bdReference<bdCommonAddr>
+            ((bdReference<bdCommonAddr> *)(*(int *)(in_r12 + 0x14) + 8));
   return;
 }
 
@@ -262,8 +267,8 @@ void __unwind_81088(void)
 {
   int in_r12;
   
-  bdReference<bdTaskByteBuffer>___bdReference<bdTaskByteBuffer>
-            ((ulonglong)*(uint *)(in_r12 + 0x14) + 0x28);
+  bdReference<bdTaskByteBuffer>::~bdReference<bdTaskByteBuffer>
+            ((bdReference<bdTaskByteBuffer> *)(*(int *)(in_r12 + 0x14) + 0x28));
   return;
 }
 
@@ -275,8 +280,8 @@ void __unwind_81089(void)
 {
   int in_r12;
   
-  bdReference<bdPendingBufferTransfer>___bdReference<bdPendingBufferTransfer>
-            ((ulonglong)*(uint *)(in_r12 + 0x14) + 0x2c);
+  bdReference<bdPendingBufferTransfer>::~bdReference<bdPendingBufferTransfer>
+            ((bdReference<bdPendingBufferTransfer> *)(*(int *)(in_r12 + 0x14) + 0x2c));
   return;
 }
 
@@ -288,8 +293,8 @@ void __unwind_81090(void)
 {
   int in_r12;
   
-  bdQueue<bdPendingBufferTransfer>___bdQueue<bdPendingBufferTransfer>
-            ((ulonglong)*(uint *)(in_r12 + 0x14) + 0x30);
+  bdLinkedList<bdPendingBufferTransfer>::__1__bdQueue_VbdPendingBufferTransfer____QAA_XZ
+            ((bdLinkedList<bdPendingBufferTransfer> *)(*(int *)(in_r12 + 0x14) + 0x30));
   return;
 }
 
@@ -301,7 +306,7 @@ void __unwind_81091(void)
 {
   int in_r12;
   
-  bdStreamSocket___bdStreamSocket((ulonglong)*(uint *)(in_r12 + 0x14) + 0x3c);
+  bdStreamSocket::~bdStreamSocket((bdStreamSocket *)(*(int *)(in_r12 + 0x14) + 0x3c));
   return;
 }
 
@@ -313,7 +318,7 @@ void __unwind_81092(void)
 {
   int in_r12;
   
-  bdAddr___bdAddr((ulonglong)*(uint *)(in_r12 + 0x14) + 0x50);
+  bdAddr::~bdAddr((bdAddr *)(*(int *)(in_r12 + 0x14) + 0x50));
   return;
 }
 
@@ -325,7 +330,8 @@ void __unwind_81310(void)
 {
   int in_r12;
   
-  bdReference<bdTaskByteBuffer>___bdReference<bdTaskByteBuffer>(*(undefined4 *)(in_r12 + 0x1c));
+  bdReference<bdTaskByteBuffer>::~bdReference<bdTaskByteBuffer>
+            (*(bdReference<bdTaskByteBuffer> **)(in_r12 + 0x1c));
   return;
 }
 
@@ -335,9 +341,9 @@ void __unwind_81310(void)
 void __unwind_81312(void)
 
 {
-  longlong in_r12;
+  int in_r12;
   
-  bdPendingBufferTransfer___bdPendingBufferTransfer(in_r12 + -0x50);
+  bdPendingBufferTransfer::~bdPendingBufferTransfer((bdPendingBufferTransfer *)(in_r12 + -0x50));
   return;
 }
 
@@ -349,7 +355,8 @@ void __unwind_81435(void)
 {
   int in_r12;
   
-  bdReference<bdByteBuffer>___bdReference<bdByteBuffer>(*(undefined4 *)(in_r12 + 0x1c));
+  bdReference<bdByteBuffer>::~bdReference<bdByteBuffer>
+            (*(bdReference<bdByteBuffer> **)(in_r12 + 0x1c));
   return;
 }
 
@@ -359,9 +366,9 @@ void __unwind_81435(void)
 void __unwind_81437(void)
 
 {
-  longlong in_r12;
+  int in_r12;
   
-  bdPendingBufferTransfer___bdPendingBufferTransfer(in_r12 + -0x40);
+  bdPendingBufferTransfer::~bdPendingBufferTransfer((bdPendingBufferTransfer *)(in_r12 + -0x40));
   return;
 }
 

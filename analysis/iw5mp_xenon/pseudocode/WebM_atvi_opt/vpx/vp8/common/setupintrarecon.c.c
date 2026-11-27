@@ -2,40 +2,39 @@
 
 // 8281B3C0  vp8_setup_intra_recon  (WebM_atvi_opt/vpx/vp8/common/setupintrarecon.c:20)
 
-void * vp8_setup_intra_recon(int *param_1)
+void vp8_setup_intra_recon(YV12_BUFFER_CONFIG *param_1)
 
 {
   int iVar1;
-  void *pvVar2;
-  int iVar3;
+  int iVar2;
   
-  vpx_memset((void *)((param_1[6] - param_1[2]) + -1),0x7f,*param_1 + 5);
-  iVar3 = 0;
-  if (0 < param_1[1]) {
+  vpx_memset(param_1->y_buffer + (-1 - param_1->y_stride),0x7f,param_1->y_width + 5);
+  iVar2 = 0;
+  if (0 < param_1->y_height) {
     do {
-      iVar1 = iVar3 * param_1[2];
-      iVar3 = iVar3 + 1;
-      *(undefined1 *)(iVar1 + param_1[6] + -1) = 0x81;
-    } while (iVar3 < param_1[1]);
+      iVar1 = iVar2 * param_1->y_stride;
+      iVar2 = iVar2 + 1;
+      param_1->y_buffer[iVar1 + -1] = 0x81;
+    } while (iVar2 < param_1->y_height);
   }
-  vpx_memset((void *)((param_1[7] - param_1[5]) + -1),0x7f,param_1[3] + 5);
-  iVar3 = 0;
-  if (0 < param_1[4]) {
+  vpx_memset(param_1->u_buffer + (-1 - param_1->uv_stride),0x7f,param_1->uv_width + 5);
+  iVar2 = 0;
+  if (0 < param_1->uv_height) {
     do {
-      iVar1 = param_1[5] * iVar3;
-      iVar3 = iVar3 + 1;
-      *(undefined1 *)(iVar1 + param_1[7] + -1) = 0x81;
-    } while (iVar3 < param_1[4]);
+      iVar1 = param_1->uv_stride * iVar2;
+      iVar2 = iVar2 + 1;
+      param_1->u_buffer[iVar1 + -1] = 0x81;
+    } while (iVar2 < param_1->uv_height);
   }
-  pvVar2 = vpx_memset((void *)((param_1[8] - param_1[5]) + -1),0x7f,param_1[3] + 5);
-  iVar3 = 0;
-  if (0 < param_1[4]) {
+  vpx_memset(param_1->v_buffer + (-1 - param_1->uv_stride),0x7f,param_1->uv_width + 5);
+  iVar2 = 0;
+  if (0 < param_1->uv_height) {
     do {
-      iVar1 = param_1[5] * iVar3;
-      iVar3 = iVar3 + 1;
-      *(undefined1 *)(iVar1 + param_1[8] + -1) = 0x81;
-    } while (iVar3 < param_1[4]);
+      iVar1 = param_1->uv_stride * iVar2;
+      iVar2 = iVar2 + 1;
+      param_1->v_buffer[iVar1 + -1] = 0x81;
+    } while (iVar2 < param_1->uv_height);
   }
-  return pvVar2;
+  return;
 }
 

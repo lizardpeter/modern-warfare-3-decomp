@@ -2,52 +2,56 @@
 
 // 8279ADE8  TRACK_rb_debug  (gfx_d3d/rb_debug.cpp:24)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void TRACK_rb_debug(void)
 
 {
-  track_static_alloc_internal(0xffffffff84838360,0x4000,0xffffffff821d5864,0);
-  track_static_alloc_internal(0xffffffff8483c360,0x4000,0xffffffff821d5850,0);
-  track_static_alloc_internal(0xffffffff84834360,0x4000,0xffffffff821d5838,0);
+  track_static_alloc_internal(g_debugPolyVerts,0x4000,"g_debugPolyVerts",0);
+  track_static_alloc_internal(g_debugLineVerts,0x4000,"g_debugLineVerts",0);
+  track_static_alloc_internal(g_debugExternLineVerts,0x4000,"g_debugExternLineVerts",0);
   return;
 }
 
 
 // 8279AE60  RB_AddDebugLine  (gfx_d3d/rb_debug.cpp:36)
 
-void RB_AddDebugLine(undefined8 param_1,undefined4 *param_2,undefined4 param_3,undefined8 param_4,
-                    ulonglong param_5,int param_6,undefined8 param_7)
+int RB_AddDebugLine(float *param_1,float *param_2,GfxColor param_3,bool param_4,int param_5,
+                   int param_6,GfxPointVertex *param_7)
 
 {
-  int iVar1;
-  undefined4 *puVar2;
-  undefined4 *puVar3;
+  GfxPointVertex *pGVar1;
+  float *pfVar2;
+  int iVar3;
+  ulonglong uVar4;
   
-  puVar3 = (undefined4 *)__savegprlr_28();
-  iVar1 = (int)param_5;
-  if (param_6 < iVar1 + 2) {
-    RB_DrawLines3D((longlong)(iVar1 >> 1) + (ulonglong)(iVar1 < 0 && (param_5 & 1) != 0),1,param_7);
-    param_5 = 0;
+  uVar4 = (ulonglong)param_5;
+  pfVar2 = (float *)__savegprlr_28(param_1);
+  iVar3 = (int)uVar4;
+  if (param_6 < iVar3 + 2) {
+    RB_DrawLines3D((iVar3 >> 1) + (uint)(iVar3 < 0 && (uVar4 & 1) != 0),1,param_7,param_4);
+    uVar4 = 0;
   }
-  puVar2 = (undefined4 *)((int)param_5 * 0x10 + (int)param_7);
-  puVar2[3] = param_3;
-  puVar2[7] = param_3;
-  *puVar2 = *puVar3;
-  puVar2[1] = puVar3[1];
-  puVar2[2] = puVar3[2];
-  puVar2[4] = *param_2;
-  puVar2[5] = param_2[1];
-  puVar2[6] = param_2[2];
-  __restgprlr_28(param_5 + 2);
-  return;
+  pGVar1 = param_7 + (int)uVar4;
+  *(GfxColor *)pGVar1->color = param_3;
+  *(GfxColor *)pGVar1[1].color = param_3;
+  pGVar1->xyz[0] = *pfVar2;
+  pGVar1->xyz[1] = pfVar2[1];
+  pGVar1->xyz[2] = pfVar2[2];
+  pGVar1[1].xyz[0] = *param_2;
+  pGVar1[1].xyz[1] = param_2[1];
+  pGVar1[1].xyz[2] = param_2[2];
+  iVar3 = __restgprlr_28(uVar4 + 2);
+  return iVar3;
 }
 
 
 // 8279AEF0  RB_EndDebugLines  (gfx_d3d/rb_debug.cpp:54)
 
-undefined8 RB_EndDebugLines(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+int RB_EndDebugLines(bool param_1,int param_2,GfxPointVertex *param_3)
 
 {
-  if ((int)param_2 != 0) {
+  if (param_2 != 0) {
     RB_DrawLines3D(param_2,1,param_3,param_1);
   }
   return 0;
@@ -56,398 +60,45 @@ undefined8 RB_EndDebugLines(undefined8 param_1,undefined8 param_2,undefined8 par
 
 // 8279AF30  RB_SetPolyVert  (gfx_d3d/rb_debug.cpp:62)
 
-void RB_SetPolyVert(undefined4 *param_1,undefined4 param_2,int param_3)
+void RB_SetPolyVert(float *param_1,GfxColor param_2,int param_3)
 
 {
-  param_3 = param_3 * 0x20;
-  *(undefined4 *)(&DAT_84822800 + param_3) = *param_1;
-  *(undefined4 *)(&DAT_84822804 + param_3) = param_1[1];
-  *(undefined4 *)(&DAT_84822808 + param_3) = param_1[2];
-  *(undefined4 *)(&DAT_8482281c + param_3) = 0x1ff00000;
-  *(undefined4 *)(&DAT_84822810 + param_3) = param_2;
-  *(undefined4 *)(&DAT_8482280c + param_3) = 0x3f800000;
-  *(undefined4 *)(&DAT_84822814 + param_3) = 0;
-  *(undefined4 *)(&DAT_84822818 + param_3) = 0;
+  tess.verts[param_3].xyzw[0] = *param_1;
+  tess.verts[param_3].xyzw[1] = param_1[1];
+  tess.verts[param_3].xyzw[2] = param_1[2];
+  tess.verts[param_3].normal.packed = 0x1ff00000;
+  tess.verts[param_3].color = param_2;
+  tess.verts[param_3].xyzw[3] = 1.0;
+  tess.verts[param_3].texCoord[0] = 0.0;
+  tess.verts[param_3].texCoord[1] = 0.0;
   return;
 }
 
 
 // 8279AFA8  RB_DrawPolyInteriors  (gfx_d3d/rb_debug.cpp:75)
-
-void RB_DrawPolyInteriors(void)
-
-{
-  int iVar1;
-  int iVar2;
-  short sVar3;
-  undefined4 *puVar4;
-  int iVar5;
-  ulonglong uVar6;
-  int iVar7;
-  int iVar8;
-  int iVar9;
-  int iVar10;
-  double dVar11;
-  double dVar12;
-  undefined4 local_60 [24];
-  
-  __savegprlr_24();
-  if (*(int *)(DAT_84821000 + 0x1900) < 1) {
-    MyAssertHandler(0xffffffff821d5878,0x53,0,0xffffffff82000f98,0xffffffff821d58b8);
-  }
-  RB_BeginSurface(DAT_8461652c,4,7);
-  iVar8 = 0;
-  if (0 < *(int *)(DAT_84821000 + 0x1900)) {
-    iVar9 = 0;
-    dVar12 = 0.0;
-    dVar11 = 1.0;
-    do {
-      iVar7 = *(int *)(DAT_84821000 + 0x18f0);
-      iVar10 = *(int *)(DAT_84821000 + 0x18fc) + iVar9;
-      iVar1 = *(int *)(iVar10 + 0x10);
-      R_ConvertColorToBytes(iVar10,local_60);
-      uVar6 = (ulonglong)*(uint *)(iVar10 + 0x14) - 2;
-      RB_CheckTessOverflow((ulonglong)*(uint *)(iVar10 + 0x14),uVar6 + (uVar6 & 0x7fffffff) * 2);
-      iVar2 = *(int *)(iVar10 + 0x14);
-      iVar5 = 0;
-      if (0 < iVar2) {
-        puVar4 = (undefined4 *)(iVar1 * 0xc + iVar7 + -4);
-        do {
-          iVar7 = DAT_8483400c + iVar5;
-          iVar5 = iVar5 + 1;
-          iVar7 = iVar7 * 0x20;
-          *(undefined4 *)(&DAT_84822800 + iVar7) = puVar4[1];
-          *(undefined4 *)(&DAT_84822804 + iVar7) = puVar4[2];
-          puVar4 = puVar4 + 3;
-          *(undefined4 *)(&DAT_84822808 + iVar7) = *puVar4;
-          *(undefined4 *)(&DAT_8482281c + iVar7) = 0x1ff00000;
-          *(float *)(&DAT_8482280c + iVar7) = (float)dVar11;
-          *(undefined4 *)(&DAT_84822810 + iVar7) = local_60[0];
-          *(float *)(&DAT_84822814 + iVar7) = (float)dVar12;
-          *(float *)(&DAT_84822818 + iVar7) = (float)dVar12;
-          iVar2 = *(int *)(iVar10 + 0x14);
-        } while (iVar5 < iVar2);
-      }
-      iVar7 = 2;
-      if (2 < iVar2) {
-        iVar1 = DAT_84834008 << 1;
-        do {
-          *(short *)(&DAT_84832800 + iVar1) = (short)DAT_8483400c;
-          sVar3 = (short)iVar7;
-          *(short *)(&DAT_84832802 + DAT_84834008 * 2) = (short)DAT_8483400c + sVar3;
-          iVar7 = iVar7 + 1;
-          *(short *)(&DAT_84832804 + DAT_84834008 * 2) = (short)DAT_8483400c + sVar3 + -1;
-          DAT_84834008 = DAT_84834008 + 3;
-          iVar1 = DAT_84834008 * 2;
-          iVar2 = *(int *)(iVar10 + 0x14);
-        } while (iVar7 < iVar2);
-      }
-      iVar8 = iVar8 + 1;
-      iVar9 = iVar9 + 0x1c;
-      DAT_8483400c = iVar2 + DAT_8483400c;
-    } while (iVar8 < *(int *)(DAT_84821000 + 0x1900));
-  }
-  RB_EndTessSurface();
-  __restgprlr_24();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0
 
 // 8279B210  RB_DrawPolyOutlines  (gfx_d3d/rb_debug.cpp:114)
-
-void RB_DrawPolyOutlines(void)
-
-{
-  undefined4 uVar1;
-  int iVar2;
-  int iVar3;
-  int iVar4;
-  int iVar5;
-  int iVar6;
-  int iVar7;
-  int iVar8;
-  int iVar9;
-  int iVar10;
-  undefined4 *puVar11;
-  undefined4 *puVar12;
-  undefined4 local_70 [28];
-  
-  __savegprlr_20();
-  if (*(int *)(DAT_84821000 + 0x1900) < 1) {
-    MyAssertHandler(0xffffffff821d5878,0x7c,0,0xffffffff82000f98,0xffffffff821d58b8);
-  }
-  iVar9 = 0;
-  iVar5 = 0;
-  if (0 < *(int *)(DAT_84821000 + 0x1900)) {
-    iVar6 = 0;
-    iVar3 = DAT_84821000;
-    do {
-      iVar8 = *(int *)(iVar3 + 0x18fc) + iVar6;
-      if (*(char *)(iVar8 + 0x18) != '\0') {
-        iVar7 = *(int *)(iVar8 + 0x10) * 0xc + *(int *)(iVar3 + 0x18f0);
-        R_ConvertColorToBytes(iVar8,local_70);
-        iVar10 = 0;
-        iVar3 = DAT_84821000;
-        if (0 < *(int *)(iVar8 + 0x14)) {
-          puVar12 = (undefined4 *)(iVar7 + 8);
-          iVar2 = (*(int *)(iVar8 + 0x14) + -1) * 0xc;
-          iVar4 = iVar9;
-          do {
-            uVar1 = local_70[0];
-            puVar11 = (undefined4 *)(iVar2 + iVar7);
-            if (0x400 < iVar4 + 2) {
-              RB_DrawLines3D(iVar4 >> 1,1,0xffffffff84838360,0);
-              iVar4 = 0;
-            }
-            iVar10 = iVar10 + 1;
-            iVar2 = (-8 - iVar7) + (int)puVar12;
-            iVar9 = iVar4 + 2;
-            (&DAT_8483836c)[iVar4 * 4] = uVar1;
-            (&DAT_8483837c)[iVar4 * 4] = uVar1;
-            (&DAT_84838360)[iVar4 * 4] = *puVar11;
-            (&DAT_84838364)[iVar4 * 4] = puVar11[1];
-            (&DAT_84838368)[iVar4 * 4] = puVar11[2];
-            (&DAT_84838370)[iVar4 * 4] = puVar12[-2];
-            (&DAT_84838374)[iVar4 * 4] = puVar12[-1];
-            uVar1 = *puVar12;
-            puVar12 = puVar12 + 3;
-            (&DAT_84838378)[iVar4 * 4] = uVar1;
-            iVar3 = DAT_84821000;
-            iVar4 = iVar9;
-          } while (iVar10 < *(int *)(iVar8 + 0x14));
-        }
-      }
-      iVar5 = iVar5 + 1;
-      iVar6 = iVar6 + 0x1c;
-    } while (iVar5 < *(int *)(iVar3 + 0x1900));
-  }
-  if (iVar9 >> 1 != 0) {
-    RB_DrawLines3D(iVar9 >> 1,1,0xffffffff84838360,0);
-  }
-  __restgprlr_20();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0
 
 // 8279B3A8  RB_DrawDebugPolys  (gfx_d3d/rb_debug.cpp:145)
-
-void RB_DrawDebugPolys(void)
-
-{
-  if (*(int *)(DAT_84821000 + 0x1900) != 0) {
-    RB_EndSurfaceIfNeeded();
-    R_Set3D(0xffffffff8484c7e0);
-    RB_DrawPolyInteriors();
-    RB_DrawPolyOutlines();
-    *(undefined4 *)(DAT_84821000 + 0x1900) = 0;
-  }
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0
 
 // 8279B408  RB_DrawDebugLines  (gfx_d3d/rb_debug.cpp:159)
-
-void RB_DrawDebugLines(undefined8 param_1,longlong param_2,undefined8 param_3)
-
-{
-  undefined4 uVar1;
-  undefined4 *puVar2;
-  int iVar3;
-  int iVar4;
-  undefined4 *puVar5;
-  bool bVar6;
-  
-  iVar3 = __savegprlr_27();
-  if ((int)param_2 != 0) {
-    RB_EndSurfaceIfNeeded();
-    R_Set3D(0xffffffff8484c7e0);
-    iVar4 = 0;
-    bVar6 = *(int *)(iVar3 + 0x1c) != 0;
-    if (0 < (int)param_2) {
-      puVar5 = (undefined4 *)(iVar3 + -0xc);
-      iVar4 = 0;
-      do {
-        iVar3 = puVar5[10];
-        if (bVar6 != (iVar3 != 0)) {
-          if (iVar4 >> 1 != 0) {
-            RB_DrawLines3D(iVar4 >> 1,1,param_3,bVar6);
-          }
-          iVar4 = 0;
-          bVar6 = iVar3 != 0;
-        }
-        uVar1 = puVar5[9];
-        if (0x400 < iVar4 + 2) {
-          RB_DrawLines3D(iVar4 >> 1,1,param_3,bVar6);
-          iVar4 = 0;
-        }
-        param_2 = param_2 + -1;
-        puVar2 = (undefined4 *)(iVar4 * 0x10 + (int)param_3);
-        iVar4 = iVar4 + 2;
-        puVar2[3] = uVar1;
-        puVar2[7] = uVar1;
-        *puVar2 = puVar5[3];
-        puVar2[1] = puVar5[4];
-        puVar2[2] = puVar5[5];
-        puVar2[4] = puVar5[6];
-        puVar2[5] = puVar5[7];
-        puVar5 = puVar5 + 8;
-        puVar2[6] = *puVar5;
-      } while (param_2 != 0);
-    }
-    if (iVar4 >> 1 != 0) {
-      RB_DrawLines3D(iVar4 >> 1,1,param_3,bVar6);
-    }
-  }
-  __restgprlr_27();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0
 
 // 8279B538  RB_DrawDebugStrings  (gfx_d3d/rb_debug.cpp:199)
-
-void RB_DrawDebugStrings(undefined8 param_1,longlong param_2)
-
-{
-  int iVar1;
-  float *pfVar2;
-  float local_50;
-  float local_4c;
-  float local_48;
-  float local_40;
-  float local_3c;
-  float local_38;
-  
-  iVar1 = __savegprlr_28();
-  if ((int)param_2 != 0) {
-    RB_EndSurfaceIfNeeded();
-    R_Set3D(0xffffffff8484c7e0);
-    if (0 < (int)param_2) {
-      pfVar2 = (float *)(iVar1 + 0x10);
-      do {
-        local_38 = -*pfVar2;
-        local_50 = DAT_8484dce8 * local_38;
-        local_4c = DAT_8484dcec * local_38;
-        local_48 = DAT_8484dcf0 * local_38;
-        local_40 = DAT_8484dcf4 * local_38;
-        local_3c = DAT_8484dcf8 * local_38;
-        local_38 = DAT_8484dcfc * local_38;
-        RB_DrawTextInSpace(pfVar2 + 1,DAT_84821010,pfVar2 + -4,&local_50,&local_40,pfVar2[-1]);
-        param_2 = param_2 + -1;
-        pfVar2 = pfVar2 + 0x18;
-      } while (param_2 != 0);
-    }
-    iVar1 = R_HasDeviceOwnership();
-    if (iVar1 == 0) {
-      MyAssertHandler(0xffffffff821ca3d0,0xaf,0,0xffffffff82000f98,0xffffffff8217d420);
-    }
-    if (DAT_8483400c != 0) {
-      RB_EndTessSurface();
-    }
-  }
-  __restgprlr_28();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0
 
 // 8279B650  RB_AddPlumeStrings  (gfx_d3d/rb_debug.cpp:221)
-
-void RB_AddPlumeStrings(void)
-
-{
-  float fVar1;
-  int iVar2;
-  int iVar3;
-  int iVar4;
-  ulonglong uVar5;
-  int iVar6;
-  float *pfVar7;
-  int iVar8;
-  int iVar9;
-  double dVar10;
-  double dVar11;
-  double dVar12;
-  double dVar13;
-  undefined8 uVar14;
-  double dVar15;
-  double dVar16;
-  double dVar17;
-  float local_80;
-  float local_7c;
-  float local_78;
-  
-  __savegprlr_26();
-  iVar3 = __savefpr_25();
-  iVar8 = 0;
-  if (0 < *(int *)(DAT_84821000 + 0x193c)) {
-    uVar14 = 0x3fe0000000000000;
-    dVar15 = 0.06400000303983688;
-    dVar16 = 4.0;
-    dVar17 = 0.012566370889544487;
-    iVar9 = 0;
-    dVar13 = 2.0;
-    dVar12 = 1.0;
-    iVar4 = DAT_84821000;
-    do {
-      iVar2 = iVar9 + *(int *)(iVar4 + 0x1938);
-      uVar5 = (ulonglong)DAT_8484dee0 - (ulonglong)*(uint *)(iVar2 + 0x20);
-      if ((-1 < (longlong)uVar5) && (iVar6 = (int)uVar5, iVar6 <= *(int *)(iVar2 + 0x24))) {
-        iVar2 = iVar9 + *(int *)(iVar4 + 0x1938);
-        *(float *)(iVar2 + 0x18) = (float)dVar12;
-        if (*(int *)(iVar2 + 0x24) < (int)((uVar5 & 0xffffffff) << 1)) {
-          iVar4 = iVar9 + *(int *)(iVar4 + 0x1938);
-          *(float *)(iVar4 + 0x18) =
-               (float)(dVar13 - (double)((float)((double)(longlong)iVar6 * dVar13) /
-                                        (float)(longlong)*(int *)(iVar4 + 0x24)));
-        }
-        dVar11 = (double)(longlong)iVar6;
-        dVar10 = sin((double)(float)(dVar11 * dVar17 + (double)(longlong)iVar8));
-        pfVar7 = (float *)(iVar9 + *(int *)(DAT_84821000 + 0x1938));
-        fVar1 = (float)((double)(float)dVar10 * dVar16);
-        local_80 = fVar1 * *(float *)(iVar3 + 0x118) + *pfVar7;
-        local_7c = *(float *)(iVar3 + 0x11c) * fVar1 + pfVar7[1];
-        local_78 = (float)(dVar11 * dVar15 + (double)(*(float *)(iVar3 + 0x120) * fVar1 + pfVar7[2])
-                          );
-        va(0xffffffff8200c28c,*(undefined4 *)(iVar9 + *(int *)(DAT_84821000 + 0x1938) + 0x1c));
-        R_AddDebugString(uVar14,DAT_84821000 + 0x18f0,&local_80,
-                         *(int *)(DAT_84821000 + 0x1938) + iVar9 + 0xc);
-        iVar4 = DAT_84821000;
-      }
-      iVar8 = iVar8 + 1;
-      iVar9 = iVar9 + 0x28;
-    } while (iVar8 < *(int *)(iVar4 + 0x193c));
-  }
-  __restfpr_25();
-  __restgprlr_26();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0
 
 // 8279B820  RB_DrawDebug  (gfx_d3d/rb_debug.cpp:250)
-
-void RB_DrawDebug(ulonglong param_1)
-
-{
-  if ((param_1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821d5878,0xfb,0,0xffffffff82000f98,0xffffffff8201dd50);
-  }
-  RB_AddPlumeStrings(param_1);
-  if (*(int *)(DAT_84821000 + 0x1900) != 0) {
-    RB_EndSurfaceIfNeeded();
-    R_Set3D(0xffffffff8484c7e0);
-    RB_DrawPolyInteriors();
-    RB_DrawPolyOutlines();
-    *(undefined4 *)(DAT_84821000 + 0x1900) = 0;
-  }
-  RB_DrawDebugLines(*(undefined4 *)(DAT_84821000 + 0x1920),*(undefined4 *)(DAT_84821000 + 0x1924),
-                    0xffffffff8483c360);
-  RB_DrawDebugLines(*(undefined4 *)(DAT_84821000 + 0x192c),*(undefined4 *)(DAT_84821000 + 0x1930),
-                    0xffffffff84834360);
-  *(undefined4 *)(DAT_84821000 + 0x1924) = 0;
-  RB_DrawDebugStrings(*(undefined4 *)(DAT_84821000 + 0x1908),*(undefined4 *)(DAT_84821000 + 0x190c))
-  ;
-  RB_DrawDebugStrings(*(undefined4 *)(DAT_84821000 + 0x1914),*(undefined4 *)(DAT_84821000 + 0x1918))
-  ;
-  RB_EndSurfaceIfNeeded();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0

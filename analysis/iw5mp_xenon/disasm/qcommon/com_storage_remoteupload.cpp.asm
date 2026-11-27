@@ -1043,7 +1043,7 @@ LAB_824f3eec:
   824F3EF8  EBE1FFF0             ld r31,-0x10(r1)
   824F3EFC  4E800020             blr
 
-; 82940048  `LiveStorage_FileShare_ExeWriteSuccessful'::`2'::`dynamic_atexit_destructor_for_'tags''  (line unknown)
+; 82940048  `dynamic_atexit_destructor_for_'tags''  (line unknown)
   82940048  7D8802A6             mfspr r12,LR
   8294004C  9181FFF8             stw r12,-0x8(r1)
   82940050  FBC1FFE8             std r30,-0x18(r1)

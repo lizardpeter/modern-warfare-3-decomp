@@ -2,12 +2,15 @@
 
 // 82917DC0  _RtlCheckStack  (<external>/bt/278379/vctools/crt/xb/xbox/chkstk.asm:125)
 
-void _RtlCheckStack(int param_1)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void _RtlCheckStack(void)
 
 {
   longlong lVar1;
+  int in_r3;
   
-  lVar1 = (longlong)(param_1 + 0xfff >> 0xc);
+  lVar1 = (longlong)(in_r3 + 0xfff >> 0xc);
   if (0 < lVar1) {
     do {
       lVar1 = lVar1 + -1;

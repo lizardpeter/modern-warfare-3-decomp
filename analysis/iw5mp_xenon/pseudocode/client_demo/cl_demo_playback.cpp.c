@@ -2,34 +2,38 @@
 
 // 827D2788  CL_Demo_AllocatePlaybackMemory  (client_demo/cl_demo_playback.cpp:84)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
 void CL_Demo_AllocatePlaybackMemory(int param_1)
 
 {
-  void *pvVar1;
-  int iVar2;
-  char cVar3;
-  undefined4 local_30;
-  undefined4 local_2c;
-  undefined1 auStack_28 [16];
+  uint uVar1;
+  clientDemoPlayback_t *pcVar2;
+  int iVar3;
+  bool bVar4;
+  int local_30;
+  int local_2c;
+  int aiStack_28 [4];
   
-  DAT_84872900 = (void *)PMem_Alloc_NoDebug(0x5eefd0,4,4);
-  pvVar1 = memset(DAT_84872900,0,0x5eefd0);
-  UI_ExpressionState_PlayerDataModified(pvVar1);
-  pvVar1 = DAT_84872900;
-  iVar2 = *(int *)((int)DAT_84872900 + 4);
-  *(int *)((int)DAT_84872900 + 4) = iVar2 + 0x66bfd0;
+  s_clientDemoPlayback = PMem_Alloc_NoDebug(0x5eefd0,4,4);
+  memset();
+  UI_ExpressionState_PlayerDataModified();
+  pcVar2 = s_clientDemoPlayback;
+  uVar1 = s_clientDemoPlayback->maxMemoryUsed;
+  s_clientDemoPlayback->maxMemoryUsed = uVar1 + 0x66bfd0;
   if (param_1 == 0) {
-    cVar3 = CL_Demo_IsDemoDownloadMemoryAllocated();
-    if (cVar3 != '\0') {
-      *(int *)((int)DAT_84872900 + 4) = *(int *)((int)DAT_84872900 + 4) + 0xa00000;
+    bVar4 = CL_Demo_IsDemoDownloadMemoryAllocated();
+    if (bVar4) {
+      s_clientDemoPlayback->maxMemoryUsed = s_clientDemoPlayback->maxMemoryUsed + 0xa00000;
     }
   }
   else {
-    *(int *)((int)pvVar1 + 4) = iVar2 + 0x86bfd0;
-    CL_Demo_GetRenderSize(&local_2c,&local_30,auStack_28);
-    pvVar1 = DAT_84872900;
-    iVar2 = mjpeg_get_total_memory_size(local_2c,local_30);
-    *(int *)((int)pvVar1 + 4) = iVar2 + *(int *)((int)pvVar1 + 4);
+    pcVar2->maxMemoryUsed = uVar1 + 0x86bfd0;
+    CL_Demo_GetRenderSize(&local_2c,&local_30,aiStack_28);
+    pcVar2 = s_clientDemoPlayback;
+    iVar3 = mjpeg_get_total_memory_size(local_2c,local_30);
+    pcVar2->maxMemoryUsed = iVar3 + pcVar2->maxMemoryUsed;
   }
   return;
 }
@@ -37,52 +41,81 @@ void CL_Demo_AllocatePlaybackMemory(int param_1)
 
 // 827D2860  CL_Demo_AllocateRenderingMovieMemory  (client_demo/cl_demo_playback.cpp:126)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void CL_Demo_AllocateRenderingMovieMemory(void)
 
 {
-  undefined8 uVar1;
-  undefined4 local_40;
-  undefined4 local_3c;
-  undefined4 local_38 [14];
+  uint uVar1;
+  void *pvVar2;
+  int local_40;
+  int local_3c;
+  int local_38 [14];
   
   __savegprlr_28();
   CL_Demo_GetRenderSize(&local_3c,&local_40,local_38);
-  DAT_84123250 = 1;
-  uVar1 = mjpeg_get_render_struct_size();
-  uVar1 = PMem_AllocFromSource_NoDebug(uVar1,0x10,4,1);
-  mjpeg_allocate_render_memory(uVar1,local_3c,local_40,local_38[0]);
+  g_dynamicRenderTargetAlloc = 1;
+  uVar1 = mjpeg_get_render_struct_size(local_3c,local_40);
+  pvVar2 = PMem_AllocFromSource_NoDebug(uVar1,0x10,4,PMEM_SOURCE_DATABASE);
+  mjpeg_allocate_render_memory(pvVar2,local_3c,local_40,local_38[0]);
   uVar1 = mjpeg_get_avi_struct_size();
-  PMem_AllocFromSource_NoDebug(uVar1,0x10,4,1);
-  mjpeg_allocate_avi_memory();
-  DAT_84123250 = 0;
+  pvVar2 = PMem_AllocFromSource_NoDebug(uVar1,0x10,4,PMEM_SOURCE_DATABASE);
+  mjpeg_allocate_avi_memory(pvVar2);
+  g_dynamicRenderTargetAlloc = 0;
   __restgprlr_28();
   return;
 }
 
 
+// 827D2780  time  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/time.inl:128)
+
+long64 time(long64 *param_1)
+
+{
+  ulonglong uVar1;
+  _FILETIME a_Stack_20 [2];
+  
+  GetSystemTimeAsFileTime(a_Stack_20);
+  uVar1 = ((longlong)a_Stack_20[0] + 0xfe624e212ac18000U) / 10000000;
+  if (0x793406fff < uVar1) {
+    uVar1 = 0xffffffffffffffff;
+  }
+  if (param_1 != (long64 *)0x0) {
+    *param_1 = uVar1;
+  }
+  return uVar1;
+}
+
+
 // 827D28E8  CL_Demo_DeallocatePlaybackMemory  (client_demo/cl_demo_playback.cpp:156)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
 
 void CL_Demo_DeallocatePlaybackMemory(void)
 
 {
-  DAT_84872900 = 0;
+  s_clientDemoPlayback = (clientDemoPlayback_t *)0x0;
   return;
 }
 
 
 // 827D28F8  CL_Demo_DeallocateRenderingMovieMemory  (client_demo/cl_demo_playback.cpp:167)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void CL_Demo_DeallocateRenderingMovieMemory(void)
 
 {
-  char cVar1;
+  bool bVar1;
   
-  cVar1 = mjpeg_is_avi_memory_allocated();
-  if (cVar1 != '\0') {
+  bVar1 = mjpeg_is_avi_memory_allocated();
+  if (bVar1) {
     mjpeg_deallocate_avi_memory();
   }
-  cVar1 = mjpeg_is_render_memory_allocated();
-  if (cVar1 != '\0') {
+  bVar1 = mjpeg_is_render_memory_allocated();
+  if (bVar1) {
     mjpeg_deallocate_render_memory();
   }
   return;
@@ -91,75 +124,80 @@ void CL_Demo_DeallocateRenderingMovieMemory(void)
 
 // 827D2940  CL_Demo_SetPlayingFlag  (client_demo/cl_demo_playback.cpp:189)
 
-void CL_Demo_SetPlayingFlag(int param_1)
+void CL_Demo_SetPlayingFlag(ClientDemoPlayingFlag param_1)
 
 {
-  if ((-1 < param_1) && (param_1 < 3)) {
-    DAT_84872908 = param_1;
+  if ((-1 < (int)param_1) && ((int)param_1 < 3)) {
+    s_clientDemoPlayingFlag = param_1;
     return;
   }
-  MyAssertHandler(0xffffffff821dcc88,0xbe,0,0xffffffff82000f98,0xffffffff821dccd8);
-  DAT_84872908 = param_1;
+  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_playback.cpp"
+                  ,0xbe,0,"%s");
+  s_clientDemoPlayingFlag = param_1;
   return;
 }
 
 
 // 827D29C0  CL_Demo_GetPlayingFlag  (client_demo/cl_demo_playback.cpp:203)
 
-undefined4 CL_Demo_GetPlayingFlag(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+ClientDemoPlayingFlag CL_Demo_GetPlayingFlag(void)
 
 {
-  return DAT_84872908;
+  return s_clientDemoPlayingFlag;
 }
 
 
 // 827D29D0  CL_Demo_CancelRendering  (client_demo/cl_demo_playback.cpp:215)
 
-void CL_Demo_CancelRendering(undefined1 param_1)
+void CL_Demo_CancelRendering(bool param_1)
 
 {
-  DAT_8487290c = param_1;
+  s_clientDemoCancelRendering = param_1;
   return;
 }
 
 
 // 827D29E0  CL_Demo_IsRenderingCancelled  (client_demo/cl_demo_playback.cpp:227)
 
-undefined1 CL_Demo_IsRenderingCancelled(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+bool CL_Demo_IsRenderingCancelled(void)
 
 {
-  return DAT_8487290c;
+  return s_clientDemoCancelRendering;
 }
 
 
 // 827D29F0  CL_Demo_PopulateDefaultMetaInformation  (client_demo/cl_demo_playback.cpp:239)
 
 void CL_Demo_PopulateDefaultMetaInformation
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3)
+               (clientDemoMetaInfo_t *param_1,char *param_2,char *param_3)
 
 {
-  void *_Dst;
-  undefined8 uVar1;
-  __time64_t _Var2;
-  char cVar4;
-  int iVar3;
+  char *pcVar2;
+  char *pcVar3;
+  long64 lVar1;
+  bool bVar5;
+  uint uVar4;
   
-  _Dst = (void *)__savegprlr_28();
-  memset(_Dst,0,0x2b0);
-  uVar1 = UI_GetMapDisplayName(param_2);
-  I_strncpyz((int)_Dst + 0x200,uVar1,0x16);
-  *(undefined1 *)((int)_Dst + 0x22c) = 0;
-  uVar1 = UI_GetGameTypeDisplayName(param_3);
-  I_strncpyz((int)_Dst + 0x216,uVar1,0x16);
-  *(undefined1 *)((int)_Dst + 0x22d) = 0;
-  I_strncpyz(_Dst,param_3,0x100);
-  I_strncpyz((int)_Dst + 0x100,param_2,0x100);
-  _Var2 = _time64((__time64_t *)0x0);
-  *(int *)((int)_Dst + 0x230) = (int)_Var2;
-  cVar4 = LiveStorage_IsTimeSynced();
-  if (cVar4 != '\0') {
-    iVar3 = LiveStorage_GetUTCOffset();
-    *(int *)((int)_Dst + 0x230) = iVar3 + *(int *)((int)_Dst + 0x230);
+  pcVar2 = (char *)__savegprlr_28(param_1);
+  memset();
+  pcVar3 = UI_GetMapDisplayName(param_2);
+  I_strncpyz(pcVar2 + 0x200,pcVar3,0x16);
+  pcVar2[0x22c] = '\0';
+  pcVar3 = UI_GetGameTypeDisplayName(param_3);
+  I_strncpyz(pcVar2 + 0x216,pcVar3,0x16);
+  pcVar2[0x22d] = '\0';
+  I_strncpyz(pcVar2,param_3,0x100);
+  I_strncpyz(pcVar2 + 0x100,param_2,0x100);
+  lVar1 = _time64((long64 *)0x0);
+  *(int *)(pcVar2 + 0x230) = (int)lVar1;
+  bVar5 = LiveStorage_IsTimeSynced();
+  if (bVar5) {
+    uVar4 = LiveStorage_GetUTCOffset();
+    *(uint *)(pcVar2 + 0x230) = uVar4 + *(int *)(pcVar2 + 0x230);
   }
   __restgprlr_28();
   return;
@@ -168,380 +206,134 @@ void CL_Demo_PopulateDefaultMetaInformation
 
 // 827D2AA8  CL_Demo_TagPlayer  (client_demo/cl_demo_playback.cpp:262)
 
-void CL_Demo_TagPlayer(int *param_1,int param_2)
+void CL_Demo_TagPlayer(clientDemoTaggedPlayers_t *param_1,int param_2)
 
 {
   if (param_2 < 0) {
     return;
   }
-  param_1[*param_1 + 1] = param_2;
-  *param_1 = *param_1 + 1;
-  Com_Printf(0xe,0xffffffff821dcd28);
+  param_1->playerIndex[param_1->count] = param_2;
+  param_1->count = param_1->count + 1;
+  Com_Printf(0xe,
+             "DEMO Player Tag: Adding playerIndex %d to the tagged players list. Tag players count is now %d\n"
+            );
   return;
 }
 
 
 // 827D2AE8  CL_Demo_IsPlayerTagged  (client_demo/cl_demo_playback.cpp:280)
 
-undefined8 CL_Demo_IsPlayerTagged(undefined8 param_1,int *param_2,int param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+bool CL_Demo_IsPlayerTagged(LocalClientNum_t param_1,clientDemoTaggedPlayers_t *param_2,int param_3)
 
 {
-  int iVar1;
+  int *piVar1;
   int iVar2;
   
-  iVar1 = *param_2;
+  piVar1 = &param_2->count;
   iVar2 = 0;
-  if (0 < iVar1) {
+  if (0 < *piVar1) {
     do {
-      param_2 = param_2 + 1;
-      if (*param_2 == param_3) {
-        return 1;
+      param_2 = (clientDemoTaggedPlayers_t *)param_2->playerIndex;
+      if (*(int *)param_2 == param_3) {
+        return true;
       }
       iVar2 = iVar2 + 1;
-    } while (iVar2 < iVar1);
+    } while (iVar2 < *piVar1);
   }
-  return 0;
+  return false;
 }
 
 
 // 827D8A78  CL_Demo_TagPlayers  (client_demo/cl_demo_playback.cpp:300)
-
-void CL_Demo_TagPlayers(undefined8 param_1,longlong param_2)
-
-{
-  undefined4 uVar1;
-  longlong lVar2;
-  bool bVar3;
-  undefined8 uVar4;
-  int iVar5;
-  char cVar7;
-  int iVar6;
-  int *piVar8;
-  int iVar9;
-  longlong lVar10;
-  
-  uVar4 = __savegprlr_25();
-  piVar8 = (int *)param_2;
-  if (*piVar8 < 0x1d) {
-    iVar5 = CG_GetLocalClientGlobals();
-    cVar7 = CL_Demo_IsFreeCamera(uVar4);
-    if (cVar7 == '\0') {
-      cVar7 = CL_Demo_IsFollowCamera(uVar4);
-      if (cVar7 == '\0') {
-        uVar1 = *(undefined4 *)(iVar5 + 0x3334);
-      }
-      else {
-        uVar1 = *(undefined4 *)(DAT_8484f0b4 + 0xc);
-      }
-      iVar6 = CL_Demo_GetPlayerIndexForClientNum(uVar4,uVar1,*(undefined4 *)(iVar5 + 0x6b98c));
-      iVar9 = 0;
-      lVar10 = param_2;
-      if (0 < *piVar8) {
-        do {
-          if (*(int *)(lVar10 + 4) == iVar6) {
-            bVar3 = true;
-            goto LAB_827d8b34;
-          }
-          iVar9 = iVar9 + 1;
-          lVar10 = lVar10 + 4;
-        } while (iVar9 < *piVar8);
-      }
-      bVar3 = false;
-LAB_827d8b34:
-      if ((!bVar3) && (-1 < iVar6)) {
-        piVar8[*piVar8 + 1] = iVar6;
-        *piVar8 = *piVar8 + 1;
-        Com_Printf(0xe,0xffffffff821dcd28);
-      }
-    }
-    lVar10 = 0;
-    do {
-      iVar6 = CG_GetEntity(uVar4,lVar10);
-      if ((((*(uint *)(iVar6 + 0x1c4) & 1) != 0) &&
-          ((((int)lVar10 != *(int *)(iVar5 + 0x3334) ||
-            (cVar7 = CL_Demo_IsFreeCamera(uVar4), cVar7 != '\0')) &&
-           (cVar7 = CG_CanSeePlayer(uVar4,iVar6,0x2807821), cVar7 != '\0')))) &&
-         (iVar6 = CL_Demo_GetPlayerIndexForClientNum(uVar4,lVar10,*(undefined4 *)(iVar5 + 0x6b98c)),
-         -1 < iVar6)) {
-        iVar9 = 0;
-        lVar2 = param_2;
-        if (0 < *piVar8) {
-          do {
-            if (*(int *)(lVar2 + 4) == iVar6) {
-              bVar3 = true;
-              goto LAB_827d8c24;
-            }
-            iVar9 = iVar9 + 1;
-            lVar2 = lVar2 + 4;
-          } while (iVar9 < *piVar8);
-        }
-        bVar3 = false;
-LAB_827d8c24:
-        if (!bVar3) {
-          piVar8[*piVar8 + 1] = iVar6;
-          *piVar8 = *piVar8 + 1;
-          Com_Printf(0xe,0xffffffff821dcd28);
-        }
-      }
-      lVar10 = lVar10 + 1;
-    } while ((int)lVar10 < 0x12);
-  }
-  __restgprlr_25();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 827D2B28  CL_Demo_CalcNextScreenshotQuality  (client_demo/cl_demo_playback.cpp:359)
 
-void CL_Demo_CalcNextScreenshotQuality(longlong param_1,longlong param_2,int *param_3)
+void CL_Demo_CalcNextScreenshotQuality(int param_1,int param_2,int *param_3)
 
 {
-  undefined8 uVar1;
+  char *pcVar1;
   
-  if ((int)param_2 + 0x8000 <= (int)param_1) {
-    uVar1 = va(0xffffffff821dcdc4,(param_1 - param_2) + 0x8000);
-    Com_Error(1,uVar1);
+  if (param_2 + 0x8000 <= param_1) {
+    pcVar1 = va("\x15CL_Demo_HiResScreenshotInternal: capture overflow (%d)");
+    Com_Error(ERR_DROP,pcVar1);
   }
   *param_3 = *param_3 << 1;
-  uVar1 = va(0xffffffff821dcd88);
-  Com_Printf(0xe,uVar1);
+  pcVar1 = va("Out of screenshot buffer memory: trying lower quality: %d \n");
+  Com_Printf(0xe,pcVar1);
   return;
 }
 
 
 // 827D8C78  CL_Demo_HiResScreenshotInternal  (client_demo/cl_demo_playback.cpp:368)
-
-void CL_Demo_HiResScreenshotInternal
-               (undefined8 param_1,ulonglong param_2,int *param_3,longlong param_4,longlong param_5)
-
-{
-  uint uVar1;
-  undefined1 uVar2;
-  bool bVar3;
-  uint uVar4;
-  int iVar5;
-  int iVar6;
-  undefined8 uVar7;
-  int iVar8;
-  int iVar10;
-  ulonglong uVar9;
-  int iVar11;
-  ulonglong uVar12;
-  int iVar13;
-  ulonglong uVar14;
-  int iVar15;
-  ulonglong uVar16;
-  longlong lVar17;
-  ulonglong uVar18;
-  ulonglong uVar19;
-  longlong lVar20;
-  longlong lVar21;
-  double dVar22;
-  double dVar23;
-  double dVar24;
-  double dVar25;
-  int local_3dc;
-  int local_3d8;
-  undefined8 local_3b0;
-  undefined8 local_3a8;
-  undefined8 local_3a0;
-  undefined8 local_398;
-  undefined4 local_390;
-  undefined1 auStack_380 [896];
-  
-  uVar7 = __savegprlr();
-  local_3b0 = 0;
-  local_3a8 = 0;
-  local_3a0 = 0;
-  local_398 = 0;
-  local_390 = 0;
-  iVar10 = (int)param_2;
-  if (0xffff < iVar10) {
-    MyAssertHandler(0xffffffff821dcc88,0x185,0,0xffffffff82000f98,0xffffffff821ddbb0);
-  }
-  iVar8 = CG_GetLocalClientGlobals(uVar7);
-  if (DAT_84872900 == 0) {
-    MyAssertHandler(0xffffffff821dcc88,0x64c,0,0xffffffff82000f98,0xffffffff821dcdfc);
-  }
-  iVar6 = DAT_84872900;
-  local_3dc = 0;
-  *(undefined4 *)(iVar8 + 0x3348) = 1;
-  uVar2 = *(undefined1 *)(iVar6 + 0x20);
-  *(undefined1 *)(iVar6 + 0x20) = 1;
-  iVar5 = DAT_82aa2974;
-  uVar4 = DAT_82aa2970;
-  uVar18 = (ulonglong)DAT_82aa2970;
-  dVar23 = (double)(longlong)DAT_82aa2974;
-  dVar22 = (double)(longlong)(int)DAT_82aa2970;
-  dVar25 = (double)(longlong)iVar10;
-  uVar1 = (uint)((double)((float)(dVar22 / dVar23) * DAT_82aa2990) * dVar25);
-  uVar16 = (ulonglong)uVar1;
-  if (0xffff < (int)uVar1) {
-    MyAssertHandler(0xffffffff821dcc88,0x1a4,0,0xffffffff82000f98,0xffffffff821ddba0);
-  }
-  uVar14 = 0x100;
-  R_SyncRenderThread();
-  lVar20 = 2;
-  do {
-    SCR_UpdateScreen();
-    lVar20 = lVar20 + -1;
-  } while (lVar20 != 0);
-  Sys_Sleep(200);
-  dVar24 = (double)(longlong)(int)uVar1;
-  R_BeginHiResShot((double)(float)(dVar24 / dVar22),(double)(float)(dVar25 / dVar23));
-  local_3d8 = 0;
-  *param_3 = 0;
-  do {
-    if ((0x800 < (int)uVar14) || (local_3dc != 0)) break;
-    lVar20 = jpeg_encode__begin(auStack_380,param_4,uVar16,param_2,uVar14,1,&local_3b0);
-    iVar15 = (int)param_5;
-    iVar11 = (int)(lVar20 - param_4);
-    if (iVar15 < iVar11) {
-      if (iVar15 + 0x8000 <= iVar11) {
-        uVar7 = va(0xffffffff821dcdc4,((lVar20 - param_4) - param_5) + 0x8000);
-        Com_Error(1,uVar7);
-      }
-      uVar14 = (uVar14 & 0x7fffffff) << 1;
-      uVar7 = va(0xffffffff821dcd88,uVar14);
-      Com_Printf(0xe,uVar7);
-    }
-    else {
-      uVar12 = (uVar16 + uVar18) - 1;
-      trapWord(6,uVar18,0);
-      iVar11 = 0;
-      trapWord(5,uVar18 & ~(((uVar12 & 0x7fffffff) << 1 | (uVar12 & 0xffffffff) >> 0x1f) - 1),0xffff
-              );
-      bVar3 = false;
-      lVar17 = 0;
-      if (0 < iVar10) {
-        do {
-          if (bVar3) break;
-          lVar21 = 0;
-          if (0 < (int)uVar1) {
-            uVar19 = uVar16;
-            do {
-              if (bVar3) break;
-              jpeg_screenshot_set_frame_info
-                        ((double)(float)((double)(longlong)iVar11 /
-                                        (double)(longlong)
-                                                (int)(((int)uVar12 / (int)uVar4) *
-                                                     ((iVar10 >> 4) +
-                                                     (uint)(iVar10 < 0 && (param_2 & 0xf) != 0)))),
-                         uVar16,param_2,uVar18,iVar5,lVar21,lVar17);
-              iVar11 = iVar11 + 1;
-              R_UpdateHiResShot((double)(float)((double)(longlong)(int)lVar21 / dVar24),
-                                (double)(float)((double)(longlong)(int)lVar17 / dVar25));
-              SCR_UpdateScreen();
-              uVar9 = uVar19;
-              if ((int)uVar4 < (int)uVar19) {
-                uVar9 = uVar18;
-              }
-              lVar20 = jpeg_screenshot_chunk(lVar20,uVar9,auStack_380);
-              iVar13 = (int)(lVar20 - param_4);
-              if (iVar15 < iVar13) {
-                if (iVar15 + 0x8000 <= iVar13) {
-                  uVar7 = va(0xffffffff821dcdc4,((lVar20 - param_4) - param_5) + 0x8000);
-                  Com_Error(1,uVar7);
-                }
-                uVar14 = (uVar14 & 0x7fffffff) << 1;
-                uVar7 = va(0xffffffff821dcd88,uVar14);
-                Com_Printf(0xe,uVar7);
-                bVar3 = true;
-              }
-              lVar21 = lVar21 + uVar18;
-              uVar19 = uVar19 - uVar18;
-            } while ((int)lVar21 < (int)uVar1);
-          }
-          lVar17 = lVar17 + 0x10;
-        } while ((int)lVar17 < iVar10);
-      }
-      if (!bVar3) {
-        lVar20 = jpeg_encode__end(auStack_380,lVar20);
-        iVar11 = (int)(lVar20 - param_4);
-        if (iVar15 < iVar11) {
-          if (iVar15 + 0x8000 <= iVar11) {
-            uVar7 = va(0xffffffff821dcdc4,((lVar20 - param_4) - param_5) + 0x8000);
-            Com_Error(1,uVar7);
-          }
-          uVar14 = (uVar14 & 0x7fffffff) << 1;
-          uVar7 = va(0xffffffff821dcd88,uVar14);
-          Com_Printf(0xe,uVar7);
-        }
-        else {
-          *param_3 = iVar11;
-          uVar7 = va("Captured %dx%d Image Quality %d Screenshot Size %d bytes\n",uVar16,param_2,
-                     uVar14);
-          Com_Printf(0xe,uVar7);
-          local_3dc = 1;
-        }
-      }
-    }
-    local_3d8 = local_3d8 + 1;
-  } while (local_3d8 < 4);
-  R_EndHiResShot();
-  *(undefined4 *)(iVar8 + 0x3348) = 0;
-  *(undefined1 *)(iVar6 + 0x20) = uVar2;
-  __restgprlr(local_3dc);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 827D9150  CL_Demo_HiResScreenshot  (client_demo/cl_demo_playback.cpp:513)
 
-void CL_Demo_HiResScreenshot(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void CL_Demo_HiResScreenshot(LocalClientNum_t param_1)
 
 {
-  bool bVar1;
-  undefined8 uVar2;
-  int iVar5;
-  undefined8 uVar3;
-  char cVar7;
-  longlong lVar4;
-  int iVar6;
-  int *piVar8;
-  undefined1 auStack_40 [64];
+  LocalClientNum_t LVar1;
+  clientDemoPlayback_t *pcVar2;
+  int iVar3;
+  bool bVar5;
+  clientConnection_t *pcVar4;
+  int *piVar6;
+  int aiStack_40 [16];
   
-  uVar2 = __savegprlr_27();
-  if (DAT_84872900 != 0) {
-    iVar5 = CL_Demo_GetPlaybackData();
-    bVar1 = true;
-    if (*(int *)(iVar5 + 0x31e1ec) == 1) goto LAB_827d9190;
+  LVar1 = __savegprlr_27(param_1);
+  if (s_clientDemoPlayback != (clientDemoPlayback_t *)0x0) {
+    pcVar2 = CL_Demo_GetPlaybackData();
+    bVar5 = true;
+    if (pcVar2->clipState == 1) goto LAB_827d9190;
   }
-  bVar1 = false;
+  bVar5 = false;
 LAB_827d9190:
-  if (bVar1) {
-    Com_Printf(0xe,0xffffffff821ddcc0);
+  if (bVar5) {
+    Com_Printf(0xe,
+               "We wont process the screenshot command since we are currently recording a clip.\n");
     __restgprlr_27();
     return;
   }
-  uVar3 = CL_ControllerIndexFromClientNum(uVar2);
-  cVar7 = Live_CanUserAccessOnlineVault(uVar3,auStack_40);
-  if (cVar7 == '\0') {
-    Com_Printf(0xe,0xffffffff821ddc70);
+  iVar3 = CL_ControllerIndexFromClientNum(LVar1);
+  bVar5 = Live_CanUserAccessOnlineVault(iVar3,aiStack_40);
+  if (!bVar5) {
+    Com_Printf(0xe,"We wont process the screenshot command since online vault is not active.\n");
     __restgprlr_27();
     return;
   }
-  lVar4 = CL_GetLocalClientConnection(uVar2);
-  iVar5 = CL_Demo_GetPlaybackData();
-  CL_Demo_PopulateDefaultMetaInformation(iVar5 + 0x31df3c,lVar4 + 0x43384,lVar4 + 0x43284);
-  CL_Demo_TagPlayers(uVar2,iVar5 + 0x31e170);
-  piVar8 = (int *)(iVar5 + 0x30df38);
-  iVar6 = CL_Demo_HiResScreenshotInternal(uVar2,0xf0,piVar8,iVar5 + 0x30df3c,0x8000,0);
-  if ((iVar6 != 0) ||
-     (iVar6 = CL_Demo_HiResScreenshotInternal(uVar2,0xb4,piVar8,iVar5 + 0x30df3c,0x8000,0),
-     iVar6 != 0)) {
-    iVar6 = CL_Demo_HiResScreenshotInternal
-                      (uVar2,0x5a0,(int *)(iVar5 + 0x205f34),iVar5 + 0x205f38,0x100000,1);
-    if (iVar6 != 0) {
-      if ((0x7fff < *piVar8) || (0xfffff < *(int *)(iVar5 + 0x205f34))) {
-        MyAssertHandler(0xffffffff821dcc88,0x22b,0,0xffffffff82000f98,0xffffffff821ddbc8);
+  pcVar4 = CL_GetLocalClientConnection(LVar1);
+  pcVar2 = CL_Demo_GetPlaybackData();
+  CL_Demo_PopulateDefaultMetaInformation
+            (&pcVar2->screenshotInfo,(pcVar4->clientDemo).footer.info.mapName,
+             (pcVar4->clientDemo).footer.info.gameType);
+  CL_Demo_TagPlayers(LVar1,&(pcVar2->screenshotInfo).taggedPlayers);
+  piVar6 = &pcVar2->thumbnailImageSize;
+  iVar3 = CL_Demo_HiResScreenshotInternal(LVar1,0xf0,piVar6,pcVar2->thumbnailImageBuf,0x8000,0);
+  if ((iVar3 != 0) ||
+     (iVar3 = CL_Demo_HiResScreenshotInternal(LVar1,0xb4,piVar6,pcVar2->thumbnailImageBuf,0x8000,0),
+     iVar3 != 0)) {
+    iVar3 = CL_Demo_HiResScreenshotInternal
+                      (LVar1,0x5a0,&pcVar2->screenshotSize,pcVar2->screenshotBuf,0x100000,1);
+    if (iVar3 != 0) {
+      if ((0x7fff < *piVar6) || (0xfffff < pcVar2->screenshotSize)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_playback.cpp"
+                        ,0x22b,0,"%s");
       }
-      CL_Demo_OpenSavePopUp(uVar2,0);
+      CL_Demo_OpenSavePopUp(LVar1,0);
       __restgprlr_27();
       return;
     }
   }
-  CL_Demo_Error(uVar2,0xffffffff8208bd88,0xffffffff821ddc4c);
+  CL_Demo_Error(LVar1,"MENU_ERROR","MENU_DEMO_SCREENSHOT_CAPTURE_FAILED");
   __restgprlr_27();
   return;
 }
@@ -549,258 +341,63 @@ LAB_827d9190:
 
 // 827D2BA8  CL_Demo_ReadHeader  (client_demo/cl_demo_playback.cpp:569)
 
-void CL_Demo_ReadHeader(undefined8 param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void CL_Demo_ReadHeader(LocalClientNum_t param_1)
 
 {
-  int iVar1;
+  clientConnection_t *pcVar1;
   
-  iVar1 = CL_GetLocalClientConnection();
-  (**(code **)(iVar1 + 0x5422c))(iVar1 + 0x40258,0x3020,param_1);
+  pcVar1 = CL_GetLocalClientConnection(param_1);
+  (*(pcVar1->clientDemo).demoRead)(&(pcVar1->clientDemo).header,0x3020,param_1);
   return;
 }
 
 
 // 827D9330  CL_Demo_SetupPlaybackForClient  (client_demo/cl_demo_playback.cpp:585)
-
-void CL_Demo_SetupPlaybackForClient(void)
-
-{
-  uint uVar1;
-  int iVar2;
-  bool bVar3;
-  undefined8 uVar4;
-  int iVar5;
-  int iVar6;
-  int iVar7;
-  undefined4 *puVar8;
-  int *piVar9;
-  char *pcVar10;
-  char cVar11;
-  
-  uVar4 = __savegprlr_28();
-  if (DAT_84872900 == 0) goto LAB_827d9524;
-  iVar5 = CL_GetLocalClientGlobals();
-  iVar6 = CL_Demo_GetPlaybackData();
-  iVar7 = CG_GetLocalClientGlobals(uVar4);
-  uVar1 = *(uint *)(iVar5 + 0x3f0);
-  if (((uVar1 & 0xff) != 0) && ((uint)*(byte *)(iVar7 + 0x76ecf) != (uVar1 & 0xff))) {
-    *(uint *)(iVar7 + 0x76ecc) = uVar1;
-    *(undefined4 *)(iVar7 + 0x76ed4) = *(undefined4 *)(iVar7 + 0x6b98c);
-    CG_MenuShowNotify(uVar4,1);
-  }
-  if (DAT_84872900 == 0) {
-LAB_827d93e0:
-    bVar3 = false;
-  }
-  else {
-    iVar7 = CL_Demo_GetPlaybackData();
-    bVar3 = true;
-    if (*(int *)(iVar7 + 0x31e1ec) != 1) goto LAB_827d93e0;
-  }
-  if (bVar3) {
-    CL_Demo_TagPlayers(uVar4,*(int *)(iVar6 + 0x5bef4c) * 0x100a8 + iVar6 + 0x52e8e4);
-  }
-  cVar11 = '\0';
-  if (DAT_84872900 != 0) {
-    puVar8 = (undefined4 *)CL_Demo_GetPlaybackData();
-    iVar7 = CL_GetLocalClientConnection(*puVar8);
-    cVar11 = *(char *)(iVar7 + 0x40260);
-  }
-  if (((cVar11 != '\0') && (iVar7 = *(int *)(iVar5 + 0x3388), iVar7 != 0)) &&
-     (*(int *)(iVar5 + 0x3380) != 0)) {
-    piVar9 = (int *)(iVar6 + 0x51e4c8);
-    pcVar10 = (char *)(iVar6 + 0x51e859);
-    iVar2 = *piVar9;
-    if (iVar2 == 0) {
-      *piVar9 = iVar7;
-      piVar9 = (int *)(iVar6 + 0x51e4c4);
-      *(int *)(iVar5 + 0x3388) = *piVar9;
-      if (*pcVar10 == '\0') {
-        *piVar9 = *piVar9 + 0x32;
-      }
-    }
-    else {
-      if (*pcVar10 == '\0') {
-        if ((iVar7 < iVar2) || (200 < iVar7 - iVar2)) {
-          iVar7 = *(int *)(iVar6 + 0x51e4c4) + 0x32;
-        }
-        else {
-          iVar7 = (iVar7 - iVar2) + *(int *)(iVar6 + 0x51e4c4);
-        }
-        *(int *)(iVar6 + 0x51e4c4) = iVar7;
-      }
-      *piVar9 = *(int *)(iVar5 + 0x3388);
-      *(undefined4 *)(iVar5 + 0x3388) = *(undefined4 *)(iVar6 + 0x51e4c4);
-    }
-    if ((*pcVar10 != '\0') && (0 < *(int *)(iVar5 + 0x3390))) {
-      *pcVar10 = '\0';
-    }
-  }
-LAB_827d9524:
-  __restgprlr_28();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
 
 // 827DC930  CL_Demo_ReadRawMessage  (client_demo/cl_demo_playback.cpp:651)
-
-void CL_Demo_ReadRawMessage(undefined8 param_1,ulonglong param_2)
-
-{
-  bool bVar1;
-  undefined8 uVar2;
-  undefined8 uVar3;
-  int iVar4;
-  int iVar5;
-  char cVar6;
-  undefined4 *puVar7;
-  int local_80;
-  undefined4 local_7c;
-  undefined4 local_78 [2];
-  undefined1 auStack_70 [16];
-  undefined1 auStack_60 [8];
-  undefined4 local_58;
-  int local_50;
-  int local_4c;
-  undefined4 local_44;
-  
-  uVar2 = __savegprlr_27();
-  LargeLocal__LargeLocal(auStack_70,0x10000);
-  uVar3 = LargeLocal__GetBuf(auStack_70);
-  iVar4 = CL_GetLocalClientConnection(uVar2);
-  puVar7 = (undefined4 *)(iVar4 + 0x5422c);
-  (*(code *)*puVar7)(&local_7c,4,uVar2);
-  *(undefined4 *)(iVar4 + 0x20138) = local_7c;
-  if ((param_2 & 0xff) != 0) {
-    (*(code *)*puVar7)(local_78,4,uVar2);
-    *(undefined4 *)(iVar4 + 0x20140) = local_78[0];
-  }
-  memset((void *)uVar3,0,0x10000);
-  MSG_Init(auStack_60,uVar3,0x10000);
-  (*(code *)*puVar7)(&local_80,4,uVar2);
-  if (local_80 < 0) {
-    MyAssertHandler(0xffffffff821dcc88,0x2a5,0,0xffffffff82000f98,0xffffffff821de57c);
-  }
-  local_44 = 0;
-  local_4c = local_80;
-  if (local_50 < local_80) {
-    Com_Error(1,0xffffffff821de548);
-  }
-  (*(code *)*puVar7)(local_58,local_4c,uVar2);
-  *(undefined4 *)(iVar4 + 0xc) = DAT_82aa1c24;
-  iVar5 = MSG_ReadLong(auStack_60);
-  *(int *)(iVar4 + 0x134) = iVar5;
-  if (iVar5 < *(int *)(iVar4 + 0x130) + -0x80) {
-    *(int *)(iVar4 + 0x134) = *(int *)(iVar4 + 0x130);
-    LargeLocal___LargeLocal(auStack_70);
-    __restgprlr_27();
-    return;
-  }
-  CL_ParseServerMessage(uVar2,auStack_60);
-  CL_Demo_SetupPlaybackForClient(uVar2);
-  if (DAT_84872900 != 0) {
-    iVar4 = CL_Demo_GetPlaybackData();
-    bVar1 = true;
-    if (*(int *)(iVar4 + 0x31e1ec) == 1) goto LAB_827dcafc;
-  }
-  bVar1 = false;
-LAB_827dcafc:
-  if (bVar1) {
-    CL_Demo_WriteClipCommands(0xffffffff827d5808,uVar2,0,1);
-    CL_Demo_WriteRawMessage(0xffffffff827d5808,uVar2,local_7c,local_58,local_4c);
-  }
-  cVar6 = CL_Demo_ShouldGenerateKeyFrame(uVar2);
-  if ((cVar6 != '\0') && (cVar6 = CL_Demo_IsClipPlaying(), cVar6 == '\0')) {
-    CL_Demo_GenerateKeyFrame(uVar2,local_58,local_4c);
-  }
-  LargeLocal___LargeLocal(auStack_70);
-  __restgprlr_27();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 827D9530  CL_Demo_ReadClientArchive  (client_demo/cl_demo_playback.cpp:721)
-
-void CL_Demo_ReadClientArchive(void)
-
-{
-  undefined8 uVar1;
-  int iVar2;
-  int iVar3;
-  ulonglong uVar4;
-  undefined4 *puVar5;
-  uint local_30 [12];
-  
-  uVar1 = __savegprlr_28();
-  iVar2 = CL_GetLocalClientConnection();
-  iVar3 = CL_GetLocalClientGlobals(uVar1);
-  puVar5 = (undefined4 *)(iVar2 + 0x5422c);
-  (*(code *)*puVar5)(local_30,4,uVar1);
-  iVar2 = local_30[0] * 0x88 + iVar3;
-  (*(code *)*puVar5)(iVar2 + 0x4c00,0xc,uVar1);
-  (*(code *)*puVar5)(iVar2 + 0x4c0c,0xc,uVar1);
-  (*(code *)*puVar5)(iVar2 + 0x4c1c,4,uVar1);
-  (*(code *)*puVar5)(iVar2 + 0x4c18,4,uVar1);
-  (*(code *)*puVar5)(iVar2 + 0x4bfc,4,uVar1);
-  (*(code *)*puVar5)(iVar2 + 0x4c20,0xc,uVar1);
-  (*(code *)*puVar5)(iVar2 + 0x4c2c,4,uVar1);
-  if (*(int *)(iVar2 + 0x4c2c) == 0) {
-    *(undefined4 *)(iVar2 + 0x4c30) = 0;
-    *(undefined4 *)(iVar2 + 0x4c34) = 0;
-    *(undefined4 *)(iVar2 + 0x4c38) = 0;
-  }
-  else {
-    (*(code *)*puVar5)(iVar2 + 0x4c30,8,uVar1);
-    (*(code *)*puVar5)(iVar2 + 0x4c38,4,uVar1);
-  }
-  (*(code *)*puVar5)(iVar2 + 0x4c3c,0x48,uVar1);
-  if (DAT_84872900 != 0) {
-    iVar2 = CL_Demo_GetPlaybackData();
-    if (*(int *)(iVar2 + 0x31e1ec) == 1) {
-      CL_Demo_WriteAllClientArchives(0xffffffff827d5808,uVar1);
-    }
-  }
-  uVar4 = (ulonglong)local_30[0] + 1;
-  uVar4 = uVar4 + ((longlong)((int)uVar4 >> 8) + (ulonglong)((int)uVar4 < 0 && (uVar4 & 0xff) != 0)
-                  & 0xffffff) * -0x100;
-  *(int *)(iVar3 + 0xd3fc) = (int)uVar4;
-  if (0xff < (uVar4 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821dcc88,0x2fc,0,0xffffffff82035258,uVar4,0x100);
-  }
-  __restgprlr_28();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
 
 // 827D9728  CL_Demo_RunFirstFrameEvents  (client_demo/cl_demo_playback.cpp:775)
 
-void CL_Demo_RunFirstFrameEvents(undefined8 param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void CL_Demo_RunFirstFrameEvents(LocalClientNum_t param_1)
 
 {
   int iVar1;
-  int iVar2;
-  undefined4 local_30;
-  undefined4 local_2c;
-  undefined4 local_28 [4];
+  connstate_t cVar2;
+  clientDemoPlayback_t *pcVar3;
+  int local_30;
+  int local_2c;
+  int local_28 [4];
   
-  if (DAT_84872900 == 0) {
-    MyAssertHandler(0xffffffff821dcc88,0x30a,0,0xffffffff82000f98,0xffffffff821dc0d8);
+  if (s_clientDemoPlayback == (clientDemoPlayback_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_playback.cpp"
+                    ,0x30a,0,"%s");
   }
   iVar1 = CL_IsCgameInitialized(param_1);
-  if (iVar1 != 0) {
-    iVar1 = CL_GetLocalClientConnectionState(param_1);
-    if (iVar1 == 10) {
-      iVar1 = CL_Demo_GetPlaybackData();
-      iVar2 = CL_Demo_IsRenderingMovie(param_1);
-      if (iVar2 != 0) {
-        CL_Demo_PopulateRenderedMovieInformationForUpload(param_1);
-        DCache_WriteToCache(1,0,2,0);
-        CL_Demo_GetRenderSize(local_28,&local_2c,&local_30);
-        mjpeg_init();
-        mjpeg_create(0xffffffff821ddd14,local_28[0],local_2c,local_30);
-      }
-      *(undefined1 *)(iVar1 + 0xb) = 1;
+  if ((iVar1 != 0) && (cVar2 = CL_GetLocalClientConnectionState(param_1), cVar2 == CA_ACTIVE)) {
+    pcVar3 = CL_Demo_GetPlaybackData();
+    iVar1 = CL_Demo_IsRenderingMovie(param_1);
+    if (iVar1 != 0) {
+      CL_Demo_PopulateRenderedMovieInformationForUpload(param_1);
+      DCache_WriteToCache(1,0,DCACHE_LOCATION_AVI_RENDER,(char *)0x0);
+      CL_Demo_GetRenderSize(local_28,&local_2c,&local_30);
+      mjpeg_init();
+      mjpeg_create("iw5_movie.avi",local_28[0],local_2c,local_30);
     }
+    pcVar3->firstFrameEventsProcessed = true;
   }
   return;
 }
@@ -808,284 +405,306 @@ void CL_Demo_RunFirstFrameEvents(undefined8 param_1)
 
 // 827DCB80  CL_Demo_ReadDemoMessage  (client_demo/cl_demo_playback.cpp:825)
 
-void CL_Demo_ReadDemoMessage(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+int CL_Demo_ReadDemoMessage(LocalClientNum_t param_1)
 
 {
-  bool bVar1;
-  undefined8 uVar2;
-  int iVar3;
-  int iVar4;
+  LocalClientNum_t LVar1;
+  clientDemoPlayback_t *pcVar2;
+  clientConnection_t *pcVar3;
+  clientDemoPlayback_t *pcVar4;
   int iVar5;
-  char cVar6;
-  ulonglong uVar7;
+  bool bVar7;
+  char *pcVar6;
   ulonglong uVar8;
-  int *piVar9;
+  char cVar10;
+  ulonglong uVar9;
+  int *piVar11;
+  _func___cdecl_int_void_ptr_int_int **pp_Var12;
   byte local_60 [96];
   
-  uVar2 = __savegprlr_23();
-  cVar6 = '\0';
-  if (DAT_84872900 != 0) {
-    iVar3 = CL_Demo_GetPlaybackData();
-    cVar6 = *(char *)(iVar3 + 8);
+  LVar1 = __savegprlr_23(param_1);
+  cVar10 = '\0';
+  if (s_clientDemoPlayback != (clientDemoPlayback_t *)0x0) {
+    pcVar2 = CL_Demo_GetPlaybackData();
+    cVar10 = pcVar2->completed;
   }
-  if (cVar6 != '\0') {
-    MyAssertHandler(0xffffffff821dcc88,0x344,0,0xffffffff82000f98,0xffffffff821de600);
+  if (cVar10 != '\0') {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_playback.cpp"
+                    ,0x344,0,"%s");
   }
-  iVar3 = CL_GetLocalClientConnection(uVar2);
-  if (DAT_84872900 != 0) {
-    iVar4 = CL_Demo_GetPlaybackData();
-    if (*(char *)(iVar4 + 0xb) == '\0') {
-      CL_Demo_RunFirstFrameEvents(uVar2);
+  pcVar3 = CL_GetLocalClientConnection(LVar1);
+  if (s_clientDemoPlayback != (clientDemoPlayback_t *)0x0) {
+    pcVar2 = CL_Demo_GetPlaybackData();
+    if (pcVar2->firstFrameEventsProcessed == false) {
+      CL_Demo_RunFirstFrameEvents(LVar1);
     }
-    if (DAT_84872900 == 0) {
+    if (s_clientDemoPlayback == (clientDemoPlayback_t *)0x0) {
 LAB_827dcc3c:
-      bVar1 = false;
+      bVar7 = false;
     }
     else {
-      iVar5 = CL_Demo_GetPlaybackData();
-      bVar1 = true;
-      if (*(int *)(iVar5 + 0x31e1ec) != 1) goto LAB_827dcc3c;
+      pcVar4 = CL_Demo_GetPlaybackData();
+      bVar7 = true;
+      if (pcVar4->clipState != 1) goto LAB_827dcc3c;
     }
-    if ((bVar1) && (0x1effff < *(int *)(iVar4 + 0x51e1f8))) {
-      Cbuf_AddCall(uVar2,0xffffffff827dba70);
-      __restgprlr_23(0);
-      return;
+    if ((bVar7) && (0x1effff < pcVar2->clipRecordBufIndex)) {
+      Cbuf_AddCall(LVar1,CL_Demo_PauseClipRecord);
+      iVar5 = __restgprlr_23(0);
+      return iVar5;
     }
-    cVar6 = CL_Demo_IsClipPlaying();
-    if ((cVar6 != '\0') && (cVar6 = CL_Demo_ShouldGenerateKeyFrame(uVar2), cVar6 != '\0')) {
-      CL_Demo_GenerateKeyFrame(uVar2,0,0);
+    bVar7 = CL_Demo_IsClipPlaying();
+    if ((bVar7) && (bVar7 = CL_Demo_ShouldGenerateKeyFrame(LVar1), bVar7)) {
+      CL_Demo_GenerateKeyFrame(LVar1,(void *)0x0,0);
     }
-    if ((DAT_84872900 != 0) && (iVar5 = CL_Demo_GetPlaybackData(), *(int *)(iVar5 + 0x31e1ec) == 3))
-    {
-      if (*(char *)(iVar4 + 0x5bef58) != '\0') {
-        CL_Demo_RestoreUIStateAfterPreview(uVar2);
-        *(code **)(iVar3 + 0x5422c) = CL_Demo_Read;
-        *(char *)(iVar4 + 0x5bef58) = '\0';
-        __restgprlr_23(0);
-        return;
+    if ((s_clientDemoPlayback != (clientDemoPlayback_t *)0x0) &&
+       (pcVar4 = CL_Demo_GetPlaybackData(), pcVar4->clipState == 3)) {
+      if (pcVar2->cancelPreview != false) {
+        CL_Demo_RestoreUIStateAfterPreview(LVar1);
+        (pcVar3->clientDemo).demoRead = CL_Demo_Read;
+        pcVar2->cancelPreview = false;
+        iVar5 = __restgprlr_23(0);
+        return iVar5;
       }
-      if (*(char *)(iVar4 + 0x5bef48) == '\0') {
-        piVar9 = (int *)(iVar4 + 0x5bef50);
-        if (*(char *)(iVar4 + 0x5bef59) == '\0') {
-          if (*piVar9 == -1) {
-            MyAssertHandler(0xffffffff821dcc88,0x385,0,0xffffffff82000f98,0xffffffff821de5a8);
+      if (pcVar2->pendingSegmentSave == false) {
+        piVar11 = &pcVar2->clipPreviewSegmentNumber;
+        if (pcVar2->previewAllSegments == false) {
+          if (*piVar11 == -1) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_playback.cpp"
+                            ,0x385,0,"%s");
           }
-          iVar5 = *piVar9 * 0x100a8 + iVar4;
-          if (*(int *)(iVar4 + 0x5bef54) == *(int *)(iVar5 + 0x51e8d4) + *(int *)(iVar5 + 0x51e8d0))
-          {
-            CL_Demo_RestoreUIStateAfterPreview(uVar2);
-            *(code **)(iVar3 + 0x5422c) = CL_Demo_Read;
-            __restgprlr_23(0);
-            return;
+          if (pcVar2->clipPreviewBufferIndex ==
+              pcVar2->segments[*piVar11].size + pcVar2->segments[*piVar11].clipBufferIndex) {
+            CL_Demo_RestoreUIStateAfterPreview(LVar1);
+            (pcVar3->clientDemo).demoRead = CL_Demo_Read;
+            iVar5 = __restgprlr_23(0);
+            return iVar5;
           }
         }
         else {
-          iVar5 = *piVar9 * 0x100a8 + iVar4;
-          if (*(int *)(iVar4 + 0x5bef54) == *(int *)(iVar5 + 0x51e8d4) + *(int *)(iVar5 + 0x51e8d0))
-          {
-            iVar5 = *piVar9 + 1;
-            *piVar9 = iVar5;
-            if (iVar5 == *(int *)(iVar4 + 0x5bef4c)) goto LAB_827dcd40;
-            CL_Demo_ActivateTransitionScreen(*(undefined4 *)(iVar5 * 0x100a8 + iVar4 + 0x50e830));
-            CL_Demo_PreviewSegment(uVar2,*piVar9);
+          iVar5 = *piVar11;
+          if (pcVar2->clipPreviewBufferIndex ==
+              pcVar2->segments[iVar5].size + pcVar2->segments[iVar5].clipBufferIndex) {
+            *piVar11 = iVar5 + 1;
+            if (iVar5 + 1 == pcVar2->segmentCount) goto LAB_827dcd40;
+            CL_Demo_ActivateTransitionScreen(pcVar2->segments[iVar5].transition);
+            CL_Demo_PreviewSegment(LVar1,*piVar11);
           }
         }
       }
-      else if (*(int *)(iVar4 + 0x51e1f8) == *(int *)(iVar4 + 0x5bef54)) {
+      else if (pcVar2->clipRecordBufIndex == pcVar2->clipPreviewBufferIndex) {
 LAB_827dcd40:
-        CL_Demo_RestoreUIStateAfterPreview(uVar2);
-        *(code **)(iVar3 + 0x5422c) = CL_Demo_Read;
-        __restgprlr_23(0);
-        return;
+        CL_Demo_RestoreUIStateAfterPreview(LVar1);
+        (pcVar3->clientDemo).demoRead = CL_Demo_Read;
+        iVar5 = __restgprlr_23(0);
+        return iVar5;
       }
     }
   }
-  (**(code **)(iVar3 + 0x5422c))(local_60,1,uVar2);
-  uVar7 = (ulonglong)local_60[0];
-  if (uVar7 != 0) {
-    uVar8 = uVar7 - 1;
-    if (3 < (uVar8 & 0xffffffff)) {
-      if (DAT_84013128 == 0) {
-        uVar2 = va(0xffffffff821de588);
-        MyAssertHandler(0xffffffff821dcc88,0x3b2,0,uVar2);
+  pp_Var12 = &(pcVar3->clientDemo).demoRead;
+  (**pp_Var12)(local_60,1,LVar1);
+  uVar8 = (ulonglong)local_60[0];
+  if (uVar8 != 0) {
+    uVar9 = uVar8 - 1;
+    if (3 < (uVar9 & 0xffffffff)) {
+      if (alwaysfails == 0) {
+        pcVar6 = va("Invalid command %i in demo file");
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_playback.cpp"
+                        ,0x3b2,0,pcVar6);
       }
-      __restgprlr_23(1);
-      return;
+      iVar5 = __restgprlr_23(1);
+      return iVar5;
     }
-    if ((int)uVar8 == 0) {
-      CL_Demo_ReadClientArchive(uVar2);
-      __restgprlr_23(1);
-      return;
+    if ((int)uVar9 == 0) {
+      CL_Demo_ReadClientArchive(LVar1);
+      iVar5 = __restgprlr_23(1);
+      return iVar5;
     }
-    if (uVar7 == 2) {
-      CL_Demo_ReadRawMessage(uVar2,0);
-      __restgprlr_23(1);
-      return;
+    if (uVar8 == 2) {
+      CL_Demo_ReadRawMessage(LVar1,false);
+      iVar5 = __restgprlr_23(1);
+      return iVar5;
     }
-    if (uVar8 != 2) {
-      CL_Demo_ReadClipCommands(uVar2,1);
-      __restgprlr_23();
-      return;
+    if (uVar9 != 2) {
+      iVar5 = CL_Demo_ReadClipCommands(LVar1,true);
+      iVar5 = __restgprlr_23(iVar5);
+      return iVar5;
     }
-    CL_Demo_ReadRawMessage(uVar2,1);
-    __restgprlr_23(1);
-    return;
+    CL_Demo_ReadRawMessage(LVar1,true);
+    iVar5 = __restgprlr_23(1);
+    return iVar5;
   }
-  if (*(code **)(iVar3 + 0x5422c) != CL_Demo_Read) {
-    MyAssertHandler(0xffffffff821dcc88,0x394,0,0xffffffff82000f98,0xffffffff821de5d4);
+  if (*pp_Var12 != CL_Demo_Read) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_playback.cpp"
+                    ,0x394,0,"%s");
   }
-  if (DAT_84872900 != 0) {
-    iVar3 = CL_Demo_GetPlaybackData();
-    bVar1 = true;
-    if (*(int *)(iVar3 + 0x31e1ec) == 1) goto LAB_827dce84;
+  if (s_clientDemoPlayback != (clientDemoPlayback_t *)0x0) {
+    pcVar2 = CL_Demo_GetPlaybackData();
+    bVar7 = true;
+    if (pcVar2->clipState == 1) goto LAB_827dce84;
   }
-  bVar1 = false;
+  bVar7 = false;
 LAB_827dce84:
-  if (bVar1) {
-    Cbuf_AddCall(uVar2,0xffffffff827dba70);
+  if (bVar7) {
+    Cbuf_AddCall(LVar1,CL_Demo_PauseClipRecord);
   }
-  iVar3 = CL_Demo_IsRenderingMovie(uVar2);
-  if (iVar3 != 0) {
-    Cbuf_AddText(uVar2,0xffffffff82030b34);
+  iVar5 = CL_Demo_IsRenderingMovie(LVar1);
+  if (iVar5 != 0) {
+    Cbuf_AddText(LVar1,"disconnect");
   }
-  if (DAT_84872900 != 0) {
-    iVar3 = CL_Demo_GetPlaybackData();
-    *(undefined1 *)(iVar3 + 8) = 1;
+  if (s_clientDemoPlayback != (clientDemoPlayback_t *)0x0) {
+    pcVar2 = CL_Demo_GetPlaybackData();
+    pcVar2->completed = true;
   }
-  CL_Demo_SetTimeScale(0x3ff0000000000000);
-  __restgprlr_23(0);
-  return;
+  CL_Demo_SetTimeScale(1.0);
+  iVar5 = __restgprlr_23(0);
+  return iVar5;
 }
 
 
 // 827D2C00  CL_Demo_ReadFooterInternalUI  (client_demo/cl_demo_playback.cpp:965)
 
-void CL_Demo_ReadFooterInternalUI(undefined8 param_1,longlong param_2,int param_3)
+int CL_Demo_ReadFooterInternalUI(void *param_1,clientDemoFooter_t *param_2,int param_3)
 
 {
-  uint uVar1;
-  undefined8 uVar2;
-  int *piVar3;
+  void *pvVar1;
+  int iVar2;
   
-  uVar2 = __savegprlr_29();
-  CL_Demo_ReadInternal();
-  piVar3 = (int *)param_2;
-  if (*piVar3 != param_3) {
-    __restgprlr_29(0);
-    return;
+  pvVar1 = (void *)__savegprlr_29(param_1);
+  CL_Demo_ReadInternal(pvVar1,param_2,0x254);
+  if ((param_2->info).version != param_3) {
+    iVar2 = __restgprlr_29(0);
+    return iVar2;
   }
-  CL_Demo_ReadInternal(uVar2,param_2 + 0x618,4);
-  uVar1 = piVar3[0x186];
-  if (uVar1 != 0) {
-    CL_Demo_ReadInternal
-              (uVar2,param_2 + 600,
-               ((ulonglong)uVar1 + ((ulonglong)uVar1 & 0x7fffffff) * 2 & 0x1fffffff) << 3);
+  CL_Demo_ReadInternal(pvVar1,&param_2->numConnectedPlayers,4);
+  if (param_2->numConnectedPlayers != 0) {
+    CL_Demo_ReadInternal(pvVar1,param_2->connectedPlayers,param_2->numConnectedPlayers * 0x18);
   }
-  CL_Demo_ReadInternal(uVar2,param_2 + 0xf80,4);
-  if (piVar3[0x3e0] != 0) {
-    CL_Demo_ReadInternal(uVar2,param_2 + 0x620,piVar3[0x3e0] << 3);
+  CL_Demo_ReadInternal(pvVar1,&param_2->numBookmarks,4);
+  if (param_2->numBookmarks != 0) {
+    CL_Demo_ReadInternal(pvVar1,param_2->bookmarks,param_2->numBookmarks << 3);
   }
-  __restgprlr_29(1);
-  return;
+  iVar2 = __restgprlr_29(1);
+  return iVar2;
 }
 
 
 // 827D2CA8  CL_Demo_ReadFooterInternalInGame  (client_demo/cl_demo_playback.cpp:991)
 
-void CL_Demo_ReadFooterInternalInGame(undefined8 param_1,longlong param_2,int param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+int CL_Demo_ReadFooterInternalInGame
+              (LocalClientNum_t param_1,clientConnection_t *param_2,int param_3)
 
 {
   uint uVar1;
-  int iVar2;
-  undefined8 uVar3;
-  undefined4 *puVar4;
+  undefined8 uVar2;
+  int iVar3;
+  longlong lVar4;
+  undefined4 *puVar5;
   
-  uVar3 = __savegprlr_27();
-  puVar4 = (undefined4 *)((int)param_2 + 0x5422c);
-  (*(code *)*puVar4)(param_2 + 0x43278,0x254,uVar3);
-  if (*(int *)(param_2 + 0x43278) != param_3) {
-    __restgprlr_27(0);
-    return;
+  lVar4 = (longlong)(int)param_2;
+  uVar2 = __savegprlr_27(param_1);
+  puVar5 = (undefined4 *)((int)lVar4 + 0x5422c);
+  (*(code *)*puVar5)(lVar4 + 0x43278,0x254,uVar2);
+  if (*(int *)(lVar4 + 0x43278) != param_3) {
+    iVar3 = __restgprlr_27(0);
+    return iVar3;
   }
-  (*(code *)*puVar4)(param_2 + 0x43890,4,uVar3);
-  uVar1 = *(uint *)(param_2 + 0x43890);
+  (*(code *)*puVar5)(lVar4 + 0x43890,4,uVar2);
+  uVar1 = *(uint *)(lVar4 + 0x43890);
   if (uVar1 != 0) {
-    (*(code *)*puVar4)(param_2 + 0x434d0,
+    (*(code *)*puVar5)(lVar4 + 0x434d0,
                        ((ulonglong)uVar1 + ((ulonglong)uVar1 & 0x7fffffff) * 2 & 0x1fffffff) << 3,
-                       uVar3);
+                       uVar2);
   }
-  (*(code *)*puVar4)(param_2 + 0x441f8,4,uVar3);
-  iVar2 = *(int *)(param_2 + 0x441f8);
-  if (iVar2 != 0) {
-    (*(code *)*puVar4)(param_2 + 0x43898,iVar2 << 3,uVar3);
+  (*(code *)*puVar5)(lVar4 + 0x441f8,4,uVar2);
+  iVar3 = *(int *)(lVar4 + 0x441f8);
+  if (iVar3 != 0) {
+    (*(code *)*puVar5)(lVar4 + 0x43898,iVar3 << 3,uVar2);
   }
-  __restgprlr_27(1);
-  return;
+  iVar3 = __restgprlr_27(1);
+  return iVar3;
 }
 
 
 // 827D9818  CL_Demo_ReadFooter  (client_demo/cl_demo_playback.cpp:1016)
 
-void CL_Demo_ReadFooter(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+int CL_Demo_ReadFooter(LocalClientNum_t param_1)
 
 {
-  undefined4 uVar1;
-  undefined8 uVar2;
-  int iVar3;
+  long lVar1;
+  LocalClientNum_t LVar2;
+  clientConnection_t *pcVar3;
   int iVar4;
-  undefined4 *puVar5;
+  clientDemoPlayback_t *pcVar5;
+  _func___cdecl_int_void_ptr_int_int **pp_Var6;
+  void **ppvVar7;
   int local_40;
-  uint local_3c [15];
+  int local_3c [15];
   
-  uVar2 = __savegprlr_27();
-  iVar3 = CL_GetLocalClientConnection();
-  if (DAT_84872900 == 0) {
-    MyAssertHandler(0xffffffff821dcc88,0x64c,0,0xffffffff82000f98,0xffffffff821dcdfc);
+  LVar2 = __savegprlr_27(param_1);
+  pcVar3 = CL_GetLocalClientConnection(LVar2);
+  if (s_clientDemoPlayback == (clientDemoPlayback_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_playback.cpp"
+                    ,0x64c,0,"%s");
   }
-  uVar1 = *(undefined4 *)(DAT_84872900 + 0x18);
-  puVar5 = (undefined4 *)(iVar3 + 0x4024c);
-  iVar4 = CL_Demo_SeekFile(*puVar5,0xfffffffffffffff8,1);
+  lVar1 = s_clientDemoPlayback->totalBytesRead;
+  ppvVar7 = &(pcVar3->clientDemo).demoFileHandle;
+  iVar4 = CL_Demo_SeekFile(*ppvVar7,-8,1);
   if (iVar4 == 0) {
-    (**(code **)(iVar3 + 0x5422c))(local_3c,4,uVar2);
-    (**(code **)(iVar3 + 0x5422c))(&local_40,4,uVar2);
-    if ((local_40 == *(int *)(iVar3 + 0x40258)) &&
-       (iVar4 = CL_Demo_SeekFile(*puVar5,-8 - (ulonglong)local_3c[0],1), iVar4 == 0)) {
-      iVar3 = CL_Demo_ReadFooterInternalInGame(uVar2,iVar3,local_40);
-      if (iVar3 != 0) {
-        CL_Demo_SeekFile(*puVar5,uVar1,2);
-        iVar3 = CL_Demo_GetPlaybackData();
-        *(undefined4 *)(iVar3 + 0x18) = uVar1;
-        __restgprlr_27(1);
-        return;
+    pp_Var6 = &(pcVar3->clientDemo).demoRead;
+    (**pp_Var6)(local_3c,4,LVar2);
+    (**pp_Var6)(&local_40,4,LVar2);
+    if ((local_40 == (pcVar3->clientDemo).header.version) &&
+       (iVar4 = CL_Demo_SeekFile(*ppvVar7,-8 - local_3c[0],1), iVar4 == 0)) {
+      iVar4 = CL_Demo_ReadFooterInternalInGame(LVar2,pcVar3,local_40);
+      if (iVar4 != 0) {
+        CL_Demo_SeekFile(*ppvVar7,lVar1,2);
+        pcVar5 = CL_Demo_GetPlaybackData();
+        pcVar5->totalBytesRead = lVar1;
+        iVar4 = __restgprlr_27(1);
+        return iVar4;
       }
     }
   }
-  __restgprlr_27(0);
-  return;
+  iVar4 = __restgprlr_27(0);
+  return iVar4;
 }
 
 
 // 827D9940  CL_Demo_AdjustFxTimeInternal  (client_demo/cl_demo_playback.cpp:1064)
 
-void CL_Demo_AdjustFxTimeInternal(undefined8 param_1,uint *param_2,uint *param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void CL_Demo_AdjustFxTimeInternal(int *param_1,int *param_2,int *param_3)
 
 {
   uint *puVar1;
-  int iVar2;
+  clientDemoPlayback_t *pcVar2;
   longlong lVar3;
   longlong lVar4;
   uint uVar5;
   longlong lVar6;
   int iVar7;
   
-  puVar1 = (uint *)__savegprlr_29();
+  puVar1 = (uint *)__savegprlr_29(param_1);
   if (*puVar1 != 0) {
-    iVar2 = CL_Demo_GetPlaybackData();
-    lVar6 = (ulonglong)*puVar1 - (ulonglong)*(uint *)(iVar2 + 0x51e4cc);
-    lVar4 = (ulonglong)*param_2 + lVar6;
-    lVar3 = lVar4 + (ulonglong)*param_3;
+    pcVar2 = CL_Demo_GetPlaybackData();
+    lVar6 = (ulonglong)*puVar1 - (ulonglong)(uint)pcVar2->originalFilmTime;
+    lVar4 = (ulonglong)(uint)*param_2 + lVar6;
+    lVar3 = lVar4 + (ulonglong)(uint)*param_3;
     if (lVar3 < 1) {
-      *puVar1 = *(uint *)(iVar2 + 0x51e4d0);
+      *puVar1 = pcVar2->clipServerTimeAtSegmentStart;
       *param_2 = 0;
       *param_3 = 0;
       __restgprlr_29();
@@ -1093,7 +712,7 @@ void CL_Demo_AdjustFxTimeInternal(undefined8 param_1,uint *param_2,uint *param_3
     }
     uVar5 = (uint)lVar4;
     if ((int)uVar5 < 1) {
-      *puVar1 = *(uint *)(iVar2 + 0x51e4d0);
+      *puVar1 = pcVar2->clipServerTimeAtSegmentStart;
       *param_2 = 0;
       *param_3 = (uint)lVar3;
       __restgprlr_29();
@@ -1101,12 +720,12 @@ void CL_Demo_AdjustFxTimeInternal(undefined8 param_1,uint *param_2,uint *param_3
     }
     iVar7 = (int)lVar6;
     if (iVar7 < 1) {
-      *puVar1 = *(uint *)(iVar2 + 0x51e4d0);
+      *puVar1 = pcVar2->clipServerTimeAtSegmentStart;
       *param_2 = uVar5;
       __restgprlr_29();
       return;
     }
-    *puVar1 = *(int *)(iVar2 + 0x51e4d0) + iVar7;
+    *puVar1 = pcVar2->clipServerTimeAtSegmentStart + iVar7;
   }
   __restgprlr_29();
   return;
@@ -1115,18 +734,21 @@ void CL_Demo_AdjustFxTimeInternal(undefined8 param_1,uint *param_2,uint *param_3
 
 // 827D9A20  CL_Demo_AdjustTimeInternal  (client_demo/cl_demo_playback.cpp:1110)
 
-void CL_Demo_AdjustTimeInternal(uint *param_1,uint *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void CL_Demo_AdjustTimeInternal(int *param_1,int *param_2)
 
 {
-  int iVar1;
+  clientDemoPlayback_t *pcVar1;
   longlong lVar2;
   longlong lVar3;
   int iVar4;
   
   if (*param_1 != 0) {
-    iVar1 = CL_Demo_GetPlaybackData();
-    lVar3 = (ulonglong)*param_1 - (ulonglong)*(uint *)(iVar1 + 0x51e4cc);
-    lVar2 = lVar3 + (ulonglong)*param_2;
+    pcVar1 = CL_Demo_GetPlaybackData();
+    lVar3 = (ulonglong)(uint)*param_1 - (ulonglong)(uint)pcVar1->originalFilmTime;
+    lVar2 = lVar3 + (ulonglong)(uint)*param_2;
     if (lVar2 < 1) {
       *param_1 = 0;
       *param_2 = 0;
@@ -1134,11 +756,11 @@ void CL_Demo_AdjustTimeInternal(uint *param_1,uint *param_2)
     else {
       iVar4 = (int)lVar3;
       if (iVar4 < 1) {
-        *param_1 = *(uint *)(iVar1 + 0x51e4d0);
-        *param_2 = (uint)lVar2;
+        *param_1 = pcVar1->clipServerTimeAtSegmentStart;
+        *param_2 = (int)lVar2;
       }
       else {
-        *param_1 = *(int *)(iVar1 + 0x51e4d0) + iVar4;
+        *param_1 = pcVar1->clipServerTimeAtSegmentStart + iVar4;
       }
     }
   }
@@ -1148,8 +770,11 @@ void CL_Demo_AdjustTimeInternal(uint *param_1,uint *param_2)
 
 // 827D9AC8  CL_Demo_AdjustTimeForPlayerStateHudElement  (client_demo/cl_demo_playback.cpp:1148)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
 void CL_Demo_AdjustTimeForPlayerStateHudElement
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,longlong param_4)
+               (int param_1,int param_2,int param_3,hudelem_s *param_4)
 
 {
   int iVar1;
@@ -1157,148 +782,167 @@ void CL_Demo_AdjustTimeForPlayerStateHudElement
   int iVar3;
   bool bVar4;
   int iVar5;
-  undefined4 *puVar6;
-  int iVar7;
-  longlong lVar8;
-  ulonglong uVar9;
+  int iVar6;
+  longlong lVar7;
   
-  iVar5 = __savegprlr_25();
+  lVar7 = (longlong)param_2;
+  iVar5 = __savegprlr_25(param_1,lVar7,param_3);
   bVar4 = false;
-  if (DAT_84872900 == 0) {
-    MyAssertHandler(0xffffffff821dcc88,0x64c,0,0xffffffff82000f98,0xffffffff821dcdfc);
+  if (s_clientDemoPlayback == (clientDemoPlayback_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_playback.cpp"
+                    ,0x64c,0,"%s");
   }
-  puVar6 = (undefined4 *)param_4;
-  uVar2 = *(uint *)(DAT_84872900 + 0x51e4cc);
-  uVar9 = (ulonglong)uVar2;
-  iVar3 = *(int *)(DAT_84872900 + 0x51e4d0);
-  switch(*puVar6) {
-  case 0:
+  uVar2 = s_clientDemoPlayback->originalFilmTime;
+  iVar3 = s_clientDemoPlayback->clipServerTimeAtSegmentStart;
+  switch(param_4->type) {
+  case HE_TYPE_FREE:
     goto switchD_827d9b58_caseD_0;
-  case 1:
-    CL_Demo_AdjustFxTimeInternal(param_4 + 0x90,param_4 + 0x98,param_4 + 0x9c);
-    CL_Demo_AdjustTimeInternal(param_4 + 0x38,param_4 + 0x3c);
-    if (((puVar6[0x1e] != 0) || (puVar6[0x1c] != 0)) || ((puVar6[0x16] != 0 || (puVar6[7] != 0)))) {
-      Com_Printf(0xe,0xffffffff821de160);
+  case HE_TYPE_TEXT:
+    CL_Demo_AdjustFxTimeInternal
+              (&param_4->fxBirthTime,&param_4->fxDecayStartTime,&param_4->fxDecayDuration);
+    CL_Demo_AdjustTimeInternal(&param_4->fadeStartTime,&param_4->fadeTime);
+    if (((param_4->time != 0) || (param_4->moveStartTime != 0)) ||
+       ((param_4->scaleStartTime != 0 || (param_4->fontScaleStartTime != 0)))) {
+      Com_Printf(0xe,"ERROR: Need to process Time value for HE_TYPE_TEXT\n");
       bVar4 = true;
     }
     break;
-  case 2:
-    CL_Demo_AdjustFxTimeInternal(param_4 + 0x90,param_4 + 0x98,param_4 + 0x9c);
-    CL_Demo_AdjustTimeInternal(param_4 + 0x38,param_4 + 0x3c);
-    CL_Demo_AdjustTimeInternal(param_4 + 0x1c,param_4 + 0x20);
-    if (((puVar6[0x1e] != 0) || (puVar6[0x1c] != 0)) || (puVar6[0x16] != 0)) {
-      Com_Printf(0xe,0xffffffff821de128);
+  case HE_TYPE_VALUE:
+    CL_Demo_AdjustFxTimeInternal
+              (&param_4->fxBirthTime,&param_4->fxDecayStartTime,&param_4->fxDecayDuration);
+    CL_Demo_AdjustTimeInternal(&param_4->fadeStartTime,&param_4->fadeTime);
+    CL_Demo_AdjustTimeInternal(&param_4->fontScaleStartTime,&param_4->fontScaleTime);
+    if (((param_4->time != 0) || (param_4->moveStartTime != 0)) || (param_4->scaleStartTime != 0)) {
+      Com_Printf(0xe,"ERROR: Need to process Time value for HE_TYPE_VALUE\n");
       bVar4 = true;
     }
     break;
-  case 3:
-    if (((puVar6[0x1e] != 0) || (puVar6[0x24] != 0)) ||
-       ((puVar6[0xe] != 0 || (((puVar6[0x1c] != 0 || (puVar6[0x16] != 0)) || (puVar6[7] != 0)))))) {
-      Com_Printf(0xe,0xffffffff821de0ec);
+  case HE_TYPE_PLAYERNAME:
+    if (((param_4->time != 0) || (param_4->fxBirthTime != 0)) ||
+       ((param_4->fadeStartTime != 0 ||
+        (((param_4->moveStartTime != 0 || (param_4->scaleStartTime != 0)) ||
+         (param_4->fontScaleStartTime != 0)))))) {
+      Com_Printf(0xe,"ERROR: Need to process Time value for HE_TYPE_PLAYERNAME\n");
       bVar4 = true;
     }
     break;
-  case 4:
-    CL_Demo_AdjustTimeInternal(param_4 + 0x38,param_4 + 0x3c);
-    iVar1 = puVar6[0x16];
+  case HE_TYPE_MATERIAL:
+    CL_Demo_AdjustTimeInternal(&param_4->fadeStartTime,&param_4->fadeTime);
+    iVar1 = param_4->scaleStartTime;
     if (iVar1 != 0) {
       if ((int)(iVar1 - uVar2) < iVar3) {
-        iVar7 = puVar6[0x17] + iVar1;
-        if (iVar5 < iVar7) {
-          puVar6[0x16] = (iVar1 - iVar5) + (int)param_2;
+        iVar6 = param_4->scaleTime + iVar1;
+        if (iVar5 < iVar6) {
+          param_4->scaleStartTime = (iVar1 - iVar5) + (int)lVar7;
         }
-        else if (iVar3 <= (int)(iVar7 - uVar2)) {
-          puVar6[0x16] = iVar3;
-          puVar6[0x17] = (puVar6[0x17] - uVar2) + iVar3;
+        else if (iVar3 <= (int)(iVar6 - uVar2)) {
+          param_4->scaleStartTime = iVar3;
+          param_4->scaleTime = (param_4->scaleTime - uVar2) + iVar3;
         }
       }
       else {
-        puVar6[0x16] = (iVar1 - uVar2) + iVar3;
+        param_4->scaleStartTime = (iVar1 - uVar2) + iVar3;
       }
     }
-    if (((puVar6[0x1e] != 0) || (puVar6[0x24] != 0)) || ((puVar6[0x1c] != 0 || (puVar6[7] != 0)))) {
-      Com_Printf(0xe,0xffffffff821de0b4);
+    if (((param_4->time != 0) || (param_4->fxBirthTime != 0)) ||
+       ((param_4->moveStartTime != 0 || (param_4->fontScaleStartTime != 0)))) {
+      Com_Printf(0xe,"ERROR: Need to process Time value for HE_TYPE_MATERIAL\n");
       bVar4 = true;
     }
     break;
-  case 5:
-    CL_Demo_AdjustTimeInternal(param_4 + 0x38,param_4 + 0x3c);
-    if ((puVar6[0x1e] != 0) && (lVar8 = (uint)puVar6[0x1e] - uVar9, -1 < lVar8)) {
-      puVar6[0x1e] = (int)lVar8 + iVar3;
+  case HE_TYPE_TIMER_DOWN:
+    CL_Demo_AdjustTimeInternal(&param_4->fadeStartTime,&param_4->fadeTime);
+    if ((param_4->time != 0) &&
+       (lVar7 = (ulonglong)(uint)param_4->time - (ulonglong)uVar2, -1 < lVar7)) {
+      param_4->time = (int)lVar7 + iVar3;
     }
-    if ((((puVar6[0x24] != 0) || (puVar6[0x1c] != 0)) || (puVar6[0x16] != 0)) || (puVar6[7] != 0)) {
-      Com_Printf(0xe,0xffffffff821de078);
+    if ((((param_4->fxBirthTime != 0) || (param_4->moveStartTime != 0)) ||
+        (param_4->scaleStartTime != 0)) || (param_4->fontScaleStartTime != 0)) {
+      Com_Printf(0xe,"ERROR: Need to process Time value for HE_TYPE_TIMER_DOWN\n");
       bVar4 = true;
     }
     break;
-  case 6:
-    if ((((puVar6[0x1e] != 0) || (puVar6[0x24] != 0)) ||
-        ((puVar6[0xe] != 0 || ((puVar6[0x1c] != 0 || (puVar6[0x16] != 0)))))) || (puVar6[7] != 0)) {
-      Com_Printf(0xe,0xffffffff821de040);
+  case HE_TYPE_TIMER_UP:
+    if ((((param_4->time != 0) || (param_4->fxBirthTime != 0)) ||
+        ((param_4->fadeStartTime != 0 ||
+         ((param_4->moveStartTime != 0 || (param_4->scaleStartTime != 0)))))) ||
+       (param_4->fontScaleStartTime != 0)) {
+      Com_Printf(0xe,"ERROR: Need to process Time value for HE_TYPE_TIMER_UP\n");
       bVar4 = true;
     }
     break;
-  case 7:
-    if (((puVar6[0x1e] != 0) || (puVar6[0x24] != 0)) ||
-       ((puVar6[0xe] != 0 || (((puVar6[0x1c] != 0 || (puVar6[0x16] != 0)) || (puVar6[7] != 0)))))) {
-      Com_Printf(0xe,0xffffffff821de004);
+  case HE_TYPE_TIMER_STATIC:
+    if (((param_4->time != 0) || (param_4->fxBirthTime != 0)) ||
+       ((param_4->fadeStartTime != 0 ||
+        (((param_4->moveStartTime != 0 || (param_4->scaleStartTime != 0)) ||
+         (param_4->fontScaleStartTime != 0)))))) {
+      Com_Printf(0xe,"ERROR: Need to process Time value for HE_TYPE_TIMER_STATIC\n");
       bVar4 = true;
     }
     break;
-  case 8:
-    if ((puVar6[0x1e] != 0) && (lVar8 = (uint)puVar6[0x1e] - uVar9, -1 < lVar8)) {
-      puVar6[0x1e] = (int)lVar8 + iVar3;
+  case HE_TYPE_TENTHS_TIMER_DOWN:
+    if ((param_4->time != 0) &&
+       (lVar7 = (ulonglong)(uint)param_4->time - (ulonglong)uVar2, -1 < lVar7)) {
+      param_4->time = (int)lVar7 + iVar3;
     }
-    if ((((puVar6[0x24] != 0) || (puVar6[0xe] != 0)) || (puVar6[0x1c] != 0)) ||
-       ((puVar6[0x16] != 0 || (puVar6[7] != 0)))) {
-      Com_Printf(0xe,0xffffffff821ddfc0);
+    if ((((param_4->fxBirthTime != 0) || (param_4->fadeStartTime != 0)) ||
+        (param_4->moveStartTime != 0)) ||
+       ((param_4->scaleStartTime != 0 || (param_4->fontScaleStartTime != 0)))) {
+      Com_Printf(0xe,"ERROR: Need to process Time value for HE_TYPE_TENTHS_TIMER_DOWN\n");
       bVar4 = true;
     }
     break;
-  case 9:
-    if ((((puVar6[0x1e] != 0) || (puVar6[0x24] != 0)) || (puVar6[0xe] != 0)) ||
-       (((puVar6[0x1c] != 0 || (puVar6[0x16] != 0)) || (puVar6[7] != 0)))) {
-      Com_Printf(0xe,0xffffffff821ddf7c);
+  case HE_TYPE_TENTHS_TIMER_UP:
+    if ((((param_4->time != 0) || (param_4->fxBirthTime != 0)) || (param_4->fadeStartTime != 0)) ||
+       (((param_4->moveStartTime != 0 || (param_4->scaleStartTime != 0)) ||
+        (param_4->fontScaleStartTime != 0)))) {
+      Com_Printf(0xe,"ERROR: Need to process Time value for HE_TYPE_TENTHS_TIMER_UP\n");
       bVar4 = true;
     }
     break;
-  case 10:
-    if (((puVar6[0x1e] != 0) || (puVar6[0x24] != 0)) ||
-       ((puVar6[0xe] != 0 || ((puVar6[0x1c] != 0 || (puVar6[0x16] != 0)))))) {
-      Com_Printf(0xe,0xffffffff821ddf38);
+  case HE_TYPE_TENTHS_TIMER_STATIC:
+    if (((param_4->time != 0) || (param_4->fxBirthTime != 0)) ||
+       ((param_4->fadeStartTime != 0 ||
+        ((param_4->moveStartTime != 0 || (param_4->scaleStartTime != 0)))))) {
+      Com_Printf(0xe,"ERROR: Need to process Time value for HE_TYPE_TENTHS_TIMER_STATIC\n");
       bVar4 = true;
     }
     break;
-  case 0xb:
-    if (((puVar6[0x1e] != 0) || (puVar6[0x24] != 0)) ||
-       ((puVar6[0xe] != 0 || (((puVar6[0x1c] != 0 || (puVar6[0x16] != 0)) || (puVar6[7] != 0)))))) {
-      Com_Printf(0xe,0xffffffff821ddef8);
+  case HE_TYPE_CLOCK_DOWN:
+    if (((param_4->time != 0) || (param_4->fxBirthTime != 0)) ||
+       ((param_4->fadeStartTime != 0 ||
+        (((param_4->moveStartTime != 0 || (param_4->scaleStartTime != 0)) ||
+         (param_4->fontScaleStartTime != 0)))))) {
+      Com_Printf(0xe,"ERROR: Need to process Time value for HE_TYPE_CLOCK_DOWN\n");
       bVar4 = true;
     }
     break;
-  case 0xc:
-    if (((((puVar6[0x1e] != 0) || (puVar6[0x24] != 0)) || (puVar6[0xe] != 0)) ||
-        ((puVar6[0x1c] != 0 || (puVar6[0x16] != 0)))) || (puVar6[7] != 0)) {
-      Com_Printf(0xe,0xffffffff821ddec0);
+  case HE_TYPE_CLOCK_UP:
+    if (((((param_4->time != 0) || (param_4->fxBirthTime != 0)) || (param_4->fadeStartTime != 0)) ||
+        ((param_4->moveStartTime != 0 || (param_4->scaleStartTime != 0)))) ||
+       (param_4->fontScaleStartTime != 0)) {
+      Com_Printf(0xe,"ERROR: Need to process Time value for HE_TYPE_CLOCK_UP\n");
       bVar4 = true;
     }
     break;
-  case 0xd:
+  case HE_TYPE_WAYPOINT:
     break;
   default:
-    Com_PrintError(0xe,0xffffffff821dde94);
+    Com_PrintError(0xe,"ERROR: Need to process hud elem type %d\n");
   }
   if (bVar4) {
-    Com_Printf(0xe,0xffffffff821dde30,uVar9,param_2,param_2);
-    Com_Printf(0xe,0xffffffff821dde1c,param_3,*puVar6);
-    Com_Printf(0xe,0xffffffff821dddf8,puVar6[0xe],puVar6[0xf]);
-    Com_Printf(0xe,0xffffffff821dddcc,puVar6[0x26],puVar6[0x27]);
-    Com_Printf(0xe,0xffffffff821ddda8,puVar6[0x1c],puVar6[0x1d]);
-    Com_Printf(0xe,0xffffffff821ddd84,puVar6[0x16],puVar6[0x17]);
-    Com_Printf(0xe,0xffffffff821ddd58,puVar6[7],puVar6[8]);
-    Com_Printf(0xe,0xffffffff821ddd4c,puVar6[0x1e]);
-    Com_Printf(0xe,0xffffffff821ddd38,puVar6[0x24]);
-    Com_Printf(0xe,0xffffffff821ddd24,puVar6[0x25]);
+    Com_Printf(0xe,
+               "Time Adjustment - originalFilmTime: %d clipServerTimeAtSegmentStart: %d currentClipServerTime: %d\n"
+              );
+    Com_Printf(0xe,"Hud %d: Type: %d\n");
+    Com_Printf(0xe,"\tfadeStartTime: %d fadeTime: %d\n");
+    Com_Printf(0xe,"\tfxDecayStartTime: %d fxDecayDuration: %d\n");
+    Com_Printf(0xe,"\tmoveStartTime: %d moveTime: %d\n");
+    Com_Printf(0xe,"\tscaleStartTime: %d scaleTime: %d\n");
+    Com_Printf(0xe,"\tfontScaleStartTime: %d fontScaleTime: %d\n");
+    Com_Printf(0xe,"\ttime: %d\n");
+    Com_Printf(0xe,"\tfxBirthTime: %d\n");
+    Com_Printf(0xe,"\tfxLetterTime: %d\n");
   }
 switchD_827d9b58_caseD_0:
   __restgprlr_25();
@@ -1308,34 +952,37 @@ switchD_827d9b58_caseD_0:
 
 // 827DA190  CL_Demo_AdjustTimeForPlayerState  (client_demo/cl_demo_playback.cpp:1368)
 
-void CL_Demo_AdjustTimeForPlayerState(undefined8 param_1,undefined8 param_2,longlong param_3)
+/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
+
+void CL_Demo_AdjustTimeForPlayerState(int param_1,int param_2,playerState_s *param_3)
 
 {
-  int iVar1;
-  uint uVar2;
-  undefined8 uVar3;
+  uint uVar1;
+  int iVar2;
+  longlong lVar3;
   longlong lVar4;
-  longlong lVar5;
+  int iVar5;
   
-  uVar3 = __savegprlr_27();
-  lVar5 = 0;
-  lVar4 = param_3 + 0x1e6c;
+  lVar3 = (longlong)(int)param_3;
+  iVar2 = __savegprlr_27(param_1);
+  iVar5 = 0;
+  lVar4 = lVar3 + 0x1e6c;
   do {
-    CL_Demo_AdjustTimeForPlayerStateHudElement(uVar3,param_2,lVar5,lVar4);
-    lVar5 = lVar5 + 1;
+    CL_Demo_AdjustTimeForPlayerStateHudElement(iVar2,param_2,iVar5,(hudelem_s *)lVar4);
+    iVar5 = iVar5 + 1;
     lVar4 = lVar4 + 0xa8;
-  } while ((int)lVar5 < 0x1f);
-  lVar5 = 0;
-  lVar4 = param_3 + 0xa14;
+  } while (iVar5 < 0x1f);
+  iVar5 = 0;
+  lVar4 = lVar3 + 0xa14;
   do {
-    CL_Demo_AdjustTimeForPlayerStateHudElement(uVar3,param_2,lVar5,lVar4);
-    lVar5 = lVar5 + 1;
+    CL_Demo_AdjustTimeForPlayerStateHudElement(iVar2,param_2,iVar5,(hudelem_s *)lVar4);
+    iVar5 = iVar5 + 1;
     lVar4 = lVar4 + 0xa8;
-  } while ((int)lVar5 < 0x1f);
-  iVar1 = *(int *)((int)param_3 + 0x558);
-  if (iVar1 != 0) {
-    uVar2 = (iVar1 - (int)uVar3) + (int)param_2;
-    *(uint *)((int)param_3 + 0x558) = -((int)uVar2 >> 0x1f) - 1U & uVar2;
+  } while (iVar5 < 0x1f);
+  iVar5 = *(int *)((int)lVar3 + 0x558);
+  if (iVar5 != 0) {
+    uVar1 = (iVar5 - iVar2) + param_2;
+    *(uint *)((int)lVar3 + 0x558) = -((int)uVar1 >> 0x1f) - 1U & uVar1;
   }
   __restgprlr_27();
   return;
@@ -1343,270 +990,111 @@ void CL_Demo_AdjustTimeForPlayerState(undefined8 param_1,undefined8 param_2,long
 
 
 // 827DA230  CL_Demo_AdjustTimeForEntityState  (client_demo/cl_demo_playback.cpp:1409)
-
-void CL_Demo_AdjustTimeForEntityState
-               (undefined8 param_1,longlong param_2,longlong param_3,undefined4 *param_4)
-
-{
-  uint uVar1;
-  int iVar2;
-  uint uVar3;
-  int iVar4;
-  int iVar5;
-  undefined8 uVar6;
-  int *piVar7;
-  char cVar8;
-  longlong lVar9;
-  ulonglong uVar10;
-  int iVar11;
-  
-  uVar6 = __savegprlr_24();
-  if (DAT_84872900 == 0) {
-    MyAssertHandler(0xffffffff821dcc88,0x64c,0,0xffffffff82000f98,0xffffffff821dcdfc);
-  }
-  uVar3 = *(uint *)(DAT_84872900 + 0x51e4cc);
-  iVar4 = *(int *)(DAT_84872900 + 0x51e4d0);
-  if (0 < (int)param_4[0x1d]) {
-    uVar10 = ((ulonglong)(uint)param_4[0x1d] - param_2) + param_3;
-    param_4[0x1d] = (int)((uVar10 & 0xffffffff) >> 0x1f) - 1U & (uint)uVar10;
-  }
-  uVar1 = param_4[4];
-  iVar11 = (int)param_3;
-  iVar5 = (int)param_2;
-  if (uVar1 != 0) {
-    lVar9 = ((ulonglong)uVar1 - param_2) + param_3;
-    if (lVar9 < 0) {
-      lVar9 = ((ulonglong)(uint)param_4[5] - param_2) + (ulonglong)uVar1;
-      if (lVar9 < 0) {
-        param_4[4] = 0;
-      }
-      else {
-        param_4[4] = iVar11 - (int)(((float)(longlong)(int)(iVar5 - uVar1) /
-                                    (float)(longlong)(int)((int)lVar9 + (iVar5 - uVar1))) *
-                                   (float)(longlong)(int)param_4[5]);
-      }
-    }
-    else {
-      param_4[4] = (int)lVar9;
-    }
-  }
-  uVar1 = param_4[0xd];
-  if (uVar1 != 0) {
-    param_3 = ((ulonglong)uVar1 - param_2) + param_3;
-    if (param_3 < 0) {
-      lVar9 = ((ulonglong)(uint)param_4[0xe] - param_2) + (ulonglong)uVar1;
-      if (lVar9 < 0) {
-        param_4[0xd] = 0;
-      }
-      else {
-        param_4[0xd] = iVar11 - (int)(((float)(longlong)(int)(iVar5 - uVar1) /
-                                      (float)(longlong)(int)((int)lVar9 + (iVar5 - uVar1))) *
-                                     (float)(longlong)(int)param_4[0xe]);
-      }
-    }
-    else {
-      param_4[0xd] = (int)param_3;
-    }
-  }
-  iVar2 = param_4[1];
-  if (((iVar2 == 0) || (iVar2 == 0x61)) || (iVar2 == 4)) {
-    uVar3 = (param_4[0x15] - iVar5) + iVar11;
-    param_4[0x15] = -((int)uVar3 >> 0x1f) - 1U & uVar3;
-  }
-  else {
-    if (iVar2 == 1) {
-      lVar9 = (ulonglong)(uint)param_4[0x1a] - (ulonglong)uVar3;
-      if (-1 < lVar9) {
-        param_4[0x1a] = (int)lVar9 + iVar4;
-        __restgprlr_24();
-        return;
-      }
-      param_4[0x1a] = 0;
-      __restgprlr_24();
-      return;
-    }
-    if ((iVar2 == 6) && (param_4[0x18] != 0)) {
-      lVar9 = (ulonglong)(uint)param_4[0x18] - (ulonglong)uVar3;
-      if (lVar9 < 0) {
-        piVar7 = (int *)Com_GetClientDObj(*param_4,uVar6);
-        if (piVar7 != (int *)0x0) {
-          if (*piVar7 == 0) {
-            CL_GetConfigString((ulonglong)(uint)param_4[0x17] + 0xe29);
-            uVar10 = XAnimCreateSimpleTree();
-            if ((uVar10 & 0xffffffff) == 0) {
-              MyAssertHandler(0xffffffff821dcc88,0x5ff,0,0xffffffff82000f98,0xffffffff820100a4);
-            }
-            DObjSetTree(piVar7,uVar10);
-          }
-          cVar8 = XAnimIsLooped(*(undefined4 *)*piVar7,1);
-          if (cVar8 == '\0') {
-            param_4[0x18] = 0;
-          }
-        }
-      }
-      else {
-        param_4[0x18] = (int)lVar9 + iVar4;
-      }
-      if (iVar11 < (int)param_4[0x18]) {
-        param_4[0x18] = iVar11;
-        __restgprlr_24();
-        return;
-      }
-    }
-  }
-  __restgprlr_24();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 827DA538  CL_Demo_AdjustTimeForClipPlayback  (client_demo/cl_demo_playback.cpp:1566)
-
-void CL_Demo_AdjustTimeForClipPlayback(undefined8 param_1,longlong param_2)
-
-{
-  undefined4 uVar1;
-  undefined8 uVar2;
-  undefined4 *puVar3;
-  int iVar4;
-  char cVar5;
-  int iVar6;
-  
-  uVar2 = __savegprlr_26();
-  cVar5 = '\0';
-  if (DAT_84872900 != 0) {
-    puVar3 = (undefined4 *)CL_Demo_GetPlaybackData();
-    iVar4 = CL_GetLocalClientConnection(*puVar3);
-    cVar5 = *(char *)(iVar4 + 0x40260);
-  }
-  if (cVar5 == '\0') {
-    MyAssertHandler(0xffffffff821dcc88,0x624,0,0xffffffff82000f98,0xffffffff821de194);
-  }
-  if (DAT_84872900 == 0) {
-    MyAssertHandler(0xffffffff821dcc88,0x64c,0,0xffffffff82000f98,0xffffffff821dcdfc);
-  }
-  iVar4 = (int)param_2;
-  uVar1 = *(undefined4 *)(iVar4 + 0x3308);
-  puVar3 = (undefined4 *)(DAT_84872900 + 0x51e4c4);
-  *(undefined4 *)(iVar4 + 0x3308) = *puVar3;
-  CL_Demo_AdjustTimeForPlayerState(uVar1,*puVar3,param_2);
-  iVar6 = 0;
-  if (0 < *(int *)(iVar4 + 0x330c)) {
-    param_2 = param_2 + 0x3314;
-    do {
-      CL_Demo_AdjustTimeForEntityState(uVar2,uVar1,*puVar3,param_2);
-      iVar6 = iVar6 + 1;
-      param_2 = param_2 + 0x100;
-    } while (iVar6 < *(int *)(iVar4 + 0x330c));
-  }
-  __restgprlr_26();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 827D2DA8  CL_Demo_IsPlaybackMemoryAllocated  (client_demo/cl_demo_playback.cpp:1599)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
 
 bool CL_Demo_IsPlaybackMemoryAllocated(void)
 
 {
-  return DAT_84872900 != 0;
+  return (bool)('\x01' - (s_clientDemoPlayback == (clientDemoPlayback_t *)0x0));
 }
 
 
 // 827D2DC0  CL_Demo_GetPlaybackData  (client_demo/cl_demo_playback.cpp:1611)
 
-int CL_Demo_GetPlaybackData(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+clientDemoPlayback_t * CL_Demo_GetPlaybackData(void)
 
 {
-  if (DAT_84872900 == 0) {
-    MyAssertHandler(0xffffffff821dcc88,0x64c,0,0xffffffff82000f98,0xffffffff821dcdfc);
+  if (s_clientDemoPlayback == (clientDemoPlayback_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_playback.cpp"
+                    ,0x64c,0,"%s");
   }
-  return DAT_84872900;
+  return s_clientDemoPlayback;
 }
 
 
 // 827D2E20  CL_Demo_GetPersistentDataBufferForDemo  (client_demo/cl_demo_playback.cpp:1624)
 
-void CL_Demo_GetPersistentDataBufferForDemo(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+uchar * CL_Demo_GetPersistentDataBufferForDemo(void)
 
 {
-  ulonglong uVar1;
+  uchar *puVar1;
+  ulonglong uVar2;
   
   __savegprlr_29();
-  uVar1 = (ulonglong)DAT_84872900;
-  if (uVar1 == 0) {
-    MyAssertHandler(0xffffffff821dcc88,0x659,0,0xffffffff82000f98,0xffffffff821dc0d8);
-    uVar1 = (ulonglong)DAT_84872900;
-    if (uVar1 == 0) {
-      MyAssertHandler(0xffffffff821dcc88,0x64c,0,0xffffffff82000f98,0xffffffff821dcdfc);
-      uVar1 = (ulonglong)DAT_84872900;
+  uVar2 = ZEXT48(s_clientDemoPlayback);
+  if (uVar2 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_playback.cpp"
+                    ,0x659,0,"%s");
+    uVar2 = ZEXT48(s_clientDemoPlayback);
+    if (uVar2 == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_playback.cpp"
+                      ,0x64c,0,"%s");
+      uVar2 = ZEXT48(s_clientDemoPlayback);
     }
   }
-  __restgprlr_29(uVar1 + 0x4c);
-  return;
+  puVar1 = (uchar *)__restgprlr_29(uVar2 + 0x4c);
+  return puVar1;
 }
 
 
 // 827DA640  CL_Demo_ShouldReadMultipleNonDeltaSnapshots  (client_demo/cl_demo_playback.cpp:1638)
-
-void CL_Demo_ShouldReadMultipleNonDeltaSnapshots(void)
-
-{
-  undefined8 uVar1;
-  int iVar2;
-  char cVar4;
-  int iVar3;
-  
-  uVar1 = __savegprlr_28();
-  if (DAT_84872900 != 0) {
-    iVar2 = CL_Demo_GetPlaybackData();
-    if (*(char *)(iVar2 + 0x51e859) != '\0') {
-      cVar4 = CL_Demo_IsClipPlaying();
-      if (cVar4 == '\0') {
-        MyAssertHandler(0xffffffff821dcc88,0x673,0,0xffffffff82000f98,0xffffffff821de194);
-      }
-      iVar3 = CL_GetLocalClientGlobals(uVar1);
-      if (*(int *)(iVar3 + 0x3390) < 0) {
-        __restgprlr_28(1);
-        return;
-      }
-      if (*(char *)(iVar2 + 0x51e859) != '\0') {
-        MyAssertHandler(0xffffffff821dcc88,0x679,0,0xffffffff82000f98,0xffffffff821de1ac);
-      }
-    }
-  }
-  __restgprlr_28(0);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
 
 // 827D2EA0  CL_Demo_IsPaused  (client_demo/cl_demo_playback.cpp:1672)
 
-undefined8 CL_Demo_IsPaused(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+bool CL_Demo_IsPaused(void)
 
 {
-  int iVar1;
+  clientDemoPlayback_t *pcVar1;
   
-  if (DAT_84872900 == 0) {
-    return 0;
+  if (s_clientDemoPlayback == (clientDemoPlayback_t *)0x0) {
+    return false;
   }
-  if ((*(char *)(DAT_8484f0bc + 0xc) != '\0') &&
-     (iVar1 = CL_Demo_GetPlaybackData(), *(char *)(iVar1 + 10) == '\0')) {
-    return 1;
+  if (((cl_demo_pause->current).enabled != false) &&
+     (pcVar1 = CL_Demo_GetPlaybackData(), pcVar1->overridePause == false)) {
+    return true;
   }
-  return 0;
+  return false;
 }
 
 
 // 827D2F10  CL_Demo_SetCompleted  (client_demo/cl_demo_playback.cpp:1687)
 
-void CL_Demo_SetCompleted(undefined1 param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void CL_Demo_SetCompleted(bool param_1)
 
 {
-  int iVar1;
+  clientDemoPlayback_t *pcVar1;
   
-  if (DAT_84872900 != 0) {
-    iVar1 = CL_Demo_GetPlaybackData();
-    *(undefined1 *)(iVar1 + 8) = param_1;
+  if (s_clientDemoPlayback != (clientDemoPlayback_t *)0x0) {
+    pcVar1 = CL_Demo_GetPlaybackData();
+    pcVar1->completed = param_1;
   }
   return;
 }
@@ -1614,47 +1102,61 @@ void CL_Demo_SetCompleted(undefined1 param_1)
 
 // 827D2F50  CL_Demo_IsCompleted  (client_demo/cl_demo_playback.cpp:1702)
 
-undefined1 CL_Demo_IsCompleted(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+bool CL_Demo_IsCompleted(void)
 
 {
-  int iVar1;
+  clientDemoPlayback_t *pcVar1;
   
-  if (DAT_84872900 == 0) {
-    return 0;
+  if (s_clientDemoPlayback == (clientDemoPlayback_t *)0x0) {
+    return false;
   }
-  iVar1 = CL_Demo_GetPlaybackData();
-  return *(undefined1 *)(iVar1 + 8);
+  pcVar1 = CL_Demo_GetPlaybackData();
+  return pcVar1->completed;
 }
 
 
 // 827D2F98  CL_Demo_IsShutdownInProgress  (client_demo/cl_demo_playback.cpp:1717)
 
-undefined1 CL_Demo_IsShutdownInProgress(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+bool CL_Demo_IsShutdownInProgress(void)
 
 {
-  int iVar1;
+  clientDemoPlayback_t *pcVar1;
   
-  if (DAT_84872900 == 0) {
-    return 0;
+  if (s_clientDemoPlayback == (clientDemoPlayback_t *)0x0) {
+    return false;
   }
-  iVar1 = CL_Demo_GetPlaybackData();
-  return *(undefined1 *)(iVar1 + 9);
+  pcVar1 = CL_Demo_GetPlaybackData();
+  return pcVar1->shutdownInProgress;
 }
 
 
 // 827D2FE0  CL_Demo_SetTimeScale  (client_demo/cl_demo_playback.cpp:1732)
 
-void CL_Demo_SetTimeScale(double param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void CL_Demo_SetTimeScale(float param_1)
 
 {
-  int iVar1;
+  clientDemoPlayback_t *pcVar1;
+  double dVar2;
   
-  if (DAT_84872900 != 0) {
-    if (param_1 <= 0.0) {
-      MyAssertHandler(0xffffffff821dcc88,0x6c8,0,0xffffffff82000f98,0xffffffff821dce14);
+  dVar2 = (double)param_1;
+  if (s_clientDemoPlayback != (clientDemoPlayback_t *)0x0) {
+    if (dVar2 <= 0.0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_playback.cpp"
+                      ,0x6c8,0,"%s");
     }
-    iVar1 = CL_Demo_GetPlaybackData();
-    *(float *)(iVar1 + 0x1c) = (float)param_1;
+    pcVar1 = CL_Demo_GetPlaybackData();
+    pcVar1->timeScale = (float)dVar2;
   }
   return;
 }
@@ -1662,29 +1164,36 @@ void CL_Demo_SetTimeScale(double param_1)
 
 // 827D3058  CL_Demo_GetTimeScale  (client_demo/cl_demo_playback.cpp:1749)
 
-double CL_Demo_GetTimeScale(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+float CL_Demo_GetTimeScale(void)
 
 {
-  int iVar1;
+  clientDemoPlayback_t *pcVar1;
   
-  if (DAT_84872900 == 0) {
+  if (s_clientDemoPlayback == (clientDemoPlayback_t *)0x0) {
     return 1.0;
   }
-  iVar1 = CL_Demo_GetPlaybackData();
-  return (double)*(float *)(iVar1 + 0x1c);
+  pcVar1 = CL_Demo_GetPlaybackData();
+  return pcVar1->timeScale;
 }
 
 
 // 827D30A8  CL_Demo_SetClipState  (client_demo/cl_demo_playback.cpp:1764)
 
-void CL_Demo_SetClipState(undefined4 param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void CL_Demo_SetClipState(int param_1)
 
 {
-  int iVar1;
+  clientDemoPlayback_t *pcVar1;
   
-  if (DAT_84872900 != 0) {
-    iVar1 = CL_Demo_GetPlaybackData();
-    *(undefined4 *)(iVar1 + 0x31e1ec) = param_1;
+  if (s_clientDemoPlayback != (clientDemoPlayback_t *)0x0) {
+    pcVar1 = CL_Demo_GetPlaybackData();
+    pcVar1->clipState = param_1;
   }
   return;
 }
@@ -1692,29 +1201,36 @@ void CL_Demo_SetClipState(undefined4 param_1)
 
 // 827D30F0  CL_Demo_GetClipState  (client_demo/cl_demo_playback.cpp:1779)
 
-undefined4 CL_Demo_GetClipState(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+int CL_Demo_GetClipState(void)
 
 {
-  int iVar1;
+  clientDemoPlayback_t *pcVar1;
   
-  if (DAT_84872900 == 0) {
+  if (s_clientDemoPlayback == (clientDemoPlayback_t *)0x0) {
     return 0;
   }
-  iVar1 = CL_Demo_GetPlaybackData();
-  return *(undefined4 *)(iVar1 + 0x31e1ec);
+  pcVar1 = CL_Demo_GetPlaybackData();
+  return pcVar1->clipState;
 }
 
 
 // 827D3140  CL_Demo_SetClipModified  (client_demo/cl_demo_playback.cpp:1794)
 
-void CL_Demo_SetClipModified(undefined1 param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void CL_Demo_SetClipModified(bool param_1)
 
 {
-  int iVar1;
+  clientDemoPlayback_t *pcVar1;
   
-  if (DAT_84872900 != 0) {
-    iVar1 = CL_Demo_GetPlaybackData();
-    *(undefined1 *)(iVar1 + 0x31e1f0) = param_1;
+  if (s_clientDemoPlayback != (clientDemoPlayback_t *)0x0) {
+    pcVar1 = CL_Demo_GetPlaybackData();
+    pcVar1->clipModified = param_1;
   }
   return;
 }
@@ -1722,39 +1238,45 @@ void CL_Demo_SetClipModified(undefined1 param_1)
 
 // 827D3188  CL_Demo_IsClipModified  (client_demo/cl_demo_playback.cpp:1809)
 
-undefined8 CL_Demo_IsClipModified(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+bool CL_Demo_IsClipModified(void)
 
 {
-  int iVar1;
+  clientDemoPlayback_t *pcVar1;
+  int iVar2;
   
-  if (DAT_84872900 == 0) {
-    return 0;
+  if (s_clientDemoPlayback == (clientDemoPlayback_t *)0x0) {
+    return false;
   }
-  iVar1 = CL_Demo_GetPlaybackData();
-  if ((*(char *)(iVar1 + 0x31e1f0) != '\0') && (iVar1 = CL_Demo_GetSegmentCount(), 0 < iVar1)) {
-    return 1;
+  pcVar1 = CL_Demo_GetPlaybackData();
+  if ((pcVar1->clipModified != false) && (iVar2 = CL_Demo_GetSegmentCount(), 0 < iVar2)) {
+    return true;
   }
-  return 0;
+  return false;
 }
 
 
 // 827DA708  CL_Demo_UpdateClipTime  (client_demo/cl_demo_playback.cpp:1824)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
 void CL_Demo_UpdateClipTime(int param_1)
 
 {
-  int iVar1;
-  char cVar2;
+  clientDemoPlayback_t *pcVar1;
+  bool bVar2;
   
-  if (DAT_84872900 != 0) {
-    iVar1 = CL_Demo_GetPlaybackData();
-    if (((*(int *)(iVar1 + 0x31e1ec) == 1) || (cVar2 = CL_Demo_IsClipPlaying(), cVar2 != '\0')) &&
-       ((cVar2 = CL_Demo_IsClipPlaying(), cVar2 == '\0' ||
-        ((cVar2 = CL_Demo_IsPaused(), cVar2 == '\0' &&
-         (cVar2 = CL_Demo_IsCompleted(), cVar2 == '\0')))))) {
-      iVar1 = CL_Demo_GetPlaybackData();
-      *(int *)(iVar1 + 0x51e4c0) = *(int *)(iVar1 + 0x51e4c0) + param_1;
-    }
+  if (((s_clientDemoPlayback != (clientDemoPlayback_t *)0x0) &&
+      ((pcVar1 = CL_Demo_GetPlaybackData(), pcVar1->clipState == 1 ||
+       (bVar2 = CL_Demo_IsClipPlaying(), bVar2)))) &&
+     ((bVar2 = CL_Demo_IsClipPlaying(), !bVar2 ||
+      ((bVar2 = CL_Demo_IsPaused(), !bVar2 && (bVar2 = CL_Demo_IsCompleted(), !bVar2)))))) {
+    pcVar1 = CL_Demo_GetPlaybackData();
+    pcVar1->clipTime = pcVar1->clipTime + param_1;
   }
   return;
 }
@@ -1762,108 +1284,132 @@ void CL_Demo_UpdateClipTime(int param_1)
 
 // 827D31F8  CL_Demo_GetClipTime  (client_demo/cl_demo_playback.cpp:1845)
 
-undefined4 CL_Demo_GetClipTime(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+int CL_Demo_GetClipTime(void)
 
 {
-  int iVar1;
+  clientDemoPlayback_t *pcVar1;
   
-  if (DAT_84872900 == 0) {
+  if (s_clientDemoPlayback == (clientDemoPlayback_t *)0x0) {
     return 0;
   }
-  iVar1 = CL_Demo_GetPlaybackData();
-  return *(undefined4 *)(iVar1 + 0x51e4c0);
+  pcVar1 = CL_Demo_GetPlaybackData();
+  return pcVar1->clipTime;
 }
 
 
 // 827D3248  CL_Demo_IsClipRecording  (client_demo/cl_demo_playback.cpp:1860)
 
-undefined8 CL_Demo_IsClipRecording(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+bool CL_Demo_IsClipRecording(void)
 
 {
-  int iVar1;
+  clientDemoPlayback_t *pcVar1;
   
-  if ((DAT_84872900 != 0) && (iVar1 = CL_Demo_GetPlaybackData(), *(int *)(iVar1 + 0x31e1ec) == 1)) {
-    return 1;
+  if ((s_clientDemoPlayback != (clientDemoPlayback_t *)0x0) &&
+     (pcVar1 = CL_Demo_GetPlaybackData(), pcVar1->clipState == 1)) {
+    return true;
   }
-  return 0;
+  return false;
 }
 
 
 // 827D3298  CL_Demo_IsClipPlaying  (client_demo/cl_demo_playback.cpp:1875)
 
-undefined1 CL_Demo_IsClipPlaying(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+bool CL_Demo_IsClipPlaying(void)
 
 {
-  undefined4 *puVar1;
-  int iVar2;
+  clientDemoPlayback_t *pcVar1;
+  clientConnection_t *pcVar2;
   
-  if (DAT_84872900 == 0) {
-    return 0;
+  if (s_clientDemoPlayback == (clientDemoPlayback_t *)0x0) {
+    return false;
   }
-  puVar1 = (undefined4 *)CL_Demo_GetPlaybackData();
-  iVar2 = CL_GetLocalClientConnection(*puVar1);
-  return *(undefined1 *)(iVar2 + 0x40260);
+  pcVar1 = CL_Demo_GetPlaybackData();
+  pcVar2 = CL_GetLocalClientConnection(pcVar1->localClientNum);
+  return (pcVar2->clientDemo).header.isClip;
 }
 
 
 // 827DA7C0  CL_Demo_GetClipPausedState  (client_demo/cl_demo_playback.cpp:1896)
 
-undefined1 CL_Demo_GetClipPausedState(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+bool CL_Demo_GetClipPausedState(void)
 
 {
-  undefined4 *puVar1;
-  int iVar2;
+  clientDemoPlayback_t *pcVar1;
+  clientConnection_t *pcVar2;
   
-  if (DAT_84872900 != 0) {
-    puVar1 = (undefined4 *)CL_Demo_GetPlaybackData();
-    iVar2 = CL_GetLocalClientConnection(*puVar1);
-    if (*(char *)(iVar2 + 0x40260) != '\0') {
-LAB_827da83c:
-      iVar2 = CL_Demo_GetPlaybackData();
-      return *(undefined1 *)(iVar2 + 0x51e898);
-    }
-    if (DAT_84872900 != 0) {
-      iVar2 = CL_Demo_GetPlaybackData();
-      if (*(int *)(iVar2 + 0x31e1ec) == 3) goto LAB_827da83c;
+  if (s_clientDemoPlayback != (clientDemoPlayback_t *)0x0) {
+    pcVar1 = CL_Demo_GetPlaybackData();
+    pcVar2 = CL_GetLocalClientConnection(pcVar1->localClientNum);
+    if (((pcVar2->clientDemo).header.isClip != false) ||
+       ((s_clientDemoPlayback != (clientDemoPlayback_t *)0x0 &&
+        (pcVar1 = CL_Demo_GetPlaybackData(), pcVar1->clipState == 3)))) {
+      pcVar1 = CL_Demo_GetPlaybackData();
+      return pcVar1->clipPausedState;
     }
   }
-  return 0;
+  return false;
 }
 
 
 // 827DA860  CL_Demo_IsTimeStopped  (client_demo/cl_demo_playback.cpp:1914)
 
-undefined8 CL_Demo_IsTimeStopped(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+bool CL_Demo_IsTimeStopped(void)
 
 {
-  char cVar2;
-  int iVar1;
+  bool bVar2;
+  clientDemoPlayback_t *pcVar1;
+  char cVar3;
   
-  cVar2 = CL_Demo_IsPaused();
-  if (cVar2 == '\0') {
-    cVar2 = '\0';
-    if (DAT_84872900 != 0) {
-      iVar1 = CL_Demo_GetPlaybackData();
-      cVar2 = *(char *)(iVar1 + 8);
+  bVar2 = CL_Demo_IsPaused();
+  if (!bVar2) {
+    cVar3 = '\0';
+    if (s_clientDemoPlayback != (clientDemoPlayback_t *)0x0) {
+      pcVar1 = CL_Demo_GetPlaybackData();
+      cVar3 = pcVar1->completed;
     }
-    if ((cVar2 == '\0') && (cVar2 = CL_Demo_GetClipPausedState(), cVar2 == '\0')) {
-      return 0;
+    if ((cVar3 == '\0') && (bVar2 = CL_Demo_GetClipPausedState(), !bVar2)) {
+      return false;
     }
   }
-  return 1;
+  return true;
 }
 
 
 // 827D32F0  CL_Demo_SetJumpTimeFlag  (client_demo/cl_demo_playback.cpp:1926)
 
-void CL_Demo_SetJumpTimeFlag(undefined1 param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void CL_Demo_SetJumpTimeFlag(bool param_1)
 
 {
-  int iVar1;
+  clientDemoPlayback_t *pcVar1;
   
-  if (DAT_84872900 != 0) {
-    iVar1 = CL_Demo_GetPlaybackData();
-    *(undefined1 *)(iVar1 + 0xc) = param_1;
+  if (s_clientDemoPlayback != (clientDemoPlayback_t *)0x0) {
+    pcVar1 = CL_Demo_GetPlaybackData();
+    pcVar1->jumpTimeFlag = param_1;
   }
   return;
 }
@@ -1871,45 +1417,58 @@ void CL_Demo_SetJumpTimeFlag(undefined1 param_1)
 
 // 827D3330  CL_Demo_GetJumpTimeFlag  (client_demo/cl_demo_playback.cpp:1941)
 
-undefined1 CL_Demo_GetJumpTimeFlag(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+bool CL_Demo_GetJumpTimeFlag(void)
 
 {
-  int iVar1;
+  clientDemoPlayback_t *pcVar1;
   
-  if (DAT_84872900 == 0) {
-    return 0;
+  if (s_clientDemoPlayback == (clientDemoPlayback_t *)0x0) {
+    return false;
   }
-  iVar1 = CL_Demo_GetPlaybackData();
-  return *(undefined1 *)(iVar1 + 0xc);
+  pcVar1 = CL_Demo_GetPlaybackData();
+  return pcVar1->jumpTimeFlag;
 }
 
 
 // 827D3378  CL_Demo_IsClipPreviewRunning  (client_demo/cl_demo_playback.cpp:1956)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
 bool CL_Demo_IsClipPreviewRunning(void)
 
 {
-  int iVar1;
+  clientDemoPlayback_t *pcVar1;
+  int iVar2;
   
-  iVar1 = 0;
-  if (DAT_84872900 != 0) {
-    iVar1 = CL_Demo_GetPlaybackData();
-    iVar1 = *(int *)(iVar1 + 0x31e1ec);
+  iVar2 = 0;
+  if (s_clientDemoPlayback != (clientDemoPlayback_t *)0x0) {
+    pcVar1 = CL_Demo_GetPlaybackData();
+    iVar2 = pcVar1->clipState;
   }
-  return iVar1 == 3;
+  return iVar2 == 3;
 }
 
 
 // 827D33C0  CL_Demo_CancelPreview  (client_demo/cl_demo_playback.cpp:1968)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
 void CL_Demo_CancelPreview(void)
 
 {
-  int iVar1;
+  clientDemoPlayback_t *pcVar1;
   
-  if (DAT_84872900 != 0) {
-    iVar1 = CL_Demo_GetPlaybackData();
-    *(undefined1 *)(iVar1 + 0x5bef58) = 1;
+  if (s_clientDemoPlayback != (clientDemoPlayback_t *)0x0) {
+    pcVar1 = CL_Demo_GetPlaybackData();
+    pcVar1->cancelPreview = true;
   }
   return;
 }
@@ -1917,246 +1476,125 @@ void CL_Demo_CancelPreview(void)
 
 // 827DA8D0  CL_Demo_IsThirdPersonCamera  (client_demo/cl_demo_playback.cpp:1983)
 
-undefined8 CL_Demo_IsThirdPersonCamera(undefined8 param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+bool CL_Demo_IsThirdPersonCamera(LocalClientNum_t param_1)
 
 {
-  char cVar1;
+  bool bVar1;
   
-  cVar1 = CL_Demo_IsFollowCamera();
-  if ((cVar1 == '\0') && (cVar1 = CL_Demo_IsFreeCamera(param_1), cVar1 == '\0')) {
-    return 0;
+  bVar1 = CL_Demo_IsFollowCamera(param_1);
+  if ((!bVar1) && (bVar1 = CL_Demo_IsFreeCamera(param_1), !bVar1)) {
+    return false;
   }
-  return 1;
+  return true;
 }
 
 
 // 827D3400  CL_Demo_IsFollowCamera  (client_demo/cl_demo_playback.cpp:1995)
-
-bool CL_Demo_IsFollowCamera(undefined8 param_1)
-
-{
-  char cVar2;
-  int iVar1;
-  
-  cVar2 = CL_Demo_IsPlaying();
-  if (((cVar2 != '\0') && (DAT_84872900 != 0)) &&
-     ((iVar1 = CG_GetLocalClientGlobals(param_1), iVar1 == 0 || (*(int *)(iVar1 + 0x7a708) == 0))))
-  {
-    iVar1 = CL_Demo_GetPlaybackData();
-    return *(int *)(iVar1 + 0x5eefc8) == 1;
-  }
-  return false;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 827D34A0  CL_Demo_IsFreeCamera  (client_demo/cl_demo_playback.cpp:2020)
-
-bool CL_Demo_IsFreeCamera(undefined8 param_1)
-
-{
-  char cVar2;
-  int iVar1;
-  
-  cVar2 = CL_Demo_IsPlaying();
-  if (((cVar2 != '\0') && (DAT_84872900 != 0)) &&
-     ((iVar1 = CG_GetLocalClientGlobals(param_1), iVar1 == 0 || (*(int *)(iVar1 + 0x7a708) == 0))))
-  {
-    iVar1 = CL_Demo_GetPlaybackData();
-    return *(int *)(iVar1 + 0x5eefc8) == 2;
-  }
-  return false;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 827D3540  CL_Demo_IsCapturingScreenshot  (client_demo/cl_demo_playback.cpp:2045)
-
-undefined4 CL_Demo_IsCapturingScreenshot(void)
-
-{
-  int iVar1;
-  
-  iVar1 = CG_GetLocalClientGlobals();
-  return *(undefined4 *)(iVar1 + 0x3348);
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 827D3568  CL_Demo_IsRenderingMovie  (client_demo/cl_demo_playback.cpp:2069)
 
-undefined1 CL_Demo_IsRenderingMovie(undefined8 param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+int CL_Demo_IsRenderingMovie(LocalClientNum_t param_1)
 
 {
-  char cVar2;
-  int iVar1;
+  bool bVar2;
+  clientConnection_t *pcVar1;
   
-  cVar2 = CL_Demo_IsPlaying();
-  if (cVar2 == '\0') {
+  bVar2 = CL_Demo_IsPlaying(param_1);
+  if (!bVar2) {
     return 0;
   }
-  iVar1 = CL_GetLocalClientConnection(param_1);
-  return *(undefined1 *)(iVar1 + 0x54230);
+  pcVar1 = CL_GetLocalClientConnection(param_1);
+  return (int)(pcVar1->clientDemo).renderingMovie;
 }
 
 
 // 827D35D0  CL_Demo_Pause  (client_demo/cl_demo_playback.cpp:2088)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void CL_Demo_Pause(void)
 
 {
-  Dvar_SetBool(DAT_8484f0bc,*(char *)(DAT_8484f0bc + 0xc) == '\0');
+  Dvar_SetBool(cl_demo_pause,(cl_demo_pause->current).enabled == false);
   return;
 }
 
 
 // 827DA928  CL_Demo_SwitchPlayer  (client_demo/cl_demo_playback.cpp:2104)
-
-void CL_Demo_SwitchPlayer(undefined8 param_1,int param_2)
-
-{
-  uint uVar1;
-  undefined8 uVar2;
-  char cVar5;
-  int iVar3;
-  int iVar4;
-  ulonglong uVar6;
-  
-  uVar2 = __savegprlr_26();
-  cVar5 = CL_Demo_IsFreeCamera();
-  if (cVar5 != '\0') {
-    Com_PrintError(0xe,0xffffffff821de210);
-    __restgprlr_26();
-    return;
-  }
-  cVar5 = '\0';
-  if (DAT_84872900 != 0) {
-    iVar3 = CL_Demo_GetPlaybackData();
-    cVar5 = *(char *)(iVar3 + 8);
-  }
-  if (cVar5 != '\0') {
-    Com_PrintError(0xe,0xffffffff821de1d8);
-    __restgprlr_26();
-    return;
-  }
-  iVar3 = 0;
-  uVar1 = *(uint *)(DAT_8484f0b4 + 0xc);
-  uVar6 = (ulonglong)uVar1;
-  while( true ) {
-    if (param_2 == 0) {
-      uVar6 = uVar6 + 1;
-    }
-    else {
-      uVar6 = uVar6 - 1;
-    }
-    if ((int)uVar6 < 0x12) {
-      if ((int)uVar6 < 0) {
-        uVar6 = 0x11;
-      }
-    }
-    else {
-      uVar6 = 0;
-    }
-    iVar4 = CG_GetEntity(uVar2,uVar6);
-    if (((*(uint *)(iVar4 + 0x1c4) & 1) != 0) && (uVar1 != (uint)uVar6)) break;
-    iVar3 = iVar3 + 1;
-    if (0x11 < iVar3) {
-LAB_827daa44:
-      uVar2 = Sys_Milliseconds();
-      Dvar_SetInt(DAT_8484f0c4,uVar2);
-      __restgprlr_26();
-      return;
-    }
-  }
-  cVar5 = CL_Demo_IsFollowCamera(uVar2);
-  if (cVar5 == '\0') {
-    CL_Demo_SwitchCameraMode(uVar2,1);
-  }
-  Dvar_SetInt(DAT_8484f0b4,uVar6);
-  goto LAB_827daa44;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure LerpEntityStatePlayer
 
 // 827D35E8  CL_Demo_SwitchCameraMode  (client_demo/cl_demo_playback.cpp:2163)
-
-void CL_Demo_SwitchCameraMode(undefined8 param_1,int param_2)
-
-{
-  undefined8 uVar1;
-  int iVar2;
-  int iVar3;
-  int iVar4;
-  char cVar6;
-  int iVar5;
-  
-  uVar1 = __savegprlr_26();
-  if (DAT_84872900 == 0) {
-    MyAssertHandler(0xffffffff821dcc88,0x64c,0,0xffffffff82000f98,0xffffffff821dcdfc);
-  }
-  iVar5 = *(int *)(DAT_84872900 + 0x5eefc8);
-  if (iVar5 != param_2) {
-    iVar2 = CG_GetLocalClientGlobals(uVar1);
-    iVar3 = CL_GetLocalClientConnection(uVar1);
-    iVar4 = CL_GetLocalClientGlobals(uVar1);
-    if ((iVar5 == 1) && (cVar6 = CL_Demo_IsClipPlaying(), cVar6 == '\0')) {
-      Dvar_SetInt(DAT_8484f0b4,*(undefined4 *)(iVar3 + 0x4025c));
-    }
-    if (param_2 == 2) {
-      *(undefined4 *)(iVar2 + 0x70560) = *(undefined4 *)(iVar2 + 0x6b9c8);
-      *(undefined4 *)(iVar2 + 0x70564) = *(undefined4 *)(iVar2 + 0x6b9cc);
-      *(undefined4 *)(iVar2 + 0x70568) = *(undefined4 *)(iVar2 + 0x6b9d0);
-      AxisToAngles(iVar2 + 0x6b9d4,iVar4 + 0x35ec);
-      *(undefined4 *)(iVar4 + 0x35f4) = 0;
-    }
-    iVar5 = CL_Demo_GetPlaybackData();
-    *(undefined1 *)(iVar5 + 0x5eefcc) = 1;
-    iVar5 = CL_Demo_GetPlaybackData();
-    *(int *)(iVar5 + 0x5eefc8) = param_2;
-    uVar1 = Sys_Milliseconds();
-    Dvar_SetInt(DAT_8484f0c4,uVar1);
-  }
-  __restgprlr_26();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 827D3720  CL_Demo_SwitchCamera  (client_demo/cl_demo_playback.cpp:2225)
 
-void CL_Demo_SwitchCamera(undefined8 param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void CL_Demo_SwitchCamera(LocalClientNum_t param_1)
 
 {
-  if (DAT_84872900 == 0) {
-    MyAssertHandler(0xffffffff821dcc88,0x64c,0,0xffffffff82000f98,0xffffffff821dcdfc);
+  if (s_clientDemoPlayback == (clientDemoPlayback_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_playback.cpp"
+                    ,0x64c,0,"%s");
   }
   CL_Demo_SwitchCameraMode
-            (param_1,-(ulonglong)((ulonglong)*(uint *)(DAT_84872900 + 0x5eefc8) != 2) &
-                     (ulonglong)*(uint *)(DAT_84872900 + 0x5eefc8) + 1);
+            (param_1,-(uint)(s_clientDemoPlayback->cameraMode != 2) &
+                     s_clientDemoPlayback->cameraMode + 1U);
   return;
 }
 
 
 // 827D37B0  CL_Demo_CameraModeChanged  (client_demo/cl_demo_playback.cpp:2249)
 
-undefined1 CL_Demo_CameraModeChanged(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+bool CL_Demo_CameraModeChanged(void)
 
 {
-  int iVar1;
+  clientDemoPlayback_t *pcVar1;
   
-  if (DAT_84872900 == 0) {
-    return 0;
+  if (s_clientDemoPlayback == (clientDemoPlayback_t *)0x0) {
+    return false;
   }
-  iVar1 = CL_Demo_GetPlaybackData();
-  return *(undefined1 *)(iVar1 + 0x5eefcc);
+  pcVar1 = CL_Demo_GetPlaybackData();
+  return pcVar1->cameraModeChanged;
 }
 
 
 // 827D3800  CL_Demo_ClearCameraModeChanged  (client_demo/cl_demo_playback.cpp:2264)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
 void CL_Demo_ClearCameraModeChanged(void)
 
 {
-  int iVar1;
+  clientDemoPlayback_t *pcVar1;
   
-  if (DAT_84872900 != 0) {
-    iVar1 = CL_Demo_GetPlaybackData();
-    *(undefined1 *)(iVar1 + 0x5eefcc) = 0;
+  if (s_clientDemoPlayback != (clientDemoPlayback_t *)0x0) {
+    pcVar1 = CL_Demo_GetPlaybackData();
+    pcVar1->cameraModeChanged = false;
   }
   return;
 }
@@ -2164,17 +1602,21 @@ void CL_Demo_ClearCameraModeChanged(void)
 
 // 827D3840  CL_Demo_ToggleDemoHud  (client_demo/cl_demo_playback.cpp:2277)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
 void CL_Demo_ToggleDemoHud(void)
 
 {
-  char cVar1;
-  int iVar2;
+  bool bVar1;
+  clientDemoPlayback_t *pcVar2;
   
-  if (DAT_84872900 != 0) {
-    iVar2 = CL_Demo_GetPlaybackData();
-    cVar1 = *(char *)(iVar2 + 0x20);
-    iVar2 = CL_Demo_GetPlaybackData();
-    *(bool *)(iVar2 + 0x20) = cVar1 == '\0';
+  if (s_clientDemoPlayback != (clientDemoPlayback_t *)0x0) {
+    pcVar2 = CL_Demo_GetPlaybackData();
+    bVar1 = pcVar2->hideDemoHud;
+    pcVar2 = CL_Demo_GetPlaybackData();
+    pcVar2->hideDemoHud = bVar1 == false;
   }
   return;
 }
@@ -2182,596 +1624,165 @@ void CL_Demo_ToggleDemoHud(void)
 
 // 827D3890  CL_Demo_IsDemoHudHidden  (client_demo/cl_demo_playback.cpp:2296)
 
-undefined1 CL_Demo_IsDemoHudHidden(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+bool CL_Demo_IsDemoHudHidden(void)
 
 {
-  int iVar1;
+  clientDemoPlayback_t *pcVar1;
+  int iVar2;
   
-  if (DAT_84872900 != 0) {
-    iVar1 = CL_Demo_GetPlaybackData();
-    if ((*(int *)(iVar1 + 0x31e1ec) != 3) && (iVar1 = CL_Demo_IsRenderingMovie(0), iVar1 == 0)) {
-      iVar1 = CL_Demo_GetPlaybackData();
-      return *(undefined1 *)(iVar1 + 0x20);
-    }
+  if (((s_clientDemoPlayback != (clientDemoPlayback_t *)0x0) &&
+      (pcVar1 = CL_Demo_GetPlaybackData(), pcVar1->clipState != 3)) &&
+     (iVar2 = CL_Demo_IsRenderingMovie(LOCAL_CLIENT_0), iVar2 == 0)) {
+    pcVar1 = CL_Demo_GetPlaybackData();
+    return pcVar1->hideDemoHud;
   }
-  return 1;
+  return true;
 }
 
 
 // 827D3900  CL_Demo_ResetTimeValues  (client_demo/cl_demo_playback.cpp:2317)
-
-void CL_Demo_ResetTimeValues(undefined8 param_1,undefined4 param_2)
-
-{
-  undefined8 uVar1;
-  int iVar2;
-  int iVar3;
-  int iVar4;
-  
-  uVar1 = __savegprlr_28();
-  iVar2 = CL_GetLocalClientGlobals();
-  iVar3 = CL_GetLocalClientConnection(uVar1);
-  iVar4 = CG_GetLocalClientGlobals(uVar1);
-  *(undefined4 *)(iVar2 + 0x3404) = param_2;
-  DAT_82aa1c24 = param_2;
-  *(undefined4 *)(iVar2 + 0x3408) = param_2;
-  *(undefined4 *)(iVar3 + 0xc) = param_2;
-  *(undefined4 *)(iVar4 + 0x6b9a8) = 0;
-  *(undefined4 *)(iVar4 + 0x6b98c) = param_2;
-  *(undefined4 *)(iVar4 + 0x10804c) = 0;
-  *(undefined4 *)(iVar4 + 0x79754) = 0;
-  *(undefined4 *)(iVar4 + 0x79768) = 0;
-  __restgprlr_28();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
 
 // 827D3998  CL_Demo_ResetMessageSequenceNumbers  (client_demo/cl_demo_playback.cpp:2347)
-
-void CL_Demo_ResetMessageSequenceNumbers(undefined8 param_1,int param_2,int param_3)
-
-{
-  undefined8 uVar1;
-  int iVar2;
-  int iVar3;
-  
-  uVar1 = __savegprlr_28();
-  iVar2 = CG_GetLocalClientStaticGlobals();
-  iVar3 = CG_GetLocalClientGlobals(uVar1);
-  if (param_3 < 1) {
-    MyAssertHandler(0xffffffff821dcc88,0x931,0,0xffffffff82000f98,0xffffffff821dce24);
-  }
-  if (param_2 < 0) {
-    *(int *)(iVar2 + 0x1c) = param_3 + -1;
-    *(int *)(iVar3 + 0x3350) = param_3;
-    __restgprlr_28();
-    return;
-  }
-  *(int *)(iVar2 + 0x1c) = param_2;
-  *(int *)(iVar3 + 0x3350) = param_3;
-  __restgprlr_28();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure clientInfo_t
 
 // 827D3A20  CL_Demo_ResetServerCommandSequenceNumbers  (client_demo/cl_demo_playback.cpp:2369)
-
-void CL_Demo_ResetServerCommandSequenceNumbers(undefined8 param_1,undefined4 param_2)
-
-{
-  undefined8 uVar1;
-  int iVar2;
-  int iVar3;
-  
-  uVar1 = __savegprlr_29();
-  iVar2 = CG_GetLocalClientStaticGlobals();
-  iVar3 = CL_GetLocalClientConnection(uVar1);
-  *(undefined4 *)(iVar2 + 0x18) = param_2;
-  *(undefined4 *)(iVar3 + 0x2013c) = param_2;
-  *(undefined4 *)(iVar3 + 0x20140) = param_2;
-  __restgprlr_29();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure clientInfo_t
 
 // 827D3A68  CL_ClearSplashUI  (client_demo/cl_demo_playback.cpp:2389)
-
-void CL_ClearSplashUI(void)
-
-{
-  undefined8 uVar1;
-  int iVar3;
-  undefined8 uVar2;
-  longlong lVar4;
-  int *piVar5;
-  undefined4 local_40 [16];
-  
-  uVar1 = __savegprlr_27();
-  iVar3 = CG_GetLocalClientGlobals();
-  if (iVar3 != 0) {
-    lVar4 = 4;
-    piVar5 = (int *)(iVar3 + 0x1083e4);
-    do {
-      if (*piVar5 != 0) {
-        *piVar5 = 0;
-        StringTable_GetAsset(0xffffffff8201cbd0,local_40);
-        uVar2 = StringTable_GetColumnValueForRow(local_40[0],piVar5[-1],0xb);
-        UI_CloseMenu(uVar1,uVar2);
-      }
-      lVar4 = lVar4 + -1;
-      piVar5 = piVar5 + 4;
-    } while (lVar4 != 0);
-  }
-  __restgprlr_27();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 827D3AE8  CL_Demo_ResetWorldInformation  (client_demo/cl_demo_playback.cpp:2419)
-
-void CL_Demo_ResetWorldInformation(undefined8 param_1,undefined8 param_2)
-
-{
-  undefined8 uVar1;
-  int iVar2;
-  
-  uVar1 = __savegprlr_29();
-  iVar2 = CG_GetLocalClientGlobals();
-  memset((void *)(iVar2 + 0x79424),0,0x330);
-  *(undefined4 *)(iVar2 + 0x76e90) = 0;
-  *(undefined4 *)(iVar2 + 0x76e84) = 0;
-  *(undefined4 *)(iVar2 + 0x76e94) = 0xffffffff;
-  Con_Close(uVar1);
-  if (*(int *)(iVar2 + 0x335c) != 0) {
-    Phys_EndFrame();
-    FX_RewindTo(uVar1,param_2,1);
-    CG_ClearScriptModelAnims(uVar1);
-  }
-  CL_ClearSplashUI(uVar1);
-  CG_ResetCompassData(uVar1,param_2);
-  CG_ClearOverheadFade();
-  __restgprlr_29();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 827DD048  CL_Demo_ProcessKeyFrameJump  (client_demo/cl_demo_playback.cpp:2455)
-
-void CL_Demo_ProcessKeyFrameJump(undefined8 param_1,longlong param_2)
-
-{
-  bool bVar1;
-  undefined4 uVar2;
-  int iVar3;
-  undefined8 uVar4;
-  undefined8 uVar5;
-  int iVar6;
-  int iVar7;
-  int iVar8;
-  int iVar9;
-  undefined4 *puVar10;
-  int iVar11;
-  char cVar14;
-  uint uVar13;
-  ulonglong uVar12;
-  undefined4 *puVar15;
-  char local_b0;
-  char local_af [3];
-  uint local_ac;
-  undefined1 auStack_a8 [8];
-  undefined1 auStack_a0 [8];
-  undefined4 local_98;
-  undefined4 local_8c [35];
-  
-  uVar4 = __savegprlr_19();
-  LargeLocal__LargeLocal(auStack_a8,0x10000);
-  uVar5 = LargeLocal__GetBuf(auStack_a8);
-  if (DAT_84872900 == 0) {
-    MyAssertHandler(0xffffffff821dcc88,0x64c,0,0xffffffff82000f98,0xffffffff821dcdfc);
-  }
-  iVar3 = DAT_84872900;
-  iVar6 = CL_GetLocalClientConnection(uVar4);
-  iVar7 = CL_GetLocalClientGlobals(uVar4);
-  iVar11 = (int)param_2 * 0x30 + iVar3;
-  CL_Demo_SeekFile(*(undefined4 *)(iVar6 + 0x4024c),*(undefined4 *)(iVar11 + 0x20304c),2);
-  bVar1 = DAT_84872900 != 0;
-  *(undefined4 *)(iVar3 + 0x18) = *(undefined4 *)(iVar11 + 0x20304c);
-  if (bVar1) {
-    iVar8 = CL_Demo_GetPlaybackData();
-    iVar9 = DAT_84872900;
-    *(undefined1 *)(iVar8 + 8) = 0;
-    if (iVar9 != 0) {
-      puVar15 = (undefined4 *)CL_Demo_GetPlaybackData();
-      iVar9 = CL_GetLocalClientConnection(*puVar15);
-      cVar14 = *(char *)(iVar9 + 0x40260);
-      goto LAB_827dd14c;
-    }
-  }
-  cVar14 = '\0';
-LAB_827dd14c:
-  if (cVar14 != '\0') {
-    *(undefined4 *)(iVar3 + 0x51e4c0) = *(undefined4 *)(iVar11 + 0x203050);
-    *(undefined4 *)(iVar3 + 0x51e4c4) = *(undefined4 *)(iVar11 + 0x203054);
-    *(undefined4 *)(iVar3 + 0x51e4d0) = *(undefined4 *)(iVar11 + 0x203074);
-    *(undefined4 *)(iVar3 + 0x51e4cc) =
-         *(undefined4 *)
-          ((int)((param_2 + 0xabadU + (param_2 + 0xabadU & 0x7fffffff) * 2 & 0xffffffff) << 4) +
-          iVar3);
-    *(undefined4 *)(iVar3 + 0x51e4c8) = 0;
-  }
-  iVar9 = CG_IsScoreboardDisplayed(uVar4);
-  if (iVar9 != 0) {
-    CG_ScoresUp(uVar4);
-    UI_SetActiveMenu(uVar4,0);
-  }
-  uVar2 = *(undefined4 *)(iVar11 + 0x203060);
-  iVar9 = CG_GetLocalClientStaticGlobals(uVar4);
-  iVar8 = CL_GetLocalClientConnection(uVar4);
-  *(undefined4 *)(iVar9 + 0x18) = uVar2;
-  puVar15 = (undefined4 *)(iVar6 + 0x5422c);
-  *(undefined4 *)(iVar8 + 0x20140) = uVar2;
-  *(undefined4 *)(iVar8 + 0x2013c) = uVar2;
-  *puVar15 = CL_Demo_ReadFromKeyFrameMemory;
-  *(undefined4 *)(iVar3 + 0x205f30) = *(undefined4 *)(iVar11 + 0x203048);
-  CL_Demo_ReadFromKeyFrameMemory(&local_ac,4,uVar4);
-  memset((void *)uVar5,0,0x10000);
-  MSG_Init(auStack_a0,uVar5,0x10000);
-  CL_Demo_ReadFromKeyFrameMemory(local_8c,4,uVar4);
-  CL_Demo_ReadFromKeyFrameMemory(local_98,local_8c[0],uVar4);
-  CL_Demo_ReadConfigStrings(uVar4,auStack_a0);
-  CL_Demo_UpdateConfigStrings(uVar4);
-  CL_Demo_ReadVisionsets(uVar4,auStack_a0);
-  CL_Demo_ReadBlur(uVar4,auStack_a0);
-  CL_Demo_ReadScores(uVar4,auStack_a0);
-  CL_Demo_ReadPersistentDataBuffer(auStack_a0);
-  if (DAT_84872900 == 0) {
-    cVar14 = '\0';
-  }
-  else {
-    puVar10 = (undefined4 *)CL_Demo_GetPlaybackData();
-    iVar6 = CL_GetLocalClientConnection(*puVar10);
-    cVar14 = *(char *)(iVar6 + 0x40260);
-  }
-  if (cVar14 != '\0') {
-    (*(code *)*puVar15)(&local_b0,1,uVar4);
-    if (local_b0 != '\x04') {
-      MyAssertHandler(0xffffffff821dcc88,0x9e0,0,0xffffffff82000f98,0xffffffff821de51c);
-    }
-    CL_Demo_ReadClipCommands(uVar4,1);
-  }
-  iVar6 = *(int *)(iVar11 + 0x203068);
-  if (iVar6 != *(int *)(iVar11 + 0x20306c)) {
-    do {
-      CL_Demo_ReadDemoMessage(uVar4);
-      uVar13 = iVar6 + 1;
-      iVar6 = uVar13 + (((int)uVar13 >> 8) + (uint)((int)uVar13 < 0 && (uVar13 & 0xff) != 0) &
-                       0xffffff) * -0x100;
-    } while (iVar6 != *(int *)(iVar11 + 0x20306c));
-  }
-  uVar12 = (ulonglong)local_ac;
-  *(int *)(iVar7 + 0xd3fc) = iVar6;
-  if (0 < (int)local_ac) {
-    do {
-      CL_Demo_ReadFromKeyFrameMemory(local_af,1,uVar4);
-      if (local_af[0] != '\0') {
-        CL_Demo_ReadDemoMessage(uVar4);
-      }
-      uVar12 = uVar12 - 1;
-    } while (uVar12 != 0);
-  }
-  *puVar15 = CL_Demo_Read;
-  CL_Demo_ResetTimeValues(uVar4,*(undefined4 *)(iVar7 + 0x3388));
-  iVar6 = *(int *)(iVar7 + 0x338c);
-  iVar8 = *(int *)(iVar11 + 0x20305c) + -1;
-  iVar11 = CG_GetLocalClientStaticGlobals(uVar4);
-  iVar9 = CG_GetLocalClientGlobals(uVar4);
-  if (iVar6 < 1) {
-    MyAssertHandler(0xffffffff821dcc88,0x931,0,0xffffffff82000f98,0xffffffff821dce24);
-  }
-  if (iVar8 < 0) {
-    iVar8 = iVar6 + -1;
-  }
-  *(int *)(iVar11 + 0x1c) = iVar8;
-  *(int *)(iVar9 + 0x3350) = iVar6;
-  CL_Demo_ResetWorldInformation(uVar4,*(undefined4 *)(iVar7 + 0x3388));
-  *(int *)(iVar7 + 0x340c) = *(int *)(iVar7 + 0x3388) - DAT_82aa1c24;
-  Con_Close(uVar4);
-  SND_StopSounds(0);
-  if (DAT_84872900 != 0) {
-    *(undefined1 *)(DAT_84872900 + 0xc) = 1;
-  }
-  *(undefined1 *)(iVar3 + 10) = 1;
-  CL_SetCGameTime(uVar4);
-  *(undefined1 *)(iVar3 + 10) = 0;
-  LargeLocal___LargeLocal(auStack_a8);
-  __restgprlr_19();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
 
 // 827D3B98  CL_Demo_GetKeyFrameForJumpForward  (client_demo/cl_demo_playback.cpp:2582)
-
-void CL_Demo_GetKeyFrameForJumpForward(void)
-
-{
-  undefined4 *puVar1;
-  undefined8 uVar2;
-  int iVar3;
-  int iVar4;
-  undefined4 *puVar5;
-  int iVar6;
-  char cVar8;
-  int iVar7;
-  int *piVar9;
-  longlong lVar10;
-  longlong lVar11;
-  int local_50;
-  undefined1 auStack_4c [76];
-  
-  uVar2 = __savegprlr_25();
-  if (DAT_84872900 == (undefined4 *)0x0) {
-    MyAssertHandler(0xffffffff821dcc88,0x64c,0,0xffffffff82000f98,0xffffffff821dcdfc);
-  }
-  puVar1 = DAT_84872900;
-  iVar3 = CL_GetLocalClientConnection(uVar2);
-  iVar4 = CL_GetLocalClientGlobals(uVar2);
-  iVar7 = puVar1[0x817ca];
-  if (DAT_84872900 == (undefined4 *)0x0) {
-    cVar8 = '\0';
-  }
-  else {
-    puVar5 = (undefined4 *)CL_Demo_GetPlaybackData();
-    iVar6 = CL_GetLocalClientConnection(*puVar5);
-    cVar8 = *(char *)(iVar6 + 0x40260);
-  }
-  if (cVar8 == '\0') {
-    iVar4 = *(int *)(iVar4 + 0x3388);
-  }
-  else if (DAT_84872900 == (undefined4 *)0x0) {
-    iVar4 = 0;
-  }
-  else {
-    iVar4 = CL_Demo_GetPlaybackData();
-    iVar4 = *(int *)(iVar4 + 0x51e4c0);
-  }
-  if ((int)puVar1[iVar7 * 0xc + 0x80c14] < iVar4) {
-    __restgprlr_25(0xffffffffffffffff);
-    return;
-  }
-  cVar8 = CL_Demo_IsPaused();
-  if (cVar8 != '\0') {
-    iVar4 = iVar4 + 700;
-  }
-  iVar7 = -1;
-  lVar11 = -1;
-  piVar9 = puVar1 + 0x80c20;
-  lVar10 = 2;
-  do {
-    iVar6 = piVar9[-0xc];
-    if (((-1 < iVar6) && (iVar4 < iVar6)) && ((iVar7 < 0 || (iVar6 < iVar7)))) {
-      lVar11 = lVar10 + -2;
-      iVar7 = iVar6;
-    }
-    iVar6 = *piVar9;
-    if (((-1 < iVar6) && (iVar4 < iVar6)) && ((iVar7 < 0 || (iVar6 < iVar7)))) {
-      lVar11 = lVar10 + -1;
-      iVar7 = iVar6;
-    }
-    iVar6 = piVar9[0xc];
-    if (((-1 < iVar6) && (iVar4 < iVar6)) && ((iVar7 < 0 || (iVar6 < iVar7)))) {
-      lVar11 = lVar10;
-      iVar7 = iVar6;
-    }
-    iVar6 = piVar9[0x18];
-    if (((-1 < iVar6) && (iVar4 < iVar6)) && ((iVar7 < 0 || (iVar6 < iVar7)))) {
-      lVar11 = lVar10 + 1;
-      iVar7 = iVar6;
-    }
-    iVar6 = piVar9[0x24];
-    if (((-1 < iVar6) && (iVar4 < iVar6)) && ((iVar7 < 0 || (iVar6 < iVar7)))) {
-      lVar11 = lVar10 + 2;
-      iVar7 = iVar6;
-    }
-    piVar9 = piVar9 + 0x3c;
-    iVar6 = (int)lVar10;
-    lVar10 = lVar10 + 5;
-  } while (iVar6 + 3 < 0xfa);
-  cVar8 = '\0';
-  if (DAT_84872900 != (undefined4 *)0x0) {
-    iVar7 = CL_GetLocalClientConnection(*DAT_84872900);
-    cVar8 = *(char *)(iVar7 + 0x40260);
-  }
-  if ((cVar8 == '\0') &&
-     (CL_Demo_GetConnectionTimeInfoForPlayer(uVar2,auStack_4c,&local_50), local_50 <= iVar4)) {
-    Dvar_SetInt(DAT_8484f0b4,*(undefined4 *)(iVar3 + 0x4025c));
-    uVar2 = Sys_Milliseconds();
-    Dvar_SetInt(DAT_8484f0c4,uVar2);
-  }
-  __restgprlr_25(lVar11);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
 
 // 827D3E30  CL_Demo_GetKeyFrameForJumpBack  (client_demo/cl_demo_playback.cpp:2658)
-
-void CL_Demo_GetKeyFrameForJumpBack(void)
-
-{
-  uint uVar1;
-  bool bVar2;
-  undefined8 uVar3;
-  int iVar4;
-  int iVar5;
-  int iVar6;
-  char cVar9;
-  undefined4 *puVar7;
-  int iVar8;
-  int iVar10;
-  int iVar11;
-  ulonglong uVar12;
-  ulonglong uVar13;
-  double dVar14;
-  int local_60;
-  undefined1 auStack_5c [92];
-  
-  uVar3 = __savegprlr_22();
-  bVar2 = false;
-  if (DAT_84872900 == 0) {
-    MyAssertHandler(0xffffffff821dcc88,0x64c,0,0xffffffff82000f98,0xffffffff821dcdfc);
-  }
-  iVar8 = DAT_84872900;
-  iVar4 = CL_GetLocalClientConnection(uVar3);
-  iVar5 = CL_GetLocalClientGlobals(uVar3);
-  uVar13 = 0xffffffffffffffff;
-  iVar11 = -1;
-  uVar1 = *(uint *)(iVar8 + 0x205f28);
-  uVar12 = (ulonglong)uVar1;
-  if (DAT_84872900 == 0) {
-    cVar9 = '\0';
-  }
-  else {
-    puVar7 = (undefined4 *)CL_Demo_GetPlaybackData();
-    iVar6 = CL_GetLocalClientConnection(*puVar7);
-    cVar9 = *(char *)(iVar6 + 0x40260);
-  }
-  if (cVar9 != '\0') {
-    iVar5 = 0;
-    if (DAT_84872900 != 0) {
-      iVar5 = CL_Demo_GetPlaybackData();
-      iVar5 = *(int *)(iVar5 + 0x51e4c0);
-    }
-    iVar5 = iVar5 + -800;
-    goto LAB_827d3f3c;
-  }
-  cVar9 = CL_Demo_IsPaused();
-  if (cVar9 == '\0') {
-    dVar14 = (double)CL_Demo_GetTimeScale();
-    iVar6 = 3;
-    if (dVar14 <= 2.0) goto LAB_827d3f08;
-  }
-  else {
-LAB_827d3f08:
-    iVar6 = 1;
-  }
-  iVar5 = *(int *)(iVar5 + 0x3388) + iVar6 * -800;
-LAB_827d3f3c:
-  iVar6 = *(int *)((int)((uVar12 + ((ulonglong)uVar1 & 0x7fffffff) * 2 & 0xffffffff) << 4) + iVar8 +
-                  0x203050);
-  if (iVar5 < iVar6) {
-    do {
-      if (0xf9 < iVar11) break;
-      iVar11 = iVar11 + 1;
-      if ((int)uVar12 == 0) {
-        uVar12 = 0xf9;
-      }
-      else {
-        iVar10 = (int)(uVar12 - 1);
-        uVar1 = iVar10 / 0xfa + (iVar10 >> 0x1f);
-        uVar12 = (uVar12 - 1) + ((longlong)(int)uVar1 + (ulonglong)(uVar1 >> 0x1f)) * -0xfa;
-      }
-      iVar10 = *(int *)((int)((uVar12 + (uVar12 & 0x7fffffff) * 2 & 0xffffffff) << 4) + iVar8 +
-                       0x203050);
-      if (((iVar10 / 1000 < iVar5 / 1000) && (0 < iVar10)) && ((iVar10 < iVar6 || (iVar6 < 1)))) {
-        bVar2 = true;
-      }
-      uVar13 = uVar12;
-    } while (!bVar2);
-    uVar12 = uVar13;
-    if (!bVar2) {
-      __restgprlr_22(0xffffffffffffffff);
-      return;
-    }
-  }
-  cVar9 = '\0';
-  if (DAT_84872900 != 0) {
-    puVar7 = (undefined4 *)CL_Demo_GetPlaybackData();
-    iVar8 = CL_GetLocalClientConnection(*puVar7);
-    cVar9 = *(char *)(iVar8 + 0x40260);
-  }
-  if ((cVar9 == '\0') &&
-     (CL_Demo_GetConnectionTimeInfoForPlayer(uVar3,&local_60,auStack_5c), iVar5 <= local_60)) {
-    Dvar_SetInt(DAT_8484f0b4,*(undefined4 *)(iVar4 + 0x4025c));
-    uVar3 = Sys_Milliseconds();
-    Dvar_SetInt(DAT_8484f0c4,uVar3);
-  }
-  __restgprlr_22(uVar12);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
 
 // 827DD4E0  CL_Demo_JumpForward  (client_demo/cl_demo_playback.cpp:2764)
 
-void CL_Demo_JumpForward(undefined8 param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CL_Demo_JumpForward(LocalClientNum_t param_1)
 
 {
-  undefined8 uVar1;
+  int iVar1;
+  char *pcVar2;
   
-  uVar1 = CL_Demo_GetKeyFrameForJumpForward();
-  if ((int)uVar1 < 0) {
-    uVar1 = va(0xffffffff821de618);
-    Com_Printf(0xe,uVar1);
+  iVar1 = CL_Demo_GetKeyFrameForJumpForward(param_1);
+  if (iVar1 < 0) {
+    pcVar2 = va("DemoForward - We couldnt find a suitable keyframe for jumping forward.\n");
+    Com_Printf(0xe,pcVar2);
     return;
   }
-  CL_Demo_ProcessKeyFrameJump(param_1,uVar1);
+  CL_Demo_ProcessKeyFrameJump(param_1,iVar1);
   return;
 }
 
 
 // 827DD550  CL_Demo_JumpBack  (client_demo/cl_demo_playback.cpp:2787)
 
-void CL_Demo_JumpBack(undefined8 param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CL_Demo_JumpBack(LocalClientNum_t param_1)
 
 {
-  undefined8 uVar1;
+  int iVar1;
+  char *pcVar2;
   
-  uVar1 = CL_Demo_GetKeyFrameForJumpBack();
-  if ((int)uVar1 < 0) {
-    uVar1 = va(0xffffffff821de660);
-    Com_Printf(0xe,uVar1);
+  iVar1 = CL_Demo_GetKeyFrameForJumpBack(param_1);
+  if (iVar1 < 0) {
+    pcVar2 = va("DemoBack - Unable to find a proper previous keyframe.\n");
+    Com_Printf(0xe,pcVar2);
     return;
   }
-  CL_Demo_ProcessKeyFrameJump(param_1,uVar1);
+  CL_Demo_ProcessKeyFrameJump(param_1,iVar1);
   return;
 }
 
 
 // 827D4090  CL_Demo_IsTransitionScreenActive  (client_demo/cl_demo_playback.cpp:2808)
 
-undefined8 CL_Demo_IsTransitionScreenActive(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+bool CL_Demo_IsTransitionScreenActive(void)
 
 {
+  clientDemoPlayback_t *pcVar1;
   int iVar2;
-  longlong lVar1;
+  longlong lVar3;
   
-  if (DAT_84872900 != 0) {
-    iVar2 = CL_Demo_GetPlaybackData();
-    if (-1 < (int)*(uint *)(iVar2 + 0x31e1f4)) {
-      lVar1 = Sys_Milliseconds();
-      lVar1 = lVar1 - (ulonglong)*(uint *)(iVar2 + 0x31e1f4);
-      if ((-1 < lVar1) && ((int)lVar1 < 0x3e9)) {
-        return 1;
+  if (s_clientDemoPlayback != (clientDemoPlayback_t *)0x0) {
+    pcVar1 = CL_Demo_GetPlaybackData();
+    if (-1 < pcVar1->transitionScreenTime) {
+      iVar2 = Sys_Milliseconds();
+      lVar3 = (longlong)iVar2 - (ulonglong)(uint)pcVar1->transitionScreenTime;
+      if ((-1 < lVar3) && ((int)lVar3 < 0x3e9)) {
+        return true;
       }
     }
   }
-  return 0;
+  return false;
 }
 
 
 // 827D4100  CL_Demo_DrawTransitionScreen  (client_demo/cl_demo_playback.cpp:2836)
 
-void CL_Demo_DrawTransitionScreen(undefined8 param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+void CL_Demo_DrawTransitionScreen(LocalClientNum_t param_1)
 
 {
-  char cVar1;
-  undefined8 uVar2;
+  bool bVar4;
+  clientDemoPlayback_t *pcVar1;
+  int iVar2;
+  ScreenPlacement *pSVar3;
+  int iVar5;
+  float *pfVar6;
+  IMAGE_DOS_HEADER *pIVar7;
+  double dVar8;
+  float local_30;
+  float local_2c;
+  MaterialInfo_s_0_u_8 local_28;
   
-  cVar1 = CL_Demo_IsTransitionScreenActive();
-  if (cVar1 != '\0') {
-    CL_Demo_GetPlaybackData();
-    Sys_Milliseconds();
-    uVar2 = 0x3ff0000000000000;
-    ScrPlace_GetActivePlacement(param_1);
-    CL_DrawStretchPic(0,0,0x4084000000000000,0x407e000000000000,0,0,uVar2,uVar2);
+  bVar4 = CL_Demo_IsTransitionScreenActive();
+  if (bVar4) {
+    pcVar1 = CL_Demo_GetPlaybackData();
+    iVar2 = Sys_Milliseconds();
+    pIVar7 = &IMAGE_DOS_HEADER_82000000;
+    pfVar6 = colorBlack;
+    dVar8 = 1.0;
+    iVar5 = -0x7d5c0000;
+    local_30 = 0.0;
+    local_2c = 0.0;
+    local_28.surfaceTypeBits = (uint)0.0;
+    local_28._4_4_ =
+         -(float)((double)(longlong)(iVar2 - pcVar1->transitionScreenTime) * 0.0010000000474974513 -
+                 1.0);
+    pSVar3 = ScrPlace_GetActivePlacement(param_1);
+    CL_DrawStretchPic(pSVar3,0.0,0.0,640.0,480.0,iVar5,(int)pfVar6,0.0,0.0,(float)dVar8,(float)dVar8
+                      ,(float *)pIVar7,(Material *)&local_30);
   }
   return;
 }
@@ -2779,15 +1790,19 @@ void CL_Demo_DrawTransitionScreen(undefined8 param_1)
 
 // 827D4200  CL_Demo_ActivateTransitionScreen  (client_demo/cl_demo_playback.cpp:2860)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
 void CL_Demo_ActivateTransitionScreen(int param_1)
 
 {
-  int iVar1;
-  undefined4 uVar2;
+  clientDemoPlayback_t *pcVar1;
+  int iVar2;
   
-  if ((DAT_84872900 != 0) && (iVar1 = CL_Demo_GetPlaybackData(), param_1 != 0)) {
-    uVar2 = Sys_Milliseconds();
-    *(undefined4 *)(iVar1 + 0x31e1f4) = uVar2;
+  if ((s_clientDemoPlayback != (clientDemoPlayback_t *)0x0) &&
+     (pcVar1 = CL_Demo_GetPlaybackData(), param_1 != 0)) {
+    iVar2 = Sys_Milliseconds();
+    pcVar1->transitionScreenTime = iVar2;
   }
   return;
 }
@@ -2795,77 +1810,78 @@ void CL_Demo_ActivateTransitionScreen(int param_1)
 
 // 827D4260  CL_Demo_InvalidateOverlappingKeyframes  (client_demo/cl_demo_playback.cpp:2883)
 
-void CL_Demo_InvalidateOverlappingKeyframes(undefined8 param_1,int param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void CL_Demo_InvalidateOverlappingKeyframes(int param_1,int param_2)
 
 {
-  bool bVar1;
-  int iVar2;
-  int iVar3;
+  int iVar1;
+  bool bVar2;
+  clientDemoPlayback_t *pcVar3;
   int iVar4;
   int iVar5;
   int *piVar6;
-  int *_Dst;
-  longlong lVar7;
+  clientDemoKeyFrame_t *pcVar7;
   int iVar8;
   
-  iVar3 = __savegprlr_18();
-  if (DAT_84872900 == 0) {
-    MyAssertHandler(0xffffffff821dcc88,0x64c,0,0xffffffff82000f98,0xffffffff821dcdfc);
+  iVar4 = __savegprlr_18(param_1);
+  if (s_clientDemoPlayback == (clientDemoPlayback_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_playback.cpp"
+                    ,0x64c,0,"%s");
   }
-  iVar2 = DAT_84872900;
-  bVar1 = false;
-  lVar7 = 0;
-  piVar6 = (int *)(DAT_84872900 + 0x205f28);
-  _Dst = (int *)(DAT_84872900 + 0x203048);
+  pcVar3 = s_clientDemoPlayback;
+  bVar2 = false;
+  iVar8 = 0;
+  piVar6 = &s_clientDemoPlayback->keyframeIndex;
+  pcVar7 = s_clientDemoPlayback->keyFrame;
   do {
-    iVar8 = (int)lVar7;
-    if ((iVar8 != *piVar6) && (0 < _Dst[7])) {
-      iVar5 = *_Dst;
-      iVar4 = iVar5 + _Dst[7];
-      if (0x1fffff < iVar4) {
-        iVar4 = iVar4 + -0x1fffff;
+    if ((iVar8 != *piVar6) && (0 < pcVar7->size)) {
+      iVar1 = pcVar7->keyframeBufferStart;
+      iVar5 = iVar1 + pcVar7->size;
+      if (0x1fffff < iVar5) {
+        iVar5 = iVar5 + -0x1fffff;
       }
-      if (iVar3 < param_2) {
-        if (iVar5 < iVar4) {
-          if (((iVar5 < iVar3) || (param_2 <= iVar5)) && ((iVar4 <= iVar3 || (param_2 < iVar4))))
+      if (iVar4 < param_2) {
+        if (iVar1 < iVar5) {
+          if (((iVar1 < iVar4) || (param_2 <= iVar1)) && ((iVar5 <= iVar4 || (param_2 < iVar5))))
           goto LAB_827d43dc;
         }
-        else if ((iVar5 < iVar3) || (param_2 <= iVar5)) {
-          if (iVar3 < iVar4) {
+        else if ((iVar1 < iVar4) || (param_2 <= iVar1)) {
+          if (iVar4 < iVar5) {
 LAB_827d43d0:
-            if (iVar4 < param_2) goto LAB_827d43d8;
+            if (iVar5 < param_2) goto LAB_827d43d8;
           }
           goto LAB_827d43dc;
         }
 LAB_827d43d8:
-        bVar1 = true;
+        bVar2 = true;
       }
-      else if (iVar5 < iVar4) {
-        if (((((iVar3 <= iVar5) && (param_2 < iVar5)) || ((iVar3 < iVar4 && (param_2 < iVar4)))) ||
-            ((iVar5 < iVar3 && (iVar4 <= param_2)))) || ((iVar5 < param_2 && (param_2 <= iVar4))))
+      else if (iVar1 < iVar5) {
+        if (((((iVar4 <= iVar1) && (param_2 < iVar1)) || ((iVar4 < iVar5 && (param_2 < iVar5)))) ||
+            ((iVar1 < iVar4 && (iVar5 <= param_2)))) || ((iVar1 < param_2 && (param_2 <= iVar5))))
         goto LAB_827d43d8;
       }
       else {
-        if ((iVar3 <= iVar5) && (param_2 < iVar5)) goto LAB_827d43d8;
-        if (iVar4 < iVar3) goto LAB_827d43d0;
+        if ((iVar4 <= iVar1) && (param_2 < iVar1)) goto LAB_827d43d8;
+        if (iVar5 < iVar4) goto LAB_827d43d0;
       }
 LAB_827d43dc:
-      if (bVar1) {
-        memset(_Dst,0,0x30);
-        Com_Printf(0xe,0xffffffff821dce3c,lVar7);
-        iVar5 = *(int *)(iVar2 + 0x14);
-        bVar1 = false;
-        if ((iVar5 != -1) &&
-           (iVar5 = iVar5 + 1, iVar4 = iVar5 / 0xfa + (iVar5 >> 0x1f),
-           iVar5 + (iVar4 - (iVar4 >> 0x1f)) * -0xfa != iVar8)) {
-          MyAssertHandler(0xffffffff821dcc88,0xb94,0,0xffffffff82000f98,0xffffffff821dce60);
+      if (bVar2) {
+        memset();
+        Com_Printf(0xe,"Keyframe %d is now invalidated.\n");
+        iVar1 = pcVar3->lastInvalidatedKeyframe;
+        bVar2 = false;
+        if ((iVar1 != -1) && ((iVar1 + 1) % 0xfa != iVar8)) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_playback.cpp"
+                          ,0xb94,0,"%s");
         }
-        *(int *)(iVar2 + 0x14) = iVar8;
+        pcVar3->lastInvalidatedKeyframe = iVar8;
       }
     }
-    lVar7 = lVar7 + 1;
-    _Dst = _Dst + 0xc;
-    if (0xf9 < (int)lVar7) {
+    iVar8 = iVar8 + 1;
+    pcVar7 = pcVar7 + 1;
+    if (0xf9 < iVar8) {
       __restgprlr_18();
       return;
     }
@@ -2874,752 +1890,255 @@ LAB_827d43dc:
 
 
 // 827D4470  CL_Demo_ShouldGenerateKeyFrame  (client_demo/cl_demo_playback.cpp:2978)
-
-longlong CL_Demo_ShouldGenerateKeyFrame(undefined8 param_1)
-
-{
-  int iVar2;
-  char cVar4;
-  int iVar3;
-  ulonglong uVar1;
-  ulonglong uVar5;
-  
-  if (((DAT_84872900 != 0) && (iVar2 = CL_IsCgameInitialized(param_1), iVar2 != 0)) &&
-     (iVar2 = CL_GetLocalClientConnectionState(param_1), iVar2 == 10)) {
-    iVar2 = CL_GetLocalClientGlobals(param_1);
-    if (((*(uint *)(iVar2 + 0x3384) & 8) == 0) &&
-       ((cVar4 = CL_Demo_IsClipPlaying(), cVar4 == '\0' ||
-        (iVar3 = CL_Demo_GetClipTime(), iVar3 != 0)))) {
-      cVar4 = CL_Demo_IsClipPlaying();
-      if (cVar4 == '\0') {
-        uVar1 = (ulonglong)*(uint *)(iVar2 + 0x3388);
-      }
-      else {
-        uVar1 = CL_Demo_GetClipTime();
-      }
-      iVar2 = CL_Demo_GetPlaybackData();
-      if (*(uint *)(iVar2 + 0x10) == 0xffffffff) {
-        return 1;
-      }
-      uVar1 = uVar1 - *(uint *)(iVar2 + 0x10);
-      uVar5 = (ulonglong)*(uint *)(DAT_8484f0dc + 0xc) * 1000;
-      return ((uVar5 & 0xffffffff) >> 0x1f) + (longlong)((int)uVar1 >> 0x1f) +
-             (ulonglong)(uVar5 <= uVar1);
-    }
-  }
-  return 0;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
 
 // 827DAA60  CL_Demo_GenerateKeyFrame  (client_demo/cl_demo_playback.cpp:3024)
-
-void CL_Demo_GenerateKeyFrame(undefined8 param_1,ulonglong param_2,ulonglong param_3)
-
-{
-  bool bVar1;
-  int iVar2;
-  undefined4 uVar3;
-  uint uVar4;
-  int iVar5;
-  undefined8 uVar6;
-  undefined8 uVar7;
-  ulonglong uVar8;
-  undefined4 *puVar10;
-  int iVar11;
-  int iVar12;
-  void *_Dst;
-  longlong lVar9;
-  int iVar13;
-  undefined1 *puVar14;
-  int iVar15;
-  ulonglong uVar16;
-  char cVar18;
-  undefined4 uVar17;
-  int iVar19;
-  int iVar20;
-  int *piVar21;
-  int *piVar22;
-  ulonglong uVar23;
-  uint uVar24;
-  undefined1 local_100 [4];
-  undefined *local_fc;
-  char *local_f8;
-  int local_f4;
-  undefined4 local_f0;
-  int *local_ec;
-  undefined1 auStack_e8 [8];
-  undefined1 auStack_e0 [16];
-  undefined1 auStack_d0 [8];
-  undefined1 *local_c8;
-  uint local_bc [47];
-  
-  uVar6 = __savegprlr();
-  iVar15 = (int)param_3;
-  LargeLocal__LargeLocal(auStack_e0,0x10000);
-  uVar7 = LargeLocal__GetBuf(auStack_e0);
-  LargeLocal__LargeLocal(auStack_e8,0x10000);
-  uVar8 = LargeLocal__GetBuf(auStack_e8);
-  local_f8 = "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_playback.cpp";
-  local_fc = &DAT_82000f98;
-  if (iVar15 < 0) {
-    MyAssertHandler(0xffffffff821dcc88,0xbe2,0,0xffffffff82000f98,0xffffffff82058928);
-  }
-  if (DAT_84872900 == 0) {
-    cVar18 = '\0';
-  }
-  else {
-    puVar10 = (undefined4 *)CL_Demo_GetPlaybackData();
-    iVar11 = CL_GetLocalClientConnection(*puVar10);
-    cVar18 = *(char *)(iVar11 + 0x40260);
-  }
-  if ((cVar18 == '\0') || (0 < iVar15)) {
-    cVar18 = '\0';
-    if (DAT_84872900 != 0) {
-      puVar10 = (undefined4 *)CL_Demo_GetPlaybackData();
-      iVar11 = CL_GetLocalClientConnection(*puVar10);
-      cVar18 = *(char *)(iVar11 + 0x40260);
-    }
-    if ((cVar18 != '\0') || (iVar15 < 1)) {
-      MyAssertHandler(0xffffffff821dcc88,0xbe3,0,0xffffffff82000f98,0xffffffff821de2c0);
-    }
-  }
-  iVar11 = CL_GetLocalClientGlobals(uVar6);
-  iVar12 = CL_GetLocalClientConnection(uVar6);
-  if (DAT_84872900 == 0) {
-    MyAssertHandler(0xffffffff821dcc88,0x64c,0,0xffffffff82000f98,0xffffffff821dcdfc);
-  }
-  iVar5 = DAT_84872900;
-  piVar21 = (int *)(DAT_84872900 + 0x205f2c);
-  iVar20 = 0;
-  iVar19 = 0;
-  iVar2 = *piVar21;
-  if (*(int *)(iVar11 + 0x3390) < 0) {
-    local_f4 = 1;
-  }
-  else {
-    local_f4 = (*(int *)(iVar11 + 0x338c) - *(int *)(iVar11 + 0x3390)) + 1;
-  }
-  local_ec = piVar21;
-  CL_Demo_WriteToKeyFrameMemory(&local_f4,4,uVar6);
-  _Dst = (void *)uVar7;
-  memset(_Dst,0,0x10000);
-  MSG_Init(auStack_d0,uVar7,0x10000);
-  CL_Demo_WriteConfigStrings(uVar6,auStack_d0,1);
-  lVar9 = CG_GetLocalClientGlobals(uVar6);
-  MSG_WriteByte(auStack_d0,0x33);
-  MSG_WriteData(auStack_d0,lVar9 + 0x107060,0xfe0);
-  MSG_WriteByte(auStack_d0,0x66);
-  CG_BlurGetData(uVar6,&local_f0,&local_f4);
-  MSG_WriteByte(auStack_d0,0x71);
-  MSG_WriteData(auStack_d0,local_f0,local_f4);
-  MSG_WriteByte(auStack_d0,0x17);
-  CL_Demo_WriteScores(uVar6,auStack_d0);
-  CL_Demo_WritePersistentDataBuffer(auStack_d0);
-  CL_Demo_WriteToKeyFrameMemory(local_bc,4,uVar6);
-  CL_Demo_WriteToKeyFrameMemory(local_c8,local_bc[0],uVar6);
-  cVar18 = '\0';
-  if (DAT_84872900 != 0) {
-    puVar10 = (undefined4 *)CL_Demo_GetPlaybackData();
-    iVar13 = CL_GetLocalClientConnection(*puVar10);
-    cVar18 = *(char *)(iVar13 + 0x40260);
-  }
-  if (cVar18 != '\0') {
-    *(undefined1 *)(iVar5 + 0x51e864) = 1;
-    CL_Demo_WriteClipCommands(0xffffffff827d4588,uVar6,0,0);
-  }
-  uVar4 = *(uint *)(iVar11 + 0xd3fc);
-  uVar17 = *(undefined4 *)(iVar12 + 0x44200);
-  if (0xff < uVar4) {
-    MyAssertHandler(0xffffffff821dcc88,0xc06,0,0xffffffff821dd888,uVar4,0x100);
-  }
-  CL_Demo_WriteAllClientArchives(0xffffffff827d4588,uVar6);
-  iVar12 = 0;
-  uVar23 = (ulonglong)*(uint *)(iVar11 + 0x3390);
-  puVar14 = (undefined1 *)uVar8;
-  if (-1 < (int)*(uint *)(iVar11 + 0x3390)) {
-LAB_827daef8:
-    uVar16 = param_3 & 0xffffffff;
-    uVar24 = (uint)uVar23;
-    if (iVar15 < 1) {
-      if (*(int *)(iVar11 + 0x338c) < (int)uVar24) goto LAB_827daf68;
-    }
-    else if (*(int *)(iVar11 + 0x338c) <= (int)uVar24) goto code_r0x827daf10;
-    iVar13 = (uVar24 & *(uint *)(iVar11 + 0xd404)) * 0x3380 + *(int *)(iVar11 + 0xd414);
-    if (*(int *)(iVar13 + 0x3300) == 0) {
-      local_100[0] = 0;
-      CL_Demo_WriteToKeyFrameMemory(local_100,1,uVar6);
-      uVar23 = uVar23 + 1;
-      piVar21 = local_ec;
-    }
-    else {
-      if (uVar24 != *(uint *)(iVar13 + 0x330c)) {
-        MyAssertHandler(local_f8,0xc2f,0,local_fc,0xffffffff821dd828);
-      }
-      if (iVar12 == 0) {
-        iVar12 = *(int *)((uVar24 & *(uint *)(iVar11 + 0xd404)) * 0x3380 + *(int *)(iVar11 + 0xd414)
-                         + 0x332c);
-      }
-      if (iVar15 < 1) {
-        iVar13 = (uVar24 & *(uint *)(iVar11 + 0xd404)) * 0x3380 + *(int *)(iVar11 + 0xd414);
-        if (iVar19 == 0) {
-          iVar19 = *(int *)(iVar13 + 0x3308);
-        }
-        else {
-          iVar13 = *(int *)(iVar13 + 0x3308);
-          iVar20 = (iVar13 - iVar19) + iVar20;
-          iVar19 = iVar13;
-        }
-      }
-      local_100[0] = 1;
-      CL_Demo_WriteToKeyFrameMemory(local_100,1,uVar6);
-      memset(_Dst,0,0x10000);
-      MSG_Init(auStack_d0,uVar7,0x10000);
-      CL_Demo_GenerateUncompressedSnapshot(uVar6,auStack_d0,uVar23);
-      *puVar14 = *local_c8;
-      puVar14[1] = local_c8[1];
-      puVar14[2] = local_c8[2];
-      puVar14[3] = local_c8[3];
-      lVar9 = MSG_WriteBitsCompress(0,local_c8 + 4,uVar8 + 4,(ulonglong)local_bc[0] - 4);
-      CL_Demo_WriteRawMessage(0xffffffff827d4588,uVar6,uVar23,uVar8,lVar9 + 4);
-      uVar23 = uVar23 + 1;
-      piVar21 = local_ec;
-    }
-    goto LAB_827daef8;
-  }
-  iVar12 = *(int *)(iVar11 + 0x33ac);
-  if (iVar15 < 1) {
-    uVar24 = *(uint *)(iVar11 + 0x338c);
-    iVar20 = 0x32;
-    if (uVar24 != *(uint *)((*(uint *)(iVar11 + 0xd404) & uVar24) * 0x3380 +
-                            *(int *)(iVar11 + 0xd414) + 0x330c)) {
-      MyAssertHandler(local_f8,0xc19,0,local_fc,0xffffffff821de260);
-    }
-    local_100[0] = 1;
-    CL_Demo_WriteToKeyFrameMemory(local_100,1,uVar6);
-    memset(_Dst,0,0x10000);
-    MSG_Init(auStack_d0,uVar7,0x10000);
-    CL_Demo_GenerateUncompressedSnapshot(uVar6,auStack_d0,uVar24);
-    *puVar14 = *local_c8;
-    puVar14[1] = local_c8[1];
-    puVar14[2] = local_c8[2];
-    puVar14[3] = local_c8[3];
-    lVar9 = MSG_WriteBitsCompress(0,local_c8 + 4,uVar8 + 4,(ulonglong)local_bc[0] - 4);
-    uVar16 = lVar9 + 4;
-    goto LAB_827daf60;
-  }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(local_f8,0xc10,0,local_fc,0xffffffff8201f49c);
-  }
-  local_100[0] = 1;
-  CL_Demo_WriteToKeyFrameMemory(local_100,1,uVar6);
-  uVar16 = param_3;
-LAB_827daf54:
-  uVar24 = *(uint *)(iVar11 + 0x338c);
-  uVar8 = param_2;
-LAB_827daf60:
-  CL_Demo_WriteRawMessage(0xffffffff827d4588,uVar6,uVar24,uVar8,uVar16);
-LAB_827daf68:
-  if (iVar12 == 0) {
-    iVar12 = *(int *)(iVar11 + 0x33ac);
-  }
-  piVar22 = (int *)(iVar5 + 0x205f28);
-  iVar19 = *piVar22 + 1;
-  iVar15 = iVar19 / 0xfa + (iVar19 >> 0x1f);
-  iVar19 = iVar19 + (iVar15 - (iVar15 >> 0x1f)) * -0xfa;
-  *piVar22 = iVar19;
-  memset((void *)(iVar19 * 0x30 + iVar5 + 0x203048),0,0x30);
-  uVar3 = *(undefined4 *)(iVar5 + 0x18);
-  iVar15 = *piVar22 * 0x30 + iVar5;
-  *(int *)(iVar15 + 0x203048) = iVar2;
-  *(undefined4 *)(iVar15 + 0x20304c) = uVar3;
-  *(undefined4 *)(iVar15 + 0x203058) = *(undefined4 *)(iVar11 + 0x338c);
-  uVar3 = *(undefined4 *)(iVar11 + 0x3390);
-  *(int *)(iVar15 + 0x203060) = iVar12;
-  *(undefined4 *)(iVar15 + 0x203068) = uVar17;
-  *(uint *)(iVar15 + 0x20306c) = uVar4;
-  *(undefined4 *)(iVar15 + 0x20305c) = uVar3;
-  iVar12 = *piVar21 - iVar2;
-  if (*piVar21 < iVar2) {
-    *(int *)(iVar15 + 0x203064) = iVar12 + 0x1fffff;
-  }
-  else {
-    *(int *)(iVar15 + 0x203064) = iVar12;
-  }
-  if (*(int *)(iVar15 + 0x203064) < 1) {
-    MyAssertHandler(local_f8,0xc74,0,local_fc,0xffffffff821de240);
-  }
-  CL_Demo_InvalidateOverlappingKeyframes(iVar2,*piVar21);
-  if (DAT_84872900 == 0) {
-    cVar18 = '\0';
-  }
-  else {
-    puVar10 = (undefined4 *)CL_Demo_GetPlaybackData();
-    iVar12 = CL_GetLocalClientConnection(*puVar10);
-    cVar18 = *(char *)(iVar12 + 0x40260);
-  }
-  iVar12 = DAT_84872900;
-  if (cVar18 == '\0') {
-    *(undefined4 *)(iVar15 + 0x203050) = *(undefined4 *)(iVar11 + 0x3388);
-    *(undefined4 *)(iVar5 + 0x10) = *(undefined4 *)(iVar11 + 0x3388);
-  }
-  else {
-    bVar1 = DAT_84872900 == 0;
-    *(int *)(iVar15 + 0x203054) = *(int *)(iVar5 + 0x51e4c4) - iVar20;
-    if (bVar1) {
-      uVar17 = 0;
-    }
-    else {
-      iVar11 = CL_Demo_GetPlaybackData();
-      uVar17 = *(undefined4 *)(iVar11 + 0x51e4c0);
-      iVar12 = DAT_84872900;
-    }
-    *(undefined4 *)(iVar15 + 0x203050) = uVar17;
-    *(undefined4 *)(iVar15 + 0x203070) = *(undefined4 *)(iVar5 + 0x51e4cc);
-    *(undefined4 *)(iVar15 + 0x203074) = *(undefined4 *)(iVar5 + 0x51e4d0);
-    if (iVar12 == 0) {
-      *(undefined4 *)(iVar5 + 0x10) = 0;
-    }
-    else {
-      iVar15 = CL_Demo_GetPlaybackData();
-      *(undefined4 *)(iVar5 + 0x10) = *(undefined4 *)(iVar15 + 0x51e4c0);
-    }
-  }
-  LargeLocal___LargeLocal(auStack_e8);
-  LargeLocal___LargeLocal(auStack_e0);
-  __restgprlr();
-  return;
-code_r0x827daf10:
-  param_2 = param_2 & 0xffffffff;
-  if (param_2 == 0) {
-    MyAssertHandler(local_f8,0xc56,0,local_fc,0xffffffff8201f49c);
-  }
-  local_100[0] = 1;
-  CL_Demo_WriteToKeyFrameMemory(local_100,1,uVar6);
-  goto LAB_827daf54;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
 
 // 827D4588  CL_Demo_WriteToKeyFrameMemory  (client_demo/cl_demo_playback.cpp:3222)
 
-void CL_Demo_WriteToKeyFrameMemory(undefined8 param_1,size_t param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void CL_Demo_WriteToKeyFrameMemory(void *param_1,int param_2,int param_3)
 
 {
-  uint uVar1;
+  int iVar1;
   int iVar2;
-  void *pvVar3;
-  size_t _Size;
-  uint *puVar4;
+  int iVar3;
+  longlong lVar4;
+  int *piVar5;
   
-  pvVar3 = (void *)__savegprlr_24();
-  if (DAT_84872900 == 0) {
-    MyAssertHandler(0xffffffff821dcc88,0x64c,0,0xffffffff82000f98,0xffffffff821dcdfc);
+  lVar4 = (longlong)param_2;
+  __savegprlr_24(param_1,lVar4,param_3);
+  iVar3 = (int)lVar4;
+  if (s_clientDemoPlayback == (clientDemoPlayback_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_playback.cpp"
+                    ,0x64c,0,"%s");
   }
-  iVar2 = DAT_84872900;
-  puVar4 = (uint *)(DAT_84872900 + 0x205f2c);
-  uVar1 = *puVar4;
-  if (0x1fffff < (int)(uVar1 + param_2)) {
-    if (0 < (longlong)(0x1fffff - (ulonglong)uVar1)) {
-      _Size = (size_t)(0x1fffff - (ulonglong)uVar1);
-      memcpy((void *)(uVar1 + DAT_84872900 + 0x3048),pvVar3,_Size);
-      uVar1 = *puVar4;
-      *puVar4 = uVar1 + _Size;
-      if (uVar1 + _Size != 0x1fffff) {
-        MyAssertHandler(0xffffffff821dcc88,0xca7,0,0xffffffff82000f98,0xffffffff821dcf00);
+  piVar5 = &s_clientDemoPlayback->keyframeBufferIndex;
+  if (0x1fffff < *piVar5 + iVar3) {
+    lVar4 = 0x1fffff - (ulonglong)(uint)*piVar5;
+    if (0 < lVar4) {
+      memcpy();
+      iVar2 = (int)lVar4;
+      iVar1 = *piVar5 + iVar2;
+      *piVar5 = iVar1;
+      if (iVar1 != 0x1fffff) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_playback.cpp"
+                        ,0xca7,0,"%s");
       }
-      pvVar3 = (void *)(_Size + (int)pvVar3);
-      param_2 = param_2 - _Size;
+      iVar3 = iVar3 - iVar2;
     }
-    *puVar4 = 0;
+    *piVar5 = 0;
   }
-  if ((int)param_2 < 1) {
-    MyAssertHandler(0xffffffff821dcc88,0xcb0,0,0xffffffff82000f98,0xffffffff82034a78);
+  if (iVar3 < 1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_playback.cpp"
+                    ,0xcb0,0,"%s");
   }
-  pvVar3 = memcpy((void *)(*puVar4 + iVar2 + 0x3048),pvVar3,param_2);
-  *puVar4 = *puVar4 + param_2;
-  __restgprlr_24(pvVar3);
+  memcpy();
+  *piVar5 = *piVar5 + iVar3;
+  __restgprlr_24();
   return;
 }
 
 
 // 827D46B0  CL_Demo_ReadFromKeyFrameMemory  (client_demo/cl_demo_playback.cpp:3261)
 
-void CL_Demo_ReadFromKeyFrameMemory(undefined8 param_1,longlong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+int CL_Demo_ReadFromKeyFrameMemory(void *param_1,int param_2,int param_3)
 
 {
-  uint uVar1;
-  int iVar2;
-  void *_Dst;
-  size_t sVar3;
-  longlong lVar4;
-  uint *puVar5;
+  int iVar1;
+  longlong lVar2;
+  longlong lVar3;
+  int *piVar4;
   
-  _Dst = (void *)__savegprlr_24();
-  if (DAT_84872900 == 0) {
-    MyAssertHandler(0xffffffff821dcc88,0x64c,0,0xffffffff82000f98,0xffffffff821dcdfc);
+  lVar2 = (longlong)param_2;
+  __savegprlr_24(param_1,lVar2,param_3);
+  if (s_clientDemoPlayback == (clientDemoPlayback_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_playback.cpp"
+                    ,0x64c,0,"%s");
   }
-  iVar2 = DAT_84872900;
-  puVar5 = (uint *)(DAT_84872900 + 0x205f30);
-  uVar1 = *puVar5;
-  if (0x1fffff < (int)(uVar1 + (int)param_2)) {
-    lVar4 = 0x1fffff - (ulonglong)uVar1;
-    if (0 < lVar4) {
-      sVar3 = (size_t)lVar4;
-      memcpy(_Dst,(void *)(uVar1 + DAT_84872900 + 0x3048),sVar3);
-      uVar1 = *puVar5;
-      *puVar5 = uVar1 + sVar3;
-      if (uVar1 + sVar3 != 0x1fffff) {
-        MyAssertHandler(0xffffffff821dcc88,0xccc,0,0xffffffff82000f98,0xffffffff821dcf98);
+  piVar4 = &s_clientDemoPlayback->keyframeBufferReadIndex;
+  if (0x1fffff < *piVar4 + (int)lVar2) {
+    lVar3 = 0x1fffff - (ulonglong)(uint)*piVar4;
+    if (0 < lVar3) {
+      memcpy();
+      iVar1 = *piVar4 + (int)lVar3;
+      *piVar4 = iVar1;
+      if (iVar1 != 0x1fffff) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_playback.cpp"
+                        ,0xccc,0,"%s");
       }
-      _Dst = (void *)(sVar3 + (int)_Dst);
-      param_2 = param_2 - lVar4;
+      lVar2 = lVar2 - lVar3;
     }
-    *puVar5 = 0;
+    *piVar4 = 0;
   }
-  sVar3 = (size_t)param_2;
-  if (0x1fffff < (int)(*puVar5 + sVar3)) {
-    MyAssertHandler(0xffffffff821dcc88,0xcd5,0,0xffffffff82000f98,0xffffffff821dcf48);
+  iVar1 = (int)lVar2;
+  if (0x1fffff < *piVar4 + iVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_playback.cpp"
+                    ,0xcd5,0,"%s");
   }
-  if ((int)sVar3 < 1) {
-    MyAssertHandler(0xffffffff821dcc88,0xcd6,0,0xffffffff82000f98,0xffffffff82034a78);
+  if (iVar1 < 1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_playback.cpp"
+                    ,0xcd6,0,"%s");
   }
-  memcpy(_Dst,(void *)(*puVar5 + iVar2 + 0x3048),sVar3);
-  *puVar5 = *puVar5 + sVar3;
-  __restgprlr_24(param_2);
-  return;
+  memcpy();
+  *piVar4 = *piVar4 + iVar1;
+  iVar1 = __restgprlr_24(lVar2);
+  return iVar1;
 }
 
 
 // 827D4808  CL_Demo_GetKeyFrameTime  (client_demo/cl_demo_playback.cpp:3302)
 
-ulonglong CL_Demo_GetKeyFrameTime(int param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+int CL_Demo_GetKeyFrameTime(int param_1)
 
 {
-  int iVar1;
+  clientDemoPlayback_t *pcVar1;
   
-  if (DAT_84872900 == 0) {
-    return 0xffffffffffffffff;
+  if (s_clientDemoPlayback == (clientDemoPlayback_t *)0x0) {
+    return -1;
   }
-  iVar1 = CL_Demo_GetPlaybackData();
-  return (ulonglong)*(uint *)(iVar1 + param_1 * 0x30 + 0x203050);
+  pcVar1 = CL_Demo_GetPlaybackData();
+  return pcVar1->keyFrame[param_1].keyframeSnapshotTime;
 }
 
 
 // 827D4878  CL_Demo_GenerateUncompressedSnapshot  (client_demo/cl_demo_playback.cpp:3317)
-
-void CL_Demo_GenerateUncompressedSnapshot(undefined8 param_1,undefined8 param_2,ulonglong param_3)
-
-{
-  uint uVar1;
-  void *_Src;
-  int *piVar2;
-  undefined8 uVar3;
-  int iVar4;
-  int iVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  int iVar8;
-  int *piVar9;
-  int iVar10;
-  undefined4 *_Src_00;
-  int *piVar11;
-  longlong lVar12;
-  int iVar13;
-  undefined *local_35b0;
-  int local_35a0;
-  int local_359c;
-  uint local_3598;
-  int local_34a0 [64];
-  undefined1 auStack_33a0 [248];
-  uint local_32a8;
-  
-  uVar6 = ZEXT48(&stack0x00000000);
-  uVar3 = __savegprlr();
-  iVar4 = CL_GetLocalClientConnection();
-  iVar5 = CL_GetLocalClientGlobals(uVar3);
-  MSG_WriteLong(param_2,*(undefined4 *)(iVar4 + 0x134));
-  DAT_848728d8 = *(undefined4 *)(iVar4 + 4);
-  DAT_848728dc = DAT_82aa1c44;
-  DAT_848728e0 = DAT_82aa1c48;
-  DAT_848728e4 = DAT_82aa1c4c;
-  DAT_848728f8 = 1;
-  if ((int)param_3 == DAT_82afa00c) {
-    lVar12 = -0x7d509300;
-    if ((DAT_82afa004 & 8) == 0) {
-      MyAssertHandler(0xffffffff821dcc88,0xd16,0,0xffffffff82000f98,0xffffffff821dd0b8);
-    }
-    local_35b0 = (undefined *)0x0;
-  }
-  else {
-    local_35b0 = &DAT_82af6d00;
-    lVar12 = (*(uint *)(iVar5 + 0xd404) & param_3) * 0x3380 + (ulonglong)*(uint *)(iVar5 + 0xd414);
-    if ((DAT_82afa004 & 8) == 0) {
-      MyAssertHandler(0xffffffff821dcc88,0xd1d,0,0xffffffff82000f98,0xffffffff821dd090);
-    }
-  }
-  MSG_WriteByte(param_2,5);
-  _Src = (void *)lVar12;
-  MSG_WriteLong(param_2,*(undefined4 *)((int)_Src + 0x3308));
-  MSG_WriteByte(param_2,0);
-  MSG_WriteByte(param_2,*(undefined4 *)((int)_Src + 0x3304));
-  if (local_35b0 == (undefined *)0x0) {
-    MSG_WriteBit0();
-    uVar3 = 0;
-  }
-  else {
-    MSG_WriteBit1(param_2);
-    memcpy(auStack_33a0,_Src,0x3300);
-    lVar12 = uVar6 - 0x33a0;
-    uVar3 = 0xffffffff82af6d00;
-    local_32a8 = local_32a8 ^ 2;
-  }
-  MSG_WriteDeltaPlayerstate
-            (0xffffffff848728d8,param_2,*(undefined4 *)((int)_Src + 0x3308),uVar3,lVar12);
-  MSG_ClearLastReferencedEntity(param_2);
-  memset(local_34a0,0,0x100);
-  iVar8 = 99999;
-  piVar9 = (int *)0x0;
-  iVar4 = iVar8;
-  iVar10 = iVar8;
-  if (local_35b0 != (undefined *)0x0) {
-    if (DAT_82afa01c < 1) {
-      iVar4 = 99999;
-      iVar10 = 99999;
-    }
-    else {
-      if ((DAT_82afa004 & 8) == 0) {
-        MyAssertHandler(0xffffffff821dcc88,0xd57,0,0xffffffff82000f98,0xffffffff821dd05c);
-      }
-      piVar9 = &DAT_82afa084;
-      iVar4 = 0;
-      iVar10 = DAT_82afa084;
-    }
-  }
-  _Src_00 = &DAT_82afa084;
-  lVar12 = 0;
-  piVar2 = &DAT_82afa084 + iVar4 * 0x40;
-LAB_827d4b44:
-  do {
-    iVar13 = iVar4;
-    piVar11 = piVar2;
-    iVar4 = *(int *)((int)_Src + 0x331c);
-    if ((int)lVar12 < iVar4) {
-LAB_827d4bb4:
-      if (local_35b0 == (undefined *)0x0) {
-        if (DAT_82afa080 != iVar4) {
-          MyAssertHandler(0xffffffff821dcc88,0xd6c,0,0xffffffff82000f98,0xffffffff821dd008);
-        }
-        memcpy(&local_35a0,_Src_00,0x100);
-      }
-      else {
-        uVar7 = (ulonglong)*(uint *)((int)_Src + 0x3324) + lVar12;
-        uVar1 = *(uint *)(iVar5 + 0xd408);
-        trapWord(6,(ulonglong)uVar1,0);
-        trapWord(5,(ulonglong)uVar1 &
-                   ~(((uVar7 & 0x7fffffff) << 1 | (uVar7 & 0xffffffff) >> 0x1f) - 1),0xffff);
-        memcpy(&local_35a0,
-               (void *)((int)((uVar7 - (longlong)((int)uVar7 / (int)uVar1) * (longlong)(int)uVar1 &
-                              0xffffffff) << 8) + *(int *)(iVar5 + 0xd418)),0x100);
-        if (local_359c != 2) {
-          local_3598 = local_3598 ^ 2;
-        }
-      }
-      DAT_848728fa = (byte)(local_3598 >> 0x1d) & 1;
-      iVar4 = local_35a0;
-    }
-    else {
-      if (DAT_82afa01c <= iVar13) {
-        MSG_WriteEntityIndex(0xffffffff848728d8,param_2,0x7ff,0xb);
-        MSG_ClearLastReferencedEntity(param_2);
-        if (DAT_82afa020 != 0) {
-          MyAssertHandler(0xffffffff821dcc88,0xdc4,0,0xffffffff82000f98,0xffffffff821dcfe4);
-        }
-        lVar12 = 0;
-        if (0 < *(int *)((int)_Src + 0x3320)) {
-          do {
-            uVar1 = *(uint *)(iVar5 + 0xd40c);
-            uVar6 = (ulonglong)*(uint *)((int)_Src + 0x3328) + lVar12;
-            trapWord(6,(ulonglong)uVar1,0);
-            uVar7 = (ulonglong)uVar1 &
-                    ~(((uVar6 & 0x7fffffff) << 1 | (uVar6 & 0xffffffff) >> 0x1f) - 1);
-            trapWord(5,uVar7,0xffff);
-            MSG_WriteDeltaClient
-                      (0xffffffff848728d8,param_2,*(undefined4 *)((int)_Src + 0x3308),0,
-                       (uVar6 - (longlong)((int)uVar6 / (int)uVar1) * (longlong)(int)uVar1) * 0xe0 +
-                       (ulonglong)*(uint *)(iVar5 + 0xd41c),1,uVar7);
-            lVar12 = lVar12 + 1;
-          } while ((int)lVar12 < *(int *)((int)_Src + 0x3320));
-        }
-        MSG_WriteBit0(param_2);
-        G_Glass_WriteEndOfGlassMarker(param_2);
-        MSG_WriteBit0(param_2);
-        MSG_WriteByte(param_2,6);
-        __restgprlr();
-        return;
-      }
-      if ((int)lVar12 < iVar4) goto LAB_827d4bb4;
-      if (local_35b0 == (undefined *)0x0) {
-        MyAssertHandler(0xffffffff821dcc88,0xd62,0,0xffffffff82000f98,"oldSnap");
-      }
-      memset(&local_35a0,0,0x100);
-      DAT_848728fa = 0;
-      local_35a0 = -1;
-      iVar4 = 99999;
-    }
-    if (iVar10 == iVar4) break;
-    if (iVar10 < iVar4) {
-      if (piVar9 == (int *)0x0) {
-        MyAssertHandler(0xffffffff821dcc88,0xd90,0,0xffffffff82000f98,0xffffffff821dd044);
-      }
-      DAT_848728fa = 0;
-      MSG_WriteEntity(0xffffffff848728d8,param_2,0,0,*(undefined4 *)((int)_Src + 0x3308),piVar9,0,1)
-      ;
-      if (iVar13 + 1 < DAT_82afa01c) goto LAB_827d4d88;
-      piVar2 = piVar11 + 0x40;
-      iVar4 = iVar13 + 1;
-      iVar10 = 99999;
-      goto LAB_827d4b44;
-    }
-    if (local_35a0 < 0) {
-      MyAssertHandler(0xffffffff821dcc88,0xda4,0,0xffffffff82000f98,0xffffffff821dd034);
-    }
-    DAT_848728f0 = 1;
-    local_34a0[0] = local_35a0;
-    MSG_WriteEntity(0xffffffff848728d8,param_2,0,0,*(undefined4 *)((int)_Src + 0x3308),
-                    uVar6 - 0x34a0,uVar6 - 0x35a0);
-    DAT_848728f0 = 0;
-    lVar12 = lVar12 + 1;
-    _Src_00 = _Src_00 + 0x40;
-    piVar2 = piVar11;
-    iVar4 = iVar13;
-  } while( true );
-  if (local_35a0 < 0) {
-    MyAssertHandler(0xffffffff821dcc88,0xd7d,0,0xffffffff82000f98,0xffffffff821dd034);
-  }
-  if (piVar9 == (int *)0x0) {
-    MyAssertHandler(0xffffffff821dcc88,0xd7e,0,0xffffffff82000f98,0xffffffff821dd044);
-  }
-  MSG_WriteEntity(0xffffffff848728d8,param_2,0,0,*(undefined4 *)((int)_Src + 0x3308),piVar9,
-                  uVar6 - 0x35a0,1);
-  lVar12 = lVar12 + 1;
-  _Src_00 = _Src_00 + 0x40;
-  piVar2 = piVar11 + 0x40;
-  iVar4 = iVar13 + 1;
-  iVar10 = iVar8;
-  if (iVar13 + 1 < DAT_82afa01c) {
-LAB_827d4d88:
-    piVar9 = piVar11 + 0x40;
-    piVar2 = piVar9;
-    iVar4 = iVar13 + 1;
-    iVar10 = *piVar9;
-  }
-  goto LAB_827d4b44;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
 
 // 827D4EF8  CL_Demo_GetAdjustedTimeForCodInfoDvar  (client_demo/cl_demo_playback.cpp:3556)
 
-void CL_Demo_GetAdjustedTimeForCodInfoDvar(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+char * CL_Demo_GetAdjustedTimeForCodInfoDvar(char *param_1,char *param_2)
 
 {
-  undefined *puVar1;
+  char *pcVar1;
   uint uVar2;
   uint uVar3;
-  undefined8 uVar4;
-  undefined4 *puVar5;
-  int iVar6;
+  char *pcVar4;
+  clientConnection_t *pcVar5;
+  clientDemoPlayback_t *pcVar6;
   int iVar7;
   int iVar8;
-  char cVar9;
-  longlong lVar10;
-  undefined **ppuVar11;
+  longlong lVar9;
+  char cVar10;
+  char **ppcVar11;
+  int iVar12;
   
-  uVar4 = __savegprlr_24();
-  if (DAT_84872900 == 0) {
-    cVar9 = '\0';
+  lVar9 = (longlong)(int)param_2;
+  pcVar4 = (char *)__savegprlr_24(param_1);
+  if (s_clientDemoPlayback == (clientDemoPlayback_t *)0x0) {
+    cVar10 = '\0';
   }
   else {
-    puVar5 = (undefined4 *)CL_Demo_GetPlaybackData();
-    iVar6 = CL_GetLocalClientConnection(*puVar5);
-    cVar9 = *(char *)(iVar6 + 0x40260);
+    pcVar6 = CL_Demo_GetPlaybackData();
+    pcVar5 = CL_GetLocalClientConnection(pcVar6->localClientNum);
+    cVar10 = (pcVar5->clientDemo).header.isClip;
   }
-  if ((cVar9 != '\0') && (DAT_84872900 != 0)) {
-    iVar7 = CL_Demo_GetPlaybackData();
-    iVar6 = 0;
-    uVar2 = *(uint *)(iVar7 + 0x51e4cc);
-    uVar3 = *(uint *)(iVar7 + 0x51e4d0);
-    iVar7 = atoi((char *)param_2);
+  if ((cVar10 != '\0') && (s_clientDemoPlayback != (clientDemoPlayback_t *)0x0)) {
+    pcVar6 = CL_Demo_GetPlaybackData();
+    iVar12 = 0;
+    uVar2 = pcVar6->originalFilmTime;
+    uVar3 = pcVar6->clipServerTimeAtSegmentStart;
+    iVar7 = atoi((char *)lVar9);
     if (0 < iVar7) {
-      ppuVar11 = &PTR_s_ui_bombtimer_a_829a3630;
-      puVar1 = PTR_s_ui_bombtimer_a_829a3630;
-      while (puVar1 != (undefined *)0x0) {
-        iVar8 = I_stricmp(*ppuVar11,uVar4);
+      ppcVar11 = demoCodInfoTimeDvars;
+      pcVar1 = demoCodInfoTimeDvars[0];
+      while (pcVar1 != (char *)0x0) {
+        iVar8 = I_stricmp(*ppcVar11,pcVar4);
         if (iVar8 == 0) {
-          lVar10 = ((longlong)iVar7 - (ulonglong)uVar2) + (ulonglong)uVar3;
-          if (lVar10 < 0) {
-            MyAssertHandler(0xffffffff821dcc88,0xe04,0,0xffffffff82000f98,0xffffffff821dd0dc);
+          if ((longlong)(((longlong)iVar7 - (ulonglong)uVar2) + (ulonglong)uVar3) < 0) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_playback.cpp"
+                            ,0xe04,0,"%s");
           }
-          va(0xffffffff82013b64,lVar10);
-          __restgprlr_24();
-          return;
+          pcVar4 = va("%d");
+          pcVar4 = (char *)__restgprlr_24(pcVar4);
+          return pcVar4;
         }
-        iVar6 = iVar6 + 1;
-        ppuVar11 = &PTR_s_ui_bombtimer_a_829a3630 + iVar6;
-        puVar1 = *ppuVar11;
+        iVar12 = iVar12 + 1;
+        ppcVar11 = demoCodInfoTimeDvars + iVar12;
+        pcVar1 = *ppcVar11;
       }
     }
   }
-  __restgprlr_24(param_2);
-  return;
+  pcVar4 = (char *)__restgprlr_24(lVar9);
+  return pcVar4;
 }
 
 
 // 827D5038  CL_Demo_GetAdjustedTimeForConfigString  (client_demo/cl_demo_playback.cpp:3606)
 
-void CL_Demo_GetAdjustedTimeForConfigString(undefined8 param_1,longlong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+int CL_Demo_GetAdjustedTimeForConfigString(int param_1,int param_2)
 
 {
-  undefined8 uVar1;
-  undefined4 *puVar2;
-  int iVar3;
-  char cVar5;
-  ulonglong uVar4;
+  int iVar1;
+  clientConnection_t *pcVar2;
+  clientDemoPlayback_t *pcVar3;
+  longlong lVar4;
+  char cVar6;
+  ulonglong uVar5;
   
-  uVar1 = __savegprlr_29();
-  if (DAT_84872900 == 0) {
-    cVar5 = '\0';
+  lVar4 = (longlong)param_2;
+  iVar1 = __savegprlr_29(param_1);
+  if (s_clientDemoPlayback == (clientDemoPlayback_t *)0x0) {
+    cVar6 = '\0';
   }
   else {
-    puVar2 = (undefined4 *)CL_Demo_GetPlaybackData();
-    iVar3 = CL_GetLocalClientConnection(*puVar2);
-    cVar5 = *(char *)(iVar3 + 0x40260);
+    pcVar3 = CL_Demo_GetPlaybackData();
+    pcVar2 = CL_GetLocalClientConnection(pcVar3->localClientNum);
+    cVar6 = (pcVar2->clientDemo).header.isClip;
   }
-  if (((cVar5 != '\0') && (DAT_84872900 != 0)) && (0 < (int)param_2)) {
-    iVar3 = CL_Demo_GetPlaybackData();
-    if ((int)uVar1 == 0xf) {
-      uVar4 = ((ulonglong)*(uint *)(iVar3 + 0x51e4d0) - (ulonglong)*(uint *)(iVar3 + 0x51e4cc)) +
-              param_2;
-      __restgprlr_29((((uVar4 & 0xffffffff) >> 0x1f) - 1) + (ulonglong)(uVar4 == 0) & uVar4);
-      return;
+  if (((cVar6 != '\0') && (s_clientDemoPlayback != (clientDemoPlayback_t *)0x0)) && (0 < (int)lVar4)
+     ) {
+    pcVar3 = CL_Demo_GetPlaybackData();
+    if (iVar1 == 0xf) {
+      uVar5 = ((ulonglong)(uint)pcVar3->clipServerTimeAtSegmentStart -
+              (ulonglong)(uint)pcVar3->originalFilmTime) + lVar4;
+      iVar1 = __restgprlr_29((((uVar5 & 0xffffffff) >> 0x1f) - 1) + (ulonglong)(uVar5 == 0) & uVar5)
+      ;
+      return iVar1;
     }
-    Com_Printf(0xe,0xffffffff821dd0fc,uVar1);
+    Com_Printf(0xe,"Error: Need to process Configstring index %d\n");
   }
-  __restgprlr_29(param_2);
-  return;
+  iVar1 = __restgprlr_29(lVar4);
+  return iVar1;
 }
 
 
 // 827D5118  CL_Demo_ReadConfigStrings  (client_demo/cl_demo_playback.cpp:3653)
 
-void CL_Demo_ReadConfigStrings(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void CL_Demo_ReadConfigStrings(LocalClientNum_t param_1,msg_t *param_2)
 
 {
   int iVar1;
   
-  memset(&DAT_82ae30f8,0,0x13bb0);
+  memset();
   iVar1 = MSG_ReadByte(param_2);
   if (iVar1 != 1) {
-    MyAssertHandler(0xffffffff821dcc88,0xe4b,0,0xffffffff82000f98,0xffffffff821dd170);
-    Com_Printf(0xe,0xffffffff821dd130);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_playback.cpp"
+                    ,0xe4b,0,"%s");
+    Com_Printf(0xe,"We have a bad keyframe information while reading configStrings.");
   }
   CL_ParseConfigStrings(param_1,param_2);
   return;
@@ -3627,100 +2146,27 @@ void CL_Demo_ReadConfigStrings(undefined8 param_1,undefined8 param_2)
 
 
 // 827D51C0  CL_Demo_UpdateConfigStrings  (client_demo/cl_demo_playback.cpp:3676)
-
-void CL_Demo_UpdateConfigStrings(undefined8 param_1)
-
-{
-  int iVar1;
-  char *_Str;
-  int iVar2;
-  
-  CG_StartAmbientWithConfig(param_1,0x3d6);
-  CG_StartAmbientWithConfig(param_1,0x3d7);
-  CG_StartAmbientWithConfig(param_1,0x3d8);
-  CG_ParseServerInfo(param_1);
-  CG_ParseCodInfo(param_1);
-  CG_ParsePlayerInfos(param_1);
-  CL_ParseMapCenter(param_1);
-  CG_ParseGameEndTime(param_1);
-  CG_ParseFog(param_1);
-  CG_ParseSunLight(param_1);
-  CG_NorthDirectionChanged(param_1);
-  CG_MiniMapChanged(param_1);
-  CG_ThermalBodyMaterialChanged(param_1);
-  VisionSetAllConfigStrings(param_1);
-  iVar1 = CG_GetLocalClientStaticGlobals(param_1);
-  _Str = (char *)CL_GetConfigString(0x1a2);
-  iVar2 = atoi(_Str);
-  *(int *)(iVar1 + 0x194) = iVar2;
-  CG_ParseTimeScale(param_1);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure clientInfo_t
 
 // 827D5290  CL_Demo_WriteVisionsets  (client_demo/cl_demo_playback.cpp:3715)
-
-void CL_Demo_WriteVisionsets(undefined8 param_1,undefined8 param_2)
-
-{
-  longlong lVar1;
-  
-  lVar1 = CG_GetLocalClientGlobals();
-  MSG_WriteByte(param_2,0x33);
-  MSG_WriteData(param_2,lVar1 + 0x107060,0xfe0);
-  MSG_WriteByte(param_2,0x66);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 827D52F8  CL_Demo_ReadVisionsets  (client_demo/cl_demo_playback.cpp:3732)
-
-void CL_Demo_ReadVisionsets(undefined8 param_1,undefined8 param_2)
-
-{
-  int iVar1;
-  int iVar2;
-  char cVar3;
-  int *piVar4;
-  int *piVar5;
-  
-  __savegprlr_27();
-  iVar1 = CG_GetLocalClientGlobals();
-  iVar2 = MSG_ReadByte(param_2);
-  if (iVar2 == 0x33) {
-    MSG_ReadData(param_2,iVar1 + 0x107060,0xfe0);
-    iVar2 = MSG_ReadByte(param_2);
-    if (iVar2 == 0x66) {
-      cVar3 = CL_Demo_IsClipPlaying();
-      if (cVar3 != '\0') {
-        iVar2 = CL_Demo_GetPlaybackData();
-        piVar5 = (int *)(iVar2 + 0x51e4cc);
-        piVar4 = (int *)(iVar2 + 0x51e4c4);
-        *(int *)(iVar1 + 0x107e70) = (*(int *)(iVar1 + 0x107e70) - *piVar5) + *piVar4;
-        *(int *)(iVar1 + 0x107e7c) = (*(int *)(iVar1 + 0x107e7c) - *piVar5) + *piVar4;
-        *(int *)(iVar1 + 0x107e88) = (*(int *)(iVar1 + 0x107e88) - *piVar5) + *piVar4;
-        *(int *)(iVar1 + 0x107e94) = (*(int *)(iVar1 + 0x107e94) - *piVar5) + *piVar4;
-        *(int *)(iVar1 + 0x107ea0) = (*(int *)(iVar1 + 0x107ea0) - *piVar5) + *piVar4;
-        *(int *)(iVar1 + 0x107eac) = (*(int *)(iVar1 + 0x107eac) - *piVar5) + *piVar4;
-      }
-      __restgprlr_27();
-      return;
-    }
-  }
-  Com_Printf(0xe,0xffffffff821dd188);
-  *(undefined4 *)param_2 = 1;
-  __restgprlr_27();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 827D5450  CL_Demo_WriteBlur  (client_demo/cl_demo_playback.cpp:3778)
 
-void CL_Demo_WriteBlur(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CL_Demo_WriteBlur(LocalClientNum_t param_1,msg_t *param_2)
 
 {
-  undefined4 local_20;
-  undefined4 local_1c [3];
+  int local_20;
+  void *local_1c [3];
   
   CG_BlurGetData(param_1,local_1c,&local_20);
   MSG_WriteByte(param_2,0x71);
@@ -3732,13 +2178,18 @@ void CL_Demo_WriteBlur(undefined8 param_1,undefined8 param_2)
 
 // 827D54B0  CL_Demo_ReadBlur  (client_demo/cl_demo_playback.cpp:3797)
 
-void CL_Demo_ReadBlur(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void CL_Demo_ReadBlur(LocalClientNum_t param_1,msg_t *param_2)
 
 {
   int iVar1;
-  char cVar2;
-  undefined4 local_20;
-  undefined4 local_1c;
+  bool bVar3;
+  clientDemoPlayback_t *pcVar2;
+  int local_20;
+  void *local_1c;
   
   CG_BlurGetData(param_1,&local_1c,&local_20);
   iVar1 = MSG_ReadByte(param_2);
@@ -3746,89 +2197,65 @@ void CL_Demo_ReadBlur(undefined8 param_1,undefined4 *param_2)
     MSG_ReadData(param_2,local_1c,local_20);
     iVar1 = MSG_ReadByte(param_2);
     if (iVar1 == 0x17) {
-      cVar2 = CL_Demo_IsClipPlaying();
-      if (cVar2 == '\0') {
+      bVar3 = CL_Demo_IsClipPlaying();
+      if (!bVar3) {
         return;
       }
-      iVar1 = CL_Demo_GetPlaybackData();
-      CG_BlurAdjustTime(param_1,*(undefined4 *)(iVar1 + 0x51e4c4),*(undefined4 *)(iVar1 + 0x51e4cc))
-      ;
+      pcVar2 = CL_Demo_GetPlaybackData();
+      CG_BlurAdjustTime(param_1,pcVar2->clipServerTime,pcVar2->originalFilmTime);
       return;
     }
   }
-  Com_Printf(0xe,0xffffffff821dd1c8);
-  *param_2 = 1;
+  Com_Printf(0xe,"We have a bad keyframe information while reading blur.");
+  param_2->overflowed = 1;
   return;
 }
 
 
 // 827D5578  CL_Demo_WriteScores  (client_demo/cl_demo_playback.cpp:3839)
-
-void CL_Demo_WriteScores(undefined8 param_1,undefined8 param_2)
-
-{
-  int iVar1;
-  int *piVar2;
-  int iVar3;
-  
-  __savegprlr_28();
-  iVar1 = CG_GetLocalClientGlobals();
-  MSG_WriteByte(param_2,0x81);
-  piVar2 = (int *)(iVar1 + 0x76ab4);
-  MSG_WriteData(param_2,piVar2,4);
-  MSG_WriteData(param_2,iVar1 + 0x76ab8,0x10);
-  MSG_WriteData(param_2,iVar1 + 0x76ad8,0x10);
-  iVar3 = 0;
-  if (0 < *piVar2) {
-    iVar1 = iVar1 + 0x76ae8;
-    do {
-      MSG_WriteData(param_2,iVar1,0x30);
-      iVar3 = iVar3 + 1;
-      iVar1 = iVar1 + 0x30;
-    } while (iVar3 < *piVar2);
-  }
-  MSG_WriteByte(param_2,0x18);
-  __restgprlr_28();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 827D5630  CL_Demo_ReadScores  (client_demo/cl_demo_playback.cpp:3861)
 
-void CL_Demo_ReadScores(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void CL_Demo_ReadScores(LocalClientNum_t param_1,msg_t *param_2)
 
 {
   int iVar1;
-  int iVar2;
-  int iVar3;
-  int *piVar4;
+  clientDemoPlayback_t *pcVar2;
+  clientDemoScoreInformation_t *pcVar3;
+  score_t *psVar4;
   
-  __savegprlr_27();
+  __savegprlr_27(param_1);
   iVar1 = MSG_ReadByte(param_2);
   if (iVar1 == 0x81) {
-    iVar1 = CL_Demo_GetPlaybackData();
-    piVar4 = (int *)(iVar1 + 0x51e4d4);
-    MSG_ReadData(param_2,piVar4,4);
-    MSG_ReadData(param_2,iVar1 + 0x51e4d8,0x10);
-    MSG_ReadData(param_2,iVar1 + 0x51e4e8,0x10);
-    iVar2 = 0;
-    if (0 < *piVar4) {
-      iVar3 = iVar1 + 0x51e4f8;
+    pcVar2 = CL_Demo_GetPlaybackData();
+    pcVar3 = &pcVar2->scoresInfo;
+    MSG_ReadData(param_2,pcVar3,4);
+    MSG_ReadData(param_2,(pcVar2->scoresInfo).teamScores,0x10);
+    MSG_ReadData(param_2,(pcVar2->scoresInfo).teamPlayers,0x10);
+    iVar1 = 0;
+    if (0 < pcVar3->numScores) {
+      psVar4 = (pcVar2->scoresInfo).scores;
       do {
-        MSG_ReadData(param_2,iVar3,0x30);
-        iVar2 = iVar2 + 1;
-        iVar3 = iVar3 + 0x30;
-      } while (iVar2 < *piVar4);
+        MSG_ReadData(param_2,psVar4,0x30);
+        iVar1 = iVar1 + 1;
+        psVar4 = psVar4 + 1;
+      } while (iVar1 < pcVar3->numScores);
     }
-    iVar2 = MSG_ReadByte(param_2);
-    if (iVar2 == 0x18) {
-      *(undefined1 *)(iVar1 + 0x51e858) = 1;
+    iVar1 = MSG_ReadByte(param_2);
+    if (iVar1 == 0x18) {
+      pcVar2->pendingScoresCopy = true;
       __restgprlr_27();
       return;
     }
   }
-  Com_Printf(0xe,0xffffffff821dd200);
-  *(undefined4 *)param_2 = 1;
+  Com_Printf(0xe,"We have a bad keyframe information while reading scores.");
+  param_2->overflowed = 1;
   __restgprlr_27();
   return;
 }
@@ -3836,34 +2263,36 @@ void CL_Demo_ReadScores(undefined8 param_1,undefined8 param_2)
 
 // 827D5710  CL_Demo_WritePersistentDataBuffer  (client_demo/cl_demo_playback.cpp:3903)
 
-void CL_Demo_WritePersistentDataBuffer(undefined8 param_1)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void CL_Demo_WritePersistentDataBuffer(msg_t *param_1)
 
 {
-  ulonglong uVar1;
-  
-  uVar1 = (ulonglong)DAT_84872900;
-  if (uVar1 == 0) {
-    MyAssertHandler(0xffffffff821dcc88,0x64c,0,0xffffffff82000f98,0xffffffff821dcdfc);
-    uVar1 = (ulonglong)DAT_84872900;
+  if (s_clientDemoPlayback == (clientDemoPlayback_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_playback.cpp"
+                    ,0x64c,0,"%s");
   }
-  MSG_WriteData(param_1,uVar1 + 0x4c,0x2ffc);
+  MSG_WriteData(param_1,s_clientDemoPlayback->persistentDataBuffer,0x2ffc);
   return;
 }
 
 
 // 827D5788  CL_Demo_ReadPersistentDataBuffer  (client_demo/cl_demo_playback.cpp:3918)
 
-void CL_Demo_ReadPersistentDataBuffer(undefined8 param_1)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void CL_Demo_ReadPersistentDataBuffer(msg_t *param_1)
 
 {
-  ulonglong uVar1;
-  
-  uVar1 = (ulonglong)DAT_84872900;
-  if (uVar1 == 0) {
-    MyAssertHandler(0xffffffff821dcc88,0x64c,0,0xffffffff82000f98,0xffffffff821dcdfc);
-    uVar1 = (ulonglong)DAT_84872900;
+  if (s_clientDemoPlayback == (clientDemoPlayback_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_playback.cpp"
+                    ,0x64c,0,"%s");
   }
-  MSG_ReadData(param_1,uVar1 + 0x4c,0x2ffc);
+  MSG_ReadData(param_1,s_clientDemoPlayback->persistentDataBuffer,0x2ffc);
   UI_ExpressionState_PlayerDataModified();
   return;
 }
@@ -3871,526 +2300,307 @@ void CL_Demo_ReadPersistentDataBuffer(undefined8 param_1)
 
 // 827D5808  CL_Demo_WriteToClipRecordMemory  (client_demo/cl_demo_playback.cpp:3936)
 
-void CL_Demo_WriteToClipRecordMemory(undefined8 param_1,size_t param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void CL_Demo_WriteToClipRecordMemory(void *param_1,int param_2,int param_3)
 
 {
-  int iVar1;
-  void *pvVar2;
-  int *piVar3;
+  clientDemoPlayback_t *pcVar1;
+  longlong lVar2;
+  int iVar3;
+  int *piVar4;
   
-  pvVar2 = (void *)__savegprlr_26();
-  if (DAT_84872900 == 0) {
-    MyAssertHandler(0xffffffff821dcc88,0x64c,0,0xffffffff82000f98,0xffffffff821dcdfc);
+  lVar2 = (longlong)param_2;
+  __savegprlr_26(param_1,lVar2,param_3);
+  if (s_clientDemoPlayback == (clientDemoPlayback_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_playback.cpp"
+                    ,0x64c,0,"%s");
   }
-  iVar1 = DAT_84872900;
-  if ((int)param_2 < 1) {
-    MyAssertHandler(0xffffffff821dcc88,0xf64,0,0xffffffff82000f98,0xffffffff82034a78);
+  pcVar1 = s_clientDemoPlayback;
+  iVar3 = (int)lVar2;
+  if (iVar3 < 1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_playback.cpp"
+                    ,0xf64,0,"%s");
   }
-  piVar3 = (int *)(iVar1 + 0x51e1f8);
-  if (0x1fffff < (int)(*piVar3 + param_2)) {
-    MyAssertHandler(0xffffffff821dcc88,0xf65,0,0xffffffff82000f98,0xffffffff821dd240);
+  piVar4 = &pcVar1->clipRecordBufIndex;
+  if (0x1fffff < *piVar4 + iVar3) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_playback.cpp"
+                    ,0xf65,0,"%s");
   }
-  pvVar2 = memcpy((void *)(*piVar3 + iVar1 + 0x31e1f8),pvVar2,param_2);
-  *piVar3 = *piVar3 + param_2;
-  __restgprlr_26(pvVar2);
+  memcpy();
+  *piVar4 = *piVar4 + iVar3;
+  __restgprlr_26();
   return;
 }
 
 
 // 827D58E8  CL_Demo_ReadFromClipRecordMemory  (client_demo/cl_demo_playback.cpp:3955)
 
-void CL_Demo_ReadFromClipRecordMemory(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+int CL_Demo_ReadFromClipRecordMemory(void *param_1,int param_2,int param_3)
 
 {
-  size_t _Size;
-  void *_Dst;
-  int iVar1;
-  int *piVar2;
-  int iVar3;
+  clientDemoPlayback_t *pcVar1;
+  int iVar2;
+  longlong lVar3;
+  int *piVar4;
+  clientDemoPlayback_t *pcVar5;
   
-  _Dst = (void *)__savegprlr_26();
-  if (DAT_84872900 == 0) {
-    MyAssertHandler(0xffffffff821dcc88,0x64c,0,0xffffffff82000f98,0xffffffff821dcdfc);
-    iVar3 = DAT_84872900;
-    if (DAT_84872900 != 0) goto LAB_827d5944;
+  lVar3 = (longlong)param_2;
+  __savegprlr_26(param_1,lVar3,param_3);
+  if (s_clientDemoPlayback == (clientDemoPlayback_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_playback.cpp"
+                    ,0x64c,0,"%s");
+    pcVar5 = s_clientDemoPlayback;
+    if (s_clientDemoPlayback != (clientDemoPlayback_t *)0x0) goto LAB_827d5944;
   }
   else {
 LAB_827d5944:
-    iVar3 = DAT_84872900;
-    iVar1 = CL_Demo_GetPlaybackData();
-    if (*(int *)(iVar1 + 0x31e1ec) == 3) goto LAB_827d5978;
+    pcVar5 = s_clientDemoPlayback;
+    pcVar1 = CL_Demo_GetPlaybackData();
+    if (pcVar1->clipState == 3) goto LAB_827d5978;
   }
-  MyAssertHandler(0xffffffff821dcc88,0xf78,0,0xffffffff82000f98,0xffffffff821dd2d8);
+  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_playback.cpp"
+                  ,0xf78,0,"%s");
 LAB_827d5978:
-  piVar2 = (int *)(iVar3 + 0x5bef54);
-  _Size = (size_t)param_2;
-  if (*(int *)(iVar3 + 0x51e1f8) < (int)(*piVar2 + _Size)) {
-    MyAssertHandler(0xffffffff821dcc88,0xf79,0,0xffffffff82000f98,0xffffffff821dd290);
+  piVar4 = &pcVar5->clipPreviewBufferIndex;
+  iVar2 = (int)lVar3;
+  if (pcVar5->clipRecordBufIndex < *piVar4 + iVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_playback.cpp"
+                    ,0xf79,0,"%s");
   }
-  if ((int)_Size < 1) {
-    MyAssertHandler(0xffffffff821dcc88,0xf7a,0,0xffffffff82000f98,0xffffffff82034a78);
+  if (iVar2 < 1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_playback.cpp"
+                    ,0xf7a,0,"%s");
   }
-  memcpy(_Dst,(void *)(*piVar2 + iVar3 + 0x31e1f8),_Size);
-  *piVar2 = *piVar2 + _Size;
-  __restgprlr_26(param_2);
-  return;
+  memcpy();
+  *piVar4 = *piVar4 + iVar2;
+  iVar2 = __restgprlr_26(lVar3);
+  return iVar2;
 }
 
 
 // 827DB2D8  CL_Demo_WriteUncompressedClipSnapshot  (client_demo/cl_demo_playback.cpp:3978)
-
-void CL_Demo_WriteUncompressedClipSnapshot(void)
-
-{
-  uint uVar1;
-  int iVar2;
-  undefined8 uVar3;
-  undefined8 uVar4;
-  undefined1 *puVar6;
-  int iVar7;
-  longlong lVar5;
-  ulonglong uVar8;
-  undefined1 auStack_90 [8];
-  undefined1 auStack_88 [8];
-  undefined1 auStack_80 [8];
-  undefined1 *local_78;
-  uint local_6c;
-  
-  uVar3 = __savegprlr_24();
-  LargeLocal__LargeLocal(auStack_88,0x10000);
-  uVar4 = LargeLocal__GetBuf(auStack_88);
-  LargeLocal__LargeLocal(auStack_90,0x10000);
-  puVar6 = (undefined1 *)LargeLocal__GetBuf(auStack_90);
-  iVar7 = CL_GetLocalClientGlobals(uVar3);
-  if (DAT_84872900 == 0) {
-    MyAssertHandler(0xffffffff821dcc88,0x64c,0,0xffffffff82000f98,0xffffffff821dcdfc);
-  }
-  iVar2 = DAT_84872900;
-  *(undefined1 *)(DAT_84872900 + 0x51e864) = 1;
-  *(undefined1 *)(iVar2 + 0x51e865) = 1;
-  *(undefined4 *)(iVar2 + 0x51e86c) = *(undefined4 *)(iVar7 + 0x33ac);
-  *(undefined4 *)(iVar2 + 0x51e870) = *(undefined4 *)(iVar7 + 0x3388);
-  if (*(int *)(iVar7 + 0x3390) < 0) {
-    *(undefined4 *)(iVar2 + 0x51e868) = *(undefined4 *)(iVar7 + 0x338c);
-  }
-  else {
-    *(int *)(iVar2 + 0x51e868) = *(int *)(iVar7 + 0x3390);
-  }
-  CL_Demo_WriteClipCommands(0xffffffff827d5808,uVar3,0,1);
-  uVar1 = *(uint *)(iVar7 + 0x3390);
-  uVar8 = (ulonglong)uVar1;
-  if ((int)uVar1 < 0) {
-    Com_Printf(0xe,0xffffffff821de370,*(undefined4 *)(iVar7 + 0x338c));
-    memset((void *)uVar4,0,0x10000);
-    MSG_Init(auStack_80,uVar4,0x10000);
-    CL_Demo_GenerateUncompressedSnapshot(uVar3,auStack_80,*(undefined4 *)(iVar7 + 0x338c));
-    *puVar6 = *local_78;
-    puVar6[1] = local_78[1];
-    puVar6[2] = local_78[2];
-    puVar6[3] = local_78[3];
-    lVar5 = MSG_WriteBitsCompress(0,local_78 + 4,puVar6 + 4,(ulonglong)local_6c - 4);
-    CL_Demo_WriteRawMessage
-              (0xffffffff827d5808,uVar3,*(undefined4 *)(iVar7 + 0x338c),puVar6,lVar5 + 4);
-  }
-  else if ((int)uVar1 <= *(int *)(iVar7 + 0x338c)) {
-    do {
-      if (*(int *)((*(uint *)(iVar7 + 0xd404) & (uint)uVar8) * 0x3380 + *(int *)(iVar7 + 0xd414) +
-                  0x3300) != 0) {
-        Com_Printf(0xe,0xffffffff821de318,uVar8);
-        memset((void *)uVar4,0,0x10000);
-        MSG_Init(auStack_80,uVar4,0x10000);
-        CL_Demo_GenerateUncompressedSnapshot(uVar3,auStack_80,uVar8);
-        *puVar6 = *local_78;
-        puVar6[1] = local_78[1];
-        puVar6[2] = local_78[2];
-        puVar6[3] = local_78[3];
-        lVar5 = MSG_WriteBitsCompress(0,local_78 + 4,puVar6 + 4,(ulonglong)local_6c - 4);
-        CL_Demo_WriteRawMessage(0xffffffff827d5808,uVar3,uVar8,puVar6,lVar5 + 4);
-      }
-      uVar8 = uVar8 + 1;
-    } while ((int)uVar8 <= *(int *)(iVar7 + 0x338c));
-  }
-  LargeLocal___LargeLocal(auStack_90);
-  LargeLocal___LargeLocal(auStack_88);
-  __restgprlr_24();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
 
 // 827D5A10  CL_Demo_CanStartClipRecord  (client_demo/cl_demo_playback.cpp:4039)
 
-void CL_Demo_CanStartClipRecord(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+int CL_Demo_CanStartClipRecord(LocalClientNum_t param_1)
 
 {
-  undefined8 uVar1;
-  int iVar2;
-  char cVar3;
+  LocalClientNum_t LVar1;
+  clientDemoPlayback_t *pcVar2;
+  int iVar3;
+  bool bVar4;
+  char cVar5;
   
-  uVar1 = __savegprlr_29();
-  if (DAT_84872900 == 0) {
+  LVar1 = __savegprlr_29(param_1);
+  if (s_clientDemoPlayback == (clientDemoPlayback_t *)0x0) {
 LAB_827d5a8c:
-    cVar3 = '\0';
+    cVar5 = '\0';
   }
   else {
-    iVar2 = CL_Demo_GetPlaybackData();
-    if ((*(int *)(iVar2 + 0x31e1ec) != 0) &&
-       ((DAT_84872900 == 0 || (iVar2 = CL_Demo_GetPlaybackData(), *(int *)(iVar2 + 0x31e1ec) != 2)))
-       ) {
-      Com_PrintError(0xe,0xffffffff821dd3d0);
+    pcVar2 = CL_Demo_GetPlaybackData();
+    if ((pcVar2->clipState != 0) &&
+       ((s_clientDemoPlayback == (clientDemoPlayback_t *)0x0 ||
+        (pcVar2 = CL_Demo_GetPlaybackData(), pcVar2->clipState != 2)))) {
+      Com_PrintError(0xe,"The clip system is doing some process. So, cant start record.\n");
       goto LAB_827d5a74;
     }
-    if (DAT_84872900 == 0) goto LAB_827d5a8c;
-    iVar2 = CL_Demo_GetPlaybackData();
-    cVar3 = *(char *)(iVar2 + 8);
+    if (s_clientDemoPlayback == (clientDemoPlayback_t *)0x0) goto LAB_827d5a8c;
+    pcVar2 = CL_Demo_GetPlaybackData();
+    cVar5 = pcVar2->completed;
   }
-  if (cVar3 != '\0') {
-    Com_PrintError(0xe,0xffffffff821dd394);
-    __restgprlr_29(0);
-    return;
+  if (cVar5 != '\0') {
+    Com_PrintError(0xe,"We cannot start record a clip for a demo that is completed\n");
+    iVar3 = __restgprlr_29(0);
+    return iVar3;
   }
-  cVar3 = CL_Demo_IsClipPlaying();
-  if (cVar3 == '\0') {
-    cVar3 = CL_Demo_IsClipPreviewRunning();
-    if (cVar3 != '\0') {
-      Com_PrintError(0xe,0xffffffff821dd350);
-      __restgprlr_29(0);
-      return;
+  bVar4 = CL_Demo_IsClipPlaying();
+  if (!bVar4) {
+    bVar4 = CL_Demo_IsClipPreviewRunning();
+    if (bVar4) {
+      Com_PrintError(0xe,"We cannot start a clip record in a demo that is being previewed\n");
+      iVar3 = __restgprlr_29(0);
+      return iVar3;
     }
-    iVar2 = CL_Demo_GetPlaybackData();
-    if (*(char *)(iVar2 + 0x5bef48) != '\0') {
-      MyAssertHandler(0xffffffff821dcc88,0xfe0,0,0xffffffff82000f98,0xffffffff821dba7c);
+    pcVar2 = CL_Demo_GetPlaybackData();
+    if (pcVar2->pendingSegmentSave != false) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_playback.cpp"
+                      ,0xfe0,0,"%s");
     }
-    if (*(int *)(iVar2 + 0x5bef4c) == 10) {
-      CL_Demo_Error(uVar1,0xffffffff8208bd88,0xffffffff821dd330);
-      __restgprlr_29(0);
-      return;
+    if (pcVar2->segmentCount == 10) {
+      CL_Demo_Error(LVar1,"MENU_ERROR","MENU_DEMO_MAX_SEGMENTS_REACHED");
+      iVar3 = __restgprlr_29(0);
+      return iVar3;
     }
-    if (0x1effff < *(int *)(iVar2 + 0x51e1f8)) {
-      CL_Demo_Error(uVar1,0xffffffff8208bd88,0xffffffff821dd30c);
-      __restgprlr_29(0);
-      return;
+    if (0x1effff < pcVar2->clipRecordBufIndex) {
+      CL_Demo_Error(LVar1,"MENU_ERROR","MENU_DEMO_MAX_CLIP_FILESIZE_REACHED");
+      iVar3 = __restgprlr_29(0);
+      return iVar3;
     }
-    __restgprlr_29(1);
-    return;
+    iVar3 = __restgprlr_29(1);
+    return iVar3;
   }
 LAB_827d5a74:
-  __restgprlr_29(0);
-  return;
+  iVar3 = __restgprlr_29(0);
+  return iVar3;
 }
 
 
 // 827DB5A0  CL_Demo_CaptureThumbnailForSegment  (client_demo/cl_demo_playback.cpp:4089)
 
-void CL_Demo_CaptureThumbnailForSegment(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+int CL_Demo_CaptureThumbnailForSegment(LocalClientNum_t param_1)
 
 {
-  undefined8 uVar1;
+  LocalClientNum_t LVar1;
   int iVar2;
-  char cVar4;
-  int iVar3;
+  bool bVar4;
+  clientDemoPlayback_t *pcVar3;
   
-  uVar1 = __savegprlr_23();
-  iVar2 = CL_Demo_CanStartClipRecord();
+  LVar1 = __savegprlr_23(param_1);
+  iVar2 = CL_Demo_CanStartClipRecord(LVar1);
   if (iVar2 != 0) {
-    cVar4 = CL_Demo_IsPaused();
-    if (cVar4 == '\0') {
-      Dvar_SetBool(DAT_8484f0bc,*(char *)(DAT_8484f0bc + 0xc) == '\0');
+    bVar4 = CL_Demo_IsPaused();
+    if (!bVar4) {
+      Dvar_SetBool(cl_demo_pause,(cl_demo_pause->current).enabled == false);
     }
-    iVar2 = CL_Demo_GetPlaybackData();
-    iVar3 = *(int *)(iVar2 + 0x5bef4c) * 0x100a8 + iVar2;
-    iVar3 = CL_Demo_HiResScreenshotInternal(uVar1,0xf0,iVar3 + 0x51e8e0,iVar3 + 0x51e8e4,0x8000,0);
-    if (iVar3 == 0) {
-      iVar2 = *(int *)(iVar2 + 0x5bef4c) * 0x100a8 + iVar2;
-      iVar3 = CL_Demo_HiResScreenshotInternal(uVar1,0xb4,iVar2 + 0x51e8e0,iVar2 + 0x51e8e4,0x8000,0)
-      ;
+    pcVar3 = CL_Demo_GetPlaybackData();
+    iVar2 = pcVar3->segmentCount;
+    iVar2 = CL_Demo_HiResScreenshotInternal
+                      (LVar1,0xf0,&pcVar3->segments[iVar2].thumbnailImageSize,
+                       pcVar3->segments[iVar2].thumbnailImageBuf,0x8000,0);
+    if (iVar2 == 0) {
+      iVar2 = pcVar3->segmentCount;
+      iVar2 = CL_Demo_HiResScreenshotInternal
+                        (LVar1,0xb4,&pcVar3->segments[iVar2].thumbnailImageSize,
+                         pcVar3->segments[iVar2].thumbnailImageBuf,0x8000,0);
     }
-    if (cVar4 == '\0') {
-      Dvar_SetBool(DAT_8484f0bc,*(char *)(DAT_8484f0bc + 0xc) == '\0');
+    if (!bVar4) {
+      Dvar_SetBool(cl_demo_pause,(cl_demo_pause->current).enabled == false);
     }
-    if (iVar3 != 0) {
-      __restgprlr_23(1);
-      return;
+    if (iVar2 != 0) {
+      iVar2 = __restgprlr_23(1);
+      return iVar2;
     }
-    CL_Demo_Error(uVar1,0xffffffff8208bd88,0xffffffff821de3c0);
+    CL_Demo_Error(LVar1,"MENU_ERROR","MENU_DEMO_CLIP_ERROR_OCCURRED");
   }
-  __restgprlr_23(0);
-  return;
+  iVar2 = __restgprlr_23(0);
+  return iVar2;
 }
 
 
 // 827DB6D0  CL_Demo_StartClipRecord  (client_demo/cl_demo_playback.cpp:4131)
-
-void CL_Demo_StartClipRecord(void)
-
-{
-  bool bVar1;
-  undefined1 uVar2;
-  undefined1 uVar3;
-  uint uVar4;
-  undefined8 uVar5;
-  undefined8 uVar6;
-  undefined1 *puVar8;
-  int iVar9;
-  int iVar10;
-  int iVar11;
-  longlong lVar7;
-  undefined4 uVar12;
-  int *piVar13;
-  uint *puVar14;
-  undefined1 auStack_30c0 [8];
-  undefined1 auStack_30b8 [8];
-  undefined1 auStack_30b0 [8];
-  undefined1 *local_30a8;
-  uint local_309c;
-  undefined1 auStack_3080 [8];
-  undefined1 local_3078;
-  
-  uVar5 = __savegprlr_21();
-  LargeLocal__LargeLocal(auStack_30c0,0x10000);
-  uVar6 = LargeLocal__GetBuf(auStack_30c0);
-  LargeLocal__LargeLocal(auStack_30b8,0x10000);
-  puVar8 = (undefined1 *)LargeLocal__GetBuf(auStack_30b8);
-  iVar9 = CL_Demo_CanStartClipRecord(uVar5);
-  if ((iVar9 != 0) && (iVar9 = CL_Demo_CaptureThumbnailForSegment(uVar5), iVar9 != 0)) {
-    iVar9 = CG_GetLocalClientGlobals(uVar5);
-    if (*(int *)(iVar9 + 0x3348) == 0) {
-      iVar10 = CL_Demo_GetPlaybackData();
-      piVar13 = (int *)(iVar10 + 0x51e1f8);
-      *(int *)(iVar10 + 0x51e85c) = *piVar13;
-      *(undefined4 *)(iVar10 + 0x51e860) = *(undefined4 *)(iVar10 + 0x51e4c0);
-      iVar11 = CL_GetLocalClientConnection(uVar5);
-      iVar9 = *piVar13;
-      if (iVar9 == 0) {
-        CL_Demo_PopulateDefaultMetaInformation(iVar10 + 0x51e1fc,iVar11 + 0x43384,iVar11 + 0x43284);
-        *(undefined4 *)(iVar11 + 0x54228) = CL_Demo_WriteToClipRecordMemory;
-        memcpy(auStack_3080,(void *)(iVar11 + 0x40258),0x3020);
-        local_3078 = 1;
-        CL_Demo_WriteHeader(uVar5,auStack_3080);
-        *(undefined4 *)(iVar11 + 0x54228) = 0;
-        memset((void *)uVar6,0,0x10000);
-        MSG_Init(auStack_30b0,uVar6,0x10000);
-        CL_Demo_WriteGameState(uVar5,auStack_30b0,iVar11 + 0x43384,iVar11 + 0x43284);
-        uVar2 = *local_30a8;
-        *puVar8 = uVar2;
-        uVar3 = local_30a8[1];
-        puVar8[1] = uVar3;
-        puVar8[2] = local_30a8[2];
-        puVar8[3] = local_30a8[3];
-        lVar7 = MSG_WriteBitsCompress
-                          (0,local_30a8 + 4,puVar8 + 4,(ulonglong)local_309c - 4,uVar3,uVar2,
-                           local_30a8);
-        CL_Demo_WriteRawMessage
-                  (0xffffffff827d5808,uVar5,*(undefined4 *)(iVar11 + 0x20138),puVar8,lVar7 + 4);
-        memset((void *)uVar6,0,0x10000);
-        MSG_Init(auStack_30b0,uVar6,0x10000);
-        CL_Demo_GenerateUncompressedSnapshot(uVar5,auStack_30b0,DAT_82afa00c);
-        *puVar8 = *local_30a8;
-        puVar8[1] = local_30a8[1];
-        puVar8[2] = local_30a8[2];
-        puVar8[3] = local_30a8[3];
-        lVar7 = MSG_WriteBitsCompress(0,local_30a8 + 4,puVar8 + 4,(ulonglong)local_309c - 4);
-        CL_Demo_WriteRawMessage(0xffffffff827d5808,uVar5,DAT_82afa00c,puVar8,lVar7 + 4);
-        iVar9 = *piVar13;
-        *(int *)(iVar10 + 0x51e4bc) = iVar9;
-      }
-      puVar14 = (uint *)(iVar10 + 0x5bef4c);
-      *(int *)(*puVar14 * 0x100a8 + iVar10 + 0x51e8d0) = iVar9;
-      uVar4 = *puVar14;
-      uVar6 = UI_SafeTranslateString(0xffffffff821de408);
-      uVar6 = va(0xffffffff821de400,uVar6,(ulonglong)uVar4 + 1);
-      I_strncpyz(*puVar14 * 0x100a8 + iVar10 + 0x51e8b8,uVar6,0x16);
-      bVar1 = DAT_84872900 != 0;
-      *(undefined4 *)(*puVar14 * 0x100a8 + iVar10 + 0x51e8d8) = 0;
-      if (bVar1) {
-        iVar9 = CL_Demo_GetPlaybackData();
-        uVar12 = Sys_Milliseconds();
-        *(undefined4 *)(iVar9 + 0x31e1f4) = uVar12;
-      }
-      CL_Demo_WriteRestorePoint(uVar5,0);
-      *(undefined1 *)(iVar10 + 0x5bef48) = 1;
-      CL_Demo_SetClipState(1);
-      CL_Demo_WriteUncompressedClipSnapshot(uVar5);
-      uVar5 = va(0xffffffff821de3e0);
-    }
-    else {
-      uVar5 = 0xffffffff821de420;
-    }
-    Com_Printf(0xe,uVar5);
-  }
-  LargeLocal___LargeLocal(auStack_30b8);
-  LargeLocal___LargeLocal(auStack_30c0);
-  __restgprlr_21();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 827DBA70  CL_Demo_PauseClipRecord  (client_demo/cl_demo_playback.cpp:4212)
 
-void CL_Demo_PauseClipRecord(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void CL_Demo_PauseClipRecord(LocalClientNum_t param_1)
 
 {
-  undefined8 uVar1;
-  int iVar2;
+  LocalClientNum_t LVar1;
+  clientDemoPlayback_t *pcVar2;
+  char *pcVar3;
   
-  uVar1 = __savegprlr_29();
-  if (DAT_84872900 != 0) {
-    iVar2 = CL_Demo_GetPlaybackData();
-    if (*(int *)(iVar2 + 0x31e1ec) == 1) {
-      if (DAT_84872900 != 0) {
-        iVar2 = CL_Demo_GetPlaybackData();
-        *(undefined4 *)(iVar2 + 0x31e1ec) = 2;
-      }
-      CL_Demo_WriteRestorePoint(uVar1,1);
-      Dvar_SetBool(DAT_8484f0bc,1);
-      CL_Demo_OpenSavePopUp(uVar1,1);
-      uVar1 = va(0xffffffff821de478);
-      Com_Printf(0xe,uVar1);
-      __restgprlr_29();
-      return;
+  LVar1 = __savegprlr_29(param_1);
+  if ((s_clientDemoPlayback != (clientDemoPlayback_t *)0x0) &&
+     (pcVar2 = CL_Demo_GetPlaybackData(), pcVar2->clipState == 1)) {
+    if (s_clientDemoPlayback != (clientDemoPlayback_t *)0x0) {
+      pcVar2 = CL_Demo_GetPlaybackData();
+      pcVar2->clipState = 2;
     }
+    CL_Demo_WriteRestorePoint(LVar1,1);
+    Dvar_SetBool(cl_demo_pause,true);
+    CL_Demo_OpenSavePopUp(LVar1,1);
+    pcVar3 = va("Clip: Paused clip Recording\n");
+    Com_Printf(0xe,pcVar3);
+    __restgprlr_29();
+    return;
   }
-  Com_PrintError(0xe,0xffffffff821de498);
+  Com_PrintError(0xe,"The clip system is not recording.\n");
   __restgprlr_29();
   return;
 }
 
 
 // 827D5BC0  CL_Demo_PreviewSegment  (client_demo/cl_demo_playback.cpp:4238)
-
-void CL_Demo_PreviewSegment(undefined8 param_1,int param_2)
-
-{
-  undefined8 uVar1;
-  int iVar3;
-  int iVar4;
-  undefined8 uVar2;
-  int iVar5;
-  int iVar6;
-  int iVar7;
-  undefined4 uVar8;
-  
-  uVar1 = __savegprlr_22();
-  if (DAT_84872900 == 0) {
-    MyAssertHandler(0xffffffff821dcc88,0x64c,0,0xffffffff82000f98,0xffffffff821dcdfc);
-  }
-  iVar7 = DAT_84872900;
-  *(int *)(DAT_84872900 + 0x5bef50) = param_2;
-  iVar3 = CL_GetLocalClientGlobals(uVar1);
-  iVar4 = CL_GetLocalClientConnection(uVar1);
-  uVar2 = va(0xffffffff821db998);
-  Com_Printf(0xe,uVar2);
-  Dvar_SetBool(DAT_8484f0bc,0);
-  *(undefined1 *)(iVar7 + 0x51e898) = 0;
-  if ((*(char *)(iVar7 + 0x5bef59) == '\0') && (DAT_84872900 != 0)) {
-    iVar5 = CL_Demo_GetPlaybackData();
-    *(undefined1 *)(iVar5 + 8) = 0;
-  }
-  iVar5 = CG_IsScoreboardDisplayed(uVar1);
-  if (iVar5 != 0) {
-    CG_ScoresUp(uVar1);
-    UI_SetActiveMenu(uVar1,0);
-  }
-  if (param_2 < 0) {
-    *(undefined4 *)(iVar7 + 0x5bef54) =
-         *(undefined4 *)(*(int *)(iVar7 + 0x5bef4c) * 0x100a8 + iVar7 + 0x51e8d0);
-  }
-  else {
-    *(undefined4 *)(iVar7 + 0x5bef54) = *(undefined4 *)(param_2 * 0x100a8 + iVar7 + 0x51e8d0);
-  }
-  if (DAT_84872900 != 0) {
-    iVar5 = CL_Demo_GetPlaybackData();
-    *(undefined4 *)(iVar5 + 0x31e1ec) = 3;
-  }
-  if (*(int *)(iVar7 + 0x51e1f8) == *(int *)(iVar7 + 0x5bef54)) {
-    MyAssertHandler(0xffffffff821dcc88,0x10b5,0,0xffffffff82000f98,0xffffffff821dd410);
-  }
-  uVar8 = *(undefined4 *)(iVar4 + 0x2013c);
-  iVar5 = CG_GetLocalClientStaticGlobals(uVar1);
-  iVar6 = CL_GetLocalClientConnection(uVar1);
-  *(undefined4 *)(iVar5 + 0x18) = uVar8;
-  *(undefined4 *)(iVar6 + 0x2013c) = uVar8;
-  *(undefined4 *)(iVar6 + 0x20140) = uVar8;
-  *(code **)(iVar4 + 0x5422c) = CL_Demo_ReadFromClipRecordMemory;
-  CL_Demo_ReadDemoMessage(uVar1);
-  CL_Demo_ReadDemoMessage(uVar1);
-  CL_Demo_ResetTimeValues(uVar1,*(undefined4 *)(iVar3 + 0x3388));
-  CL_Demo_ResetMessageSequenceNumbers(uVar1,(ulonglong)*(uint *)(iVar3 + 0x338c) - 1);
-  CL_Demo_ResetWorldInformation(uVar1,*(undefined4 *)(iVar3 + 0x3388));
-  *(int *)(iVar3 + 0x340c) = *(int *)(iVar3 + 0x3388) - DAT_82aa1c24;
-  if ((*(char *)(iVar7 + 0x5bef59) == '\0') && (DAT_84872900 != 0)) {
-    iVar7 = CL_Demo_GetPlaybackData();
-    uVar8 = Sys_Milliseconds();
-    *(undefined4 *)(iVar7 + 0x31e1f4) = uVar8;
-  }
-  __restgprlr_22();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
 
 // 827D5E50  CL_Demo_MoveSegment  (client_demo/cl_demo_playback.cpp:4308)
 
-void CL_Demo_MoveSegment(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void CL_Demo_MoveSegment(int param_1,int param_2)
 
 {
-  undefined8 uVar1;
-  void *_Dst;
-  int iVar2;
-  void *_Src;
-  void *_Src_00;
-  int iVar3;
+  int iVar1;
+  clientDemoPlayback_t *pcVar2;
+  char *pcVar3;
   int iVar4;
-  int iVar5;
-  undefined1 auStack_50 [80];
+  LargeLocal aLStack_50 [10];
   
-  uVar1 = __savegprlr_24();
-  LargeLocal__LargeLocal(auStack_50,0x100a8);
-  _Dst = (void *)LargeLocal__GetBuf(auStack_50);
-  if (DAT_84872900 == 0) {
-    Com_PrintError(0xe,0xffffffff821dd504);
-    LargeLocal___LargeLocal(auStack_50);
+  iVar1 = __savegprlr_24(param_1);
+  LargeLocal::LargeLocal(aLStack_50,0x100a8);
+  LargeLocal::GetBuf(aLStack_50);
+  if (s_clientDemoPlayback == (clientDemoPlayback_t *)0x0) {
+    Com_PrintError(0xe,"Playback memory isnt inited.\n");
+    LargeLocal::~LargeLocal(aLStack_50);
     __restgprlr_24();
     return;
   }
-  iVar2 = CL_Demo_GetPlaybackData();
-  iVar5 = (int)uVar1;
-  if (iVar5 < 0) {
+  pcVar2 = CL_Demo_GetPlaybackData();
+  if (iVar1 < 0) {
 LAB_827d5ff4:
-    Com_PrintError(0xe,0xffffffff821dd454,uVar1);
-    LargeLocal___LargeLocal(auStack_50);
+    Com_PrintError(0xe,"Bad segment index %d\n");
+    LargeLocal::~LargeLocal(aLStack_50);
     __restgprlr_24();
     return;
   }
-  iVar3 = *(int *)(iVar2 + 0x5bef4c) + -1;
-  if (iVar3 < iVar5) goto LAB_827d5ff4;
-  iVar4 = (int)param_2;
-  if ((iVar5 == 0) && (iVar4 == 0)) {
+  iVar4 = pcVar2->segmentCount + -1;
+  if (iVar4 < iVar1) goto LAB_827d5ff4;
+  if ((iVar1 == 0) && (param_2 == 0)) {
 LAB_827d5efc:
-    Com_PrintError(0xe,0xffffffff821dd4dc,param_2,uVar1);
-    LargeLocal___LargeLocal(auStack_50);
+    Com_PrintError(0xe,"Unspported direction %d for index %d\n");
+    LargeLocal::~LargeLocal(aLStack_50);
     __restgprlr_24();
     return;
   }
-  if (iVar5 == iVar3) {
-    if (iVar4 != 0) goto LAB_827d5efc;
+  if (iVar1 == iVar4) {
+    if (param_2 != 0) goto LAB_827d5efc;
   }
-  else if (iVar4 != 0) {
-    iVar3 = iVar5 + 1;
+  else if (param_2 != 0) {
+    iVar4 = 1;
     goto LAB_827d5f38;
   }
-  iVar3 = iVar5 + -1;
+  iVar4 = -1;
 LAB_827d5f38:
-  if ((iVar3 < 0) || (*(int *)(iVar2 + 0x5bef4c) <= iVar3)) {
-    MyAssertHandler(0xffffffff821dcc88,0x10f2,0,0xffffffff82000f98,0xffffffff821dd498);
+  if ((iVar1 + iVar4 < 0) || (pcVar2->segmentCount <= iVar1 + iVar4)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_playback.cpp"
+                    ,0x10f2,0,"%s");
   }
-  _Src = (void *)(iVar5 * 0x100a8 + iVar2 + 0x51e8b8);
-  memcpy(_Dst,_Src,0x100a8);
-  _Src_00 = (void *)(iVar3 * 0x100a8 + iVar2 + 0x51e8b8);
-  memcpy(_Src,_Src_00,0x100a8);
-  memcpy(_Src_00,_Dst,0x100a8);
-  CL_Demo_SetClipModified(1);
-  uVar1 = va(0xffffffff821dd46c,uVar1,param_2);
-  Com_Printf(0xe,uVar1);
-  LargeLocal___LargeLocal(auStack_50);
+  memcpy();
+  memcpy();
+  memcpy();
+  CL_Demo_SetClipModified(true);
+  pcVar3 = va("Clip: Moved segment %d in direction %d\n");
+  Com_Printf(0xe,pcVar3);
+  LargeLocal::~LargeLocal(aLStack_50);
   __restgprlr_24();
   return;
 }
@@ -4398,86 +2608,73 @@ LAB_827d5f38:
 
 // 827D6018  CL_Demo_DeleteSegment  (client_demo/cl_demo_playback.cpp:4356)
 
-void CL_Demo_DeleteSegment(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void CL_Demo_DeleteSegment(int param_1)
 
 {
   uint uVar1;
   uint uVar2;
-  longlong lVar3;
-  int iVar5;
-  undefined8 uVar4;
+  int iVar3;
+  clientDemoPlayback_t *pcVar4;
+  char *pcVar5;
   longlong lVar6;
   int iVar7;
-  int iVar8;
+  int *piVar8;
   int *piVar9;
-  int iVar10;
-  uint *puVar11;
-  uint *puVar12;
-  int iVar13;
-  void *_Dst;
   
-  lVar3 = __savegprlr_24();
-  if (DAT_84872900 == 0) {
-    Com_PrintError(0xe,0xffffffff821dd504);
+  iVar3 = __savegprlr_24(param_1);
+  if (s_clientDemoPlayback == (clientDemoPlayback_t *)0x0) {
+    Com_PrintError(0xe,"Playback memory isnt inited.\n");
     __restgprlr_24();
     return;
   }
-  iVar5 = CL_Demo_GetPlaybackData();
-  iVar10 = (int)lVar3;
-  if (-1 < iVar10) {
-    puVar12 = (uint *)(iVar5 + 0x5bef4c);
-    if (iVar10 <= (int)(*puVar12 - 1)) {
-      iVar13 = iVar10 * 0x100a8 + iVar5;
-      iVar8 = 0;
-      uVar1 = *(uint *)(iVar13 + 0x51e8d0);
-      uVar2 = *(uint *)(iVar13 + 0x51e8d4);
-      lVar6 = (ulonglong)uVar2 + (ulonglong)uVar1;
-      iVar7 = (int)lVar6;
-      if (0 < (int)*puVar12) {
-        piVar9 = (int *)(iVar5 + 0x51e8d0);
+  pcVar4 = CL_Demo_GetPlaybackData();
+  if (-1 < iVar3) {
+    piVar9 = &pcVar4->segmentCount;
+    if (iVar3 <= *piVar9 + -1) {
+      iVar7 = 0;
+      uVar2 = pcVar4->segments[iVar3].size;
+      lVar6 = (ulonglong)uVar2 + (ulonglong)(uint)pcVar4->segments[iVar3].clipBufferIndex;
+      if (0 < *piVar9) {
+        piVar8 = &pcVar4->segments[0].clipBufferIndex;
         do {
-          if (iVar8 != iVar10) {
-            if (iVar7 <= *piVar9) {
-              *piVar9 = *piVar9 - uVar2;
-            }
+          if ((iVar7 != iVar3) && ((int)lVar6 <= *piVar8)) {
+            *piVar8 = *piVar8 - uVar2;
           }
-          iVar8 = iVar8 + 1;
-          piVar9 = piVar9 + 0x402a;
-        } while (iVar8 < (int)*puVar12);
+          iVar7 = iVar7 + 1;
+          piVar8 = piVar8 + 0x402a;
+        } while (iVar7 < *piVar9);
       }
-      puVar11 = (uint *)(iVar5 + 0x51e1f8);
-      lVar6 = (ulonglong)*puVar11 - lVar6;
-      if (0 < lVar6) {
-        memmove((void *)(uVar1 + iVar5 + 0x31e1f8),(void *)(iVar7 + iVar5 + 0x31e1f8),(size_t)lVar6)
-        ;
+      piVar8 = &pcVar4->clipRecordBufIndex;
+      if (0 < (longlong)((ulonglong)(uint)*piVar8 - lVar6)) {
+        memmove();
       }
-      if (iVar10 < (int)*puVar12) {
-        _Dst = (void *)(iVar13 + 0x51e8b8);
-        lVar6 = lVar3;
+      if (iVar3 < *piVar9) {
         do {
-          lVar6 = lVar6 + 1;
-          if ((int)lVar6 < (int)*puVar12) {
-            memcpy(_Dst,(void *)((int)_Dst + 0x100a8),0x100a8);
+          iVar3 = iVar3 + 1;
+          if (iVar3 < *piVar9) {
+            memcpy();
           }
           else {
-            memset(_Dst,0,0x100a8);
+            memset();
           }
-          _Dst = (void *)((int)_Dst + 0x100a8);
-        } while ((int)lVar6 < (int)*puVar12);
+        } while (iVar3 < *piVar9);
       }
-      uVar1 = *puVar12;
-      *puVar12 = (uint)((ulonglong)uVar1 - 1);
-      *puVar11 = *puVar11 - uVar2;
-      if (((ulonglong)uVar1 - 1 != 0) && (DAT_84872900 != 0)) {
-        *(undefined1 *)(DAT_84872900 + 0x31e1f0) = 1;
+      uVar1 = *piVar9;
+      *piVar9 = (int)((ulonglong)uVar1 - 1);
+      *piVar8 = *piVar8 - uVar2;
+      if (((ulonglong)uVar1 - 1 != 0) && (s_clientDemoPlayback != (clientDemoPlayback_t *)0x0)) {
+        s_clientDemoPlayback->clipModified = true;
       }
-      uVar4 = va(0xffffffff821dd524,lVar3);
-      Com_Printf(0xe,uVar4);
+      pcVar5 = va("Clip: Deleted segment %d \n");
+      Com_Printf(0xe,pcVar5);
       __restgprlr_24();
       return;
     }
   }
-  Com_PrintError(0xe,0xffffffff821dd454,lVar3);
+  Com_PrintError(0xe,"Bad segment index %d\n");
   __restgprlr_24();
   return;
 }
@@ -4485,26 +2682,29 @@ void CL_Demo_DeleteSegment(void)
 
 // 827D61E8  CL_Demo_SwitchTransition  (client_demo/cl_demo_playback.cpp:4437)
 
-void CL_Demo_SwitchTransition(undefined8 param_1,int param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void CL_Demo_SwitchTransition(int param_1,int param_2)
 
 {
   int iVar1;
-  int iVar2;
+  clientDemoPlayback_t *pcVar2;
   int *piVar3;
   
-  iVar1 = __savegprlr_28();
-  if (DAT_84872900 == 0) {
-    Com_Printf(0,0xffffffff821dd570);
+  iVar1 = __savegprlr_28(param_1);
+  if (s_clientDemoPlayback == (clientDemoPlayback_t *)0x0) {
+    Com_Printf(0,"Error: Demo Playback Buffer is not inited.\n");
     __restgprlr_28();
     return;
   }
-  iVar2 = CL_Demo_GetPlaybackData();
-  if (iVar1 == *(int *)(iVar2 + 0x5bef4c) + -1) {
-    Com_Printf(0,0xffffffff821dd540);
+  pcVar2 = CL_Demo_GetPlaybackData();
+  if (iVar1 == pcVar2->segmentCount + -1) {
+    Com_Printf(0,"Cant switch transitions for the last segment\n");
     __restgprlr_28();
     return;
   }
-  piVar3 = (int *)(iVar1 * 0x100a8 + iVar2 + 0x51e8d8);
+  piVar3 = &pcVar2->segments[iVar1].transition;
   iVar1 = *piVar3;
   if (param_2 == 0) {
     if (iVar1 == 0) {
@@ -4521,9 +2721,9 @@ void CL_Demo_SwitchTransition(undefined8 param_1,int param_2)
   }
   *piVar3 = iVar1;
 LAB_827d62b0:
-  if (DAT_84872900 != 0) {
-    iVar1 = CL_Demo_GetPlaybackData();
-    *(undefined1 *)(iVar1 + 0x31e1f0) = 1;
+  if (s_clientDemoPlayback != (clientDemoPlayback_t *)0x0) {
+    pcVar2 = CL_Demo_GetPlaybackData();
+    pcVar2->clipModified = true;
   }
   __restgprlr_28();
   return;
@@ -4531,260 +2731,27 @@ LAB_827d62b0:
 
 
 // 827D62D8  CL_Demo_WriteClipCommands  (client_demo/cl_demo_playback.cpp:4481)
-
-void CL_Demo_WriteClipCommands
-               (undefined8 param_1,undefined8 param_2,ulonglong param_3,ulonglong param_4)
-
-{
-  char cVar1;
-  code *pcVar4;
-  undefined8 uVar2;
-  int iVar5;
-  int iVar6;
-  int iVar7;
-  int iVar8;
-  char cVar9;
-  undefined8 uVar3;
-  uint uVar10;
-  int *piVar11;
-  byte *pbVar12;
-  char *pcVar13;
-  uint *puVar14;
-  float *pfVar15;
-  double dVar16;
-  double dVar17;
-  char local_f0 [3];
-  byte local_ed;
-  char local_ec [4];
-  float local_e8;
-  int local_e4;
-  undefined4 local_e0;
-  undefined4 local_dc;
-  undefined1 auStack_d8 [8];
-  float local_d0;
-  float local_cc;
-  float local_c8;
-  undefined1 auStack_c0 [8];
-  undefined4 local_b8;
-  undefined4 local_ac [43];
-  
-  pcVar4 = (code *)__savegprlr_16();
-  LargeLocal__LargeLocal(auStack_d8,0x10000);
-  uVar2 = LargeLocal__GetBuf(auStack_d8);
-  if (DAT_84872900 == 0) goto LAB_827d6b08;
-  iVar5 = CL_Demo_GetPlaybackData();
-  iVar6 = CG_GetLocalClientGlobals(param_2);
-  iVar7 = CL_GetLocalClientGlobals(param_2);
-  cVar1 = *(char *)(iVar5 + 0x51e864);
-  local_f0[0] = '\x04';
-  (*pcVar4)(local_f0,1,param_2);
-  if (((uint)*(byte *)(iVar5 + 0x51e874) != *(uint *)(DAT_8484f0b4 + 0xc)) || (cVar1 != '\0')) {
-    local_f0[0] = '\0';
-    (*pcVar4)(local_f0,1,param_2);
-    local_ed = (byte)*(undefined4 *)(DAT_8484f0b4 + 0xc);
-    (*pcVar4)(&local_ed,1,param_2);
-    if ((param_4 & 0xff) != 0) {
-      *(byte *)(iVar5 + 0x51e874) = local_ed;
-    }
-  }
-  dVar17 = 1.0;
-  dVar16 = dVar17;
-  if (DAT_84872900 != 0) {
-    iVar8 = CL_Demo_GetPlaybackData();
-    dVar17 = (double)*(float *)(iVar8 + 0x1c);
-  }
-  if (((double)*(float *)(iVar5 + 0x51e878) != dVar17) || (cVar1 != '\0')) {
-    local_f0[0] = '\x01';
-    (*pcVar4)(local_f0,1,param_2);
-    if (DAT_84872900 != 0) {
-      iVar8 = CL_Demo_GetPlaybackData();
-      dVar16 = (double)*(float *)(iVar8 + 0x1c);
-    }
-    local_e8 = (float)dVar16;
-    (*pcVar4)(&local_e8,4,param_2);
-    if ((param_4 & 0xff) != 0) {
-      *(float *)(iVar5 + 0x51e878) = local_e8;
-    }
-  }
-  pbVar12 = (byte *)(iVar5 + 0x51e87c);
-  puVar14 = (uint *)(iVar5 + 0x5eefc8);
-  if (((uint)*pbVar12 != *puVar14) || (cVar1 != '\0')) {
-    local_f0[0] = '\x02';
-    (*pcVar4)(local_f0,1,param_2);
-    local_f0[2] = (char)*puVar14;
-    (*pcVar4)(local_f0 + 2,1,param_2);
-    if (((param_4 & 0xff) != 0) && (*pbVar12 = local_f0[2], (uint)(byte)local_f0[2] != *puVar14)) {
-      MyAssertHandler(0xffffffff821dcc88,0x11c5,0,0xffffffff82000f98,0xffffffff821dd610);
-    }
-  }
-  param_4 = param_4 & 0xff;
-  if (param_4 == 0) {
-    uVar10 = *puVar14;
-  }
-  else {
-    uVar10 = (uint)*pbVar12;
-  }
-  if ((uVar10 != 0) || (cVar1 != '\0')) {
-    local_f0[0] = '\x03';
-    (*pcVar4)(local_f0,1,param_2);
-    if (uVar10 == 0) {
-      pfVar15 = (float *)(iVar6 + 0x6b9c8);
-LAB_827d6594:
-      if ((((*pfVar15 == *(float *)(iVar5 + 0x51e880)) &&
-           (pfVar15[1] == *(float *)(iVar5 + 0x51e884))) &&
-          (pfVar15[2] == *(float *)(iVar5 + 0x51e888))) && (cVar1 == '\0')) {
-        local_f0[1] = 0;
-        (*pcVar4)(local_f0 + 1,1,param_2);
-      }
-      else {
-        local_f0[1] = 1;
-        (*pcVar4)(local_f0 + 1,1,param_2);
-        local_d0 = *pfVar15;
-        local_cc = pfVar15[1];
-        local_c8 = pfVar15[2];
-        (*pcVar4)(&local_d0,0xc,param_2);
-        if (param_4 != 0) {
-          *(float *)(iVar5 + 0x51e880) = local_d0;
-          *(float *)(iVar5 + 0x51e884) = local_cc;
-          *(float *)(iVar5 + 0x51e888) = local_c8;
-        }
-      }
-    }
-    else if (uVar10 < 3) {
-      pfVar15 = (float *)(iVar6 + 0x70560);
-      goto LAB_827d6594;
-    }
-    local_f0[0] = '\x04';
-    (*pcVar4)(local_f0,1,param_2);
-    if (uVar10 == 0) {
-      if (((*(float *)(iVar7 + 0x35ec) == *(float *)(iVar5 + 0x51e88c)) &&
-          (*(float *)(iVar7 + 0x35f0) == *(float *)(iVar5 + 0x51e890))) &&
-         ((*(float *)(iVar7 + 0x35f4) == *(float *)(iVar5 + 0x51e894) && (cVar1 == '\0')))) {
-        local_f0[1] = 0;
-        (*pcVar4)(local_f0 + 1,1,param_2);
-        goto LAB_827d6954;
-      }
-      local_f0[1] = 1;
-      (*pcVar4)(local_f0 + 1,1,param_2);
-      local_d0 = *(float *)(iVar7 + 0x35ec);
-      local_cc = *(float *)(iVar7 + 0x35f0);
-      local_c8 = *(float *)(iVar7 + 0x35f4);
-      (*pcVar4)(&local_d0,0xc,param_2);
-      if (param_4 != 0) {
-        *(float *)(iVar5 + 0x51e88c) = local_d0;
-        *(float *)(iVar5 + 0x51e890) = local_cc;
-        *(float *)(iVar5 + 0x51e894) = local_c8;
-      }
-    }
-    else if (uVar10 < 3) {
-      if (((*(float *)(iVar6 + 0x7056c) == *(float *)(iVar5 + 0x51e88c)) &&
-          (*(float *)(iVar6 + 0x70570) == *(float *)(iVar5 + 0x51e890))) &&
-         ((*(float *)(iVar6 + 0x70574) == *(float *)(iVar5 + 0x51e894) && (cVar1 == '\0')))) {
-        local_f0[1] = 0;
-        (*pcVar4)(local_f0 + 1,1,param_2);
-        goto LAB_827d6954;
-      }
-      local_f0[1] = 1;
-      (*pcVar4)(local_f0 + 1,1,param_2);
-      local_d0 = *(float *)(iVar6 + 0x7056c);
-      local_cc = *(float *)(iVar6 + 0x70570);
-      local_c8 = *(float *)(iVar6 + 0x70574);
-      (*pcVar4)(&local_d0,0xc,param_2);
-      if (param_4 != 0) {
-        *(float *)(iVar5 + 0x51e88c) = local_d0;
-        *(float *)(iVar5 + 0x51e890) = local_cc;
-        *(float *)(iVar5 + 0x51e894) = local_c8;
-      }
-    }
-    if ((cVar1 != '\0') && (cVar9 = CL_Demo_IsClipPlaying(), cVar9 == '\0')) {
-      local_f0[0] = '\x05';
-      (*pcVar4)(local_f0,1,param_2);
-      (*pcVar4)(iVar5 + 0x51e868,4,param_2);
-      (*pcVar4)(iVar5 + 0x51e86c,4,param_2);
-      (*pcVar4)(iVar5 + 0x51e870,4,param_2);
-      local_e4 = CG_IsScoreboardDisplayed(param_2);
-      (*pcVar4)(&local_e4,4,param_2);
-      if (local_e4 != 0) {
-        piVar11 = (int *)(iVar6 + 0x76ab4);
-        (*pcVar4)(piVar11,4,param_2);
-        (*pcVar4)(iVar6 + 0x76ab8,0x10,param_2);
-        (*pcVar4)(iVar6 + 0x76ad8,0x10,param_2);
-        iVar7 = 0;
-        if (0 < *piVar11) {
-          iVar6 = iVar6 + 0x76ae8;
-          do {
-            (*pcVar4)(iVar6,0x30,param_2);
-            iVar7 = iVar7 + 1;
-            iVar6 = iVar6 + 0x30;
-          } while (iVar7 < *piVar11);
-        }
-      }
-      uVar3 = va(0xffffffff821dd5d4);
-      Com_Printf(0xe,uVar3);
-    }
-  }
-LAB_827d6954:
-  if (*(char *)(iVar5 + 0x51e865) != '\0') {
-    local_f0[0] = '\x06';
-    memset((void *)uVar2,0,0x10000);
-    MSG_Init(auStack_c0,uVar2,0x10000);
-    CL_Demo_WriteConfigStrings(param_2,auStack_c0,1);
-    CL_Demo_WriteVisionsets(param_2,auStack_c0);
-    CG_BlurGetData(param_2,&local_dc,&local_e0);
-    MSG_WriteByte(auStack_c0,0x71);
-    MSG_WriteData(auStack_c0,local_dc,local_e0);
-    MSG_WriteByte(auStack_c0,0x17);
-    CL_Demo_WriteScores(param_2,auStack_c0);
-    CL_Demo_WritePersistentDataBuffer(auStack_c0);
-    (*pcVar4)(local_f0,1,param_2);
-    (*pcVar4)(local_ac,4,param_2);
-    (*pcVar4)(local_b8,local_ac[0],param_2);
-    uVar2 = va(0xffffffff821dd59c);
-    Com_Printf(0xe,uVar2);
-    *(char *)(iVar5 + 0x51e865) = '\0';
-  }
-  pcVar13 = (char *)(iVar5 + 0x51e898);
-  if ((*pcVar13 != *(char *)(DAT_8484f0bc + 0xc)) || (cVar1 != '\0')) {
-    local_f0[0] = '\a';
-    (*pcVar4)(local_f0,1,param_2);
-    if (param_4 == 0) {
-      local_ec[0] = *pcVar13;
-    }
-    else {
-      local_ec[0] = *(char *)(DAT_8484f0bc + 0xc);
-    }
-    (*pcVar4)(local_ec,1,param_2);
-    if (param_4 != 0) {
-      *pcVar13 = *(char *)(DAT_8484f0bc + 0xc);
-    }
-  }
-  local_f0[0] = ((param_3 & 0xff) != 0) + '\t';
-  (*pcVar4)(local_f0,1,param_2);
-  *(char *)(iVar5 + 0x51e864) = '\0';
-LAB_827d6b08:
-  LargeLocal___LargeLocal(auStack_d8);
-  __restgprlr_16();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 827DBB20  CL_Demo_WriteClipCommandsWhenPaused  (client_demo/cl_demo_playback.cpp:4750)
 
-void CL_Demo_WriteClipCommandsWhenPaused(undefined8 param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void CL_Demo_WriteClipCommandsWhenPaused(LocalClientNum_t param_1)
 
 {
-  int iVar1;
+  clientDemoPlayback_t *pcVar1;
   
-  if (DAT_84872900 != 0) {
-    iVar1 = CL_Demo_GetPlaybackData();
-    if (*(int *)(iVar1 + 0x31e1ec) == 1) {
-      iVar1 = CL_Demo_GetPlaybackData();
-      if (0x1effff < *(int *)(iVar1 + 0x51e1f8)) {
-        CL_Demo_PauseClipRecord(param_1);
-        return;
-      }
+  if (s_clientDemoPlayback != (clientDemoPlayback_t *)0x0) {
+    pcVar1 = CL_Demo_GetPlaybackData();
+    if ((pcVar1->clipState == 1) &&
+       (pcVar1 = CL_Demo_GetPlaybackData(), 0x1effff < pcVar1->clipRecordBufIndex)) {
+      CL_Demo_PauseClipRecord(param_1);
+      return;
     }
-    CL_Demo_WriteClipCommands(0xffffffff827d5808,param_1,1,1);
+    CL_Demo_WriteClipCommands(CL_Demo_WriteToClipRecordMemory,param_1,true,true);
   }
   return;
 }
@@ -4792,704 +2759,190 @@ void CL_Demo_WriteClipCommandsWhenPaused(undefined8 param_1)
 
 // 827D6B20  CL_Demo_WriteTransitionClipCommandBlockToBuffer  (client_demo/cl_demo_playback.cpp:4771)
 
-undefined8
-CL_Demo_WriteTransitionClipCommandBlockToBuffer(undefined4 param_1,undefined1 *param_2,int param_3)
+int CL_Demo_WriteTransitionClipCommandBlockToBuffer(int param_1,uchar *param_2,int param_3)
 
 {
   if (param_3 < 8) {
-    Com_PrintError(0,0xffffffff821dd678,param_3,7);
+    Com_PrintError(0,
+                   "ERROR: Not writing clip transitions since our buffer size (%d) is less than the required size (%d). This shouldnt happen.\n"
+                  );
     return 0;
   }
-  *param_2 = 4;
-  param_2[1] = 8;
-  *(undefined4 *)(param_2 + 2) = param_1;
-  param_2[6] = 9;
-  Com_Printf(0xe,0xffffffff821dd644);
+  *param_2 = '\x04';
+  param_2[1] = '\b';
+  *(int *)(param_2 + 2) = param_1;
+  param_2[6] = '\t';
+  Com_Printf(0xe,"DEMO: w Clip Cmd: CLIENT_DEMO_CLIP_CMD_TRANSITION\n");
   return 7;
 }
 
 
 // 827DBBD0  CL_Demo_ParseClipCommand  (client_demo/cl_demo_playback.cpp:4815)
-
-void CL_Demo_ParseClipCommand(undefined8 param_1,uint param_2,ulonglong param_3)
-
-{
-  code *pcVar1;
-  undefined8 uVar2;
-  undefined8 uVar3;
-  int iVar4;
-  int iVar5;
-  int iVar6;
-  char cVar8;
-  int iVar7;
-  int *_Dst;
-  undefined4 *puVar9;
-  char local_a0;
-  undefined1 local_9f [3];
-  int local_9c;
-  float local_98;
-  uint local_94;
-  undefined4 local_90;
-  undefined4 local_8c;
-  undefined1 auStack_88 [8];
-  undefined1 auStack_80 [8];
-  undefined4 local_78;
-  undefined4 local_6c [27];
-  
-  uVar2 = __savegprlr_23();
-  LargeLocal__LargeLocal(auStack_88,0x10000);
-  uVar3 = LargeLocal__GetBuf(auStack_88);
-  if (DAT_84872900 == 0) {
-    MyAssertHandler(0xffffffff821dcc88,0x64c,0,0xffffffff82000f98,0xffffffff821dcdfc);
-  }
-  iVar7 = DAT_84872900;
-  iVar4 = CG_GetLocalClientGlobals(uVar2);
-  iVar5 = CL_GetLocalClientGlobals(uVar2);
-  iVar6 = CL_GetLocalClientConnection(uVar2);
-  switch(param_2 & 0xff) {
-  case 0:
-    (**(code **)(iVar6 + 0x5422c))(local_9f,1,uVar2);
-    Dvar_SetInt(DAT_8484f0b4,local_9f[0]);
-    cVar8 = CL_Demo_IsClipPlaying();
-    if ((cVar8 != '\0') || (cVar8 = CL_Demo_IsClipPreviewRunning(), cVar8 != '\0')) {
-LAB_827dbd00:
-      *(undefined1 *)(iVar7 + 0x51e8b4) = 1;
-      LargeLocal___LargeLocal(auStack_88);
-      __restgprlr_23();
-      return;
-    }
-    break;
-  case 1:
-    (**(code **)(iVar6 + 0x5422c))(&local_98,4,uVar2);
-    CL_Demo_SetTimeScale((double)local_98);
-    LargeLocal___LargeLocal(auStack_88);
-    __restgprlr_23();
-    return;
-  case 2:
-    (**(code **)(iVar6 + 0x5422c))((undefined1 *)(iVar7 + 0x51e87c),1,uVar2);
-    uVar3 = va(0xffffffff821de4d8,*(undefined4 *)(iVar7 + 0x5eefc8));
-    Com_Printf(0xe,uVar3);
-    iVar4 = CL_IsCgameInitialized(uVar2);
-    if (iVar4 != 0) {
-      CL_Demo_SwitchCameraMode(uVar2,*(undefined1 *)(iVar7 + 0x51e87c));
-    }
-    cVar8 = CL_Demo_IsClipPlaying();
-    if (cVar8 != '\0') goto LAB_827dbd00;
-    cVar8 = CL_Demo_IsClipPreviewRunning();
-    if (cVar8 != '\0') {
-      *(undefined1 *)(iVar7 + 0x51e8b4) = 1;
-      LargeLocal___LargeLocal(auStack_88);
-      __restgprlr_23();
-      return;
-    }
-    break;
-  case 3:
-    (**(code **)(iVar6 + 0x5422c))(&local_a0,1,uVar2);
-    if (local_a0 == '\0') {
-      *(undefined4 *)(iVar7 + 0x51e89c) = *(undefined4 *)(iVar7 + 0x51e880);
-      *(undefined4 *)(iVar7 + 0x51e8a0) = *(undefined4 *)(iVar7 + 0x51e884);
-      *(undefined4 *)(iVar7 + 0x51e8a4) = *(undefined4 *)(iVar7 + 0x51e888);
-      LargeLocal___LargeLocal(auStack_88);
-      __restgprlr_23();
-      return;
-    }
-    pcVar1 = *(code **)(iVar6 + 0x5422c);
-    if ((param_3 & 0xff) != 0) {
-      *(undefined4 *)(iVar7 + 0x51e89c) = *(undefined4 *)(iVar7 + 0x51e880);
-      *(undefined4 *)(iVar7 + 0x51e8a0) = *(undefined4 *)(iVar7 + 0x51e884);
-      *(undefined4 *)(iVar7 + 0x51e8a4) = *(undefined4 *)(iVar7 + 0x51e888);
-      (*pcVar1)((undefined4 *)(iVar7 + 0x51e880),0xc,uVar2);
-      LargeLocal___LargeLocal(auStack_88);
-      __restgprlr_23();
-      return;
-    }
-    (*pcVar1)((undefined4 *)(iVar4 + 0x6b9c8),0xc,uVar2);
-    if (*(char *)(iVar7 + 0x51e87c) == '\x02') {
-      *(undefined4 *)(iVar4 + 0x70560) = *(undefined4 *)(iVar4 + 0x6b9c8);
-      *(undefined4 *)(iVar4 + 0x70564) = *(undefined4 *)(iVar4 + 0x6b9cc);
-      *(undefined4 *)(iVar4 + 0x70568) = *(undefined4 *)(iVar4 + 0x6b9d0);
-      LargeLocal___LargeLocal(auStack_88);
-      __restgprlr_23();
-      return;
-    }
-    break;
-  case 4:
-    (**(code **)(iVar6 + 0x5422c))(&local_a0,1,uVar2);
-    if (local_a0 == '\0') {
-      *(undefined4 *)(iVar7 + 0x51e8a8) = *(undefined4 *)(iVar7 + 0x51e88c);
-      *(undefined4 *)(iVar7 + 0x51e8ac) = *(undefined4 *)(iVar7 + 0x51e890);
-      *(undefined4 *)(iVar7 + 0x51e8b0) = *(undefined4 *)(iVar7 + 0x51e894);
-      LargeLocal___LargeLocal(auStack_88);
-      __restgprlr_23();
-      return;
-    }
-    pcVar1 = *(code **)(iVar6 + 0x5422c);
-    if ((param_3 & 0xff) != 0) {
-      *(undefined4 *)(iVar7 + 0x51e8a8) = *(undefined4 *)(iVar7 + 0x51e88c);
-      *(undefined4 *)(iVar7 + 0x51e8ac) = *(undefined4 *)(iVar7 + 0x51e890);
-      *(undefined4 *)(iVar7 + 0x51e8b0) = *(undefined4 *)(iVar7 + 0x51e894);
-      (*pcVar1)((undefined4 *)(iVar7 + 0x51e88c),0xc,uVar2);
-      LargeLocal___LargeLocal(auStack_88);
-      __restgprlr_23();
-      return;
-    }
-    (*pcVar1)((undefined4 *)(iVar5 + 0x35ec),0xc,uVar2);
-    if (*(char *)(iVar7 + 0x51e87c) == '\x02') {
-      *(undefined4 *)(iVar4 + 0x7056c) = *(undefined4 *)(iVar5 + 0x35ec);
-      *(undefined4 *)(iVar4 + 0x70570) = *(undefined4 *)(iVar5 + 0x35f0);
-      *(undefined4 *)(iVar4 + 0x70574) = *(undefined4 *)(iVar5 + 0x35f4);
-      LargeLocal___LargeLocal(auStack_88);
-      __restgprlr_23();
-      return;
-    }
-    break;
-  case 5:
-    puVar9 = (undefined4 *)(iVar6 + 0x5422c);
-    (*(code *)*puVar9)(&local_94,4,uVar2);
-    (*(code *)*puVar9)(&local_90,4,uVar2);
-    (*(code *)*puVar9)(iVar7 + 0x51e4cc,4,uVar2);
-    (*(code *)*puVar9)(&local_9c,4,uVar2);
-    if (local_9c != 0) {
-      _Dst = (int *)(iVar7 + 0x51e4d4);
-      memset(_Dst,0,900);
-      (*(code *)*puVar9)(_Dst,4,uVar2);
-      (*(code *)*puVar9)(iVar7 + 0x51e4d8,0x10,uVar2);
-      (*(code *)*puVar9)(iVar7 + 0x51e4e8,0x10,uVar2);
-      iVar4 = 0;
-      if (0 < *_Dst) {
-        iVar5 = iVar7 + 0x51e4f8;
-        do {
-          (*(code *)*puVar9)(iVar5,0x30,uVar2);
-          iVar4 = iVar4 + 1;
-          iVar5 = iVar5 + 0x30;
-        } while (iVar4 < *_Dst);
-      }
-      *(undefined1 *)(iVar7 + 0x51e858) = 1;
-      CL_Demo_CopyScoresInformationToCgame(uVar2);
-    }
-    CL_Demo_ResetMessageSequenceNumbers(uVar2,(ulonglong)local_94 - 1);
-    iVar4 = CG_GetLocalClientStaticGlobals(uVar2);
-    iVar5 = CL_GetLocalClientConnection(uVar2);
-    *(undefined4 *)(iVar4 + 0x18) = local_90;
-    *(undefined4 *)(iVar5 + 0x2013c) = local_90;
-    *(undefined4 *)(iVar5 + 0x20140) = local_90;
-    CL_Demo_ResetWorldInformation(uVar2,0);
-    if (DAT_84872900 != 0) {
-      iVar4 = CL_Demo_GetPlaybackData();
-      *(undefined1 *)(iVar4 + 0xc) = 1;
-    }
-    cVar8 = CL_Demo_IsClipPlaying();
-    if ((cVar8 != '\0') || (cVar8 = CL_Demo_IsClipPreviewRunning(), cVar8 != '\0')) {
-      *(undefined1 *)(iVar7 + 0x51e8b4) = 1;
-    }
-    cVar8 = CL_Demo_IsClipPlaying();
-    if (cVar8 != '\0') {
-      *(undefined1 *)(iVar7 + 0x51e859) = 1;
-      *(undefined4 *)(iVar7 + 0x51e4d0) = *(undefined4 *)(iVar7 + 0x51e4c4);
-    }
-    if ((local_9c == 0) && (iVar7 = CG_IsScoreboardDisplayed(uVar2), iVar7 != 0)) {
-      CG_ScoresUp(uVar2);
-      UI_SetActiveMenu(uVar2,0);
-      LargeLocal___LargeLocal(auStack_88);
-      __restgprlr_23();
-      return;
-    }
-    break;
-  case 6:
-    memset((void *)uVar3,0,0x10000);
-    MSG_Init(auStack_80,uVar3,0x10000);
-    (**(code **)(iVar6 + 0x5422c))(local_6c,4,uVar2);
-    (**(code **)(iVar6 + 0x5422c))(local_78,local_6c[0],uVar2);
-    CL_Demo_ReadConfigStrings(uVar2,auStack_80);
-    CL_Demo_UpdateConfigStrings(uVar2);
-    CL_Demo_ReadVisionsets(uVar2,auStack_80);
-    CL_Demo_ReadBlur(uVar2,auStack_80);
-    CL_Demo_ReadScores(uVar2,auStack_80);
-    CL_Demo_ReadPersistentDataBuffer(auStack_80);
-    LargeLocal___LargeLocal(auStack_88);
-    __restgprlr_23();
-    return;
-  case 7:
-    (**(code **)(iVar6 + 0x5422c))(iVar7 + 0x51e898,1,uVar2);
-    LargeLocal___LargeLocal(auStack_88);
-    __restgprlr_23();
-    return;
-  case 8:
-    (**(code **)(iVar6 + 0x5422c))(&local_8c,4,uVar2);
-    CL_Demo_ActivateTransitionScreen(local_8c);
-    LargeLocal___LargeLocal(auStack_88);
-    __restgprlr_23();
-    return;
-  case 9:
-  case 10:
-    break;
-  default:
-    if (DAT_84013128 == 0) {
-      uVar2 = va(0xffffffff821de4bc);
-      MyAssertHandler(0xffffffff821dcc88,0x1382,0,uVar2);
-    }
-  }
-  LargeLocal___LargeLocal(auStack_88);
-  __restgprlr_23();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 827DC3B8  CL_Demo_ReadClipCommands  (client_demo/cl_demo_playback.cpp:5006)
 
-void CL_Demo_ReadClipCommands(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+int CL_Demo_ReadClipCommands(LocalClientNum_t param_1,bool param_2)
 
 {
-  undefined8 uVar1;
-  int iVar2;
-  char local_30 [48];
+  LocalClientNum_t LVar1;
+  clientConnection_t *pcVar2;
+  int iVar3;
+  _func___cdecl_int_void_ptr_int_int **pp_Var4;
+  uchar local_30 [48];
   
-  uVar1 = __savegprlr_28();
-  iVar2 = CL_GetLocalClientConnection();
-  (**(code **)(iVar2 + 0x5422c))(local_30,1,uVar1);
+  LVar1 = __savegprlr_28(param_1);
+  pcVar2 = CL_GetLocalClientConnection(LVar1);
+  pp_Var4 = &(pcVar2->clientDemo).demoRead;
+  (**pp_Var4)(local_30,1,LVar1);
   while ((local_30[0] != '\t' && (local_30[0] != '\n'))) {
-    CL_Demo_ParseClipCommand(uVar1,local_30[0],param_2);
-    (**(code **)(iVar2 + 0x5422c))(local_30,1,uVar1);
+    CL_Demo_ParseClipCommand(LVar1,local_30[0],param_2);
+    (**pp_Var4)(local_30,1,LVar1);
   }
-  __restgprlr_28(-(local_30[0] != '\n') & 1);
-  return;
+  iVar3 = __restgprlr_28(-(local_30[0] != '\n') & 1);
+  return iVar3;
 }
 
 
 // 827D6BA0  CL_Demo_CopyScoresInformationToCgame  (client_demo/cl_demo_playback.cpp:5036)
-
-void CL_Demo_CopyScoresInformationToCgame(void)
-
-{
-  int iVar1;
-  undefined8 uVar2;
-  int iVar3;
-  void *pvVar4;
-  void *pvVar5;
-  int *piVar6;
-  int iVar7;
-  void *_Src;
-  int *_Dst;
-  
-  uVar2 = __savegprlr_20();
-  iVar3 = CL_IsCgameInitialized();
-  pvVar4 = (void *)0x0;
-  if (iVar3 != 0) {
-    iVar3 = CL_Demo_GetPlaybackData();
-    if (*(char *)(iVar3 + 0x51e858) == '\0') {
-      MyAssertHandler(0xffffffff821dcc88,0x13b6,0,0xffffffff82000f98,0xffffffff821dd6f4);
-    }
-    pvVar4 = (void *)CG_GetLocalClientGlobals(uVar2);
-    if (*(int *)((int)pvVar4 + 0x100b64) != 0) {
-      _Dst = (int *)((int)pvVar4 + 0x76ae8);
-      memset(_Dst,0,0x360);
-      piVar6 = (int *)(iVar3 + 0x51e4d4);
-      *(int *)((int)pvVar4 + 0x76ab4) = *piVar6;
-      *(undefined4 *)((int)pvVar4 + 0x76ad8) = *(undefined4 *)(iVar3 + 0x51e4e8);
-      iVar7 = 0;
-      *(undefined4 *)((int)pvVar4 + 0x76adc) = *(undefined4 *)(iVar3 + 0x51e4ec);
-      *(undefined4 *)((int)pvVar4 + 0x76ae0) = *(undefined4 *)(iVar3 + 0x51e4f0);
-      *(undefined4 *)((int)pvVar4 + 0x76ae4) = *(undefined4 *)(iVar3 + 0x51e4f4);
-      *(undefined4 *)((int)pvVar4 + 0x76ab8) = *(undefined4 *)(iVar3 + 0x51e4d8);
-      *(undefined4 *)((int)pvVar4 + 0x76abc) = *(undefined4 *)(iVar3 + 0x51e4dc);
-      *(undefined4 *)((int)pvVar4 + 0x76ac0) = *(undefined4 *)(iVar3 + 0x51e4e0);
-      *(undefined4 *)((int)pvVar4 + 0x76ac4) = *(undefined4 *)(iVar3 + 0x51e4e4);
-      pvVar5 = (void *)*piVar6;
-      if (0 < *piVar6) {
-        _Src = (void *)(iVar3 + 0x51e4f8);
-        do {
-          pvVar5 = memcpy(_Dst,_Src,0x30);
-          iVar1 = *_Dst;
-          if (*(int *)((int)pvVar4 + iVar1 * 0x590 + 0x100b88) == 0) {
-            _Dst[6] = 0;
-            _Dst[0xb] = 0;
-            _Dst[4] = 0;
-          }
-          else {
-            _Dst[6] = *(int *)((int)pvVar4 + iVar1 * 0x590 + 0x100bbc);
-            pvVar5 = (void *)CL_GetRankIcon(*(undefined4 *)((int)pvVar4 + iVar1 * 0x590 + 0x100bbc),
-                                            *(undefined4 *)((int)pvVar4 + iVar1 * 0x590 + 0x100bc0),
-                                            _Dst + 0xb);
-            *(int *)((int)pvVar4 + *_Dst * 0x590 + 0x100bdc) = _Dst[1];
-            _Dst[4] = *(int *)((int)pvVar4 + *_Dst * 0x590 + 0x100bb4);
-          }
-          _Dst[9] = 0;
-          iVar7 = iVar7 + 1;
-          _Dst[10] = 0;
-          _Src = (void *)((int)_Src + 0x30);
-          _Dst = _Dst + 0xc;
-        } while (iVar7 < *piVar6);
-      }
-      pvVar4 = pvVar5;
-      *(char *)(iVar3 + 0x51e858) = '\0';
-    }
-  }
-  __restgprlr_20(pvVar4);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 827D6D98  CL_Demo_WriteToRestorePointMemory  (client_demo/cl_demo_playback.cpp:5091)
 
-void CL_Demo_WriteToRestorePointMemory(undefined8 param_1,size_t param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void CL_Demo_WriteToRestorePointMemory(void *param_1,int param_2,int param_3)
 
 {
-  int iVar1;
-  void *_Src;
-  void *pvVar2;
+  clientDemoPlayback_t *pcVar1;
+  longlong lVar2;
   int *piVar3;
+  int iVar4;
   
-  _Src = (void *)__savegprlr_26();
-  pvVar2 = _Src;
-  if (DAT_84872900 == 0) {
-    pvVar2 = (void *)MyAssertHandler(0xffffffff821dcc88,0x64c,0,0xffffffff82000f98,
-                                     0xffffffff821dcdfc);
+  lVar2 = (longlong)param_2;
+  __savegprlr_26(param_1,lVar2,param_3);
+  if (s_clientDemoPlayback == (clientDemoPlayback_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_playback.cpp"
+                    ,0x64c,0,"%s");
   }
-  iVar1 = DAT_84872900;
-  if ((int)param_2 < 1) {
-    pvVar2 = (void *)MyAssertHandler(0xffffffff821dcc88,0x13e7,0,0xffffffff82000f98,
-                                     0xffffffff82034a78);
+  pcVar1 = s_clientDemoPlayback;
+  iVar4 = (int)lVar2;
+  if (iVar4 < 1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_playback.cpp"
+                    ,0x13e7,0,"%s");
   }
-  if (1 < *(int *)(iVar1 + 0x5bef5c)) {
-    pvVar2 = (void *)MyAssertHandler(0xffffffff821dcc88,0x13e8,0,0xffffffff82000f98,
-                                     0xffffffff821dd710);
+  if (1 < pcVar1->selectedRestorePoint) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_playback.cpp"
+                    ,0x13e8,0,"%s");
   }
-  piVar3 = (int *)(iVar1 + 0x5bef60);
-  if ((int)(*piVar3 + param_2) < 0x18001) {
-    pvVar2 = memcpy((void *)(*(int *)(iVar1 + 0x5bef5c) * 0x18000 + *piVar3 + iVar1 + 0x5bef64),_Src
-                    ,param_2);
+  piVar3 = &pcVar1->restorePointBufferIndex;
+  if (*piVar3 + iVar4 < 0x18001) {
+    memcpy();
   }
-  *piVar3 = *piVar3 + param_2;
-  __restgprlr_26(pvVar2);
+  *piVar3 = *piVar3 + iVar4;
+  __restgprlr_26();
   return;
 }
 
 
 // 827D6EA0  CL_Demo_ReadFromRestorePointMemory  (client_demo/cl_demo_playback.cpp:5112)
 
-void CL_Demo_ReadFromRestorePointMemory(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+int CL_Demo_ReadFromRestorePointMemory(void *param_1,int param_2,int param_3)
 
 {
-  int iVar1;
-  void *_Dst;
-  size_t _Size;
-  int *piVar2;
+  clientDemoPlayback_t *pcVar1;
+  int iVar2;
+  longlong lVar3;
+  int *piVar4;
   
-  _Dst = (void *)__savegprlr_25();
-  if (DAT_84872900 == 0) {
-    MyAssertHandler(0xffffffff821dcc88,0x64c,0,0xffffffff82000f98,0xffffffff821dcdfc);
+  lVar3 = (longlong)param_2;
+  __savegprlr_25(param_1,lVar3,param_3);
+  if (s_clientDemoPlayback == (clientDemoPlayback_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_playback.cpp"
+                    ,0x64c,0,"%s");
   }
-  iVar1 = DAT_84872900;
-  _Size = (size_t)param_2;
-  if ((int)_Size < 1) {
-    MyAssertHandler(0xffffffff821dcc88,0x13fd,0,0xffffffff82000f98,0xffffffff82034a78);
+  pcVar1 = s_clientDemoPlayback;
+  iVar2 = (int)lVar3;
+  if (iVar2 < 1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_playback.cpp"
+                    ,0x13fd,0,"%s");
   }
-  piVar2 = (int *)(iVar1 + 0x5bef60);
-  if (0x17fff < (int)(*piVar2 + _Size)) {
-    MyAssertHandler(0xffffffff821dcc88,0x13fe,0,0xffffffff82000f98,0xffffffff821dd758);
+  piVar4 = &pcVar1->restorePointBufferIndex;
+  if (0x17fff < *piVar4 + iVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_playback.cpp"
+                    ,0x13fe,0,"%s");
   }
-  if (1 < *(int *)(iVar1 + 0x5bef5c)) {
-    MyAssertHandler(0xffffffff821dcc88,0x13ff,0,0xffffffff82000f98,0xffffffff821dd710);
+  if (1 < pcVar1->selectedRestorePoint) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_playback.cpp"
+                    ,0x13ff,0,"%s");
   }
-  memcpy(_Dst,(void *)(*(int *)(iVar1 + 0x5bef5c) * 0x18000 + *piVar2 + iVar1 + 0x5bef64),_Size);
-  *piVar2 = *piVar2 + _Size;
-  __restgprlr_25(param_2);
-  return;
+  memcpy();
+  *piVar4 = *piVar4 + iVar2;
+  iVar2 = __restgprlr_25(lVar3);
+  return iVar2;
 }
 
 
 // 827D6FD0  CL_Demo_WriteRestorePoint  (client_demo/cl_demo_playback.cpp:5135)
-
-void CL_Demo_WriteRestorePoint(undefined8 param_1,int param_2)
-
-{
-  uint uVar1;
-  undefined4 uVar2;
-  uint uVar3;
-  undefined4 uVar4;
-  int iVar5;
-  undefined8 uVar6;
-  undefined8 uVar7;
-  undefined1 *puVar9;
-  int iVar10;
-  int iVar11;
-  int iVar12;
-  longlong lVar8;
-  int *piVar13;
-  ulonglong uVar14;
-  undefined1 local_f0 [4];
-  int local_ec;
-  undefined1 auStack_e8 [8];
-  undefined1 auStack_e0 [16];
-  undefined1 auStack_d0 [8];
-  undefined1 *local_c8;
-  uint local_bc;
-  
-  uVar6 = __savegprlr();
-  LargeLocal__LargeLocal(auStack_e0,0x10000);
-  uVar7 = LargeLocal__GetBuf(auStack_e0);
-  LargeLocal__LargeLocal(auStack_e8,0x10000);
-  puVar9 = (undefined1 *)LargeLocal__GetBuf(auStack_e8);
-  iVar10 = CL_GetLocalClientGlobals(uVar6);
-  iVar11 = CL_GetLocalClientConnection(uVar6);
-  if (DAT_84872900 == 0) {
-    MyAssertHandler(0xffffffff821dcc88,0x64c,0,0xffffffff82000f98,0xffffffff821dcdfc);
-  }
-  iVar5 = DAT_84872900;
-  piVar13 = (int *)(DAT_84872900 + 0x5bef60);
-  *(int *)(DAT_84872900 + 0x5bef5c) = param_2;
-  *piVar13 = 0;
-  iVar12 = CL_Demo_GetPlaybackData();
-  *(undefined1 *)(iVar5 + param_2 + 0x5eefc4) = *(undefined1 *)(iVar12 + 8);
-  if (*(int *)(iVar10 + 0x3390) < 0) {
-    local_ec = 1;
-  }
-  else {
-    local_ec = (*(int *)(iVar10 + 0x338c) - *(int *)(iVar10 + 0x3390)) + 1;
-  }
-  CL_Demo_WriteToRestorePointMemory(&local_ec,4,uVar6);
-  *(undefined1 *)(iVar5 + 0x51e864) = 1;
-  *(undefined1 *)(iVar5 + 0x51e865) = 1;
-  *(undefined4 *)(iVar5 + 0x51e86c) = *(undefined4 *)(iVar11 + 0x2013c);
-  *(undefined4 *)(iVar5 + 0x51e870) = *(undefined4 *)(iVar10 + 0x3388);
-  if (*(int *)(iVar10 + 0x3390) < 0) {
-    *(undefined4 *)(iVar5 + 0x51e868) = *(undefined4 *)(iVar10 + 0x338c);
-  }
-  else {
-    *(int *)(iVar5 + 0x51e868) = *(int *)(iVar10 + 0x3390);
-  }
-  CL_Demo_WriteClipCommands(0xffffffff827d6d98,uVar6,0,0);
-  uVar3 = *(uint *)(iVar10 + 0xd3fc);
-  uVar4 = *(undefined4 *)(iVar11 + 0x44200);
-  if (0xff < uVar3) {
-    MyAssertHandler(0xffffffff821dcc88,0x143a,0,0xffffffff821dd888,uVar3,0x100);
-  }
-  CL_Demo_WriteAllClientArchives(0xffffffff827d6d98,uVar6);
-  iVar11 = 0;
-  uVar1 = *(uint *)(iVar10 + 0x3390);
-  uVar14 = (ulonglong)uVar1;
-  if ((int)uVar1 < 0) {
-    local_f0[0] = 1;
-    iVar11 = *(int *)(iVar10 + 0x33ac);
-    CL_Demo_WriteToRestorePointMemory(local_f0,1,uVar6);
-    memset((void *)uVar7,0,0x10000);
-    MSG_Init(auStack_d0,uVar7,0x10000);
-    CL_Demo_GenerateUncompressedSnapshot(uVar6,auStack_d0,*(undefined4 *)(iVar10 + 0x338c));
-    *puVar9 = *local_c8;
-    puVar9[1] = local_c8[1];
-    puVar9[2] = local_c8[2];
-    puVar9[3] = local_c8[3];
-    lVar8 = MSG_WriteBitsCompress(0,local_c8 + 4,puVar9 + 4,(ulonglong)local_bc - 4);
-    CL_Demo_WriteRawMessage
-              (0xffffffff827d6d98,uVar6,*(undefined4 *)(iVar10 + 0x338c),puVar9,lVar8 + 4);
-LAB_827d73bc:
-    if (iVar11 != 0) goto LAB_827d73c8;
-  }
-  else if ((int)uVar1 <= *(int *)(iVar10 + 0x338c)) {
-    do {
-      uVar1 = (uint)uVar14;
-      iVar12 = (*(uint *)(iVar10 + 0xd404) & uVar1) * 0x3380 + *(int *)(iVar10 + 0xd414);
-      if (*(int *)(iVar12 + 0x3300) == 0) {
-        local_f0[0] = 0;
-        CL_Demo_WriteToRestorePointMemory(local_f0,1,uVar6);
-      }
-      else {
-        if (uVar1 != *(uint *)(iVar12 + 0x330c)) {
-          MyAssertHandler(0xffffffff821dcc88,0x1451,0,0xffffffff82000f98,0xffffffff821dd828);
-        }
-        if (iVar11 == 0) {
-          iVar11 = *(int *)((*(uint *)(iVar10 + 0xd404) & uVar1) * 0x3380 +
-                            *(int *)(iVar10 + 0xd414) + 0x332c);
-        }
-        local_f0[0] = 1;
-        CL_Demo_WriteToRestorePointMemory(local_f0,1,uVar6);
-        memset((void *)uVar7,0,0x10000);
-        MSG_Init(auStack_d0,uVar7,0x10000);
-        CL_Demo_GenerateUncompressedSnapshot(uVar6,auStack_d0,uVar14);
-        *puVar9 = *local_c8;
-        puVar9[1] = local_c8[1];
-        puVar9[2] = local_c8[2];
-        puVar9[3] = local_c8[3];
-        lVar8 = MSG_WriteBitsCompress(0,local_c8 + 4,puVar9 + 4,(ulonglong)local_bc - 4);
-        CL_Demo_WriteRawMessage(0xffffffff827d6d98,uVar6,uVar14,puVar9,lVar8 + 4);
-      }
-      uVar14 = uVar14 + 1;
-    } while ((int)uVar14 <= *(int *)(iVar10 + 0x338c));
-    goto LAB_827d73bc;
-  }
-  iVar11 = *(int *)(iVar10 + 0x33ac);
-LAB_827d73c8:
-  iVar12 = param_2 * 0x30 + iVar5;
-  *(undefined4 *)(iVar12 + 0x5eef68) = *(undefined4 *)(iVar5 + 0x18);
-  *(undefined4 *)(iVar12 + 0x5eef6c) = *(undefined4 *)(iVar10 + 0x3388);
-  *(undefined4 *)(iVar12 + 0x5eef74) = *(undefined4 *)(iVar10 + 0x338c);
-  uVar2 = *(undefined4 *)(iVar10 + 0x3390);
-  *(undefined4 *)(iVar12 + 0x5eef84) = uVar4;
-  *(undefined4 *)(iVar12 + 0x5eef78) = uVar2;
-  *(uint *)(iVar12 + 0x5eef88) = uVar3;
-  *(int *)(iVar12 + 0x5eef7c) = iVar11;
-  iVar10 = *piVar13;
-  *(int *)(iVar12 + 0x5eef80) = iVar10;
-  if (0x18000 < iVar10) {
-    Com_Error(1,0xffffffff821dd7a8);
-  }
-  LargeLocal___LargeLocal(auStack_e8);
-  LargeLocal___LargeLocal(auStack_e0);
-  __restgprlr();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
 
 // 827DC458  CL_Demo_ReadRestorePoint  (client_demo/cl_demo_playback.cpp:5253)
-
-void CL_Demo_ReadRestorePoint(undefined8 param_1,int param_2)
-
-{
-  undefined4 uVar1;
-  int iVar2;
-  undefined8 uVar3;
-  int iVar4;
-  int iVar5;
-  int iVar6;
-  int iVar7;
-  int iVar8;
-  uint uVar9;
-  undefined4 *puVar10;
-  char local_70;
-  char local_6f [3];
-  int local_6c [27];
-  
-  uVar3 = __savegprlr_21();
-  iVar4 = CL_GetLocalClientGlobals();
-  iVar5 = CL_GetLocalClientConnection(uVar3);
-  if (DAT_84872900 == 0) {
-    MyAssertHandler(0xffffffff821dcc88,0x64c,0,0xffffffff82000f98,0xffffffff821dcdfc);
-  }
-  iVar2 = DAT_84872900;
-  if (*(char *)(DAT_84872900 + param_2 + 0x5eefc4) == '\0') {
-    *(int *)(DAT_84872900 + 0x5bef5c) = param_2;
-    *(undefined4 *)(iVar2 + 0x5bef60) = 0;
-    iVar8 = param_2 * 0x30 + iVar2;
-    CL_Demo_SeekFile(*(undefined4 *)(iVar5 + 0x4024c),*(undefined4 *)(iVar8 + 0x5eef68),2);
-    iVar6 = DAT_84872900;
-    *(undefined4 *)(iVar2 + 0x18) = *(undefined4 *)(iVar8 + 0x5eef68);
-    if (iVar6 != 0) {
-      iVar6 = CL_Demo_GetPlaybackData();
-      *(undefined1 *)(iVar6 + 8) = 0;
-    }
-    iVar6 = CG_IsScoreboardDisplayed(uVar3);
-    if (iVar6 != 0) {
-      CG_ScoresUp(uVar3);
-      UI_SetActiveMenu(uVar3,0);
-    }
-    uVar1 = *(undefined4 *)(iVar8 + 0x5eef7c);
-    iVar6 = CG_GetLocalClientStaticGlobals(uVar3);
-    iVar7 = CL_GetLocalClientConnection(uVar3);
-    *(undefined4 *)(iVar6 + 0x18) = uVar1;
-    puVar10 = (undefined4 *)(iVar5 + 0x5422c);
-    *(undefined4 *)(iVar7 + 0x2013c) = uVar1;
-    *(undefined4 *)(iVar7 + 0x20140) = uVar1;
-    *puVar10 = CL_Demo_ReadFromRestorePointMemory;
-    CL_Demo_ReadFromRestorePointMemory(local_6c,4,uVar3);
-    (*(code *)*puVar10)(&local_70,1,uVar3);
-    if (local_70 != '\x04') {
-      MyAssertHandler(0xffffffff821dcc88,0x14b4,0,0xffffffff82000f98,0xffffffff821de51c);
-    }
-    CL_Demo_ReadClipCommands(uVar3,0);
-    iVar5 = *(int *)(iVar8 + 0x5eef84);
-    if (iVar5 != *(int *)(iVar8 + 0x5eef88)) {
-      do {
-        CL_Demo_ReadDemoMessage(uVar3);
-        uVar9 = iVar5 + 1;
-        iVar5 = uVar9 + (((int)uVar9 >> 8) + (uint)((int)uVar9 < 0 && (uVar9 & 0xff) != 0) &
-                        0xffffff) * -0x100;
-      } while (iVar5 != *(int *)(iVar8 + 0x5eef88));
-    }
-    iVar6 = 0;
-    *(int *)(iVar4 + 0xd3fc) = iVar5;
-    if (0 < local_6c[0]) {
-      do {
-        (*(code *)*puVar10)(local_6f,1,uVar3);
-        if (local_6f[0] != '\0') {
-          CL_Demo_ReadDemoMessage(uVar3);
-        }
-        iVar6 = iVar6 + 1;
-      } while (iVar6 < local_6c[0]);
-    }
-    *puVar10 = CL_Demo_Read;
-    CL_Demo_ResetTimeValues(uVar3,*(undefined4 *)(iVar4 + 0x3388));
-    iVar7 = *(int *)(iVar8 + 0x5eef78) + -1;
-    iVar5 = *(int *)(iVar4 + 0x338c);
-    iVar8 = CG_GetLocalClientStaticGlobals(uVar3);
-    iVar6 = CG_GetLocalClientGlobals(uVar3);
-    if (iVar5 < 1) {
-      MyAssertHandler(0xffffffff821dcc88,0x931,0,0xffffffff82000f98,0xffffffff821dce24);
-    }
-    if (iVar7 < 0) {
-      iVar7 = iVar5 + -1;
-    }
-    *(int *)(iVar8 + 0x1c) = iVar7;
-    *(int *)(iVar6 + 0x3350) = iVar5;
-    CL_Demo_ResetWorldInformation(uVar3,*(undefined4 *)(iVar4 + 0x3388));
-    *(int *)(iVar4 + 0x340c) = *(int *)(iVar4 + 0x3388) - DAT_82aa1c24;
-    Con_Close(uVar3);
-    SND_StopSounds(0);
-    if (DAT_84872900 != 0) {
-      *(undefined1 *)(DAT_84872900 + 0xc) = 1;
-    }
-    *(undefined1 *)(iVar2 + 10) = 1;
-    CL_SetCGameTime(uVar3);
-    *(undefined1 *)(iVar2 + 10) = 0;
-  }
-  else if (DAT_84872900 != 0) {
-    iVar4 = CL_Demo_GetPlaybackData();
-    *(undefined1 *)(iVar4 + 8) = 1;
-    __restgprlr_21();
-    return;
-  }
-  __restgprlr_21();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
 
 // 827DC7B8  CL_Demo_RestoreUIStateAfterPreview  (client_demo/cl_demo_playback.cpp:5353)
 
-void CL_Demo_RestoreUIStateAfterPreview(undefined8 param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void CL_Demo_RestoreUIStateAfterPreview(LocalClientNum_t param_1)
 
 {
-  int iVar1;
-  char *pcVar2;
+  clientDemoPlayback_t *pcVar1;
+  int iVar2;
+  bool *pbVar3;
   
-  if (DAT_84872900 != 0) {
-    iVar1 = CL_Demo_GetPlaybackData();
-    *(undefined4 *)(iVar1 + 0x31e1ec) = 2;
+  if (s_clientDemoPlayback != (clientDemoPlayback_t *)0x0) {
+    pcVar1 = CL_Demo_GetPlaybackData();
+    pcVar1->clipState = 2;
   }
-  Dvar_SetBool(DAT_8484f0bc,1);
-  if (DAT_84872900 == 0) {
-    MyAssertHandler(0xffffffff821dcc88,0x64c,0,0xffffffff82000f98,0xffffffff821dcdfc);
+  Dvar_SetBool(cl_demo_pause,true);
+  if (s_clientDemoPlayback == (clientDemoPlayback_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_playback.cpp"
+                    ,0x64c,0,"%s");
   }
-  if (*(char *)(DAT_84872900 + 0x5bef48) == '\0') {
-    pcVar2 = (char *)(DAT_84872900 + 0x5bef59);
-    if (*pcVar2 == '\0') {
+  if (s_clientDemoPlayback->pendingSegmentSave == false) {
+    pbVar3 = &s_clientDemoPlayback->previewAllSegments;
+    if (*pbVar3 == false) {
       CL_Demo_ReadRestorePoint(param_1,0);
-      iVar1 = CG_IsScoreboardDisplayed(param_1);
-      if (iVar1 != 0) {
+      iVar2 = CG_IsScoreboardDisplayed(param_1);
+      if (iVar2 != 0) {
         CG_ScoresUp(param_1);
         UI_SetActiveMenu(param_1,0);
       }
       Key_SetCatcher(param_1,0x10);
-      UI_OpenMenu(param_1,0xffffffff82014a90);
+      UI_OpenMenu(param_1,"demo_manage_segments");
     }
     else {
       CL_Demo_ReadRestorePoint(param_1,0);
-      iVar1 = CG_IsScoreboardDisplayed(param_1);
-      if (iVar1 != 0) {
+      iVar2 = CG_IsScoreboardDisplayed(param_1);
+      if (iVar2 != 0) {
         CG_ScoresUp(param_1);
         UI_SetActiveMenu(param_1,0);
       }
       Key_SetCatcher(param_1,0x10);
-      UI_OpenMenu(param_1,0xffffffff82014a90);
-      *pcVar2 = '\0';
+      UI_OpenMenu(param_1,"demo_manage_segments");
+      *pbVar3 = false;
     }
   }
   else {
@@ -5501,1101 +2954,147 @@ void CL_Demo_RestoreUIStateAfterPreview(undefined8 param_1)
 
 
 // 827D7488  CL_Demo_FollowCameraViewTrace  (client_demo/cl_demo_playback.cpp:5399)
-
-void CL_Demo_FollowCameraViewTrace(undefined8 param_1,undefined8 param_2)
-
-{
-  float fVar1;
-  undefined4 uVar2;
-  int iVar3;
-  float *pfVar4;
-  double dVar5;
-  double dVar6;
-  double dVar7;
-  float local_e0;
-  float local_dc;
-  float local_d8;
-  float local_d0;
-  float local_cc;
-  float local_c8;
-  float local_c0;
-  float local_bc;
-  float local_b8;
-  float local_b0;
-  float local_ac;
-  float local_a8;
-  undefined4 local_a0;
-  undefined4 local_9c;
-  undefined4 local_98;
-  undefined4 local_94;
-  undefined4 local_90;
-  undefined4 local_8c;
-  undefined1 auStack_88 [16];
-  undefined1 auStack_78 [24];
-  float local_60 [24];
-  
-  __savegprlr_29();
-  uVar2 = *(undefined4 *)(DAT_8484f0b4 + 0xc);
-  iVar3 = CG_GetLocalClientGlobals();
-  AngleVectors(iVar3 + 0x7056c,&local_b0,auStack_88,auStack_78);
-  pfVar4 = (float *)(iVar3 + 0x70560);
-  dVar7 = 1.0;
-  dVar6 = (double)SQRT(local_b0 * local_b0 + local_a8 * local_a8 + local_ac * local_ac);
-  dVar5 = dVar7;
-  if (-dVar6 < 0.0) {
-    dVar5 = dVar6;
-  }
-  fVar1 = (float)(1.0 / dVar5);
-  local_b0 = local_b0 * fVar1;
-  local_ac = local_ac * fVar1;
-  local_a8 = local_a8 * fVar1;
-  local_e0 = *pfVar4;
-  local_dc = *(float *)(iVar3 + 0x70564);
-  local_d8 = *(float *)(iVar3 + 0x70568);
-  local_d0 = -(local_b0 * 85.0 - *pfVar4);
-  local_cc = -(local_ac * 85.0 - *(float *)(iVar3 + 0x70564));
-  local_c8 = -(local_a8 * 85.0 - *(float *)(iVar3 + 0x70568));
-  local_a0 = 0;
-  local_9c = 0;
-  local_98 = 0;
-  local_94 = 0x40800000;
-  local_90 = 0x40800000;
-  local_8c = 0x40800000;
-  CG_TraceCapsule(local_60,&local_e0,&local_d0,&local_a0,uVar2,param_2);
-  dVar5 = (double)local_60[0];
-  if (dVar5 == dVar7) {
-    *pfVar4 = local_d0;
-    *(float *)(iVar3 + 0x70564) = local_cc;
-    *(float *)(iVar3 + 0x70568) = local_c8;
-    __restgprlr_29();
-    return;
-  }
-  local_c0 = (float)((double)(float)((double)local_d0 - (double)local_e0) * dVar5 + (double)local_e0
-                    );
-  local_bc = (float)((double)(float)((double)local_cc - (double)local_dc) * dVar5 + (double)local_dc
-                    );
-  local_b8 = (float)(dVar7 - dVar5) * 32.0 +
-             (float)((double)(float)((double)local_c8 - (double)local_d8) * dVar5 + (double)local_d8
-                    );
-  CG_TraceCapsule(local_60,&local_e0,&local_c0,&local_a0,uVar2,param_2);
-  *pfVar4 = (local_c0 - local_e0) * local_60[0] + local_e0;
-  *(float *)(iVar3 + 0x70564) = (local_bc - local_dc) * local_60[0] + local_dc;
-  *(float *)(iVar3 + 0x70568) = (local_b8 - local_d8) * local_60[0] + local_d8;
-  __restgprlr_29();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 827D7688  CL_Demo_FreeCameraViewTrace  (client_demo/cl_demo_playback.cpp:5445)
-
-void CL_Demo_FreeCameraViewTrace(undefined8 param_1,undefined8 param_2)
-
-{
-  float fVar1;
-  int iVar2;
-  float fVar3;
-  float fVar4;
-  int iVar5;
-  int iVar6;
-  int *piVar7;
-  float *pfVar8;
-  int iVar9;
-  float *pfVar10;
-  float *pfVar11;
-  longlong lVar12;
-  int iVar13;
-  int iVar14;
-  int *piVar15;
-  float *pfVar16;
-  double dVar17;
-  double dVar18;
-  double dVar19;
-  double dVar20;
-  double dVar21;
-  double dVar22;
-  double dVar23;
-  double dVar24;
-  float local_1b0;
-  float local_1ac;
-  float local_1a8;
-  float local_1a0;
-  float local_19c;
-  float local_198;
-  float local_190;
-  float local_18c;
-  float local_188;
-  float local_180;
-  float local_17c;
-  float local_178;
-  float local_170;
-  float local_16c;
-  float local_168;
-  float local_160;
-  float local_15c;
-  float local_158;
-  float local_154;
-  float local_150;
-  float local_14c;
-  float local_140;
-  float local_13c;
-  float local_138;
-  float local_134;
-  char local_112;
-  int local_100;
-  int local_fc [7];
-  float local_e0 [56];
-  
-  __savegprlr_23();
-  __savefpr_26();
-  dVar21 = 0.016669999808073044;
-  iVar5 = CG_GetLocalClientGlobals();
-  pfVar16 = (float *)(iVar5 + 0x70578);
-  dVar24 = 1.0;
-  local_1a0 = *pfVar16;
-  local_19c = *(float *)(iVar5 + 0x7057c);
-  pfVar11 = (float *)(iVar5 + 0x70560);
-  lVar12 = 1;
-  local_198 = *(float *)(iVar5 + 0x70580);
-  iVar9 = 0;
-  pfVar10 = local_e0 + 2;
-  local_e0[0] = *pfVar16;
-  dVar23 = 0.10000000149011612;
-  dVar20 = 0.9990000128746033;
-  dVar19 = 6.0;
-  dVar22 = 0.0;
-  dVar18 = (double)SQRT(local_e0[0] * local_e0[0] +
-                        *(float *)(iVar5 + 0x7057c) * *(float *)(iVar5 + 0x7057c) +
-                        *(float *)(iVar5 + 0x70580) * *(float *)(iVar5 + 0x70580));
-  dVar17 = dVar24;
-  if (-dVar18 < 0.0) {
-    dVar17 = dVar18;
-  }
-  local_e0[2] = (float)(1.0 / dVar17);
-  local_e0[0] = local_e0[0] * local_e0[2];
-  local_e0[1] = local_e0[2] * *(float *)(iVar5 + 0x7057c);
-  local_e0[2] = *(float *)(iVar5 + 0x70580) * local_e0[2];
-  while( true ) {
-    local_170 = (float)(dVar21 * (double)*pfVar16 + (double)*pfVar11);
-    local_16c = (float)(dVar21 * (double)*(float *)(iVar5 + 0x7057c) +
-                       (double)*(float *)(iVar5 + 0x70564));
-    local_168 = (float)((double)*(float *)(iVar5 + 0x70580) * dVar21 +
-                       (double)*(float *)(iVar5 + 0x70568));
-    local_160 = (float)dVar22;
-    local_15c = (float)dVar22;
-    local_158 = (float)dVar22;
-    local_154 = (float)dVar19;
-    local_150 = (float)dVar19;
-    local_14c = (float)dVar19;
-    CG_TraceCapsule(&local_140,pfVar11,&local_170,&local_160,0xffffffffffffffff,param_2);
-    if (local_112 != '\0') {
-      *(float *)(iVar5 + 0x70580) = (float)dVar22;
-      __restfpr_26();
-      __restgprlr_23();
-      return;
-    }
-    dVar17 = (double)local_140;
-    if (dVar22 < dVar17) {
-      *pfVar11 = (float)((double)(float)((double)local_170 - (double)*pfVar11) * dVar17 +
-                        (double)*pfVar11);
-      *(float *)(iVar5 + 0x70564) =
-           (float)((double)(float)((double)local_16c - (double)*(float *)(iVar5 + 0x70564)) * dVar17
-                  + (double)*(float *)(iVar5 + 0x70564));
-      *(float *)(iVar5 + 0x70568) =
-           (float)((double)(float)((double)local_168 - (double)*(float *)(iVar5 + 0x70568)) * dVar17
-                  + (double)*(float *)(iVar5 + 0x70568));
-    }
-    if ((double)local_140 == dVar24) break;
-    dVar21 = -(double)(float)((double)local_140 * dVar21 - dVar21);
-    iVar13 = (int)lVar12;
-    if (7 < iVar13) {
-LAB_827d7b94:
-      *(float *)(iVar5 + 0x70580) = (float)dVar22;
-      *(float *)(iVar5 + 0x7057c) = (float)dVar22;
-      *pfVar16 = (float)dVar22;
-      break;
-    }
-    iVar14 = 0;
-    if (0 < iVar13) {
-      pfVar8 = local_e0 + 2;
-      do {
-        if (dVar20 < (double)(*pfVar8 * local_134 + pfVar8[-1] * local_138 + pfVar8[-2] * local_13c)
-           ) {
-          PM_ClipVelocity(pfVar16,&local_13c,pfVar16);
-          *pfVar16 = local_13c + *pfVar16;
-          *(float *)(iVar5 + 0x7057c) = local_138 + *(float *)(iVar5 + 0x7057c);
-          *(float *)(iVar5 + 0x70580) = *(float *)(iVar5 + 0x70580) + local_134;
-          if (iVar14 < iVar13) goto LAB_827d7b5c;
-          break;
-        }
-        iVar14 = iVar14 + 1;
-        pfVar8 = pfVar8 + 3;
-      } while (iVar14 < iVar13);
-    }
-    pfVar10[1] = local_13c;
-    lVar12 = lVar12 + 1;
-    pfVar10[2] = local_138;
-    pfVar10 = pfVar10 + 3;
-    *pfVar10 = local_134;
-    dVar17 = (double)PM_PermuteRestrictiveClipPlanes(pfVar16,lVar12,local_e0,&local_100);
-    if (dVar17 < dVar23) {
-      PM_ClipVelocity(pfVar16,local_e0 + local_100 * 3,&local_1b0);
-      PM_ClipVelocity(&local_1a0,local_e0 + local_100 * 3,&local_190);
-      iVar13 = 1;
-      iVar14 = (int)lVar12;
-      fVar1 = local_1b0;
-      if (1 < iVar14) {
-        piVar15 = local_fc;
-        fVar3 = local_1a8;
-        fVar4 = local_1ac;
-        do {
-          iVar6 = *piVar15;
-          if ((double)(local_e0[iVar6 * 3 + 2] * fVar3 +
-                      local_e0[iVar6 * 3 + 1] * fVar4 + fVar1 * local_e0[iVar6 * 3]) < dVar23) {
-            PM_ClipVelocity(&local_1b0,local_e0 + iVar6 * 3,&local_1b0);
-            PM_ClipVelocity(&local_190,local_e0 + *piVar15 * 3,&local_190);
-            fVar1 = local_1b0;
-            fVar3 = local_1a8;
-            fVar4 = local_1ac;
-            if ((double)(local_e0[local_100 * 3 + 2] * local_1a8 +
-                        local_e0[local_100 * 3 + 1] * local_1ac +
-                        local_e0[local_100 * 3] * local_1b0) < dVar22) {
-              Vec3Cross(local_e0 + local_100 * 3,local_e0 + *piVar15 * 3,&local_180);
-              iVar6 = 1;
-              piVar7 = local_fc;
-              dVar18 = (double)SQRT(local_180 * local_180 +
-                                    local_178 * local_178 + local_17c * local_17c);
-              dVar17 = dVar24;
-              if (-dVar18 < 0.0) {
-                dVar17 = dVar18;
-              }
-              fVar1 = (float)(dVar24 / dVar17);
-              local_180 = local_180 * fVar1;
-              local_17c = local_17c * fVar1;
-              local_178 = local_178 * fVar1;
-              fVar3 = *(float *)(iVar5 + 0x70580) * local_178 +
-                      local_17c * *(float *)(iVar5 + 0x7057c) + local_180 * *pfVar16;
-              local_188 = local_178 * local_198 + local_17c * local_19c + local_180 * local_1a0;
-              fVar1 = local_180 * fVar3;
-              fVar4 = local_17c * fVar3;
-              fVar3 = local_178 * fVar3;
-              local_190 = local_180 * local_188;
-              local_18c = local_17c * local_188;
-              local_188 = local_178 * local_188;
-              do {
-                local_1b0 = fVar1;
-                local_1ac = fVar4;
-                local_1a8 = fVar3;
-                if ((iVar6 != iVar13) &&
-                   (iVar2 = *piVar7,
-                   (double)(local_e0[iVar2 * 3 + 2] * fVar3 +
-                           local_e0[iVar2 * 3 + 1] * fVar4 + fVar1 * local_e0[iVar2 * 3]) < dVar23))
-                goto LAB_827d7b94;
-                iVar6 = iVar6 + 1;
-                piVar7 = piVar7 + 1;
-              } while (iVar6 < iVar14);
-            }
-          }
-          iVar13 = iVar13 + 1;
-          piVar15 = piVar15 + 1;
-        } while (iVar13 < iVar14);
-      }
-      *pfVar16 = fVar1;
-      *(float *)(iVar5 + 0x7057c) = local_1ac;
-      *(float *)(iVar5 + 0x70580) = local_1a8;
-      local_19c = local_18c;
-      local_1a0 = local_190;
-      local_198 = local_188;
-    }
-LAB_827d7b5c:
-    iVar9 = iVar9 + 1;
-    if (3 < iVar9) {
-      __restfpr_26();
-      __restgprlr_23();
-      return;
-    }
-  }
-  __restfpr_26();
-  __restgprlr_23();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 827D7BB0  CL_Demo_LerpClipCameraValues  (client_demo/cl_demo_playback.cpp:5596)
-
-void CL_Demo_LerpClipCameraValues(void)
-
-{
-  undefined8 uVar1;
-  int iVar2;
-  int iVar3;
-  float *pfVar4;
-  longlong lVar5;
-  float *pfVar6;
-  double dVar7;
-  double dVar8;
-  double dVar9;
-  double dVar10;
-  double dVar11;
-  double dVar12;
-  double dVar13;
-  
-  __savegprlr_29();
-  uVar1 = __savefpr_26();
-  if (DAT_84872900 != 0) {
-    iVar2 = CL_Demo_GetPlaybackData();
-    iVar3 = CG_GetLocalClientGlobals(uVar1);
-    if ((*(int *)(iVar2 + 0x5eefc8) != 1) && (*(int *)(iVar2 + 0x5eefc8) != 2)) {
-      MyAssertHandler(0xffffffff821dcc88,0x15e8,0,0xffffffff82000f98,0xffffffff821dd8e0);
-    }
-    dVar10 = (double)*(float *)(iVar3 + 0x6b980);
-    if (*(char *)(iVar2 + 0x51e8b4) != '\0') {
-      *(undefined4 *)(iVar2 + 0x51e89c) = *(undefined4 *)(iVar2 + 0x51e880);
-      *(undefined4 *)(iVar2 + 0x51e8a0) = *(undefined4 *)(iVar2 + 0x51e884);
-      *(undefined4 *)(iVar2 + 0x51e8a4) = *(undefined4 *)(iVar2 + 0x51e888);
-      *(undefined4 *)(iVar2 + 0x51e8a8) = *(undefined4 *)(iVar2 + 0x51e88c);
-      *(undefined4 *)(iVar2 + 0x51e8ac) = *(undefined4 *)(iVar2 + 0x51e890);
-      *(undefined4 *)(iVar2 + 0x51e8b0) = *(undefined4 *)(iVar2 + 0x51e894);
-      *(char *)(iVar2 + 0x51e8b4) = '\0';
-    }
-    pfVar4 = (float *)(iVar3 + 0x70568);
-    dVar11 = 360.0;
-    pfVar6 = (float *)(iVar2 + 0x51e888);
-    dVar12 = 0.5;
-    lVar5 = 3;
-    *(float *)(iVar3 + 0x70560) =
-         (float)((double)(float)((double)*(float *)(iVar2 + 0x51e880) -
-                                (double)*(float *)(iVar2 + 0x51e89c)) * dVar10 +
-                (double)*(float *)(iVar2 + 0x51e89c));
-    *(float *)(iVar3 + 0x70564) =
-         (float)((double)(float)((double)*(float *)(iVar2 + 0x51e884) -
-                                (double)*(float *)(iVar2 + 0x51e8a0)) * dVar10 +
-                (double)*(float *)(iVar2 + 0x51e8a0));
-    *(float *)(iVar3 + 0x70568) =
-         (float)((double)(float)((double)*(float *)(iVar2 + 0x51e888) -
-                                (double)*(float *)(iVar2 + 0x51e8a4)) * dVar10 +
-                (double)*(float *)(iVar2 + 0x51e8a4));
-    dVar13 = 0.0027777778450399637;
-    do {
-      dVar9 = (double)pfVar6[8];
-      pfVar6 = pfVar6 + 1;
-      dVar8 = (double)(float)((double)(float)((double)*pfVar6 - dVar9) * dVar13);
-      dVar7 = floor((double)(float)(dVar8 + dVar12));
-      lVar5 = lVar5 + -1;
-      pfVar4 = pfVar4 + 1;
-      *pfVar4 = (float)((double)(float)((double)(float)(dVar8 - (double)(float)dVar7) * dVar10) *
-                        dVar11 + dVar9);
-    } while (lVar5 != 0);
-  }
-  __restfpr_26();
-  __restgprlr_29();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 827D7D68  CL_Demo_ShouldAllowCameraMovement  (client_demo/cl_demo_playback.cpp:5636)
-
-bool CL_Demo_ShouldAllowCameraMovement(undefined8 param_1)
-
-{
-  char cVar2;
-  int iVar1;
-  
-  cVar2 = CL_Demo_IsPauseMenuOpen();
-  if (((cVar2 == '\0') && (cVar2 = CL_Demo_IsSaveDialogOpen(param_1), cVar2 == '\0')) &&
-     (cVar2 = CL_Demo_IsErrorDialogOpen(param_1), cVar2 == '\0')) {
-    iVar1 = CG_GetLocalClientGlobals(param_1);
-    return *(int *)(iVar1 + 0x3348) == 0;
-  }
-  return false;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 827D7DF8  CL_Demo_FollowCameraMove  (client_demo/cl_demo_playback.cpp:5660)
-
-void CL_Demo_FollowCameraMove(undefined8 param_1,longlong param_2)
-
-{
-  undefined8 uVar1;
-  char cVar5;
-  undefined4 *puVar2;
-  int iVar3;
-  int iVar4;
-  float *pfVar6;
-  longlong lVar7;
-  double dVar8;
-  double dVar9;
-  double dVar10;
-  double dVar11;
-  double dVar12;
-  double dVar13;
-  
-  __savegprlr_25();
-  uVar1 = __savefpr_27();
-  cVar5 = CL_Demo_ShouldAllowCameraMovement();
-  if (cVar5 != '\0') {
-    if (DAT_84872900 == 0) {
-      cVar5 = '\0';
-    }
-    else {
-      puVar2 = (undefined4 *)CL_Demo_GetPlaybackData();
-      iVar3 = CL_GetLocalClientConnection(*puVar2);
-      cVar5 = *(char *)(iVar3 + 0x40260);
-    }
-    if (cVar5 == '\0') {
-      if (DAT_84872900 == 0) {
-LAB_827d7e84:
-        iVar3 = CG_GetLocalClientGlobals(uVar1);
-        iVar4 = CG_GetEntity(uVar1,*(undefined4 *)(DAT_8484f0b4 + 0xc));
-        *(undefined4 *)(iVar3 + 0x70578) = 0;
-        *(undefined4 *)(iVar3 + 0x7057c) = 0;
-        param_2 = param_2 + 4;
-        *(undefined4 *)(iVar3 + 0x70580) = 0;
-        dVar10 = 360.0;
-        pfVar6 = (float *)(iVar3 + 0x70568);
-        dVar11 = 0.5;
-        lVar7 = 3;
-        dVar12 = 0.0027777778450399637;
-        dVar13 = 0.0054931640625;
-        do {
-          param_2 = param_2 + 4;
-          dVar9 = (double)(float)((double)(float)((double)(longlong)*(int *)param_2 * dVar13) *
-                                 dVar12);
-          dVar8 = floor((double)(float)(dVar9 + dVar11));
-          lVar7 = lVar7 + -1;
-          pfVar6 = pfVar6 + 1;
-          *pfVar6 = (float)((double)(float)(dVar9 - (double)(float)dVar8) * dVar10);
-        } while (lVar7 != 0);
-        *(undefined4 *)(iVar3 + 0x70560) = *(undefined4 *)(iVar4 + 0x14);
-        *(undefined4 *)(iVar3 + 0x70564) = *(undefined4 *)(iVar4 + 0x18);
-        *(undefined4 *)(iVar3 + 0x70568) = *(undefined4 *)(iVar4 + 0x1c);
-        *(float *)(iVar3 + 0x70568) = *(float *)(iVar3 + 0x70568) + 35.0;
-        CL_Demo_FollowCameraViewTrace(uVar1,0x2810011);
-        __restfpr_27();
-        __restgprlr_25();
-        return;
-      }
-      iVar3 = CL_Demo_GetPlaybackData();
-      if (*(int *)(iVar3 + 0x31e1ec) != 3) goto LAB_827d7e84;
-    }
-    CL_Demo_LerpClipCameraValues(uVar1);
-  }
-  __restfpr_27();
-  __restgprlr_25();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
 
 // 827D7FB0  CL_Demo_FreeCameraMove  (client_demo/cl_demo_playback.cpp:5698)
-
-void CL_Demo_FreeCameraMove(undefined8 param_1,longlong param_2)
-
-{
-  float fVar1;
-  float fVar2;
-  float fVar3;
-  float fVar4;
-  float fVar5;
-  int iVar6;
-  undefined8 uVar7;
-  char cVar10;
-  undefined4 *puVar8;
-  int iVar9;
-  float *pfVar11;
-  float *pfVar12;
-  longlong lVar13;
-  double dVar14;
-  double dVar15;
-  double dVar16;
-  double dVar17;
-  double dVar18;
-  double dVar19;
-  double dVar20;
-  double dVar21;
-  double dVar22;
-  double dVar23;
-  double dVar24;
-  double dVar25;
-  float local_108;
-  float local_104;
-  float local_100;
-  float local_f8;
-  float local_f4;
-  float local_f0;
-  float local_e8;
-  float local_e4;
-  float local_e0;
-  
-  __savegprlr_18();
-  uVar7 = __savefpr_21();
-  cVar10 = CL_Demo_ShouldAllowCameraMovement();
-  if (cVar10 != '\0') {
-    if (DAT_84872900 == 0) {
-      cVar10 = '\0';
-    }
-    else {
-      puVar8 = (undefined4 *)CL_Demo_GetPlaybackData();
-      iVar9 = CL_GetLocalClientConnection(*puVar8);
-      cVar10 = *(char *)(iVar9 + 0x40260);
-    }
-    if ((cVar10 == '\0') &&
-       ((DAT_84872900 == 0 || (iVar9 = CL_Demo_GetPlaybackData(), *(int *)(iVar9 + 0x31e1ec) != 3)))
-       ) {
-      iVar9 = CG_GetLocalClientGlobals(uVar7);
-      pfVar11 = (float *)(iVar9 + 0x70578);
-      dVar18 = 1.0;
-      fVar5 = *pfVar11;
-      dVar19 = 0.0;
-      dVar14 = (double)SQRT(*(float *)(iVar9 + 0x70580) * *(float *)(iVar9 + 0x70580) +
-                            fVar5 * fVar5 +
-                            *(float *)(iVar9 + 0x7057c) * *(float *)(iVar9 + 0x7057c));
-      if (1.0 <= dVar14) {
-        dVar24 = (double)*(float *)(DAT_829c4058 + 0xc);
-        if ((double)*(float *)(DAT_829c4058 + 0xc) <= dVar14) {
-          dVar24 = dVar14;
-        }
-        dVar24 = -(double)(float)((double)(float)(dVar24 * (double)(*(float *)(DAT_829c7d48 + 0xc) *
-                                                                   1.5)) * 0.016666999086737633 -
-                                 dVar14);
-        if (dVar24 < 0.0) {
-          dVar24 = dVar19;
-        }
-        fVar2 = (float)(dVar24 / dVar14);
-        *pfVar11 = fVar5 * fVar2;
-        *(float *)(iVar9 + 0x7057c) = *(float *)(iVar9 + 0x7057c) * fVar2;
-        *(float *)(iVar9 + 0x70580) = fVar2 * *(float *)(iVar9 + 0x70580);
-      }
-      else {
-        *pfVar11 = 0.0;
-        *(undefined4 *)(iVar9 + 0x7057c) = 0;
-        *(undefined4 *)(iVar9 + 0x70580) = 0;
-      }
-      if (((((uint)*pfVar11 & 0x7f800000) == 0x7f800000) ||
-          ((*(uint *)(iVar9 + 0x7057c) & 0x7f800000) == 0x7f800000)) ||
-         ((*(uint *)(iVar9 + 0x70580) & 0x7f800000) == 0x7f800000)) {
-        MyAssertHandler(0xffffffff821dcc88,0x1679,0,0xffffffff82000f98,0xffffffff821dd9e8);
-      }
-      iVar6 = (int)param_2;
-      dVar24 = (double)(longlong)*(char *)(iVar6 + 0x1c);
-      dVar25 = (double)(longlong)*(char *)(iVar6 + 0x1d);
-      dVar14 = dVar19;
-      if ((*(uint *)(iVar6 + 4) & 0x4000) != 0) {
-        dVar14 = 127.0;
-      }
-      if ((*(uint *)(iVar6 + 4) & 0x8000) != 0) {
-        dVar14 = (double)(float)(dVar14 - 127.0);
-      }
-      dVar16 = ABS(dVar24);
-      if (dVar16 < ABS(dVar25)) {
-        dVar16 = ABS(dVar25);
-      }
-      if (dVar16 < ABS(dVar14)) {
-        dVar16 = ABS(dVar14);
-      }
-      fVar5 = SQRT((float)(dVar24 * dVar24 +
-                          (double)(float)(dVar14 * dVar14 + (double)(float)(dVar25 * dVar25))));
-      dVar20 = dVar19;
-      if (1e-06 < fVar5) {
-        dVar20 = (double)(((float)(dVar16 * 190.0) / (fVar5 * 127.0)) * 3.0);
-      }
-      dVar16 = 360.0;
-      param_2 = param_2 + 4;
-      dVar21 = 0.5;
-      lVar13 = 3;
-      dVar22 = 0.0027777778450399637;
-      pfVar12 = (float *)(iVar9 + 0x70568);
-      dVar23 = 0.0054931640625;
-      do {
-        param_2 = param_2 + 4;
-        dVar17 = (double)(float)((double)(float)((double)(longlong)*(int *)param_2 * dVar23) *
-                                dVar22);
-        dVar15 = floor((double)(float)(dVar17 + dVar21));
-        lVar13 = lVar13 + -1;
-        pfVar12 = pfVar12 + 1;
-        *pfVar12 = (float)((double)(float)(dVar17 - (double)(float)dVar15) * dVar16);
-      } while (lVar13 != 0);
-      if ((((*(uint *)(iVar9 + 0x7056c) & 0x7f800000) == 0x7f800000) ||
-          ((*(uint *)(iVar9 + 0x70570) & 0x7f800000) == 0x7f800000)) ||
-         ((*(uint *)(iVar9 + 0x70574) & 0x7f800000) == 0x7f800000)) {
-        MyAssertHandler(0xffffffff821dcc88,0x16a0,0,0xffffffff82000f98,0xffffffff821dd960);
-      }
-      AngleVectors((uint *)(iVar9 + 0x7056c),&local_e8,&local_108,&local_f8);
-      fVar5 = (float)((double)local_e4 * dVar24 +
-                     (double)(float)((double)local_f4 * dVar14 +
-                                    (double)(float)((double)local_104 * dVar25)));
-      fVar2 = (float)((double)local_e0 * dVar24 +
-                     (double)(float)((double)local_f0 * dVar14 +
-                                    (double)(float)((double)local_100 * dVar25)));
-      fVar3 = (float)((double)local_e8 * dVar24 +
-                     (double)(float)((double)local_f8 * dVar14 +
-                                    (double)(float)((double)local_108 * dVar25)));
-      dVar24 = (double)SQRT(fVar3 * fVar3 + fVar2 * fVar2 + fVar5 * fVar5);
-      fVar4 = (float)(dVar24 * dVar20);
-      dVar14 = dVar18;
-      if (-dVar24 < 0.0) {
-        dVar14 = dVar24;
-      }
-      fVar1 = (float)(dVar18 / dVar14);
-      dVar14 = (double)(fVar4 - (float)((double)(fVar2 * fVar1) *
-                                        (double)*(float *)(iVar9 + 0x70580) +
-                                       (double)(float)((double)(fVar5 * fVar1) *
-                                                       (double)*(float *)(iVar9 + 0x7057c) +
-                                                      (double)(float)((double)*pfVar11 *
-                                                                     (double)(fVar1 * fVar3)))));
-      if (dVar19 < dVar14) {
-        if (fVar4 < *(float *)(DAT_829c4058 + 0xc)) {
-          fVar4 = *(float *)(DAT_829c4058 + 0xc);
-        }
-        dVar18 = (double)(fVar4 * 0.15000299);
-        if (dVar14 < (double)(fVar4 * 0.15000299)) {
-          dVar18 = dVar14;
-        }
-        fVar3 = (float)((double)(fVar1 * fVar3) * dVar18 + (double)*pfVar11);
-        *pfVar11 = fVar3;
-        *(float *)(iVar9 + 0x7057c) =
-             (float)((double)(fVar5 * fVar1) * dVar18 + (double)*(float *)(iVar9 + 0x7057c));
-        *(float *)(iVar9 + 0x70580) =
-             (float)((double)(fVar2 * fVar1) * dVar18 + (double)*(float *)(iVar9 + 0x70580));
-        if (((((uint)fVar3 & 0x7f800000) == 0x7f800000) ||
-            ((*(uint *)(iVar9 + 0x7057c) & 0x7f800000) == 0x7f800000)) ||
-           ((*(uint *)(iVar9 + 0x70580) & 0x7f800000) == 0x7f800000)) {
-          MyAssertHandler(0xffffffff821dcc88,0x16b5,0,0xffffffff82000f98,0xffffffff821dd9e8);
-        }
-      }
-      CL_Demo_FreeCameraViewTrace(uVar7,0x800815);
-      __restfpr_21();
-      __restgprlr_18();
-      return;
-    }
-    CL_Demo_LerpClipCameraValues(uVar7);
-  }
-  __restfpr_21();
-  __restgprlr_18();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
 
 // 827D84E8  CL_Demo_CalcViewValues  (client_demo/cl_demo_playback.cpp:5829)
-
-void CL_Demo_CalcViewValues(void)
-
-{
-  int iVar1;
-  
-  iVar1 = CG_GetLocalClientGlobals();
-  *(undefined4 *)(iVar1 + 0x70574) = 0;
-  AnglesToAxis(iVar1 + 0x7056c,iVar1 + 0x6b9d4);
-  *(undefined4 *)(iVar1 + 0x6b9c8) = *(undefined4 *)(iVar1 + 0x70560);
-  *(undefined4 *)(iVar1 + 0x6b9cc) = *(undefined4 *)(iVar1 + 0x70564);
-  *(undefined4 *)(iVar1 + 0x6b9d0) = *(undefined4 *)(iVar1 + 0x70568);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 827D8568  CL_Demo_SetButtonPressTime  (client_demo/cl_demo_playback.cpp:5850)
 
-void CL_Demo_SetButtonPressTime(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void CL_Demo_SetButtonPressTime(int param_1)
 
 {
-  int iVar1;
+  clientDemoPlayback_t *pcVar1;
   uint uVar2;
-  undefined4 uVar3;
+  int iVar3;
   
-  uVar2 = __savegprlr_28();
+  uVar2 = __savegprlr_28(param_1);
   if (9 < uVar2) {
-    MyAssertHandler(0xffffffff821dcc88,0x16db,0,0xffffffff821dda78,uVar2,10);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_playback.cpp"
+                    ,0x16db,0,
+                    "demoControlButtonType doesn\'t index CLIENT_DEMO_CONTROLS_BUTTON_COUNT\n\t%i not in [0, %i)"
+                   );
   }
-  if (DAT_84872900 == 0) {
-    MyAssertHandler(0xffffffff821dcc88,0x64c,0,0xffffffff82000f98,0xffffffff821dcdfc);
+  if (s_clientDemoPlayback == (clientDemoPlayback_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_playback.cpp"
+                    ,0x64c,0,"%s");
   }
-  iVar1 = DAT_84872900;
-  uVar3 = Sys_Milliseconds();
-  *(undefined4 *)((uVar2 + 9) * 4 + iVar1) = uVar3;
+  pcVar1 = s_clientDemoPlayback;
+  iVar3 = Sys_Milliseconds();
+  pcVar1->buttonPressTime[uVar2] = iVar3;
   __restgprlr_28();
   return;
 }
 
 
 // 827DD5C0  CL_Demo_HandleInput  (client_demo/cl_demo_playback.cpp:5863)
-
-void CL_Demo_HandleInput(undefined8 param_1,int param_2,int param_3)
-
-{
-  undefined8 uVar1;
-  char cVar4;
-  int iVar2;
-  undefined4 uVar3;
-  undefined8 uVar5;
-  double dVar6;
-  double dVar7;
-  double dVar8;
-  
-  uVar1 = __savegprlr_28();
-  cVar4 = CL_Demo_IsPlaying();
-  if ((((cVar4 != '\0') && (DAT_84872900 != 0)) &&
-      (iVar2 = CL_IsCgameInitialized(uVar1), iVar2 != 0)) &&
-     (iVar2 = CG_GetLocalClientGlobals(uVar1), *(int *)(iVar2 + 0x3348) == 0)) {
-    iVar2 = CL_Demo_IsRenderingMovie(uVar1);
-    if (iVar2 == 0) {
-      cVar4 = CL_Demo_IsClipPreviewRunning();
-      if (cVar4 == '\0') {
-        cVar4 = CL_Demo_IsPauseMenuOpen(uVar1);
-        if (((cVar4 == '\0') && (cVar4 = CL_Demo_IsSaveDialogOpen(uVar1), cVar4 == '\0')) &&
-           ((cVar4 = CL_Demo_IsErrorDialogOpen(uVar1), cVar4 == '\0' &&
-            (iVar2 = CL_GetLocalClientConnectionState(uVar1), iVar2 == 10)))) {
-          switch(param_2 + -1) {
-          case 0:
-            if (param_3 != 0) {
-              Dvar_SetBool(DAT_8484f0bc,*(char *)(DAT_8484f0bc + 0xc) == '\0');
-              if (DAT_84872900 == 0) {
-                MyAssertHandler(0xffffffff821dcc88,0x64c,0,0xffffffff82000f98,0xffffffff821dcdfc);
-              }
-              iVar2 = DAT_84872900;
-              uVar3 = Sys_Milliseconds();
-              *(undefined4 *)(iVar2 + 0x24) = uVar3;
-              __restgprlr_28();
-              return;
-            }
-            break;
-          case 1:
-            if ((param_3 != 0) && (cVar4 = CL_Demo_IsClipRecording(), cVar4 == '\0')) {
-              cVar4 = CL_Demo_IsPaused();
-              if (cVar4 == '\0') {
-                Dvar_SetBool(DAT_8484f0bc,*(char *)(DAT_8484f0bc + 0xc) == '\0');
-              }
-              Cbuf_AddCall(uVar1,0xffffffff827d9150);
-              if (DAT_84872900 == 0) {
-                MyAssertHandler(0xffffffff821dcc88,0x64c,0,0xffffffff82000f98,0xffffffff821dcdfc);
-              }
-              iVar2 = DAT_84872900;
-              uVar3 = Sys_Milliseconds();
-              *(undefined4 *)(iVar2 + 0x2c) = uVar3;
-              __restgprlr_28();
-              return;
-            }
-            break;
-          case 2:
-            if ((param_3 != 0) && (cVar4 = CL_Demo_IsClipPlaying(), cVar4 == '\0')) {
-              cVar4 = CL_Demo_IsClipRecording();
-              if (cVar4 == '\0') {
-                uVar5 = 0xffffffff827db6d0;
-              }
-              else {
-                uVar5 = 0xffffffff827dba70;
-              }
-              Cbuf_AddCall(uVar1,uVar5);
-              if (DAT_84872900 == 0) {
-                MyAssertHandler(0xffffffff821dcc88,0x64c,0,0xffffffff82000f98,0xffffffff821dcdfc);
-              }
-              iVar2 = DAT_84872900;
-              uVar3 = Sys_Milliseconds();
-              *(undefined4 *)(iVar2 + 0x28) = uVar3;
-            }
-            break;
-          case 3:
-            if ((param_3 != 0) && (cVar4 = CL_Demo_IsClipPlaying(), cVar4 == '\0')) {
-              CL_Demo_SwitchCamera(uVar1);
-              if (DAT_84872900 == 0) {
-                MyAssertHandler(0xffffffff821dcc88,0x64c,0,0xffffffff82000f98,0xffffffff821dcdfc);
-              }
-              iVar2 = DAT_84872900;
-              uVar3 = Sys_Milliseconds();
-              *(undefined4 *)(iVar2 + 0x34) = uVar3;
-              __restgprlr_28();
-              return;
-            }
-            break;
-          case 4:
-            if (((param_3 != 0) && (cVar4 = CL_Demo_IsClipPlaying(), cVar4 == '\0')) &&
-               (cVar4 = CL_Demo_IsFreeCamera(uVar1), cVar4 == '\0')) {
-              CL_Demo_SwitchPlayer(uVar1,1);
-              if (DAT_84872900 == 0) {
-                MyAssertHandler(0xffffffff821dcc88,0x64c,0,0xffffffff82000f98,0xffffffff821dcdfc);
-              }
-              iVar2 = DAT_84872900;
-              uVar3 = Sys_Milliseconds();
-              *(undefined4 *)(iVar2 + 0x30) = uVar3;
-              __restgprlr_28();
-              return;
-            }
-            break;
-          case 5:
-            if (((param_3 != 0) && (cVar4 = CL_Demo_IsClipPlaying(), cVar4 == '\0')) &&
-               (cVar4 = CL_Demo_IsFreeCamera(uVar1), cVar4 == '\0')) {
-              CL_Demo_SwitchPlayer(uVar1,0);
-              if (DAT_84872900 == 0) {
-                MyAssertHandler(0xffffffff821dcc88,0x64c,0,0xffffffff82000f98,0xffffffff821dcdfc);
-              }
-              iVar2 = DAT_84872900;
-              uVar3 = Sys_Milliseconds();
-              *(undefined4 *)(iVar2 + 0x30) = uVar3;
-              __restgprlr_28();
-              return;
-            }
-            break;
-          case 0xf:
-            if (param_3 != 0) {
-              CL_Demo_ToggleDemoHud();
-              if (DAT_84872900 == 0) {
-                MyAssertHandler(0xffffffff821dcc88,0x64c,0,0xffffffff82000f98,0xffffffff821dcdfc);
-              }
-              iVar2 = DAT_84872900;
-              uVar3 = Sys_Milliseconds();
-              *(undefined4 *)(iVar2 + 0x38) = uVar3;
-              __restgprlr_28();
-              return;
-            }
-            break;
-          case 0x11:
-            if ((param_3 != 0) && (cVar4 = CL_Demo_IsClipRecording(), cVar4 == '\0')) {
-              Cbuf_AddCall(uVar1,0xffffffff827dd550);
-              if (DAT_84872900 == 0) {
-                MyAssertHandler(0xffffffff821dcc88,0x64c,0,0xffffffff82000f98,0xffffffff821dcdfc);
-              }
-              iVar2 = DAT_84872900;
-              uVar3 = Sys_Milliseconds();
-              *(undefined4 *)(iVar2 + 0x3c) = uVar3;
-              __restgprlr_28();
-              return;
-            }
-            break;
-          case 0x12:
-            if ((param_3 != 0) && (cVar4 = CL_Demo_IsClipRecording(), cVar4 == '\0')) {
-              Cbuf_AddCall(uVar1,0xffffffff827dd4e0);
-              if (DAT_84872900 == 0) {
-                MyAssertHandler(0xffffffff821dcc88,0x64c,0,0xffffffff82000f98,0xffffffff821dcdfc);
-              }
-              iVar2 = DAT_84872900;
-              uVar3 = Sys_Milliseconds();
-              *(undefined4 *)(iVar2 + 0x40) = uVar3;
-              __restgprlr_28();
-              return;
-            }
-            break;
-          case 0x13:
-            if ((param_3 != 0) && (cVar4 = CL_Demo_IsClipPlaying(), cVar4 == '\0')) {
-              dVar6 = (double)CL_Demo_GetTimeScale();
-              dVar7 = 0.10000000149011612;
-              dVar8 = floor((double)((float)(dVar6 + 0.10000000149011612) * 10.0 + 0.5));
-              dVar6 = (double)(float)((double)(longlong)(int)dVar8 * dVar7);
-              if ((float)(4.0 - (double)(float)((double)(longlong)(int)dVar8 * dVar7)) < 0.0) {
-                dVar6 = 4.0;
-              }
-              CL_Demo_SetTimeScale(dVar6);
-              if (DAT_84872900 == 0) {
-                MyAssertHandler(0xffffffff821dcc88,0x64c,0,0xffffffff82000f98,0xffffffff821dcdfc);
-              }
-              iVar2 = DAT_84872900;
-              uVar3 = Sys_Milliseconds();
-              *(undefined4 *)(iVar2 + 0x48) = uVar3;
-              __restgprlr_28();
-              return;
-            }
-            break;
-          case 0x14:
-            if ((param_3 != 0) && (cVar4 = CL_Demo_IsClipPlaying(), cVar4 == '\0')) {
-              dVar6 = (double)CL_Demo_GetTimeScale();
-              dVar7 = 0.10000000149011612;
-              dVar8 = floor((double)((float)(dVar6 - 0.10000000149011612) * 10.0 + 0.5));
-              dVar6 = (double)(float)((double)(longlong)(int)dVar8 * dVar7);
-              if ((float)((double)(float)((double)(longlong)(int)dVar8 * dVar7) - dVar7) < 0.0) {
-                dVar6 = dVar7;
-              }
-              CL_Demo_SetTimeScale(dVar6);
-              if (DAT_84872900 == 0) {
-                MyAssertHandler(0xffffffff821dcc88,0x64c,0,0xffffffff82000f98,0xffffffff821dcdfc);
-              }
-              iVar2 = DAT_84872900;
-              uVar3 = Sys_Milliseconds();
-              *(undefined4 *)(iVar2 + 0x44) = uVar3;
-              __restgprlr_28();
-              return;
-            }
-            break;
-          case 0x15:
-            if ((param_3 != 0) && (cVar4 = CL_Demo_IsClipPlaying(), cVar4 == '\0')) {
-              dVar6 = (double)CL_Demo_GetTimeScale();
-              dVar8 = 1.0;
-              dVar6 = ceil((double)(float)(dVar6 - 1.0));
-              if (dVar8 <= (double)(longlong)(int)dVar6) {
-                CL_Demo_SetTimeScale();
-                __restgprlr_28();
-                return;
-              }
-            }
-            break;
-          case 0x16:
-            if ((param_3 != 0) && (cVar4 = CL_Demo_IsClipPlaying(), cVar4 == '\0')) {
-              dVar6 = (double)CL_Demo_GetTimeScale();
-              dVar6 = floor((double)(float)(dVar6 + 1.0));
-              if ((float)(longlong)(int)dVar6 <= 4.0) {
-                CL_Demo_SetTimeScale();
-                __restgprlr_28();
-                return;
-              }
-            }
-          }
-        }
-      }
-      else if ((param_2 == 2) && (DAT_84872900 != 0)) {
-        iVar2 = CL_Demo_GetPlaybackData();
-        *(undefined1 *)(iVar2 + 0x5bef58) = 1;
-        __restgprlr_28();
-        return;
-      }
-    }
-    else if (param_2 == 2) {
-      DAT_8487290c = 1;
-      Cbuf_AddText(uVar1,0xffffffff82030b34);
-      __restgprlr_28();
-      return;
-    }
-  }
-  __restgprlr_28();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 827D85F8  CL_Demo_DrawDebugInformation  (client_demo/cl_demo_playback.cpp:6124)
-
-void CL_Demo_DrawDebugInformation(void)
-
-{
-  undefined8 uVar1;
-  int iVar2;
-  char cVar4;
-  int iVar3;
-  float *pfVar5;
-  int iVar6;
-  int iVar7;
-  double dVar8;
-  undefined8 uVar9;
-  double dVar10;
-  double dVar11;
-  double dVar12;
-  double dVar13;
-  float local_90;
-  float local_8c;
-  float local_88;
-  
-  __savegprlr_23();
-  uVar1 = __savefpr_26();
-  if (DAT_84872900 != 0) {
-    iVar2 = CG_GetLocalClientGlobals();
-    if (iVar2 != 0) {
-      dVar8 = (double)*(float *)(DAT_8484f0e4 + 0xc);
-      cVar4 = CL_Demo_IsFollowCamera(uVar1);
-      if ((cVar4 == '\0') && (cVar4 = CL_Demo_IsFreeCamera(uVar1), cVar4 == '\0')) {
-        pfVar5 = (float *)(iVar2 + 0x6b9c8);
-      }
-      else {
-        pfVar5 = (float *)(iVar2 + 0x70560);
-      }
-      dVar11 = (double)pfVar5[2];
-      dVar12 = (double)pfVar5[1];
-      dVar13 = (double)*pfVar5;
-      if (*(int *)(DAT_8484f0b8 + 0xc) != 0) {
-        iVar3 = *(int *)(iVar2 + 0x335c);
-        iVar6 = 0;
-        if (0 < *(int *)(iVar3 + 0x330c)) {
-          iVar7 = 0;
-          uVar9 = 0x3fe6666660000000;
-          dVar10 = 10.0;
-          do {
-            iVar3 = CG_GetEntity(uVar1,*(undefined4 *)(iVar3 + 0x3314));
-            local_90 = *(float *)(iVar3 + 0x14);
-            local_8c = *(float *)(iVar3 + 0x18);
-            local_88 = *(float *)(iVar3 + 0x1c);
-            if ((double)SQRT((float)((double)local_8c - dVar12) * (float)((double)local_8c - dVar12)
-                             + (float)((double)local_88 - dVar11) *
-                               (float)((double)local_88 - dVar11) +
-                               (float)((double)local_90 - dVar13) *
-                               (float)((double)local_90 - dVar13)) < dVar8) {
-              CG_DebugStar(&local_90,0xffffffff82181818,1);
-              local_88 = (float)((double)local_88 + dVar10);
-              va(0xffffffff821ddad4,*(undefined4 *)(iVar3 + 200));
-              CL_AddDebugString(uVar9,&local_90,0xffffffff821818b8);
-              local_88 = (float)((double)local_88 + dVar10);
-              va(0xffffffff821ddae4,*(undefined4 *)(*(int *)(iVar2 + 0x335c) + iVar7 + 0x3314));
-              CL_AddDebugString(uVar9,&local_90,0xffffffff821818b8);
-            }
-            iVar7 = iVar7 + 0x100;
-            iVar6 = iVar6 + 1;
-            iVar3 = iVar7 + *(int *)(iVar2 + 0x335c);
-          } while (iVar6 < *(int *)(*(int *)(iVar2 + 0x335c) + 0x330c));
-        }
-      }
-    }
-  }
-  __restfpr_26();
-  __restgprlr_23();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 827D87E0  CL_Demo_DrawProfile  (client_demo/cl_demo_playback.cpp:6178)
 
-void CL_Demo_DrawProfile(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void CL_Demo_DrawProfile(LocalClientNum_t param_1)
 
 {
-  uint uVar1;
-  undefined8 uVar2;
-  char cVar7;
-  undefined8 uVar3;
-  int iVar5;
-  int iVar6;
-  undefined8 uVar4;
+  LocalClientNum_t LVar1;
+  bool bVar7;
+  ScreenPlacement *pSVar2;
+  Font_s *pFVar3;
+  int iVar4;
+  clientDemoPlayback_t *pcVar5;
+  char *pcVar6;
   int iVar8;
+  undefined8 uVar9;
   int iVar10;
-  longlong lVar9;
-  ulonglong uVar11;
-  undefined4 *puVar12;
-  double dVar13;
-  undefined8 uVar14;
+  int iVar11;
+  int iVar12;
+  int *piVar13;
+  double dVar14;
   double dVar15;
   double dVar16;
+  double dVar17;
   
-  __savegprlr_17();
-  uVar2 = __savefpr_28();
-  cVar7 = CL_Demo_IsPlaying();
-  if (((cVar7 != '\0') && (DAT_84872900 != 0)) && (*(char *)(DAT_8484f0d0 + 0xc) != '\0')) {
-    uVar2 = ScrPlace_GetActivePlacement(uVar2);
-    uVar3 = UI_GetFontHandle(0x3fd8000000000000,uVar2,3);
-    dVar15 = 0.0;
-    uVar14 = 0x3fd3333340000000;
-    dVar16 = dVar15;
-    iVar5 = UI_TextHeight(0x3fd3333340000000);
-    iVar6 = CL_Demo_GetPlaybackData();
-    if (-1 < *(int *)(iVar6 + 0x10)) {
-      UI_DrawText(dVar15,dVar15,uVar14,uVar2,0xffffffff821ddb34,0x7fffffff,uVar3,
-                  *(int *)(iVar6 + 0x10),0x7fff0000,8,9);
-      dVar13 = (double)(longlong)(iVar5 + 10);
-      uVar11 = (ulonglong)*(uint *)(iVar6 + 0x205f28);
-      iVar10 = 0;
-      dVar16 = dVar13;
+  __savegprlr_17(param_1);
+  LVar1 = __savefpr_28();
+  bVar7 = CL_Demo_IsPlaying(LVar1);
+  if (((bVar7) && (s_clientDemoPlayback != (clientDemoPlayback_t *)0x0)) &&
+     ((cl_demo_drawprofile->current).enabled != false)) {
+    pSVar2 = ScrPlace_GetActivePlacement(LVar1);
+    pFVar3 = UI_GetFontHandle(pSVar2,3,0.375);
+    dVar16 = 0.0;
+    dVar15 = 0.30000001192092896;
+    dVar17 = dVar16;
+    iVar4 = UI_TextHeight(pFVar3,0.3);
+    pcVar5 = CL_Demo_GetPlaybackData();
+    uVar9 = 0x7fff0000;
+    if (-1 < pcVar5->lastGeneratedKeyframeTime) {
+      UI_DrawText(pSVar2,"Keyframe Information --- Time | Msg# | Del# |",0x7fffffff,pFVar3,
+                  (float)dVar16,(float)dVar16,pcVar5->lastGeneratedKeyframeTime,0x7fff0000,
+                  (float)dVar15,(float *)&DAT_00000008,9);
+      dVar14 = (double)(longlong)(iVar4 + 10);
+      iVar12 = pcVar5->keyframeIndex;
+      uVar9 = 0x203064;
+      iVar11 = 0;
+      dVar17 = dVar14;
       do {
-        iVar8 = (int)uVar11 * 0x30 + iVar6;
-        if (*(int *)(iVar8 + 0x203064) == 0) break;
-        uVar4 = va(0xffffffff821ddb14,uVar11,*(undefined4 *)(iVar8 + 0x203050),
-                   *(undefined4 *)(iVar8 + 0x203058),*(undefined4 *)(iVar8 + 0x20305c));
-        UI_DrawText(dVar15,dVar16,uVar14,uVar2,uVar4,0x7fffffff,uVar3);
-        iVar10 = iVar10 + 1;
-        dVar16 = (double)(float)(dVar13 + dVar16);
-        iVar8 = (int)(uVar11 - 1);
-        uVar1 = iVar8 / 0xfa + (iVar8 >> 0x1f);
-        uVar11 = (uVar11 - 1) + ((longlong)(int)uVar1 + (ulonglong)(uVar1 >> 0x1f)) * -0xfa;
-      } while (iVar10 < 4);
+        if (pcVar5->keyFrame[iVar12].size == 0) break;
+        iVar8 = pcVar5->keyFrame[iVar12].keyframeSnapshotDeltaNum;
+        iVar10 = 0x203064;
+        pcVar6 = va("Keyframe %d --- %d | %d | %d |");
+        UI_DrawText(pSVar2,pcVar6,0x7fffffff,pFVar3,(float)dVar16,(float)dVar17,iVar8,iVar10,
+                    (float)dVar15,(float *)&DAT_00000008,9);
+        iVar12 = iVar12 + -1;
+        iVar11 = iVar11 + 1;
+        dVar17 = (double)(float)(dVar14 + dVar17);
+        iVar8 = iVar12 / 0xfa + (iVar12 >> 0x1f);
+        iVar12 = iVar12 + (iVar8 - (iVar8 >> 0x1f)) * -0xfa;
+      } while (iVar11 < 4);
     }
-    lVar9 = 0;
-    puVar12 = (undefined4 *)(iVar6 + 0x5eef78);
+    iVar12 = 0;
+    piVar13 = &pcVar5->restoreKeyframe[0].keyframeSnapshotDeltaNum;
     do {
-      if (puVar12[2] != 0) {
-        uVar4 = va(0xffffffff821ddaf0,lVar9,puVar12[-3],puVar12[-1],*puVar12);
-        UI_DrawText(dVar15,dVar16,uVar14,uVar2,uVar4,0x7fffffff,uVar3);
-        dVar16 = (double)(float)((double)(longlong)(iVar5 + 10) + dVar16);
+      if (piVar13[2] != 0) {
+        iVar11 = *piVar13;
+        pcVar6 = va("Restore Point %d --- %d | %d | %d |");
+        UI_DrawText(pSVar2,pcVar6,0x7fffffff,pFVar3,(float)dVar16,(float)dVar17,iVar11,(int)uVar9,
+                    (float)dVar15,(float *)&DAT_00000008,9);
+        dVar17 = (double)(float)((double)(longlong)(iVar4 + 10) + dVar17);
       }
-      lVar9 = lVar9 + 1;
-      puVar12 = puVar12 + 0xc;
-    } while ((int)lVar9 < 2);
+      iVar12 = iVar12 + 1;
+      piVar13 = piVar13 + 0xc;
+    } while (iVar12 < 2);
   }
   __restfpr_28();
   __restgprlr_17();
@@ -6605,7 +3104,9 @@ void CL_Demo_DrawProfile(void)
 
 // 827D8A60  CL_Demo_UpdateTimeDemo  (client_demo/cl_demo_playback.cpp:6300)
 
-void CL_Demo_UpdateTimeDemo(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CL_Demo_UpdateTimeDemo(LocalClientNum_t param_1)
 
 {
   return;
@@ -6614,7 +3115,9 @@ void CL_Demo_UpdateTimeDemo(void)
 
 // 827D8A68  CL_Demo_SetTimeDemoBaseTime  (client_demo/cl_demo_playback.cpp:6340)
 
-void CL_Demo_SetTimeDemoBaseTime(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CL_Demo_SetTimeDemoBaseTime(LocalClientNum_t param_1,int param_2)
 
 {
   return;
@@ -6623,7 +3126,9 @@ void CL_Demo_SetTimeDemoBaseTime(void)
 
 // 827D8A70  CL_Demo_GetTimeDemoBaseTime  (client_demo/cl_demo_playback.cpp:6358)
 
-undefined8 CL_Demo_GetTimeDemoBaseTime(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+int CL_Demo_GetTimeDemoBaseTime(LocalClientNum_t param_1)
 
 {
   return 0;

@@ -2,25 +2,30 @@
 
 // 8258B020  TRACK_stringed_hooks  (stringed/stringed_hooks.cpp:82)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void TRACK_stringed_hooks(void)
 
 {
-  track_static_alloc_internal(0xffffffff82991050,0x78,0xffffffff821646f0,0x22);
+  track_static_alloc_internal(g_languages,0x78,"g_languages",0x22);
   return;
 }
 
 
 // 8258B040  SEH_UpdateCurrentLanguage  (stringed/stringed_hooks.cpp:102)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void SEH_UpdateCurrentLanguage(void)
 
 {
-  if (DAT_83f5de10 == 0) {
-    MyAssertHandler(0xffffffff82164700,0x67,0,0xffffffff82000f98,0xffffffff82164748);
+  if (loc_language == (dvar_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\stringed\\stringed_hooks.cpp",
+                    0x67,0,"%s");
   }
-  if ((*(int *)(DAT_83f5de10 + 0xc) < 8) || (DAT_83f5de1c = 1, 0xc < *(int *)(DAT_83f5de10 + 0xc)))
-  {
-    DAT_83f5de1c = 0;
+  if (((loc_language->current).integer < 8) ||
+     (g_currentAsian = 1, 0xc < (loc_language->current).integer)) {
+    g_currentAsian = 0;
   }
   return;
 }
@@ -28,27 +33,36 @@ void SEH_UpdateCurrentLanguage(void)
 
 // 8258B0C0  SEH_GetCurrentLanguage  (stringed/stringed_hooks.cpp:132)
 
-undefined4 SEH_GetCurrentLanguage(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int SEH_GetCurrentLanguage(void)
 
 {
-  if (DAT_83f5de10 == 0) {
-    MyAssertHandler(0xffffffff82164700,0x85,0,0xffffffff82000f98,0xffffffff82164748);
+  if (loc_language == (dvar_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\stringed\\stringed_hooks.cpp",
+                    0x85,0,"%s");
   }
-  return *(undefined4 *)(DAT_83f5de10 + 0xc);
+  return (loc_language->current).integer;
 }
 
 
 // 8258B120  SEH_InitLanguage  (stringed/stringed_hooks.cpp:144)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void SEH_InitLanguage(void)
 
 {
-  DAT_83f5de10 = Dvar_RegisterInt(0xffffffff82164748,0,0,0xe,2,0xffffffff82164858);
-  DAT_83f5de14 = Dvar_RegisterBool(0xffffffff82164824,0,2,0xffffffff82164838);
-  DAT_83f5de18 = Dvar_RegisterBool(0xffffffff82164800,1,2,0xffffffff82164810);
-  DAT_83f5de0c = Dvar_RegisterBool(0xffffffff821647d0,0,0,0xffffffff821647e0);
-  DAT_83f5de08 = Dvar_RegisterBool(0xffffffff821647c0,0,0,0xffffffff8216479c);
-  DAT_83f5de04 = Dvar_RegisterBool(0xffffffff82164758,0,0,0xffffffff82164770);
+  loc_language = Dvar_RegisterInt("loc_language",0,0,0xe,2,"Language");
+  loc_forceEnglish = Dvar_RegisterBool("loc_forceEnglish",false,2,"Force english localized strings")
+  ;
+  loc_translate = Dvar_RegisterBool("loc_translate",true,2,"Enable translations");
+  loc_warnings = Dvar_RegisterBool("loc_warnings",false,0,"Enable localization warnings");
+  loc_warningsUI = Dvar_RegisterBool("loc_warningsUI",false,0,"Enable localization warnings for UI")
+  ;
+  loc_warningsAsErrors =
+       Dvar_RegisterBool("loc_warningsAsErrors",false,0,"Throw an error for any unlocalized string")
+  ;
   SEH_UpdateCurrentLanguage();
   return;
 }
@@ -56,24 +70,21 @@ void SEH_InitLanguage(void)
 
 // 8258B220  SEH_VerifyLanguageSelection  (stringed/stringed_hooks.cpp:224)
 
-ulonglong SEH_VerifyLanguageSelection(ulonglong param_1)
+int SEH_VerifyLanguageSelection(int param_1)
 
 {
-  longlong lVar1;
-  ulonglong uVar2;
-  uint uVar3;
+  int iVar1;
+  int iVar2;
   
-  if (*(int *)(&DAT_82991054 + (int)((param_1 & 0xffffffff) << 3)) == 0) {
-    lVar1 = 0;
+  if (g_languages[param_1].bPresent == 0) {
+    iVar1 = 0;
     do {
-      uVar3 = (uint)(lVar1 + param_1);
-      uVar2 = (longlong)((int)uVar3 / 0xf + ((int)uVar3 >> 0x1f)) + (ulonglong)(uVar3 >> 0x1f);
-      uVar2 = (lVar1 + param_1) - ((uVar2 & 0xfffffff) * 0x10 - uVar2);
-      if (*(int *)(&DAT_82991054 + (int)((uVar2 & 0xffffffff) << 3)) != 0) {
-        return uVar2;
+      iVar2 = (iVar1 + param_1) % 0xf;
+      if (g_languages[iVar2].bPresent != 0) {
+        return iVar2;
       }
-      lVar1 = lVar1 + 1;
-    } while ((int)lVar1 < 0xf);
+      iVar1 = iVar1 + 1;
+    } while (iVar1 < 0xf);
     param_1 = 0;
   }
   return param_1;
@@ -81,54 +92,34 @@ ulonglong SEH_VerifyLanguageSelection(ulonglong param_1)
 
 
 // 8258B2A0  SE_GetString_FastFile  (stringed/stringed_hooks.cpp:301)
-
-undefined4 SE_GetString_FastFile(undefined8 param_1)
-
-{
-  undefined4 *puVar1;
-  
-  puVar1 = (undefined4 *)DB_FindXAssetHeader(0x19,param_1,0);
-  if (puVar1 != (undefined4 *)0x0) {
-    return *puVar1;
-  }
-  return 0;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
 
 // 8258B2F0  SE_GetString  (stringed/stringed_hooks.cpp:311)
-
-undefined4 SE_GetString(undefined8 param_1)
-
-{
-  undefined4 *puVar1;
-  
-  puVar1 = (undefined4 *)DB_FindXAssetHeader(0x19,param_1,0);
-  if (puVar1 != (undefined4 *)0x0) {
-    return *puVar1;
-  }
-  return 0;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
 
 // 8258B340  SEH_StringEd_GetString  (stringed/stringed_hooks.cpp:322)
 
-void SEH_StringEd_GetString(char *param_1)
+char * SEH_StringEd_GetString(char *param_1)
 
 {
-  if (DAT_83f5de18 == 0) {
-    return;
+  char *pcVar1;
+  
+  if (loc_translate == (dvar_t *)0x0) {
+    return param_1;
   }
-  if (*(char *)(DAT_83f5de18 + 0xc) == '\0') {
-    return;
+  if ((loc_translate->current).enabled == false) {
+    return param_1;
   }
   if (*param_1 == '\0') {
-    return;
+    return param_1;
   }
   if (param_1[1] == '\0') {
-    return;
+    return param_1;
   }
-  SE_GetString();
-  return;
+  pcVar1 = SE_GetString(param_1);
+  return pcVar1;
 }
 
 
@@ -143,22 +134,22 @@ char * SEH_SafeTranslateString(char *param_1)
   longlong lVar4;
   
   pcVar1 = param_1;
-  if ((((DAT_83f5de18 != 0) && (*(char *)(DAT_83f5de18 + 0xc) != '\0')) && (*param_1 != '\0')) &&
-     (param_1[1] != '\0')) {
-    pcVar1 = (char *)SE_GetString();
+  if ((((loc_translate != (dvar_t *)0x0) && ((loc_translate->current).enabled != false)) &&
+      (*param_1 != '\0')) && (param_1[1] != '\0')) {
+    pcVar1 = SE_GetString(param_1);
   }
   if (pcVar1 == (char *)0x0) {
-    if (*(char *)(DAT_83f5de0c + 0xc) == '\0') {
-      I_strncpyz(0xffffffff83f5de20,param_1,0x400);
+    if ((loc_warnings->current).enabled == false) {
+      I_strncpyz(szErrorString,param_1,0x400);
     }
     else {
-      if (*(char *)(DAT_83f5de04 + 0xc) == '\0') {
-        Com_PrintWarning(0x10,0xffffffff82164880,param_1);
+      if ((loc_warningsAsErrors->current).enabled == false) {
+        Com_PrintWarning(0x10,"WARNING: Could not translate exe string \"%s\"\n");
       }
       else {
-        Com_Error(6,0xffffffff821648b0);
+        Com_Error(ERR_LOCALIZATION,"Could not translate exe string \"%s\"");
       }
-      puVar2 = (undefined1 *)((int)&DAT_83f5de1c + 3);
+      puVar2 = (undefined1 *)((int)&g_currentAsian + 3);
       puVar3 = &UNK_8216486b;
       lVar4 = 0x11;
       do {
@@ -167,10 +158,10 @@ char * SEH_SafeTranslateString(char *param_1)
         *puVar2 = *puVar3;
         lVar4 = lVar4 + -1;
       } while (lVar4 != 0);
-      I_strncat(0xffffffff83f5de20,0x400,param_1);
-      I_strncat(0xffffffff83f5de20,0x400,0xffffffff82164864);
+      I_strncat(szErrorString,0x400,param_1);
+      I_strncat(szErrorString,0x400,"^1)^7");
     }
-    pcVar1 = &DAT_83f5de20;
+    pcVar1 = szErrorString;
   }
   return pcVar1;
 }
@@ -178,294 +169,302 @@ char * SEH_SafeTranslateString(char *param_1)
 
 // 8258B4B8  SEH_GetLocalizedTokenReference  (stringed/stringed_hooks.cpp:378)
 
-void SEH_GetLocalizedTokenReference
-               (undefined8 param_1,ulonglong param_2,undefined8 param_3,int param_4)
+int SEH_GetLocalizedTokenReference
+              (char *param_1,char *param_2,char *param_3,msgLocErrType_t param_4)
 
 {
   char cVar1;
   int iVar2;
-  int iVar5;
-  ulonglong uVar3;
-  undefined8 uVar4;
+  int iVar3;
+  char *pcVar4;
+  ulonglong uVar5;
   
-  iVar5 = __savegprlr_28();
-  uVar3 = param_2;
-  if ((((DAT_83f5de18 != 0) && (*(char *)(DAT_83f5de18 + 0xc) != '\0')) &&
-      (*(char *)param_2 != '\0')) && (((char *)param_2)[1] != '\0')) {
-    uVar3 = SE_GetString(param_2);
+  uVar5 = (ulonglong)(int)param_2;
+  iVar3 = __savegprlr_28(param_1,uVar5,param_3);
+  if ((((loc_translate != (dvar_t *)0x0) && ((loc_translate->current).enabled != false)) &&
+      (pcVar4 = (char *)uVar5, *pcVar4 != '\0')) && (pcVar4[1] != '\0')) {
+    pcVar4 = SE_GetString(pcVar4);
+    uVar5 = (ulonglong)(int)pcVar4;
   }
-  if ((uVar3 & 0xffffffff) == 0) {
-    if ((DAT_83f5de0c == 0) || (*(char *)(DAT_83f5de0c + 0xc) == '\0')) {
-      uVar4 = 0xffffffff82000f98;
+  if ((uVar5 & 0xffffffff) == 0) {
+    if ((loc_warnings == (dvar_t *)0x0) || ((loc_warnings->current).enabled == false)) {
+      pcVar4 = "%s";
     }
-    else if (((DAT_83f5de04 == 0) || (*(char *)(DAT_83f5de04 + 0xc) == '\0')) || (param_4 == 1)) {
-      Com_PrintWarning(0x10,0xffffffff821648d4,param_3,param_2);
-      uVar4 = 0xffffffff8202c564;
+    else if (((loc_warningsAsErrors == (dvar_t *)0x0) ||
+             ((loc_warningsAsErrors->current).enabled == false)) || (param_4 == LOCMSG_NOERR)) {
+      Com_PrintWarning(0x10,"WARNING: Could not translate part of %s: \"%s\"\n");
+      pcVar4 = "^1UNLOCALIZED(^7%s^1)^7";
     }
     else {
-      Com_Error(6,0xffffffff82164904,param_3,param_2);
-      uVar4 = 0xffffffff8202c564;
+      Com_Error(ERR_LOCALIZATION,"Could not translate part of %s: \"%s\"");
+      pcVar4 = "^1UNLOCALIZED(^7%s^1)^7";
     }
-    uVar3 = va(uVar4,param_2);
-    if (param_4 == 1) {
-      __restgprlr_28(0);
-      return;
+    pcVar4 = va(pcVar4);
+    uVar5 = (ulonglong)(int)pcVar4;
+    if (param_4 == LOCMSG_NOERR) {
+      iVar3 = __restgprlr_28(0);
+      return iVar3;
     }
   }
-  iVar2 = (int)uVar3;
+  iVar2 = (int)uVar5;
   do {
-    cVar1 = *(char *)uVar3;
-    ((char *)uVar3)[iVar5 - iVar2] = cVar1;
-    uVar3 = uVar3 + 1;
+    cVar1 = *(char *)uVar5;
+    ((char *)uVar5)[iVar3 - iVar2] = cVar1;
+    uVar5 = uVar5 + 1;
   } while (cVar1 != '\0');
-  __restgprlr_28(1);
-  return;
+  iVar3 = __restgprlr_28(1);
+  return iVar3;
 }
 
 
 // 8258B5F8  SEH_LocalizeTextMessage  (stringed/stringed_hooks.cpp:421)
 
-void SEH_LocalizeTextMessage(undefined8 param_1,undefined8 param_2,ulonglong param_3)
+char * SEH_LocalizeTextMessage(char *param_1,char *param_2,msgLocErrType_t param_3)
 
 {
   bool bVar1;
   char cVar2;
   bool bVar3;
   bool bVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  int iVar7;
-  int iVar8;
-  char *pcVar10;
-  longlong lVar9;
-  int iVar11;
-  ulonglong uVar12;
+  int iVar5;
+  int iVar6;
+  char (*pacVar7) [1024];
+  char *pcVar8;
+  int iVar9;
+  ulonglong uVar10;
+  ulonglong uVar11;
+  longlong lVar12;
   ulonglong uVar13;
-  longlong lVar14;
-  undefined *_Dst;
-  ulonglong uVar15;
-  ulonglong uVar16;
-  longlong lVar17;
+  ulonglong uVar14;
+  longlong lVar15;
+  longlong lVar16;
+  uint uStack00000024;
   int local_8c0;
   char local_8a0 [1024];
   char local_4a0 [1184];
   
-  uVar5 = ZEXT48(&stack0x00000000);
-  uVar6 = __savegprlr();
-  iVar7 = DAT_83f60a20 + 1;
-  iVar11 = iVar7 / 10 + (iVar7 >> 0x1f);
-  DAT_83f60a20 = iVar7 + ((iVar11 - (iVar11 >> 0x1f)) * 5 & 0x7fffffffU) * -2;
-  _Dst = &DAT_83f5e220 + DAT_83f60a20 * 0x400;
-  memset(_Dst,0,0x400);
+  uVar14 = (ulonglong)(int)param_3;
+  uVar10 = (ulonglong)(int)param_1;
+  __savegprlr();
+  uStack00000024 = (uint)uVar14;
+  iVar5 = iCurrString + 1;
+  iVar9 = iVar5 / 10 + (iVar5 >> 0x1f);
+  iCurrString = iVar5 + ((iVar9 - (iVar9 >> 0x1f)) * 5 & 0x7fffffffU) * -2;
+  pacVar7 = szStrings + iCurrString;
+  memset();
   bVar1 = true;
-  lVar14 = 0;
+  lVar12 = 0;
   bVar3 = true;
   local_8c0 = 1;
-  iVar11 = 0;
+  iVar9 = 0;
   bVar4 = false;
-  uVar12 = uVar6;
-  uVar13 = uVar6;
-  uVar16 = param_3;
-  if (*(char *)uVar6 != '\0') {
+  uVar11 = uVar10;
+  if (*(char *)uVar10 != '\0') {
     do {
-      cVar2 = *(char *)uVar13;
-      lVar17 = lVar14;
+      cVar2 = *(char *)uVar11;
+      lVar16 = lVar12;
       if ((((cVar2 == '\0') || (cVar2 == '\x14')) || (cVar2 == '\x15')) || (cVar2 == '\x16')) {
-        if ((uVar12 & 0xffffffff) < (uVar13 & 0xffffffff)) {
-          uVar15 = uVar13 - uVar12;
-          I_strncpyz(uVar5 - 0x8a0,uVar12,uVar15 + 1);
+        if ((uVar10 & 0xffffffff) < (uVar11 & 0xffffffff)) {
+          uVar13 = uVar11 - uVar10;
+          I_strncpyz(local_8a0,(char *)uVar10,(int)uVar13 + 1);
           if (bVar3) {
-            iVar7 = SEH_GetLocalizedTokenReference(uVar5 - 0x8a0,uVar5 - 0x8a0,param_2,uVar16);
-            if (iVar7 == 0) {
-              __restgprlr(0);
-              return;
+            iVar5 = SEH_GetLocalizedTokenReference
+                              (local_8a0,local_8a0,param_2,(msgLocErrType_t)uVar14);
+            if (iVar5 == 0) {
+              pcVar8 = (char *)0x0;
+              __restgprlr();
+              return pcVar8;
             }
-            lVar17 = uVar5 - 0x8a0;
+            pcVar8 = local_8a0;
             do {
-              pcVar10 = (char *)lVar17;
-              lVar17 = lVar17 + 1;
-            } while (*pcVar10 != '\0');
-            uVar15 = (lVar17 - (uVar5 - 0x8a0)) - 1 & 0xffffffff;
+              cVar2 = *pcVar8;
+              pcVar8 = pcVar8 + 1;
+            } while (cVar2 != '\0');
+            uVar13 = ZEXT48(pcVar8 + (-1 - (int)local_8a0));
           }
-          lVar17 = uVar15 + lVar14;
-          if (0x3ff < (int)lVar17) {
-            if (((DAT_83f5de0c != 0) && (*(char *)(DAT_83f5de0c + 0xc) != '\0')) &&
-               ((DAT_83f5de04 != 0 &&
-                ((*(char *)(DAT_83f5de04 + 0xc) != '\0' && ((int)uVar16 != 1)))))) {
-              Com_Error(1,"%s too long when translated: \"%s\"",param_2,uVar6);
+          lVar16 = uVar13 + lVar12;
+          if (0x3ff < (int)lVar16) {
+            if (((loc_warnings != (dvar_t *)0x0) && ((loc_warnings->current).enabled != false)) &&
+               ((loc_warningsAsErrors != (dvar_t *)0x0 &&
+                (((loc_warningsAsErrors->current).enabled != false &&
+                 ((msgLocErrType_t)uVar14 != LOCMSG_NOERR)))))) {
+              Com_Error(ERR_DROP,"%s too long when translated: \"%s\"");
             }
-            Com_Printf(0x10,"%s too long when translated: \"%s\"\n",param_2,uVar6);
+            Com_Printf(0x10,"%s too long when translated: \"%s\"\n");
           }
-          iVar7 = 0;
-          if (0 < (longlong)(uVar15 - 2)) {
+          iVar5 = 0;
+          if (0 < (longlong)(uVar13 - 2)) {
             do {
-              iVar8 = strncmp(local_8a0 + iVar7,"&&",2);
-              if ((iVar8 == 0) && (iVar8 = isdigit((int)local_8a0[iVar7 + 2]), iVar8 != 0)) {
+              pcVar8 = local_8a0 + iVar5;
+              strncmp();
+              if ((pcVar8 == (char *)0x0) &&
+                 (iVar6 = isdigit((int)local_8a0[iVar5 + 2]), iVar6 != 0)) {
                 if (bVar1) {
-                  iVar11 = iVar11 + 1;
+                  iVar9 = iVar9 + 1;
                 }
                 else {
                   bVar4 = true;
-                  local_8a0[iVar7] = '\x16';
+                  local_8a0[iVar5] = '\x16';
                 }
               }
-              iVar7 = iVar7 + 1;
-            } while (iVar7 < (int)(uVar15 - 2));
+              iVar5 = iVar5 + 1;
+            } while (iVar5 < (int)(uVar13 - 2));
           }
-          if ((iVar11 < 1) || ((int)lVar14 < 1)) {
-            lVar9 = uVar5 - 0x8a0;
+          if ((iVar9 < 1) || ((int)lVar12 < 1)) {
+            pcVar8 = local_8a0;
             do {
-              cVar2 = *(char *)lVar9;
-              ((char *)lVar9)[(int)(_Dst + ((int)lVar14 - (int)local_8a0))] = cVar2;
-              lVar9 = lVar9 + 1;
+              cVar2 = *pcVar8;
+              pcVar8[(int)pacVar7 + ((int)lVar12 - (int)local_8a0)] = cVar2;
+              pcVar8 = pcVar8 + 1;
             } while (cVar2 != '\0');
           }
           else {
             bVar1 = false;
-            iVar8 = 0;
-            iVar7 = 0;
-            if (0 < lVar14 + -2) {
+            iVar6 = 0;
+            iVar5 = 0;
+            if (0 < lVar12 + -2) {
 LAB_8258b870:
-              iVar7 = strncmp(_Dst + iVar8,"&&",2);
-              if (iVar7 != 0) goto LAB_8258b8d4;
-              iVar7 = isdigit((int)(char)_Dst[iVar8 + 2]);
-              if (iVar7 == 0) goto LAB_8258b8d4;
-              cVar2 = _Dst[iVar8 + 2];
-              if ((longlong)cVar2 + -0x30 == 0) {
-                Com_Printf(0x10,0xffffffff82164930,param_2,uVar6);
+              pcVar8 = *pacVar7 + iVar6;
+              strncmp();
+              if (pcVar8 != (char *)0x0) goto LAB_8258b8d4;
+              iVar5 = isdigit((int)(*pacVar7)[iVar6 + 2]);
+              if (iVar5 == 0) goto LAB_8258b8d4;
+              lVar15 = (longlong)(*pacVar7)[iVar6 + 2] + -0x30;
+              if (lVar15 == 0) {
+                Com_Printf(0x10,"%s cannot have &&0 as conversion format: \"%s\"\n");
               }
-              if ((int)((longlong)cVar2 + -0x30) != local_8c0) goto LAB_8258b8d4;
-              pcVar10 = _Dst + iVar8 + 3;
-              iVar7 = -(int)pcVar10;
+              if ((int)lVar15 != local_8c0) goto LAB_8258b8d4;
+              pcVar8 = *pacVar7 + iVar6 + 3;
+              iVar5 = -(int)pcVar8;
               do {
-                cVar2 = *pcVar10;
-                pcVar10[(int)(local_4a0 + iVar7)] = cVar2;
-                pcVar10 = pcVar10 + 1;
+                cVar2 = *pcVar8;
+                pcVar8[(int)(local_4a0 + iVar5)] = cVar2;
+                pcVar8 = pcVar8 + 1;
               } while (cVar2 != '\0');
               bVar1 = true;
-              _Dst[iVar8] = '\0';
-              iVar7 = iVar8;
+              (*pacVar7)[iVar6] = '\0';
+              iVar5 = iVar6;
 LAB_8258b918:
-              if (iVar7 < 0) {
+              if (iVar5 < 0) {
                 MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\stringed\\stringed_hooks.cpp"
-                                ,0x205,0,&DAT_82000f98,"i >= 0");
+                                ,0x205,0,"%s");
               }
             }
             if (bVar1) {
-              lVar14 = uVar5 - 0x8a0;
+              pcVar8 = local_8a0;
               do {
-                cVar2 = *(char *)lVar14;
-                ((char *)lVar14)[(int)(_Dst + (iVar7 - (int)local_8a0))] = cVar2;
-                lVar14 = lVar14 + 1;
+                cVar2 = *pcVar8;
+                pcVar8[(int)pacVar7 + (iVar5 - (int)local_8a0)] = cVar2;
+                pcVar8 = pcVar8 + 1;
               } while (cVar2 != '\0');
-              lVar14 = uVar5 - 0x4a0;
+              pcVar8 = local_4a0;
               do {
-                cVar2 = *(char *)lVar14;
-                ((char *)lVar14)[(int)(_Dst + (iVar7 - (int)local_4a0) + (int)uVar15)] = cVar2;
-                lVar14 = lVar14 + 1;
+                cVar2 = *pcVar8;
+                pcVar8[(int)pacVar7 + (iVar5 - (int)local_4a0) + (int)uVar13] = cVar2;
+                pcVar8 = pcVar8 + 1;
               } while (cVar2 != '\0');
-              lVar14 = lVar17 + -3;
-              iVar11 = iVar11 + -1;
+              lVar12 = lVar16 + -3;
+              iVar9 = iVar9 + -1;
             }
-            uVar16 = param_3 & 0xffffffff;
+            uVar14 = (ulonglong)uStack00000024;
             local_8c0 = local_8c0 + 1;
-            lVar17 = lVar14;
+            lVar16 = lVar12;
           }
         }
-        cVar2 = *(char *)uVar13;
+        cVar2 = *(char *)uVar11;
         if (cVar2 == '\x14') {
           bVar3 = true;
 LAB_8258ba08:
-          uVar12 = uVar13 + 1;
+          uVar10 = uVar11 + 1;
         }
         else {
-          uVar12 = uVar13;
+          uVar10 = uVar11;
           if (cVar2 == '\x15') {
             bVar3 = false;
             goto LAB_8258ba08;
           }
         }
-        bVar1 = *(char *)uVar12 != '\x16';
-        uVar13 = uVar12;
+        bVar1 = *(char *)uVar10 != '\x16';
+        uVar11 = uVar10;
         if (!bVar1) {
-          uVar12 = uVar12 + 1;
-          uVar13 = uVar12;
+          uVar10 = uVar10 + 1;
+          uVar11 = uVar10;
         }
       }
       else {
-        uVar13 = uVar13 + 1;
+        uVar11 = uVar11 + 1;
       }
-      lVar14 = lVar17;
-    } while (*(char *)uVar12 != '\0');
-    if ((bVar4) && (0 < (int)lVar17)) {
-      iVar11 = 0;
+      lVar12 = lVar16;
+    } while (*(char *)uVar10 != '\0');
+    if ((bVar4) && (0 < (int)lVar16)) {
+      iVar9 = 0;
       do {
-        if (_Dst[iVar11] == '\x16') {
-          _Dst[iVar11] = 0x25;
+        if ((*pacVar7)[iVar9] == '\x16') {
+          (*pacVar7)[iVar9] = '%';
         }
-        iVar11 = iVar11 + 1;
-        lVar17 = lVar17 + -1;
-      } while (lVar17 != 0);
+        iVar9 = iVar9 + 1;
+        lVar16 = lVar16 + -1;
+      } while (lVar16 != 0);
     }
   }
-  __restgprlr(_Dst);
-  return;
+  __restgprlr();
+  return *pacVar7;
 LAB_8258b8d4:
-  iVar8 = iVar8 + 1;
-  iVar7 = iVar8;
-  if ((int)(lVar14 + -2) <= iVar8) goto LAB_8258b918;
+  iVar6 = iVar6 + 1;
+  iVar5 = iVar6;
+  if ((int)(lVar12 + -2) <= iVar6) goto LAB_8258b918;
   goto LAB_8258b870;
 }
 
 
 // 8258BA78  Korean_ValidKSC5601Hangul  (stringed/stringed_hooks.cpp:593)
 
-undefined8 Korean_ValidKSC5601Hangul(uint param_1,uint param_2)
+bool Korean_ValidKSC5601Hangul(uint param_1,uint param_2)
 
 {
-  undefined8 uVar1;
+  bool bVar1;
   
-  if ((((param_1 < 0xb0) || (200 < param_1)) || (param_2 < 0xa1)) || (uVar1 = 1, 0xfe < param_2)) {
-    uVar1 = 0;
+  if ((((param_1 < 0xb0) || (200 < param_1)) || (param_2 < 0xa1)) || (bVar1 = true, 0xfe < param_2))
+  {
+    bVar1 = false;
   }
-  return uVar1;
+  return bVar1;
 }
 
 
 // 8258BAA8  Korean_ValidKSC5601Hangul_Code  (stringed/stringed_hooks.cpp:599)
 
-undefined8 Korean_ValidKSC5601Hangul_Code(ulonglong param_1)
+bool Korean_ValidKSC5601Hangul_Code(uint param_1)
 
 {
-  ulonglong uVar1;
-  undefined8 uVar2;
+  uint uVar1;
+  bool bVar2;
   
-  uVar1 = (param_1 & 0xffffffff) >> 8 & 0xff;
+  uVar1 = param_1 >> 8 & 0xff;
   if ((((uVar1 < 0xb0) || (200 < uVar1)) || ((param_1 & 0xff) < 0xa1)) ||
-     (uVar2 = 1, 0xfe < (param_1 & 0xff))) {
-    uVar2 = 0;
+     (bVar2 = true, 0xfe < (param_1 & 0xff))) {
+    bVar2 = false;
   }
-  return uVar2;
+  return bVar2;
 }
 
 
 // 8258BAE0  Korean_CollapseKSC5601HangulCode  (stringed/stringed_hooks.cpp:610)
 
-longlong Korean_CollapseKSC5601HangulCode(ulonglong param_1)
+int Korean_CollapseKSC5601HangulCode(uint param_1)
 
 {
   bool bVar1;
-  ulonglong uVar2;
+  uint uVar2;
   
-  uVar2 = (param_1 & 0xffffffff) >> 8 & 0xff;
+  uVar2 = param_1 >> 8 & 0xff;
   if ((((uVar2 < 0xb0) || (200 < uVar2)) || ((param_1 & 0xff) < 0xa1)) ||
      (bVar1 = true, 0xfe < (param_1 & 0xff))) {
     bVar1 = false;
   }
   if (bVar1) {
-    param_1 = param_1 - 0xb0a0;
-    return (((param_1 & 0xffffffff) >> 8) + ((param_1 & 0xffffffff) >> 7 & 0x1fffffe)) * 0x20 +
-           (param_1 & 0xff);
+    uVar2 = param_1 - 0xb0a0;
+    return ((uVar2 >> 8) + (uVar2 >> 7 & 0x1fffffe)) * 0x20 + (uVar2 & 0xff);
   }
   return 0;
 }
@@ -473,42 +472,42 @@ longlong Korean_CollapseKSC5601HangulCode(ulonglong param_1)
 
 // 8258BB48  Taiwanese_ValidBig5Code  (stringed/stringed_hooks.cpp:638)
 
-undefined8 Taiwanese_ValidBig5Code(ulonglong param_1)
+bool Taiwanese_ValidBig5Code(uint param_1)
 
 {
-  ulonglong uVar1;
+  uint uVar1;
   
-  uVar1 = (param_1 & 0xffffffff) >> 8 & 0xff;
+  uVar1 = param_1 >> 8 & 0xff;
   if ((((0xa0 < uVar1) && (uVar1 < 199)) || ((200 < uVar1 && (uVar1 < 0xfa)))) &&
-     (((param_1 = param_1 & 0xff, 0x3f < param_1 && (param_1 < 0x7f)) ||
-      ((0xa0 < param_1 && (param_1 < 0xff)))))) {
-    return 1;
+     (((uVar1 = param_1 & 0xff, 0x3f < uVar1 && (uVar1 < 0x7f)) ||
+      ((0xa0 < uVar1 && (uVar1 < 0xff)))))) {
+    return true;
   }
-  return 0;
+  return false;
 }
 
 
 // 8258BBA0  Taiwanese_IsTrailingPunctuation  (stringed/stringed_hooks.cpp:658)
 
-undefined8 Taiwanese_IsTrailingPunctuation(uint param_1)
+bool Taiwanese_IsTrailingPunctuation(uint param_1)
 
 {
   if ((0xa13f < param_1) && (param_1 < 0xa154)) {
-    return 1;
+    return true;
   }
-  return 0;
+  return false;
 }
 
 
 // 8258BBC0  Taiwanese_CollapseBig5Code  (stringed/stringed_hooks.cpp:676)
 
-longlong Taiwanese_CollapseBig5Code(ulonglong param_1)
+int Taiwanese_CollapseBig5Code(uint param_1)
 
 {
   bool bVar1;
-  ulonglong uVar2;
+  uint uVar2;
   
-  uVar2 = (param_1 & 0xffffffff) >> 8 & 0xff;
+  uVar2 = param_1 >> 8 & 0xff;
   if ((((uVar2 < 0xa1) || (0xc6 < uVar2)) && ((uVar2 < 0xc9 || (0xf9 < uVar2)))) ||
      (((uVar2 = param_1 & 0xff, uVar2 < 0x40 || (0x7e < uVar2)) &&
       ((uVar2 < 0xa1 || (0xfe < uVar2)))))) {
@@ -522,8 +521,7 @@ longlong Taiwanese_CollapseBig5Code(ulonglong param_1)
     if (0x5f < (uVar2 & 0xff)) {
       uVar2 = param_1 - 0xa160;
     }
-    return (((uVar2 & 0xffffffff) >> 8) + ((uVar2 & 0xffffffff) >> 6 & 0x3fffffc)) * 0x20 +
-           (uVar2 & 0xff);
+    return ((uVar2 >> 8) + (uVar2 >> 6 & 0x3fffffc)) * 0x20 + (uVar2 & 0xff);
   }
   return 0;
 }
@@ -531,56 +529,57 @@ longlong Taiwanese_CollapseBig5Code(ulonglong param_1)
 
 // 8258BC60  Japanese_ValidShiftJISCode  (stringed/stringed_hooks.cpp:709)
 
-undefined8 Japanese_ValidShiftJISCode(uint param_1,uint param_2)
+bool Japanese_ValidShiftJISCode(uint param_1,uint param_2)
 
 {
   if ((((0x80 < param_1) && (param_1 < 0xa0)) || ((0xdf < param_1 && (param_1 < 0xf0)))) &&
      (((0x3f < param_2 && (param_2 < 0x7f)) || ((0x7f < param_2 && (param_2 < 0xfd)))))) {
-    return 1;
+    return true;
   }
-  return 0;
+  return false;
 }
 
 
 // 8258BCB0  Japanese_ValidShiftJISCode_UICode  (stringed/stringed_hooks.cpp:721)
 
-undefined8 Japanese_ValidShiftJISCode_UICode(ulonglong param_1)
+bool Japanese_ValidShiftJISCode_UICode(uint param_1)
 
 {
-  ulonglong uVar1;
+  uint uVar1;
+  uint uVar2;
   
-  uVar1 = (param_1 & 0xffffffff) >> 8 & 0xff;
-  param_1 = param_1 & 0xff;
-  if ((((0x80 < uVar1) && (uVar1 < 0xa0)) || ((0xdf < uVar1 && (uVar1 < 0xf0)))) &&
-     (((0x3f < param_1 && (param_1 < 0x7f)) || ((0x7f < param_1 && (param_1 < 0xfd)))))) {
-    return 1;
+  uVar2 = param_1 >> 8 & 0xff;
+  uVar1 = param_1 & 0xff;
+  if ((((0x80 < uVar2) && (uVar2 < 0xa0)) || ((0xdf < uVar2 && (uVar2 < 0xf0)))) &&
+     (((0x3f < uVar1 && (uVar1 < 0x7f)) || ((0x7f < uVar1 && (uVar1 < 0xfd)))))) {
+    return true;
   }
-  return 0;
+  return false;
 }
 
 
 // 8258BD08  Japanese_IsTrailingPunctuation  (stringed/stringed_hooks.cpp:729)
 
-undefined8 Japanese_IsTrailingPunctuation(uint param_1)
+bool Japanese_IsTrailingPunctuation(uint param_1)
 
 {
   if ((0x813f < param_1) && (param_1 < 0x8152)) {
-    return 1;
+    return true;
   }
-  return 0;
+  return false;
 }
 
 
 // 8258BD28  Japanese_CollapseShiftJISCode  (stringed/stringed_hooks.cpp:744)
 
-longlong Japanese_CollapseShiftJISCode(ulonglong param_1)
+int Japanese_CollapseShiftJISCode(uint param_1)
 
 {
   bool bVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
+  uint uVar2;
+  uint uVar3;
   
-  uVar2 = (param_1 & 0xffffffff) >> 8 & 0xff;
+  uVar2 = param_1 >> 8 & 0xff;
   uVar3 = param_1 & 0xff;
   if ((((uVar2 < 0x81) || (0x9f < uVar2)) && ((uVar2 < 0xe0 || (0xef < uVar2)))) ||
      (((uVar3 < 0x40 || (0x7e < uVar3)) && ((uVar3 < 0x80 || (0xfc < uVar3)))))) {
@@ -597,7 +596,7 @@ longlong Japanese_CollapseShiftJISCode(ulonglong param_1)
     if (0x5eff < (uVar3 & 0xff00)) {
       uVar3 = uVar3 - 0x4000;
     }
-    return ((uVar3 & 0xffffffff) >> 8) * 0xbc + (uVar3 & 0xff);
+    return (uVar3 >> 8) * 0xbc + (uVar3 & 0xff);
   }
   return 0;
 }
@@ -605,62 +604,63 @@ longlong Japanese_CollapseShiftJISCode(ulonglong param_1)
 
 // 8258BDD0  Chinese_ValidGBCode  (stringed/stringed_hooks.cpp:774)
 
-undefined8 Chinese_ValidGBCode(byte param_1,byte param_2)
+bool Chinese_ValidGBCode(uchar param_1,uchar param_2)
 
 {
-  undefined8 uVar1;
+  bool bVar1;
   
-  if ((((param_1 < 0x81) || (0xfe < param_1)) || (param_2 < 0x41)) || (uVar1 = 1, 0xfe < param_2)) {
-    uVar1 = 0;
+  if ((((param_1 < 0x81) || (0xfe < param_1)) || (param_2 < 0x41)) || (bVar1 = true, 0xfe < param_2)
+     ) {
+    bVar1 = false;
   }
-  return uVar1;
+  return bVar1;
 }
 
 
 // 8258BE08  Chinese_ValidGBCode_UICode  (stringed/stringed_hooks.cpp:780)
 
-undefined8 Chinese_ValidGBCode_UICode(ulonglong param_1)
+bool Chinese_ValidGBCode_UICode(uint param_1)
 
 {
-  ulonglong uVar1;
-  undefined8 uVar2;
+  uint uVar1;
+  bool bVar2;
   
-  uVar1 = (param_1 & 0xffffffff) >> 8 & 0xff;
+  uVar1 = param_1 >> 8 & 0xff;
   if ((((uVar1 < 0x81) || (0xfe < uVar1)) || ((param_1 & 0xff) < 0x41)) ||
-     (uVar2 = 1, 0xfe < (param_1 & 0xff))) {
-    uVar2 = 0;
+     (bVar2 = true, 0xfe < (param_1 & 0xff))) {
+    bVar2 = false;
   }
-  return uVar2;
+  return bVar2;
 }
 
 
 // 8258BE48  Chinese_IsTrailingPunctuation  (stringed/stringed_hooks.cpp:788)
 
-undefined8 Chinese_IsTrailingPunctuation(uint param_1)
+bool Chinese_IsTrailingPunctuation(uint param_1)
 
 {
   if ((0x8140 < param_1) && (param_1 < 0x814e)) {
-    return 1;
+    return true;
   }
-  return 0;
+  return false;
 }
 
 
 // 8258BE68  Chinese_CollapseGBCode  (stringed/stringed_hooks.cpp:804)
 
-longlong Chinese_CollapseGBCode(ulonglong param_1)
+int Chinese_CollapseGBCode(uint param_1)
 
 {
   bool bVar1;
-  ulonglong uVar2;
+  uint uVar2;
   
-  uVar2 = (param_1 & 0xffffffff) >> 8 & 0xff;
+  uVar2 = param_1 >> 8 & 0xff;
   if ((((uVar2 < 0x81) || (0xfe < uVar2)) || ((param_1 & 0xff) < 0x41)) ||
      (bVar1 = true, 0xfe < (param_1 & 0xff))) {
     bVar1 = false;
   }
   if (bVar1) {
-    return ((param_1 - 0x8140 & 0xffffffff) >> 8) * 0x5f + (param_1 - 0x8140 & 0xff);
+    return (param_1 - 0x8140 >> 8) * 0x5f + (param_1 - 0x8140 & 0xff);
   }
   return 0;
 }
@@ -668,91 +668,93 @@ longlong Chinese_CollapseGBCode(ulonglong param_1)
 
 // 8258BFF8  SEH_DecodeLetter  (stringed/stringed_hooks.cpp:824)
 
-void SEH_DecodeLetter(undefined8 param_1,ulonglong param_2,undefined4 *param_3,ulonglong param_4)
+uint SEH_DecodeLetter(uint param_1,uint param_2,int *param_3,int *param_4)
 
 {
-  bool bVar1;
-  byte bVar2;
+  byte bVar1;
+  ulonglong uVar2;
+  int iVar5;
   ulonglong uVar3;
-  longlong lVar4;
-  ulonglong uVar5;
-  char cVar6;
-  uint *puVar7;
+  uint uVar6;
+  bool bVar7;
+  ulonglong uVar4;
   ulonglong uVar8;
-  uint uVar9;
+  uint *puVar9;
+  ulonglong uVar10;
   
-  uVar3 = __savegprlr_28();
-  uVar5 = uVar3 & 0xff;
-  param_2 = param_2 & 0xff;
-  puVar7 = (uint *)param_4;
-  if (DAT_83f5de1c != 0) {
-    lVar4 = SEH_GetCurrentLanguage();
-    uVar8 = lVar4 - 8;
-    if ((uVar8 & 0xffffffff) < 4) {
-      bVar1 = (int)uVar8 != 0;
-      if (lVar4 == 9 && bVar1) {
-        param_2 = (uVar3 & 0xff) * 0x100 + param_2;
-        cVar6 = Taiwanese_ValidBig5Code(param_2);
-        if (cVar6 != '\0') {
+  uVar8 = (ulonglong)(int)param_4;
+  uVar4 = (ulonglong)(int)param_2;
+  uVar2 = __savegprlr_28(param_1);
+  uVar3 = uVar2 & 0xff;
+  uVar4 = uVar4 & 0xff;
+  puVar9 = (uint *)uVar8;
+  if (g_currentAsian != 0) {
+    iVar5 = SEH_GetCurrentLanguage();
+    uVar10 = (longlong)iVar5 - 8;
+    if ((uVar10 & 0xffffffff) < 4) {
+      bVar7 = (int)uVar10 != 0;
+      if ((longlong)iVar5 == 9 && bVar7) {
+        uVar4 = (uVar2 & 0xff) * 0x100 + uVar4;
+        bVar7 = Taiwanese_ValidBig5Code((uint)uVar4);
+        if (bVar7) {
           *param_3 = 2;
-          if ((param_4 & 0xffffffff) != 0) {
-            if (((param_2 & 0xffffffff) < 0xa140) || (uVar9 = 1, 0xa153 < (param_2 & 0xffffffff))) {
-              uVar9 = 0;
+          if ((uVar8 & 0xffffffff) != 0) {
+            if (((uVar4 & 0xffffffff) < 0xa140) || (uVar6 = 1, 0xa153 < (uVar4 & 0xffffffff))) {
+              uVar6 = 0;
             }
-            *puVar7 = uVar9;
+            *puVar9 = uVar6;
           }
-          __restgprlr_28(param_2);
-          return;
+          uVar6 = __restgprlr_28(uVar4);
+          return uVar6;
         }
       }
-      else if (uVar8 == 2 && bVar1) {
-        cVar6 = Japanese_ValidShiftJISCode(uVar5,param_2);
-        if (cVar6 != '\0') {
-          uVar5 = (uVar3 & 0xff) * 0x100 + param_2;
+      else if (uVar10 == 2 && bVar7) {
+        bVar7 = Japanese_ValidShiftJISCode((uint)uVar3,(uint)uVar4);
+        if (bVar7) {
+          uVar3 = (uVar2 & 0xff) * 0x100 + uVar4;
           *param_3 = 2;
-          if ((param_4 & 0xffffffff) != 0) {
-            if ((uVar5 < 0x8140) || (uVar9 = 1, 0x8151 < uVar5)) {
-              uVar9 = 0;
+          if ((uVar8 & 0xffffffff) != 0) {
+            if ((uVar3 < 0x8140) || (uVar6 = 1, 0x8151 < uVar3)) {
+              uVar6 = 0;
             }
-            *puVar7 = uVar9;
-            __restgprlr_28();
-            return;
+            *puVar9 = uVar6;
+            uVar6 = __restgprlr_28();
+            return uVar6;
           }
           goto LAB_8258c22c;
         }
       }
-      else if (bVar1) {
-        param_2 = (uVar3 & 0xff) * 0x100 + param_2;
-        if ((((param_2 >> 8 < 0x81) || (0xfe < param_2 >> 8)) || ((param_2 & 0xff) < 0x41)) ||
-           (bVar1 = true, 0xfe < (param_2 & 0xff))) {
-          bVar1 = false;
+      else if (bVar7) {
+        uVar4 = (uVar2 & 0xff) * 0x100 + uVar4;
+        if ((((uVar4 >> 8 < 0x81) || (0xfe < uVar4 >> 8)) || ((uVar4 & 0xff) < 0x41)) ||
+           (bVar7 = true, 0xfe < (uVar4 & 0xff))) {
+          bVar7 = false;
         }
-        if (bVar1) {
+        if (bVar7) {
           *param_3 = 2;
-          uVar5 = param_2;
-          if ((param_4 & 0xffffffff) != 0) {
-            if ((param_2 < 0x8141) || (bVar2 = 1, 0x814d < param_2)) {
-              bVar2 = 0;
+          uVar3 = uVar4;
+          if ((uVar8 & 0xffffffff) != 0) {
+            if ((uVar4 < 0x8141) || (bVar1 = 1, 0x814d < uVar4)) {
+              bVar1 = 0;
             }
-            *puVar7 = (uint)bVar2;
-            __restgprlr_28();
-            return;
+            *puVar9 = (uint)bVar1;
+            uVar6 = __restgprlr_28();
+            return uVar6;
           }
           goto LAB_8258c22c;
         }
       }
       else {
-        if (((uVar5 < 0xb0) || (200 < uVar5)) ||
-           ((param_2 < 0xa1 || (bVar1 = true, 0xfe < param_2)))) {
-          bVar1 = false;
+        if (((uVar3 < 0xb0) || (200 < uVar3)) || ((uVar4 < 0xa1 || (bVar7 = true, 0xfe < uVar4)))) {
+          bVar7 = false;
         }
-        if (bVar1) {
-          uVar5 = (uVar3 & 0xff) * 0x100 + param_2;
+        if (bVar7) {
+          uVar3 = (uVar2 & 0xff) * 0x100 + uVar4;
           *param_3 = 2;
-          if ((param_4 & 0xffffffff) != 0) {
-            *puVar7 = 0;
-            __restgprlr_28(uVar5);
-            return;
+          if ((uVar8 & 0xffffffff) != 0) {
+            *puVar9 = 0;
+            uVar6 = __restgprlr_28(uVar3);
+            return uVar6;
           }
           goto LAB_8258c22c;
         }
@@ -760,30 +762,30 @@ void SEH_DecodeLetter(undefined8 param_1,ulonglong param_2,undefined4 *param_3,u
     }
   }
   *param_3 = 1;
-  if ((param_4 & 0xffffffff) != 0) {
-    if (((((uVar5 == 0x21) || (uVar5 == 0x3f)) || (uVar5 == 0x2c)) ||
-        ((uVar5 == 0x2e || (uVar5 == 0x3b)))) || (uVar9 = 0, uVar5 == 0x3a)) {
-      uVar9 = 1;
+  if ((uVar8 & 0xffffffff) != 0) {
+    if (((((uVar3 == 0x21) || (uVar3 == 0x3f)) || (uVar3 == 0x2c)) ||
+        ((uVar3 == 0x2e || (uVar3 == 0x3b)))) || (uVar6 = 0, uVar3 == 0x3a)) {
+      uVar6 = 1;
     }
-    *puVar7 = uVar9;
+    *puVar9 = uVar6;
   }
 LAB_8258c22c:
-  __restgprlr_28(uVar5);
-  return;
+  uVar6 = __restgprlr_28(uVar3);
+  return uVar6;
 }
 
 
 // 8258C238  SEH_ReadCharFromStringModCase  (stringed/stringed_hooks.cpp:914)
 
-uint SEH_ReadCharFromStringModCase(int *param_1,undefined8 param_2,int param_3)
+uint SEH_ReadCharFromStringModCase(char **param_1,int *param_2,int param_3)
 
 {
   int iVar1;
   uint uVar2;
   int local_20 [2];
   
-  uVar2 = SEH_DecodeLetter(*(undefined1 *)*param_1,((undefined1 *)*param_1)[1],local_20,param_2);
-  iVar1 = DAT_83f5de1c;
+  uVar2 = SEH_DecodeLetter((uint)(byte)**param_1,(uint)(byte)(*param_1)[1],local_20,param_2);
+  iVar1 = g_currentAsian;
   *param_1 = *param_1 + local_20[0];
   if (iVar1 != 0) {
     return uVar2;
@@ -796,7 +798,7 @@ uint SEH_ReadCharFromStringModCase(int *param_1,undefined8 param_2,int param_3)
       uVar2 = tolower(uVar2);
       return uVar2;
     }
-    iVar1 = *(int *)(DAT_83f5de10 + 0xc);
+    iVar1 = (loc_language->current).integer;
     if (iVar1 == 7) {
       if ((uVar2 == 0x8a) ||
          ((((0x8b < uVar2 && (uVar2 < 0x90)) || (uVar2 == 0xaa)) ||
@@ -893,7 +895,7 @@ uint SEH_ReadCharFromStringModCase(int *param_1,undefined8 param_2,int param_3)
       if (uVar2 == 0xb2) {
         return 0xb3;
       }
-      if (uVar2 == 0xbe) goto switchD_8258c3c0_caseD_a;
+      if (uVar2 == 0xbe) goto switchD_8258c3c0_caseD_be;
     }
     if (uVar2 < 0xc0) {
       return uVar2;
@@ -908,7 +910,7 @@ LAB_8258c680:
     uVar2 = toupper(uVar2);
     return uVar2;
   }
-  iVar1 = *(int *)(DAT_83f5de10 + 0xc);
+  iVar1 = (loc_language->current).integer;
   if (iVar1 == 7) {
     if (((uVar2 == 0x9a) || (((0x9b < uVar2 && (uVar2 < 0xa0)) || (uVar2 == 0xba)))) ||
        ((uVar2 == 0xbf || (uVar2 == 0xb3)))) {
@@ -983,31 +985,31 @@ LAB_8258c684:
         return 0xa1;
       }
     }
-switchD_8258c3c0_caseD_1:
+switchD_8258c3c0_caseD_b5:
     if ((0xdf < uVar2) && (uVar2 < 0x100)) {
       uVar2 = uVar2 - 0x20;
     }
   }
   else {
-    switch(uVar2 - 0xb4) {
-    case 0:
+    switch(uVar2) {
+    case 0xb4:
       goto LAB_8258c684;
     default:
-      goto switchD_8258c3c0_caseD_1;
-    case 4:
+      goto switchD_8258c3c0_caseD_b5;
+    case 0xb8:
       uVar2 = 0xa8;
       break;
-    case 6:
+    case 0xba:
       uVar2 = 0xaa;
       break;
-    case 8:
+    case 0xbc:
       uVar2 = 0xa3;
       break;
-    case 10:
-switchD_8258c3c0_caseD_a:
+    case 0xbe:
+switchD_8258c3c0_caseD_be:
       uVar2 = 0xbd;
       break;
-    case 0xb:
+    case 0xbf:
       uVar2 = 0xaf;
     }
   }
@@ -1017,40 +1019,46 @@ switchD_8258c3c0_caseD_a:
 
 // 8258C6A0  SEH_ReadCharFromString  (stringed/stringed_hooks.cpp:1126)
 
-void SEH_ReadCharFromString(int *param_1,undefined8 param_2)
+uint SEH_ReadCharFromString(char **param_1,int *param_2)
 
 {
+  uint uVar1;
   int local_20 [4];
   
-  SEH_DecodeLetter(*(undefined1 *)*param_1,((undefined1 *)*param_1)[1],local_20,param_2);
+  uVar1 = SEH_DecodeLetter((uint)(byte)**param_1,(uint)(byte)(*param_1)[1],local_20,param_2);
   *param_1 = *param_1 + local_20[0];
-  return;
+  return uVar1;
 }
 
 
 // 8258BED0  Language_IsAsian  (stringed/stringed_hooks.cpp:1135)
 
-undefined4 Language_IsAsian(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int Language_IsAsian(void)
 
 {
-  return DAT_83f5de1c;
+  return g_currentAsian;
 }
 
 
 // 8258BEE0  Language_UsesSpaces  (stringed/stringed_hooks.cpp:1141)
 
-undefined8 Language_UsesSpaces(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int Language_UsesSpaces(void)
 
 {
-  undefined8 uVar1;
+  int iVar1;
   
-  if (DAT_83f5de10 == 0) {
-    MyAssertHandler(0xffffffff82164700,0x85,0,0xffffffff82000f98,0xffffffff82164748);
+  if (loc_language == (dvar_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\stringed\\stringed_hooks.cpp",
+                    0x85,0,"%s");
   }
-  if ((*(int *)(DAT_83f5de10 + 0xc) < 9) || (uVar1 = 0, 0xb < *(int *)(DAT_83f5de10 + 0xc))) {
-    uVar1 = 1;
+  if (((loc_language->current).integer < 9) || (iVar1 = 0, 0xb < (loc_language->current).integer)) {
+    iVar1 = 1;
   }
-  return uVar1;
+  return iVar1;
 }
 
 
@@ -1059,21 +1067,21 @@ undefined8 Language_UsesSpaces(void)
 int SEH_PrintStrlen(char *param_1)
 
 {
-  char cVar1;
-  int iVar2;
+  byte bVar1;
+  uint uVar2;
   int iVar3;
   int local_20 [2];
   
   iVar3 = 0;
   if (param_1 != (char *)0x0) {
     iVar3 = 0;
-    cVar1 = *param_1;
-    while (cVar1 != '\0') {
-      iVar2 = SEH_DecodeLetter(*param_1,param_1[1],local_20,0);
+    bVar1 = *param_1;
+    while (bVar1 != 0) {
+      uVar2 = SEH_DecodeLetter((uint)(byte)*param_1,(uint)(byte)param_1[1],local_20,(int *)0x0);
       param_1 = param_1 + local_20[0];
-      if (iVar2 == 0x5e) {
-        if ((param_1 == (char *)0x0) ||
-           (((cVar1 = *param_1, cVar1 == '^' || (cVar1 < '0')) || (';' < cVar1)))) {
+      if (uVar2 == 0x5e) {
+        if (((byte *)param_1 == (byte *)0x0) ||
+           (((bVar1 = *param_1, bVar1 == 0x5e || ((char)bVar1 < '0')) || (';' < (char)bVar1)))) {
 LAB_8258c784:
           iVar3 = iVar3 + 1;
         }
@@ -1081,8 +1089,8 @@ LAB_8258c784:
           param_1 = param_1 + 1;
         }
       }
-      else if ((iVar2 != 10) && (iVar2 != 0xd)) goto LAB_8258c784;
-      cVar1 = *param_1;
+      else if ((uVar2 != 10) && (uVar2 != 0xd)) goto LAB_8258c784;
+      bVar1 = *param_1;
     }
   }
   return iVar3;
@@ -1091,41 +1099,41 @@ LAB_8258c784:
 
 // 8258BF58  SEH_GetLanguageName  (stringed/stringed_hooks.cpp:1200)
 
-undefined * SEH_GetLanguageName(int param_1)
+char * SEH_GetLanguageName(int param_1)
 
 {
   if ((-1 < param_1) && (param_1 < 0xf)) {
-    return (&PTR_s_english_82991050)[param_1 * 2];
+    return g_languages[param_1].pszName;
   }
-  return PTR_s_english_82991050;
+  return g_languages[0].pszName;
 }
 
 
 // 8258BF88  SEH_GetLanguageIndexForName  (stringed/stringed_hooks.cpp:1217)
 
-void SEH_GetLanguageIndexForName(undefined8 param_1,int *param_2)
+int SEH_GetLanguageIndexForName(char *param_1,int *param_2)
 
 {
-  undefined8 uVar1;
+  char *pcVar1;
   int iVar2;
   int iVar3;
-  undefined **ppuVar4;
+  languageInfo_t *plVar4;
   
-  uVar1 = __savegprlr_27();
-  ppuVar4 = &PTR_s_english_82991050;
+  pcVar1 = (char *)__savegprlr_27(param_1);
+  plVar4 = g_languages;
   iVar3 = 0;
   do {
-    iVar2 = I_stricmp(uVar1,*ppuVar4);
+    iVar2 = I_stricmp(pcVar1,plVar4->pszName);
     if (iVar2 == 0) {
       *param_2 = iVar3;
-      __restgprlr_27(1);
-      return;
+      iVar3 = __restgprlr_27(1);
+      return iVar3;
     }
-    ppuVar4 = ppuVar4 + 2;
+    plVar4 = plVar4 + 1;
     iVar3 = iVar3 + 1;
-  } while ((int)ppuVar4 < -0x7d66ef38);
+  } while ((int)plVar4 < -0x7d66ef38);
   *param_2 = 0;
-  __restgprlr_27(0);
-  return;
+  iVar3 = __restgprlr_27(0);
+  return iVar3;
 }
 

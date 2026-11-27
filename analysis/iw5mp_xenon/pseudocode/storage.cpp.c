@@ -2,46 +2,45 @@
 
 // 828BAB70  XStorageBuildServerPath  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/src/storage.cpp:81)
 
-undefined8
-XStorageBuildServerPath
-          (undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
-          undefined4 param_5,undefined4 param_6,undefined4 param_7)
+ulong XStorageBuildServerPath
+                (ulong param_1,_XSTORAGE_FACILITY param_2,void *param_3,ulong param_4,
+                wchar_t *param_5,wchar_t *param_6,ulong *param_7)
 
 {
-  int iVar2;
-  undefined8 uVar1;
-  undefined4 local_30 [2];
+  int iVar1;
+  ulong uVar2;
+  ulong local_30 [2];
   undefined8 local_28;
-  undefined4 local_20;
-  undefined4 local_1c;
-  undefined4 local_18;
-  undefined4 local_14;
-  undefined4 local_10;
-  undefined4 local_c;
+  int local_20;
+  void *local_1c;
+  ulong local_18;
+  wchar_t *local_14;
+  wchar_t *local_10;
+  ulong *local_c;
   
+  local_20 = (int)(char)param_2;
   local_28 = 0;
   local_30[0] = param_1;
-  local_20 = param_2;
   local_1c = param_3;
   local_18 = param_4;
   local_14 = param_5;
   local_10 = param_6;
   local_c = param_7;
-  iVar2 = XMsgInProcessCall(0xfc,0x58035,local_30,0);
-  if (iVar2 < 0) {
-    if (iVar2 == -0x7ff8ffa9) {
-      uVar1 = 0x57;
+  iVar1 = XMsgInProcessCall(0xfc,0x58035,local_30,0);
+  if (iVar1 < 0) {
+    if (iVar1 == -0x7ff8ffa9) {
+      uVar2 = 0x57;
     }
     else {
-      uVar1 = 0x7a;
-      if (iVar2 != -0x7ff8ff86) {
-        uVar1 = 0x65b;
+      uVar2 = 0x7a;
+      if (iVar1 != -0x7ff8ff86) {
+        uVar2 = 0x65b;
       }
     }
   }
   else {
-    uVar1 = 0;
+    uVar2 = 0;
   }
-  return uVar1;
+  return uVar2;
 }
 

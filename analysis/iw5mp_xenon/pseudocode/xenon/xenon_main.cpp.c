@@ -2,17 +2,19 @@
 
 // 8264E3A8  TRACK_xenon_main  (xenon/xenon_main.cpp:100)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void TRACK_xenon_main(void)
 
 {
-  track_static_alloc_internal(0xffffffff8425bd00,0x1000,0xffffffff8218ec14,10);
+  track_static_alloc_internal(g_mallocBuf,0x1000,"g_mallocBuf",10);
   return;
 }
 
 
 // 8264E3C8  Sys_OpenURL  (xenon/xenon_main.cpp:114)
 
-void Sys_OpenURL(void)
+void Sys_OpenURL(char *param_1,int param_2)
 
 {
   return;
@@ -21,40 +23,37 @@ void Sys_OpenURL(void)
 
 // 8264ED90  Sys_OutOfMemErrorInternal  (xenon/xenon_main.cpp:128)
 
-/* WARNING: Control flow encountered bad instruction data */
-
-void Sys_OutOfMemErrorInternal(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+void Sys_OutOfMemErrorInternal(int param_1,char *param_2,int param_3)
 
 {
-  Com_Printf(0x10,0xffffffff8218edc4,param_1,param_2,param_3);
+  Com_Printf(0x10,"Out of memory %d: filename \'%s\', line %d\n");
   track_PrintAllInfo();
-  Sys_Error(0xffffffff8218edb0,param_1);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+                    /* WARNING: Subroutine does not return */
+  Sys_Error("Out of memory %d");
 }
 
 
 // 8264EDD8  Sys_OutOfMemErrorInternal  (xenon/xenon_main.cpp:145)
 
-/* WARNING: Control flow encountered bad instruction data */
-
-void Sys_OutOfMemErrorInternal(undefined8 param_1)
+void Sys_OutOfMemErrorInternal(int param_1)
 
 {
-  Com_Printf(0,0xffffffff8218edf0,param_1);
+  Com_Printf(0,"Out of memory %d\n");
   track_PrintAllInfo();
-  Sys_Error(0xffffffff8218edb0,param_1);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+                    /* WARNING: Subroutine does not return */
+  Sys_Error("Out of memory %d");
 }
 
 
 // 8264EE18  Sys_Quit  (xenon/xenon_main.cpp:173)
 
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Sys_Quit(void)
 
 {
-  char cVar1;
+  bool bVar1;
   
   __savegprlr_29();
   IN_Shutdown();
@@ -65,118 +64,106 @@ void Sys_Quit(void)
   Con_Shutdown();
   Com_ShutdownEvents();
   Sys_ShutdownEvents();
-  if (DAT_83f1e19c == 0) {
+  if (g_serverThreadOwnership == 0) {
     SL_Shutdown();
   }
-  cVar1 = Com_ErrorEntered();
-  if (cVar1 == '\0') {
+  bVar1 = Com_ErrorEntered();
+  if (!bVar1) {
     track_shutdown(0);
   }
   Con_ShutdownChannels();
-  cVar1 = Sys_IsMainThread();
-  if (cVar1 == '\0') {
-    MyAssertHandler(0xffffffff8218ec80,0xca,0,0xffffffff82000f98,0xffffffff82010b48);
+  bVar1 = Sys_IsMainThread();
+  if (!bVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_main.cpp",0xca,0,
+                    "%s");
   }
-  if (DAT_8425bcb0 != 0) {
-    MyAssertHandler(0xffffffff8218ec80,0xcc,0,0xffffffff82000f98,0xffffffff8218ee04);
+  if (g_allowFree != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_main.cpp",0xcc,0,
+                    "%s");
   }
-  DAT_8425bcb0 = 1;
-                    /* WARNING: Subroutine does not return */
-  longjmp((int *)&DAT_84259380,-1);
+  g_allowFree = 1;
+  longjmp();
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
 }
 
 
 // 8264E3D0  Sys_Error  (xenon/xenon_main.cpp:229)
 
-/* WARNING: Restarted to delay deadcode elimination for space: stack */
-
-void Sys_Error(char *param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-              undefined8 param_5,undefined8 param_6,undefined8 param_7,undefined8 param_8)
+void Sys_Error(char *param_1)
 
 {
   undefined8 in_r0;
-  int iVar2;
-  undefined8 uVar1;
-  code *pcVar3;
+  int iVar1;
+  BladeErrorResponse BVar2;
   char *pcStack00000014;
-  undefined8 uStack00000018;
-  undefined8 uStack00000020;
-  undefined8 uStack00000028;
-  undefined8 uStack00000030;
-  undefined8 uStack00000038;
-  undefined8 uStack00000040;
-  undefined8 uStack00000048;
-  undefined2 uStack_490;
-  undefined2 uStack_48e;
-  undefined4 uStack_48c;
-  undefined8 uStack_480;
-  code *pcStack_478;
-  undefined1 *local_470;
   char acStack_410 [1023];
   undefined1 local_11;
   
-  uStack00000018 = param_2;
-  uStack00000020 = param_3;
-  uStack00000028 = param_4;
-  uStack00000030 = param_5;
-  uStack00000038 = param_6;
-  uStack00000040 = param_7;
-  uStack00000048 = param_8;
   pcStack00000014 = param_1;
-  local_470 = (undefined1 *)register0x0000000c;
-  Sys_EnterCriticalSection(2);
-  _vsnprintf(acStack_410,0x400,pcStack00000014,(va_list)&stack0x00000018);
+  Sys_EnterCriticalSection(CRITSECT_COM_ERROR);
+  _vsnprintf(acStack_410,0x400,pcStack00000014,&stack0x00000018);
   local_11 = 0;
-  Com_PrintError(0x10,0xffffffff8218ec64,acStack_410);
-  iVar2 = IsDebuggerConnected();
-  if (iVar2 != 0) {
+  Com_PrintError(0x10,"-----------\nSys_Error:\n%s\n");
+  iVar1 = IsDebuggerConnected();
+  if (iVar1 != 0) {
     trapWord(0x1f,in_r0,0x16);
   }
-  DAT_8425a054 = 0;
-  if (DAT_84259ccc == '\0') {
+  g_launchData.inviteState = INVITE_NONE;
+  if (g_launchData.startupText[0] == '\0') {
     Com_PrintStackTrace();
-    if (DAT_84013130 == 0) {
-      Com_Printf(0x10,0xffffffff8218ec44);
-      Com_Printf(0x10,0xffffffff82004d30,acStack_410);
-      Com_Printf(0x10,0xffffffff8218ec24);
+    if (isHandlingAssert == 0) {
+      Com_Printf(0x10,"===Restarting for Sys_Error===\n");
+      Com_Printf(0x10,"%s\n");
+      Com_Printf(0x10,"==============================\n");
     }
     Sys_SuspendOtherThreads();
-    Com_sprintf(0xffffffff84259ccc,900,0xffffffff8218ec20,acStack_410);
+    Com_sprintf(g_launchData.startupText,900,"e%s");
     XSetLaunchData(0xffffffff84259cc8,1000);
   }
   else {
     Sys_SuspendOtherThreads();
-    DAT_84259ccc = '\0';
+    g_launchData.startupText[0] = '\0';
     XSetLaunchData(0xffffffff84259cc8,1000);
     DmReboot(0);
   }
-  R_BladeErrorDisplay(acStack_410);
-  R_BladeErrorHandleResponse();
-  pcVar3 = Sys_Print;
-  uVar1 = XLaunchNewImage(0xffffffff820313f8,0);
-  uStack_480 = 0xffffffff84259cc8;
-  uStack_490 = 0;
-  uStack_48e = 0;
-  uStack_48c = 0;
-  pcStack_478 = pcVar3;
-  RtlInitAnsiString(&uStack_490,uVar1);
-  RtlOutputDebugString(&uStack_490);
+  BVar2 = R_BladeErrorDisplay(acStack_410);
+  R_BladeErrorHandleResponse(BVar2);
+                    /* WARNING: Subroutine does not return */
+  XLaunchNewImage("2-iw5mp.exe",0);
+}
+
+
+// 8264E520  Sys_Print  (xenon/xenon_main.cpp:296)
+
+void Sys_Print(char *param_1)
+
+{
+  _STRING a_Stack_20 [2];
+  
+  a_Stack_20[0].Length = 0;
+  a_Stack_20[0].MaximumLength = 0;
+  a_Stack_20[0].Buffer = (uchar *)0x0;
+  RtlInitAnsiString(a_Stack_20,param_1);
+  RtlOutputDebugString(a_Stack_20);
   return;
 }
 
 
 // 8264E528  Sys_GetClipboardData  (xenon/xenon_main.cpp:312)
 
-undefined8 Sys_GetClipboardData(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+char * Sys_GetClipboardData(void)
 
 {
-  return 0;
+  return (char *)0x0;
 }
 
 
 // 8264E530  Sys_FreeClipboardData  (xenon/xenon_main.cpp:324)
 
-void Sys_FreeClipboardData(void)
+void Sys_FreeClipboardData(char *param_1)
 
 {
   return;
@@ -185,7 +172,7 @@ void Sys_FreeClipboardData(void)
 
 // 8264E538  Sys_SetClipboardData  (xenon/xenon_main.cpp:335)
 
-undefined8 Sys_SetClipboardData(void)
+int Sys_SetClipboardData(char *param_1)
 
 {
   return 1;
@@ -194,39 +181,42 @@ undefined8 Sys_SetClipboardData(void)
 
 // 8264E540  Sys_QueEvent  (xenon/xenon_main.cpp:364)
 
-void Sys_QueEvent(undefined8 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
-                 undefined4 param_5,undefined4 param_6,undefined4 param_7)
+void Sys_QueEvent(int param_1,sysEventType_t param_2,int param_3,int param_4,int param_5,int param_6
+                 ,void *param_7)
 
 {
-  int iVar1;
+  uint uVar1;
   int iVar2;
   
-  iVar1 = __savegprlr_22();
-  iVar2 = (DAT_842598c4 & 0xff) * 0x1c;
-  if (0xff < (int)(DAT_842598c4 - DAT_8425cd00)) {
-    Com_Printf(0x10,0xffffffff8218eccc);
-    if (*(int *)(&DAT_8425a0c8 + iVar2) != 0) {
-      MyAssertHandler(0xffffffff8218ec80,0x173,0,0xffffffff82000f98,0xffffffff8218ecc0);
+  iVar2 = __savegprlr_22(param_1);
+  uVar1 = eventHead & 0xff;
+  if (0xff < eventHead - eventTail) {
+    Com_Printf(0x10,"Sys_QueEvent: overflow\n");
+    if (eventQue[uVar1].evPtr != (void *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_main.cpp",0x173,
+                      0,"%s");
     }
-    DAT_8425cd00 = DAT_8425cd00 + 1;
+    eventTail = eventTail + 1;
   }
-  DAT_842598c4 = DAT_842598c4 + 1;
-  if (iVar1 == 0) {
-    iVar1 = Sys_Milliseconds();
+  eventHead = eventHead + 1;
+  if (iVar2 == 0) {
+    iVar2 = Sys_Milliseconds();
   }
-  *(int *)(&DAT_8425a0b4 + iVar2) = iVar1;
-  *(undefined4 *)(&DAT_8425a0b8 + iVar2) = param_2;
-  *(undefined4 *)(&DAT_8425a0bc + iVar2) = param_3;
-  *(undefined4 *)(&DAT_8425a0c0 + iVar2) = param_4;
-  *(undefined4 *)(&DAT_8425a0c4 + iVar2) = param_6;
-  *(undefined4 *)(&DAT_8425a0c8 + iVar2) = param_7;
-  *(undefined4 *)(&DAT_8425a0b0 + iVar2) = param_5;
+  eventQue[uVar1].evTime = iVar2;
+  eventQue[uVar1].evType = param_2;
+  eventQue[uVar1].evValue = param_3;
+  eventQue[uVar1].evValue2 = param_4;
+  eventQue[uVar1].evPtrLength = param_6;
+  eventQue[uVar1].evPtr = param_7;
+  eventQue[uVar1].evPortIndex = param_5;
   __restgprlr_22();
   return;
 }
 
 
 // 8264E628  Sys_ShutdownEvents  (xenon/xenon_main.cpp:394)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Sys_ShutdownEvents(void)
 
@@ -235,16 +225,16 @@ void Sys_ShutdownEvents(void)
   int iVar2;
   
   __savegprlr_29();
-  iVar2 = DAT_842598c4;
-  if ((int)DAT_8425cd00 < DAT_842598c4) {
+  iVar2 = eventHead;
+  if (eventTail < eventHead) {
     do {
-      uVar1 = DAT_8425cd00 & 0xff;
-      DAT_8425cd00 = DAT_8425cd00 + 1;
-      if (*(int *)(&DAT_8425a0c8 + uVar1 * 0x1c) != 0) {
-        Com_FreeEvent();
-        iVar2 = DAT_842598c4;
+      uVar1 = eventTail & 0xff;
+      eventTail = eventTail + 1;
+      if (eventQue[uVar1].evPtr != (void *)0x0) {
+        Com_FreeEvent(eventQue[uVar1].evPtr);
+        iVar2 = eventHead;
       }
-    } while ((int)DAT_8425cd00 < iVar2);
+    } while (eventTail < iVar2);
   }
   __restgprlr_29();
   return;
@@ -253,51 +243,56 @@ void Sys_ShutdownEvents(void)
 
 // 8264E690  Sys_GetEvent  (xenon/xenon_main.cpp:415)
 
-int Sys_GetEvent(int param_1)
+sysEvent_t * Sys_GetEvent(sysEvent_t *__return_storage_ptr__)
 
 {
-  undefined4 *puVar1;
-  undefined4 *puVar2;
-  longlong lVar3;
+  int iVar1;
+  void **ppvVar2;
+  ulong *puVar3;
+  undefined4 *puVar4;
+  longlong lVar5;
   undefined4 uStack_34;
   undefined8 local_30;
   undefined8 local_28;
   undefined8 local_20;
   undefined4 local_18;
   
-  if ((int)DAT_8425cd00 < DAT_842598c4) {
-    lVar3 = 7;
-    puVar1 = (undefined4 *)(param_1 + -4);
-    puVar2 = &DAT_8425a0ac + (DAT_8425cd00 & 0xff) * 7;
-    DAT_8425cd00 = DAT_8425cd00 + 1;
+  if (eventTail < eventHead) {
+    lVar5 = 7;
+    ppvVar2 = &__return_storage_ptr__[-1].evPtr;
+    puVar3 = g_launchData.selectedSaveDeviceIDs + (eventTail & 0xffU) * 7 + 3;
+    eventTail = eventTail + 1;
     do {
-      puVar2 = puVar2 + 1;
-      puVar1 = puVar1 + 1;
-      *puVar1 = *puVar2;
-      lVar3 = lVar3 + -1;
-    } while (lVar3 != 0);
+      puVar3 = puVar3 + 1;
+      ppvVar2 = ppvVar2 + 1;
+      *ppvVar2 = (void *)*puVar3;
+      lVar5 = lVar5 + -1;
+    } while (lVar5 != 0);
   }
   else {
     local_30 = 0;
     local_28 = 0;
     local_20 = 0;
     local_18 = 0;
-    Sys_Milliseconds();
-    puVar2 = &uStack_34;
-    puVar1 = (undefined4 *)(param_1 + -4);
-    lVar3 = 7;
+    iVar1 = Sys_Milliseconds();
+    local_30 = CONCAT44(local_30._0_4_,iVar1);
+    puVar4 = &uStack_34;
+    ppvVar2 = &__return_storage_ptr__[-1].evPtr;
+    lVar5 = 7;
     do {
-      puVar2 = puVar2 + 1;
-      puVar1 = puVar1 + 1;
-      *puVar1 = *puVar2;
-      lVar3 = lVar3 + -1;
-    } while (lVar3 != 0);
+      puVar4 = puVar4 + 1;
+      ppvVar2 = ppvVar2 + 1;
+      *ppvVar2 = (void *)*puVar4;
+      lVar5 = lVar5 + -1;
+    } while (lVar5 != 0);
   }
-  return param_1;
+  return __return_storage_ptr__;
 }
 
 
 // 8264E750  Sys_In_Restart_f  (xenon/xenon_main.cpp:444)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Sys_In_Restart_f(void)
 
@@ -308,13 +303,28 @@ void Sys_In_Restart_f(void)
 }
 
 
+// 8264E778  Sys_Net_Restart_f  (xenon/xenon_main.cpp:460)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* void __cdecl Sys_Net_Restart_f(void) */
+
+void Sys_Net_Restart_f(void)
+
+{
+  NET_Config(networkingEnabled);
+  return;
+}
+
+
 // 8264E780  Sys_Init  (xenon/xenon_main.cpp:498)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Sys_Init(void)
 
 {
-  Cmd_AddCommandInternal(0xffffffff8218ecf0,0xffffffff8264e750,0xffffffff8425cd20);
-  Cmd_AddCommandInternal(0xffffffff8218ece4,0xffffffff8264e778,0xffffffff8425cd0c);
+  Cmd_AddCommandInternal("in_restart",Sys_In_Restart_f,&Sys_In_Restart_f_VAR);
+  Cmd_AddCommandInternal("net_restart",Sys_Net_Restart_f,&Sys_Net_Restart_f_VAR);
   IN_Init();
   return;
 }
@@ -322,16 +332,18 @@ void Sys_Init(void)
 
 // 8264E7D8  InitMemory  (xenon/xenon_main.cpp:524)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void InitMemory(void)
 
 {
   if (DAT_8425bcb4 == '\0') {
     DAT_8425bcb4 = '\x01';
     DAT_8425cd08 = 0x4be000;
-    DAT_8425cd04 = 0x2000000;
+    g_reservedSize = 0x2000000;
     PMem_Init();
     track_init();
-    track_static_alloc_internal(0,DAT_8425cd08,0xffffffff8218ecfc,2);
+    track_static_alloc_internal((void *)0x0,DAT_8425cd08,"CoDSP.exe",2);
   }
   return;
 }
@@ -339,13 +351,15 @@ void InitMemory(void)
 
 // 8264E850  GetXenonCommandLine  (xenon/xenon_main.cpp:548)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 char * GetXenonCommandLine(void)
 
 {
   char *pcVar1;
   
   pcVar1 = GetCommandLineA();
-  if (pcVar1 != (LPSTR)0x0) {
+  if (pcVar1 != (char *)0x0) {
     while (*pcVar1 != '\0') {
       if (*pcVar1 == ' ') {
         return pcVar1 + 1;
@@ -362,16 +376,16 @@ char * GetXenonCommandLine(void)
 
 // 8264E8B0  InitLaunchData  (xenon/xenon_main.cpp:568)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void InitLaunchData(void)
 
 {
-  void *pvVar1;
-  
   XGetLaunchData(0xffffffff84259cc8,1000);
-  if (DAT_84259cc8 != 9) {
-    pvVar1 = memset(&DAT_84259cc8,0,1000);
-    DAT_84259cc8 = 9;
-    Memcard_InitializeDevices(pvVar1);
+  if (g_launchData.version != 9) {
+    memset();
+    g_launchData.version = 9;
+    Memcard_InitializeDevices();
     XSetLaunchData(0xffffffff84259cc8,1000);
   }
   return;
@@ -380,35 +394,39 @@ void InitLaunchData(void)
 
 // 8264E920  main  (xenon/xenon_main.cpp:591)
 
-int main(int _Argc,char **_Argv,char **_Env)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int main(void)
 
 {
-  undefined8 uVar1;
-  char cVar3;
-  int iVar2;
+  char *pcVar1;
+  bool bVar3;
+  SETJMP_VECTOR4 *pSVar2;
   
-  InitLaunchData(_Argc,_Argv,_Env);
+  InitLaunchData();
   InitMemory();
-  uVar1 = GetXenonCommandLine();
+  pcVar1 = GetXenonCommandLine();
   Sys_InitializeCriticalSections();
   Sys_InitMainThread();
   Com_InitParse();
   Dvar_Init();
   InitTiming();
-  I_strncpyz(0xffffffff842598c8,uVar1,0x400);
+  pSVar2 = g_sys_quit;
+  I_strncpyz(&DAT_842598c8,pcVar1,0x400);
   Sys_Milliseconds();
   Profile_Init();
   Profile_InitContext(0);
-  cVar3 = Sys_IsMainThread();
-  if (cVar3 == '\0') {
-    MyAssertHandler(0xffffffff8218ec80,0x26c,0,0xffffffff82000f98,0xffffffff82010b48);
+  bVar3 = Sys_IsMainThread();
+  if (!bVar3) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_main.cpp",0x26c,0,
+                    "%s");
   }
-  iVar2 = setjmp(0xffffffff84259380);
-  if (iVar2 != 0) {
+  setjmp();
+  if (pSVar2 != (SETJMP_VECTOR4 *)0x0) {
     return 0;
   }
   Session_InitDvars();
-  Com_Init(0xffffffff842598c8);
+  Com_Init(&DAT_842598c8);
   do {
     Com_Frame();
   } while( true );
@@ -417,23 +435,27 @@ int main(int _Argc,char **_Argv,char **_Env)
 
 // 8264E9F8  ConvertToMB  (xenon/xenon_main.cpp:644)
 
-double ConvertToMB(int param_1)
+float ConvertToMB(int param_1)
 
 {
-  return (double)((float)(longlong)param_1 * 9.536743e-07);
+  return (float)(longlong)param_1 * 9.536743e-07;
 }
 
 
 // 8264EA20  XenonTotalMemory  (xenon/xenon_main.cpp:653)
 
-longlong XenonTotalMemory(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int XenonTotalMemory(void)
 
 {
-  return 0x20000000 - (ulonglong)DAT_8425cd04;
+  return 0x20000000 - g_reservedSize;
 }
 
 
 // 8264EA38  UpdateMemStats  (xenon/xenon_main.cpp:663)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void UpdateMemStats(void)
 
@@ -441,8 +463,8 @@ void UpdateMemStats(void)
   _MEMORYSTATUS _Stack_30;
   
   GlobalMemoryStatus(&_Stack_30);
-  if ((int)_Stack_30.dwAvailPhys < (int)DAT_829959b0) {
-    DAT_829959b0 = _Stack_30.dwAvailPhys;
+  if ((int)_Stack_30.dwAvailPhys < (int)g_min_available_memory) {
+    g_min_available_memory = _Stack_30.dwAvailPhys;
   }
   return;
 }
@@ -450,79 +472,70 @@ void UpdateMemStats(void)
 
 // 8264EA78  DumpMemStats  (xenon/xenon_main.cpp:679)
 
-void DumpMemStats(void)
+void DumpMemStats(int param_1)
 
 {
-  int iVar1;
-  double dVar2;
   _MEMORYSTATUS _Stack_60;
   _MEMORYSTATUS _Stack_40;
   
   GlobalMemoryStatus(&_Stack_40);
-  if ((int)_Stack_40.dwAvailPhys < (int)DAT_829959b0) {
-    DAT_829959b0 = _Stack_40.dwAvailPhys;
+  if ((int)_Stack_40.dwAvailPhys < (int)g_min_available_memory) {
+    g_min_available_memory = _Stack_40.dwAvailPhys;
   }
   GlobalMemoryStatus(&_Stack_60);
   PMem_DumpMemStats();
-  iVar1 = PMem_GetFreeAmount();
-  dVar2 = 9.5367431640625e-07;
-  Com_Printf(0x10,0xffffffff8218ed5c,
-             (double)(float)((double)(longlong)
-                                     (int)(((0x20000000 - DAT_8425cd04) - _Stack_60.dwAvailPhys) -
-                                          iVar1) * 9.5367431640625e-07));
-  iVar1 = DB_StreamUsedMemory();
-  Com_Printf(0x10,0xffffffff8217d318,(double)(float)((double)(longlong)iVar1 * dVar2));
-  iVar1 = PMem_GetFreeAmount();
-  Com_Printf(0x10,0xffffffff8218ed40,(double)(float)((double)(longlong)iVar1 * dVar2));
-  Com_Printf(0x10,0xffffffff8218ed24,
-             (double)(float)((double)(longlong)(int)_Stack_60.dwAvailPhys * dVar2));
-  Com_Printf(0x10,0xffffffff8218ed08,(double)(float)((double)(longlong)(int)DAT_829959b0 * dVar2));
+  PMem_GetFreeAmount();
+  Com_Printf(0x10,"used               %5.2f\n");
+  DB_StreamUsedMemory();
+  Com_Printf(0x10,"streaming          %5.1f\n");
+  PMem_GetFreeAmount();
+  Com_Printf(0x10,"free physical      %5.2f\n");
+  Com_Printf(0x10,"free normal        %5.2f\n");
+  Com_Printf(0x10,"min free normal    %5.2f\n");
   return;
 }
 
 
 // 8264EBF8  malloc  (xenon/xenon_main.cpp:709)
 
-void * malloc(size_t _Size)
+void * malloc(uint param_1)
 
 {
   ulonglong uVar1;
-  ulonglong uVar2;
-  uint uVar3;
-  undefined *puVar4;
+  uint uVar2;
+  ulonglong uVar3;
   char in_RESERVE;
   byte in_cr0;
   
-  puVar4 = &DAT_8425bd00;
-  uVar1 = (longlong)(int)_Size + 7U & 0xfffffff8;
+  uVar1 = (longlong)(int)param_1 + 7U & 0xfffffff8;
   do {
-    uVar3 = DAT_842598c0;
-    uVar2 = (ulonglong)DAT_842598c0;
+    uVar2 = DAT_842598c0;
+    uVar3 = (ulonglong)DAT_842598c0;
     if (in_RESERVE != '\0') {
-      DAT_842598c0 = storeWordConditionalIndexed(uVar1 + uVar2,0,0xffffffff842598c0);
+      DAT_842598c0 = storeWordConditionalIndexed(uVar1 + uVar3,0,0xffffffff842598c0);
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
-  if (0x1000 < (uVar2 + uVar1 & 0xffffffff)) {
-    puVar4 = &DAT_8425bd00;
-    Sys_Error(0xffffffff8218ed78);
-    uVar3 = (uint)uVar2;
+  if (0x1000 < (uVar3 + uVar1 & 0xffffffff)) {
+                    /* WARNING: Subroutine does not return */
+    Sys_Error("malloc: out of memory");
   }
-  return puVar4 + uVar3;
+  return g_mallocBuf + uVar2;
 }
 
 
 // 8264EC68  free  (xenon/xenon_main.cpp:721)
 
-void free(void *_Memory)
+void free(void *param_1)
 
 {
-  char cVar1;
+  bool bVar1;
   
-  if ((DAT_8425bcb0 == 0) || (cVar1 = Sys_IsMainThread(_Memory), cVar1 == '\0')) {
-    Sys_Error(0xffffffff8218ed90);
+  if ((g_allowFree != 0) && (bVar1 = Sys_IsMainThread(), bVar1)) {
+    return;
   }
-  return;
+                    /* WARNING: Subroutine does not return */
+  Sys_Error("Code error: free called");
 }
 
 
@@ -530,36 +543,37 @@ void free(void *_Memory)
 
 /* WARNING: Enum "SectionFlags": Some values do not have unique names */
 
-void Sys_GetTextSection(undefined8 param_1,uint *param_2)
+bool Sys_GetTextSection(uint *param_1,uint *param_2)
 
 {
   undefined4 *puVar1;
   int iVar2;
-  int iVar3;
-  IMAGE_SECTION_HEADER *pIVar4;
+  undefined1 uVar3;
+  int iVar4;
+  IMAGE_SECTION_HEADER *pIVar5;
   
-  puVar1 = (undefined4 *)__savegprlr_25();
-  iVar3 = 0;
-  pIVar4 = &IMAGE_SECTION_HEADER_82000208;
-  while (((pIVar4->Characteristics & IMAGE_SCN_MEM_EXECUTE) == 0 ||
-         (iVar2 = I_strcmp(pIVar4,0xffffffff8218eda8), iVar2 != 0))) {
-    iVar3 = iVar3 + 1;
-    pIVar4 = pIVar4 + 1;
-    if (0xc < iVar3) {
-      __restgprlr_25(0);
-      return;
+  puVar1 = (undefined4 *)__savegprlr_25(param_1);
+  iVar4 = 0;
+  pIVar5 = &IMAGE_SECTION_HEADER_82000208;
+  while (((pIVar5->Characteristics & IMAGE_SCN_MEM_EXECUTE) == 0 ||
+         (iVar2 = I_strcmp(pIVar5->Name,".text"), iVar2 != 0))) {
+    iVar4 = iVar4 + 1;
+    pIVar5 = pIVar5 + 1;
+    if (0xc < iVar4) {
+      uVar3 = __restgprlr_25(0);
+      return (bool)uVar3;
     }
   }
   *puVar1 = IMAGE_DOS_HEADER_82000000.e_magic +
-            ((uint)*(byte *)((int)&pIVar4->VirtualAddress + 3) << 0x18 |
-             (uint)*(byte *)((int)&pIVar4->VirtualAddress + 2) << 0x10 |
-             (uint)*(byte *)((int)&pIVar4->VirtualAddress + 1) << 8 |
-            (uint)*(byte *)&pIVar4->VirtualAddress);
-  *param_2 = (uint)(byte)pIVar4->SizeOfRawData << 0x18 |
-             (uint)*(byte *)((int)&pIVar4->SizeOfRawData + 2) << 0x10 |
-             (uint)*(byte *)((int)&pIVar4->SizeOfRawData + 1) << 8 |
-             (uint)*(byte *)&pIVar4->SizeOfRawData;
-  __restgprlr_25(1);
-  return;
+            ((uint)*(byte *)((int)&pIVar5->VirtualAddress + 3) << 0x18 |
+             (uint)*(byte *)((int)&pIVar5->VirtualAddress + 2) << 0x10 |
+             (uint)*(byte *)((int)&pIVar5->VirtualAddress + 1) << 8 |
+            (uint)*(byte *)&pIVar5->VirtualAddress);
+  *param_2 = (uint)(byte)pIVar5->SizeOfRawData << 0x18 |
+             (uint)*(byte *)((int)&pIVar5->SizeOfRawData + 2) << 0x10 |
+             (uint)*(byte *)((int)&pIVar5->SizeOfRawData + 1) << 8 |
+             (uint)*(byte *)&pIVar5->SizeOfRawData;
+  uVar3 = __restgprlr_25(1);
+  return (bool)uVar3;
 }
 

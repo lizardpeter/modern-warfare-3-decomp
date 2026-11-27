@@ -10,15 +10,16 @@ der_decode_sequence_multi
           undefined8 param_5,undefined8 param_6,undefined8 param_7,undefined8 param_8)
 
 {
-  undefined4 uVar1;
-  int *piVar2;
-  undefined8 uVar3;
-  int iVar4;
+  int *piVar1;
+  undefined8 uVar2;
+  void *pvVar3;
+  uint uVar4;
   longlong lVar5;
   undefined4 uVar6;
-  undefined1 *puVar7;
-  undefined4 *puVar8;
-  int iVar9;
+  undefined4 uVar7;
+  undefined1 *puVar8;
+  undefined4 *puVar9;
+  int iVar10;
   undefined4 uStack0000001c;
   undefined8 uStack00000020;
   undefined8 uStack00000028;
@@ -27,20 +28,20 @@ der_decode_sequence_multi
   undefined8 uStack00000040;
   undefined8 uStack00000048;
   
-  iVar4 = 0;
-  puVar7 = (undefined1 *)&stack0x00000038;
+  uVar4 = 0;
+  puVar8 = (undefined1 *)&stack0x00000030;
   uStack00000020._4_4_ = (int)param_3;
   while (uStack00000020._4_4_ != 0) {
     if ((uStack00000020._4_4_ < 1) || (0xf < uStack00000020._4_4_)) {
       return 0x10;
     }
-    iVar4 = iVar4 + 1;
-    piVar2 = (int *)(puVar7 + 4);
-    puVar7 = puVar7 + 0x18;
-    uStack00000020._4_4_ = *piVar2;
+    uVar4 = uVar4 + 1;
+    piVar1 = (int *)(puVar8 + 0xc);
+    puVar8 = puVar8 + 0x18;
+    uStack00000020._4_4_ = *piVar1;
   }
-  if (iVar4 == 0) {
-    uVar3 = 2;
+  if (uVar4 == 0) {
+    uVar2 = 2;
   }
   else {
     uStack0000001c = param_2;
@@ -50,38 +51,38 @@ der_decode_sequence_multi
     uStack00000038 = param_6;
     uStack00000040 = param_7;
     uStack00000048 = param_8;
-    iVar4 = tom_game_calloc(0x20);
-    if (iVar4 == 0) {
-      uVar3 = 0xd;
+    pvVar3 = tom_game_calloc(0x20,uVar4);
+    if (pvVar3 == (void *)0x0) {
+      uVar2 = 0xd;
     }
     else {
       lVar5 = 0;
       if (uStack00000020._4_4_ != 0) {
-        puVar8 = (undefined4 *)(iVar4 + -0x1c);
-        iVar9 = uStack00000020._4_4_;
-        uVar1 = uStack00000030._4_4_;
-        puVar7 = (undefined1 *)&stack0x00000038;
-        uVar6 = uStack00000028._4_4_;
+        puVar9 = (undefined4 *)((int)pvVar3 + -0x1c);
+        iVar10 = uStack00000020._4_4_;
+        uVar6 = uStack00000030._4_4_;
+        puVar8 = (undefined1 *)&stack0x00000038;
+        uVar7 = uStack00000028._4_4_;
         do {
-          if ((iVar9 < 1) || (0xf < iVar9)) {
-            tom_game_free(iVar4);
+          if ((iVar10 < 1) || (0xf < iVar10)) {
+            tom_game_free(pvVar3);
             return 0x10;
           }
-          puVar8[7] = iVar9;
-          puVar8[9] = uVar6;
+          puVar9[7] = iVar10;
+          puVar9[9] = uVar7;
           lVar5 = lVar5 + 1;
-          puVar8 = puVar8 + 8;
-          *puVar8 = uVar1;
-          iVar9 = *(int *)(puVar7 + 4);
-          uVar6 = *(undefined4 *)(puVar7 + 0xc);
-          uVar1 = *(undefined4 *)(puVar7 + 0x14);
-          puVar7 = puVar7 + 0x18;
-        } while (iVar9 != 0);
+          puVar9 = puVar9 + 8;
+          *puVar9 = uVar6;
+          iVar10 = *(int *)(puVar8 + 4);
+          uVar7 = *(undefined4 *)(puVar8 + 0xc);
+          uVar6 = *(undefined4 *)(puVar8 + 0x14);
+          puVar8 = puVar8 + 0x18;
+        } while (iVar10 != 0);
       }
-      uVar3 = der_decode_sequence_ex(param_1,uStack0000001c,iVar4,lVar5,1);
-      tom_game_free(iVar4);
+      uVar2 = der_decode_sequence_ex(param_1,uStack0000001c,pvVar3,lVar5,1);
+      tom_game_free(pvVar3);
     }
   }
-  return uVar3;
+  return uVar2;
 }
 

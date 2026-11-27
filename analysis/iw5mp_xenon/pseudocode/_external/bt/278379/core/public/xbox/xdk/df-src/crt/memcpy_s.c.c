@@ -2,50 +2,48 @@
 
 // 82925770  memcpy_s  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/memcpy_s.c:47)
 
-errno_t memcpy_s(void *_Dst,rsize_t _DstSize,void *_Src,rsize_t _MaxCount)
+int memcpy_s(void *param_1,uint param_2,void *param_3,uint param_4)
 
 {
-  void *_Dst_00;
-  int *piVar1;
-  errno_t eVar2;
+  int iVar1;
+  int *piVar2;
   ulonglong uVar3;
   ulonglong uVar4;
   ulonglong uVar5;
-  int iVar6;
   
-  uVar5 = (ulonglong)(int)_MaxCount;
-  uVar4 = (ulonglong)(int)_Src;
-  uVar3 = (ulonglong)(int)_DstSize;
-  _Dst_00 = (void *)__savegprlr_29(_Dst);
+  uVar5 = (ulonglong)(int)param_4;
+  uVar4 = (ulonglong)(int)param_3;
+  uVar3 = (ulonglong)(int)param_2;
+  iVar1 = __savegprlr_29(param_1);
   if ((uVar5 & 0xffffffff) != 0) {
-    if (_Dst_00 == (void *)0x0) {
-      piVar1 = _errno();
-      *piVar1 = 0x16;
+    if (iVar1 == 0) {
+      piVar2 = _errno();
+      *piVar2 = 0x16;
       _invalid_parameter_noinfo();
 LAB_829257b0:
-      iVar6 = 0x16;
+      iVar1 = 0x16;
       goto LAB_829257b4;
     }
     if (((uVar4 & 0xffffffff) == 0) || ((uVar3 & 0xffffffff) < (uVar5 & 0xffffffff))) {
-      memset(_Dst_00,0,(size_t)uVar3);
+      memset();
       if ((uVar4 & 0xffffffff) == 0) {
-        piVar1 = _errno();
-        iVar6 = 0x16;
+        piVar2 = _errno();
+        iVar1 = 0x16;
       }
       else {
         if ((uVar5 & 0xffffffff) <= (uVar3 & 0xffffffff)) goto LAB_829257b0;
-        piVar1 = _errno();
-        iVar6 = 0x22;
+        piVar2 = _errno();
+        iVar1 = 0x22;
       }
-      *piVar1 = iVar6;
+      *piVar2 = iVar1;
       _invalid_parameter_noinfo();
       goto LAB_829257b4;
     }
-    memcpy(_Dst_00,(void *)uVar4,(size_t)uVar5);
+    memcpy();
   }
-  iVar6 = 0;
+  iVar1 = 0;
 LAB_829257b4:
-  eVar2 = __restgprlr_29(iVar6);
-  return eVar2;
+  iVar1 = __restgprlr_29(iVar1);
+  return iVar1;
 }
 

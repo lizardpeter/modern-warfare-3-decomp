@@ -2,181 +2,245 @@
 
 // 822A7548  TRACK_CG_CollWorld  (cgame/cg_colltree.cpp:72)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void TRACK_CG_CollWorld(void)
 
 {
-  track_static_alloc_internal(0xffffffff82a05d80,0x10070,0xffffffff82010af4,0x19);
-  track_static_alloc_internal(0xffffffff829ddd80,0x28000,0xffffffff82010ae4,0x19);
+  track_static_alloc_internal(cgEntCollWorld,0x10070,"cgEntCollWorld",0x19);
+  track_static_alloc_internal(cgEntCollNodes,0x28000,"cgEntCollNodes",0x19);
   return;
 }
 
 
 // 822A75A8  CG_GetCollWorld  (cgame/cg_colltree.cpp:99)
 
-void CG_GetCollWorld(undefined4 *param_1,undefined4 *param_2)
+void CG_GetCollWorld(void **param_1,void **param_2)
 
 {
-  *param_1 = &DAT_82a05d80;
-  *param_2 = &DAT_829ddd80;
+  *param_1 = cgEntCollWorld;
+  *param_2 = cgEntCollNodes;
   return;
 }
 
 
 // 822A75C8  CG_SetCollWorldLocalClientNum  (cgame/cg_colltree.cpp:109)
 
-void CG_SetCollWorldLocalClientNum(undefined4 param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CG_SetCollWorldLocalClientNum(LocalClientNum_t param_1)
 
 {
-  char cVar1;
+  bool bVar1;
   
-  cVar1 = Sys_IsMainThread();
-  if (cVar1 == '\0') {
-    MyAssertHandler(0xffffffff82010b08,0x6f,0,0xffffffff82000f98,0xffffffff82010b48);
-    DAT_82a15df0 = param_1;
+  bVar1 = Sys_IsMainThread();
+  if (!bVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_colltree.cpp",0x6f,0,
+                    "%s");
+    cgCollWorldLocalClientNum = param_1;
     return;
   }
-  DAT_82a15df0 = param_1;
+  cgCollWorldLocalClientNum = param_1;
   return;
 }
 
 
 // 822A7648  CG_GetCollWorldLocalClientNum  (cgame/cg_colltree.cpp:121)
 
-int CG_GetCollWorldLocalClientNum(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+LocalClientNum_t CG_GetCollWorldLocalClientNum(void)
 
 {
-  if (DAT_82a15df0 < 0) {
-    MyAssertHandler(0xffffffff82010b08,0x7d,0,0xffffffff82000f98,0xffffffff82010b5c);
+  if ((int)cgCollWorldLocalClientNum < 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_colltree.cpp",0x7d,0,
+                    "%s");
   }
-  return DAT_82a15df0;
+  return cgCollWorldLocalClientNum;
 }
 
 
 // 822A76A8  CG_ClearEntityCollWorld  (cgame/cg_colltree.cpp:134)
 
-void CG_ClearEntityCollWorld(ulonglong param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CG_ClearEntityCollWorld(LocalClientNum_t param_1)
 
 {
-  int iVar1;
-  void *_Dst;
+  uint uVar1;
   uint uVar2;
-  uint uVar3;
-  longlong lVar4;
-  bool bVar5;
+  CgEntCollWorld *pCVar3;
+  bool bVar4;
   
-  if (3 < (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82010b08,0x8b,0,0xffffffff82010b80,param_1,4);
+  if (LOCAL_CLIENT_3 < param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_colltree.cpp",0x8b,0,
+                    "localClientNum doesn\'t index COLL_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  lVar4 = param_1 * 0x401c + -0x7d5fa280;
-  _Dst = (void *)lVar4;
-  memset(_Dst,0,0x401c);
-  memset(&DAT_829ddd80 + (int)((param_1 + (param_1 & 0x3fffffff) * 4 & 0xffffffff) << 0xd),0,0xa000)
-  ;
-  CM_BrushModelBounds(0,lVar4);
+  pCVar3 = cgEntCollWorld + param_1;
+  memset();
+  memset();
+  CM_BrushModelBounds(0,&pCVar3->box);
+  cgEntCollWorld[param_1].freeHead = 2;
   uVar2 = 2;
-  *(undefined2 *)((int)_Dst + 0x18) = 2;
   do {
-    iVar1 = uVar2 * 0x10;
-    uVar3 = uVar2 + 1;
-    uVar2 = uVar3 & 0xffff;
-    *(short *)((int)_Dst + iVar1 + 0x22) = (short)uVar3;
-  } while (uVar2 < 0x3ff);
-  bVar5 = *(float *)((int)_Dst + 0xc) <= *(float *)((int)_Dst + 0x10);
-  *(ushort *)((int)_Dst + 0x30) = (ushort)bVar5;
-  *(undefined4 *)((int)_Dst + 0x2c) = *(undefined4 *)((bVar5 + 3) * 4 + (int)_Dst);
+    uVar1 = uVar2 + 1 & 0xffff;
+    pCVar3->sectors[uVar2].tree.u.parent = (ushort)(uVar2 + 1);
+    uVar2 = uVar1;
+  } while (uVar1 < 0x3ff);
+  bVar4 = cgEntCollWorld[param_1].box.halfSize[0] <= cgEntCollWorld[param_1].box.halfSize[1];
+  cgEntCollWorld[param_1].sectors[1].tree.axis = (ushort)bVar4;
+  cgEntCollWorld[param_1].sectors[1].tree.dist = (pCVar3->box).halfSize[bVar4];
   return;
 }
 
 
 // 822A77B0  CG_GetEntityCollSector  (cgame/cg_colltree.cpp:165)
 
-void CG_GetEntityCollSector(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+CgEntCollSector * CG_GetEntityCollSector(LocalClientNum_t param_1,ushort param_2)
 
 {
   ulonglong uVar1;
-  ulonglong uVar2;
+  CgEntCollSector *pCVar2;
+  ulonglong uVar3;
   
-  uVar2 = __savegprlr_29();
-  if (3 < (uVar2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82010b08,0xa8,0,0xffffffff82010b80,uVar2,4);
+  uVar3 = (ulonglong)(short)param_2;
+  uVar1 = __savegprlr_29(param_1);
+  if (3 < (uVar1 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_colltree.cpp",0xa8,0,
+                    "localClientNum doesn\'t index COLL_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  uVar1 = param_2 & 0xffff;
-  if (uVar1 == 0) {
-    MyAssertHandler(0xffffffff82010b08,0xa9,0,0xffffffff82000f98,0xffffffff82010bf8);
+  if ((uVar3 & 0xffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_colltree.cpp",0xa9,0,
+                    "%s");
   }
-  if (0x3ff < uVar1) {
-    MyAssertHandler(0xffffffff82010b08,0xaa,0,0xffffffff82010bc8,0xffffffff82010be0,uVar1);
+  if (0x3ff < (uVar3 & 0xffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_colltree.cpp",0xaa,0,
+                    "%s\n\t(sectorIndex) = %i");
   }
-  __restgprlr_29(uVar2 * 0x401c + (param_2 & 0xffff) * 0x10 + -0x7d5fa264);
-  return;
+  pCVar2 = (CgEntCollSector *)__restgprlr_29(uVar1 * 0x401c + (uVar3 & 0xffff) * 0x10 + -0x7d5fa264)
+  ;
+  return pCVar2;
 }
 
 
 // 822A7870  CG_GetCollNode  (cgame/cg_colltree.cpp:182)
 
-void CG_GetCollNode(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+CgEntCollNode * CG_GetCollNode(LocalClientNum_t param_1,int param_2)
 
 {
   ulonglong uVar1;
+  CgEntCollNode *pCVar2;
+  ulonglong uVar3;
   
-  uVar1 = __savegprlr_29();
+  uVar3 = (ulonglong)param_2;
+  uVar1 = __savegprlr_29(param_1);
   if (3 < (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82010b08,0xb7,0,0xffffffff82010b80,uVar1,4);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_colltree.cpp",0xb7,0,
+                    "localClientNum doesn\'t index COLL_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  if (0x7ff < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82010b08,0xb8,0,0xffffffff82010c04,param_2,0x800);
+  if (0x7ff < (uVar3 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_colltree.cpp",0xb8,0,
+                    "entIndex doesn\'t index MAX_GENTITIES\n\t%i not in [0, %i)");
   }
-  param_2 = (uVar1 & 0x1fffff) * 0x800 + param_2;
-  __restgprlr_29((param_2 + (param_2 & 0x3fffffff) * 4 & 0x3fffffff) * 4 + -0x7d622280);
-  return;
+  uVar3 = (uVar1 & 0x1fffff) * 0x800 + uVar3;
+  pCVar2 = (CgEntCollNode *)
+           __restgprlr_29((uVar3 + (uVar3 & 0x3fffffff) * 4 & 0x3fffffff) * 4 + -0x7d622280);
+  return pCVar2;
+}
+
+
+// 822A7908  CG_GetEntityCollNode  (cgame/cg_colltree.cpp:194)
+
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* struct CgEntCollNode const * __cdecl CG_GetEntityCollNode(enum LocalClientNum_t,int) */
+
+CgEntCollNode * CG_GetEntityCollNode(LocalClientNum_t param_1,int param_2)
+
+{
+  ulonglong uVar1;
+  CgEntCollNode *pCVar2;
+  ulonglong uVar3;
+  
+  uVar3 = (ulonglong)param_2;
+  uVar1 = __savegprlr_29(param_1);
+  if (3 < (uVar1 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_colltree.cpp",0xb7,0,
+                    "localClientNum doesn\'t index COLL_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
+  }
+  if (0x7ff < (uVar3 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_colltree.cpp",0xb8,0,
+                    "entIndex doesn\'t index MAX_GENTITIES\n\t%i not in [0, %i)");
+  }
+  uVar3 = (uVar1 & 0x1fffff) * 0x800 + uVar3;
+  pCVar2 = (CgEntCollNode *)
+           __restgprlr_29((uVar3 + (uVar3 & 0x3fffffff) * 4 & 0x3fffffff) * 4 + -0x7d622280);
+  return pCVar2;
 }
 
 
 // 822A7910  CG_AddEntityToCollSector  (cgame/cg_colltree.cpp:203)
 
-void CG_AddEntityToCollSector(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CG_AddEntityToCollSector(LocalClientNum_t param_1,int param_2,ushort param_3)
 
 {
   ulonglong uVar1;
-  undefined2 *puVar2;
-  longlong lVar3;
-  ushort *puVar4;
-  ulonglong uVar5;
+  CgEntCollNode *pCVar2;
+  ulonglong uVar3;
+  ulonglong uVar4;
+  longlong lVar5;
+  ushort *puVar6;
+  ulonglong uVar7;
   
-  uVar1 = __savegprlr_22();
+  uVar4 = (ulonglong)(short)param_3;
+  uVar3 = (ulonglong)param_2;
+  uVar1 = __savegprlr_22(param_1);
   if (3 < (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82010b08,0xd3,0,0xffffffff82010b80,uVar1,4);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_colltree.cpp",0xd3,0,
+                    "localClientNum doesn\'t index COLL_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  if (0x7ff < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82010b08,0xd4,0,0xffffffff82010c04,param_2,0x800);
+  if (0x7ff < (uVar3 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_colltree.cpp",0xd4,0,
+                    "entIndex doesn\'t index MAX_GENTITIES\n\t%i not in [0, %i)");
   }
-  uVar5 = param_3 & 0xffff;
-  if (uVar5 == 0) {
-    MyAssertHandler(0xffffffff82010b08,0xd5,0,0xffffffff82000f98,0xffffffff82010bf8);
+  if ((uVar4 & 0xffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_colltree.cpp",0xd5,0,
+                    "%s");
   }
-  if (0x3ff < uVar5) {
-    MyAssertHandler(0xffffffff82010b08,0xd6,0,0xffffffff82010bc8,0xffffffff82010be0,uVar5);
+  if (0x3ff < (uVar4 & 0xffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_colltree.cpp",0xd6,0,
+                    "%s\n\t(sectorIndex) = %i");
   }
-  puVar2 = (undefined2 *)CG_GetCollNode(uVar1,param_2);
-  lVar3 = uVar1 * 0x401c + (param_3 & 0xffff) * 0x10 + -0x7d5fa258;
-  puVar4 = (ushort *)lVar3;
-  if (((ulonglong)*puVar4 - 1 & 0xffffffff) <= (param_2 & 0xffffffff)) {
+  pCVar2 = CG_GetCollNode((LocalClientNum_t)uVar1,(int)uVar3);
+  lVar5 = uVar1 * 0x401c + (uVar4 & 0xffff) * 0x10 + -0x7d5fa258;
+  puVar6 = (ushort *)lVar5;
+  if (((ulonglong)*puVar6 - 1 & 0xffffffff) <= (uVar3 & 0xffffffff)) {
     do {
-      uVar5 = (ulonglong)*(ushort *)lVar3 - 1;
+      uVar7 = (ulonglong)*(ushort *)lVar5 - 1;
       if (3 < (uVar1 & 0xffffffff)) {
-        MyAssertHandler(0xffffffff82010b08,0xb7,0,0xffffffff82010b80,uVar1,4);
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_colltree.cpp",
+                        0xb7,0,
+                        "localClientNum doesn\'t index COLL_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)")
+        ;
       }
-      if (0x7ff < (uVar5 & 0xffffffff)) {
-        MyAssertHandler(0xffffffff82010b08,0xb8,0,0xffffffff82010c04,uVar5,0x800);
+      if (0x7ff < (uVar7 & 0xffffffff)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_colltree.cpp",
+                        0xb8,0,"entIndex doesn\'t index MAX_GENTITIES\n\t%i not in [0, %i)");
       }
-      uVar5 = (uVar1 & 0x1fffff) * 0x800 + uVar5;
-      lVar3 = (uVar5 + (uVar5 & 0x3fffffff) * 4 & 0x3fffffff) * 4 + -0x7d62227e;
-      puVar4 = (ushort *)lVar3;
-    } while (((ulonglong)*puVar4 - 1 & 0xffffffff) <= (param_2 & 0xffffffff));
+      uVar7 = (uVar1 & 0x1fffff) * 0x800 + uVar7;
+      lVar5 = (uVar7 + (uVar7 & 0x3fffffff) * 4 & 0x3fffffff) * 4 + -0x7d62227e;
+      puVar6 = (ushort *)lVar5;
+    } while (((ulonglong)*puVar6 - 1 & 0xffffffff) <= (uVar3 & 0xffffffff));
   }
-  *puVar2 = (short)param_3;
-  puVar2[1] = *puVar4;
-  *puVar4 = (short)param_2 + 1;
+  pCVar2->sector = (ushort)uVar4;
+  pCVar2->nextEntInSector = *puVar6;
+  *puVar6 = (short)uVar3 + 1;
   __restgprlr_22();
   return;
 }
@@ -184,172 +248,196 @@ void CG_AddEntityToCollSector(undefined8 param_1,ulonglong param_2,ulonglong par
 
 // 822A7AC0  CG_AllocEntityCollSector  (cgame/cg_colltree.cpp:244)
 
-void CG_AllocEntityCollSector(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+ushort CG_AllocEntityCollSector(LocalClientNum_t param_1,float *param_2,float *param_3)
 
 {
   ushort uVar1;
-  int iVar2;
-  int iVar3;
+  uint uVar2;
+  ushort uVar3;
   ulonglong uVar4;
   float *pfVar5;
-  float *pfVar6;
-  bool bVar7;
+  ulonglong uVar6;
+  float *pfVar7;
+  bool bVar8;
   float local_60 [24];
   
-  uVar4 = __savegprlr_23();
-  if (3 < (uVar4 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82010b08,0xfb,0,0xffffffff82010b80,uVar4,4);
+  uVar6 = (ulonglong)(int)param_3;
+  uVar4 = (ulonglong)(int)param_2;
+  uVar2 = __savegprlr_23(param_1);
+  if (3 < uVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_colltree.cpp",0xfb,0,
+                    "localClientNum doesn\'t index COLL_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82010b08,0xfc,0,0xffffffff82000f98,0xffffffff82010c8c);
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_colltree.cpp",0xfc,0,
+                    "%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82010b08,0xfd,0,0xffffffff82000f98,0xffffffff82010c84);
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_colltree.cpp",0xfd,0,
+                    "%s");
   }
-  iVar2 = (int)uVar4 * 0x401c;
-  uVar1 = *(ushort *)(&DAT_82a05d98 + iVar2);
-  if (uVar1 != 0) {
-    pfVar5 = (float *)param_2;
-    pfVar6 = (float *)param_3;
-    local_60[0] = *pfVar6 - *pfVar5;
-    local_60[1] = pfVar6[1] - pfVar5[1];
-    bVar7 = local_60[0] <= local_60[1];
-    if (512.0 < local_60[bVar7]) {
-      iVar3 = (uint)uVar1 * 0x10 + iVar2;
-      if (*(short *)(&DAT_82a05d80 + iVar3 + 0x28) != 0) {
-        MyAssertHandler(0xffffffff82010b08,0x10d,0,0xffffffff82000f98,0xffffffff82010c6c);
+  uVar3 = cgEntCollWorld[uVar2].freeHead;
+  if (uVar3 != 0) {
+    pfVar5 = (float *)uVar4;
+    pfVar7 = (float *)uVar6;
+    local_60[0] = *pfVar7 - *pfVar5;
+    local_60[1] = pfVar7[1] - pfVar5[1];
+    bVar8 = local_60[0] <= local_60[1];
+    if (512.0 < local_60[bVar8]) {
+      if (cgEntCollWorld[uVar2].sectors[uVar3].entListHead != 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_colltree.cpp",
+                        0x10d,0,"%s");
       }
-      *(undefined2 *)(&DAT_82a05d98 + iVar2) = *(undefined2 *)(&DAT_82a05d80 + iVar3 + 0x22);
-      *(ushort *)(&DAT_82a05d80 + iVar3 + 0x20) = (ushort)bVar7;
-      *(float *)(&DAT_82a05d80 + iVar3 + 0x1c) = (pfVar5[bVar7] + pfVar6[bVar7]) * 0.5;
-      if (*(short *)(&DAT_82a05d80 + iVar3 + 0x24) != 0) {
-        MyAssertHandler(0xffffffff82010b08,0x114,0,0xffffffff82000f98,0xffffffff82010c54);
+      cgEntCollWorld[uVar2].freeHead = (ushort)cgEntCollWorld[uVar2].sectors[uVar3].tree.u;
+      uVar1 = cgEntCollWorld[uVar2].sectors[uVar3].tree.child[0];
+      cgEntCollWorld[uVar2].sectors[uVar3].tree.axis = (ushort)bVar8;
+      cgEntCollWorld[uVar2].sectors[uVar3].tree.dist = (pfVar5[bVar8] + pfVar7[bVar8]) * 0.5;
+      if (uVar1 != 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_colltree.cpp",
+                        0x114,0,"%s");
       }
-      if (*(short *)(&DAT_82a05d80 + iVar3 + 0x26) != 0) {
-        MyAssertHandler(0xffffffff82010b08,0x115,0,0xffffffff82000f98,0xffffffff82010c3c);
+      if (cgEntCollWorld[uVar2].sectors[uVar3].tree.child[1] != 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_colltree.cpp",
+                        0x115,0,"%s");
       }
-      __restgprlr_23(uVar1);
-      return;
+      uVar3 = __restgprlr_23(uVar3);
+      return uVar3;
     }
   }
-  __restgprlr_23(0);
-  return;
+  uVar3 = __restgprlr_23(0);
+  return uVar3;
 }
 
 
 // 822A7C88  CG_SortEntityCollSector  (cgame/cg_colltree.cpp:287)
 
-void CG_SortEntityCollSector
-               (undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CG_SortEntityCollSector(LocalClientNum_t param_1,ushort param_2,float *param_3,float *param_4)
 
 {
   ushort uVar1;
   ushort uVar2;
-  ulonglong uVar3;
-  int iVar4;
-  uint uVar5;
-  undefined *puVar6;
-  undefined8 uVar7;
-  undefined8 uVar8;
-  uint uVar9;
-  int iVar10;
-  undefined *puVar11;
+  uint uVar3;
+  LocalClientNum_t LVar4;
+  ulonglong uVar5;
+  ushort uVar7;
+  CgEntCollNode *pCVar6;
+  ulonglong uVar8;
+  int iVar9;
+  ulonglong uVar10;
+  ulonglong uVar11;
   uint uVar12;
-  undefined *puVar13;
-  uint uVar14;
-  double dVar15;
+  ulonglong uVar13;
+  ulonglong uVar14;
+  ulonglong uVar15;
+  double dVar16;
+  float *pfStack0000002c;
   
-  uVar5 = __savegprlr();
-  if (3 < uVar5) {
-    MyAssertHandler(0xffffffff82010b08,0x12a,0,0xffffffff82010b80,uVar5,4);
+  uVar11 = (ulonglong)(int)param_4;
+  uVar10 = (ulonglong)(int)param_3;
+  uVar8 = (ulonglong)(short)param_2;
+  uVar5 = (ulonglong)(int)param_1;
+  __savegprlr();
+  pfStack0000002c = (float *)uVar11;
+  if (3 < (uVar5 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_colltree.cpp",0x12a,0
+                    ,"localClientNum doesn\'t index COLL_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  uVar3 = param_2 & 0xffff;
-  if (uVar3 == 0) {
-    MyAssertHandler(0xffffffff82010b08,299,0,0xffffffff82000f98,0xffffffff82010bf8);
+  if ((uVar8 & 0xffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_colltree.cpp",299,0,
+                    "%s");
   }
-  if (0x3ff < uVar3) {
-    MyAssertHandler(0xffffffff82010b08,300,0,0xffffffff82010bc8,0xffffffff82010be0,uVar3);
+  if (0x3ff < (uVar8 & 0xffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_colltree.cpp",300,0,
+                    "%s\n\t(sectorIndex) = %i");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82010b08,0x12d,0,0xffffffff82000f98,0xffffffff82010c8c);
+  if ((uVar10 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_colltree.cpp",0x12d,0
+                    ,"%s");
   }
-  if ((param_4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82010b08,0x12e,0,0xffffffff82000f98,0xffffffff82010c84);
+  if ((uVar11 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_colltree.cpp",0x12e,0
+                    ,"%s");
   }
-  iVar4 = ((uint)param_2 & 0xffff) * 0x10 + uVar5 * 0x401c;
-  uVar9 = (uint)*(ushort *)(&DAT_82a05d80 + iVar4 + 0x28);
-  dVar15 = (double)*(float *)(&DAT_82a05d80 + iVar4 + 0x1c);
-  uVar1 = *(ushort *)(&DAT_82a05d80 + iVar4 + 0x20);
-  if (uVar9 != 0) {
-    puVar11 = (undefined *)0x0;
+  LVar4 = (LocalClientNum_t)uVar5;
+  uVar3 = (uint)uVar8 & 0xffff;
+  uVar11 = (ulonglong)cgEntCollWorld[LVar4].sectors[uVar3].entListHead;
+  dVar16 = (double)cgEntCollWorld[LVar4].sectors[uVar3].tree.dist;
+  uVar1 = cgEntCollWorld[LVar4].sectors[uVar3].tree.axis;
+  if (uVar11 != 0) {
+    uVar13 = 0;
     do {
-      uVar12 = uVar9 - 1;
-      if (3 < uVar5) {
-        MyAssertHandler(0xffffffff82010b08,0xb7,0,
-                        "localClientNum doesn\'t index COLL_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)",
-                        uVar5,4);
+      uVar14 = uVar11 - 1;
+      if (3 < (uVar5 & 0xffffffff)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_colltree.cpp",
+                        0xb7,0,
+                        "localClientNum doesn\'t index COLL_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)")
+        ;
       }
-      if (0x7ff < uVar12) {
-        MyAssertHandler(0xffffffff82010b08,0xb8,0,0xffffffff82010c04,uVar12,0x800);
+      if (0x7ff < (uVar14 & 0xffffffff)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_colltree.cpp",
+                        0xb8,0,"entIndex doesn\'t index MAX_GENTITIES\n\t%i not in [0, %i)");
       }
-      iVar10 = (uVar5 * 0x800 + uVar12) * 0x14;
-      puVar13 = &DAT_829ddd80 + iVar10;
-      if ((double)*(float *)(puVar13 + (uVar1 + 1) * 4) <= dVar15) {
-        if ((double)*(float *)(puVar13 + (uVar1 + 3) * 4) < dVar15) {
-          uVar14 = (uint)*(ushort *)(&DAT_82a05d80 + iVar4 + 0x26);
-          if (uVar14 != 0) goto LAB_822a7ee8;
-          uVar14 = CG_AllocEntityCollSector(uVar5,param_3,(int)param_4);
-          uVar9 = uVar14 & 0xffff;
-          if (uVar9 != 0) {
-            *(short *)(&DAT_82a05d80 + iVar4 + 0x26) = (short)uVar14;
+      uVar11 = (uVar5 & 0x1fffff) * 0x800 + uVar14;
+      uVar15 = (uVar11 + (uVar11 & 0x3fffffff) * 4 & 0x3fffffff) * 4 - 0x7d622280;
+      iVar9 = (int)uVar15;
+      if ((double)*(float *)((uVar1 + 1) * 4 + iVar9) <= dVar16) {
+        if ((double)*(float *)((uVar1 + 3) * 4 + iVar9) < dVar16) {
+          uVar7 = cgEntCollWorld[LVar4].sectors[uVar3].tree.child[1];
+          if (uVar7 != 0) goto LAB_822a7ee8;
+          uVar7 = CG_AllocEntityCollSector(LVar4,(float *)uVar10,pfStack0000002c);
+          uVar12 = (uint)uVar7;
+          if (uVar12 != 0) {
+            cgEntCollWorld[LVar4].sectors[uVar3].tree.child[1] = uVar7;
             goto LAB_822a7edc;
           }
         }
 LAB_822a7f6c:
-        uVar9 = (uint)*(ushort *)(&DAT_829ddd82 + iVar10);
+        uVar11 = (ulonglong)*(ushort *)(iVar9 + 2);
       }
       else {
-        uVar14 = (uint)*(ushort *)(&DAT_82a05d80 + iVar4 + 0x24);
-        if (uVar14 == 0) {
-          uVar14 = CG_AllocEntityCollSector(uVar5,param_3,(int)param_4);
-          uVar9 = uVar14 & 0xffff;
-          if (uVar9 == 0) goto LAB_822a7f6c;
-          *(short *)(&DAT_82a05d80 + iVar4 + 0x24) = (short)uVar14;
+        uVar7 = cgEntCollWorld[LVar4].sectors[uVar3].tree.child[0];
+        if (uVar7 == 0) {
+          uVar7 = CG_AllocEntityCollSector(LVar4,(float *)uVar10,pfStack0000002c);
+          uVar12 = (uint)uVar7;
+          if (uVar12 == 0) goto LAB_822a7f6c;
+          cgEntCollWorld[LVar4].sectors[uVar3].tree.child[0] = uVar7;
 LAB_822a7edc:
-          *(short *)(&DAT_82a05d80 + uVar9 * 0x10 + uVar5 * 0x401c + 0x22) = (short)param_2;
+          cgEntCollWorld[LVar4].sectors[uVar12].tree.u.parent = (ushort)uVar8;
         }
 LAB_822a7ee8:
-        uVar2 = *(ushort *)(&DAT_829ddd82 + iVar10);
-        uVar9 = (uint)uVar2;
-        if (puVar11 == (undefined *)0x0) {
-          puVar6 = (undefined *)
-                   CG_GetCollNode(uVar5,(ulonglong)*(ushort *)(&DAT_82a05d80 + iVar4 + 0x28) - 1);
-          if (puVar6 != puVar13) {
-            uVar7 = 0x162;
-            uVar8 = 0xffffffff82010c98;
+        uVar2 = *(ushort *)(iVar9 + 2);
+        uVar11 = (ulonglong)uVar2;
+        if ((uVar13 & 0xffffffff) == 0) {
+          pCVar6 = CG_GetCollNode(LVar4,cgEntCollWorld[LVar4].sectors[uVar3].entListHead - 1);
+          if (ZEXT48(pCVar6) != (uVar15 & 0xffffffff)) {
+            iVar9 = 0x162;
 LAB_822a7f34:
-            MyAssertHandler(0xffffffff82010b08,uVar7,0,&DAT_82000f98,uVar8);
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_colltree.cpp"
+                            ,iVar9,0,"%s");
           }
         }
         else {
-          puVar6 = (undefined *)CG_GetCollNode(uVar5,(ulonglong)*(ushort *)(puVar11 + 2) - 1);
-          if (puVar6 != puVar13) {
-            uVar8 = 0xffffffff82010ce8;
-            uVar7 = 0x163;
+          pCVar6 = CG_GetCollNode(LVar4,*(ushort *)((int)uVar13 + 2) - 1);
+          if (ZEXT48(pCVar6) != (uVar15 & 0xffffffff)) {
+            iVar9 = 0x163;
             goto LAB_822a7f34;
           }
         }
-        CG_AddEntityToCollSector(uVar5,uVar12,uVar14);
-        puVar13 = puVar11;
-        if (puVar11 == (undefined *)0x0) {
-          *(ushort *)(&DAT_82a05d80 + iVar4 + 0x28) = uVar2;
+        CG_AddEntityToCollSector(LVar4,(int)uVar14,uVar7);
+        uVar15 = uVar13;
+        if ((uVar13 & 0xffffffff) == 0) {
+          cgEntCollWorld[LVar4].sectors[uVar3].entListHead = uVar2;
         }
         else {
-          *(ushort *)(puVar11 + 2) = uVar2;
+          *(ushort *)((int)uVar13 + 2) = uVar2;
         }
       }
-      puVar11 = puVar13;
-    } while (uVar9 != 0);
+      uVar13 = uVar15;
+    } while (uVar11 != 0);
   }
   __restgprlr();
   return;
@@ -358,80 +446,91 @@ LAB_822a7f34:
 
 // 822A7F90  CG_UnlinkEntityColl  (cgame/cg_colltree.cpp:371)
 
-void CG_UnlinkEntityColl(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CG_UnlinkEntityColl(LocalClientNum_t param_1,int param_2)
 
 {
-  short sVar1;
-  ushort uVar2;
-  int iVar3;
-  int iVar4;
-  ushort *puVar5;
-  uint uVar6;
-  ushort *puVar7;
-  ushort *puVar8;
-  ushort *puVar9;
-  int iVar10;
-  uint uVar11;
+  ushort uVar1;
+  CgEntCollTree *pCVar2;
+  LocalClientNum_t LVar3;
+  CgEntCollNode *pCVar4;
+  CgEntCollNode *pCVar5;
+  CgEntCollNode *pCVar6;
+  CgEntCollNode *pCVar7;
+  ulonglong uVar8;
+  int iVar9;
+  uint uVar10;
+  CgEntCollSector *pCVar11;
+  uint uVar12;
   
-  uVar6 = __savegprlr_20();
-  if (3 < uVar6) {
-    MyAssertHandler(0xffffffff82010b08,0x17c,0,0xffffffff82010b80,uVar6,4);
+  uVar8 = (ulonglong)param_2;
+  LVar3 = __savegprlr_20(param_1);
+  if (LOCAL_CLIENT_3 < LVar3) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_colltree.cpp",0x17c,0
+                    ,"localClientNum doesn\'t index COLL_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  if (0x7ff < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82010b08,0x17d,0,0xffffffff82010c04,param_2,0x800);
+  if (0x7ff < (uVar8 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_colltree.cpp",0x17d,0
+                    ,"entIndex doesn\'t index MAX_GENTITIES\n\t%i not in [0, %i)");
   }
-  iVar10 = uVar6 * 0x401c;
-  puVar7 = (ushort *)CG_GetCollNode(uVar6,param_2);
-  uVar11 = (uint)*puVar7;
-  if (uVar11 != 0) {
-    iVar3 = uVar11 * 0x10 + iVar10;
-    *puVar7 = 0;
-    if (*(short *)(&DAT_82a05d80 + iVar3 + 0x28) == 0) {
-      MyAssertHandler(0xffffffff82010b08,0x189,0,0xffffffff82000f98,0xffffffff82010da4);
+  pCVar4 = CG_GetCollNode(LVar3,(int)uVar8);
+  uVar10 = (uint)pCVar4->sector;
+  if (uVar10 != 0) {
+    pCVar4->sector = 0;
+    pCVar11 = cgEntCollWorld[LVar3].sectors + uVar10;
+    if (cgEntCollWorld[LVar3].sectors[uVar10].entListHead == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_colltree.cpp",0x189
+                      ,0,"%s");
     }
-    if (*(ushort *)(&DAT_82a05d80 + iVar3 + 0x28) - 1 == (int)param_2) {
-      *(ushort *)(&DAT_82a05d80 + iVar3 + 0x28) = puVar7[1];
+    iVar9 = cgEntCollWorld[LVar3].sectors[uVar10].entListHead - 1;
+    if (iVar9 == (int)uVar8) {
+      cgEntCollWorld[LVar3].sectors[uVar10].entListHead = pCVar4->nextEntInSector;
     }
     else {
-      puVar8 = (ushort *)CG_GetCollNode(uVar6);
-      puVar9 = (ushort *)CG_GetCollNode(uVar6,(ulonglong)puVar8[1] - 1);
-      while (puVar5 = puVar9, puVar5 != puVar7) {
-        if (puVar8[1] == 0) {
-          MyAssertHandler(0xffffffff82010b08,0x19b,0,0xffffffff82000f98,0xffffffff82010d8c);
+      pCVar5 = CG_GetCollNode(LVar3,iVar9);
+      pCVar6 = CG_GetCollNode(LVar3,pCVar5->nextEntInSector - 1);
+      while (pCVar6 != pCVar4) {
+        if (pCVar5->nextEntInSector == 0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_colltree.cpp",
+                          0x19b,0,"%s");
         }
-        puVar9 = (ushort *)CG_GetCollNode(uVar6,(ulonglong)puVar5[1] - 1);
-        puVar8 = puVar5;
+        pCVar7 = CG_GetCollNode(LVar3,pCVar6->nextEntInSector - 1);
+        pCVar5 = pCVar6;
+        pCVar6 = pCVar7;
       }
-      puVar8[1] = puVar7[1];
+      pCVar5->nextEntInSector = pCVar4->nextEntInSector;
     }
-    sVar1 = *(short *)(&DAT_82a05d80 + iVar3 + 0x28);
+    uVar1 = cgEntCollWorld[LVar3].sectors[uVar10].entListHead;
     while( true ) {
-      if (((sVar1 != 0) || (*(short *)(&DAT_82a05d80 + iVar3 + 0x24) != 0)) ||
-         (*(short *)(&DAT_82a05d80 + iVar3 + 0x26) != 0)) goto LAB_822a81dc;
-      uVar6 = (uint)*(ushort *)(&DAT_82a05d80 + iVar3 + 0x22);
-      iVar4 = iVar3 + 0x22;
-      if (uVar6 == 0) break;
-      iVar3 = uVar6 * 0x10 + iVar10;
-      *(undefined2 *)(&DAT_82a05d80 + iVar4) = *(undefined2 *)(&DAT_82a05d98 + iVar10);
-      *(short *)(&DAT_82a05d98 + iVar10) = (short)uVar11;
-      if (*(ushort *)(&DAT_82a05d80 + iVar3 + 0x24) == uVar11) {
-        *(undefined2 *)(&DAT_82a05d80 + iVar3 + 0x24) = 0;
+      if (((uVar1 != 0) || ((pCVar11->tree).child[0] != 0)) || ((pCVar11->tree).child[1] != 0))
+      goto LAB_822a81dc;
+      uVar12 = (uint)(pCVar11->tree).u.parent;
+      pCVar2 = &pCVar11->tree;
+      if (uVar12 == 0) break;
+      pCVar11 = cgEntCollWorld[LVar3].sectors + uVar12;
+      pCVar2->u = (<unnamed_type_u>)cgEntCollWorld[LVar3].freeHead;
+      cgEntCollWorld[LVar3].freeHead = (ushort)uVar10;
+      if (cgEntCollWorld[LVar3].sectors[uVar12].tree.child[0] == uVar10) {
+        cgEntCollWorld[LVar3].sectors[uVar12].tree.child[0] = 0;
       }
       else {
-        if (*(ushort *)(&DAT_82a05d80 + iVar3 + 0x26) != uVar11) {
-          MyAssertHandler(0xffffffff82010b08,0x1b4,0,0xffffffff82000f98,0xffffffff82010d64);
+        if (cgEntCollWorld[LVar3].sectors[uVar12].tree.child[1] != uVar10) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_colltree.cpp",
+                          0x1b4,0,"%s");
         }
-        *(undefined2 *)(&DAT_82a05d80 + iVar3 + 0x26) = 0;
+        cgEntCollWorld[LVar3].sectors[uVar12].tree.child[1] = 0;
       }
-      sVar1 = *(short *)(&DAT_82a05d80 + iVar3 + 0x28);
-      uVar11 = uVar6;
+      uVar1 = cgEntCollWorld[LVar3].sectors[uVar12].entListHead;
+      uVar10 = uVar12;
     }
-    if (uVar11 != 1) {
-      MyAssertHandler(0xffffffff82010b08,0x1a3,0,0xffffffff82000f98,0xffffffff82010d40);
+    if (uVar10 != 1) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_colltree.cpp",0x1a3
+                      ,0,"%s");
     }
 LAB_822a81dc:
-    for (uVar2 = *(ushort *)(&DAT_82a05d80 + iVar3 + 0x22); uVar2 != 0;
-        uVar2 = *(ushort *)(&DAT_82a05d80 + (uint)uVar2 * 0x10 + iVar10 + 0x22)) {
+    for (uVar1 = (pCVar11->tree).u.parent; uVar1 != 0;
+        uVar1 = cgEntCollWorld[LVar3].sectors[uVar1].tree.u.parent) {
     }
   }
   __restgprlr_20();
@@ -441,94 +540,103 @@ LAB_822a81dc:
 
 // 822A8208  CG_LinkEntityColl  (cgame/cg_colltree.cpp:458)
 
-void CG_LinkEntityColl(undefined8 param_1,ulonglong param_2,float *param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CG_LinkEntityColl(LocalClientNum_t param_1,int param_2,Bounds *param_3)
 
 {
   float fVar1;
-  ushort uVar2;
-  int iVar3;
-  ulonglong uVar4;
-  ushort *puVar5;
-  uint uVar6;
+  float fVar2;
+  LocalClientNum_t LVar3;
+  CgEntCollNode *pCVar4;
+  ulonglong uVar5;
+  int iVar6;
   uint uVar7;
-  float *pfVar8;
-  uint uVar9;
-  double dVar10;
+  uint uVar8;
+  CgEntCollWorld *pCVar9;
+  uint uVar10;
   double dVar11;
   double dVar12;
   double dVar13;
+  double dVar14;
   float local_80 [4];
   float local_70;
   float local_6c;
   float local_68;
   float local_64;
   
-  __savegprlr_26();
-  uVar4 = __savefpr_28();
-  if (3 < (uVar4 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82010b08,0x1d6,0,0xffffffff82010b80,uVar4,4);
+  uVar5 = (ulonglong)param_2;
+  __savegprlr_26(param_1);
+  LVar3 = __savefpr_28();
+  if (LOCAL_CLIENT_3 < LVar3) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_colltree.cpp",0x1d6,0
+                    ,"localClientNum doesn\'t index COLL_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  if (0x7ff < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82010b08,0x1d7,0,0xffffffff82010c04,param_2,0x800);
+  if (0x7ff < (uVar5 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_colltree.cpp",0x1d7,0
+                    ,"entIndex doesn\'t index MAX_GENTITIES\n\t%i not in [0, %i)");
   }
-  iVar3 = (int)uVar4 * 0x401c;
-  pfVar8 = (float *)(&DAT_82a05d80 + iVar3);
-  puVar5 = (ushort *)CG_GetCollNode(uVar4,param_2);
-  local_70 = *param_3 - param_3[3];
-  dVar13 = (double)local_70;
-  local_68 = param_3[3] + *param_3;
-  dVar12 = (double)local_68;
-  local_6c = param_3[1] - param_3[4];
-  dVar11 = (double)local_6c;
-  local_64 = param_3[4] + param_3[1];
-  dVar10 = (double)local_64;
+  pCVar9 = cgEntCollWorld + LVar3;
+  iVar6 = (int)uVar5;
+  pCVar4 = CG_GetCollNode(LVar3,iVar6);
+  local_70 = param_3->midPoint[0] - param_3->halfSize[0];
+  dVar14 = (double)local_70;
+  local_68 = param_3->halfSize[0] + param_3->midPoint[0];
+  dVar13 = (double)local_68;
+  local_6c = param_3->midPoint[1] - param_3->halfSize[1];
+  dVar12 = (double)local_6c;
+  local_64 = param_3->halfSize[1] + param_3->midPoint[1];
+  dVar11 = (double)local_64;
   do {
-    local_80[2] = *pfVar8 - *(float *)(&DAT_82a05d8c + iVar3);
-    local_80[0] = *(float *)(&DAT_82a05d8c + iVar3) + *pfVar8;
-    local_80[3] = *(float *)(&DAT_82a05d84 + iVar3) - *(float *)(&DAT_82a05d90 + iVar3);
-    local_80[1] = *(float *)(&DAT_82a05d90 + iVar3) + *(float *)(&DAT_82a05d84 + iVar3);
-    uVar7 = 1;
+    fVar1 = (pCVar9->box).midPoint[0];
+    local_80[0] = cgEntCollWorld[LVar3].box.halfSize[0];
+    fVar2 = cgEntCollWorld[LVar3].box.midPoint[1];
+    local_80[2] = fVar1 - local_80[0];
+    local_80[1] = cgEntCollWorld[LVar3].box.halfSize[1];
+    local_80[0] = local_80[0] + fVar1;
+    local_80[3] = fVar2 - local_80[1];
+    local_80[1] = local_80[1] + fVar2;
+    uVar8 = 1;
     do {
       while( true ) {
-        uVar9 = uVar7;
-        uVar6 = (uint)*(ushort *)(pfVar8 + uVar9 * 4 + 8);
-        fVar1 = pfVar8[uVar9 * 4 + 7];
-        if (local_80[uVar6 + 4] <= fVar1) break;
-        uVar2 = *(ushort *)(pfVar8 + uVar9 * 4 + 9);
-        local_80[uVar6 + 2] = fVar1;
-        uVar7 = (uint)uVar2;
-        if (uVar2 == 0) goto LAB_822a8384;
+        uVar10 = uVar8;
+        uVar7 = (uint)pCVar9->sectors[uVar10].tree.axis;
+        fVar1 = pCVar9->sectors[uVar10].tree.dist;
+        if (local_80[uVar7 + 4] <= fVar1) break;
+        uVar8 = (uint)pCVar9->sectors[uVar10].tree.child[0];
+        local_80[uVar7 + 2] = fVar1;
+        if (uVar8 == 0) goto LAB_822a8384;
       }
-      if (fVar1 <= local_80[uVar6 + 6]) {
-        if (uVar9 == *puVar5) {
-          *(float *)(puVar5 + 2) = (float)dVar13;
-          *(float *)(puVar5 + 4) = (float)dVar11;
-          *(float *)(puVar5 + 6) = (float)dVar12;
-          *(float *)(puVar5 + 8) = (float)dVar10;
+      if (fVar1 <= local_80[uVar7 + 6]) {
+        if (uVar10 == pCVar4->sector) {
+          pCVar4->linkMins[0] = (float)dVar14;
+          pCVar4->linkMins[1] = (float)dVar12;
+          pCVar4->linkMaxs[0] = (float)dVar13;
+          pCVar4->linkMaxs[1] = (float)dVar11;
           __restfpr_28();
           __restgprlr_26();
           return;
         }
         break;
       }
-      uVar7 = (uint)*(ushort *)((int)pfVar8 + uVar9 * 0x10 + 0x26);
-      local_80[uVar6] = fVar1;
-    } while (uVar7 != 0);
+      uVar8 = (uint)pCVar9->sectors[uVar10].tree.child[1];
+      local_80[uVar7] = fVar1;
+    } while (uVar8 != 0);
 LAB_822a8384:
-    if (*puVar5 == 0) {
-      CG_AddEntityToCollSector(uVar4,param_2,uVar9);
+    if (pCVar4->sector == 0) {
+      CG_AddEntityToCollSector(LVar3,iVar6,(ushort)uVar10);
 LAB_822a83d8:
-      *(float *)(puVar5 + 2) = (float)dVar13;
-      *(float *)(puVar5 + 4) = (float)dVar11;
-      *(float *)(puVar5 + 6) = (float)dVar12;
-      *(float *)(puVar5 + 8) = (float)dVar10;
-      CG_SortEntityCollSector(uVar4,uVar9,local_80 + 2,local_80);
+      pCVar4->linkMins[0] = (float)dVar14;
+      pCVar4->linkMins[1] = (float)dVar12;
+      pCVar4->linkMaxs[0] = (float)dVar13;
+      pCVar4->linkMaxs[1] = (float)dVar11;
+      CG_SortEntityCollSector(LVar3,(ushort)uVar10,local_80 + 2,local_80);
       __restfpr_28();
       __restgprlr_26();
       return;
     }
-    if (uVar9 == *puVar5) goto LAB_822a83d8;
-    CG_UnlinkEntityColl(uVar4,param_2);
+    if (uVar10 == pCVar4->sector) goto LAB_822a83d8;
+    CG_UnlinkEntityColl(LVar3,iVar6);
   } while( true );
 }
 

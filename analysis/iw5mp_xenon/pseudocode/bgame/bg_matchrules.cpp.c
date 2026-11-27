@@ -2,36 +2,40 @@
 
 // 827FC3F0  Com_BlockChecksum32  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/common/checksum.h:9)
 
-void Com_BlockChecksum32(undefined8 param_1,undefined8 param_2)
+uint Com_BlockChecksum32(void *param_1,uint param_2)
 
 {
-  Com_BlockChecksumKey32(param_1,param_2,0);
-  return;
+  uint uVar1;
+  
+  uVar1 = Com_BlockChecksumKey32(param_1,param_2,0);
+  return uVar1;
 }
 
 
 // 827FC3F8  AssertMatchRulesVersionIsSet  (bgame/bg_matchrules.cpp:79)
 
-void AssertMatchRulesVersionIsSet(void)
+void AssertMatchRulesVersionIsSet(MatchRules *param_1)
 
 {
-  uint uVar2;
-  undefined8 uVar1;
+  uchar *puVar1;
+  StructuredDataDef *pSVar2;
   int iVar3;
   int iVar4;
-  uint local_30 [12];
+  StructuredDataBuffer local_30 [6];
   
-  uVar2 = __savegprlr_29();
-  uVar1 = StructuredDataDef_GetAsset(0xffffffff8203d614,0xc00);
-  if (uVar2 == 0) {
-    MyAssertHandler(0xffffffff821e2648,0x54,0,0xffffffff82000f98,0xffffffff82030240);
+  puVar1 = (uchar *)__savegprlr_29(param_1);
+  pSVar2 = StructuredDataDef_GetAsset("mp/recipes.def",0xc00);
+  if (puVar1 == (uchar *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\../universal/com_structureddatadef.h"
+                    ,0x54,0,"%s");
   }
-  local_30[1] = 0xc00;
-  local_30[0] = uVar2;
-  iVar3 = StructuredData_GetVersion(uVar1);
+  local_30[0].size = 0xc00;
+  local_30[0].data = puVar1;
+  iVar3 = StructuredData_GetVersion(pSVar2);
   iVar4 = StructuredData_GetDataVersion(local_30);
   if (iVar4 != iVar3) {
-    MyAssertHandler(0xffffffff821e26a0,0x54,0,0xffffffff82000f98,0xffffffff821e26e8);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",0x54,
+                    0,"%s");
   }
   __restgprlr_29();
   return;
@@ -40,24 +44,27 @@ void AssertMatchRulesVersionIsSet(void)
 
 // 827FC4A0  MatchRules_Notify  (bgame/bg_matchrules.cpp:102)
 
-void MatchRules_Notify(undefined8 param_1,uint param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void MatchRules_Notify(int param_1,MatchRulesNotify param_2)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
-  char cVar3;
+  LocalClientNum_t LVar1;
+  char *pcVar2;
+  bool bVar3;
   
-  if (1 < param_2) {
-    MyAssertHandler(0xffffffff821e26a0,0x67,0,0xffffffff821e277c,param_2,2);
+  if (MRNOTIFY_FAILED_TO_SAVE < param_2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",0x67,
+                    0,"notify doesn\'t index MRNOTIFY_COUNT\n\t%i not in [0, %i)");
   }
-  uVar1 = CL_LocalClientNumFromControllerIndex(param_1);
-  uVar2 = UI_SafeTranslateString(0xffffffff8208bd7c);
-  Dvar_SetFromStringByName(0xffffffff821e2764,uVar2);
-  uVar2 = UI_SafeTranslateString((&PTR_s_MPUI_RECIPE_LOAD_FAILED_829a59c0)[param_2]);
-  Dvar_SetFromStringByName(0xffffffff821e274c,uVar2);
-  cVar3 = Menu_IsMenuOpenAndVisible(uVar1,0xffffffff821e2738);
-  if (cVar3 == '\0') {
-    UI_OpenMenu(uVar1,0xffffffff821e2738);
+  LVar1 = CL_LocalClientNumFromControllerIndex(param_1);
+  pcVar2 = UI_SafeTranslateString("MENU_NOTICE");
+  Dvar_SetFromStringByName("cl_vault_notify_title",pcVar2);
+  pcVar2 = UI_SafeTranslateString(s_matchRulesNotifyLocStrings[param_2]);
+  Dvar_SetFromStringByName("cl_vault_notify_message",pcVar2);
+  bVar3 = Menu_IsMenuOpenAndVisible(LVar1,"popup_vault_notify");
+  if (!bVar3) {
+    UI_OpenMenu(LVar1,"popup_vault_notify");
   }
   return;
 }
@@ -65,652 +72,676 @@ void MatchRules_Notify(undefined8 param_1,uint param_2)
 
 // 827FC578  LookupStringFromPlayerdata  (bgame/bg_matchrules.cpp:180)
 
-void LookupStringFromPlayerdata(undefined8 param_1,int *param_2)
+char * LookupStringFromPlayerdata(int param_1,char **param_2)
 
 {
-  int iVar1;
-  int *piVar2;
-  longlong lVar3;
+  char **ppcVar1;
+  char *pcVar2;
+  int iVar3;
   
-  lVar3 = 0;
-  iVar1 = *param_2;
-  piVar2 = param_2;
-  while (iVar1 != 0) {
-    piVar2 = piVar2 + 1;
-    lVar3 = lVar3 + 1;
-    iVar1 = *piVar2;
+  iVar3 = 0;
+  pcVar2 = *param_2;
+  ppcVar1 = param_2;
+  while (pcVar2 != (char *)0x0) {
+    ppcVar1 = ppcVar1 + 1;
+    iVar3 = iVar3 + 1;
+    pcVar2 = *ppcVar1;
   }
-  LiveStorage_PlayerDataGetString(param_1,param_2,lVar3);
-  return;
+  pcVar2 = LiveStorage_PlayerDataGetString(param_1,param_2,iVar3);
+  return pcVar2;
 }
 
 
 // 82800590  ValidateKillstreakType  (bgame/bg_matchrules.cpp:197)
 
-void ValidateKillstreakType
-               (undefined8 param_1,ulonglong param_2,undefined8 param_3,longlong param_4,int param_5
-               )
+int ValidateKillstreakType(int param_1,char *param_2,char *param_3,char *(*param_4) [5],int param_5)
 
 {
   longlong lVar1;
   int iVar2;
-  undefined8 uVar3;
+  GameStateInfo *pGVar3;
+  StructuredDataDef *pSVar4;
   int iVar5;
-  undefined8 uVar4;
-  char cVar7;
+  bool bVar7;
   char *pcVar6;
-  longlong lVar8;
-  int local_70 [28];
+  ulonglong uVar8;
+  int iVar9;
+  longlong lVar10;
+  StructuredDataBuffer local_70 [14];
   
-  uVar3 = __savegprlr_21();
-  iVar5 = GameStateInfo_Get();
-  if (*(int *)(iVar5 + 8) == 0) {
-    MyAssertHandler(0xffffffff821e26a0,0xc9,0,0xffffffff82000f98,0xffffffff821e6158);
+  lVar10 = (longlong)(int)param_4;
+  uVar8 = (ulonglong)(int)param_2;
+  iVar2 = __savegprlr_21(param_1);
+  pGVar3 = GameStateInfo_Get();
+  if (pGVar3->matchRules == (MatchRules *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",0xc9,
+                    0,"%s");
   }
-  uVar4 = StructuredDataDef_GetAsset(0xffffffff8203d614,0xc00);
-  iVar5 = GameStateInfo_Get();
-  local_70[0] = *(int *)(iVar5 + 8);
-  if (local_70[0] == 0) {
-    MyAssertHandler(0xffffffff821e2648,0x54,0,0xffffffff82000f98,0xffffffff82030240);
+  pSVar4 = StructuredDataDef_GetAsset("mp/recipes.def",0xc00);
+  pGVar3 = GameStateInfo_Get();
+  local_70[0].data = pGVar3->matchRules->data;
+  if ((MatchRules *)local_70[0].data == (MatchRules *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\../universal/com_structureddatadef.h"
+                    ,0x54,0,"%s");
   }
-  local_70[1] = 0xc00;
-  if (((param_2 & 0xffffffff) != 0) && (iVar5 = I_stricmp(param_2,param_3), iVar5 == 0)) {
-    cVar7 = StructuredData_GetData<bool>
-                      (uVar4,local_70,0xffffffff821e6148,0xffffffff821e612c,param_3);
-    if (cVar7 != '\0') {
+  local_70[0].size = 0xc00;
+  if (((uVar8 & 0xffffffff) != 0) && (iVar5 = I_stricmp((char *)uVar8,param_3), iVar5 == 0)) {
+    bVar7 = StructuredData_GetData<bool>(pSVar4,local_70);
+    if (bVar7) {
 LAB_82800688:
-      __restgprlr_21(0);
-      return;
+      iVar2 = __restgprlr_21(0);
+      return iVar2;
     }
     iVar5 = 0;
     if (0 < param_5) {
       do {
-        lVar8 = 0;
-        iVar2 = *(int *)param_4;
-        lVar1 = param_4;
-        while (iVar2 != 0) {
+        iVar9 = 0;
+        pcVar6 = *(char **)lVar10;
+        lVar1 = lVar10;
+        while (pcVar6 != (char *)0x0) {
           lVar1 = lVar1 + 4;
-          lVar8 = lVar8 + 1;
-          iVar2 = *(int *)lVar1;
+          iVar9 = iVar9 + 1;
+          pcVar6 = (char *)*(int *)lVar1;
         }
-        pcVar6 = (char *)LiveStorage_PlayerDataGetString(uVar3,param_4,lVar8);
+        pcVar6 = LiveStorage_PlayerDataGetString(iVar2,(char **)lVar10,iVar9);
         if ((pcVar6 == (char *)0x0) || (*pcVar6 == '\0')) {
-          MyAssertHandler(0xffffffff821e26a0,0xd9,0,0xffffffff82000f98,0xffffffff821e60f0);
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp"
+                          ,0xd9,0,"%s");
         }
-        cVar7 = StructuredData_GetData<bool>
-                          (uVar4,local_70,0xffffffff821e6148,0xffffffff821e6114,pcVar6);
-        if (cVar7 != '\0') goto LAB_82800688;
+        bVar7 = StructuredData_GetData<bool>(pSVar4,local_70);
+        if (bVar7) goto LAB_82800688;
         iVar5 = iVar5 + 1;
-        param_4 = param_4 + 0x14;
+        lVar10 = lVar10 + 0x14;
       } while (iVar5 < param_5);
     }
   }
-  __restgprlr_21(1);
-  return;
+  iVar2 = __restgprlr_21(1);
+  return iVar2;
 }
 
 
 // 828013D8  StructuredData_GetData<bool>  (universal/com_structureddatadef.h:208)
 
-/* WARNING: Restarted to delay deadcode elimination for space: stack */
-
-undefined1
-StructuredData_GetData<bool>
-          (undefined8 param_1,undefined4 param_2,undefined8 param_3,undefined8 param_4,
-          undefined8 param_5,undefined8 param_6,undefined8 param_7,undefined8 param_8)
+bool StructuredData_GetData<bool>(StructuredDataDef *param_1,StructuredDataBuffer *param_2)
 
 {
-  undefined4 uStack0000001c;
-  undefined8 uStack00000020;
-  undefined8 uStack00000028;
-  undefined8 uStack00000030;
-  undefined8 uStack00000038;
-  undefined8 uStack00000040;
-  undefined8 uStack00000048;
-  undefined1 local_10 [16];
+  StructuredDataBuffer *pSStack0000001c;
+  undefined1 local_10 [4];
+  char *local_c;
   
-  uStack00000020 = param_3;
-  uStack00000028 = param_4;
-  uStack00000030 = param_5;
-  uStack00000038 = param_6;
-  uStack00000040 = param_7;
-  uStack00000048 = param_8;
-  uStack0000001c = param_2;
-  StructuredData_VardicGetLookupByVaList(param_1,param_2,local_10,&stack0x00000020);
-  return local_10[0];
+  local_c = &stack0x00000020;
+  pSStack0000001c = param_2;
+  StructuredData_VardicGetLookupByVaList(param_1,param_2,local_10,local_c);
+  return (bool)local_10[0];
 }
 
 
 // 827FC5A0  GetWeaponGroup  (bgame/bg_matchrules.cpp:230)
 
-void GetWeaponGroup(undefined8 param_1)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+
+char * GetWeaponGroup(char *param_1)
 
 {
   int iVar1;
-  undefined4 local_20 [2];
+  char *pcVar2;
+  StringTable *local_20 [2];
   
-  StringTable_GetAsset(0xffffffff820867c8,local_20);
-  iVar1 = DB_IsXAssetDefault(0x26,0xffffffff820867c8);
+  StringTable_GetAsset("mp/statstable.csv",local_20);
+  iVar1 = DB_IsXAssetDefault(ASSET_TYPE_STRINGTABLE,"mp/statstable.csv");
   if (iVar1 != 0) {
-    Com_Error(1,0xffffffff821e27b8);
+    Com_Error(ERR_DROP,"\x15Unable to find the lookup table \'mp/statstable.csv\' in the fastfile");
   }
-  StringTable_Lookup(local_20[0],4,param_1,2);
-  return;
+  pcVar2 = StringTable_Lookup(local_20[0],4,param_1,2);
+  return pcVar2;
 }
 
 
 // 82800758  ValidateWeaponClass  (bgame/bg_matchrules.cpp:242)
 
-void ValidateWeaponClass(void)
+int ValidateWeaponClass(char *param_1)
 
 {
-  undefined8 uVar1;
-  int iVar3;
-  undefined8 uVar2;
-  char *pcVar4;
-  char cVar5;
-  int local_30 [12];
+  char *pcVar1;
+  GameStateInfo *pGVar2;
+  StructuredDataDef *pSVar3;
+  bool bVar5;
+  int iVar4;
+  StructuredDataBuffer local_30 [6];
   
-  uVar1 = __savegprlr_28();
-  iVar3 = GameStateInfo_Get();
-  if (*(int *)(iVar3 + 8) == 0) {
-    MyAssertHandler(0xffffffff821e26a0,0xf5,0,0xffffffff82000f98,0xffffffff821e6158);
+  pcVar1 = (char *)__savegprlr_28(param_1);
+  pGVar2 = GameStateInfo_Get();
+  if (pGVar2->matchRules == (MatchRules *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",0xf5,
+                    0,"%s");
   }
-  uVar2 = StructuredDataDef_GetAsset(0xffffffff8203d614,0xc00);
-  iVar3 = GameStateInfo_Get();
-  local_30[0] = *(int *)(iVar3 + 8);
-  if (local_30[0] == 0) {
-    MyAssertHandler(0xffffffff821e2648,0x54,0,0xffffffff82000f98,0xffffffff82030240);
+  pSVar3 = StructuredDataDef_GetAsset("mp/recipes.def",0xc00);
+  pGVar2 = GameStateInfo_Get();
+  local_30[0].data = pGVar2->matchRules->data;
+  if ((MatchRules *)local_30[0].data == (MatchRules *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\../universal/com_structureddatadef.h"
+                    ,0x54,0,"%s");
   }
-  local_30[1] = 0xc00;
-  pcVar4 = (char *)GetWeaponGroup(uVar1);
-  if ((pcVar4 != (char *)0x0) && (*pcVar4 != '\0')) {
-    cVar5 = StructuredData_GetData<bool>(uVar2,local_30,0xffffffff821e6148,0xffffffff821e6178);
-    __restgprlr_28(cVar5 == '\0');
-    return;
+  local_30[0].size = 0xc00;
+  pcVar1 = GetWeaponGroup(pcVar1);
+  if ((pcVar1 != (char *)0x0) && (*pcVar1 != '\0')) {
+    bVar5 = StructuredData_GetData<bool>(pSVar3,local_30);
+    iVar4 = __restgprlr_28(!bVar5);
+    return iVar4;
   }
-  __restgprlr_28(1);
-  return;
+  iVar4 = __restgprlr_28(1);
+  return iVar4;
 }
 
 
 // 82800850  MatchRules_ValidateWeapon  (bgame/bg_matchrules.cpp:264)
 
-void MatchRules_ValidateWeapon(void)
+int MatchRules_ValidateWeapon(char *param_1)
 
 {
+  char *pcVar2;
+  GameStateInfo *pGVar3;
+  StructuredDataDef *pSVar4;
+  bool bVar6;
+  int iVar5;
   undefined8 uVar1;
-  int iVar3;
-  undefined8 uVar2;
-  char cVar4;
-  int local_30 [12];
+  StructuredDataBuffer local_30 [6];
   
-  uVar1 = __savegprlr_28();
-  iVar3 = GameStateInfo_Get();
-  if (*(int *)(iVar3 + 8) == 0) {
-    MyAssertHandler(0xffffffff821e26a0,0x10b,0,0xffffffff82000f98,0xffffffff821e6158);
+  pcVar2 = (char *)__savegprlr_28(param_1);
+  pGVar3 = GameStateInfo_Get();
+  if (pGVar3->matchRules == (MatchRules *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",0x10b
+                    ,0,"%s");
   }
-  uVar2 = StructuredDataDef_GetAsset(0xffffffff8203d614,0xc00);
-  iVar3 = GameStateInfo_Get();
-  local_30[0] = *(int *)(iVar3 + 8);
-  if (local_30[0] == 0) {
-    MyAssertHandler(0xffffffff821e2648,0x54,0,0xffffffff82000f98,0xffffffff82030240);
+  pSVar4 = StructuredDataDef_GetAsset("mp/recipes.def",0xc00);
+  pGVar3 = GameStateInfo_Get();
+  local_30[0].data = pGVar3->matchRules->data;
+  if ((MatchRules *)local_30[0].data == (MatchRules *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\../universal/com_structureddatadef.h"
+                    ,0x54,0,"%s");
   }
-  local_30[1] = 0xc00;
-  cVar4 = StructuredData_GetData<bool>(uVar2,local_30,0xffffffff821e6148,0xffffffff821e6190,uVar1);
-  iVar3 = ValidateWeaponClass(uVar1);
-  if ((cVar4 != '\0') || (uVar1 = 1, iVar3 == 0)) {
+  local_30[0].size = 0xc00;
+  bVar6 = StructuredData_GetData<bool>(pSVar4,local_30);
+  iVar5 = ValidateWeaponClass(pcVar2);
+  if ((bVar6) || (uVar1 = 1, iVar5 == 0)) {
     uVar1 = 0;
   }
-  __restgprlr_28(uVar1);
-  return;
+  iVar5 = __restgprlr_28(uVar1);
+  return iVar5;
 }
 
 
 // 82800948  MatchRules_ValidateCustomClass  (bgame/bg_matchrules.cpp:284)
 
-void MatchRules_ValidateCustomClass(undefined8 param_1,ulonglong param_2,undefined8 param_3)
+int MatchRules_ValidateCustomClass(int param_1,char *param_2,int param_3)
 
 {
-  int *piVar1;
-  undefined8 uVar2;
-  int iVar5;
-  undefined8 uVar3;
-  ulonglong uVar4;
+  char **ppcVar1;
+  int iVar2;
+  GameStateInfo *pGVar3;
+  StructuredDataDef *pSVar4;
+  char *pcVar5;
   int iVar6;
-  char *pcVar7;
-  char cVar8;
-  longlong lVar9;
-  int *piVar10;
-  uint uVar11;
-  undefined1 auStack_300 [8];
-  int local_2f8 [3];
-  undefined1 *local_2ec;
-  char *local_2e8;
-  undefined *local_2e4;
-  undefined4 local_2e0;
-  int local_2d0;
-  undefined1 *local_2cc;
+  bool bVar7;
+  int iVar8;
+  char **ppcVar9;
+  uint uVar10;
+  ulonglong uVar11;
+  char *pcVar12;
+  char acStack_300 [8];
+  StructuredDataBuffer local_2f8;
+  char *local_2f0;
+  char *local_2ec [7];
+  char *local_2d0;
+  char *local_2cc;
   char *local_2c8;
-  undefined1 *local_2c4;
-  undefined4 local_2c0;
-  int local_2bc;
-  undefined1 *local_2b8;
+  char *local_2c4;
+  char *local_2c0;
+  char *local_2bc;
+  char *local_2b8;
   char *local_2b4;
-  undefined1 *local_2b0;
+  undefined *local_2b0;
   undefined4 local_2ac;
-  int local_2a8;
-  undefined1 *local_2a4;
+  char *local_2a8;
+  char *local_2a4;
   char *local_2a0;
-  undefined *local_29c;
+  char *local_29c;
   undefined4 local_298;
-  int local_290;
-  undefined1 *local_28c;
+  char *local_290;
+  char *local_28c;
   char *local_288;
-  undefined1 *local_284;
-  undefined4 local_280;
-  int local_27c;
-  undefined1 *local_278;
+  char *local_284;
+  char *local_280;
+  char *local_27c;
+  char *local_278;
   char *local_274;
-  undefined1 *local_270;
+  undefined *local_270;
   undefined4 local_26c;
-  int local_268;
-  undefined1 *local_264;
+  char *local_268;
+  char *local_264;
   char *local_260;
-  undefined *local_25c;
+  char *local_25c;
   undefined4 local_258;
-  int local_250;
-  undefined1 *local_24c;
+  char *local_250;
+  char *local_24c;
   char *local_248;
-  undefined1 *local_244;
-  undefined4 local_240;
-  int local_23c;
-  undefined1 *local_238;
+  char *local_244;
+  char *local_240;
+  char *local_23c;
+  char *local_238;
   char *local_234;
-  undefined1 *local_230;
+  undefined *local_230;
   undefined4 local_22c;
-  int local_228;
-  undefined1 *local_224;
+  char *local_228;
+  char *local_224;
   char *local_220;
-  undefined *local_21c;
+  char *local_21c;
   undefined4 local_218;
-  int local_210;
-  undefined1 *local_20c;
+  char *local_210;
+  char *local_20c;
   char *local_208;
-  undefined1 *local_204;
+  undefined *local_204;
   char *local_200;
-  undefined1 *local_1fc;
+  undefined *local_1fc;
   undefined4 local_1f8;
-  int local_1f4;
-  undefined1 *local_1f0;
+  char *local_1f4;
+  char *local_1f0;
   char *local_1ec;
-  undefined1 *local_1e8;
+  undefined *local_1e8;
   char *local_1e4;
-  undefined1 *local_1e0;
+  undefined *local_1e0;
   undefined4 local_1dc;
-  int local_1d8;
-  undefined1 *local_1d4;
+  char *local_1d8;
+  char *local_1d4;
   char *local_1d0;
-  undefined1 *local_1cc;
+  undefined *local_1cc;
   char *local_1c8;
-  undefined1 *local_1c4;
+  undefined *local_1c4;
   undefined4 local_1c0;
-  int local_1bc;
-  undefined1 *local_1b8;
+  char *local_1bc;
+  char *local_1b8;
   char *local_1b4;
-  undefined1 *local_1b0;
+  undefined *local_1b0;
   char *local_1ac;
-  undefined1 *local_1a8;
+  undefined *local_1a8;
   undefined4 local_1a4;
-  int local_1a0;
-  undefined1 *local_19c;
+  char *local_1a0;
+  char *local_19c;
   char *local_198;
-  undefined1 *local_194;
+  undefined *local_194;
   char *local_190;
   undefined4 local_18c;
-  int local_188;
-  undefined1 *local_184;
+  char *local_188;
+  char *local_184;
   char *local_180;
-  undefined1 *local_17c;
+  undefined *local_17c;
   char *local_178;
   undefined4 local_174;
-  int local_170;
-  undefined1 *local_16c;
+  char *local_170;
+  char *local_16c;
   char *local_168;
   undefined4 local_164;
-  int local_150;
-  undefined1 *local_14c;
+  undefined8 local_160;
+  char *local_150;
+  char *local_14c;
   char *local_148;
-  undefined1 *local_144;
-  undefined *local_140;
+  undefined *local_144;
+  char *local_140;
   undefined4 local_13c;
-  int local_138;
-  undefined1 *local_134;
+  char *local_138;
+  char *local_134;
   char *local_130;
-  undefined1 *local_12c;
-  undefined *local_128;
+  undefined *local_12c;
+  char *local_128;
   undefined4 local_124;
-  int local_120;
-  undefined1 *local_11c;
+  char *local_120;
+  char *local_11c;
   char *local_118;
+  undefined4 local_114;
   undefined4 local_110;
   undefined4 local_10c;
-  int local_108;
-  undefined1 *local_104;
+  char *local_108;
+  char *local_104;
   char *local_100;
-  undefined1 *local_fc;
+  undefined *local_fc;
   undefined4 local_f8;
-  int local_f0;
-  undefined1 *local_ec;
+  undefined4 local_f4;
+  char *local_f0;
+  char *local_ec;
   char *local_e8;
-  undefined *local_e4;
+  char *local_e4;
   undefined4 local_e0;
-  int local_d8;
-  undefined1 *local_d4;
+  undefined4 local_dc;
+  char *local_d8;
+  char *local_d4;
   char *local_d0;
-  undefined *local_cc;
+  char *local_cc;
   undefined4 local_c8;
-  int local_c0;
-  undefined1 *local_bc;
+  undefined4 local_c4;
+  char *local_c0;
+  char *local_bc;
   char *local_b8;
-  undefined1 *local_b4;
+  undefined *local_b4;
   undefined4 local_b0;
-  int local_a8;
-  undefined1 *local_a4;
+  undefined4 local_ac;
+  char *local_a8;
+  char *local_a4;
   char *local_a0;
-  undefined *local_9c;
+  char *local_9c;
   undefined4 local_98;
+  undefined4 local_94;
   
-  uVar2 = __savegprlr_16();
-  iVar5 = GameStateInfo_Get();
-  if (*(int *)(iVar5 + 8) == 0) {
-    MyAssertHandler(0xffffffff821e26a0,0x121,0,0xffffffff82000f98,0xffffffff821e6158);
+  uVar11 = (ulonglong)(int)param_2;
+  iVar2 = __savegprlr_16(param_1,uVar11,param_3);
+  pGVar3 = GameStateInfo_Get();
+  if (pGVar3->matchRules == (MatchRules *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",0x121
+                    ,0,"%s");
   }
-  uVar3 = StructuredDataDef_GetAsset(0xffffffff8203d614,0xc00);
-  iVar5 = GameStateInfo_Get();
-  local_2f8[0] = *(int *)(iVar5 + 8);
-  if (local_2f8[0] == 0) {
-    MyAssertHandler(0xffffffff821e2648,0x54,0,0xffffffff82000f98,0xffffffff82030240);
+  pSVar4 = StructuredDataDef_GetAsset("mp/recipes.def",0xc00);
+  pGVar3 = GameStateInfo_Get();
+  local_2f8.data = pGVar3->matchRules->data;
+  if ((MatchRules *)local_2f8.data == (MatchRules *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\../universal/com_structureddatadef.h"
+                    ,0x54,0,"%s");
   }
-  local_2f8[1] = 0xc00;
-  Com_sprintf(auStack_300,3,0xffffffff82013b64,param_3);
-  if (((param_2 & 0xffffffff) == 0) || (*(char *)param_2 == '\0')) {
-    param_2 = 0xffffffff82085ff0;
+  local_2f8.size = 0xc00;
+  Com_sprintf(acStack_300,3,"%d");
+  if (((uVar11 & 0xffffffff) == 0) || (*(char *)uVar11 == '\0')) {
+    uVar11 = 0xffffffff82085ff0;
   }
-  iVar5 = (int)param_2;
+  pcVar12 = (char *)uVar11;
+  local_1a0 = pcVar12;
+  local_188 = pcVar12;
+  local_170 = pcVar12;
   local_198 = "weaponSetups";
-  local_194 = &DAT_8203248c;
+  local_194 = &s_0;
   local_180 = "weaponSetups";
-  local_184 = auStack_300;
-  local_16c = auStack_300;
+  local_184 = acStack_300;
+  local_16c = acStack_300;
   local_18c = 0;
   local_190 = "weapon";
-  local_19c = auStack_300;
-  local_17c = &DAT_82032490;
+  local_17c = &s_1;
   local_178 = "weapon";
+  local_19c = acStack_300;
   local_174 = 0;
-  uVar11 = 0;
+  uVar10 = 0;
   local_168 = "specialGrenade";
-  piVar10 = &local_1a0;
+  ppcVar9 = &local_1a0;
   local_164 = 0;
-  local_1a0 = iVar5;
-  local_188 = iVar5;
-  local_170 = iVar5;
+  local_160 = 0;
   do {
-    lVar9 = 0;
-    iVar6 = *piVar10;
-    piVar1 = piVar10;
-    while (iVar6 != 0) {
-      piVar1 = piVar1 + 1;
-      lVar9 = lVar9 + 1;
-      iVar6 = *piVar1;
+    iVar6 = 0;
+    pcVar5 = *ppcVar9;
+    ppcVar1 = ppcVar9;
+    while (pcVar5 != (char *)0x0) {
+      ppcVar1 = ppcVar1 + 1;
+      iVar6 = iVar6 + 1;
+      pcVar5 = *ppcVar1;
     }
-    uVar4 = LiveStorage_PlayerDataGetString(uVar2,piVar10,lVar9);
-    if ((uVar4 & 0xffffffff) == 0) {
-      MyAssertHandler(0xffffffff821e26a0,0x134,0,0xffffffff82000f98,0xffffffff820772bc);
+    pcVar5 = LiveStorage_PlayerDataGetString(iVar2,ppcVar9,iVar6);
+    if (pcVar5 == (char *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",
+                      0x134,0,"%s");
     }
-    iVar6 = I_stricmp(uVar4,0xffffffff82003484);
-    if ((iVar6 != 0) && (iVar6 = MatchRules_ValidateWeapon(uVar4), iVar6 == 0)) goto LAB_82801004;
-    uVar11 = uVar11 + 1;
-    piVar10 = piVar10 + 6;
-  } while (uVar11 < 3);
-  local_20c = auStack_300;
+    iVar6 = I_stricmp(pcVar5,"none");
+    if ((iVar6 != 0) && (iVar6 = MatchRules_ValidateWeapon(pcVar5), iVar6 == 0)) goto LAB_82801004;
+    uVar10 = uVar10 + 1;
+    ppcVar9 = ppcVar9 + 6;
+  } while (uVar10 < 3);
+  local_210 = pcVar12;
   local_208 = "weaponSetups";
-  local_204 = &DAT_8203248c;
-  local_1f0 = auStack_300;
+  local_204 = &s_0;
+  local_20c = acStack_300;
   local_200 = "attachment";
-  local_1d4 = auStack_300;
   local_1e4 = "attachment";
-  local_1b8 = auStack_300;
   local_1c8 = "attachment";
   local_1ac = "attachment";
-  local_1fc = &DAT_8203248c;
+  local_1fc = &s_0;
   local_1f8 = 0;
-  uVar11 = 0;
-  piVar10 = &local_210;
+  uVar10 = 0;
+  local_1f4 = pcVar12;
+  ppcVar9 = &local_210;
+  local_1f0 = acStack_300;
   local_1ec = "weaponSetups";
-  local_1e8 = &DAT_8203248c;
-  local_1e0 = &DAT_82032490;
+  local_1e8 = &s_0;
+  local_1e0 = &s_1;
   local_1dc = 0;
+  local_1d8 = pcVar12;
+  local_1d4 = acStack_300;
   local_1d0 = "weaponSetups";
-  local_1cc = &DAT_82032490;
-  local_1c4 = &DAT_8203248c;
+  local_1cc = &s_1;
+  local_1c4 = &s_0;
   local_1c0 = 0;
+  local_1bc = pcVar12;
+  local_1b8 = acStack_300;
   local_1b4 = "weaponSetups";
-  local_1b0 = &DAT_82032490;
-  local_1a8 = &DAT_82032490;
+  local_1b0 = &s_1;
+  local_1a8 = &s_1;
   local_1a4 = 0;
-  local_210 = iVar5;
-  local_1f4 = iVar5;
-  local_1d8 = iVar5;
-  local_1bc = iVar5;
   do {
-    lVar9 = 0;
-    iVar6 = *piVar10;
-    piVar1 = piVar10;
-    while (iVar6 != 0) {
-      piVar1 = piVar1 + 1;
-      lVar9 = lVar9 + 1;
-      iVar6 = *piVar1;
+    iVar6 = 0;
+    pcVar5 = *ppcVar9;
+    ppcVar1 = ppcVar9;
+    while (pcVar5 != (char *)0x0) {
+      ppcVar1 = ppcVar1 + 1;
+      iVar6 = iVar6 + 1;
+      pcVar5 = *ppcVar1;
     }
-    pcVar7 = (char *)LiveStorage_PlayerDataGetString(uVar2,piVar10,lVar9);
-    if ((pcVar7 == (char *)0x0) || (*pcVar7 == '\0')) {
-      MyAssertHandler(0xffffffff821e26a0,0x147,0,0xffffffff82000f98,0xffffffff821e61d8);
+    pcVar5 = LiveStorage_PlayerDataGetString(iVar2,ppcVar9,iVar6);
+    if ((pcVar5 == (char *)0x0) || (*pcVar5 == '\0')) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",
+                      0x147,0,"%s");
     }
-    cVar8 = StructuredData_GetData<bool>
-                      (uVar3,local_2f8,0xffffffff821e6148,0xffffffff821e61fc,pcVar7);
-    if (cVar8 != '\0') goto LAB_82801004;
-    uVar11 = uVar11 + 1;
-    piVar10 = piVar10 + 7;
-  } while (uVar11 < 4);
+    bVar7 = StructuredData_GetData<bool>(pSVar4,&local_2f8);
+    if (bVar7) goto LAB_82801004;
+    uVar10 = uVar10 + 1;
+    ppcVar9 = ppcVar9 + 7;
+  } while (uVar10 < 4);
   local_148 = "weaponSetups";
   local_130 = "weaponSetups";
-  local_144 = &DAT_8203248c;
-  local_14c = auStack_300;
-  local_140 = &DAT_820889e0;
-  local_134 = auStack_300;
+  local_150 = pcVar12;
+  local_144 = &s_0;
+  local_138 = pcVar12;
+  local_140 = "buff";
   local_118 = "deathstreak";
-  local_11c = auStack_300;
-  local_128 = &DAT_820889e0;
-  local_12c = &DAT_82032490;
-  local_104 = auStack_300;
+  local_14c = acStack_300;
+  local_134 = acStack_300;
+  local_128 = "buff";
+  local_11c = acStack_300;
+  local_12c = &s_1;
   local_13c = 0;
   local_124 = 0;
-  local_ec = auStack_300;
+  local_120 = pcVar12;
+  local_114 = 0;
   local_110 = 0;
   local_10c = 0;
+  local_104 = acStack_300;
+  local_108 = pcVar12;
   local_100 = "perks";
-  local_d4 = auStack_300;
-  local_fc = &DAT_82032490;
+  local_fc = &s_1;
   local_f8 = 0;
-  local_bc = auStack_300;
+  local_f4 = 0;
+  local_ec = acStack_300;
+  local_f0 = pcVar12;
   local_e8 = "perks";
-  local_e4 = &DAT_820889f8;
-  local_a4 = auStack_300;
+  local_e4 = "2";
   local_e0 = 0;
-  uVar11 = 0;
-  piVar10 = &local_150;
+  uVar10 = 0;
+  local_dc = 0;
+  local_d8 = pcVar12;
+  ppcVar9 = &local_150;
+  local_d4 = acStack_300;
   local_d0 = "perks";
-  local_cc = &DAT_821e61d4;
+  local_cc = "3";
   local_c8 = 0;
+  local_c4 = 0;
+  local_c0 = pcVar12;
+  local_bc = acStack_300;
   local_b8 = "perks";
-  local_b4 = &DAT_8203248c;
+  local_b4 = &s_0;
   local_b0 = 0;
+  local_ac = 0;
+  local_a8 = pcVar12;
   local_a0 = "perks";
-  local_9c = &DAT_821e61d0;
+  local_9c = "6";
+  local_a4 = acStack_300;
   local_98 = 0;
-  local_150 = iVar5;
-  local_138 = iVar5;
-  local_120 = iVar5;
-  local_108 = iVar5;
-  local_f0 = iVar5;
-  local_d8 = iVar5;
-  local_c0 = iVar5;
-  local_a8 = iVar5;
+  local_94 = 0;
   do {
-    lVar9 = 0;
-    iVar6 = *piVar10;
-    piVar1 = piVar10;
-    while (iVar6 != 0) {
-      piVar1 = piVar1 + 1;
-      lVar9 = lVar9 + 1;
-      iVar6 = *piVar1;
+    iVar6 = 0;
+    pcVar5 = *ppcVar9;
+    ppcVar1 = ppcVar9;
+    while (pcVar5 != (char *)0x0) {
+      ppcVar1 = ppcVar1 + 1;
+      iVar6 = iVar6 + 1;
+      pcVar5 = *ppcVar1;
     }
-    pcVar7 = (char *)LiveStorage_PlayerDataGetString(uVar2,piVar10,lVar9);
-    if ((pcVar7 == (char *)0x0) || (*pcVar7 == '\0')) {
-      MyAssertHandler(0xffffffff821e26a0,0x16b,0,0xffffffff82000f98,0xffffffff821e61a8);
+    pcVar5 = LiveStorage_PlayerDataGetString(iVar2,ppcVar9,iVar6);
+    if ((pcVar5 == (char *)0x0) || (*pcVar5 == '\0')) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",
+                      0x16b,0,"%s");
     }
-    cVar8 = StructuredData_GetData<bool>
-                      (uVar3,local_2f8,0xffffffff821e6148,0xffffffff821e61c0,pcVar7);
-    if (cVar8 != '\0') goto LAB_82801004;
-    uVar11 = uVar11 + 1;
-    piVar10 = piVar10 + 6;
-  } while (uVar11 < 8);
-  local_2ec = auStack_300;
-  local_2e8 = "perks";
-  local_2e0 = 0;
-  lVar9 = 0;
-  local_2e4 = &DAT_821e61a4;
-  piVar10 = local_2f8 + 2;
-  if ((param_2 & 0xffffffff) != 0) {
+    bVar7 = StructuredData_GetData<bool>(pSVar4,&local_2f8);
+    if (bVar7) goto LAB_82801004;
+    uVar10 = uVar10 + 1;
+    ppcVar9 = ppcVar9 + 6;
+  } while (uVar10 < 8);
+  local_2ec[1] = "perks";
+  local_2ec[3] = (char *)0x0;
+  local_2ec[0] = acStack_300;
+  iVar8 = 0;
+  local_2ec[2] = "5";
+  ppcVar9 = &local_2f0;
+  iVar6 = 0;
+  if ((uVar11 & 0xffffffff) != 0) {
     do {
-      piVar10 = piVar10 + 1;
-      lVar9 = lVar9 + 1;
-    } while (*piVar10 != 0);
+      ppcVar9 = ppcVar9 + 1;
+      iVar8 = iVar6 + 1;
+      iVar6 = iVar8;
+    } while (*ppcVar9 != (char *)0x0);
   }
-  local_2f8[2] = iVar5;
-  uVar3 = LiveStorage_PlayerDataGetString(uVar2,local_2f8 + 2,lVar9);
-  local_24c = auStack_300;
-  local_244 = &DAT_8203248c;
-  local_238 = auStack_300;
-  local_224 = auStack_300;
+  local_2f0 = pcVar12;
+  pcVar5 = LiveStorage_PlayerDataGetString(iVar2,&local_2f0,iVar8);
+  local_24c = acStack_300;
+  local_244 = "0";
+  local_238 = acStack_300;
+  local_224 = acStack_300;
   local_248 = "assaultStreaks";
-  local_240 = 0;
+  local_240 = (char *)0x0;
   local_234 = "assaultStreaks";
-  local_230 = &DAT_82032490;
+  local_230 = &s_1;
   local_22c = 0;
   local_220 = "assaultStreaks";
-  local_21c = &DAT_820889f8;
+  local_21c = "2";
   local_218 = 0;
-  local_250 = iVar5;
-  local_23c = iVar5;
-  local_228 = iVar5;
-  iVar6 = ValidateKillstreakType(uVar2,uVar3,0xffffffff82087338,&local_250,3);
+  local_250 = pcVar12;
+  local_23c = pcVar12;
+  local_228 = pcVar12;
+  iVar6 = ValidateKillstreakType(iVar2,pcVar5,"streaktype_assault",(char *(*) [5])&local_250,3);
   if (iVar6 != 0) {
-    local_2cc = auStack_300;
-    local_2c4 = &DAT_8203248c;
-    local_2b8 = auStack_300;
-    local_2a4 = auStack_300;
+    local_2cc = acStack_300;
+    local_2c4 = "0";
+    local_2b8 = acStack_300;
+    local_2a4 = acStack_300;
     local_2c8 = "defenseStreaks";
-    local_2c0 = 0;
+    local_2c0 = (char *)0x0;
     local_2b4 = "defenseStreaks";
-    local_2b0 = &DAT_82032490;
+    local_2b0 = &s_1;
     local_2ac = 0;
     local_2a0 = "defenseStreaks";
-    local_29c = &DAT_820889f8;
+    local_29c = "2";
     local_298 = 0;
-    local_2d0 = iVar5;
-    local_2bc = iVar5;
-    local_2a8 = iVar5;
-    iVar6 = ValidateKillstreakType(uVar2,uVar3,0xffffffff8208734c,&local_2d0,3);
+    local_2d0 = pcVar12;
+    local_2bc = pcVar12;
+    local_2a8 = pcVar12;
+    iVar6 = ValidateKillstreakType(iVar2,pcVar5,"streaktype_support",(char *(*) [5])&local_2d0,3);
     if (iVar6 != 0) {
-      local_28c = auStack_300;
-      local_284 = &DAT_8203248c;
-      local_278 = auStack_300;
-      local_264 = auStack_300;
+      local_28c = acStack_300;
+      local_284 = "0";
+      local_278 = acStack_300;
+      local_264 = acStack_300;
       local_288 = "specialistStreaks";
-      local_280 = 0;
+      local_280 = (char *)0x0;
       local_274 = "specialistStreaks";
-      local_270 = &DAT_82032490;
+      local_270 = &s_1;
       local_26c = 0;
       local_260 = "specialistStreaks";
-      local_25c = &DAT_820889f8;
+      local_25c = "2";
       local_258 = 0;
-      local_290 = iVar5;
-      local_27c = iVar5;
-      local_268 = iVar5;
-      lVar9 = ValidateKillstreakType(uVar2,uVar3,0xffffffff82087360,&local_290,3);
-      __restgprlr_16(lVar9 != 0);
-      return;
+      local_290 = pcVar12;
+      local_27c = pcVar12;
+      local_268 = pcVar12;
+      iVar2 = ValidateKillstreakType
+                        (iVar2,pcVar5,"streaktype_specialist",(char *(*) [5])&local_290,3);
+      iVar2 = __restgprlr_16(iVar2 != 0);
+      return iVar2;
     }
   }
 LAB_82801004:
-  __restgprlr_16(0);
-  return;
+  iVar2 = __restgprlr_16(0);
+  return iVar2;
 }
 
 
 // 827FC620  UpdateMatchRulesDataFromOldDef  (bgame/bg_matchrules.cpp:411)
 
-void UpdateMatchRulesDataFromOldDef(undefined8 param_1,int param_2)
+bool UpdateMatchRulesDataFromOldDef(uchar *param_1,int param_2)
 
 {
-  uint uVar2;
-  undefined8 uVar1;
-  uint local_30 [12];
+  uchar *puVar1;
+  StructuredDataDefSet *pSVar2;
+  bool bVar3;
+  undefined1 uVar4;
+  StructuredDataBuffer local_30 [6];
   
-  uVar2 = __savegprlr_28();
-  if (uVar2 == 0) {
-    MyAssertHandler(0xffffffff821e26a0,0x19e,0,0xffffffff82000f98,0xffffffff8201f49c);
+  puVar1 = (uchar *)__savegprlr_28(param_1);
+  if (puVar1 == (uchar *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",0x19e
+                    ,0,"%s");
   }
   if (0xc00 < param_2) {
-    MyAssertHandler(0xffffffff821e26a0,0x19f,0,0xffffffff82000f98,0xffffffff821e2800);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",0x19f
+                    ,0,"%s");
   }
-  uVar1 = StructuredDataDefSet_GetAsset(0xffffffff8203d614);
-  if (uVar2 == 0) {
-    MyAssertHandler(0xffffffff821e2648,0x54,0,0xffffffff82000f98,0xffffffff82030240);
+  pSVar2 = StructuredDataDefSet_GetAsset("mp/recipes.def");
+  if (puVar1 == (uchar *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\../universal/com_structureddatadef.h"
+                    ,0x54,0,"%s");
   }
-  local_30[1] = 0xc00;
-  local_30[0] = uVar2;
-  StructuredData_UpdateVersion(uVar1,local_30,0);
-  __restgprlr_28();
-  return;
+  local_30[0].size = 0xc00;
+  local_30[0].data = puVar1;
+  bVar3 = StructuredData_UpdateVersion(pSVar2,local_30,(StructuredDataDef *)0x0);
+  uVar4 = __restgprlr_28(bVar3);
+  return (bool)uVar4;
 }
 
 
 // 827FC6E8  UpdateMatchRulesChecksumAndVersion  (bgame/bg_matchrules.cpp:424)
 
-void UpdateMatchRulesChecksumAndVersion(void)
+void UpdateMatchRulesChecksumAndVersion(MatchRules *param_1)
 
 {
-  uint uVar1;
-  int iVar2;
-  undefined4 uVar3;
-  uint local_30 [12];
+  uchar *puVar1;
+  StructuredDataDef *pSVar2;
+  uint uVar3;
+  StructuredDataBuffer local_30 [6];
   
-  uVar1 = __savegprlr_29();
-  if (uVar1 == 0) {
-    MyAssertHandler(0xffffffff821e26a0,0x1a9,0,0xffffffff82000f98,0xffffffff821e2820);
+  puVar1 = (uchar *)__savegprlr_29(param_1);
+  if (puVar1 == (uchar *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",0x1a9
+                    ,0,"%s");
   }
-  iVar2 = StructuredDataDef_GetAsset(0xffffffff8203d614,0xc00);
-  if (uVar1 == 0) {
-    MyAssertHandler(0xffffffff821e2648,0x54,0,0xffffffff82000f98,0xffffffff82030240);
+  pSVar2 = StructuredDataDef_GetAsset("mp/recipes.def",0xc00);
+  if (puVar1 == (uchar *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\../universal/com_structureddatadef.h"
+                    ,0x54,0,"%s");
   }
-  local_30[1] = 0xc00;
-  local_30[0] = uVar1;
-  StructuredData_SetDataVersion(iVar2,local_30);
-  uVar3 = Com_BlockChecksumKey32(uVar1,*(undefined4 *)(iVar2 + 0x30),0);
-  *(undefined4 *)(uVar1 + 0xc04) = uVar3;
+  local_30[0].size = 0xc00;
+  local_30[0].data = puVar1;
+  StructuredData_SetDataVersion(pSVar2,local_30);
+  uVar3 = Com_BlockChecksumKey32(puVar1,pSVar2->size,0);
+  *(uint *)(puVar1 + 0xc04) = uVar3;
   __restgprlr_29();
   return;
 }
@@ -718,19 +749,22 @@ void UpdateMatchRulesChecksumAndVersion(void)
 
 // 82801010  InitializeMatchRules  (bgame/bg_matchrules.cpp:439)
 
-void InitializeMatchRules(ulonglong param_1)
+void InitializeMatchRules(MatchRules *param_1)
 
 {
   int iVar1;
   
-  if ((param_1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821e26a0,0x1b8,0,0xffffffff82000f98,0xffffffff821e2820);
+  if (param_1 == (MatchRules *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",0x1b8
+                    ,0,"%s");
   }
-  Com_Printf(0x10,0xffffffff821e6270);
-  iVar1 = LoadMatchRulesDefaultFromFF(param_1,0xffffffff82072a84);
+  Com_Printf(0x10,"[InitializeMatchRules] Attempting to load war.recipe defaults\n");
+  iVar1 = LoadMatchRulesDefaultFromFF(param_1,"war");
   if (iVar1 == 0) {
-    Com_PrintError(0x10,0xffffffff821e6218);
-    memset((void *)param_1,0,0xc01);
+    Com_PrintError(0x10,
+                   "[InitializeMatchRules] Unable to load default gametype \'war\', memsetting to 0 instead.\n"
+                  );
+    memset();
   }
   UpdateMatchRulesChecksumAndVersion(param_1);
   return;
@@ -739,23 +773,28 @@ void InitializeMatchRules(ulonglong param_1)
 
 // 828010B8  MatchRulesChanged  (bgame/bg_matchrules.cpp:460)
 
-void MatchRulesChanged(ulonglong param_1)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void MatchRulesChanged(MatchRules *param_1)
 
 {
-  undefined8 uVar1;
-  char cVar2;
+  char *pcVar1;
+  bool bVar3;
+  PartyData *pPVar2;
   
-  if ((param_1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821e26a0,0x1cd,0,0xffffffff82000f98,0xffffffff821e2820);
+  if (param_1 == (MatchRules *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",0x1cd
+                    ,0,"%s");
   }
   UpdateMatchRulesChecksumAndVersion(param_1);
-  uVar1 = BG_MatchRulesData_GetString(param_1,0xffffffff820337c4);
-  Dvar_SetString(DAT_83f71eb0,uVar1);
-  uVar1 = BG_MatchRulesData_GetString(param_1,0xffffffff820337c4);
-  Dvar_SetStringByName(0xffffffff82022f8c,uVar1);
-  if ((*(char *)(DAT_84253bb8 + 0xc) != '\0') && (cVar2 = Lobby_AreWeHost(), cVar2 != '\0')) {
-    Lobby_GetPartyData();
-    PartyHost_MatchRulesStateChanged();
+  pcVar1 = BG_MatchRulesData_GetString(param_1,"gametype");
+  Dvar_SetString(ui_gametype,pcVar1);
+  pcVar1 = BG_MatchRulesData_GetString(param_1,"gametype");
+  Dvar_SetStringByName("g_gametype",pcVar1);
+  if (((xblive_privatematch->current).enabled != false) && (bVar3 = Lobby_AreWeHost(), bVar3)) {
+    pPVar2 = Lobby_GetPartyData();
+    PartyHost_MatchRulesStateChanged(pPVar2);
   }
   return;
 }
@@ -763,352 +802,410 @@ void MatchRulesChanged(ulonglong param_1)
 
 // 827FC798  GetLocalizedMatchRulesName  (bgame/bg_matchrules.cpp:474)
 
-void GetLocalizedMatchRulesName(char *param_1,undefined8 param_2)
+char * GetLocalizedMatchRulesName(char *param_1,char *param_2)
 
 {
+  char *pcVar1;
+  
   if ((param_1 != (char *)0x0) && (*param_1 != '\0')) {
-    return;
+    return param_1;
   }
-  UI_GetCustomizedGameTypeDefaultDisplayName(param_2);
-  return;
+  pcVar1 = UI_GetCustomizedGameTypeDefaultDisplayName(param_2);
+  return pcVar1;
 }
 
 
 // 827FC7B8  HeaderCache_SaveFile  (bgame/bg_matchrules.cpp:483)
 
-void HeaderCache_SaveFile(undefined8 param_1,int param_2,ulonglong param_3)
+MatchRulesSaveHeader *
+HeaderCache_SaveFile(MatchRulesSaveHeader *param_1,MatchRulesSaveLocation param_2,char *param_3)
 
 {
   char cVar1;
   char cVar2;
-  void *_Src;
   int iVar3;
-  undefined4 uVar4;
-  char *pcVar5;
-  uint uVar6;
-  undefined1 *puVar7;
+  uint uVar4;
+  MatchRulesSaveHeader *pMVar5;
+  ulonglong uVar6;
+  char *pcVar7;
   uint uVar8;
   
-  _Src = (void *)__savegprlr_23();
-  if (_Src == (void *)0x0) {
-    MyAssertHandler(0xffffffff821e26a0,0x1ea,0,0xffffffff82000f98,0xffffffff82058e00);
+  uVar6 = (ulonglong)(int)param_3;
+  iVar3 = __savegprlr_23(param_1);
+  if (iVar3 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",0x1ea
+                    ,0,"%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821e26a0,0x1eb,0,0xffffffff82000f98,0xffffffff82032494);
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",0x1eb
+                    ,0,"%s");
   }
-  uVar6 = 8;
+  uVar4 = 8;
   uVar8 = 0;
-  puVar7 = &DAT_84877eb4;
+  pcVar7 = g_matchRulesHeader[0].xuid;
   do {
-    if (*(int *)(puVar7 + -0xc) == 0) {
-      if (uVar6 == 8) {
-        uVar6 = uVar8;
+    if (((MatchRulesHeaderCache *)(pcVar7 + -0xc))->inUse == 0) {
+      if (uVar4 == 8) {
+        uVar4 = uVar8;
       }
     }
-    else if ((param_2 == *(int *)(puVar7 + -4)) && (iVar3 = I_strcmp(param_3,puVar7), iVar3 == 0))
-    break;
-    puVar7 = puVar7 + 0x210;
+    else if ((param_2 == *(MatchRulesSaveLocation *)(pcVar7 + -4)) &&
+            (iVar3 = I_strcmp((char *)uVar6,pcVar7), iVar3 == 0)) break;
+    pcVar7 = pcVar7 + 0x210;
     uVar8 = uVar8 + 1;
-  } while ((int)puVar7 < -0x7b7870cc);
+  } while ((int)pcVar7 < -0x7b7870cc);
   if (uVar8 == 8) {
-    uVar8 = uVar6;
-    if (uVar6 == 8) {
-      Com_PrintWarning(0x10,0xffffffff821e2918);
+    uVar8 = uVar4;
+    if (uVar4 == 8) {
+      Com_PrintWarning(0x10,
+                       "[HeaderCache_SaveFile] MatchRulesHeaderCache is full, so overwriting oldest used file.\n"
+                      );
       uVar8 = 8;
-      uVar6 = 0xffffffff;
-      if (DAT_84877eac != 0xffffffff) {
+      uVar4 = 0xffffffff;
+      if (g_matchRulesHeader[0].lastAccessedTime != 0xffffffff) {
         uVar8 = 0;
-        uVar6 = DAT_84877eac;
+        uVar4 = g_matchRulesHeader[0].lastAccessedTime;
       }
-      if (DAT_848780bc < uVar6) {
+      if (g_matchRulesHeader[1].lastAccessedTime < uVar4) {
         uVar8 = 1;
-        uVar6 = DAT_848780bc;
+        uVar4 = g_matchRulesHeader[1].lastAccessedTime;
       }
-      if (DAT_848782cc < uVar6) {
+      if (g_matchRulesHeader[2].lastAccessedTime < uVar4) {
         uVar8 = 2;
-        uVar6 = DAT_848782cc;
+        uVar4 = g_matchRulesHeader[2].lastAccessedTime;
       }
-      if (DAT_848784dc < uVar6) {
+      if (g_matchRulesHeader[3].lastAccessedTime < uVar4) {
         uVar8 = 3;
-        uVar6 = DAT_848784dc;
+        uVar4 = g_matchRulesHeader[3].lastAccessedTime;
       }
-      if (DAT_848786ec < uVar6) {
+      if (g_matchRulesHeader[4].lastAccessedTime < uVar4) {
         uVar8 = 4;
-        uVar6 = DAT_848786ec;
+        uVar4 = g_matchRulesHeader[4].lastAccessedTime;
       }
-      if (DAT_848788fc < uVar6) {
+      if (g_matchRulesHeader[5].lastAccessedTime < uVar4) {
         uVar8 = 5;
-        uVar6 = DAT_848788fc;
+        uVar4 = g_matchRulesHeader[5].lastAccessedTime;
       }
-      if (DAT_84878b0c < uVar6) {
+      if (g_matchRulesHeader[6].lastAccessedTime < uVar4) {
         uVar8 = 6;
-        uVar6 = DAT_84878b0c;
+        uVar4 = g_matchRulesHeader[6].lastAccessedTime;
       }
-      if (DAT_84878d1c < uVar6) {
+      if (g_matchRulesHeader[7].lastAccessedTime < uVar4) {
         uVar8 = 7;
       }
     }
     if (7 < uVar8) {
-      MyAssertHandler(0xffffffff821e26a0,0x212,0,0xffffffff821e28dc,uVar8,8);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",
+                      0x212,0,"cacheIndex doesn\'t index MAX_CACHED\n\t%i not in [0, %i)");
     }
-    I_strncpyz(&DAT_84877eb4 + uVar8 * 0x210,param_3,0x40);
-    (&DAT_84877eb0)[uVar8 * 0x84] = param_2;
-    (&DAT_84877ea8)[uVar8 * 0x84] = 1;
+    I_strncpyz(g_matchRulesHeader[uVar8].xuid,(char *)uVar6,0x40);
+    g_matchRulesHeader[uVar8].saveLocation = param_2;
+    g_matchRulesHeader[uVar8].inUse = 1;
   }
   if (0x107f < uVar8) {
-    MyAssertHandler(0xffffffff821e26a0,0x21b,0,0xffffffff821e2890,uVar8,0x1080);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",0x21b
+                    ,0,"cacheIndex doesn\'t index sizeof( g_matchRulesHeader )\n\t%i not in [0, %i)"
+                   );
   }
-  if ((&DAT_84877ea8)[uVar8 * 0x84] != 0) {
-    pcVar5 = &DAT_84877eb4 + uVar8 * 0x210;
+  if (g_matchRulesHeader[uVar8].inUse != 0) {
+    pcVar7 = g_matchRulesHeader[uVar8].xuid;
     do {
-      cVar1 = *(char *)param_3;
-      cVar2 = *pcVar5;
+      cVar1 = *(char *)uVar6;
+      cVar2 = *pcVar7;
       if (cVar1 == '\0') break;
-      param_3 = param_3 + 1;
-      pcVar5 = pcVar5 + 1;
+      uVar6 = uVar6 + 1;
+      pcVar7 = pcVar7 + 1;
     } while (cVar1 == cVar2);
-    if ((cVar1 == cVar2) && (param_2 == (&DAT_84877eb0)[uVar8 * 0x84])) goto LAB_827fca40;
+    if ((cVar1 == cVar2) && (param_2 == g_matchRulesHeader[uVar8].saveLocation)) goto LAB_827fca40;
   }
-  MyAssertHandler(0xffffffff821e26a0,0x21e,0,0xffffffff82000f98,0xffffffff821e2830);
+  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",0x21e,0
+                  ,"%s");
 LAB_827fca40:
   uVar4 = Sys_GetTimeAsSeconds();
-  (&DAT_84877eac)[uVar8 * 0x84] = uVar4;
-  memcpy(&DAT_84877ef4 + uVar8 * 0x210,_Src,0x1c4);
-  __restgprlr_23(&DAT_84877ef4 + uVar8 * 0x210);
-  return;
+  g_matchRulesHeader[uVar8].lastAccessedTime = uVar4;
+  memcpy();
+  pMVar5 = (MatchRulesSaveHeader *)__restgprlr_23(uVar8 * 0x210 + -0x7b78810c);
+  return pMVar5;
 }
 
 
 // 827FCA68  HeaderCache_FindFile  (bgame/bg_matchrules.cpp:551)
 
-void HeaderCache_FindFile(undefined8 param_1,undefined8 param_2)
+MatchRulesSaveHeader * HeaderCache_FindFile(MatchRulesSaveLocation param_1,char *param_2)
 
 {
-  int iVar1;
+  MatchRulesSaveLocation MVar1;
   int iVar2;
-  uint uVar3;
-  int *piVar4;
+  MatchRulesSaveHeader *pMVar3;
+  uint uVar4;
+  MatchRulesHeaderCache *pMVar5;
   
-  iVar1 = __savegprlr_28();
-  uVar3 = 0;
-  piVar4 = &DAT_84877ea8;
-  while (((*piVar4 == 0 || (iVar1 != piVar4[2])) ||
-         (iVar2 = I_strcmp(param_2,piVar4 + 3), iVar2 != 0))) {
-    uVar3 = uVar3 + 0x210;
-    piVar4 = piVar4 + 0x84;
-    if (0x107f < uVar3) {
-      __restgprlr_28(0);
-      return;
+  MVar1 = __savegprlr_28(param_1);
+  uVar4 = 0;
+  pMVar5 = g_matchRulesHeader;
+  while (((pMVar5->inUse == 0 || (MVar1 != pMVar5->saveLocation)) ||
+         (iVar2 = I_strcmp(param_2,pMVar5->xuid), iVar2 != 0))) {
+    uVar4 = uVar4 + 0x210;
+    pMVar5 = pMVar5 + 1;
+    if (0x107f < uVar4) {
+      pMVar3 = (MatchRulesSaveHeader *)__restgprlr_28(0);
+      return pMVar3;
     }
   }
-  iVar1 = Sys_GetTimeAsSeconds();
-  piVar4[1] = iVar1;
-  __restgprlr_28(piVar4 + 0x13);
-  return;
+  uVar4 = Sys_GetTimeAsSeconds();
+  pMVar5->lastAccessedTime = uVar4;
+  pMVar3 = (MatchRulesSaveHeader *)__restgprlr_28(&pMVar5->header);
+  return pMVar3;
 }
 
 
 // 827FCAE8  BG_MatchRulesData_GetString  (bgame/bg_matchrules.cpp:573)
 
-void BG_MatchRulesData_GetString(undefined8 param_1,ulonglong param_2)
+char * BG_MatchRulesData_GetString(MatchRules *param_1,char *param_2)
 
 {
-  uint uVar2;
-  undefined8 uVar1;
-  int iVar3;
-  int iVar4;
-  uint local_50 [4];
-  undefined1 auStack_40 [64];
+  uchar *puVar1;
+  StructuredDataDef *pSVar2;
+  LookupState LVar3;
+  LookupResultDataType LVar4;
+  char *pcVar5;
+  ulonglong uVar6;
+  StructuredDataBuffer local_50 [2];
+  StructuredDataLookup aSStack_40 [4];
   
-  uVar2 = __savegprlr_28();
-  if (uVar2 == 0) {
-    MyAssertHandler(0xffffffff821e26a0,0x242,0,0xffffffff82000f98,0xffffffff821e2820);
+  uVar6 = (ulonglong)(int)param_2;
+  puVar1 = (uchar *)__savegprlr_28(param_1);
+  if (puVar1 == (uchar *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",0x242
+                    ,0,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821e26a0,0x243,0,0xffffffff82000f98,0xffffffff821e29a0);
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",0x243
+                    ,0,"%s");
   }
-  uVar1 = StructuredDataDef_GetAsset(0xffffffff8203d614,0xc00);
-  if (uVar2 == 0) {
-    MyAssertHandler(0xffffffff821e2648,0x54,0,0xffffffff82000f98,0xffffffff82030240);
+  pSVar2 = StructuredDataDef_GetAsset("mp/recipes.def",0xc00);
+  if (puVar1 == (uchar *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\../universal/com_structureddatadef.h"
+                    ,0x54,0,"%s");
   }
-  local_50[1] = 0xc00;
-  local_50[0] = uVar2;
-  StructuredData_InitializeLookup(uVar1,auStack_40);
-  StructuredData_LookupWithString(auStack_40,param_2);
-  iVar3 = StructuredData_GetLookupState(auStack_40);
-  iVar4 = StructuredData_GetLookupResultType(auStack_40);
-  if ((iVar3 != 1) || (iVar4 != 2)) {
-    Com_PrintError(0x10,0xffffffff821e2970,param_2);
-    Com_Error(DAT_829a59d0,PTR_s_MENU_MATCHRULES_DATAREADERROR_829a59d4);
+  local_50[0].size = 0xc00;
+  local_50[0].data = puVar1;
+  StructuredData_InitializeLookup(pSVar2,aSStack_40);
+  StructuredData_LookupWithString(aSStack_40,(char *)uVar6);
+  LVar3 = StructuredData_GetLookupState(aSStack_40);
+  LVar4 = StructuredData_GetLookupResultType(aSStack_40);
+  if ((LVar3 != LOOKUP_FINISHED) || (LVar4 != LOOKUP_RESULT_STRING)) {
+    Com_PrintError(0x10,"Could not find \'%s\' field in mp/recipes.def\'\n");
+    Com_Error(genericError[1].level,genericError[1].error);
   }
-  StructuredData_GetString(auStack_40,local_50);
-  __restgprlr_28();
-  return;
+  pcVar5 = StructuredData_GetString(aSStack_40,local_50);
+  pcVar5 = (char *)__restgprlr_28(pcVar5);
+  return pcVar5;
 }
 
 
 // 827FCC18  BG_MatchRulesData_GetRecipeName  (bgame/bg_matchrules.cpp:600)
 
-void BG_MatchRulesData_GetRecipeName(undefined8 param_1)
+char * BG_MatchRulesData_GetRecipeName(MatchRules *param_1)
 
 {
-  BG_MatchRulesData_GetString(param_1,0xffffffff821e29b0);
-  return;
+  char *pcVar1;
+  
+  pcVar1 = BG_MatchRulesData_GetString(param_1,"recipeName");
+  return pcVar1;
 }
 
 
 // 827FCC28  BG_MatchRulesData_GetGameType  (bgame/bg_matchrules.cpp:606)
 
-void BG_MatchRulesData_GetGameType(undefined8 param_1)
+char * BG_MatchRulesData_GetGameType(MatchRules *param_1)
 
 {
-  BG_MatchRulesData_GetString(param_1,0xffffffff820337c4);
-  return;
+  char *pcVar1;
+  
+  pcVar1 = BG_MatchRulesData_GetString(param_1,"gametype");
+  return pcVar1;
 }
 
 
 // 827FCC38  BG_MatchRulesData_GetGameTypeFromIndex  (bgame/bg_matchrules.cpp:612)
 
-void BG_MatchRulesData_GetGameTypeFromIndex(void)
+char * BG_MatchRulesData_GetGameTypeFromIndex(uint param_1)
 
 {
-  undefined8 uVar1;
-  int iVar2;
-  int iVar3;
-  int iVar4;
-  undefined4 *puVar5;
-  undefined1 auStack_30 [4];
-  int *local_2c;
+  uint uVar1;
+  StructuredDataDef *pSVar2;
+  LookupState LVar3;
+  LookupResultDataType LVar4;
+  StructuredDataEnumEntry *pSVar5;
+  char *pcVar6;
+  StructuredDataLookup aSStack_30 [3];
   
-  uVar1 = __savegprlr_29();
-  iVar2 = StructuredDataDef_GetAsset(0xffffffff8203d614,0xc00);
-  StructuredData_InitializeLookup(iVar2,auStack_30);
-  StructuredData_LookupWithString(auStack_30,0xffffffff820337c4);
-  iVar3 = StructuredData_GetLookupState(auStack_30);
-  iVar4 = StructuredData_GetLookupResultType(auStack_30);
-  if ((iVar3 != 1) || (iVar4 != 2)) {
-    Com_PrintError(0x10,0xffffffff821e2a48);
-    Com_Error(DAT_829a59d0,PTR_s_MENU_MATCHRULES_DATAREADERROR_829a59d4);
+  uVar1 = __savegprlr_29(param_1);
+  pSVar2 = StructuredDataDef_GetAsset("mp/recipes.def",0xc00);
+  StructuredData_InitializeLookup(pSVar2,aSStack_30);
+  StructuredData_LookupWithString(aSStack_30,"gametype");
+  LVar3 = StructuredData_GetLookupState(aSStack_30);
+  LVar4 = StructuredData_GetLookupResultType(aSStack_30);
+  if ((LVar3 != LOOKUP_FINISHED) || (LVar4 != LOOKUP_RESULT_STRING)) {
+    Com_PrintError(0x10,"Could not find \'gametype\' field in \'mp/recipes.def\'\n");
+    Com_Error(genericError[1].level,genericError[1].error);
   }
-  if (*local_2c != 4) {
-    Com_PrintError(0x10,0xffffffff821e2a0c);
-    Com_Error(DAT_829a59d0,PTR_s_MENU_MATCHRULES_DATAREADERROR_829a59d4);
+  if ((aSStack_30[0].type)->type != DATA_ENUM) {
+    Com_PrintError(0x10,"\'gametype\' field in \'mp/recipes.def\' is not of enum type\n");
+    Com_Error(genericError[1].level,genericError[1].error);
   }
-  if (*(uint *)(iVar2 + 8) <= (uint)local_2c[1]) {
-    MyAssertHandler(0xffffffff821e26a0,0x27b,0,0xffffffff821e29c0);
+  if ((uint)pSVar2->enumCount <= ((aSStack_30[0].type)->u).stringDataLength) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",0x27b
+                    ,0,"lookup.type->u.enumIndex doesn\'t index def->enumCount\n\t%i not in [0, %i)"
+                   );
   }
-  puVar5 = (undefined4 *)
-           StructuredData_GetEnumEntryAtIndex
-                     (((ulonglong)(uint)local_2c[1] +
-                       ((ulonglong)(uint)local_2c[1] & 0x7fffffff) * 2 & 0x3fffffff) * 4 +
-                      (ulonglong)*(uint *)(iVar2 + 0xc),uVar1);
-  __restgprlr_29(*puVar5);
-  return;
+  pSVar5 = StructuredData_GetEnumEntryAtIndex
+                     (pSVar2->enums + ((aSStack_30[0].type)->u).stringDataLength,uVar1);
+  pcVar6 = (char *)__restgprlr_29(pSVar5->string);
+  return pcVar6;
 }
 
 
 // 827FCD48  BG_MatchRulesData_GetGameTypeIndex  (bgame/bg_matchrules.cpp:643)
 
-void BG_MatchRulesData_GetGameTypeIndex(void)
+uint BG_MatchRulesData_GetGameTypeIndex(MatchRules *param_1)
 
 {
-  uint uVar2;
-  undefined8 uVar1;
-  int iVar3;
-  int iVar4;
-  uint local_40 [4];
-  undefined4 local_30;
-  int *local_2c;
-  undefined4 local_28;
+  uchar *puVar1;
+  StructuredDataDef *pSVar2;
+  LookupState LVar3;
+  LookupResultDataType LVar4;
+  StructuredDataEnumEntry *pSVar5;
+  uint uVar6;
+  StructuredDataBuffer local_40 [2];
+  StructuredDataLookup local_30 [3];
   
-  uVar2 = __savegprlr_29();
-  if (uVar2 == 0) {
-    MyAssertHandler(0xffffffff821e26a0,0x288,0,0xffffffff82000f98,0xffffffff821e2820);
+  puVar1 = (uchar *)__savegprlr_29(param_1);
+  if (puVar1 == (uchar *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",0x288
+                    ,0,"%s");
   }
-  uVar1 = StructuredDataDef_GetAsset(0xffffffff8203d614,0xc00);
-  StructuredData_InitializeLookup(uVar1,&local_30);
-  StructuredData_LookupWithString(&local_30,0xffffffff820337c4);
-  iVar3 = StructuredData_GetLookupState(&local_30);
-  iVar4 = StructuredData_GetLookupResultType(&local_30);
-  if ((iVar3 != 1) || (iVar4 != 2)) {
-    Com_PrintError(0x10,0xffffffff821e2a48);
-    Com_Error(DAT_829a59d0,PTR_s_MENU_MATCHRULES_DATAREADERROR_829a59d4);
+  pSVar2 = StructuredDataDef_GetAsset("mp/recipes.def",0xc00);
+  StructuredData_InitializeLookup(pSVar2,local_30);
+  StructuredData_LookupWithString(local_30,"gametype");
+  LVar3 = StructuredData_GetLookupState(local_30);
+  LVar4 = StructuredData_GetLookupResultType(local_30);
+  if ((LVar3 != LOOKUP_FINISHED) || (LVar4 != LOOKUP_RESULT_STRING)) {
+    Com_PrintError(0x10,"Could not find \'gametype\' field in \'mp/recipes.def\'\n");
+    Com_Error(genericError[1].level,genericError[1].error);
   }
-  if (*local_2c != 4) {
-    Com_PrintError(0x10,0xffffffff821e2a0c);
-    Com_Error(DAT_829a59d0,PTR_s_MENU_MATCHRULES_DATAREADERROR_829a59d4);
+  if ((local_30[0].type)->type != DATA_ENUM) {
+    Com_PrintError(0x10,"\'gametype\' field in \'mp/recipes.def\' is not of enum type\n");
+    Com_Error(genericError[1].level,genericError[1].error);
   }
-  if (uVar2 == 0) {
-    MyAssertHandler(0xffffffff821e2648,0x54,0,0xffffffff82000f98,0xffffffff82030240);
+  if (puVar1 == (uchar *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\../universal/com_structureddatadef.h"
+                    ,0x54,0,"%s");
   }
-  local_40[1] = 0xc00;
-  local_40[0] = uVar2;
-  iVar3 = StructuredData_GetEnumEntryAtOffset(local_30,local_2c,local_28,local_40);
-  __restgprlr_29(*(undefined2 *)(iVar3 + 4));
-  return;
+  local_40[0].size = 0xc00;
+  local_40[0].data = puVar1;
+  pSVar5 = StructuredData_GetEnumEntryAtOffset
+                     (local_30[0].def,local_30[0].type,local_30[0].offset,local_40);
+  uVar6 = __restgprlr_29(pSVar5->index);
+  return uVar6;
+}
+
+
+// 827FCE78  GetXuid  (bgame/bg_matchrules.cpp:676)
+
+char * GetXuid(int param_1)
+
+{
+  longlong lVar1;
+  char *pcVar2;
+  
+  lVar1 = __savegprlr_29(param_1);
+  if ((int)lVar1 < 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x2d7,0,
+                    "%s");
+  }
+  if (3 < (int)lVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x2d8,0,
+                    "%s");
+  }
+  lVar1 = lVar1 * 0x2058 + -0x7bdb4a28;
+  if (lVar1 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x2d9,0,
+                    "%s");
+  }
+  pcVar2 = (char *)__restgprlr_29(lVar1);
+  return pcVar2;
 }
 
 
 // 827FCE80  BuildFilename  (bgame/bg_matchrules.cpp:685)
 
-void BuildFilename(undefined8 param_1,ulonglong param_2,ulonglong param_3,longlong param_4)
+void BuildFilename(MatchRulesSaveLocation param_1,char *param_2,char *param_3,int param_4)
 
 {
   int iVar1;
   char *pcVar2;
-  char *pcVar5;
-  ulonglong uVar3;
-  longlong lVar4;
+  char *pcVar3;
+  ulonglong uVar4;
+  char *pcVar6;
+  ulonglong uVar5;
   
-  iVar1 = __savegprlr_26();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821e26a0,0x2b0,0,0xffffffff82000f98,0xffffffff82032494);
+  uVar4 = (ulonglong)(int)param_3;
+  uVar5 = (ulonglong)(int)param_2;
+  iVar1 = __savegprlr_26(param_1);
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",0x2b0
+                    ,0,"%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821e26a0,0x2b1,0,0xffffffff82000f98,0xffffffff821e2ba4);
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",0x2b1
+                    ,0,"%s");
   }
-  pcVar2 = (char *)param_2;
+  pcVar3 = (char *)uVar5;
+  pcVar2 = (char *)uVar4;
   if (iVar1 == 1) {
-    uVar3 = param_2;
-    if (*pcVar2 == '\0') {
+    if (*pcVar3 == '\0') {
       iVar1 = 0;
     }
     else {
       do {
-        pcVar5 = (char *)uVar3;
-        uVar3 = uVar3 + 1;
-      } while (*pcVar5 != '\0');
-      iVar1 = (int)uVar3 - (int)pcVar2;
+        pcVar6 = (char *)uVar5;
+        uVar5 = uVar5 + 1;
+      } while (*pcVar6 != '\0');
+      iVar1 = (int)uVar5 - (int)pcVar3;
     }
-    if ((int)param_4 < iVar1 + 0xc) {
-      MyAssertHandler(0xffffffff821e26a0,0x2b5,0,0xffffffff82000f98,0xffffffff821e2b30);
+    if (param_4 < iVar1 + 0xc) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",
+                      0x2b5,0,"%s");
     }
-    I_strncpyz(param_3,0xffffffff821e2b24,param_4);
-    lVar4 = 0xb;
+    I_strncpyz(pcVar2,"cmr_history",param_4);
+    iVar1 = 0xb;
   }
   else {
     if (iVar1 != 0) {
-      MyAssertHandler(0xffffffff821e26a0,699,0,0xffffffff82000f98,0xffffffff821e2b00);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",699
+                      ,0,"%s");
     }
-    uVar3 = param_2;
-    if (*pcVar2 == '\0') {
+    if (*pcVar3 == '\0') {
       iVar1 = 0;
     }
     else {
       do {
-        pcVar5 = (char *)uVar3;
-        uVar3 = uVar3 + 1;
-      } while (*pcVar5 != '\0');
-      iVar1 = (int)uVar3 - (int)pcVar2;
+        pcVar6 = (char *)uVar5;
+        uVar5 = uVar5 + 1;
+      } while (*pcVar6 != '\0');
+      iVar1 = (int)uVar5 - (int)pcVar3;
     }
-    if ((int)param_4 < iVar1 + 9) {
-      MyAssertHandler(0xffffffff821e26a0,700,0,0xffffffff82000f98,0xffffffff821e2a90);
+    if (param_4 < iVar1 + 9) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",700
+                      ,0,"%s");
     }
-    I_strncpyz(param_3,0xffffffff821e2a84,param_4);
-    lVar4 = 8;
+    I_strncpyz(pcVar2,"cmr_save",param_4);
+    iVar1 = 8;
   }
-  if (*pcVar2 != '\0') {
-    Com_sprintf(lVar4 + param_3,param_4 - lVar4,0xffffffff821e2a80,param_2);
+  if (*pcVar3 != '\0') {
+    Com_sprintf(pcVar2 + iVar1,param_4 - iVar1,"_%s");
   }
   __restgprlr_26();
   return;
@@ -1117,85 +1214,84 @@ void BuildFilename(undefined8 param_1,ulonglong param_2,ulonglong param_3,longlo
 
 // 827FD040  ReadFileToBuffer  (bgame/bg_matchrules.cpp:713)
 
-void ReadFileToBuffer(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-                     int param_5)
+int ReadFileToBuffer(char *param_1,int param_2,uchar *param_3,int param_4,int param_5)
 
 {
-  undefined8 uVar1;
-  char cVar3;
-  ulonglong uVar2;
-  undefined8 uVar4;
-  char local_40 [64];
+  char *pcVar1;
+  bool bVar4;
+  int iVar2;
+  void *pvVar3;
+  MemcardError local_40 [5];
   
-  uVar1 = __savegprlr_27();
-  uVar4 = 0;
-  if (param_5 != 0) {
-    cVar3 = Memcard_IsDeviceSelected(param_2);
-    if ((cVar3 == '\0') || (cVar3 = Memcard_HasLostSelectedSaveDevice(param_2), cVar3 != '\0'))
-    goto LAB_827fd07c;
-  }
-  cVar3 = Memcard_SelectSaveDevice(param_2,0,0);
-  if (cVar3 != '\0') {
-    uVar2 = OpenContextFile(uVar1,0xffffffff820068af,0,param_2);
-    if ((uVar2 & 0xffffffff) != 0) {
-      uVar4 = ReadFromMemoryCard(uVar2,param_3,param_4,local_40);
-      if (((int)param_4 < (int)uVar4) || (local_40[0] != '\0')) {
-        uVar4 = 0;
+  pcVar1 = (char *)__savegprlr_27(param_1);
+  iVar2 = 0;
+  if (((param_5 == 0) ||
+      ((bVar4 = Memcard_IsDeviceSelected(param_2), bVar4 &&
+       (bVar4 = Memcard_HasLostSelectedSaveDevice(param_2), !bVar4)))) &&
+     (bVar4 = Memcard_SelectSaveDevice(param_2,false,0), bVar4)) {
+    pvVar3 = OpenContextFile(pcVar1,"",MEMCARD_READ,param_2);
+    if (pvVar3 != (void *)0x0) {
+      iVar2 = ReadFromMemoryCard(pvVar3,param_3,param_4,local_40);
+      if ((param_4 < iVar2) || (local_40[0].isError != false)) {
+        iVar2 = 0;
       }
-      CloseContextFile(uVar2);
+      CloseContextFile(pvVar3);
     }
-    __restgprlr_27(uVar4);
-    return;
+    iVar2 = __restgprlr_27(iVar2);
+    return iVar2;
   }
-LAB_827fd07c:
-  __restgprlr_27(0);
-  return;
+  iVar2 = __restgprlr_27(0);
+  return iVar2;
 }
 
 
 // 827FD120  WriteBufferToFile  (bgame/bg_matchrules.cpp:774)
 
-void WriteBufferToFile(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-                      int param_5)
+int WriteBufferToFile(char *param_1,int param_2,uchar *param_3,int param_4,int param_5)
 
 {
-  undefined8 uVar1;
-  char cVar4;
-  ulonglong uVar2;
-  char *pcVar3;
-  undefined8 uVar5;
+  char *pcVar1;
+  bool bVar5;
+  int iVar2;
+  void *pvVar3;
+  MemcardError *pMVar4;
+  longlong lVar6;
+  longlong lVar7;
   
-  uVar1 = __savegprlr_27();
-  uVar5 = 0;
+  lVar6 = (longlong)param_4;
+  pcVar1 = (char *)__savegprlr_27(param_1);
+  lVar7 = 0;
   if (((param_5 == 0) ||
-      ((cVar4 = Memcard_IsDeviceSelected(param_2), cVar4 != '\0' &&
-       (cVar4 = Memcard_HasLostSelectedSaveDevice(param_2), cVar4 == '\0')))) &&
-     (cVar4 = Memcard_SelectSaveDevice(param_2,0,0), cVar4 != '\0')) {
-    uVar2 = OpenContextFile(uVar1,0xffffffff821e2bb4,1,param_2);
-    if ((uVar2 & 0xffffffff) != 0) {
-      WriteToMemoryCardFile(uVar2,param_3,param_4);
-      pcVar3 = (char *)Memcard_GetWriteError();
-      if (*pcVar3 == '\0') {
-        uVar5 = param_4;
+      ((bVar5 = Memcard_IsDeviceSelected(param_2), bVar5 &&
+       (bVar5 = Memcard_HasLostSelectedSaveDevice(param_2), !bVar5)))) &&
+     (bVar5 = Memcard_SelectSaveDevice(param_2,false,0), bVar5)) {
+    pvVar3 = OpenContextFile(pcVar1,"GAME_CUSTOM_GAMEMODE",MEMCARD_WRITE,param_2);
+    if (pvVar3 != (void *)0x0) {
+      WriteToMemoryCardFile(pvVar3,param_3,(uint)lVar6);
+      pMVar4 = Memcard_GetWriteError();
+      if (pMVar4->isError == false) {
+        lVar7 = lVar6;
       }
-      CloseContextFile(uVar2);
+      CloseContextFile(pvVar3);
     }
-    __restgprlr_27(uVar5);
-    return;
+    iVar2 = __restgprlr_27(lVar7);
+    return iVar2;
   }
-  __restgprlr_27(0);
-  return;
+  iVar2 = __restgprlr_27(0);
+  return iVar2;
 }
 
 
 // 827FD1F0  OverlappedWriteClose  (bgame/bg_matchrules.cpp:841)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void OverlappedWriteClose(void)
 
 {
-  if (DAT_8487a750 != 0) {
-    CloseContextFile();
-    DAT_8487a750 = 0;
+  if (g_matchRulesFileData.fileHandle != (void *)0x0) {
+    CloseContextFile(g_matchRulesFileData.fileHandle);
+    g_matchRulesFileData.fileHandle = (void *)0x0;
   }
   return;
 }
@@ -1203,934 +1299,981 @@ void OverlappedWriteClose(void)
 
 // 827FD230  OverlappedWriteBufferToFile  (bgame/bg_matchrules.cpp:868)
 
-void OverlappedWriteBufferToFile
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-               int param_5)
+int OverlappedWriteBufferToFile(char *param_1,int param_2,uchar *param_3,int param_4,int param_5)
 
 {
+  char *pcVar2;
+  bool bVar5;
+  int iVar3;
+  MemcardError *pMVar4;
   undefined8 uVar1;
-  char cVar4;
-  BOOL BVar2;
-  char *pcVar3;
-  DWORD aDStack_40 [16];
+  ulong auStack_40 [16];
   
-  uVar1 = __savegprlr_26();
+  pcVar2 = (char *)__savegprlr_26(param_1);
   if (((param_5 != 0) &&
-      ((cVar4 = Memcard_IsDeviceSelected(param_2), cVar4 == '\0' ||
-       (cVar4 = Memcard_HasLostSelectedSaveDevice(param_2), cVar4 != '\0')))) ||
-     (cVar4 = Memcard_SelectSaveDevice(param_2,0,0), cVar4 == '\0')) {
+      ((bVar5 = Memcard_IsDeviceSelected(param_2), !bVar5 ||
+       (bVar5 = Memcard_HasLostSelectedSaveDevice(param_2), bVar5)))) ||
+     (bVar5 = Memcard_SelectSaveDevice(param_2,false,0), !bVar5)) {
 LAB_827fd268:
-    __restgprlr_26(0);
-    return;
+    iVar3 = __restgprlr_26(0);
+    return iVar3;
   }
-  if (DAT_8487a750 != (HANDLE)0x0) {
-    BVar2 = GetOverlappedResult(DAT_8487a750,(LPOVERLAPPED)&DAT_8487a754,aDStack_40,0);
-    if (BVar2 == 0) goto LAB_827fd268;
-    if (DAT_8487a750 != (HANDLE)0x0) {
-      CloseContextFile();
-      DAT_8487a750 = (HANDLE)0x0;
+  if (g_matchRulesFileData.fileHandle != (void *)0x0) {
+    iVar3 = GetOverlappedResult(g_matchRulesFileData.fileHandle,&g_matchRulesFileData.overlapped,
+                                auStack_40,0);
+    if (iVar3 == 0) goto LAB_827fd268;
+    if (g_matchRulesFileData.fileHandle != (void *)0x0) {
+      CloseContextFile(g_matchRulesFileData.fileHandle);
+      g_matchRulesFileData.fileHandle = (void *)0x0;
     }
   }
-  DAT_8487a750 = (HANDLE)OpenContextFile(uVar1,0xffffffff821e2bb4,1,param_2);
-  if (DAT_8487a750 != (HANDLE)0x0) {
-    DAT_8487a754 = 0;
-    DAT_8487a758 = 0;
-    DAT_8487a75c = 0;
-    DAT_8487a760 = 0;
-    DAT_8487a764 = 0;
-    WriteToMemoryCardFileAsync(DAT_8487a750,param_3,param_4,0xffffffff8487a754);
-    pcVar3 = (char *)Memcard_GetWriteError();
+  g_matchRulesFileData.fileHandle =
+       OpenContextFile(pcVar2,"GAME_CUSTOM_GAMEMODE",MEMCARD_WRITE,param_2);
+  if (g_matchRulesFileData.fileHandle != (void *)0x0) {
+    g_matchRulesFileData.overlapped.Internal = 0;
+    g_matchRulesFileData.overlapped.InternalHigh = 0;
+    g_matchRulesFileData.overlapped.Offset = 0;
+    g_matchRulesFileData.overlapped.OffsetHigh = 0;
+    g_matchRulesFileData.overlapped.hEvent = (void *)0x0;
+    WriteToMemoryCardFileAsync
+              (g_matchRulesFileData.fileHandle,param_3,param_4,&g_matchRulesFileData.overlapped);
+    pMVar4 = Memcard_GetWriteError();
     uVar1 = 0;
-    if (*pcVar3 != '\0') goto LAB_827fd354;
+    if (pMVar4->isError != false) goto LAB_827fd354;
   }
   uVar1 = 1;
 LAB_827fd354:
-  __restgprlr_26(uVar1);
-  return;
+  iVar3 = __restgprlr_26(uVar1);
+  return iVar3;
 }
 
 
 // 827FD360  GetSizeOfMatchRulesFileHeader  (bgame/bg_matchrules.cpp:962)
 
-longlong GetSizeOfMatchRulesFileHeader(int param_1)
+int GetSizeOfMatchRulesFileHeader(MatchRulesSaveHeader *param_1)
 
 {
-  longlong lVar1;
-  longlong lVar2;
+  int iVar1;
+  int iVar2;
   
-  lVar1 = 10;
-  if (*(short *)(param_1 + 0xc) != 0) {
-    lVar1 = 0x2c;
+  iVar2 = 10;
+  if (param_1->slot[0].dataLen != 0) {
+    iVar2 = 0x2c;
   }
-  lVar2 = lVar1 + 2;
-  if (*(short *)(param_1 + 0x38) != 0) {
-    lVar2 = lVar1 + 0x24;
+  iVar1 = iVar2 + 2;
+  if (param_1->slot[1].dataLen != 0) {
+    iVar1 = iVar2 + 0x24;
   }
-  lVar1 = lVar2 + 2;
-  if (*(short *)(param_1 + 100) != 0) {
-    lVar1 = lVar2 + 0x24;
+  iVar2 = iVar1 + 2;
+  if (param_1->slot[2].dataLen != 0) {
+    iVar2 = iVar1 + 0x24;
   }
-  lVar2 = lVar1 + 2;
-  if (*(short *)(param_1 + 0x90) != 0) {
-    lVar2 = lVar1 + 0x24;
+  iVar1 = iVar2 + 2;
+  if (param_1->slot[3].dataLen != 0) {
+    iVar1 = iVar2 + 0x24;
   }
-  lVar1 = lVar2 + 2;
-  if (*(short *)(param_1 + 0xbc) != 0) {
-    lVar1 = lVar2 + 0x24;
+  iVar2 = iVar1 + 2;
+  if (param_1->slot[4].dataLen != 0) {
+    iVar2 = iVar1 + 0x24;
   }
-  lVar2 = lVar1 + 2;
-  if (*(short *)(param_1 + 0xe8) != 0) {
-    lVar2 = lVar1 + 0x24;
+  iVar1 = iVar2 + 2;
+  if (param_1->slot[5].dataLen != 0) {
+    iVar1 = iVar2 + 0x24;
   }
-  lVar1 = lVar2 + 2;
-  if (*(short *)(param_1 + 0x114) != 0) {
-    lVar1 = lVar2 + 0x24;
+  iVar2 = iVar1 + 2;
+  if (param_1->slot[6].dataLen != 0) {
+    iVar2 = iVar1 + 0x24;
   }
-  lVar2 = lVar1 + 2;
-  if (*(short *)(param_1 + 0x140) != 0) {
-    lVar2 = lVar1 + 0x24;
+  iVar1 = iVar2 + 2;
+  if (param_1->slot[7].dataLen != 0) {
+    iVar1 = iVar2 + 0x24;
   }
-  lVar1 = lVar2 + 2;
-  if (*(short *)(param_1 + 0x16c) != 0) {
-    lVar1 = lVar2 + 0x24;
+  iVar2 = iVar1 + 2;
+  if (param_1->slot[8].dataLen != 0) {
+    iVar2 = iVar1 + 0x24;
   }
-  if (*(short *)(param_1 + 0x198) == 0) {
-    return lVar1 + 2;
+  if (param_1->slot[9].dataLen == 0) {
+    return iVar2 + 2;
   }
-  return lVar1 + 0x24;
+  return iVar2 + 0x24;
 }
 
 
 // 827FD430  WriteMatchRulesFileHeaderToBuffer  (bgame/bg_matchrules.cpp:987)
 
-void WriteMatchRulesFileHeaderToBuffer(undefined8 param_1,longlong param_2,int param_3)
+/* WARNING: Enum "MatchRulesReturnCode": Some values do not have unique names */
+
+MatchRulesReturnCode
+WriteMatchRulesFileHeaderToBuffer(MatchRulesSaveHeader *param_1,uchar *param_2,uint param_3)
 
 {
-  undefined4 *puVar1;
-  undefined4 uVar2;
-  int iVar3;
-  longlong lVar4;
+  uint *puVar1;
+  uint *puVar2;
+  uint uVar3;
+  MatchRulesReturnCode MVar4;
   longlong lVar5;
-  int iVar6;
+  longlong lVar6;
+  short *psVar8;
   longlong lVar7;
-  longlong lVar8;
-  short *psVar9;
+  int iVar9;
+  longlong lVar10;
+  uint *puVar11;
   
-  puVar1 = (undefined4 *)__savegprlr_23();
-  ((undefined4 *)param_2)[1] = 2;
-  iVar6 = 0;
-  psVar9 = (short *)(puVar1 + 3);
-  lVar4 = param_2 + 8;
-  lVar7 = (param_2 + 8) - param_2;
+  lVar5 = (longlong)(int)param_2;
+  puVar2 = (uint *)__savegprlr_23(param_1);
+  puVar1 = (uint *)lVar5;
+  puVar1[1] = 2;
+  iVar9 = 0;
+  puVar11 = puVar2 + 3;
+  lVar6 = lVar5 + 8;
+  lVar5 = (lVar5 + 8) - lVar5;
   do {
-    iVar3 = puVar1[2];
-    if (param_3 <= (int)puVar1[2]) {
-      iVar3 = param_3;
+    uVar3 = puVar2[2];
+    if ((int)param_3 <= (int)puVar2[2]) {
+      uVar3 = param_3;
     }
-    if ((int)(iVar3 - ((-(uint)(*psVar9 != 0) & 0x22) + 2)) <= (int)lVar7) {
-      Com_PrintError(0x10,0xffffffff821e2bd0);
-      __restgprlr_23(0xffffffffffffffff);
-      return;
+    if ((int)(uVar3 - ((-(uint)(*(short *)puVar11 != 0) & 0x22) + 2)) <= (int)lVar5) {
+      Com_PrintError(0x10,
+                     "[WriteMatchRulesFileHeaderToBuffer] Tried to write past end of savefile\n");
+      MVar4 = __restgprlr_23(0xffffffffffffffff);
+      return MVar4;
     }
-    *(short *)lVar4 = *psVar9;
-    lVar5 = lVar4 + 2;
-    lVar8 = lVar7 + 2;
-    if (*psVar9 != 0) {
-      *(undefined4 *)lVar5 = *(undefined4 *)(psVar9 + 4);
-      lVar8 = lVar7 + 0x24;
-      I_strncpyz(lVar4 + 6,psVar9 + 6,10);
-      I_strncpyz(lVar4 + 0x10,psVar9 + 0xb,0x14);
-      lVar5 = lVar4 + 0x24;
+    psVar8 = (short *)lVar6;
+    *psVar8 = *(short *)puVar11;
+    lVar7 = lVar6 + 2;
+    lVar10 = lVar5 + 2;
+    if (*(short *)puVar11 != 0) {
+      *(uint *)lVar7 = puVar11[2];
+      lVar10 = lVar5 + 0x24;
+      I_strncpyz((char *)(psVar8 + 3),(char *)(puVar11 + 3),10);
+      I_strncpyz((char *)(psVar8 + 8),(char *)((int)puVar11 + 0x16),0x14);
+      lVar7 = lVar6 + 0x24;
     }
-    iVar6 = iVar6 + 1;
-    psVar9 = psVar9 + 0x16;
-    lVar4 = lVar5;
-    lVar7 = lVar8;
-  } while (iVar6 < 10);
-  uVar2 = Com_BlockChecksumKey32(param_2 + 4,(ulonglong)(uint)puVar1[2] - 4,0);
-  *puVar1 = uVar2;
-  *(undefined4 *)param_2 = uVar2;
-  __restgprlr_23(1);
-  return;
+    iVar9 = iVar9 + 1;
+    puVar11 = puVar11 + 0xb;
+    lVar6 = lVar7;
+    lVar5 = lVar10;
+  } while (iVar9 < 10);
+  uVar3 = Com_BlockChecksumKey32(puVar1 + 1,puVar2[2] - 4,0);
+  *puVar2 = uVar3;
+  *puVar1 = uVar3;
+  MVar4 = __restgprlr_23(1);
+  return MVar4;
 }
 
 
 // 827FD548  ReadMatchRulesSaveFile  (bgame/bg_matchrules.cpp:1033)
 
-void ReadMatchRulesSaveFile
-               (undefined8 param_1,undefined8 param_2,longlong param_3,longlong param_4,
-               ulonglong param_5,int param_6,undefined8 param_7)
+/* WARNING: Enum "MatchRulesReturnCode": Some values do not have unique names */
+
+MatchRulesReturnCode
+ReadMatchRulesSaveFile
+          (char *param_1,int param_2,MatchRulesSaveHeader *param_3,uchar *param_4,int param_5,
+          int param_6,int param_7)
 
 {
   short sVar1;
   ushort uVar2;
-  undefined8 uVar3;
-  int *_Dst;
-  ulonglong uVar4;
-  int iVar5;
-  undefined8 uVar6;
-  int *piVar7;
-  undefined8 uVar8;
-  undefined8 uVar9;
-  longlong lVar10;
-  longlong lVar11;
+  uint *puVar3;
+  char *pcVar4;
+  uint uVar5;
+  MatchRulesReturnCode MVar6;
+  int iVar7;
+  uint *puVar8;
+  longlong lVar9;
+  ulonglong uVar10;
+  uint uVar11;
   longlong lVar12;
   longlong lVar13;
-  longlong lVar14;
   short *psVar15;
+  longlong lVar14;
+  longlong lVar16;
+  longlong lVar17;
+  short *psVar18;
   
-  uVar3 = __savegprlr_22();
+  uVar10 = (ulonglong)param_5;
+  lVar9 = (longlong)(int)param_4;
+  lVar12 = (longlong)(int)param_3;
+  pcVar4 = (char *)__savegprlr_22(param_1);
+  uVar11 = (uint)uVar10;
   if (param_6 == 0) {
-    if ((param_5 & 0xffffffff) != 0x7970) {
-      uVar9 = 0xffffffff821e2d60;
-      uVar8 = 0xffffffff821e2d28;
-      uVar6 = 0x411;
+    if ((uVar10 & 0xffffffff) != 0x7970) {
+      iVar7 = 0x411;
       goto LAB_827fd5b4;
     }
   }
-  else if ((param_5 & 0xffffffff) != 0x170) {
-    uVar9 = 0xffffffff821e2e00;
-    uVar8 = 0xffffffff821e2dc4;
-    uVar6 = 0x40f;
+  else if ((uVar10 & 0xffffffff) != 0x170) {
+    iVar7 = 0x40f;
 LAB_827fd5b4:
-    MyAssertHandler(0xffffffff821e26a0,uVar6,0,0xffffffff820011f4,uVar8,uVar9);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",iVar7
+                    ,0,"%s\n\t%s");
   }
-  _Dst = (int *)param_3;
-  memset(_Dst,0,0x1c4);
-  uVar4 = ReadFileToBuffer(uVar3,param_2,param_4,param_5,param_7);
-  _Dst[2] = (int)uVar4;
-  if ((uVar4 & 0xffffffff) != 0) {
-    piVar7 = (int *)param_4;
+  memset();
+  puVar8 = (uint *)lVar9;
+  uVar5 = ReadFileToBuffer(pcVar4,param_2,(uchar *)puVar8,uVar11,param_7);
+  puVar3 = (uint *)lVar12;
+  puVar3[2] = uVar5;
+  if (uVar5 != 0) {
     if (param_6 == 0) {
-      iVar5 = Com_BlockChecksumKey32(param_4 + 4,uVar4 - 4,0);
-      *_Dst = iVar5;
-      if (iVar5 != *piVar7) {
-        Com_PrintError(0x10,0xffffffff821e2cf4);
+      uVar5 = Com_BlockChecksumKey32(puVar8 + 1,uVar5 - 4,0);
+      *puVar3 = uVar5;
+      if (uVar5 != *puVar8) {
+        Com_PrintError(0x10,"[ReadMatchRulesSaveFile] Save file is corrupted\n");
         goto LAB_827fd638;
       }
     }
-    iVar5 = piVar7[1];
-    _Dst[1] = iVar5;
-    if (iVar5 != 2) {
-      uVar3 = va(0xffffffff821e2ca0,2);
-      Com_PrintError(0x10,uVar3);
-      __restgprlr_22(0xffffffffffffffff);
-      return;
+    uVar5 = puVar8[1];
+    puVar3[1] = uVar5;
+    if (uVar5 != 2) {
+      pcVar4 = va(
+                 "[ReadMatchRulesSaveFile] Save file is of incorrect version, expected %d got %d.\n"
+                 );
+      Com_PrintError(0x10,pcVar4);
+      MVar6 = __restgprlr_22(0xffffffffffffffff);
+      return MVar6;
     }
-    lVar12 = param_3 + 0xc;
-    iVar5 = 0;
-    lVar10 = param_4 + 8;
-    lVar13 = (param_4 + 8) - param_4;
+    lVar16 = lVar12 + 0xc;
+    iVar7 = 0;
+    lVar13 = lVar9 + 8;
+    lVar9 = (lVar9 + 8) - lVar9;
     do {
-      psVar15 = (short *)lVar12;
-      uVar4 = (ulonglong)(uint)_Dst[2];
-      if ((int)param_5 <= _Dst[2]) {
-        uVar4 = param_5;
+      psVar18 = (short *)lVar16;
+      uVar5 = puVar3[2];
+      if ((int)uVar11 <= (int)puVar3[2]) {
+        uVar5 = uVar11;
       }
-      if ((int)((int)uVar4 - ((-(uint)(*psVar15 != 0) & 0x22) + 2)) <= (int)lVar13) {
-        Com_PrintError(0x10,0xffffffff821e2c5c);
-        __restgprlr_22(0xffffffffffffffff);
-        return;
+      if ((int)(uVar5 - ((-(uint)(*psVar18 != 0) & 0x22) + 2)) <= (int)lVar9) {
+        Com_PrintError(0x10,"[ReadMatchRulesSaveFile] Tried to read past end of save file\n");
+        MVar6 = __restgprlr_22(0xffffffffffffffff);
+        return MVar6;
       }
-      sVar1 = *(short *)lVar10;
-      lVar11 = lVar10 + 2;
+      psVar15 = (short *)lVar13;
+      sVar1 = *psVar15;
       lVar14 = lVar13 + 2;
-      *psVar15 = sVar1;
+      lVar17 = lVar9 + 2;
+      *psVar18 = sVar1;
       if (sVar1 != 0) {
-        *(undefined4 *)(psVar15 + 4) = *(undefined4 *)lVar11;
+        *(undefined4 *)(psVar18 + 4) = *(undefined4 *)lVar14;
+        lVar17 = lVar9 + 0x24;
+        I_strncpyz((char *)(psVar18 + 6),(char *)(psVar15 + 3),10);
+        I_strncpyz((char *)(psVar18 + 0xb),(char *)(psVar15 + 8),0x14);
         lVar14 = lVar13 + 0x24;
-        I_strncpyz(lVar12 + 0xc,lVar10 + 6,10);
-        I_strncpyz(lVar12 + 0x16,lVar10 + 0x10,0x14);
-        lVar11 = lVar10 + 0x24;
       }
-      iVar5 = iVar5 + 1;
-      lVar12 = lVar12 + 0x2c;
-      lVar10 = lVar11;
+      iVar7 = iVar7 + 1;
+      lVar16 = lVar16 + 0x2c;
       lVar13 = lVar14;
-    } while (iVar5 < 10);
+      lVar9 = lVar17;
+    } while (iVar7 < 10);
     if (param_6 == 0) {
-      iVar5 = 0;
-      param_3 = param_3 + -0x1c;
+      iVar7 = 0;
+      lVar12 = lVar12 + -0x1c;
       do {
-        uVar4 = (ulonglong)(uint)_Dst[2];
-        if ((int)param_5 <= _Dst[2]) {
-          uVar4 = param_5;
+        uVar5 = puVar3[2];
+        if ((int)uVar11 <= (int)puVar3[2]) {
+          uVar5 = uVar11;
         }
-        uVar2 = *(ushort *)((int)param_3 + 0x28);
-        if ((int)((int)uVar4 - (uint)uVar2) < (int)lVar11 - (int)piVar7) {
-          Com_PrintError(0x10,0xffffffff821e2c1c);
-          __restgprlr_22(0xffffffffffffffff);
-          return;
+        uVar2 = *(ushort *)((int)lVar12 + 0x28);
+        if ((int)(uVar5 - uVar2) < (int)lVar14 - (int)puVar8) {
+          Com_PrintError(0x10,"[ReadMatchRulesSaveFile] Tried to read past end of savefile\n");
+          MVar6 = __restgprlr_22(0xffffffffffffffff);
+          return MVar6;
         }
-        iVar5 = iVar5 + 1;
-        param_3 = param_3 + 0x2c;
-        *(int *)param_3 = (int)lVar11;
-        lVar11 = (ulonglong)uVar2 + lVar11;
-      } while (iVar5 < 10);
+        iVar7 = iVar7 + 1;
+        lVar12 = lVar12 + 0x2c;
+        *(int *)lVar12 = (int)lVar14;
+        lVar14 = (ulonglong)uVar2 + lVar14;
+      } while (iVar7 < 10);
     }
-    __restgprlr_22(1);
-    return;
+    MVar6 = __restgprlr_22(1);
+    return MVar6;
   }
 LAB_827fd638:
-  __restgprlr_22(0xffffffffffffffff);
-  return;
+  MVar6 = __restgprlr_22(0xffffffffffffffff);
+  return MVar6;
 }
 
 
 // 827FD7C0  LoadMatchRulesMetadataFromDisk  (bgame/bg_matchrules.cpp:1122)
 
-void LoadMatchRulesMetadataFromDisk
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,ulonglong param_4,
-               ulonglong param_5,undefined8 param_6)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "MatchRulesReturnCode": Some values do not have unique names */
+
+int LoadMatchRulesMetadataFromDisk
+              (MatchRules *param_1,int param_2,MatchRulesSaveLocation param_3,int param_4,
+              MatchRulesSaveHeaderLookup param_5,Operand *param_6)
 
 {
-  bool bVar1;
-  ulonglong uVar2;
-  undefined8 uVar3;
-  undefined8 uVar4;
-  ulonglong uVar5;
-  int iVar6;
-  char cVar7;
-  longlong lVar8;
-  longlong lVar9;
-  undefined4 local_64c;
-  undefined4 local_648;
-  undefined4 local_644;
-  uint local_640;
-  uint local_63c;
+  uchar *puVar1;
+  char *pcVar2;
+  MatchRulesSaveHeader *pMVar3;
+  MatchRulesReturnCode MVar4;
+  int iVar5;
+  bool bVar7;
+  uint uVar6;
+  ulonglong uVar8;
+  ulonglong uVar9;
+  longlong lVar10;
+  LargeLocal aLStack_660 [2];
+  qtime_s qStack_650;
+  MatchRulesSaveHeader MStack_620;
+  char acStack_450 [1104];
   
-  uVar2 = ZEXT48(&stack0x00000000);
-  __savegprlr_23();
-  LargeLocal__LargeLocal(uVar2 - 0x660,0x170);
-  uVar3 = LargeLocal__GetBuf(uVar2 - 0x660);
-  uVar4 = Live_GetLocalClientOfflineXuidString(param_2);
-  uVar5 = HeaderCache_FindFile(param_3,uVar4);
-  if ((uVar5 & 0xffffffff) == 0) {
-    BuildFilename(param_3,uVar4,uVar2 - 0x450,0x40);
-    iVar6 = ReadMatchRulesSaveFile(uVar2 - 0x450,param_2,uVar2 - 0x620,uVar3,0x170,1,1);
-    if (iVar6 == -1) {
-      Com_PrintWarning(0x10,0xffffffff821e2f2c,uVar2 - 0x450);
+  uVar9 = (ulonglong)(int)param_5;
+  uVar8 = (ulonglong)param_4;
+  __savegprlr_23(param_1);
+  LargeLocal::LargeLocal(aLStack_660,0x170);
+  puVar1 = LargeLocal::GetBuf(aLStack_660);
+  pcVar2 = Live_GetLocalClientOfflineXuidString(param_2);
+  pMVar3 = HeaderCache_FindFile(param_3,pcVar2);
+  lVar10 = (longlong)(int)pMVar3;
+  if (pMVar3 == (MatchRulesSaveHeader *)0x0) {
+    BuildFilename(param_3,pcVar2,acStack_450,0x40);
+    MVar4 = ReadMatchRulesSaveFile(acStack_450,param_2,&MStack_620,puVar1,0x170,1,1);
+    if (MVar4 == MR_RETCODE_ERROR) {
+      Com_PrintWarning(0x10,"Unable to load Custom Match Rules File \'%s\'\n");
       goto LAB_827fd874;
     }
-    if (iVar6 == -2) {
-      Com_PrintWarning(0x10,0xffffffff821e2ed0);
-      LargeLocal___LargeLocal(uVar2 - 0x660);
-      __restgprlr_23(0);
-      return;
+    if (MVar4 == MR_RETCODE_INVALID_SAVEDEVICE) {
+      Com_PrintWarning(0x10,
+                       "[LoadMatchRulesMetadataFromDisk] No save device selected and data not previously cached.\n"
+                      );
+      LargeLocal::~LargeLocal(aLStack_660);
+      iVar5 = __restgprlr_23(0);
+      return iVar5;
     }
-    uVar5 = HeaderCache_SaveFile(uVar2 - 0x620,param_3,uVar4);
-    if ((uVar5 & 0xffffffff) == 0) {
-      MyAssertHandler(0xffffffff821e26a0,0x482,0,0xffffffff82000f98,0xffffffff821e2ec0);
+    pMVar3 = HeaderCache_SaveFile(&MStack_620,param_3,pcVar2);
+    lVar10 = (longlong)(int)pMVar3;
+    if (pMVar3 == (MatchRulesSaveHeader *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",
+                      0x482,0,"%s");
     }
   }
-  if ((int)param_5 == 4) {
-    iVar6 = (int)uVar5;
-    uVar5 = (ulonglong)(*(short *)(iVar6 + 0xc) != 0);
-    if (*(short *)(iVar6 + 0x38) != 0) {
-      uVar5 = uVar5 + 1;
+  if ((int)uVar9 == 4) {
+    iVar5 = (int)lVar10;
+    uVar6 = (uint)(*(short *)(iVar5 + 0xc) != 0);
+    if (*(short *)(iVar5 + 0x38) != 0) {
+      uVar6 = uVar6 + 1;
     }
-    if (*(short *)(iVar6 + 100) != 0) {
-      uVar5 = uVar5 + 1;
+    if (*(short *)(iVar5 + 100) != 0) {
+      uVar6 = uVar6 + 1;
     }
-    if (*(short *)(iVar6 + 0x90) != 0) {
-      uVar5 = uVar5 + 1;
+    if (*(short *)(iVar5 + 0x90) != 0) {
+      uVar6 = uVar6 + 1;
     }
-    if (*(short *)(iVar6 + 0xbc) != 0) {
-      uVar5 = uVar5 + 1;
+    if (*(short *)(iVar5 + 0xbc) != 0) {
+      uVar6 = uVar6 + 1;
     }
-    if (*(short *)(iVar6 + 0xe8) != 0) {
-      uVar5 = uVar5 + 1;
+    if (*(short *)(iVar5 + 0xe8) != 0) {
+      uVar6 = uVar6 + 1;
     }
-    if (*(short *)(iVar6 + 0x114) != 0) {
-      uVar5 = uVar5 + 1;
+    if (*(short *)(iVar5 + 0x114) != 0) {
+      uVar6 = uVar6 + 1;
     }
-    if (*(short *)(iVar6 + 0x140) != 0) {
-      uVar5 = uVar5 + 1;
+    if (*(short *)(iVar5 + 0x140) != 0) {
+      uVar6 = uVar6 + 1;
     }
-    if (*(short *)(iVar6 + 0x16c) != 0) {
-      uVar5 = uVar5 + 1;
+    if (*(short *)(iVar5 + 0x16c) != 0) {
+      uVar6 = uVar6 + 1;
     }
-    if (*(short *)(iVar6 + 0x198) != 0) {
-      uVar5 = uVar5 + 1;
+    if (*(short *)(iVar5 + 0x198) != 0) {
+      uVar6 = uVar6 + 1;
     }
-    Operand_SetInt(param_6,uVar5);
-    LargeLocal___LargeLocal(uVar2 - 0x660);
-    __restgprlr_23(1);
-    return;
+    Operand_SetInt(param_6,uVar6);
+    LargeLocal::~LargeLocal(aLStack_660);
+    iVar5 = __restgprlr_23(1);
+    return iVar5;
   }
-  if (9 < (param_4 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821e26a0,0x492,0,0xffffffff821e2e78,param_4,10);
+  if (9 < (uVar8 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",0x492
+                    ,0,"slotIndex doesn\'t index MATCH_RULES_MAX_SAVESLOTS\n\t%i not in [0, %i)");
   }
-  lVar9 = param_4 * 0x2c + uVar5;
-  iVar6 = (int)lVar9;
-  if (*(short *)(iVar6 + 0xc) == 0) {
-    lVar8 = -0x7dff9751;
+  lVar10 = uVar8 * 0x2c + lVar10;
+  iVar5 = (int)lVar10;
+  if (*(short *)(iVar5 + 0xc) == 0) {
+    pcVar2 = "";
   }
   else {
-    if (3 < (param_5 & 0xffffffff)) {
+    if (3 < (uVar9 & 0xffffffff)) {
 LAB_827fd874:
-      LargeLocal___LargeLocal(uVar2 - 0x660);
-      __restgprlr_23(0);
-      return;
+      LargeLocal::~LargeLocal(aLStack_660);
+      iVar5 = __restgprlr_23(0);
+      return iVar5;
     }
-    bVar1 = (int)param_5 != 0;
-    if (param_5 == 1 && bVar1) {
-      lVar8 = lVar9 + 0x18;
+    bVar7 = (int)uVar9 != 0;
+    if (uVar9 == 1 && bVar7) {
+      pcVar2 = (char *)(iVar5 + 0x18);
     }
-    else if (param_5 == 2 && bVar1) {
-      lVar8 = UI_GetGameTypeDisplayName(lVar9 + 0x18);
+    else if (uVar9 == 2 && bVar7) {
+      pcVar2 = UI_GetGameTypeDisplayName((char *)(iVar5 + 0x18));
     }
-    else if (bVar1) {
-      lVar8 = lVar9 + 0x22;
-      if ((lVar8 == 0) || (*(char *)lVar8 == '\0')) {
-        lVar8 = UI_GetCustomizedGameTypeDefaultDisplayName(lVar9 + 0x18);
+    else if (bVar7) {
+      lVar10 = lVar10 + 0x22;
+      if ((lVar10 == 0) || (*(char *)lVar10 == '\0')) {
+        pcVar2 = UI_GetCustomizedGameTypeDefaultDisplayName((char *)(iVar5 + 0x18));
+        lVar10 = (longlong)(int)pcVar2;
       }
+      pcVar2 = (char *)lVar10;
     }
     else {
-      cVar7 = LiveStorage_IsTimeSynced();
-      if (cVar7 == '\0') {
-        uVar5 = (ulonglong)*(uint *)(iVar6 + 0x14);
+      bVar7 = LiveStorage_IsTimeSynced();
+      if (bVar7) {
+        uVar6 = LiveStorage_GetUTCOffset();
+        iVar5 = uVar6 + *(int *)(iVar5 + 0x14);
       }
       else {
-        lVar9 = LiveStorage_GetUTCOffset();
-        uVar5 = lVar9 + (ulonglong)*(uint *)(iVar6 + 0x14);
+        iVar5 = *(int *)(iVar5 + 0x14);
       }
-      Com_RealTime(uVar5,uVar2 - 0x650);
-      Com_sprintf(uVar2 - 0x450,0x400,0xffffffff821dedbc,(ulonglong)local_640 + 1,local_644,
-                  (ulonglong)local_63c + 0x76c,local_648,local_64c);
-      lVar8 = uVar2 - 0x450;
+      Com_RealTime(iVar5,&qStack_650);
+      Com_sprintf(acStack_450,0x400,"%d/%d/%d  %.2d:%.2d");
+      pcVar2 = acStack_450;
     }
   }
-  Operand_SetString(param_6,lVar8);
-  LargeLocal___LargeLocal(uVar2 - 0x660);
-  __restgprlr_23(1);
-  return;
+  Operand_SetString(param_6,pcVar2);
+  LargeLocal::~LargeLocal(aLStack_660);
+  iVar5 = __restgprlr_23(1);
+  return iVar5;
 }
 
 
 // 827FDAE0  LoadMatchRulesFromDisk  (bgame/bg_matchrules.cpp:1211)
 
-void LoadMatchRulesFromDisk
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,ulonglong param_4)
+/* WARNING: Enum "MatchRulesReturnCode": Some values do not have unique names */
+
+MatchRulesReturnCode
+LoadMatchRulesFromDisk(MatchRules *param_1,int param_2,MatchRulesSaveLocation param_3,int param_4)
 
 {
   ushort uVar1;
-  uint uVar2;
+  uchar *puVar2;
   ushort *puVar3;
-  void *_Dst;
-  int *piVar7;
-  undefined8 uVar4;
-  char cVar9;
-  ulonglong uVar5;
-  int iVar8;
-  undefined8 uVar6;
-  int *piVar10;
+  uint *puVar4;
+  uchar *puVar5;
+  uint *puVar6;
+  char *pcVar7;
+  bool bVar14;
+  void *pvVar8;
+  uint uVar9;
+  MatchRulesReturnCode MVar10;
   int iVar11;
-  ushort *puVar12;
+  StructuredDataDef *pSVar12;
   int iVar13;
-  ulonglong uVar14;
-  ushort *puVar15;
-  undefined1 auStack_2a0 [8];
-  undefined1 auStack_298 [8];
-  char local_290 [16];
-  undefined1 auStack_280 [36];
-  int aiStack_25c [7];
-  int local_240;
-  int local_23c;
-  int local_238;
-  ushort local_234 [2];
-  uint local_230 [140];
+  ulonglong uVar15;
+  undefined4 *puVar16;
+  uint *puVar17;
+  int iVar18;
+  SavedSlot *pSVar19;
+  LargeLocal LStack_2a0;
+  StructuredDataBuffer SStack_298;
+  MemcardError local_290;
+  char acStack_280 [36];
+  undefined4 auStack_25c [7];
+  MatchRulesSaveHeader local_240;
   
-  _Dst = (void *)__savegprlr_18();
-  LargeLocal__LargeLocal(auStack_2a0,0x7970);
-  piVar7 = (int *)LargeLocal__GetBuf(auStack_2a0);
-  if (9 < (param_4 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821e26a0,0x4c3,0,0xffffffff821e2e78,param_4,10);
+  uVar15 = (ulonglong)param_4;
+  puVar5 = (uchar *)__savegprlr_18(param_1);
+  LargeLocal::LargeLocal(&LStack_2a0,0x7970);
+  puVar6 = LargeLocal::GetBuf(&LStack_2a0);
+  if (9 < (uVar15 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",0x4c3
+                    ,0,"slotIndex doesn\'t index MATCH_RULES_MAX_SAVESLOTS\n\t%i not in [0, %i)");
   }
-  uVar4 = Live_GetLocalClientOfflineXuidString(param_2);
-  BuildFilename(param_3,uVar4,auStack_280,0x40);
-  memset(&local_240,0,0x1c4);
-  uVar14 = 0;
-  cVar9 = Memcard_SelectSaveDevice(param_2,0,0);
-  if ((cVar9 != '\0') &&
-     (uVar5 = OpenContextFile(auStack_280,0xffffffff820068af,0,param_2), (uVar5 & 0xffffffff) != 0))
-  {
-    uVar14 = ReadFromMemoryCard(uVar5,piVar7,0x7970,local_290);
-    if ((0x7970 < (int)uVar14) || (local_290[0] != '\0')) {
-      uVar14 = 0;
+  pcVar7 = Live_GetLocalClientOfflineXuidString(param_2);
+  BuildFilename(param_3,pcVar7,acStack_280,0x40);
+  memset();
+  uVar9 = 0;
+  bVar14 = Memcard_SelectSaveDevice(param_2,false,0);
+  if ((bVar14) &&
+     (pvVar8 = OpenContextFile(acStack_280,"",MEMCARD_READ,param_2), pvVar8 != (void *)0x0)) {
+    uVar9 = ReadFromMemoryCard(pvVar8,puVar6,0x7970,&local_290);
+    if ((0x7970 < (int)uVar9) || (local_290.isError != false)) {
+      uVar9 = 0;
     }
-    CloseContextFile(uVar5);
+    CloseContextFile(pvVar8);
   }
-  local_238 = (int)uVar14;
-  if ((uVar14 & 0xffffffff) != 0) {
-    local_240 = Com_BlockChecksumKey32(piVar7 + 1,uVar14 - 4,0);
-    if (local_240 == *piVar7) {
-      local_23c = piVar7[1];
-      puVar12 = (ushort *)(piVar7 + 2);
-      if (local_23c == 2) {
-        iVar13 = 0;
-        iVar8 = (int)puVar12 - (int)piVar7;
-        puVar15 = local_234;
+  local_240.fileLen = uVar9;
+  if (uVar9 != 0) {
+    local_240.checksum = Com_BlockChecksumKey32(puVar6 + 1,uVar9 - 4,0);
+    if (local_240.checksum == *puVar6) {
+      local_240.fileVersion = puVar6[1];
+      puVar17 = puVar6 + 2;
+      if (local_240.fileVersion == 2) {
+        iVar18 = 0;
+        iVar11 = (int)puVar17 - (int)puVar6;
+        pSVar19 = local_240.slot;
         do {
-          iVar11 = 0x7970;
-          if (local_238 < 0x7970) {
-            iVar11 = local_238;
+          uVar9 = 0x7970;
+          if ((int)local_240.fileLen < 0x7970) {
+            uVar9 = local_240.fileLen;
           }
-          if ((int)(iVar11 - ((-(uint)(*puVar15 != 0) & 0x22) + 2)) <= iVar8) {
-            uVar4 = 0xffffffff821e2c5c;
+          if ((int)(uVar9 - ((-(uint)(pSVar19->dataLen != 0) & 0x22) + 2)) <= iVar11) {
+            pcVar7 = "[ReadMatchRulesSaveFile] Tried to read past end of save file\n";
             goto LAB_827fdda4;
           }
-          uVar1 = *puVar12;
-          *puVar15 = uVar1;
-          iVar11 = iVar8 + 2;
-          puVar3 = puVar12 + 1;
+          uVar1 = *(ushort *)puVar17;
+          pSVar19->dataLen = uVar1;
+          puVar4 = (uint *)((int)puVar17 + 2);
+          iVar13 = iVar11 + 2;
           if (uVar1 != 0) {
-            *(int *)(puVar15 + 4) = *(int *)(puVar12 + 1);
-            I_strncpyz(puVar15 + 6,puVar12 + 3,10);
-            I_strncpyz(puVar15 + 0xb,puVar12 + 8,0x14);
-            iVar11 = iVar8 + 0x24;
-            puVar3 = puVar12 + 0x12;
+            pSVar19->timestamp = *(uint *)((int)puVar17 + 2);
+            I_strncpyz(pSVar19->gametype,(char *)((int)puVar17 + 6),10);
+            I_strncpyz(pSVar19->name,(char *)(puVar17 + 4),0x14);
+            puVar4 = puVar17 + 9;
+            iVar13 = iVar11 + 0x24;
           }
-          puVar12 = puVar3;
-          iVar8 = iVar11;
-          iVar13 = iVar13 + 1;
-          puVar15 = puVar15 + 0x16;
-        } while (iVar13 < 10);
-        iVar13 = 0;
-        piVar10 = aiStack_25c;
+          iVar11 = iVar13;
+          puVar17 = puVar4;
+          iVar18 = iVar18 + 1;
+          pSVar19 = pSVar19 + 1;
+        } while (iVar18 < 10);
+        iVar18 = 0;
+        puVar16 = auStack_25c;
         while( true ) {
-          iVar8 = local_238;
-          if (0x796f < local_238) {
-            iVar8 = 0x7970;
+          uVar9 = local_240.fileLen;
+          if (0x796f < (int)local_240.fileLen) {
+            uVar9 = 0x7970;
           }
-          puVar15 = (ushort *)(piVar10 + 10);
-          if ((int)(iVar8 - (uint)*puVar15) < (int)puVar12 - (int)piVar7) break;
-          iVar13 = iVar13 + 1;
-          piVar10 = piVar10 + 0xb;
-          *piVar10 = (int)puVar12;
-          puVar12 = (ushort *)((uint)*puVar15 + (int)puVar12);
-          if (9 < iVar13) {
-            iVar13 = (int)param_4;
-            uVar1 = local_234[iVar13 * 0x16];
-            uVar2 = local_230[iVar13 * 0xb];
+          puVar3 = (ushort *)(puVar16 + 10);
+          if ((int)(uVar9 - *puVar3) < (int)puVar17 - (int)puVar6) break;
+          iVar18 = iVar18 + 1;
+          puVar16 = puVar16 + 0xb;
+          *puVar16 = puVar17;
+          puVar17 = (uint *)((uint)*puVar3 + (int)puVar17);
+          if (9 < iVar18) {
+            iVar18 = (int)uVar15;
+            uVar1 = local_240.slot[iVar18].dataLen;
+            puVar2 = local_240.slot[iVar18].dataStart;
             if (uVar1 == 0) {
-              Com_PrintError(0x10,0xffffffff821e345c);
-              MatchRules_Notify(param_2,0);
-              LargeLocal___LargeLocal(auStack_2a0);
-              __restgprlr_18(0);
-              return;
+              Com_PrintError(0x10,"[LoadMatchRulesFromDisk] Attempted loaded slot is empty.\n");
+              MatchRules_Notify(param_2,MRNOTIFY_FAILED_TO_LOAD);
+              LargeLocal::~LargeLocal(&LStack_2a0);
+              MVar10 = __restgprlr_18(0);
+              return MVar10;
             }
-            HeaderCache_SaveFile(&local_240,param_3,uVar4);
-            StructuredData_MakeBuffer(auStack_298,uVar2,uVar1);
-            uVar4 = StructuredData_GetDataVersion(auStack_298);
-            iVar8 = StructuredDataDef_GetAsset(0xffffffff8203d614,0xc00);
-            uVar6 = StructuredData_GetVersion();
-            if ((int)uVar4 == (int)uVar6) {
-              if ((uint)uVar1 != *(uint *)(iVar8 + 0x30)) {
-                Com_PrintError(0x10,0xffffffff821e33cc);
-                MatchRules_Notify(param_2,0);
-                LargeLocal___LargeLocal(auStack_2a0);
-                __restgprlr_18(0);
-                return;
+            HeaderCache_SaveFile(&local_240,param_3,pcVar7);
+            StructuredData_MakeBuffer(&SStack_298,puVar2,(uint)uVar1);
+            iVar11 = StructuredData_GetDataVersion(&SStack_298);
+            pSVar12 = StructuredDataDef_GetAsset("mp/recipes.def",0xc00);
+            iVar13 = StructuredData_GetVersion(pSVar12);
+            if (iVar11 == iVar13) {
+              if ((uint)uVar1 != pSVar12->size) {
+                Com_PrintError(0x10,"[LoadMatchRulesFromDisk] Loaded def is of wrong size.\n");
+                MatchRules_Notify(param_2,MRNOTIFY_FAILED_TO_LOAD);
+                LargeLocal::~LargeLocal(&LStack_2a0);
+                MVar10 = __restgprlr_18(0);
+                return MVar10;
               }
             }
             else {
-              cVar9 = UpdateMatchRulesDataFromOldDef(uVar2,uVar1);
-              if (cVar9 == '\0') {
-                Com_PrintError(0x10,0xffffffff821e3408,uVar6,uVar4);
-                MatchRules_Notify(param_2,0);
-                LargeLocal___LargeLocal(auStack_2a0);
-                __restgprlr_18(0);
-                return;
+              bVar14 = UpdateMatchRulesDataFromOldDef(puVar2,(uint)uVar1);
+              if (!bVar14) {
+                Com_PrintError(0x10,
+                               "[LoadMatchRulesFromDisk] Loaded def version does not match, expected %d, got %d\n"
+                              );
+                MatchRules_Notify(param_2,MRNOTIFY_FAILED_TO_LOAD);
+                LargeLocal::~LargeLocal(&LStack_2a0);
+                MVar10 = __restgprlr_18(0);
+                return MVar10;
               }
             }
-            if ((_Dst <= (void *)local_230[iVar13 * 0xb]) &&
-               ((int)local_230[iVar13 * 0xb] + (uint)local_234[iVar13 * 0x16] <=
-                (uint)local_234[iVar13 * 0x16] + (int)_Dst)) {
-              MyAssertHandler(0xffffffff821e26a0,0x4f2,0,0xffffffff820011f4,0xffffffff821e3228,
-                              0xffffffff821e3360);
+            puVar2 = local_240.slot[iVar18].dataStart;
+            if ((puVar5 <= puVar2) &&
+               (uVar1 = local_240.slot[iVar18].dataLen, puVar2 + uVar1 <= puVar5 + uVar1)) {
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp"
+                              ,0x4f2,0,"%s\n\t%s");
             }
-            if (((int *)local_230[iVar13 * 0xb] < piVar7) ||
-               (piVar7 + 0x1e5c <
-                (int *)((uint)local_234[iVar13 * 0x16] + (int)local_230[iVar13 * 0xb]))) {
-              MyAssertHandler(0xffffffff821e26a0,0x4f2,0,0xffffffff820011f4,0xffffffff821e30b0,
-                              0xffffffff821e31d8);
+            puVar17 = (uint *)local_240.slot[iVar18].dataStart;
+            if ((puVar17 < puVar6) ||
+               (puVar6 + 0x1e5c < (uint *)((uint)local_240.slot[iVar18].dataLen + (int)puVar17))) {
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp"
+                              ,0x4f2,0,"%s\n\t%s");
             }
-            if ((int)_Dst + 0xc00U < (uint)local_234[iVar13 * 0x16] + (int)_Dst) {
-              MyAssertHandler(0xffffffff821e26a0,0x4f2,0,0xffffffff820011f4,0xffffffff821e2f60,
-                              0xffffffff821e3068);
+            if (puVar5 + 0xc00 < puVar5 + local_240.slot[iVar18].dataLen) {
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp"
+                              ,0x4f2,0,"%s\n\t%s");
             }
-            memcpy(_Dst,(void *)local_230[iVar13 * 0xb],(uint)local_234[iVar13 * 0x16]);
-            LargeLocal___LargeLocal(auStack_2a0);
-            __restgprlr_18(1);
-            return;
+            memcpy();
+            LargeLocal::~LargeLocal(&LStack_2a0);
+            MVar10 = __restgprlr_18(1);
+            return MVar10;
           }
         }
-        uVar4 = 0xffffffff821e2c1c;
+        pcVar7 = "[ReadMatchRulesSaveFile] Tried to read past end of savefile\n";
       }
       else {
-        uVar4 = va(0xffffffff821e2ca0,2);
+        pcVar7 = va(
+                   "[ReadMatchRulesSaveFile] Save file is of incorrect version, expected %d got %d.\n"
+                   );
       }
     }
     else {
-      uVar4 = 0xffffffff821e2cf4;
+      pcVar7 = "[ReadMatchRulesSaveFile] Save file is corrupted\n";
     }
 LAB_827fdda4:
-    Com_PrintError(0x10,uVar4);
+    Com_PrintError(0x10,pcVar7);
   }
-  MatchRules_Notify(param_2,0);
-  LargeLocal___LargeLocal(auStack_2a0);
-  __restgprlr_18(0);
-  return;
+  MatchRules_Notify(param_2,MRNOTIFY_FAILED_TO_LOAD);
+  LargeLocal::~LargeLocal(&LStack_2a0);
+  MVar10 = __restgprlr_18(0);
+  return MVar10;
 }
 
 
 // 827FDF98  SaveMatchRulesToDisk  (bgame/bg_matchrules.cpp:1273)
 
-void SaveMatchRulesToDisk(undefined8 param_1,undefined8 param_2,ulonglong param_3,ulonglong param_4)
+/* WARNING: Heritage AFTER dead removal. Example location: s0xfffffd60 : 0x827fe448 */
+/* WARNING: Restarted to delay deadcode elimination for space: stack */
+/* WARNING: Enum "MatchRulesReturnCode": Some values do not have unique names */
+
+void SaveMatchRulesToDisk
+               (MatchRules *param_1,int param_2,MatchRulesSaveLocation param_3,int param_4)
 
 {
-  short sVar1;
+  ushort uVar1;
   ushort uVar2;
-  int iVar3;
-  ushort *puVar4;
+  uint *puVar3;
+  int iVar4;
   ulonglong uVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  ulonglong uVar8;
-  char cVar14;
-  ulonglong uVar9;
-  int *piVar10;
-  int iVar11;
-  undefined4 uVar12;
-  void *_Dst;
+  longlong lVar6;
+  char *pcVar9;
+  bool bVar17;
+  void *pvVar10;
+  uint uVar11;
+  StructuredDataDef *pSVar12;
   char *pcVar13;
-  undefined8 uVar15;
-  ulonglong uVar16;
-  void *pvVar17;
-  size_t _Size;
-  uint uVar18;
-  longlong lVar19;
-  longlong lVar20;
+  longlong lVar7;
+  MemcardError *pMVar16;
+  ulonglong uVar18;
+  int *piVar19;
+  ulonglong uVar20;
+  ushort *puVar22;
   longlong lVar21;
-  int iVar22;
-  uint uVar23;
-  ulonglong uVar24;
-  longlong lVar25;
-  longlong lVar26;
-  short *psVar27;
-  char local_2c0;
-  int local_2b0;
-  int local_2ac;
-  uint local_2a8;
-  void *local_2a0;
+  longlong lVar23;
+  longlong lVar24;
+  int iVar25;
+  uint uVar26;
+  ulonglong uVar27;
+  SavedSlot *pSVar28;
+  MatchRulesSaveLocation MStack00000024;
+  int iStack_2cc;
+  LargeLocal LStack_2c8;
+  MemcardError local_2c0;
+  MatchRulesSaveHeader local_2b0;
+  char acStack_e0 [224];
+  uint *puVar8;
+  MatchRules *pMVar14;
+  int iVar15;
   
-  uVar5 = ZEXT48(&stack0x00000000);
-  uVar6 = __savegprlr();
-  LargeLocal__LargeLocal(uVar5 - 0x2c8,0x7970);
-  uVar7 = LargeLocal__GetBuf(uVar5 - 0x2c8);
-  if ((uVar6 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821e26a0,0x501,0,0xffffffff82000f98,0xffffffff821e2820);
+  uVar20 = (ulonglong)param_4;
+  uVar5 = (ulonglong)(int)param_1;
+  __savegprlr();
+  MStack00000024 = param_3;
+  LargeLocal::LargeLocal(&LStack_2c8,0x7970);
+  puVar8 = LargeLocal::GetBuf(&LStack_2c8);
+  lVar6 = (longlong)(int)puVar8;
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",0x501
+                    ,0,"%s");
   }
-  if (9 < (param_4 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821e26a0,0x502,0,0xffffffff821e2e78,param_4,10);
+  if (9 < (uVar20 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",0x502
+                    ,0,"slotIndex doesn\'t index MATCH_RULES_MAX_SAVESLOTS\n\t%i not in [0, %i)");
   }
-  uVar8 = Live_GetLocalClientOfflineXuidString(param_2);
-  BuildFilename(param_3,uVar8,uVar5 - 0xe0,0x40);
-  memset(&local_2b0,0,0x1c4);
-  uVar24 = 0;
-  cVar14 = Memcard_SelectSaveDevice(param_2,0,0);
-  if ((cVar14 != '\0') &&
-     (uVar9 = OpenContextFile(uVar5 - 0xe0,0xffffffff820068af,0,param_2), (uVar9 & 0xffffffff) != 0)
-     ) {
-    uVar24 = ReadFromMemoryCard(uVar9,uVar7,0x7970,uVar5 - 0x2c0);
-    if ((0x7970 < (int)uVar24) || (local_2c0 != '\0')) {
-      uVar24 = 0;
+  pcVar9 = Live_GetLocalClientOfflineXuidString(param_2);
+  BuildFilename(param_3,pcVar9,acStack_e0,0x40);
+  memset();
+  uVar11 = 0;
+  bVar17 = Memcard_SelectSaveDevice(param_2,false,0);
+  if ((bVar17) &&
+     (pvVar10 = OpenContextFile(acStack_e0,"",MEMCARD_READ,param_2), pvVar10 != (void *)0x0)) {
+    uVar11 = ReadFromMemoryCard(pvVar10,puVar8,0x7970,&local_2c0);
+    if ((0x7970 < (int)uVar11) || (local_2c0.isError != false)) {
+      uVar11 = 0;
     }
-    CloseContextFile(uVar9);
+    CloseContextFile(pvVar10);
   }
-  local_2a8 = (uint)uVar24;
-  piVar10 = (int *)uVar7;
-  if ((uVar24 & 0xffffffff) == 0) {
+  local_2b0.fileLen = uVar11;
+  if (uVar11 == 0) {
 LAB_827fe118:
-    iVar22 = -1;
-    Com_PrintWarning(0x10,0xffffffff821e4288);
-    memset(&local_2b0,0,0x1c4);
+    iVar25 = -1;
+    Com_PrintWarning(0x10,
+                     "[SaveMatchRulesToDisk] Loading existing file failed, will overwrite instead.\n"
+                    );
+    memset();
   }
   else {
-    local_2b0 = Com_BlockChecksumKey32(uVar7 + 4,uVar24 - 4,0);
-    if (local_2b0 != *piVar10) {
-      uVar15 = 0xffffffff821e2cf4;
+    local_2b0.checksum = Com_BlockChecksumKey32(puVar8 + 1,uVar11 - 4,0);
+    if (local_2b0.checksum != *puVar8) {
+      pcVar13 = "[ReadMatchRulesSaveFile] Save file is corrupted\n";
 LAB_827fe114:
-      Com_PrintError(0x10,uVar15);
+      Com_PrintError(0x10,pcVar13);
       goto LAB_827fe118;
     }
-    local_2ac = *(int *)(uVar7 + 4);
-    if (local_2ac != 2) {
-      uVar15 = va(0xffffffff821e2ca0,2);
+    local_2b0.fileVersion = puVar8[1];
+    if (local_2b0.fileVersion != 2) {
+      pcVar13 = va(
+                  "[ReadMatchRulesSaveFile] Save file is of incorrect version, expected %d got %d.\n"
+                  );
       goto LAB_827fe114;
     }
-    iVar22 = 0;
-    lVar26 = uVar5 - 0x2a4;
-    lVar25 = uVar7 + 8;
-    lVar20 = (uVar7 + 8) - uVar7;
+    iVar25 = 0;
+    pSVar28 = local_2b0.slot;
+    lVar7 = lVar6 + 8;
+    lVar23 = (lVar6 + 8) - lVar6;
     do {
-      psVar27 = (short *)lVar26;
-      uVar18 = 0x7970;
-      if ((int)local_2a8 < 0x7970) {
-        uVar18 = local_2a8;
+      uVar11 = 0x7970;
+      if ((int)local_2b0.fileLen < 0x7970) {
+        uVar11 = local_2b0.fileLen;
       }
-      if ((int)(uVar18 - ((-(uint)(*psVar27 != 0) & 0x22) + 2)) <= (int)lVar20) {
-        uVar15 = 0xffffffff821e2c5c;
+      if ((int)(uVar11 - ((-(uint)(pSVar28->dataLen != 0) & 0x22) + 2)) <= (int)lVar23) {
+        pcVar13 = "[ReadMatchRulesSaveFile] Tried to read past end of save file\n";
         goto LAB_827fe114;
       }
-      sVar1 = *(short *)lVar25;
-      lVar19 = lVar25 + 2;
-      lVar21 = lVar20 + 2;
-      *psVar27 = sVar1;
-      if (sVar1 != 0) {
-        *(undefined4 *)(psVar27 + 4) = *(undefined4 *)lVar19;
-        lVar21 = lVar20 + 0x24;
-        I_strncpyz(lVar26 + 0xc,lVar25 + 6,10);
-        I_strncpyz(lVar26 + 0x16,lVar25 + 0x10,0x14);
-        lVar19 = lVar25 + 0x24;
+      puVar22 = (ushort *)lVar7;
+      uVar2 = *puVar22;
+      lVar21 = lVar7 + 2;
+      lVar24 = lVar23 + 2;
+      pSVar28->dataLen = uVar2;
+      if (uVar2 != 0) {
+        pSVar28->timestamp = *(uint *)lVar21;
+        lVar24 = lVar23 + 0x24;
+        I_strncpyz(pSVar28->gametype,(char *)(puVar22 + 3),10);
+        I_strncpyz(pSVar28->name,(char *)(puVar22 + 8),0x14);
+        lVar21 = lVar7 + 0x24;
       }
-      iVar22 = iVar22 + 1;
-      lVar26 = lVar26 + 0x2c;
-      lVar25 = lVar19;
-      lVar20 = lVar21;
-    } while (iVar22 < 10);
-    iVar22 = 0;
-    lVar25 = uVar5 - 0x2cc;
+      iVar25 = iVar25 + 1;
+      pSVar28 = pSVar28 + 1;
+      lVar7 = lVar21;
+      lVar23 = lVar24;
+    } while (iVar25 < 10);
+    iVar25 = 0;
+    piVar19 = &iStack_2cc;
     do {
-      uVar18 = local_2a8;
-      if (0x796f < (int)local_2a8) {
-        uVar18 = 0x7970;
+      uVar11 = local_2b0.fileLen;
+      if (0x796f < (int)local_2b0.fileLen) {
+        uVar11 = 0x7970;
       }
-      uVar2 = *(ushort *)((int)lVar25 + 0x28);
-      if ((int)(uVar18 - uVar2) < (int)lVar19 - (int)piVar10) {
-        uVar15 = 0xffffffff821e2c1c;
+      puVar22 = (ushort *)(piVar19 + 10);
+      if ((int)(uVar11 - *puVar22) < (int)lVar21 - (int)puVar8) {
+        pcVar13 = "[ReadMatchRulesSaveFile] Tried to read past end of savefile\n";
         goto LAB_827fe114;
       }
-      iVar22 = iVar22 + 1;
-      lVar25 = lVar25 + 0x2c;
-      *(int *)lVar25 = (int)lVar19;
-      lVar19 = (ulonglong)uVar2 + lVar19;
-    } while (iVar22 < 10);
-    iVar22 = 1;
+      iVar25 = iVar25 + 1;
+      piVar19 = piVar19 + 0xb;
+      *piVar19 = (int)lVar21;
+      lVar21 = (ulonglong)*puVar22 + lVar21;
+    } while (iVar25 < 10);
+    iVar25 = 1;
   }
-  iVar11 = StructuredDataDef_GetAsset(0xffffffff8203d614,0xc00);
-  lVar25 = param_4 * 0x2c + (uVar5 - 0x2a4);
-  uVar2 = *(ushort *)((int)(param_4 * 0x2c) + (int)(uVar5 - 0x2a4));
-  uVar9 = (ulonglong)uVar2;
-  uVar12 = Sys_GetTimeAsSeconds();
-  puVar4 = (ushort *)lVar25;
-  *(undefined4 *)(puVar4 + 4) = uVar12;
-  uVar15 = BG_MatchRulesData_GetString(uVar6,0xffffffff820337c4);
-  I_strncpyz(lVar25 + 0xc,uVar15,10);
-  uVar15 = BG_MatchRulesData_GetString(uVar6,0xffffffff821e29b0);
-  I_strncpyz(lVar25 + 0x16,uVar15,0x14);
-  uVar24 = (ulonglong)*(uint *)(iVar11 + 0x30) & 0xffff;
-  *puVar4 = (ushort)*(uint *)(iVar11 + 0x30);
-  lVar25 = GetSizeOfMatchRulesFileHeader(uVar5 - 0x2b0);
-  if (iVar22 != 1) {
-    local_2a8 = ((uint)uVar24 & 0xffff) + (int)lVar25;
-    *(int *)(puVar4 + 2) = (int)lVar25 + (int)piVar10;
+  pSVar12 = StructuredDataDef_GetAsset("mp/recipes.def",0xc00);
+  iVar4 = (int)uVar20;
+  pSVar28 = local_2b0.slot + iVar4;
+  uVar2 = local_2b0.slot[iVar4].dataLen;
+  uVar27 = (ulonglong)uVar2;
+  uVar11 = Sys_GetTimeAsSeconds();
+  local_2b0.slot[iVar4].timestamp = uVar11;
+  pMVar14 = (MatchRules *)uVar5;
+  pcVar13 = BG_MatchRulesData_GetString(pMVar14,"gametype");
+  I_strncpyz(local_2b0.slot[iVar4].gametype,pcVar13,10);
+  pcVar13 = BG_MatchRulesData_GetString(pMVar14,"recipeName");
+  I_strncpyz(local_2b0.slot[iVar4].name,pcVar13,0x14);
+  uVar20 = (ulonglong)pSVar12->size & 0xffff;
+  pSVar28->dataLen = (ushort)pSVar12->size;
+  iVar15 = GetSizeOfMatchRulesFileHeader(&local_2b0);
+  lVar7 = (longlong)iVar15;
+  if (iVar25 != 1) {
+    local_2b0.fileLen = ((uint)uVar20 & 0xffff) + iVar15;
+    local_2b0.slot[iVar4].dataStart = (uchar *)(iVar15 + (int)puVar8);
     goto LAB_827fe8c4;
   }
-  uVar16 = ZEXT48(local_2a0);
-  lVar20 = (lVar25 - uVar16) + uVar7;
-  iVar22 = (int)lVar20;
-  if (uVar9 == (uVar24 & 0xffff)) {
-    if (iVar22 == 0) goto LAB_827fe898;
-    if ((longlong)((local_2a8 - uVar16) + uVar7) < 0) {
-      MyAssertHandler(0xffffffff821e26a0,0x52b,0,0xffffffff820011f4,0xffffffff821e41d0,
-                      0xffffffff821e4220);
-      uVar16 = ZEXT48(local_2a0);
+  uVar18 = ZEXT48(local_2b0.slot[0].dataStart);
+  lVar23 = (lVar7 - uVar18) + lVar6;
+  iVar25 = (int)lVar23;
+  if (uVar27 == (uVar20 & 0xffff)) {
+    if (iVar25 == 0) goto LAB_827fe898;
+    if ((longlong)((local_2b0.fileLen - uVar18) + lVar6) < 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",
+                      0x52b,0,"%s\n\t%s");
+      uVar18 = ZEXT48(local_2b0.slot[0].dataStart);
     }
-    if ((uVar16 < (uVar7 & 0xffffffff)) ||
-       ((uVar7 + 0x7970 & 0xffffffff) < (local_2a8 + uVar7 & 0xffffffff))) {
-      MyAssertHandler(0xffffffff821e26a0,0x52b,0,0xffffffff820011f4,0xffffffff821e4060,
-                      0xffffffff821e4188);
-      uVar16 = ZEXT48(local_2a0);
+    if ((uVar18 < ZEXT48(puVar8)) ||
+       ((lVar6 + 0x7970U & 0xffffffff) < ((ulonglong)local_2b0.fileLen + lVar6 & 0xffffffff))) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",
+                      0x52b,0,"%s\n\t%s");
+      uVar18 = ZEXT48(local_2b0.slot[0].dataStart);
     }
-    if (((lVar25 + uVar7 & 0xffffffff) < (uVar7 & 0xffffffff)) ||
-       (pvVar17 = (void *)uVar16,
-       (uVar7 + 0x7970 & 0xffffffff) <
-       (((uVar7 & 0x7fffffff) * 2 - uVar16) + (ulonglong)local_2a8 + lVar25 & 0xffffffff))) {
-      MyAssertHandler(0xffffffff821e26a0,0x52b,0,0xffffffff820011f4,0xffffffff821e3f38,
-                      0xffffffff821e4188);
-      pvVar17 = local_2a0;
+    if (((lVar7 + lVar6 & 0xffffffffU) < ZEXT48(puVar8)) ||
+       ((lVar6 + 0x7970U & 0xffffffff) <
+        (((ZEXT48(puVar8) & 0x7fffffff) * 2 - uVar18) + (ulonglong)local_2b0.fileLen + lVar7 &
+        0xffffffff))) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",
+                      0x52b,0,"%s\n\t%s");
     }
-    _Dst = (void *)(lVar25 + uVar7);
-    _Size = (local_2a8 - (int)pvVar17) + (int)piVar10;
 LAB_827fe894:
-    memmove(_Dst,pvVar17,_Size);
+    memmove();
   }
   else {
-    if ((int)param_4 == 0) {
-      if (*(int *)(puVar4 + 2) == 0) {
-        MyAssertHandler(0xffffffff821e26a0,0x534,0,0xffffffff82000f98,0xffffffff821e4278);
+    if (iVar4 == 0) {
+      if (local_2b0.slot[0].dataStart == (uchar *)0x0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",
+                        0x534,0,"%s");
       }
-      if ((longlong)(((local_2a8 - uVar9) - (ulonglong)*(uint *)(puVar4 + 2)) + uVar7) < 0) {
-        MyAssertHandler(0xffffffff821e26a0,0x536,0,0xffffffff820011f4,0xffffffff821e3e80,
-                        0xffffffff821e3ed8);
+      if ((longlong)(((local_2b0.fileLen - uVar27) - ZEXT48(local_2b0.slot[0].dataStart)) + lVar6) <
+          0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",
+                        0x536,0,"%s\n\t%s");
       }
-      if (((uVar9 + *(uint *)(puVar4 + 2) & 0xffffffff) < (uVar7 & 0xffffffff)) ||
-         ((uVar7 + 0x7970 & 0xffffffff) < (local_2a8 + uVar7 & 0xffffffff))) {
-        MyAssertHandler(0xffffffff821e26a0,0x536,0,0xffffffff820011f4,0xffffffff821e3d08,
-                        0xffffffff821e3e38);
+      if (((uVar27 + ZEXT48(local_2b0.slot[0].dataStart) & 0xffffffff) < ZEXT48(puVar8)) ||
+         ((lVar6 + 0x7970U & 0xffffffff) < ((ulonglong)local_2b0.fileLen + lVar6 & 0xffffffff))) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",
+                        0x536,0,"%s\n\t%s");
       }
-      if ((((ulonglong)*puVar4 + lVar20 + (ulonglong)*(uint *)(puVar4 + 2) & 0xffffffff) <
-           (uVar7 & 0xffffffff)) ||
-         ((uVar7 + 0x7970 & 0xffffffff) <
-          ((*puVar4 - uVar9) + lVar20 + (ulonglong)local_2a8 + uVar7 & 0xffffffff))) {
-        MyAssertHandler(0xffffffff821e26a0,0x536,0,0xffffffff820011f4,0xffffffff821e3ba8,
-                        0xffffffff821e3e38);
+      if ((((ulonglong)pSVar28->dataLen + lVar23 + ZEXT48(local_2b0.slot[0].dataStart) & 0xffffffff)
+           < ZEXT48(puVar8)) ||
+         ((lVar6 + 0x7970U & 0xffffffff) <
+          ((pSVar28->dataLen - uVar27) + lVar23 + (ulonglong)local_2b0.fileLen + lVar6 & 0xffffffff)
+         )) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",
+                        0x536,0,"%s\n\t%s");
       }
-      iVar3 = *(int *)(puVar4 + 2);
-      pvVar17 = (void *)(iVar3 + (uint)uVar2);
-      _Dst = (void *)((uint)*puVar4 + iVar3 + iVar22);
-      _Size = ((local_2a8 - iVar3) - (uint)uVar2) + (int)piVar10;
       goto LAB_827fe894;
     }
-    if (uVar16 == 0) {
-      MyAssertHandler(0xffffffff821e26a0,0x53c,0,0xffffffff82000f98,0xffffffff821e3b8c);
-      uVar16 = ZEXT48(local_2a0);
+    if (uVar18 == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",
+                      0x53c,0,"%s");
+      uVar18 = ZEXT48(local_2b0.slot[0].dataStart);
     }
-    if (*(int *)(puVar4 + 2) == 0) {
-      MyAssertHandler(0xffffffff821e26a0,0x53d,0,0xffffffff82000f98,0xffffffff821e4278);
-      uVar16 = ZEXT48(local_2a0);
+    if (local_2b0.slot[iVar4].dataStart == (uchar *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",
+                      0x53d,0,"%s");
+      uVar18 = ZEXT48(local_2b0.slot[0].dataStart);
     }
-    if (iVar22 < 0) {
-      if ((longlong)(*(uint *)(puVar4 + 2) - uVar16) < 0) {
-        MyAssertHandler(0xffffffff821e26a0,0x542,0,0xffffffff820011f4,0xffffffff821e3908,
-                        0xffffffff821e38b8);
-        uVar16 = ZEXT48(local_2a0);
+    if (iVar25 < 0) {
+      if ((longlong)(ZEXT48(local_2b0.slot[iVar4].dataStart) - uVar18) < 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",
+                        0x542,0,"%s\n\t%s");
+        uVar18 = ZEXT48(local_2b0.slot[0].dataStart);
       }
-      if ((uVar16 < (uVar7 & 0xffffffff)) ||
-         ((uVar7 + 0x7970 & 0xffffffff) < (ulonglong)*(uint *)(puVar4 + 2))) {
-        MyAssertHandler(0xffffffff821e26a0,0x542,0,0xffffffff820011f4,0xffffffff821e3950,
-                        0xffffffff821e4188);
-        uVar16 = ZEXT48(local_2a0);
+      if ((uVar18 < ZEXT48(puVar8)) ||
+         ((lVar6 + 0x7970U & 0xffffffff) < ZEXT48(local_2b0.slot[iVar4].dataStart))) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",
+                        0x542,0,"%s\n\t%s");
+        uVar18 = ZEXT48(local_2b0.slot[0].dataStart);
       }
-      if (((lVar25 + uVar7 & 0xffffffff) < (uVar7 & 0xffffffff)) ||
-         (pvVar17 = (void *)uVar16,
-         (uVar7 + 0x7970 & 0xffffffff) <
-         ((lVar25 - uVar16) + uVar7 + (ulonglong)*(uint *)(puVar4 + 2) & 0xffffffff))) {
-        MyAssertHandler(0xffffffff821e26a0,0x542,0,0xffffffff820011f4,0xffffffff821e3a70,
-                        0xffffffff821e4188);
-        pvVar17 = local_2a0;
+      if (((lVar7 + lVar6 & 0xffffffffU) < ZEXT48(puVar8)) ||
+         ((lVar6 + 0x7970U & 0xffffffff) <
+          ((lVar7 - uVar18) + lVar6 + ZEXT48(local_2b0.slot[iVar4].dataStart) & 0xffffffff))) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",
+                        0x542,0,"%s\n\t%s");
       }
-      memmove((void *)(lVar25 + uVar7),pvVar17,*(int *)(puVar4 + 2) - (int)pvVar17);
+      memmove();
     }
-    if ((uVar9 != *puVar4) || (iVar22 != 0)) {
-      if ((longlong)(((local_2a8 - uVar9) - (ulonglong)*(uint *)(puVar4 + 2)) + uVar7) < 0) {
-        MyAssertHandler(0xffffffff821e26a0,0x549,0,0xffffffff820011f4,0xffffffff821e3e80,
-                        0xffffffff821e3ed8);
+    if ((uVar27 != pSVar28->dataLen) || (iVar25 != 0)) {
+      if ((longlong)
+          (((local_2b0.fileLen - uVar27) - ZEXT48(local_2b0.slot[iVar4].dataStart)) + lVar6) < 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",
+                        0x549,0,"%s\n\t%s");
       }
-      if (((uVar9 + *(uint *)(puVar4 + 2) & 0xffffffff) < (uVar7 & 0xffffffff)) ||
-         ((uVar7 + 0x7970 & 0xffffffff) < (local_2a8 + uVar7 & 0xffffffff))) {
-        MyAssertHandler(0xffffffff821e26a0,0x549,0,0xffffffff820011f4,0xffffffff821e3d08,
-                        0xffffffff821e3e38);
+      if (((uVar27 + ZEXT48(local_2b0.slot[iVar4].dataStart) & 0xffffffff) < ZEXT48(puVar8)) ||
+         ((lVar6 + 0x7970U & 0xffffffff) < ((ulonglong)local_2b0.fileLen + lVar6 & 0xffffffff))) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",
+                        0x549,0,"%s\n\t%s");
       }
-      if ((((ulonglong)*puVar4 + lVar20 + (ulonglong)*(uint *)(puVar4 + 2) & 0xffffffff) <
-           (uVar7 & 0xffffffff)) ||
-         ((uVar7 + 0x7970 & 0xffffffff) <
-          ((*puVar4 - uVar9) + lVar20 + (ulonglong)local_2a8 + uVar7 & 0xffffffff))) {
-        MyAssertHandler(0xffffffff821e26a0,0x549,0,0xffffffff820011f4,0xffffffff821e3ba8,
-                        0xffffffff821e3e38);
+      if ((((ulonglong)pSVar28->dataLen + lVar23 + ZEXT48(local_2b0.slot[iVar4].dataStart) &
+           0xffffffff) < ZEXT48(puVar8)) ||
+         ((lVar6 + 0x7970U & 0xffffffff) <
+          ((pSVar28->dataLen - uVar27) + lVar23 + (ulonglong)local_2b0.fileLen + lVar6 & 0xffffffff)
+         )) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",
+                        0x549,0,"%s\n\t%s");
       }
-      iVar3 = *(int *)(puVar4 + 2);
-      memmove((void *)((uint)*puVar4 + iVar3 + iVar22),(void *)(iVar3 + (uint)uVar2),
-              ((local_2a8 - iVar3) - (uint)uVar2) + (int)piVar10);
-      uVar24 = ZEXT48(local_2a0);
-      if (0 < iVar22) {
-        if ((longlong)(*(uint *)(puVar4 + 2) - uVar24) < 0) {
-          MyAssertHandler(0xffffffff821e26a0,0x550,0,0xffffffff820011f4,0xffffffff821e3908,
-                          0xffffffff821e38b8);
-          uVar24 = ZEXT48(local_2a0);
+      memmove();
+      uVar20 = ZEXT48(local_2b0.slot[0].dataStart);
+      if (0 < iVar25) {
+        if ((longlong)(ZEXT48(local_2b0.slot[iVar4].dataStart) - uVar20) < 0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp"
+                          ,0x550,0,"%s\n\t%s");
+          uVar20 = ZEXT48(local_2b0.slot[0].dataStart);
         }
-        if ((uVar24 < (uVar7 & 0xffffffff)) ||
-           ((uVar7 + 0x7970 & 0xffffffff) < (ulonglong)*(uint *)(puVar4 + 2))) {
-          MyAssertHandler(0xffffffff821e26a0,0x550,0,0xffffffff820011f4,0xffffffff821e3950,
-                          0xffffffff821e4188);
-          uVar24 = ZEXT48(local_2a0);
+        if ((uVar20 < ZEXT48(puVar8)) ||
+           ((lVar6 + 0x7970U & 0xffffffff) < ZEXT48(local_2b0.slot[iVar4].dataStart))) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp"
+                          ,0x550,0,"%s\n\t%s");
+          uVar20 = ZEXT48(local_2b0.slot[0].dataStart);
         }
-        if (((lVar25 + uVar7 & 0xffffffff) < (uVar7 & 0xffffffff)) ||
-           (pvVar17 = (void *)uVar24,
-           (uVar7 + 0x7970 & 0xffffffff) <
-           ((lVar25 - uVar24) + uVar7 + (ulonglong)*(uint *)(puVar4 + 2) & 0xffffffff))) {
-          MyAssertHandler(0xffffffff821e26a0,0x550,0,0xffffffff820011f4,0xffffffff821e3a70,
-                          0xffffffff821e4188);
-          pvVar17 = local_2a0;
+        if (((lVar7 + lVar6 & 0xffffffffU) < ZEXT48(puVar8)) ||
+           ((lVar6 + 0x7970U & 0xffffffff) <
+            ((lVar7 - uVar20) + lVar6 + ZEXT48(local_2b0.slot[iVar4].dataStart) & 0xffffffff))) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp"
+                          ,0x550,0,"%s\n\t%s");
         }
-        _Dst = (void *)(lVar25 + uVar7);
-        _Size = *(int *)(puVar4 + 2) - (int)pvVar17;
         goto LAB_827fe894;
       }
     }
   }
 LAB_827fe898:
-  uVar8 = uVar8 & 0xffffffff;
-  param_3 = param_3 & 0xffffffff;
-  *(int *)(puVar4 + 2) = iVar22 + *(int *)(puVar4 + 2);
-  local_2a8 = ((uint)*puVar4 - (uint)uVar2) + iVar22 + local_2a8;
+  uVar1 = pSVar28->dataLen;
+  local_2b0.slot[iVar4].dataStart = local_2b0.slot[iVar4].dataStart + iVar25;
+  local_2b0.fileLen = ((uint)uVar1 - (uint)uVar2) + iVar25 + local_2b0.fileLen;
+  param_3 = MStack00000024;
 LAB_827fe8c4:
-  if (*(uint *)(iVar11 + 0x30) != (uint)*puVar4) {
-    MyAssertHandler(0xffffffff821e26a0,0x55a,0,0xffffffff82000f98,0xffffffff821e389c);
+  if (pSVar12->size != (uint)pSVar28->dataLen) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",0x55a
+                    ,0,"%s");
   }
-  AssertMatchRulesVersionIsSet(uVar6);
-  if (*(int *)(puVar4 + 2) == 0) {
-    MyAssertHandler(0xffffffff821e26a0,0x55d,0,0xffffffff82000f98,0xffffffff821e4278);
+  AssertMatchRulesVersionIsSet(pMVar14);
+  if (local_2b0.slot[iVar4].dataStart == (uchar *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",0x55d
+                    ,0,"%s");
   }
-  if (*(int *)(iVar11 + 0x30) < 0) {
-    MyAssertHandler(0xffffffff821e26a0,0x55f,0,0xffffffff820011f4,0xffffffff82048cf4,
-                    0xffffffff82048d18);
+  if ((int)pSVar12->size < 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",0x55f
+                    ,0,"%s\n\t%s");
   }
-  if (((ulonglong)*(uint *)(puVar4 + 2) <= (uVar6 & 0xffffffff)) &&
-     ((*(uint *)(iVar11 + 0x30) + uVar6 & 0xffffffff) <=
-      ((ulonglong)*(uint *)(iVar11 + 0x30) + (ulonglong)*(uint *)(puVar4 + 2) & 0xffffffff))) {
-    MyAssertHandler(0xffffffff821e26a0,0x55f,0,0xffffffff820011f4,0xffffffff821e3750,
-                    0xffffffff821e3840);
+  uVar20 = ZEXT48(local_2b0.slot[iVar4].dataStart);
+  if ((uVar20 <= (uVar5 & 0xffffffff)) &&
+     ((pSVar12->size + uVar5 & 0xffffffff) <= (pSVar12->size + uVar20 & 0xffffffff))) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",0x55f
+                    ,0,"%s\n\t%s");
   }
-  if ((uVar6 + 0xc00 & 0xffffffff) < (*(uint *)(iVar11 + 0x30) + uVar6 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821e26a0,0x55f,0,0xffffffff820011f4,0xffffffff821e3618,
-                    0xffffffff821e3708);
+  if ((uVar5 + 0xc00 & 0xffffffff) < (pSVar12->size + uVar5 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",0x55f
+                    ,0,"%s\n\t%s");
   }
-  if (((ulonglong)*(uint *)(puVar4 + 2) < (uVar7 & 0xffffffff)) ||
-     ((uVar7 + 0x7970 & 0xffffffff) < (ulonglong)(*(int *)(iVar11 + 0x30) + *(uint *)(puVar4 + 2))))
-  {
-    MyAssertHandler(0xffffffff821e26a0,0x55f,0,0xffffffff820011f4,0xffffffff821e34f0,
-                    0xffffffff821e35d8);
+  puVar3 = (uint *)local_2b0.slot[iVar4].dataStart;
+  if ((puVar3 < puVar8) ||
+     ((lVar6 + 0x7970U & 0xffffffff) < (ulonglong)(pSVar12->size + (int)puVar3))) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",0x55f
+                    ,0,"%s\n\t%s");
   }
-  memcpy(*(void **)(puVar4 + 2),(void *)uVar6,*(size_t *)(iVar11 + 0x30));
-  if (0x7970 < local_2a8) {
-    MyAssertHandler(0xffffffff821e26a0,0x562,0,0xffffffff82000f98,0xffffffff821e34c8);
+  memcpy();
+  if (0x7970 < local_2b0.fileLen) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",0x562
+                    ,0,"%s");
   }
-  WriteMatchRulesFileHeaderToBuffer(uVar5 - 0x2b0,uVar7,0x7970);
-  uVar18 = local_2a8;
-  cVar14 = Memcard_SelectSaveDevice(param_2,0,0);
-  uVar23 = 0;
-  if ((cVar14 != '\0') &&
-     (uVar6 = OpenContextFile(uVar5 - 0xe0,0xffffffff821e2bb4,1,param_2), uVar23 = 0,
-     (uVar6 & 0xffffffff) != 0)) {
-    WriteToMemoryCardFile(uVar6,uVar7,uVar18);
-    pcVar13 = (char *)Memcard_GetWriteError();
-    if (*pcVar13 == '\0') {
-      uVar23 = uVar18;
+  WriteMatchRulesFileHeaderToBuffer(&local_2b0,(uchar *)puVar8,0x7970);
+  uVar11 = local_2b0.fileLen;
+  bVar17 = Memcard_SelectSaveDevice(param_2,false,0);
+  uVar26 = 0;
+  if ((bVar17) &&
+     (pvVar10 = OpenContextFile(acStack_e0,"GAME_CUSTOM_GAMEMODE",MEMCARD_WRITE,param_2), uVar26 = 0
+     , pvVar10 != (void *)0x0)) {
+    WriteToMemoryCardFile(pvVar10,puVar8,uVar11);
+    pMVar16 = Memcard_GetWriteError();
+    if (pMVar16->isError == false) {
+      uVar26 = uVar11;
     }
-    CloseContextFile(uVar6);
+    CloseContextFile(pvVar10);
   }
-  if (uVar23 == local_2a8) {
-    HeaderCache_SaveFile(uVar5 - 0x2b0,param_3,uVar8);
-    LargeLocal___LargeLocal(uVar5 - 0x2c8);
+  if (uVar26 == local_2b0.fileLen) {
+    HeaderCache_SaveFile(&local_2b0,param_3,pcVar9);
+    LargeLocal::~LargeLocal(&LStack_2c8);
     __restgprlr();
     return;
   }
-  Com_PrintError(0x10,0xffffffff821e3498);
-  MatchRules_Notify(param_2,1);
-  LargeLocal___LargeLocal(uVar5 - 0x2c8);
+  Com_PrintError(0x10,"[SaveMatchRulesToDisk] Failed to write file.\n");
+  MatchRules_Notify(param_2,MRNOTIFY_FAILED_TO_SAVE);
+  LargeLocal::~LargeLocal(&LStack_2c8);
   __restgprlr();
   return;
 }
@@ -2139,75 +2282,74 @@ LAB_827fe8c4:
 // 827FEB20  SaveMatchRulesToDiskAppendToFront_DeleteSaveSlot  (bgame/bg_matchrules.cpp:1396)
 
 void SaveMatchRulesToDiskAppendToFront_DeleteSaveSlot
-               (undefined8 param_1,longlong param_2,ulonglong param_3)
+               (int param_1,MatchRulesSaveHeader *param_2,uchar *param_3)
 
 {
   int iVar1;
   int iVar2;
   ulonglong uVar3;
-  void *pvVar4;
+  longlong lVar4;
   ulonglong uVar5;
-  longlong lVar6;
+  ulonglong uVar6;
   longlong lVar7;
-  size_t _Size;
-  ushort local_a0 [2];
-  void *local_9c;
+  longlong lVar8;
+  ushort local_a0;
+  uint local_9c;
   
-  uVar3 = __savegprlr_20();
-  lVar6 = uVar3 * 0x2c + param_2;
-  pvVar4 = (void *)(lVar6 + 0xcU);
-  memcpy(local_a0,pvVar4,0x2c);
+  uVar5 = (ulonglong)(int)param_3;
+  lVar4 = (longlong)(int)param_2;
+  uVar3 = __savegprlr_20(param_1);
+  lVar7 = uVar3 * 0x2c + lVar4;
+  memcpy();
   if (9 < (uVar3 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821e26a0,0x57a,0,0xffffffff821e4a10,uVar3,10);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",0x57a
+                    ,0,"deleteIdx doesn\'t index MATCH_RULES_MAX_SAVESLOTS\n\t%i not in [0, %i)");
   }
-  uVar5 = (ulonglong)local_a0[0];
-  iVar1 = (int)param_2;
+  uVar6 = (ulonglong)local_a0;
+  iVar1 = (int)lVar4;
   if ((int)uVar3 < 9) {
-    lVar7 = 9 - uVar3;
-    _Size = (int)lVar7 * 0x2c;
-    if ((int)_Size < 0) {
-      MyAssertHandler(0xffffffff821e26a0,0x581,0,0xffffffff820011f4,0xffffffff821e4930,
-                      0xffffffff821e4990);
+    lVar8 = 9 - uVar3;
+    if ((int)lVar8 * 0x2c < 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",
+                      0x581,0,"%s\n\t%s");
     }
-    if ((lVar6 + 0x38U & 0xffffffff) < (param_2 + 0xcU & 0xffffffff)) {
-      MyAssertHandler(0xffffffff821e26a0,0x581,0,0xffffffff820011f4,0xffffffff821e47a0,
-                      0xffffffff821e48e0);
+    if ((lVar7 + 0x38U & 0xffffffff) < (lVar4 + 0xcU & 0xffffffff)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",
+                      0x581,0,"%s\n\t%s");
     }
-    if (((lVar6 + 0xcU & 0xffffffff) < (param_2 + 0xcU & 0xffffffff)) ||
-       ((param_2 + 0x1c4U & 0xffffffff) < (param_2 + 0x198U & 0xffffffff))) {
-      MyAssertHandler(0xffffffff821e26a0,0x581,0,0xffffffff820011f4,0xffffffff821e4660,
-                      0xffffffff821e48e0);
+    if (((lVar7 + 0xcU & 0xffffffff) < (lVar4 + 0xcU & 0xffffffff)) ||
+       ((lVar4 + 0x1c4U & 0xffffffff) < (lVar4 + 0x198U & 0xffffffff))) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",
+                      0x581,0,"%s\n\t%s");
     }
-    memmove(pvVar4,(void *)(lVar6 + 0x38U),_Size);
-    uVar3 = ZEXT48(local_9c);
-    if ((longlong)(((*(uint *)(iVar1 + 8) - uVar5) - uVar3) + param_3) < 0) {
-      MyAssertHandler(0xffffffff821e26a0,0x586,0,0xffffffff820011f4,0xffffffff821e45a8,
-                      0xffffffff821e4600);
+    memmove();
+    uVar3 = (ulonglong)local_9c;
+    if ((longlong)(((*(uint *)(iVar1 + 8) - uVar6) - uVar3) + uVar5) < 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",
+                      0x586,0,"%s\n\t%s");
     }
-    if (((uVar5 + uVar3 & 0xffffffff) < (param_3 & 0xffffffff)) ||
-       ((param_3 + 0x7970 & 0xffffffff) < (*(uint *)(iVar1 + 8) + param_3 & 0xffffffff))) {
-      MyAssertHandler(0xffffffff821e26a0,0x586,0,0xffffffff820011f4,0xffffffff821e4408,
-                      0xffffffff821e4558);
+    if (((uVar6 + uVar3 & 0xffffffff) < (uVar5 & 0xffffffff)) ||
+       ((uVar5 + 0x7970 & 0xffffffff) < (*(uint *)(iVar1 + 8) + uVar5 & 0xffffffff))) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",
+                      0x586,0,"%s\n\t%s");
     }
-    if ((uVar3 < (param_3 & 0xffffffff)) ||
-       ((param_3 + 0x7970 & 0xffffffff) < ((*(uint *)(iVar1 + 8) - uVar5) + param_3 & 0xffffffff)))
-    {
-      MyAssertHandler(0xffffffff821e26a0,0x586,0,0xffffffff820011f4,0xffffffff821e42d8,
-                      0xffffffff821e4558);
+    if ((uVar3 < (uVar5 & 0xffffffff)) ||
+       ((uVar5 + 0x7970 & 0xffffffff) < ((*(uint *)(iVar1 + 8) - uVar6) + uVar5 & 0xffffffff))) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",
+                      0x586,0,"%s\n\t%s");
     }
-    memmove(local_9c,(void *)(uVar5 + uVar3),
-            ((*(int *)(iVar1 + 8) - (uint)local_a0[0]) - (int)local_9c) + (int)param_3);
-    lVar6 = lVar6 + -0x1c;
+    memmove();
+    lVar7 = lVar7 + -0x1c;
     do {
-      iVar2 = (int)lVar6;
-      lVar6 = lVar6 + 0x2c;
-      *(int *)lVar6 = *(int *)(iVar2 + 0x2c) - (uint)local_a0[0];
-      lVar7 = lVar7 + -1;
-    } while (lVar7 != 0);
+      iVar2 = (int)lVar7;
+      lVar7 = lVar7 + 0x2c;
+      *(int *)lVar7 = *(int *)(iVar2 + 0x2c) - (uint)local_a0;
+      lVar8 = lVar8 + -1;
+    } while (lVar8 != 0);
   }
-  *(uint *)(iVar1 + 8) = *(int *)(iVar1 + 8) - (uint)local_a0[0];
-  pvVar4 = memset((void *)(iVar1 + 0x198),0,0x2c);
-  __restgprlr_20(pvVar4);
+  *(uint *)(iVar1 + 8) = *(int *)(iVar1 + 8) - (uint)local_a0;
+  memset();
+  __restgprlr_20();
   return;
 }
 
@@ -2217,61 +2359,67 @@ void SaveMatchRulesToDiskAppendToFront_DeleteSaveSlot
 /* WARNING: Removing unreachable block (ram,0x827feea4) */
 
 void SaveMatchRulesToDiskAppendToFront_PushFirstSlot
-               (undefined8 param_1,int param_2,ulonglong param_3)
+               (MatchRulesSaveHeader *param_1,StructuredDataDef *param_2,uchar *param_3)
 
 {
-  int iVar1;
-  int iVar2;
-  ushort *_Src;
-  int iVar4;
-  ulonglong uVar3;
-  longlong lVar5;
+  uchar *puVar1;
+  MatchRulesSaveHeader *pMVar2;
+  int iVar3;
+  ulonglong uVar4;
+  uchar *puVar6;
+  ulonglong uVar5;
+  longlong lVar7;
+  SavedSlot *pSVar8;
   
-  iVar1 = __savegprlr_24();
-  _Src = (ushort *)(iVar1 + 0xc);
-  lVar5 = (ulonglong)*(ushort *)(iVar1 + 0x16c) + (ulonglong)*(ushort *)(iVar1 + 0x140) +
-          (ulonglong)*(ushort *)(iVar1 + 0x114) + (ulonglong)*(ushort *)(iVar1 + 0xe8) +
-          (ulonglong)*(ushort *)(iVar1 + 0xbc) + (ulonglong)*(ushort *)(iVar1 + 0x90) +
-          (ulonglong)*(ushort *)(iVar1 + 100) + (ulonglong)*(ushort *)(iVar1 + 0x38) +
-          (ulonglong)*(ushort *)(iVar1 + 0xc);
-  if (lVar5 != 0) {
-    *(uint *)(iVar1 + 8) = *(int *)(iVar1 + 8) - (uint)*(ushort *)(iVar1 + 0x198);
-    memmove((void *)(iVar1 + 0x38),_Src,0x18c);
+  uVar4 = (ulonglong)(int)param_3;
+  pMVar2 = (MatchRulesSaveHeader *)__savegprlr_24(param_1);
+  pSVar8 = pMVar2->slot;
+  lVar7 = (ulonglong)pMVar2->slot[8].dataLen + (ulonglong)pMVar2->slot[7].dataLen +
+          (ulonglong)pMVar2->slot[6].dataLen + (ulonglong)pMVar2->slot[5].dataLen +
+          (ulonglong)pMVar2->slot[4].dataLen + (ulonglong)pMVar2->slot[3].dataLen +
+          (ulonglong)pMVar2->slot[2].dataLen + (ulonglong)pMVar2->slot[1].dataLen +
+          (ulonglong)pMVar2->slot[0].dataLen;
+  if (lVar7 != 0) {
+    pMVar2->fileLen = pMVar2->fileLen - (uint)pMVar2->slot[9].dataLen;
+    memmove();
   }
-  *_Src = (ushort)*(undefined4 *)(param_2 + 0x30);
-  iVar2 = GetSizeOfMatchRulesFileHeader(iVar1);
-  if (*(int *)(iVar1 + 0x3c) == 0) {
-    MyAssertHandler(0xffffffff821e26a0,0x5ad,0,0xffffffff82000f98,0xffffffff821e4d64);
+  pSVar8->dataLen = (ushort)param_2->size;
+  iVar3 = GetSizeOfMatchRulesFileHeader(pMVar2);
+  if (pMVar2->slot[1].dataStart == (uchar *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",0x5ad
+                    ,0,"%s");
   }
-  iVar4 = iVar2 + (int)param_3;
-  *(int *)(iVar1 + 0x10) = iVar4;
-  iVar2 = (iVar2 - *(int *)(iVar1 + 0x3c)) + (int)param_3;
-  *(uint *)(iVar1 + 8) = (uint)*_Src + *(int *)(iVar1 + 8) + iVar2;
-  if ((size_t)lVar5 != 0) {
-    if (iVar4 == 0) {
-      MyAssertHandler(0xffffffff821e26a0,0x5b5,0,0xffffffff82000f98,0xffffffff821e4d48);
+  puVar1 = pMVar2->slot[1].dataStart;
+  puVar6 = (uchar *)(iVar3 + (int)uVar4);
+  pMVar2->slot[0].dataStart = puVar6;
+  iVar3 = (iVar3 - (int)puVar1) + (int)uVar4;
+  pMVar2->fileLen = (uint)pSVar8->dataLen + pMVar2->fileLen + iVar3;
+  if ((int)lVar7 != 0) {
+    if (puVar6 == (uchar *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",
+                      0x5b5,0,"%s");
     }
-    if (((ulonglong)*(uint *)(iVar1 + 0x3c) < (param_3 & 0xffffffff)) ||
-       ((param_3 + 0x7970 & 0xffffffff) < ((ulonglong)*(uint *)(iVar1 + 0x3c) + lVar5 & 0xffffffff))
-       ) {
-      MyAssertHandler(0xffffffff821e26a0,0x5b7,0,0xffffffff820011f4,0xffffffff821e4ba0,
-                      0xffffffff821e4cb0);
+    uVar5 = ZEXT48(pMVar2->slot[1].dataStart);
+    if ((uVar5 < (uVar4 & 0xffffffff)) ||
+       ((uVar4 + 0x7970 & 0xffffffff) < (uVar5 + lVar7 & 0xffffffff))) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",
+                      0x5b7,0,"%s\n\t%s");
     }
-    uVar3 = (ulonglong)*_Src + (ulonglong)*(uint *)(iVar1 + 0x10);
-    if (((uVar3 & 0xffffffff) < (param_3 & 0xffffffff)) ||
-       ((param_3 + 0x7970 & 0xffffffff) < (uVar3 + lVar5 & 0xffffffff))) {
-      MyAssertHandler(0xffffffff821e26a0,0x5b7,0,0xffffffff820011f4,0xffffffff821e4a58,
-                      0xffffffff821e4cb0);
+    uVar5 = (ulonglong)pSVar8->dataLen + ZEXT48(pMVar2->slot[0].dataStart);
+    if (((uVar5 & 0xffffffff) < (uVar4 & 0xffffffff)) ||
+       ((uVar4 + 0x7970 & 0xffffffff) < (uVar5 + lVar7 & 0xffffffff))) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",
+                      0x5b7,0,"%s\n\t%s");
     }
-    memmove((void *)((uint)*_Src + *(int *)(iVar1 + 0x10)),*(void **)(iVar1 + 0x3c),(size_t)lVar5);
-    *(uint *)(iVar1 + 0x3c) = (uint)*_Src + iVar2 + *(int *)(iVar1 + 0x3c);
-    *(uint *)(iVar1 + 0x68) = (uint)*_Src + *(int *)(iVar1 + 0x68) + iVar2;
-    *(uint *)(iVar1 + 0x94) = (uint)*_Src + iVar2 + *(int *)(iVar1 + 0x94);
-    *(uint *)(iVar1 + 0xc0) = (uint)*_Src + *(int *)(iVar1 + 0xc0) + iVar2;
-    *(uint *)(iVar1 + 0xec) = (uint)*_Src + iVar2 + *(int *)(iVar1 + 0xec);
-    *(uint *)(iVar1 + 0x118) = (uint)*_Src + *(int *)(iVar1 + 0x118) + iVar2;
-    *(uint *)(iVar1 + 0x144) = (uint)*_Src + iVar2 + *(int *)(iVar1 + 0x144);
-    *(uint *)(iVar1 + 0x170) = (uint)*_Src + *(int *)(iVar1 + 0x170) + iVar2;
+    memmove();
+    pMVar2->slot[1].dataStart = pMVar2->slot[1].dataStart + (uint)pSVar8->dataLen + iVar3;
+    pMVar2->slot[2].dataStart = pMVar2->slot[2].dataStart + iVar3 + (uint)pSVar8->dataLen;
+    pMVar2->slot[3].dataStart = pMVar2->slot[3].dataStart + (uint)pSVar8->dataLen + iVar3;
+    pMVar2->slot[4].dataStart = pMVar2->slot[4].dataStart + iVar3 + (uint)pSVar8->dataLen;
+    pMVar2->slot[5].dataStart = pMVar2->slot[5].dataStart + (uint)pSVar8->dataLen + iVar3;
+    pMVar2->slot[6].dataStart = pMVar2->slot[6].dataStart + iVar3 + (uint)pSVar8->dataLen;
+    pMVar2->slot[7].dataStart = pMVar2->slot[7].dataStart + (uint)pSVar8->dataLen + iVar3;
+    pMVar2->slot[8].dataStart = pMVar2->slot[8].dataStart + iVar3 + (uint)pSVar8->dataLen;
   }
   __restgprlr_24();
   return;
@@ -2280,28 +2428,33 @@ void SaveMatchRulesToDiskAppendToFront_PushFirstSlot
 
 // 82801188  BG_SaveMatchRulesToHistory  (bgame/bg_matchrules.cpp:1474)
 
-void BG_SaveMatchRulesToHistory(undefined8 param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void BG_SaveMatchRulesToHistory(LocalClientNum_t param_1)
 
 {
-  int iVar2;
-  undefined8 uVar1;
+  int iVar1;
+  GameStateInfo *pGVar2;
   
-  iVar2 = GameStateInfo_InPlaylistGame();
-  if (iVar2 == 0) {
-    iVar2 = GameStateInfo_Get();
-    if (*(int *)(iVar2 + 4) == 0) {
-      Com_PrintWarning(0x10,0xffffffff821e62b0);
+  iVar1 = GameStateInfo_InPlaylistGame();
+  if (iVar1 == 0) {
+    pGVar2 = GameStateInfo_Get();
+    if (pGVar2->usingRecipe == 0) {
+      Com_PrintWarning(0x10,
+                       "BG_SaveMatchRulesToHistory while not using custom match rules -- ignoring\n"
+                      );
     }
     else {
-      if (*(int *)(iVar2 + 8) == 0) {
-        MyAssertHandler(0xffffffff821e26a0,0x5d1,0,0xffffffff82000f98,0xffffffff82042524);
+      if (pGVar2->matchRules == (MatchRules *)0x0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",
+                        0x5d1,0,"%s");
       }
-      uVar1 = CL_ControllerIndexFromClientNum(param_1);
-      SaveMatchRulesToDiskAppendToFront(*(undefined4 *)(iVar2 + 8),uVar1,1,1);
+      iVar1 = CL_ControllerIndexFromClientNum(param_1);
+      SaveMatchRulesToDiskAppendToFront(pGVar2->matchRules,iVar1,MR_SAVELOC_PLAYERHISTORY,1);
     }
   }
   else {
-    Com_PrintWarning(0x10,0xffffffff821e6300);
+    Com_PrintWarning(0x10,"BG_SaveMatchRulesToHistory while in a playlist game -- ignoring\n");
   }
   return;
 }
@@ -2309,719 +2462,697 @@ void BG_SaveMatchRulesToHistory(undefined8 param_1)
 
 // 827FF018  SaveMatchRulesToDiskAppendToFront  (bgame/bg_matchrules.cpp:1498)
 
+/* WARNING: Enum "MatchRulesReturnCode": Some values do not have unique names */
+
 void SaveMatchRulesToDiskAppendToFront
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
+               (MatchRules *param_1,int param_2,MatchRulesSaveLocation param_3,int param_4)
 
 {
-  short sVar1;
+  ushort uVar1;
   ushort *puVar2;
-  int iVar3;
-  ulonglong uVar4;
-  int *piVar11;
+  uchar *puVar3;
+  MatchRules *pMVar4;
+  MatchRules *pMVar5;
+  StructuredDataDef *pSVar6;
+  char *pcVar7;
+  char *pcVar8;
+  char *pcVar9;
+  MatchRulesSaveHeader *pMVar10;
+  int iVar11;
   int iVar12;
-  undefined8 uVar5;
-  undefined8 uVar6;
-  undefined8 uVar7;
-  int iVar13;
-  undefined4 uVar14;
-  undefined4 uVar15;
-  ulonglong uVar8;
-  undefined8 uVar9;
-  longlong lVar10;
-  uint uVar16;
-  int *piVar17;
-  int *piVar18;
-  int iVar19;
-  short *psVar20;
-  undefined1 *puVar21;
-  int aiStack_2bc [3];
-  undefined1 auStack_2b0 [16];
-  int local_2a0;
-  int local_29c;
-  uint local_298;
-  short local_294 [2];
-  int *local_290;
-  undefined4 local_28c;
-  undefined1 auStack_288 [10];
-  undefined1 auStack_27e [430];
-  undefined1 auStack_d0 [208];
+  char *pcVar13;
+  int iVar14;
+  uint uVar15;
+  ulonglong uVar16;
+  undefined4 *puVar17;
+  uchar *puVar18;
+  SavedSlot *pSVar19;
+  undefined4 auStack_2bc [3];
+  LargeLocal aLStack_2b0 [2];
+  MatchRulesSaveHeader local_2a0;
+  char acStack_d0 [208];
   
-  uVar4 = __savegprlr_16();
-  LargeLocal__LargeLocal(auStack_2b0,0x7970);
-  piVar11 = (int *)LargeLocal__GetBuf(auStack_2b0);
-  if ((uVar4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821e26a0,0x5e5,0,0xffffffff82000f98,0xffffffff821e2820);
+  pMVar4 = (MatchRules *)__savegprlr_16(param_1);
+  LargeLocal::LargeLocal(aLStack_2b0,0x7970);
+  pMVar5 = LargeLocal::GetBuf(aLStack_2b0);
+  if (pMVar4 == (MatchRules *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",0x5e5
+                    ,0,"%s");
   }
-  iVar12 = StructuredDataDef_GetAsset(0xffffffff8203d614,0xc00);
-  uVar5 = BG_MatchRulesData_GetString(uVar4,0xffffffff820337c4);
-  uVar6 = BG_MatchRulesData_GetString(uVar4,0xffffffff821e29b0);
-  uVar7 = Live_GetLocalClientOfflineXuidString(param_2);
-  iVar13 = HeaderCache_FindFile(param_3,uVar7);
-  if (iVar13 != 0) {
-    uVar14 = I_strncmp(uVar5,iVar13 + 0x18,10);
-    uVar15 = I_strncmp(uVar6,iVar13 + 0x22,0x14);
-    if (((*(short *)(iVar13 + 0xc) != 0) && ((uint)LZCOUNT(uVar14) >> 5 != 0)) &&
-       ((uint)LZCOUNT(uVar15) >> 5 != 0)) {
-      Com_Printf(0x10,0xffffffff821e51e0);
-      LargeLocal___LargeLocal(auStack_2b0);
+  pSVar6 = StructuredDataDef_GetAsset("mp/recipes.def",0xc00);
+  pcVar7 = BG_MatchRulesData_GetString(pMVar4,"gametype");
+  pcVar8 = BG_MatchRulesData_GetString(pMVar4,"recipeName");
+  pcVar9 = Live_GetLocalClientOfflineXuidString(param_2);
+  pMVar10 = HeaderCache_FindFile(param_3,pcVar9);
+  if (pMVar10 != (MatchRulesSaveHeader *)0x0) {
+    iVar11 = I_strncmp(pcVar7,pMVar10->slot[0].gametype,10);
+    iVar12 = I_strncmp(pcVar8,pMVar10->slot[0].name,0x14);
+    if (((pMVar10->slot[0].dataLen != 0) && ((uint)LZCOUNT(iVar11) >> 5 != 0)) &&
+       ((uint)LZCOUNT(iVar12) >> 5 != 0)) {
+      Com_Printf(0x10,"[SaveMatchRulesToDiskAppendToFront] Data has been previously saved.\n");
+      LargeLocal::~LargeLocal(aLStack_2b0);
       __restgprlr_16();
       return;
     }
   }
-  BuildFilename(param_3,uVar7,auStack_d0,0x40);
-  memset(&local_2a0,0,0x1c4);
-  uVar8 = ReadFileToBuffer(auStack_d0,param_2,piVar11,0x7970,param_4);
-  local_298 = (uint)uVar8;
-  if ((uVar8 & 0xffffffff) == 0) {
-    iVar13 = -1;
+  BuildFilename(param_3,pcVar9,acStack_d0,0x40);
+  memset();
+  local_2a0.fileLen = ReadFileToBuffer(acStack_d0,param_2,pMVar5->data,0x7970,param_4);
+  if (local_2a0.fileLen == 0) {
+    iVar11 = -1;
   }
   else {
-    local_2a0 = Com_BlockChecksumKey32(piVar11 + 1,uVar8 - 4,0);
-    if (local_2a0 == *piVar11) {
-      local_29c = piVar11[1];
-      piVar18 = piVar11 + 2;
-      if (local_29c == 2) {
-        iVar13 = 0;
-        iVar19 = (int)piVar18 - (int)piVar11;
-        psVar20 = local_294;
+    local_2a0.checksum = Com_BlockChecksumKey32(pMVar5->data + 4,local_2a0.fileLen - 4,0);
+    if (local_2a0.checksum == *(uint *)pMVar5->data) {
+      local_2a0.fileVersion = *(uint *)(pMVar5->data + 4);
+      puVar18 = pMVar5->data + 8;
+      if (local_2a0.fileVersion == 2) {
+        iVar11 = 0;
+        iVar12 = (int)puVar18 - (int)pMVar5;
+        pSVar19 = local_2a0.slot;
         do {
-          uVar16 = 0x7970;
-          if ((int)local_298 < 0x7970) {
-            uVar16 = local_298;
+          uVar15 = 0x7970;
+          if ((int)local_2a0.fileLen < 0x7970) {
+            uVar15 = local_2a0.fileLen;
           }
-          if ((int)(uVar16 - ((-(uint)(*psVar20 != 0) & 0x22) + 2)) <= iVar19) {
-            Com_PrintError(0x10,0xffffffff821e2c5c);
-            iVar13 = -1;
+          if ((int)(uVar15 - ((-(uint)(pSVar19->dataLen != 0) & 0x22) + 2)) <= iVar12) {
+            Com_PrintError(0x10,"[ReadMatchRulesSaveFile] Tried to read past end of save file\n");
+            iVar11 = -1;
             goto LAB_827ff308;
           }
-          sVar1 = *(short *)piVar18;
-          *psVar20 = sVar1;
-          iVar3 = iVar19 + 2;
-          piVar17 = (int *)((int)piVar18 + 2);
-          if (sVar1 != 0) {
-            *(int *)(psVar20 + 4) = *(int *)((int)piVar18 + 2);
-            I_strncpyz(psVar20 + 6,(short *)((int)piVar18 + 6),10);
-            I_strncpyz(psVar20 + 0xb,piVar18 + 4,0x14);
-            iVar3 = iVar19 + 0x24;
-            piVar17 = piVar18 + 9;
+          uVar1 = *(ushort *)puVar18;
+          pSVar19->dataLen = uVar1;
+          puVar3 = puVar18 + 2;
+          iVar14 = iVar12 + 2;
+          if (uVar1 != 0) {
+            pSVar19->timestamp = *(uint *)(puVar18 + 2);
+            I_strncpyz(pSVar19->gametype,(char *)(puVar18 + 6),10);
+            I_strncpyz(pSVar19->name,(char *)(puVar18 + 0x10),0x14);
+            puVar3 = puVar18 + 0x24;
+            iVar14 = iVar12 + 0x24;
           }
-          piVar18 = piVar17;
-          iVar19 = iVar3;
-          iVar13 = iVar13 + 1;
-          psVar20 = psVar20 + 0x16;
-        } while (iVar13 < 10);
-        iVar13 = 0;
-        piVar17 = aiStack_2bc;
+          iVar12 = iVar14;
+          puVar18 = puVar3;
+          iVar11 = iVar11 + 1;
+          pSVar19 = pSVar19 + 1;
+        } while (iVar11 < 10);
+        iVar11 = 0;
+        puVar17 = auStack_2bc;
         do {
-          uVar16 = local_298;
-          if (0x796f < (int)local_298) {
-            uVar16 = 0x7970;
+          uVar15 = local_2a0.fileLen;
+          if (0x796f < (int)local_2a0.fileLen) {
+            uVar15 = 0x7970;
           }
-          puVar2 = (ushort *)(piVar17 + 10);
-          if ((int)(uVar16 - *puVar2) < (int)piVar18 - (int)piVar11) {
-            Com_PrintError(0x10,0xffffffff821e2c1c);
-            iVar13 = -1;
+          puVar2 = (ushort *)(puVar17 + 10);
+          if ((int)(uVar15 - *puVar2) < (int)puVar18 - (int)pMVar5) {
+            Com_PrintError(0x10,"[ReadMatchRulesSaveFile] Tried to read past end of savefile\n");
+            iVar11 = -1;
             goto LAB_827ff308;
           }
-          iVar13 = iVar13 + 1;
-          piVar17 = piVar17 + 0xb;
-          *piVar17 = (int)piVar18;
-          piVar18 = (int *)((uint)*puVar2 + (int)piVar18);
-        } while (iVar13 < 10);
-        iVar13 = 1;
+          iVar11 = iVar11 + 1;
+          puVar17 = puVar17 + 0xb;
+          *puVar17 = puVar18;
+          puVar18 = puVar18 + *puVar2;
+        } while (iVar11 < 10);
+        iVar11 = 1;
       }
       else {
-        uVar9 = va(0xffffffff821e2ca0,2);
-        Com_PrintError(0x10,uVar9);
-        iVar13 = -1;
+        pcVar13 = va(
+                    "[ReadMatchRulesSaveFile] Save file is of incorrect version, expected %d got %d.\n"
+                    );
+        Com_PrintError(0x10,pcVar13);
+        iVar11 = -1;
       }
     }
     else {
-      Com_PrintError(0x10,0xffffffff821e2cf4);
-      iVar13 = -1;
+      Com_PrintError(0x10,"[ReadMatchRulesSaveFile] Save file is corrupted\n");
+      iVar11 = -1;
     }
   }
 LAB_827ff308:
-  if (((int)param_4 != 0) && (iVar13 == -2)) {
-    Com_PrintWarning(0x10,0xffffffff821e519c);
-    LargeLocal___LargeLocal(auStack_2b0);
+  if ((param_4 != 0) && (iVar11 == -2)) {
+    Com_PrintWarning(0x10,"[SaveMatchRulesToDiskAppendToFront] No save device selected.\n");
+    LargeLocal::~LargeLocal(aLStack_2b0);
     __restgprlr_16();
     return;
   }
-  if (iVar13 == 1) {
-    lVar10 = 0;
-    puVar21 = auStack_27e;
+  if (iVar11 == 1) {
+    iVar11 = 0;
+    pcVar13 = local_2a0.slot[0].name;
     do {
-      if (*(short *)(puVar21 + -0x16) != 0) {
-        uVar14 = I_strncmp(uVar5,puVar21 + -10,10);
-        uVar15 = I_strncmp(uVar6,puVar21,0x14);
-        if (((uint)LZCOUNT(uVar14) >> 5 != 0) && ((uint)LZCOUNT(uVar15) >> 5 != 0)) {
-          Com_Printf(0xd,0xffffffff821e50a0);
-          SaveMatchRulesToDiskAppendToFront_DeleteSaveSlot(lVar10,&local_2a0,piVar11);
+      if (((SavedSlot *)(pcVar13 + -0x16))->dataLen != 0) {
+        iVar12 = I_strncmp(pcVar7,pcVar13 + -10,10);
+        iVar14 = I_strncmp(pcVar8,pcVar13,0x14);
+        if (((uint)LZCOUNT(iVar12) >> 5 != 0) && ((uint)LZCOUNT(iVar14) >> 5 != 0)) {
+          Com_Printf(0xd,
+                     "[SaveMatchRulesToDiskAppendToFront] Tried to add custom matchrules recipe to front of file but identical recipe was already in history--removing duplicate.\n"
+                    );
+          SaveMatchRulesToDiskAppendToFront_DeleteSaveSlot(iVar11,&local_2a0,pMVar5->data);
           break;
         }
       }
-      lVar10 = lVar10 + 1;
-      puVar21 = puVar21 + 0x2c;
-    } while ((int)lVar10 < 10);
-    SaveMatchRulesToDiskAppendToFront_PushFirstSlot(&local_2a0,iVar12,piVar11);
-    uVar8 = (ulonglong)local_298;
+      iVar11 = iVar11 + 1;
+      pcVar13 = pcVar13 + 0x2c;
+    } while (iVar11 < 10);
+    SaveMatchRulesToDiskAppendToFront_PushFirstSlot(&local_2a0,pSVar6,pMVar5->data);
+    uVar16 = (ulonglong)local_2a0.fileLen;
   }
   else {
-    if (iVar13 == -1) {
-      Com_PrintWarning(0x10,0xffffffff821e5140);
-      memset(&local_2a0,0,0x1c4);
+    if (iVar11 == -1) {
+      Com_PrintWarning(0x10,
+                       "[SaveMatchRulesToDiskAppendToFront] Loading existing file failed, will overwrite instead.\n"
+                      );
+      memset();
     }
-    uVar8 = (ulonglong)*(uint *)(iVar12 + 0x30) & 0xffff;
-    local_294[0] = (short)*(uint *)(iVar12 + 0x30);
-    lVar10 = GetSizeOfMatchRulesFileHeader(&local_2a0);
-    local_290 = (int *)((int)lVar10 + (int)piVar11);
-    uVar8 = uVar8 + lVar10;
-    local_298 = (uint)uVar8;
+    uVar16 = (ulonglong)pSVar6->size & 0xffff;
+    local_2a0.slot[0].dataLen = (ushort)pSVar6->size;
+    iVar11 = GetSizeOfMatchRulesFileHeader(&local_2a0);
+    local_2a0.slot[0].dataStart = pMVar5->data + iVar11;
+    uVar16 = uVar16 + (longlong)iVar11;
+    local_2a0.fileLen = (uint)uVar16;
   }
-  if (0x7970 < (uVar8 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821e26a0,0x629,0,0xffffffff821e506c,uVar8,0x7970);
+  if (0x7970 < (uVar16 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",0x629
+                    ,0,"header.fileLen <= sizeof( saveBuffer )\n\t%i, %i");
   }
-  local_28c = Sys_GetTimeAsSeconds();
-  I_strncpyz(auStack_288,uVar5,10);
-  I_strncpyz(auStack_27e,uVar6,0x14);
-  AssertMatchRulesVersionIsSet(uVar4);
-  if (local_290 == (int *)0x0) {
-    MyAssertHandler(0xffffffff821e26a0,0x632,0,0xffffffff82000f98,0xffffffff821e3b8c);
+  local_2a0.slot[0].timestamp = Sys_GetTimeAsSeconds();
+  I_strncpyz(local_2a0.slot[0].gametype,pcVar7,10);
+  I_strncpyz(local_2a0.slot[0].name,pcVar8,0x14);
+  AssertMatchRulesVersionIsSet(pMVar4);
+  if ((MatchRules *)local_2a0.slot[0].dataStart == (MatchRules *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",0x632
+                    ,0,"%s");
   }
-  if (*(int *)(iVar12 + 0x30) < 0) {
-    MyAssertHandler(0xffffffff821e26a0,0x634,0,0xffffffff820011f4,0xffffffff82048cf4,
-                    0xffffffff82048d18);
+  if ((int)pSVar6->size < 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",0x634
+                    ,0,"%s\n\t%s");
   }
-  if ((ZEXT48(local_290) <= (uVar4 & 0xffffffff)) &&
-     ((*(uint *)(iVar12 + 0x30) + uVar4 & 0xffffffff) <=
-      ((ulonglong)*(uint *)(iVar12 + 0x30) + ZEXT48(local_290) & 0xffffffff))) {
-    MyAssertHandler(0xffffffff821e26a0,0x634,0,0xffffffff820011f4,0xffffffff821e4f08,
-                    0xffffffff821e5008);
+  if ((local_2a0.slot[0].dataStart <= pMVar4) &&
+     (pMVar4->data + pSVar6->size <= local_2a0.slot[0].dataStart + pSVar6->size)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",0x634
+                    ,0,"%s\n\t%s");
   }
-  if ((uVar4 + 0xc00 & 0xffffffff) < (*(uint *)(iVar12 + 0x30) + uVar4 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821e26a0,0x634,0,0xffffffff820011f4,0xffffffff821e3618,
-                    0xffffffff821e3708);
+  if (pMVar4->data + 0xc00 < pMVar4->data + pSVar6->size) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",0x634
+                    ,0,"%s\n\t%s");
   }
-  if ((local_290 < piVar11) ||
-     (piVar11 + 0x1e5c < (int *)(*(int *)(iVar12 + 0x30) + (int)local_290))) {
-    MyAssertHandler(0xffffffff821e26a0,0x634,0,0xffffffff820011f4,0xffffffff821e4dc0,
-                    0xffffffff821e4ec0);
+  if ((local_2a0.slot[0].dataStart < pMVar5) ||
+     (pMVar5[10].data + 0x120 < local_2a0.slot[0].dataStart + pSVar6->size)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",0x634
+                    ,0,"%s\n\t%s");
   }
-  memcpy(local_290,(void *)uVar4,*(size_t *)(iVar12 + 0x30));
-  WriteMatchRulesFileHeaderToBuffer(&local_2a0,piVar11,0x7970);
-  uVar16 = WriteBufferToFile(auStack_d0,param_2,piVar11,local_298,param_4);
-  if (uVar16 == local_298) {
-    HeaderCache_SaveFile(&local_2a0,param_3,uVar7);
-    LargeLocal___LargeLocal(auStack_2b0);
+  memcpy();
+  WriteMatchRulesFileHeaderToBuffer(&local_2a0,pMVar5->data,0x7970);
+  uVar15 = WriteBufferToFile(acStack_d0,param_2,pMVar5->data,local_2a0.fileLen,param_4);
+  if (uVar15 == local_2a0.fileLen) {
+    HeaderCache_SaveFile(&local_2a0,param_3,pcVar9);
+    LargeLocal::~LargeLocal(aLStack_2b0);
     __restgprlr_16();
     return;
   }
-  Com_PrintError(0x10,0xffffffff821e4d80);
-  LargeLocal___LargeLocal(auStack_2b0);
+  Com_PrintError(0x10,"[SaveMatchRulesToDiskAppendToFront] Failed to write file.\n");
+  LargeLocal::~LargeLocal(aLStack_2b0);
   __restgprlr_16();
   return;
 }
 
 
 // 827FF658  BuildMatchRulesRawfileCache  (bgame/bg_matchrules.cpp:1608)
-
-void BuildMatchRulesRawfileCache(void)
-
-{
-  undefined8 uVar1;
-  undefined8 uVar2;
-  int iVar5;
-  longlong lVar3;
-  undefined8 uVar4;
-  char cVar6;
-  ulonglong uVar7;
-  undefined1 auStack_90 [16];
-  undefined1 auStack_80 [128];
-  
-  uVar1 = __savegprlr_26();
-  DAT_84879b38 = 0;
-  Com_sprintf(auStack_80,0x40,0xffffffff821e536c,uVar1);
-  uVar2 = DB_FindXAssetHeader(0x24,auStack_80,1);
-  iVar5 = DB_IsXAssetDefault(0x24,auStack_80);
-  if (iVar5 != 0) {
-    Com_PrintError(0xd,0xffffffff821e5328,auStack_80);
-    __restgprlr_26();
-    return;
-  }
-  DB_GetRawBuffer(uVar2,0xffffffff84879b46,0xc01);
-  iVar5 = StructuredDataDef_GetAsset(0xffffffff8203d614,0xc00);
-  lVar3 = DB_GetRawFileLen(uVar2);
-  uVar7 = lVar3 - 1;
-  StructuredData_MakeBuffer(auStack_90,0xffffffff84879b46,uVar7);
-  uVar2 = StructuredData_GetVersion(iVar5);
-  uVar4 = StructuredData_GetDataVersion(auStack_90);
-  if ((int)uVar4 == (int)uVar2) {
-    if ((uVar7 & 0xffffffff) != (ulonglong)*(uint *)(iVar5 + 0x30)) {
-      Com_PrintError(0xd,0xffffffff821e5250,uVar1,uVar7);
-      __restgprlr_26();
-      return;
-    }
-  }
-  else {
-    cVar6 = UpdateMatchRulesDataFromOldDef(0xffffffff84879b46,uVar7);
-    if (cVar6 == '\0') {
-      Com_PrintError(0xd,0xffffffff821e52b0,auStack_80,uVar2,uVar4);
-      __restgprlr_26();
-      return;
-    }
-  }
-  if (0xc00 < *(uint *)(iVar5 + 0x30)) {
-    MyAssertHandler(0xffffffff821e26a0,0x66f,0,0xffffffff82000f98,0xffffffff821e5228);
-  }
-  I_strncpyz(0xffffffff84879b3c,uVar1,10);
-  DAT_8487a74c = Com_BlockChecksumKey32(0xffffffff84879b46,*(undefined4 *)(iVar5 + 0x30),0);
-  DAT_8487a748 = *(undefined4 *)(iVar5 + 0x30);
-  DAT_84879b38 = 1;
-  __restgprlr_26();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
 
 // 827FF808  GetMatchRulesDefaultDataFromFF  (bgame/bg_matchrules.cpp:1659)
 
-ulonglong GetMatchRulesDefaultDataFromFF(undefined8 param_1)
+MatchRulesRawfileCache * GetMatchRulesDefaultDataFromFF(char *param_1)
 
 {
   int iVar1;
   
-  if ((DAT_84879b38 == 0) || (iVar1 = I_strncmp(0xffffffff84879b3c,param_1,10), iVar1 != 0)) {
+  if ((g_matchRulesRawfileCache.inUse == 0) ||
+     (iVar1 = I_strncmp(g_matchRulesRawfileCache.gametype,param_1,10), iVar1 != 0)) {
     BuildMatchRulesRawfileCache(param_1);
   }
-  return -(ulonglong)(DAT_84879b38 != 0) & 0xffffffff84879b38;
+  return (MatchRulesRawfileCache *)(-(uint)(g_matchRulesRawfileCache.inUse != 0) & 0x84879b38);
 }
 
 
 // 827FF880  LoadMatchRulesDefaultFromFF  (bgame/bg_matchrules.cpp:1668)
 
-void LoadMatchRulesDefaultFromFF(undefined8 param_1,ulonglong param_2)
+int LoadMatchRulesDefaultFromFF(MatchRules *param_1,char *param_2)
 
 {
-  void *_Dst;
   int iVar1;
+  MatchRulesRawfileCache *pMVar2;
+  ulonglong uVar3;
   
-  _Dst = (void *)__savegprlr_28();
-  if (_Dst == (void *)0x0) {
-    MyAssertHandler(0xffffffff821e26a0,0x687,0,0xffffffff82000f98,0xffffffff821e2820);
-  }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821e26a0,0x688,0,0xffffffff82000f98,0xffffffff820337c4);
-  }
-  iVar1 = GetMatchRulesDefaultDataFromFF(param_2);
+  uVar3 = (ulonglong)(int)param_2;
+  iVar1 = __savegprlr_28(param_1);
   if (iVar1 == 0) {
-    __restgprlr_28();
-    return;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",0x687
+                    ,0,"%s");
   }
-  memcpy(_Dst,(void *)(iVar1 + 0xe),*(size_t *)(iVar1 + 0xc10));
-  __restgprlr_28(1);
-  return;
+  if ((uVar3 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",0x688
+                    ,0,"%s");
+  }
+  pMVar2 = GetMatchRulesDefaultDataFromFF((char *)uVar3);
+  if (pMVar2 == (MatchRulesRawfileCache *)0x0) {
+    iVar1 = __restgprlr_28();
+    return iVar1;
+  }
+  memcpy();
+  iVar1 = __restgprlr_28(1);
+  return iVar1;
 }
 
 
 // 827FF920  WriteSnapshotDelta  (bgame/bg_matchrules.cpp:1685)
 
-void WriteSnapshotDelta(undefined8 param_1,ulonglong param_2,ulonglong param_3,longlong param_4)
+void WriteSnapshotDelta(MatchRulesSnapshotDelta *param_1,uchar *param_2,uchar *param_3,int param_4)
 
 {
   int iVar1;
   ulonglong uVar2;
   ulonglong uVar3;
-  void *pvVar4;
-  ushort uVar7;
-  longlong lVar5;
-  ulonglong uVar6;
+  ushort uVar6;
+  longlong lVar4;
+  ulonglong uVar5;
+  ulonglong uVar7;
   ulonglong uVar8;
   ulonglong uVar9;
-  longlong lVar10;
-  ulonglong uVar12;
-  char *_Src;
+  ulonglong uVar10;
+  longlong lVar11;
   ulonglong uVar13;
   ulonglong uVar14;
-  longlong lVar15;
-  int *piVar11;
+  ulonglong uVar15;
+  longlong lVar16;
+  int *piVar12;
   
-  uVar2 = __savegprlr();
-  uVar3 = uVar2;
+  lVar4 = (longlong)param_4;
+  uVar3 = (ulonglong)(int)param_3;
+  uVar10 = (ulonglong)(int)param_2;
+  uVar2 = (ulonglong)(int)param_1;
+  __savegprlr();
   if ((uVar2 & 0xffffffff) == 0) {
-    uVar3 = MyAssertHandler(0xffffffff821e26a0,0x6a4,0,0xffffffff82000f98,0xffffffff8208f468);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",0x6a4
+                    ,0,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    uVar3 = MyAssertHandler(0xffffffff821e26a0,0x6a5,0,0xffffffff82000f98,0xffffffff821e5798);
+  if ((uVar10 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",0x6a5
+                    ,0,"%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    uVar3 = MyAssertHandler(0xffffffff821e26a0,0x6a6,0,0xffffffff82000f98,0xffffffff821e5790);
+  if ((uVar3 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",0x6a6
+                    ,0,"%s");
   }
-  lVar10 = uVar2 + 0x10;
-  piVar11 = (int *)lVar10;
-  uVar8 = param_3 + param_4;
+  lVar11 = uVar2 + 0x10;
+  piVar12 = (int *)lVar11;
+  uVar8 = uVar3 + lVar4;
   uVar9 = uVar2 + 0x14;
   iVar1 = (int)uVar2;
   *(undefined2 *)(iVar1 + 0xc) = 0;
-  uVar14 = uVar9;
-  if ((param_3 & 0xffffffff) < (uVar8 & 0xffffffff)) {
-    uVar3 = 0xffffffff821e5580;
-    uVar13 = param_3;
+  uVar14 = uVar3;
+  uVar15 = uVar9;
+  if ((uVar3 & 0xffffffff) < (uVar8 & 0xffffffff)) {
     do {
-      _Src = (char *)uVar13;
-      if (*_Src == *(char *)param_2) {
-        uVar13 = uVar13 + 1;
-        param_2 = param_2 + 1;
+      if (*(char *)uVar14 == *(char *)uVar10) {
+        uVar14 = uVar14 + 1;
+        uVar10 = uVar10 + 1;
       }
       else {
-        uVar3 = (uVar14 - lVar10) - 4;
-        if (0x4cf < (uVar3 + ((uVar3 & 0xffffffff) / 0x4d0) * -0x4d0 + 5 & 0xffffffff)) {
-          *(undefined4 *)lVar10 = (int)uVar3;
-          uVar3 = (ulonglong)*(ushort *)(iVar1 + 0xc) + 1;
-          if (2 < uVar3) {
-            MyAssertHandler(0xffffffff821e26a0,0x6c0,0,
+        uVar7 = (uVar15 - lVar11) - 4;
+        if (0x4cf < (uVar7 + ((uVar7 & 0xffffffff) / 0x4d0) * -0x4d0 + 5 & 0xffffffff)) {
+          *(undefined4 *)lVar11 = (int)uVar7;
+          if (2 < (ulonglong)*(ushort *)(iVar1 + 0xc) + 1) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp"
+                            ,0x6c0,0,
                             "delta->partitionCount + 1 doesn\'t index ARRAY_COUNT( delta->partition )\n\t%i not in [0, %i)"
-                            ,uVar3,3);
+                           );
           }
-          uVar3 = 0;
-          uVar7 = *(short *)(iVar1 + 0xc) + 1;
-          *(ushort *)(iVar1 + 0xc) = uVar7;
-          lVar5 = (ulonglong)uVar7 * 0x4d4 + uVar2;
-          lVar10 = lVar5 + 0x10;
-          uVar9 = lVar5 + 0x14;
-          uVar14 = uVar9;
+          uVar7 = 0;
+          uVar6 = *(short *)(iVar1 + 0xc) + 1;
+          *(ushort *)(iVar1 + 0xc) = uVar6;
+          lVar4 = (ulonglong)uVar6 * 0x4d4 + uVar2;
+          lVar11 = lVar4 + 0x10;
+          uVar9 = lVar4 + 0x14;
+          uVar15 = uVar9;
         }
-        uVar6 = uVar13 + 1;
-        lVar15 = 1;
-        uVar12 = 0;
-        lVar5 = 1;
-        if ((uVar6 & 0xffffffff) < (uVar8 & 0xffffffff)) {
+        uVar5 = uVar14 + 1;
+        lVar16 = 1;
+        uVar13 = 0;
+        lVar4 = 1;
+        if ((uVar5 & 0xffffffff) < (uVar8 & 0xffffffff)) {
           do {
-            if ((uVar3 + ((uVar3 & 0xffffffff) / 0x4d0) * -0x4d0 + 4 + lVar5 & 0xffffffff) == 0x4d0)
+            if ((uVar7 + ((uVar7 & 0xffffffff) / 0x4d0) * -0x4d0 + 4 + lVar4 & 0xffffffff) == 0x4d0)
             break;
-            if (*(char *)uVar6 == ((char *)uVar6)[(int)(char *)param_2 - (int)_Src]) {
-              uVar12 = uVar12 + 1;
-              if (4 < (uVar12 & 0xffffffff)) break;
+            if (*(char *)uVar5 == ((char *)uVar5)[(int)(char *)uVar10 - (int)(char *)uVar14]) {
+              uVar13 = uVar13 + 1;
+              if (4 < (uVar13 & 0xffffffff)) break;
             }
             else {
-              lVar15 = uVar12 + lVar15;
-              uVar12 = 0;
-              lVar15 = lVar15 + 1;
+              lVar16 = uVar13 + lVar16;
+              uVar13 = 0;
+              lVar16 = lVar16 + 1;
             }
-            uVar6 = uVar6 + 1;
-            lVar5 = lVar5 + 1;
-          } while ((uVar6 & 0xffffffff) < (uVar8 & 0xffffffff));
+            uVar5 = uVar5 + 1;
+            lVar4 = lVar4 + 1;
+          } while ((uVar5 & 0xffffffff) < (uVar8 & 0xffffffff));
         }
-        uVar3 = lVar10 + 0x4d4;
-        if ((uVar3 & 0xffffffff) <= (uVar14 + 2 & 0xffffffff)) {
-          MyAssertHandler(0xffffffff821e26a0,0x6de,0,&DAT_82000f98,0xffffffff821e5388);
+        uVar7 = lVar11 + 0x4d4;
+        if ((uVar7 & 0xffffffff) <= (uVar15 + 2 & 0xffffffff)) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp"
+                          ,0x6de,0,"%s");
         }
-        uVar6 = uVar14 + 4;
-        *(short *)uVar14 = (short)uVar13 - (short)param_3;
-        if ((uVar3 & 0xffffffff) <= (uVar6 & 0xffffffff)) {
-          MyAssertHandler(0xffffffff821e26a0,0x6e3,0,&DAT_82000f98,0xffffffff821e5388);
+        uVar5 = uVar15 + 4;
+        *(short *)uVar15 = (short)uVar14 - (short)uVar3;
+        if ((uVar7 & 0xffffffff) <= (uVar5 & 0xffffffff)) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp"
+                          ,0x6e3,0,"%s");
         }
-        *(undefined2 *)(uVar14 + 2) = (short)lVar15;
-        if ((int)(size_t)lVar15 < 0) {
-          MyAssertHandler(0xffffffff821e26a0,0x6e9,0,0xffffffff820011f4,
-                          "0 <= static_cast<int>(length)","Memcpy has negative length. (length)");
+        *(undefined2 *)(uVar15 + 2) = (short)lVar16;
+        if ((int)lVar16 < 0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp"
+                          ,0x6e9,0,"%s\n\t%s");
         }
-        if (((uVar6 & 0xffffffff) <= (uVar13 & 0xffffffff)) &&
-           ((lVar15 + uVar13 & 0xffffffff) <= (lVar15 + uVar6 & 0xffffffff))) {
-          MyAssertHandler(0xffffffff821e26a0,0x6e9,0,0xffffffff820011f4,
-                          "reinterpret_cast<const byte*>((toReadPtr)) < reinterpret_cast<const byte*>((writePtr)) || reinterpret_cast<const byte*>((toReadPtr))+((length)) > reinterpret_cast<const byte*>((writePtr))+((length))"
-                          ,
-                          "Memcpy from (toReadPtr) to (writePtr) is copying between overlapping ranges "
-                         );
+        if (((uVar5 & 0xffffffff) <= (uVar14 & 0xffffffff)) &&
+           ((lVar16 + uVar14 & 0xffffffff) <= (lVar16 + uVar5 & 0xffffffff))) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp"
+                          ,0x6e9,0,"%s\n\t%s");
         }
-        if (((uVar13 & 0xffffffff) < (param_3 & 0xffffffff)) ||
-           ((uVar8 & 0xffffffff) < (lVar15 + uVar13 & 0xffffffff))) {
-          MyAssertHandler(0xffffffff821e26a0,0x6e9,0,0xffffffff820011f4,
-                          "reinterpret_cast<const byte*>((toReadPtr)) >= reinterpret_cast<const byte*>((toBuf)) && reinterpret_cast<const byte*>((toReadPtr))+((length)) <= reinterpret_cast<const byte*>((toBuf))+((size))"
-                          ,"Memcpy from (toReadPtr) exceeded bounds of toBuf");
+        if (((uVar14 & 0xffffffff) < (uVar3 & 0xffffffff)) ||
+           ((uVar8 & 0xffffffff) < (lVar16 + uVar14 & 0xffffffff))) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp"
+                          ,0x6e9,0,"%s\n\t%s");
         }
-        if (((uVar6 & 0xffffffff) < (uVar9 & 0xffffffff)) ||
-           ((uVar3 & 0xffffffff) < (lVar15 + uVar6 & 0xffffffff))) {
-          MyAssertHandler(0xffffffff821e26a0,0x6e9,0,0xffffffff820011f4,0xffffffff821e53d0,
-                          "Memcpy to (writePtr) exceeded bounds of part->data");
+        if (((uVar5 & 0xffffffff) < (uVar9 & 0xffffffff)) ||
+           ((uVar7 & 0xffffffff) < (lVar16 + uVar5 & 0xffffffff))) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp"
+                          ,0x6e9,0,"%s\n\t%s");
         }
-        pvVar4 = memcpy((void *)uVar6,_Src,(size_t)lVar15);
-        uVar3 = (ulonglong)(int)pvVar4;
-        uVar14 = lVar15 + uVar6;
-        uVar13 = uVar12 + lVar15 + uVar13;
-        param_2 = uVar12 + lVar15 + param_2;
+        memcpy();
+        uVar15 = lVar16 + uVar5;
+        uVar14 = uVar13 + lVar16 + uVar14;
+        uVar10 = uVar13 + lVar16 + uVar10;
       }
-      piVar11 = (int *)lVar10;
-    } while ((uVar13 & 0xffffffff) < (uVar8 & 0xffffffff));
+      piVar12 = (int *)lVar11;
+    } while ((uVar14 & 0xffffffff) < (uVar8 & 0xffffffff));
   }
-  if ((uVar14 & 0xffffffff) != (uVar9 & 0xffffffff)) {
+  if ((uVar15 & 0xffffffff) != (uVar9 & 0xffffffff)) {
     *(short *)(iVar1 + 0xc) = *(short *)(iVar1 + 0xc) + 1;
   }
-  *piVar11 = ((int)uVar14 - (int)piVar11) + -4;
-  __restgprlr(uVar3);
+  *piVar12 = ((int)uVar15 - (int)piVar12) + -4;
+  __restgprlr();
   return;
 }
 
 
 // 827FFCD8  WriteMatchRulesSnapshotFullDelta  (bgame/bg_matchrules.cpp:1789)
 
-void WriteMatchRulesSnapshotFullDelta(undefined8 param_1,ulonglong param_2)
+int WriteMatchRulesSnapshotFullDelta(MatchRulesSnapshotDelta *param_1,MatchRules *param_2)
 
 {
-  int iVar1;
-  int *piVar2;
-  ulonglong uVar3;
+  int *piVar1;
+  ulonglong uVar2;
+  StructuredDataDef *pSVar3;
   int iVar4;
-  longlong lVar5;
+  ulonglong uVar5;
   longlong lVar6;
-  ulonglong uVar7;
+  longlong lVar7;
   ulonglong uVar8;
   ulonglong uVar9;
   longlong lVar10;
-  size_t _Size;
   ulonglong uVar11;
   
-  uVar3 = __savegprlr();
-  if ((uVar3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821e26a0,0x707,0,0xffffffff82000f98,0xffffffff8208f468);
+  uVar5 = (ulonglong)(int)param_2;
+  uVar2 = (ulonglong)(int)param_1;
+  __savegprlr();
+  if ((uVar2 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",0x707
+                    ,0,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821e26a0,0x708,0,0xffffffff82000f98,0xffffffff821e2820);
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",0x708
+                    ,0,"%s");
   }
-  iVar4 = StructuredDataDef_GetAsset(0xffffffff8203d614,0xc00);
-  uVar8 = 0;
-  iVar1 = (int)uVar3;
-  *(undefined2 *)(iVar1 + 0xc) = 0;
-  if (*(int *)(iVar4 + 0x30) != 0) {
+  pSVar3 = StructuredDataDef_GetAsset("mp/recipes.def",0xc00);
+  uVar9 = 0;
+  iVar4 = (int)uVar2;
+  *(undefined2 *)(iVar4 + 0xc) = 0;
+  if (pSVar3->size != 0) {
     do {
-      lVar5 = (ulonglong)*(ushort *)(iVar1 + 0xc) * 0x4d4 + uVar3;
-      *(ushort *)(iVar1 + 0xc) = *(ushort *)(iVar1 + 0xc) + 1;
-      piVar2 = (int *)((int)lVar5 + 0x10);
-      lVar6 = *(uint *)(iVar4 + 0x30) - uVar8;
+      lVar6 = (ulonglong)*(ushort *)(iVar4 + 0xc) * 0x4d4 + uVar2;
+      *(ushort *)(iVar4 + 0xc) = *(ushort *)(iVar4 + 0xc) + 1;
+      piVar1 = (int *)((int)lVar6 + 0x10);
+      lVar7 = pSVar3->size - uVar9;
       lVar10 = 0x4cc;
-      if ((int)lVar6 < 0x4cc) {
-        lVar10 = lVar6;
+      if ((int)lVar7 < 0x4cc) {
+        lVar10 = lVar7;
       }
-      uVar7 = lVar5 + 0x4e4;
-      if ((uVar7 & 0xffffffff) <= (lVar5 + 0x16U & 0xffffffff)) {
-        MyAssertHandler(0xffffffff821e26a0,0x715,0,&DAT_82000f98,0xffffffff821e5388);
+      uVar8 = lVar6 + 0x4e4;
+      if ((uVar8 & 0xffffffff) <= (lVar6 + 0x16U & 0xffffffff)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",
+                        0x715,0,"%s");
       }
-      *(undefined2 *)(lVar5 + 0x14U) = (short)uVar8;
-      uVar11 = lVar5 + 0x18;
-      if ((uVar7 & 0xffffffff) <= (uVar11 & 0xffffffff)) {
-        MyAssertHandler(0xffffffff821e26a0,0x71a,0,&DAT_82000f98,0xffffffff821e5388);
+      *(undefined2 *)(lVar6 + 0x14U) = (short)uVar9;
+      uVar11 = lVar6 + 0x18;
+      if ((uVar8 & 0xffffffff) <= (uVar11 & 0xffffffff)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",
+                        0x71a,0,"%s");
       }
-      _Size = (size_t)lVar10;
-      *(undefined2 *)(lVar5 + 0x16U) = (short)lVar10;
-      if ((int)_Size < 0) {
-        MyAssertHandler(0xffffffff821e26a0,0x722,0,0xffffffff820011f4,
-                        "0 <= static_cast<int>(length)","Memcpy has negative length. (length)");
+      *(undefined2 *)(lVar6 + 0x16U) = (short)lVar10;
+      if ((int)lVar10 < 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",
+                        0x722,0,"%s\n\t%s");
       }
-      uVar9 = uVar8 + param_2;
-      if (((uVar11 & 0xffffffff) <= (uVar9 & 0xffffffff)) &&
-         ((lVar10 + uVar8 + param_2 & 0xffffffff) <= (uVar11 + lVar10 & 0xffffffff))) {
-        MyAssertHandler(0xffffffff821e26a0,0x722,0,0xffffffff820011f4,0xffffffff821e57a0,
-                        "Memcpy from (&matchRules->data[offset]) to (writePtr) is copying between overlapping ranges "
-                       );
+      if (((uVar11 & 0xffffffff) <= (uVar9 + uVar5 & 0xffffffff)) &&
+         ((lVar10 + uVar9 + uVar5 & 0xffffffff) <= (uVar11 + lVar10 & 0xffffffff))) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",
+                        0x722,0,"%s\n\t%s");
       }
-      if (((uVar9 & 0xffffffff) < (param_2 & 0xffffffff)) ||
-         ((param_2 + 0xc01 & 0xffffffff) < (lVar10 + uVar8 + param_2 & 0xffffffff))) {
-        MyAssertHandler(0xffffffff821e26a0,0x722,0,0xffffffff820011f4,0xffffffff821e58d8,
-                        0xffffffff821e5888);
+      if (((uVar9 + uVar5 & 0xffffffff) < (uVar5 & 0xffffffff)) ||
+         ((uVar5 + 0xc01 & 0xffffffff) < (lVar10 + uVar9 + uVar5 & 0xffffffff))) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",
+                        0x722,0,"%s\n\t%s");
       }
-      if (((uVar11 & 0xffffffff) < (lVar5 + 0x14U & 0xffffffff)) ||
-         ((uVar7 & 0xffffffff) < (uVar11 + lVar10 & 0xffffffff))) {
-        MyAssertHandler(0xffffffff821e26a0,0x722,0,0xffffffff820011f4,0xffffffff821e53d0,
-                        0xffffffff821e575c);
+      if (((uVar11 & 0xffffffff) < (lVar6 + 0x14U & 0xffffffff)) ||
+         ((uVar8 & 0xffffffff) < (uVar11 + lVar10 & 0xffffffff))) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",
+                        0x722,0,"%s\n\t%s");
       }
-      memcpy((void *)uVar11,(void *)uVar9,_Size);
-      uVar8 = lVar10 + uVar8;
-      *piVar2 = (int)(void *)uVar11 + (_Size - (int)piVar2) + -4;
-    } while ((uVar8 & 0xffffffff) < (ulonglong)*(uint *)(iVar4 + 0x30));
+      memcpy();
+      uVar9 = lVar10 + uVar9;
+      *piVar1 = ((int)uVar11 - (int)piVar1) + (int)lVar10 + -4;
+    } while ((uVar9 & 0xffffffff) < (ulonglong)pSVar3->size);
   }
-  __restgprlr(1);
-  return;
+  iVar4 = 1;
+  __restgprlr();
+  return iVar4;
 }
 
 
 // 827FFF68  WriteMatchRulesSnapshotDeltaFromBuffer  (bgame/bg_matchrules.cpp:1838)
 
-void WriteMatchRulesSnapshotDeltaFromBuffer(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+int WriteMatchRulesSnapshotDeltaFromBuffer
+              (MatchRulesSnapshotDelta *param_1,MatchRules *param_2,uchar *param_3)
 
 {
-  ulonglong uVar1;
-  int iVar2;
+  MatchRulesSnapshotDelta *pMVar1;
+  StructuredDataDef *pSVar2;
+  int iVar3;
+  ulonglong uVar4;
+  ulonglong uVar5;
   
-  uVar1 = __savegprlr_27();
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821e26a0,0x72f,0,0xffffffff82000f98,0xffffffff8208f468);
+  uVar5 = (ulonglong)(int)param_3;
+  uVar4 = (ulonglong)(int)param_2;
+  pMVar1 = (MatchRulesSnapshotDelta *)__savegprlr_27(param_1);
+  if (pMVar1 == (MatchRulesSnapshotDelta *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",0x72f
+                    ,0,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821e26a0,0x730,0,0xffffffff82000f98,0xffffffff821e2820);
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",0x730
+                    ,0,"%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821e26a0,0x731,0,0xffffffff82000f98,0xffffffff821e5798);
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",0x731
+                    ,0,"%s");
   }
-  iVar2 = StructuredDataDef_GetAsset(0xffffffff8203d614,0xc00);
-  WriteSnapshotDelta(uVar1,param_3,param_2,*(undefined4 *)(iVar2 + 0x30));
-  __restgprlr_27(1);
-  return;
+  pSVar2 = StructuredDataDef_GetAsset("mp/recipes.def",0xc00);
+  WriteSnapshotDelta(pMVar1,(uchar *)uVar5,(uchar *)uVar4,pSVar2->size);
+  iVar3 = __restgprlr_27(1);
+  return iVar3;
 }
 
 
 // 82800030  WriteMatchRulesSnapshotDeltaFromDefaults  (bgame/bg_matchrules.cpp:1851)
 
-void WriteMatchRulesSnapshotDeltaFromDefaults(undefined8 param_1,ulonglong param_2)
+int WriteMatchRulesSnapshotDeltaFromDefaults(MatchRulesSnapshotDelta *param_1,MatchRules *param_2)
 
 {
-  ulonglong uVar1;
-  int iVar3;
-  undefined8 uVar2;
+  MatchRulesSnapshotDelta *pMVar1;
+  char *pcVar2;
+  MatchRulesRawfileCache *pMVar4;
+  int iVar5;
+  ulonglong uVar6;
+  MatchRules *pMVar3;
   
-  uVar1 = __savegprlr_28();
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821e26a0,0x73e,0,0xffffffff82000f98,0xffffffff8208f468);
+  uVar6 = (ulonglong)(int)param_2;
+  pMVar1 = (MatchRulesSnapshotDelta *)__savegprlr_28(param_1);
+  if (pMVar1 == (MatchRulesSnapshotDelta *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",0x73e
+                    ,0,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821e26a0,0x73f,0,0xffffffff82000f98,0xffffffff821e2820);
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",0x73f
+                    ,0,"%s");
   }
-  BG_MatchRulesData_GetString(param_2,0xffffffff820337c4);
-  iVar3 = GetMatchRulesDefaultDataFromFF();
-  if (iVar3 == 0) {
-    Com_Printf(0x19,0xffffffff821e5a98);
-    WriteMatchRulesSnapshotFullDelta(uVar1,param_2);
-    __restgprlr_28();
-    return;
+  pMVar3 = (MatchRules *)uVar6;
+  pcVar2 = BG_MatchRulesData_GetString(pMVar3,"gametype");
+  pMVar4 = GetMatchRulesDefaultDataFromFF(pcVar2);
+  if (pMVar4 == (MatchRulesRawfileCache *)0x0) {
+    Com_Printf(0x19,"[WriteMatchRulesSnapshotDeltaFromDefaults] Building full delta.\n");
+    iVar5 = WriteMatchRulesSnapshotFullDelta(pMVar1,pMVar3);
+    iVar5 = __restgprlr_28(iVar5);
+    return iVar5;
   }
-  uVar2 = BG_MatchRulesData_GetString(param_2,0xffffffff820337c4);
-  Com_Printf(0x19,0xffffffff821e5a48,uVar2);
-  WriteSnapshotDelta(uVar1,iVar3 + 0xe,param_2,*(undefined4 *)(iVar3 + 0xc10));
-  __restgprlr_28(1);
-  return;
+  BG_MatchRulesData_GetString(pMVar3,"gametype");
+  Com_Printf(0x19,"[WriteMatchRulesSnapshotDeltaFromDefaults] Building from defaults for %s.\n");
+  WriteSnapshotDelta(pMVar1,pMVar4->data,pMVar3->data,pMVar4->length);
+  iVar5 = __restgprlr_28(1);
+  return iVar5;
 }
 
 
 // 82800128  LoadMatchRulesFromPlaylists  (bgame/bg_matchrules.cpp:1878)
 
-void LoadMatchRulesFromPlaylists(undefined8 param_1,ulonglong param_2,undefined8 param_3)
+int LoadMatchRulesFromPlaylists(MatchRules *param_1,char *param_2,int param_3,int param_4)
 
 {
-  ulonglong uVar1;
-  ulonglong uVar2;
-  undefined8 uVar3;
+  MatchRules *pMVar1;
+  uint uVar2;
+  int iVar3;
+  StructuredDataDef *pSVar4;
   int iVar5;
-  undefined8 uVar4;
-  char cVar6;
-  size_t _Size;
-  undefined1 auStack_50 [80];
+  bool bVar7;
+  int iVar6;
+  ulonglong uVar8;
+  longlong lVar9;
+  StructuredDataBuffer aSStack_50 [10];
   
-  uVar1 = __savegprlr_24();
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821e26a0,0x759,0,0xffffffff82000f98,0xffffffff821e2820);
+  lVar9 = (longlong)param_3;
+  uVar8 = (ulonglong)(int)param_2;
+  pMVar1 = (MatchRules *)__savegprlr_24(param_1,uVar8,lVar9,param_4);
+  if (pMVar1 == (MatchRules *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",0x759
+                    ,0,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821e26a0,0x75a,0,0xffffffff82000f98,0xffffffff820337c4);
+  if ((uVar8 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",0x75a
+                    ,0,"%s");
   }
-  if ((DAT_84878f28 == 0) || (DAT_84878f2c != (int)param_3)) {
-    uVar2 = GetRecipeFromPackedPlaylist(param_3,0xffffffff84878f34,0xc00);
-    if ((int)uVar2 == 0) {
+  iVar6 = (int)lVar9;
+  if ((g_matchRulesPlaylistCache.inUse == 0) || (g_matchRulesPlaylistCache.index != iVar6)) {
+    uVar2 = GetRecipeFromPackedPlaylist(iVar6,g_matchRulesPlaylistCache.data,0xc00);
+    if (uVar2 == 0) {
 LAB_82800244:
-      __restgprlr_24(0);
-      return;
+      iVar6 = __restgprlr_24(0);
+      return iVar6;
     }
-    StructuredData_MakeBuffer(auStack_50,0xffffffff84878f34,uVar2);
-    uVar3 = StructuredData_GetDataVersion(auStack_50);
-    iVar5 = StructuredDataDef_GetAsset(0xffffffff8203d614,0xc00);
-    uVar4 = StructuredData_GetVersion();
-    if ((int)uVar3 == (int)uVar4) {
-      if ((uVar2 & 0xffffffff) != (ulonglong)*(uint *)(iVar5 + 0x30)) {
-        Com_PrintError(0x10,0xffffffff821e5fd4);
-        __restgprlr_24(0);
-        return;
+    StructuredData_MakeBuffer(aSStack_50,g_matchRulesPlaylistCache.data,uVar2);
+    iVar3 = StructuredData_GetDataVersion(aSStack_50);
+    pSVar4 = StructuredDataDef_GetAsset("mp/recipes.def",0xc00);
+    iVar5 = StructuredData_GetVersion(pSVar4);
+    if (iVar3 == iVar5) {
+      if (uVar2 != pSVar4->size) {
+        Com_PrintError(0x10,"[LoadMatchRulesFromPlaylists] Loaded def is of wrong size.\n");
+        iVar6 = __restgprlr_24(0);
+        return iVar6;
       }
     }
     else {
-      cVar6 = UpdateMatchRulesDataFromOldDef(0xffffffff84878f34,uVar2);
-      if (cVar6 == '\0') {
-        Com_PrintError(0x10,0xffffffff821e6010,uVar4,uVar3);
+      bVar7 = UpdateMatchRulesDataFromOldDef(g_matchRulesPlaylistCache.data,uVar2);
+      if (!bVar7) {
+        Com_PrintError(0x10,
+                       "[LoadMatchRulesFromPlaylists] Loaded def version does not match, expected %d, got %d\n"
+                      );
         goto LAB_82800244;
       }
     }
-    DAT_84878f30 = *(uint *)(iVar5 + 0x30);
-    DAT_84878f28 = 1;
-    DAT_84878f2c = (int)param_3;
+    g_matchRulesPlaylistCache.length = pSVar4->size;
+    g_matchRulesPlaylistCache.inUse = 1;
+    g_matchRulesPlaylistCache.index = iVar6;
   }
-  if ((int)DAT_84878f30 < 0) {
-    MyAssertHandler(0xffffffff821e26a0,0x77d,0,0xffffffff820011f4,0xffffffff821e5f5c,
-                    0xffffffff821e5f94);
+  if (g_matchRulesPlaylistCache.length < 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",0x77d
+                    ,0,"%s\n\t%s");
   }
-  uVar2 = (ulonglong)DAT_84878f30;
-  if (((uVar1 & 0xffffffff) < 0x84878f35) &&
-     ((uVar2 - 0x7b7870cc & 0xffffffff) <= (uVar2 + uVar1 & 0xffffffff))) {
-    MyAssertHandler(0xffffffff821e26a0,0x77d,0,0xffffffff820011f4,0xffffffff821e5db8,
-                    0xffffffff821e5ef0);
-    uVar2 = (ulonglong)DAT_84878f30;
+  if ((pMVar1 < (MatchRules *)0x84878f35) &&
+     ((undefined1 *)(g_matchRulesPlaylistCache.length + 0x84878f34U) <=
+      pMVar1->data + g_matchRulesPlaylistCache.length)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",0x77d
+                    ,0,"%s\n\t%s");
   }
-  if (0x84879b34 < (uVar2 - 0x7b7870cc & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821e26a0,0x77d,0,0xffffffff820011f4,0xffffffff821e5bf8,
-                    0xffffffff821e5d58);
-    uVar2 = (ulonglong)DAT_84878f30;
+  if (0x84879b34 < g_matchRulesPlaylistCache.length + 0x84878f34U) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",0x77d
+                    ,0,"%s\n\t%s");
   }
-  _Size = (size_t)uVar2;
-  if ((uVar1 + 0xc01 & 0xffffffff) < (uVar2 + uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821e26a0,0x77d,0,0xffffffff820011f4,0xffffffff821e5ae0,
-                    0xffffffff821e3068);
-    _Size = DAT_84878f30;
+  if (&pMVar1->field_0xc01 < pMVar1->data + g_matchRulesPlaylistCache.length) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",0x77d
+                    ,0,"%s\n\t%s");
   }
-  memcpy((void *)uVar1,&DAT_84878f34,_Size);
-  UpdateMatchRulesChecksumAndVersion(uVar1);
-  __restgprlr_24(1);
-  return;
+  memcpy();
+  UpdateMatchRulesChecksumAndVersion(pMVar1);
+  iVar6 = __restgprlr_24(1);
+  return iVar6;
 }
 
 
 // 82801250  SaveMatchRulesDataToFilesystem  (bgame/bg_matchrules.cpp:1929)
 
-void SaveMatchRulesDataToFilesystem(undefined8 param_1,undefined8 param_2)
+void SaveMatchRulesDataToFilesystem(MatchRules *param_1,char *param_2)
 
 {
-  ulonglong uVar1;
-  ulonglong uVar2;
-  int iVar3;
-  undefined4 local_c0;
-  undefined4 local_bc;
-  undefined1 auStack_b0 [64];
-  undefined1 auStack_70 [112];
+  MatchRules *pMVar1;
+  char *pcVar2;
+  void *pvVar3;
+  StructuredDataDef *pSVar4;
+  int iVar5;
+  StructuredDataBuffer local_c0 [2];
+  char acStack_b0 [64];
+  char acStack_70 [112];
   
-  uVar1 = __savegprlr_28();
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821e26a0,0x790,0,0xffffffff82000f98,0xffffffff821e2820);
+  pMVar1 = (MatchRules *)__savegprlr_28(param_1,param_2);
+  if (pMVar1 == (MatchRules *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_matchrules.cpp",0x790
+                    ,0,"%s");
   }
-  AssertMatchRulesVersionIsSet(uVar1);
-  Com_sprintf(auStack_b0,0x40,0xffffffff821e641c,param_2);
-  Com_sprintf(auStack_70,0x40,0xffffffff821e6414);
-  va(0xffffffff8207a0b8,auStack_70,auStack_b0);
-  uVar2 = FS_FOpenFileWrite();
-  if ((uVar2 & 0xffffffff) == 0) {
-    Com_PrintError(0xd,0xffffffff821e63d0,auStack_70,auStack_b0);
+  AssertMatchRulesVersionIsSet(pMVar1);
+  Com_sprintf(acStack_b0,0x40,"%s.recipe");
+  Com_sprintf(acStack_70,0x40,"recipes");
+  pcVar2 = va("%s/%s");
+  pvVar3 = FS_FOpenFileWrite(pcVar2);
+  if (pvVar3 == (void *)0x0) {
+    Com_PrintError(0xd,"[SaveMatchRulesDataToFilesystem] Could not open %s/%s for writing\n");
     __restgprlr_28();
     return;
   }
-  iVar3 = StructuredDataDef_GetAsset(0xffffffff8203d614,0xc00);
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821e2648,0x54,0,0xffffffff82000f98,0xffffffff82030240);
+  pSVar4 = StructuredDataDef_GetAsset("mp/recipes.def",0xc00);
+  if (pMVar1 == (MatchRules *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\../universal/com_structureddatadef.h"
+                    ,0x54,0,"%s");
   }
-  local_c0 = (undefined4)uVar1;
-  local_bc = 0xc00;
-  StructuredData_SetData<char_const_*>(iVar3,&local_c0,0xffffffff820068af,0xffffffff821e29b0);
-  MatchRulesChanged(uVar1);
-  iVar3 = FS_Write(uVar1,*(undefined4 *)(iVar3 + 0x30),uVar2);
-  FS_FCloseFile(uVar2);
-  if (iVar3 == 0) {
-    Com_PrintError(0xd,0xffffffff821e6390,auStack_b0);
+  local_c0[0].size = 0xc00;
+  local_c0[0].data = (uchar *)pMVar1;
+  StructuredData_SetData<char_const_*>(pSVar4,local_c0,"");
+  MatchRulesChanged(pMVar1);
+  iVar5 = FS_Write(pMVar1,pSVar4->size,pvVar3);
+  FS_FCloseFile(pvVar3);
+  if (iVar5 == 0) {
+    Com_PrintError(0xd,"[SaveMatchRulesDataToFilesystem] Failed to write into %s\n");
     __restgprlr_28();
     return;
   }
-  Com_Printf(0xd,0xffffffff821e6348,auStack_70,auStack_b0);
+  Com_Printf(0xd,"[SaveMatchRulesDataToFilesystem] Succeeded writing defaults into %s/%s\n");
   __restgprlr_28();
   return;
 }
@@ -3029,74 +3160,76 @@ void SaveMatchRulesDataToFilesystem(undefined8 param_1,undefined8 param_2)
 
 // 828003A8  MatchRules_ResetHeaderCache  (bgame/bg_matchrules.cpp:1977)
 
-void * MatchRules_ResetHeaderCache(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void MatchRules_ResetHeaderCache(void)
 
 {
-  void *pvVar1;
-  
-  pvVar1 = memset(&DAT_84877ea8,0,0x1080);
-  return pvVar1;
+  memset();
+  return;
 }
 
 
 // 828003C0  MatchRules_PrintSaveFileMetaData  (bgame/bg_matchrules.cpp:1983)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
 void MatchRules_PrintSaveFileMetaData(void)
 
 {
-  undefined4 uVar1;
-  undefined8 uVar2;
+  MatchRulesSaveLocation MVar1;
+  LocalClientNum_t LVar2;
   int iVar3;
   int iVar4;
-  longlong lVar5;
-  longlong lVar6;
-  char **ppcVar7;
-  undefined1 *puVar8;
-  char *local_b0 [8];
-  undefined1 auStack_90 [4];
-  undefined4 local_8c;
-  undefined1 auStack_88 [4];
-  undefined4 local_84;
-  undefined1 auStack_80 [4];
-  undefined4 local_7c;
+  int iVar5;
+  int iVar6;
+  longlong lVar7;
+  MatchRulesSaveHeaderLookup *pMVar8;
+  Operand *pOVar9;
+  MatchRulesSaveLocation local_a8 [2];
+  MatchRulesSaveHeaderLookup local_a0 [4];
+  Operand OStack_90;
+  Operand OStack_88;
+  Operand aOStack_80 [16];
   
   __savegprlr_19();
-  local_b0[2] = (char *)0x0;
-  local_b0[4] = (char *)0x0;
-  local_b0[0] = "Player Save";
-  local_b0[1] = "Player History";
-  local_b0[3] = (char *)0x1;
-  local_b0[5] = (char *)0x2;
-  local_b0[6] = (char *)0x3;
-  Cmd_LocalClientNum();
-  uVar2 = CL_ControllerIndexFromClientNum();
-  iVar4 = 0;
+  local_a8[0] = MR_SAVELOC_PLAYERSAVED;
+  local_a0[0] = RECIPE_LOOKUP_TIMESTAMP;
+  local_a8[1] = 1;
+  local_a0[1] = 2;
+  local_a0[2] = 3;
+  LVar2 = Cmd_LocalClientNum();
+  iVar3 = CL_ControllerIndexFromClientNum(LVar2);
+  iVar5 = 0;
   do {
-    Com_Printf(0x10,0xffffffff821e6068,*(undefined4 *)((int)local_b0 + iVar4));
-    lVar5 = 0;
-    uVar1 = *(undefined4 *)((int)local_b0 + iVar4 + 8);
+    Com_Printf(0x10,"[MR] SLOTS IN %s *******************\n");
+    iVar6 = 0;
+    MVar1 = *(MatchRulesSaveLocation *)((int)local_a8 + iVar5);
     do {
-      Operand_SetInt(auStack_90,0);
-      Operand_SetString(auStack_88,0xffffffff820068af);
-      Operand_SetString(auStack_80,0xffffffff820068af);
-      ppcVar7 = local_b0 + 4;
-      puVar8 = auStack_90;
-      lVar6 = 3;
+      Operand_SetInt(&OStack_90,0);
+      Operand_SetString(&OStack_88,"");
+      Operand_SetString(aOStack_80,"");
+      pMVar8 = local_a0;
+      pOVar9 = &OStack_90;
+      lVar7 = 3;
       do {
-        iVar3 = LoadMatchRulesMetadataFromDisk(0,uVar2,uVar1,lVar5,*ppcVar7,puVar8);
-        if (iVar3 == 0) {
-          Com_Printf(0x10,0xffffffff821e6090);
+        iVar4 = LoadMatchRulesMetadataFromDisk((MatchRules *)0x0,iVar3,MVar1,iVar6,*pMVar8,pOVar9);
+        if (iVar4 == 0) {
+          Com_Printf(0x10,"[MR] Unable to load file.\n");
         }
-        lVar6 = lVar6 + -1;
-        puVar8 = puVar8 + 8;
-        ppcVar7 = ppcVar7 + 1;
-      } while (lVar6 != 0);
-      Com_Printf(0x10,0xffffffff821e60ac,lVar5,local_8c,local_84,local_7c);
-      lVar5 = lVar5 + 1;
-    } while ((int)lVar5 < 10);
-    Com_Printf(0x10,0xffffffff820145f4);
-    iVar4 = iVar4 + 4;
-  } while (iVar4 < 8);
+        lVar7 = lVar7 + -1;
+        pOVar9 = pOVar9 + 1;
+        pMVar8 = pMVar8 + 1;
+      } while (lVar7 != 0);
+      Com_Printf(0x10,"[MR] %d. <%d> %s \"%s\"\n");
+      iVar6 = iVar6 + 1;
+    } while (iVar6 < 10);
+    Com_Printf(0x10,"\n\n");
+    iVar5 = iVar5 + 4;
+  } while (iVar5 < 8);
   __restgprlr_19();
   return;
 }
@@ -3104,17 +3237,17 @@ void MatchRules_PrintSaveFileMetaData(void)
 
 // 82800520  MatchRules_PrintCurrentIdentifiers  (bgame/bg_matchrules.cpp:2017)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void MatchRules_PrintCurrentIdentifiers(void)
 
 {
-  int iVar3;
-  undefined8 uVar1;
-  undefined8 uVar2;
+  GameStateInfo *pGVar1;
   
-  iVar3 = GameStateInfo_Get();
-  uVar1 = BG_MatchRulesData_GetString(*(undefined4 *)(iVar3 + 8),0xffffffff821e29b0);
-  uVar2 = BG_MatchRulesData_GetString(*(undefined4 *)(iVar3 + 8),0xffffffff820337c4);
-  Com_Printf(0x10,0xffffffff821e60e0,uVar1,uVar2);
+  pGVar1 = GameStateInfo_Get();
+  BG_MatchRulesData_GetString(pGVar1->matchRules,"recipeName");
+  BG_MatchRulesData_GetString(pGVar1->matchRules,"gametype");
+  Com_Printf(0x10,"RECIPE: %s, %s\n");
   return;
 }
 

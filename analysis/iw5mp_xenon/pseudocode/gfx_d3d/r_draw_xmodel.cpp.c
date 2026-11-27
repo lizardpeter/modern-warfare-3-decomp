@@ -2,550 +2,153 @@
 
 // 82737DC0  __lvx  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/vectorintrinsics.h:98)
 
-/* WARNING: Control flow encountered bad instruction data */
-
-void __lvx(void)
+__vector4 * __lvx(__vector4 *__return_storage_ptr__,void *param_1,int param_2)
 
 {
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  return __return_storage_ptr__;
 }
 
 
 // 82737DC8  __stvx  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/vectorintrinsics.h:104)
 
-/* WARNING: Control flow encountered bad instruction data */
-
-void __stvx(void)
+void __stvx(__vector4 param_1,void *param_2,int param_3)
 
 {
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  undefined4 *puVar1;
+  undefined4 in_vr1_32_0;
+  undefined4 in_vr1_32_1;
+  undefined4 in_vr1_32_2;
+  undefined4 in_vr1_32_3;
+  
+  puVar1 = (undefined4 *)((int)param_2 + param_3 & 0xfffffff0);
+  *puVar1 = in_vr1_32_0;
+  puVar1[1] = in_vr1_32_1;
+  puVar1[2] = in_vr1_32_2;
+  puVar1[3] = in_vr1_32_3;
+  return;
 }
 
 
 // 82737F18  R_SetupXModelRigidModelSurfWithUpdate  (gfx_d3d/r_draw_xmodel.cpp:192)
-
-void R_SetupXModelRigidModelSurfWithUpdate(undefined8 param_1,ulonglong param_2)
-
-{
-  int iVar2;
-  undefined4 uVar3;
-  undefined8 uVar1;
-  ulonglong uVar4;
-  
-  iVar2 = __savegprlr_27();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821bf0a0,0xce,0,0xffffffff82000f98,0xffffffff821beabc);
-  }
-  uVar4 = param_2 + 0x48;
-  if (uVar4 == 0) {
-    MyAssertHandler(0xffffffff821bf0a0,0xd2,0,0xffffffff82000f98,0xffffffff821ba260);
-  }
-  if ((ulonglong)*(uint *)(iVar2 + 0xc4) != (uVar4 & 0xffffffff)) {
-    R_ChangeIndices(iVar2 + 0xc0,uVar4);
-  }
-  uVar3 = XSurfaceGetModelVertDecl(param_2);
-  *(undefined4 *)(iVar2 + 200) = uVar3;
-  R_UpdateVertexDecl(iVar2);
-  uVar1 = XSurfaceGetVert0Size(param_2);
-  R_SetStreamSource(iVar2 + 0xc0,param_2 + 0x20,0,uVar1);
-  __restgprlr_27();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GPUTEXTURE_FETCH_CONSTANT_s_0_s_0
 
 // 82737FD8  R_DrawXModelRigidModelChildSurf  (gfx_d3d/r_draw_xmodel.cpp:235)
-
-void R_DrawXModelRigidModelChildSurf(undefined8 param_1,int param_2,int param_3)
-
-{
-  ulonglong uVar1;
-  longlong lVar2;
-  undefined4 uStack00000010;
-  uint local_30;
-  uint local_2c;
-  int local_28;
-  
-  uVar1 = __savegprlr_29();
-  R_SetupPassPerPrimArgs();
-  local_28 = (uint)*(ushort *)(param_2 + 0x1c) * 3;
-  local_30 = (uint)*(ushort *)(param_3 + 2);
-  local_2c = (uint)*(ushort *)(param_2 + 0x1e);
-  R_DrawIndexedPrimitive((uVar1 & 0xffffffff) + 0xc0,&local_30);
-  if (*(int *)(DAT_845aa6d8 + 0xc) != 0) {
-    uStack00000010 = (undefined4)(uVar1 >> 0x20);
-    lVar2 = R_GetActiveWorldMatrix(uStack00000010);
-    RB_ShowTess(uVar1,lVar2 + 0x30,0xffffffff821bf0e4,0xffffffff821818b8);
-  }
-  __restgprlr_29();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0
 
 // 82738070  R_DrawXModelRigidSurfLitInternal  (gfx_d3d/r_draw_xmodel.cpp:272)
-
-/* WARNING: Control flow encountered bad instruction data */
-
-void R_DrawXModelRigidSurfLitInternal(void)
-
-{
-  undefined1 in_vs32 [16];
-  undefined1 in_vs40 [16];
-  undefined1 in_vs43 [16];
-  undefined1 in_vs55 [16];
-  undefined1 in_vs59 [16];
-  
-  __savegprlr();
-  __savevmx_120();
-  altv207_13(in_vs32,in_vs55);
-  altv207_13(in_vs32,in_vs40);
-  altv300_23(in_vs59,in_vs43);
-  altv300_21(in_vs32,in_vs43);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0
 
 // 827383A8  R_DrawXModelRigidSurfCameraInternal  (gfx_d3d/r_draw_xmodel.cpp:398)
-
-/* WARNING: Control flow encountered bad instruction data */
-
-void R_DrawXModelRigidSurfCameraInternal(void)
-
-{
-  undefined1 in_vs32 [16];
-  undefined1 in_vs39 [16];
-  undefined1 in_vs43 [16];
-  undefined1 in_vs55 [16];
-  undefined1 in_vs60 [16];
-  
-  __savegprlr();
-  __savevmx_120();
-  altv207_13(in_vs32,in_vs55);
-  altv207_13(in_vs32,in_vs39);
-  altv300_23(in_vs60,in_vs43);
-  altv300_21(in_vs32,in_vs43);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0
 
 // 827386C0  R_DrawXModelRigidSurfInternal  (gfx_d3d/r_draw_xmodel.cpp:507)
-
-/* WARNING: Control flow encountered bad instruction data */
-
-void R_DrawXModelRigidSurfInternal(void)
-
-{
-  undefined1 in_vs32 [16];
-  undefined1 in_vs42 [16];
-  undefined1 in_vs61 [16];
-  
-  __savegprlr();
-  __savevmx_120();
-  altv300_23(in_vs61,in_vs42);
-  altv300_21(in_vs32,in_vs42);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0
 
 // 82737DD0  D3DTag_Index  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/d3d9.h:615)
 
-int D3DTag_Index(int param_1)
+/* WARNING: Enum "_D3DTAG": Some values do not have unique names */
+
+ulong D3DTag_Index(_D3DTAG param_1)
 
 {
-  return param_1 >> 0x10;
+  return (int)(char)param_1 >> 0x10;
 }
 
 
 // 82737DD8  D3DTag_SubsetMask  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/d3d9.h:623)
 
-ulonglong D3DTag_SubsetMask(ulonglong param_1,longlong param_2,longlong param_3)
+/* WARNING: Enum "_D3DTAG": Some values do not have unique names */
+
+ulong64 D3DTag_SubsetMask(_D3DTAG param_1,ulong param_2,ulong param_3)
 
 {
-  return (ulonglong)(-0x8000000000000000 >> (param_3 - param_2 & 0x7fU)) >>
-         ((param_1 & 0xff) + param_2 & 0x7f);
+  return (ulonglong)
+         (-0x8000000000000000 >> ((longlong)(int)param_3 - (longlong)(int)param_2 & 0x7fU)) >>
+         ((ulonglong)param_1 + (longlong)(int)param_2 & 0x7f);
 }
 
 
 // 82737E00  D3DTag_ShaderConstantMask  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/d3d9.h:631)
 
-ulonglong D3DTag_ShaderConstantMask(ulonglong param_1,longlong param_2)
+ulong64 D3DTag_ShaderConstantMask(ulong param_1,ulong param_2)
 
 {
-  ulonglong uVar1;
-  
-  uVar1 = (param_1 & 0xffffffff) >> 2;
   return (ulonglong)
-         (-0x8000000000000000 >> ((((param_1 + param_2) - 1 & 0xffffffff) >> 2) - uVar1 & 0x7f)) >>
-         (uVar1 & 0x7f);
+         (-0x8000000000000000 >>
+         (((((longlong)(int)param_1 + (longlong)(int)param_2) - 1U & 0xffffffff) >> 2) -
+          (ulonglong)(param_1 >> 2) & 0x7f)) >> ((ulonglong)(param_1 >> 2) & 0x7f);
 }
 
 
 // 82737E30  D3DTagCollection_Set  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/d3d9.h:648)
 
-void D3DTagCollection_Set(int param_1,int param_2,ulonglong param_3)
+void D3DTagCollection_Set(_D3DTAGCOLLECTION *param_1,ulong param_2,ulong64 param_3)
 
 {
-  *(ulonglong *)(param_2 * 8 + param_1) = *(ulonglong *)(param_2 * 8 + param_1) | param_3;
+  param_1->m_Mask[param_2] = param_1->m_Mask[param_2] | param_3;
   return;
 }
 
 
 // 82737E48  D3DTagCollection_Clear  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/d3d9.h:660)
 
-void D3DTagCollection_Clear(int param_1,int param_2,ulonglong param_3)
+void D3DTagCollection_Clear(_D3DTAGCOLLECTION *param_1,ulong param_2,ulong64 param_3)
 
 {
-  *(ulonglong *)(param_2 * 8 + param_1) = *(ulonglong *)(param_2 * 8 + param_1) & ~param_3;
+  param_1->m_Mask[param_2] = param_1->m_Mask[param_2] & ~param_3;
   return;
 }
 
 
 // 82738918  R_DrawXModelUnlitNoPrepass  (gfx_d3d/r_draw_xmodel.cpp:1864)
-
-/* WARNING: Control flow encountered bad instruction data */
-
-void R_DrawXModelUnlitNoPrepass(void)
-
-{
-  int iVar1;
-  undefined1 in_vs32 [16];
-  undefined1 in_vs43 [16];
-  undefined1 in_vs59 [16];
-  
-  __savegprlr();
-  iVar1 = __savevmx_120();
-  if (*(int *)(iVar1 + 4) != 2) {
-    MyAssertHandler(0xffffffff821bf0a0,0x76a,0,0xffffffff821beb60,0xffffffff821beb88);
-  }
-  altv300_21(in_vs32,in_vs43);
-  altv300_23(in_vs59,in_vs43);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GPUTEXTURE_FETCH_CONSTANT_s_0_s_0
 
 // 82738D88  R_DrawXModelUnlitNoPrepassNoGfxEnt  (gfx_d3d/r_draw_xmodel.cpp:2213)
-
-/* WARNING: Control flow encountered bad instruction data */
-
-void R_DrawXModelUnlitNoPrepassNoGfxEnt(void)
-
-{
-  int iVar1;
-  undefined1 in_vs32 [16];
-  undefined1 in_vs43 [16];
-  undefined1 in_vs59 [16];
-  
-  __savegprlr();
-  iVar1 = __savevmx_120();
-  if (*(int *)(iVar1 + 4) != 2) {
-    MyAssertHandler(0xffffffff821bf0a0,0x8c2,0,0xffffffff821beb60,0xffffffff821beb88);
-  }
-  altv300_21(in_vs32,in_vs43);
-  altv300_23(in_vs59,in_vs43);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GPUTEXTURE_FETCH_CONSTANT_s_0_s_0
 
 // 82739130  R_DrawXModelLitNoPrepass  (gfx_d3d/r_draw_xmodel.cpp:2488)
-
-/* WARNING: Control flow encountered bad instruction data */
-
-void R_DrawXModelLitNoPrepass(void)
-
-{
-  int iVar1;
-  undefined1 in_vs32 [16];
-  undefined1 in_vs43 [16];
-  undefined1 in_vs56 [16];
-  
-  __savegprlr();
-  iVar1 = __savevmx_120();
-  if (*(int *)(iVar1 + 4) != 1) {
-    MyAssertHandler(0xffffffff821bf0a0,0x9e0,0,0xffffffff821beb60,0xffffffff821bedb8);
-  }
-  altv300_21(in_vs32,in_vs43);
-  altv300_23(in_vs56,in_vs43);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GPUTEXTURE_FETCH_CONSTANT_s_0_s_0
 
 // 82737E60  D3DDevice_SetStreamSource_Inline  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/d3d9.h:2778)
-
-void D3DDevice_SetStreamSource_Inline(void)
-
-{
-  D3DDevice_SetStreamSource();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GPU_TESSELLATORPACKET_s_0_s_0
 
 // 82737E88  D3DDevice_SetTexture_Inline  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/d3d9.h:2799)
-
-void D3DDevice_SetTexture_Inline(void)
-
-{
-  D3DDevice_SetTexture();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GPUTEXTURE_FETCH_CONSTANT_s_0_s_0
 
 // 82739728  R_DrawXModelAmbientNoPrepass  (gfx_d3d/r_draw_xmodel.cpp:2958)
-
-/* WARNING: Control flow encountered bad instruction data */
-
-void R_DrawXModelAmbientNoPrepass(undefined8 param_1,int param_2)
-
-{
-  int iVar1;
-  undefined1 in_vs32 [16];
-  undefined1 in_vs43 [16];
-  undefined1 in_vs58 [16];
-  
-  __savegprlr();
-  iVar1 = __savevmx_120();
-  if (*(int *)(iVar1 + 4) != 3) {
-    MyAssertHandler(0xffffffff821bf0a0,0xbb3,0,0xffffffff821beb60,0xffffffff821bedf4);
-  }
-  altv300_21(in_vs32,in_vs43);
-  altv300_23(in_vs58,in_vs43);
-  **(ulonglong **)(param_2 + 0xc0) = **(ulonglong **)(param_2 + 0xc0) & 0xbfffffffffffffff;
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GPUTEXTURE_FETCH_CONSTANT_s_0_s_0
 
 // 82737EA0  D3DDevice_GpuOwnVertexShaderConstantF  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/d3d9.h:3408)
-
-void D3DDevice_GpuOwnVertexShaderConstantF(ulonglong *param_1,ulonglong param_2,longlong param_3)
-
-{
-  ulonglong uVar1;
-  
-  uVar1 = (param_2 & 0xffffffff) >> 2;
-  *param_1 = *param_1 &
-             ~((ulonglong)
-               (-0x8000000000000000 >>
-               ((((param_2 + param_3) - 1 & 0xffffffff) >> 2) - uVar1 & 0x7f)) >> (uVar1 & 0x7f));
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GPU_TESSELLATORPACKET_s_0_s_0
 
 // 82737ED8  D3DDevice_GpuDisownVertexShaderConstantF  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/d3d9.h:3464)
-
-void D3DDevice_GpuDisownVertexShaderConstantF(ulonglong *param_1,ulonglong param_2,longlong param_3)
-
-{
-  ulonglong uVar1;
-  
-  uVar1 = (param_2 & 0xffffffff) >> 2;
-  *param_1 = (ulonglong)
-             (-0x8000000000000000 >> ((((param_2 + param_3) - 1 & 0xffffffff) >> 2) - uVar1 & 0x7f))
-             >> (uVar1 & 0x7f) | *param_1;
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GPU_TESSELLATORPACKET_s_0_s_0
 
 // 82737F10  D3DDevice_GpuEndShaderConstantF4  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/d3d9.h:3497)
-
-void D3DDevice_GpuEndShaderConstantF4(void)
-
-{
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GPU_TESSELLATORPACKET_s_0_s_0
 
 // 82739CB8  R_DrawXModelRigidSurfLit  (gfx_d3d/r_draw_xmodel.cpp:3713)
-
-void R_DrawXModelRigidSurfLit(undefined8 param_1,undefined4 param_2)
-
-{
-  byte bVar1;
-  int iVar2;
-  int iVar3;
-  int iVar4;
-  int *piVar5;
-  DWORD DVar6;
-  undefined4 local_60;
-  uint local_5c;
-  int local_58;
-  uint local_54;
-  undefined4 local_50;
-  undefined4 local_4c;
-  undefined4 local_48;
-  undefined4 local_44;
-  undefined4 local_3c;
-  
-  piVar5 = (int *)__savegprlr_27();
-  iVar2 = piVar5[1];
-  if (*(char *)(*(int *)(iVar2 + 0xf8) + 100) == '\0') {
-    R_DrawXModelRigidSurfLitInternal();
-    __restgprlr_27();
-    return;
-  }
-  R_DirtyCodeConstantBlock(iVar2,8);
-  *(undefined8 *)(iVar2 + 0x130) = 0;
-  *(undefined8 *)(iVar2 + 0x138) = 0;
-  *(undefined8 *)(iVar2 + 0x140) = 0;
-  *(undefined8 *)(iVar2 + 0x148) = 0;
-  if (piVar5[2] == 0) {
-    MyAssertHandler(0xffffffff821bf0a0,0x251,0,0xffffffff82000f98,0xffffffff821bf0f8);
-  }
-  iVar3 = piVar5[2];
-  iVar4 = *(int *)(piVar5[1] + 0xf8);
-  local_58 = *(int *)(piVar5[1] + 0x74);
-  local_44 = *(undefined4 *)(*piVar5 + 0x13ec);
-  local_50 = *(undefined4 *)(iVar3 + 8);
-  local_4c = *(undefined4 *)(iVar3 + 0xc);
-  local_48 = *(undefined4 *)(iVar3 + 0x10);
-  bVar1 = *(byte *)(iVar4 + 100);
-  local_54 = (uint)*(byte *)(iVar4 + 99);
-  local_60 = param_2;
-  local_5c = (uint)bVar1;
-  DVar6 = GetCurrentProcessorNumber();
-  local_3c = *(undefined4 *)(&DAT_846177e4 + DVar6 * 4);
-  if (bVar1 == 2) {
-    R_DrawXModelUnlitNoPrepass(&local_60,iVar2);
-    if (*(int *)(iVar2 + 0x74) != local_58) {
-      MyAssertHandler(0xffffffff821bf0a0,0xea5,0,0xffffffff82000f98,0xffffffff821bf2d8);
-      __restgprlr_27();
-      return;
-    }
-  }
-  else {
-    if (bVar1 == 1) {
-      if ((*(byte *)(*(int *)(iVar2 + 0xf8) + 99) & 1) != 0) {
-        R_SetSamplerState(iVar2,1,0x72);
-      }
-      R_DrawXModelLitNoPrepass(&local_60,iVar2);
-      *(int *)(iVar2 + 0x74) = local_58;
-      __restgprlr_27();
-      return;
-    }
-    if (bVar1 != 3) {
-      MyAssertHandler(0xffffffff821bf0a0,0xebb,0,0xffffffff82000f98,0xffffffff821bf298);
-    }
-    R_DrawXModelAmbientNoPrepass(&local_60,iVar2);
-  }
-  __restgprlr_27();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0
 
 // 82739E78  R_DrawXModelRigidSurfCamera  (gfx_d3d/r_draw_xmodel.cpp:3788)
-
-void R_DrawXModelRigidSurfCamera(undefined8 param_1,undefined4 param_2)
-
-{
-  int iVar1;
-  int iVar2;
-  int *piVar3;
-  DWORD DVar4;
-  uint uVar5;
-  int iStack_6c;
-  undefined4 local_60;
-  uint local_5c;
-  int local_58;
-  uint local_54;
-  undefined4 local_50;
-  undefined4 local_4c;
-  undefined4 local_48;
-  undefined4 local_44;
-  undefined4 local_3c;
-  
-  piVar3 = (int *)__savegprlr_27();
-  iStack_6c = (int)*(undefined8 *)piVar3;
-  if (*(char *)(*(int *)(iStack_6c + 0xf8) + 100) == '\0') {
-    R_DrawXModelRigidSurfCameraInternal();
-    __restgprlr_27();
-    return;
-  }
-  if (piVar3[2] == 0) {
-    MyAssertHandler(0xffffffff821bf0a0,0x251,0,0xffffffff82000f98,0xffffffff821bf0f8);
-  }
-  iVar1 = piVar3[2];
-  iVar2 = *(int *)(piVar3[1] + 0xf8);
-  local_58 = *(int *)(piVar3[1] + 0x74);
-  local_44 = *(undefined4 *)(*piVar3 + 0x13ec);
-  local_50 = *(undefined4 *)(iVar1 + 8);
-  local_4c = *(undefined4 *)(iVar1 + 0xc);
-  local_48 = *(undefined4 *)(iVar1 + 0x10);
-  local_54 = (uint)*(byte *)(iVar2 + 99);
-  uVar5 = (uint)*(byte *)(iVar2 + 100);
-  local_60 = param_2;
-  local_5c = uVar5;
-  DVar4 = GetCurrentProcessorNumber();
-  local_3c = *(undefined4 *)(&DAT_846177e4 + DVar4 * 4);
-  if (uVar5 != 2) {
-    MyAssertHandler(0xffffffff821bf0a0,0xed9,0,0xffffffff82000f98,0xffffffff821bf338);
-  }
-  R_DrawXModelUnlitNoPrepass(&local_60,iStack_6c);
-  if (*(int *)(iStack_6c + 0x74) != local_58) {
-    MyAssertHandler(0xffffffff821bf0a0,0xedc,0,0xffffffff82000f98,0xffffffff821bee70);
-  }
-  __restgprlr_27();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0
 
 // 82739FB8  R_DrawXModelRigidSurf  (gfx_d3d/r_draw_xmodel.cpp:3809)
-
-void R_DrawXModelRigidSurf(undefined8 param_1,undefined4 param_2)
-
-{
-  int iVar1;
-  int iVar2;
-  int iVar3;
-  int *piVar4;
-  DWORD DVar5;
-  uint uVar6;
-  undefined4 local_60;
-  uint local_5c;
-  int local_58;
-  uint local_54;
-  undefined4 local_50;
-  undefined4 local_4c;
-  undefined4 local_48;
-  undefined4 local_44;
-  undefined4 local_3c;
-  
-  piVar4 = (int *)__savegprlr_27();
-  iVar1 = piVar4[1];
-  if (*(char *)(*(int *)(iVar1 + 0xf8) + 100) == '\0') {
-    R_DrawXModelRigidSurfInternal();
-    __restgprlr_27();
-    return;
-  }
-  if (piVar4[2] == 0) {
-    MyAssertHandler(0xffffffff821bf0a0,0x251,0,0xffffffff82000f98,0xffffffff821bf0f8);
-  }
-  iVar2 = piVar4[2];
-  iVar3 = *(int *)(piVar4[1] + 0xf8);
-  local_58 = *(int *)(piVar4[1] + 0x74);
-  local_44 = *(undefined4 *)(*piVar4 + 0x13ec);
-  local_50 = *(undefined4 *)(iVar2 + 8);
-  local_4c = *(undefined4 *)(iVar2 + 0xc);
-  local_48 = *(undefined4 *)(iVar2 + 0x10);
-  local_54 = (uint)*(byte *)(iVar3 + 99);
-  uVar6 = (uint)*(byte *)(iVar3 + 100);
-  local_60 = param_2;
-  local_5c = uVar6;
-  DVar5 = GetCurrentProcessorNumber();
-  local_3c = *(undefined4 *)(&DAT_846177e4 + DVar5 * 4);
-  if (uVar6 != 2) {
-    MyAssertHandler(0xffffffff821bf0a0,0xeee,0,0xffffffff82000f98,0xffffffff821bf338);
-  }
-  R_DrawXModelUnlitNoPrepassNoGfxEnt(&local_60,iVar1);
-  if (*(int *)(iVar1 + 0x74) != local_58) {
-    MyAssertHandler(0xffffffff821bf0a0,0xef1,0,0xffffffff82000f98,0xffffffff821bf2d8);
-  }
-  __restgprlr_27();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0

@@ -5,44 +5,41 @@
 void pushmalloc(undefined8 param_1,longlong param_2)
 
 {
-  size_t _Size;
   ulonglong uVar1;
   int iVar2;
   int iVar3;
   undefined *puVar4;
-  void *pvVar5;
-  undefined *puVar6;
-  undefined *_Dst;
-  void *pvVar7;
+  undefined *puVar5;
+  undefined4 uVar6;
+  undefined *puVar7;
   
-  pvVar5 = (void *)__savegprlr_24();
-  puVar6 = PTR_DAT_8489beb4;
-  _Dst = PTR_DAT_8489beb8;
-  pvVar7 = pvVar5;
+  uVar6 = __savegprlr_24();
+  puVar7 = PTR_DAT_8489beb4;
+  puVar5 = PTR_DAT_8489beb8;
   if (DAT_8489bebc == DAT_8489beb0) {
-    puVar6 = (undefined *)radmalloc(DAT_8489bebc << 4);
+    puVar7 = (undefined *)radmalloc(DAT_8489bebc << 4);
     iVar2 = DAT_8489bebc;
     puVar4 = PTR_DAT_8489beb4;
-    _Size = DAT_8489bebc << 2;
-    _Dst = puVar6 + DAT_8489bebc * 8;
-    memcpy(puVar6,PTR_DAT_8489beb4,_Size);
-    pvVar7 = memcpy(_Dst,PTR_DAT_8489beb8,_Size);
+    iVar3 = DAT_8489bebc * 8;
+    memcpy();
+    memcpy();
     DAT_8489bebc = iVar2 << 1;
+    puVar5 = puVar7 + iVar3;
     if (DAT_8489bebc != 0x40) {
-      pvVar7 = (void *)radfree(puVar4);
+      radfree(puVar4);
     }
   }
-  PTR_DAT_8489beb8 = _Dst;
-  PTR_DAT_8489beb4 = puVar6;
-  puVar6 = PTR_DAT_8489beb4;
-  iVar2 = DAT_8489beb0 * 4;
+  PTR_DAT_8489beb8 = puVar5;
+  PTR_DAT_8489beb4 = puVar7;
+  puVar7 = PTR_DAT_8489beb4;
+  iVar3 = DAT_8489beb0 * 4;
   DAT_8489beb0 = DAT_8489beb0 + 1;
   uVar1 = param_2 + 0x1fU & 0xffffffe0;
-  iVar3 = (((DAT_8489beac >> 5) - (int)(uVar1 >> 5)) + 1 & 0x1f) * 0x20 + (int)uVar1;
-  DAT_8489beac = DAT_8489beac + iVar3;
-  *(int *)(PTR_DAT_8489beb8 + iVar2) = iVar3;
-  *(void **)(puVar6 + iVar2) = pvVar5;
-  __restgprlr_24(pvVar7);
+  iVar2 = (((DAT_8489beac >> 5) - (int)(uVar1 >> 5)) + 1 & 0x1f) * 0x20 + (int)uVar1;
+  DAT_8489beac = DAT_8489beac + iVar2;
+  *(int *)(PTR_DAT_8489beb8 + iVar3) = iVar2;
+  *(undefined4 *)(puVar7 + iVar3) = uVar6;
+  __restgprlr_24();
   return;
 }
 

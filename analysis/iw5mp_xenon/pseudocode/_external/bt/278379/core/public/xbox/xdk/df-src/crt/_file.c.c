@@ -4,57 +4,59 @@
 
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
-FILE * __iob_func(void)
+_iobuf * __iob_func(void)
 
 {
-  return (FILE *)&DAT_829b0150;
+  return _iob;
 }
 
 
 // 8291AEF8  __initstdio  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/_file.c:104)
 
-undefined8 __initstdio(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int __initstdio(void)
 
 {
-  undefined *puVar1;
-  undefined4 *puVar2;
+  _iobuf *p_Var1;
+  int *piVar2;
   int iVar3;
   uint uVar4;
   longlong lVar5;
   
-  if (DAT_84897ec4 == 0) {
-    DAT_84897ec4 = 0x200;
+  if (_nstream == 0) {
+    _nstream = 0x200;
   }
-  else if ((int)DAT_84897ec4 < 0x14) {
-    DAT_84897ec4 = 0x14;
+  else if (_nstream < 0x14) {
+    _nstream = 0x14;
   }
-  DAT_84897ec0 = calloc(DAT_84897ec4,4);
-  if (DAT_84897ec0 == (void *)0x0) {
-    DAT_84897ec4 = 0x14;
-    DAT_84897ec0 = calloc(0x14,4);
-    if (DAT_84897ec0 == (void *)0x0) {
+  __piob = calloc(_nstream,4);
+  if (__piob == (void **)0x0) {
+    _nstream = 0x14;
+    __piob = calloc(0x14,4);
+    if (__piob == (void **)0x0) {
       return 0x1a;
     }
   }
-  puVar1 = &DAT_829b0150;
+  p_Var1 = _iob;
   iVar3 = 0;
   lVar5 = 0x14;
   do {
-    *(undefined **)(iVar3 + (int)DAT_84897ec0) = puVar1;
-    puVar1 = puVar1 + 0x20;
+    *(_iobuf **)(iVar3 + (int)__piob) = p_Var1;
+    p_Var1 = p_Var1 + 1;
     iVar3 = iVar3 + 4;
     lVar5 = lVar5 + -1;
   } while (lVar5 != 0);
-  puVar2 = &DAT_829b0160;
+  piVar2 = &_iob[0]._file;
   uVar4 = 0;
   lVar5 = 3;
   do {
-    iVar3 = *(int *)((&DAT_84897dc0)[(int)uVar4 >> 5] + (uVar4 & 0x1f) * 0x48);
+    iVar3 = *(int *)(*(int *)(&__pioinfo + ((int)uVar4 >> 5) * 4) + (uVar4 & 0x1f) * 0x48);
     if (((iVar3 == -1) || (iVar3 == -2)) || (iVar3 == 0)) {
-      *puVar2 = 0xfffffffe;
+      *piVar2 = -2;
     }
     uVar4 = uVar4 + 1;
-    puVar2 = puVar2 + 8;
+    piVar2 = piVar2 + 8;
     lVar5 = lVar5 + -1;
   } while (lVar5 != 0);
   return 0;
@@ -69,25 +71,25 @@ void __endstdio(void)
 
 {
   _flushall();
-  if (DAT_84895dec != '\0') {
+  if (_exitflag != '\0') {
     _fcloseall();
   }
-  free(DAT_84897ec0);
+  free(__piob);
   return;
 }
 
 
 // 8291B060  _lock_file  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/_file.c:211)
 
-void _lock_file(FILE *_File)
+void _lock_file(_iobuf *param_1)
 
 {
-  if ((_File < (FILE *)&DAT_829b0150) || ((FILE *)&DAT_829b03b0 < _File)) {
-    RtlEnterCriticalSection((longlong)(int)_File + 0x20);
+  if ((param_1 < _iob) || (_iob + 0x13 < param_1)) {
+    RtlEnterCriticalSection((longlong)(int)param_1 + 0x20);
   }
   else {
-    _lock(((int)&_File[0x3eb27f5]._file >> 5) + 0x10);
-    _File->_flag = _File->_flag | 0x8000;
+    _lock(((int)&param_1[0x3eb27f5]._file >> 5) + 0x10);
+    param_1->_flag = param_1->_flag | 0x8000;
   }
   return;
 }
@@ -95,15 +97,15 @@ void _lock_file(FILE *_File)
 
 // 8291B0D0  _lock_file2  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/_file.c:254)
 
-void _lock_file2(int _Index,void *_File)
+void _lock_file2(int param_1,void *param_2)
 
 {
-  if (_Index < 0x14) {
-    _lock(_Index + 0x10);
-    *(uint *)((int)_File + 0xc) = *(uint *)((int)_File + 0xc) | 0x8000;
+  if (param_1 < 0x14) {
+    _lock(param_1 + 0x10);
+    *(uint *)((int)param_2 + 0xc) = *(uint *)((int)param_2 + 0xc) | 0x8000;
   }
   else {
-    RtlEnterCriticalSection((longlong)(int)_File + 0x20);
+    RtlEnterCriticalSection((longlong)(int)param_2 + 0x20);
   }
   return;
 }
@@ -111,30 +113,30 @@ void _lock_file2(int _Index,void *_File)
 
 // 8291B120  _unlock_file  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/_file.c:296)
 
-void _unlock_file(FILE *_File)
+void _unlock_file(_iobuf *param_1)
 
 {
-  if (((FILE *)0x829b014f < _File) && (_File < (FILE *)0x829b03b1)) {
-    _File->_flag = _File->_flag & 0xffff7fff;
-    _unlock(((int)&_File[0x3eb27f5]._file >> 5) + 0x10);
+  if (((_iobuf *)0x829b014f < param_1) && (param_1 < (_iobuf *)((int)&_iob[0x13]._ptr + 1))) {
+    param_1->_flag = param_1->_flag & 0xffff7fff;
+    _unlock(((int)&param_1[0x3eb27f5]._file >> 5) + 0x10);
     return;
   }
-  RtlLeaveCriticalSection((longlong)(int)_File + 0x20);
+  RtlLeaveCriticalSection((longlong)(int)param_1 + 0x20);
   return;
 }
 
 
 // 8291B160  _unlock_file2  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/_file.c:339)
 
-void _unlock_file2(int _Index,void *_File)
+void _unlock_file2(int param_1,void *param_2)
 
 {
-  if (_Index < 0x14) {
-    *(uint *)((int)_File + 0xc) = *(uint *)((int)_File + 0xc) & 0xffff7fff;
-    _unlock(_Index + 0x10);
+  if (param_1 < 0x14) {
+    *(uint *)((int)param_2 + 0xc) = *(uint *)((int)param_2 + 0xc) & 0xffff7fff;
+    _unlock(param_1 + 0x10);
     return;
   }
-  RtlLeaveCriticalSection((longlong)(int)_File + 0x20);
+  RtlLeaveCriticalSection((longlong)(int)param_2 + 0x20);
   return;
 }
 

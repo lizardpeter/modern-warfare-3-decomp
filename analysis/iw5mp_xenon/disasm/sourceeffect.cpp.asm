@@ -28,10 +28,10 @@ LAB_828d3534:
   828D3538  60634001             ori r3,r3,0x4001
   828D353C  4E800020             blr
 
-; 828D35B0  XAUDIO::CSourceStream::FlushSourceBuffers  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/sourcestream.h:97)
+; 828D35B0  FlushSourceBuffers  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/sourcestream.h:97)
   828D35B0  48008420             b 0x828db9d0
 
-; 828D3540  XAUDIO::CSourceEffect::CSourceEffect  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/sourceeffect.cpp:136)
+; 828D3540  CSourceEffect  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/sourceeffect.cpp:136)
   828D3540  7D8802A6             mfspr r12,LR
   828D3544  9181FFF8             stw r12,-0x8(r1)
   828D3548  FBE1FFF0             std r31,-0x10(r1)
@@ -59,7 +59,7 @@ LAB_828d3534:
   828D35A0  EBE1FFF0             ld r31,-0x10(r1)
   828D35A4  4E800020             blr
 
-; 828D35B8  XAUDIO::CSourceEffect::~CSourceEffect  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/sourceeffect.cpp:159)
+; 828D35B8  ~CSourceEffect  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/sourceeffect.cpp:159)
   828D35B8  7D8802A6             mfspr r12,LR
   828D35BC  9181FFF8             stw r12,-0x8(r1)
   828D35C0  FBE1FFF0             std r31,-0x10(r1)
@@ -82,7 +82,7 @@ LAB_828d3534:
   828D3604  EBE1FFF0             ld r31,-0x10(r1)
   828D3608  4E800020             blr
 
-; 828D32D0  XAUDIO::CSourceEffect::Initialize  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/sourceeffect.cpp:185)
+; 828D32D0  Initialize  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/sourceeffect.cpp:185)
   828D32D0  81240048             lwz r9,0x48(r4)
   828D32D4  7C6A1B78             or r10,r3,r3
   828D32D8  7C8B2378             or r11,r4,r4
@@ -96,7 +96,7 @@ LAB_828d3534:
   828D32F8  88AB0044             lbz r5,0x44(r11)
   828D32FC  4800866C             b 0x828db968
 
-; 828D3698  XAUDIO::CSourceEffect::CompletePacket  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/sourceeffect.cpp:225)
+; 828D3698  CompletePacket  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/sourceeffect.cpp:225)
   828D3698  7D8802A6             mfspr r12,LR
   828D369C  48043021             bl 0x829166bc
   828D36A0  9421FF80             stwu r1,-0x80(r1)
@@ -122,7 +122,7 @@ LAB_828d36e8:
   828D36EC  38210080             addi r1,r1,0x80
   828D36F0  4804301C             b 0x8291670c
 
-; 828D3300  XAUDIO::CSourceEffect::GetParam  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/sourceeffect.cpp:267)
+; 828D3300  GetParam  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/sourceeffect.cpp:267)
   828D3300  548B063E             rlwinm r11,r4,0x0,0x18,0x1f
   828D3304  2B0B0002             cmplwi cr6,r11,0x2
   828D3308  409A005C             bne cr6,0x828d3364
@@ -190,7 +190,7 @@ LAB_828d33e8:
   828D33EC  60630057             ori r3,r3,0x57
   828D33F0  4E800020             blr
 
-; 828D33F8  XAUDIO::CSourceEffect::SetParam  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/sourceeffect.cpp:331)
+; 828D33F8  SetParam  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/sourceeffect.cpp:331)
   828D33F8  548B063E             rlwinm r11,r4,0x0,0x18,0x1f
   828D33FC  2B0B0002             cmplwi cr6,r11,0x2
   828D3400  409A005C             bne cr6,0x828d345c
@@ -258,11 +258,11 @@ LAB_828d34e0:
   828D34E4  60630057             ori r3,r3,0x57
   828D34E8  4E800020             blr
 
-; 828D35A8  [thunk]:XAUDIO::CSourceEffect::`vector_deleting_destructor'  (line unknown)
+; 828D35A8  `vector_deleting_destructor'`adjustor{12}'  (line unknown)
   828D35A8  3863FFF4             subi r3,r3,0xc
   828D35AC  48000064             b 0x828d3610
 
-; 828D3610  XAUDIO::CSourceEffect::`scalar_deleting_destructor'  (line unknown)
+; 828D3610  `scalar_deleting_destructor'  (line unknown)
   828D3610  7D8802A6             mfspr r12,LR
   828D3614  9181FFF8             stw r12,-0x8(r1)
   828D3618  FBC1FFE8             std r30,-0x18(r1)

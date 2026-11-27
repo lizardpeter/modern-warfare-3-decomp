@@ -2,60 +2,78 @@
 
 // 82656588  Sys_InitTimeBases  (xenon/xenon_shared.cpp:19)
 
-BOOL Sys_InitTimeBases(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void Sys_InitTimeBases(void)
 
 {
-  BOOL BVar1;
-  
   DAT_8427b390 = GetTickCount();
-  BVar1 = QueryPerformanceCounter((LARGE_INTEGER *)&DAT_8427b388);
-  DAT_8427b394 = 1;
-  return BVar1;
+  QueryPerformanceCounter(&sys_counterBase);
+  sys_timeBasesInitialized = 1;
+  return;
 }
 
 
 // 826565D0  Sys_Milliseconds  (xenon/xenon_shared.cpp:32)
 
-longlong Sys_Milliseconds(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int Sys_Milliseconds(void)
 
 {
-  DWORD DVar1;
+  ulong uVar1;
   
-  if (DAT_8427b394 == 0) {
+  if (sys_timeBasesInitialized == 0) {
     DAT_8427b390 = GetTickCount();
-    QueryPerformanceCounter((LARGE_INTEGER *)&DAT_8427b388);
-    DAT_8427b394 = 1;
+    QueryPerformanceCounter(&sys_counterBase);
+    sys_timeBasesInitialized = 1;
   }
-  DVar1 = GetTickCount();
-  return (longlong)(int)DVar1 - (ulonglong)DAT_8427b390;
+  uVar1 = GetTickCount();
+  return uVar1 - DAT_8427b390;
 }
 
 
 // 82656630  Sys_Microseconds  (xenon/xenon_shared.cpp:50)
 
-longlong Sys_Microseconds(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+ulong64 Sys_Microseconds(void)
 
 {
-  double dVar1;
-  LARGE_INTEGER local_20 [2];
+  double in_f1;
+  _LARGE_INTEGER local_20 [2];
   
-  if (DAT_8427b394 == 0) {
+  if (sys_timeBasesInitialized == 0) {
     DAT_8427b390 = GetTickCount();
-    QueryPerformanceCounter((LARGE_INTEGER *)&DAT_8427b388);
-    DAT_8427b394 = 1;
+    QueryPerformanceCounter(&sys_counterBase);
+    sys_timeBasesInitialized = 1;
   }
   QueryPerformanceCounter(local_20);
-  dVar1 = (double)__u64tod((longlong)local_20[0] - DAT_8427b388);
-  return (longlong)(dVar1 * DAT_841db438);
+  __u64tod();
+  return (longlong)(in_f1 * usecPerRawTimerTick);
+}
+
+
+// 826566B8  Sys_MillisecondsRaw  (xenon/xenon_shared.cpp:68)
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int Sys_MillisecondsRaw(void)
+
+{
+  return _DAT_000000bd;
 }
 
 
 // 826566C0  Sys_GetCurrentUser  (xenon/xenon_shared.cpp:74)
 
-undefined8 Sys_GetCurrentUser(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+char * Sys_GetCurrentUser(void)
 
 {
-  return 0xffffffff82995af0;
+  return s_userName;
 }
 
 
@@ -73,7 +91,9 @@ void Sys_SnapVector(float *param_1)
 
 // 82656750  Sys_GetTimeAsSeconds  (xenon/xenon_shared.cpp:114)
 
-ulonglong Sys_GetTimeAsSeconds(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+uint Sys_GetTimeAsSeconds(void)
 
 {
   longlong lVar1;
@@ -81,7 +101,7 @@ ulonglong Sys_GetTimeAsSeconds(void)
   undefined8 local_50;
   _FILETIME local_48;
   _FILETIME local_40 [2];
-  SYSTEMTIME local_30;
+  _SYSTEMTIME local_30;
   _SYSTEMTIME a_Stack_20 [2];
   
   local_30.wMilliseconds = 0;
@@ -92,16 +112,18 @@ ulonglong Sys_GetTimeAsSeconds(void)
   local_30.wMonth = 1;
   local_30.wYear = 0x7b2;
   SystemTimeToFileTime(&local_30,&local_48);
-  local_50 = CONCAT44(local_48.dwLowDateTime,local_48.dwHighDateTime);
+  local_50 = CONCAT44(local_48.dwHighDateTime,local_48.dwLowDateTime);
   lVar1 = local_50;
   GetSystemTime(a_Stack_20);
   SystemTimeToFileTime(a_Stack_20,local_40);
-  local_50 = CONCAT44(local_40[0].dwLowDateTime,local_40[0].dwHighDateTime);
+  local_50 = CONCAT44(local_40[0].dwHighDateTime,local_40[0].dwLowDateTime);
   uVar2 = (ulonglong)(local_50 - lVar1) / 10000000;
   local_50._0_4_ = (int)(uVar2 >> 0x20);
   if (local_50._0_4_ != 0) {
-    MyAssertHandler(0xffffffff82190a38,0x90,0,0xffffffff82000f98,0xffffffff82190a7c);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_shared.cpp",0x90,0
+                    ,"%s");
   }
-  return uVar2 & 0xffffffff;
+  local_50._4_4_ = (uint)uVar2;
+  return local_50._4_4_;
 }
 

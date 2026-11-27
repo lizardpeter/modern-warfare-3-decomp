@@ -2,60 +2,62 @@
 
 // 824276E8  Glass_IsEdgeLoopBackwards  (EffectsCore/fx_glass_crack_shard.cpp:79)
 
-bool Glass_IsEdgeLoopBackwards(int param_1,byte *param_2)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+bool Glass_IsEdgeLoopBackwards(FxGlassCrackWork *param_1,FxGlassCrackEdge *param_2)
 
 {
-  float fVar1;
-  byte *pbVar2;
-  float *pfVar3;
-  int iVar4;
-  float *pfVar5;
-  byte *pbVar6;
+  byte bVar1;
+  float fVar2;
+  FxGlassCrackPoint *pFVar3;
+  FxGlassCrackEdge *pFVar4;
   
-  fVar1 = 0.0;
-  pbVar6 = param_2;
-  pfVar3 = (float *)((uint)*param_2 * 8 + param_1 + 0x3fc);
+  fVar2 = 0.0;
+  pFVar4 = param_2;
+  pFVar3 = param_1->pts + (param_2->field0_0x0)._s_0.i0;
   do {
-    pbVar2 = pbVar6 + 1;
-    pbVar6 = *(byte **)(pbVar6 + 0x14);
-    iVar4 = (uint)*pbVar2 * 8 + param_1;
-    pfVar5 = (float *)(iVar4 + 0x3fc);
-    fVar1 = (pfVar3[1] * *pfVar5 - *(float *)(iVar4 + 0x400) * *pfVar3) + fVar1;
-    pfVar3 = pfVar5;
-  } while (pbVar6 != param_2);
-  return fVar1 < 0.0;
+    bVar1 = (pFVar4->field0_0x0)._s_0.i1;
+    pFVar4 = (pFVar4->field0_0x0)._s_0.next;
+    fVar2 = (pFVar3->xy[1] * param_1->pts[bVar1].xy[0] - param_1->pts[bVar1].xy[1] * pFVar3->xy[0])
+            + fVar2;
+    pFVar3 = param_1->pts + bVar1;
+  } while (pFVar4 != param_2);
+  return fVar2 < 0.0;
 }
 
 
 // 82427760  Glass_HasShardTriangleEdge  (EffectsCore/fx_glass_crack_shard.cpp:158)
 
-undefined8 Glass_HasShardTriangleEdge(int param_1,undefined1 param_2,undefined1 param_3)
+bool Glass_HasShardTriangleEdge(FxGlassShardTriangulate *param_1,uchar param_2,uchar param_3)
 
 {
   uint uVar1;
-  short *psVar2;
+  FxGlassShardEdge *pFVar2;
   undefined2 local_10;
   
   uVar1 = 0;
   local_10 = CONCAT11(param_2,param_3);
-  if (*(uint *)(param_1 + 0xcfc) != 0) {
-    psVar2 = (short *)(param_1 + 0xd00);
+  if (param_1->edgeCount != 0) {
+    pFVar2 = param_1->edges;
     do {
-      if (*psVar2 == local_10) {
-        return 1;
+      if (pFVar2->packed == local_10) {
+        return true;
       }
       uVar1 = uVar1 + 1;
-      psVar2 = psVar2 + 1;
-    } while (uVar1 < *(uint *)(param_1 + 0xcfc));
+      pFVar2 = pFVar2 + 1;
+    } while (uVar1 < param_1->edgeCount);
   }
-  return 0;
+  return false;
 }
 
 
 // 824277B0  Glass_ShouldKeepFanVert  (EffectsCore/fx_glass_crack_shard.cpp:175)
 
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
 bool Glass_ShouldKeepFanVert
-               (int param_1,int param_2,byte param_3,byte param_4,byte param_5,uint param_6)
+               (FxGlassCrackWork *param_1,FxGlassShardTriangulate *param_2,uchar param_3,
+               uchar param_4,uchar param_5,uchar param_6)
 
 {
   float fVar1;
@@ -66,67 +68,60 @@ bool Glass_ShouldKeepFanVert
   float fVar6;
   uint uVar7;
   float fVar8;
-  int iVar9;
+  float fVar9;
   float fVar10;
-  int iVar11;
-  int iVar12;
-  float fVar13;
-  bool bVar14;
-  uint uVar15;
-  short *psVar16;
+  bool bVar11;
+  uint uVar12;
+  FxGlassShardEdge *pFVar13;
   undefined2 local_20;
   
-  uVar7 = *(uint *)(param_2 + 0xcfc);
-  uVar15 = 0;
+  uVar7 = param_2->edgeCount;
+  uVar12 = 0;
   local_20 = CONCAT11(param_3,param_4);
   if (uVar7 != 0) {
-    psVar16 = (short *)(param_2 + 0xd00);
+    pFVar13 = param_2->edges;
     do {
-      if (*psVar16 == local_20) {
-        bVar14 = true;
+      if (pFVar13->packed == local_20) {
+        bVar11 = true;
         goto LAB_824277f8;
       }
-      uVar15 = uVar15 + 1;
-      psVar16 = psVar16 + 1;
-    } while (uVar15 < uVar7);
+      uVar12 = uVar12 + 1;
+      pFVar13 = pFVar13 + 1;
+    } while (uVar12 < uVar7);
   }
-  bVar14 = false;
+  bVar11 = false;
 LAB_824277f8:
-  if (!bVar14) {
-    uVar15 = 0;
+  if (!bVar11) {
+    uVar12 = 0;
     local_20 = CONCAT11(param_4,param_5);
     if (uVar7 != 0) {
-      psVar16 = (short *)(param_2 + 0xd00);
+      pFVar13 = param_2->edges;
       do {
-        if (*psVar16 == local_20) {
-          bVar14 = true;
+        if (pFVar13->packed == local_20) {
+          bVar11 = true;
           goto LAB_8242785c;
         }
-        uVar15 = uVar15 + 1;
-        psVar16 = psVar16 + 1;
-      } while (uVar15 < uVar7);
+        uVar12 = uVar12 + 1;
+        pFVar13 = pFVar13 + 1;
+      } while (uVar12 < uVar7);
     }
-    bVar14 = false;
+    bVar11 = false;
 LAB_8242785c:
-    if (!bVar14) {
-      iVar9 = (uint)param_4 * 8 + param_1;
-      iVar11 = (uint)param_3 * 8 + param_1;
-      iVar12 = (uint)param_5 * 8 + param_1;
-      fVar1 = *(float *)(iVar9 + 0x400);
-      fVar2 = *(float *)(iVar9 + 0x3fc);
-      fVar3 = *(float *)(iVar11 + 0x3fc);
-      fVar4 = *(float *)(iVar12 + 0x400);
-      fVar10 = fVar2 - fVar3;
+    if (!bVar11) {
+      fVar1 = param_1->pts[param_4].xy[1];
+      fVar2 = param_1->pts[param_4].xy[0];
+      fVar3 = param_1->pts[param_3].xy[0];
+      fVar4 = param_1->pts[param_5].xy[1];
+      fVar9 = fVar2 - fVar3;
       fVar8 = fVar4 - fVar1;
-      fVar5 = *(float *)(iVar11 + 0x400);
-      fVar6 = *(float *)(iVar12 + 0x3fc);
+      fVar5 = param_1->pts[param_3].xy[1];
+      fVar6 = param_1->pts[param_5].xy[0];
       fVar1 = fVar1 - fVar5;
       fVar2 = fVar6 - fVar2;
-      fVar13 = fVar2 * fVar1 - fVar8 * fVar10;
-      if ((0.0 < fVar13) && ((fVar10 * fVar2 + fVar8 * fVar1) * 0.2679492 <= fVar13)) {
-        param_1 = (param_6 & 0xff) * 8 + param_1;
-        fVar1 = *(float *)(param_1 + 0x3fc);
-        fVar2 = *(float *)(param_1 + 0x400);
+      fVar10 = fVar2 * fVar1 - fVar8 * fVar9;
+      if ((0.0 < fVar10) && ((fVar9 * fVar2 + fVar8 * fVar1) * 0.2679492 <= fVar10)) {
+        fVar1 = param_1->pts[param_6].xy[0];
+        fVar2 = param_1->pts[param_6].xy[1];
         return 0.0 <= (fVar6 - fVar1) * (fVar2 - fVar5) - (fVar4 - fVar2) * (fVar1 - fVar3);
       }
     }
@@ -137,7 +132,10 @@ LAB_8242785c:
 
 // 82427938  Glass_SimplifyTriangleFan  (EffectsCore/fx_glass_crack_shard.cpp:217)
 
-void Glass_SimplifyTriangleFan(undefined8 param_1,longlong param_2,undefined8 param_3)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+uint Glass_SimplifyTriangleFan
+               (FxGlassCrackWork *param_1,FxGlassShardTriangulate *param_2,uint param_3)
 
 {
   byte bVar1;
@@ -148,134 +146,135 @@ void Glass_SimplifyTriangleFan(undefined8 param_1,longlong param_2,undefined8 pa
   float fVar6;
   float fVar7;
   float fVar8;
-  uint uVar9;
-  float fVar10;
-  int iVar11;
-  float fVar12;
+  float fVar9;
+  int iVar10;
+  float fVar11;
+  int iVar12;
   int iVar13;
-  int iVar14;
-  float fVar15;
-  bool bVar16;
-  int iVar17;
-  undefined4 uVar18;
-  uint uVar19;
+  float fVar14;
+  bool bVar15;
+  int iVar16;
+  uint uVar17;
+  longlong lVar18;
+  ulonglong uVar19;
   longlong lVar20;
   uint uVar21;
   int iVar22;
-  uint uVar23;
+  ulonglong uVar23;
   byte *pbVar24;
   byte bVar25;
   undefined2 local_40;
   undefined2 local_3e;
   
-  uVar19 = (uint)param_3;
-  uVar18 = (undefined4)((ulonglong)param_3 >> 0x20);
-  iVar17 = __savegprlr_26();
-  if (6 < uVar19) {
-    iVar11 = (int)param_2;
-    uVar9 = *(uint *)(iVar11 + 0xcfc);
-    if (uVar19 < uVar9 - 1) {
+  uVar19 = (ulonglong)(int)param_3;
+  lVar18 = (longlong)(int)param_2;
+  iVar16 = __savegprlr_26(param_1);
+  if (6 < (uVar19 & 0xffffffff)) {
+    iVar10 = (int)lVar18;
+    uVar17 = *(uint *)(iVar10 + 0xcfc);
+    if ((uVar19 & 0xffffffff) < (ulonglong)(uVar17 - 1)) {
       iVar22 = 2;
       uVar23 = 3;
-      pbVar24 = (byte *)(*(int *)(iVar11 + 0x1108) + *(int *)(iVar11 + 0x1100));
+      pbVar24 = (byte *)(*(int *)(iVar10 + 0x1108) + *(int *)(iVar10 + 0x1100));
       bVar25 = pbVar24[1];
       bVar1 = pbVar24[2];
-      if (3 < uVar19) {
+      if (3 < (uVar19 & 0xffffffff)) {
         do {
-          bVar2 = pbVar24[uVar23];
+          bVar2 = pbVar24[(int)uVar23];
           uVar21 = 0;
           local_40 = CONCAT11(bVar25,bVar1);
-          if (uVar9 != 0) {
-            lVar20 = param_2 + 0xd00;
+          if (uVar17 != 0) {
+            lVar20 = lVar18 + 0xd00;
             do {
               if (*(short *)lVar20 == local_40) {
-                bVar16 = true;
+                bVar15 = true;
                 goto LAB_824279d4;
               }
               uVar21 = uVar21 + 1;
               lVar20 = lVar20 + 2;
-            } while (uVar21 < uVar9);
+            } while (uVar21 < uVar17);
           }
-          bVar16 = false;
+          bVar15 = false;
 LAB_824279d4:
-          if (bVar16) {
-            bVar16 = true;
+          if (bVar15) {
+            bVar15 = true;
           }
           else {
             uVar21 = 0;
             local_3e = CONCAT11(bVar1,bVar2);
-            if (uVar9 != 0) {
-              lVar20 = param_2 + 0xd00;
+            if (uVar17 != 0) {
+              lVar20 = lVar18 + 0xd00;
               do {
                 if (*(short *)lVar20 == local_3e) {
-                  bVar16 = true;
+                  bVar15 = true;
                   goto LAB_82427a2c;
                 }
                 uVar21 = uVar21 + 1;
                 lVar20 = lVar20 + 2;
-              } while (uVar21 < uVar9);
+              } while (uVar21 < uVar17);
             }
-            bVar16 = false;
+            bVar15 = false;
 LAB_82427a2c:
-            if (bVar16) {
-              bVar16 = true;
+            if (bVar15) {
+              bVar15 = true;
             }
             else {
-              iVar11 = (uint)bVar25 * 8 + iVar17;
-              iVar13 = (uint)bVar1 * 8 + iVar17;
-              iVar14 = (uint)bVar2 * 8 + iVar17;
-              fVar3 = *(float *)(iVar11 + 0x3fc);
-              fVar4 = *(float *)(iVar13 + 0x400);
-              fVar5 = *(float *)(iVar13 + 0x3fc);
-              fVar6 = *(float *)(iVar14 + 0x400);
-              fVar10 = fVar5 - fVar3;
-              fVar12 = fVar6 - fVar4;
-              fVar7 = *(float *)(iVar11 + 0x400);
-              fVar8 = *(float *)(iVar14 + 0x3fc);
+              iVar10 = (uint)bVar25 * 8 + iVar16;
+              iVar12 = (uint)bVar1 * 8 + iVar16;
+              iVar13 = (uint)bVar2 * 8 + iVar16;
+              fVar3 = *(float *)(iVar10 + 0x3fc);
+              fVar4 = *(float *)(iVar12 + 0x400);
+              fVar5 = *(float *)(iVar12 + 0x3fc);
+              fVar6 = *(float *)(iVar13 + 0x400);
+              fVar9 = fVar5 - fVar3;
+              fVar11 = fVar6 - fVar4;
+              fVar7 = *(float *)(iVar10 + 0x400);
+              fVar8 = *(float *)(iVar13 + 0x3fc);
               fVar4 = fVar4 - fVar7;
               fVar5 = fVar8 - fVar5;
-              fVar15 = fVar5 * fVar4 - fVar12 * fVar10;
-              if (0.0 < fVar15) {
-                if ((fVar10 * fVar5 + fVar12 * fVar4) * 0.2679492 <= fVar15) {
-                  iVar11 = (uint)*pbVar24 * 8 + iVar17;
-                  fVar4 = *(float *)(iVar11 + 0x3fc);
-                  fVar5 = *(float *)(iVar11 + 0x400);
-                  bVar16 = true;
+              fVar14 = fVar5 * fVar4 - fVar11 * fVar9;
+              if (0.0 < fVar14) {
+                if ((fVar9 * fVar5 + fVar11 * fVar4) * 0.2679492 <= fVar14) {
+                  iVar10 = (uint)*pbVar24 * 8 + iVar16;
+                  fVar4 = *(float *)(iVar10 + 0x3fc);
+                  fVar5 = *(float *)(iVar10 + 0x400);
+                  bVar15 = true;
                   if ((fVar8 - fVar4) * (fVar5 - fVar7) - (fVar6 - fVar5) * (fVar4 - fVar3) < 0.0) {
-                    bVar16 = false;
+                    bVar15 = false;
                   }
                 }
                 else {
-                  bVar16 = true;
+                  bVar15 = true;
                 }
               }
               else {
-                bVar16 = true;
+                bVar15 = true;
               }
             }
           }
-          if (bVar16) {
+          if (bVar15) {
             pbVar24[iVar22] = bVar1;
             iVar22 = iVar22 + 1;
             bVar25 = bVar1;
           }
           uVar23 = uVar23 + 1;
           bVar1 = bVar2;
-        } while (uVar23 < uVar19);
+        } while ((uVar23 & 0xffffffff) < (uVar19 & 0xffffffff));
       }
-      pbVar24[iVar22] = pbVar24[uVar19 - 1];
-      __restgprlr_26(iVar22 + 1);
-      return;
+      pbVar24[iVar22] = pbVar24[(int)uVar19 + -1];
+      uVar17 = __restgprlr_26(iVar22 + 1);
+      return uVar17;
     }
   }
-  __restgprlr_26(CONCAT44(uVar18,uVar19));
-  return;
+  uVar17 = __restgprlr_26(uVar19);
+  return uVar17;
 }
 
 
 // 82427B48  Glass_SetupAngleMetric  (EffectsCore/fx_glass_crack_shard.cpp:251)
 
-void Glass_SetupAngleMetric(short *param_1,short *param_2,int *param_3)
+void Glass_SetupAngleMetric
+               (FxGlassVertex *param_1,FxGlassVertex *param_2,FxGlassCrackAngleEval *param_3)
 
 {
   short sVar1;
@@ -283,68 +282,77 @@ void Glass_SetupAngleMetric(short *param_1,short *param_2,int *param_3)
   short sVar3;
   short sVar4;
   
-  sVar1 = *param_1;
-  sVar2 = param_1[1];
-  sVar3 = param_2[1];
-  sVar4 = *param_2;
-  *param_3 = (int)sVar1;
-  param_3[1] = (int)sVar2;
-  param_3[3] = (int)sVar3 - (int)sVar2;
-  param_3[2] = (int)sVar4 - (int)sVar1;
+  sVar1 = param_1->x;
+  sVar2 = param_1->y;
+  sVar3 = param_2->y;
+  sVar4 = param_2->x;
+  param_3->org[0] = (int)sVar1;
+  param_3->org[1] = (int)sVar2;
+  param_3->delta[1] = (int)sVar3 - (int)sVar2;
+  param_3->delta[0] = (int)sVar4 - (int)sVar1;
   return;
 }
 
 
 // 82427B88  Glass_EvaluateEdgeEquationAtPoint  (EffectsCore/fx_glass_crack_shard.cpp:262)
 
-longlong Glass_EvaluateEdgeEquationAtPoint(int param_1,short *param_2)
+int Glass_EvaluateEdgeEquationAtPoint(FxGlassShardSeenEdge *param_1,FxGlassVertex *param_2)
 
 {
-  return ((longlong)(int)param_2[1] * (longlong)*(int *)(param_1 + 8) +
-         (longlong)*(int *)(param_1 + 4) * (longlong)(int)*param_2) -
-         (ulonglong)*(uint *)(param_1 + 0xc);
+  return ((int)param_2->y * param_1->lineEq[1] + param_1->lineEq[0] * (int)param_2->x) -
+         param_1->lineEq[2];
 }
 
 
 // 82427BB8  Glass_EvaluatePointVersusBaseEdge  (EffectsCore/fx_glass_crack_shard.cpp:268)
 
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
 void Glass_EvaluatePointVersusBaseEdge
-               (undefined8 param_1,int param_2,int *param_3,ulonglong param_4)
+               (FxGlassCrackWork *param_1,FxGlassShardTriangulate *param_2,
+               FxGlassCrackAngleEval *param_3,uint param_4)
 
 {
   uint uVar1;
-  int iVar3;
-  undefined8 uVar2;
+  int iVar2;
+  ulonglong uVar3;
   uint uVar4;
   int iVar5;
   uint uVar6;
-  uint *puVar7;
-  short *psVar9;
-  longlong lVar8;
-  ulonglong uVar10;
-  longlong lVar11;
+  FxGlassShardPointMetric *pFVar7;
+  short *psVar8;
+  ulonglong uVar9;
+  longlong lVar10;
+  uint uVar11;
   
-  iVar3 = __savegprlr_27();
-  psVar9 = (short *)((int)((param_4 & 0xffffffff) << 2) + iVar3);
-  iVar5 = (int)*psVar9 - *param_3;
-  iVar3 = (int)psVar9[1] - param_3[1];
-  lVar11 = (longlong)param_3[3] * (longlong)iVar5 - (longlong)param_3[2] * (longlong)iVar3;
-  uVar10 = (longlong)param_3[3] * (longlong)iVar3 + (longlong)param_3[2] * (longlong)iVar5;
-  if ((lVar11 == 0) && ((int)uVar10 == 0)) {
-    MyAssertHandler(0xffffffff820643d0,0x11a,0,0xffffffff82000f98,0xffffffff820643b0);
+  uVar3 = (ulonglong)(int)param_4;
+  iVar2 = __savegprlr_27(param_1);
+  psVar8 = (short *)((int)((uVar3 & 0xffffffff) << 2) + iVar2);
+  iVar5 = (int)*psVar8 - param_3->org[0];
+  iVar2 = (int)psVar8[1] - param_3->org[1];
+  lVar10 = (longlong)param_3->delta[1] * (longlong)iVar5 -
+           (longlong)param_3->delta[0] * (longlong)iVar2;
+  uVar9 = (longlong)param_3->delta[1] * (longlong)iVar2 +
+          (longlong)param_3->delta[0] * (longlong)iVar5;
+  iVar2 = (int)uVar9;
+  if ((lVar10 == 0) && (iVar2 == 0)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack_shard.cpp"
+                    ,0x11a,0,"%s");
   }
-  uVar1 = (int)uVar10 >> 0x1f;
-  puVar7 = (uint *)((int)param_4 * 0xc + param_2);
-  lVar8 = ((longlong)(int)uVar1 ^ uVar10) + ((ulonglong)uVar1 & 1);
+  uVar1 = iVar2 >> 0x1f;
+  uVar11 = (uint)lVar10;
+  pFVar7 = param_2->metric + (int)uVar3;
+  lVar10 = ((longlong)(int)uVar1 ^ uVar9) + ((ulonglong)uVar1 & 1);
   uVar6 = (uint)((ulonglong)uVar1 & 1);
-  uVar4 = (int)(uint)lVar11 >> 0x1f & 3U ^ uVar6;
-  uVar6 = (uVar1 ^ (uint)lVar11) + uVar6;
-  *puVar7 = uVar4;
-  puVar7[2] = (uint)lVar8;
-  puVar7[1] = uVar6;
-  if ((lVar8 < 0) || ((uVar6 != 0 && (uVar6 >> 0x1f != (uVar4 & 1))))) {
-    uVar2 = va(0xffffffff82061b5c,lVar11,uVar10);
-    MyAssertHandler(0xffffffff820643d0,0x125,0,0xffffffff820011f4,0xffffffff82064320,uVar2);
+  uVar4 = (int)uVar11 >> 0x1f & 3U ^ uVar6;
+  uVar6 = (uVar1 ^ uVar11) + uVar6;
+  pFVar7->quadrant = uVar4;
+  pFVar7->tanDenom = (int)lVar10;
+  pFVar7->tanNumer = uVar6;
+  if ((lVar10 < 0) || ((uVar6 != 0 && (uVar6 >> 0x1f != (uVar4 & 1))))) {
+    va("%i, %i");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack_shard.cpp"
+                    ,0x125,0,"%s\n\t%s");
   }
   __restgprlr_27();
   return;
@@ -353,7 +361,7 @@ void Glass_EvaluatePointVersusBaseEdge
 
 // 82427CE8  Glass_CompareEvaluatedPoints  (EffectsCore/fx_glass_crack_shard.cpp:298)
 
-void Glass_CompareEvaluatedPoints(undefined8 param_1,int param_2)
+bool Glass_CompareEvaluatedPoints(uint param_1,uint param_2)
 
 {
   uint uVar1;
@@ -361,88 +369,95 @@ void Glass_CompareEvaluatedPoints(undefined8 param_1,int param_2)
   uint uVar3;
   uint uVar4;
   int iVar5;
-  ulonglong uVar6;
+  undefined1 uVar6;
   ulonglong uVar7;
-  uint *puVar8;
-  uint *puVar9;
+  ulonglong uVar8;
+  FxGlassShardPointMetric *pFVar9;
+  FxGlassShardPointMetric *pFVar10;
   
-  iVar5 = __savegprlr_28();
-  puVar9 = (uint *)(iVar5 * 0xc + DAT_8332cc60);
-  puVar8 = (uint *)(param_2 * 0xc + DAT_8332cc60);
-  uVar1 = *puVar9;
-  uVar2 = *puVar8;
+  iVar5 = __savegprlr_28(param_1);
+  pFVar10 = s_triang->metric + iVar5;
+  pFVar9 = s_triang->metric + param_2;
+  uVar1 = pFVar10->quadrant;
+  uVar2 = pFVar9->quadrant;
   if (uVar1 != uVar2) {
-    __restgprlr_28(((~(ulonglong)(uVar2 ^ uVar1) & 0xffffffff) >> 0x1f) +
-                   (ulonglong)(uVar2 <= uVar1) & 1);
-    return;
+    uVar6 = __restgprlr_28(((~(ulonglong)(uVar2 ^ uVar1) & 0xffffffff) >> 0x1f) +
+                           (ulonglong)(uVar2 <= uVar1) & 1);
+    return (bool)uVar6;
   }
-  uVar1 = puVar8[2];
-  uVar2 = puVar9[1];
-  uVar3 = puVar8[1];
-  uVar4 = puVar9[2];
+  uVar1 = pFVar9->tanDenom;
+  uVar2 = pFVar10->tanNumer;
+  uVar3 = pFVar9->tanNumer;
+  uVar4 = pFVar10->tanDenom;
   if ((longlong)(int)uVar2 * (longlong)(int)uVar1 != (longlong)(int)uVar4 * (longlong)(int)uVar3) {
-    __restgprlr_28((longlong)(int)uVar2 * (longlong)(int)uVar1 <
-                   (longlong)(int)uVar4 * (longlong)(int)uVar3);
-    return;
+    uVar6 = __restgprlr_28((longlong)(int)uVar2 * (longlong)(int)uVar1 <
+                           (longlong)(int)uVar4 * (longlong)(int)uVar3);
+    return (bool)uVar6;
   }
   if (uVar4 != 0) {
     if (uVar4 == uVar1) {
-      MyAssertHandler(0xffffffff820643d0,0x13f,0,0xffffffff82000f98,0xffffffff82064434);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack_shard.cpp"
+                      ,0x13f,0,"%s");
     }
-    __restgprlr_28(((~(ulonglong)(uVar1 ^ uVar4) & 0xffffffff) >> 0x1f) +
-                   (ulonglong)(uVar1 <= uVar4) & 1);
-    return;
+    uVar6 = __restgprlr_28(((~(ulonglong)(uVar1 ^ uVar4) & 0xffffffff) >> 0x1f) +
+                           (ulonglong)(uVar1 <= uVar4) & 1);
+    return (bool)uVar6;
   }
   if (uVar2 == 0) {
-    MyAssertHandler(0xffffffff820643d0,0x143,0,0xffffffff82000f98,0xffffffff82064420);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack_shard.cpp"
+                    ,0x143,0,"%s");
   }
-  uVar7 = ((ulonglong)uVar3 ^ (longlong)((int)uVar3 >> 0x1f)) - (longlong)((int)uVar3 >> 0x1f);
-  uVar6 = ((ulonglong)uVar2 ^ (longlong)((int)uVar2 >> 0x1f)) - (longlong)((int)uVar2 >> 0x1f);
-  __restgprlr_28(((~(uVar7 ^ uVar6) & 0xffffffff) >> 0x1f) + (ulonglong)(uVar7 <= uVar6) & 1,
-                 ~(uVar7 ^ uVar6),uVar6 - uVar7);
-  return;
+  uVar8 = ((ulonglong)uVar3 ^ (longlong)((int)uVar3 >> 0x1f)) - (longlong)((int)uVar3 >> 0x1f);
+  uVar7 = ((ulonglong)uVar2 ^ (longlong)((int)uVar2 >> 0x1f)) - (longlong)((int)uVar2 >> 0x1f);
+  uVar6 = __restgprlr_28(((~(uVar8 ^ uVar7) & 0xffffffff) >> 0x1f) + (ulonglong)(uVar8 <= uVar7) & 1
+                         ,~(uVar8 ^ uVar7),uVar7 - uVar8);
+  return (bool)uVar6;
 }
 
 
 // 82427E40  Glass_AreEvaluatedPointsColinear  (EffectsCore/fx_glass_crack_shard.cpp:329)
 
-undefined8 Glass_AreEvaluatedPointsColinear(int *param_1,int *param_2)
+bool Glass_AreEvaluatedPointsColinear
+               (FxGlassShardPointMetric *param_1,FxGlassShardPointMetric *param_2)
 
 {
-  if (*param_1 != *param_2) {
-    return 0;
+  if (param_1->quadrant != param_2->quadrant) {
+    return false;
   }
-  if ((longlong)param_1[1] * (longlong)param_2[2] != (longlong)param_1[2] * (longlong)param_2[1]) {
-    return 0;
+  if ((longlong)param_1->tanNumer * (longlong)param_2->tanDenom !=
+      (longlong)param_1->tanDenom * (longlong)param_2->tanNumer) {
+    return false;
   }
-  return 1;
+  return true;
 }
 
 
 // 82427E98  Glass_RemovePointsBehindEdge  (EffectsCore/fx_glass_crack_shard.cpp:346)
 
-void Glass_RemovePointsBehindEdge(int param_1,int param_2,uint param_3,uint param_4,int param_5)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void Glass_RemovePointsBehindEdge
+               (FxGlassCrackWork *param_1,FxGlassShardSeenEdge *param_2,uint param_3,uint param_4,
+               uint *param_5)
 
 {
-  int *piVar1;
-  int iVar2;
-  short *psVar3;
+  uint *puVar1;
+  longlong lVar2;
   
   if (param_3 < param_4) {
-    iVar2 = param_4 - param_3;
-    piVar1 = (int *)(param_3 * 4 + param_5);
+    lVar2 = (longlong)(int)param_4 - (longlong)(int)param_3;
+    puVar1 = param_5 + param_3;
     do {
-      if ((*piVar1 != 0xff) &&
-         (psVar3 = (short *)(*piVar1 * 4 + param_1),
-         (longlong)
-         (((longlong)(int)psVar3[1] * (longlong)*(int *)(param_2 + 8) +
-          (longlong)*(int *)(param_2 + 4) * (longlong)(int)*psVar3) -
-         (ulonglong)*(uint *)(param_2 + 0xc)) < 0)) {
-        *piVar1 = 0xff;
+      if ((*puVar1 != 0xff) &&
+         ((longlong)
+          (((longlong)(int)param_1->packedPts[*puVar1].y * (longlong)param_2->lineEq[1] +
+           (longlong)param_2->lineEq[0] * (longlong)(int)param_1->packedPts[*puVar1].x) -
+          (ulonglong)(uint)param_2->lineEq[2]) < 0)) {
+        *puVar1 = 0xff;
       }
-      piVar1 = piVar1 + 1;
-      iVar2 = iVar2 + -1;
-    } while (iVar2 != 0);
+      puVar1 = puVar1 + 1;
+      lVar2 = lVar2 + -1;
+    } while (lVar2 != 0);
   }
   return;
 }
@@ -450,116 +465,133 @@ void Glass_RemovePointsBehindEdge(int param_1,int param_2,uint param_3,uint para
 
 // 82429D68  Glass_GetShardTriangleFanForBaseEdge  (EffectsCore/fx_glass_crack_shard.cpp:360)
 
-void Glass_GetShardTriangleFanForBaseEdge
-               (undefined8 param_1,longlong param_2,ulonglong param_3,ulonglong param_4)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+uint Glass_GetShardTriangleFanForBaseEdge
+               (FxGlassCrackWork *param_1,FxGlassShardTriangulate *param_2,uchar param_3,
+               uint param_4)
 
 {
   byte bVar1;
   byte bVar2;
-  byte bVar3;
-  byte bVar4;
+  short sVar3;
+  short sVar4;
   short sVar5;
   short sVar6;
-  short sVar7;
-  short sVar8;
-  ushort uVar9;
-  int iVar10;
-  short *psVar11;
-  short *psVar12;
+  uchar *puVar7;
+  int iVar8;
+  uint *puVar9;
+  FxGlassShardSeenEdge *pFVar10;
+  bool bVar11;
+  FxGlassShardTriangulate *pFVar12;
   int iVar13;
-  bool bVar14;
-  int iVar15;
-  ulonglong uVar16;
-  int iVar17;
+  ulonglong uVar14;
+  FxGlassCrackWork *pFVar15;
+  longlong lVar16;
+  uint uVar17;
   int iVar18;
   int iVar19;
-  short *psVar20;
-  longlong lVar21;
+  FxGlassVertex *pFVar20;
   uint uVar22;
+  longlong lVar21;
   int *piVar23;
   ulonglong uVar24;
   longlong lVar25;
   ulonglong uVar26;
   longlong lVar27;
-  undefined1 uVar28;
+  uchar uVar28;
   longlong lVar29;
   int iVar30;
   int *piVar31;
   ulonglong uVar32;
-  undefined1 local_2898 [1016];
+  FxGlassCrackAngleEval local_28b0;
+  uint local_28a0 [256];
   uint auStack_24a0 [2344];
   
-  uVar16 = ZEXT48(&stack0x00000000);
-  iVar17 = __savegprlr_15();
-  iVar30 = (int)((param_4 + 0x680 & 0xffffffff) << 1);
-  iVar15 = (int)param_2;
-  iVar10 = (int)((param_4 & 0xffffffff) << 1) + iVar15;
-  bVar4 = *(byte *)(iVar30 + iVar15);
-  bVar1 = *(byte *)(iVar10 + 0xd01);
+  uVar26 = (ulonglong)(int)param_4;
+  uVar32 = (ulonglong)(char)param_3;
+  lVar16 = (longlong)(int)param_2;
+  uVar14 = ZEXT48(&stack0x00000000);
+  pFVar15 = (FxGlassCrackWork *)__savegprlr_15(param_1);
+  iVar13 = (int)((uVar26 & 0xffffffff) << 1);
+  iVar30 = (int)((uVar26 + 0x680 & 0xffffffff) << 1);
+  pFVar12 = (FxGlassShardTriangulate *)lVar16;
+  bVar2 = *(byte *)((int)&pFVar12->metric[0].quadrant + iVar30);
+  uVar22 = (uint)bVar2;
+  bVar1 = *(byte *)((int)pFVar12->edges + iVar13 + 1);
   uVar26 = 2;
-  psVar20 = (short *)((uint)bVar4 * 4 + iVar17);
+  pFVar20 = pFVar15->packedPts + bVar2;
+  sVar3 = pFVar20->x;
+  sVar4 = pFVar20->y;
   uVar24 = 0;
-  uVar28 = (undefined1)param_3;
-  *(undefined1 *)((uint)bVar4 + iVar15 + 0xbf4) = uVar28;
-  *(undefined1 *)((uint)bVar1 + iVar15 + 0xbf4) = uVar28;
-  uVar22 = 0;
-  if (*(int *)(iVar15 + 0xcfc) != 0) {
-    lVar27 = uVar16 - 0x289c;
-    lVar29 = uVar16 - 0x20ae;
-    lVar25 = param_2 + 0xd01;
+  sVar5 = pFVar15->packedPts[bVar1].x;
+  sVar6 = pFVar15->packedPts[bVar1].y;
+  uVar28 = (uchar)uVar32;
+  pFVar12->evalTime[bVar2] = uVar28;
+  pFVar12->evalTime[bVar1] = uVar28;
+  local_28b0.delta[0] = (int)sVar5 - (int)sVar3;
+  local_28b0.delta[1] = (int)sVar6 - (int)sVar4;
+  local_28b0.org[0] = (int)sVar3;
+  uVar17 = 0;
+  local_28a0[0] = (uint)bVar2;
+  local_28b0.org[1] = (int)sVar4;
+  local_28a0[1] = (uint)bVar1;
+  if (pFVar12->edgeCount != 0) {
+    lVar27 = uVar14 - 0x289c;
+    lVar29 = uVar14 - 0x20ae;
+    lVar25 = lVar16 + 0xd01;
     do {
-      bVar2 = ((byte *)lVar25)[-1];
-      if (bVar2 != bVar4) {
-        bVar3 = *(byte *)lVar25;
-        sVar5 = *psVar20;
-        sVar6 = psVar20[1];
-        psVar11 = (short *)((uint)bVar2 * 4 + iVar17);
-        psVar12 = (short *)((uint)bVar3 * 4 + iVar17);
-        sVar7 = psVar11[1];
-        sVar8 = *psVar11;
-        iVar19 = (int)psVar12[1] - (int)sVar7;
-        iVar18 = (int)sVar8 - (int)*psVar12;
-        iVar13 = (int)lVar29;
-        *(int *)(iVar13 + 0x12) = iVar19;
-        *(int *)(iVar13 + 0x16) = iVar18;
-        lVar21 = (longlong)(int)sVar8 * (longlong)iVar19 + (longlong)iVar18 * (longlong)(int)sVar7;
-        *(int *)(iVar13 + 0x1a) = (int)lVar21;
-        lVar21 = ((longlong)(int)sVar6 * (longlong)iVar18 + (longlong)(int)sVar5 * (longlong)iVar19)
+      bVar1 = ((byte *)lVar25)[-1];
+      if (bVar1 != uVar22) {
+        bVar2 = *(byte *)lVar25;
+        sVar3 = pFVar20->x;
+        sVar4 = pFVar20->y;
+        sVar5 = pFVar15->packedPts[bVar1].y;
+        sVar6 = pFVar15->packedPts[bVar1].x;
+        iVar19 = (int)pFVar15->packedPts[bVar2].y - (int)sVar5;
+        iVar18 = (int)sVar6 - (int)pFVar15->packedPts[bVar2].x;
+        iVar8 = (int)lVar29;
+        *(int *)(iVar8 + 0x12) = iVar19;
+        *(int *)(iVar8 + 0x16) = iVar18;
+        lVar21 = (longlong)(int)sVar6 * (longlong)iVar19 + (longlong)iVar18 * (longlong)(int)sVar5;
+        *(int *)(iVar8 + 0x1a) = (int)lVar21;
+        lVar21 = ((longlong)(int)sVar4 * (longlong)iVar18 + (longlong)(int)sVar3 * (longlong)iVar19)
                  - lVar21;
-        if ((-1 < lVar21) && (((int)lVar21 != 0 || (bVar3 == bVar4)))) {
-          iVar18 = iVar15 + 0xbf4;
-          if ((ulonglong)*(byte *)(iVar18 + (uint)bVar2) != (param_3 & 0xff)) {
-            *(uint *)((int)lVar27 + 4) = (uint)bVar2;
-            *(undefined1 *)(iVar18 + (uint)bVar2) = uVar28;
+        if ((-1 < lVar21) && (((int)lVar21 != 0 || (bVar2 == uVar22)))) {
+          if ((ulonglong)pFVar12->evalTime[bVar1] != (uVar32 & 0xff)) {
+            *(uint *)((int)lVar27 + 4) = (uint)bVar1;
+            pFVar12->evalTime[bVar1] = uVar28;
             uVar26 = uVar26 + 1;
             lVar27 = lVar27 + 4;
-            Glass_EvaluatePointVersusBaseEdge(iVar17,param_2,uVar16 - 0x28b0,bVar2);
+            Glass_EvaluatePointVersusBaseEdge(pFVar15,pFVar12,&local_28b0,(uint)bVar1);
           }
-          if ((ulonglong)*(byte *)(iVar18 + (uint)bVar3) != (param_3 & 0xff)) {
-            *(undefined1 *)(iVar18 + (uint)bVar3) = uVar28;
+          if ((ulonglong)pFVar12->evalTime[bVar2] != (uVar32 & 0xff)) {
+            pFVar12->evalTime[bVar2] = uVar28;
             lVar27 = lVar27 + 4;
-            *(uint *)lVar27 = (uint)bVar3;
+            *(uint *)lVar27 = (uint)bVar2;
             uVar26 = uVar26 + 1;
-            Glass_EvaluatePointVersusBaseEdge(iVar17,param_2,uVar16 - 0x28b0,bVar3);
+            Glass_EvaluatePointVersusBaseEdge(pFVar15,pFVar12,&local_28b0,(uint)bVar2);
           }
-          *(ushort *)(iVar13 + 0xe) = (ushort)bVar2;
+          *(ushort *)(iVar8 + 0xe) = (ushort)bVar1;
           uVar24 = uVar24 + 1;
           lVar29 = lVar29 + 0x10;
-          *(ushort *)lVar29 = (ushort)bVar3;
+          *(ushort *)lVar29 = (ushort)bVar2;
+          uVar22 = local_28a0[0];
         }
       }
-      uVar22 = uVar22 + 1;
+      uVar17 = uVar17 + 1;
       lVar25 = lVar25 + 2;
-    } while (uVar22 < *(uint *)(iVar15 + 0xcfc));
+    } while (uVar17 < pFVar12->edgeCount);
   }
-  lVar27 = (uVar26 & 0x3fffffff) * 4 + (uVar16 - 0x28a0);
-  DAT_8332cc60 = iVar15;
-  std___Sort<unsigned_int_*,int,bool_(__cdecl*)(unsigned_int,unsigned_int)>
-            (uVar16 - 0x2898,lVar27,(int)lVar27 - (int)local_2898 >> 2,0xffffffff82427ce8);
+  puVar9 = (uint *)((int)local_28a0 + (int)((uVar26 & 0xffffffff) << 2));
+  s_triang = pFVar12;
+  std::_Sort<unsigned_int_*,int,bool_(__cdecl*)(unsigned_int,unsigned_int)>
+            (local_28a0 + 2,puVar9,(int)puVar9 - (int)(local_28a0 + 2) >> 2,
+             Glass_CompareEvaluatedPoints);
   uVar22 = 0;
-  DAT_8332cc60 = 0;
+  s_triang = (FxGlassShardTriangulate *)0x0;
   if ((uVar26 & 0xffffffff) != 0) {
-    lVar27 = uVar16 - 0x28a4;
+    lVar27 = uVar14 - 0x28a4;
     uVar32 = uVar26;
     do {
       lVar27 = lVar27 + 4;
@@ -569,74 +601,91 @@ void Glass_GetShardTriangleFanForBaseEdge
     } while (uVar32 != 0);
   }
   if ((uVar24 & 0xffffffff) != 0) {
-    lVar27 = uVar16 - 0x20a0;
+    lVar27 = uVar14 - 0x20a0;
     do {
-      uVar9 = ((ushort *)lVar27)[1];
-      uVar32 = (ulonglong)auStack_24a0[*(ushort *)lVar27];
-      if (auStack_24a0[uVar9] < uVar32) {
-        if (uVar9 != bVar4) {
-          Glass_RemovePointsBehindEdge(iVar17,lVar27,uVar32 + 1,uVar26,uVar16 - 0x28a0);
+      pFVar10 = (FxGlassShardSeenEdge *)lVar27;
+      uVar22 = auStack_24a0[pFVar10->i1];
+      uVar17 = auStack_24a0[pFVar10->i0];
+      if ((ulonglong)uVar22 < (ulonglong)uVar17) {
+        if (pFVar10->i1 != local_28a0[0]) {
+          Glass_RemovePointsBehindEdge(pFVar15,pFVar10,uVar17 + 1,(uint)uVar26,local_28a0);
+          uVar17 = 2;
           goto LAB_8242a044;
         }
-        if ((uVar32 + 1 & 0xffffffff) < (uVar26 & 0xffffffff)) {
-          uVar26 = uVar32 + 1;
+        uVar32 = (ulonglong)uVar17 + 1;
+        if ((uVar32 & 0xffffffff) < (uVar26 & 0xffffffff)) {
+          uVar26 = uVar32;
         }
       }
       else {
+        uVar32 = uVar26;
+        if ((int)uVar22 < (int)(uint)uVar26) {
+          uVar32 = (ulonglong)uVar22;
+        }
+        uVar22 = (uint)uVar32;
+        uVar17 = uVar17 + 1;
 LAB_8242a044:
-        Glass_RemovePointsBehindEdge(iVar17);
+        Glass_RemovePointsBehindEdge
+                  (pFVar15,(FxGlassShardSeenEdge *)lVar27,uVar17,uVar22,local_28a0);
       }
       uVar24 = uVar24 - 1;
       lVar27 = lVar27 + 0x10;
     } while (uVar24 != 0);
   }
-  uVar22 = *(uint *)(iVar15 + 0x1100);
-  if ((ulonglong)*(uint *)(iVar15 + 0x1104) <= (uVar22 + uVar26 & 0xffffffff)) {
-    __restgprlr_15(0xffffffffffffffff);
-    return;
+  uVar22 = pFVar12->fanDataUsed;
+  if ((ulonglong)pFVar12->fanDataLimit <= (uVar22 + uVar26 & 0xffffffff)) {
+    uVar22 = __restgprlr_15(0xffffffffffffffff);
+    return uVar22;
   }
-  bVar2 = *(byte *)(iVar30 + iVar15);
+  puVar7 = pFVar12->fanData;
+  bVar1 = *(byte *)((int)&pFVar12->metric[0].quadrant + iVar30);
   iVar30 = 2;
-  uVar28 = *(undefined1 *)(iVar10 + 0xd01);
-  iVar10 = *(int *)(iVar15 + 0x1108) + uVar22;
-  *(byte *)(*(int *)(iVar15 + 0x1108) + uVar22) = bVar2;
-  *(undefined1 *)(iVar10 + 1) = uVar28;
-  if ((ushort)bVar4 != (ushort)bVar2) {
-    MyAssertHandler(0xffffffff820643d0,0x1cf,0,0xffffffff82064aac);
+  uVar28 = *(uchar *)((int)pFVar12->edges + iVar13 + 1);
+  puVar7[uVar22] = bVar1;
+  puVar7[uVar22 + 1] = uVar28;
+  if (local_28a0[0] != bVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack_shard.cpp"
+                    ,0x1cf,0,"pts[0] == fanVerts[0]\n\t%i, %i");
   }
-  if ((uint)bVar1 != (uint)*(byte *)(iVar10 + 1)) {
-    MyAssertHandler(0xffffffff820643d0,0x1d0,0,0xffffffff82064a8c);
+  uVar32 = (ulonglong)local_28a0[1];
+  if (uVar32 != puVar7[uVar22 + 1]) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack_shard.cpp"
+                    ,0x1d0,0,"pts[1] == fanVerts[1]\n\t%i, %i");
+    uVar32 = (ulonglong)local_28a0[1];
   }
-  lVar29 = (ulonglong)(uint)bVar1 * 0xc;
-  lVar27 = lVar29 + param_2;
-  *(undefined4 *)((int)lVar29 + iVar15) = 0;
+  lVar29 = (uVar32 + (uVar32 & 0x7fffffff) * 2 & 0x3fffffff) * 4;
+  lVar27 = lVar29 + lVar16;
+  *(undefined4 *)((int)&pFVar12->metric[0].quadrant + (int)lVar29) = 0;
   *(undefined4 *)((int)lVar27 + 4) = 0;
   *(undefined4 *)((int)lVar27 + 8) = 1;
   if (2 < (uVar26 & 0xffffffff)) {
-    lVar25 = uVar16 - 0x2898;
+    lVar25 = uVar14 - 0x2898;
     lVar29 = uVar26 - 2;
     do {
-      uVar22 = *(uint *)lVar25;
-      if ((ulonglong)uVar22 != 0xff) {
+      uVar17 = *(uint *)lVar25;
+      if ((ulonglong)uVar17 != 0xff) {
         piVar31 = (int *)lVar27;
-        lVar21 = ((ulonglong)uVar22 + ((ulonglong)uVar22 & 0x7fffffff) * 2 & 0x3fffffff) * 4 +
-                 param_2;
+        lVar21 = ((ulonglong)uVar17 + ((ulonglong)uVar17 & 0x7fffffff) * 2 & 0x3fffffff) * 4 +
+                 lVar16;
         piVar23 = (int *)lVar21;
         if (*piVar31 == *piVar23) {
-          bVar14 = false;
+          bVar11 = false;
           if ((longlong)piVar23[2] * (longlong)piVar31[1] ==
               (longlong)piVar23[1] * (longlong)piVar31[2]) {
-            bVar14 = true;
+            bVar11 = true;
           }
         }
         else {
-          bVar14 = false;
+          bVar11 = false;
         }
-        if (!bVar14) {
-          if (*(uint *)(iVar15 + 0x1104) <= (uint)(*(int *)(iVar15 + 0x1100) + iVar30)) {
-            MyAssertHandler(0xffffffff820643d0,0x1e2,0,0xffffffff82064a30);
+        if (!bVar11) {
+          if (pFVar12->fanDataLimit <= pFVar12->fanDataUsed + iVar30) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack_shard.cpp"
+                            ,0x1e2,0,
+                            "triang->fanDataUsed + fanVertCount doesn\'t index triang->fanDataLimit\n\t%i not in [0, %i)"
+                           );
           }
-          *(char *)(iVar30 + iVar10) = (char)uVar22;
+          puVar7[iVar30 + uVar22] = (uchar)uVar17;
           iVar30 = iVar30 + 1;
           lVar27 = lVar21;
         }
@@ -645,174 +694,175 @@ LAB_8242a044:
       lVar25 = lVar25 + 4;
     } while (lVar29 != 0);
   }
-  __restgprlr_15(iVar30);
-  return;
+  uVar22 = __restgprlr_15(iVar30);
+  return uVar22;
 }
 
 
 // 82427F10  Glass_PickShardTriangleFanBaseEdge  (EffectsCore/fx_glass_crack_shard.cpp:492)
 
-ulonglong Glass_PickShardTriangleFanBaseEdge(int param_1,longlong param_2,byte param_3)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+uint Glass_PickShardTriangleFanBaseEdge
+               (FxGlassCrackWork *param_1,FxGlassShardTriangulate *param_2,uchar param_3)
 
 {
-  float fVar1;
+  byte bVar1;
   float fVar2;
   float fVar3;
   float fVar4;
-  undefined4 uVar5;
+  float fVar5;
   uint uVar6;
-  int iVar7;
+  float fVar7;
   float fVar8;
   float fVar9;
-  float fVar10;
-  byte *pbVar11;
-  ulonglong uVar12;
-  ulonglong uVar13;
-  ulonglong uVar14;
-  int iVar15;
-  longlong lVar16;
+  uint uVar10;
+  int iVar11;
+  uint uVar12;
+  FxGlassShardEdge *pFVar13;
   
-  iVar7 = (int)param_2;
   if (2 < param_3) {
-    return ((ulonglong)*(uint *)(iVar7 + 0xcfc) +
-            ((ulonglong)*(uint *)(iVar7 + 0xcfc) & 0x7fffffff) * 2 & 0xffffffff) >> 4;
+    return param_2->edgeCount * 3 >> 4;
   }
-  uVar6 = *(uint *)(iVar7 + 0xcfc);
-  uVar13 = (ulonglong)uVar6;
-  uVar14 = 0;
-  fVar1 = 0.0;
-  uVar12 = uVar13;
+  uVar6 = param_2->edgeCount;
+  uVar12 = 0;
+  fVar2 = 0.0;
+  uVar10 = uVar6;
   if (3 < (int)uVar6) {
-    fVar2 = *(float *)(iVar7 + 0xcf4);
-    fVar3 = *(float *)(iVar7 + 0xcf8);
-    lVar16 = param_2 + 0xd02;
-    fVar4 = *(float *)(iVar7 + 0xcfc);
+    fVar3 = param_2->awayFromPoint[0];
+    fVar4 = param_2->awayFromPoint[1];
+    pFVar13 = param_2->edges + 1;
+    fVar5 = (float)param_2->edgeCount;
     do {
-      pbVar11 = (byte *)lVar16;
-      iVar15 = (uint)pbVar11[-2] * 8 + param_1;
-      fVar8 = fVar2 - *(float *)(iVar15 + 0x3fc);
-      fVar10 = fVar4 - *(float *)(iVar15 + 0x404);
-      fVar9 = fVar3 - *(float *)(iVar15 + 0x400);
-      fVar8 = fVar9 * fVar9 + fVar10 * fVar10 + fVar8 * fVar8;
-      if (fVar1 < fVar8) {
-        uVar12 = uVar14;
-        fVar1 = fVar8;
+      bVar1 = pFVar13[-1].fields.i0;
+      fVar7 = fVar3 - param_1->pts[bVar1].xy[0];
+      fVar9 = fVar5 - param_1->pts[bVar1 + 1].xy[0];
+      fVar8 = fVar4 - param_1->pts[bVar1].xy[1];
+      fVar7 = fVar8 * fVar8 + fVar9 * fVar9 + fVar7 * fVar7;
+      if (fVar2 < fVar7) {
+        fVar2 = fVar7;
+        uVar10 = uVar12;
       }
-      iVar15 = (uint)*pbVar11 * 8 + param_1;
-      fVar8 = fVar2 - *(float *)(iVar15 + 0x3fc);
-      fVar10 = fVar4 - *(float *)(iVar15 + 0x404);
-      fVar9 = fVar3 - *(float *)(iVar15 + 0x400);
-      fVar8 = fVar9 * fVar9 + fVar10 * fVar10 + fVar8 * fVar8;
-      if (fVar1 < fVar8) {
-        uVar12 = uVar14 + 1;
-        fVar1 = fVar8;
+      bVar1 = (pFVar13->fields).i0;
+      fVar7 = fVar3 - param_1->pts[bVar1].xy[0];
+      fVar9 = fVar5 - param_1->pts[bVar1 + 1].xy[0];
+      fVar8 = fVar4 - param_1->pts[bVar1].xy[1];
+      fVar7 = fVar8 * fVar8 + fVar9 * fVar9 + fVar7 * fVar7;
+      if (fVar2 < fVar7) {
+        uVar10 = uVar12 + 1;
+        fVar2 = fVar7;
       }
-      iVar15 = (uint)pbVar11[2] * 8 + param_1;
-      fVar8 = fVar2 - *(float *)(iVar15 + 0x3fc);
-      fVar10 = fVar4 - *(float *)(iVar15 + 0x404);
-      fVar9 = fVar3 - *(float *)(iVar15 + 0x400);
-      fVar8 = fVar9 * fVar9 + fVar10 * fVar10 + fVar8 * fVar8;
-      if (fVar1 < fVar8) {
-        uVar12 = uVar14 + 2;
-        fVar1 = fVar8;
+      bVar1 = pFVar13[1].fields.i0;
+      fVar7 = fVar3 - param_1->pts[bVar1].xy[0];
+      fVar9 = fVar5 - param_1->pts[bVar1 + 1].xy[0];
+      fVar8 = fVar4 - param_1->pts[bVar1].xy[1];
+      fVar7 = fVar8 * fVar8 + fVar9 * fVar9 + fVar7 * fVar7;
+      if (fVar2 < fVar7) {
+        uVar10 = uVar12 + 2;
+        fVar2 = fVar7;
       }
-      iVar15 = (uint)pbVar11[4] * 8 + param_1;
-      fVar8 = fVar2 - *(float *)(iVar15 + 0x3fc);
-      fVar10 = fVar4 - *(float *)(iVar15 + 0x404);
-      fVar9 = fVar3 - *(float *)(iVar15 + 0x400);
-      fVar8 = fVar9 * fVar9 + fVar10 * fVar10 + fVar8 * fVar8;
-      if (fVar1 < fVar8) {
-        uVar12 = uVar14 + 3;
-        fVar1 = fVar8;
+      bVar1 = pFVar13[2].fields.i0;
+      fVar7 = fVar3 - param_1->pts[bVar1].xy[0];
+      fVar9 = fVar5 - param_1->pts[bVar1 + 1].xy[0];
+      fVar8 = fVar4 - param_1->pts[bVar1].xy[1];
+      fVar7 = fVar8 * fVar8 + fVar9 * fVar9 + fVar7 * fVar7;
+      if (fVar2 < fVar7) {
+        uVar10 = uVar12 + 3;
+        fVar2 = fVar7;
       }
-      uVar14 = uVar14 + 4;
-      lVar16 = lVar16 + 8;
-    } while ((uVar14 & 0xffffffff) < (uVar13 - 3 & 0xffffffff));
+      uVar12 = uVar12 + 4;
+      pFVar13 = pFVar13 + 4;
+    } while (uVar12 < uVar6 - 3);
   }
-  if ((uVar14 & 0xffffffff) < (ulonglong)uVar6) {
-    lVar16 = uVar13 - uVar14;
-    param_2 = (uVar14 + 0x680 & 0x7fffffff) * 2 + param_2;
+  if (uVar12 < uVar6) {
+    iVar11 = uVar6 - uVar12;
+    pFVar13 = param_2->edges + uVar12;
     do {
-      iVar15 = (uint)*(byte *)param_2 * 8 + param_1;
-      fVar2 = *(float *)(iVar7 + 0xcf4) - *(float *)(iVar15 + 0x3fc);
-      fVar4 = *(float *)(iVar7 + 0xcfc) - *(float *)(iVar15 + 0x404);
-      fVar3 = *(float *)(iVar7 + 0xcf8) - *(float *)(iVar15 + 0x400);
-      fVar2 = fVar3 * fVar3 + fVar4 * fVar4 + fVar2 * fVar2;
-      if (fVar1 < fVar2) {
-        uVar12 = uVar14;
-        fVar1 = fVar2;
+      bVar1 = (pFVar13->fields).i0;
+      fVar3 = param_2->awayFromPoint[0] - param_1->pts[bVar1].xy[0];
+      fVar5 = (float)param_2->edgeCount - param_1->pts[bVar1 + 1].xy[0];
+      fVar4 = param_2->awayFromPoint[1] - param_1->pts[bVar1].xy[1];
+      fVar3 = fVar4 * fVar4 + fVar5 * fVar5 + fVar3 * fVar3;
+      if (fVar2 < fVar3) {
+        fVar2 = fVar3;
+        uVar10 = uVar12;
       }
-      uVar14 = uVar14 + 1;
-      param_2 = param_2 + 2;
-      lVar16 = lVar16 + -1;
-    } while (lVar16 != 0);
+      uVar12 = uVar12 + 1;
+      pFVar13 = pFVar13 + 1;
+      iVar11 = iVar11 + -1;
+    } while (iVar11 != 0);
   }
-  param_1 = (uint)*(byte *)((int)((uVar12 + 0x680 & 0xffffffff) << 1) + iVar7) * 8 + param_1;
-  uVar5 = *(undefined4 *)(param_1 + 0x400);
-  *(undefined4 *)(iVar7 + 0xcf4) = *(undefined4 *)(param_1 + 0x3fc);
-  *(undefined4 *)(iVar7 + 0xcf8) = uVar5;
-  return uVar12;
+  bVar1 = param_2->edges[uVar10].fields.i0;
+  fVar2 = param_1->pts[bVar1].xy[1];
+  param_2->awayFromPoint[0] = param_1->pts[bVar1].xy[0];
+  param_2->awayFromPoint[1] = fVar2;
+  return uVar10;
 }
 
 
 // 8242A1F8  Glass_GetShardTriangleFan  (EffectsCore/fx_glass_crack_shard.cpp:544)
 
-void Glass_GetShardTriangleFan(void)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+uint Glass_GetShardTriangleFan
+               (FxGlassCrackWork *param_1,FxGlassShardTriangulate *param_2,uchar param_3)
 
 {
-  undefined8 uVar1;
+  FxGlassCrackWork *pFVar1;
+  uint uVar2;
   
-  uVar1 = __savegprlr_29();
-  Glass_PickShardTriangleFanBaseEdge();
-  Glass_GetShardTriangleFanForBaseEdge(uVar1);
-  __restgprlr_29();
-  return;
+  pFVar1 = (FxGlassCrackWork *)__savegprlr_29(param_1);
+  uVar2 = Glass_PickShardTriangleFanBaseEdge(pFVar1,param_2,param_3);
+  uVar2 = Glass_GetShardTriangleFanForBaseEdge(pFVar1,param_2,param_3,uVar2);
+  uVar2 = __restgprlr_29(uVar2);
+  return uVar2;
 }
 
 
 // 82428118  Glass_RemoveShardTriangleEdge  (EffectsCore/fx_glass_crack_shard.cpp:553)
 
-undefined8 Glass_RemoveShardTriangleEdge(int param_1,undefined1 param_2,undefined1 param_3)
+bool Glass_RemoveShardTriangleEdge(FxGlassShardTriangulate *param_1,uchar param_2,uchar param_3)
 
 {
-  int iVar1;
+  uint uVar1;
   uint uVar2;
-  short *psVar3;
+  FxGlassShardEdge *pFVar3;
   undefined2 local_10;
   
-  iVar1 = *(int *)(param_1 + 0xcfc);
+  uVar1 = param_1->edgeCount;
   uVar2 = 0;
   local_10 = CONCAT11(param_2,param_3);
-  if (iVar1 != 0) {
-    psVar3 = (short *)(param_1 + 0xd00);
+  if (uVar1 != 0) {
+    pFVar3 = param_1->edges;
     do {
-      if (*psVar3 == local_10) {
-        *(int *)(param_1 + 0xcfc) = iVar1 + -1;
-        *(undefined2 *)((uVar2 + 0x680) * 2 + param_1) =
-             *(undefined2 *)((iVar1 + 0x67f) * 2 + param_1);
-        return 1;
+      if (pFVar3->packed == local_10) {
+        param_1->edgeCount = uVar1 - 1;
+        param_1->edges[uVar2] = param_1->edges[uVar1 - 1];
+        return true;
       }
       uVar2 = uVar2 + 1;
-      psVar3 = psVar3 + 1;
-    } while (uVar2 < *(uint *)(param_1 + 0xcfc));
+      pFVar3 = pFVar3 + 1;
+    } while (uVar2 < param_1->edgeCount);
   }
-  return 0;
+  return false;
 }
 
 
 // 82428190  Glass_AddShardTriangleEdge  (EffectsCore/fx_glass_crack_shard.cpp:574)
 
-void Glass_AddShardTriangleEdge(undefined8 param_1,undefined1 param_2,undefined1 param_3)
+void Glass_AddShardTriangleEdge(FxGlassShardTriangulate *param_1,uchar param_2,uchar param_3)
 
 {
   int iVar1;
   
-  iVar1 = __savegprlr_29();
+  iVar1 = __savegprlr_29(param_1);
   if (0x1ff < *(uint *)(iVar1 + 0xcfc)) {
-    MyAssertHandler(0xffffffff820643d0,0x23f,0,0xffffffff82064460,*(uint *)(iVar1 + 0xcfc),0x200);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack_shard.cpp"
+                    ,0x23f,0,
+                    "triang->edgeCount doesn\'t index GLASS_CRACK_EDGE_LIMIT\n\t%i not in [0, %i)");
   }
-  *(undefined1 *)((*(int *)(iVar1 + 0xcfc) + 0x680) * 2 + iVar1) = param_2;
-  *(undefined1 *)(*(int *)(iVar1 + 0xcfc) * 2 + iVar1 + 0xd01) = param_3;
+  *(uchar *)((*(int *)(iVar1 + 0xcfc) + 0x680) * 2 + iVar1) = param_2;
+  *(uchar *)(*(int *)(iVar1 + 0xcfc) * 2 + iVar1 + 0xd01) = param_3;
   *(int *)(iVar1 + 0xcfc) = *(int *)(iVar1 + 0xcfc) + 1;
   __restgprlr_29();
   return;
@@ -821,58 +871,62 @@ void Glass_AddShardTriangleEdge(undefined8 param_1,undefined1 param_2,undefined1
 
 // 82428208  Glass_UpdateShardTriangleEdgesForFan  (EffectsCore/fx_glass_crack_shard.cpp:583)
 
-void Glass_UpdateShardTriangleEdgesForFan(undefined8 param_1,ulonglong param_2)
+void Glass_UpdateShardTriangleEdgesForFan(FxGlassShardTriangulate *param_1,uint param_2)
 
 {
   undefined1 uVar1;
   int iVar2;
   bool bVar3;
   int iVar4;
-  short *psVar5;
-  uint uVar6;
-  int iVar7;
-  ulonglong uVar8;
-  undefined1 uVar9;
+  ulonglong uVar5;
+  short *psVar6;
+  uint uVar7;
+  int iVar8;
+  ulonglong uVar9;
+  undefined1 uVar10;
   undefined2 local_50;
   
-  iVar4 = __savegprlr_24();
-  uVar8 = 0;
-  iVar7 = *(int *)(iVar4 + 0x1108) + *(int *)(iVar4 + 0x1100);
-  uVar9 = *(undefined1 *)(iVar7 + (int)param_2 + -1);
-  if ((param_2 & 0xffffffff) != 0) {
+  uVar5 = (ulonglong)(int)param_2;
+  iVar4 = __savegprlr_24(param_1);
+  uVar9 = 0;
+  iVar8 = *(int *)(iVar4 + 0x1108) + *(int *)(iVar4 + 0x1100);
+  uVar10 = *(undefined1 *)(iVar8 + (int)uVar5 + -1);
+  if ((uVar5 & 0xffffffff) != 0) {
     do {
-      uVar1 = *(undefined1 *)((int)uVar8 + iVar7);
+      uVar1 = *(undefined1 *)((int)uVar9 + iVar8);
       iVar2 = *(int *)(iVar4 + 0xcfc);
-      uVar6 = 0;
-      local_50 = CONCAT11(uVar9,uVar1);
+      uVar7 = 0;
+      local_50 = CONCAT11(uVar10,uVar1);
       if (iVar2 != 0) {
-        psVar5 = (short *)(iVar4 + 0xd00);
+        psVar6 = (short *)(iVar4 + 0xd00);
         do {
-          if (*psVar5 == local_50) {
+          if (*psVar6 == local_50) {
             *(int *)(iVar4 + 0xcfc) = iVar2 + -1;
             bVar3 = true;
-            *(undefined2 *)((uVar6 + 0x680) * 2 + iVar4) =
+            *(undefined2 *)((uVar7 + 0x680) * 2 + iVar4) =
                  *(undefined2 *)((iVar2 + 0x67f) * 2 + iVar4);
             goto LAB_82428298;
           }
-          uVar6 = uVar6 + 1;
-          psVar5 = psVar5 + 1;
-        } while (uVar6 < *(uint *)(iVar4 + 0xcfc));
+          uVar7 = uVar7 + 1;
+          psVar6 = psVar6 + 1;
+        } while (uVar7 < *(uint *)(iVar4 + 0xcfc));
       }
       bVar3 = false;
 LAB_82428298:
       if (!bVar3) {
         if (0x1ff < *(uint *)(iVar4 + 0xcfc)) {
-          MyAssertHandler(0xffffffff820643d0,0x23f,0,0xffffffff82064460,*(uint *)(iVar4 + 0xcfc),
-                          0x200);
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack_shard.cpp"
+                          ,0x23f,0,
+                          "triang->edgeCount doesn\'t index GLASS_CRACK_EDGE_LIMIT\n\t%i not in [0, %i)"
+                         );
         }
         *(undefined1 *)((*(int *)(iVar4 + 0xcfc) + 0x680) * 2 + iVar4) = uVar1;
-        *(undefined1 *)(*(int *)(iVar4 + 0xcfc) * 2 + iVar4 + 0xd01) = uVar9;
+        *(undefined1 *)(*(int *)(iVar4 + 0xcfc) * 2 + iVar4 + 0xd01) = uVar10;
         *(int *)(iVar4 + 0xcfc) = *(int *)(iVar4 + 0xcfc) + 1;
       }
-      uVar8 = uVar8 + 1;
-      uVar9 = uVar1;
-    } while ((uVar8 & 0xffffffff) < (param_2 & 0xffffffff));
+      uVar9 = uVar9 + 1;
+      uVar10 = uVar1;
+    } while ((uVar9 & 0xffffffff) < (uVar5 & 0xffffffff));
   }
   __restgprlr_24();
   return;
@@ -881,123 +935,122 @@ LAB_82428298:
 
 // 82428330  Glass_AddEdgesForLoop  (EffectsCore/fx_glass_crack_shard.cpp:603)
 
-longlong Glass_AddEdgesForLoop(int param_1,undefined1 *param_2,int param_3)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+uint Glass_AddEdgesForLoop
+               (FxGlassCrackWork *param_1,FxGlassCrackEdge *param_2,FxGlassShardTriangulate *param_3
+               ,bool param_4)
 
 {
   byte bVar1;
-  undefined1 uVar2;
+  uchar uVar2;
   float fVar3;
-  longlong lVar4;
-  int iVar5;
-  undefined1 *puVar6;
+  uint uVar4;
+  FxGlassCrackEdge *pFVar5;
   
-  lVar4 = 0;
-  puVar6 = param_2;
+  uVar4 = 0;
+  pFVar5 = param_2;
   do {
-    bVar1 = puVar6[1];
-    uVar2 = *puVar6;
-    lVar4 = lVar4 + 1;
-    puVar6 = *(undefined1 **)(puVar6 + 0x14);
-    iVar5 = (uint)bVar1 * 8 + param_1;
-    fVar3 = *(float *)(iVar5 + 0x400);
-    *(float *)(param_3 + 0xcf4) = *(float *)(iVar5 + 0x3fc) + *(float *)(param_3 + 0xcf4);
-    *(float *)(param_3 + 0xcf8) = fVar3 + *(float *)(param_3 + 0xcf8);
-    *(undefined1 *)((*(int *)(param_3 + 0xcfc) + 0x680) * 2 + param_3) = uVar2;
-    *(byte *)(*(int *)(param_3 + 0xcfc) * 2 + param_3 + 0xd01) = bVar1;
-    *(int *)(param_3 + 0xcfc) = *(int *)(param_3 + 0xcfc) + 1;
-  } while (puVar6 != param_2);
-  return lVar4;
+    bVar1 = (pFVar5->field0_0x0)._s_0.i1;
+    uVar2 = (pFVar5->field0_0x0)._s_0.i0;
+    uVar4 = uVar4 + 1;
+    pFVar5 = (pFVar5->field0_0x0)._s_0.next;
+    fVar3 = param_1->pts[bVar1].xy[1];
+    param_3->awayFromPoint[0] = param_1->pts[bVar1].xy[0] + param_3->awayFromPoint[0];
+    param_3->awayFromPoint[1] = fVar3 + param_3->awayFromPoint[1];
+    param_3->edges[param_3->edgeCount].fields.i0 = uVar2;
+    *(byte *)((int)param_3->edges + param_3->edgeCount * 2 + 1) = bVar1;
+    param_3->edgeCount = param_3->edgeCount + 1;
+  } while (pFVar5 != param_2);
+  return uVar4;
 }
 
 
 // 824283C0  Glass_SetupTriangulateShard  (EffectsCore/fx_glass_crack_shard.cpp:626)
 
-void Glass_SetupTriangulateShard(undefined8 param_1,longlong param_2,undefined8 param_3)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void Glass_SetupTriangulateShard
+               (FxGlassCrackWork *param_1,FxGlassShard *param_2,FxGlassShardTriangulate *param_3)
 
 {
-  size_t _Size;
   int iVar1;
   int iVar2;
-  int iVar3;
-  float fVar4;
-  int iVar6;
-  void *pvVar7;
-  longlong lVar5;
-  ulonglong uVar8;
-  uint uVar9;
+  FxGlassCrackWork *pFVar3;
+  uint uVar4;
+  undefined8 uVar5;
+  longlong lVar6;
+  uint uVar7;
+  uint uVar8;
   
-  iVar6 = __savegprlr_24();
-  iVar2 = (int)param_2;
-  uVar9 = *(uint *)(iVar2 + 0x2ac);
-  iVar3 = (int)param_3;
-  _Size = *(size_t *)(iVar6 + 0xbf4);
-  *(int *)(iVar3 + 0x1104) = (int)((0xe7 - (ulonglong)uVar9 & 0xffffffff) << 2);
-  *(int *)(iVar3 + 0x1108) = (int)(((ulonglong)uVar9 + 0xac & 0xffffffff) << 2) + iVar2;
-  pvVar7 = memset((void *)(iVar3 + 0xbf4),0,_Size);
-  lVar5 = (longlong)(int)pvVar7;
+  lVar6 = (longlong)(int)param_2;
+  pFVar3 = (FxGlassCrackWork *)__savegprlr_24(param_1);
+  iVar2 = (int)lVar6;
+  uVar7 = *(uint *)(iVar2 + 0x2ac);
+  param_3->fanDataLimit = (uint)((0xe7 - (ulonglong)uVar7 & 0xffffffff) << 2);
+  param_3->fanData = (uchar *)((int)(((ulonglong)uVar7 + 0xac & 0xffffffff) << 2) + iVar2);
+  memset();
+  uVar5 = 0;
   iVar1 = *(int *)(iVar2 + 0x14);
+  uVar7 = 0;
   uVar8 = 0;
-  uVar9 = 0;
-  *(undefined4 *)(iVar3 + 0xcf4) = 0;
-  *(undefined4 *)(iVar3 + 0xcf8) = 0;
-  *(undefined4 *)(iVar3 + 0xcfc) = 0;
+  param_3->awayFromPoint[0] = 0.0;
+  param_3->awayFromPoint[1] = 0.0;
+  param_3->edgeCount = 0;
   if (iVar1 != 0) {
-    param_2 = param_2 + 0x10;
+    lVar6 = lVar6 + 0x10;
     do {
-      param_2 = param_2 + 8;
-      lVar5 = Glass_AddEdgesForLoop(iVar6,*(undefined4 *)param_2,param_3);
-      uVar9 = uVar9 + 1;
-      uVar8 = lVar5 + uVar8;
-    } while (uVar9 < *(uint *)(iVar2 + 0x14));
+      lVar6 = lVar6 + 8;
+      uVar4 = Glass_AddEdgesForLoop
+                        (pFVar3,(FxGlassCrackEdge *)*(undefined4 *)lVar6,param_3,SUB81(uVar5,0));
+      uVar8 = uVar8 + 1;
+      uVar7 = uVar4 + uVar7;
+    } while (uVar8 < *(uint *)(iVar2 + 0x14));
   }
-  fVar4 = 1.0 / (float)(uVar8 & 0xffffffff);
-  *(float *)(iVar3 + 0xcf4) = fVar4 * *(float *)(iVar3 + 0xcf4);
-  *(float *)(iVar3 + 0xcf8) = *(float *)(iVar3 + 0xcf8) * fVar4;
-  *(undefined4 *)(iVar3 + 0x1100) = 0;
-  __restgprlr_24(lVar5);
+  param_3->awayFromPoint[0] = (1.0 / (float)uVar7) * param_3->awayFromPoint[0];
+  param_3->awayFromPoint[1] = param_3->awayFromPoint[1] * (1.0 / (float)uVar7);
+  param_3->fanDataUsed = 0;
+  __restgprlr_24();
   return;
 }
 
 
 // 824284A8  Glass_RotateBorderVerts  (EffectsCore/fx_glass_crack_shard.cpp:647)
 
-void Glass_RotateBorderVerts(undefined8 param_1,ulonglong param_2)
+void Glass_RotateBorderVerts(FxGlassShard *param_1,uint param_2)
 
 {
   ushort uVar1;
   ushort *puVar2;
   char cVar3;
-  size_t _Size;
   int iVar4;
   ulonglong uVar5;
   int iVar6;
   int iVar7;
-  ulonglong uVar8;
+  longlong lVar8;
   ulonglong uVar9;
   uint uVar10;
-  undefined1 auStack_240 [576];
   
-  iVar4 = __savegprlr_26();
-  if ((param_2 & 0xffffffff) != 0) {
-    _Size = (size_t)((param_2 & 0xffffffff) << 2);
+  uVar5 = (ulonglong)(int)param_2;
+  iVar4 = __savegprlr_26(param_1);
+  if ((uVar5 & 0xffffffff) != 0) {
     uVar1 = *(ushort *)(iVar4 + 0x1c);
     uVar9 = (ulonglong)uVar1;
-    uVar8 = uVar9 - param_2;
-    memcpy(auStack_240,(void *)(iVar4 + 0x2b0),_Size);
-    memmove((void *)(iVar4 + 0x2b0),(void *)((int)((param_2 + 0xac & 0xffffffff) << 2) + iVar4),
-            (size_t)((uVar8 & 0xffffffff) << 2));
-    memcpy((void *)((int)((uVar8 + 0xac & 0xffffffff) << 2) + iVar4),auStack_240,_Size);
+    lVar8 = uVar9 - uVar5;
+    memcpy();
+    memmove();
+    memcpy();
     iVar6 = 0;
     *(uint *)(iVar4 + 0x29c) =
-         *(uint *)(iVar4 + 0x29c) >> ((uint)uVar8 & 0x3f) & ~((1 << (0x20 - uVar1 & 0x3f)) - 1U) |
-         *(uint *)(iVar4 + 0x29c) << ((uint)param_2 & 0x3f);
+         *(uint *)(iVar4 + 0x29c) >> ((uint)lVar8 & 0x3f) & ~((1 << (0x20 - uVar1 & 0x3f)) - 1U) |
+         *(uint *)(iVar4 + 0x29c) << ((uint)uVar5 & 0x3f);
     uVar10 = (uint)uVar1;
     cVar3 = (char)uVar1;
     if (*(int *)(iVar4 + 0x2a0) != 0) {
       do {
         puVar2 = (ushort *)(iVar6 * 4 + (uVar1 + 0xac) * 4 + iVar4);
         if ((ulonglong)*(byte *)(puVar2 + 1) < (ulonglong)uVar10) {
-          uVar5 = *(byte *)(puVar2 + 1) + uVar8;
+          uVar5 = (ulonglong)*(byte *)(puVar2 + 1) + lVar8;
           trapWord(6,uVar9,0);
           *(char *)(puVar2 + 1) =
                (char)uVar5 - (char)((uVar5 & 0xffffffff) / (ulonglong)uVar10) * cVar3;
@@ -1011,13 +1064,13 @@ void Glass_RotateBorderVerts(undefined8 param_1,ulonglong param_2)
       do {
         puVar2 = (ushort *)(iVar7 * 4 + (iVar6 + (uint)uVar1 + 0xac) * 4 + iVar4);
         if ((ulonglong)*(byte *)(puVar2 + 1) < (ulonglong)uVar1) {
-          uVar5 = *(byte *)(puVar2 + 1) + uVar8;
+          uVar5 = (ulonglong)*(byte *)(puVar2 + 1) + lVar8;
           trapWord(6,uVar9,0);
           *(char *)(puVar2 + 1) =
                (char)uVar5 - (char)((uVar5 & 0xffffffff) / (ulonglong)uVar10) * cVar3;
         }
         if ((ulonglong)*(byte *)((int)puVar2 + 3) < (ulonglong)uVar10) {
-          uVar5 = *(byte *)((int)puVar2 + 3) + uVar8;
+          uVar5 = (ulonglong)*(byte *)((int)puVar2 + 3) + lVar8;
           trapWord(6,uVar9,0);
           *(char *)((int)puVar2 + 3) =
                (char)uVar5 - (char)((uVar5 & 0xffffffff) / (ulonglong)uVar10) * cVar3;
@@ -1033,75 +1086,74 @@ void Glass_RotateBorderVerts(undefined8 param_1,ulonglong param_2)
 
 // 8242A228  Glass_TriangulateShard  (EffectsCore/fx_glass_crack_shard.cpp:706)
 
-void Glass_TriangulateShard(undefined8 param_1,undefined8 param_2)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void Glass_TriangulateShard(FxGlassCrackWork *param_1,FxGlassShard *param_2)
 
 {
   byte bVar1;
-  int iVar2;
-  int iVar3;
+  uint uVar2;
+  FxGlassCrackWork *pFVar3;
   uint uVar4;
-  undefined8 uVar5;
-  undefined8 uVar6;
-  ulonglong uVar7;
-  char cVar8;
-  ulonglong uVar9;
-  undefined1 auStack_1170 [3324];
-  int local_474;
-  uint local_70;
-  uint local_6c;
-  byte *local_68;
+  uchar uVar5;
+  uchar uVar6;
+  uint uVar7;
+  FxGlassShardTriangulate FStack_1170;
   
-  uVar5 = __savegprlr_21();
-  Glass_SetupTriangulateShard();
-  cVar8 = '\x01';
+  pFVar3 = (FxGlassCrackWork *)__savegprlr_21(param_1);
+  Glass_SetupTriangulateShard(pFVar3,param_2,&FStack_1170);
+  uVar6 = '\x01';
   while( true ) {
-    Glass_PickShardTriangleFanBaseEdge(uVar5,auStack_1170,cVar8);
-    uVar6 = Glass_GetShardTriangleFanForBaseEdge(uVar5,auStack_1170);
-    uVar7 = Glass_SimplifyTriangleFan(uVar5,auStack_1170,uVar6);
-    if ((uVar7 & 0xffffffff) < 3) {
-      MyAssertHandler(0xffffffff820643d0,0x2cf,0,0xffffffff82064b04,uVar7,2);
+    uVar5 = uVar6;
+    uVar4 = Glass_PickShardTriangleFanBaseEdge(pFVar3,&FStack_1170,uVar6);
+    uVar4 = Glass_GetShardTriangleFanForBaseEdge(pFVar3,&FStack_1170,uVar5,uVar4);
+    uVar4 = Glass_SimplifyTriangleFan(pFVar3,&FStack_1170,uVar4);
+    if (uVar4 < 3) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack_shard.cpp"
+                      ,0x2cf,0,"fanVertCount > 2\n\t%i, %i");
     }
-    iVar2 = (int)param_2;
-    if ((((ulonglong)local_6c - (ulonglong)local_70) - 1 & 0xffffffff) < (uVar7 & 0xffffffff)) {
-      *(undefined4 *)(iVar2 + 0x2a8) = 0;
+    if ((FStack_1170.fanDataLimit - FStack_1170.fanDataUsed) - 1 < uVar4) {
+      param_2->fanDataCount = 0;
       __restgprlr_21();
       return;
     }
-    Glass_UpdateShardTriangleEdgesForFan(auStack_1170,uVar7);
-    uVar4 = local_70;
-    uVar9 = local_70 + uVar7 + 1;
-    if ((ulonglong)local_6c < (uVar9 & 0xffffffff)) {
-      MyAssertHandler(0xffffffff820643d0,0x2d5,0,0xffffffff82064b20,uVar9);
+    Glass_UpdateShardTriangleEdgesForFan(&FStack_1170,uVar4);
+    uVar2 = FStack_1170.fanDataUsed;
+    uVar7 = FStack_1170.fanDataUsed + uVar4 + 1;
+    if (FStack_1170.fanDataLimit < uVar7) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack_shard.cpp"
+                      ,0x2d5,0,
+                      "triang.fanDataUsed + fanVertCount + 1 <= triang.fanDataLimit\n\t%i, %i");
     }
-    local_70 = (uint)uVar9;
-    local_68[(int)uVar7 + uVar4] = 0xff;
-    if (local_474 == 0) break;
-    cVar8 = cVar8 + '\x01';
+    FStack_1170.fanData[uVar4 + uVar2] = 0xff;
+    FStack_1170.fanDataUsed = uVar7;
+    if (FStack_1170.edgeCount == 0) break;
+    uVar6 = uVar6 + '\x01';
   }
-  if (cVar8 == '\x01') {
-    bVar1 = *local_68;
-    *(undefined4 *)(iVar2 + 0x2a8) = 0;
-    Glass_RotateBorderVerts(param_2,*(undefined1 *)((uint)bVar1 + iVar2 + 0x19d));
+  if (uVar6 == '\x01') {
+    bVar1 = *FStack_1170.fanData;
+    param_2->fanDataCount = 0;
+    Glass_RotateBorderVerts(param_2,(uint)param_2->ptIndexMap[bVar1]);
     __restgprlr_21();
     return;
   }
-  uVar7 = 0;
-  if ((uVar9 & 0xffffffff) != 0) {
+  uVar4 = 0;
+  if (uVar7 != 0) {
     do {
-      if ((local_68[(int)uVar7] != 0xff) &&
-         (bVar1 = *(byte *)((uint)local_68[(int)uVar7] + iVar2 + 0x19d),
-         local_68[(int)uVar7] = bVar1, bVar1 == 0xff)) {
-        MyAssertHandler(0xffffffff820643d0,0x2e8,0,0xffffffff82000f98,0xffffffff82064acc);
+      if ((FStack_1170.fanData[uVar4] != 0xff) &&
+         (bVar1 = param_2->ptIndexMap[FStack_1170.fanData[uVar4]],
+         FStack_1170.fanData[uVar4] = bVar1, bVar1 == 0xff)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack_shard.cpp"
+                        ,0x2e8,0,"%s");
       }
-      uVar7 = uVar7 + 1;
-    } while ((uVar7 & 0xffffffff) < (uVar9 & 0xffffffff));
+      uVar4 = uVar4 + 1;
+    } while (uVar4 < uVar7);
   }
-  for (; (uVar9 & 3) != 0; uVar9 = uVar9 + 1) {
-    local_68[(int)uVar9] = 0xff;
+  for (; (uVar7 & 3) != 0; uVar7 = uVar7 + 1) {
+    FStack_1170.fanData[uVar7] = 0xff;
   }
-  iVar3 = (int)((uVar9 & 0xffffffff) >> 2);
-  *(int *)(iVar2 + 0x2a8) = iVar3;
-  *(int *)(iVar2 + 0x2ac) = *(int *)(iVar2 + 0x2ac) + iVar3;
+  param_2->fanDataCount = uVar7 >> 2;
+  param_2->geoDataUsed = param_2->geoDataUsed + (uVar7 >> 2);
   __restgprlr_21();
   return;
 }
@@ -1109,7 +1161,10 @@ void Glass_TriangulateShard(undefined8 param_1,undefined8 param_2)
 
 // 82428630  Glass_AreaX2AndScaledCentroidForEdgeLoop  (EffectsCore/fx_glass_crack_shard.cpp:770)
 
-void Glass_AreaX2AndScaledCentroidForEdgeLoop(undefined8 param_1,ulonglong param_2,double *param_3)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+double Glass_AreaX2AndScaledCentroidForEdgeLoop
+                 (FxGlassCrackWork *param_1,FxGlassCrackEdge *param_2,double *param_3)
 
 {
   float fVar1;
@@ -1117,11 +1172,11 @@ void Glass_AreaX2AndScaledCentroidForEdgeLoop(undefined8 param_1,ulonglong param
   double *pdVar3;
   int iVar4;
   ulonglong uVar5;
-  double *pdVar6;
-  ulonglong uVar7;
-  byte *pbVar9;
+  ulonglong uVar6;
+  double *pdVar7;
   ulonglong uVar8;
-  double dVar10;
+  byte *pbVar10;
+  ulonglong uVar9;
   double dVar11;
   double dVar12;
   double dVar13;
@@ -1132,106 +1187,110 @@ void Glass_AreaX2AndScaledCentroidForEdgeLoop(undefined8 param_1,ulonglong param
   double dVar18;
   double dVar19;
   double dVar20;
+  double dVar21;
   double local_890 [274];
   
-  __savegprlr_24();
+  uVar5 = (ulonglong)(int)param_2;
+  __savegprlr_24(param_1);
   iVar4 = __savefpr_26();
-  pdVar6 = local_890 + 1;
-  uVar5 = 0;
-  uVar8 = param_2;
+  pdVar7 = local_890 + 1;
+  uVar6 = 0;
+  uVar9 = uVar5;
   do {
-    uVar7 = uVar5;
-    if (0x7f < (uVar7 & 0xffffffff)) {
-      MyAssertHandler(0xffffffff820643d0,0x30e,0,0xffffffff820644b0,uVar7,0x80);
+    uVar8 = uVar6;
+    if (0x7f < (uVar8 & 0xffffffff)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack_shard.cpp"
+                      ,0x30e,0,"vertCount doesn\'t index ARRAY_COUNT( coord )\n\t%i not in [0, %i)")
+      ;
     }
-    pbVar9 = (byte *)uVar8;
-    uVar8 = (ulonglong)*(uint *)(pbVar9 + 0x14);
-    iVar2 = (uint)*pbVar9 * 8 + iVar4;
+    pbVar10 = (byte *)uVar9;
+    uVar9 = (ulonglong)*(uint *)(pbVar10 + 0x14);
+    iVar2 = (uint)*pbVar10 * 8 + iVar4;
     fVar1 = *(float *)(iVar2 + 0x400);
-    pdVar6[1] = (double)*(float *)(iVar2 + 0x3fc);
-    pdVar6 = pdVar6 + 2;
-    *pdVar6 = (double)fVar1;
-    uVar5 = uVar7 + 1;
-  } while (uVar8 != (param_2 & 0xffffffff));
-  iVar4 = (int)((uVar7 & 0xfffffff) << 4);
-  uVar5 = 1;
-  dVar15 = *(double *)((int)local_890 + iVar4 + 0x18);
-  dVar14 = *(double *)((int)local_890 + iVar4 + 0x10);
-  dVar12 = *(double *)((int)local_890 + iVar4 + 8);
-  dVar11 = *(double *)((int)local_890 + iVar4);
-  dVar18 = 0.0;
-  dVar13 = dVar12 - local_890[3];
-  dVar10 = (dVar15 - local_890[5]) * local_890[2] + dVar14 * dVar13;
-  param_3[1] = (dVar15 + local_890[3] + local_890[5]) * (dVar15 - local_890[5]) * local_890[2] +
-               (dVar15 + dVar12 + local_890[3]) * dVar14 * dVar13 + param_3[1];
-  *param_3 = (dVar14 + local_890[4] + local_890[2]) * (local_890[4] - dVar14) * local_890[3] +
-             (dVar11 + dVar14 + local_890[2]) * (local_890[2] - dVar11) * dVar15 + *param_3;
-  if (1 < (uVar7 & 0xffffffff)) {
-    dVar11 = dVar18;
-    if (1 < (int)uVar7 + -1) {
-      pdVar6 = local_890 + 4;
+    pdVar7[1] = (double)*(float *)(iVar2 + 0x3fc);
+    pdVar7 = pdVar7 + 2;
+    *pdVar7 = (double)fVar1;
+    uVar6 = uVar8 + 1;
+  } while (uVar9 != (uVar5 & 0xffffffff));
+  iVar4 = (int)((uVar8 & 0xfffffff) << 4);
+  uVar6 = 1;
+  dVar16 = *(double *)((int)local_890 + iVar4 + 0x18);
+  dVar15 = *(double *)((int)local_890 + iVar4 + 0x10);
+  dVar13 = *(double *)((int)local_890 + iVar4 + 8);
+  dVar12 = *(double *)((int)local_890 + iVar4);
+  dVar19 = 0.0;
+  dVar14 = dVar13 - local_890[3];
+  dVar11 = (dVar16 - local_890[5]) * local_890[2] + dVar15 * dVar14;
+  param_3[1] = (dVar16 + local_890[3] + local_890[5]) * (dVar16 - local_890[5]) * local_890[2] +
+               (dVar16 + dVar13 + local_890[3]) * dVar15 * dVar14 + param_3[1];
+  *param_3 = (dVar15 + local_890[4] + local_890[2]) * (local_890[4] - dVar15) * local_890[3] +
+             (dVar12 + dVar15 + local_890[2]) * (local_890[2] - dVar12) * dVar16 + *param_3;
+  if (1 < (uVar8 & 0xffffffff)) {
+    dVar12 = dVar19;
+    if (1 < (int)uVar8 + -1) {
+      pdVar7 = local_890 + 4;
       do {
-        dVar19 = *pdVar6;
-        uVar5 = uVar5 + 2;
-        dVar17 = pdVar6[2];
-        dVar16 = pdVar6[1];
-        dVar15 = pdVar6[5];
-        dVar14 = pdVar6[3];
-        dVar12 = dVar16 - dVar15;
-        dVar13 = pdVar6[-1];
-        pdVar3 = pdVar6 + -2;
-        pdVar6 = pdVar6 + 4;
-        dVar20 = dVar13 - dVar14;
-        dVar11 = dVar12 * dVar17 + dVar11;
-        dVar18 = dVar20 * dVar19 + dVar18;
-        *param_3 = (dVar17 + dVar19 + *pdVar3) * (dVar17 - *pdVar3) * dVar16 +
-                   (dVar17 + dVar19 + *pdVar6) * (*pdVar6 - dVar19) * dVar14 + *param_3;
-        param_3[1] = (dVar16 + dVar14 + dVar13) * dVar20 * dVar19 +
-                     (dVar15 + dVar16 + dVar14) * dVar12 * dVar17 + param_3[1];
-      } while ((uVar5 & 0xffffffff) < (uVar7 - 1 & 0xffffffff));
+        dVar20 = *pdVar7;
+        uVar6 = uVar6 + 2;
+        dVar18 = pdVar7[2];
+        dVar17 = pdVar7[1];
+        dVar16 = pdVar7[5];
+        dVar15 = pdVar7[3];
+        dVar13 = dVar17 - dVar16;
+        dVar14 = pdVar7[-1];
+        pdVar3 = pdVar7 + -2;
+        pdVar7 = pdVar7 + 4;
+        dVar21 = dVar14 - dVar15;
+        dVar12 = dVar13 * dVar18 + dVar12;
+        dVar19 = dVar21 * dVar20 + dVar19;
+        *param_3 = (dVar18 + dVar20 + *pdVar3) * (dVar18 - *pdVar3) * dVar17 +
+                   (dVar18 + dVar20 + *pdVar7) * (*pdVar7 - dVar20) * dVar15 + *param_3;
+        param_3[1] = (dVar17 + dVar15 + dVar14) * dVar21 * dVar20 +
+                     (dVar16 + dVar17 + dVar15) * dVar13 * dVar18 + param_3[1];
+      } while ((uVar6 & 0xffffffff) < (uVar8 - 1 & 0xffffffff));
     }
-    if ((uVar5 & 0xffffffff) < (uVar7 & 0xffffffff)) {
-      iVar4 = (int)((uVar5 & 0xfffffff) << 4);
-      dVar19 = *(double *)((int)local_890 + iVar4 + 0x18);
-      dVar16 = *(double *)((int)local_890 + iVar4);
-      dVar15 = *(double *)((int)local_890 + iVar4 + 0x28);
-      dVar14 = *(double *)((int)local_890 + iVar4 + 0x20);
-      dVar12 = *(double *)((int)local_890 + iVar4 + 8);
-      dVar13 = *(double *)((int)local_890 + iVar4 + 0x10);
-      dVar17 = dVar12 - dVar15;
-      dVar10 = dVar13 * dVar17 + dVar10;
-      param_3[1] = (dVar19 + dVar15 + dVar12) * dVar13 * dVar17 + param_3[1];
-      *param_3 = (dVar14 + dVar16 + dVar13) * (dVar14 - dVar16) * dVar19 + *param_3;
+    if ((uVar6 & 0xffffffff) < (uVar8 & 0xffffffff)) {
+      iVar4 = (int)((uVar6 & 0xfffffff) << 4);
+      dVar20 = *(double *)((int)local_890 + iVar4 + 0x18);
+      dVar17 = *(double *)((int)local_890 + iVar4);
+      dVar16 = *(double *)((int)local_890 + iVar4 + 0x28);
+      dVar15 = *(double *)((int)local_890 + iVar4 + 0x20);
+      dVar13 = *(double *)((int)local_890 + iVar4 + 8);
+      dVar14 = *(double *)((int)local_890 + iVar4 + 0x10);
+      dVar18 = dVar13 - dVar16;
+      dVar11 = dVar14 * dVar18 + dVar11;
+      param_3[1] = (dVar20 + dVar16 + dVar13) * dVar14 * dVar18 + param_3[1];
+      *param_3 = (dVar15 + dVar17 + dVar14) * (dVar15 - dVar17) * dVar20 + *param_3;
     }
-    dVar10 = dVar11 + dVar18 + dVar10;
+    dVar11 = dVar12 + dVar19 + dVar11;
   }
-  __restfpr_26(dVar10);
-  __restgprlr_24();
-  return;
+  __restfpr_26(dVar11);
+  dVar11 = (double)__restgprlr_24();
+  return dVar11;
 }
 
 
 // 824288C8  Glass_UpdateLoopDependency  (EffectsCore/fx_glass_crack_shard.cpp:818)
 
-void Glass_UpdateLoopDependency(int param_1,uint param_2,uint param_3,int param_4)
+void Glass_UpdateLoopDependency(FxGlassShard *param_1,uint param_2,uint param_3,uchar *param_4)
 
 {
   uint uVar1;
-  undefined2 *puVar2;
+  ushort *puVar2;
   
-  if (*(char *)(param_3 + param_4) == '\0') {
+  if (param_4[param_3] == '\0') {
     return;
   }
-  uVar1 = *(uint *)(param_1 + 0x14);
+  uVar1 = param_1->loopCount;
   if (uVar1 <= param_2) {
     return;
   }
-  puVar2 = (undefined2 *)(param_2 * 8 + param_1 + 0x1e);
+  puVar2 = &param_1->loops[param_2].parentLoopIndex;
   do {
-    if (**(byte **)(puVar2 + -3) == param_3) {
-      *puVar2 = (short)uVar1;
+    if ((((FxGlassShardEdgeLoop *)(puVar2 + -3))->firstEdge->field0_0x0)._s_0.i0 == param_3) {
+      *puVar2 = (ushort)uVar1;
     }
-    uVar1 = *(uint *)(param_1 + 0x14);
+    uVar1 = param_1->loopCount;
     param_2 = param_2 + 1;
     puVar2 = puVar2 + 4;
   } while (param_2 < uVar1);
@@ -1241,65 +1300,68 @@ void Glass_UpdateLoopDependency(int param_1,uint param_2,uint param_3,int param_
 
 // 82428920  Glass_ReverseLoopsStartingAt  (EffectsCore/fx_glass_crack_shard.cpp:833)
 
-void Glass_ReverseLoopsStartingAt(int param_1,uint param_2)
+void Glass_ReverseLoopsStartingAt(FxGlassShard *param_1,uint param_2)
 
 {
   short sVar1;
-  undefined8 uVar2;
-  undefined8 *puVar3;
-  undefined8 *puVar4;
+  FxGlassShardEdgeLoop FVar2;
+  FxGlassShardEdgeLoop *pFVar3;
+  FxGlassShardEdgeLoop *pFVar4;
   uint uVar5;
   uint uVar6;
-  short *psVar7;
+  ushort *puVar7;
   
-  uVar5 = *(uint *)(param_1 + 0x14);
+  uVar5 = param_1->loopCount;
   if (uVar5 <= param_2 + 1) {
     return;
   }
   uVar6 = uVar5 - 1;
-  puVar3 = (undefined8 *)((uVar5 + 3) * 8 + param_1);
-  puVar4 = (undefined8 *)((param_2 + 2) * 8 + param_1);
+  pFVar3 = param_1->loops + uVar5;
+  pFVar4 = param_1->loops + (param_2 - 1);
   uVar5 = param_2;
   do {
     uVar5 = uVar5 + 1;
-    uVar2 = puVar4[1];
+    FVar2 = pFVar4[1];
     uVar6 = uVar6 - 1;
-    puVar4 = puVar4 + 1;
-    *puVar4 = puVar3[-1];
-    puVar3 = puVar3 + -1;
-    *puVar3 = uVar2;
+    pFVar4 = pFVar4 + 1;
+    *pFVar4 = pFVar3[-1];
+    pFVar3 = pFVar3 + -1;
+    *pFVar3 = FVar2;
   } while (uVar5 < uVar6);
-  uVar5 = *(uint *)(param_1 + 0x14);
+  uVar5 = param_1->loopCount;
   sVar1 = (short)param_2;
   if (uVar5 <= param_2) {
     return;
   }
-  psVar7 = (short *)(param_2 * 8 + param_1 + 0x1e);
+  puVar7 = &param_1->loops[param_2].parentLoopIndex;
   do {
-    if (*psVar7 != -1) {
-      *psVar7 = ((short)uVar5 + sVar1 + -1) - *psVar7;
+    if (*puVar7 != 0xffff) {
+      *puVar7 = ((short)uVar5 + sVar1 + -1) - *puVar7;
     }
     param_2 = param_2 + 1;
-    psVar7 = psVar7 + 4;
-  } while (param_2 < *(uint *)(param_1 + 0x14));
+    puVar7 = puVar7 + 4;
+  } while (param_2 < param_1->loopCount);
   return;
 }
 
 
 // 824289C0  Glass_ExtractHoleEdge  (EffectsCore/fx_glass_crack_shard.cpp:864)
 
-void Glass_ExtractHoleEdge(int param_1,undefined4 param_2,int param_3)
+void Glass_ExtractHoleEdge(FxGlassCrackEdge *param_1,FxGlassCrackEdge *param_2,uchar *param_3)
 
 {
-  *(undefined4 *)(param_1 + 0x14) = param_2;
-  *(undefined1 *)((uint)*(byte *)(param_1 + 1) + param_3) = 0xff;
+  (param_1->field0_0x0)._s_0.next = param_2;
+  param_3[(param_1->field0_0x0)._s_0.i1] = 0xff;
   return;
 }
 
 
 // 824289D8  Glass_ExtractCracksAndHolesFromLoop  (EffectsCore/fx_glass_crack_shard.cpp:872)
 
-void Glass_ExtractCracksAndHolesFromLoop(undefined8 param_1,longlong param_2,ulonglong param_3)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+bool Glass_ExtractCracksAndHolesFromLoop
+               (FxGlassCrackWork *param_1,FxGlassShard *param_2,FxGlassCrackEdge *param_3)
 
 {
   byte bVar1;
@@ -1308,280 +1370,310 @@ void Glass_ExtractCracksAndHolesFromLoop(undefined8 param_1,longlong param_2,ulo
   uint uVar4;
   int iVar5;
   byte *pbVar6;
-  int iVar7;
-  longlong lVar8;
-  uint uVar10;
-  longlong lVar9;
-  ulonglong uVar11;
+  byte *pbVar7;
+  FxGlassShard *pFVar8;
+  undefined1 uVar9;
+  ulonglong uVar10;
+  longlong lVar11;
   longlong lVar12;
-  undefined4 *puVar13;
+  uint uVar13;
   ulonglong uVar14;
-  byte *pbVar15;
-  byte *pbVar16;
-  ulonglong uVar17;
+  FxGlassShardEdgeLoop *pFVar17;
+  longlong lVar15;
+  longlong lVar16;
   ulonglong uVar18;
+  FxGlassCrackEdge *pFVar19;
+  FxGlassCrackEdge *pFVar20;
+  ulonglong uVar21;
+  ulonglong uVar22;
   byte abStack_6a0 [256];
   char acStack_5a0 [252];
   int iStack_4a4;
-  byte *local_4a0 [296];
+  FxGlassCrackEdge *local_4a0 [296];
   
-  iVar7 = __savegprlr();
-  memset(abStack_6a0,0xff,*(size_t *)(iVar7 + 0xbf4));
-  iVar7 = (int)param_2;
-  uVar4 = *(uint *)(iVar7 + 0x14);
-  uVar17 = 0;
-  uVar14 = param_3;
-  pbVar15 = (byte *)0x0;
+  uVar10 = (ulonglong)(int)param_3;
+  lVar16 = (longlong)(int)param_2;
+  __savegprlr();
+  memset();
+  pFVar8 = (FxGlassShard *)lVar16;
+  uVar4 = pFVar8->loopCount;
+  uVar21 = 0;
+  uVar18 = uVar10;
+  pFVar19 = (FxGlassCrackEdge *)0x0;
   do {
-    pbVar6 = (byte *)uVar14;
-    uVar14 = (ulonglong)*(uint *)(pbVar6 + 0x14);
-    bVar2 = abStack_6a0[pbVar6[1]];
-    uVar18 = (ulonglong)bVar2;
-    if (uVar18 == (uVar17 - 2 & 0xffffffff)) {
-      uVar18 = uVar17 - 1;
-      if ((ulonglong)abStack_6a0[*pbVar6] != (uVar18 & 0xffffffff)) {
-        MyAssertHandler(0xffffffff820643d0,899,0,0xffffffff82000f98,0xffffffff82064548);
+    pbVar7 = (byte *)uVar18;
+    uVar18 = (ulonglong)*(uint *)(pbVar7 + 0x14);
+    bVar2 = abStack_6a0[pbVar7[1]];
+    uVar22 = (ulonglong)bVar2;
+    if (uVar22 == (uVar21 - 2 & 0xffffffff)) {
+      uVar22 = uVar21 - 1;
+      if ((ulonglong)abStack_6a0[*pbVar7] != (uVar22 & 0xffffffff)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack_shard.cpp"
+                        ,899,0,"%s");
       }
-      iVar5 = (int)((uVar18 & 0xffffffff) << 2);
-      pbVar16 = *(byte **)((int)local_4a0 + iVar5);
-      abStack_6a0[*pbVar6] = 0xff;
-      *(byte **)(pbVar16 + 0x14) = pbVar15;
-      if ((pbVar16[1] != *pbVar6) || (*pbVar16 != pbVar6[1])) {
-        MyAssertHandler(0xffffffff820643d0,0x387,0,0xffffffff82000f98,0xffffffff82064578);
+      iVar5 = (int)((uVar22 & 0xffffffff) << 2);
+      pFVar20 = *(FxGlassCrackEdge **)((int)local_4a0 + iVar5);
+      abStack_6a0[*pbVar7] = 0xff;
+      (pFVar20->field0_0x0)._s_0.next = pFVar19;
+      if (((pFVar20->field0_0x0)._s_0.i1 != *pbVar7) || ((pFVar20->field0_0x0)._s_0.i0 != pbVar7[1])
+         ) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack_shard.cpp"
+                        ,0x387,0,"%s");
       }
-      if (*(byte *)(*(int *)((int)&iStack_4a4 + iVar5) + 1) != pbVar6[1]) {
-        MyAssertHandler(0xffffffff820643d0,0x388,0,0xffffffff82000f98,0xffffffff820645bc);
+      if (*(byte *)(*(int *)((int)&iStack_4a4 + iVar5) + 1) != pbVar7[1]) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack_shard.cpp"
+                        ,0x388,0,"%s");
       }
-      if (acStack_5a0[pbVar6[1]] != '\0') {
-        if (*(int *)(iVar7 + 0x98) != 0x40) {
-          *(byte **)((*(int *)(iVar7 + 0x98) + 0x27) * 4 + iVar7) = pbVar16;
-          *(int *)(iVar7 + 0x98) = *(int *)(iVar7 + 0x98) + 1;
+      if (acStack_5a0[pbVar7[1]] != '\0') {
+        if (pFVar8->crackCount != 0x40) {
+          pFVar8->cracks[pFVar8->crackCount] = pFVar20;
+          pFVar8->crackCount = pFVar8->crackCount + 1;
         }
-        pbVar16 = (byte *)0x0;
+        pFVar20 = (FxGlassCrackEdge *)0x0;
       }
     }
     else {
-      pbVar16 = pbVar15;
-      if (pbVar15 != (byte *)0x0) {
-        if (*(int *)(iVar7 + 0x98) != 0x40) {
-          *(byte **)((*(int *)(iVar7 + 0x98) + 0x27) * 4 + iVar7) = pbVar15;
-          *(int *)(iVar7 + 0x98) = *(int *)(iVar7 + 0x98) + 1;
+      pFVar20 = pFVar19;
+      if (pFVar19 != (FxGlassCrackEdge *)0x0) {
+        if (pFVar8->crackCount != 0x40) {
+          pFVar8->cracks[pFVar8->crackCount] = pFVar19;
+          pFVar8->crackCount = pFVar8->crackCount + 1;
         }
-        pbVar16 = (byte *)0x0;
+        pFVar20 = (FxGlassCrackEdge *)0x0;
       }
-      if (uVar18 == 0xff) {
-        if (0xfe < (uVar17 & 0xffffffff)) {
-          MyAssertHandler(0xffffffff820643d0,0x3a1,0,0xffffffff820645e8,uVar17,0xff);
+      if (uVar22 == 0xff) {
+        if (0xfe < (uVar21 & 0xffffffff)) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack_shard.cpp"
+                          ,0x3a1,0,
+                          "borderCount doesn\'t index ARRAY_COUNT( border )\n\t%i not in [0, %i)");
         }
-        bVar2 = pbVar6[1];
-        uVar18 = uVar17 + 1;
-        abStack_6a0[bVar2] = (byte)uVar17;
+        bVar2 = pbVar7[1];
+        uVar22 = uVar21 + 1;
+        abStack_6a0[bVar2] = (byte)uVar21;
         acStack_5a0[bVar2] = '\0';
-        *(byte **)((int)local_4a0 + (int)((uVar17 & 0xffffffff) << 2)) = pbVar6;
+        *(byte **)((int)local_4a0 + (int)((uVar21 & 0xffffffff) << 2)) = pbVar7;
       }
       else {
-        if ((*(int *)(iVar7 + 0x14) == 0x10) || ((uVar17 & 0xffffffff) == 0)) goto LAB_82428ec0;
-        if ((uVar17 - 2 & 0xffffffff) <= uVar18) {
-          MyAssertHandler(0xffffffff820643d0,0x3b0,0,0xffffffff82000f98,0xffffffff8206462c);
+        if ((pFVar8->loopCount == 0x10) || ((uVar21 & 0xffffffff) == 0)) goto LAB_82428ec0;
+        if ((uVar21 - 2 & 0xffffffff) <= uVar22) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack_shard.cpp"
+                          ,0x3b0,0,"%s");
         }
-        uVar11 = uVar18 + 2;
-        if (uVar11 < (uVar17 & 0xffffffff)) {
-          lVar8 = uVar17 - uVar11;
-          lVar9 = uVar11 * 4 + (ZEXT48(&stack0x00000000) - 0x4a0);
+        uVar14 = uVar22 + 2;
+        if (uVar14 < (uVar21 & 0xffffffff)) {
+          lVar11 = uVar21 - uVar14;
+          lVar12 = uVar14 * 4 + (ZEXT48(&stack0x00000000) - 0x4a0);
           do {
-            iVar5 = ((undefined4 *)lVar9)[-1];
-            pbVar15 = (byte *)*(undefined4 *)lVar9;
-            *(byte **)(iVar5 + 0x14) = pbVar15;
-            bVar1 = *pbVar15;
+            iVar5 = ((undefined4 *)lVar12)[-1];
+            pbVar6 = (byte *)*(undefined4 *)lVar12;
+            *(byte **)(iVar5 + 0x14) = pbVar6;
+            bVar1 = *pbVar6;
             abStack_6a0[*(byte *)(iVar5 + 1)] = 0xff;
-            if ((acStack_5a0[bVar1] != '\0') && (uVar4 < *(uint *)(iVar7 + 0x14))) {
-              lVar12 = ((ulonglong)uVar4 & 0x1fffffff) * 8 + param_2 + 0x1e;
-              uVar10 = uVar4;
+            if ((acStack_5a0[bVar1] != '\0') && (uVar4 < pFVar8->loopCount)) {
+              lVar15 = ((ulonglong)uVar4 & 0x1fffffff) * 8 + lVar16 + 0x1e;
+              uVar13 = uVar4;
               do {
-                if (**(byte **)((undefined2 *)lVar12 + -3) == bVar1) {
-                  *(undefined2 *)lVar12 = (short)*(undefined4 *)(iVar7 + 0x14);
+                if (**(byte **)((undefined2 *)lVar15 + -3) == bVar1) {
+                  *(undefined2 *)lVar15 = (short)pFVar8->loopCount;
                 }
-                uVar10 = uVar10 + 1;
-                lVar12 = lVar12 + 8;
-              } while (uVar10 < *(uint *)(iVar7 + 0x14));
+                uVar13 = uVar13 + 1;
+                lVar15 = lVar15 + 8;
+              } while (uVar13 < pFVar8->loopCount);
             }
-            lVar9 = lVar9 + 4;
-            lVar8 = lVar8 + -1;
-          } while (lVar8 != 0);
+            lVar12 = lVar12 + 4;
+            lVar11 = lVar11 + -1;
+          } while (lVar11 != 0);
         }
-        iVar5 = *(int *)((int)&iStack_4a4 + (int)((uVar17 & 0xffffffff) << 2));
-        *(byte **)(iVar5 + 0x14) = pbVar6;
-        bVar1 = *pbVar6;
+        iVar5 = *(int *)((int)&iStack_4a4 + (int)((uVar21 & 0xffffffff) << 2));
+        *(byte **)(iVar5 + 0x14) = pbVar7;
+        bVar1 = *pbVar7;
         abStack_6a0[*(byte *)(iVar5 + 1)] = 0xff;
-        if ((acStack_5a0[bVar1] != '\0') && (uVar4 < *(uint *)(iVar7 + 0x14))) {
-          lVar8 = ((ulonglong)uVar4 & 0x1fffffff) * 8 + param_2 + 0x1e;
-          uVar10 = uVar4;
+        if ((acStack_5a0[bVar1] != '\0') && (uVar4 < pFVar8->loopCount)) {
+          lVar11 = ((ulonglong)uVar4 & 0x1fffffff) * 8 + lVar16 + 0x1e;
+          uVar13 = uVar4;
           do {
-            if (**(byte **)((undefined2 *)lVar8 + -3) == bVar1) {
-              *(undefined2 *)lVar8 = (short)*(undefined4 *)(iVar7 + 0x14);
+            if (**(byte **)((undefined2 *)lVar11 + -3) == bVar1) {
+              *(undefined2 *)lVar11 = (short)pFVar8->loopCount;
             }
-            uVar10 = uVar10 + 1;
-            lVar8 = lVar8 + 8;
-          } while (uVar10 < *(uint *)(iVar7 + 0x14));
+            uVar13 = uVar13 + 1;
+            lVar11 = lVar11 + 8;
+          } while (uVar13 < pFVar8->loopCount);
         }
-        bVar1 = pbVar6[1];
+        bVar1 = pbVar7[1];
         cVar3 = acStack_5a0[bVar1];
-        *(byte **)(pbVar6 + 0x14) = local_4a0[bVar2 + 1];
-        if ((cVar3 != '\0') && (uVar4 < *(uint *)(iVar7 + 0x14))) {
-          lVar8 = ((ulonglong)uVar4 & 0x1fffffff) * 8 + param_2 + 0x1e;
-          uVar10 = uVar4;
+        *(FxGlassCrackEdge **)(pbVar7 + 0x14) = local_4a0[bVar2 + 1];
+        if ((cVar3 != '\0') && (uVar4 < pFVar8->loopCount)) {
+          lVar11 = ((ulonglong)uVar4 & 0x1fffffff) * 8 + lVar16 + 0x1e;
+          uVar13 = uVar4;
           do {
-            if (**(byte **)((undefined2 *)lVar8 + -3) == bVar1) {
-              *(undefined2 *)lVar8 = (short)*(undefined4 *)(iVar7 + 0x14);
+            if (**(byte **)((undefined2 *)lVar11 + -3) == bVar1) {
+              *(undefined2 *)lVar11 = (short)pFVar8->loopCount;
             }
-            uVar10 = uVar10 + 1;
-            lVar8 = lVar8 + 8;
-          } while (uVar10 < *(uint *)(iVar7 + 0x14));
+            uVar13 = uVar13 + 1;
+            lVar11 = lVar11 + 8;
+          } while (uVar13 < pFVar8->loopCount);
         }
-        if (0xf < *(uint *)(iVar7 + 0x14)) {
-          MyAssertHandler(0xffffffff820643d0,0x3bc,0,
+        if (0xf < pFVar8->loopCount) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack_shard.cpp"
+                          ,0x3bc,0,
                           "shard->loopCount doesn\'t index ARRAY_COUNT( shard->loops )\n\t%i not in [0, %i)"
-                          ,*(uint *)(iVar7 + 0x14),0x10);
+                         );
         }
-        iVar5 = *(int *)(iVar7 + 0x14);
-        pbVar15 = *(byte **)(pbVar6 + 0x14);
-        *(int *)(iVar7 + 0x14) = iVar5 + 1;
-        bVar1 = *pbVar15;
-        puVar13 = (undefined4 *)((iVar5 + 3) * 8 + iVar7);
-        uVar18 = uVar18 + 1;
-        *puVar13 = pbVar15;
-        *(ushort *)(puVar13 + 1) = (short)uVar17 - (ushort)bVar2;
-        *(undefined2 *)((int)puVar13 + 6) = 0xffff;
+        uVar13 = pFVar8->loopCount;
+        pFVar19 = *(FxGlassCrackEdge **)(pbVar7 + 0x14);
+        pFVar8->loopCount = uVar13 + 1;
+        bVar1 = (pFVar19->field0_0x0)._s_0.i0;
+        pFVar17 = pFVar8->loops + uVar13;
+        uVar22 = uVar22 + 1;
+        pFVar17->firstEdge = pFVar19;
+        pFVar17->vertCount = (short)uVar21 - (ushort)bVar2;
+        pFVar17->parentLoopIndex = 0xffff;
         acStack_5a0[bVar1] = '\x01';
       }
     }
-    uVar17 = uVar18;
-    pbVar15 = pbVar16;
-  } while (uVar14 != (param_3 & 0xffffffff));
-  if ((uVar18 & 0xffffffff) < 2) {
-    MyAssertHandler(0xffffffff820643d0,0x3cc,0,0xffffffff82000f98,0xffffffff82064534);
+    uVar21 = uVar22;
+    pFVar19 = pFVar20;
+  } while (uVar18 != (uVar10 & 0xffffffff));
+  if ((uVar22 & 0xffffffff) < 2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack_shard.cpp"
+                    ,0x3cc,0,"%s");
   }
-  if ((uVar18 & 0xffffffff) == 2) {
-    if ((*local_4a0[0] != local_4a0[1][1]) || (local_4a0[0][1] != *local_4a0[1])) {
-      MyAssertHandler(0xffffffff820643d0,0x3cf,0,0xffffffff82000f98,0xffffffff820644f0);
+  if ((uVar22 & 0xffffffff) == 2) {
+    if (((local_4a0[0]->field0_0x0)._s_0.i0 != (local_4a0[1]->field0_0x0)._s_0.i1) ||
+       ((local_4a0[0]->field0_0x0)._s_0.i1 != (local_4a0[1]->field0_0x0)._s_0.i0)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack_shard.cpp"
+                      ,0x3cf,0,"%s");
     }
-    iVar5 = *(int *)(iVar7 + 0x98);
-    *(byte **)(local_4a0[1] + 0x14) = pbVar16;
-    if (iVar5 != 0x40) {
-      *(byte **)((iVar5 + 0x27) * 4 + iVar7) = local_4a0[1];
-      *(int *)(iVar7 + 0x98) = *(int *)(iVar7 + 0x98) + 1;
+    uVar13 = pFVar8->crackCount;
+    (local_4a0[1]->field0_0x0)._s_0.next = pFVar20;
+    if (uVar13 != 0x40) {
+      pFVar8->cracks[uVar13] = local_4a0[1];
+      pFVar8->crackCount = pFVar8->crackCount + 1;
     }
   }
   else {
-    if (*(int *)(iVar7 + 0x14) == 0x10) {
+    if (pFVar8->loopCount == 0x10) {
 LAB_82428ec0:
-      __restgprlr(0);
-      return;
+      uVar9 = 0;
+      __restgprlr();
+      return (bool)uVar9;
     }
-    if ((pbVar16 != (byte *)0x0) && (*(int *)(iVar7 + 0x98) != 0x40)) {
-      *(byte **)((*(int *)(iVar7 + 0x98) + 0x27) * 4 + iVar7) = pbVar16;
-      *(int *)(iVar7 + 0x98) = *(int *)(iVar7 + 0x98) + 1;
+    if ((pFVar20 != (FxGlassCrackEdge *)0x0) && (pFVar8->crackCount != 0x40)) {
+      pFVar8->cracks[pFVar8->crackCount] = pFVar20;
+      pFVar8->crackCount = pFVar8->crackCount + 1;
     }
-    if (1 < (uVar18 & 0xffffffff)) {
-      lVar9 = uVar18 - 1;
-      lVar8 = ZEXT48(&stack0x00000000) - 0x49c;
+    if (1 < (uVar22 & 0xffffffff)) {
+      lVar12 = uVar22 - 1;
+      lVar11 = ZEXT48(&stack0x00000000) - 0x49c;
       do {
-        pbVar15 = (byte *)*(undefined4 *)lVar8;
-        *(byte **)(((undefined4 *)lVar8)[-1] + 0x14) = pbVar15;
-        bVar2 = *pbVar15;
-        if ((acStack_5a0[bVar2] != '\0') && (uVar4 < *(uint *)(iVar7 + 0x14))) {
-          lVar12 = ((ulonglong)uVar4 & 0x1fffffff) * 8 + param_2 + 0x1e;
-          uVar10 = uVar4;
+        pbVar7 = (byte *)*(undefined4 *)lVar11;
+        *(byte **)(((undefined4 *)lVar11)[-1] + 0x14) = pbVar7;
+        bVar2 = *pbVar7;
+        if ((acStack_5a0[bVar2] != '\0') && (uVar4 < pFVar8->loopCount)) {
+          lVar15 = ((ulonglong)uVar4 & 0x1fffffff) * 8 + lVar16 + 0x1e;
+          uVar13 = uVar4;
           do {
-            if (**(byte **)((undefined2 *)lVar12 + -3) == bVar2) {
-              *(undefined2 *)lVar12 = (short)*(undefined4 *)(iVar7 + 0x14);
+            if (**(byte **)((undefined2 *)lVar15 + -3) == bVar2) {
+              *(undefined2 *)lVar15 = (short)pFVar8->loopCount;
             }
-            uVar10 = uVar10 + 1;
-            lVar12 = lVar12 + 8;
-          } while (uVar10 < *(uint *)(iVar7 + 0x14));
+            uVar13 = uVar13 + 1;
+            lVar15 = lVar15 + 8;
+          } while (uVar13 < pFVar8->loopCount);
         }
-        lVar8 = lVar8 + 4;
-        lVar9 = lVar9 + -1;
-      } while (lVar9 != 0);
+        lVar11 = lVar11 + 4;
+        lVar12 = lVar12 + -1;
+      } while (lVar12 != 0);
     }
-    *(byte **)(*(int *)((int)&iStack_4a4 + (int)((uVar18 & 0xffffffff) << 2)) + 0x14) = local_4a0[0]
-    ;
-    bVar2 = *local_4a0[0];
-    if ((acStack_5a0[bVar2] != '\0') && (uVar4 < *(uint *)(iVar7 + 0x14))) {
-      lVar8 = ((ulonglong)uVar4 & 0x1fffffff) * 8 + param_2 + 0x1e;
-      uVar10 = uVar4;
+    *(FxGlassCrackEdge **)(*(int *)((int)&iStack_4a4 + (int)((uVar22 & 0xffffffff) << 2)) + 0x14) =
+         local_4a0[0];
+    bVar2 = (local_4a0[0]->field0_0x0)._s_0.i0;
+    if ((acStack_5a0[bVar2] != '\0') && (uVar4 < pFVar8->loopCount)) {
+      lVar16 = ((ulonglong)uVar4 & 0x1fffffff) * 8 + lVar16 + 0x1e;
+      uVar13 = uVar4;
       do {
-        if (**(byte **)((undefined2 *)lVar8 + -3) == bVar2) {
-          *(undefined2 *)lVar8 = (short)*(undefined4 *)(iVar7 + 0x14);
+        if (**(byte **)((undefined2 *)lVar16 + -3) == bVar2) {
+          *(undefined2 *)lVar16 = (short)pFVar8->loopCount;
         }
-        uVar10 = uVar10 + 1;
-        lVar8 = lVar8 + 8;
-      } while (uVar10 < *(uint *)(iVar7 + 0x14));
+        uVar13 = uVar13 + 1;
+        lVar16 = lVar16 + 8;
+      } while (uVar13 < pFVar8->loopCount);
     }
-    if (0xf < *(uint *)(iVar7 + 0x14)) {
-      MyAssertHandler(0xffffffff820643d0,0x3ee,0,
+    if (0xf < pFVar8->loopCount) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack_shard.cpp"
+                      ,0x3ee,0,
                       "shard->loopCount doesn\'t index ARRAY_COUNT( shard->loops )\n\t%i not in [0, %i)"
-                      ,*(uint *)(iVar7 + 0x14),0x10);
+                     );
     }
-    iVar5 = *(int *)(iVar7 + 0x14);
-    *(int *)(iVar7 + 0x14) = iVar5 + 1;
-    puVar13 = (undefined4 *)((iVar5 + 3) * 8 + iVar7);
-    *puVar13 = local_4a0[0];
-    *(short *)(puVar13 + 1) = (short)uVar18;
-    *(undefined2 *)((int)puVar13 + 6) = 0xffff;
+    uVar13 = pFVar8->loopCount;
+    pFVar8->loopCount = uVar13 + 1;
+    pFVar17 = pFVar8->loops + uVar13;
+    pFVar17->firstEdge = local_4a0[0];
+    pFVar17->vertCount = (ushort)uVar22;
+    pFVar17->parentLoopIndex = 0xffff;
   }
-  Glass_ReverseLoopsStartingAt(param_2,uVar4);
-  __restgprlr(1);
-  return;
+  Glass_ReverseLoopsStartingAt(pFVar8,uVar4);
+  uVar9 = 1;
+  __restgprlr();
+  return (bool)uVar9;
 }
 
 
 // 82429068  Glass_ExtractShardCracksAndHoles  (EffectsCore/fx_glass_crack_shard.cpp:1020)
 
-void Glass_ExtractShardCracksAndHoles
-               (undefined8 param_1,undefined8 param_2,longlong param_3,uint param_4)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+bool Glass_ExtractShardCracksAndHoles
+               (FxGlassCrackWork *param_1,FxGlassShard *param_2,FxGlassCrackEdge **param_3,
+               uint param_4)
 
 {
-  undefined8 uVar1;
-  char cVar2;
-  uint uVar3;
+  FxGlassCrackWork *pFVar1;
+  bool bVar2;
+  undefined1 uVar3;
+  ulonglong uVar4;
+  ulonglong uVar5;
+  longlong lVar6;
   
-  uVar1 = __savegprlr_27();
-  uVar3 = 0;
-  *(undefined4 *)((int)param_2 + 0x14) = 0;
-  *(undefined4 *)((int)param_2 + 0x98) = 0;
-  if (param_4 != 0) {
+  uVar4 = (ulonglong)(int)param_4;
+  lVar6 = (longlong)(int)param_3;
+  pFVar1 = (FxGlassCrackWork *)__savegprlr_27(param_1);
+  uVar5 = 0;
+  param_2->loopCount = 0;
+  param_2->crackCount = 0;
+  if ((uVar4 & 0xffffffff) != 0) {
     do {
-      cVar2 = Glass_ExtractCracksAndHolesFromLoop(uVar1,param_2,*(undefined4 *)param_3);
-      if (cVar2 == '\0') {
-        __restgprlr_27(0);
-        return;
+      bVar2 = Glass_ExtractCracksAndHolesFromLoop
+                        (pFVar1,param_2,(FxGlassCrackEdge *)*(undefined4 *)lVar6);
+      if (!bVar2) {
+        uVar3 = __restgprlr_27(0);
+        return (bool)uVar3;
       }
-      uVar3 = uVar3 + 1;
-      param_3 = param_3 + 4;
-    } while (uVar3 < param_4);
+      uVar5 = uVar5 + 1;
+      lVar6 = lVar6 + 4;
+    } while ((uVar5 & 0xffffffff) < (uVar4 & 0xffffffff));
   }
-  __restgprlr_27(1);
-  return;
+  uVar3 = __restgprlr_27(1);
+  return (bool)uVar3;
 }
 
 
 // 824290E0  Glass_AssertValidLoopOrder  (EffectsCore/fx_glass_crack_shard.cpp:1037)
 
-void Glass_AssertValidLoopOrder(void)
+void Glass_AssertValidLoopOrder(FxGlassShard *param_1)
 
 {
   int iVar1;
   ushort *puVar2;
   uint uVar3;
   
-  iVar1 = __savegprlr_26();
+  iVar1 = __savegprlr_26(param_1);
   uVar3 = 0;
   if (*(int *)(iVar1 + 0x14) != 0) {
     puVar2 = (ushort *)(iVar1 + 0x1e);
     do {
       if ((*puVar2 != 0xffff) && (uVar3 <= *puVar2)) {
-        MyAssertHandler(0xffffffff820643d0,0x415,0,0xffffffff82000f98,0xffffffff820646a0);
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack_shard.cpp"
+                        ,0x415,0,"%s");
       }
       uVar3 = uVar3 + 1;
       puVar2 = puVar2 + 4;
@@ -1594,53 +1686,58 @@ void Glass_AssertValidLoopOrder(void)
 
 // 82429168  Glass_RotateLoops  (EffectsCore/fx_glass_crack_shard.cpp:1052)
 
-void Glass_RotateLoops(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+void Glass_RotateLoops(FxGlassShard *param_1,uint param_2,uint param_3)
 
 {
   int iVar1;
   longlong lVar2;
-  longlong lVar3;
+  ulonglong uVar3;
   ulonglong uVar4;
-  undefined8 uVar5;
-  ushort *puVar6;
-  longlong lVar7;
-  ulonglong uVar8;
+  longlong lVar5;
+  ulonglong uVar6;
+  undefined8 uVar7;
+  ushort *puVar8;
+  longlong lVar9;
+  ulonglong uVar10;
   
-  lVar2 = __savegprlr_29();
-  if ((param_3 & 0xffffffff) <= (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff820643d0,0x421,0,0xffffffff82000f98,0xffffffff820646e8);
+  uVar4 = (ulonglong)(int)param_3;
+  uVar3 = (ulonglong)(int)param_2;
+  lVar2 = __savegprlr_29(param_1);
+  if ((uVar4 & 0xffffffff) <= (uVar3 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack_shard.cpp"
+                    ,0x421,0,"%s");
   }
-  lVar7 = (param_3 + 3 & 0x1fffffff) * 8 + lVar2;
-  uVar5 = *(undefined8 *)lVar7;
-  if ((param_2 & 0xffffffff) < (param_3 & 0xffffffff)) {
-    lVar3 = param_3 - param_2;
-    lVar7 = lVar7 + 8;
+  lVar9 = (uVar4 + 3 & 0x1fffffff) * 8 + lVar2;
+  uVar7 = *(undefined8 *)lVar9;
+  if ((uVar3 & 0xffffffff) < (uVar4 & 0xffffffff)) {
+    lVar5 = uVar4 - uVar3;
+    lVar9 = lVar9 + 8;
     do {
-      iVar1 = (int)lVar7;
-      lVar7 = lVar7 + -8;
-      *(undefined8 *)lVar7 = *(undefined8 *)(iVar1 + -0x10);
-      lVar3 = lVar3 + -1;
-    } while (lVar3 != 0);
+      iVar1 = (int)lVar9;
+      lVar9 = lVar9 + -8;
+      *(undefined8 *)lVar9 = *(undefined8 *)(iVar1 + -0x10);
+      lVar5 = lVar5 + -1;
+    } while (lVar5 != 0);
   }
-  uVar4 = param_2 + 1;
+  uVar6 = uVar3 + 1;
   iVar1 = (int)lVar2;
-  *(undefined8 *)((int)((param_2 + 3 & 0xffffffff) << 3) + iVar1) = uVar5;
-  if ((uVar4 & 0xffffffff) < (ulonglong)*(uint *)(iVar1 + 0x14)) {
-    lVar2 = (uVar4 & 0x1fffffff) * 8 + lVar2 + 0x1e;
+  *(undefined8 *)((int)((uVar3 + 3 & 0xffffffff) << 3) + iVar1) = uVar7;
+  if ((uVar6 & 0xffffffff) < (ulonglong)*(uint *)(iVar1 + 0x14)) {
+    lVar2 = (uVar6 & 0x1fffffff) * 8 + lVar2 + 0x1e;
     do {
-      puVar6 = (ushort *)lVar2;
-      uVar8 = (ulonglong)*puVar6;
-      if (uVar8 <= (param_3 & 0xffffffff)) {
-        if (uVar8 == (param_3 & 0xffffffff)) {
-          *puVar6 = (ushort)param_2;
+      puVar8 = (ushort *)lVar2;
+      uVar10 = (ulonglong)*puVar8;
+      if (uVar10 <= (uVar4 & 0xffffffff)) {
+        if (uVar10 == (uVar4 & 0xffffffff)) {
+          *puVar8 = (ushort)uVar3;
         }
-        else if ((param_2 & 0xffffffff) <= uVar8) {
-          *puVar6 = *puVar6 + 1;
+        else if ((uVar3 & 0xffffffff) <= uVar10) {
+          *puVar8 = *puVar8 + 1;
         }
       }
-      uVar4 = uVar4 + 1;
+      uVar6 = uVar6 + 1;
       lVar2 = lVar2 + 8;
-    } while ((uVar4 & 0xffffffff) < (ulonglong)*(uint *)(iVar1 + 0x14));
+    } while ((uVar6 & 0xffffffff) < (ulonglong)*(uint *)(iVar1 + 0x14));
   }
   __restgprlr_29();
   return;
@@ -1649,7 +1746,7 @@ void Glass_RotateLoops(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 // 82429248  Glass_SwapLoopParentChildRelationship_r  (EffectsCore/fx_glass_crack_shard.cpp:1079)
 
-void Glass_SwapLoopParentChildRelationship_r(undefined8 param_1,ulonglong param_2)
+uint Glass_SwapLoopParentChildRelationship_r(FxGlassShard *param_1,uint param_2)
 
 {
   char cVar1;
@@ -1658,58 +1755,64 @@ void Glass_SwapLoopParentChildRelationship_r(undefined8 param_1,ulonglong param_
   char *pcVar4;
   int iVar5;
   int iVar6;
-  int iVar7;
-  undefined2 *puVar8;
+  FxGlassShard *pFVar7;
+  uint uVar8;
   ulonglong uVar9;
+  ushort *puVar10;
+  ulonglong uVar11;
   
-  iVar7 = __savegprlr_21();
-  iVar5 = (int)((param_2 & 0xffffffff) << 3) + iVar7;
-  uVar3 = *(ushort *)(iVar5 + 0x1e);
-  uVar9 = (ulonglong)uVar3;
-  if ((param_2 & 0xffffffff) <= uVar9) {
-    MyAssertHandler(0xffffffff820643d0,0x43d,0,0xffffffff82000f98,0xffffffff82064758);
+  uVar9 = (ulonglong)(int)param_2;
+  pFVar7 = (FxGlassShard *)__savegprlr_21(param_1);
+  iVar6 = (int)((uVar9 & 0xffffffff) << 3);
+  uVar3 = *(ushort *)((int)&pFVar7->loops[0].parentLoopIndex + iVar6);
+  uVar11 = (ulonglong)uVar3;
+  if ((uVar9 & 0xffffffff) <= uVar11) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack_shard.cpp"
+                    ,0x43d,0,"%s");
   }
-  iVar6 = (uint)uVar3 * 8 + iVar7;
-  puVar8 = (undefined2 *)(iVar6 + 0x1e);
-  if (*(short *)(iVar6 + 0x1e) != -1) {
-    uVar9 = Glass_SwapLoopParentChildRelationship_r(iVar7,uVar9);
-    iVar6 = (int)uVar9 * 8 + iVar7;
-    puVar8 = (undefined2 *)(iVar6 + 0x1e);
-    if (*(short *)(iVar6 + 0x1e) != -1) {
-      MyAssertHandler(0xffffffff820643d0,0x445,0,0xffffffff82000f98,0xffffffff82064720);
+  puVar10 = &pFVar7->loops[uVar3].parentLoopIndex;
+  if (pFVar7->loops[uVar3].parentLoopIndex != 0xffff) {
+    uVar8 = Glass_SwapLoopParentChildRelationship_r(pFVar7,(uint)uVar3);
+    uVar11 = (ulonglong)(int)uVar8;
+    puVar10 = &pFVar7->loops[uVar8].parentLoopIndex;
+    if (pFVar7->loops[uVar8].parentLoopIndex != 0xffff) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack_shard.cpp"
+                      ,0x445,0,"%s");
     }
-    if ((param_2 & 0xffffffff) <= (uVar9 & 0xffffffff)) {
-      MyAssertHandler(0xffffffff820643d0,0x446,0,0xffffffff82000f98,0xffffffff82064758);
+    if ((uVar9 & 0xffffffff) <= (ulonglong)uVar8) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack_shard.cpp"
+                      ,0x446,0,"%s");
     }
   }
-  iVar6 = (int)((uVar9 + 3 & 0x1fffffff) << 3);
-  pcVar4 = *(char **)(iVar6 + iVar7);
-  cVar2 = **(char **)((int)((param_2 + 3 & 0xffffffff) << 3) + iVar7);
+  iVar5 = (int)((uVar11 + 3 & 0x1fffffff) << 3);
+  pcVar4 = *(char **)((int)pFVar7->centroid + iVar5 + -8);
+  cVar2 = **(char **)((int)pFVar7->centroid + (int)((uVar9 + 3 & 0xffffffff) << 3) + -8);
   cVar1 = *pcVar4;
   while (cVar1 != cVar2) {
     pcVar4 = *(char **)(pcVar4 + 0x14);
-    if (pcVar4 == *(char **)(iVar6 + iVar7)) {
-      MyAssertHandler(0xffffffff820643d0,0x44e,0,0xffffffff82000f98,0xffffffff820646f0);
+    if (pcVar4 == *(char **)((int)pFVar7->centroid + iVar5 + -8)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack_shard.cpp"
+                      ,0x44e,0,"%s");
     }
     cVar1 = *pcVar4;
   }
-  *(char **)(iVar6 + iVar7) = pcVar4;
-  *puVar8 = (short)param_2;
-  *(undefined2 *)(iVar5 + 0x1e) = 0xffff;
-  Glass_RotateLoops(iVar7,uVar9,param_2);
-  Glass_AssertValidLoopOrder(iVar7);
-  __restgprlr_21(uVar9);
-  return;
+  *(char **)((int)pFVar7->centroid + iVar5 + -8) = pcVar4;
+  *puVar10 = (ushort)uVar9;
+  *(undefined2 *)((int)&pFVar7->loops[0].parentLoopIndex + iVar6) = 0xffff;
+  Glass_RotateLoops(pFVar7,(uint)uVar11,(uint)uVar9);
+  Glass_AssertValidLoopOrder(pFVar7);
+  uVar8 = __restgprlr_21(uVar11);
+  return uVar8;
 }
 
 
 // 824293B8  Glass_ReorderLoops  (EffectsCore/fx_glass_crack_shard.cpp:1116)
 
-void Glass_ReorderLoops(int param_1,int param_2)
+void Glass_ReorderLoops(FxGlassShard *param_1,uint param_2)
 
 {
-  if ((*(short *)(param_2 * 8 + param_1 + 0x1e) == -1) ||
-     (param_2 = Glass_SwapLoopParentChildRelationship_r(), param_2 != 0)) {
+  if ((param_1->loops[param_2].parentLoopIndex == 0xffff) ||
+     (param_2 = Glass_SwapLoopParentChildRelationship_r(param_1,param_2), param_2 != 0)) {
     Glass_RotateLoops(param_1,0,param_2);
     Glass_AssertValidLoopOrder(param_1);
   }
@@ -1719,103 +1822,113 @@ void Glass_ReorderLoops(int param_1,int param_2)
 
 // 82429B58  Glass_SetupShard  (EffectsCore/fx_glass_crack_shard.cpp:1130)
 
-void Glass_SetupShard(undefined8 param_1,longlong param_2)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+bool Glass_SetupShard(FxGlassCrackWork *param_1,FxGlassShard *param_2)
 
 {
   bool bVar1;
-  size_t _Size;
-  float *pfVar2;
-  int iVar3;
-  float fVar4;
-  longlong lVar5;
-  float fVar6;
-  double dVar7;
+  FxGlassShard *pFVar2;
+  FxGlassCrackWork *pFVar3;
+  undefined1 uVar5;
+  uint uVar4;
+  longlong lVar6;
+  uint uVar7;
   double dVar8;
   double dVar9;
+  double dVar10;
   undefined8 local_80;
   double local_78;
   
-  iVar3 = __savegprlr_23();
-  pfVar2 = (float *)param_2;
-  fVar4 = pfVar2[5];
-  dVar7 = 0.0;
-  dVar9 = 8.0;
-  fVar6 = 0.0;
+  lVar6 = (longlong)(int)param_2;
+  pFVar3 = (FxGlassCrackWork *)__savegprlr_23(param_1);
+  pFVar2 = (FxGlassShard *)lVar6;
+  uVar4 = pFVar2->loopCount;
+  dVar8 = 0.0;
+  dVar10 = 8.0;
+  uVar7 = 0;
   local_80 = 0.0;
   local_78 = 0.0;
-  if (fVar4 != 0.0) {
-    lVar5 = param_2 + 0x18;
+  if (uVar4 != 0) {
+    lVar6 = lVar6 + 0x18;
     do {
-      dVar8 = (double)Glass_AreaX2AndScaledCentroidForEdgeLoop(iVar3,*(undefined4 *)lVar5,&local_80)
-      ;
-      dVar7 = dVar8 + dVar7;
-      if ((dVar9 < dVar8) && (bVar1 = fVar4 != pfVar2[5], dVar9 = dVar8, fVar4 = fVar6, bVar1)) {
-        MyAssertHandler(0xffffffff820643d0,0x47d,0,0xffffffff82000f98,0xffffffff82064a08);
+      dVar9 = Glass_AreaX2AndScaledCentroidForEdgeLoop
+                        (pFVar3,(FxGlassCrackEdge *)*(undefined4 *)lVar6,(double *)&local_80);
+      dVar8 = dVar9 + dVar8;
+      if ((dVar10 < dVar9) &&
+         (bVar1 = uVar4 != pFVar2->loopCount, dVar10 = dVar9, uVar4 = uVar7, bVar1)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack_shard.cpp"
+                        ,0x47d,0,"%s");
       }
-      fVar6 = (float)((int)fVar6 + 1);
-      lVar5 = lVar5 + 8;
-    } while ((uint)fVar6 < (uint)pfVar2[5]);
+      uVar7 = uVar7 + 1;
+      lVar6 = lVar6 + 8;
+    } while (uVar7 < pFVar2->loopCount);
   }
-  if (fVar4 != pfVar2[5]) {
-    if ((fVar4 != 0.0) &&
-       ((*(short *)((int)pfVar2 + (int)fVar4 * 8 + 0x1e) == -1 ||
-        (fVar4 = (float)Glass_SwapLoopParentChildRelationship_r(param_2,fVar4,fVar4), fVar4 != 0.0))
-       )) {
-      Glass_RotateLoops(param_2,0,fVar4);
-      Glass_AssertValidLoopOrder(param_2);
+  if (uVar4 != pFVar2->loopCount) {
+    if ((uVar4 != 0) &&
+       ((pFVar2->loops[uVar4].parentLoopIndex == 0xffff ||
+        (uVar4 = Glass_SwapLoopParentChildRelationship_r(pFVar2,uVar4), uVar4 != 0)))) {
+      Glass_RotateLoops(pFVar2,0,uVar4);
+      Glass_AssertValidLoopOrder(pFVar2);
     }
-    if (*(ushort *)(pfVar2 + 7) < 0x21) {
-      *pfVar2 = (float)dVar7;
-      pfVar2[2] = (float)(local_80 / (dVar7 * 3.0));
-      pfVar2[3] = (float)(local_78 / (dVar7 * 3.0));
-      Glass_PackVertex(param_2 + 8,param_2 + 0x10);
-      _Size = *(size_t *)(iVar3 + 0xbf4);
-      local_80._2_2_ = SUB42(pfVar2[4],0);
-      local_80._0_2_ = (short)((uint)pfVar2[4] >> 0x10);
-      lVar5 = (longlong)local_80._0_2_;
+    if (pFVar2->loops[0].vertCount < 0x21) {
+      pFVar2->areaX2 = (float)dVar8;
+      pFVar2->centroid[0] = (float)(local_80 / (dVar8 * 3.0));
+      pFVar2->centroid[1] = (float)(local_78 / (dVar8 * 3.0));
+      Glass_PackVertex(pFVar2->centroid,&pFVar2->packedCentroid);
+      local_80._2_2_ = (pFVar2->packedCentroid).y;
+      local_80._0_2_ = (pFVar2->packedCentroid).x;
+      lVar6 = (longlong)local_80._0_2_;
       local_80 = (double)(longlong)local_80._2_2_;
-      pfVar2[2] = (float)lVar5 * 0.03125;
-      pfVar2[3] = (float)(longlong)local_80 * 0.03125;
-      pfVar2[0xab] = 0.0;
-      *(undefined1 *)(pfVar2 + 0x67) = 0;
-      memset((void *)((int)pfVar2 + 0x19d),0xff,_Size);
-      __restgprlr_23(1);
-      return;
+      pFVar2->centroid[0] = (float)lVar6 * 0.03125;
+      pFVar2->centroid[1] = (float)(longlong)local_80 * 0.03125;
+      pFVar2->geoDataUsed = 0;
+      pFVar2->ptCount = '\0';
+      memset();
+      uVar5 = __restgprlr_23(1);
+      return (bool)uVar5;
     }
   }
-  __restgprlr_23(0);
-  return;
+  uVar5 = __restgprlr_23(0);
+  return (bool)uVar5;
 }
 
 
 // 82429420  Glass_EmitShardVertex  (EffectsCore/fx_glass_crack_shard.cpp:1178)
 
-void Glass_EmitShardVertex(undefined8 param_1,int param_2,ulonglong param_3,short *param_4)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void Glass_EmitShardVertex
+               (FxGlassCrackWork *param_1,FxGlassShard *param_2,uint param_3,FxGlassVertex *param_4)
 
 {
-  char cVar1;
+  uchar uVar1;
   short sVar2;
   short sVar3;
   int iVar4;
-  int iVar5;
+  ulonglong uVar5;
   short *psVar6;
   
-  iVar5 = __savegprlr_26();
-  if (0x7f < *(byte *)(param_2 + 0x19c)) {
-    MyAssertHandler(0xffffffff820643d0,0x49b,0,0xffffffff820647a8,*(byte *)(param_2 + 0x19c),0x80);
+  uVar5 = (ulonglong)(int)param_3;
+  iVar4 = __savegprlr_26(param_1);
+  if (0x7f < param_2->ptCount) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack_shard.cpp"
+                    ,0x49b,0,
+                    "shard->ptCount doesn\'t index GLASS_VERT_PER_PIECE_LIMIT\n\t%i not in [0, %i)")
+    ;
   }
-  iVar4 = param_2 + (int)param_3;
-  if (*(char *)(iVar4 + 0x19d) != -1) {
-    MyAssertHandler(0xffffffff820643d0,0x49c,0,0xffffffff82000f98,0xffffffff82064774);
+  if (param_2->ptIndexMap[(int)uVar5] != 0xff) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack_shard.cpp"
+                    ,0x49c,0,"%s");
   }
-  psVar6 = (short *)((int)((param_3 & 0xffffffff) << 2) + iVar5);
-  *(undefined1 *)(iVar4 + 0x19d) = *(undefined1 *)(param_2 + 0x19c);
-  sVar2 = *(short *)(param_2 + 0x10);
+  psVar6 = (short *)((int)((uVar5 & 0xffffffff) << 2) + iVar4);
+  param_2->ptIndexMap[(int)uVar5] = param_2->ptCount;
+  sVar2 = (param_2->packedCentroid).x;
   sVar3 = *psVar6;
-  cVar1 = *(char *)(param_2 + 0x19c);
-  param_4[1] = psVar6[1] - *(short *)(param_2 + 0x12);
-  *(char *)(param_2 + 0x19c) = cVar1 + '\x01';
-  *param_4 = sVar3 - sVar2;
+  uVar1 = param_2->ptCount;
+  param_4->y = psVar6[1] - (param_2->packedCentroid).y;
+  param_2->ptCount = uVar1 + '\x01';
+  param_4->x = sVar3 - sVar2;
   __restgprlr_26();
   return;
 }
@@ -1823,52 +1936,48 @@ void Glass_EmitShardVertex(undefined8 param_1,int param_2,ulonglong param_3,shor
 
 // 824294E0  Glass_PackShardBorder  (EffectsCore/fx_glass_crack_shard.cpp:1190)
 
-void Glass_PackShardBorder(undefined8 param_1,longlong param_2)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void Glass_PackShardBorder(FxGlassCrackWork *param_1,FxGlassShard *param_2)
 
 {
   byte bVar1;
-  int iVar2;
-  short *psVar3;
-  int iVar4;
-  int iVar5;
-  int iVar6;
-  uint uVar7;
-  uint uVar8;
-  undefined1 *puVar9;
-  longlong lVar10;
+  float fVar2;
+  FxGlassCrackWork *pFVar3;
+  FxGlassVertex *pFVar4;
+  uint uVar5;
+  uint uVar6;
+  FxGlassCrackEdge *pFVar7;
   
-  iVar4 = __savegprlr_23();
-  uVar8 = 0;
-  iVar2 = (int)param_2;
-  *(undefined4 *)(iVar2 + 0x29c) = 0;
-  puVar9 = *(undefined1 **)(iVar2 + 0x18);
+  pFVar3 = (FxGlassCrackWork *)__savegprlr_23(param_1);
+  uVar6 = 0;
+  param_2->supportMask = 0;
+  pFVar7 = param_2->loops[0].firstEdge;
   do {
-    if (puVar9[3] == '\0') {
-      bVar1 = *(byte *)(iVar2 + 0x19c);
-      uVar7 = *(uint *)(iVar2 + 0x29c);
+    if ((pFVar7->field0_0x0)._s_0.type == '\0') {
+      bVar1 = param_2->ptCount;
+      uVar5 = param_2->supportMask;
       if (0x20 < bVar1) {
-        MyAssertHandler(0xffffffff82003018,0x475,0,0xffffffff8205cbd0,bVar1,0x21);
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.h",
+                        0x475,0,"count doesn\'t index 33\n\t%i not in [0, %i)");
       }
-      *(uint *)(iVar2 + 0x29c) = (&DAT_82992400)[bVar1] | uVar7;
+      param_2->supportMask = *(uint *)(&g_bitShift + (uint)bVar1 * 4) | uVar5;
     }
-    lVar10 = ((ulonglong)*(byte *)(iVar2 + 0x19c) + 0xac) * 4 + param_2;
-    Glass_EmitShardVertex(iVar4,param_2,*puVar9,lVar10);
-    psVar3 = (short *)lVar10;
-    iVar6 = (int)psVar3[1];
-    iVar5 = (int)*psVar3;
-    uVar7 = iVar5 * iVar5 + iVar6 * iVar6;
-    if ((int)uVar8 < (int)uVar7) {
-      uVar8 = uVar7;
+    pFVar4 = (FxGlassVertex *)(param_2->geoData[0].asBytes + (uint)param_2->ptCount * 4);
+    Glass_EmitShardVertex(pFVar3,param_2,(uint)(pFVar7->field0_0x0)._s_0.i0,pFVar4);
+    uVar5 = (int)pFVar4->x * (int)pFVar4->x + (int)pFVar4->y * (int)pFVar4->y;
+    if ((int)uVar6 < (int)uVar5) {
+      uVar6 = uVar5;
     }
-    puVar9 = *(undefined1 **)(puVar9 + 0x14);
-  } while (puVar9 != *(undefined1 **)(iVar2 + 0x18));
-  *(float *)(iVar2 + 4) =
-       SQRT(**(float **)(iVar4 + 0x3e90) * **(float **)(iVar4 + 0x3e90) +
-            (float)uVar8 * 0.0009765625);
-  if ((ushort)*(byte *)(iVar2 + 0x19c) != *(ushort *)(iVar2 + 0x1c)) {
-    MyAssertHandler(0xffffffff820643d0,0x4c5,0,0xffffffff82000f98,0xffffffff820647f4);
+    pFVar7 = (pFVar7->field0_0x0)._s_0.next;
+  } while (pFVar7 != param_2->loops[0].firstEdge);
+  fVar2 = pFVar3->def->halfThickness;
+  param_2->radius = SQRT(fVar2 * fVar2 + (float)uVar6 * 0.0009765625);
+  if ((ushort)param_2->ptCount != param_2->loops[0].vertCount) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack_shard.cpp"
+                    ,0x4c5,0,"%s");
   }
-  *(uint *)(iVar2 + 0x2ac) = (uint)*(byte *)(iVar2 + 0x19c) + *(int *)(iVar2 + 0x2ac);
+  param_2->geoDataUsed = (uint)param_2->ptCount + param_2->geoDataUsed;
   __restgprlr_23();
   return;
 }
@@ -1876,186 +1985,203 @@ void Glass_PackShardBorder(undefined8 param_1,longlong param_2)
 
 // 82429640  Glass_PackShardHoles  (EffectsCore/fx_glass_crack_shard.cpp:1227)
 
-void Glass_PackShardHoles(undefined8 param_1,longlong param_2)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+bool Glass_PackShardHoles(FxGlassCrackWork *param_1,FxGlassShard *param_2)
 
 {
   byte bVar1;
   ushort uVar2;
-  int iVar3;
-  undefined8 uVar4;
-  char cVar5;
-  uint uVar6;
+  FxGlassShard *pFVar3;
+  FxGlassCrackWork *pFVar4;
+  bool bVar5;
+  undefined1 uVar6;
   longlong lVar7;
-  undefined4 *puVar8;
-  byte *pbVar9;
-  ulonglong uVar10;
-  ushort *puVar11;
+  uint uVar8;
+  longlong lVar9;
+  undefined4 *puVar10;
+  byte *pbVar11;
+  ulonglong uVar12;
+  ushort *puVar13;
   
-  uVar4 = __savegprlr_17();
-  iVar3 = (int)param_2;
-  cVar5 = Glass_IsEdgeLoopBackwards(uVar4,*(undefined4 *)(iVar3 + 0x18));
-  if (cVar5 != '\0') {
-    MyAssertHandler(0xffffffff820643d0,0x4d1,0,0xffffffff82000f98,0xffffffff820648fc);
+  lVar7 = (longlong)(int)param_2;
+  pFVar4 = (FxGlassCrackWork *)__savegprlr_17(param_1);
+  pFVar3 = (FxGlassShard *)lVar7;
+  bVar5 = Glass_IsEdgeLoopBackwards(pFVar4,pFVar3->loops[0].firstEdge);
+  if (bVar5) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack_shard.cpp"
+                    ,0x4d1,0,"%s");
   }
-  uVar6 = 1;
-  *(undefined4 *)(iVar3 + 0x2a0) = 0;
-  uVar10 = ((ulonglong)*(uint *)(iVar3 + 0x2ac) + 0xac & 0x3fffffff) * 4 + param_2;
-  if (1 < *(uint *)(iVar3 + 0x14)) {
-    lVar7 = param_2 + 0x20;
+  uVar8 = 1;
+  pFVar3->holeDataCount = 0;
+  uVar12 = ((ulonglong)pFVar3->geoDataUsed + 0xac & 0x3fffffff) * 4 + lVar7;
+  if (1 < pFVar3->loopCount) {
+    lVar9 = lVar7 + 0x20;
     do {
-      puVar8 = (undefined4 *)lVar7;
-      cVar5 = Glass_IsEdgeLoopBackwards(uVar4,*puVar8);
-      if (cVar5 == '\0') {
-        MyAssertHandler(0xffffffff820643d0,0x4d8,0,0xffffffff82000f98,0xffffffff82064820);
+      puVar10 = (undefined4 *)lVar9;
+      bVar5 = Glass_IsEdgeLoopBackwards(pFVar4,(FxGlassCrackEdge *)*puVar10);
+      if (!bVar5) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack_shard.cpp"
+                        ,0x4d8,0,"%s");
       }
-      pbVar9 = (byte *)*puVar8;
-      cVar5 = *(char *)((uint)*pbVar9 + iVar3 + 0x19d);
-      puVar11 = (ushort *)uVar10;
-      if (*(short *)((int)puVar8 + 6) == -1) {
-        if (cVar5 != -1) {
-          MyAssertHandler(0xffffffff820643d0,0x4dc,0,0xffffffff82000f98,0xffffffff82064854);
+      pbVar11 = (byte *)*puVar10;
+      puVar13 = (ushort *)uVar12;
+      if (*(short *)((int)puVar10 + 6) == -1) {
+        if (pFVar3->ptIndexMap[*pbVar11] != 0xff) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack_shard.cpp"
+                          ,0x4dc,0,"%s");
         }
-        uVar2 = *(ushort *)(puVar8 + 1);
-        *(undefined1 *)(puVar11 + 1) = 0xff;
-        *puVar11 = uVar2;
+        uVar2 = *(ushort *)(puVar10 + 1);
+        *(undefined1 *)(puVar13 + 1) = 0xff;
+        *puVar13 = uVar2;
       }
       else {
-        if (cVar5 == -1) {
-          MyAssertHandler(0xffffffff820643d0,0x4e5,0,0xffffffff82000f98,0xffffffff82064890);
+        if (pFVar3->ptIndexMap[*pbVar11] == 0xff) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack_shard.cpp"
+                          ,0x4e5,0,"%s");
         }
-        bVar1 = *pbVar9;
-        pbVar9 = *(byte **)(pbVar9 + 0x14);
-        *puVar11 = *(short *)(puVar8 + 1) - 1;
-        *(undefined1 *)(puVar11 + 1) = *(undefined1 *)((uint)bVar1 + iVar3 + 0x19d);
+        bVar1 = *pbVar11;
+        pbVar11 = *(byte **)(pbVar11 + 0x14);
+        *puVar13 = *(short *)(puVar10 + 1) - 1;
+        *(uchar *)(puVar13 + 1) = pFVar3->ptIndexMap[bVar1];
       }
-      *(undefined1 *)((int)puVar11 + 3) = 0;
-      if (0x80 < (uint)*(byte *)(iVar3 + 0x19c) + (uint)*puVar11) {
-        __restgprlr_17(0);
-        return;
+      *(undefined1 *)((int)puVar13 + 3) = 0;
+      if (0x80 < (uint)pFVar3->ptCount + (uint)*puVar13) {
+        uVar6 = __restgprlr_17(0);
+        return (bool)uVar6;
       }
-      *(uint *)(iVar3 + 0x2ac) = *(int *)(iVar3 + 0x2ac) + (uint)*puVar11 + 1;
-      uVar10 = uVar10 + 4;
-      *(uint *)(iVar3 + 0x2a0) = (uint)*puVar11 + *(int *)(iVar3 + 0x2a0) + 1;
+      pFVar3->geoDataUsed = pFVar3->geoDataUsed + (uint)*puVar13 + 1;
+      uVar12 = uVar12 + 4;
+      pFVar3->holeDataCount = (uint)*puVar13 + pFVar3->holeDataCount + 1;
       do {
-        Glass_EmitShardVertex(uVar4,param_2,*pbVar9,uVar10);
-        uVar10 = uVar10 + 4;
-        pbVar9 = *(byte **)(pbVar9 + 0x14);
-      } while (pbVar9 != (byte *)*puVar8);
-      if ((uVar10 & 0xffffffff) !=
-          (((ulonglong)*(uint *)(iVar3 + 0x2ac) + 0xac & 0x3fffffff) * 4 + param_2 & 0xffffffff)) {
-        MyAssertHandler(0xffffffff820643d0,0x4fc,0,0xffffffff82000f98,0xffffffff820648cc);
+        Glass_EmitShardVertex(pFVar4,pFVar3,(uint)*pbVar11,(FxGlassVertex *)uVar12);
+        uVar12 = uVar12 + 4;
+        pbVar11 = *(byte **)(pbVar11 + 0x14);
+      } while (pbVar11 != (byte *)*puVar10);
+      if ((uVar12 & 0xffffffff) !=
+          (((ulonglong)pFVar3->geoDataUsed + 0xac & 0x3fffffff) * 4 + lVar7 & 0xffffffff)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack_shard.cpp"
+                        ,0x4fc,0,"%s");
       }
-      uVar6 = uVar6 + 1;
-      lVar7 = lVar7 + 8;
-    } while (uVar6 < *(uint *)(iVar3 + 0x14));
+      uVar8 = uVar8 + 1;
+      lVar9 = lVar9 + 8;
+    } while (uVar8 < pFVar3->loopCount);
   }
-  __restgprlr_17(1);
-  return;
+  uVar6 = __restgprlr_17(1);
+  return (bool)uVar6;
 }
 
 
 // 82429870  Glass_PackShardCracks  (EffectsCore/fx_glass_crack_shard.cpp:1284)
 
-void Glass_PackShardCracks(undefined8 param_1,longlong param_2)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void Glass_PackShardCracks(FxGlassCrackWork *param_1,FxGlassShard *param_2)
 
 {
   byte bVar1;
-  char cVar2;
-  int iVar3;
-  short *psVar4;
-  undefined8 uVar5;
-  longlong lVar6;
-  int iVar7;
+  uchar uVar2;
+  uint uVar3;
+  uint uVar4;
+  FxGlassShard *pFVar5;
+  short *psVar6;
+  FxGlassCrackWork *pFVar7;
   longlong lVar8;
-  int iVar9;
-  byte *pbVar10;
+  uint uVar9;
+  int iVar10;
+  byte *pbVar11;
   
-  uVar5 = __savegprlr_15();
-  iVar3 = (int)param_2;
-  *(undefined4 *)(iVar3 + 0x2a4) = 0;
-  if (*(char *)(iVar3 + 0x19c) != -0x80) {
-    iVar7 = *(int *)(iVar3 + 0x98);
-    lVar8 = ((ulonglong)*(uint *)(iVar3 + 0x2ac) + 0xac & 0x3fffffff) * 4 + param_2;
-    if (iVar7 != 0) {
-      lVar6 = ((ulonglong)(iVar7 + 0x27) & 0x3fffffff) * 4 + param_2;
+  lVar8 = (longlong)(int)param_2;
+  pFVar7 = (FxGlassCrackWork *)__savegprlr_15(param_1);
+  pFVar5 = (FxGlassShard *)lVar8;
+  pFVar5->crackDataCount = 0;
+  if (pFVar5->ptCount != 0x80) {
+    uVar3 = pFVar5->geoDataUsed;
+    uVar9 = pFVar5->crackCount;
+    if (uVar9 != 0) {
+      lVar8 = ((ulonglong)(uVar9 + 0x27) & 0x3fffffff) * 4 + lVar8;
       do {
-        lVar6 = lVar6 + -4;
-        pbVar10 = (byte *)*(undefined4 *)lVar6;
-        iVar7 = iVar7 + -1;
-        iVar9 = *(int *)(iVar3 + 0x2a4) * 4;
-        bVar1 = *pbVar10;
-        psVar4 = (short *)(iVar9 + (int)lVar8);
-        *(int *)(iVar3 + 0x2a4) = *(int *)(iVar3 + 0x2a4) + 1;
-        cVar2 = *(char *)((uint)bVar1 + iVar3 + 0x19d);
-        *(char *)(psVar4 + 1) = cVar2;
-        *(undefined1 *)((int)psVar4 + 3) = 0xff;
-        *(undefined2 *)(iVar9 + (int)lVar8) = 0;
-        if (cVar2 == -1) {
-          if (*(byte *)(iVar3 + 0x19c) < 0x7f) {
+        lVar8 = lVar8 + -4;
+        pbVar11 = (byte *)*(undefined4 *)lVar8;
+        uVar9 = uVar9 - 1;
+        uVar4 = pFVar5->crackDataCount;
+        bVar1 = *pbVar11;
+        psVar6 = (short *)(pFVar5->geoData[0].asBytes + uVar4 * 4 + uVar3 * 4);
+        pFVar5->crackDataCount = uVar4 + 1;
+        uVar2 = pFVar5->ptIndexMap[bVar1];
+        *(uchar *)(psVar6 + 1) = uVar2;
+        *(undefined1 *)((int)psVar6 + 3) = 0xff;
+        pFVar5->geoData[uVar3 + uVar4].vert.x = 0;
+        if (uVar2 == 0xff) {
+          if (pFVar5->ptCount < 0x7f) {
             Glass_EmitShardVertex
-                      (uVar5,param_2,bVar1,
-                       ((ulonglong)*(uint *)(iVar3 + 0x2a4) & 0x3fffffff) * 4 + lVar8);
-            *(int *)(iVar3 + 0x2a4) = *(int *)(iVar3 + 0x2a4) + 1;
-            *psVar4 = *psVar4 + 1;
+                      (pFVar7,pFVar5,(uint)bVar1,
+                       (FxGlassVertex *)(pFVar5->geoData + uVar3 + pFVar5->crackDataCount));
+            pFVar5->crackDataCount = pFVar5->crackDataCount + 1;
+            *psVar6 = *psVar6 + 1;
             goto LAB_82429984;
           }
-          *(uint *)(iVar3 + 0x2a4) = *(uint *)(iVar3 + 0x2a4) - 1;
+          pFVar5->crackDataCount = pFVar5->crackDataCount - 1;
         }
         else {
 LAB_82429984:
-          iVar9 = 0x80 - (uint)*(byte *)(iVar3 + 0x19c);
-          if (iVar9 < 0x1f) {
-            if (iVar9 == 0) {
-              if (*(char *)(psVar4 + 1) == -1) {
-                if (*psVar4 != 1) {
-                  MyAssertHandler(0xffffffff820643d0,0x52c,0,0xffffffff82000f98,0xffffffff8206493c);
+          iVar10 = 0x80 - (uint)pFVar5->ptCount;
+          if (iVar10 < 0x1f) {
+            if (iVar10 == 0) {
+              if (*(char *)(psVar6 + 1) == -1) {
+                if (*psVar6 != 1) {
+                  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack_shard.cpp"
+                                  ,0x52c,0,"%s");
                 }
-                if (*(char *)((uint)pbVar10[1] + iVar3 + 0x19d) != -1) {
-                  MyAssertHandler(0xffffffff820643d0,0x52d,0,0xffffffff82000f98,0xffffffff82064958);
+                if (pFVar5->ptIndexMap[pbVar11[1]] != 0xff) {
+                  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack_shard.cpp"
+                                  ,0x52d,0,"%s");
                 }
-                if ((uint)*(byte *)((uint)*pbVar10 + iVar3 + 0x19d) != *(byte *)(iVar3 + 0x19c) - 1)
-                {
-                  MyAssertHandler(0xffffffff820643d0,0x52e,0,0xffffffff82000f98,0xffffffff82064994);
+                if ((uint)pFVar5->ptIndexMap[*pbVar11] != pFVar5->ptCount - 1) {
+                  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack_shard.cpp"
+                                  ,0x52e,0,"%s");
                 }
-                *(undefined1 *)((uint)*pbVar10 + iVar3 + 0x19d) = 0xff;
-                *(int *)(iVar3 + 0x2a4) = *(int *)(iVar3 + 0x2a4) + -2;
-                *(char *)(iVar3 + 0x19c) = *(char *)(iVar3 + 0x19c) + -1;
+                pFVar5->ptIndexMap[*pbVar11] = 0xff;
+                pFVar5->crackDataCount = pFVar5->crackDataCount - 2;
+                pFVar5->ptCount = pFVar5->ptCount + 0xff;
               }
               else {
-                if (*psVar4 != 0) {
-                  MyAssertHandler(0xffffffff820643d0,0x535,0,0xffffffff82000f98,0xffffffff820649cc);
+                if (*psVar6 != 0) {
+                  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack_shard.cpp"
+                                  ,0x535,0,"%s");
                 }
-                cVar2 = *(char *)((uint)pbVar10[1] + iVar3 + 0x19d);
-                *(char *)((int)psVar4 + 3) = cVar2;
-                if (cVar2 == -1) {
-                  *(int *)(iVar3 + 0x2a4) = *(int *)(iVar3 + 0x2a4) + -1;
+                uVar2 = pFVar5->ptIndexMap[pbVar11[1]];
+                *(uchar *)((int)psVar6 + 3) = uVar2;
+                if (uVar2 == 0xff) {
+                  pFVar5->crackDataCount = pFVar5->crackDataCount - 1;
                 }
               }
               goto LAB_82429b38;
             }
           }
           else {
-            iVar9 = 0x1f;
+            iVar10 = 0x1f;
           }
-          while (*(char *)((uint)pbVar10[1] + iVar3 + 0x19d) == -1) {
+          while (pFVar5->ptIndexMap[pbVar11[1]] == 0xff) {
             Glass_EmitShardVertex
-                      (uVar5,param_2,pbVar10[1],
-                       ((ulonglong)*(uint *)(iVar3 + 0x2a4) & 0x3fffffff) * 4 + lVar8);
-            iVar9 = iVar9 + -1;
-            *(int *)(iVar3 + 0x2a4) = *(int *)(iVar3 + 0x2a4) + 1;
-            pbVar10 = *(byte **)(pbVar10 + 0x14);
-            *psVar4 = *psVar4 + 1;
-            if ((pbVar10 == (byte *)0x0) || (iVar9 == 0)) goto LAB_82429b38;
+                      (pFVar7,pFVar5,(uint)pbVar11[1],
+                       (FxGlassVertex *)(pFVar5->geoData + uVar3 + pFVar5->crackDataCount));
+            iVar10 = iVar10 + -1;
+            pFVar5->crackDataCount = pFVar5->crackDataCount + 1;
+            pbVar11 = *(byte **)(pbVar11 + 0x14);
+            *psVar6 = *psVar6 + 1;
+            if ((pbVar11 == (byte *)0x0) || (iVar10 == 0)) goto LAB_82429b38;
           }
-          if (*(int *)(pbVar10 + 0x14) != 0) {
-            MyAssertHandler(0xffffffff820643d0,0x541,0,0xffffffff82000f98,0xffffffff820649e8);
+          if (*(int *)(pbVar11 + 0x14) != 0) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack_shard.cpp"
+                            ,0x541,0,"%s");
           }
-          *(undefined1 *)((int)psVar4 + 3) = *(undefined1 *)((uint)pbVar10[1] + iVar3 + 0x19d);
+          *(uchar *)((int)psVar6 + 3) = pFVar5->ptIndexMap[pbVar11[1]];
         }
 LAB_82429b38:
-      } while (iVar7 != 0);
+      } while (uVar9 != 0);
     }
-    *(int *)(iVar3 + 0x2ac) = *(int *)(iVar3 + 0x2ac) + *(int *)(iVar3 + 0x2a4);
+    pFVar5->geoDataUsed = pFVar5->geoDataUsed + pFVar5->crackDataCount;
   }
   __restgprlr_15();
   return;
@@ -2064,30 +2190,35 @@ LAB_82429b38:
 
 // 8242A420  Glass_ConvertLoopsToPiece  (EffectsCore/fx_glass_crack_shard.cpp:1362)
 
-void Glass_ConvertLoopsToPiece(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void Glass_ConvertLoopsToPiece(FxGlassCrackWork *param_1,FxGlassCrackEdge **param_2,uint param_3)
 
 {
-  char cVar1;
-  undefined1 auStack_660 [1616];
+  bool bVar1;
+  FxGlassShard FStack_660;
   
-  cVar1 = Glass_ExtractShardCracksAndHoles(param_1,auStack_660,param_2,param_3);
-  if ((cVar1 != '\0') && (cVar1 = Glass_SetupShard(param_1,auStack_660), cVar1 != '\0')) {
-    Glass_PackShardBorder(param_1,auStack_660);
-    cVar1 = Glass_PackShardHoles(param_1,auStack_660);
-    if (cVar1 != '\0') {
-      Glass_PackShardCracks(param_1,auStack_660);
-      Glass_TriangulateShard(param_1,auStack_660);
-      Glass_FinalizeShard(param_1,auStack_660);
+  bVar1 = Glass_ExtractShardCracksAndHoles(param_1,&FStack_660,param_2,param_3);
+  if ((bVar1) && (bVar1 = Glass_SetupShard(param_1,&FStack_660), bVar1)) {
+    Glass_PackShardBorder(param_1,&FStack_660);
+    bVar1 = Glass_PackShardHoles(param_1,&FStack_660);
+    if (bVar1) {
+      Glass_PackShardCracks(param_1,&FStack_660);
+      Glass_TriangulateShard(param_1,&FStack_660);
+      Glass_FinalizeShard(param_1,&FStack_660);
     }
   }
   return;
 }
 
 
-// 8242A4C8  std::_Push_heap<unsigned_int_*,int,unsigned_int,bool_(__cdecl*)(unsigned_int,unsigned_int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2455)
+// 8242A4C8  _Push_heap<unsigned_int_*,int,unsigned_int,bool_(__cdecl*)(unsigned_int,unsigned_int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2455)
 
-void std___Push_heap<unsigned_int_*,int,unsigned_int,bool_(__cdecl*)(unsigned_int,unsigned_int)>
-               (undefined8 param_1,ulonglong param_2,int param_3,undefined4 *param_4,code *param_5)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::_Push_heap<unsigned_int_*,int,unsigned_int,bool_(__cdecl*)(unsigned_int,unsigned_int)>
+               (uint *param_1,int param_2,int param_3,uint *param_4,
+               _func___cdecl_bool_uint_uint *param_5)
 
 {
   int iVar1;
@@ -2095,253 +2226,279 @@ void std___Push_heap<unsigned_int_*,int,unsigned_int,bool_(__cdecl*)(unsigned_in
   ulonglong uVar3;
   ulonglong uVar4;
   int iVar5;
-  char cVar6;
-  uint uVar7;
+  bool bVar6;
+  ulonglong uVar7;
+  uint uVar8;
   
-  iVar5 = __savegprlr_25();
-  iVar1 = (int)param_2;
-  uVar7 = iVar1 - 1;
-  uVar4 = (longlong)((int)uVar7 >> 1) + (ulonglong)((int)uVar7 < 0 && (uVar7 & 1) != 0);
+  uVar7 = (ulonglong)param_2;
+  iVar5 = __savegprlr_25(param_1);
+  iVar1 = (int)uVar7;
+  uVar8 = iVar1 - 1;
+  uVar4 = (longlong)((int)uVar8 >> 1) + (ulonglong)((int)uVar8 < 0 && (uVar8 & 1) != 0);
   while (uVar3 = uVar4, param_3 < iVar1) {
     iVar2 = (int)((uVar3 & 0xffffffff) << 2);
-    cVar6 = (*param_5)(*(undefined4 *)(iVar2 + iVar5),*param_4);
-    if (cVar6 == '\0') break;
+    bVar6 = (*param_5)(*(uint *)(iVar2 + iVar5),*param_4);
+    if (!bVar6) break;
     iVar1 = (int)uVar3;
-    uVar7 = iVar1 - 1;
-    *(undefined4 *)((int)((param_2 & 0xffffffff) << 2) + iVar5) = *(undefined4 *)(iVar2 + iVar5);
-    uVar4 = (longlong)((int)uVar7 >> 1) + (ulonglong)((int)uVar7 < 0 && (uVar7 & 1) != 0);
-    param_2 = uVar3;
+    uVar8 = iVar1 - 1;
+    *(undefined4 *)((int)((uVar7 & 0xffffffff) << 2) + iVar5) = *(undefined4 *)(iVar2 + iVar5);
+    uVar4 = (longlong)((int)uVar8 >> 1) + (ulonglong)((int)uVar8 < 0 && (uVar8 & 1) != 0);
+    uVar7 = uVar3;
   }
-  *(undefined4 *)((int)((param_2 & 0xffffffff) << 2) + iVar5) = *param_4;
+  *(uint *)((int)((uVar7 & 0xffffffff) << 2) + iVar5) = *param_4;
   __restgprlr_25();
   return;
 }
 
 
-// 8242A558  std::_Adjust_heap<unsigned_int_*,int,unsigned_int,bool_(__cdecl*)(unsigned_int,unsigned_int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2565)
+// 8242A558  _Adjust_heap<unsigned_int_*,int,unsigned_int,bool_(__cdecl*)(unsigned_int,unsigned_int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2565)
 
-void std___Adjust_heap<unsigned_int_*,int,unsigned_int,bool_(__cdecl*)(unsigned_int,unsigned_int)>
-               (undefined8 param_1,ulonglong param_2,uint param_3,undefined4 *param_4,code *param_5)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::_Adjust_heap<unsigned_int_*,int,unsigned_int,bool_(__cdecl*)(unsigned_int,unsigned_int)>
+               (uint *param_1,int param_2,int param_3,uint *param_4,
+               _func___cdecl_bool_uint_uint *param_5)
 
 {
-  undefined4 *puVar1;
+  uint *puVar1;
   int iVar2;
   int iVar3;
-  int iVar4;
-  char cVar5;
-  uint uVar6;
-  ulonglong uVar7;
+  bool bVar4;
+  ulonglong uVar5;
+  ulonglong uVar6;
+  uint uVar7;
   ulonglong uVar8;
   ulonglong uVar9;
+  int iVar11;
+  ulonglong uVar10;
   
-  iVar4 = __savegprlr_25();
-  uVar8 = (param_2 + 1 & 0x7fffffff) << 1;
-  uVar6 = (uint)uVar8;
-  uVar7 = param_2;
-  while (uVar9 = uVar8, (int)uVar6 < (int)param_3) {
-    puVar1 = (undefined4 *)((int)(uVar9 << 2) + iVar4);
-    cVar5 = (*param_5)(*puVar1,puVar1[-1]);
-    if (cVar5 != '\0') {
-      uVar9 = uVar9 - 1;
+  uVar6 = (ulonglong)param_3;
+  uVar5 = (ulonglong)param_2;
+  iVar3 = __savegprlr_25(param_1);
+  uVar9 = (uVar5 + 1 & 0x7fffffff) << 1;
+  iVar11 = (int)uVar9;
+  uVar8 = uVar5;
+  while (uVar10 = uVar9, iVar11 < (int)uVar6) {
+    puVar1 = (uint *)((int)(uVar10 << 2) + iVar3);
+    bVar4 = (*param_5)(*puVar1,puVar1[-1]);
+    if (bVar4) {
+      uVar10 = uVar10 - 1;
     }
-    uVar8 = (uVar9 + 1 & 0x7fffffff) << 1;
-    *(undefined4 *)((int)((uVar7 & 0xffffffff) << 2) + iVar4) =
-         *(undefined4 *)((int)((uVar9 & 0xffffffff) << 2) + iVar4);
-    uVar6 = (uint)uVar8;
-    uVar7 = uVar9;
+    uVar9 = (uVar10 + 1 & 0x7fffffff) << 1;
+    *(undefined4 *)((int)((uVar8 & 0xffffffff) << 2) + iVar3) =
+         *(undefined4 *)((int)((uVar10 & 0xffffffff) << 2) + iVar3);
+    iVar11 = (int)uVar9;
+    uVar8 = uVar10;
   }
-  if (uVar6 == param_3) {
-    uVar8 = uVar7 & 0xffffffff;
-    uVar7 = (ulonglong)param_3 - 1;
-    *(undefined4 *)((int)(uVar8 << 2) + iVar4) = *(undefined4 *)(param_3 * 4 + iVar4 + -4);
+  if (iVar11 == (int)uVar6) {
+    uVar9 = uVar8 & 0xffffffff;
+    uVar8 = uVar6 - 1;
+    *(undefined4 *)((int)(uVar9 << 2) + iVar3) =
+         *(undefined4 *)((int)((uVar6 & 0xffffffff) << 2) + iVar3 + -4);
   }
-  iVar2 = (int)uVar7;
-  uVar6 = iVar2 - 1;
-  uVar8 = (longlong)((int)uVar6 >> 1) + (ulonglong)((int)uVar6 < 0 && (uVar6 & 1) != 0);
-  while (uVar9 = uVar8, (int)param_2 < iVar2) {
-    iVar3 = (int)((uVar9 & 0xffffffff) << 2);
-    cVar5 = (*param_5)(*(undefined4 *)(iVar3 + iVar4),*param_4);
-    if (cVar5 == '\0') break;
-    iVar2 = (int)uVar9;
-    uVar6 = iVar2 - 1;
-    *(undefined4 *)((int)((uVar7 & 0xffffffff) << 2) + iVar4) = *(undefined4 *)(iVar3 + iVar4);
-    uVar8 = (longlong)((int)uVar6 >> 1) + (ulonglong)((int)uVar6 < 0 && (uVar6 & 1) != 0);
-    uVar7 = uVar9;
+  iVar11 = (int)uVar8;
+  uVar7 = iVar11 - 1;
+  uVar9 = (longlong)((int)uVar7 >> 1) + (ulonglong)((int)uVar7 < 0 && (uVar7 & 1) != 0);
+  while (uVar6 = uVar9, (int)uVar5 < iVar11) {
+    iVar2 = (int)((uVar6 & 0xffffffff) << 2);
+    bVar4 = (*param_5)(*(uint *)(iVar2 + iVar3),*param_4);
+    if (!bVar4) break;
+    iVar11 = (int)uVar6;
+    uVar7 = iVar11 - 1;
+    *(undefined4 *)((int)((uVar8 & 0xffffffff) << 2) + iVar3) = *(undefined4 *)(iVar2 + iVar3);
+    uVar9 = (longlong)((int)uVar7 >> 1) + (ulonglong)((int)uVar7 < 0 && (uVar7 & 1) != 0);
+    uVar8 = uVar6;
   }
-  *(undefined4 *)((int)((uVar7 & 0xffffffff) << 2) + iVar4) = *param_4;
+  *(uint *)((int)((uVar8 & 0xffffffff) << 2) + iVar3) = *param_4;
   __restgprlr_25();
   return;
 }
 
 
-// 8242A668  std::_Make_heap<unsigned_int_*,int,unsigned_int,bool_(__cdecl*)(unsigned_int,unsigned_int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2658)
+// 8242A668  _Make_heap<unsigned_int_*,int,unsigned_int,bool_(__cdecl*)(unsigned_int,unsigned_int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2658)
 
-void std___Make_heap<unsigned_int_*,int,unsigned_int,bool_(__cdecl*)(unsigned_int,unsigned_int)>
-               (undefined8 param_1,int param_2,undefined8 param_3)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::_Make_heap<unsigned_int_*,int,unsigned_int,bool_(__cdecl*)(unsigned_int,unsigned_int)>
+               (uint *param_1,uint *param_2,_func___cdecl_bool_uint_uint *param_3,int *param_4,
+               uint *param_5)
 
 {
   uint uVar1;
-  int iVar2;
-  undefined4 *puVar3;
-  longlong lVar4;
-  char cVar5;
-  longlong lVar6;
-  ulonglong uVar7;
-  int iVar8;
-  ulonglong uVar9;
+  uint *puVar2;
+  uint *puVar3;
+  ulonglong uVar4;
+  longlong lVar5;
+  bool bVar6;
+  longlong lVar7;
+  longlong lVar8;
+  int iVar9;
   ulonglong uVar10;
   ulonglong uVar11;
   ulonglong uVar12;
-  undefined4 local_50 [20];
+  ulonglong uVar13;
+  uint uVar14;
+  uint local_50 [20];
   
-  lVar4 = __savegprlr_24();
-  iVar2 = (int)lVar4;
-  uVar1 = param_2 - iVar2 >> 2;
-  uVar9 = (longlong)(param_2 - iVar2 >> 3) + (ulonglong)((int)uVar1 < 0 && (uVar1 & 1) != 0);
-  if (0 < (longlong)uVar9) {
-    uVar7 = (uVar9 + 1 & 0x7fffffff) << 1;
-    lVar6 = (uVar9 & 0x3fffffff) * 4 + lVar4;
+  lVar8 = (longlong)(int)param_3;
+  lVar7 = (longlong)(int)param_2;
+  lVar5 = __savegprlr_24(param_1,lVar7,lVar8,param_4,param_5);
+  puVar2 = (uint *)lVar5;
+  iVar9 = (int)lVar7 - (int)puVar2;
+  uVar1 = iVar9 >> 2;
+  uVar11 = (longlong)(iVar9 >> 3) + (ulonglong)((int)uVar1 < 0 && (uVar1 & 1) != 0);
+  if (0 < (longlong)uVar11) {
+    uVar10 = (uVar11 + 1 & 0x7fffffff) << 1;
+    lVar5 = (uVar11 & 0x3fffffff) * 4 + lVar5;
     do {
-      lVar6 = lVar6 + -4;
-      local_50[0] = *(undefined4 *)lVar6;
-      uVar7 = uVar7 - 2;
-      uVar9 = uVar9 - 1;
-      iVar8 = (int)uVar7;
-      uVar12 = uVar7;
-      uVar10 = uVar9;
-      while (uVar11 = uVar12, iVar8 < (int)uVar1) {
-        puVar3 = (undefined4 *)((int)((uVar11 & 0xffffffff) << 2) + iVar2);
-        cVar5 = (*(code *)param_3)(*puVar3,puVar3[-1]);
-        if (cVar5 != '\0') {
-          uVar11 = uVar11 - 1;
+      lVar5 = lVar5 + -4;
+      local_50[0] = *(uint *)lVar5;
+      uVar10 = uVar10 - 2;
+      uVar11 = uVar11 - 1;
+      uVar14 = (uint)uVar10;
+      uVar13 = uVar10;
+      uVar4 = uVar11;
+      while (uVar12 = uVar13, (int)uVar14 < (int)uVar1) {
+        puVar3 = (uint *)((int)((uVar12 & 0xffffffff) << 2) + (int)puVar2);
+        bVar6 = (*(_func___cdecl_bool_uint_uint *)lVar8)(*puVar3,puVar3[-1]);
+        if (bVar6) {
+          uVar12 = uVar12 - 1;
         }
-        uVar12 = (uVar11 + 1 & 0x7fffffff) << 1;
-        *(undefined4 *)((int)((uVar10 & 0xffffffff) << 2) + iVar2) =
-             *(undefined4 *)((int)((uVar11 & 0xffffffff) << 2) + iVar2);
-        iVar8 = (int)uVar12;
-        uVar10 = uVar11;
+        uVar13 = (uVar12 + 1 & 0x7fffffff) << 1;
+        *(undefined4 *)((int)((uVar4 & 0xffffffff) << 2) + (int)puVar2) =
+             *(undefined4 *)((int)((uVar12 & 0xffffffff) << 2) + (int)puVar2);
+        uVar14 = (uint)uVar13;
+        uVar4 = uVar12;
       }
-      if ((uint)uVar11 == uVar1) {
-        uVar12 = uVar10 & 0xffffffff;
-        uVar10 = (longlong)(int)uVar1 - 1;
-        *(undefined4 *)((int)(uVar12 << 2) + iVar2) = *(undefined4 *)(uVar1 * 4 + iVar2 + -4);
+      iVar9 = (int)uVar4;
+      if (uVar14 == uVar1) {
+        iVar9 = uVar1 - 1;
+        *(uint *)((int)((uVar4 & 0xffffffff) << 2) + (int)puVar2) = puVar2[uVar1 - 1];
       }
-      std___Push_heap<unsigned_int_*,int,unsigned_int,bool_(__cdecl*)(unsigned_int,unsigned_int)>
-                (lVar4,uVar10,uVar9,local_50,param_3);
-    } while (0 < (int)uVar9);
+      _Push_heap<unsigned_int_*,int,unsigned_int,bool_(__cdecl*)(unsigned_int,unsigned_int)>
+                (puVar2,iVar9,(int)uVar11,local_50,(_func___cdecl_bool_uint_uint *)lVar8);
+    } while (0 < (int)uVar11);
   }
   __restgprlr_24();
   return;
 }
 
 
-// 8242ABF8  std::_Sort_heap<unsigned_int_*,bool_(__cdecl*)(unsigned_int,unsigned_int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2700)
+// 8242ABF8  _Sort_heap<unsigned_int_*,bool_(__cdecl*)(unsigned_int,unsigned_int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2700)
 
-void std___Sort_heap<unsigned_int_*,bool_(__cdecl*)(unsigned_int,unsigned_int)>
-               (undefined8 param_1,longlong param_2,undefined8 param_3)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::_Sort_heap<unsigned_int_*,bool_(__cdecl*)(unsigned_int,unsigned_int)>
+               (uint *param_1,uint *param_2,_func___cdecl_bool_uint_uint *param_3)
 
 {
   int iVar1;
-  undefined4 *puVar2;
+  uint *puVar2;
   longlong lVar3;
-  undefined4 local_30 [12];
+  longlong lVar4;
+  uint local_30 [12];
   
-  lVar3 = __savegprlr_28();
-  param_2 = param_2 - lVar3;
-  if (4 < (int)((uint)param_2 & 0xfffffffc)) {
-    puVar2 = (undefined4 *)lVar3;
+  lVar4 = (longlong)(int)param_2;
+  lVar3 = __savegprlr_28(param_1);
+  lVar4 = lVar4 - lVar3;
+  if (4 < (int)((uint)lVar4 & 0xfffffffc)) {
+    puVar2 = (uint *)lVar3;
     do {
-      iVar1 = (int)param_2;
-      local_30[0] = *(undefined4 *)((int)puVar2 + iVar1 + -4);
-      param_2 = param_2 + -4;
-      *(undefined4 *)((int)puVar2 + iVar1 + -4) = *puVar2;
-      std___Adjust_heap<unsigned_int_*,int,unsigned_int,bool_(__cdecl*)(unsigned_int,unsigned_int)>
-                (lVar3,0,(int)(uint)param_2 >> 2,local_30,param_3);
-    } while (4 < (int)((uint)param_2 & 0xfffffffc));
+      iVar1 = (int)lVar4;
+      local_30[0] = *(uint *)((int)puVar2 + iVar1 + -4);
+      lVar4 = lVar4 + -4;
+      *(uint *)((int)puVar2 + iVar1 + -4) = *puVar2;
+      _Adjust_heap<unsigned_int_*,int,unsigned_int,bool_(__cdecl*)(unsigned_int,unsigned_int)>
+                (puVar2,0,(int)(uint)lVar4 >> 2,local_30,param_3);
+    } while (4 < (int)((uint)lVar4 & 0xfffffffc));
   }
   __restgprlr_28();
   return;
 }
 
 
-// 8242A758  std::_Insertion_sort1<unsigned_int_*,bool_(__cdecl*)(unsigned_int,unsigned_int),unsigned_int>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3650)
+// 8242A758  _Insertion_sort1<unsigned_int_*,bool_(__cdecl*)(unsigned_int,unsigned_int),unsigned_int>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3650)
 
-void std___Insertion_sort1<unsigned_int_*,bool_(__cdecl*)(unsigned_int,unsigned_int),unsigned_int>
-               (undefined8 param_1,ulonglong param_2,code *param_3)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::_Insertion_sort1<unsigned_int_*,bool_(__cdecl*)(unsigned_int,unsigned_int),unsigned_int>
+               (uint *param_1,uint *param_2,_func___cdecl_bool_uint_uint *param_3,uint *param_4)
 
 {
   undefined4 uVar1;
-  int iVar2;
-  undefined4 *_Src;
+  ulonglong uVar2;
   ulonglong uVar3;
   ulonglong uVar4;
   ulonglong uVar5;
-  ulonglong uVar6;
-  char cVar8;
-  void *pvVar7;
-  ulonglong uVar9;
-  undefined4 *puVar10;
+  char cVar6;
+  ulonglong uVar7;
+  longlong lVar8;
+  code *pcVar9;
+  ulonglong uVar10;
+  undefined4 *puVar11;
   
-  uVar6 = __savegprlr_24();
-  if (((uVar6 & 0xffffffff) != (param_2 & 0xffffffff)) &&
-     (uVar9 = uVar6 + 4, (uVar9 & 0xffffffff) != (param_2 & 0xffffffff))) {
-    _Src = (undefined4 *)uVar6;
+  lVar8 = (longlong)(int)param_3;
+  uVar7 = (ulonglong)(int)param_2;
+  uVar5 = __savegprlr_24(param_1,uVar7,lVar8,param_4);
+  if (((uVar5 & 0xffffffff) != (uVar7 & 0xffffffff)) &&
+     (uVar10 = uVar5 + 4, (uVar10 & 0xffffffff) != (uVar7 & 0xffffffff))) {
     do {
-      puVar10 = (undefined4 *)uVar9;
-      uVar1 = *puVar10;
-      cVar8 = (*param_3)(uVar1,*_Src);
-      if (cVar8 == '\0') {
-        uVar6 = (*param_3)(uVar1,puVar10[-1]);
-        uVar5 = uVar9 - 4;
-        uVar4 = uVar9;
-        while (uVar3 = uVar5, (uVar6 & 0xff) != 0) {
-          puVar10 = (undefined4 *)uVar3;
-          *(undefined4 *)uVar4 = *puVar10;
-          uVar6 = (*param_3)(uVar1,*(undefined4 *)(uVar3 - 4));
-          uVar5 = uVar3 - 4;
-          uVar4 = uVar3;
+      puVar11 = (undefined4 *)uVar10;
+      uVar1 = *puVar11;
+      pcVar9 = (code *)lVar8;
+      cVar6 = (*pcVar9)(uVar1,*(undefined4 *)uVar5);
+      if (cVar6 == '\0') {
+        cVar6 = (*pcVar9)(uVar1,puVar11[-1]);
+        uVar4 = uVar10 - 4;
+        uVar3 = uVar10;
+        while (uVar2 = uVar4, cVar6 != '\0') {
+          puVar11 = (undefined4 *)uVar2;
+          *(undefined4 *)uVar3 = *puVar11;
+          cVar6 = (*pcVar9)(uVar1,*(undefined4 *)(uVar2 - 4));
+          uVar4 = uVar2 - 4;
+          uVar3 = uVar2;
         }
-        *puVar10 = uVar1;
+        *puVar11 = uVar1;
       }
       else {
-        iVar2 = (int)puVar10 - (int)_Src >> 2;
-        pvVar7 = memmove(puVar10 + (1 - iVar2),_Src,iVar2 * 4);
-        uVar6 = (ulonglong)(int)pvVar7;
-        *_Src = uVar1;
+        memmove();
+        *(undefined4 *)uVar5 = uVar1;
       }
-      uVar9 = uVar9 + 4;
-    } while ((uVar9 & 0xffffffff) != (param_2 & 0xffffffff));
+      uVar10 = uVar10 + 4;
+    } while ((uVar10 & 0xffffffff) != (uVar7 & 0xffffffff));
   }
-  __restgprlr_24(uVar6);
+  __restgprlr_24();
   return;
 }
 
 
-// 8242A838  std::_Med3<unsigned_int_*,bool_(__cdecl*)(unsigned_int,unsigned_int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3683)
+// 8242A838  _Med3<unsigned_int_*,bool_(__cdecl*)(unsigned_int,unsigned_int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3683)
 
-void std___Med3<unsigned_int_*,bool_(__cdecl*)(unsigned_int,unsigned_int)>
-               (undefined8 param_1,undefined4 *param_2,undefined4 *param_3,code *param_4)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::_Med3<unsigned_int_*,bool_(__cdecl*)(unsigned_int,unsigned_int)>
+               (uint *param_1,uint *param_2,uint *param_3,_func___cdecl_bool_uint_uint *param_4)
 
 {
-  undefined4 uVar1;
-  undefined4 *puVar2;
-  char cVar3;
+  uint uVar1;
+  uint *puVar2;
+  bool bVar3;
   
-  puVar2 = (undefined4 *)__savegprlr_28();
-  cVar3 = (*param_4)(*param_2,*puVar2);
-  if (cVar3 != '\0') {
+  puVar2 = (uint *)__savegprlr_28(param_1);
+  bVar3 = (*param_4)(*param_2,*puVar2);
+  if (bVar3) {
     uVar1 = *param_2;
     *param_2 = *puVar2;
     *puVar2 = uVar1;
   }
-  cVar3 = (*param_4)(*param_3,*param_2);
-  if (cVar3 != '\0') {
+  bVar3 = (*param_4)(*param_3,*param_2);
+  if (bVar3) {
     uVar1 = *param_3;
     *param_3 = *param_2;
     *param_2 = uVar1;
   }
-  cVar3 = (*param_4)(*param_2,*puVar2);
-  if (cVar3 != '\0') {
+  bVar3 = (*param_4)(*param_2,*puVar2);
+  if (bVar3) {
     uVar1 = *param_2;
     *param_2 = *puVar2;
     *puVar2 = uVar1;
@@ -2351,242 +2508,258 @@ void std___Med3<unsigned_int_*,bool_(__cdecl*)(unsigned_int,unsigned_int)>
 }
 
 
-// 8242A8E0  std::_Median<unsigned_int_*,bool_(__cdecl*)(unsigned_int,unsigned_int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3695)
+// 8242A8E0  _Median<unsigned_int_*,bool_(__cdecl*)(unsigned_int,unsigned_int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3695)
 
-void std___Median<unsigned_int_*,bool_(__cdecl*)(unsigned_int,unsigned_int)>
-               (undefined8 param_1,longlong param_2,longlong param_3,undefined8 param_4)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::_Median<unsigned_int_*,bool_(__cdecl*)(unsigned_int,unsigned_int)>
+               (uint *param_1,uint *param_2,uint *param_3,_func___cdecl_bool_uint_uint *param_4)
 
 {
   int iVar1;
-  ulonglong uVar2;
-  longlong lVar3;
+  int iVar2;
+  uint *puVar3;
   uint uVar5;
   ulonglong uVar4;
-  longlong lVar6;
   
-  lVar3 = __savegprlr_26();
-  iVar1 = (int)param_3 - (int)lVar3 >> 2;
+  puVar3 = (uint *)__savegprlr_26(param_1);
+  iVar1 = (int)param_3 - (int)puVar3 >> 2;
   if (0x28 < iVar1) {
     uVar5 = iVar1 + 1;
     uVar4 = (longlong)((int)uVar5 >> 3) + (ulonglong)((int)uVar5 < 0 && (uVar5 & 7) != 0);
-    uVar2 = uVar4 & 0x3fffffff;
-    uVar4 = uVar4 & 0x1fffffff;
-    lVar6 = uVar2 * 4 + lVar3;
-    std___Med3<unsigned_int_*,bool_(__cdecl*)(unsigned_int,unsigned_int)>
-              (lVar3,lVar6,uVar4 * 8 + lVar3);
-    std___Med3<unsigned_int_*,bool_(__cdecl*)(unsigned_int,unsigned_int)>
-              (param_2 + uVar2 * -4,param_2,uVar2 * 4 + param_2,param_4);
-    lVar3 = param_3 + uVar2 * -4;
-    std___Med3<unsigned_int_*,bool_(__cdecl*)(unsigned_int,unsigned_int)>
-              (param_3 + uVar4 * -8,lVar3,param_3,param_4);
-    std___Med3<unsigned_int_*,bool_(__cdecl*)(unsigned_int,unsigned_int)>
-              (lVar6,param_2,lVar3,param_4);
+    iVar2 = (int)((uVar4 & 0xffffffff) << 3);
+    iVar1 = (int)((uVar4 & 0x3fffffff) << 2);
+    _Med3<unsigned_int_*,bool_(__cdecl*)(unsigned_int,unsigned_int)>
+              (puVar3,(uint *)(iVar1 + (int)puVar3),(uint *)(iVar2 + (int)puVar3),param_4);
+    _Med3<unsigned_int_*,bool_(__cdecl*)(unsigned_int,unsigned_int)>
+              ((uint *)((int)param_2 - iVar1),param_2,(uint *)(iVar1 + (int)param_2),param_4);
+    _Med3<unsigned_int_*,bool_(__cdecl*)(unsigned_int,unsigned_int)>
+              ((uint *)((int)param_3 - iVar2),(uint *)((int)param_3 - iVar1),param_3,param_4);
+    _Med3<unsigned_int_*,bool_(__cdecl*)(unsigned_int,unsigned_int)>
+              ((uint *)(iVar1 + (int)puVar3),param_2,(uint *)((int)param_3 - iVar1),param_4);
     __restgprlr_26();
     return;
   }
-  std___Med3<unsigned_int_*,bool_(__cdecl*)(unsigned_int,unsigned_int)>(lVar3,param_2,param_3);
+  _Med3<unsigned_int_*,bool_(__cdecl*)(unsigned_int,unsigned_int)>(puVar3,param_2,param_3,param_4);
   __restgprlr_26();
   return;
 }
 
 
-// 8242A988  std::_Unguarded_partition<unsigned_int_*,bool_(__cdecl*)(unsigned_int,unsigned_int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3712)
+// 8242A988  _Unguarded_partition<unsigned_int_*,bool_(__cdecl*)(unsigned_int,unsigned_int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3712)
 
-void std___Unguarded_partition<unsigned_int_*,bool_(__cdecl*)(unsigned_int,unsigned_int)>
-               (undefined8 param_1,ulonglong param_2,ulonglong param_3,code *param_4)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+pair<unsigned_int_*,unsigned_int_*>
+std::_Unguarded_partition<unsigned_int_*,bool_(__cdecl*)(unsigned_int,unsigned_int)>
+          (uint *param_1,uint *param_2,_func___cdecl_bool_uint_uint *param_3)
 
 {
-  bool bVar1;
-  undefined4 uVar2;
-  uint uVar3;
+  undefined4 uVar1;
+  uint uVar2;
   undefined4 *puVar4;
-  char cVar5;
-  int iVar6;
+  bool bVar5;
+  pair<unsigned_int_*,unsigned_int_*> pVar3;
+  ulonglong uVar6;
   ulonglong uVar7;
-  undefined4 *puVar8;
+  _func___cdecl_bool_uint_uint *in_r6;
+  int iVar8;
   ulonglong uVar9;
-  ulonglong uVar10;
+  undefined4 *puVar10;
   ulonglong uVar11;
-  ulonglong uVar12;
-  undefined4 *puVar13;
-  undefined4 *puVar14;
+  undefined4 *puVar12;
+  ulonglong uVar13;
+  ulonglong uVar14;
+  ulonglong uVar15;
+  uint *puVar16;
+  undefined4 *puVar17;
   
-  puVar4 = (undefined4 *)__savegprlr_23();
-  iVar6 = (int)param_3 - (int)param_2;
-  uVar3 = iVar6 >> 2;
-  uVar12 = ((longlong)(iVar6 >> 3) + (ulonglong)((int)uVar3 < 0 && (uVar3 & 1) != 0) & 0x3fffffff) *
-           4 + param_2;
-  std___Median<unsigned_int_*,bool_(__cdecl*)(unsigned_int,unsigned_int)>
-            (param_2,uVar12,param_3 - 4);
-  uVar7 = uVar12 + 4;
-  if ((param_2 & 0xffffffff) < (uVar12 & 0xffffffff)) {
+  uVar7 = (ulonglong)(int)param_3;
+  uVar6 = (ulonglong)(int)param_2;
+  puVar4 = (undefined4 *)__savegprlr_23(param_1);
+  iVar8 = (int)uVar7 - (int)(uint *)uVar6;
+  uVar2 = iVar8 >> 2;
+  uVar15 = ((longlong)(iVar8 >> 3) + (ulonglong)((int)uVar2 < 0 && (uVar2 & 1) != 0) & 0x3fffffff) *
+           4 + uVar6;
+  _Median<unsigned_int_*,bool_(__cdecl*)(unsigned_int,unsigned_int)>
+            ((uint *)uVar6,(uint *)uVar15,(uint *)((int)uVar7 + -4),in_r6);
+  uVar9 = uVar15 + 4;
+  if ((uVar6 & 0xffffffff) < (uVar15 & 0xffffffff)) {
     do {
-      puVar13 = (undefined4 *)uVar12;
-      uVar10 = uVar12 - 4;
-      cVar5 = (*param_4)(puVar13[-1],*puVar13);
-      if ((cVar5 != '\0') || (cVar5 = (*param_4)(*puVar13,*(undefined4 *)uVar10), cVar5 != '\0'))
-      break;
-      uVar12 = uVar10;
-    } while ((param_2 & 0xffffffff) < (uVar10 & 0xffffffff));
+      puVar16 = (uint *)uVar15;
+      uVar13 = uVar15 - 4;
+      bVar5 = (*in_r6)(puVar16[-1],*puVar16);
+      if ((bVar5) || (bVar5 = (*in_r6)(*puVar16,*(uint *)uVar13), bVar5)) break;
+      uVar15 = uVar13;
+    } while ((uVar6 & 0xffffffff) < (uVar13 & 0xffffffff));
   }
-  uVar9 = uVar7;
-  uVar10 = uVar12;
-  if ((uVar7 & 0xffffffff) < (param_3 & 0xffffffff)) {
+  uVar11 = uVar9;
+  uVar13 = uVar15;
+  if ((uVar9 & 0xffffffff) < (uVar7 & 0xffffffff)) {
     do {
-      cVar5 = (*param_4)(*(undefined4 *)uVar7,*(undefined4 *)uVar12);
-      uVar9 = uVar7;
-      if ((cVar5 != '\0') ||
-         (cVar5 = (*param_4)(*(undefined4 *)uVar12,*(undefined4 *)uVar7), cVar5 != '\0')) break;
-      uVar7 = uVar7 + 4;
-      uVar9 = uVar7;
-    } while ((uVar7 & 0xffffffff) < (param_3 & 0xffffffff));
+      bVar5 = (*in_r6)(*(uint *)uVar9,*(uint *)uVar15);
+      uVar11 = uVar9;
+      if ((bVar5) || (bVar5 = (*in_r6)(*(uint *)uVar15,*(uint *)uVar9), bVar5)) break;
+      uVar9 = uVar9 + 4;
+      uVar11 = uVar9;
+    } while ((uVar9 & 0xffffffff) < (uVar7 & 0xffffffff));
   }
   do {
-    uVar11 = uVar7;
-    if ((uVar9 & 0xffffffff) < (param_3 & 0xffffffff)) {
+    uVar14 = uVar9;
+    if ((uVar11 & 0xffffffff) < (uVar7 & 0xffffffff)) {
       do {
-        puVar13 = (undefined4 *)uVar9;
-        cVar5 = (*param_4)(*(undefined4 *)uVar10,*puVar13);
-        uVar7 = uVar11;
-        if (cVar5 == '\0') {
-          cVar5 = (*param_4)(*puVar13,*(undefined4 *)uVar10);
-          if (cVar5 != '\0') break;
-          uVar7 = uVar11 + 4;
-          uVar2 = *(undefined4 *)uVar11;
-          *(undefined4 *)uVar11 = *puVar13;
-          *puVar13 = uVar2;
+        puVar16 = (uint *)uVar11;
+        bVar5 = (*in_r6)(*(uint *)uVar13,*puVar16);
+        uVar9 = uVar14;
+        if (!bVar5) {
+          bVar5 = (*in_r6)(*puVar16,*(uint *)uVar13);
+          if (bVar5) break;
+          uVar9 = uVar14 + 4;
+          uVar2 = *(uint *)uVar14;
+          *(uint *)uVar14 = *puVar16;
+          *puVar16 = uVar2;
         }
-        uVar9 = uVar9 + 4;
-        uVar11 = uVar7;
-      } while ((uVar9 & 0xffffffff) < (param_3 & 0xffffffff));
+        uVar11 = uVar11 + 4;
+        uVar14 = uVar9;
+      } while ((uVar11 & 0xffffffff) < (uVar7 & 0xffffffff));
     }
-    bVar1 = (uVar12 & 0xffffffff) == (param_2 & 0xffffffff);
-    if ((param_2 & 0xffffffff) < (uVar12 & 0xffffffff)) {
+    bVar5 = (uVar15 & 0xffffffff) == (uVar6 & 0xffffffff);
+    if ((uVar6 & 0xffffffff) < (uVar15 & 0xffffffff)) {
       do {
-        uVar11 = uVar12 - 4;
-        cVar5 = (*param_4)(*(undefined4 *)((int)uVar12 + -4),*(undefined4 *)uVar10);
-        puVar13 = (undefined4 *)uVar11;
-        if (cVar5 == '\0') {
-          cVar5 = (*param_4)(*(undefined4 *)uVar10,*puVar13);
-          if (cVar5 != '\0') break;
-          uVar10 = uVar10 - 4;
-          uVar2 = *(undefined4 *)uVar10;
-          *(undefined4 *)uVar10 = *puVar13;
-          *puVar13 = uVar2;
+        uVar14 = uVar15 - 4;
+        bVar5 = (*in_r6)(*(uint *)((int)uVar15 + -4),*(uint *)uVar13);
+        puVar16 = (uint *)uVar14;
+        if (!bVar5) {
+          bVar5 = (*in_r6)(*(uint *)uVar13,*puVar16);
+          if (bVar5) break;
+          uVar13 = uVar13 - 4;
+          uVar2 = *(uint *)uVar13;
+          *(uint *)uVar13 = *puVar16;
+          *puVar16 = uVar2;
         }
-        uVar12 = uVar11;
-      } while ((param_2 & 0xffffffff) < (uVar11 & 0xffffffff));
-      bVar1 = (uVar12 & 0xffffffff) == (param_2 & 0xffffffff);
+        uVar15 = uVar14;
+      } while ((uVar6 & 0xffffffff) < (uVar14 & 0xffffffff));
+      bVar5 = (uVar15 & 0xffffffff) == (uVar6 & 0xffffffff);
     }
-    puVar13 = (undefined4 *)uVar9;
-    if (bVar1) {
-      puVar8 = (undefined4 *)uVar7;
-      puVar14 = (undefined4 *)uVar10;
-      if ((uVar9 & 0xffffffff) == (param_3 & 0xffffffff)) {
-        *puVar4 = puVar14;
-        puVar4[1] = puVar8;
-        __restgprlr_23(puVar4);
-        return;
+    puVar12 = (undefined4 *)uVar11;
+    if (bVar5) {
+      puVar10 = (undefined4 *)uVar9;
+      puVar17 = (undefined4 *)uVar13;
+      if ((uVar11 & 0xffffffff) == (uVar7 & 0xffffffff)) {
+        *puVar4 = puVar17;
+        puVar4[1] = puVar10;
+        pVar3 = (pair<unsigned_int_*,unsigned_int_*>)__restgprlr_23(puVar4);
+        return pVar3;
       }
-      if ((uVar7 & 0xffffffff) != (uVar9 & 0xffffffff)) {
-        uVar2 = *puVar14;
-        *puVar14 = *puVar8;
-        *puVar8 = uVar2;
+      if ((uVar9 & 0xffffffff) != (uVar11 & 0xffffffff)) {
+        uVar1 = *puVar17;
+        *puVar17 = *puVar10;
+        *puVar10 = uVar1;
       }
-      uVar7 = uVar7 + 4;
-      uVar2 = *puVar14;
-      *puVar14 = *puVar13;
-      *puVar13 = uVar2;
       uVar9 = uVar9 + 4;
-      uVar10 = uVar10 + 4;
+      uVar1 = *puVar17;
+      *puVar17 = *puVar12;
+      *puVar12 = uVar1;
+      uVar11 = uVar11 + 4;
+      uVar13 = uVar13 + 4;
     }
     else {
-      uVar12 = uVar12 - 4;
-      puVar8 = (undefined4 *)uVar12;
-      if ((uVar9 & 0xffffffff) == (param_3 & 0xffffffff)) {
-        uVar10 = uVar10 - 4;
-        puVar13 = (undefined4 *)uVar10;
-        if ((uVar12 & 0xffffffff) != (uVar10 & 0xffffffff)) {
-          uVar2 = *puVar8;
-          *puVar8 = *puVar13;
-          *puVar13 = uVar2;
+      uVar15 = uVar15 - 4;
+      puVar10 = (undefined4 *)uVar15;
+      if ((uVar11 & 0xffffffff) == (uVar7 & 0xffffffff)) {
+        uVar13 = uVar13 - 4;
+        puVar12 = (undefined4 *)uVar13;
+        if ((uVar15 & 0xffffffff) != (uVar13 & 0xffffffff)) {
+          uVar1 = *puVar10;
+          *puVar10 = *puVar12;
+          *puVar12 = uVar1;
         }
-        uVar7 = uVar7 - 4;
-        uVar2 = *puVar13;
-        *puVar13 = *(undefined4 *)uVar7;
-        *(undefined4 *)uVar7 = uVar2;
+        uVar9 = uVar9 - 4;
+        uVar1 = *puVar12;
+        *puVar12 = *(undefined4 *)uVar9;
+        *(undefined4 *)uVar9 = uVar1;
       }
       else {
-        uVar2 = *puVar13;
-        *puVar13 = *puVar8;
-        *puVar8 = uVar2;
-        uVar9 = uVar9 + 4;
+        uVar1 = *puVar12;
+        *puVar12 = *puVar10;
+        *puVar10 = uVar1;
+        uVar11 = uVar11 + 4;
       }
     }
   } while( true );
 }
 
 
-// 8242AC68  std::_Sort<unsigned_int_*,int,bool_(__cdecl*)(unsigned_int,unsigned_int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3771)
+// 8242AC68  _Sort<unsigned_int_*,int,bool_(__cdecl*)(unsigned_int,unsigned_int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3771)
 
-void std___Sort<unsigned_int_*,int,bool_(__cdecl*)(unsigned_int,unsigned_int)>
-               (undefined8 param_1,ulonglong param_2,ulonglong param_3,undefined8 param_4)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::_Sort<unsigned_int_*,int,bool_(__cdecl*)(unsigned_int,unsigned_int)>
+               (uint *param_1,uint *param_2,int param_3,_func___cdecl_bool_uint_uint *param_4)
 
 {
-  ulonglong uVar1;
-  int iVar2;
+  uint *puVar1;
+  uint *puVar2;
   ulonglong uVar3;
-  ulonglong uVar4;
   int iVar5;
-  uint local_40;
-  uint local_3c;
+  ulonglong uVar4;
+  ulonglong uVar6;
+  int iVar7;
+  _func___cdecl_bool_uint_uint *p_Var8;
+  uint *local_40;
+  uint *local_3c;
   
-  uVar1 = __savegprlr_26();
-  iVar2 = (int)param_2 - (int)uVar1;
+  uVar4 = (ulonglong)param_3;
+  uVar3 = (ulonglong)(int)param_2;
+  puVar2 = (uint *)__savegprlr_26(param_1);
+  p_Var8 = (_func___cdecl_bool_uint_uint *)uVar3;
+  iVar5 = (int)p_Var8 - (int)puVar2;
   do {
-    iVar2 = iVar2 >> 2;
-    if (iVar2 < 0x21) {
+    iVar5 = iVar5 >> 2;
+    if (iVar5 < 0x21) {
 LAB_8242ad20:
-      if (1 < iVar2) {
-        std___Insertion_sort1<unsigned_int_*,bool_(__cdecl*)(unsigned_int,unsigned_int),unsigned_int>
-                  (uVar1,param_2,param_4,0);
+      if (1 < iVar5) {
+        _Insertion_sort1<unsigned_int_*,bool_(__cdecl*)(unsigned_int,unsigned_int),unsigned_int>
+                  (puVar2,(uint *)p_Var8,param_4,(uint *)0x0);
       }
       __restgprlr_26();
       return;
     }
-    iVar5 = (int)param_3;
-    if (iVar5 < 1) {
-      if (0x20 < iVar2) {
-        if (1 < iVar2) {
-          std___Make_heap<unsigned_int_*,int,unsigned_int,bool_(__cdecl*)(unsigned_int,unsigned_int)>
-                    (uVar1,param_2,param_4,0,0);
+    p_Var8 = (_func___cdecl_bool_uint_uint *)uVar3;
+    iVar7 = (int)uVar4;
+    if (iVar7 < 1) {
+      if (0x20 < iVar5) {
+        if (1 < iVar5) {
+          _Make_heap<unsigned_int_*,int,unsigned_int,bool_(__cdecl*)(unsigned_int,unsigned_int)>
+                    (puVar2,(uint *)p_Var8,param_4,(int *)0x0,(uint *)0x0);
         }
-        std___Sort_heap<unsigned_int_*,bool_(__cdecl*)(unsigned_int,unsigned_int)>
-                  (uVar1,param_2,param_4);
+        _Sort_heap<unsigned_int_*,bool_(__cdecl*)(unsigned_int,unsigned_int)>
+                  (puVar2,(uint *)p_Var8,param_4);
         __restgprlr_26();
         return;
       }
       goto LAB_8242ad20;
     }
-    std___Unguarded_partition<unsigned_int_*,bool_(__cdecl*)(unsigned_int,unsigned_int)>
-              (&local_40,uVar1,param_2,param_4);
-    param_3 = (longlong)(iVar5 >> 1) + (ulonglong)(iVar5 < 0 && (param_3 & 1) != 0);
-    param_3 = (longlong)((int)param_3 >> 1) + (ulonglong)((int)param_3 < 0 && (param_3 & 1) != 0) +
-              param_3;
-    uVar4 = (ulonglong)local_3c;
-    uVar3 = (ulonglong)local_40;
-    if ((int)(local_40 - (int)uVar1 & 0xfffffffc) < (int)((int)param_2 - local_3c & 0xfffffffc)) {
-      std___Sort<unsigned_int_*,int,bool_(__cdecl*)(unsigned_int,unsigned_int)>
-                (uVar1,uVar3,param_3,param_4);
-      uVar1 = uVar4;
-      uVar3 = param_2;
+    _Unguarded_partition<unsigned_int_*,bool_(__cdecl*)(unsigned_int,unsigned_int)>
+              ((uint *)&local_40,puVar2,p_Var8);
+    puVar1 = local_3c;
+    uVar4 = (longlong)(iVar7 >> 1) + (ulonglong)(iVar7 < 0 && (uVar4 & 1) != 0);
+    uVar4 = (longlong)((int)uVar4 >> 1) + (ulonglong)((int)uVar4 < 0 && (uVar4 & 1) != 0) + uVar4;
+    uVar6 = ZEXT48(local_40);
+    if ((int)((int)local_40 - (int)puVar2 & 0xfffffffcU) <
+        (int)((int)p_Var8 - (int)local_3c & 0xfffffffcU)) {
+      _Sort<unsigned_int_*,int,bool_(__cdecl*)(unsigned_int,unsigned_int)>
+                (puVar2,local_40,(int)uVar4,param_4);
+      uVar6 = uVar3;
+      puVar2 = puVar1;
     }
     else {
-      std___Sort<unsigned_int_*,int,bool_(__cdecl*)(unsigned_int,unsigned_int)>
-                (uVar4,param_2,param_3,param_4);
+      _Sort<unsigned_int_*,int,bool_(__cdecl*)(unsigned_int,unsigned_int)>
+                (local_3c,(uint *)p_Var8,(int)uVar4,param_4);
     }
-    iVar2 = (int)uVar3 - (int)uVar1;
-    param_2 = uVar3;
+    p_Var8 = (_func___cdecl_bool_uint_uint *)uVar6;
+    iVar5 = (int)p_Var8 - (int)puVar2;
+    uVar3 = uVar6;
   } while( true );
 }
 

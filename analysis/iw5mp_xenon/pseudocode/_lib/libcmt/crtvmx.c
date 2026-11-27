@@ -2,120 +2,393 @@
 
 // 8291803C  __savevmx_119  (line unknown)
 
-/* WARNING: Control flow encountered bad instruction data */
-
 void __savevmx_119(void)
 
 {
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  undefined4 *puVar1;
+  int in_r12;
+  undefined4 in_register_00004970;
+  undefined4 in_register_00004974;
+  undefined4 in_register_00004978;
+  undefined4 in_v119;
+  undefined4 in_register_00004980;
+  undefined4 in_register_00004984;
+  undefined4 in_register_00004988;
+  undefined4 in_v120;
+  undefined4 in_register_00004990;
+  undefined4 in_register_00004994;
+  undefined4 in_register_00004998;
+  undefined4 in_v121;
+  undefined4 in_register_000049a0;
+  undefined4 in_register_000049a4;
+  undefined4 in_register_000049a8;
+  undefined4 in_v122;
+  undefined4 in_register_000049b0;
+  undefined4 in_register_000049b4;
+  undefined4 in_register_000049b8;
+  undefined4 in_v123;
+  undefined4 in_register_000049c0;
+  undefined4 in_register_000049c4;
+  undefined4 in_register_000049c8;
+  undefined4 in_v124;
+  undefined4 in_register_000049d0;
+  undefined4 in_register_000049d4;
+  undefined4 in_register_000049d8;
+  undefined4 in_v125;
+  undefined4 in_register_000049e0;
+  undefined4 in_register_000049e4;
+  undefined4 in_register_000049e8;
+  undefined4 in_v126;
+  undefined4 in_register_000049f0;
+  undefined4 in_register_000049f4;
+  undefined4 in_register_000049f8;
+  undefined4 in_v127;
+  
+  puVar1 = (undefined4 *)(in_r12 - 0x90U & 0xfffffff0);
+  *puVar1 = in_register_00004970;
+  puVar1[1] = in_register_00004974;
+  puVar1[2] = in_register_00004978;
+  puVar1[3] = in_v119;
+  puVar1 = (undefined4 *)(in_r12 - 0x80U & 0xfffffff0);
+  *puVar1 = in_register_00004980;
+  puVar1[1] = in_register_00004984;
+  puVar1[2] = in_register_00004988;
+  puVar1[3] = in_v120;
+  puVar1 = (undefined4 *)(in_r12 - 0x70U & 0xfffffff0);
+  *puVar1 = in_register_00004990;
+  puVar1[1] = in_register_00004994;
+  puVar1[2] = in_register_00004998;
+  puVar1[3] = in_v121;
+  puVar1 = (undefined4 *)(in_r12 - 0x60U & 0xfffffff0);
+  *puVar1 = in_register_000049a0;
+  puVar1[1] = in_register_000049a4;
+  puVar1[2] = in_register_000049a8;
+  puVar1[3] = in_v122;
+  puVar1 = (undefined4 *)(in_r12 - 0x50U & 0xfffffff0);
+  *puVar1 = in_register_000049b0;
+  puVar1[1] = in_register_000049b4;
+  puVar1[2] = in_register_000049b8;
+  puVar1[3] = in_v123;
+  puVar1 = (undefined4 *)(in_r12 - 0x40U & 0xfffffff0);
+  *puVar1 = in_register_000049c0;
+  puVar1[1] = in_register_000049c4;
+  puVar1[2] = in_register_000049c8;
+  puVar1[3] = in_v124;
+  puVar1 = (undefined4 *)(in_r12 - 0x30U & 0xfffffff0);
+  *puVar1 = in_register_000049d0;
+  puVar1[1] = in_register_000049d4;
+  puVar1[2] = in_register_000049d8;
+  puVar1[3] = in_v125;
+  puVar1 = (undefined4 *)(in_r12 - 0x20U & 0xfffffff0);
+  *puVar1 = in_register_000049e0;
+  puVar1[1] = in_register_000049e4;
+  puVar1[2] = in_register_000049e8;
+  puVar1[3] = in_v126;
+  puVar1 = (undefined4 *)(in_r12 - 0x10U & 0xfffffff0);
+  *puVar1 = in_register_000049f0;
+  puVar1[1] = in_register_000049f4;
+  puVar1[2] = in_register_000049f8;
+  puVar1[3] = in_v127;
+  return;
 }
 
 
 // 82918044  __savevmx_120  (line unknown)
 
-/* WARNING: Control flow encountered bad instruction data */
-
 void __savevmx_120(void)
 
 {
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  undefined4 *puVar1;
+  int in_r12;
+  undefined4 in_register_00004980;
+  undefined4 in_register_00004984;
+  undefined4 in_register_00004988;
+  undefined4 in_v120;
+  undefined4 in_register_00004990;
+  undefined4 in_register_00004994;
+  undefined4 in_register_00004998;
+  undefined4 in_v121;
+  undefined4 in_register_000049a0;
+  undefined4 in_register_000049a4;
+  undefined4 in_register_000049a8;
+  undefined4 in_v122;
+  undefined4 in_register_000049b0;
+  undefined4 in_register_000049b4;
+  undefined4 in_register_000049b8;
+  undefined4 in_v123;
+  undefined4 in_register_000049c0;
+  undefined4 in_register_000049c4;
+  undefined4 in_register_000049c8;
+  undefined4 in_v124;
+  undefined4 in_register_000049d0;
+  undefined4 in_register_000049d4;
+  undefined4 in_register_000049d8;
+  undefined4 in_v125;
+  undefined4 in_register_000049e0;
+  undefined4 in_register_000049e4;
+  undefined4 in_register_000049e8;
+  undefined4 in_v126;
+  undefined4 in_register_000049f0;
+  undefined4 in_register_000049f4;
+  undefined4 in_register_000049f8;
+  undefined4 in_v127;
+  
+  puVar1 = (undefined4 *)(in_r12 - 0x80U & 0xfffffff0);
+  *puVar1 = in_register_00004980;
+  puVar1[1] = in_register_00004984;
+  puVar1[2] = in_register_00004988;
+  puVar1[3] = in_v120;
+  puVar1 = (undefined4 *)(in_r12 - 0x70U & 0xfffffff0);
+  *puVar1 = in_register_00004990;
+  puVar1[1] = in_register_00004994;
+  puVar1[2] = in_register_00004998;
+  puVar1[3] = in_v121;
+  puVar1 = (undefined4 *)(in_r12 - 0x60U & 0xfffffff0);
+  *puVar1 = in_register_000049a0;
+  puVar1[1] = in_register_000049a4;
+  puVar1[2] = in_register_000049a8;
+  puVar1[3] = in_v122;
+  puVar1 = (undefined4 *)(in_r12 - 0x50U & 0xfffffff0);
+  *puVar1 = in_register_000049b0;
+  puVar1[1] = in_register_000049b4;
+  puVar1[2] = in_register_000049b8;
+  puVar1[3] = in_v123;
+  puVar1 = (undefined4 *)(in_r12 - 0x40U & 0xfffffff0);
+  *puVar1 = in_register_000049c0;
+  puVar1[1] = in_register_000049c4;
+  puVar1[2] = in_register_000049c8;
+  puVar1[3] = in_v124;
+  puVar1 = (undefined4 *)(in_r12 - 0x30U & 0xfffffff0);
+  *puVar1 = in_register_000049d0;
+  puVar1[1] = in_register_000049d4;
+  puVar1[2] = in_register_000049d8;
+  puVar1[3] = in_v125;
+  puVar1 = (undefined4 *)(in_r12 - 0x20U & 0xfffffff0);
+  *puVar1 = in_register_000049e0;
+  puVar1[1] = in_register_000049e4;
+  puVar1[2] = in_register_000049e8;
+  puVar1[3] = in_v126;
+  puVar1 = (undefined4 *)(in_r12 - 0x10U & 0xfffffff0);
+  *puVar1 = in_register_000049f0;
+  puVar1[1] = in_register_000049f4;
+  puVar1[2] = in_register_000049f8;
+  puVar1[3] = in_v127;
+  return;
 }
 
 
 // 82918054  __savevmx_122  (line unknown)
 
-/* WARNING: Control flow encountered bad instruction data */
-
 void __savevmx_122(void)
 
 {
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  undefined4 *puVar1;
+  int in_r12;
+  undefined4 in_register_000049a0;
+  undefined4 in_register_000049a4;
+  undefined4 in_register_000049a8;
+  undefined4 in_v122;
+  undefined4 in_register_000049b0;
+  undefined4 in_register_000049b4;
+  undefined4 in_register_000049b8;
+  undefined4 in_v123;
+  undefined4 in_register_000049c0;
+  undefined4 in_register_000049c4;
+  undefined4 in_register_000049c8;
+  undefined4 in_v124;
+  undefined4 in_register_000049d0;
+  undefined4 in_register_000049d4;
+  undefined4 in_register_000049d8;
+  undefined4 in_v125;
+  undefined4 in_register_000049e0;
+  undefined4 in_register_000049e4;
+  undefined4 in_register_000049e8;
+  undefined4 in_v126;
+  undefined4 in_register_000049f0;
+  undefined4 in_register_000049f4;
+  undefined4 in_register_000049f8;
+  undefined4 in_v127;
+  
+  puVar1 = (undefined4 *)(in_r12 - 0x60U & 0xfffffff0);
+  *puVar1 = in_register_000049a0;
+  puVar1[1] = in_register_000049a4;
+  puVar1[2] = in_register_000049a8;
+  puVar1[3] = in_v122;
+  puVar1 = (undefined4 *)(in_r12 - 0x50U & 0xfffffff0);
+  *puVar1 = in_register_000049b0;
+  puVar1[1] = in_register_000049b4;
+  puVar1[2] = in_register_000049b8;
+  puVar1[3] = in_v123;
+  puVar1 = (undefined4 *)(in_r12 - 0x40U & 0xfffffff0);
+  *puVar1 = in_register_000049c0;
+  puVar1[1] = in_register_000049c4;
+  puVar1[2] = in_register_000049c8;
+  puVar1[3] = in_v124;
+  puVar1 = (undefined4 *)(in_r12 - 0x30U & 0xfffffff0);
+  *puVar1 = in_register_000049d0;
+  puVar1[1] = in_register_000049d4;
+  puVar1[2] = in_register_000049d8;
+  puVar1[3] = in_v125;
+  puVar1 = (undefined4 *)(in_r12 - 0x20U & 0xfffffff0);
+  *puVar1 = in_register_000049e0;
+  puVar1[1] = in_register_000049e4;
+  puVar1[2] = in_register_000049e8;
+  puVar1[3] = in_v126;
+  puVar1 = (undefined4 *)(in_r12 - 0x10U & 0xfffffff0);
+  *puVar1 = in_register_000049f0;
+  puVar1[1] = in_register_000049f4;
+  puVar1[2] = in_register_000049f8;
+  puVar1[3] = in_v127;
+  return;
 }
 
 
 // 8291805C  __savevmx_123  (line unknown)
 
-/* WARNING: Control flow encountered bad instruction data */
-
 void __savevmx_123(void)
 
 {
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  undefined4 *puVar1;
+  int in_r12;
+  undefined4 in_register_000049b0;
+  undefined4 in_register_000049b4;
+  undefined4 in_register_000049b8;
+  undefined4 in_v123;
+  undefined4 in_register_000049c0;
+  undefined4 in_register_000049c4;
+  undefined4 in_register_000049c8;
+  undefined4 in_v124;
+  undefined4 in_register_000049d0;
+  undefined4 in_register_000049d4;
+  undefined4 in_register_000049d8;
+  undefined4 in_v125;
+  undefined4 in_register_000049e0;
+  undefined4 in_register_000049e4;
+  undefined4 in_register_000049e8;
+  undefined4 in_v126;
+  undefined4 in_register_000049f0;
+  undefined4 in_register_000049f4;
+  undefined4 in_register_000049f8;
+  undefined4 in_v127;
+  
+  puVar1 = (undefined4 *)(in_r12 - 0x50U & 0xfffffff0);
+  *puVar1 = in_register_000049b0;
+  puVar1[1] = in_register_000049b4;
+  puVar1[2] = in_register_000049b8;
+  puVar1[3] = in_v123;
+  puVar1 = (undefined4 *)(in_r12 - 0x40U & 0xfffffff0);
+  *puVar1 = in_register_000049c0;
+  puVar1[1] = in_register_000049c4;
+  puVar1[2] = in_register_000049c8;
+  puVar1[3] = in_v124;
+  puVar1 = (undefined4 *)(in_r12 - 0x30U & 0xfffffff0);
+  *puVar1 = in_register_000049d0;
+  puVar1[1] = in_register_000049d4;
+  puVar1[2] = in_register_000049d8;
+  puVar1[3] = in_v125;
+  puVar1 = (undefined4 *)(in_r12 - 0x20U & 0xfffffff0);
+  *puVar1 = in_register_000049e0;
+  puVar1[1] = in_register_000049e4;
+  puVar1[2] = in_register_000049e8;
+  puVar1[3] = in_v126;
+  puVar1 = (undefined4 *)(in_r12 - 0x10U & 0xfffffff0);
+  *puVar1 = in_register_000049f0;
+  puVar1[1] = in_register_000049f4;
+  puVar1[2] = in_register_000049f8;
+  puVar1[3] = in_v127;
+  return;
 }
 
 
 // 82918064  __savevmx_124  (line unknown)
 
-/* WARNING: Control flow encountered bad instruction data */
-
 void __savevmx_124(void)
 
 {
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  undefined4 *puVar1;
+  int in_r12;
+  undefined4 in_register_000049c0;
+  undefined4 in_register_000049c4;
+  undefined4 in_register_000049c8;
+  undefined4 in_v124;
+  undefined4 in_register_000049d0;
+  undefined4 in_register_000049d4;
+  undefined4 in_register_000049d8;
+  undefined4 in_v125;
+  undefined4 in_register_000049e0;
+  undefined4 in_register_000049e4;
+  undefined4 in_register_000049e8;
+  undefined4 in_v126;
+  undefined4 in_register_000049f0;
+  undefined4 in_register_000049f4;
+  undefined4 in_register_000049f8;
+  undefined4 in_v127;
+  
+  puVar1 = (undefined4 *)(in_r12 - 0x40U & 0xfffffff0);
+  *puVar1 = in_register_000049c0;
+  puVar1[1] = in_register_000049c4;
+  puVar1[2] = in_register_000049c8;
+  puVar1[3] = in_v124;
+  puVar1 = (undefined4 *)(in_r12 - 0x30U & 0xfffffff0);
+  *puVar1 = in_register_000049d0;
+  puVar1[1] = in_register_000049d4;
+  puVar1[2] = in_register_000049d8;
+  puVar1[3] = in_v125;
+  puVar1 = (undefined4 *)(in_r12 - 0x20U & 0xfffffff0);
+  *puVar1 = in_register_000049e0;
+  puVar1[1] = in_register_000049e4;
+  puVar1[2] = in_register_000049e8;
+  puVar1[3] = in_v126;
+  puVar1 = (undefined4 *)(in_r12 - 0x10U & 0xfffffff0);
+  *puVar1 = in_register_000049f0;
+  puVar1[1] = in_register_000049f4;
+  puVar1[2] = in_register_000049f8;
+  puVar1[3] = in_v127;
+  return;
 }
 
 
 // 829182D4  __restvmx_119  (line unknown)
 
-/* WARNING: Control flow encountered bad instruction data */
-
 void __restvmx_119(void)
 
 {
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  return;
 }
 
 
 // 829182DC  __restvmx_120  (line unknown)
 
-/* WARNING: Control flow encountered bad instruction data */
-
 void __restvmx_120(void)
 
 {
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  return;
 }
 
 
 // 829182EC  __restvmx_122  (line unknown)
 
-/* WARNING: Control flow encountered bad instruction data */
-
 void __restvmx_122(void)
 
 {
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  return;
 }
 
 
 // 829182F4  __restvmx_123  (line unknown)
 
-/* WARNING: Control flow encountered bad instruction data */
-
 void __restvmx_123(void)
 
 {
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  return;
 }
 
 
 // 829182FC  __restvmx_124  (line unknown)
 
-/* WARNING: Control flow encountered bad instruction data */
-
 void __restvmx_124(void)
 
 {
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  return;
 }
 

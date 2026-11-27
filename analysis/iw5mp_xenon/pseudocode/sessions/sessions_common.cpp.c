@@ -2,79 +2,101 @@
 
 // 826DB3F8  Session_InitDvars  (sessions/sessions_common.cpp:59)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Session_InitDvars(void)
 
 {
-  DAT_844cb0b0 = Dvar_RegisterInt(0xffffffff821a6900,2,1,0x1e,0,0xffffffff821a6914);
-  DAT_844cb0a8 = Dvar_RegisterInt(0xffffffff821a68f0,10,1,500,0,0xffffffff821a68a8);
-  DAT_844cb0bc = Dvar_RegisterInt(0xffffffff821a6860,0x32,10,500,0,0xffffffff821a6874);
-  DAT_844cb0ac = Dvar_RegisterInt(0xffffffff821a67f8,6,0,500,0,0xffffffff821a6820);
+  DAT_844cb0b0 = Dvar_RegisterInt("ping_searches_per",2,1,0x1e,0,
+                                  "Number of searches at each min ping value");
+  DAT_844cb0a8 = Dvar_RegisterInt("ping_increment",10,1,500,0,
+                                  "Number of milliseconds to increase min ping after each set of searches"
+                                 );
+  ping_default_min =
+       Dvar_RegisterInt("ping_default_min",0x32,10,500,0,
+                        "Minimum ping for the initial set of searches");
+  session_advertiseFailedSearchCount =
+       Dvar_RegisterInt("session_advertiseFailedSearchCount",6,0,500,0,
+                        "Failed search count at which we list ourselves with matchmaking");
   return;
 }
 
 
 // 826DB4D8  Session_ResetDvars  (sessions/sessions_common.cpp:68)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Session_ResetDvars(void)
 
 {
-  Dvar_Reset(DAT_844cb0b0,0);
-  Dvar_Reset(DAT_844cb0a8,0);
-  Dvar_Reset(DAT_844cb0bc,0);
-  Dvar_Reset(DAT_844cb0ac,0);
+  Dvar_Reset(DAT_844cb0b0,DVAR_SOURCE_INTERNAL);
+  Dvar_Reset(DAT_844cb0a8,DVAR_SOURCE_INTERNAL);
+  Dvar_Reset(ping_default_min,DVAR_SOURCE_INTERNAL);
+  Dvar_Reset(session_advertiseFailedSearchCount,DVAR_SOURCE_INTERNAL);
   return;
 }
 
 
 // 826DB540  Session_ResetMinPing  (sessions/sessions_common.cpp:77)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
 void Session_ResetMinPing(void)
 
 {
-  if (DAT_844cb0bc == 0) {
-    MyAssertHandler(0xffffffff821a6940,0x4e,0,0xffffffff82000f98,0xffffffff821a6860);
+  if (ping_default_min == (dvar_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions_common.cpp",
+                    0x4e,0,"%s");
   }
-  DAT_844cb0c0 = 0xffffffff;
-  DAT_844cb0b8 = *(undefined4 *)(DAT_844cb0bc + 0xc);
-  DAT_844c7d60 = 0;
+  g_searchCountWithCurrentMinPing = -1;
+  g_minPing = (ping_default_min->current).integer;
+  g_serverSession.dyn.allowJoining = false;
   return;
 }
 
 
 // 826DB5C0  Session_ResetFailedSearchCount  (sessions/sessions_common.cpp:87)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Session_ResetFailedSearchCount(void)
 
 {
-  DAT_844cb0b4 = 0;
+  g_failedSearchCount = 0;
   return;
 }
 
 
 // 826DB5D0  Session_UpdateMinPing  (sessions/sessions_common.cpp:92)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Session_UpdateMinPing(void)
 
 {
   __savegprlr_29();
-  if (DAT_844cb0b8 == 0) {
+  if (g_minPing == 0) {
     Session_ResetMinPing();
   }
   if (DAT_844cb0b0 == 0) {
-    MyAssertHandler(0xffffffff821a6940,0x60,0,0xffffffff82000f98,0xffffffff821a6900);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions_common.cpp",
+                    0x60,0,"%s");
   }
   if (DAT_844cb0a8 == 0) {
-    MyAssertHandler(0xffffffff821a6940,0x61,0,0xffffffff82000f98,0xffffffff821a68f0);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions_common.cpp",
+                    0x61,0,"%s");
   }
-  if (DAT_844cb0bc == 0) {
-    MyAssertHandler(0xffffffff821a6940,0x62,0,0xffffffff82000f98,0xffffffff821a6860);
+  if (ping_default_min == (dvar_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions_common.cpp",
+                    0x62,0,"%s");
   }
-  DAT_844cb0c0 = DAT_844cb0c0 + 1;
-  DAT_844cb0b4 = DAT_844cb0b4 + 1;
-  Com_Printf(0x19,0xffffffff821a6988,DAT_844cb0b8);
-  if (*(int *)(DAT_844cb0b0 + 0xc) <= DAT_844cb0c0) {
-    DAT_844cb0c0 = 0;
-    DAT_844cb0b8 = *(int *)(DAT_844cb0a8 + 0xc) + DAT_844cb0b8;
+  g_searchCountWithCurrentMinPing = g_searchCountWithCurrentMinPing + 1;
+  g_failedSearchCount = g_failedSearchCount + 1;
+  Com_Printf(0x19,"Min Ping %d Search %d Failed Search Count %d\n");
+  if (*(int *)(DAT_844cb0b0 + 0xc) <= g_searchCountWithCurrentMinPing) {
+    g_searchCountWithCurrentMinPing = 0;
+    g_minPing = *(int *)(DAT_844cb0a8 + 0xc) + g_minPing;
   }
   __restgprlr_29();
   return;
@@ -83,187 +105,233 @@ void Session_UpdateMinPing(void)
 
 // 826DB6E0  Session_GetMinPing  (sessions/sessions_common.cpp:113)
 
-undefined4 Session_GetMinPing(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int Session_GetMinPing(void)
 
 {
-  return DAT_844cb0b8;
+  return g_minPing;
 }
 
 
 // 826DB6F0  Session_GetFailedSearchCount  (sessions/sessions_common.cpp:119)
 
-undefined4 Session_GetFailedSearchCount(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int Session_GetFailedSearchCount(void)
 
 {
-  return DAT_844cb0b4;
+  return g_failedSearchCount;
 }
 
 
 // 826DB700  Session_ShouldAdvertise  (sessions/sessions_common.cpp:126)
 
-uint Session_ShouldAdvertise(void)
+bool Session_ShouldAdvertise(int param_1)
 
 {
   uint uVar1;
-  char cVar2;
+  bool bVar2;
   
-  cVar2 = CL_AllLocalClientsDisconnected();
-  if (cVar2 != '\0') {
-    cVar2 = Live_CanHostServer(*(undefined4 *)(DAT_82b59048 + 0xc));
-    if (cVar2 == '\0') {
-      return 0;
+  bVar2 = CL_AllLocalClientsDisconnected();
+  if (bVar2) {
+    bVar2 = Live_CanHostServer((party_maxplayers->current).integer);
+    if (!bVar2) {
+      return false;
     }
-    if (DAT_844cb0ac == 0) {
-      MyAssertHandler(0xffffffff821a6940,0x8f,0,0xffffffff82000f98,0xffffffff821a67f8);
+    if (session_advertiseFailedSearchCount == (dvar_t *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions_common.cpp"
+                      ,0x8f,0,"%s");
     }
-    uVar1 = *(uint *)(DAT_844cb0ac + 0xc);
+    uVar1 = (session_advertiseFailedSearchCount->current).unsignedInt;
     if (uVar1 != 0) {
-      return (((int)DAT_844cb0b4 >> 0x1f) - ((int)uVar1 >> 0x1f)) + (uint)(uVar1 <= DAT_844cb0b4) &
-             0xff;
+      return (bool)(((char)(g_failedSearchCount >> 0x1f) - (char)((int)uVar1 >> 0x1f)) +
+                   (uVar1 <= (uint)g_failedSearchCount));
     }
   }
-  return 1;
+  return true;
 }
 
 
 // 826DB7E0  Session_NeedToSyncParams  (sessions/sessions_common.cpp:153)
 
-void Session_NeedToSyncParams(undefined8 param_1,ulonglong param_2,int param_3,uint param_4)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+bool Session_NeedToSyncParams(SessionData *param_1,int param_2,int param_3,int param_4)
 
 {
   int iVar1;
+  undefined1 uVar2;
+  ulonglong uVar3;
   
-  iVar1 = __savegprlr_26();
+  uVar3 = (ulonglong)param_2;
+  iVar1 = __savegprlr_26(param_1,uVar3);
   if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff821a6940,0x9a,0,0xffffffff82000f98,0xffffffff82036a08);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions_common.cpp",
+                    0x9a,0,"%s");
   }
   if ((*(uint *)(iVar1 + 0x68) & 0x10) != 0) {
-    MyAssertHandler(0xffffffff821a6940,0x9c,0,0xffffffff82000f98,0xffffffff821a69b8);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions_common.cpp",
+                    0x9c,0,"%s");
   }
   if ((((*(uint *)(iVar1 + 0x68) ^ param_4) & 0xf00) == 0) && (*(int *)(iVar1 + 0x60) == param_3)) {
-    __restgprlr_26(param_2 != *(uint *)(iVar1 + 100));
-    return;
+    uVar2 = __restgprlr_26(uVar3 != *(uint *)(iVar1 + 100));
+    return (bool)uVar2;
   }
-  __restgprlr_26(1);
-  return;
+  uVar2 = __restgprlr_26(1);
+  return (bool)uVar2;
 }
 
 
 // 826DB8A0  Session_JoinPotentialHost  (sessions/sessions_common.cpp:171)
 
-void Session_JoinPotentialHost
-               (undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4,
-               undefined8 param_5,ulonglong param_6,ulonglong param_7,ulonglong param_8)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+int Session_JoinPotentialHost
+              (int param_1,_XSESSION_INFO *param_2,int param_3,int param_4,int param_5,
+              SessionData *param_6,in_addr *param_7,ushort *param_8)
 
 {
-  undefined8 uVar1;
-  char cVar3;
-  int iVar2;
-  longlong lVar4;
+  int iVar1;
+  SessionData *pSVar2;
+  bool bVar3;
+  _XSESSION_INFO *p_Var4;
   ulonglong uVar5;
-  byte *pbVar6;
-  byte local_70 [8];
-  byte abStack_68 [104];
+  ulonglong uVar6;
+  longlong lVar7;
+  ulonglong uVar8;
+  ulonglong uVar9;
+  byte *pbVar10;
+  byte local_70 [112];
   
-  uVar1 = __savegprlr_21();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821a6940,0xb0,0,0xffffffff82000f98,0xffffffff82034334);
+  uVar8 = (ulonglong)(int)param_8;
+  uVar6 = (ulonglong)(int)param_7;
+  uVar5 = (ulonglong)(int)param_6;
+  uVar9 = (ulonglong)(int)param_2;
+  iVar1 = __savegprlr_21(param_1);
+  if ((uVar9 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions_common.cpp",
+                    0xb0,0,"%s");
   }
-  if ((param_6 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821a6940,0xb1,0,0xffffffff82000f98,0xffffffff821a6b24);
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions_common.cpp",
+                    0xb1,0,"%s");
   }
-  if ((param_7 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821a6940,0xb2,0,0xffffffff82000f98,0xffffffff821a6b1c);
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions_common.cpp",
+                    0xb2,0,"%s");
   }
-  if ((param_8 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821a6940,0xb3,0,0xffffffff82000f98,0xffffffff821a6b14);
+  if ((uVar8 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions_common.cpp",
+                    0xb3,0,"%s");
   }
-  if (DAT_8424a64c == 0) {
-    MyAssertHandler(0xffffffff82018f38,0x1d3,0,0xffffffff82000f98,0xffffffff82018f84);
+  if (debug_onlinePlayEvenIfDown == (dvar_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\../universal/onlinegame.h"
+                    ,0x1d3,0,"%s");
   }
-  if (*(char *)(DAT_8424a64c + 0xc) == '\0') {
-    pbVar6 = local_70;
-    uVar5 = param_2;
+  p_Var4 = (_XSESSION_INFO *)uVar9;
+  if ((debug_onlinePlayEvenIfDown->current).enabled == false) {
+    pbVar10 = local_70;
+    local_70[0] = 0;
+    local_70[1] = 0;
+    local_70[2] = 0;
+    local_70[3] = 0;
+    local_70[4] = 0;
+    local_70[5] = 0;
+    local_70[6] = 0;
+    local_70[7] = 0;
     do {
-      lVar4 = (ulonglong)*pbVar6 - (ulonglong)*(byte *)uVar5;
-      if (lVar4 != 0) break;
-      pbVar6 = pbVar6 + 1;
-      uVar5 = uVar5 + 1;
-    } while (pbVar6 != abStack_68);
-    if ((int)lVar4 == 0) {
-      MyAssertHandler(0xffffffff821a6940,0xb9,0,0xffffffff82000f98,0xffffffff82034dc8);
+      lVar7 = (ulonglong)*pbVar10 - (ulonglong)*(byte *)uVar9;
+      if (lVar7 != 0) break;
+      pbVar10 = pbVar10 + 1;
+      uVar9 = uVar9 + 1;
+    } while (pbVar10 != local_70 + 8);
+    if ((int)lVar7 == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions_common.cpp"
+                      ,0xb9,0,"%s");
     }
   }
-  else if (*(int *)((int)param_2 + 8) == 0) {
-    Com_Printf(0x19,0xffffffff821a6ab8);
-    __restgprlr_21(0);
-    return;
+  else if ((p_Var4->hostAddress).ina.S_un.S_addr == 0) {
+    Com_Printf(0x19,"JoinPotentialHost - Invalid host address\n");
+    iVar1 = __restgprlr_21(0);
+    return iVar1;
   }
-  Session_DeleteSession(param_6);
-  Session_ClearSession(param_6);
-  cVar3 = Session_StartClient(param_6,uVar1,param_3,param_2,0,param_4,param_5);
-  if (cVar3 == '\0') {
-    Com_Printf(0x19,0xffffffff821a6ae4);
-    Session_DeleteSession(param_6);
-    __restgprlr_21(0);
-    return;
+  pSVar2 = (SessionData *)uVar5;
+  Session_DeleteSession(pSVar2);
+  Session_ClearSession(pSVar2);
+  bVar3 = Session_StartClient(pSVar2,iVar1,param_3,p_Var4,0,param_4,param_5);
+  if (!bVar3) {
+    Com_Printf(0x19,"JoinPotentialHost - Failed to create session\n");
+    Session_DeleteSession(pSVar2);
+    iVar1 = __restgprlr_21(0);
+    return iVar1;
   }
-  cVar3 = Xenon_RegisterRemoteXenon(param_2,param_7,param_8);
-  if (cVar3 == '\0') {
-    Com_Printf(0x19,0xffffffff821a6a48);
-    Session_DeleteSession(param_6);
-    __restgprlr_21(0);
-    return;
+  bVar3 = Xenon_RegisterRemoteXenon(p_Var4,(in_addr *)uVar6,(ushort *)uVar8);
+  if (!bVar3) {
+    Com_Printf(0x19,
+               "JoinPotentialHost - Failed to get the local address from session (it\'s probably us we\'re trying to register)\n"
+              );
+    Session_DeleteSession(pSVar2);
+    iVar1 = __restgprlr_21(0);
+    return iVar1;
   }
-  iVar2 = NET_IsLoopbackInAddr(param_7);
-  if (iVar2 != 0) {
-    Com_Printf(0x19,0xffffffff821a69f8);
-    Session_DeleteSession(param_6);
-    __restgprlr_21(0);
-    return;
+  iVar1 = NET_IsLoopbackInAddr((in_addr *)uVar6);
+  if (iVar1 != 0) {
+    Com_Printf(0x19,"JoinPotentialHost - Failed since we\'re trying to join on loopback address\n");
+    Session_DeleteSession(pSVar2);
+    iVar1 = __restgprlr_21(0);
+    return iVar1;
   }
-  __restgprlr_21(1);
-  return;
+  iVar1 = __restgprlr_21(1);
+  return iVar1;
 }
 
 
 // 826DBB10  Session_IsHost  (sessions/sessions_common.cpp:254)
 
-ulonglong Session_IsHost(ulonglong param_1,undefined8 param_2)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+bool Session_IsHost(SessionData *param_1,int param_2)
 
 {
-  int iVar2;
-  ulonglong uVar1;
+  PartyData *pPVar1;
+  bool bVar2;
   
-  if ((param_1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821a6940,0x103,0,0xffffffff82000f98,0xffffffff82036a08);
+  if (param_1 == (SessionData *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions_common.cpp",
+                    0x103,0,"%s");
   }
-  iVar2 = Party_GetPartyForSession(param_1);
-  if ((iVar2 == 0) || (*(int *)(iVar2 + 0x1ef4) == 0)) {
-    uVar1 = (ulonglong)((int)param_2 == 0);
+  pPVar1 = Party_GetPartyForSession(param_1);
+  if ((pPVar1 == (PartyData *)0x0) || (pPVar1->inParty == 0)) {
+    bVar2 = param_2 == 0;
   }
   else {
-    uVar1 = Party_IsHost(iVar2,param_2);
+    bVar2 = Party_IsHost(pPVar1,param_2);
   }
-  return uVar1;
+  return bVar2;
 }
 
 
 // 826DBBA0  Session_HostNum  (sessions/sessions_common.cpp:276)
 
-undefined8 Session_HostNum(ulonglong param_1)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+int Session_HostNum(SessionData *param_1)
 
 {
+  PartyData *pPVar1;
   int iVar2;
-  undefined8 uVar1;
   
-  if ((param_1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821a6940,0x119,0,0xffffffff82000f98,0xffffffff82036a08);
+  if (param_1 == (SessionData *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions_common.cpp",
+                    0x119,0,"%s");
   }
-  iVar2 = Party_GetPartyForSession(param_1);
-  if ((iVar2 != 0) && (*(int *)(iVar2 + 0x1ef4) != 0)) {
-    uVar1 = Party_HostNum();
-    return uVar1;
+  pPVar1 = Party_GetPartyForSession(param_1);
+  if ((pPVar1 != (PartyData *)0x0) && (pPVar1->inParty != 0)) {
+    iVar2 = Party_HostNum(pPVar1);
+    return iVar2;
   }
   return 0;
 }
@@ -271,247 +339,275 @@ undefined8 Session_HostNum(ulonglong param_1)
 
 // 826DBC30  Session_AreWeHost  (sessions/sessions_common.cpp:294)
 
-ulonglong Session_AreWeHost(ulonglong param_1)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+int Session_AreWeHost(SessionData *param_1)
 
 {
-  int iVar3;
-  ulonglong uVar1;
-  undefined8 uVar2;
-  char cVar5;
-  undefined8 *puVar4;
-  undefined1 auStack_30 [24];
+  PartyData *pPVar1;
+  int iVar2;
+  bool bVar3;
+  netadr_t in_stack_ffffff88;
+  netadr_t nStack_30;
   
-  if ((param_1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821a6940,0x12d,0,0xffffffff82000f98,0xffffffff82036a08);
+  if (param_1 == (SessionData *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions_common.cpp",
+                    0x12d,0,"%s");
   }
-  iVar3 = Party_GetPartyForSession(param_1);
-  if ((iVar3 == 0) || (*(int *)(iVar3 + 0x1ef4) == 0)) {
-    uVar2 = Session_HostNum(param_1);
-    cVar5 = Session_IsUserRegistered(param_1,uVar2);
-    if (cVar5 == '\0') {
-      uVar1 = 0;
+  pPVar1 = Party_GetPartyForSession(param_1);
+  if ((pPVar1 == (PartyData *)0x0) || (pPVar1->inParty == 0)) {
+    iVar2 = Session_HostNum(param_1);
+    bVar3 = Session_IsUserRegistered(param_1,iVar2);
+    if (bVar3) {
+      Session_GetPlayerAddr(&nStack_30,param_1,iVar2);
+      iVar2 = NET_IsLocalAddress(in_stack_ffffff88);
     }
     else {
-      puVar4 = (undefined8 *)Session_GetPlayerAddr(auStack_30,param_1,uVar2);
-      uVar1 = NET_IsLocalAddress(*puVar4,puVar4[1]);
+      iVar2 = 0;
     }
   }
   else {
-    uVar1 = (ulonglong)*(uint *)(iVar3 + 0x1eec);
+    iVar2 = pPVar1->areWeHost;
   }
-  return uVar1;
+  return iVar2;
 }
 
 
 // 826DCF98  Session_HasHostAddress  (sessions/sessions_common.cpp:319)
 
-bool Session_HasHostAddress(ulonglong param_1,uint param_2)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+int Session_HasHostAddress(SessionData *param_1,int param_2)
 
 {
-  undefined8 uVar1;
+  int iVar1;
   uint uVar2;
-  bool bVar3;
   
-  if ((param_1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821a6940,0x140,0,0xffffffff82000f98,0xffffffff82036a08);
+  if (param_1 == (SessionData *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions_common.cpp",
+                    0x140,0,"%s");
   }
-  uVar1 = Session_HostNum(param_1);
-  if ((uint)uVar1 == param_2) {
-    bVar3 = true;
+  iVar1 = Session_HostNum(param_1);
+  if (iVar1 == param_2) {
+    uVar2 = 1;
   }
   else {
-    uVar2 = Session_GetConnectivityBitsForClientAddress(param_1,uVar1);
-    bVar3 = (uVar2 & 1 << (param_2 & 0x3f)) != 0;
+    uVar2 = Session_GetConnectivityBitsForClientAddress(param_1,iVar1);
+    uVar2 = (uint)((uVar2 & 1 << (param_2 & 0x3fU)) != 0);
   }
-  return bVar3;
+  return uVar2;
 }
 
 
 // 826DBD00  Session_ClearInviteState  (sessions/sessions_common.cpp:338)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Session_ClearInviteState(void)
 
 {
-  DAT_844cb0a4 = 0;
+  s_inviteSessionState = SESSION_STATE_NONE;
   return;
 }
 
 
 // 826DBD10  Session_SetInviteSessionPending  (sessions/sessions_common.cpp:344)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Session_SetInviteSessionPending(void)
 
 {
-  DAT_844cb0a4 = 1;
+  s_inviteSessionState = SESSION_STATE_PENDING;
   return;
 }
 
 
 // 826DBD20  Session_GetInviteSessionState  (sessions/sessions_common.cpp:350)
 
-undefined4 Session_GetInviteSessionState(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+InviteSessionState Session_GetInviteSessionState(void)
 
 {
-  return DAT_844cb0a4;
+  return s_inviteSessionState;
 }
 
 
 // 826DBD30  Session_JoinInProgress  (sessions/sessions_common.cpp:356)
 
-void Session_JoinInProgress(void)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+int Session_JoinInProgress(int param_1)
 
 {
-  undefined8 uVar1;
+  int iVar1;
   int iVar2;
-  char cVar3;
-  undefined8 local_30 [6];
+  bool bVar3;
+  XNKID local_30 [6];
   
-  uVar1 = __savegprlr_28();
-  if (DAT_82aa1ab4 == 0) {
-    MyAssertHandler(0xffffffff821a6940,0x167,0,0xffffffff82000f98,0xffffffff82032ae0);
+  iVar1 = __savegprlr_28(param_1);
+  if (session_join_min_time == (dvar_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions_common.cpp",
+                    0x167,0,"%s");
   }
-  iVar2 = PartyAtomic_IsJoiningActive(0xffffffff82b59110);
+  iVar2 = PartyAtomic_IsJoiningActive(&g_partyJoinInfo);
   if (iVar2 != 0) {
-    MyAssertHandler(0xffffffff821a6940,0x169,0,0xffffffff82000f98,0xffffffff82040f3c);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions_common.cpp",
+                    0x169,0,"%s");
   }
   iVar2 = Sys_Milliseconds();
-  if (*(int *)(DAT_82aa1ab4 + 0xc) <= iVar2 - DAT_844cb0c4) {
-    Com_Memcpy(local_30,0xffffffff8425a060,8);
-    cVar3 = Session_SearchSessionByID(uVar1,local_30[0]);
-    if (cVar3 != '\0') {
+  if ((session_join_min_time->current).integer <= iVar2 - DAT_844cb0c4) {
+    Com_Memcpy(local_30,g_launchData.inviteHostInfo,8);
+    bVar3 = Session_SearchSessionByID(iVar1,local_30[0]);
+    if (bVar3) {
       DAT_844cb0c4 = Sys_Milliseconds();
-      DAT_844cb0a4 = 2;
-      __restgprlr_28(1);
-      return;
+      s_inviteSessionState = SESSION_STATE_SEARCH;
+      iVar1 = __restgprlr_28(1);
+      return iVar1;
     }
-    Com_Printf(0x19,0xffffffff821a6b34);
-    DAT_844cb0a4 = 0;
-    Live_ConfirmAcceptInvitation_Error(0xffffffff821a3efc);
+    Com_Printf(0x19,"Session_JoinInProgress failed to find session.\n");
+    s_inviteSessionState = SESSION_STATE_NONE;
+    Live_ConfirmAcceptInvitation_Error("@EXE_HOSTUNREACH");
   }
-  __restgprlr_28(0);
-  return;
+  iVar1 = __restgprlr_28(0);
+  return iVar1;
 }
 
 
 // 826DBE50  Session_IsUserRegisteredInternal  (sessions/sessions_common.cpp:395)
 
-undefined1 Session_IsUserRegisteredInternal(int param_1,uint param_2)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+bool Session_IsUserRegisteredInternal(SessionData *param_1,int param_2)
 
 {
-  if (0x11 < param_2) {
-    MyAssertHandler(0xffffffff821a6940,0x18c,0,0xffffffff82014c1c,param_2,0x12);
+  if (0x11 < (uint)param_2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions_common.cpp",
+                    0x18c,0,"clientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
   }
-  return *(undefined1 *)(param_2 * 0x10 + param_1 + 0x508);
+  return (param_1->dyn).internalRegisteredUsers[param_2].active;
 }
 
 
 // 826DBEC0  Session_FindRegisteredUserInternal  (sessions/sessions_common.cpp:402)
 
-longlong Session_FindRegisteredUserInternal(int param_1,longlong param_2)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+int Session_FindRegisteredUserInternal(SessionData *param_1,ulong64 param_2)
 
 {
-  longlong lVar1;
-  longlong *plVar2;
+  int iVar1;
+  ulong64 *puVar2;
   
-  if (param_1 == 0) {
-    MyAssertHandler(0xffffffff821a6940,0x195,0,0xffffffff82000f98,0xffffffff82036a08);
+  if (param_1 == (SessionData *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions_common.cpp",
+                    0x195,0,"%s");
   }
-  lVar1 = 0;
-  plVar2 = (longlong *)(param_1 + 0x510);
-  while ((*(char *)(plVar2 + -1) == '\0' || (*plVar2 != param_2))) {
-    lVar1 = lVar1 + 1;
-    plVar2 = plVar2 + 2;
-    if (0x11 < (int)lVar1) {
+  iVar1 = 0;
+  puVar2 = &(param_1->dyn).internalRegisteredUsers[0].xuid;
+  while ((((RegisteredUser *)(puVar2 + -1))->active == false || (*puVar2 != param_2))) {
+    iVar1 = iVar1 + 1;
+    puVar2 = puVar2 + 2;
+    if (0x11 < iVar1) {
       return -1;
     }
   }
-  return lVar1;
+  return iVar1;
 }
 
 
 // 826DBF58  Session_CountRegisteredUsersInternal  (sessions/sessions_common.cpp:421)
 
-longlong Session_CountRegisteredUsersInternal(int param_1)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+int Session_CountRegisteredUsersInternal(SessionData *param_1)
 
 {
-  char *pcVar1;
-  longlong lVar2;
+  RegisteredUser *pRVar1;
+  int iVar2;
   longlong lVar3;
   
-  lVar2 = 0;
-  pcVar1 = (char *)(param_1 + 0x518);
+  iVar2 = 0;
+  pRVar1 = (param_1->dyn).internalRegisteredUsers + 1;
   lVar3 = 3;
   do {
-    if (pcVar1[-0x10] != '\0') {
-      lVar2 = lVar2 + 1;
+    if (pRVar1[-1].active != false) {
+      iVar2 = iVar2 + 1;
     }
-    if (*pcVar1 != '\0') {
-      lVar2 = lVar2 + 1;
+    if (pRVar1->active != false) {
+      iVar2 = iVar2 + 1;
     }
-    if (pcVar1[0x10] != '\0') {
-      lVar2 = lVar2 + 1;
+    if (pRVar1[1].active != false) {
+      iVar2 = iVar2 + 1;
     }
-    if (pcVar1[0x20] != '\0') {
-      lVar2 = lVar2 + 1;
+    if (pRVar1[2].active != false) {
+      iVar2 = iVar2 + 1;
     }
-    if (pcVar1[0x30] != '\0') {
-      lVar2 = lVar2 + 1;
+    if (pRVar1[3].active != false) {
+      iVar2 = iVar2 + 1;
     }
-    if (pcVar1[0x40] != '\0') {
-      lVar2 = lVar2 + 1;
+    if (pRVar1[4].active != false) {
+      iVar2 = iVar2 + 1;
     }
-    pcVar1 = pcVar1 + 0x60;
+    pRVar1 = pRVar1 + 6;
     lVar3 = lVar3 + -1;
   } while (lVar3 != 0);
-  return lVar2;
+  return iVar2;
 }
 
 
 // 826DBFD8  Session_JoinSession  (sessions/sessions_common.cpp:439)
 
-void Session_JoinSession(undefined8 param_1,ulonglong param_2,ulonglong param_3,longlong param_4,
-                        ulonglong param_5)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void Session_JoinSession(int param_1,SessionData *param_2,int param_3,ulong64 param_4,bool param_5)
 
 {
-  undefined4 *puVar1;
-  undefined8 uVar2;
+  SessionData *pSVar1;
+  int iVar2;
   int iVar3;
-  int iVar4;
-  undefined8 uVar5;
+  ulonglong uVar4;
+  ulonglong uVar5;
   
-  uVar2 = __savegprlr_25();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821a6940,0x1b8,0,0xffffffff82000f98,0xffffffff82036a08);
+  uVar5 = (ulonglong)param_3;
+  uVar4 = (ulonglong)(int)param_2;
+  iVar2 = __savegprlr_25(param_1);
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions_common.cpp",
+                    0x1b8,0,"%s");
   }
-  puVar1 = (undefined4 *)param_2;
-  if (puVar1[4] == 0) {
-    MyAssertHandler(0xffffffff821a6940,0x1b9,0,0xffffffff82000f98,0xffffffff820583e8);
+  pSVar1 = (SessionData *)uVar4;
+  if ((pSVar1->dyn).sessionHandle == (void *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions_common.cpp",
+                    0x1b9,0,"%s");
   }
   if (param_4 == 0) {
-    MyAssertHandler(0xffffffff821a6940,0x1ba,0,0xffffffff82000f98,0xffffffff8206bbec);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions_common.cpp",
+                    0x1ba,0,"%s");
   }
-  Session_SanityCheckSession(param_2);
-  iVar3 = Session_FindRegisteredUserInternal(param_2,param_4);
-  if (iVar3 != (int)param_3) {
-    if ((param_5 & 0xff) == 0) {
-      uVar5 = 0xffffffff821a5ca8;
+  Session_SanityCheckSession(pSVar1);
+  iVar3 = Session_FindRegisteredUserInternal(pSVar1,param_4);
+  if (iVar3 != (int)uVar5) {
+    Com_Printf(0x10,
+               "Session - JoinSession - Adding xuid %llx in a %s slot (slot %i) to \'%s\' session\n"
+              );
+    iVar3 = (int)((uVar5 & 0xffffffff) << 4);
+    if ((&(pSVar1->dyn).internalRegisteredUsers[0].active)[iVar3] != false) {
+      va("found XUID %llx in slot %i");
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions_common.cpp"
+                      ,0x1c7,0,"%s\n\t%s");
     }
-    else {
-      uVar5 = 0xffffffff82084e68;
+    iVar2 = Session_JoinSession_Platform(iVar2,pSVar1,(int)uVar5,param_4,param_5);
+    if (iVar2 != 0) {
+      (&(pSVar1->dyn).internalRegisteredUsers[0].active)[iVar3] = true;
+      *(ulong64 *)
+       ((pSVar1->dyn).sessionInfo.sessionID.ab + (int)((uVar5 + 0x51 & 0xffffffff) << 4) + -0x14) =
+           param_4;
     }
-    Com_Printf(0x10,0xffffffff821a6bb8,param_4,uVar5,param_3,*puVar1);
-    iVar3 = (int)((param_3 & 0xffffffff) << 4);
-    if (*(char *)((int)puVar1 + iVar3 + 0x508) != '\0') {
-      uVar5 = va(0xffffffff821a6b98,
-                 *(undefined8 *)((int)((param_3 + 0x51 & 0xffffffff) << 4) + (int)puVar1),param_3);
-      MyAssertHandler(0xffffffff821a6940,0x1c7,0,0xffffffff820011f4,0xffffffff821a6b64,uVar5);
-    }
-    iVar4 = Session_JoinSession_Platform(uVar2,param_2,param_3,param_4,param_5);
-    if (iVar4 != 0) {
-      *(undefined1 *)((int)puVar1 + iVar3 + 0x508) = 1;
-      *(longlong *)((int)((param_3 + 0x51 & 0xffffffff) << 4) + (int)puVar1) = param_4;
-    }
-    Session_SanityCheckSession(param_2);
+    Session_SanityCheckSession(pSVar1);
   }
   __restgprlr_25();
   return;
@@ -520,37 +616,44 @@ void Session_JoinSession(undefined8 param_1,ulonglong param_2,ulonglong param_3,
 
 // 826DC168  Session_LeaveSession  (sessions/sessions_common.cpp:470)
 
-void Session_LeaveSession(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void Session_LeaveSession(SessionData *param_1,int param_2)
 
 {
   int iVar1;
-  undefined4 *puVar2;
+  SessionData *pSVar2;
+  ulonglong uVar3;
   
-  puVar2 = (undefined4 *)__savegprlr_26();
-  if (puVar2 == (undefined4 *)0x0) {
-    MyAssertHandler(0xffffffff821a6940,0x1d7,0,0xffffffff82000f98,0xffffffff82036a08);
+  uVar3 = (ulonglong)param_2;
+  pSVar2 = (SessionData *)__savegprlr_26(param_1);
+  if (pSVar2 == (SessionData *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions_common.cpp",
+                    0x1d7,0,"%s");
   }
-  if (puVar2[4] == 0) {
-    MyAssertHandler(0xffffffff821a6940,0x1d8,0,0xffffffff82000f98,0xffffffff820583e8);
+  if ((pSVar2->dyn).sessionHandle == (void *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions_common.cpp",
+                    0x1d8,0,"%s");
   }
-  if (0x11 < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821a6940,0x1d9,0,0xffffffff821a58a0,param_2,0x12);
+  if (0x11 < (uVar3 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions_common.cpp",
+                    0x1d9,0,"registeredUserSlot doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
   }
-  Session_SanityCheckSession(puVar2);
-  if (0x11 < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821a6940,0x18c,0,0xffffffff82014c1c,param_2,0x12);
+  Session_SanityCheckSession(pSVar2);
+  if (0x11 < (uVar3 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions_common.cpp",
+                    0x18c,0,"clientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
   }
-  iVar1 = (int)((param_2 & 0xffffffff) << 4);
-  if (*(char *)((int)puVar2 + iVar1 + 0x508) != '\0') {
-    Com_Printf(0x10,0xffffffff821a6c10,param_2,
-               *(undefined8 *)((int)((param_2 + 0x51 & 0xffffffff) << 4) + (int)puVar2),*puVar2,
-               puVar2[4]);
-    if (puVar2[4] == 0) {
-      MyAssertHandler(0xffffffff821a6940,0x1e4,0,0xffffffff82000f98,0xffffffff820583e8);
+  iVar1 = (int)((uVar3 & 0xffffffff) << 4);
+  if ((&(pSVar2->dyn).internalRegisteredUsers[0].active)[iVar1] != false) {
+    Com_Printf(0x10,"Session - LeaveSession for slot %i (%llx) in session \'%s\' [%p]\n");
+    if ((pSVar2->dyn).sessionHandle == (void *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions_common.cpp"
+                      ,0x1e4,0,"%s");
     }
-    Session_LeaveSession_Platform(puVar2,param_2);
-    *(undefined1 *)((int)puVar2 + iVar1 + 0x508) = 0;
-    Session_SanityCheckSession(puVar2);
+    Session_LeaveSession_Platform(pSVar2,(int)uVar3);
+    (&(pSVar2->dyn).internalRegisteredUsers[0].active)[iVar1] = false;
+    Session_SanityCheckSession(pSVar2);
   }
   __restgprlr_26();
   return;
@@ -559,38 +662,42 @@ void Session_LeaveSession(undefined8 param_1,ulonglong param_2)
 
 // 826DC2B8  Session_AddNewPlayersToSession  (sessions/sessions_common.cpp:496)
 
-void Session_AddNewPlayersToSession(void)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void Session_AddNewPlayersToSession(SessionData *param_1)
 
 {
-  int iVar1;
-  char cVar2;
-  char *pcVar3;
-  undefined8 *puVar4;
-  ulonglong uVar5;
+  SessionData *pSVar1;
+  bool bVar2;
+  RegisteredUser *pRVar3;
+  ulong64 *puVar4;
+  uint uVar5;
   
-  iVar1 = __savegprlr_26();
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff821a6940,499,0,0xffffffff82000f98,0xffffffff82036a08);
+  pSVar1 = (SessionData *)__savegprlr_26(param_1);
+  if (pSVar1 == (SessionData *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions_common.cpp",
+                    499,0,"%s");
   }
   uVar5 = 0;
-  puVar4 = (undefined8 *)(iVar1 + 0x78);
-  pcVar3 = (char *)(iVar1 + 0x508);
+  puVar4 = &(pSVar1->dyn).users[0].xuid;
+  pRVar3 = (pSVar1->dyn).internalRegisteredUsers;
   do {
-    cVar2 = Session_IsUserRegistered(iVar1,uVar5);
-    if (cVar2 != '\0') {
-      if (0x11 < (uVar5 & 0xffffffff)) {
-        MyAssertHandler(0xffffffff821a6940,0x18c,0,0xffffffff82014c1c,uVar5,0x12);
+    bVar2 = Session_IsUserRegistered(pSVar1,uVar5);
+    if (bVar2) {
+      if (0x11 < uVar5) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions_common.cpp"
+                        ,0x18c,0,"clientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
       }
-      if (*pcVar3 == '\0') {
-        cVar2 = Session_JoinInProgressForXUID(iVar1,*puVar4);
-        if (cVar2 == '\0') {
-          Session_JoinSession(*(undefined4 *)(iVar1 + 0x4f8),iVar1,uVar5,*puVar4,
-                              *(undefined1 *)((int)puVar4 + 0x32));
+      if (pRVar3->active == false) {
+        bVar2 = Session_JoinInProgressForXUID(pSVar1,*puVar4);
+        if (!bVar2) {
+          Session_JoinSession((pSVar1->dyn).sessionCreateController,pSVar1,uVar5,*puVar4,
+                              *(bool *)((int)puVar4 + 0x32));
         }
       }
     }
     uVar5 = uVar5 + 1;
-    pcVar3 = pcVar3 + 0x10;
+    pRVar3 = pRVar3 + 1;
     puVar4 = puVar4 + 8;
   } while ((int)uVar5 < 0x12);
   __restgprlr_26();
@@ -600,46 +707,51 @@ void Session_AddNewPlayersToSession(void)
 
 // 826DC3A0  Session_DropOldPlayersFromSession  (sessions/sessions_common.cpp:518)
 
-void Session_DropOldPlayersFromSession(void)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void Session_DropOldPlayersFromSession(SessionData *param_1)
 
 {
-  undefined4 *puVar2;
-  char cVar3;
-  undefined8 uVar1;
-  longlong lVar4;
-  longlong *plVar5;
-  longlong *plVar6;
-  ulonglong uVar7;
+  SessionData *pSVar1;
+  bool bVar2;
+  ulong64 *puVar3;
+  ulong64 *puVar4;
+  uint uVar5;
   
-  puVar2 = (undefined4 *)__savegprlr_23();
-  if (puVar2 == (undefined4 *)0x0) {
-    MyAssertHandler(0xffffffff821a6940,0x209,0,0xffffffff82000f98,0xffffffff82036a08);
+  pSVar1 = (SessionData *)__savegprlr_23(param_1);
+  if (pSVar1 == (SessionData *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions_common.cpp",
+                    0x209,0,"%s");
   }
-  uVar7 = 0;
-  plVar6 = (longlong *)(puVar2 + 0x144);
-  plVar5 = (longlong *)(puVar2 + 0x1e);
+  uVar5 = 0;
+  puVar4 = &(pSVar1->dyn).internalRegisteredUsers[0].xuid;
+  puVar3 = &(pSVar1->dyn).users[0].xuid;
   do {
-    if (0x11 < (uVar7 & 0xffffffff)) {
-      MyAssertHandler(0xffffffff821a6940,0x18c,0,0xffffffff82014c1c,uVar7,0x12);
+    if (0x11 < uVar5) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions_common.cpp"
+                      ,0x18c,0,"clientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
     }
-    if (*(char *)(plVar6 + -1) != '\0') {
-      cVar3 = Session_IsUserRegistered(puVar2,uVar7);
-      if (cVar3 == '\0') {
-        Com_Printf(0xe,0xffffffff821a6c50,*plVar6,*puVar2,uVar7);
+    if (((RegisteredUser *)(puVar4 + -1))->active != false) {
+      bVar2 = Session_IsUserRegistered(pSVar1,uVar5);
+      if (bVar2) {
+        if (*puVar3 == *puVar4) goto LAB_826dc4b0;
+        Session_GetXuid(pSVar1,uVar5);
+        Com_Printf(0xe,
+                   "Removing xuid %llx from the session \'%s\' because %llx is now registered at that slot (slot %i)\n"
+                  );
       }
       else {
-        lVar4 = *plVar6;
-        if (*plVar5 == lVar4) goto LAB_826dc4b0;
-        uVar1 = Session_GetXuid(puVar2,uVar7);
-        Com_Printf(0xe,0xffffffff821a6cb0,lVar4,*puVar2,uVar1,uVar7);
+        Com_Printf(0xe,
+                   "Removing xuid %llx from the session \'%s\' because nobody is registered at that slot (slot %i)\n"
+                  );
       }
-      Session_LeaveSession(puVar2,uVar7);
+      Session_LeaveSession(pSVar1,uVar5);
     }
 LAB_826dc4b0:
-    uVar7 = uVar7 + 1;
-    plVar6 = plVar6 + 2;
-    plVar5 = plVar5 + 8;
-    if (0x11 < (int)uVar7) {
+    uVar5 = uVar5 + 1;
+    puVar4 = puVar4 + 2;
+    puVar3 = puVar3 + 8;
+    if (0x11 < (int)uVar5) {
       __restgprlr_23();
       return;
     }
@@ -649,15 +761,18 @@ LAB_826dc4b0:
 
 // 826DC4D0  Session_UpdateInternalUserRegistration  (sessions/sessions_common.cpp:543)
 
-void Session_UpdateInternalUserRegistration(int param_1)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void Session_UpdateInternalUserRegistration(SessionData *param_1)
 
 {
   int iVar1;
   
-  if (param_1 == 0) {
-    MyAssertHandler(0xffffffff821a6940,0x220,0,0xffffffff82000f98,0xffffffff82036a08);
+  if (param_1 == (SessionData *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions_common.cpp",
+                    0x220,0,"%s");
   }
-  if ((*(char *)(param_1 + 0x50) != '\0') &&
+  if (((param_1->dyn).keysGenerated != false) &&
      (iVar1 = Session_SessionTasksInProgress(param_1), iVar1 == 0)) {
     Session_DropOldPlayersFromSession(param_1);
     Session_AddNewPlayersToSession(param_1);
@@ -668,390 +783,456 @@ void Session_UpdateInternalUserRegistration(int param_1)
 
 // 826DC550  Session_GetLocalVoiceConnectivity  (sessions/sessions_common.cpp:559)
 
-undefined4 Session_GetLocalVoiceConnectivity(int param_1)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+int Session_GetLocalVoiceConnectivity(SessionData *param_1)
 
 {
-  if (param_1 == 0) {
-    MyAssertHandler(0xffffffff821a6940,0x230,0,0xffffffff82000f98,0xffffffff82036a08);
+  if (param_1 == (SessionData *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions_common.cpp",
+                    0x230,0,"%s");
   }
-  return *(undefined4 *)(param_1 + 0x4f4);
+  return (param_1->dyn).localVoiceConnectivityBits;
 }
 
 
 // 826DC5A8  Session_SetLocalVoiceConnectivity  (sessions/sessions_common.cpp:566)
 
-void Session_SetLocalVoiceConnectivity(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+int Session_SetLocalVoiceConnectivity(SessionData *param_1,int param_2)
 
 {
-  undefined4 *puVar2;
-  undefined8 uVar1;
-  char cVar4;
+  SessionData *pSVar1;
+  int iVar2;
+  bool bVar4;
   uint uVar3;
-  uint uVar5;
   
-  puVar2 = (undefined4 *)__savegprlr_29();
-  if (puVar2 == (undefined4 *)0x0) {
-    MyAssertHandler(0xffffffff821a6940,0x237,0,0xffffffff82000f98,0xffffffff82036a08);
+  pSVar1 = (SessionData *)__savegprlr_29(param_1);
+  if (pSVar1 == (SessionData *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions_common.cpp",
+                    0x237,0,"%s");
   }
-  uVar5 = (uint)param_2;
-  if (puVar2[0x13d] == uVar5) {
-    __restgprlr_29(0);
-    return;
+  if ((pSVar1->dyn).localVoiceConnectivityBits == param_2) {
+    iVar2 = __restgprlr_29(0);
+    return iVar2;
   }
-  Com_Printf(0xe,0xffffffff821a6dd4,*puVar2,puVar2[0x13d],param_2);
-  if (uVar5 != 0) {
-    uVar1 = Session_HostNum(puVar2);
-    cVar4 = Session_IsUserRegistered(puVar2,uVar1);
-    if ((cVar4 != '\0') && (uVar3 = Session_HostNum(puVar2), (1 << (uVar3 & 0x3f) & uVar5) == 0)) {
-      MyAssertHandler(0xffffffff821a6940,0x240,0,0xffffffff820011f4,0xffffffff821a6d10,
-                      0xffffffff821a6dac);
+  Com_Printf(0xe,"Session %s - SetLocalVoiceConnectivity changed from %i to %i\n");
+  if (param_2 != 0) {
+    iVar2 = Session_HostNum(pSVar1);
+    bVar4 = Session_IsUserRegistered(pSVar1,iVar2);
+    if ((bVar4) && (uVar3 = Session_HostNum(pSVar1), (1 << (uVar3 & 0x3f) & param_2) == 0)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions_common.cpp"
+                      ,0x240,0,"%s\n\t%s");
     }
   }
-  puVar2[0x13d] = uVar5;
-  __restgprlr_29(1);
-  return;
+  (pSVar1->dyn).localVoiceConnectivityBits = param_2;
+  iVar2 = __restgprlr_29(1);
+  return iVar2;
 }
 
 
 // 826DC698  Session_RemoveLocalVoiceConnectivity  (sessions/sessions_common.cpp:584)
 
-void Session_RemoveLocalVoiceConnectivity(int param_1,uint param_2)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+int Session_RemoveLocalVoiceConnectivity(SessionData *param_1,int param_2)
 
 {
-  if (param_1 == 0) {
-    MyAssertHandler(0xffffffff821a6940,0x249,0,0xffffffff82000f98,0xffffffff82036a08);
+  int iVar1;
+  
+  if (param_1 == (SessionData *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions_common.cpp",
+                    0x249,0,"%s");
   }
-  Session_SetLocalVoiceConnectivity(param_1,*(uint *)(param_1 + 0x4f4) & ~param_2);
-  return;
+  iVar1 = Session_SetLocalVoiceConnectivity
+                    (param_1,(param_1->dyn).localVoiceConnectivityBits & ~param_2);
+  return iVar1;
 }
 
 
 // 826DC708  Session_AddLocalVoiceConnectivity  (sessions/sessions_common.cpp:593)
 
-void Session_AddLocalVoiceConnectivity(int param_1,ulonglong param_2)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+int Session_AddLocalVoiceConnectivity(SessionData *param_1,int param_2)
 
 {
-  if (param_1 == 0) {
-    MyAssertHandler(0xffffffff821a6940,0x252,0,0xffffffff82000f98,0xffffffff82036a08);
+  int iVar1;
+  
+  if (param_1 == (SessionData *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions_common.cpp",
+                    0x252,0,"%s");
   }
-  Session_SetLocalVoiceConnectivity(param_1,*(uint *)(param_1 + 0x4f4) | param_2);
-  return;
+  iVar1 = Session_SetLocalVoiceConnectivity
+                    (param_1,(param_1->dyn).localVoiceConnectivityBits | param_2);
+  return iVar1;
 }
 
 
 // 826DC778  Session_GetClientVoiceConnectivity  (sessions/sessions_common.cpp:602)
 
-void Session_GetClientVoiceConnectivity(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+int Session_GetClientVoiceConnectivity(SessionData *param_1,int param_2)
 
 {
-  int iVar1;
-  char cVar2;
+  SessionData *pSVar1;
+  bool bVar3;
+  int iVar2;
+  ulonglong uVar4;
   
-  iVar1 = __savegprlr_28();
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff821a6940,0x25b,0,0xffffffff82000f98,0xffffffff82036a08);
+  uVar4 = (ulonglong)param_2;
+  pSVar1 = (SessionData *)__savegprlr_28(param_1);
+  if (pSVar1 == (SessionData *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions_common.cpp",
+                    0x25b,0,"%s");
   }
-  if (0x11 < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821a6940,0x25c,0,0xffffffff82014c1c,param_2,0x12);
+  if (0x11 < (uVar4 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions_common.cpp",
+                    0x25c,0,"clientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
   }
-  cVar2 = Session_IsUserRegistered(iVar1,param_2);
-  if (cVar2 == '\0') {
-    MyAssertHandler(0xffffffff821a6940,0x25d,0,0xffffffff82000f98,0xffffffff820369d8);
+  bVar3 = Session_IsUserRegistered(pSVar1,(int)uVar4);
+  if (!bVar3) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions_common.cpp",
+                    0x25d,0,"%s");
   }
-  __restgprlr_28(*(undefined4 *)((int)((param_2 & 0xffffffff) << 6) + iVar1 + 0x94));
-  return;
+  iVar2 = __restgprlr_28(*(undefined4 *)
+                          ((int)(pSVar1->dyn).users[0].nextConnectivityTestTime +
+                          (int)((uVar4 & 0xffffffff) << 6) + -4));
+  return iVar2;
 }
 
 
 // 826DD030  Session_SetClientVoiceConnectivity  (sessions/sessions_common.cpp:612)
 
-void Session_SetClientVoiceConnectivity(undefined8 param_1,ulonglong param_2,undefined8 param_3)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+int Session_SetClientVoiceConnectivity(SessionData *param_1,int param_2,int param_3)
 
 {
-  undefined4 *puVar1;
-  undefined4 *puVar3;
-  char cVar6;
-  undefined8 uVar2;
+  SessionData *pSVar1;
+  bool bVar5;
+  int iVar2;
+  int iVar3;
   uint uVar4;
-  int iVar5;
-  uint uVar7;
-  ulonglong uVar8;
-  longlong lVar9;
+  ulonglong uVar6;
+  ulonglong uVar7;
   
-  puVar3 = (undefined4 *)__savegprlr_24();
-  if (puVar3 == (undefined4 *)0x0) {
-    MyAssertHandler(0xffffffff821a6940,0x265,0,0xffffffff82000f98,0xffffffff82036a08);
+  uVar6 = (ulonglong)param_2;
+  pSVar1 = (SessionData *)__savegprlr_24(param_1);
+  if (pSVar1 == (SessionData *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions_common.cpp",
+                    0x265,0,"%s");
   }
-  if (0x11 < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821a6940,0x266,0,0xffffffff82014c1c,param_2,0x12);
+  if (0x11 < (uVar6 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions_common.cpp",
+                    0x266,0,"clientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
   }
-  cVar6 = Session_IsUserRegistered(puVar3,param_2);
-  if (cVar6 == '\0') {
-    MyAssertHandler(0xffffffff821a6940,0x267,0,0xffffffff82000f98,0xffffffff820369d8);
+  bVar5 = Session_IsUserRegistered(pSVar1,(int)uVar6);
+  if (!bVar5) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions_common.cpp",
+                    0x267,0,"%s");
   }
-  puVar1 = puVar3 + (int)param_2 * 0x10;
-  uVar7 = (uint)param_3;
-  if (puVar1[0x25] == uVar7) {
-    __restgprlr_24(0);
-    return;
+  iVar2 = (int)((uVar6 & 0xffffffff) << 6);
+  if (*(uint *)((int)(pSVar1->dyn).users[0].nextConnectivityTestTime + iVar2 + -4) == param_3) {
+    iVar2 = __restgprlr_24(0);
+    return iVar2;
   }
-  uVar2 = Session_HostNum(puVar3);
-  uVar4 = Session_GetConnectivityBitsForClientAddress(puVar3,uVar2);
-  if (uVar7 == uVar4) {
-    Com_Printf(0xe,0xffffffff821a71b0,param_2,*(undefined8 *)(puVar1 + 0x1e));
+  iVar3 = Session_HostNum(pSVar1);
+  uVar4 = Session_GetConnectivityBitsForClientAddress(pSVar1,iVar3);
+  if (param_3 == uVar4) {
+    Com_Printf(0xe,"[p2p] Client %i (%llx) cannot talk to anyone but the server\n");
   }
   else {
-    Com_Printf(0xe,0xffffffff821a7178,param_2,*(undefined8 *)(puVar1 + 0x1e));
-    lVar9 = 0;
-    uVar8 = 1;
+    Com_Printf(0xe,"[p2p] Client %i (%llx) can get packets from clients ");
+    iVar3 = 0;
+    uVar7 = 1;
     do {
-      if (((uint)uVar8 & uVar7) != 0) {
-        Com_Printf(0xe,0xffffffff8203764c,lVar9);
+      if (((uint)uVar7 & param_3) != 0) {
+        Com_Printf(0xe,"%i, ");
       }
-      lVar9 = lVar9 + 1;
-      uVar8 = (uVar8 & 0x7fffffff) << 1 | uVar8 >> 0x1f;
-    } while ((int)lVar9 < 0x12);
-    Com_Printf(0xe,0xffffffff820044d8);
+      iVar3 = iVar3 + 1;
+      uVar7 = (uVar7 & 0x7fffffff) << 1 | uVar7 >> 0x1f;
+    } while (iVar3 < 0x12);
+    Com_Printf(0xe,"\n");
   }
-  Com_Printf(0xe,0xffffffff821a7128,*puVar3,param_2,puVar1[0x25],param_3);
-  if (uVar7 == 0) {
-    MyAssertHandler(0xffffffff821a6940,0x283,0,0xffffffff820011f4,0xffffffff821a70d8,
-                    0xffffffff821a70ec);
+  Com_Printf(0xe,"Session %s - SetClientVoiceConnectivity for client %i changed from %i to %i\n");
+  if (param_3 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions_common.cpp",
+                    0x283,0,"%s\n\t%s");
   }
-  uVar4 = Session_HostNum(puVar3);
-  if ((1 << (uVar4 & 0x3f) & uVar7) == 0) {
-    MyAssertHandler(0xffffffff821a6940,0x284,0,0xffffffff820011f4,0xffffffff82036ac8,
-                    0xffffffff821a70ac);
+  uVar4 = Session_HostNum(pSVar1);
+  if ((1 << (uVar4 & 0x3f) & param_3) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions_common.cpp",
+                    0x284,0,"%s\n\t%s");
   }
-  iVar5 = Session_HostNum(puVar3);
-  if (((int)param_2 == iVar5) && (uVar7 != 0x3ffff)) {
-    MyAssertHandler(0xffffffff821a6940,0x285,0,0xffffffff820011f4,0xffffffff821a7020,
-                    0xffffffff821a7080);
+  iVar3 = Session_HostNum(pSVar1);
+  if (((int)uVar6 == iVar3) && (param_3 != 0x3ffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions_common.cpp",
+                    0x285,0,"%s\n\t%s");
   }
-  puVar1[0x25] = uVar7;
-  __restgprlr_24(1);
-  return;
+  *(int *)((int)(pSVar1->dyn).users[0].nextConnectivityTestTime + iVar2 + -4) = param_3;
+  iVar2 = __restgprlr_24(1);
+  return iVar2;
 }
 
 
 // 826DD270  Session_RemoveClientVoiceConnectivity  (sessions/sessions_common.cpp:653)
 
-void Session_RemoveClientVoiceConnectivity(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+int Session_RemoveClientVoiceConnectivity(SessionData *param_1,int param_2,int param_3)
 
 {
-  int iVar1;
-  char cVar2;
+  SessionData *pSVar1;
+  bool bVar3;
+  int iVar2;
+  ulonglong uVar4;
   
-  iVar1 = __savegprlr_27();
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff821a6940,0x28e,0,0xffffffff82000f98,0xffffffff82036a08);
+  uVar4 = (ulonglong)param_2;
+  pSVar1 = (SessionData *)__savegprlr_27(param_1);
+  if (pSVar1 == (SessionData *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions_common.cpp",
+                    0x28e,0,"%s");
   }
-  if (0x11 < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821a6940,0x28f,0,0xffffffff82014c1c,param_2,0x12);
+  if (0x11 < (uVar4 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions_common.cpp",
+                    0x28f,0,"clientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
   }
-  cVar2 = Session_IsUserRegistered(iVar1,param_2);
-  if (cVar2 == '\0') {
-    MyAssertHandler(0xffffffff821a6940,0x290,0,0xffffffff82000f98,0xffffffff820369d8);
+  bVar3 = Session_IsUserRegistered(pSVar1,(int)uVar4);
+  if (!bVar3) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions_common.cpp",
+                    0x290,0,"%s");
   }
-  Session_SetClientVoiceConnectivity
-            (iVar1,param_2,
-             (ulonglong)*(uint *)((int)((param_2 & 0xffffffff) << 6) + iVar1 + 0x94) & ~param_3);
-  __restgprlr_27();
-  return;
+  iVar2 = Session_SetClientVoiceConnectivity
+                    (pSVar1,(int)uVar4,
+                     *(uint *)((int)(pSVar1->dyn).users[0].nextConnectivityTestTime +
+                              (int)((uVar4 & 0xffffffff) << 6) + -4) & ~param_3);
+  iVar2 = __restgprlr_27(iVar2);
+  return iVar2;
 }
 
 
 // 826DD340  Session_AddClientVoiceConnectivity  (sessions/sessions_common.cpp:664)
 
-void Session_AddClientVoiceConnectivity(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+int Session_AddClientVoiceConnectivity(SessionData *param_1,int param_2,int param_3)
 
 {
-  int iVar1;
-  char cVar2;
+  SessionData *pSVar1;
+  bool bVar3;
+  int iVar2;
+  ulonglong uVar4;
   
-  iVar1 = __savegprlr_27();
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff821a6940,0x299,0,0xffffffff82000f98,0xffffffff82036a08);
+  uVar4 = (ulonglong)param_2;
+  pSVar1 = (SessionData *)__savegprlr_27(param_1);
+  if (pSVar1 == (SessionData *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions_common.cpp",
+                    0x299,0,"%s");
   }
-  if (0x11 < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821a6940,0x29a,0,0xffffffff82014c1c,param_2,0x12);
+  if (0x11 < (uVar4 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions_common.cpp",
+                    0x29a,0,"clientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
   }
-  cVar2 = Session_IsUserRegistered(iVar1,param_2);
-  if (cVar2 == '\0') {
-    MyAssertHandler(0xffffffff821a6940,0x29b,0,0xffffffff82000f98,0xffffffff820369d8);
+  bVar3 = Session_IsUserRegistered(pSVar1,(int)uVar4);
+  if (!bVar3) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions_common.cpp",
+                    0x29b,0,"%s");
   }
-  Session_SetClientVoiceConnectivity
-            (iVar1,param_2,*(uint *)((int)((param_2 & 0xffffffff) << 6) + iVar1 + 0x94) | param_3);
-  __restgprlr_27();
-  return;
+  iVar2 = Session_SetClientVoiceConnectivity
+                    (pSVar1,(int)uVar4,
+                     *(uint *)((int)(pSVar1->dyn).users[0].nextConnectivityTestTime +
+                              (int)((uVar4 & 0xffffffff) << 6) + -4) | param_3);
+  iVar2 = __restgprlr_27(iVar2);
+  return iVar2;
 }
 
 
 // 826DC830  Session_GetConnectivityBitsForAddr  (sessions/sessions_common.cpp:676)
 
-void Session_GetConnectivityBitsForAddr(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+int Session_GetConnectivityBitsForAddr(SessionData *param_1,netadr_t param_2)
 
 {
-  undefined8 uVar1;
-  char cVar4;
-  undefined8 *puVar2;
-  int iVar3;
+  SessionData *pSVar1;
+  bool bVar3;
+  int iVar2;
+  ulonglong uVar4;
   ulonglong uVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  undefined1 auStack_50 [80];
+  uint uVar6;
+  netadr_t in_stack_ffffff68;
+  netadr_t in_stack_ffffff78;
+  netadr_t anStack_50 [5];
   
-  uVar1 = __savegprlr_26();
-  uVar5 = 0;
-  uVar7 = 0;
-  uVar6 = 1;
+  pSVar1 = (SessionData *)__savegprlr_26(param_1);
+  uVar4 = 0;
+  uVar6 = 0;
+  uVar5 = 1;
   do {
-    cVar4 = Session_IsUserRegistered(uVar1,uVar7);
-    if (cVar4 != '\0') {
-      puVar2 = (undefined8 *)Session_GetPlayerAddr(auStack_50,uVar1,uVar7);
-      iVar3 = NET_CompareIPAdr(param_2,param_3,*puVar2,puVar2[1]);
-      if (iVar3 != 0) {
-        uVar5 = uVar6 | uVar5;
+    bVar3 = Session_IsUserRegistered(pSVar1,uVar6);
+    if (bVar3) {
+      Session_GetPlayerAddr(anStack_50,pSVar1,uVar6);
+      iVar2 = NET_CompareIPAdr(in_stack_ffffff68,in_stack_ffffff78);
+      if (iVar2 != 0) {
+        uVar4 = uVar5 | uVar4;
       }
     }
-    uVar7 = uVar7 + 1;
-    uVar6 = (uVar6 & 0x7fffffff) << 1 | uVar6 >> 0x1f;
-  } while ((uVar7 & 0xffffffff) < 0x12);
-  __restgprlr_26(uVar5);
-  return;
+    uVar6 = uVar6 + 1;
+    uVar5 = (uVar5 & 0x7fffffff) << 1 | uVar5 >> 0x1f;
+  } while (uVar6 < 0x12);
+  iVar2 = __restgprlr_26(uVar4);
+  return iVar2;
 }
 
 
 // 826DC8C0  Session_GetConnectivityBitsForClientAddress  (sessions/sessions_common.cpp:697)
 
-void Session_GetConnectivityBitsForClientAddress(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+int Session_GetConnectivityBitsForClientAddress(SessionData *param_1,int param_2)
 
 {
-  ulonglong uVar1;
-  char cVar4;
-  undefined8 *puVar3;
-  undefined8 uVar2;
-  undefined1 auStack_40 [64];
+  SessionData *pSVar1;
+  bool bVar4;
+  uint uVar2;
+  int iVar3;
+  ulonglong uVar5;
+  uint uVar6;
+  netadr_t in_stack_ffffff78;
+  netadr_t anStack_40 [4];
   
-  uVar1 = __savegprlr_28();
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821a6940,0x2ba,0,0xffffffff82000f98,0xffffffff82036a08);
+  uVar5 = (ulonglong)param_2;
+  pSVar1 = (SessionData *)__savegprlr_28(param_1);
+  if (pSVar1 == (SessionData *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions_common.cpp",
+                    0x2ba,0,"%s");
   }
-  if (0x11 < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821a6940,699,0,0xffffffff82014c1c,param_2,0x12);
+  if (0x11 < (uVar5 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions_common.cpp",
+                    699,0,"clientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
   }
-  cVar4 = Session_IsUserRegistered(uVar1,param_2);
-  if (cVar4 != '\0') {
-    puVar3 = (undefined8 *)Session_GetPlayerAddr(auStack_40,uVar1,param_2);
-    uVar2 = Session_GetConnectivityBitsForAddr(uVar1,*puVar3,puVar3[1]);
-    if ((1 << ((uint)param_2 & 0x3f) & (uint)uVar2) == 0) {
-      MyAssertHandler(0xffffffff821a6940,0x2c3,0,0xffffffff82000f98,0xffffffff821a6e14);
+  uVar6 = (uint)uVar5;
+  bVar4 = Session_IsUserRegistered(pSVar1,uVar6);
+  if (bVar4) {
+    Session_GetPlayerAddr(anStack_40,pSVar1,uVar6);
+    uVar2 = Session_GetConnectivityBitsForAddr(pSVar1,in_stack_ffffff78);
+    if ((1 << (uVar6 & 0x3f) & uVar2) == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions_common.cpp"
+                      ,0x2c3,0,"%s");
     }
-    __restgprlr_28(uVar2);
-    return;
+    iVar3 = __restgprlr_28(uVar2);
+    return iVar3;
   }
-  __restgprlr_28(1 << ((uint)param_2 & 0x3f));
-  return;
+  iVar3 = __restgprlr_28(1 << (uVar6 & 0x3f));
+  return iVar3;
 }
 
 
 // 826DC9C0  Session_GetConnectivityBitsForLocalClients  (sessions/sessions_common.cpp:717)
 
-void Session_GetConnectivityBitsForLocalClients(void)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+int Session_GetConnectivityBitsForLocalClients(SessionData *param_1)
 
 {
-  undefined8 uVar1;
-  char cVar2;
-  ulonglong uVar3;
+  SessionData *pSVar1;
+  bool bVar3;
+  int iVar2;
   ulonglong uVar4;
   ulonglong uVar5;
+  uint uVar6;
   
-  uVar1 = __savegprlr_28();
-  uVar3 = 0;
-  uVar5 = 0;
-  uVar4 = 1;
+  pSVar1 = (SessionData *)__savegprlr_28(param_1);
+  uVar4 = 0;
+  uVar6 = 0;
+  uVar5 = 1;
   do {
-    cVar2 = Session_IsUserRegistered(uVar1,uVar5);
-    if ((cVar2 != '\0') && (cVar2 = Session_PlayerHasLoopbackAddr(uVar1,uVar5), cVar2 != '\0')) {
-      uVar3 = uVar4 | uVar3;
+    bVar3 = Session_IsUserRegistered(pSVar1,uVar6);
+    if ((bVar3) && (bVar3 = Session_PlayerHasLoopbackAddr(pSVar1,uVar6), bVar3)) {
+      uVar4 = uVar5 | uVar4;
     }
-    uVar5 = uVar5 + 1;
-    uVar4 = (uVar4 & 0x7fffffff) << 1 | uVar4 >> 0x1f;
-  } while ((uVar5 & 0xffffffff) < 0x12);
-  if ((int)uVar3 == 0) {
-    Com_PrintError(0xe,0xffffffff821a6e40);
+    uVar6 = uVar6 + 1;
+    uVar5 = (uVar5 & 0x7fffffff) << 1 | uVar5 >> 0x1f;
+  } while (uVar6 < 0x12);
+  if ((int)uVar4 == 0) {
+    Com_PrintError(0xe,
+                   "Session - GetConnectivityBitsForLocalClients - No local clients found for connectivity!\n"
+                  );
   }
-  __restgprlr_28(uVar3);
-  return;
+  iVar2 = __restgprlr_28(uVar4);
+  return iVar2;
 }
 
 
 // 826DCA48  Session_GetClientNumAtSameAddress  (sessions/sessions_common.cpp:748)
 
-/* WARNING: Restarted to delay deadcode elimination for space: stack */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
-void Session_GetClientNumAtSameAddress(undefined8 param_1,undefined8 param_2)
+int Session_GetClientNumAtSameAddress(SessionData *param_1,int param_2)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
-  undefined8 uVar3;
-  char cVar6;
-  undefined8 *puVar4;
-  int iVar5;
-  longlong lVar7;
-  undefined1 auStack_40 [64];
+  SessionData *pSVar1;
+  bool bVar3;
+  int iVar2;
+  longlong lVar4;
+  netadr_t in_stack_ffffff68;
+  netadr_t in_stack_ffffff78;
+  netadr_t anStack_40 [4];
   
-  uVar3 = __savegprlr_27();
-  cVar6 = Session_IsUserRegistered();
-  if (cVar6 != '\0') {
-    puVar4 = (undefined8 *)Session_GetPlayerAddr(auStack_40,uVar3,param_2);
-    uVar2 = *puVar4;
-    lVar7 = 0;
-    uVar1 = puVar4[1];
+  pSVar1 = (SessionData *)__savegprlr_27(param_1);
+  bVar3 = Session_IsUserRegistered(pSVar1,param_2);
+  if (bVar3) {
+    Session_GetPlayerAddr(anStack_40,pSVar1,param_2);
+    lVar4 = 0;
     do {
-      if ((int)param_2 != (int)lVar7) {
-        cVar6 = Session_IsUserRegistered(uVar3,lVar7);
-        if (cVar6 != '\0') {
-          puVar4 = (undefined8 *)Session_GetPlayerAddr(auStack_40,uVar3,lVar7);
-          iVar5 = NET_CompareIPAdr(uVar2,uVar1,*puVar4,puVar4[1]);
-          if (iVar5 != 0) {
-            __restgprlr_27(lVar7);
-            return;
-          }
+      iVar2 = (int)lVar4;
+      if ((param_2 != iVar2) && (bVar3 = Session_IsUserRegistered(pSVar1,iVar2), bVar3)) {
+        Session_GetPlayerAddr(anStack_40,pSVar1,iVar2);
+        iVar2 = NET_CompareIPAdr(in_stack_ffffff68,in_stack_ffffff78);
+        if (iVar2 != 0) {
+          iVar2 = __restgprlr_27(lVar4);
+          return iVar2;
         }
       }
-      lVar7 = lVar7 + 1;
-    } while ((int)lVar7 < 0x12);
+      lVar4 = lVar4 + 1;
+    } while ((int)lVar4 < 0x12);
   }
-  __restgprlr_27(0xffffffffffffffff);
-  return;
+  iVar2 = __restgprlr_27(0xffffffffffffffff);
+  return iVar2;
 }
 
 
 // 826DCB20  Session_UpdatePartyHostAddress  (sessions/sessions_common.cpp:775)
 
-void Session_UpdatePartyHostAddress(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void Session_UpdatePartyHostAddress(SessionData *param_1,int param_2)
 
 {
-  ulonglong uVar1;
-  char cVar4;
-  ulonglong uVar2;
-  undefined8 *puVar3;
-  undefined1 auStack_40 [64];
+  SessionData *pSVar1;
+  bool bVar3;
+  PartyData *pPVar2;
+  netadr_t in_stack_ffffff78;
+  netadr_t anStack_40 [4];
   
-  uVar1 = __savegprlr_28();
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821a6940,0x308,0,0xffffffff82000f98,0xffffffff82036a08);
+  pSVar1 = (SessionData *)__savegprlr_28(param_1);
+  if (pSVar1 == (SessionData *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions_common.cpp",
+                    0x308,0,"%s");
   }
-  cVar4 = Session_IsUserRegistered(uVar1,param_2);
-  if (cVar4 == '\0') {
-    MyAssertHandler(0xffffffff821a6940,0x309,0,0xffffffff82000f98,0xffffffff820369d8);
+  bVar3 = Session_IsUserRegistered(pSVar1,param_2);
+  if (!bVar3) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions_common.cpp",
+                    0x309,0,"%s");
   }
-  uVar2 = Party_GetPartyForSession(uVar1);
-  if (((uVar2 & 0xffffffff) != 0) && (cVar4 = Party_IsHost(uVar2,param_2), cVar4 != '\0')) {
-    puVar3 = (undefined8 *)Session_GetPlayerAddr(auStack_40,uVar1,param_2);
-    Party_UpdateHostAddr(uVar2,*puVar3,puVar3[1]);
+  pPVar2 = Party_GetPartyForSession(pSVar1);
+  if ((pPVar2 != (PartyData *)0x0) && (bVar3 = Party_IsHost(pPVar2,param_2), bVar3)) {
+    Session_GetPlayerAddr(anStack_40,pSVar1,param_2);
+    Party_UpdateHostAddr(pPVar2,in_stack_ffffff78);
   }
   __restgprlr_28();
   return;
@@ -1060,86 +1241,86 @@ void Session_UpdatePartyHostAddress(undefined8 param_1,undefined8 param_2)
 
 // 826DCBF0  Session_SetPlayerAddr  (sessions/sessions_common.cpp:795)
 
-/* WARNING: Restarted to delay deadcode elimination for space: stack */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
-void Session_SetPlayerAddr
-               (undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4)
+void Session_SetPlayerAddr(SessionData *param_1,int param_2,netadr_t param_3)
 
 {
-  undefined4 *puVar1;
-  undefined4 uVar2;
+  int iVar1;
+  ClientInfo *pCVar2;
   char cVar3;
   char cVar4;
   char cVar5;
-  undefined4 *puVar8;
-  int iVar9;
-  undefined8 uVar6;
-  undefined8 uVar7;
-  char cVar10;
-  int in_stack_00000020;
-  char cStack00000024;
-  char cStack00000025;
-  char cStack00000026;
-  char cStack00000027;
-  undefined4 uStack0000002c;
-  undefined1 local_60 [4];
-  undefined4 uStack_5c;
-  undefined2 local_58;
-  undefined2 uStack_56;
-  undefined4 uStack_54;
+  SessionData *pSVar6;
+  int iVar7;
+  bool bVar8;
+  ulonglong uVar9;
+  ulonglong in_r5;
+  undefined8 in_r6;
+  ulonglong uVar10;
+  netadrtype_t nStack00000020;
+  uchar uStack00000024;
+  uchar uStack00000025;
+  uchar uStack00000026;
+  uchar uStack00000027;
+  uint uStack00000028;
+  netsrc_t nStack0000002c;
+  netadr_t in_stack_ffffff58;
+  netadr_t in_stack_ffffff68;
+  netadr_t local_60 [6];
   
-  uVar2 = in_stack_00000020;
-  puVar8 = (undefined4 *)__savegprlr_24();
-  if (puVar8 == (undefined4 *)0x0) {
-    MyAssertHandler(0xffffffff821a6940,0x31e,0,0xffffffff82000f98,0xffffffff82036a08);
+  uVar9 = (ulonglong)param_2;
+  pSVar6 = (SessionData *)__savegprlr_24(param_1);
+  _nStack00000020 = in_r5;
+  _uStack00000028 = in_r6;
+  if (pSVar6 == (SessionData *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions_common.cpp",
+                    0x31e,0,"%s");
   }
-  if (0x11 < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821a6940,799,0,0xffffffff82014c1c,param_2,0x12);
+  if (0x11 < (uVar9 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions_common.cpp",
+                    799,0,"clientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
   }
-  in_stack_00000020 = (int)((ulonglong)param_3 >> 0x20);
-  cStack00000027 = (char)param_3;
-  cVar5 = cStack00000027;
-  cStack00000026 = (char)((ulonglong)param_3 >> 8);
-  cVar4 = cStack00000026;
-  cStack00000025 = (char)((ulonglong)param_3 >> 0x10);
-  cVar3 = cStack00000025;
-  cStack00000024 = (char)((ulonglong)param_3 >> 0x18);
-  cVar10 = cStack00000024;
-  _cStack00000024 = (undefined4)param_3;
-  uStack0000002c = (undefined4)param_4;
-  uStack_5c = _cStack00000024;
-  local_58 = (undefined2)((ulonglong)param_4 >> 0x30);
-  uStack_56 = (undefined2)((ulonglong)param_4 >> 0x20);
-  uStack_54 = uStack0000002c;
-  if ((((in_stack_00000020 != 2) && (cVar10 == '\0')) && (cVar3 == '\0')) &&
-     ((cVar4 == '\0' && (cVar5 == '\0')))) {
-    MyAssertHandler(0xffffffff821a6940,0x32a,0,0xffffffff820011f4,0xffffffff821a6f40,
-                    0xffffffff821a49d8);
+  uVar10 = _nStack00000020 & 0xff;
+  cVar5 = uStack00000026;
+  cVar4 = uStack00000025;
+  cVar3 = uStack00000024;
+  local_60[0].type = nStack00000020;
+  local_60[0].ip[0] = uStack00000024;
+  local_60[0].ip[1] = uStack00000025;
+  local_60[0].ip[2] = uStack00000026;
+  local_60[0].ip[3] = uStack00000027;
+  local_60[0]._8_4_ = uStack00000028;
+  local_60[0].localNetID = nStack0000002c;
+  if ((((nStack00000020 != NA_LOOPBACK) && (cVar3 == '\0')) && (cVar4 == '\0')) &&
+     ((cVar5 == '\0' && (uVar10 == 0)))) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions_common.cpp",
+                    0x32a,0,"%s\n\t%s");
   }
-  if (((cVar10 == '\x7f') && (cVar3 == '\0')) &&
-     ((cVar4 == '\0' && ((cVar5 == '\x01' && (in_stack_00000020 != 2)))))) {
-    Com_PrintWarning(0xe,0xffffffff821a6ee0);
-    NetAdr_SetType(local_60,2);
-    local_58 = 0;
+  if (((cVar3 == '\x7f') && (cVar4 == '\0')) &&
+     ((cVar5 == '\0' && ((uVar10 == 1 && (nStack00000020 != NA_LOOPBACK)))))) {
+    Com_PrintWarning(0xe,
+                     "Client %i has a 127.0.0.1 IP and the type isn\'t NA_LOOPBACK, so we\'re changing it over.\n"
+                    );
+    NetAdr_SetType(local_60,NA_LOOPBACK);
+    local_60[0]._8_4_ = local_60[0]._8_4_ & 0xffff;
   }
-  puVar1 = puVar8 + (int)param_2 * 0x10;
-  if ((*(char *)(puVar1 + 0x1c) != '\0') &&
-     (iVar9 = NET_CompareAdr(CONCAT44(uVar2,uStack_5c),
-                             CONCAT44(CONCAT22(local_58,uStack_56),uStack_54),
-                             *(undefined8 *)(puVar1 + 0x21),*(undefined8 *)(puVar1 + 0x23)),
-     iVar9 == 0)) {
-    uVar6 = NET_AdrToString(CONCAT44(uVar2,uStack_5c),
-                            CONCAT44(CONCAT22(local_58,uStack_56),uStack_54));
-    uVar7 = NET_AdrToString(*(undefined8 *)(puVar1 + 0x21),*(undefined8 *)(puVar1 + 0x23));
-    Com_Printf(0xe,0xffffffff821a6ea0,*puVar8,param_2,uVar7,uVar6);
+  iVar1 = (int)uVar9;
+  if (((pSVar6->dyn).users[iVar1].registered != false) &&
+     (iVar7 = NET_CompareAdr(in_stack_ffffff58,in_stack_ffffff68), iVar7 == 0)) {
+    NET_AdrToString(in_stack_ffffff58);
+    NET_AdrToString(in_stack_ffffff58);
+    Com_Printf(0xe,"Session %s - Changing clientNum %i\'s address from \'%s\' to \'%s\'\n");
   }
-  puVar1[0x21] = uVar2;
-  puVar1[0x22] = uStack_5c;
-  puVar1[0x23] = CONCAT22(local_58,uStack_56);
-  puVar1[0x24] = uStack_54;
-  cVar10 = Session_IsUserRegistered(puVar8,param_2);
-  if (cVar10 != '\0') {
-    Session_UpdatePartyHostAddress(puVar8,param_2);
+  (pSVar6->dyn).users[iVar1].addr.type = local_60[0].type;
+  *&(pSVar6->dyn).users[iVar1].addr.ip = local_60[0].ip;
+  pCVar2 = (pSVar6->dyn).users + iVar1;
+  (pCVar2->addr).port = local_60[0].port;
+  *(undefined2 *)&(pCVar2->addr).field_0xa = local_60[0]._10_2_;
+  (pSVar6->dyn).users[iVar1].addr.localNetID = local_60[0].localNetID;
+  bVar8 = Session_IsUserRegistered(pSVar6,iVar1);
+  if (bVar8) {
+    Session_UpdatePartyHostAddress(pSVar6,iVar1);
   }
   __restgprlr_24();
   return;
@@ -1148,50 +1329,53 @@ void Session_SetPlayerAddr
 
 // 826DCE20  Session_UpdateSplitscreenMembersInAddr  (sessions/sessions_common.cpp:832)
 
-/* WARNING: Restarted to delay deadcode elimination for space: stack */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void Session_UpdateSplitscreenMembersInAddr
-               (undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4)
+               (SessionData *param_1,uint param_2,in_addr param_3,ushort param_4)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
-  undefined4 *puVar3;
-  char cVar6;
-  undefined8 *puVar4;
+  SessionData *pSVar1;
+  bool bVar3;
+  int iVar2;
+  ulonglong uVar4;
   int iVar5;
-  ulonglong uVar7;
-  undefined1 auStack_50 [80];
+  uint uVar6;
+  netadr_t in_stack_ffffff58;
+  netadr_t in_stack_ffffff68;
+  netadr_t anStack_50 [5];
   
-  puVar3 = (undefined4 *)__savegprlr_25();
-  if (puVar3 == (undefined4 *)0x0) {
-    MyAssertHandler(0xffffffff821a6940,0x347,0,0xffffffff82000f98,0xffffffff82036a08);
+  uVar4 = (ulonglong)(int)param_2;
+  pSVar1 = (SessionData *)__savegprlr_25(param_1);
+  if (pSVar1 == (SessionData *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions_common.cpp",
+                    0x347,0,"%s");
   }
-  if (0x11 < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821a6940,0x348,0,0xffffffff821a6fe0,param_2,0x12);
+  if (0x11 < (uVar4 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions_common.cpp",
+                    0x348,0,"mainClientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
   }
-  cVar6 = Session_IsUserRegistered(puVar3,param_2);
-  if (cVar6 == '\0') {
-    Com_PrintWarning(0xe,0xffffffff821a6f98,*puVar3,param_2);
+  iVar5 = (int)uVar4;
+  bVar3 = Session_IsUserRegistered(pSVar1,iVar5);
+  if (!bVar3) {
+    Com_PrintWarning(0xe,"Session %s - Attempted to update member %i\'s address, not registered\n");
     __restgprlr_25();
     return;
   }
-  puVar4 = (undefined8 *)Session_GetPlayerAddr(auStack_50,puVar3,param_2);
-  uVar2 = *puVar4;
-  uVar7 = 0;
-  uVar1 = puVar4[1];
+  Session_GetPlayerAddr(anStack_50,pSVar1,iVar5);
+  uVar6 = 0;
   do {
-    if (((param_2 & 0xffffffff) != (uVar7 & 0xffffffff)) &&
-       (cVar6 = Session_IsUserRegistered(puVar3,uVar7), cVar6 != '\0')) {
-      puVar4 = (undefined8 *)Session_GetPlayerAddr(auStack_50,puVar3,uVar7);
-      iVar5 = NET_CompareIPAdr(uVar2,uVar1,*puVar4,puVar4[1]);
-      if (iVar5 != 0) {
-        Live_UpdatePlayerInAddr(puVar3,uVar7,param_3,param_4);
+    if (((uVar4 & 0xffffffff) != (ulonglong)uVar6) &&
+       (bVar3 = Session_IsUserRegistered(pSVar1,uVar6), bVar3)) {
+      Session_GetPlayerAddr(anStack_50,pSVar1,uVar6);
+      iVar2 = NET_CompareIPAdr(in_stack_ffffff58,in_stack_ffffff68);
+      if (iVar2 != 0) {
+        Live_UpdatePlayerInAddr(pSVar1,uVar6,param_3,param_4);
       }
     }
-    uVar7 = uVar7 + 1;
-  } while ((uVar7 & 0xffffffff) < 0x12);
-  Live_UpdatePlayerInAddr(puVar3,param_2,param_3,param_4);
+    uVar6 = uVar6 + 1;
+  } while (uVar6 < 0x12);
+  Live_UpdatePlayerInAddr(pSVar1,iVar5,param_3,param_4);
   __restgprlr_25();
   return;
 }

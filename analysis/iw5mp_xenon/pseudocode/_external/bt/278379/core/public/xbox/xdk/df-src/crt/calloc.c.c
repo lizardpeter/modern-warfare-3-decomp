@@ -2,19 +2,20 @@
 
 // 82922018  calloc  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/calloc.c:46)
 
-void * calloc(size_t _Count,size_t _Size)
+void * calloc(uint param_1,uint param_2)
 
 {
-  longlong lVar1;
+  void *pvVar1;
   int *piVar2;
   int local_20 [4];
   
   local_20[0] = 0;
-  lVar1 = calloc_impl(_Count,_Size,local_20);
-  if (((lVar1 == 0) && (local_20[0] != 0)) && (piVar2 = _errno(), piVar2 != (int *)0x0)) {
+  pvVar1 = _calloc_impl(param_1,param_2,local_20);
+  if (((pvVar1 == (void *)0x0) && (local_20[0] != 0)) && (piVar2 = _errno(), piVar2 != (int *)0x0))
+  {
     piVar2 = _errno();
     *piVar2 = local_20[0];
   }
-  return (void *)lVar1;
+  return pvVar1;
 }
 

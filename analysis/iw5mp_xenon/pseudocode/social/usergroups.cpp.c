@@ -2,79 +2,81 @@
 
 // 8293F348  `dynamic_initializer_for_'g_DWUserGroupTask''  (social/usergroups.cpp:65)
 
-int _dynamic_initializer_for__g_DWUserGroupTask__(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void _dynamic_initializer_for__g_DWUserGroupTask__(void)
 
 {
-  int iVar1;
-  
-  DAT_8456cf48 = 0;
-  DAT_8456cf4c = 0;
-  DAT_8456cf50 = 0;
-  DAT_8456cf54 = 0;
-  iVar1 = atexit(_dynamic_atexit_destructor_for__g_DWUserGroupTask__);
-  return iVar1;
+  g_DWUserGroupTask[0].m_ptr = (bdRemoteTask *)0x0;
+  g_DWUserGroupTask[1].m_ptr = (bdRemoteTask *)0x0;
+  g_DWUserGroupTask[2].m_ptr = (bdRemoteTask *)0x0;
+  g_DWUserGroupTask[3].m_ptr = (bdRemoteTask *)0x0;
+  atexit(_dynamic_atexit_destructor_for__g_DWUserGroupTask__);
+  return;
 }
 
 
 // 8293F380  `dynamic_initializer_for_'g_groupMembershipInfo''  (social/usergroups.cpp:68)
 
-int _dynamic_initializer_for__g_groupMembershipInfo__(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void _dynamic_initializer_for__g_groupMembershipInfo__(void)
 
 {
-  int iVar1;
-  longlong lVar2;
-  longlong lVar3;
+  bdUserGroupMembershipInfo (*this) [20];
+  longlong lVar1;
   
-  lVar3 = 0x4f;
-  lVar2 = -0x7ba930a8;
+  lVar1 = 0x4f;
+  this = g_groupMembershipInfo;
   do {
-    bdUserGroupMembershipInfo__bdUserGroupMembershipInfo(lVar2);
-    lVar3 = lVar3 + -1;
-    lVar2 = lVar2 + 0x60;
-  } while (-1 < lVar3);
-  iVar1 = atexit(_dynamic_atexit_destructor_for__g_groupMembershipInfo__);
-  return iVar1;
+    bdUserGroupMembershipInfo::bdUserGroupMembershipInfo(*this);
+    lVar1 = lVar1 + -1;
+    this = (bdUserGroupMembershipInfo (*) [20])((int)this + 0x60);
+  } while (-1 < lVar1);
+  atexit(_dynamic_atexit_destructor_for__g_groupMembershipInfo__);
+  return;
 }
 
 
 // 82709FF8  UserGroups_Shutdown  (social/usergroups.cpp:99)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void UserGroups_Shutdown(void)
 
 {
-  uint uVar1;
-  undefined4 *puVar2;
-  uint uVar3;
-  uint *puVar4;
-  uint *puVar5;
+  bdRemoteTask *pbVar1;
+  uint uVar2;
+  uint *puVar3;
+  bdReference<bdRemoteTask> *pbVar4;
   char in_RESERVE;
   byte in_cr0;
   
   __savegprlr_29();
-  puVar5 = &DAT_8456cf48;
+  pbVar4 = g_DWUserGroupTask;
   do {
-    uVar1 = *puVar5;
-    if (uVar1 != 0) {
-      if (uVar1 != 0) {
+    pbVar1 = pbVar4->m_ptr;
+    if (pbVar1 != (bdRemoteTask *)0x0) {
+      if (pbVar1 != (bdRemoteTask *)0x0) {
         do {
-          puVar4 = (uint *)((ulonglong)uVar1 + 4);
+          puVar3 = (uint *)(ZEXT48(pbVar1) + 4);
           if (in_RESERVE != '\0') {
-            uVar3 = storeWordConditionalIndexed((ulonglong)*puVar4 - 1,0,(ulonglong)uVar1 + 4);
-            *puVar4 = uVar3;
+            uVar2 = storeWordConditionalIndexed((ulonglong)*puVar3 - 1,0,ZEXT48(pbVar1) + 4);
+            *puVar3 = uVar2;
             in_cr0 = 2;
           }
         } while (!(bool)(in_cr0 >> 1 & 1));
-        if (*(int *)(uVar1 + 4) == 0) {
-          puVar2 = (undefined4 *)*puVar5;
-          if (puVar2 != (undefined4 *)0x0) {
-            (**(code **)*puVar2)(puVar2,1);
+        if (*(int *)&pbVar1->field_0x4 == 0) {
+          pbVar1 = pbVar4->m_ptr;
+          if (pbVar1 != (bdRemoteTask *)0x0) {
+            (**(code **)pbVar1->_padding_)(pbVar1,1);
           }
         }
       }
-      *puVar5 = 0;
+      pbVar4->m_ptr = (bdRemoteTask *)0x0;
     }
-    puVar5 = puVar5 + 1;
-  } while ((int)puVar5 < -0x7ba930a8);
+    pbVar4 = pbVar4 + 1;
+  } while ((int)pbVar4 < -0x7ba930a8);
   __restgprlr_29();
   return;
 }
@@ -85,32 +87,32 @@ void UserGroups_Shutdown(void)
 void UserGroups_Clear(int param_1)
 
 {
-  (&DAT_8456cf18)[param_1] = 0;
+  g_NumUserGroups[param_1] = 0;
   return;
 }
 
 
 // 8270A098  UserGroups_UserSignedOut  (social/usergroups.cpp:115)
 
-void UserGroups_UserSignedOut(void)
+void UserGroups_UserSignedOut(int param_1)
 
 {
   int iVar1;
   int iVar2;
   
-  iVar1 = __savegprlr_29();
-  if (((int *)(&DAT_8456cf48)[iVar1] != (int *)0x0) &&
-     (iVar2 = (**(code **)(*(int *)(&DAT_8456cf48)[iVar1] + 4))(), iVar2 == 1)) {
-    bdRemoteTask__cancelTask((&DAT_8456cf48)[iVar1]);
+  iVar1 = __savegprlr_29(param_1);
+  if ((g_DWUserGroupTask[iVar1].m_ptr != (bdRemoteTask *)0x0) &&
+     (iVar2 = (**(code **)((g_DWUserGroupTask[iVar1].m_ptr)->_padding_ + 4))(), iVar2 == 1)) {
+    bdRemoteTask::cancelTask(g_DWUserGroupTask[iVar1].m_ptr);
   }
-  (&DAT_8456cf18)[iVar1] = 0;
+  g_NumUserGroups[iVar1] = 0;
   (&DAT_8456cef8)[iVar1] = 0;
-  (&DAT_8456cf08)[iVar1] = 0;
+  g_DWUserGroupTaskStage[iVar1] = USERGROUPS_DW_TASK_STAGE_WAITING;
   (&DAT_8456cf34)[iVar1] = 0;
-  (&DAT_8456cee0)[iVar1] = 0;
+  g_GetUserGroupsRetryAttempts[iVar1] = 0;
   (&DAT_8456cf30)[iVar1] = 0;
-  (&DAT_8456cef4)[iVar1] = 0;
-  (&DAT_8456cf44)[iVar1] = 0;
+  s_needToDownloadUserGroups[iVar1] = false;
+  s_downloadedRecentPlayers[iVar1] = false;
   __restgprlr_29();
   return;
 }
@@ -118,25 +120,20 @@ void UserGroups_UserSignedOut(void)
 
 // 82708BA0  UserGroups_GoCompare  (social/usergroups.cpp:137)
 
-void UserGroups_GoCompare(ulonglong param_1,int param_2,longlong param_3)
+void UserGroups_GoCompare(int param_1,XuidInfo *param_2,ulong64 param_3)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
+  uint uVar1;
   
-  iVar1 = (int)((param_1 & 0xffffffff) << 2);
-  uVar3 = 0;
-  if (*(int *)((int)&DAT_8456cf18 + iVar1) != 0) {
+  uVar1 = 0;
+  if (g_NumUserGroups[param_1] != 0) {
     do {
-      uVar2 = (param_1 + (param_1 & 0x3fffffff) * 4 & 0x3fffffff) * 4 + uVar3;
-      if (*(longlong *)(&DAT_8456cf60 + (int)((uVar2 + (uVar2 & 0x7fffffff) * 2 & 0xffffffff) << 5))
-          == param_3) {
-        *(char *)(param_2 + 0xd8) = *(char *)(param_2 + 0xd8) + '\x01';
-        *(uint *)(param_2 + 0xd4) = 1 << ((uint)uVar3 & 0x3f) | *(uint *)(param_2 + 0xd4);
+      if (g_groupMembershipInfo[param_1][uVar1].m_userGroupID == param_3) {
+        param_2->numMatchingGroups = param_2->numMatchingGroups + '\x01';
+        param_2->matchingGroups = 1 << (uVar1 & 0x3f) | param_2->matchingGroups;
       }
-      uVar3 = uVar3 + 1;
-    } while ((uVar3 & 0xffffffff) < (ulonglong)*(uint *)((int)&DAT_8456cf18 + iVar1));
+      uVar1 = uVar1 + 1;
+    } while (uVar1 < g_NumUserGroups[param_1]);
   }
   return;
 }
@@ -144,7 +141,7 @@ void UserGroups_GoCompare(ulonglong param_1,int param_2,longlong param_3)
 
 // 82708C38  UserGroups_UpdateUserGroupComparison  (social/usergroups.cpp:150)
 
-void UserGroups_UpdateUserGroupComparison(undefined8 param_1,longlong param_2)
+void UserGroups_UpdateUserGroupComparison(int param_1,int param_2)
 
 {
   int iVar1;
@@ -158,11 +155,13 @@ void UserGroups_UpdateUserGroupComparison(undefined8 param_1,longlong param_2)
   ulonglong uVar9;
   ulonglong uVar10;
   
-  uVar2 = __savegprlr_27();
+  lVar6 = (longlong)param_2;
+  uVar2 = __savegprlr_27(param_1);
   if (3 < (uVar2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821b49b8,0x97,0,0xffffffff82057c60,uVar2,4);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\usergroups.cpp",0x97,0,
+                    "localControllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  lVar6 = uVar2 * 0x2bd0 + param_2 * 0xe0;
+  lVar6 = uVar2 * 0x2bd0 + lVar6 * 0xe0;
   lVar4 = lVar6 + -0x7baac468;
   if (lVar4 != 0) {
     iVar1 = (int)lVar4;
@@ -171,7 +170,7 @@ void UserGroups_UpdateUserGroupComparison(undefined8 param_1,longlong param_2)
     *(undefined1 *)(iVar1 + 0xd8) = 0;
     if (*(char *)(iVar1 + 0xd0) != '\0') {
       lVar6 = lVar6 + -0x7baac438;
-      uVar9 = (ulonglong)*(uint *)((int)&DAT_8456cf18 + (int)((uVar2 & 0xffffffff) << 2));
+      uVar9 = (ulonglong)*(uint *)((int)g_NumUserGroups + (int)((uVar2 & 0xffffffff) << 2));
       do {
         lVar4 = *(longlong *)lVar6;
         lVar5 = 0;
@@ -181,8 +180,8 @@ void UserGroups_UpdateUserGroupComparison(undefined8 param_1,longlong param_2)
           do {
             uVar7 = (uVar2 + (uVar2 & 0x3fffffff) * 4 & 0x3fffffff) * 4 + lVar5;
             if (*(longlong *)
-                 (&DAT_8456cf60 + (int)((uVar7 + (uVar7 & 0x7fffffff) * 2 & 0xffffffff) << 5)) ==
-                lVar4) {
+                 (g_groupMembershipInfo[0][0].m_userGroupName +
+                 (int)((uVar7 + (uVar7 & 0x7fffffff) * 2 & 0xffffffff) << 5) + -8) == lVar4) {
               *(char *)(iVar1 + 0xd8) = *(char *)(iVar1 + 0xd8) + '\x01';
               *(uint *)(iVar1 + 0xd4) = *(uint *)(iVar1 + 0xd4) | (uint)uVar3;
             }
@@ -203,47 +202,58 @@ void UserGroups_UpdateUserGroupComparison(undefined8 param_1,longlong param_2)
 
 // 82708D58  UserGroups_UpdateAllUserGroupComparisons  (social/usergroups.cpp:168)
 
-void UserGroups_UpdateAllUserGroupComparisons(void)
+void UserGroups_UpdateAllUserGroupComparisons(int param_1)
 
 {
   byte bVar1;
-  uint uVar2;
-  byte *pbVar3;
-  ulonglong uVar4;
-  int iVar5;
+  ulonglong uVar2;
+  longlong lVar3;
+  longlong lVar4;
+  longlong lVar5;
+  byte *pbVar6;
+  ulonglong uVar7;
+  int iVar8;
   
-  uVar2 = __savegprlr_24();
-  if (3 < uVar2) {
-    MyAssertHandler(0xffffffff821b49b8,0xa9,0,0xffffffff82057c60,uVar2,4);
+  uVar2 = __savegprlr_24(param_1);
+  if (3 < (uVar2 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\usergroups.cpp",0xa9,0,
+                    "localControllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  bVar1 = (&DAT_84556758)[uVar2 * 0x2bd0];
-  uVar4 = (ulonglong)bVar1;
+  bVar1 = *(uchar *)((int)(g_metPlayerInfo[0].playersXuidInfo + 0x32) + (int)(uVar2 * 0x2bd0));
+  uVar7 = (ulonglong)bVar1;
   if (0x32 < bVar1) {
-    MyAssertHandler(0xffffffff821b49b8,0xac,0,0xffffffff821b49f8,uVar4,0,0x32);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\usergroups.cpp",0xac,0,
+                    "total_met_players not in [0, MAX_MET_FRIENDS]\n\t%i not in [%i, %i]");
   }
   if (bVar1 != 0) {
-    pbVar3 = &DAT_84553c68 + uVar2 * 0x2bd0;
+    lVar5 = uVar2 * 0x2bd0 + -0x7baac398;
     do {
-      if (3 < uVar2) {
-        MyAssertHandler(0xffffffff821b49b8,0x97,0,0xffffffff82057c60,uVar2,4);
+      if (3 < (uVar2 & 0xffffffff)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\usergroups.cpp",
+                        0x97,0,
+                        "localControllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
       }
-      if (pbVar3 != (byte *)0xd0) {
-        iVar5 = 0;
-        pbVar3[4] = 0;
-        pbVar3[5] = 0;
-        pbVar3[6] = 0;
-        pbVar3[7] = 0;
-        pbVar3[8] = 0;
-        if (*pbVar3 != 0) {
+      lVar3 = lVar5 + -0xd0;
+      if (lVar5 != 0xd0) {
+        pbVar6 = (byte *)lVar5;
+        iVar8 = 0;
+        pbVar6[4] = 0;
+        pbVar6[5] = 0;
+        pbVar6[6] = 0;
+        pbVar6[7] = 0;
+        pbVar6[8] = 0;
+        if (*pbVar6 != 0) {
+          lVar4 = lVar5 + -0xa8;
           do {
-            UserGroups_GoCompare(uVar2);
-            iVar5 = iVar5 + 1;
-          } while (iVar5 < (int)(uint)*pbVar3);
+            lVar4 = lVar4 + 8;
+            UserGroups_GoCompare((int)uVar2,(XuidInfo *)lVar3,*(ulong64 *)lVar4);
+            iVar8 = iVar8 + 1;
+          } while (iVar8 < (int)(uint)*pbVar6);
         }
       }
-      uVar4 = uVar4 - 1;
-      pbVar3 = pbVar3 + 0xe0;
-    } while (uVar4 != 0);
+      uVar7 = uVar7 - 1;
+      lVar5 = lVar5 + 0xe0;
+    } while (uVar7 != 0);
   }
   __restgprlr_24();
   return;
@@ -252,25 +262,26 @@ void UserGroups_UpdateAllUserGroupComparisons(void)
 
 // 82708E78  UserGroups_RetryReadingPlayerGroups  (social/usergroups.cpp:182)
 
-void UserGroups_RetryReadingPlayerGroups(void)
+void UserGroups_RetryReadingPlayerGroups(int param_1)
 
 {
-  int iVar1;
-  int iVar2;
+  dvar_t *pdVar1;
+  dvar_t *pdVar2;
   int iVar3;
-  int iVar4;
+  uint uVar4;
+  int iVar5;
   
-  iVar2 = __savegprlr_29();
-  iVar1 = DAT_84546dbc;
-  iVar4 = DAT_84545c90;
-  iVar3 = (&DAT_8456cee0)[iVar2];
-  (&DAT_8456cee0)[iVar2] = iVar3 + 1;
-  iVar3 = Live_GenerateTimeToRetryInSeconds
-                    ((longlong)(*(int *)(iVar4 + 0xc) / 1000) * (longlong)(iVar3 + 1),
-                     *(int *)(iVar1 + 0xc) / 1000);
-  iVar4 = Sys_Milliseconds();
-  (&DAT_8456cf08)[iVar2] = 0;
-  (&DAT_8456cf34)[iVar2] = iVar4 + iVar3 * 1000;
+  iVar3 = __savegprlr_29(param_1);
+  pdVar2 = userGroup_max_retry_time;
+  pdVar1 = userGroup_retry_step;
+  iVar5 = g_GetUserGroupsRetryAttempts[iVar3];
+  g_GetUserGroupsRetryAttempts[iVar3] = iVar5 + 1;
+  uVar4 = Live_GenerateTimeToRetryInSeconds
+                    (((pdVar1->current).integer / 1000) * (iVar5 + 1),
+                     (pdVar2->current).integer / 1000);
+  iVar5 = Sys_Milliseconds();
+  g_DWUserGroupTaskStage[iVar3] = USERGROUPS_DW_TASK_STAGE_WAITING;
+  (&DAT_8456cf34)[iVar3] = iVar5 + uVar4 * 1000;
   __restgprlr_29();
   return;
 }
@@ -278,117 +289,124 @@ void UserGroups_RetryReadingPlayerGroups(void)
 
 // 82708EF0  UserGroups_CanWeStart  (social/usergroups.cpp:190)
 
-void UserGroups_CanWeStart(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+bool UserGroups_CanWeStart(int param_1)
 
 {
   bool bVar1;
   int iVar2;
-  char cVar4;
-  int iVar3;
   bool bVar5;
-  undefined8 uVar6;
-  undefined4 local_30 [12];
+  connstate_t cVar3;
+  int iVar4;
+  undefined1 uVar6;
+  undefined8 uVar7;
+  LocalClientNum_t local_30 [12];
   
-  iVar2 = __savegprlr_29();
+  iVar2 = __savegprlr_29(param_1);
   bVar1 = false;
-  cVar4 = CL_DoesControllerIndexHaveALocalClientNum(iVar2,local_30);
-  if ((cVar4 != '\0') && (iVar3 = CL_GetLocalClientConnectionState(local_30[0]), 2 < iVar3)) {
+  bVar5 = CL_DoesControllerIndexHaveALocalClientNum(iVar2,local_30);
+  if ((bVar5) && (cVar3 = CL_GetLocalClientConnectionState(local_30[0]), 2 < (int)cVar3)) {
     bVar1 = true;
   }
-  iVar3 = Sys_Milliseconds();
+  iVar4 = Sys_Milliseconds();
   bVar5 = false;
-  if (((&DAT_8456cf08)[iVar2] == 1) || ((&DAT_8456cf08)[iVar2] == 2)) {
+  if ((g_DWUserGroupTaskStage[iVar2] == USERGROUPS_DW_TASK_STAGE_WORKING) ||
+     (g_DWUserGroupTaskStage[iVar2] == USERGROUPS_DW_TASK_STAGE_PENDING)) {
     bVar5 = true;
   }
-  if (((bVar1) || (iVar3 <= (int)(&DAT_8456cf34)[iVar2])) || (uVar6 = 1, bVar5)) {
-    uVar6 = 0;
+  if (((bVar1) || (iVar4 <= (int)(&DAT_8456cf34)[iVar2])) || (uVar7 = 1, bVar5)) {
+    uVar7 = 0;
   }
-  __restgprlr_29(uVar6);
-  return;
+  uVar6 = __restgprlr_29(uVar7);
+  return (bool)uVar6;
 }
 
 
 // 82708FA8  UserGroups_CanWeProcess  (social/usergroups.cpp:221)
 
-void UserGroups_CanWeProcess(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+bool UserGroups_CanWeProcess(int param_1)
 
 {
   bool bVar1;
   int iVar2;
-  char cVar4;
-  int iVar3;
-  undefined8 uVar5;
-  undefined4 local_30 [12];
+  bool bVar4;
+  connstate_t cVar3;
+  undefined1 uVar5;
+  undefined8 uVar6;
+  LocalClientNum_t local_30 [12];
   
-  iVar2 = __savegprlr_29();
+  iVar2 = __savegprlr_29(param_1);
   bVar1 = false;
-  cVar4 = CL_DoesControllerIndexHaveALocalClientNum(iVar2,local_30);
-  if ((cVar4 != '\0') && (iVar3 = CL_GetLocalClientConnectionState(local_30[0]), 2 < iVar3)) {
+  bVar4 = CL_DoesControllerIndexHaveALocalClientNum(iVar2,local_30);
+  if ((bVar4) && (cVar3 = CL_GetLocalClientConnectionState(local_30[0]), 2 < (int)cVar3)) {
     bVar1 = true;
   }
-  cVar4 = Lobby_IsInRunningLobby();
-  if (((bVar1) || (cVar4 != '\0')) || (uVar5 = 1, (&DAT_8456cf44)[iVar2] == '\0')) {
-    uVar5 = 0;
+  bVar4 = Lobby_IsInRunningLobby();
+  if (((bVar1) || (bVar4)) || (uVar6 = 1, s_downloadedRecentPlayers[iVar2] == false)) {
+    uVar6 = 0;
   }
-  __restgprlr_29(uVar5);
-  return;
+  uVar5 = __restgprlr_29(uVar6);
+  return (bool)uVar5;
 }
 
 
 // 8270A130  UserGroups_ProcessDownload  (social/usergroups.cpp:251)
 
-void UserGroups_ProcessDownload(void)
+void UserGroups_ProcessDownload(int param_1)
 
 {
   byte bVar1;
-  int iVar2;
+  char *pcVar2;
   uint uVar3;
   uint uVar4;
   int iVar5;
   undefined1 *puVar6;
-  int iVar7;
-  ulonglong uVar8;
-  longlong lVar9;
+  ulonglong uVar7;
   
-  uVar3 = __savegprlr_22();
-  iVar7 = uVar3 * 0x2bd0;
-  bVar1 = (&DAT_84556758)[iVar7];
-  uVar8 = (ulonglong)bVar1;
-  (&DAT_8456cf18)[uVar3] = 0;
+  uVar3 = __savegprlr_22(param_1);
+  bVar1 = g_metPlayerInfo[uVar3].metPlayerCount;
+  uVar7 = (ulonglong)bVar1;
+  g_NumUserGroups[uVar3] = 0;
   if (0x32 < bVar1) {
-    MyAssertHandler(0xffffffff821b49b8,0x103,0,0xffffffff821b4a3c,uVar8,0,0x32);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\usergroups.cpp",0x103,0
+                    ,"metPlayerCount not in [0, MAX_MET_FRIENDS]\n\t%i not in [%i, %i]");
   }
   if (bVar1 != 0) {
-    puVar6 = (undefined1 *)(iVar7 + -0x7baac46f);
+    puVar6 = (undefined1 *)(uVar3 * 0x2bd0 + -0x7baac46f);
     do {
       puVar6 = puVar6 + 0xe0;
       *puVar6 = 0;
-      uVar8 = uVar8 - 1;
-    } while (uVar8 != 0);
+      uVar7 = uVar7 - 1;
+    } while (uVar7 != 0);
   }
-  (&DAT_8456cf08)[uVar3] = 3;
-  uVar4 = bdRemoteTask__getNumResults((&DAT_8456cf48)[uVar3]);
-  (&DAT_8456cf18)[uVar3] = uVar4;
+  g_DWUserGroupTaskStage[uVar3] = USERGROUPS_DW_TASK_STAGE_ALL_DONE;
+  uVar4 = bdRemoteTask::getNumResults(g_DWUserGroupTask[uVar3].m_ptr);
+  g_NumUserGroups[uVar3] = uVar4;
   if (0x14 < uVar4) {
-    (&DAT_8456cf18)[uVar3] = 0x14;
+    g_NumUserGroups[uVar3] = 0x14;
   }
   iVar5 = Sys_Milliseconds();
-  iVar2 = *(int *)(DAT_84546d4c + 0xc);
-  (&DAT_8456cee0)[uVar3] = 0;
-  (&DAT_8456cf34)[uVar3] = iVar5 + iVar2;
+  pcVar2 = (userGroup_cool_off_time->current).string;
+  g_GetUserGroupsRetryAttempts[uVar3] = 0;
+  (&DAT_8456cf34)[uVar3] = pcVar2 + iVar5;
   if (3 < uVar3) {
-    MyAssertHandler(0xffffffff821b49b8,0xa9,0,0xffffffff82057c60,uVar3,4);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\usergroups.cpp",0xa9,0,
+                    "localControllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  bVar1 = (&DAT_84556758)[iVar7];
+  bVar1 = g_metPlayerInfo[uVar3].metPlayerCount;
   if (0x32 < bVar1) {
-    MyAssertHandler(0xffffffff821b49b8,0xac,0,0xffffffff821b49f8,bVar1,0,0x32);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\usergroups.cpp",0xac,0,
+                    "total_met_players not in [0, MAX_MET_FRIENDS]\n\t%i not in [%i, %i]");
   }
-  lVar9 = 0;
+  iVar5 = 0;
   if (bVar1 != 0) {
     do {
-      UserGroups_UpdateUserGroupComparison(uVar3,lVar9);
-      lVar9 = lVar9 + 1;
-    } while ((int)lVar9 < (int)(uint)bVar1);
+      UserGroups_UpdateUserGroupComparison(uVar3,iVar5);
+      iVar5 = iVar5 + 1;
+    } while (iVar5 < (int)(uint)bVar1);
   }
   __restgprlr_22();
   return;
@@ -397,171 +415,181 @@ void UserGroups_ProcessDownload(void)
 
 // 82709040  UserGroups_GetMeetPlayerInfo  (social/usergroups.cpp:284)
 
-void UserGroups_GetMeetPlayerInfo(undefined8 param_1,longlong param_2)
+XuidInfo * UserGroups_GetMeetPlayerInfo(int param_1,ulong64 param_2)
 
 {
   byte bVar1;
   uint uVar2;
-  int iVar3;
-  longlong *plVar4;
+  XuidInfo *pXVar3;
+  ulong64 *puVar4;
   int iVar5;
   
-  uVar2 = __savegprlr_28();
+  uVar2 = __savegprlr_28(param_1);
   if (3 < uVar2) {
-    MyAssertHandler(0xffffffff821b49b8,0x11f,0,0xffffffff82031880,uVar2,4);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\usergroups.cpp",0x11f,0
+                    ,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  iVar3 = uVar2 * 0x2bd0;
-  if (&DAT_84553b90 + iVar3 == (undefined1 *)0x0) {
-    MyAssertHandler(0xffffffff821b49b8,0x122,0,0xffffffff82000f98,0xffffffff821b4a7c);
+  if (g_metPlayerInfo + uVar2 == (MetPlayerInfo *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\usergroups.cpp",0x122,0
+                    ,"%s");
   }
-  bVar1 = (&DAT_84556758)[iVar3];
+  bVar1 = g_metPlayerInfo[uVar2].metPlayerCount;
   if (0x32 < bVar1) {
-    MyAssertHandler(0xffffffff821b49b8,0x125,0,0xffffffff821b4a3c,bVar1,0,0x32);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\usergroups.cpp",0x125,0
+                    ,"metPlayerCount not in [0, MAX_MET_FRIENDS]\n\t%i not in [%i, %i]");
   }
   iVar5 = 0;
   if (bVar1 != 0) {
-    plVar4 = (longlong *)(&DAT_84553b98 + iVar3);
+    puVar4 = (ulong64 *)(uVar2 * 0x2bd0 + -0x7baac468);
     do {
-      if (param_2 == *plVar4) {
-        __restgprlr_28(&DAT_84553b90 + iVar3 + iVar5 * 0xe0 + 8);
-        return;
+      if (param_2 == *puVar4) {
+        pXVar3 = (XuidInfo *)__restgprlr_28(g_metPlayerInfo[uVar2].playersXuidInfo + iVar5);
+        return pXVar3;
       }
       iVar5 = iVar5 + 1;
-      plVar4 = plVar4 + 0x1c;
+      puVar4 = puVar4 + 0x1c;
     } while (iVar5 < (int)(uint)bVar1);
   }
-  __restgprlr_28(0);
-  return;
+  pXVar3 = (XuidInfo *)__restgprlr_28(0);
+  return pXVar3;
 }
 
 
 // 82709140  UserGroups_GetGroupPopupText  (social/usergroups.cpp:308)
 
-void UserGroups_GetGroupPopupText(void)
+char * UserGroups_GetGroupPopupText(int param_1)
 
 {
   char cVar1;
-  uint uVar3;
-  undefined8 uVar2;
+  uint uVar2;
+  char *pcVar3;
   uint uVar4;
-  char *pcVar5;
-  char *pcVar6;
+  ulonglong uVar5;
+  int iVar6;
   int iVar7;
-  ulonglong uVar8;
-  int iVar9;
-  int iVar10;
   
-  uVar3 = __savegprlr_24();
-  if (3 < uVar3) {
-    MyAssertHandler(0xffffffff821b49b8,0x135,0,0xffffffff82057c60,uVar3,4);
+  uVar2 = __savegprlr_24(param_1);
+  if (3 < uVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\usergroups.cpp",0x135,0
+                    ,"localControllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  uVar2 = UI_SafeTranslateString(0xffffffff821b4ae0);
-  DAT_8456ed58 = 0;
-  uVar4 = MeetPlayer_GetPositionByXuid(uVar3,DAT_8456cf28);
+  pcVar3 = UI_SafeTranslateString("MENU_USER_GROUP_SEPERATOR");
+  userGroupText[0] = '\0';
+  uVar4 = MeetPlayer_GetPositionByXuid(uVar2,g_userGroupPopupTextXUID);
   if ((int)uVar4 < 0) {
-    pcVar5 = (char *)UI_SafeTranslateString(0xffffffff821b4ac8);
-    pcVar6 = pcVar5;
+    pcVar3 = UI_SafeTranslateString("MENU_NO_COMMON_GROUPS");
+    iVar6 = (int)userGroupText - (int)pcVar3;
     do {
-      cVar1 = *pcVar6;
-      (&DAT_8456ed58)[(int)pcVar6 - (int)pcVar5] = cVar1;
-      pcVar6 = pcVar6 + 1;
+      cVar1 = *pcVar3;
+      pcVar3[iVar6] = cVar1;
+      pcVar3 = pcVar3 + 1;
     } while (cVar1 != '\0');
-    __restgprlr_24(0xffffffff8456ed58);
-    return;
+    pcVar3 = (char *)__restgprlr_24(0xffffffff8456ed58);
+    return pcVar3;
   }
   if (0x31 < uVar4) {
-    MyAssertHandler(0xffffffff821b49b8,0x147,0,0xffffffff821b4a88,uVar4,0x32);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\usergroups.cpp",0x147,0
+                    ,"currentIndex doesn\'t index MAX_MET_FRIENDS\n\t%i not in [0, %i)");
   }
-  iVar7 = uVar3 * 0x2bd0 + uVar4 * 0xe0;
-  if (iVar7 == 0x7baac468) {
-    MyAssertHandler(0xffffffff821b49b8,0x14a,0,0xffffffff82000f98,0xffffffff82021a7c);
+  if (uVar2 * 0x2bd0 + uVar4 * 0xe0 == 0x7baac468) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\usergroups.cpp",0x14a,0
+                    ,"%s");
   }
-  iVar10 = 0;
-  iVar9 = 0;
-  uVar8 = 1;
+  iVar7 = 0;
+  iVar6 = 0;
+  uVar5 = 1;
   do {
-    if ((*(uint *)(&DAT_84553c6c + iVar7) & uVar8) != 0) {
-      if (iVar10 != 0) {
-        I_strncat(0xffffffff8456ed58,0x528,uVar2);
+    if ((g_metPlayerInfo[uVar2].playersXuidInfo[uVar4].matchingGroups & uVar5) != 0) {
+      if (iVar7 != 0) {
+        I_strncat(userGroupText,0x528,pcVar3);
       }
-      I_strncat(0xffffffff8456ed58,0x528,&DAT_8456cf68 + (uVar3 * 0x14 + iVar9) * 0x60);
-      iVar10 = iVar10 + 1;
+      I_strncat(userGroupText,0x528,g_groupMembershipInfo[uVar2][iVar6].m_userGroupName);
+      iVar7 = iVar7 + 1;
     }
-    iVar9 = iVar9 + 1;
-    uVar8 = (uVar8 & 0x7fffffff) << 1 | uVar8 >> 0x1f;
-  } while (iVar9 < 0x14);
-  if (iVar10 == 0) {
-    pcVar5 = (char *)UI_SafeTranslateString(0xffffffff821b4ac8);
-    pcVar6 = pcVar5;
+    iVar6 = iVar6 + 1;
+    uVar5 = (uVar5 & 0x7fffffff) << 1 | uVar5 >> 0x1f;
+  } while (iVar6 < 0x14);
+  if (iVar7 == 0) {
+    pcVar3 = UI_SafeTranslateString("MENU_NO_COMMON_GROUPS");
+    iVar6 = (int)userGroupText - (int)pcVar3;
     do {
-      cVar1 = *pcVar6;
-      (&DAT_8456ed58)[(int)pcVar6 - (int)pcVar5] = cVar1;
-      pcVar6 = pcVar6 + 1;
+      cVar1 = *pcVar3;
+      pcVar3[iVar6] = cVar1;
+      pcVar3 = pcVar3 + 1;
     } while (cVar1 != '\0');
   }
-  __restgprlr_24(0xffffffff8456ed58);
-  return;
+  pcVar3 = (char *)__restgprlr_24(0xffffffff8456ed58);
+  return pcVar3;
 }
 
 
 // 82709318  UserGroups_GetCommonInterestTotal  (social/usergroups.cpp:356)
 
-void UserGroups_GetCommonInterestTotal(void)
+int UserGroups_GetCommonInterestTotal(int param_1)
 
 {
   uint uVar1;
   uint uVar2;
   int iVar3;
   
-  uVar1 = __savegprlr_29();
+  uVar1 = __savegprlr_29(param_1);
   if (3 < uVar1) {
-    MyAssertHandler(0xffffffff821b49b8,0x165,0,0xffffffff82057c60,uVar1,4);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\usergroups.cpp",0x165,0
+                    ,"localControllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  if (*(int *)(DAT_84546d74 + 0xc) != 0) {
-    uVar2 = MeetPlayer_GetPositionByXuid(uVar1,*(undefined8 *)(&DAT_84553b30 + uVar1 * 0x18));
+  if ((userGroup_active->current).integer != 0) {
+    uVar2 = MeetPlayer_GetPositionByXuid(uVar1,g_metPlayerGlob[uVar1].storedPlayer);
     if (-1 < (int)uVar2) {
       if (0x31 < uVar2) {
-        MyAssertHandler(0xffffffff821b49b8,0x172,0,0xffffffff821b4a88,uVar2,0x32);
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\usergroups.cpp",
+                        0x172,0,"currentIndex doesn\'t index MAX_MET_FRIENDS\n\t%i not in [0, %i)");
       }
-      iVar3 = uVar1 * 0x2bd0 + uVar2 * 0xe0;
-      if (iVar3 != 0x7baac468) {
-        __restgprlr_29((&DAT_84553c70)[iVar3]);
-        return;
+      if (uVar1 * 0x2bd0 + uVar2 * 0xe0 != 0x7baac468) {
+        iVar3 = __restgprlr_29(g_metPlayerInfo[uVar1].playersXuidInfo[uVar2].numMatchingGroups);
+        return iVar3;
       }
     }
   }
-  __restgprlr_29(0);
-  return;
+  iVar3 = __restgprlr_29(0);
+  return iVar3;
 }
 
 
 // 82709400  UserGroups_CreateGroupMessage  (social/usergroups.cpp:385)
 
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
 void UserGroups_CreateGroupMessage
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-               undefined8 param_5,ulonglong param_6)
+               (int param_1,char *param_2,msg_t *param_3,ulong64 param_4,int param_5,bool param_6)
 
 {
   int iVar1;
-  uint uVar2;
-  undefined8 in_stack_00000028;
+  ulonglong uVar2;
+  ulonglong uVar3;
+  ulonglong uVar4;
+  ulong64 uStack00000028;
   
-  iVar1 = __savegprlr_26();
-  in_stack_00000028 = param_4;
-  MSG_WriteString(param_3);
+  uVar4 = (ulonglong)param_6;
+  uVar2 = __savegprlr_26(param_1);
+  uStack00000028 = param_4;
+  MSG_WriteString(param_3,param_2);
   MSG_WriteData(param_3,&stack0x00000028,8);
-  if ((param_6 & 0xff) != 0) {
+  if ((uVar4 & 0xff) != 0) {
     MSG_WriteByte(param_3,param_5);
-    MSG_WriteByte(param_3,(&DAT_8456cf18)[iVar1]);
-    if (0x14 < (uint)(&DAT_8456cf18)[iVar1]) {
-      MyAssertHandler(0xffffffff821b49b8,0x18a,0,0xffffffff82000f98,0xffffffff821b4afc);
+    iVar1 = (int)((uVar2 & 0x3fffffff) << 2);
+    MSG_WriteByte(param_3,*(int *)((int)g_NumUserGroups + iVar1));
+    if (0x14 < *(uint *)((int)g_NumUserGroups + iVar1)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\usergroups.cpp",0x18a
+                      ,0,"%s");
     }
-    uVar2 = 0;
-    if ((&DAT_8456cf18)[iVar1] != 0) {
+    uVar4 = 0;
+    if (*(int *)((int)g_NumUserGroups + iVar1) != 0) {
       do {
-        MSG_WriteData(param_3,&DAT_8456cf60 + (iVar1 * 0x14 + uVar2) * 0x60,8);
-        uVar2 = uVar2 + 1;
-      } while (uVar2 < (uint)(&DAT_8456cf18)[iVar1]);
+        uVar3 = (uVar2 + (uVar2 & 0x3fffffff) * 4 & 0x3fffffff) * 4 + uVar4;
+        MSG_WriteData(param_3,g_groupMembershipInfo[0][0].m_userGroupName +
+                              (int)((uVar3 + (uVar3 & 0x7fffffff) * 2 & 0xffffffff) << 5) + -8,8);
+        uVar4 = uVar4 + 1;
+      } while ((uVar4 & 0xffffffff) < (ulonglong)*(uint *)((int)g_NumUserGroups + iVar1));
     }
   }
   __restgprlr_26();
@@ -571,67 +599,72 @@ void UserGroups_CreateGroupMessage
 
 // 827094F8  UserGroups_SendGroupsToAll  (social/usergroups.cpp:404)
 
-void UserGroups_SendGroupsToAll(undefined8 param_1,undefined8 param_2,ulonglong param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void UserGroups_SendGroupsToAll(char *param_1,LocalClientNum_t param_2,int param_3)
 
 {
-  undefined8 uVar1;
-  undefined4 *puVar4;
-  char cVar8;
-  undefined8 *puVar5;
-  int iVar6;
-  uint uVar7;
-  undefined8 uVar2;
-  undefined8 uVar3;
-  undefined8 *puVar9;
-  longlong lVar10;
-  undefined8 local_1a0 [2];
-  undefined1 auStack_190 [8];
-  undefined4 local_188;
-  undefined4 local_17c;
-  undefined1 auStack_160 [16];
-  undefined1 auStack_150 [336];
+  ulong64 uVar1;
+  char *pcVar2;
+  PartyData *pPVar3;
+  bool bVar8;
+  int iVar4;
+  int iVar5;
+  uint uVar6;
+  PartyData *pPVar7;
+  ulonglong uVar9;
+  ulong64 *puVar10;
+  int iVar11;
+  netadr_t in_stack_fffffe18;
+  ulong64 local_1a0 [2];
+  msg_t mStack_190;
+  netadr_t nStack_160;
+  uchar auStack_150 [336];
   
-  uVar1 = __savegprlr_23();
-  if (3 < (param_3 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821b49b8,0x195,0,0xffffffff82031880,param_3,4);
+  uVar9 = (ulonglong)param_3;
+  pcVar2 = (char *)__savegprlr_23(param_1);
+  if (3 < (uVar9 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\usergroups.cpp",0x195,0
+                    ,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  puVar4 = (undefined4 *)Lobby_GetPartyData();
-  lVar10 = 0;
-  puVar9 = (undefined8 *)(puVar4 + 0x60);
+  pPVar3 = Lobby_GetPartyData();
+  iVar11 = 0;
+  puVar10 = &pPVar3->partyMembers[0].player;
   do {
-    if ((4 < *(byte *)(puVar9 + -0x25)) && (*(byte *)(puVar9 + -0x25) != 6)) {
-      cVar8 = Session_IsUserRegistered(*puVar4,lVar10);
-      if (cVar8 != '\0') {
-        puVar5 = (undefined8 *)Session_GetPlayerAddr(auStack_160,*puVar4,lVar10);
-        iVar6 = NET_IsLocalAddress(*puVar5,puVar5[1]);
-        if (iVar6 == 0) {
-          iVar6 = MeetPlayer_GetPositionByXuid(param_3,*puVar9);
-          if (iVar6 != -1) {
-            iVar6 = (int)param_3 * 0x2bd0 + iVar6 * 0xe0;
-            if (((&DAT_84553c71)[iVar6] != '\0') &&
-               (uVar7 = Sys_GetTimeAsSeconds(), uVar7 < *(uint *)(&DAT_84553c74 + iVar6))) {
-              Com_Printf(0x19,0xffffffff821b4b34,*(undefined8 *)(puVar4 + (int)lVar10 * 0x54 + 0x60)
-                        );
-              __restgprlr_23();
-              return;
-            }
-            cVar8 = dwGetOnlineUserID(param_3,local_1a0);
-            if (cVar8 != '\0') {
-              MSG_Init(auStack_190,auStack_150,0x100);
-              uVar3 = local_1a0[0];
-              uVar2 = Lobby_GetPartyData();
-              uVar3 = Party_FindMemberByXUID(uVar2,uVar3);
-              UserGroups_CreateGroupMessage(param_3,uVar1,auStack_190,local_1a0[0],uVar3,1);
-              CL_WritePeerToPeerOOBData(*puVar4,param_2,lVar10,local_188,local_17c,0,1);
-              Com_Printf(0x19,0xffffffff821b4b74,*puVar9);
-            }
+    if (((4 < ((PartyMember *)(puVar10 + -0x25))->status) &&
+        (((PartyMember *)(puVar10 + -0x25))->status != 6)) &&
+       (bVar8 = Session_IsUserRegistered(pPVar3->session,iVar11), bVar8)) {
+      Session_GetPlayerAddr(&nStack_160,pPVar3->session,iVar11);
+      iVar4 = NET_IsLocalAddress(in_stack_fffffe18);
+      if (iVar4 == 0) {
+        iVar5 = (int)uVar9;
+        iVar4 = MeetPlayer_GetPositionByXuid(iVar5,*puVar10);
+        if (iVar4 != -1) {
+          if ((g_metPlayerInfo[iVar5].playersXuidInfo[iVar4].groupsConfirmed != false) &&
+             (uVar6 = Sys_GetTimeAsSeconds(),
+             uVar6 < g_metPlayerInfo[iVar5].playersXuidInfo[iVar4].nextRefresh)) {
+            Com_Printf(0x19,"User Groups: Not sending groups to %I64x, we\'ve got them now\n");
+            __restgprlr_23();
+            return;
+          }
+          bVar8 = dwGetOnlineUserID(iVar5,local_1a0);
+          if (bVar8) {
+            MSG_Init(&mStack_190,auStack_150,0x100);
+            uVar1 = local_1a0[0];
+            pPVar7 = Lobby_GetPartyData();
+            iVar4 = Party_FindMemberByXUID(pPVar7,uVar1);
+            UserGroups_CreateGroupMessage(iVar5,pcVar2,&mStack_190,local_1a0[0],iVar4,true);
+            CL_WritePeerToPeerOOBData
+                      (pPVar3->session,param_2,iVar11,mStack_190.data,mStack_190.cursize,false,1);
+            Com_Printf(0x19,"User Groups: Sending Groups to %I64x\n");
           }
         }
       }
     }
-    lVar10 = lVar10 + 1;
-    puVar9 = puVar9 + 0x2a;
-    if (0x11 < (int)lVar10) {
+    iVar11 = iVar11 + 1;
+    puVar10 = puVar10 + 0x2a;
+    if (0x11 < iVar11) {
       __restgprlr_23();
       return;
     }
@@ -641,31 +674,39 @@ void UserGroups_SendGroupsToAll(undefined8 param_1,undefined8 param_2,ulonglong 
 
 // 827096B8  UserGroups_SendAck  (social/usergroups.cpp:459)
 
-void UserGroups_SendAck(undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void UserGroups_SendAck(LocalClientNum_t param_1,int param_2,char *param_3,int param_4)
 
 {
-  undefined8 uVar1;
-  char cVar3;
-  undefined4 *puVar2;
-  undefined8 local_170 [2];
-  undefined1 auStack_160 [8];
-  undefined4 local_158;
-  undefined4 local_14c;
-  undefined1 auStack_130 [304];
+  LocalClientNum_t LVar1;
+  bool bVar3;
+  PartyData *pPVar2;
+  ulonglong uVar4;
+  ulong64 local_170 [2];
+  msg_t mStack_160;
+  uchar auStack_130 [304];
   
-  uVar1 = __savegprlr_27();
-  if (3 < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821b49b8,0x1cc,0,0xffffffff82057c60,param_2,4);
+  uVar4 = (ulonglong)param_2;
+  LVar1 = __savegprlr_27(param_1);
+  if (3 < (uVar4 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\usergroups.cpp",0x1cc,0
+                    ,"localControllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  cVar3 = Lobby_IsInRunningLobby();
-  if (cVar3 != '\0') {
-    puVar2 = (undefined4 *)Lobby_GetPartyData();
-    cVar3 = Session_IsUserRegistered(*puVar2,param_4);
-    if ((cVar3 != '\0') && (cVar3 = dwGetOnlineUserID(param_2,local_170), cVar3 != '\0')) {
-      MSG_Init(auStack_160,auStack_130,0x100);
-      UserGroups_CreateGroupMessage(param_2,param_3,auStack_160,local_170[0],0,0);
-      CL_WritePeerToPeerOOBData(*puVar2,uVar1,param_4,local_158,local_14c,0,1);
-      Com_Printf(0x19,0xffffffff821b4b9c,*(undefined8 *)(puVar2 + (int)param_4 * 0x54 + 0x60));
+  bVar3 = Lobby_IsInRunningLobby();
+  if (bVar3) {
+    pPVar2 = Lobby_GetPartyData();
+    bVar3 = Session_IsUserRegistered(pPVar2->session,param_4);
+    if (bVar3) {
+      bVar3 = dwGetOnlineUserID((int)uVar4,local_170);
+      if (bVar3) {
+        MSG_Init(&mStack_160,auStack_130,0x100);
+        UserGroups_CreateGroupMessage((int)uVar4,param_3,&mStack_160,local_170[0],0,false);
+        CL_WritePeerToPeerOOBData
+                  (pPVar2->session,LVar1,param_4,mStack_160.data,mStack_160.cursize,false,1);
+        Com_Printf(0x19,"User Groups: Sending ACK to %I64x\n");
+      }
     }
   }
   __restgprlr_27();
@@ -675,141 +716,152 @@ void UserGroups_SendAck(undefined8 param_1,ulonglong param_2,undefined8 param_3,
 
 // 827097B8  UserGroups_DownloadedRecentPlayers  (social/usergroups.cpp:487)
 
-void UserGroups_DownloadedRecentPlayers(uint param_1)
+void UserGroups_DownloadedRecentPlayers(int param_1)
 
 {
-  if (3 < param_1) {
-    MyAssertHandler(0xffffffff821b49b8,0x1e8,0,0xffffffff82031880,param_1,4);
+  if (3 < (uint)param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\usergroups.cpp",0x1e8,0
+                    ,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  (&DAT_8456cf44)[param_1] = 1;
+  s_downloadedRecentPlayers[param_1] = true;
   return;
 }
 
 
 // 82709820  UserGroups_IsAllowed  (social/usergroups.cpp:495)
 
-undefined8 UserGroups_IsAllowed(undefined8 param_1)
+bool UserGroups_IsAllowed(int param_1)
 
 {
-  char cVar1;
+  bool bVar1;
   
-  cVar1 = SocialConfig_Ok();
-  if (((cVar1 != '\0') && (*(int *)(DAT_84546d74 + 0xc) != 0)) &&
-     (cVar1 = Live_IsUserSignedInToLive(param_1), cVar1 != '\0')) {
-    return 1;
+  bVar1 = SocialConfig_Ok();
+  if (((bVar1) && ((userGroup_active->current).integer != 0)) &&
+     (bVar1 = Live_IsUserSignedInToLive(param_1), bVar1)) {
+    return true;
   }
-  return 0;
+  return false;
 }
 
 
 // 82709890  UserGroups_Init  (social/usergroups.cpp:501)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void UserGroups_Init(void)
 
 {
-  DAT_8456cf44 = 0;
-  DAT_8456cef4 = 0;
+  s_downloadedRecentPlayers[0] = false;
+  s_needToDownloadUserGroups[0] = false;
   DAT_8456cf30 = 0;
-  DAT_8456cee0 = 0;
+  g_GetUserGroupsRetryAttempts[0] = 0;
   DAT_8456cf34 = 0;
-  DAT_8456cf08 = 0;
+  g_DWUserGroupTaskStage[0] = USERGROUPS_DW_TASK_STAGE_WAITING;
   DAT_8456cef8 = 0;
-  DAT_8456cf45 = 0;
-  DAT_8456cef5 = 0;
+  s_downloadedRecentPlayers[1] = false;
+  s_needToDownloadUserGroups[1] = false;
   DAT_8456cf31 = 0;
-  DAT_8456cee4 = 0;
+  g_GetUserGroupsRetryAttempts[1] = 0;
   DAT_8456cf38 = 0;
-  DAT_8456cf0c = 0;
+  g_DWUserGroupTaskStage[1] = USERGROUPS_DW_TASK_STAGE_WAITING;
   DAT_8456cefc = 0;
-  DAT_8456cf18 = 0;
-  DAT_8456cf46 = 0;
-  DAT_8456cef6 = 0;
+  g_NumUserGroups[0] = 0;
+  s_downloadedRecentPlayers[2] = false;
+  s_needToDownloadUserGroups[2] = false;
   DAT_8456cf32 = 0;
-  DAT_8456cee8 = 0;
+  g_GetUserGroupsRetryAttempts[2] = 0;
   DAT_8456cf3c = 0;
-  DAT_8456cf10 = 0;
+  g_DWUserGroupTaskStage[2] = USERGROUPS_DW_TASK_STAGE_WAITING;
   DAT_8456cf00 = 0;
-  DAT_8456cf1c = 0;
-  DAT_8456cf47 = 0;
-  DAT_8456cef7 = 0;
+  g_NumUserGroups[1] = 0;
+  s_downloadedRecentPlayers[3] = false;
+  s_needToDownloadUserGroups[3] = false;
   DAT_8456cf33 = 0;
-  DAT_8456ceec = 0;
+  g_GetUserGroupsRetryAttempts[3] = 0;
   DAT_8456cf40 = 0;
-  DAT_8456cf14 = 0;
+  g_DWUserGroupTaskStage[3] = USERGROUPS_DW_TASK_STAGE_WAITING;
   DAT_8456cf04 = 0;
-  DAT_8456cf20 = 0;
-  DAT_8456cf24 = 0;
+  g_NumUserGroups[2] = 0;
+  g_NumUserGroups[3] = 0;
   return;
 }
 
 
 // 82709928  UserGroups_ProcessUserGroupMessage  (social/usergroups.cpp:522)
 
-void UserGroups_ProcessUserGroupMessage(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+int UserGroups_ProcessUserGroupMessage(int param_1,msg_t *param_2)
 
 {
-  uint uVar2;
+  uint uVar1;
+  int iVar2;
   int iVar3;
-  int iVar4;
-  undefined8 uVar1;
+  PartyData *pPVar4;
   uint uVar5;
-  undefined8 local_50 [10];
+  ulong64 local_50 [10];
   
-  uVar2 = __savegprlr_25();
-  if (3 < uVar2) {
-    MyAssertHandler(0xffffffff821b49b8,0x20b,0,0xffffffff82057c60,uVar2,4);
+  uVar1 = __savegprlr_25(param_1);
+  if (3 < uVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\usergroups.cpp",0x20b,0
+                    ,"localControllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
   MSG_ReadData(param_2,local_50,8);
-  iVar3 = MSG_ReadByte(param_2);
-  if ((-1 < iVar3) && (iVar3 < 0x12)) {
-    iVar3 = MSG_ReadByte(param_2);
-    if (0x14 < iVar3) {
-      MyAssertHandler(0xffffffff821b49b8,0x21a,0,0xffffffff82000f98,0xffffffff821b4c34);
+  iVar2 = MSG_ReadByte(param_2);
+  if ((-1 < iVar2) && (iVar2 < 0x12)) {
+    iVar2 = MSG_ReadByte(param_2);
+    if (0x14 < iVar2) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\usergroups.cpp",0x21a
+                      ,0,"%s");
     }
-    iVar4 = MeetPlayer_GetPositionByXuid(uVar2,local_50[0]);
-    if (iVar4 != -1) {
-      if (0 < iVar3) {
+    iVar3 = MeetPlayer_GetPositionByXuid(uVar1,local_50[0]);
+    if (iVar3 != -1) {
+      if (0 < iVar2) {
         uVar5 = 0;
         do {
-          MSG_ReadData(param_2,&DAT_84553b90 + (iVar4 * 0x1c + uVar5 + 7) * 8 + uVar2 * 0x2bd0,8);
+          MSG_ReadData(param_2,g_metPlayerInfo[uVar1].playersXuidInfo[iVar3].userGroups + uVar5,8);
           uVar5 = uVar5 + 1 & 0xff;
-        } while ((int)uVar5 < iVar3);
+        } while ((int)uVar5 < iVar2);
       }
-      (&DAT_84553b90)[iVar4 * 0xe0 + uVar2 * 0x2bd0 + 0xd8] = (char)iVar3;
-      Com_Printf(0x19,0xffffffff821b4c08,local_50[0]);
-      UserGroups_UpdateUserGroupComparison(uVar2,iVar4);
-      uVar1 = Lobby_GetPartyData();
-      Party_FindMemberByXUID(uVar1,local_50[0]);
-      __restgprlr_25();
-      return;
+      g_metPlayerInfo[uVar1].playersXuidInfo[iVar3].numUserGroups = (uchar)iVar2;
+      Com_Printf(0x19,"User Groups: Received Groups from %I64x\n");
+      UserGroups_UpdateUserGroupComparison(uVar1,iVar3);
+      pPVar4 = Lobby_GetPartyData();
+      iVar2 = Party_FindMemberByXUID(pPVar4,local_50[0]);
+      iVar2 = __restgprlr_25(iVar2);
+      return iVar2;
     }
-    Com_Printf(0x19,0xffffffff821b4bc0,local_50[0]);
+    Com_Printf(0x19,"User Groups: Received Groups from %I64x, BUT I DON\'T KNOW WHO HE IS!\n");
   }
-  __restgprlr_25(0xffffffffffffffff);
-  return;
+  iVar2 = __restgprlr_25(0xffffffffffffffff);
+  return iVar2;
 }
 
 
 // 82709A90  UserGroups_ProcessAck  (social/usergroups.cpp:566)
 
-void UserGroups_ProcessAck(ulonglong param_1,undefined8 param_2)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void UserGroups_ProcessAck(int param_1,msg_t *param_2)
 
 {
   int iVar1;
-  int iVar2;
-  undefined8 local_20;
+  uint uVar2;
+  ulong64 local_20;
   
-  if (3 < (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821b49b8,0x237,0,0xffffffff82057c60,param_1,4);
+  if (3 < (uint)param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\usergroups.cpp",0x237,0
+                    ,"localControllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
   MSG_ReadData(param_2,&local_20,8);
   iVar1 = MeetPlayer_GetPositionByXuid(param_1,local_20);
   if (iVar1 != -1) {
-    iVar1 = (int)param_1 * 0x2bd0 + iVar1 * 0xe0;
-    (&DAT_84553c71)[iVar1] = 1;
-    iVar2 = Sys_GetTimeAsSeconds();
-    *(int *)(&DAT_84553c74 + iVar1) = iVar2 + *(int *)(DAT_84545ce8 + 0xc);
-    Com_Printf(0x19,0xffffffff821b4c54,local_20);
+    g_metPlayerInfo[param_1].playersXuidInfo[iVar1].groupsConfirmed = true;
+    uVar2 = Sys_GetTimeAsSeconds();
+    g_metPlayerInfo[param_1].playersXuidInfo[iVar1].nextRefresh =
+         (uint)((userGroup_refresh_time_secs->current).string + uVar2);
+    Com_Printf(0x19,"User Groups: Received ACK from %I64x\n");
   }
   return;
 }
@@ -817,21 +869,27 @@ void UserGroups_ProcessAck(ulonglong param_1,undefined8 param_2)
 
 // 82709B68  UserGroups_HandleUserGroupsReceived  (social/usergroups.cpp:589)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
 void UserGroups_HandleUserGroupsReceived
-               (undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4,
-               undefined8 param_5)
+               (LocalClientNum_t param_1,int param_2,netadr_t param_3,msg_t *param_4)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
+  LocalClientNum_t LVar1;
+  int iVar2;
+  ulonglong uVar3;
+  msg_t *in_r7;
   
-  uVar1 = __savegprlr_29();
-  if (3 < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821b49b8,0x24f,0,0xffffffff82057c60,param_2,4);
+  uVar3 = (ulonglong)param_2;
+  LVar1 = __savegprlr_29(param_1,uVar3,param_4);
+  if (3 < (uVar3 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\usergroups.cpp",0x24f,0
+                    ,"localControllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  uVar2 = UserGroups_ProcessUserGroupMessage(param_2,param_5);
-  if ((int)uVar2 != -1) {
-    UserGroups_SendAck(uVar1,param_2,0xffffffff821b4978,uVar2);
+  iVar2 = UserGroups_ProcessUserGroupMessage((int)uVar3,in_r7);
+  if (iVar2 != -1) {
+    UserGroups_SendAck(LVar1,(int)uVar3,"ug_groups_confirmed",iVar2);
   }
   __restgprlr_29();
   return;
@@ -840,157 +898,182 @@ void UserGroups_HandleUserGroupsReceived
 
 // 82709BE0  UserGroups_HandleUserGroupsConfirmation  (social/usergroups.cpp:606)
 
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 void UserGroups_HandleUserGroupsConfirmation
-               (undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4,
-               undefined8 param_5)
+               (LocalClientNum_t param_1,int param_2,netadr_t param_3,msg_t *param_4)
 
 {
-  if (3 < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821b49b8,0x260,0,0xffffffff82057c60,param_2,4);
+  msg_t *in_r7;
+  
+  if (3 < (uint)param_2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\usergroups.cpp",0x260,0
+                    ,"localControllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  UserGroups_ProcessAck(param_2,param_5);
+  UserGroups_ProcessAck(param_2,in_r7);
   return;
 }
 
 
 // 82709C50  UserGroups_HandlePacket  (social/usergroups.cpp:625)
 
-void UserGroups_HandlePacket
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-               undefined8 param_5)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+bool UserGroups_HandlePacket(char *param_1,LocalClientNum_t param_2,netadr_t param_3,msg_t *param_4)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
+  char *pcVar1;
+  int iVar2;
   int iVar3;
-  undefined **ppuVar4;
-  int iVar5;
-  int iVar6;
+  undefined1 uVar4;
+  longlong lVar5;
+  longlong lVar6;
+  undefined8 in_r6;
+  undefined8 in_r7;
+  UserGroupMessages *pUVar7;
+  int iVar8;
+  int iVar9;
   
-  uVar1 = __savegprlr_23();
-  iVar6 = 0;
-  uVar2 = CL_ControllerIndexFromClientNum(param_2);
-  ppuVar4 = &PTR_s_ug_my_groups_821b499c;
-  iVar5 = 0;
+  lVar6 = (longlong)(int)param_4;
+  lVar5 = (longlong)(int)param_2;
+  pcVar1 = (char *)__savegprlr_23(param_1,lVar5,lVar6);
+  iVar9 = 0;
+  iVar2 = CL_ControllerIndexFromClientNum((LocalClientNum_t)lVar5);
+  pUVar7 = messageHandlers;
+  iVar8 = 0;
   do {
-    iVar3 = I_stricmp(uVar1,*ppuVar4);
+    iVar3 = I_stricmp(pcVar1,pUVar7->string);
     if (iVar3 == 0) {
-      if (*(int *)((int)&PTR_UserGroups_HandleUserGroupsReceived_821b49a0 + iVar5) == 0) {
-        MyAssertHandler(0xffffffff821b49b8,0x27c,0,0xffffffff82000f98,0xffffffff821b4c7c);
+      if (*(int *)((int)&messageHandlers[0].function + iVar8) == 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\usergroups.cpp",
+                        0x27c,0,"%s");
       }
-      (**(code **)((int)&PTR_UserGroups_HandleUserGroupsReceived_821b49a0 + iVar5))
-                (param_2,uVar2,param_3,param_4,param_5);
-      __restgprlr_23(1);
-      return;
+      (**(code **)((int)&messageHandlers[0].function + iVar8))(lVar5,iVar2,lVar6,in_r6,in_r7);
+      uVar4 = __restgprlr_23(1);
+      return (bool)uVar4;
     }
-    iVar6 = iVar6 + 1;
-    iVar5 = iVar6 * 8;
-    ppuVar4 = &PTR_s_ug_my_groups_821b499c + iVar6 * 2;
-  } while (*(&PTR_s_ug_my_groups_821b499c)[iVar6 * 2] != '\0');
-  __restgprlr_23(0);
-  return;
+    iVar9 = iVar9 + 1;
+    iVar8 = iVar9 * 8;
+    pUVar7 = messageHandlers + iVar9;
+  } while (*messageHandlers[iVar9].string != '\0');
+  uVar4 = __restgprlr_23(0);
+  return (bool)uVar4;
 }
 
 
 // 8270A2A0  UserGroups_Update  (social/usergroups.cpp:648)
 
-void UserGroups_Update(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void UserGroups_Update(LocalClientNum_t param_1,int param_2)
 
 {
-  int *piVar1;
+  bdRemoteTask *pbVar1;
   uint uVar2;
-  undefined8 uVar3;
-  char cVar10;
+  int *piVar3;
+  int iVar4;
+  LocalClientNum_t LVar5;
+  bool bVar12;
   int iVar6;
-  ulonglong uVar4;
-  undefined8 uVar5;
-  int iVar7;
-  int iVar8;
-  int iVar9;
-  longlong lVar11;
-  undefined1 auStack_50 [8];
-  undefined8 local_48 [9];
+  bdLobbyService *this;
+  Status SVar7;
+  bdUserGroups *pbVar8;
+  bdReference<bdRemoteTask> *this_00;
+  bdReference<bdRemoteTask> bVar9;
+  int iVar10;
+  bdLobbyErrorCode bVar11;
+  ulonglong uVar13;
+  bdReference<bdRemoteTask> abStack_50 [2];
+  ulong64 local_48 [9];
   
-  uVar3 = __savegprlr_25();
-  if (3 < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821b49b8,0x289,0,0xffffffff82031880,param_2,4);
+  uVar13 = (ulonglong)param_2;
+  LVar5 = __savegprlr_25(param_1);
+  if (3 < (uVar13 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\usergroups.cpp",0x289,0
+                    ,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  cVar10 = SocialConfig_Ok();
-  if (cVar10 != '\0') {
-    cVar10 = Live_IsUserSignedInToLive(param_2);
-    if ((((cVar10 != '\0') && (*(int *)(DAT_84546d74 + 0xc) != 0)) &&
-        (iVar6 = dwGetLobbyService(param_2), iVar6 != 0)) &&
-       (iVar6 = bdLobbyService__getStatus(), iVar6 == 2)) {
-      lVar11 = (param_2 & 0x3fffffff) * 4;
-      iVar6 = (int)lVar11;
-      uVar2 = *(uint *)((int)&DAT_8456cf08 + iVar6);
+  bVar12 = SocialConfig_Ok();
+  if (bVar12) {
+    iVar6 = (int)uVar13;
+    bVar12 = Live_IsUserSignedInToLive(iVar6);
+    if ((((bVar12) && ((userGroup_active->current).integer != 0)) &&
+        (this = dwGetLobbyService(iVar6), this != (bdLobbyService *)0x0)) &&
+       (SVar7 = bdLobbyService::getStatus(this), SVar7 == BD_CONNECTED)) {
+      iVar4 = (int)((uVar13 & 0x3fffffff) << 2);
+      uVar2 = *(uint *)((int)g_DWUserGroupTaskStage + iVar4);
       if (uVar2 < 4) {
-        iVar9 = (int)param_2;
         if (uVar2 == 1) {
-          if (*(int **)((int)&DAT_8456cf48 + iVar6) != (int *)0x0) {
-            iVar7 = (**(code **)(**(int **)((int)&DAT_8456cf48 + iVar6) + 4))();
-            if (iVar7 == 1) goto LAB_8270a5a8;
-            iVar8 = bdRemoteTask__getErrorCode(*(undefined4 *)((int)&DAT_8456cf48 + iVar6));
-            if ((iVar7 == 2) && (iVar8 == 0)) {
-              (&DAT_8456cf30)[iVar9] = 1;
-              cVar10 = UserGroups_CanWeProcess(param_2);
-              if (cVar10 == '\0') {
-                *(undefined4 *)((int)&DAT_8456cf08 + iVar6) = 2;
+          piVar3 = *(int **)((int)&g_DWUserGroupTask[0].m_ptr + iVar4);
+          if (piVar3 != (int *)0x0) {
+            iVar10 = (**(code **)(*piVar3 + 4))();
+            if (iVar10 == 1) goto LAB_8270a5a8;
+            bVar11 = bdRemoteTask::getErrorCode
+                               (*(bdRemoteTask **)((int)&g_DWUserGroupTask[0].m_ptr + iVar4));
+            if ((iVar10 == 2) && (bVar11 == BD_NO_ERROR)) {
+              (&DAT_8456cf30)[iVar6] = 1;
+              bVar12 = UserGroups_CanWeProcess(iVar6);
+              if (bVar12) {
+                UserGroups_ProcessDownload(iVar6);
               }
               else {
-                UserGroups_ProcessDownload(param_2);
+                *(undefined4 *)((int)g_DWUserGroupTaskStage + iVar4) = 2;
               }
             }
             else {
-              *(undefined4 *)((int)&DAT_8456cf18 + iVar6) = 0;
-              UserGroups_RetryReadingPlayerGroups(param_2);
+              *(undefined4 *)((int)g_NumUserGroups + iVar4) = 0;
+              UserGroups_RetryReadingPlayerGroups(iVar6);
             }
           }
         }
         else if (uVar2 == 2) {
-          cVar10 = UserGroups_CanWeProcess(param_2);
-          if (cVar10 != '\0') {
-            UserGroups_ProcessDownload(param_2);
+          bVar12 = UserGroups_CanWeProcess(iVar6);
+          if (bVar12) {
+            UserGroups_ProcessDownload(iVar6);
           }
         }
         else if (uVar2 == 0) {
-          uVar4 = dwGetUserGroups(param_2);
-          if (((uVar4 & 0xffffffff) != 0) &&
-             (cVar10 = UserGroups_CanWeStart(param_2), cVar10 != '\0')) {
-            *(undefined4 *)((int)&DAT_8456cf34 + iVar6) = 0;
-            cVar10 = dwGetOnlineUserID(param_2,local_48);
-            if (cVar10 != '\0') {
-              DAT_8456ced8 = local_48[0];
-              lVar11 = lVar11 + -0x7ba930b8;
-              uVar5 = bdUserGroups__getMemberships
-                                (auStack_50,uVar4,0xffffffff8456ced8,1,param_2 * 0x780 + -0x7ba930a8
-                                 ,0x14);
-              bdReference<bdRemoteTask>__operator_(lVar11,uVar5);
-              bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(auStack_50);
-              piVar1 = (int *)*(int *)lVar11;
-              if ((piVar1 == (int *)0x0) || (iVar7 = (**(code **)(*piVar1 + 4))(), iVar7 != 1)) {
-                UserGroups_RetryReadingPlayerGroups(param_2);
+          pbVar8 = dwGetUserGroups(iVar6);
+          if ((pbVar8 != (bdUserGroups *)0x0) && (bVar12 = UserGroups_CanWeStart(iVar6), bVar12)) {
+            *(undefined4 *)((int)&DAT_8456cf34 + iVar4) = 0;
+            bVar12 = dwGetOnlineUserID(iVar6,local_48);
+            if (bVar12) {
+              g_getUserGroupsUsers[0] = local_48[0];
+              this_00 = (bdReference<bdRemoteTask> *)((int)&g_DWUserGroupTask[0].m_ptr + iVar4);
+              bVar9 = bdUserGroups::getMemberships
+                                ((bdUserGroups *)abStack_50,(ulong64 *)pbVar8,0x8456ced8,
+                                 (bdUserGroupMembershipInfo *)0x1,
+                                 (uint)(g_groupMembershipInfo + iVar6));
+              bdReference<bdRemoteTask>::operator=(this_00,(bdReference<bdRemoteTask> *)bVar9.m_ptr)
+              ;
+              bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(abStack_50);
+              pbVar1 = this_00->m_ptr;
+              if ((pbVar1 == (bdRemoteTask *)0x0) ||
+                 (iVar10 = (**(code **)(pbVar1->_padding_ + 4))(), iVar10 != 1)) {
+                UserGroups_RetryReadingPlayerGroups(iVar6);
               }
               else {
-                *(undefined4 *)((int)&DAT_8456cf08 + iVar6) = 1;
-                (&DAT_8456cef4)[iVar9] = 0;
+                *(undefined4 *)((int)g_DWUserGroupTaskStage + iVar4) = 1;
+                s_needToDownloadUserGroups[iVar6] = false;
               }
             }
           }
         }
-        else if ((&DAT_8456cef4)[iVar9] != '\0') {
-          *(undefined4 *)((int)&DAT_8456cf08 + iVar6) = 0;
+        else if (s_needToDownloadUserGroups[iVar6] != false) {
+          *(undefined4 *)((int)g_DWUserGroupTaskStage + iVar4) = 0;
         }
       }
-      else if (DAT_84013128 == 0) {
-        MyAssertHandler(0xffffffff821b49b8,0x2e9,0,0xffffffff821b4d48);
+      else if (alwaysfails == 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\usergroups.cpp",
+                        0x2e9,0,"Invalid Usergroup task stage");
       }
-      cVar10 = Lobby_IsInRunningLobby();
-      if (((cVar10 != '\0') && (*(int *)((int)&DAT_8456cf18 + iVar6) != 0)) &&
-         (iVar9 = Sys_Milliseconds(), *(int *)((int)&DAT_8456cef8 + iVar6) < iVar9)) {
-        iVar9 = Sys_Milliseconds();
-        *(int *)((int)&DAT_8456cef8 + iVar6) = iVar9 + *(int *)(DAT_84545cb4 + 0xc);
-        UserGroups_SendGroupsToAll(0xffffffff821b498c,uVar3,param_2);
+      bVar12 = Lobby_IsInRunningLobby();
+      if (((bVar12) && (*(int *)((int)g_NumUserGroups + iVar4) != 0)) &&
+         (iVar10 = Sys_Milliseconds(), *(int *)((int)&DAT_8456cef8 + iVar4) < iVar10)) {
+        iVar10 = Sys_Milliseconds();
+        *(char **)((int)&DAT_8456cef8 + iVar4) = (userGroup_RetryTime->current).string + iVar10;
+        UserGroups_SendGroupsToAll("ug_my_groups",LVar5,iVar6);
       }
     }
   }
@@ -1008,101 +1091,125 @@ void UserGroups_Fetch(int param_1)
   if ((&DAT_8456cf30)[param_1] == '\0') {
     return;
   }
-  (&DAT_8456cef4)[param_1] = 1;
+  s_needToDownloadUserGroups[param_1] = true;
   return;
 }
 
 
 // 82709D68  UserGroups_DoesXUIDHaveGroups  (social/usergroups.cpp:773)
 
-undefined8 UserGroups_DoesXUIDHaveGroups(int param_1,longlong param_2)
+bool UserGroups_DoesXUIDHaveGroups(int param_1,ulong64 param_2)
 
 {
-  int iVar2;
-  undefined8 uVar1;
+  XuidInfo *pXVar1;
+  bool bVar2;
   
-  if ((((param_2 == 0) || ((&DAT_84556758)[param_1 * 0x2bd0] == '\0')) ||
-      (*(int *)(DAT_84546d74 + 0xc) == 0)) ||
-     ((iVar2 = UserGroups_GetMeetPlayerInfo(), iVar2 == 0 ||
-      (uVar1 = 1, *(char *)(iVar2 + 0xd8) == '\0')))) {
-    uVar1 = 0;
+  if ((((param_2 == 0) || (g_metPlayerInfo[param_1].metPlayerCount == '\0')) ||
+      ((userGroup_active->current).integer == 0)) ||
+     ((pXVar1 = UserGroups_GetMeetPlayerInfo(param_1,param_2), pXVar1 == (XuidInfo *)0x0 ||
+      (bVar2 = true, pXVar1->numMatchingGroups == '\0')))) {
+    bVar2 = false;
   }
-  return uVar1;
+  return bVar2;
 }
 
 
 // 82709DE0  UserGroups_OpenGroupPopup  (social/usergroups.cpp:798)
 
-void UserGroups_OpenGroupPopup(undefined8 param_1,undefined8 param_2,int param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void UserGroups_OpenGroupPopup
+               (int param_1,LocalClientNum_t param_2,USERGROUPS_GROUP_TEXT_TYPE param_3,int param_4)
 
 {
-  int iVar2;
-  undefined8 uVar1;
+  int iVar1;
+  UiContext *pUVar2;
+  longlong lVar3;
+  longlong lVar4;
+  USERGROUPS_GROUP_TEXT_TYPE UVar5;
   
-  iVar2 = __savegprlr_29();
-  uVar1 = UI_GetClientDC(param_2);
-  if (param_3 == 0) {
-    DAT_8456cf28 = *(undefined8 *)(&DAT_84553b30 + iVar2 * 0x18);
+  lVar4 = (longlong)(int)param_3;
+  lVar3 = (longlong)(int)param_2;
+  iVar1 = __savegprlr_29(param_1,lVar3,lVar4,param_4);
+  pUVar2 = UI_GetClientDC((LocalClientNum_t)lVar3);
+  UVar5 = (USERGROUPS_GROUP_TEXT_TYPE)lVar4;
+  if (UVar5 == USERGROUPS_GROUP_TEXT_TYPE_RECENT_PLAYERS) {
+    g_userGroupPopupTextXUID = g_metPlayerGlob[iVar1].storedPlayer;
   }
-  else if (param_3 == 1) {
-    DAT_8456cf28 = DAT_83fd1d70;
+  else if (UVar5 == USERGROUPS_GROUP_TEXT_TYPE_LOBBY) {
+    g_userGroupPopupTextXUID = sharedUiInfo.partyMemberXuid;
   }
   else {
-    if (param_3 != 2) {
-      if (DAT_84013128 == 0) {
-        MyAssertHandler(0xffffffff821b49b8,0x342,0,0xffffffff821b4ca0);
+    if (UVar5 != USERGROUPS_GROUP_TEXT_TYPE_COOP) {
+      if (alwaysfails == 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\usergroups.cpp",
+                        0x342,0,"Trying to open the group popup with an illegal type");
       }
       __restgprlr_29();
       return;
     }
-    if (DAT_84013128 == 0) {
-      MyAssertHandler(0xffffffff821b49b8,0x330,0,0xffffffff821b4ce8);
+    if (alwaysfails == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\usergroups.cpp",0x330
+                      ,0,"Trying to retrieve coop groups in MP");
     }
   }
-  DAT_8456cef0 = param_3;
-  Menus_OpenByName(uVar1,0xffffffff821b4cd4);
-  __restgprlr_29();
+  g_userGroupPopupTextType = UVar5;
+  iVar1 = Menus_OpenByName(pUVar2,"user_group_popup");
+  __restgprlr_29(iVar1);
   return;
 }
 
 
 // 82709ED8  UserGroups_DoesSlotHaveGroups  (social/usergroups.cpp:844)
 
-void UserGroups_DoesSlotHaveGroups(undefined8 param_1,longlong param_2)
+bool UserGroups_DoesSlotHaveGroups(int param_1,int param_2)
 
 {
   int iVar1;
-  ulonglong uVar2;
+  undefined1 uVar2;
+  bool bVar3;
+  longlong lVar4;
+  ulonglong uVar5;
   
-  iVar1 = __savegprlr_29();
-  if ((&DAT_84556758)[iVar1 * 0x2bd0] == '\0') {
-    __restgprlr_29(0);
-    return;
+  lVar4 = (longlong)param_2;
+  iVar1 = __savegprlr_29(param_1);
+  if (g_metPlayerInfo[iVar1].metPlayerCount == '\0') {
+    uVar2 = __restgprlr_29(0);
+    return (bool)uVar2;
   }
-  uVar2 = (ulonglong)(uint)(&DAT_84553b24)[iVar1 * 6] + param_2;
-  if (0x31 < (uVar2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821b49b8,0x354,0,0xffffffff821b4d10,uVar2,0x32);
+  uVar5 = (ulonglong)(uint)g_metPlayerGlob[iVar1].currentStartPos + lVar4;
+  if (0x31 < (uVar5 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\usergroups.cpp",0x354,0
+                    ,"row doesn\'t index MAX_MET_FRIENDS\n\t%i not in [0, %i)");
   }
-  UserGroups_DoesXUIDHaveGroups
-            (iVar1,*(undefined8 *)(&DAT_84553b98 + (int)uVar2 * 0xe0 + iVar1 * 0x2bd0));
-  __restgprlr_29();
-  return;
+  bVar3 = UserGroups_DoesXUIDHaveGroups
+                    (iVar1,g_metPlayerInfo[iVar1].playersXuidInfo[(int)uVar5].playerXuids);
+  uVar2 = __restgprlr_29(bVar3);
+  return (bool)uVar2;
 }
 
 
 // 82709F78  UserGroups_ShowLobbyGroups  (social/usergroups.cpp:859)
 
-void UserGroups_ShowLobbyGroups(undefined8 param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void UserGroups_ShowLobbyGroups(LocalClientNum_t param_1)
 
 {
-  undefined8 uVar1;
+  UiContext *pUVar1;
   
-  if (*(int *)(DAT_84546d74 + 0xc) != 0) {
-    CL_ControllerIndexFromClientNum();
-    uVar1 = UI_GetClientDC(param_1);
-    DAT_8456cef0 = 1;
-    DAT_8456cf28 = DAT_83fd1d70;
-    Menus_OpenByName(uVar1,0xffffffff821b4cd4);
+  if ((userGroup_active->current).integer != 0) {
+    CL_ControllerIndexFromClientNum(param_1);
+    pUVar1 = UI_GetClientDC(param_1);
+    g_userGroupPopupTextType = USERGROUPS_GROUP_TEXT_TYPE_LOBBY;
+    g_userGroupPopupTextXUID = sharedUiInfo.partyMemberXuid;
+    Menus_OpenByName(pUVar1,"user_group_popup");
   }
   return;
 }
@@ -1110,17 +1217,19 @@ void UserGroups_ShowLobbyGroups(undefined8 param_1)
 
 // 82940D90  `dynamic_atexit_destructor_for_'g_groupMembershipInfo''  (line unknown)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void _dynamic_atexit_destructor_for__g_groupMembershipInfo__(void)
 
 {
   longlong lVar1;
-  longlong lVar2;
+  char *this;
   
   lVar1 = 0x4f;
-  lVar2 = -0x7ba912a8;
+  this = userGroupText;
   do {
-    lVar2 = lVar2 + -0x60;
-    bdUserGroupMembershipInfo___bdUserGroupMembershipInfo(lVar2);
+    this = (char *)((int)this + -0x60);
+    bdUserGroupMembershipInfo::~bdUserGroupMembershipInfo((bdUserGroupMembershipInfo *)this);
     lVar1 = lVar1 + -1;
   } while (-1 < lVar1);
   return;
@@ -1128,6 +1237,8 @@ void _dynamic_atexit_destructor_for__g_groupMembershipInfo__(void)
 
 
 // 82940DE0  `dynamic_atexit_destructor_for_'g_DWUserGroupTask''  (line unknown)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_atexit_destructor_for__g_DWUserGroupTask__(void)
 
@@ -1138,16 +1249,16 @@ void _dynamic_atexit_destructor_for__g_DWUserGroupTask__(void)
   longlong lVar4;
   uint *puVar5;
   longlong lVar6;
-  uint *puVar7;
+  bdUserGroupMembershipInfo (*pabVar7) [20];
   char in_RESERVE;
   byte in_cr0;
   
   __savegprlr_29();
   lVar6 = 3;
-  puVar7 = (uint *)&DAT_8456cf58;
+  pabVar7 = g_groupMembershipInfo;
   do {
-    puVar7 = puVar7 + -1;
-    uVar2 = *puVar7;
+    pabVar7 = (bdUserGroupMembershipInfo (*) [20])&pabVar7[-1][0x13].field_0x5c;
+    uVar2 = *(uint *)pabVar7;
     if ((ulonglong)uVar2 != 0) {
       lVar4 = (ulonglong)uVar2 + 4;
       do {
@@ -1159,11 +1270,11 @@ void _dynamic_atexit_destructor_for__g_DWUserGroupTask__(void)
         }
       } while (!(bool)(in_cr0 >> 1 & 1));
       if (*(int *)(uVar2 + 4) == 0) {
-        puVar1 = (undefined4 *)*puVar7;
+        puVar1 = *(undefined4 **)pabVar7;
         if (puVar1 != (undefined4 *)0x0) {
           (**(code **)*puVar1)(puVar1,1);
         }
-        *puVar7 = 0;
+        *(undefined4 *)pabVar7 = 0;
       }
     }
     lVar6 = lVar6 + -1;

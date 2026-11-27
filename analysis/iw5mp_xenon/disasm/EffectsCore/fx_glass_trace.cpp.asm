@@ -507,7 +507,7 @@ LAB_8242f034:
   8242F034  382101A0             addi r1,r1,0x1a0
   8242F038  484E76CC             b 0x82916704
 
-; 8242F100  std::_Push_heap<FxGlassTraceHit_*,int,FxGlassTraceHit,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2455)
+; 8242F100  _Push_heap<FxGlassTraceHit_*,int,FxGlassTraceHit,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2455)
   8242F100  7D8802A6             mfspr r12,LR
   8242F104  484E75A9             bl 0x829166ac
   8242F108  9421FF70             stwu r1,-0x90(r1)
@@ -557,7 +557,7 @@ LAB_8242f194:
   8242F1B0  38210090             addi r1,r1,0x90
   8242F1B4  484E7548             b 0x829166fc
 
-; 8242F1B8  std::_Adjust_heap<FxGlassTraceHit_*,int,FxGlassTraceHit,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2565)
+; 8242F1B8  _Adjust_heap<FxGlassTraceHit_*,int,FxGlassTraceHit,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2565)
   8242F1B8  7D8802A6             mfspr r12,LR
   8242F1BC  484E74F1             bl 0x829166ac
   8242F1C0  9421FF70             stwu r1,-0x90(r1)
@@ -656,7 +656,7 @@ LAB_8242f300:
   8242F31C  38210090             addi r1,r1,0x90
   8242F320  484E73DC             b 0x829166fc
 
-; 8242F328  std::_Make_heap<FxGlassTraceHit_*,int,FxGlassTraceHit,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2658)
+; 8242F328  _Make_heap<FxGlassTraceHit_*,int,FxGlassTraceHit,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2658)
   8242F328  7D8802A6             mfspr r12,LR
   8242F32C  484E737D             bl 0x829166a8
   8242F330  9421FF30             stwu r1,-0xd0(r1)
@@ -742,7 +742,7 @@ LAB_8242f458:
   8242F458  382100D0             addi r1,r1,0xd0
   8242F45C  484E729C             b 0x829166f8
 
-; 8242FAA8  std::_Sort_heap<FxGlassTraceHit_*,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2700)
+; 8242FAA8  _Sort_heap<FxGlassTraceHit_*,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2700)
   8242FAA8  7D8802A6             mfspr r12,LR
   8242FAAC  484E6C09             bl 0x829166b4
   8242FAB0  9421FF50             stwu r1,-0xb0(r1)
@@ -781,7 +781,7 @@ LAB_8242fb2c:
   8242FB2C  382100B0             addi r1,r1,0xb0
   8242FB30  484E6BD4             b 0x82916704
 
-; 8242F628  std::_Insertion_sort1<FxGlassTraceHit_*,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&),FxGlassTraceHit>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3650)
+; 8242F628  _Insertion_sort1<FxGlassTraceHit_*,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&),FxGlassTraceHit>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3650)
   8242F628  7D8802A6             mfspr r12,LR
   8242F62C  484E7081             bl 0x829166ac
   8242F630  9421FF40             stwu r1,-0xc0(r1)
@@ -858,7 +858,7 @@ LAB_8242f72c:
   8242F72C  382100C0             addi r1,r1,0xc0
   8242F730  484E6FCC             b 0x829166fc
 
-; 8242F460  std::_Med3<FxGlassTraceHit_*,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3683)
+; 8242F460  _Med3<FxGlassTraceHit_*,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3683)
   8242F460  7D8802A6             mfspr r12,LR
   8242F464  484E7255             bl 0x829166b8
   8242F468  9421FF50             stwu r1,-0xb0(r1)
@@ -929,7 +929,7 @@ LAB_8242f560:
   8242F560  382100B0             addi r1,r1,0xb0
   8242F564  484E71A4             b 0x82916708
 
-; 8242F568  std::_Median<FxGlassTraceHit_*,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3695)
+; 8242F568  _Median<FxGlassTraceHit_*,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3695)
   8242F568  7D8802A6             mfspr r12,LR
   8242F56C  484E7145             bl 0x829166b0
   8242F570  9421FF70             stwu r1,-0x90(r1)
@@ -979,7 +979,7 @@ LAB_8242f610:
   8242F61C  38210090             addi r1,r1,0x90
   8242F620  484E70E0             b 0x82916700
 
-; 8242F738  std::_Unguarded_partition<FxGlassTraceHit_*,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3712)
+; 8242F738  _Unguarded_partition<FxGlassTraceHit_*,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3712)
   8242F738  7D8802A6             mfspr r12,LR
   8242F73C  484E6F65             bl 0x829166a0
   8242F740  9421FE00             stwu r1,-0x200(r1)
@@ -1218,7 +1218,7 @@ LAB_8242fa94:
   8242FAA0  38210200             addi r1,r1,0x200
   8242FAA4  484E6C4C             b 0x829166f0
 
-; 8242FB38  std::_Sort<FxGlassTraceHit_*,int,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3771)
+; 8242FB38  _Sort<FxGlassTraceHit_*,int,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3771)
   8242FB38  7D8802A6             mfspr r12,LR
   8242FB3C  484E6B71             bl 0x829166ac
   8242FB40  9421FF60             stwu r1,-0xa0(r1)

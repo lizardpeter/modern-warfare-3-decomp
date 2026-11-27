@@ -2,105 +2,117 @@
 
 // 8293F230  `dynamic_initializer_for_'tasks''  (social/social_meetplayer.cpp:127)
 
-int _dynamic_initializer_for__tasks__(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void _dynamic_initializer_for__tasks__(void)
 
 {
-  int iVar1;
-  undefined4 *puVar2;
-  longlong lVar3;
+  ulong64 *puVar1;
+  longlong lVar2;
   
-  lVar3 = 0x20;
-  puVar2 = (undefined4 *)0x8455ea40;
+  lVar2 = 0x20;
+  puVar1 = g_metPlayerInfo[3].playersXuidInfo[0x31].userGroups + 5;
   do {
-    puVar2 = puVar2 + 0x28;
-    *puVar2 = 0;
-    lVar3 = lVar3 + -1;
-  } while (lVar3 != 0);
-  iVar1 = atexit(_dynamic_atexit_destructor_for__tasks__);
-  return iVar1;
+    puVar1 = puVar1 + 0x14;
+    *(undefined4 *)puVar1 = 0;
+    lVar2 = lVar2 + -1;
+  } while (lVar2 != 0);
+  atexit(_dynamic_atexit_destructor_for__tasks__);
+  return;
 }
 
 
 // 82706E90  MeetPlayer_Initialize  (social/social_meetplayer.cpp:133)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void MeetPlayer_Initialize(void)
 
 {
-  void *pvVar1;
-  undefined4 *puVar2;
-  undefined8 *puVar3;
-  undefined1 *puVar4;
-  undefined4 *puVar5;
-  uint uVar6;
-  undefined1 *_Dst;
+  int *piVar1;
+  ulong64 *puVar2;
+  char *pcVar3;
+  int *piVar4;
+  uint uVar5;
+  MetPlayerInfo *pMVar6;
   
   __savegprlr_19();
-  DAT_84553b1c = Dvar_RegisterInt(0xffffffff821b3bc8,10000,0,0x7fffffff,4,0xffffffff821b3be8);
-  DAT_84553b18 = Dvar_RegisterInt(0xffffffff821b3ba8,300000,0,0x7fffffff,0,0xffffffff821b3b48);
-  TaskManager_ConstructTaskSet(0xffffffff8455ead0,0xffffffff821b3b2c);
-  _Dst = &DAT_84553b90;
-  puVar4 = (undefined1 *)0x8454889c;
-  puVar2 = &DAT_84553b00;
-  puVar3 = &DAT_845508e0;
-  uVar6 = 0;
-  puVar5 = (undefined4 *)0x84553b0c;
+  meetPlayer_ListUpdateInterval =
+       Dvar_RegisterInt("meetPlayer_ListUpdateInterval",10000,0,0x7fffffff,4,
+                        "Time in milliseconds since uploaded recent met player list.");
+  DAT_84553b18 = Dvar_RegisterInt("meetPlayer_ListUploadInterval",300000,0,0x7fffffff,0,
+                                  "This dvar is used to make sure that recent met player list get updates only when it changes."
+                                 );
+  TaskManager_ConstructTaskSet(&tasks,"MeetPlayer_Initialize");
+  pMVar6 = g_metPlayerInfo;
+  pcVar3 = g_friendFeederName + 0x1c;
+  piVar1 = s_metPlayerLastUploadTime;
+  puVar2 = s_metPlayerListDownloaded;
+  uVar5 = 0;
+  piVar4 = s_metPlayerLastUploadTime + 3;
   do {
-    if (3 < uVar6) {
-      MyAssertHandler(0xffffffff821b3348,0x1a1,0,0xffffffff82031880,uVar6,4);
+    if (3 < uVar5) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_meetplayer.cpp"
+                      ,0x1a1,0,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)")
+      ;
     }
-    pvVar1 = memset(_Dst,0,0x2bd0);
-    *_Dst = 3;
-    _Dst = _Dst + 0x2bd0;
-    *puVar3 = 0;
+    memset();
+    pMVar6->version = '\x03';
+    pMVar6 = pMVar6 + 1;
     *puVar2 = 0;
-    (&DAT_84553b14)[uVar6] = 0;
-    puVar5[5] = 0;
-    *(undefined4 *)(puVar4 + 4) = 0;
-    uVar6 = uVar6 + 1;
-    puVar5 = puVar5 + 6;
-    *puVar5 = 0;
-    puVar3 = puVar3 + 1;
-    puVar4 = puVar4 + 0x2010;
-    *puVar4 = 1;
+    *piVar1 = 0;
+    s_metPlayerListChanged[uVar5] = false;
+    piVar4[5] = 0;
+    pcVar3[4] = '\0';
+    pcVar3[5] = '\0';
+    pcVar3[6] = '\0';
+    pcVar3[7] = '\0';
+    uVar5 = uVar5 + 1;
+    piVar4 = piVar4 + 6;
+    *piVar4 = 0;
     puVar2 = puVar2 + 1;
-  } while ((int)_Dst < -0x7baa1530);
-  __restgprlr_19(pvVar1);
+    pcVar3 = pcVar3 + 0x2010;
+    *pcVar3 = '\x01';
+    piVar1 = piVar1 + 1;
+  } while ((int)pMVar6 < -0x7baa1530);
+  __restgprlr_19();
   return;
 }
 
 
 // 82704778  MeetPlayer_Shutdown  (social/social_meetplayer.cpp:154)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void MeetPlayer_Shutdown(void)
 
 {
-  TaskManager_DestructTaskSet(0xffffffff8455ead0);
+  TaskManager_DestructTaskSet(&tasks);
   return;
 }
 
 
 // 82704788  MeetPlayer_GetPlayerIndex  (social/social_meetplayer.cpp:162)
 
-longlong MeetPlayer_GetPlayerIndex(int param_1,longlong param_2)
+int MeetPlayer_GetPlayerIndex(int param_1,ulong64 param_2)
 
 {
-  longlong lVar1;
+  int iVar1;
   int iVar2;
   int iVar3;
   
-  param_1 = param_1 * 0x2bd0;
-  lVar1 = 0;
-  if ((byte)(&DAT_84556758)[param_1] != 0) {
+  iVar1 = 0;
+  if (g_metPlayerInfo[param_1].metPlayerCount != 0) {
     iVar3 = 0;
-    iVar2 = param_1;
+    iVar2 = param_1 * 0x2bd0;
     do {
-      if (*(longlong *)(&DAT_84553b98 + iVar2) == param_2) {
-        return lVar1;
+      if (*(ulong64 *)(g_metPlayerInfo[0].playersXuidInfo[0].gamertag + iVar2 + -8) == param_2) {
+        return iVar1;
       }
-      lVar1 = lVar1 + 1;
+      iVar1 = iVar1 + 1;
       iVar3 = iVar3 + 0xe0;
-      iVar2 = iVar3 + param_1;
-    } while ((int)lVar1 < (int)(uint)(byte)(&DAT_84556758)[param_1]);
+      iVar2 = iVar3 + param_1 * 0x2bd0;
+    } while (iVar1 < (int)(uint)g_metPlayerInfo[param_1].metPlayerCount);
   }
   return -1;
 }
@@ -108,83 +120,80 @@ longlong MeetPlayer_GetPlayerIndex(int param_1,longlong param_2)
 
 // 82706710  MeetPlayer_AddPlayerAtSlot  (social/social_meetplayer.cpp:190)
 
-void MeetPlayer_AddPlayerAtSlot
-               (undefined8 param_1,undefined8 param_2,ulonglong param_3,ulonglong param_4)
+bool MeetPlayer_AddPlayerAtSlot(int param_1,ulong64 param_2,char *param_3,int param_4)
 
 {
   int iVar1;
-  ulonglong uVar2;
+  uint uVar2;
+  undefined1 uVar4;
+  bool bVar5;
   uint uVar3;
-  char *pcVar4;
-  char cVar6;
-  undefined4 uVar5;
-  undefined8 uVar7;
-  undefined8 uVar8;
-  longlong lVar9;
+  ulonglong uVar6;
+  char *pcVar7;
+  ulonglong uVar8;
   
-  uVar2 = __savegprlr_25();
-  if (3 < (uVar2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821b3348,0xbf,0,0xffffffff82031880,uVar2,4);
+  uVar8 = (ulonglong)param_4;
+  uVar6 = (ulonglong)(int)param_3;
+  uVar2 = __savegprlr_25(param_1);
+  if (3 < uVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_meetplayer.cpp",
+                    0xbf,0,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  if (0x31 < (param_4 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821b3348,0xc0,0,0xffffffff821b3a5c,param_4,0x32);
+  if (0x31 < (uVar8 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_meetplayer.cpp",
+                    0xc0,0,"slot doesn\'t index MAX_MET_FRIENDS\n\t%i not in [0, %i)");
   }
-  uVar8 = 0xffffffff8218ae5c;
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821b3348,0xcb,0,0xffffffff82000f98,0xffffffff8218ae5c);
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_meetplayer.cpp",
+                    0xcb,0,"%s");
   }
-  if (*(char *)param_3 != '\0') {
-    uVar3 = Live_IsGuestByXUID(param_2);
-    pcVar4 = strchr((char *)param_3,0x28);
-    if (1 - (pcVar4 == (char *)0x0) != (uVar3 & 0xff)) {
-      if ((pcVar4 == (char *)0x0) == 1) {
-        uVar7 = 0xffffffff821b3a3c;
-        uVar8 = 0xffffffff82032494;
-      }
-      else {
-        uVar7 = 0xffffffff821b3a4c;
-      }
-      Com_Printf(0x10,0xffffffff821b39f0,param_3,param_2,uVar8,uVar7);
+  pcVar7 = (char *)uVar6;
+  if (*pcVar7 != '\0') {
+    bVar5 = Live_IsGuestByXUID(param_2);
+    strchr();
+    if ((uVar6 != 0) != bVar5) {
+      Com_Printf(0x10,"MeetPlayer - %s (%llx) is guest by %s only %s added to Recent Players list\n"
+                );
     }
-    cVar6 = Live_IsGuestByXUID(param_2);
-    if ((cVar6 == '\0') && (*(char *)(DAT_82aa1ae4 + 0xc) == '\0')) {
-      lVar9 = param_4 * 0xe0 + uVar2 * 0x2bd0 + -0x7baac470;
-      iVar1 = (int)lVar9;
-      *(undefined8 *)(iVar1 + 8) = param_2;
-      I_strncpyz(lVar9 + 0x10,param_3,0x20);
-      uVar5 = Sys_GetTimeAsSeconds();
-      *(undefined4 *)(iVar1 + 0x30) = uVar5;
-      (&DAT_8454a8ac)[(int)uVar2 * 0x2010] = 1;
-      __restgprlr_25(1);
-      return;
+    bVar5 = Live_IsGuestByXUID(param_2);
+    if ((!bVar5) && ((systemlink->current).enabled == false)) {
+      iVar1 = (int)uVar8;
+      g_metPlayerInfo[uVar2].playersXuidInfo[iVar1].playerXuids = param_2;
+      I_strncpyz(g_metPlayerInfo[uVar2].playersXuidInfo[iVar1].gamertag,pcVar7,0x20);
+      uVar3 = Sys_GetTimeAsSeconds();
+      g_metPlayerInfo[uVar2].playersXuidInfo[iVar1].systemTime = uVar3;
+      s_meetPlayerPresence[uVar2].dirty = true;
+      uVar4 = __restgprlr_25(1);
+      return (bool)uVar4;
     }
   }
-  __restgprlr_25(0);
-  return;
+  uVar4 = __restgprlr_25(0);
+  return (bool)uVar4;
 }
 
 
 // 827047E0  MeetPlayer_GetPositionByXuid  (social/social_meetplayer.cpp:248)
 
-longlong MeetPlayer_GetPositionByXuid(uint param_1,longlong param_2)
+int MeetPlayer_GetPositionByXuid(int param_1,ulong64 param_2)
 
 {
-  longlong lVar1;
-  longlong *plVar2;
+  int iVar1;
+  XuidInfo *pXVar2;
   
-  if (3 < param_1) {
-    MyAssertHandler(0xffffffff821b3348,0xf9,0,0xffffffff82031880,param_1,4);
+  if (3 < (uint)param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_meetplayer.cpp",
+                    0xf9,0,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  lVar1 = 0;
-  if ((byte)(&DAT_84556758)[param_1 * 0x2bd0] != 0) {
-    plVar2 = (longlong *)(&DAT_84553b98 + param_1 * 0x2bd0);
+  iVar1 = 0;
+  if (g_metPlayerInfo[param_1].metPlayerCount != 0) {
+    pXVar2 = g_metPlayerInfo[param_1].playersXuidInfo;
     do {
-      if (param_2 == *plVar2) {
-        return lVar1;
+      if (param_2 == pXVar2->playerXuids) {
+        return iVar1;
       }
-      lVar1 = lVar1 + 1;
-      plVar2 = plVar2 + 0x1c;
-    } while ((int)lVar1 < (int)(uint)(byte)(&DAT_84556758)[param_1 * 0x2bd0]);
+      iVar1 = iVar1 + 1;
+      pXVar2 = pXVar2 + 1;
+    } while (iVar1 < (int)(uint)g_metPlayerInfo[param_1].metPlayerCount);
   }
   return -1;
 }
@@ -192,181 +201,193 @@ longlong MeetPlayer_GetPositionByXuid(uint param_1,longlong param_2)
 
 // 82704888  MeetPlayer_Compare  (social/social_meetplayer.cpp:285)
 
-void MeetPlayer_Compare(undefined8 param_1,ulonglong param_2)
+int MeetPlayer_Compare(void *param_1,void *param_2)
 
 {
   longlong *plVar1;
-  ulonglong uVar2;
-  longlong lVar3;
+  int iVar2;
+  ulonglong uVar3;
+  longlong *plVar4;
   
-  plVar1 = (longlong *)__savegprlr_28();
+  uVar3 = (ulonglong)(int)param_2;
+  plVar1 = (longlong *)__savegprlr_28(param_1);
   if (plVar1 == (longlong *)0x0) {
-    MyAssertHandler(0xffffffff821b3348,0x127,0,0xffffffff82000f98,0xffffffff821b339c);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_meetplayer.cpp",
+                    0x127,0,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821b3348,0x128,0,0xffffffff82000f98,0xffffffff821b3390);
+  if ((uVar3 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_meetplayer.cpp",
+                    0x128,0,"%s");
   }
-  lVar3 = *(longlong *)param_2;
+  plVar4 = (longlong *)uVar3;
   if (*plVar1 == 0) {
-    if (lVar3 == 0) {
-      __restgprlr_28(0);
-      return;
+    if (*plVar4 == 0) {
+      iVar2 = __restgprlr_28(0);
+      return iVar2;
     }
-    __restgprlr_28(1);
-    return;
+    iVar2 = __restgprlr_28(1);
+    return iVar2;
   }
-  if (lVar3 == 0) {
-    __restgprlr_28(0xffffffffffffffff);
-    return;
+  if (*plVar4 == 0) {
+    iVar2 = __restgprlr_28(0xffffffffffffffff);
+    return iVar2;
   }
-  uVar2 = (ulonglong)*(uint *)((longlong *)param_2 + 5);
-  if (*(uint *)(plVar1 + 5) == uVar2) {
-    I_stricmp(plVar1 + 1,param_2 + 8);
-    __restgprlr_28();
-    return;
+  if ((ulonglong)*(uint *)(plVar1 + 5) == (ulonglong)*(uint *)(plVar4 + 5)) {
+    iVar2 = I_stricmp((char *)(plVar1 + 1),(char *)(plVar4 + 1));
+    iVar2 = __restgprlr_28(iVar2);
+    return iVar2;
   }
-  __restgprlr_28(uVar2 - *(uint *)(plVar1 + 5));
-  return;
+  iVar2 = __restgprlr_28((ulonglong)*(uint *)(plVar4 + 5) - (ulonglong)*(uint *)(plVar1 + 5));
+  return iVar2;
 }
 
 
 // 82704968  MeetPlayer_CanWeAddToList  (social/social_meetplayer.cpp:316)
 
-longlong MeetPlayer_CanWeAddToList(int param_1)
+bool MeetPlayer_CanWeAddToList(int param_1)
 
 {
-  longlong lVar1;
+  int iVar1;
   
-  lVar1 = Sys_Milliseconds();
-  return (ulonglong)(*(uint *)(DAT_84553b1c + 0xc) >> 0x1f) +
-         (longlong)((int)(lVar1 - (ulonglong)*(uint *)(&DAT_84553b80 + param_1 * 4)) >> 0x1f) +
-         (ulonglong)
-         ((ulonglong)*(uint *)(DAT_84553b1c + 0xc) <=
-         lVar1 - (ulonglong)*(uint *)(&DAT_84553b80 + param_1 * 4));
+  iVar1 = Sys_Milliseconds();
+  return (bool)((((char)((longlong)iVar1 - (ulonglong)(uint)s_lastUpdateTime[param_1] >> 0x18) >> 7)
+                - (char)((meetPlayer_ListUpdateInterval->current).integer >> 0x1f)) +
+               ((ulonglong)(uint)(meetPlayer_ListUpdateInterval->current).integer <=
+               (longlong)iVar1 - (ulonglong)(uint)s_lastUpdateTime[param_1]));
 }
 
 
 // 827049C8  MeetPlayer_IsPlatformFriend  (social/social_meetplayer.cpp:328)
 
-longlong MeetPlayer_IsPlatformFriend(uint param_1)
+bool MeetPlayer_IsPlatformFriend(int param_1)
 
 {
-  longlong lVar1;
+  int iVar1;
   
-  if (3 < param_1) {
-    MyAssertHandler(0xffffffff821b3348,0x149,0,0xffffffff82031880,param_1,4);
+  if (3 < (uint)param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_meetplayer.cpp",
+                    0x149,0,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  if (*(longlong *)(&DAT_84553b30 + param_1 * 0x18) == 0) {
-    return 0;
+  if (g_metPlayerGlob[param_1].storedPlayer == 0) {
+    return false;
   }
-  lVar1 = Friends_FindIndex(param_1);
-  return (lVar1 + 1) - (lVar1 + (ulonglong)(lVar1 + 1 == 0));
+  iVar1 = Friends_FindIndex(param_1,g_metPlayerGlob[param_1].storedPlayer);
+  return (bool)((char)((longlong)iVar1 + 1) - ((char)iVar1 + ((longlong)iVar1 + 1 == 0)));
 }
 
 
 // 827068B0  MeetPlayer_UpdateMember  (social/social_meetplayer.cpp:344)
 
-void MeetPlayer_UpdateMember(undefined8 param_1,longlong param_2,ulonglong param_3)
+bool MeetPlayer_UpdateMember(int param_1,ulong64 param_2,char *param_3)
 
 {
-  undefined1 uVar1;
-  uint uVar3;
-  undefined4 uVar4;
-  ulonglong uVar2;
-  char cVar6;
-  int iVar5;
-  int iVar7;
-  longlong lVar8;
-  longlong lVar9;
+  byte bVar1;
+  uint uVar2;
+  int iVar3;
+  undefined1 uVar7;
+  uint uVar4;
+  uint uVar5;
+  bool bVar8;
+  int iVar6;
+  ulonglong uVar9;
   int iVar10;
   int iVar11;
+  int iVar12;
   
-  uVar3 = __savegprlr_23();
-  if (3 < uVar3) {
-    MyAssertHandler(0xffffffff821b3348,0x15e,0,0xffffffff82031880,uVar3,4);
+  uVar9 = (ulonglong)(int)param_3;
+  uVar2 = __savegprlr_23(param_1);
+  if (3 < uVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_meetplayer.cpp",
+                    0x15e,0,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
   if (param_2 == 0) {
-    MyAssertHandler(0xffffffff821b3348,0x15f,0,0xffffffff82000f98,0xffffffff821b3b1c);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_meetplayer.cpp",
+                    0x15f,0,"%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821b3348,0x163,0,0xffffffff82000f98,0xffffffff8218ae5c);
+  if ((uVar9 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_meetplayer.cpp",
+                    0x163,0,"%s");
   }
-  uVar4 = Sys_Milliseconds();
-  iVar7 = uVar3 * 0x2bd0;
-  uVar1 = (&DAT_84556758)[iVar7];
-  *(undefined4 *)(&DAT_84553b80 + uVar3 * 4) = uVar4;
+  iVar3 = Sys_Milliseconds();
+  bVar1 = g_metPlayerInfo[uVar2].metPlayerCount;
+  s_lastUpdateTime[uVar2] = iVar3;
   if (param_2 == 0) {
-    __restgprlr_23(0);
-    return;
+    uVar7 = __restgprlr_23(0);
+    return (bool)uVar7;
   }
-  uVar2 = MeetPlayer_GetPositionByXuid(uVar3,param_2);
-  if ((int)uVar2 == -1) {
-    if ((byte)(&DAT_84556758)[iVar7] < 0x32) {
-      cVar6 = MeetPlayer_AddPlayerAtSlot(uVar3,param_2,param_3,uVar1);
-      if (cVar6 != '\0') {
-        (&DAT_84556758)[iVar7] = (&DAT_84556758)[iVar7] + '\x01';
+  uVar4 = MeetPlayer_GetPositionByXuid(uVar2,param_2);
+  if (uVar4 == 0xffffffff) {
+    if (g_metPlayerInfo[uVar2].metPlayerCount < 0x32) {
+      bVar8 = MeetPlayer_AddPlayerAtSlot(uVar2,param_2,(char *)uVar9,(uint)bVar1);
+      if (bVar8) {
+        g_metPlayerInfo[uVar2].metPlayerCount = g_metPlayerInfo[uVar2].metPlayerCount + '\x01';
       }
     }
     else {
-      if ((&DAT_84556758)[iVar7] != 0x32) {
-        MyAssertHandler(0xffffffff821b3348,0x186,0,0xffffffff82000f98,0xffffffff821b3a94);
+      if (g_metPlayerInfo[uVar2].metPlayerCount != 0x32) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_meetplayer.cpp"
+                        ,0x186,0,"%s");
       }
-      lVar8 = 0;
-      lVar9 = 1;
-      if (1 < (byte)(&DAT_84556758)[iVar7]) {
-        iVar10 = 0;
-        iVar11 = 0xe0;
+      iVar3 = 0;
+      iVar10 = 1;
+      if (1 < g_metPlayerInfo[uVar2].metPlayerCount) {
+        iVar11 = 0;
+        iVar12 = 0xe0;
         do {
-          iVar5 = MeetPlayer_Compare(&DAT_84553b90 + iVar10 + iVar7 + 8,
-                                     &DAT_84553b98 + iVar11 + iVar7);
-          if (iVar5 < 0) {
-            lVar8 = lVar9;
-            iVar10 = iVar11;
+          iVar6 = MeetPlayer_Compare(g_metPlayerInfo[uVar2].playersXuidInfo[0].gamertag +
+                                     iVar11 + -8,(void *)(uVar2 * 0x2bd0 + -0x7baac468 + iVar12));
+          if (iVar6 < 0) {
+            iVar11 = iVar12;
+            iVar3 = iVar10;
           }
-          lVar9 = lVar9 + 1;
-          iVar11 = iVar11 + 0xe0;
-        } while ((int)lVar9 < (int)(uint)(byte)(&DAT_84556758)[iVar7]);
+          iVar10 = iVar10 + 1;
+          iVar12 = iVar12 + 0xe0;
+        } while (iVar10 < (int)(uint)g_metPlayerInfo[uVar2].metPlayerCount);
       }
-      MeetPlayer_AddPlayerAtSlot(uVar3,param_2,param_3,lVar8);
+      MeetPlayer_AddPlayerAtSlot(uVar2,param_2,(char *)uVar9,iVar3);
     }
   }
   else {
-    if ((ulonglong)(byte)(&DAT_84556758)[iVar7] <= (uVar2 & 0xffffffff)) {
-      MyAssertHandler(0xffffffff821b3348,0x175,0,0xffffffff821b3ac8,uVar2);
+    if (g_metPlayerInfo[uVar2].metPlayerCount <= uVar4) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_meetplayer.cpp"
+                      ,0x175,0,
+                      "currentPlayerPosition doesn\'t index playerInfo->metPlayerCount\n\t%i not in [0, %i)"
+                     );
     }
-    uVar4 = Sys_GetTimeAsSeconds();
-    *(undefined4 *)(&DAT_84553b90 + (int)uVar2 * 0xe0 + iVar7 + 0x30) = uVar4;
+    uVar5 = Sys_GetTimeAsSeconds();
+    g_metPlayerInfo[uVar2].playersXuidInfo[uVar4].systemTime = uVar5;
   }
-  (&DAT_84553b14)[uVar3] = 1;
-  __restgprlr_23(1);
-  return;
+  s_metPlayerListChanged[uVar2] = true;
+  uVar7 = __restgprlr_23(1);
+  return (bool)uVar7;
 }
 
 
 // 82706AB8  MeetPlayer_Reset  (social/social_meetplayer.cpp:416)
 
-void MeetPlayer_Reset(void)
+void MeetPlayer_Reset(int param_1)
 
 {
   int iVar1;
   int iVar2;
   ulonglong uVar3;
   
-  uVar3 = __savegprlr_25();
+  uVar3 = __savegprlr_25(param_1);
   if (3 < (uVar3 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821b3348,0x1a1,0,0xffffffff82031880,uVar3,4);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_meetplayer.cpp",
+                    0x1a1,0,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
   iVar1 = (int)uVar3;
-  memset(&DAT_84553b90 + iVar1 * 0x2bd0,0,0x2bd0);
+  memset();
   iVar2 = (int)((uVar3 + (uVar3 & 0x7fffffff) * 2 & 0xffffffff) << 3);
-  (&DAT_84553b14)[iVar1] = 0;
-  *(undefined8 *)((int)&DAT_845508e0 + (int)((uVar3 & 0xffffffff) << 3)) = 0;
-  *(undefined4 *)((int)&DAT_84553b00 + (int)((uVar3 & 0xffffffff) << 2)) = 0;
-  (&DAT_84553b90)[iVar1 * 0x2bd0] = 3;
-  *(undefined4 *)((int)&DAT_84553b20 + iVar2) = 0;
-  *(undefined4 *)((int)&DAT_84553b24 + iVar2) = 0;
-  (&DAT_845488a0)[iVar1 * 0x804] = 0;
-  (&DAT_8454a8ac)[iVar1 * 0x2010] = 1;
+  s_metPlayerListChanged[iVar1] = false;
+  *(undefined8 *)((int)s_metPlayerListDownloaded + (int)((uVar3 & 0xffffffff) << 3)) = 0;
+  *(undefined4 *)((int)s_metPlayerLastUploadTime + (int)((uVar3 & 0xffffffff) << 2)) = 0;
+  g_metPlayerInfo[iVar1].version = '\x03';
+  *(undefined4 *)((int)&g_metPlayerGlob[0].currentIndex + iVar2) = 0;
+  *(undefined4 *)((int)&g_metPlayerGlob[0].currentStartPos + iVar2) = 0;
+  s_meetPlayerPresence[iVar1].count = 0;
+  s_meetPlayerPresence[iVar1].dirty = true;
   __restgprlr_25();
   return;
 }
@@ -374,47 +395,49 @@ void MeetPlayer_Reset(void)
 
 // 82706B90  MeetPlayer_Sort  (social/social_meetplayer.cpp:439)
 
-void MeetPlayer_Sort(void)
+void MeetPlayer_Sort(int param_1)
 
 {
   byte bVar1;
   uint uVar2;
   int iVar3;
-  int iVar4;
-  char cVar5;
+  uchar uVar4;
   
-  uVar2 = __savegprlr_28();
+  uVar2 = __savegprlr_28(param_1);
   if (3 < uVar2) {
-    MyAssertHandler(0xffffffff821b3348,0x1bb,0,0xffffffff82031880,uVar2,4);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_meetplayer.cpp",
+                    0x1bb,0,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  iVar4 = uVar2 * 0x2bd0;
-  qsort(&DAT_84553b98 + iVar4,(uint)(byte)(&DAT_84556758)[iVar4],0xe0,MeetPlayer_Compare);
-  cVar5 = (&DAT_84556758)[iVar4];
-  while ((cVar5 != '\0' &&
-         (*(longlong *)((uint)(byte)(&DAT_84556758)[iVar4] * 0xe0 + iVar4 + -0x7baac548) == 0))) {
-    cVar5 = (&DAT_84556758)[iVar4] - 1;
-    (&DAT_84553b14)[uVar2] = 1;
-    (&DAT_84556758)[iVar4] = cVar5;
-    (&DAT_8454a8ac)[uVar2 * 0x2010] = 1;
+  qsort(g_metPlayerInfo[uVar2].playersXuidInfo,(uint)g_metPlayerInfo[uVar2].metPlayerCount,0xe0,
+        MeetPlayer_Compare);
+  uVar4 = g_metPlayerInfo[uVar2].metPlayerCount;
+  while ((uVar4 != '\0' &&
+         (*(longlong *)
+           ((int)s_meetPlayerUserInfoBuffer +
+           (uint)g_metPlayerInfo[uVar2].metPlayerCount * 0xe0 + uVar2 * 0x2bd0 + 0x31b8) == 0))) {
+    uVar4 = g_metPlayerInfo[uVar2].metPlayerCount - 1;
+    s_metPlayerListChanged[uVar2] = true;
+    g_metPlayerInfo[uVar2].metPlayerCount = uVar4;
+    s_meetPlayerPresence[uVar2].dirty = true;
   }
-  if ((&DAT_84553b14)[uVar2] != '\0') {
-    iVar3 = MeetPlayer_GetPlayerIndex(uVar2,*(undefined8 *)(&DAT_84553b28 + uVar2 * 0x18));
+  if (s_metPlayerListChanged[uVar2] != false) {
+    iVar3 = MeetPlayer_GetPlayerIndex(uVar2,g_metPlayerGlob[uVar2].currentPlayer);
     if (iVar3 < 0) {
-      bVar1 = (&DAT_84556758)[iVar4];
-      iVar4 = (&DAT_84553b20)[uVar2 * 6];
-      if ((int)(uint)bVar1 <= iVar4) {
+      bVar1 = g_metPlayerInfo[uVar2].metPlayerCount;
+      iVar3 = g_metPlayerGlob[uVar2].currentIndex;
+      if ((int)(uint)bVar1 <= iVar3) {
         if (bVar1 != 0) {
-          MeetPlayer_FeederSelection(uVar2,(ulonglong)bVar1 - 1);
+          MeetPlayer_FeederSelection(uVar2,bVar1 - 1);
           __restgprlr_28();
           return;
         }
-        iVar4 = 0;
+        iVar3 = 0;
       }
-      MeetPlayer_FeederSelection(uVar2,iVar4);
+      MeetPlayer_FeederSelection(uVar2,iVar3);
       __restgprlr_28();
       return;
     }
-    (&DAT_84553b20)[uVar2 * 6] = iVar3;
+    g_metPlayerGlob[uVar2].currentIndex = iVar3;
   }
   __restgprlr_28();
   return;
@@ -423,60 +446,64 @@ void MeetPlayer_Sort(void)
 
 // 82704A70  MeetPlayer_GetCount  (social/social_meetplayer.cpp:491)
 
-undefined1 MeetPlayer_GetCount(ulonglong param_1)
+int MeetPlayer_GetCount(int param_1)
 
 {
-  if (3 < (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821b3348,0x1ec,0,0xffffffff82031880,param_1,4);
+  if (3 < (uint)param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_meetplayer.cpp",
+                    0x1ec,0,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  return (&DAT_84556758)[(int)param_1 * 0x2bd0];
+  return (int)g_metPlayerInfo[param_1].metPlayerCount;
 }
 
 
 // 82704AD8  MeetPlayer_GetLastMetTime  (social/social_meetplayer.cpp:498)
 
-longlong MeetPlayer_GetLastMetTime(ulonglong param_1,int param_2)
+uint MeetPlayer_GetLastMetTime(int param_1,int param_2)
 
 {
   uint uVar1;
-  longlong lVar2;
+  uint uVar2;
   
-  if (3 < (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821b3348,499,0,0xffffffff82031880,param_1,4);
+  if (3 < (uint)param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_meetplayer.cpp",
+                    499,0,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  uVar1 = *(uint *)(&DAT_84553bc0 + (int)param_1 * 0x2bd0 + param_2 * 0xe0);
-  lVar2 = Sys_GetTimeAsSeconds();
-  return lVar2 - (ulonglong)uVar1;
+  uVar1 = g_metPlayerInfo[param_1].playersXuidInfo[param_2].systemTime;
+  uVar2 = Sys_GetTimeAsSeconds();
+  return uVar2 - uVar1;
 }
 
 
 // 82706CD8  MeetPlayer_RemoveFriends  (social/social_meetplayer.cpp:511)
 
-void MeetPlayer_RemoveFriends(void)
+void MeetPlayer_RemoveFriends(int param_1)
 
 {
   uint uVar1;
-  char cVar2;
+  bool bVar2;
   ulonglong uVar3;
-  undefined8 *_Dst;
+  ulong64 *puVar4;
   
-  uVar1 = __savegprlr_26();
+  uVar1 = __savegprlr_26(param_1);
   if (3 < uVar1) {
-    MyAssertHandler(0xffffffff821b3348,0x203,0,0xffffffff82031880,uVar1,4);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_meetplayer.cpp",
+                    0x203,0,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
   if (3 < uVar1) {
-    MyAssertHandler(0xffffffff821b3348,0x1ec,0,0xffffffff82031880,uVar1,4);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_meetplayer.cpp",
+                    0x1ec,0,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  uVar3 = (ulonglong)(byte)(&DAT_84556758)[uVar1 * 0x2bd0];
-  if ((&DAT_84556758)[uVar1 * 0x2bd0] != 0) {
-    _Dst = (undefined8 *)(&DAT_84553b98 + uVar1 * 0x2bd0);
+  uVar3 = (ulonglong)g_metPlayerInfo[uVar1].metPlayerCount;
+  if (g_metPlayerInfo[uVar1].metPlayerCount != 0) {
+    puVar4 = (ulong64 *)(uVar1 * 0x2bd0 + -0x7baac468);
     do {
-      cVar2 = Friends_IsFriendByID(uVar1,*_Dst);
-      if (cVar2 != '\0') {
-        memset(_Dst,0,0xe0);
+      bVar2 = Friends_IsFriendByID(uVar1,*puVar4);
+      if (bVar2) {
+        memset();
       }
       uVar3 = uVar3 - 1;
-      _Dst = _Dst + 0x1c;
+      puVar4 = puVar4 + 0x1c;
     } while (uVar3 != 0);
   }
   MeetPlayer_Sort(uVar1);
@@ -490,271 +517,291 @@ void MeetPlayer_RemoveFriends(void)
 void MeetPlayer_MarkPresenceForUpdate(int param_1)
 
 {
-  (&DAT_8454a8ac)[param_1 * 0x2010] = 1;
+  s_meetPlayerPresence[param_1].dirty = true;
   return;
 }
 
 
 // 82704B80  MeetPlayer_PresenceBusy  (social/social_meetplayer.cpp:551)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 bool MeetPlayer_PresenceBusy(void)
 
 {
-  return DAT_84553b10 != 0;
+  return (bool)('\x01' - (s_meetPlayerPresenceHandle == (void *)0x0));
 }
 
 
 // 82704B98  MeetPlayer_PresenceNeeded  (social/social_meetplayer.cpp:557)
 
-undefined8 MeetPlayer_PresenceNeeded(ulonglong param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+bool MeetPlayer_PresenceNeeded(int param_1)
 
 {
-  char cVar3;
-  int iVar2;
-  undefined8 uVar1;
-  undefined4 local_20 [4];
+  bool bVar2;
+  int iVar1;
+  LocalClientNum_t local_20 [4];
   
-  if (3 < (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821b3348,0x230,0,0xffffffff82031880,param_1,4);
+  if (3 < (uint)param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_meetplayer.cpp",
+                    0x230,0,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  if (((&DAT_8454a8ac)[(int)param_1 * 0x2010] != '\0') &&
-     (cVar3 = Live_IsUserSignedInToLive(param_1), cVar3 != '\0')) {
-    iVar2 = MeetPlayer_GetCount(param_1);
-    if ((0 < iVar2) &&
-       (cVar3 = CL_DoesControllerIndexHaveALocalClientNum(param_1,local_20), cVar3 != '\0')) {
-      uVar1 = Menu_IsMenuOpenAndVisible(local_20[0],0xffffffff8218e804);
-      return uVar1;
-    }
+  if ((((s_meetPlayerPresence[param_1].dirty != false) &&
+       (bVar2 = Live_IsUserSignedInToLive(param_1), bVar2)) &&
+      (iVar1 = MeetPlayer_GetCount(param_1), 0 < iVar1)) &&
+     (bVar2 = CL_DoesControllerIndexHaveALocalClientNum(param_1,local_20), bVar2)) {
+    bVar2 = Menu_IsMenuOpenAndVisible(local_20[0],"popup_friends");
+    return bVar2;
   }
-  return 0;
+  return false;
 }
 
 
 // 82704C70  MeetPlayer_GetPresence  (social/social_meetplayer.cpp:575)
 
-undefined * MeetPlayer_GetPresence(uint param_1,longlong param_2)
+_XONLINE_PRESENCE * MeetPlayer_GetPresence(int param_1,ulong64 param_2)
 
 {
   int iVar1;
   int iVar2;
   int iVar3;
-  int iVar4;
   
-  if (3 < param_1) {
-    MyAssertHandler(0xffffffff821b3348,0x243,0,0xffffffff82031880,param_1,4);
+  if (3 < (uint)param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_meetplayer.cpp",
+                    0x243,0,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  iVar2 = param_1 * 0x2010;
-  iVar4 = 0;
-  if (0 < (int)(&DAT_845488a0)[param_1 * 0x804]) {
-    iVar3 = 0;
-    iVar1 = iVar2;
+  iVar3 = 0;
+  if (0 < (int)s_meetPlayerPresence[param_1].count) {
+    iVar2 = 0;
+    iVar1 = param_1 * 0x2010;
     do {
-      if (*(longlong *)(&DAT_845488a4 + iVar1) == param_2) {
-        return &DAT_845488a4 + iVar4 * 0xa4 + iVar2;
+      if (*(ulong64 *)(s_meetPlayerPresence[0].presence[0].sessionID.ab + iVar1 + -0xc) == param_2)
+      {
+        return s_meetPlayerPresence[param_1].presence + iVar3;
       }
-      iVar4 = iVar4 + 1;
-      iVar3 = iVar3 + 0xa4;
-      iVar1 = iVar3 + iVar2;
-    } while (iVar4 < (int)(&DAT_845488a0)[param_1 * 0x804]);
+      iVar3 = iVar3 + 1;
+      iVar2 = iVar2 + 0xa4;
+      iVar1 = iVar2 + param_1 * 0x2010;
+    } while (iVar3 < (int)s_meetPlayerPresence[param_1].count);
   }
-  return (undefined *)0x0;
+  return (_XONLINE_PRESENCE *)0x0;
 }
 
 
 // 82704D30  MeetPlayer_UpdatePresence  (social/social_meetplayer.cpp:596)
 
-void MeetPlayer_UpdatePresence(void)
+void MeetPlayer_UpdatePresence(int param_1)
 
 {
-  int iVar1;
+  ulong uVar1;
+  bool bVar6;
   int iVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
-  int iVar6;
-  undefined8 uVar5;
-  BOOL BVar7;
-  int iVar8;
-  undefined8 *puVar9;
-  longlong lVar10;
-  int iVar11;
+  overlappedTask *poVar3;
+  _XOVERLAPPED *p_Var4;
+  ulong uVar5;
+  int iVar7;
+  undefined8 *puVar8;
+  int iVar9;
   uint local_210 [2];
   undefined8 uStack_208;
-  undefined1 local_200 [512];
+  ulong64 local_200 [64];
   
-  uVar3 = __savegprlr_20();
-  if (3 < (uVar3 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821b3348,0x25d,0,0xffffffff82031880,uVar3,4);
+  uVar1 = __savegprlr_20(param_1);
+  if (3 < uVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_meetplayer.cpp",
+                    0x25d,0,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  uVar4 = MeetPlayer_PresenceNeeded(uVar3);
-  if (((uVar4 & 0xff) != 0) && (DAT_84553b10 == (HANDLE)0x0)) {
-    uVar4 = Live_IsUserSignedInToLive(uVar3);
-    if ((uVar4 & 0xff) != 0) {
-      uVar4 = MeetPlayer_GetCount(uVar3);
-      iVar6 = (int)uVar4;
-      if ((iVar6 < 0) || (0x32 < iVar6)) {
-        uVar4 = MyAssertHandler(0xffffffff821b3348,0x264,0,0xffffffff821b3450,uVar4,0,0x32);
-      }
-      iVar2 = (int)uVar3;
-      if (iVar6 == 0) {
-        (&DAT_845488a0)[iVar2 * 0x804] = 0;
-        (&DAT_8454a8ac)[iVar2 * 0x2010] = 0;
-        __restgprlr_20();
-        return;
-      }
-      lVar10 = 0;
-      iVar8 = 0;
-      if (0 < iVar6) {
-        puVar9 = &uStack_208;
-        iVar11 = 0;
-        do {
-          iVar1 = iVar11 + iVar2 * 0x2bd0;
-          uVar4 = Xenon_PresenceIsSubscribed(uVar3,*(undefined8 *)(&DAT_84553b98 + iVar1));
-          if ((uVar4 & 0xff) == 0) goto LAB_82704fd4;
-          uVar4 = Live_XUIDIsLocalPlayer(*(undefined8 *)(&DAT_84553b98 + iVar1));
-          if (((uVar4 & 0xff) == 0) &&
-             (uVar4 = Friends_IsFriendByID(uVar3,*(undefined8 *)(&DAT_84553b98 + iVar1)),
-             (uVar4 & 0xff) == 0)) {
-            lVar10 = lVar10 + 1;
-            puVar9 = puVar9 + 1;
-            *puVar9 = *(undefined8 *)(&DAT_84553b98 + iVar1);
-          }
-          iVar8 = iVar8 + 1;
-          iVar11 = iVar11 + 0xe0;
-        } while (iVar8 < iVar6);
-        if ((int)lVar10 != 0) {
-          TaskManager_GetOpenTaskSlot(0xffffffff8455ead0,uVar3,1);
-          uVar5 = TaskManager_TaskToXOverlapped();
-          uVar4 = XPresenceCreateEnumerator
-                            (uVar3,lVar10,local_200,0,0x32,local_210,0xffffffff84553b10);
-          if ((uVar4 & 0xffffffff) == 0) {
-            if (DAT_84553b10 == (HANDLE)0x0) {
-              MyAssertHandler(0xffffffff821b3348,0x290,0,0xffffffff82000f98,0xffffffff821b33e0);
-            }
-            if (0x2008 < local_210[0]) {
-              MyAssertHandler(0xffffffff821b3348,0x291,0,0xffffffff82000f98,0xffffffff821b33a8);
-            }
-            uVar4 = XEnumerate(DAT_84553b10,uVar3 * 0x2010 + -0x7bab775c,local_210[0],0,uVar5);
-            if ((uVar4 & 0xffffffff) == 0x3e5) goto LAB_82704fd4;
-            Com_PrintError(0x10,0xffffffff8218e5dc,uVar4);
-          }
-          else {
-            Com_PrintError(0x10,0xffffffff821b3408,uVar3,uVar4);
-          }
-          TaskManager_TaskFromXOverlapped(0xffffffff8455ead0,uVar5);
-          TaskManager_ClearTask();
-          BVar7 = CloseHandle(DAT_84553b10);
-          uVar4 = (ulonglong)BVar7;
-          DAT_84553b10 = (HANDLE)0x0;
+  bVar6 = MeetPlayer_PresenceNeeded(uVar1);
+  if (((bVar6) && (s_meetPlayerPresenceHandle == (void *)0x0)) &&
+     (bVar6 = Live_IsUserSignedInToLive(uVar1), bVar6)) {
+    iVar2 = MeetPlayer_GetCount(uVar1);
+    if ((iVar2 < 0) || (0x32 < iVar2)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_meetplayer.cpp"
+                      ,0x264,0,"metCount not in [0, MAX_MET_FRIENDS]\n\t%i not in [%i, %i]");
+    }
+    if (iVar2 == 0) {
+      s_meetPlayerPresence[uVar1].count = 0;
+      s_meetPlayerPresence[uVar1].dirty = false;
+      __restgprlr_20();
+      return;
+    }
+    uVar5 = 0;
+    iVar7 = 0;
+    if (0 < iVar2) {
+      puVar8 = &uStack_208;
+      iVar9 = 0;
+      do {
+        bVar6 = Xenon_PresenceIsSubscribed
+                          (uVar1,*(ulong64 *)
+                                  (g_metPlayerInfo[uVar1].playersXuidInfo[0].gamertag + iVar9 + -8))
+        ;
+        if (!bVar6) goto LAB_82704fd4;
+        bVar6 = Live_XUIDIsLocalPlayer
+                          (*(ulong64 *)
+                            (g_metPlayerInfo[uVar1].playersXuidInfo[0].gamertag + iVar9 + -8));
+        if ((!bVar6) &&
+           (bVar6 = Friends_IsFriendByID
+                              (uVar1,*(ulong64 *)
+                                      (g_metPlayerInfo[uVar1].playersXuidInfo[0].gamertag +
+                                      iVar9 + -8)), !bVar6)) {
+          uVar5 = uVar5 + 1;
+          puVar8 = puVar8 + 1;
+          *puVar8 = *(undefined8 *)(g_metPlayerInfo[uVar1].playersXuidInfo[0].gamertag + iVar9 + -8)
+          ;
         }
+        iVar7 = iVar7 + 1;
+        iVar9 = iVar9 + 0xe0;
+      } while (iVar7 < iVar2);
+      if (uVar5 != 0) {
+        poVar3 = TaskManager_GetOpenTaskSlot(&tasks,uVar1,1);
+        p_Var4 = TaskManager_TaskToXOverlapped(poVar3);
+        uVar5 = XPresenceCreateEnumerator
+                          (uVar1,uVar5,local_200,0,0x32,local_210,&s_meetPlayerPresenceHandle);
+        if (uVar5 == 0) {
+          if (s_meetPlayerPresenceHandle == (void *)0x0) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_meetplayer.cpp"
+                            ,0x290,0,"%s");
+          }
+          if (0x2008 < local_210[0]) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_meetplayer.cpp"
+                            ,0x291,0,"%s");
+          }
+          uVar1 = XEnumerate(s_meetPlayerPresenceHandle,s_meetPlayerPresence[uVar1].presence,
+                             local_210[0],(ulong *)0x0,p_Var4);
+          if (uVar1 == 0x3e5) goto LAB_82704fd4;
+          Com_PrintError(0x10,"MS Error: enumeration failed with error %x\n");
+        }
+        else {
+          Com_PrintError(0x10,
+                         "MS Error: Unable to get presence enumerator for met players %i: 0x%x\n");
+        }
+        poVar3 = TaskManager_TaskFromXOverlapped(&tasks,p_Var4);
+        TaskManager_ClearTask(poVar3);
+        CloseHandle(s_meetPlayerPresenceHandle);
+        s_meetPlayerPresenceHandle = (void *)0x0;
       }
     }
   }
 LAB_82704fd4:
-  __restgprlr_20(uVar4);
+  __restgprlr_20();
   return;
 }
 
 
 // 82704FE0  MeetPlayer_UpdatePresenceComplete  (social/social_meetplayer.cpp:674)
 
-void MeetPlayer_UpdatePresenceComplete(void)
+taskCompleteResults MeetPlayer_UpdatePresenceComplete(overlappedTask *param_1)
 
 {
-  byte bVar1;
-  int iVar3;
-  ulonglong uVar2;
-  undefined8 uVar4;
-  undefined4 local_40 [16];
+  overlappedTask *poVar1;
+  _XOVERLAPPED *p_Var2;
+  ulong uVar3;
+  taskCompleteResults tVar4;
+  uint uVar5;
+  undefined8 uVar6;
+  ulong local_40 [16];
   
-  iVar3 = __savegprlr_27();
-  if (iVar3 == 0) {
-    MyAssertHandler(0xffffffff821b3348,0x2a9,0,0xffffffff82000f98,0xffffffff8208b598);
+  poVar1 = (overlappedTask *)__savegprlr_27(param_1);
+  if (poVar1 == (overlappedTask *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_meetplayer.cpp",
+                    0x2a9,0,"%s");
   }
-  bVar1 = *(byte *)(iVar3 + 0x95);
-  if (3 < bVar1) {
-    MyAssertHandler(0xffffffff821b3348,0x2ac,0,0xffffffff82031880,bVar1,4);
+  uVar5 = (uint)poVar1->controllerIndex;
+  if (3 < uVar5) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_meetplayer.cpp",
+                    0x2ac,0,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  uVar2 = TaskManager_TaskToXOverlapped(iVar3);
-  if ((uVar2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821b3348,0x2af,0,0xffffffff82000f98,0xffffffff8218e7c4);
+  p_Var2 = TaskManager_TaskToXOverlapped(poVar1);
+  if (p_Var2 == (_XOVERLAPPED *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_meetplayer.cpp",
+                    0x2af,0,"%s");
   }
-  XGetOverlappedResult(uVar2,local_40,0);
-  uVar2 = XGetOverlappedExtendedError(uVar2);
-  if (((uVar2 & 0xffffffff) == 0) || ((uVar2 & 0xffffffff) == 0x80070012)) {
-    uVar4 = 1;
-    (&DAT_845488a0)[(uint)bVar1 * 0x804] = local_40[0];
-    (&DAT_8454a8ac)[(uint)bVar1 * 0x2010] = 0;
+  XGetOverlappedResult(p_Var2,local_40,0);
+  uVar3 = XGetOverlappedExtendedError(p_Var2);
+  if ((uVar3 == 0) || (uVar3 == 0x80070012)) {
+    uVar6 = 1;
+    s_meetPlayerPresence[uVar5].count = local_40[0];
+    s_meetPlayerPresence[uVar5].dirty = false;
   }
   else {
-    Com_PrintError(1,0xffffffff821b3490,uVar2);
-    uVar4 = 2;
+    Com_PrintError(1,
+                   "Microsoft error - Async fetch of party presence failed with error code %llx in MeetPlayer_UpdatePresenceComplete()\n"
+                  );
+    uVar6 = 2;
   }
-  TaskManager_ClearTask(iVar3);
-  CloseHandle(DAT_84553b10);
-  DAT_84553b10 = (HANDLE)0x0;
-  __restgprlr_27(uVar4);
-  return;
+  TaskManager_ClearTask(poVar1);
+  CloseHandle(s_meetPlayerPresenceHandle);
+  s_meetPlayerPresenceHandle = (void *)0x0;
+  tVar4 = __restgprlr_27(uVar6);
+  return tVar4;
 }
 
 
 // 82705118  MeetPlayer_UpdatePlayerInfo  (social/social_meetplayer.cpp:714)
 
-void MeetPlayer_UpdatePlayerInfo(void)
+void MeetPlayer_UpdatePlayerInfo(int param_1)
 
 {
-  undefined8 *puVar1;
-  uint uVar5;
-  char cVar7;
-  ulonglong uVar2;
-  int iVar6;
-  undefined8 uVar3;
-  undefined8 uVar4;
+  int iVar1;
+  uint uVar3;
+  bool bVar7;
+  ulong uVar4;
+  overlappedTask *poVar5;
+  _XOVERLAPPED *p_Var6;
+  ulong64 uVar2;
   undefined8 *puVar8;
   int iVar9;
-  ulonglong uVar10;
+  int iVar10;
+  ulonglong uVar11;
+  longlong lVar12;
   undefined8 auStack_4f8 [3];
-  undefined1 local_4e0 [1248];
+  _FIND_USER_INFO local_4e0 [52];
   
-  uVar5 = __savegprlr_27();
-  if (3 < uVar5) {
-    MyAssertHandler(0xffffffff821b3348,0x2d2,0,0xffffffff82031880,uVar5,4);
+  uVar3 = __savegprlr_27(param_1);
+  if (3 < uVar3) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_meetplayer.cpp",
+                    0x2d2,0,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  cVar7 = TaskManager_TaskIsInProgress(0xffffffff8455ead0,0);
-  if (cVar7 == '\0') {
-    cVar7 = Live_IsUserSignedInToLive(uVar5);
-    if (cVar7 != '\0') {
-      uVar2 = MeetPlayer_GetCount(uVar5);
-      iVar6 = (int)uVar2;
-      if ((iVar6 < 0) || (0x32 < iVar6)) {
-        MyAssertHandler(0xffffffff821b3348,0x2d7,0,0xffffffff821b3570,uVar2,0,0x32);
+  bVar7 = TaskManager_TaskIsInProgress(&tasks,0);
+  if (!bVar7) {
+    bVar7 = Live_IsUserSignedInToLive(uVar3);
+    if (bVar7) {
+      uVar4 = MeetPlayer_GetCount(uVar3);
+      if (((int)uVar4 < 0) || (0x32 < (int)uVar4)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_meetplayer.cpp"
+                        ,0x2d7,0,"userCount not in [0, MAX_MET_FRIENDS]\n\t%i not in [%i, %i]");
       }
-      if (iVar6 != 0) {
-        if (0 < iVar6) {
-          iVar9 = 0;
+      if (uVar4 != 0) {
+        if (0 < (int)uVar4) {
+          iVar10 = 0;
           puVar8 = auStack_4f8;
-          uVar10 = uVar2;
-          iVar6 = uVar5 * 0x2bd0;
+          lVar12 = (longlong)(int)uVar4;
+          iVar9 = uVar3 * 0x2bd0;
           do {
-            iVar9 = iVar9 + 0xe0;
-            puVar1 = (undefined8 *)(&DAT_84553b98 + iVar6);
-            iVar6 = iVar9 + uVar5 * 0x2bd0;
+            iVar10 = iVar10 + 0xe0;
+            iVar1 = iVar9 + -8;
+            iVar9 = iVar10 + uVar3 * 0x2bd0;
             puVar8 = puVar8 + 3;
-            *puVar8 = *puVar1;
-            uVar10 = uVar10 - 1;
-          } while (uVar10 != 0);
+            *puVar8 = *(undefined8 *)(g_metPlayerInfo[0].playersXuidInfo[0].gamertag + iVar1);
+            lVar12 = lVar12 + -1;
+          } while (lVar12 != 0);
         }
-        uVar10 = (uVar2 + (uVar2 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + 8;
-        if (0xc80 < (uVar10 & 0xffffffff)) {
-          MyAssertHandler(0xffffffff821b3348,0x2e0,0,0xffffffff82000f98,0xffffffff821b3530);
+        uVar11 = ((longlong)(int)uVar4 + ((ulonglong)uVar4 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + 8;
+        if (0xc80 < (uVar11 & 0xffffffff)) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_meetplayer.cpp"
+                          ,0x2e0,0,"%s");
         }
-        TaskManager_GetOpenTaskSlot(0xffffffff8455ead0,uVar5,0);
-        uVar3 = TaskManager_TaskToXOverlapped();
-        uVar4 = Live_GetXuid(uVar5);
-        uVar2 = XUserFindUsers(uVar4,uVar2,local_4e0,uVar10,&DAT_84550900 + uVar5 * 0xc80,uVar3);
-        if (((uVar2 & 0xffffffff) != 0) && ((uVar2 & 0xffffffff) != 0x3e5)) {
-          TaskManager_TaskFromXOverlapped(0xffffffff8455ead0,uVar3);
-          TaskManager_ClearTask();
-          Com_PrintError(0x10,0xffffffff821b3504,uVar2);
+        poVar5 = TaskManager_GetOpenTaskSlot(&tasks,uVar3,0);
+        p_Var6 = TaskManager_TaskToXOverlapped(poVar5);
+        uVar2 = Live_GetXuid(uVar3);
+        uVar4 = XUserFindUsers(uVar2,uVar4,local_4e0,(ulong)uVar11,
+                               (_FIND_USERS_RESPONSE *)(s_meetPlayerUserInfoBuffer + uVar3),p_Var6);
+        if ((uVar4 != 0) && (uVar4 != 0x3e5)) {
+          poVar5 = TaskManager_TaskFromXOverlapped(&tasks,p_Var6);
+          TaskManager_ClearTask(poVar5);
+          Com_PrintError(0x10,"Error (0x%x) MeetPlayer_UpdatePlayerInfo\n");
         }
       }
     }
@@ -766,112 +813,127 @@ void MeetPlayer_UpdatePlayerInfo(void)
 
 // 827052C8  MeetPlayer_UpdatePlayerInfoComplete  (social/social_meetplayer.cpp:751)
 
-void MeetPlayer_UpdatePlayerInfoComplete(void)
+taskCompleteResults MeetPlayer_UpdatePlayerInfoComplete(overlappedTask *param_1)
 
 {
   byte bVar1;
-  int iVar2;
-  int iVar4;
-  ulonglong uVar3;
+  overlappedTask *poVar2;
+  _XOVERLAPPED *p_Var3;
+  ulong uVar4;
   int iVar5;
-  int iVar6;
-  uint uVar7;
-  int iVar8;
-  undefined1 auStack_80 [128];
+  taskCompleteResults tVar6;
+  ulonglong uVar7;
+  uint uVar8;
+  int iVar9;
+  char *pcVar10;
+  ulong auStack_80 [32];
   
-  iVar4 = __savegprlr_18();
-  if (iVar4 == 0) {
-    MyAssertHandler(0xffffffff821b3348,0x2fb,0,0xffffffff82000f98,0xffffffff8208b598);
+  poVar2 = (overlappedTask *)__savegprlr_18(param_1);
+  if (poVar2 == (overlappedTask *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_meetplayer.cpp",
+                    0x2fb,0,"%s");
   }
-  bVar1 = *(byte *)(iVar4 + 0x95);
-  uVar7 = (uint)bVar1;
-  if (3 < uVar7) {
-    MyAssertHandler(0xffffffff821b3348,0x2fe,0,0xffffffff82031880,uVar7,4);
+  bVar1 = poVar2->controllerIndex;
+  uVar8 = (uint)bVar1;
+  if (3 < uVar8) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_meetplayer.cpp",
+                    0x2fe,0,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  uVar3 = TaskManager_TaskToXOverlapped(iVar4);
-  if ((uVar3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821b3348,0x301,0,0xffffffff82000f98,0xffffffff8218e7c4);
+  p_Var3 = TaskManager_TaskToXOverlapped(poVar2);
+  if (p_Var3 == (_XOVERLAPPED *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_meetplayer.cpp",
+                    0x301,0,"%s");
   }
-  XGetOverlappedResult(uVar3,auStack_80,0);
-  uVar3 = XGetOverlappedExtendedError(uVar3);
-  if ((uVar3 & 0xffffffff) == 0) {
-    iVar2 = (uint)bVar1 * 0xc80;
-    uVar3 = (ulonglong)*(uint *)(&DAT_84550900 + iVar2);
-    if (0 < (int)*(uint *)(&DAT_84550900 + iVar2)) {
-      iVar8 = 0;
+  XGetOverlappedResult(p_Var3,auStack_80,0);
+  uVar4 = XGetOverlappedExtendedError(p_Var3);
+  if (uVar4 == 0) {
+    uVar7 = (ulonglong)*(uint *)s_meetPlayerUserInfoBuffer[uVar8];
+    if (0 < (int)*(uint *)s_meetPlayerUserInfoBuffer[uVar8]) {
+      iVar9 = 0;
       do {
         iVar5 = MeetPlayer_GetPositionByXuid
-                          (uVar7,*(undefined8 *)(*(int *)(&DAT_84550904 + iVar2) + iVar8));
+                          ((uint)bVar1,
+                           *(ulong64 *)(*(int *)(s_meetPlayerUserInfoBuffer[uVar8] + 4) + iVar9));
         if (-1 < iVar5) {
-          if (3 < uVar7) {
-            MyAssertHandler(0xffffffff821b3348,0x1ec,0,0xffffffff82031880,uVar7,4);
+          if (3 < uVar8) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_meetplayer.cpp"
+                            ,0x1ec,0,
+                            "controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
           }
-          if ((int)(uint)(byte)(&DAT_84556758)[uVar7 * 0x2bd0] <= iVar5) {
-            MyAssertHandler(0xffffffff821b3348,0x310,0,0xffffffff82000f98,0xffffffff821b3628);
+          if ((int)(uint)g_metPlayerInfo[uVar8].metPlayerCount <= iVar5) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_meetplayer.cpp"
+                            ,0x310,0,"%s");
           }
-          iVar6 = I_strcmp(&DAT_84553ba0 + iVar5 * 0xe0 + uVar7 * 0x2bd0,
-                           *(int *)(&DAT_84550904 + iVar2) + iVar8 + 8);
-          if (iVar6 != 0) {
-            I_strncpyz(&DAT_84553ba0 + iVar5 * 0xe0 + uVar7 * 0x2bd0,
-                       *(int *)(&DAT_84550904 + iVar2) + iVar8 + 8,0x20);
-            (&DAT_84553b14)[bVar1] = 1;
+          pcVar10 = g_metPlayerInfo[uVar8].playersXuidInfo[iVar5].gamertag;
+          iVar5 = I_strcmp(pcVar10,(char *)(*(int *)(s_meetPlayerUserInfoBuffer[uVar8] + 4) + iVar9
+                                           + 8));
+          if (iVar5 != 0) {
+            I_strncpyz(pcVar10,(char *)(*(int *)(s_meetPlayerUserInfoBuffer[uVar8] + 4) + iVar9 + 8)
+                       ,0x20);
+            s_metPlayerListChanged[bVar1] = true;
           }
         }
-        uVar3 = uVar3 - 1;
-        iVar8 = iVar8 + 0x18;
-      } while (uVar3 != 0);
+        uVar7 = uVar7 - 1;
+        iVar9 = iVar9 + 0x18;
+      } while (uVar7 != 0);
     }
-    TaskManager_ClearTask(iVar4);
-    __restgprlr_18(1);
-    return;
+    TaskManager_ClearTask(poVar2);
+    tVar6 = __restgprlr_18(1);
+    return tVar6;
   }
-  Com_PrintError(1,0xffffffff821b35b0,uVar3);
-  TaskManager_ClearTask(iVar4);
-  __restgprlr_18(2);
-  return;
+  Com_PrintError(1,
+                 "Microsoft error - Async fetch of party presence failed with error code %llx in MeetPlayer_UpdatePlayerInfoComplete()\n"
+                );
+  TaskManager_ClearTask(poVar2);
+  tVar6 = __restgprlr_18(2);
+  return tVar6;
 }
 
 
 // 827054D0  MeetPlayer_CheckOngoingTasks  (social/social_meetplayer.cpp:808)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void MeetPlayer_CheckOngoingTasks(void)
 
 {
-  int *piVar2;
-  undefined8 uVar1;
-  uint uVar3;
-  undefined *puVar4;
+  _XOVERLAPPED *p_Var1;
+  char *pcVar2;
+  taskCompleteResults tVar3;
+  overlappedTask *poVar4;
   
   __savegprlr_21();
-  puVar4 = &DAT_8455ead8;
+  poVar4 = tasks.tasks;
   do {
-    if (puVar4[0x94] != '\0') {
-      piVar2 = (int *)TaskManager_TaskToXOverlapped(puVar4);
-      if (piVar2 == (int *)0x0) {
-        MyAssertHandler(0xffffffff821b3348,0x334,0,0xffffffff82000f98,0xffffffff8208b66c);
+    if (poVar4->active != false) {
+      p_Var1 = TaskManager_TaskToXOverlapped(poVar4);
+      if (p_Var1 == (_XOVERLAPPED *)0x0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_meetplayer.cpp"
+                        ,0x334,0,"%s");
       }
-      if (*piVar2 == 0x3e5) break;
-      if (*(int *)(puVar4 + 0x90) == 0) {
-        uVar3 = MeetPlayer_UpdatePlayerInfoComplete(puVar4);
-        uVar1 = 0xffffffff821b3660;
+      if (p_Var1->InternalLow == 0x3e5) break;
+      if (poVar4->type == 0) {
+        tVar3 = MeetPlayer_UpdatePlayerInfoComplete(poVar4);
+        pcVar2 = "Error fetching player info for met players\n";
       }
-      else if (*(int *)(puVar4 + 0x90) == 1) {
-        uVar3 = MeetPlayer_UpdatePresenceComplete(puVar4);
-        uVar1 = 0xffffffff821b368c;
+      else if (poVar4->type == 1) {
+        tVar3 = MeetPlayer_UpdatePresenceComplete(poVar4);
+        pcVar2 = "Error fetching presence for met players\n";
       }
       else {
-        uVar3 = 2;
-        uVar1 = va(0xffffffff8217b05c);
-        if (DAT_84013128 == 0) {
-          MyAssertHandler(0xffffffff821b3348,0x34a,0,uVar1);
+        tVar3 = TASK_ERROR;
+        pcVar2 = va("Unknown session task type %i\n");
+        if (alwaysfails == 0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_meetplayer.cpp"
+                          ,0x34a,0,pcVar2);
         }
       }
-      if (1 < uVar3) {
-        Com_PrintError(0x10,uVar1);
+      if (TASK_COMPLETE < tVar3) {
+        Com_PrintError(0x10,pcVar2);
       }
     }
-    puVar4 = puVar4 + 0xa0;
-  } while ((int)puVar4 < -0x7baa0128);
+    poVar4 = poVar4 + 1;
+  } while ((int)poVar4 < -0x7baa0128);
   __restgprlr_21();
   return;
 }
@@ -879,221 +941,255 @@ void MeetPlayer_CheckOngoingTasks(void)
 
 // 827055F0  MeetPlayer_GetStatus  (social/social_meetplayer.cpp:860)
 
-void MeetPlayer_GetStatus(undefined8 param_1,ulonglong param_2)
+char * MeetPlayer_GetStatus(int param_1,int param_2)
 
 {
-  ulonglong uVar1;
-  undefined8 uVar2;
+  uint uVar1;
+  char *pcVar2;
   ulonglong uVar3;
-  ulonglong uVar4;
   
-  uVar1 = __savegprlr_29();
-  if (3 < (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821b3348,0x35d,0,0xffffffff82031880,uVar1,4);
+  uVar3 = (ulonglong)param_2;
+  uVar1 = __savegprlr_29(param_1);
+  if (3 < uVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_meetplayer.cpp",
+                    0x35d,0,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  if ((ulonglong)(byte)(&DAT_84556758)[(int)uVar1 * 0x2bd0] <= (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821b3348,0x35e,0,0xffffffff821b3730,param_2);
+  if ((ulonglong)g_metPlayerInfo[uVar1].metPlayerCount <= (uVar3 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_meetplayer.cpp",
+                    0x35e,0,
+                    "playerIndex doesn\'t index g_metPlayerInfo[ controllerIndex ].metPlayerCount\n\t%i not in [0, %i)"
+                   );
   }
-  uVar1 = MeetPlayer_GetLastMetTime(uVar1,param_2);
-  uVar4 = (uVar1 & 0xffffffff) / 0x15180;
-  uVar3 = (uVar1 & 0xffffffff) / 0xe10;
-  uVar1 = (uVar1 & 0xffffffff) / 0x3c;
-  if (uVar4 != 0) {
-    uVar2 = UI_SafeTranslateString(0xffffffff821b3714);
-    UI_ReplaceConversionInt(uVar2,uVar4);
-    __restgprlr_29();
-    return;
+  uVar1 = MeetPlayer_GetLastMetTime(uVar1,(int)uVar3);
+  if ((ulonglong)uVar1 / 0x15180 != 0) {
+    pcVar2 = UI_SafeTranslateString("MENU_LAST_MET_N_DAYS_AGO");
+    pcVar2 = UI_ReplaceConversionInt(pcVar2,(int)((ulonglong)uVar1 / 0x15180));
+    pcVar2 = (char *)__restgprlr_29(pcVar2);
+    return pcVar2;
   }
-  if (uVar3 != 0) {
-    uVar2 = UI_SafeTranslateString(0xffffffff821b36f8);
-    UI_ReplaceConversionInt(uVar2,uVar3);
-    __restgprlr_29();
-    return;
+  if ((ulonglong)uVar1 / 0xe10 != 0) {
+    pcVar2 = UI_SafeTranslateString("MENU_LAST_MET_N_HOURS_AGO");
+    pcVar2 = UI_ReplaceConversionInt(pcVar2,(int)((ulonglong)uVar1 / 0xe10));
+    pcVar2 = (char *)__restgprlr_29(pcVar2);
+    return pcVar2;
   }
-  if (uVar1 != 0) {
-    uVar2 = UI_SafeTranslateString(0xffffffff821b36dc);
-    UI_ReplaceConversionInt(uVar2,uVar1);
-    __restgprlr_29();
-    return;
+  if ((ulonglong)uVar1 / 0x3c != 0) {
+    pcVar2 = UI_SafeTranslateString("MENU_LAST_MET_N_MINS_AGO");
+    pcVar2 = UI_ReplaceConversionInt(pcVar2,(int)((ulonglong)uVar1 / 0x3c));
+    pcVar2 = (char *)__restgprlr_29(pcVar2);
+    return pcVar2;
   }
-  UI_SafeTranslateString(0xffffffff821b36b8);
-  __restgprlr_29();
-  return;
+  pcVar2 = UI_SafeTranslateString("MENU_LAST_MET_LESS_THAN_A_MIN_AGO");
+  pcVar2 = (char *)__restgprlr_29(pcVar2);
+  return pcVar2;
 }
 
 
 // 82705718  MeetPlayer_FeederItemText  (social/social_meetplayer.cpp:885)
 
-void MeetPlayer_FeederItemText(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+char * MeetPlayer_FeederItemText(int param_1,int param_2,int param_3,Font_s *param_4,float param_5)
 
 {
   ulonglong uVar1;
+  char *pcVar2;
+  ulonglong uVar3;
+  ulonglong uVar4;
   
-  uVar1 = __savegprlr_27();
+  uVar4 = (ulonglong)param_3;
+  uVar3 = (ulonglong)param_2;
+  uVar1 = __savegprlr_27((double)param_5,param_1,uVar3,uVar4,param_4);
   if (3 < (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821b3348,0x376,0,0xffffffff82031880,uVar1,4);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_meetplayer.cpp",
+                    0x376,0,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  if ((ulonglong)(byte)(&DAT_84556758)[(int)(uVar1 * 0x2bd0)] <= (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821b3348,0x377,0,0xffffffff821b37e0,param_2);
+  if ((ulonglong)
+      *(uchar *)((int)(g_metPlayerInfo[0].playersXuidInfo + 0x32) + (int)(uVar1 * 0x2bd0)) <=
+      (uVar3 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_meetplayer.cpp",
+                    0x377,0,
+                    "row doesn\'t index g_metPlayerInfo[ controllerIndex ].metPlayerCount\n\t%i not in [0, %i)"
+                   );
   }
-  if (2 < (param_3 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821b3348,0x378,0,0xffffffff821b3790,param_3,3);
+  if (2 < (uVar4 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_meetplayer.cpp",
+                    0x378,0,
+                    "column doesn\'t index NUM_RECENT_PLAYERS_FEEDER_COLUMNS\n\t%i not in [0, %i)");
   }
-  if ((param_3 & 0xffffffff) != 0) {
-    if (((param_3 & 0xffffffff) != 1) && (2 < (param_3 & 0xffffffff))) {
-      if (DAT_84013128 == 0) {
-        MyAssertHandler(0xffffffff821b3348,0x38c,0,0xffffffff8218e900);
+  if ((uVar4 & 0xffffffff) != 0) {
+    if (((uVar4 & 0xffffffff) != 1) && (2 < (uVar4 & 0xffffffff))) {
+      if (alwaysfails == 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_meetplayer.cpp"
+                        ,0x38c,0,"MeetPlayer_FeederItemText -- unknown column");
       }
-      __restgprlr_27(0);
-      return;
+      pcVar2 = (char *)__restgprlr_27(0);
+      return pcVar2;
     }
-    __restgprlr_27(0xffffffff820068af);
-    return;
+    pcVar2 = (char *)__restgprlr_27(0xffffffff820068af);
+    return pcVar2;
   }
-  __restgprlr_27(param_2 * 0xe0 + uVar1 * 0x2bd0 + -0x7baac460);
-  return;
+  pcVar2 = (char *)__restgprlr_27(uVar3 * 0xe0 + uVar1 * 0x2bd0 + -0x7baac460);
+  return pcVar2;
 }
 
 
 // 82705830  MeetPlayer_FeederSelection  (social/social_meetplayer.cpp:914)
 
-void MeetPlayer_FeederSelection(uint param_1,int param_2)
+void MeetPlayer_FeederSelection(int param_1,int param_2)
 
 {
-  undefined8 uVar1;
+  ulong64 uVar1;
   
-  if (3 < param_1) {
-    MyAssertHandler(0xffffffff821b3348,0x393,0,0xffffffff82031880,param_1,4);
+  if (3 < (uint)param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_meetplayer.cpp",
+                    0x393,0,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  uVar1 = *(undefined8 *)(&DAT_84553b98 + param_1 * 0x2bd0 + param_2 * 0xe0);
-  (&DAT_84553b20)[param_1 * 6] = param_2;
-  *(undefined8 *)(&DAT_84553b28 + param_1 * 0x18) = uVar1;
+  uVar1 = g_metPlayerInfo[param_1].playersXuidInfo[param_2].playerXuids;
+  g_metPlayerGlob[param_1].currentIndex = param_2;
+  g_metPlayerGlob[param_1].currentPlayer = uVar1;
   return;
 }
 
 
 // 827058D0  MeetPlayer_FeederStoreXUID  (social/social_meetplayer.cpp:923)
 
-void MeetPlayer_FeederStoreXUID(uint param_1)
+void MeetPlayer_FeederStoreXUID(int param_1)
 
 {
-  if (3 < param_1) {
-    MyAssertHandler(0xffffffff821b3348,0x39c,0,0xffffffff82031880,param_1,4);
+  if (3 < (uint)param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_meetplayer.cpp",
+                    0x39c,0,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  *(undefined8 *)(&DAT_84553b30 + param_1 * 0x18) = *(undefined8 *)(&DAT_84553b28 + param_1 * 0x18);
+  g_metPlayerGlob[param_1].storedPlayer = g_metPlayerGlob[param_1].currentPlayer;
   return;
 }
 
 
 // 82705948  MeetPlayer_FeederClearXUID  (social/social_meetplayer.cpp:931)
 
-void MeetPlayer_FeederClearXUID(uint param_1)
+void MeetPlayer_FeederClearXUID(int param_1)
 
 {
-  if (3 < param_1) {
-    MyAssertHandler(0xffffffff821b3348,0x3a4,0,0xffffffff82031880,param_1,4);
+  if (3 < (uint)param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_meetplayer.cpp",
+                    0x3a4,0,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  *(undefined8 *)(&DAT_84553b30 + param_1 * 0x18) = 0;
+  g_metPlayerGlob[param_1].storedPlayer = 0;
   return;
 }
 
 
 // 827059C0  MeetPlayer_FeederGamerTag  (social/social_meetplayer.cpp:939)
 
-void MeetPlayer_FeederGamerTag(void)
+char * MeetPlayer_FeederGamerTag(int param_1)
 
 {
   uint uVar1;
   uint uVar2;
+  char *pcVar3;
   
-  uVar1 = __savegprlr_29();
+  uVar1 = __savegprlr_29(param_1);
   if (3 < uVar1) {
-    MyAssertHandler(0xffffffff821b3348,0x3ae,0,0xffffffff82031880,uVar1,4);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_meetplayer.cpp",
+                    0x3ae,0,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  uVar2 = MeetPlayer_GetPositionByXuid(uVar1,*(undefined8 *)(&DAT_84553b30 + uVar1 * 0x18));
+  uVar2 = MeetPlayer_GetPositionByXuid(uVar1,g_metPlayerGlob[uVar1].storedPlayer);
   if ((int)uVar2 < 0) {
-    __restgprlr_29(0xffffffff820068af);
-    return;
+    pcVar3 = (char *)__restgprlr_29(0xffffffff820068af);
+    return pcVar3;
   }
   if (0x31 < uVar2) {
-    MyAssertHandler(0xffffffff821b3348,0x3b4,0,0xffffffff821b3838,uVar2,0x32);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_meetplayer.cpp",
+                    0x3b4,0,"playerIndex doesn\'t index MAX_MET_FRIENDS\n\t%i not in [0, %i)");
   }
-  __restgprlr_29(&DAT_84553ba0 + uVar1 * 0x2bd0 + uVar2 * 0xe0);
-  return;
+  pcVar3 = (char *)__restgprlr_29(uVar1 * 0x2bd0 + uVar2 * 0xe0 + -0x7baac460);
+  return pcVar3;
 }
 
 
 // 82705A90  MeetPlayer_FeederOverrideCursorPos  (social/social_meetplayer.cpp:954)
 
-void MeetPlayer_FeederOverrideCursorPos
-               (undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4)
+void MeetPlayer_FeederOverrideCursorPos(int param_1,int param_2,int *param_3,int *param_4)
 
 {
   uint uVar1;
   uint uVar2;
-  uint *puVar3;
-  uint *puVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  int iVar7;
+  ulonglong uVar3;
+  ulonglong uVar4;
+  uint *puVar5;
+  uint *puVar6;
+  ulonglong uVar7;
+  int iVar8;
   
-  uVar1 = __savegprlr_21();
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821b3348,0x3bd,0,0xffffffff82000f98,0xffffffff8218eadc);
+  uVar7 = (ulonglong)(int)param_4;
+  uVar4 = (ulonglong)(int)param_3;
+  uVar3 = (ulonglong)param_2;
+  uVar1 = __savegprlr_21(param_1);
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_meetplayer.cpp",
+                    0x3bd,0,"%s");
   }
-  if ((param_4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821b3348,0x3be,0,0xffffffff82000f98,0xffffffff82182238);
+  if ((uVar7 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_meetplayer.cpp",
+                    0x3be,0,"%s");
   }
   if (3 < uVar1) {
-    MyAssertHandler(0xffffffff821b3348,0x3bf,0,0xffffffff82057c60,uVar1,4);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_meetplayer.cpp",
+                    0x3bf,0,
+                    "localControllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  puVar3 = (uint *)param_3;
-  if ((int)*puVar3 < 0) {
-    MyAssertHandler(0xffffffff821b3348,0x3c2,0,0xffffffff82000f98,0xffffffff8218eacc);
+  puVar5 = (uint *)uVar4;
+  if ((int)*puVar5 < 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_meetplayer.cpp",
+                    0x3c2,0,"%s");
   }
-  puVar4 = (uint *)param_4;
-  if ((int)*puVar4 < 0) {
-    MyAssertHandler(0xffffffff821b3348,0x3c3,0,0xffffffff82000f98,0xffffffff8218eabc);
+  puVar6 = (uint *)uVar7;
+  if ((int)*puVar6 < 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_meetplayer.cpp",
+                    0x3c3,0,"%s");
   }
-  uVar2 = MeetPlayer_GetPlayerIndex(uVar1,*(undefined8 *)(&DAT_84553b28 + uVar1 * 0x18));
-  if ((ulonglong)(byte)(&DAT_84556758)[uVar1 * 0x2bd0] == 0) {
-    *puVar3 = 0;
-    *puVar4 = 0;
+  uVar2 = MeetPlayer_GetPlayerIndex(uVar1,g_metPlayerGlob[uVar1].currentPlayer);
+  if ((ulonglong)g_metPlayerInfo[uVar1].metPlayerCount == 0) {
+    *puVar5 = 0;
+    *puVar6 = 0;
   }
   else if ((int)uVar2 < 0) {
-    uVar5 = (ulonglong)(byte)(&DAT_84556758)[uVar1 * 0x2bd0] - 1;
-    uVar6 = (ulonglong)*puVar3;
-    if ((int)uVar5 <= (int)*puVar3) {
-      uVar6 = uVar5;
+    uVar7 = (ulonglong)g_metPlayerInfo[uVar1].metPlayerCount - 1;
+    uVar4 = (ulonglong)*puVar5;
+    if ((int)uVar7 <= (int)*puVar5) {
+      uVar4 = uVar7;
     }
-    uVar2 = (int)((uVar6 & 0xffffffff) >> 0x1f) - (uint)(uVar6 != 0) & (uint)uVar6;
-    *puVar3 = uVar2;
-    (&DAT_84553b20)[uVar1 * 6] = uVar2;
-    *(undefined8 *)(&DAT_84553b28 + uVar1 * 0x18) =
-         *(undefined8 *)(&DAT_84553b98 + *puVar3 * 0xe0 + uVar1 * 0x2bd0);
+    uVar2 = -((int)(uint)uVar4 >> 0x1f) - (uint)(uVar4 != 0) & (uint)uVar4;
+    *puVar5 = uVar2;
+    g_metPlayerGlob[uVar1].currentIndex = uVar2;
+    g_metPlayerGlob[uVar1].currentPlayer =
+         g_metPlayerInfo[uVar1].playersXuidInfo[*puVar5].playerXuids;
   }
   else {
-    *puVar3 = uVar2;
+    *puVar5 = uVar2;
   }
-  uVar2 = *puVar3;
-  if ((int)*puVar4 <= (int)uVar2) {
-    iVar7 = uVar2 - (int)param_2;
-    if (iVar7 < (int)*puVar4) goto LAB_82705c54;
-    uVar2 = iVar7 + 1;
+  uVar2 = *puVar5;
+  if ((int)*puVar6 <= (int)uVar2) {
+    iVar8 = uVar2 - (int)uVar3;
+    if (iVar8 < (int)*puVar6) goto LAB_82705c54;
+    uVar2 = iVar8 + 1;
   }
-  *puVar4 = uVar2;
+  *puVar6 = uVar2;
 LAB_82705c54:
-  if ((int)*puVar3 < 0) {
-    MyAssertHandler(0xffffffff821b3348,0x3e0,1,0xffffffff82000f98,0xffffffff8218eacc);
+  if ((int)*puVar5 < 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_meetplayer.cpp",
+                    0x3e0,1,"%s");
   }
-  if ((int)*puVar4 < 0) {
-    MyAssertHandler(0xffffffff821b3348,0x3e1,1,0xffffffff82000f98,0xffffffff8218eabc);
+  if ((int)*puVar6 < 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_meetplayer.cpp",
+                    0x3e1,1,"%s");
   }
-  if ((param_2 & 0xffffffff) <= ((ulonglong)*puVar3 - (ulonglong)*puVar4 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821b3348,0x3e2,1,0xffffffff8218ea78,
-                    (ulonglong)*puVar3 - (ulonglong)*puVar4,param_2);
+  if ((uVar3 & 0xffffffff) <= ((ulonglong)*puVar5 - (ulonglong)*puVar6 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_meetplayer.cpp",
+                    0x3e2,1,"(*cursorPos - *startPos) doesn\'t index viewmax\n\t%i not in [0, %i)");
   }
-  (&DAT_84553b24)[uVar1 * 6] = *puVar4;
+  g_metPlayerGlob[uVar1].currentStartPos = *puVar6;
   __restgprlr_21();
   return;
 }
@@ -1101,43 +1197,50 @@ LAB_82705c54:
 
 // 82705CE0  MeetPlayer_FeederOnShowGroups  (social/social_meetplayer.cpp:1001)
 
-void MeetPlayer_FeederOnShowGroups(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void MeetPlayer_FeederOnShowGroups(LocalClientNum_t param_1,int param_2)
 
 {
-  if ((&DAT_84556758)[(int)param_2 * 0x2bd0] == '\0') {
+  if (g_metPlayerInfo[param_2].metPlayerCount == '\0') {
     return;
   }
-  if (*(int *)(DAT_84546d74 + 0xc) == 0) {
+  if ((userGroup_active->current).integer == 0) {
     return;
   }
-  UserGroups_OpenGroupPopup(param_2,param_1,0,0);
+  UserGroups_OpenGroupPopup(param_2,param_1,USERGROUPS_GROUP_TEXT_TYPE_RECENT_PLAYERS,0);
   return;
 }
 
 
 // 82705D30  MeetPlayer_FeederOnReportRequest  (social/social_meetplayer.cpp:1011)
 
-void MeetPlayer_FeederOnReportRequest(uint param_1,undefined8 param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void MeetPlayer_FeederOnReportRequest(int param_1,ReportOffense param_2)
 
 {
-  char cVar2;
+  bool bVar3;
   int iVar1;
-  undefined8 uVar3;
-  undefined1 auStack_20 [8];
+  char *pcVar2;
+  ulong64 uVar4;
+  LocalClientNum_t aLStack_20 [2];
   
-  if (3 < param_1) {
-    MyAssertHandler(0xffffffff821b3348,0x3f6,0,0xffffffff82057c60,param_1,4);
+  if (3 < (uint)param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_meetplayer.cpp",
+                    0x3f6,0,
+                    "localControllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  cVar2 = Live_IsUserSignedInToLive(param_1);
-  if ((cVar2 != '\0') && ((&DAT_84556758)[param_1 * 0x2bd0] != '\0')) {
-    uVar3 = *(undefined8 *)(&DAT_84553b30 + param_1 * 0x18);
-    iVar1 = MeetPlayer_GetPlayerIndex(param_1,uVar3);
+  bVar3 = Live_IsUserSignedInToLive(param_1);
+  if ((bVar3) && (g_metPlayerInfo[param_1].metPlayerCount != '\0')) {
+    uVar4 = g_metPlayerGlob[param_1].storedPlayer;
+    iVar1 = MeetPlayer_GetPlayerIndex(param_1,uVar4);
     if (-1 < iVar1) {
-      LiveAntiCheat_ReportPlayer(param_1,param_2,uVar3);
-      cVar2 = CL_DoesControllerIndexHaveALocalClientNum(param_1,auStack_20);
-      if (cVar2 != '\0') {
-        FriendsMenu_GetReportSubmitString(param_2);
-        FriendsMenu_ShowErrorMessage();
+      LiveAntiCheat_ReportPlayer(param_1,param_2,uVar4);
+      bVar3 = CL_DoesControllerIndexHaveALocalClientNum(param_1,aLStack_20);
+      if (bVar3) {
+        pcVar2 = FriendsMenu_GetReportSubmitString(param_2);
+        FriendsMenu_ShowErrorMessage(pcVar2);
       }
     }
   }
@@ -1147,20 +1250,21 @@ void MeetPlayer_FeederOnReportRequest(uint param_1,undefined8 param_2)
 
 // 82705E20  MeetPlayer_FeederOnShowCard  (social/social_meetplayer.cpp:1037)
 
-void MeetPlayer_FeederOnShowCard(uint param_1)
+void MeetPlayer_FeederOnShowCard(int param_1)
 
 {
-  char cVar2;
-  ulonglong uVar1;
+  bool bVar2;
+  ulong uVar1;
   
-  if (3 < param_1) {
-    MyAssertHandler(0xffffffff821b3348,0x40e,0,0xffffffff82031880,param_1,4);
+  if (3 < (uint)param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_meetplayer.cpp",
+                    0x40e,0,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  cVar2 = Live_IsUserSignedInToLive(param_1);
-  if (cVar2 != '\0') {
-    if ((*(longlong *)(&DAT_84553b30 + param_1 * 0x18) != 0) &&
-       (uVar1 = XShowGamerCardUI(param_1), (uVar1 & 0xffffffff) != 0)) {
-      Com_PrintError(0x16,0xffffffff8218aec8,uVar1);
+  bVar2 = Live_IsUserSignedInToLive(param_1);
+  if (bVar2) {
+    if ((g_metPlayerGlob[param_1].storedPlayer != 0) &&
+       (uVar1 = XShowGamerCardUI(param_1,g_metPlayerGlob[param_1].storedPlayer), uVar1 != 0)) {
+      Com_PrintError(0x16,"Microsoft error %i from XShowGamerCardUI()\n");
     }
   }
   return;
@@ -1169,21 +1273,22 @@ void MeetPlayer_FeederOnShowCard(uint param_1)
 
 // 82705ED0  MeetPlayer_FeederOnFriendRequest  (social/social_meetplayer.cpp:1053)
 
-void MeetPlayer_FeederOnFriendRequest(uint param_1)
+void MeetPlayer_FeederOnFriendRequest(int param_1)
 
 {
-  char cVar2;
-  int iVar1;
+  bool bVar2;
+  ulong uVar1;
   
-  if (3 < param_1) {
-    MyAssertHandler(0xffffffff821b3348,0x41e,0,0xffffffff82031880,param_1,4);
+  if (3 < (uint)param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_meetplayer.cpp",
+                    0x41e,0,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  cVar2 = Live_IsUserSignedInToLive(param_1);
-  if ((cVar2 != '\0') && (cVar2 = MeetPlayer_IsPlatformFriend(param_1), cVar2 == '\0')) {
-    if (*(longlong *)(&DAT_84553b30 + param_1 * 0x18) != 0) {
-      iVar1 = XShowFriendRequestUI(param_1);
-      if (iVar1 != 0) {
-        Com_PrintError(0x16,0xffffffff821aed70);
+  bVar2 = Live_IsUserSignedInToLive(param_1);
+  if ((bVar2) && (bVar2 = MeetPlayer_IsPlatformFriend(param_1), !bVar2)) {
+    if (g_metPlayerGlob[param_1].storedPlayer != 0) {
+      uVar1 = XShowFriendRequestUI(param_1,g_metPlayerGlob[param_1].storedPlayer);
+      if (uVar1 != 0) {
+        Com_PrintError(0x16,"Microsoft error %i from XShowFriendRequestUI()\n");
         return;
       }
       Friends_MarkForUpdate(param_1);
@@ -1195,48 +1300,50 @@ void MeetPlayer_FeederOnFriendRequest(uint param_1)
 
 // 82705FB0  MeetPlayer_Join  (social/social_meetplayer.cpp:1075)
 
-void MeetPlayer_Join(undefined8 param_1,undefined8 param_2)
+void MeetPlayer_Join(int param_1,ulong64 param_2)
 
 {
-  ulonglong uVar1;
-  char cVar3;
-  int iVar2;
-  undefined4 local_30 [12];
+  uint uVar1;
+  bool bVar3;
+  _XONLINE_PRESENCE *p_Var2;
+  char *local_30 [12];
   
-  uVar1 = __savegprlr_29();
-  if (3 < (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821b3348,0x437,0,0xffffffff82031880,uVar1,4);
+  uVar1 = __savegprlr_29(param_1);
+  if (3 < uVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_meetplayer.cpp",
+                    0x437,0,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  cVar3 = Live_IsUserSignedInToLive(uVar1);
-  if (cVar3 != '\0') {
-    iVar2 = MeetPlayer_GetPresence(uVar1,param_2);
-    if (iVar2 == 0) {
-      Com_PrintError(0x10,0xffffffff821b3940);
-      FriendsMenu_ShowErrorMessage(0xffffffff821aee9c);
+  bVar3 = Live_IsUserSignedInToLive(uVar1);
+  if (bVar3) {
+    p_Var2 = MeetPlayer_GetPresence(uVar1,param_2);
+    if (p_Var2 == (_XONLINE_PRESENCE *)0x0) {
+      Com_PrintError(0x10,"MeetPlayer_Join() failed because the friend info was not found.\n");
+      FriendsMenu_ShowErrorMessage("MENU_JOIN_SESSION_INVALID");
       __restgprlr_29();
       return;
     }
-    if (*(int *)(iVar2 + 0x14) != 0x415608cb) {
-      Com_PrintError(0x10,0xffffffff821b38f8);
-      FriendsMenu_ShowErrorMessage(0xffffffff821b302c);
+    if (p_Var2->dwTitleID != 0x415608cb) {
+      Com_PrintError(0x10,"MeetPlayer_Join() failed because the player is not playing our title.\n")
+      ;
+      FriendsMenu_ShowErrorMessage("MENU_FRIEND_NOT_IN_GAME");
       __restgprlr_29();
       return;
     }
-    cVar3 = Social_IsUserJoinable(uVar1,*(undefined8 *)(iVar2 + 0xc),param_2,local_30);
-    if (cVar3 == '\0') {
-      Com_PrintError(0x10,0xffffffff821b38b8);
+    bVar3 = Social_IsUserJoinable(uVar1,(XNKID)*&(p_Var2->sessionID).ab,param_2,local_30);
+    if (!bVar3) {
+      Com_PrintError(0x10,"MeetPlayer_Join() failed because the player is not available.\n");
       FriendsMenu_ShowErrorMessage(local_30[0]);
       __restgprlr_29();
       return;
     }
-    cVar3 = FriendsMenu_IsAllowedToJoin_Platform(uVar1,local_30);
-    if (cVar3 == '\0') {
-      Com_PrintError(0x10,0xffffffff821b3878);
+    bVar3 = FriendsMenu_IsAllowedToJoin_Platform(uVar1,local_30);
+    if (!bVar3) {
+      Com_PrintError(0x10,"MeetPlayer_Join() failed because the player is not joinable.\n");
       FriendsMenu_ShowErrorMessage(local_30[0]);
       __restgprlr_29();
       return;
     }
-    Friends_StartJoiningFriend_Platform(uVar1,param_2,*(undefined8 *)(iVar2 + 0xc),0);
+    Friends_StartJoiningFriend_Platform(uVar1,param_2,(XNKID)*&(p_Var2->sessionID).ab,false);
   }
   __restgprlr_29();
   return;
@@ -1245,34 +1352,39 @@ void MeetPlayer_Join(undefined8 param_1,undefined8 param_2)
 
 // 82706110  MeetPlayer_Invite  (social/social_meetplayer.cpp:1122)
 
-void MeetPlayer_Invite(ulonglong param_1,undefined8 param_2)
+void MeetPlayer_Invite(int param_1,ulong64 param_2)
 
 {
-  char cVar2;
-  int iVar1;
-  undefined4 local_20 [2];
+  bool bVar2;
+  _XONLINE_PRESENCE *p_Var1;
+  char *local_20 [2];
   
-  if (3 < (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821b3348,0x466,0,0xffffffff82031880,param_1,4);
+  if (3 < (uint)param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_meetplayer.cpp",
+                    0x466,0,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  cVar2 = Live_IsUserSignedInToLive(param_1);
-  if (cVar2 != '\0') {
-    cVar2 = FriendsMenu_IsAllowedToInvite(param_1,local_20);
-    if (cVar2 == '\0') {
-      Com_PrintError(0x10,0xffffffff821b32e0);
-      FriendsMenu_ShowErrorMessage(local_20[0]);
-    }
-    else {
-      iVar1 = MeetPlayer_GetPresence(param_1,param_2);
-      if ((iVar1 == 0) ||
-         (cVar2 = Social_IsAlreadyConnected(param_1,*(undefined8 *)(iVar1 + 0xc),param_2,local_20),
-         cVar2 == '\0')) {
+  bVar2 = Live_IsUserSignedInToLive(param_1);
+  if (bVar2) {
+    bVar2 = FriendsMenu_IsAllowedToInvite(param_1,local_20);
+    if (bVar2) {
+      p_Var1 = MeetPlayer_GetPresence(param_1,param_2);
+      if ((p_Var1 == (_XONLINE_PRESENCE *)0x0) ||
+         (bVar2 = Social_IsAlreadyConnected
+                            (param_1,(XNKID)*&(p_Var1->sessionID).ab,param_2,local_20), !bVar2)) {
         Live_SendInvite(param_1,param_2);
       }
       else {
-        Com_PrintError(0x10,0xffffffff821b3988);
+        Com_PrintError(0x10,
+                       "MeetPlayer_FeederOnInviteRequest() failed because the player is already connected.\n"
+                      );
         FriendsMenu_ShowErrorMessage(local_20[0]);
       }
+    }
+    else {
+      Com_PrintError(0x10,
+                     "FriendsMenu_FeederOnInviteRequest() failed because we are not allowed to invite anyone right now.\n"
+                    );
+      FriendsMenu_ShowErrorMessage(local_20[0]);
     }
   }
   return;
@@ -1281,14 +1393,15 @@ void MeetPlayer_Invite(ulonglong param_1,undefined8 param_2)
 
 // 82706218  MeetPlayer_FeederOnJoinRequest  (social/social_meetplayer.cpp:1155)
 
-void MeetPlayer_FeederOnJoinRequest(uint param_1)
+void MeetPlayer_FeederOnJoinRequest(int param_1)
 
 {
-  if (3 < param_1) {
-    MyAssertHandler(0xffffffff821b3348,0x484,0,0xffffffff82031880,param_1,4);
+  if (3 < (uint)param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_meetplayer.cpp",
+                    0x484,0,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  if (*(longlong *)(&DAT_84553b30 + param_1 * 0x18) != 0) {
-    MeetPlayer_Join(param_1);
+  if (g_metPlayerGlob[param_1].storedPlayer != 0) {
+    MeetPlayer_Join(param_1,g_metPlayerGlob[param_1].storedPlayer);
   }
   return;
 }
@@ -1296,14 +1409,15 @@ void MeetPlayer_FeederOnJoinRequest(uint param_1)
 
 // 82706298  MeetPlayer_FeederOnInviteRequest  (social/social_meetplayer.cpp:1166)
 
-void MeetPlayer_FeederOnInviteRequest(uint param_1)
+void MeetPlayer_FeederOnInviteRequest(int param_1)
 
 {
-  if (3 < param_1) {
-    MyAssertHandler(0xffffffff821b3348,0x48f,0,0xffffffff82031880,param_1,4);
+  if (3 < (uint)param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_meetplayer.cpp",
+                    0x48f,0,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  if (*(longlong *)(&DAT_84553b30 + param_1 * 0x18) != 0) {
-    MeetPlayer_Invite(param_1);
+  if (g_metPlayerGlob[param_1].storedPlayer != 0) {
+    MeetPlayer_Invite(param_1,g_metPlayerGlob[param_1].storedPlayer);
   }
   return;
 }
@@ -1311,10 +1425,10 @@ void MeetPlayer_FeederOnInviteRequest(uint param_1)
 
 // 82704760  XUserFindUsersResponseSize  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/xonline.h:1250)
 
-longlong XUserFindUsersResponseSize(ulonglong param_1)
+ulong XUserFindUsersResponseSize(ulong param_1)
 
 {
-  return (param_1 + (param_1 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + 8;
+  return param_1 * 0x18 + 8;
 }
 
 
@@ -1323,61 +1437,64 @@ longlong XUserFindUsersResponseSize(ulonglong param_1)
 void MeetPlayer_ClearUploadFlags(int param_1)
 
 {
-  undefined4 uVar1;
+  int iVar1;
   
-  uVar1 = Sys_Milliseconds();
-  (&DAT_84553b14)[param_1] = 0;
-  (&DAT_84553b00)[param_1] = uVar1;
+  iVar1 = Sys_Milliseconds();
+  s_metPlayerListChanged[param_1] = false;
+  s_metPlayerLastUploadTime[param_1] = iVar1;
   return;
 }
 
 
 // 82706360  MeetPlayer_UploadMetPlayerListNeeded  (social/social_meetplayer.cpp:1347)
 
-void MeetPlayer_UploadMetPlayerListNeeded(void)
+bool MeetPlayer_UploadMetPlayerListNeeded(int param_1)
 
 {
   int iVar1;
   int iVar3;
-  char cVar5;
+  bool bVar5;
   int iVar4;
   undefined8 uVar2;
+  undefined1 uVar6;
   
-  iVar3 = __savegprlr_29();
-  cVar5 = CL_AllLocalClientsDisconnected();
-  if (((cVar5 == '\0') ||
+  iVar3 = __savegprlr_29(param_1);
+  bVar5 = CL_AllLocalClientsDisconnected();
+  if (((!bVar5) ||
       (iVar1 = *(int *)(DAT_84553b18 + 0xc), iVar4 = Sys_Milliseconds(),
-      iVar4 - (&DAT_84553b00)[iVar3] <= iVar1)) || (uVar2 = 1, (&DAT_84553b14)[iVar3] == '\0')) {
+      iVar4 - s_metPlayerLastUploadTime[iVar3] <= iVar1)) ||
+     (uVar2 = 1, s_metPlayerListChanged[iVar3] == false)) {
     uVar2 = 0;
   }
-  __restgprlr_29(uVar2);
-  return;
+  uVar6 = __restgprlr_29(uVar2);
+  return (bool)uVar6;
 }
 
 
 // 827063C8  MeetPlayer_UploadMetPlayerList  (social/social_meetplayer.cpp:1362)
 
-void MeetPlayer_UploadMetPlayerList(void)
+void MeetPlayer_UploadMetPlayerList(int param_1)
 
 {
   int iVar1;
-  bool bVar2;
-  uint uVar3;
-  char cVar5;
-  int iVar4;
+  uint uVar2;
+  bool bVar4;
+  int iVar3;
   
-  uVar3 = __savegprlr_29();
-  if (3 < uVar3) {
-    MyAssertHandler(0xffffffff821b3348,0x553,0,0xffffffff82031880,uVar3,4);
+  uVar2 = __savegprlr_29(param_1);
+  if (3 < uVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_meetplayer.cpp",
+                    0x553,0,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  cVar5 = CL_AllLocalClientsDisconnected();
-  if (((cVar5 == '\0') ||
-      (iVar1 = *(int *)(DAT_84553b18 + 0xc), iVar4 = Sys_Milliseconds(),
-      iVar4 - (&DAT_84553b00)[uVar3] <= iVar1)) || (bVar2 = true, (&DAT_84553b14)[uVar3] == '\0')) {
-    bVar2 = false;
+  bVar4 = CL_AllLocalClientsDisconnected();
+  if (((!bVar4) ||
+      (iVar1 = *(int *)(DAT_84553b18 + 0xc), iVar3 = Sys_Milliseconds(),
+      iVar3 - s_metPlayerLastUploadTime[uVar2] <= iVar1)) ||
+     (bVar4 = true, s_metPlayerListChanged[uVar2] == false)) {
+    bVar4 = false;
   }
-  if (bVar2) {
-    LiveStorage_WriteMetPlayerList(uVar3,0xffffffff821b39dc,&DAT_84553b90 + uVar3 * 0x2bd0,0x2bd0);
+  if (bVar4) {
+    LiveStorage_WriteMetPlayerList(uVar2,"metplayerdata",&g_metPlayerInfo[uVar2].version,0x2bd0);
   }
   __restgprlr_29();
   return;
@@ -1389,52 +1506,53 @@ void MeetPlayer_UploadMetPlayerList(void)
 bool MeetPlayer_NeedToDownloadMetPlayerList(int param_1)
 
 {
-  char cVar2;
-  longlong lVar1;
+  bool bVar2;
+  ulong64 uVar1;
   
-  cVar2 = CL_AllLocalClientsDisconnected();
-  if (cVar2 == '\0') {
+  bVar2 = CL_AllLocalClientsDisconnected();
+  if (!bVar2) {
     return false;
   }
-  lVar1 = Live_GetXuid(param_1);
-  return (&DAT_845508e0)[param_1] != lVar1;
+  uVar1 = Live_GetXuid(param_1);
+  return s_metPlayerListDownloaded[param_1] != uVar1;
 }
 
 
 // 82706DA8  MeetPlayer_SetMetPlayerListDownloaded  (social/social_meetplayer.cpp:1384)
 
-void MeetPlayer_SetMetPlayerListDownloaded(void)
+void MeetPlayer_SetMetPlayerListDownloaded(int param_1)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  char cVar5;
-  undefined8 uVar3;
-  undefined4 uVar4;
+  ulonglong uVar1;
+  int iVar3;
+  ulong64 uVar2;
+  int iVar4;
+  bool bVar5;
   
-  uVar2 = __savegprlr_29();
-  if (3 < (uVar2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821b3348,0x569,0,0xffffffff82031880,uVar2,4);
+  uVar1 = __savegprlr_29(param_1);
+  if (3 < (uVar1 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_meetplayer.cpp",
+                    0x569,0,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  cVar5 = Live_IsUserSignedInToLive(uVar2);
-  if (cVar5 != '\0') {
-    iVar1 = (int)uVar2;
-    if ((&DAT_84553b90)[iVar1 * 0x2bd0] != '\x03') {
-      MeetPlayer_Reset(uVar2);
-      (&DAT_84553b14)[iVar1] = 1;
+  iVar3 = (int)uVar1;
+  bVar5 = Live_IsUserSignedInToLive(iVar3);
+  if (bVar5) {
+    if (g_metPlayerInfo[iVar3].version != '\x03') {
+      MeetPlayer_Reset(iVar3);
+      s_metPlayerListChanged[iVar3] = true;
     }
-    uVar3 = Live_GetXuid(uVar2);
-    *(undefined8 *)((int)&DAT_845508e0 + (int)((uVar2 & 0xffffffff) << 3)) = uVar3;
-    uVar4 = Sys_Milliseconds();
-    *(undefined4 *)((int)&DAT_84553b00 + (int)((uVar2 & 0xffffffff) << 2)) = uVar4;
-    MeetPlayer_RemoveFriends(uVar2);
-    UserGroups_DownloadedRecentPlayers(uVar2);
-    MeetPlayer_UpdatePlayerInfo(uVar2);
-    (&DAT_8454a8ac)[iVar1 * 0x2010] = 1;
+    uVar2 = Live_GetXuid(iVar3);
+    *(ulong64 *)((int)s_metPlayerListDownloaded + (int)((uVar1 & 0xffffffff) << 3)) = uVar2;
+    iVar4 = Sys_Milliseconds();
+    *(int *)((int)s_metPlayerLastUploadTime + (int)((uVar1 & 0xffffffff) << 2)) = iVar4;
+    MeetPlayer_RemoveFriends(iVar3);
+    UserGroups_DownloadedRecentPlayers(iVar3);
+    MeetPlayer_UpdatePlayerInfo(iVar3);
+    s_meetPlayerPresence[iVar3].dirty = true;
     __restgprlr_29();
     return;
   }
-  MeetPlayer_Reset(uVar2);
+  MeetPlayer_Reset(iVar3);
   __restgprlr_29();
   return;
 }
@@ -1442,17 +1560,18 @@ void MeetPlayer_SetMetPlayerListDownloaded(void)
 
 // 82706510  MeetPlayer_DownloadMetPlayersList  (social/social_meetplayer.cpp:1421)
 
-void MeetPlayer_DownloadMetPlayersList(ulonglong param_1)
+void MeetPlayer_DownloadMetPlayersList(int param_1)
 
 {
-  char cVar1;
+  bool bVar1;
   
-  if (3 < (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821b3348,0x58e,0,0xffffffff82031880,param_1,4);
+  if (3 < (uint)param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_meetplayer.cpp",
+                    0x58e,0,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  cVar1 = MeetPlayer_NeedToDownloadMetPlayerList(param_1);
-  if (cVar1 != '\0') {
-    LiveStorage_ReadMetPlayerList(param_1,0xffffffff821b39dc,param_1 * 0x2bd0 + -0x7baac470,0x2bd0);
+  bVar1 = MeetPlayer_NeedToDownloadMetPlayerList(param_1);
+  if (bVar1) {
+    LiveStorage_ReadMetPlayerList(param_1,"metplayerdata",&g_metPlayerInfo[param_1].version,0x2bd0);
   }
   return;
 }
@@ -1460,10 +1579,10 @@ void MeetPlayer_DownloadMetPlayersList(ulonglong param_1)
 
 // 827065A0  MeetPlayer_Update  (social/social_meetplayer.cpp:1481)
 
-void MeetPlayer_Update(undefined8 param_1)
+void MeetPlayer_Update(int param_1)
 
 {
-  MeetPlayer_DownloadMetPlayersList();
+  MeetPlayer_DownloadMetPlayersList(param_1);
   MeetPlayer_UploadMetPlayerList(param_1);
   MeetPlayer_UpdatePresence(param_1);
   MeetPlayer_CheckOngoingTasks();
@@ -1473,10 +1592,10 @@ void MeetPlayer_Update(undefined8 param_1)
 
 // 827065E0  MeetPlayer_ClearDWOverlappedTasks  (social/social_meetplayer.cpp:1501)
 
-void MeetPlayer_ClearDWOverlappedTasks(undefined8 param_1)
+void MeetPlayer_ClearDWOverlappedTasks(int param_1)
 
 {
-  TaskManager_ClearOverlappedTasksForController(0xffffffff8455ead8,param_1);
+  TaskManager_ClearOverlappedTasksForController(tasks.tasks,param_1);
   return;
 }
 
@@ -1486,52 +1605,58 @@ void MeetPlayer_ClearDWOverlappedTasks(undefined8 param_1)
 bool MeetPlayer_IsSlotSelected(int param_1,int param_2)
 
 {
-  if ((&DAT_84556758)[param_1 * 0x2bd0] == '\0') {
+  if (g_metPlayerInfo[param_1].metPlayerCount == '\0') {
     return false;
   }
-  return param_2 == (&DAT_84553b20)[param_1 * 6] - (&DAT_84553b24)[param_1 * 6];
+  return param_2 == g_metPlayerGlob[param_1].currentIndex - g_metPlayerGlob[param_1].currentStartPos
+  ;
 }
 
 
 // 82706650  MeetPlayer_GetPresenceForSlot  (social/social_meetplayer.cpp:1524)
 
-undefined8 MeetPlayer_GetPresenceForSlot(int param_1,int param_2)
+char * MeetPlayer_GetPresenceForSlot(int param_1,int param_2)
 
 {
-  undefined8 uVar1;
+  char *pcVar1;
+  int iVar2;
   
-  if ((&DAT_84553b24)[param_1 * 6] + param_2 < (int)(uint)(byte)(&DAT_84556758)[param_1 * 0x2bd0]) {
-    uVar1 = MeetPlayer_GetStatus();
-    return uVar1;
+  iVar2 = g_metPlayerGlob[param_1].currentStartPos + param_2;
+  if (iVar2 < (int)(uint)g_metPlayerInfo[param_1].metPlayerCount) {
+    pcVar1 = MeetPlayer_GetStatus(param_1,iVar2);
+    return pcVar1;
   }
-  return 0xffffffff820068af;
+  return "";
 }
 
 
 // 827066A0  MeetPlayer_GetCurrentIndexName  (social/social_meetplayer.cpp:1535)
 
-undefined * MeetPlayer_GetCurrentIndexName(int param_1)
+char * MeetPlayer_GetCurrentIndexName(int param_1)
 
 {
-  return &DAT_84553ba0 + (&DAT_84553b20)[param_1 * 6] * 0xe0 + param_1 * 0x2bd0;
+  return g_metPlayerInfo[param_1].playersXuidInfo[g_metPlayerGlob[param_1].currentIndex].gamertag;
 }
 
 
 // 827066D8  MeetPlayer_GetCurrentIndexXUID  (social/social_meetplayer.cpp:1546)
 
-undefined8 MeetPlayer_GetCurrentIndexXUID(int param_1)
+ulong64 MeetPlayer_GetCurrentIndexXUID(int param_1)
 
 {
-  return *(undefined8 *)(&DAT_84553b98 + (&DAT_84553b20)[param_1 * 6] * 0xe0 + param_1 * 0x2bd0);
+  return g_metPlayerInfo[param_1].playersXuidInfo[g_metPlayerGlob[param_1].currentIndex].playerXuids
+  ;
 }
 
 
 // 82940CE8  `dynamic_atexit_destructor_for_'tasks''  (line unknown)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void _dynamic_atexit_destructor_for__tasks__(void)
 
 {
-  OverlappedTaskSet___OverlappedTaskSet(0xffffffff8455ead0);
+  OverlappedTaskSet::~OverlappedTaskSet(&tasks);
   return;
 }
 

@@ -7,7 +7,7 @@ void __unwind_83522(void)
 {
   int in_r12;
   
-  bdReferencable___bdReferencable(*(undefined4 *)(in_r12 + 0x14));
+  bdReferencable::~bdReferencable(*(bdReferencable **)(in_r12 + 0x14));
   return;
 }
 
@@ -19,7 +19,7 @@ void __unwind_83600(void)
 {
   int in_r12;
   
-  bdRichPresenceService__operator_delete(*(undefined4 *)(in_r12 + -0x20));
+  bdMemory::__3bdRichPresenceService__SAXPAX_Z(*(void **)(in_r12 + -0x20));
   return;
 }
 
@@ -31,7 +31,7 @@ void __unwind_83631(void)
 {
   int in_r12;
   
-  bdSubscription__operator_delete(*(undefined4 *)(in_r12 + -0x20));
+  bdMemory::__3bdSubscription__SAXPAX_Z(*(void **)(in_r12 + -0x20));
   return;
 }
 
@@ -43,7 +43,8 @@ void __unwind_83709(void)
 {
   int in_r12;
   
-  bdReference<bdLobbyConnection>___bdReference<bdLobbyConnection>(*(undefined4 *)(in_r12 + 0x1c));
+  bdReference<bdLobbyConnection>::~bdReference<bdLobbyConnection>
+            (*(bdReference<bdLobbyConnection> **)(in_r12 + 0x1c));
   return;
 }
 
@@ -55,7 +56,7 @@ void __unwind_83710(void)
 {
   int in_r12;
   
-  bdByteBuffer__operator_delete(*(undefined4 *)(in_r12 + -0x3c));
+  bdByteBuffer::operator_delete(*(void **)(in_r12 + -0x3c));
   return;
 }
 
@@ -65,9 +66,10 @@ void __unwind_83710(void)
 void __unwind_83711(void)
 
 {
-  longlong in_r12;
+  int in_r12;
   
-  bdReference<bdByteBuffer>___bdReference<bdByteBuffer>(in_r12 + -0x3c);
+  bdReference<bdByteBuffer>::~bdReference<bdByteBuffer>
+            ((bdReference<bdByteBuffer> *)(in_r12 + -0x3c));
   return;
 }
 
@@ -79,7 +81,7 @@ void __unwind_83713(void)
 {
   int in_r12;
   
-  bdBitBuffer__operator_delete(*(undefined4 *)(in_r12 + -0x40));
+  bdBitBuffer::operator_delete(*(void **)(in_r12 + -0x40));
   return;
 }
 
@@ -89,9 +91,9 @@ void __unwind_83713(void)
 void __unwind_83714(void)
 
 {
-  longlong in_r12;
+  int in_r12;
   
-  bdReference<bdBitBuffer>___bdReference<bdBitBuffer>(in_r12 + -0x40);
+  bdReference<bdBitBuffer>::~bdReference<bdBitBuffer>((bdReference<bdBitBuffer> *)(in_r12 + -0x40));
   return;
 }
 
@@ -103,7 +105,7 @@ void __unwind_83715(void)
 {
   int in_r12;
   
-  bdRemoteTaskManager__operator_delete(*(undefined4 *)(in_r12 + -0x38));
+  bdMemory::__3bdRemoteTaskManager__SAXPAX_Z(*(void **)(in_r12 + -0x38));
   return;
 }
 
@@ -115,7 +117,8 @@ void __unwind_83952(void)
 {
   int in_r12;
   
-  bdReference<bdLobbyConnection>___bdReference<bdLobbyConnection>(*(undefined4 *)(in_r12 + 0x1c));
+  bdReference<bdLobbyConnection>::~bdReference<bdLobbyConnection>
+            (*(bdReference<bdLobbyConnection> **)(in_r12 + 0x1c));
   return;
 }
 
@@ -127,7 +130,8 @@ void __unwind_84400(void)
 {
   int in_r12;
   
-  bdReference<bdByteBuffer>___bdReference<bdByteBuffer>(*(undefined4 *)(in_r12 + 0x1c));
+  bdReference<bdByteBuffer>::~bdReference<bdByteBuffer>
+            (*(bdReference<bdByteBuffer> **)(in_r12 + 0x1c));
   return;
 }
 
@@ -137,9 +141,9 @@ void __unwind_84400(void)
 void __unwind_84402(void)
 
 {
-  longlong in_r12;
+  int in_r12;
   
-  bdSessionInvite___bdSessionInvite(in_r12 + -0x20a0);
+  bdSessionInvite::~bdSessionInvite((bdSessionInvite *)(in_r12 + -0x20a0));
   return;
 }
 
@@ -149,9 +153,9 @@ void __unwind_84402(void)
 void __unwind_84404(void)
 
 {
-  longlong in_r12;
+  int in_r12;
   
-  bdSessionID___bdSessionID(in_r12 + -0x23c8);
+  bdTaskResult::__1bdSessionID__UAA_XZ((bdTaskResult *)(in_r12 + -0x23c8));
   return;
 }
 
@@ -163,7 +167,7 @@ void __unwind_84406(void)
 {
   int in_r12;
   
-  bdAntiCheatChallenges__operator_delete(*(undefined4 *)(in_r12 + -0x23e8));
+  bdMemory::__3bdAntiCheatChallenges__SAXPAX_Z(*(void **)(in_r12 + -0x23e8));
   return;
 }
 
@@ -173,9 +177,10 @@ void __unwind_84406(void)
 void __unwind_84407(void)
 
 {
-  longlong in_r12;
+  int in_r12;
   
-  bdReference<bdAntiCheatChallenges>___bdReference<bdAntiCheatChallenges>(in_r12 + -0x23e8);
+  bdReference<bdAntiCheatChallenges>::~bdReference<bdAntiCheatChallenges>
+            ((bdReference<bdAntiCheatChallenges> *)(in_r12 + -0x23e8));
   return;
 }
 
@@ -187,7 +192,7 @@ void __unwind_84804(void)
 {
   int in_r12;
   
-  bdAddr___bdAddr(*(undefined4 *)(in_r12 + 0x1c));
+  bdAddr::~bdAddr(*(bdAddr **)(in_r12 + 0x1c));
   return;
 }
 
@@ -199,7 +204,7 @@ void __unwind_84805(void)
 {
   int in_r12;
   
-  bdLobbyConnection__operator_delete(*(undefined4 *)(in_r12 + -0x60));
+  bdMemory::__3bdLobbyConnection__SAXPAX_Z(*(void **)(in_r12 + -0x60));
   return;
 }
 
@@ -209,9 +214,10 @@ void __unwind_84805(void)
 void __unwind_84898(void)
 
 {
-  longlong in_r12;
+  int in_r12;
   
-  bdReference<bdByteBuffer>___bdReference<bdByteBuffer>(in_r12 + -0xbc);
+  bdReference<bdByteBuffer>::~bdReference<bdByteBuffer>
+            ((bdReference<bdByteBuffer> *)(in_r12 + -0xbc));
   return;
 }
 
@@ -223,7 +229,7 @@ void __unwind_85003(void)
 {
   int in_r12;
   
-  bdProfiles__operator_delete(*(undefined4 *)(in_r12 + -0x20));
+  bdMemory::__3bdProfiles__SAXPAX_Z(*(void **)(in_r12 + -0x20));
   return;
 }
 
@@ -235,7 +241,7 @@ void __unwind_85029(void)
 {
   int in_r12;
   
-  bdMessaging__operator_delete(*(undefined4 *)(in_r12 + -0x20));
+  bdMemory::__3bdMessaging__SAXPAX_Z(*(void **)(in_r12 + -0x20));
   return;
 }
 
@@ -247,7 +253,7 @@ void __unwind_85055(void)
 {
   int in_r12;
   
-  bdMatchMaking__operator_delete(*(undefined4 *)(in_r12 + -0x20));
+  bdMemory::__3bdMatchMaking__SAXPAX_Z(*(void **)(in_r12 + -0x20));
   return;
 }
 
@@ -259,7 +265,7 @@ void __unwind_85081(void)
 {
   int in_r12;
   
-  bdStats__operator_delete(*(undefined4 *)(in_r12 + -0x20));
+  bdMemory::__3bdStats__SAXPAX_Z(*(void **)(in_r12 + -0x20));
   return;
 }
 
@@ -271,7 +277,7 @@ void __unwind_85107(void)
 {
   int in_r12;
   
-  bdTeams__operator_delete(*(undefined4 *)(in_r12 + -0x20));
+  bdMemory::__3bdTeams__SAXPAX_Z(*(void **)(in_r12 + -0x20));
   return;
 }
 
@@ -283,7 +289,7 @@ void __unwind_85159(void)
 {
   int in_r12;
   
-  bdStorage__operator_delete(*(undefined4 *)(in_r12 + -0x20));
+  bdMemory::__3bdStorage__SAXPAX_Z(*(void **)(in_r12 + -0x20));
   return;
 }
 
@@ -295,7 +301,7 @@ void __unwind_85211(void)
 {
   int in_r12;
   
-  bdEventLog__operator_delete(*(undefined4 *)(in_r12 + -0x20));
+  bdMemory::__3bdEventLog__SAXPAX_Z(*(void **)(in_r12 + -0x20));
   return;
 }
 
@@ -307,7 +313,7 @@ void __unwind_85237(void)
 {
   int in_r12;
   
-  bdKeyArchive__operator_delete(*(undefined4 *)(in_r12 + -0x20));
+  bdMemory::__3bdKeyArchive__SAXPAX_Z(*(void **)(in_r12 + -0x20));
   return;
 }
 
@@ -319,7 +325,7 @@ void __unwind_85263(void)
 {
   int in_r12;
   
-  bdCounter__operator_delete(*(undefined4 *)(in_r12 + -0x20));
+  bdMemory::__3bdCounter__SAXPAX_Z(*(void **)(in_r12 + -0x20));
   return;
 }
 
@@ -331,7 +337,7 @@ void __unwind_85289(void)
 {
   int in_r12;
   
-  bdGroup__operator_delete(*(undefined4 *)(in_r12 + -0x20));
+  bdMemory::__3bdGroup__SAXPAX_Z(*(void **)(in_r12 + -0x20));
   return;
 }
 
@@ -343,7 +349,7 @@ void __unwind_85319(void)
 {
   int in_r12;
   
-  bdContentStreaming__operator_delete(*(undefined4 *)(in_r12 + -0x20));
+  bdMemory::__3bdContentStreaming__SAXPAX_Z(*(void **)(in_r12 + -0x20));
   return;
 }
 
@@ -355,7 +361,7 @@ void __unwind_85320(void)
 {
   int in_r12;
   
-  bdLSPEnumerator__operator_delete(*(undefined4 *)(in_r12 + -0x20));
+  bdMemory::__3bdLSPEnumerator__SAXPAX_Z(*(void **)(in_r12 + -0x20));
   return;
 }
 
@@ -367,7 +373,7 @@ void __unwind_85397(void)
 {
   int in_r12;
   
-  bdTags__operator_delete(*(undefined4 *)(in_r12 + -0x20));
+  bdMemory::__3bdTags__SAXPAX_Z(*(void **)(in_r12 + -0x20));
   return;
 }
 
@@ -379,7 +385,7 @@ void __unwind_85475(void)
 {
   int in_r12;
   
-  bdFacebook__operator_delete(*(undefined4 *)(in_r12 + -0x20));
+  bdMemory::__3bdFacebook__SAXPAX_Z(*(void **)(in_r12 + -0x20));
   return;
 }
 
@@ -391,7 +397,7 @@ void __unwind_85527(void)
 {
   int in_r12;
   
-  bdAntiCheat__operator_delete(*(undefined4 *)(in_r12 + -0x20));
+  bdMemory::__3bdAntiCheat__SAXPAX_Z(*(void **)(in_r12 + -0x20));
   return;
 }
 
@@ -403,7 +409,7 @@ void __unwind_85553(void)
 {
   int in_r12;
   
-  bdDML__operator_delete(*(undefined4 *)(in_r12 + -0x20));
+  bdMemory::__3bdDML__SAXPAX_Z(*(void **)(in_r12 + -0x20));
   return;
 }
 
@@ -415,7 +421,7 @@ void __unwind_85605(void)
 {
   int in_r12;
   
-  bdUserGroups__operator_delete(*(undefined4 *)(in_r12 + -0x20));
+  bdMemory::__3bdUserGroups__SAXPAX_Z(*(void **)(in_r12 + -0x20));
   return;
 }
 
@@ -427,7 +433,8 @@ void __unwind_85627(void)
 {
   int in_r12;
   
-  bdLobbyConnectionListener___bdLobbyConnectionListener(*(undefined4 *)(in_r12 + 0x14));
+  bdLobbyConnectionListener::~bdLobbyConnectionListener
+            (*(bdLobbyConnectionListener **)(in_r12 + 0x14));
   return;
 }
 
@@ -439,8 +446,8 @@ void __unwind_85628(void)
 {
   int in_r12;
   
-  bdReference<bdLobbyConnection>___bdReference<bdLobbyConnection>
-            ((ulonglong)*(uint *)(in_r12 + 0x14) + 0x7c);
+  bdReference<bdLobbyConnection>::~bdReference<bdLobbyConnection>
+            ((bdReference<bdLobbyConnection> *)(*(int *)(in_r12 + 0x14) + 0x7c));
   return;
 }
 
@@ -452,7 +459,7 @@ void __unwind_85656(void)
 {
   int in_r12;
   
-  bdAddr___bdAddr(*(undefined4 *)(in_r12 + 0x1c));
+  bdAddr::~bdAddr(*(bdAddr **)(in_r12 + 0x1c));
   return;
 }
 
@@ -464,7 +471,7 @@ void __unwind_85709(void)
 {
   int in_r12;
   
-  bdTitleUtilities__operator_delete(*(undefined4 *)(in_r12 + -0x20));
+  bdMemory::__3bdTitleUtilities__SAXPAX_Z(*(void **)(in_r12 + -0x20));
   return;
 }
 

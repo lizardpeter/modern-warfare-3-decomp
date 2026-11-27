@@ -3216,7 +3216,7 @@ LAB_8248e680:
   8248E6B8  EBE1FFF0             ld r31,-0x10(r1)
   8248E6BC  4E800020             blr
 
-; 8249D668  std::_Push_heap<EntityOrigin_*,int,EntityOrigin,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2455)
+; 8249D668  _Push_heap<EntityOrigin_*,int,EntityOrigin,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2455)
   8249D668  7D8802A6             mfspr r12,LR
   8249D66C  48479041             bl 0x829166ac
   8249D670  9421FF70             stwu r1,-0x90(r1)
@@ -3468,7 +3468,7 @@ LAB_8248e970:
   8248E98C  EBE1FFF0             ld r31,-0x10(r1)
   8248E990  4E800020             blr
 
-; 8249D730  std::_Adjust_heap<EntityOrigin_*,int,EntityOrigin,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2565)
+; 8249D730  _Adjust_heap<EntityOrigin_*,int,EntityOrigin,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2565)
   8249D730  7D8802A6             mfspr r12,LR
   8249D734  48478F79             bl 0x829166ac
   8249D738  9421FF70             stwu r1,-0x90(r1)
@@ -3665,7 +3665,7 @@ LAB_8248eac4:
   8248EAD0  EBE1FFF0             ld r31,-0x10(r1)
   8248EAD4  4E800020             blr
 
-; 8249D8B8  std::_Make_heap<EntityOrigin_*,int,EntityOrigin,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2658)
+; 8249D8B8  _Make_heap<EntityOrigin_*,int,EntityOrigin,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2658)
   8249D8B8  7D8802A6             mfspr r12,LR
   8249D8BC  48478DED             bl 0x829166a8
   8249D8C0  9421FF50             stwu r1,-0xb0(r1)
@@ -3812,7 +3812,7 @@ LAB_8248eb8c:
   8248EB98  EBE1FFF0             ld r31,-0x10(r1)
   8248EB9C  4E800020             blr
 
-; 8249E2B8  std::_Sort_heap<EntityOrigin_*,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2700)
+; 8249E2B8  _Sort_heap<EntityOrigin_*,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2700)
   8249E2B8  7D8802A6             mfspr r12,LR
   8249E2BC  484783F9             bl 0x829166b4
   8249E2C0  9421FF70             stwu r1,-0x90(r1)
@@ -5181,7 +5181,7 @@ LAB_8248fe44:
   8248FE78  7D8803A6             mtspr LR,r12
   8248FE7C  4E800020             blr
 
-; 8249DC58  std::_Insertion_sort1<EntityOrigin_*,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&),EntityOrigin>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3650)
+; 8249DC58  _Insertion_sort1<EntityOrigin_*,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&),EntityOrigin>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3650)
   8249DC58  7D8802A6             mfspr r12,LR
   8249DC5C  48478A51             bl 0x829166ac
   8249DC60  9421FF60             stwu r1,-0xa0(r1)
@@ -5319,7 +5319,7 @@ LAB_8248fee8:
   8248FEF4  EBE1FFF0             ld r31,-0x10(r1)
   8248FEF8  4E800020             blr
 
-; 8249DA00  std::_Med3<EntityOrigin_*,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3683)
+; 8249DA00  _Med3<EntityOrigin_*,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3683)
   8249DA00  7D8802A6             mfspr r12,LR
   8249DA04  48478CB5             bl 0x829166b8
   8249DA08  9421FF70             stwu r1,-0x90(r1)
@@ -5477,7 +5477,7 @@ LAB_8248ff8c:
   8248FF9C  38210080             addi r1,r1,0x80
   8248FFA0  48486768             b 0x82916708
 
-; 8249DBB0  std::_Median<EntityOrigin_*,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3695)
+; 8249DBB0  _Median<EntityOrigin_*,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3695)
   8249DBB0  7D8802A6             mfspr r12,LR
   8249DBB4  48478AFD             bl 0x829166b0
   8249DBB8  9421FF70             stwu r1,-0x90(r1)
@@ -5601,7 +5601,7 @@ LAB_824900bc:
   824900BC  38210090             addi r1,r1,0x90
   824900C0  4848663C             b 0x829166fc
 
-; 8249DDD0  std::_Unguarded_partition<EntityOrigin_*,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3712)
+; 8249DDD0  _Unguarded_partition<EntityOrigin_*,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3712)
   8249DDD0  7D8802A6             mfspr r12,LR
   8249DDD4  484788D1             bl 0x829166a4
   8249DDD8  9421FEF0             stwu r1,-0x110(r1)
@@ -5974,7 +5974,7 @@ LAB_82490120:
   82490154  EBE1FFF0             ld r31,-0x10(r1)
   82490158  4E800020             blr
 
-; 8249E360  std::_Sort<EntityOrigin_*,int,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3771)
+; 8249E360  _Sort<EntityOrigin_*,int,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3771)
   8249E360  7D8802A6             mfspr r12,LR
   8249E364  4847834D             bl 0x829166b0
   8249E368  9421FF70             stwu r1,-0x90(r1)

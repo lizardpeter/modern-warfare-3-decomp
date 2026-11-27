@@ -2,6 +2,8 @@
 
 // 824ACA58  TRACK_g_svcmds  (game/g_svcmds.cpp:47)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void TRACK_g_svcmds(void)
 
 {
@@ -11,103 +13,92 @@ void TRACK_g_svcmds(void)
 
 // 824ACA60  StringToFilter  (game/g_svcmds.cpp:73)
 
-/* WARNING: Restarted to delay deadcode elimination for space: stack */
-
-void StringToFilter(undefined8 param_1,undefined4 *param_2)
+int StringToFilter(char *param_1,ipFilter_s *param_2)
 
 {
   int iVar1;
   char *pcVar2;
   uint uVar3;
   int iVar4;
-  char cVar5;
-  int iVar6;
-  undefined4 local_c0;
-  undefined4 local_bc [3];
+  int iVar5;
+  char cVar6;
+  uint local_c0;
+  uint local_bc [3];
   char acStack_b0 [176];
   
-  pcVar2 = (char *)__savegprlr_27();
-  iVar6 = 0;
+  pcVar2 = (char *)__savegprlr_27(param_1);
+  iVar4 = 0;
   local_bc[0] = 0;
   local_c0 = 0;
   do {
-    cVar5 = *pcVar2;
-    if ((cVar5 < '0') || ('9' < cVar5)) {
-      Com_Printf(0xf,0xffffffff8207dd1c,pcVar2);
-      __restgprlr_27(0);
-      return;
+    cVar6 = *pcVar2;
+    if ((cVar6 < '0') || ('9' < cVar6)) {
+      Com_Printf(0xf,"Bad filter address: %s\n");
+      iVar4 = __restgprlr_27(0);
+      return iVar4;
     }
-    iVar4 = 0;
+    iVar5 = 0;
     iVar1 = -(int)pcVar2;
     do {
-      if ('9' < cVar5) break;
-      acStack_b0[(int)(pcVar2 + iVar1)] = cVar5;
-      iVar4 = iVar4 + 1;
+      if ('9' < cVar6) break;
+      acStack_b0[(int)(pcVar2 + iVar1)] = cVar6;
+      iVar5 = iVar5 + 1;
       pcVar2 = pcVar2 + 1;
-      cVar5 = *pcVar2;
-    } while ('/' < cVar5);
-    acStack_b0[iVar4] = '\0';
+      cVar6 = *pcVar2;
+    } while ('/' < cVar6);
+    acStack_b0[iVar5] = '\0';
     uVar3 = atoi(acStack_b0);
-    *(char *)((int)local_bc + iVar6 + -4) = (char)uVar3;
+    *(char *)((int)local_bc + iVar4 + -4) = (char)uVar3;
     if ((uVar3 & 0xff) != 0) {
-      *(undefined1 *)((int)local_bc + iVar6) = 0xff;
+      *(undefined1 *)((int)local_bc + iVar4) = 0xff;
     }
     if (*pcVar2 == '\0') break;
-    iVar6 = iVar6 + 1;
+    iVar4 = iVar4 + 1;
     pcVar2 = pcVar2 + 1;
-  } while (iVar6 < 4);
-  *param_2 = local_bc[0];
-  param_2[1] = local_c0;
-  __restgprlr_27(1);
-  return;
+  } while (iVar4 < 4);
+  param_2->mask = local_bc[0];
+  param_2->compare = local_c0;
+  iVar4 = __restgprlr_27(1);
+  return iVar4;
 }
 
 
 // 824ACB70  UpdateIPBans  (game/g_svcmds.cpp:121)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void UpdateIPBans(void)
 
 {
   char cVar1;
   int iVar2;
-  int iVar3;
-  char *pcVar4;
-  int iVar5;
-  int *piVar6;
-  undefined1 local_440;
-  undefined1 uStack_43f;
-  undefined1 uStack_43e;
-  undefined1 uStack_43d;
+  char *pcVar3;
+  int iVar4;
+  uint *puVar5;
   char local_430 [1072];
   
   __savegprlr_28();
-  iVar5 = 0;
+  iVar4 = 0;
   local_430[0] = '\0';
   if (0 < DAT_8359d624) {
-    piVar6 = &DAT_8359d62c;
-    iVar3 = DAT_8359d624;
+    puVar5 = &ipFilters[0].compare;
+    iVar2 = DAT_8359d624;
     do {
-      iVar2 = *piVar6;
-      if (iVar2 != -1) {
-        pcVar4 = local_430;
+      if (*puVar5 != 0xffffffff) {
+        pcVar3 = local_430;
         do {
-          cVar1 = *pcVar4;
-          pcVar4 = pcVar4 + 1;
+          cVar1 = *pcVar3;
+          pcVar3 = pcVar3 + 1;
         } while (cVar1 != '\0');
-        uStack_43f = (undefined1)((uint)iVar2 >> 0x10);
-        local_440 = (undefined1)((uint)iVar2 >> 0x18);
-        uStack_43d = (undefined1)iVar2;
-        uStack_43e = (undefined1)((uint)iVar2 >> 8);
-        Com_sprintf(local_430 + (int)(pcVar4 + (-1 - (int)local_430)),
-                    0x400 - (int)(pcVar4 + (-1 - (int)local_430)),0xffffffff8207dd34,local_440,
-                    uStack_43f,uStack_43e,uStack_43d);
-        iVar3 = DAT_8359d624;
+        Com_sprintf(local_430 + (int)(pcVar3 + (-1 - (int)local_430)),
+                    0x400 - (int)(pcVar3 + (-1 - (int)local_430)),"%i.%i.%i.%i ");
+        iVar2 = DAT_8359d624;
       }
-      iVar5 = iVar5 + 1;
-      piVar6 = piVar6 + 2;
-    } while (iVar5 < iVar3);
+      iVar4 = iVar4 + 1;
+      puVar5 = puVar5 + 2;
+    } while (iVar4 < iVar2);
   }
-  Dvar_SetString(DAT_8353ff54,local_430);
+  Dvar_SetString(g_banIPs,local_430);
   __restgprlr_28();
   return;
 }
@@ -115,32 +106,32 @@ void UpdateIPBans(void)
 
 // 824ACC30  AddIP  (game/g_svcmds.cpp:146)
 
-void AddIP(undefined8 param_1)
+void AddIP(char *param_1)
 
 {
   int iVar1;
-  int *piVar2;
+  uint *puVar2;
   int iVar3;
   
   iVar3 = 0;
   if (0 < DAT_8359d624) {
-    piVar2 = &DAT_8359d62c;
+    puVar2 = &ipFilters[0].compare;
     do {
-      if (*piVar2 == -1) break;
+      if (*puVar2 == 0xffffffff) break;
       iVar3 = iVar3 + 1;
-      piVar2 = piVar2 + 2;
+      puVar2 = puVar2 + 2;
     } while (iVar3 < DAT_8359d624);
   }
   if (iVar3 == DAT_8359d624) {
     if (DAT_8359d624 == 0x400) {
-      Com_Printf(0xf,0xffffffff8207dd44);
+      Com_Printf(0xf,"IP filter list is full\n");
       return;
     }
     DAT_8359d624 = DAT_8359d624 + 1;
   }
-  iVar1 = StringToFilter(param_1,&DAT_8359d628 + iVar3 * 2);
+  iVar1 = StringToFilter(param_1,ipFilters + iVar3);
   if (iVar1 == 0) {
-    (&DAT_8359d62c)[iVar3 * 2] = 0xffffffff;
+    ipFilters[iVar3].compare = 0xffffffff;
   }
   UpdateIPBans();
   return;
@@ -149,183 +140,164 @@ void AddIP(undefined8 param_1)
 
 // 824ACCE8  G_ProcessIPBans  (game/g_svcmds.cpp:175)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void G_ProcessIPBans(void)
 
 {
   char cVar1;
-  char *_Str;
-  char *pcVar2;
-  int iVar3;
-  int *piVar4;
-  int iVar5;
+  ulonglong uVar2;
+  ulonglong uVar3;
+  int iVar4;
+  uint *puVar5;
+  int iVar6;
   char local_440 [1088];
   
   __savegprlr_25();
   DAT_8359d624 = 0;
-  I_strncpyz(local_440,*(undefined4 *)(DAT_8353ff54 + 0xc),0x400);
-  _Str = local_440;
+  I_strncpyz(local_440,(g_banIPs->current).string,0x400);
+  uVar2 = ZEXT48(&stack0x00000000) - 0x440;
   do {
-    if ((local_440[0] == '\0') || (pcVar2 = strchr(_Str,0x20), pcVar2 == (char *)0x0)) {
+    if ((local_440[0] == '\0') || (uVar3 = uVar2, strchr(), (uVar3 & 0xffffffff) == 0)) {
       __restgprlr_25();
       return;
     }
-    cVar1 = *pcVar2;
+    cVar1 = *(char *)uVar3;
     while (cVar1 == ' ') {
-      *pcVar2 = '\0';
-      pcVar2 = pcVar2 + 1;
-      cVar1 = *pcVar2;
+      *(char *)uVar3 = '\0';
+      uVar3 = uVar3 + 1;
+      cVar1 = *(char *)uVar3;
     }
-    if (*_Str != '\0') {
-      iVar5 = 0;
+    if (*(char *)uVar2 != '\0') {
+      iVar6 = 0;
       if (0 < DAT_8359d624) {
-        piVar4 = &DAT_8359d62c;
+        puVar5 = &ipFilters[0].compare;
         do {
-          if (*piVar4 == -1) break;
-          iVar5 = iVar5 + 1;
-          piVar4 = piVar4 + 2;
-        } while (iVar5 < DAT_8359d624);
+          if (*puVar5 == 0xffffffff) break;
+          iVar6 = iVar6 + 1;
+          puVar5 = puVar5 + 2;
+        } while (iVar6 < DAT_8359d624);
       }
-      if (iVar5 == DAT_8359d624) {
+      if (iVar6 == DAT_8359d624) {
         if (DAT_8359d624 == 0x400) {
-          Com_Printf(0xf,0xffffffff8207dd44);
+          Com_Printf(0xf,"IP filter list is full\n");
           goto LAB_824acdfc;
         }
         DAT_8359d624 = DAT_8359d624 + 1;
       }
-      iVar3 = StringToFilter(_Str,&DAT_8359d628 + iVar5 * 2);
-      if (iVar3 == 0) {
-        (&DAT_8359d62c)[iVar5 * 2] = 0xffffffff;
+      iVar4 = StringToFilter((char *)uVar2,ipFilters + iVar6);
+      if (iVar4 == 0) {
+        ipFilters[iVar6].compare = 0xffffffff;
       }
       UpdateIPBans();
     }
 LAB_824acdfc:
-    local_440[0] = *pcVar2;
-    _Str = pcVar2;
+    local_440[0] = *(char *)uVar3;
+    uVar2 = uVar3;
   } while( true );
 }
 
 
 // 824ACE18  Svcmd_AddIP_f  (game/g_svcmds.cpp:205)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 void Svcmd_AddIP_f(void)
 
 {
-  undefined1 auStack_410 [1024];
+  char acStack_410 [1024];
   
-  if (7 < DAT_835eea98) {
-    MyAssertHandler(0xffffffff8206ecb0,0xc3,0,0xffffffff8206ecf0,DAT_835eea98,8);
+  if (7 < (uint)sv_cmd_args.nesting) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\../qcommon/cmd.h",0xc3,0,
+                    "sv_cmd_args.nesting doesn\'t index CMD_MAX_NESTING\n\t%i not in [0, %i)");
   }
-  if (*(int *)(&DAT_835eeadc + DAT_835eea98 * 4) < 2) {
-    Com_Printf(0,0xffffffff8207dd5c);
+  if (sv_cmd_args.argc[sv_cmd_args.nesting] < 2) {
+    Com_Printf(0,"Usage:  addip <ip-mask>\n");
     return;
   }
-  SV_Cmd_ArgvBuffer(1,auStack_410,0x400);
-  AddIP(auStack_410);
+  SV_Cmd_ArgvBuffer(1,acStack_410,0x400);
+  AddIP(acStack_410);
   return;
 }
 
 
 // 824ACEC8  Svcmd_RemoveIP_f  (game/g_svcmds.cpp:227)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 void Svcmd_RemoveIP_f(void)
 
 {
   int iVar1;
-  int *piVar2;
-  int local_420;
-  int local_41c;
-  undefined1 auStack_410 [1024];
+  uint *puVar2;
+  ipFilter_s local_420 [2];
+  char acStack_410 [1024];
   
-  if (7 < DAT_835eea98) {
-    MyAssertHandler(0xffffffff8206ecb0,0xc3,0,0xffffffff8206ecf0,DAT_835eea98,8);
+  if (7 < (uint)sv_cmd_args.nesting) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\../qcommon/cmd.h",0xc3,0,
+                    "sv_cmd_args.nesting doesn\'t index CMD_MAX_NESTING\n\t%i not in [0, %i)");
   }
-  if (*(int *)(&DAT_835eeadc + DAT_835eea98 * 4) < 2) {
-    Com_Printf(0,0xffffffff8207dd98);
+  if (sv_cmd_args.argc[sv_cmd_args.nesting] < 2) {
+    Com_Printf(0,"Usage:  sv removeip <ip-mask>\n");
     return;
   }
-  SV_Cmd_ArgvBuffer(1,auStack_410,0x400);
-  iVar1 = StringToFilter(auStack_410,&local_420);
+  SV_Cmd_ArgvBuffer(1,acStack_410,0x400);
+  iVar1 = StringToFilter(acStack_410,local_420);
   if (iVar1 != 0) {
     iVar1 = 0;
     if (0 < DAT_8359d624) {
-      piVar2 = &DAT_8359d62c;
+      puVar2 = &ipFilters[0].compare;
       do {
-        if ((piVar2[-1] == local_420) && (*piVar2 == local_41c)) {
-          (&DAT_8359d62c)[iVar1 * 2] = 0xffffffff;
-          Com_Printf(0,0xffffffff8207dd78);
+        if ((((ipFilter_s *)(puVar2 + -1))->mask == local_420[0].mask) &&
+           (*puVar2 == local_420[0].compare)) {
+          ipFilters[iVar1].compare = 0xffffffff;
+          Com_Printf(0,"Removed.\n");
           UpdateIPBans();
           return;
         }
         iVar1 = iVar1 + 1;
-        piVar2 = piVar2 + 2;
+        puVar2 = puVar2 + 2;
       } while (iVar1 < DAT_8359d624);
     }
-    Com_Printf(0,0xffffffff8207dd84,auStack_410);
+    Com_Printf(0,"Didn\'t find %s.\n");
   }
   return;
 }
 
 
 // 824AD018  Svcmd_EntityList_f  (game/g_svcmds.cpp:268)
-
-void Svcmd_EntityList_f(void)
-
-{
-  undefined8 uVar1;
-  int iVar2;
-  longlong lVar3;
-  short *psVar4;
-  
-  __savegprlr_25();
-  lVar3 = 1;
-  if (1 < DAT_83580b08) {
-    psVar4 = &DAT_83373a72;
-    iVar2 = DAT_83580b08;
-    do {
-      if (*(char *)((int)psVar4 + -0x6f) != '\0') {
-        Com_Printf(0,0xffffffff8207ddb8,lVar3);
-        uVar1 = BG_GetEntityTypeName(*(undefined4 *)(psVar4 + -0xb7));
-        Com_Printf(0,0xffffffff8207ddc0,uVar1);
-        if (*psVar4 != 0) {
-          uVar1 = SL_ConvertToString();
-          Com_Printf(0,0xffffffff8207ddc8,uVar1);
-        }
-        Com_Printf(0,0xffffffff820044d8);
-        iVar2 = DAT_83580b08;
-      }
-      lVar3 = lVar3 + 1;
-      psVar4 = psVar4 + 0x140;
-    } while ((int)lVar3 < iVar2);
-  }
-  __restgprlr_25();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure gclient_s_s_0_s_0_s_0
 
 // 824AD0E8  ConsoleCommand  (game/g_svcmds.cpp:301)
 
-undefined8 ConsoleCommand(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+int ConsoleCommand(void)
 
 {
-  undefined8 uVar1;
+  char *pcVar1;
   int iVar2;
   
-  uVar1 = Cmd_Argv(0);
-  iVar2 = I_stricmp(uVar1,0xffffffff8207ddf0);
+  pcVar1 = Cmd_Argv(0);
+  iVar2 = I_stricmp(pcVar1,"addip");
   if (iVar2 == 0) {
     Svcmd_AddIP_f();
   }
   else {
-    iVar2 = I_stricmp(uVar1,0xffffffff8207dde4);
+    iVar2 = I_stricmp(pcVar1,"removeip");
     if (iVar2 == 0) {
       Svcmd_RemoveIP_f();
     }
     else {
-      iVar2 = I_stricmp(uVar1,0xffffffff8207dddc);
+      iVar2 = I_stricmp(pcVar1,"listip");
       if (iVar2 != 0) {
         return 0;
       }
-      Cbuf_InsertText(0,0xffffffff8207ddd0);
+      Cbuf_InsertText(LOCAL_CLIENT_0,"g_banIPs\n");
     }
   }
   return 1;

@@ -8,59 +8,60 @@ void unpack2G(float *param_1,float *param_2,int param_3)
   float *pfVar1;
   float fVar2;
   float fVar3;
-  float fVar4;
+  int iVar4;
   float fVar5;
   float fVar6;
   float fVar7;
-  int iVar8;
-  float *pfVar9;
+  float fVar8;
+  int iVar9;
   float *pfVar10;
   float *pfVar11;
   float *pfVar12;
-  int iVar13;
+  float *pfVar13;
+  int iVar14;
   
   fVar2 = *param_1;
   fVar3 = *param_2;
-  pfVar11 = param_1 + param_3;
-  pfVar10 = param_2 + param_3;
+  pfVar12 = param_1 + param_3;
+  pfVar11 = param_2 + param_3;
   *param_1 = fVar3 + fVar2;
   *param_2 = 0.0;
-  *pfVar10 = 0.0;
-  *pfVar11 = fVar2 - fVar3;
+  *pfVar11 = 0.0;
+  *pfVar12 = fVar2 - fVar3;
   if (param_3 == 0x100) {
-    pfVar9 = (float *)&DAT_82206bd0;
+    pfVar10 = twiddle512;
   }
   else {
-    pfVar9 = (float *)&UNK_82206fc8;
+    pfVar10 = twiddle128;
   }
-  param_3 = param_3 >> 1;
-  iVar8 = 1;
-  if (1 < param_3) {
-    iVar13 = param_3 + -1;
-    pfVar12 = param_2;
+  iVar4 = param_3 >> 1;
+  iVar9 = 1;
+  if (1 < iVar4) {
+    iVar14 = iVar4 + -1;
+    pfVar13 = param_2;
     do {
-      fVar2 = *pfVar9;
-      pfVar1 = pfVar9 + 1;
-      pfVar9 = pfVar9 + 2;
-      fVar3 = (pfVar10[-1] + pfVar12[1]) * 0.5;
-      fVar4 = (pfVar12[1] - pfVar10[-1]) * 0.5;
-      fVar5 = (param_1[1] - pfVar11[-1]) * 0.5;
-      fVar6 = (pfVar11[-1] + param_1[1]) * 0.5;
-      fVar7 = fVar5 * fVar2 - fVar3 * *pfVar1;
-      fVar2 = fVar3 * fVar2 + fVar5 * *pfVar1;
-      pfVar12 = pfVar12 + 1;
-      *pfVar12 = fVar4 - fVar7;
+      fVar2 = *pfVar10;
+      pfVar1 = pfVar10 + 1;
+      pfVar10 = pfVar10 + 2;
+      fVar3 = (pfVar11[-1] + pfVar13[1]) * 0.5;
+      fVar5 = (pfVar13[1] - pfVar11[-1]) * 0.5;
+      fVar6 = (param_1[1] - pfVar12[-1]) * 0.5;
+      fVar7 = (pfVar12[-1] + param_1[1]) * 0.5;
+      fVar8 = fVar6 * fVar2 - fVar3 * *pfVar1;
+      fVar2 = fVar3 * fVar2 + fVar6 * *pfVar1;
+      pfVar13 = pfVar13 + 1;
+      *pfVar13 = fVar5 - fVar8;
       param_1 = param_1 + 1;
-      *param_1 = fVar2 + fVar6;
+      *param_1 = fVar2 + fVar7;
+      pfVar12 = pfVar12 + -1;
+      *pfVar12 = fVar7 - fVar2;
       pfVar11 = pfVar11 + -1;
-      *pfVar11 = fVar6 - fVar2;
-      pfVar10 = pfVar10 + -1;
-      *pfVar10 = -(fVar7 + fVar4);
-      iVar13 = iVar13 + -1;
-      iVar8 = param_3;
-    } while (iVar13 != 0);
+      *pfVar11 = -(fVar8 + fVar5);
+      iVar14 = iVar14 + -1;
+      iVar9 = iVar4;
+    } while (iVar14 != 0);
   }
-  param_2[iVar8] = -param_2[iVar8];
+  param_2[iVar9] = -param_2[iVar9];
   return;
 }
 
@@ -75,53 +76,54 @@ void pack2G(float *param_1,float *param_2,int param_3)
   float fVar3;
   float fVar4;
   float fVar5;
-  float fVar6;
+  int iVar6;
   float fVar7;
-  float *pfVar8;
-  longlong lVar9;
-  float *pfVar10;
+  float fVar8;
+  float *pfVar9;
+  longlong lVar10;
   float *pfVar11;
+  float *pfVar12;
   
   fVar2 = *param_1;
   fVar3 = *param_2;
-  pfVar11 = param_1 + param_3;
-  pfVar10 = param_2 + param_3;
-  fVar4 = *pfVar11;
-  fVar5 = *pfVar10;
+  pfVar12 = param_1 + param_3;
+  pfVar11 = param_2 + param_3;
+  fVar4 = *pfVar12;
+  fVar5 = *pfVar11;
   *param_1 = (fVar4 + fVar2) - (fVar5 + fVar3);
   *param_2 = (fVar3 - fVar5) + (fVar2 - fVar4);
   if (param_3 == 0x100) {
-    pfVar8 = (float *)&DAT_82206bd0;
+    pfVar9 = twiddle512;
   }
   else {
-    pfVar8 = (float *)&UNK_82206fc8;
+    pfVar9 = twiddle128;
   }
-  param_3 = param_3 >> 1;
-  fVar2 = param_2[param_3];
-  param_1[param_3] = param_1[param_3] * 2.0;
-  param_2[param_3] = fVar2 * 2.0;
-  if (1 < param_3) {
-    lVar9 = (longlong)param_3 + -1;
+  iVar6 = param_3 >> 1;
+  fVar2 = param_2[iVar6];
+  param_1[iVar6] = param_1[iVar6] * 2.0;
+  param_2[iVar6] = fVar2 * 2.0;
+  if (1 < iVar6) {
+    lVar10 = (longlong)iVar6 + -1;
     do {
-      fVar3 = param_1[1] - pfVar11[-1];
-      fVar4 = pfVar11[-1] + param_1[1];
-      fVar2 = *pfVar8;
-      fVar6 = pfVar10[-1] + param_2[1];
-      fVar7 = param_2[1] - pfVar10[-1];
-      pfVar1 = pfVar8 + 1;
-      pfVar8 = pfVar8 + 2;
-      fVar5 = *pfVar1 * fVar6 + fVar2 * fVar3;
-      fVar2 = fVar2 * fVar6 - *pfVar1 * fVar3;
+      fVar3 = param_1[1] - pfVar12[-1];
+      fVar4 = pfVar12[-1] + param_1[1];
+      fVar2 = *pfVar9;
+      fVar7 = pfVar11[-1] + param_2[1];
+      fVar8 = param_2[1] - pfVar11[-1];
+      pfVar1 = pfVar9 + 1;
+      pfVar9 = pfVar9 + 2;
+      fVar5 = *pfVar1 * fVar7 + fVar2 * fVar3;
+      fVar2 = fVar2 * fVar7 - *pfVar1 * fVar3;
       param_2 = param_2 + 1;
-      *param_2 = fVar5 + fVar7;
+      *param_2 = fVar5 + fVar8;
       param_1 = param_1 + 1;
       *param_1 = fVar4 - fVar2;
+      pfVar12 = pfVar12 + -1;
+      *pfVar12 = fVar2 + fVar4;
       pfVar11 = pfVar11 + -1;
-      *pfVar11 = fVar2 + fVar4;
-      pfVar10 = pfVar10 + -1;
-      *pfVar10 = -(fVar7 - fVar5);
-      lVar9 = lVar9 + -1;
-    } while (lVar9 != 0);
+      *pfVar11 = -(fVar8 - fVar5);
+      lVar10 = lVar10 + -1;
+    } while (lVar10 != 0);
   }
   return;
 }

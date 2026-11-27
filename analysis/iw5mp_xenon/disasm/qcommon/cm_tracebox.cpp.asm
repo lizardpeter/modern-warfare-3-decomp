@@ -87,10 +87,66 @@ LAB_824cfc08:
   824CFC28  39210024             addi r9,r1,0x24
   824CFC2C  D0210024             stfs f1,0x24(r1)
   824CFC30  39400010             li r10,0x10
-  824CFC34  13E02407             vcmpneb. v31,v0,v4
+  824CFC34  13E02407             lvlx128 v63,0,r4
   824CFC38  39000040             li r8,0x40
+  824CFC3C  1BDF0774             vspltisw128 v62,-0x1
+  824CFC40  3CE08405             lis r7,-0x7bfb
+  824CFC44  3964000C             addi r11,r4,0xc
+  824CFC48  13A04C07             lvlx128 v61,0,r9
+  824CFC4C  1960EF31             vspltw128 v11,v61,0x0
+  824CFC50  11A340C3             lvx128 v13,r3,r8
+  824CFC54  38C7F950             subi r6,r7,0x6b0
+  824CFC58  100350C3             lvx128 v0,r3,r10
+  824CFC5C  38A00020             li r5,0x20
+  824CFC60  114B682E             vmaddfp v10,v11,v0,v13
+  824CFC64  138A2447             lvrx128 v60,r10,r4
+  824CFC68  175FE2F5             vor128 v58,v63,v60
+  824CFC6C  13205C07             lvlx128 v57,0,r11
+  824CFC70  130A5C47             lvrx128 v56,r10,r11
+  824CFC74  1B7EF0F5             vslw128 v59,v62,v62
+  824CFC78  13E030C7             lvx128 v63,0,r6
+  824CFC7C  16F9C2F5             vor128 v55,v57,v56
+  824CFC80  11A328C3             lvx128 v13,r3,r5
+  824CFC84  16DAFA35             vand128 v54,v58,v63
+  824CFC88  1597FA31             vand128 v12,v55,v63
+  824CFC8C  116B636E             vmaddfp v11,v11,v13,v12
+  824CFC90  17EAB055             vsubfp128 v63,v10,v54
+  824CFC94  16BFDA75             vandc128 v53,v63,v59
+  824CFC98  1A955964             vcmpgtfp128. v52,v53,v11
+  824CFC9C  419A000C             beq cr6,0x824cfca8
+  824CFCA0  38600001             li r3,0x1
+  824CFCA4  4E800020             blr
+LAB_824cfca8:
+  824CFCA8  3D608405             lis r11,-0x7bfb
+  824CFCAC  1A7EF0F5             vslw128 v51,v62,v62
+  824CFCB0  3D408405             lis r10,-0x7bfb
+  824CFCB4  392BF690             subi r9,r11,0x970
+  824CFCB8  390AF9A0             subi r8,r10,0x660
+  824CFCBC  10E048C3             lvx128 v7,0,r9
+  824CFCC0  10C040C3             lvx128 v6,0,r8
+  824CFCC4  164001C4             vperm128 v50,v0,v0,v7
+  824CFCC8  16200184             vperm128 v49,v0,v0,v6
+  824CFCCC  161FF9E5             vperm128 v48,v63,v63,v7
+  824CFCD0  15FFF9A5             vperm128 v47,v63,v63,v6
+  824CFCD4  15CD69C4             vperm128 v46,v13,v13,v7
+  824CFCD8  15AC6184             vperm128 v45,v12,v12,v6
+  824CFCDC  159180B5             vmulfp128 v44,v49,v48
+  824CFCE0  100D69AB             vperm v0,v13,v13,v6
+  824CFCE4  157278B5             vmulfp128 v43,v50,v47
+  824CFCE8  11AC61EB             vperm v13,v12,v12,v7
+  824CFCEC  158D70B1             vmulfp128 v12,v45,v46
+  824CFCF0  154B6075             vsubfp128 v42,v43,v44
+  824CFCF4  100D602E             vmaddfp v0,v13,v0,v12
+  824CFCF8  152A9A75             vandc128 v41,v42,v51
+  824CFCFC  19090164             vcmpgtfp128. v40,v41,v0
+  824CFD00  7CF02026             mfocrf r7,cr6
+  824CFD04  7CE638F8             nor r6,r7,r7
+  824CFD08  54C3DFFE             rlwinm r3,r6,0x1b,0x1f,0x1f
+  824CFD0C  4E800020             blr
 
 ; 824CFAF0  __lvx  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/vectorintrinsics.h:98)
+  824CFAF0  102320C3             lvx128 v1,r3,r4
+  824CFAF4  4E800020             blr
 
 ; 824CFD10  CM_TraceBox_NoFloat4  (qcommon/cm_tracebox.cpp:101)
   824CFD10  C0C30010             lfs f6,0x10(r3)

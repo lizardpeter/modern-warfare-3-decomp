@@ -3,14 +3,17 @@
 // 82613028  TextureAtlasGetCoords  (universal/textureatlas.cpp:13)
 
 void TextureAtlasGetCoords
-               (double param_1,double param_2,undefined8 param_3,undefined8 param_4,uint param_5,
-               uint param_6,float *param_7,float *param_8,float *param_9,float *param_10)
+               (float param_1,float param_2,uint param_3,uint param_4,float *param_5,float *param_6,
+               float *param_7,float *param_8)
 
 {
+  float *in_r9;
+  float *in_r10;
+  
   *param_8 = 1.0 / (float)param_5;
-  *param_10 = 1.0 / (float)param_6;
-  *param_7 = (float)((double)*param_8 * param_2);
-  *param_9 = (float)((double)*param_10 * param_1);
+  *in_r10 = 1.0 / (float)param_6;
+  *param_7 = *param_8 * param_2;
+  *in_r9 = *in_r10 * param_1;
   return;
 }
 
@@ -18,24 +21,27 @@ void TextureAtlasGetCoords
 // 82613088  TextureAtlas_GetCoords_ByIndex_Pow2Bits  (universal/textureatlas.cpp:22)
 
 void TextureAtlas_GetCoords_ByIndex_Pow2Bits
-               (undefined8 param_1,uint param_2,uint param_3,float *param_4,float *param_5,
-               float *param_6,float *param_7)
+               (uint param_1,uint param_2,uint param_3,float *param_4,float *param_5,float *param_6,
+               float *param_7)
 
 {
   uint uVar1;
   uint uVar2;
-  ulonglong uVar3;
+  uint uVar3;
   
-  uVar3 = __savegprlr_24();
+  uVar3 = __savegprlr_24(param_1);
   uVar1 = 1 << (param_2 & 0x3f);
   uVar2 = 1 << (param_3 & 0x3f);
-  if (((longlong)(int)uVar2 * (longlong)(int)uVar1 & 0xffffffffU) <= (uVar3 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82184110,0x1a,0,0xffffffff82184158,uVar3);
+  if (uVar2 * uVar1 <= uVar3) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\textureatlas.cpp",
+                    0x1a,0,
+                    "tileIndex doesn\'t index ( 1 << tilesWidePow2Bits ) * ( 1 << tilesHighPow2Bits )\n\t%i not in [0, %i)"
+                   );
   }
   *param_5 = 1.0 / (float)uVar1;
   *param_7 = 1.0 / (float)uVar2;
-  *param_4 = (float)((ulonglong)uVar1 - 1 & uVar3 & 0xffffffff) * *param_5;
-  *param_6 = (float)((uint)uVar3 >> (param_2 & 0x3f)) * *param_7;
+  *param_4 = (float)(uVar1 - 1 & uVar3) * *param_5;
+  *param_6 = (float)(uVar3 >> (param_2 & 0x3f)) * *param_7;
   __restgprlr_24();
   return;
 }
@@ -44,37 +50,48 @@ void TextureAtlas_GetCoords_ByIndex_Pow2Bits
 // 82613178  TextureAtlas_GetCoords_ByIndex_Pow2  (universal/textureatlas.cpp:35)
 
 void TextureAtlas_GetCoords_ByIndex_Pow2
-               (undefined8 param_1,ulonglong param_2,ulonglong param_3,float *param_4,float *param_5
-               ,float *param_6,float *param_7)
+               (uint param_1,uint param_2,uint param_3,float *param_4,float *param_5,float *param_6,
+               float *param_7)
 
 {
   uint uVar1;
   uint uVar2;
   ulonglong uVar3;
+  ulonglong uVar4;
+  ulonglong uVar5;
   
-  uVar3 = __savegprlr_22();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82184110,0x27,0,0xffffffff82000f98,0xffffffff82184268);
+  uVar5 = (ulonglong)(int)param_3;
+  uVar4 = (ulonglong)(int)param_2;
+  uVar3 = __savegprlr_22(param_1);
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\textureatlas.cpp",
+                    0x27,0,"%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82184110,0x28,0,0xffffffff82000f98,0xffffffff82184254);
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\textureatlas.cpp",
+                    0x28,0,"%s");
   }
-  if ((param_2 - 1 & param_2 & 0xffffffff) != 0) {
-    MyAssertHandler(0xffffffff82184110,0x29,0,0xffffffff82000f98,0xffffffff82184238);
+  if ((uVar4 - 1 & uVar4 & 0xffffffff) != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\textureatlas.cpp",
+                    0x29,0,"%s");
   }
-  if ((param_3 - 1 & param_3 & 0xffffffff) != 0) {
-    MyAssertHandler(0xffffffff82184110,0x2a,0,0xffffffff82000f98,0xffffffff8218421c);
+  if ((uVar5 - 1 & uVar5 & 0xffffffff) != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\textureatlas.cpp",
+                    0x2a,0,"%s");
   }
-  uVar1 = 1 << ((uint)param_2 & 0x3f);
-  uVar2 = 1 << ((uint)param_3 & 0x3f);
+  uVar1 = 1 << ((uint)uVar4 & 0x3f);
+  uVar2 = 1 << ((uint)uVar5 & 0x3f);
   if (((longlong)(int)uVar2 * (longlong)(int)uVar1 & 0xffffffffU) <= (uVar3 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82184110,0x2b,0,0xffffffff821841c0,uVar3);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\textureatlas.cpp",
+                    0x2b,0,
+                    "tileIndex doesn\'t index ( 1 << tilesWidePow2 ) * ( 1 << tilesHighPow2 )\n\t%i not in [0, %i)"
+                   );
   }
-  trapWord(6,param_2,0);
+  trapWord(6,uVar4,0);
   *param_5 = 1.0 / (float)uVar1;
   *param_7 = 1.0 / (float)uVar2;
-  *param_4 = (float)(param_2 - 1 & uVar3 & 0xffffffff) * *param_5;
-  *param_6 = (float)((uVar3 & 0xffffffff) / (param_2 & 0xffffffff)) * *param_7;
+  *param_4 = (float)(uVar4 - 1 & uVar3 & 0xffffffff) * *param_5;
+  *param_6 = (float)((uVar3 & 0xffffffff) / (uVar4 & 0xffffffff)) * *param_7;
   __restgprlr_22();
   return;
 }
@@ -83,29 +100,36 @@ void TextureAtlas_GetCoords_ByIndex_Pow2
 // 82613318  TextureAtlas_GetCoords_ByIndex  (universal/textureatlas.cpp:52)
 
 void TextureAtlas_GetCoords_ByIndex
-               (undefined8 param_1,ulonglong param_2,ulonglong param_3,float *param_4,float *param_5
-               ,float *param_6,float *param_7)
+               (uint param_1,uint param_2,uint param_3,float *param_4,float *param_5,float *param_6,
+               float *param_7)
 
 {
-  ulonglong uVar1;
+  uint uVar1;
+  ulonglong uVar2;
+  ulonglong uVar3;
   
-  uVar1 = __savegprlr_23();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82184110,0x38,0,0xffffffff82000f98,0xffffffff821842d4);
+  uVar3 = (ulonglong)(int)param_3;
+  uVar2 = (ulonglong)(int)param_2;
+  uVar1 = __savegprlr_23(param_1);
+  if ((uVar2 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\textureatlas.cpp",
+                    0x38,0,"%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82184110,0x39,0,0xffffffff82000f98,0xffffffff821842c4);
+  if ((uVar3 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\textureatlas.cpp",
+                    0x39,0,"%s");
   }
-  if (((longlong)(int)param_2 * (longlong)(int)param_3 & 0xffffffffU) <= (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82184110,0x3a,0,0xffffffff82184280,uVar1);
+  if ((uint)((int)uVar2 * (int)uVar3) <= uVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\textureatlas.cpp",
+                    0x3a,0,"tileIndex doesn\'t index tilesWide * tilesHigh\n\t%i not in [0, %i)");
   }
-  trapWord(6,param_2,0);
-  trapWord(6,param_2,0);
-  *param_5 = 1.0 / (float)(param_2 & 0xffffffff);
-  *param_7 = 1.0 / (float)(param_3 & 0xffffffff);
-  *param_4 = (float)(uVar1 - (longlong)(int)((uVar1 & 0xffffffff) / (param_2 & 0xffffffff)) *
-                             (longlong)(int)param_2 & 0xffffffff) * *param_5;
-  *param_6 = (float)((uVar1 & 0xffffffff) / (param_2 & 0xffffffff)) * *param_7;
+  trapWord(6,uVar2,0);
+  trapWord(6,uVar2,0);
+  *param_5 = 1.0 / (float)(uVar2 & 0xffffffff);
+  *param_7 = 1.0 / (float)(uVar3 & 0xffffffff);
+  *param_4 = (float)(uVar1 - (int)((ulonglong)uVar1 / (uVar2 & 0xffffffff)) * (int)uVar2) * *param_5
+  ;
+  *param_6 = (float)((ulonglong)uVar1 / (uVar2 & 0xffffffff)) * *param_7;
   __restgprlr_23();
   return;
 }
@@ -114,24 +138,29 @@ void TextureAtlas_GetCoords_ByIndex
 // 82613460  TextureAtlas_GetCoords_ByPercent  (universal/textureatlas.cpp:67)
 
 void TextureAtlas_GetCoords_ByPercent
-               (undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4,
-               undefined8 param_5,undefined8 param_6,undefined8 param_7,undefined8 param_8)
+               (float param_1,uint param_2,uint param_3,uint param_4,float *param_5,float *param_6,
+               float *param_7,float *param_8)
 
 {
-  double dVar1;
+  uint uVar1;
+  ulonglong uVar2;
+  float *in_r10;
+  double dVar3;
   
-  dVar1 = (double)__savegprlr_25();
-  if (dVar1 < 0.0) {
-    MyAssertHandler(0xffffffff82184110,0x46,0,0xffffffff82000f98,0xffffffff821842e4);
+  uVar2 = (ulonglong)(int)param_3;
+  dVar3 = (double)__savegprlr_25((double)param_1,param_2);
+  if (dVar3 < 0.0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\textureatlas.cpp",
+                    0x46,0,"%s");
   }
-  if (dVar1 < 1.0) {
-    dVar1 = floor((double)(float)((double)(param_2 & 0xffffffff) * dVar1));
-    param_2 = (ulonglong)(uint)(int)dVar1;
+  if (dVar3 < 1.0) {
+    dVar3 = floor((double)(float)((double)(uVar2 & 0xffffffff) * dVar3));
+    uVar1 = (uint)dVar3;
   }
   else {
-    param_2 = param_2 - 1;
+    uVar1 = (int)uVar2 - 1;
   }
-  TextureAtlas_GetCoords_ByIndex(param_2,param_3,param_4,param_5,param_6,param_7,param_8);
+  TextureAtlas_GetCoords_ByIndex(uVar1,param_4,(uint)param_5,param_6,param_7,param_8,in_r10);
   __restgprlr_25();
   return;
 }

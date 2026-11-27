@@ -2,6 +2,8 @@
 
 // 8274E808  TRACK_r_marks  (gfx_d3d/r_marks.cpp:56)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void TRACK_r_marks(void)
 
 {
@@ -11,152 +13,124 @@ void TRACK_r_marks(void)
 
 // 8274E810  R_CheckMarkTris  (gfx_d3d/r_marks.cpp:129)
 
-void R_CheckMarkTris(void)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+void R_CheckMarkTris(MarkInfo *param_1)
 
 {
   float fVar1;
   float fVar2;
-  float fVar3;
+  ushort uVar3;
   float fVar4;
-  float *pfVar5;
-  float *pfVar6;
-  float *pfVar7;
-  bool bVar8;
-  int iVar9;
-  float *pfVar10;
-  float *pfVar11;
-  longlong lVar12;
-  ulonglong uVar13;
-  float *pfVar14;
-  longlong lVar15;
-  ushort *puVar16;
-  float fVar17;
-  float fVar18;
-  int iVar19;
+  float fVar5;
+  float fVar6;
+  bool bVar7;
+  int iVar8;
+  float *pfVar9;
+  longlong lVar10;
+  ulonglong uVar11;
+  float *pfVar12;
+  int iVar13;
+  ushort *puVar14;
+  ushort *puVar15;
+  uint uVar16;
+  int iVar17;
+  int iVar18;
+  double dVar19;
   double dVar20;
   double dVar21;
-  double dVar22;
-  double dVar23;
-  double dVar24;
-  double dVar25;
-  double dVar26;
-  double dVar27;
-  double dVar28;
-  double dVar29;
   int local_160;
-  float local_140 [6];
-  float local_128;
-  float local_124;
-  float local_120;
+  float local_140 [12];
   float local_110 [68];
   
   __savegprlr();
-  pfVar10 = (float *)__savefpr_22();
-  lVar15 = 0;
-  if (0 < (int)pfVar10[0x110]) {
+  iVar8 = __savefpr_22();
+  iVar13 = 0;
+  if (0 < *(int *)(iVar8 + 0x440)) {
     local_160 = 0;
     dVar21 = 1.0;
     do {
-      fVar1 = pfVar10[0x18];
-      bVar8 = false;
-      lVar12 = 0;
-      iVar19 = 0;
-      puVar16 = (ushort *)(local_160 + (int)fVar1);
+      bVar7 = false;
+      lVar10 = 0;
+      iVar18 = 0;
+      puVar14 = (ushort *)(local_160 + *(int *)(iVar8 + 0x60));
+      puVar15 = puVar14;
       do {
-        lVar12 = lVar12 + 1;
-        fVar18 = (float)(uint)*puVar16;
-        uVar13 = (longlong)(int)lVar12 / 3 + ((longlong)(int)lVar12 >> 0x3f);
-        uVar13 = (uVar13 & 0xffffffff) + ((uVar13 & 0xffffffff) >> 0x1f);
-        fVar17 = (float)(uint)*(ushort *)
-                               ((int)((lVar12 - (uVar13 + (uVar13 & 0x7fffffff) * 2) & 0xffffffff)
-                                     << 1) + local_160 + (int)fVar1);
-        if ((uint)pfVar10[0x111] <= (uint)fVar18) {
-          MyAssertHandler(0xffffffff821c6d94,0x99,0,
-                          "index doesn\'t index markInfo->usedPointCount\n\t%i not in [0, %i)",
-                          fVar18);
+        lVar10 = lVar10 + 1;
+        uVar3 = *puVar15;
+        uVar11 = (longlong)(int)lVar10 / 3 + ((longlong)(int)lVar10 >> 0x3f);
+        uVar11 = (uVar11 & 0xffffffff) + ((uVar11 & 0xffffffff) >> 0x1f);
+        uVar16 = (uint)*(ushort *)
+                        ((int)((lVar10 - (uVar11 + (uVar11 & 0x7fffffff) * 2) & 0xffffffff) << 1) +
+                        (int)puVar14);
+        if (*(uint *)(iVar8 + 0x444) <= (uint)uVar3) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_marks.cpp",
+                          0x99,0,
+                          "index doesn\'t index markInfo->usedPointCount\n\t%i not in [0, %i)");
         }
-        if ((uint)pfVar10[0x111] <= (uint)fVar17) {
-          MyAssertHandler(0xffffffff821c6d94,0x9a,0,
-                          "nextIndex doesn\'t index markInfo->usedPointCount\n\t%i not in [0, %i)",
-                          fVar17);
+        if (*(uint *)(iVar8 + 0x444) <= uVar16) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_marks.cpp",
+                          0x9a,0,
+                          "nextIndex doesn\'t index markInfo->usedPointCount\n\t%i not in [0, %i)");
         }
-        pfVar14 = (float *)((int)fVar18 * 0x20 + (int)pfVar10[0x1a]);
-        pfVar11 = (float *)((int)fVar17 * 0x20 + (int)pfVar10[0x1a]);
-        fVar17 = pfVar14[2];
-        fVar2 = pfVar11[2] - fVar17;
-        fVar3 = *pfVar11 - *pfVar14;
-        fVar18 = pfVar14[1];
-        fVar4 = pfVar11[1] - fVar18;
-        *(float *)((int)local_110 + iVar19) = fVar3;
-        *(float *)((int)local_110 + iVar19 + 4) = fVar4;
-        *(float *)((int)local_110 + iVar19 + 8) = fVar2;
-        *(float *)((int)local_140 + iVar19) = *pfVar14;
-        *(float *)((int)local_140 + iVar19 + 4) = fVar18;
-        *(float *)((int)local_140 + iVar19 + 8) = fVar17;
-        dVar20 = (double)SQRT(fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2);
-        dVar22 = dVar21;
+        pfVar12 = (float *)((uint)uVar3 * 0x20 + *(int *)(iVar8 + 0x68));
+        pfVar9 = (float *)(uVar16 * 0x20 + *(int *)(iVar8 + 0x68));
+        fVar1 = pfVar12[2];
+        fVar4 = pfVar9[2] - fVar1;
+        fVar5 = *pfVar9 - *pfVar12;
+        fVar2 = pfVar12[1];
+        fVar6 = pfVar9[1] - fVar2;
+        *(float *)((int)local_110 + iVar18) = fVar5;
+        *(float *)((int)local_110 + iVar18 + 4) = fVar6;
+        *(float *)((int)local_110 + iVar18 + 8) = fVar4;
+        *(float *)((int)local_140 + iVar18) = *pfVar12;
+        *(float *)((int)local_140 + iVar18 + 4) = fVar2;
+        *(float *)((int)local_140 + iVar18 + 8) = fVar1;
+        dVar20 = (double)SQRT(fVar6 * fVar6 + fVar5 * fVar5 + fVar4 * fVar4);
+        dVar19 = dVar21;
         if (-dVar20 < 0.0) {
-          dVar22 = dVar20;
+          dVar19 = dVar20;
         }
-        fVar17 = (float)(dVar21 / dVar22);
-        *(float *)((int)local_110 + iVar19) = fVar3 * fVar17;
-        *(float *)((int)local_110 + iVar19 + 4) = fVar4 * fVar17;
-        *(float *)((int)local_110 + iVar19 + 8) = fVar2 * fVar17;
+        fVar1 = (float)(dVar21 / dVar19);
+        *(float *)((int)local_110 + iVar18) = fVar5 * fVar1;
+        *(float *)((int)local_110 + iVar18 + 4) = fVar6 * fVar1;
+        *(float *)((int)local_110 + iVar18 + 8) = fVar4 * fVar1;
         if (2048.0 < dVar20) {
-          bVar8 = true;
+          bVar7 = true;
         }
-        iVar19 = iVar19 + 0xc;
-        puVar16 = puVar16 + 1;
-      } while (iVar19 < 0x24);
-      dVar29 = (double)local_120;
-      iVar19 = 0;
-      dVar28 = (double)local_124;
-      pfVar11 = local_110 + 2;
-      dVar27 = (double)local_128;
-      dVar26 = (double)local_140[5];
-      dVar25 = (double)local_140[4];
-      dVar24 = (double)local_140[3];
-      dVar23 = (double)local_140[2];
-      dVar20 = (double)local_140[1];
-      dVar22 = (double)local_140[0];
+        iVar18 = iVar18 + 0xc;
+        puVar15 = puVar15 + 1;
+      } while (iVar18 < 0x24);
+      iVar18 = 0;
+      pfVar9 = local_110 + 2;
       do {
-        iVar19 = iVar19 + 1;
-        uVar13 = (longlong)iVar19 / 3 + ((longlong)iVar19 >> 0x3f);
-        iVar9 = iVar19 + ((int)uVar13 + (int)((uVar13 & 0xffffffff) >> 0x1f)) * -3;
-        if ((0.95 < local_110[iVar9 * 3 + 2] * *pfVar11 +
-                    local_110[iVar9 * 3 + 1] * pfVar11[-1] + local_110[iVar9 * 3] * pfVar11[-2]) &&
-           (bVar8)) {
-          Com_Printf(0xe,0xffffffff821c6dd4);
-          Com_Printf(dVar22,dVar20,dVar23,dVar24,dVar25,dVar26,dVar27,dVar28,dVar29,0xe,
-                     0xffffffff821c6e10,lVar15,dVar22,dVar20,dVar23,dVar24,dVar25);
-          Com_Printf(0xe,0xffffffff821c6e44,(double)pfVar10[0xd],(double)pfVar10[0xe],
-                     (double)pfVar10[0xf],(double)pfVar10[0x10],(double)pfVar10[0x11],
-                     (double)pfVar10[0x12]);
-          Com_Printf(0xe,0xffffffff821c6e74,(double)*pfVar10,(double)pfVar10[1],(double)pfVar10[2],
-                     (double)pfVar10[3]);
-          lVar12 = 0;
-          pfVar14 = pfVar10 + 0x1a;
+        iVar18 = iVar18 + 1;
+        uVar11 = (longlong)iVar18 / 3 + ((longlong)iVar18 >> 0x3f);
+        iVar17 = iVar18 + ((int)uVar11 + (int)((uVar11 & 0xffffffff) >> 0x1f)) * -3;
+        if ((0.95 < local_110[iVar17 * 3 + 2] * *pfVar9 +
+                    local_110[iVar17 * 3 + 1] * pfVar9[-1] + local_110[iVar17 * 3] * pfVar9[-2]) &&
+           (bVar7)) {
+          Com_Printf(0xe,"R_MarkFragments: Sliver mark found.  Mark info follows.\n");
+          Com_Printf(0xe,"  Bogus tri (%d): (%f %f %f) (%f %f %f) (%f %f %f)\n");
+          Com_Printf(0xe,"  Mark axis: (%f %f %f) (%f %f %f) (%f %f %f)\n");
+          Com_Printf(0xe,"  Bounds: (%f %f %f) %f\n");
+          iVar17 = 0;
           do {
-            pfVar5 = pfVar14 + 1;
-            pfVar6 = pfVar14 + 2;
-            pfVar7 = pfVar14 + 3;
-            pfVar14 = pfVar14 + 4;
-            Com_Printf(0xe,0xffffffff821c6e90,lVar12,(double)*pfVar5,(double)*pfVar6,(double)*pfVar7
-                       ,(double)*pfVar14);
-            lVar12 = lVar12 + 1;
-          } while ((int)lVar12 < 6);
-          Com_Printf(0xe,"  LocalOrigin: (%f %f %f)\n",(double)pfVar10[7],(double)pfVar10[8],
-                     (double)pfVar10[9]);
-          if (DAT_84013128 == 0) {
-            MyAssertHandler(0xffffffff821c6d94,0xb9,0,
-                            "Sliver mark, please see console log for details.");
+            Com_Printf(0xe,"  Plane %d: (%f %f %f) %f\n");
+            iVar17 = iVar17 + 1;
+          } while (iVar17 < 6);
+          Com_Printf(0xe,"  LocalOrigin: (%f %f %f)\n");
+          if (alwaysfails == 0) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_marks.cpp",
+                            0xb9,0,"Sliver mark, please see console log for details.");
           }
         }
-        pfVar11 = pfVar11 + 3;
-      } while (iVar19 < 3);
-      lVar15 = lVar15 + 1;
+        pfVar9 = pfVar9 + 3;
+      } while (iVar18 < 3);
+      iVar13 = iVar13 + 1;
       local_160 = local_160 + 0xe;
-    } while ((int)lVar15 < (int)pfVar10[0x110]);
+    } while (iVar13 < *(int *)(iVar8 + 0x440));
   }
   __restfpr_22();
   __restgprlr();
@@ -165,6 +139,8 @@ void R_CheckMarkTris(void)
 
 
 // 8274ECC0  R_RegisterMarkDvars  (gfx_d3d/r_marks.cpp:194)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void R_RegisterMarkDvars(void)
 
@@ -176,21 +152,21 @@ void R_RegisterMarkDvars(void)
 // 8274ECC8  R_LerpModelMarkPoints  (gfx_d3d/r_marks.cpp:203)
 
 void R_LerpModelMarkPoints
-               (double param_1,float *param_2,float *param_3,undefined8 param_4,float *param_5)
+               (FxModelMarkPoint *param_1,FxModelMarkPoint *param_2,float param_3,
+               FxModelMarkPoint *param_4)
 
 {
-  *param_5 = (float)((double)(float)((double)*param_3 - (double)*param_2) * param_1 +
-                    (double)*param_2);
-  param_5[1] = (float)((double)(float)((double)param_3[1] - (double)param_2[1]) * param_1 +
-                      (double)param_2[1]);
-  param_5[2] = (float)((double)(float)((double)param_3[2] - (double)param_2[2]) * param_1 +
-                      (double)param_2[2]);
-  param_5[3] = (float)((double)(float)((double)param_3[3] - (double)param_2[3]) * param_1 +
-                      (double)param_2[3]);
-  param_5[4] = (float)((double)(float)((double)param_3[4] - (double)param_2[4]) * param_1 +
-                      (double)param_2[4]);
-  param_5[5] = (float)((double)(float)((double)param_3[5] - (double)param_2[5]) * param_1 +
-                      (double)param_2[5]);
+  float *in_r6;
+  
+  *in_r6 = (param_2->xyz[0] - param_1->xyz[0]) * param_3 + param_1->xyz[0];
+  in_r6[1] = (param_2->xyz[1] - param_1->xyz[1]) * param_3 + param_1->xyz[1];
+  in_r6[2] = (param_2->xyz[2] - param_1->xyz[2]) * param_3 + param_1->xyz[2];
+  in_r6[3] = (param_2->vertWeights[0] - param_1->vertWeights[0]) * param_3 + param_1->vertWeights[0]
+  ;
+  in_r6[4] = (param_2->vertWeights[1] - param_1->vertWeights[1]) * param_3 + param_1->vertWeights[1]
+  ;
+  in_r6[5] = (param_2->vertWeights[2] - param_1->vertWeights[2]) * param_3 + param_1->vertWeights[2]
+  ;
   return;
 }
 
@@ -224,7 +200,8 @@ void R_LerpModelMarkPoints
 /* WARNING: Removing unreachable block (ram,0x8274f0fc) */
 /* WARNING: Removing unreachable block (ram,0x8274f110) */
 
-void R_ChopPolyBehindPlane(undefined8 param_1,longlong param_2,undefined8 param_3,float *param_4)
+int R_ChopPolyBehindPlane
+              (int param_1,FxModelMarkPoint *param_2,FxModelMarkPoint *param_3,float *param_4)
 
 {
   float fVar1;
@@ -235,9 +212,10 @@ void R_ChopPolyBehindPlane(undefined8 param_1,longlong param_2,undefined8 param_
   float *pfVar6;
   int iVar7;
   int iVar8;
-  int iVar9;
-  int *piVar10;
-  int iVar11;
+  longlong lVar9;
+  int iVar10;
+  int *piVar11;
+  int iVar12;
   undefined8 in_f30;
   undefined8 in_f31;
   int local_f0 [4];
@@ -246,11 +224,13 @@ void R_ChopPolyBehindPlane(undefined8 param_1,longlong param_2,undefined8 param_
   undefined8 local_88;
   undefined8 local_80;
   
-  iVar7 = __savegprlr_18();
+  lVar9 = (longlong)(int)param_2;
+  iVar7 = __savegprlr_18(param_1);
   local_88 = in_f30;
   local_80 = in_f31;
   if (9 < iVar7) {
-    MyAssertHandler(0xffffffff821c6d94,0xdf,0,0xffffffff821c7008,0xffffffff821c7020,iVar7);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_marks.cpp",0xdf,0,
+                    "%s\n\t(inPointCount) = %i");
   }
   local_f0[0] = 0;
   local_f0[1] = 0;
@@ -260,58 +240,58 @@ void R_ChopPolyBehindPlane(undefined8 param_1,longlong param_2,undefined8 param_
     fVar1 = param_4[1];
     fVar2 = *param_4;
     fVar3 = param_4[2];
-    param_2 = param_2 + 8;
+    lVar9 = lVar9 + 8;
     fVar4 = param_4[3];
-    iVar9 = 0;
-    iVar11 = iVar7;
+    iVar10 = 0;
+    iVar12 = iVar7;
     do {
-      pfVar6 = (float *)param_2;
+      pfVar6 = (float *)lVar9;
       fVar5 = (*pfVar6 * fVar3 + fVar1 * pfVar6[-1] + pfVar6[-2] * fVar2) - fVar4;
-      *(float *)((int)local_b0 + iVar9) = fVar5;
-      piVar10 = (int *)((int)local_e0 + iVar9);
+      *(float *)((int)local_b0 + iVar10) = fVar5;
+      piVar11 = (int *)((int)local_e0 + iVar10);
       if (fVar5 <= 0.5) {
         if (-0.5 <= fVar5) {
-          *piVar10 = 2;
+          *piVar11 = 2;
         }
         else {
-          *piVar10 = 1;
+          *piVar11 = 1;
         }
       }
       else {
-        *piVar10 = 0;
+        *piVar11 = 0;
       }
-      param_2 = param_2 + 0x18;
-      iVar9 = iVar9 + 4;
-      local_f0[*piVar10] = local_f0[*piVar10] + 1;
-      iVar11 = iVar11 + -1;
+      lVar9 = lVar9 + 0x18;
+      iVar10 = iVar10 + 4;
+      local_f0[*piVar11] = local_f0[*piVar11] + 1;
+      iVar12 = iVar12 + -1;
       iVar8 = iVar7;
-    } while (iVar11 != 0);
+    } while (iVar12 != 0);
   }
   local_e0[iVar8] = local_e0[0];
   local_b0[iVar8] = local_b0[0];
-  __restgprlr_18(0);
-  return;
+  iVar7 = __restgprlr_18(0);
+  return iVar7;
 }
 
 
 // 8274F128  R_LerpWorldMarkPoints  (gfx_d3d/r_marks.cpp:295)
 
 void R_LerpWorldMarkPoints
-               (double param_1,float *param_2,float *param_3,undefined8 param_4,float *param_5)
+               (FxWorldMarkPoint *param_1,FxWorldMarkPoint *param_2,float param_3,
+               FxWorldMarkPoint *param_4)
 
 {
-  *param_5 = (float)((double)(float)((double)*param_3 - (double)*param_2) * param_1 +
-                    (double)*param_2);
-  param_5[1] = (float)((double)(float)((double)param_3[1] - (double)param_2[1]) * param_1 +
-                      (double)param_2[1]);
-  param_5[2] = (float)((double)(float)((double)param_3[2] - (double)param_2[2]) * param_1 +
-                      (double)param_2[2]);
-  param_5[3] = (float)((double)(float)((double)param_3[3] - (double)param_2[3]) * param_1 +
-                      (double)param_2[3]);
-  param_5[4] = (float)((double)(float)((double)param_3[4] - (double)param_2[4]) * param_1 +
-                      (double)param_2[4]);
-  param_5[5] = (float)((double)(float)((double)param_3[5] - (double)param_2[5]) * param_1 +
-                      (double)param_2[5]);
+  float *in_r6;
+  
+  *in_r6 = (param_2->xyz[0] - param_1->xyz[0]) * param_3 + param_1->xyz[0];
+  in_r6[1] = (param_2->xyz[1] - param_1->xyz[1]) * param_3 + param_1->xyz[1];
+  in_r6[2] = (param_2->xyz[2] - param_1->xyz[2]) * param_3 + param_1->xyz[2];
+  in_r6[3] = (param_2->vertWeights[0] - param_1->vertWeights[0]) * param_3 + param_1->vertWeights[0]
+  ;
+  in_r6[4] = (param_2->vertWeights[1] - param_1->vertWeights[1]) * param_3 + param_1->vertWeights[1]
+  ;
+  in_r6[5] = (param_2->vertWeights[2] - param_1->vertWeights[2]) * param_3 + param_1->vertWeights[2]
+  ;
   return;
 }
 
@@ -345,8 +325,8 @@ void R_LerpWorldMarkPoints
 /* WARNING: Removing unreachable block (ram,0x8274f55c) */
 /* WARNING: Removing unreachable block (ram,0x8274f570) */
 
-void R_ChopWorldPolyBehindPlane
-               (undefined8 param_1,longlong param_2,undefined8 param_3,float *param_4)
+int R_ChopWorldPolyBehindPlane
+              (int param_1,FxWorldMarkPoint *param_2,FxWorldMarkPoint *param_3,float *param_4)
 
 {
   float fVar1;
@@ -357,9 +337,10 @@ void R_ChopWorldPolyBehindPlane
   float *pfVar6;
   int iVar7;
   int iVar8;
-  int iVar9;
-  int *piVar10;
-  int iVar11;
+  longlong lVar9;
+  int iVar10;
+  int *piVar11;
+  int iVar12;
   undefined8 in_f30;
   undefined8 in_f31;
   int local_f0 [4];
@@ -368,11 +349,13 @@ void R_ChopWorldPolyBehindPlane
   undefined8 local_88;
   undefined8 local_80;
   
-  iVar7 = __savegprlr_18();
+  lVar9 = (longlong)(int)param_2;
+  iVar7 = __savegprlr_18(param_1);
   local_88 = in_f30;
   local_80 = in_f31;
   if (9 < iVar7) {
-    MyAssertHandler(0xffffffff821c6d94,0x13b,0,0xffffffff821c7008,0xffffffff821c7020,iVar7);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_marks.cpp",0x13b,0,
+                    "%s\n\t(inPointCount) = %i");
   }
   local_f0[0] = 0;
   local_f0[1] = 0;
@@ -382,109 +365,126 @@ void R_ChopWorldPolyBehindPlane
     fVar1 = param_4[1];
     fVar2 = *param_4;
     fVar3 = param_4[2];
-    param_2 = param_2 + 8;
+    lVar9 = lVar9 + 8;
     fVar4 = param_4[3];
-    iVar9 = 0;
-    iVar11 = iVar7;
+    iVar10 = 0;
+    iVar12 = iVar7;
     do {
-      pfVar6 = (float *)param_2;
+      pfVar6 = (float *)lVar9;
       fVar5 = (*pfVar6 * fVar3 + fVar1 * pfVar6[-1] + pfVar6[-2] * fVar2) - fVar4;
-      *(float *)((int)local_b0 + iVar9) = fVar5;
-      piVar10 = (int *)((int)local_e0 + iVar9);
+      *(float *)((int)local_b0 + iVar10) = fVar5;
+      piVar11 = (int *)((int)local_e0 + iVar10);
       if (fVar5 <= 0.5) {
         if (-0.5 <= fVar5) {
-          *piVar10 = 2;
+          *piVar11 = 2;
         }
         else {
-          *piVar10 = 1;
+          *piVar11 = 1;
         }
       }
       else {
-        *piVar10 = 0;
+        *piVar11 = 0;
       }
-      param_2 = param_2 + 0x18;
-      iVar9 = iVar9 + 4;
-      local_f0[*piVar10] = local_f0[*piVar10] + 1;
-      iVar11 = iVar11 + -1;
+      lVar9 = lVar9 + 0x18;
+      iVar10 = iVar10 + 4;
+      local_f0[*piVar11] = local_f0[*piVar11] + 1;
+      iVar12 = iVar12 + -1;
       iVar8 = iVar7;
-    } while (iVar11 != 0);
+    } while (iVar12 != 0);
   }
   local_e0[iVar8] = local_e0[0];
   local_b0[iVar8] = local_b0[0];
-  __restgprlr_18(0);
-  return;
+  iVar7 = __restgprlr_18(0);
+  return iVar7;
 }
 
 
 // 8274F588  R_Mark_MaterialAllowsMarks  (gfx_d3d/r_marks.cpp:387)
 
-bool R_Mark_MaterialAllowsMarks(int param_1,int param_2)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+bool R_Mark_MaterialAllowsMarks(Material *param_1,Material *param_2)
 
 {
-  if ((*(byte *)(param_1 + 4) & 5) != 0) {
+  uint uVar1;
+  
+  if (((param_1->info).field0_0x0.field_0x4 & 5) != 0) {
     return false;
   }
-  return *(uint *)(param_2 + 0x10) == (*(uint *)(param_1 + 0x10) & *(uint *)(param_2 + 0x10));
+  uVar1 = *(uint *)((int)&(param_2->info).field0_0x0.field1_0x8 + 8);
+  return uVar1 == (*(uint *)((int)&(param_1->info).field0_0x0.field1_0x8 + 8) & uVar1);
 }
 
 
 // 8274F5C0  R_AllowMarks  (gfx_d3d/r_marks.cpp:407)
 
-bool R_AllowMarks(int param_1,int param_2)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+int R_AllowMarks(int param_1,void *param_2)
 
 {
-  int iVar1;
+  Material *pMVar1;
   
-  iVar1 = *(int *)(*(int *)(DAT_846178cc + 0x50) + param_1 * 0x18 + 0x10);
-  if ((*(byte *)(iVar1 + 4) & 5) != 0) {
-    return false;
+  pMVar1 = g_worldDpvs->surfaces[param_1].material;
+  if (((pMVar1->info).field0_0x0.field_0x4 & 5) != 0) {
+    return 0;
   }
-  return *(uint *)(param_2 + 0x10) == (*(uint *)(iVar1 + 0x10) & *(uint *)(param_2 + 0x10));
+  return (uint)LZCOUNT(*(uint *)((int)param_2 + 0x10) -
+                       (*(uint *)((int)&(pMVar1->info).field0_0x0.field1_0x8 + 8) &
+                       *(uint *)((int)param_2 + 0x10))) >> 5;
 }
 
 
 // 8274F620  R_AllowSmodelMarks  (gfx_d3d/r_marks.cpp:415)
 
-longlong R_AllowSmodelMarks(int param_1)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+int R_AllowSmodelMarks(int param_1,void *param_2)
 
 {
-  ulonglong uVar1;
+  ushort uVar1;
   longlong lVar2;
   
-  uVar1 = (ulonglong)*(ushort *)(*(int *)(DAT_846178cc + 0x58) + param_1 * 0x2c + 0x22);
-  lVar2 = uVar1 - 1;
-  return lVar2 - ((uVar1 - 2) + (ulonglong)(lVar2 == 0));
+  uVar1 = g_worldDpvs->smodelDrawInsts[param_1].lightingHandle;
+  lVar2 = (ulonglong)uVar1 - 1;
+  return (int)lVar2 - ((uVar1 - 2) + (uint)(lVar2 == 0));
 }
 
 
 // 82751310  R_AddMarkFragment<1>  (gfx_d3d/r_marks.cpp:422)
 
-void R_AddMarkFragment<1>
-               (undefined8 param_1,longlong param_2,longlong param_3,short param_4,int param_5,
-               longlong param_6,int param_7,longlong param_8)
+int R_AddMarkFragment<1>
+              (FxModelMarkPoint (*param_1) [9],float (*param_2) [4],GfxMarkContext *param_3,
+              int param_4,int param_5,FxMarkTri *param_6,int param_7,TriangleVisitorVertex *param_8,
+              float (*param_9) [3],FxMarkPoint *param_10)
 
 {
   int iVar1;
   int iVar2;
   int iVar3;
   int iVar4;
-  longlong lVar5;
-  int iVar6;
+  int iVar5;
+  longlong lVar6;
+  short sVar8;
   float *pfVar7;
-  float *pfVar9;
-  longlong lVar8;
-  ulonglong uVar10;
-  float *pfVar12;
-  longlong lVar11;
-  ulonglong uVar13;
-  short sVar14;
-  undefined4 *puVar15;
-  short *psVar16;
+  float *pfVar10;
+  longlong lVar9;
+  ulonglong uVar11;
+  float *pfVar13;
+  longlong lVar12;
+  ulonglong uVar14;
+  short sVar15;
+  undefined4 *puVar16;
   longlong lVar17;
-  ulonglong uVar18;
-  int iVar19;
-  longlong lVar20;
-  undefined4 in_stack_00000054;
+  short *psVar18;
+  longlong lVar19;
+  ulonglong uVar20;
+  int iVar21;
+  longlong lVar22;
+  longlong lVar23;
+  float (*in_stack_00000054) [3];
   uint in_stack_0000005c;
   float local_a0;
   float local_9c;
@@ -496,170 +496,174 @@ void R_AddMarkFragment<1>
   float local_84;
   float local_80;
   
-  lVar5 = __savegprlr_18();
-  uVar18 = 0;
-  lVar17 = 3;
-  iVar19 = 0;
+  lVar17 = (longlong)(int)param_6;
+  sVar8 = (short)param_4;
+  lVar6 = (longlong)(int)param_3;
+  lVar22 = (longlong)(int)param_2;
+  iVar4 = __savegprlr_18(param_1);
+  uVar20 = 0;
+  lVar19 = 3;
+  iVar21 = 0;
   while( true ) {
-    lVar17 = R_ChopPolyBehindPlane
-                       (lVar17,uVar18 * 0xd8 + lVar5,(ulonglong)((int)uVar18 == 0) * 0xd8 + lVar5,
-                        param_2);
-    iVar6 = (int)lVar17;
-    if (9 < iVar6) {
-      MyAssertHandler(0xffffffff821c6d94,0x1b5,0,0xffffffff821c71e4,0xffffffff821c71c8,lVar17);
+    iVar5 = R_ChopPolyBehindPlane
+                      ((int)lVar19,(FxModelMarkPoint *)((int)uVar20 * 0xd8 + iVar4),
+                       (FxModelMarkPoint *)(((uint)LZCOUNT((int)uVar20) >> 5) * 0xd8 + iVar4),
+                       (float *)lVar22);
+    lVar19 = (longlong)iVar5;
+    if (9 < iVar5) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_marks.cpp",0x1b5,0
+                      ,"%s\n\t(clipPointCount) = %i");
     }
-    uVar18 = uVar18 ^ 1;
-    if (iVar6 == 0) break;
-    iVar19 = iVar19 + 1;
-    param_2 = param_2 + 0x10;
-    if (5 < iVar19) {
-      if (iVar6 <= param_7) {
-        if ((int)(lVar17 - 2U) + (int)((lVar17 - 2U & 0xffffffff) << 1) <= param_5) {
-          MatrixTransformVector(param_8 + 0xc,in_stack_00000054,&local_a0);
-          MatrixTransformVector(param_8 + 0x24,in_stack_00000054,&local_94);
-          MatrixTransformVector(param_8 + 0x3c,in_stack_00000054,&local_88);
-          uVar13 = 0;
-          iVar19 = (int)lVar5;
-          if (3 < iVar6) {
-            lVar11 = uVar18 * 9;
-            lVar5 = (ulonglong)in_stack_0000005c - 4;
-            do {
-              uVar10 = lVar11 + uVar13 + 2;
-              iVar3 = (int)((lVar11 + uVar13 + (lVar11 + uVar13 & 0x7fffffff) * 2 & 0x1fffffff) << 3
-                           );
-              iVar2 = iVar3 + iVar19;
-              iVar1 = (int)lVar5;
-              *(undefined4 *)(iVar1 + 4) = *(undefined4 *)(iVar3 + iVar19);
-              *(undefined4 *)(iVar1 + 8) = *(undefined4 *)(iVar2 + 4);
-              *(undefined4 *)(iVar1 + 0xc) = *(undefined4 *)(iVar2 + 8);
-              *(undefined4 *)(iVar1 + 0x10) = 0;
-              *(undefined4 *)(iVar1 + 0x14) = 0;
-              *(float *)(iVar1 + 0x18) =
-                   local_94 * *(float *)(iVar2 + 0x10) +
-                   *(float *)(iVar2 + 0xc) * local_a0 + local_88 * *(float *)(iVar2 + 0x14);
-              *(float *)(iVar1 + 0x1c) =
-                   local_90 * *(float *)(iVar2 + 0x10) +
-                   *(float *)(iVar2 + 0xc) * local_9c + local_84 * *(float *)(iVar2 + 0x14);
-              *(float *)(iVar1 + 0x20) =
-                   local_8c * *(float *)(iVar2 + 0x10) +
-                   *(float *)(iVar2 + 0xc) * local_98 + local_80 * *(float *)(iVar2 + 0x14);
-              *(undefined4 *)(iVar1 + 0x24) = *(undefined4 *)(iVar2 + 0x18);
-              *(undefined4 *)(iVar1 + 0x28) = *(undefined4 *)(iVar2 + 0x1c);
-              iVar4 = (int)((uVar10 + (uVar10 & 0x7fffffff) * 2 & 0x1fffffff) << 3);
-              iVar3 = iVar4 + iVar19;
-              *(undefined4 *)(iVar1 + 0x2c) = *(undefined4 *)(iVar2 + 0x20);
-              *(undefined4 *)(iVar1 + 0x30) = 0;
-              pfVar7 = (float *)(iVar3 + 0xc);
-              *(undefined4 *)(iVar1 + 0x34) = 0;
-              *(float *)(iVar1 + 0x38) =
-                   local_94 * *(float *)(iVar2 + 0x28) +
-                   *(float *)(iVar2 + 0x24) * local_a0 + local_88 * *(float *)(iVar2 + 0x2c);
-              *(float *)(iVar1 + 0x3c) =
-                   local_90 * *(float *)(iVar2 + 0x28) +
-                   *(float *)(iVar2 + 0x24) * local_9c + local_84 * *(float *)(iVar2 + 0x2c);
-              pfVar12 = (float *)(iVar3 + 0x10);
-              *(float *)(iVar1 + 0x40) =
-                   local_8c * *(float *)(iVar2 + 0x28) +
-                   *(float *)(iVar2 + 0x24) * local_98 + local_80 * *(float *)(iVar2 + 0x2c);
-              *(undefined4 *)(iVar1 + 0x44) = *(undefined4 *)(iVar4 + iVar19);
-              *(undefined4 *)(iVar1 + 0x48) = *(undefined4 *)(iVar3 + 4);
-              *(undefined4 *)(iVar1 + 0x4c) = *(undefined4 *)(iVar3 + 8);
-              *(undefined4 *)(iVar1 + 0x50) = 0;
-              pfVar9 = (float *)(iVar3 + 0x14);
-              *(undefined4 *)(iVar1 + 0x54) = 0;
-              iVar2 = (int)uVar13;
-              uVar13 = uVar13 + 4;
-              puVar15 = (undefined4 *)(((int)lVar11 + 3 + iVar2) * 0x18 + iVar19);
-              *(float *)(iVar1 + 0x58) =
-                   local_94 * *pfVar12 + *pfVar7 * local_a0 + local_88 * *pfVar9;
-              *(float *)(iVar1 + 0x5c) =
-                   local_90 * *pfVar12 + *pfVar7 * local_9c + local_84 * *pfVar9;
-              *(float *)(iVar1 + 0x60) =
-                   local_8c * *pfVar12 + *pfVar7 * local_98 + local_80 * *pfVar9;
-              *(undefined4 *)(iVar1 + 100) = *puVar15;
-              *(undefined4 *)(iVar1 + 0x68) = puVar15[1];
-              *(undefined4 *)(iVar1 + 0x6c) = puVar15[2];
-              *(undefined4 *)(iVar1 + 0x70) = 0;
-              *(undefined4 *)(iVar1 + 0x74) = 0;
-              *(float *)(iVar1 + 0x78) =
-                   local_94 * (float)puVar15[4] +
-                   (float)puVar15[3] * local_a0 + local_88 * (float)puVar15[5];
-              *(float *)(iVar1 + 0x7c) =
-                   local_90 * (float)puVar15[4] +
-                   (float)puVar15[3] * local_9c + local_84 * (float)puVar15[5];
-              lVar5 = lVar5 + 0x80;
-              *(float *)lVar5 =
-                   local_8c * (float)puVar15[4] +
-                   (float)puVar15[3] * local_98 + local_80 * (float)puVar15[5];
-            } while ((int)uVar13 < iVar6 + -3);
-          }
-          if ((int)uVar13 < iVar6) {
-            lVar11 = lVar17 - uVar13;
-            lVar5 = (uVar13 & 0x7ffffff) * 0x20 + (ulonglong)in_stack_0000005c + -4;
-            do {
-              iVar1 = (int)uVar13;
-              uVar13 = uVar13 + 1;
-              puVar15 = (undefined4 *)(((int)uVar18 * 9 + iVar1) * 0x18 + iVar19);
-              iVar1 = (int)lVar5;
-              *(undefined4 *)(iVar1 + 4) = *puVar15;
-              *(undefined4 *)(iVar1 + 8) = puVar15[1];
-              *(undefined4 *)(iVar1 + 0xc) = puVar15[2];
-              *(undefined4 *)(iVar1 + 0x10) = 0;
-              *(undefined4 *)(iVar1 + 0x14) = 0;
-              *(float *)(iVar1 + 0x18) =
-                   local_94 * (float)puVar15[4] +
-                   (float)puVar15[3] * local_a0 + local_88 * (float)puVar15[5];
-              *(float *)(iVar1 + 0x1c) =
-                   local_90 * (float)puVar15[4] +
-                   (float)puVar15[3] * local_9c + local_84 * (float)puVar15[5];
-              lVar5 = lVar5 + 0x20;
-              *(float *)lVar5 =
-                   local_8c * (float)puVar15[4] +
-                   (float)puVar15[3] * local_98 + local_80 * (float)puVar15[5];
-              lVar11 = lVar11 + -1;
-            } while (lVar11 != 0);
-          }
-          sVar14 = 2;
-          if (2 < iVar6) {
-            param_6 = param_6 + 4;
-            lVar5 = lVar17 + -2;
-            do {
-              psVar16 = (short *)param_6;
-              *psVar16 = param_4;
-              psVar16[-1] = sVar14 + param_4;
-              lVar8 = param_6 + 1;
-              psVar16[-2] = param_4 + -1 + sVar14;
-              lVar11 = param_3 + -1;
-              lVar20 = 7;
-              do {
-                lVar11 = lVar11 + 1;
-                lVar8 = lVar8 + 1;
-                *(undefined1 *)lVar8 = *(undefined1 *)lVar11;
-                lVar20 = lVar20 + -1;
-              } while (lVar20 != 0);
-              lVar5 = lVar5 + -1;
-              param_6 = param_6 + 0xe;
-              sVar14 = sVar14 + 1;
-            } while (lVar5 != 0);
-          }
-          __restgprlr_18(lVar17);
-          return;
+    uVar20 = uVar20 ^ 1;
+    if (iVar5 == 0) break;
+    iVar21 = iVar21 + 1;
+    lVar22 = lVar22 + 0x10;
+    if (5 < iVar21) {
+      if ((iVar5 <= param_7) &&
+         ((int)(lVar19 - 2U) + (int)((lVar19 - 2U & 0xffffffff) << 1) <= param_5)) {
+        MatrixTransformVector(param_8->normal,in_stack_00000054,&local_a0);
+        MatrixTransformVector(param_8[1].normal,in_stack_00000054,&local_94);
+        MatrixTransformVector(param_8[2].normal,in_stack_00000054,&local_88);
+        uVar14 = 0;
+        if (3 < iVar5) {
+          lVar12 = uVar20 * 9;
+          lVar22 = (ulonglong)in_stack_0000005c - 4;
+          do {
+            uVar11 = lVar12 + uVar14 + 2;
+            iVar2 = (int)((lVar12 + uVar14 + (lVar12 + uVar14 & 0x7fffffff) * 2 & 0x1fffffff) << 3);
+            iVar1 = iVar2 + iVar4;
+            iVar21 = (int)lVar22;
+            *(undefined4 *)(iVar21 + 4) = *(undefined4 *)(iVar2 + iVar4);
+            *(undefined4 *)(iVar21 + 8) = *(undefined4 *)(iVar1 + 4);
+            *(undefined4 *)(iVar21 + 0xc) = *(undefined4 *)(iVar1 + 8);
+            *(undefined4 *)(iVar21 + 0x10) = 0;
+            *(undefined4 *)(iVar21 + 0x14) = 0;
+            *(float *)(iVar21 + 0x18) =
+                 local_94 * *(float *)(iVar1 + 0x10) +
+                 *(float *)(iVar1 + 0xc) * local_a0 + local_88 * *(float *)(iVar1 + 0x14);
+            *(float *)(iVar21 + 0x1c) =
+                 local_90 * *(float *)(iVar1 + 0x10) +
+                 *(float *)(iVar1 + 0xc) * local_9c + local_84 * *(float *)(iVar1 + 0x14);
+            *(float *)(iVar21 + 0x20) =
+                 local_8c * *(float *)(iVar1 + 0x10) +
+                 *(float *)(iVar1 + 0xc) * local_98 + local_80 * *(float *)(iVar1 + 0x14);
+            *(undefined4 *)(iVar21 + 0x24) = *(undefined4 *)(iVar1 + 0x18);
+            *(undefined4 *)(iVar21 + 0x28) = *(undefined4 *)(iVar1 + 0x1c);
+            iVar3 = (int)((uVar11 + (uVar11 & 0x7fffffff) * 2 & 0x1fffffff) << 3);
+            iVar2 = iVar3 + iVar4;
+            *(undefined4 *)(iVar21 + 0x2c) = *(undefined4 *)(iVar1 + 0x20);
+            *(undefined4 *)(iVar21 + 0x30) = 0;
+            pfVar7 = (float *)(iVar2 + 0xc);
+            *(undefined4 *)(iVar21 + 0x34) = 0;
+            *(float *)(iVar21 + 0x38) =
+                 local_94 * *(float *)(iVar1 + 0x28) +
+                 *(float *)(iVar1 + 0x24) * local_a0 + local_88 * *(float *)(iVar1 + 0x2c);
+            *(float *)(iVar21 + 0x3c) =
+                 local_90 * *(float *)(iVar1 + 0x28) +
+                 *(float *)(iVar1 + 0x24) * local_9c + local_84 * *(float *)(iVar1 + 0x2c);
+            pfVar13 = (float *)(iVar2 + 0x10);
+            *(float *)(iVar21 + 0x40) =
+                 local_8c * *(float *)(iVar1 + 0x28) +
+                 *(float *)(iVar1 + 0x24) * local_98 + local_80 * *(float *)(iVar1 + 0x2c);
+            *(undefined4 *)(iVar21 + 0x44) = *(undefined4 *)(iVar3 + iVar4);
+            *(undefined4 *)(iVar21 + 0x48) = *(undefined4 *)(iVar2 + 4);
+            *(undefined4 *)(iVar21 + 0x4c) = *(undefined4 *)(iVar2 + 8);
+            *(undefined4 *)(iVar21 + 0x50) = 0;
+            pfVar10 = (float *)(iVar2 + 0x14);
+            *(undefined4 *)(iVar21 + 0x54) = 0;
+            iVar1 = (int)uVar14;
+            uVar14 = uVar14 + 4;
+            puVar16 = (undefined4 *)(((int)lVar12 + 3 + iVar1) * 0x18 + iVar4);
+            *(float *)(iVar21 + 0x58) =
+                 local_94 * *pfVar13 + *pfVar7 * local_a0 + local_88 * *pfVar10;
+            *(float *)(iVar21 + 0x5c) =
+                 local_90 * *pfVar13 + *pfVar7 * local_9c + local_84 * *pfVar10;
+            *(float *)(iVar21 + 0x60) =
+                 local_8c * *pfVar13 + *pfVar7 * local_98 + local_80 * *pfVar10;
+            *(undefined4 *)(iVar21 + 100) = *puVar16;
+            *(undefined4 *)(iVar21 + 0x68) = puVar16[1];
+            *(undefined4 *)(iVar21 + 0x6c) = puVar16[2];
+            *(undefined4 *)(iVar21 + 0x70) = 0;
+            *(undefined4 *)(iVar21 + 0x74) = 0;
+            *(float *)(iVar21 + 0x78) =
+                 local_94 * (float)puVar16[4] +
+                 (float)puVar16[3] * local_a0 + local_88 * (float)puVar16[5];
+            *(float *)(iVar21 + 0x7c) =
+                 local_90 * (float)puVar16[4] +
+                 (float)puVar16[3] * local_9c + local_84 * (float)puVar16[5];
+            lVar22 = lVar22 + 0x80;
+            *(float *)lVar22 =
+                 local_8c * (float)puVar16[4] +
+                 (float)puVar16[3] * local_98 + local_80 * (float)puVar16[5];
+          } while ((int)uVar14 < iVar5 + -3);
         }
+        if ((int)uVar14 < iVar5) {
+          lVar12 = lVar19 - uVar14;
+          lVar22 = (uVar14 & 0x7ffffff) * 0x20 + (ulonglong)in_stack_0000005c + -4;
+          do {
+            iVar21 = (int)uVar14;
+            uVar14 = uVar14 + 1;
+            puVar16 = (undefined4 *)(((int)uVar20 * 9 + iVar21) * 0x18 + iVar4);
+            iVar21 = (int)lVar22;
+            *(undefined4 *)(iVar21 + 4) = *puVar16;
+            *(undefined4 *)(iVar21 + 8) = puVar16[1];
+            *(undefined4 *)(iVar21 + 0xc) = puVar16[2];
+            *(undefined4 *)(iVar21 + 0x10) = 0;
+            *(undefined4 *)(iVar21 + 0x14) = 0;
+            *(float *)(iVar21 + 0x18) =
+                 local_94 * (float)puVar16[4] +
+                 (float)puVar16[3] * local_a0 + local_88 * (float)puVar16[5];
+            *(float *)(iVar21 + 0x1c) =
+                 local_90 * (float)puVar16[4] +
+                 (float)puVar16[3] * local_9c + local_84 * (float)puVar16[5];
+            lVar22 = lVar22 + 0x20;
+            *(float *)lVar22 =
+                 local_8c * (float)puVar16[4] +
+                 (float)puVar16[3] * local_98 + local_80 * (float)puVar16[5];
+            lVar12 = lVar12 + -1;
+          } while (lVar12 != 0);
+        }
+        sVar15 = 2;
+        if (2 < iVar5) {
+          lVar17 = lVar17 + 4;
+          lVar22 = lVar19 + -2;
+          do {
+            psVar18 = (short *)lVar17;
+            *psVar18 = sVar8;
+            psVar18[-1] = sVar15 + sVar8;
+            lVar9 = lVar17 + 1;
+            psVar18[-2] = sVar8 + -1 + sVar15;
+            lVar12 = lVar6 + -1;
+            lVar23 = 7;
+            do {
+              lVar12 = lVar12 + 1;
+              lVar9 = lVar9 + 1;
+              *(undefined1 *)lVar9 = *(undefined1 *)lVar12;
+              lVar23 = lVar23 + -1;
+            } while (lVar23 != 0);
+            lVar22 = lVar22 + -1;
+            lVar17 = lVar17 + 0xe;
+            sVar15 = sVar15 + 1;
+          } while (lVar22 != 0);
+        }
+        iVar4 = __restgprlr_18(lVar19);
+        return iVar4;
       }
-      __restgprlr_18(0xffffffffffffffff);
-      return;
+      iVar4 = __restgprlr_18(0xffffffffffffffff);
+      return iVar4;
     }
   }
-  __restgprlr_18(0);
-  return;
+  iVar4 = __restgprlr_18(0);
+  return iVar4;
 }
 
 
 // 827517D8  R_AddMarkFragment<0>  (gfx_d3d/r_marks.cpp:422)
 
-void R_AddMarkFragment<0>
-               (undefined8 param_1,longlong param_2,longlong param_3,short param_4,int param_5,
-               longlong param_6,int param_7,int param_8)
+int R_AddMarkFragment<0>
+              (FxModelMarkPoint (*param_1) [9],float (*param_2) [4],GfxMarkContext *param_3,
+              int param_4,int param_5,FxMarkTri *param_6,int param_7,TriangleVisitorVertex *param_8,
+              float (*param_9) [3],FxMarkPoint *param_10)
 
 {
   float fVar1;
@@ -675,247 +679,260 @@ void R_AddMarkFragment<0>
   int iVar11;
   int iVar12;
   int iVar13;
-  longlong lVar14;
-  int iVar15;
+  int iVar14;
+  longlong lVar15;
+  short sVar17;
   float *pfVar16;
-  float *pfVar18;
-  longlong lVar17;
-  ulonglong uVar19;
-  float *pfVar21;
-  longlong lVar20;
-  ulonglong uVar22;
-  short sVar23;
-  undefined4 *puVar24;
-  short *psVar25;
+  float *pfVar19;
+  longlong lVar18;
+  ulonglong uVar20;
+  float *pfVar22;
+  longlong lVar21;
+  ulonglong uVar23;
+  short sVar24;
+  undefined4 *puVar25;
   longlong lVar26;
-  int iVar27;
-  ulonglong uVar28;
-  longlong lVar29;
+  short *psVar27;
+  longlong lVar28;
+  int iVar29;
+  ulonglong uVar30;
+  longlong lVar31;
+  longlong lVar32;
   uint in_stack_00000054;
   
-  lVar14 = __savegprlr_18();
-  uVar28 = 0;
-  lVar26 = 3;
-  iVar27 = 0;
+  lVar26 = (longlong)(int)param_6;
+  sVar17 = (short)param_4;
+  lVar15 = (longlong)(int)param_3;
+  lVar31 = (longlong)(int)param_2;
+  iVar13 = __savegprlr_18(param_1);
+  uVar30 = 0;
+  lVar28 = 3;
+  iVar29 = 0;
   while( true ) {
-    lVar26 = R_ChopPolyBehindPlane
-                       (lVar26,uVar28 * 0xd8 + lVar14,(ulonglong)((int)uVar28 == 0) * 0xd8 + lVar14,
-                        param_2);
-    iVar15 = (int)lVar26;
-    if (9 < iVar15) {
-      MyAssertHandler(0xffffffff821c6d94,0x1b5,0,0xffffffff821c71e4,0xffffffff821c71c8,lVar26);
+    iVar14 = R_ChopPolyBehindPlane
+                       ((int)lVar28,(FxModelMarkPoint *)((int)uVar30 * 0xd8 + iVar13),
+                        (FxModelMarkPoint *)(((uint)LZCOUNT((int)uVar30) >> 5) * 0xd8 + iVar13),
+                        (float *)lVar31);
+    lVar28 = (longlong)iVar14;
+    if (9 < iVar14) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_marks.cpp",0x1b5,0
+                      ,"%s\n\t(clipPointCount) = %i");
     }
-    uVar28 = uVar28 ^ 1;
-    if (iVar15 == 0) break;
-    iVar27 = iVar27 + 1;
-    param_2 = param_2 + 0x10;
-    if (5 < iVar27) {
-      if (iVar15 <= param_7) {
-        if ((int)(lVar26 - 2U) + (int)((lVar26 - 2U & 0xffffffff) << 1) <= param_5) {
-          fVar1 = *(float *)(param_8 + 0xc);
-          fVar2 = *(float *)(param_8 + 0x10);
-          fVar3 = *(float *)(param_8 + 0x14);
-          uVar22 = 0;
-          fVar4 = *(float *)(param_8 + 0x24);
-          fVar5 = *(float *)(param_8 + 0x28);
-          fVar6 = *(float *)(param_8 + 0x2c);
-          fVar7 = *(float *)(param_8 + 0x3c);
-          fVar8 = *(float *)(param_8 + 0x40);
-          fVar9 = *(float *)(param_8 + 0x44);
-          iVar27 = (int)lVar14;
-          if (3 < iVar15) {
-            lVar20 = uVar28 * 9;
-            lVar14 = (ulonglong)in_stack_00000054 - 4;
+    uVar30 = uVar30 ^ 1;
+    if (iVar14 == 0) break;
+    iVar29 = iVar29 + 1;
+    lVar31 = lVar31 + 0x10;
+    if (5 < iVar29) {
+      if (iVar14 <= param_7) {
+        if ((int)(lVar28 - 2U) + (int)((lVar28 - 2U & 0xffffffff) << 1) <= param_5) {
+          fVar1 = param_8->normal[0];
+          fVar2 = param_8->normal[1];
+          fVar3 = param_8->normal[2];
+          uVar23 = 0;
+          fVar4 = param_8[1].normal[0];
+          fVar5 = param_8[1].normal[1];
+          fVar6 = param_8[1].normal[2];
+          fVar7 = param_8[2].normal[0];
+          fVar8 = param_8[2].normal[1];
+          fVar9 = param_8[2].normal[2];
+          if (3 < iVar14) {
+            lVar21 = uVar30 * 9;
+            lVar31 = (ulonglong)in_stack_00000054 - 4;
             do {
-              uVar19 = lVar20 + uVar22 + 2;
-              iVar12 = (int)((lVar20 + uVar22 + (lVar20 + uVar22 & 0x7fffffff) * 2 & 0x1fffffff) <<
+              uVar20 = lVar21 + uVar23 + 2;
+              iVar11 = (int)((lVar21 + uVar23 + (lVar21 + uVar23 & 0x7fffffff) * 2 & 0x1fffffff) <<
                             3);
-              iVar11 = iVar12 + iVar27;
-              iVar10 = (int)lVar14;
-              *(undefined4 *)(iVar10 + 4) = *(undefined4 *)(iVar12 + iVar27);
-              *(undefined4 *)(iVar10 + 8) = *(undefined4 *)(iVar11 + 4);
-              *(undefined4 *)(iVar10 + 0xc) = *(undefined4 *)(iVar11 + 8);
-              *(undefined4 *)(iVar10 + 0x10) = 0;
-              *(undefined4 *)(iVar10 + 0x14) = 0;
-              *(float *)(iVar10 + 0x18) =
-                   *(float *)(iVar11 + 0x10) * fVar4 +
-                   *(float *)(iVar11 + 0xc) * fVar1 + *(float *)(iVar11 + 0x14) * fVar7;
-              *(float *)(iVar10 + 0x1c) =
-                   *(float *)(iVar11 + 0x10) * fVar5 +
-                   *(float *)(iVar11 + 0xc) * fVar2 + *(float *)(iVar11 + 0x14) * fVar8;
-              *(float *)(iVar10 + 0x20) =
-                   *(float *)(iVar11 + 0x10) * fVar6 +
-                   *(float *)(iVar11 + 0xc) * fVar3 + *(float *)(iVar11 + 0x14) * fVar9;
-              *(undefined4 *)(iVar10 + 0x24) = *(undefined4 *)(iVar11 + 0x18);
-              *(undefined4 *)(iVar10 + 0x28) = *(undefined4 *)(iVar11 + 0x1c);
-              iVar13 = (int)((uVar19 + (uVar19 & 0x7fffffff) * 2 & 0x1fffffff) << 3);
-              iVar12 = iVar13 + iVar27;
-              *(undefined4 *)(iVar10 + 0x2c) = *(undefined4 *)(iVar11 + 0x20);
-              *(undefined4 *)(iVar10 + 0x30) = 0;
-              pfVar16 = (float *)(iVar12 + 0xc);
-              *(undefined4 *)(iVar10 + 0x34) = 0;
-              *(float *)(iVar10 + 0x38) =
-                   *(float *)(iVar11 + 0x28) * fVar4 +
-                   *(float *)(iVar11 + 0x24) * fVar1 + *(float *)(iVar11 + 0x2c) * fVar7;
-              *(float *)(iVar10 + 0x3c) =
-                   *(float *)(iVar11 + 0x28) * fVar5 +
-                   *(float *)(iVar11 + 0x24) * fVar2 + *(float *)(iVar11 + 0x2c) * fVar8;
-              pfVar21 = (float *)(iVar12 + 0x10);
-              *(float *)(iVar10 + 0x40) =
-                   *(float *)(iVar11 + 0x28) * fVar6 +
-                   *(float *)(iVar11 + 0x24) * fVar3 + *(float *)(iVar11 + 0x2c) * fVar9;
-              *(undefined4 *)(iVar10 + 0x44) = *(undefined4 *)(iVar13 + iVar27);
-              *(undefined4 *)(iVar10 + 0x48) = *(undefined4 *)(iVar12 + 4);
-              *(undefined4 *)(iVar10 + 0x4c) = *(undefined4 *)(iVar12 + 8);
-              *(undefined4 *)(iVar10 + 0x50) = 0;
-              pfVar18 = (float *)(iVar12 + 0x14);
-              *(undefined4 *)(iVar10 + 0x54) = 0;
-              iVar11 = (int)uVar22;
-              uVar22 = uVar22 + 4;
-              puVar24 = (undefined4 *)(((int)lVar20 + 3 + iVar11) * 0x18 + iVar27);
-              *(float *)(iVar10 + 0x58) = *pfVar21 * fVar4 + *pfVar16 * fVar1 + *pfVar18 * fVar7;
-              *(float *)(iVar10 + 0x5c) = *pfVar21 * fVar5 + *pfVar16 * fVar2 + *pfVar18 * fVar8;
-              *(float *)(iVar10 + 0x60) = *pfVar21 * fVar6 + *pfVar16 * fVar3 + *pfVar18 * fVar9;
-              *(undefined4 *)(iVar10 + 100) = *puVar24;
-              *(undefined4 *)(iVar10 + 0x68) = puVar24[1];
-              *(undefined4 *)(iVar10 + 0x6c) = puVar24[2];
-              *(undefined4 *)(iVar10 + 0x70) = 0;
-              *(undefined4 *)(iVar10 + 0x74) = 0;
-              *(float *)(iVar10 + 0x78) =
-                   (float)puVar24[4] * fVar4 + (float)puVar24[3] * fVar1 + (float)puVar24[5] * fVar7
+              iVar10 = iVar11 + iVar13;
+              iVar29 = (int)lVar31;
+              *(undefined4 *)(iVar29 + 4) = *(undefined4 *)(iVar11 + iVar13);
+              *(undefined4 *)(iVar29 + 8) = *(undefined4 *)(iVar10 + 4);
+              *(undefined4 *)(iVar29 + 0xc) = *(undefined4 *)(iVar10 + 8);
+              *(undefined4 *)(iVar29 + 0x10) = 0;
+              *(undefined4 *)(iVar29 + 0x14) = 0;
+              *(float *)(iVar29 + 0x18) =
+                   *(float *)(iVar10 + 0x10) * fVar4 +
+                   *(float *)(iVar10 + 0xc) * fVar1 + *(float *)(iVar10 + 0x14) * fVar7;
+              *(float *)(iVar29 + 0x1c) =
+                   *(float *)(iVar10 + 0x10) * fVar5 +
+                   *(float *)(iVar10 + 0xc) * fVar2 + *(float *)(iVar10 + 0x14) * fVar8;
+              *(float *)(iVar29 + 0x20) =
+                   *(float *)(iVar10 + 0x10) * fVar6 +
+                   *(float *)(iVar10 + 0xc) * fVar3 + *(float *)(iVar10 + 0x14) * fVar9;
+              *(undefined4 *)(iVar29 + 0x24) = *(undefined4 *)(iVar10 + 0x18);
+              *(undefined4 *)(iVar29 + 0x28) = *(undefined4 *)(iVar10 + 0x1c);
+              iVar12 = (int)((uVar20 + (uVar20 & 0x7fffffff) * 2 & 0x1fffffff) << 3);
+              iVar11 = iVar12 + iVar13;
+              *(undefined4 *)(iVar29 + 0x2c) = *(undefined4 *)(iVar10 + 0x20);
+              *(undefined4 *)(iVar29 + 0x30) = 0;
+              pfVar16 = (float *)(iVar11 + 0xc);
+              *(undefined4 *)(iVar29 + 0x34) = 0;
+              *(float *)(iVar29 + 0x38) =
+                   *(float *)(iVar10 + 0x28) * fVar4 +
+                   *(float *)(iVar10 + 0x24) * fVar1 + *(float *)(iVar10 + 0x2c) * fVar7;
+              *(float *)(iVar29 + 0x3c) =
+                   *(float *)(iVar10 + 0x28) * fVar5 +
+                   *(float *)(iVar10 + 0x24) * fVar2 + *(float *)(iVar10 + 0x2c) * fVar8;
+              pfVar22 = (float *)(iVar11 + 0x10);
+              *(float *)(iVar29 + 0x40) =
+                   *(float *)(iVar10 + 0x28) * fVar6 +
+                   *(float *)(iVar10 + 0x24) * fVar3 + *(float *)(iVar10 + 0x2c) * fVar9;
+              *(undefined4 *)(iVar29 + 0x44) = *(undefined4 *)(iVar12 + iVar13);
+              *(undefined4 *)(iVar29 + 0x48) = *(undefined4 *)(iVar11 + 4);
+              *(undefined4 *)(iVar29 + 0x4c) = *(undefined4 *)(iVar11 + 8);
+              *(undefined4 *)(iVar29 + 0x50) = 0;
+              pfVar19 = (float *)(iVar11 + 0x14);
+              *(undefined4 *)(iVar29 + 0x54) = 0;
+              iVar10 = (int)uVar23;
+              uVar23 = uVar23 + 4;
+              puVar25 = (undefined4 *)(((int)lVar21 + 3 + iVar10) * 0x18 + iVar13);
+              *(float *)(iVar29 + 0x58) = *pfVar22 * fVar4 + *pfVar16 * fVar1 + *pfVar19 * fVar7;
+              *(float *)(iVar29 + 0x5c) = *pfVar22 * fVar5 + *pfVar16 * fVar2 + *pfVar19 * fVar8;
+              *(float *)(iVar29 + 0x60) = *pfVar22 * fVar6 + *pfVar16 * fVar3 + *pfVar19 * fVar9;
+              *(undefined4 *)(iVar29 + 100) = *puVar25;
+              *(undefined4 *)(iVar29 + 0x68) = puVar25[1];
+              *(undefined4 *)(iVar29 + 0x6c) = puVar25[2];
+              *(undefined4 *)(iVar29 + 0x70) = 0;
+              *(undefined4 *)(iVar29 + 0x74) = 0;
+              *(float *)(iVar29 + 0x78) =
+                   (float)puVar25[4] * fVar4 + (float)puVar25[3] * fVar1 + (float)puVar25[5] * fVar7
               ;
-              *(float *)(iVar10 + 0x7c) =
-                   (float)puVar24[4] * fVar5 + (float)puVar24[3] * fVar2 + (float)puVar24[5] * fVar8
+              *(float *)(iVar29 + 0x7c) =
+                   (float)puVar25[4] * fVar5 + (float)puVar25[3] * fVar2 + (float)puVar25[5] * fVar8
               ;
-              lVar14 = lVar14 + 0x80;
-              *(float *)lVar14 =
-                   (float)puVar24[4] * fVar6 + (float)puVar24[3] * fVar3 + (float)puVar24[5] * fVar9
+              lVar31 = lVar31 + 0x80;
+              *(float *)lVar31 =
+                   (float)puVar25[4] * fVar6 + (float)puVar25[3] * fVar3 + (float)puVar25[5] * fVar9
               ;
-            } while ((int)uVar22 < iVar15 + -3);
+            } while ((int)uVar23 < iVar14 + -3);
           }
-          if ((int)uVar22 < iVar15) {
-            lVar20 = lVar26 - uVar22;
-            lVar14 = (uVar22 & 0x7ffffff) * 0x20 + (ulonglong)in_stack_00000054 + -4;
+          if ((int)uVar23 < iVar14) {
+            lVar21 = lVar28 - uVar23;
+            lVar31 = (uVar23 & 0x7ffffff) * 0x20 + (ulonglong)in_stack_00000054 + -4;
             do {
-              iVar10 = (int)uVar22;
-              uVar22 = uVar22 + 1;
-              puVar24 = (undefined4 *)(((int)uVar28 * 9 + iVar10) * 0x18 + iVar27);
-              iVar10 = (int)lVar14;
-              *(undefined4 *)(iVar10 + 4) = *puVar24;
-              *(undefined4 *)(iVar10 + 8) = puVar24[1];
-              *(undefined4 *)(iVar10 + 0xc) = puVar24[2];
-              *(undefined4 *)(iVar10 + 0x10) = 0;
-              *(undefined4 *)(iVar10 + 0x14) = 0;
-              *(float *)(iVar10 + 0x18) =
-                   (float)puVar24[4] * fVar4 + (float)puVar24[3] * fVar1 + (float)puVar24[5] * fVar7
+              iVar29 = (int)uVar23;
+              uVar23 = uVar23 + 1;
+              puVar25 = (undefined4 *)(((int)uVar30 * 9 + iVar29) * 0x18 + iVar13);
+              iVar29 = (int)lVar31;
+              *(undefined4 *)(iVar29 + 4) = *puVar25;
+              *(undefined4 *)(iVar29 + 8) = puVar25[1];
+              *(undefined4 *)(iVar29 + 0xc) = puVar25[2];
+              *(undefined4 *)(iVar29 + 0x10) = 0;
+              *(undefined4 *)(iVar29 + 0x14) = 0;
+              *(float *)(iVar29 + 0x18) =
+                   (float)puVar25[4] * fVar4 + (float)puVar25[3] * fVar1 + (float)puVar25[5] * fVar7
               ;
-              *(float *)(iVar10 + 0x1c) =
-                   (float)puVar24[4] * fVar5 + (float)puVar24[3] * fVar2 + (float)puVar24[5] * fVar8
+              *(float *)(iVar29 + 0x1c) =
+                   (float)puVar25[4] * fVar5 + (float)puVar25[3] * fVar2 + (float)puVar25[5] * fVar8
               ;
-              lVar14 = lVar14 + 0x20;
-              *(float *)lVar14 =
-                   (float)puVar24[4] * fVar6 + (float)puVar24[3] * fVar3 + (float)puVar24[5] * fVar9
+              lVar31 = lVar31 + 0x20;
+              *(float *)lVar31 =
+                   (float)puVar25[4] * fVar6 + (float)puVar25[3] * fVar3 + (float)puVar25[5] * fVar9
               ;
-              lVar20 = lVar20 + -1;
-            } while (lVar20 != 0);
+              lVar21 = lVar21 + -1;
+            } while (lVar21 != 0);
           }
-          sVar23 = 2;
-          if (2 < iVar15) {
-            param_6 = param_6 + 4;
-            lVar14 = lVar26 + -2;
+          sVar24 = 2;
+          if (2 < iVar14) {
+            lVar26 = lVar26 + 4;
+            lVar31 = lVar28 + -2;
             do {
-              psVar25 = (short *)param_6;
-              *psVar25 = param_4;
-              psVar25[-1] = sVar23 + param_4;
-              lVar17 = param_6 + 1;
-              psVar25[-2] = param_4 + -1 + sVar23;
-              lVar20 = param_3 + -1;
-              lVar29 = 7;
+              psVar27 = (short *)lVar26;
+              *psVar27 = sVar17;
+              psVar27[-1] = sVar24 + sVar17;
+              lVar18 = lVar26 + 1;
+              psVar27[-2] = sVar17 + -1 + sVar24;
+              lVar21 = lVar15 + -1;
+              lVar32 = 7;
               do {
-                lVar20 = lVar20 + 1;
-                lVar17 = lVar17 + 1;
-                *(undefined1 *)lVar17 = *(undefined1 *)lVar20;
-                lVar29 = lVar29 + -1;
-              } while (lVar29 != 0);
-              lVar14 = lVar14 + -1;
-              param_6 = param_6 + 0xe;
-              sVar23 = sVar23 + 1;
-            } while (lVar14 != 0);
+                lVar21 = lVar21 + 1;
+                lVar18 = lVar18 + 1;
+                *(undefined1 *)lVar18 = *(undefined1 *)lVar21;
+                lVar32 = lVar32 + -1;
+              } while (lVar32 != 0);
+              lVar31 = lVar31 + -1;
+              lVar26 = lVar26 + 0xe;
+              sVar24 = sVar24 + 1;
+            } while (lVar31 != 0);
           }
-          __restgprlr_18(lVar26);
-          return;
+          iVar13 = __restgprlr_18(lVar28);
+          return iVar13;
         }
       }
-      __restgprlr_18(0xffffffffffffffff);
-      return;
+      iVar13 = __restgprlr_18(0xffffffffffffffff);
+      return iVar13;
     }
   }
-  __restgprlr_18(0);
-  return;
+  iVar13 = __restgprlr_18(0);
+  return iVar13;
 }
 
 
 // 8274F648  R_GetMarkFragmentClipPlanes  (gfx_d3d/r_marks.cpp:493)
 
-double R_GetMarkFragmentClipPlanes(float *param_1,float *param_2,float *param_3)
+void R_GetMarkFragmentClipPlanes(Sphere *param_1,float (*param_2) [3],float (*param_3) [4])
 
 {
   float fVar1;
   float fVar2;
   float fVar3;
-  double dVar4;
   
-  fVar1 = *param_2;
-  *param_3 = fVar1;
-  fVar2 = param_2[1];
-  param_3[1] = fVar2;
-  fVar3 = param_2[2];
-  param_3[2] = fVar3;
-  param_3[3] = (param_1[2] * fVar3 + *param_1 * fVar1 + fVar2 * param_1[1]) - param_1[3];
-  fVar1 = *param_2;
-  param_3[4] = -fVar1;
-  fVar2 = param_2[1];
-  param_3[5] = -fVar2;
-  fVar3 = param_2[2];
-  param_3[6] = -fVar3;
-  param_3[7] = (-fVar3 * param_1[2] + -fVar2 * param_1[1] + -fVar1 * *param_1) - param_1[3];
-  param_3[8] = param_2[3];
-  param_3[9] = param_2[4];
-  fVar1 = param_2[5];
-  param_3[10] = fVar1;
-  param_3[0xb] = (fVar1 * param_1[2] + param_3[9] * param_1[1] + *param_1 * param_3[8]) - param_1[3]
-  ;
-  param_3[0xc] = -param_2[3];
-  param_3[0xd] = -param_2[4];
-  fVar1 = param_2[5];
-  param_3[0xe] = -fVar1;
-  param_3[0xf] = (-fVar1 * param_1[2] + param_3[0xd] * param_1[1] + param_3[0xc] * *param_1) -
-                 param_1[3];
-  param_3[0x10] = param_2[6];
-  param_3[0x11] = param_2[7];
-  fVar1 = param_2[8];
-  param_3[0x12] = fVar1;
-  param_3[0x13] =
-       (fVar1 * param_1[2] + param_3[0x11] * param_1[1] + *param_1 * param_3[0x10]) - param_1[3];
-  param_3[0x14] = -param_2[6];
-  param_3[0x15] = -param_2[7];
-  dVar4 = -(double)param_2[8];
-  param_3[0x16] = (float)dVar4;
-  param_3[0x17] =
-       (float)(dVar4 * (double)param_1[2] +
-              (double)(param_3[0x15] * param_1[1] + param_3[0x14] * *param_1)) - param_1[3];
-  return dVar4;
+  fVar1 = (*param_2)[0];
+  (*param_3)[0] = fVar1;
+  fVar2 = (*param_2)[1];
+  (*param_3)[1] = fVar2;
+  fVar3 = (*param_2)[2];
+  (*param_3)[2] = fVar3;
+  (*param_3)[3] =
+       (param_1->origin[2] * fVar3 + param_1->origin[0] * fVar1 + fVar2 * param_1->origin[1]) -
+       param_1->radius;
+  fVar1 = (*param_2)[0];
+  param_3[1][0] = -fVar1;
+  fVar2 = (*param_2)[1];
+  param_3[1][1] = -fVar2;
+  fVar3 = (*param_2)[2];
+  param_3[1][2] = -fVar3;
+  param_3[1][3] =
+       (-fVar3 * param_1->origin[2] + -fVar2 * param_1->origin[1] + -fVar1 * param_1->origin[0]) -
+       param_1->radius;
+  param_3[2][0] = param_2[1][0];
+  param_3[2][1] = param_2[1][1];
+  fVar1 = param_2[1][2];
+  param_3[2][2] = fVar1;
+  param_3[2][3] =
+       (fVar1 * param_1->origin[2] +
+       param_3[2][1] * param_1->origin[1] + param_1->origin[0] * param_3[2][0]) - param_1->radius;
+  param_3[3][0] = -param_2[1][0];
+  param_3[3][1] = -param_2[1][1];
+  fVar1 = param_2[1][2];
+  param_3[3][2] = -fVar1;
+  param_3[3][3] =
+       (-fVar1 * param_1->origin[2] +
+       param_3[3][1] * param_1->origin[1] + param_3[3][0] * param_1->origin[0]) - param_1->radius;
+  param_3[4][0] = param_2[2][0];
+  param_3[4][1] = param_2[2][1];
+  fVar1 = param_2[2][2];
+  param_3[4][2] = fVar1;
+  param_3[4][3] =
+       (fVar1 * param_1->origin[2] +
+       param_3[4][1] * param_1->origin[1] + param_1->origin[0] * param_3[4][0]) - param_1->radius;
+  param_3[5][0] = -param_2[2][0];
+  param_3[5][1] = -param_2[2][1];
+  fVar1 = param_2[2][2];
+  param_3[5][2] = -fVar1;
+  param_3[5][3] =
+       (-fVar1 * param_1->origin[2] +
+       param_3[5][1] * param_1->origin[1] + param_3[5][0] * param_1->origin[0]) - param_1->radius;
+  return;
 }
 
 
 // 8274F840  R_MarkFragment_IsTriangleRejected  (gfx_d3d/r_marks.cpp:513)
 
-undefined8
-R_MarkFragment_IsTriangleRejected(float *param_1,float *param_2,float *param_3,float *param_4)
+bool R_MarkFragment_IsTriangleRejected(float *param_1,float *param_2,float *param_3,float *param_4)
 
 {
   float fVar1;
-  undefined8 uVar2;
+  bool bVar2;
   float local_40;
   float local_3c;
   float local_38;
@@ -933,651 +950,562 @@ R_MarkFragment_IsTriangleRejected(float *param_1,float *param_2,float *param_3,f
   local_3c = param_2[1] - param_3[1];
   local_38 = param_2[2] - param_3[2];
   Vec3Cross(&local_40,&local_30,&local_20);
-  uVar2 = 1;
+  bVar2 = true;
   fVar1 = param_1[2] * local_18 + param_1[1] * local_1c + *param_1 * local_20;
   if ((0.0 <= fVar1) &&
      ((local_20 * local_20 + local_1c * local_1c + local_18 * local_18) * 0.25 <= fVar1 * fVar1)) {
-    uVar2 = 0;
+    bVar2 = false;
   }
-  return uVar2;
+  return bVar2;
 }
 
 
 // 8274F938  R_MarkFragment_SetupWorldClipPoints  (gfx_d3d/r_marks.cpp:534)
 
-void R_MarkFragment_SetupWorldClipPoints(int param_1,ushort *param_2,undefined4 *param_3)
+void R_MarkFragment_SetupWorldClipPoints
+               (GfxWorldVertex *param_1,ushort *param_2,FxWorldMarkPoint (*param_3) [9])
 
 {
-  undefined4 uVar1;
-  undefined4 uVar2;
+  float fVar1;
+  float fVar2;
   ushort uVar3;
   ushort uVar4;
-  undefined4 *puVar5;
+  GfxWorldVertex *pGVar5;
   
   uVar3 = param_2[1];
   uVar4 = param_2[2];
-  puVar5 = (undefined4 *)((uint)*param_2 * 0x2c + param_1);
-  uVar1 = puVar5[1];
-  uVar2 = puVar5[2];
-  *param_3 = *puVar5;
-  puVar5 = (undefined4 *)((uint)uVar3 * 0x2c + param_1);
-  param_3[1] = uVar1;
-  param_3[2] = uVar2;
-  param_3[3] = 0;
-  param_3[4] = 0;
-  param_3[5] = 0;
-  param_3[3] = 0x3f800000;
-  uVar1 = puVar5[1];
-  uVar2 = puVar5[2];
-  param_3[6] = *puVar5;
-  puVar5 = (undefined4 *)((uint)uVar4 * 0x2c + param_1);
-  param_3[7] = uVar1;
-  param_3[8] = uVar2;
-  param_3[9] = 0;
-  param_3[10] = 0;
-  param_3[0xb] = 0;
-  param_3[10] = 0x3f800000;
-  param_3[0xc] = *puVar5;
-  param_3[0xd] = puVar5[1];
-  param_3[0xe] = puVar5[2];
-  param_3[0xf] = 0;
-  param_3[0x10] = 0;
-  param_3[0x11] = 0;
-  param_3[0x11] = 0x3f800000;
+  pGVar5 = param_1 + *param_2;
+  fVar1 = pGVar5->xyz[1];
+  fVar2 = pGVar5->xyz[2];
+  (*param_3)[0].xyz[0] = pGVar5->xyz[0];
+  pGVar5 = param_1 + uVar3;
+  (*param_3)[0].xyz[1] = fVar1;
+  (*param_3)[0].xyz[2] = fVar2;
+  (*param_3)[0].vertWeights[0] = 0.0;
+  (*param_3)[0].vertWeights[1] = 0.0;
+  (*param_3)[0].vertWeights[2] = 0.0;
+  (*param_3)[0].vertWeights[0] = 1.0;
+  fVar1 = pGVar5->xyz[1];
+  fVar2 = pGVar5->xyz[2];
+  (*param_3)[1].xyz[0] = pGVar5->xyz[0];
+  pGVar5 = param_1 + uVar4;
+  (*param_3)[1].xyz[1] = fVar1;
+  (*param_3)[1].xyz[2] = fVar2;
+  (*param_3)[1].vertWeights[0] = 0.0;
+  (*param_3)[1].vertWeights[1] = 0.0;
+  (*param_3)[1].vertWeights[2] = 0.0;
+  (*param_3)[1].vertWeights[1] = 1.0;
+  (*param_3)[2].xyz[0] = pGVar5->xyz[0];
+  (*param_3)[2].xyz[1] = pGVar5->xyz[1];
+  (*param_3)[2].xyz[2] = pGVar5->xyz[2];
+  (*param_3)[2].vertWeights[0] = 0.0;
+  (*param_3)[2].vertWeights[1] = 0.0;
+  (*param_3)[2].vertWeights[2] = 0.0;
+  (*param_3)[2].vertWeights[2] = 1.0;
   return;
 }
 
 
 // 82751C70  R_MarkFragment_DoTriangle<1>  (gfx_d3d/r_marks.cpp:551)
 
-void R_MarkFragment_DoTriangle<1>(void)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+bool R_MarkFragment_DoTriangle<1>
+               (MarkInfo *param_1,float (*param_2) [4],GfxMarkContext *param_3,
+               TriangleVisitorVertex *param_4,float (*param_5) [3],FxModelMarkPoint (*param_6) [9])
 
 {
+  int iVar1;
   int iVar2;
-  undefined8 uVar1;
-  int iVar3;
-  undefined8 in_r8;
+  undefined1 uVar3;
+  float (*in_stack_ffffff78) [3];
+  FxMarkPoint *in_stack_ffffff7c;
   
-  iVar2 = __savegprlr_28();
-  uVar1 = R_AddMarkFragment<1>(in_r8);
-  iVar3 = (int)uVar1;
-  if (iVar3 == -1) {
-    __restgprlr_28(0);
-    return;
+  iVar1 = __savegprlr_28(param_1);
+  iVar2 = R_AddMarkFragment<1>
+                    (param_6,param_2,param_3,*(int *)(iVar1 + 0x444),
+                     *(int *)(iVar1 + 0x5c) - *(int *)(iVar1 + 0x440),
+                     (FxMarkTri *)(*(int *)(iVar1 + 0x440) * 0xe + *(int *)(iVar1 + 0x60)),
+                     *(int *)(iVar1 + 100) - *(int *)(iVar1 + 0x444),param_4,in_stack_ffffff78,
+                     in_stack_ffffff7c);
+  if (iVar2 == -1) {
+    uVar3 = __restgprlr_28(0);
+    return (bool)uVar3;
   }
-  if (iVar3 != 0) {
-    if (iVar3 < 3) {
-      MyAssertHandler(0xffffffff821c6d94,0x231,0,0xffffffff821c7058,0xffffffff821c7078,uVar1);
+  if (iVar2 != 0) {
+    if (iVar2 < 3) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_marks.cpp",0x231,0
+                      ,"%s\n\t(fragmentPointCount) = %i");
     }
-    *(int *)(iVar2 + 0x444) = iVar3 + *(int *)(iVar2 + 0x444);
-    *(int *)(iVar2 + 0x440) = iVar3 + *(int *)(iVar2 + 0x440) + -2;
+    *(int *)(iVar1 + 0x444) = iVar2 + *(int *)(iVar1 + 0x444);
+    *(int *)(iVar1 + 0x440) = iVar2 + *(int *)(iVar1 + 0x440) + -2;
   }
-  __restgprlr_28(1);
-  return;
+  uVar3 = __restgprlr_28(1);
+  return (bool)uVar3;
 }
 
 
 // 82751D40  R_MarkFragment_DoTriangle<0>  (gfx_d3d/r_marks.cpp:551)
 
-void R_MarkFragment_DoTriangle<0>(void)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+bool R_MarkFragment_DoTriangle<0>
+               (MarkInfo *param_1,float (*param_2) [4],GfxMarkContext *param_3,
+               TriangleVisitorVertex *param_4,float (*param_5) [3],FxModelMarkPoint (*param_6) [9])
 
 {
+  int iVar1;
   int iVar2;
-  undefined8 uVar1;
-  int iVar3;
-  undefined8 in_r7;
+  undefined1 uVar3;
+  float (*in_stack_ffffff88) [3];
+  FxMarkPoint *in_stack_ffffff8c;
   
-  iVar2 = __savegprlr_28();
-  uVar1 = R_AddMarkFragment<0>(in_r7);
-  iVar3 = (int)uVar1;
-  if (iVar3 == -1) {
-    __restgprlr_28(0);
-    return;
+  iVar1 = __savegprlr_28(param_1);
+  iVar2 = R_AddMarkFragment<0>
+                    ((FxModelMarkPoint (*) [9])param_5,param_2,param_3,*(int *)(iVar1 + 0x444),
+                     *(int *)(iVar1 + 0x5c) - *(int *)(iVar1 + 0x440),
+                     (FxMarkTri *)(*(int *)(iVar1 + 0x440) * 0xe + *(int *)(iVar1 + 0x60)),
+                     *(int *)(iVar1 + 100) - *(int *)(iVar1 + 0x444),param_4,in_stack_ffffff88,
+                     in_stack_ffffff8c);
+  if (iVar2 == -1) {
+    uVar3 = __restgprlr_28(0);
+    return (bool)uVar3;
   }
-  if (iVar3 != 0) {
-    if (iVar3 < 3) {
-      MyAssertHandler(0xffffffff821c6d94,0x231,0,0xffffffff821c7058,0xffffffff821c7078,uVar1);
+  if (iVar2 != 0) {
+    if (iVar2 < 3) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_marks.cpp",0x231,0
+                      ,"%s\n\t(fragmentPointCount) = %i");
     }
-    *(int *)(iVar2 + 0x444) = iVar3 + *(int *)(iVar2 + 0x444);
-    *(int *)(iVar2 + 0x440) = iVar3 + *(int *)(iVar2 + 0x440) + -2;
+    *(int *)(iVar1 + 0x444) = iVar2 + *(int *)(iVar1 + 0x444);
+    *(int *)(iVar1 + 0x440) = iVar2 + *(int *)(iVar1 + 0x440) + -2;
   }
-  __restgprlr_28(1);
-  return;
+  uVar3 = __restgprlr_28(1);
+  return (bool)uVar3;
 }
 
 
 // 8274F9F0  R_MarkFragments_WorldBrushReflectionCompatible  (gfx_d3d/r_marks.cpp:571)
 
-bool R_MarkFragments_WorldBrushReflectionCompatible(int param_1,int param_2)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+bool R_MarkFragments_WorldBrushReflectionCompatible(MarkInfo *param_1,GfxSurface *param_2)
 
 {
-  if (*(char *)(param_1 + 0xd9) == '\0') {
+  if (param_1->markHasReflection == false) {
     return true;
   }
-  return *(char *)(param_2 + 0x15) != '\0';
+  return (bool)('\x01' - ((param_2->laf).fields.reflectionProbeIndex == '\0'));
 }
 
 
 // 8274FA18  R_MarkFragments_BrushSurface  (gfx_d3d/r_marks.cpp:585)
-
-/* WARNING: Control flow encountered bad instruction data */
-
-void R_MarkFragments_BrushSurface
-               (undefined8 param_1,longlong param_2,uint param_3,undefined4 param_4,int param_5)
-
-{
-  char cVar1;
-  short sVar2;
-  int iVar3;
-  char cVar5;
-  int iVar4;
-  int iVar6;
-  undefined1 *puVar7;
-  longlong lVar8;
-  short sVar9;
-  float *pfVar10;
-  undefined4 *puVar11;
-  short *psVar12;
-  int iVar13;
-  ushort *puVar14;
-  uint uVar15;
-  int iVar16;
-  ulonglong uVar17;
-  longlong lVar18;
-  longlong lVar19;
-  double dVar20;
-  double dVar21;
-  float local_2d0 [4];
-  float local_2c0;
-  float local_2bc;
-  undefined4 local_2b8;
-  undefined4 local_2b4;
-  undefined4 local_2b0;
-  float local_2ac;
-  float local_2a8;
-  float local_2a4;
-  undefined4 local_2a0;
-  undefined4 local_29c;
-  undefined4 local_298;
-  float local_294;
-  float local_290;
-  float local_28c;
-  
-  __savegprlr_15();
-  iVar3 = __savefpr_15();
-  cVar5 = *(char *)(param_5 + 0x14);
-  cVar1 = *(char *)(iVar3 + 0xd8);
-  iVar6 = (int)param_2;
-  *(char *)(iVar6 + 1) = cVar5;
-  if ((cVar1 == '\0') || (cVar5 != '\x1f')) {
-    iVar13 = 0;
-    *(undefined1 *)(iVar6 + 6) = *(undefined1 *)(param_5 + 0x15);
-    *(undefined1 *)(iVar6 + 5) = *(undefined1 *)(param_5 + 0x16);
-    iVar6 = *(int *)(param_5 + 4) * 0x2c + *(int *)(DAT_84613714 + 0x38);
-    puVar14 = (ushort *)(*(int *)(param_5 + 0xc) * 2 + *(int *)(DAT_84613714 + 0x88));
-    if (*(ushort *)(param_5 + 10) != 0) {
-      dVar20 = 1.0;
-      dVar21 = 0.0;
-      do {
-        cVar5 = R_MarkFragment_IsTriangleRejected
-                          (param_4,(uint)*puVar14 * 0x2c + iVar6,(uint)puVar14[1] * 0x2c + iVar6,
-                           (uint)puVar14[2] * 0x2c + iVar6);
-        if (cVar5 == '\0') {
-          local_2c0 = (float)dVar21;
-          local_2bc = (float)dVar21;
-          uVar17 = (ulonglong)param_3;
-          local_2d0[3] = (float)dVar20;
-          local_2ac = (float)dVar21;
-          local_2a4 = (float)dVar21;
-          local_2a8 = (float)dVar20;
-          local_294 = (float)dVar21;
-          local_290 = (float)dVar21;
-          local_28c = (float)dVar20;
-          pfVar10 = (float *)((uint)*puVar14 * 0x2c + iVar6);
-          local_2d0[0] = *pfVar10;
-          local_2d0[1] = pfVar10[1];
-          local_2d0[2] = pfVar10[2];
-          puVar11 = (undefined4 *)((uint)puVar14[1] * 0x2c + iVar6);
-          local_2b8 = *puVar11;
-          local_2b4 = puVar11[1];
-          local_2b0 = puVar11[2];
-          local_2a0 = *(undefined4 *)((uint)puVar14[2] * 0x2c + iVar6);
-          iVar4 = (uint)puVar14[2] * 0x2c + iVar6;
-          uVar15 = 0;
-          lVar18 = 3;
-          iVar16 = 0;
-          local_29c = *(undefined4 *)(iVar4 + 4);
-          local_298 = *(undefined4 *)(iVar4 + 8);
-          while( true ) {
-            lVar18 = R_ChopWorldPolyBehindPlane
-                               (lVar18,local_2d0 + uVar15 * 0x36,
-                                local_2d0 + (uint)(uVar15 == 0) * 0x36,uVar17);
-            iVar4 = (int)lVar18;
-            if (iVar4 == 0) break;
-            if (9 < iVar4) {
-              MyAssertHandler(0xffffffff821c6d94,0x27e,0,0xffffffff821c7058,0xffffffff821c7038,
-                              lVar18);
-            }
-            iVar16 = iVar16 + 1;
-            uVar15 = uVar15 ^ 1;
-            uVar17 = uVar17 + 0x10;
-            if (5 < iVar16) {
-              if (iVar4 <= *(int *)(iVar3 + 100) - *(int *)(iVar3 + 0x444)) {
-                if ((int)(lVar18 - 2U) + (int)((lVar18 - 2U & 0xffffffff) << 1) <=
-                    *(int *)(iVar3 + 0x5c) - *(int *)(iVar3 + 0x440)) {
-                  psVar12 = (short *)(*(int *)(iVar3 + 0x440) * 0xe + *(int *)(iVar3 + 0x60));
-                  sVar9 = 2;
-                  if (2 < iVar4) {
-                    sVar2 = (short)*(int *)(iVar3 + 0x444);
-                    lVar18 = lVar18 + -2;
-                    do {
-                      psVar12[2] = sVar2;
-                      *psVar12 = sVar2 + -1 + sVar9;
-                      puVar7 = (undefined1 *)((int)psVar12 + 5);
-                      psVar12[1] = sVar9 + sVar2;
-                      lVar8 = param_2 + -1;
-                      lVar19 = 7;
-                      do {
-                        lVar8 = lVar8 + 1;
-                        puVar7 = puVar7 + 1;
-                        *puVar7 = *(undefined1 *)lVar8;
-                        lVar19 = lVar19 + -1;
-                      } while (lVar19 != 0);
-                      lVar18 = lVar18 + -1;
-                      psVar12 = psVar12 + 7;
-                      sVar9 = sVar9 + 1;
-                    } while (lVar18 != 0);
-                  }
-                    /* WARNING: Bad instruction - Truncating control flow here */
-                  halt_baddata();
-                }
-              }
-              __restfpr_15(0);
-              __restgprlr_15();
-              return;
-            }
-          }
-        }
-        iVar13 = iVar13 + 1;
-        puVar14 = puVar14 + 3;
-      } while (iVar13 < (int)(uint)*(ushort *)(param_5 + 10));
-    }
-  }
-  __restfpr_15(1);
-  __restgprlr_15();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
 
 // 82750200  R_MarkFragments_WorldBrushes  (gfx_d3d/r_marks.cpp:699)
 
-void R_MarkFragments_WorldBrushes(void)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+bool R_MarkFragments_WorldBrushes(MarkInfo *param_1)
 
 {
-  int iVar1;
-  char cVar2;
-  uint uVar3;
-  int *piVar4;
-  bool bVar5;
-  char local_460 [4];
+  MarkInfo *pMVar1;
+  bool bVar2;
+  undefined1 uVar3;
+  uint uVar4;
+  GfxSurface **ppGVar5;
+  bool local_460 [4];
   uint local_45c;
-  int *local_458;
-  undefined1 auStack_454 [20];
-  int local_440 [272];
+  GfxSurface **local_458;
+  GfxMarkContext aGStack_454 [2];
+  GfxSurface *local_440 [272];
   
-  iVar1 = __savegprlr_25();
-  if ((*(int *)(iVar1 + 0x440) != 0) || (*(int *)(iVar1 + 0x444) != 0)) {
-    MyAssertHandler(0xffffffff821c6d94,0x2c4,0,0xffffffff82000f98,0xffffffff821c7094);
+  pMVar1 = (MarkInfo *)__savegprlr_25(param_1);
+  if ((pMVar1->usedTriCount != 0) || (pMVar1->usedPointCount != 0)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_marks.cpp",0x2c4,0,
+                    "%s");
   }
-  FX_SetMarkContextModelType_WorldBrush(auStack_454);
-  FX_SetMarkContext_ModelIndex(auStack_454,0);
+  FX_SetMarkContextModelType_WorldBrush(aGStack_454);
+  FX_SetMarkContext_ModelIndex(aGStack_454,0);
   local_458 = local_440;
-  R_SphereSurfaces(iVar1,*(undefined4 *)(iVar1 + 0x14),0xffffffff829a2d60,
-                   *(undefined4 *)(iVar1 + 0x58),&local_458,0x100,&local_45c,1);
-  local_460[0] = '\0';
-  uVar3 = 0;
+  R_SphereSurfaces((Sphere *)pMVar1,pMVar1->bspSetBits,allowSurf,pMVar1->material,&local_458,0x100,
+                   &local_45c,1);
+  local_460[0] = false;
+  uVar4 = 0;
   if (local_45c != 0) {
-    piVar4 = local_440;
+    ppGVar5 = local_440;
     do {
-      if (*(char *)(iVar1 + 0xd9) == '\0') {
-        bVar5 = true;
+      if (pMVar1->markHasReflection == false) {
+        bVar2 = true;
       }
       else {
-        bVar5 = *(char *)(*piVar4 + 0x15) != '\0';
+        bVar2 = ((*ppGVar5)->laf).fields.reflectionProbeIndex != '\0';
       }
-      if ((bVar5) &&
-         (cVar2 = R_MarkFragments_BrushSurface
-                            (iVar1,auStack_454,iVar1 + 0x6c,iVar1 + 0x34,*piVar4,local_460),
-         cVar2 == '\0')) {
-        __restgprlr_25(0);
-        return;
+      if ((bVar2) &&
+         (bVar2 = R_MarkFragments_BrushSurface
+                            (pMVar1,aGStack_454,pMVar1->planes,pMVar1->axis[0],*ppGVar5,local_460),
+         !bVar2)) {
+        uVar3 = __restgprlr_25(0);
+        return (bool)uVar3;
       }
-      uVar3 = uVar3 + 1;
-      piVar4 = piVar4 + 1;
-    } while (uVar3 < local_45c);
+      uVar4 = uVar4 + 1;
+      ppGVar5 = ppGVar5 + 1;
+    } while (uVar4 < local_45c);
   }
-  if (local_460[0] != '\0') {
-    (**(code **)(iVar1 + 0x448))
-              (*(undefined4 *)(iVar1 + 0x44c),*(undefined4 *)(iVar1 + 0x440),
-               *(undefined4 *)(iVar1 + 0x60),*(undefined4 *)(iVar1 + 0x444),
-               *(undefined4 *)(iVar1 + 0x68),iVar1,iVar1 + 0x40);
-    R_CheckMarkTris(iVar1);
-    *(undefined4 *)(iVar1 + 0x440) = 0;
-    *(undefined4 *)(iVar1 + 0x444) = 0;
+  if (local_460[0] != false) {
+    (*pMVar1->callback)(pMVar1->callbackContext,pMVar1->usedTriCount,pMVar1->tris,
+                        pMVar1->usedPointCount,pMVar1->points,(float *)pMVar1,pMVar1->axis[1]);
+    R_CheckMarkTris(pMVar1);
+    pMVar1->usedTriCount = 0;
+    pMVar1->usedPointCount = 0;
   }
-  if ((*(int *)(iVar1 + 0x440) != 0) || (*(int *)(iVar1 + 0x444) != 0)) {
-    MyAssertHandler(0xffffffff821c6d94,0x2de,0,0xffffffff82000f98,0xffffffff821c7094);
+  if ((pMVar1->usedTriCount != 0) || (pMVar1->usedPointCount != 0)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_marks.cpp",0x2de,0,
+                    "%s");
   }
-  __restgprlr_25(1);
-  return;
+  uVar3 = __restgprlr_25(1);
+  return (bool)uVar3;
 }
 
 
 // 827503B0  R_MarkFragment_SetupGlassClipPoints  (gfx_d3d/r_marks.cpp:740)
 
-void R_MarkFragment_SetupGlassClipPoints(int param_1,ushort *param_2,undefined4 *param_3)
+void R_MarkFragment_SetupGlassClipPoints
+               (float (*param_1) [3],ushort *param_2,FxWorldMarkPoint (*param_3) [9])
 
 {
-  undefined4 uVar1;
-  undefined4 uVar2;
+  float fVar1;
+  float fVar2;
   ushort uVar3;
   ushort uVar4;
-  undefined4 *puVar5;
-  int iVar6;
-  int iVar7;
+  float (*pafVar5) [3];
   
   uVar3 = param_2[2];
   uVar4 = param_2[1];
-  puVar5 = (undefined4 *)((uint)*param_2 * 0xc + param_1);
-  uVar1 = puVar5[1];
-  uVar2 = puVar5[2];
-  iVar6 = (uint)uVar4 * 0xc + param_1;
-  *param_3 = *puVar5;
-  param_3[1] = uVar1;
-  param_3[2] = uVar2;
-  param_3[3] = 0;
-  param_3[4] = 0;
-  param_3[5] = 0;
-  param_3[3] = 0x3f800000;
-  param_3[6] = *(undefined4 *)((uint)uVar4 * 0xc + param_1);
-  uVar1 = *(undefined4 *)(iVar6 + 8);
-  iVar7 = (uint)uVar3 * 0xc + param_1;
-  param_3[7] = *(undefined4 *)(iVar6 + 4);
-  param_3[8] = uVar1;
-  param_3[9] = 0;
-  param_3[10] = 0;
-  param_3[0xb] = 0;
-  param_3[10] = 0x3f800000;
-  param_3[0xc] = *(undefined4 *)((uint)uVar3 * 0xc + param_1);
-  param_3[0xd] = *(undefined4 *)(iVar7 + 4);
-  param_3[0xe] = *(undefined4 *)(iVar7 + 8);
-  param_3[0xf] = 0;
-  param_3[0x10] = 0;
-  param_3[0x11] = 0;
-  param_3[0x11] = 0x3f800000;
+  pafVar5 = param_1 + *param_2;
+  fVar1 = (*pafVar5)[1];
+  fVar2 = (*pafVar5)[2];
+  (*param_3)[0].xyz[0] = (*pafVar5)[0];
+  (*param_3)[0].xyz[1] = fVar1;
+  (*param_3)[0].xyz[2] = fVar2;
+  (*param_3)[0].vertWeights[0] = 0.0;
+  (*param_3)[0].vertWeights[1] = 0.0;
+  (*param_3)[0].vertWeights[2] = 0.0;
+  (*param_3)[0].vertWeights[0] = 1.0;
+  (*param_3)[1].xyz[0] = param_1[uVar4][0];
+  fVar1 = param_1[uVar4][2];
+  (*param_3)[1].xyz[1] = param_1[uVar4][1];
+  (*param_3)[1].xyz[2] = fVar1;
+  (*param_3)[1].vertWeights[0] = 0.0;
+  (*param_3)[1].vertWeights[1] = 0.0;
+  (*param_3)[1].vertWeights[2] = 0.0;
+  (*param_3)[1].vertWeights[1] = 1.0;
+  (*param_3)[2].xyz[0] = param_1[uVar3][0];
+  (*param_3)[2].xyz[1] = param_1[uVar3][1];
+  (*param_3)[2].xyz[2] = param_1[uVar3][2];
+  (*param_3)[2].vertWeights[0] = 0.0;
+  (*param_3)[2].vertWeights[1] = 0.0;
+  (*param_3)[2].vertWeights[2] = 0.0;
+  (*param_3)[2].vertWeights[2] = 1.0;
   return;
 }
 
 
 // 82750488  R_MarkFragments_Glass  (gfx_d3d/r_marks.cpp:755)
 
-void R_MarkFragments_Glass(void)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+bool R_MarkFragments_Glass(MarkInfo *param_1)
 
 {
-  undefined4 uVar1;
-  undefined4 uVar2;
-  undefined2 uVar3;
-  uint uVar4;
-  short sVar5;
-  bool bVar6;
-  int iVar8;
-  char cVar11;
+  float fVar1;
+  float fVar2;
+  undefined4 uVar3;
+  undefined4 uVar4;
+  ushort uVar5;
+  Material *pMVar6;
+  uint uVar7;
+  MarkInfo *pMVar8;
   int iVar9;
-  int iVar10;
-  longlong lVar7;
-  undefined1 *puVar12;
-  undefined1 *puVar13;
-  short sVar15;
-  ulonglong uVar14;
-  short *psVar16;
-  uint uVar17;
-  ushort *puVar18;
-  uint uVar19;
-  int iVar20;
-  longlong lVar21;
-  longlong lVar22;
-  undefined4 local_1040;
+  longlong lVar10;
+  bool bVar13;
+  undefined1 uVar14;
+  Material *pMVar11;
+  bool bVar15;
+  int iVar12;
+  undefined1 *puVar16;
+  undefined1 *puVar17;
+  short sVar19;
+  ulonglong uVar18;
+  FxMarkTri *pFVar20;
+  uint uVar21;
+  GlassTri *pGVar22;
+  char *pcVar23;
+  uint uVar24;
+  int iVar25;
+  ushort *puVar26;
+  longlong lVar27;
+  longlong lVar28;
+  longlong lVar29;
+  float local_1040;
   undefined4 local_103c;
   undefined4 local_1038;
-  undefined2 *local_1034;
+  ushort *local_1034;
   uint local_1030;
   uint local_102c;
   undefined4 local_1028;
-  undefined1 local_1024 [20];
-  undefined2 auStack_1010 [32];
-  undefined4 auStack_fd0 [6];
+  GfxMarkContext local_1024;
+  char *local_101c;
+  char *local_1018;
+  ushort auStack_1010 [32];
+  FxWorldMarkPoint FStack_fd0;
   undefined4 auStack_fb8 [6];
   undefined4 auStack_fa0 [6];
   undefined4 auStack_f88 [90];
-  ushort local_e20 [192];
-  undefined1 auStack_ca0 [3232];
+  GlassTri local_e20 [64];
+  float afStack_ca0 [808];
   
-  iVar8 = __savegprlr();
-  if ((*(int *)(iVar8 + 0x440) != 0) || (*(int *)(iVar8 + 0x444) != 0)) {
-    MyAssertHandler(0xffffffff821c6d94,0x30c,0,0xffffffff82000f98,0xffffffff821c7094);
+  lVar10 = (longlong)(int)param_1;
+  __savegprlr();
+  pMVar8 = (MarkInfo *)lVar10;
+  pcVar23 = "%s";
+  local_1018 = "%s";
+  local_101c = "!markInfo->usedTriCount && !markInfo->usedPointCount";
+  if ((pMVar8->usedTriCount != 0) || (pMVar8->usedPointCount != 0)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_marks.cpp",0x30c,0,
+                    "%s");
   }
-  FX_SetMarkContextModelType_Glass(local_1024);
-  cVar11 = FX_GlassPiecesInSphere(iVar8,auStack_1010,0x20,&local_102c);
-  if (cVar11 != '\0') {
+  FX_SetMarkContextModelType_Glass(&local_1024);
+  bVar13 = FX_GlassPiecesInSphere(&pMVar8->bounds,auStack_1010,0x20,&local_102c);
+  if (bVar13) {
     local_1028 = 0;
     if (local_102c != 0) {
       local_1034 = auStack_1010;
       do {
-        iVar20 = *(int *)(iVar8 + 0x58);
-        uVar3 = *local_1034;
-        iVar9 = FX_GlassPieceMaterial(uVar3);
-        if ((*(byte *)(iVar9 + 4) & 5) == 0) {
-          uVar17 = *(uint *)(iVar20 + 0x10);
-          bVar6 = uVar17 == (*(uint *)(iVar9 + 0x10) & uVar17);
+        puVar26 = local_1034;
+        pMVar6 = pMVar8->material;
+        uVar5 = *local_1034;
+        pMVar11 = FX_GlassPieceMaterial((uint)uVar5);
+        if (((pMVar11->info).field0_0x0.field_0x4 & 5) == 0) {
+          uVar21 = *(uint *)((int)&(pMVar6->info).field0_0x0.field1_0x8 + 8);
+          bVar13 = uVar21 == (*(uint *)((int)&(pMVar11->info).field0_0x0.field1_0x8 + 8) & uVar21);
         }
         else {
-          bVar6 = false;
+          bVar13 = false;
         }
-        if (bVar6) {
-          cVar11 = FX_GlassTrisInPiece(uVar3,iVar8 + 0x34,local_e20,0x40,auStack_ca0,0x100,
-                                       &local_1030,&local_1040);
-          if (cVar11 == '\0') goto LAB_82750514;
+        if (bVar13) {
+          bVar13 = FX_GlassTrisInPiece((uint)uVar5,pMVar8->axis[0],local_e20,0x40,
+                                       (float (*) [3])afStack_ca0,0x100,&local_1030,&local_1040);
+          if (!bVar13) goto LAB_82750514;
           if (0x40 < local_1030) {
-            MyAssertHandler(0xffffffff821c6d94,0x322,0,0xffffffff82187634,0xffffffff821c70d0);
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_marks.cpp",
+                            0x322,0,"%s\n\t(triCount) = %i");
           }
-          FX_SetMarkContext_GlassPieceIndex(local_1024,uVar3);
-          bVar6 = false;
-          uVar17 = 0;
+          FX_SetMarkContext_GlassPieceIndex(&local_1024,uVar5);
+          local_1024.reflectionProbeIndex = '\0';
+          bVar13 = false;
+          local_1024.primaryLightIndex = '\0';
+          uVar21 = 0;
           if (local_1030 != 0) {
-            puVar18 = local_e20;
+            pGVar22 = local_e20;
             do {
-              cVar11 = R_MarkFragment_IsTriangleRejected
-                                 (iVar8 + 0x34,auStack_ca0 + (uint)*puVar18 * 0xc,
-                                  auStack_ca0 + (uint)puVar18[1] * 0xc,
-                                  auStack_ca0 + (uint)puVar18[2] * 0xc);
-              if (cVar11 == '\0') {
-                R_MarkFragment_SetupGlassClipPoints(auStack_ca0,puVar18,auStack_fd0);
-                uVar19 = 0;
-                lVar21 = 3;
-                iVar9 = 0;
-                iVar20 = iVar8 + 0x6c;
+              bVar15 = R_MarkFragment_IsTriangleRejected
+                                 (pMVar8->axis[0],afStack_ca0 + (uint)pGVar22->indices[0] * 3,
+                                  afStack_ca0 + (uint)pGVar22->indices[1] * 3,
+                                  afStack_ca0 + (uint)pGVar22->indices[2] * 3);
+              if (!bVar15) {
+                R_MarkFragment_SetupGlassClipPoints
+                          ((float (*) [3])afStack_ca0,pGVar22->indices,
+                           (FxWorldMarkPoint (*) [9])&FStack_fd0);
+                uVar24 = 0;
+                lVar28 = 3;
+                iVar25 = 0;
+                lVar27 = lVar10 + 0x6c;
                 do {
-                  lVar21 = R_ChopWorldPolyBehindPlane
-                                     (lVar21,auStack_fd0 + uVar19 * 0x36,
-                                      auStack_fd0 + (uint)(uVar19 == 0) * 0x36,iVar20);
-                  iVar10 = (int)lVar21;
-                  if (iVar10 == 0) goto LAB_827509a8;
-                  if (9 < iVar10) {
-                    MyAssertHandler(0xffffffff821c6d94,0x33c,0,0xffffffff821c7058,0xffffffff821c7038
-                                    ,lVar21);
+                  iVar12 = R_ChopWorldPolyBehindPlane
+                                     ((int)lVar28,&FStack_fd0 + uVar24 * 9,
+                                      &FStack_fd0 + ((uint)LZCOUNT(uVar24) >> 5) * 9,(float *)lVar27
+                                     );
+                  lVar28 = (longlong)iVar12;
+                  if (iVar12 == 0) goto LAB_827509a8;
+                  if (9 < iVar12) {
+                    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_marks.cpp"
+                                    ,0x33c,0,"%s\n\t(fragmentPointCount) = %i");
                   }
-                  iVar9 = iVar9 + 1;
-                  uVar19 = uVar19 ^ 1;
-                  iVar20 = iVar20 + 0x10;
-                } while (iVar9 < 6);
-                uVar4 = *(uint *)(iVar8 + 0x444);
-                if (((int)(*(int *)(iVar8 + 100) - uVar4) < iVar10) ||
-                   (*(int *)(iVar8 + 0x5c) - *(int *)(iVar8 + 0x440) <
-                    (int)(lVar21 - 2U) + (int)((lVar21 - 2U & 0xffffffff) << 1))) goto LAB_82750514;
-                psVar16 = (short *)(*(int *)(iVar8 + 0x440) * 0xe + *(int *)(iVar8 + 0x60));
-                sVar15 = 2;
-                if (2 < iVar10) {
-                  sVar5 = (short)uVar4;
-                  lVar7 = lVar21 + -2;
+                  iVar25 = iVar25 + 1;
+                  uVar24 = uVar24 ^ 1;
+                  lVar27 = lVar27 + 0x10;
+                } while (iVar25 < 6);
+                uVar7 = pMVar8->usedPointCount;
+                if (((int)(pMVar8->maxPoints - uVar7) < iVar12) ||
+                   (pMVar8->maxTris - pMVar8->usedTriCount <
+                    (int)(lVar28 - 2U) + (int)((lVar28 - 2U & 0xffffffff) << 1))) goto LAB_82750514;
+                pFVar20 = pMVar8->tris + pMVar8->usedTriCount;
+                sVar19 = 2;
+                if (2 < iVar12) {
+                  uVar5 = (ushort)uVar7;
+                  lVar27 = lVar28 + -2;
                   do {
-                    psVar16[2] = sVar5;
-                    puVar13 = (undefined1 *)((int)&local_1028 + 3);
-                    psVar16[1] = sVar15 + sVar5;
-                    *psVar16 = sVar5 + -1 + sVar15;
-                    puVar12 = (undefined1 *)((int)psVar16 + 5);
-                    lVar22 = 7;
+                    pFVar20->indices[2] = uVar5;
+                    puVar17 = (undefined1 *)((int)&local_1028 + 3);
+                    pFVar20->indices[1] = sVar19 + uVar5;
+                    pFVar20->indices[0] = (uVar5 - 1) + sVar19;
+                    puVar16 = (undefined1 *)((int)pFVar20->indices + 5);
+                    lVar29 = 7;
                     do {
-                      puVar13 = puVar13 + 1;
-                      puVar12 = puVar12 + 1;
-                      *puVar12 = *puVar13;
-                      lVar22 = lVar22 + -1;
-                    } while (lVar22 != 0);
-                    lVar7 = lVar7 + -1;
-                    psVar16 = psVar16 + 7;
-                    sVar15 = sVar15 + 1;
-                  } while (lVar7 != 0);
+                      puVar17 = puVar17 + 1;
+                      puVar16 = puVar16 + 1;
+                      *puVar16 = *puVar17;
+                      lVar29 = lVar29 + -1;
+                    } while (lVar29 != 0);
+                    lVar27 = lVar27 + -1;
+                    pFVar20 = pFVar20 + 1;
+                    sVar19 = sVar19 + 1;
+                  } while (lVar27 != 0);
                 }
-                uVar14 = 0;
-                lVar7 = ((ulonglong)uVar4 & 0x7ffffff) * 0x20 + (ulonglong)*(uint *)(iVar8 + 0x68);
-                if (3 < iVar10) {
-                  lVar22 = lVar7 + -4;
+                uVar18 = 0;
+                lVar27 = ((ulonglong)uVar7 & 0x7ffffff) * 0x20 + ZEXT48(pMVar8->points);
+                if (3 < iVar12) {
+                  lVar29 = lVar27 + -4;
                   do {
-                    iVar9 = uVar19 * 9 + (int)uVar14;
-                    uVar14 = uVar14 + 4;
-                    uVar1 = auStack_fb8[iVar9 * 6];
-                    uVar2 = auStack_fa0[iVar9 * 6];
-                    iVar20 = (int)lVar22;
-                    *(undefined4 *)(iVar20 + 4) = auStack_fd0[iVar9 * 6];
-                    *(undefined4 *)(iVar20 + 8) = auStack_fd0[iVar9 * 6 + 1];
-                    *(undefined4 *)(iVar20 + 0xc) = auStack_fd0[iVar9 * 6 + 2];
-                    *(undefined4 *)(iVar20 + 0x18) = local_1040;
-                    *(undefined4 *)(iVar20 + 0x1c) = local_103c;
-                    *(undefined4 *)(iVar20 + 0x20) = local_1038;
-                    *(undefined4 *)(iVar20 + 0x24) = uVar1;
-                    *(undefined4 *)(iVar20 + 0x28) = auStack_fb8[iVar9 * 6 + 1];
-                    *(undefined4 *)(iVar20 + 0x2c) = auStack_fb8[iVar9 * 6 + 2];
-                    *(undefined4 *)(iVar20 + 0x38) = local_1040;
-                    *(undefined4 *)(iVar20 + 0x3c) = local_103c;
-                    *(undefined4 *)(iVar20 + 0x40) = local_1038;
-                    *(undefined4 *)(iVar20 + 0x44) = uVar2;
-                    *(undefined4 *)(iVar20 + 0x48) = auStack_fa0[iVar9 * 6 + 1];
-                    *(undefined4 *)(iVar20 + 0x4c) = auStack_fa0[iVar9 * 6 + 2];
-                    *(undefined4 *)(iVar20 + 0x58) = local_1040;
-                    *(undefined4 *)(iVar20 + 0x5c) = local_103c;
-                    *(undefined4 *)(iVar20 + 0x60) = local_1038;
-                    *(undefined4 *)(iVar20 + 100) = auStack_f88[iVar9 * 6];
-                    *(undefined4 *)(iVar20 + 0x68) = auStack_f88[iVar9 * 6 + 1];
-                    *(undefined4 *)(iVar20 + 0x6c) = auStack_f88[iVar9 * 6 + 2];
-                    *(undefined4 *)(iVar20 + 0x78) = local_1040;
-                    *(undefined4 *)(iVar20 + 0x7c) = local_103c;
-                    lVar22 = lVar22 + 0x80;
-                    *(undefined4 *)lVar22 = local_1038;
-                  } while ((int)uVar14 < iVar10 + -3);
+                    iVar9 = uVar24 * 9 + (int)uVar18;
+                    uVar18 = uVar18 + 4;
+                    uVar3 = auStack_fb8[iVar9 * 6];
+                    uVar4 = auStack_fa0[iVar9 * 6];
+                    iVar25 = (int)lVar29;
+                    *(float *)(iVar25 + 4) = (&FStack_fd0)[iVar9].xyz[0];
+                    *(float *)(iVar25 + 8) = (&FStack_fd0)[iVar9].xyz[1];
+                    *(float *)(iVar25 + 0xc) = (&FStack_fd0)[iVar9].xyz[2];
+                    *(float *)(iVar25 + 0x18) = local_1040;
+                    *(undefined4 *)(iVar25 + 0x1c) = local_103c;
+                    *(undefined4 *)(iVar25 + 0x20) = local_1038;
+                    *(undefined4 *)(iVar25 + 0x24) = uVar3;
+                    *(undefined4 *)(iVar25 + 0x28) = auStack_fb8[iVar9 * 6 + 1];
+                    *(undefined4 *)(iVar25 + 0x2c) = auStack_fb8[iVar9 * 6 + 2];
+                    *(float *)(iVar25 + 0x38) = local_1040;
+                    *(undefined4 *)(iVar25 + 0x3c) = local_103c;
+                    *(undefined4 *)(iVar25 + 0x40) = local_1038;
+                    *(undefined4 *)(iVar25 + 0x44) = uVar4;
+                    *(undefined4 *)(iVar25 + 0x48) = auStack_fa0[iVar9 * 6 + 1];
+                    *(undefined4 *)(iVar25 + 0x4c) = auStack_fa0[iVar9 * 6 + 2];
+                    *(float *)(iVar25 + 0x58) = local_1040;
+                    *(undefined4 *)(iVar25 + 0x5c) = local_103c;
+                    *(undefined4 *)(iVar25 + 0x60) = local_1038;
+                    *(undefined4 *)(iVar25 + 100) = auStack_f88[iVar9 * 6];
+                    *(undefined4 *)(iVar25 + 0x68) = auStack_f88[iVar9 * 6 + 1];
+                    *(undefined4 *)(iVar25 + 0x6c) = auStack_f88[iVar9 * 6 + 2];
+                    *(float *)(iVar25 + 0x78) = local_1040;
+                    *(undefined4 *)(iVar25 + 0x7c) = local_103c;
+                    lVar29 = lVar29 + 0x80;
+                    *(undefined4 *)lVar29 = local_1038;
+                  } while ((int)uVar18 < iVar12 + -3);
                 }
-                if ((int)uVar14 < iVar10) {
-                  lVar22 = lVar21 - uVar14;
-                  lVar7 = (uVar14 & 0x7ffffff) * 0x20 + lVar7 + -4;
+                if ((int)uVar18 < iVar12) {
+                  lVar28 = lVar28 - uVar18;
+                  lVar27 = (uVar18 & 0x7ffffff) * 0x20 + lVar27 + -4;
                   do {
-                    iVar9 = uVar19 * 9 + (int)uVar14;
-                    uVar14 = uVar14 + 1;
-                    uVar1 = auStack_fd0[iVar9 * 6 + 1];
-                    uVar2 = auStack_fd0[iVar9 * 6 + 2];
-                    iVar20 = (int)lVar7;
-                    *(undefined4 *)(iVar20 + 4) = auStack_fd0[iVar9 * 6];
-                    *(undefined4 *)(iVar20 + 8) = uVar1;
-                    *(undefined4 *)(iVar20 + 0xc) = uVar2;
-                    *(undefined4 *)(iVar20 + 0x18) = local_1040;
-                    *(undefined4 *)(iVar20 + 0x1c) = local_103c;
-                    lVar7 = lVar7 + 0x20;
-                    *(undefined4 *)lVar7 = local_1038;
-                    lVar22 = lVar22 + -1;
-                  } while (lVar22 != 0);
+                    iVar9 = uVar24 * 9 + (int)uVar18;
+                    uVar18 = uVar18 + 1;
+                    fVar1 = (&FStack_fd0)[iVar9].xyz[1];
+                    fVar2 = (&FStack_fd0)[iVar9].xyz[2];
+                    iVar25 = (int)lVar27;
+                    *(float *)(iVar25 + 4) = (&FStack_fd0)[iVar9].xyz[0];
+                    *(float *)(iVar25 + 8) = fVar1;
+                    *(float *)(iVar25 + 0xc) = fVar2;
+                    *(float *)(iVar25 + 0x18) = local_1040;
+                    *(undefined4 *)(iVar25 + 0x1c) = local_103c;
+                    lVar27 = lVar27 + 0x20;
+                    *(undefined4 *)lVar27 = local_1038;
+                    lVar28 = lVar28 + -1;
+                  } while (lVar28 != 0);
                 }
-                if (iVar10 < 3) {
-                  MyAssertHandler(0xffffffff821c6d94,0x35c,0,0xffffffff821c7058,0xffffffff821c7078,
-                                  lVar21);
+                if (iVar12 < 3) {
+                  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_marks.cpp"
+                                  ,0x35c,0,"%s\n\t(fragmentPointCount) = %i");
                 }
-                bVar6 = true;
-                *(int *)(iVar8 + 0x444) = iVar10 + *(int *)(iVar8 + 0x444);
-                *(int *)(iVar8 + 0x440) = iVar10 + *(int *)(iVar8 + 0x440) + -2;
+                bVar13 = true;
+                pMVar8->usedPointCount = iVar12 + pMVar8->usedPointCount;
+                pMVar8->usedTriCount = iVar12 + pMVar8->usedTriCount + -2;
               }
 LAB_827509a8:
-              uVar17 = uVar17 + 1;
-              puVar18 = puVar18 + 3;
-            } while (uVar17 < local_1030);
+              uVar21 = uVar21 + 1;
+              pGVar22 = pGVar22 + 1;
+              pcVar23 = local_1018;
+              puVar26 = local_1034;
+            } while (uVar21 < local_1030);
           }
-          if (bVar6) {
-            (**(code **)(iVar8 + 0x448))
-                      (*(undefined4 *)(iVar8 + 0x44c),*(undefined4 *)(iVar8 + 0x440),
-                       *(undefined4 *)(iVar8 + 0x60),*(undefined4 *)(iVar8 + 0x444),
-                       *(undefined4 *)(iVar8 + 0x68),iVar8,iVar8 + 0x40);
-            R_CheckMarkTris(iVar8);
-            *(undefined4 *)(iVar8 + 0x440) = 0;
-            *(undefined4 *)(iVar8 + 0x444) = 0;
+          if (bVar13) {
+            (*pMVar8->callback)(pMVar8->callbackContext,pMVar8->usedTriCount,pMVar8->tris,
+                                pMVar8->usedPointCount,pMVar8->points,(float *)pMVar8,
+                                pMVar8->axis[1]);
+            R_CheckMarkTris(pMVar8);
+            pMVar8->usedTriCount = 0;
+            pMVar8->usedPointCount = 0;
 LAB_82750a1c:
-            if (*(int *)(iVar8 + 0x444) == 0) goto LAB_82750a40;
+            if (pMVar8->usedPointCount == 0) goto LAB_82750a40;
           }
-          else if (*(int *)(iVar8 + 0x440) == 0) goto LAB_82750a1c;
-          MyAssertHandler(0xffffffff821c6d94,0x369,0,&DAT_82000f98,
-                          "!markInfo->usedTriCount && !markInfo->usedPointCount");
+          else if (pMVar8->usedTriCount == 0) goto LAB_82750a1c;
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_marks.cpp",
+                          0x369,0,pcVar23);
         }
 LAB_82750a40:
-        local_1034 = local_1034 + 1;
+        local_1034 = puVar26 + 1;
         local_1028 = local_1028 + 1;
       } while (local_1028 < local_102c);
     }
-    if ((*(int *)(iVar8 + 0x440) != 0) || (*(int *)(iVar8 + 0x444) != 0)) {
-      MyAssertHandler(0xffffffff821c6d94,0x36c,0,&DAT_82000f98,
-                      "!markInfo->usedTriCount && !markInfo->usedPointCount");
+    if ((pMVar8->usedTriCount != 0) || (pMVar8->usedPointCount != 0)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_marks.cpp",0x36c,0
+                      ,pcVar23);
     }
-    __restgprlr(1);
-    return;
+    uVar14 = 1;
+    __restgprlr();
+    return (bool)uVar14;
   }
 LAB_82750514:
-  __restgprlr(0);
-  return;
+  uVar14 = 0;
+  __restgprlr();
+  return (bool)uVar14;
 }
 
 
 // 82750AA0  R_Mark_TransformClipPlanes  (gfx_d3d/r_marks.cpp:882)
 
-void R_Mark_TransformClipPlanes(int param_1,float *param_2,int param_3)
+void R_Mark_TransformClipPlanes(float (*param_1) [4],float (*param_2) [3],float (*param_3) [4])
 
 {
   float fVar1;
-  float *pfVar2;
+  float (*pafVar2) [4];
   float *pfVar3;
   float *pfVar4;
   float *pfVar5;
   float *pfVar6;
   longlong lVar7;
   
-  pfVar5 = (float *)(param_3 + -4);
+  pfVar5 = param_3[-1] + 3;
   lVar7 = 6;
-  pfVar6 = (float *)(param_1 + 8);
+  pfVar6 = *param_1 + 2;
   do {
-    pfVar5[1] = param_2[2] * *pfVar6 + pfVar6[-2] * *param_2 + pfVar6[-1] * param_2[1];
-    *(float *)((int)pfVar6 + (param_3 - param_1) + -4) =
-         param_2[5] * *pfVar6 + pfVar6[-2] * param_2[3] + pfVar6[-1] * param_2[4];
-    *(float *)((param_3 - param_1) + (int)pfVar6) =
-         *pfVar6 * param_2[8] + pfVar6[-2] * param_2[6] + pfVar6[-1] * param_2[7];
-    pfVar2 = pfVar6 + -2;
+    pfVar5[1] = (*param_2)[2] * *pfVar6 +
+                (*(float (*) [4])(pfVar6 + -2))[0] * (*param_2)[0] + pfVar6[-1] * (*param_2)[1];
+    *(float *)((int)pfVar6 + ((int)param_3 - (int)param_1) + -4) =
+         param_2[1][2] * *pfVar6 +
+         (*(float (*) [4])(pfVar6 + -2))[0] * param_2[1][0] + pfVar6[-1] * param_2[1][1];
+    *(float *)(((int)param_3 - (int)param_1) + (int)pfVar6) =
+         *pfVar6 * param_2[2][2] +
+         (*(float (*) [4])(pfVar6 + -2))[0] * param_2[2][0] + pfVar6[-1] * param_2[2][1];
+    pafVar2 = (float (*) [4])(pfVar6 + -2);
     fVar1 = *pfVar6;
     pfVar3 = pfVar6 + 1;
     pfVar4 = pfVar6 + -1;
     pfVar6 = pfVar6 + 4;
     pfVar5 = pfVar5 + 4;
-    *pfVar5 = *pfVar3 - (param_2[0xb] * fVar1 + *pfVar2 * param_2[9] + *pfVar4 * param_2[10]);
+    *pfVar5 = *pfVar3 - (param_2[3][2] * fVar1 +
+                        (*pafVar2)[0] * param_2[3][0] + *pfVar4 * param_2[3][1]);
     lVar7 = lVar7 + -1;
   } while (lVar7 != 0);
   return;
@@ -1586,140 +1514,149 @@ void R_Mark_TransformClipPlanes(int param_1,float *param_2,int param_3)
 
 // 82750B78  R_MarkFragments_EntBrushes  (gfx_d3d/r_marks.cpp:895)
 
-void R_MarkFragments_EntBrushes(void)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+bool R_MarkFragments_EntBrushes(MarkInfo *param_1)
 
 {
   ushort uVar1;
   int iVar2;
-  int iVar3;
+  Material *pMVar3;
   uint uVar4;
-  bool bVar5;
-  int iVar6;
-  char cVar7;
-  int iVar8;
+  MarkInfo *pMVar5;
+  bool bVar6;
+  undefined1 uVar7;
+  GfxSurface *pGVar8;
   uint uVar9;
   int iVar10;
   uint uVar11;
-  undefined4 *puVar12;
+  cpose_t **ppcVar12;
   int iVar13;
-  char local_190 [4];
-  undefined1 local_18c [12];
+  bool local_190 [4];
+  GfxMarkContext local_18c;
   float local_180;
   float local_17c;
   float local_178;
-  undefined1 auStack_170 [36];
+  float afStack_170 [9];
   float local_14c;
   float local_148;
   float local_144;
-  undefined1 auStack_140 [16];
-  undefined1 auStack_130 [16];
-  undefined1 auStack_120 [16];
-  undefined1 auStack_110 [16];
-  undefined1 auStack_100 [36];
-  undefined1 auStack_dc [12];
-  undefined1 auStack_d0 [208];
+  float afStack_140 [4];
+  float afStack_130 [4];
+  float afStack_120 [4];
+  float afStack_110 [4];
+  float afStack_100 [9];
+  float afStack_dc [3];
+  float afStack_d0 [52];
   
-  iVar6 = __savegprlr_20();
-  iVar2 = *(int *)(iVar6 + 0x428);
+  pMVar5 = (MarkInfo *)__savegprlr_20(param_1);
+  iVar2 = pMVar5->sceneBModelCollidedCount;
   iVar10 = 0;
   if (iVar2 != 0) {
-    puVar12 = (undefined4 *)(iVar6 + 0x2ac);
+    ppcVar12 = &pMVar5->sceneBModelsCollided[0].pose;
     do {
-      local_18c[0] = 2;
-      FX_SetMarkContext_EntNum(local_18c,*(undefined2 *)(puVar12 + 1));
-      CG_GetPoseAngles(*puVar12,auStack_130);
-      AnglesToAxis(auStack_130,auStack_170);
-      CG_GetPoseOrigin(*puVar12,&local_14c);
-      R_Mark_TransformClipPlanes(iVar6 + 0x6c,auStack_170,auStack_d0);
-      MatrixTransposeTransformVector(iVar6 + 0x34,auStack_170,auStack_140);
-      local_190[0] = '\0';
-      uVar1 = *(ushort *)(puVar12[-1] + 0x36);
+      local_18c.modelType = '\x02';
+      FX_SetMarkContext_EntNum(&local_18c,*(ushort *)(ppcVar12 + 1));
+      CG_GetPoseAngles(*ppcVar12,afStack_130);
+      AnglesToAxis(afStack_130,(float (*) [3])afStack_170);
+      CG_GetPoseOrigin(*ppcVar12,&local_14c);
+      R_Mark_TransformClipPlanes
+                (pMVar5->planes,(float (*) [3])afStack_170,(float (*) [4])afStack_d0);
+      MatrixTransposeTransformVector(pMVar5->axis[0],(float (*) [3])afStack_170,afStack_140);
+      local_190[0] = false;
+      uVar1 = ((MarkInfoCollidedBModel *)(ppcVar12 + -1))->brushModel->startSurfIndex;
       uVar9 = (uint)uVar1;
-      uVar11 = (uint)*(ushort *)(puVar12[-1] + 0x34) + (uint)uVar1;
+      uVar11 = (uint)((MarkInfoCollidedBModel *)(ppcVar12 + -1))->brushModel->surfaceCount +
+               (uint)uVar1;
       if (uVar1 != uVar11) {
         iVar13 = uVar9 * 0x18;
         do {
-          iVar8 = *(int *)(DAT_846178cc + 0x50) + iVar13;
-          iVar3 = *(int *)(iVar8 + 0x10);
-          if ((*(byte *)(iVar3 + 4) & 5) == 0) {
-            uVar4 = *(uint *)(*(int *)(iVar6 + 0x58) + 0x10);
-            bVar5 = uVar4 == (*(uint *)(iVar3 + 0x10) & uVar4);
+          pGVar8 = (GfxSurface *)((int)&(g_worldDpvs->surfaces->tris).vertexLayerData + iVar13);
+          pMVar3 = pGVar8->material;
+          if (((pMVar3->info).field0_0x0.field_0x4 & 5) == 0) {
+            uVar4 = *(uint *)((int)&(pMVar5->material->info).field0_0x0.field1_0x8 + 8);
+            bVar6 = uVar4 == (*(uint *)((int)&(pMVar3->info).field0_0x0.field1_0x8 + 8) & uVar4);
           }
           else {
-            bVar5 = false;
+            bVar6 = false;
           }
-          if ((bVar5) &&
-             (cVar7 = R_MarkFragments_BrushSurface
-                                (iVar6,local_18c,auStack_d0,auStack_140,iVar8,local_190),
-             cVar7 == '\0')) {
-            __restgprlr_20(0);
-            return;
+          if ((bVar6) &&
+             (bVar6 = R_MarkFragments_BrushSurface
+                                (pMVar5,&local_18c,(float (*) [4])afStack_d0,afStack_140,pGVar8,
+                                 local_190), !bVar6)) {
+            uVar7 = __restgprlr_20(0);
+            return (bool)uVar7;
           }
           uVar9 = uVar9 + 1;
           iVar13 = iVar13 + 0x18;
         } while (uVar9 != uVar11);
       }
-      if (local_190[0] != '\0') {
-        MatrixTranspose(auStack_170,auStack_100);
+      if (local_190[0] != false) {
+        MatrixTranspose((float (*) [3])afStack_170,(float (*) [3])afStack_100);
         local_180 = -local_14c;
         local_17c = -local_148;
         local_178 = -local_144;
-        MatrixTransformVector(&local_180,auStack_100,auStack_dc);
-        MatrixTransformVector43(iVar6,auStack_100,auStack_110);
-        MatrixTransposeTransformVector(iVar6 + 0x40,auStack_170,auStack_120);
-        (**(code **)(iVar6 + 0x448))
-                  (*(undefined4 *)(iVar6 + 0x44c),*(undefined4 *)(iVar6 + 0x440),
-                   *(undefined4 *)(iVar6 + 0x60),*(undefined4 *)(iVar6 + 0x444),
-                   *(undefined4 *)(iVar6 + 0x68),auStack_110,auStack_120);
-        R_CheckMarkTris(iVar6);
-        *(undefined4 *)(iVar6 + 0x440) = 0;
-        *(undefined4 *)(iVar6 + 0x444) = 0;
+        MatrixTransformVector(&local_180,(float (*) [3])afStack_100,afStack_dc);
+        MatrixTransformVector43((float *)pMVar5,(float (*) [3])afStack_100,afStack_110);
+        MatrixTransposeTransformVector(pMVar5->axis[1],(float (*) [3])afStack_170,afStack_120);
+        (*pMVar5->callback)(pMVar5->callbackContext,pMVar5->usedTriCount,pMVar5->tris,
+                            pMVar5->usedPointCount,pMVar5->points,afStack_110,afStack_120);
+        R_CheckMarkTris(pMVar5);
+        pMVar5->usedTriCount = 0;
+        pMVar5->usedPointCount = 0;
       }
       iVar10 = iVar10 + 1;
-      puVar12 = puVar12 + 3;
+      ppcVar12 = ppcVar12 + 3;
     } while (iVar10 != iVar2);
   }
-  __restgprlr_20(1);
-  return;
+  uVar7 = __restgprlr_20(1);
+  return (bool)uVar7;
 }
 
 
 // 82750D88  R_MarkFragments_Brushes  (gfx_d3d/r_marks.cpp:969)
 
-bool R_MarkFragments_Brushes(undefined8 param_1)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+bool R_MarkFragments_Brushes(MarkInfo *param_1)
 
 {
-  char cVar1;
+  bool bVar1;
   
-  cVar1 = R_MarkFragments_WorldBrushes();
-  if (cVar1 == '\0') {
+  bVar1 = R_MarkFragments_WorldBrushes(param_1);
+  if (!bVar1) {
     return false;
   }
-  cVar1 = R_MarkFragments_EntBrushes(param_1);
-  return cVar1 != '\0';
+  bVar1 = R_MarkFragments_EntBrushes(param_1);
+  return (bool)('\x01' - !bVar1);
 }
 
 
 // 8274E2F0  FX_SetMarkContextModelType_EntModel  (renderer/tr_types.h:985)
 
-void FX_SetMarkContextModelType_EntModel(undefined8 param_1,undefined8 param_2)
+void FX_SetMarkContextModelType_EntModel(GfxMarkContext *param_1,int param_2)
 
 {
-  undefined1 *puVar1;
+  GfxMarkContext *pGVar1;
   int iVar2;
   
-  puVar1 = (undefined1 *)__savegprlr_28();
-  if (puVar1 == (undefined1 *)0x0) {
-    MyAssertHandler(0xffffffff821c6b70,0x3da,0,0xffffffff82000f98,0xffffffff820653c8);
+  pGVar1 = (GfxMarkContext *)__savegprlr_28(param_1);
+  if (pGVar1 == (GfxMarkContext *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\../renderer/tr_types.h"
+                    ,0x3da,0,"%s");
   }
-  if (0x1f < (int)param_2) {
-    MyAssertHandler(0xffffffff821c6b70,0x3db,0,0xffffffff82000f98,0xffffffff820654e8);
+  if (0x1f < param_2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\../renderer/tr_types.h"
+                    ,0x3db,0,"%s");
   }
-  puVar1[4] = (char)param_2;
-  *puVar1 = 3;
-  iVar2 = FX_GetMarkContext_DObjModelIndex(puVar1);
-  if ((int)param_2 != iVar2) {
-    MyAssertHandler(0xffffffff821c6b70,0x3df,0,0xffffffff8206548c,0xffffffff820654a8,param_2);
+  (pGVar1->field3_0x4).surfIndex = (uchar)param_2;
+  pGVar1->modelType = '\x03';
+  iVar2 = FX_GetMarkContext_DObjModelIndex(pGVar1);
+  if (param_2 != iVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\../renderer/tr_types.h"
+                    ,0x3df,0,"%s\n\t(dobjModelIndex) = %i");
   }
   __restgprlr_28();
   return;
@@ -1728,139 +1665,162 @@ void FX_SetMarkContextModelType_EntModel(undefined8 param_1,undefined8 param_2)
 
 // 82751E10  R_MarkModelCoreCallback<1>  (gfx_d3d/r_marks.cpp:994)
 
-void R_MarkModelCoreCallback<1>(undefined8 param_1,longlong param_2)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+bool R_MarkModelCoreCallback<1>(void *param_1,TriangleVisitorVertex *param_2)
 
 {
   undefined4 *puVar1;
-  int iVar2;
+  TriangleVisitorVertex *pTVar2;
   undefined4 *puVar3;
-  char cVar4;
-  float *pfVar5;
-  undefined1 *puVar6;
-  longlong lVar7;
+  bool bVar4;
+  undefined1 uVar5;
+  float *pfVar6;
+  FxModelMarkPoint *pFVar7;
   longlong lVar8;
-  double dVar9;
+  longlong lVar9;
   double dVar10;
+  double dVar11;
   float local_220;
   undefined4 local_21c;
   undefined4 local_218;
-  undefined1 auStack_210 [4];
-  float afStack_20c [5];
-  undefined1 auStack_1f8 [24];
-  undefined1 auStack_1e0 [480];
+  FxModelMarkPoint FStack_210;
+  float afStack_1f8 [6];
+  float afStack_1e0 [120];
   
-  puVar3 = (undefined4 *)__savegprlr_23();
-  pfVar5 = &local_220;
-  iVar2 = (int)param_2;
-  dVar9 = 1.0;
-  dVar10 = 0.0;
-  puVar6 = auStack_210;
-  lVar8 = param_2 + 8;
-  lVar7 = 3;
+  lVar9 = (longlong)(int)param_2;
+  puVar3 = (undefined4 *)__savegprlr_23(param_1);
+  pfVar6 = &local_220;
+  pTVar2 = (TriangleVisitorVertex *)lVar9;
+  dVar10 = 1.0;
+  dVar11 = 0.0;
+  pFVar7 = &FStack_210;
+  lVar9 = lVar9 + 8;
+  lVar8 = 3;
   do {
-    puVar1 = (undefined4 *)lVar8;
+    puVar1 = (undefined4 *)lVar9;
     local_220 = (float)puVar1[-2];
     local_21c = puVar1[-1];
     local_218 = *puVar1;
-    MatrixTransformVector43(&local_220,puVar3[5],puVar6);
-    *(float *)(((int)afStack_20c - iVar2) + (int)puVar1) = (float)dVar10;
-    *(float *)((int)afStack_20c + (4 - iVar2) + (int)puVar1) = (float)dVar10;
-    lVar7 = lVar7 + -1;
-    *(float *)((int)afStack_20c + (8 - iVar2) + (int)puVar1) = (float)dVar10;
-    puVar6 = puVar6 + 0x18;
-    pfVar5 = pfVar5 + 7;
-    *pfVar5 = (float)dVar9;
-    lVar8 = lVar8 + 0x18;
-  } while (lVar7 != 0);
-  cVar4 = R_MarkFragment_IsTriangleRejected(puVar3[3],auStack_210,auStack_1f8,auStack_1e0);
-  if (cVar4 != '\0') {
-    __restgprlr_23(1);
-    return;
+    MatrixTransformVector43(&local_220,(float (*) [3])puVar3[5],pFVar7->xyz);
+    *(float *)((int)&FStack_210 + (4 - (int)pTVar2) + (int)puVar1) = (float)dVar11;
+    *(float *)((int)&FStack_210 + (8 - (int)pTVar2) + (int)puVar1) = (float)dVar11;
+    lVar8 = lVar8 + -1;
+    *(float *)((int)&FStack_210 + (0xc - (int)pTVar2) + (int)puVar1) = (float)dVar11;
+    pFVar7 = pFVar7 + 1;
+    pfVar6 = pfVar6 + 7;
+    *pfVar6 = (float)dVar10;
+    lVar9 = lVar9 + 0x18;
+  } while (lVar8 != 0);
+  bVar4 = R_MarkFragment_IsTriangleRejected
+                    ((float *)puVar3[3],FStack_210.xyz,afStack_1f8,afStack_1e0);
+  if (bVar4) {
+    uVar5 = __restgprlr_23(1);
+    return (bool)uVar5;
   }
-  cVar4 = R_MarkFragment_DoTriangle<1>(*puVar3,puVar3[4],puVar3[1],param_2,puVar3[6],auStack_210);
-  __restgprlr_23(cVar4 != '\0');
-  return;
+  bVar4 = R_MarkFragment_DoTriangle<1>
+                    ((MarkInfo *)*puVar3,(float (*) [4])puVar3[4],(GfxMarkContext *)puVar3[1],pTVar2
+                     ,(float (*) [3])puVar3[6],(FxModelMarkPoint (*) [9])&FStack_210);
+  uVar5 = __restgprlr_23(bVar4);
+  return (bool)uVar5;
 }
 
 
 // 82751F20  R_MarkModelCoreCallback<0>  (gfx_d3d/r_marks.cpp:994)
 
-bool R_MarkModelCoreCallback<0>(undefined4 *param_1,int param_2)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+bool R_MarkModelCoreCallback<0>(void *param_1,TriangleVisitorVertex *param_2)
 
 {
-  undefined4 uVar1;
-  undefined4 uVar2;
-  char cVar3;
-  bool bVar4;
-  undefined4 *puVar5;
-  undefined4 *puVar6;
-  undefined4 *puVar7;
-  longlong lVar8;
-  undefined4 auStack_1e0 [4];
-  undefined1 local_1d0 [4];
-  undefined4 local_1cc [5];
-  undefined1 auStack_1b8 [24];
-  undefined1 auStack_1a0 [392];
+  float fVar1;
+  float fVar2;
+  bool bVar3;
+  char cVar4;
+  FxModelMarkPoint (*paFVar5) [9];
+  float *pfVar6;
+  float *pfVar7;
+  float *pfVar8;
+  longlong lVar9;
+  float afStack_1e0 [4];
+  float local_1d0;
+  undefined4 local_1cc;
+  FxModelMarkPoint local_1c8;
+  float afStack_1a0 [98];
   
-  puVar5 = auStack_1e0;
-  lVar8 = 3;
-  puVar6 = auStack_1e0;
-  puVar7 = (undefined4 *)(param_2 + 8);
+  pfVar6 = afStack_1e0;
+  lVar9 = 3;
+  pfVar7 = afStack_1e0;
+  paFVar5 = (FxModelMarkPoint (*) [9])((int)&local_1c8 - (int)param_2);
+  pfVar8 = param_2->xyz + 2;
   do {
-    uVar1 = puVar7[-1];
-    uVar2 = *puVar7;
-    puVar6[4] = puVar7[-2];
-    puVar6[5] = uVar1;
-    puVar6 = puVar6 + 6;
-    *puVar6 = uVar2;
-    *(undefined4 *)(((int)local_1cc - param_2) + (int)puVar7) = 0;
-    *(undefined4 *)((int)local_1cc + (4 - param_2) + (int)puVar7) = 0;
-    *(undefined4 *)((int)local_1cc + (8 - param_2) + (int)puVar7) = 0;
-    puVar7 = puVar7 + 6;
-    puVar5 = puVar5 + 7;
-    *puVar5 = 0x3f800000;
-    lVar8 = lVar8 + -1;
-  } while (lVar8 != 0);
-  cVar3 = R_MarkFragment_IsTriangleRejected(param_1[3],local_1d0,auStack_1b8,auStack_1a0);
-  if (cVar3 == '\0') {
-    cVar3 = R_MarkFragment_DoTriangle<0>(*param_1,param_1[4],param_1[1],param_2,local_1d0);
-    bVar4 = cVar3 != '\0';
+    fVar1 = pfVar8[-1];
+    fVar2 = *pfVar8;
+    pfVar7[4] = ((TriangleVisitorVertex *)(pfVar8 + -2))->xyz[0];
+    pfVar7[5] = fVar1;
+    pfVar7 = pfVar7 + 6;
+    *pfVar7 = fVar2;
+    *(undefined4 *)(((int)&local_1cc - (int)param_2) + (int)pfVar8) = 0;
+    *(undefined4 *)((int)(*paFVar5)[0].xyz + (int)pfVar8) = 0;
+    *(undefined4 *)((int)&local_1c8 + (4 - (int)param_2) + (int)pfVar8) = 0;
+    pfVar8 = pfVar8 + 6;
+    pfVar6 = pfVar6 + 7;
+    *pfVar6 = 1.0;
+    lVar9 = lVar9 + -1;
+  } while (lVar9 != 0);
+  bVar3 = R_MarkFragment_IsTriangleRejected
+                    (*(float **)((int)param_1 + 0xc),&local_1d0,local_1c8.vertWeights + 1,
+                     afStack_1a0);
+  if (bVar3) {
+    cVar4 = '\x01';
   }
   else {
-    bVar4 = true;
+    bVar3 = R_MarkFragment_DoTriangle<0>
+                      (*(MarkInfo **)param_1,*(float (**) [4])((int)param_1 + 0x10),
+                       *(GfxMarkContext **)((int)param_1 + 4),param_2,(float (*) [3])&local_1d0,
+                       paFVar5);
+    cVar4 = '\x01' - !bVar3;
   }
-  return bVar4;
+  return (bool)cVar4;
 }
 
 
 // 8274E3A8  FX_SetMarkContextModelType_EntViewmodel  (renderer/tr_types.h:996)
 
-void FX_SetMarkContextModelType_EntViewmodel
-               (undefined8 param_1,undefined8 param_2,ulonglong param_3)
+void FX_SetMarkContextModelType_EntViewmodel(GfxMarkContext *param_1,int param_2,int param_3)
 
 {
-  undefined1 *puVar1;
+  GfxMarkContext *pGVar1;
   int iVar2;
+  ulonglong uVar3;
   
-  puVar1 = (undefined1 *)__savegprlr_27();
-  if (puVar1 == (undefined1 *)0x0) {
-    MyAssertHandler(0xffffffff821c6b70,1000,0,0xffffffff82000f98,0xffffffff820653c8);
+  uVar3 = (ulonglong)param_3;
+  pGVar1 = (GfxMarkContext *)__savegprlr_27(param_1);
+  if (pGVar1 == (GfxMarkContext *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\../renderer/tr_types.h"
+                    ,1000,0,"%s");
   }
-  if (0x1f < (int)param_2) {
-    MyAssertHandler(0xffffffff821c6b70,0x3e9,0,0xffffffff82000f98,0xffffffff820654e8);
+  if (0x1f < param_2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\../renderer/tr_types.h"
+                    ,0x3e9,0,"%s");
   }
-  if (3 < (int)param_3) {
-    MyAssertHandler(0xffffffff821c6b70,0x3ea,0,0xffffffff821c6c7c,0xffffffff821c6c10,param_3);
+  if (3 < (int)uVar3) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\../renderer/tr_types.h"
+                    ,0x3ea,0,"%s\n\t(viewmodelClientIndex) = %i");
   }
-  *puVar1 = 3;
-  puVar1[4] = (byte)((param_3 & 0xffffffff) << 5) | 0x80 | (byte)param_2;
-  iVar2 = FX_GetMarkContext_DObjModelIndex(puVar1);
-  if ((int)param_2 != iVar2) {
-    MyAssertHandler(0xffffffff821c6b70,0x3f1,0,0xffffffff8206548c,0xffffffff820654a8,param_2);
+  pGVar1->modelType = '\x03';
+  (pGVar1->field3_0x4).surfIndex = (byte)((uVar3 & 0xffffffff) << 5) | 0x80 | (byte)param_2;
+  iVar2 = FX_GetMarkContext_DObjModelIndex(pGVar1);
+  if (param_2 != iVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\../renderer/tr_types.h"
+                    ,0x3f1,0,"%s\n\t(dobjModelIndex) = %i");
   }
-  iVar2 = FX_GetMarkContext_ViewmodelClientIndex(puVar1);
-  if ((int)param_3 != iVar2) {
-    MyAssertHandler(0xffffffff821c6b70,0x3f2,0,0xffffffff821c6c7c,0xffffffff821c6bc0,param_3);
+  iVar2 = FX_GetMarkContext_ViewmodelClientIndex(pGVar1);
+  if ((int)uVar3 != iVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\../renderer/tr_types.h"
+                    ,0x3f2,0,"%s\n\t(viewmodelClientIndex) = %i");
   }
   __restgprlr_27();
   return;
@@ -1869,21 +1829,28 @@ void FX_SetMarkContextModelType_EntViewmodel
 
 // 82752018  R_MarkFragments_XModelSurface_Basic  (gfx_d3d/r_marks.cpp:1034)
 
-void R_MarkFragments_XModelSurface_Basic
-               (undefined8 param_1,undefined8 param_2,longlong param_3,float *param_4,
-               undefined8 param_5,undefined4 param_6)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+bool R_MarkFragments_XModelSurface_Basic
+               (MarkInfo *param_1,XSurface *param_2,float (*param_3) [3],float *param_4,
+               float param_5,GfxMarkContext *param_6)
 
 {
   float fVar1;
   float fVar2;
   int iVar3;
-  char cVar4;
-  float *pfVar5;
-  longlong lVar6;
-  ulonglong uVar7;
+  float *pfVar4;
+  bool bVar5;
+  undefined1 uVar6;
+  float (*pafVar7) [3];
   longlong lVar8;
+  float *pfVar9;
+  longlong lVar10;
+  uint uVar11;
+  longlong lVar12;
   double extraout_f1;
-  double dVar9;
+  double dVar13;
   float local_c0;
   float local_bc;
   float local_b8;
@@ -1896,105 +1863,109 @@ void R_MarkFragments_XModelSurface_Basic
   float local_90;
   float local_8c;
   float local_88;
-  float *local_80;
-  undefined4 local_7c;
+  float *local_80 [2];
   float *local_78;
   float *local_74;
   float *local_70;
   undefined1 *local_6c;
-  undefined4 local_68;
+  float (*local_68) [3];
   float fStack_64;
   undefined1 local_60 [36];
   float local_3c;
   float local_38;
   float local_34;
   
-  local_80 = (float *)__savegprlr_28();
-  pfVar5 = &fStack_64;
-  lVar8 = 3;
-  lVar6 = param_3 + -4;
+  lVar8 = (longlong)(int)param_3;
+  pfVar4 = (float *)__savegprlr_28((double)param_5,param_1);
+  pfVar9 = &fStack_64;
+  lVar12 = 3;
+  lVar10 = lVar8 + -4;
   do {
-    iVar3 = (int)lVar6;
+    iVar3 = (int)lVar10;
     fVar1 = *(float *)(iVar3 + 8);
-    lVar6 = lVar6 + 0xc;
-    fVar2 = *(float *)lVar6;
-    pfVar5[1] = (float)((double)*(float *)(iVar3 + 4) * extraout_f1);
-    pfVar5[2] = (float)((double)fVar1 * extraout_f1);
-    pfVar5 = pfVar5 + 3;
-    *pfVar5 = (float)((double)fVar2 * extraout_f1);
-    lVar8 = lVar8 + -1;
-  } while (lVar8 != 0);
+    lVar10 = lVar10 + 0xc;
+    fVar2 = *(float *)lVar10;
+    pfVar9[1] = (float)((double)*(float *)(iVar3 + 4) * extraout_f1);
+    pfVar9[2] = (float)((double)fVar1 * extraout_f1);
+    pfVar9 = pfVar9 + 3;
+    *pfVar9 = (float)((double)fVar2 * extraout_f1);
+    lVar12 = lVar12 + -1;
+  } while (lVar12 != 0);
   local_3c = *param_4;
   local_38 = param_4[1];
   local_34 = param_4[2];
-  local_c0 = *local_80 - local_3c;
-  local_bc = local_80[1] - local_38;
-  local_b8 = local_80[2] - local_34;
-  dVar9 = (double)(float)(1.0 / extraout_f1);
-  MatrixTransposeTransformVector(&local_c0,param_3,&local_b0);
-  local_98 = (float)((double)local_80[3] * dVar9);
-  local_74 = local_80 + 0xd;
-  local_70 = local_80 + 0x1b;
+  local_c0 = *pfVar4 - local_3c;
+  local_bc = pfVar4[1] - local_38;
+  local_b8 = pfVar4[2] - local_34;
+  dVar13 = (double)(float)(1.0 / extraout_f1);
+  pafVar7 = (float (*) [3])lVar8;
+  MatrixTransposeTransformVector(&local_c0,pafVar7,&local_b0);
+  local_98 = (float)((double)pfVar4[3] * dVar13);
+  local_74 = pfVar4 + 0xd;
+  local_70 = pfVar4 + 0x1b;
   local_6c = local_60;
-  uVar7 = 0;
+  uVar11 = 0;
   local_88 = -local_98;
-  local_68 = (undefined4)param_3;
-  local_a0 = (float)((double)local_b0 * dVar9) + local_98;
-  local_9c = (float)((double)local_ac * dVar9) + local_98;
-  local_98 = (float)((double)local_a8 * dVar9) + local_98;
-  local_90 = (float)((double)local_b0 * dVar9) + local_88;
-  local_8c = (float)((double)local_ac * dVar9) + local_88;
-  local_88 = (float)((double)local_a8 * dVar9) + local_88;
-  local_7c = param_6;
-  local_78 = local_80;
-  if (*(int *)((int)param_2 + 0x40) != 0) {
+  local_a0 = (float)((double)local_b0 * dVar13) + local_98;
+  local_9c = (float)((double)local_ac * dVar13) + local_98;
+  local_98 = (float)((double)local_a8 * dVar13) + local_98;
+  local_90 = (float)((double)local_b0 * dVar13) + local_88;
+  local_8c = (float)((double)local_ac * dVar13) + local_88;
+  local_88 = (float)((double)local_a8 * dVar13) + local_88;
+  local_80[0] = pfVar4;
+  local_78 = pfVar4;
+  local_68 = pafVar7;
+  if ((param_2->field0_0x0).field8_0x20._s_1._padding_ != 0) {
     do {
-      cVar4 = XSurfaceVisitTrianglesInAabb
-                        (param_2,uVar7,&local_90,&local_a0,0xffffffff82751e10,&local_80);
-      if (cVar4 == '\0') {
-        __restgprlr_28(0);
-        return;
+      bVar5 = XSurfaceVisitTrianglesInAabb
+                        (param_2,uVar11,&local_90,&local_a0,R_MarkModelCoreCallback<1>,local_80);
+      if (!bVar5) {
+        uVar6 = __restgprlr_28(0);
+        return (bool)uVar6;
       }
-      uVar7 = uVar7 + 1;
-    } while ((uVar7 & 0xffffffff) != (ulonglong)*(uint *)((int)param_2 + 0x40));
+      uVar11 = uVar11 + 1;
+    } while (uVar11 != (param_2->field0_0x0).field8_0x20._s_1._padding_);
   }
-  __restgprlr_28(1);
-  return;
+  uVar6 = __restgprlr_28(1);
+  return (bool)uVar6;
 }
 
 
 // 8274E4D0  FX_SetMarkContextModelType_WorldBrush  (renderer/tr_types.h:1037)
 
-void FX_SetMarkContextModelType_WorldBrush(undefined1 *param_1)
+void FX_SetMarkContextModelType_WorldBrush(GfxMarkContext *param_1)
 
 {
-  if (param_1 == (undefined1 *)0x0) {
-    MyAssertHandler(0xffffffff821c6b70,0x40e,0,0xffffffff82000f98,0xffffffff820653c8);
+  if (param_1 == (GfxMarkContext *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\../renderer/tr_types.h"
+                    ,0x40e,0,"%s");
     uRam00000000 = 0;
     return;
   }
-  *param_1 = 0;
+  param_1->modelType = '\0';
   return;
 }
 
 
 // 8274E548  FX_SetMarkContextModelType_WorldModel  (renderer/tr_types.h:1051)
 
-void FX_SetMarkContextModelType_WorldModel(undefined8 param_1,undefined8 param_2)
+void FX_SetMarkContextModelType_WorldModel(GfxMarkContext *param_1,int param_2)
 
 {
-  undefined1 *puVar1;
+  GfxMarkContext *pGVar1;
   int iVar2;
   
-  puVar1 = (undefined1 *)__savegprlr_29();
-  if (puVar1 == (undefined1 *)0x0) {
-    MyAssertHandler(0xffffffff821c6b70,0x41c,0,0xffffffff82000f98,0xffffffff820653c8);
+  pGVar1 = (GfxMarkContext *)__savegprlr_29(param_1);
+  if (pGVar1 == (GfxMarkContext *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\../renderer/tr_types.h"
+                    ,0x41c,0,"%s");
   }
-  puVar1[4] = (char)param_2;
-  *puVar1 = 1;
-  iVar2 = FX_GetMarkContext_SurfaceIndex(puVar1);
-  if ((int)param_2 != iVar2) {
-    MyAssertHandler(0xffffffff821c6b70,0x420,0,0xffffffff821c6c9c,0xffffffff821c6cb4,param_2);
+  (pGVar1->field3_0x4).surfIndex = (uchar)param_2;
+  pGVar1->modelType = '\x01';
+  iVar2 = FX_GetMarkContext_SurfaceIndex(pGVar1);
+  if (param_2 != iVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\../renderer/tr_types.h"
+                    ,0x420,0,"%s\n\t(surfaceIndex) = %i");
   }
   __restgprlr_29();
   return;
@@ -2003,94 +1974,110 @@ void FX_SetMarkContextModelType_WorldModel(undefined8 param_1,undefined8 param_2
 
 // 8274E5D8  FX_SetMarkContextModelType_Glass  (renderer/tr_types.h:1061)
 
-void FX_SetMarkContextModelType_Glass(undefined1 *param_1)
+void FX_SetMarkContextModelType_Glass(GfxMarkContext *param_1)
 
 {
-  if (param_1 == (undefined1 *)0x0) {
-    MyAssertHandler(0xffffffff821c6b70,0x426,0,0xffffffff82000f98,0xffffffff820653c8);
+  if (param_1 == (GfxMarkContext *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\../renderer/tr_types.h"
+                    ,0x426,0,"%s");
     uRam00000000 = 4;
     return;
   }
-  *param_1 = 4;
+  param_1->modelType = '\x04';
   return;
 }
 
 
 // 827521B0  R_MarkFragments_EntirelyRigidXModel  (gfx_d3d/r_marks.cpp:1082)
 
-void R_MarkFragments_EntirelyRigidXModel
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-               undefined8 param_5,undefined8 param_6)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+bool R_MarkFragments_EntirelyRigidXModel
+               (MarkInfo *param_1,XModel *param_2,float (*param_3) [3],float *param_4,float param_5,
+               GfxMarkContext *param_6)
 
 {
   uint uVar1;
-  bool bVar2;
-  int iVar3;
+  uint uVar2;
+  MarkInfo *pMVar3;
   int iVar4;
-  int *piVar5;
-  char cVar6;
-  longlong lVar7;
-  longlong lVar8;
-  undefined8 extraout_f1;
-  undefined8 uVar9;
-  uint local_60 [24];
+  Material **ppMVar5;
+  bool bVar6;
+  undefined1 uVar7;
+  ulonglong uVar8;
+  GfxMarkContext *in_r8;
+  int iVar9;
+  int iVar10;
+  double extraout_f1;
+  double dVar11;
+  XSurface *local_60 [24];
   
-  iVar3 = __savegprlr_23();
-  uVar9 = extraout_f1;
+  uVar8 = (ulonglong)(int)param_6;
+  pMVar3 = (MarkInfo *)__savegprlr_23((double)param_5,param_1);
+  dVar11 = extraout_f1;
   iVar4 = XModelGetSurfaces(param_2,local_60,0);
-  piVar5 = (int *)XModelGetSkins(param_2,0);
-  lVar8 = 0;
+  ppMVar5 = XModelGetSkins(param_2,0);
+  iVar10 = 0;
   if (iVar4 != 0) {
-    lVar7 = 0;
+    iVar9 = 0;
     do {
-      if (0x8000 < (int)lVar7) break;
-      if ((*(byte *)(*piVar5 + 4) & 5) == 0) {
-        uVar1 = *(uint *)(*(int *)(iVar3 + 0x58) + 0x10);
-        bVar2 = uVar1 == (*(uint *)(*piVar5 + 0x10) & uVar1);
+      if (0x8000 < iVar9) break;
+      if ((((*ppMVar5)->info).field0_0x0.field_0x4 & 5) == 0) {
+        uVar1 = *(uint *)((int)&(pMVar3->material->info).field0_0x0.field1_0x8 + 8);
+        uVar2 = *(uint *)((int)&((*ppMVar5)->info).field0_0x0.field1_0x8 + 8) & uVar1;
+        uVar8 = (ulonglong)uVar2;
+        bVar6 = uVar1 == uVar2;
       }
       else {
-        bVar2 = false;
+        bVar6 = false;
       }
-      if (bVar2) {
-        FX_SetMarkContextModelType_WorldModel(param_6,lVar8);
-        cVar6 = R_MarkFragments_XModelSurface_Basic
-                          (uVar9,iVar3,lVar7 + (ulonglong)local_60[0],param_3,param_4);
-        if (cVar6 == '\0') {
-          __restgprlr_23(0);
-          return;
+      if (bVar6) {
+        FX_SetMarkContextModelType_WorldModel(in_r8,iVar10);
+        bVar6 = R_MarkFragments_XModelSurface_Basic
+                          (pMVar3,(XSurface *)((int)local_60[0]->partBits + iVar9 + -0x68),param_3,
+                           param_4,(float)dVar11,(GfxMarkContext *)uVar8);
+        if (!bVar6) {
+          uVar7 = __restgprlr_23(0);
+          return (bool)uVar7;
         }
       }
-      lVar8 = lVar8 + 1;
-      piVar5 = piVar5 + 1;
-      lVar7 = lVar7 + 0x80;
-    } while ((int)lVar8 != iVar4);
+      iVar10 = iVar10 + 1;
+      ppMVar5 = ppMVar5 + 1;
+      iVar9 = iVar9 + 0x80;
+    } while (iVar10 != iVar4);
   }
-  __restgprlr_23(1);
-  return;
+  uVar7 = __restgprlr_23(1);
+  return (bool)uVar7;
 }
 
 
 // 8274E650  FX_SetMarkContext_ModelIndex  (renderer/tr_types.h:1083)
 
-void FX_SetMarkContext_ModelIndex(undefined8 param_1,ulonglong param_2)
+void FX_SetMarkContext_ModelIndex(GfxMarkContext *param_1,ushort param_2)
 
 {
-  char *pcVar2;
-  ulonglong uVar1;
+  GfxMarkContext *pGVar1;
+  ushort uVar2;
+  ulonglong uVar3;
   
-  pcVar2 = (char *)__savegprlr_27();
-  if (pcVar2 == (char *)0x0) {
-    MyAssertHandler(0xffffffff821c6b70,0x43c,0,0xffffffff82000f98,0xffffffff820653c8);
-    MyAssertHandler(0xffffffff821c6b70,0x3b2,0,0xffffffff82000f98,0xffffffff820653c8);
+  uVar3 = (ulonglong)(short)param_2;
+  pGVar1 = (GfxMarkContext *)__savegprlr_27(param_1);
+  if (pGVar1 == (GfxMarkContext *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\../renderer/tr_types.h"
+                    ,0x43c,0,"%s");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\../renderer/tr_types.h"
+                    ,0x3b2,0,"%s");
   }
-  if ((*pcVar2 != '\0') && (*pcVar2 != '\x01')) {
-    MyAssertHandler(0xffffffff821c6b70,0x43d,0,0xffffffff82000f98,0xffffffff82065550);
+  if ((pGVar1->modelType != '\0') && (pGVar1->modelType != '\x01')) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\../renderer/tr_types.h"
+                    ,0x43d,0,"%s");
   }
-  *(short *)(pcVar2 + 2) = (short)param_2;
-  uVar1 = FX_GetMarkContext_ModelIndex(pcVar2);
-  if ((param_2 & 0xffff) != (uVar1 & 0xffff)) {
-    MyAssertHandler(0xffffffff821c6b70,0x440,0,0xffffffff82184d80,0xffffffff821c6cf0,
-                    param_2 & 0xffff);
+  pGVar1->typeSpecificIndex = SUB82(uVar3,0);
+  uVar2 = FX_GetMarkContext_ModelIndex(pGVar1);
+  if ((uVar3 & 0xffff) != (ulonglong)uVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\../renderer/tr_types.h"
+                    ,0x440,0,"%s\n\t(modelIndex) = %i");
   }
   __restgprlr_27();
   return;
@@ -2099,9 +2086,12 @@ void FX_SetMarkContext_ModelIndex(undefined8 param_1,ulonglong param_2)
 
 // 827522D0  R_MarkFragments_AnimatedXModel_VertList  (gfx_d3d/r_marks.cpp:1109)
 
-void R_MarkFragments_AnimatedXModel_VertList
-               (undefined8 param_1,undefined8 param_2,longlong param_3,float *param_4,
-               undefined4 param_5,undefined8 param_6)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+bool R_MarkFragments_AnimatedXModel_VertList
+               (MarkInfo *param_1,int param_2,DObjAnimMat *param_3,DObjAnimMat *param_4,
+               GfxMarkContext *param_5,XSurface *param_6)
 
 {
   float fVar1;
@@ -2115,12 +2105,12 @@ void R_MarkFragments_AnimatedXModel_VertList
   float fVar9;
   float fVar10;
   float fVar11;
-  undefined4 *puVar12;
-  char cVar13;
-  undefined4 *puVar14;
+  float *pfVar12;
+  bool bVar13;
+  undefined1 uVar14;
   longlong lVar15;
-  double dVar16;
-  double dVar17;
+  undefined4 *puVar16;
+  longlong lVar17;
   double dVar18;
   double dVar19;
   double dVar20;
@@ -2140,20 +2130,19 @@ void R_MarkFragments_AnimatedXModel_VertList
   double dVar34;
   double dVar35;
   double dVar36;
+  double dVar37;
+  double dVar38;
   float local_330;
   float local_32c;
   float local_328;
-  undefined4 local_320;
-  undefined4 local_31c;
-  undefined4 local_318;
+  float local_320;
+  float local_31c;
+  float local_318;
   float local_310;
   float local_30c;
   float local_308;
   undefined4 uStack_304;
-  float local_300;
-  float local_2fc;
-  float local_2f8;
-  float local_2f4;
+  float local_300 [4];
   float local_2f0;
   float local_2ec;
   float local_2e8;
@@ -2206,259 +2195,263 @@ void R_MarkFragments_AnimatedXModel_VertList
   float local_22c;
   float local_228;
   float local_224;
-  undefined4 *local_220;
-  undefined4 local_21c;
-  undefined4 *local_218;
-  undefined1 *local_214;
-  undefined1 *local_210;
-  undefined1 auStack_200 [16];
-  undefined1 auStack_1f0 [84];
+  float *local_220;
+  GfxMarkContext *local_21c;
+  float *local_218;
+  float *local_214;
+  float *local_210;
+  float afStack_200 [4];
+  float afStack_1f0 [21];
   float local_19c;
   float local_198;
-  undefined1 auStack_180 [48];
-  undefined1 auStack_150 [336];
+  float afStack_180 [12];
+  float afStack_150 [84];
   
-  __savegprlr_22();
-  puVar12 = (undefined4 *)__savefpr();
+  lVar15 = (longlong)(int)param_3;
+  pfVar12 = (float *)__savegprlr_22(param_1);
+  __savefpr();
   Profile_Begin(0xd1);
-  puVar14 = &uStack_304;
-  param_3 = param_3 + -4;
-  lVar15 = 8;
+  puVar16 = &uStack_304;
+  lVar15 = lVar15 + -4;
+  lVar17 = 8;
   do {
-    param_3 = param_3 + 4;
-    puVar14 = puVar14 + 1;
-    *puVar14 = *(undefined4 *)param_3;
-    lVar15 = lVar15 + -1;
-  } while (lVar15 != 0);
-  dVar31 = (double)local_300;
-  dVar30 = (double)((float)puVar12[0x33] + local_2f0);
-  dVar29 = (double)((float)puVar12[0x34] + local_2ec);
-  dVar33 = (double)local_2f4;
-  dVar34 = (double)local_2f8;
-  dVar28 = (double)((float)puVar12[0x35] + local_2e8);
-  dVar32 = (double)local_2fc;
-  if (((uint)local_300 & 0x7f800000) == 0x7f800000) {
-LAB_827523c0:
-    MyAssertHandler(0xffffffff820656f0,0x22e,0,0xffffffff82000f98,0xffffffff820159f0);
+    lVar15 = lVar15 + 4;
+    puVar16 = puVar16 + 1;
+    *puVar16 = *(undefined4 *)lVar15;
+    lVar17 = lVar17 + -1;
+  } while (lVar17 != 0);
+  dVar33 = (double)local_300[0];
+  dVar32 = (double)(pfVar12[0x33] + local_2f0);
+  dVar31 = (double)(pfVar12[0x34] + local_2ec);
+  dVar35 = (double)local_300[3];
+  dVar36 = (double)local_300[2];
+  dVar30 = (double)(pfVar12[0x35] + local_2e8);
+  dVar34 = (double)local_300[1];
+  if ((((((uint)local_300[0] & 0x7f800000) == 0x7f800000) ||
+       (((uint)local_300[1] & 0x7f800000) == 0x7f800000)) ||
+      (((uint)local_300[2] & 0x7f800000) == 0x7f800000)) ||
+     (((uint)local_300[3] & 0x7f800000) == 0x7f800000)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\renderer\\../xanim/xanim_public.h"
+                    ,0x22e,0,"%s");
   }
-  else {
-    if (((uint)local_2fc & 0x7f800000) == 0x7f800000) goto LAB_827523c0;
-    if (((uint)local_2f8 & 0x7f800000) == 0x7f800000) goto LAB_827523c0;
-    if (((uint)local_2f4 & 0x7f800000) == 0x7f800000) goto LAB_827523c0;
-  }
-  dVar35 = (double)local_2e4;
+  dVar37 = (double)local_2e4;
   if (((uint)local_2e4 & 0x7f800000) == 0x7f800000) {
-    MyAssertHandler(0xffffffff820656f0,0x22f,0,0xffffffff82000f98,0xffffffff820159d4);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\renderer\\../xanim/xanim_public.h"
+                    ,0x22f,0,"%s");
   }
-  dVar17 = dVar35 * dVar31;
-  dVar16 = (double)(float)dVar17;
-  dVar20 = dVar35 * dVar32;
-  dVar19 = (double)(float)dVar20;
-  dVar35 = dVar35 * dVar34;
-  dVar18 = (double)(float)dVar35;
-  dVar36 = 1.0;
-  fVar1 = (float)(dVar34 * dVar18);
-  fVar2 = (float)(dVar33 * dVar18);
-  dVar27 = (double)((float)(dVar34 * dVar19) + (float)(dVar33 * dVar16));
-  dVar26 = (double)((float)(dVar34 * dVar16) - (float)(dVar33 * dVar19));
-  dVar23 = (double)((float)(dVar33 * dVar19) + (float)(dVar34 * dVar16));
-  dVar25 = (double)(fVar2 + (float)(dVar32 * dVar16));
-  dVar24 = (double)((float)(dVar32 * dVar16) - fVar2);
-  dVar22 = (double)((float)(dVar34 * dVar19) - (float)(dVar33 * dVar16));
-  dVar21 = (double)(1.0 - (fVar1 + (float)(dVar32 * dVar19)));
-  dVar18 = (double)(1.0 - (fVar1 + (float)(dVar31 * dVar16)));
-  dVar16 = (double)(1.0 - ((float)(dVar32 * dVar19) + (float)(dVar31 * dVar16)));
-  if (((uint)*param_4 & 0x7f800000) == 0x7f800000) {
-LAB_827524f0:
-    MyAssertHandler(0xffffffff820656f0,0x29a,0,0xffffffff82000f98,0xffffffff820159f0);
+  dVar19 = dVar37 * dVar33;
+  dVar18 = (double)(float)dVar19;
+  dVar22 = dVar37 * dVar34;
+  dVar21 = (double)(float)dVar22;
+  dVar37 = dVar37 * dVar36;
+  dVar20 = (double)(float)dVar37;
+  dVar38 = 1.0;
+  fVar1 = (float)(dVar36 * dVar20);
+  fVar2 = (float)(dVar35 * dVar20);
+  dVar29 = (double)((float)(dVar36 * dVar21) + (float)(dVar35 * dVar18));
+  dVar28 = (double)((float)(dVar36 * dVar18) - (float)(dVar35 * dVar21));
+  dVar25 = (double)((float)(dVar35 * dVar21) + (float)(dVar36 * dVar18));
+  dVar27 = (double)(fVar2 + (float)(dVar34 * dVar18));
+  dVar26 = (double)((float)(dVar34 * dVar18) - fVar2);
+  dVar24 = (double)((float)(dVar36 * dVar21) - (float)(dVar35 * dVar18));
+  dVar23 = (double)(1.0 - (fVar1 + (float)(dVar34 * dVar21)));
+  dVar20 = (double)(1.0 - (fVar1 + (float)(dVar33 * dVar18)));
+  dVar18 = (double)(1.0 - ((float)(dVar34 * dVar21) + (float)(dVar33 * dVar18)));
+  if (((((uint)param_4->quat[0] & 0x7f800000) == 0x7f800000) ||
+      (((uint)param_4->quat[1] & 0x7f800000) == 0x7f800000)) ||
+     ((((uint)param_4->quat[2] & 0x7f800000) == 0x7f800000 ||
+      (((uint)param_4->quat[3] & 0x7f800000) == 0x7f800000)))) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\renderer\\../xanim/xanim_public.h"
+                    ,0x29a,0,"%s");
   }
-  else {
-    if (((uint)param_4[1] & 0x7f800000) == 0x7f800000) goto LAB_827524f0;
-    if (((uint)param_4[2] & 0x7f800000) == 0x7f800000) goto LAB_827524f0;
-    if (((uint)param_4[3] & 0x7f800000) == 0x7f800000) goto LAB_827524f0;
+  if (((uint)param_4->transWeight & 0x7f800000) == 0x7f800000) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\renderer\\../xanim/xanim_public.h"
+                    ,0x29b,0,"%s");
   }
-  if (((uint)param_4[7] & 0x7f800000) == 0x7f800000) {
-    MyAssertHandler(0xffffffff820656f0,0x29b,0,0xffffffff82000f98,0xffffffff820159d4);
-  }
-  fVar1 = param_4[2];
-  fVar2 = param_4[7];
-  fVar11 = fVar2 * *param_4;
-  fVar3 = param_4[1];
+  fVar1 = param_4->quat[2];
+  fVar2 = param_4->transWeight;
+  fVar11 = fVar2 * param_4->quat[0];
+  fVar3 = param_4->quat[1];
   fVar10 = fVar2 * fVar3;
-  fVar4 = param_4[3];
-  local_2cc = (float)dVar27;
-  fVar5 = param_4[5];
-  fVar6 = param_4[6];
-  fVar7 = param_4[4];
-  local_2e0 = (float)dVar21;
-  local_2dc = (float)dVar25;
-  local_2d8 = (float)dVar26;
+  fVar4 = param_4->quat[3];
+  local_2cc = (float)dVar29;
+  fVar5 = param_4->trans[1];
+  fVar6 = param_4->trans[2];
+  fVar7 = param_4->trans[0];
+  local_2e0 = (float)dVar23;
+  local_2dc = (float)dVar27;
+  local_2d8 = (float)dVar28;
   fVar8 = fVar2 * fVar1 * fVar1;
-  local_2d4 = (float)dVar24;
-  fVar9 = fVar11 * *param_4;
-  local_2d0 = (float)dVar18;
-  local_2c8 = (float)dVar23;
-  local_2c4 = (float)dVar22;
-  local_2c0 = (float)dVar16;
-  local_2bc = (float)dVar30;
-  local_2b8 = (float)dVar29;
-  local_2b4 = (float)dVar28;
+  local_2d4 = (float)dVar26;
+  fVar9 = fVar11 * param_4->quat[0];
+  local_2d0 = (float)dVar20;
+  local_2c8 = (float)dVar25;
+  local_2c4 = (float)dVar24;
+  local_2c0 = (float)dVar18;
+  local_2bc = (float)dVar32;
+  local_2b8 = (float)dVar31;
+  local_2b4 = (float)dVar30;
   local_2a4 = fVar2 * fVar1 * fVar4;
   local_298 = fVar11 * fVar1 - fVar10 * fVar4;
   local_2a8 = fVar10 * fVar4 + fVar11 * fVar1;
   local_29c = fVar10 * fVar1 - fVar4 * fVar11;
   local_2ac = fVar11 * fVar3 - local_2a4;
   local_2a4 = local_2a4 + fVar11 * fVar3;
-  local_2a0 = (float)(dVar36 - (double)(fVar8 + fVar9));
+  local_2a0 = (float)(dVar38 - (double)(fVar8 + fVar9));
   local_294 = fVar10 * fVar1 + fVar4 * fVar11;
-  local_2b0 = (float)(dVar36 - (double)(fVar8 + fVar10 * fVar3));
-  local_290 = (float)(dVar36 - (double)(fVar10 * fVar3 + fVar9));
+  local_2b0 = (float)(dVar38 - (double)(fVar8 + fVar10 * fVar3));
+  local_290 = (float)(dVar38 - (double)(fVar10 * fVar3 + fVar9));
   local_28c = -(fVar7 * local_2b0 + local_2a4 * fVar5 + local_298 * fVar6);
   local_284 = -(local_290 * fVar6 + local_2a8 * fVar7 + local_29c * fVar5);
   local_288 = -(local_294 * fVar6 + local_2ac * fVar7 + local_2a0 * fVar5);
-  MatrixMultiply43(&local_2b0,&local_2e0,auStack_1f0);
-  if (puVar12[0x111] != 0) {
-    MyAssertHandler(0xffffffff821c6d94,0x474,0,0xffffffff82000f98,0xffffffff821c7200);
+  MatrixMultiply43((float (*) [3])&local_2b0,(float (*) [3])&local_2e0,(float (*) [3])afStack_1f0);
+  if (pfVar12[0x111] != 0.0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_marks.cpp",0x474,0,
+                    "%s");
   }
-  R_Mark_TransformClipPlanes(puVar12 + 0x1b,auStack_1f0,auStack_150);
-  MatrixTransposeTransformVector(puVar12 + 0xd,auStack_1f0,auStack_200);
-  if (((uint)*param_4 & 0x7f800000) == 0x7f800000) {
-LAB_827526f8:
-    MyAssertHandler(0xffffffff820656f0,0x22e,0,0xffffffff82000f98,0xffffffff820159f0);
+  R_Mark_TransformClipPlanes
+            ((float (*) [4])(pfVar12 + 0x1b),(float (*) [3])afStack_1f0,(float (*) [4])afStack_150);
+  MatrixTransposeTransformVector(pfVar12 + 0xd,(float (*) [3])afStack_1f0,afStack_200);
+  if (((((uint)param_4->quat[0] & 0x7f800000) == 0x7f800000) ||
+      (((uint)param_4->quat[1] & 0x7f800000) == 0x7f800000)) ||
+     ((((uint)param_4->quat[2] & 0x7f800000) == 0x7f800000 ||
+      (((uint)param_4->quat[3] & 0x7f800000) == 0x7f800000)))) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\renderer\\../xanim/xanim_public.h"
+                    ,0x22e,0,"%s");
   }
-  else {
-    if (((uint)param_4[1] & 0x7f800000) == 0x7f800000) goto LAB_827526f8;
-    if (((uint)param_4[2] & 0x7f800000) == 0x7f800000) goto LAB_827526f8;
-    if (((uint)param_4[3] & 0x7f800000) == 0x7f800000) goto LAB_827526f8;
+  if (((uint)param_4->transWeight & 0x7f800000) == 0x7f800000) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\renderer\\../xanim/xanim_public.h"
+                    ,0x22f,0,"%s");
   }
-  if (((uint)param_4[7] & 0x7f800000) == 0x7f800000) {
-    MyAssertHandler(0xffffffff820656f0,0x22f,0,0xffffffff82000f98,0xffffffff820159d4);
-  }
-  fVar1 = param_4[7];
-  fVar2 = param_4[1];
+  fVar1 = param_4->transWeight;
+  fVar2 = param_4->quat[1];
   fVar5 = fVar1 * fVar2;
-  fVar3 = param_4[2];
-  fVar6 = fVar1 * *param_4;
-  fVar4 = param_4[3];
-  dVar27 = (double)param_4[4];
-  dVar26 = (double)param_4[5];
-  fVar8 = fVar6 * *param_4;
-  dVar25 = (double)param_4[6];
+  fVar3 = param_4->quat[2];
+  fVar6 = fVar1 * param_4->quat[0];
+  fVar4 = param_4->quat[3];
+  dVar29 = (double)param_4->trans[0];
+  dVar28 = (double)param_4->trans[1];
+  fVar8 = fVar6 * param_4->quat[0];
+  dVar27 = (double)param_4->trans[2];
   fVar7 = fVar1 * fVar3 * fVar3;
   fVar1 = fVar1 * fVar3 * fVar4;
   local_19c = fVar5 * fVar3 - fVar6 * fVar4;
-  dVar24 = (double)(fVar5 * fVar3 + fVar6 * fVar4);
-  dVar23 = (double)(fVar6 * fVar3 - fVar5 * fVar4);
-  dVar22 = (double)(fVar1 + fVar6 * fVar2);
-  dVar21 = (double)(fVar6 * fVar2 - fVar1);
-  local_198 = (float)(dVar36 - (double)(fVar5 * fVar2 + fVar8));
-  dVar19 = (double)(fVar5 * fVar4 + fVar6 * fVar3);
-  dVar18 = (double)(float)(dVar36 - (double)(fVar7 + fVar5 * fVar2));
-  dVar16 = (double)(float)(dVar36 - (double)(fVar7 + fVar8));
-  if (((uint)(float)dVar31 & 0x7f800000) != 0x7f800000) {
-    if (((uint)(float)dVar32 & 0x7f800000) != 0x7f800000) {
-      if (((uint)(float)dVar34 & 0x7f800000) != 0x7f800000) {
-        if (((uint)(float)dVar33 & 0x7f800000) != 0x7f800000) goto LAB_82752830;
-      }
-    }
+  dVar26 = (double)(fVar5 * fVar3 + fVar6 * fVar4);
+  dVar25 = (double)(fVar6 * fVar3 - fVar5 * fVar4);
+  dVar24 = (double)(fVar1 + fVar6 * fVar2);
+  dVar23 = (double)(fVar6 * fVar2 - fVar1);
+  local_198 = (float)(dVar38 - (double)(fVar5 * fVar2 + fVar8));
+  dVar21 = (double)(fVar5 * fVar4 + fVar6 * fVar3);
+  dVar20 = (double)(float)(dVar38 - (double)(fVar7 + fVar5 * fVar2));
+  dVar18 = (double)(float)(dVar38 - (double)(fVar7 + fVar8));
+  if ((((((uint)(float)dVar33 & 0x7f800000) == 0x7f800000) ||
+       (((uint)(float)dVar34 & 0x7f800000) == 0x7f800000)) ||
+      (((uint)(float)dVar36 & 0x7f800000) == 0x7f800000)) ||
+     (((uint)(float)dVar35 & 0x7f800000) == 0x7f800000)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\renderer\\../xanim/xanim_public.h"
+                    ,0x29a,0,"%s");
   }
-  MyAssertHandler(0xffffffff820656f0,0x29a,0,0xffffffff82000f98,0xffffffff820159f0);
-LAB_82752830:
   if (((uint)local_2e4 & 0x7f800000) == 0x7f800000) {
-    MyAssertHandler(0xffffffff820656f0,0x29b,0,0xffffffff82000f98,0xffffffff820159d4);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\renderer\\../xanim/xanim_public.h"
+                    ,0x29b,0,"%s");
   }
-  dVar17 = (double)(float)dVar17;
-  dVar20 = (double)(float)dVar20;
-  dVar35 = (double)(float)dVar35;
-  fVar1 = (float)(dVar34 * dVar35);
+  dVar19 = (double)(float)dVar19;
+  dVar22 = (double)(float)dVar22;
+  dVar37 = (double)(float)dVar37;
+  fVar1 = (float)(dVar36 * dVar37);
   local_234 = local_19c;
   local_230 = local_198;
-  local_250 = (float)dVar18;
-  local_24c = (float)dVar22;
-  local_274 = (float)(dVar33 * dVar35);
-  local_248 = (float)dVar23;
-  local_244 = (float)dVar21;
-  local_240 = (float)dVar16;
-  local_23c = (float)dVar24;
-  local_238 = (float)dVar19;
-  local_22c = (float)dVar27;
-  local_26c = (float)(dVar34 * dVar20) - (float)(dVar33 * dVar17);
-  local_264 = (float)(dVar34 * dVar20) + (float)(dVar33 * dVar17);
-  local_228 = (float)dVar26;
-  local_224 = (float)dVar25;
-  local_278 = (float)(dVar33 * dVar20) + (float)(dVar34 * dVar17);
-  local_27c = (float)(dVar32 * dVar17) - local_274;
-  local_274 = local_274 + (float)(dVar32 * dVar17);
-  local_268 = (float)(dVar34 * dVar17) - (float)(dVar33 * dVar20);
-  local_260 = (float)(dVar36 - (double)((float)(dVar32 * dVar20) + (float)(dVar17 * dVar31)));
-  local_280 = (float)(dVar36 - (double)(fVar1 + (float)(dVar32 * dVar20)));
-  local_270 = (float)(dVar36 - (double)(fVar1 + (float)(dVar17 * dVar31)));
-  local_254 = -(float)((double)local_260 * dVar28 +
-                      (double)(float)((double)local_278 * dVar30 +
-                                     (double)(float)((double)local_26c * dVar29)));
-  local_25c = -(float)((double)local_268 * dVar28 +
-                      (double)(float)((double)local_274 * dVar29 +
-                                     (double)(float)((double)local_280 * dVar30)));
-  local_258 = -(float)((double)local_264 * dVar28 +
-                      (double)(float)((double)local_27c * dVar30 +
-                                     (double)(float)((double)local_270 * dVar29)));
-  MatrixMultiply43(&local_280,&local_250,auStack_180);
-  local_320 = *puVar12;
-  local_31c = puVar12[1];
-  local_318 = puVar12[2];
-  MatrixTransformVector43(&local_320,auStack_180,puVar12 + 7);
-  local_328 = (float)puVar12[3];
+  local_250 = (float)dVar20;
+  local_24c = (float)dVar24;
+  local_274 = (float)(dVar35 * dVar37);
+  local_248 = (float)dVar25;
+  local_244 = (float)dVar23;
+  local_240 = (float)dVar18;
+  local_23c = (float)dVar26;
+  local_238 = (float)dVar21;
+  local_22c = (float)dVar29;
+  local_26c = (float)(dVar36 * dVar22) - (float)(dVar35 * dVar19);
+  local_264 = (float)(dVar36 * dVar22) + (float)(dVar35 * dVar19);
+  local_228 = (float)dVar28;
+  local_224 = (float)dVar27;
+  local_278 = (float)(dVar35 * dVar22) + (float)(dVar36 * dVar19);
+  local_27c = (float)(dVar34 * dVar19) - local_274;
+  local_274 = local_274 + (float)(dVar34 * dVar19);
+  local_268 = (float)(dVar36 * dVar19) - (float)(dVar35 * dVar22);
+  local_260 = (float)(dVar38 - (double)((float)(dVar34 * dVar22) + (float)(dVar19 * dVar33)));
+  local_280 = (float)(dVar38 - (double)(fVar1 + (float)(dVar34 * dVar22)));
+  local_270 = (float)(dVar38 - (double)(fVar1 + (float)(dVar19 * dVar33)));
+  local_254 = -(float)((double)local_260 * dVar30 +
+                      (double)(float)((double)local_278 * dVar32 +
+                                     (double)(float)((double)local_26c * dVar31)));
+  local_25c = -(float)((double)local_268 * dVar30 +
+                      (double)(float)((double)local_274 * dVar31 +
+                                     (double)(float)((double)local_280 * dVar32)));
+  local_258 = -(float)((double)local_264 * dVar30 +
+                      (double)(float)((double)local_27c * dVar32 +
+                                     (double)(float)((double)local_270 * dVar31)));
+  MatrixMultiply43((float (*) [3])&local_280,(float (*) [3])&local_250,(float (*) [3])afStack_180);
+  local_320 = *pfVar12;
+  local_31c = pfVar12[1];
+  local_318 = pfVar12[2];
+  MatrixTransformVector43(&local_320,(float (*) [3])afStack_180,pfVar12 + 7);
+  local_328 = pfVar12[3];
   local_308 = -local_328;
-  local_330 = (float)puVar12[7] + local_328;
-  local_32c = (float)puVar12[8] + local_328;
-  local_214 = auStack_200;
-  local_328 = (float)puVar12[9] + local_328;
-  local_210 = auStack_150;
-  local_310 = (float)puVar12[7] + local_308;
-  local_30c = (float)puVar12[8] + local_308;
-  local_308 = (float)puVar12[9] + local_308;
-  local_220 = puVar12;
+  local_330 = pfVar12[7] + local_328;
+  local_32c = pfVar12[8] + local_328;
+  local_214 = afStack_200;
+  local_328 = pfVar12[9] + local_328;
+  local_210 = afStack_150;
+  local_310 = pfVar12[7] + local_308;
+  local_30c = pfVar12[8] + local_308;
+  local_308 = pfVar12[9] + local_308;
+  local_220 = pfVar12;
   local_21c = param_5;
-  local_218 = puVar12 + 7;
-  cVar13 = XSurfaceVisitTrianglesInAabb
-                     (param_6,param_2,&local_310,&local_330,0xffffffff82751f20,&local_220);
-  if (cVar13 == '\0') {
-    Profile_EndInternal(0);
-    __restfpr(0);
-    __restgprlr_22();
-    return;
+  local_218 = pfVar12 + 7;
+  bVar13 = XSurfaceVisitTrianglesInAabb
+                     (param_6,param_2,&local_310,&local_330,R_MarkModelCoreCallback<0>,&local_220);
+  if (!bVar13) {
+    Profile_EndInternal((double *)0x0);
+    __restfpr();
+    uVar14 = __restgprlr_22();
+    return (bool)uVar14;
   }
-  if (puVar12[0x111] != 0) {
-    MatrixTransposeTransformVector(puVar12 + 0x10,auStack_1f0,puVar12 + 10);
+  if (pfVar12[0x111] != 0.0) {
+    MatrixTransposeTransformVector(pfVar12 + 0x10,(float (*) [3])afStack_1f0,pfVar12 + 10);
   }
-  Profile_EndInternal(0);
-  __restfpr(1);
-  __restgprlr_22();
-  return;
+  Profile_EndInternal((double *)0x0);
+  __restfpr();
+  uVar14 = __restgprlr_22();
+  return (bool)uVar14;
 }
 
 
 // 8274E730  FX_SetMarkContext_GlassPieceIndex  (renderer/tr_types.h:1115)
 
-void FX_SetMarkContext_GlassPieceIndex(undefined8 param_1,ulonglong param_2)
+void FX_SetMarkContext_GlassPieceIndex(GfxMarkContext *param_1,ushort param_2)
 
 {
-  char *pcVar2;
-  ulonglong uVar1;
+  GfxMarkContext *pGVar1;
+  ushort uVar2;
+  ulonglong uVar3;
   
-  pcVar2 = (char *)__savegprlr_27();
-  if (pcVar2 == (char *)0x0) {
-    MyAssertHandler(0xffffffff821c6b70,0x45c,0,0xffffffff82000f98,0xffffffff820653c8);
-    MyAssertHandler(0xffffffff821c6b70,0x3b2,0,0xffffffff82000f98,0xffffffff820653c8);
+  uVar3 = (ulonglong)(short)param_2;
+  pGVar1 = (GfxMarkContext *)__savegprlr_27(param_1);
+  if (pGVar1 == (GfxMarkContext *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\../renderer/tr_types.h"
+                    ,0x45c,0,"%s");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\../renderer/tr_types.h"
+                    ,0x3b2,0,"%s");
   }
-  if (*pcVar2 != '\x04') {
-    MyAssertHandler(0xffffffff821c6b70,0x45d,0,0xffffffff82000f98,0xffffffff820656b0);
+  if (pGVar1->modelType != '\x04') {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\../renderer/tr_types.h"
+                    ,0x45d,0,"%s");
   }
-  *(short *)(pcVar2 + 2) = (short)param_2;
-  uVar1 = FX_GetMarkContext_GlassPieceIndex(pcVar2);
-  if ((param_2 & 0xffff) != (uVar1 & 0xffff)) {
-    MyAssertHandler(0xffffffff821c6b70,0x460,0,0xffffffff821c6d28,0xffffffff821c6d48,
-                    param_2 & 0xffff);
+  pGVar1->typeSpecificIndex = SUB82(uVar3,0);
+  uVar2 = FX_GetMarkContext_GlassPieceIndex(pGVar1);
+  if ((uVar3 & 0xffff) != (ulonglong)uVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\../renderer/tr_types.h"
+                    ,0x460,0,"%s\n\t(glassPieceIndex) = %i");
   }
   __restgprlr_27();
   return;
@@ -2467,466 +2460,587 @@ void FX_SetMarkContext_GlassPieceIndex(undefined8 param_1,ulonglong param_2)
 
 // 82752A68  R_MarkFragments_AnimatedXModel  (gfx_d3d/r_marks.cpp:1178)
 
-void R_MarkFragments_AnimatedXModel
-               (undefined8 param_1,undefined8 param_2,int param_3,longlong param_4,longlong param_5,
-               int param_6,undefined8 param_7)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+bool R_MarkFragments_AnimatedXModel
+               (MarkInfo *param_1,XModel *param_2,uint *param_3,int param_4,DObjAnimMat *param_5,
+               int param_6,GfxMarkContext *param_7)
 
 {
   uint uVar1;
-  ulonglong uVar2;
-  bool bVar3;
-  ushort uVar4;
-  int iVar6;
-  int iVar7;
-  longlong lVar5;
-  char cVar8;
+  ushort uVar2;
+  int iVar3;
+  DObjAnimMat *pDVar4;
+  bool bVar5;
+  undefined1 uVar6;
+  longlong lVar7;
+  int iVar8;
   int iVar9;
-  ulonglong uVar10;
-  int iVar11;
-  char *pcVar12;
-  int *local_c0;
+  XSurface *pXVar10;
+  uint *puStack00000024;
+  Material **local_c0;
   int local_bc;
   int local_b8;
-  int local_b4;
+  XSurface *local_b4;
   char *local_b0;
   int local_ac;
   char *local_a8;
   
-  iVar6 = __savegprlr();
-  iVar7 = XModelGetSurfaces(param_2,&local_b4,0);
-  local_ac = iVar7;
-  lVar5 = XModelGetBasePose(param_2);
-  local_c0 = (int *)XModelGetSkins(param_2,0);
+  lVar7 = (longlong)param_4;
+  __savegprlr();
+  puStack00000024 = param_3;
+  iVar3 = XModelGetSurfaces(param_2,&local_b4,0);
+  local_ac = iVar3;
+  pDVar4 = XModelGetBasePose(param_2);
+  local_c0 = XModelGetSkins(param_2,0);
   local_a8 = "!markInfo->usedTriCount && !markInfo->usedPointCount";
-  if ((*(int *)(iVar6 + 0x440) != 0) || (*(int *)(iVar6 + 0x444) != 0)) {
-    MyAssertHandler(0xffffffff821c6d94,0x4a9,0,0xffffffff82000f98,0xffffffff821c7094);
+  if ((param_1->usedTriCount != 0) || (param_1->usedPointCount != 0)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_marks.cpp",0x4a9,0,
+                    "%s");
   }
   Profile_Begin(0xd0);
   local_b8 = 0;
-  pcVar12 = "!markInfo->usedTriCount && !markInfo->usedPointCount";
-  if (iVar7 != 0) {
+  if (iVar3 != 0) {
     local_bc = 0;
     local_b0 = "surface->vertListCount > 0";
     do {
-      if ((*(byte *)(*local_c0 + 4) & 5) == 0) {
-        uVar1 = *(uint *)(*(int *)(iVar6 + 0x58) + 0x10);
-        bVar3 = uVar1 == (*(uint *)(*local_c0 + 0x10) & uVar1);
+      if ((((*local_c0)->info).field0_0x0.field_0x4 & 5) == 0) {
+        uVar1 = *(uint *)((int)&(param_1->material->info).field0_0x0.field1_0x8 + 8);
+        bVar5 = uVar1 == (*(uint *)((int)&((*local_c0)->info).field0_0x0.field1_0x8 + 8) & uVar1);
       }
       else {
-        bVar3 = false;
+        bVar5 = false;
       }
-      if ((bVar3) && (iVar11 = local_bc + local_b4, (*(byte *)(iVar11 + 1) & 0x40) == 0)) {
-        if (*(int *)(iVar11 + 0x40) == 0) {
-          MyAssertHandler(0xffffffff821c6d94,0x4b7,0,0xffffffff82000f98,local_b0);
+      if ((bVar5) &&
+         (pXVar10 = (XSurface *)((int)local_b4->partBits + local_bc + -0x68),
+         ((pXVar10->field0_0x0)._padding_ & 0x400000) == 0)) {
+        if ((pXVar10->field0_0x0).field8_0x20._s_1._padding_ == 0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_marks.cpp",
+                          0x4b7,0,"%s");
         }
-        uVar10 = 0;
-        if (*(int *)(iVar11 + 0x40) != 0) {
-          iVar9 = 0;
+        iVar9 = 0;
+        if ((pXVar10->field0_0x0).field8_0x20._s_1._padding_ != 0) {
+          iVar8 = 0;
           do {
-            uVar4 = *(ushort *)(*(int *)(iVar11 + 0x44) + iVar9) >> 6;
-            uVar2 = (ulonglong)uVar4;
-            iVar7 = (int)(uVar2 + param_4);
-            if (param_6 <= iVar7) {
-              MyAssertHandler(0xffffffff821c6d94,0x4c4,0,0xffffffff82000f98,0xffffffff821c7220);
+            uVar2 = *(ushort *)
+                     ((int)&((pXVar10->field0_0x0).field8_0x20._s_1.vertList)->boneOffset + iVar8)
+                    >> 6;
+            iVar3 = (int)((ulonglong)uVar2 + lVar7);
+            if (param_6 <= iVar3) {
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_marks.cpp"
+                              ,0x4c4,0,"%s");
             }
-            if ((*(uint *)((iVar7 >> 5) * 4 + param_3) &
-                *(uint *)((int)&DAT_82992400 + ((uint)((uVar2 + param_4 & 0xffffffff) << 2) & 0x7c))
-                ) == 0) {
-              *(char *)((int)param_7 + 1) = (char)uVar4;
-              if ((uVar4 & 0xff) != uVar4) {
-                MyAssertHandler(0xffffffff821c6d94,0x4cf,0,0xffffffff821c7270,0xffffffff821c7248,
-                                uVar2);
+            if ((puStack00000024[iVar3 >> 5] &
+                *(uint *)(&g_bitShift +
+                         ((uint)(((ulonglong)uVar2 + lVar7 & 0xffffffff) << 2) & 0x7c))) == 0) {
+              (param_7->field1_0x1).lmapIndex = (uchar)uVar2;
+              if ((uVar2 & 0xff) != uVar2) {
+                MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_marks.cpp"
+                                ,0x4cf,0,"%s\n\t(boneOffset) = %i");
               }
-              cVar8 = R_MarkFragments_AnimatedXModel_VertList
-                                (iVar6,uVar10,uVar2 * 0x20 + param_5,uVar2 * 0x20 + lVar5,param_7,
-                                 iVar11);
-              if (cVar8 == '\0') {
-                Profile_EndInternal(0);
-                __restgprlr(0);
-                return;
+              bVar5 = R_MarkFragments_AnimatedXModel_VertList
+                                (param_1,iVar9,param_5 + uVar2,pDVar4 + uVar2,param_7,pXVar10);
+              if (!bVar5) {
+                Profile_EndInternal((double *)0x0);
+                uVar6 = 0;
+                __restgprlr();
+                return (bool)uVar6;
               }
-              if (*(int *)(iVar6 + 0x440) == 0) {
-                if (*(int *)(iVar6 + 0x444) == 0) goto LAB_82752d08;
+              if (param_1->usedTriCount == 0) {
+                if (param_1->usedPointCount == 0) goto LAB_82752d08;
               }
-              else if (*(int *)(iVar6 + 0x444) != 0) {
-                (**(code **)(iVar6 + 0x448))
-                          (*(undefined4 *)(iVar6 + 0x44c),*(int *)(iVar6 + 0x440),
-                           *(undefined4 *)(iVar6 + 0x60),*(int *)(iVar6 + 0x444),
-                           *(undefined4 *)(iVar6 + 0x68),iVar6 + 0x1c,iVar6 + 0x28);
-                R_CheckMarkTris(iVar6);
+              else if (param_1->usedPointCount != 0) {
+                (*param_1->callback)
+                          (param_1->callbackContext,param_1->usedTriCount,param_1->tris,
+                           param_1->usedPointCount,param_1->points,param_1->localOrigin,
+                           param_1->localTexCoordAxis);
+                R_CheckMarkTris(param_1);
               }
-              *(undefined4 *)(iVar6 + 0x440) = 0;
-              *(undefined4 *)(iVar6 + 0x444) = 0;
+              param_1->usedTriCount = 0;
+              param_1->usedPointCount = 0;
             }
 LAB_82752d08:
-            uVar10 = uVar10 + 1;
-            iVar9 = iVar9 + 0xc;
-            iVar7 = local_ac;
-          } while ((uVar10 & 0xffffffff) != (ulonglong)*(uint *)(iVar11 + 0x40));
+            iVar9 = iVar9 + 1;
+            iVar8 = iVar8 + 0xc;
+            iVar3 = local_ac;
+          } while (iVar9 != (pXVar10->field0_0x0).field8_0x20._s_1._padding_);
         }
       }
       local_c0 = local_c0 + 1;
       local_b8 = local_b8 + 1;
       local_bc = local_bc + 0x80;
-      pcVar12 = local_a8;
-    } while (local_b8 != iVar7);
+    } while (local_b8 != iVar3);
   }
-  if ((*(int *)(iVar6 + 0x440) != 0) || (*(int *)(iVar6 + 0x444) != 0)) {
-    MyAssertHandler(0xffffffff821c6d94,0x4e6,0,0xffffffff82000f98,pcVar12);
+  if ((param_1->usedTriCount != 0) || (param_1->usedPointCount != 0)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_marks.cpp",0x4e6,0,
+                    "%s");
   }
-  Profile_EndInternal(0);
-  __restgprlr(1);
-  return;
+  Profile_EndInternal((double *)0x0);
+  uVar6 = 1;
+  __restgprlr();
+  return (bool)uVar6;
 }
 
 
 // 82750DF0  R_MarkUtil_GetDObjAnimMatAndHideParts  (gfx_d3d/r_marks.cpp:1262)
 
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
 void R_MarkUtil_GetDObjAnimMatAndHideParts
-               (undefined8 param_1,undefined8 param_2,int *param_3,undefined8 param_4)
+               (DObj *param_1,cpose_t *param_2,DObjAnimMat **param_3,uint *param_4)
 
 {
-  undefined8 uVar1;
+  DObj *pDVar1;
   int iVar2;
-  undefined1 auStack_80 [32];
-  undefined8 local_60;
-  undefined8 local_58;
-  undefined8 local_50;
-  undefined8 local_48;
+  DObjAnimMat *pDVar3;
+  int aiStack_80 [8];
+  char local_60 [96];
   
-  uVar1 = __savegprlr_26();
+  pDVar1 = (DObj *)__savegprlr_26(param_1);
   Profile_Begin(0xcf);
-  local_60 = 0;
-  local_58 = 0;
-  local_50 = 0;
-  local_48 = 0;
-  iVar2 = DObjGetSurfaces(uVar1,auStack_80,&local_60);
+  local_60[0] = '\0';
+  local_60[1] = '\0';
+  local_60[2] = '\0';
+  local_60[3] = '\0';
+  local_60[4] = '\0';
+  local_60[5] = '\0';
+  local_60[6] = '\0';
+  local_60[7] = '\0';
+  local_60[8] = '\0';
+  local_60[9] = '\0';
+  local_60[10] = '\0';
+  local_60[0xb] = '\0';
+  local_60[0xc] = '\0';
+  local_60[0xd] = '\0';
+  local_60[0xe] = '\0';
+  local_60[0xf] = '\0';
+  local_60[0x10] = '\0';
+  local_60[0x11] = '\0';
+  local_60[0x12] = '\0';
+  local_60[0x13] = '\0';
+  local_60[0x14] = '\0';
+  local_60[0x15] = '\0';
+  local_60[0x16] = '\0';
+  local_60[0x17] = '\0';
+  local_60[0x18] = '\0';
+  local_60[0x19] = '\0';
+  local_60[0x1a] = '\0';
+  local_60[0x1b] = '\0';
+  local_60[0x1c] = '\0';
+  local_60[0x1d] = '\0';
+  local_60[0x1e] = '\0';
+  local_60[0x1f] = '\0';
+  iVar2 = DObjGetSurfaces(pDVar1,aiStack_80,local_60);
   if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff821c6d94,0x4fb,0,0xffffffff82000f98,0xffffffff8205dd18);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_marks.cpp",0x4fb,0,
+                    "%s");
   }
-  DObjLock(uVar1);
-  iVar2 = CG_DObjCalcPoseForMark(param_2,uVar1,auStack_80);
-  *param_3 = iVar2;
-  DObjUnlock(uVar1);
-  if ((*param_3 != 0) && (iVar2 = DObjSkelAreBonesUpToDate(uVar1,auStack_80), iVar2 == 0)) {
-    MyAssertHandler(0xffffffff821c6d94,0x506,0,0xffffffff82000f98,0xffffffff821c7150);
+  DObjLock(pDVar1);
+  pDVar3 = CG_DObjCalcPoseForMark(param_2,pDVar1,aiStack_80);
+  *param_3 = pDVar3;
+  DObjUnlock(pDVar1);
+  if ((*param_3 != (DObjAnimMat *)0x0) &&
+     (iVar2 = DObjSkelAreBonesUpToDate(pDVar1,aiStack_80), iVar2 == 0)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_marks.cpp",0x506,0,
+                    "%s");
   }
-  DObjGetHidePartBits(uVar1,param_4);
-  Profile_EndInternal(0);
-  __restgprlr_26();
+  DObjGetHidePartBits(pDVar1,param_4);
+  iVar2 = Profile_EndInternal((double *)0x0);
+  __restgprlr_26(iVar2);
   return;
 }
 
 
 // 82752DA8  R_MarkFragments_SceneDObjs  (gfx_d3d/r_marks.cpp:1295)
 
-void R_MarkFragments_SceneDObjs(void)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+bool R_MarkFragments_SceneDObjs(MarkInfo *param_1)
 
 {
-  undefined2 uVar1;
-  undefined4 uVar2;
+  ushort uVar1;
+  DObj *pDVar2;
+  MarkInfo *pMVar3;
   int iVar4;
-  int iVar5;
-  undefined4 *puVar6;
-  undefined8 uVar3;
-  char cVar7;
-  int iVar8;
-  undefined4 *puVar9;
-  ulonglong uVar10;
-  longlong lVar11;
-  longlong lVar12;
-  uint local_a0;
-  undefined1 auStack_9c [5];
-  undefined1 local_97;
-  undefined1 local_96;
-  undefined1 auStack_90 [144];
+  XModel *pXVar5;
+  int iVar6;
+  bool bVar7;
+  undefined1 uVar8;
+  int iVar9;
+  cpose_t **ppcVar10;
+  DObjAnimMat *pDVar11;
+  int iVar12;
+  int iVar13;
+  DObjAnimMat *local_a0;
+  GfxMarkContext GStack_9c;
+  uint auStack_90 [36];
   
-  iVar4 = __savegprlr_18();
+  pMVar3 = (MarkInfo *)__savegprlr_18(param_1);
   Profile_Begin(0xce);
-  iVar8 = 0;
-  if (*(int *)(iVar4 + 0x2a4) != 0) {
-    puVar9 = (undefined4 *)(iVar4 + 0x128);
+  iVar9 = 0;
+  if (pMVar3->sceneDObjCollidedCount != 0) {
+    ppcVar10 = &pMVar3->sceneDObjsCollided[0].pose;
     do {
-      uVar2 = puVar9[-1];
-      uVar1 = *(undefined2 *)(puVar9 + 1);
-      R_MarkUtil_GetDObjAnimMatAndHideParts(uVar2,*puVar9,&local_a0,auStack_90);
-      uVar10 = (ulonglong)local_a0;
-      if (uVar10 != 0) {
-        iVar5 = DObjGetNumModels(uVar2);
-        lVar11 = 0;
-        lVar12 = 0;
-        if (iVar5 != 0) {
+      pDVar2 = ((MarkInfoCollidedDObj *)(ppcVar10 + -1))->dObj;
+      uVar1 = *(ushort *)(ppcVar10 + 1);
+      R_MarkUtil_GetDObjAnimMatAndHideParts(pDVar2,*ppcVar10,&local_a0,auStack_90);
+      pDVar11 = local_a0;
+      if (local_a0 != (DObjAnimMat *)0x0) {
+        iVar4 = DObjGetNumModels(pDVar2);
+        iVar12 = 0;
+        iVar13 = 0;
+        if (iVar4 != 0) {
           do {
-            local_96 = 0;
-            local_97 = 0;
-            FX_SetMarkContextModelType_EntModel(auStack_9c,lVar12);
-            FX_SetMarkContext_EntNum(auStack_9c,uVar1);
-            puVar6 = (undefined4 *)DObjGetModel(uVar2,lVar12);
-            if (*(byte *)((int)puVar6 + 0xe2) < 0x80) {
-              if (*(char *)(puVar6 + 0x38) != '\0') {
-                MyAssertHandler(0xffffffff821c6d94,0x536,0,0xffffffff82187878,0xffffffff82187890,
-                                *puVar6);
+            GStack_9c.reflectionProbeIndex = '\0';
+            GStack_9c.primaryLightIndex = '\0';
+            FX_SetMarkContextModelType_EntModel(&GStack_9c,iVar13);
+            FX_SetMarkContext_EntNum(&GStack_9c,uVar1);
+            pXVar5 = DObjGetModel(pDVar2,iVar13);
+            if ((byte)pXVar5->collLod < 0x80) {
+              if (pXVar5->maxLoadedLod != '\0') {
+                MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_marks.cpp"
+                                ,0x536,0,"%s\n\t(model->name) = %s");
               }
-              uVar3 = DObjNumBones(uVar2);
-              cVar7 = R_MarkFragments_AnimatedXModel
-                                (iVar4,puVar6,auStack_90,lVar11,uVar10,uVar3,auStack_9c);
-              if (cVar7 == '\0') {
-                Profile_EndInternal(0);
-                __restgprlr_18(0);
-                return;
+              iVar6 = DObjNumBones(pDVar2);
+              bVar7 = R_MarkFragments_AnimatedXModel
+                                (pMVar3,pXVar5,auStack_90,iVar12,pDVar11,iVar6,&GStack_9c);
+              if (!bVar7) {
+                Profile_EndInternal((double *)0x0);
+                uVar8 = __restgprlr_18(0);
+                return (bool)uVar8;
               }
             }
-            lVar12 = lVar12 + 1;
-            lVar11 = (ulonglong)*(byte *)(puVar6 + 1) + lVar11;
-            uVar10 = (ulonglong)*(byte *)(puVar6 + 1) * 0x20 + uVar10;
-            local_a0 = (uint)uVar10;
-          } while ((int)lVar12 != iVar5);
+            iVar13 = iVar13 + 1;
+            iVar12 = (uint)pXVar5->numBones + iVar12;
+            local_a0 = pDVar11 + pXVar5->numBones;
+            pDVar11 = local_a0;
+          } while (iVar13 != iVar4);
         }
       }
-      iVar8 = iVar8 + 1;
-      puVar9 = puVar9 + 3;
-    } while (iVar8 != *(int *)(iVar4 + 0x2a4));
+      iVar9 = iVar9 + 1;
+      ppcVar10 = ppcVar10 + 3;
+    } while (iVar9 != pMVar3->sceneDObjCollidedCount);
   }
-  Profile_EndInternal(0);
-  __restgprlr_18(1);
-  return;
+  Profile_EndInternal((double *)0x0);
+  uVar8 = __restgprlr_18(1);
+  return (bool)uVar8;
 }
 
 
 // 82752F28  R_MarkFragments_ViewmodelDObjs  (gfx_d3d/r_marks.cpp:1354)
 
-void R_MarkFragments_ViewmodelDObjs(void)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+bool R_MarkFragments_ViewmodelDObjs(MarkInfo *param_1)
 
 {
-  undefined4 uVar1;
+  DObj *pDVar1;
+  MarkInfo *pMVar2;
   int iVar3;
-  int iVar4;
-  undefined4 *puVar5;
-  undefined8 uVar2;
-  char cVar6;
-  int iVar7;
-  undefined4 *puVar8;
-  ulonglong uVar9;
-  longlong lVar10;
-  longlong lVar11;
-  uint local_a0;
-  undefined1 auStack_9c [5];
-  undefined1 local_97;
-  undefined1 local_96;
-  undefined1 auStack_90 [144];
+  XModel *pXVar4;
+  int iVar5;
+  bool bVar6;
+  undefined1 uVar7;
+  int iVar8;
+  MarkInfoCollidedDObj *pMVar9;
+  DObjAnimMat *pDVar10;
+  int iVar11;
+  int iVar12;
+  DObjAnimMat *local_a0;
+  GfxMarkContext GStack_9c;
+  uint auStack_90 [36];
   
-  iVar3 = __savegprlr_19();
+  pMVar2 = (MarkInfo *)__savegprlr_19(param_1);
   Profile_Begin(0xce);
-  iVar7 = 0;
-  if (*(int *)(iVar3 + 0x438) != 0) {
-    puVar8 = (undefined4 *)(iVar3 + 0x42c);
+  iVar8 = 0;
+  if (pMVar2->viewmodelDObjsCollidedCount != 0) {
+    pMVar9 = pMVar2->viewmodelDObjsCollided;
     do {
-      uVar1 = *puVar8;
-      R_MarkUtil_GetDObjAnimMatAndHideParts(uVar1,puVar8[1],&local_a0,auStack_90);
-      uVar9 = (ulonglong)local_a0;
-      if (uVar9 != 0) {
-        iVar4 = DObjGetNumModels(uVar1);
-        lVar10 = 0;
-        lVar11 = 0;
-        if (iVar4 != 0) {
+      pDVar1 = pMVar9->dObj;
+      R_MarkUtil_GetDObjAnimMatAndHideParts(pDVar1,pMVar9->pose,&local_a0,auStack_90);
+      pDVar10 = local_a0;
+      if (local_a0 != (DObjAnimMat *)0x0) {
+        iVar3 = DObjGetNumModels(pDVar1);
+        iVar11 = 0;
+        iVar12 = 0;
+        if (iVar3 != 0) {
           do {
-            local_96 = 0;
-            local_97 = 0;
-            FX_SetMarkContextModelType_EntViewmodel
-                      (auStack_9c,lVar11,*(undefined4 *)(iVar3 + 0x43c));
-            puVar5 = (undefined4 *)DObjGetModel(uVar1,lVar11);
-            if (*(byte *)((int)puVar5 + 0xe2) < 0x80) {
-              if (*(char *)(puVar5 + 0x38) != '\0') {
-                MyAssertHandler(0xffffffff821c6d94,0x56e,0,0xffffffff82187878,0xffffffff82187890,
-                                *puVar5);
+            GStack_9c.reflectionProbeIndex = '\0';
+            GStack_9c.primaryLightIndex = '\0';
+            FX_SetMarkContextModelType_EntViewmodel(&GStack_9c,iVar12,pMVar2->viewmodelClientIndex);
+            pXVar4 = DObjGetModel(pDVar1,iVar12);
+            if ((byte)pXVar4->collLod < 0x80) {
+              if (pXVar4->maxLoadedLod != '\0') {
+                MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_marks.cpp"
+                                ,0x56e,0,"%s\n\t(model->name) = %s");
               }
-              uVar2 = DObjNumBones(uVar1);
-              cVar6 = R_MarkFragments_AnimatedXModel
-                                (iVar3,puVar5,auStack_90,lVar10,uVar9,uVar2,auStack_9c);
-              if (cVar6 == '\0') {
-                Profile_EndInternal(0);
-                __restgprlr_19(0);
-                return;
+              iVar5 = DObjNumBones(pDVar1);
+              bVar6 = R_MarkFragments_AnimatedXModel
+                                (pMVar2,pXVar4,auStack_90,iVar11,pDVar10,iVar5,&GStack_9c);
+              if (!bVar6) {
+                Profile_EndInternal((double *)0x0);
+                uVar7 = __restgprlr_19(0);
+                return (bool)uVar7;
               }
             }
-            lVar11 = lVar11 + 1;
-            lVar10 = (ulonglong)*(byte *)(puVar5 + 1) + lVar10;
-            uVar9 = (ulonglong)*(byte *)(puVar5 + 1) * 0x20 + uVar9;
-            local_a0 = (uint)uVar9;
-          } while ((int)lVar11 != iVar4);
+            iVar12 = iVar12 + 1;
+            iVar11 = (uint)pXVar4->numBones + iVar11;
+            local_a0 = pDVar10 + pXVar4->numBones;
+            pDVar10 = local_a0;
+          } while (iVar12 != iVar3);
         }
       }
-      iVar7 = iVar7 + 1;
-      puVar8 = puVar8 + 3;
-    } while (iVar7 != *(int *)(iVar3 + 0x438));
+      iVar8 = iVar8 + 1;
+      pMVar9 = pMVar9 + 1;
+    } while (iVar8 != pMVar2->viewmodelDObjsCollidedCount);
   }
-  Profile_EndInternal(0);
-  __restgprlr_19(1);
-  return;
+  Profile_EndInternal((double *)0x0);
+  uVar7 = __restgprlr_19(1);
+  return (bool)uVar7;
 }
 
 
 // 827530A0  R_MarkFragments_StaticModels  (gfx_d3d/r_marks.cpp:1409)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
 
-void R_MarkFragments_StaticModels(void)
+bool R_MarkFragments_StaticModels(MarkInfo *param_1)
 
 {
-  char cVar1;
-  ushort uVar2;
-  undefined4 *puVar3;
-  int iVar4;
-  ushort uVar5;
-  uint uVar6;
-  ushort *puVar7;
-  uint uVar8;
-  int iVar9;
+  ushort uVar1;
+  XModel *pXVar2;
+  float *pfVar3;
+  ulonglong uVar4;
+  MarkInfo *pMVar5;
+  ushort uVar6;
+  bool bVar7;
+  undefined1 uVar8;
+  ushort *puVar9;
+  longlong lVar10;
+  undefined1 auVar11 [16];
+  undefined1 auVar12 [16];
+  undefined1 auVar13 [16];
+  undefined1 auVar14 [16];
+  undefined1 auVar15 [16];
+  undefined1 auVar16 [16];
+  undefined1 auVar17 [16];
+  undefined1 auVar18 [16];
+  undefined1 auVar19 [16];
   int local_d8;
-  undefined1 uStack_b4;
-  undefined1 local_b3;
-  undefined1 local_af;
-  char local_ae;
+  GfxMarkContext aGStack_b4 [2];
+  GfxMarkContext aGStack_a0 [22];
   
-  iVar4 = __savegprlr_19();
-  FX_SetMarkContextModelType_WorldModel(&uStack_b4,0);
+  uVar4 = ZEXT48(&stack0x00000000);
+  pMVar5 = (MarkInfo *)__savegprlr_19(param_1);
+  FX_SetMarkContextModelType_WorldModel(aGStack_b4,0);
   local_d8 = 0;
-  uVar6 = iVar4 + 0x120;
-  if (*(int *)(iVar4 + 0x120) != 0) {
-    puVar7 = (ushort *)(iVar4 + 0xe0);
+  if (pMVar5->smodelCollidedCount != 0) {
+    puVar9 = pMVar5->smodelsCollided;
     do {
-      if ((*(int *)(iVar4 + 0x440) != 0) || (*(int *)(iVar4 + 0x444) != 0)) {
-        MyAssertHandler(0xffffffff821c6d94,0x58e,0,&DAT_82000f98,
-                        "!markInfo->usedTriCount && !markInfo->usedPointCount");
+      if ((pMVar5->usedTriCount != 0) || (pMVar5->usedPointCount != 0)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_marks.cpp",0x58e
+                        ,0,"%s");
       }
-      uVar2 = *puVar7;
-      uVar8 = (uint)uVar2;
-      iVar9 = *(int *)(DAT_846178cc + 0x58) + uVar8 * 0x2c;
-      puVar3 = *(undefined4 **)(iVar9 + 0x1c);
-      uVar6 = (uint)*(byte *)((int)puVar3 + 0xe2);
-      if (uVar6 < 0x80) {
-        if (*(char *)(puVar3 + 0x38) != '\0') {
-          MyAssertHandler(0xffffffff821c6d94,0x597,0,"%s\n\t(xmodel->name) = %s",
-                          "(!xmodel->maxLoadedLod)",*puVar3);
+      uVar1 = *puVar9;
+      lVar10 = ZEXT48(g_worldDpvs->smodelDrawInsts) + (ulonglong)uVar1 * 0x2c;
+      pfVar3 = (float *)lVar10;
+      pXVar2 = (XModel *)pfVar3[7];
+      if ((byte)pXVar2->collLod < 0x80) {
+        if (pXVar2->maxLoadedLod != '\0') {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_marks.cpp",
+                          0x597,0,"%s\n\t(xmodel->name) = %s");
         }
-        local_b3 = 0x1f;
-        local_ae = *(char *)(iVar9 + 0x24);
-        cVar1 = *(char *)(iVar9 + 0x24);
-        if (local_ae != cVar1) {
-          MyAssertHandler(0xffffffff821c6d94,0x59c,0,"%s\n\t(smodelDraw->reflectionProbeIndex) = %i"
-                          ,"(markContext.reflectionProbeIndex == smodelDraw->reflectionProbeIndex)",
-                          cVar1,cVar1,local_ae);
+        aGStack_b4[0].field1_0x1.lmapIndex = '\x1f';
+        aGStack_b4[0].reflectionProbeIndex = *(uchar *)(pfVar3 + 9);
+        if (aGStack_b4[0].reflectionProbeIndex != *(uchar *)(pfVar3 + 9)) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_marks.cpp",
+                          0x59c,0,"%s\n\t(smodelDraw->reflectionProbeIndex) = %i");
         }
-        local_af = *(undefined1 *)(iVar9 + 0x25);
-        FX_SetMarkContext_ModelIndex(&uStack_b4,uVar8);
-        uVar5 = FX_GetMarkContext_ModelIndex(&uStack_b4);
-        if (uVar5 != uVar2) {
-          MyAssertHandler(0xffffffff821c6d94,0x59f,0,"%s\n\t(smodelIndex) = %i",
-                          "(FX_GetMarkContext_ModelIndex( &markContext ) == smodelIndex)",uVar8);
+        aGStack_b4[0].primaryLightIndex = *(uchar *)((int)pfVar3 + 0x25);
+        FX_SetMarkContext_ModelIndex(aGStack_b4,uVar1);
+        uVar6 = FX_GetMarkContext_ModelIndex(aGStack_b4);
+        if (uVar6 != uVar1) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_marks.cpp",
+                          0x59f,0,"%s\n\t(smodelIndex) = %i");
         }
-                    /* WARNING: Bad instruction - Truncating control flow here */
-        halt_baddata();
+        auVar19 = loadVectorLeftIndexed(lVar10 + 0xc);
+        auVar18 = loadVectorRightIndexed(lVar10 + 0x1c);
+        auVar19 = auVar19 | auVar18;
+        auVar18 = vectorSplatWord(auVar19,0);
+        auVar17 = vectorSplatWord(auVar19,1);
+        auVar19 = vectorSplatWord(auVar19,2);
+        auVar18 = vectorUnpackD3Dtype(auVar18,8);
+        auVar11 = vectorUnpackD3Dtype(auVar17,8);
+        auVar17 = vectorUnpackD3Dtype(auVar19,8);
+        auVar19 = vectorMultiplyAddFloatingPoint
+                            (auVar18,(undefined1  [16])g_unpackMul101010.field0_0x0,
+                             (undefined1  [16])g_unpackAdd101010.field0_0x0);
+        auVar11 = vectorMultiplyAddFloatingPoint
+                            (auVar11,(undefined1  [16])g_unpackMul101010.field0_0x0,
+                             (undefined1  [16])g_unpackAdd101010.field0_0x0);
+        auVar18 = vectorMultiplyAddFloatingPoint
+                            (auVar17,(undefined1  [16])g_unpackMul101010.field0_0x0,
+                             (undefined1  [16])g_unpackAdd101010.field0_0x0);
+        auVar16 = vectorSplatWord(auVar19,0);
+        auVar15 = vectorSplatWord(auVar19,1);
+        auVar14 = vectorSplatWord(auVar19,2);
+        auVar13 = vectorSplatWord(auVar11,0);
+        auVar12 = vectorSplatWord(auVar11,1);
+        auVar11 = vectorSplatWord(auVar11,2);
+        auVar17 = vectorSplatWord(auVar18,0);
+        auVar19 = vectorSplatWord(auVar18,1);
+        storeVectorElementWordIndexed(auVar16,uVar4 - 0xa0);
+        auVar18 = vectorSplatWord(auVar18,2);
+        storeVectorElementWordIndexed(auVar15,uVar4 - 0x9c);
+        storeVectorElementWordIndexed(auVar14,uVar4 - 0x98);
+        storeVectorElementWordIndexed(auVar13,uVar4 - 0x94);
+        storeVectorElementWordIndexed(auVar12,uVar4 - 0x90);
+        storeVectorElementWordIndexed(auVar11,uVar4 - 0x8c);
+        storeVectorElementWordIndexed(auVar17,uVar4 - 0x88);
+        storeVectorElementWordIndexed(auVar19,uVar4 - 0x84);
+        storeVectorElementWordIndexed(auVar18,uVar4 - 0x80);
+        bVar7 = R_MarkFragments_EntirelyRigidXModel
+                          (pMVar5,pXVar2,(float (*) [3])aGStack_a0,pfVar3,pfVar3[6],aGStack_a0);
+        if (!bVar7) {
+          uVar8 = __restgprlr_19(0);
+          return (bool)uVar8;
+        }
+        if (pMVar5->usedTriCount == 0) {
+          if (pMVar5->usedPointCount == 0) goto LAB_827533a4;
+        }
+        else if (pMVar5->usedPointCount != 0) {
+          (*pMVar5->callback)(pMVar5->callbackContext,pMVar5->usedTriCount,pMVar5->tris,
+                              pMVar5->usedPointCount,pMVar5->points,(float *)pMVar5,pMVar5->axis[1])
+          ;
+          R_CheckMarkTris(pMVar5);
+        }
+        pMVar5->usedTriCount = 0;
+        pMVar5->usedPointCount = 0;
       }
-      puVar7 = puVar7 + 1;
+LAB_827533a4:
+      puVar9 = puVar9 + 1;
       local_d8 = local_d8 + 1;
-    } while (local_d8 != *(int *)(iVar4 + 0x120));
+    } while (local_d8 != pMVar5->smodelCollidedCount);
   }
-  if ((*(int *)(iVar4 + 0x440) != 0) || (*(int *)(iVar4 + 0x444) != 0)) {
-    MyAssertHandler(0xffffffff821c6d94,0x5b2,0,&DAT_82000f98,
-                    "!markInfo->usedTriCount && !markInfo->usedPointCount",uVar6);
+  if ((pMVar5->usedTriCount != 0) || (pMVar5->usedPointCount != 0)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_marks.cpp",0x5b2,0,
+                    "%s");
   }
-  __restgprlr_19(1);
-  return;
+  uVar8 = __restgprlr_19(1);
+  return (bool)uVar8;
 }
 
 
 // 82753410  R_MarkFragments_Models  (gfx_d3d/r_marks.cpp:1464)
 
-void R_MarkFragments_Models(void)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+bool R_MarkFragments_Models(MarkInfo *param_1)
 
 {
-  int iVar1;
-  char cVar2;
+  MarkInfo *pMVar1;
+  bool bVar2;
+  undefined1 uVar3;
   
-  iVar1 = __savegprlr_28();
-  if (*(char *)(iVar1 + 0xd8) != '\0') {
-    MyAssertHandler(0xffffffff821c6d94,0x5b9,0,0xffffffff82000f98,0xffffffff821c73dc);
+  pMVar1 = (MarkInfo *)__savegprlr_28(param_1);
+  if (pMVar1->markHasLightmap != false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_marks.cpp",0x5b9,0,
+                    "%s");
   }
-  if ((*(int *)(iVar1 + 0x440) != 0) || (*(int *)(iVar1 + 0x444) != 0)) {
-    MyAssertHandler(0xffffffff821c6d94,0x5ba,0,0xffffffff82000f98,0xffffffff821c73a4);
+  if ((pMVar1->usedTriCount != 0) || (pMVar1->usedPointCount != 0)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_marks.cpp",0x5ba,0,
+                    "%s");
   }
-  cVar2 = R_MarkFragments_StaticModels(iVar1);
-  if (cVar2 != '\0') {
-    if ((*(int *)(iVar1 + 0x440) != 0) || (*(int *)(iVar1 + 0x444) != 0)) {
-      MyAssertHandler(0xffffffff821c6d94,0x5bd,0,0xffffffff82000f98,0xffffffff821c73a4);
+  bVar2 = R_MarkFragments_StaticModels(pMVar1);
+  if (bVar2) {
+    if ((pMVar1->usedTriCount != 0) || (pMVar1->usedPointCount != 0)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_marks.cpp",0x5bd,0
+                      ,"%s");
     }
-    cVar2 = R_MarkFragments_SceneDObjs(iVar1);
-    if (cVar2 != '\0') {
-      if ((*(int *)(iVar1 + 0x440) != 0) || (*(int *)(iVar1 + 0x444) != 0)) {
-        MyAssertHandler(0xffffffff821c6d94,0x5c0,0,0xffffffff82000f98,0xffffffff821c73a4);
+    bVar2 = R_MarkFragments_SceneDObjs(pMVar1);
+    if (bVar2) {
+      if ((pMVar1->usedTriCount != 0) || (pMVar1->usedPointCount != 0)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_marks.cpp",0x5c0
+                        ,0,"%s");
       }
-      cVar2 = R_MarkFragments_ViewmodelDObjs(iVar1);
-      if (cVar2 != '\0') {
-        if ((*(int *)(iVar1 + 0x440) != 0) || (*(int *)(iVar1 + 0x444) != 0)) {
-          MyAssertHandler(0xffffffff821c6d94,0x5c3,0,0xffffffff82000f98,0xffffffff821c73a4);
+      bVar2 = R_MarkFragments_ViewmodelDObjs(pMVar1);
+      if (bVar2) {
+        if ((pMVar1->usedTriCount != 0) || (pMVar1->usedPointCount != 0)) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_marks.cpp",
+                          0x5c3,0,"%s");
         }
-        cVar2 = R_MarkFragments_Glass(iVar1);
-        if (cVar2 != '\0') {
-          if ((*(int *)(iVar1 + 0x440) != 0) || (*(int *)(iVar1 + 0x444) != 0)) {
-            MyAssertHandler(0xffffffff821c6d94,0x5c6,0,0xffffffff82000f98,0xffffffff821c73a4);
+        bVar2 = R_MarkFragments_Glass(pMVar1);
+        if (bVar2) {
+          if ((pMVar1->usedTriCount != 0) || (pMVar1->usedPointCount != 0)) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_marks.cpp",
+                            0x5c6,0,"%s");
           }
-          __restgprlr_28(1);
-          return;
+          uVar3 = __restgprlr_28(1);
+          return (bool)uVar3;
         }
       }
     }
   }
-  __restgprlr_28(0);
-  return;
+  uVar3 = __restgprlr_28(0);
+  return (bool)uVar3;
 }
 
 
 // 82750EF0  R_MarkFragments_Begin  (gfx_d3d/r_marks.cpp:1484)
 
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
 void R_MarkFragments_Begin
-               (undefined8 param_1,int param_2,undefined8 param_3,undefined4 *param_4,int param_5,
-               ulonglong param_6,undefined4 param_7)
+               (MarkInfo *param_1,MarkFragmentsAgainstEnum param_2,float (*param_3) [3],
+               float *param_4,Material *param_5,bool param_6,int param_7)
 
 {
-  int iVar1;
-  undefined4 uVar2;
+  Sphere *pSVar1;
+  float fVar2;
+  ulonglong uVar3;
   
-  iVar1 = __savegprlr_25();
-  AxisCopy(param_3,iVar1 + 0x34);
-  *(undefined4 *)(iVar1 + 0xcc) = *param_4;
-  *(undefined4 *)(iVar1 + 0xd0) = param_4[1];
-  *(undefined4 *)(iVar1 + 0xd4) = param_4[2];
-  *(int *)(iVar1 + 0x58) = param_5;
-  *(byte *)(iVar1 + 0xd8) = *(byte *)(param_5 + 4) >> 1 & 1;
-  *(byte *)(iVar1 + 0xd9) = *(byte *)(param_5 + 4) >> 4 & 1;
-  *(int *)(iVar1 + 0xdc) = param_2;
-  *(undefined4 *)(iVar1 + 0x43c) = param_7;
-  R_GetMarkFragmentClipPlanes(iVar1,iVar1 + 0x34,iVar1 + 0x6c);
-  if (param_2 == 0) {
-    *(undefined4 *)(iVar1 + 0x428) = 0;
+  uVar3 = (ulonglong)param_6;
+  pSVar1 = (Sphere *)__savegprlr_25(param_1);
+  AxisCopy(param_3,(float (*) [3])&pSVar1[2].radius);
+  pSVar1[10].origin[1] = *param_4;
+  pSVar1[10].origin[2] = param_4[1];
+  pSVar1[10].radius = param_4[2];
+  pSVar1[4].origin[2] = (float)param_5;
+  *(byte *)&pSVar1[10].radiusSq = (byte)(param_5->info).field0_0x0.field_0x4 >> 1 & 1;
+  *(byte *)((int)&pSVar1[10].radiusSq + 1) = (byte)(param_5->info).field0_0x0.field_0x4 >> 4 & 1;
+  pSVar1[0xb].origin[0] = (float)param_2;
+  pSVar1[0x36].origin[1] = (float)param_7;
+  R_GetMarkFragmentClipPlanes
+            (pSVar1,(float (*) [3])&pSVar1[2].radius,(float (*) [4])(pSVar1[5].origin + 2));
+  if ((float)param_2 == 0.0) {
+    pSVar1[0x35].origin[1] = 0.0;
     __restgprlr_25();
     return;
   }
-  if (param_2 != 1) {
-    MyAssertHandler(0xffffffff821c6d94,0x5dd,0,0xffffffff82000f98,0xffffffff821c7198);
+  if ((float)param_2 != 1.4013e-45) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_marks.cpp",0x5dd,0,
+                    "%s");
   }
-  *(undefined4 *)(iVar1 + 0x2a4) = 0;
-  *(undefined4 *)(iVar1 + 0x438) = 0;
-  if ((param_6 & 0xff) == 0) {
-    uVar2 = R_SphereStaticModels
-                      (iVar1,*(undefined4 *)(iVar1 + 0x18),0xffffffff8274f620,0,iVar1 + 0xe0,0x20);
-    *(undefined4 *)(iVar1 + 0x120) = uVar2;
+  pSVar1[0x21].radiusSq = 0.0;
+  pSVar1[0x36].origin[0] = 0.0;
+  if ((uVar3 & 0xff) == 0) {
+    fVar2 = (float)R_SphereStaticModels
+                             (pSVar1,(uint *)pSVar1[1].origin[1],R_AllowSmodelMarks,(void *)0x0,
+                              (ushort *)(pSVar1[0xb].origin + 1),0x20);
+    pSVar1[0xe].origin[2] = fVar2;
   }
   else {
-    *(undefined4 *)(iVar1 + 0x120) = 0;
+    pSVar1[0xe].origin[2] = 0.0;
   }
-  if (*(int *)(iVar1 + 0x120) == 0x20) {
-    R_WarnOncePerFrame(0x12,0x20);
+  if (pSVar1[0xe].origin[2] == 4.48416e-44) {
+    R_WarnOncePerFrame(R_WARN_MARK_SMODEL_COLLIDED_LIMIT);
   }
   __restgprlr_25();
   return;
@@ -2935,96 +3049,112 @@ void R_MarkFragments_Begin
 
 // 82751018  R_MarkFragments_AddDObj  (gfx_d3d/r_marks.cpp:1516)
 
-undefined8
-R_MarkFragments_AddDObj(int param_1,undefined4 param_2,undefined4 param_3,undefined2 param_4)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+bool R_MarkFragments_AddDObj(MarkInfo *param_1,DObj *param_2,cpose_t *param_3,ushort param_4)
 
 {
   int iVar1;
   
-  if (*(int *)(param_1 + 0x2a4) == 0x20) {
-    return 0;
+  iVar1 = param_1->sceneDObjCollidedCount;
+  if (iVar1 == 0x20) {
+    return false;
   }
-  iVar1 = *(int *)(param_1 + 0x2a4) * 0xc + param_1;
-  *(undefined4 *)(iVar1 + 0x124) = param_2;
-  *(undefined4 *)(iVar1 + 0x128) = param_3;
-  *(undefined2 *)(iVar1 + 300) = param_4;
-  *(int *)(param_1 + 0x2a4) = *(int *)(param_1 + 0x2a4) + 1;
-  return 1;
+  param_1->sceneDObjsCollided[iVar1].dObj = param_2;
+  param_1->sceneDObjsCollided[iVar1].pose = param_3;
+  param_1->sceneDObjsCollided[iVar1].entnum = param_4;
+  param_1->sceneDObjCollidedCount = param_1->sceneDObjCollidedCount + 1;
+  return true;
 }
 
 
 // 82751068  R_MarkFragments_AddViewModelDObj  (gfx_d3d/r_marks.cpp:1532)
 
-undefined8 R_MarkFragments_AddViewModelDObj(int param_1,undefined4 param_2,undefined4 param_3)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+bool R_MarkFragments_AddViewModelDObj(MarkInfo *param_1,DObj *param_2,cpose_t *param_3)
 
 {
-  undefined4 *puVar1;
+  MarkInfoCollidedDObj *pMVar1;
   
-  if (*(int *)(param_1 + 0x438) == 1) {
-    return 0;
+  if (param_1->viewmodelDObjsCollidedCount == 1) {
+    return false;
   }
-  puVar1 = (undefined4 *)((*(int *)(param_1 + 0x438) + 0x59) * 0xc + param_1);
-  *puVar1 = param_2;
-  puVar1[1] = param_3;
-  *(undefined2 *)(puVar1 + 2) = 0;
-  *(int *)(param_1 + 0x438) = *(int *)(param_1 + 0x438) + 1;
-  return 1;
+  pMVar1 = param_1->viewmodelDObjsCollided + param_1->viewmodelDObjsCollidedCount;
+  pMVar1->dObj = param_2;
+  pMVar1->pose = param_3;
+  pMVar1->entnum = 0;
+  param_1->viewmodelDObjsCollidedCount = param_1->viewmodelDObjsCollidedCount + 1;
+  return true;
 }
 
 
 // 827510B8  R_MarkFragments_AddBModel  (gfx_d3d/r_marks.cpp:1549)
 
-undefined8
-R_MarkFragments_AddBModel(int param_1,undefined4 param_2,undefined4 param_3,undefined2 param_4)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+bool R_MarkFragments_AddBModel
+               (MarkInfo *param_1,GfxBrushModel *param_2,cpose_t *param_3,ushort param_4)
 
 {
   int iVar1;
   
-  if (*(int *)(param_1 + 0x428) == 0x20) {
-    return 0;
+  iVar1 = param_1->sceneBModelCollidedCount;
+  if (iVar1 == 0x20) {
+    return false;
   }
-  iVar1 = *(int *)(param_1 + 0x428) * 0xc + param_1;
-  *(undefined4 *)(iVar1 + 0x2a8) = param_2;
-  *(undefined4 *)(iVar1 + 0x2ac) = param_3;
-  *(undefined2 *)(iVar1 + 0x2b0) = param_4;
-  *(int *)(param_1 + 0x428) = *(int *)(param_1 + 0x428) + 1;
-  return 1;
+  param_1->sceneBModelsCollided[iVar1].brushModel = param_2;
+  param_1->sceneBModelsCollided[iVar1].pose = param_3;
+  param_1->sceneBModelsCollided[iVar1].entnum = param_4;
+  param_1->sceneBModelCollidedCount = param_1->sceneBModelCollidedCount + 1;
+  return true;
 }
 
 
 // 827535B8  R_MarkFragments_Go  (gfx_d3d/r_marks.cpp:1565)
 
-void R_MarkFragments_Go(undefined8 param_1,float param_2,float param_3,float param_4,float param_5,
-                       float param_6,float param_7)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+void R_MarkFragments_Go(MarkInfo *param_1,
+                       _func___cdecl_void_void_ptr_int_FxMarkTri_ptr_int_FxMarkPoint_ptr_float_ptr_float_ptr
+                       *param_2,void *param_3,int param_4,FxMarkTri *param_5,int param_6,
+                       FxMarkPoint *param_7)
 
 {
-  float *pfVar1;
-  char cVar2;
+  MarkInfo *pMVar1;
+  bool bVar2;
   
-  pfVar1 = (float *)__savegprlr_23();
-  if (pfVar1[0x16] == 0.0) {
-    MyAssertHandler(0xffffffff821c6d94,0x620,0,0xffffffff82000f98,0xffffffff821c7484);
+  pMVar1 = (MarkInfo *)__savegprlr_23(param_1);
+  if (pMVar1->material == (Material *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_marks.cpp",0x620,0,
+                    "%s");
   }
-  pfVar1[0x18] = param_5;
-  pfVar1[0x19] = param_6;
-  pfVar1[0x1a] = param_7;
-  pfVar1[0x110] = 0.0;
-  pfVar1[0x17] = param_4;
-  pfVar1[0x111] = 0.0;
-  pfVar1[0x112] = param_2;
-  pfVar1[0x113] = param_3;
-  if (pfVar1[0x37] == 0.0) {
-    cVar2 = R_MarkFragments_Brushes(pfVar1);
+  pMVar1->tris = param_5;
+  pMVar1->maxPoints = param_6;
+  pMVar1->points = param_7;
+  pMVar1->usedTriCount = 0;
+  pMVar1->maxTris = param_4;
+  pMVar1->usedPointCount = 0;
+  pMVar1->callback = param_2;
+  pMVar1->callbackContext = param_3;
+  if (pMVar1->markAgainst == MARK_FRAGMENTS_AGAINST_BRUSHES) {
+    bVar2 = R_MarkFragments_Brushes(pMVar1);
   }
   else {
-    if (pfVar1[0x37] != 1.4013e-45) {
-      MyAssertHandler(0xffffffff821c6d94,0x634,0,0xffffffff82000f98,0xffffffff821c744c);
+    if (pMVar1->markAgainst != MARK_FRAGMENTS_AGAINST_MODELS) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_marks.cpp",0x634,0
+                      ,"%s");
     }
-    cVar2 = R_MarkFragments_Models(pfVar1);
+    bVar2 = R_MarkFragments_Models(pMVar1);
   }
-  if (cVar2 == '\0') {
-    Com_Printf(0xe,0xffffffff821c73f8,pfVar1[0x17],(double)pfVar1[3],(double)*pfVar1,
-               (double)pfVar1[1],(double)pfVar1[2]);
+  if (bVar2 == false) {
+    Com_Printf(0xe,
+               "R_MarkFragments: Too many triangles to mark, max %d radius %.2f at %.2f %.2f %.2f\n"
+              );
   }
   __restgprlr_23();
   return;
@@ -3032,100 +3162,5 @@ void R_MarkFragments_Go(undefined8 param_1,float param_2,float param_3,float par
 
 
 // 82751108  R_TestIntersect_SphereWorldBrush  (gfx_d3d/r_marks.cpp:1606)
-
-void R_TestIntersect_SphereWorldBrush(undefined8 param_1,longlong param_2,undefined8 param_3)
-
-{
-  int iVar1;
-  char cVar2;
-  float *pfVar3;
-  undefined4 *puVar4;
-  int iVar5;
-  int iVar6;
-  int iVar7;
-  longlong lVar8;
-  int iVar9;
-  ushort *puVar10;
-  uint uVar11;
-  undefined8 uVar12;
-  double dVar13;
-  double dVar14;
-  float local_230 [4];
-  float local_220;
-  float local_21c;
-  undefined4 local_218;
-  undefined4 local_214;
-  undefined4 local_210;
-  float local_20c;
-  float local_208;
-  float local_204;
-  undefined4 local_200;
-  undefined4 local_1fc;
-  undefined4 local_1f8;
-  float local_1f4;
-  float local_1f0;
-  float local_1ec;
-  
-  iVar1 = __savegprlr_19();
-  iVar6 = 0;
-  iVar9 = *(int *)(iVar1 + 4) * 0x2c + *(int *)(DAT_84613714 + 0x38);
-  puVar10 = (ushort *)(*(int *)(iVar1 + 0xc) * 2 + *(int *)(DAT_84613714 + 0x88));
-  if (*(short *)(iVar1 + 10) != 0) {
-    dVar13 = 1.0;
-    dVar14 = 0.0;
-    do {
-      cVar2 = R_MarkFragment_IsTriangleRejected
-                        (param_3,(uint)*puVar10 * 0x2c + iVar9,(uint)puVar10[1] * 0x2c + iVar9,
-                         (uint)puVar10[2] * 0x2c + iVar9);
-      if (cVar2 == '\0') {
-        local_220 = (float)dVar14;
-        local_21c = (float)dVar14;
-        local_230[3] = (float)dVar13;
-        local_20c = (float)dVar14;
-        local_204 = (float)dVar14;
-        local_208 = (float)dVar13;
-        local_1f4 = (float)dVar14;
-        local_1f0 = (float)dVar14;
-        local_1ec = (float)dVar13;
-        pfVar3 = (float *)((uint)*puVar10 * 0x2c + iVar9);
-        local_230[0] = *pfVar3;
-        local_230[1] = pfVar3[1];
-        local_230[2] = pfVar3[2];
-        puVar4 = (undefined4 *)((uint)puVar10[1] * 0x2c + iVar9);
-        local_218 = *puVar4;
-        local_214 = puVar4[1];
-        local_210 = puVar4[2];
-        local_200 = *(undefined4 *)((uint)puVar10[2] * 0x2c + iVar9);
-        iVar5 = (uint)puVar10[2] * 0x2c + iVar9;
-        uVar11 = 0;
-        uVar12 = 3;
-        iVar7 = 0;
-        local_1fc = *(undefined4 *)(iVar5 + 4);
-        local_1f8 = *(undefined4 *)(iVar5 + 8);
-        lVar8 = param_2;
-        while( true ) {
-          if (5 < iVar7) {
-            __restgprlr_19(1);
-            return;
-          }
-          uVar12 = R_ChopWorldPolyBehindPlane
-                             (uVar12,local_230 + uVar11 * 0x36,
-                              local_230 + (uint)(uVar11 == 0) * 0x36,lVar8);
-          if ((int)uVar12 == 0) break;
-          if (9 < (int)uVar12) {
-            MyAssertHandler(0xffffffff821c6d94,0x663,0,0xffffffff821c7058,0xffffffff821c7038,uVar12)
-            ;
-          }
-          uVar11 = uVar11 ^ 1;
-          iVar7 = iVar7 + 1;
-          lVar8 = lVar8 + 0x10;
-        }
-      }
-      iVar6 = iVar6 + 1;
-      puVar10 = puVar10 + 3;
-    } while (iVar6 < (int)(uint)*(ushort *)(iVar1 + 10));
-  }
-  __restgprlr_19(0);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0

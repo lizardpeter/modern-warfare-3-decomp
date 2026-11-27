@@ -2,18 +2,18 @@
 
 // 828AC328  XapiUserIoApcDispatcher  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/filehops.c:90)
 
-void XapiUserIoApcDispatcher(code *param_1,uint *param_2)
+void XapiUserIoApcDispatcher(void *param_1,_IO_STATUS_BLOCK *param_2,ulong param_3)
 
 {
   undefined8 uVar1;
-  uint uVar2;
+  ulong uVar2;
   
-  if ((*param_2 & 0xc0000000) == 0xc0000000) {
-    uVar1 = RtlNtStatusToDosError();
+  if (((param_2->field0_0x0).Status & 0xc0000000U) == 0xc0000000) {
+    uVar1 = RtlNtStatusToDosError((param_2->field0_0x0).Status,param_2,param_3);
     uVar2 = 0;
   }
   else {
-    uVar2 = param_2[1];
+    uVar2 = param_2->Information;
     uVar1 = 0;
   }
   (*param_1)(uVar1,uVar2,param_2);

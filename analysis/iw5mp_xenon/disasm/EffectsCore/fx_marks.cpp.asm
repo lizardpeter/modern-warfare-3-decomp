@@ -2288,6 +2288,98 @@ LAB_82431168:
   82432D44  481AD2A5             bl 0x825dffe8
   82432D48  39600010             li r11,0x10
   82432D4C  395E0018             addi r10,r30,0x18
+  82432D50  1BFF0774             vspltisw128 v63,-0x1
+  82432D54  393F0014             addi r9,r31,0x14
+  82432D58  10C0EC07             lvlx128 v38,0,r29
+  82432D5C  38E10078             addi r7,r1,0x78
+  82432D60  EC1F07F2             fmuls f0,f31,f31
+  82432D64  38C10078             addi r6,r1,0x78
+  82432D68  3CA08405             lis r5,-0x7bfb
+  82432D6C  1BBFF8F5             vslw128 v61,v63,v63
+  82432D70  128B5447             lvrx128 v52,r11,r10
+  82432D74  1B9FF8F5             vslw128 v60,v63,v63
+  82432D78  3865F950             subi r3,r5,0x6b0
+  82432D7C  12EB4C47             lvrx128 v55,r11,r9
+  82432D80  132B3C47             lvrx128 v57,r11,r7
+  82432D84  1B7FF8F5             vslw128 v59,v63,v63
+  82432D88  13003407             lvlx128 v56,0,r6
+  82432D8C  1B5FF8F5             vslw128 v58,v63,v63
+  82432D90  12A04C07             lvlx128 v53,0,r9
+  82432D94  16D8CAF5             vor128 v54,v56,v57
+  82432D98  12405407             lvlx128 v50,0,r10
+  82432D9C  1675BAF5             vor128 v51,v53,v55
+  82432DA0  1632A2F5             vor128 v49,v50,v52
+  82432DA4  3881006C             addi r4,r1,0x6c
+  82432DA8  38A1006C             addi r5,r1,0x6c
+  82432DAC  10EBEC47             lvrx128 v39,r11,r29
+  82432DB0  3B410060             addi r26,r1,0x60
+  82432DB4  14863AF5             vor128 v36,v38,v39
+  82432DB8  3B210060             addi r25,r1,0x60
+  82432DBC  18E28F31             vspltw128 v7,v49,0x2
+  82432DC0  390A000C             addi r8,r10,0xc
+  82432DC4  120B2447             lvrx128 v48,r11,r4
+  82432DC8  18C18F31             vspltw128 v6,v49,0x1
+  82432DCC  11E02C07             lvlx128 v47,0,r5
+  82432DD0  18A08F31             vspltw128 v5,v49,0x0
+  82432DD4  11CBD447             lvrx128 v46,r11,r26
+  82432DD8  158F82F5             vor128 v44,v47,v48
+  82432DDC  13E018C7             lvx128 v63,0,r3
+  82432DE0  3C608218             lis r3,-0x7de8
+  82432DE4  15B6FA31             vand128 v13,v54,v63
+  82432DE8  11A0CC07             lvlx128 v45,0,r25
+  82432DEC  1573FA31             vand128 v11,v51,v63
+  82432DF0  114B4447             lvrx128 v42,r11,r8
+  82432DF4  156D72F5             vor128 v43,v45,v46
+  82432DF8  11204407             lvlx128 v41,0,r8
+  82432DFC  158CFA31             vand128 v12,v44,v63
+  82432E00  3863A030             subi r3,r3,0x5fd0
+  82432E04  150952F5             vor128 v40,v41,v42
+  82432E08  3B010050             addi r24,r1,0x50
+  82432E0C  116D59EE             vmaddfp v11,v13,v7,v11
+  82432E10  150DEA51             vandc128 v8,v13,v61
+  82432E14  140BFA31             vand128 v0,v43,v63
+  82432E18  15ACE251             vandc128 v13,v12,v60
+  82432E1C  18A04735             vspltw128 v37,v40,0x0
+  82432E20  1444FA35             vand128 v34,v36,v63
+  82432E24  19414731             vspltw128 v10,v40,0x1
+  82432E28  13C018C7             lvx128 v62,0,r3
+  82432E2C  1460DA55             vandc128 v35,v0,v59
+  82432E30  19224731             vspltw128 v9,v40,0x2
+  82432E34  14E518B1             vmulfp128 v7,v37,v35
+  82432E38  11865B2E             vmaddfp v12,v6,v12,v11
+  82432E3C  11AA3B6E             vmaddfp v13,v10,v13,v7
+  82432E40  1005602E             vmaddfp v0,v5,v0,v12
+  82432E44  11A96A2E             vmaddfp v13,v9,v8,v13
+  82432E48  14220074             vsubfp128 v33,v34,v0
+  82432E4C  1401D275             vandc128 v32,v33,v58
+  82432E50  17E06874             vsubfp128 v63,v32,v13
+  82432E54  1BDFF2A5             vmaxfp128 v62,v63,v62
+  82432E58  17BEF1B5             vmsum3fp128 v61,v62,v62
+  82432E5C  1B80EF35             vspltw128 v60,v61,0x0
+  82432E60  1380C187             stvewx128 v60,0,r24
+  82432E64  C1A10050             lfs f13,0x50(r1)
+  82432E68  FF0D0000             fcmpu cr6,f13,f0
+  82432E6C  40980050             bge cr6,0x82432ebc
+  82432E70  579D043E             rlwinm r29,r28,0x0,0x10,0x1f
+  82432E74  7F1DE040             cmplw cr6,r29,r28
+  82432E78  419A002C             beq cr6,0x82432ea4
+  82432E7C  3D608206             lis r11,-0x7dfa
+  82432E80  3D408206             lis r10,-0x7dfa
+  82432E84  3D208206             lis r9,-0x7dfa
+  82432E88  38EB5B18             addi r7,r11,0x5b18
+  82432E8C  38CA5B00             addi r6,r10,0x5b00
+  82432E90  38695870             addi r3,r9,0x5870
+  82432E94  7F88E378             or r8,r28,r28
+  82432E98  38A00000             li r5,0x0
+  82432E9C  388003FA             li r4,0x3fa
+  82432EA0  481A1661             bl 0x825d4500
+LAB_82432ea4:
+  82432EA4  7FA6EB78             or r6,r29,r29
+  82432EA8  7FE5FB78             or r5,r31,r31
+  82432EAC  7FC4F378             or r4,r30,r30
+  82432EB0  7F63DB78             or r3,r27,r27
+  82432EB4  4831E205             bl 0x827510b8
+  82432EB8  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
 LAB_82432ebc:
   82432EBC  38600000             li r3,0x0
   82432EC0  4BE2E059             bl 0x82260f18
@@ -4110,7 +4202,36 @@ LAB_82433db4:
   82434C98  D09B001C             stfs f4,0x1c(r27)
   82434C9C  C07F0010             lfs f3,0x10(r31)
   82434CA0  D07B0020             stfs f3,0x20(r27)
-  82434CA4  13E038C7             vcmpequd v31,v0,v7
+  82434CA4  13E038C7             lvx128 v63,0,r7
+  82434CA8  118020C3             lvx128 v12,0,r4
+  82434CAC  11A028C3             lvx128 v13,0,r5
+  82434CB0  13CBEC47             lvrx128 v62,r11,r29
+  82434CB4  13A0EC07             lvlx128 v61,0,r29
+  82434CB8  179DF2F5             vor128 v60,v61,v62
+  82434CBC  141CFA31             vand128 v0,v60,v63
+  82434CC0  11A06B2E             vmaddfp v13,v0,v12,v13
+  82434CC4  18096ED0             vpkd3d128 v0,v13,0x9,0x3
+  82434CC8  1B600734             vspltw128 v59,v0,0x0
+  82434CCC  13601987             stvewx128 v59,0,r3
+  82434CD0  81010050             lwz r8,0x50(r1)
+  82434CD4  911B0024             stw r8,0x24(r27)
+  82434CD8  134BE447             lvrx128 v58,r11,r28
+  82434CDC  1320E407             lvlx128 v57,0,r28
+  82434CE0  1719D2F5             vor128 v56,v57,v58
+  82434CE4  13E038C7             lvx128 v63,0,r7
+  82434CE8  11A028C3             lvx128 v13,0,r5
+  82434CEC  118020C3             lvx128 v12,0,r4
+  82434CF0  1418FA31             vand128 v0,v56,v63
+  82434CF4  11A06B2E             vmaddfp v13,v0,v12,v13
+  82434CF8  18096ED0             vpkd3d128 v0,v13,0x9,0x3
+  82434CFC  1AE00734             vspltw128 v55,v0,0x0
+  82434D00  12E05187             stvewx128 v55,0,r10
+  82434D04  80E10050             lwz r7,0x50(r1)
+  82434D08  90FB0028             stw r7,0x28(r27)
+  82434D0C  382100C0             addi r1,r1,0xc0
+  82434D10  3981FFC8             subi r12,r1,0x38
+  82434D14  484E1AD1             bl 0x829167e4
+  82434D18  484E19E8             b 0x82916700
 
 ; 82434D20  FX_ExpandMarkVert_Transform<GfxWorldVertex>  (EffectsCore/fx_marks.cpp:1705)
   82434D20  7D8802A6             mfspr r12,LR
@@ -4181,9 +4302,53 @@ LAB_82433db4:
   82434E24  ED0D187A             fmadds f8,f13,f1,f3
   82434E28  3886F950             subi r4,r6,0x6b0
   82434E2C  ECEB137A             fmadds f7,f11,f13,f2
-  82434E30  13C03C07             vcmpneb. v30,v0,v7
-  82434E34  13EB4447             vcmpneh. v31,v11,v8
+  82434E30  13C03C07             lvlx128 v62,0,r7
+  82434E34  13EB4447             lvrx128 v63,r11,r8
   82434E38  39210058             addi r9,r1,0x58
+  82434E3C  17BEFAF5             vor128 v61,v62,v63
+  82434E40  39010058             addi r8,r1,0x58
+  82434E44  38E10050             addi r7,r1,0x50
+  82434E48  3CC08218             lis r6,-0x7de8
+  82434E4C  80BC0000             lwz r5,0x0(r28)
+  82434E50  90BD0010             stw r5,0x10(r29)
+  82434E54  ECCC42BA             fmadds f6,f12,f10,f8
+  82434E58  ECA93B3A             fmadds f5,f9,f12,f7
+  82434E5C  EC8607FA             fmadds f4,f6,f31,f0
+  82434E60  D09D0014             stfs f4,0x14(r29)
+  82434E64  EC6507FA             fmadds f3,f5,f31,f0
+  82434E68  D07D0018             stfs f3,0x18(r29)
+  82434E6C  C05F000C             lfs f2,0xc(r31)
+  82434E70  D05D001C             stfs f2,0x1c(r29)
+  82434E74  C03F0010             lfs f1,0x10(r31)
+  82434E78  38C6A0F0             subi r6,r6,0x5f10
+  82434E7C  D03D0020             stfs f1,0x20(r29)
+  82434E80  11A018C3             lvx128 v13,0,r3
+  82434E84  13E020C7             lvx128 v63,0,r4
+  82434E88  141DFA31             vand128 v0,v61,v63
+  82434E8C  118030C3             lvx128 v12,0,r6
+  82434E90  178002D4             vor128 v60,v0,v0
+  82434E94  10006B2E             vmaddfp v0,v0,v12,v13
+  82434E98  1B8906D4             vpkd3d128 v60,v0,0x9,0x3
+  82434E9C  1B60E735             vspltw128 v59,v60,0x0
+  82434EA0  13605187             stvewx128 v59,0,r10
+  82434EA4  80A10050             lwz r5,0x50(r1)
+  82434EA8  134B4C47             lvrx128 v58,r11,r9
+  82434EAC  90BD0024             stw r5,0x24(r29)
+  82434EB0  11A018C3             lvx128 v13,0,r3
+  82434EB4  118030C3             lvx128 v12,0,r6
+  82434EB8  13204407             lvlx128 v57,0,r8
+  82434EBC  1719D2F5             vor128 v56,v57,v58
+  82434EC0  13E020C7             lvx128 v63,0,r4
+  82434EC4  1418FA31             vand128 v0,v56,v63
+  82434EC8  11A06B2E             vmaddfp v13,v0,v12,v13
+  82434ECC  18096ED0             vpkd3d128 v0,v13,0x9,0x3
+  82434ED0  1AE00734             vspltw128 v55,v0,0x0
+  82434ED4  12E03987             stvewx128 v55,0,r7
+  82434ED8  80810050             lwz r4,0x50(r1)
+  82434EDC  909D0028             stw r4,0x28(r29)
+  82434EE0  382100D0             addi r1,r1,0xd0
+  82434EE4  CBE1FFC8             lfd f31,-0x38(r1)
+  82434EE8  484E181C             b 0x82916704
 
 ; 82434EF0  FX_ExpandMarkVert_Glass<GfxWorldVertex>  (EffectsCore/fx_marks.cpp:1733)
   82434EF0  7D8802A6             mfspr r12,LR
@@ -4256,9 +4421,51 @@ LAB_82433db4:
   82434FFC  C0090F18             lfs f0,0xf18(r9)
   82435000  3CA08218             lis r5,-0x7de8
   82435004  3D408218             lis r10,-0x7de8
-  82435008  13EB4447             vcmpneh. v31,v11,v8
-  8243500C  13C03C07             vcmpneb. v30,v0,v7
+  82435008  13EB4447             lvrx128 v63,r11,r8
+  8243500C  13C03C07             lvlx128 v62,0,r7
   82435010  3865A0E0             subi r3,r5,0x5f20
+  82435014  17BEFAF5             vor128 v61,v62,v63
+  82435018  39210050             addi r9,r1,0x50
+  8243501C  39010050             addi r8,r1,0x50
+  82435020  38EAA0F0             subi r7,r10,0x5f10
+  82435024  ED025F3A             fmadds f8,f2,f28,f11
+  82435028  ECE9573A             fmadds f7,f9,f28,f10
+  8243502C  ECC807FA             fmadds f6,f8,f31,f0
+  82435030  D0DD0014             stfs f6,0x14(r29)
+  82435034  ECA707FA             fmadds f5,f7,f31,f0
+  82435038  D0BD0018             stfs f5,0x18(r29)
+  8243503C  C09A000C             lfs f4,0xc(r26)
+  82435040  D09D001C             stfs f4,0x1c(r29)
+  82435044  C07A0010             lfs f3,0x10(r26)
+  82435048  D07D0020             stfs f3,0x20(r29)
+  8243504C  11A018C3             lvx128 v13,0,r3
+  82435050  118038C3             lvx128 v12,0,r7
+  82435054  13E020C7             lvx128 v63,0,r4
+  82435058  141DFA31             vand128 v0,v61,v63
+  8243505C  178002D4             vor128 v60,v0,v0
+  82435060  10006B2E             vmaddfp v0,v0,v12,v13
+  82435064  1B8906D4             vpkd3d128 v60,v0,0x9,0x3
+  82435068  1B60E735             vspltw128 v59,v60,0x0
+  8243506C  13604987             stvewx128 v59,0,r9
+  82435070  80A10050             lwz r5,0x50(r1)
+  82435074  90BD0024             stw r5,0x24(r29)
+  82435078  13E020C7             lvx128 v63,0,r4
+  8243507C  11A018C3             lvx128 v13,0,r3
+  82435080  118038C3             lvx128 v12,0,r7
+  82435084  134BF447             lvrx128 v58,r11,r30
+  82435088  1320F407             lvlx128 v57,0,r30
+  8243508C  1719D2F5             vor128 v56,v57,v58
+  82435090  1418FA31             vand128 v0,v56,v63
+  82435094  11A06B2E             vmaddfp v13,v0,v12,v13
+  82435098  18096ED0             vpkd3d128 v0,v13,0x9,0x3
+  8243509C  1AE00734             vspltw128 v55,v0,0x0
+  824350A0  12E04187             stvewx128 v55,0,r8
+  824350A4  80810050             lwz r4,0x50(r1)
+  824350A8  909D0028             stw r4,0x28(r29)
+  824350AC  382100D0             addi r1,r1,0xd0
+  824350B0  3981FFC8             subi r12,r1,0x38
+  824350B4  484E1731             bl 0x829167e4
+  824350B8  484E1648             b 0x82916700
 
 ; 824350C0  FX_ExpandMarkVerts_NoTransform<GfxWorldVertex>  (EffectsCore/fx_marks.cpp:1759)
   824350C0  7D8802A6             mfspr r12,LR
@@ -6483,7 +6690,7 @@ LAB_82436490:
   824364A0  CBE1FF90             lfd f31,-0x70(r1)
   824364A4  484E0244             b 0x829166e8
 
-; 82437910  std::_Push_heap<FxMarkTri_*,int,FxMarkTri,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2455)
+; 82437910  _Push_heap<FxMarkTri_*,int,FxMarkTri,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2455)
   82437910  7D8802A6             mfspr r12,LR
   82437914  484DED99             bl 0x829166ac
   82437918  9421FF70             stwu r1,-0x90(r1)
@@ -6754,7 +6961,7 @@ LAB_8243674c:
   8243674C  382100D0             addi r1,r1,0xd0
   82436750  484DFFA4             b 0x829166f4
 
-; 824379D0  std::_Adjust_heap<FxMarkTri_*,int,FxMarkTri,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2565)
+; 824379D0  _Adjust_heap<FxMarkTri_*,int,FxMarkTri,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2565)
   824379D0  7D8802A6             mfspr r12,LR
   824379D4  484DECD9             bl 0x829166ac
   824379D8  9421FF70             stwu r1,-0x90(r1)
@@ -7037,7 +7244,7 @@ LAB_824369d4:
   824369DC  382100A0             addi r1,r1,0xa0
   824369E0  484DFD14             b 0x829166f4
 
-; 82437B40  std::_Make_heap<FxMarkTri_*,int,FxMarkTri,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2658)
+; 82437B40  _Make_heap<FxMarkTri_*,int,FxMarkTri,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2658)
   82437B40  7D8802A6             mfspr r12,LR
   82437B44  484DEB65             bl 0x829166a8
   82437B48  9421FF50             stwu r1,-0xb0(r1)
@@ -7187,7 +7394,7 @@ LAB_82436ab0:
   82436AC0  EBE1FFF0             ld r31,-0x10(r1)
   82436AC4  4E800020             blr
 
-; 82438468  std::_Sort_heap<FxMarkTri_*,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2700)
+; 82438468  _Sort_heap<FxMarkTri_*,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2700)
   82438468  7D8802A6             mfspr r12,LR
   8243846C  484DE24D             bl 0x829166b8
   82438470  9421FF70             stwu r1,-0x90(r1)
@@ -7441,7 +7648,7 @@ LAB_82436d3c:
   82434B8C  EBE1FFF0             ld r31,-0x10(r1)
   82434B90  4E800020             blr
 
-; 82437EA0  std::_Insertion_sort1<FxMarkTri_*,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&),FxMarkTri>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3650)
+; 82437EA0  _Insertion_sort1<FxMarkTri_*,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&),FxMarkTri>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3650)
   82437EA0  7D8802A6             mfspr r12,LR
   82437EA4  484DE809             bl 0x829166ac
   82437EA8  9421FF60             stwu r1,-0xa0(r1)
@@ -7542,7 +7749,7 @@ LAB_82437ff0:
   82437FF0  382100A0             addi r1,r1,0xa0
   82437FF4  484DE708             b 0x829166fc
 
-; 82437C78  std::_Med3<FxMarkTri_*,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3683)
+; 82437C78  _Med3<FxMarkTri_*,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3683)
   82437C78  7D8802A6             mfspr r12,LR
   82437C7C  484DEA3D             bl 0x829166b8
   82437C80  9421FF70             stwu r1,-0x90(r1)
@@ -7649,7 +7856,7 @@ LAB_82437de4:
   82437DE4  38210090             addi r1,r1,0x90
   82437DE8  484DE920             b 0x82916708
 
-; 82437DF0  std::_Median<FxMarkTri_*,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3695)
+; 82437DF0  _Median<FxMarkTri_*,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3695)
   82437DF0  7D8802A6             mfspr r12,LR
   82437DF4  484DE8BD             bl 0x829166b0
   82437DF8  9421FF70             stwu r1,-0x90(r1)
@@ -7695,7 +7902,7 @@ LAB_82437e88:
   82437E94  38210090             addi r1,r1,0x90
   82437E98  484DE868             b 0x82916700
 
-; 82437FF8  std::_Unguarded_partition<FxMarkTri_*,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3712)
+; 82437FF8  _Unguarded_partition<FxMarkTri_*,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3712)
   82437FF8  7D8802A6             mfspr r12,LR
   82437FFC  484DE6A9             bl 0x829166a4
   82438000  9421FEF0             stwu r1,-0x110(r1)
@@ -8019,7 +8226,7 @@ LAB_82438454:
   82438460  38210110             addi r1,r1,0x110
   82438464  484DE290             b 0x829166f4
 
-; 82438508  std::_Sort<FxMarkTri_*,int,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3771)
+; 82438508  _Sort<FxMarkTri_*,int,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3771)
   82438508  7D8802A6             mfspr r12,LR
   8243850C  484DE1A1             bl 0x829166ac
   82438510  9421FF60             stwu r1,-0xa0(r1)

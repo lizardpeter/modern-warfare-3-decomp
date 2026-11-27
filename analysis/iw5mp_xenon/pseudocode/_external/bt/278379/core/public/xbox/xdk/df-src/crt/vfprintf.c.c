@@ -2,8 +2,8 @@
 
 // 8291D790  vfprintf_helper  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/vfprintf.c:51)
 
-void vfprintf_helper(undefined8 param_1,longlong param_2,longlong param_3,undefined8 param_4,
-                    undefined8 param_5)
+int vfprintf_helper(_func___cdecl_int__iobuf_ptr_char_ptr_localeinfo_struct_ptr_char_ptr *param_1,
+                   _iobuf *param_2,char *param_3,localeinfo_struct *param_4,char *param_5)
 
 {
   code *pcVar2;
@@ -11,37 +11,45 @@ void vfprintf_helper(undefined8 param_1,longlong param_2,longlong param_3,undefi
   ulonglong uVar1;
   uint uVar4;
   int iVar5;
-  undefined *puVar6;
-  undefined *puVar7;
-  FILE *_File;
+  longlong lVar6;
+  longlong lVar7;
+  longlong lVar8;
+  longlong lVar9;
+  ioinfo *piVar10;
+  ioinfo *piVar11;
+  _iobuf *p_Var12;
   uint local_50;
   
-  pcVar2 = (code *)__savegprlr_25();
+  lVar9 = (longlong)(int)param_5;
+  lVar8 = (longlong)(int)param_4;
+  lVar7 = (longlong)(int)param_3;
+  lVar6 = (longlong)(int)param_2;
+  pcVar2 = (code *)__savegprlr_25(param_1,lVar6,lVar7,lVar8,lVar9);
   iVar5 = 0;
   local_50 = 0;
-  if ((param_2 == 0) || (param_3 == param_3 + -1 + (ulonglong)(param_3 == 0))) {
+  if ((lVar6 == 0) || (lVar7 == lVar7 + -1 + (ulonglong)(lVar7 == 0))) {
     piVar3 = _errno();
     *piVar3 = 0x16;
     _invalid_parameter_noinfo();
     uVar1 = 0xffffffffffffffff;
     goto LAB_8291d904;
   }
-  _File = (FILE *)param_2;
-  _lock_file(_File);
-  if ((_File->_flag & 0x40U) == 0) {
-    uVar4 = _fileno(_File);
+  p_Var12 = (_iobuf *)lVar6;
+  _lock_file(p_Var12);
+  if ((p_Var12->_flag & 0x40U) == 0) {
+    uVar4 = _fileno(p_Var12);
     if ((uVar4 == 0xffffffff) || (uVar4 == 0xfffffffe)) {
-      puVar6 = &DAT_829b0a68;
+      piVar10 = &__badioinfo;
     }
     else {
-      puVar6 = (undefined *)((&DAT_84897dc0)[(int)uVar4 >> 5] + (uVar4 & 0x1f) * 0x48);
+      piVar10 = (ioinfo *)(*(int *)(&__pioinfo + ((int)uVar4 >> 5) * 4) + (uVar4 & 0x1f) * 0x48);
     }
-    puVar7 = &DAT_829b0a68;
-    if ((puVar6[0x28] & 0xfe) == 0) {
+    piVar11 = &__badioinfo;
+    if (((piVar10->field5_0x28).unicode & 0xfe) == 0) {
       if ((uVar4 != 0xffffffff) && (uVar4 != 0xfffffffe)) {
-        puVar7 = (undefined *)((&DAT_84897dc0)[(int)uVar4 >> 5] + (uVar4 & 0x1f) * 0x48);
+        piVar11 = (ioinfo *)(*(int *)(&__pioinfo + ((int)uVar4 >> 5) * 4) + (uVar4 & 0x1f) * 0x48);
       }
-      if ((puVar7[0x28] & 1) == 0) goto LAB_8291d8b8;
+      if (((piVar11->field5_0x28).unicode & 1) == 0) goto LAB_8291d8b8;
     }
     piVar3 = _errno();
     *piVar3 = 0x16;
@@ -51,26 +59,26 @@ void vfprintf_helper(undefined8 param_1,longlong param_2,longlong param_3,undefi
   }
 LAB_8291d8b8:
   if (iVar5 == 0) {
-    iVar5 = _stbuf(_File);
-    local_50 = (*pcVar2)(param_2,param_3,param_4,param_5);
-    _ftbuf(iVar5,_File);
+    iVar5 = _stbuf(p_Var12);
+    local_50 = (*pcVar2)(lVar6,lVar7,lVar8,lVar9);
+    _ftbuf(iVar5,p_Var12);
   }
   FUN_8291d90c();
   uVar1 = (ulonglong)local_50;
 LAB_8291d904:
-  __restgprlr_25(uVar1);
-  return;
+  iVar5 = __restgprlr_25(uVar1);
+  return iVar5;
 }
 
 
 // 8291D940  vfprintf  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/vfprintf.c:116)
 
-int vfprintf(FILE *_File,char *_Format,va_list _ArgList)
+int vfprintf(_iobuf *param_1,char *param_2,char *param_3)
 
 {
   int iVar1;
   
-  iVar1 = vfprintf_helper(0xffffffff8291f0d0,_File,_Format,0,_ArgList);
+  iVar1 = vfprintf_helper(_output_l,param_1,param_2,(localeinfo_struct *)0x0,param_3);
   return iVar1;
 }
 

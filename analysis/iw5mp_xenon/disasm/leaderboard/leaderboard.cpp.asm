@@ -1662,7 +1662,7 @@ LAB_826d2044:
   826D204C  7D8803A6             mtspr LR,r12
   826D2050  4E800020             blr
 
-; 826D2820  Leaderboard::~Leaderboard  (line unknown)
+; 826D2820  ~Leaderboard  (line unknown)
   826D2820  7D8802A6             mfspr r12,LR
   826D2824  48243E99             bl 0x829166bc
   826D2828  9421FF90             stwu r1,-0x70(r1)
@@ -1683,7 +1683,7 @@ LAB_826d284c:
   826D2860  38210070             addi r1,r1,0x70
   826D2864  48243EA8             b 0x8291670c
 
-; 826D2868  LbGlob::LbGlob  (line unknown)
+; 826D2868  LbGlob  (line unknown)
   826D2868  7D8802A6             mfspr r12,LR
   826D286C  48243E51             bl 0x829166bc
   826D2870  9421FF90             stwu r1,-0x70(r1)

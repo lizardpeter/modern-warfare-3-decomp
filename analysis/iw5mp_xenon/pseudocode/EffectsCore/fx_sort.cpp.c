@@ -2,7 +2,10 @@
 
 // 8243A450  FXI_CalcRunnerParentSortOrder  (EffectsCore/fx_sort.cpp:36)
 
-void FXI_CalcRunnerParentSortOrder(void)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+int FXI_CalcRunnerParentSortOrder(FxEffect *param_1)
 
 {
   int *piVar1;
@@ -12,13 +15,15 @@ void FXI_CalcRunnerParentSortOrder(void)
   longlong lVar5;
   int iVar6;
   
-  piVar1 = (int *)__savegprlr_28();
+  piVar1 = (int *)__savegprlr_28(param_1);
   if (piVar1 == (int *)0x0) {
-    MyAssertHandler(0xffffffff82067370,0x2c,0,0xffffffff82000f98,0xffffffff82067364);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_sort.cpp",0x2c,
+                    0,"%s");
   }
   iVar2 = *piVar1;
   if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff82067370,0x2f,0,0xffffffff82000f98,0xffffffff8206070c);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_sort.cpp",0x2f,
+                    0,"%s");
   }
   uVar3 = 0;
   uVar4 = 0;
@@ -40,147 +45,157 @@ void FXI_CalcRunnerParentSortOrder(void)
       trapWord(6,uVar4,0);
       trapWord(5,uVar4 & ~(((uVar3 & 0x7fffffff) << 1 | (uVar3 & 0xffffffff) >> 0x1f) - 1),0xffff);
       if (0xfd < iVar2) {
-        __restgprlr_28(0xfe);
-        return;
+        iVar2 = __restgprlr_28(0xfe);
+        return iVar2;
       }
       if (0 < iVar2) goto LAB_8243a554;
     }
   }
   iVar2 = 0;
 LAB_8243a554:
-  __restgprlr_28(iVar2);
-  return;
+  iVar2 = __restgprlr_28(iVar2);
+  return iVar2;
 }
 
 
 // 8243AF10  FX_PoolToHandle_Generic<FxElem>  (EffectsCore/fx_system_handle.h:69)
 
-ulonglong FX_PoolToHandle_Generic<FxElem>(ulonglong param_1,ulonglong param_2)
+ushort FX_PoolToHandle_Generic<FxElem>(FxPool<FxElem> *param_1,FxElem *param_2)
 
 {
-  undefined8 uVar1;
-  uint uVar2;
+  uint uVar1;
   
-  if ((((param_2 & 0xffffffff) == 0) || ((param_2 & 0xffffffff) < (param_1 & 0xffffffff))) ||
-     ((param_1 + 0x10000 & 0xffffffff) <= (param_2 & 0xffffffff))) {
-    uVar1 = va(0xffffffff8205d418,param_1,param_2);
-    MyAssertHandler(0xffffffff82060828,0x4c,0,0xffffffff820011f4,0xffffffff82067410,uVar1);
+  if (((param_2 == (FxElem *)0x0) || (param_2 < param_1)) ||
+     ((FxElem *)(param_1 + 0x800) <= param_2)) {
+    va("%p %p");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_system_handle.h"
+                    ,0x4c,0,"%s\n\t%s");
   }
-  uVar2 = (int)param_2 - (int)param_1;
-  return (longlong)((int)uVar2 >> 2) + (ulonglong)((int)uVar2 < 0 && (uVar2 & 3) != 0) & 0xffff;
+  uVar1 = (int)param_2 - (int)param_1;
+  return (short)((int)uVar1 >> 2) + (ushort)((int)uVar1 < 0 && (uVar1 & 3) != 0);
 }
 
 
 // 8243A7F0  FXI_FirstEffectIsFurther  (EffectsCore/fx_sort.cpp:74)
 
-void FXI_FirstEffectIsFurther(undefined8 param_1,undefined8 param_2)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+bool FXI_FirstEffectIsFurther(FxEffect *param_1,FxEffect *param_2)
 
 {
-  int iVar1;
-  int iVar3;
-  undefined8 uVar2;
+  FxEffect *pFVar1;
+  undefined1 uVar3;
+  uint uVar2;
   
-  iVar3 = __savegprlr_27();
-  iVar1 = (int)param_2;
-  if ((*(char *)(iVar3 + 0x27) == -1) && (*(char *)(iVar1 + 0x27) == -1)) {
-    __restgprlr_27(0);
-    return;
+  pFVar1 = (FxEffect *)__savegprlr_27(param_1);
+  if ((pFVar1->runnerSortOrder == 0xff) && (param_2->runnerSortOrder == 0xff)) {
+    uVar3 = __restgprlr_27(0);
+    return (bool)uVar3;
   }
-  if (*(char *)(iVar3 + 0x27) == -1) {
-    uVar2 = FXI_CalcRunnerParentSortOrder(iVar3);
-    if ((uint)uVar2 != ((uint)uVar2 & 0xff)) {
-      MyAssertHandler(0xffffffff82016410,0x1ce,0,0xffffffff8201645c,uVar2);
+  if (pFVar1->runnerSortOrder == 0xff) {
+    uVar2 = FXI_CalcRunnerParentSortOrder(pFVar1);
+    if (uVar2 != (uVar2 & 0xff)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/assertive.h"
+                      ,0x1ce,0,"i == static_cast< Type >( i )\n\t%i, %i");
     }
-    *(char *)(iVar3 + 0x27) = (char)uVar2;
+    pFVar1->runnerSortOrder = (uchar)uVar2;
   }
-  if (*(char *)(iVar1 + 0x27) == -1) {
+  if (param_2->runnerSortOrder == 0xff) {
     uVar2 = FXI_CalcRunnerParentSortOrder(param_2);
-    if ((uint)uVar2 != ((uint)uVar2 & 0xff)) {
-      MyAssertHandler(0xffffffff82016410,0x1ce,0,0xffffffff8201645c,uVar2);
+    if (uVar2 != (uVar2 & 0xff)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/assertive.h"
+                      ,0x1ce,0,"i == static_cast< Type >( i )\n\t%i, %i");
     }
-    *(char *)(iVar1 + 0x27) = (char)uVar2;
+    param_2->runnerSortOrder = (uchar)uVar2;
   }
-  __restgprlr_27(-(*(byte *)(iVar3 + 0x27) < *(byte *)(iVar1 + 0x27)) & 1);
-  return;
+  uVar3 = __restgprlr_27(-(pFVar1->runnerSortOrder < param_2->runnerSortOrder) & 1);
+  return (bool)uVar3;
 }
 
 
 // 8243A8D0  FXW_SortEffects  (EffectsCore/fx_sort.cpp:89)
 
-void FXW_SortEffects(void)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void FXW_SortEffects(FxSystem *param_1)
 
 {
-  undefined2 uVar1;
-  undefined2 uVar2;
-  uint uVar3;
-  float fVar4;
+  ushort uVar1;
+  ushort uVar2;
+  ushort *puVar3;
+  uint uVar4;
   float fVar5;
   float fVar6;
-  int iVar7;
-  int iVar8;
-  int iVar9;
-  char cVar10;
-  uint uVar11;
-  uint uVar12;
+  float fVar7;
+  FxSystem *pFVar8;
+  FxEffect *pFVar9;
+  FxEffect *pFVar10;
+  bool bVar12;
+  int iVar11;
   uint uVar13;
-  double dVar14;
-  double dVar15;
+  uint uVar14;
+  uint uVar15;
   double dVar16;
   double dVar17;
   double dVar18;
+  double dVar19;
+  double dVar20;
   float afStack_1070 [1052];
   
-  __savegprlr_24();
-  iVar7 = __savefpr_27();
+  __savegprlr_24(param_1);
+  pFVar8 = (FxSystem *)__savefpr_27();
   Profile_Begin(0xba);
-  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff82067468);
-  if (iVar7 == 0) {
-    MyAssertHandler(0xffffffff82067370,0x68,0,0xffffffff82000f98,0xffffffff82038694);
+  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"fx sort");
+  if (pFVar8 == (FxSystem *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_sort.cpp",0x68,
+                    0,"%s");
   }
-  uVar11 = *(uint *)(iVar7 + 0x68);
-  if (uVar11 != *(uint *)(iVar7 + 0x6c)) {
-    uVar12 = uVar11 << 1;
-    dVar15 = 1.000100016593933;
-    dVar14 = 0.9998999834060669;
+  uVar13 = pFVar8->firstActiveEffect;
+  if (uVar13 != pFVar8->firstNewEffect) {
+    uVar14 = uVar13 << 1;
+    dVar17 = 1.000100016593933;
+    dVar16 = 0.9998999834060669;
     do {
-      uVar1 = *(undefined2 *)((uVar12 & 0x7fe) + *(int *)(iVar7 + 0x74));
-      iVar8 = FX_EffectFromHandle(iVar7,uVar1);
-      fVar4 = *(float *)(iVar7 + 0xdc) - *(float *)(iVar8 + 0x68);
-      fVar5 = *(float *)(iVar7 + 0xd4) - *(float *)(iVar8 + 0x60);
-      fVar6 = *(float *)(iVar7 + 0xd8) - *(float *)(iVar8 + 100);
-      dVar17 = (double)(fVar6 * fVar6 + fVar5 * fVar5 + fVar4 * fVar4);
-      uVar13 = uVar11;
-      if (uVar11 != *(uint *)(iVar7 + 0x68)) {
-        dVar16 = (double)(float)(dVar17 * dVar14);
+      uVar1 = *(ushort *)((uVar14 & 0x7fe) + (int)pFVar8->allEffectHandles);
+      pFVar9 = FX_EffectFromHandle(pFVar8,uVar1);
+      fVar5 = (pFVar8->camera).origin[2] - (pFVar9->frameNow).origin[2];
+      fVar6 = (pFVar8->camera).origin[0] - (pFVar9->frameNow).origin[0];
+      fVar7 = (pFVar8->camera).origin[1] - (pFVar9->frameNow).origin[1];
+      dVar19 = (double)(fVar7 * fVar7 + fVar6 * fVar6 + fVar5 * fVar5);
+      uVar15 = uVar13;
+      if (uVar13 != pFVar8->firstActiveEffect) {
+        dVar18 = (double)(float)(dVar19 * dVar16);
         do {
-          uVar12 = uVar13 - 1;
-          dVar18 = (double)*(float *)((int)afStack_1070 + (uVar12 * 4 & 0xffc));
-          if (dVar16 <= dVar18) {
-            if ((double)(float)(dVar17 * dVar15) <= dVar18) break;
-            iVar9 = FX_EffectFromHandle(iVar7,*(undefined2 *)
-                                               ((int)(((ulonglong)uVar12 & 0x3ff) << 1) +
-                                               *(int *)(iVar7 + 0x74)));
-            if ((*(short *)(iVar9 + 0x18) != *(short *)(iVar8 + 0x18)) ||
-               (cVar10 = FXI_FirstEffectIsFurther(iVar8,iVar9), cVar10 == '\0')) break;
-          }
-          iVar9 = *(int *)(iVar7 + 0x74);
-          uVar2 = *(undefined2 *)((int)(((ulonglong)uVar12 & 0x3ff) << 1) + iVar9);
-          afStack_1070[uVar13 & 0x3ff] = (float)dVar18;
-          *(undefined2 *)((uVar13 & 0x3ff) * 2 + iVar9) = uVar2;
-          uVar13 = uVar12;
-        } while (uVar12 != *(uint *)(iVar7 + 0x68));
+          uVar14 = uVar15 - 1;
+          dVar20 = (double)*(float *)((int)afStack_1070 + (uVar14 * 4 & 0xffc));
+          if ((dVar18 <= dVar20) &&
+             ((((double)(float)(dVar19 * dVar17) <= dVar20 ||
+               (pFVar10 = FX_EffectFromHandle(pFVar8,*(ushort *)
+                                                      ((int)(((ulonglong)uVar14 & 0x3ff) << 1) +
+                                                      (int)pFVar8->allEffectHandles)),
+               pFVar10->owner != pFVar9->owner)) ||
+              (bVar12 = FXI_FirstEffectIsFurther(pFVar9,pFVar10), !bVar12)))) break;
+          puVar3 = pFVar8->allEffectHandles;
+          uVar2 = *(ushort *)((int)(((ulonglong)uVar14 & 0x3ff) << 1) + (int)puVar3);
+          afStack_1070[uVar15 & 0x3ff] = (float)dVar20;
+          puVar3[uVar15 & 0x3ff] = uVar2;
+          uVar15 = uVar14;
+        } while (uVar14 != pFVar8->firstActiveEffect);
       }
-      uVar11 = uVar11 + 1;
-      *(undefined2 *)((uVar13 & 0x3ff) * 2 + *(int *)(iVar7 + 0x74)) = uVar1;
-      uVar12 = uVar11 * 2;
-      uVar3 = *(uint *)(iVar7 + 0x6c);
-      afStack_1070[uVar13 & 0x3ff] = (float)dVar17;
-    } while (uVar11 != uVar3);
+      uVar13 = uVar13 + 1;
+      pFVar8->allEffectHandles[uVar15 & 0x3ff] = uVar1;
+      uVar14 = uVar13 * 2;
+      uVar4 = pFVar8->firstNewEffect;
+      afStack_1070[uVar15 & 0x3ff] = (float)dVar19;
+    } while (uVar13 != uVar4);
   }
   sync(1);
   PIXEndNamedEvent();
-  Profile_EndInternal(0);
-  __restfpr_27();
+  iVar11 = Profile_EndInternal((double *)0x0);
+  __restfpr_27(iVar11);
   __restgprlr_24();
   return;
 }
@@ -188,54 +203,66 @@ void FXW_SortEffects(void)
 
 // 8243AFB0  FX_ElemToHandle  (EffectsCore/fx_system_handle.h:90)
 
-void FX_ElemToHandle(int param_1,undefined8 param_2)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+ushort FX_ElemToHandle(FxSystem *param_1,FxElem *param_2)
 
 {
-  if (param_1 == 0) {
-    MyAssertHandler(0xffffffff82060828,0x5b,0,0xffffffff82000f98,0xffffffff82038694);
+  ushort uVar1;
+  
+  if (param_1 == (FxSystem *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_system_handle.h"
+                    ,0x5b,0,"%s");
   }
-  FX_PoolToHandle_Generic<FxElem>(*(undefined4 *)(param_1 + 0x3c),param_2);
-  return;
+  uVar1 = FX_PoolToHandle_Generic<FxElem>(param_1->elems,param_2);
+  return uVar1;
 }
 
 
 // 8243A560  FXIW_GetInsertSortElem  (EffectsCore/fx_sort.cpp:150)
 
-void FXIW_GetInsertSortElem(undefined8 param_1,longlong param_2,longlong param_3,uint *param_4)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void FXIW_GetInsertSortElem
+               (FxSystem *param_1,FxEffect *param_2,FxElem *param_3,FxInsertSortElem *param_4)
 
 {
-  byte *pbVar1;
-  ulonglong uVar2;
-  int iVar3;
-  ulonglong uVar4;
-  int iVar5;
+  ulonglong uVar1;
+  int iVar2;
+  ulonglong uVar3;
+  FxElemDef *pFVar4;
   float local_70;
   float local_6c;
   float local_68;
-  undefined1 auStack_60 [96];
+  orientation_t aoStack_60 [2];
   
-  iVar3 = __savegprlr_27();
-  pbVar1 = (byte *)param_3;
-  param_4[2] = *(uint *)(pbVar1 + 4);
-  param_4[3] = (uint)(*pbVar1 >> 2);
-  iVar5 = (*pbVar1 & 0x3fffffc) * 0x40 + *(int *)(*(int *)param_2 + 0x30);
-  *(undefined1 *)(param_4 + 4) = *(undefined1 *)(iVar5 + 0xb0);
-  if (3 < *(byte *)(iVar5 + 0xb0)) {
-    MyAssertHandler(0xffffffff82067370,0xa1,0,0xffffffff820617d0,0xffffffff820673b4,
-                    *(byte *)(iVar5 + 0xb0));
+  iVar2 = __savegprlr_27(param_1);
+  param_4->msecBegin = param_3->msecBegin;
+  param_4->defIndex = (uint)((byte)(param_3->field0_0x0).defer >> 2);
+  pFVar4 = (FxElemDef *)
+           (param_2->def->elemDefs->spawnOrigin +
+           ((byte)(param_3->field0_0x0).defer & 0x3fffffc) * 8 + -7);
+  param_4->elemType = pFVar4->elemType;
+  if (3 < pFVar4->elemType) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_sort.cpp",0xa1,
+                    0,"%s\n\t(elemDef->elemType) = %i");
   }
-  *param_4 = (uint)*(byte *)(iVar5 + 0xf8);
-  uVar4 = (ulonglong)pbVar1[1] * 0x128 + (ulonglong)*(ushort *)((int)(int *)param_2 + 0x16) +
-          (ulonglong)*(uint *)(iVar5 + 0xfc) + (ulonglong)*(uint *)(pbVar1 + 4);
-  uVar2 = (uVar4 & 0xffffffff) * 0x11a3019b >> 0x20;
-  FX_GetOrientation(iVar5,param_2 + 0x34,param_2 + 0x50,
-                    uVar4 + (((uVar4 - uVar2 & 0xffffffff) >> 1) + uVar2 >> 8) * -0x1df & 0xffff,
-                    auStack_60);
-  FX_OrientationPosToWorldPos(auStack_60,param_3 + 0x14,&local_70);
-  local_68 = *(float *)(iVar3 + 0x18c) - local_68;
-  local_70 = *(float *)(iVar3 + 0x184) - local_70;
-  local_6c = *(float *)(iVar3 + 0x188) - local_6c;
-  param_4[1] = (uint)(local_6c * local_6c + local_70 * local_70 + local_68 * local_68);
+  param_4->defSortOrder = (uint)pFVar4->sortOrder;
+  uVar3 = (ulonglong)param_3->sequence * 0x128 + (ulonglong)param_2->randomSeed +
+          (ulonglong)(uint)pFVar4->randomSeed + (ulonglong)(uint)param_3->msecBegin;
+  uVar1 = (uVar3 & 0xffffffff) * 0x11a3019b >> 0x20;
+  FX_GetOrientation(pFVar4,&param_2->frameAtSpawn,&param_2->frameNow,
+                    (int)uVar3 + (int)(((uVar3 - uVar1 & 0xffffffff) >> 1) + uVar1 >> 8) * -0x1df &
+                    0xffff,aoStack_60);
+  FX_OrientationPosToWorldPos(aoStack_60,(param_3->field6_0x14).origin,&local_70);
+  local_68 = *(float *)(iVar2 + 0x18c) - local_68;
+  local_70 = *(float *)(iVar2 + 0x184) - local_70;
+  local_6c = *(float *)(iVar2 + 0x188) - local_6c;
+  param_4->distToCamSq = local_6c * local_6c + local_70 * local_70 + local_68 * local_68;
   __restgprlr_27();
   return;
 }
@@ -243,116 +270,131 @@ void FXIW_GetInsertSortElem(undefined8 param_1,longlong param_2,longlong param_3
 
 // 8243A690  FXIW_ExistingElemSortsBeforeNewElem  (EffectsCore/fx_sort.cpp:173)
 
-void FXIW_ExistingElemSortsBeforeNewElem
-               (undefined8 param_1,longlong param_2,longlong param_3,int *param_4)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+bool FXIW_ExistingElemSortsBeforeNewElem
+               (FxSystem *param_1,FxEffect *param_2,FxElem *param_3,FxInsertSortElem *param_4)
 
 {
   ulonglong uVar1;
   int iVar2;
-  byte *pbVar3;
+  undefined1 uVar3;
   ulonglong uVar4;
-  int iVar5;
+  FxElemDef *pFVar5;
   float local_70;
   float local_6c;
   float local_68;
-  undefined1 auStack_60 [96];
+  orientation_t aoStack_60 [2];
   
-  iVar2 = __savegprlr_27();
-  pbVar3 = (byte *)param_3;
-  iVar5 = (*pbVar3 & 0x3fffffc) * 0x40 + *(int *)(*(int *)param_2 + 0x30);
-  if (*(char *)(iVar5 + 0xb0) == '\x03') {
-    MyAssertHandler(0xffffffff82067370,0xb6,0,0xffffffff82000f98,0xffffffff820673e4);
+  iVar2 = __savegprlr_27(param_1);
+  pFVar5 = (FxElemDef *)
+           (param_2->def->elemDefs->spawnOrigin +
+           ((byte)(param_3->field0_0x0).defer & 0x3fffffc) * 8 + -7);
+  if (pFVar5->elemType == '\x03') {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_sort.cpp",0xb6,
+                    0,"%s");
   }
-  if (3 < *(byte *)(iVar5 + 0xb0)) {
+  if (3 < pFVar5->elemType) {
 LAB_8243a6fc:
-    __restgprlr_27(1);
-    return;
+    uVar3 = __restgprlr_27(1);
+    return (bool)uVar3;
   }
-  if (*(char *)(iVar5 + 0xb1) != '\0') {
-    if ((int)(uint)*(byte *)(iVar5 + 0xf8) < *param_4) goto LAB_8243a6fc;
-    if ((int)(uint)*(byte *)(iVar5 + 0xf8) <= *param_4) {
-      uVar4 = (ulonglong)pbVar3[1] * 0x128 + (ulonglong)*(ushort *)((int)(int *)param_2 + 0x16) +
-              (ulonglong)*(uint *)(iVar5 + 0xfc) + (ulonglong)*(uint *)(pbVar3 + 4);
+  if (pFVar5->visualCount != '\0') {
+    if ((int)(uint)pFVar5->sortOrder < param_4->defSortOrder) goto LAB_8243a6fc;
+    if ((int)(uint)pFVar5->sortOrder <= param_4->defSortOrder) {
+      uVar4 = (ulonglong)param_3->sequence * 0x128 + (ulonglong)param_2->randomSeed +
+              (ulonglong)(uint)pFVar5->randomSeed + (ulonglong)(uint)param_3->msecBegin;
       uVar1 = (uVar4 & 0xffffffff) * 0x11a3019b >> 0x20;
-      FX_GetOrientation(iVar5,param_2 + 0x34,param_2 + 0x50,
-                        uVar4 + (((uVar4 - uVar1 & 0xffffffff) >> 1) + uVar1 >> 8) * -0x1df & 0xffff
-                        ,auStack_60);
-      FX_OrientationPosToWorldPos(auStack_60,param_3 + 0x14,&local_70);
+      FX_GetOrientation(pFVar5,&param_2->frameAtSpawn,&param_2->frameNow,
+                        (int)uVar4 +
+                        (int)(((uVar4 - uVar1 & 0xffffffff) >> 1) + uVar1 >> 8) * -0x1df & 0xffff,
+                        aoStack_60);
+      FX_OrientationPosToWorldPos(aoStack_60,(param_3->field6_0x14).origin,&local_70);
       local_68 = *(float *)(iVar2 + 0x18c) - local_68;
       local_70 = *(float *)(iVar2 + 0x184) - local_70;
       local_6c = *(float *)(iVar2 + 0x188) - local_6c;
-      __restgprlr_27((float)param_4[1] <
-                     local_6c * local_6c + local_70 * local_70 + local_68 * local_68);
-      return;
+      uVar3 = __restgprlr_27(param_4->distToCamSq <
+                             local_6c * local_6c + local_70 * local_70 + local_68 * local_68);
+      return (bool)uVar3;
     }
   }
-  __restgprlr_27(0);
-  return;
+  uVar3 = __restgprlr_27(0);
+  return (bool)uVar3;
 }
 
 
 // 8243AA98  FXIW_SortSpriteElemIntoEffect  (EffectsCore/fx_sort.cpp:202)
 
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 void FXIW_SortSpriteElemIntoEffect
-               (undefined8 param_1,longlong param_2,undefined8 param_3,undefined8 param_4)
+               (FxSystem *param_1,FxEffect *param_2,FxElem *param_3,ushort param_4)
 
 {
   ushort uVar1;
-  uint uVar2;
-  int iVar4;
-  undefined8 uVar3;
-  char cVar6;
-  short sVar5;
+  FxPool<FxElem> *pFVar2;
+  FxEffect *pFVar3;
+  FxSystem *pFVar4;
+  bool bVar6;
+  ushort uVar5;
   longlong lVar7;
-  ulonglong uVar8;
-  longlong lVar9;
-  ushort *puVar10;
-  longlong lVar11;
-  ulonglong uVar12;
-  int local_a0 [40];
+  longlong lVar8;
+  ushort *puVar9;
+  FxElem *pFVar10;
+  FxInsertSortElem local_a0 [8];
   
-  iVar4 = __savegprlr_17();
-  lVar9 = param_2 + 8;
-  puVar10 = (ushort *)lVar9;
-  lVar11 = 0;
-  uVar8 = 0xffffffffffffffff;
-  if (*(short *)((int)param_2 + 8) != -1) {
-    FXIW_GetInsertSortElem();
-    if (local_a0[0] < 0) {
-      MyAssertHandler(0xffffffff82067370,0xd9,0,0xffffffff82000f98,0xffffffff820674cc);
+  lVar8 = (longlong)(int)param_2;
+  pFVar4 = (FxSystem *)__savegprlr_17(param_1);
+  pFVar3 = (FxEffect *)lVar8;
+  lVar8 = lVar8 + 8;
+  puVar9 = (ushort *)lVar8;
+  pFVar10 = (FxElem *)0x0;
+  uVar5 = 0xffff;
+  if (pFVar3->firstElemHandle[0] != 0xffff) {
+    FXIW_GetInsertSortElem(pFVar4,pFVar3,param_3,local_a0);
+    if (local_a0[0].defSortOrder < 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_sort.cpp",
+                      0xd9,0,"%s");
     }
     do {
-      puVar10 = (ushort *)lVar9;
-      uVar1 = *puVar10;
-      uVar12 = (ulonglong)uVar1;
-      if (iVar4 == 0) {
-        MyAssertHandler(0xffffffff82060828,0x62,0,0xffffffff82000f98,0xffffffff82038694);
+      puVar9 = (ushort *)lVar8;
+      uVar1 = *puVar9;
+      if (pFVar4 == (FxSystem *)0x0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_system_handle.h"
+                        ,0x62,0,"%s");
       }
-      uVar2 = *(uint *)(iVar4 + 0x3c);
-      if ((0x3fff < uVar12) || ((uVar1 & 7) != 0)) {
-        uVar3 = va(0xffffffff82060820,(ulonglong)uVar2,uVar12);
-        MyAssertHandler(0xffffffff82060828,0x54,0,0xffffffff820011f4,0xffffffff82060a50,uVar3);
+      pFVar2 = pFVar4->elems;
+      if ((0x3fff < uVar1) || ((uVar1 & 7) != 0)) {
+        va("%p %i");
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_system_handle.h"
+                        ,0x54,0,"%s\n\t%s");
       }
-      lVar11 = uVar12 * 4 + (ulonglong)uVar2;
-      cVar6 = FXIW_ExistingElemSortsBeforeNewElem(iVar4,param_2,lVar11,local_a0);
-      if (cVar6 == '\0') break;
-      uVar8 = (ulonglong)*puVar10;
-      uVar2 = (int)lVar11 - *(int *)(iVar4 + 0x3c) >> 5;
-      if (0x7ff < uVar2) {
-        MyAssertHandler(0xffffffff82067370,0xe3,0,0xffffffff82067470,uVar2,0x800);
+      pFVar10 = (FxElem *)((int)&pFVar2->field0_0x0 + (uint)uVar1 * 4);
+      bVar6 = FXIW_ExistingElemSortsBeforeNewElem(pFVar4,pFVar3,pFVar10,local_a0);
+      if (!bVar6) break;
+      uVar5 = *puVar9;
+      if (0x7ff < (uint)((int)pFVar10 - (int)pFVar4->elems >> 5)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_sort.cpp",
+                        0xe3,0,
+                        "(remoteNextElem - (FxElem*)system->elems) doesn\'t index FX_ELEM_LIMIT\n\t%i not in [0, %i)"
+                       );
       }
-      lVar7 = ((ulonglong)(uint)((int)lVar11 - *(int *)(iVar4 + 0x3c) >> 5) & 0x7fffffff) * 2;
-      lVar9 = lVar7 + (ulonglong)*(uint *)(iVar4 + 0x44);
-      puVar10 = (ushort *)lVar9;
-    } while (*(short *)((int)lVar7 + *(uint *)(iVar4 + 0x44)) != -1);
+      lVar7 = ((ulonglong)(uint)((int)pFVar10 - (int)pFVar4->elems >> 5) & 0x7fffffff) * 2;
+      lVar8 = lVar7 + ZEXT48(pFVar4->nextElemHandleInEffect);
+      puVar9 = (ushort *)lVar8;
+    } while (*(short *)((int)lVar7 + (int)pFVar4->nextElemHandleInEffect) != -1);
   }
-  FX_SetNextElemInEffect(iVar4,param_4,*puVar10);
-  FX_SetPrevElemInEffect(iVar4,param_4,uVar8);
-  *puVar10 = (ushort)param_4;
-  sVar5 = FX_GetNextElemInEffect(iVar4,param_4);
-  if (sVar5 != -1) {
-    uVar3 = FX_ElemToHandle(iVar4,lVar11);
-    FX_SetPrevElemInEffect(iVar4,uVar3,param_4);
+  FX_SetNextElemInEffect(pFVar4,param_4,*puVar9);
+  FX_SetPrevElemInEffect(pFVar4,param_4,uVar5);
+  *puVar9 = param_4;
+  uVar5 = FX_GetNextElemInEffect(pFVar4,param_4);
+  if (uVar5 != 0xffff) {
+    uVar5 = FX_ElemToHandle(pFVar4,pFVar10);
+    FX_SetPrevElemInEffect(pFVar4,uVar5,param_4);
   }
   __restgprlr_17();
   return;
@@ -361,69 +403,80 @@ void FXIW_SortSpriteElemIntoEffect
 
 // 8243AC80  FXW_SortNewElemsInEffect  (EffectsCore/fx_sort.cpp:242)
 
-void FXW_SortNewElemsInEffect(undefined8 param_1,undefined8 param_2)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void FXW_SortNewElemsInEffect(FxSystem *param_1,FxEffect *param_2)
 
 {
-  uint uVar1;
-  undefined4 *puVar2;
-  int iVar3;
-  int *piVar4;
-  int iVar7;
-  undefined8 uVar5;
-  ulonglong uVar6;
-  ulonglong uVar8;
-  uint uVar9;
-  ulonglong uVar10;
-  byte *pbVar11;
+  ushort uVar1;
+  FxPool<FxElem> *pFVar2;
+  FxEffectDef *pFVar3;
+  uint uVar4;
+  FxSystem *pFVar5;
+  ushort uVar6;
+  ushort uVar7;
+  uint uVar8;
+  byte *pbVar9;
   
-  iVar7 = __savegprlr_16();
-  piVar4 = (int *)param_2;
-  uVar10 = (ulonglong)*(ushort *)(piVar4 + 2);
-  uVar8 = (ulonglong)*(ushort *)((int)piVar4 + 0xe);
-  if (uVar10 != uVar8) {
-    *(ushort *)(piVar4 + 2) = *(ushort *)((int)piVar4 + 0xe);
-    if (uVar8 != 0xffff) {
-      FX_SetPrevElemInEffect(iVar7,uVar8,0xffffffffffffffff);
+  pFVar5 = (FxSystem *)__savegprlr_16(param_1);
+  uVar7 = param_2->firstElemHandle[0];
+  uVar1 = param_2->firstSortedElemHandle;
+  if (uVar7 != uVar1) {
+    param_2->firstElemHandle[0] = uVar1;
+    if (uVar1 != 0xffff) {
+      FX_SetPrevElemInEffect(pFVar5,uVar1,0xffff);
     }
     do {
-      if (iVar7 == 0) {
-        MyAssertHandler(0xffffffff82060828,0x69,0,0xffffffff82000f98,0xffffffff82038694);
+      if (pFVar5 == (FxSystem *)0x0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_system_handle.h"
+                        ,0x69,0,"%s");
       }
-      uVar1 = *(uint *)(iVar7 + 0x3c);
-      if ((0x3fff < (uVar10 & 0xffff)) || ((uVar10 & 7) != 0)) {
-        uVar5 = va(0xffffffff82060820,(ulonglong)uVar1,uVar10 & 0xffff);
-        MyAssertHandler(0xffffffff82060828,0x54,0,0xffffffff820011f4,0xffffffff82060a50,uVar5);
+      pFVar2 = pFVar5->elems;
+      if ((0x3fff < uVar7) || ((uVar7 & 7) != 0)) {
+        va("%p %i");
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_system_handle.h"
+                        ,0x54,0,"%s\n\t%s");
       }
-      uVar6 = FX_GetNextElemInEffect(iVar7,uVar10);
-      FXIW_SortSpriteElemIntoEffect(iVar7,param_2,(uVar10 & 0xffff) * 4 + (ulonglong)uVar1,uVar10);
-      uVar10 = uVar6;
-    } while ((uVar6 & 0xffff) != uVar8);
-    puVar2 = (undefined4 *)*piVar4;
-    *(undefined2 *)((int)piVar4 + 0xe) = *(undefined2 *)(piVar4 + 2);
-    if (puVar2 == (undefined4 *)0x0) {
-      MyAssertHandler(0xffffffff82067370,0x113,0,0xffffffff82000f98,0xffffffff8206070c);
+      uVar6 = FX_GetNextElemInEffect(pFVar5,uVar7);
+      FXIW_SortSpriteElemIntoEffect
+                (pFVar5,param_2,(FxElem *)((int)&pFVar2->field0_0x0 + (uint)uVar7 * 4),uVar7);
+      uVar7 = uVar6;
+    } while (uVar6 != uVar1);
+    pFVar3 = param_2->def;
+    param_2->firstSortedElemHandle = param_2->firstElemHandle[0];
+    if (pFVar3 == (FxEffectDef *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_sort.cpp",
+                      0x113,0,"%s");
     }
-    uVar9 = (uint)*(ushort *)(piVar4 + 2);
-    uVar1 = uVar9;
-    while (uVar1 != 0xffff) {
-      iVar3 = *(int *)(iVar7 + 0x3c);
-      if ((0x3fff < uVar1) || ((uVar1 & 7) != 0)) {
-        uVar5 = va(0xffffffff82060820,iVar3,uVar1);
-        MyAssertHandler(0xffffffff82060828,0x54,0,0xffffffff820011f4,0xffffffff82060a50,uVar5);
+    uVar8 = (uint)param_2->firstElemHandle[0];
+    uVar4 = uVar8;
+    while (uVar4 != 0xffff) {
+      pFVar2 = pFVar5->elems;
+      if ((0x3fff < uVar4) || ((uVar4 & 7) != 0)) {
+        va("%p %i");
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_system_handle.h"
+                        ,0x54,0,"%s\n\t%s");
       }
-      pbVar11 = (byte *)(uVar1 * 4 + iVar3);
-      if (pbVar11 == (byte *)0x0) {
-        MyAssertHandler(0xffffffff82067370,0x11a,0,0xffffffff82000f98,0xffffffff820674e8);
+      pbVar9 = (byte *)((int)&pFVar2->field0_0x0 + uVar4 * 4);
+      if (pbVar9 == (byte *)0x0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_sort.cpp",
+                        0x11a,0,"%s");
       }
-      if ((int)(puVar2[4] + puVar2[5] + puVar2[6]) <= (int)(uint)(*pbVar11 >> 2)) {
-        MyAssertHandler(0xffffffff82067370,0x11c,0,0xffffffff82000f98,0xffffffff820674f8);
+      if (pFVar3->elemDefCountLooping + pFVar3->elemDefCountOneShot + pFVar3->elemDefCountEmission
+          <= (int)(uint)(*pbVar9 >> 2)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_sort.cpp",
+                        0x11c,0,"%s");
       }
-      if (3 < *(byte *)((uint)(*pbVar11 >> 2) * 0x100 + *(int *)(*piVar4 + 0x30) + 0xb0)) {
-        uVar5 = va(0xffffffff82067560,*puVar2);
-        MyAssertHandler(0xffffffff82067370,0x11e,0,0xffffffff820011f4,0xffffffff8206759c,uVar5);
+      if (3 < param_2->def->elemDefs[*pbVar9 >> 2].elemType) {
+        va("Effect %s elem defindex %d had bad elem type %d after sort");
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_sort.cpp",
+                        0x11e,0,"%s\n\t%s");
       }
-      uVar9 = FX_GetNextElemInEffect(iVar7,uVar9);
-      uVar1 = uVar9 & 0xffff;
+      uVar7 = FX_GetNextElemInEffect(pFVar5,(ushort)uVar8);
+      uVar8 = (uint)(short)uVar7;
+      uVar4 = (uint)uVar7;
     }
   }
   __restgprlr_16();
@@ -433,24 +486,34 @@ void FXW_SortNewElemsInEffect(undefined8 param_1,undefined8 param_2)
 
 // 8243A2F0  FX_SetNextElemInEffect  (EffectsCore/fx_system.h:320)
 
-void FX_SetNextElemInEffect(undefined8 param_1,ulonglong param_2,undefined2 param_3)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void FX_SetNextElemInEffect(FxSystem *param_1,ushort param_2,ushort param_3)
 
 {
   int iVar1;
   ulonglong uVar2;
   
-  iVar1 = __savegprlr_27();
-  uVar2 = (param_2 & 0xffffffff) >> 3 & 0x1fff;
+  uVar2 = (ulonglong)(short)param_2;
+  iVar1 = __savegprlr_27(param_1);
+  uVar2 = (uVar2 & 0xffffffff) >> 3 & 0x1fff;
   if (0x7ff < uVar2) {
-    MyAssertHandler(0xffffffff82060900,0x141,0,0xffffffff82060898,uVar2,0x800);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_system.h",0x141
+                    ,0,
+                    "elemHandle * FxElem::HANDLE_SCALE / sizeof( FxElem ) doesn\'t index FX_ELEM_LIMIT\n\t%i not in [0, %i)"
+                   );
   }
   if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff82060900,0x142,0,0xffffffff82000f98,0xffffffff82038694);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_system.h",0x142
+                    ,0,"%s");
   }
   if (*(int *)(iVar1 + 0x44) == 0) {
-    MyAssertHandler(0xffffffff82060900,0x143,0,0xffffffff82000f98,0xffffffff82060874);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_system.h",0x143
+                    ,0,"%s");
   }
-  *(undefined2 *)((int)(uVar2 << 1) + *(int *)(iVar1 + 0x44)) = param_3;
+  *(ushort *)((int)(uVar2 << 1) + *(int *)(iVar1 + 0x44)) = param_3;
   __restgprlr_27();
   return;
 }
@@ -458,24 +521,34 @@ void FX_SetNextElemInEffect(undefined8 param_1,ulonglong param_2,undefined2 para
 
 // 8243A3A0  FX_SetPrevElemInEffect  (EffectsCore/fx_system.h:338)
 
-void FX_SetPrevElemInEffect(undefined8 param_1,ulonglong param_2,undefined2 param_3)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void FX_SetPrevElemInEffect(FxSystem *param_1,ushort param_2,ushort param_3)
 
 {
   int iVar1;
   ulonglong uVar2;
   
-  iVar1 = __savegprlr_27();
-  uVar2 = (param_2 & 0xffffffff) >> 3 & 0x1fff;
+  uVar2 = (ulonglong)(short)param_2;
+  iVar1 = __savegprlr_27(param_1);
+  uVar2 = (uVar2 & 0xffffffff) >> 3 & 0x1fff;
   if (0x7ff < uVar2) {
-    MyAssertHandler(0xffffffff82060900,0x153,0,0xffffffff82060898,uVar2,0x800);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_system.h",0x153
+                    ,0,
+                    "elemHandle * FxElem::HANDLE_SCALE / sizeof( FxElem ) doesn\'t index FX_ELEM_LIMIT\n\t%i not in [0, %i)"
+                   );
   }
   if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff82060900,0x154,0,0xffffffff82000f98,0xffffffff82038694);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_system.h",0x154
+                    ,0,"%s");
   }
   if (*(int *)(iVar1 + 0x48) == 0) {
-    MyAssertHandler(0xffffffff82060900,0x155,0,0xffffffff82000f98,0xffffffff82067344);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_system.h",0x155
+                    ,0,"%s");
   }
-  *(undefined2 *)((int)(uVar2 << 1) + *(int *)(iVar1 + 0x48)) = param_3;
+  *(ushort *)((int)(uVar2 << 1) + *(int *)(iVar1 + 0x48)) = param_3;
   __restgprlr_27();
   return;
 }

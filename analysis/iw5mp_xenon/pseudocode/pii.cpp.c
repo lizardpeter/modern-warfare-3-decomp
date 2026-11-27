@@ -2,12 +2,14 @@
 
 // 828BB1D0  _XAccountGetUserInfoCheck  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/src/pii.cpp:24)
 
-ulonglong _XAccountGetUserInfoCheck(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+ulong _XAccountGetUserInfoCheck(void)
 
 {
   longlong lVar1;
   
   lVar1 = XexCheckExecutablePrivilege(0xd);
-  return -(ulonglong)(lVar1 == 0) & 0xffffffff80070005;
+  return -(uint)(lVar1 == 0) & 0x80070005;
 }
 

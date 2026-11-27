@@ -2,6 +2,8 @@
 
 // 82783008  TRACK_r_staticmodel  (gfx_d3d/r_staticmodel.cpp:15)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void TRACK_r_staticmodel(void)
 
 {
@@ -11,7 +13,10 @@ void TRACK_r_staticmodel(void)
 
 // 82783010  R_StaticModelGetMemoryUsageInst  (gfx_d3d/r_staticmodel.cpp:23)
 
-undefined8 R_StaticModelGetMemoryUsageInst(void)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+int R_StaticModelGetMemoryUsageInst(GfxStaticModelDrawInst *param_1)
 
 {
   return 0x2c;
@@ -19,51 +24,5 @@ undefined8 R_StaticModelGetMemoryUsageInst(void)
 
 
 // 82783018  R_StaticModelGetMemoryUsage  (gfx_d3d/r_staticmodel.cpp:29)
-
-void R_StaticModelGetMemoryUsage(undefined8 param_1,int *param_2)
-
-{
-  int iVar1;
-  int iVar2;
-  longlong lVar3;
-  int iVar4;
-  int iVar5;
-  int iVar6;
-  int iVar7;
-  int iVar8;
-  
-  iVar2 = __savegprlr_29();
-  *param_2 = 0;
-  lVar3 = 0;
-  if (DAT_8461658c == 0) {
-    __restgprlr_29(0);
-    return;
-  }
-  iVar7 = 0;
-  if (0 < *(int *)(DAT_8461658c + 0x34)) {
-    iVar8 = 0;
-    iVar6 = DAT_8461658c;
-    do {
-      iVar4 = 0;
-      iVar1 = *(int *)(*(int *)(iVar6 + 0x48) + iVar8);
-      if (*(short *)(iVar1 + 0x1e) != 0) {
-        iVar5 = 0;
-        do {
-          if (*(int *)((uint)*(ushort *)(*(int *)(iVar1 + 0x20) + iVar5) * 0x2c +
-                       *(int *)(iVar6 + 0x284) + 0x1c) == iVar2) {
-            lVar3 = lVar3 + 0x2c;
-            *param_2 = *param_2 + 1;
-            iVar6 = DAT_8461658c;
-          }
-          iVar4 = iVar4 + 1;
-          iVar5 = iVar5 + 2;
-        } while (iVar4 < (int)(uint)*(ushort *)(iVar1 + 0x1e));
-      }
-      iVar7 = iVar7 + 1;
-      iVar8 = iVar8 + 4;
-    } while (iVar7 < *(int *)(iVar6 + 0x34));
-  }
-  __restgprlr_29(lVar3);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0

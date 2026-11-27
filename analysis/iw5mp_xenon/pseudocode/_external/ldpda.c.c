@@ -2,36 +2,40 @@
 
 // 828C8468  FindBaseBand  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/ldpda.c:219)
 
-longlong FindBaseBand(longlong param_1,ulonglong param_2)
+int FindBaseBand(float *param_1,int param_2)
 
 {
   float fVar1;
   float fVar2;
-  longlong lVar3;
-  ulonglong uVar4;
+  int iVar3;
+  longlong lVar4;
+  ulonglong uVar5;
+  longlong lVar6;
   
-  uVar4 = param_2 - 1;
+  lVar6 = (longlong)param_2;
+  uVar5 = lVar6 - 1;
   fVar1 = 0.0;
   fVar2 = fVar1;
-  if (-1 < (longlong)uVar4) {
-    lVar3 = (param_2 & 0x3fffffff) * 4 + param_1;
+  if (-1 < (longlong)uVar5) {
+    lVar4 = ((ulonglong)(uint)param_2 & 0x3fffffff) * 4 + (longlong)(int)param_1;
     do {
-      lVar3 = lVar3 + -4;
-      fVar2 = *(float *)lVar3 + fVar2;
-      param_2 = param_2 - 1;
-    } while (param_2 != 0);
+      lVar4 = lVar4 + -4;
+      fVar2 = *(float *)lVar4 + fVar2;
+      lVar6 = lVar6 + -1;
+    } while (lVar6 != 0);
   }
-  if (-1 < (int)uVar4) {
-    param_1 = (uVar4 & 0x3fffffff) * 4 + param_1;
+  if (-1 < (int)uVar5) {
+    lVar6 = (uVar5 & 0x3fffffff) * 4 + (longlong)(int)param_1;
     do {
-      fVar1 = *(float *)param_1 + fVar1;
+      fVar1 = *(float *)lVar6 + fVar1;
       if (fVar2 * 0.05 <= fVar1) break;
-      uVar4 = uVar4 - 1;
-      param_1 = param_1 + -4;
-    } while (-1 < (longlong)uVar4);
+      uVar5 = uVar5 - 1;
+      lVar6 = lVar6 + -4;
+    } while (-1 < (longlong)uVar5);
   }
-  if (0x4b < (int)(uVar4 + 2)) {
-    return uVar4 + 2;
+  iVar3 = (int)uVar5 + 2;
+  if (0x4b < iVar3) {
+    return iVar3;
   }
   return 0x4c;
 }
@@ -39,89 +43,93 @@ longlong FindBaseBand(longlong param_1,ulonglong param_2)
 
 // 828C84F0  CalcMaskEnvelope  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/ldpda.c:377)
 
-void CalcMaskEnvelope(undefined8 param_1,int param_2,longlong param_3,longlong param_4)
+void CalcMaskEnvelope(float *param_1,int param_2,float *param_3,int param_4)
 
 {
   float fVar1;
   float *pfVar2;
   undefined4 *puVar3;
-  int iVar4;
-  float *pfVar5;
-  ulonglong uVar6;
+  uint uVar4;
+  int iVar5;
+  longlong lVar6;
   float *pfVar7;
-  int iVar8;
+  longlong lVar8;
   ulonglong uVar9;
-  longlong lVar10;
-  float *pfVar11;
+  float *pfVar10;
+  int iVar11;
   ulonglong uVar12;
-  double dVar13;
-  double dVar14;
+  float *pfVar13;
+  ulonglong uVar14;
+  double dVar15;
+  double dVar16;
   float local_250 [68];
   float local_140 [80];
   
-  iVar4 = __savegprlr_27();
-  iVar8 = param_2 + 1 >> 1;
-  uVar9 = (ulonglong)iVar8;
-  pfVar7 = local_250;
-  pfVar11 = local_140;
-  uVar6 = 0;
-  if (0 < (longlong)uVar9) {
-    pfVar5 = (float *)(iVar4 + -4);
-    uVar12 = uVar9;
+  lVar8 = (longlong)param_4;
+  lVar6 = (longlong)(int)param_3;
+  iVar5 = __savegprlr_27(param_1);
+  iVar11 = param_2 + 1 >> 1;
+  uVar12 = (ulonglong)iVar11;
+  pfVar10 = local_250;
+  pfVar13 = local_140;
+  uVar9 = 0;
+  if (0 < (longlong)uVar12) {
+    pfVar7 = (float *)(iVar5 + -4);
+    uVar14 = uVar12;
     do {
-      pfVar2 = pfVar5 + 1;
-      pfVar5 = pfVar5 + 2;
-      fVar1 = *pfVar5;
-      *pfVar7 = *pfVar2;
-      pfVar7 = pfVar7 + 1;
-      *pfVar11 = fVar1;
-      pfVar11 = pfVar11 + 1;
-      uVar12 = uVar12 - 1;
-      uVar6 = uVar9;
-    } while (uVar12 != 0);
+      pfVar2 = pfVar7 + 1;
+      pfVar7 = pfVar7 + 2;
+      fVar1 = *pfVar7;
+      *pfVar10 = *pfVar2;
+      pfVar10 = pfVar10 + 1;
+      *pfVar13 = fVar1;
+      pfVar13 = pfVar13 + 1;
+      uVar14 = uVar14 - 1;
+      uVar9 = uVar12;
+    } while (uVar14 != 0);
   }
-  dVar14 = 0.0;
-  if (iVar8 << 1 != param_2 + 1) {
-    uVar9 = uVar6 & 0xffffffff;
-    *pfVar11 = 0.0;
-    pfVar11 = pfVar11 + 1;
-    uVar6 = uVar6 + 1;
-    *pfVar7 = *(float *)((int)(uVar9 << 3) + iVar4);
-    pfVar7 = pfVar7 + 1;
+  dVar16 = 0.0;
+  if (iVar11 << 1 != param_2 + 1) {
+    uVar12 = uVar9 & 0xffffffff;
+    *pfVar13 = 0.0;
+    pfVar13 = pfVar13 + 1;
+    uVar9 = uVar9 + 1;
+    *pfVar10 = *(float *)((int)(uVar12 << 3) + iVar5);
+    pfVar10 = pfVar10 + 1;
   }
-  lVar10 = (0x41 - uVar6 & 0x3fffffff) << 2;
-  (*DAT_848958c8)(pfVar7,0,lVar10);
-  (*DAT_848958c8)(pfVar11,0,lVar10);
+  uVar4 = (uint)((0x41 - uVar9 & 0x3fffffff) << 2);
+  (*memsetfunc)(pfVar10,0,uVar4);
+  (*memsetfunc)(pfVar13,0,uVar4);
   realFft(local_250,local_140,0x80);
-  dVar13 = (double)((64.0 / (float)(longlong)(int)param_4) * 32768.0);
-  if (dVar13 <= dVar14) {
-    dVar13 = dVar13 - 0.5;
+  dVar15 = (double)((64.0 / (float)(longlong)(int)lVar8) * 32768.0);
+  if (dVar15 <= dVar16) {
+    dVar15 = dVar15 - 0.5;
   }
   else {
-    dVar13 = dVar13 + 0.5;
+    dVar15 = dVar15 + 0.5;
   }
-  uVar9 = param_4 - 1;
-  uVar6 = 0;
-  if (0 < (longlong)uVar9) {
-    lVar10 = param_3 + -4;
-    iVar8 = 0x4000;
-    uVar12 = uVar9;
+  uVar12 = lVar8 - 1;
+  uVar9 = 0;
+  if (0 < (longlong)uVar12) {
+    lVar8 = lVar6 + -4;
+    iVar11 = 0x4000;
+    uVar14 = uVar12;
     do {
-      iVar4 = iVar8 >> 0xf;
-      iVar8 = iVar8 + (int)dVar13;
-      lVar10 = lVar10 + 4;
-      *(float *)lVar10 = local_140[iVar4] * local_140[iVar4] + local_250[iVar4] * local_250[iVar4];
-      uVar12 = uVar12 - 1;
-      uVar6 = uVar9;
-    } while (uVar12 != 0);
+      iVar5 = iVar11 >> 0xf;
+      iVar11 = iVar11 + (int)dVar15;
+      lVar8 = lVar8 + 4;
+      *(float *)lVar8 = local_140[iVar5] * local_140[iVar5] + local_250[iVar5] * local_250[iVar5];
+      uVar14 = uVar14 - 1;
+      uVar9 = uVar12;
+    } while (uVar14 != 0);
   }
-  iVar8 = (int)dVar13 * (int)uVar6 + 0x4000 >> 0xf;
-  if (iVar8 < 0x40) {
-    *(float *)((int)((uVar6 & 0xffffffff) << 2) + (int)param_3) =
-         local_140[iVar8] * local_140[iVar8] + local_250[iVar8] * local_250[iVar8];
+  iVar11 = (int)dVar15 * (int)uVar9 + 0x4000 >> 0xf;
+  if (iVar11 < 0x40) {
+    *(float *)((int)((uVar9 & 0xffffffff) << 2) + (int)lVar6) =
+         local_140[iVar11] * local_140[iVar11] + local_250[iVar11] * local_250[iVar11];
   }
   else {
-    puVar3 = (undefined4 *)((int)((uVar6 & 0xffffffff) << 2) + (int)param_3);
+    puVar3 = (undefined4 *)((int)((uVar9 & 0xffffffff) << 2) + (int)lVar6);
     *puVar3 = puVar3[-1];
   }
   __restgprlr_27();
@@ -131,7 +139,7 @@ void CalcMaskEnvelope(undefined8 param_1,int param_2,longlong param_3,longlong p
 
 // 828C86C8  CalcRSbyPower  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/ldpda.c:486)
 
-void CalcRSbyPower(int param_1,int param_2,float *param_3,int param_4)
+void CalcRSbyPower(float *param_1,int param_2,float *param_3,int param_4)
 
 {
   float fVar1;
@@ -140,12 +148,11 @@ void CalcRSbyPower(int param_1,int param_2,float *param_3,int param_4)
   float *pfVar4;
   int iVar5;
   float *pfVar6;
-  undefined4 *puVar7;
-  longlong lVar8;
+  longlong lVar7;
   float local_230;
-  undefined4 local_22c [66];
+  float local_22c [66];
   float fStack_124;
-  undefined1 local_120 [264];
+  float local_120 [66];
   
   fVar1 = (float)(longlong)param_2 * 0.015625 * 32768.0;
   if (fVar1 <= 0.0) {
@@ -155,23 +162,23 @@ void CalcRSbyPower(int param_1,int param_2,float *param_3,int param_4)
     fVar1 = fVar1 + 0.5;
   }
   local_230 = 0.0;
-  puVar7 = local_22c;
+  pfVar6 = local_22c;
   iVar5 = (int)fVar1 + 0x4000;
-  lVar8 = 0x3f;
+  lVar7 = 0x3f;
   do {
     iVar3 = iVar5 >> 0xf;
     iVar5 = iVar5 + (int)fVar1;
-    *puVar7 = *(undefined4 *)(iVar3 * 4 + param_1);
-    puVar7 = puVar7 + 1;
-    lVar8 = lVar8 + -1;
-  } while (lVar8 != 0);
-  *puVar7 = 0;
-  (*DAT_848958c8)(local_120,0,0x104);
+    *pfVar6 = param_1[iVar3];
+    pfVar6 = pfVar6 + 1;
+    lVar7 = lVar7 + -1;
+  } while (lVar7 != 0);
+  *pfVar6 = 0.0;
+  (*memsetfunc)(local_120,0,0x104);
   inverseRealFft(&local_230,local_120,0x80);
   pfVar6 = &local_230;
   iVar5 = param_4 + 1 >> 1;
-  lVar8 = (longlong)iVar5;
-  if (0 < lVar8) {
+  lVar7 = (longlong)iVar5;
+  if (0 < lVar7) {
     pfVar4 = &fStack_124;
     do {
       fVar1 = *pfVar6;
@@ -181,8 +188,8 @@ void CalcRSbyPower(int param_1,int param_2,float *param_3,int param_4)
       *param_3 = fVar1 * 0.0078125;
       param_3[1] = fVar2 * 0.0078125;
       param_3 = param_3 + 2;
-      lVar8 = lVar8 + -1;
-    } while (lVar8 != 0);
+      lVar7 = lVar7 + -1;
+    } while (lVar7 != 0);
   }
   if (iVar5 << 1 != param_4 + 1) {
     *param_3 = *pfVar6 * 0.0078125;
@@ -193,69 +200,64 @@ void CalcRSbyPower(int param_1,int param_2,float *param_3,int param_4)
 
 // 828C8828  SelectPeaks  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/ldpda.c:567)
 
-void SelectPeaks(undefined8 param_1,undefined8 param_2,longlong param_3,undefined8 param_4)
+void SelectPeaks(float *param_1,int param_2,int *param_3,int *param_4,float param_5)
 
 {
-  float fVar1;
-  int iVar2;
-  int iVar3;
+  int iVar1;
+  float *pfVar2;
   int *piVar4;
+  longlong lVar3;
   longlong lVar5;
   int iVar6;
-  longlong lVar7;
-  undefined4 *puVar8;
-  int iVar9;
+  int iVar7;
   double extraout_f1;
-  double dVar10;
-  double dVar11;
+  double dVar8;
+  double dVar9;
   float local_210 [2];
   longlong local_208;
-  undefined1 auStack_200 [32];
+  float afStack_200 [8];
   float local_1e0 [8];
-  undefined1 auStack_1c0 [32];
+  float afStack_1c0 [8];
   float afStack_1a0 [104];
   
-  iVar3 = __savegprlr_27();
-  dVar11 = extraout_f1;
-  PeakPick(iVar3,0,0x57,0x2b,param_3,param_4);
-  local_208 = (longlong)(int)param_2;
-  dVar10 = ceil((double)((float)local_208 * 0.058139537));
-  iVar6 = (int)dVar10;
-  local_208 = (longlong)iVar6;
-  if (7 < iVar6) {
-    iVar6 = 7;
+  lVar5 = (longlong)(int)param_3;
+  pfVar2 = (float *)__savegprlr_27((double)param_5,param_1);
+  piVar4 = (int *)lVar5;
+  dVar9 = extraout_f1;
+  PeakPick(pfVar2,0,0x57,0x2b,piVar4,param_4);
+  local_208 = (longlong)param_2;
+  dVar8 = ceil((double)((float)local_208 * 0.058139537));
+  iVar7 = (int)dVar8;
+  local_208 = (longlong)iVar7;
+  if (7 < iVar7) {
+    iVar7 = 7;
   }
-  CalcRSbyPower(iVar3,param_2,local_1e0,iVar6);
+  CalcRSbyPower(pfVar2,param_2,local_1e0,iVar7);
   local_1e0[0] = local_1e0[0] * 1.000001;
-  NellyDurbin(local_1e0,iVar6,auStack_200,auStack_1c0,local_210);
-  BandExpand(0x3fef5c2900000000,auStack_200,auStack_200,iVar6);
-  CalcMaskEnvelope(auStack_200,iVar6,afStack_1a0,param_2);
-  iVar9 = 0;
+  NellyDurbin(local_1e0,iVar7,afStack_200,afStack_1c0,local_210);
+  BandExpand(afStack_200,afStack_200,iVar7,0.98);
+  CalcMaskEnvelope(afStack_200,iVar7,afStack_1a0,param_2);
   iVar6 = 0;
-  piVar4 = (int *)param_4;
-  if (0 < *piVar4) {
-    lVar5 = param_3 + -4;
-    lVar7 = param_3;
+  iVar7 = 0;
+  if (0 < *param_4) {
+    lVar3 = lVar5 + -4;
     do {
-      iVar2 = *(int *)lVar7;
-      if (((iVar2 < (int)param_2) &&
-          (fVar1 = *(float *)(iVar2 * 4 + iVar3), local_210[0] * 0.2 <= afStack_1a0[iVar2] * fVar1))
-         && ((float)(dVar11 * 0.0006553599960170686) < fVar1)) {
-        lVar5 = lVar5 + 4;
-        *(int *)lVar5 = iVar2;
-        iVar9 = iVar9 + 1;
+      iVar1 = *(int *)lVar5;
+      if (((iVar1 < param_2) && (local_210[0] * 0.2 <= afStack_1a0[iVar1] * pfVar2[iVar1])) &&
+         ((float)(dVar9 * 0.0006553599960170686) < pfVar2[iVar1])) {
+        lVar3 = lVar3 + 4;
+        *(int *)lVar3 = iVar1;
+        iVar6 = iVar6 + 1;
       }
-      iVar6 = iVar6 + 1;
-      lVar7 = lVar7 + 4;
-    } while (iVar6 < *piVar4);
+      iVar7 = iVar7 + 1;
+      lVar5 = lVar5 + 4;
+    } while (iVar7 < *param_4);
   }
-  iVar6 = (int)param_3;
-  puVar8 = (undefined4 *)(iVar9 * 4 + iVar6);
-  *puVar8 = 0x7fff;
-  puVar8[1] = 0x7fff;
-  *(undefined4 *)((iVar9 + 2) * 4 + iVar6) = 0x7fff;
-  *(undefined4 *)((iVar9 + 3) * 4 + iVar6) = 0x7fff;
-  *piVar4 = iVar9;
+  piVar4[iVar6] = 0x7fff;
+  (piVar4 + iVar6)[1] = 0x7fff;
+  piVar4[iVar6 + 2] = 0x7fff;
+  piVar4[iVar6 + 3] = 0x7fff;
+  *param_4 = iVar6;
   __restgprlr_27();
   return;
 }
@@ -263,84 +265,90 @@ void SelectPeaks(undefined8 param_1,undefined8 param_2,longlong param_3,undefine
 
 // 828C89D0  NellyLDPDA  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/ldpda.c:701)
 
-void NellyLDPDA(undefined8 param_1,undefined8 param_2,float *param_3)
+float NellyLDPDA(float *param_1,float *param_2,void *param_3)
 
 {
-  float fVar1;
+  float *pfVar1;
   int iVar2;
-  undefined8 uVar3;
-  longlong lVar4;
-  ulonglong uVar5;
-  undefined8 uVar6;
-  undefined8 uVar7;
-  longlong lVar8;
-  ulonglong uVar9;
-  longlong lVar10;
-  double extraout_f1;
+  int iVar3;
+  int *in_r9;
+  ulonglong uVar4;
+  longlong lVar5;
+  ulonglong uVar6;
+  longlong lVar7;
+  double dVar8;
+  float fVar9;
+  uint local_2a0;
   float local_29c;
   float local_298 [3];
   uint local_28c;
-  undefined4 local_288;
+  int local_288;
   float afStack_284 [5];
-  float local_270 [156];
+  float local_270 [4];
+  float afStack_260 [92];
+  int aiStack_f0 [60];
   
-  uVar9 = ZEXT48(&stack0x00000000);
-  uVar3 = __savegprlr_27();
-  NellyMagSq();
-  FindMaxValueFlt(uVar9 - 0x260,0x5c,uVar9 - 0x2a0,uVar9 - 0x29c);
-  lVar4 = FindBaseBand(uVar9 - 0x260,0x56);
-  SelectPeaks((double)local_29c,uVar9 - 0x260,lVar4,uVar9 - 0xf0,uVar9 - 0x288);
+  pfVar1 = (float *)__savegprlr_27(param_1);
+  NellyMagSq(pfVar1,param_2,0x5c,afStack_260);
+  FindMaxValueFlt(afStack_260,0x5c,(int *)&local_2a0,&local_29c);
+  iVar2 = FindBaseBand(afStack_260,0x56);
+  lVar7 = (longlong)iVar2;
+  SelectPeaks(afStack_260,iVar2,aiStack_f0,&local_288,local_29c);
   if (0.0 < local_29c) {
     local_29c = 1.0 / local_29c;
   }
-  if (-1 < (longlong)(lVar4 - 1U)) {
-    lVar8 = (lVar4 - 1U & 0x3fffffff) * 4 + (uVar9 - 0x25c);
-    lVar10 = lVar4;
+  uVar4 = lVar7 - 1;
+  local_2a0 = (uint)uVar4;
+  if (-1 < (longlong)uVar4) {
+    local_2a0 = local_2a0 - iVar2;
+    in_r9 = (int *)(ZEXT48(&stack0x00000000) - 0x25c);
+    lVar5 = (uVar4 & 0x3fffffff) * 4 + (ZEXT48(&stack0x00000000) - 0x25c);
     do {
-      iVar2 = (int)lVar8;
-      lVar8 = lVar8 + -4;
-      *(float *)lVar8 = SQRT(SQRT(SQRT(*(float *)(iVar2 + -4) * local_29c)));
-      lVar10 = lVar10 + -1;
-    } while (lVar10 != 0);
+      iVar3 = (int)lVar5;
+      lVar5 = lVar5 + -4;
+      *(float *)lVar5 = SQRT(SQRT(SQRT(*(float *)(iVar3 + -4) * local_29c)));
+      lVar7 = lVar7 + -1;
+    } while (lVar7 != 0);
   }
-  uVar5 = SelectPitchCandidates
-                    ((double)*param_3,(double)param_3[1],uVar9 - 0x260,lVar4,uVar9 - 0xf0,local_288,
-                     uVar9 - 0x280,uVar9 - 0x270);
-  uVar6 = FindBand4VoicLD((double)*(float *)((int)afStack_284 + (int)((uVar5 & 0xffffffff) << 2)),
-                          lVar4);
-  uVar5 = uVar5 - 1;
-  uVar7 = uVar6;
-  for (uVar9 = uVar5; -1 < (longlong)uVar9; uVar9 = (uVar9 & 0xffffffff) - 1) {
-    uVar7 = VoicingLD((double)*(float *)((int)afStack_284 + (int)((uVar9 & 0xffffffff) << 2) + 4),
-                      uVar7,uVar3,param_2,uVar6);
-    local_298[(int)uVar9] = (float)extraout_f1;
+  iVar3 = SelectPitchCandidates
+                    (afStack_260,iVar2,aiStack_f0,local_288,afStack_284 + 1,local_270,
+                     *(float *)param_3,*(float *)((int)param_3 + 4),in_r9);
+  iVar2 = FindBand4VoicLD(iVar2,afStack_284[iVar3]);
+  lVar7 = (longlong)iVar2;
+  uVar6 = (longlong)iVar3 - 1;
+  uVar4 = uVar6;
+  while (local_2a0 = (uint)uVar4, -1 < (longlong)uVar4) {
+    fVar9 = VoicingLD(*(float *)((int)afStack_284 + (int)((uVar4 & 0xffffffff) << 2) + 4),
+                      (float *)lVar7,pfVar1,(int)param_2);
+    local_298[local_2a0] = fVar9;
+    uVar4 = (ulonglong)local_2a0 - 1;
   }
-  uVar9 = 0;
-  if ((int)local_28c < (int)uVar5) {
+  uVar4 = 0;
+  if ((int)local_28c < (int)uVar6) {
     if (((local_28c != 0) && (local_298[local_28c] < local_298[0] * 0.75)) ||
-       (uVar9 = (ulonglong)local_28c,
-       *(float *)((int)local_298 + (int)((uVar5 & 0xffffffff) << 2)) < local_298[local_28c] * 1.1))
+       (uVar4 = (ulonglong)local_28c,
+       *(float *)((int)local_298 + (int)((uVar6 & 0xffffffff) << 2)) < local_298[local_28c] * 1.1))
     goto LAB_828c8bc4;
   }
-  else if (*(float *)((int)local_298 + (int)((uVar5 & 0xffffffff) << 2)) < local_298[0] * 0.88)
+  else if (*(float *)((int)local_298 + (int)((uVar6 & 0xffffffff) << 2)) < local_298[0] * 0.88)
   goto LAB_828c8bc4;
-  uVar9 = uVar5;
+  uVar4 = uVar6;
 LAB_828c8bc4:
-  iVar2 = (int)((uVar9 & 0xffffffff) << 2);
-  fVar1 = *(float *)((int)local_270 + iVar2);
-  *param_3 = *(float *)((int)afStack_284 + iVar2 + 4);
-  param_3[1] = fVar1;
-  __restgprlr_27();
-  return;
+  iVar2 = (int)((uVar4 & 0xffffffff) << 2);
+  fVar9 = *(float *)((int)local_270 + iVar2);
+  *(float *)param_3 = *(float *)((int)afStack_284 + iVar2 + 4);
+  *(float *)((int)param_3 + 4) = fVar9;
+  dVar8 = (double)__restgprlr_27();
+  return (float)dVar8;
 }
 
 
 // 828C8BE8  GetPitchTable  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/ldpda.c:824)
 
-void GetPitchTable(undefined4 *param_1,undefined4 *param_2)
+void GetPitchTable(float **param_1,int *param_2)
 
 {
-  *param_1 = &DAT_82204228;
+  *param_1 = CpfPitchTable;
   *param_2 = 0x4a;
   return;
 }
@@ -348,29 +356,29 @@ void GetPitchTable(undefined4 *param_1,undefined4 *param_2)
 
 // 828C8C00  NellyInitLDPDA  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/ldpda.c:856)
 
-bool NellyInitLDPDA(int *param_1)
+ushort NellyInitLDPDA(void **param_1)
 
 {
   undefined4 *puVar1;
   
-  puVar1 = (undefined4 *)(*DAT_848958c0)(1,8);
-  *param_1 = (int)puVar1;
+  puVar1 = (*callocfunc)(1,8);
+  *param_1 = puVar1;
   if (puVar1 != (undefined4 *)0x0) {
     *puVar1 = 0x42c80000;
-    *(undefined4 *)(*param_1 + 4) = 0;
+    *(undefined4 *)((int)*param_1 + 4) = 0;
   }
-  return puVar1 == (undefined4 *)0x0;
+  return (ushort)(puVar1 == (undefined4 *)0x0);
 }
 
 
 // 828C8C78  NellyFreeLDPDA  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/ldpda.c:885)
 
-undefined8 NellyFreeLDPDA(int *param_1)
+ushort NellyFreeLDPDA(void **param_1)
 
 {
-  if (*param_1 != 0) {
-    (*DAT_848958c4)();
-    *param_1 = 0;
+  if (*param_1 != (void *)0x0) {
+    (*freefunc)(*param_1);
+    *param_1 = (void *)0x0;
   }
   return 0;
 }

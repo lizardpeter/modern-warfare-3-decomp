@@ -2,22 +2,25 @@
 
 // 82811008  vp8_update_mode_info_border  (WebM_atvi_opt/vpx/vp8/common/alloccommon.c:29)
 
-void vp8_update_mode_info_border(undefined8 param_1,longlong param_2,longlong param_3)
+void vp8_update_mode_info_border(MODE_INFO *param_1,int param_2,int param_3)
 
 {
   longlong lVar1;
   void *pvVar2;
+  longlong lVar3;
+  longlong lVar4;
   
-  lVar1 = __savegprlr_29();
-  pvVar2 = vpx_memset((void *)((int)lVar1 + ((int)param_3 + 2) * -0x98),0,
-                      (int)(param_3 * 0x98) + 0x98);
-  if (0 < (int)param_2) {
+  lVar3 = (longlong)param_3;
+  lVar4 = (longlong)param_2;
+  lVar1 = __savegprlr_29(param_1);
+  pvVar2 = vpx_memset((void *)((int)lVar1 + ((int)lVar3 + 2) * -0x98),0,(int)(lVar3 * 0x98) + 0x98);
+  if (0 < (int)lVar4) {
     lVar1 = lVar1 + -0x98;
     do {
       pvVar2 = vpx_memset((void *)lVar1,0,0x98);
-      param_2 = param_2 + -1;
-      lVar1 = lVar1 + param_3 * 0x98;
-    } while (param_2 != 0);
+      lVar4 = lVar4 + -1;
+      lVar1 = lVar1 + lVar3 * 0x98;
+    } while (lVar4 != 0);
   }
   __restgprlr_29(pvVar2);
   return;
@@ -26,25 +29,25 @@ void vp8_update_mode_info_border(undefined8 param_1,longlong param_2,longlong pa
 
 // 82811068  vp8_de_alloc_frame_buffers  (WebM_atvi_opt/vpx/vp8/common/alloccommon.c:40)
 
-void vp8_de_alloc_frame_buffers(void)
+void vp8_de_alloc_frame_buffers(VP8Common *param_1)
 
 {
   int iVar1;
-  int iVar2;
+  YV12_BUFFER_CONFIG *pYVar2;
   longlong lVar3;
   
-  iVar1 = __savegprlr_29();
-  iVar2 = iVar1 + 0x35bc;
+  iVar1 = __savegprlr_29(param_1);
+  pYVar2 = (YV12_BUFFER_CONFIG *)(iVar1 + 0x35bc);
   lVar3 = 4;
   do {
-    vp8_yv12_de_alloc_frame_buffer(iVar2);
+    vp8_yv12_de_alloc_frame_buffer(pYVar2);
     lVar3 = lVar3 + -1;
-    iVar2 = iVar2 + 0x34;
+    pYVar2 = pYVar2 + 1;
   } while (lVar3 != 0);
-  vp8_yv12_de_alloc_frame_buffer(iVar1 + 0x36e0);
-  vp8_yv12_de_alloc_frame_buffer(iVar1 + 0x36ac);
-  vpx_free(*(undefined4 *)(iVar1 + 0x5fc4));
-  vpx_free(*(undefined4 *)(iVar1 + 0x376c));
+  vp8_yv12_de_alloc_frame_buffer((YV12_BUFFER_CONFIG *)(iVar1 + 0x36e0));
+  vp8_yv12_de_alloc_frame_buffer((YV12_BUFFER_CONFIG *)(iVar1 + 0x36ac));
+  vpx_free(*(void **)(iVar1 + 0x5fc4));
+  vpx_free(*(void **)(iVar1 + 0x376c));
   *(undefined4 *)(iVar1 + 0x5fc4) = 0;
   *(undefined4 *)(iVar1 + 0x376c) = 0;
   __restgprlr_29();
@@ -54,168 +57,167 @@ void vp8_de_alloc_frame_buffers(void)
 
 // 828110C8  vp8_alloc_frame_buffers  (WebM_atvi_opt/vpx/vp8/common/alloccommon.c:58)
 
-void vp8_alloc_frame_buffers(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+int vp8_alloc_frame_buffers(VP8Common *param_1,int param_2,int param_3)
 
 {
-  int iVar1;
+  VP8Common *pVVar1;
   int iVar2;
   int iVar3;
-  int iVar4;
-  int iVar5;
-  longlong lVar6;
+  MODE_INFO *pMVar4;
+  ENTROPY_CONTEXT_PLANES *pEVar5;
+  YV12_BUFFER_CONFIG *pYVar6;
+  YV12_BUFFER_CONFIG *pYVar7;
+  longlong lVar8;
   
-  iVar1 = __savegprlr_25();
-  vp8_de_alloc_frame_buffers();
-  if ((int)(param_2 & 0xf) != 0) {
-    param_2 = (param_2 - (param_2 & 0xf)) + 0x10;
+  pVVar1 = (VP8Common *)__savegprlr_25(param_1);
+  vp8_de_alloc_frame_buffers(pVVar1);
+  if ((param_2 & 0xfU) != 0) {
+    param_2 = (param_2 - (param_2 & 0xfU)) + 0x10;
   }
-  if ((int)(param_3 & 0xf) != 0) {
-    param_3 = (param_3 - (param_3 & 0xf)) + 0x10;
+  if ((param_3 & 0xfU) != 0) {
+    param_3 = (param_3 - (param_3 & 0xfU)) + 0x10;
   }
-  iVar4 = iVar1 + 0x35bc;
-  iVar5 = 0;
-  iVar3 = iVar4;
+  pYVar7 = pVVar1->yv12_fb;
+  iVar3 = 0;
+  pYVar6 = pYVar7;
   do {
-    *(undefined4 *)(iVar1 + 0x368c) = 0;
-    iVar2 = vp8_yv12_alloc_frame_buffer(iVar3,param_2,param_3,0x20);
+    pVVar1->fb_idx_ref_cnt[0] = 0;
+    iVar2 = vp8_yv12_alloc_frame_buffer(pYVar6,param_2,param_3,0x20);
     if (iVar2 < 0) {
-      lVar6 = 4;
+      lVar8 = 4;
       do {
-        vp8_yv12_de_alloc_frame_buffer(iVar4);
-        lVar6 = lVar6 + -1;
-        iVar4 = iVar4 + 0x34;
-      } while (lVar6 != 0);
-      vp8_yv12_de_alloc_frame_buffer(iVar1 + 0x36e0);
-      vp8_yv12_de_alloc_frame_buffer(iVar1 + 0x36ac);
-      vpx_free(*(undefined4 *)(iVar1 + 0x5fc4));
-      vpx_free(*(undefined4 *)(iVar1 + 0x376c));
-      *(undefined4 *)(iVar1 + 0x5fc4) = 0;
-      *(undefined4 *)(iVar1 + 0x376c) = 0;
-      __restgprlr_25(0xfffffffffffffffe);
-      return;
+        vp8_yv12_de_alloc_frame_buffer(pYVar7);
+        lVar8 = lVar8 + -1;
+        pYVar7 = pYVar7 + 1;
+      } while (lVar8 != 0);
+      vp8_yv12_de_alloc_frame_buffer(&pVVar1->temp_scale_frame);
+      vp8_yv12_de_alloc_frame_buffer(&pVVar1->post_proc_buffer);
+      vpx_free(pVVar1->above_context);
+      vpx_free(pVVar1->mip);
+      pVVar1->above_context = (ENTROPY_CONTEXT_PLANES *)0x0;
+      pVVar1->mip = (MODE_INFO *)0x0;
+      iVar3 = __restgprlr_25(0xfffffffffffffffe);
+      return iVar3;
     }
-    iVar5 = iVar5 + 1;
-    iVar3 = iVar3 + 0x34;
-  } while (iVar5 < 4);
-  *(undefined4 *)(iVar1 + 0x369c) = 0;
-  *(undefined4 *)(iVar1 + 0x36a0) = 1;
-  *(undefined4 *)(iVar1 + 0x36a4) = 2;
-  *(undefined4 *)(iVar1 + 0x36a8) = 3;
-  *(undefined4 *)(iVar1 + 0x368c) = 1;
-  *(undefined4 *)(iVar1 + 0x3690) = 1;
-  *(undefined4 *)(iVar1 + 0x3694) = 1;
-  *(undefined4 *)(iVar1 + 0x3698) = 1;
-  iVar3 = vp8_yv12_alloc_frame_buffer(iVar1 + 0x36e0,param_2,0x10,0x20);
+    iVar3 = iVar3 + 1;
+    pYVar6 = pYVar6 + 1;
+  } while (iVar3 < 4);
+  pVVar1->new_fb_idx = 0;
+  pVVar1->lst_fb_idx = 1;
+  pVVar1->gld_fb_idx = 2;
+  pVVar1->alt_fb_idx = 3;
+  pVVar1->fb_idx_ref_cnt[0] = 1;
+  pVVar1->fb_idx_ref_cnt[1] = 1;
+  pVVar1->fb_idx_ref_cnt[2] = 1;
+  pVVar1->fb_idx_ref_cnt[3] = 1;
+  iVar3 = vp8_yv12_alloc_frame_buffer(&pVVar1->temp_scale_frame,param_2,0x10,0x20);
   if (iVar3 < 0) {
-    lVar6 = 4;
+    lVar8 = 4;
     do {
-      vp8_yv12_de_alloc_frame_buffer(iVar4);
-      lVar6 = lVar6 + -1;
-      iVar4 = iVar4 + 0x34;
-    } while (lVar6 != 0);
-    vp8_yv12_de_alloc_frame_buffer(iVar1 + 0x36e0);
-    vp8_yv12_de_alloc_frame_buffer(iVar1 + 0x36ac);
-    vpx_free(*(undefined4 *)(iVar1 + 0x5fc4));
-    vpx_free(*(undefined4 *)(iVar1 + 0x376c));
-    *(undefined4 *)(iVar1 + 0x5fc4) = 0;
-    *(undefined4 *)(iVar1 + 0x376c) = 0;
-    __restgprlr_25(0xfffffffffffffffe);
-    return;
+      vp8_yv12_de_alloc_frame_buffer(pYVar7);
+      lVar8 = lVar8 + -1;
+      pYVar7 = pYVar7 + 1;
+    } while (lVar8 != 0);
+    vp8_yv12_de_alloc_frame_buffer(&pVVar1->temp_scale_frame);
+    vp8_yv12_de_alloc_frame_buffer(&pVVar1->post_proc_buffer);
+    vpx_free(pVVar1->above_context);
+    vpx_free(pVVar1->mip);
+    pVVar1->above_context = (ENTROPY_CONTEXT_PLANES *)0x0;
+    pVVar1->mip = (MODE_INFO *)0x0;
+    iVar3 = __restgprlr_25(0xfffffffffffffffe);
+    return iVar3;
   }
-  iVar3 = vp8_yv12_alloc_frame_buffer(iVar1 + 0x36ac,param_2,param_3,0x20);
+  iVar3 = vp8_yv12_alloc_frame_buffer(&pVVar1->post_proc_buffer,param_2,param_3,0x20);
   if (-1 < iVar3) {
-    iVar3 = (int)param_3 >> 4;
-    iVar4 = (int)param_2 >> 4;
-    *(int *)(iVar1 + 0x3728) = iVar3;
-    *(int *)(iVar1 + 0x372c) = iVar4;
-    *(int *)(iVar1 + 0x3730) = iVar4 + 1;
-    *(int *)(iVar1 + 0x3724) = iVar4 * iVar3;
-    iVar3 = vpx_calloc((longlong)(iVar3 + 1) * (longlong)(iVar4 + 1),0x98);
-    *(int *)(iVar1 + 0x376c) = iVar3;
-    if (iVar3 != 0) {
-      *(int *)(iVar1 + 0x3770) = (*(int *)(iVar1 + 0x3730) + 1) * 0x98 + iVar3;
-      iVar3 = vpx_calloc((ulonglong)*(uint *)(iVar1 + 0x372c) +
-                         ((ulonglong)*(uint *)(iVar1 + 0x372c) & 0x1fffffff) * 8,1);
-      *(int *)(iVar1 + 0x5fc4) = iVar3;
-      if (iVar3 != 0) {
-        vp8_update_mode_info_border
-                  (*(undefined4 *)(iVar1 + 0x3770),*(undefined4 *)(iVar1 + 0x3728),
-                   *(undefined4 *)(iVar1 + 0x372c));
-        __restgprlr_25(0);
-        return;
+    iVar3 = param_3 >> 4;
+    iVar2 = param_2 >> 4;
+    pVVar1->mb_rows = iVar3;
+    pVVar1->mb_cols = iVar2;
+    pVVar1->mode_info_stride = iVar2 + 1;
+    pVVar1->MBs = iVar2 * iVar3;
+    pMVar4 = vpx_calloc((iVar3 + 1) * (iVar2 + 1),0x98);
+    pVVar1->mip = pMVar4;
+    if (pMVar4 != (MODE_INFO *)0x0) {
+      pVVar1->mi = pMVar4 + pVVar1->mode_info_stride + 1;
+      pEVar5 = vpx_calloc(pVVar1->mb_cols * 9,1);
+      pVVar1->above_context = pEVar5;
+      if (pEVar5 != (ENTROPY_CONTEXT_PLANES *)0x0) {
+        vp8_update_mode_info_border(pVVar1->mi,pVVar1->mb_rows,pVVar1->mb_cols);
+        iVar3 = __restgprlr_25(0);
+        return iVar3;
       }
     }
   }
-  vp8_de_alloc_frame_buffers(iVar1);
-  __restgprlr_25(0xfffffffffffffffe);
-  return;
+  vp8_de_alloc_frame_buffers(pVVar1);
+  iVar3 = __restgprlr_25(0xfffffffffffffffe);
+  return iVar3;
 }
 
 
 // 828112F8  vp8_setup_version  (WebM_atvi_opt/vpx/vp8/common/alloccommon.c:132)
 
-void vp8_setup_version(int param_1)
+void vp8_setup_version(VP8Common *param_1)
 
 {
   uint uVar1;
   
-  uVar1 = *(uint *)(param_1 + 0x6c6c);
+  uVar1 = param_1->version;
   if ((3 < uVar1) || (uVar1 == 0)) {
-    *(undefined4 *)(param_1 + 0x3740) = 0;
-    *(undefined4 *)(param_1 + 0x373c) = 0;
-    *(undefined4 *)(param_1 + 0x3738) = 0;
-    *(undefined4 *)(param_1 + 0x3744) = 0;
+    param_1->use_bilinear_mc_filter = 0;
+    param_1->simpler_lpf = 0;
+    param_1->no_lpf = 0;
+    param_1->full_pixel = 0;
     return;
   }
   if (uVar1 == 1) {
-    *(undefined4 *)(param_1 + 0x3738) = 0;
-    *(undefined4 *)(param_1 + 0x373c) = 1;
-    *(undefined4 *)(param_1 + 0x3740) = 1;
-    *(undefined4 *)(param_1 + 0x3744) = 0;
+    param_1->no_lpf = 0;
+    param_1->simpler_lpf = 1;
+    param_1->use_bilinear_mc_filter = 1;
+    param_1->full_pixel = 0;
     return;
   }
   if (uVar1 != 2) {
-    *(undefined4 *)(param_1 + 0x3738) = 1;
-    *(undefined4 *)(param_1 + 0x373c) = 1;
-    *(undefined4 *)(param_1 + 0x3740) = 1;
-    *(undefined4 *)(param_1 + 0x3744) = 1;
+    param_1->no_lpf = 1;
+    param_1->simpler_lpf = 1;
+    param_1->use_bilinear_mc_filter = 1;
+    param_1->full_pixel = 1;
     return;
   }
-  *(undefined4 *)(param_1 + 0x3738) = 1;
-  *(undefined4 *)(param_1 + 0x373c) = 0;
-  *(undefined4 *)(param_1 + 0x3740) = 1;
-  *(undefined4 *)(param_1 + 0x3744) = 0;
+  param_1->no_lpf = 1;
+  param_1->simpler_lpf = 0;
+  param_1->use_bilinear_mc_filter = 1;
+  param_1->full_pixel = 0;
   return;
 }
 
 
 // 82811388  vp8_create_common  (WebM_atvi_opt/vpx/vp8/common/alloccommon.c:169)
 
-void * vp8_create_common(int param_1)
+void vp8_create_common(VP8Common *param_1)
 
 {
-  void *pvVar1;
-  
-  vp8_machine_specific_config();
+  vp8_machine_specific_config(param_1);
   vp8_default_coef_probs(param_1);
   vp8_init_mbmode_probs(param_1);
-  vp8_default_bmode_probs(param_1 + 0x67db);
-  *(undefined4 *)(param_1 + 0x3738) = 0;
-  *(undefined4 *)(param_1 + 0x3734) = 1;
-  *(undefined4 *)(param_1 + 0x373c) = 0;
-  *(undefined4 *)(param_1 + 0x3740) = 0;
-  *(undefined4 *)(param_1 + 0x3744) = 0;
-  *(undefined4 *)(param_1 + 0x6c70) = 0;
-  *(undefined4 *)(param_1 + 0x35b0) = 0;
-  *(undefined4 *)(param_1 + 0x35b4) = 0;
-  pvVar1 = vpx_memset((void *)(param_1 + 0x5fb4),0,0x10);
-  *(undefined4 *)(param_1 + 0x5fa8) = 0;
-  *(undefined4 *)(param_1 + 0x5fac) = 0;
-  return pvVar1;
+  vp8_default_bmode_probs((param_1->fc).bmode_prob);
+  param_1->no_lpf = 0;
+  param_1->mb_no_coeff_skip = 1;
+  param_1->simpler_lpf = 0;
+  param_1->use_bilinear_mc_filter = 0;
+  param_1->full_pixel = 0;
+  param_1->multi_token_partition = ONE_PARTITION;
+  param_1->clr_type = REG_YUV;
+  param_1->clamp_type = RECON_CLAMP_REQUIRED;
+  vpx_memset(param_1->ref_frame_sign_bias,0,0x10);
+  param_1->copy_buffer_to_gf = 0;
+  param_1->copy_buffer_to_arf = 0;
+  return;
 }
 
 
 // 82811420  vp8_initialize_common  (WebM_atvi_opt/vpx/vp8/common/alloccommon.c:198)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void vp8_initialize_common(void)
 

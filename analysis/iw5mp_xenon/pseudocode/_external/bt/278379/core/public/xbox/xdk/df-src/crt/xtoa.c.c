@@ -2,56 +2,66 @@
 
 // 8291DC80  xtoa  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/xtoa.c:93)
 
-void xtoa(ulonglong param_1,char *param_2,ulonglong param_3,int param_4)
+void xtoa(ulong param_1,char *param_2,uint param_3,int param_4)
 
 {
   ulonglong uVar1;
-  char cVar2;
-  char *pcVar3;
-  char *pcVar4;
+  char *pcVar2;
+  ulonglong uVar3;
+  char cVar4;
+  char *pcVar5;
   
-  pcVar3 = param_2;
+  uVar1 = (ulonglong)(int)param_1;
+  pcVar2 = param_2;
   if (param_4 != 0) {
-    pcVar3 = param_2 + 1;
+    pcVar2 = param_2 + 1;
     *param_2 = '-';
-    param_1 = -param_1;
-    param_2 = pcVar3;
+    uVar1 = -uVar1;
+    param_2 = pcVar2;
   }
   do {
-    pcVar4 = param_2;
-    trapWord(6,param_3,0);
-    uVar1 = param_1 - (longlong)(int)((param_1 & 0xffffffff) / (param_3 & 0xffffffff)) *
-                      (longlong)(int)param_3;
-    param_1 = (param_1 & 0xffffffff) / (param_3 & 0xffffffff);
-    trapWord(6,param_3,0);
-    cVar2 = (char)uVar1;
-    if ((uVar1 & 0xffffffff) < 10) {
-      cVar2 = cVar2 + '0';
+    pcVar5 = param_2;
+    trapWord(6,(longlong)(int)param_3,0);
+    uVar3 = uVar1 - (longlong)(int)((uVar1 & 0xffffffff) / (ulonglong)param_3) *
+                    (longlong)(int)param_3;
+    uVar1 = (uVar1 & 0xffffffff) / (ulonglong)param_3;
+    trapWord(6,(longlong)(int)param_3,0);
+    cVar4 = (char)uVar3;
+    if ((uVar3 & 0xffffffff) < 10) {
+      cVar4 = cVar4 + '0';
     }
     else {
-      cVar2 = cVar2 + 'W';
+      cVar4 = cVar4 + 'W';
     }
-    *pcVar4 = cVar2;
-    param_2 = pcVar4 + 1;
-  } while (param_1 != 0);
-  pcVar4[1] = '\0';
+    *pcVar5 = cVar4;
+    param_2 = pcVar5 + 1;
+  } while (uVar1 != 0);
+  pcVar5[1] = '\0';
   do {
-    cVar2 = *pcVar4;
-    *pcVar4 = *pcVar3;
-    pcVar4 = pcVar4 + -1;
-    *pcVar3 = cVar2;
-    pcVar3 = pcVar3 + 1;
-  } while (pcVar3 < pcVar4);
+    cVar4 = *pcVar5;
+    *pcVar5 = *pcVar2;
+    pcVar5 = pcVar5 + -1;
+    *pcVar2 = cVar4;
+    pcVar2 = pcVar2 + 1;
+  } while (pcVar2 < pcVar5);
   return;
 }
 
 
 // 8291DD10  _itoa  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/xtoa.c:235)
 
-char * _itoa(int _Value,char *_Dest,int _Radix)
+char * _itoa(int param_1,char *param_2,int param_3)
 
 {
-  xtoa();
-  return _Dest;
+  int iVar1;
+  
+  if ((param_3 == 10) && (param_1 < 0)) {
+    iVar1 = 1;
+  }
+  else {
+    iVar1 = 0;
+  }
+  xtoa(param_1,param_2,param_3,iVar1);
+  return param_2;
 }
 

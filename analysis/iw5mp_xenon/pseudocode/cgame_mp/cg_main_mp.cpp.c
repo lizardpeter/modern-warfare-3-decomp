@@ -2,350 +2,716 @@
 
 // 822D58A8  Window_GetRect  (ui/ui_utils_api.h:35)
 
-longlong Window_GetRect(ulonglong param_1)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+rectDef_s * Window_GetRect(windowDef_t *param_1)
 
 {
-  if ((param_1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82018fa0,0x24,0,0xffffffff82000f98,0xffffffff8200fdb4);
+  if (param_1 == (windowDef_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_utils_api.h",0x24,0,"%s"
+                   );
   }
-  return param_1 + 4;
+  return &param_1->rect;
 }
 
 
 // 822D5840  Live_OnlinePlayEvenIfDown  (universal/onlinegame.h:465)
 
-bool Live_OnlinePlayEvenIfDown(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int Live_OnlinePlayEvenIfDown(void)
 
 {
-  if (DAT_8424a64c == 0) {
-    MyAssertHandler(0xffffffff82018f38,0x1d3,0,0xffffffff82000f98,0xffffffff82018f84);
+  byte bVar1;
+  
+  if (debug_onlinePlayEvenIfDown == (dvar_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\../universal/onlinegame.h"
+                    ,0x1d3,0,"%s");
   }
-  return *(char *)(DAT_8424a64c + 0xc) != '\0';
+  bVar1 = (debug_onlinePlayEvenIfDown->current).color[0];
+  return (uint)bVar1 + (-(uint)(bVar1 == 0) - (bVar1 - 1));
 }
 
 
 // 822D5900  CG_ClearSoundPlaybackTracking  (cgame_mp/cg_main_mp.cpp:534)
 
-void * CG_ClearSoundPlaybackTracking(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void CG_ClearSoundPlaybackTracking(void)
 
 {
-  void *pvVar1;
-  
-  pvVar1 = memset(&DAT_82a3ce48,0,0x600);
-  return pvVar1;
+  memset();
+  return;
 }
 
 
 // 822D5918  CG_GetClientNumForLocalClient  (cgame_mp/cg_main_mp.cpp:540)
-
-undefined4 CG_GetClientNumForLocalClient(ulonglong param_1)
-
-{
-  if ((ulonglong)DAT_82aa1ae8 <= (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82018fe0,0x21d,0,0xffffffff82019024,param_1);
-  }
-  return *(undefined4 *)((int)param_1 * 0x108600 + DAT_82a383cc + 0x3334);
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 822D5990  CG_IsRagdollTrajectory  (cgame_mp/cg_main_mp.cpp:549)
 
-void CG_IsRagdollTrajectory(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+bool CG_IsRagdollTrajectory(trajectory_t *param_1)
 
 {
   int *piVar1;
-  undefined8 uVar2;
+  undefined1 uVar2;
+  undefined8 uVar3;
   
-  piVar1 = (int *)__savegprlr_28();
+  piVar1 = (int *)__savegprlr_28(param_1);
   if (piVar1 == (int *)0x0) {
-    MyAssertHandler(0xffffffff82018fe0,0x226,0,0xffffffff82000f98,0xffffffff82019074);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_main_mp.cpp",0x226
+                    ,0,"%s");
   }
-  if (DAT_84436220 == 0) {
-    MyAssertHandler(0xffffffff82018fe0,0x227,0,0xffffffff82000f98,0xffffffff82019064);
+  if (ragdoll_enable == (dvar_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_main_mp.cpp",0x227
+                    ,0,"%s");
   }
-  if (((*(char *)(DAT_84436220 + 0xc) == '\0') || (*piVar1 < 10)) || (uVar2 = 1, 0xc < *piVar1)) {
-    uVar2 = 0;
+  if ((((ragdoll_enable->current).enabled == false) || (*piVar1 < 10)) || (uVar3 = 1, 0xc < *piVar1)
+     ) {
+    uVar3 = 0;
   }
-  __restgprlr_28(uVar2);
-  return;
+  uVar2 = __restgprlr_28(uVar3);
+  return (bool)uVar2;
 }
 
 
 // 822D5A38  CG_RegisterDvars  (cgame_mp/cg_main_mp.cpp:579)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
 void CG_RegisterDvars(void)
 
 {
   int iVar1;
-  undefined8 uVar2;
-  undefined8 uVar3;
-  undefined8 uVar4;
-  undefined8 uVar5;
-  undefined8 uVar6;
-  undefined8 uVar7;
-  undefined8 uVar8;
-  undefined8 uVar9;
-  undefined8 uVar10;
-  undefined8 uVar11;
-  undefined8 uVar12;
-  undefined8 uVar13;
-  undefined8 uVar14;
-  undefined8 uVar15;
-  undefined8 uVar16;
-  undefined8 uVar17;
-  undefined8 uVar18;
+  ushort uVar2;
+  IMAGE_DOS_HEADER *pIVar3;
+  ushort uVar5;
+  char *pcVar4;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  double dVar14;
+  double dVar15;
+  double dVar16;
+  double dVar17;
+  double dVar18;
+  double dVar19;
+  double dVar20;
+  double dVar21;
+  double dVar22;
   
   __savegprlr_28();
   __savefpr_15();
-  DAT_82a3836c = Dvar_RegisterBool(0xffffffff8201554c,1,4,0xffffffff8201cb4c);
-  DAT_82a3d6a0 = Dvar_RegisterInt(0xffffffff8201cb3c,4,0,4,0,0xffffffff8201cac8);
-  DAT_82a3826c = Dvar_RegisterBool(0xffffffff8201ca5c,1,0x40,0xffffffff8201ca78);
-  DAT_82a3d680 = Dvar_RegisterInt(0xffffffff8201ca4c,100,0,0x7fffffff,0,0xffffffff8201ca18);
-  uVar17 = 0x4064000000000000;
-  uVar16 = 0x3ff0000000000000;
-  DAT_82a3d668 = Dvar_RegisterFloat(0x4050400000000000,0x3ff0000000000000,0x4064000000000000,
-                                    0xffffffff8201c9ec);
-  uVar10 = 0x4000000000000000;
-  uVar4 = 0x3fc99999a0000000;
-  DAT_82a3ce38 = Dvar_RegisterFloat(uVar16,0x3fc99999a0000000,0x4000000000000000,0xffffffff8201c9bc)
+  cg_drawGun = Dvar_RegisterBool("cg_drawGun",true,4,"Draw the view model");
+  cg_cursorHints =
+       Dvar_RegisterInt("cg_cursorHints",4,0,4,0,
+                        "Draw cursor hints where:\n 0: no hints\n\t1:\tsin size pulse\n\t2:\tone way size pulse\n\t3:\talpha pulse\n\t4:\tstatic image"
+                       );
+  cg_weaponHintsCoD1Style =
+       Dvar_RegisterBool("cg_weaponHintsCoD1Style",true,0x40,
+                         "Draw weapon hints in CoD1 style: with the weapon name, and with the icon below"
+                        );
+  cg_hintFadeTime =
+       Dvar_RegisterInt("cg_hintFadeTime",100,0,0x7fffffff,0,
+                        "Time in milliseconds for the cursor hint to fade");
+  dVar21 = 160.0;
+  dVar20 = 1.0;
+  cg_fov = Dvar_RegisterFloat("cg_fov",65.0,1.0,160.0,0,"c\\cgame_mp\\cg_local_mp.h");
+  pcVar4 = "the motion tracker after being detected";
+  uVar2 = 0;
+  dVar14 = 2.0;
+  dVar8 = 0.20000000298023224;
+  cg_fovScale = Dvar_RegisterFloat("cg_fovScale",(float)dVar20,0.2,2.0,0,
+                                   "the motion tracker after being detected");
+  cg_fovMin = Dvar_RegisterFloat("cg_fovMin",(float)dVar20,(float)dVar20,(float)dVar21,uVar2,pcVar4)
   ;
-  DAT_82a3822c = Dvar_RegisterFloat(uVar16,uVar16,uVar17,0xffffffff8201c98c);
-  uVar18 = 0;
-  DAT_82a38320 = Dvar_RegisterFloat(uVar16,0,uVar16,0xffffffff8201c938);
-  DAT_82a38338 = Dvar_RegisterBool(0xffffffff8201c914,1,4,0xffffffff8201c920);
-  DAT_82a38264 = Dvar_RegisterBool(0xffffffff8201c8f4,0,4,0xffffffff8201c904);
-  DAT_82a38398 = Dvar_RegisterBool(0xffffffff8201c8c8,1,0,0xffffffff8201c8d8);
-  DAT_82a38230 = Dvar_RegisterBool(0xffffffff8201c890,1,0,0xffffffff8201c8a4);
-  DAT_82a3d5ec = Dvar_RegisterBool(0xffffffff8201c87c,1,0,0xffffffff8201c858);
-  DAT_82a3837c = Dvar_RegisterBool(0xffffffff8201c830,0,0,0xffffffff8201c844);
-  DAT_82a3824c = Dvar_RegisterEnum(0xffffffff8201c824,0xffffffff82962d54,1,0,0xffffffff8201c80c);
-  DAT_82a2f808 = Dvar_RegisterBool(0xffffffff8201c7ec,1,0,0xffffffff8201c7fc);
-  DAT_82a38280 = Dvar_RegisterBool(0xffffffff8201c7b4,0,4,0xffffffff8201c7c8);
-  DAT_82a3d618 = Dvar_RegisterBool(0xffffffff8201c7a0,1,0,0xffffffff8201c788);
-  uVar15 = 0x4084000000000000;
-  DAT_82a3d628 = Dvar_RegisterVec2(0x4034000000000000,0x4062200000000000,0xc069000000000000,
-                                   0x4084000000000000,0xffffffff8201c730);
-  DAT_82a2f804 = Dvar_RegisterBool(0xffffffff8201c708,1,0,0xffffffff8201c718);
-  uVar14 = 0x4080000000000000;
-  uVar12 = 0x4049000000000000;
-  DAT_82a38250 = Dvar_RegisterFloat(0x4049000000000000,uVar18,0x4080000000000000,0xffffffff8201c6f8)
+  dVar22 = 0.0;
+  cg_viewVehicleInfluence =
+       Dvar_RegisterFloat("cg_viewVehicleInfluence",(float)dVar20,0.0,(float)dVar20,uVar2,
+                          "the motion tracker after being detected");
+  cg_draw2D = Dvar_RegisterBool("cg_draw2D",true,4,"Draw 2D screen elements");
+  cg_drawHealth = Dvar_RegisterBool("cg_drawHealth",false,4,"Draw health bar");
+  cg_drawZoomHint = Dvar_RegisterBool("cg_drawZoomHint",true,0,"Draw a \'click to zoom\' hint");
+  cg_drawBreathHint =
+       Dvar_RegisterBool("cg_drawBreathHint",true,0,"Draw a \'hold breath to steady\' hint");
+  cg_drawMantleHint =
+       Dvar_RegisterBool("cg_drawMantleHint",true,0,"Draw a \'press key to mantle\' hint");
+  cg_drawStatsSource = Dvar_RegisterBool("cg_drawStatsSource",false,0,"Draw stats source");
+  cg_drawFPS = Dvar_RegisterEnum("cg_drawFPS",cg_drawFpsNames,1,0,"Draw frames per second");
+  cg_drawViewpos = Dvar_RegisterBool("cg_drawViewpos",true,0,"Draw viewpos");
+  cg_drawEffectNum =
+       Dvar_RegisterBool("cg_drawEffectNum",false,4,"Draw counts of effects and elements");
+  cg_drawFPSLabels = Dvar_RegisterBool("cg_drawFPSLabels",true,0,"Draw FPS Info Labels");
+  dVar19 = 640.0;
+  cg_debugInfoCornerOffset =
+       Dvar_RegisterVec2("cg_debugInfoCornerOffset",20.0,145.0,-200.0,640.0,0,
+                         "the motion tracker after being detected");
+  uVar2 = 1;
+  cg_drawVersion = Dvar_RegisterBool("cg_drawVersion",true,0,"Draw the game version");
+  pcVar4 = "the motion tracker after being detected";
+  dVar18 = 512.0;
+  dVar16 = 50.0;
+  cg_drawVersionX =
+       Dvar_RegisterFloat("cg_drawVersionX",50.0,(float)dVar22,512.0,uVar2,
+                          "the motion tracker after being detected");
+  cg_drawVersionY = Dvar_RegisterFloat("cg_drawVersionY",18.0,(float)dVar22,(float)dVar18,0,pcVar4);
+  snd_drawInfo = Dvar_RegisterEnum("snd_drawInfo",snd_drawInfoStrings,0,0,
+                                   "Draw debugging information for sounds");
+  cg_drawScriptUsage =
+       Dvar_RegisterBool("cg_drawScriptUsage",false,0,"Draw debugging information for scripts");
+  cg_drawMaterial =
+       Dvar_RegisterEnum("cg_drawMaterial",cg_drawMaterialNames,0,4,
+                         "Draw debugging information for materials");
+  cg_drawSnapshot =
+       Dvar_RegisterBool("cg_drawSnapshot",false,0,"Draw debugging information for snapshots");
+  cg_drawCrosshair = Dvar_RegisterBool("cg_drawCrosshair",true,4,"Turn on weapon crosshair");
+  cg_drawTurretCrosshair =
+       Dvar_RegisterBool("cg_drawTurretCrosshair",true,0,"Draw a cross hair when using a turret");
+  cg_drawCrosshairNames =
+       Dvar_RegisterBool("cg_drawCrosshairNames",true,4,
+                         "Draw the name of an enemy under the crosshair");
+  cg_drawCrosshairNamesPosX =
+       Dvar_RegisterInt("cg_drawCrosshairNamesPosX",300,0,0x280,0,
+                        "Virtual screen space position of the crosshair name");
+  cg_drawCrosshairNamesPosY =
+       Dvar_RegisterInt("cg_drawCrosshairNamesPosY",0xb4,0,0x1e0,0,
+                        "Virtual screen space position of the crosshair name");
+  cg_drawShellshock =
+       Dvar_RegisterBool("cg_drawShellshock",true,4,"Draw shellshock & flashbang screen effects.");
+  cg_drawDamageFlash = Dvar_RegisterBool("cg_drawDamageFlash",false,4,"Draw flash when hit.");
+  pcVar4 = &DAT_00000004;
+  cg_drawDamageDirection =
+       Dvar_RegisterBool("cg_drawDamageDirection",true,4,"Draw hit direction arrow.");
+  painVisionTriggerHealth =
+       Dvar_RegisterFloat("painVisionTriggerHealth",0.55,(float)dVar22,(float)dVar20,0,pcVar4);
+  dVar9 = 30.0;
+  dVar10 = 0.30000001192092896;
+  painVisionLerpOutRate =
+       Dvar_RegisterFloat("painVisionLerpOutRate",0.3,(float)dVar22,30.0,0,
+                          "the motion tracker after being detected");
+  painReverbRoomType =
+       Dvar_RegisterEnum("painReverbRoomType",(char **)&bg_soundRoomTypes,0x16,4,
+                         "Pain reverb room type.");
+  pcVar4 = "the motion tracker after being detected";
+  uVar2 = 0;
+  dVar13 = 0.5;
+  painReverbDryLevel =
+       Dvar_RegisterFloat("painReverbDryLevel",0.5,(float)dVar22,(float)dVar20,0,
+                          "the motion tracker after being detected");
+  dVar7 = 0.4000000059604645;
+  painReverbWetLevel =
+       Dvar_RegisterFloat("painReverbWetLevel",0.4,(float)dVar22,(float)dVar20,uVar2,pcVar4);
+  pcVar4 = "the motion tracker after being detected";
+  uVar2 = 0;
+  cg_hudStanceFlash =
+       Dvar_RegisterColor("cg_hudStanceFlash",(float)dVar20,(float)dVar20,(float)dVar20,
+                          (float)dVar20,0,"the motion tracker after being detected");
+  dVar21 = 128.0;
+  cg_hudDamageIconWidth =
+       Dvar_RegisterFloat("cg_hudDamageIconWidth",128.0,(float)dVar22,(float)dVar18,uVar2,pcVar4);
+  pIVar3 = &IMAGE_DOS_HEADER_82000000;
+  uVar2 = 0;
+  dVar6 = 64.0;
+  cg_hudDamageIconHeight =
+       Dvar_RegisterFloat("cg_hudDamageIconHeight",64.0,(float)dVar22,(float)dVar18,0,
+                          IMAGE_DOS_HEADER_82000000.e_magic);
+  cg_hudDamageIconOffset =
+       Dvar_RegisterFloat("cg_hudDamageIconOffset",(float)dVar21,(float)dVar22,(float)dVar18,uVar2,
+                          pIVar3->e_magic);
+  cg_hudDamageIconTime =
+       Dvar_RegisterInt("cg_hudDamageIconTime",6000,0,0x7fffffff,0,
+                        "The amount of time for the damage icon to stay on screen after damage is taken"
+                       );
+  cg_hudDamageIconInScope =
+       Dvar_RegisterBool("cg_hudDamageIconInScope",false,0,
+                         "Draw damage icons when aiming down the sight of a scoped weapon");
+  pcVar4 = "the motion tracker after being detected";
+  uVar2 = 0;
+  dVar15 = 1000.0;
+  cg_hudGrenadeIconMaxRangeFrag =
+       Dvar_RegisterFloat("cg_hudGrenadeIconMaxRangeFrag",250.0,(float)dVar22,1000.0,0,
+                          "the motion tracker after being detected");
+  cg_hudGrenadeIconMaxRangeFlash =
+       Dvar_RegisterFloat("cg_hudGrenadeIconMaxRangeFlash",500.0,(float)dVar22,2000.0,uVar2,pcVar4);
+  cg_hudGrenadeIconMaxHeight =
+       Dvar_RegisterFloat("cg_hudGrenadeIconMaxHeight",104.0,(float)dVar22,(float)dVar15,0,
+                          "the motion tracker after being detected");
+  uVar2 = 0;
+  cg_hudGrenadeIconInScope =
+       Dvar_RegisterBool("cg_hudGrenadeIconInScope",false,0,
+                         "Show the grenade indicator when aiming down the sight of a scoped weapon")
   ;
-  DAT_82a2f7fc = Dvar_RegisterFloat(0x4032000000000000,uVar18,uVar14,0xffffffff8201c6a8);
-  DAT_82a3d5a4 = Dvar_RegisterEnum(0xffffffff8201c670,0xffffffff82962d40,0,0,0xffffffff8201c680);
-  DAT_82a3d494 = Dvar_RegisterBool(0xffffffff8201c634,0,0,0xffffffff8201c648);
-  DAT_82a3d594 = Dvar_RegisterEnum(0xffffffff8201c5f8,0xffffffff82962d78,0,4,0xffffffff8201c608);
-  DAT_82a382e0 = Dvar_RegisterBool(0xffffffff8201c5e8,0,0,0xffffffff8201c5bc);
-  DAT_82a3827c = Dvar_RegisterBool(0xffffffff8201c58c,1,4,0xffffffff8201c5a0);
-  DAT_82a382d4 = Dvar_RegisterBool(0xffffffff82015484,1,0,0xffffffff8201c564);
-  DAT_82a3d4b8 = Dvar_RegisterBool(0xffffffff8201c51c,1,4,0xffffffff8201c534);
-  DAT_82a383a8 = Dvar_RegisterInt(0xffffffff8201c4cc,300,0,0x280,0,0xffffffff8201c4e8);
-  DAT_82a3d608 = Dvar_RegisterInt(0xffffffff8201c4b0,0xb4,0,0x1e0,0,0xffffffff8201c4e8);
-  DAT_82a382f0 = Dvar_RegisterBool(0xffffffff8201c470,1,4,0xffffffff8201c484);
-  DAT_82a3d604 = Dvar_RegisterBool(0xffffffff8201c444,0,4,0xffffffff8201c458);
-  DAT_82a383c4 = Dvar_RegisterBool(0xffffffff8201c42c,1,4,0xffffffff8201c410);
-  DAT_82a382b4 = Dvar_RegisterFloat(0x3fe19999a0000000,uVar18,uVar16,0xffffffff8201c3b8);
-  uVar5 = 0x403e000000000000;
-  uVar6 = 0x3fd3333340000000;
-  DAT_82a2f800 = Dvar_RegisterFloat(0x3fd3333340000000,uVar18,0x403e000000000000,0xffffffff8201c374)
+  pcVar4 = "the motion tracker after being detected";
+  cg_hudGrenadeIconOffset =
+       Dvar_RegisterFloat("cg_hudGrenadeIconOffset",(float)dVar16,(float)dVar22,(float)dVar18,uVar2,
+                          "the motion tracker after being detected");
+  uVar2 = 0;
+  dVar11 = 25.0;
+  cg_hudGrenadeIconHeight =
+       Dvar_RegisterFloat("cg_hudGrenadeIconHeight",25.0,(float)dVar22,(float)dVar18,0,pcVar4);
+  cg_hudGrenadeIconWidth =
+       Dvar_RegisterFloat("cg_hudGrenadeIconWidth",(float)dVar11,(float)dVar22,(float)dVar18,uVar2,
+                          "the motion tracker after being detected");
+  uVar2 = 0;
+  cg_hudGrenadeIconEnabledFlash =
+       Dvar_RegisterBool("cg_hudGrenadeIconEnabledFlash",false,0,
+                         "Show the grenade indicator for flash grenades");
+  pIVar3 = &IMAGE_DOS_HEADER_82000000;
+  dVar21 = 12.0;
+  cg_hudGrenadePointerHeight =
+       Dvar_RegisterFloat("cg_hudGrenadePointerHeight",12.0,(float)dVar22,(float)dVar18,uVar2,
+                          IMAGE_DOS_HEADER_82000000.e_magic);
+  uVar2 = 0;
+  cg_hudGrenadePointerWidth =
+       Dvar_RegisterFloat("cg_hudGrenadePointerWidth",(float)dVar11,(float)dVar22,(float)dVar18,0,
+                          pIVar3->e_magic);
+  cg_hudGrenadePointerPivot =
+       Dvar_RegisterVec2("cg_hudGrenadePointerPivot",(float)dVar21,27.0,(float)dVar22,(float)dVar18,
+                         uVar2,pIVar3->e_magic);
+  dVar12 = 0.10000000149011612;
+  cg_hudGrenadePointerPulseFreq =
+       Dvar_RegisterFloat("cg_hudGrenadePointerPulseFreq",1.7,0.1,(float)dVar16,0,
+                          g_mdlprv.model.clones[0x18].objBuf + 4);
+  pcVar4 = "the motion tracker after being detected";
+  uVar2 = 0;
+  dVar11 = 3.0;
+  cg_hudGrenadePointerPulseMax =
+       Dvar_RegisterFloat("cg_hudGrenadePointerPulseMax",1.85,(float)dVar22,3.0,0,
+                          "the motion tracker after being detected");
+  cg_hudGrenadePointerPulseMin =
+       Dvar_RegisterFloat("cg_hudGrenadePointerPulseMin",(float)dVar10,-3.0,(float)dVar20,uVar2,
+                          pcVar4);
+  pcVar4 = g_mdlprv.model.clones[0x18].objBuf + 4;
+  uVar5 = 0;
+  cg_hudGrenadeColorInProximity =
+       Dvar_RegisterVec4("cg_hudGrenadeColorInProximity",GRENADE_UI_COLOR_INPROXIMITY,(float)dVar22,
+                         (float)dVar20,0,g_mdlprv.model.clones[0x18].objBuf + 4);
+  uVar2 = 0x8f24;
+  cg_hudGrenadeColorDangerClose =
+       Dvar_RegisterVec4("cg_hudGrenadeColorDangerClose",GRENADE_UI_COLOR_DANGERCLOSE,(float)dVar22,
+                         (float)dVar20,uVar5,pcVar4);
+  pcVar4 = "the motion tracker after being detected";
+  cg_hudGrenadeDangerCloseDistance =
+       Dvar_RegisterFloat("cg_hudGrenadeDangerCloseDistance",(float)dVar9,(float)dVar22,
+                          (float)dVar15,uVar2,"the motion tracker after being detected");
+  dVar17 = 5.0;
+  cg_hudChatPosition =
+       Dvar_RegisterVec2("cg_hudChatPosition",5.0,200.0,(float)dVar22,(float)dVar19,0,pcVar4);
+  pcVar4 = "the motion tracker after being detected";
+  uVar2 = 0;
+  cg_hudChatIntermissionPosition =
+       Dvar_RegisterVec2("cg_hudChatIntermissionPosition",(float)dVar17,110.0,(float)dVar22,
+                         (float)dVar19,0,"the motion tracker after being detected");
+  cg_hudSayPosition =
+       Dvar_RegisterVec2("cg_hudSayPosition",(float)dVar17,175.0,(float)dVar22,(float)dVar19,uVar2,
+                         pcVar4);
+  cg_hudVotePosition =
+       Dvar_RegisterVec2("cg_hudVotePosition",(float)dVar17,220.0,(float)dVar22,(float)dVar19,0,
+                         "the motion tracker after being detected");
+  cg_drawLagometer = Dvar_RegisterBool("drawLagometer",false,0,"Enable the \'lagometer\'");
+  pcVar4 = (char *)0x0;
+  drawEntityCount = Dvar_RegisterBool("drawEntityCount",false,0,"Enable entity count drawing");
+  dVar16 = -3.4028234663852886e+38;
+  dVar9 = -180.0;
+  dVar19 = 3.4028234663852886e+38;
+  dVar15 = -55.0;
+  drawEntityCountPos =
+       Dvar_RegisterVec2("drawEntityCountPos",-55.0,-180.0,-3.4028235e+38,3.4028235e+38,0,pcVar4);
+  drawEntityCountSize =
+       Dvar_RegisterInt("drawEntityCountSize",0x20,0,0x7fffffff,0,
+                        "How big to draw the entity count graph");
+  drawServerBandwidth =
+       Dvar_RegisterBool("drawServerBandwidth",false,0,"Enable drawing server bandwidth");
+  dVar21 = -340.0;
+  drawServerBandwidthPos =
+       Dvar_RegisterVec2("drawServerBandwidthPos",(float)dVar15,-340.0,(float)dVar16,(float)dVar19,0
+                         ,"the motion tracker after being detected");
+  drawServerBandwidthSize =
+       Dvar_RegisterInt("drawEntityCountSize",0x20,0,0x7fffffff,0,
+                        "How big to draw the entity count graph");
+  drawKillcamData =
+       Dvar_RegisterBool("drawKillcamData",false,0,"Enable drawing server killcam data");
+  drawKillcamDataPos =
+       Dvar_RegisterVec2("drawKillcamDataPos",(float)dVar15,(float)dVar21,(float)dVar16,
+                         (float)dVar19,0,"the motion tracker after being detected");
+  drawKillcamDataSize =
+       Dvar_RegisterInt("drawKillcamDataSize",0x20,0,0x7fffffff,0,
+                        "How big to draw the killcam data graph");
+  uVar2 = 0;
+  dVar21 = 10000.0;
+  cg_hudProneY = Dvar_RegisterFloat("cg_hudProneY",-160.0,-10000.0,10000.0,0,
+                                    g_mdlprv.model.clones[0x18].objBuf + 4);
+  dVar15 = 0.6000000238418579;
+  cg_mapLocationSelectionCursorSpeed =
+       Dvar_RegisterFloat("cg_mapLocationSelectionCursorSpeed",0.6,0.001,(float)dVar20,uVar2,
+                          "the motion tracker after being detected");
+  pcVar4 = (char *)0xffffffff;
+  uVar2 = 0;
+  cg_packetAnalysisClient =
+       Dvar_RegisterInt("cg_packetAnalysisClient",0,-1,0x12,0,
+                        "The client num to get the packet analysis done");
+  cg_packetAnalysisTextScale =
+       Dvar_RegisterFloat("cg_packetAnalysisTextScale",(float)dVar8,(float)dVar22,(float)dVar20,
+                          uVar2,pcVar4);
+  cg_packetAnalysisEntTextScale =
+       Dvar_RegisterFloat("cg_packetAnalysisEntTextScale",0.23,(float)dVar22,(float)dVar20,0,
+                          "the motion tracker after being detected");
+  cg_packetAnalysisTextY =
+       Dvar_RegisterInt("cg_packetAnalysisTextY",0xf,-10,0x400,0,
+                        "The y coordinate of the packet analysis debug prints");
+  pcVar4 = (char *)0xfffffff6;
+  uVar2 = 0xfffb;
+  cg_packetAnalysisEntTextY =
+       Dvar_RegisterInt("cg_packetAnalysisEntTextY",-5,-10,0x400,0,
+                        "The y coordinate of the packet analysis entity debug prints");
+  dVar16 = 9.999999747378752e-05;
+  cg_hudSplitscreenCompassScale =
+       Dvar_RegisterFloat("cg_hudSplitscreenCompassScale",(float)dVar20,0.0001,(float)dVar19,uVar2,
+                          pcVar4);
+  pcVar4 = "c\\cgame_mp\\cg_local_mp.h";
+  uVar2 = 0;
+  cg_hudSplitscreenCompassElementScale =
+       Dvar_RegisterFloat("cg_hudSplitscreenCompassElementScale",1.5,(float)dVar16,(float)dVar19,0,
+                          "c\\cgame_mp\\cg_local_mp.h");
+  cg_hudSplitscreenStanceScale =
+       Dvar_RegisterFloat("cg_hudSplitscreenStanceScale",(float)dVar20,(float)dVar16,(float)dVar19,
+                          uVar2,pcVar4);
+  pcVar4 = "c\\cgame_mp\\cg_local_mp.h";
+  uVar2 = 0;
+  dVar8 = 9.999999747378752e-06;
+  cg_hudSplitscreenScoreboardScale =
+       Dvar_RegisterFloat("cg_hudSplitscreenScoreboardScale",(float)dVar14,1e-05,(float)dVar19,0,
+                          "c\\cgame_mp\\cg_local_mp.h");
+  cg_hudSplitscreenBannerScoreboardScale =
+       Dvar_RegisterFloat("cg_hudSplitscreenBannerScoreboardScale",(float)dVar14,(float)dVar8,
+                          (float)dVar19,uVar2,pcVar4);
+  cg_splitscreenSpectatorScaleIncrease =
+       Dvar_RegisterFloat("cg_splitscreenSpectatorScaleIncrease",(float)dVar10,(float)dVar16,
+                          (float)dVar19,0,"the motion tracker after being detected");
+  uVar2 = 0;
+  cg_weaponCycleDelay =
+       Dvar_RegisterInt("cg_weaponCycleDelay",0,0,0x7fffffff,0,
+                        "The delay after cycling to a new weapon to prevent holding down the cycle weapon button from cycling too fast"
+                       );
+  pcVar4 = "c\\cgame_mp\\cg_local_mp.h";
+  cg_crosshairAlpha =
+       Dvar_RegisterFloat("cg_crosshairAlpha",(float)dVar20,(float)dVar22,(float)dVar20,uVar2,
+                          "c\\cgame_mp\\cg_local_mp.h");
+  cg_crosshairAlphaMin =
+       Dvar_RegisterFloat("cg_crosshairAlphaMin",(float)dVar13,(float)dVar22,(float)dVar20,0,pcVar4)
   ;
-  DAT_82a3d47c = Dvar_RegisterEnum(0xffffffff8201c348,0xffffffff829611f8,0x16,4,0xffffffff8201c35c);
-  uVar9 = 0x3fe0000000000000;
-  DAT_82a38234 = Dvar_RegisterFloat(0x3fe0000000000000,uVar18,uVar16,0xffffffff8201c31c);
-  uVar3 = 0x3fd99999a0000000;
-  DAT_82a383b8 = Dvar_RegisterFloat(0x3fd99999a0000000,uVar18,uVar16,0xffffffff8201c308);
-  DAT_82a3d488 = Dvar_RegisterColor(uVar16,uVar16,uVar16,uVar16,0xffffffff8201c2a0);
-  uVar17 = 0x4060000000000000;
-  DAT_82a3830c = Dvar_RegisterFloat(0x4060000000000000,uVar18,uVar14,0xffffffff8201c288);
-  uVar2 = 0x4050000000000000;
-  DAT_82a382d8 = Dvar_RegisterFloat(0x4050000000000000,uVar18,uVar14,0xffffffff8201c230);
-  DAT_82a382ac = Dvar_RegisterFloat(uVar17,uVar18,uVar14,0xffffffff8201c218);
-  DAT_82a3d624 = Dvar_RegisterInt(0xffffffff8201c180,6000,0,0x7fffffff,0,0xffffffff8201c198);
-  DAT_82a3d4ac = Dvar_RegisterBool(0xffffffff8201c124,0,0,0xffffffff8201c140);
-  uVar11 = 0x408f400000000000;
-  DAT_82a38240 = Dvar_RegisterFloat(0x406f400000000000,uVar18,0x408f400000000000,0xffffffff8201c094)
+  cg_crosshairDynamic = Dvar_RegisterBool("cg_crosshairDynamic",false,4,"Crosshair is Dynamic");
+  cg_crosshairEnemyColor =
+       Dvar_RegisterBool("cg_crosshairEnemyColor",true,4,"The crosshair color when over an enemy");
+  uVar2 = 1;
+  cg_brass = Dvar_RegisterBool("cg_brass",true,0,"Weapons eject brass");
+  cg_centertime =
+       Dvar_RegisterFloat("cg_centertime",(float)dVar17,(float)dVar22,(float)dVar19,uVar2,
+                          "the motion tracker after being detected");
+  cg_debugPosition =
+       Dvar_RegisterBool("cg_debugposition",false,4,"Output position debugging information");
+  cg_debugEvents =
+       Dvar_RegisterInt("cg_debugevents",-1,-1,0xba,4,
+                        "Output event debug information.  EV_NONE turns it off.  EV_MAX_EVENTS shows all events.  Otherwise, show only specified value."
+                       );
+  dVar10 = 100.0;
+  cg_errorDecay =
+       Dvar_RegisterFloat("cg_errordecay",100.0,(float)dVar22,(float)dVar19,0,
+                          IMAGE_DOS_HEADER_82000000.e_magic);
+  cg_showmiss = Dvar_RegisterInt("cg_showmiss",0,0,2,0,"Show prediction errors");
+  cg_footsteps = Dvar_RegisterBool("cg_footsteps",true,4,"Play footstep sounds");
+  uVar2 = 0;
+  cg_marks_ents_player_only =
+       Dvar_RegisterBool("cg_marks_ents_player_only",false,0,
+                         "Marks on entities from players\' bullets only.");
+  pcVar4 = "the motion tracker after being detected";
+  tracer_thermalWidthMult =
+       Dvar_RegisterFloat("tracer_thermalWidthMult",(float)dVar14,(float)dVar12,(float)dVar19,uVar2,
+                          "the motion tracker after being detected");
+  tracer_firstPersonMaxWidth =
+       Dvar_RegisterFloat("tracer_firstPersonMaxWidth",4.0,(float)dVar12,(float)dVar19,0,pcVar4);
+  pcVar4 = (char *)0x0;
+  tracer_explosiveOverride =
+       Dvar_RegisterBool("tracer_explosiveOverride",true,0,
+                         "When turned on, will apply an override to the tracer settings when shooting explosive bullets."
+                        );
+  dVar14 = 0.75;
+  tracer_explosiveColor1 =
+       Dvar_RegisterVec4("tracer_explosiveColor1",(float)dVar20,0.75,0.75,(float)dVar22,
+                         (float)dVar22,(float)dVar20,0,pcVar4);
+  uVar2 = 0;
+  tracer_explosiveColor2 =
+       Dvar_RegisterVec4("tracer_explosiveColor2",(float)dVar20,(float)dVar14,(float)dVar14,
+                         (float)dVar20,(float)dVar22,(float)dVar20,0,
+                         g_mdlprv.model.clones[0x18].objBuf + 4);
+  pcVar4 = "The 3rd color of a bullet tracer when using explosive bullets";
+  tracer_explosiveColor3 =
+       Dvar_RegisterVec4("tracer_explosiveColor3",(float)dVar20,(float)dVar14,(float)dVar14,
+                         (float)dVar20,(float)dVar22,(float)dVar20,uVar2,
+                         "The 3rd color of a bullet tracer when using explosive bullets");
+  uVar2 = 0;
+  tracer_explosiveColor4 =
+       Dvar_RegisterVec4("tracer_explosiveColor4",(float)dVar20,(float)dVar14,(float)dVar14,
+                         (float)dVar20,(float)dVar22,(float)dVar20,0,pcVar4);
+  pcVar4 = "The 5th color of a bullet tracer when using explosive bullets";
+  tracer_explosiveColor5 =
+       Dvar_RegisterVec4("tracer_explosiveColor5",(float)dVar20,(float)dVar14,(float)dVar14,
+                         (float)dVar20,(float)dVar22,(float)dVar20,uVar2,
+                         "The 5th color of a bullet tracer when using explosive bullets");
+  tracer_explosiveWidth =
+       Dvar_RegisterFloat("tracer_explosiveWidth",15.0,(float)dVar20,(float)dVar19,0,pcVar4);
+  tracer_debugDraw =
+       Dvar_RegisterBool("tracer_debugDraw",false,0,
+                         "Draw debug lines where the tracers should be visible.");
+  pcVar4 = (char *)0x0;
+  uVar2 = 0;
+  tracer_stoppingPowerOverride =
+       Dvar_RegisterBool("tracer_stoppingPowerOverride",false,0,
+                         "When turned on, will apply an override to the tracer settings when the stopping power perk is active."
+                        );
+  tracer_stoppingPowerColor1 =
+       Dvar_RegisterVec4("tracer_stoppingPowerColor1",(float)dVar22,(float)dVar22,(float)dVar22,
+                         (float)dVar22,(float)dVar22,(float)dVar20,uVar2,pcVar4);
+  uVar2 = 0;
+  tracer_stoppingPowerColor2 =
+       Dvar_RegisterVec4("tracer_stoppingPowerColor2",(float)dVar20,(float)dVar20,(float)dVar20,
+                         (float)dVar20,(float)dVar22,(float)dVar20,0,
+                         g_mdlprv.model.clones[0x18].objBuf + 4);
+  pcVar4 = "The 3rd color of a bullet tracer when using StoppingPower bullets";
+  tracer_stoppingPowerColor3 =
+       Dvar_RegisterVec4("tracer_stoppingPowerColor3",(float)dVar20,(float)dVar22,(float)dVar22,
+                         (float)dVar20,(float)dVar22,(float)dVar20,uVar2,
+                         "The 3rd color of a bullet tracer when using StoppingPower bullets");
+  tracer_stoppingPowerColor4 =
+       Dvar_RegisterVec4("tracer_stoppingPowerColor4",(float)dVar20,(float)dVar22,(float)dVar22,
+                         (float)dVar20,(float)dVar22,(float)dVar20,0,pcVar4);
+  uVar2 = 0;
+  tracer_stoppingPowerColor5 =
+       Dvar_RegisterVec4("tracer_stoppingPowerColor5",(float)dVar20,(float)dVar20,(float)dVar22,
+                         (float)dVar20,(float)dVar22,(float)dVar20,0,
+                         "the motion tracker after being detected");
+  pcVar4 = "the motion tracker after being detected";
+  dVar8 = 6.0;
+  tracer_stoppingPowerWidth =
+       Dvar_RegisterFloat("tracer_stoppingPowerWidth",6.0,(float)dVar20,(float)dVar19,uVar2,
+                          "the motion tracker after being detected");
+  cg_thirdPersonRange =
+       Dvar_RegisterFloat("cg_thirdPersonRange",120.0,(float)dVar22,1024.0,0,pcVar4);
+  cg_thirdPersonAngle =
+       Dvar_RegisterFloat("cg_thirdPersonAngle",(float)dVar22,(float)dVar9,360.0,0,
+                          IMAGE_DOS_HEADER_82000000.e_magic);
+  cg_thirdPerson = Dvar_RegisterBool("cg_thirdPerson",false,4,"Use third person view");
+  cg_thirdPersonMode =
+       Dvar_RegisterEnum("cg_thirdPersonMode",cg_thirdPersonModeNames,1,4,
+                         "How the camera behaves in third person");
+  cg_thirdPersonSpectator =
+       Dvar_RegisterBool("cg_thirdPersonSpectator",true,4,"Use third person view in spectator mode")
   ;
-  DAT_82a3d480 = Dvar_RegisterFloat(0x407f400000000000,uVar18,0x409f400000000000,0xffffffff8201c074)
+  cg_chatTime = Dvar_RegisterInt("cg_chatTime",12000,0,60000,0,
+                                 "The amount of time that a chat message is visible");
+  cg_chatHeight = Dvar_RegisterInt("cg_chatHeight",4,0,8,0,"The font height of a chat message");
+  cg_teamChatsOnly =
+       Dvar_RegisterBool("cg_teamChatsOnly",false,0,"Allow chatting only on the same team");
+  cg_paused = Dvar_RegisterInt("cl_paused",0,0,2,0x2000,"Pause the game");
+  cg_drawpaused = Dvar_RegisterBool("cg_drawpaused",true,0,"Draw paused screen");
+  cg_debug_overlay_viewport =
+       Dvar_RegisterBool("cg_debug_overlay_viewport",false,4,
+                         "Remove the sniper overlay so you can check that the scissor window is correct."
+                        );
+  cg_dumpAnims = Dvar_RegisterInt("cg_dumpAnims",-1,-1,0x7ff,4,
+                                  "Output animation info for the given entity id");
+  cg_dobjdump = Dvar_RegisterInt("cg_dobjdump",-1,-1,0x7ff,4,
+                                 "Output dobj info for the given entity id");
+  cg_developer = Dvar_RegisterInt("developer",0,0,2,0,"Enable development options");
+  uVar2 = 0;
+  cg_minicon = Dvar_RegisterBool("con_minicon",false,0,"Display the mini console on screen");
+  cg_subtitleMinTime =
+       Dvar_RegisterFloat("cg_subtitleMinTime",(float)dVar11,(float)dVar22,(float)dVar19,uVar2,
+                          "the motion tracker after being detected");
+  cg_subtitleWidthStandard =
+       Dvar_RegisterInt("cg_subtitleWidthStandard",0x1e0,0x82,0x680,0,
+                        "The width of the subtitles on a non wide-screen");
+  cg_subtitleWidthWidescreen =
+       Dvar_RegisterInt("cg_subtitleWidthWidescreen",600,0x82,0x680,0,
+                        "The width of the subtitle on a wide-screen");
+  cg_gameMessageWidth =
+       Dvar_RegisterInt("cg_gameMessageWidth",0x1c7,0x82,0x680,0,
+                        "The maximum character width of the game messages");
+  cg_gameBoldMessageWidth =
+       Dvar_RegisterInt("cg_gameBoldMessageWidth",0x186,0x82,0x680,0,
+                        "The maximum character width of the bold game messages");
+  cg_chatWithOtherTeams =
+       Dvar_RegisterBool("cg_chatWithOtherTeams",false,4,
+                         "If true, players can talk to other players regardless of their teams");
+  cg_hearKillerEnabled =
+       Dvar_RegisterBool("cg_hearKillerEnabled",false,4,
+                         "If true, you can hear the person who just killed you");
+  cg_deadChatWithTeam =
+       Dvar_RegisterBool("cg_deadChatWithTeam",false,4,
+                         "If true, dead players can talk to living players on their team");
+  cg_deadHearTeamLiving =
+       Dvar_RegisterBool("cg_deadHearTeamLiving",false,4,
+                         "If true, dead players can hear living players on their team talk");
+  cg_deadHearAllLiving =
+       Dvar_RegisterBool("cg_deadHearAllLiving",false,4,
+                         "If true, dead players can hear all living players talk");
+  cg_deadChatWithDead =
+       Dvar_RegisterBool("cg_deadChatWithDead",false,4,
+                         "If true, dead players can all chat together, regardless of team");
+  cg_everyoneHearsEveryone =
+       Dvar_RegisterBool("cg_everyoneHearsEveryone",false,4,
+                         "If true, all players can all chat together, regardless of team or death");
+  cg_hearKillerTime =
+       Dvar_RegisterInt("cg_hearKillerTime",2000,0,0x7fffffff,4,
+                        "Duration (in milliseconds) to hear the person who just killed you");
+  cg_hearVictimEnabled =
+       Dvar_RegisterBool("cg_hearVictimEnabled",true,4,
+                         "If true, you can hear the person you just killed");
+  cg_hearVictimTime =
+       Dvar_RegisterInt("cg_hearVictimTime",2000,0,0x7fffffff,4,
+                        "Duration (in milliseconds) to hear the person you just killed");
+  pcVar4 = (char *)0x0;
+  uVar2 = 1;
+  cg_descriptiveText =
+       Dvar_RegisterBool("cg_descriptiveText",true,0,"Draw descriptive spectator messages");
+  cg_youInKillCamSize =
+       Dvar_RegisterFloat("cg_youInKillCamSize",(float)dVar8,(float)dVar22,(float)dVar10,uVar2,
+                          pcVar4);
+  cg_killCamDefaultLerpTime =
+       Dvar_RegisterInt("cg_killCamDefaultLerpTime",300,0,0x7fffffff,4,
+                        "Default time used to lerp between killcam entities.");
+  uVar2 = 900;
+  cg_killCamTurretLerpTime =
+       Dvar_RegisterInt("cg_killCamTurretLerpTime",900,0,0x7fffffff,4,
+                        "Time used to lerp to a killcam entity of the TURRET type.");
+  pcVar4 = "the motion tracker after being detected";
+  cg_scriptIconSize =
+       Dvar_RegisterFloat("cg_scriptIconSize",(float)dVar22,(float)dVar22,(float)dVar10,uVar2,
+                          "the motion tracker after being detected");
+  uVar2 = 0;
+  cg_connectionIconSize =
+       Dvar_RegisterFloat("cg_connectionIconSize",(float)dVar22,(float)dVar22,(float)dVar10,0,pcVar4
+                         );
+  cg_voiceIconSize =
+       Dvar_RegisterFloat("cg_voiceIconSize",(float)dVar22,(float)dVar22,(float)dVar10,uVar2,pcVar4)
   ;
-  DAT_82a3d470 = Dvar_RegisterFloat(0x405a000000000000,uVar18,uVar11,0xffffffff8201bf74);
-  DAT_82a3ce30 = Dvar_RegisterBool(0xffffffff8201bf08,0,0,0xffffffff8201bf28);
-  DAT_82a38378 = Dvar_RegisterFloat(uVar12,uVar18,uVar14,0xffffffff8201beb4);
-  uVar7 = 0x4039000000000000;
-  DAT_82a3d56c = Dvar_RegisterFloat(0x4039000000000000,uVar18,uVar14,0xffffffff8201be70);
-  DAT_82a382a8 = Dvar_RegisterFloat(uVar7,uVar18,uVar14,0xffffffff8201be30);
-  DAT_82a2f7f0 = Dvar_RegisterBool(0xffffffff8201bde0,0,0,0xffffffff8201be00);
-  uVar17 = 0x4028000000000000;
-  DAT_82a3d67c = Dvar_RegisterFloat(0x4028000000000000,uVar18,uVar14,0xffffffff8201bd98);
-  DAT_82a3d574 = Dvar_RegisterFloat(uVar7,uVar18,uVar14,0xffffffff8201bd50);
-  DAT_82a383d4 = Dvar_RegisterVec2(uVar17,0x403b000000000000,uVar18,uVar14,0xffffffff8201bd00);
-  uVar8 = 0x3fb99999a0000000;
-  DAT_82a3839c = Dvar_RegisterFloat(0x3ffb333340000000,0x3fb99999a0000000,uVar12,0xffffffff8201bc8c)
-  ;
-  uVar7 = 0x4008000000000000;
-  DAT_82a2f7f8 = Dvar_RegisterFloat(0x3ffd9999a0000000,uVar18,0x4008000000000000,0xffffffff8201bbdc)
-  ;
-  DAT_82a3d5e0 = Dvar_RegisterFloat(uVar6,0xc008000000000000,uVar16,0xffffffff8201bbbc);
-  DAT_82a38314 = Dvar_RegisterVec4(uVar18,uVar16,0xffffffff8201bacc,0xffffffff82018f14,
-                                   0xffffffff82020000,0xffffffff82a40000,0,0xffffffff8201baec);
-  DAT_82a3d584 = Dvar_RegisterVec4(uVar18,uVar16,0xffffffff8201baac,0xffffffff82018f24);
-  DAT_82a3d68c = Dvar_RegisterFloat(uVar5,uVar18,uVar11,0xffffffff8201b9e0);
-  uVar13 = 0x4014000000000000;
-  DAT_82a382e8 = Dvar_RegisterVec2(0x4014000000000000,0x4069000000000000,uVar18,uVar15,
-                                   0xffffffff8201b9cc);
-  DAT_82a3d5cc = Dvar_RegisterVec2(uVar13,0x405b800000000000,uVar18,uVar15,0xffffffff8201b958);
-  DAT_82a2f810 = Dvar_RegisterVec2(uVar13,0x4065e00000000000,uVar18,uVar15,0xffffffff8201b924);
-  DAT_82a3d5c0 = Dvar_RegisterVec2(uVar13,0x406b800000000000,uVar18,uVar15,0xffffffff8201b8ec);
-  DAT_82a3d674 = Dvar_RegisterBool(0xffffffff8201b8c4,0,0,0xffffffff8201b8d4);
-  DAT_82a3d5f4 = Dvar_RegisterBool(0xffffffff8201b8b4,0,0,0xffffffff8201b898);
-  uVar12 = 0xc7efffffe0000000;
-  uVar5 = 0xc066800000000000;
-  uVar15 = 0x47efffffe0000000;
-  uVar11 = 0xc04b800000000000;
-  DAT_82a382cc = Dvar_RegisterVec2(0xc04b800000000000,0xc066800000000000,0xc7efffffe0000000,
-                                   0x47efffffe0000000,0xffffffff8201b884);
-  DAT_82a3d5b8 = Dvar_RegisterInt(0xffffffff8201b820,0x20,0,0x7fffffff,0,0xffffffff8201b834);
-  DAT_82a3d580 = Dvar_RegisterBool(0xffffffff8201b7ec,0,0,0xffffffff8201b800);
-  uVar17 = 0xc075400000000000;
-  DAT_82a3823c = Dvar_RegisterVec2(uVar11,0xc075400000000000,uVar12,uVar15,0xffffffff8201b7a4);
-  DAT_82a3d46c = Dvar_RegisterInt(0xffffffff8201b820,0x20,0,0x7fffffff,0,0xffffffff8201b834);
-  DAT_82a3d63c = Dvar_RegisterBool(0xffffffff8201b770,0,0,0xffffffff8201b780);
-  DAT_82a3d5a0 = Dvar_RegisterVec2(uVar11,uVar17,uVar12,uVar15,0xffffffff8201b734);
-  DAT_82a3d498 = Dvar_RegisterInt(0xffffffff8201b6f8,0x20,0,0x7fffffff,0,0xffffffff8201b70c);
-  uVar17 = 0x40c3880000000000;
-  DAT_82a38330 = Dvar_RegisterFloat(0xc064000000000000,0xc0c3880000000000,0x40c3880000000000,
-                                    0xffffffff8201b6a4);
-  uVar11 = 0x3fe3333340000000;
-  DAT_82a382a0 = Dvar_RegisterFloat(0x3fe3333340000000,0x3f50624de0000000,uVar16,0xffffffff8201b644)
-  ;
-  DAT_82a3834c = Dvar_RegisterInt(0xffffffff8201b5fc,0,0xffffffffffffffff,0x12,0,0xffffffff8201b614)
-  ;
-  DAT_82a3d600 = Dvar_RegisterFloat(uVar4,uVar18,uVar16,0xffffffff8201b5e0);
-  DAT_82a38288 = Dvar_RegisterFloat(0x3fcd70a3e0000000,uVar18,uVar16,0xffffffff8201b54c);
-  DAT_82a382fc = Dvar_RegisterInt(0xffffffff8201b534,0xf,0xfffffffffffffff6,0x400,0,
-                                  0xffffffff8201b4fc);
-  DAT_82a3d5ac = Dvar_RegisterInt(0xffffffff8201b4a4,0xfffffffffffffffb,0xfffffffffffffff6,0x400,0,
-                                  0xffffffff8201b4c0);
-  uVar12 = 0x3f1a36e2e0000000;
-  DAT_82a38290 = Dvar_RegisterFloat(uVar16,0x3f1a36e2e0000000,uVar15,0xffffffff8201214c);
-  DAT_82a3d66c = Dvar_RegisterFloat(0x3ff8000000000000,uVar12,uVar15,0xffffffff820123dc);
-  DAT_82a382a4 = Dvar_RegisterFloat(uVar16,uVar12,uVar15,0xffffffff8201b418);
-  uVar4 = 0x3ee4f8b580000000;
-  DAT_82a38380 = Dvar_RegisterFloat(uVar10,0x3ee4f8b580000000,uVar15,0xffffffff8201b37c);
-  DAT_82a3ce34 = Dvar_RegisterFloat(uVar10,uVar4,uVar15,0xffffffff8201b354);
-  DAT_82a3d620 = Dvar_RegisterFloat(uVar6,uVar12,uVar15,0xffffffff8201b2b0);
-  DAT_82a3d458 = Dvar_RegisterInt(0xffffffff8201b22c,0,0,0x7fffffff,0,0xffffffff8201b240);
-  DAT_82a38340 = Dvar_RegisterFloat(uVar16,uVar18,uVar16,0xffffffff82015418);
-  DAT_82a3ce20 = Dvar_RegisterFloat(uVar9,uVar18,uVar16,0xffffffff820156c0);
-  DAT_82a3d4a8 = Dvar_RegisterBool(0xffffffff820156dc,0,4,0xffffffff8201b1b4);
-  DAT_82a3d44c = Dvar_RegisterBool(0xffffffff82015400,1,4,0xffffffff8201b18c);
-  DAT_82a38268 = Dvar_RegisterBool(0xffffffff8201b16c,1,0,0xffffffff8201b178);
-  DAT_82a38388 = Dvar_RegisterFloat(uVar13,uVar18,uVar15,0xffffffff8201b12c);
-  DAT_82a38360 = Dvar_RegisterBool(0xffffffff8201b0f0,0,4,0xffffffff8201b104);
-  DAT_82a3d478 = Dvar_RegisterInt(0xffffffff8201b0e0,0xffffffffffffffff,0xffffffffffffffff,0xba,4,
-                                  0xffffffff8201b060);
-  uVar6 = 0x4059000000000000;
-  DAT_82a3d5d8 = Dvar_RegisterFloat(0x4059000000000000,uVar18,uVar15,0xffffffff8201b030);
-  DAT_82a3d648 = Dvar_RegisterInt(0xffffffff8201b024,0,0,2,0,0xffffffff8201b00c);
-  DAT_82a3d4c4 = Dvar_RegisterBool(0xffffffff8201afe4,1,4,0xffffffff8201aff4);
-  DAT_82a38278 = Dvar_RegisterBool(0xffffffff8201af98,0,0,0xffffffff8201afb4);
-  DAT_82a3d690 = Dvar_RegisterFloat(uVar10,uVar8,uVar15,0xffffffff8201af38);
-  DAT_82a383a0 = Dvar_RegisterFloat(0x4010000000000000,uVar8,uVar15,0xffffffff8201aed4);
-  DAT_82a3d610 = Dvar_RegisterBool(0xffffffff8201aeb8,1,0,0xffffffff8201ae58);
-  uVar10 = 0x3fe8000000000000;
-  DAT_82a3832c = Dvar_RegisterVec4(uVar16,0x3fe8000000000000,0x3fe8000000000000,uVar18,uVar18,uVar16
-                                   ,0xffffffff8201ae00);
-  DAT_82a38324 = Dvar_RegisterVec4(uVar16,uVar10,uVar10,uVar16,uVar18,uVar16,0xffffffff8201ada8);
-  DAT_82a38308 = Dvar_RegisterVec4(uVar16,uVar10,uVar10,uVar16,uVar18,uVar16,0xffffffff8201ad50);
-  DAT_82a3ce44 = Dvar_RegisterVec4(uVar16,uVar10,uVar10,uVar16,uVar18,uVar16,0xffffffff8201acf8);
-  DAT_82a3d634 = Dvar_RegisterVec4(uVar16,uVar10,uVar10,uVar16,uVar18,uVar16,0xffffffff8201aca0);
-  DAT_82a3d45c = Dvar_RegisterFloat(0x402e000000000000,uVar16,uVar15,0xffffffff8201ac4c);
-  DAT_82a38394 = Dvar_RegisterBool(0xffffffff8201ac38,0,0,0xffffffff8201ac00);
-  DAT_82a3828c = Dvar_RegisterBool(0xffffffff8201ab74,0,0,0xffffffff8201ab98);
-  DAT_82a3d5d0 = Dvar_RegisterVec4(uVar18,uVar18,uVar18,uVar18,uVar18,uVar16,0xffffffff8201ab14);
-  DAT_82a38390 = Dvar_RegisterVec4(uVar16,uVar16,uVar16,uVar16,uVar18,uVar16,0xffffffff8201aab4);
-  DAT_82a38254 = Dvar_RegisterVec4(uVar16,uVar18,uVar18,uVar16,uVar18,uVar16,0xffffffff8201aa54);
-  DAT_82a3d6ac = Dvar_RegisterVec4(uVar16,uVar18,uVar18,uVar16,uVar18,uVar16,0xffffffff8201a9f4);
-  DAT_82a3833c = Dvar_RegisterVec4(uVar16,uVar16,uVar18,uVar16,uVar18,uVar16,0xffffffff8201a994);
-  uVar4 = 0x4018000000000000;
-  DAT_82a382b0 = Dvar_RegisterFloat(0x4018000000000000,uVar16,uVar15,0xffffffff8201a938);
-  DAT_82a3d468 = Dvar_RegisterFloat(0x405e000000000000,uVar18,0x4090000000000000,0xffffffff8201a924)
-  ;
-  DAT_82a3d6a4 = Dvar_RegisterFloat(uVar18,uVar5,0x4076800000000000,0xffffffff8201a890);
-  DAT_82a38258 = Dvar_RegisterBool(0xffffffff8201a868,0,4,0xffffffff8201a878);
-  DAT_82a382dc = Dvar_RegisterEnum(0xffffffff8201a854,0xffffffff82962d6c,1,4,0xffffffff8201a82c);
-  DAT_82a38270 = Dvar_RegisterBool(0xffffffff8201a7ec,1,4,0xffffffff8201a804);
-  DAT_82a3d614 = Dvar_RegisterInt(0xffffffff8201a7e0,12000,0,60000,0,0xffffffff8201a7ac);
-  DAT_82a3838c = Dvar_RegisterInt(0xffffffff8201a778,4,0,8,0,0xffffffff8201a788);
-  DAT_82a3d630 = Dvar_RegisterBool(0xffffffff8201a73c,0,0,0xffffffff8201a750);
-  DAT_82a3d69c = Dvar_RegisterInt(0xffffffff82018374,0,0,2,0x2000,0xffffffff8201a72c);
-  DAT_82a3d61c = Dvar_RegisterBool(0xffffffff82015468,1,0,0xffffffff8201a718);
-  DAT_82a3d5a8 = Dvar_RegisterBool(0xffffffff8201a6a8,0,4,0xffffffff8201a6c8);
-  DAT_82a3d5c4 = Dvar_RegisterInt(0xffffffff8201a668,0xffffffffffffffff,0xffffffffffffffff,0x7ff,4,
-                                  0xffffffff8201a678);
-  DAT_82a3d49c = Dvar_RegisterInt(0xffffffff8201a630,0xffffffffffffffff,0xffffffffffffffff,0x7ff,4,
-                                  0xffffffff8201a63c);
-  DAT_82a3d678 = Dvar_RegisterInt(0xffffffff8201a624,0,0,2,0,0xffffffff8201a608);
-  DAT_82a383a4 = Dvar_RegisterBool(0xffffffff8201a5d8,0,0,0xffffffff8201a5e4);
-  DAT_82a3d684 = Dvar_RegisterFloat(uVar7,uVar18,uVar15,0xffffffff8201a57c);
-  DAT_82a3d5dc = Dvar_RegisterInt(0xffffffff8201a530,0x1e0,0x82,0x680,0,0xffffffff8201a54c);
-  DAT_82a3d670 = Dvar_RegisterInt(0xffffffff8201a514,600,0x82,0x680,0,0xffffffff8201a4e8);
-  DAT_82a3d460 = Dvar_RegisterInt(0xffffffff8201a4a0,0x1c7,0x82,0x680,0,0xffffffff8201a4b4);
-  DAT_82a3d5f0 = Dvar_RegisterInt(0xffffffff8201a450,0x186,0x82,0x680,0,0xffffffff8201a468);
-  DAT_82a382f8 = Dvar_RegisterBool(0xffffffff8201a438,0,4,0xffffffff8201a3f0);
-  DAT_82a3d688 = Dvar_RegisterBool(0xffffffff8201a3a0,0,4,0xffffffff8201a3b8);
-  DAT_82a3d598 = Dvar_RegisterBool(0xffffffff8201a34c,0,4,0xffffffff8201a360);
-  DAT_82a3d698 = Dvar_RegisterBool(0xffffffff8201a2ec,0,4,0xffffffff8201a308);
-  DAT_82a3d484 = Dvar_RegisterBool(0xffffffff8201a29c,0,4,0xffffffff8201a2b4);
-  DAT_82a3d660 = Dvar_RegisterBool(0xffffffff8201a288,0,4,0xffffffff8201a248);
-  DAT_82a3d5fc = Dvar_RegisterBool(0xffffffff8201a1e0,0,4,0xffffffff8201a200);
-  DAT_82a3d48c = Dvar_RegisterInt(0xffffffff8201a1cc,2000,0,0x7fffffff,4,0xffffffff8201a188);
-  DAT_82a38374 = Dvar_RegisterBool(0xffffffff8201a13c,1,4,0xffffffff8201a154);
-  DAT_82a3ce3c = Dvar_RegisterInt(0xffffffff8201a128,2000,0,0x7fffffff,4,0xffffffff8201a0e8);
-  DAT_82a3d664 = Dvar_RegisterBool(0xffffffff8201a0b0,1,0,0xffffffff8201a0c4);
-  DAT_82a38300 = Dvar_RegisterFloat(uVar4,uVar18,uVar6,0xffffffff8201a09c);
-  DAT_82a3d5c8 = Dvar_RegisterInt(0xffffffff8201a024,300,0,0x7fffffff,4,0xffffffff8201a040);
-  DAT_82a38260 = Dvar_RegisterInt(0xffffffff82019fcc,900,0,0x7fffffff,4,0xffffffff82019fe8);
-  DAT_82a3d638 = Dvar_RegisterFloat(uVar18,uVar18,uVar6,0xffffffff82019f98);
-  DAT_82a3d5b0 = Dvar_RegisterFloat(uVar18,uVar18,uVar6,0xffffffff82019f64);
-  DAT_82a382c4 = Dvar_RegisterFloat(uVar18,uVar18,uVar6,0xffffffff82019f50);
-  DAT_82a3d4bc = Dvar_RegisterBool(0xffffffff82019ed4,0,4,0xffffffff82019ef0);
-  DAT_82a3d60c = Dvar_RegisterFloat(0x3f947ae140000000,uVar18,uVar16,0xffffffff82019eb8);
-  DAT_82a382f4 = Dvar_RegisterFloat(uVar17,uVar18,uVar15,0xffffffff82019e38);
+  pcVar4 = &DAT_00000004;
+  uVar2 = 0;
+  cg_constantSizeHeadIcons =
+       Dvar_RegisterBool("cg_constantSizeHeadIcons",false,4,
+                         "Head icons are the same size regardless of distance from the player");
+  cg_headIconMinScreenRadius =
+       Dvar_RegisterFloat("cg_headIconMinScreenRadius",0.02,(float)dVar22,(float)dVar20,uVar2,pcVar4
+                         );
+  pcVar4 = "the motion tracker after being detected";
+  uVar2 = 0;
+  cg_overheadNamesMaxDist =
+       Dvar_RegisterFloat("cg_overheadNamesMaxDist",(float)dVar21,(float)dVar22,(float)dVar19,0,
+                          "the motion tracker after being detected");
   iVar1 = R_IsHiDef();
-  uVar5 = 0x3fe4ccccc0000000;
-  uVar17 = uVar9;
+  dVar9 = 0.6499999761581421;
+  dVar21 = dVar13;
   if (iVar1 != 0) {
-    uVar17 = uVar5;
+    dVar21 = dVar9;
   }
-  DAT_82a38384 = Dvar_RegisterFloat(uVar17,uVar18,uVar6,0xffffffff82019df8);
-  DAT_82a3825c = Dvar_RegisterFloat(uVar2,uVar18,uVar15,0xffffffff82019dac);
-  DAT_82a38348 = Dvar_RegisterFloat(uVar14,uVar18,uVar15,0xffffffff82019d94);
-  DAT_82a3d6a8 = Dvar_RegisterFloat(0x3ff19999a0000000,uVar18,uVar6,0xffffffff82019cfc);
-  DAT_82a3831c = Dvar_RegisterFloat(0x3fe6666660000000,uVar18,uVar15,0xffffffff82019ce0);
-  DAT_82a383c8 = Dvar_RegisterFloat(uVar9,uVar18,uVar15,0xffffffff82019c64);
-  DAT_82a3ce40 = Dvar_RegisterFloat(uVar9,uVar18,uVar15,0xffffffff82019c30);
-  DAT_82a3d490 = Dvar_RegisterColor(uVar18,uVar18,uVar18,uVar16,0xffffffff82019bf8);
-  DAT_82a383ac = Dvar_RegisterInt(0xffffffff82019bac,2,0,10,4,0xffffffff82019bc4);
-  DAT_82a38310 = Dvar_RegisterInt(0xffffffff82019b94,2,0,10,4,0xffffffff82019b60);
-  DAT_82a3d4b4 = Dvar_RegisterBool(0xffffffff82019b20,1,4,0xffffffff82019b38);
-  DAT_82a38238 = Dvar_RegisterInt(0xffffffff82019b0c,0xfa,0,0x7fffffff,4,0xffffffff82019ae0);
-  DAT_82a2f814 = Dvar_RegisterInt(0xffffffff82019a9c,0xfa,0,0x7fffffff,4,0xffffffff82019ab0);
-  DAT_82a38344 = Dvar_RegisterInt(0xffffffff82019a54,0,0,0x7fffffff,4,0xffffffff82019a6c);
-  DAT_82a38284 = Dvar_RegisterInt(0xffffffff82019a0c,0x5dc,0,0x7fffffff,4,0xffffffff82019a24);
-  DAT_82a38364 = Dvar_RegisterBool(0xffffffff820199c4,0,4,0xffffffff820199d8);
-  DAT_82a38298 = Dvar_RegisterInt(0xffffffff820199ac,1000,0,0x7fffffff,4,0xffffffff82019968);
-  DAT_82a3d474 = Dvar_RegisterInt(0xffffffff82019904,0x32,0,0x7fffffff,4,0xffffffff82019920);
-  DAT_82a3d570 = Dvar_RegisterString(0xffffffff820198b8,0xffffffff820068af,0,0xffffffff820198cc);
-  DAT_82a3d62c = Dvar_RegisterBool(0xffffffff820198ac,1,0,0xffffffff820198a0);
-  DAT_82a3829c = Dvar_RegisterInt(0xffffffff82019860,0x708,0,0x7fffffff,0,0xffffffff8201987c);
-  DAT_82a383c0 = Dvar_RegisterInt(0xffffffff82019840,600,1,0x7fffffff,0,0xffffffff82019818);
-  DAT_82a382d0 = Dvar_RegisterFloat(uVar16,uVar18,uVar15,0xffffffff820197b4);
-  DAT_82a38274 = Dvar_RegisterFloat(0x4030000000000000,uVar18,uVar15,0xffffffff8201979c);
-  DAT_82a3d4c0 = Dvar_RegisterFloat(uVar8,uVar18,uVar15,0xffffffff82019720);
-  DAT_82a382b8 = Dvar_RegisterBool(0xffffffff82019694,0,0x40,0xffffffff820196b0);
-  DAT_82a382c8 = Dvar_RegisterFloat(0x4046800000000000,uVar18,0x4066800000000000,0xffffffff82019638)
+  cg_overheadNamesSize =
+       Dvar_RegisterFloat("cg_overheadNamesSize",(float)dVar21,(float)dVar22,(float)dVar10,uVar2,
+                          pcVar4);
+  cg_overheadNamesNearDist =
+       Dvar_RegisterFloat("cg_overheadNamesNearDist",(float)dVar6,(float)dVar22,(float)dVar19,uVar2,
+                          pcVar4);
+  cg_overheadNamesFarDist =
+       Dvar_RegisterFloat("cg_overheadNamesFarDist",(float)dVar18,(float)dVar22,(float)dVar19,uVar2,
+                          pcVar4);
+  pcVar4 = "the motion tracker after being detected";
+  uVar2 = 0;
+  cg_overheadIconSize =
+       Dvar_RegisterFloat("cg_overheadIconSize",1.1,(float)dVar22,(float)dVar10,0,
+                          "the motion tracker after being detected");
+  cg_overheadNamesFarScale =
+       Dvar_RegisterFloat("cg_overheadNamesFarScale",0.7,(float)dVar22,(float)dVar19,uVar2,pcVar4);
+  pcVar4 = "the motion tracker after being detected";
+  uVar2 = 0;
+  cg_overheadRankSize =
+       Dvar_RegisterFloat("cg_overheadRankSize",(float)dVar13,(float)dVar22,(float)dVar19,0,
+                          "the motion tracker after being detected");
+  cg_overheadTitleSize =
+       Dvar_RegisterFloat("cg_overheadTitleSize",(float)dVar13,(float)dVar22,(float)dVar19,uVar2,
+                          pcVar4);
+  cg_overheadNamesGlow =
+       Dvar_RegisterColor("cg_overheadNamesGlow",(float)dVar22,(float)dVar22,(float)dVar22,
+                          (float)dVar20,uVar2,pcVar4);
+  cg_overheadNamesFont =
+       Dvar_RegisterInt("cg_overheadNamesFont",2,0,10,4,
+                        "Font for overhead names ( see menudefinition.h )");
+  cg_overheadTitlesFont =
+       Dvar_RegisterInt("cg_overheadTitlesFont",2,0,10,4,
+                        "Font for overhead titles ( see menudefinition.h )");
+  cg_drawFriendlyNames =
+       Dvar_RegisterBool("cg_drawFriendlyNames",true,4,"Whether to show friendly names in game");
+  cg_enemyNameFadeIn =
+       Dvar_RegisterInt("cg_enemyNameFadeIn",0xfa,0,0x7fffffff,4,
+                        "Time in milliseconds to fade in enemy names");
+  cg_enemyNameFadeOut =
+       Dvar_RegisterInt("cg_enemyNameFadeOut",0xfa,0,0x7fffffff,4,
+                        "Time in milliseconds to fade out enemy names");
+  cg_friendlyNameFadeIn =
+       Dvar_RegisterInt("cg_friendlyNameFadeIn",0,0,0x7fffffff,4,
+                        "Time in milliseconds to fade in friendly names");
+  cg_friendlyNameFadeOut =
+       Dvar_RegisterInt("cg_friendlyNameFadeOut",0x5dc,0,0x7fffffff,4,
+                        "Time in milliseconds to fade out friendly names");
+  cg_drawThroughWalls =
+       Dvar_RegisterBool("cg_drawThroughWalls",false,4,
+                         "Whether to draw friendly names through walls or not");
+  cg_flashbangNameFadeIn =
+       Dvar_RegisterInt("cg_flashbangNameFadeIn",1000,0,0x7fffffff,4,
+                        "Time in milliseconds to fade in friendly names after a flashbang");
+  cg_flashbangNameFadeOut =
+       Dvar_RegisterInt("cg_flashbangNameFadeOut",0x32,0,0x7fffffff,4,
+                        "Time in milliseconds to fade out friendly names when flash banged");
+  thermal_playerModel =
+       Dvar_RegisterString("thermal_playerModel","",0,
+                           "Model to draw for players when in thermal vision mode");
+  cg_blood = Dvar_RegisterBool("cg_blood",true,0,"Show Blood");
+  cg_invalidCmdHintDuration =
+       Dvar_RegisterInt("cg_invalidCmdHintDuration",0x708,0,0x7fffffff,0,
+                        "Duration of an invalid command hint");
+  cg_invalidCmdHintBlinkInterval =
+       Dvar_RegisterInt("cg_invalidCmdHintBlinkInterval",600,1,0x7fffffff,0,
+                        "Blink rate of an invalid command hint");
+  pcVar4 = "the motion tracker after being detected";
+  uVar2 = 0;
+  cg_viewZSmoothingMin =
+       Dvar_RegisterFloat("cg_viewZSmoothingMin",(float)dVar20,(float)dVar22,(float)dVar19,0,
+                          "the motion tracker after being detected");
+  cg_viewZSmoothingMax =
+       Dvar_RegisterFloat("cg_viewZSmoothingMax",16.0,(float)dVar22,(float)dVar19,uVar2,pcVar4);
+  cg_viewZSmoothingTime =
+       Dvar_RegisterFloat("cg_viewZSmoothingTime",(float)dVar12,(float)dVar22,(float)dVar19,0,
+                          "the motion tracker after being detected");
+  overrideNVGModelWithKnife =
+       Dvar_RegisterBool("overrideNVGModelWithKnife",false,0x40,
+                         "When true, nightvision animations will attach the weapDef\'s knife model instead of the night vision goggles."
+                        );
+  cg_weapHitCullAngle =
+       Dvar_RegisterFloat("cg_weapHitCullAngle",45.0,(float)dVar22,180.0,0,
+                          "the motion tracker after being detected");
+  cg_weapHitCullEnable =
+       Dvar_RegisterBool("cg_weapHitCullEnable",true,0,"When true, cull back facing weapon hit fx.")
   ;
-  DAT_82a38244 = Dvar_RegisterBool(0xffffffff820195f4,1,0,0xffffffff8201960c);
-  DAT_82a383b4 = Dvar_RegisterBool(0xffffffff820195dc,1,0,0xffffffff820195b4);
+  cg_useRelativeTeamColors =
+       Dvar_RegisterBool("useRelativeTeamColors",true,0,"Whether to use relative team colors.");
   CG_ModelPreviewerRegisterDvars();
   CG_ViewRegisterDvars();
   VehicleCl_RegisterDvars();
@@ -361,39 +727,82 @@ void CG_RegisterDvars(void)
   CG_RegisterWeaponDvars();
   CG_ClientSideEffectsRegisterDvars();
   CG_VehRegisterDvars();
-  DAT_8353ff20 = Dvar_RegisterBool(0xffffffff82019564,0,4,0xffffffff8201957c);
+  g_compassShowEnemies =
+       Dvar_RegisterBool("g_compassShowEnemies",false,4,
+                         "Whether enemies are visible on the compass at all times");
   BG_RegisterDvars();
   Turret_PlaceSentry_RegisterDvars();
   CG_AntiBurnInHUD_RegisterDvars();
   AimAssist_RegisterDvars();
-  DAT_82a3d450 = Dvar_RegisterBool(0xffffffff8201952c,0,0,0xffffffff82019540);
-  DAT_82a3d57c = Dvar_RegisterBool(0xffffffff82019518,0,0,0xffffffff820194f0);
-  DAT_82a382ec = Dvar_RegisterInt(0xffffffff820194bc,0,0,0x800,0,0xffffffff820194d0);
-  DAT_82a383d0 = Dvar_RegisterBool(0xffffffff82019468,1,0,0xffffffff82019480);
-  DAT_82a3d5e8 = Dvar_RegisterInt(0xffffffff82019434,0,0,0x800,0,0xffffffff82019448);
-  DAT_82a38368 = Dvar_RegisterBool(0xffffffff820193e8,0,0,0xffffffff82019404);
-  DAT_82a3d4b0 = Dvar_RegisterInt(0xffffffff82019388,0xffffffffffffffff,0xffffffffffffffff,0x11,0,
-                                  0xffffffff820193a8);
-  DAT_82a3d59c = Dvar_RegisterBool(0xffffffff82019304,0,0,0xffffffff82019328);
-  DAT_82a38358 = Dvar_RegisterBool(0xffffffff820192b8,0,0,0xffffffff820192d4);
-  DAT_82a3d448 = Dvar_RegisterBool(0xffffffff82019288,0,0,0xffffffff8201929c);
-  DAT_82a3d464 = Dvar_RegisterInt(0xffffffff82019270,4,1,0x14,4,0xffffffff82019234);
-  DAT_82a382bc = Dvar_RegisterColor(uVar11,0x3fe47ae140000000,0x3fe6147ae0000000,uVar16,
-                                    0xffffffff82019204);
-  DAT_82a38354 = Dvar_RegisterColor(uVar5,0x3fe23d70a0000000,0x3fda3d70a0000000,uVar16,
-                                    0xffffffff820191d8);
-  uVar17 = 0x3fe99999a0000000;
-  DAT_82a3d644 = Dvar_RegisterColor(uVar11,0x3fe99999a0000000,uVar11,uVar16,0xffffffff8201539c);
-  DAT_82a3d4a0 = Dvar_RegisterColor(uVar16,uVar17,uVar3,uVar16,0xffffffff82019180);
-  uVar17 = 0x3fdcccccc0000000;
-  DAT_82a38334 = Dvar_RegisterColor(uVar16,0x3fdcccccc0000000,uVar9,uVar16,0xffffffff8201536c);
-  uVar2 = 0x3fd0000000000000;
-  DAT_82a38370 = Dvar_RegisterColor(0x3fd0000000000000,0x3fd0000000000000,0x3fd0000000000000,uVar16,
-                                    0xffffffff8201913c);
-  DAT_82a3d590 = Dvar_RegisterColor(uVar10,uVar2,uVar2,uVar16,0xffffffff82019128);
-  DAT_82a3d65c = Dvar_RegisterColor(uVar16,uVar9,uVar18,uVar16,0xffffffff82015384);
-  DAT_82a3835c = Dvar_RegisterColor(0x3fd6666660000000,uVar16,uVar16,uVar16,0xffffffff820153b0);
-  DAT_82a38248 = Dvar_RegisterColor(uVar18,uVar17,0x3fe6666660000000,uVar16,0xffffffff82019080);
+  cg_drawRumbleDebug =
+       Dvar_RegisterBool("cg_drawrumbledebug",false,0,"Display rumble debug information");
+  cg_drawWVisDebug =
+       Dvar_RegisterBool("cg_drawWVisDebug",false,0,"Display weapon visibility debug info");
+  cg_drawDebugBones =
+       Dvar_RegisterInt("cg_drawDebugBones",0,0,0x800,0,"Draw bones for entity number.");
+  cg_drawDebugBonesBind =
+       Dvar_RegisterBool("cg_drawDebugBonesBind",true,0,
+                         "Draw bind pose when drawing bones with cg_drawDebugBones.");
+  cg_drawDebugTags = Dvar_RegisterInt("cg_drawDebugTags",0,0,0x800,0,"Draw tags for entity number.")
+  ;
+  cg_drawDebugClientTriggers =
+       Dvar_RegisterBool("cg_drawDebugClientTriggers",false,0,
+                         "Display client side trigger debug information");
+  cg_drawEntityPacketHistogram =
+       Dvar_RegisterInt("cg_drawEntityPacketHistogram",-1,-1,0x11,0,
+                        "Display entity state network packet histograms (-1 to disable)");
+  cg_drawOnlyFirstEntityPacket =
+       Dvar_RegisterBool("cg_drawOnlyFirstEntityPacket",false,0,
+                         "Display only the first entity state network packet histogram (if 0, we ignore the first packet)"
+                        );
+  cg_drawPlayerStateHistogram =
+       Dvar_RegisterBool("cg_drawPlayerStateHistogram",false,0,
+                         "Display player state network packet histogram");
+  cg_resetHistograms = Dvar_RegisterBool("cg_resetHistograms",false,0,"Clear net packet histograms")
+  ;
+  cg_weaponVisInterval =
+       Dvar_RegisterInt("cg_weaponVisInterval",4,1,0x14,4,
+                        "Do weapon vis checks once per this many frames, per centity");
+  uVar2 = 0;
+  cg_TeamColor_Allies =
+       Dvar_RegisterColor("cg_TeamColor_Allies",(float)dVar15,0.64,0.69,(float)dVar20,0,
+                          "the motion tracker after being detected");
+  pcVar4 = "the motion tracker after being detected";
+  cg_TeamColor_Axis =
+       Dvar_RegisterColor("cg_TeamColor_Axis",(float)dVar9,0.57,0.41,(float)dVar20,uVar2,
+                          "the motion tracker after being detected");
+  uVar2 = 0;
+  dVar21 = 0.800000011920929;
+  cg_TeamColor_MyTeam =
+       Dvar_RegisterColor("cg_TeamColor_MyTeam",(float)dVar15,0.8,(float)dVar15,(float)dVar20,0,
+                          pcVar4);
+  pcVar4 = "the motion tracker after being detected";
+  cg_TeamColor_MyParty =
+       Dvar_RegisterColor("cg_TeamColor_MyParty",(float)dVar20,(float)dVar21,(float)dVar7,
+                          (float)dVar20,uVar2,"the motion tracker after being detected");
+  dVar21 = 0.44999998807907104;
+  cg_TeamColor_EnemyTeam =
+       Dvar_RegisterColor("cg_TeamColor_EnemyTeam",(float)dVar20,0.45,(float)dVar13,(float)dVar20,0,
+                          pcVar4);
+  pcVar4 = "the motion tracker after being detected";
+  uVar2 = 0;
+  dVar6 = 0.25;
+  cg_TeamColor_Spectator =
+       Dvar_RegisterColor("cg_TeamColor_Spectator",0.25,0.25,0.25,(float)dVar20,0,
+                          "the motion tracker after being detected");
+  cg_TeamColor_Free =
+       Dvar_RegisterColor("cg_TeamColor_Free",(float)dVar14,(float)dVar6,(float)dVar6,(float)dVar20,
+                          uVar2,pcVar4);
+  pcVar4 = "c\\cgame_mp\\cg_local_mp.h";
+  cg_ColorBlind_EnemyTeam =
+       Dvar_RegisterColor("cg_ColorBlind_EnemyTeam",(float)dVar20,(float)dVar13,(float)dVar22,
+                          (float)dVar20,uVar2,"c\\cgame_mp\\cg_local_mp.h");
+  cg_ColorBlind_MyTeam =
+       Dvar_RegisterColor("cg_ColorBlind_MyTeam",0.35,(float)dVar20,(float)dVar20,(float)dVar20,0,
+                          pcVar4);
+  cg_ColorBlind_MyParty =
+       Dvar_RegisterColor("cg_ColorBlind_MyParty",(float)dVar22,(float)dVar21,0.7,(float)dVar20,0,
+                          "the motion tracker after being detected");
   __restfpr_15();
   __restgprlr_28();
   return;
@@ -401,150 +810,61 @@ void CG_RegisterDvars(void)
 
 
 // 822D7FB0  TRACK_cg_main  (cgame_mp/cg_main_mp.cpp:1039)
-
-void TRACK_cg_main(void)
-
-{
-  track_static_alloc_internal(0xffffffff82a2f818,0x8a10,0xffffffff8201cbc8,0x23);
-  track_static_alloc_internal(DAT_82a383cc,4,0xffffffff820011fc,9);
-  track_static_alloc_internal(DAT_82a383b0,4,0xffffffff8201cbbc,9);
-  track_static_alloc_internal(DAT_82a3ce28,4,0xffffffff8201cba8,9);
-  track_static_alloc_internal(0xffffffff82a3d4c8,0xa0,0xffffffff8201cb94,9);
-  track_static_alloc_internal(0xffffffff82a3d64c,0x10,0xffffffff8201cb7c,9);
-  track_static_alloc_internal(0xffffffff82a3ce48,0x600,0xffffffff8201cb60,0xd);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 822D8098  CG_AllocateClientMemory  (cgame_mp/cg_main_mp.cpp:1061)
-
-void CG_AllocateClientMemory(void)
-
-{
-  longlong lVar1;
-  int iVar2;
-  undefined4 uVar3;
-  undefined4 *puVar4;
-  
-  lVar1 = __savegprlr_29();
-  iVar2 = (int)lVar1;
-  DAT_82a38328 = iVar2;
-  DAT_82a383cc = PMem_AllocFromSource_NoDebug((longlong)iVar2 * 0x108600,4,4,1);
-  DAT_82a383b0 = PMem_AllocFromSource_NoDebug(lVar1 * 0x4098,4,4,1);
-  if (0 < iVar2) {
-    puVar4 = &DAT_82a3d648;
-    do {
-      uVar3 = PMem_AllocFromSource_NoDebug(0x6000,4,4,1);
-      lVar1 = lVar1 + -1;
-      puVar4 = puVar4 + 1;
-      *puVar4 = uVar3;
-    } while (lVar1 != 0);
-  }
-  DAT_82a3ce28 = PMem_AllocFromSource_NoDebug((longlong)iVar2 * 0xf6000,4,4,1);
-  __restgprlr_29();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 822D8158  CG_FreeClientMemory  (cgame_mp/cg_main_mp.cpp:1081)
-
-void * CG_FreeClientMemory(void)
-
-{
-  void *pvVar1;
-  
-  pvVar1 = memset(&DAT_82a3d4c8,0,0xa0);
-  DAT_82a3d64c = 0;
-  DAT_82a3d650 = 0;
-  DAT_82a3d654 = 0;
-  DAT_82a3d658 = 0;
-  DAT_82a3ce28 = 0;
-  DAT_82a383cc = 0;
-  DAT_82a383b0 = 0;
-  DAT_82a38328 = 0;
-  return pvVar1;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure LerpEntityStatePlayer
 
 // 822D81D0  CG_GetGameTime  (cgame_mp/cg_main_mp.cpp:1100)
-
-undefined4 CG_GetGameTime(ulonglong param_1)
-
-{
-  int iVar1;
-  
-  if (3 < (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82001158,0x4aa,0,0xffffffff820011a8,param_1,4);
-  }
-  if ((int)(&DAT_82b3e54c)[(int)param_1 * 0x79] < 5) {
-    return 0;
-  }
-  iVar1 = CG_GetLocalClientGlobals(param_1);
-  return *(undefined4 *)(iVar1 + 0x6b98c);
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 822D8270  CG_CloseSplashes  (cgame_mp/cg_main_mp.cpp:1112)
-
-void CG_CloseSplashes(void)
-
-{
-  undefined8 uVar1;
-  int iVar3;
-  undefined8 uVar2;
-  longlong lVar4;
-  int *piVar5;
-  undefined4 local_50 [20];
-  
-  uVar1 = __savegprlr_25();
-  iVar3 = CG_GetLocalClientGlobals();
-  lVar4 = 4;
-  piVar5 = (int *)(iVar3 + 0x1083e4);
-  do {
-    if (*piVar5 != 0) {
-      if (piVar5[1] + *piVar5 < *(int *)(iVar3 + 0x6b98c)) {
-        *piVar5 = 0;
-        StringTable_GetAsset(0xffffffff8201cbd0,local_50);
-        uVar2 = StringTable_GetColumnValueForRow(local_50[0],piVar5[-1],0xb);
-        UI_CloseMenu(uVar1,uVar2);
-      }
-    }
-    lVar4 = lVar4 + -1;
-    piVar5 = piVar5 + 4;
-  } while (lVar4 != 0);
-  __restgprlr_25();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 822D8308  CG_CheckSessionId  (cgame_mp/cg_main_mp.cpp:1138)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void CG_CheckSessionId(void)
 
 {
-  byte bVar1;
-  byte bVar2;
-  char cVar3;
+  bool bVar1;
+  longlong lVar2;
+  _XSESSION_INFO *p_Var3;
   byte *pbVar4;
-  byte *pbVar5;
-  byte local_10 [8];
-  byte local_8 [8];
+  byte local_10 [16];
   
-  if (*(char *)(DAT_82aa1af8 + 0xc) != '\0') {
-    cVar3 = CL_Demo_IsPlaying(0);
-    if (cVar3 == '\0') {
-      pbVar5 = local_10;
-      pbVar4 = &DAT_844c7874;
-      do {
-        bVar1 = *pbVar5;
-        bVar2 = *pbVar4;
-        if ((ulonglong)bVar1 - (ulonglong)bVar2 != 0) break;
-        pbVar5 = pbVar5 + 1;
-        pbVar4 = pbVar4 + 1;
-      } while (pbVar5 != local_8);
-      if ((int)((ulonglong)bVar1 - (ulonglong)bVar2) == 0) {
-        MyAssertHandler(0xffffffff82018fe0,0x47e,0,0xffffffff82000f98,0xffffffff8201cbe8);
-      }
+  if (((onlinegame->current).enabled != false) &&
+     (bVar1 = CL_Demo_IsPlaying(LOCAL_CLIENT_0), !bVar1)) {
+    pbVar4 = local_10;
+    local_10[0] = 0;
+    local_10[1] = 0;
+    local_10[2] = 0;
+    local_10[3] = 0;
+    local_10[4] = 0;
+    local_10[5] = 0;
+    local_10[6] = 0;
+    local_10[7] = 0;
+    p_Var3 = &g_serverSession.dyn.sessionInfo;
+    do {
+      lVar2 = (ulonglong)*pbVar4 - (ulonglong)(p_Var3->sessionID).ab[0];
+      if (lVar2 != 0) break;
+      pbVar4 = pbVar4 + 1;
+      p_Var3 = (_XSESSION_INFO *)((p_Var3->sessionID).ab + 1);
+    } while (pbVar4 != local_10 + 8);
+    if ((int)lVar2 == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_main_mp.cpp",
+                      0x47e,0,"%s");
     }
   }
   return;
@@ -553,13 +873,16 @@ void CG_CheckSessionId(void)
 
 // 822D83B8  CG_Frame  (cgame_mp/cg_main_mp.cpp:1157)
 
-void CG_Frame(undefined8 param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CG_Frame(LocalClientNum_t param_1)
 
 {
   int iVar1;
+  connstate_t cVar2;
   
-  iVar1 = CL_IsCgameInitialized();
-  if ((iVar1 != 0) && (iVar1 = CL_GetLocalClientConnectionState(param_1), 5 < iVar1)) {
+  iVar1 = CL_IsCgameInitialized(param_1);
+  if ((iVar1 != 0) && (cVar2 = CL_GetLocalClientConnectionState(param_1), 5 < (int)cVar2)) {
     CG_CloseSplashes(param_1);
     CG_CheckSessionId();
   }
@@ -568,383 +891,95 @@ void CG_Frame(undefined8 param_1)
 
 
 // 822D8408  CG_GetDObjOrientation  (cgame_mp/cg_main_mp.cpp:1178)
-
-void CG_GetDObjOrientation
-               (undefined8 param_1,undefined8 param_2,ulonglong param_3,ulonglong param_4)
-
-{
-  undefined4 *puVar1;
-  undefined8 uVar2;
-  int iVar3;
-  
-  uVar2 = __savegprlr_25();
-  iVar3 = (int)param_2;
-  if ((iVar3 < 0) || (0x801 < iVar3)) {
-    MyAssertHandler(0xffffffff82018fe0,0x49e,0,0xffffffff8201cccc,0xffffffff8201cc98,param_2);
-  }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82018fe0,0x49f,0,0xffffffff82000f98,0xffffffff8201cc90);
-  }
-  if ((param_4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82018fe0,0x4a0,0,0xffffffff82000f98,0xffffffff82004854);
-  }
-  puVar1 = (undefined4 *)param_4;
-  if (iVar3 < 0x800) {
-    iVar3 = CG_GetEntity(uVar2,param_2);
-    AnglesToAxis(iVar3 + 0x20,param_3);
-    *puVar1 = *(undefined4 *)(iVar3 + 0x14);
-    puVar1[1] = *(undefined4 *)(iVar3 + 0x18);
-    puVar1[2] = *(undefined4 *)(iVar3 + 0x1c);
-    __restgprlr_25();
-    return;
-  }
-  if (0xef < iVar3 + -0x800) {
-    MyAssertHandler(0xffffffff82018fe0,0x4a9,0,0xffffffff8201cccc,0xffffffff8201cc54,param_2);
-  }
-  iVar3 = CG_GetLocalClientGlobals(uVar2);
-  AxisCopy(iVar3 + 0x797b4,param_3);
-  *puVar1 = *(undefined4 *)(iVar3 + 0x797d8);
-  puVar1[1] = *(undefined4 *)(iVar3 + 0x797dc);
-  puVar1[2] = *(undefined4 *)(iVar3 + 0x797e0);
-  __restgprlr_25();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure LerpEntityStatePlayer
 
 // 822D8568  CG_CopyEntityOrientation  (cgame_mp/cg_main_mp.cpp:1203)
-
-void CG_CopyEntityOrientation
-               (undefined8 param_1,undefined8 param_2,ulonglong param_3,ulonglong param_4)
-
-{
-  undefined8 uVar1;
-  int iVar2;
-  undefined4 *puVar3;
-  
-  uVar1 = __savegprlr_26();
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82018fe0,0x4b6,0,0xffffffff82000f98,0xffffffff8201ccf0);
-  }
-  if ((param_4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82018fe0,0x4b7,0,0xffffffff82000f98,0xffffffff8201cce4);
-  }
-  iVar2 = CG_GetEntity(uVar1,param_2);
-  puVar3 = (undefined4 *)param_3;
-  *puVar3 = *(undefined4 *)(iVar2 + 0x14);
-  puVar3[1] = *(undefined4 *)(iVar2 + 0x18);
-  puVar3[2] = *(undefined4 *)(iVar2 + 0x1c);
-  AnglesToAxis(iVar2 + 0x20,param_4);
-  __restgprlr_26();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure LerpEntityStatePlayer
 
 // 822D8618  CG_CopySoundEntityOrientation  (cgame_mp/cg_main_mp.cpp:1216)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 void CG_CopySoundEntityOrientation
-               (undefined8 param_1,longlong param_2,undefined8 param_3,undefined8 param_4)
+               (LocalClientNum_t param_1,int param_2,float *param_3,float (*param_4) [3])
 
 {
-  if (0x7ff < (int)param_2) {
+  if (0x7ff < param_2) {
     CG_CopyClientSideSoundEntityOrientation(param_2 + -0x800,param_3,param_4);
     return;
   }
-  CG_CopyEntityOrientation(param_1,param_2,param_3);
+  CG_CopyEntityOrientation(param_1,param_2,param_3,param_4);
   return;
 }
 
 
 // 822D8640  CG_GetSoundEntityOrientation  (cgame_mp/cg_main_mp.cpp:1233)
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
-void CG_GetSoundEntityOrientation(undefined8 param_1,undefined8 param_2,undefined8 param_3)
-
-{
-  ulonglong uVar1;
-  char cVar3;
-  int iVar2;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  
-  uVar1 = __savegprlr_26();
-  if (((uVar1 & 0x20000) == 0) && (uVar5 = 0, 0 < DAT_82aa1ae8)) {
-    do {
-      cVar3 = CL_IsLocalClientActive(uVar5);
-      if ((cVar3 != '\0') &&
-         (iVar2 = CG_GetLocalClientGlobals(uVar5), *(int *)(iVar2 + 0x7a708) == 0)) {
-        uVar4 = (uVar1 & 0xffffffff) >> 0x14;
-        if ((uint)uVar4 < 0x800) goto LAB_822d86f4;
-        goto LAB_822d86c4;
-      }
-      uVar5 = uVar5 + 1;
-    } while ((int)uVar5 < DAT_82aa1ae8);
-  }
-  uVar4 = (uVar1 & 0xffffffff) >> 0x14;
-  if ((uint)uVar4 < 0x800) {
-    uVar5 = (uVar1 & 0xffffffff) >> 0x12 & 3;
-LAB_822d86f4:
-    CG_CopyEntityOrientation(uVar5,uVar4,param_2,param_3);
-    __restgprlr_26();
-    return;
-  }
-LAB_822d86c4:
-  CG_CopyClientSideSoundEntityOrientation(uVar4 - 0x800,param_2,param_3);
-  __restgprlr_26();
-  return;
-}
-
+// 822D8710  CG_GetPredictedPlayerState  (cgame_mp/cg_main_mp.cpp:1261)
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 822D8718  CG_IsValidRemoteInputState  (cgame_mp/cg_main_mp.cpp:1268)
-
-undefined8 CG_IsValidRemoteInputState(void)
-
-{
-  int iVar2;
-  undefined8 uVar1;
-  
-  iVar2 = CG_GetLocalClientGlobals();
-  iVar2 = *(int *)(iVar2 + 4);
-  if (iVar2 == 5) {
-    return 0;
-  }
-  if ((iVar2 == 3) || (uVar1 = 0, iVar2 == 2)) {
-    uVar1 = 1;
-  }
-  return uVar1;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 822D8770  CG_GameMessage  (cgame_mp/cg_main_mp.cpp:1285)
 
-void CG_GameMessage(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CG_GameMessage(LocalClientNum_t param_1,char *param_2)
 
 {
-  CL_ConsolePrint(param_1,2,param_2,0,*(undefined4 *)(DAT_82a3d460 + 0xc),0);
+  CL_ConsolePrint(param_1,2,param_2,0,(cg_gameMessageWidth->current).integer,0);
   return;
 }
 
 
 // 822D8790  CG_BoldGameMessage  (cgame_mp/cg_main_mp.cpp:1291)
 
-void CG_BoldGameMessage(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CG_BoldGameMessage(LocalClientNum_t param_1,char *param_2)
 
 {
-  CL_ConsolePrint(param_1,3,param_2,0,*(undefined4 *)(DAT_82a3d5f0 + 0xc),0);
+  CL_ConsolePrint(param_1,3,param_2,0,(cg_gameBoldMessageWidth->current).integer,0);
   return;
 }
 
 
 // 822DB730  CG_GetHelicopterAnims  (cgame_mp/cg_main_mp.cpp:1297)
 
-ulonglong CG_GetHelicopterAnims(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+XAnim_s * CG_GetHelicopterAnims(void)
 
 {
-  ulonglong uVar1;
+  XAnim_s *pXVar1;
   
-  uVar1 = XAnimCreateAnims(0xffffffff8201deb4,2,0xffffffff822db720);
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82018fe0,0x515,0,0xffffffff82000f98,0xffffffff8201deac);
+  pXVar1 = XAnimCreateAnims("helicopter",2,Hunk_AllocXAnimClient);
+  if (pXVar1 == (XAnim_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_main_mp.cpp",0x515
+                    ,0,"%s");
   }
-  XAnimBlend(uVar1,0,0xffffffff82004220,1,1,0,1);
-  BG_CreateXAnim(uVar1,1,0xffffffff8201dea0,1);
-  return uVar1;
+  XAnimBlend(pXVar1,0,"root",1,1,0,true);
+  BG_CreateXAnim(pXVar1,1,"bh_rotors",true);
+  return pXVar1;
 }
 
 
 // 822D87B0  CG_RegisterGraphics  (cgame_mp/cg_main_mp.cpp:1324)
-
-void CG_RegisterGraphics(undefined8 param_1,undefined8 param_2)
-
-{
-  undefined8 uVar1;
-  int iVar2;
-  char *pcVar3;
-  undefined4 uVar4;
-  int iVar5;
-  undefined4 *puVar6;
-  longlong lVar7;
-  int *piVar8;
-  
-  uVar1 = __savegprlr_23();
-  DAT_82a383f8 = Material_RegisterHandle(0xffffffff8201d8ec,7);
-  DAT_82a383e4 = Material_RegisterHandle(0xffffffff8201d8d4,7);
-  Material_RegisterHandle(0xffffffff82016c08,7);
-  Material_RegisterHandle(0xffffffff82016bd4,7);
-  Material_RegisterHandle(0xffffffff82016bc4,7);
-  Material_RegisterHandle(0xffffffff82016bb4,7);
-  Material_RegisterHandle(0xffffffff82016c6c,7);
-  DAT_82a383e8 = Tracer_Register(0xffffffff8201d8c4);
-  DAT_82a383ec = Material_RegisterHandle(0xffffffff8201d8b0,6);
-  DAT_82a383f0 = Material_RegisterHandle(0xffffffff8201d8a4,6);
-  DAT_82a383f4 = Material_RegisterHandle(0xffffffff8201d894,6);
-  DAT_82a38408 = Material_RegisterHandle(0xffffffff8201d888,7);
-  DAT_82a3840c = Material_RegisterHandle(0xffffffff8201d878,7);
-  DAT_82a388bc = Material_RegisterHandle(0xffffffff8201d86c,7);
-  DAT_82a387d4 = Material_RegisterHandle(0xffffffff8201d858,7);
-  DAT_82a38848 = 0;
-  DAT_82a387d8 = Material_RegisterHandle(0xffffffff8201d840,7);
-  DAT_82a3884c = Material_RegisterHandle(0xffffffff8201d824,7);
-  DAT_82a387e0 = Material_RegisterHandle(0xffffffff8201d80c,7);
-  DAT_82a38854 = Material_RegisterHandle(0xffffffff8201d7f0,7);
-  DAT_82a387dc = Material_RegisterHandle(0xffffffff8201d7d0,7);
-  DAT_82a38850 = Material_RegisterHandle(0xffffffff8201d7ac,7);
-  DAT_82a387e4 = Material_RegisterHandle(0xffffffff8201d78c,7);
-  DAT_82a38858 = Material_RegisterHandle(0xffffffff8201d768,7);
-  DAT_82a387e8 = Material_RegisterHandle(0xffffffff8201d748,7);
-  DAT_82a3885c = Material_RegisterHandle(0xffffffff8201d724,7);
-  DAT_82a387f0 = Material_RegisterHandle(0xffffffff8201d704,7);
-  DAT_82a38864 = Material_RegisterHandle(0xffffffff8201d6e0,7);
-  DAT_82a387ec = Material_RegisterHandle(0xffffffff8201d6bc,7);
-  DAT_82a38860 = Material_RegisterHandle(0xffffffff8201d694,7);
-  DAT_82a387f4 = Material_RegisterHandle(0xffffffff8201d66c,7);
-  DAT_82a38868 = Material_RegisterHandle(0xffffffff8201d644,7);
-  DAT_82a387f8 = Material_RegisterHandle(0xffffffff8201d630,7);
-  DAT_82a3886c = Material_RegisterHandle(0xffffffff8201d618,7);
-  DAT_82a38800 = Material_RegisterHandle(0xffffffff8201d600,7);
-  DAT_82a38874 = Material_RegisterHandle(0xffffffff8201d5e4,7);
-  DAT_82a38804 = Material_RegisterHandle(0xffffffff8201d5c8,7);
-  DAT_82a38878 = Material_RegisterHandle(0xffffffff8201d5ac,7);
-  DAT_82a387fc = Material_RegisterHandle(0xffffffff8201d588,7);
-  DAT_82a38870 = Material_RegisterHandle(0xffffffff8201d564,7);
-  DAT_82a38818 = Material_RegisterHandle(0xffffffff8201d548,7);
-  DAT_82a3888c = Material_RegisterHandle(0xffffffff8201d528,7);
-  DAT_82a3881c = Material_RegisterHandle(0xffffffff8201d504,7);
-  DAT_82a38890 = Material_RegisterHandle(0xffffffff8201d4dc,7);
-  DAT_82a38810 = Material_RegisterHandle(0xffffffff8201d4c0,7);
-  DAT_82a38884 = Material_RegisterHandle(0xffffffff8201d4a4,7);
-  DAT_82a38814 = Material_RegisterHandle(0xffffffff8201d484,7);
-  DAT_82a38888 = Material_RegisterHandle(0xffffffff8201d460,7);
-  DAT_82a38828 = Material_RegisterHandle(0xffffffff8201d444,7);
-  DAT_82a3889c = Material_RegisterHandle(0xffffffff8201d428,7);
-  DAT_82a3882c = Material_RegisterHandle(0xffffffff8201d444,7);
-  DAT_82a388a0 = Material_RegisterHandle(0xffffffff8201d428,7);
-  DAT_82a38820 = Material_RegisterHandle(0xffffffff8201d410,7);
-  DAT_82a38894 = Material_RegisterHandle(0xffffffff8201d3f4,7);
-  DAT_82a38824 = Material_RegisterHandle(0xffffffff8201d410,7);
-  DAT_82a38898 = Material_RegisterHandle(0xffffffff8201d3f4,7);
-  DAT_82a38838 = Material_RegisterHandle(0xffffffff8201d3d0,7);
-  DAT_82a388ac = Material_RegisterHandle(0xffffffff8201d3a8,7);
-  DAT_82a3883c = Material_RegisterHandle(0xffffffff8201d37c,7);
-  DAT_82a388b0 = Material_RegisterHandle(0xffffffff8201d34c,7);
-  DAT_82a38830 = Material_RegisterHandle(0xffffffff8201d32c,7);
-  DAT_82a388a4 = Material_RegisterHandle(0xffffffff8201d308,7);
-  DAT_82a38834 = Material_RegisterHandle(0xffffffff8201d2e0,7);
-  DAT_82a388a8 = Material_RegisterHandle(0xffffffff8201d2b4,7);
-  DAT_82a3880c = Material_RegisterHandle(0xffffffff8201d294,7);
-  DAT_82a38880 = Material_RegisterHandle(0xffffffff8201d270,7);
-  DAT_82a38808 = Material_RegisterHandle(0xffffffff8201d250,7);
-  DAT_82a3887c = Material_RegisterHandle(0xffffffff8201d230,7);
-  DAT_82a38844 = Material_RegisterHandle(0xffffffff8201d214,7);
-  DAT_82a388b8 = Material_RegisterHandle(0xffffffff8201d1f4,7);
-  DAT_82a38840 = Material_RegisterHandle(0xffffffff8201d1d8,7);
-  DAT_82a388b4 = Material_RegisterHandle(0xffffffff8201d1b8,7);
-  DAT_82a388c0 = Material_RegisterHandle(0xffffffff8201d1a8,7);
-  DAT_82a388c4 = Material_RegisterHandle(0xffffffff8201d194,7);
-  DAT_82a388c8 = Material_RegisterHandle(0xffffffff8201d188,7);
-  DAT_82a3c968 = Material_RegisterHandle(0xffffffff8201d164,7);
-  DAT_82a3c960 = Material_RegisterHandle(0xffffffff8201d150,7);
-  DAT_82a3c964 = Material_RegisterHandle(0xffffffff8201d138,7);
-  DAT_82a3c96c = Material_RegisterHandle(0xffffffff8201d124,7);
-  DAT_82a3c970 = Material_RegisterHandle(0xffffffff8201d104,7);
-  DAT_82a3c974 = Material_RegisterHandle(0xffffffff8201d0f4,7);
-  DAT_82a3c978 = Material_RegisterHandle(0xffffffff8201d0e0,7);
-  DAT_82a3c97c = Material_RegisterHandle(0xffffffff8201d0c8,7);
-  DAT_82a3c980 = Material_RegisterHandle(0xffffffff8201d0b4,7);
-  DAT_82a3c984 = Material_RegisterHandle(0xffffffff8201d094,7);
-  DAT_82a3c988 = Material_RegisterHandle(0xffffffff8201d080,7);
-  DAT_82a3c98c = Material_RegisterHandle(0xffffffff8201d06c,7);
-  DAT_82a3c990 = Material_RegisterHandle(0xffffffff8201d058,7);
-  DAT_82a3c994 = Material_RegisterHandle(0xffffffff8201d044,7);
-  DAT_82a3c998 = Material_RegisterHandle(0xffffffff8201d02c,7);
-  DAT_82a3c99c = Material_RegisterHandle(0xffffffff8201d020,7);
-  DAT_82a3c9a0 = Material_RegisterHandle(0xffffffff8201d014,7);
-  DAT_82a3c9a4 = Material_RegisterHandle(0xffffffff8201d008,7);
-  DAT_82a3c9a8 = Material_RegisterHandle(0xffffffff8201cffc,7);
-  DAT_82a3c9ac = Material_RegisterHandle(0xffffffff8201cfe8,7);
-  DAT_82a3c9b0 = Material_RegisterHandle(0xffffffff8201cfd4,7);
-  DAT_82a383dc = Material_RegisterHandle(0xffffffff8201cfc8,7);
-  DAT_82a383e0 = Material_RegisterHandle(0xffffffff8201cfb4,7);
-  CG_RegisterScoreboardGraphics();
-  CG_PrecacheWeaponAnimations();
-  iVar2 = CG_GetLocalClientStaticGlobals(uVar1);
-  lVar7 = 1;
-  puVar6 = (undefined4 *)(iVar2 + 0x19c);
-  do {
-    pcVar3 = (char *)CL_GetConfigString(lVar7 + 0x404);
-    if (*pcVar3 != '\0') {
-      uVar4 = R_RegisterModel();
-      *puVar6 = uVar4;
-    }
-    lVar7 = lVar7 + 1;
-    puVar6 = puVar6 + 1;
-  } while ((int)lVar7 < 0x400);
-  memset(&DAT_82a3ca20,0,0x400);
-  lVar7 = 1;
-  piVar8 = &DAT_82a3ca24;
-  do {
-    pcVar3 = (char *)CL_GetConfigString(lVar7 + 0x9a4);
-    if (*pcVar3 != '\0') {
-      iVar5 = FX_Register();
-      *piVar8 = iVar5;
-      if (iVar5 == 0) {
-        MyAssertHandler(0xffffffff82018fe0,0x5bb,0,0xffffffff82000f98,0xffffffff8201cfa4);
-      }
-    }
-    piVar8 = piVar8 + 1;
-    lVar7 = lVar7 + 1;
-  } while ((int)piVar8 < -0x7d5c31e0);
-  iVar5 = FX_Register(0xffffffff8201cf84);
-  *(int *)(iVar2 + 0x1198) = iVar5;
-  if (iVar5 == 0) {
-    MyAssertHandler(0xffffffff82018fe0,0x5bf,0,0xffffffff82000f98,0xffffffff8201cf70);
-  }
-  lVar7 = 1;
-  do {
-    pcVar3 = (char *)CL_GetConfigString(lVar7 + 0xba4);
-    if (*pcVar3 != '\0') {
-      iVar5 = BG_LoadShellShockDvars();
-      if (iVar5 == 0) {
-        Com_Error(1,0xffffffff8201cf3c,pcVar3);
-      }
-      BG_GetShellshockParms(lVar7);
-      BG_SetShellShockParmsFromDvars();
-    }
-    lVar7 = lVar7 + 1;
-  } while ((int)lVar7 < 0x10);
-  iVar5 = BG_LoadShellShockDvars(0xffffffff8201cf30);
-  if (iVar5 == 0) {
-    Com_Error(1,0xffffffff8201cf00);
-  }
-  BG_SetShellShockParmsFromDvars(iVar2 + 0x119c);
-  CG_RegisterRumbles(uVar1);
-  DAT_82a3c9b4 = CG_RegisterImpactEffects(param_2);
-  if (DAT_82a3c9b4 == 0) {
-    Com_Error(1,0xffffffff8201ceb8);
-  }
-  DAT_82a3c9bc = FX_Register(0xffffffff8201ce9c);
-  DAT_82a3c9c0 = FX_Register(0xffffffff8201ce84);
-  DAT_82a3c9c4 = FX_Register(0xffffffff8201ce64);
-  DAT_82a3c9c8 = FX_Register(0xffffffff8201ce40);
-  DAT_82a3c9cc = FX_Register(0xffffffff8201ce24);
-  DAT_82a3c9b8 = CG_RegisterSurfaceEffects(param_2);
-  if (DAT_82a3c9b8 == 0) {
-    Com_Error(1,0xffffffff8201cdd8);
-  }
-  DAT_82a3c9d0 = FX_Register(0xffffffff8201cdbc);
-  DAT_82a3c9d4 = FX_Register(0xffffffff8201cda8);
-  DAT_82a3c9d8 = FX_Register(0xffffffff8201cd88);
-  DAT_82a3c9dc = FX_Register(0xffffffff8201cd68);
-  DAT_82a3c9e0 = FX_Register(0xffffffff8201cd50);
-  DAT_82a3c9e4 = FX_Register(0xffffffff8201cd34);
-  DAT_82a3c9e8 = FX_Register(0xffffffff8201cd18);
-  DAT_82a3c9ec = FX_Register(0xffffffff8201ccfc);
-  __restgprlr_23();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure clientInfo_t
 
 // 822DB7E0  CG_StartAmbient  (cgame_mp/cg_main_mp.cpp:1519)
 
-void CG_StartAmbient(undefined8 param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CG_StartAmbient(LocalClientNum_t param_1)
 
 {
   CG_StartAmbientWithConfig(param_1,0x3d6);
@@ -955,96 +990,111 @@ void CG_StartAmbient(undefined8 param_1)
 
 // 822D9210  CG_StartAmbientWithConfig  (cgame_mp/cg_main_mp.cpp:1526)
 
-void CG_StartAmbientWithConfig(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CG_StartAmbientWithConfig(LocalClientNum_t param_1,int param_2)
 
 {
   char cVar1;
-  undefined8 uVar2;
-  char *pcVar5;
-  char *pcVar6;
-  uint uVar7;
-  int iVar8;
-  undefined8 uVar3;
-  undefined8 uVar4;
-  char *pcVar9;
-  ulonglong uVar10;
-  int iVar11;
-  double dVar12;
+  LocalClientNum_t LVar2;
+  char *pcVar3;
+  char *pcVar4;
+  uint uVar5;
+  int iVar6;
+  snd_alias_system_t sVar7;
+  snd_alias_t *psVar8;
+  IMAGE_DOS_HEADER *pIVar9;
+  char *pcVar10;
+  snd_alias_system_t sVar11;
+  int iVar12;
   double dVar13;
   double dVar14;
+  double dVar15;
   
-  uVar2 = __savegprlr_26();
-  iVar8 = (int)param_2;
-  if (((iVar8 != 0x3d6) && (iVar8 != 0x3d7)) && (iVar8 != 0x3d8)) {
-    MyAssertHandler(0xffffffff82018fe0,0x5f7,0,0xffffffff8201d934,0xffffffff8201d958,param_2);
+  LVar2 = __savegprlr_26(param_1);
+  if (((param_2 != 0x3d6) && (param_2 != 0x3d7)) && (param_2 != 0x3d8)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_main_mp.cpp",0x5f7
+                    ,0,"%s\n\t(configStringIndex) = %i");
   }
-  pcVar5 = (char *)CL_GetConfigString(param_2);
-  pcVar6 = pcVar5;
+  pcVar3 = CL_GetConfigString(param_2);
+  pcVar4 = pcVar3;
   do {
-    cVar1 = *pcVar6;
-    pcVar6 = pcVar6 + 1;
+    cVar1 = *pcVar4;
+    pcVar4 = pcVar4 + 1;
   } while (cVar1 != '\0');
-  if ((int)pcVar6 - (int)pcVar5 == 1) goto LAB_822d94a8;
-  pcVar6 = (char *)Info_ValueForKey(pcVar5,0xffffffff8201d930);
-  uVar7 = atoi(pcVar6);
-  uVar10 = (ulonglong)(uVar7 >> 0x1f) - 1 & (longlong)(int)uVar7;
-  pcVar6 = (char *)Info_ValueForKey(pcVar5,0xffffffff8201d92c);
-  iVar8 = atoi(pcVar6);
-  dVar13 = (double)((float)(longlong)iVar8 * 0.001);
-  dVar12 = 1.0;
-  if ((float)(dVar13 - 1.0) < 0.0) {
-    dVar12 = dVar13;
+  if ((int)pcVar4 - (int)pcVar3 == 1) goto LAB_822d94a8;
+  pcVar4 = Info_ValueForKey(pcVar3,"t");
+  uVar5 = atoi(pcVar4);
+  uVar5 = -((int)uVar5 >> 0x1f) - 1U & uVar5;
+  pcVar4 = Info_ValueForKey(pcVar3,"v");
+  iVar6 = atoi(pcVar4);
+  pIVar9 = &IMAGE_DOS_HEADER_82000000;
+  dVar14 = (double)((float)(longlong)iVar6 * 0.001);
+  dVar13 = 1.0;
+  if ((float)(dVar14 - 1.0) < 0.0) {
+    dVar13 = dVar14;
   }
-  dVar14 = 0.0;
-  if (-dVar13 < 0.0) {
-    dVar14 = dVar12;
+  dVar15 = 0.0;
+  if (-dVar14 < 0.0) {
+    dVar15 = dVar13;
   }
-  pcVar6 = (char *)Info_ValueForKey(pcVar5,0xffffffff8201d928);
-  atoi(pcVar6);
-  pcVar6 = (char *)Info_ValueForKey(pcVar5,0xffffffff82012c64);
-  iVar8 = atoi(pcVar6);
-  if (iVar8 < 1) {
-    iVar11 = 0;
-    if (0 < iVar8) goto LAB_822d9384;
+  pcVar4 = Info_ValueForKey(pcVar3,"e");
+  sVar7 = atoi(pcVar4);
+  if ((int)sVar7 < 1) {
+    sVar11 = SASYS_UI;
+    if (0 < (int)sVar7) goto LAB_822d934c;
   }
   else {
-    iVar8 = 1;
+    sVar7 = SASYS_CGAME;
+LAB_822d934c:
+    sVar11 = sVar7;
+  }
+  pcVar4 = Info_ValueForKey(pcVar3,"s");
+  iVar6 = atoi(pcVar4);
+  if (iVar6 < 1) {
+    iVar12 = 0;
+    if (0 < iVar6) goto LAB_822d9384;
+  }
+  else {
+    iVar6 = 1;
 LAB_822d9384:
-    iVar11 = iVar8;
+    iVar12 = iVar6;
   }
-  pcVar5 = (char *)Info_ValueForKey(pcVar5,0xffffffff8201d924);
-  pcVar6 = pcVar5;
+  pcVar3 = Info_ValueForKey(pcVar3,"n");
+  pcVar4 = pcVar3;
   do {
-    cVar1 = *pcVar6;
-    pcVar6 = pcVar6 + 1;
+    cVar1 = *pcVar4;
+    pcVar4 = pcVar4 + 1;
   } while (cVar1 != '\0');
-  pcVar9 = pcVar5;
-  if ((int)pcVar6 - (int)pcVar5 == 1) {
-    SND_StopAmbient(uVar10);
+  pcVar10 = pcVar3;
+  if ((int)pcVar4 - (int)pcVar3 == 1) {
+    SND_StopAmbient(uVar5);
     __restgprlr_26();
     return;
   }
   do {
-    cVar1 = *pcVar9;
-    pcVar9 = pcVar9 + 1;
+    cVar1 = *pcVar10;
+    pcVar10 = pcVar10 + 1;
   } while (cVar1 != '\0');
-  pcVar6 = pcVar5;
-  if (((int)pcVar9 - (int)pcVar5 != 1) && (iVar11 != 0)) {
-    SND_StopAmbientAlias(pcVar5,uVar10);
+  pcVar4 = pcVar3;
+  if (((int)pcVar10 - (int)pcVar3 != 1) && (iVar12 != 0)) {
+    SND_StopAmbientAlias(pcVar3,uVar5);
     __restgprlr_26();
     return;
   }
   do {
-    cVar1 = *pcVar6;
-    pcVar6 = pcVar6 + 1;
+    cVar1 = *pcVar4;
+    pcVar4 = pcVar4 + 1;
   } while (cVar1 != '\0');
-  if (((int)pcVar6 - (int)pcVar5 == 1) || (iVar11 != 0)) {
-    MyAssertHandler(0xffffffff82018fe0,0x62b,0,0xffffffff82000f98,0xffffffff8201d8f8);
+  if (((int)pcVar4 - (int)pcVar3 == 1) || (iVar12 != 0)) {
+    pIVar9 = (IMAGE_DOS_HEADER *)0x0;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_main_mp.cpp",0x62b
+                    ,0,"%s");
   }
-  uVar3 = CL_PickSoundAlias(pcVar5);
-  uVar4 = R_PopRemoteScreenUpdate();
-  SND_PlayAmbientAlias(dVar14,uVar2,uVar3);
-  R_PushRemoteScreenUpdate(uVar4);
+  psVar8 = CL_PickSoundAlias(pcVar3);
+  iVar6 = R_PopRemoteScreenUpdate();
+  SND_PlayAmbientAlias(LVar2,psVar8,(float)dVar15,(int)pIVar9,uVar5,sVar11);
+  R_PushRemoteScreenUpdate(iVar6);
 LAB_822d94a8:
   __restgprlr_26();
   return;
@@ -1052,140 +1102,55 @@ LAB_822d94a8:
 
 
 // 822DB820  CG_PlayClientSoundAlias  (cgame_mp/cg_main_mp.cpp:1597)
-
-void CG_PlayClientSoundAlias(undefined8 param_1,undefined8 param_2)
-
-{
-  int iVar1;
-  
-  iVar1 = CG_GetLocalClientGlobals();
-  CG_PlaySoundAliasScaled
-            (0x3ff0000000000000,param_1,*(undefined4 *)(iVar1 + 0x150),iVar1 + 0x1c,param_2);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 822DB880  CG_PlayClientSoundAliasByName  (cgame_mp/cg_main_mp.cpp:1608)
-
-void CG_PlayClientSoundAliasByName(undefined8 param_1,undefined8 param_2)
-
-{
-  int iVar1;
-  
-  iVar1 = CG_GetLocalClientGlobals();
-  CG_PlaySoundAliasByName(param_1,*(undefined4 *)(iVar1 + 0x150),iVar1 + 0x1c,param_2);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 822DB8D0  CG_PlayEntitySoundAlias  (cgame_mp/cg_main_mp.cpp:1619)
-
-void CG_PlayEntitySoundAlias(undefined8 param_1,undefined8 param_2,undefined8 param_3)
-
-{
-  undefined8 uVar1;
-  longlong lVar2;
-  
-  uVar1 = __savegprlr_29();
-  lVar2 = CG_GetEntity();
-  CG_PlaySoundAliasScaled(0x3ff0000000000000,uVar1,param_2,lVar2 + 0xdc,param_3);
-  __restgprlr_29();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure LerpEntityStatePlayer
 
 // 822DB918  CG_PlayEntitySoundAliasCompassPing  (cgame_mp/cg_main_mp.cpp:1628)
 
-void CG_PlayEntitySoundAliasCompassPing(double param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+int CG_PlayEntitySoundAliasCompassPing
+              (LocalClientNum_t param_1,int param_2,float *param_3,float param_4)
 
 {
-  CG_PlaySoundAliasWithPitch((double)(-(float)(param_1 * param_1 - 1.0) * 1.5));
-  return;
+  int iVar1;
+  
+  iVar1 = CG_PlaySoundAliasWithPitch
+                    (param_1,param_2,param_3,cgMedia.uavPing,-(param_4 * param_4 - 1.0) * 1.5);
+  return iVar1;
 }
 
 
 // 822DB940  CG_PlayEntitySoundAliasFootstep  (cgame_mp/cg_main_mp.cpp:1643)
-
-void CG_PlayEntitySoundAliasFootstep
-               (undefined8 param_1,longlong param_2,undefined8 param_3,ulonglong param_4)
-
-{
-  int iVar1;
-  int iVar2;
-  bool bVar3;
-  undefined8 uVar4;
-  longlong lVar5;
-  undefined8 uVar6;
-  int iVar7;
-  double dVar8;
-  double dVar9;
-  
-  uVar4 = __savegprlr_25();
-  lVar5 = CG_GetLocalClientGlobals();
-  iVar1 = (int)param_2;
-  if ((*(uint *)(iVar1 + 0x1c4) & 1) == 0) {
-    if ((param_4 & 0xff) == 0) {
-      uVar6 = 0xffffffff8201dedc;
-    }
-    else {
-      uVar6 = 0xffffffff8201dee0;
-    }
-    uVar6 = va(0xffffffff8201dec0,*(undefined4 *)(iVar1 + 0xc4),uVar6);
-    MyAssertHandler(0xffffffff82018fe0,0x675,0,0xffffffff820011f4,0xffffffff82012adc,uVar6);
-  }
-  dVar8 = 1.0;
-  if (lVar5 == -0x4ec) {
-    MyAssertHandler(0xffffffff82000fa8,0x4f,0,0xffffffff82000f98,0xffffffff82000f9c);
-  }
-  iVar2 = (int)lVar5;
-  dVar9 = dVar8;
-  if ((*(uint *)(iVar2 + 0x4f0) & 0x80) != 0) {
-    iVar7 = DAT_829d7f04;
-    if ((param_4 & 0xff) == 0) {
-      iVar7 = *(int *)(*(int *)(iVar1 + 0x154) * 0x590 + iVar2 + 0x100bb4);
-      if ((iVar7 == 0) ||
-         (bVar3 = true, iVar7 != *(int *)(*(int *)(iVar2 + 0x150) * 0x590 + iVar2 + 0x100bb4))) {
-        bVar3 = false;
-      }
-      iVar7 = DAT_829d7ee0;
-      if (bVar3) {
-        iVar7 = DAT_829d7ebc;
-      }
-    }
-    dVar9 = (double)*(float *)(iVar7 + 0xc);
-  }
-  CG_PlaySoundAliasScaled(dVar9,dVar8,uVar4,*(undefined4 *)(iVar1 + 0xc4),param_2 + 0xdc,param_3);
-  __restgprlr_25();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure LerpEntityStatePlayer
 
 // 822DBAC8  CG_PlayEntitySoundAliasByName  (cgame_mp/cg_main_mp.cpp:1679)
-
-void CG_PlayEntitySoundAliasByName(undefined8 param_1,undefined8 param_2,undefined8 param_3)
-
-{
-  undefined8 uVar1;
-  longlong lVar2;
-  
-  uVar1 = __savegprlr_29();
-  lVar2 = CG_GetEntity();
-  CG_PlaySoundAliasByName(uVar1,param_2,lVar2 + 0xdc,param_3);
-  __restgprlr_29();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure LerpEntityStatePlayer
 
 // 822D94B8  CG_StopSoundAlias  (cgame_mp/cg_main_mp.cpp:1688)
 
-void CG_StopSoundAlias(undefined8 param_1,undefined8 param_2,int *param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CG_StopSoundAlias(LocalClientNum_t param_1,int param_2,snd_alias_list_t *param_3)
 
 {
-  undefined8 uVar1;
+  SndEntHandle SVar1;
   
-  if ((param_3 != (int *)0x0) && (*param_3 != 0)) {
-    uVar1 = CG_GenerateSndEntHandle();
-    SND_StopSoundAliasOnEnt(uVar1,*param_3);
+  if ((param_3 != (snd_alias_list_t *)0x0) && (param_3->aliasName != (char *)0x0)) {
+    SVar1 = CG_GenerateSndEntHandle(param_1,param_2);
+    SND_StopSoundAliasOnEnt(SVar1,param_3->aliasName);
   }
   return;
 }
@@ -1193,512 +1158,342 @@ void CG_StopSoundAlias(undefined8 param_1,undefined8 param_2,int *param_3)
 
 // 822D9500  CG_StopSoundsOnEnt  (cgame_mp/cg_main_mp.cpp:1700)
 
-void CG_StopSoundsOnEnt(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CG_StopSoundsOnEnt(LocalClientNum_t param_1,int param_2)
 
 {
-  CG_GenerateSndEntHandle();
-  SND_StopSoundsOnEnt();
+  SndEntHandle SVar1;
+  
+  SVar1 = CG_GenerateSndEntHandle(param_1,param_2);
+  SND_StopSoundsOnEnt(SVar1);
   return;
 }
 
 
 // 822D9528  CG_StopSoundAliasByName  (cgame_mp/cg_main_mp.cpp:1709)
 
-void CG_StopSoundAliasByName(undefined8 param_1,undefined8 param_2,longlong param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CG_StopSoundAliasByName(LocalClientNum_t param_1,int param_2,int param_3)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
+  LocalClientNum_t LVar2;
+  char *pcVar3;
+  SndEntHandle SVar1;
   
-  uVar1 = __savegprlr_29();
-  uVar2 = CL_GetConfigString(param_3 + 0x824);
-  uVar1 = CG_GenerateSndEntHandle(uVar1,param_2);
-  SND_StopSoundAliasOnEnt(uVar1,uVar2);
+  LVar2 = __savegprlr_29(param_1);
+  pcVar3 = CL_GetConfigString(param_3 + 0x824);
+  SVar1 = CG_GenerateSndEntHandle(LVar2,param_2);
+  SND_StopSoundAliasOnEnt(SVar1,pcVar3);
   __restgprlr_29();
   return;
 }
 
 
 // 822D9568  CG_StopClientSoundAliasByName  (cgame_mp/cg_main_mp.cpp:1720)
-
-void CG_StopClientSoundAliasByName(undefined8 param_1,longlong param_2)
-
-{
-  undefined4 uVar1;
-  undefined8 uVar2;
-  int iVar4;
-  undefined8 uVar3;
-  
-  uVar2 = __savegprlr_29();
-  iVar4 = CG_GetLocalClientGlobals();
-  uVar1 = *(undefined4 *)(iVar4 + 0x150);
-  uVar3 = CL_GetConfigString(param_2 + 0x824);
-  uVar2 = CG_GenerateSndEntHandle(uVar2,uVar1);
-  SND_StopSoundAliasOnEnt(uVar2,uVar3);
-  __restgprlr_29();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 822D95B0  CG_ShouldPlaySoundOnLocalClient  (cgame_mp/cg_main_mp.cpp:1729)
-
-void CG_ShouldPlaySoundOnLocalClient
-               (undefined8 param_1,float param_2,float *param_3,undefined8 param_4)
-
-{
-  undefined8 uVar1;
-  int iVar2;
-  char cVar5;
-  float fVar3;
-  int iVar4;
-  int iVar6;
-  longlong lVar7;
-  float *pfVar8;
-  
-  uVar1 = __savegprlr_25();
-  iVar2 = CL_GetLocalClientActiveCount();
-  if (iVar2 == 1) {
-    __restgprlr_25();
-    return;
-  }
-  iVar2 = CG_GetLocalClientGlobals(uVar1);
-  if ((*(float *)(iVar2 + 0x7a708) == 0.0) && (lVar7 = 0, 0 < DAT_82aa1ae8)) {
-    do {
-      cVar5 = CL_IsLocalClientActive(lVar7);
-      if ((cVar5 != '\0') && (fVar3 = (float)CG_GetClientNumForLocalClient(lVar7), fVar3 == param_2)
-         ) {
-        __restgprlr_25((int)uVar1 == (int)lVar7);
-        return;
-      }
-      lVar7 = lVar7 + 1;
-    } while ((int)lVar7 < DAT_82aa1ae8);
-  }
-  iVar6 = 0;
-  pfVar8 = (float *)&DAT_82a3ce54;
-  while( true ) {
-    if (pfVar8[1] == 0.0) {
-      __restgprlr_25(iVar6 < 0x40);
-      return;
-    }
-    if ((((param_2 == pfVar8[-3]) && (*(float *)(iVar2 + 0x7a708) == pfVar8[2])) &&
-        (*param_3 == pfVar8[-2])) &&
-       (((param_3[1] == pfVar8[-1] && (param_3[2] == *pfVar8)) &&
-        (iVar4 = I_stricmp(param_4), iVar4 == 0)))) break;
-    pfVar8 = pfVar8 + 6;
-    iVar6 = iVar6 + 1;
-    if (-0x7d5c2bad < (int)pfVar8) {
-      __restgprlr_25(0);
-      return;
-    }
-  }
-  __restgprlr_25(0);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 822D9720  CG_SubtitlePrint  (cgame_mp/cg_main_mp.cpp:1772)
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure clientInfo_t
 
-void CG_SubtitlePrint(undefined8 param_1,ulonglong param_2)
-
-{
-  undefined4 uVar1;
-  ulonglong uVar3;
-  int iVar4;
-  ulonglong uVar5;
-  double dVar6;
-  int iVar2;
-  
-  uVar3 = __savegprlr_25();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82018fe0,0x6f0,0,0xffffffff82000f98,0xffffffff8201d9d0);
-  }
-  if (DAT_82a3d5dc == 0) {
-    MyAssertHandler(0xffffffff82018fe0,0x6f1,0,0xffffffff82000f98,0xffffffff8201a530);
-  }
-  if (DAT_82a3d670 == 0) {
-    MyAssertHandler(0xffffffff82018fe0,0x6f2,0,0xffffffff82000f98,0xffffffff8201a514);
-  }
-  if (DAT_82a3d684 == 0) {
-    MyAssertHandler(0xffffffff82018fe0,0x6f3,0,0xffffffff82000f98,0xffffffff8201a57c);
-  }
-  if (((int)uVar3 != 0) && (*(int *)((int)param_2 + 4) != 0)) {
-    iVar4 = CG_GetLocalClientStaticGlobals(0);
-    iVar2 = DAT_82a3d5dc;
-    if (1.3333334 < *(float *)(iVar4 + 0x10)) {
-      iVar2 = DAT_82a3d670;
-    }
-    uVar1 = *(undefined4 *)(iVar2 + 0xc);
-    dVar6 = floor((double)(*(float *)(DAT_82a3d684 + 0xc) * 1000.0 + 0.5));
-    uVar5 = (ulonglong)(uint)(int)dVar6;
-    if ((int)dVar6 < (int)uVar3) {
-      uVar5 = uVar3;
-    }
-    CL_SubtitlePrint(0,*(undefined4 *)((int)param_2 + 4),uVar5,uVar1);
-  }
-  __restgprlr_25();
-  return;
-}
-
+// 822D9888  CG_SubtitleSndLengthNotify  (cgame_mp/cg_main_mp.cpp:1794)
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure clientInfo_t
 
 // 822D9890  CG_EntityCustomSndLengthNotify  (cgame_mp/cg_main_mp.cpp:1800)
-
-void CG_EntityCustomSndLengthNotify(undefined8 param_1,undefined4 param_2)
-
-{
-  undefined8 uVar1;
-  int iVar2;
-  ushort uStack0000001c;
-  ushort uStack0000001e;
-  
-  uVar1 = __savegprlr_28();
-  uStack0000001c = (ushort)((uint)param_2 >> 0x10);
-  if (0x11 < uStack0000001c) {
-    MyAssertHandler(0xffffffff82018fe0,0x70d,0,0xffffffff8201da90,uStack0000001c,0x12);
-  }
-  uStack0000001e = (ushort)param_2;
-  if (0x7ff < uStack0000001e) {
-    MyAssertHandler(0xffffffff82018fe0,0x70e,0,0xffffffff8201da30,uStack0000001e,0x800);
-  }
-  iVar2 = CG_GetEntity(uStack0000001c,uStack0000001e);
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff82018fe0,0x710,1,0xffffffff82000f98,0xffffffff82002118);
-  }
-  if (*(int *)(iVar2 + 200) != 0xb) {
-    Com_DPrintf(9,0xffffffff8201d9d8);
-    __restgprlr_28();
-    return;
-  }
-  CG_Turret_SoundNotify(iVar2,uVar1);
-  __restgprlr_28();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure LerpEntityStatePlayer
 
 // 822D9978  CG_AddFXSoundAlias  (cgame_mp/cg_main_mp.cpp:1824)
-
-void CG_AddFXSoundAlias(undefined8 param_1,undefined8 param_2,undefined8 param_3,int param_4)
-
-{
-  undefined8 uVar1;
-  int iVar3;
-  ulonglong uVar2;
-  
-  uVar1 = __savegprlr_28();
-  iVar3 = CG_GetLocalClientGlobals();
-  if ((*(int *)(iVar3 + 0x6b990) <= param_4) &&
-     (uVar2 = Com_PickSoundAliasFromList(param_3), (uVar2 & 0xffffffff) != 0)) {
-    Snd_AssertAliasValid();
-    uVar1 = CG_GenerateSndEntHandle(uVar1,0x7fe);
-    SND_AddPlayFXSoundAlias(uVar2,uVar1,param_2);
-  }
-  __restgprlr_28();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 822D99E8  CG_UpdateSoundPlaybackTracking  (cgame_mp/cg_main_mp.cpp:1849)
-
-void CG_UpdateSoundPlaybackTracking
-               (undefined8 param_1,undefined4 param_2,undefined4 *param_3,undefined4 param_4)
-
-{
-  undefined8 uVar1;
-  int iVar2;
-  int *piVar3;
-  int iVar4;
-  
-  uVar1 = __savegprlr_28();
-  iVar2 = CL_GetLocalClientActiveCount();
-  if (iVar2 != 1) {
-    iVar2 = CG_GetLocalClientGlobals(uVar1);
-    iVar4 = 0;
-    piVar3 = &DAT_82a3ce70;
-    while (piVar3[-6] != 0) {
-      if (*piVar3 == 0) {
-        iVar4 = iVar4 + 1;
-        break;
-      }
-      if (piVar3[6] == 0) {
-        iVar4 = iVar4 + 2;
-        break;
-      }
-      if (piVar3[0xc] == 0) {
-        iVar4 = iVar4 + 3;
-        break;
-      }
-      piVar3 = piVar3 + 0x18;
-      iVar4 = iVar4 + 4;
-      if (-0x7d5c2b91 < (int)piVar3) {
-        __restgprlr_28();
-        return;
-      }
-    }
-    if (iVar4 < 0x40) {
-      (&DAT_82a3ce48)[iVar4 * 6] = param_2;
-      (&DAT_82a3ce58)[iVar4 * 6] = param_4;
-      (&DAT_82a3ce5c)[iVar4 * 6] = *(undefined4 *)(iVar2 + 0x7a708);
-      (&DAT_82a3ce4c)[iVar4 * 6] = *param_3;
-      (&DAT_82a3ce50)[iVar4 * 6] = param_3[1];
-      (&DAT_82a3ce54)[iVar4 * 6] = param_3[2];
-    }
-  }
-  __restgprlr_28();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 822D9AD8  CG_PlaySoundAliasScaled  (cgame_mp/cg_main_mp.cpp:1879)
 
-void CG_PlaySoundAliasScaled
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-               undefined8 param_5,ulonglong param_6)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+int CG_PlaySoundAliasScaled
+              (LocalClientNum_t param_1,int param_2,float *param_3,snd_alias_list_t *param_4,
+              float param_5,float param_6)
 
 {
-  undefined8 uVar1;
-  char cVar4;
-  ulonglong uVar2;
-  undefined8 uVar3;
-  undefined8 extraout_f1;
+  LocalClientNum_t LVar2;
+  bool bVar6;
+  snd_alias_t *psVar3;
+  SndEntHandle SVar1;
+  int iVar4;
+  int iVar5;
+  SndEntHandle SVar7;
+  float *pfVar8;
+  ulonglong uVar9;
+  snd_alias_list_t *psVar10;
+  double extraout_f1;
+  double dVar11;
+  double dVar12;
   
-  uVar1 = __savegprlr_26();
-  if ((param_6 & 0xffffffff) != 0) {
-    if (((*(int *)param_6 != 0) &&
-        (uVar3 = extraout_f1, cVar4 = CG_ShouldPlaySoundOnLocalClient(), cVar4 != '\0')) &&
-       (uVar2 = Com_PickSoundAliasFromList(param_6), (uVar2 & 0xffffffff) != 0)) {
-      CG_GenerateSndEntHandle(uVar1,param_4);
-      uVar3 = SND_PlayScaledSoundAlias(uVar3,param_2,uVar2);
-      SND_AddLengthNotify(uVar3,uVar2,0,0);
-      if ((int)uVar3 != -1) {
-        CG_UpdateSoundPlaybackTracking(uVar1,param_4,param_5,*(int *)param_6);
+  dVar11 = (double)param_6;
+  uVar9 = (ulonglong)(int)param_4;
+  SVar7 = (SndEntHandle)(longlong)param_2;
+  LVar2 = __savegprlr_26((double)param_5,param_1);
+  if ((uVar9 & 0xffffffff) != 0) {
+    psVar10 = (snd_alias_list_t *)uVar9;
+    if (psVar10->aliasName != (char *)0x0) {
+      iVar5 = SVar7._4_4_;
+      dVar12 = extraout_f1;
+      pfVar8 = param_3;
+      bVar6 = CG_ShouldPlaySoundOnLocalClient(LVar2,iVar5,param_3,psVar10->aliasName);
+      if ((bVar6) && (psVar3 = Com_PickSoundAliasFromList(psVar10), psVar3 != (snd_alias_t *)0x0)) {
+        SVar1 = CG_GenerateSndEntHandle(LVar2,iVar5);
+        iVar4 = SND_PlayScaledSoundAlias
+                          (psVar3,(float)dVar12,(float)dVar11,SVar7,pfVar8,SVar1._4_4_,
+                           (snd_alias_system_t)param_3);
+        SND_AddLengthNotify(iVar4,psVar3,SndLengthNotify_Subtitle,0);
+        if (iVar4 != -1) {
+          CG_UpdateSoundPlaybackTracking(LVar2,iVar5,param_3,psVar10->aliasName);
+        }
+        iVar5 = __restgprlr_26(iVar4);
+        return iVar5;
       }
-      __restgprlr_26(uVar3);
-      return;
     }
   }
-  __restgprlr_26(0xffffffffffffffff);
-  return;
+  iVar5 = __restgprlr_26(0xffffffffffffffff);
+  return iVar5;
 }
 
 
 // 822D9BC0  CG_PlaySoundAlias  (cgame_mp/cg_main_mp.cpp:1905)
 
-void CG_PlaySoundAlias(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+int CG_PlaySoundAlias(LocalClientNum_t param_1,int param_2,float *param_3,snd_alias_list_t *param_4)
 
 {
-  CG_PlaySoundAliasScaled(0x3ff0000000000000);
-  return;
+  int iVar1;
+  
+  iVar1 = CG_PlaySoundAliasScaled(param_1,param_2,param_3,param_4,1.0,1.0);
+  return iVar1;
 }
 
 
 // 822D9BD0  CG_PlaySoundAliasAtTime  (cgame_mp/cg_main_mp.cpp:1914)
-
-void CG_PlaySoundAliasAtTime
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-               int param_5)
-
-{
-  undefined8 uVar1;
-  int iVar2;
-  
-  uVar1 = __savegprlr_27();
-  iVar2 = CG_GetLocalClientGlobals();
-  if (param_5 < *(int *)(iVar2 + 0x6b990)) {
-    __restgprlr_27(0xffffffffffffffff);
-    return;
-  }
-  CG_PlaySoundAliasScaled(0x3ff0000000000000,uVar1,param_2,param_3,param_4);
-  __restgprlr_27();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 822D9C40  CG_PlaySoundAliasWithPitch  (cgame_mp/cg_main_mp.cpp:1927)
 
-void CG_PlaySoundAliasWithPitch
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,ulonglong param_4)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+int CG_PlaySoundAliasWithPitch
+              (LocalClientNum_t param_1,int param_2,float *param_3,snd_alias_list_t *param_4,
+              float param_5)
 
 {
-  undefined8 uVar1;
-  char cVar4;
-  ulonglong uVar2;
-  undefined8 uVar3;
-  undefined8 extraout_f1;
+  LocalClientNum_t LVar2;
+  bool bVar6;
+  snd_alias_t *psVar3;
+  SndEntHandle SVar1;
+  int iVar4;
+  int iVar5;
+  SndEntHandle SVar7;
+  ulonglong uVar8;
+  snd_alias_list_t *psVar9;
+  double extraout_f1;
+  double dVar10;
   
-  uVar1 = __savegprlr_26();
-  if ((param_4 & 0xffffffff) != 0) {
-    if (((*(int *)param_4 != 0) &&
-        (uVar3 = extraout_f1, cVar4 = CG_ShouldPlaySoundOnLocalClient(), cVar4 != '\0')) &&
-       (uVar2 = Com_PickSoundAliasFromList(param_4), (uVar2 & 0xffffffff) != 0)) {
-      CG_GenerateSndEntHandle(uVar1,param_2);
-      uVar3 = SND_PlaySoundAliasWithPitch(uVar3,uVar2);
-      SND_AddLengthNotify(uVar3,uVar2,0,0);
-      if ((int)uVar3 != -1) {
-        CG_UpdateSoundPlaybackTracking(uVar1,param_2,param_3,*(int *)param_4);
+  uVar8 = (ulonglong)(int)param_4;
+  SVar7 = (SndEntHandle)(longlong)param_2;
+  LVar2 = __savegprlr_26((double)param_5,param_1);
+  if ((uVar8 & 0xffffffff) != 0) {
+    psVar9 = (snd_alias_list_t *)uVar8;
+    if (psVar9->aliasName != (char *)0x0) {
+      iVar5 = SVar7._4_4_;
+      dVar10 = extraout_f1;
+      bVar6 = CG_ShouldPlaySoundOnLocalClient(LVar2,iVar5,param_3,psVar9->aliasName);
+      if ((bVar6) && (psVar3 = Com_PickSoundAliasFromList(psVar9), psVar3 != (snd_alias_t *)0x0)) {
+        SVar1 = CG_GenerateSndEntHandle(LVar2,iVar5);
+        iVar4 = SND_PlaySoundAliasWithPitch
+                          (psVar3,(float)dVar10,SVar7,SVar1._4_4_,(int)param_3,SASYS_UI);
+        SND_AddLengthNotify(iVar4,psVar3,SndLengthNotify_Subtitle,0);
+        if (iVar4 != -1) {
+          CG_UpdateSoundPlaybackTracking(LVar2,iVar5,param_3,psVar9->aliasName);
+        }
+        iVar5 = __restgprlr_26(iVar4);
+        return iVar5;
       }
-      __restgprlr_26(uVar3);
-      return;
     }
   }
-  __restgprlr_26(0xffffffffffffffff);
-  return;
+  iVar5 = __restgprlr_26(0xffffffffffffffff);
+  return iVar5;
 }
 
 
 // 822D9D18  CG_PlaySoundAliasByName  (cgame_mp/cg_main_mp.cpp:1953)
 
-void CG_PlaySoundAliasByName
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,longlong param_4)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+int CG_PlaySoundAliasByName(LocalClientNum_t param_1,int param_2,float *param_3,int param_4)
 
 {
-  undefined8 uVar1;
-  ulonglong uVar2;
-  char cVar5;
-  ulonglong uVar3;
-  undefined8 uVar4;
+  LocalClientNum_t LVar2;
+  char *pcVar3;
+  bool bVar6;
+  snd_alias_t *psVar4;
+  SndEntHandle SVar1;
+  int iVar5;
   
-  uVar1 = __savegprlr_26();
-  uVar2 = CL_GetConfigString(param_4 + 0x824);
-  if ((((uVar2 & 0xffffffff) != 0) &&
-      (cVar5 = CG_ShouldPlaySoundOnLocalClient(uVar1,param_2,param_3,uVar2), cVar5 != '\0')) &&
-     (uVar3 = CL_PickSoundAlias(uVar2), (uVar3 & 0xffffffff) != 0)) {
-    uVar4 = CG_GenerateSndEntHandle(uVar1,param_2);
-    uVar4 = SND_PlaySoundAlias(uVar3,uVar4,param_3,0,1);
-    SND_AddLengthNotify(uVar4,uVar3,0,0);
-    if ((int)uVar4 != -1) {
-      CG_UpdateSoundPlaybackTracking(uVar1,param_2,param_3,uVar2);
+  LVar2 = __savegprlr_26(param_1);
+  pcVar3 = CL_GetConfigString(param_4 + 0x824);
+  if (pcVar3 != (char *)0x0) {
+    bVar6 = CG_ShouldPlaySoundOnLocalClient(LVar2,param_2,param_3,pcVar3);
+    if ((bVar6) && (psVar4 = CL_PickSoundAlias(pcVar3), psVar4 != (snd_alias_t *)0x0)) {
+      SVar1 = CG_GenerateSndEntHandle(LVar2,param_2);
+      iVar5 = SND_PlaySoundAlias(psVar4,SVar1,param_3,0,SASYS_CGAME);
+      SND_AddLengthNotify(iVar5,psVar4,SndLengthNotify_Subtitle,0);
+      if (iVar5 != -1) {
+        CG_UpdateSoundPlaybackTracking(LVar2,param_2,param_3,pcVar3);
+      }
+      iVar5 = __restgprlr_26(iVar5);
+      return iVar5;
     }
-    __restgprlr_26(uVar4);
-    return;
   }
-  __restgprlr_26(0xffffffffffffffff);
-  return;
+  iVar5 = __restgprlr_26(0xffffffffffffffff);
+  return iVar5;
 }
 
 
 // 822D9DE8  CG_PlaySoundAliasAsMasterByName  (cgame_mp/cg_main_mp.cpp:1982)
 
-void CG_PlaySoundAliasAsMasterByName
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,longlong param_4)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+int CG_PlaySoundAliasAsMasterByName(LocalClientNum_t param_1,int param_2,float *param_3,int param_4)
 
 {
-  undefined8 uVar1;
-  ulonglong uVar2;
-  char cVar5;
-  ulonglong uVar3;
-  undefined8 uVar4;
+  LocalClientNum_t LVar2;
+  char *pcVar3;
+  bool bVar6;
+  snd_alias_t *psVar4;
+  SndEntHandle SVar1;
+  int iVar5;
   
-  uVar1 = __savegprlr_26();
-  uVar2 = CL_GetConfigString(param_4 + 0x824);
-  if ((((uVar2 & 0xffffffff) != 0) &&
-      (cVar5 = CG_ShouldPlaySoundOnLocalClient(uVar1,param_2,param_3,uVar2), cVar5 != '\0')) &&
-     (uVar3 = CL_PickSoundAlias(uVar2), (uVar3 & 0xffffffff) != 0)) {
-    uVar4 = CG_GenerateSndEntHandle(uVar1,param_2);
-    uVar4 = SND_PlaySoundAliasAsMaster(uVar3,uVar4,param_3,0,1);
-    SND_AddLengthNotify(uVar4,uVar3,0,0);
-    if ((int)uVar4 != -1) {
-      CG_UpdateSoundPlaybackTracking(uVar1,param_2,param_3,uVar2);
+  LVar2 = __savegprlr_26(param_1);
+  pcVar3 = CL_GetConfigString(param_4 + 0x824);
+  if (pcVar3 != (char *)0x0) {
+    bVar6 = CG_ShouldPlaySoundOnLocalClient(LVar2,param_2,param_3,pcVar3);
+    if ((bVar6) && (psVar4 = CL_PickSoundAlias(pcVar3), psVar4 != (snd_alias_t *)0x0)) {
+      SVar1 = CG_GenerateSndEntHandle(LVar2,param_2);
+      iVar5 = SND_PlaySoundAliasAsMaster(psVar4,SVar1,param_3,0,SASYS_CGAME);
+      SND_AddLengthNotify(iVar5,psVar4,SndLengthNotify_Subtitle,0);
+      if (iVar5 != -1) {
+        CG_UpdateSoundPlaybackTracking(LVar2,param_2,param_3,pcVar3);
+      }
+      iVar5 = __restgprlr_26(iVar5);
+      return iVar5;
     }
-    __restgprlr_26(uVar4);
-    return;
   }
-  __restgprlr_26(0xffffffffffffffff);
-  return;
+  iVar5 = __restgprlr_26(0xffffffffffffffff);
+  return iVar5;
 }
 
 
 // 822D9EB8  CG_PlaySoundAliasByName2  (cgame_mp/cg_main_mp.cpp:2010)
 
-void CG_PlaySoundAliasByName2
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,ulonglong param_4)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+int CG_PlaySoundAliasByName2(LocalClientNum_t param_1,int param_2,float *param_3,char *param_4)
 
 {
-  undefined8 uVar1;
-  char cVar4;
-  ulonglong uVar2;
-  undefined8 uVar3;
+  LocalClientNum_t LVar2;
+  bool bVar5;
+  snd_alias_t *psVar3;
+  SndEntHandle SVar1;
+  int iVar4;
+  ulonglong uVar6;
+  char *pcVar7;
   
-  uVar1 = __savegprlr_26();
-  if ((((param_4 & 0xffffffff) != 0) && (cVar4 = CG_ShouldPlaySoundOnLocalClient(), cVar4 != '\0'))
-     && (uVar2 = CL_PickSoundAlias(param_4), (uVar2 & 0xffffffff) != 0)) {
-    uVar3 = CG_GenerateSndEntHandle(uVar1,param_2);
-    uVar3 = SND_PlaySoundAlias(uVar2,uVar3,param_3,0,1);
-    SND_AddLengthNotify(uVar3,uVar2,0,0);
-    if ((int)uVar3 != -1) {
-      CG_UpdateSoundPlaybackTracking(uVar1,param_2,param_3,param_4);
+  uVar6 = (ulonglong)(int)param_4;
+  LVar2 = __savegprlr_26(param_1);
+  if ((uVar6 & 0xffffffff) != 0) {
+    pcVar7 = (char *)uVar6;
+    bVar5 = CG_ShouldPlaySoundOnLocalClient(LVar2,param_2,param_3,pcVar7);
+    if ((bVar5) && (psVar3 = CL_PickSoundAlias(pcVar7), psVar3 != (snd_alias_t *)0x0)) {
+      SVar1 = CG_GenerateSndEntHandle(LVar2,param_2);
+      iVar4 = SND_PlaySoundAlias(psVar3,SVar1,param_3,0,SASYS_CGAME);
+      SND_AddLengthNotify(iVar4,psVar3,SndLengthNotify_Subtitle,0);
+      if (iVar4 != -1) {
+        CG_UpdateSoundPlaybackTracking(LVar2,param_2,param_3,pcVar7);
+      }
+      iVar4 = __restgprlr_26(iVar4);
+      return iVar4;
     }
-    __restgprlr_26(uVar3);
-    return;
   }
-  __restgprlr_26(0xffffffffffffffff);
-  return;
+  iVar4 = __restgprlr_26(0xffffffffffffffff);
+  return iVar4;
 }
 
 
 // 822D9F70  CG_PlayEntitySoundAliasByName2  (cgame_mp/cg_main_mp.cpp:2037)
-
-void CG_PlayEntitySoundAliasByName2(undefined8 param_1,undefined8 param_2,undefined8 param_3)
-
-{
-  undefined8 uVar1;
-  longlong lVar2;
-  
-  uVar1 = __savegprlr_29();
-  lVar2 = CG_GetEntity();
-  CG_PlaySoundAliasByName2(uVar1,param_2,lVar2 + 0xdc,param_3);
-  __restgprlr_29();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure LerpEntityStatePlayer
 
 // 822D9FB0  CG_PlayClientSoundAliasByName2  (cgame_mp/cg_main_mp.cpp:2047)
-
-void CG_PlayClientSoundAliasByName2(undefined8 param_1,undefined8 param_2)
-
-{
-  int iVar1;
-  
-  iVar1 = CG_GetLocalClientGlobals();
-  CG_PlaySoundAliasByName2(param_1,*(undefined4 *)(iVar1 + 0x150),iVar1 + 0x1c,param_2);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 822DA000  CG_PlayBoltedFxFromConfigstring  (cgame_mp/cg_main_mp.cpp:2058)
 
-void CG_PlayBoltedFxFromConfigstring(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+void CG_PlayBoltedFxFromConfigstring(LocalClientNum_t param_1,int param_2,int param_3)
 
 {
-  int iVar1;
-  undefined8 uVar2;
-  char *pcVar4;
-  undefined8 uVar3;
+  FxEffectDef *pFVar1;
+  LocalClientNum_t LVar2;
+  char *pcVar3;
+  uint uVar4;
   ulonglong uVar5;
-  undefined2 local_40 [32];
+  ushort local_40 [32];
   
-  uVar2 = __savegprlr_26();
-  pcVar4 = (char *)CL_GetConfigString(param_3);
-  if ((pcVar4 != (char *)0x0) && (*pcVar4 != '\0')) {
-    if ((pcVar4[1] == '\0') || (pcVar4[2] == '\0')) {
-      uVar3 = va(0xffffffff8201db78,pcVar4);
-      MyAssertHandler(0xffffffff82018fe0,0x817,0,0xffffffff820011f4,0xffffffff8201db40,uVar3);
+  LVar2 = __savegprlr_26(param_1);
+  pcVar3 = CL_GetConfigString(param_3);
+  if ((pcVar3 != (char *)0x0) && (*pcVar3 != '\0')) {
+    if ((pcVar3[1] == '\0') || (pcVar3[2] == '\0')) {
+      va("tagAndEffect: \'%s\'");
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_main_mp.cpp",
+                      0x817,0,"%s\n\t%s");
     }
-    uVar5 = ((longlong)*pcVar4 + ((longlong)*pcVar4 & 0x3fffffffU) * 4 & 0x7fffffff) * 2 +
-            (longlong)pcVar4[1];
-    uVar5 = ((uVar5 + (uVar5 & 0x3fffffff) * 4 & 0x7fffffff) * 2 + (longlong)pcVar4[2]) - 0x14d0;
+    uVar5 = ((longlong)*pcVar3 + ((longlong)*pcVar3 & 0x3fffffffU) * 4 & 0x7fffffff) * 2 +
+            (longlong)pcVar3[1];
+    uVar5 = ((uVar5 + (uVar5 & 0x3fffffff) * 4 & 0x7fffffff) * 2 + (longlong)pcVar3[2]) - 0x14d0;
     if (((longlong)uVar5 < 1) || (0xff < (int)uVar5)) {
-      MyAssertHandler(0xffffffff82018fe0,0x819,0,0xffffffff82000f98,0xffffffff82016d94);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_main_mp.cpp",
+                      0x819,0,"%s");
     }
-    iVar1 = *(int *)(&DAT_82a3ca20 + (int)((uVar5 & 0xffffffff) << 2));
-    if (iVar1 == 0) {
-      MyAssertHandler(0xffffffff82018fe0,0x81c,0,0xffffffff82000f98,0xffffffff82015e68);
+    pFVar1 = *(FxEffectDef **)((int)cgMedia.fxs + (int)((uVar5 & 0xffffffff) << 2));
+    if (pFVar1 == (FxEffectDef *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_main_mp.cpp",
+                      0x81c,0,"%s");
     }
-    local_40[0] = SL_GetString(pcVar4 + 3,0);
-    CG_PlayBoltedEffect(uVar2,iVar1,param_2);
+    uVar4 = SL_GetString(pcVar3 + 3,0);
+    local_40[0] = (ushort)uVar4;
+    CG_PlayBoltedEffect(LVar2,pFVar1,param_2,uVar4 & 0xffff);
     Scr_SetString(local_40,0);
     __restgprlr_26();
     return;
   }
-  Com_PrintError(0xe,0xffffffff8201daf8,param_3);
+  Com_PrintError(0xe,"Error in CG_PlayBoltedFxFromConfigstring(), unknown effect at index %i\n");
   __restgprlr_26();
   return;
 }
@@ -1706,1100 +1501,205 @@ void CG_PlayBoltedFxFromConfigstring(undefined8 param_1,undefined8 param_2,undef
 
 // 822DA188  CG_StopBoltedFxFromConfigstring  (cgame_mp/cg_main_mp.cpp:2090)
 
-void CG_StopBoltedFxFromConfigstring(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+void CG_StopBoltedFxFromConfigstring(LocalClientNum_t param_1,int param_2,int param_3)
 
 {
-  int iVar1;
-  undefined8 uVar2;
-  char *pcVar4;
-  undefined8 uVar3;
+  FxEffectDef *pFVar1;
+  LocalClientNum_t LVar2;
+  char *pcVar3;
+  uint uVar4;
   ulonglong uVar5;
-  undefined2 local_40 [32];
+  ushort local_40 [32];
   
-  uVar2 = __savegprlr_26();
-  pcVar4 = (char *)CL_GetConfigString(param_3);
-  if ((pcVar4 != (char *)0x0) && (*pcVar4 != '\0')) {
-    if ((pcVar4[1] == '\0') || (pcVar4[2] == '\0')) {
-      uVar3 = va(0xffffffff8201db78,pcVar4);
-      MyAssertHandler(0xffffffff82018fe0,0x837,0,0xffffffff820011f4,0xffffffff8201db40,uVar3);
+  LVar2 = __savegprlr_26(param_1);
+  pcVar3 = CL_GetConfigString(param_3);
+  if ((pcVar3 != (char *)0x0) && (*pcVar3 != '\0')) {
+    if ((pcVar3[1] == '\0') || (pcVar3[2] == '\0')) {
+      va("tagAndEffect: \'%s\'");
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_main_mp.cpp",
+                      0x837,0,"%s\n\t%s");
     }
-    uVar5 = ((longlong)*pcVar4 + ((longlong)*pcVar4 & 0x3fffffffU) * 4 & 0x7fffffff) * 2 +
-            (longlong)pcVar4[1];
-    uVar5 = ((uVar5 + (uVar5 & 0x3fffffff) * 4 & 0x7fffffff) * 2 + (longlong)pcVar4[2]) - 0x14d0;
+    uVar5 = ((longlong)*pcVar3 + ((longlong)*pcVar3 & 0x3fffffffU) * 4 & 0x7fffffff) * 2 +
+            (longlong)pcVar3[1];
+    uVar5 = ((uVar5 + (uVar5 & 0x3fffffff) * 4 & 0x7fffffff) * 2 + (longlong)pcVar3[2]) - 0x14d0;
     if (((longlong)uVar5 < 1) || (0xff < (int)uVar5)) {
-      MyAssertHandler(0xffffffff82018fe0,0x839,0,0xffffffff82000f98,0xffffffff82016d94);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_main_mp.cpp",
+                      0x839,0,"%s");
     }
-    iVar1 = *(int *)(&DAT_82a3ca20 + (int)((uVar5 & 0xffffffff) << 2));
-    if (iVar1 == 0) {
-      MyAssertHandler(0xffffffff82018fe0,0x83c,0,0xffffffff82000f98,0xffffffff82015e68);
+    pFVar1 = *(FxEffectDef **)((int)cgMedia.fxs + (int)((uVar5 & 0xffffffff) << 2));
+    if (pFVar1 == (FxEffectDef *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_main_mp.cpp",
+                      0x83c,0,"%s");
     }
-    local_40[0] = SL_GetString(pcVar4 + 3,0);
-    CG_StopBoltedEffects(uVar2,iVar1,param_2);
+    uVar4 = SL_GetString(pcVar3 + 3,0);
+    local_40[0] = (ushort)uVar4;
+    CG_StopBoltedEffects(LVar2,pFVar1,param_2,uVar4 & 0xffff);
     Scr_SetString(local_40,0);
     __restgprlr_26();
     return;
   }
-  Com_PrintError(0xe,0xffffffff8201db90,param_3);
+  Com_PrintError(0xe,"Error in CG_StopBoltedFxFromConfigstring(), unknown effect at index %i\n");
   __restgprlr_26();
   return;
 }
 
 
 // 822DA310  CG_RewindKillcamEffects  (cgame_mp/cg_main_mp.cpp:2127)
-
-void CG_RewindKillcamEffects(void)
-
-{
-  int iVar1;
-  uint uVar2;
-  undefined8 uVar3;
-  int iVar4;
-  int iVar5;
-  int *piVar6;
-  int iVar7;
-  int *piVar8;
-  undefined1 auStack_a0 [12];
-  undefined1 auStack_94 [12];
-  undefined1 auStack_88 [136];
-  
-  uVar3 = __savegprlr_19();
-  iVar4 = CG_GetLocalClientStaticGlobals();
-  if (*(int *)(iVar4 + 0x1198) != 0) {
-    Phys_EndFrame();
-    iVar5 = CG_GetLocalClientGlobals(uVar3);
-    piVar6 = (int *)(iVar5 + 0x6b98c);
-    Com_Printf(0xe,0xffffffff8201dcac,*piVar6);
-    FX_KillEffectDef(uVar3,*(undefined4 *)(iVar4 + 0x1198));
-    FX_RewindTo(uVar3,*piVar6,0);
-    iVar7 = 0;
-    iVar5 = *(int *)(iVar5 + 0x335c);
-    if (0 < *(int *)(iVar5 + 0x330c)) {
-      piVar8 = (int *)(iVar5 + 0x3318);
-      do {
-        if ((((piVar8[1] & 0x40U) != 0) && (*piVar6 <= piVar8[0x1c])) && (piVar8[0x14] <= *piVar6))
-        {
-          if (*piVar8 != 0) {
-            MyAssertHandler(0xffffffff82018fe0,0x870,0,0xffffffff8201dbf4,0xffffffff8201dbd8);
-          }
-          uVar2 = piVar8[0x28] - 1U & 3;
-          iVar1 = piVar8[uVar2 + 0x29];
-          if ((iVar1 < 0x49) || (0x50 < iVar1)) {
-            MyAssertHandler(0xffffffff82018fe0,0x872,0,0xffffffff8201dc10,iVar1,0x49,0x50);
-          }
-          ByteToDir(piVar8[uVar2 + 0x2d],auStack_a0);
-          Vec3Basis_RightHanded(auStack_a0,auStack_94,auStack_88);
-          Com_Printf(0xe,0xffffffff8201dc74,piVar8[0x14],(double)(float)piVar8[5],
-                     (double)(float)piVar8[6],(double)(float)piVar8[7]);
-          FX_PlayOrientedEffect
-                    (uVar3,*(undefined4 *)(iVar4 + 0x1198),piVar8[0x14],piVar8 + 5,auStack_a0);
-        }
-        iVar7 = iVar7 + 1;
-        piVar8 = piVar8 + 0x40;
-      } while (iVar7 < *(int *)(iVar5 + 0x330c));
-    }
-  }
-  __restgprlr_19();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure clientInfo_t
 
 // 822DA4E8  CG_LoadHudMenu  (cgame_mp/cg_main_mp.cpp:2187)
-
-void CG_LoadHudMenu(void)
-
-{
-  longlong lVar1;
-  int iVar4;
-  ulonglong uVar2;
-  undefined8 uVar3;
-  int iVar5;
-  longlong lVar6;
-  int iVar7;
-  double dVar8;
-  double dVar9;
-  
-  lVar1 = __savegprlr_25();
-  iVar4 = CL_GetLocalClientActiveCount();
-  if (iVar4 < 2) {
-    if (*(char *)(DAT_83667344 + 0xc) == '\0') {
-      uVar2 = 0xffffffff8201dcd0;
-    }
-    else {
-      uVar2 = 0xffffffff8201dce4;
-    }
-  }
-  else {
-    iVar4 = CG_GetLocalClientViewParams(lVar1);
-    if (iVar4 == 0) {
-      MyAssertHandler(0xffffffff82018fe0,0x89b,0,0xffffffff82000f98,0xffffffff8201dd50);
-    }
-    dVar8 = (double)*(float *)(iVar4 + 8);
-    dVar9 = 1.0;
-    if ((dVar8 != 0.5) && (dVar8 != 1.0)) {
-      MyAssertHandler(0xffffffff82018fe0,0x89c,0,0xffffffff8201dcf8,0xffffffff8201dd14,dVar8);
-    }
-    uVar2 = ZEXT48((&PTR_s_ui_mp_hud_splitscreen_480_halfw__82962d90)
-                   [(uint)*(byte *)(DAT_83667344 + 0xc) * 2 +
-                    (uint)((double)*(float *)(iVar4 + 8) == dVar9)]);
-  }
-  iVar4 = UI_LoadMenus(uVar2,7);
-  lVar6 = lVar1 * 0x2284 + -0x7d5d07e8;
-  UI_AddMenuList(lVar6,iVar4,0);
-  uVar3 = R_PopRemoteScreenUpdate();
-  iVar5 = 0;
-  if (0 < *(int *)(iVar4 + 4)) {
-    iVar7 = 0;
-    do {
-      Menus_RunOnOpenScript(lVar6,*(undefined4 *)(*(int *)(iVar4 + 8) + iVar7));
-      iVar5 = iVar5 + 1;
-      iVar7 = iVar7 + 4;
-    } while (iVar5 < *(int *)(iVar4 + 4));
-  }
-  R_PushRemoteScreenUpdate(uVar3);
-  iVar4 = CL_GetLocalClientActiveCount();
-  if (iVar4 == 1) {
-    uVar3 = 0xffffffff82014dc8;
-  }
-  else {
-    uVar3 = 0xffffffff82014dbc;
-  }
-  uVar2 = Menus_FindByName(lVar6,uVar3);
-  if ((uVar2 & 0xffffffff) != 0) {
-    if (uVar2 == 0xfffffffffffffffc) {
-      MyAssertHandler(0xffffffff82018fa0,0x24,0,0xffffffff82000f98,0xffffffff8200fdb4);
-    }
-    iVar5 = CG_GetLocalClientStaticGlobals(lVar1);
-    iVar4 = (int)uVar2;
-    *(undefined4 *)(iVar5 + 0x1404) = *(undefined4 *)(iVar4 + 0x10);
-    *(undefined4 *)(iVar5 + 0x1408) = *(undefined4 *)(iVar4 + 0x14);
-    *(undefined4 *)(iVar5 + 0x140c) = *(undefined4 *)(iVar4 + 0xc);
-  }
-  __restgprlr_25();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure clientInfo_t
 
 // 822DA6F8  CG_GetWeaponAttachBone  (cgame_mp/cg_main_mp.cpp:2283)
-
-undefined2 CG_GetWeaponAttachBone(int param_1,int param_2,int param_3)
-
-{
-  if (param_2 == 2) {
-    return DAT_835a0c56;
-  }
-  if ((param_3 == 0) && (*(int *)(param_1 + 0x438) == 0)) {
-    return DAT_835a0c66;
-  }
-  return DAT_835a0c64;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure clientInfo_t
 
 // 822DA748  CG_AttachWeapon  (cgame_mp/cg_main_mp.cpp:2300)
-
-void CG_AttachWeapon(undefined8 param_1,ulonglong param_2,int param_3,uint param_4,ulonglong param_5
-                    ,ulonglong param_6)
-
-{
-  int iVar1;
-  int iVar2;
-  int iVar3;
-  undefined4 uVar4;
-  ulonglong uVar5;
-  short sVar6;
-  int iVar7;
-  uint uVar8;
-  int iVar9;
-  undefined2 uVar10;
-  undefined4 *puVar11;
-  int *piVar12;
-  int iVar13;
-  int iVar14;
-  ulonglong uVar15;
-  uint uVar16;
-  short sVar18;
-  uint uVar17;
-  
-  iVar7 = __savegprlr();
-  if ((param_5 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82018fe0,0x907,0,0xffffffff82000f98,0xffffffff8201dd8c);
-  }
-  if ((param_6 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82018fe0,0x908,0,0xffffffff82000f98,0xffffffff8201dd7c);
-  }
-  if ((*(uint *)(param_3 + 0x51c) & 0xff) != 0) {
-    uVar8 = BG_GetAlternateWeapon(*(uint *)(param_3 + 0x51c),0);
-    iVar2 = (&DAT_829d84a0)[uVar8 & 0xff];
-    uVar8 = BG_GetAlternateWeapon(*(undefined4 *)(param_3 + 0x51c),0);
-    iVar3 = (&DAT_829d80d8)[uVar8 & 0xff];
-    iVar9 = BG_GetWeaponType(*(undefined4 *)(param_3 + 0x51c),0);
-    if ((*(int *)(param_3 + 0x530) == 0) || (iVar13 = 1, *(char *)(param_3 + 0x52e) != '\0')) {
-      iVar13 = 0;
-    }
-    if (*(int *)((*(uint *)(param_3 + 0x51c) >> 6 & 0x3c) + *(int *)(iVar2 + 0x1e0)) != 0) {
-      *(uint *)param_5 = (uint)param_2 & 0xffff;
-    }
-    iVar14 = 0;
-    do {
-      if (((iVar9 != 4) &&
-          (*(int *)((*(uint *)(param_3 + 0x51c) >> 6 & 0x3c) + *(int *)(iVar2 + 0x1e0)) != 0)) &&
-         (*(char *)(param_3 + 0x52d) == '\0')) {
-        if (0x1f < (param_2 & 0xffff)) {
-          MyAssertHandler(0xffffffff82018fe0,0x91e,0,0xffffffff82000f98,
-                          "numModels < DOBJ_MAX_SUBMODELS");
-        }
-        puVar11 = (undefined4 *)(((uint)param_2 & 0xffff) * 8 + iVar7);
-        *puVar11 = *(undefined4 *)
-                    ((*(uint *)(param_3 + 0x51c) >> 6 & 0x3c) + *(int *)(iVar2 + 0x1e0));
-        uVar10 = DAT_835a0c56;
-        if (((iVar9 != 2) && (uVar10 = DAT_835a0c64, iVar14 == 0)) &&
-           (*(int *)(param_3 + 0x438) == 0)) {
-          uVar10 = DAT_835a0c66;
-        }
-        *(undefined2 *)(puVar11 + 1) = uVar10;
-        *(undefined1 *)((int)puVar11 + 6) = 0;
-        param_2 = (param_2 & 0xffff) + 1 & 0xffff;
-        if ((*(uint *)(param_3 + 0x51c) & 0x7000) != 0) {
-          if (0x1f < param_2) {
-            MyAssertHandler(0xffffffff82018fe0,0x929,0,0xffffffff82000f98,
-                            "numModels < DOBJ_MAX_SUBMODELS");
-          }
-          iVar1 = *(int *)((*(uint *)(param_3 + 0x51c) >> 10 & 0x1c) + *(int *)(iVar3 + 0x10) + -4);
-          if (iVar1 == 0) {
-            MyAssertHandler(0xffffffff82018fe0,0x92b,1,0xffffffff82000f98,"weapAttachment");
-          }
-          iVar1 = *(int *)((*(uint *)(param_3 + 0x51c) >> 6 & 0x3c) + *(int *)(iVar1 + 0x14));
-          if (iVar1 != 0) {
-            piVar12 = (int *)((int)param_2 * 8 + iVar7);
-            param_2 = param_2 + 1 & 0xffff;
-            *piVar12 = iVar1;
-            *(undefined2 *)(piVar12 + 1) = 0;
-            *(undefined1 *)((int)piVar12 + 6) = 0;
-          }
-        }
-        if ((*(uint *)(param_3 + 0x51c) & 0x18000) != 0) {
-          if (0x1f < param_2) {
-            MyAssertHandler(0xffffffff82018fe0,0x937,0,0xffffffff82000f98,
-                            "numModels < DOBJ_MAX_SUBMODELS");
-          }
-          iVar1 = *(int *)((*(uint *)(param_3 + 0x51c) >> 0xd & 0xc) + *(int *)(iVar3 + 0x14) + -4);
-          if (iVar1 == 0) {
-            MyAssertHandler(0xffffffff82018fe0,0x939,1,0xffffffff82000f98,"weapAttachment");
-          }
-          iVar1 = *(int *)((*(uint *)(param_3 + 0x51c) >> 6 & 0x3c) + *(int *)(iVar1 + 0x14));
-          if (iVar1 != 0) {
-            piVar12 = (int *)((int)param_2 * 8 + iVar7);
-            param_2 = param_2 + 1 & 0xffff;
-            *piVar12 = iVar1;
-            *(undefined2 *)(piVar12 + 1) = 0;
-            *(undefined1 *)((int)piVar12 + 6) = 0;
-          }
-        }
-        if ((*(uint *)(param_3 + 0x51c) & 0x1e0000) != 0) {
-          uVar8 = 1;
-          uVar16 = 0;
-          do {
-            if ((*(uint *)(param_3 + 0x51c) >> 0x11 & uVar8 & 0xf) != 0) {
-              if (0x1f < param_2) {
-                MyAssertHandler(0xffffffff82018fe0,0x949,0,0xffffffff82000f98,
-                                "numModels < DOBJ_MAX_SUBMODELS");
-              }
-              iVar1 = *(int *)(*(int *)(iVar3 + 0x18) + uVar16);
-              if (iVar1 == 0) {
-                MyAssertHandler(0xffffffff82018fe0,0x94b,1,0xffffffff82000f98,"weapAttachment");
-              }
-              iVar1 = *(int *)((*(uint *)(param_3 + 0x51c) >> 6 & 0x3c) + *(int *)(iVar1 + 0x14));
-              if (iVar1 != 0) {
-                piVar12 = (int *)((int)param_2 * 8 + iVar7);
-                param_2 = param_2 + 1 & 0xffff;
-                *piVar12 = iVar1;
-                *(undefined2 *)(piVar12 + 1) = 0;
-                *(undefined1 *)((int)piVar12 + 6) = 0;
-              }
-            }
-            uVar16 = uVar16 + 4;
-            uVar8 = uVar8 << 1;
-          } while (uVar16 < 0x10);
-        }
-      }
-      iVar14 = iVar14 + 1;
-    } while (iVar14 <= iVar13);
-    if ((*(int *)(iVar2 + 0x1f0) != 0) && (*(char *)(param_3 + 0x52e) != '\0')) {
-      if (0x1f < (param_2 & 0xffff)) {
-        MyAssertHandler(0xffffffff82018fe0,0x95b,0,0xffffffff82000f98,
-                        "numModels < DOBJ_MAX_SUBMODELS");
-      }
-      puVar11 = (undefined4 *)(((uint)param_2 & 0xffff) * 8 + iVar7);
-      param_2 = (param_2 & 0xffff) + 1 & 0xffff;
-      *puVar11 = *(undefined4 *)(iVar2 + 0x1f0);
-      uVar10 = DAT_835a0c56;
-      *(undefined1 *)((int)puVar11 + 6) = 0;
-      *(undefined2 *)(puVar11 + 1) = uVar10;
-    }
-  }
-  if ((param_4 & 0xff) != 0) {
-    uVar8 = BG_GetAlternateWeapon(param_4,0);
-    iVar2 = (&DAT_829d84a0)[uVar8 & 0xff];
-    uVar8 = BG_GetAlternateWeapon(param_4,0);
-    iVar3 = (&DAT_829d80d8)[uVar8 & 0xff];
-    sVar18 = *(short *)(iVar2 + 0x79c);
-    if (*(short *)(iVar2 + 0x79c) == 0) {
-      sVar18 = DAT_835a0c6a;
-    }
-    if (*(int *)(iVar2 + 0x7a0) != 0) {
-      if (0x1f < (param_2 & 0xffff)) {
-        MyAssertHandler(0xffffffff82018fe0,0x971,0,0xffffffff82000f98,
-                        "numModels < DOBJ_MAX_SUBMODELS");
-      }
-      puVar11 = (undefined4 *)(((uint)param_2 & 0xffff) * 8 + iVar7);
-      param_2 = (param_2 & 0xffff) + 1 & 0xffff;
-      *puVar11 = *(undefined4 *)(iVar2 + 0x7a0);
-      sVar6 = DAT_835a0c6a;
-      *(undefined1 *)((int)puVar11 + 6) = 1;
-      *(short *)(puVar11 + 1) = sVar6;
-    }
-    uVar8 = param_4 >> 6 & 0x3c;
-    if ((*(int *)(uVar8 + *(int *)(iVar2 + 0x1e0)) != 0) &&
-       ((*(int *)(iVar2 + 0x7a0) == 0 || (*(float *)(*(int *)(iVar2 + 0x7a0) + 0xf4) == 0.0)))) {
-      uVar5 = param_2 & 0xffff;
-      if (0x1f < uVar5) {
-        MyAssertHandler(0xffffffff82018fe0,0x979,0,0xffffffff82000f98,
-                        "numModels < DOBJ_MAX_SUBMODELS");
-      }
-      puVar11 = (undefined4 *)(((uint)param_2 & 0xffff) * 8 + iVar7);
-      uVar4 = *(undefined4 *)(uVar8 + *(int *)(iVar2 + 0x1e0));
-      uVar15 = uVar5 + 1 & 0xffff;
-      *(short *)(puVar11 + 1) = sVar18;
-      *(undefined1 *)((int)puVar11 + 6) = 1;
-      *puVar11 = uVar4;
-      *(undefined4 *)param_6 = (int)uVar5;
-      if ((param_4 >> 0xc & 7) != 0) {
-        if (0x1f < uVar15) {
-          MyAssertHandler(0xffffffff82018fe0,0x983,0,0xffffffff82000f98,
-                          "numModels < DOBJ_MAX_SUBMODELS");
-        }
-        iVar2 = *(int *)((param_4 >> 0xc & 7) * 4 + *(int *)(iVar3 + 0x10) + -4);
-        if (iVar2 == 0) {
-          MyAssertHandler(0xffffffff82018fe0,0x985,1,0xffffffff82000f98,"weapAttachment");
-        }
-        iVar2 = *(int *)(iVar2 + 0x14);
-        if (*(int *)(iVar2 + uVar8) != 0) {
-          puVar11 = (undefined4 *)((int)uVar15 * 8 + iVar7);
-          uVar15 = uVar15 + 1 & 0xffff;
-          *puVar11 = *(undefined4 *)(iVar2 + uVar8);
-          *(undefined2 *)(puVar11 + 1) = 0;
-          *(undefined1 *)((int)puVar11 + 6) = 0;
-        }
-      }
-      if ((param_4 >> 0xf & 3) != 0) {
-        if (0x1f < uVar15) {
-          MyAssertHandler(0xffffffff82018fe0,0x991,0,0xffffffff82000f98,
-                          "numModels < DOBJ_MAX_SUBMODELS");
-        }
-        iVar2 = *(int *)((param_4 >> 0xf & 3) * 4 + *(int *)(iVar3 + 0x14) + -4);
-        if (iVar2 == 0) {
-          MyAssertHandler(0xffffffff82018fe0,0x993,1,0xffffffff82000f98,"weapAttachment");
-        }
-        iVar2 = *(int *)(iVar2 + 0x14);
-        if (*(int *)(iVar2 + uVar8) != 0) {
-          puVar11 = (undefined4 *)((int)uVar15 * 8 + iVar7);
-          uVar15 = uVar15 + 1 & 0xffff;
-          *puVar11 = *(undefined4 *)(iVar2 + uVar8);
-          *(undefined2 *)(puVar11 + 1) = 0;
-          *(undefined1 *)((int)puVar11 + 6) = 0;
-        }
-      }
-      if ((param_4 >> 0x11 & 0xf) != 0) {
-        uVar16 = 1;
-        uVar17 = 0;
-        do {
-          if ((param_4 >> 0x11 & uVar16 & 0xf) != 0) {
-            if (0x1f < uVar15) {
-              MyAssertHandler(0xffffffff82018fe0,0x9a3,0,&DAT_82000f98,
-                              "numModels < DOBJ_MAX_SUBMODELS");
-            }
-            iVar2 = *(int *)(*(int *)(iVar3 + 0x18) + uVar17);
-            if (iVar2 == 0) {
-              MyAssertHandler(0xffffffff82018fe0,0x9a5,1,&DAT_82000f98,"weapAttachment");
-            }
-            iVar2 = *(int *)(iVar2 + 0x14);
-            if (*(int *)(iVar2 + uVar8) != 0) {
-              puVar11 = (undefined4 *)((int)uVar15 * 8 + iVar7);
-              uVar15 = uVar15 + 1 & 0xffff;
-              *puVar11 = *(undefined4 *)(iVar2 + uVar8);
-              *(undefined2 *)(puVar11 + 1) = 0;
-              *(undefined1 *)((int)puVar11 + 6) = 0;
-            }
-          }
-          uVar17 = uVar17 + 4;
-          uVar16 = uVar16 << 1;
-        } while (uVar17 < 0x10);
-      }
-      __restgprlr(uVar15);
-      return;
-    }
-  }
-  __restgprlr(param_2);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure clientInfo_t
 
 // 822DAEE0  CG_CreateDObj  (cgame_mp/cg_main_mp.cpp:2523)
 
-void CG_CreateDObj(void)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+DObj * CG_CreateDObj(DObjModel_s *param_1,ushort param_2,XAnimTree *param_3,int param_4,
+                    LocalClientNum_t param_5,int param_6)
 
 {
   int iVar1;
-  undefined8 uVar2;
-  ulonglong in_r7;
-  int in_r8;
-  undefined4 *puVar3;
+  DObjModel_s *pDVar2;
+  DObj *pDVar3;
+  ulonglong uVar4;
+  undefined4 *puVar5;
   
-  __savegprlr_28();
-  uVar2 = Com_ClientDObjCreate();
-  iVar1 = (int)((in_r7 & 0xffffffff) << 2);
-  if (*(int *)((int)&DAT_82a3d64c + iVar1) == 0) {
-    MyAssertHandler(0xffffffff82018fe0,0x9e0,0,0xffffffff82000f98,0xffffffff82016300);
+  uVar4 = (ulonglong)(int)param_5;
+  pDVar2 = (DObjModel_s *)__savegprlr_28(param_1);
+  pDVar3 = Com_ClientDObjCreate(pDVar2,param_2,param_3,param_4,(LocalClientNum_t)uVar4);
+  iVar1 = (int)((uVar4 & 0xffffffff) << 2);
+  if (*(int *)((int)cg_entityOriginArray + iVar1) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_main_mp.cpp",0x9e0
+                    ,0,"%s");
   }
-  puVar3 = (undefined4 *)(in_r8 * 0xc + *(int *)((int)&DAT_82a3d64c + iVar1));
-  *puVar3 = 0x48000000;
-  puVar3[1] = 0x48000000;
-  puVar3[2] = 0x48000000;
-  __restgprlr_28(uVar2);
-  return;
+  puVar5 = (undefined4 *)(param_6 * 0xc + *(int *)((int)cg_entityOriginArray + iVar1));
+  *puVar5 = 0x48000000;
+  puVar5[1] = 0x48000000;
+  puVar5[2] = 0x48000000;
+  pDVar3 = (DObj *)__restgprlr_28(pDVar3);
+  return pDVar3;
 }
 
 
 // 822DBB08  CG_LoadAnimTreeInstances  (cgame_mp/cg_main_mp.cpp:2554)
-
-void CG_LoadAnimTreeInstances(void)
-
-{
-  undefined4 uVar1;
-  undefined8 uVar2;
-  int iVar3;
-  undefined4 uVar4;
-  undefined4 *puVar5;
-  longlong lVar6;
-  
-  uVar2 = __savegprlr_28();
-  iVar3 = CG_GetLocalClientGlobals();
-  lVar6 = 0x12;
-  puVar5 = (undefined4 *)(iVar3 + 0x100b10);
-  uVar1 = *(undefined4 *)(iVar3 + 0x100b50);
-  do {
-    uVar4 = XAnimCreateTree(uVar1,0xffffffff822db720);
-    lVar6 = lVar6 + -1;
-    puVar5 = puVar5 + 0x164;
-    *puVar5 = uVar4;
-  } while (lVar6 != 0);
-  iVar3 = CG_GetLocalClientStaticGlobals(uVar2);
-  lVar6 = 8;
-  puVar5 = (undefined4 *)(iVar3 + 0x1398);
-  do {
-    uVar4 = XAnimCreateTree(uVar1,0xffffffff822db720);
-    lVar6 = lVar6 + -1;
-    puVar5 = puVar5 + 0x164;
-    *puVar5 = uVar4;
-  } while (lVar6 != 0);
-  __restgprlr_28();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 822DAF78  CG_FreeAnimTreeInstances  (cgame_mp/cg_main_mp.cpp:2580)
-
-void CG_FreeAnimTreeInstances(void)
-
-{
-  undefined8 uVar1;
-  int iVar2;
-  longlong lVar3;
-  int *piVar4;
-  
-  uVar1 = __savegprlr_28();
-  iVar2 = CG_GetLocalClientGlobals();
-  lVar3 = 0x12;
-  piVar4 = (int *)(iVar2 + 0x1010a0);
-  do {
-    if (*piVar4 != 0) {
-      XAnimFreeTree(*piVar4,0);
-      *piVar4 = 0;
-    }
-    lVar3 = lVar3 + -1;
-    piVar4 = piVar4 + 0x164;
-  } while (lVar3 != 0);
-  iVar2 = CG_GetLocalClientStaticGlobals(uVar1);
-  lVar3 = 8;
-  piVar4 = (int *)(iVar2 + 0x1928);
-  do {
-    if (*piVar4 != 0) {
-      XAnimFreeTree(*piVar4,0);
-      *piVar4 = 0;
-    }
-    lVar3 = lVar3 + -1;
-    piVar4 = piVar4 + 0x164;
-  } while (lVar3 != 0);
-  __restgprlr_28();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 822DB000  CG_InitViewDimensions  (cgame_mp/cg_main_mp.cpp:2609)
-
-void CG_InitViewDimensions(void)
-
-{
-  undefined4 *puVar1;
-  double dVar2;
-  
-  __savegprlr_28();
-  puVar1 = (undefined4 *)CG_GetLocalClientStaticGlobals();
-  puVar1[5] = 0x3f800000;
-  *puVar1 = 0;
-  CL_GetScreenDimensions(puVar1 + 2,puVar1 + 3,puVar1 + 4);
-  if ((int)puVar1[2] < 1) {
-    MyAssertHandler(0xffffffff82018fe0,0xa3b,1,0xffffffff8201de04,0xffffffff8201de20);
-  }
-  if ((int)puVar1[3] < 1) {
-    MyAssertHandler(0xffffffff82018fe0,0xa3c,1,0xffffffff8201ddd0,0xffffffff8201ddec);
-  }
-  dVar2 = (double)(float)puVar1[4];
-  if (dVar2 <= 0.0) {
-    MyAssertHandler(0xffffffff82018fe0,0xa3d,1,0xffffffff8201dd9c,0xffffffff8201ddb8,dVar2);
-  }
-  __restgprlr_28();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure clientInfo_t
 
 // 822DB0E8  CG_GetClientNum  (cgame_mp/cg_main_mp.cpp:2626)
-
-undefined4 CG_GetClientNum(void)
-
-{
-  int iVar1;
-  
-  iVar1 = CG_GetLocalClientGlobals();
-  return *(undefined4 *)(iVar1 + 0x3334);
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 822DB110  CG_GetEntityType  (cgame_mp/cg_main_mp.cpp:2632)
-
-void CG_GetEntityType(undefined8 param_1,ulonglong param_2)
-
-{
-  ulonglong uVar1;
-  int iVar2;
-  
-  uVar1 = __savegprlr_29();
-  if ((ulonglong)DAT_82aa1ae8 <= (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82018fe0,0xa4b,0,0xffffffff8200d150,uVar1);
-  }
-  if (0x7ff < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82018fe0,0xa4c,0,0xffffffff8201de38,param_2,0x800);
-  }
-  iVar2 = CG_GetEntity(uVar1,param_2);
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff82018fe0,0xa4f,0,0xffffffff82000f98,0xffffffff82002118);
-  }
-  __restgprlr_29(*(undefined4 *)(iVar2 + 200));
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure LerpEntityStatePlayer
 
 // 822DB1C8  CG_InitDof  (cgame_mp/cg_main_mp.cpp:2647)
 
-void CG_InitDof(int param_1)
+void CG_InitDof(GfxDepthOfField *param_1)
 
 {
-  *(undefined4 *)(param_1 + 8) = 0;
-  *(undefined4 *)(param_1 + 0xc) = 0;
-  *(undefined4 *)(param_1 + 0x10) = 0x459c4000;
-  *(undefined4 *)(param_1 + 0x14) = 0x459c4000;
-  *(undefined4 *)(param_1 + 0x18) = 0x40c00000;
-  *(undefined4 *)(param_1 + 0x1c) = 0;
+  param_1->nearStart = 0.0;
+  param_1->nearEnd = 0.0;
+  param_1->farStart = 5000.0;
+  param_1->farEnd = 5000.0;
+  param_1->nearBlur = 6.0;
+  param_1->farBlur = 0.0;
   return;
 }
 
 
 // 822DBB88  CG_Init  (cgame_mp/cg_main_mp.cpp:2667)
-
-void CG_Init(undefined8 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
-
-{
-  byte bVar1;
-  byte bVar2;
-  char cVar3;
-  uint uVar5;
-  undefined8 uVar4;
-  char cVar13;
-  int iVar6;
-  void *_Dst;
-  void *_Dst_00;
-  void *pvVar7;
-  char *pcVar8;
-  char *pcVar9;
-  undefined4 uVar10;
-  int iVar11;
-  int iVar12;
-  byte *pbVar14;
-  undefined4 *puVar15;
-  char *pcVar16;
-  byte *pbVar17;
-  undefined8 in_r13;
-  int *piVar18;
-  uint *_Dst_01;
-  ulonglong uVar19;
-  longlong lVar20;
-  undefined4 local_370 [2];
-  undefined1 auStack_368 [8];
-  byte local_360 [8];
-  byte abStack_358 [8];
-  undefined4 local_350;
-  undefined1 *local_34c;
-  undefined1 *local_348;
-  undefined1 auStack_320 [32];
-  undefined1 auStack_300 [32];
-  undefined1 auStack_2e0 [64];
-  undefined1 auStack_2a0 [672];
-  
-  uVar5 = __savegprlr();
-  LargeLocal__LargeLocal(auStack_368,0x9000);
-  uVar4 = LargeLocal__GetBuf(auStack_368);
-  cVar13 = Sys_IsMainThread();
-  if (cVar13 == '\0') {
-    MyAssertHandler(0xffffffff82018fe0,0xa80,0,0xffffffff82000f98,0xffffffff82010b48);
-  }
-  DB_SyncXAssets();
-  if (((((*(char *)(DAT_82aa1af8 + 0xc) != '\0') &&
-        (cVar13 = CL_Demo_IsPlaying(uVar5), cVar13 == '\0')) &&
-       (*(char *)(DAT_82aa1ae4 + 0xc) == '\0')) &&
-      ((*(char *)(DAT_82b3ecb8 + 0xc) == '\0' || (*(char *)(DAT_82aa1af8 + 0xc) != '\0')))) &&
-     (iVar6 = Live_OnlinePlayEvenIfDown(), iVar6 == 0)) {
-    pbVar17 = local_360;
-    pbVar14 = &DAT_844c7874;
-    do {
-      bVar1 = *pbVar17;
-      bVar2 = *pbVar14;
-      if ((ulonglong)bVar1 - (ulonglong)bVar2 != 0) break;
-      pbVar17 = pbVar17 + 1;
-      pbVar14 = pbVar14 + 1;
-    } while (pbVar17 != abStack_358);
-    if ((int)((ulonglong)bVar1 - (ulonglong)bVar2) == 0) {
-      MyAssertHandler(0xffffffff82018fe0,0xa9b,0,0xffffffff82000f98,0xffffffff8201e1e0);
-    }
-  }
-  _Dst = (void *)CG_GetLocalClientGlobals(uVar5);
-  _Dst_00 = (void *)CG_GetLocalClientStaticGlobals(uVar5);
-  if (DAT_82a38328 <= uVar5) {
-    MyAssertHandler(0xffffffff82018fe0,0xaa5,0,0xffffffff820012b0,uVar5);
-  }
-  memset(_Dst_00,0,0x4098);
-  memset(_Dst,0,0x108600);
-  _Dst_01 = (uint *)(&DAT_82a2f818 + uVar5 * 0x2284);
-  memset(_Dst_01,0,0x2284);
-  pvVar7 = memset((void *)(uVar5 * 0xf6000 + DAT_82a3ce28),0,0xf6000);
-  puVar15 = &DAT_82a3d4c4 + uVar5 * 10;
-  lVar20 = 10;
-  do {
-    puVar15 = puVar15 + 1;
-    *puVar15 = 0;
-    lVar20 = lVar20 + -1;
-  } while (lVar20 != 0);
-  *_Dst_01 = uVar5;
-  CG_ClearCompassPingData(pvVar7);
-  CG_Veh_Init();
-  CG_ClearOverheadFade();
-  *(undefined4 *)((int)_Dst + 0x6ba1c) = 0;
-  *(undefined4 *)((int)_Dst + 0x6ba20) = 0;
-  *(undefined4 *)((int)_Dst + 0x6ba24) = 0x459c4000;
-  *(undefined4 *)((int)_Dst + 0x6ba28) = 0x459c4000;
-  *(undefined4 *)((int)_Dst + 0x6ba2c) = 0x40c00000;
-  *(undefined4 *)((int)_Dst + 0x6ba30) = 0;
-  Ragdoll_Init();
-  Phys_InitClient();
-  *(uint *)((int)_Dst + 0x3338) = uVar5;
-  *(undefined1 *)((int)_Dst + 0x106faa) = 0x12;
-  *(undefined4 *)((int)_Dst + 0x1085bc) = 0xffffffff;
-  CL_SetStance(uVar5,0);
-  CL_SetADS(uVar5,0);
-  *(undefined4 *)((int)_Dst + 0x3334) = param_4;
-  *(undefined1 *)((int)_Dst + 0x765b0) = 0;
-  *(code **)((int)_Dst + 0x100b70) = CG_GetXModel;
-  *(code **)((int)_Dst + 0x100b74) = CG_CreateDObj;
-  *(code **)((int)_Dst + 0x100b78) = CG_AttachWeapon;
-  *(undefined4 *)((int)_Dst + 0x76eb0) = 1;
-  *(undefined4 *)((int)_Dst + 0x100b6c) = 0;
-  *(code **)((int)_Dst + 0x100b80) = CG_GetDObj;
-  *(code **)((int)_Dst + 0x100b7c) = Com_SafeClientDObjFree;
-  *(code **)((int)_Dst + 0x100b84) = Hunk_AllocXAnimClient;
-  *(undefined4 *)((int)_Dst + 0x76ebc) = 1;
-  *(undefined4 *)((int)_Dst_00 + 0x1c) = param_2;
-  *(undefined4 *)((int)_Dst_00 + 0x18) = param_3;
-  *(uint *)((int)_Dst_00 + 0x20) = (uint)*(byte *)(DAT_83666174 + 0xc);
-  CG_ParseServerInfo(uVar5);
-  CG_ParseCodInfo(uVar5);
-  R_BeginRemoteScreenUpdate();
-  UI_LoadIngameMenus(uVar5);
-  DAT_82a383d8 = Material_RegisterHandle(0xffffffff8201e1d4,7);
-  DAT_82a39350 = CL_RegisterFont(0xffffffff8201e1c0,1);
-  DAT_82a39354 = CL_RegisterFont(0xffffffff8201e1ac,1);
-  Material_RegisterHandle(0xffffffff82014e30,7);
-  DAT_82a3c9f0 = Material_RegisterHandle(0xffffffff8201e190,7);
-  DAT_82a3c9f4 = Material_RegisterHandle(0xffffffff8201e180,7);
-  DAT_82a3c9f8 = Material_RegisterHandle(0xffffffff8201e168,7);
-  DAT_82a3c9fc = Material_RegisterHandle(0xffffffff8201e14c,7);
-  DAT_82a3ca00 = Material_RegisterHandle(0xffffffff8201e130,7);
-  DAT_82a3ca04 = Material_RegisterHandle(0xffffffff8201e118,7);
-  DAT_82a3ca08 = Material_RegisterHandle(0xffffffff8201e0f8,7);
-  DAT_82a3ca0c = Material_RegisterHandle(0xffffffff8201e0dc,7);
-  DAT_82a3ca10 = Material_RegisterHandle(0xffffffff8201e0c8,7);
-  DAT_82a3ca14 = Material_RegisterHandle(0xffffffff8201e0ac,7);
-  DAT_82a3ca18 = Material_RegisterHandle(0xffffffff8201e09c,7);
-  DAT_82a3ca1c = Material_RegisterHandle(0xffffffff8201e08c,7);
-  Material_RegisterHandle(0xffffffff8201e074,7);
-  Material_RegisterHandle(0xffffffff8201e058,7);
-  Material_RegisterHandle(0xffffffff8201e040,7);
-  Material_RegisterHandle(0xffffffff8201e02c,7);
-  Material_RegisterHandle(0xffffffff8201e018,7);
-  Material_RegisterHandle(0xffffffff8201e004,7);
-  Material_RegisterHandle(0xffffffff8201dfec,7);
-  Material_RegisterHandle(0xffffffff82016c6c,7);
-  Material_RegisterHandle(0xffffffff82016bb4,7);
-  Material_RegisterHandle(0xffffffff82016bc4,7);
-  Material_RegisterHandle(0xffffffff82016bd4,7);
-  Material_RegisterHandle(0xffffffff82016be4,7);
-  Material_RegisterHandle(0xffffffff82016c08,7);
-  CG_InitConsoleCommands();
-  CG_InitViewDimensions(uVar5);
-  pcVar8 = (char *)CL_GetConfigString(2);
-  pcVar16 = "cod";
-  pcVar9 = pcVar8;
-  do {
-    cVar13 = *pcVar9;
-    cVar3 = *pcVar16;
-    if (cVar13 == '\0') break;
-    pcVar9 = pcVar9 + 1;
-    pcVar16 = pcVar16 + 1;
-  } while (cVar13 == cVar3);
-  if (cVar13 != cVar3) {
-    Com_Error(1,0xffffffff8201dfc4,0xffffffff8201dfe8,pcVar8);
-  }
-  pcVar9 = (char *)CL_GetConfigString(0x1a2);
-  iVar6 = atoi(pcVar9);
-  *(int *)((int)_Dst_00 + 0x194) = iVar6;
-  if (DAT_83666174 == 0) {
-    MyAssertHandler(0xffffffff82018fe0,0xb24,0,0xffffffff82000f98,0xffffffff8201dfb4);
-  }
-  if (*(char *)(DAT_83666174 + 0xc) == '\0') {
-    Mantle_CreateAnims(0xffffffff822db720);
-  }
-  if (DAT_829d8a50 == 0) {
-    Com_SetWeaponInfoMemory(2);
-    BG_ClearWeaponDef();
-  }
-  uVar19 = 1;
-  do {
-    CG_SetupWeaponDef(uVar5,uVar19);
-    piVar18 = (int *)in_r13;
-    uVar19 = uVar19 + 1;
-  } while ((uVar19 & 0xffffffff) < 0xf0);
-  CGScr_LoadAnimTrees();
-  iVar6 = *piVar18;
-  if (*(int *)(iVar6 + 8) != 0) {
-    MyAssertHandler(0xffffffff82018fe0,0xb3e,0,0xffffffff8201dfa4,0xffffffff8201df98);
-  }
-  *(int *)(iVar6 + 8) = (int)_Dst + 0x7a7a0;
-  BG_CheckThread();
-  if (*(int *)(iVar6 + 8) == 0) {
-    MyAssertHandler(0xffffffff82018fe0,0xb44,0,0xffffffff82000f98,0xffffffff820033f4);
-  }
-  BG_FindAnims();
-  local_370[0] = 0;
-  BG_AnimParseAnimScript(*(undefined4 *)(iVar6 + 8),uVar4,local_370);
-  Scr_PrecacheAnimTrees
-            (*(undefined4 *)(*(int *)(iVar6 + 8) + 0x863e4),
-             *(undefined4 *)(*(int *)(iVar6 + 8) + 0x863cc));
-  BG_FindAnimTrees();
-  Scr_EndLoadAnimTrees();
-  BG_FinalizePlayerAnims();
-  CG_LoadAnimTreeInstances(uVar5);
-  if (*(int *)((int)_Dst_00 + 0x20) == 0) {
-    GScr_LoadConsts();
-    BG_LoadPenetrationDepthTable();
-  }
-  uVar10 = CG_GetHelicopterAnims();
-  *(undefined4 *)((int)_Dst_00 + 0x4094) = uVar10;
-  iVar12 = (int)_Dst_00 + 0x150;
-  CL_CM_LoadMap(iVar12);
-  Menu_Setup(_Dst_01);
-  CG_ParsePlayerInfos(uVar5);
-  if (DAT_82a3d6b1 == '\0') {
-    FX_LoadWorld(iVar12);
-    uVar4 = LoadWorld(iVar12);
-    DAT_82a3d6b1 = '\x01';
-    iVar11 = CL_GetLocalClientGlobals(uVar5);
-    if (*(int *)((int)_Dst_00 + 0x20) == 0) {
-      cVar13 = CL_Demo_IsPlaying(uVar5);
-      if ((cVar13 == '\0') && (*(int *)(iVar11 + 0x350c) != (int)uVar4)) {
-        Com_sprintf(auStack_320,0x20,0xffffffff82013b64);
-        Com_sprintf(auStack_300,0x20,0xffffffff82013b64,uVar4);
-        local_34c = auStack_320;
-        local_348 = auStack_300;
-        local_350 = 2;
-        uVar4 = UI_SafeTranslateString(0xffffffff8201df44);
-        UI_ReplaceConversions(uVar4,&local_350,auStack_2a0,0x200);
-        Com_Error(1,auStack_2a0);
-      }
-    }
-    else if ((int)uVar4 != *(int *)(iVar11 + 0x350c)) {
-      uVar4 = va(0xffffffff8201df78,uVar4);
-      MyAssertHandler(0xffffffff82018fe0,0xb77,0,0xffffffff820011f4,0xffffffff8201df60,uVar4);
-    }
-  }
-  iVar12 = I_strnicmp(iVar12,0xffffffff8201df3c,5);
-  if (iVar12 != 0) {
-    MyAssertHandler(0xffffffff82018fe0,0xb96,0,0xffffffff82000f98,0xffffffff8201df14);
-  }
-  Com_StripExtension((int)_Dst_00 + 0x155,auStack_2e0);
-  ProfLoad_Begin(0xffffffff8201df00);
-  FX_InitSystem(uVar5);
-  cVar13 = CL_IsFirstActiveLocalClient(uVar5);
-  if (cVar13 != '\0') {
-    CG_Glass_Init(1);
-  }
-  ProfLoad_End();
-  CG_InitItemsUnlocked(uVar5);
-  CG_RegisterGraphics(uVar5,auStack_2e0);
-  VehicleCl_InitGlobals();
-  VehicleCl_InitLocalClient(uVar5);
-  CG_LoadHudMenu(uVar5);
-  CG_InitLocalEntities(uVar5);
-  DynEntCl_InitEntities(uVar5);
-  CG_StartClientSideTriggers(uVar5);
-  CG_SetConfigValues(uVar5,1);
-  CG_NorthDirectionChanged(uVar5);
-  CG_ThermalBodyMaterialChanged(uVar5);
-  if (DAT_82a3d6b1 == '\0') {
-    SND_StopSounds(0);
-  }
-  CG_ParseFog(uVar5);
-  R_InitPrimaryLights((int)_Dst + 0x6bb20);
-  R_ClearShadowedPrimaryLightHistory(uVar5);
-  if (DAT_82a3d6b0 == '\0') {
-    CG_StartAmbientWithConfig(uVar5,0x3d6);
-    CG_StartAmbientWithConfig(uVar5,0x3d7);
-    DAT_82a3d6b0 = '\x01';
-  }
-  CG_ParseSunLight(uVar5);
-  uVar4 = Com_GetFilenameSubString(auStack_2e0);
-  SND_SetSoundOcclusionPreset(uVar4,1);
-  CL_SetADS(uVar5,0);
-  AimTarget_Init(uVar5);
-  AimAssist_Init(uVar5);
-  CG_InitDevguiRumbleGraph(uVar5);
-  CG_ModelPreviewerCreateDevGui(uVar5);
-  DevSoundMixer_CreateDevGUI();
-  CG_StartClientSideEffects(uVar5);
-  if (*(int *)(iVar6 + 8) != (int)_Dst + 0x7a7a0) {
-    MyAssertHandler(0xffffffff82018fe0,0xbf7,0,0xffffffff8201dfa4,0xffffffff8201dee4);
-  }
-  *(undefined4 *)(iVar6 + 8) = 0;
-  R_EndRemoteScreenUpdate();
-  LightEdit_MapLoad();
-  PlayerCard_InitGame();
-  LargeLocal___LargeLocal(auStack_368);
-  __restgprlr();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 822DB200  CG_FreeWeapons  (cgame_mp/cg_main_mp.cpp:3088)
 
-void CG_FreeWeapons(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+void CG_FreeWeapons(LocalClientNum_t param_1)
 
 {
-  int iVar2;
-  undefined8 uVar1;
-  undefined4 *puVar3;
-  int iVar4;
-  longlong lVar5;
+  XAnimTree *pXVar1;
+  LocalClientNum_t LVar2;
+  int iVar3;
+  dvar_t **ppdVar4;
+  PlayerHandIndex PVar5;
+  longlong lVar6;
   
-  iVar2 = __savegprlr_28();
-  iVar4 = 0;
+  LVar2 = __savegprlr_28(param_1);
+  PVar5 = WEAPON_HAND_DEFAULT;
   do {
-    uVar1 = CG_WeaponDObjHandle(iVar4);
-    Com_SafeClientDObjFree(uVar1,iVar2);
-    if (*(int *)(&DAT_82a3d4cc + (iVar2 * 2 + iVar4) * 0x14) != 0) {
-      Com_XAnimFreeSmallTree();
+    iVar3 = CG_WeaponDObjHandle(PVar5);
+    Com_SafeClientDObjFree(iVar3,LVar2);
+    pXVar1 = cg_viewModelHand[LVar2][PVar5].tree;
+    if (pXVar1 != (XAnimTree *)0x0) {
+      Com_XAnimFreeSmallTree(pXVar1);
     }
-    iVar4 = iVar4 + 1;
-  } while (iVar4 < 2);
-  lVar5 = 10;
-  puVar3 = &DAT_82a3d4c4 + iVar2 * 10;
+    PVar5 = PVar5 + WEAPON_HAND_LEFT;
+  } while ((int)PVar5 < 2);
+  lVar6 = 10;
+  ppdVar4 = &cg_footsteps + LVar2 * 10;
   do {
-    puVar3 = puVar3 + 1;
-    *puVar3 = 0;
-    lVar5 = lVar5 + -1;
-  } while (lVar5 != 0);
+    ppdVar4 = ppdVar4 + 1;
+    *ppdVar4 = (dvar_t *)0x0;
+    lVar6 = lVar6 + -1;
+  } while (lVar6 != 0);
   __restgprlr_28();
   return;
 }
 
 
 // 822DB290  CG_FreeRagdolls  (cgame_mp/cg_main_mp.cpp:3111)
-
-void CG_FreeRagdolls(void)
-
-{
-  int iVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
-  char in_RESERVE;
-  byte in_cr0;
-  
-  uVar2 = __savegprlr_21();
-  uVar3 = 0;
-  do {
-    if (0x7ff < (uVar3 & 0xffffffff)) {
-      MyAssertHandler(0xffffffff8200ffd8,0x6b4,0,0xffffffff820012f4,uVar3,0x800);
-    }
-    if ((ulonglong)DAT_82a38328 <= (uVar2 & 0xffffffff)) {
-      MyAssertHandler(0xffffffff8200ffd8,0x6b9,0,0xffffffff820012b0,uVar2,DAT_82a38328);
-    }
-    iVar1 = ((int)uVar2 * 0x800 + (int)uVar3) * 0x1ec + DAT_82a3ce28;
-    if ((*(int *)(iVar1 + 8) != 0) && (*(int *)(iVar1 + 8) != -1)) {
-      Ragdoll_Remove();
-      *(undefined4 *)(iVar1 + 8) = 0;
-    }
-    if ((*(int *)(iVar1 + 0xc) != 0) && (*(int *)(iVar1 + 0xc) != -1)) {
-      Ragdoll_Remove();
-      *(undefined4 *)(iVar1 + 0xc) = 0;
-    }
-    if ((*(int *)(iVar1 + 0x10) != 0) && (*(int *)(iVar1 + 0x10) != -1)) {
-      Phys_ObjDestroy(1);
-      *(undefined4 *)(iVar1 + 0x10) = 0;
-      do {
-        if (in_RESERVE != '\0') {
-          DAT_8427b880 = storeWordConditionalIndexed
-                                   ((ulonglong)DAT_8427b880 - 1,0,0xffffffff8427b880);
-          in_cr0 = 2;
-        }
-      } while (!(bool)(in_cr0 >> 1 & 1));
-    }
-    uVar3 = uVar3 + 1;
-  } while ((int)uVar3 < 0x800);
-  __restgprlr_21();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure LerpEntityStatePlayer
 
 // 822DB3C0  CG_Shutdown  (cgame_mp/cg_main_mp.cpp:3150)
-
-void CG_Shutdown(longlong param_1)
-
-{
-  void *_Dst;
-  undefined8 uVar1;
-  int iVar2;
-  void *pvVar3;
-  
-  _Dst = (void *)CG_GetLocalClientGlobals();
-  uVar1 = R_TrackStatistics(0);
-  SND_FadeAllSounds(0x3ff0000000000000,uVar1,0);
-  CG_StopAllRumbles(param_1);
-  Phys_EndFrame();
-  CG_FreeRagdolls(param_1);
-  Ragdoll_Shutdown();
-  DAT_82a3d6b1 = 0;
-  DAT_82a3d6b0 = 0;
-  Mantle_ShutdownAnims();
-  UILocalVar_Shutdown(param_1 * 0x2284 + -0x7d5cfd6c);
-  CG_FreeWeapons(param_1);
-  CG_FreeEntityDObjInfo(param_1);
-  Com_FreeWeaponInfoMemory(2);
-  CG_ModelPreviewerDestroyDevGui();
-  FX_WaitKillAllEffects(param_1);
-  FX_ShutdownSystem(param_1);
-  DynEntCl_Shutdown(param_1);
-  CG_FreeAnimTreeInstances(param_1);
-  iVar2 = CG_GetLocalClientStaticGlobals(param_1);
-  if (*(int *)(iVar2 + 0x20) == 0) {
-    Scr_ShutdownGameStrings();
-  }
-  *(undefined4 *)((int)_Dst + 0x335c) = 0;
-  pvVar3 = memset(_Dst,0,0x108600);
-  if (*(int *)((int)_Dst + 0x335c) != 0) {
-    pvVar3 = (void *)MyAssertHandler(0xffffffff82018fe0,0xc87,0,0xffffffff82000f98,
-                                     0xffffffff8201de70);
-  }
-  CG_ClearCompassPingData(pvVar3);
-  CG_ShutdownConsoleCommands();
-  CG_ShutdownClientSideEffects(param_1);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 822DB510  CG_SaveMigrationPers  (cgame_mp/cg_main_mp.cpp:3221)
-
-void CG_SaveMigrationPers(uint param_1)
-
-{
-  int iVar1;
-  int iVar2;
-  
-  if (3 < param_1) {
-    MyAssertHandler(0xffffffff82001158,0x47f,0,0xffffffff820011a8,param_1,4);
-  }
-  iVar2 = param_1 * 0x1e4;
-  iVar1 = CG_GetLocalClientGlobals(param_1);
-  *(undefined4 *)(&DAT_82b3e4f8 + iVar2) = *(undefined4 *)(iVar1 + 0x6b98c);
-  *(undefined4 *)(&DAT_82b3e518 + iVar2) = *(undefined4 *)(iVar1 + 0x76ecc);
-  *(undefined4 *)(&DAT_82b3e51c + iVar2) = *(undefined4 *)(iVar1 + 0x76ed0);
-  *(undefined4 *)(&DAT_82b3e520 + iVar2) = *(undefined4 *)(iVar1 + 0x76ed4);
-  *(undefined4 *)(&DAT_82b3e524 + iVar2) = *(undefined4 *)(iVar1 + 0x76ed8);
-  *(undefined4 *)(&DAT_82b3e528 + iVar2) = *(undefined4 *)(iVar1 + 0x76edc);
-  *(undefined4 *)(&DAT_82b3e52c + iVar2) = *(undefined4 *)(iVar1 + 0x79850);
-  *(undefined4 *)(&DAT_82b3e534 + iVar2) = *(undefined4 *)(iVar1 + 0x79858);
-  *(undefined4 *)(&DAT_82b3e530 + iVar2) = *(undefined4 *)(iVar1 + 0x79854);
-  *(undefined4 *)(&DAT_82b3e538 + iVar2) = *(undefined4 *)(iVar1 + 0x7985c);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 822DB620  CG_LoadMigrationPers  (cgame_mp/cg_main_mp.cpp:3246)
-
-void CG_LoadMigrationPers(uint param_1)
-
-{
-  int iVar1;
-  int iVar2;
-  
-  if (3 < param_1) {
-    MyAssertHandler(0xffffffff82001158,0x47f,0,0xffffffff820011a8,param_1,4);
-  }
-  iVar2 = param_1 * 0x1e4;
-  iVar1 = CG_GetLocalClientGlobals(param_1);
-  *(undefined4 *)(iVar1 + 0x6b98c) = *(undefined4 *)(&DAT_82b3e4f8 + iVar2);
-  *(undefined4 *)(iVar1 + 0x76ecc) = *(undefined4 *)(&DAT_82b3e518 + iVar2);
-  *(undefined4 *)(iVar1 + 0x76ed4) = *(undefined4 *)(&DAT_82b3e520 + iVar2);
-  *(undefined4 *)(iVar1 + 0x76ed8) = *(undefined4 *)(&DAT_82b3e524 + iVar2);
-  *(undefined4 *)(iVar1 + 0x76edc) = *(undefined4 *)(&DAT_82b3e528 + iVar2);
-  *(undefined4 *)(iVar1 + 0x79850) = *(undefined4 *)(&DAT_82b3e52c + iVar2);
-  *(undefined4 *)(iVar1 + 0x79858) = *(undefined4 *)(&DAT_82b3e534 + iVar2);
-  *(undefined4 *)(iVar1 + 0x79854) = *(undefined4 *)(&DAT_82b3e530 + iVar2);
-  *(undefined4 *)(iVar1 + 0x7985c) = *(undefined4 *)(&DAT_82b3e538 + iVar2);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 822DB720  Hunk_AllocXAnimClient  (cgame_mp/cg_main_mp.cpp:3286)
 
-void Hunk_AllocXAnimClient(undefined8 param_1)
+void * Hunk_AllocXAnimClient(int param_1)
 
 {
-  Hunk_Alloc(param_1,0xffffffff8201de88,0xb);
-  return;
+  void *pvVar1;
+  
+  pvVar1 = Hunk_Alloc(param_1,"Hunk_AllocXAnimClient",0xb);
+  return pvVar1;
 }
 

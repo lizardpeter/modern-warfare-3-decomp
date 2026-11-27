@@ -2,7 +2,7 @@
 
 // 827C6B70  jpeg_fdct_islow  (jpeg-6/jfdctint.c:141)
 
-void jpeg_fdct_islow(void)
+void jpeg_fdct_islow(int *param_1)
 
 {
   int iVar1;
@@ -25,7 +25,7 @@ void jpeg_fdct_islow(void)
   longlong lVar18;
   longlong lVar19;
   
-  iVar1 = __savegprlr_20();
+  iVar1 = __savegprlr_20(param_1);
   piVar15 = (int *)(iVar1 + -0x1c);
   lVar19 = 8;
   do {

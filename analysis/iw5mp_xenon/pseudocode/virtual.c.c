@@ -2,45 +2,45 @@
 
 // 828A9A08  VirtualQuery  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/virtual.c:49)
 
-SIZE_T VirtualQuery(LPCVOID lpAddress,PMEMORY_BASIC_INFORMATION lpBuffer,SIZE_T dwLength)
+ulong VirtualQuery(void *param_1,_MEMORY_BASIC_INFORMATION *param_2,ulong param_3)
 
 {
-  int iVar1;
-  SIZE_T SVar2;
+  long lVar1;
+  ulong uVar2;
   
-  iVar1 = NtQueryVirtualMemory(lpAddress,lpBuffer,0);
-  if (iVar1 < 0) {
-    XapiSetLastNTError();
-    SVar2 = 0;
+  lVar1 = NtQueryVirtualMemory(param_1,param_2,0);
+  if (lVar1 < 0) {
+    XapiSetLastNTError(lVar1);
+    uVar2 = 0;
   }
   else {
-    SVar2 = 0x1c;
+    uVar2 = 0x1c;
   }
-  return SVar2;
+  return uVar2;
 }
 
 
 // 828A9A70  GlobalMemoryStatus  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/virtual.c:119)
 
-void GlobalMemoryStatus(LPMEMORYSTATUS lpBuffer)
+void GlobalMemoryStatus(_MEMORYSTATUS *param_1)
 
 {
   undefined4 local_80;
   int local_7c;
   int local_74;
-  SIZE_T local_70;
+  ulong local_70;
   int local_6c;
   
   local_80 = 0x68;
   MmQueryStatistics(&local_80);
-  lpBuffer->dwMemoryLoad = 0;
-  lpBuffer->dwLength = 0x20;
-  lpBuffer->dwTotalPageFile = 0;
-  lpBuffer->dwAvailPageFile = 0;
-  lpBuffer->dwAvailPhys = local_74 << 0xc;
-  lpBuffer->dwAvailVirtual = local_70 - local_6c;
-  lpBuffer->dwTotalVirtual = local_70;
-  lpBuffer->dwTotalPhys = local_7c << 0xc;
+  param_1->dwMemoryLoad = 0;
+  param_1->dwLength = 0x20;
+  param_1->dwTotalPageFile = 0;
+  param_1->dwAvailPageFile = 0;
+  param_1->dwAvailPhys = local_74 << 0xc;
+  param_1->dwAvailVirtual = local_70 - local_6c;
+  param_1->dwTotalVirtual = local_70;
+  param_1->dwTotalPhys = local_7c << 0xc;
   return;
 }
 

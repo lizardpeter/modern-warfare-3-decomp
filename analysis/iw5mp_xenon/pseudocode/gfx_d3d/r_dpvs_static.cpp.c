@@ -2,92 +2,263 @@
 
 // 827325F0  __lvx  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/vectorintrinsics.h:98)
 
-/* WARNING: Control flow encountered bad instruction data */
-
-void __lvx(void)
+__vector4 * __lvx(__vector4 *__return_storage_ptr__,void *param_1,int param_2)
 
 {
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  return __return_storage_ptr__;
 }
 
 
 // 827325F8  R_AddAabbTreeSurfacesInFrustum_r  (gfx_d3d/r_dpvs_static.cpp:288)
-
-/* WARNING: Control flow encountered bad instruction data */
-
-void R_AddAabbTreeSurfacesInFrustum_r(void)
-
-{
-  undefined1 in_vs32 [16];
-  undefined1 in_vs35 [16];
-  
-  __savegprlr_18();
-  altv300_21(in_vs32,in_vs35);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0
 
 // 82732AC0  R_CopyClipPlane  (gfx_d3d/r_dpvs_static.cpp:492)
 
-/* WARNING: Control flow encountered bad instruction data */
-
-void R_CopyClipPlane(void)
+void R_CopyClipPlane(DpvsPlane *param_1,DpvsClipPlane *param_2)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs35 [16];
-  undefined1 in_vs43 [16];
+  undefined4 uVar1;
+  undefined4 uVar2;
+  undefined4 uVar3;
+  undefined4 uVar4;
+  undefined4 *puVar5;
+  undefined1 auVar6 [16];
+  undefined1 auVar7 [16];
   
-  altv300_21(in_vs32,in_vs35);
-  altv300_23(in_vs43,in_vs35);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  auVar7 = loadVectorLeftIndexed((longlong)(int)param_1);
+  auVar6 = loadVectorRightIndexed((longlong)(int)param_1 + 0x10);
+  uVar1 = 0x3f800000;
+  uVar2 = 0xbf800000;
+  *(undefined1 (*) [16])((uint)param_2 & 0xfffffff0) = auVar7 | auVar6;
+  uVar4 = uVar1;
+  if (param_1->coeffs[0] < 0.0) {
+    uVar4 = uVar2;
+  }
+  uVar3 = uVar1;
+  if (param_1->coeffs[2] < 0.0) {
+    uVar3 = uVar2;
+  }
+  if (param_1->coeffs[1] < 0.0) {
+    uVar1 = uVar2;
+  }
+  puVar5 = (undefined4 *)((uint)&param_2->signs & 0xfffffff0);
+  *puVar5 = uVar4;
+  puVar5[1] = uVar1;
+  puVar5[2] = uVar3;
+  puVar5[3] = 0;
+  return;
 }
 
 
 // 82732B28  R_AddCellStaticSurfacesInFrustum  (gfx_d3d/r_dpvs_static.cpp:620)
 
-/* WARNING: Control flow encountered bad instruction data */
-
-void R_AddCellStaticSurfacesInFrustum(void)
+void R_AddCellStaticSurfacesInFrustum(DpvsStaticCellCmd *param_1)
 
 {
   byte bVar1;
-  int iVar2;
-  int iVar3;
-  undefined1 in_vs32 [16];
-  undefined1 in_vs39 [16];
-  undefined1 in_vs43 [16];
-  undefined1 in_vs62 [16];
-  undefined1 local_2c0 [64];
-  undefined4 local_280;
+  undefined4 uVar2;
+  undefined4 uVar3;
+  float fVar4;
+  float fVar5;
+  GfxAabbTree *pGVar6;
+  uint uVar7;
+  int iVar8;
+  undefined4 uVar9;
+  undefined4 uVar10;
+  int iVar11;
+  float *pfVar12;
+  undefined4 *puVar13;
+  ulonglong uVar14;
+  uint *puVar15;
+  ulonglong uVar16;
+  longlong lVar17;
+  longlong lVar18;
+  undefined1 (*pauVar19) [16];
+  longlong lVar20;
+  longlong lVar21;
+  uint uVar22;
+  undefined1 auVar23 [16];
+  undefined1 auVar24 [16];
+  undefined4 local_2d0;
+  undefined4 uStack_2cc;
+  undefined4 uStack_2c8;
+  undefined4 uStack_2c4;
   
-  iVar3 = __savegprlr_19();
-  iVar2 = *(int *)(iVar3 + 4);
-  if (iVar2 != 0) {
-    bVar1 = *(byte *)(iVar3 + 8);
+  uVar14 = ZEXT48(&stack0x00000000);
+  puVar15 = (uint *)__savegprlr_19(param_1);
+  iVar8 = (int)(uVar14 - 800);
+  *(BADSPACEBASE **)iVar8 = register0x0000000c;
+  pGVar6 = (GfxAabbTree *)puVar15[1];
+  if (pGVar6 != (GfxAabbTree *)0x0) {
+    bVar1 = *(byte *)(puVar15 + 2);
     if (0x10 < bVar1) {
-      MyAssertHandler(0xffffffff821bd860,0x286,0,0xffffffff821bd824,0xffffffff821bd83c,bVar1);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs_static.cpp",
+                      0x286,0,"%s\n\t(planes.count) = %i");
     }
     if (bVar1 == 0) {
-      MyAssertHandler(0xffffffff821bd860,0x287,0,0xffffffff82000f98,0xffffffff821bd814);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs_static.cpp",
+                      0x287,0,"%s");
     }
-    if (3 < bVar1) {
-      altv300_23(in_vs62,in_vs39);
-      altv300_21(in_vs32,in_vs39);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-      halt_baddata();
+    uVar7 = *puVar15;
+    uVar16 = 0;
+    uVar2 = 0xbf800000;
+    uVar22 = (uint)bVar1;
+    uVar3 = 0x3f800000;
+    if (3 < uVar22) {
+      *(undefined4 *)(iVar8 + 0x5c) = 0;
+      lVar17 = uVar14 - 0x2c4;
+      lVar18 = uVar14 - 0x240;
+      lVar20 = (ulonglong)uVar7 + 0x18;
+      do {
+        puVar13 = (undefined4 *)lVar18;
+        iVar11 = (int)lVar17;
+        *(undefined1 (**) [16])(iVar11 + 4) = (undefined1 (*) [16])(puVar13 + -0xc);
+        auVar24 = loadVectorRightIndexed(lVar20 + -8);
+        auVar23 = loadVectorLeftIndexed(lVar20 + -0x18);
+        *(undefined1 (**) [16])(iVar11 + 8) = (undefined1 (*) [16])(puVar13 + -4);
+        *(undefined1 (*) [16])(puVar13 + -0xc) = auVar23 | auVar24;
+        pfVar12 = (float *)lVar20;
+        fVar4 = pfVar12[-5];
+        uVar16 = uVar16 + 4;
+        fVar5 = pfVar12[-4];
+        *(undefined1 (**) [16])(iVar11 + 0xc) = (undefined1 (*) [16])(puVar13 + 4);
+        uVar10 = uVar3;
+        if (pfVar12[-6] < 0.0) {
+          uVar10 = uVar2;
+        }
+        uVar9 = uVar3;
+        if (fVar4 < 0.0) {
+          uVar9 = uVar2;
+        }
+        *(undefined4 *)(iVar8 + 0x54) = uVar9;
+        uVar9 = uVar3;
+        if (fVar5 < 0.0) {
+          uVar9 = uVar2;
+        }
+        *(undefined4 *)(iVar8 + 0x50) = uVar10;
+        *(undefined4 *)(iVar8 + 0x58) = uVar9;
+        lVar17 = lVar17 + 0x10;
+        *(int *)lVar17 = (int)(puVar13 + 0xc);
+        puVar13[-8] = local_2d0;
+        puVar13[-7] = uStack_2cc;
+        puVar13[-6] = uStack_2c8;
+        puVar13[-5] = uStack_2c4;
+        auVar24 = loadVectorRightIndexed(lVar20 + 8);
+        auVar23 = loadVectorLeftIndexed(lVar20 + -8);
+        *(undefined1 (*) [16])(puVar13 + -4) = auVar23 | auVar24;
+        fVar4 = pfVar12[-1];
+        uVar10 = uVar3;
+        if (pfVar12[-2] < 0.0) {
+          uVar10 = uVar2;
+        }
+        uVar9 = uVar3;
+        if (*pfVar12 < 0.0) {
+          uVar9 = uVar2;
+        }
+        *(undefined4 *)(iVar8 + 0x50) = uVar10;
+        uVar10 = uVar3;
+        if (fVar4 < 0.0) {
+          uVar10 = uVar2;
+        }
+        *(undefined4 *)(iVar8 + 0x54) = uVar10;
+        *(undefined4 *)(iVar8 + 0x58) = uVar9;
+        *puVar13 = local_2d0;
+        puVar13[1] = uStack_2cc;
+        puVar13[2] = uStack_2c8;
+        puVar13[3] = uStack_2c4;
+        auVar24 = loadVectorRightIndexed(lVar20 + 0x18);
+        auVar23 = loadVectorLeftIndexed(lVar20 + 8);
+        *(undefined1 (*) [16])(puVar13 + 4) = auVar23 | auVar24;
+        fVar4 = pfVar12[3];
+        uVar10 = uVar3;
+        if (pfVar12[2] < 0.0) {
+          uVar10 = uVar2;
+        }
+        uVar9 = uVar3;
+        if (pfVar12[4] < 0.0) {
+          uVar9 = uVar2;
+        }
+        *(undefined4 *)(iVar8 + 0x50) = uVar10;
+        uVar10 = uVar3;
+        if (fVar4 < 0.0) {
+          uVar10 = uVar2;
+        }
+        *(undefined4 *)(iVar8 + 0x54) = uVar10;
+        *(undefined4 *)(iVar8 + 0x58) = uVar9;
+        puVar13[8] = local_2d0;
+        puVar13[9] = uStack_2cc;
+        puVar13[10] = uStack_2c8;
+        puVar13[0xb] = uStack_2c4;
+        auVar24 = loadVectorRightIndexed(lVar20 + 0x28);
+        auVar23 = loadVectorLeftIndexed(lVar20 + 0x18);
+        *(undefined1 (*) [16])(puVar13 + 0xc) = auVar23 | auVar24;
+        fVar4 = pfVar12[7];
+        uVar10 = uVar3;
+        if (pfVar12[8] < 0.0) {
+          uVar10 = uVar2;
+        }
+        uVar9 = uVar3;
+        if (pfVar12[6] < 0.0) {
+          uVar9 = uVar2;
+        }
+        *(undefined4 *)(iVar8 + 0x50) = uVar9;
+        uVar9 = uVar3;
+        if (fVar4 < 0.0) {
+          uVar9 = uVar2;
+        }
+        *(undefined4 *)(iVar8 + 0x54) = uVar9;
+        *(undefined4 *)(iVar8 + 0x58) = uVar10;
+        lVar20 = lVar20 + 0x40;
+        puVar13[0x10] = local_2d0;
+        puVar13[0x11] = uStack_2cc;
+        puVar13[0x12] = uStack_2c8;
+        puVar13[0x13] = uStack_2c4;
+        lVar18 = lVar18 + 0x80;
+      } while ((uVar16 & 0xffffffff) < ((ulonglong)bVar1 - 3 & 0xffffffff));
     }
-    if (bVar1 != 0) {
-      altv300_21(in_vs32,in_vs43);
-      altv300_23(in_vs62,in_vs43);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-      halt_baddata();
+    if ((uVar16 & 0xffffffff) < (ulonglong)uVar22) {
+      *(undefined4 *)(iVar8 + 0x5c) = 0;
+      lVar18 = bVar1 - uVar16;
+      lVar21 = (uVar16 & 0xfffffff) * 0x10 + (ulonglong)uVar7;
+      lVar20 = (uVar16 & 0x7ffffff) * 0x20 + (uVar14 - 0x270);
+      lVar17 = (uVar16 & 0x3fffffff) * 4 + (uVar14 - 800) + 0x5c;
+      do {
+        auVar24 = loadVectorLeftIndexed(lVar21);
+        auVar23 = loadVectorRightIndexed(lVar21 + 0x10);
+        lVar17 = lVar17 + 4;
+        pauVar19 = (undefined1 (*) [16])lVar20;
+        *(int *)lVar17 = (int)pauVar19;
+        *pauVar19 = auVar24 | auVar23;
+        pfVar12 = (float *)lVar21;
+        fVar4 = pfVar12[1];
+        fVar5 = *pfVar12;
+        uVar10 = uVar3;
+        if (pfVar12[2] < 0.0) {
+          uVar10 = uVar2;
+        }
+        *(undefined4 *)(iVar8 + 0x58) = uVar10;
+        uVar10 = uVar3;
+        if (fVar5 < 0.0) {
+          uVar10 = uVar2;
+        }
+        uVar9 = uVar3;
+        if (fVar4 < 0.0) {
+          uVar9 = uVar2;
+        }
+        *(undefined4 *)(iVar8 + 0x50) = uVar10;
+        *(undefined4 *)(iVar8 + 0x54) = uVar9;
+        lVar21 = lVar21 + 0x10;
+        *(undefined4 *)pauVar19[1] = local_2d0;
+        *(undefined4 *)(pauVar19[1] + 4) = uStack_2cc;
+        *(undefined4 *)(pauVar19[1] + 8) = uStack_2c8;
+        *(undefined4 *)(pauVar19[1] + 0xc) = uStack_2c4;
+        lVar20 = lVar20 + 0x20;
+        lVar18 = lVar18 + -1;
+      } while (lVar18 != 0);
     }
-    local_280 = 0;
-    R_AddAabbTreeSurfacesInFrustum_r(iVar2,local_2c0);
+    *(uint *)(iVar8 + 0xa0) = uVar22;
+    R_AddAabbTreeSurfacesInFrustum_r(pGVar6,(DpvsClipPlaneSet *)(iVar8 + 0x60));
   }
   __restgprlr_19();
   return;
@@ -96,107 +267,25 @@ void R_AddCellStaticSurfacesInFrustum(void)
 
 // 82732DD8  R_AddCellStaticSurfacesInFrustumCmd  (gfx_d3d/r_dpvs_static.cpp:830)
 
-void R_AddCellStaticSurfacesInFrustumCmd(int param_1)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+void R_AddCellStaticSurfacesInFrustumCmd(void *param_1)
 
 {
   int iVar1;
-  undefined4 uVar2;
+  uchar *puVar2;
   int *in_r13;
   
   iVar1 = *in_r13;
-  uVar2 = *(undefined4 *)((*(ushort *)(param_1 + 10) + 0xf) * 4 + DAT_846178cc);
-  *(undefined4 *)(iVar1 + 0x108) =
-       *(undefined4 *)((*(ushort *)(param_1 + 10) + 0xc) * 4 + DAT_846178cc);
-  *(undefined4 *)(iVar1 + 0x10c) = uVar2;
-  R_AddCellStaticSurfacesInFrustum();
+  puVar2 = g_worldDpvs->surfaceVisData[*(ushort *)((int)param_1 + 10)];
+  *(uchar **)(iVar1 + 0x108) = g_worldDpvs->smodelVisData[*(ushort *)((int)param_1 + 10)];
+  *(uchar **)(iVar1 + 0x10c) = puVar2;
+  R_AddCellStaticSurfacesInFrustum(param_1);
   return;
 }
 
 
 // 82732E18  R_AddSkySurfacesDpvs  (gfx_d3d/r_dpvs_static.cpp:898)
-
-/* WARNING: Control flow encountered bad instruction data */
-
-void R_AddSkySurfacesDpvs(undefined8 param_1,int param_2)
-
-{
-  int iVar1;
-  undefined4 uVar2;
-  int iVar3;
-  int iVar4;
-  char cVar5;
-  int *in_r13;
-  int iVar6;
-  int iVar7;
-  int iVar8;
-  int iVar9;
-  undefined1 in_vs32 [16];
-  undefined1 in_vs36 [16];
-  undefined1 in_vs38 [16];
-  undefined1 in_vs39 [16];
-  undefined1 in_vs43 [16];
-  undefined1 in_vs53 [16];
-  undefined1 in_vs55 [16];
-  undefined1 in_vs56 [16];
-  undefined1 in_vs63 [16];
-  undefined1 auVar10 [16];
-  
-  __savegprlr();
-  cVar5 = Sys_IsMainThread();
-  if (cVar5 == '\0') {
-    MyAssertHandler(0xffffffff821bd860,0x389,0,0xffffffff82000f98,0xffffffff82010b48);
-  }
-  iVar4 = DAT_8461658c;
-  if (*(int *)(DAT_8461658c + 0x14) != 0) {
-    iVar1 = *in_r13;
-    uVar2 = *(undefined4 *)(DAT_8461658c + 0x268);
-    *(undefined4 *)(iVar1 + 0x108) = *(undefined4 *)(DAT_8461658c + 0x25c);
-    *(undefined4 *)(iVar1 + 0x10c) = uVar2;
-    if (3 < param_2) {
-      altv300_23(in_vs63,in_vs39);
-      altv300_21(in_vs32,in_vs39);
-      altv300_21(in_vs32,in_vs38);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-      halt_baddata();
-    }
-    if (0 < param_2) {
-      altv300_21(in_vs32,in_vs43);
-      altv300_23(in_vs63,in_vs43);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-      halt_baddata();
-    }
-    iVar6 = 0;
-    if (0 < *(int *)(iVar4 + 0x14)) {
-      altv207_13(in_vs32,in_vs53);
-      iVar7 = 0;
-      do {
-        iVar3 = *(int *)(iVar4 + 0x18);
-        iVar8 = 0;
-        if (0 < *(int *)(iVar7 + iVar3)) {
-          iVar9 = 0;
-          do {
-            if (*(char *)(*(int *)(iVar1 + 0x10c) +
-                         (uint)*(ushort *)
-                                (*(int *)(*(int *)(iVar7 + iVar3 + 4) + iVar9) * 2 +
-                                *(int *)(iVar4 + 0x274))) == '\0') {
-              altv207_13(in_vs32,in_vs55);
-              auVar10 = altv207_13(in_vs32,in_vs56);
-              altv300_23(auVar10,in_vs36);
-              altv300_21(in_vs32,in_vs36);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-              halt_baddata();
-            }
-            iVar3 = *(int *)(iVar4 + 0x18);
-            iVar8 = iVar8 + 1;
-            iVar9 = iVar9 + 4;
-          } while (iVar8 < *(int *)(iVar7 + iVar3));
-        }
-        iVar6 = iVar6 + 1;
-        iVar7 = iVar7 + 0x10;
-      } while (iVar6 < *(int *)(iVar4 + 0x14));
-    }
-  }
-  __restgprlr();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0

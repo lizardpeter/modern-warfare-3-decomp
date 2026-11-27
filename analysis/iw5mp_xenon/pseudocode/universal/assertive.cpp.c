@@ -2,347 +2,351 @@
 
 // 825D3510  TRACK_assertive  (universal/assertive.cpp:265)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void TRACK_assertive(void)
 
 {
-  track_static_alloc_internal(0xffffffff840120a0,0x1000,0xffffffff821745b8,0);
-  track_static_alloc_internal(0xffffffff8400c488,0x100,0xffffffff821745ac,0);
-  track_static_alloc_internal(0xffffffff840110a0,0x1000,0xffffffff82174594,0);
-  track_static_alloc_internal(0xffffffff840100a0,0x1000,0xffffffff82174580,0);
-  track_static_alloc_internal(0xffffffff8400c6a0,0x3a00,0xffffffff82174570,0);
+  track_static_alloc_internal(&DAT_840120a0,0x1000,"assertMessage",0);
+  track_static_alloc_internal(lineBuffer,0x100,"lineBuffer",0);
+  track_static_alloc_internal(&DAT_840110a0,0x1000,"recursiveAssertMessage",0);
+  track_static_alloc_internal(&DAT_840100a0,0x1000,"shortAssertMessage",0);
+  track_static_alloc_internal(g_assertAddress,0x3a00,"g_assertAddress",0);
   return;
 }
 
 
 // 825D35B8  ParseError  (universal/assertive.cpp:295)
 
-void ParseError(undefined8 param_1)
+void ParseError(char *param_1)
 
 {
-  Com_PrintError(0x10,0xffffffff821745c8,param_1);
+  Com_PrintError(0x10,".map parse error - %s\n");
   return;
 }
 
 
 // 825D35D0  ReadLine  (universal/assertive.cpp:588)
 
-void ReadLine(void)
+bool ReadLine(void *param_1)
 
 {
-  undefined8 uVar1;
+  void *pvVar1;
   int iVar2;
-  int iVar3;
-  bool bVar4;
+  undefined1 uVar3;
+  int iVar4;
+  bool bVar5;
   
-  uVar1 = __savegprlr_28();
+  pvVar1 = (void *)__savegprlr_28(param_1);
   iVar2 = DAT_8400c590;
 LAB_825d35f4:
   DAT_8400c590 = iVar2 - DAT_8400c69c;
-  bVar4 = false;
-  memmove(&DAT_8400c488,&DAT_8400c488 + DAT_8400c69c,DAT_8400c590);
+  bVar5 = false;
+  memmove();
   DAT_8400c69c = 0;
   do {
-    iVar2 = FS_Read(&DAT_8400c488 + DAT_8400c590,0xff - DAT_8400c590,uVar1);
+    iVar2 = FS_Read(lineBuffer + DAT_8400c590,0xff - DAT_8400c590,pvVar1);
     iVar2 = iVar2 + DAT_8400c590;
     DAT_8400c590 = iVar2;
-    (&DAT_8400c488)[iVar2] = 0;
+    lineBuffer[iVar2] = '\0';
     if (iVar2 == 0) {
-      __restgprlr_28(0);
-      return;
+      uVar3 = __restgprlr_28(0);
+      return (bool)uVar3;
     }
-    iVar3 = 0;
+    iVar4 = 0;
     if (0 < iVar2) {
       do {
-        if ((&DAT_8400c488)[iVar3] == '\n') {
-          (&DAT_8400c488)[iVar3] = 0;
-          if ((&DAT_8400c489)[iVar3] == '\r') {
-            DAT_8400c69c = iVar3 + 2;
+        if (lineBuffer[iVar4] == '\n') {
+          lineBuffer[iVar4] = '\0';
+          if (lineBuffer[iVar4 + 1] == '\r') {
+            DAT_8400c69c = iVar4 + 2;
           }
           else {
-            DAT_8400c69c = iVar3 + 1;
+            DAT_8400c69c = iVar4 + 1;
           }
-          if (!bVar4) {
-            __restgprlr_28(1);
-            return;
+          if (!bVar5) {
+            uVar3 = __restgprlr_28(1);
+            return (bool)uVar3;
           }
           goto LAB_825d35f4;
         }
-        iVar3 = iVar3 + 1;
-      } while (iVar3 < iVar2);
+        iVar4 = iVar4 + 1;
+      } while (iVar4 < iVar2);
     }
     DAT_8400c590 = 0;
-    bVar4 = true;
+    bVar5 = true;
   } while( true );
 }
 
 
 // 825D36B8  SkipLines  (universal/assertive.cpp:635)
 
-void SkipLines(undefined8 param_1,undefined8 param_2)
+bool SkipLines(int param_1,void *param_2,bool param_3)
 
 {
   int iVar1;
   int iVar2;
-  bool bVar3;
-  int iVar4;
-  int iVar5;
+  undefined1 uVar3;
+  longlong lVar4;
+  bool bVar5;
+  int iVar6;
+  int iVar7;
   
-  iVar1 = __savegprlr_26();
-  iVar5 = 0;
+  lVar4 = (longlong)(int)param_2;
+  iVar1 = __savegprlr_26(param_1,lVar4,param_3);
+  iVar7 = 0;
   iVar2 = DAT_8400c590;
   if (0 < iVar1) {
 LAB_825d36ec:
     do {
       DAT_8400c590 = iVar2 - DAT_8400c69c;
-      bVar3 = false;
-      memmove(&DAT_8400c488,&DAT_8400c488 + DAT_8400c69c,DAT_8400c590);
+      bVar5 = false;
+      memmove();
       DAT_8400c69c = 0;
       while( true ) {
-        iVar2 = FS_Read(&DAT_8400c488 + DAT_8400c590,0xff - DAT_8400c590,param_2);
+        iVar2 = FS_Read(lineBuffer + DAT_8400c590,0xff - DAT_8400c590,(void *)lVar4);
         iVar2 = iVar2 + DAT_8400c590;
         DAT_8400c590 = iVar2;
-        (&DAT_8400c488)[iVar2] = 0;
+        lineBuffer[iVar2] = '\0';
         if (iVar2 == 0) break;
-        iVar4 = 0;
+        iVar6 = 0;
         if (0 < iVar2) {
           do {
-            if ((&DAT_8400c488)[iVar4] == '\n') {
-              (&DAT_8400c488)[iVar4] = 0;
-              if ((&DAT_8400c489)[iVar4] == '\r') {
-                DAT_8400c69c = iVar4 + 2;
+            if (lineBuffer[iVar6] == '\n') {
+              lineBuffer[iVar6] = '\0';
+              if (lineBuffer[iVar6 + 1] == '\r') {
+                DAT_8400c69c = iVar6 + 2;
               }
               else {
-                DAT_8400c69c = iVar4 + 1;
+                DAT_8400c69c = iVar6 + 1;
               }
-              if (bVar3) goto LAB_825d36ec;
-              bVar3 = true;
+              if (bVar5) goto LAB_825d36ec;
+              bVar5 = true;
               goto LAB_825d379c;
             }
-            iVar4 = iVar4 + 1;
-          } while (iVar4 < iVar2);
+            iVar6 = iVar6 + 1;
+          } while (iVar6 < iVar2);
         }
         DAT_8400c590 = 0;
-        bVar3 = true;
+        bVar5 = true;
       }
-      bVar3 = false;
+      bVar5 = false;
 LAB_825d379c:
-      if (!bVar3) {
-        __restgprlr_26(0);
-        return;
+      if (!bVar5) {
+        uVar3 = __restgprlr_26(0);
+        return (bool)uVar3;
       }
-      iVar5 = iVar5 + 1;
-    } while (iVar5 < iVar1);
+      iVar7 = iVar7 + 1;
+    } while (iVar7 < iVar1);
   }
-  __restgprlr_26(1);
-  return;
+  uVar3 = __restgprlr_26(1);
+  return (bool)uVar3;
 }
 
 
 // 825D37D8  ParseMapFile  (universal/assertive.cpp:653)
 
-void ParseMapFile(undefined8 param_1,ulonglong param_2,undefined8 param_3)
+bool ParseMapFile(void *param_1,uint param_2,char *param_3)
 
 {
   char cVar1;
-  uint uVar2;
-  undefined8 uVar3;
-  char cVar8;
-  int iVar4;
-  char *pcVar5;
-  char *pcVar6;
-  char *pcVar7;
-  char *pcVar9;
-  uint uVar10;
-  uint uVar11;
-  ulonglong uVar12;
-  ulonglong uVar13;
+  char cVar2;
+  uint uVar3;
+  ulonglong uVar4;
+  void *pvVar6;
+  bool bVar9;
+  int iVar7;
+  undefined1 uVar10;
+  char *pcVar8;
+  ulonglong uVar5;
+  ulonglong uVar11;
+  char *pcVar12;
+  longlong lVar13;
   uint uVar14;
-  uint *puVar15;
+  ulonglong uVar15;
+  ulonglong uVar16;
+  ulonglong uVar17;
+  uint uVar18;
+  AddressInfo *pAVar19;
   uint local_870;
   uint local_86c;
-  undefined1 auStack_868 [4];
-  undefined1 auStack_864 [4];
   char local_860;
-  char acStack_85f [1023];
   char acStack_460 [1120];
   
-  uVar3 = __savegprlr_22();
-  pcVar7 = &DAT_8400c488;
+  uVar11 = (ulonglong)(int)param_2;
+  uVar4 = ZEXT48(&stack0x00000000);
+  pvVar6 = (void *)__savegprlr_22(param_1);
+  uVar17 = 0xffffffff8400c488;
   do {
-    cVar8 = ReadLine(uVar3);
-    if (cVar8 == '\0') goto LAB_825d3d0c;
-    iVar4 = sscanf(&DAT_8400c488," Preferred load address is %x\r\n",auStack_864);
-  } while (iVar4 != 1);
-  cVar8 = SkipLines(2,uVar3);
-  if (cVar8 != '\0') {
-    uVar13 = 0;
-    cVar8 = ReadLine(uVar3);
-    if (cVar8 != '\0') {
-      while( true ) {
-        if (DAT_8400c488 == '\0') {
-          uVar14 = 0;
-          if (DAT_840130a0 != 0) {
-            puVar15 = &DAT_8400c6a0;
-            uVar10 = DAT_840130a0;
-            do {
-              if (((param_2 & 0xffffffff) <= (ulonglong)*puVar15) &&
-                 ((ulonglong)*puVar15 < (uVar13 & 0xffffffff))) {
-                I_strncpyz(puVar15 + 1,param_3,0x40);
-                uVar10 = DAT_840130a0;
-              }
-              uVar14 = uVar14 + 1;
-              puVar15 = puVar15 + 0x74;
-            } while (uVar14 < uVar10);
-          }
-          goto LAB_825d3930;
+    bVar9 = ReadLine(pvVar6);
+    if (!bVar9) goto LAB_825d3d0c;
+    lVar13 = uVar4 - 0x864;
+    iVar7 = sscanf(lineBuffer," Preferred load address is %x\r\n");
+  } while (iVar7 != 1);
+  bVar9 = SkipLines(2,pvVar6,SUB81(lVar13,0));
+  if (bVar9) {
+    uVar16 = 0;
+    bVar9 = ReadLine(pvVar6);
+    if (bVar9) {
+      while (lineBuffer[0] != '\0') {
+        lVar13 = uVar4 - 0x868;
+        iVar7 = sscanf(lineBuffer,"%x:%x %xH %s %s");
+        if (iVar7 != 5) goto LAB_825d3cfc;
+        uVar15 = (ulonglong)local_86c + (ulonglong)local_870 + uVar11 + 0x1000;
+        if ((uVar16 & 0xffffffff) < (uVar15 & 0xffffffff)) {
+          uVar16 = uVar15;
         }
-        iVar4 = sscanf(&DAT_8400c488,"%x:%x %xH %s %s",auStack_868,&local_86c,&local_870,&local_860,
-                       acStack_460);
-        if (iVar4 != 5) break;
-        uVar12 = (ulonglong)local_86c + (ulonglong)local_870 + param_2 + 0x1000;
-        if ((uVar13 & 0xffffffff) < (uVar12 & 0xffffffff)) {
-          uVar13 = uVar12;
-        }
-        cVar8 = ReadLine(uVar3);
-        if (cVar8 == '\0') {
-          __restgprlr_22(0);
-          return;
+        bVar9 = ReadLine(pvVar6);
+        if (!bVar9) {
+          uVar10 = __restgprlr_22(0);
+          return (bool)uVar10;
         }
       }
-      uVar3 = 0xffffffff821745e0;
-LAB_825d3cfc:
-      Com_PrintError(0x10,0xffffffff821745c8,uVar3);
+      uVar18 = 0;
+      if (g_assertAddressCount != 0) {
+        pAVar19 = g_assertAddress;
+        uVar14 = g_assertAddressCount;
+        do {
+          if (((uVar11 & 0xffffffff) <= (ulonglong)pAVar19->address) &&
+             ((ulonglong)pAVar19->address < (uVar16 & 0xffffffff))) {
+            lVar13 = 0x40;
+            I_strncpyz(pAVar19->moduleName,param_3,0x40);
+            uVar14 = g_assertAddressCount;
+          }
+          uVar18 = uVar18 + 1;
+          pAVar19 = pAVar19 + 1;
+        } while (uVar18 < uVar14);
+      }
+      do {
+        bVar9 = ReadLine(pvVar6);
+        if (!bVar9) goto LAB_825d3d0c;
+        pcVar8 = strstr(lineBuffer,"Publics by Value");
+      } while (pcVar8 == (char *)0x0);
+      bVar9 = SkipLines(1,pvVar6,SUB81(lVar13,0));
+      if ((bVar9) && (bVar9 = ReadLine(pvVar6), bVar9)) {
+        while (uVar10 = (undefined1)lVar13, lineBuffer[0] != '\0') {
+          iVar7 = sscanf(lineBuffer,"%x:%x %s %x");
+          if ((iVar7 != 4) || (uVar15 = uVar17, strrchr(), (uVar15 & 0xffffffff) == 0))
+          goto LAB_825d3cfc;
+          lVar13 = uVar4 - 0x460;
+          iVar7 = sscanf((char *)((int)uVar15 + 1),"%s");
+          if (iVar7 != 1) goto LAB_825d3cfc;
+          uVar18 = 0;
+          if (g_assertAddressCount != 0) {
+            uVar15 = 0xffffffff8400c6e4;
+            uVar14 = g_assertAddressCount;
+            do {
+              pcVar8 = (char *)uVar15;
+              uVar3 = *(uint *)(pcVar8 + -0x44);
+              if (((((uVar11 & 0xffffffff) <= (ulonglong)uVar3) &&
+                   ((ulonglong)uVar3 < (uVar16 & 0xffffffff))) && (local_870 <= uVar3)) &&
+                 ((*pcVar8 == '\0' || (*(uint *)(pcVar8 + 0x140) < local_870)))) {
+                iVar7 = -0x860;
+                *(uint *)(pcVar8 + 0x140) = local_870;
+                if ((local_860 == '_') || (local_860 == '?')) {
+                  iVar7 = -0x85f;
+                }
+                I_strncpyz(pcVar8,&stack0x00000000 + iVar7,0x100);
+                uVar5 = uVar15;
+                strchr();
+                if ((uVar5 & 0xffffffff) != 0) {
+                  *(undefined1 *)uVar5 = 0;
+                }
+                uVar5 = uVar4 - 0x460;
+                strrchr();
+                pcVar12 = (char *)((int)uVar5 + 1);
+                if ((uVar5 & 0xffffffff) == 0) {
+                  pcVar12 = acStack_460;
+                }
+                lVar13 = 0x40;
+                I_strncpyz(pcVar8 + 0x100,pcVar12,0x40);
+                uVar14 = g_assertAddressCount;
+              }
+              uVar18 = uVar18 + 1;
+              uVar15 = uVar15 + 0x1d0;
+            } while (uVar18 < uVar14);
+          }
+          bVar9 = ReadLine(pvVar6);
+          if (!bVar9) {
+            uVar10 = __restgprlr_22(0);
+            return (bool)uVar10;
+          }
+        }
+        bVar9 = SkipLines(2,pvVar6,(bool)uVar10);
+        if ((bVar9) && (bVar9 = ReadLine(pvVar6), bVar9)) {
+          pcVar8 = " Static symbols\r";
+          uVar15 = uVar17;
+          do {
+            cVar1 = *(char *)uVar15;
+            cVar2 = *pcVar8;
+            if (cVar1 == '\0') break;
+            uVar15 = uVar15 + 1;
+            pcVar8 = pcVar8 + 1;
+          } while (cVar1 == cVar2);
+          if (cVar1 == cVar2) {
+            bVar9 = SkipLines(1,pvVar6,(bool)uVar10);
+            if (!bVar9) goto LAB_825d3d0c;
+            bVar9 = ReadLine(pvVar6);
+            while ((bVar9 && (lineBuffer[0] != '\0'))) {
+              iVar7 = sscanf(lineBuffer,"%x:%x %s %x");
+              if (((iVar7 != 4) || (uVar15 = uVar17, strrchr(), (uVar15 & 0xffffffff) == 0)) ||
+                 (iVar7 = sscanf((char *)((int)uVar15 + 1),"%s"), iVar7 != 1)) goto LAB_825d3cfc;
+              uVar18 = 0;
+              if (g_assertAddressCount != 0) {
+                uVar15 = 0xffffffff8400c6e4;
+                uVar14 = g_assertAddressCount;
+                do {
+                  pcVar8 = (char *)uVar15;
+                  uVar3 = *(uint *)(pcVar8 + -0x44);
+                  if ((((uVar11 & 0xffffffff) <= (ulonglong)uVar3) &&
+                      ((ulonglong)uVar3 < (uVar16 & 0xffffffff))) &&
+                     ((local_870 <= uVar3 &&
+                      ((*pcVar8 == '\0' || (*(uint *)(pcVar8 + 0x140) < local_870)))))) {
+                    iVar7 = -0x860;
+                    *(uint *)(pcVar8 + 0x140) = local_870;
+                    if ((local_860 == '_') || (local_860 == '?')) {
+                      iVar7 = -0x85f;
+                    }
+                    I_strncpyz(pcVar8,&stack0x00000000 + iVar7,0x100);
+                    uVar5 = uVar15;
+                    strchr();
+                    if ((uVar5 & 0xffffffff) != 0) {
+                      *(undefined1 *)uVar5 = 0;
+                    }
+                    uVar5 = uVar4 - 0x460;
+                    strrchr();
+                    pcVar12 = (char *)((int)uVar5 + 1);
+                    if ((uVar5 & 0xffffffff) == 0) {
+                      pcVar12 = acStack_460;
+                    }
+                    I_strncpyz(pcVar8 + 0x100,pcVar12,0x40);
+                    uVar14 = g_assertAddressCount;
+                  }
+                  uVar18 = uVar18 + 1;
+                  uVar15 = uVar15 + 0x1d0;
+                } while (uVar18 < uVar14);
+              }
+              bVar9 = ReadLine(pvVar6);
+            }
+          }
+          uVar10 = __restgprlr_22(1);
+          return (bool)uVar10;
+        }
+      }
     }
   }
 LAB_825d3d0c:
-  __restgprlr_22(0);
-  return;
-  while (pcVar5 = strstr(&DAT_8400c488,"Publics by Value"), pcVar5 == (char *)0x0) {
-LAB_825d3930:
-    cVar8 = ReadLine(uVar3);
-    if (cVar8 == '\0') goto LAB_825d3d0c;
-  }
-  cVar8 = SkipLines(1,uVar3);
-  if ((cVar8 != '\0') && (cVar8 = ReadLine(uVar3), cVar8 != '\0')) {
-    while (DAT_8400c488 != '\0') {
-      iVar4 = sscanf(&DAT_8400c488,"%x:%x %s %x",auStack_868,&local_86c,&local_860,&local_870);
-      if (iVar4 != 4) {
-        uVar3 = 0xffffffff82174644;
-        goto LAB_825d3cfc;
-      }
-      pcVar5 = strrchr(&DAT_8400c488,0x20);
-      if ((pcVar5 == (char *)0x0) ||
-         (iVar4 = sscanf(pcVar5 + 1,"%s",acStack_460), uVar14 = local_870, iVar4 != 1)) {
-        uVar3 = 0xffffffff8217460c;
-        goto LAB_825d3cfc;
-      }
-      uVar10 = 0;
-      if (DAT_840130a0 != 0) {
-        pcVar5 = &DAT_8400c6e4;
-        uVar11 = DAT_840130a0;
-        do {
-          uVar2 = *(uint *)(pcVar5 + -0x44);
-          if (((((param_2 & 0xffffffff) <= (ulonglong)uVar2) &&
-               ((ulonglong)uVar2 < (uVar13 & 0xffffffff))) && (uVar14 <= uVar2)) &&
-             ((*pcVar5 == '\0' || (*(uint *)(pcVar5 + 0x140) < uVar14)))) {
-            pcVar6 = &local_860;
-            *(uint *)(pcVar5 + 0x140) = uVar14;
-            if ((local_860 == '_') || (local_860 == '?')) {
-              pcVar6 = acStack_85f;
-            }
-            I_strncpyz(pcVar5,pcVar6,0x100);
-            pcVar6 = strchr(pcVar5,0x40);
-            if (pcVar6 != (char *)0x0) {
-              *pcVar6 = '\0';
-            }
-            pcVar6 = strrchr(acStack_460,0x5c);
-            pcVar9 = pcVar6 + 1;
-            if (pcVar6 == (char *)0x0) {
-              pcVar9 = acStack_460;
-            }
-            I_strncpyz(pcVar5 + 0x100,pcVar9,0x40);
-            uVar11 = DAT_840130a0;
-          }
-          uVar10 = uVar10 + 1;
-          pcVar5 = pcVar5 + 0x1d0;
-        } while (uVar10 < uVar11);
-      }
-      cVar8 = ReadLine(uVar3);
-      if (cVar8 == '\0') {
-        __restgprlr_22(0);
-        return;
-      }
-    }
-    cVar8 = SkipLines(2,uVar3);
-    if ((cVar8 == '\0') || (cVar8 = ReadLine(uVar3), cVar8 == '\0')) goto LAB_825d3d0c;
-    pcVar5 = " Static symbols\r";
-    do {
-      cVar8 = *pcVar7;
-      cVar1 = *pcVar5;
-      if (cVar8 == '\0') break;
-      pcVar7 = pcVar7 + 1;
-      pcVar5 = pcVar5 + 1;
-    } while (cVar8 == cVar1);
-    if (cVar8 == cVar1) {
-      cVar8 = SkipLines(1,uVar3);
-      if (cVar8 == '\0') goto LAB_825d3d0c;
-      cVar8 = ReadLine(uVar3);
-      while ((cVar8 != '\0' && (DAT_8400c488 != '\0'))) {
-        iVar4 = sscanf(&DAT_8400c488,"%x:%x %s %x",auStack_868,&local_86c,&local_860,&local_870);
-        if (iVar4 != 4) {
-          uVar3 = 0xffffffff821746b0;
-          goto LAB_825d3cfc;
-        }
-        pcVar7 = strrchr(&DAT_8400c488,0x20);
-        if ((pcVar7 == (char *)0x0) ||
-           (iVar4 = sscanf(pcVar7 + 1,"%s",acStack_460), uVar14 = local_870, iVar4 != 1)) {
-          uVar3 = 0xffffffff82174678;
-          goto LAB_825d3cfc;
-        }
-        uVar10 = 0;
-        if (DAT_840130a0 != 0) {
-          pcVar7 = &DAT_8400c6e4;
-          uVar11 = DAT_840130a0;
-          do {
-            uVar2 = *(uint *)(pcVar7 + -0x44);
-            if (((((param_2 & 0xffffffff) <= (ulonglong)uVar2) &&
-                 ((ulonglong)uVar2 < (uVar13 & 0xffffffff))) && (uVar14 <= uVar2)) &&
-               ((*pcVar7 == '\0' || (*(uint *)(pcVar7 + 0x140) < uVar14)))) {
-              pcVar5 = &local_860;
-              *(uint *)(pcVar7 + 0x140) = uVar14;
-              if ((local_860 == '_') || (local_860 == '?')) {
-                pcVar5 = acStack_85f;
-              }
-              I_strncpyz(pcVar7,pcVar5,0x100);
-              pcVar5 = strchr(pcVar7,0x40);
-              if (pcVar5 != (char *)0x0) {
-                *pcVar5 = '\0';
-              }
-              pcVar5 = strrchr(acStack_460,0x5c);
-              pcVar6 = pcVar5 + 1;
-              if (pcVar5 == (char *)0x0) {
-                pcVar6 = acStack_460;
-              }
-              I_strncpyz(pcVar7 + 0x100,pcVar6,0x40);
-              uVar11 = DAT_840130a0;
-            }
-            uVar10 = uVar10 + 1;
-            pcVar7 = pcVar7 + 0x1d0;
-          } while (uVar10 < uVar11);
-        }
-        cVar8 = ReadLine(uVar3);
-      }
-    }
-    __restgprlr_22(1);
-    return;
-  }
+  uVar10 = __restgprlr_22(0);
+  return (bool)uVar10;
+LAB_825d3cfc:
+  Com_PrintError(0x10,".map parse error - %s\n");
   goto LAB_825d3d0c;
 }
 
 
 // 825D3D18  GetModuleBase  (universal/assertive.cpp:946)
 
-void GetModuleBase(void)
+uint GetModuleBase(char *param_1)
 
 {
   char cVar1;
@@ -350,97 +354,100 @@ void GetModuleBase(void)
   ulonglong uVar3;
   longlong lVar4;
   int iVar5;
-  char *pcVar7;
-  longlong lVar6;
-  undefined *puVar8;
-  ulonglong uVar9;
-  longlong lVar10;
+  uint uVar6;
+  char *pcVar8;
+  longlong lVar7;
+  undefined *puVar9;
+  ulonglong uVar10;
+  longlong lVar11;
+  char acStack_260 [260];
   undefined4 local_15c;
-  undefined1 auStack_130 [304];
+  char acStack_130 [304];
   
   uVar3 = ZEXT48(&stack0x00000000);
-  lVar4 = __savegprlr_28();
-  lVar6 = lVar4;
+  lVar4 = __savegprlr_28(param_1);
+  lVar7 = lVar4;
   do {
-    pcVar7 = (char *)lVar6;
-    lVar6 = lVar6 + 1;
-  } while (*pcVar7 != '\0');
-  uVar9 = (lVar6 - lVar4) - 1U & 0xffffffff;
-  uVar2 = uVar9;
+    pcVar8 = (char *)lVar7;
+    lVar7 = lVar7 + 1;
+  } while (*pcVar8 != '\0');
+  uVar10 = (lVar7 - lVar4) - 1U & 0xffffffff;
+  uVar2 = uVar10;
   do {
     uVar2 = uVar2 - 1;
     if ((longlong)uVar2 < 0) goto LAB_825d3d90;
-    cVar1 = *(char *)((int)uVar2 + (int)(void *)lVar4);
+    cVar1 = *(char *)((int)uVar2 + (int)lVar4);
   } while (((cVar1 != '.') && (cVar1 != '/')) && (cVar1 != '\\'));
   if ((-1 < (int)uVar2) && (cVar1 == '.')) {
-    uVar9 = uVar2;
+    uVar10 = uVar2;
   }
 LAB_825d3d90:
-  memcpy(auStack_130,(void *)lVar4,(size_t)uVar9);
+  memcpy();
   iVar5 = DmWalkLoadedModules(uVar3 - 0x270,uVar3 - 0x260);
   if (iVar5 == 0x2da0000) {
-    lVar6 = uVar9 + (uVar3 - 0x130);
+    lVar7 = uVar10 + (uVar3 - 0x130);
     do {
-      pcVar7 = "";
-      lVar4 = lVar6 + -1;
-      lVar10 = 5;
+      pcVar8 = "";
+      lVar4 = lVar7 + -1;
+      lVar11 = 5;
       do {
-        pcVar7 = pcVar7 + 1;
+        pcVar8 = pcVar8 + 1;
         lVar4 = lVar4 + 1;
-        *(char *)lVar4 = *pcVar7;
-        lVar10 = lVar10 + -1;
-      } while (lVar10 != 0);
-      iVar5 = I_stricmp(uVar3 - 0x260,uVar3 - 0x130);
+        *(char *)lVar4 = *pcVar8;
+        lVar11 = lVar11 + -1;
+      } while (lVar11 != 0);
+      iVar5 = I_stricmp(acStack_260,acStack_130);
       if (iVar5 == 0) {
 LAB_825d3e5c:
         DmCloseLoadedModules(0);
-        __restgprlr_28(local_15c);
-        return;
+        uVar6 = __restgprlr_28(local_15c);
+        return uVar6;
       }
-      puVar8 = &UNK_8217474f;
-      lVar4 = lVar6 + -1;
-      lVar10 = 5;
+      puVar9 = &UNK_8217474f;
+      lVar4 = lVar7 + -1;
+      lVar11 = 5;
       do {
-        puVar8 = puVar8 + 1;
+        puVar9 = puVar9 + 1;
         lVar4 = lVar4 + 1;
-        *(undefined1 *)lVar4 = *puVar8;
-        lVar10 = lVar10 + -1;
-      } while (lVar10 != 0);
-      iVar5 = I_stricmp(uVar3 - 0x260,uVar3 - 0x130);
+        *(undefined1 *)lVar4 = *puVar9;
+        lVar11 = lVar11 + -1;
+      } while (lVar11 != 0);
+      iVar5 = I_stricmp(acStack_260,acStack_130);
       if (iVar5 == 0) goto LAB_825d3e5c;
       iVar5 = DmWalkLoadedModules(uVar3 - 0x270,uVar3 - 0x260);
     } while (iVar5 == 0x2da0000);
   }
   DmCloseLoadedModules(0);
-  __restgprlr_28(0);
-  return;
+  uVar6 = __restgprlr_28(0);
+  return uVar6;
 }
 
 
 // 825D3E70  BuildMappingInfo  (universal/assertive.cpp:1008)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void BuildMappingInfo(void)
 
 {
   char cVar1;
-  HANDLE hFindFile;
-  ulonglong uVar2;
-  BOOL BVar3;
+  void *pvVar2;
+  uint uVar3;
   int iVar4;
   char *pcVar5;
-  int local_1170 [4];
+  void *local_1170 [4];
   _WIN32_FIND_DATAA _Stack_1160;
   char local_1020 [2048];
   char acStack_820 [2080];
   
   __savegprlr_29();
-  sprintf(acStack_820,"%s\\*.map",0xffffffff82174764);
-  hFindFile = FindFirstFileA(acStack_820,&_Stack_1160);
-  if (hFindFile != (HANDLE)0xffffffff) {
+  sprintf(acStack_820,"%s\\*.map");
+  pvVar2 = FindFirstFileA(acStack_820,&_Stack_1160);
+  if (pvVar2 != (void *)0xffffffff) {
     do {
-      uVar2 = GetModuleBase(_Stack_1160.cFileName);
-      if (((uVar2 & 0xffffffff) != 0) &&
-         (FS_FOpenFileRead(_Stack_1160.cFileName,local_1170), local_1170[0] != 0)) {
+      uVar3 = GetModuleBase(_Stack_1160.cFileName);
+      if ((uVar3 != 0) &&
+         (FS_FOpenFileRead(_Stack_1160.cFileName,local_1170), local_1170[0] != (void *)0x0)) {
         iVar4 = 0;
         do {
           cVar1 = _Stack_1160.cFileName[iVar4];
@@ -453,21 +460,21 @@ void BuildMappingInfo(void)
           pcVar5 = pcVar5 + 1;
         } while (cVar1 != '\0');
         pcVar5[(int)&_Stack_1160 + (0x13b - (int)local_1020)] = '\0';
-        ParseMapFile(local_1170[0],uVar2,local_1020);
+        ParseMapFile(local_1170[0],uVar3,local_1020);
         FS_FCloseFile(local_1170[0]);
       }
-      BVar3 = FindNextFileA(hFindFile,&_Stack_1160);
-    } while (BVar3 != 0);
-    hFindFile = (HANDLE)CloseHandle(hFindFile);
+      iVar4 = FindNextFileA(pvVar2,&_Stack_1160);
+    } while (iVar4 != 0);
+    pvVar2 = (void *)CloseHandle(pvVar2);
   }
-  __restgprlr_29(hFindFile);
+  __restgprlr_29(pvVar2);
   return;
 }
 
 
 // 825D3F70  BuildAndPrintMappedAddresses  (universal/assertive.cpp:1080)
 
-void BuildAndPrintMappedAddresses(undefined8 param_1,int param_2)
+int BuildAndPrintMappedAddresses(char *param_1,int param_2)
 
 {
   char *pcVar1;
@@ -475,157 +482,152 @@ void BuildAndPrintMappedAddresses(undefined8 param_1,int param_2)
   int iVar3;
   int iVar4;
   int iVar5;
-  size_t _Count;
   uint uVar6;
   uint uVar7;
   char *pcVar8;
   longlong lVar9;
   longlong lVar10;
   
-  lVar2 = __savegprlr_20();
+  lVar2 = __savegprlr_20(param_1);
   BuildMappingInfo();
   uVar7 = 0;
   lVar10 = lVar2;
-  if (DAT_840130a0 != 0) {
-    pcVar8 = &DAT_8400c6a4;
-    uVar6 = DAT_840130a0;
+  if (g_assertAddressCount != 0) {
+    pcVar8 = g_assertAddress[0].moduleName;
+    uVar6 = g_assertAddressCount;
     do {
       if (*pcVar8 != '\0') {
         iVar5 = (int)lVar2;
-        iVar3 = _snprintf((char *)lVar10,(iVar5 - (int)(char *)lVar10) + param_2,"%s:    ",pcVar8);
+        iVar3 = _snprintf((char *)lVar10,(iVar5 - (int)(char *)lVar10) + param_2,"%s:    ");
         pcVar1 = (char *)(iVar3 + lVar10);
         if (pcVar8[0x184] == '\0') {
           if (pcVar8[0x40] == '\0') {
-            _Count = (iVar5 - (int)pcVar1) + param_2;
+            uVar6 = (iVar5 - (int)pcVar1) + param_2;
             if (pcVar8[0x140] == '\0') {
-              iVar4 = _snprintf(pcVar1,_Count," ...addr 0x%08X",(ulonglong)*(uint *)(pcVar8 + -4),
-                                pcVar8 + 0x184);
+              iVar4 = _snprintf(pcVar1,uVar6," ...addr 0x%08X");
               lVar9 = (longlong)iVar4;
             }
             else {
-              iVar4 = _snprintf(pcVar1,_Count," ...%s, addr 0x%08X",pcVar8 + 0x140,
-                                (ulonglong)*(uint *)(pcVar8 + -4));
+              iVar4 = _snprintf(pcVar1,uVar6," ...%s, addr 0x%08X");
               lVar9 = (longlong)iVar4;
             }
           }
           else {
-            iVar4 = _snprintf(pcVar1,(iVar5 - (int)pcVar1) + param_2,"%s        ...%s, addr 0x%08X",
-                              pcVar8 + 0x40,pcVar8 + 0x140,(ulonglong)*(uint *)(pcVar8 + -4));
+            iVar4 = _snprintf(pcVar1,(iVar5 - (int)pcVar1) + param_2,"%s        ...%s, addr 0x%08X")
+            ;
             lVar9 = (longlong)iVar4;
           }
         }
         else {
-          iVar4 = _snprintf(pcVar1,(iVar5 - (int)pcVar1) + param_2,"%s        ...%s, line %i",
-                            pcVar8 + 0x40,pcVar8 + 0x184,(ulonglong)*(uint *)(pcVar8 + 0x1c8));
+          iVar4 = _snprintf(pcVar1,(iVar5 - (int)pcVar1) + param_2,"%s        ...%s, line %i");
           lVar9 = (longlong)iVar4;
         }
         lVar9 = lVar9 + iVar3 + lVar10;
         pcVar1 = (char *)lVar9;
         iVar5 = _snprintf(pcVar1,(iVar5 - (int)pcVar1) + param_2,"\n");
         lVar10 = iVar5 + lVar9;
-        uVar6 = DAT_840130a0;
+        uVar6 = g_assertAddressCount;
       }
       uVar7 = uVar7 + 1;
       pcVar8 = pcVar8 + 0x1d0;
     } while (uVar7 < uVar6);
   }
-  __restgprlr_20(lVar10 - lVar2);
-  return;
+  iVar5 = __restgprlr_20(lVar10 - lVar2);
+  return iVar5;
 }
 
 
 // 825D40D0  DoStackTrace  (universal/assertive.cpp:1213)
 
-void DoStackTrace(undefined8 param_1,longlong param_2,undefined8 param_3,int param_4)
+int DoStackTrace(char *param_1,int param_2,int param_3,int param_4)
 
 {
   char *pcVar1;
   longlong lVar2;
   int iVar3;
-  void *pvVar4;
+  int iVar4;
   int iVar5;
-  int iVar6;
-  size_t _Count;
+  uint uVar6;
   uint uVar7;
   int *piVar8;
   longlong lVar9;
-  uint uVar10;
-  char *pcVar11;
-  longlong lVar12;
+  char *pcVar10;
+  longlong lVar11;
   
-  lVar2 = __savegprlr_20();
+  lVar9 = (longlong)param_2;
+  lVar2 = __savegprlr_20(param_1,lVar9,param_3);
   iVar3 = DmCaptureStackBackTrace(0x20,0xffffffff840130a8);
   if (iVar3 != 0x2da0000) {
-    __restgprlr_20(0);
-    return;
+    iVar3 = __restgprlr_20(0);
+    return iVar3;
   }
-  pvVar4 = memset(&DAT_8400c6a0,0,0x3a00);
-  DAT_840130a0 = 0;
-  if ((int)(param_2 + 1U) < 0x20) {
-    piVar8 = (int *)0x8400c4d0;
-    lVar9 = (param_2 + 1U & 0x3fffffff) * 4 + -0x7bfecf58;
-    DAT_840130a0 = 0;
+  memset();
+  uVar7 = 0;
+  g_assertAddressCount = 0;
+  if ((int)(lVar9 + 1U) < 0x20) {
+    piVar8 = (int *)(lineBuffer + 0x48);
+    lVar9 = (lVar9 + 1U & 0x3fffffff) * 4 + -0x7bfecf58;
     do {
       iVar3 = *(int *)lVar9;
-      DAT_840130a0 = DAT_840130a0 + 1;
+      uVar7 = uVar7 + 1;
       piVar8 = piVar8 + 0x74;
       *piVar8 = iVar3;
+      g_assertAddressCount = uVar7;
       if (iVar3 == 0) break;
       lVar9 = lVar9 + 4;
     } while ((int)lVar9 < -0x7bfeced8);
   }
-  BuildMappingInfo(pvVar4);
-  uVar10 = 0;
+  BuildMappingInfo();
+  uVar7 = 0;
   lVar9 = lVar2;
-  if (DAT_840130a0 != 0) {
-    pcVar11 = &DAT_8400c6a4;
-    uVar7 = DAT_840130a0;
+  if (g_assertAddressCount != 0) {
+    pcVar10 = g_assertAddress[0].moduleName;
+    uVar6 = g_assertAddressCount;
     do {
-      if (*pcVar11 != '\0') {
+      if (*pcVar10 != '\0') {
         iVar3 = (int)lVar2;
-        iVar5 = _snprintf((char *)lVar9,(iVar3 - (int)(char *)lVar9) + param_4,"%s:    ",pcVar11);
-        pcVar1 = (char *)(iVar5 + lVar9);
-        if (pcVar11[0x184] == '\0') {
-          if (pcVar11[0x40] == '\0') {
-            _Count = (iVar3 - (int)pcVar1) + param_4;
-            if (pcVar11[0x140] == '\0') {
-              iVar6 = _snprintf(pcVar1,_Count," ...addr 0x%08X",(ulonglong)*(uint *)(pcVar11 + -4),
-                                pcVar11 + 0x184);
-              lVar12 = (longlong)iVar6;
+        iVar4 = _snprintf((char *)lVar9,(iVar3 - (int)(char *)lVar9) + param_4,"%s:    ");
+        pcVar1 = (char *)(iVar4 + lVar9);
+        if (pcVar10[0x184] == '\0') {
+          if (pcVar10[0x40] == '\0') {
+            uVar6 = (iVar3 - (int)pcVar1) + param_4;
+            if (pcVar10[0x140] == '\0') {
+              iVar5 = _snprintf(pcVar1,uVar6," ...addr 0x%08X");
+              lVar11 = (longlong)iVar5;
             }
             else {
-              iVar6 = _snprintf(pcVar1,_Count," ...%s, addr 0x%08X",pcVar11 + 0x140,
-                                (ulonglong)*(uint *)(pcVar11 + -4));
-              lVar12 = (longlong)iVar6;
+              iVar5 = _snprintf(pcVar1,uVar6," ...%s, addr 0x%08X");
+              lVar11 = (longlong)iVar5;
             }
           }
           else {
-            iVar6 = _snprintf(pcVar1,(iVar3 - (int)pcVar1) + param_4,"%s        ...%s, addr 0x%08X",
-                              pcVar11 + 0x40,pcVar11 + 0x140,(ulonglong)*(uint *)(pcVar11 + -4));
-            lVar12 = (longlong)iVar6;
+            iVar5 = _snprintf(pcVar1,(iVar3 - (int)pcVar1) + param_4,"%s        ...%s, addr 0x%08X")
+            ;
+            lVar11 = (longlong)iVar5;
           }
         }
         else {
-          iVar6 = _snprintf(pcVar1,(iVar3 - (int)pcVar1) + param_4,"%s        ...%s, line %i",
-                            pcVar11 + 0x40,pcVar11 + 0x184,(ulonglong)*(uint *)(pcVar11 + 0x1c8));
-          lVar12 = (longlong)iVar6;
+          iVar5 = _snprintf(pcVar1,(iVar3 - (int)pcVar1) + param_4,"%s        ...%s, line %i");
+          lVar11 = (longlong)iVar5;
         }
-        lVar12 = lVar12 + iVar5 + lVar9;
-        pcVar1 = (char *)lVar12;
+        lVar11 = lVar11 + iVar4 + lVar9;
+        pcVar1 = (char *)lVar11;
         iVar3 = _snprintf(pcVar1,(iVar3 - (int)pcVar1) + param_4,"\n");
-        lVar9 = iVar3 + lVar12;
-        uVar7 = DAT_840130a0;
+        lVar9 = iVar3 + lVar11;
+        uVar6 = g_assertAddressCount;
       }
-      uVar10 = uVar10 + 1;
-      pcVar11 = pcVar11 + 0x1d0;
-    } while (uVar10 < uVar7);
+      uVar7 = uVar7 + 1;
+      pcVar10 = pcVar10 + 0x1d0;
+    } while (uVar7 < uVar6);
   }
-  __restgprlr_20(lVar9 - lVar2);
-  return;
+  iVar3 = __restgprlr_20(lVar9 - lVar2);
+  return iVar3;
 }
 
 
 // 825D42C0  RestoreWindow  (universal/assertive.cpp:1292)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void RestoreWindow(void)
 
@@ -636,10 +638,10 @@ void RestoreWindow(void)
 
 // 825D42C8  SetAssertCallbackHandler  (universal/assertive.cpp:1314)
 
-void SetAssertCallbackHandler(undefined4 param_1)
+void SetAssertCallbackHandler(_func___cdecl_void *param_1)
 
 {
-  DAT_84013134 = param_1;
+  AssertCallback = param_1;
   return;
 }
 
@@ -647,8 +649,9 @@ void SetAssertCallbackHandler(undefined4 param_1)
 // 825D42D8  IsDebuggerConnected  (universal/assertive.cpp:1320)
 
 /* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
-void IsDebuggerConnected(void)
+int IsDebuggerConnected(void)
 
 {
                     /* WARNING: Bad instruction - Truncating control flow here */
@@ -658,189 +661,141 @@ void IsDebuggerConnected(void)
 
 // 825D42E0  BuildShortAssertMessage  (universal/assertive.cpp:1432)
 
-void BuildShortAssertMessage
-               (undefined8 param_1,ulonglong param_2,undefined8 param_3,char *param_4,size_t param_5
-               )
+void BuildShortAssertMessage(char *param_1,char *param_2,int param_3,char *param_4,int param_5)
 
 {
-  ulonglong uVar1;
-  char *pcVar3;
-  undefined8 uVar2;
-  int iVar4;
-  undefined8 uVar5;
+  char *pcVar1;
+  int iVar2;
+  ulonglong uVar3;
   
-  uVar1 = __savegprlr_26();
-  if ((param_2 & 0xffffffff) == 0) {
-    param_2 = 0xffffffff82992330;
+  uVar3 = (ulonglong)(int)param_2;
+  __savegprlr_26(param_1,uVar3,param_3);
+  pcVar1 = (char *)uVar3;
+  if ((uVar3 & 0xffffffff) == 0) {
+    pcVar1 = unknown;
   }
-  if ((uVar1 & 0xffffffff) == 0) {
-    uVar1 = 0xffffffff82992330;
+  for (pcVar1 = strstr(pcVar1,"\\"); pcVar1 != (char *)0x0; pcVar1 = strstr(pcVar1 + 1,"\\")) {
   }
-  pcVar3 = strstr((char *)param_2,"\\");
-  while (pcVar3 != (char *)0x0) {
-    param_2 = (longlong)(int)pcVar3 + 1;
-    pcVar3 = strstr((char *)param_2,"\\");
-  }
-  if (DAT_8400c594 == 0) {
-    uVar5 = 0xffffffff820068af;
-  }
-  else {
-    uVar5 = 0xffffffff82174820;
-  }
-  uVar2 = Dvar_GetString(0xffffffff8208cee4);
-  iVar4 = _snprintf(param_4,param_5,"Compiled: %s %s\nBuild: %s%s\n",0xffffffff82073bbc,
-                    0xffffffff82174814,uVar2,uVar5);
-  iVar4 = _snprintf(param_4 + iVar4,(size_t)(param_4 + (param_5 - (int)(param_4 + iVar4))),
-                    "Expression: %s\nFile: %s\nLine: %d",uVar1,param_2,param_3);
-  __restgprlr_26(iVar4);
+  Dvar_GetString("version");
+  iVar2 = _snprintf(param_4,param_5,"Compiled: %s %s\nBuild: %s%s\n");
+  iVar2 = _snprintf(param_4 + iVar2,(uint)(param_4 + (param_5 - (int)(param_4 + iVar2))),
+                    "Expression: %s\nFile: %s\nLine: %d");
+  __restgprlr_26(iVar2);
   return;
 }
 
 
 // 825D43E0  BuildAssertMessage  (universal/assertive.cpp:1465)
 
-void BuildAssertMessage(undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4,
-                       longlong param_5,longlong param_6,longlong param_7)
+void BuildAssertMessage(char *param_1,char *param_2,int param_3,int param_4,int param_5,
+                       char *param_6,int param_7)
 
 {
-  ulonglong uVar1;
-  ulonglong uVar2;
-  undefined8 uVar3;
-  int iVar4;
-  int iVar5;
-  longlong lVar6;
-  char *pcVar7;
-  undefined8 uVar8;
-  longlong lVar9;
+  int iVar1;
+  char *pcVar2;
+  char *pcVar3;
+  longlong lVar4;
+  char cStack_61;
+  char local_60 [96];
   
-  uVar1 = ZEXT48(&stack0x00000000);
-  uVar2 = __savegprlr_23();
-  lVar6 = uVar1 - 0x61;
-  lVar9 = 10;
-  pcVar7 = "";
+  __savegprlr_23(param_1,param_2,param_3);
+  pcVar2 = &cStack_61;
+  lVar4 = 10;
+  pcVar3 = "";
   do {
-    pcVar7 = pcVar7 + 1;
-    lVar6 = lVar6 + 1;
-    *(char *)lVar6 = *pcVar7;
-    lVar9 = lVar9 + -1;
-  } while (lVar9 != 0);
-  if ((param_2 & 0xffffffff) == 0) {
-    param_2 = uVar1 - 0x60;
-  }
-  if ((uVar2 & 0xffffffff) == 0) {
-    uVar2 = uVar1 - 0x60;
-  }
-  DAT_8400c598[0] = '<';
-  DAT_8400c598[1] = 'x';
-  DAT_8400c598[2] = 'e';
-  DAT_8400c598[3] = 'n';
-  DAT_8400c598[4] = 'o';
-  DAT_8400c598[5] = 'n';
-  DAT_8400c598[6] = '>';
-  DAT_8400c598[7] = '\0';
-  if (DAT_8400c594 == 0) {
-    uVar8 = 0xffffffff820068af;
-  }
-  else {
-    uVar8 = 0xffffffff82174820;
-  }
-  uVar3 = Dvar_GetString(0xffffffff8208cee4);
-  iVar4 = _snprintf((char *)param_6,(size_t)param_7,"Compiled: %s %s\nBuild: %s%s\n",
-                    0xffffffff82073bbc,0xffffffff82174814,uVar3,uVar8);
-  pcVar7 = (char *)(iVar4 + param_6);
-  iVar5 = _snprintf(pcVar7,(size_t)((char *)param_6 + ((size_t)param_7 - (int)pcVar7)),
-                    "Expression:\n    %s\n\nModule:    %s\nFile:    %s\nLine:    %d\n\n",uVar2,
-                    0xffffffff8400c598,param_2,param_3);
-  lVar6 = (longlong)iVar5 + iVar4 + param_6;
-  DoStackTrace(lVar6,param_5 + 1,param_4,(param_6 - lVar6) + param_7);
-  __restgprlr_23();
+    pcVar3 = pcVar3 + 1;
+    pcVar2 = pcVar2 + 1;
+    *pcVar2 = *pcVar3;
+    lVar4 = lVar4 + -1;
+  } while (lVar4 != 0);
+  builtin_strncpy(g_module,"<xenon>",8);
+  Dvar_GetString("version");
+  iVar1 = _snprintf(param_6,param_7,"Compiled: %s %s\nBuild: %s%s\n");
+  pcVar3 = param_6 + iVar1;
+  iVar1 = _snprintf(pcVar3,(uint)(param_6 + (param_7 - (int)pcVar3)),
+                    "Expression:\n    %s\n\nModule:    %s\nFile:    %s\nLine:    %d\n\n");
+  iVar1 = DoStackTrace(pcVar3 + iVar1,param_5 + 1,param_4,
+                       (int)(param_6 + (param_7 - (int)(pcVar3 + iVar1))));
+  __restgprlr_23(iVar1);
   return;
 }
 
 
 // 825D4500  MyAssertHandler  (universal/assertive.cpp:1612)
 
-void MyAssertHandler(undefined8 param_1,undefined8 param_2,undefined8 param_3,char *param_4,
-                    undefined8 param_5,undefined8 param_6,undefined8 param_7,undefined8 param_8)
+void MyAssertHandler(char *param_1,int param_2,int param_3,char *param_4)
 
 {
   undefined8 in_r0;
-  undefined8 uVar1;
+  char *pcVar1;
   int iVar2;
-  char cVar3;
-  undefined8 uVar4;
-  longlong lVar5;
-  undefined8 in_stack_00000030;
-  undefined8 in_stack_00000038;
-  undefined8 in_stack_00000040;
-  undefined8 in_stack_00000048;
+  bool bVar3;
+  longlong lVar4;
+  char *pcStack0000002c;
   
-  uVar1 = __savegprlr_25();
-  in_stack_00000030 = param_5;
-  in_stack_00000038 = param_6;
-  in_stack_00000040 = param_7;
-  in_stack_00000048 = param_8;
-  Sys_EnterCriticalSection(0x12);
-  _vsnprintf(&DAT_84013538,0x400,param_4,(va_list)&stack0x00000030);
-  DAT_84013937 = 0;
-  if (DAT_8400c594 == 0) {
-    uVar4 = 0xffffffff820068af;
-  }
-  else {
-    uVar4 = 0xffffffff82174820;
-  }
-  Com_sprintf(0xffffffff84013138,0x400,0xffffffff821749d8,uVar4,0xffffffff84013538,uVar1,param_2,
-              0xffffffff82073bbc);
-  OutputDebugStringA(&DAT_84013138);
-  if (DAT_84013134 != (code *)0x0) {
-    (*DAT_84013134)();
+  pcStack0000002c = param_4;
+  pcVar1 = (char *)__savegprlr_25(param_1);
+  Sys_EnterCriticalSection(CRITSECT_ASSERT);
+  _vsnprintf(message,0x400,pcStack0000002c,&stack0x00000030);
+  message[0x3ff] = '\0';
+  Com_sprintf(outputDebugString,0x400,
+              "Assert Expression:%s\n    %s\nFile:    %s\nLine:    %d\nCompiled:%s %s\n\n");
+  OutputDebugStringA(outputDebugString);
+  if (AssertCallback != (_func___cdecl_void *)0x0) {
+    (*AssertCallback)();
   }
   iVar2 = DmIsDebuggerPresent();
   if (iVar2 == 0) {
-    if (DAT_84013130 != 0) {
-      BuildAssertMessage(0xffffffff84013538,uVar1,param_2,param_3,1,0xffffffff840110a0,0x1000);
-      if (DAT_84013130 == 1) {
-        DAT_84013130 = 2;
-        Com_Printf(0x10,0xffffffff82174980);
-        Com_Printf(0x10,0xffffffff840110a0);
-        Com_Printf(0x10,0xffffffff82174928);
+    if (isHandlingAssert != 0) {
+      BuildAssertMessage(message,pcVar1,param_2,param_3,1,&DAT_840110a0,0x1000);
+      if (isHandlingAssert == 1) {
+        isHandlingAssert = 2;
+        Com_Printf(0x10,
+                   "ASSERTBEGIN - ( Recursive assert )---------------------------------------------\n"
+                  );
+        Com_Printf(0x10,&DAT_840110a0);
+        Com_Printf(0x10,
+                   "ASSERTEND - ( Recursive assert ) ----------------------------------------------\n\n"
+                  );
       }
       iVar2 = DmIsDebuggerPresent();
       if (iVar2 == 0) {
         Com_CloseLogsAndCopyToAssertLog();
-        NET_RemoteDbgHostAssertHandler(0xffffffff840120a0);
-        Sys_Error(0xffffffff840100a0);
+        NET_RemoteDbgHostAssertHandler(&DAT_840120a0);
+                    /* WARNING: Subroutine does not return */
+        Sys_Error(&DAT_840100a0);
       }
-      else {
-        trapWord(0x1f,in_r0,0x16);
-      }
+      trapWord(0x1f,in_r0,0x16);
     }
-    lVar5 = 10;
-    DAT_84013130 = 1;
+    lVar4 = 10;
+    isHandlingAssert = 1;
     do {
       NET_RemoteDbgHostFrame();
-      lVar5 = lVar5 + -1;
-    } while (lVar5 != 0);
-    BuildShortAssertMessage(0xffffffff84013538,uVar1,param_2,0xffffffff840100a0,0x1000);
-    BuildAssertMessage(0xffffffff84013538,uVar1,param_2,param_3,1,0xffffffff840120a0,0x1000);
-    Com_Printf(1,0xffffffff821748d0);
-    Com_Printf(1,0xffffffff82000f98,0xffffffff840120a0);
-    Com_Printf(1,0xffffffff82174878);
-    LSP_LogStringEvenIfControllerIsInactive(0xffffffff840120a0);
+      lVar4 = lVar4 + -1;
+    } while (lVar4 != 0);
+    BuildShortAssertMessage(message,pcVar1,param_2,&DAT_840100a0,0x1000);
+    BuildAssertMessage(message,pcVar1,param_2,param_3,1,&DAT_840120a0,0x1000);
+    Com_Printf(1,"ASSERTBEGIN -------------------------------------------------------------------\n"
+              );
+    Com_Printf(1,"%s");
+    Com_Printf(1,"ASSERTEND ---------------------------------------------------------------------\n"
+              );
+    LSP_LogStringEvenIfControllerIsInactive(&DAT_840120a0);
     LSP_ForceSendPacket();
-    cVar3 = Sys_IsSndStreamPacketCallbackThread();
-    if (cVar3 != '\0') {
+    bVar3 = Sys_IsSndStreamPacketCallbackThread();
+    if (bVar3) {
       DmReboot(0);
     }
     iVar2 = DmIsDebuggerPresent();
     if (iVar2 == 0) {
       Com_CloseLogsAndCopyToAssertLog();
-      NET_RemoteDbgHostAssertHandler(0xffffffff840120a0);
-      Sys_Error(0xffffffff840100a0);
+      NET_RemoteDbgHostAssertHandler(&DAT_840120a0);
+                    /* WARNING: Subroutine does not return */
+      Sys_Error(&DAT_840100a0);
     }
-    DAT_84013130 = 0;
+    isHandlingAssert = 0;
   }
-  Sys_LeaveCriticalSection(0x12);
+  Sys_LeaveCriticalSection(CRITSECT_ASSERT);
   trapWord(0x1f,in_r0,0x16);
   __restgprlr_25();
   return;
@@ -849,20 +804,22 @@ void MyAssertHandler(undefined8 param_1,undefined8 param_2,undefined8 param_3,ch
 
 // 825D4778  RefreshQuitOnErrorCondition  (universal/assertive.cpp:1821)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void RefreshQuitOnErrorCondition(void)
 
 {
-  char cVar2;
+  bool bVar2;
   int iVar1;
   
-  cVar2 = Dvar_IsSystemActive();
-  if (cVar2 != '\0') {
-    cVar2 = Dvar_GetBool(0xffffffff82174a30);
-    if ((cVar2 == '\0') && (iVar1 = Dvar_GetInt(0xffffffff82174a20), iVar1 != 2)) {
-      DAT_8401312c = 0;
+  bVar2 = Dvar_IsSystemActive();
+  if (bVar2) {
+    bVar2 = Dvar_GetBool("QuitOnError");
+    if ((!bVar2) && (iVar1 = Dvar_GetInt("r_vc_compile"), iVar1 != 2)) {
+      shouldQuitOnError = false;
       return;
     }
-    DAT_8401312c = 1;
+    shouldQuitOnError = true;
   }
   return;
 }
@@ -870,22 +827,24 @@ void RefreshQuitOnErrorCondition(void)
 
 // 825D47E0  QuitOnError  (universal/assertive.cpp:1835)
 
-undefined1 QuitOnError(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+bool QuitOnError(void)
 
 {
-  char cVar2;
+  bool bVar2;
   int iVar1;
   
-  cVar2 = Dvar_IsSystemActive();
-  if (cVar2 == '\0') {
-    return DAT_8401312c;
+  bVar2 = Dvar_IsSystemActive();
+  if (!bVar2) {
+    return shouldQuitOnError;
   }
-  cVar2 = Dvar_GetBool(0xffffffff82174a30);
-  if ((cVar2 == '\0') && (iVar1 = Dvar_GetInt(0xffffffff82174a20), iVar1 != 2)) {
-    DAT_8401312c = 0;
-    return 0;
+  bVar2 = Dvar_GetBool("QuitOnError");
+  if ((!bVar2) && (iVar1 = Dvar_GetInt("r_vc_compile"), iVar1 != 2)) {
+    shouldQuitOnError = false;
+    return false;
   }
-  DAT_8401312c = 1;
-  return 1;
+  shouldQuitOnError = true;
+  return true;
 }
 

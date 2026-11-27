@@ -2,54 +2,51 @@
 
 // 82503A78  TRACK_migration_memory  (qcommon/migration.cpp:27)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void TRACK_migration_memory(void)
 
 {
-  track_static_alloc_internal(0xffffffff83689bec,8,0xffffffff8208f000,10);
+  track_static_alloc_internal(&migrationGlob,8,"migrationGlob",10);
   return;
 }
 
 
 // 82503A98  Migration_Init  (qcommon/migration.cpp:34)
-
-void Migration_Init(void)
-
-{
-  if (DAT_83689bec != (undefined *)0x0) {
-    MyAssertHandler(0xffffffff8208f010,0x23,0,0xffffffff82000f98,0xffffffff8208f050);
-  }
-  DAT_83689bf0 = 0x180000;
-  DAT_83689bec = &DAT_83d0ee00;
-  Com_Memset(0xffffffff83d0ee00,0xaa,0x180000);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 82503B20  Migration_Shutdown  (qcommon/migration.cpp:50)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Migration_Shutdown(void)
 
 {
-  DAT_83689bec = 0;
-  DAT_83689bf0 = 0;
+  migrationGlob.buffer = (uchar *)0x0;
+  migrationGlob.size = 0;
   return;
 }
 
 
 // 82503B40  Migration_GetBuffer  (qcommon/migration.cpp:57)
 
-undefined4 Migration_GetBuffer(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+uchar * Migration_GetBuffer(void)
 
 {
-  return DAT_83689bec;
+  return migrationGlob.buffer;
 }
 
 
 // 82503B50  Migration_GetBufferSize  (qcommon/migration.cpp:63)
 
-undefined4 Migration_GetBufferSize(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int Migration_GetBufferSize(void)
 
 {
-  return DAT_83689bf0;
+  return migrationGlob.size;
 }
 

@@ -2,27 +2,15 @@
 
 // 828A96E8  CreateThread  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/createthread.c:109)
 
-HANDLE CreateThread(LPSECURITY_ATTRIBUTES lpThreadAttributes,SIZE_T dwStackSize,
-                   LPTHREAD_START_ROUTINE lpStartAddress,LPVOID lpParameter,DWORD dwCreationFlags,
-                   LPDWORD lpThreadId)
+void * CreateThread(void *param_1,ulong param_2,_func___cdecl_ulong_void_ptr *param_3,void *param_4,
+                   ulong param_5,ulong *param_6)
 
 {
-  undefined8 uVar1;
-  HANDLE pvVar2;
-  longlong lVar3;
-  longlong lVar4;
-  longlong lVar5;
-  longlong lVar6;
-  longlong lVar7;
+  void *pvVar1;
   
-  lVar7 = (longlong)(int)lpThreadId;
-  lVar6 = (longlong)(int)dwCreationFlags;
-  lVar5 = (longlong)(int)lpParameter;
-  lVar4 = (longlong)(int)lpStartAddress;
-  lVar3 = (longlong)(int)dwStackSize;
-  uVar1 = __savegprlr_26(lpThreadAttributes,lVar3,lVar4,lVar5,lVar6,lVar7);
-  uVar1 = XapipCreateThread(uVar1,lVar3,lVar4,lVar5,lVar6,0xffffffffffffffff,lVar7);
-  pvVar2 = (HANDLE)__restgprlr_26(uVar1);
-  return pvVar2;
+  pvVar1 = (void *)__savegprlr_26(param_1);
+  pvVar1 = XapipCreateThread(pvVar1,param_2,param_3,param_4,param_5,0xffffffff,param_6);
+  pvVar1 = (void *)__restgprlr_26(pvVar1);
+  return pvVar1;
 }
 

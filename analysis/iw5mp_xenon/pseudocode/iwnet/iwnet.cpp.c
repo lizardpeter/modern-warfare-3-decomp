@@ -2,40 +2,46 @@
 
 // 826E20B0  IWNet_CloseTask  (iwnet/iwnet.cpp:122)
 
-void IWNet_CloseTask(char *param_1)
+/* WARNING: Enum "IWNetCommand": Some values do not have unique names */
+/* WARNING: Enum "IWNetClientNetworkMessage": Some values do not have unique names */
+
+void IWNet_CloseTask(IWNetCommandData *param_1)
 
 {
-  if (*param_1 != '\x01') {
-    MyAssertHandler(0xffffffff821a82dc,0x7f,0,0xffffffff82000f98,0xffffffff821a8318);
-    *param_1 = '\0';
+  if (param_1->active != true) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\iwnet\\iwnet.cpp",0x7f,0,"%s");
+    param_1->active = false;
     return;
   }
-  *param_1 = '\0';
+  param_1->active = false;
   return;
 }
 
 
 // 826E2130  IWNet_CancelTask  (iwnet/iwnet.cpp:133)
 
-void IWNet_CancelTask(void)
+/* WARNING: Enum "IWNetCommand": Some values do not have unique names */
+/* WARNING: Enum "IWNetClientNetworkMessage": Some values do not have unique names */
+
+void IWNet_CancelTask(IWNetCommandData *param_1)
 
 {
-  char *pcVar1;
-  char cVar2;
+  IWNetCommandData *pIVar1;
+  bool bVar2;
   
-  pcVar1 = (char *)__savegprlr_29();
-  if (pcVar1 == (char *)0x0) {
-    MyAssertHandler(0xffffffff821a82dc,0x86,0,0xffffffff82000f98,0xffffffff8200b0fc);
+  pIVar1 = (IWNetCommandData *)__savegprlr_29(param_1);
+  if (pIVar1 == (IWNetCommandData *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\iwnet\\iwnet.cpp",0x86,0,"%s");
   }
-  if (*pcVar1 == '\0') {
-    MyAssertHandler(0xffffffff821a82dc,0x87,0,0xffffffff82000f98,0xffffffff821a8340);
+  if (pIVar1->active == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\iwnet\\iwnet.cpp",0x87,0,"%s");
   }
-  cVar2 = IWNet_Storage_IsStorageCommand(pcVar1);
-  if (cVar2 != '\0') {
-    IWNet_Storage_Cancel(*(undefined4 *)(pcVar1 + 0xc));
+  bVar2 = IWNet_Storage_IsStorageCommand(pIVar1);
+  if (bVar2) {
+    IWNet_Storage_Cancel((pIVar1->params).storageParams);
   }
-  Com_Printf(0x19,0xffffffff821a832c,*(undefined4 *)(pcVar1 + 4));
-  IWNet_CloseTask(pcVar1);
+  Com_Printf(0x19,"Cancelling task %i\n");
+  IWNet_CloseTask(pIVar1);
   __restgprlr_29();
   return;
 }
@@ -43,30 +49,34 @@ void IWNet_CancelTask(void)
 
 // 826E21E0  IWNet_CancelStorageTask  (iwnet/iwnet.cpp:154)
 
-void IWNet_CancelStorageTask(void)
+/* WARNING: Enum "IWNetCommand": Some values do not have unique names */
+/* WARNING: Enum "IWNetClientNetworkMessage": Some values do not have unique names */
+
+void IWNet_CancelStorageTask(IWNetStorageTaskState *param_1)
 
 {
-  int iVar1;
-  char cVar2;
-  ulonglong uVar3;
+  IWNetStorageTaskState *pIVar1;
+  bool bVar2;
+  int iVar3;
   longlong lVar4;
-  char *pcVar5;
+  IWNetCommandData *pIVar5;
   
-  iVar1 = __savegprlr_28();
-  uVar3 = 0;
-  pcVar5 = &DAT_844cf278;
+  pIVar1 = (IWNetStorageTaskState *)__savegprlr_28(param_1);
+  iVar3 = 0;
+  pIVar5 = s_iwNetCommands;
   lVar4 = 0x18;
   do {
-    if (((*pcVar5 != '\0') && (cVar2 = IWNet_Storage_IsStorageCommand(pcVar5), cVar2 != '\0')) &&
-       (*(int *)(pcVar5 + 0xc) == iVar1)) {
-      IWNet_CancelTask(pcVar5);
-      uVar3 = uVar3 + 1;
+    if (((pIVar5->active != false) && (bVar2 = IWNet_Storage_IsStorageCommand(pIVar5), bVar2)) &&
+       ((pIVar5->params).storageParams == pIVar1)) {
+      IWNet_CancelTask(pIVar5);
+      iVar3 = iVar3 + 1;
     }
     lVar4 = lVar4 + -1;
-    pcVar5 = pcVar5 + 0x1c;
+    pIVar5 = pIVar5 + 1;
   } while (lVar4 != 0);
-  if ((uVar3 & 0xffffffff) != 1) {
-    MyAssertHandler(0xffffffff821a82dc,0xa8,0,0xffffffff821a834c,0xffffffff821a8364,uVar3);
+  if (iVar3 != 1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\iwnet\\iwnet.cpp",0xa8,0,
+                    "%s\n\t(cancelCount) = %i");
   }
   __restgprlr_28();
   return;
@@ -75,34 +85,39 @@ void IWNet_CancelStorageTask(void)
 
 // 826E2280  IWNet_CancelCommand  (iwnet/iwnet.cpp:174)
 
-void IWNet_CancelCommand(void)
+/* WARNING: Enum "IWNetCommand": Some values do not have unique names */
+/* WARNING: Enum "IWNetClientNetworkMessage": Some values do not have unique names */
+
+void IWNet_CancelCommand(IWNetCommand param_1)
 
 {
-  int iVar1;
-  char cVar2;
+  IWNetCommand IVar1;
+  bool bVar2;
   longlong lVar3;
-  char *pcVar4;
+  IWNetCommandData *pIVar4;
   
-  iVar1 = __savegprlr_24();
-  pcVar4 = &DAT_844cf278;
+  IVar1 = __savegprlr_24(param_1);
+  pIVar4 = s_iwNetCommands;
   lVar3 = 0x18;
   do {
-    if ((*(int *)(pcVar4 + 4) == iVar1) && (*pcVar4 != '\0')) {
-      if (pcVar4 == (char *)0x0) {
-        MyAssertHandler(0xffffffff821a82dc,0x86,0,0xffffffff82000f98,0xffffffff8200b0fc);
+    if ((pIVar4->command == IVar1) && (pIVar4->active != false)) {
+      if (pIVar4 == (IWNetCommandData *)0x0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\iwnet\\iwnet.cpp",0x86,0,
+                        "%s");
       }
-      if (*pcVar4 == '\0') {
-        MyAssertHandler(0xffffffff821a82dc,0x87,0,0xffffffff82000f98,0xffffffff821a8340);
+      if (pIVar4->active == false) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\iwnet\\iwnet.cpp",0x87,0,
+                        "%s");
       }
-      cVar2 = IWNet_Storage_IsStorageCommand(pcVar4);
-      if (cVar2 != '\0') {
-        IWNet_Storage_Cancel(*(undefined4 *)(pcVar4 + 0xc));
+      bVar2 = IWNet_Storage_IsStorageCommand(pIVar4);
+      if (bVar2) {
+        IWNet_Storage_Cancel((pIVar4->params).storageParams);
       }
-      Com_Printf(0x19,0xffffffff821a832c,*(undefined4 *)(pcVar4 + 4));
-      IWNet_CloseTask(pcVar4);
+      Com_Printf(0x19,"Cancelling task %i\n");
+      IWNet_CloseTask(pIVar4);
     }
     lVar3 = lVar3 + -1;
-    pcVar4 = pcVar4 + 0x1c;
+    pIVar4 = pIVar4 + 1;
   } while (lVar3 != 0);
   __restgprlr_24();
   return;
@@ -111,201 +126,227 @@ void IWNet_CancelCommand(void)
 
 // 826E2368  IWNet_IsCommandActive  (iwnet/iwnet.cpp:184)
 
-undefined8 IWNet_IsCommandActive(int param_1)
+/* WARNING: Enum "IWNetCommand": Some values do not have unique names */
+/* WARNING: Enum "IWNetClientNetworkMessage": Some values do not have unique names */
+
+bool IWNet_IsCommandActive(IWNetCommand param_1)
 
 {
   uint uVar1;
-  char *pcVar2;
+  IWNetCommandData *pIVar2;
   
   uVar1 = 0;
-  pcVar2 = &DAT_844cf278;
-  while ((*(int *)(pcVar2 + 4) != param_1 || (*pcVar2 == '\0'))) {
+  pIVar2 = s_iwNetCommands;
+  while ((pIVar2->command != param_1 || (pIVar2->active == false))) {
     uVar1 = uVar1 + 0x1c;
-    pcVar2 = pcVar2 + 0x1c;
+    pIVar2 = pIVar2 + 1;
     if (0x29f < uVar1) {
-      return 0;
+      return false;
     }
   }
-  return 1;
+  return true;
 }
 
 
 // 826E23B0  IWNet_UtilFindWriter  (iwnet/iwnet.cpp:196)
 
-int IWNet_UtilFindWriter(int *param_1,int param_2)
+/* WARNING: Enum "IWNetCommand": Some values do not have unique names */
+/* WARNING: Enum "IWNetClientNetworkMessage": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+_func___cdecl_void_int_IWNetCommandData_ptr_msg_t_ptr *
+IWNet_UtilFindWriter(IWNetCommandWriter *param_1,IWNetCommand param_2)
 
 {
-  int iVar1;
+  _func___cdecl_void_int_IWNetCommandData_ptr_msg_t_ptr *p_Var1;
   
-  iVar1 = param_1[1];
+  p_Var1 = param_1->handler;
   while( true ) {
-    if (iVar1 == 0) {
-      return 0;
+    if (p_Var1 == (_func___cdecl_void_int_IWNetCommandData_ptr_msg_t_ptr *)0x0) {
+      return (_func___cdecl_void_int_IWNetCommandData_ptr_msg_t_ptr *)0x0;
     }
-    if (param_2 == *param_1) break;
-    iVar1 = param_1[3];
-    param_1 = param_1 + 2;
+    if (param_2 == param_1->command) break;
+    p_Var1 = param_1[1].handler;
+    param_1 = param_1 + 1;
   }
-  return iVar1;
+  return p_Var1;
 }
 
 
 // 826E23E8  IWNet_GetCommandSlotByIndex  (iwnet/iwnet.cpp:207)
 
-longlong IWNet_GetCommandSlotByIndex(longlong param_1)
+/* WARNING: Enum "IWNetCommand": Some values do not have unique names */
+/* WARNING: Enum "IWNetClientNetworkMessage": Some values do not have unique names */
+
+IWNetCommandData * IWNet_GetCommandSlotByIndex(int param_1)
 
 {
-  if ((int)param_1 < 0) {
-    MyAssertHandler(0xffffffff821a82dc,0xd0,0,0xffffffff8200aef4,0xffffffff820127c0,param_1);
+  if (param_1 < 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\iwnet\\iwnet.cpp",0xd0,0,
+                    "%s\n\t(index) = %i");
   }
-  if ((int)param_1 < 0x18) {
-    return param_1 * 0x1c + -0x7bb30d88;
+  if (param_1 < 0x18) {
+    return s_iwNetCommands + param_1;
   }
-  return 0;
+  return (IWNetCommandData *)0x0;
 }
 
 
 // 826E2470  IWNet_GetCommandIndex  (iwnet/iwnet.cpp:216)
 
-void IWNet_GetCommandIndex(void)
+/* WARNING: Enum "IWNetCommand": Some values do not have unique names */
+/* WARNING: Enum "IWNetClientNetworkMessage": Some values do not have unique names */
+
+int IWNet_GetCommandIndex(IWNetCommandData *param_1)
 
 {
   int iVar1;
   
-  iVar1 = __savegprlr_29();
+  iVar1 = __savegprlr_29(param_1);
   iVar1 = (iVar1 + 0x7bb30d88) / 0x1c;
   if (iVar1 < 0) {
-    MyAssertHandler(0xffffffff821a82dc,0xd9,0,0xffffffff82000f98,0xffffffff821a83c4);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\iwnet\\iwnet.cpp",0xd9,0,"%s");
   }
   if (0x17 < iVar1) {
-    MyAssertHandler(0xffffffff821a82dc,0xda,0,0xffffffff82000f98,0xffffffff821a8378);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\iwnet\\iwnet.cpp",0xda,0,"%s");
   }
-  __restgprlr_29(iVar1);
-  return;
+  iVar1 = __restgprlr_29(iVar1);
+  return iVar1;
 }
 
 
 // 826E24F0  IWNet_GetActiveCmdCount  (iwnet/iwnet.cpp:224)
 
-longlong IWNet_GetActiveCmdCount(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "IWNetCommand": Some values do not have unique names */
+/* WARNING: Enum "IWNetClientNetworkMessage": Some values do not have unique names */
+
+int IWNet_GetActiveCmdCount(void)
 
 {
-  longlong lVar1;
-  char *pcVar2;
+  int iVar1;
+  IWNetCommandData *pIVar2;
   longlong lVar3;
   
-  lVar1 = 0;
-  pcVar2 = &DAT_844cf294;
+  iVar1 = 0;
+  pIVar2 = s_iwNetCommands + 1;
   lVar3 = 4;
   do {
-    if (pcVar2[-0x1c] != '\0') {
-      lVar1 = lVar1 + 1;
+    if (pIVar2[-1].active != false) {
+      iVar1 = iVar1 + 1;
     }
-    if (*pcVar2 != '\0') {
-      lVar1 = lVar1 + 1;
+    if (pIVar2->active != false) {
+      iVar1 = iVar1 + 1;
     }
-    if (pcVar2[0x1c] != '\0') {
-      lVar1 = lVar1 + 1;
+    if (pIVar2[1].active != false) {
+      iVar1 = iVar1 + 1;
     }
-    if (pcVar2[0x38] != '\0') {
-      lVar1 = lVar1 + 1;
+    if (pIVar2[2].active != false) {
+      iVar1 = iVar1 + 1;
     }
-    if (pcVar2[0x54] != '\0') {
-      lVar1 = lVar1 + 1;
+    if (pIVar2[3].active != false) {
+      iVar1 = iVar1 + 1;
     }
-    if (pcVar2[0x70] != '\0') {
-      lVar1 = lVar1 + 1;
+    if (pIVar2[4].active != false) {
+      iVar1 = iVar1 + 1;
     }
-    pcVar2 = pcVar2 + 0xa8;
+    pIVar2 = pIVar2 + 6;
     lVar3 = lVar3 + -1;
   } while (lVar3 != 0);
-  return lVar1;
+  return iVar1;
 }
 
 
 // 826E2578  IWNet_FindFreeCommand  (iwnet/iwnet.cpp:241)
 
-char * IWNet_FindFreeCommand(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "IWNetCommand": Some values do not have unique names */
+/* WARNING: Enum "IWNetClientNetworkMessage": Some values do not have unique names */
+
+IWNetCommandData * IWNet_FindFreeCommand(void)
 
 {
-  char *pcVar1;
+  IWNetCommandData *pIVar1;
   
-  pcVar1 = &DAT_844cf278;
+  pIVar1 = s_iwNetCommands;
   do {
-    if (*pcVar1 == '\0') {
-      return pcVar1;
+    if (pIVar1->active == false) {
+      return pIVar1;
     }
-    pcVar1 = pcVar1 + 0x1c;
-  } while ((int)pcVar1 < -0x7bb30ae8);
-  return (char *)0x0;
+    pIVar1 = pIVar1 + 1;
+  } while ((int)pIVar1 < -0x7bb30ae8);
+  return (IWNetCommandData *)0x0;
 }
 
 
 // 826E25A8  IWNet_AddCommand  (iwnet/iwnet.cpp:256)
 
-void IWNet_AddCommand(undefined8 param_1,undefined4 param_2,ulonglong param_3)
+/* WARNING: Enum "IWNetCommand": Some values do not have unique names */
+/* WARNING: Enum "IWNetClientNetworkMessage": Some values do not have unique names */
+
+bool IWNet_AddCommand(int param_1,IWNetCommand param_2,IWNetParameters *param_3)
 
 {
-  undefined4 uVar2;
-  undefined8 uVar1;
-  char *pcVar3;
-  char *pcVar4;
-  undefined4 *puVar5;
-  longlong lVar6;
+  int iVar1;
+  undefined1 uVar2;
+  ulonglong uVar3;
+  uchar *puVar4;
+  IWNetCommandData *pIVar5;
+  int iVar6;
+  longlong lVar7;
   
-  uVar2 = __savegprlr_28();
-  pcVar4 = &DAT_844cf278;
+  uVar3 = (ulonglong)(int)param_3;
+  iVar1 = __savegprlr_28(param_1);
+  pIVar5 = s_iwNetCommands;
   do {
-    if (*pcVar4 == '\0') {
-      pcVar3 = pcVar4 + -4;
-      lVar6 = 7;
+    if (pIVar5->active == false) {
+      puVar4 = &pIVar5[-1].internalData.numSendFailures;
+      lVar7 = 7;
       do {
-        pcVar3 = pcVar3 + 4;
-        pcVar3[0] = '\0';
-        pcVar3[1] = '\0';
-        pcVar3[2] = '\0';
-        pcVar3[3] = '\0';
-        lVar6 = lVar6 + -1;
-      } while (lVar6 != 0);
-      *(undefined4 *)(pcVar4 + 4) = param_2;
-      *(undefined4 *)(pcVar4 + 0x10) = uVar2;
-      *pcVar4 = '\x01';
-      pcVar4[2] = '\0';
-      pcVar4[3] = '\0';
-      if ((param_3 & 0xffffffff) != 0) {
-        *(undefined4 *)(pcVar4 + 0xc) = *(undefined4 *)param_3;
+        puVar4 = puVar4 + 4;
+        *(undefined4 *)puVar4 = 0;
+        lVar7 = lVar7 + -1;
+      } while (lVar7 != 0);
+      pIVar5->command = param_2;
+      (pIVar5->internalData).localControllerIndex = iVar1;
+      pIVar5->active = true;
+      pIVar5->sequenceNumber = 0;
+      if ((uVar3 & 0xffffffff) != 0) {
+        pIVar5->params = *(IWNetParameters *)uVar3;
       }
-      __restgprlr_28(1);
-      return;
+      uVar2 = __restgprlr_28(1);
+      return (bool)uVar2;
     }
-    pcVar4 = pcVar4 + 0x1c;
-  } while ((int)pcVar4 < -0x7bb30ae8);
-  uVar1 = IWNet_GetActiveCmdCount();
-  Com_PrintError(0x19,0xffffffff821a83f0,uVar1);
-  lVar6 = 0;
-  if (0 < (int)uVar1) {
-    puVar5 = &DAT_844cf260;
+    pIVar5 = pIVar5 + 1;
+  } while ((int)pIVar5 < -0x7bb30ae8);
+  iVar1 = IWNet_GetActiveCmdCount();
+  Com_PrintError(0x19,"We can\'t allocate a new IWNet command, we have %i pending commands:\n");
+  iVar6 = 0;
+  if (0 < iVar1) {
     do {
-      puVar5 = puVar5 + 7;
-      Com_Printf(0x19,0xffffffff821a83e0,lVar6,*puVar5);
-      lVar6 = lVar6 + 1;
-    } while ((int)lVar6 < (int)uVar1);
+      Com_Printf(0x19,"%i. Cmd %i\n");
+      iVar6 = iVar6 + 1;
+    } while (iVar6 < iVar1);
   }
-  __restgprlr_28(0);
-  return;
+  uVar2 = __restgprlr_28(0);
+  return (bool)uVar2;
 }
 
 
 // 826E2688  IWNet_DNSResolved  (iwnet/iwnet.cpp:302)
 
-undefined8 IWNet_DNSResolved(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+bool IWNet_DNSResolved(void)
 
 {
-  return 1;
+  return true;
 }
 
 
 // 826E2690  IWNet_RestartDNSLookup  (iwnet/iwnet.cpp:324)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void IWNet_RestartDNSLookup(void)
 
@@ -316,7 +357,8 @@ void IWNet_RestartDNSLookup(void)
 
 // 826E2698  IWNet_DNSLookup  (iwnet/iwnet.cpp:333)
 
-void IWNet_DNSLookup(void)
+void IWNet_DNSLookup(char *param_1,char *param_2,char *param_3,char *param_4,char *param_5,
+                    char *param_6)
 
 {
   return;
@@ -325,18 +367,25 @@ void IWNet_DNSLookup(void)
 
 // 826E26A0  IWNet_Init_Internal  (iwnet/iwnet.cpp:443)
 
-void IWNet_Init_Internal(void)
+void IWNet_Init_Internal(char *param_1,char *param_2,char *param_3,char *param_4,char *param_5,
+                        char *param_6)
 
 {
-  DAT_844cf270 = Dvar_RegisterInt(0xffffffff821a8498,4,4,0x7fffffff,0,0xffffffff821a84ac);
-  DAT_844cf518 = Dvar_RegisterInt(0xffffffff821a8484,0x78,0x1e,0x7fffffff,0,0xffffffff821a845c);
-  DAT_844cf274 = Dvar_RegisterBool(0xffffffff821a8438,0,0,0xffffffff821a8444);
+  iwnet_minResendTime =
+       Dvar_RegisterInt("iwnet_minResendTime",4,4,0x7fffffff,0,
+                        "minimum resend time for iwnet commands");
+  iwnet_maxResendTime =
+       Dvar_RegisterInt("iwnet_maxResendTime",0x78,0x1e,0x7fffffff,0,
+                        "maximum resend time for iwnet commands");
+  iwnet_debug = Dvar_RegisterBool("iwnet_debug",false,0,"turn on iwnet debugging");
   TeamMaking_Init();
   return;
 }
 
 
 // 826E2748  IWNet_Init  (iwnet/iwnet.cpp:487)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void IWNet_Init(void)
 
@@ -347,6 +396,8 @@ void IWNet_Init(void)
 
 // 826E2750  IWNet_Frame  (iwnet/iwnet.cpp:513)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void IWNet_Frame(void)
 
 {
@@ -356,22 +407,26 @@ void IWNet_Frame(void)
 
 // 826E2758  IWNet_CancelTasksForController  (iwnet/iwnet.cpp:562)
 
-void IWNet_CancelTasksForController(void)
+/* WARNING: Enum "IWNetCommand": Some values do not have unique names */
+/* WARNING: Enum "IWNetClientNetworkMessage": Some values do not have unique names */
+
+void IWNet_CancelTasksForController(int param_1)
 
 {
   int iVar2;
   ulonglong uVar1;
-  char *pcVar3;
+  IWNetCommandData *pIVar3;
   ulonglong uVar4;
   ulonglong uVar5;
   bool bVar6;
   
-  iVar2 = __savegprlr_26();
+  iVar2 = __savegprlr_26(param_1);
   uVar4 = 0xffffffff844cf278;
   uVar5 = 0;
   while( true ) {
     if ((int)uVar5 < 0) {
-      MyAssertHandler(0xffffffff821a82dc,0xd0,0,0xffffffff8200aef4,0xffffffff820127c0,uVar5);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\iwnet\\iwnet.cpp",0xd0,0,
+                      "%s\n\t(index) = %i");
     }
     uVar1 = uVar5 & 0xffffffff;
     bVar6 = uVar5 < 0x18;
@@ -379,9 +434,9 @@ void IWNet_CancelTasksForController(void)
     uVar1 = -((uVar1 >> 0x1f) + (ulonglong)bVar6) & uVar4;
     uVar4 = uVar4 + 0x1c;
     if ((uVar1 & 0xffffffff) == 0) break;
-    pcVar3 = (char *)uVar1;
-    if ((*pcVar3 != '\0') && (*(int *)(pcVar3 + 0x10) == iVar2)) {
-      IWNet_CancelTask();
+    pIVar3 = (IWNetCommandData *)uVar1;
+    if ((pIVar3->active != false) && ((pIVar3->internalData).localControllerIndex == iVar2)) {
+      IWNet_CancelTask(pIVar3);
     }
   }
   __restgprlr_26();

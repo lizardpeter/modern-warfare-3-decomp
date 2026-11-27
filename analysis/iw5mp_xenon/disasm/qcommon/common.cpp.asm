@@ -1302,7 +1302,6 @@ LAB_824fbe6c:
   824FBE88  389F000C             addi r4,r31,0xc
   824FBE8C  7EE3BB78             or r3,r23,r23
   824FBE90  48152541             bl 0x8264e3d0
-  824FBE94  811F0000             lwz r8,0x0(r31)
 LAB_824fbe98:
   824FBE98  3D2082B4             lis r9,-0x7d4c
   824FBE9C  39600000             li r11,0x0
@@ -1563,11 +1562,6 @@ LAB_824fc190:
   824F7104  7FE4FB78             or r4,r31,r31
   824F7108  38690F98             addi r3,r9,0xf98
   824F710C  481572C5             bl 0x8264e3d0
-  824F7110  38210060             addi r1,r1,0x60
-  824F7114  8181FFF8             lwz r12,-0x8(r1)
-  824F7118  7D8803A6             mtspr LR,r12
-  824F711C  EBE1FFF0             ld r31,-0x10(r1)
-  824F7120  4E800020             blr
 
 ; 824FA368  Com_Error  (qcommon/common.cpp:1812)
   824FA368  7D8802A6             mfspr r12,LR
@@ -1616,7 +1610,6 @@ LAB_824fa3ac:
 LAB_824fa40c:
   824FA40C  806B000C             lwz r3,0xc(r11)
   824FA410  48153FC1             bl 0x8264e3d0
-  824FA414  817C7360             lwz r11,0x7360(r28)
 LAB_824fa418:
   824FA418  2F0B0001             cmpwi cr6,r11,0x1
   824FA41C  40990014             ble cr6,0x824fa430
@@ -1920,11 +1913,6 @@ LAB_824fa85c:
   824FA85C  480E930D             bl 0x825e3b68
 LAB_824fa860:
   824FA860  481545B9             bl 0x8264ee18
-  824FA864  38210070             addi r1,r1,0x70
-  824FA868  8181FFF8             lwz r12,-0x8(r1)
-  824FA86C  7D8803A6             mtspr LR,r12
-  824FA870  EBE1FFF0             ld r31,-0x10(r1)
-  824FA874  4E800020             blr
 
 ; 824F7128  Com_ClearGamePadCheat  (qcommon/common.cpp:2223)
   824F7128  7D8802A6             mfspr r12,LR

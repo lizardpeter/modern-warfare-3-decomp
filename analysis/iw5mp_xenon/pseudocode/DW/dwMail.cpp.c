@@ -2,180 +2,180 @@
 
 // 8293EBB8  `dynamic_initializer_for_'s_dwMailManager''  (DW/dwMail.cpp:418)
 
-int _dynamic_initializer_for__s_dwMailManager__(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void _dynamic_initializer_for__s_dwMailManager__(void)
 
 {
-  int iVar1;
-  
-  dwMailManager__dwMailManager(0xffffffff844f5f98);
-  iVar1 = atexit(_dynamic_atexit_destructor_for__s_dwMailManager__);
-  return iVar1;
-}
-
-
-// 826EBAA8  dwMailRateRecorderManager<20,1,60000>::RecordUse  (DW/dwMail.cpp:486)
-
-void dwMailRateRecorderManager<20,1,60000>__RecordUse(void)
-
-{
-  int *piVar1;
-  DWORD DVar2;
-  uint *puVar3;
-  int iVar4;
-  DWORD *_Src;
-  
-  piVar1 = (int *)__savegprlr_29();
-  DVar2 = Sys_MillisecondsRaw();
-  if (*piVar1 != 0) {
-    puVar3 = (uint *)(piVar1 + 1);
-    iVar4 = 0;
-    if (0 < *piVar1) {
-      do {
-        if (*puVar3 < DVar2 - 60000) {
-          *piVar1 = iVar4;
-          break;
-        }
-        iVar4 = iVar4 + 1;
-        puVar3 = puVar3 + 2;
-      } while (iVar4 < *piVar1);
-    }
-  }
-  iVar4 = *piVar1;
-  _Src = (DWORD *)(piVar1 + 1);
-  if (iVar4 == 0) {
-    *_Src = DVar2;
-    piVar1[2] = 1;
-    *piVar1 = *piVar1 + 1;
-    __restgprlr_29(1);
-    return;
-  }
-  if (*_Src != DVar2) {
-    if (iVar4 < 0x14) {
-      memmove(piVar1 + 3,_Src,iVar4 << 3);
-      *piVar1 = *piVar1 + 1;
-      piVar1[2] = 1;
-      *_Src = DVar2;
-      __restgprlr_29(1);
-      return;
-    }
-    *_Src = DVar2;
-    piVar1[2] = piVar1[2] + 1;
-    __restgprlr_29(0);
-    return;
-  }
-  piVar1[2] = piVar1[2] + 1;
-  __restgprlr_29(1);
+  dwMailManager::dwMailManager(&s_dwMailManager);
+  atexit(_dynamic_atexit_destructor_for__s_dwMailManager__);
   return;
 }
 
 
-// 826EBBB8  dwMailRateRecorderManager<20,1,60000>::GetRate  (DW/dwMail.cpp:543)
+// 826EBAA8  RecordUse  (DW/dwMail.cpp:486)
 
-longlong dwMailRateRecorderManager<20,1,60000>__GetRate(uint *param_1)
-
-{
-  DWORD DVar1;
-  uint *puVar2;
-  longlong lVar3;
-  uint uVar4;
-  
-  DVar1 = Sys_MillisecondsRaw();
-  lVar3 = 0;
-  uVar4 = 0;
-  puVar2 = param_1;
-  if (0 < (int)*param_1) {
-    do {
-      if ((int)*param_1 <= (int)uVar4) {
-        return lVar3;
-      }
-      if (puVar2[1] < DVar1 - 60000) {
-        *param_1 = uVar4;
-        return lVar3;
-      }
-      uVar4 = uVar4 + 1;
-      lVar3 = (ulonglong)puVar2[2] + lVar3;
-      puVar2 = puVar2 + 2;
-    } while ((int)uVar4 < (int)*param_1);
-  }
-  return lVar3;
-}
-
-
-// 826EA770  dwMailThrottle::IsOK  (DW/dwMail.cpp:651)
-
-undefined8 dwMailThrottle__IsOK(char *param_1)
+bool __thiscall
+dwMailRateRecorderManager<20,1,60000>::RecordUse(dwMailRateRecorderManager<20,1,60000> *this)
 
 {
-  DWORD DVar1;
+  int *piVar1;
   int iVar2;
+  undefined1 uVar3;
+  uint *puVar4;
+  int iVar5;
+  int *piVar6;
   
-  if (*param_1 != '\0') {
-    DVar1 = Sys_MillisecondsRaw();
-    if ((uint)(*(int *)(param_1 + 8) + *(int *)(param_1 + 4)) < DVar1) {
-      *param_1 = '\0';
+  piVar1 = (int *)__savegprlr_29(this);
+  iVar2 = Sys_MillisecondsRaw();
+  if (*piVar1 != 0) {
+    puVar4 = (uint *)(piVar1 + 1);
+    iVar5 = 0;
+    if (0 < *piVar1) {
+      do {
+        if (*puVar4 < iVar2 - 60000U) {
+          *piVar1 = iVar5;
+          break;
+        }
+        iVar5 = iVar5 + 1;
+        puVar4 = puVar4 + 2;
+      } while (iVar5 < *piVar1);
     }
   }
-  if ((*param_1 == '\0') &&
-     (iVar2 = dwMailRateRecorderManager<20,1,60000>__GetRate(param_1 + 0xc), iVar2 < 0x14)) {
-    param_1[8] = '\0';
-    param_1[9] = '\0';
-    param_1[10] = '\x03';
-    param_1[0xb] = -0x18;
-    return 1;
+  piVar6 = piVar1 + 1;
+  if (*piVar1 == 0) {
+    *piVar6 = iVar2;
+    piVar1[2] = 1;
+    *piVar1 = *piVar1 + 1;
+    uVar3 = __restgprlr_29(1);
+    return (bool)uVar3;
   }
-  return 0;
+  if (*piVar6 != iVar2) {
+    if (*piVar1 < 0x14) {
+      memmove();
+      *piVar1 = *piVar1 + 1;
+      piVar1[2] = 1;
+      *piVar6 = iVar2;
+      uVar3 = __restgprlr_29(1);
+      return (bool)uVar3;
+    }
+    *piVar6 = iVar2;
+    piVar1[2] = piVar1[2] + 1;
+    uVar3 = __restgprlr_29(0);
+    return (bool)uVar3;
+  }
+  piVar1[2] = piVar1[2] + 1;
+  uVar3 = __restgprlr_29(1);
+  return (bool)uVar3;
 }
 
 
-// 826E93D0  dwMailThrottle::ReportError  (DW/dwMail.cpp:687)
+// 826EBBB8  GetRate  (DW/dwMail.cpp:543)
 
-void dwMailThrottle__ReportError(undefined1 *param_1)
+int __thiscall
+dwMailRateRecorderManager<20,1,60000>::GetRate(dwMailRateRecorderManager<20,1,60000> *this)
 
 {
-  DWORD DVar1;
+  int iVar1;
+  dwMailRateRecorderManager<20,1,60000> *pdVar2;
+  int iVar3;
+  int iVar4;
+  
+  iVar1 = Sys_MillisecondsRaw();
+  iVar3 = 0;
+  iVar4 = 0;
+  pdVar2 = this;
+  if (0 < this->m_numsamples) {
+    do {
+      if (this->m_numsamples <= iVar4) {
+        return iVar3;
+      }
+      if (pdVar2->m_siwnetdwraterecorderentry_array[0].m_time < iVar1 - 60000U) {
+        this->m_numsamples = iVar4;
+        return iVar3;
+      }
+      pdVar2 = (dwMailRateRecorderManager<20,1,60000> *)
+               &pdVar2->m_siwnetdwraterecorderentry_array[0].m_count;
+      iVar4 = iVar4 + 1;
+      iVar3 = *(int *)pdVar2 + iVar3;
+    } while (iVar4 < this->m_numsamples);
+  }
+  return iVar3;
+}
+
+
+// 826EA770  IsOK  (DW/dwMail.cpp:651)
+
+bool __thiscall dwMailThrottle::IsOK(dwMailThrottle *this)
+
+{
+  uint uVar1;
   int iVar2;
   
-  *param_1 = 1;
-  DVar1 = Sys_MillisecondsRaw();
-  *(DWORD *)(param_1 + 4) = DVar1;
-  if (*(uint *)(param_1 + 8) < 1000) {
-    iVar2 = 1000;
+  if ((this->m_errorcondition != false) &&
+     (uVar1 = Sys_MillisecondsRaw(), this->m_errortimeamount + this->m_errortimestamp < uVar1)) {
+    this->m_errorcondition = false;
+  }
+  if ((this->m_errorcondition == false) &&
+     (iVar2 = dwMailRateRecorderManager<20,1,60000>::GetRate(&this->m_dwmailraterecordermanager),
+     iVar2 < 0x14)) {
+    this->m_errortimeamount = 1000;
+    return true;
+  }
+  return false;
+}
+
+
+// 826E93D0  ReportError  (DW/dwMail.cpp:687)
+
+void __thiscall dwMailThrottle::ReportError(dwMailThrottle *this)
+
+{
+  uint uVar1;
+  
+  this->m_errorcondition = true;
+  uVar1 = Sys_MillisecondsRaw();
+  this->m_errortimestamp = uVar1;
+  if (this->m_errortimeamount < 1000) {
+    uVar1 = 1000;
   }
   else {
-    iVar2 = *(uint *)(param_1 + 8) << 1;
+    uVar1 = this->m_errortimeamount << 1;
   }
-  *(int *)(param_1 + 8) = iVar2;
+  this->m_errortimeamount = uVar1;
   return;
 }
 
 
 // 826EB1F0  dwMail_FillWithDefaultValues  (DW/dwMail.cpp:712)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void dwMail_FillWithDefaultValues(void)
 
 {
   uint uVar1;
-  undefined4 *puVar2;
+  bdReference<bdRemoteTask> bVar2;
   longlong lVar3;
   uint *puVar4;
   char in_RESERVE;
   byte in_cr0;
   
-  Com_Memset(0xffffffff844f5f98,0,8);
-  DAT_844f5fa0 = 0;
-  DAT_844f5fa4 = 0;
-  DAT_844f5fa8 = Sys_Milliseconds();
-  DAT_844f5fb0 = 0;
-  DAT_844f5fac = DAT_844f5fa8;
-  Com_Memset(0xffffffff844f5fb4,0,0x18);
-  puVar2 = DAT_844f5fe0;
-  DAT_844f5fcc = 0;
-  DAT_844f5fd8 = 0;
-  DAT_844f5fd0 = 0;
-  DAT_844f5fd4 = 0;
-  DAT_844f5fdc = 0;
-  if (ZEXT48(DAT_844f5fe0) != 0) {
-    lVar3 = ZEXT48(DAT_844f5fe0) + 4;
+  Com_Memset(&s_dwMailManager,0,8);
+  s_dwMailManager.enabled = 0;
+  s_dwMailManager.dwmailmanagerstate = DWMAILMANAGERSTATE_IDLE;
+  s_dwMailManager.time_entered_state = Sys_Milliseconds();
+  s_dwMailManager.verboseflag = 0;
+  s_dwMailManager.time_idle = s_dwMailManager.time_entered_state;
+  Com_Memset(s_dwMailManager.dwmailmailhandlerentryarray,0,0x18);
+  bVar2 = s_dwMailManager.bdremotetaskref;
+  s_dwMailManager.num_handlers = 0;
+  s_dwMailManager.done_processing = 0;
+  s_dwMailManager.dwmailmailhandlerentry = (dwMailMailHandlerEntry *)0x0;
+  s_dwMailManager.request_send = 0;
+  s_dwMailManager.controllerindex = 0;
+  if (ZEXT48(s_dwMailManager.bdremotetaskref.m_ptr) != 0) {
+    lVar3 = ZEXT48(s_dwMailManager.bdremotetaskref.m_ptr) + 4;
     do {
       puVar4 = (uint *)lVar3;
       if (in_RESERVE != '\0') {
@@ -184,136 +184,140 @@ void dwMail_FillWithDefaultValues(void)
         in_cr0 = 2;
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
-    if (puVar2[1] == 0) {
-      if (DAT_844f5fe0 != (undefined4 *)0x0) {
-        (**(code **)*DAT_844f5fe0)(DAT_844f5fe0,1);
+    if (*(int *)&(bVar2.m_ptr)->field_0x4 == 0) {
+      if (s_dwMailManager.bdremotetaskref.m_ptr != (bdRemoteTask *)0x0) {
+        (**(code **)(s_dwMailManager.bdremotetaskref.m_ptr)->_padding_)
+                  (s_dwMailManager.bdremotetaskref.m_ptr,1);
       }
     }
   }
-  DAT_844f5fe0 = (undefined4 *)0x0;
-  DAT_844f60a8 = 0;
-  DAT_844f60c8 = 0;
-  DAT_844f60d0 = 0;
-  DAT_844f60d4 = 0;
-  DAT_844f60d8 = 0;
-  Com_Memset(0xffffffff844f6100,0,0x14);
-  DAT_844f60e0 = 0;
-  DAT_844f60e4 = 0;
-  DAT_844f60e8 = 0;
-  DAT_844f60ec = 0;
-  DAT_844f60f0 = 0;
-  DAT_844f60f4 = 0;
-  DAT_844f60f8 = 0;
-  DAT_844f60fc = 0;
-  DAT_844f6114 = 0;
-  DAT_844f6118 = 0;
-  DAT_844f611c = 0;
-  DAT_844f6120 = 0;
-  Com_Memset(0xffffffff844f61c4,0,0x400);
+  s_dwMailManager.bdremotetaskref.m_ptr = (bdRemoteTask *)0x0;
+  s_dwMailManager.getmailbody_mailid = 0;
+  s_dwMailManager.send_bdonlineuserid = 0;
+  s_dwMailManager.send_bufferptr = (void *)0x0;
+  s_dwMailManager.send_buffersize = 0;
+  s_dwMailManager.delete_mailid = 0;
+  Com_Memset(&s_dwMailManager.dwmailbufferwriter,0,0x14);
+  s_dwMailManager.user[0].signedin = 0;
+  s_dwMailManager.user[0].newmailcounter = 0;
+  s_dwMailManager.user[1].signedin = 0;
+  s_dwMailManager.user[1].newmailcounter = 0;
+  s_dwMailManager.user[2].signedin = 0;
+  s_dwMailManager.user[2].newmailcounter = 0;
+  s_dwMailManager.user[3].signedin = 0;
+  s_dwMailManager.user[3].newmailcounter = 0;
+  s_dwMailManager.dwmailthrottle.m_errorcondition = false;
+  s_dwMailManager.dwmailthrottle.m_errortimestamp = 0;
+  s_dwMailManager.dwmailthrottle.m_errortimeamount = 0;
+  s_dwMailManager.dwmailthrottle.m_dwmailraterecordermanager.m_numsamples = 0;
+  Com_Memset(s_dwMailManager.bufferdata,0,0x400);
   return;
 }
 
 
 // 826E9428  dwMail_DWMailStatus_f  (DW/dwMail.cpp:759)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void dwMail_DWMailStatus_f(void)
 
 {
-  switch(DAT_844f5fa4) {
-  case 0:
-    Com_Printf(0x19,0xffffffff821aab34);
+  switch(s_dwMailManager.dwmailmanagerstate) {
+  case DWMAILMANAGERSTATE_IDLE:
+    Com_Printf(0x19,"dwmailstatus:  State = Idle\n");
     return;
-  case 1:
-    Com_Printf(0x19,0xffffffff821aab0c);
+  case DWMAILMANAGERSTATE_GETHEADERSINIT:
+    Com_Printf(0x19,"dwmailstatus:  State = GetHeadersInit\n");
     return;
-  case 2:
-    Com_Printf(0x19,0xffffffff821aaae8);
+  case DWMAILMANAGERSTATE_GETHEADERS:
+    Com_Printf(0x19,"dwmailstatus:  State = GetHeaders\n");
     return;
-  case 3:
-    Com_Printf(0x19,0xffffffff821aaab0,DAT_844f60a8);
+  case DWMAILMANAGERSTATE_GETDATAINIT:
+    Com_Printf(0x19,"dwmailstatus:  State = GetDataInit (for MailId#%lld)\n");
     return;
-  case 4:
-    Com_Printf(0x19,0xffffffff821aaa7c,DAT_844f60a8);
+  case DWMAILMANAGERSTATE_GETDATA:
+    Com_Printf(0x19,"dwmailstatus:  State = GetData (for MailId#%lld)\n");
     return;
-  case 5:
+  case DWMAILMANAGERSTATE_PROCESSING:
     break;
-  case 6:
-    Com_Printf(0x19,0xffffffff821aa9cc,DAT_844f60d4,DAT_844f60c8);
+  case DWMAILMANAGERSTATE_SENDINIT:
+    Com_Printf(0x19,"dwmailstatus:  State = SendInit (%d bytes to UserID#%lld)\n");
     return;
-  case 7:
-    Com_Printf(0x19,0xffffffff821aa994,DAT_844f60d4,DAT_844f60c8);
+  case DWMAILMANAGERSTATE_SEND:
+    Com_Printf(0x19,"dwmailstatus:  State = Send (%d bytes to UserID#%lld)\n");
     return;
-  case 8:
-    Com_Printf(0x19,0xffffffff821aa964,DAT_844f60d8);
+  case DWMAILMANAGERSTATE_DELETEINIT:
+    Com_Printf(0x19,"dwmailstatus:  State = Delete (MailId#%lld)\n");
     return;
-  case 9:
-    Com_Printf(0x19,0xffffffff821aa964,DAT_844f60d8);
+  case DWMAILMANAGERSTATE_DELETE:
+    Com_Printf(0x19,"dwmailstatus:  State = Delete (MailId#%lld)\n");
     return;
-  case 0xffffffff:
-    Com_Printf(0x19,0xffffffff821aab54);
+  case DWMAILMANAGERSTATE_ERROR:
+    Com_Printf(0x19,"dwmailstatus:  State = Error\n");
     return;
   default:
-    Com_Printf(0x19,0xffffffff821aa938);
+    Com_Printf(0x19,"dwmailstatus:  Unknown manager state %d!\n");
     return;
   }
-  if (DAT_844f5fd0 == 0) {
-    Com_Printf(0x19,0xffffffff821aaa08,uRam00000000);
+  if (s_dwMailManager.dwmailmailhandlerentry == (dwMailMailHandlerEntry *)0x0) {
+    Com_Printf(0x19,"dwmailstatus:  State = Processing (for HandlerID#%d)\n");
     return;
   }
-  Com_Printf(0x19,0xffffffff821aaa40);
+  Com_Printf(0x19,"dwmailstatus:  State = Processing (for unknown handler)\n");
   return;
 }
 
 
 // 826E9580  dwMail_DWMailVerbose_f  (DW/dwMail.cpp:828)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void dwMail_DWMailVerbose_f(void)
 
 {
   int iVar1;
-  char *_Str;
-  uint uVar2;
-  undefined8 uVar3;
+  char *pcVar2;
+  uint uVar3;
   
   iVar1 = Cmd_Argc();
   if (1 < iVar1) {
-    _Str = (char *)Cmd_Argv(1);
-    uVar2 = atoi(_Str);
-    if (-1 < (int)uVar2) goto LAB_826e95cc;
+    pcVar2 = Cmd_Argv(1);
+    uVar3 = atoi(pcVar2);
+    if (-1 < (int)uVar3) goto LAB_826e95cc;
   }
-  uVar2 = (uint)LZCOUNT(DAT_844f5fb0) >> 5;
+  uVar3 = (uint)LZCOUNT(s_dwMailManager.verboseflag) >> 5;
 LAB_826e95cc:
-  if (uVar2 == 0) {
-    if (DAT_844f5fb0 != 0) {
-      Com_Printf(0x19,0xffffffff821aaba0);
-      DAT_844f5fb0 = 0;
+  if (uVar3 == 0) {
+    if (s_dwMailManager.verboseflag != 0) {
+      Com_Printf(0x19,"dwmailverbose:  Verbose disabled!\n");
+      s_dwMailManager.verboseflag = 0;
       return;
     }
-    uVar3 = 0xffffffff821aab74;
+    pcVar2 = "dwmailverbose:  Verbose already disabled!\n";
   }
   else {
-    if (DAT_844f5fb0 == 0) {
-      Com_Printf(0x19,0xffffffff821aabc4);
-      DAT_844f5fb0 = 1;
+    if (s_dwMailManager.verboseflag == 0) {
+      Com_Printf(0x19,"dwmailverbose:  Verbose enabled!\n");
+      s_dwMailManager.verboseflag = 1;
       return;
     }
-    uVar3 = 0xffffffff821aabe8;
+    pcVar2 = "dwmailverbose:  Verbose already enabled!\n";
   }
-  Com_Printf(0x19,uVar3);
+  Com_Printf(0x19,pcVar2);
   return;
 }
 
 
 // 826E9668  dwMail_GotoState  (DW/dwMail.cpp:878)
 
-void dwMail_GotoState(int param_1)
+void dwMail_GotoState(dwMailManagerState_t param_1)
 
 {
-  if (DAT_844f5fa4 != param_1) {
-    DAT_844f5fa4 = param_1;
-    DAT_844f5fa8 = Sys_Milliseconds();
-    if (param_1 == 0) {
-      DAT_844f5fac = DAT_844f5fa8;
+  if (s_dwMailManager.dwmailmanagerstate != param_1) {
+    s_dwMailManager.dwmailmanagerstate = param_1;
+    s_dwMailManager.time_entered_state = Sys_Milliseconds();
+    if (param_1 == DWMAILMANAGERSTATE_IDLE) {
+      s_dwMailManager.time_idle = s_dwMailManager.time_entered_state;
     }
   }
   return;
@@ -322,16 +326,19 @@ void dwMail_GotoState(int param_1)
 
 // 826E96C8  dwMail_PumpStateError  (DW/dwMail.cpp:985)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void dwMail_PumpStateError(void)
 
 {
   int iVar1;
   
   iVar1 = Sys_Milliseconds();
-  if ((DAT_844f5fa8 + 2000 <= iVar1) && (DAT_844f5fa4 != 0)) {
-    DAT_844f5fa4 = 0;
-    DAT_844f5fa8 = Sys_Milliseconds();
-    DAT_844f5fac = DAT_844f5fa8;
+  if ((s_dwMailManager.time_entered_state + 2000 <= iVar1) &&
+     (s_dwMailManager.dwmailmanagerstate != DWMAILMANAGERSTATE_IDLE)) {
+    s_dwMailManager.dwmailmanagerstate = DWMAILMANAGERSTATE_IDLE;
+    s_dwMailManager.time_entered_state = Sys_Milliseconds();
+    s_dwMailManager.time_idle = s_dwMailManager.time_entered_state;
   }
   return;
 }
@@ -339,47 +346,53 @@ void dwMail_PumpStateError(void)
 
 // 826EA290  dwMail_PumpStateIdle  (DW/dwMail.cpp:1004)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void dwMail_PumpStateIdle(void)
 
 {
-  int iVar1;
-  int *piVar2;
-  longlong lVar3;
+  bdMessaging *pbVar1;
+  int iVar2;
+  dwMailUser *pdVar3;
+  int iVar4;
+  int *piVar5;
   
   __savegprlr_29();
-  if (DAT_844f5fa0 != 0) {
-    lVar3 = 0;
-    piVar2 = &DAT_844f60e0;
+  if (s_dwMailManager.enabled != 0) {
+    iVar2 = 0;
+    pdVar3 = s_dwMailManager.user;
     do {
-      if (((*piVar2 != 0) && (0 < piVar2[1])) && (iVar1 = dwGetMessaging(lVar3), iVar1 != 0)) {
-        DAT_844f5fdc = (undefined4)lVar3;
-        if (DAT_844f5fa4 != 1) {
-          DAT_844f5fa4 = 1;
-          DAT_844f5fa8 = Sys_Milliseconds();
+      if (((pdVar3->signedin != 0) && (0 < pdVar3->newmailcounter)) &&
+         (pbVar1 = dwGetMessaging(iVar2), pbVar1 != (bdMessaging *)0x0)) {
+        s_dwMailManager.controllerindex = iVar2;
+        if (s_dwMailManager.dwmailmanagerstate != DWMAILMANAGERSTATE_GETHEADERSINIT) {
+          s_dwMailManager.dwmailmanagerstate = DWMAILMANAGERSTATE_GETHEADERSINIT;
+          s_dwMailManager.time_entered_state = Sys_Milliseconds();
           __restgprlr_29();
           return;
         }
         goto LAB_826ea364;
       }
-      lVar3 = lVar3 + 1;
-      piVar2 = piVar2 + 2;
-    } while ((int)lVar3 < 4);
-    iVar1 = Sys_Milliseconds();
-    if (DAT_844f5fac + 1200000 <= iVar1) {
-      lVar3 = 0;
-      piVar2 = &DAT_844f60e4;
-      DAT_844f5fac = iVar1;
+      iVar2 = iVar2 + 1;
+      pdVar3 = pdVar3 + 1;
+    } while (iVar2 < 4);
+    iVar2 = Sys_Milliseconds();
+    if (s_dwMailManager.time_idle + 1200000 <= iVar2) {
+      iVar4 = 0;
+      piVar5 = &s_dwMailManager.user[0].newmailcounter;
+      s_dwMailManager.time_idle = iVar2;
       do {
-        if ((piVar2[-1] != 0) && (iVar1 = dwGetMessaging(lVar3), iVar1 != 0)) {
-          Sys_LockWrite(0xffffffff844f5f98);
-          if (*piVar2 == 0) {
-            *piVar2 = 1;
+        if ((((dwMailUser *)(piVar5 + -1))->signedin != 0) &&
+           (pbVar1 = dwGetMessaging(iVar4), pbVar1 != (bdMessaging *)0x0)) {
+          Sys_LockWrite(&s_dwMailManager.fastcriticalsection);
+          if (*piVar5 == 0) {
+            *piVar5 = 1;
           }
-          Sys_UnlockWrite(0xffffffff844f5f98);
+          Sys_UnlockWrite(&s_dwMailManager.fastcriticalsection);
         }
-        lVar3 = lVar3 + 1;
-        piVar2 = piVar2 + 2;
-      } while ((int)lVar3 < 4);
+        iVar4 = iVar4 + 1;
+        piVar5 = piVar5 + 2;
+      } while (iVar4 < 4);
     }
   }
 LAB_826ea364:
@@ -390,13 +403,13 @@ LAB_826ea364:
 
 // 826E9728  dwMail_GetMailHeaders  (DW/dwMail.cpp:1071)
 
-void dwMail_GetMailHeaders(undefined4 param_1)
+void dwMail_GetMailHeaders(int param_1)
 
 {
-  DAT_844f5fdc = param_1;
-  if (DAT_844f5fa4 != 1) {
-    DAT_844f5fa4 = 1;
-    DAT_844f5fa8 = Sys_Milliseconds();
+  s_dwMailManager.controllerindex = param_1;
+  if (s_dwMailManager.dwmailmanagerstate != DWMAILMANAGERSTATE_GETHEADERSINIT) {
+    s_dwMailManager.dwmailmanagerstate = DWMAILMANAGERSTATE_GETHEADERSINIT;
+    s_dwMailManager.time_entered_state = Sys_Milliseconds();
   }
   return;
 }
@@ -404,58 +417,64 @@ void dwMail_GetMailHeaders(undefined4 param_1)
 
 // 826EA808  dwMail_PumpStateGetHeaderInit  (DW/dwMail.cpp:1086)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void dwMail_PumpStateGetHeaderInit(void)
 
 {
-  char cVar4;
-  int iVar3;
-  ulonglong uVar1;
-  undefined8 uVar2;
-  undefined1 auStack_20 [8];
+  bool bVar4;
+  int iVar1;
+  bdMailHeader *pbVar2;
+  bdReference<bdRemoteTask> bVar3;
+  bdReference<bdRemoteTask> abStack_20 [2];
   
-  cVar4 = dwMailThrottle__IsOK(0xffffffff844f6114);
-  if (cVar4 == '\0') {
-    if (DAT_844f5fb0 != 0) {
-      Com_Printf(0x19,0xffffffff821ab338,DAT_844f5fdc);
-    }
-  }
-  else {
-    iVar3 = Sys_Milliseconds();
-    if (iVar3 < DAT_844f5fa8 + 1000) {
-      if (DAT_844f5fb0 != 0) {
-        Com_Printf(0x19,0xffffffff821ab2e0,DAT_844f5fdc);
+  bVar4 = dwMailThrottle::IsOK(&s_dwMailManager.dwmailthrottle);
+  if (bVar4) {
+    iVar1 = Sys_Milliseconds();
+    if (iVar1 < s_dwMailManager.time_entered_state + 1000) {
+      if (s_dwMailManager.verboseflag != 0) {
+        Com_Printf(0x19,
+                   "dwMail: Still waiting for our GETHEADER wait time to be up for controller #%d...\n"
+                  );
       }
     }
     else {
-      uVar1 = dwGetMessaging(DAT_844f5fdc);
-      if ((uVar1 & 0xffffffff) == 0) {
-        Com_PrintError(0x19,0xffffffff821ab280,DAT_844f5fdc);
+      pbVar2 = (bdMailHeader *)dwGetMessaging(s_dwMailManager.controllerindex);
+      if (pbVar2 == (bdMailHeader *)0x0) {
+        Com_PrintError(0x19,
+                       "dwMail: Attempting to get mail header for controller #%d, however bdmessaging object is NULL.\n"
+                      );
         dwMail_GetMailHeadersFailure();
       }
       else {
-        if (DAT_844f5fb0 != 0) {
-          Com_Printf(0x19,0xffffffff821ab244,DAT_844f5fdc);
+        if (s_dwMailManager.verboseflag != 0) {
+          Com_Printf(0x19,"dwMail: Calling getMailHeaders() for controller #%d...\n");
         }
-        uVar2 = bdMessaging__getMailHeaders(auStack_20,uVar1,0xffffffff844f5fe8,0,2,0);
-        bdReference<bdRemoteTask>__operator_(0xffffffff844f5fe0,uVar2);
-        bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(auStack_20);
-        if (DAT_844f5fe0 == 0) {
-          dwMailThrottle__ReportError(0xffffffff844f6114);
-          Com_PrintError(0x19,0xffffffff821ab204);
+        bVar3 = bdMessaging::getMailHeaders((bdMessaging *)abStack_20,pbVar2,0x844f5fe8,0,true);
+        bdReference<bdRemoteTask>::operator=
+                  (&s_dwMailManager.bdremotetaskref,(bdReference<bdRemoteTask> *)bVar3.m_ptr);
+        bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(abStack_20);
+        if (s_dwMailManager.bdremotetaskref.m_ptr == (bdRemoteTask *)0x0) {
+          dwMailThrottle::ReportError(&s_dwMailManager.dwmailthrottle);
+          Com_PrintError(0x19,"dwMail: Unable to start remote task for getMailHeaders()!!!\n");
           dwMail_GetMailHeadersFailure();
         }
         else {
-          dwMailRateRecorderManager<20,1,60000>__RecordUse(0xffffffff844f6120);
-          if (DAT_844f5fb0 != 0) {
-            Com_Printf(0x19,0xffffffff821ab1d0,DAT_844f5fdc);
+          dwMailRateRecorderManager<20,1,60000>::RecordUse
+                    (&s_dwMailManager.dwmailthrottle.m_dwmailraterecordermanager);
+          if (s_dwMailManager.verboseflag != 0) {
+            Com_Printf(0x19,"dwMail: Fetching mail headers for controller #%d\n");
           }
-          if (DAT_844f5fa4 != 2) {
-            DAT_844f5fa4 = 2;
-            DAT_844f5fa8 = Sys_Milliseconds();
+          if (s_dwMailManager.dwmailmanagerstate != DWMAILMANAGERSTATE_GETHEADERS) {
+            s_dwMailManager.dwmailmanagerstate = DWMAILMANAGERSTATE_GETHEADERS;
+            s_dwMailManager.time_entered_state = Sys_Milliseconds();
           }
         }
       }
     }
+  }
+  else if (s_dwMailManager.verboseflag != 0) {
+    Com_Printf(0x19,"dwMail: Throttle keeping us in GetHeaderInit state for controller #%d...\n");
   }
   return;
 }
@@ -463,27 +482,29 @@ void dwMail_PumpStateGetHeaderInit(void)
 
 // 826EA9A0  dwMail_PumpStateGetHeader  (DW/dwMail.cpp:1165)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void dwMail_PumpStateGetHeader(void)
 
 {
-  int iVar2;
-  undefined8 uVar1;
+  int iVar1;
+  uint uVar2;
   
-  if (DAT_844f5fe0 == (int *)0x0) {
-    Com_PrintError(0x19,0xffffffff821ab3b8);
+  if (s_dwMailManager.bdremotetaskref.m_ptr == (bdRemoteTask *)0x0) {
+    Com_PrintError(0x19,"dwMail: bdremotetaskref became NULL (PumpStateGetHeader)!!!\n");
     dwMail_GetMailHeadersFailure();
   }
   else {
-    iVar2 = (**(code **)(*DAT_844f5fe0 + 4))();
-    if (iVar2 != 1) {
-      if (iVar2 == 2) {
-        uVar1 = bdRemoteTask__getNumResults(DAT_844f5fe0);
-        bdReference<bdRemoteTask>__operator_(0xffffffff844f5fe0,0);
-        dwMail_GetMailHeadersSuccess(uVar1,0xffffffff844f5fe8);
+    iVar1 = (**(code **)((s_dwMailManager.bdremotetaskref.m_ptr)->_padding_ + 4))();
+    if (iVar1 != 1) {
+      if (iVar1 == 2) {
+        uVar2 = bdRemoteTask::getNumResults(s_dwMailManager.bdremotetaskref.m_ptr);
+        bdReference<bdRemoteTask>::operator=(&s_dwMailManager.bdremotetaskref,(bdRemoteTask *)0x0);
+        dwMail_GetMailHeadersSuccess(uVar2,s_dwMailManager.bdmailheader);
       }
       else {
-        Com_PrintError(0x19,0xffffffff821ab384);
-        bdReference<bdRemoteTask>__operator_(0xffffffff844f5fe0,0);
+        Com_PrintError(0x19,"dwMail: getMailHeaders() returned failure (%d)!!!\n");
+        bdReference<bdRemoteTask>::operator=(&s_dwMailManager.bdremotetaskref,(bdRemoteTask *)0x0);
         dwMail_GetMailHeadersFailure();
       }
     }
@@ -494,87 +515,91 @@ void dwMail_PumpStateGetHeader(void)
 
 // 826EA398  dwMail_GetMailHeadersSuccess  (DW/dwMail.cpp:1208)
 
-void dwMail_GetMailHeadersSuccess(undefined8 param_1,ulonglong param_2)
+void dwMail_GetMailHeadersSuccess(int param_1,bdMailHeader *param_2)
 
 {
   int iVar1;
-  undefined8 uVar2;
+  ulonglong uVar2;
+  char *pcVar3;
   
-  iVar1 = __savegprlr_29();
-  if (DAT_844f5fb0 != 0) {
-    Com_Printf(0x19,0xffffffff821ab130,DAT_844f5fdc);
+  uVar2 = (ulonglong)(int)param_2;
+  iVar1 = __savegprlr_29(param_1);
+  if (s_dwMailManager.verboseflag != 0) {
+    Com_Printf(0x19,"dwMail: Done fetching mail headers for controller #%d.\n");
     if (iVar1 < 2) {
       if (iVar1 == 1) {
-        uVar2 = 0xffffffff821ab0c8;
+        pcVar3 = "dwMail: Exactly one mail header entry was found.\n";
       }
       else {
-        uVar2 = 0xffffffff821ab09c;
+        pcVar3 = "dwMail: No mail header entries were found.\n";
       }
     }
     else {
-      uVar2 = 0xffffffff821ab0fc;
+      pcVar3 = "dwMail: More than one mail header entry was found.\n";
     }
-    Com_Printf(0x19,uVar2);
+    Com_Printf(0x19,pcVar3);
   }
-  if (DAT_844f5fa0 == 0) {
-    if (DAT_844f5fb0 != 0) {
-      Com_Printf(0x19,0xffffffff821ab048);
+  if (s_dwMailManager.enabled == 0) {
+    if (s_dwMailManager.verboseflag != 0) {
+      Com_Printf(0x19,
+                 "dwMail: We were disabled while fetching headers.  Let\'s just go back to IDLE state\n"
+                );
     }
-    if (DAT_844f5fa4 != 0) {
-      DAT_844f5fa4 = 0;
-      DAT_844f5fa8 = Sys_Milliseconds();
-      DAT_844f5fac = DAT_844f5fa8;
+    if (s_dwMailManager.dwmailmanagerstate != DWMAILMANAGERSTATE_IDLE) {
+      s_dwMailManager.dwmailmanagerstate = DWMAILMANAGERSTATE_IDLE;
+      s_dwMailManager.time_entered_state = Sys_Milliseconds();
+      s_dwMailManager.time_idle = s_dwMailManager.time_entered_state;
       __restgprlr_29();
       return;
     }
   }
   else {
-    Sys_LockWrite(0xffffffff844f5f98);
-    (&DAT_844f60e4)[DAT_844f5fdc * 2] = (&DAT_844f60e4)[DAT_844f5fdc * 2] + -1;
-    if ((int)(&DAT_844f60e4)[DAT_844f5fdc * 2] < 0) {
-      (&DAT_844f60e4)[DAT_844f5fdc * 2] = 0;
+    Sys_LockWrite(&s_dwMailManager.fastcriticalsection);
+    s_dwMailManager.user[s_dwMailManager.controllerindex].newmailcounter =
+         s_dwMailManager.user[s_dwMailManager.controllerindex].newmailcounter + -1;
+    if (s_dwMailManager.user[s_dwMailManager.controllerindex].newmailcounter < 0) {
+      s_dwMailManager.user[s_dwMailManager.controllerindex].newmailcounter = 0;
     }
-    if (1 < iVar1) {
-      if ((int)(&DAT_844f60e4)[DAT_844f5fdc * 2] < 1) {
-        (&DAT_844f60e4)[DAT_844f5fdc * 2] = 1;
-      }
+    if ((1 < iVar1) && (s_dwMailManager.user[s_dwMailManager.controllerindex].newmailcounter < 1)) {
+      s_dwMailManager.user[s_dwMailManager.controllerindex].newmailcounter = 1;
     }
-    Sys_UnlockWrite(0xffffffff844f5f98);
+    Sys_UnlockWrite(&s_dwMailManager.fastcriticalsection);
     if (iVar1 < 1) {
-      if (DAT_844f5fb0 != 0) {
-        Com_Printf(0x19,0xffffffff821aaff8,DAT_844f5fdc);
+      if (s_dwMailManager.verboseflag != 0) {
+        Com_Printf(0x19,"dwMail: No message headers for controller #%d, therefore nothing to do.\n")
+        ;
       }
-      if (DAT_844f5fa4 != 0) {
-        DAT_844f5fa4 = 0;
-        DAT_844f5fa8 = Sys_Milliseconds();
-        DAT_844f5fac = DAT_844f5fa8;
+      if (s_dwMailManager.dwmailmanagerstate != DWMAILMANAGERSTATE_IDLE) {
+        s_dwMailManager.dwmailmanagerstate = DWMAILMANAGERSTATE_IDLE;
+        s_dwMailManager.time_entered_state = Sys_Milliseconds();
+        s_dwMailManager.time_idle = s_dwMailManager.time_entered_state;
         __restgprlr_29();
         return;
       }
     }
-    else if ((param_2 & 0xffffffff) == 0) {
-      Com_PrintError(0x19,0xffffffff821aafc8);
-      if (DAT_844f5fa4 != -1) {
-        DAT_844f5fa4 = 0xffffffff;
-        DAT_844f5fa8 = Sys_Milliseconds();
+    else if ((uVar2 & 0xffffffff) == 0) {
+      Com_PrintError(0x19,"dwMail: bdmailheader_in passed in is NULL!!!\n");
+      if (s_dwMailManager.dwmailmanagerstate != DWMAILMANAGERSTATE_ERROR) {
+        s_dwMailManager.dwmailmanagerstate = DWMAILMANAGERSTATE_ERROR;
+        s_dwMailManager.time_entered_state = Sys_Milliseconds();
         __restgprlr_29();
         return;
       }
     }
     else {
-      iVar1 = (int)param_2;
-      if (DAT_844f5fb0 != 0) {
-        Com_Printf(0x19,0xffffffff821aaf60,*(undefined8 *)(iVar1 + 0x50),
-                   *(undefined4 *)(iVar1 + 0x5c),*(undefined8 *)(iVar1 + 8),
-                   *(undefined8 *)(iVar1 + 8),param_2 + 0x10,DAT_844f5fdc);
+      if (s_dwMailManager.verboseflag != 0) {
+        Com_Printf(0x19,
+                   "dwMail: Discovered mail header MailID#%lld (%d bytes) from user %lld ($%llx) \'%s\' for controller #%d\n"
+                  );
       }
-      if (0x3ff < *(uint *)(iVar1 + 0x5c)) {
-        Com_PrintError(0x19,0xffffffff821aaf18);
-        dwMail_DeleteMail(DAT_844f60c0);
+      if (0x3ff < *(uint *)((int)uVar2 + 0x5c)) {
+        Com_PrintError(0x19,
+                       "dwMail: Uh oh, mail body too big to process!!!  We\'ll just delete it!\n");
+        dwMail_DeleteMail(s_dwMailManager.bdmailbody.m_mailID);
         __restgprlr_29();
         return;
       }
-      dwMail_GetMailData(*(undefined8 *)(iVar1 + 0x50));
+      dwMail_GetMailData(*(ulong64 *)((int)uVar2 + 0x50));
     }
   }
   __restgprlr_29();
@@ -584,15 +609,17 @@ void dwMail_GetMailHeadersSuccess(undefined8 param_1,ulonglong param_2)
 
 // 826E9778  dwMail_GetMailHeadersFailure  (DW/dwMail.cpp:1306)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void dwMail_GetMailHeadersFailure(void)
 
 {
-  if (DAT_844f5fb0 != 0) {
-    Com_Printf(0x19,0xffffffff821aac18,DAT_844f5fdc);
+  if (s_dwMailManager.verboseflag != 0) {
+    Com_Printf(0x19,"dwMail: GetMailHeadersFailure() for controller #%d, going to ERROR state!\n");
   }
-  if (DAT_844f5fa4 != -1) {
-    DAT_844f5fa4 = -1;
-    DAT_844f5fa8 = Sys_Milliseconds();
+  if (s_dwMailManager.dwmailmanagerstate != DWMAILMANAGERSTATE_ERROR) {
+    s_dwMailManager.dwmailmanagerstate = DWMAILMANAGERSTATE_ERROR;
+    s_dwMailManager.time_entered_state = Sys_Milliseconds();
   }
   return;
 }
@@ -600,16 +627,16 @@ void dwMail_GetMailHeadersFailure(void)
 
 // 826E97E0  dwMail_GetMailData  (DW/dwMail.cpp:1325)
 
-void dwMail_GetMailData(undefined8 param_1)
+void dwMail_GetMailData(ulong64 param_1)
 
 {
-  DAT_844f60b8 = 0x3ff;
-  DAT_844f60b4 = &DAT_844f61c4;
-  DAT_844f60c0 = 0;
-  DAT_844f60a8 = param_1;
-  if (DAT_844f5fa4 != 3) {
-    DAT_844f5fa4 = 3;
-    DAT_844f5fa8 = Sys_Milliseconds();
+  s_dwMailManager.bdmailbody.m_size = 0x3ff;
+  s_dwMailManager.bdmailbody.m_mailBody = s_dwMailManager.bufferdata;
+  s_dwMailManager.bdmailbody.m_mailID = 0;
+  s_dwMailManager.getmailbody_mailid = param_1;
+  if (s_dwMailManager.dwmailmanagerstate != DWMAILMANAGERSTATE_GETDATAINIT) {
+    s_dwMailManager.dwmailmanagerstate = DWMAILMANAGERSTATE_GETDATAINIT;
+    s_dwMailManager.time_entered_state = Sys_Milliseconds();
   }
   return;
 }
@@ -617,49 +644,55 @@ void dwMail_GetMailData(undefined8 param_1)
 
 // 826EAA68  dwMail_PumpStateGetDataInit  (DW/dwMail.cpp:1343)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void dwMail_PumpStateGetDataInit(void)
 
 {
-  char cVar3;
-  ulonglong uVar1;
-  undefined8 uVar2;
-  undefined1 auStack_20 [8];
+  bool bVar3;
+  bdMessaging *pbVar1;
+  bdReference<bdRemoteTask> bVar2;
+  bdReference<bdRemoteTask> abStack_20 [2];
   
-  cVar3 = dwMailThrottle__IsOK(0xffffffff844f6114);
-  if (cVar3 == '\0') {
-    if (DAT_844f5fb0 != 0) {
-      Com_Printf(0x19,0xffffffff821ab528,DAT_844f5fdc);
-    }
-  }
-  else {
-    uVar1 = dwGetMessaging(DAT_844f5fdc);
-    if ((uVar1 & 0xffffffff) == 0) {
-      Com_PrintError(0x19,0xffffffff821ab4c0,DAT_844f60a8,DAT_844f5fdc);
+  bVar3 = dwMailThrottle::IsOK(&s_dwMailManager.dwmailthrottle);
+  if (bVar3) {
+    pbVar1 = dwGetMessaging(s_dwMailManager.controllerindex);
+    if (pbVar1 == (bdMessaging *)0x0) {
+      Com_PrintError(0x19,
+                     "dwMail: Requesting mail body for MailID#%lld for controller #%d, but bdmessaging object disappeared!\n"
+                    );
       dwMail_GetMailDataFailure();
     }
     else {
-      if (DAT_844f5fb0 != 0) {
-        Com_Printf(0x19,0xffffffff821ab478,DAT_844f60a8,DAT_844f5fdc);
+      if (s_dwMailManager.verboseflag != 0) {
+        Com_Printf(0x19,"dwMail: Requesting mail body for MailID#%lld for controller #%d\n");
       }
-      uVar2 = bdMessaging__getMails(auStack_20,uVar1,0xffffffff844f60a8,1,0xffffffff844f60b0,0);
-      bdReference<bdRemoteTask>__operator_(0xffffffff844f5fe0,uVar2);
-      bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(auStack_20);
-      if (DAT_844f5fe0 == 0) {
-        dwMailThrottle__ReportError(0xffffffff844f6114);
-        Com_PrintError(0x19,0xffffffff821ab43c);
+      bVar2 = bdMessaging::getMails
+                        ((bdMessaging *)abStack_20,(ulong64 *)pbVar1,0x844f60a8,(bdMailBody *)0x1,
+                         true);
+      bdReference<bdRemoteTask>::operator=
+                (&s_dwMailManager.bdremotetaskref,(bdReference<bdRemoteTask> *)bVar2.m_ptr);
+      bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(abStack_20);
+      if (s_dwMailManager.bdremotetaskref.m_ptr == (bdRemoteTask *)0x0) {
+        dwMailThrottle::ReportError(&s_dwMailManager.dwmailthrottle);
+        Com_PrintError(0x19,"dwMail: Unable to start remote task for getMails()!!!\n");
         dwMail_GetMailDataFailure();
       }
       else {
-        dwMailRateRecorderManager<20,1,60000>__RecordUse(0xffffffff844f6120);
-        if (DAT_844f5fb0 != 0) {
-          Com_Printf(0x19,0xffffffff821ab3f8,DAT_844f60a8,DAT_844f5fdc);
+        dwMailRateRecorderManager<20,1,60000>::RecordUse
+                  (&s_dwMailManager.dwmailthrottle.m_dwmailraterecordermanager);
+        if (s_dwMailManager.verboseflag != 0) {
+          Com_Printf(0x19,"dwMail: Fetching mail data for MailID#%lld for controller #%d...\n");
         }
-        if (DAT_844f5fa4 != 4) {
-          DAT_844f5fa4 = 4;
-          DAT_844f5fa8 = Sys_Milliseconds();
+        if (s_dwMailManager.dwmailmanagerstate != DWMAILMANAGERSTATE_GETDATA) {
+          s_dwMailManager.dwmailmanagerstate = DWMAILMANAGERSTATE_GETDATA;
+          s_dwMailManager.time_entered_state = Sys_Milliseconds();
         }
       }
     }
+  }
+  else if (s_dwMailManager.verboseflag != 0) {
+    Com_Printf(0x19,"dwMail: Throttle keeping us in GetDataInit state for controller #%d...\n");
   }
   return;
 }
@@ -667,27 +700,29 @@ void dwMail_PumpStateGetDataInit(void)
 
 // 826EB358  dwMail_PumpStateGetData  (DW/dwMail.cpp:1404)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void dwMail_PumpStateGetData(void)
 
 {
-  int iVar2;
-  undefined8 uVar1;
+  int iVar1;
+  uint uVar2;
   
-  if (DAT_844f5fe0 == (int *)0x0) {
-    Com_PrintError(0x19,0xffffffff821abc00);
+  if (s_dwMailManager.bdremotetaskref.m_ptr == (bdRemoteTask *)0x0) {
+    Com_PrintError(0x19,"dwMail: bdremotetaskref became NULL! (PumpStateGetData)\n");
     dwMail_GetMailDataFailure();
   }
   else {
-    iVar2 = (**(code **)(*DAT_844f5fe0 + 4))();
-    if (iVar2 != 1) {
-      if (iVar2 == 2) {
-        uVar1 = bdRemoteTask__getNumResults(DAT_844f5fe0);
-        bdReference<bdRemoteTask>__operator_(0xffffffff844f5fe0,0);
-        dwMail_GetMailDataSuccess(uVar1,0xffffffff844f60b0);
+    iVar1 = (**(code **)((s_dwMailManager.bdremotetaskref.m_ptr)->_padding_ + 4))();
+    if (iVar1 != 1) {
+      if (iVar1 == 2) {
+        uVar2 = bdRemoteTask::getNumResults(s_dwMailManager.bdremotetaskref.m_ptr);
+        bdReference<bdRemoteTask>::operator=(&s_dwMailManager.bdremotetaskref,(bdRemoteTask *)0x0);
+        dwMail_GetMailDataSuccess(uVar2,&s_dwMailManager.bdmailbody);
       }
       else {
-        Com_PrintError(0x19,0xffffffff821abbd0);
-        bdReference<bdRemoteTask>__operator_(0xffffffff844f5fe0,0);
+        Com_PrintError(0x19,"dwMail: getMails() returned failure (%d)!!!\n");
+        bdReference<bdRemoteTask>::operator=(&s_dwMailManager.bdremotetaskref,(bdRemoteTask *)0x0);
         dwMail_GetMailDataFailure();
       }
     }
@@ -698,28 +733,29 @@ void dwMail_PumpStateGetData(void)
 
 // 826EABD0  dwMail_GetMailDataSuccess  (DW/dwMail.cpp:1447)
 
-void dwMail_GetMailDataSuccess(undefined8 param_1,ulonglong param_2)
+void dwMail_GetMailDataSuccess(int param_1,bdMailBody *param_2)
 
 {
   int iVar1;
-  uint uVar2;
-  undefined8 uVar3;
-  int iVar4;
+  dwMailHandlerReturnCode_t dVar2;
+  ulonglong uVar3;
+  char *pcVar4;
   uint uVar5;
-  undefined4 *puVar6;
-  longlong lVar7;
+  dwMailMailHandlerEntry *pdVar6;
+  int iVar7;
   
-  iVar1 = __savegprlr_26();
-  if (DAT_844f5fb0 == 0) {
+  uVar3 = (ulonglong)(int)param_2;
+  iVar1 = __savegprlr_26(param_1);
+  if (s_dwMailManager.verboseflag == 0) {
 LAB_826eac80:
     if (iVar1 < 1) {
-      if (DAT_844f5fb0 != 0) {
-        Com_Printf(0x19,0xffffffff821ab8e0);
+      if (s_dwMailManager.verboseflag != 0) {
+        Com_Printf(0x19,"dwMail: No mail data waiting for us.\n");
       }
-      if (DAT_844f5fa4 != 0) {
-        DAT_844f5fa4 = 0;
-        DAT_844f5fa8 = Sys_Milliseconds();
-        DAT_844f5fac = DAT_844f5fa8;
+      if (s_dwMailManager.dwmailmanagerstate != DWMAILMANAGERSTATE_IDLE) {
+        s_dwMailManager.dwmailmanagerstate = DWMAILMANAGERSTATE_IDLE;
+        s_dwMailManager.time_entered_state = Sys_Milliseconds();
+        s_dwMailManager.time_idle = s_dwMailManager.time_entered_state;
         __restgprlr_26();
         return;
       }
@@ -727,114 +763,129 @@ LAB_826eac80:
     }
   }
   else {
-    Com_Printf(0x19,0xffffffff821ab9b8,DAT_844f5fdc);
+    Com_Printf(0x19,"dwMail: Done fetching mail bodies for controller #%d\n");
     if (1 < iVar1) {
-      uVar3 = 0xffffffff821ab988;
+      pcVar4 = "dwMail: More than one mail body was found!!!!\n";
 LAB_826eac78:
-      Com_Printf(0x19,uVar3);
+      Com_Printf(0x19,pcVar4);
       goto LAB_826eac80;
     }
     if (iVar1 != 1) {
-      uVar3 = 0xffffffff821ab908;
+      pcVar4 = "dwMail: No mail bodies were found!!!\n";
       goto LAB_826eac78;
     }
-    Com_Printf(0x19,0xffffffff821ab95c);
+    Com_Printf(0x19,"dwMail: Exactly one mail body was found.\n");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    Com_PrintError(0x19,0xffffffff821ab930);
-    if (DAT_844f5fa4 != -1) {
-      DAT_844f5fa4 = 0xffffffff;
-      DAT_844f5fa8 = Sys_Milliseconds();
+  if ((uVar3 & 0xffffffff) == 0) {
+    Com_PrintError(0x19,"dwMail: bdmailbody_in passed in is NULL!!!\n");
+    if (s_dwMailManager.dwmailmanagerstate != DWMAILMANAGERSTATE_ERROR) {
+      s_dwMailManager.dwmailmanagerstate = DWMAILMANAGERSTATE_ERROR;
+      s_dwMailManager.time_entered_state = Sys_Milliseconds();
       __restgprlr_26();
       return;
     }
   }
   else {
-    iVar4 = (int)param_2;
-    uVar5 = *(uint *)(iVar4 + 8);
-    iVar1 = *(int *)(iVar4 + 4);
+    uVar5 = *(uint *)((int)uVar3 + 8);
+    pcVar4 = *(char **)((int)uVar3 + 4);
     if (0x3ff < uVar5) {
-      MyAssertHandler(0xffffffff821aad70,0x5dc,0,0xffffffff82000f98,0xffffffff821ab8a4);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwMail.cpp",0x5dc,0,"%s")
+      ;
       uVar5 = 0x3ff;
     }
-    *(undefined1 *)(uVar5 + iVar1) = 0;
-    if ((DAT_844f5fb0 != 0) &&
-       (Com_Printf(0x19,0xffffffff821ab86c,*(undefined8 *)(iVar4 + 0x10),uVar5), DAT_844f5fb0 != 0))
-    {
-      Com_Printf(0x19,0xffffffff821ab828);
+    pcVar4[uVar5] = '\0';
+    if ((s_dwMailManager.verboseflag != 0) &&
+       (Com_Printf(0x19,"dwMail: Discovered mail body MailID#%lld (%d bytes)\n"),
+       s_dwMailManager.verboseflag != 0)) {
+      Com_Printf(0x19,"dwMail: PAUSING until process message callback handles message.\n");
     }
-    DAT_844f5fd0 = (undefined4 *)0x0;
-    DAT_844f5fd4 = 0;
-    DAT_844f5fd8 = 0;
-    dwMailBufferWriter_Init(0xffffffff844f6100,0xffffffff844f61c4,0x400);
-    if (DAT_844f5fa4 != 5) {
-      DAT_844f5fa4 = 5;
-      DAT_844f5fa8 = Sys_Milliseconds();
+    s_dwMailManager.dwmailmailhandlerentry = (dwMailMailHandlerEntry *)0x0;
+    s_dwMailManager.request_send = 0;
+    s_dwMailManager.done_processing = 0;
+    dwMailBufferWriter_Init(&s_dwMailManager.dwmailbufferwriter,s_dwMailManager.bufferdata,0x400);
+    if (s_dwMailManager.dwmailmanagerstate != DWMAILMANAGERSTATE_PROCESSING) {
+      s_dwMailManager.dwmailmanagerstate = DWMAILMANAGERSTATE_PROCESSING;
+      s_dwMailManager.time_entered_state = Sys_Milliseconds();
     }
-    lVar7 = 0;
-    puVar6 = &DAT_844f5fb4;
-    iVar4 = DAT_844f5fcc;
-    if (0 < DAT_844f5fcc) {
+    iVar7 = 0;
+    pdVar6 = s_dwMailManager.dwmailmailhandlerentryarray;
+    iVar1 = s_dwMailManager.num_handlers;
+    if (0 < s_dwMailManager.num_handlers) {
       do {
-        if (puVar6[1] != 0) {
-          if (DAT_844f5fb0 != 0) {
-            Com_Printf(0x19,0xffffffff821ab7f0,lVar7 + 1);
+        if (pdVar6->dwmailhandlerinspect !=
+            (_func___cdecl_dwMailHandlerReturnCode_t_int_char_ptr_int *)0x0) {
+          if (s_dwMailManager.verboseflag != 0) {
+            Com_Printf(0x19,"dwMail: Calling process message callback (#%d)...\n");
           }
-          uVar2 = (*(code *)puVar6[1])(DAT_844f5fdc,iVar1,uVar5);
-          iVar4 = DAT_844f5fcc;
-          if (uVar2 != 0) {
-            if (4 < uVar2) {
-              if (DAT_844f5fb0 != 0) {
-                Com_Printf(0x19,0xffffffff821ab738);
+          dVar2 = (*pdVar6->dwmailhandlerinspect)(s_dwMailManager.controllerindex,pcVar4,uVar5);
+          iVar1 = s_dwMailManager.num_handlers;
+          if (dVar2 != DWMAILHANDLERRETURNCODE_NOT_FOR_US) {
+            if (DWMAILHANDLERRETURNCODE_PROCESSING_SEND_THEN_DONE < dVar2) {
+              if (s_dwMailManager.verboseflag != 0) {
+                Com_Printf(0x19,
+                           "dwMail: Process message callback returned %d, going straight to Continue(DELETE)...\n"
+                          );
               }
               dwMail_ProcessingDone();
               __restgprlr_26();
               return;
             }
-            DAT_844f5fd4 = 0;
-            if ((uVar2 == 3) || (uVar2 == 4)) {
-              DAT_844f5fd4 = 1;
+            s_dwMailManager.request_send = 0;
+            if ((dVar2 == DWMAILHANDLERRETURNCODE_PROCESSING_SEND_THEN_CONTINUE) ||
+               (dVar2 == DWMAILHANDLERRETURNCODE_PROCESSING_SEND_THEN_DONE)) {
+              s_dwMailManager.request_send = 1;
             }
-            DAT_844f5fd8 = 0;
-            if ((uVar2 == 2) || (uVar2 == 4)) {
-              DAT_844f5fd8 = 1;
+            s_dwMailManager.done_processing = 0;
+            if ((dVar2 == DWMAILHANDLERRETURNCODE_PROCESSING_DONE) ||
+               (dVar2 == DWMAILHANDLERRETURNCODE_PROCESSING_SEND_THEN_DONE)) {
+              s_dwMailManager.done_processing = 1;
             }
-            DAT_844f5fd0 = puVar6;
-            if (DAT_844f5fb0 != 0) {
-              if (uVar2 == 2) {
-                Com_Printf(0x19,0xffffffff821ab570);
+            s_dwMailManager.dwmailmailhandlerentry = pdVar6;
+            if (s_dwMailManager.verboseflag != 0) {
+              if (dVar2 == DWMAILHANDLERRETURNCODE_PROCESSING_DONE) {
+                Com_Printf(0x19,
+                           "dwMail: Process message callback returned PROCESSING_COMPLETE, therefore we\'ve got some pumping to do...\n"
+                          );
                 __restgprlr_26();
                 return;
               }
-              if (uVar2 == 3) {
-                Com_Printf(0x19,0xffffffff821ab5e0);
+              if (dVar2 == DWMAILHANDLERRETURNCODE_PROCESSING_SEND_THEN_CONTINUE) {
+                Com_Printf(0x19,
+                           "dwMail: Process message callback returned PROCESSING_SEND_THEN_CONTINUE, therefore we\'ve got some pumping to do...\n"
+                          );
                 __restgprlr_26();
                 return;
               }
-              if (uVar2 == 4) {
-                Com_Printf(0x19,0xffffffff821ab658);
+              if (dVar2 == DWMAILHANDLERRETURNCODE_PROCESSING_SEND_THEN_DONE) {
+                Com_Printf(0x19,
+                           "dwMail: Process message callback returned PROCESSING_SEND_THEN_COMPLETE, therefore we\'ve got some pumping to do...\n"
+                          );
                 __restgprlr_26();
                 return;
               }
-              Com_Printf(0x19,0xffffffff821ab6d0);
+              Com_Printf(0x19,
+                         "dwMail: Process message callback returned PROCESSING, therefore we\'ve got some pumping to do...\n"
+                        );
               __restgprlr_26();
               return;
             }
             goto LAB_826eae5c;
           }
         }
-        lVar7 = lVar7 + 1;
-        puVar6 = puVar6 + 3;
-      } while ((int)lVar7 < iVar4);
+        iVar7 = iVar7 + 1;
+        pdVar6 = pdVar6 + 1;
+      } while (iVar7 < iVar1);
     }
-    if (DAT_844f5fb0 != 0) {
-      Com_Printf(0x19,0xffffffff821ab790);
+    if (s_dwMailManager.verboseflag != 0) {
+      Com_Printf(0x19,
+                 "dwMail: No process message handler accepted this, therefore we\'re going straight to done!!!\n"
+                );
     }
-    Com_Memset(0xffffffff844f61c4,0,0x400);
-    DAT_844f60d8 = DAT_844f60c0;
-    if (DAT_844f5fa4 != 8) {
-      DAT_844f5fa4 = 8;
-      DAT_844f5fa8 = Sys_Milliseconds();
+    Com_Memset(s_dwMailManager.bufferdata,0,0x400);
+    s_dwMailManager.delete_mailid = s_dwMailManager.bdmailbody.m_mailID;
+    if (s_dwMailManager.dwmailmanagerstate != DWMAILMANAGERSTATE_DELETEINIT) {
+      s_dwMailManager.dwmailmanagerstate = DWMAILMANAGERSTATE_DELETEINIT;
+      s_dwMailManager.time_entered_state = Sys_Milliseconds();
     }
   }
 LAB_826eae5c:
@@ -845,19 +896,22 @@ LAB_826eae5c:
 
 // 826E9848  dwMail_GetMailDataFailure  (DW/dwMail.cpp:1629)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void dwMail_GetMailDataFailure(void)
 
 {
-  if (DAT_844f5fb0 != 0) {
-    Com_Printf(0x19,0xffffffff821aac68,DAT_844f5fdc);
+  if (s_dwMailManager.verboseflag != 0) {
+    Com_Printf(0x19,"dwMail: GetMailDataFailure() for controller #%d, going to ERROR state!\n");
   }
-  Sys_LockWrite(0xffffffff844f5f98);
-  (&DAT_844f60e4)[DAT_844f5fdc * 2] = (&DAT_844f60e4)[DAT_844f5fdc * 2] + 1;
-  Sys_UnlockWrite(0xffffffff844f5f98);
-  Com_Memset(0xffffffff844f61c4,0,0x400);
-  if (DAT_844f5fa4 != -1) {
-    DAT_844f5fa4 = -1;
-    DAT_844f5fa8 = Sys_Milliseconds();
+  Sys_LockWrite(&s_dwMailManager.fastcriticalsection);
+  s_dwMailManager.user[s_dwMailManager.controllerindex].newmailcounter =
+       s_dwMailManager.user[s_dwMailManager.controllerindex].newmailcounter + 1;
+  Sys_UnlockWrite(&s_dwMailManager.fastcriticalsection);
+  Com_Memset(s_dwMailManager.bufferdata,0,0x400);
+  if (s_dwMailManager.dwmailmanagerstate != DWMAILMANAGERSTATE_ERROR) {
+    s_dwMailManager.dwmailmanagerstate = DWMAILMANAGERSTATE_ERROR;
+    s_dwMailManager.time_entered_state = Sys_Milliseconds();
   }
   return;
 }
@@ -865,65 +919,74 @@ void dwMail_GetMailDataFailure(void)
 
 // 826EB790  dwMail_PumpStateProcessing  (DW/dwMail.cpp:1655)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void dwMail_PumpStateProcessing(void)
 
 {
-  int iVar1;
+  dwMailHandlerReturnCode_t dVar1;
+  int in_r5;
   
-  if (DAT_844f5fd4 != 0) {
-    DAT_844f5fd4 = 0;
-    dwMail_SendMail(DAT_844f6100,DAT_844f6110);
+  if (s_dwMailManager.request_send != 0) {
+    s_dwMailManager.request_send = 0;
+    dwMail_SendMail(ZEXT48(s_dwMailManager.dwmailbufferwriter.bufferptr),
+                    (void *)s_dwMailManager.dwmailbufferwriter.numbyteswritten,in_r5);
     return;
   }
-  if (DAT_844f5fd0 == 0) {
-    Com_PrintError(0x19,0xffffffff821abfc0);
-    DAT_844f5fd8 = 1;
+  if (s_dwMailManager.dwmailmailhandlerentry == (dwMailMailHandlerEntry *)0x0) {
+    Com_PrintError(0x19,"dwMail: Mail Handler disappeared while in PROCESSING state!\n");
+    s_dwMailManager.done_processing = 1;
   }
-  else if (*(code **)(DAT_844f5fd0 + 8) == (code *)0x0) {
-    Com_PrintError(0x19,0xffffffff821abf78);
-    DAT_844f5fd8 = 1;
+  else if ((s_dwMailManager.dwmailmailhandlerentry)->dwmailhandlerpump ==
+           (_func___cdecl_dwMailHandlerReturnCode_t *)0x0) {
+    Com_PrintError(0x19,"dwMail: Mail Handler pump function is NULL while in PROCESSING state!\n");
+    s_dwMailManager.done_processing = 1;
   }
   else {
-    if (DAT_844f5fd8 != 0) goto LAB_826eb918;
-    iVar1 = (**(code **)(DAT_844f5fd0 + 8))();
-    if ((iVar1 < 1) || (4 < iVar1)) {
-      Com_PrintError(0x19,0xffffffff821abe70);
-      DAT_844f5fd4 = 0;
+    if (s_dwMailManager.done_processing != 0) goto LAB_826eb918;
+    dVar1 = (*(s_dwMailManager.dwmailmailhandlerentry)->dwmailhandlerpump)();
+    if (((int)dVar1 < 1) || (4 < (int)dVar1)) {
+      Com_PrintError(0x19,
+                     "dwMail: Mail handler pump returned ERROR, NOT_FOR_US, or something we don\'t recognize!\n"
+                    );
+      s_dwMailManager.request_send = 0;
       goto LAB_826eb918;
     }
-    if (DAT_844f5fb0 == 0) {
+    if (s_dwMailManager.verboseflag == 0) {
 LAB_826eb8b0:
-      if ((iVar1 == 3) || (iVar1 == 4)) goto LAB_826eb8c0;
+      if ((dVar1 == DWMAILHANDLERRETURNCODE_PROCESSING_SEND_THEN_CONTINUE) ||
+         (dVar1 == DWMAILHANDLERRETURNCODE_PROCESSING_SEND_THEN_DONE)) goto LAB_826eb8c0;
     }
     else {
-      if (iVar1 == 2) {
-        Com_Printf(0x19,0xffffffff821abec8);
-        DAT_844f5fd8 = 1;
+      if (dVar1 == DWMAILHANDLERRETURNCODE_PROCESSING_DONE) {
+        Com_Printf(0x19,"dwMail: Mail handler pump returned PROCESSING_COMPLETE!\n");
+        s_dwMailManager.done_processing = 1;
         goto LAB_826eb90c;
       }
-      if (iVar1 == 3) {
-        Com_Printf(0x19,0xffffffff821abf04);
+      if (dVar1 == DWMAILHANDLERRETURNCODE_PROCESSING_SEND_THEN_CONTINUE) {
+        Com_Printf(0x19,"dwMail: Mail handler pump returned SEND_THEN_CONTINUE!\n");
       }
       else {
-        if (iVar1 != 4) goto LAB_826eb8b0;
-        Com_Printf(0x19,0xffffffff821abf3c);
+        if (dVar1 != DWMAILHANDLERRETURNCODE_PROCESSING_SEND_THEN_DONE) goto LAB_826eb8b0;
+        Com_Printf(0x19,"dwMail: Mail handler pump returned SEND_THEN_COMPLETE!\n");
       }
 LAB_826eb8c0:
-      DAT_844f5fd4 = 1;
+      s_dwMailManager.request_send = 1;
     }
-    if ((iVar1 == 2) || (iVar1 == 4)) {
-      DAT_844f5fd8 = 1;
+    if ((dVar1 == DWMAILHANDLERRETURNCODE_PROCESSING_DONE) ||
+       (dVar1 == DWMAILHANDLERRETURNCODE_PROCESSING_SEND_THEN_DONE)) {
+      s_dwMailManager.done_processing = 1;
     }
-    else if (DAT_844f5fd8 == 0) {
+    else if (s_dwMailManager.done_processing == 0) {
       return;
     }
   }
 LAB_826eb90c:
-  if (DAT_844f5fd4 != 0) {
+  if (s_dwMailManager.request_send != 0) {
     return;
   }
 LAB_826eb918:
-  DAT_844f5fd8 = 0;
+  s_dwMailManager.done_processing = 0;
   dwMail_ProcessingDone();
   return;
 }
@@ -931,24 +994,31 @@ LAB_826eb918:
 
 // 826EB778  dwMail_ProcessingSend  (DW/dwMail.cpp:1741)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void dwMail_ProcessingSend(void)
 
 {
-  dwMail_SendMail(DAT_844f6100,DAT_844f6110);
+  int in_r5;
+  
+  dwMail_SendMail(ZEXT48(s_dwMailManager.dwmailbufferwriter.bufferptr),
+                  (void *)s_dwMailManager.dwmailbufferwriter.numbyteswritten,in_r5);
   return;
 }
 
 
 // 826EA5C8  dwMail_ProcessingDone  (DW/dwMail.cpp:1752)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void dwMail_ProcessingDone(void)
 
 {
-  Com_Memset(0xffffffff844f61c4,0,0x400);
-  DAT_844f60d8 = DAT_844f60c0;
-  if (DAT_844f5fa4 != 8) {
-    DAT_844f5fa4 = 8;
-    DAT_844f5fa8 = Sys_Milliseconds();
+  Com_Memset(s_dwMailManager.bufferdata,0,0x400);
+  s_dwMailManager.delete_mailid = s_dwMailManager.bdmailbody.m_mailID;
+  if (s_dwMailManager.dwmailmanagerstate != DWMAILMANAGERSTATE_DELETEINIT) {
+    s_dwMailManager.dwmailmanagerstate = DWMAILMANAGERSTATE_DELETEINIT;
+    s_dwMailManager.time_entered_state = Sys_Milliseconds();
   }
   return;
 }
@@ -956,20 +1026,20 @@ void dwMail_ProcessingDone(void)
 
 // 826EB420  dwMail_SendMail  (DW/dwMail.cpp:1767)
 
-void dwMail_SendMail(int param_1,int param_2)
+void dwMail_SendMail(ulong64 param_1,void *param_2,int param_3)
 
 {
-  if ((param_1 == 0) || (param_2 < 1)) {
-    Com_PrintError(0x19,0xffffffff821abc3c);
+  if (((param_1 & 0xffffffff) == 0) || ((int)param_2 < 1)) {
+    Com_PrintError(0x19,"dwMail: Nothing to send! Let\'s pretend we just sent it.\n");
     dwMail_SendMailSuccess();
   }
   else {
-    DAT_844f60c8 = DAT_844f5ff0;
-    DAT_844f60d0 = param_1;
-    DAT_844f60d4 = param_2;
-    if (DAT_844f5fa4 != 6) {
-      DAT_844f5fa4 = 6;
-      DAT_844f5fa8 = Sys_Milliseconds();
+    s_dwMailManager.send_bufferptr = (void *)param_1;
+    s_dwMailManager.send_bdonlineuserid = s_dwMailManager.bdmailheader[0].m_senderID;
+    s_dwMailManager.send_buffersize = (uint)param_2;
+    if (s_dwMailManager.dwmailmanagerstate != DWMAILMANAGERSTATE_SENDINIT) {
+      s_dwMailManager.dwmailmanagerstate = DWMAILMANAGERSTATE_SENDINIT;
+      s_dwMailManager.time_entered_state = Sys_Milliseconds();
       return;
     }
   }
@@ -979,50 +1049,55 @@ void dwMail_SendMail(int param_1,int param_2)
 
 // 826EB4B0  dwMail_PumpStateSendInit  (DW/dwMail.cpp:1792)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void dwMail_PumpStateSendInit(void)
 
 {
-  char cVar3;
-  ulonglong uVar1;
-  undefined8 uVar2;
-  undefined1 auStack_20 [8];
+  bool bVar3;
+  bdMessaging *pbVar1;
+  bdReference<bdRemoteTask> bVar2;
+  bdReference<bdRemoteTask> abStack_20 [2];
   
-  cVar3 = dwMailThrottle__IsOK(0xffffffff844f6114);
-  if (cVar3 == '\0') {
-    if (DAT_844f5fb0 != 0) {
-      Com_Printf(0x19,0xffffffff821abda0,DAT_844f5fdc);
-    }
-  }
-  else {
-    uVar1 = dwGetMessaging(DAT_844f5fdc);
-    if ((uVar1 & 0xffffffff) == 0) {
-      Com_PrintError(0x19,0xffffffff821abd28,DAT_844f60c8,DAT_844f60c8,DAT_844f60d4,DAT_844f5fdc);
+  bVar3 = dwMailThrottle::IsOK(&s_dwMailManager.dwmailthrottle);
+  if (bVar3) {
+    pbVar1 = dwGetMessaging(s_dwMailManager.controllerindex);
+    if (pbVar1 == (bdMessaging *)0x0) {
+      Com_PrintError(0x19,
+                     "dwMail: Attempting to send mail to user#%lld ($%llx) (size=%d) for controller #%d, but bdmessaging object disappeared!\n"
+                    );
       dwMail_SendMailFailure();
     }
     else {
-      if (DAT_844f5fb0 != 0) {
-        Com_Printf(0x19,0xffffffff821abcf0,DAT_844f5fdc);
+      if (s_dwMailManager.verboseflag != 0) {
+        Com_Printf(0x19,"dwMail: Calling sendMail() for controller #%d...\n");
       }
-      uVar2 = bdMessaging__sendMail(auStack_20,uVar1,DAT_844f60d0,DAT_844f60d4,0xffffffff844f60c8,1)
-      ;
-      bdReference<bdRemoteTask>__operator_(0xffffffff844f5fe0,uVar2);
-      bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(auStack_20);
-      if (DAT_844f5fe0 == 0) {
-        dwMailThrottle__ReportError(0xffffffff844f6114);
-        Com_PrintError(0x19,0xffffffff821abcb8);
+      bVar2 = bdMessaging::sendMail
+                        ((bdMessaging *)abStack_20,pbVar1,(uint)s_dwMailManager.send_bufferptr,
+                         (ulong64 *)s_dwMailManager.send_buffersize,0x844f60c8);
+      bdReference<bdRemoteTask>::operator=
+                (&s_dwMailManager.bdremotetaskref,(bdReference<bdRemoteTask> *)bVar2.m_ptr);
+      bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(abStack_20);
+      if (s_dwMailManager.bdremotetaskref.m_ptr == (bdRemoteTask *)0x0) {
+        dwMailThrottle::ReportError(&s_dwMailManager.dwmailthrottle);
+        Com_PrintError(0x19,"dwMail: Unable to start remote task for sendMail()!!!\n");
         dwMail_SendMailFailure();
       }
       else {
-        dwMailRateRecorderManager<20,1,60000>__RecordUse(0xffffffff844f6120);
-        if (DAT_844f5fb0 != 0) {
-          Com_Printf(0x19,0xffffffff821abc78,DAT_844f60c8,DAT_844f60c8,DAT_844f60d4);
+        dwMailRateRecorderManager<20,1,60000>::RecordUse
+                  (&s_dwMailManager.dwmailthrottle.m_dwmailraterecordermanager);
+        if (s_dwMailManager.verboseflag != 0) {
+          Com_Printf(0x19,"dwMail: Sending mail to User#%lld ($%llx) of size %d bytes...\n");
         }
-        if (DAT_844f5fa4 != 7) {
-          DAT_844f5fa4 = 7;
-          DAT_844f5fa8 = Sys_Milliseconds();
+        if (s_dwMailManager.dwmailmanagerstate != DWMAILMANAGERSTATE_SEND) {
+          s_dwMailManager.dwmailmanagerstate = DWMAILMANAGERSTATE_SEND;
+          s_dwMailManager.time_entered_state = Sys_Milliseconds();
         }
       }
     }
+  }
+  else if (s_dwMailManager.verboseflag != 0) {
+    Com_Printf(0x19,"dwMail: Throttle keeping us in SendInit state for controller #%d...\n");
   }
   return;
 }
@@ -1030,25 +1105,27 @@ void dwMail_PumpStateSendInit(void)
 
 // 826EB620  dwMail_PumpStateSend  (DW/dwMail.cpp:1857)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void dwMail_PumpStateSend(void)
 
 {
-  undefined8 uVar1;
+  int iVar1;
   
-  if (DAT_844f5fe0 == (int *)0x0) {
-    Com_PrintError(0x19,0xffffffff821abe18);
+  if (s_dwMailManager.bdremotetaskref.m_ptr == (bdRemoteTask *)0x0) {
+    Com_PrintError(0x19,"dwMail: bdremotetaskref became NULL! (PumpStateSend)\n");
     dwMail_SendMailFailure();
     return;
   }
-  uVar1 = (**(code **)(*DAT_844f5fe0 + 4))();
-  if ((int)uVar1 != 1) {
-    if ((int)uVar1 != 2) {
-      Com_PrintError(0x19,0xffffffff821abde8);
-      bdReference<bdRemoteTask>__operator_(0xffffffff844f5fe0,0);
+  iVar1 = (**(code **)((s_dwMailManager.bdremotetaskref.m_ptr)->_padding_ + 4))();
+  if (iVar1 != 1) {
+    if (iVar1 != 2) {
+      Com_PrintError(0x19,"dwMail: sendMail() returned failure (%d)!!!\n");
+      bdReference<bdRemoteTask>::operator=(&s_dwMailManager.bdremotetaskref,(bdRemoteTask *)0x0);
       dwMail_SendMailFailure();
       return;
     }
-    bdReference<bdRemoteTask>__operator_(0xffffffff844f5fe0,0,uVar1);
+    bdReference<bdRemoteTask>::operator=(&s_dwMailManager.bdremotetaskref,(bdRemoteTask *)0x0);
     dwMail_SendMailSuccess();
   }
   return;
@@ -1057,21 +1134,23 @@ void dwMail_PumpStateSend(void)
 
 // 826EAF50  dwMail_SendMailSuccess  (DW/dwMail.cpp:1897)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void dwMail_SendMailSuccess(void)
 
 {
-  if (DAT_844f5fb0 != 0) {
-    Com_Printf(0x19,0xffffffff821ab9f0,DAT_844f5fdc);
+  if (s_dwMailManager.verboseflag != 0) {
+    Com_Printf(0x19,"dwMail: Mail sent for controller #%d!\n");
   }
-  Com_Memset(0xffffffff844f61c4,0,0x400);
-  DAT_844f6100 = &DAT_844f61c4;
-  DAT_844f6104 = 0x400;
-  DAT_844f610c = 0x400;
-  DAT_844f6108 = &DAT_844f61c4;
-  DAT_844f6110 = 0;
-  if (DAT_844f5fa4 != 5) {
-    DAT_844f5fa4 = 5;
-    DAT_844f5fa8 = Sys_Milliseconds();
+  Com_Memset(s_dwMailManager.bufferdata,0,0x400);
+  s_dwMailManager.dwmailbufferwriter.bufferptr = (uchar *)s_dwMailManager.bufferdata;
+  s_dwMailManager.dwmailbufferwriter.buffersize = 0x400;
+  s_dwMailManager.dwmailbufferwriter.numbytesleft = 0x400;
+  s_dwMailManager.dwmailbufferwriter.currentptr = (uchar *)s_dwMailManager.bufferdata;
+  s_dwMailManager.dwmailbufferwriter.numbyteswritten = 0;
+  if (s_dwMailManager.dwmailmanagerstate != DWMAILMANAGERSTATE_PROCESSING) {
+    s_dwMailManager.dwmailmanagerstate = DWMAILMANAGERSTATE_PROCESSING;
+    s_dwMailManager.time_entered_state = Sys_Milliseconds();
   }
   return;
 }
@@ -1079,21 +1158,25 @@ void dwMail_SendMailSuccess(void)
 
 // 826EAFF0  dwMail_SendMailFailure  (DW/dwMail.cpp:1922)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void dwMail_SendMailFailure(void)
 
 {
-  if (DAT_844f5fb0 != 0) {
-    Com_Printf(0x19,0xffffffff821aba18,DAT_844f5fdc);
+  if (s_dwMailManager.verboseflag != 0) {
+    Com_Printf(0x19,
+               "dwMail: SendMailFailure() for controller #%d, continuing on to delete our original mail message...\n"
+              );
   }
-  Com_Memset(0xffffffff844f61c4,0,0x400);
-  DAT_844f6100 = &DAT_844f61c4;
-  DAT_844f6104 = 0x400;
-  DAT_844f610c = 0x400;
-  DAT_844f6108 = &DAT_844f61c4;
-  DAT_844f6110 = 0;
-  if (DAT_844f5fa4 != 5) {
-    DAT_844f5fa4 = 5;
-    DAT_844f5fa8 = Sys_Milliseconds();
+  Com_Memset(s_dwMailManager.bufferdata,0,0x400);
+  s_dwMailManager.dwmailbufferwriter.bufferptr = (uchar *)s_dwMailManager.bufferdata;
+  s_dwMailManager.dwmailbufferwriter.buffersize = 0x400;
+  s_dwMailManager.dwmailbufferwriter.numbytesleft = 0x400;
+  s_dwMailManager.dwmailbufferwriter.currentptr = (uchar *)s_dwMailManager.bufferdata;
+  s_dwMailManager.dwmailbufferwriter.numbyteswritten = 0;
+  if (s_dwMailManager.dwmailmanagerstate != DWMAILMANAGERSTATE_PROCESSING) {
+    s_dwMailManager.dwmailmanagerstate = DWMAILMANAGERSTATE_PROCESSING;
+    s_dwMailManager.time_entered_state = Sys_Milliseconds();
   }
   return;
 }
@@ -1101,13 +1184,13 @@ void dwMail_SendMailFailure(void)
 
 // 826E98E8  dwMail_DeleteMail  (DW/dwMail.cpp:1947)
 
-void dwMail_DeleteMail(undefined8 param_1)
+void dwMail_DeleteMail(ulong64 param_1)
 
 {
-  DAT_844f60d8 = param_1;
-  if (DAT_844f5fa4 != 8) {
-    DAT_844f5fa4 = 8;
-    DAT_844f5fa8 = Sys_Milliseconds();
+  s_dwMailManager.delete_mailid = param_1;
+  if (s_dwMailManager.dwmailmanagerstate != DWMAILMANAGERSTATE_DELETEINIT) {
+    s_dwMailManager.dwmailmanagerstate = DWMAILMANAGERSTATE_DELETEINIT;
+    s_dwMailManager.time_entered_state = Sys_Milliseconds();
   }
   return;
 }
@@ -1115,49 +1198,53 @@ void dwMail_DeleteMail(undefined8 param_1)
 
 // 826EB090  dwMail_PumpStateDeleteInit  (DW/dwMail.cpp:1962)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void dwMail_PumpStateDeleteInit(void)
 
 {
-  char cVar3;
-  ulonglong uVar1;
-  undefined8 uVar2;
-  undefined1 auStack_20 [8];
+  bool bVar3;
+  bdMessaging *pbVar1;
+  bdReference<bdRemoteTask> bVar2;
+  bdReference<bdRemoteTask> abStack_20 [2];
   
-  cVar3 = dwMailThrottle__IsOK(0xffffffff844f6114);
-  if (cVar3 == '\0') {
-    if (DAT_844f5fb0 != 0) {
-      Com_Printf(0x19,0xffffffff821abb88,DAT_844f5fdc);
-    }
-  }
-  else {
-    uVar1 = dwGetMessaging(DAT_844f5fdc);
-    if ((uVar1 & 0xffffffff) == 0) {
-      Com_PrintError(0x19,0xffffffff821abb20,DAT_844f60d8,DAT_844f5fdc);
+  bVar3 = dwMailThrottle::IsOK(&s_dwMailManager.dwmailthrottle);
+  if (bVar3) {
+    pbVar1 = dwGetMessaging(s_dwMailManager.controllerindex);
+    if (pbVar1 == (bdMessaging *)0x0) {
+      Com_PrintError(0x19,
+                     "dwMail: Attempting to delete MailID#%lld for controller #%d, but bdmessaging object disappeared!\n"
+                    );
       dwMail_DeleteMailFailure();
     }
     else {
-      if (DAT_844f5fb0 != 0) {
-        Com_Printf(0x19,0xffffffff821abaec,DAT_844f5fdc);
+      if (s_dwMailManager.verboseflag != 0) {
+        Com_Printf(0x19,"dwMail: Calling deleteMail() for controller #%d...\n");
       }
-      uVar2 = bdMessaging__deleteMail(auStack_20,uVar1,0xffffffff844f60d8,1);
-      bdReference<bdRemoteTask>__operator_(0xffffffff844f5fe0,uVar2);
-      bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(auStack_20);
-      if (DAT_844f5fe0 == 0) {
-        dwMailThrottle__ReportError(0xffffffff844f6114);
-        Com_PrintError(0x19,0xffffffff821abab0);
+      bVar2 = bdMessaging::deleteMail((bdMessaging *)abStack_20,(ulong64 *)pbVar1,0x844f60d8);
+      bdReference<bdRemoteTask>::operator=
+                (&s_dwMailManager.bdremotetaskref,(bdReference<bdRemoteTask> *)bVar2.m_ptr);
+      bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(abStack_20);
+      if (s_dwMailManager.bdremotetaskref.m_ptr == (bdRemoteTask *)0x0) {
+        dwMailThrottle::ReportError(&s_dwMailManager.dwmailthrottle);
+        Com_PrintError(0x19,"dwMail: Unable to start remote task for deleteMail()!!!\n");
         dwMail_DeleteMailFailure();
       }
       else {
-        dwMailRateRecorderManager<20,1,60000>__RecordUse(0xffffffff844f6120);
-        if (DAT_844f5fb0 != 0) {
-          Com_Printf(0x19,0xffffffff821aba7c,DAT_844f60d8,DAT_844f5fdc);
+        dwMailRateRecorderManager<20,1,60000>::RecordUse
+                  (&s_dwMailManager.dwmailthrottle.m_dwmailraterecordermanager);
+        if (s_dwMailManager.verboseflag != 0) {
+          Com_Printf(0x19,"dwMail: Deleting MailID#%lld for controller #%d...\n");
         }
-        if (DAT_844f5fa4 != 9) {
-          DAT_844f5fa4 = 9;
-          DAT_844f5fa8 = Sys_Milliseconds();
+        if (s_dwMailManager.dwmailmanagerstate != DWMAILMANAGERSTATE_DELETE) {
+          s_dwMailManager.dwmailmanagerstate = DWMAILMANAGERSTATE_DELETE;
+          s_dwMailManager.time_entered_state = Sys_Milliseconds();
         }
       }
     }
+  }
+  else if (s_dwMailManager.verboseflag != 0) {
+    Com_Printf(0x19,"dwMail: Throttle keeping us in DeleteInit state for controller #%d...\n");
   }
   return;
 }
@@ -1165,29 +1252,31 @@ void dwMail_PumpStateDeleteInit(void)
 
 // 826EA628  dwMail_PumpStateDelete  (DW/dwMail.cpp:2024)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void dwMail_PumpStateDelete(void)
 
 {
-  undefined8 uVar1;
+  int iVar1;
   
-  if (DAT_844f5fe0 == (int *)0x0) {
-    Com_PrintError(0x19,0xffffffff821ab198);
-    if (DAT_844f5fa4 != -1) {
-      DAT_844f5fa4 = 0xffffffff;
-      DAT_844f5fa8 = Sys_Milliseconds();
+  if (s_dwMailManager.bdremotetaskref.m_ptr == (bdRemoteTask *)0x0) {
+    Com_PrintError(0x19,"dwMail: bdremotetaskref became NULL! (PumpStateDelete)\n");
+    if (s_dwMailManager.dwmailmanagerstate != DWMAILMANAGERSTATE_ERROR) {
+      s_dwMailManager.dwmailmanagerstate = DWMAILMANAGERSTATE_ERROR;
+      s_dwMailManager.time_entered_state = Sys_Milliseconds();
       return;
     }
   }
   else {
-    uVar1 = (**(code **)(*DAT_844f5fe0 + 4))();
-    if ((int)uVar1 != 1) {
-      if ((int)uVar1 != 2) {
-        Com_PrintError(0x19,0xffffffff821ab168);
-        bdReference<bdRemoteTask>__operator_(0xffffffff844f5fe0,0);
+    iVar1 = (**(code **)((s_dwMailManager.bdremotetaskref.m_ptr)->_padding_ + 4))();
+    if (iVar1 != 1) {
+      if (iVar1 != 2) {
+        Com_PrintError(0x19,"dwMail: deleteMail() returned failure (%d)!!!\n");
+        bdReference<bdRemoteTask>::operator=(&s_dwMailManager.bdremotetaskref,(bdRemoteTask *)0x0);
         dwMail_DeleteMailFailure();
         return;
       }
-      bdReference<bdRemoteTask>__operator_(0xffffffff844f5fe0,0,uVar1);
+      bdReference<bdRemoteTask>::operator=(&s_dwMailManager.bdremotetaskref,(bdRemoteTask *)0x0);
       dwMail_DeleteMailSuccess();
     }
   }
@@ -1197,16 +1286,20 @@ void dwMail_PumpStateDelete(void)
 
 // 826E9938  dwMail_DeleteMailSuccess  (DW/dwMail.cpp:2066)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void dwMail_DeleteMailSuccess(void)
 
 {
-  if (DAT_844f5fb0 != 0) {
-    Com_Printf(0x19,0xffffffff821aacb0,DAT_844f60d8,DAT_844f5fdc);
+  if (s_dwMailManager.verboseflag != 0) {
+    Com_Printf(0x19,
+               "dwMail: Done deleting mail MailID#%lld for controller #%d, now let\'s go back to the IDLE state.\n"
+              );
   }
-  if (DAT_844f5fa4 != 0) {
-    DAT_844f5fa4 = 0;
-    DAT_844f5fa8 = Sys_Milliseconds();
-    DAT_844f5fac = DAT_844f5fa8;
+  if (s_dwMailManager.dwmailmanagerstate != DWMAILMANAGERSTATE_IDLE) {
+    s_dwMailManager.dwmailmanagerstate = DWMAILMANAGERSTATE_IDLE;
+    s_dwMailManager.time_entered_state = Sys_Milliseconds();
+    s_dwMailManager.time_idle = s_dwMailManager.time_entered_state;
   }
   return;
 }
@@ -1214,15 +1307,19 @@ void dwMail_DeleteMailSuccess(void)
 
 // 826E99A8  dwMail_DeleteMailFailure  (DW/dwMail.cpp:2085)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void dwMail_DeleteMailFailure(void)
 
 {
-  if (DAT_844f5fb0 != 0) {
-    Com_Printf(0x19,0xffffffff821aad18,DAT_844f60d8,DAT_844f5fdc);
+  if (s_dwMailManager.verboseflag != 0) {
+    Com_Printf(0x19,
+               "dwMail: DeleteMailFailure() for MailID#%lld for controller #%d, going to ERROR state!\n"
+              );
   }
-  if (DAT_844f5fa4 != -1) {
-    DAT_844f5fa4 = -1;
-    DAT_844f5fa8 = Sys_Milliseconds();
+  if (s_dwMailManager.dwmailmanagerstate != DWMAILMANAGERSTATE_ERROR) {
+    s_dwMailManager.dwmailmanagerstate = DWMAILMANAGERSTATE_ERROR;
+    s_dwMailManager.time_entered_state = Sys_Milliseconds();
   }
   return;
 }
@@ -1230,14 +1327,14 @@ void dwMail_DeleteMailFailure(void)
 
 // 826EA708  dwMailBufferWriter_Init  (DW/dwMail.cpp:2109)
 
-void dwMailBufferWriter_Init(undefined8 param_1,undefined4 param_2,undefined4 param_3)
+void dwMailBufferWriter_Init(dwMailBufferWriter *param_1,void *param_2,int param_3)
 
 {
   undefined4 *puVar1;
   
-  puVar1 = (undefined4 *)__savegprlr_29();
+  puVar1 = (undefined4 *)__savegprlr_29(param_1);
   if (puVar1 == (undefined4 *)0x0) {
-    MyAssertHandler(0xffffffff821aad70,0x83e,0,0xffffffff82000f98,0xffffffff821aada8);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwMail.cpp",0x83e,0,"%s");
   }
   *puVar1 = param_2;
   puVar1[1] = param_3;
@@ -1251,163 +1348,177 @@ void dwMailBufferWriter_Init(undefined8 param_1,undefined4 param_2,undefined4 pa
 
 // 826E9A18  dwMailBufferWriter_Reset  (DW/dwMail.cpp:2123)
 
-void dwMailBufferWriter_Reset(undefined4 *param_1)
+void dwMailBufferWriter_Reset(dwMailBufferWriter *param_1)
 
 {
-  if (param_1 == (undefined4 *)0x0) {
-    MyAssertHandler(0xffffffff821aad70,0x84c,0,0xffffffff82000f98,0xffffffff821aada8);
+  if (param_1 == (dwMailBufferWriter *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwMail.cpp",0x84c,0,"%s");
   }
-  param_1[4] = 0;
-  param_1[2] = *param_1;
-  param_1[3] = param_1[1];
+  param_1->numbyteswritten = 0;
+  param_1->currentptr = param_1->bufferptr;
+  param_1->numbytesleft = param_1->buffersize;
   return;
 }
 
 
 // 826E9A88  dwMailBufferWriter_WriteData  (DW/dwMail.cpp:2137)
 
-void dwMailBufferWriter_WriteData(undefined8 param_1,ulonglong param_2,undefined8 param_3)
+int dwMailBufferWriter_WriteData(dwMailBufferWriter *param_1,void *param_2,int param_3)
 
 {
   int iVar1;
-  int iVar2;
+  ulonglong uVar2;
   
-  iVar1 = __savegprlr_29();
+  uVar2 = (ulonglong)(int)param_2;
+  iVar1 = __savegprlr_29(param_1);
   if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff821aad70,0x85a,0,0xffffffff82000f98,0xffffffff821aada8);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwMail.cpp",0x85a,0,"%s");
   }
-  iVar2 = (int)param_3;
-  if (0 < iVar2) {
-    if (*(int *)(iVar1 + 8) != 0) {
-      if (*(int *)(iVar1 + 0xc) < iVar2) {
-        __restgprlr_29(0);
-        return;
+  if (0 < param_3) {
+    if (*(void **)(iVar1 + 8) != (void *)0x0) {
+      if (*(int *)(iVar1 + 0xc) < param_3) {
+        iVar1 = __restgprlr_29(0);
+        return iVar1;
       }
-      if ((param_2 & 0xffffffff) != 0) {
-        Com_Memcpy(*(int *)(iVar1 + 8),param_2,param_3);
+      if ((uVar2 & 0xffffffff) != 0) {
+        Com_Memcpy(*(void **)(iVar1 + 8),(void *)uVar2,param_3);
       }
-      *(int *)(iVar1 + 8) = *(int *)(iVar1 + 8) + iVar2;
-      *(int *)(iVar1 + 0xc) = *(int *)(iVar1 + 0xc) - iVar2;
+      *(int *)(iVar1 + 8) = *(int *)(iVar1 + 8) + param_3;
+      *(int *)(iVar1 + 0xc) = *(int *)(iVar1 + 0xc) - param_3;
     }
-    *(int *)(iVar1 + 0x10) = *(int *)(iVar1 + 0x10) + iVar2;
+    *(int *)(iVar1 + 0x10) = *(int *)(iVar1 + 0x10) + param_3;
   }
-  __restgprlr_29(1);
-  return;
+  iVar1 = __restgprlr_29(1);
+  return iVar1;
 }
 
 
 // 826E9B40  dwMailBufferWriter_WriteString  (DW/dwMail.cpp:2168)
 
-void dwMailBufferWriter_WriteString(undefined8 param_1,ulonglong param_2)
+int dwMailBufferWriter_WriteString(dwMailBufferWriter *param_1,char *param_2)
 
 {
-  ulonglong uVar1;
-  char *pcVar3;
-  ulonglong uVar2;
+  dwMailBufferWriter *pdVar1;
+  int iVar2;
+  ulonglong uVar3;
+  char *pcVar5;
+  ulonglong uVar4;
   
-  uVar1 = __savegprlr_28();
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821aad70,0x879,0,0xffffffff82000f98,0xffffffff821aada8);
+  uVar3 = (ulonglong)(int)param_2;
+  pdVar1 = (dwMailBufferWriter *)__savegprlr_28(param_1);
+  if (pdVar1 == (dwMailBufferWriter *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwMail.cpp",0x879,0,"%s");
   }
-  uVar2 = param_2;
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821aad70,0x87a,0,0xffffffff82000f98,0xffffffff8217b334);
+  uVar4 = uVar3;
+  if ((uVar3 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwMail.cpp",0x87a,0,"%s");
   }
   do {
-    pcVar3 = (char *)uVar2;
-    uVar2 = uVar2 + 1;
-  } while (*pcVar3 != '\0');
-  dwMailBufferWriter_WriteData(uVar1,param_2,(uVar2 - param_2) - 1 & 0xffffffff);
-  __restgprlr_28();
-  return;
+    pcVar5 = (char *)uVar4;
+    uVar4 = uVar4 + 1;
+  } while (*pcVar5 != '\0');
+  iVar2 = dwMailBufferWriter_WriteData(pdVar1,(void *)uVar3,((int)uVar4 - (int)(void *)uVar3) + -1);
+  iVar2 = __restgprlr_28(iVar2);
+  return iVar2;
 }
 
 
 // 826EB6E8  dwMail_Init  (DW/dwMail.cpp:2186)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void dwMail_Init(void)
 
 {
   dwMail_FillWithDefaultValues();
-  Cmd_AddCommandInternal(0xffffffff821abe60,0xffffffff826e9428,0xffffffff844f5f84);
-  Cmd_AddCommandInternal(0xffffffff821abe50,0xffffffff826e9580,0xffffffff844f5f70);
+  Cmd_AddCommandInternal("dwmailstatus",dwMail_DWMailStatus_f,&dwMail_DWMailStatus_f_VAR);
+  Cmd_AddCommandInternal("dwmailverbose",dwMail_DWMailVerbose_f,&dwMail_DWMailVerbose_f_VAR);
   return;
 }
 
 
 // 826EB740  dwMail_Shutdown  (DW/dwMail.cpp:2210)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void dwMail_Shutdown(void)
 
 {
   dwMail_FillWithDefaultValues();
-  Cmd_RemoveCommand(0xffffffff821abe60);
-  Cmd_RemoveCommand(0xffffffff821abe50);
+  Cmd_RemoveCommand("dwmailstatus");
+  Cmd_RemoveCommand("dwmailverbose");
   return;
 }
 
 
 // 826E9BE0  dwMail_Enable  (DW/dwMail.cpp:2228)
 
-void dwMail_Enable(undefined4 param_1)
+void dwMail_Enable(int param_1)
 
 {
-  DAT_844f5fa0 = param_1;
+  s_dwMailManager.enabled = param_1;
   return;
 }
 
 
 // 826E9BF0  dwMail_IsEnabled  (DW/dwMail.cpp:2239)
 
-undefined4 dwMail_IsEnabled(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int dwMail_IsEnabled(void)
 
 {
-  return DAT_844f5fa0;
+  return s_dwMailManager.enabled;
 }
 
 
 // 826E9C00  dwMail_RegisterHandler  (DW/dwMail.cpp:2251)
 
-undefined8 dwMail_RegisterHandler(int param_1,int param_2,int param_3)
+int dwMail_RegisterHandler
+              (int param_1,_func___cdecl_dwMailHandlerReturnCode_t_int_char_ptr_int *param_2,
+              _func___cdecl_dwMailHandlerReturnCode_t *param_3)
 
 {
-  int iVar1;
-  bool bVar2;
-  int *piVar3;
+  bool bVar1;
+  int iVar2;
+  _func___cdecl_dwMailHandlerReturnCode_t_int_char_ptr_int **pp_Var3;
   int iVar4;
   
-  if (param_2 == 0) {
-    MyAssertHandler(0xffffffff821aad70,0x8cf,0,0xffffffff82000f98,0xffffffff821aade4);
+  if (param_2 == (_func___cdecl_dwMailHandlerReturnCode_t_int_char_ptr_int *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwMail.cpp",0x8cf,0,"%s");
     return 0;
   }
-  bVar2 = false;
-  iVar1 = 0;
-  iVar4 = DAT_844f5fcc;
-  if (0 < DAT_844f5fcc) {
-    piVar3 = &DAT_844f5fb8;
+  bVar1 = false;
+  iVar2 = 0;
+  iVar4 = s_dwMailManager.num_handlers;
+  if (0 < s_dwMailManager.num_handlers) {
+    pp_Var3 = &s_dwMailManager.dwmailmailhandlerentryarray[0].dwmailhandlerinspect;
     do {
-      if (piVar3[-1] == param_1) {
-        *piVar3 = param_2;
-        bVar2 = true;
-        piVar3[1] = param_3;
-        iVar4 = DAT_844f5fcc;
+      if (((dwMailMailHandlerEntry *)(pp_Var3 + -1))->id == param_1) {
+        *pp_Var3 = param_2;
+        bVar1 = true;
+        pp_Var3[1] = (_func___cdecl_dwMailHandlerReturnCode_t_int_char_ptr_int *)param_3;
+        iVar4 = s_dwMailManager.num_handlers;
       }
-      iVar1 = iVar1 + 1;
-      piVar3 = piVar3 + 3;
-    } while (iVar1 < iVar4);
-    if (bVar2) {
+      iVar2 = iVar2 + 1;
+      pp_Var3 = pp_Var3 + 3;
+    } while (iVar2 < iVar4);
+    if (bVar1) {
       return 1;
     }
   }
   if (iVar4 < 2) {
-    (&DAT_844f5fb4)[iVar4 * 3] = param_1;
-    (&DAT_844f5fb8)[DAT_844f5fcc * 3] = param_2;
-    (&DAT_844f5fbc)[DAT_844f5fcc * 3] = param_3;
-    DAT_844f5fcc = DAT_844f5fcc + 1;
+    s_dwMailManager.dwmailmailhandlerentryarray[iVar4].id = param_1;
+    s_dwMailManager.dwmailmailhandlerentryarray[s_dwMailManager.num_handlers].dwmailhandlerinspect =
+         param_2;
+    s_dwMailManager.dwmailmailhandlerentryarray[s_dwMailManager.num_handlers].dwmailhandlerpump =
+         param_3;
+    s_dwMailManager.num_handlers = s_dwMailManager.num_handlers + 1;
     return 1;
   }
-  if (DAT_84013128 == 0) {
-    MyAssertHandler(0xffffffff821aad70,0x8e9,0,0xffffffff821aadc0);
+  if (alwaysfails == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwMail.cpp",0x8e9,0,
+                    "dwMail: mail handler queue is full!");
   }
   return 0;
 }
@@ -1415,40 +1526,35 @@ undefined8 dwMail_RegisterHandler(int param_1,int param_2,int param_3)
 
 // 826E9D60  dwMail_UnregisterHandler  (DW/dwMail.cpp:2300)
 
-void dwMail_UnregisterHandler(void)
+void dwMail_UnregisterHandler(int param_1)
 
 {
   int iVar1;
   ulonglong uVar2;
-  ulonglong uVar3;
-  longlong lVar4;
-  undefined4 *_Src;
-  int *_Dst;
+  longlong lVar3;
+  dwMailMailHandlerEntry *pdVar4;
   
-  iVar1 = __savegprlr_27();
-  lVar4 = 0;
-  uVar3 = (ulonglong)DAT_844f5fcc;
-  if (0 < (int)DAT_844f5fcc) {
-    _Dst = &DAT_844f5fb4;
-    _Src = &DAT_844f5fc0;
+  iVar1 = __savegprlr_27(param_1);
+  lVar3 = 0;
+  uVar2 = (ulonglong)(uint)s_dwMailManager.num_handlers;
+  if (0 < s_dwMailManager.num_handlers) {
+    pdVar4 = s_dwMailManager.dwmailmailhandlerentryarray;
     do {
-      if (*_Dst == iVar1) {
-        uVar2 = (uVar3 - lVar4) - 1;
-        if (0 < (longlong)uVar2) {
-          memmove(_Dst,_Src,(size_t)((uVar2 + (uVar2 & 0x7fffffff) * 2 & 0xffffffff) << 2));
-          uVar3 = (ulonglong)DAT_844f5fcc;
+      if (pdVar4->id == iVar1) {
+        if (0 < (longlong)((uVar2 - lVar3) + -1)) {
+          memmove();
+          uVar2 = (ulonglong)(uint)s_dwMailManager.num_handlers;
         }
-        Com_Memset((uVar3 + (uVar3 & 0x7fffffff) * 2 & 0x3fffffff) * 4 + -0x7bb0a058,0,0xc);
-        lVar4 = lVar4 + -1;
-        uVar3 = (ulonglong)DAT_844f5fcc - 1;
-        _Src = _Src + -3;
-        _Dst = _Dst + -3;
-        DAT_844f5fcc = (uint)uVar3;
+        Com_Memset((void *)((int)(s_dwMailManager.dwmailmailhandlerentryarray + -1) +
+                           (int)((uVar2 + (uVar2 & 0x7fffffff) * 2 & 0xffffffff) << 2)),0,0xc);
+        lVar3 = lVar3 + -1;
+        uVar2 = (ulonglong)(uint)s_dwMailManager.num_handlers - 1;
+        pdVar4 = pdVar4 + -1;
+        s_dwMailManager.num_handlers = (int)uVar2;
       }
-      lVar4 = lVar4 + 1;
-      _Src = _Src + 3;
-      _Dst = _Dst + 3;
-    } while ((int)lVar4 < (int)uVar3);
+      lVar3 = lVar3 + 1;
+      pdVar4 = pdVar4 + 1;
+    } while ((int)lVar3 < (int)uVar2);
   }
   __restgprlr_27();
   return;
@@ -1457,33 +1563,39 @@ void dwMail_UnregisterHandler(void)
 
 // 826E9E18  dwMail_EmptyHandlerList  (DW/dwMail.cpp:2333)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void dwMail_EmptyHandlerList(void)
 
 {
-  Com_Memset(0xffffffff844f5fb4,0,0x18);
-  DAT_844f5fcc = 0;
+  Com_Memset(s_dwMailManager.dwmailmailhandlerentryarray,0,0x18);
+  s_dwMailManager.num_handlers = 0;
   return;
 }
 
 
 // 826E9E60  dwMail_GetHandlerCount  (DW/dwMail.cpp:2345)
 
-undefined4 dwMail_GetHandlerCount(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int dwMail_GetHandlerCount(void)
 
 {
-  return DAT_844f5fcc;
+  return s_dwMailManager.num_handlers;
 }
 
 
 // 826E9E70  dwMail_ReplyBufferReset  (DW/dwMail.cpp:2356)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void dwMail_ReplyBufferReset(void)
 
 {
-  if ((DAT_844f5fa4 == 5) ||
-     (MyAssertHandler(0xffffffff821aad70,0x935,0,0xffffffff82000f98,0xffffffff821aae08),
-     DAT_844f5fa4 == 5)) {
-    dwMailBufferWriter_Reset(0xffffffff844f6100);
+  if ((s_dwMailManager.dwmailmanagerstate == DWMAILMANAGERSTATE_PROCESSING) ||
+     (MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwMail.cpp",0x935,0,"%s")
+     , s_dwMailManager.dwmailmanagerstate == DWMAILMANAGERSTATE_PROCESSING)) {
+    dwMailBufferWriter_Reset(&s_dwMailManager.dwmailbufferwriter);
   }
   return;
 }
@@ -1491,66 +1603,73 @@ void dwMail_ReplyBufferReset(void)
 
 // 826E9EE0  dwMail_ReplyBufferWriteData  (DW/dwMail.cpp:2373)
 
-void dwMail_ReplyBufferWriteData(undefined8 param_1,undefined8 param_2)
+int dwMail_ReplyBufferWriteData(void *param_1,int param_2)
 
 {
-  undefined8 uVar1;
+  void *pvVar1;
+  int iVar2;
   
-  uVar1 = __savegprlr_29();
-  if ((DAT_844f5fa4 != 5) &&
-     (MyAssertHandler(0xffffffff821aad70,0x946,0,0xffffffff82000f98,0xffffffff821aae08),
-     DAT_844f5fa4 != 5)) {
-    __restgprlr_29(0);
-    return;
+  pvVar1 = (void *)__savegprlr_29(param_1);
+  if ((s_dwMailManager.dwmailmanagerstate != DWMAILMANAGERSTATE_PROCESSING) &&
+     (MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwMail.cpp",0x946,0,"%s")
+     , s_dwMailManager.dwmailmanagerstate != DWMAILMANAGERSTATE_PROCESSING)) {
+    iVar2 = __restgprlr_29(0);
+    return iVar2;
   }
-  dwMailBufferWriter_WriteData(0xffffffff844f6100,uVar1,param_2);
-  __restgprlr_29();
-  return;
+  iVar2 = dwMailBufferWriter_WriteData(&s_dwMailManager.dwmailbufferwriter,pvVar1,param_2);
+  iVar2 = __restgprlr_29(iVar2);
+  return iVar2;
 }
 
 
 // 826E9F60  dwMail_ReplyBufferWriteString  (DW/dwMail.cpp:2390)
 
-undefined8 dwMail_ReplyBufferWriteString(undefined8 param_1)
+int dwMail_ReplyBufferWriteString(char *param_1)
 
 {
-  undefined8 uVar1;
+  int iVar1;
   
-  if ((DAT_844f5fa4 == 5) ||
-     (MyAssertHandler(0xffffffff821aad70,0x957,0,0xffffffff82000f98,0xffffffff821aae08),
-     DAT_844f5fa4 == 5)) {
-    uVar1 = dwMailBufferWriter_WriteString(0xffffffff844f6100,param_1);
+  if ((s_dwMailManager.dwmailmanagerstate == DWMAILMANAGERSTATE_PROCESSING) ||
+     (MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwMail.cpp",0x957,0,"%s")
+     , s_dwMailManager.dwmailmanagerstate == DWMAILMANAGERSTATE_PROCESSING)) {
+    iVar1 = dwMailBufferWriter_WriteString(&s_dwMailManager.dwmailbufferwriter,param_1);
   }
   else {
-    uVar1 = 0;
+    iVar1 = 0;
   }
-  return uVar1;
+  return iVar1;
 }
 
 
 // 826E9FE8  dwMail_ReplyBufferGetNumBytesWritten  (DW/dwMail.cpp:2407)
 
-undefined4 dwMail_ReplyBufferGetNumBytesWritten(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int dwMail_ReplyBufferGetNumBytesWritten(void)
 
 {
-  return DAT_844f6110;
+  return s_dwMailManager.dwmailbufferwriter.numbyteswritten;
 }
 
 
 // 826E9FF8  dwMail_AbortProcessing  (DW/dwMail.cpp:2418)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void dwMail_AbortProcessing(void)
 
 {
-  if (DAT_844f5fd0 == 0) {
+  if (s_dwMailManager.dwmailmailhandlerentry == (dwMailMailHandlerEntry *)0x0) {
     return;
   }
-  DAT_844f5fd0 = 0;
+  s_dwMailManager.dwmailmailhandlerentry = (dwMailMailHandlerEntry *)0x0;
   return;
 }
 
 
 // 826EB940  dwMail_Frame  (DW/dwMail.cpp:2432)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void dwMail_Frame(void)
 
@@ -1558,59 +1677,63 @@ void dwMail_Frame(void)
   char in_RESERVE;
   byte in_cr0;
   
-  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff8217dba4);
+  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"dwMail_Frame");
   Profile2_UpdateEntry(7);
   do {
     if (in_RESERVE != '\0') {
-      DAT_84184e14 = storeWordConditionalIndexed((ulonglong)DAT_84184e14 + 1,0,0xffffffff84184e14);
+      g_prof2_begin_count[7] =
+           storeWordConditionalIndexed
+                     ((ulonglong)(uint)g_prof2_begin_count[7] + 1,0,0xffffffff84184e14);
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
-  switch(DAT_844f5fa4) {
-  case 0:
+  switch(s_dwMailManager.dwmailmanagerstate) {
+  case DWMAILMANAGERSTATE_IDLE:
     dwMail_PumpStateIdle();
     break;
-  case 1:
+  case DWMAILMANAGERSTATE_GETHEADERSINIT:
     dwMail_PumpStateGetHeaderInit();
     break;
-  case 2:
+  case DWMAILMANAGERSTATE_GETHEADERS:
     dwMail_PumpStateGetHeader();
     break;
-  case 3:
+  case DWMAILMANAGERSTATE_GETDATAINIT:
     dwMail_PumpStateGetDataInit();
     break;
-  case 4:
+  case DWMAILMANAGERSTATE_GETDATA:
     dwMail_PumpStateGetData();
     break;
-  case 5:
+  case DWMAILMANAGERSTATE_PROCESSING:
     dwMail_PumpStateProcessing();
     break;
-  case 6:
+  case DWMAILMANAGERSTATE_SENDINIT:
     dwMail_PumpStateSendInit();
     break;
-  case 7:
+  case DWMAILMANAGERSTATE_SEND:
     dwMail_PumpStateSend();
     break;
-  case 8:
+  case DWMAILMANAGERSTATE_DELETEINIT:
     dwMail_PumpStateDeleteInit();
     break;
-  case 9:
+  case DWMAILMANAGERSTATE_DELETE:
     dwMail_PumpStateDelete();
     break;
-  case -1:
+  case DWMAILMANAGERSTATE_ERROR:
     dwMail_PumpStateError();
     break;
   default:
-    if (DAT_844f5fa4 != 0) {
-      DAT_844f5fa4 = 0;
-      DAT_844f5fa8 = Sys_Milliseconds();
-      DAT_844f5fac = DAT_844f5fa8;
+    if (s_dwMailManager.dwmailmanagerstate != DWMAILMANAGERSTATE_IDLE) {
+      s_dwMailManager.dwmailmanagerstate = DWMAILMANAGERSTATE_IDLE;
+      s_dwMailManager.time_entered_state = Sys_Milliseconds();
+      s_dwMailManager.time_idle = s_dwMailManager.time_entered_state;
     }
   }
   Profile2_UpdateEntry(7);
   do {
     if (in_RESERVE != '\0') {
-      DAT_84184e14 = storeWordConditionalIndexed((ulonglong)DAT_84184e14 - 1,0,0xffffffff84184e14);
+      g_prof2_begin_count[7] =
+           storeWordConditionalIndexed
+                     ((ulonglong)(uint)g_prof2_begin_count[7] - 1,0,0xffffffff84184e14);
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
@@ -1621,10 +1744,14 @@ void dwMail_Frame(void)
 
 // 826EA018  dwMail_IsBusy  (DW/dwMail.cpp:2504)
 
-undefined8 dwMail_IsBusy(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int dwMail_IsBusy(void)
 
 {
-  if (((DAT_844f5fa4 != 0) && (DAT_844f5fa4 != -1)) && (DAT_844f5fa4 != 5)) {
+  if (((s_dwMailManager.dwmailmanagerstate != DWMAILMANAGERSTATE_IDLE) &&
+      (s_dwMailManager.dwmailmanagerstate != DWMAILMANAGERSTATE_ERROR)) &&
+     (s_dwMailManager.dwmailmanagerstate != DWMAILMANAGERSTATE_PROCESSING)) {
     return 1;
   }
   return 0;
@@ -1636,16 +1763,16 @@ undefined8 dwMail_IsBusy(void)
 void dwMail_HandleOnNewMailEvent(int param_1)
 
 {
-  if (DAT_844f5fb0 != 0) {
-    Com_Printf(0x19,0xffffffff821aae98,param_1);
+  if (s_dwMailManager.verboseflag != 0) {
+    Com_Printf(0x19,"dwMail: dwMail_HandleOnNewMailEvent( %d )\n");
   }
   if ((param_1 < 0) || (3 < param_1)) {
-    MyAssertHandler(0xffffffff821aad70,0x9df,0,0xffffffff82000f98,0xffffffff821aae50);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwMail.cpp",0x9df,0,"%s");
   }
   if ((-1 < param_1) && (param_1 < 4)) {
-    Sys_LockWrite(0xffffffff844f5f98);
-    (&DAT_844f60e4)[param_1 * 2] = (&DAT_844f60e4)[param_1 * 2] + 1;
-    Sys_UnlockWrite(0xffffffff844f5f98);
+    Sys_LockWrite(&s_dwMailManager.fastcriticalsection);
+    s_dwMailManager.user[param_1].newmailcounter = s_dwMailManager.user[param_1].newmailcounter + 1;
+    Sys_UnlockWrite(&s_dwMailManager.fastcriticalsection);
   }
   return;
 }
@@ -1656,17 +1783,17 @@ void dwMail_HandleOnNewMailEvent(int param_1)
 void dwMail_UserSignedInToLive(int param_1)
 
 {
-  if (DAT_844f5fb0 != 0) {
-    Com_Printf(0x19,0xffffffff821aaec4,param_1);
+  if (s_dwMailManager.verboseflag != 0) {
+    Com_Printf(0x19,"dwMail: dwMail_UserSignedInToLive( %d )\n");
   }
   if ((param_1 < 0) || (3 < param_1)) {
-    MyAssertHandler(0xffffffff821aad70,0x9fc,0,0xffffffff82000f98,0xffffffff821aae50);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwMail.cpp",0x9fc,0,"%s");
   }
   if ((-1 < param_1) && (param_1 < 4)) {
-    (&DAT_844f60e0)[param_1 * 2] = 1;
-    Sys_LockWrite(0xffffffff844f5f98);
-    (&DAT_844f60e4)[param_1 * 2] = (&DAT_844f60e4)[param_1 * 2] + 1;
-    Sys_UnlockWrite(0xffffffff844f5f98);
+    s_dwMailManager.user[param_1].signedin = 1;
+    Sys_LockWrite(&s_dwMailManager.fastcriticalsection);
+    s_dwMailManager.user[param_1].newmailcounter = s_dwMailManager.user[param_1].newmailcounter + 1;
+    Sys_UnlockWrite(&s_dwMailManager.fastcriticalsection);
   }
   return;
 }
@@ -1674,81 +1801,83 @@ void dwMail_UserSignedInToLive(int param_1)
 
 // 826EA1E0  dwMail_UserSignedOut  (DW/dwMail.cpp:2577)
 
-void dwMail_UserSignedOut(void)
+void dwMail_UserSignedOut(int param_1)
 
 {
   int iVar1;
   
-  iVar1 = __savegprlr_29();
-  if (DAT_844f5fb0 != 0) {
-    Com_Printf(0x19,0xffffffff821aaef0,iVar1);
+  iVar1 = __savegprlr_29(param_1);
+  if (s_dwMailManager.verboseflag != 0) {
+    Com_Printf(0x19,"dwMail: dwMail_UserSignedOut( %d )\n");
   }
   if ((iVar1 < 0) || (3 < iVar1)) {
-    MyAssertHandler(0xffffffff821aad70,0xa1b,0,0xffffffff82000f98,0xffffffff821aae50);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwMail.cpp",0xa1b,0,"%s");
   }
   if ((-1 < iVar1) && (iVar1 < 4)) {
-    (&DAT_844f60e0)[iVar1 * 2] = 0;
-    Sys_LockWrite(0xffffffff844f5f98);
-    (&DAT_844f60e4)[iVar1 * 2] = 0;
-    Sys_UnlockWrite(0xffffffff844f5f98);
+    s_dwMailManager.user[iVar1].signedin = 0;
+    Sys_LockWrite(&s_dwMailManager.fastcriticalsection);
+    s_dwMailManager.user[iVar1].newmailcounter = 0;
+    Sys_UnlockWrite(&s_dwMailManager.fastcriticalsection);
   }
   __restgprlr_29();
   return;
 }
 
 
-// 826EBC40  dwMailManager::dwMailManager  (line unknown)
+// 826EBC40  dwMailManager  (line unknown)
 
-void dwMailManager__dwMailManager(void)
+dwMailManager * __thiscall dwMailManager::dwMailManager(dwMailManager *this)
 
 {
   int iVar1;
-  int iVar2;
+  dwMailManager *pdVar2;
+  bdMailHeader *this_00;
   longlong lVar3;
   
-  iVar1 = __savegprlr_28();
-  iVar2 = iVar1 + 0x50;
+  iVar1 = __savegprlr_28(this);
+  this_00 = (bdMailHeader *)(iVar1 + 0x50);
   *(undefined4 *)(iVar1 + 0x48) = 0;
   lVar3 = 1;
   do {
-    bdMailHeader__bdMailHeader(iVar2);
+    bdMailHeader::bdMailHeader(this_00);
     lVar3 = lVar3 + -1;
-    iVar2 = iVar2 + 0x60;
+    this_00 = this_00 + 1;
   } while (-1 < lVar3);
-  bdMailBody__bdMailBody(iVar1 + 0x118);
+  bdMailBody::bdMailBody((bdMailBody *)(iVar1 + 0x118));
   *(undefined4 *)(iVar1 + 0x188) = 0;
   *(undefined1 *)(iVar1 + 0x17c) = 0;
   *(undefined4 *)(iVar1 + 0x180) = 0;
   *(undefined4 *)(iVar1 + 0x184) = 0;
   *(undefined4 *)(iVar1 + 0x188) = 0;
-  __restgprlr_28(iVar1);
-  return;
+  pdVar2 = (dwMailManager *)__restgprlr_28(iVar1);
+  return pdVar2;
 }
 
 
-// 826EBCA0  dwMailManager::~dwMailManager  (line unknown)
+// 826EBCA0  ~dwMailManager  (line unknown)
 
-void dwMailManager___dwMailManager(void)
+void __thiscall dwMailManager::~dwMailManager(dwMailManager *this)
 
 {
   int iVar1;
   longlong lVar2;
-  int iVar3;
+  bdMailHeader *this_00;
   
-  iVar1 = __savegprlr_29();
+  iVar1 = __savegprlr_29(this);
   *(undefined1 *)(iVar1 + 0x17c) = 0;
   *(undefined4 *)(iVar1 + 0x180) = 0;
   *(undefined4 *)(iVar1 + 0x184) = 0;
   *(undefined4 *)(iVar1 + 0x188) = 0;
-  bdMailBody___bdMailBody(iVar1 + 0x118);
-  iVar3 = iVar1 + 0x110;
+  bdMailBody::~bdMailBody((bdMailBody *)(iVar1 + 0x118));
+  this_00 = (bdMailHeader *)(iVar1 + 0x110);
   lVar2 = 1;
   do {
-    iVar3 = iVar3 + -0x60;
-    bdMailHeader___bdMailHeader(iVar3);
+    this_00 = this_00 + -1;
+    bdMailHeader::~bdMailHeader(this_00);
     lVar2 = lVar2 + -1;
   } while (-1 < lVar2);
-  bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(iVar1 + 0x48);
+  bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>((bdReference<bdRemoteTask> *)(iVar1 + 0x48))
+  ;
   __restgprlr_29();
   return;
 }
@@ -1756,10 +1885,12 @@ void dwMailManager___dwMailManager(void)
 
 // 82940470  `dynamic_atexit_destructor_for_'s_dwMailManager''  (line unknown)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void _dynamic_atexit_destructor_for__s_dwMailManager__(void)
 
 {
-  dwMailManager___dwMailManager(0xffffffff844f5f98);
+  dwMailManager::~dwMailManager(&s_dwMailManager);
   return;
 }
 

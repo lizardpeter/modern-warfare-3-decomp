@@ -2,51 +2,51 @@
 
 // 82811AF8  vp8_mv_cont  (WebM_atvi_opt/vpx/vp8/common/entropymode.c:41)
 
-char vp8_mv_cont(short *param_1,short *param_2)
+int vp8_mv_cont(MV *param_1,MV *param_2)
 
 {
   bool bVar1;
-  char cVar2;
+  int iVar2;
   
-  if ((*param_1 != 0) || (cVar2 = '\x01', param_1[1] != 0)) {
-    cVar2 = '\0';
+  if ((param_1->row != 0) || (iVar2 = 1, param_1->col != 0)) {
+    iVar2 = 0;
   }
-  if ((*param_2 != 0) || (bVar1 = true, param_2[1] != 0)) {
+  if ((param_2->row != 0) || (bVar1 = true, param_2->col != 0)) {
     bVar1 = false;
   }
-  if ((*param_1 == *param_2) && (param_1[1] == param_2[1])) {
-    return cVar2 + '\x03';
+  if ((param_1->row == param_2->row) && (param_1->col == param_2->col)) {
+    return ((uint)LZCOUNT(iVar2) >> 5 ^ 1) + 3;
   }
   if (bVar1) {
-    return '\x02';
+    return 2;
   }
-  return cVar2;
+  return (uint)(iVar2 != 0);
 }
 
 
 // 82811B88  vp8_init_mbmode_probs  (WebM_atvi_opt/vpx/vp8/common/entropymode.c:195)
 
-void vp8_init_mbmode_probs(void)
+void vp8_init_mbmode_probs(VP8Common *param_1)
 
 {
-  longlong lVar1;
+  int iVar1;
   void *pvVar2;
-  undefined1 auStack_50 [80];
+  uint auStack_50 [20];
   
-  lVar1 = __savegprlr_28();
+  iVar1 = __savegprlr_28(param_1);
   vp8_tree_probs_from_distribution
-            (5,0xffffffff84897a00,0xffffffff821e88dc,lVar1 + 0x67e4,auStack_50,0xffffffff821e8744,
+            (5,vp8_ymode_encodings,"",(uchar *)(iVar1 + 0x67e4),(uint (*) [2])auStack_50,y_mode_cts,
              0x100,1);
   vp8_tree_probs_from_distribution
-            (5,0xffffffff84897b80,0xffffffff821e88e4,lVar1 + 0x6355,auStack_50,0xffffffff821e8730,
-             0x100,1);
+            (5,vp8_kf_ymode_encodings,&vp8_kf_ymode_tree,(uchar *)(iVar1 + 0x6355),
+             (uint (*) [2])auStack_50,kf_y_mode_cts,0x100,1);
   vp8_tree_probs_from_distribution
-            (4,0xffffffff84897b20,0xffffffff821e88ec,lVar1 + 0x67e8,auStack_50,0xffffffff821e8758,
-             0x100,1);
+            (4,vp8_uv_mode_encodings,"",(uchar *)(iVar1 + 0x67e8),(uint (*) [2])auStack_50,
+             uv_mode_cts,0x100,1);
   vp8_tree_probs_from_distribution
-            (4,0xffffffff84897b20,0xffffffff821e88ec,lVar1 + 0x6359,auStack_50,0xffffffff821e8768,
-             0x100,1);
-  pvVar2 = vpx_memcpy((void *)((int)lVar1 + 0x67eb),&DAT_821e87a0,3);
+            (4,vp8_uv_mode_encodings,"",(uchar *)(iVar1 + 0x6359),(uint (*) [2])auStack_50,
+             kf_uv_mode_cts,0x100,1);
+  pvVar2 = vpx_memcpy((void *)(iVar1 + 0x67eb),sub_mv_ref_prob,3);
   __restgprlr_28(pvVar2);
   return;
 }
@@ -54,50 +54,50 @@ void vp8_init_mbmode_probs(void)
 
 // 82811C68  intra_bmode_probs_from_distribution  (WebM_atvi_opt/vpx/vp8/common/entropymode.c:227)
 
-void intra_bmode_probs_from_distribution(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+void intra_bmode_probs_from_distribution(uchar *param_1,uint (*param_2) [2],uint *param_3)
 
 {
-  vp8_tree_probs_from_distribution
-            (10,0xffffffff84897ac0,0xffffffff821e88c8,param_1,param_2,param_3,0x100,1);
+  vp8_tree_probs_from_distribution(10,vp8_bmode_encodings,"",param_1,param_2,param_3,0x100,1);
   return;
 }
 
 
 // 82811C98  vp8_default_bmode_probs  (WebM_atvi_opt/vpx/vp8/common/entropymode.c:236)
 
-void vp8_default_bmode_probs(undefined8 param_1)
+void vp8_default_bmode_probs(uchar *param_1)
 
 {
-  undefined1 auStack_50 [80];
+  uint auStack_50 [20];
   
   vp8_tree_probs_from_distribution
-            (10,0xffffffff84897ac0,0xffffffff821e88c8,param_1,auStack_50,0xffffffff821e8778,0x100,1)
-  ;
+            (10,vp8_bmode_encodings,"",param_1,(uint (*) [2])auStack_50,bmode_cts,0x100,1);
   return;
 }
 
 
 // 82811CE8  vp8_kf_default_bmode_probs  (WebM_atvi_opt/vpx/vp8/common/entropymode.c:242)
 
-void vp8_kf_default_bmode_probs(void)
+void vp8_kf_default_bmode_probs(uchar (*param_1) [10] [9])
 
 {
-  longlong lVar1;
+  int iVar1;
   ulonglong uVar2;
   longlong lVar3;
   longlong lVar4;
-  undefined1 auStack_80 [128];
+  uint auStack_80 [32];
   
-  lVar1 = __savegprlr_26();
+  iVar1 = __savegprlr_26(param_1);
   lVar3 = 0;
   do {
     lVar4 = 0;
     do {
       uVar2 = lVar3 + lVar4;
       vp8_tree_probs_from_distribution
-                (10,0xffffffff84897ac0,0xffffffff821e88c8,uVar2 + (uVar2 & 0x1fffffff) * 8 + lVar1,
-                 auStack_80,(uVar2 + (uVar2 & 0x3fffffff) * 4 & 0x1fffffff) * 8 + -0x7de17580,0x100,
-                 1);
+                (10,vp8_bmode_encodings,"",
+                 (uchar *)((int)uVar2 + (int)((uVar2 & 0xffffffff) << 3) + iVar1),
+                 (uint (*) [2])auStack_80,
+                 (uint *)((int)vp8_kf_default_bmode_counts[0][0] +
+                         (int)((uVar2 + (uVar2 & 0x3fffffff) * 4 & 0xffffffff) << 3)),0x100,1);
       lVar4 = lVar4 + 1;
     } while ((int)lVar4 < 10);
     lVar3 = lVar3 + 10;
@@ -109,17 +109,19 @@ void vp8_kf_default_bmode_probs(void)
 
 // 82811D78  vp8_entropy_mode_init  (WebM_atvi_opt/vpx/vp8/common/entropymode.c:264)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void vp8_entropy_mode_init(void)
 
 {
-  vp8_tokens_from_tree(0xffffffff84897ac0,0xffffffff821e88c8);
-  vp8_tokens_from_tree(0xffffffff84897a00,0xffffffff821e88dc);
-  vp8_tokens_from_tree(0xffffffff84897b80,0xffffffff821e88e4);
-  vp8_tokens_from_tree(0xffffffff84897b20,0xffffffff821e88ec);
-  vp8_tokens_from_tree(0xffffffff84897a40,0xffffffff821e88f4);
-  vp8_tokens_from_tree_offset(0xffffffff84897b40,0xffffffff821e88fc,5);
-  vp8_tokens_from_tree_offset(0xffffffff84897aa0,0xffffffff821e8904,10);
-  vp8_tokens_from_tree(0xffffffff84897a60,0xffffffff821e890c);
+  vp8_tokens_from_tree(vp8_bmode_encodings,"");
+  vp8_tokens_from_tree(vp8_ymode_encodings,"");
+  vp8_tokens_from_tree(vp8_kf_ymode_encodings,&vp8_kf_ymode_tree);
+  vp8_tokens_from_tree(vp8_uv_mode_encodings,"");
+  vp8_tokens_from_tree(vp8_mbsplit_encodings,&vp8_mbsplit_tree);
+  vp8_tokens_from_tree_offset(vp8_mv_ref_encoding_array,&vp8_mv_ref_tree,5);
+  vp8_tokens_from_tree_offset(vp8_sub_mv_ref_encoding_array,&vp8_sub_mv_ref_tree,10);
+  vp8_tokens_from_tree(vp8_small_mvencodings,"\x02");
   return;
 }
 

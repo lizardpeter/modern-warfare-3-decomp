@@ -2,152 +2,141 @@
 
 // 826A9B50  MD4Init  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/common/md4.cpp:96)
 
-void MD4Init(undefined4 *param_1)
+void MD4Init(MD4_CTX *param_1)
 
 {
-  param_1[5] = 0;
-  param_1[4] = 0;
-  *param_1 = 0x67452301;
-  param_1[1] = 0xefcdab89;
-  param_1[2] = 0x98badcfe;
-  param_1[3] = 0x10325476;
+  param_1->count[1] = 0;
+  param_1->count[0] = 0;
+  param_1->state[0] = 0x67452301;
+  param_1->state[1] = 0xefcdab89;
+  param_1->state[2] = 0x98badcfe;
+  param_1->state[3] = 0x10325476;
   return;
 }
 
 
 // 826AA378  MD4Update  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/common/md4.cpp:108)
 
-void MD4Update(undefined8 param_1,longlong param_2,ulonglong param_3)
+void MD4Update(MD4_CTX *param_1,uchar *param_2,uint param_3)
 
 {
   uint uVar1;
-  int iVar2;
-  void *pvVar3;
-  uint uVar4;
-  ulonglong uVar5;
+  longlong lVar2;
+  ulong *puVar3;
+  ulonglong uVar4;
+  uint uVar5;
   ulonglong uVar6;
-  size_t _Size;
   
-  iVar2 = __savegprlr_26();
-  uVar1 = *(uint *)(iVar2 + 0x10);
-  uVar4 = (int)((param_3 & 0xffffffff) << 3) + uVar1;
-  *(uint *)(iVar2 + 0x10) = uVar4;
-  uVar5 = (ulonglong)(uVar1 >> 3) & 0x3f;
-  if ((ulonglong)uVar4 < (param_3 & 0x1fffffff) << 3) {
-    *(int *)(iVar2 + 0x14) = *(int *)(iVar2 + 0x14) + 1;
+  uVar4 = (ulonglong)(int)param_3;
+  puVar3 = (ulong *)__savegprlr_26(param_1);
+  uVar1 = puVar3[4];
+  uVar5 = (int)((uVar4 & 0xffffffff) << 3) + uVar1;
+  puVar3[4] = uVar5;
+  if ((ulonglong)uVar5 < (uVar4 & 0x1fffffff) << 3) {
+    puVar3[5] = puVar3[5] + 1;
   }
-  uVar6 = -uVar5 + 0x40;
-  _Size = (size_t)uVar6;
-  *(uint *)(iVar2 + 0x14) = ((uint)param_3 >> 0x1d) + *(int *)(iVar2 + 0x14);
-  if ((param_3 & 0xffffffff) < (uVar6 & 0xffffffff)) {
-    _Size = 0;
-  }
-  else {
-    memcpy((void *)((int)uVar5 + iVar2 + 0x18),(void *)param_2,_Size);
-    MD4Transform(iVar2,iVar2 + 0x18);
-    uVar5 = -uVar5 + 0x7f;
-    if ((uVar5 & 0xffffffff) < (param_3 & 0xffffffff)) {
+  lVar2 = -((ulonglong)(uVar1 >> 3) & 0x3f);
+  puVar3[5] = ((uint)uVar4 >> 0x1d) + puVar3[5];
+  if ((lVar2 + 0x40U & 0xffffffff) <= (uVar4 & 0xffffffff)) {
+    memcpy();
+    MD4Transform(puVar3,(uchar *)(puVar3 + 6));
+    uVar6 = lVar2 + 0x7f;
+    if ((uVar6 & 0xffffffff) < (uVar4 & 0xffffffff)) {
       do {
-        MD4Transform(iVar2,param_2 + -0x3f + uVar5);
-        uVar5 = uVar5 + 0x40;
+        MD4Transform(puVar3,param_2 + (int)uVar6 + -0x3f);
         uVar6 = uVar6 + 0x40;
-        _Size = (size_t)uVar6;
-      } while ((uVar5 & 0xffffffff) < (param_3 & 0xffffffff));
+      } while ((uVar6 & 0xffffffff) < (uVar4 & 0xffffffff));
     }
-    uVar5 = 0;
   }
-  pvVar3 = memcpy((void *)((int)uVar5 + iVar2 + 0x18),(void *)(_Size + (int)(void *)param_2),
-                  (uint)param_3 - _Size);
-  __restgprlr_26(pvVar3);
+  memcpy();
+  __restgprlr_26();
   return;
 }
 
 
 // 826AA450  MD4Final  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/common/md4.cpp:143)
 
-void * MD4Final(int param_1,undefined4 *param_2)
+void MD4Final(uchar *param_1,MD4_CTX *param_2)
 
 {
-  undefined1 uVar1;
-  undefined1 uVar2;
-  undefined1 uVar3;
-  undefined4 *puVar4;
-  void *pvVar5;
-  int iVar6;
-  undefined4 *puVar8;
-  ulonglong uVar7;
+  uchar uVar1;
+  uchar uVar2;
+  uchar uVar3;
+  ulong *puVar4;
+  uint uVar5;
+  uint uVar6;
+  int iVar7;
+  ulong *puVar8;
   longlong lVar9;
-  undefined1 local_20 [8];
+  uchar local_20 [8];
   
-  puVar8 = param_2 + 3;
+  puVar8 = param_2->state + 3;
   lVar9 = 2;
-  iVar6 = 0;
+  iVar7 = 0;
   do {
     puVar4 = puVar8 + 1;
-    uVar1 = *(undefined1 *)((int)puVar8 + 6);
-    uVar2 = *(undefined1 *)((int)puVar8 + 5);
+    uVar1 = *(uchar *)((int)puVar8 + 6);
+    uVar2 = *(uchar *)((int)puVar8 + 5);
     puVar8 = puVar8 + 1;
-    uVar3 = *(undefined1 *)puVar8;
-    local_20[iVar6] = (char)*puVar4;
-    local_20[iVar6 + 1] = uVar1;
-    local_20[iVar6 + 2] = uVar2;
-    local_20[iVar6 + 3] = uVar3;
+    uVar3 = *(uchar *)puVar8;
+    local_20[iVar7] = (uchar)*puVar4;
+    local_20[iVar7 + 1] = uVar1;
+    local_20[iVar7 + 2] = uVar2;
+    local_20[iVar7 + 3] = uVar3;
     lVar9 = lVar9 + -1;
-    iVar6 = iVar6 + 4;
+    iVar7 = iVar7 + 4;
   } while (lVar9 != 0);
-  uVar7 = (ulonglong)((uint)param_2[4] >> 3) & 0x3f;
-  lVar9 = 0x38 - uVar7;
-  if (0x37 < uVar7) {
-    lVar9 = 0x78 - uVar7;
+  uVar5 = param_2->count[0] >> 3 & 0x3f;
+  uVar6 = 0x38 - uVar5;
+  if (0x37 < uVar5) {
+    uVar6 = 0x78 - uVar5;
   }
-  MD4Update(param_2,0xffffffff82997758,lVar9);
+  MD4Update(param_2,PADDING,uVar6);
   MD4Update(param_2,local_20,8);
-  iVar6 = 0;
+  iVar7 = 0;
   lVar9 = 4;
-  puVar8 = param_2;
   do {
-    *(char *)(iVar6 + param_1) = (char)*puVar8;
-    *(undefined1 *)(param_1 + 1 + iVar6) = *(undefined1 *)((int)puVar8 + 2);
-    *(undefined1 *)(param_1 + 2 + iVar6) = *(undefined1 *)((int)puVar8 + 1);
-    uVar1 = *(undefined1 *)puVar8;
-    puVar8 = puVar8 + 1;
-    *(undefined1 *)(param_1 + 3 + iVar6) = uVar1;
-    iVar6 = iVar6 + 4;
+    param_1[iVar7] = (uchar)param_2->state[0];
+    param_1[iVar7 + 1] = *(uchar *)((int)param_2->state + 2);
+    param_1[iVar7 + 2] = *(uchar *)((int)param_2->state + 1);
+    puVar8 = param_2->state;
+    param_2 = (MD4_CTX *)(param_2->state + 1);
+    param_1[iVar7 + 3] = *(uchar *)puVar8;
+    iVar7 = iVar7 + 4;
     lVar9 = lVar9 + -1;
   } while (lVar9 != 0);
-  pvVar5 = memset(param_2,0,0x58);
-  return pvVar5;
+  memset();
+  return;
 }
 
 
 // 826A9D18  MD4Transform  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/common/md4.cpp:168)
 
-void MD4Transform(undefined8 param_1,int param_2)
+void MD4Transform(ulong *param_1,uchar *param_2)
 
 {
   uint uVar1;
   uint uVar2;
   uint uVar3;
-  undefined1 *puVar4;
-  undefined1 *puVar5;
-  undefined1 *puVar6;
-  undefined1 *puVar7;
-  uint *puVar8;
+  uchar *puVar4;
+  int iVar5;
+  int iVar6;
+  int iVar7;
+  ulonglong uVar8;
   ulonglong uVar9;
   ulonglong uVar10;
+  undefined4 *puVar12;
   ulonglong uVar11;
-  undefined4 *puVar13;
-  ulonglong uVar12;
-  int iVar16;
+  int iVar15;
+  ulonglong uVar13;
   ulonglong uVar14;
-  ulonglong uVar15;
+  ulonglong uVar16;
   ulonglong uVar17;
   ulonglong uVar18;
   ulonglong uVar19;
   ulonglong uVar20;
   ulonglong uVar21;
-  ulonglong uVar22;
-  longlong lVar23;
+  longlong lVar22;
   undefined4 uStack_e4;
   uint local_e0 [4];
   uint local_d0;
@@ -163,141 +152,135 @@ void MD4Transform(undefined8 param_1,int param_2)
   uint local_a8;
   uint local_a4;
   
-  puVar8 = (uint *)__savegprlr();
-  uVar1 = puVar8[1];
-  uVar9 = (ulonglong)uVar1;
-  uVar2 = puVar8[2];
-  uVar3 = puVar8[3];
-  iVar16 = 0;
-  lVar23 = 0x10;
-  puVar13 = &uStack_e4;
+  __savegprlr();
+  uVar1 = param_1[1];
+  uVar8 = (ulonglong)uVar1;
+  uVar2 = param_1[2];
+  uVar3 = param_1[3];
+  iVar15 = 0;
+  lVar22 = 0x10;
+  puVar12 = &uStack_e4;
   do {
-    puVar4 = (undefined1 *)(param_2 + 3 + iVar16);
-    puVar5 = (undefined1 *)(param_2 + 2 + iVar16);
-    puVar6 = (undefined1 *)(param_2 + 1 + iVar16);
-    puVar7 = (undefined1 *)(iVar16 + param_2);
-    iVar16 = iVar16 + 4;
-    puVar13 = puVar13 + 1;
-    *puVar13 = CONCAT31(CONCAT21(CONCAT11(*puVar4,*puVar5),*puVar6),*puVar7);
-    lVar23 = lVar23 + -1;
-  } while (lVar23 != 0);
-  uVar22 = (ulonglong)local_e0[0];
-  uVar21 = (ulonglong)local_e0[1];
-  uVar20 = (ulonglong)local_e0[2];
-  uVar19 = (ulonglong)local_e0[3];
-  uVar18 = (ulonglong)local_d0;
-  uVar10 = ((ulonglong)uVar3 & ~uVar9 | (ulonglong)(uVar2 & uVar1)) + uVar22 + (ulonglong)*puVar8;
-  uVar14 = (uVar10 & 0x1fffffff) << 3 | (uVar10 & 0xffffffff) >> 0x1d;
-  uVar17 = (ulonglong)local_c0;
-  uVar10 = ((ulonglong)uVar2 & ~uVar14 | uVar9 & uVar14) + uVar21 + (ulonglong)uVar3;
-  uVar12 = (uVar10 & 0x1ffffff) << 7 | (uVar10 & 0xffffffff) >> 0x19;
-  uVar10 = (uVar9 & ~uVar12 | uVar12 & uVar14) + uVar20 + (ulonglong)uVar2;
-  uVar11 = (uVar10 & 0x1fffff) << 0xb | (uVar10 & 0xffffffff) >> 0x15;
-  uVar9 = (uVar14 & ~uVar11 | uVar12 & uVar11) + uVar19 + uVar9;
-  uVar9 = (uVar9 & 0x1fff) << 0x13 | (uVar9 & 0xffffffff) >> 0xd;
-  uVar14 = (uVar12 & ~uVar9 | uVar11 & uVar9) + uVar18 + uVar14;
-  uVar10 = (uVar14 & 0x1fffffff) << 3 | (uVar14 & 0xffffffff) >> 0x1d;
-  uVar12 = (uVar11 & ~uVar10 | uVar9 & uVar10) + (ulonglong)local_cc + uVar12;
-  uVar12 = (uVar12 & 0x1ffffff) << 7 | (uVar12 & 0xffffffff) >> 0x19;
-  uVar11 = (uVar9 & ~uVar12 | uVar12 & uVar10) + (ulonglong)local_c8 + uVar11;
-  uVar11 = (uVar11 & 0x1fffff) << 0xb | (uVar11 & 0xffffffff) >> 0x15;
-  uVar9 = (uVar10 & ~uVar11 | uVar12 & uVar11) + (ulonglong)local_c4 + uVar9;
-  uVar9 = (uVar9 & 0x1fff) << 0x13 | (uVar9 & 0xffffffff) >> 0xd;
-  uVar10 = (uVar12 & ~uVar9 | uVar11 & uVar9) + uVar17 + uVar10;
-  uVar15 = (uVar10 & 0x1fffffff) << 3 | (uVar10 & 0xffffffff) >> 0x1d;
-  uVar12 = (uVar11 & ~uVar15 | uVar9 & uVar15) + (ulonglong)local_bc + uVar12;
-  uVar10 = (uVar12 & 0x1ffffff) << 7 | (uVar12 & 0xffffffff) >> 0x19;
-  uVar11 = (uVar9 & ~uVar10 | uVar10 & uVar15) + (ulonglong)local_b8 + uVar11;
-  uVar14 = (uVar11 & 0x1fffff) << 0xb | (uVar11 & 0xffffffff) >> 0x15;
-  uVar9 = (uVar15 & ~uVar14 | uVar10 & uVar14) + (ulonglong)local_b4 + uVar9;
-  uVar11 = (uVar9 & 0x1fff) << 0x13 | (uVar9 & 0xffffffff) >> 0xd;
-  uVar15 = (uVar10 & ~uVar11 | uVar14 & uVar11) + (ulonglong)local_b0 + uVar15;
-  uVar9 = (uVar15 & 0x1fffffff) << 3 | (uVar15 & 0xffffffff) >> 0x1d;
-  uVar10 = (uVar14 & ~uVar9 | uVar11 & uVar9) + (ulonglong)local_ac + uVar10;
-  uVar12 = (uVar10 & 0x1ffffff) << 7 | (uVar10 & 0xffffffff) >> 0x19;
-  uVar14 = (uVar11 & ~uVar12 | uVar12 & uVar9) + (ulonglong)local_a8 + uVar14;
-  uVar14 = (uVar14 & 0x1fffff) << 0xb | (uVar14 & 0xffffffff) >> 0x15;
-  uVar11 = (uVar9 & ~uVar14 | uVar12 & uVar14) + (ulonglong)local_a4 + uVar11;
-  uVar11 = (uVar11 & 0x1fff) << 0x13 | (uVar11 & 0xffffffff) >> 0xd;
-  uVar9 = ((uVar14 | uVar11) & uVar12 | uVar14 & uVar11) + uVar22 + uVar9 + 0x5a827999;
-  uVar10 = (uVar9 & 0x1fffffff) << 3 | (uVar9 & 0xffffffff) >> 0x1d;
-  uVar9 = ((uVar11 | uVar10) & uVar14 | uVar11 & uVar10) + uVar18 + uVar12 + 0x5a827999;
-  uVar9 = (uVar9 & 0x7ffffff) << 5 | (uVar9 & 0xffffffff) >> 0x1b;
-  uVar12 = ((uVar11 | uVar10) & uVar9 | uVar11 & uVar10) + uVar17 + uVar14 + 0x5a827999;
-  uVar14 = (uVar12 & 0x7fffff) << 9 | (uVar12 & 0xffffffff) >> 0x17;
-  uVar12 = ((uVar14 | uVar10) & uVar9 | uVar14 & uVar10) + (ulonglong)local_b0 + uVar11 + 0x5a827999
-  ;
-  uVar11 = (uVar12 & 0x7ffff) << 0xd | (uVar12 & 0xffffffff) >> 0x13;
-  uVar10 = ((uVar14 | uVar11) & uVar9 | uVar14 & uVar11) + uVar21 + uVar10 + 0x5a827999;
-  uVar12 = (uVar10 & 0x1fffffff) << 3 | (uVar10 & 0xffffffff) >> 0x1d;
-  uVar9 = ((uVar11 | uVar12) & uVar14 | uVar11 & uVar12) + (ulonglong)local_cc + uVar9 + 0x5a827999;
-  uVar10 = (uVar9 & 0x7ffffff) << 5 | (uVar9 & 0xffffffff) >> 0x1b;
-  uVar9 = ((uVar11 | uVar12) & uVar10 | uVar11 & uVar12) + (ulonglong)local_bc + uVar14 + 0x5a827999
-  ;
-  uVar14 = (uVar9 & 0x7fffff) << 9 | (uVar9 & 0xffffffff) >> 0x17;
-  uVar9 = ((uVar14 | uVar12) & uVar10 | uVar14 & uVar12) + (ulonglong)local_ac + uVar11 + 0x5a827999
-  ;
-  uVar11 = (uVar9 & 0x7ffff) << 0xd | (uVar9 & 0xffffffff) >> 0x13;
-  uVar9 = ((uVar14 | uVar11) & uVar10 | uVar14 & uVar11) + uVar20 + uVar12 + 0x5a827999;
-  uVar12 = (uVar9 & 0x1fffffff) << 3 | (uVar9 & 0xffffffff) >> 0x1d;
-  uVar9 = ((uVar11 | uVar12) & uVar14 | uVar11 & uVar12) + (ulonglong)local_c8 + uVar10 + 0x5a827999
-  ;
-  uVar9 = (uVar9 & 0x7ffffff) << 5 | (uVar9 & 0xffffffff) >> 0x1b;
-  uVar10 = ((uVar11 | uVar12) & uVar9 | uVar11 & uVar12) + (ulonglong)local_b8 + uVar14 + 0x5a827999
-  ;
-  uVar14 = (uVar10 & 0x7fffff) << 9 | (uVar10 & 0xffffffff) >> 0x17;
-  uVar10 = ((uVar14 | uVar12) & uVar9 | uVar14 & uVar12) + (ulonglong)local_a8 + uVar11 + 0x5a827999
-  ;
-  uVar10 = (uVar10 & 0x7ffff) << 0xd | (uVar10 & 0xffffffff) >> 0x13;
-  uVar12 = ((uVar14 | uVar10) & uVar9 | uVar14 & uVar10) + uVar19 + uVar12 + 0x5a827999;
-  uVar11 = (uVar12 & 0x1fffffff) << 3 | (uVar12 & 0xffffffff) >> 0x1d;
-  uVar9 = ((uVar10 | uVar11) & uVar14 | uVar10 & uVar11) + (ulonglong)local_c4 + uVar9 + 0x5a827999;
-  uVar9 = (uVar9 & 0x7ffffff) << 5 | (uVar9 & 0xffffffff) >> 0x1b;
-  uVar12 = ((uVar10 | uVar11) & uVar9 | uVar10 & uVar11) + (ulonglong)local_b4 + uVar14 + 0x5a827999
-  ;
-  uVar14 = (uVar12 & 0x7fffff) << 9 | (uVar12 & 0xffffffff) >> 0x17;
-  uVar10 = ((uVar14 | uVar11) & uVar9 | uVar14 & uVar11) + (ulonglong)local_a4 + uVar10 + 0x5a827999
-  ;
-  uVar12 = (uVar10 & 0x7ffff) << 0xd | (uVar10 & 0xffffffff) >> 0x13;
-  uVar10 = (uVar9 ^ uVar14 ^ uVar12) + uVar22 + uVar11 + 0x6ed9eba1;
-  uVar11 = (uVar10 & 0x1fffffff) << 3 | (uVar10 & 0xffffffff) >> 0x1d;
-  uVar9 = (uVar14 ^ uVar12 ^ uVar11) + uVar17 + uVar9 + 0x6ed9eba1;
-  uVar9 = (uVar9 & 0x7fffff) << 9 | (uVar9 & 0xffffffff) >> 0x17;
-  uVar10 = (uVar9 ^ uVar12 ^ uVar11) + uVar18 + uVar14 + 0x6ed9eba1;
-  uVar10 = (uVar10 & 0x1fffff) << 0xb | (uVar10 & 0xffffffff) >> 0x15;
-  uVar12 = (uVar9 ^ uVar10 ^ uVar11) + (ulonglong)local_b0 + uVar12 + 0x6ed9eba1;
-  uVar14 = (uVar12 & 0x1ffff) << 0xf | (uVar12 & 0xffffffff) >> 0x11;
-  uVar12 = (uVar9 ^ uVar10 ^ uVar14) + uVar20 + uVar11 + 0x6ed9eba1;
-  uVar11 = (uVar12 & 0x1fffffff) << 3 | (uVar12 & 0xffffffff) >> 0x1d;
-  uVar9 = (uVar10 ^ uVar14 ^ uVar11) + (ulonglong)local_b8 + uVar9 + 0x6ed9eba1;
-  uVar12 = (uVar9 & 0x7fffff) << 9 | (uVar9 & 0xffffffff) >> 0x17;
-  uVar9 = (uVar12 ^ uVar14 ^ uVar11) + (ulonglong)local_c8 + uVar10 + 0x6ed9eba1;
+    iVar5 = iVar15 + 3;
+    iVar6 = iVar15 + 2;
+    iVar7 = iVar15 + 1;
+    puVar4 = param_2 + iVar15;
+    iVar15 = iVar15 + 4;
+    puVar12 = puVar12 + 1;
+    *puVar12 = CONCAT31(CONCAT21(CONCAT11(param_2[iVar5],param_2[iVar6]),param_2[iVar7]),*puVar4);
+    lVar22 = lVar22 + -1;
+  } while (lVar22 != 0);
+  uVar21 = (ulonglong)local_e0[0];
+  uVar20 = (ulonglong)local_e0[1];
+  uVar19 = (ulonglong)local_e0[2];
+  uVar18 = (ulonglong)local_e0[3];
+  uVar17 = (ulonglong)local_d0;
+  uVar9 = ((ulonglong)uVar3 & ~uVar8 | (ulonglong)(uVar2 & uVar1)) + uVar21 + (ulonglong)*param_1;
+  uVar13 = (uVar9 & 0x1fffffff) << 3 | (uVar9 & 0xffffffff) >> 0x1d;
+  uVar16 = (ulonglong)local_c0;
+  uVar9 = ((ulonglong)uVar2 & ~uVar13 | uVar8 & uVar13) + uVar20 + (ulonglong)uVar3;
+  uVar11 = (uVar9 & 0x1ffffff) << 7 | (uVar9 & 0xffffffff) >> 0x19;
+  uVar9 = (uVar8 & ~uVar11 | uVar11 & uVar13) + uVar19 + (ulonglong)uVar2;
   uVar10 = (uVar9 & 0x1fffff) << 0xb | (uVar9 & 0xffffffff) >> 0x15;
-  uVar9 = (uVar12 ^ uVar10 ^ uVar11) + (ulonglong)local_a8 + uVar14 + 0x6ed9eba1;
-  uVar14 = (uVar9 & 0x1ffff) << 0xf | (uVar9 & 0xffffffff) >> 0x11;
-  uVar9 = (uVar12 ^ uVar10 ^ uVar14) + uVar21 + uVar11 + 0x6ed9eba1;
-  uVar15 = (uVar9 & 0x1fffffff) << 3 | (uVar9 & 0xffffffff) >> 0x1d;
-  uVar9 = (uVar10 ^ uVar14 ^ uVar15) + (ulonglong)local_bc + uVar12 + 0x6ed9eba1;
-  uVar12 = (uVar9 & 0x7fffff) << 9 | (uVar9 & 0xffffffff) >> 0x17;
-  uVar9 = (uVar12 ^ uVar14 ^ uVar15) + (ulonglong)local_cc + uVar10 + 0x6ed9eba1;
-  uVar11 = (uVar9 & 0x1fffff) << 0xb | (uVar9 & 0xffffffff) >> 0x15;
-  uVar9 = (uVar12 ^ uVar11 ^ uVar15) + (ulonglong)local_ac + uVar14 + 0x6ed9eba1;
-  uVar17 = (uVar9 & 0x1ffff) << 0xf | (uVar9 & 0xffffffff) >> 0x11;
-  uVar10 = (uVar12 ^ uVar11 ^ uVar17) + uVar19 + uVar15 + 0x6ed9eba1;
-  uVar9 = (uVar10 & 0xffffffff) << 3;
-  uVar10 = (uVar10 & 0xffffffff) >> 0x1d;
-  uVar14 = uVar9 & 0xffffffff | uVar10;
-  *puVar8 = *puVar8 + ((uint)uVar9 | (uint)uVar10);
-  uVar10 = (uVar11 ^ uVar17 ^ uVar14) + (ulonglong)local_b4 + uVar12 + 0x6ed9eba1;
-  uVar9 = (uVar10 & 0xffffffff) << 9;
-  uVar10 = (uVar10 & 0xffffffff) >> 0x17;
-  uVar12 = uVar9 & 0xffffffff | uVar10;
-  puVar8[3] = uVar3 + ((uint)uVar9 | (uint)uVar10);
-  uVar9 = (uVar12 ^ uVar17 ^ uVar14) + (ulonglong)local_c4 + uVar11 + 0x6ed9eba1;
+  uVar8 = (uVar13 & ~uVar10 | uVar11 & uVar10) + uVar18 + uVar8;
+  uVar8 = (uVar8 & 0x1fff) << 0x13 | (uVar8 & 0xffffffff) >> 0xd;
+  uVar13 = (uVar11 & ~uVar8 | uVar10 & uVar8) + uVar17 + uVar13;
+  uVar9 = (uVar13 & 0x1fffffff) << 3 | (uVar13 & 0xffffffff) >> 0x1d;
+  uVar11 = (uVar10 & ~uVar9 | uVar8 & uVar9) + (ulonglong)local_cc + uVar11;
+  uVar11 = (uVar11 & 0x1ffffff) << 7 | (uVar11 & 0xffffffff) >> 0x19;
+  uVar10 = (uVar8 & ~uVar11 | uVar11 & uVar9) + (ulonglong)local_c8 + uVar10;
+  uVar10 = (uVar10 & 0x1fffff) << 0xb | (uVar10 & 0xffffffff) >> 0x15;
+  uVar8 = (uVar9 & ~uVar10 | uVar11 & uVar10) + (ulonglong)local_c4 + uVar8;
+  uVar8 = (uVar8 & 0x1fff) << 0x13 | (uVar8 & 0xffffffff) >> 0xd;
+  uVar9 = (uVar11 & ~uVar8 | uVar10 & uVar8) + uVar16 + uVar9;
+  uVar14 = (uVar9 & 0x1fffffff) << 3 | (uVar9 & 0xffffffff) >> 0x1d;
+  uVar11 = (uVar10 & ~uVar14 | uVar8 & uVar14) + (ulonglong)local_bc + uVar11;
+  uVar9 = (uVar11 & 0x1ffffff) << 7 | (uVar11 & 0xffffffff) >> 0x19;
+  uVar10 = (uVar8 & ~uVar9 | uVar9 & uVar14) + (ulonglong)local_b8 + uVar10;
+  uVar13 = (uVar10 & 0x1fffff) << 0xb | (uVar10 & 0xffffffff) >> 0x15;
+  uVar8 = (uVar14 & ~uVar13 | uVar9 & uVar13) + (ulonglong)local_b4 + uVar8;
+  uVar10 = (uVar8 & 0x1fff) << 0x13 | (uVar8 & 0xffffffff) >> 0xd;
+  uVar14 = (uVar9 & ~uVar10 | uVar13 & uVar10) + (ulonglong)local_b0 + uVar14;
+  uVar8 = (uVar14 & 0x1fffffff) << 3 | (uVar14 & 0xffffffff) >> 0x1d;
+  uVar9 = (uVar13 & ~uVar8 | uVar10 & uVar8) + (ulonglong)local_ac + uVar9;
+  uVar11 = (uVar9 & 0x1ffffff) << 7 | (uVar9 & 0xffffffff) >> 0x19;
+  uVar13 = (uVar10 & ~uVar11 | uVar11 & uVar8) + (ulonglong)local_a8 + uVar13;
+  uVar13 = (uVar13 & 0x1fffff) << 0xb | (uVar13 & 0xffffffff) >> 0x15;
+  uVar10 = (uVar8 & ~uVar13 | uVar11 & uVar13) + (ulonglong)local_a4 + uVar10;
+  uVar10 = (uVar10 & 0x1fff) << 0x13 | (uVar10 & 0xffffffff) >> 0xd;
+  uVar8 = ((uVar13 | uVar10) & uVar11 | uVar13 & uVar10) + uVar21 + uVar8 + 0x5a827999;
+  uVar9 = (uVar8 & 0x1fffffff) << 3 | (uVar8 & 0xffffffff) >> 0x1d;
+  uVar8 = ((uVar10 | uVar9) & uVar13 | uVar10 & uVar9) + uVar17 + uVar11 + 0x5a827999;
+  uVar8 = (uVar8 & 0x7ffffff) << 5 | (uVar8 & 0xffffffff) >> 0x1b;
+  uVar11 = ((uVar10 | uVar9) & uVar8 | uVar10 & uVar9) + uVar16 + uVar13 + 0x5a827999;
+  uVar13 = (uVar11 & 0x7fffff) << 9 | (uVar11 & 0xffffffff) >> 0x17;
+  uVar11 = ((uVar13 | uVar9) & uVar8 | uVar13 & uVar9) + (ulonglong)local_b0 + uVar10 + 0x5a827999;
+  uVar10 = (uVar11 & 0x7ffff) << 0xd | (uVar11 & 0xffffffff) >> 0x13;
+  uVar9 = ((uVar13 | uVar10) & uVar8 | uVar13 & uVar10) + uVar20 + uVar9 + 0x5a827999;
+  uVar11 = (uVar9 & 0x1fffffff) << 3 | (uVar9 & 0xffffffff) >> 0x1d;
+  uVar8 = ((uVar10 | uVar11) & uVar13 | uVar10 & uVar11) + (ulonglong)local_cc + uVar8 + 0x5a827999;
+  uVar9 = (uVar8 & 0x7ffffff) << 5 | (uVar8 & 0xffffffff) >> 0x1b;
+  uVar8 = ((uVar10 | uVar11) & uVar9 | uVar10 & uVar11) + (ulonglong)local_bc + uVar13 + 0x5a827999;
+  uVar13 = (uVar8 & 0x7fffff) << 9 | (uVar8 & 0xffffffff) >> 0x17;
+  uVar8 = ((uVar13 | uVar11) & uVar9 | uVar13 & uVar11) + (ulonglong)local_ac + uVar10 + 0x5a827999;
+  uVar10 = (uVar8 & 0x7ffff) << 0xd | (uVar8 & 0xffffffff) >> 0x13;
+  uVar8 = ((uVar13 | uVar10) & uVar9 | uVar13 & uVar10) + uVar19 + uVar11 + 0x5a827999;
+  uVar11 = (uVar8 & 0x1fffffff) << 3 | (uVar8 & 0xffffffff) >> 0x1d;
+  uVar8 = ((uVar10 | uVar11) & uVar13 | uVar10 & uVar11) + (ulonglong)local_c8 + uVar9 + 0x5a827999;
+  uVar8 = (uVar8 & 0x7ffffff) << 5 | (uVar8 & 0xffffffff) >> 0x1b;
+  uVar9 = ((uVar10 | uVar11) & uVar8 | uVar10 & uVar11) + (ulonglong)local_b8 + uVar13 + 0x5a827999;
+  uVar13 = (uVar9 & 0x7fffff) << 9 | (uVar9 & 0xffffffff) >> 0x17;
+  uVar9 = ((uVar13 | uVar11) & uVar8 | uVar13 & uVar11) + (ulonglong)local_a8 + uVar10 + 0x5a827999;
+  uVar9 = (uVar9 & 0x7ffff) << 0xd | (uVar9 & 0xffffffff) >> 0x13;
+  uVar11 = ((uVar13 | uVar9) & uVar8 | uVar13 & uVar9) + uVar18 + uVar11 + 0x5a827999;
+  uVar10 = (uVar11 & 0x1fffffff) << 3 | (uVar11 & 0xffffffff) >> 0x1d;
+  uVar8 = ((uVar9 | uVar10) & uVar13 | uVar9 & uVar10) + (ulonglong)local_c4 + uVar8 + 0x5a827999;
+  uVar8 = (uVar8 & 0x7ffffff) << 5 | (uVar8 & 0xffffffff) >> 0x1b;
+  uVar11 = ((uVar9 | uVar10) & uVar8 | uVar9 & uVar10) + (ulonglong)local_b4 + uVar13 + 0x5a827999;
+  uVar13 = (uVar11 & 0x7fffff) << 9 | (uVar11 & 0xffffffff) >> 0x17;
+  uVar9 = ((uVar13 | uVar10) & uVar8 | uVar13 & uVar10) + (ulonglong)local_a4 + uVar9 + 0x5a827999;
+  uVar11 = (uVar9 & 0x7ffff) << 0xd | (uVar9 & 0xffffffff) >> 0x13;
+  uVar9 = (uVar8 ^ uVar13 ^ uVar11) + uVar21 + uVar10 + 0x6ed9eba1;
+  uVar10 = (uVar9 & 0x1fffffff) << 3 | (uVar9 & 0xffffffff) >> 0x1d;
+  uVar8 = (uVar13 ^ uVar11 ^ uVar10) + uVar16 + uVar8 + 0x6ed9eba1;
+  uVar8 = (uVar8 & 0x7fffff) << 9 | (uVar8 & 0xffffffff) >> 0x17;
+  uVar9 = (uVar8 ^ uVar11 ^ uVar10) + uVar17 + uVar13 + 0x6ed9eba1;
   uVar9 = (uVar9 & 0x1fffff) << 0xb | (uVar9 & 0xffffffff) >> 0x15;
-  puVar8[2] = uVar2 + (int)uVar9;
-  uVar9 = (uVar12 ^ uVar9 ^ uVar14) + (ulonglong)local_a4 + uVar17 + 0x6ed9eba1;
-  puVar8[1] = ((uint)((uVar9 & 0xffffffff) << 0xf) | (uint)((uVar9 & 0xffffffff) >> 0x11)) + uVar1;
+  uVar11 = (uVar8 ^ uVar9 ^ uVar10) + (ulonglong)local_b0 + uVar11 + 0x6ed9eba1;
+  uVar13 = (uVar11 & 0x1ffff) << 0xf | (uVar11 & 0xffffffff) >> 0x11;
+  uVar11 = (uVar8 ^ uVar9 ^ uVar13) + uVar19 + uVar10 + 0x6ed9eba1;
+  uVar10 = (uVar11 & 0x1fffffff) << 3 | (uVar11 & 0xffffffff) >> 0x1d;
+  uVar8 = (uVar9 ^ uVar13 ^ uVar10) + (ulonglong)local_b8 + uVar8 + 0x6ed9eba1;
+  uVar11 = (uVar8 & 0x7fffff) << 9 | (uVar8 & 0xffffffff) >> 0x17;
+  uVar8 = (uVar11 ^ uVar13 ^ uVar10) + (ulonglong)local_c8 + uVar9 + 0x6ed9eba1;
+  uVar9 = (uVar8 & 0x1fffff) << 0xb | (uVar8 & 0xffffffff) >> 0x15;
+  uVar8 = (uVar11 ^ uVar9 ^ uVar10) + (ulonglong)local_a8 + uVar13 + 0x6ed9eba1;
+  uVar13 = (uVar8 & 0x1ffff) << 0xf | (uVar8 & 0xffffffff) >> 0x11;
+  uVar8 = (uVar11 ^ uVar9 ^ uVar13) + uVar20 + uVar10 + 0x6ed9eba1;
+  uVar14 = (uVar8 & 0x1fffffff) << 3 | (uVar8 & 0xffffffff) >> 0x1d;
+  uVar8 = (uVar9 ^ uVar13 ^ uVar14) + (ulonglong)local_bc + uVar11 + 0x6ed9eba1;
+  uVar11 = (uVar8 & 0x7fffff) << 9 | (uVar8 & 0xffffffff) >> 0x17;
+  uVar8 = (uVar11 ^ uVar13 ^ uVar14) + (ulonglong)local_cc + uVar9 + 0x6ed9eba1;
+  uVar10 = (uVar8 & 0x1fffff) << 0xb | (uVar8 & 0xffffffff) >> 0x15;
+  uVar8 = (uVar11 ^ uVar10 ^ uVar14) + (ulonglong)local_ac + uVar13 + 0x6ed9eba1;
+  uVar16 = (uVar8 & 0x1ffff) << 0xf | (uVar8 & 0xffffffff) >> 0x11;
+  uVar9 = (uVar11 ^ uVar10 ^ uVar16) + uVar18 + uVar14 + 0x6ed9eba1;
+  uVar8 = (uVar9 & 0xffffffff) << 3;
+  uVar9 = (uVar9 & 0xffffffff) >> 0x1d;
+  uVar13 = uVar8 & 0xffffffff | uVar9;
+  *param_1 = *param_1 + ((uint)uVar8 | (uint)uVar9);
+  uVar9 = (uVar10 ^ uVar16 ^ uVar13) + (ulonglong)local_b4 + uVar11 + 0x6ed9eba1;
+  uVar8 = (uVar9 & 0xffffffff) << 9;
+  uVar9 = (uVar9 & 0xffffffff) >> 0x17;
+  uVar11 = uVar8 & 0xffffffff | uVar9;
+  param_1[3] = uVar3 + ((uint)uVar8 | (uint)uVar9);
+  uVar9 = (uVar11 ^ uVar16 ^ uVar13) + (ulonglong)local_c4 + uVar10 + 0x6ed9eba1;
+  uVar8 = (uVar9 & 0xffffffff) << 0xb;
+  uVar9 = (uVar9 & 0xffffffff) >> 0x15;
+  param_1[2] = uVar2 + ((uint)uVar8 | (uint)uVar9);
+  uVar8 = (uVar11 ^ (uVar8 & 0xffffffff | uVar9) ^ uVar13) + (ulonglong)local_a4 + uVar16 +
+          0x6ed9eba1;
+  param_1[1] = ((uint)((uVar8 & 0xffffffff) << 0xf) | (uint)uVar8 >> 0x11) + uVar1;
   __restgprlr();
   return;
 }
@@ -305,10 +288,10 @@ void MD4Transform(undefined8 param_1,int param_2)
 
 // 826A9B90  Encode  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/common/md4.cpp:239)
 
-void Encode(int param_1,undefined4 *param_2,int param_3)
+void Encode(uchar *param_1,ulong *param_2,uint param_3)
 
 {
-  undefined1 uVar1;
+  uchar uVar1;
   longlong lVar2;
   int iVar3;
   
@@ -316,14 +299,14 @@ void Encode(int param_1,undefined4 *param_2,int param_3)
   if (param_3 == 0) {
     return;
   }
-  lVar2 = (ulonglong)(param_3 - 1U >> 2) + 1;
+  lVar2 = (((longlong)(int)param_3 - 1U & 0xffffffff) >> 2) + 1;
   do {
-    *(char *)(iVar3 + param_1) = (char)*param_2;
-    *(undefined1 *)(param_1 + 1 + iVar3) = *(undefined1 *)((int)param_2 + 2);
-    *(undefined1 *)(param_1 + 2 + iVar3) = *(undefined1 *)((int)param_2 + 1);
-    uVar1 = *(undefined1 *)param_2;
+    param_1[iVar3] = (uchar)*param_2;
+    param_1[iVar3 + 1] = *(uchar *)((int)param_2 + 2);
+    param_1[iVar3 + 2] = *(uchar *)((int)param_2 + 1);
+    uVar1 = *(uchar *)param_2;
     param_2 = param_2 + 1;
-    *(undefined1 *)(param_1 + 3 + iVar3) = uVar1;
+    param_1[iVar3 + 3] = uVar1;
     iVar3 = iVar3 + 4;
     lVar2 = lVar2 + -1;
   } while (lVar2 != 0);
@@ -333,29 +316,29 @@ void Encode(int param_1,undefined4 *param_2,int param_3)
 
 // 826A9BF0  Decode  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/common/md4.cpp:253)
 
-void Decode(int param_1,int param_2,int param_3)
+void Decode(ulong *param_1,uchar *param_2,uint param_3)
 
 {
-  undefined1 *puVar1;
-  undefined1 *puVar2;
-  undefined1 *puVar3;
-  undefined1 *puVar4;
+  uchar *puVar1;
+  int iVar2;
+  int iVar3;
+  int iVar4;
   longlong lVar5;
-  undefined4 *puVar6;
+  ulong *puVar6;
   int iVar7;
   
   iVar7 = 0;
   if (param_3 != 0) {
-    lVar5 = (ulonglong)(param_3 - 1U >> 2) + 1;
-    puVar6 = (undefined4 *)(param_1 + -4);
+    lVar5 = (((longlong)(int)param_3 - 1U & 0xffffffff) >> 2) + 1;
+    puVar6 = param_1 + -1;
     do {
-      puVar1 = (undefined1 *)(param_2 + 3 + iVar7);
-      puVar2 = (undefined1 *)(param_2 + 2 + iVar7);
-      puVar3 = (undefined1 *)(param_2 + 1 + iVar7);
-      puVar4 = (undefined1 *)(iVar7 + param_2);
+      iVar2 = iVar7 + 3;
+      iVar3 = iVar7 + 2;
+      iVar4 = iVar7 + 1;
+      puVar1 = param_2 + iVar7;
       iVar7 = iVar7 + 4;
       puVar6 = puVar6 + 1;
-      *puVar6 = CONCAT31(CONCAT21(CONCAT11(*puVar1,*puVar2),*puVar3),*puVar4);
+      *puVar6 = CONCAT31(CONCAT21(CONCAT11(param_2[iVar2],param_2[iVar3]),param_2[iVar4]),*puVar1);
       lVar5 = lVar5 + -1;
     } while (lVar5 != 0);
   }
@@ -365,30 +348,24 @@ void Decode(int param_1,int param_2,int param_3)
 
 // 826AA560  Com_BlockChecksum128  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/common/md4.cpp:265)
 
-void Com_BlockChecksum128
-               (undefined8 param_1,undefined8 param_2,undefined4 param_3,undefined8 param_4)
+void Com_BlockChecksum128(void *param_1,int param_2,int param_3,uint *param_4)
 
 {
-  undefined8 uVar1;
-  undefined4 in_stack_00000024;
-  undefined4 local_80;
-  undefined4 local_7c;
-  undefined4 local_78;
-  undefined4 local_74;
-  undefined4 local_70;
-  undefined4 local_6c;
+  uchar *puVar1;
+  int iStack00000024;
+  MD4_CTX local_80;
   
-  uVar1 = __savegprlr_29();
-  local_6c = 0;
-  local_7c = 0xefcdab89;
-  local_78 = 0x98badcfe;
-  local_74 = 0x10325476;
-  local_70 = 0;
-  local_80 = 0x67452301;
-  in_stack_00000024 = param_3;
-  MD4Update(&local_80,&stack0x00000024,4);
-  MD4Update(&local_80,uVar1,param_2);
-  MD4Final(param_4,&local_80);
+  iStack00000024 = param_3;
+  puVar1 = (uchar *)__savegprlr_29(param_1);
+  local_80.count[1] = 0;
+  local_80.state[1] = 0xefcdab89;
+  local_80.state[2] = 0x98badcfe;
+  local_80.state[3] = 0x10325476;
+  local_80.count[0] = 0;
+  local_80.state[0] = 0x67452301;
+  MD4Update(&local_80,(uchar *)&stack0x00000024,4);
+  MD4Update(&local_80,puVar1,param_2);
+  MD4Final((uchar *)param_4,&local_80);
   __restgprlr_29();
   return;
 }
@@ -396,29 +373,22 @@ void Com_BlockChecksum128
 
 // 826AA5F0  Com_BlockChecksum128Cat  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/common/md4.cpp:275)
 
-void Com_BlockChecksum128Cat
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-               undefined8 param_5)
+void Com_BlockChecksum128Cat(void *param_1,int param_2,void *param_3,int param_4,uint *param_5)
 
 {
-  undefined8 uVar1;
-  undefined4 local_80;
-  undefined4 local_7c;
-  undefined4 local_78;
-  undefined4 local_74;
-  undefined4 local_70;
-  undefined4 local_6c;
+  uchar *puVar1;
+  MD4_CTX local_80;
   
-  uVar1 = __savegprlr_29();
-  local_7c = 0xefcdab89;
-  local_80 = 0x67452301;
-  local_6c = 0;
-  local_70 = 0;
-  local_78 = 0x98badcfe;
-  local_74 = 0x10325476;
-  MD4Update(&local_80,uVar1,param_2);
+  puVar1 = (uchar *)__savegprlr_29(param_1);
+  local_80.state[1] = 0xefcdab89;
+  local_80.state[0] = 0x67452301;
+  local_80.count[1] = 0;
+  local_80.count[0] = 0;
+  local_80.state[2] = 0x98badcfe;
+  local_80.state[3] = 0x10325476;
+  MD4Update(&local_80,puVar1,param_2);
   MD4Update(&local_80,param_3,param_4);
-  MD4Final(param_5,&local_80);
+  MD4Final((uchar *)param_5,&local_80);
   __restgprlr_29();
   return;
 }
@@ -426,59 +396,57 @@ void Com_BlockChecksum128Cat
 
 // 826AA678  Com_BlockChecksum32_Legacy  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/common/md4.cpp:285)
 
-uint Com_BlockChecksum32_Legacy(undefined8 param_1,undefined8 param_2)
+uint Com_BlockChecksum32_Legacy(void *param_1,int param_2)
 
 {
   uint local_70;
   uint local_6c;
   uint local_68;
   uint local_64;
-  undefined4 local_60;
-  undefined4 local_5c;
-  undefined4 local_58;
-  undefined4 local_54;
-  undefined4 local_50;
-  undefined4 local_4c;
+  MD4_CTX local_60;
   
-  local_5c = 0xefcdab89;
-  local_60 = 0x67452301;
-  local_4c = 0;
-  local_50 = 0;
-  local_58 = 0x98badcfe;
-  local_54 = 0x10325476;
+  local_60.state[1] = 0xefcdab89;
+  local_60.state[0] = 0x67452301;
+  local_60.count[1] = 0;
+  local_60.count[0] = 0;
+  local_60.state[2] = 0x98badcfe;
+  local_60.state[3] = 0x10325476;
   MD4Update(&local_60,param_1,param_2);
-  MD4Final(&local_70,&local_60);
+  MD4Final((uchar *)&local_70,&local_60);
   return local_64 ^ local_68 ^ local_6c ^ local_70;
 }
 
 
 // 826A9C60  Com_BlockChecksumKey32  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/common/md4.cpp:303)
 
-ulonglong Com_BlockChecksumKey32(int param_1,int param_2,ulonglong param_3)
+uint Com_BlockChecksumKey32(void *param_1,uint param_2,uint param_3)
 
 {
   ulonglong uVar1;
-  byte *pbVar2;
-  int iVar3;
+  byte *pbVar3;
+  int iVar4;
+  uint uVar2;
   
-  param_3 = ~param_3;
-  if (param_1 != param_1 + param_2) {
-    iVar3 = (param_1 + param_2) - param_1;
-    pbVar2 = (byte *)(param_1 + -1);
+  uVar1 = ~(longlong)(int)param_3;
+  uVar2 = (uint)uVar1;
+  if (param_1 != (void *)((int)param_1 + param_2)) {
+    iVar4 = (int)((int)param_1 + param_2) - (int)param_1;
+    pbVar3 = (byte *)((int)param_1 + -1);
     do {
-      pbVar2 = pbVar2 + 1;
-      uVar1 = (longlong)(int)((uint)(*pbVar2 ^ param_3) & 1) * -0x12477ce0 ^
-              ((*pbVar2 ^ param_3) & 0xffffffff) >> 1;
+      pbVar3 = pbVar3 + 1;
+      uVar1 = (longlong)(int)((uint)(*pbVar3 ^ uVar1) & 1) * -0x12477ce0 ^
+              ((*pbVar3 ^ uVar1) & 0xffffffff) >> 1;
       uVar1 = (longlong)(int)((uint)uVar1 & 1) * -0x12477ce0 ^ (uVar1 & 0xffffffff) >> 1;
       uVar1 = (longlong)(int)((uint)uVar1 & 1) * -0x12477ce0 ^ (uVar1 & 0xffffffff) >> 1;
       uVar1 = (longlong)(int)((uint)uVar1 & 1) * -0x12477ce0 ^ (uVar1 & 0xffffffff) >> 1;
       uVar1 = (longlong)(int)((uint)uVar1 & 1) * -0x12477ce0 ^ (uVar1 & 0xffffffff) >> 1;
       uVar1 = (longlong)(int)((uint)uVar1 & 1) * -0x12477ce0 ^ (uVar1 & 0xffffffff) >> 1;
       uVar1 = (longlong)(int)((uint)uVar1 & 1) * -0x12477ce0 ^ (uVar1 & 0xffffffff) >> 1;
-      param_3 = (longlong)(int)((uint)uVar1 & 1) * -0x12477ce0 ^ (uVar1 & 0xffffffff) >> 1;
-      iVar3 = iVar3 + -1;
-    } while (iVar3 != 0);
+      uVar1 = (longlong)(int)((uint)uVar1 & 1) * -0x12477ce0 ^ (uVar1 & 0xffffffff) >> 1;
+      uVar2 = (uint)uVar1;
+      iVar4 = iVar4 + -1;
+    } while (iVar4 != 0);
   }
-  return ~param_3;
+  return ~uVar2;
 }
 

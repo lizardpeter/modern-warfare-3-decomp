@@ -2,22 +2,27 @@
 
 // 826A3538  Ragdoll_ResetBodiesUsingDef  (ragdoll/ragdoll_cmds.cpp:19)
 
-void Ragdoll_ResetBodiesUsingDef(void)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void Ragdoll_ResetBodiesUsingDef(int param_1)
 
 {
-  undefined4 *puVar1;
+  RagdollBody *pRVar1;
   
-  __savegprlr_27();
-  puVar1 = &DAT_84436228;
+  __savegprlr_27(param_1);
+  pRVar1 = (RagdollBody *)&ragdollBodies;
   do {
-    if (puVar1 == (undefined4 *)0x0) {
-      MyAssertHandler(0xffffffff8219b1e4,0x12d,0,0xffffffff82000f98,0xffffffff82003cbc);
+    if (pRVar1 == (RagdollBody *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll.h",0x12d,0,
+                      "%s");
     }
-    if (1 < (int)puVar1[0x41]) {
-      Ragdoll_BodyNewState(puVar1,1);
+    if (1 < (int)(pRVar1->state).state) {
+      Ragdoll_BodyNewState(pRVar1,BS_DOBJ_WAIT);
     }
-    puVar1 = puVar1 + 0x255;
-  } while ((int)puVar1 < -0x7bbb7358);
+    pRVar1 = pRVar1 + 1;
+  } while ((int)pRVar1 < -0x7bbb7358);
   __restgprlr_27();
   return;
 }
@@ -25,31 +30,34 @@ void Ragdoll_ResetBodiesUsingDef(void)
 
 // 826A35C0  Ragdoll_Clear_f  (ragdoll/ragdoll_cmds.cpp:34)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Ragdoll_Clear_f(void)
 
 {
   int iVar1;
-  char *_Str;
-  void *pvVar2;
-  int iVar3;
+  char *pcVar2;
+  RagdollDef_0_ *pRVar3;
   int iVar4;
-  longlong lVar5;
+  int iVar5;
+  longlong lVar6;
   
   iVar1 = Cmd_Argc();
   if (1 < iVar1) {
-    _Str = (char *)Cmd_Argv(1);
-    iVar1 = atoi(_Str);
+    pcVar2 = Cmd_Argv(1);
+    iVar1 = atoi(pcVar2);
     if ((-1 < iVar1) && (iVar1 < 2)) {
-      pvVar2 = memset(&DAT_84448cb8 + iVar1 * 0xf58,0,0xf58);
-      iVar4 = 0;
-      lVar5 = 0x14;
+      pRVar3 = &ragdollDefs + iVar1 * 0xf58;
+      memset();
+      iVar5 = 0;
+      lVar6 = 0x14;
       do {
-        iVar3 = iVar1 * 0x3d6 + iVar4;
-        iVar4 = iVar4 + 1;
-        *(undefined4 *)(&DAT_84449bc0 + iVar3 * 4) = 0xffffffff;
-        lVar5 = lVar5 + -1;
-      } while (lVar5 != 0);
-      Ragdoll_ResetBodiesUsingDef(pvVar2);
+        iVar4 = iVar1 * 0x3d6 + iVar5;
+        iVar5 = iVar5 + 1;
+        *(undefined4 *)(&DAT_84449bc0 + iVar4 * 4) = 0xffffffff;
+        lVar6 = lVar6 + -1;
+      } while (lVar6 != 0);
+      Ragdoll_ResetBodiesUsingDef((int)pRVar3);
     }
   }
   return;
@@ -58,188 +66,194 @@ void Ragdoll_Clear_f(void)
 
 // 826A3668  Ragdoll_ReadAxis  (ragdoll/ragdoll_cmds.cpp:69)
 
-void Ragdoll_ReadAxis(undefined8 param_1,float *param_2)
+bool Ragdoll_ReadAxis(int param_1,float *param_2)
 
 {
   char cVar1;
   float fVar2;
   float fVar3;
-  undefined8 uVar4;
+  int iVar4;
   int iVar5;
+  undefined1 uVar7;
   char *pcVar6;
-  undefined **ppuVar7;
-  uint uVar8;
+  <unnamed_type_axisTable> *p<Var8;
+  uint uVar9;
   
-  uVar4 = __savegprlr_26();
+  iVar4 = __savegprlr_26(param_1);
   iVar5 = Cmd_Argc();
-  if (iVar5 < (int)uVar4) {
-    Com_Printf(0xe,0xffffffff8219ba60,uVar4);
+  if (iVar5 < iVar4) {
+    Com_Printf(0xe,"Ragdoll: Missing axis arg %d\n");
     *param_2 = 0.0;
     param_2[1] = 0.0;
     param_2[2] = 0.0;
-    __restgprlr_26(0);
-    return;
+    uVar7 = __restgprlr_26(0);
+    return (bool)uVar7;
   }
-  pcVar6 = (char *)Cmd_Argv(uVar4);
+  pcVar6 = Cmd_Argv(iVar4);
   cVar1 = *pcVar6;
   if (cVar1 == '-') {
     pcVar6 = pcVar6 + 1;
   }
-  uVar8 = 0;
-  ppuVar7 = &PTR_DAT_82997548;
+  uVar9 = 0;
+  p<Var8 = axisTable;
   do {
-    iVar5 = I_stricmp(pcVar6,*ppuVar7);
-    if (iVar5 == 0) {
-      fVar2 = (float)(&DAT_8299754c)[uVar8 * 4];
+    iVar4 = I_stricmp(pcVar6,p<Var8->name);
+    if (iVar4 == 0) {
+      fVar2 = axisTable[uVar9].axis[0];
       *param_2 = fVar2;
-      fVar3 = (float)(&DAT_82997550)[uVar8 * 4];
+      fVar3 = axisTable[uVar9].axis[1];
       param_2[1] = fVar3;
-      param_2[2] = (float)(&DAT_82997554)[uVar8 * 4];
+      param_2[2] = axisTable[uVar9].axis[2];
       if (cVar1 == '-') {
         *param_2 = -fVar2;
         param_2[1] = -fVar3;
         param_2[2] = -param_2[2];
       }
-      __restgprlr_26(1);
-      return;
+      uVar7 = __restgprlr_26(1);
+      return (bool)uVar7;
     }
-    uVar8 = uVar8 + 1;
-    ppuVar7 = ppuVar7 + 4;
-  } while (uVar8 < 4);
-  Com_Printf(0xe,0xffffffff8219ba40,pcVar6);
-  __restgprlr_26(0);
-  return;
+    uVar9 = uVar9 + 1;
+    p<Var8 = p<Var8 + 1;
+  } while (uVar9 < 4);
+  Com_Printf(0xe,"Ragdoll: Unknown bone axis %s\n");
+  uVar7 = __restgprlr_26(0);
+  return (bool)uVar7;
 }
 
 
 // 826A3790  Ragdoll_ReadGeomType  (ragdoll/ragdoll_cmds.cpp:121)
 
-void Ragdoll_ReadGeomType(undefined8 param_1,int param_2)
+bool Ragdoll_ReadGeomType(int param_1,BoneDef *param_2)
 
 {
   char cVar1;
   char *pcVar2;
-  undefined8 uVar3;
+  int iVar3;
   int iVar4;
+  undefined1 uVar6;
   char *pcVar5;
-  uint uVar6;
-  undefined **ppuVar7;
+  char *pcVar7;
+  PhysicsGeomType PVar8;
+  char **ppcVar9;
   
-  uVar3 = __savegprlr_28();
+  iVar3 = __savegprlr_28(param_1);
   iVar4 = Cmd_Argc();
-  if (iVar4 < (int)uVar3) {
-    Com_Printf(0xe,0xffffffff8219baa4,uVar3);
-    __restgprlr_28(0);
-    return;
+  if (iVar4 < iVar3) {
+    Com_Printf(0xe,"Ragdoll: Missing geom type arg %d\n");
+    uVar6 = __restgprlr_28(0);
+    return (bool)uVar6;
   }
-  uVar3 = Cmd_Argv(uVar3);
-  ppuVar7 = &PTR_DAT_82997588;
-  uVar6 = 0;
+  pcVar5 = Cmd_Argv(iVar3);
+  ppcVar9 = geomNames;
+  PVar8 = PHYS_GEOM_NONE;
   while( true ) {
-    pcVar2 = *ppuVar7;
-    pcVar5 = pcVar2;
+    pcVar2 = *ppcVar9;
+    pcVar7 = pcVar2;
     do {
-      cVar1 = *pcVar5;
-      pcVar5 = pcVar5 + 1;
+      cVar1 = *pcVar7;
+      pcVar7 = pcVar7 + 1;
     } while (cVar1 != '\0');
-    iVar4 = I_strnicmp(pcVar2,uVar3,pcVar5 + (-1 - (int)pcVar2));
-    if (iVar4 == 0) break;
-    uVar6 = uVar6 + 1;
-    ppuVar7 = ppuVar7 + 1;
-    if (5 < uVar6) {
-      Com_Printf(0xe,0xffffffff8219ba80,uVar3);
-      __restgprlr_28(0);
-      return;
+    iVar3 = I_strnicmp(pcVar2,pcVar5,(int)(pcVar7 + (-1 - (int)pcVar2)));
+    if (iVar3 == 0) break;
+    PVar8 = PVar8 + PHYS_GEOM_BOX;
+    ppcVar9 = ppcVar9 + 1;
+    if (PHYS_GEOM_CYLINDER < PVar8) {
+      Com_Printf(0xe,"Ragdoll: Unknown bone geom type %s\n");
+      uVar6 = __restgprlr_28(0);
+      return (bool)uVar6;
     }
   }
-  *(uint *)(param_2 + 0x4c) = uVar6;
-  __restgprlr_28(1);
-  return;
+  param_2->geomType = PVar8;
+  uVar6 = __restgprlr_28(1);
+  return (bool)uVar6;
 }
 
 
 // 826A3860  Ragdoll_Bone_f  (ragdoll/ragdoll_cmds.cpp:148)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Ragdoll_Bone_f(void)
 
 {
   int iVar1;
-  int iVar3;
+  int iVar2;
+  char *pcVar3;
   char *pcVar4;
-  undefined8 uVar2;
   int iVar5;
-  char cVar6;
-  undefined1 *puVar7;
-  undefined4 *puVar8;
-  undefined1 *puVar9;
-  undefined1 *puVar10;
-  longlong lVar11;
-  double dVar12;
+  bool bVar6;
+  RagdollDef *pRVar7;
+  BoneDef *pBVar8;
+  BoneDef *pBVar9;
+  double dVar10;
   
   __savegprlr_26();
-  iVar3 = Cmd_Argc();
-  if (10 < iVar3) {
-    pcVar4 = (char *)Cmd_Argv(1);
-    iVar3 = atoi(pcVar4);
-    if ((-1 < iVar3) && (iVar3 < 2)) {
-      iVar3 = iVar3 * 0xf58;
-      puVar7 = &DAT_84448cb8 + iVar3;
-      iVar1 = *(int *)(&DAT_84448cbc + iVar3);
+  iVar2 = Cmd_Argc();
+  if (10 < iVar2) {
+    pcVar3 = Cmd_Argv(1);
+    iVar2 = atoi(pcVar3);
+    if ((-1 < iVar2) && (iVar2 < 2)) {
+      iVar2 = iVar2 * 0xf58;
+      pRVar7 = (RagdollDef *)(&ragdollDefs + iVar2);
+      iVar1 = *(int *)(&DAT_84448cbc + iVar2);
       if (0xd < iVar1) {
-        Com_Printf(0xe,0xffffffff8219bb24,0xe);
+        Com_Printf(0xe,"Ragdoll: Too many ragdoll bones, max %d\n");
         __restgprlr_26();
         return;
       }
-      lVar11 = 0;
-      puVar10 = puVar7 + iVar1 * 0x50 + 8;
-      puVar8 = (undefined4 *)(puVar7 + iVar1 * 0x50 + 0x2c);
-      puVar9 = puVar10;
+      iVar5 = 0;
+      pBVar9 = pRVar7->boneDefs + iVar1;
+      pcVar3 = pRVar7->boneDefs[iVar1].animBoneTextNames[1] + 0x10;
+      pBVar8 = pBVar9;
       do {
-        puVar8 = puVar8 + 1;
-        *puVar8 = 0;
-        uVar2 = Cmd_Argv(lVar11 + 2);
-        I_strncpyz(puVar9,uVar2,0x14);
-        lVar11 = lVar11 + 1;
-        puVar9 = puVar9 + 0x14;
-      } while ((int)lVar11 < 2);
-      pcVar4 = (char *)Cmd_Argv(4);
-      dVar12 = atof(pcVar4);
-      *(float *)(puVar7 + iVar1 * 0x50 + 0x38) = (float)dVar12;
-      pcVar4 = (char *)Cmd_Argv(5);
-      dVar12 = atof(pcVar4);
-      *(float *)(puVar7 + iVar1 * 0x50 + 0x40) = (float)dVar12;
-      pcVar4 = (char *)Cmd_Argv(6);
-      dVar12 = atof(pcVar4);
-      *(float *)(puVar7 + iVar1 * 0x50 + 0x44) = (float)dVar12;
-      pcVar4 = (char *)Cmd_Argv(7);
-      dVar12 = atof(pcVar4);
-      *(float *)(puVar7 + iVar1 * 0x50 + 0x48) = (float)dVar12;
-      pcVar4 = (char *)Cmd_Argv(8);
-      iVar5 = atoi(pcVar4);
+        pcVar3 = pcVar3 + 4;
+        pcVar3[0] = '\0';
+        pcVar3[1] = '\0';
+        pcVar3[2] = '\0';
+        pcVar3[3] = '\0';
+        pcVar4 = Cmd_Argv(iVar5 + 2);
+        I_strncpyz((char *)pBVar8,pcVar4,0x14);
+        iVar5 = iVar5 + 1;
+        pBVar8 = (BoneDef *)(pBVar8->animBoneTextNames + 1);
+      } while (iVar5 < 2);
+      pcVar3 = Cmd_Argv(4);
+      dVar10 = atof(pcVar3);
+      pRVar7->boneDefs[iVar1].radius = (float)dVar10;
+      pcVar3 = Cmd_Argv(5);
+      dVar10 = atof(pcVar3);
+      pRVar7->boneDefs[iVar1].percent = (float)dVar10;
+      pcVar3 = Cmd_Argv(6);
+      dVar10 = atof(pcVar3);
+      pRVar7->boneDefs[iVar1].mass = (float)dVar10;
+      pcVar3 = Cmd_Argv(7);
+      dVar10 = atof(pcVar3);
+      pRVar7->boneDefs[iVar1].friction = (float)dVar10;
+      pcVar3 = Cmd_Argv(8);
+      iVar5 = atoi(pcVar3);
       if (iVar5 == -1) {
-        *(undefined4 *)(puVar7 + iVar1 * 0x50 + 0x4c) = 0xffffffff;
+        pRVar7->boneDefs[iVar1].parentBone = -1;
       }
       else {
-        if (*(int *)(&DAT_84448cbc + iVar3) <= iVar5) {
-          Com_Printf(0xe,0xffffffff8219baec);
+        if (*(int *)(&DAT_84448cbc + iVar2) <= iVar5) {
+          Com_Printf(0xe,"Ragdoll: Child bones must come after parent bones: %d\n");
           __restgprlr_26();
           return;
         }
-        *(int *)(puVar7 + iVar1 * 0x50 + 0x4c) = iVar5;
+        pRVar7->boneDefs[iVar1].parentBone = iVar5;
       }
-      pcVar4 = (char *)Cmd_Argv(9);
-      iVar5 = atoi(pcVar4);
-      puVar7[iVar1 * 0x50 + 0x3c] = '\x01' - (iVar5 == 0);
-      cVar6 = Ragdoll_ReadGeomType(10,puVar10);
-      if (cVar6 != '\0') {
-        cVar6 = Ragdoll_ValidatePrecalcBoneDef(puVar7,puVar10);
-        if (cVar6 == '\0') {
-          Com_Printf(0xe,0xffffffff8219bac8,*(undefined4 *)(&DAT_84448cbc + iVar3));
+      pcVar3 = Cmd_Argv(9);
+      iVar5 = atoi(pcVar3);
+      pRVar7->boneDefs[iVar1].mirror = (bool)('\x01' - (iVar5 == 0));
+      bVar6 = Ragdoll_ReadGeomType(10,pBVar9);
+      if (bVar6) {
+        bVar6 = Ragdoll_ValidatePrecalcBoneDef(pRVar7,pBVar9);
+        if (!bVar6) {
+          Com_Printf(0xe,"Ragdoll: Bone %d validation failed\n");
           __restgprlr_26();
           return;
         }
-        *(int *)(&DAT_84448cbc + iVar3) = *(int *)(&DAT_84448cbc + iVar3) + 1;
-        Ragdoll_ResetBodiesUsingDef();
+        *(int *)(&DAT_84448cbc + iVar2) = *(int *)(&DAT_84448cbc + iVar2) + 1;
+        Ragdoll_ResetBodiesUsingDef(1);
       }
     }
   }
@@ -250,41 +264,45 @@ void Ragdoll_Bone_f(void)
 
 // 826A3A38  Ragdoll_ReadJointType  (ragdoll/ragdoll_cmds.cpp:230)
 
-void Ragdoll_ReadJointType(undefined8 param_1,int param_2)
+bool Ragdoll_ReadJointType(int param_1,JointDef *param_2)
 
 {
-  undefined8 uVar1;
+  int iVar1;
   int iVar2;
-  uint uVar3;
-  undefined4 *puVar4;
+  undefined1 uVar4;
+  char *pcVar3;
+  JointType_conflict JVar5;
+  char **ppcVar6;
   
-  uVar1 = __savegprlr_28();
+  iVar1 = __savegprlr_28(param_1);
   iVar2 = Cmd_Argc();
-  if (iVar2 < (int)uVar1) {
-    Com_Printf(0xe,0xffffffff8219bb70,uVar1);
-    __restgprlr_28(0);
-    return;
+  if (iVar2 < iVar1) {
+    Com_Printf(0xe,"Ragdoll: Missing joint type arg %d\n");
+    uVar4 = __restgprlr_28(0);
+    return (bool)uVar4;
   }
-  uVar1 = Cmd_Argv(uVar1);
-  puVar4 = &DAT_829975a0;
-  uVar3 = 0;
+  pcVar3 = Cmd_Argv(iVar1);
+  ppcVar6 = jointNames;
+  JVar5 = RAGDOLL_JOINT_NONE;
   do {
-    iVar2 = I_stricmp(uVar1,*puVar4);
-    if (iVar2 == 0) {
-      *(uint *)(param_2 + 4) = uVar3;
-      __restgprlr_28(1);
-      return;
+    iVar1 = I_stricmp(pcVar3,*ppcVar6);
+    if (iVar1 == 0) {
+      param_2->type = JVar5;
+      uVar4 = __restgprlr_28(1);
+      return (bool)uVar4;
     }
-    uVar3 = uVar3 + 1;
-    puVar4 = puVar4 + 1;
-  } while (uVar3 < 3);
-  Com_Printf(0xe,0xffffffff8219bb50,uVar1);
-  __restgprlr_28(0);
-  return;
+    JVar5 = JVar5 + RAGDOLL_JOINT_HINGE;
+    ppcVar6 = ppcVar6 + 1;
+  } while (JVar5 < (RAGDOLL_JOINT_SWIVEL|RAGDOLL_JOINT_HINGE));
+  Com_Printf(0xe,"Ragdoll: Unknown joint type %s\n");
+  uVar4 = __restgprlr_28(0);
+  return (bool)uVar4;
 }
 
 
 // 826A3AE8  Ragdoll_Joint_f  (ragdoll/ragdoll_cmds.cpp:257)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Ragdoll_Joint_f(void)
 
@@ -292,38 +310,38 @@ void Ragdoll_Joint_f(void)
   int iVar1;
   char *pcVar2;
   uint uVar3;
-  char cVar4;
-  undefined1 *puVar5;
+  bool bVar4;
+  JointDef *pJVar5;
   
   iVar1 = Cmd_Argc();
   if (3 < iVar1) {
-    pcVar2 = (char *)Cmd_Argv(1);
+    pcVar2 = Cmd_Argv(1);
     iVar1 = atoi(pcVar2);
     if ((-1 < iVar1) && (iVar1 < 2)) {
       iVar1 = iVar1 * 0xf58;
       if (*(int *)(&DAT_84449244 + iVar1) < 0x1c) {
-        puVar5 = (undefined1 *)(*(int *)(&DAT_84449244 + iVar1) * 0x54 + iVar1 + -0x7bbb6db8);
-        pcVar2 = (char *)Cmd_Argv(2);
+        pJVar5 = (JointDef *)(*(int *)(&DAT_84449244 + iVar1) * 0x54 + iVar1 + -0x7bbb6db8);
+        pcVar2 = Cmd_Argv(2);
         uVar3 = atoi(pcVar2);
-        *puVar5 = (char)uVar3;
+        pJVar5->bone = (uchar)uVar3;
         if ((int)(uVar3 & 0xff) < *(int *)(&DAT_84448cbc + iVar1)) {
           if ((uVar3 & 0xff) == 0) {
-            Com_Printf(0xe,0xffffffff8219bb94);
+            Com_Printf(0xe,"Ragdoll: Joint referenced bone with no parent (0)\n");
           }
           else {
-            cVar4 = Ragdoll_ReadJointType(3,puVar5);
-            if (cVar4 != '\0') {
+            bVar4 = Ragdoll_ReadJointType(3,pJVar5);
+            if (bVar4) {
               *(int *)(&DAT_84449244 + iVar1) = *(int *)(&DAT_84449244 + iVar1) + 1;
-              Ragdoll_ResetBodiesUsingDef();
+              Ragdoll_ResetBodiesUsingDef(1);
             }
           }
         }
         else {
-          Com_Printf(0xe,0xffffffff8219bbc8);
+          Com_Printf(0xe,"Ragdoll: Joint referenced nonexistent bone\n");
         }
       }
       else {
-        Com_Printf(0xe,0xffffffff8219bbf4,0x1c);
+        Com_Printf(0xe,"Ragdoll: Too many ragdoll joints, max %d\n");
       }
     }
   }
@@ -332,6 +350,8 @@ void Ragdoll_Joint_f(void)
 
 
 // 826A3BF8  Ragdoll_Limit_f  (ragdoll/ragdoll_cmds.cpp:301)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Ragdoll_Limit_f(void)
 
@@ -344,42 +364,41 @@ void Ragdoll_Limit_f(void)
   int iVar6;
   char *pcVar7;
   int iVar8;
-  char cVar9;
+  bool bVar9;
   double dVar10;
   double dVar11;
   
   iVar6 = Cmd_Argc();
   if (6 < iVar6) {
-    pcVar7 = (char *)Cmd_Argv(1);
+    pcVar7 = Cmd_Argv(1);
     iVar6 = atoi(pcVar7);
     if ((-1 < iVar6) && (iVar6 < 2)) {
       iVar6 = iVar6 * 0xf58;
       if (*(int *)(&DAT_84449244 + iVar6) < 0x1c) {
-        pcVar7 = (char *)Cmd_Argv(2);
+        pcVar7 = Cmd_Argv(2);
         iVar8 = atoi(pcVar7);
         if (iVar8 < *(int *)(&DAT_84449244 + iVar6)) {
           iVar6 = iVar8 * 0x54 + iVar6;
           iVar5 = iVar6 + 0x590;
-          iVar2 = *(int *)(&DAT_84448cb8 + iVar6 + 0x598);
-          if (iVar2 < 3) {
-            cVar9 = Ragdoll_ReadAxis(3,&DAT_84448cb8 + (iVar2 + 1) * 0xc + iVar5);
-            if (cVar9 != '\0') {
-              pcVar7 = (char *)Cmd_Argv(4);
+          iVar8 = *(int *)(&ragdollDefs + iVar6 + 0x598);
+          if (iVar8 < 3) {
+            bVar9 = Ragdoll_ReadAxis(3,(float *)(&ragdollDefs + (iVar8 + 1) * 0xc + iVar5));
+            if (bVar9) {
+              pcVar7 = Cmd_Argv(4);
               dVar10 = atof(pcVar7);
-              *(float *)(&DAT_84448cb8 +
-                        (*(int *)(&DAT_84448cb8 + iVar6 + 0x598) + 0x12) * 4 + iVar5) =
-                   (float)dVar10;
-              pcVar7 = (char *)Cmd_Argv(5);
+              *(float *)(&ragdollDefs + (*(int *)(&ragdollDefs + iVar6 + 0x598) + 0x12) * 4 + iVar5)
+                   = (float)dVar10;
+              pcVar7 = Cmd_Argv(5);
               dVar10 = atof(pcVar7);
               dVar11 = 0.01745329238474369;
-              *(float *)(&DAT_84448cb8 + (*(int *)(&DAT_84448cb8 + iVar6 + 0x598) + 0xc) * 4 + iVar5
-                        ) = (float)dVar10 * 0.017453292;
-              pcVar7 = (char *)Cmd_Argv(6);
+              *(float *)(&ragdollDefs + (*(int *)(&ragdollDefs + iVar6 + 0x598) + 0xc) * 4 + iVar5)
+                   = (float)dVar10 * 0.017453292;
+              pcVar7 = Cmd_Argv(6);
               dVar10 = atof(pcVar7);
-              *(float *)(&DAT_84448cb8 + (*(int *)(&DAT_84448cb8 + iVar6 + 0x598) + 0xf) * 4 + iVar5
-                        ) = (float)((double)(float)dVar10 * dVar11);
-              iVar8 = (*(int *)(&DAT_84448cb8 + iVar6 + 0x598) + 0xc) * 4;
-              fVar1 = *(float *)(&DAT_84448cb8 + iVar8 + iVar5);
+              iVar8 = (*(int *)(&ragdollDefs + iVar6 + 0x598) + 0xf) * 4;
+              *(float *)(&ragdollDefs + iVar8 + iVar5) = (float)((double)(float)dVar10 * dVar11);
+              iVar2 = (*(int *)(&ragdollDefs + iVar6 + 0x598) + 0xc) * 4;
+              fVar1 = *(float *)(&ragdollDefs + iVar2 + iVar5);
               fVar3 = 3.1415927;
               if (fVar1 - 3.1415927 < 0.0) {
                 fVar3 = fVar1;
@@ -388,9 +407,9 @@ void Ragdoll_Limit_f(void)
               if (-3.1415927 - fVar1 < 0.0) {
                 fVar4 = fVar3;
               }
-              *(float *)(&DAT_84448cb8 + iVar8 + iVar5) = fVar4;
-              iVar8 = (*(int *)(&DAT_84448cb8 + iVar6 + 0x598) + 0xf) * 4;
-              fVar1 = *(float *)(&DAT_84448cb8 + iVar8 + iVar5);
+              *(float *)(&ragdollDefs + iVar2 + iVar5) = fVar4;
+              iVar2 = (*(int *)(&ragdollDefs + iVar6 + 0x598) + 0xf) * 4;
+              fVar1 = *(float *)(&ragdollDefs + iVar2 + iVar5);
               fVar3 = 3.1415927;
               if (fVar1 - 3.1415927 < 0.0) {
                 fVar3 = fVar1;
@@ -399,21 +418,21 @@ void Ragdoll_Limit_f(void)
               if (-3.1415927 - fVar1 < 0.0) {
                 fVar4 = fVar3;
               }
-              *(float *)(&DAT_84448cb8 + iVar8 + iVar5) = fVar4;
-              *(int *)(&DAT_84448cb8 + iVar6 + 0x598) = *(int *)(&DAT_84448cb8 + iVar6 + 0x598) + 1;
-              Ragdoll_ResetBodiesUsingDef();
+              *(float *)(&ragdollDefs + iVar2 + iVar5) = fVar4;
+              *(int *)(&ragdollDefs + iVar6 + 0x598) = *(int *)(&ragdollDefs + iVar6 + 0x598) + 1;
+              Ragdoll_ResetBodiesUsingDef(iVar8);
             }
           }
           else {
-            Com_Printf(0xe,0xffffffff8219bc20,iVar8,3);
+            Com_Printf(0xe,"Ragdoll: Too many limit axes for joint %d, max %d\n");
           }
         }
         else {
-          Com_Printf(0xe,0xffffffff8219bc54);
+          Com_Printf(0xe,"Ragdoll: Angular limit added to nonexistent joint %d\n");
         }
       }
       else {
-        Com_Printf(0xe,0xffffffff8219bbf4,0x1c);
+        Com_Printf(0xe,"Ragdoll: Too many ragdoll joints, max %d\n");
       }
     }
   }
@@ -423,45 +442,47 @@ void Ragdoll_Limit_f(void)
 
 // 826A3DE0  Ragdoll_Selfpair_f  (ragdoll/ragdoll_cmds.cpp:355)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Ragdoll_Selfpair_f(void)
 
 {
   int iVar1;
-  char *pcVar2;
-  uint uVar3;
-  undefined1 *puVar4;
+  int iVar2;
+  char *pcVar3;
+  uint uVar4;
   int iVar5;
-  undefined1 *puVar6;
+  RagdollDef_0_ *pRVar6;
   
   __savegprlr_27();
-  iVar1 = Cmd_Argc();
-  if (3 < iVar1) {
-    pcVar2 = (char *)Cmd_Argv(1);
-    iVar1 = atoi(pcVar2);
-    if ((-1 < iVar1) && (iVar1 < 2)) {
-      iVar1 = iVar1 * 0xf58;
-      if (0x20 < *(int *)(&DAT_84449b78 + iVar1)) {
-        Com_Printf(0xe,0xffffffff8219bcb8,0x21);
+  iVar2 = Cmd_Argc();
+  if (3 < iVar2) {
+    pcVar3 = Cmd_Argv(1);
+    iVar2 = atoi(pcVar3);
+    if ((-1 < iVar2) && (iVar2 < 2)) {
+      iVar2 = iVar2 * 0xf58;
+      if (0x20 < *(int *)(&DAT_84449b78 + iVar2)) {
+        Com_Printf(0xe,"Ragdoll: Too many ragdoll self collision pairs, max %d\n");
         __restgprlr_27();
         return;
       }
       iVar5 = 0;
-      puVar4 = &DAT_84448cb8 + (*(int *)(&DAT_84449b78 + iVar1) + 0x762) * 2 + iVar1;
-      puVar6 = puVar4;
+      pRVar6 = &ragdollDefs + (*(int *)(&DAT_84449b78 + iVar2) + 0x762) * 2 + iVar2;
+      iVar1 = 2 - (int)pRVar6;
       do {
-        pcVar2 = (char *)Cmd_Argv(puVar6 + (2 - (int)puVar4));
-        uVar3 = atoi(pcVar2);
-        *puVar6 = (char)uVar3;
-        if (*(int *)(&DAT_84448cbc + iVar1) < (int)(uVar3 & 0xff)) {
-          Com_Printf(0xe,0xffffffff8219bc8c,puVar4[iVar5]);
+        pcVar3 = Cmd_Argv((int)(pRVar6 + iVar1));
+        uVar4 = atoi(pcVar3);
+        *pRVar6 = (char)uVar4;
+        if (*(int *)(&DAT_84448cbc + iVar2) < (int)(uVar4 & 0xff)) {
+          Com_Printf(0xe,"Ragdoll: Bad self collision pair bone %d\n");
           __restgprlr_27();
           return;
         }
         iVar5 = iVar5 + 1;
-        puVar6 = puVar6 + 1;
+        pRVar6 = pRVar6 + 1;
       } while (iVar5 < 2);
-      *(int *)(&DAT_84449b78 + iVar1) = *(int *)(&DAT_84449b78 + iVar1) + 1;
-      Ragdoll_ResetBodiesUsingDef();
+      *(int *)(&DAT_84449b78 + iVar2) = *(int *)(&DAT_84449b78 + iVar2) + 1;
+      Ragdoll_ResetBodiesUsingDef(uVar4);
     }
   }
   __restgprlr_27();
@@ -471,60 +492,61 @@ void Ragdoll_Selfpair_f(void)
 
 // 826A3EC8  Ragdoll_BaseLerpBone_f  (ragdoll/ragdoll_cmds.cpp:396)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Ragdoll_BaseLerpBone_f(void)
 
 {
   int iVar1;
-  int iVar3;
-  char *pcVar4;
-  undefined8 uVar2;
-  int iVar5;
+  int iVar2;
+  char *pcVar3;
+  int iVar4;
   
   __savegprlr_29();
-  iVar3 = Cmd_Argc();
-  if (2 < iVar3) {
-    pcVar4 = (char *)Cmd_Argv(1);
-    iVar3 = atoi(pcVar4);
-    if ((-1 < iVar3) && (iVar3 < 2)) {
-      iVar3 = iVar3 * 0xf58;
-      if (8 < *(int *)(&DAT_84449120 + iVar3)) {
-        Com_Printf(0xe,0xffffffff8219bcf0,9);
+  iVar2 = Cmd_Argc();
+  if (2 < iVar2) {
+    pcVar3 = Cmd_Argv(1);
+    iVar2 = atoi(pcVar3);
+    if ((-1 < iVar2) && (iVar2 < 2)) {
+      iVar2 = iVar2 * 0xf58;
+      if (8 < *(int *)(&DAT_84449120 + iVar2)) {
+        Com_Printf(0xe,"Ragdoll: Too many base pose lerping bones, max %d\n");
         __restgprlr_29();
         return;
       }
-      iVar1 = *(int *)(&DAT_84449120 + iVar3) * 0x20 + iVar3;
-      uVar2 = Cmd_Argv(2);
-      I_strncpyz(&DAT_84448cb8 + iVar1 + 0x46c,uVar2,0x14);
-      *(undefined4 *)(&DAT_84448cb8 + iVar1 + 0x480) = 0;
-      iVar5 = Cmd_Argc();
-      if (iVar5 < 3) {
-        *(undefined4 *)(&DAT_84448cb8 + iVar1 + 0x488) = *(undefined4 *)(DAT_84436208 + 0xc);
+      iVar1 = *(int *)(&DAT_84449120 + iVar2) * 0x20 + iVar2;
+      pcVar3 = Cmd_Argv(2);
+      I_strncpyz(&ragdollDefs + iVar1 + 0x46c,pcVar3,0x14);
+      *(undefined4 *)(&ragdollDefs + iVar1 + 0x480) = 0;
+      iVar4 = Cmd_Argc();
+      if (iVar4 < 3) {
+        *(int *)(&ragdollDefs + iVar1 + 0x488) = (ragdoll_baselerp_time->current).integer;
       }
       else {
-        pcVar4 = (char *)Cmd_Argv(3);
-        iVar5 = atoi(pcVar4);
-        *(int *)(&DAT_84448cb8 + iVar1 + 0x488) = iVar5;
-        if (iVar5 < 6000) {
-          if (iVar5 < 0x65) {
-            iVar5 = 100;
+        pcVar3 = Cmd_Argv(3);
+        iVar4 = atoi(pcVar3);
+        *(int *)(&ragdollDefs + iVar1 + 0x488) = iVar4;
+        if (iVar4 < 6000) {
+          if (iVar4 < 0x65) {
+            iVar4 = 100;
           }
-          *(int *)(&DAT_84448cb8 + iVar1 + 0x488) = iVar5;
+          *(int *)(&ragdollDefs + iVar1 + 0x488) = iVar4;
         }
         else {
-          *(undefined4 *)(&DAT_84448cb8 + iVar1 + 0x488) = 6000;
+          *(undefined4 *)(&ragdollDefs + iVar1 + 0x488) = 6000;
         }
       }
-      iVar5 = Cmd_Argc();
-      if (3 < iVar5) {
-        pcVar4 = (char *)Cmd_Argv(4);
-        iVar5 = atoi(pcVar4);
-        *(int *)(&DAT_84448cb8 + iVar1 + 0x484) = iVar5;
-        *(int *)(&DAT_84449120 + iVar3) = *(int *)(&DAT_84449120 + iVar3) + 1;
+      iVar4 = Cmd_Argc();
+      if (3 < iVar4) {
+        pcVar3 = Cmd_Argv(4);
+        iVar4 = atoi(pcVar3);
+        *(int *)(&ragdollDefs + iVar1 + 0x484) = iVar4;
+        *(int *)(&DAT_84449120 + iVar2) = *(int *)(&DAT_84449120 + iVar2) + 1;
         __restgprlr_29();
         return;
       }
-      *(undefined4 *)(&DAT_84448cb8 + iVar1 + 0x484) = 0;
-      *(int *)(&DAT_84449120 + iVar3) = *(int *)(&DAT_84449120 + iVar3) + 1;
+      *(undefined4 *)(&ragdollDefs + iVar1 + 0x484) = 0;
+      *(int *)(&DAT_84449120 + iVar2) = *(int *)(&DAT_84449120 + iVar2) + 1;
     }
   }
   __restgprlr_29();
@@ -534,47 +556,47 @@ void Ragdoll_BaseLerpBone_f(void)
 
 // 826A4000  Ragdoll_PinBone_f  (ragdoll/ragdoll_cmds.cpp:446)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Ragdoll_PinBone_f(void)
 
 {
   int iVar1;
-  int iVar3;
-  char *pcVar4;
-  undefined8 uVar2;
-  int iVar5;
-  uint uVar6;
+  int iVar2;
+  char *pcVar3;
+  uint uVar4;
   
   __savegprlr_29();
-  iVar3 = Cmd_Argc();
-  if (2 < iVar3) {
-    pcVar4 = (char *)Cmd_Argv(1);
-    iVar3 = atoi(pcVar4);
-    if ((-1 < iVar3) && (iVar3 < 2)) {
-      iVar3 = iVar3 * 0xf58;
-      if (8 < *(int *)(&DAT_84449120 + iVar3)) {
-        Com_Printf(0xe,0xffffffff8219bcf0,9);
+  iVar2 = Cmd_Argc();
+  if (2 < iVar2) {
+    pcVar3 = Cmd_Argv(1);
+    iVar2 = atoi(pcVar3);
+    if ((-1 < iVar2) && (iVar2 < 2)) {
+      iVar2 = iVar2 * 0xf58;
+      if (8 < *(int *)(&DAT_84449120 + iVar2)) {
+        Com_Printf(0xe,"Ragdoll: Too many base pose lerping bones, max %d\n");
         __restgprlr_29();
         return;
       }
-      iVar1 = *(int *)(&DAT_84449120 + iVar3) * 0x20 + iVar3;
-      uVar2 = Cmd_Argv(2);
-      iVar5 = SL_FindString();
-      *(int *)(&DAT_84448cb8 + iVar1 + 0x480) = iVar5;
-      if (iVar5 == 0) {
-        Com_Printf(0xe,0xffffffff8219bd58,uVar2);
+      iVar1 = *(int *)(&DAT_84449120 + iVar2) * 0x20 + iVar2;
+      pcVar3 = Cmd_Argv(2);
+      uVar4 = SL_FindString(pcVar3);
+      *(uint *)(&ragdollDefs + iVar1 + 0x480) = uVar4;
+      if (uVar4 == 0) {
+        Com_Printf(0xe,"Ragdoll: Couldn\'t find pinned bone named %s\n");
         __restgprlr_29();
         return;
       }
-      pcVar4 = (char *)Cmd_Argv(3);
-      uVar6 = atoi(pcVar4);
-      *(uint *)(&DAT_84448cb8 + iVar1 + 0x484) = uVar6;
-      if (*(uint *)(&DAT_84448cbc + iVar3) <= uVar6) {
-        Com_Printf(0xe,0xffffffff8219bd24,uVar6);
+      pcVar3 = Cmd_Argv(3);
+      uVar4 = atoi(pcVar3);
+      *(uint *)(&ragdollDefs + iVar1 + 0x484) = uVar4;
+      if (*(uint *)(&DAT_84448cbc + iVar2) <= uVar4) {
+        Com_Printf(0xe,"Ragdoll: Pinned bone has invalid parent index %d\n");
         __restgprlr_29();
         return;
       }
-      *(undefined4 *)(&DAT_84448cb8 + iVar1 + 0x488) = 0;
-      *(int *)(&DAT_84449120 + iVar3) = *(int *)(&DAT_84449120 + iVar3) + 1;
+      *(undefined4 *)(&ragdollDefs + iVar1 + 0x488) = 0;
+      *(int *)(&DAT_84449120 + iVar2) = *(int *)(&DAT_84449120 + iVar2) + 1;
     }
   }
   __restgprlr_29();
@@ -584,39 +606,40 @@ void Ragdoll_PinBone_f(void)
 
 // 826A4100  Ragdoll_HitLocMapping_f  (ragdoll/ragdoll_cmds.cpp:495)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Ragdoll_HitLocMapping_f(void)
 
 {
-  int iVar2;
-  char *pcVar3;
+  int iVar1;
+  char *pcVar2;
+  int iVar3;
   int iVar4;
-  undefined8 uVar1;
   int iVar5;
-  int iVar6;
-  undefined4 *puVar7;
+  char **ppcVar6;
   
   __savegprlr_26();
-  iVar2 = Cmd_Argc();
-  if (2 < iVar2) {
-    pcVar3 = (char *)Cmd_Argv(1);
-    iVar2 = atoi(pcVar3);
-    if ((-1 < iVar2) && (iVar2 < 2)) {
-      pcVar3 = (char *)Cmd_Argv(2);
-      iVar4 = atoi(pcVar3);
-      uVar1 = Cmd_Argv(3);
-      puVar7 = &DAT_829974f8;
-      iVar6 = 0;
+  iVar1 = Cmd_Argc();
+  if (2 < iVar1) {
+    pcVar2 = Cmd_Argv(1);
+    iVar1 = atoi(pcVar2);
+    if ((-1 < iVar1) && (iVar1 < 2)) {
+      pcVar2 = Cmd_Argv(2);
+      iVar3 = atoi(pcVar2);
+      pcVar2 = Cmd_Argv(3);
+      ppcVar6 = g_HitLocNames;
+      iVar5 = 0;
       do {
-        iVar5 = I_stricmp(*puVar7,uVar1);
-        if (iVar5 == 0) {
-          *(int *)(&DAT_84448cb8 + (iVar6 + 0x3c2) * 4 + iVar2 * 0xf58) = iVar4;
+        iVar4 = I_stricmp(*ppcVar6,pcVar2);
+        if (iVar4 == 0) {
+          *(int *)(&ragdollDefs + (iVar5 + 0x3c2) * 4 + iVar1 * 0xf58) = iVar3;
           __restgprlr_26();
           return;
         }
-        puVar7 = puVar7 + 1;
-        iVar6 = iVar6 + 1;
-      } while ((int)puVar7 < -0x7d668ab8);
-      Com_Printf(0xe,0xffffffff8219bd88,uVar1);
+        ppcVar6 = ppcVar6 + 1;
+        iVar5 = iVar5 + 1;
+      } while ((int)ppcVar6 < -0x7d668ab8);
+      Com_Printf(0xe,"Ragdoll: Unknown hit location \'%s\'\n");
     }
   }
   __restgprlr_26();
@@ -626,17 +649,21 @@ void Ragdoll_HitLocMapping_f(void)
 
 // 826A41C8  Ragdoll_InitCommands  (ragdoll/ragdoll_cmds.cpp:534)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Ragdoll_InitCommands(void)
 
 {
-  Cmd_AddCommandInternal(0xffffffff8219be34,0xffffffff826a35c0,0xffffffff8444abfc);
-  Cmd_AddCommandInternal(0xffffffff8219be24,0xffffffff826a3860,0xffffffff8444abe8);
-  Cmd_AddCommandInternal(0xffffffff8219be0c,0xffffffff826a3ec8,0xffffffff8444abd4);
-  Cmd_AddCommandInternal(0xffffffff8219bdf8,0xffffffff826a4000,0xffffffff8444abc0);
-  Cmd_AddCommandInternal(0xffffffff8219bde8,0xffffffff826a3ae8,0xffffffff8444abac);
-  Cmd_AddCommandInternal(0xffffffff8219bdd8,0xffffffff826a3bf8,0xffffffff8444ab98);
-  Cmd_AddCommandInternal(0xffffffff8219bdc4,0xffffffff826a3de0,0xffffffff8444ab84);
-  Cmd_AddCommandInternal(0xffffffff8219bdac,0xffffffff826a4100,0xffffffff8444ab70);
+  Cmd_AddCommandInternal("ragdoll_clear",Ragdoll_Clear_f,&Ragdoll_Clear_f_VAR);
+  Cmd_AddCommandInternal("ragdoll_bone",Ragdoll_Bone_f,&Ragdoll_Bone_f_VAR);
+  Cmd_AddCommandInternal("ragdoll_baselerp_bone",Ragdoll_BaseLerpBone_f,&Ragdoll_BaseLerpBone_f_VAR)
+  ;
+  Cmd_AddCommandInternal("ragdoll_pin_bone",Ragdoll_PinBone_f,&Ragdoll_PinBone_f_VAR);
+  Cmd_AddCommandInternal("ragdoll_joint",Ragdoll_Joint_f,&Ragdoll_Joint_f_VAR);
+  Cmd_AddCommandInternal("ragdoll_limit",Ragdoll_Limit_f,&Ragdoll_Limit_f_VAR);
+  Cmd_AddCommandInternal("ragdoll_selfpair",Ragdoll_Selfpair_f,&Ragdoll_Selfpair_f_VAR);
+  Cmd_AddCommandInternal
+            ("ragdoll_hitloc_mapping",Ragdoll_HitLocMapping_f,&Ragdoll_HitLocMapping_f_VAR);
   return;
 }
 

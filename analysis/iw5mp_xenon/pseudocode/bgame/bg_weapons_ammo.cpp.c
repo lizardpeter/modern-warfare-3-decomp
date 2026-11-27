@@ -2,203 +2,247 @@
 
 // 82290BB0  BG_AmmoForWeapon  (bgame/bg_weapons_ammo.cpp:9)
 
-ulonglong BG_AmmoForWeapon(ulonglong param_1,char param_2)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+int BG_AmmoForWeapon(Weapon param_1,bool param_2)
 
 {
-  bool bVar1;
-  uint uVar2;
-  char cVar3;
-  longlong lVar4;
-  int local_30;
-  int local_2c;
-  int local_28 [4];
+  int iVar1;
+  Weapon WVar2;
+  bool bVar3;
+  bool bVar4;
+  WeaponAttachment *local_30;
+  WeaponAttachment *local_2c;
+  WeaponAttachment *local_28 [4];
   
-  uVar2 = BG_GetAlternateWeapon();
-  if (*(uint *)((&DAT_829d84a0)[uVar2 & 0xff] + 0x218) != 0) {
-    return (ulonglong)*(uint *)((&DAT_829d84a0)[uVar2 & 0xff] + 0x218);
+  WVar2 = BG_GetAlternateWeapon(param_1,param_2);
+  iVar1 = *(int *)(*(int *)((int)bg_weaponDefs +
+                           ((uint)(((ulonglong)WVar2 & 0xffffffff) << 2) & 0x3fc)) + 0x218);
+  if (iVar1 != 0) {
+    return iVar1;
   }
-  if (param_2 != '\0') {
-    cVar3 = BG_HasUnderbarrelAmmo(param_1);
-    lVar4 = 1;
-    if (cVar3 != '\0') goto LAB_82290c14;
+  if (param_2) {
+    bVar3 = BG_HasUnderbarrelAmmo(param_1);
+    bVar4 = true;
+    if (!bVar3) goto LAB_82290c10;
   }
-  lVar4 = 0;
-LAB_82290c14:
-  if (lVar4 != 0) {
-    cVar3 = BG_IsIW5Weapon(param_1);
-    if (cVar3 != '\0') {
-      BG_GetWeaponAttachments(param_1,lVar4,&local_30,&local_2c,local_28);
-      bVar1 = local_30 == 0;
-      if ((local_30 != 0) && ((bVar1 || (bVar1 = false, *(char *)(local_30 + 0xa1) != '\0')))) {
-        bVar1 = true;
+  else {
+LAB_82290c10:
+    bVar4 = false;
+  }
+  if (bVar4) {
+    bVar4 = BG_IsIW5Weapon(param_1);
+    if (bVar4) {
+      BG_GetWeaponAttachments(param_1,true,&local_30,&local_2c,local_28);
+      bVar4 = local_30 == (WeaponAttachment *)0x0;
+      if ((local_30 != (WeaponAttachment *)0x0) &&
+         ((bVar4 || (bVar4 = false, local_30->shareAmmoWithAlt != false)))) {
+        bVar4 = true;
       }
-      if ((local_2c != 0) && ((bVar1 || (bVar1 = false, *(char *)(local_2c + 0xa1) != '\0')))) {
-        bVar1 = true;
+      if ((local_2c != (WeaponAttachment *)0x0) &&
+         ((bVar4 || (bVar4 = false, local_2c->shareAmmoWithAlt != false)))) {
+        bVar4 = true;
       }
-      if ((local_28[0] != 0) && ((bVar1 || (bVar1 = false, *(char *)(local_28[0] + 0xa1) != '\0'))))
-      {
-        bVar1 = true;
+      if ((local_28[0] != (WeaponAttachment *)0x0) &&
+         ((bVar4 || (bVar4 = false, local_28[0]->shareAmmoWithAlt != false)))) {
+        bVar4 = true;
       }
-      if (bVar1) {
-        return param_1;
-      }
+      if (bVar4) goto LAB_82290cf4;
     }
-    param_1 = param_1 | 0x1000000;
+    param_1 = (Weapon)((ulonglong)param_1 | 0x1000000);
   }
-  return param_1;
+LAB_82290cf4:
+  return param_1._4_4_;
 }
 
 
 // 82290D10  BG_ClipForWeapon  (bgame/bg_weapons_ammo.cpp:74)
 
-ulonglong BG_ClipForWeapon(ulonglong param_1,char param_2)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+int BG_ClipForWeapon(Weapon param_1,bool param_2)
 
 {
-  bool bVar1;
-  uint uVar2;
-  char cVar3;
-  longlong lVar4;
-  int local_30;
-  int local_2c;
-  int local_28 [4];
+  int iVar1;
+  Weapon WVar2;
+  bool bVar3;
+  bool bVar4;
+  WeaponAttachment *local_30;
+  WeaponAttachment *local_2c;
+  WeaponAttachment *local_28 [4];
   
-  uVar2 = BG_GetAlternateWeapon();
-  if (*(uint *)((&DAT_829d84a0)[uVar2 & 0xff] + 0x220) != 0) {
-    return (ulonglong)*(uint *)((&DAT_829d84a0)[uVar2 & 0xff] + 0x220);
+  WVar2 = BG_GetAlternateWeapon(param_1,param_2);
+  iVar1 = *(int *)(*(int *)((int)bg_weaponDefs +
+                           ((uint)(((ulonglong)WVar2 & 0xffffffff) << 2) & 0x3fc)) + 0x220);
+  if (iVar1 != 0) {
+    return iVar1;
   }
-  if (param_2 != '\0') {
-    cVar3 = BG_HasUnderbarrelAmmo(param_1);
-    lVar4 = 1;
-    if (cVar3 != '\0') goto LAB_82290d74;
+  if (param_2) {
+    bVar3 = BG_HasUnderbarrelAmmo(param_1);
+    bVar4 = true;
+    if (!bVar3) goto LAB_82290d70;
   }
-  lVar4 = 0;
-LAB_82290d74:
-  if (lVar4 != 0) {
-    cVar3 = BG_IsIW5Weapon(param_1);
-    if (cVar3 != '\0') {
-      BG_GetWeaponAttachments(param_1,lVar4,&local_30,&local_2c,local_28);
-      bVar1 = local_30 == 0;
-      if ((local_30 != 0) && ((bVar1 || (bVar1 = false, *(char *)(local_30 + 0xa1) != '\0')))) {
-        bVar1 = true;
+  else {
+LAB_82290d70:
+    bVar4 = false;
+  }
+  if (bVar4) {
+    bVar4 = BG_IsIW5Weapon(param_1);
+    if (bVar4) {
+      BG_GetWeaponAttachments(param_1,true,&local_30,&local_2c,local_28);
+      bVar4 = local_30 == (WeaponAttachment *)0x0;
+      if ((local_30 != (WeaponAttachment *)0x0) &&
+         ((bVar4 || (bVar4 = false, local_30->shareAmmoWithAlt != false)))) {
+        bVar4 = true;
       }
-      if ((local_2c != 0) && ((bVar1 || (bVar1 = false, *(char *)(local_2c + 0xa1) != '\0')))) {
-        bVar1 = true;
+      if ((local_2c != (WeaponAttachment *)0x0) &&
+         ((bVar4 || (bVar4 = false, local_2c->shareAmmoWithAlt != false)))) {
+        bVar4 = true;
       }
-      if ((local_28[0] != 0) && ((bVar1 || (bVar1 = false, *(char *)(local_28[0] + 0xa1) != '\0'))))
-      {
-        bVar1 = true;
+      if ((local_28[0] != (WeaponAttachment *)0x0) &&
+         ((bVar4 || (bVar4 = false, local_28[0]->shareAmmoWithAlt != false)))) {
+        bVar4 = true;
       }
-      if (bVar1) {
-        return param_1;
-      }
+      if (bVar4) goto LAB_82290e54;
     }
-    param_1 = param_1 | 0x1000000;
+    param_1 = (Weapon)((ulonglong)param_1 | 0x1000000);
   }
-  return param_1;
+LAB_82290e54:
+  return param_1._4_4_;
 }
 
 
 // 82290E70  BG_WeaponIsClipOnly  (bgame/bg_weapons_ammo.cpp:118)
 
-undefined1 BG_WeaponIsClipOnly(void)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+int BG_WeaponIsClipOnly(Weapon param_1,bool param_2)
 
 {
-  uint uVar1;
+  Weapon WVar1;
   
-  uVar1 = BG_GetAlternateWeapon();
-  return *(undefined1 *)((&DAT_829d84a0)[uVar1 & 0xff] + 0x77a);
+  WVar1 = BG_GetAlternateWeapon(param_1,param_2);
+  return (int)*(byte *)(*(int *)((int)bg_weaponDefs +
+                                ((uint)(((ulonglong)WVar1 & 0xffffffff) << 2) & 0x3fc)) + 0x77a);
 }
 
 
 // 82290EA8  BG_WeaponAllowsAmmoPickup  (bgame/bg_weapons_ammo.cpp:124)
 
-bool BG_WeaponAllowsAmmoPickup(void)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+int BG_WeaponAllowsAmmoPickup(Weapon param_1,bool param_2)
 
 {
-  uint uVar1;
+  Weapon WVar1;
   
-  uVar1 = BG_GetAlternateWeapon();
-  return *(char *)((&DAT_829d84a0)[uVar1 & 0xff] + 0x77b) == '\0';
+  WVar1 = BG_GetAlternateWeapon(param_1,param_2);
+  return (uint)LZCOUNT((uint)*(byte *)(*(int *)((int)bg_weaponDefs +
+                                               ((uint)(((ulonglong)WVar1 & 0xffffffff) << 2) & 0x3fc
+                                               )) + 0x77b)) >> 5;
 }
 
 
 // 82291610  BG_WeaponAmmo  (bgame/bg_weapons_ammo.cpp:132)
 
-void BG_WeaponAmmo(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+int BG_WeaponAmmo(playerState_s *param_1,Weapon param_2,bool param_3)
 
 {
-  undefined8 uVar1;
-  longlong lVar2;
-  longlong lVar3;
-  int iVar5;
-  longlong lVar4;
+  playerState_s *ppVar1;
+  int iVar2;
+  int iVar3;
+  int iVar4;
   
-  uVar1 = __savegprlr_28();
-  lVar2 = BG_GetAmmoInClipForWeapon();
-  lVar3 = BG_GetAmmoNotInClip(uVar1,param_2,param_3);
-  iVar5 = BG_PlayerDualWieldingWeapon(uVar1,param_2);
-  if (iVar5 != 0) {
-    lVar4 = BG_GetAmmoInClipForWeapon(uVar1,param_2,param_3,1);
-    __restgprlr_28(lVar4 + lVar3 + lVar2);
-    return;
+  ppVar1 = (playerState_s *)__savegprlr_28(param_1);
+  iVar2 = BG_GetAmmoInClipForWeapon(ppVar1,param_2,param_3,WEAPON_HAND_DEFAULT);
+  iVar3 = BG_GetAmmoNotInClip(ppVar1,param_2,param_3);
+  iVar4 = BG_PlayerDualWieldingWeapon(ppVar1,param_2);
+  if (iVar4 != 0) {
+    iVar4 = BG_GetAmmoInClipForWeapon(ppVar1,param_2,param_3,WEAPON_HAND_LEFT);
+    iVar2 = __restgprlr_28((longlong)iVar4 + (longlong)iVar3 + (longlong)iVar2);
+    return iVar2;
   }
-  __restgprlr_28(lVar3 + lVar2);
-  return;
+  iVar2 = __restgprlr_28((longlong)iVar3 + (longlong)iVar2);
+  return iVar2;
 }
 
 
 // 82290EE8  BG_GetAmmoPlayerMax  (bgame/bg_weapons_ammo.cpp:145)
 
-void BG_GetAmmoPlayerMax(undefined8 param_1,undefined8 param_2,ulonglong param_3,ulonglong param_4)
+/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+int BG_GetAmmoPlayerMax(playerState_s *param_1,Weapon param_2,bool param_3,Weapon param_4)
 
 {
   int iVar1;
-  uint uVar2;
-  int iVar3;
-  int iVar4;
-  char cVar5;
+  playerState_s *ppVar4;
+  Weapon WVar2;
+  int iVar5;
+  Weapon WVar3;
   int iVar6;
-  uint *puVar7;
-  ulonglong uVar8;
+  bool bVar7;
+  bool bVar8;
+  ulonglong uVar9;
+  int iVar10;
+  uint *puVar11;
   
-  iVar1 = __savegprlr_23();
-  uVar2 = BG_GetAlternateWeapon(param_2,param_3);
-  if (-1 < *(int *)((&DAT_829d84a0)[uVar2 & 0xff] + 0x230)) {
-    __restgprlr_23(*(undefined4 *)((&DAT_829d84a0)[uVar2 & 0xff] + 0x234));
-    return;
+  uVar9 = (ulonglong)param_3;
+  ppVar4 = (playerState_s *)__savegprlr_23(param_1);
+  bVar8 = SUB81(uVar9,0);
+  WVar2 = BG_GetAlternateWeapon(param_2,bVar8);
+  iVar5 = *(int *)((int)bg_weaponDefs + ((uint)(((ulonglong)WVar2 & 0xffffffff) << 2) & 0x3fc));
+  if (-1 < *(int *)(iVar5 + 0x230)) {
+    iVar5 = __restgprlr_23(*(undefined4 *)(iVar5 + 0x234));
+    return iVar5;
   }
-  uVar2 = BG_GetAlternateWeapon(param_2,param_3);
-  if (*(char *)((&DAT_829d84a0)[uVar2 & 0xff] + 0x77a) != '\0') {
-    BG_GetClipSize(iVar1,param_2,param_3);
-    __restgprlr_23();
-    return;
+  WVar2 = BG_GetAlternateWeapon(param_2,bVar8);
+  if (*(char *)(*(int *)((int)bg_weaponDefs + ((uint)(((ulonglong)WVar2 & 0xffffffff) << 2) & 0x3fc)
+                        ) + 0x77a) != '\0') {
+    iVar5 = BG_GetClipSize(ppVar4,param_2,bVar8);
+    iVar5 = __restgprlr_23(iVar5);
+    return iVar5;
   }
-  iVar3 = BG_AmmoForWeapon(param_2,param_3);
-  iVar6 = 0;
-  puVar7 = (uint *)(iVar1 + 0x274);
+  iVar5 = BG_AmmoForWeapon(param_2,bVar8);
+  iVar10 = 0;
+  puVar11 = (uint *)(ppVar4->field0_0x0).weaponsEquipped;
   do {
-    uVar8 = (ulonglong)*puVar7;
-    if (((*puVar7 & 0xff) != 0) && (uVar8 != (param_4 & 0xffffffff))) {
-      uVar2 = BG_GetAlternateWeapon(uVar8,param_3);
-      iVar1 = (&DAT_829d84a0)[uVar2 & 0xff];
-      iVar4 = BG_AmmoForWeapon(uVar8,param_3);
-      if (iVar4 == iVar3) {
+    WVar2.data = 0;
+    WVar2._4_4_ = *puVar11;
+    if (((*puVar11 & 0xff) != 0) && (WVar2 != (Weapon)((ulonglong)param_4 & 0xffffffff))) {
+      WVar3 = BG_GetAlternateWeapon(WVar2,bVar8);
+      iVar1 = *(int *)((int)bg_weaponDefs + ((uint)(((ulonglong)WVar3 & 0xffffffff) << 2) & 0x3fc));
+      iVar6 = BG_AmmoForWeapon(WVar2,bVar8);
+      if (iVar6 == iVar5) {
         if (-1 < *(int *)(iVar1 + 0x230)) {
-          __restgprlr_23(*(undefined4 *)(iVar1 + 0x234));
-          return;
+          iVar5 = __restgprlr_23(*(undefined4 *)(iVar1 + 0x234));
+          return iVar5;
         }
-        if (((param_3 & 0xff) == 0) || (cVar5 = BG_HasUnderbarrelAmmo(uVar8), cVar5 != '\0')) {
-          BG_MaxAmmo(uVar8,param_3);
-          __restgprlr_23();
-          return;
+        if (((uVar9 & 0xff) == 0) || (bVar7 = BG_HasUnderbarrelAmmo(WVar2), bVar7)) {
+          iVar5 = BG_MaxAmmo(WVar2,bVar8);
+          iVar5 = __restgprlr_23(iVar5);
+          return iVar5;
         }
       }
     }
-    iVar6 = iVar6 + 1;
-    puVar7 = puVar7 + 1;
-    if (0xe < iVar6) {
-      __restgprlr_23(0);
-      return;
+    iVar10 = iVar10 + 1;
+    puVar11 = puVar11 + 1;
+    if (0xe < iVar10) {
+      iVar5 = __restgprlr_23(0);
+      return iVar5;
     }
   } while( true );
 }
@@ -206,94 +250,105 @@ void BG_GetAmmoPlayerMax(undefined8 param_1,undefined8 param_2,ulonglong param_3
 
 // 82291688  BG_GetMaxPickupableAmmo  (bgame/bg_weapons_ammo.cpp:193)
 
-void BG_GetMaxPickupableAmmo(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+int BG_GetMaxPickupableAmmo(playerState_s *param_1,Weapon param_2,bool param_3)
 
 {
-  uint uVar1;
-  int iVar2;
+  playerState_s *ppVar3;
+  Weapon WVar1;
+  int iVar4;
+  int iVar5;
+  Weapon WVar2;
   int iVar6;
-  uint uVar7;
-  longlong lVar3;
-  longlong lVar4;
-  longlong lVar5;
+  int *piVar7;
   uint uVar8;
-  int iVar9;
+  uint *puVar9;
   int *piVar10;
-  uint *puVar11;
-  int *piVar12;
-  ulonglong uVar13;
+  ulonglong uVar11;
+  longlong lVar12;
+  uint uVar13;
   int iStack_a4;
   int local_a0 [40];
   
-  iVar6 = __savegprlr_21();
-  uVar7 = BG_GetAlternateWeapon(param_2,param_3);
-  iVar2 = (&DAT_829d84a0)[uVar7 & 0xff];
+  ppVar3 = (playerState_s *)__savegprlr_21(param_1);
+  WVar1 = BG_GetAlternateWeapon(param_2,param_3);
+  iVar4 = *(int *)((int)bg_weaponDefs + ((uint)(((ulonglong)WVar1 & 0xffffffff) << 2) & 0x3fc));
   BG_AmmoForWeapon(param_2,param_3);
-  if (*(int *)(iVar2 + 0x230) < 0) {
-    uVar7 = BG_GetAlternateWeapon(param_2,param_3);
-    if (*(char *)((&DAT_829d84a0)[uVar7 & 0xff] + 0x77a) != '\0') {
-      lVar3 = BG_GetClipSize();
-      lVar4 = BG_GetAmmoInClipForWeapon(iVar6,param_2,param_3,0);
-      lVar4 = lVar3 - lVar4;
-      if (*(int *)(iVar6 + 0x390) == 1) {
-        lVar5 = BG_GetAmmoInClipForWeapon(iVar6,param_2,param_3,1);
-        lVar4 = (lVar4 + lVar3) - lVar5;
+  if (*(int *)(iVar4 + 0x230) < 0) {
+    WVar1 = BG_GetAlternateWeapon(param_2,param_3);
+    if (*(char *)(*(int *)((int)bg_weaponDefs +
+                          ((uint)(((ulonglong)WVar1 & 0xffffffff) << 2) & 0x3fc)) + 0x77a) != '\0')
+    {
+      iVar4 = BG_GetClipSize(ppVar3,param_2,param_3);
+      iVar5 = BG_GetAmmoInClipForWeapon(ppVar3,param_2,param_3,WEAPON_HAND_DEFAULT);
+      lVar12 = (longlong)iVar4 - (longlong)iVar5;
+      if (*(int *)&ppVar3->field_0x390 == 1) {
+        iVar5 = BG_GetAmmoInClipForWeapon(ppVar3,param_2,param_3,WEAPON_HAND_LEFT);
+        lVar12 = (lVar12 + iVar4) - (longlong)iVar5;
       }
-      __restgprlr_21(lVar4);
-      return;
+      iVar4 = __restgprlr_21(lVar12);
+      return iVar4;
     }
-    lVar3 = BG_GetAmmoPlayerMax(iVar6,param_2,param_3,0);
-    lVar4 = BG_GetAmmoNotInClip(iVar6,param_2,param_3);
-    __restgprlr_21(lVar3 - lVar4);
-    return;
+    iVar4 = BG_GetAmmoPlayerMax(ppVar3,param_2,param_3,(Weapon)0x0);
+    iVar5 = BG_GetAmmoNotInClip(ppVar3,param_2,param_3);
+    iVar4 = __restgprlr_21((longlong)iVar4 - (longlong)iVar5);
+    return iVar4;
   }
-  uVar13 = (ulonglong)*(uint *)(iVar2 + 0x234);
-  uVar7 = 0;
-  piVar12 = &iStack_a4;
-  puVar11 = (uint *)(iVar6 + 0x274);
-  lVar3 = 0xf;
+  uVar11 = (ulonglong)*(uint *)(iVar4 + 0x234);
+  uVar13 = 0;
+  piVar10 = &iStack_a4;
+  puVar9 = (uint *)(ppVar3->field0_0x0).weaponsEquipped;
+  lVar12 = 0xf;
   do {
-    uVar1 = *puVar11;
-    if ((uVar1 & 0xff) != 0) {
-      uVar8 = BG_GetAlternateWeapon(uVar1,param_3);
-      if (*(int *)((&DAT_829d84a0)[uVar8 & 0xff] + 0x230) == *(int *)(iVar2 + 0x230)) {
-        uVar8 = BG_GetAlternateWeapon(uVar1,param_3);
-        if (*(char *)((&DAT_829d84a0)[uVar8 & 0xff] + 0x77a) == '\0') {
-          iVar9 = BG_AmmoForWeapon(uVar1,param_3);
-          uVar8 = 0;
-          if (uVar7 != 0) {
-            piVar10 = local_a0;
-            do {
-              if (*piVar10 == iVar9) break;
-              uVar8 = uVar8 + 1;
-              piVar10 = piVar10 + 1;
-            } while (uVar8 < uVar7);
-          }
-          if (uVar8 == uVar7) {
-            lVar4 = BG_GetAmmoNotInClip(iVar6,uVar1,param_3);
-            piVar12 = piVar12 + 1;
-            *piVar12 = iVar9;
-            uVar7 = uVar7 + 1;
-            goto LAB_8229188c;
-          }
+    WVar1.data = 0;
+    WVar1._4_4_ = *puVar9;
+    if (((*puVar9 & 0xff) != 0) &&
+       (WVar2 = BG_GetAlternateWeapon(WVar1,param_3),
+       *(int *)(*(int *)((int)bg_weaponDefs + ((uint)(((ulonglong)WVar2 & 0xffffffff) << 2) & 0x3fc)
+                        ) + 0x230) == *(int *)(iVar4 + 0x230))) {
+      WVar2 = BG_GetAlternateWeapon(WVar1,param_3);
+      if (*(char *)(*(int *)((int)bg_weaponDefs +
+                            ((uint)(((ulonglong)WVar2 & 0xffffffff) << 2) & 0x3fc)) + 0x77a) == '\0'
+         ) {
+        iVar5 = BG_AmmoForWeapon(WVar1,param_3);
+        uVar8 = 0;
+        if (uVar13 != 0) {
+          piVar7 = local_a0;
+          do {
+            if (*piVar7 == iVar5) break;
+            uVar8 = uVar8 + 1;
+            piVar7 = piVar7 + 1;
+          } while (uVar8 < uVar13);
         }
-        else {
-          lVar4 = BG_GetAmmoInClipForWeapon(iVar6,uVar1,param_3,0);
-          uVar13 = uVar13 - lVar4;
-          iVar9 = BG_PlayerDualWieldingWeapon(iVar6,uVar1);
-          if (iVar9 != 0) {
-            lVar4 = BG_GetAmmoInClipForWeapon(iVar6,uVar1,param_3,1);
+        if (uVar8 == uVar13) {
+          iVar6 = BG_GetAmmoNotInClip(ppVar3,WVar1,param_3);
+          piVar10 = piVar10 + 1;
+          *piVar10 = iVar5;
+          uVar13 = uVar13 + 1;
+          goto LAB_8229188c;
+        }
+      }
+      else {
+        iVar5 = BG_GetAmmoInClipForWeapon(ppVar3,WVar1,param_3,WEAPON_HAND_DEFAULT);
+        uVar11 = uVar11 - (longlong)iVar5;
+        iVar5 = BG_PlayerDualWieldingWeapon(ppVar3,WVar1);
+        if (iVar5 != 0) {
+          iVar6 = BG_GetAmmoInClipForWeapon(ppVar3,WVar1,param_3,WEAPON_HAND_LEFT);
 LAB_8229188c:
-            uVar13 = uVar13 - lVar4;
-          }
+          uVar11 = uVar11 - (longlong)iVar6;
         }
       }
     }
-    lVar3 = lVar3 + -1;
-    puVar11 = puVar11 + 1;
-    if (lVar3 == 0) {
-      __restgprlr_21(uVar13);
-      return;
+    lVar12 = lVar12 + -1;
+    puVar9 = puVar9 + 1;
+    if (lVar12 == 0) {
+      iVar4 = __restgprlr_21(uVar11);
+      return iVar4;
     }
   } while( true );
 }
@@ -301,16 +356,21 @@ LAB_8229188c:
 
 // 822918A8  BG_GetTotalAmmoReserve  (bgame/bg_weapons_ammo.cpp:267)
 
-void BG_GetTotalAmmoReserve(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+int BG_GetTotalAmmoReserve(playerState_s *param_1,Weapon param_2,bool param_3)
 
 {
-  int iVar1;
-  int iVar3;
-  uint uVar4;
-  uint uVar5;
-  longlong lVar2;
-  int iVar6;
-  int *piVar7;
+  playerState_s *ppVar3;
+  Weapon WVar1;
+  Weapon WVar2;
+  int iVar4;
+  int iVar5;
+  int *piVar6;
+  uint uVar7;
   longlong lVar8;
   uint *puVar9;
   int *piVar10;
@@ -323,71 +383,76 @@ void BG_GetTotalAmmoReserve(undefined8 param_1,undefined8 param_2,undefined8 par
   int iStack_b4;
   int local_b0 [44];
   
-  iVar3 = __savegprlr_19();
+  ppVar3 = (playerState_s *)__savegprlr_19(param_1);
   lVar12 = 0;
   uVar14 = 0;
   uVar13 = 0;
-  uVar4 = BG_GetAlternateWeapon(param_2,param_3);
-  iVar1 = (&DAT_829d84a0)[uVar4 & 0xff];
-  if (*(int *)(iVar1 + 0x230) < 0) {
-    uVar4 = BG_GetAlternateWeapon(param_2,param_3);
-    if (*(char *)((&DAT_829d84a0)[uVar4 & 0xff] + 0x77a) != '\0') {
-      BG_GetAmmoInClipBothHandsForWeapon();
-      __restgprlr_19();
-      return;
+  WVar1 = BG_GetAlternateWeapon(param_2,param_3);
+  iVar5 = *(int *)((int)bg_weaponDefs + ((uint)(((ulonglong)WVar1 & 0xffffffff) << 2) & 0x3fc));
+  if (*(int *)(iVar5 + 0x230) < 0) {
+    WVar1 = BG_GetAlternateWeapon(param_2,param_3);
+    if (*(char *)(*(int *)((int)bg_weaponDefs +
+                          ((uint)(((ulonglong)WVar1 & 0xffffffff) << 2) & 0x3fc)) + 0x77a) != '\0')
+    {
+      iVar5 = BG_GetAmmoInClipBothHandsForWeapon(ppVar3,param_2,param_3);
+      iVar5 = __restgprlr_19(iVar5);
+      return iVar5;
     }
-    BG_GetAmmoNotInClip(iVar3,param_2,param_3);
-    __restgprlr_19();
-    return;
+    iVar5 = BG_GetAmmoNotInClip(ppVar3,param_2,param_3);
+    iVar5 = __restgprlr_19(iVar5);
+    return iVar5;
   }
   piVar11 = &iStack_b4;
   piVar10 = &iStack_f4;
-  puVar9 = (uint *)(iVar3 + 0x274);
+  puVar9 = (uint *)(ppVar3->field0_0x0).weaponsEquipped;
   lVar8 = 0xf;
   do {
-    uVar4 = *puVar9;
-    if ((uVar4 & 0xff) != 0) {
-      uVar5 = BG_GetAlternateWeapon(uVar4,param_3);
-      iVar6 = (&DAT_829d84a0)[uVar5 & 0xff];
-      if (*(int *)(iVar6 + 0x230) == *(int *)(iVar1 + 0x230)) {
-        uVar5 = BG_GetAlternateWeapon(uVar4,param_3);
-        if (*(char *)((&DAT_829d84a0)[uVar5 & 0xff] + 0x77a) == '\0') {
-          iVar6 = BG_AmmoForWeapon(uVar4,param_3);
-          uVar5 = 0;
+    WVar1.data = 0;
+    WVar1._4_4_ = *puVar9;
+    if ((*puVar9 & 0xff) != 0) {
+      WVar2 = BG_GetAlternateWeapon(WVar1,param_3);
+      iVar4 = *(int *)((int)bg_weaponDefs + ((uint)(((ulonglong)WVar2 & 0xffffffff) << 2) & 0x3fc));
+      if (*(int *)(iVar4 + 0x230) == *(int *)(iVar5 + 0x230)) {
+        WVar2 = BG_GetAlternateWeapon(WVar1,param_3);
+        if (*(char *)(*(int *)((int)bg_weaponDefs +
+                              ((uint)(((ulonglong)WVar2 & 0xffffffff) << 2) & 0x3fc)) + 0x77a) ==
+            '\0') {
+          iVar4 = BG_AmmoForWeapon(WVar1,param_3);
+          uVar7 = 0;
           if (uVar14 != 0) {
-            piVar7 = local_b0;
+            piVar6 = local_b0;
             do {
-              if (*piVar7 == iVar6) break;
-              uVar5 = uVar5 + 1;
-              piVar7 = piVar7 + 1;
-            } while (uVar5 < uVar14);
+              if (*piVar6 == iVar4) break;
+              uVar7 = uVar7 + 1;
+              piVar6 = piVar6 + 1;
+            } while (uVar7 < uVar14);
           }
-          if (uVar5 == uVar14) {
+          if (uVar7 == uVar14) {
             piVar11 = piVar11 + 1;
-            *piVar11 = iVar6;
+            *piVar11 = iVar4;
             uVar14 = uVar14 + 1;
-            lVar2 = BG_GetAmmoNotInClip(iVar3,uVar4,param_3);
+            iVar4 = BG_GetAmmoNotInClip(ppVar3,WVar1,param_3);
             goto LAB_82291a0c;
           }
         }
         else {
-          iVar6 = *(int *)(iVar6 + 0x220);
-          uVar5 = 0;
+          iVar4 = *(int *)(iVar4 + 0x220);
+          uVar7 = 0;
           if (uVar13 != 0) {
-            piVar7 = local_f0;
+            piVar6 = local_f0;
             do {
-              if (*piVar7 == iVar6) break;
-              uVar5 = uVar5 + 1;
-              piVar7 = piVar7 + 1;
-            } while (uVar5 < uVar13);
+              if (*piVar6 == iVar4) break;
+              uVar7 = uVar7 + 1;
+              piVar6 = piVar6 + 1;
+            } while (uVar7 < uVar13);
           }
-          if (uVar5 == uVar13) {
+          if (uVar7 == uVar13) {
             piVar10 = piVar10 + 1;
-            *piVar10 = iVar6;
+            *piVar10 = iVar4;
             uVar13 = uVar13 + 1;
-            lVar2 = BG_GetAmmoInClipBothHandsForWeapon(iVar3,uVar4,param_3);
+            iVar4 = BG_GetAmmoInClipBothHandsForWeapon(ppVar3,WVar1,param_3);
 LAB_82291a0c:
-            lVar12 = lVar2 + lVar12;
+            lVar12 = iVar4 + lVar12;
           }
         }
       }
@@ -395,8 +460,8 @@ LAB_82291a0c:
     lVar8 = lVar8 + -1;
     puVar9 = puVar9 + 1;
     if (lVar8 == 0) {
-      __restgprlr_19(lVar12);
-      return;
+      iVar5 = __restgprlr_19(lVar12);
+      return iVar5;
     }
   } while( true );
 }
@@ -404,105 +469,121 @@ LAB_82291a0c:
 
 // 82291038  WeaponValidForSustainAmmoCheat  (bgame/bg_weapons_ammo.cpp:339)
 
-undefined8 WeaponValidForSustainAmmoCheat(void)
+bool WeaponValidForSustainAmmoCheat(Weapon param_1,bool param_2)
 
 {
-  return 1;
+  return true;
 }
 
 
 // 82291040  BG_GetClipAmmoPtr  (bgame/bg_weapons_ammo.cpp:381)
 
-int * BG_GetClipAmmoPtr(int param_1,int param_2)
+/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
+
+ClipAmmo * BG_GetClipAmmoPtr(playerState_s *param_1,int param_2)
 
 {
-  int *piVar1;
+  ClipAmmo *pCVar1;
   int iVar2;
   
-  if (param_1 == 0) {
-    MyAssertHandler(0xffffffff8200ddc8,0x181,0,0xffffffff82000f98,0xffffffff82001fdc);
+  if (param_1 == (playerState_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_ammo.cpp",
+                    0x181,0,"%s");
   }
   iVar2 = 0;
-  piVar1 = (int *)(param_1 + 0x40c);
+  pCVar1 = (ClipAmmo *)&param_1->field_0x40c;
   do {
-    if (*piVar1 == param_2) {
-      return piVar1;
+    if (pCVar1->clipIndex == param_2) {
+      return pCVar1;
     }
     iVar2 = iVar2 + 1;
-    piVar1 = piVar1 + 3;
+    pCVar1 = pCVar1 + 1;
   } while (iVar2 < 0xf);
-  return (int *)0x0;
+  return (ClipAmmo *)0x0;
 }
 
 
 // 822910C8  BG_GetFreeClipAmmoPtr  (bgame/bg_weapons_ammo.cpp:397)
 
-void BG_GetFreeClipAmmoPtr(void)
+/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
+
+ClipAmmo * BG_GetFreeClipAmmoPtr(playerState_s *param_1)
 
 {
-  int iVar1;
-  bool bVar2;
-  int iVar4;
-  int *piVar5;
-  int iVar6;
-  undefined8 uVar3;
+  bool bVar1;
+  int iVar5;
+  int *piVar6;
+  Weapon WVar2;
   int iVar7;
-  int *piVar8;
-  longlong lVar9;
-  undefined4 *puVar10;
-  undefined1 auStack_480 [1152];
+  Weapon WVar3;
+  Weapon WVar4;
+  ClipAmmo *pCVar8;
+  int iVar9;
+  int *piVar10;
+  longlong lVar11;
+  uint *puVar12;
+  char acStack_480 [1152];
   
-  iVar4 = __savegprlr_18();
-  if (iVar4 == 0) {
-    MyAssertHandler(0xffffffff8200ddc8,0x194,0,0xffffffff82000f98,0xffffffff82001fdc);
+  iVar5 = __savegprlr_18(param_1);
+  if (iVar5 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_ammo.cpp",
+                    0x194,0,"%s");
   }
-  piVar8 = (int *)(iVar4 + 0x40c);
-  iVar7 = 0;
-  piVar5 = piVar8;
+  piVar10 = (int *)(iVar5 + 0x40c);
+  iVar9 = 0;
+  piVar6 = piVar10;
   do {
-    if (*piVar5 == 0) {
-      *piVar5 = 0;
-      piVar5[1] = 0;
-      piVar5[2] = 0;
-      __restgprlr_18();
-      return;
+    if (*piVar6 == 0) {
+      *piVar6 = 0;
+      piVar6[1] = 0;
+      piVar6[2] = 0;
+      pCVar8 = (ClipAmmo *)__restgprlr_18();
+      return pCVar8;
     }
-    iVar7 = iVar7 + 1;
-    piVar5 = piVar5 + 3;
-  } while (iVar7 < 0xf);
-  lVar9 = 0xf;
-  piVar5 = piVar8;
+    iVar9 = iVar9 + 1;
+    piVar6 = piVar6 + 3;
+  } while (iVar9 < 0xf);
+  lVar11 = 0xf;
+  piVar6 = piVar10;
   do {
-    bVar2 = false;
-    if (*piVar5 == 0) {
-      MyAssertHandler(0xffffffff8200ddc8,0x1a5,0,0xffffffff82000f98,0xffffffff8200de2c);
+    bVar1 = false;
+    if (*piVar6 == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_ammo.cpp",
+                      0x1a5,0,"%s");
     }
-    iVar7 = 0;
-    puVar10 = (undefined4 *)(iVar4 + 0x274);
+    iVar9 = 0;
+    puVar12 = (uint *)(iVar5 + 0x274);
     do {
-      iVar6 = BG_ClipForWeapon(*puVar10,0);
-      if ((iVar6 == *piVar5) || (iVar6 = BG_ClipForWeapon(*puVar10,1), iVar6 == *piVar5)) {
-        iVar6 = piVar5[1];
-        iVar1 = piVar5[2];
-        bVar2 = true;
-        uVar3 = BG_GetWeaponName(*(undefined4 *)((iVar7 + 0x9d) * 4 + iVar4),auStack_480,0x400);
-        Com_PrintError(0x10,0xffffffff8200de4c,iVar6,iVar1,uVar3);
+      WVar2.data = 0;
+      WVar2._4_4_ = *puVar12;
+      iVar7 = BG_ClipForWeapon(WVar2,false);
+      if ((iVar7 == *piVar6) ||
+         (WVar3.data = 0, WVar3._4_4_ = *puVar12, iVar7 = BG_ClipForWeapon(WVar3,true),
+         iVar7 == *piVar6)) {
+        bVar1 = true;
+        WVar4.data = 0;
+        WVar4._4_4_ = *(uint *)((iVar9 + 0x9d) * 4 + iVar5);
+        BG_GetWeaponName(WVar4,acStack_480,0x400);
+        Com_PrintError(0x10,"%i, %i (left hand) rounds for %s\n");
         break;
       }
-      iVar7 = iVar7 + 1;
-      puVar10 = puVar10 + 1;
-    } while (iVar7 < 0xf);
-    if (!bVar2) {
-      Com_PrintError(0x10,0xffffffff8200de70,piVar5[1],piVar5[2],*piVar5);
+      iVar9 = iVar9 + 1;
+      puVar12 = puVar12 + 1;
+    } while (iVar9 < 0xf);
+    if (!bVar1) {
+      Com_PrintError(0x10,
+                     "%i, %i (left hand) rounds for clipIndex %i, but we don\'t have any weapons that use that clip!\n"
+                    );
     }
-    lVar9 = lVar9 + -1;
-    piVar5 = piVar5 + 3;
-    if (lVar9 == 0) {
-      if (DAT_84013128 == 0) {
-        MyAssertHandler(0xffffffff8200ddc8,0x1bd,0,0xffffffff8200de0c);
+    lVar11 = lVar11 + -1;
+    piVar6 = piVar6 + 3;
+    if (lVar11 == 0) {
+      if (alwaysfails == 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_ammo.cpp"
+                        ,0x1bd,0,"All clipAmmo slots are full!");
       }
-      __restgprlr_18(piVar8);
-      return;
+      pCVar8 = (ClipAmmo *)__restgprlr_18(piVar10);
+      return pCVar8;
     }
   } while( true );
 }
@@ -510,37 +591,41 @@ void BG_GetFreeClipAmmoPtr(void)
 
 // 82291288  BG_CreateClipAmmoPtr  (bgame/bg_weapons_ammo.cpp:451)
 
-void BG_CreateClipAmmoPtr(undefined8 param_1,undefined4 param_2)
+/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
+
+ClipAmmo * BG_CreateClipAmmoPtr(playerState_s *param_1,int param_2)
 
 {
-  int iVar1;
-  undefined4 *puVar2;
+  ClipAmmo *pCVar1;
   
-  iVar1 = BG_GetClipAmmoPtr();
-  if (iVar1 == 0) {
-    puVar2 = (undefined4 *)BG_GetFreeClipAmmoPtr(param_1);
-    *puVar2 = param_2;
+  pCVar1 = BG_GetClipAmmoPtr(param_1,param_2);
+  if (pCVar1 == (ClipAmmo *)0x0) {
+    pCVar1 = BG_GetFreeClipAmmoPtr(param_1);
+    pCVar1->clipIndex = param_2;
   }
-  return;
+  return pCVar1;
 }
 
 
 // 822912D8  BG_RemoveClipAmmo  (bgame/bg_weapons_ammo.cpp:465)
 
-void BG_RemoveClipAmmo(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
+
+void BG_RemoveClipAmmo(playerState_s *param_1,Weapon param_2,bool param_3)
 
 {
-  undefined8 uVar1;
-  int *piVar2;
+  int iVar1;
+  ClipAmmo *pCVar2;
   
-  uVar1 = BG_ClipForWeapon(param_2,param_3);
-  piVar2 = (int *)BG_GetClipAmmoPtr(param_1,uVar1);
-  if (piVar2 != (int *)0x0) {
-    *piVar2 = 0;
-    piVar2[1] = 0;
-    piVar2[2] = 0;
-    if (*piVar2 != 0) {
-      MyAssertHandler(0xffffffff8200ddc8,0x1db,0,0xffffffff82000f98,0xffffffff8200ded0);
+  iVar1 = BG_ClipForWeapon(param_2,param_3);
+  pCVar2 = BG_GetClipAmmoPtr(param_1,iVar1);
+  if (pCVar2 != (ClipAmmo *)0x0) {
+    pCVar2->clipIndex = 0;
+    pCVar2->ammoCount[0] = 0;
+    pCVar2->ammoCount[1] = 0;
+    if (pCVar2->clipIndex != 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_ammo.cpp",
+                      0x1db,0,"%s");
     }
   }
   return;
@@ -549,31 +634,37 @@ void BG_RemoveClipAmmo(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 // 82291360  BG_AddClipAmmo  (bgame/bg_weapons_ammo.cpp:480)
 
-void BG_AddClipAmmo(undefined8 param_1,undefined8 param_2,longlong param_3,int param_4)
+/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void BG_AddClipAmmo(playerState_s *param_1,int param_2,PlayerHandIndex param_3,int param_4)
 
 {
   int iVar1;
-  ulonglong uVar2;
-  undefined4 *puVar4;
-  undefined8 uVar3;
+  playerState_s *ppVar2;
+  ClipAmmo *pCVar3;
+  longlong lVar4;
   
-  uVar2 = __savegprlr_26();
-  if ((uVar2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8200ddc8,0x1e3,0,0xffffffff82000f98,0xffffffff82001fdc);
+  lVar4 = (longlong)(int)param_3;
+  ppVar2 = (playerState_s *)__savegprlr_26(param_1);
+  if (ppVar2 == (playerState_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_ammo.cpp",
+                    0x1e3,0,"%s");
   }
-  puVar4 = (undefined4 *)BG_GetClipAmmoPtr(uVar2,param_2);
-  if (puVar4 == (undefined4 *)0x0) {
-    puVar4 = (undefined4 *)BG_GetFreeClipAmmoPtr(uVar2);
-    *puVar4 = (int)param_2;
+  pCVar3 = BG_GetClipAmmoPtr(ppVar2,param_2);
+  if (pCVar3 == (ClipAmmo *)0x0) {
+    pCVar3 = BG_GetFreeClipAmmoPtr(ppVar2);
+    pCVar3->clipIndex = param_2;
   }
-  if (param_4 < 0) {
-    if (*(int *)((int)((param_3 + 1U & 0xffffffff) << 2) + (int)puVar4) < -param_4) {
-      uVar3 = va(0xffffffff8200df28);
-      MyAssertHandler(0xffffffff8200ddc8,0x1e6,0,0xffffffff820011f4,0xffffffff8200def0,uVar3);
-    }
+  if ((param_4 < 0) &&
+     (*(int *)((int)pCVar3->ammoCount + (int)((lVar4 + 1U & 0xffffffff) << 2) + -4) < -param_4)) {
+    va("Tried to subtract %i rounds, but we only have %i rounds in the clip");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_ammo.cpp",
+                    0x1e6,0,"%s\n\t%s");
   }
-  iVar1 = (int)((param_3 + 1U & 0xffffffff) << 2);
-  *(int *)(iVar1 + (int)puVar4) = *(int *)(iVar1 + (int)puVar4) + param_4;
+  iVar1 = (int)((lVar4 + 1U & 0xffffffff) << 2);
+  *(int *)((int)pCVar3->ammoCount + iVar1 + -4) =
+       *(int *)((int)pCVar3->ammoCount + iVar1 + -4) + param_4;
   __restgprlr_26();
   return;
 }
@@ -581,27 +672,33 @@ void BG_AddClipAmmo(undefined8 param_1,undefined8 param_2,longlong param_3,int p
 
 // 82291440  BG_SetClipAmmo  (bgame/bg_weapons_ammo.cpp:492)
 
-void BG_SetClipAmmo(undefined8 param_1,undefined8 param_2,longlong param_3,undefined8 param_4)
+/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void BG_SetClipAmmo(playerState_s *param_1,int param_2,PlayerHandIndex param_3,int param_4)
 
 {
-  ulonglong uVar1;
-  undefined4 *puVar3;
-  undefined8 uVar2;
+  playerState_s *ppVar1;
+  ClipAmmo *pCVar2;
+  longlong lVar3;
   
-  uVar1 = __savegprlr_26();
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8200ddc8,0x1ef,0,0xffffffff82000f98,0xffffffff82001fdc);
+  lVar3 = (longlong)(int)param_3;
+  ppVar1 = (playerState_s *)__savegprlr_26(param_1);
+  if (ppVar1 == (playerState_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_ammo.cpp",
+                    0x1ef,0,"%s");
   }
-  puVar3 = (undefined4 *)BG_GetClipAmmoPtr(uVar1,param_2);
-  if (puVar3 == (undefined4 *)0x0) {
-    puVar3 = (undefined4 *)BG_GetFreeClipAmmoPtr(uVar1);
-    *puVar3 = (int)param_2;
+  pCVar2 = BG_GetClipAmmoPtr(ppVar1,param_2);
+  if (pCVar2 == (ClipAmmo *)0x0) {
+    pCVar2 = BG_GetFreeClipAmmoPtr(ppVar1);
+    pCVar2->clipIndex = param_2;
   }
-  if ((int)param_4 < 0) {
-    uVar2 = va(0xffffffff8200df78,param_4);
-    MyAssertHandler(0xffffffff8200ddc8,0x1f2,0,0xffffffff820011f4,0xffffffff8200df6c,uVar2);
+  if (param_4 < 0) {
+    va("Tried to set the clip ammo to a negative amount (%i).");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_ammo.cpp",
+                    0x1f2,0,"%s\n\t%s");
   }
-  *(int *)((int)((param_3 + 1U & 0xffffffff) << 2) + (int)puVar3) = (int)param_4;
+  *(int *)((int)pCVar2->ammoCount + (int)((lVar3 + 1U & 0xffffffff) << 2) + -4) = param_4;
   __restgprlr_26();
   return;
 }
@@ -609,17 +706,20 @@ void BG_SetClipAmmo(undefined8 param_1,undefined8 param_2,longlong param_3,undef
 
 // 82291508  PM_WeaponUseAmmo  (bgame/bg_weapons_ammo.cpp:505)
 
-void PM_WeaponUseAmmo(undefined8 param_1,undefined8 param_2,undefined8 param_3,longlong param_4,
-                     undefined8 param_5)
+/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void PM_WeaponUseAmmo(playerState_s *param_1,Weapon param_2,bool param_3,int param_4,
+                     PlayerHandIndex param_5)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
+  playerState_s *ppVar1;
+  int iVar2;
   
-  uVar1 = __savegprlr_29();
-  if (*(char *)(DAT_829c7e94 + 0xc) == '\0') {
-    uVar2 = BG_ClipForWeapon(param_2,param_3);
-    BG_AddClipAmmo(uVar1,uVar2,param_5,-param_4);
+  ppVar1 = (playerState_s *)__savegprlr_29(param_1);
+  if ((player_sustainAmmo->current).enabled == false) {
+    iVar2 = BG_ClipForWeapon(param_2,param_3);
+    BG_AddClipAmmo(ppVar1,iVar2,param_5,-param_4);
   }
   __restgprlr_29();
   return;
@@ -628,65 +728,83 @@ void PM_WeaponUseAmmo(undefined8 param_1,undefined8 param_2,undefined8 param_3,l
 
 // 82291A70  PM_WeaponClipEmpty  (bgame/bg_weapons_ammo.cpp:519)
 
-bool PM_WeaponClipEmpty(int param_1,undefined8 param_2)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
+
+int PM_WeaponClipEmpty(playerState_s *param_1,PlayerHandIndex param_2)
 
 {
   int iVar1;
-  undefined8 uVar2;
+  Weapon WVar2;
+  bool bVar3;
   
-  if (param_1 != 0) {
-    uVar2 = 1;
-    if ((*(uint *)(param_1 + 0x374) & 0x8000) != 0) goto LAB_82291aa0;
+  if ((param_1 == (playerState_s *)0x0) ||
+     (bVar3 = true, (*(uint *)&param_1->field_0x374 & 0x8000) == 0)) {
+    bVar3 = false;
   }
-  uVar2 = 0;
-LAB_82291aa0:
-  iVar1 = BG_GetAmmoInClipForWeapon(param_1,*(undefined4 *)(param_1 + 0x370),uVar2,param_2);
-  return iVar1 == 0;
+  WVar2.data = 0;
+  WVar2._4_4_ = *(uint *)&param_1->field_0x370;
+  iVar1 = BG_GetAmmoInClipForWeapon(param_1,WVar2,bVar3,param_2);
+  return (uint)LZCOUNT(iVar1) >> 5;
 }
 
 
 // 82291AC8  BG_WeaponBothClipEmpty  (bgame/bg_weapons_ammo.cpp:524)
 
-bool BG_WeaponBothClipEmpty(int param_1)
+/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
+
+int BG_WeaponBothClipEmpty(playerState_s *param_1)
 
 {
   int iVar1;
-  undefined8 uVar2;
+  Weapon WVar2;
+  bool bVar3;
   
-  if (param_1 != 0) {
-    uVar2 = 1;
-    if ((*(uint *)(param_1 + 0x374) & 0x8000) != 0) goto LAB_82291af4;
+  if ((param_1 == (playerState_s *)0x0) ||
+     (bVar3 = true, (*(uint *)&param_1->field_0x374 & 0x8000) == 0)) {
+    bVar3 = false;
   }
-  uVar2 = 0;
-LAB_82291af4:
-  iVar1 = BG_GetAmmoInClipBothHandsForWeapon(param_1,*(undefined4 *)(param_1 + 0x370),uVar2);
-  return iVar1 == 0;
+  WVar2.data = 0;
+  WVar2._4_4_ = *(uint *)&param_1->field_0x370;
+  iVar1 = BG_GetAmmoInClipBothHandsForWeapon(param_1,WVar2,bVar3);
+  return (uint)LZCOUNT(iVar1) >> 5;
 }
 
 
 // 82291560  PM_AddAmmoToClip  (bgame/bg_weapons_ammo.cpp:531)
 
-void PM_AddAmmoToClip(undefined8 param_1,undefined8 param_2,longlong param_3)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
+
+void PM_AddAmmoToClip(playerState_s *param_1,PlayerHandIndex param_2,int param_3)
 
 {
-  int iVar2;
-  undefined8 uVar1;
-  undefined8 uVar3;
+  playerState_s *ppVar3;
+  Weapon WVar1;
+  uint uVar4;
+  Weapon WVar2;
+  int iVar5;
+  bool bVar6;
   
-  iVar2 = __savegprlr_28();
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff8200ddc8,0x218,0,0xffffffff82000f98,0xffffffff82001fdc);
+  ppVar3 = (playerState_s *)__savegprlr_28(param_1);
+  if (ppVar3 == (playerState_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_ammo.cpp",
+                    0x218,0,"%s");
   }
   else {
-    uVar3 = 1;
-    if ((*(uint *)(iVar2 + 0x374) & 0x8000) != 0) goto LAB_822915c0;
+    bVar6 = true;
+    if ((*(uint *)&ppVar3->field_0x374 & 0x8000) != 0) goto LAB_822915c0;
   }
-  uVar3 = 0;
+  bVar6 = false;
 LAB_822915c0:
-  uVar1 = BG_AmmoForWeapon(*(undefined4 *)(iVar2 + 0x370),uVar3);
-  uVar3 = BG_ClipForWeapon(*(undefined4 *)(iVar2 + 0x370),uVar3);
-  BG_AddClipAmmo(iVar2,uVar3,param_2,param_3);
-  BG_AddGlobalAmmoForAmmoType(iVar2,uVar1,-param_3);
+  WVar1.data = 0;
+  WVar1._4_4_ = *(uint *)&ppVar3->field_0x370;
+  uVar4 = BG_AmmoForWeapon(WVar1,bVar6);
+  WVar2.data = 0;
+  WVar2._4_4_ = *(uint *)&ppVar3->field_0x370;
+  iVar5 = BG_ClipForWeapon(WVar2,bVar6);
+  BG_AddClipAmmo(ppVar3,iVar5,param_2,param_3);
+  BG_AddGlobalAmmoForAmmoType(ppVar3,uVar4,-param_3);
   __restgprlr_28();
   return;
 }
@@ -694,47 +812,64 @@ LAB_822915c0:
 
 // 82291B18  PM_ReloadClip  (bgame/bg_weapons_ammo.cpp:547)
 
-void PM_ReloadClip(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
+
+void PM_ReloadClip(playerState_s *param_1,PlayerHandIndex param_2)
 
 {
-  int iVar1;
-  int iVar2;
-  int iVar3;
+  playerState_s *ppVar3;
+  Weapon WVar1;
   int iVar4;
+  Weapon WVar2;
   int iVar5;
   int iVar6;
   int iVar7;
   int iVar8;
-  undefined8 uVar9;
+  Weapon WVar9;
+  Weapon WVar10;
+  Weapon WVar11;
+  int iVar12;
+  bool bVar13;
   
-  iVar2 = __savegprlr_24();
-  if ((iVar2 == 0) || (uVar9 = 1, (*(uint *)(iVar2 + 0x374) & 0x8000) == 0)) {
-    uVar9 = 0;
+  ppVar3 = (playerState_s *)__savegprlr_24(param_1);
+  if ((ppVar3 == (playerState_s *)0x0) ||
+     (bVar13 = true, (*(uint *)&ppVar3->field_0x374 & 0x8000) == 0)) {
+    bVar13 = false;
   }
-  iVar3 = BG_ReloadAmmoAdd(*(undefined4 *)(iVar2 + 0x370),uVar9);
-  iVar4 = BG_ReloadStartAdd(*(undefined4 *)(iVar2 + 0x370),uVar9);
-  iVar1 = ((int)param_2 + 0x15) * 0x1c;
-  iVar8 = *(int *)(iVar1 + iVar2);
-  if (((iVar8 != 10) && (iVar8 != 0xb)) || (iVar4 != 0)) {
-    iVar5 = BG_GetClipSize(iVar2,*(undefined4 *)(iVar2 + 0x370),uVar9);
-    iVar6 = BG_GetAmmoNotInClip(iVar2,*(undefined4 *)(iVar2 + 0x370),uVar9);
-    iVar7 = BG_GetAmmoInClipForWeapon(iVar2,*(undefined4 *)(iVar2 + 0x370),uVar9,param_2);
-    iVar8 = iVar5 - iVar7;
-    if (iVar6 < iVar5 - iVar7) {
-      iVar8 = iVar6;
+  WVar1.data = 0;
+  WVar1._4_4_ = *(uint *)&ppVar3->field_0x370;
+  iVar4 = BG_ReloadAmmoAdd(WVar1,bVar13);
+  WVar2.data = 0;
+  WVar2._4_4_ = *(uint *)&ppVar3->field_0x370;
+  iVar5 = BG_ReloadStartAdd(WVar2,bVar13);
+  iVar12 = (ppVar3->field0_0x0).weapState[param_2].weaponState;
+  if (((iVar12 != 10) && (iVar12 != 0xb)) || (iVar5 != 0)) {
+    WVar9.data = 0;
+    WVar9._4_4_ = *(uint *)&ppVar3->field_0x370;
+    iVar6 = BG_GetClipSize(ppVar3,WVar9,bVar13);
+    WVar10.data = 0;
+    WVar10._4_4_ = *(uint *)&ppVar3->field_0x370;
+    iVar7 = BG_GetAmmoNotInClip(ppVar3,WVar10,bVar13);
+    WVar11.data = 0;
+    WVar11._4_4_ = *(uint *)&ppVar3->field_0x370;
+    iVar8 = BG_GetAmmoInClipForWeapon(ppVar3,WVar11,bVar13,param_2);
+    iVar12 = iVar6 - iVar8;
+    if (iVar7 < iVar6 - iVar8) {
+      iVar12 = iVar7;
     }
-    iVar1 = *(int *)(iVar1 + iVar2);
-    if ((iVar1 == 10) || (iVar1 == 0xb)) {
-      if ((iVar4 < iVar5) && (iVar4 < iVar8)) {
-        iVar8 = iVar4;
+    iVar7 = (ppVar3->field0_0x0).weapState[param_2].weaponState;
+    if ((iVar7 == 10) || (iVar7 == 0xb)) {
+      if ((iVar5 < iVar6) && (iVar5 < iVar12)) {
+        iVar12 = iVar5;
       }
     }
-    else if (((iVar3 != 0) && (iVar3 < iVar5)) && (iVar3 < iVar8)) {
-      iVar8 = iVar3;
+    else if (((iVar4 != 0) && (iVar4 < iVar6)) && (iVar4 < iVar12)) {
+      iVar12 = iVar4;
     }
-    if (iVar8 != 0) {
-      PM_AddAmmoToClip(iVar2,param_2);
-      PM_AddEvent(iVar2,0x17);
+    if (iVar12 != 0) {
+      PM_AddAmmoToClip(ppVar3,param_2,iVar12);
+      PM_AddEvent(ppVar3,0x17);
     }
   }
   __restgprlr_24();

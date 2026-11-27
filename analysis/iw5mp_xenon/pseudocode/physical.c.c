@@ -2,43 +2,54 @@
 
 // 828A9AF8  XPhysicalAlloc  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/physical.c:33)
 
-void XPhysicalAlloc(undefined8 param_1,longlong param_2,undefined8 param_3,ulonglong param_4)
+void * XPhysicalAlloc(ulong param_1,ulong param_2,ulong param_3,ulong param_4)
 
 {
   longlong lVar1;
-  longlong lVar2;
+  void *pvVar2;
+  ulonglong uVar3;
+  longlong lVar4;
+  longlong lVar5;
+  longlong lVar6;
   
-  lVar1 = __savegprlr_28();
-  if (DAT_84895774 != 0) {
-    param_4 = param_4 << 0x20 | param_4 & 0xdfffffff;
+  uVar3 = (ulonglong)(int)param_4;
+  lVar6 = (longlong)(int)param_3;
+  lVar4 = (longlong)(int)param_2;
+  lVar1 = __savegprlr_28(param_1,lVar4,lVar6,uVar3);
+  if (g_fSmallPagesOverride != 0) {
+    uVar3 = uVar3 << 0x20 | uVar3 & 0xdfffffff;
   }
-  if ((int)param_2 == -1) {
-    param_2 = 0;
-    lVar2 = -1;
+  if ((int)lVar4 == -1) {
+    lVar4 = 0;
+    lVar5 = -1;
   }
   else {
-    lVar2 = lVar1 + param_2 + -1;
-    param_3 = 0;
+    lVar5 = lVar1 + lVar4 + -1;
+    lVar6 = 0;
   }
-  lVar1 = MmAllocatePhysicalMemoryEx(0,lVar1,param_4,param_2,lVar2,param_3);
+  lVar1 = MmAllocatePhysicalMemoryEx(0,lVar1,uVar3,lVar4,lVar5,lVar6);
   if (lVar1 == 0) {
     SetLastError(8);
   }
-  __restgprlr_28(lVar1);
-  return;
+  pvVar2 = (void *)__restgprlr_28(lVar1);
+  return pvVar2;
 }
 
 
 // 828A9B88  XPhysicalProtect  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/physical.c:131)
 
-void XPhysicalProtect(undefined8 param_1,ulonglong param_2,undefined8 param_3)
+void XPhysicalProtect(void *param_1,ulong param_2,ulong param_3)
 
 {
   undefined8 uVar1;
+  ulonglong uVar2;
+  longlong lVar3;
   
-  uVar1 = __savegprlr_29();
-  if ((param_2 & 0xffffffff) != 0) {
-    MmSetAddressProtect(uVar1,param_2,param_3);
+  lVar3 = (longlong)(int)param_3;
+  uVar2 = (ulonglong)(int)param_2;
+  uVar1 = __savegprlr_29(param_1,uVar2,lVar3);
+  if ((uVar2 & 0xffffffff) != 0) {
+    MmSetAddressProtect(uVar1,uVar2,lVar3);
   }
   __restgprlr_29();
   return;
@@ -47,10 +58,10 @@ void XPhysicalProtect(undefined8 param_1,ulonglong param_2,undefined8 param_3)
 
 // 828A9BC8  XQueryMemoryProtect  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/physical.c:157)
 
-undefined8 XQueryMemoryProtect(undefined8 param_1)
+ulong XQueryMemoryProtect(void *param_1)
 
 {
-  undefined8 uVar1;
+  ulong uVar1;
   
   uVar1 = MmQueryAddressProtect(param_1);
   return uVar1;

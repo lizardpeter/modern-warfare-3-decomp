@@ -2,61 +2,66 @@
 
 // 826F2740  dwGetLobbyService  (DW/dwUtils-xbox.cpp:23)
 
-void dwGetLobbyService(void)
+bdLobbyService * dwGetLobbyService(int param_1)
 
 {
-  bool bVar1;
+  ulonglong uVar1;
   int iVar2;
-  ulonglong uVar3;
-  char cVar6;
-  int iVar5;
-  ulonglong uVar4;
+  bdLobbyService *pbVar3;
+  bool bVar4;
   
-  uVar3 = __savegprlr_28();
-  if (3 < (uVar3 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821ad2fc,0x18,0,0xffffffff82031880,uVar3,4);
+  uVar1 = __savegprlr_28(param_1);
+  if (3 < (uVar1 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwUtils-xbox.cpp",0x18,0,
+                    "controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  cVar6 = Live_UserIsGuest(uVar3);
-  if (cVar6 != '\0') {
-    __restgprlr_28(0);
-    return;
+  iVar2 = (int)uVar1;
+  bVar4 = Live_UserIsGuest(iVar2);
+  if (bVar4) {
+    pbVar3 = (bdLobbyService *)__restgprlr_28(0);
+    return pbVar3;
   }
-  iVar2 = (int)uVar3 * 0x1c;
-  if (*(int *)(&DAT_844f5f00 + iVar2) == 0) {
-    iVar5 = bdMemory__allocate(300);
-    if (iVar5 == 0) {
-      uVar4 = 0;
+  if (g_dwControllerData[iVar2].lobby == (bdLobbyService *)0x0) {
+    pbVar3 = bdMemory::allocate(300);
+    if (pbVar3 == (bdLobbyService *)0x0) {
+      pbVar3 = (bdLobbyService *)0x0;
     }
     else {
-      uVar4 = bdLobbyService__bdLobbyService();
+      pbVar3 = bdLobbyService::bdLobbyService(pbVar3);
     }
-    *(int *)(&DAT_844f5f00 + iVar2) = (int)uVar4;
-    if ((uVar4 & 0xffffffff) != 0) {
-      if ((uVar3 & 0xffffffff) < 4) {
-        bVar1 = (int)uVar3 != 0;
-        if (uVar3 == 1 && bVar1) {
-          bdLobbyService__registerEventHandler(uVar4,0xffffffff844f222c);
+    g_dwControllerData[iVar2].lobby = pbVar3;
+    if (pbVar3 != (bdLobbyService *)0x0) {
+      if ((uVar1 & 0xffffffff) < 4) {
+        bVar4 = iVar2 != 0;
+        if (uVar1 == 1 && bVar4) {
+          bdLobbyService::registerEventHandler
+                    (pbVar3,(bdLobbyEventHandler *)&g_dwLobbyEventHandler1);
         }
-        else if (uVar3 == 2 && bVar1) {
-          bdLobbyService__registerEventHandler(uVar4,0xffffffff844f2224);
+        else if (uVar1 == 2 && bVar4) {
+          bdLobbyService::registerEventHandler
+                    (pbVar3,(bdLobbyEventHandler *)&g_dwLobbyEventHandler2);
         }
-        else if (bVar1) {
-          bdLobbyService__registerEventHandler(uVar4,0xffffffff844f2230);
+        else if (bVar4) {
+          bdLobbyService::registerEventHandler
+                    (pbVar3,(bdLobbyEventHandler *)&g_dwLobbyEventHandler3);
         }
         else {
-          bdLobbyService__registerEventHandler(uVar4,0xffffffff844f2228);
+          bdLobbyService::registerEventHandler
+                    (pbVar3,(bdLobbyEventHandler *)&g_dwLobbyEventHandler0);
         }
       }
-      else if (DAT_84013128 == 0) {
-        MyAssertHandler(0xffffffff821ad2fc,0x3b,0,0xffffffff821ad2d0);
+      else if (alwaysfails == 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwUtils-xbox.cpp",0x3b,
+                        0,"non-supported controller index encountered!");
       }
     }
   }
-  if (*(int *)(&DAT_844f5f00 + iVar2) == 0) {
-    MyAssertHandler(0xffffffff821ad2fc,0x41,0,0xffffffff82000f98,0xffffffff821ad2a4);
+  if (g_dwControllerData[iVar2].lobby == (bdLobbyService *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwUtils-xbox.cpp",0x41,0,
+                    "%s");
   }
-  __restgprlr_28(*(undefined4 *)(&DAT_844f5f00 + iVar2));
-  return;
+  pbVar3 = (bdLobbyService *)__restgprlr_28(g_dwControllerData[iVar2].lobby);
+  return pbVar3;
 }
 
 
@@ -65,13 +70,13 @@ void dwGetLobbyService(void)
 void dwLobbyServiceCleanup(int param_1)
 
 {
-  undefined4 *puVar1;
+  bdLobbyService *pbVar1;
   
-  puVar1 = *(undefined4 **)(&DAT_844f5f00 + param_1 * 0x1c);
-  if (puVar1 != (undefined4 *)0x0) {
-    (**(code **)*puVar1)(puVar1,1);
-    *(undefined4 *)(&DAT_844f5f00 + param_1 * 0x1c) = 0;
-    (&DAT_844f5f04)[param_1 * 7] = 0;
+  pbVar1 = g_dwControllerData[param_1].lobby;
+  if (pbVar1 != (bdLobbyService *)0x0) {
+    (**(code **)pbVar1->_padding_)(pbVar1,1);
+    g_dwControllerData[param_1].lobby = (bdLobbyService *)0x0;
+    g_dwControllerData[param_1].logOnStatus = DW_LOGON_ERROR;
   }
   return;
 }
@@ -79,66 +84,70 @@ void dwLobbyServiceCleanup(int param_1)
 
 // 826F2908  dwResetLogonAttempts  (DW/dwUtils-xbox.cpp:83)
 
-void dwResetLogonAttempts(ulonglong param_1)
+void dwResetLogonAttempts(int param_1)
 
 {
-  if (3 < (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821ad2fc,0x54,0,0xffffffff82031880,param_1,4);
+  if (3 < (uint)param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwUtils-xbox.cpp",0x54,0,
+                    "controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  DAT_844f6955 = 0;
-  (&DAT_844f5f10)[(int)param_1 * 7] = 0;
-  (&DAT_844f5f14)[(int)param_1 * 7] = 0;
+  g_disableLSGReconnect = false;
+  g_dwControllerData[param_1].connectInterval = 0;
+  g_dwControllerData[param_1].numLogOnAttempts = 0;
   return;
 }
 
 
 // 826F2988  dwGetNumLogonAttemps  (DW/dwUtils-xbox.cpp:93)
 
-undefined4 dwGetNumLogonAttemps(ulonglong param_1)
+int dwGetNumLogonAttemps(int param_1)
 
 {
-  if (3 < (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821ad2fc,0x5e,0,0xffffffff82031880,param_1,4);
+  if (3 < (uint)param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwUtils-xbox.cpp",0x5e,0,
+                    "controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  return (&DAT_844f5f14)[(int)param_1 * 7];
+  return g_dwControllerData[param_1].numLogOnAttempts;
 }
 
 
 // 826F29F0  dwSetLogonStatus  (DW/dwUtils-xbox.cpp:101)
 
-void dwSetLogonStatus(ulonglong param_1,undefined4 param_2)
+void dwSetLogonStatus(int param_1,DWLogonStatus param_2)
 
 {
-  if (3 < (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821ad2fc,0x66,0,0xffffffff82031880,param_1,4);
+  if (3 < (uint)param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwUtils-xbox.cpp",0x66,0,
+                    "controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  (&DAT_844f5f04)[(int)param_1 * 7] = param_2;
+  g_dwControllerData[param_1].logOnStatus = param_2;
   return;
 }
 
 
 // 826F2FA0  dwLobbyPump  (DW/dwUtils-xbox.cpp:109)
 
-void dwLobbyPump(void)
+void dwLobbyPump(int param_1)
 
 {
-  undefined8 uVar1;
-  ulonglong uVar2;
-  int iVar3;
+  int iVar1;
+  bdLobbyService *this;
+  Status SVar2;
+  bdContentStreamingBase *this_00;
   
-  uVar1 = __savegprlr_28();
-  (&DAT_844f5f04)[(int)uVar1 * 7] = 0;
-  uVar2 = dwGetLobbyService();
-  if ((uVar2 & 0xffffffff) != 0) {
-    bdLobbyService__pump();
-    iVar3 = bdLobbyService__getStatus(uVar2);
-    if (iVar3 == 2) {
-      (&DAT_844f5f04)[(int)uVar1 * 7] = 8;
-      LiveAntiCheat_Pump(uVar1);
-      LiveRegionInfo_Pump(uVar1);
-      iVar3 = dwGetContentStreaming(uVar1);
-      if (iVar3 != 0) {
-        bdContentStreamingBase__pump();
+  iVar1 = __savegprlr_28(param_1);
+  g_dwControllerData[iVar1].logOnStatus = DW_LOGON_ERROR;
+  this = dwGetLobbyService(iVar1);
+  if (this != (bdLobbyService *)0x0) {
+    bdLobbyService::pump(this);
+    SVar2 = bdLobbyService::getStatus(this);
+    if (SVar2 == BD_CONNECTED) {
+      g_dwControllerData[iVar1].logOnStatus = DW_LOGON_COMPLETE;
+      LiveAntiCheat_Pump(iVar1);
+      LiveRegionInfo_Pump(iVar1);
+      this_00 = (bdContentStreamingBase *)dwGetContentStreaming(iVar1);
+      if (this_00 != (bdContentStreamingBase *)0x0) {
+        bdContentStreamingBase::pump(this_00);
       }
     }
   }
@@ -149,279 +158,285 @@ void dwLobbyPump(void)
 
 // 826F2A68  dwGetStorage  (DW/dwUtils-xbox.cpp:142)
 
-void dwGetStorage(void)
+bdStorage * dwGetStorage(int param_1)
 
 {
-  ulonglong uVar1;
+  bdLobbyService *this;
+  bdStorage *pbVar1;
   
-  uVar1 = dwGetLobbyService();
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821ad2fc,0x90,0,0xffffffff82000f98,0xffffffff821ad33c);
+  this = dwGetLobbyService(param_1);
+  if (this == (bdLobbyService *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwUtils-xbox.cpp",0x90,0,
+                    "%s");
   }
-  bdLobbyService__getStorage(uVar1);
-  return;
+  pbVar1 = bdLobbyService::getStorage(this);
+  return pbVar1;
 }
 
 
 // 826F2AC8  dwGetCounter  (DW/dwUtils-xbox.cpp:150)
 
-undefined8 dwGetCounter(void)
+bdCounter * dwGetCounter(int param_1)
 
 {
-  ulonglong uVar1;
-  int iVar3;
-  undefined8 uVar2;
+  bdLobbyService *this;
+  Status SVar1;
+  bdCounter *pbVar2;
   
-  uVar1 = dwGetLobbyService();
-  if (((uVar1 & 0xffffffff) == 0) || (iVar3 = bdLobbyService__getStatus(), iVar3 != 2)) {
-    uVar2 = 0;
+  this = dwGetLobbyService(param_1);
+  if ((this == (bdLobbyService *)0x0) ||
+     (SVar1 = bdLobbyService::getStatus(this), SVar1 != BD_CONNECTED)) {
+    pbVar2 = (bdCounter *)0x0;
   }
   else {
-    uVar2 = bdLobbyService__getCounter(uVar1);
+    pbVar2 = bdLobbyService::getCounter(this);
   }
-  return uVar2;
+  return pbVar2;
 }
 
 
 // 826F2B28  dwGetFacebook  (DW/dwUtils-xbox.cpp:161)
 
-undefined8 dwGetFacebook(void)
+bdFacebook * dwGetFacebook(int param_1)
 
 {
-  int iVar2;
-  undefined8 uVar1;
+  bdLobbyService *this;
+  bdFacebook *pbVar1;
   
-  iVar2 = dwGetLobbyService();
-  if (iVar2 != 0) {
-    uVar1 = bdLobbyService__getFacebook();
-    return uVar1;
+  this = dwGetLobbyService(param_1);
+  if (this != (bdLobbyService *)0x0) {
+    pbVar1 = bdLobbyService::getFacebook(this);
+    return pbVar1;
   }
-  return 0;
+  return (bdFacebook *)0x0;
 }
 
 
 // 826F2B78  dwGetRichPresence  (DW/dwUtils-xbox.cpp:173)
 
-undefined8 dwGetRichPresence(void)
+bdRichPresenceService * dwGetRichPresence(int param_1)
 
 {
-  int iVar2;
-  undefined8 uVar1;
+  bdLobbyService *this;
+  bdRichPresenceService *pbVar1;
   
-  iVar2 = dwGetLobbyService();
-  if (iVar2 != 0) {
-    uVar1 = bdLobbyService__getRichPresence();
-    return uVar1;
+  this = dwGetLobbyService(param_1);
+  if (this != (bdLobbyService *)0x0) {
+    pbVar1 = bdLobbyService::getRichPresence(this);
+    return pbVar1;
   }
-  return 0;
+  return (bdRichPresenceService *)0x0;
 }
 
 
 // 826F2BC8  dwGetUserGroups  (DW/dwUtils-xbox.cpp:185)
 
-undefined8 dwGetUserGroups(void)
+bdUserGroups * dwGetUserGroups(int param_1)
 
 {
-  int iVar2;
-  undefined8 uVar1;
+  bdLobbyService *this;
+  bdUserGroups *pbVar1;
   
-  iVar2 = dwGetLobbyService();
-  if (iVar2 != 0) {
-    uVar1 = bdLobbyService__getUserGroups();
-    return uVar1;
+  this = dwGetLobbyService(param_1);
+  if (this != (bdLobbyService *)0x0) {
+    pbVar1 = bdLobbyService::getUserGroups(this);
+    return pbVar1;
   }
-  return 0;
+  return (bdUserGroups *)0x0;
 }
 
 
 // 826F2C18  dwGetGroup  (DW/dwUtils-xbox.cpp:197)
 
-undefined8 dwGetGroup(void)
+bdGroup * dwGetGroup(int param_1)
 
 {
-  ulonglong uVar1;
-  int iVar3;
-  undefined8 uVar2;
+  bdLobbyService *this;
+  Status SVar1;
+  bdGroup *pbVar2;
   
-  uVar1 = dwGetLobbyService();
-  if (((uVar1 & 0xffffffff) == 0) || (iVar3 = bdLobbyService__getStatus(), iVar3 != 2)) {
-    uVar2 = 0;
+  this = dwGetLobbyService(param_1);
+  if ((this == (bdLobbyService *)0x0) ||
+     (SVar1 = bdLobbyService::getStatus(this), SVar1 != BD_CONNECTED)) {
+    pbVar2 = (bdGroup *)0x0;
   }
   else {
-    uVar2 = bdLobbyService__getGroup(uVar1);
+    pbVar2 = bdLobbyService::getGroup(this);
   }
-  return uVar2;
+  return pbVar2;
 }
 
 
 // 826F2C78  dwGetKeyArchive  (DW/dwUtils-xbox.cpp:209)
 
-undefined8 dwGetKeyArchive(void)
+bdKeyArchive * dwGetKeyArchive(int param_1)
 
 {
-  int iVar2;
-  undefined8 uVar1;
+  bdLobbyService *this;
+  bdKeyArchive *pbVar1;
   
-  iVar2 = dwGetLobbyService();
-  if (iVar2 != 0) {
-    uVar1 = bdLobbyService__getKeyArchive();
-    return uVar1;
+  this = dwGetLobbyService(param_1);
+  if (this != (bdLobbyService *)0x0) {
+    pbVar1 = bdLobbyService::getKeyArchive(this);
+    return pbVar1;
   }
-  return 0;
+  return (bdKeyArchive *)0x0;
 }
 
 
 // 826F2CC8  dwGetTeams  (DW/dwUtils-xbox.cpp:221)
 
-undefined8 dwGetTeams(void)
+bdTeams * dwGetTeams(int param_1)
 
 {
-  int iVar2;
-  undefined8 uVar1;
+  bdLobbyService *this;
+  bdTeams *pbVar1;
   
-  iVar2 = dwGetLobbyService();
-  if (iVar2 != 0) {
-    uVar1 = bdLobbyService__getTeams();
-    return uVar1;
+  this = dwGetLobbyService(param_1);
+  if (this != (bdLobbyService *)0x0) {
+    pbVar1 = bdLobbyService::getTeams(this);
+    return pbVar1;
   }
-  return 0;
+  return (bdTeams *)0x0;
 }
 
 
 // 826F2D18  dwGetStats  (DW/dwUtils-xbox.cpp:233)
 
-undefined8 dwGetStats(void)
+bdStats * dwGetStats(int param_1)
 
 {
-  int iVar2;
-  undefined8 uVar1;
+  bdLobbyService *this;
+  bdStats *pbVar1;
   
-  iVar2 = dwGetLobbyService();
-  if (iVar2 != 0) {
-    uVar1 = bdLobbyService__getStats();
-    return uVar1;
+  this = dwGetLobbyService(param_1);
+  if (this != (bdLobbyService *)0x0) {
+    pbVar1 = bdLobbyService::getStats(this);
+    return pbVar1;
   }
-  return 0;
+  return (bdStats *)0x0;
 }
 
 
 // 826F2D68  dwGetMatchmaking  (DW/dwUtils-xbox.cpp:245)
 
-undefined8 dwGetMatchmaking(void)
+bdMatchMaking * dwGetMatchmaking(int param_1)
 
 {
-  int iVar2;
-  undefined8 uVar1;
+  bdLobbyService *this;
+  bdMatchMaking *pbVar1;
   
-  iVar2 = dwGetLobbyService();
-  if (iVar2 != 0) {
-    uVar1 = bdLobbyService__getMatchMaking();
-    return uVar1;
+  this = dwGetLobbyService(param_1);
+  if (this != (bdLobbyService *)0x0) {
+    pbVar1 = bdLobbyService::getMatchMaking(this);
+    return pbVar1;
   }
-  return 0;
+  return (bdMatchMaking *)0x0;
 }
 
 
 // 826F2DB8  dwGetContentStreaming  (DW/dwUtils-xbox.cpp:258)
 
-undefined8 dwGetContentStreaming(void)
+bdContentStreaming * dwGetContentStreaming(int param_1)
 
 {
-  int iVar2;
-  undefined8 uVar1;
+  bdLobbyService *this;
+  bdContentStreaming *pbVar1;
   
-  iVar2 = dwGetLobbyService();
-  if (iVar2 != 0) {
-    uVar1 = bdLobbyService__getContentStreaming();
-    return uVar1;
+  this = dwGetLobbyService(param_1);
+  if (this != (bdLobbyService *)0x0) {
+    pbVar1 = bdLobbyService::getContentStreaming(this);
+    return pbVar1;
   }
-  return 0;
+  return (bdContentStreaming *)0x0;
 }
 
 
 // 826F2E08  dwGetTagService  (DW/dwUtils-xbox.cpp:271)
 
-undefined8 dwGetTagService(void)
+bdTags * dwGetTagService(int param_1)
 
 {
-  ulonglong uVar1;
-  int iVar3;
-  undefined8 uVar2;
+  bdLobbyService *this;
+  Status SVar1;
+  bdTags *pbVar2;
   
-  uVar1 = dwGetLobbyService();
-  if (((uVar1 & 0xffffffff) == 0) || (iVar3 = bdLobbyService__getStatus(), iVar3 != 2)) {
-    uVar2 = 0;
+  this = dwGetLobbyService(param_1);
+  if ((this == (bdLobbyService *)0x0) ||
+     (SVar1 = bdLobbyService::getStatus(this), SVar1 != BD_CONNECTED)) {
+    pbVar2 = (bdTags *)0x0;
   }
   else {
-    uVar2 = bdLobbyService__getTags(uVar1);
+    pbVar2 = bdLobbyService::getTags(this);
   }
-  return uVar2;
+  return pbVar2;
 }
 
 
 // 826F2E68  dwGetProfiles  (DW/dwUtils-xbox.cpp:302)
 
-undefined8 dwGetProfiles(void)
+bdProfiles * dwGetProfiles(int param_1)
 
 {
-  ulonglong uVar1;
-  int iVar3;
-  undefined8 uVar2;
+  bdLobbyService *this;
+  Status SVar1;
+  bdProfiles *pbVar2;
   
-  uVar1 = dwGetLobbyService();
-  if (((uVar1 & 0xffffffff) == 0) || (iVar3 = bdLobbyService__getStatus(), iVar3 != 2)) {
-    uVar2 = 0;
+  this = dwGetLobbyService(param_1);
+  if ((this == (bdLobbyService *)0x0) ||
+     (SVar1 = bdLobbyService::getStatus(this), SVar1 != BD_CONNECTED)) {
+    pbVar2 = (bdProfiles *)0x0;
   }
   else {
-    uVar2 = bdLobbyService__getProfiles(uVar1);
+    pbVar2 = bdLobbyService::getProfiles(this);
   }
-  return uVar2;
+  return pbVar2;
 }
 
 
 // 826F2EC8  dwGetOnlineUserID  (DW/dwUtils-xbox.cpp:316)
 
-undefined8 dwGetOnlineUserID(undefined8 param_1,undefined8 *param_2)
+bool dwGetOnlineUserID(int param_1,ulong64 *param_2)
 
 {
-  undefined8 uVar1;
+  ulong64 uVar1;
   
-  uVar1 = Live_GetXuid();
+  uVar1 = Live_GetXuid(param_1);
   *param_2 = uVar1;
-  return 1;
+  return true;
 }
 
 
 // 826F2F00  dwGetSubscription  (DW/dwUtils-xbox.cpp:324)
 
-undefined8 dwGetSubscription(void)
+bdSubscription * dwGetSubscription(int param_1)
 
 {
-  int iVar2;
-  undefined8 uVar1;
+  bdLobbyService *this;
+  bdSubscription *pbVar1;
   
-  iVar2 = dwGetLobbyService();
-  if (iVar2 != 0) {
-    uVar1 = bdLobbyService__getSubscription();
-    return uVar1;
+  this = dwGetLobbyService(param_1);
+  if (this != (bdLobbyService *)0x0) {
+    pbVar1 = bdLobbyService::getSubscription(this);
+    return pbVar1;
   }
-  return 0;
+  return (bdSubscription *)0x0;
 }
 
 
 // 826F2F50  dwGetDML  (DW/dwUtils-xbox.cpp:336)
 
-undefined8 dwGetDML(void)
+bdDML * dwGetDML(int param_1)
 
 {
-  int iVar2;
-  undefined8 uVar1;
+  bdLobbyService *this;
+  bdDML *pbVar1;
   
-  iVar2 = dwGetLobbyService();
-  if (iVar2 != 0) {
-    uVar1 = bdLobbyService__getDML();
-    return uVar1;
+  this = dwGetLobbyService(param_1);
+  if (this != (bdLobbyService *)0x0) {
+    pbVar1 = bdLobbyService::getDML(this);
+    return pbVar1;
   }
-  return 0;
+  return (bdDML *)0x0;
 }
 

@@ -2,37 +2,54 @@
 
 // 8226E390  Mantle_RegisterDvars  (bgame/bg_mantle.cpp:197)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Mantle_RegisterDvars(void)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
-  undefined8 uVar3;
+  ushort uVar1;
+  IMAGE_DOS_HEADER *pIVar2;
+  double dVar3;
+  double dVar4;
+  double dVar5;
   
-  DAT_829c401c = Dvar_RegisterBool(0xffffffff82004d08,1,0x8c,0xffffffff82004d18);
-  DAT_829c4028 = Dvar_RegisterBool(0xffffffff82004cd4,0,0x8c,0xffffffff82004ce4);
-  uVar3 = 0;
-  DAT_829c4020 = Dvar_RegisterFloat(0x4034000000000000,0,0x4060000000000000,0xffffffff82004c74);
-  DAT_829c4024 = Dvar_RegisterFloat(0x3fb99999a0000000,uVar3,0x402e000000000000,0xffffffff82004c60);
-  uVar2 = 0x4066800000000000;
-  uVar1 = 0x404e000000000000;
-  DAT_829c4018 = Dvar_RegisterFloat(0x404e000000000000,uVar3,0x4066800000000000,0xffffffff82004bc8);
-  DAT_829c402c = Dvar_RegisterFloat(uVar1,uVar3,uVar2,0xffffffff82004b74);
-  DAT_829c4010 = Dvar_RegisterFloat(uVar3,uVar3,0x47efffffe0000000,0xffffffff82004b0c);
+  mantle_enable = Dvar_RegisterBool("mantle_enable",true,0x8c,"Enable player mantling");
+  mantle_debug = Dvar_RegisterBool("mantle_debug",false,0x8c,"Show debug information for mantling");
+  pIVar2 = &IMAGE_DOS_HEADER_82000000;
+  uVar1 = 0;
+  dVar5 = 0.0;
+  DAT_829c4020 = Dvar_RegisterFloat("mantle_check_range",20.0,0.0,128.0,0,
+                                    IMAGE_DOS_HEADER_82000000.e_magic);
+  DAT_829c4024 = Dvar_RegisterFloat("mantle_check_radius",0.1,(float)dVar5,15.0,uVar1,
+                                    pIVar2->e_magic);
+  pIVar2 = &IMAGE_DOS_HEADER_82000000;
+  uVar1 = 0;
+  dVar4 = 180.0;
+  dVar3 = 60.0;
+  mantle_check_angle =
+       Dvar_RegisterFloat("mantle_check_angle",60.0,(float)dVar5,180.0,0,
+                          IMAGE_DOS_HEADER_82000000.e_magic);
+  mantle_view_yawcap =
+       Dvar_RegisterFloat("mantle_view_yawcap",(float)dVar3,(float)dVar5,(float)dVar4,uVar1,
+                          pIVar2->e_magic);
+  mantle_max_vertical_end_velocity =
+       Dvar_RegisterFloat("mantle_max_vertical_end_velocity",(float)dVar5,(float)dVar5,3.4028235e+38
+                          ,uVar1,pIVar2->e_magic);
   return;
 }
 
 
 // 8226E518  Mantle_DebugPrint  (bgame/bg_mantle.cpp:241)
 
-void Mantle_DebugPrint(ulonglong param_1)
+void Mantle_DebugPrint(char *param_1)
 
 {
-  if ((param_1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82004d34,0xf2,0,0xffffffff82000f98,0xffffffff82004d74);
+  if (param_1 == (char *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_mantle.cpp",0xf2,0,
+                    "%s");
   }
-  if (*(char *)(DAT_829c4028 + 0xc) != '\0') {
-    Com_Printf(0x11,0xffffffff82004d30,param_1);
+  if ((mantle_debug->current).enabled != false) {
+    Com_Printf(0x11,"%s\n");
   }
   return;
 }
@@ -42,173 +59,177 @@ void Mantle_DebugPrint(ulonglong param_1)
 
 /* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
-uint Mantle_IsFastMantle(int param_1)
+int Mantle_IsFastMantle(MantleState *param_1)
 
 {
-  if (param_1 == 0) {
-    MyAssertHandler(0xffffffff82004d34,0x101,0,0xffffffff82000f98,0xffffffff82004d78);
+  if (param_1 == (MantleState *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_mantle.cpp",0x101,0,
+                    "%s");
     return _DAT_0000000c >> 6 & 1;
   }
-  return *(uint *)(param_1 + 0xc) >> 6 & 1;
+  return (uint)param_1->flags >> 6 & 1;
 }
 
 
 // 8226E610  Mantle_GetAnimStateIndex  (bgame/bg_mantle.cpp:264)
 
-bool Mantle_GetAnimStateIndex(ulonglong param_1)
+uint Mantle_GetAnimStateIndex(MantleState *param_1)
 
 {
-  longlong lVar1;
+  int iVar1;
   
-  if ((param_1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82004d34,0x109,0,0xffffffff82000f98,0xffffffff82004d78);
+  if (param_1 == (MantleState *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_mantle.cpp",0x109,0,
+                    "%s");
   }
-  lVar1 = Mantle_IsFastMantle(param_1);
-  return lVar1 != 0;
+  iVar1 = Mantle_IsFastMantle(param_1);
+  return (uint)(iVar1 != 0);
 }
 
 
 // 8226E678  Mantle_GetActiveXAnimGroup  (bgame/bg_mantle.cpp:277)
 
-void Mantle_GetActiveXAnimGroup(void)
+XAnim_s * Mantle_GetActiveXAnimGroup(MantleState *param_1)
 
 {
-  ulonglong uVar1;
-  longlong lVar2;
+  MantleState *pMVar1;
+  int iVar2;
+  XAnim_s *pXVar3;
   
-  uVar1 = __savegprlr_28();
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82004d34,0x118,0,0xffffffff82000f98,0xffffffff82004d78);
-    MyAssertHandler(0xffffffff82004d34,0x109,0,0xffffffff82000f98,0xffffffff82004d78);
+  pMVar1 = (MantleState *)__savegprlr_28(param_1);
+  if (pMVar1 == (MantleState *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_mantle.cpp",0x118,0,
+                    "%s");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_mantle.cpp",0x109,0,
+                    "%s");
   }
-  lVar2 = Mantle_IsFastMantle(uVar1);
-  __restgprlr_28((&DAT_829c4008)[lVar2 != 0]);
-  return;
+  iVar2 = Mantle_IsFastMantle(pMVar1);
+  pXVar3 = (XAnim_s *)__restgprlr_28(s_mantleAnims[iVar2 != 0]);
+  return pXVar3;
 }
 
 
 // 8226E700  Mantle_GetUpLength  (bgame/bg_mantle.cpp:290)
 
-void Mantle_GetUpLength(int param_1)
+int Mantle_GetUpLength(MantleState *param_1)
 
 {
-  undefined4 uVar1;
-  undefined8 uVar2;
+  uint uVar1;
+  XAnim_s *pXVar2;
+  int iVar3;
   
-  uVar1 = (&DAT_82960d18)[*(int *)(param_1 + 8) * 3];
-  uVar2 = Mantle_GetActiveXAnimGroup();
-  XAnimGetLengthMsec(uVar2,uVar1);
-  return;
+  uVar1 = s_mantleTrans[param_1->transIndex].upAnimIndex;
+  pXVar2 = Mantle_GetActiveXAnimGroup(param_1);
+  iVar3 = XAnimGetLengthMsec(pXVar2,uVar1);
+  return iVar3;
 }
 
 
 // 8226E750  Mantle_GetOverLength  (bgame/bg_mantle.cpp:302)
 
-undefined8 Mantle_GetOverLength(int param_1)
+int Mantle_GetOverLength(MantleState *param_1)
 
 {
-  undefined4 uVar1;
-  undefined8 uVar2;
+  uint uVar1;
+  XAnim_s *pXVar2;
+  int iVar3;
   
-  if ((*(uint *)(param_1 + 0xc) & 1) == 0) {
+  if ((param_1->flags & 1U) == 0) {
     return 0;
   }
-  uVar1 = (&DAT_82960d1c)[*(int *)(param_1 + 8) * 3];
-  uVar2 = Mantle_GetActiveXAnimGroup();
-  uVar2 = XAnimGetLengthMsec(uVar2,uVar1);
-  return uVar2;
+  uVar1 = s_mantleTrans[param_1->transIndex].overAnimIndex;
+  pXVar2 = Mantle_GetActiveXAnimGroup(param_1);
+  iVar3 = XAnimGetLengthMsec(pXVar2,uVar1);
+  return iVar3;
 }
 
 
 // 8226E7C8  Mantle_GetAnim  (bgame/bg_mantle.cpp:317)
 
-void Mantle_GetAnim(void)
+int Mantle_GetAnim(MantleState *param_1)
 
 {
   uint uVar1;
-  undefined4 uVar2;
+  MantleState *pMVar2;
+  XAnim_s *pXVar3;
   int iVar4;
-  undefined8 uVar3;
   int iVar5;
-  int iVar6;
-  longlong lVar7;
+  longlong lVar6;
   
-  iVar4 = __savegprlr_29();
-  uVar2 = (&DAT_82960d18)[*(int *)(iVar4 + 8) * 3];
-  uVar3 = Mantle_GetActiveXAnimGroup();
-  iVar5 = XAnimGetLengthMsec(uVar3,uVar2);
-  iVar6 = Mantle_GetOverLength(iVar4);
-  if ((*(int *)(iVar4 + 4) < 0) || (iVar6 + iVar5 < *(int *)(iVar4 + 4))) {
-    MyAssertHandler(0xffffffff82004d34,0x148,0,0xffffffff82000f98,0xffffffff82004d80);
+  pMVar2 = (MantleState *)__savegprlr_29(param_1);
+  uVar1 = s_mantleTrans[pMVar2->transIndex].upAnimIndex;
+  pXVar3 = Mantle_GetActiveXAnimGroup(pMVar2);
+  iVar4 = XAnimGetLengthMsec(pXVar3,uVar1);
+  iVar5 = Mantle_GetOverLength(pMVar2);
+  if ((pMVar2->timer < 0) || (iVar5 + iVar4 < pMVar2->timer)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_mantle.cpp",0x148,0,
+                    "%s");
   }
-  uVar1 = *(uint *)(iVar4 + 8);
-  lVar7 = ((ulonglong)uVar1 & 0x7fffffff) * 2;
-  if (*(int *)(iVar4 + 4) <= iVar5) {
-    __restgprlr_29(*(undefined4 *)
-                    ((int)&DAT_82960d18 + (int)(((ulonglong)uVar1 + lVar7 & 0xffffffff) << 2)));
-    return;
+  uVar1 = pMVar2->transIndex;
+  lVar6 = ((ulonglong)uVar1 & 0x7fffffff) * 2;
+  if (pMVar2->timer <= iVar4) {
+    iVar4 = __restgprlr_29(*(undefined4 *)
+                            ((int)&s_mantleTrans[0].upAnimIndex +
+                            (int)(((ulonglong)uVar1 + lVar6 & 0xffffffff) << 2)));
+    return iVar4;
   }
-  __restgprlr_29(*(undefined4 *)
-                  ((int)&DAT_82960d1c + (int)(((ulonglong)uVar1 + lVar7 & 0xffffffff) << 2)));
-  return;
+  iVar4 = __restgprlr_29(*(undefined4 *)
+                          ((int)&s_mantleTrans[0].overAnimIndex +
+                          (int)(((ulonglong)uVar1 + lVar6 & 0xffffffff) << 2)));
+  return iVar4;
 }
 
 
 // 8226E888  Mantle_GetAnimDelta  (bgame/bg_mantle.cpp:344)
 
-void Mantle_GetAnimDelta(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+void Mantle_GetAnimDelta(MantleState *param_1,int param_2,float *param_3)
 
 {
-  float fVar1;
-  undefined4 uVar2;
-  int iVar3;
-  float *pfVar6;
-  undefined8 uVar4;
-  undefined8 uVar5;
-  float *pfVar7;
-  longlong lVar8;
-  int iVar9;
+  uint uVar1;
+  MantleState *pMVar2;
+  XAnim_s *pXVar3;
+  int iVar4;
+  int iVar5;
+  longlong lVar6;
   float local_60;
   float local_5c;
   float local_58;
-  undefined1 auStack_50 [80];
+  float afStack_50 [20];
   
-  pfVar6 = (float *)__savegprlr_25();
-  uVar2 = (&DAT_82960d18)[(int)pfVar6[2] * 3];
-  uVar4 = Mantle_GetActiveXAnimGroup();
-  uVar4 = XAnimGetLengthMsec(uVar4,uVar2);
-  uVar5 = Mantle_GetOverLength(pfVar6);
-  iVar9 = (int)param_2;
-  iVar3 = (int)uVar4;
-  if ((iVar9 < 0) || ((int)uVar5 + iVar3 < iVar9)) {
-    uVar4 = va(0xffffffff82004df0,param_2,uVar4,uVar5);
-    MyAssertHandler(0xffffffff82004d34,0x163,0,0xffffffff820011f4,0xffffffff82004dc0,uVar4);
+  pMVar2 = (MantleState *)__savegprlr_25(param_1);
+  uVar1 = s_mantleTrans[pMVar2->transIndex].upAnimIndex;
+  pXVar3 = Mantle_GetActiveXAnimGroup(pMVar2);
+  iVar4 = XAnimGetLengthMsec(pXVar3,uVar1);
+  iVar5 = Mantle_GetOverLength(pMVar2);
+  if ((param_2 < 0) || (iVar5 + iVar4 < param_2)) {
+    va("time: %i, upTime: %i, overTime: %i");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_mantle.cpp",0x163,0,
+                    "%s\n\t%s");
   }
-  fVar1 = pfVar6[2];
-  lVar8 = ((ulonglong)(uint)fVar1 & 0x7fffffff) * 2;
-  if (iVar9 <= iVar3) {
-    uVar2 = *(undefined4 *)
-             ((int)&DAT_82960d18 + (int)(((ulonglong)(uint)fVar1 + lVar8 & 0xffffffff) << 2));
-    uVar4 = Mantle_GetActiveXAnimGroup(pfVar6);
-    XAnimGetAbsDelta((double)(float)((double)(longlong)iVar9 / (double)(longlong)iVar3),uVar4,uVar2,
-                     auStack_50,param_3);
-    VectorAngleMultiply((double)*pfVar6,param_3);
+  uVar1 = pMVar2->transIndex;
+  lVar6 = ((ulonglong)uVar1 & 0x7fffffff) * 2;
+  if (param_2 <= iVar4) {
+    uVar1 = *(uint *)((int)&s_mantleTrans[0].upAnimIndex +
+                     (int)(((ulonglong)uVar1 + lVar6 & 0xffffffff) << 2));
+    pXVar3 = Mantle_GetActiveXAnimGroup(pMVar2);
+    XAnimGetAbsDelta(pXVar3,uVar1,afStack_50,param_3,
+                     (float)(longlong)param_2 / (float)(longlong)iVar4);
+    VectorAngleMultiply(param_3,pMVar2->yaw);
     __restgprlr_25();
     return;
   }
-  uVar2 = *(undefined4 *)
-           ((int)&DAT_82960d18 + (int)(((ulonglong)(uint)fVar1 + lVar8 & 0xffffffff) << 2));
-  uVar4 = Mantle_GetActiveXAnimGroup(pfVar6);
-  XAnimGetAbsDelta(0x3ff0000000000000,uVar4,uVar2,auStack_50,&local_60);
-  uVar2 = (&DAT_82960d1c)[(int)pfVar6[2] * 3];
-  uVar4 = Mantle_GetActiveXAnimGroup(pfVar6);
-  XAnimGetAbsDelta((double)(float)((double)(longlong)(iVar9 - iVar3) / (double)(longlong)(int)uVar5)
-                   ,uVar4,uVar2,auStack_50,param_3);
-  pfVar7 = (float *)param_3;
-  *pfVar7 = *pfVar7 + local_60;
-  pfVar7[1] = local_5c + pfVar7[1];
-  pfVar7[2] = local_58 + pfVar7[2];
-  VectorAngleMultiply((double)*pfVar6,param_3);
+  uVar1 = *(uint *)((int)&s_mantleTrans[0].upAnimIndex +
+                   (int)(((ulonglong)uVar1 + lVar6 & 0xffffffff) << 2));
+  pXVar3 = Mantle_GetActiveXAnimGroup(pMVar2);
+  XAnimGetAbsDelta(pXVar3,uVar1,afStack_50,&local_60,1.0);
+  uVar1 = s_mantleTrans[pMVar2->transIndex].overAnimIndex;
+  pXVar3 = Mantle_GetActiveXAnimGroup(pMVar2);
+  XAnimGetAbsDelta(pXVar3,uVar1,afStack_50,param_3,
+                   (float)(longlong)(param_2 - iVar4) / (float)(longlong)iVar5);
+  *param_3 = *param_3 + local_60;
+  param_3[1] = local_5c + param_3[1];
+  param_3[2] = local_58 + param_3[2];
+  VectorAngleMultiply(param_3,pMVar2->yaw);
   __restgprlr_25();
   return;
 }
@@ -216,115 +237,79 @@ void Mantle_GetAnimDelta(undefined8 param_1,undefined8 param_2,undefined8 param_
 
 // 8226EA70  Mantle_CreateAnims  (bgame/bg_mantle.cpp:382)
 
-void Mantle_CreateAnims(void)
+void Mantle_CreateAnims(_func___cdecl_void_ptr_int *param_1)
 
 {
-  undefined8 uVar1;
-  ulonglong uVar2;
+  _func___cdecl_void_ptr_int *p_Var1;
+  XAnim_s *pXVar2;
   longlong lVar3;
-  undefined **ppuVar4;
-  undefined4 *puVar5;
+  char *(*papcVar4) [11];
+  XAnim_s **ppXVar5;
   float *pfVar6;
-  longlong lVar7;
-  longlong lVar8;
-  ulonglong uVar9;
+  int iVar7;
+  uint uVar8;
+  double dVar9;
   double dVar10;
-  undefined8 uVar11;
-  undefined8 uVar12;
-  undefined8 uVar13;
-  double dVar14;
-  double dVar15;
-  double dVar16;
-  undefined8 uVar17;
-  double dVar18;
+  double dVar11;
+  double dVar12;
   float local_f0;
   float local_ec;
   float local_e8;
-  undefined1 auStack_e0 [224];
+  float afStack_e0 [56];
   
-  __savegprlr_16();
-  uVar1 = __savefpr_24();
-  puVar5 = &DAT_829c4008;
-  if (DAT_829c4008 == 0) {
-    uVar11 = 0xc032000000000000;
-    dVar14 = -18.0;
-    uVar12 = 0x403f000000000000;
-    dVar15 = 31.0;
-    uVar17 = 0;
-    uVar13 = 0x4030000000000000;
-    dVar16 = 16.0;
-    dVar18 = 1.0;
-    lVar7 = 0;
-    ppuVar4 = &PTR_s_mp_mantle_root_82960d70;
+  __savegprlr_16(param_1);
+  p_Var1 = (_func___cdecl_void_ptr_int *)__savefpr_24();
+  ppXVar5 = s_mantleAnims;
+  if (s_mantleAnims[0] == (XAnim_s *)0x0) {
+    dVar9 = -18.0;
+    dVar10 = 31.0;
+    dVar11 = 16.0;
+    dVar12 = 1.0;
+    iVar7 = 0;
+    papcVar4 = s_mantleAnimNames;
     lVar3 = 2;
     do {
-      uVar2 = XAnimCreateAnims(0xffffffff82004e14,0xb,uVar1);
-      if ((uVar2 & 0xffffffff) == 0) {
-        MyAssertHandler(0xffffffff82004d34,0x18d,0,0xffffffff82000f98,0xffffffff82004e24);
+      pXVar2 = XAnimCreateAnims("PLAYER_MANTLE",0xb,p_Var1);
+      if (pXVar2 == (XAnim_s *)0x0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_mantle.cpp",0x18d
+                        ,0,"%s");
       }
-      *puVar5 = (int)uVar2;
-      XAnimBlend(uVar2,0,*ppuVar4,1,10,0,1);
-      lVar8 = 1;
+      *ppXVar5 = pXVar2;
+      XAnimBlend(pXVar2,0,(*papcVar4)[0],1,10,0,true);
+      uVar8 = 1;
       do {
-        BG_CreateXAnim(uVar2,lVar8,
-                       *(undefined4 *)
-                        ((int)&PTR_s_mp_mantle_root_82960d70 +
-                        (int)((lVar7 + lVar8 & 0xffffffffU) << 2)),1);
-        lVar8 = lVar8 + 1;
-      } while ((int)lVar8 < 0xb);
-      pfVar6 = (float *)&DAT_82960d20;
+        BG_CreateXAnim(pXVar2,uVar8,s_mantleAnimNames[0][iVar7 + uVar8],true);
+        uVar8 = uVar8 + 1;
+      } while ((int)uVar8 < 0xb);
+      pfVar6 = &s_mantleTrans[0].height;
       do {
-        uVar9 = (ulonglong)(uint)pfVar6[-2];
-        XAnimGetAbsDelta(dVar18,uVar2,uVar9,auStack_e0,&local_f0);
-        dVar10 = (double)local_f0;
-        if (dVar18 < ABS((double)(float)(dVar10 - dVar16))) {
-          Com_Error(dVar10,uVar13,1,0xffffffff82004e38,
-                    *(undefined4 *)
-                     ((int)&PTR_s_mp_mantle_root_82960d70 + (int)((lVar7 + uVar9 & 0xffffffff) << 2)
-                     ),dVar10,uVar13);
+        XAnimGetAbsDelta(pXVar2,((MantleAnimTransition *)(pfVar6 + -2))->upAnimIndex,afStack_e0,
+                         &local_f0,(float)dVar12);
+        if (dVar12 < ABS((double)(float)((double)local_f0 - dVar11))) {
+          Com_Error(ERR_DROP,"Mantle anim [%s] has X translation %f, should be %f\n");
         }
-        dVar10 = (double)local_ec;
-        if (dVar18 < ABS(dVar10)) {
-          Com_Error(dVar10,uVar17,1,0xffffffff82004e70,
-                    *(undefined4 *)
-                     ((int)&PTR_s_mp_mantle_root_82960d70 + (int)((lVar7 + uVar9 & 0xffffffff) << 2)
-                     ),dVar10,uVar17);
+        if (dVar12 < ABS((double)local_ec)) {
+          Com_Error(ERR_DROP,"Mantle anim [%s] has Y translation %f, should be %f\n");
         }
-        if (dVar18 < ABS((double)(float)((double)local_e8 - (double)*pfVar6))) {
-          Com_Error(1,0xffffffff82004ea8,
-                    *(undefined4 *)
-                     ((int)&PTR_s_mp_mantle_root_82960d70 + (int)((lVar7 + uVar9 & 0xffffffff) << 2)
-                     ),(double)local_e8,(double)*pfVar6);
+        if (dVar12 < ABS((double)(local_e8 - *pfVar6))) {
+          Com_Error(ERR_DROP,"Mantle anim [%s] has Z translation %f, should be %f\n");
         }
-        uVar9 = (ulonglong)(uint)pfVar6[-1];
-        XAnimGetAbsDelta(dVar18,uVar2,uVar9,auStack_e0,&local_f0);
-        dVar10 = (double)local_f0;
-        if (dVar18 < ABS((double)(float)(dVar10 - dVar15))) {
-          Com_Error(dVar10,uVar12,1,0xffffffff82004e38,
-                    *(undefined4 *)
-                     ((int)&PTR_s_mp_mantle_root_82960d70 + (int)((lVar7 + uVar9 & 0xffffffff) << 2)
-                     ),dVar10,uVar12);
+        XAnimGetAbsDelta(pXVar2,(uint)pfVar6[-1],afStack_e0,&local_f0,(float)dVar12);
+        if (dVar12 < ABS((double)(float)((double)local_f0 - dVar10))) {
+          Com_Error(ERR_DROP,"Mantle anim [%s] has X translation %f, should be %f\n");
         }
-        dVar10 = (double)local_ec;
-        if (dVar18 < ABS(dVar10)) {
-          Com_Error(dVar10,uVar17,1,0xffffffff82004e70,
-                    *(undefined4 *)
-                     ((int)&PTR_s_mp_mantle_root_82960d70 + (int)((lVar7 + uVar9 & 0xffffffff) << 2)
-                     ),dVar10,uVar17);
+        if (dVar12 < ABS((double)local_ec)) {
+          Com_Error(ERR_DROP,"Mantle anim [%s] has Y translation %f, should be %f\n");
         }
-        dVar10 = (double)local_e8;
-        if (dVar18 < ABS((double)(float)(dVar10 - dVar14))) {
-          Com_Error(dVar10,uVar11,1,0xffffffff82004ea8,
-                    *(undefined4 *)
-                     ((int)&PTR_s_mp_mantle_root_82960d70 + (int)((lVar7 + uVar9 & 0xffffffff) << 2)
-                     ),dVar10,uVar11);
+        if (dVar12 < ABS((double)(float)((double)local_e8 - dVar9))) {
+          Com_Error(ERR_DROP,"Mantle anim [%s] has Z translation %f, should be %f\n");
         }
         pfVar6 = pfVar6 + 3;
       } while ((int)pfVar6 < -0x7d69f28c);
       lVar3 = lVar3 + -1;
-      puVar5 = puVar5 + 1;
-      ppuVar4 = ppuVar4 + 0xb;
-      lVar7 = lVar7 + 0xb;
+      ppXVar5 = ppXVar5 + 1;
+      papcVar4 = papcVar4 + 1;
+      iVar7 = iVar7 + 0xb;
     } while (lVar3 != 0);
   }
   __restfpr_24();
@@ -335,204 +320,83 @@ void Mantle_CreateAnims(void)
 
 // 8226EDB8  Mantle_ShutdownAnims  (bgame/bg_mantle.cpp:440)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Mantle_ShutdownAnims(void)
 
 {
-  DAT_829c4008 = 0;
-  DAT_829c400c = 0;
+  s_mantleAnims[0] = (XAnim_s *)0x0;
+  s_mantleAnims[1] = (XAnim_s *)0x0;
   return;
 }
 
 
 // 8226EDD0  Mantle_FindTransition  (bgame/bg_mantle.cpp:452)
 
-undefined1 Mantle_FindTransition(double param_1,double param_2)
+int Mantle_FindTransition(float param_1,float param_2)
 
 {
   float fVar1;
-  undefined1 uVar2;
-  double dVar3;
+  float fVar2;
+  float fVar3;
+  uint uVar4;
+  double dVar5;
   
-  dVar3 = (double)(float)(param_2 - param_1);
-  if (dVar3 <= 0.0) {
-    MyAssertHandler(dVar3,0xffffffff82004d34,0x1cc,0,0xffffffff82004f10,0xffffffff82004f24,dVar3);
+  dVar5 = (double)(param_2 - param_1);
+  if (dVar5 <= 0.0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_mantle.cpp",0x1cc,0,
+                    "%s\n\t(height) = %g");
   }
-  uVar2 = ABS((float)((double)DAT_82960d2c - dVar3)) < ABS((float)((double)DAT_82960d20 - dVar3));
-  fVar1 = ABS((float)((double)DAT_82960d20 - dVar3));
-  if ((bool)uVar2) {
-    fVar1 = ABS((float)((double)DAT_82960d2c - dVar3));
+  fVar1 = ABS((float)((double)s_mantleTrans[0].height - dVar5));
+  fVar3 = ABS((float)((double)s_mantleTrans[1].height - dVar5));
+  fVar2 = fVar1;
+  if (fVar3 < fVar1) {
+    fVar2 = fVar3;
   }
-  if (ABS((float)((double)DAT_82960d38 - dVar3)) < fVar1) {
-    uVar2 = 2;
-    fVar1 = ABS((float)((double)DAT_82960d38 - dVar3));
+  uVar4 = (uint)(fVar3 < fVar1);
+  if (ABS((float)((double)s_mantleTrans[2].height - dVar5)) < fVar2) {
+    uVar4 = 2;
+    fVar2 = ABS((float)((double)s_mantleTrans[2].height - dVar5));
   }
-  if (ABS((float)((double)DAT_82960d44 - dVar3)) < fVar1) {
-    uVar2 = 3;
-    fVar1 = ABS((float)((double)DAT_82960d44 - dVar3));
+  if (ABS((float)((double)s_mantleTrans[3].height - dVar5)) < fVar2) {
+    uVar4 = 3;
+    fVar2 = ABS((float)((double)s_mantleTrans[3].height - dVar5));
   }
-  if (ABS((float)((double)DAT_82960d50 - dVar3)) < fVar1) {
-    uVar2 = 4;
-    fVar1 = ABS((float)((double)DAT_82960d50 - dVar3));
+  if (ABS((float)((double)s_mantleTrans[4].height - dVar5)) < fVar2) {
+    uVar4 = 4;
+    fVar2 = ABS((float)((double)s_mantleTrans[4].height - dVar5));
   }
-  if (ABS((float)((double)DAT_82960d5c - dVar3)) < fVar1) {
-    uVar2 = 5;
-    fVar1 = ABS((float)((double)DAT_82960d5c - dVar3));
+  if (ABS((float)((double)s_mantleTrans[5].height - dVar5)) < fVar2) {
+    uVar4 = 5;
+    fVar2 = ABS((float)((double)s_mantleTrans[5].height - dVar5));
   }
-  if (ABS((float)((double)DAT_82960d68 - dVar3)) < fVar1) {
-    uVar2 = 6;
+  if (ABS((float)((double)s_mantleTrans[6].height - dVar5)) < fVar2) {
+    uVar4 = 6;
   }
-  return uVar2;
+  return uVar4;
 }
 
 
 // 8226EEF8  Mantle_CalcEndPos  (bgame/bg_mantle.cpp:480)
-
-void Mantle_CalcEndPos(undefined8 param_1,float *param_2)
-
-{
-  int iVar1;
-  int *piVar2;
-  undefined4 *puVar3;
-  char *pcVar4;
-  longlong lVar5;
-  double dVar6;
-  float local_b0;
-  float local_ac;
-  float local_a8;
-  float local_a0;
-  float local_9c;
-  float local_98;
-  undefined4 uStack_94;
-  undefined1 local_90 [8];
-  undefined4 local_88;
-  undefined4 local_7c;
-  float local_70 [11];
-  char local_41;
-  
-  piVar2 = (int *)__savegprlr_28();
-  iVar1 = *piVar2;
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff82004d34,0x1e8,0,0xffffffff82000f98,0xffffffff82001fdc);
-  }
-  if (((uint)param_2[0xc] & 1) == 0) {
-    param_2[9] = param_2[6];
-    param_2[10] = param_2[7];
-    param_2[0xb] = param_2[8];
-    __restgprlr_28();
-    return;
-  }
-  puVar3 = &uStack_94;
-  pcVar4 = "k]";
-  lVar5 = 6;
-  do {
-    pcVar4 = pcVar4 + 4;
-    puVar3 = puVar3 + 1;
-    *puVar3 = *(undefined4 *)pcVar4;
-    lVar5 = lVar5 + -1;
-  } while (lVar5 != 0);
-  local_a0 = param_2[6];
-  local_9c = param_2[7];
-  local_98 = param_2[8];
-  local_b0 = *param_2 * 31.0 + local_a0;
-  local_ac = param_2[1] * 31.0 + local_9c;
-  local_a8 = param_2[2] * 31.0 + local_98;
-  local_88 = 0x41c80000;
-  local_7c = 0x41c80000;
-  PM_trace(piVar2,local_70,&local_a0,&local_b0,local_90,*(undefined4 *)(iVar1 + 0x150),piVar2[0x17])
-  ;
-  if ((local_41 == '\0') && (dVar6 = 1.0, 1.0 <= local_70[0])) {
-    local_a0 = local_b0;
-    local_98 = local_a8;
-    local_a8 = local_a8 - 18.0;
-    local_9c = local_ac;
-    PM_trace(piVar2,local_70,&local_a0,&local_b0,local_90,*(undefined4 *)(iVar1 + 0x150),
-             piVar2[0x17]);
-    if ((local_41 == '\0') && (dVar6 <= (double)local_70[0])) {
-      param_2[9] = local_b0;
-      param_2[10] = local_ac;
-      param_2[0xb] = local_a8;
-      param_2[0xb] = (float)((double)(float)((double)local_a8 - (double)local_98) *
-                             (double)local_70[0] + (double)local_98);
-      __restgprlr_28();
-      return;
-    }
-  }
-  param_2[0xc] = (float)((uint)param_2[0xc] & 0xfffffffe);
-  param_2[9] = param_2[6];
-  param_2[10] = param_2[7];
-  param_2[0xb] = param_2[8];
-  __restgprlr_28();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
 
 // 8226F0F8  Mantle_Start  (bgame/bg_mantle.cpp:532)
-
-void Mantle_Start(undefined8 param_1,longlong param_2,undefined8 param_3)
-
-{
-  int iVar1;
-  int iVar2;
-  int iVar6;
-  undefined4 uVar7;
-  undefined8 uVar3;
-  longlong lVar4;
-  longlong lVar5;
-  longlong lVar8;
-  double dVar9;
-  float local_50;
-  float local_4c;
-  float local_48;
-  
-  iVar6 = __savegprlr_26();
-  lVar8 = param_2 + 0x22c;
-  dVar9 = (double)vectoyaw(param_3);
-  iVar1 = (int)param_2;
-  *(float *)(iVar1 + 0x22c) = (float)dVar9;
-  *(undefined4 *)(iVar1 + 0x230) = 0;
-  iVar2 = (int)param_3;
-  uVar7 = Mantle_FindTransition((double)*(float *)(iVar2 + 0x14),(double)*(float *)(iVar2 + 0x20));
-  *(undefined4 *)(iVar1 + 0x234) = uVar7;
-  *(uint *)(iVar1 + 0x238) = *(uint *)(iVar2 + 0x30) & 0xffffffdf;
-  if (param_2 == -0x4ec) {
-    MyAssertHandler(0xffffffff82000fa8,0x4f,0,0xffffffff82000f98,0xffffffff82000f9c);
-  }
-  if ((*(uint *)(iVar1 + 0x4f0) & 1) != 0) {
-    *(uint *)(iVar1 + 0x238) = *(uint *)(iVar1 + 0x238) | 0x40;
-  }
-  uVar7 = (&DAT_82960d18)[*(int *)(iVar1 + 0x234) * 3];
-  uVar3 = Mantle_GetActiveXAnimGroup(lVar8);
-  lVar4 = XAnimGetLengthMsec(uVar3,uVar7);
-  lVar5 = Mantle_GetOverLength(lVar8);
-  Mantle_GetAnimDelta(lVar8,lVar5 + lVar4,&local_50);
-  *(float *)(iVar1 + 0x1c) = *(float *)(iVar2 + 0x24) - local_50;
-  *(float *)(iVar1 + 0x20) = *(float *)(iVar2 + 0x28) - local_4c;
-  *(float *)(iVar1 + 0x24) = *(float *)(iVar2 + 0x2c) - local_48;
-  if ((*(uint *)(iVar1 + 0xc) & 4) != 0) {
-    MyAssertHandler(0xffffffff82004d34,0x22d,0,0xffffffff82000f98,0xffffffff82004f38);
-  }
-  *(uint *)(iVar1 + 0xc) = *(uint *)(iVar1 + 0xc) | 4;
-  PM_AddEvent(param_2,0xb8);
-  *(uint *)(iVar1 + 0xf8) = *(uint *)(iVar1 + 0xf8) | 0x20000;
-  *(undefined4 *)(iVar6 + 0x10c) = *(undefined4 *)(iVar2 + 0x24);
-  *(undefined4 *)(iVar6 + 0x110) = *(undefined4 *)(iVar2 + 0x28);
-  *(undefined4 *)(iVar6 + 0x114) = *(undefined4 *)(iVar2 + 0x2c);
-  *(int *)(iVar6 + 0x118) = (int)(lVar5 + lVar4);
-  *(undefined1 *)(iVar6 + 0x108) = 1;
-  __restgprlr_26();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
 
 // 8226F290  Mantle_CheckLedge  (bgame/bg_mantle.cpp:574)
 
-void Mantle_CheckLedge(undefined8 param_1,undefined8 param_2,undefined8 param_3,longlong param_4)
+/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
+
+bool Mantle_CheckLedge(playerState_s *param_1,uchar param_2,int param_3,MantleResults *param_4,
+                      float param_5)
 
 {
   float fVar1;
-  float *pfVar2;
-  int iVar4;
-  undefined8 uVar3;
+  int iVar2;
+  char *pcVar3;
+  undefined1 uVar4;
   double extraout_f1;
   double dVar5;
   double dVar6;
@@ -542,95 +406,87 @@ void Mantle_CheckLedge(undefined8 param_1,undefined8 param_2,undefined8 param_3,
   float local_b0;
   float local_ac;
   float local_a8;
-  undefined4 local_a0;
-  undefined4 local_9c;
-  undefined4 local_98;
-  undefined4 local_94;
-  undefined4 local_90;
-  undefined4 local_8c;
-  float local_80 [11];
-  char local_51;
-  char local_50;
+  Bounds local_a0;
+  trace_t local_80 [2];
   
-  iVar4 = __savegprlr_26();
+  iVar2 = __savegprlr_26((double)param_5,param_1);
   dVar6 = extraout_f1;
-  if (iVar4 == 0) {
-    MyAssertHandler(0xffffffff82004d34,0x245,0,0xffffffff82000f98,0xffffffff82001fdc);
+  if (iVar2 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_mantle.cpp",0x245,0,
+                    "%s");
   }
-  va(dVar6,0xffffffff82005088,dVar6);
-  Mantle_DebugPrint();
-  local_98 = 0x41700000;
-  local_94 = 0x41700000;
-  local_90 = 0x41700000;
-  local_8c = 0x41700000;
-  pfVar2 = (float *)param_4;
-  local_a8 = (float)((double)pfVar2[5] + dVar6);
-  local_ac = pfVar2[4];
-  local_b0 = pfVar2[3];
-  local_c0 = *pfVar2 * 16.0 + local_b0;
-  local_bc = pfVar2[1] * 16.0 + local_ac;
+  pcVar3 = va("Checking for ledge at %f units");
+  Mantle_DebugPrint(pcVar3);
+  local_a0.midPoint[2] = 15.0;
+  local_a0.halfSize[0] = 15.0;
+  local_a0.halfSize[1] = 15.0;
+  local_a0.halfSize[2] = 15.0;
+  local_a8 = (float)((double)param_4->startPos[2] + dVar6);
+  local_ac = param_4->startPos[1];
+  local_b0 = param_4->startPos[0];
+  local_c0 = param_4->dir[0] * 16.0 + local_b0;
+  local_bc = param_4->dir[1] * 16.0 + local_ac;
   dVar6 = 0.0;
-  local_a0 = 0;
-  local_9c = 0;
-  local_b8 = pfVar2[2] * 16.0 + local_a8;
-  PM_traceHandler(param_2,local_80,&local_b0,&local_c0,&local_a0,*(undefined4 *)(iVar4 + 0x150),
-                  param_3);
-  if ((local_51 != '\0') || (dVar5 = 1.0, local_80[0] < 1.0)) {
-    uVar3 = 0xffffffff82004f58;
+  local_a0.midPoint[0] = 0.0;
+  local_a0.midPoint[1] = 0.0;
+  local_b8 = param_4->dir[2] * 16.0 + local_a8;
+  PM_traceHandler(param_2,local_80,&local_b0,&local_c0,&local_a0,*(int *)(iVar2 + 0x150),param_3);
+  if ((local_80[0].startsolid != false) || (dVar5 = 1.0, local_80[0].fraction < 1.0)) {
+    pcVar3 = "Mantle Failed: Forward movement is blocked";
   }
   else {
     local_a8 = local_b8;
-    local_b8 = pfVar2[5] + 18.0;
+    local_b8 = param_4->startPos[2] + 18.0;
     local_b0 = local_c0;
     local_ac = local_bc;
-    PM_traceHandler(param_2,local_80,&local_b0,&local_c0,&local_a0,*(undefined4 *)(iVar4 + 0x150),
-                    param_3);
-    if ((local_51 == '\0') && ((double)local_80[0] != dVar5)) {
-      if (local_50 == '\0') {
-        uVar3 = 0xffffffff82005064;
+    PM_traceHandler(param_2,local_80,&local_b0,&local_c0,&local_a0,*(int *)(iVar2 + 0x150),param_3);
+    if ((local_80[0].startsolid == false) && ((double)local_80[0].fraction != dVar5)) {
+      if (local_80[0].walkable == false) {
+        pcVar3 = "Mantle Failed: Ledge is too steep";
       }
       else {
-        pfVar2[6] = local_c0;
-        pfVar2[7] = local_bc;
-        pfVar2[8] = local_b8;
-        fVar1 = (float)((double)(float)((double)local_b8 - (double)local_a8) * (double)local_80[0] +
-                       (double)local_a8);
-        pfVar2[8] = fVar1;
-        dVar5 = (double)(fVar1 - pfVar2[5]);
-        if (dVar5 <= dVar6) {
-          MyAssertHandler(0xffffffff82004d34,0x271,0,0xffffffff82004fec,0xffffffff82005028,dVar5);
+        param_4->ledgePos[0] = local_c0;
+        param_4->ledgePos[1] = local_bc;
+        param_4->ledgePos[2] = local_b8;
+        fVar1 = (float)((double)(float)((double)local_b8 - (double)local_a8) *
+                        (double)local_80[0].fraction + (double)local_a8);
+        param_4->ledgePos[2] = fVar1;
+        if ((double)(fVar1 - param_4->startPos[2]) <= dVar6) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_mantle.cpp",
+                          0x271,0,"%s\n\t((mresults->ledgePos[2] - mresults->startPos[2])) = %g");
         }
-        local_98 = 0x41c80000;
-        local_8c = 0x41c80000;
-        PM_traceHandler(param_2,local_80,param_4 + 0x18,param_4 + 0x18,&local_a0,
-                        *(undefined4 *)(iVar4 + 0x150),param_3);
-        if (local_51 == '\0') {
-          Mantle_DebugPrint(0xffffffff82004fa4);
-          __restgprlr_26(1);
-          return;
+        local_a0.midPoint[2] = 25.0;
+        local_a0.halfSize[2] = 25.0;
+        PM_traceHandler(param_2,local_80,param_4->ledgePos,param_4->ledgePos,&local_a0,
+                        *(int *)(iVar2 + 0x150),param_3);
+        if (local_80[0].startsolid == false) {
+          Mantle_DebugPrint("Mantle available!");
+          uVar4 = __restgprlr_26(1);
+          return (bool)uVar4;
         }
-        uVar3 = 0xffffffff82004fb8;
+        pcVar3 = "Mantle Failed: Player can\'t fit crouched on ledge";
       }
     }
     else {
-      uVar3 = 0xffffffff82004f84;
+      pcVar3 = "Mantle Failed: Can\'t find ledge";
     }
   }
-  Mantle_DebugPrint(uVar3);
-  __restgprlr_26(0);
-  return;
+  Mantle_DebugPrint(pcVar3);
+  uVar4 = __restgprlr_26(0);
+  return (bool)uVar4;
 }
 
 
 // 8226F528  Mantle_FindMantleSurface  (bgame/bg_mantle.cpp:644)
 
-void Mantle_FindMantleSurface
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,float *param_4)
+/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
+
+bool Mantle_FindMantleSurface(playerState_s *param_1,uchar param_2,trace_t *param_3,float *param_4)
 
 {
-  float *pfVar1;
-  int iVar3;
-  undefined8 uVar2;
+  int iVar1;
+  char *pcVar2;
+  undefined1 uVar3;
   double dVar4;
   double dVar5;
   double dVar6;
@@ -648,33 +504,29 @@ void Mantle_FindMantleSurface
   float local_90;
   float local_8c;
   float local_88;
-  undefined4 local_80;
-  undefined4 local_7c;
-  undefined4 local_78;
-  float local_74;
-  float local_70;
-  undefined4 local_6c;
+  Bounds local_80 [5];
   
-  iVar3 = __savegprlr_24();
-  if (iVar3 == 0) {
-    MyAssertHandler(0xffffffff82004d34,0x28f,0,0xffffffff82000f98,0xffffffff82001fdc);
+  iVar1 = __savegprlr_24(param_1);
+  if (iVar1 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_mantle.cpp",0x28f,0,
+                    "%s");
   }
   dVar9 = 0.0;
-  local_74 = *(float *)(DAT_829c4024 + 0xc);
-  local_80 = 0;
-  local_7c = 0;
-  local_78 = 0x420c0000;
-  local_6c = 0x420c0000;
-  local_70 = local_74;
-  if (35.0 < local_74) {
-    MyAssertHandler(0xffffffff82004d34,0x296,0,0xffffffff82000f98,0xffffffff820051dc);
-    if (35.0 < local_70) {
-      MyAssertHandler(0xffffffff82004d34,0x297,0,0xffffffff82000f98,0xffffffff820051b0);
-    }
+  local_80[0].halfSize[0] = *(float *)(DAT_829c4024 + 0xc);
+  local_80[0].midPoint[0] = 0.0;
+  local_80[0].midPoint[1] = 0.0;
+  local_80[0].midPoint[2] = 35.0;
+  local_80[0].halfSize[2] = 35.0;
+  local_80[0].halfSize[1] = local_80[0].halfSize[0];
+  if ((35.0 < local_80[0].halfSize[0]) &&
+     (MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_mantle.cpp",0x296,0
+                      ,"%s"), 35.0 < local_80[0].halfSize[1])) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_mantle.cpp",0x297,0,
+                    "%s");
   }
   dVar10 = (double)(15.0 - *(float *)(DAT_829c4024 + 0xc));
   dVar8 = (double)(float)((double)*(float *)(DAT_829c4020 + 0xc) + dVar10);
-  AngleVectors(iVar3 + 0x158,&local_b0,0,0);
+  AngleVectors((float *)(iVar1 + 0x158),&local_b0,(float *)0x0,(float *)0x0);
   dVar4 = (double)local_b0;
   dVar7 = (double)local_ac;
   dVar10 = -dVar10;
@@ -688,26 +540,24 @@ void Mantle_FindMantleSurface
   local_b0 = (float)(dVar4 * dVar5);
   local_ac = (float)(dVar7 * dVar5);
   local_a8 = (float)(dVar5 * dVar9);
-  local_a0 = (float)(dVar10 * (double)local_b0 + (double)*(float *)(iVar3 + 0x1c));
-  local_90 = (float)((double)local_b0 * dVar8 + (double)*(float *)(iVar3 + 0x1c));
-  local_9c = (float)((double)local_ac * dVar10 + (double)*(float *)(iVar3 + 0x20));
-  local_8c = (float)((double)local_ac * dVar8 + (double)*(float *)(iVar3 + 0x20));
-  local_98 = (float)(dVar10 * (double)local_a8 + (double)*(float *)(iVar3 + 0x24));
-  local_88 = (float)((double)local_a8 * dVar8 + (double)*(float *)(iVar3 + 0x24));
-  PM_traceHandler(param_2,param_3,&local_a0,&local_90,&local_80,*(undefined4 *)(iVar3 + 0x150),
-                  0x1000000);
-  pfVar1 = (float *)param_3;
-  if ((*(char *)((int)pfVar1 + 0x2f) == '\0') && (*(char *)((int)pfVar1 + 0x2e) == '\0')) {
-    if ((double)*pfVar1 == dVar11) {
-      uVar2 = 0xffffffff82005188;
+  local_a0 = (float)(dVar10 * (double)local_b0 + (double)*(float *)(iVar1 + 0x1c));
+  local_90 = (float)((double)local_b0 * dVar8 + (double)*(float *)(iVar1 + 0x1c));
+  local_9c = (float)((double)local_ac * dVar10 + (double)*(float *)(iVar1 + 0x20));
+  local_8c = (float)((double)local_ac * dVar8 + (double)*(float *)(iVar1 + 0x20));
+  local_98 = (float)(dVar10 * (double)local_a8 + (double)*(float *)(iVar1 + 0x24));
+  local_88 = (float)((double)local_a8 * dVar8 + (double)*(float *)(iVar1 + 0x24));
+  PM_traceHandler(param_2,param_3,&local_a0,&local_90,local_80,*(int *)(iVar1 + 0x150),0x1000000);
+  if ((param_3->startsolid == false) && (param_3->allsolid == false)) {
+    if ((double)param_3->fraction == dVar11) {
+      pcVar2 = "Mantle Failed: No mantle surface found";
     }
-    else if (((uint)pfVar1[4] & 0x6000000) == 0) {
-      uVar2 = 0xffffffff82005140;
+    else if ((param_3->surfaceFlags & 0x6000000U) == 0) {
+      pcVar2 = "Mantle Failed: No mantle surface with MANTLE_ON or MANTLE_OVER found";
     }
     else {
-      dVar10 = -(double)pfVar1[1];
+      dVar10 = -(double)param_3->normal[0];
       *param_4 = (float)dVar10;
-      dVar6 = -(double)pfVar1[2];
+      dVar6 = -(double)param_3->normal[1];
       param_4[1] = (float)dVar6;
       param_4[2] = (float)dVar9;
       dVar4 = (double)SQRT((float)(dVar10 * dVar10 + (double)(float)(dVar6 * dVar6)));
@@ -723,346 +573,167 @@ void Mantle_FindMantleSurface
         dVar9 = acos((double)((float)(dVar5 * dVar9) * local_a8 +
                              (float)(dVar6 * dVar5) * local_ac + (float)(dVar5 * dVar10) * local_b0)
                     );
-        if ((float)dVar9 * 57.295776 <= *(float *)(DAT_829c4018 + 0xc)) {
-          __restgprlr_24(1);
-          return;
+        if ((float)dVar9 * 57.295776 <= (mantle_check_angle->current).value) {
+          uVar3 = __restgprlr_24(1);
+          return (bool)uVar3;
         }
-        uVar2 = 0xffffffff820050d4;
+        pcVar2 = "Mantle Failed: Player is not facing mantle surface";
       }
       else {
-        uVar2 = 0xffffffff82005108;
+        pcVar2 = "Mantle Failed: Mantle surface has vertical normal";
       }
     }
   }
   else {
-    uVar2 = 0xffffffff820050a8;
+    pcVar2 = "Mantle Failed: Mantle brush is too thick";
   }
-  Mantle_DebugPrint(uVar2);
-  __restgprlr_24(0);
-  return;
+  Mantle_DebugPrint(pcVar2);
+  uVar3 = __restgprlr_24(0);
+  return (bool)uVar3;
 }
 
 
 // 8226F830  Mantle_CanMantle  (bgame/bg_mantle.cpp:720)
 
-void Mantle_CanMantle(undefined8 param_1,undefined8 param_2,undefined8 param_3,ulonglong param_4)
+/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
+
+bool Mantle_CanMantle(playerState_s *param_1,uchar param_2,int param_3,MantleResults *param_4)
 
 {
-  int iVar1;
-  char cVar2;
-  undefined4 *puVar3;
-  undefined4 local_80;
-  undefined4 local_7c;
-  undefined4 local_78;
-  undefined1 auStack_70 [16];
-  uint local_60;
+  playerState_s *ppVar1;
+  undefined1 uVar2;
+  bool bVar3;
+  ulonglong uVar4;
+  MantleResults *pMVar5;
+  float local_80;
+  float local_7c;
+  float local_78;
+  trace_t atStack_70 [2];
   
-  iVar1 = __savegprlr_26();
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff82004d34,0x2d4,0,0xffffffff82000f98,0xffffffff82001fdc);
+  uVar4 = (ulonglong)(int)param_4;
+  ppVar1 = (playerState_s *)__savegprlr_26(param_1);
+  if (ppVar1 == (playerState_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_mantle.cpp",0x2d4,0,
+                    "%s");
   }
-  if ((param_4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82004d34,0x2d5,0,0xffffffff82000f98,0xffffffff820052b0);
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_mantle.cpp",0x2d5,0,
+                    "%s");
   }
-  Mantle_DebugPrint(0xffffffff82005294);
-  if (*(char *)(DAT_829c401c + 0xc) == '\0') {
-    Mantle_DebugPrint(0xffffffff82005278);
+  Mantle_DebugPrint("====== Mantle Debug ======");
+  if ((mantle_enable->current).enabled == false) {
+    Mantle_DebugPrint("Mantle Failed: Not enabled");
   }
   else {
-    if (7 < *(int *)(iVar1 + 4)) {
-      Mantle_DebugPrint(0xffffffff82005258);
-      __restgprlr_26(0);
-      return;
+    if (7 < (ppVar1->field0_0x0).remoteEyesEnt) {
+      Mantle_DebugPrint("Mantle Failed: Player is dead");
+      uVar2 = __restgprlr_26(0);
+      return (bool)uVar2;
     }
-    if ((*(uint *)(iVar1 + 0xc) & 4) != 0) {
-      Mantle_DebugPrint(0xffffffff82005230);
-      __restgprlr_26(0);
-      return;
+    if ((*(uint *)&(ppVar1->field0_0x0).field_0xc & 4) != 0) {
+      Mantle_DebugPrint("Mantle Failed: Player already mantling");
+      uVar2 = __restgprlr_26(0);
+      return (bool)uVar2;
     }
-    if ((*(uint *)(iVar1 + 0xf8) & 0xc) != 0) {
-      Mantle_DebugPrint(0xffffffff8200520c);
-      __restgprlr_26(0);
-      return;
+    if (((ppVar1->field0_0x0).eFlags & 0xcU) != 0) {
+      Mantle_DebugPrint("Mantle Failed: Player not standing");
+      uVar2 = __restgprlr_26(0);
+      return (bool)uVar2;
     }
-    cVar2 = Mantle_FindMantleSurface(iVar1,param_2,auStack_70,&local_80);
-    if (cVar2 != '\0') {
-      puVar3 = (undefined4 *)param_4;
-      *puVar3 = local_80;
-      puVar3[1] = local_7c;
-      puVar3[2] = local_78;
-      puVar3[3] = *(undefined4 *)(iVar1 + 0x1c);
-      puVar3[4] = *(undefined4 *)(iVar1 + 0x20);
-      puVar3[5] = *(undefined4 *)(iVar1 + 0x24);
-      if ((local_60 & 0x4000000) != 0) {
-        puVar3[0xc] = puVar3[0xc] | 1;
+    bVar3 = Mantle_FindMantleSurface(ppVar1,param_2,atStack_70,&local_80);
+    if (bVar3) {
+      pMVar5 = (MantleResults *)uVar4;
+      pMVar5->dir[0] = local_80;
+      pMVar5->dir[1] = local_7c;
+      pMVar5->dir[2] = local_78;
+      pMVar5->startPos[0] = *(float *)&(ppVar1->field0_0x0).field_0x1c;
+      pMVar5->startPos[1] = *(float *)&(ppVar1->field0_0x0).field_0x20;
+      pMVar5->startPos[2] = *(float *)&(ppVar1->field0_0x0).field_0x24;
+      if ((atStack_70[0].surfaceFlags & 0x4000000U) != 0) {
+        pMVar5->flags = pMVar5->flags | 1;
       }
-      cVar2 = Mantle_CheckLedge(0x404e000000000000,iVar1,param_2,param_3,param_4);
-      if (cVar2 == '\0') {
-        cVar2 = Mantle_CheckLedge(0x4044000000000000,iVar1,param_2,param_3,param_4);
-        if (cVar2 == '\0') {
-          cVar2 = Mantle_CheckLedge(0x4034000000000000,iVar1,param_2,param_3,param_4);
-          __restgprlr_26(cVar2 != '\0');
-          return;
+      bVar3 = Mantle_CheckLedge(ppVar1,param_2,param_3,pMVar5,60.0);
+      if (!bVar3) {
+        bVar3 = Mantle_CheckLedge(ppVar1,param_2,param_3,pMVar5,40.0);
+        if (!bVar3) {
+          bVar3 = Mantle_CheckLedge(ppVar1,param_2,param_3,pMVar5,20.0);
+          uVar2 = __restgprlr_26(bVar3);
+          return (bool)uVar2;
         }
       }
-      __restgprlr_26(1);
-      return;
+      uVar2 = __restgprlr_26(1);
+      return (bool)uVar2;
     }
   }
-  __restgprlr_26(0);
-  return;
+  uVar2 = __restgprlr_26(0);
+  return (bool)uVar2;
 }
 
 
 // 8226FA48  Mantle_ForceMantle  (bgame/bg_mantle.cpp:786)
 
-void Mantle_ForceMantle(int param_1)
+/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
+
+void Mantle_ForceMantle(playerState_s *param_1)
 
 {
-  if (param_1 == 0) {
-    MyAssertHandler(0xffffffff82004d34,0x313,0,0xffffffff82000f98,0xffffffff82001fdc);
+  if (param_1 == (playerState_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_mantle.cpp",0x313,0,
+                    "%s");
   }
-  *(uint *)(param_1 + 0x238) = *(uint *)(param_1 + 0x238) | 0x20;
+  (param_1->field0_0x0).mantleState.flags = (param_1->field0_0x0).mantleState.flags | 0x20;
   return;
 }
 
 
 // 8226FAA8  Mantle_Activate  (bgame/bg_mantle.cpp:794)
-
-void Mantle_Activate(undefined8 param_1,ulonglong param_2)
-
-{
-  uint uVar1;
-  float *pfVar2;
-  float fVar3;
-  bool bVar4;
-  uint *puVar5;
-  ulonglong uVar6;
-  undefined1 auStack_70 [47];
-  char local_41;
-  
-  puVar5 = (uint *)__savegprlr_26();
-  if (puVar5 == (uint *)0x0) {
-    MyAssertHandler(0xffffffff82004d34,799,0,0xffffffff82000f98,0xffffffff82004978);
-  }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82004d34,800,0,0xffffffff82000f98,0xffffffff820052b0);
-  }
-  uVar1 = *puVar5;
-  uVar6 = (ulonglong)uVar1;
-  if (uVar6 == 0) {
-    MyAssertHandler(0xffffffff82004d34,0x323,0,0xffffffff82000f98,0xffffffff82001fdc);
-  }
-  bVar4 = false;
-  *(uint *)(uVar1 + 0x238) = *(uint *)(uVar1 + 0x238) | 8;
-  pfVar2 = (float *)param_2;
-  pfVar2[0xc] = (float)((uint)pfVar2[0xc] | 8);
-  if (((puVar5[2] & 0x400) == 0) && ((*(uint *)(uVar1 + 0x238) & 0x20) == 0)) {
-    if (uVar6 == 0xfffffffffffffb14) {
-      MyAssertHandler(0xffffffff82000fa8,0x4f,0,0xffffffff82000f98,0xffffffff82000f9c);
-    }
-    if ((*(uint *)(uVar1 + 0x4f0) & 0x400) == 0) goto LAB_8226fc00;
-    fVar3 = *(float *)(uVar1 + 0x30) * pfVar2[2] +
-            *(float *)(uVar1 + 0x2c) * pfVar2[1] + *(float *)(uVar1 + 0x28) * *pfVar2;
-    if ((fVar3 <= 0.0) && ((fVar3 != 0.0 || (*(char *)(puVar5 + 8) < '\x01')))) goto LAB_8226fc00;
-  }
-  bVar4 = true;
-LAB_8226fc00:
-  if (bVar4) {
-    Mantle_CalcEndPos(puVar5,param_2);
-    if ((*(uint *)(uVar1 + 0xf8) & 4) == 0) {
-      PM_trace(puVar5,auStack_70,param_2 + 0x18,param_2 + 0x18,0xffffffff8200c2a0,
-               *(undefined4 *)(uVar1 + 0x150),puVar5[0x17]);
-      if (local_41 != '\0') {
-        pfVar2[0xc] = (float)((uint)pfVar2[0xc] | 2);
-      }
-      PM_trace(puVar5,auStack_70,param_2 + 0x24,param_2 + 0x24,0xffffffff8200c2a0,
-               *(undefined4 *)(uVar1 + 0x150),puVar5[0x17]);
-      if (local_41 == '\0') {
-        pfVar2[0xc] = (float)((uint)pfVar2[0xc] | 4);
-      }
-    }
-    Mantle_Start(puVar5,uVar6,param_2);
-  }
-  __restgprlr_26();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
 
 // 8226FCB8  Mantle_Update  (bgame/bg_mantle.cpp:852)
-
-void Mantle_Update(void)
-
-{
-  int iVar1;
-  int *piVar2;
-  char cVar3;
-  undefined8 *puVar4;
-  longlong lVar5;
-  undefined8 uStack_68;
-  undefined1 local_60 [96];
-  
-  piVar2 = (int *)__savegprlr_28();
-  if (piVar2 == (int *)0x0) {
-    MyAssertHandler(0xffffffff82004d34,0x358,0,0xffffffff82000f98,0xffffffff82004978);
-  }
-  iVar1 = *piVar2;
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff82004d34,0x35b,0,0xffffffff82000f98,0xffffffff82001fdc);
-  }
-  puVar4 = &uStack_68;
-  lVar5 = 7;
-  do {
-    puVar4 = puVar4 + 1;
-    *puVar4 = 0;
-    lVar5 = lVar5 + -1;
-  } while (lVar5 != 0);
-  cVar3 = Mantle_CanMantle(iVar1,*(undefined1 *)(piVar2 + 0x4d),piVar2[0x17],local_60);
-  if (cVar3 != '\0') {
-    Mantle_Activate(piVar2,local_60);
-  }
-  __restgprlr_28();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
 
 // 8226FD70  Mantle_Move  (bgame/bg_mantle.cpp:871)
-
-void Mantle_Move(undefined8 param_1,longlong param_2,int param_3)
-
-{
-  uint uVar1;
-  int iVar2;
-  int iVar3;
-  float fVar4;
-  int iVar7;
-  undefined8 uVar5;
-  int iVar8;
-  int iVar9;
-  longlong lVar6;
-  undefined4 uVar10;
-  int iVar11;
-  undefined8 uVar12;
-  longlong lVar13;
-  float local_98;
-  float local_94;
-  float local_90;
-  float local_88;
-  float local_84;
-  float local_80;
-  float local_78;
-  float local_74;
-  float local_70;
-  
-  iVar7 = __savegprlr_21();
-  iVar3 = (int)param_2;
-  if ((*(uint *)(iVar3 + 0xc) & 4) == 0) {
-    MyAssertHandler(0xffffffff82004d34,0x370,0,0xffffffff82000f98,0xffffffff82005308);
-  }
-  if (*(int *)(param_3 + 0x28) < 0) {
-    MyAssertHandler(0xffffffff82004d34,0x371,0,0xffffffff820052dc,0xffffffff820052f4);
-  }
-  if (*(char *)(DAT_829c401c + 0xc) != '\0') {
-    uVar1 = *(uint *)(iVar3 + 0x238);
-    lVar13 = param_2 + 0x22c;
-    *(uint *)(iVar3 + 0x238) = uVar1 & 0xfffffff7;
-    if ((uVar1 & 2) != 0) {
-      BG_AddPredictableEventToPlayerstate(7,0,param_2);
-    }
-    uVar10 = (&DAT_82960d18)[*(int *)(iVar3 + 0x234) * 3];
-    uVar5 = Mantle_GetActiveXAnimGroup(lVar13);
-    iVar8 = XAnimGetLengthMsec(uVar5,uVar10);
-    iVar9 = Mantle_GetOverLength(lVar13);
-    iVar2 = *(int *)(iVar3 + 0x230);
-    iVar9 = iVar9 + iVar8;
-    iVar8 = iVar2 + *(int *)(param_3 + 0x28);
-    *(int *)(iVar3 + 0x230) = iVar8;
-    if (iVar9 < iVar8) {
-      *(int *)(iVar3 + 0x230) = iVar9;
-    }
-    iVar8 = *(int *)(iVar3 + 0x230);
-    Mantle_GetAnimDelta(lVar13,iVar2,&local_88);
-    Mantle_GetAnimDelta(lVar13,*(undefined4 *)(iVar3 + 0x230),&local_98);
-    lVar6 = Mantle_GetAnim(lVar13);
-    uVar10 = Mantle_IsFastMantle(lVar13);
-    BG_SetConditionValue(*(undefined4 *)(iVar3 + 0x150),0x10,uVar10);
-    BG_AnimScriptAnimation(param_2,0,lVar6 + 0x16,1);
-    local_98 = local_98 - local_88;
-    local_94 = local_94 - local_84;
-    local_90 = local_90 - local_80;
-    if (*(char *)(DAT_829c4028 + 0xc) != '\0') {
-      local_78 = local_98 + *(float *)(iVar3 + 0x1c);
-      local_74 = *(float *)(iVar3 + 0x20) + local_94;
-      local_70 = *(float *)(iVar3 + 0x24) + local_90;
-      uVar12 = 0xffffffff821818b8;
-      uVar10 = (&DAT_82960d18)[*(int *)(iVar3 + 0x234) * 3];
-      uVar5 = Mantle_GetActiveXAnimGroup(lVar13);
-      iVar11 = XAnimGetLengthMsec(uVar5,uVar10);
-      if (iVar11 <= *(int *)(iVar3 + 0x230)) {
-        uVar12 = 0xffffffff82181878;
-      }
-      PM_debugLine(*(undefined1 *)(iVar7 + 0x134),param_2 + 0x1c,&local_78,uVar12,0,1000);
-    }
-    *(float *)(iVar3 + 0x1c) = local_98 + *(float *)(iVar3 + 0x1c);
-    *(float *)(iVar3 + 0x20) = *(float *)(iVar3 + 0x20) + local_94;
-    *(float *)(iVar3 + 0x24) = *(float *)(iVar3 + 0x24) + local_90;
-    fVar4 = 1.0 / ((float)(longlong)(iVar8 - iVar2) * 0.001);
-    *(float *)(iVar3 + 0x28) = fVar4 * local_98;
-    *(float *)(iVar3 + 0x2c) = local_94 * fVar4;
-    *(float *)(iVar3 + 0x30) = local_90 * fVar4;
-    if (*(int *)(iVar3 + 0x230) == iVar9) {
-      if ((*(uint *)(iVar3 + 0xc) & 4) == 0) {
-        MyAssertHandler(0xffffffff82004d34,0x3b6,0,0xffffffff82000f98,0xffffffff820052bc);
-      }
-      *(uint *)(iVar3 + 0xc) = *(uint *)(iVar3 + 0xc) & 0xfffffffb;
-      *(undefined1 *)(iVar7 + 0x108) = 0;
-      if ((*(uint *)(iVar3 + 0x238) & 4) != 0) {
-        BG_AddPredictableEventToPlayerstate(6,0,param_2);
-        *(uint *)(iVar3 + 0xf8) = *(uint *)(iVar3 + 0xf8) & 0xfffdffff;
-      }
-      if (*(float *)(DAT_829c4010 + 0xc) < *(float *)(iVar3 + 0x30)) {
-        *(float *)(iVar3 + 0x30) = *(float *)(DAT_829c4010 + 0xc);
-      }
-      *(uint *)(iVar3 + 0x238) = *(uint *)(iVar3 + 0x238) | 0x10;
-    }
-  }
-  __restgprlr_21();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
 
 // 822700C8  Mantle_CapView  (bgame/bg_mantle.cpp:978)
 
-void Mantle_CapView(void)
+/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
+
+void Mantle_CapView(playerState_s *param_1)
 
 {
-  int iVar1;
-  double dVar2;
-  double dVar3;
-  double dVar4;
+  float fVar1;
+  int iVar2;
+  float fVar3;
+  float fVar4;
   
-  iVar1 = __savegprlr_29();
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff82004d34,0x3d6,0,0xffffffff82000f98,0xffffffff82001fdc);
+  iVar2 = __savegprlr_29(param_1);
+  if (iVar2 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_mantle.cpp",0x3d6,0,
+                    "%s");
   }
-  if ((*(uint *)(iVar1 + 0xc) & 4) == 0) {
-    MyAssertHandler(0xffffffff82004d34,0x3d7,0,0xffffffff82000f98,0xffffffff82005308);
+  if ((*(uint *)(iVar2 + 0xc) & 4) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_mantle.cpp",0x3d7,0,
+                    "%s");
   }
-  if (*(char *)(DAT_829c401c + 0xc) != '\0') {
-    dVar3 = (double)AngleDelta((double)*(float *)(iVar1 + 0x22c),(double)*(float *)(iVar1 + 0x15c));
-    dVar2 = (double)*(float *)(DAT_829c402c + 0xc);
-    dVar4 = -dVar2;
-    if ((dVar3 < dVar4) || (dVar2 < dVar3)) {
-      for (; dVar3 < dVar4; dVar3 = (double)(float)(dVar2 + dVar3)) {
+  if ((mantle_enable->current).enabled != false) {
+    fVar3 = AngleDelta(*(float *)(iVar2 + 0x22c),*(float *)(iVar2 + 0x15c));
+    fVar4 = (mantle_view_yawcap->current).value;
+    fVar1 = -fVar4;
+    if ((fVar3 < fVar1) || (fVar4 < fVar3)) {
+      for (; fVar3 < fVar1; fVar3 = fVar4 + fVar3) {
       }
-      for (; dVar2 < dVar3; dVar3 = (double)(float)(dVar3 - dVar2)) {
+      for (; fVar4 < fVar3; fVar3 = fVar3 - fVar4) {
       }
-      if (0.0 < dVar3) {
-        dVar2 = dVar4;
+      if (0.0 < fVar3) {
+        fVar4 = fVar1;
       }
-      *(float *)(iVar1 + 100) = (float)((double)*(float *)(iVar1 + 100) + dVar3);
-      dVar3 = (double)AngleNormalize360((double)(float)((double)*(float *)(iVar1 + 0x22c) + dVar2));
-      *(float *)(iVar1 + 0x15c) = (float)dVar3;
+      *(float *)(iVar2 + 100) = *(float *)(iVar2 + 100) + fVar3;
+      fVar4 = AngleNormalize360(*(float *)(iVar2 + 0x22c) + fVar4);
+      *(float *)(iVar2 + 0x15c) = fVar4;
     }
   }
   __restgprlr_29();
@@ -1072,29 +743,37 @@ void Mantle_CapView(void)
 
 // 822701D8  Mantle_ClearFlags  (bgame/bg_mantle.cpp:1011)
 
-void Mantle_ClearFlags(int param_1)
+/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
+
+void Mantle_ClearFlags(playerState_s *param_1)
 
 {
-  if (param_1 == 0) {
-    MyAssertHandler(0xffffffff82004d34,0x3f4,0,0xffffffff82000f98,0xffffffff82001fdc);
+  if (param_1 == (playerState_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_mantle.cpp",0x3f4,0,
+                    "%s");
   }
-  *(uint *)(param_1 + 0x238) = *(uint *)(param_1 + 0x238) & 0xffffffe7;
+  (param_1->field0_0x0).mantleState.flags = (param_1->field0_0x0).mantleState.flags & 0xffffffe7;
   return;
 }
 
 
 // 82270238  Mantle_IsWeaponInactive  (bgame/bg_mantle.cpp:1020)
 
-longlong Mantle_IsWeaponInactive(int param_1)
+/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
+
+bool Mantle_IsWeaponInactive(playerState_s *param_1)
 
 {
   longlong lVar1;
   
-  if ((*(char *)(DAT_829c401c + 0xc) != '\0') && ((*(uint *)(param_1 + 0xc) & 4) != 0)) {
-    lVar1 = (ulonglong)(uint)(&DAT_82960d1c)[*(int *)(param_1 + 0x234) * 3] - 10;
-    return lVar1 - (((ulonglong)(uint)(&DAT_82960d1c)[*(int *)(param_1 + 0x234) * 3] - 0xb) +
-                   (ulonglong)(lVar1 == 0));
+  if (((mantle_enable->current).enabled != false) &&
+     ((*(uint *)&(param_1->field0_0x0).field_0xc & 4) != 0)) {
+    lVar1 = (ulonglong)
+            (uint)s_mantleTrans[(param_1->field0_0x0).mantleState.transIndex].overAnimIndex - 10;
+    return (bool)((char)lVar1 -
+                 ((char)s_mantleTrans[(param_1->field0_0x0).mantleState.transIndex].overAnimIndex +
+                  -0xb + (lVar1 == 0)));
   }
-  return 0;
+  return false;
 }
 

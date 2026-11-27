@@ -2,7 +2,7 @@
 
 // 8292A528  _matherr  (<external>/bt/278379/vctools/crt/src/fpw32/tran/matherr.c:70)
 
-int _matherr(_exception *_Except)
+int _matherr(_exception *param_1)
 
 {
   return 0;

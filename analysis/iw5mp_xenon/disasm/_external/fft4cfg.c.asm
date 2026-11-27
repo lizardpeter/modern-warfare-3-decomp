@@ -39,13 +39,66 @@ LAB_828cc1c0:
   828CC1D8  54FF1838             rlwinm r31,r7,0x3,0x0,0x1c
   828CC1DC  1FC7000C             mulli r30,r7,0xc
   828CC1E0  7F2903A6             mtspr CTR,r25
-  828CC1E4  13BF58C7             vcmpequd v29,v31,v11
+LAB_828cc1e4:
+  828CC1E4  13BF58C7             lvx128 v61,r31,r11
   828CC1E8  3B200020             li r25,0x20
-  828CC1EC  139E58C7             vcmpequd v28,v30,v11
+  828CC1EC  139E58C7             lvx128 v60,r30,r11
   828CC1F0  3B000040             li r24,0x40
-  828CC1F4  13E058C7             vcmpequd v31,v0,v11
+  828CC1F4  13E058C7             lvx128 v63,0,r11
   828CC1F8  3AE00010             li r23,0x10
-  828CC1FC  13C658C7             vcmpequd v30,v6,v11
+  828CC1FC  13C658C7             lvx128 v62,r6,r11
+  828CC200  177FE835             vaddfp128 v59,v63,v61
+  828CC204  173EE035             vaddfp128 v57,v62,v60
+  828CC208  134050C7             lvx128 v58,0,r10
+  828CC20C  17FFE875             vsubfp128 v63,v63,v61
+  828CC210  130650C7             lvx128 v56,r6,r10
+  828CC214  17DEE075             vsubfp128 v62,v62,v60
+  828CC218  13BF50C7             lvx128 v61,r31,r10
+  828CC21C  139E50C7             lvx128 v60,r30,r10
+  828CC220  16FAE835             vaddfp128 v55,v58,v61
+  828CC224  16D8E035             vaddfp128 v54,v56,v60
+  828CC228  12A048C7             lvx128 v53,0,r9
+  828CC22C  17BAE875             vsubfp128 v61,v58,v61
+  828CC230  1349C8C7             lvx128 v58,r9,r25
+  828CC234  1798E075             vsubfp128 v60,v56,v60
+  828CC238  1309C0C7             lvx128 v56,r9,r24
+  828CC23C  3B200030             li r25,0x30
+  828CC240  1109B8C3             lvx128 v8,r9,r23
+  828CC244  3B000050             li r24,0x50
+  828CC248  14FBC871             vsubfp128 v7,v59,v57
+  828CC24C  1169C8C3             lvx128 v11,r9,r25
+  828CC250  177BC835             vaddfp128 v59,v59,v57
+  828CC254  10C9C0C3             lvx128 v6,r9,r24
+  828CC258  39290060             addi r9,r9,0x60
+  828CC25C  1417B071             vsubfp128 v0,v55,v54
+  828CC260  159DF071             vsubfp128 v12,v61,v62
+  828CC264  14BFE031             vaddfp128 v5,v63,v60
+  828CC268  149FE071             vsubfp128 v4,v63,v60
+  828CC26C  155DF031             vaddfp128 v10,v61,v62
+  828CC270  17F7B035             vaddfp128 v63,v55,v54
+  828CC274  1467A891             vmulfp128 v3,v7,v53
+  828CC278  136059C7             stvx128 v59,0,r11
+  828CC27C  1440A891             vmulfp128 v2,v0,v53
+  828CC280  142CD091             vmulfp128 v1,v12,v58
+  828CC284  17E5D091             vmulfp128 v31,v5,v58
+  828CC288  17C4C091             vmulfp128 v30,v4,v56
+  828CC28C  17AAC091             vmulfp128 v29,v10,v56
+  828CC290  13E051C7             stvx128 v63,0,r10
+  828CC294  10601A2F             vnmsubfp v3,v0,v8,v3
+  828CC298  1007122E             vmaddfp v0,v7,v8,v2
+  828CC29C  11A50AEE             vmaddfp v13,v5,v11,v1
+  828CC2A0  110CFAEF             vnmsubfp v8,v12,v11,v31
+  828CC2A4  118AF1AF             vnmsubfp v12,v10,v6,v30
+  828CC2A8  1164E9AE             vmaddfp v11,v4,v6,v29
+  828CC2AC  106659C3             stvx128 v3,r6,r11
+  828CC2B0  100651C3             stvx128 v0,r6,r10
+  828CC2B4  11BF51C3             stvx128 v13,r31,r10
+  828CC2B8  111F59C3             stvx128 v8,r31,r11
+  828CC2BC  119E59C3             stvx128 v12,r30,r11
+  828CC2C0  396BFFF0             subi r11,r11,0x10
+  828CC2C4  117E51C3             stvx128 v11,r30,r10
+  828CC2C8  394AFFF0             subi r10,r10,0x10
+  828CC2CC  4200FF18             bdnz 0x828cc1e4
 LAB_828cc2d0:
   828CC2D0  37BDFFFF             subic. r29,r29,0x1
   828CC2D4  7D7B5850             subf r11,r27,r11

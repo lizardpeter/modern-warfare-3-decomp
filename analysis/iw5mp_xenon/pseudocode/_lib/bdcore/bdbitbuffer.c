@@ -7,7 +7,7 @@ void __unwind_68604(void)
 {
   int in_r12;
   
-  bdReferencable___bdReferencable(*(undefined4 *)(in_r12 + 0x14));
+  bdReferencable::~bdReferencable(*(bdReferencable **)(in_r12 + 0x14));
   return;
 }
 
@@ -19,7 +19,7 @@ void __unwind_68883(void)
 {
   int in_r12;
   
-  bdReferencable___bdReferencable(*(undefined4 *)(in_r12 + 0x14));
+  bdReferencable::~bdReferencable(*(bdReferencable **)(in_r12 + 0x14));
   return;
 }
 
@@ -31,7 +31,8 @@ void __unwind_68884(void)
 {
   int in_r12;
   
-  bdFastArray<unsigned_char>___bdFastArray<unsigned_char>((ulonglong)*(uint *)(in_r12 + 0x14) + 8);
+  bdFastArray<unsigned_char>::~bdFastArray<unsigned_char>
+            ((bdFastArray<unsigned_char> *)(*(int *)(in_r12 + 0x14) + 8));
   return;
 }
 
@@ -43,7 +44,7 @@ void __unwind_68913(void)
 {
   int in_r12;
   
-  bdReferencable___bdReferencable(*(undefined4 *)(in_r12 + 0x14));
+  bdReferencable::~bdReferencable(*(bdReferencable **)(in_r12 + 0x14));
   return;
 }
 
@@ -55,7 +56,8 @@ void __unwind_68914(void)
 {
   int in_r12;
   
-  bdFastArray<unsigned_char>___bdFastArray<unsigned_char>((ulonglong)*(uint *)(in_r12 + 0x14) + 8);
+  bdFastArray<unsigned_char>::~bdFastArray<unsigned_char>
+            ((bdFastArray<unsigned_char> *)(*(int *)(in_r12 + 0x14) + 8));
   return;
 }
 

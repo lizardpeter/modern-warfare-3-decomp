@@ -2,7 +2,7 @@
 
 // 8281A8A8  vp8_predict_intra4x4  (WebM_atvi_opt/vpx/vp8/common/reconintra4x4.c:24)
 
-void vp8_predict_intra4x4(undefined8 param_1,undefined4 param_2,longlong param_3)
+void vp8_predict_intra4x4(BLOCKD *param_1,int param_2,uchar *param_3)
 
 {
   byte bVar1;
@@ -23,8 +23,9 @@ void vp8_predict_intra4x4(undefined8 param_1,undefined4 param_2,longlong param_3
   ulonglong uVar16;
   longlong lVar17;
   undefined4 *puVar18;
-  byte *pbVar19;
-  longlong lVar20;
+  byte *pbVar20;
+  longlong lVar19;
+  longlong lVar21;
   byte local_80 [12];
   undefined4 uStack_74;
   int local_70;
@@ -32,53 +33,54 @@ void vp8_predict_intra4x4(undefined8 param_1,undefined4 param_2,longlong param_3
   int local_68;
   int local_64;
   
-  iVar8 = __savegprlr_21();
+  lVar19 = (longlong)(int)param_3;
+  iVar8 = __savegprlr_21(param_1);
   iVar11 = *(int *)(iVar8 + 0x2c);
   iVar7 = *(int *)(iVar8 + 0x28);
   iVar8 = **(int **)(iVar8 + 0x24);
   local_80[0] = *(byte *)(iVar7 + iVar8 + -1);
-  pbVar19 = (byte *)((iVar7 - iVar11) + iVar8);
+  pbVar20 = (byte *)((iVar7 - iVar11) + iVar8);
   local_80[2] = *(byte *)(iVar11 * 2 + iVar7 + iVar8 + -1);
   local_80[3] = *(byte *)(iVar11 * 3 + iVar7 + iVar8 + -1);
   local_80[1] = *(byte *)(iVar7 + iVar11 + iVar8 + -1);
-  bVar1 = pbVar19[-1];
+  bVar1 = pbVar20[-1];
   uVar13 = (ulonglong)bVar1;
-  puVar12 = (undefined1 *)param_3;
+  puVar12 = (undefined1 *)lVar19;
   switch(param_2) {
   case 0:
-    param_3 = param_3 + -0xd;
-    lVar20 = 4;
+    lVar19 = lVar19 + -0xd;
+    lVar21 = 4;
     uVar10 = (undefined1)
-             ((int)((uint)pbVar19[3] + (uint)pbVar19[2] + (uint)pbVar19[1] + (uint)*pbVar19 +
+             ((int)((uint)pbVar20[3] + (uint)pbVar20[2] + (uint)pbVar20[1] + (uint)*pbVar20 +
                     (uint)local_80[3] + (uint)local_80[2] + (uint)local_80[1] + (uint)local_80[0] +
                    4) >> 3);
     do {
-      iVar11 = (int)param_3;
+      iVar11 = (int)lVar19;
       *(undefined1 *)(iVar11 + 0xd) = uVar10;
       *(undefined1 *)(iVar11 + 0xe) = uVar10;
       *(undefined1 *)(iVar11 + 0xf) = uVar10;
-      param_3 = param_3 + 0x10;
-      *(undefined1 *)param_3 = uVar10;
-      lVar20 = lVar20 + -1;
-    } while (lVar20 != 0);
+      lVar19 = lVar19 + 0x10;
+      *(undefined1 *)lVar19 = uVar10;
+      lVar21 = lVar21 + -1;
+    } while (lVar21 != 0);
     __restgprlr_21();
     return;
   case 1:
     iVar11 = 0;
-    param_3 = param_3 + -0xd;
-    lVar20 = 4;
+    lVar19 = lVar19 + -0xd;
+    lVar21 = 4;
     do {
       uVar16 = (ulonglong)local_80[iVar11];
-      lVar17 = (*pbVar19 - uVar13) + uVar16;
+      lVar17 = (*pbVar20 - uVar13) + uVar16;
       if (lVar17 < 0) {
         lVar17 = 0;
       }
       else if (0xff < (int)lVar17) {
         lVar17 = 0xff;
       }
-      iVar7 = (int)param_3;
+      iVar7 = (int)lVar19;
       *(char *)(iVar7 + 0xd) = (char)lVar17;
-      lVar17 = (pbVar19[1] - uVar13) + uVar16;
+      lVar17 = (pbVar20[1] - uVar13) + uVar16;
       if (lVar17 < 0) {
         lVar17 = 0;
       }
@@ -86,7 +88,7 @@ void vp8_predict_intra4x4(undefined8 param_1,undefined4 param_2,longlong param_3
         lVar17 = 0xff;
       }
       *(char *)(iVar7 + 0xe) = (char)lVar17;
-      lVar17 = (pbVar19[2] - uVar13) + uVar16;
+      lVar17 = (pbVar20[2] - uVar13) + uVar16;
       if (lVar17 < 0) {
         lVar17 = 0;
       }
@@ -94,37 +96,37 @@ void vp8_predict_intra4x4(undefined8 param_1,undefined4 param_2,longlong param_3
         lVar17 = 0xff;
       }
       *(char *)(iVar7 + 0xf) = (char)lVar17;
-      lVar17 = (pbVar19[3] - uVar13) + uVar16;
+      lVar17 = (pbVar20[3] - uVar13) + uVar16;
       if (lVar17 < 0) {
         lVar17 = 0;
       }
       else if (0xff < (int)lVar17) {
         lVar17 = 0xff;
       }
-      param_3 = param_3 + 0x10;
-      *(undefined1 *)param_3 = (char)lVar17;
+      lVar19 = lVar19 + 0x10;
+      *(undefined1 *)lVar19 = (char)lVar17;
       iVar11 = iVar11 + 1;
-      lVar20 = lVar20 + -1;
-    } while (lVar20 != 0);
+      lVar21 = lVar21 + -1;
+    } while (lVar21 != 0);
     __restgprlr_21();
     return;
   case 2:
-    bVar4 = *pbVar19;
-    bVar5 = pbVar19[1];
-    bVar6 = pbVar19[2];
-    bVar3 = pbVar19[3];
-    bVar2 = pbVar19[4];
-    lVar20 = 4;
-    param_3 = param_3 + -0xd;
+    bVar4 = *pbVar20;
+    bVar5 = pbVar20[1];
+    bVar6 = pbVar20[2];
+    bVar3 = pbVar20[3];
+    bVar2 = pbVar20[4];
+    lVar21 = 4;
+    lVar19 = lVar19 + -0xd;
     do {
-      iVar11 = (int)param_3;
+      iVar11 = (int)lVar19;
       *(char *)(iVar11 + 0xd) = (char)((int)((bVar4 + 1) * 2 + (uint)bVar1 + (uint)bVar5) >> 2);
       *(char *)(iVar11 + 0xe) = (char)((int)((bVar5 + 1) * 2 + (uint)bVar6 + (uint)bVar4) >> 2);
       *(char *)(iVar11 + 0xf) = (char)((int)((bVar6 + 1) * 2 + (uint)bVar3 + (uint)bVar5) >> 2);
-      param_3 = param_3 + 0x10;
-      *(undefined1 *)param_3 = (char)((int)((bVar3 + 1) * 2 + (uint)bVar2 + (uint)bVar6) >> 2);
-      lVar20 = lVar20 + -1;
-    } while (lVar20 != 0);
+      lVar19 = lVar19 + 0x10;
+      *(undefined1 *)lVar19 = (char)((int)((bVar3 + 1) * 2 + (uint)bVar2 + (uint)bVar6) >> 2);
+      lVar21 = lVar21 + -1;
+    } while (lVar21 != 0);
     __restgprlr_21();
     return;
   case 3:
@@ -132,52 +134,52 @@ void vp8_predict_intra4x4(undefined8 param_1,undefined4 param_2,longlong param_3
     local_6c = (int)((local_80[1] + 1) * 2 + (uint)local_80[2] + (uint)local_80[0]) >> 2;
     local_68 = (int)((local_80[2] + 1) * 2 + (uint)local_80[3] + (uint)local_80[1]) >> 2;
     puVar18 = &uStack_74;
-    lVar20 = 4;
+    lVar21 = 4;
     local_64 = (int)((uint)local_80[3] * 3 + (uint)local_80[2] + 2) >> 2;
-    param_3 = param_3 + -0xd;
+    lVar19 = lVar19 + -0xd;
     do {
       puVar18 = puVar18 + 1;
-      iVar11 = (int)param_3;
+      iVar11 = (int)lVar19;
       uVar10 = (undefined1)*puVar18;
       *(undefined1 *)(iVar11 + 0xd) = uVar10;
       *(undefined1 *)(iVar11 + 0xe) = uVar10;
       *(undefined1 *)(iVar11 + 0xf) = uVar10;
-      param_3 = param_3 + 0x10;
-      *(undefined1 *)param_3 = uVar10;
-      lVar20 = lVar20 + -1;
-    } while (lVar20 != 0);
+      lVar19 = lVar19 + 0x10;
+      *(undefined1 *)lVar19 = uVar10;
+      lVar21 = lVar21 + -1;
+    } while (lVar21 != 0);
     __restgprlr_21();
     return;
   case 4:
-    *puVar12 = (char)((int)((pbVar19[1] + 1) * 2 + (uint)pbVar19[2] + (uint)*pbVar19) >> 2);
-    uVar10 = (undefined1)((int)((pbVar19[2] + 1) * 2 + (uint)pbVar19[3] + (uint)pbVar19[1]) >> 2);
+    *puVar12 = (char)((int)((pbVar20[1] + 1) * 2 + (uint)pbVar20[2] + (uint)*pbVar20) >> 2);
+    uVar10 = (undefined1)((int)((pbVar20[2] + 1) * 2 + (uint)pbVar20[3] + (uint)pbVar20[1]) >> 2);
     puVar12[0x10] = uVar10;
     puVar12[1] = uVar10;
-    uVar10 = (undefined1)((int)((pbVar19[3] + 1) * 2 + (uint)pbVar19[4] + (uint)pbVar19[2]) >> 2);
+    uVar10 = (undefined1)((int)((pbVar20[3] + 1) * 2 + (uint)pbVar20[4] + (uint)pbVar20[2]) >> 2);
     puVar12[0x20] = uVar10;
     puVar12[0x11] = uVar10;
     puVar12[2] = uVar10;
-    uVar10 = (undefined1)((int)((pbVar19[4] + 1) * 2 + (uint)pbVar19[5] + (uint)pbVar19[3]) >> 2);
+    uVar10 = (undefined1)((int)((pbVar20[4] + 1) * 2 + (uint)pbVar20[5] + (uint)pbVar20[3]) >> 2);
     puVar12[0x30] = uVar10;
     puVar12[0x21] = uVar10;
     puVar12[0x12] = uVar10;
     puVar12[3] = uVar10;
-    uVar10 = (undefined1)((int)((pbVar19[5] + 1) * 2 + (uint)pbVar19[4] + (uint)pbVar19[6]) >> 2);
+    uVar10 = (undefined1)((int)((pbVar20[5] + 1) * 2 + (uint)pbVar20[4] + (uint)pbVar20[6]) >> 2);
     puVar12[0x31] = uVar10;
     puVar12[0x22] = uVar10;
     puVar12[0x13] = uVar10;
-    uVar10 = (undefined1)((int)((pbVar19[6] + 1) * 2 + (uint)pbVar19[7] + (uint)pbVar19[5]) >> 2);
+    uVar10 = (undefined1)((int)((pbVar20[6] + 1) * 2 + (uint)pbVar20[7] + (uint)pbVar20[5]) >> 2);
     puVar12[0x32] = uVar10;
     puVar12[0x23] = uVar10;
     puVar12[0x33] =
-         (char)((int)((uint)pbVar19[7] + (uint)pbVar19[7] * 2 + (uint)pbVar19[6] + 2) >> 2);
+         (char)((int)((uint)pbVar20[7] + (uint)pbVar20[7] * 2 + (uint)pbVar20[6] + 2) >> 2);
     __restgprlr_21();
     return;
   case 5:
-    bVar4 = *pbVar19;
-    bVar5 = pbVar19[1];
-    bVar6 = pbVar19[2];
-    bVar3 = pbVar19[3];
+    bVar4 = *pbVar20;
+    bVar5 = pbVar20[1];
+    bVar6 = pbVar20[2];
+    bVar3 = pbVar20[3];
     puVar12[0x30] =
          (char)((int)((local_80[2] + 1) * 2 + (uint)local_80[3] + (uint)local_80[1]) >> 2);
     puVar12[3] = (char)((int)((bVar6 + 1) * 2 + (uint)bVar3 + (uint)bVar5) >> 2);
@@ -204,10 +206,10 @@ void vp8_predict_intra4x4(undefined8 param_1,undefined4 param_2,longlong param_3
     __restgprlr_21();
     return;
   case 6:
-    bVar4 = pbVar19[1];
-    bVar5 = *pbVar19;
-    bVar6 = pbVar19[2];
-    bVar3 = pbVar19[3];
+    bVar4 = pbVar20[1];
+    bVar5 = *pbVar20;
+    bVar6 = pbVar20[2];
+    bVar3 = pbVar20[3];
     puVar12[0x30] =
          (char)((int)((local_80[1] + 1) * 2 + (uint)local_80[2] + (uint)local_80[0]) >> 2);
     puVar12[0x20] = (char)((int)((local_80[0] + 1) * 2 + (uint)local_80[1] + (uint)bVar1) >> 2);
@@ -234,34 +236,34 @@ void vp8_predict_intra4x4(undefined8 param_1,undefined4 param_2,longlong param_3
     __restgprlr_21();
     return;
   case 7:
-    *puVar12 = (char)((int)((uint)pbVar19[1] + (uint)*pbVar19 + 1) >> 1);
-    puVar12[0x10] = (char)((int)((pbVar19[1] + 1) * 2 + (uint)pbVar19[2] + (uint)*pbVar19) >> 2);
-    uVar10 = (undefined1)((int)((uint)pbVar19[2] + (uint)pbVar19[1] + 1) >> 1);
+    *puVar12 = (char)((int)((uint)pbVar20[1] + (uint)*pbVar20 + 1) >> 1);
+    puVar12[0x10] = (char)((int)((pbVar20[1] + 1) * 2 + (uint)pbVar20[2] + (uint)*pbVar20) >> 2);
+    uVar10 = (undefined1)((int)((uint)pbVar20[2] + (uint)pbVar20[1] + 1) >> 1);
     puVar12[1] = uVar10;
     puVar12[0x20] = uVar10;
-    uVar10 = (undefined1)((int)((pbVar19[2] + 1) * 2 + (uint)pbVar19[3] + (uint)pbVar19[1]) >> 2);
+    uVar10 = (undefined1)((int)((pbVar20[2] + 1) * 2 + (uint)pbVar20[3] + (uint)pbVar20[1]) >> 2);
     puVar12[0x30] = uVar10;
     puVar12[0x11] = uVar10;
-    uVar10 = (undefined1)((int)((uint)pbVar19[3] + (uint)pbVar19[2] + 1) >> 1);
+    uVar10 = (undefined1)((int)((uint)pbVar20[3] + (uint)pbVar20[2] + 1) >> 1);
     puVar12[2] = uVar10;
     puVar12[0x21] = uVar10;
-    uVar10 = (undefined1)((int)((pbVar19[3] + 1) * 2 + (uint)pbVar19[4] + (uint)pbVar19[2]) >> 2);
+    uVar10 = (undefined1)((int)((pbVar20[3] + 1) * 2 + (uint)pbVar20[4] + (uint)pbVar20[2]) >> 2);
     puVar12[0x12] = uVar10;
     puVar12[0x31] = uVar10;
-    uVar10 = (undefined1)((int)((uint)pbVar19[4] + (uint)pbVar19[3] + 1) >> 1);
+    uVar10 = (undefined1)((int)((uint)pbVar20[4] + (uint)pbVar20[3] + 1) >> 1);
     puVar12[0x22] = uVar10;
     puVar12[3] = uVar10;
-    uVar10 = (undefined1)((int)((pbVar19[4] + 1) * 2 + (uint)pbVar19[5] + (uint)pbVar19[3]) >> 2);
+    uVar10 = (undefined1)((int)((pbVar20[4] + 1) * 2 + (uint)pbVar20[5] + (uint)pbVar20[3]) >> 2);
     puVar12[0x32] = uVar10;
     puVar12[0x13] = uVar10;
-    puVar12[0x23] = (char)((int)((pbVar19[5] + 1) * 2 + (uint)pbVar19[4] + (uint)pbVar19[6]) >> 2);
-    puVar12[0x33] = (char)((int)((pbVar19[6] + 1) * 2 + (uint)pbVar19[7] + (uint)pbVar19[5]) >> 2);
+    puVar12[0x23] = (char)((int)((pbVar20[5] + 1) * 2 + (uint)pbVar20[4] + (uint)pbVar20[6]) >> 2);
+    puVar12[0x33] = (char)((int)((pbVar20[6] + 1) * 2 + (uint)pbVar20[7] + (uint)pbVar20[5]) >> 2);
     __restgprlr_21();
     return;
   case 8:
-    bVar4 = pbVar19[1];
-    bVar5 = *pbVar19;
-    bVar6 = pbVar19[2];
+    bVar4 = pbVar20[1];
+    bVar5 = *pbVar20;
+    bVar6 = pbVar20[2];
     puVar12[0x30] = (char)((int)((uint)local_80[3] + (uint)local_80[2] + 1) >> 1);
     puVar12[0x31] =
          (char)((int)((local_80[2] + 1) * 2 + (uint)local_80[3] + (uint)local_80[1]) >> 2);
@@ -319,55 +321,57 @@ void vp8_predict_intra4x4(undefined8 param_1,undefined4 param_2,longlong param_3
 
 // 8281B2B0  vp8_intra_prediction_down_copy  (WebM_atvi_opt/vpx/vp8/common/reconintra4x4.c:306)
 
-void vp8_intra_prediction_down_copy(int param_1)
+void vp8_intra_prediction_down_copy(MACROBLOCKD *param_1)
 
 {
   int iVar1;
-  undefined4 *puVar2;
+  uchar *puVar2;
   
-  iVar1 = *(int *)(param_1 + 0xb28);
-  puVar2 = (undefined4 *)
-           (((**(int **)(param_1 + 0xb20) + *(int *)(param_1 + 0xb24)) - iVar1) + 0x10);
-  puVar2[iVar1] = *puVar2;
-  puVar2[iVar1 * 2] = *puVar2;
-  puVar2[iVar1 * 3] = *puVar2;
+  iVar1 = param_1->block[0].dst_stride;
+  puVar2 = *param_1->block[0].base_dst + (param_1->block[0].dst - iVar1) + 0x10;
+  *(undefined4 *)(puVar2 + iVar1 * 4) = *(undefined4 *)puVar2;
+  *(undefined4 *)(puVar2 + iVar1 * 8) = *(undefined4 *)puVar2;
+  *(undefined4 *)(puVar2 + iVar1 * 0xc) = *(undefined4 *)puVar2;
   return;
 }
 
 
 // 8281B300  vp8_recon_intra4x4mb  (WebM_atvi_opt/vpx/vp8/common/reconintra4x4.c:321)
 
-void vp8_recon_intra4x4mb(undefined8 param_1,longlong param_2)
+void vp8_recon_intra4x4mb(vp8_recon_rtcd_vtable *param_1,MACROBLOCKD *param_2)
 
 {
   int iVar1;
-  undefined4 *puVar2;
-  int iVar3;
-  int iVar4;
+  uchar *puVar2;
+  MACROBLOCKD *pMVar3;
+  undefined4 *puVar4;
   int iVar5;
-  longlong lVar6;
-  longlong lVar7;
+  vp8_recon_rtcd_vtable *pvVar6;
+  int iVar7;
+  longlong lVar8;
+  longlong lVar9;
   
-  iVar3 = __savegprlr_28();
-  iVar4 = (int)param_2;
-  iVar1 = *(int *)(iVar4 + 0xb28);
-  lVar7 = param_2 + 0xb20;
-  iVar4 = (*(int *)(iVar4 + 0xb24) - iVar1) + **(int **)(iVar4 + 0xb20);
-  iVar5 = iVar4 + 0x10;
-  lVar6 = 0x10;
-  *(undefined4 *)(iVar1 * 4 + iVar5) = *(undefined4 *)(iVar4 + 0x10);
-  *(undefined4 *)(iVar1 * 8 + iVar5) = *(undefined4 *)(iVar4 + 0x10);
-  *(undefined4 *)(iVar1 * 0xc + iVar5) = *(undefined4 *)(iVar4 + 0x10);
+  lVar9 = (longlong)(int)param_2;
+  pvVar6 = (vp8_recon_rtcd_vtable *)__savegprlr_28(param_1);
+  pMVar3 = (MACROBLOCKD *)lVar9;
+  iVar1 = pMVar3->block[0].dst_stride;
+  lVar9 = lVar9 + 0xb20;
+  iVar7 = pMVar3->block[0].dst - iVar1;
+  puVar2 = *pMVar3->block[0].base_dst;
+  iVar5 = iVar7 + 0x10;
+  lVar8 = 0x10;
+  *(undefined4 *)(puVar2 + iVar1 * 4 + iVar5) = *(undefined4 *)(puVar2 + iVar7 + 0x10);
+  *(undefined4 *)(puVar2 + iVar1 * 8 + iVar5) = *(undefined4 *)(puVar2 + iVar7 + 0x10);
+  *(undefined4 *)(puVar2 + iVar1 * 0xc + iVar5) = *(undefined4 *)(puVar2 + iVar7 + 0x10);
   do {
-    puVar2 = (undefined4 *)lVar7;
-    vp8_predict_intra4x4(lVar7 + -0x24,puVar2[4],puVar2[-7]);
-    (**(code **)(iVar3 + 0xc))
-              (puVar2[-7],puVar2[-6],(ulonglong)(uint)puVar2[1] + (ulonglong)*(uint *)*puVar2,
-               puVar2[2]);
-    lVar6 = lVar6 + -1;
-    lVar7 = lVar7 + 0x3c;
-  } while (lVar6 != 0);
-  vp8_recon_intra_mbuv(iVar3,param_2);
+    puVar4 = (undefined4 *)lVar9;
+    vp8_predict_intra4x4((BLOCKD *)(puVar4 + -9),puVar4[4],(uchar *)puVar4[-7]);
+    (*pvVar6->recon)((uchar *)puVar4[-7],(short *)puVar4[-6],(uchar *)(puVar4[1] + *(int *)*puVar4),
+                     puVar4[2]);
+    lVar8 = lVar8 + -1;
+    lVar9 = lVar9 + 0x3c;
+  } while (lVar8 != 0);
+  vp8_recon_intra_mbuv(pvVar6,pMVar3);
   __restgprlr_28();
   return;
 }

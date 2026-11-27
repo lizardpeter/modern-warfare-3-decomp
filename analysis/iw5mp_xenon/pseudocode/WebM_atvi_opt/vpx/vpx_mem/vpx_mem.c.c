@@ -2,7 +2,9 @@
 
 // 8283EA10  vpx_mem_get_version  (WebM_atvi_opt/vpx/vpx_mem/vpx_mem.c:85)
 
-undefined8 vpx_mem_get_version(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+uint vpx_mem_get_version(void)
 
 {
   return 0x2020105;
@@ -11,25 +13,489 @@ undefined8 vpx_mem_get_version(void)
 
 // 8283EA20  vpx_mem_set_heap_size  (WebM_atvi_opt/vpx/vpx_mem/vpx_mem.c:94)
 
-undefined8 vpx_mem_set_heap_size(void)
+int vpx_mem_set_heap_size(uint param_1)
 
 {
-  return 0xffffffffffffffff;
+  return -1;
+}
+
+
+// 8283EA28  vpx_memcpy  (WebM_atvi_opt/vpx/vpx_mem/vpx_mem.c:464)
+
+void * vpx_memcpy(void *param_1,void *param_2,uint param_3)
+
+{
+  bool bVar1;
+  undefined1 uVar2;
+  undefined1 uVar3;
+  byte bVar4;
+  undefined4 uVar5;
+  undefined4 uVar6;
+  undefined4 uVar7;
+  int iVar8;
+  int iVar9;
+  ulonglong uVar10;
+  longlong lVar11;
+  ulonglong uVar12;
+  longlong lVar13;
+  ulonglong uVar14;
+  ulonglong uVar15;
+  ulonglong uVar16;
+  undefined8 uVar17;
+  int iVar18;
+  undefined8 uVar19;
+  undefined8 uVar20;
+  longlong lVar21;
+  longlong lVar22;
+  
+  uVar14 = (ulonglong)(int)param_3;
+  uVar12 = (ulonglong)(int)param_2;
+  uVar10 = (ulonglong)(int)param_1;
+  dataCacheBlockTouch(uVar12);
+  uVar15 = 8 - (ZEXT48(param_1) & 7);
+  if (((uint)param_1 & 7) == 0) {
+LAB_829169c4:
+    bVar1 = 0x7f < (uVar14 & 0xffffffff);
+    if ((uVar12 & 7) == 4) {
+      uVar12 = uVar12 - 4;
+      if (bVar1) {
+        lVar13 = uVar10 - 4;
+        uVar15 = 0x80 - (uVar10 & 0x7f);
+        if ((uVar10 & 0x7f) != 0) {
+          uVar10 = (uVar15 & 0xffffffff) >> 2;
+          uVar14 = uVar14 - uVar15;
+          do {
+            uVar12 = uVar12 + 4;
+            lVar13 = lVar13 + 4;
+            *(undefined4 *)lVar13 = *(undefined4 *)uVar12;
+            uVar10 = uVar10 - 1;
+          } while (uVar10 != 0);
+        }
+        uVar10 = (uVar14 & 0xffffffff) >> 7;
+        if (uVar10 != 0) {
+          bVar1 = (uVar14 & 0x7f) == 0;
+          lVar21 = (((uVar14 + 0x7f & 0xffffffff) >> 7) - 1 & 7) + 1;
+          lVar11 = 4;
+          do {
+            dataCacheBlockTouch(lVar11 + uVar12);
+            lVar11 = lVar11 + 0x80;
+            lVar21 = lVar21 + -1;
+          } while (lVar21 != 0);
+          lVar21 = uVar12 + uVar14;
+          lVar22 = lVar13 + uVar14;
+          do {
+            while( true ) {
+              iVar18 = 8;
+              do {
+                iVar18 = iVar18 + -1;
+                iVar8 = (int)uVar12;
+                uVar5 = *(undefined4 *)(iVar8 + 8);
+                uVar6 = *(undefined4 *)(iVar8 + 0xc);
+                iVar9 = (int)lVar13;
+                *(undefined4 *)(iVar9 + 4) = *(undefined4 *)(iVar8 + 4);
+                uVar12 = uVar12 + 0x10;
+                uVar7 = *(undefined4 *)uVar12;
+                *(undefined4 *)(iVar9 + 8) = uVar5;
+                *(undefined4 *)(iVar9 + 0xc) = uVar6;
+                lVar13 = lVar13 + 0x10;
+                *(undefined4 *)lVar13 = uVar7;
+              } while (iVar18 != 0);
+              if ((lVar21 - lVar11 & 0xffffffffU) <= (uVar12 & 0xffffffff)) break;
+              dataCacheBlockTouch(lVar11 + uVar12);
+              uVar10 = uVar10 - 1;
+              if (uVar10 == 0) goto LAB_82916bb8;
+            }
+            if (!bVar1) {
+              dataCacheBlockTouchForStore(lVar22 + -1);
+              bVar1 = false;
+            }
+            uVar10 = uVar10 - 1;
+          } while (uVar10 != 0);
+        }
+      }
+      else {
+        dataCacheBlockTouchForStore(uVar10);
+        lVar13 = uVar10 - 4;
+      }
+LAB_82916bb8:
+      uVar10 = uVar14 & 3;
+      for (uVar14 = (uVar14 & 0xffffffff) >> 2 & 0x1f; uVar14 != 0; uVar14 = uVar14 - 1) {
+        uVar12 = uVar12 + 4;
+        lVar13 = lVar13 + 4;
+        *(undefined4 *)lVar13 = *(undefined4 *)uVar12;
+      }
+      if (uVar10 != 0) {
+        lVar13 = lVar13 + 3;
+        lVar11 = uVar12 + 3;
+        do {
+          lVar11 = lVar11 + 1;
+          lVar13 = lVar13 + 1;
+          *(undefined1 *)lVar13 = *(undefined1 *)lVar11;
+          uVar10 = uVar10 - 1;
+        } while (uVar10 != 0);
+      }
+      return param_1;
+    }
+    if ((uVar12 & 7) != 0) {
+      uVar12 = uVar12 - 1;
+      if (bVar1) {
+        lVar13 = uVar10 - 1;
+        lVar11 = 0x80 - (uVar10 & 0x7f);
+        if ((uVar10 & 0x7f) != 0) {
+          uVar14 = uVar14 - lVar11;
+          do {
+            uVar12 = uVar12 + 1;
+            lVar13 = lVar13 + 1;
+            *(undefined1 *)lVar13 = *(undefined1 *)uVar12;
+            lVar11 = lVar11 + -1;
+          } while (lVar11 != 0);
+        }
+        uVar10 = (uVar14 & 0xffffffff) >> 7;
+        if (uVar10 != 0) {
+          bVar1 = (uVar14 & 0x7f) == 0;
+          lVar21 = (((uVar14 + 0x7f & 0xffffffff) >> 7) - 1 & 7) + 1;
+          lVar11 = 1;
+          do {
+            dataCacheBlockTouch(lVar11 + uVar12);
+            lVar11 = lVar11 + 0x80;
+            lVar21 = lVar21 + -1;
+          } while (lVar21 != 0);
+          lVar21 = uVar12 + uVar14;
+          lVar22 = lVar13 + uVar14;
+          do {
+            while( true ) {
+              iVar18 = 0x20;
+              do {
+                iVar8 = (int)uVar12;
+                iVar18 = iVar18 + -1;
+                bVar4 = *(byte *)(iVar8 + 2);
+                uVar12 = uVar12 + 4;
+                *(undefined4 *)((int)lVar13 + 1) = *(undefined4 *)(iVar8 + 1);
+                lVar13 = lVar13 + 4;
+              } while (iVar18 != 0);
+              if ((lVar21 - lVar11 & 0xffffffffU) <= (uVar12 & 0xffffffff)) break;
+              dataCacheBlockTouch(bVar4 + uVar12);
+              uVar10 = uVar10 - 1;
+              if (uVar10 == 0) goto LAB_82916ce8;
+            }
+            if (!bVar1) {
+              dataCacheBlockTouchForStore(lVar22 + -1);
+              bVar1 = false;
+            }
+            uVar10 = uVar10 - 1;
+          } while (uVar10 != 0);
+        }
+      }
+      else {
+        dataCacheBlockTouchForStore(uVar10);
+        lVar13 = uVar10 - 1;
+      }
+LAB_82916ce8:
+      for (uVar14 = uVar14 & 0x7f; uVar14 != 0; uVar14 = uVar14 - 1) {
+        uVar12 = uVar12 + 1;
+        lVar13 = lVar13 + 1;
+        *(undefined1 *)lVar13 = *(undefined1 *)uVar12;
+      }
+      return param_1;
+    }
+    if (bVar1) {
+      uVar15 = uVar10 - 8;
+      uVar12 = uVar12 - 8;
+      uVar16 = 0x80 - (uVar10 & 0x7f);
+      if ((uVar10 & 0x7f) != 0) {
+        uVar10 = (uVar16 & 0xffffffff) >> 3;
+        uVar14 = uVar14 - uVar16;
+        do {
+          uVar12 = uVar12 + 8;
+          uVar15 = uVar15 + 8;
+          *(undefined8 *)uVar15 = *(undefined8 *)uVar12;
+          uVar10 = uVar10 - 1;
+        } while (uVar10 != 0);
+      }
+      uVar10 = (uVar14 & 0xffffffff) >> 7;
+      if (uVar10 != 0) {
+        bVar1 = (uVar14 & 0x7f) == 0;
+        lVar11 = (((uVar14 + 0x7f & 0xffffffff) >> 7) - 1 & 7) + 1;
+        lVar13 = 8;
+        do {
+          dataCacheBlockTouch(lVar13 + uVar12);
+          lVar13 = lVar13 + 0x80;
+          lVar11 = lVar11 + -1;
+        } while (lVar11 != 0);
+        lVar11 = uVar12 + uVar14;
+        lVar21 = uVar15 + uVar14;
+        do {
+          while( true ) {
+            iVar18 = (int)uVar12;
+            uVar19 = *(undefined8 *)(iVar18 + 0x10);
+            uVar20 = *(undefined8 *)(iVar18 + 0x18);
+            iVar8 = (int)uVar15;
+            *(undefined8 *)(iVar8 + 8) = *(undefined8 *)(iVar18 + 8);
+            uVar17 = *(undefined8 *)(iVar18 + 0x20);
+            *(undefined8 *)(iVar8 + 0x10) = uVar19;
+            uVar19 = *(undefined8 *)(iVar18 + 0x28);
+            *(undefined8 *)(iVar8 + 0x18) = uVar20;
+            uVar20 = *(undefined8 *)(iVar18 + 0x30);
+            *(undefined8 *)(iVar8 + 0x20) = uVar17;
+            uVar17 = *(undefined8 *)(iVar18 + 0x38);
+            *(undefined8 *)(iVar8 + 0x28) = uVar19;
+            uVar19 = *(undefined8 *)(iVar18 + 0x40);
+            *(undefined8 *)(iVar8 + 0x30) = uVar20;
+            uVar20 = *(undefined8 *)(iVar18 + 0x48);
+            *(undefined8 *)(iVar8 + 0x38) = uVar17;
+            uVar17 = *(undefined8 *)(iVar18 + 0x50);
+            *(undefined8 *)(iVar8 + 0x40) = uVar19;
+            uVar19 = *(undefined8 *)(iVar18 + 0x58);
+            *(undefined8 *)(iVar8 + 0x48) = uVar20;
+            uVar20 = *(undefined8 *)(iVar18 + 0x60);
+            *(undefined8 *)(iVar8 + 0x50) = uVar17;
+            uVar17 = *(undefined8 *)(iVar18 + 0x68);
+            *(undefined8 *)(iVar8 + 0x58) = uVar19;
+            uVar19 = *(undefined8 *)(iVar18 + 0x70);
+            *(undefined8 *)(iVar8 + 0x60) = uVar20;
+            uVar20 = *(undefined8 *)(iVar18 + 0x78);
+            *(undefined8 *)(iVar8 + 0x68) = uVar17;
+            uVar12 = uVar12 + 0x80;
+            uVar17 = *(undefined8 *)uVar12;
+            *(undefined8 *)(iVar8 + 0x70) = uVar19;
+            *(undefined8 *)(iVar8 + 0x78) = uVar20;
+            uVar15 = uVar15 + 0x80;
+            *(undefined8 *)uVar15 = uVar17;
+            if ((lVar11 - lVar13 & 0xffffffffU) <= (uVar12 & 0xffffffff)) break;
+            dataCacheBlockTouch(lVar13 + uVar12);
+            uVar10 = uVar10 - 1;
+            if (uVar10 == 0) goto LAB_829169ec;
+          }
+          if (!bVar1) {
+            dataCacheBlockTouchForStore(lVar21 + -1);
+            bVar1 = false;
+          }
+          uVar10 = uVar10 - 1;
+        } while (uVar10 != 0);
+      }
+      goto LAB_829169ec;
+    }
+  }
+  else if ((uVar15 & 0xffffffff) < (ulonglong)param_3) {
+    if ((uVar15 & 0xffffffff) == 4) {
+      uVar14 = uVar14 - uVar15;
+      uVar12 = uVar12 + 4;
+      *(undefined4 *)param_1 = *(undefined4 *)param_2;
+      uVar10 = uVar10 + 4;
+    }
+    else {
+      uVar14 = uVar14 - uVar15;
+      lVar11 = uVar10 - 1;
+      lVar13 = uVar12 - 1;
+      do {
+        lVar22 = lVar13;
+        lVar21 = lVar11;
+        lVar13 = lVar22 + 1;
+        lVar11 = lVar21 + 1;
+        *(undefined1 *)lVar11 = *(undefined1 *)lVar13;
+        uVar15 = uVar15 - 1;
+      } while (uVar15 != 0);
+      uVar10 = lVar21 + 2;
+      uVar12 = lVar22 + 2;
+    }
+    goto LAB_829169c4;
+  }
+  dataCacheBlockTouchForStore(uVar10);
+  uVar12 = uVar12 - 8;
+  uVar15 = uVar10 - 8;
+LAB_829169ec:
+  uVar10 = uVar14 & 7;
+  for (uVar14 = (uVar14 & 0xffffffff) >> 3 & 0xf; uVar14 != 0; uVar14 = uVar14 - 1) {
+    uVar12 = uVar12 + 8;
+    uVar15 = uVar15 + 8;
+    *(undefined8 *)uVar15 = *(undefined8 *)uVar12;
+  }
+  if (uVar10 != 0) {
+    if (uVar10 == 4) {
+      iVar18 = (int)uVar12;
+      uVar5 = *(undefined4 *)(iVar18 + 8);
+      iVar8 = (int)uVar15;
+      if ((uVar15 & 3) != 0) {
+        uVar2 = *(undefined1 *)(iVar18 + 9);
+        uVar3 = *(undefined1 *)(iVar18 + 10);
+        *(undefined1 *)(iVar8 + 8) = *(undefined1 *)(iVar18 + 8);
+        *(undefined1 *)(iVar8 + 9) = uVar2;
+        *(undefined1 *)(iVar8 + 10) = uVar3;
+        *(char *)(iVar8 + 0xb) = (char)uVar5;
+        return param_1;
+      }
+      *(undefined4 *)(iVar8 + 8) = uVar5;
+      return param_1;
+    }
+    lVar11 = uVar15 + 7;
+    lVar13 = uVar12 + 7;
+    do {
+      lVar13 = lVar13 + 1;
+      lVar11 = lVar11 + 1;
+      *(undefined1 *)lVar11 = *(undefined1 *)lVar13;
+      uVar10 = uVar10 - 1;
+    } while (uVar10 != 0);
+  }
+  return param_1;
+}
+
+
+// 8283EA30  vpx_memset  (WebM_atvi_opt/vpx/vpx_mem/vpx_mem.c:484)
+
+void * vpx_memset(void *param_1,int param_2,uint param_3)
+
+{
+  longlong lVar1;
+  ulonglong uVar2;
+  void *pvVar3;
+  undefined1 uVar5;
+  uint uVar4;
+  uint *puVar6;
+  uint *puVar7;
+  code *UNRECOVERED_JUMPTABLE_00;
+  ulonglong uVar8;
+  
+  uVar2 = (ulonglong)(int)param_3;
+  lVar1 = uVar2 + 1;
+  puVar6 = param_1;
+  while( true ) {
+    lVar1 = lVar1 + -1;
+    uVar5 = (undefined1)param_2;
+    if (lVar1 == 0 || ((uint)puVar6 & 3) == 0) break;
+    uVar2 = uVar2 - 1;
+    *(undefined1 *)puVar6 = uVar5;
+    puVar6 = (uint *)((int)puVar6 + 1);
+  }
+  uVar4 = (param_2 & 0xffU) << 8;
+  uVar4 = (uVar4 | param_2 & 0xffff00ffU) << 0x10 | uVar4 | param_2 & 0xffU;
+  for (uVar8 = (uVar2 & 0xffffffff) >> 4; uVar8 != 0; uVar8 = uVar8 - 1) {
+    *puVar6 = uVar4;
+    puVar6[1] = uVar4;
+    puVar6[2] = uVar4;
+    puVar6[3] = uVar4;
+    puVar6 = puVar6 + 4;
+  }
+  uVar8 = (uVar2 & 0xffffffff) >> 2 & 3;
+  puVar7 = puVar6;
+  if (uVar8 != 0) {
+    *puVar6 = uVar4;
+    puVar7 = puVar6 + 1;
+    if (uVar8 != 1) {
+      *puVar7 = uVar4;
+      puVar7 = puVar6 + 2;
+      if (uVar8 != 2) {
+        *puVar7 = uVar4;
+        puVar7 = puVar6 + 3;
+      }
+    }
+  }
+  uVar2 = uVar2 & 3;
+  if (uVar2 == 0) {
+    return param_1;
+  }
+  *(undefined1 *)puVar7 = uVar5;
+                    /* WARNING: Could not recover jumptable at 0x8291688c. Too many branches */
+                    /* WARNING: Treating indirect jump as call */
+  if (uVar2 == 1) {
+    pvVar3 = (void *)(*UNRECOVERED_JUMPTABLE_00)();
+    return pvVar3;
+  }
+  *(undefined1 *)((int)puVar7 + 1) = uVar5;
+                    /* WARNING: Could not recover jumptable at 0x82916894. Too many branches */
+                    /* WARNING: Treating indirect jump as call */
+  if (uVar2 == 2) {
+    pvVar3 = (void *)(*UNRECOVERED_JUMPTABLE_00)();
+    return pvVar3;
+  }
+  *(undefined1 *)((int)puVar7 + 2) = uVar5;
+  return param_1;
+}
+
+
+// 8283EA38  vpx_memmove  (WebM_atvi_opt/vpx/vpx_mem/vpx_mem.c:504)
+
+void * vpx_memmove(void *param_1,void *param_2,uint param_3)
+
+{
+  int iVar1;
+  longlong lVar2;
+  ulonglong uVar3;
+  ulonglong uVar4;
+  ulonglong uVar5;
+  ulonglong uVar6;
+  
+  uVar3 = (ulonglong)(int)param_3;
+  if (param_1 == param_2) {
+    return param_1;
+  }
+  if ((int)param_2 <= (int)param_1) {
+    lVar2 = uVar3 + 1;
+    uVar5 = (longlong)(int)param_2 + uVar3;
+    for (uVar4 = (longlong)(int)param_1 + uVar3; lVar2 = lVar2 + -1, lVar2 != 0 && (uVar4 & 3) != 0;
+        uVar4 = uVar4 - 1) {
+      uVar3 = uVar3 - 1;
+      iVar1 = (int)uVar5;
+      uVar5 = uVar5 - 1;
+      *(undefined1 *)((int)uVar4 + -1) = *(undefined1 *)(iVar1 + -1);
+    }
+    uVar6 = (uVar3 & 0xffffffff) >> 2;
+    if (uVar6 != 0) {
+      if ((uVar5 & 3) == 0) {
+        do {
+          iVar1 = (int)uVar5;
+          uVar5 = uVar5 - 4;
+          *(undefined4 *)((int)uVar4 + -4) = *(undefined4 *)(iVar1 + -4);
+          uVar4 = uVar4 - 4;
+          uVar6 = uVar6 - 1;
+        } while (uVar6 != 0);
+      }
+      else {
+        do {
+          iVar1 = (int)uVar5;
+          uVar4 = uVar4 - 4;
+          uVar5 = uVar5 - 4;
+          *(undefined4 *)uVar4 = *(undefined4 *)(iVar1 + -4);
+          uVar6 = uVar6 - 1;
+        } while (uVar6 != 0);
+      }
+    }
+    uVar3 = uVar3 & 3;
+    if (uVar3 != 0) {
+      do {
+        iVar1 = (int)uVar5;
+        uVar5 = uVar5 - 1;
+        *(undefined1 *)((int)uVar4 + -1) = *(undefined1 *)(iVar1 + -1);
+        uVar4 = uVar4 - 1;
+        uVar3 = uVar3 - 1;
+      } while (uVar3 != 0);
+      return (void *)uVar4;
+    }
+    return (void *)uVar4;
+  }
+  memcpy();
+  return param_1;
 }
 
 
 // 8283EA40  vpx_mem_set_functions  (WebM_atvi_opt/vpx/vpx_mem/vpx_mem.c:660)
 
-undefined8 vpx_mem_set_functions(void)
+int vpx_mem_set_functions
+              (_func___cdecl_void_ptr_uint *param_1,_func___cdecl_void_ptr_uint_uint *param_2,
+              _func___cdecl_void_ptr_void_ptr_uint *param_3,_func___cdecl_void_void_ptr *param_4,
+              _func___cdecl_void_ptr_void_ptr_void_ptr_uint *param_5,
+              _func___cdecl_void_ptr_void_ptr_int_uint *param_6,
+              _func___cdecl_void_ptr_void_ptr_void_ptr_uint *param_7)
 
 {
-  return 0xffffffffffffffff;
+  return -1;
 }
 
 
 // 8283EA48  vpx_mem_unset_functions  (WebM_atvi_opt/vpx/vpx_mem/vpx_mem.c:718)
 
-undefined8 vpx_mem_unset_functions(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int vpx_mem_unset_functions(void)
 
 {
   return 0;

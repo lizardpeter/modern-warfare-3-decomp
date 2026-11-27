@@ -2,820 +2,125 @@
 
 // 8234F300  TRACK_cl_parse  (client_mp/cl_parse_mp.cpp:65)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void TRACK_cl_parse(void)
 
 {
-  track_static_alloc_internal(0xffffffff82965830,0x400,0xffffffff82035240,9);
+  track_static_alloc_internal(svc_strings,0x400,"svc_strings",9);
   return;
 }
 
 
 // 8234F320  SHOWNET  (client_mp/cl_parse_mp.cpp:76)
 
-void SHOWNET(int param_1,undefined8 param_2)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void SHOWNET(msg_t *param_1,char *param_2)
 
 {
-  if (*(int *)(DAT_82b3ecc8 + 0xc) < 2) {
+  if ((cl_shownet->current).integer < 2) {
     return;
   }
-  Com_Printf(0xe,0xffffffff8203524c,(ulonglong)*(uint *)(param_1 + 0x1c) - 1,param_2);
+  Com_Printf(0xe,"%3i:%s\n");
   return;
 }
 
 
 // 8234F358  CL_SavePredictedPlayerInformationForServerTime  (client_mp/cl_parse_mp.cpp:86)
-
-void CL_SavePredictedPlayerInformationForServerTime(undefined8 param_1,int param_2)
-
-{
-  int iVar1;
-  int iVar2;
-  ulonglong uVar3;
-  uint *puVar4;
-  
-  iVar2 = __savegprlr_27();
-  puVar4 = (uint *)(iVar2 + 0xd3fc);
-  uVar3 = (ulonglong)*puVar4 + 0xff;
-  uVar3 = uVar3 + ((longlong)((int)uVar3 >> 8) + (ulonglong)((int)uVar3 < 0 && (uVar3 & 0xff) != 0)
-                  & 0xffffff) * -0x100;
-  if (0xff < (uVar3 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff820352e8,0x59,0,0xffffffff820352a4,uVar3,0x100);
-  }
-  if (*(int *)((int)uVar3 * 0x88 + iVar2 + 0x4bfc) != param_2) {
-    *(int *)(*puVar4 * 0x88 + iVar2 + 0x4bfc) = param_2;
-    iVar1 = *puVar4 * 0x88 + iVar2;
-    *(undefined4 *)(iVar1 + 0x4c00) = *(undefined4 *)(iVar2 + 0x3560);
-    *(undefined4 *)(iVar1 + 0x4c04) = *(undefined4 *)(iVar2 + 0x3564);
-    *(undefined4 *)(iVar1 + 0x4c08) = *(undefined4 *)(iVar2 + 0x3568);
-    iVar1 = *puVar4 * 0x88 + iVar2;
-    *(undefined4 *)(iVar1 + 0x4c0c) = *(undefined4 *)(iVar2 + 0x356c);
-    *(undefined4 *)(iVar1 + 0x4c10) = *(undefined4 *)(iVar2 + 0x3570);
-    *(undefined4 *)(iVar1 + 0x4c14) = *(undefined4 *)(iVar2 + 0x3574);
-    *(undefined4 *)(*puVar4 * 0x88 + iVar2 + 0x4c18) = *(undefined4 *)(iVar2 + 0x35dc);
-    *(undefined4 *)(*puVar4 * 0x88 + iVar2 + 0x4c1c) = *(undefined4 *)(iVar2 + 0x35e0);
-    iVar1 = *puVar4 * 0x88 + iVar2;
-    *(undefined4 *)(iVar1 + 0x4c20) = *(undefined4 *)(iVar2 + 0x3578);
-    *(undefined4 *)(iVar1 + 0x4c24) = *(undefined4 *)(iVar2 + 0x357c);
-    *(undefined4 *)(iVar1 + 0x4c28) = *(undefined4 *)(iVar2 + 0x3580);
-    *(undefined4 *)(*puVar4 * 0x88 + iVar2 + 0x4c2c) = *(undefined4 *)(iVar2 + 0x3584);
-    iVar1 = *puVar4 * 0x88 + iVar2;
-    *(undefined4 *)(iVar1 + 0x4c30) = *(undefined4 *)(iVar2 + 0x3588);
-    *(undefined4 *)(iVar1 + 0x4c34) = *(undefined4 *)(iVar2 + 0x358c);
-    *(undefined4 *)(*puVar4 * 0x88 + iVar2 + 0x4c38) = *(undefined4 *)(iVar2 + 0x3590);
-    uVar3 = (ulonglong)*puVar4 + 1;
-    uVar3 = uVar3 + ((longlong)((int)uVar3 >> 8) +
-                     (ulonglong)((int)uVar3 < 0 && (uVar3 & 0xff) != 0) & 0xffffff) * -0x100;
-    *puVar4 = (uint)uVar3;
-    if (0xff < (uVar3 & 0xffffffff)) {
-      MyAssertHandler(0xffffffff820352e8,0x6a,0,0xffffffff82035258,uVar3,0x100);
-    }
-  }
-  __restgprlr_27();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
 
 // 8234F510  CL_SavePredictedVehicleForServerTime  (client_mp/cl_parse_mp.cpp:111)
-
-void CL_SavePredictedVehicleForServerTime(undefined8 param_1,int param_2,int param_3)
-
-{
-  int iVar1;
-  int iVar2;
-  ulonglong uVar3;
-  uint *puVar4;
-  
-  iVar2 = __savegprlr_27();
-  puVar4 = (uint *)(iVar2 + 0xd3fc);
-  uVar3 = (ulonglong)*puVar4 + 0xff;
-  uVar3 = uVar3 + ((longlong)((int)uVar3 >> 8) + (ulonglong)((int)uVar3 < 0 && (uVar3 & 0xff) != 0)
-                  & 0xffffff) * -0x100;
-  if (0xff < (uVar3 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff820352e8,0x72,0,0xffffffff820352a4,uVar3,0x100);
-  }
-  if (*(int *)((int)uVar3 * 0x88 + iVar2 + 0x4bfc) != param_2) {
-    *(undefined4 *)(*puVar4 * 0x88 + iVar2 + 0x4c40) = *(undefined4 *)(param_3 + 4);
-    iVar1 = *puVar4 * 0x88 + iVar2;
-    *(undefined4 *)(iVar1 + 0x4c44) = *(undefined4 *)(param_3 + 8);
-    *(undefined4 *)(iVar1 + 0x4c48) = *(undefined4 *)(param_3 + 0xc);
-    *(undefined4 *)(iVar1 + 0x4c4c) = *(undefined4 *)(param_3 + 0x10);
-    iVar1 = *puVar4 * 0x88 + iVar2;
-    *(undefined4 *)(iVar1 + 0x4c50) = *(undefined4 *)(param_3 + 0x14);
-    *(undefined4 *)(iVar1 + 0x4c54) = *(undefined4 *)(param_3 + 0x18);
-    *(undefined4 *)(iVar1 + 0x4c58) = *(undefined4 *)(param_3 + 0x1c);
-    iVar1 = *puVar4 * 0x88 + iVar2;
-    *(undefined4 *)(iVar1 + 0x4c5c) = *(undefined4 *)(param_3 + 0x20);
-    *(undefined4 *)(iVar1 + 0x4c60) = *(undefined4 *)(param_3 + 0x24);
-    *(undefined4 *)(iVar1 + 0x4c64) = *(undefined4 *)(param_3 + 0x28);
-    iVar1 = *puVar4 * 0x88 + iVar2;
-    *(undefined4 *)(iVar1 + 0x4c68) = *(undefined4 *)(param_3 + 0x2c);
-    *(undefined4 *)(iVar1 + 0x4c6c) = *(undefined4 *)(param_3 + 0x30);
-    *(undefined4 *)(iVar1 + 0x4c70) = *(undefined4 *)(param_3 + 0x34);
-    iVar1 = *puVar4 * 0x88 + iVar2;
-    *(undefined4 *)(iVar1 + 0x4c74) = *(undefined4 *)(param_3 + 0x38);
-    *(undefined4 *)(iVar1 + 0x4c78) = *(undefined4 *)(param_3 + 0x3c);
-    iVar2 = *puVar4 * 0x88 + iVar2;
-    *(undefined4 *)(iVar2 + 0x4c7c) = *(undefined4 *)(param_3 + 0x40);
-    *(undefined4 *)(iVar2 + 0x4c80) = *(undefined4 *)(param_3 + 0x44);
-  }
-  __restgprlr_27();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
 
 // 8234F688  CL_GetClientArchiveIndexForServerTime  (client_mp/cl_parse_mp.cpp:129)
-
-void CL_GetClientArchiveIndexForServerTime(undefined8 param_1,int param_2,ulonglong param_3)
-
-{
-  int iVar1;
-  ulonglong uVar2;
-  longlong lVar3;
-  
-  iVar1 = __savegprlr_24();
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff820352e8,0x84,0,0xffffffff82000f98,0xffffffff82035368);
-  }
-  lVar3 = 0;
-  while( true ) {
-    uVar2 = ((ulonglong)*(uint *)(iVar1 + 0xd3fc) - lVar3) + 0xff;
-    uVar2 = uVar2 + ((longlong)((int)uVar2 >> 8) +
-                     (ulonglong)((int)uVar2 < 0 && (uVar2 & 0xff) != 0) & 0xffffff) * -0x100;
-    if (0xff < (uVar2 & 0xffffffff)) {
-      MyAssertHandler(0xffffffff820352e8,0x89,0,0xffffffff8203532c,uVar2,0x100);
-    }
-    if (*(int *)((int)uVar2 * 0x88 + iVar1 + 0x4bfc) <= param_2) break;
-    lVar3 = lVar3 + 1;
-    if (0xff < (int)lVar3) {
-      *(int *)param_3 = 0;
-      __restgprlr_24(0);
-      return;
-    }
-  }
-  *(int *)param_3 = (int)uVar2;
-  __restgprlr_24(1);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
 
 // 8234F768  CL_GetPredictedPlayerInformationForServerTime  (client_mp/cl_parse_mp.cpp:150)
-
-void CL_GetPredictedPlayerInformationForServerTime
-               (undefined8 param_1,undefined8 param_2,int param_3)
-
-{
-  int iVar1;
-  int iVar2;
-  undefined4 local_40;
-  
-  iVar1 = __savegprlr_27();
-  iVar2 = CL_GetClientArchiveIndexForServerTime();
-  if (iVar2 == 0) {
-    Com_PrintError(0xe,0xffffffff82035378,param_2);
-    __restgprlr_27(0);
-    return;
-  }
-  iVar1 = local_40 * 0x88 + iVar1;
-  if (*(int *)(iVar1 + 0x4bfc) != (int)param_2) {
-    Com_Printf(0xe,0xffffffff82035490,param_2);
-  }
-  *(undefined4 *)(param_3 + 0x1c) = *(undefined4 *)(iVar1 + 0x4c00);
-  *(undefined4 *)(param_3 + 0x20) = *(undefined4 *)(iVar1 + 0x4c04);
-  *(undefined4 *)(param_3 + 0x24) = *(undefined4 *)(iVar1 + 0x4c08);
-  *(undefined4 *)(param_3 + 0x28) = *(undefined4 *)(iVar1 + 0x4c0c);
-  *(undefined4 *)(param_3 + 0x2c) = *(undefined4 *)(iVar1 + 0x4c10);
-  *(undefined4 *)(param_3 + 0x30) = *(undefined4 *)(iVar1 + 0x4c14);
-  *(undefined4 *)(param_3 + 0x18) = *(undefined4 *)(iVar1 + 0x4c18);
-  *(undefined4 *)(param_3 + 0xf4) = *(undefined4 *)(iVar1 + 0x4c1c);
-  if ((*(uint *)(param_3 + 0x1c) & 0x7f800000) == 0x7f800000) {
-LAB_8234f858:
-    MyAssertHandler(0xffffffff820352e8,0xa4,0,0xffffffff82000f98,0xffffffff82035438);
-  }
-  else {
-    if ((*(uint *)(param_3 + 0x20) & 0x7f800000) == 0x7f800000) goto LAB_8234f858;
-    if ((*(uint *)(param_3 + 0x24) & 0x7f800000) == 0x7f800000) goto LAB_8234f858;
-  }
-  if ((*(uint *)(param_3 + 0x28) & 0x7f800000) != 0x7f800000) {
-    if ((*(uint *)(param_3 + 0x2c) & 0x7f800000) != 0x7f800000) {
-      if ((*(uint *)(param_3 + 0x30) & 0x7f800000) != 0x7f800000) goto LAB_8234f8d8;
-    }
-  }
-  MyAssertHandler(0xffffffff820352e8,0xa5,0,0xffffffff82000f98,0xffffffff820353e0);
-LAB_8234f8d8:
-  __restgprlr_27(1);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
 
 // 8234F908  CL_GetPredictedVehicleForServerTime  (client_mp/cl_parse_mp.cpp:193)
-
-void CL_GetPredictedVehicleForServerTime(undefined8 param_1,undefined8 param_2,int param_3)
-
-{
-  int iVar1;
-  int iVar2;
-  undefined4 local_30;
-  
-  iVar1 = __savegprlr_29();
-  iVar2 = CL_GetClientArchiveIndexForServerTime();
-  if (iVar2 != 0) {
-    iVar1 = local_30 * 0x88 + iVar1;
-    if (*(int *)(iVar1 + 0x4bfc) != (int)param_2) {
-      Com_Printf(0xe,0xffffffff82035508,param_2);
-    }
-    *(undefined4 *)(param_3 + 4) = *(undefined4 *)(iVar1 + 0x4c40);
-    *(undefined4 *)(param_3 + 8) = *(undefined4 *)(iVar1 + 0x4c44);
-    *(undefined4 *)(param_3 + 0xc) = *(undefined4 *)(iVar1 + 0x4c48);
-    *(undefined4 *)(param_3 + 0x10) = *(undefined4 *)(iVar1 + 0x4c4c);
-    *(undefined4 *)(param_3 + 0x14) = *(undefined4 *)(iVar1 + 0x4c50);
-    *(undefined4 *)(param_3 + 0x18) = *(undefined4 *)(iVar1 + 0x4c54);
-    *(undefined4 *)(param_3 + 0x1c) = *(undefined4 *)(iVar1 + 0x4c58);
-    *(undefined4 *)(param_3 + 0x20) = *(undefined4 *)(iVar1 + 0x4c5c);
-    *(undefined4 *)(param_3 + 0x24) = *(undefined4 *)(iVar1 + 0x4c60);
-    *(undefined4 *)(param_3 + 0x28) = *(undefined4 *)(iVar1 + 0x4c64);
-    *(undefined4 *)(param_3 + 0x2c) = *(undefined4 *)(iVar1 + 0x4c68);
-    *(undefined4 *)(param_3 + 0x30) = *(undefined4 *)(iVar1 + 0x4c6c);
-    *(undefined4 *)(param_3 + 0x34) = *(undefined4 *)(iVar1 + 0x4c70);
-    *(undefined4 *)(param_3 + 0x38) = *(undefined4 *)(iVar1 + 0x4c74);
-    *(undefined4 *)(param_3 + 0x3c) = *(undefined4 *)(iVar1 + 0x4c78);
-    *(undefined4 *)(param_3 + 0x40) = *(undefined4 *)(iVar1 + 0x4c7c);
-    *(undefined4 *)(param_3 + 0x44) = *(undefined4 *)(iVar1 + 0x4c80);
-    __restgprlr_29(1);
-    return;
-  }
-  __restgprlr_29(0);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
 
 // 8234FA00  CL_UpdatePredictedPlayerInformationForServerTime  (client_mp/cl_parse_mp.cpp:221)
-
-void CL_UpdatePredictedPlayerInformationForServerTime
-               (undefined8 param_1,undefined8 param_2,int param_3)
-
-{
-  undefined8 uVar1;
-  int iVar2;
-  int iVar3;
-  int iVar4;
-  int local_30 [12];
-  
-  uVar1 = __savegprlr_28();
-  iVar2 = CL_GetLocalClientGlobals();
-  iVar3 = CG_GetLocalClientGlobals(uVar1);
-  iVar4 = CL_GetClientArchiveIndexForServerTime(iVar2,param_2,local_30);
-  if (iVar4 != 0) {
-    iVar2 = local_30[0] * 0x88 + iVar2;
-    *(undefined4 *)(param_3 + 0x158) = *(undefined4 *)(iVar2 + 0x4c20);
-    *(undefined4 *)(param_3 + 0x15c) = *(undefined4 *)(iVar2 + 0x4c24);
-    *(undefined4 *)(param_3 + 0x160) = *(undefined4 *)(iVar2 + 0x4c28);
-    *(undefined4 *)(param_3 + 0x208) = *(undefined4 *)(iVar2 + 0x4c2c);
-    *(undefined4 *)(iVar3 + 0x7987c) = *(undefined4 *)(iVar3 + 0x79870);
-    *(undefined4 *)(iVar3 + 0x79880) = *(undefined4 *)(iVar3 + 0x79874);
-    *(undefined4 *)(iVar3 + 0x79870) = *(undefined4 *)(iVar2 + 0x4c30);
-    *(undefined4 *)(iVar3 + 0x79874) = *(undefined4 *)(iVar2 + 0x4c34);
-    *(undefined4 *)(iVar3 + 0x79884) = *(undefined4 *)(iVar3 + 0x79878);
-    *(undefined4 *)(iVar3 + 0x79878) = *(undefined4 *)(iVar2 + 0x4c38);
-    __restgprlr_28(1);
-    return;
-  }
-  __restgprlr_28(0);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
 
 // 8234FAD8  CL_GetEntityStateForFrame  (client_mp/cl_parse_mp.cpp:258)
-
-longlong CL_GetEntityStateForFrame(int param_1,int param_2,ulonglong param_3)
-
-{
-  uint uVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
-  
-  if ((*(uint *)(param_2 + 0x3304) & 8) == 0) {
-    uVar2 = *(uint *)(param_2 + 0x3324) + param_3;
-    uVar1 = *(uint *)(param_1 + 0xd408);
-    uVar3 = (ulonglong)*(uint *)(param_1 + 0xd418);
-    param_3 = uVar2 - (longlong)((int)uVar2 / (int)uVar1) * (longlong)(int)uVar1;
-    trapWord(6,(ulonglong)uVar1,0);
-    trapWord(5,(ulonglong)uVar1 & ~(((uVar2 & 0x7fffffff) << 1 | (uVar2 & 0xffffffff) >> 0x1f) - 1),
-             0xffff);
-  }
-  else {
-    if ((ulonglong)DAT_82afa080 <= (param_3 & 0xffffffff)) {
-      MyAssertHandler(0xffffffff820352e8,0x107,0,0xffffffff82035570,param_3);
-    }
-    uVar3 = 0xffffffff82afa084;
-  }
-  return (param_3 & 0xffffff) * 0x100 + uVar3;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
 
 // 8234FBB0  CL_DeltaEntity  (client_mp/cl_parse_mp.cpp:281)
-
-void CL_DeltaEntity(undefined8 param_1,undefined8 param_2,undefined8 param_3,int param_4,
-                   undefined8 param_5,undefined8 param_6)
-
-{
-  uint uVar1;
-  uint uVar2;
-  int iVar4;
-  int iVar5;
-  undefined8 uVar3;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  
-  iVar4 = __savegprlr_23();
-  if (*(uint *)(iVar4 + 0xd408) == 0) {
-    MyAssertHandler(0xffffffff820352e8,0x11c,0,0xffffffff82000f98,0xffffffff820355e8);
-  }
-  if ((*(uint *)(param_4 + 0x3304) & 8) == 0) {
-    uVar1 = *(uint *)(iVar4 + 0x3510);
-    uVar2 = *(uint *)(iVar4 + 0xd408);
-    uVar7 = (ulonglong)uVar1 - (longlong)((int)uVar1 / (int)uVar2) * (longlong)(int)uVar2;
-    trapWord(6,(ulonglong)uVar2,0);
-    trapWord(5,(ulonglong)uVar2 &
-               ~((((ulonglong)uVar1 & 0x7fffffff) << 1 | (ulonglong)(uVar1 >> 0x1f)) - 1),0xffff);
-    uVar6 = (ulonglong)*(uint *)(iVar4 + 0xd418);
-  }
-  else {
-    uVar6 = 0xffffffff82afa084;
-    uVar7 = (ulonglong)DAT_82afa080;
-  }
-  iVar5 = MSG_ReadDeltaEntity(param_2,param_3,param_6,(uVar7 & 0xffffff) * 0x100 + uVar6,param_5);
-  if (iVar5 == 0) {
-    if ((*(uint *)(param_4 + 0x3304) & 8) != 0) {
-      if (DAT_82afa080 != *(uint *)(param_4 + 0x331c)) {
-        uVar3 = va(0xffffffff820355dc);
-        MyAssertHandler(0xffffffff820352e8,0x132,0,0xffffffff820011f4,0xffffffff820355b0,uVar3);
-      }
-      DAT_82afa080 = DAT_82afa080 + 1;
-      *(int *)(param_4 + 0x331c) = *(int *)(param_4 + 0x331c) + 1;
-      __restgprlr_23();
-      return;
-    }
-    *(int *)(iVar4 + 0x3510) = *(int *)(iVar4 + 0x3510) + 1;
-    *(int *)(param_4 + 0x331c) = *(int *)(param_4 + 0x331c) + 1;
-  }
-  __restgprlr_23();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
 
 // 8234FD40  CL_CopyOldEntity  (client_mp/cl_parse_mp.cpp:323)
-
-void CL_CopyOldEntity(undefined8 param_1,int param_2,void *param_3)
-
-{
-  uint uVar1;
-  uint uVar2;
-  int iVar3;
-  void *pvVar4;
-  
-  iVar3 = __savegprlr_29();
-  if ((*(uint *)(param_2 + 0x3304) & 8) != 0) {
-    MyAssertHandler(0xffffffff820352e8,0x148,0,0xffffffff82000f98,0xffffffff82035600);
-  }
-  uVar1 = *(uint *)(iVar3 + 0x3510);
-  uVar2 = *(uint *)(iVar3 + 0xd408);
-  trapWord(6,(ulonglong)uVar2,0);
-  trapWord(5,(ulonglong)uVar2 &
-             ~((((ulonglong)uVar1 & 0x7fffffff) << 1 | (ulonglong)(uVar1 >> 0x1f)) - 1),0xffff);
-  pvVar4 = memcpy((void *)((uVar1 - ((int)uVar1 / (int)uVar2) * uVar2) * 0x100 +
-                          *(int *)(iVar3 + 0xd418)),param_3,0x100);
-  *(int *)(iVar3 + 0x3510) = *(int *)(iVar3 + 0x3510) + 1;
-  *(int *)(param_2 + 0x331c) = *(int *)(param_2 + 0x331c) + 1;
-  __restgprlr_29(pvVar4);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 8234FE00  CL_DeltaClient  (client_mp/cl_parse_mp.cpp:349)
-
-void CL_DeltaClient(undefined8 param_1,undefined8 param_2,undefined8 param_3,int param_4,
-                   ulonglong param_5,undefined8 param_6,int param_7)
-
-{
-  uint uVar1;
-  int iVar3;
-  void *pvVar4;
-  uint uVar5;
-  int iVar6;
-  char cVar7;
-  undefined8 uVar2;
-  void *_Dst;
-  
-  iVar3 = __savegprlr_23();
-  if (0x11 < (param_5 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff820352e8,0x160,0,0xffffffff8203579c);
-  }
-  uVar1 = *(uint *)(iVar3 + 0x3514);
-  uVar5 = *(uint *)(iVar3 + 0xd40c);
-  trapWord(5,(ulonglong)uVar5 &
-             ~((((ulonglong)uVar1 & 0x7fffffff) << 1 | (ulonglong)(uVar1 >> 0x1f)) - 1),0xffff);
-  trapWord(6,(ulonglong)uVar5,0);
-  _Dst = (void *)((uVar1 - ((int)uVar1 / (int)uVar5) * uVar5) * 0xe0 + *(int *)(iVar3 + 0xd41c));
-  if (param_7 == 0) {
-    pvVar4 = (void *)MSG_ReadDeltaClient(param_2,param_3,param_6,_Dst,param_5);
-    if (pvVar4 != (void *)0x0) goto LAB_823500a4;
-    if ((*(char *)(DAT_82aa1af8 + 0xc) != '\0') || (*(char *)(DAT_82aa1ae4 + 0xc) != '\0')) {
-      uVar1 = *(uint *)((int)_Dst + 0x7c);
-      uVar5 = Session_HostNum(0xffffffff844c7860);
-      if ((1 << (uVar5 & 0x3f) & uVar1) == 0) {
-        MyAssertHandler(0xffffffff820352e8,0x172,0,0xffffffff82035774,0xffffffff82035720,uVar1);
-      }
-      iVar6 = Session_HostNum(0xffffffff844c7860);
-      if ((iVar6 == (int)param_5) && (*(int *)((int)_Dst + 0x7c) != 0x3ffff)) {
-        MyAssertHandler(0xffffffff820352e8,0x173,0,0xffffffff82035774,0xffffffff820356b0);
-      }
-      pvVar4 = (void *)Session_IsUserRegistered(0xffffffff844c7860,param_5);
-      if (((uint)pvVar4 & 0xff) != 0) {
-        Session_SetClientVoiceConnectivity
-                  (0xffffffff844c7860,param_5,*(undefined4 *)((int)_Dst + 0x7c));
-        pvVar4 = (void *)Session_PlayerHasLoopbackAddr(0xffffffff844c7860,param_5);
-        if ((((uint)pvVar4 & 0xff) != 0) &&
-           (pvVar4 = (void *)Session_GetLocalVoiceConnectivity(0xffffffff844c7860),
-           pvVar4 != *(void **)((int)_Dst + 0x7c))) {
-          cVar7 = IsServerRunning();
-          if (cVar7 != '\0') {
-            MyAssertHandler(0xffffffff820352e8,0x180,0,0xffffffff820011f4,0xffffffff82022e08,
-                            0xffffffff82035684);
-          }
-          uVar2 = Session_HostNum(0xffffffff844c7860);
-          uVar2 = Session_GetConnectivityBitsForClientAddress(0xffffffff844c7860,uVar2);
-          Session_AddLocalVoiceConnectivity(0xffffffff844c7860,uVar2);
-          uVar2 = Session_GetConnectivityBitsForLocalClients(0xffffffff844c7860);
-          Session_AddLocalVoiceConnectivity(0xffffffff844c7860,uVar2);
-          pvVar4 = (void *)Session_GetLocalVoiceConnectivity(0xffffffff844c7860);
-          if (pvVar4 != *(void **)((int)_Dst + 0x7c)) {
-            Com_Printf(0xe,0xffffffff82035630,pvVar4);
-            uVar2 = CL_LocalClientNumFromControllerIndex(DAT_844c7d58);
-            pvVar4 = (void *)CL_UpdateConnectivityBits(uVar2,0xffffffff844c7860,pvVar4);
-          }
-        }
-      }
-    }
-  }
-  else {
-    pvVar4 = memcpy(_Dst,(void *)param_6,0xe0);
-  }
-  *(int *)(iVar3 + 0x3514) = *(int *)(iVar3 + 0x3514) + 1;
-  *(int *)(param_4 + 0x3320) = *(int *)(param_4 + 0x3320) + 1;
-LAB_823500a4:
-  __restgprlr_23(pvVar4);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
 
 // 823500B0  CL_ParsePacketEntities  (client_mp/cl_parse_mp.cpp:415)
-
-void CL_ParsePacketEntities
-               (undefined8 param_1,undefined8 param_2,undefined4 param_3,ulonglong param_4,
-               undefined8 param_5)
-
-{
-  undefined4 uVar1;
-  int iVar2;
-  int iVar3;
-  int iVar6;
-  undefined8 uVar4;
-  int iVar7;
-  undefined8 uVar5;
-  int *piVar8;
-  int *piVar9;
-  longlong lVar10;
-  int iVar11;
-  double dVar12;
-  double dVar13;
-  double dVar14;
-  int local_1d0;
-  int local_1b0 [108];
-  
-  iVar6 = __savegprlr();
-  uVar1 = *(undefined4 *)(iVar6 + 0x3510);
-  local_1d0 = 0;
-  iVar2 = (int)param_5;
-  *(undefined4 *)(iVar2 + 0x331c) = 0;
-  *(undefined4 *)(iVar2 + 0x3324) = uVar1;
-  if (*(char *)(DAT_836b9398 + 0xc) != '\0') {
-    Com_Printf(0xe,0xffffffff82035950);
-  }
-  lVar10 = 0;
-  piVar8 = (int *)0x0;
-  iVar3 = (int)param_4;
-  if ((param_4 & 0xffffffff) == 0) {
-    iVar11 = 99999;
-  }
-  else if (*(int *)(iVar3 + 0x331c) < 1) {
-    iVar11 = 99999;
-  }
-  else {
-    piVar8 = (int *)CL_GetEntityStateForFrame(iVar6,param_4,0);
-    iVar11 = *piVar8;
-  }
-  memset(local_1b0,0,0x100);
-  piVar9 = (int *)param_2;
-  iVar7 = *piVar9;
-  while (iVar7 == 0) {
-    uVar4 = MSG_ReadEntityIndex(param_2,0xb);
-    iVar7 = (int)uVar4;
-    if ((iVar7 < 0) || (0x7ff < iVar7)) {
-      MyAssertHandler(0xffffffff820352e8,0x1d6,0,0xffffffff8203584c,0xffffffff82035828,uVar4);
-    }
-    if ((*piVar9 != 0) || (iVar7 == 0x7ff)) break;
-    if (piVar9[5] < piVar9[7]) {
-      Com_Error(1,&DAT_820358fc);
-    }
-    while ((iVar11 < iVar7 && (*piVar9 == 0))) {
-      if (*(int *)(DAT_82b3ecc8 + 0xc) == 3) {
-        Com_Printf(0xe,"%3i:  unchanged: %i\n",piVar9[7],iVar11);
-      }
-      CL_CopyOldEntity(iVar6,param_5,piVar8);
-      if (*(char *)(DAT_836b9398 + 0xc) != '\0') {
-        uVar5 = BG_GetEntityTypeName(piVar8[1]);
-        Com_Printf(0xe,0xffffffff82035860,iVar11,uVar5);
-      }
-      lVar10 = lVar10 + 1;
-      if ((int)lVar10 < *(int *)(iVar3 + 0x331c)) {
-        piVar8 = (int *)CL_GetEntityStateForFrame(iVar6,param_4,lVar10);
-        if (*piVar8 <= iVar11) {
-          uVar5 = va(0xffffffff82035880,iVar11,*piVar8,lVar10,param_4);
-          MyAssertHandler(0xffffffff820352e8,0x1fd,0,0xffffffff820011f4,0xffffffff820358bc,uVar5);
-        }
-        iVar11 = *piVar8;
-      }
-      else {
-        iVar11 = 99999;
-      }
-    }
-    if (iVar11 == iVar7) {
-      if (*(int *)(DAT_82b3ecc8 + 0xc) == 3) {
-        Com_Printf(0xe,"%3i:  delta: %i\n",piVar9[7],uVar4);
-      }
-      CL_DeltaEntity(iVar6,param_2,param_3,param_5,uVar4,piVar8);
-      lVar10 = lVar10 + 1;
-      if ((int)lVar10 < *(int *)(iVar3 + 0x331c)) {
-        piVar8 = (int *)CL_GetEntityStateForFrame(iVar6,param_4,lVar10);
-        iVar11 = *piVar8;
-      }
-      else {
-        iVar11 = 99999;
-      }
-    }
-    else {
-      if (iVar11 <= iVar7) {
-        MyAssertHandler(0xffffffff820352e8,0x21d,0,0xffffffff82000f98,0xffffffff820358d8);
-      }
-      if (*(int *)(DAT_82b3ecc8 + 0xc) == 3) {
-        Com_Printf(0xe,0xffffffff820358e8,piVar9[7],uVar4);
-      }
-      local_1b0[0] = iVar7;
-      CL_DeltaEntity(iVar6,param_2,param_3,param_5,uVar4,local_1b0);
-    }
-    local_1d0 = local_1d0 + 1;
-    iVar7 = *piVar9;
-  }
-  while ((iVar11 != 99999 && (*piVar9 == 0))) {
-    if (*(int *)(DAT_82b3ecc8 + 0xc) == 3) {
-      Com_Printf(0xe,"%3i:  unchanged: %i\n",piVar9[7],iVar11);
-    }
-    CL_CopyOldEntity(iVar6,param_5,piVar8);
-    lVar10 = lVar10 + 1;
-    if (*(char *)(DAT_836b9398 + 0xc) != '\0') {
-      dVar14 = (double)(float)piVar8[8];
-      dVar13 = (double)(float)piVar8[7];
-      dVar12 = (double)(float)piVar8[6];
-      uVar4 = BG_GetEntityTypeName(piVar8[1]);
-      Com_Printf(dVar12,dVar13,dVar14,0xe,0xffffffff820357fc,iVar11,uVar4,dVar12,dVar13,dVar14);
-    }
-    if (*(int *)(iVar3 + 0x331c) <= (int)lVar10) break;
-    piVar8 = (int *)CL_GetEntityStateForFrame(iVar6,param_4,lVar10);
-    iVar11 = *piVar8;
-  }
-  if ((*(char *)(DAT_82b3ecb4 + 0xc) != '\0') || (*(char *)(DAT_836b9398 + 0xc) != '\0')) {
-    Com_Printf(0xe,0xffffffff820357d0,*(undefined4 *)(iVar2 + 0x3308),
-               *(undefined4 *)(iVar2 + 0x331c));
-  }
-  __restgprlr(local_1d0);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
 
 // 823505D0  CL_ParsePacketClients  (client_mp/cl_parse_mp.cpp:617)
-
-void CL_ParsePacketClients
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,ulonglong param_4,
-               undefined8 param_5)
-
-{
-  undefined4 uVar1;
-  int iVar2;
-  uint uVar3;
-  uint uVar4;
-  int iVar5;
-  int iVar6;
-  int iVar7;
-  ulonglong uVar8;
-  ulonglong uVar9;
-  undefined8 uVar10;
-  void *pvVar11;
-  int *piVar12;
-  uint uVar13;
-  uint uVar14;
-  longlong lVar15;
-  longlong lVar16;
-  undefined1 auStack_180 [384];
-  
-  uVar8 = __savegprlr();
-  iVar5 = (int)uVar8;
-  uVar1 = *(undefined4 *)(iVar5 + 0x3514);
-  lVar15 = 0;
-  iVar6 = (int)param_5;
-  *(undefined4 *)(iVar6 + 0x3320) = 0;
-  *(undefined4 *)(iVar6 + 0x3328) = uVar1;
-  lVar16 = 0;
-  iVar7 = (int)param_4;
-  uVar9 = uVar8;
-  if ((param_4 & 0xffffffff) == 0) {
-    uVar14 = 99999;
-  }
-  else if (*(int *)(iVar7 + 0x3320) < 1) {
-    uVar14 = 99999;
-  }
-  else {
-    uVar3 = *(uint *)(iVar5 + 0xd40c);
-    uVar13 = *(uint *)(iVar7 + 0x3328);
-    trapWord(6,(ulonglong)uVar3,0);
-    lVar15 = ((ulonglong)uVar13 - (longlong)((int)uVar13 / (int)uVar3) * (longlong)(int)uVar3) *
-             0xe0;
-    uVar14 = *(uint *)((int)lVar15 + *(uint *)(iVar5 + 0xd41c));
-    uVar9 = (ulonglong)uVar3 &
-            ~((((ulonglong)uVar13 & 0x7fffffff) << 1 | (ulonglong)(uVar13 >> 0x1f)) - 1);
-    lVar15 = lVar15 + (ulonglong)*(uint *)(iVar5 + 0xd41c);
-    trapWord(5,uVar9,0xffff);
-  }
-  piVar12 = (int *)param_2;
-  iVar2 = *piVar12;
-  while ((iVar2 == 0 && (uVar9 = MSG_ReadBit(param_2), (int)uVar9 != 0))) {
-    uVar10 = MSG_ReadEntityIndex(param_2,5);
-    if (piVar12[5] < piVar12[7]) {
-      Com_Error(1,0xffffffff820359a4);
-    }
-    uVar13 = (uint)uVar10;
-    if ((int)uVar14 < (int)uVar13) {
-      do {
-        if (*(int *)(DAT_82b3ecc8 + 0xc) == 3) {
-          Com_Printf(0xe,"%3i:  unchanged: %i\n",piVar12[7],uVar14);
-        }
-        if (0x11 < uVar14) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_parse_mp.cpp"
-                          ,0x160,0,"newnum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)",uVar14,
-                          0x12);
-        }
-        uVar3 = *(uint *)(iVar5 + 0x3514);
-        uVar14 = *(uint *)(iVar5 + 0xd40c);
-        trapWord(6,(ulonglong)uVar14,0);
-        trapWord(5,(ulonglong)uVar14 &
-                   ~((((ulonglong)uVar3 & 0x7fffffff) << 1 | (ulonglong)(uVar3 >> 0x1f)) - 1),0xffff
-                );
-        memcpy((void *)((uVar3 - ((int)uVar3 / (int)uVar14) * uVar14) * 0xe0 +
-                       *(uint *)(iVar5 + 0xd41c)),(void *)lVar15,0xe0);
-        lVar16 = lVar16 + 1;
-        *(int *)(iVar5 + 0x3514) = *(int *)(iVar5 + 0x3514) + 1;
-        *(int *)(iVar6 + 0x3320) = *(int *)(iVar6 + 0x3320) + 1;
-        if ((int)lVar16 < *(int *)(iVar7 + 0x3320)) {
-          uVar3 = *(uint *)(iVar5 + 0xd40c);
-          uVar9 = (ulonglong)*(uint *)(iVar7 + 0x3328) + lVar16;
-          uVar4 = *(uint *)(iVar5 + 0xd41c);
-          trapWord(6,(ulonglong)uVar3,0);
-          lVar15 = (uVar9 - (longlong)((int)uVar9 / (int)uVar3) * (longlong)(int)uVar3) * 0xe0;
-          uVar14 = *(uint *)((int)lVar15 + uVar4);
-          lVar15 = lVar15 + (ulonglong)uVar4;
-          trapWord(5,(ulonglong)uVar3 &
-                     ~(((uVar9 & 0x7fffffff) << 1 | (uVar9 & 0xffffffff) >> 0x1f) - 1),0xffff);
-        }
-        else {
-          uVar14 = 99999;
-        }
-      } while ((int)uVar14 < (int)uVar13);
-    }
-    if (uVar14 == uVar13) {
-      if (*(int *)(DAT_82b3ecc8 + 0xc) == 3) {
-        Com_Printf(0xe,0xffffffff82035924,piVar12[7],uVar10);
-      }
-      uVar9 = CL_DeltaClient(uVar8,param_2,param_3,param_5,uVar10,lVar15,0);
-      lVar16 = lVar16 + 1;
-      if ((int)lVar16 < *(int *)(iVar7 + 0x3320)) {
-        uVar13 = *(uint *)(iVar5 + 0xd40c);
-        uVar9 = (ulonglong)*(uint *)(iVar7 + 0x3328) + lVar16;
-        trapWord(6,(ulonglong)uVar13,0);
-        lVar15 = (uVar9 - (longlong)((int)uVar9 / (int)uVar13) * (longlong)(int)uVar13) * 0xe0;
-        uVar14 = *(uint *)((int)lVar15 + *(uint *)(iVar5 + 0xd41c));
-        uVar9 = (ulonglong)uVar13 &
-                ~(((uVar9 & 0x7fffffff) << 1 | (uVar9 & 0xffffffff) >> 0x1f) - 1);
-        lVar15 = lVar15 + (ulonglong)*(uint *)(iVar5 + 0xd41c);
-        trapWord(5,uVar9,0xffff);
-      }
-      else {
-        uVar14 = 99999;
-      }
-    }
-    else {
-      if ((int)uVar14 <= (int)uVar13) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_parse_mp.cpp"
-                        ,0x2cd,0,0xffffffff82000f98,0xffffffff820358d8);
-      }
-      if (*(int *)(DAT_82b3ecc8 + 0xc) == 3) {
-        Com_Printf(0xe,0xffffffff820358e8,piVar12[7],uVar10);
-      }
-      memset(auStack_180,0,0xe0);
-      uVar9 = CL_DeltaClient(uVar8,param_2,param_3,param_5,uVar10,auStack_180,0);
-    }
-    iVar2 = *piVar12;
-  }
-  while ((uVar14 != 99999 && (*piVar12 == 0))) {
-    if (*(int *)(DAT_82b3ecc8 + 0xc) == 3) {
-      Com_Printf(0xe,"%3i:  unchanged: %i\n",piVar12[7],uVar14);
-    }
-    if (0x11 < uVar14) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_parse_mp.cpp",
-                      0x160,0,"newnum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)",uVar14,0x12);
-    }
-    uVar13 = *(uint *)(iVar5 + 0x3514);
-    uVar3 = *(uint *)(iVar5 + 0xd40c);
-    trapWord(6,(ulonglong)uVar3,0);
-    trapWord(5,(ulonglong)uVar3 &
-               ~((((ulonglong)uVar13 & 0x7fffffff) << 1 | (ulonglong)(uVar13 >> 0x1f)) - 1),0xffff);
-    pvVar11 = memcpy((void *)((uVar13 - ((int)uVar13 / (int)uVar3) * uVar3) * 0xe0 +
-                             *(int *)(iVar5 + 0xd41c)),(void *)lVar15,0xe0);
-    uVar9 = (ulonglong)(int)pvVar11;
-    lVar16 = lVar16 + 1;
-    *(int *)(iVar5 + 0x3514) = *(int *)(iVar5 + 0x3514) + 1;
-    *(int *)(iVar6 + 0x3320) = *(int *)(iVar6 + 0x3320) + 1;
-    if (*(int *)(iVar7 + 0x3320) <= (int)lVar16) break;
-    uVar13 = *(uint *)(iVar5 + 0xd40c);
-    uVar8 = (ulonglong)*(uint *)(iVar7 + 0x3328) + lVar16;
-    uVar9 = uVar8 - (longlong)((int)uVar8 / (int)uVar13) * (longlong)(int)uVar13;
-    uVar14 = *(uint *)((int)(uVar9 * 0xe0) + *(uint *)(iVar5 + 0xd41c));
-    trapWord(6,(ulonglong)uVar13,0);
-    lVar15 = uVar9 * 0xe0 + (ulonglong)*(uint *)(iVar5 + 0xd41c);
-    trapWord(5,(ulonglong)uVar13 & ~(((uVar8 & 0x7fffffff) << 1 | (uVar8 & 0xffffffff) >> 0x1f) - 1)
-             ,0xffff);
-  }
-  if (*(char *)(DAT_82b3ecb4 + 0xc) != '\0') {
-    uVar9 = Com_Printf(0xe,0xffffffff8203598c,*(undefined4 *)(iVar6 + 0x3320));
-  }
-  __restgprlr(uVar9);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
 
 // 82350AB0  CL_ReadOverlayBits  (client_mp/cl_parse_mp.cpp:769)
 
-void CL_ReadOverlayBits(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void CL_ReadOverlayBits(msg_t *param_1,int param_2)
 
 {
-  undefined8 uVar1;
-  int iVar5;
-  undefined8 uVar2;
-  undefined8 uVar3;
-  undefined8 uVar4;
+  msg_t *pmVar1;
+  int iVar2;
+  int iVar3;
+  int iVar4;
   
-  uVar1 = __savegprlr_27();
-  iVar5 = MSG_ReadBit();
-  if (0 < iVar5) {
-    iVar5 = MSG_ReadBit(uVar1);
-    if (iVar5 != 0) {
-      StatMon_Warning(6,3000,0xffffffff8201dfec);
+  pmVar1 = (msg_t *)__savegprlr_27(param_1);
+  iVar2 = MSG_ReadBit(pmVar1);
+  if (0 < iVar2) {
+    iVar2 = MSG_ReadBit(pmVar1);
+    if (iVar2 != 0) {
+      StatMon_Warning(6,3000,"code_warning_serverfps");
     }
-    iVar5 = MSG_ReadBit(uVar1);
-    if (iVar5 != 0) {
-      StatMon_Warning(4,3000,0xffffffff8201e058);
+    iVar2 = MSG_ReadBit(pmVar1);
+    if (iVar2 != 0) {
+      StatMon_Warning(4,3000,"code_warning_snapshotents");
     }
-    iVar5 = MSG_ReadBit(uVar1);
-    if (iVar5 != 0) {
-      StatMon_Warning(7,3000,0xffffffff82035a1c);
+    iVar2 = MSG_ReadBit(pmVar1);
+    if (iVar2 != 0) {
+      StatMon_Warning(7,3000,"code_warning_scripterrors");
     }
-    iVar5 = MSG_ReadBit(uVar1);
-    if (iVar5 != 0) {
-      StatMon_Warning(8,3000,0xffffffff82035a04);
+    iVar2 = MSG_ReadBit(pmVar1);
+    if (iVar2 != 0) {
+      StatMon_Warning(8,3000,"code_warning_bandwidth");
     }
-    iVar5 = MSG_ReadBit(uVar1);
-    if (iVar5 != 0) {
-      StatMon_Warning(9,20000,0xffffffff820359ec);
+    iVar2 = MSG_ReadBit(pmVar1);
+    if (iVar2 != 0) {
+      StatMon_Warning(9,20000,"code_warning_gamestate");
     }
-    iVar5 = MSG_ReadBit(uVar1);
-    if (iVar5 != 0) {
-      StatMon_Warning(10,3000,0xffffffff820359cc);
+    iVar2 = MSG_ReadBit(pmVar1);
+    if (iVar2 != 0) {
+      StatMon_Warning(10,3000,"code_warning_bandwidthlimited");
     }
-    uVar2 = MSG_ReadByte(uVar1);
-    uVar3 = MSG_ReadBits(uVar1,0xb);
-    uVar4 = MSG_ReadBits(uVar1,0xb);
-    CL_TrackServerBandwidth(uVar2);
-    CL_TrackServerEntities(uVar3,param_2,uVar4);
-    MSG_ReadLong(uVar1);
-    CL_TrackKillcamTime();
+    iVar2 = MSG_ReadByte(pmVar1);
+    iVar3 = MSG_ReadBits(pmVar1,0xb);
+    iVar4 = MSG_ReadBits(pmVar1,0xb);
+    CL_TrackServerBandwidth(iVar2);
+    CL_TrackServerEntities(iVar3,param_2,iVar4);
+    iVar2 = MSG_ReadLong(pmVar1);
+    CL_TrackKillcamTime(iVar2);
   }
   __restgprlr_27();
   return;
@@ -823,429 +128,52 @@ void CL_ReadOverlayBits(undefined8 param_1,undefined8 param_2)
 
 
 // 82350C00  CL_CheckForSnapshotValidity  (client_mp/cl_parse_mp.cpp:803)
-
-void CL_CheckForSnapshotValidity(undefined8 param_1,int param_2,int param_3)
-
-{
-  uint uVar1;
-  int iVar2;
-  
-  iVar2 = __savegprlr_25();
-  if (*(uint *)(iVar2 + 0xd408) == 0) {
-    MyAssertHandler(0xffffffff820352e8,0x324,0,0xffffffff82000f98,0xffffffff820355e8);
-  }
-  if (*(uint *)(iVar2 + 0xd40c) == 0) {
-    MyAssertHandler(0xffffffff820352e8,0x325,0,0xffffffff82000f98,0xffffffff82035af8);
-  }
-  if (*(int *)(param_2 + 0x3300) == 0) {
-    Com_PrintError(0xe,0xffffffff82035ac0);
-    __restgprlr_25(0);
-    return;
-  }
-  if (*(int *)(param_2 + 0x330c) != param_3) {
-    Com_DPrintf(0xe,0xffffffff82035aa8);
-    __restgprlr_25(0);
-    return;
-  }
-  uVar1 = *(uint *)(iVar2 + 0xd408);
-  if ((int)(uVar1 - 600) < (int)(*(uint *)(iVar2 + 0x3510) - *(uint *)(param_2 + 0x3324))) {
-    Com_DPrintf(0xe,0xffffffff82035a70,
-                (((ulonglong)*(uint *)(iVar2 + 0x3510) - (ulonglong)*(uint *)(param_2 + 0x3324)) -
-                (ulonglong)uVar1) + 600);
-    __restgprlr_25(0);
-    return;
-  }
-  uVar1 = *(uint *)(iVar2 + 0xd40c);
-  if ((int)(uVar1 - *(uint *)(DAT_83d0b55c + 0xc)) <
-      (int)(*(uint *)(iVar2 + 0x3514) - *(uint *)(param_2 + 0x3328))) {
-    Com_DPrintf(0xe,0xffffffff82035a38,
-                (((ulonglong)*(uint *)(iVar2 + 0x3514) - (ulonglong)*(uint *)(param_2 + 0x3328)) -
-                (ulonglong)uVar1) + (ulonglong)*(uint *)(DAT_83d0b55c + 0xc));
-    __restgprlr_25(0);
-    return;
-  }
-  __restgprlr_25(1);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
 
 // 82350D78  CL_TrackServerTimeError  (client_mp/cl_parse_mp.cpp:839)
-
-void CL_TrackServerTimeError(undefined8 param_1,int param_2)
-
-{
-  uint uVar1;
-  uint uVar2;
-  undefined8 uVar3;
-  int iVar5;
-  undefined8 uVar4;
-  int iVar6;
-  int iVar7;
-  uint *puVar8;
-  ulonglong uVar9;
-  uint uVar11;
-  undefined4 *puVar12;
-  ulonglong uVar10;
-  longlong lVar13;
-  longlong lVar14;
-  int iVar15;
-  
-  uVar3 = __savegprlr_25();
-  iVar5 = CL_GetLocalClientGlobals();
-  uVar9 = (ulonglong)DAT_82aa1c24;
-  lVar14 = (*(uint *)(iVar5 + 0x3388) - uVar9) - (ulonglong)*(uint *)(iVar5 + 0x340c);
-  lVar13 = (ulonglong)*(uint *)(iVar5 + 0x3418) -
-           (((ulonglong)*(uint *)(iVar5 + 0x3418) / 0x14) * 0x14 & 0xfffffffc);
-  if (param_2 != 0) {
-    if (*(char *)(DAT_82b3eca8 + 0xc) != '\0') {
-      uVar4 = Sys_Milliseconds();
-      Com_Printf(0xe,0xffffffff82035b44,lVar14,uVar4);
-      uVar9 = (ulonglong)DAT_82aa1c24;
-    }
-    uVar1 = *(uint *)(iVar5 + 0x3424);
-    uVar2 = (uint)lVar14;
-    uVar11 = (int)(uVar2 - uVar1) >> 0x1f;
-    iVar7 = ((uVar1 ^ (int)uVar1 >> 0x1f) - ((int)uVar1 >> 0x1f)) + 200;
-    if (iVar7 <= (int)((uVar2 - uVar1 ^ uVar11) - uVar11)) {
-      uVar11 = uVar2 - *(int *)(iVar5 + 0x3428);
-      uVar1 = (int)uVar11 >> 0x1f;
-      if ((iVar7 <= (int)((uVar11 ^ uVar1) - uVar1)) &&
-         (iVar7 <= (int)((uVar2 ^ (int)uVar2 >> 0x1f) - ((int)uVar2 >> 0x1f)))) {
-        if (*(char *)(DAT_82b3eca8 + 0xc) != '\0') {
-          Com_Printf(0xe,0xffffffff82035b24,lVar14);
-          uVar9 = (ulonglong)DAT_82aa1c24;
-        }
-        if (*(uint *)(iVar5 + 0x341c) < 0x14) {
-          iVar7 = *(int *)(iVar5 + 0x3388) - (int)uVar9;
-        }
-        else {
-          uVar9 = (((ulonglong)*(uint *)(iVar5 + 0x3388) -
-                   ((ulonglong)(*(uint *)(iVar5 + 0x3424) >> 0x1f) - 1 &
-                   (ulonglong)*(uint *)(iVar5 + 0x3424))) - uVar9) +
-                  (ulonglong)*(uint *)(iVar5 + 0x340c);
-          iVar7 = (int)uVar9;
-          iVar7 = (iVar7 >> 1) + (uint)(iVar7 < 0 && (uVar9 & 1) != 0);
-        }
-        *(int *)(iVar5 + 0x340c) = iVar7;
-        puVar12 = (undefined4 *)(iVar5 + 0x35cc);
-        lVar14 = 0x80;
-        do {
-          puVar12 = puVar12 + 0xb;
-          *puVar12 = 0;
-          lVar14 = lVar14 + -1;
-        } while (lVar14 != 0);
-        lVar14 = ((ulonglong)*(uint *)(iVar5 + 0x3388) - (ulonglong)DAT_82aa1c24) -
-                 (ulonglong)*(uint *)(iVar5 + 0x340c);
-      }
-    }
-    *(int *)((int)((lVar13 + 0xd1fU & 0xffffffff) << 2) + iVar5) = (int)lVar14;
-    uVar9 = (ulonglong)*(uint *)(iVar5 + 0x341c) + 1;
-    *(int *)(iVar5 + 0x3418) = *(int *)(iVar5 + 0x3418) + 1;
-    if (0x14 < (int)uVar9) {
-      uVar9 = 0x14;
-    }
-    iVar7 = (int)uVar9;
-    *(int *)(iVar5 + 0x341c) = iVar7;
-    uVar10 = 0;
-    iVar15 = 0;
-    if (0 < iVar7) {
-      puVar8 = (uint *)(iVar5 + 0x3478);
-      do {
-        puVar8 = puVar8 + 1;
-        iVar15 = iVar15 + 1;
-        uVar10 = *puVar8 + uVar10;
-      } while (iVar15 < iVar7);
-    }
-    *(int *)(iVar5 + 0x3428) = (int)lVar14;
-    iVar7 = (int)uVar10 / iVar7;
-    trapWord(6,uVar9,0);
-    *(int *)(iVar5 + 0x3424) = iVar7;
-    trapWord(5,uVar9 & ~(((uVar10 & 0x7fffffff) << 1 | (uVar10 & 0xffffffff) >> 0x1f) - 1),0xffff);
-    if ((iVar7 < -99) || (999 < iVar7)) {
-      if (*(char *)(DAT_82b3eca8 + 0xc) != '\0') {
-        Com_Printf(0xe,0xffffffff82035b10);
-      }
-      CL_ResetServerTimeDelta(uVar3);
-      __restgprlr_25();
-      return;
-    }
-  }
-  iVar15 = (int)lVar14;
-  iVar7 = 0;
-  if (((*(char *)(DAT_82b3ecb8 + 0xc) == '\0') ||
-      ((*(char *)(DAT_82aa1af8 + 0xc) != '\0' || (*(char *)(DAT_82aa1ae4 + 0xc) != '\0')))) &&
-     (*(char *)(DAT_83666174 + 0xc) != '\0')) {
-    iVar7 = 0x21;
-  }
-  if (*(int *)(iVar5 + 0x3424) < 0) {
-    iVar15 = *(int *)(iVar5 + 0x3424) + iVar15;
-  }
-  else {
-    iVar6 = CG_GetLocalClientGlobals(uVar3);
-    if (*(int *)(iVar6 + 0x6b984) == 0) {
-      if (iVar15 < 8) {
-        iVar6 = 8 - iVar15;
-        if (0x11 < iVar6) {
-          iVar6 = 0x11;
-        }
-        if (iVar7 < iVar6) {
-          iVar7 = iVar6;
-        }
-      }
-      goto LAB_82351078;
-    }
-  }
-  iVar7 = 0x42;
-LAB_82351078:
-  *(int *)((int)((lVar13 + 0xd0bU & 0xffffffff) << 2) + iVar5) = iVar15 - iVar7;
-  __restgprlr_25();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
 
 // 82351090  CL_ParseSnapshot  (client_mp/cl_parse_mp.cpp:945)
-
-void CL_ParseSnapshot(undefined8 param_1,undefined8 param_2)
-
-{
-  int iVar1;
-  undefined8 uVar2;
-  int *_Dst;
-  uint uVar5;
-  int iVar6;
-  int iVar7;
-  uint uVar8;
-  ulonglong uVar3;
-  undefined8 uVar4;
-  char cVar10;
-  int *piVar9;
-  undefined4 uVar11;
-  undefined *puVar12;
-  uint *puVar13;
-  undefined *puVar14;
-  longlong lVar15;
-  undefined1 auStack_90 [144];
-  
-  uVar2 = __savegprlr_16();
-  LargeLocal__LargeLocal(auStack_90,0x3380);
-  _Dst = (int *)LargeLocal__GetBuf(auStack_90);
-  uVar5 = CL_GetLocalClientGlobals(uVar2);
-  iVar6 = CL_GetLocalClientConnection(uVar2);
-  memset(_Dst,0,0x3380);
-  _Dst[0xccb] = *(int *)(iVar6 + 0x2013c);
-  iVar7 = MSG_ReadLong(param_2);
-  _Dst[0xcc2] = iVar7;
-  _Dst[0xcc3] = *(int *)(iVar6 + 0x20138);
-  iVar7 = MSG_ReadByte(param_2);
-  if (iVar7 == 0) {
-    _Dst[0xcc4] = -1;
-  }
-  else {
-    _Dst[0xcc4] = _Dst[0xcc3] - iVar7;
-  }
-  uVar8 = MSG_ReadByte(param_2);
-  _Dst[0xcc1] = uVar8;
-  if ((uVar8 & 8) != 0) {
-    DAT_82afa080 = 0;
-  }
-  if (_Dst[0xcc4] < 1) {
-    _Dst[0xcc0] = 1;
-    if ((_Dst[0xcc1] & 8U) == 0) {
-      if (DAT_82afa080 == 0) {
-        Com_PrintError(0xe,0xffffffff82035db8);
-        goto LAB_823511c4;
-      }
-      puVar14 = &DAT_82af6d00;
-      CL_Demo_ReceivedUncompressedSnapshot(uVar2,_Dst[0xcc2]);
-    }
-    else {
-      puVar14 = (undefined *)0x0;
-      CL_Demo_ReceivedUncompressedSnapshot(uVar2,_Dst[0xcc2]);
-    }
-  }
-  else {
-    puVar14 = (undefined *)
-              ((*(uint *)(uVar5 + 0xd404) & _Dst[0xcc4]) * 0x3380 + *(int *)(uVar5 + 0xd414));
-    cVar10 = CL_CheckForSnapshotValidity(uVar5,puVar14);
-    if (cVar10 == '\0') {
-LAB_823511c4:
-      MSG_Discard(param_2);
-      LargeLocal___LargeLocal(auStack_90);
-      __restgprlr_16();
-      return;
-    }
-    _Dst[0xcc0] = 1;
-  }
-  iVar7 = *(int *)(uVar5 + 0x3404);
-  piVar9 = (int *)param_2;
-  if (1 < *(int *)(DAT_82b3ecc8 + 0xc)) {
-    Com_Printf(0xe,0xffffffff8203524c,(ulonglong)(uint)piVar9[7] - 1,0xffffffff82035da8);
-  }
-  uVar3 = MSG_ReadBit(param_2);
-  uVar3 = (-uVar3 & ~uVar3 & 0xffffffff) >> 0x1f;
-  if (uVar3 == 0) {
-    if (puVar14 != (undefined *)0x0) goto LAB_823512d0;
-LAB_823512dc:
-    puVar12 = (undefined *)0x0;
-  }
-  else {
-    if (puVar14 == (undefined *)0x0) {
-      _Dst[0xcc0] = 0;
-      Com_PrintWarning(0xe,0xffffffff82035d58);
-      MSG_Discard(param_2);
-      LargeLocal___LargeLocal(auStack_90);
-      __restgprlr_16();
-      return;
-    }
-LAB_823512d0:
-    puVar12 = puVar14;
-    if (uVar3 == 0) goto LAB_823512dc;
-  }
-  MSG_ReadDeltaPlayerstate(uVar2,param_2,_Dst[0xcc2],puVar12,_Dst,1);
-  if (iVar7 != *(int *)(uVar5 + 0x3404)) {
-    uVar4 = va(0xffffffff82035d10,iVar7);
-    MyAssertHandler(0xffffffff820352e8,0x437,0,0xffffffff820011f4,0xffffffff82035ce8,uVar4);
-  }
-  MSG_ClearLastReferencedEntity(param_2);
-  if (1 < *(int *)(DAT_82b3ecc8 + 0xc)) {
-    Com_Printf(0xe,0xffffffff8203524c,(ulonglong)(uint)piVar9[7] - 1,0xffffffff82035cd8);
-  }
-  uVar4 = CL_ParsePacketEntities(uVar5,param_2,_Dst[0xcc2],puVar14,_Dst);
-  MSG_ClearLastReferencedEntity(param_2);
-  if (1 < *(int *)(DAT_82b3ecc8 + 0xc)) {
-    Com_Printf(0xe,0xffffffff8203524c,(ulonglong)(uint)piVar9[7] - 1,0xffffffff82035cc8);
-  }
-  CL_ParsePacketClients(uVar5,param_2,_Dst[0xcc2],puVar14,_Dst);
-  cVar10 = CL_Demo_IsRecording(uVar2);
-  if (cVar10 != '\0') {
-    if (puVar14 == (undefined *)0x0) {
-      uVar11 = 0;
-      iVar7 = 0;
-    }
-    else {
-      iVar7 = *(int *)(puVar14 + 0x3320);
-      if (iVar7 == _Dst[0xcc8]) goto LAB_8235141c;
-      uVar11 = *(undefined4 *)(puVar14 + 0x3328);
-    }
-    CL_Demo_TrackConnectedClients(uVar2,iVar7,uVar11,_Dst[0xcc8],_Dst[0xcca]);
-  }
-LAB_8235141c:
-  CG_Glass_ReadChanges(param_2);
-  if (*piVar9 == 0) {
-    CL_ReadOverlayBits(param_2,uVar4);
-    cVar10 = CL_Demo_IsPlaying(uVar2);
-    if ((cVar10 == '\0') || (*_Dst != 0)) {
-      if (_Dst[0xcc0] != 0) {
-        CL_TrackServerTimeError(uVar2,1);
-        puVar13 = (uint *)(uVar5 + 0xd400);
-        uVar8 = _Dst[0xcc3];
-        lVar15 = (ulonglong)*(uint *)(uVar5 + 0x338c) + 1;
-        if ((int)*puVar13 <= (int)(uVar8 - (int)lVar15)) {
-          lVar15 = (ulonglong)uVar8 - (ulonglong)*puVar13;
-        }
-        if ((int)lVar15 < (int)uVar8) {
-          do {
-            uVar8 = *(uint *)(uVar5 + 0xd404) & (uint)lVar15;
-            if (uVar8 == (*(uint *)(uVar5 + 0xd404) & _Dst[0xcc3])) {
-              Com_PrintWarning(0x19,0xffffffff82035c70,lVar15);
-            }
-            else {
-              *(undefined4 *)(uVar8 * 0x3380 + *(int *)(uVar5 + 0xd414) + 0x3300) = 0;
-            }
-            lVar15 = lVar15 + 1;
-          } while ((int)lVar15 < _Dst[0xcc3]);
-        }
-        if ((_Dst[0xcc1] & 8U) != 0) {
-          memcpy(&DAT_82af6d00,_Dst,0x3380);
-        }
-        if ((uVar5 & 0x7f) != 0) {
-          MyAssertHandler(0xffffffff820352e8,0x4a3,0,0xffffffff820011f4,0xffffffff82035be4,
-                          0xffffffff82035c28);
-        }
-        if (((uint)_Dst & 0x7f) != 0) {
-          MyAssertHandler(0xffffffff820352e8,0x4a4,0,0xffffffff820011f4,0xffffffff82035b78,
-                          0xffffffff82035bb4);
-        }
-        piVar9 = (int *)(uVar5 + 0x80);
-        memcpy(piVar9,_Dst,0x3380);
-        iVar7 = 0;
-        *(undefined4 *)(uVar5 + 0x3394) = 999;
-        if (0 < (int)*puVar13) {
-          do {
-            iVar1 = ((*(int *)(iVar6 + 0x54238) - iVar7) - 1U & *(uint *)(uVar5 + 0xd404)) * 0xc +
-                    *(int *)(uVar5 + 0xd410);
-            if (*(int *)(iVar1 + 4) <= *piVar9) {
-              *(int *)(uVar5 + 0x3394) = DAT_82aa1c24 - *(int *)(iVar1 + 8);
-              break;
-            }
-            iVar7 = iVar7 + 1;
-          } while (iVar7 < (int)*puVar13);
-        }
-        memcpy((void *)((*(uint *)(uVar5 + 0xd404) & *(uint *)(uVar5 + 0x338c)) * 0x3380 +
-                       *(int *)(uVar5 + 0xd414)),piVar9,0x3380);
-        if (*(int *)(DAT_82b3ecc8 + 0xc) == 3) {
-          Com_Printf(0xe,0xffffffff82035b54,*(undefined4 *)(uVar5 + 0x338c),
-                     *(undefined4 *)(uVar5 + 0x3390),*(undefined4 *)(uVar5 + 0x3394));
-        }
-        *(undefined4 *)(uVar5 + 0x3410) = 1;
-      }
-      LargeLocal___LargeLocal(auStack_90);
-      __restgprlr_16();
-      return;
-    }
-  }
-  _Dst[0xcc0] = 0;
-  LargeLocal___LargeLocal(auStack_90);
-  __restgprlr_16();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
 
 // 823516A0  CL_ServerIdChanged  (client_mp/cl_parse_mp.cpp:1228)
-
-void CL_ServerIdChanged(void)
-
-{
-  int iVar1;
-  char *_Str;
-  
-  iVar1 = CL_GetLocalClientGlobals();
-  _Str = (char *)CL_GetConfigString(3);
-  DAT_82ae30f4 = atoi(_Str);
-  *(int *)(iVar1 + 0x3414) = DAT_82ae30f4;
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
 
 // 823516F0  CL_SystemInfoChanged  (client_mp/cl_parse_mp.cpp:1248)
 
-void CL_SystemInfoChanged(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CL_SystemInfoChanged(LocalClientNum_t param_1)
 
 {
-  undefined8 uVar1;
+  LocalClientNum_t LVar1;
+  char *pcVar2;
   char *pcVar3;
-  undefined8 uVar2;
-  char cVar5;
-  int iVar4;
-  int local_40 [2];
-  undefined1 auStack_38 [8];
-  undefined1 auStack_30 [48];
+  bool bVar5;
+  char *pcVar4;
+  char *local_40 [2];
+  LargeLocal LStack_38;
+  LargeLocal aLStack_30 [6];
   
-  uVar1 = __savegprlr_29();
-  LargeLocal__LargeLocal(auStack_30,0x2000);
-  pcVar3 = (char *)LargeLocal__GetBuf(auStack_30);
-  LargeLocal__LargeLocal(auStack_38,0x2000);
-  uVar2 = LargeLocal__GetBuf(auStack_38);
-  cVar5 = CL_Demo_IsPlaying(uVar1);
-  if ((cVar5 == '\0') && (iVar4 = CL_GetConfigString(1), *(char *)(DAT_83666174 + 0xc) == '\0')) {
-    while ((local_40[0] = iVar4, local_40[0] != 0 &&
-           (Info_NextPair(local_40,pcVar3,uVar2), *pcVar3 != '\0'))) {
-      Dvar_SetFromStringByName(pcVar3,uVar2);
-      iVar4 = local_40[0];
+  LVar1 = __savegprlr_29(param_1);
+  LargeLocal::LargeLocal(aLStack_30,0x2000);
+  pcVar2 = LargeLocal::GetBuf(aLStack_30);
+  LargeLocal::LargeLocal(&LStack_38,0x2000);
+  pcVar3 = LargeLocal::GetBuf(&LStack_38);
+  bVar5 = CL_Demo_IsPlaying(LVar1);
+  if ((!bVar5) && (pcVar4 = CL_GetConfigString(1), (com_sv_running->current).enabled == false)) {
+    while ((local_40[0] = pcVar4, local_40[0] != (char *)0x0 &&
+           (Info_NextPair(local_40,pcVar2,pcVar3), *pcVar2 != '\0'))) {
+      Dvar_SetFromStringByName(pcVar2,pcVar3);
+      pcVar4 = local_40[0];
     }
   }
-  LargeLocal___LargeLocal(auStack_38);
-  LargeLocal___LargeLocal(auStack_30);
+  LargeLocal::~LargeLocal(&LStack_38);
+  LargeLocal::~LargeLocal(aLStack_30);
   __restgprlr_29();
   return;
 }
@@ -1253,155 +181,34 @@ void CL_SystemInfoChanged(void)
 
 // 823517B8  CL_ParseMapCenter  (client_mp/cl_parse_mp.cpp:1315)
 
-int CL_ParseMapCenter(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CL_ParseMapCenter(LocalClientNum_t param_1)
 
 {
-  char *_Src;
-  int iVar1;
+  char *pcVar1;
   
-  _Src = (char *)CL_GetConfigString(0x10);
-  iVar1 = sscanf(_Src,"%f %f %f",0xffffffff82aa1c44,0xffffffff82aa1c48,0xffffffff82aa1c4c);
-  return iVar1;
-}
-
-
-// 82351800  CL_ParseConfigStrings  (client_mp/cl_parse_mp.cpp:1323)
-
-void CL_ParseConfigStrings(undefined8 param_1,undefined8 param_2)
-
-{
-  char cVar1;
-  longlong lVar2;
-  ulonglong uVar3;
-  int iVar4;
-  int iVar5;
-  char *pcVar6;
-  char *pcVar8;
-  ulonglong uVar7;
-  longlong lVar9;
-  longlong lVar10;
-  ulonglong uVar11;
-  
-  __savegprlr_18();
-  memset(&DAT_82ae30f8,0,0x3bac);
-  lVar10 = 0;
-  iVar5 = -1;
-  DAT_82af6ca4 = 1;
-  lVar2 = MSG_ReadShort(param_2);
-  uVar11 = 0;
-  uVar3 = CCS_GetConfigStringNum(0);
-  iVar4 = (int)uVar3;
-  while ((iVar4 == 0 && ((int)uVar11 < 0xeeb))) {
-    uVar11 = uVar11 + 1;
-    uVar3 = CCS_GetConfigStringNum(uVar11);
-    iVar4 = (int)uVar3;
-  }
-  lVar9 = lVar2;
-  if (0 < (int)lVar2) {
-    do {
-      iVar4 = MSG_ReadBit(param_2);
-      if (iVar4 == 0) {
-        iVar5 = MSG_ReadBits(param_2,0xc);
-      }
-      else {
-        iVar5 = iVar5 + 1;
-      }
-      if ((iVar5 < 0) || (0xeea < iVar5)) {
-        Com_PrintError(0xe,0xffffffff8202ca2c,iVar5);
-        Com_Error(1,0xffffffff82035e5c);
-      }
-      iVar4 = (int)uVar3;
-      while (iVar4 != 0) {
-        iVar4 = (int)uVar3;
-        if (iVar5 <= iVar4) {
-          if ((iVar4 != 0) && (iVar4 == iVar5)) {
-            uVar11 = uVar11 + 1;
-            uVar3 = CCS_GetConfigStringNum(uVar11);
-          }
-          break;
-        }
-        pcVar6 = (char *)CCS_GetConfigStringValue(uVar11);
-        pcVar8 = pcVar6;
-        do {
-          cVar1 = *pcVar8;
-          pcVar8 = pcVar8 + 1;
-        } while (cVar1 != '\0');
-        *(int *)((int)&DAT_82ae30f8 + (int)((uVar3 & 0xffffffff) << 2)) = DAT_82af6ca4;
-        memcpy(&DAT_82ae6ca4 + DAT_82af6ca4,pcVar6,(int)pcVar8 - (int)pcVar6);
-        uVar11 = uVar11 + 1;
-        DAT_82af6ca4 = DAT_82af6ca4 + ((int)pcVar8 - (int)pcVar6);
-        uVar3 = CCS_GetConfigStringNum(uVar11);
-        lVar10 = lVar10 + 1;
-        iVar4 = (int)uVar3;
-      }
-      iVar4 = MSG_ReadBit(param_2);
-      if (iVar4 == 0) {
-        MSG_ReadBits(param_2,0xc);
-        pcVar6 = (char *)CCS_GetConfigStringValue();
-        pcVar8 = pcVar6;
-      }
-      else {
-        pcVar6 = (char *)MSG_ReadBigString();
-        pcVar8 = pcVar6;
-      }
-      do {
-        cVar1 = *pcVar6;
-        pcVar6 = pcVar6 + 1;
-      } while (cVar1 != '\0');
-      iVar4 = ((int)pcVar6 - (int)pcVar8) - 1;
-      if (0x10000 < DAT_82af6ca4 + iVar4 + 1) {
-        Com_Error(1,0xffffffff8202c9e8);
-      }
-      (&DAT_82ae30f8)[iVar5] = DAT_82af6ca4;
-      memcpy(&DAT_82ae6ca4 + DAT_82af6ca4,pcVar8,(int)pcVar6 - (int)pcVar8);
-      lVar9 = lVar9 + -1;
-      DAT_82af6ca4 = DAT_82af6ca4 + iVar4 + 1;
-    } while (lVar9 != 0);
-  }
-  iVar4 = (int)uVar3;
-  while ((iVar4 != 0 && ((int)uVar3 < 0xeeb))) {
-    pcVar6 = (char *)CCS_GetConfigStringValue(uVar11);
-    pcVar8 = pcVar6;
-    do {
-      cVar1 = *pcVar8;
-      pcVar8 = pcVar8 + 1;
-    } while (cVar1 != '\0');
-    *(int *)((int)&DAT_82ae30f8 + (int)((uVar3 & 0xffffffff) << 2)) = DAT_82af6ca4;
-    memcpy(&DAT_82ae6ca4 + DAT_82af6ca4,pcVar6,(int)pcVar8 - (int)pcVar6);
-    uVar11 = uVar11 + 1;
-    DAT_82af6ca4 = DAT_82af6ca4 + ((int)pcVar8 - (int)pcVar6);
-    uVar3 = CCS_GetConfigStringNum(uVar11);
-    lVar10 = lVar10 + 1;
-    iVar4 = (int)uVar3;
-  }
-  if ((int)uVar11 == 0) {
-    iVar4 = 0;
-  }
-  else {
-    uVar3 = lVar10 * 100;
-    iVar4 = (int)uVar3 / (int)uVar11;
-    trapWord(6,uVar11,0);
-    trapWord(5,uVar11 & ~(((uVar3 & 0x7fffffff) << 1 | (uVar3 & 0xffffffff) >> 0x1f) - 1),0xffff);
-  }
-  uVar7 = lVar10 * 100;
-  uVar3 = lVar2 + lVar10;
-  trapWord(6,uVar3,0);
-  trapWord(5,uVar3 & ~(((uVar7 & 0x7fffffff) << 1 | (uVar7 & 0xffffffff) >> 0x1f) - 1),0xffff);
-  Com_Printf(0x10,0xffffffff82035e18,iVar4,uVar11,(int)uVar7 / (int)uVar3,lVar2);
-  __restgprlr_18();
+  pcVar1 = CL_GetConfigString(0x10);
+  sscanf(pcVar1,"%f %f %f");
   return;
 }
 
 
+// 82351800  CL_ParseConfigStrings  (client_mp/cl_parse_mp.cpp:1323)
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
 // 82351BE0  CL_SetupNetFieldLists  (client_mp/cl_parse_mp.cpp:1435)
 
-void CL_SetupNetFieldLists(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CL_SetupNetFieldLists(LocalClientNum_t param_1)
 
 {
-  char cVar1;
+  bool bVar1;
   
-  cVar1 = CL_Demo_IsPlaying();
-  if (cVar1 != '\0') {
+  bVar1 = CL_Demo_IsPlaying(param_1);
+  if (bVar1) {
     CL_Demo_SetupNetFieldListsForDemo();
     return;
   }
@@ -1411,134 +218,30 @@ void CL_SetupNetFieldLists(void)
 
 
 // 82351C28  CL_ParseGamestate  (client_mp/cl_parse_mp.cpp:1449)
-
-void CL_ParseGamestate(undefined8 param_1,undefined8 param_2)
-
-{
-  undefined8 uVar1;
-  int iVar5;
-  int iVar6;
-  undefined4 uVar7;
-  undefined8 uVar2;
-  char cVar8;
-  undefined8 uVar3;
-  undefined1 uVar9;
-  char *_Src;
-  ulonglong uVar4;
-  undefined1 auStack_90 [32];
-  undefined1 auStack_70 [112];
-  
-  uVar1 = __savegprlr_24();
-  Con_Close();
-  iVar5 = CL_GetLocalClientConnection(uVar1);
-  *(undefined4 *)(iVar5 + 0x24) = 0;
-  CL_ClearState(uVar1);
-  MSG_ClearLastReferencedEntity(param_2);
-  DAT_82aa1c44 = 0;
-  DAT_82aa1c48 = 0;
-  DAT_82aa1c4c = 0;
-  iVar6 = CL_GetLocalClientGlobals(uVar1);
-  uVar7 = MSG_ReadLong(param_2);
-  *(undefined4 *)(iVar5 + 0x2013c) = uVar7;
-  MSG_ReadString(param_2,auStack_70,0x20);
-  uVar7 = MSG_ReadLong(param_2);
-  *(undefined4 *)(iVar6 + 0x350c) = uVar7;
-  MSG_ReadString(param_2,auStack_90,0x20);
-  uVar2 = MSG_ReadLong(param_2);
-  cVar8 = CL_Demo_IsPlaying(uVar1);
-  if (cVar8 == '\0') {
-    if ((*(char *)(DAT_82aa1ae4 + 0xc) == '\0') &&
-       ((*(char *)(DAT_82b3ecb8 + 0xc) != '\0' ||
-        ((*(char *)(DAT_82aa1af8 + 0xc) != '\0' && (cVar8 = Lobby_IsInLobby(), cVar8 != '\0')))))) {
-      CCS_LoadConstantConfigStrings(auStack_70,auStack_90);
-    }
-    else {
-      CCS_ClearConstantConfigStrings();
-    }
-    uVar3 = CCS_GetChecksum();
-    if ((int)uVar2 != (int)uVar3) {
-      uVar9 = Lobby_IsInLobby();
-      Com_PrintError(0xe,0xffffffff82035ef0,uVar3,uVar2,*(undefined1 *)(DAT_82aa1af8 + 0xc),uVar9);
-      Com_Error(1,0xffffffff82035ed4);
-    }
-  }
-  else {
-    CCS_LoadConstantConfigStrings(iVar5 + 0x43384,iVar5 + 0x43284);
-    iVar6 = CCS_GetChecksum();
-    if (*(int *)(iVar5 + 0x40270) != iVar6) {
-      Com_Error(1,0xffffffff82035f64);
-      __restgprlr_24();
-      return;
-    }
-  }
-  uVar2 = MSG_ReadByte(param_2);
-  iVar6 = (int)uVar2;
-  while (iVar6 != 6) {
-    if ((int)uVar2 != 1) {
-      uVar4 = FS_FOpenFileWrite(0xffffffff82031280);
-      if ((uVar4 & 0xffffffff) != 0) {
-        FS_Write(*(undefined4 *)((int)param_2 + 8),*(undefined4 *)((int)param_2 + 0x14),uVar4);
-        FS_FCloseFile(uVar4);
-      }
-      Com_PrintError(1,0xffffffff82035e84,uVar2);
-      MSG_Discard(param_2);
-      __restgprlr_24();
-      return;
-    }
-    CL_ParseConfigStrings(uVar1,param_2);
-    _Src = (char *)CL_GetConfigString(0x10);
-    sscanf(_Src,"%f %f %f",0xffffffff82aa1c44,0xffffffff82aa1c48,0xffffffff82aa1c4c);
-    uVar2 = MSG_ReadByte(param_2);
-    iVar6 = (int)uVar2;
-  }
-  uVar2 = MSG_ReadLong(param_2);
-  iVar6 = (int)uVar2;
-  *(int *)(iVar5 + 4) = iVar6;
-  if ((-1 < iVar6) && (iVar6 < 0x12)) {
-    uVar7 = MSG_ReadLong(param_2);
-    *(undefined4 *)(iVar5 + 300) = uVar7;
-    CL_ServerIdChanged(uVar1);
-    CL_SystemInfoChanged(uVar1);
-    CL_DownloadsComplete(uVar1);
-    cVar8 = CL_Demo_IsPlaying(uVar1);
-    if (cVar8 == '\0') {
-      MSG_SetupNetFieldListsForGame();
-    }
-    else {
-      CL_Demo_SetupNetFieldListsForDemo();
-    }
-    CL_AllocSnapshotMemory(uVar1);
-    CL_LoadMigrationPers(uVar1);
-    Dvar_SetInt(DAT_83666158,0);
-    __restgprlr_24();
-    return;
-  }
-  Com_PrintError(1,0xffffffff82035eac,uVar2);
-  *(undefined4 *)(iVar5 + 4) = 0;
-  MSG_Discard(param_2);
-  __restgprlr_24();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
 
 // 82351F38  CL_ParseCommandString  (client_mp/cl_parse_mp.cpp:1616)
 
-void CL_ParseCommandString(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CL_ParseCommandString(LocalClientNum_t param_1,msg_t *param_2)
 
 {
-  undefined8 uVar1;
-  uint uVar3;
-  undefined8 uVar2;
-  int iVar4;
-  undefined1 auStack_420 [1056];
+  LocalClientNum_t LVar1;
+  uint uVar2;
+  char *pcVar3;
+  clientConnection_t *pcVar4;
+  char acStack_420 [1056];
   
-  uVar1 = __savegprlr_29();
-  uVar3 = MSG_ReadLong(param_2);
-  uVar2 = MSG_ReadString(param_2,auStack_420,0x400);
-  iVar4 = CL_GetLocalClientConnection(uVar1);
-  if ((int)*(uint *)(iVar4 + 0x2013c) < (int)uVar3) {
-    *(uint *)(iVar4 + 0x2013c) = uVar3;
-    I_strncpyz((uVar3 & 0x7f) * 0x400 + iVar4 + 0x20144,uVar2,0x400);
+  LVar1 = __savegprlr_29(param_1);
+  uVar2 = MSG_ReadLong(param_2);
+  pcVar3 = MSG_ReadString(param_2,acStack_420,0x400);
+  pcVar4 = CL_GetLocalClientConnection(LVar1);
+  if (pcVar4->serverCommandSequence < (int)uVar2) {
+    pcVar4->serverCommandSequence = uVar2;
+    I_strncpyz(pcVar4->serverCommands[uVar2 & 0x7f],pcVar3,0x400);
   }
   __restgprlr_29();
   return;
@@ -1547,44 +250,49 @@ void CL_ParseCommandString(undefined8 param_1,undefined8 param_2)
 
 // 82351FB0  CL_ParseCommandBuffer  (client_mp/cl_parse_mp.cpp:1653)
 
-void CL_ParseCommandBuffer(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void CL_ParseCommandBuffer(LocalClientNum_t param_1,msg_t *param_2)
 
 {
-  undefined8 uVar1;
+  LocalClientNum_t LVar1;
   uint uVar2;
-  ushort uVar4;
-  int iVar3;
-  int local_470 [5];
-  int local_45c;
+  uint uVar3;
+  clientConnection_t *pcVar4;
+  msg_t local_470;
   undefined1 auStack_440 [1088];
   
-  uVar1 = __savegprlr_25();
+  LVar1 = __savegprlr_25(param_1);
   uVar2 = MSG_ReadLong(param_2);
-  uVar4 = MSG_ReadShort(param_2);
-  if (0x3fc < uVar4) {
-    Com_PrintError(0xe,0xffffffff8203606c,uVar4,0x3fc);
-    Com_Error(1,0xffffffff820360a0);
-    MyAssertHandler(0xffffffff820352e8,0x68f,0,0xffffffff82000f98,0xffffffff8203604c);
+  uVar3 = MSG_ReadShort(param_2);
+  uVar3 = uVar3 & 0xffff;
+  if (0x3fc < uVar3) {
+    Com_PrintError(0xe,"Exceeded the maximum valid command size (%i / %i)\n");
+    Com_Error(ERR_DROP,"\x15Invalid binary server command");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_parse_mp.cpp",
+                    0x68f,0,"%s");
   }
-  MSG_ReadData(param_2,auStack_440,uVar4);
-  if (*(int *)param_2 != 0) {
-    Com_PrintError(0xe,0xffffffff8203601c);
-    Com_Error(1,0xffffffff820360a0);
+  MSG_ReadData(param_2,auStack_440,uVar3);
+  if (param_2->overflowed != 0) {
+    Com_PrintError(0xe,"Message overflowed when reading binary command\n");
+    Com_Error(ERR_DROP,"\x15Invalid binary server command");
   }
-  iVar3 = CL_GetLocalClientConnection(uVar1);
-  if ((int)*(uint *)(iVar3 + 0x2013c) < (int)uVar2) {
-    *(uint *)(iVar3 + 0x2013c) = uVar2;
-    MSG_Init(local_470,(uVar2 & 0x7f) * 0x400 + iVar3 + 0x20144,0x400);
-    MSG_WriteByte(local_470,0x5a);
-    MSG_WriteByte(local_470,0);
-    MSG_WriteShort(local_470,uVar4);
-    if (local_45c != 4) {
-      MyAssertHandler(0xffffffff820352e8,0x6a7,0,0xffffffff820011f4,0xffffffff82035fa4,
-                      0xffffffff82035fdc);
+  pcVar4 = CL_GetLocalClientConnection(LVar1);
+  if (pcVar4->serverCommandSequence < (int)uVar2) {
+    pcVar4->serverCommandSequence = uVar2;
+    MSG_Init(&local_470,(uchar *)(pcVar4->serverCommands + (uVar2 & 0x7f)),0x400);
+    MSG_WriteByte(&local_470,0x5a);
+    MSG_WriteByte(&local_470,0);
+    MSG_WriteShort(&local_470,uVar3);
+    if (local_470.cursize != 4) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_parse_mp.cpp",
+                      0x6a7,0,"%s\n\t%s");
     }
-    MSG_WriteData(local_470,auStack_440,uVar4);
-    if (local_470[0] != 0) {
-      MyAssertHandler(0xffffffff820352e8,0x6aa,0,0xffffffff82000f98,0xffffffff82035f80);
+    MSG_WriteData(&local_470,auStack_440,uVar3);
+    if (local_470.overflowed != 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_parse_mp.cpp",
+                      0x6aa,0,"%s");
     }
   }
   __restgprlr_25();
@@ -1593,119 +301,9 @@ void CL_ParseCommandBuffer(undefined8 param_1,undefined8 param_2)
 
 
 // 82352158  CL_ParseMatchData  (client_mp/cl_parse_mp.cpp:1712)
-
-void CL_ParseMatchData(undefined8 param_1,undefined8 param_2)
-
-{
-  undefined8 uVar1;
-  
-  uVar1 = __savegprlr_29();
-  MSG_ReadString(param_2,0xffffffff82aa2a04,0x40);
-  MSG_ReadData(param_2,0xffffffff82aa2a44,0x400);
-  CL_AddReliableCommand(uVar1,0xffffffff820360c0);
-  __restgprlr_29();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 823521B0  CL_ParseServerMessage  (client_mp/cl_parse_mp.cpp:1722)
-
-void CL_ParseServerMessage(undefined8 param_1,undefined8 param_2)
-
-{
-  int iVar1;
-  ulonglong uVar2;
-  undefined8 uVar3;
-  undefined *puVar4;
-  undefined *puVar5;
-  undefined1 auStack_90 [16];
-  int local_80 [5];
-  undefined4 local_6c;
-  uint local_64;
-  
-  uVar2 = __savegprlr_23();
-  LargeLocal__LargeLocal(auStack_90,0x10000);
-  uVar3 = LargeLocal__GetBuf(auStack_90);
-  iVar1 = (int)param_2;
-  if (*(int *)(DAT_82b3ecc8 + 0xc) == 1) {
-    Com_Printf(0xe,0xffffffff820122e0,*(undefined4 *)(iVar1 + 0x14));
-  }
-  else if (1 < *(int *)(DAT_82b3ecc8 + 0xc)) {
-    Com_Printf(0xe,0xffffffff820361a0);
-  }
-  if (3 < (uVar2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8202c1d8,0x4aa,0,0xffffffff820011a8,uVar2,4);
-  }
-  if ((&DAT_82b3e54c)[(int)uVar2 * 0x79] == 0) {
-    Com_Printf(0x19,0xffffffff82036158);
-  }
-  else {
-    MSG_Init(local_80,uVar3,0x10000);
-    if (0x10000 < (uint)(*(int *)(iVar1 + 0x14) - *(int *)(iVar1 + 0x1c))) {
-      Com_Error(1,0xffffffff82036124);
-    }
-    local_6c = MSG_ReadBitsCompress
-                         ((ulonglong)*(uint *)(iVar1 + 8) + (ulonglong)*(uint *)(iVar1 + 0x1c),uVar3
-                          ,(ulonglong)*(uint *)(iVar1 + 0x14) - (ulonglong)*(uint *)(iVar1 + 0x1c));
-    if (local_80[0] == 0) {
-      do {
-        puVar4 = (undefined *)MSG_ReadByte(local_80);
-        if ((puVar4 == (undefined *)0x6) || (local_80[0] != 0)) {
-          if (1 < *(int *)(DAT_82b3ecc8 + 0xc)) {
-            Com_Printf(0xe,0xffffffff8203524c,(ulonglong)local_64 - 1,0xffffffff820360d0);
-          }
-          if (local_80[0] == 0) goto LAB_823524a0;
-          break;
-        }
-        if (1 < *(int *)(DAT_82b3ecc8 + 0xc)) {
-          uVar3 = 0xffffffff82036114;
-          puVar5 = puVar4;
-          if ((&PTR_s_svc_gamestate_82965830)[(int)puVar4] != (undefined *)0x0) {
-            uVar3 = 0xffffffff8203524c;
-            puVar5 = (&PTR_s_svc_gamestate_82965830)[(int)puVar4];
-          }
-          Com_Printf(0xe,uVar3,(ulonglong)local_64 - 1,puVar5);
-        }
-        if ((undefined *)0x5 < puVar4) {
-LAB_82352418:
-          uVar2 = FS_FOpenFileWrite(0xffffffff82031280);
-          if ((uVar2 & 0xffffffff) != 0) {
-            FS_Write(*(undefined4 *)(iVar1 + 8),*(undefined4 *)(iVar1 + 0x14),uVar2);
-            FS_FCloseFile(uVar2);
-          }
-          Com_PrintError(1,0xffffffff820360e0,puVar4);
-          break;
-        }
-        if (puVar4 == (undefined *)0x0) {
-          SV_WaitServer();
-          LargeLocalReset();
-          CL_ParseGamestate(uVar2,local_80);
-          LargeLocalReset();
-        }
-        else {
-          if (puVar4 == (undefined *)0x1) goto LAB_82352418;
-          if (puVar4 == (undefined *)0x2) {
-            CL_ParseCommandString(uVar2,local_80);
-          }
-          else if (puVar4 == (undefined *)0x3) {
-            CL_ParseCommandBuffer(uVar2,local_80);
-          }
-          else if (puVar4 == (undefined *)0x4) {
-            MSG_ReadString(local_80,0xffffffff82aa2a04,0x40);
-            MSG_ReadData(local_80,0xffffffff82aa2a44,0x400);
-            CL_AddReliableCommand(uVar2,0xffffffff820360c0);
-          }
-          else {
-            CL_ParseSnapshot(uVar2,local_80);
-          }
-        }
-      } while (local_80[0] == 0);
-    }
-  }
-  MSG_Discard(param_2);
-LAB_823524a0:
-  LargeLocal___LargeLocal(auStack_90);
-  __restgprlr_23();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s

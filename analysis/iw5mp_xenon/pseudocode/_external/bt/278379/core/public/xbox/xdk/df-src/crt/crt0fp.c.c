@@ -7,7 +7,7 @@
 void _fptrap(void)
 
 {
+                    /* WARNING: Subroutine does not return */
   _amsg_exit(2);
-  return;
 }
 

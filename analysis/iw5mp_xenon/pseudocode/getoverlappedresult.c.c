@@ -2,45 +2,44 @@
 
 // 828AB100  GetOverlappedResult  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/getoverlappedresult.c:60)
 
-BOOL GetOverlappedResult(HANDLE hFile,LPOVERLAPPED lpOverlapped,LPDWORD lpNumberOfBytesTransferred,
-                        BOOL bWait)
+int GetOverlappedResult(void *param_1,_OVERLAPPED *param_2,ulong *param_3,int param_4)
 
 {
-  HANDLE pvVar2;
-  HANDLE hHandle;
-  DWORD DVar3;
+  void *pvVar2;
+  void *pvVar3;
+  ulong uVar4;
   undefined8 uVar1;
-  BOOL BVar4;
+  int iVar5;
   
-  pvVar2 = (HANDLE)__savegprlr_28(hFile);
-  if (lpOverlapped->Internal == 0x103) {
-    if (bWait == 0) {
-      DVar3 = 0x102;
+  pvVar2 = (void *)__savegprlr_28(param_1);
+  if (param_2->Internal == 0x103) {
+    if (param_4 == 0) {
+      uVar4 = 0x102;
     }
     else {
-      hHandle = lpOverlapped->hEvent;
-      if (lpOverlapped->hEvent == (HANDLE)0x0) {
-        hHandle = pvVar2;
+      pvVar3 = param_2->hEvent;
+      if (param_2->hEvent == (void *)0x0) {
+        pvVar3 = pvVar2;
       }
-      DVar3 = WaitForSingleObject(hHandle,0xffffffff);
+      uVar4 = WaitForSingleObject(pvVar3,0xffffffff);
     }
-    if (DVar3 == 0x102) {
+    if (uVar4 == 0x102) {
       SetLastError(0x3e4);
     }
-    else if (DVar3 == 0) goto LAB_828ab170;
+    else if (uVar4 == 0) goto LAB_828ab170;
   }
   else {
 LAB_828ab170:
-    *lpNumberOfBytesTransferred = lpOverlapped->InternalHigh;
-    if (-1 < (int)lpOverlapped->Internal) {
+    *param_3 = param_2->InternalHigh;
+    if (-1 < (int)param_2->Internal) {
       uVar1 = 1;
       goto LAB_828ab19c;
     }
-    RtlSetLastNTError();
+    RtlSetLastNTError(param_2->Internal);
   }
   uVar1 = 0;
 LAB_828ab19c:
-  BVar4 = __restgprlr_28(uVar1);
-  return BVar4;
+  iVar5 = __restgprlr_28(uVar1);
+  return iVar5;
 }
 

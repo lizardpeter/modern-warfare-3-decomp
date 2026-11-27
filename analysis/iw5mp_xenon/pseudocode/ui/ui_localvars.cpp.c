@@ -2,61 +2,62 @@
 
 // 825A49D0  UI_LocalVarUsage_f  (ui/ui_localvars.cpp:19)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 void UI_LocalVarUsage_f(void)
 
 {
   char cVar1;
   char cVar2;
   bool bVar3;
-  int iVar5;
-  char *pcVar6;
-  undefined8 uVar4;
-  longlong lVar7;
+  int iVar4;
+  char *pcVar5;
+  UILocalVarContext *pUVar6;
+  LocalClientNum_t LVar7;
   longlong lVar8;
-  longlong lVar9;
-  char *pcVar10;
-  int *piVar11;
-  undefined1 auStack_450 [1104];
+  char *pcVar9;
+  char **ppcVar10;
+  char acStack_450 [1104];
   
   __savegprlr_24();
   bVar3 = false;
-  iVar5 = Cmd_Argc();
-  if (iVar5 == 2) {
-    pcVar10 = "list";
-    pcVar6 = (char *)Cmd_Argv(1);
+  iVar4 = Cmd_Argc();
+  if (iVar4 == 2) {
+    pcVar9 = "list";
+    pcVar5 = Cmd_Argv(1);
     do {
-      cVar1 = *pcVar6;
-      cVar2 = *pcVar10;
+      cVar1 = *pcVar5;
+      cVar2 = *pcVar9;
       if (cVar1 == '\0') break;
-      pcVar6 = pcVar6 + 1;
-      pcVar10 = pcVar10 + 1;
+      pcVar5 = pcVar5 + 1;
+      pcVar9 = pcVar9 + 1;
     } while (cVar1 == cVar2);
     if (cVar1 == cVar2) {
       bVar3 = true;
     }
   }
-  lVar8 = 0;
+  LVar7 = LOCAL_CLIENT_0;
   do {
-    lVar7 = 0;
     if (bVar3) {
-      Com_Printf(0xd,0xffffffff8216a8e0,lVar8);
+      Com_Printf(0xd,"Local client %i:\n");
     }
-    iVar5 = UI_GetLocalVarsContext(lVar8);
-    lVar9 = 0x200;
-    piVar11 = (int *)(iVar5 + 4);
+    pUVar6 = UI_GetLocalVarsContext(LVar7);
+    lVar8 = 0x200;
+    ppcVar10 = &pUVar6->table[0].name;
     do {
-      if ((*piVar11 != 0) && (lVar7 = lVar7 + 1, bVar3)) {
-        uVar4 = UILocalVar_GetString(piVar11 + -1,auStack_450,0x400);
-        Com_Printf(0xd,0xffffffff8216a8f4,*piVar11,uVar4);
+      if ((*ppcVar10 != (char *)0x0) && (bVar3)) {
+        UILocalVar_GetString((UILocalVar *)(ppcVar10 + -1),acStack_450,0x400);
+        Com_Printf(0xd,"  %s = %s\n");
       }
-      lVar9 = lVar9 + -1;
-      piVar11 = piVar11 + 3;
-    } while (lVar9 != 0);
-    Com_Printf(0xd,0xffffffff8216a900,lVar8,lVar7,0x200);
-    lVar8 = lVar8 + 1;
-  } while ((int)lVar8 < 4);
+      lVar8 = lVar8 + -1;
+      ppcVar10 = ppcVar10 + 3;
+    } while (lVar8 != 0);
+    Com_Printf(0xd,"Local client %i using %i out of %i local vars\n");
+    LVar7 = LVar7 + LOCAL_CLIENT_1;
+  } while ((int)LVar7 < 4);
   if (!bVar3) {
-    Com_Printf(0xd,0xffffffff8216a8a0);
+    Com_Printf(0xd,"Use \"localVarUsage list\" to see all local var names and values\n");
   }
   __restgprlr_24();
   return;
@@ -65,14 +66,15 @@ void UI_LocalVarUsage_f(void)
 
 // 825A3F28  UILocalVar_FreeString  (ui/ui_localvars.cpp:63)
 
-void UILocalVar_FreeString(int *param_1)
+void UILocalVar_FreeString(UILocalVar *param_1)
 
 {
-  if (param_1 == (int *)0x0) {
-    MyAssertHandler(0xffffffff8216a794,0x40,0,0xffffffff82000f98,0xffffffff8216a7d4);
+  if (param_1 == (UILocalVar *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_localvars.cpp",0x40,0,
+                    "%s");
   }
-  if (*param_1 == 2) {
-    FreeString(param_1[2],0x23);
+  if (param_1->type == UILOCALVAR_STRING) {
+    FreeString((param_1->u).string,0x23);
   }
   return;
 }
@@ -80,66 +82,70 @@ void UILocalVar_FreeString(int *param_1)
 
 // 825A3F98  UILocalVar_Init  (ui/ui_localvars.cpp:72)
 
-void UILocalVar_Init(int param_1)
+void UILocalVar_Init(UILocalVarContext *param_1)
 
 {
-  if (param_1 != 0) {
+  if (param_1 != (UILocalVarContext *)0x0) {
     return;
   }
-  MyAssertHandler(0xffffffff8216a794,0x49,0,0xffffffff82000f98,0xffffffff820653c8);
+  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_localvars.cpp",0x49,0,"%s"
+                 );
   return;
 }
 
 
 // 825A3FC8  UILocalVar_Shutdown  (ui/ui_localvars.cpp:78)
 
-void UILocalVar_Shutdown(void)
+void UILocalVar_Shutdown(UILocalVarContext *param_1)
 
 {
-  void *pvVar1;
+  int iVar1;
   longlong lVar2;
   int *piVar3;
   
-  pvVar1 = (void *)__savegprlr_26();
-  if (pvVar1 == (void *)0x0) {
-    MyAssertHandler(0xffffffff8216a794,0x51,0,0xffffffff82000f98,0xffffffff820653c8);
+  iVar1 = __savegprlr_26(param_1);
+  if (iVar1 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_localvars.cpp",0x51,0,
+                    "%s");
   }
-  piVar3 = (int *)((int)pvVar1 + 4);
+  piVar3 = (int *)(iVar1 + 4);
   lVar2 = 0x200;
   do {
     if (*piVar3 != 0) {
       if (piVar3 == (int *)0x4) {
-        MyAssertHandler(0xffffffff8216a794,0x40,0,0xffffffff82000f98,0xffffffff8216a7d4);
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_localvars.cpp",0x40,
+                        0,"%s");
       }
       if (piVar3[-1] == 2) {
-        FreeString(piVar3[1],0x23);
+        FreeString((char *)piVar3[1],0x23);
       }
-      FreeString(*piVar3,0x23);
+      FreeString((char *)*piVar3,0x23);
     }
     lVar2 = lVar2 + -1;
     piVar3 = piVar3 + 3;
   } while (lVar2 != 0);
-  pvVar1 = memset(pvVar1,0,0x1800);
-  __restgprlr_26(pvVar1);
+  memset();
+  __restgprlr_26();
   return;
 }
 
 
 // 825A4B08  UILocalVar_HashName  (ui/ui_localvars.cpp:97)
 
-ulonglong UILocalVar_HashName(char *param_1)
+uint UILocalVar_HashName(char *param_1)
 
 {
   longlong lVar1;
   int iVar2;
   char *pcVar3;
-  ulonglong uVar4;
+  longlong lVar4;
   int iVar5;
   
   if (param_1 == (char *)0x0) {
-    MyAssertHandler(0xffffffff8216a794,0x65,0,0xffffffff82000f98,0xffffffff82021a74);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_localvars.cpp",0x65,0,
+                    "%s");
   }
-  uVar4 = 0;
+  lVar4 = 0;
   iVar5 = (int)*param_1;
   if (*param_1 != '\0') {
     iVar2 = 0x77 - (int)param_1;
@@ -148,287 +154,331 @@ ulonglong UILocalVar_HashName(char *param_1)
       param_1 = param_1 + 1;
       lVar1 = (longlong)iVar5;
       iVar5 = (int)*param_1;
-      uVar4 = (int)pcVar3 * lVar1 + uVar4;
+      lVar4 = (int)pcVar3 * lVar1 + lVar4;
     } while (iVar5 != 0);
   }
-  return ((uVar4 & 0xffffffff) >> 8) + uVar4 & 0x1ff;
+  return ((uint)((ulonglong)lVar4 >> 8) & 0xffffff) + (int)lVar4 & 0x1ff;
 }
 
 
 // 825A4090  UILocalVar_FindLocation  (ui/ui_localvars.cpp:113)
 
-void UILocalVar_FindLocation(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+bool UILocalVar_FindLocation(UILocalVarContext *param_1,char *param_2,uint *param_3)
 
 {
   char cVar1;
   int iVar2;
   uint uVar3;
-  uint uVar4;
+  undefined1 uVar4;
   ulonglong uVar5;
-  char *pcVar6;
-  char *pcVar7;
+  ulonglong uVar6;
+  uint uVar7;
+  ulonglong uVar8;
+  char *pcVar9;
+  char *pcVar10;
   
-  iVar2 = __savegprlr_27();
+  uVar6 = (ulonglong)(int)param_3;
+  uVar5 = (ulonglong)(int)param_2;
+  iVar2 = __savegprlr_27(param_1);
   if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff8216a794,0x75,0,0xffffffff82000f98,0xffffffff820653c8);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_localvars.cpp",0x75,0,
+                    "%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8216a794,0x76,0,0xffffffff82000f98,0xffffffff82021a74);
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_localvars.cpp",0x76,0,
+                    "%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8216a794,0x77,0,0xffffffff82000f98,0xffffffff8216a7d8);
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_localvars.cpp",0x77,0,
+                    "%s");
   }
-  uVar3 = UILocalVar_HashName(param_2);
-  uVar4 = uVar3;
+  uVar3 = UILocalVar_HashName((char *)uVar5);
+  uVar7 = uVar3;
   do {
-    pcVar7 = *(char **)(uVar4 * 0xc + iVar2 + 4);
-    uVar5 = param_2;
-    if (pcVar7 == (char *)0x0) break;
+    pcVar10 = *(char **)(uVar7 * 0xc + iVar2 + 4);
+    uVar8 = uVar5;
+    if (pcVar10 == (char *)0x0) break;
     do {
-      cVar1 = *pcVar7;
-      pcVar6 = (char *)uVar5;
+      cVar1 = *pcVar10;
+      pcVar9 = (char *)uVar8;
       if (cVar1 == '\0') break;
-      pcVar7 = pcVar7 + 1;
-      uVar5 = uVar5 + 1;
-    } while (cVar1 == *pcVar6);
-    if (cVar1 == *pcVar6) {
-      *(uint *)param_3 = uVar4;
-      __restgprlr_27(1);
-      return;
+      pcVar10 = pcVar10 + 1;
+      uVar8 = uVar8 + 1;
+    } while (cVar1 == *pcVar9);
+    if (cVar1 == *pcVar9) {
+      *(uint *)uVar6 = uVar7;
+      uVar4 = __restgprlr_27(1);
+      return (bool)uVar4;
     }
-    uVar4 = uVar4 + 1 & 0x1ff;
-  } while (uVar4 != uVar3);
-  *(uint *)param_3 = uVar4;
-  __restgprlr_27(0);
-  return;
+    uVar7 = uVar7 + 1 & 0x1ff;
+  } while (uVar7 != uVar3);
+  *(uint *)uVar6 = uVar7;
+  uVar4 = __restgprlr_27(0);
+  return (bool)uVar4;
 }
 
 
 // 825A41B0  UILocalVar_Find  (ui/ui_localvars.cpp:143)
 
-void UILocalVar_Find(undefined8 param_1,ulonglong param_2)
+UILocalVar * UILocalVar_Find(UILocalVarContext *param_1,char *param_2)
 
 {
   ulonglong uVar1;
-  char cVar2;
+  bool bVar3;
+  UILocalVar *pUVar2;
+  ulonglong uVar4;
   uint local_30 [12];
   
-  uVar1 = __savegprlr_28();
+  uVar4 = (ulonglong)(int)param_2;
+  uVar1 = __savegprlr_28(param_1);
   if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8216a794,0x92,0,0xffffffff82000f98,0xffffffff820653c8);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_localvars.cpp",0x92,0,
+                    "%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8216a794,0x93,0,0xffffffff82000f98,0xffffffff82021a74);
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_localvars.cpp",0x93,0,
+                    "%s");
   }
-  cVar2 = UILocalVar_FindLocation(uVar1,param_2,local_30);
-  if (cVar2 != '\0') {
-    __restgprlr_28(((ulonglong)local_30[0] + ((ulonglong)local_30[0] & 0x7fffffff) * 2 & 0x3fffffff)
-                   * 4 + uVar1);
-    return;
+  bVar3 = UILocalVar_FindLocation((UILocalVarContext *)uVar1,(char *)uVar4,local_30);
+  if (bVar3) {
+    pUVar2 = (UILocalVar *)
+             __restgprlr_28(((ulonglong)local_30[0] + ((ulonglong)local_30[0] & 0x7fffffff) * 2 &
+                            0x3fffffff) * 4 + uVar1);
+    return pUVar2;
   }
-  __restgprlr_28(0);
-  return;
+  pUVar2 = (UILocalVar *)__restgprlr_28(0);
+  return pUVar2;
 }
 
 
 // 825A4260  UILocalVar_FindOrCreate  (ui/ui_localvars.cpp:156)
 
-void UILocalVar_FindOrCreate(undefined8 param_1,ulonglong param_2)
+UILocalVar * UILocalVar_FindOrCreate(UILocalVarContext *param_1,char *param_2)
 
 {
-  int iVar1;
-  char cVar3;
-  undefined4 uVar2;
-  undefined4 *puVar4;
+  UILocalVarContext *pUVar1;
+  bool bVar4;
+  UILocalVar *pUVar2;
+  char *pcVar3;
+  ulonglong uVar5;
   uint local_30 [12];
   
-  iVar1 = __savegprlr_28();
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff8216a794,0xa0,0,0xffffffff82000f98,0xffffffff820653c8);
+  uVar5 = (ulonglong)(int)param_2;
+  pUVar1 = (UILocalVarContext *)__savegprlr_28(param_1);
+  if (pUVar1 == (UILocalVarContext *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_localvars.cpp",0xa0,0,
+                    "%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8216a794,0xa1,0,0xffffffff82000f98,0xffffffff82021a74);
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_localvars.cpp",0xa1,0,
+                    "%s");
   }
-  cVar3 = UILocalVar_FindLocation(iVar1,param_2,local_30);
-  if (cVar3 != '\0') {
-    __restgprlr_28(local_30[0] * 0xc + iVar1);
-    return;
+  bVar4 = UILocalVar_FindLocation(pUVar1,(char *)uVar5,local_30);
+  if (bVar4) {
+    pUVar2 = (UILocalVar *)__restgprlr_28(pUVar1->table + local_30[0]);
+    return pUVar2;
   }
-  puVar4 = (undefined4 *)(local_30[0] * 0xc + iVar1);
-  uVar2 = CopyString(param_2,0xffffffff8216a7e4,0x23);
-  puVar4[1] = uVar2;
-  *puVar4 = 0;
-  puVar4[2] = 0;
-  __restgprlr_28(puVar4);
-  return;
+  pUVar2 = pUVar1->table + local_30[0];
+  pcVar3 = CopyString((char *)uVar5,"UILocalVar_FindOrCreate",0x23);
+  pUVar2->name = pcVar3;
+  pUVar2->type = UILOCALVAR_INT;
+  (pUVar2->u).integer = 0;
+  pUVar2 = (UILocalVar *)__restgprlr_28(pUVar2);
+  return pUVar2;
 }
 
 
 // 825A4340  UILocalVar_GetBool  (ui/ui_localvars.cpp:175)
 
-bool UILocalVar_GetBool(int *param_1)
+bool UILocalVar_GetBool(UILocalVar *param_1)
 
 {
-  int iVar1;
-  bool bVar2;
+  UILocalVarType UVar1;
+  int iVar2;
+  char cVar3;
   
-  if (param_1 == (int *)0x0) {
-    MyAssertHandler(0xffffffff8216a794,0xb0,0,0xffffffff82000f98,0xffffffff8216a7d4);
+  if (param_1 == (UILocalVar *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_localvars.cpp",0xb0,0,
+                    "%s");
   }
-  iVar1 = *param_1;
-  if (iVar1 == 0) {
-    bVar2 = param_1[2] != 0;
+  UVar1 = param_1->type;
+  if (UVar1 == UILOCALVAR_INT) {
+    cVar3 = '\x01' - ((param_1->u).integer == 0);
   }
-  else if (iVar1 == 1) {
-    bVar2 = (float)param_1[2] != 0.0;
+  else if (UVar1 == UILOCALVAR_FLOAT) {
+    cVar3 = (param_1->u).value != 0.0;
   }
   else {
-    if (iVar1 != 2) {
-      MyAssertHandler(0xffffffff8216a794,0xbb,0,0xffffffff8216a7fc,iVar1,2);
+    if (UVar1 != UILOCALVAR_STRING) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_localvars.cpp",0xbb,0,
+                      "var->type == UILOCALVAR_STRING\n\t%i, %i");
     }
-    iVar1 = atoi((char *)param_1[2]);
-    bVar2 = iVar1 != 0;
+    iVar2 = atoi((param_1->u).string);
+    cVar3 = '\x01' - (iVar2 == 0);
   }
-  return bVar2;
+  return (bool)cVar3;
 }
 
 
 // 825A4418  UILocalVar_GetInt  (ui/ui_localvars.cpp:194)
 
-ulonglong UILocalVar_GetInt(int *param_1)
+int UILocalVar_GetInt(UILocalVar *param_1)
 
 {
+  UILocalVarType UVar1;
   int iVar2;
-  ulonglong uVar1;
   
-  if (param_1 == (int *)0x0) {
-    MyAssertHandler(0xffffffff8216a794,0xc3,0,0xffffffff82000f98,0xffffffff8216a7d4);
+  if (param_1 == (UILocalVar *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_localvars.cpp",0xc3,0,
+                    "%s");
   }
-  iVar2 = *param_1;
-  if (iVar2 == 0) {
-    uVar1 = (ulonglong)(uint)param_1[2];
+  UVar1 = param_1->type;
+  if (UVar1 == UILOCALVAR_INT) {
+    iVar2 = (param_1->u).integer;
   }
-  else if (iVar2 == 1) {
-    uVar1 = (ulonglong)(uint)(int)(float)param_1[2];
+  else if (UVar1 == UILOCALVAR_FLOAT) {
+    iVar2 = (int)(param_1->u).value;
   }
   else {
-    if (iVar2 != 2) {
-      MyAssertHandler(0xffffffff8216a794,0xce,0,0xffffffff8216a7fc,iVar2,2);
+    if (UVar1 != UILOCALVAR_STRING) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_localvars.cpp",0xce,0,
+                      "var->type == UILOCALVAR_STRING\n\t%i, %i");
     }
-    iVar2 = atoi((char *)param_1[2]);
-    uVar1 = (ulonglong)iVar2;
+    iVar2 = atoi((param_1->u).string);
   }
-  return uVar1;
+  return iVar2;
 }
 
 
 // 825A44D0  UILocalVar_GetFloat  (ui/ui_localvars.cpp:213)
 
-double UILocalVar_GetFloat(int *param_1)
+float UILocalVar_GetFloat(UILocalVar *param_1)
 
 {
-  int iVar1;
-  double dVar2;
+  float fVar1;
+  UILocalVarType UVar2;
+  double dVar3;
   
-  if (param_1 == (int *)0x0) {
-    MyAssertHandler(0xffffffff8216a794,0xd6,0,0xffffffff82000f98,0xffffffff8216a7d4);
+  if (param_1 == (UILocalVar *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_localvars.cpp",0xd6,0,
+                    "%s");
   }
-  iVar1 = *param_1;
-  if (iVar1 == 0) {
-    dVar2 = (double)(longlong)param_1[2];
+  UVar2 = param_1->type;
+  if (UVar2 == UILOCALVAR_INT) {
+    fVar1 = (float)(longlong)(param_1->u).integer;
   }
-  else if (iVar1 == 1) {
-    dVar2 = (double)(float)param_1[2];
+  else if (UVar2 == UILOCALVAR_FLOAT) {
+    fVar1 = (param_1->u).value;
   }
   else {
-    if (iVar1 != 2) {
-      MyAssertHandler(0xffffffff8216a794,0xe1,0,0xffffffff8216a7fc,iVar1,2);
+    if (UVar2 != UILOCALVAR_STRING) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_localvars.cpp",0xe1,0,
+                      "var->type == UILOCALVAR_STRING\n\t%i, %i");
     }
-    dVar2 = atof((char *)param_1[2]);
-    dVar2 = (double)(float)dVar2;
+    dVar3 = atof((param_1->u).string);
+    fVar1 = (float)dVar3;
   }
-  return dVar2;
+  return fVar1;
 }
 
 
 // 825A4598  UILocalVar_GetString  (ui/ui_localvars.cpp:232)
 
-void UILocalVar_GetString(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+char * UILocalVar_GetString(UILocalVar *param_1,char *param_2,int param_3)
 
 {
   int iVar1;
   int *piVar2;
+  char *pcVar3;
+  longlong lVar4;
   
-  piVar2 = (int *)__savegprlr_28();
+  lVar4 = (longlong)(int)param_2;
+  piVar2 = (int *)__savegprlr_28(param_1);
   if (piVar2 == (int *)0x0) {
-    MyAssertHandler(0xffffffff8216a794,0xe9,0,0xffffffff82000f98,0xffffffff8216a7d4);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_localvars.cpp",0xe9,0,
+                    "%s");
   }
   iVar1 = *piVar2;
   if (iVar1 != 0) {
     if (iVar1 != 1) {
       if (iVar1 != 2) {
-        MyAssertHandler(0xffffffff8216a794,0xf6,0,0xffffffff8216a7fc,iVar1,2);
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_localvars.cpp",0xf6,
+                        0,"var->type == UILOCALVAR_STRING\n\t%i, %i");
       }
-      __restgprlr_28(piVar2[2]);
-      return;
+      pcVar3 = (char *)__restgprlr_28(piVar2[2]);
+      return pcVar3;
     }
-    Com_sprintf(param_2,param_3,0xffffffff820181dc,(double)(float)piVar2[2]);
-    __restgprlr_28(param_2);
-    return;
+    Com_sprintf((char *)lVar4,param_3,"%g");
+    pcVar3 = (char *)__restgprlr_28(lVar4);
+    return pcVar3;
   }
-  Com_sprintf(param_2,param_3,0xffffffff8200c28c,piVar2[2]);
-  __restgprlr_28(param_2);
-  return;
+  Com_sprintf((char *)lVar4,param_3,"%i");
+  pcVar3 = (char *)__restgprlr_28(lVar4);
+  return pcVar3;
 }
 
 
 // 825A4670  UILocalVar_GetStringByName  (ui/ui_localvars.cpp:253)
 
-void UILocalVar_GetStringByName
-               (undefined8 param_1,ulonglong param_2,ulonglong param_3,undefined8 param_4)
+char * UILocalVar_GetStringByName
+                 (UILocalVarContext *param_1,char *param_2,char *param_3,int param_4)
 
 {
-  ulonglong uVar1;
+  UILocalVarContext *pUVar1;
+  UILocalVar *pUVar2;
+  char *pcVar3;
+  ulonglong uVar4;
+  ulonglong uVar5;
   
-  uVar1 = __savegprlr_26();
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8216a794,0x100,0,0xffffffff82000f98,0xffffffff820653c8);
+  uVar5 = (ulonglong)(int)param_3;
+  uVar4 = (ulonglong)(int)param_2;
+  pUVar1 = (UILocalVarContext *)__savegprlr_26(param_1);
+  if (pUVar1 == (UILocalVarContext *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_localvars.cpp",0x100,0,
+                    "%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8216a794,0x101,0,0xffffffff82000f98,0xffffffff8216a87c);
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_localvars.cpp",0x101,0,
+                    "%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8216a794,0x102,0,0xffffffff82000f98,0xffffffff8216a870);
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_localvars.cpp",0x102,0,
+                    "%s");
   }
-  uVar1 = UILocalVar_Find(uVar1,param_2);
-  if ((uVar1 & 0xffffffff) == 0) {
-    Com_PrintWarning(0xd,0xffffffff8216a828,param_2);
-    __restgprlr_26(0xffffffff820068af);
-    return;
+  pUVar2 = UILocalVar_Find(pUVar1,(char *)uVar4);
+  if (pUVar2 == (UILocalVar *)0x0) {
+    Com_PrintWarning(0xd,
+                     "WARNING: Could not find LocalVar \'%s\' in UILocalVar_GetStringByName().\n");
+    pcVar3 = (char *)__restgprlr_26(0xffffffff820068af);
+    return pcVar3;
   }
-  UILocalVar_GetString(uVar1,param_3,param_4);
-  __restgprlr_26();
-  return;
+  pcVar3 = UILocalVar_GetString(pUVar2,(char *)uVar5,param_4);
+  pcVar3 = (char *)__restgprlr_26(pcVar3);
+  return pcVar3;
 }
 
 
 // 825A4758  UILocalVar_SetBool  (ui/ui_localvars.cpp:272)
 
-void UILocalVar_SetBool(undefined8 param_1,uint param_2)
+void UILocalVar_SetBool(UILocalVar *param_1,bool param_2)
 
 {
   int *piVar1;
+  uint uVar2;
   
-  piVar1 = (int *)__savegprlr_27();
+  uVar2 = (uint)param_2;
+  piVar1 = (int *)__savegprlr_27(param_1);
   if (piVar1 == (int *)0x0) {
-    MyAssertHandler(0xffffffff8216a794,0x113,0,0xffffffff82000f98,0xffffffff8216a7d4);
-    MyAssertHandler(0xffffffff8216a794,0x40,0,0xffffffff82000f98,0xffffffff8216a7d4);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_localvars.cpp",0x113,0,
+                    "%s");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_localvars.cpp",0x40,0,
+                    "%s");
   }
   if (*piVar1 == 2) {
-    FreeString(piVar1[2],0x23);
+    FreeString((char *)piVar1[2],0x23);
   }
   *piVar1 = 0;
-  piVar1[2] = param_2 & 0xff;
+  piVar1[2] = uVar2 & 0xff;
   UI_IncExpressionExecuteTime();
   __restgprlr_27();
   return;
@@ -437,18 +487,20 @@ void UILocalVar_SetBool(undefined8 param_1,uint param_2)
 
 // 825A47F0  UILocalVar_SetInt  (ui/ui_localvars.cpp:288)
 
-void UILocalVar_SetInt(undefined8 param_1,int param_2)
+void UILocalVar_SetInt(UILocalVar *param_1,int param_2)
 
 {
   int *piVar1;
   
-  piVar1 = (int *)__savegprlr_27();
+  piVar1 = (int *)__savegprlr_27(param_1);
   if (piVar1 == (int *)0x0) {
-    MyAssertHandler(0xffffffff8216a794,0x123,0,0xffffffff82000f98,0xffffffff8216a7d4);
-    MyAssertHandler(0xffffffff8216a794,0x40,0,0xffffffff82000f98,0xffffffff8216a7d4);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_localvars.cpp",0x123,0,
+                    "%s");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_localvars.cpp",0x40,0,
+                    "%s");
   }
   if (*piVar1 == 2) {
-    FreeString(piVar1[2],0x23);
+    FreeString((char *)piVar1[2],0x23);
   }
   piVar1[2] = param_2;
   *piVar1 = 0;
@@ -460,21 +512,23 @@ void UILocalVar_SetInt(undefined8 param_1,int param_2)
 
 // 825A4888  UILocalVar_SetFloat  (ui/ui_localvars.cpp:304)
 
-void UILocalVar_SetFloat(void)
+void UILocalVar_SetFloat(UILocalVar *param_1,float param_2)
 
 {
   int *piVar1;
   double extraout_f1;
   double dVar2;
   
-  piVar1 = (int *)__savegprlr_28();
+  piVar1 = (int *)__savegprlr_28((double)param_2,param_1);
   dVar2 = extraout_f1;
   if (piVar1 == (int *)0x0) {
-    MyAssertHandler(0xffffffff8216a794,0x133,0,0xffffffff82000f98,0xffffffff8216a7d4);
-    MyAssertHandler(0xffffffff8216a794,0x40,0,0xffffffff82000f98,0xffffffff8216a7d4);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_localvars.cpp",0x133,0,
+                    "%s");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_localvars.cpp",0x40,0,
+                    "%s");
   }
   if (*piVar1 == 2) {
-    FreeString(piVar1[2],0x23);
+    FreeString((char *)piVar1[2],0x23);
   }
   piVar1[2] = (int)(float)dVar2;
   *piVar1 = 1;
@@ -486,23 +540,25 @@ void UILocalVar_SetFloat(void)
 
 // 825A4928  UILocalVar_SetString  (ui/ui_localvars.cpp:320)
 
-void UILocalVar_SetString(undefined8 param_1,undefined8 param_2)
+void UILocalVar_SetString(UILocalVar *param_1,char *param_2)
 
 {
   int *piVar1;
-  int iVar2;
+  char *pcVar2;
   
-  piVar1 = (int *)__savegprlr_27();
+  piVar1 = (int *)__savegprlr_27(param_1);
   if (piVar1 == (int *)0x0) {
-    MyAssertHandler(0xffffffff8216a794,0x143,0,0xffffffff82000f98,0xffffffff8216a7d4);
-    MyAssertHandler(0xffffffff8216a794,0x40,0,0xffffffff82000f98,0xffffffff8216a7d4);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_localvars.cpp",0x143,0,
+                    "%s");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_localvars.cpp",0x40,0,
+                    "%s");
   }
   if (*piVar1 == 2) {
-    FreeString(piVar1[2],0x23);
+    FreeString((char *)piVar1[2],0x23);
   }
   *piVar1 = 2;
-  iVar2 = CopyString(param_2,0xffffffff8216a884,0x23);
-  piVar1[2] = iVar2;
+  pcVar2 = CopyString(param_2,"UILocalVar_SetString",0x23);
+  piVar1[2] = (int)pcVar2;
   UI_IncExpressionExecuteTime();
   __restgprlr_27();
   return;

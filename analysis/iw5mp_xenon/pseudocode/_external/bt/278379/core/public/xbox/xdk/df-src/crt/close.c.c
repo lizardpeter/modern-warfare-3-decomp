@@ -2,101 +2,102 @@
 
 // 829221E8  _close  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/close.c:41)
 
-int _close(int _FileHandle)
+int _close(int param_1)
 
 {
-  uint _Filehandle;
-  ulong *puVar2;
-  int *piVar3;
-  ulonglong uVar1;
-  int iVar4;
+  int iVar1;
+  uint uVar3;
+  ulong *puVar4;
+  int *piVar5;
+  ulonglong uVar2;
+  int iVar6;
   uint uStack00000014;
   uint local_40;
   
-  _Filehandle = __savegprlr_27(_FileHandle);
-  uStack00000014 = _Filehandle;
-  if (_Filehandle == 0xfffffffe) {
-    puVar2 = __doserrno();
-    *puVar2 = 0;
-    piVar3 = _errno();
-    uVar1 = 0xffffffffffffffff;
-    *piVar3 = 9;
+  uVar3 = __savegprlr_27(param_1);
+  uStack00000014 = uVar3;
+  if (uVar3 == 0xfffffffe) {
+    puVar4 = __doserrno();
+    *puVar4 = 0;
+    piVar5 = _errno();
+    uVar2 = 0xffffffffffffffff;
+    *piVar5 = 9;
   }
   else {
-    if ((-1 < (int)_Filehandle) && (_Filehandle < DAT_84897db0)) {
-      iVar4 = (_Filehandle & 0x1f) * 0x48;
-      if ((*(byte *)((&DAT_84897dc0)[(int)_Filehandle >> 5] + iVar4 + 4) & 1) != 0) {
-        __lock_fhandle(_Filehandle);
-        if ((*(byte *)((&DAT_84897dc0)[(int)_Filehandle >> 5] + iVar4 + 4) & 1) == 0) {
-          piVar3 = _errno();
-          *piVar3 = 9;
+    if ((-1 < (int)uVar3) && (uVar3 < (uint)_nhandle)) {
+      iVar6 = ((int)uVar3 >> 5) * 4;
+      iVar1 = (uVar3 & 0x1f) * 0x48;
+      if ((*(byte *)(*(int *)(&__pioinfo + iVar6) + iVar1 + 4) & 1) != 0) {
+        __lock_fhandle(uVar3);
+        if ((*(byte *)(*(int *)(&__pioinfo + iVar6) + iVar1 + 4) & 1) == 0) {
+          piVar5 = _errno();
+          *piVar5 = 9;
           local_40 = 0xffffffff;
         }
         else {
-          local_40 = _close_nolock(_Filehandle);
+          local_40 = _close_nolock(uVar3);
         }
         FUN_82922310();
-        uVar1 = (ulonglong)local_40;
+        uVar2 = (ulonglong)local_40;
         goto LAB_829222e8;
       }
     }
-    puVar2 = __doserrno();
-    *puVar2 = 0;
-    piVar3 = _errno();
-    *piVar3 = 9;
+    puVar4 = __doserrno();
+    *puVar4 = 0;
+    piVar5 = _errno();
+    *piVar5 = 9;
     _invalid_parameter_noinfo();
-    uVar1 = 0xffffffffffffffff;
+    uVar2 = 0xffffffffffffffff;
   }
 LAB_829222e8:
-  iVar4 = __restgprlr_27(uVar1);
-  return iVar4;
+  iVar6 = __restgprlr_27(uVar2);
+  return iVar6;
 }
 
 
 // 82922100  _close_nolock  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/close.c:71)
 
-int _close_nolock(int _FileHandle)
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+int _close_nolock(int param_1)
 
 {
-  uint _FileHandle_00;
-  intptr_t iVar2;
-  intptr_t iVar3;
-  HANDLE hObject;
-  BOOL BVar4;
-  DWORD DVar5;
+  uint uVar2;
+  int iVar3;
+  int iVar4;
+  void *pvVar5;
+  ulong uVar6;
   undefined8 uVar1;
-  int iVar6;
   
-  _FileHandle_00 = __savegprlr_29(_FileHandle);
-  iVar2 = _get_osfhandle(_FileHandle_00);
-  if (iVar2 != -1) {
-    if (((_FileHandle_00 == 1) && ((*(byte *)(DAT_84897dc0 + 0x94) & 1) != 0)) ||
-       ((_FileHandle_00 == 2 && ((*(byte *)(DAT_84897dc0 + 0x4c) & 1) != 0)))) {
-      iVar2 = _get_osfhandle(2);
-      iVar3 = _get_osfhandle(1);
-      if (iVar3 == iVar2) goto LAB_8292218c;
+  uVar2 = __savegprlr_29(param_1);
+  iVar3 = _get_osfhandle(uVar2);
+  if (iVar3 != -1) {
+    if (((uVar2 == 1) && ((*(byte *)(___pioinfo + 0x94) & 1) != 0)) ||
+       ((uVar2 == 2 && ((*(byte *)(___pioinfo + 0x4c) & 1) != 0)))) {
+      iVar3 = _get_osfhandle(2);
+      iVar4 = _get_osfhandle(1);
+      if (iVar4 == iVar3) goto LAB_8292218c;
     }
-    hObject = (HANDLE)_get_osfhandle(_FileHandle_00);
-    BVar4 = CloseHandle(hObject);
-    if (BVar4 == 0) {
-      DVar5 = GetLastError();
+    pvVar5 = (void *)_get_osfhandle(uVar2);
+    iVar3 = CloseHandle(pvVar5);
+    if (iVar3 == 0) {
+      uVar6 = GetLastError();
       goto LAB_82922190;
     }
   }
 LAB_8292218c:
-  DVar5 = 0;
+  uVar6 = 0;
 LAB_82922190:
-  _free_osfhnd(_FileHandle_00);
-  *(undefined1 *)((&DAT_84897dc0)[(int)_FileHandle_00 >> 5] + (_FileHandle_00 & 0x1f) * 0x48 + 4) =
-       0;
-  if (DVar5 == 0) {
+  _free_osfhnd(uVar2);
+  *(undefined1 *)(*(int *)(&__pioinfo + ((int)uVar2 >> 5) * 4) + (uVar2 & 0x1f) * 0x48 + 4) = 0;
+  if (uVar6 == 0) {
     uVar1 = 0;
   }
   else {
-    _dosmaperr(DVar5);
+    _dosmaperr(uVar6);
     uVar1 = 0xffffffffffffffff;
   }
-  iVar6 = __restgprlr_29(uVar1);
-  return iVar6;
+  iVar3 = __restgprlr_29(uVar1);
+  return iVar3;
 }
 

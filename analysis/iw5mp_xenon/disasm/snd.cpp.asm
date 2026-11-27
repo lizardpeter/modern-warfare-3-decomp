@@ -20828,13 +20828,12 @@ LAB_82855868:
   8285587C  398C588C             addi r12,r12,0x588c
   82855880  7C0C002E             lwzx r0,r12,r0
   82855884  7C0903A6             mtspr CTR,r0
-switchD:
   82855888  4E800420             bctr
-caseD_0:
+LAB_828558c8:
   828558C8  38600001             li r3,0x1
   828558CC  38210080             addi r1,r1,0x80
   828558D0  480C0E38             b 0x82916708
-caseD_2:
+LAB_828558d4:
   828558D4  39400012             li r10,0x12
   828558D8  7D69FE70             srawi r9,r11,0x1f
   828558DC  55480FFE             rlwinm r8,r10,0x1,0x1f,0x1f

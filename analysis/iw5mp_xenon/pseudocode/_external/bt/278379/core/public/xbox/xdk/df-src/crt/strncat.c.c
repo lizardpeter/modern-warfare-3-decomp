@@ -2,32 +2,32 @@
 
 // 82918658  strncat  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/strncat.c:44)
 
-char * strncat(char *_Dest,char *_Source,size_t _Count)
+char * strncat(char *param_1,char *param_2,uint param_3)
 
 {
   char cVar1;
   char *pcVar2;
   char *pcVar3;
   
-  pcVar2 = _Dest;
+  pcVar2 = param_1;
   do {
     pcVar3 = pcVar2;
     pcVar2 = pcVar3 + 1;
   } while (*pcVar3 != '\0');
-  if (_Count != 0) {
-    pcVar2 = _Source + -1;
+  if (param_3 != 0) {
+    pcVar2 = param_2 + -1;
     do {
       pcVar2 = pcVar2 + 1;
       cVar1 = *pcVar2;
-      _Count = _Count - 1;
+      param_3 = param_3 - 1;
       *pcVar3 = cVar1;
       pcVar3 = pcVar3 + 1;
       if (cVar1 == '\0') {
-        return _Dest;
+        return param_1;
       }
-    } while (_Count != 0);
+    } while (param_3 != 0);
   }
   *pcVar3 = '\0';
-  return _Dest;
+  return param_1;
 }
 

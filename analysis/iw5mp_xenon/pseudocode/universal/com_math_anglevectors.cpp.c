@@ -2,55 +2,63 @@
 
 // 825DFEB0  AngleVectors  (universal/com_math_anglevectors.cpp:12)
 
-void AngleVectors(undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4)
+void AngleVectors(float *param_1,float *param_2,float *param_3,float *param_4)
 
 {
   float *pfVar1;
-  float *pfVar2;
-  double dVar3;
-  double dVar4;
-  double dVar5;
+  ulonglong uVar2;
+  float *pfVar3;
+  ulonglong uVar4;
+  ulonglong uVar5;
   double dVar6;
   double dVar7;
   double dVar8;
   double dVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
   
-  __savegprlr_28();
+  uVar5 = (ulonglong)(int)param_4;
+  uVar4 = (ulonglong)(int)param_3;
+  uVar2 = (ulonglong)(int)param_2;
+  __savegprlr_28(param_1);
   pfVar1 = (float *)__savefpr_26();
-  dVar5 = 0.01745329238474369;
-  dVar7 = (double)(pfVar1[1] * 0.017453292);
-  dVar3 = sin(dVar7);
-  dVar9 = (double)(float)dVar3;
-  dVar3 = cos(dVar7);
-  dVar8 = (double)(float)dVar3;
-  dVar4 = (double)(float)((double)*pfVar1 * dVar5);
-  dVar3 = sin(dVar4);
-  dVar7 = (double)(float)dVar3;
-  dVar3 = cos(dVar4);
-  dVar3 = (double)(float)dVar3;
-  if ((param_2 & 0xffffffff) != 0) {
-    pfVar2 = (float *)param_2;
-    *pfVar2 = (float)(dVar3 * dVar8);
-    pfVar2[1] = (float)(dVar3 * dVar9);
-    pfVar2[2] = (float)-dVar7;
+  dVar8 = 0.01745329238474369;
+  dVar10 = (double)(pfVar1[1] * 0.017453292);
+  dVar6 = sin(dVar10);
+  dVar12 = (double)(float)dVar6;
+  dVar6 = cos(dVar10);
+  dVar11 = (double)(float)dVar6;
+  dVar7 = (double)(float)((double)*pfVar1 * dVar8);
+  dVar6 = sin(dVar7);
+  dVar10 = (double)(float)dVar6;
+  dVar6 = cos(dVar7);
+  dVar6 = (double)(float)dVar6;
+  if ((uVar2 & 0xffffffff) != 0) {
+    pfVar3 = (float *)uVar2;
+    *pfVar3 = (float)(dVar6 * dVar11);
+    pfVar3[1] = (float)(dVar6 * dVar12);
+    pfVar3[2] = (float)-dVar10;
   }
-  if (((param_3 & 0xffffffff) != 0) || ((param_4 & 0xffffffff) != 0)) {
-    dVar5 = (double)(float)((double)pfVar1[2] * dVar5);
-    dVar4 = sin(dVar5);
-    dVar6 = (double)(float)dVar4;
-    dVar4 = cos(dVar5);
-    dVar4 = (double)(float)dVar4;
-    if ((param_3 & 0xffffffff) != 0) {
-      pfVar1 = (float *)param_3;
-      pfVar1[2] = (float)(dVar6 * dVar3) * -1.0;
-      *pfVar1 = (float)(dVar4 * dVar9 - (double)(float)((double)(float)(dVar6 * dVar7) * dVar8));
-      pfVar1[1] = (float)(dVar4 * dVar8) * -1.0 - (float)((double)(float)(dVar6 * dVar7) * dVar9);
+  if (((uVar4 & 0xffffffff) != 0) || ((uVar5 & 0xffffffff) != 0)) {
+    dVar8 = (double)(float)((double)pfVar1[2] * dVar8);
+    dVar7 = sin(dVar8);
+    dVar9 = (double)(float)dVar7;
+    dVar7 = cos(dVar8);
+    dVar7 = (double)(float)dVar7;
+    if ((uVar4 & 0xffffffff) != 0) {
+      pfVar1 = (float *)uVar4;
+      pfVar1[2] = (float)(dVar9 * dVar6) * -1.0;
+      *pfVar1 = (float)(dVar7 * dVar12 - (double)(float)((double)(float)(dVar9 * dVar10) * dVar11));
+      pfVar1[1] = (float)(dVar7 * dVar11) * -1.0 - (float)((double)(float)(dVar9 * dVar10) * dVar12)
+      ;
     }
-    if ((param_4 & 0xffffffff) != 0) {
-      pfVar1 = (float *)param_4;
-      pfVar1[2] = (float)(dVar4 * dVar3);
-      *pfVar1 = (float)((double)(float)(dVar4 * dVar7) * dVar8 + (double)(float)(dVar6 * dVar9));
-      pfVar1[1] = (float)((double)(float)(dVar4 * dVar7) * dVar9 - (double)(float)(dVar6 * dVar8));
+    if ((uVar5 & 0xffffffff) != 0) {
+      pfVar1 = (float *)uVar5;
+      pfVar1[2] = (float)(dVar7 * dVar6);
+      *pfVar1 = (float)((double)(float)(dVar7 * dVar10) * dVar11 + (double)(float)(dVar9 * dVar12));
+      pfVar1[1] = (float)((double)(float)(dVar7 * dVar10) * dVar12 - (double)(float)(dVar9 * dVar11)
+                         );
     }
   }
   __restfpr_26();
@@ -61,35 +69,204 @@ void AngleVectors(undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglo
 
 // 825DFFE8  AnglesToAxis  (universal/com_math_anglevectors.cpp:106)
 
-/* WARNING: Control flow encountered bad instruction data */
-
-void AnglesToAxis(void)
+void AnglesToAxis(float *param_1,float (*param_2) [3])
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs35 [16];
+  longlong lVar1;
+  undefined1 auVar2 [16];
+  undefined1 auVar3 [16];
+  undefined1 auVar4 [16];
+  undefined1 auVar5 [16];
+  undefined1 auVar6 [16];
+  undefined1 auVar7 [16];
+  undefined1 auVar8 [16];
+  undefined1 auVar9 [16];
+  undefined1 auVar10 [16];
+  undefined1 auVar11 [16];
+  undefined1 auVar12 [16];
+  __vector4 in_stack_ffffff78;
+  __vector4_u_0 local_30;
+  __vector4_u_0 local_20;
   
-  altv300_21(in_vs32,in_vs35);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  lVar1 = (longlong)(int)param_2;
+  auVar12 = loadVectorLeftIndexed((longlong)(int)param_1);
+  auVar11 = vectorSplatImmediateSignedWord(1);
+  auVar10 = loadVectorRightIndexed((longlong)(int)param_1 + 0x10);
+  auVar11 = vectorConvertFromSignedFixedPointWord128(auVar11,1);
+  auVar10 = (auVar12 | auVar10) & (undefined1  [16])g_keepXYZ.field0_0x0;
+  auVar10 = vectorPermute128(auVar10,auVar10,(undefined1  [16])g_XZYW.field0_0x0);
+  auVar10 = vectorMultiplyFloatingPoint(auVar10,(undefined1  [16])g_degreeToRadian.field0_0x0);
+  vectorMultiplyFloatingPoint(auVar10,auVar11);
+  XMVectorSinCos((__vector4 *)&local_20._s_2,(__vector4 *)&local_30._s_2,in_stack_ffffff78);
+  auVar10 = vectorSplatImmediateSignedWord(0xff);
+  auVar9 = vectorSplatImmediateSignedWord(0);
+  auVar12 = vectorShiftLeftWord128(auVar10,auVar10);
+  auVar7 = vectorUnpackD3Dtype(auVar9,4);
+  auVar11 = vectorSplatWord((undefined1  [16])local_30,1);
+  auVar10 = vectorSplatWord((undefined1  [16])local_30,0);
+  auVar8 = vectorRotateLeftImmediateAndMaskInsert(auVar12,auVar9,9,0);
+  auVar9 = vectorSplatWord((undefined1  [16])local_20,0);
+  auVar12 = vectorSplatWord((undefined1  [16])local_30,2);
+  auVar6 = vectorRotateLeftImmediateAndMaskInsert(auVar11,(undefined1  [16])local_20,4,0);
+  auVar11 = vectorSplatWord((undefined1  [16])local_20,1);
+  auVar5 = vectorRotateLeftImmediateAndMaskInsert(auVar10,(undefined1  [16])local_20,8,0);
+  auVar10 = vectorSplatWord((undefined1  [16])local_20,2);
+  auVar4 = vectorRotateLeftImmediateAndMaskInsert(auVar9,(undefined1  [16])local_30,8,0);
+  auVar2 = vectorPermuteWordImmediate(auVar7,0xfe);
+  auVar3 = vectorRotateLeftImmediateAndMaskInsert(auVar12,(undefined1  [16])local_20,2,0);
+  auVar9 = vectorRotateLeftImmediateAndMaskInsert(auVar11,(undefined1  [16])local_30,4,0);
+  auVar11 = vectorMultiplyFloatingPoint(auVar5,auVar6);
+  auVar12 = vectorRotateLeftImmediateAndMaskInsert(auVar10,(undefined1  [16])local_30,2,0);
+  auVar10 = vectorMultiplyFloatingPoint(auVar4 ^ auVar8,auVar9);
+  auVar11 = vectorMultiplyFloatingPoint(auVar11,auVar3);
+  auVar10 = vectorMultiplyAddFloatingPoint128(auVar12,auVar10,auVar11);
+  auVar11 = vectorPermute128(auVar10,auVar10,(undefined1  [16])g_YXZW.field0_0x0);
+  auVar10 = vectorAddFloatingPoint128(auVar11,auVar11);
+  auVar9 = vectorPermuteWordImmediate(auVar11,7);
+  auVar12 = vectorSplatWord(auVar11,3);
+  auVar3 = vectorMultiplyFloatingPoint(auVar11,auVar10);
+  auVar11 = vectorPermuteWordImmediate(auVar10,0x9b);
+  auVar10 = vectorPermuteWordImmediate(auVar10,99);
+  auVar9 = vectorMultiplyFloatingPoint(auVar9,auVar11);
+  auVar12 = vectorMultiplyFloatingPoint(auVar12,auVar10);
+  auVar10 = vectorPermuteWordImmediate(auVar3,0x40);
+  auVar11 = vectorPermuteWordImmediate(auVar3,0xa4);
+  auVar10 = vectorSubtractFloatingPoint128(auVar2,auVar10);
+  auVar3 = vectorAddFloatingPoint128(auVar9,auVar12);
+  auVar12 = vectorSubtractFloatingPoint128(auVar9,auVar12);
+  auVar9 = vectorSubtractFloatingPoint128(auVar10,auVar11);
+  auVar11 = vectorPermuteWordImmediate(auVar3,0x42);
+  auVar10 = vectorShiftLeftDoubleByOctetImmediate(auVar12,auVar3,8);
+  auVar12 = vectorRotateLeftImmediateAndMaskInsert(auVar11,auVar12,6,3);
+  auVar11 = vectorPermuteWordImmediate(auVar10,0x88);
+  auVar9 = vectorRotateLeftImmediateAndMaskInsert(auVar9,auVar7,1,3);
+  auVar10 = vectorPermuteWordImmediate(auVar9,7);
+  auVar5 = vectorRotateLeftImmediateAndMaskInsert(auVar11,auVar9,3,0);
+  auVar9 = vectorRotateLeftImmediateAndMaskInsert(auVar9,auVar12,6,3);
+  auVar12 = vectorMergeLowWord128(auVar12,auVar10);
+  auVar11 = vectorSplatWord(auVar9,0);
+  auVar10 = vectorSplatWord(auVar9,1);
+  auVar4 = vectorSplatWord(auVar9,2);
+  auVar2 = vectorSplatWord(auVar12,0);
+  auVar3 = vectorSplatWord(auVar12,1);
+  auVar9 = vectorSplatWord(auVar12,2);
+  auVar12 = vectorSplatWord(auVar5,0);
+  storeVectorElementWordIndexed(auVar11,lVar1);
+  auVar11 = vectorSplatWord(auVar5,1);
+  storeVectorElementWordIndexed(auVar10,lVar1 + 4);
+  auVar10 = vectorSplatWord(auVar5,2);
+  storeVectorElementWordIndexed(auVar4,lVar1 + 8);
+  storeVectorElementWordIndexed(auVar2,lVar1 + 0xc);
+  storeVectorElementWordIndexed(auVar3,lVar1 + 0x10);
+  storeVectorElementWordIndexed(auVar9,lVar1 + 0x14);
+  storeVectorElementWordIndexed(auVar12,lVar1 + 0x18);
+  storeVectorElementWordIndexed(auVar11,lVar1 + 0x1c);
+  storeVectorElementWordIndexed(auVar10,lVar1 + 0x20);
+  return;
 }
 
 
 // 825E01A0  RadianToAxis  (universal/com_math_anglevectors.cpp:119)
 
-/* WARNING: Control flow encountered bad instruction data */
-
-void RadianToAxis(void)
+void RadianToAxis(float *param_1,float (*param_2) [3])
 
 {
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  longlong lVar1;
+  undefined1 auVar2 [16];
+  undefined1 auVar3 [16];
+  undefined1 auVar4 [16];
+  undefined1 auVar5 [16];
+  undefined1 auVar6 [16];
+  undefined1 auVar7 [16];
+  undefined1 auVar8 [16];
+  undefined1 auVar9 [16];
+  undefined1 auVar10 [16];
+  undefined1 auVar11 [16];
+  undefined1 auVar12 [16];
+  __vector4 in_stack_ffffff78;
+  __vector4_u_0 local_30;
+  __vector4_u_0 local_20;
+  
+  lVar1 = (longlong)(int)param_2;
+  auVar12 = vectorSplatImmediateSignedWord(1);
+  auVar11 = loadVectorLeftIndexed((longlong)(int)param_1);
+  auVar10 = vectorConvertFromSignedFixedPointWord128(auVar12,1);
+  auVar12 = loadVectorRightIndexed((longlong)(int)param_1 + 0x10);
+  auVar12 = (auVar11 | auVar12) & (undefined1  [16])g_keepXYZ.field0_0x0;
+  auVar12 = vectorPermute128(auVar12,auVar12,(undefined1  [16])g_XZYW.field0_0x0);
+  vectorMultiplyFloatingPoint(auVar12,auVar10);
+  XMVectorSinCos((__vector4 *)&local_20._s_2,(__vector4 *)&local_30._s_2,in_stack_ffffff78);
+  auVar12 = vectorSplatImmediateSignedWord(0xff);
+  auVar9 = vectorSplatImmediateSignedWord(0);
+  auVar10 = vectorShiftLeftWord128(auVar12,auVar12);
+  auVar7 = vectorUnpackD3Dtype(auVar9,4);
+  auVar11 = vectorSplatWord((undefined1  [16])local_30,1);
+  auVar12 = vectorSplatWord((undefined1  [16])local_30,0);
+  auVar8 = vectorRotateLeftImmediateAndMaskInsert(auVar10,auVar9,9,0);
+  auVar9 = vectorSplatWord((undefined1  [16])local_20,0);
+  auVar10 = vectorSplatWord((undefined1  [16])local_20,1);
+  auVar6 = vectorRotateLeftImmediateAndMaskInsert(auVar11,(undefined1  [16])local_20,4,0);
+  auVar11 = vectorSplatWord((undefined1  [16])local_30,2);
+  auVar5 = vectorRotateLeftImmediateAndMaskInsert(auVar12,(undefined1  [16])local_20,8,0);
+  auVar12 = vectorSplatWord((undefined1  [16])local_20,2);
+  auVar4 = vectorRotateLeftImmediateAndMaskInsert(auVar9,(undefined1  [16])local_30,8,0);
+  auVar2 = vectorPermuteWordImmediate(auVar7,0xfe);
+  auVar9 = vectorRotateLeftImmediateAndMaskInsert(auVar10,(undefined1  [16])local_30,4,0);
+  auVar3 = vectorRotateLeftImmediateAndMaskInsert(auVar11,(undefined1  [16])local_20,2,0);
+  auVar10 = vectorMultiplyFloatingPoint(auVar5,auVar6);
+  auVar11 = vectorRotateLeftImmediateAndMaskInsert(auVar12,(undefined1  [16])local_30,2,0);
+  auVar12 = vectorMultiplyFloatingPoint(auVar4 ^ auVar8,auVar9);
+  auVar10 = vectorMultiplyFloatingPoint(auVar10,auVar3);
+  auVar12 = vectorMultiplyAddFloatingPoint128(auVar11,auVar12,auVar10);
+  auVar10 = vectorPermute128(auVar12,auVar12,(undefined1  [16])g_YXZW.field0_0x0);
+  auVar12 = vectorAddFloatingPoint128(auVar10,auVar10);
+  auVar3 = vectorPermuteWordImmediate(auVar10,7);
+  auVar9 = vectorSplatWord(auVar10,3);
+  auVar11 = vectorMultiplyFloatingPoint(auVar10,auVar12);
+  auVar10 = vectorPermuteWordImmediate(auVar12,0x9b);
+  auVar12 = vectorPermuteWordImmediate(auVar12,99);
+  auVar3 = vectorMultiplyFloatingPoint(auVar3,auVar10);
+  auVar9 = vectorMultiplyFloatingPoint(auVar9,auVar12);
+  auVar12 = vectorPermuteWordImmediate(auVar11,0x40);
+  auVar11 = vectorPermuteWordImmediate(auVar11,0xa4);
+  auVar10 = vectorSubtractFloatingPoint128(auVar2,auVar12);
+  auVar12 = vectorAddFloatingPoint128(auVar3,auVar9);
+  auVar3 = vectorSubtractFloatingPoint128(auVar3,auVar9);
+  auVar9 = vectorSubtractFloatingPoint128(auVar10,auVar11);
+  auVar10 = vectorPermuteWordImmediate(auVar12,0x42);
+  auVar12 = vectorShiftLeftDoubleByOctetImmediate(auVar3,auVar12,8);
+  auVar11 = vectorRotateLeftImmediateAndMaskInsert(auVar10,auVar3,6,3);
+  auVar10 = vectorPermuteWordImmediate(auVar12,0x88);
+  auVar9 = vectorRotateLeftImmediateAndMaskInsert(auVar9,auVar7,1,3);
+  auVar12 = vectorPermuteWordImmediate(auVar9,7);
+  auVar4 = vectorRotateLeftImmediateAndMaskInsert(auVar10,auVar9,3,0);
+  auVar3 = vectorRotateLeftImmediateAndMaskInsert(auVar9,auVar11,6,3);
+  auVar9 = vectorMergeLowWord128(auVar11,auVar12);
+  auVar11 = vectorSplatWord(auVar3,0);
+  auVar10 = vectorSplatWord(auVar3,1);
+  auVar12 = vectorSplatWord(auVar3,2);
+  storeVectorElementWordIndexed(auVar11,lVar1);
+  auVar2 = vectorSplatWord(auVar9,0);
+  storeVectorElementWordIndexed(auVar10,lVar1 + 4);
+  auVar3 = vectorSplatWord(auVar9,1);
+  storeVectorElementWordIndexed(auVar12,lVar1 + 8);
+  auVar9 = vectorSplatWord(auVar9,2);
+  auVar11 = vectorSplatWord(auVar4,0);
+  auVar10 = vectorSplatWord(auVar4,1);
+  auVar12 = vectorSplatWord(auVar4,2);
+  storeVectorElementWordIndexed(auVar2,lVar1 + 0xc);
+  storeVectorElementWordIndexed(auVar3,lVar1 + 0x10);
+  storeVectorElementWordIndexed(auVar9,lVar1 + 0x14);
+  storeVectorElementWordIndexed(auVar11,lVar1 + 0x18);
+  storeVectorElementWordIndexed(auVar10,lVar1 + 0x1c);
+  storeVectorElementWordIndexed(auVar12,lVar1 + 0x20);
+  return;
 }
 
 
 // 825E0348  Vec4Normalize  (universal/com_math_anglevectors.cpp:139)
 
-void Vec4Normalize(float *param_1)
+float Vec4Normalize(float *param_1)
 
 {
   float fVar1;
@@ -97,36 +274,75 @@ void Vec4Normalize(float *param_1)
   float fVar3;
   float fVar4;
   float fVar5;
+  float fVar6;
   
   fVar1 = param_1[1];
   fVar2 = *param_1;
   fVar3 = param_1[2];
   fVar4 = param_1[3];
-  fVar5 = SQRT(fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2 + fVar1 * fVar1);
-  if (fVar5 == 0.0) {
-    return;
+  fVar6 = SQRT(fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2 + fVar1 * fVar1);
+  if (fVar6 == 0.0) {
+    return fVar6;
   }
-  fVar5 = 1.0 / fVar5;
+  fVar5 = 1.0 / fVar6;
   *param_1 = fVar2 * fVar5;
   param_1[1] = fVar1 * fVar5;
   param_1[2] = fVar3 * fVar5;
   param_1[3] = fVar4 * fVar5;
-  return;
+  return fVar6;
 }
 
 
 // 825E03B0  AnglesToQuat  (universal/com_math_anglevectors.cpp:174)
 
-/* WARNING: Control flow encountered bad instruction data */
-
-void AnglesToQuat(void)
+void AnglesToQuat(float *param_1,float *param_2)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs35 [16];
+  undefined1 auVar1 [16];
+  undefined1 auVar2 [16];
+  undefined1 auVar3 [16];
+  undefined1 auVar4 [16];
+  undefined1 auVar5 [16];
+  undefined1 auVar6 [16];
+  undefined1 auVar7 [16];
+  undefined1 auVar8 [16];
+  undefined1 auVar9 [16];
+  __vector4 in_stack_ffffff78;
+  __vector4_u_0 local_40;
+  __vector4_u_0 local_30;
   
-  altv300_21(in_vs32,in_vs35);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  auVar9 = loadVectorLeftIndexed((longlong)(int)param_1);
+  auVar8 = vectorSplatImmediateSignedWord(1);
+  auVar7 = loadVectorRightIndexed((longlong)(int)param_1 + 0x10);
+  auVar8 = vectorConvertFromSignedFixedPointWord128(auVar8,1);
+  auVar7 = (auVar9 | auVar7) & (undefined1  [16])g_keepXYZ.field0_0x0;
+  auVar7 = vectorPermute128(auVar7,auVar7,(undefined1  [16])g_XZYW.field0_0x0);
+  auVar7 = vectorMultiplyFloatingPoint(auVar7,(undefined1  [16])g_degreeToRadian.field0_0x0);
+  vectorMultiplyFloatingPoint(auVar7,auVar8);
+  XMVectorSinCos((__vector4 *)&local_30._s_2,(__vector4 *)&local_40._s_2,in_stack_ffffff78);
+  auVar7 = vectorSplatImmediateSignedWord(0xff);
+  auVar6 = vectorSplatImmediateSignedWord(0);
+  auVar9 = vectorShiftLeftWord128(auVar7,auVar7);
+  auVar8 = vectorSplatWord((undefined1  [16])local_40,1);
+  auVar7 = vectorSplatWord((undefined1  [16])local_40,0);
+  auVar5 = vectorRotateLeftImmediateAndMaskInsert(auVar9,auVar6,9,0);
+  auVar6 = vectorSplatWord((undefined1  [16])local_30,0);
+  auVar9 = vectorSplatWord((undefined1  [16])local_40,2);
+  auVar4 = vectorRotateLeftImmediateAndMaskInsert(auVar8,(undefined1  [16])local_30,4,0);
+  auVar8 = vectorSplatWord((undefined1  [16])local_30,1);
+  auVar3 = vectorRotateLeftImmediateAndMaskInsert(auVar7,(undefined1  [16])local_30,8,0);
+  auVar7 = vectorSplatWord((undefined1  [16])local_30,2);
+  auVar2 = vectorRotateLeftImmediateAndMaskInsert(auVar6,(undefined1  [16])local_40,8,0);
+  auVar1 = vectorRotateLeftImmediateAndMaskInsert(auVar9,(undefined1  [16])local_30,2,0);
+  auVar6 = vectorRotateLeftImmediateAndMaskInsert(auVar8,(undefined1  [16])local_40,4,0);
+  auVar8 = vectorMultiplyFloatingPoint(auVar3,auVar4);
+  auVar9 = vectorRotateLeftImmediateAndMaskInsert(auVar7,(undefined1  [16])local_40,2,0);
+  auVar7 = vectorMultiplyFloatingPoint(auVar2 ^ auVar5,auVar6);
+  auVar8 = vectorMultiplyFloatingPoint(auVar8,auVar1);
+  auVar7 = vectorMultiplyAddFloatingPoint128(auVar9,auVar7,auVar8);
+  auVar7 = vectorPermute128(auVar7,auVar7,(undefined1  [16])g_YXZW.field0_0x0);
+  storeVectorLeftIndexed(auVar7,(longlong)(int)param_2);
+  storeVectorRightIndexed(auVar7,(longlong)(int)param_2 + 0x10);
+  return;
 }
 

@@ -2,72 +2,72 @@
 
 // 82916800  memset  (<external>/bt/278379/vctools/crt/xb/xbox/memsetp.asm:46)
 
-void * memset(void *_Dst,int _Val,size_t _Size)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void memset(void)
 
 {
   longlong lVar1;
-  ulonglong uVar2;
-  void *pvVar3;
-  undefined1 uVar5;
-  uint uVar4;
-  uint *puVar6;
-  uint *puVar7;
+  uint *in_r3;
+  uint in_r4;
+  undefined1 uVar3;
+  uint uVar2;
+  ulonglong in_r5;
+  uint *puVar4;
   code *UNRECOVERED_JUMPTABLE_00;
-  ulonglong uVar8;
+  ulonglong uVar5;
   
-  uVar2 = (ulonglong)(int)_Size;
-  lVar1 = uVar2 + 1;
-  puVar6 = _Dst;
+  lVar1 = in_r5 + 1;
   while( true ) {
     lVar1 = lVar1 + -1;
-    uVar5 = (undefined1)_Val;
-    if (lVar1 == 0 || ((uint)puVar6 & 3) == 0) break;
-    uVar2 = uVar2 - 1;
-    *(undefined1 *)puVar6 = uVar5;
-    puVar6 = (uint *)((int)puVar6 + 1);
+    uVar3 = (undefined1)in_r4;
+    if (lVar1 == 0 || ((uint)in_r3 & 3) == 0) break;
+    in_r5 = in_r5 - 1;
+    *(undefined1 *)in_r3 = uVar3;
+    in_r3 = (uint *)((int)in_r3 + 1);
   }
-  uVar4 = (_Val & 0xffU) << 8;
-  uVar4 = (uVar4 | _Val & 0xffff00ffU) << 0x10 | uVar4 | _Val & 0xffU;
-  for (uVar8 = (uVar2 & 0xffffffff) >> 4; uVar8 != 0; uVar8 = uVar8 - 1) {
-    *puVar6 = uVar4;
-    puVar6[1] = uVar4;
-    puVar6[2] = uVar4;
-    puVar6[3] = uVar4;
-    puVar6 = puVar6 + 4;
+  uVar2 = (in_r4 & 0xff) << 8;
+  uVar2 = (uVar2 | in_r4 & 0xffff00ff) << 0x10 | uVar2 | in_r4 & 0xff;
+  for (uVar5 = (in_r5 & 0xffffffff) >> 4; uVar5 != 0; uVar5 = uVar5 - 1) {
+    *in_r3 = uVar2;
+    in_r3[1] = uVar2;
+    in_r3[2] = uVar2;
+    in_r3[3] = uVar2;
+    in_r3 = in_r3 + 4;
   }
-  uVar8 = (uVar2 & 0xffffffff) >> 2 & 3;
-  puVar7 = puVar6;
-  if (uVar8 != 0) {
-    *puVar6 = uVar4;
-    puVar7 = puVar6 + 1;
-    if (uVar8 != 1) {
-      *puVar7 = uVar4;
-      puVar7 = puVar6 + 2;
-      if (uVar8 != 2) {
-        *puVar7 = uVar4;
-        puVar7 = puVar6 + 3;
+  uVar5 = (in_r5 & 0xffffffff) >> 2 & 3;
+  puVar4 = in_r3;
+  if (uVar5 != 0) {
+    *in_r3 = uVar2;
+    puVar4 = in_r3 + 1;
+    if (uVar5 != 1) {
+      *puVar4 = uVar2;
+      puVar4 = in_r3 + 2;
+      if (uVar5 != 2) {
+        *puVar4 = uVar2;
+        puVar4 = in_r3 + 3;
       }
     }
   }
-  uVar2 = uVar2 & 3;
-  if (uVar2 == 0) {
-    return _Dst;
+  uVar5 = in_r5 & 3;
+  if (uVar5 == 0) {
+    return;
   }
-  *(undefined1 *)puVar7 = uVar5;
+  *(undefined1 *)puVar4 = uVar3;
                     /* WARNING: Could not recover jumptable at 0x8291688c. Too many branches */
                     /* WARNING: Treating indirect jump as call */
-  if (uVar2 == 1) {
-    pvVar3 = (void *)(*UNRECOVERED_JUMPTABLE_00)();
-    return pvVar3;
+  if (uVar5 == 1) {
+    (*UNRECOVERED_JUMPTABLE_00)();
+    return;
   }
-  *(undefined1 *)((int)puVar7 + 1) = uVar5;
+  *(undefined1 *)((int)puVar4 + 1) = uVar3;
                     /* WARNING: Could not recover jumptable at 0x82916894. Too many branches */
                     /* WARNING: Treating indirect jump as call */
-  if (uVar2 == 2) {
-    pvVar3 = (void *)(*UNRECOVERED_JUMPTABLE_00)();
-    return pvVar3;
+  if (uVar5 == 2) {
+    (*UNRECOVERED_JUMPTABLE_00)();
+    return;
   }
-  *(undefined1 *)((int)puVar7 + 2) = uVar5;
-  return _Dst;
+  *(undefined1 *)((int)puVar4 + 2) = uVar3;
+  return;
 }
 

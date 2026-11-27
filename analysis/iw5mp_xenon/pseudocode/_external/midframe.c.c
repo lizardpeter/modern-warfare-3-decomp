@@ -2,71 +2,79 @@
 
 // 828CA9B0  MidFrameParam  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/midframe.c:72)
 
-void MidFrameParam(undefined8 param_1,float *param_2,undefined8 param_3,undefined8 param_4,
-                  undefined8 param_5,int param_6)
+void MidFrameParam(void *param_1,void *param_2,int param_3,int param_4,float param_5,int param_6)
 
 {
-  undefined4 uVar1;
-  float fVar2;
-  undefined4 *puVar4;
-  undefined8 uVar3;
+  void *pvVar1;
+  float *pfVar2;
+  undefined4 *puVar3;
+  float *pfVar4;
+  longlong lVar5;
+  longlong lVar6;
+  float *pfVar7;
+  int in_r8;
   double extraout_f1;
-  double dVar5;
-  double dVar6;
-  double dVar7;
   double dVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  float fVar12;
   float local_480;
-  undefined1 auStack_470 [1136];
+  float afStack_470 [284];
   
-  puVar4 = (undefined4 *)__savegprlr_25();
-  dVar6 = extraout_f1;
-  dVar5 = (double)MidEstPitch((double)(float)puVar4[0xd],(double)param_2[2],
-                              (double)(float)puVar4[0xc],(double)param_2[3]);
-  if (param_6 == 1) {
-    dVar5 = (double)(float)(dVar5 * 2.0);
+  lVar6 = (longlong)param_3;
+  lVar5 = (longlong)(int)param_2;
+  puVar3 = (undefined4 *)__savegprlr_25((double)param_5,param_1,lVar5,lVar6,param_4,param_6);
+  pfVar2 = (float *)lVar5;
+  dVar8 = extraout_f1;
+  fVar12 = MidEstPitch((float)puVar3[0xd],pfVar2[2],(float)puVar3[0xc],pfVar2[3]);
+  dVar10 = (double)fVar12;
+  if (in_r8 == 1) {
+    dVar10 = (double)(float)(dVar10 * 2.0);
   }
-  uVar1 = *puVar4;
-  uVar3 = NellyAdaptiveWindow(dVar5);
-  GetFrameSpCBM(uVar1,param_3,uVar3,auStack_470);
-  HammingWindowNormSC(auStack_470,uVar3);
-  dVar8 = 0.10000000149011612;
-  dVar5 = (double)TDPitchRefine(dVar5,0x3fb99999a0000000,auStack_470,uVar3);
-  *param_2 = (float)dVar5;
-  if (param_6 == 1) {
-    *param_2 = (float)(dVar5 * 0.5);
+  pvVar1 = (void *)*puVar3;
+  pfVar4 = (float *)NellyAdaptiveWindow((float)dVar10);
+  pfVar7 = pfVar4;
+  GetFrameSpCBM(pvVar1,(int)lVar6,(int)pfVar4,afStack_470);
+  HammingWindowNormSC(afStack_470,(int)pfVar4);
+  dVar11 = 0.10000000149011612;
+  fVar12 = TDPitchRefine(afStack_470,(int)pfVar4,(float)dVar10,pfVar7,0.1);
+  *pfVar2 = fVar12;
+  if (in_r8 == 1) {
+    *pfVar2 = fVar12 * 0.5;
   }
-  dVar5 = (double)param_2[3];
-  dVar7 = (double)(float)puVar4[0xc];
-  if ((double)(float)puVar4[7] < dVar8) {
-    puVar4[7] = (float)dVar8;
+  dVar10 = (double)pfVar2[3];
+  dVar9 = (double)(float)puVar3[0xc];
+  if ((double)(float)puVar3[7] < dVar11) {
+    puVar3[7] = (float)dVar11;
   }
-  if (dVar6 < dVar8) {
-    dVar6 = dVar8;
+  if (dVar8 < dVar11) {
+    dVar8 = dVar11;
   }
-  if (ABS((float)(dVar5 - dVar7)) < 0.15) {
-    fVar2 = (float)(dVar7 + dVar5) * 0.5;
+  if (ABS((float)(dVar10 - dVar9)) < 0.15) {
+    fVar12 = (float)(dVar9 + dVar10) * 0.5;
     goto LAB_828caaf8;
   }
   if (0.35 <= local_480) {
-    if (dVar5 <= dVar7) goto LAB_828caaec;
+    if (dVar10 <= dVar9) goto LAB_828caaec;
 LAB_828caadc:
-    dVar5 = dVar5 / dVar6;
+    dVar10 = dVar10 / dVar8;
   }
   else {
-    if (dVar5 <= dVar7) goto LAB_828caadc;
+    if (dVar10 <= dVar9) goto LAB_828caadc;
 LAB_828caaec:
-    dVar5 = dVar7 / (double)(float)puVar4[7];
+    dVar10 = dVar9 / (double)(float)puVar3[7];
   }
-  fVar2 = (float)dVar5 * local_480;
+  fVar12 = (float)dVar10 * local_480;
 LAB_828caaf8:
-  if (fVar2 < 0.0) {
-    fVar2 = 0.0;
+  if (fVar12 < 0.0) {
+    fVar12 = 0.0;
   }
-  if (1.0 < fVar2) {
-    fVar2 = 1.0;
+  if (1.0 < fVar12) {
+    fVar12 = 1.0;
   }
-  puVar4[7] = (float)dVar6;
-  param_2[1] = fVar2;
+  puVar3[7] = (float)dVar8;
+  pfVar2[1] = fVar12;
   __restgprlr_25();
   return;
 }

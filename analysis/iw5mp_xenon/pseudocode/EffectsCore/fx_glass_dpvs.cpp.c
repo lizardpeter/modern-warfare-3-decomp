@@ -3,146 +3,154 @@
 // 8242AD88  FX_IsGlassPieceCulledByDpvsPlane  (EffectsCore/fx_glass_dpvs.cpp:59)
 
 bool FX_IsGlassPieceCulledByDpvsPlane
-               (double param_1,double param_2,float *param_3,float *param_4,undefined8 param_5,
-               undefined8 param_6,float *param_7)
+               (float *param_1,float *param_2,float param_3,float param_4,DpvsPlane *param_5)
 
 {
   float fVar1;
-  double dVar2;
+  float fVar2;
+  float *in_r7;
   
-  dVar2 = (double)(param_4[2] * param_7[2] + param_4[1] * param_7[1] + *param_4 * *param_7);
-  fVar1 = (float)(ABS(dVar2) * param_1 +
-                 (double)(param_3[2] * param_7[2] + param_3[1] * param_7[1] + *param_3 * *param_7 +
-                         param_7[3]));
-  return ABS(fVar1) * fVar1 < (float)((double)(float)(dVar2 * dVar2) * param_2 - param_2);
+  fVar2 = param_2[2] * in_r7[2] + param_2[1] * in_r7[1] + *param_2 * *in_r7;
+  fVar1 = ABS(fVar2) * param_3 +
+          param_1[2] * in_r7[2] + param_1[1] * in_r7[1] + *param_1 * *in_r7 + in_r7[3];
+  return ABS(fVar1) * fVar1 < fVar2 * fVar2 * param_4 - param_4;
 }
 
 
 // 8242AE00  Glass_GetPieceDrawFlags  (EffectsCore/fx_glass_dpvs.cpp:91)
 
-void Glass_GetPieceDrawFlags
-               (undefined8 param_1,undefined8 param_2,float *param_3,ulonglong param_4,
-               longlong param_5)
+uchar Glass_GetPieceDrawFlags
+                (FxGlassPiecePlace *param_1,float param_2,float *param_3,uint param_4,
+                DpvsPlane *param_5)
 
 {
   float fVar1;
   float *pfVar2;
-  int iVar3;
-  ulonglong uVar4;
+  float *pfVar4;
+  uchar uVar5;
+  ulonglong uVar3;
+  longlong in_r7;
+  ulonglong uVar6;
   double extraout_f1;
-  double dVar5;
-  double dVar6;
   double dVar7;
   double dVar8;
   double dVar9;
   double dVar10;
   double dVar11;
+  double dVar12;
+  double dVar13;
   float local_70;
   float local_6c;
   float local_68;
   
-  __savegprlr_28();
-  iVar3 = __savefpr_26();
-  dVar8 = (double)(*(float *)(iVar3 + 0x14) - param_3[1]);
-  dVar7 = (double)(*(float *)(iVar3 + 0x18) - param_3[2]);
-  dVar9 = (double)(*(float *)(iVar3 + 0x10) - *param_3);
-  dVar11 = (double)(*(float *)(iVar3 + 0x1c) * *(float *)(iVar3 + 0x1c) -
-                   (float)(extraout_f1 * extraout_f1));
-  dVar6 = (double)(float)(dVar9 * dVar9 +
-                         (double)(float)(dVar7 * dVar7 + (double)(float)(dVar8 * dVar8)));
-  if ((double)(float)(dVar6 * 7.0461542236444075e-06) <= dVar11) {
-    dVar10 = extraout_f1;
-    UnitQuatToNormal(iVar3,&local_70);
-    uVar4 = 0;
-    if ((param_4 & 0xffffffff) != 0) {
-      param_5 = param_5 + 8;
+  uVar3 = (ulonglong)(int)param_5;
+  __savegprlr_28((double)param_2,param_1,param_3);
+  pfVar4 = (float *)__savefpr_26();
+  dVar10 = (double)(pfVar4[5] - *(float *)(param_4 + 4));
+  dVar9 = (double)(pfVar4[6] - *(float *)(param_4 + 8));
+  dVar11 = (double)(pfVar4[4] - *(float *)param_4);
+  dVar13 = (double)(pfVar4[7] * pfVar4[7] - (float)(extraout_f1 * extraout_f1));
+  dVar8 = (double)(float)(dVar11 * dVar11 +
+                         (double)(float)(dVar9 * dVar9 + (double)(float)(dVar10 * dVar10)));
+  if ((double)(float)(dVar8 * 7.0461542236444075e-06) <= dVar13) {
+    dVar12 = extraout_f1;
+    UnitQuatToNormal(pfVar4,&local_70);
+    uVar6 = 0;
+    if ((uVar3 & 0xffffffff) != 0) {
+      in_r7 = in_r7 + 8;
       do {
-        pfVar2 = (float *)param_5;
-        dVar5 = (double)(float)((double)*pfVar2 * (double)local_68 +
+        pfVar2 = (float *)in_r7;
+        dVar7 = (double)(float)((double)*pfVar2 * (double)local_68 +
                                (double)(float)((double)pfVar2[-2] * (double)local_70 +
                                               (double)(float)((double)pfVar2[-1] * (double)local_6c)
                                               ));
-        fVar1 = (float)(ABS(dVar5) * dVar10 +
-                       (double)((float)((double)*pfVar2 * (double)*(float *)(iVar3 + 0x18) +
-                                       (double)(float)((double)pfVar2[-1] *
-                                                       (double)*(float *)(iVar3 + 0x14) +
+        fVar1 = (float)(ABS(dVar7) * dVar12 +
+                       (double)((float)((double)*pfVar2 * (double)pfVar4[6] +
+                                       (double)(float)((double)pfVar2[-1] * (double)pfVar4[5] +
                                                       (double)(float)((double)pfVar2[-2] *
-                                                                     (double)*(float *)(iVar3 + 0x10
-                                                                                       )))) +
+                                                                     (double)pfVar4[4]))) +
                                pfVar2[1]));
-        if (ABS(fVar1) * fVar1 < (float)((double)(float)(dVar5 * dVar5) * dVar11 - dVar11))
+        if (ABS(fVar1) * fVar1 < (float)((double)(float)(dVar7 * dVar7) * dVar13 - dVar13))
         goto LAB_8242ae78;
-        uVar4 = uVar4 + 1;
-        param_5 = param_5 + 0x10;
-      } while ((uVar4 & 0xffffffff) < (param_4 & 0xffffffff));
+        uVar6 = uVar6 + 1;
+        in_r7 = in_r7 + 0x10;
+      } while ((uVar6 & 0xffffffff) < (uVar3 & 0xffffffff));
     }
-    uVar4 = 3;
-    if (1.0 < (float)(dVar6 - dVar11)) {
-      fVar1 = (float)(dVar6 - dVar11) * 0.0013272297;
-      dVar7 = ABS((double)(float)((double)local_68 * dVar7 +
-                                 (double)(float)((double)local_6c * dVar8 +
-                                                (double)(float)((double)local_70 * dVar9))));
-      if ((float)((double)*(float *)(iVar3 + 0x1c) * dVar7) < fVar1) {
-        uVar4 = 2;
+    uVar3 = 3;
+    if (1.0 < (float)(dVar8 - dVar13)) {
+      fVar1 = (float)(dVar8 - dVar13) * 0.0013272297;
+      dVar9 = ABS((double)(float)((double)local_68 * dVar9 +
+                                 (double)(float)((double)local_6c * dVar10 +
+                                                (double)(float)((double)local_70 * dVar11))));
+      if ((float)((double)pfVar4[7] * dVar9) < fVar1) {
+        uVar3 = 2;
       }
-      if ((float)((double)(float)(-(double)(float)(dVar7 * dVar7 - dVar6) * dVar10) * dVar10) <
+      if ((float)((double)(float)(-(double)(float)(dVar9 * dVar9 - dVar8) * dVar12) * dVar12) <
           fVar1 * fVar1) {
-        uVar4 = uVar4 << 0x20 | uVar4 & 0xfffffffffffffffd;
+        uVar3 = uVar3 << 0x20 | uVar3 & 0xfffffffffffffffd;
       }
-      __restfpr_26(uVar4);
-      __restgprlr_28();
-      return;
+      __restfpr_26(uVar3);
+      uVar5 = __restgprlr_28();
+      return uVar5;
     }
     __restfpr_26(3);
-    __restgprlr_28();
-    return;
+    uVar5 = __restgprlr_28();
+    return uVar5;
   }
 LAB_8242ae78:
   __restfpr_26(0);
-  __restgprlr_28();
-  return;
+  uVar5 = __restgprlr_28();
+  return uVar5;
 }
 
 
 // 8242B228  FX_AddCellGlassSurfacesInFrustumCmd  (EffectsCore/fx_glass_dpvs.cpp:162)
 
-void FX_AddCellGlassSurfacesInFrustumCmd(void)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void FX_AddCellGlassSurfacesInFrustumCmd(void *param_1)
 
 {
-  int iVar1;
-  int iVar2;
-  int iVar3;
-  int iVar4;
+  uint uVar1;
+  FxGlassPiecePlace *pFVar2;
+  uchar *puVar3;
+  float *pfVar4;
   int iVar5;
-  byte bVar6;
-  int local_70;
-  int local_6c;
-  undefined4 local_68;
-  undefined4 *local_64;
-  undefined4 local_60;
+  int iVar6;
+  byte bVar7;
+  undefined8 in_r4;
+  SpuBitArrayIterator local_70 [5];
   
-  iVar5 = __savegprlr_22();
-  iVar1 = DAT_8333cad4;
-  if (DAT_8333cad4 != 0) {
-    if (DAT_8333cb0c == 0) {
-      MyAssertHandler(0xffffffff82064bd8,0xc1,0,0xffffffff82000f98,0xffffffff82064bc0);
+  iVar5 = __savegprlr_22(param_1);
+  uVar1 = fxWorld.glassSys.pieceWordCount;
+  if (fxWorld.glassSys.pieceWordCount != 0) {
+    if (fxWorld.glassSys.cellBits == (uint *)0x0) {
+      in_r4 = 0xc1;
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_dpvs.cpp"
+                      ,0xc1,0,"%s");
     }
-    iVar4 = DAT_8333cb18;
-    iVar3 = DAT_8333cb10;
-    iVar2 = DAT_8333caf8;
-    local_6c = iVar1;
-    local_68 = 0;
-    local_64 = (undefined4 *)((uint)*(ushort *)(iVar5 + 6) * iVar1 * 4 + DAT_8333cb0c);
-    local_60 = *local_64;
-    while (iVar5 = SpuBitArrayIterator__Advance(&local_70), iVar1 = local_70, iVar5 != 0) {
-      if (*(char *)(local_70 + iVar3) == '\0') {
-        bVar6 = Glass_GetPieceDrawFlags
-                          ((double)*(float *)(local_70 * 4 + iVar4),local_70 * 0x20 + iVar2);
-        if (bVar6 != 0) {
-          if (3 < bVar6) {
-            MyAssertHandler(0xffffffff82064bd8,0xde,0,0xffffffff82064ba8,0xffffffff82064b70);
+    pfVar4 = fxWorld.glassSys.halfThickness;
+    puVar3 = fxWorld.glassSys.visData;
+    pFVar2 = fxWorld.glassSys.piecePlaces;
+    local_70[0].wordCount = uVar1;
+    local_70[0].wordIndex = 0;
+    local_70[0].bitArray = fxWorld.glassSys.cellBits + *(ushort *)(iVar5 + 6) * uVar1;
+    local_70[0].bits = *local_70[0].bitArray;
+    while( true ) {
+      iVar6 = SpuBitArrayIterator::Advance(local_70);
+      uVar1 = local_70[0].index;
+      if (iVar6 == 0) break;
+      if (puVar3[local_70[0].index] == '\0') {
+        bVar7 = Glass_GetPieceDrawFlags
+                          (pFVar2 + local_70[0].index,pfVar4[local_70[0].index],(float *)in_r4,
+                           iVar5 + 8,(DpvsPlane *)(uint)*(ushort *)(iVar5 + 4));
+        if (bVar7 != 0) {
+          if (3 < bVar7) {
+            in_r4 = 0xde;
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_dpvs.cpp"
+                            ,0xde,0,"%s\n\t(drawFlags) = %i");
           }
-          *(byte *)(iVar1 + iVar3) = bVar6;
+          puVar3[uVar1] = bVar7;
         }
       }
     }
@@ -154,56 +162,56 @@ void FX_AddCellGlassSurfacesInFrustumCmd(void)
 
 // 8242AFB8  FX_ClearGlassVisData  (EffectsCore/fx_glass_dpvs.cpp:267)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
 void FX_ClearGlassVisData(void)
 
 {
-  Com_Memset(DAT_8333cb10,0,DAT_8333cad0 + 0xfU & 0xfffffff0);
+  Com_Memset(fxWorld.glassSys.visData,0,fxWorld.glassSys.pieceLimit + 0xf & 0xfffffff0);
   return;
 }
 
 
 // 8242AFD8  Glass_LinkPiece_Static  (EffectsCore/fx_glass_dpvs.cpp:278)
 
-void Glass_LinkPiece_Static(undefined8 param_1,ulonglong param_2)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void Glass_LinkPiece_Static(FxGlassSystem *param_1,uint param_2)
 
 {
   float fVar1;
-  int iVar2;
-  int iVar3;
-  float *pfVar4;
-  longlong lVar5;
+  float *pfVar2;
+  uint uVar3;
+  int iVar4;
+  ulonglong uVar5;
+  float *pfVar6;
   float local_50;
   float local_4c;
   float local_48;
-  undefined4 local_40;
-  undefined4 local_3c;
-  undefined4 local_38;
-  float local_34;
-  float local_30;
-  float local_2c;
+  Bounds local_40 [2];
   
-  iVar3 = __savegprlr_29();
-  lVar5 = (ulonglong)*(uint *)(iVar3 + 0x34) + (param_2 & 0x7ffffff) * 0x20;
-  pfVar4 = (float *)(*(int *)(iVar3 + 0x50) + (int)param_2 * 0xc);
-  iVar2 = (int)lVar5;
-  if (((*(float *)(iVar2 + 0x10) != *pfVar4) || (*(float *)(iVar2 + 0x14) != pfVar4[1])) ||
-     (*(float *)(iVar2 + 0x18) != pfVar4[2])) {
-    *pfVar4 = 262144.0;
-    pfVar4[1] = 262144.0;
-    pfVar4[2] = 262144.0;
-    local_40 = *(undefined4 *)(iVar2 + 0x10);
-    local_3c = *(undefined4 *)(iVar2 + 0x14);
-    local_38 = *(undefined4 *)(iVar2 + 0x18);
-    UnitQuatToNormal(lVar5,&local_50);
-    fVar1 = *(float *)(*(int *)(iVar3 + 0x54) + (int)((param_2 & 0xffffffff) << 2));
-    local_34 = SQRT(local_48 * local_48 + local_4c * local_4c) * *(float *)(iVar2 + 0x1c) +
-               ABS(local_50) * fVar1;
-    local_30 = SQRT(local_50 * local_50 + local_48 * local_48) * *(float *)(iVar2 + 0x1c) +
-               ABS(local_4c) * fVar1;
-    local_2c = SQRT(local_50 * local_50 + local_4c * local_4c) * *(float *)(iVar2 + 0x1c) +
-               ABS(local_48) * fVar1;
-    R_FilterThingIntoCells
-              (param_2,&local_40,*(undefined4 *)(iVar3 + 0x48),*(undefined4 *)(iVar3 + 0x10));
+  uVar5 = (ulonglong)(int)param_2;
+  iVar4 = __savegprlr_29(param_1);
+  uVar3 = (uint)uVar5;
+  pfVar2 = (float *)(*(int *)(iVar4 + 0x34) + uVar3 * 0x20);
+  pfVar6 = (float *)(*(int *)(iVar4 + 0x50) + uVar3 * 0xc);
+  if (((pfVar2[4] != *pfVar6) || (pfVar2[5] != pfVar6[1])) || (pfVar2[6] != pfVar6[2])) {
+    *pfVar6 = 262144.0;
+    pfVar6[1] = 262144.0;
+    pfVar6[2] = 262144.0;
+    local_40[0].midPoint[0] = pfVar2[4];
+    local_40[0].midPoint[1] = pfVar2[5];
+    local_40[0].midPoint[2] = pfVar2[6];
+    UnitQuatToNormal(pfVar2,&local_50);
+    fVar1 = *(float *)(*(int *)(iVar4 + 0x54) + (int)((uVar5 & 0xffffffff) << 2));
+    local_40[0].halfSize[0] =
+         SQRT(local_48 * local_48 + local_4c * local_4c) * pfVar2[7] + ABS(local_50) * fVar1;
+    local_40[0].halfSize[1] =
+         SQRT(local_50 * local_50 + local_48 * local_48) * pfVar2[7] + ABS(local_4c) * fVar1;
+    local_40[0].halfSize[2] =
+         SQRT(local_50 * local_50 + local_4c * local_4c) * pfVar2[7] + ABS(local_48) * fVar1;
+    R_FilterThingIntoCells(uVar3,local_40,*(uint **)(iVar4 + 0x48),*(uint *)(iVar4 + 0x10));
   }
   __restgprlr_29();
   return;
@@ -212,41 +220,40 @@ void Glass_LinkPiece_Static(undefined8 param_1,ulonglong param_2)
 
 // 8242B108  Glass_LinkPiece_Dynamic  (EffectsCore/fx_glass_dpvs.cpp:310)
 
-void Glass_LinkPiece_Dynamic(int param_1,int param_2)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void Glass_LinkPiece_Dynamic(FxGlassSystem *param_1,uint param_2)
 
 {
-  undefined4 uVar1;
-  undefined4 uVar2;
-  float fVar3;
-  float fVar4;
-  float *pfVar5;
-  int iVar6;
+  float fVar1;
+  FxGlassPiecePlace *pFVar2;
+  uint uVar3;
+  uint *puVar4;
+  float fVar5;
+  float fVar6;
   float fVar7;
-  undefined4 local_20;
-  undefined4 local_1c;
-  undefined4 local_18;
-  float local_14;
-  float local_10;
-  float local_c;
+  float (*pafVar8) [3];
+  Bounds local_20;
   
-  iVar6 = *(int *)(param_1 + 0x34) + param_2 * 0x20;
-  pfVar5 = (float *)(*(int *)(param_1 + 0x50) + param_2 * 0xc);
-  fVar3 = pfVar5[2] - *(float *)(iVar6 + 0x18);
-  fVar4 = *pfVar5 - *(float *)(iVar6 + 0x10);
-  fVar7 = pfVar5[1] - *(float *)(iVar6 + 0x14);
-  if (256.0 <= fVar7 * fVar7 + fVar4 * fVar4 + fVar3 * fVar3) {
-    *pfVar5 = *(float *)(iVar6 + 0x10);
-    pfVar5[1] = *(float *)(iVar6 + 0x14);
-    uVar1 = *(undefined4 *)(param_1 + 0x10);
-    uVar2 = *(undefined4 *)(param_1 + 0x48);
-    pfVar5[2] = *(float *)(iVar6 + 0x18);
-    local_20 = *(undefined4 *)(iVar6 + 0x10);
-    local_1c = *(undefined4 *)(iVar6 + 0x14);
-    local_18 = *(undefined4 *)(iVar6 + 0x18);
-    local_14 = *(float *)(iVar6 + 0x1c) + 16.0;
-    local_10 = local_14;
-    local_c = local_14;
-    R_FilterThingIntoCells(param_2,&local_20,uVar2,uVar1);
+  pFVar2 = param_1->piecePlaces;
+  pafVar8 = param_1->linkOrg + param_2;
+  fVar1 = (&pFVar2->_s_0)[param_2].frame.origin[0];
+  fVar5 = (*pafVar8)[2] - (&pFVar2->_s_0)[param_2].frame.origin[2];
+  fVar6 = (*pafVar8)[0] - fVar1;
+  fVar7 = (*pafVar8)[1] - (&pFVar2->_s_0)[param_2].frame.origin[1];
+  if (256.0 <= fVar7 * fVar7 + fVar6 * fVar6 + fVar5 * fVar5) {
+    (*pafVar8)[0] = fVar1;
+    (*pafVar8)[1] = (&pFVar2->_s_0)[param_2].frame.origin[1];
+    uVar3 = param_1->pieceWordCount;
+    puVar4 = param_1->cellBits;
+    (*pafVar8)[2] = (&pFVar2->_s_0)[param_2].frame.origin[2];
+    local_20.midPoint[0] = (&pFVar2->_s_0)[param_2].frame.origin[0];
+    local_20.midPoint[1] = (&pFVar2->_s_0)[param_2].frame.origin[1];
+    local_20.midPoint[2] = (&pFVar2->_s_0)[param_2].frame.origin[2];
+    local_20.halfSize[0] = (&pFVar2->_s_0)[param_2].radius + 16.0;
+    local_20.halfSize[1] = local_20.halfSize[0];
+    local_20.halfSize[2] = local_20.halfSize[0];
+    R_FilterThingIntoCells(param_2,&local_20,puVar4,uVar3);
   }
   return;
 }
@@ -254,20 +261,22 @@ void Glass_LinkPiece_Dynamic(int param_1,int param_2)
 
 // 8242B1E8  Glass_UnlinkPiece  (EffectsCore/fx_glass_dpvs.cpp:330)
 
-void Glass_UnlinkPiece(int param_1,int param_2)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void Glass_UnlinkPiece(FxGlassSystem *param_1,uint param_2)
 
 {
-  undefined4 uVar1;
-  undefined4 uVar2;
-  undefined4 *puVar3;
+  uint uVar1;
+  uint *puVar2;
+  float (*pafVar3) [3];
   
-  uVar1 = *(undefined4 *)(param_1 + 0x10);
-  puVar3 = (undefined4 *)(*(int *)(param_1 + 0x50) + param_2 * 0xc);
-  uVar2 = *(undefined4 *)(param_1 + 0x48);
-  *puVar3 = 0x48800000;
-  puVar3[1] = 0x48800000;
-  puVar3[2] = 0x48800000;
-  R_UnfilterThingFromCells(param_2,uVar2,uVar1);
+  uVar1 = param_1->pieceWordCount;
+  pafVar3 = param_1->linkOrg + param_2;
+  puVar2 = param_1->cellBits;
+  (*pafVar3)[0] = 262144.0;
+  (*pafVar3)[1] = 262144.0;
+  (*pafVar3)[2] = 262144.0;
+  R_UnfilterThingFromCells(param_2,puVar2,uVar1);
   return;
 }
 

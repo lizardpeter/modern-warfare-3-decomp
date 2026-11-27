@@ -7,7 +7,7 @@ void __unwind_74577(void)
 {
   int in_r12;
   
-  bdByteBuffer___bdByteBuffer(*(undefined4 *)(in_r12 + 0x14));
+  bdByteBuffer::~bdByteBuffer(*(bdByteBuffer **)(in_r12 + 0x14));
   return;
 }
 
@@ -19,7 +19,7 @@ void __unwind_74610(void)
 {
   int in_r12;
   
-  bdByteBuffer___bdByteBuffer(*(undefined4 *)(in_r12 + 0x14));
+  bdByteBuffer::~bdByteBuffer(*(bdByteBuffer **)(in_r12 + 0x14));
   return;
 }
 
@@ -31,7 +31,7 @@ void __unwind_74637(void)
 {
   int in_r12;
   
-  bdByteBuffer___bdByteBuffer(*(undefined4 *)(in_r12 + 0x14));
+  bdByteBuffer::~bdByteBuffer(*(bdByteBuffer **)(in_r12 + 0x14));
   return;
 }
 

@@ -215,6 +215,8 @@ LAB_82723c64:
   82723C78  4E800020             blr
 
 ; 827229E8  __lvx  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/vectorintrinsics.h:98)
+  827229E8  102320C3             lvx128 v1,r3,r4
+  827229EC  4E800020             blr
 
 ; 827231F0  R_InsertSortSurfsInRange<GfxSortCodeSurfsInterface,GfxCodeSurf>  (gfx_d3d/r_sortsurfs.h:101)
   827231F0  7D8802A6             mfspr r12,LR
@@ -1042,7 +1044,7 @@ LAB_827236a8:
   8272378C  39610050             addi r11,r1,0x50
   82723790  C1410068             lfs f10,0x68(r1)
   82723794  38A10068             addi r5,r1,0x68
-  82723798  13E038C7             vcmpequd v31,v0,v7
+  82723798  13E038C7             lvx128 v63,0,r7
   8272379C  ED2B502A             fadds f9,f11,f10
   827237A0  C101006C             lfs f8,0x6c(r1)
   827237A4  7F84E378             or r4,r28,r28
@@ -1050,6 +1052,137 @@ LAB_827236a8:
   827237AC  38610058             addi r3,r1,0x58
   827237B0  C0FE0004             lfs f7,0x4(r30)
   827237B4  ECC7402A             fadds f6,f7,f8
+  827237B8  17DFFAF5             vor128 v62,v63,v63
+  827237BC  C0A10070             lfs f5,0x70(r1)
+  827237C0  D0DF0004             stfs f6,0x4(r31)
+  827237C4  3B7E0004             addi r27,r30,0x4
+  827237C8  C09E0008             lfs f4,0x8(r30)
+  827237CC  EC64282A             fadds f3,f4,f5
+  827237D0  1BCDFED5             vpkd3d128 v62,v63,0xd,0x3
+  827237D4  C3E60F10             lfs f31,0xf10(r6)
+  827237D8  D07F0008             stfs f3,0x8(r31)
+  827237DC  3B5E0008             addi r26,r30,0x8
+  827237E0  D3FF000C             stfs f31,0xc(r31)
+  827237E4  81410054             lwz r10,0x54(r1)
+  827237E8  1BA0F735             vspltw128 v61,v62,0x0
+  827237EC  3D208203             lis r9,-0x7dfd
+  827237F0  915F0010             stw r10,0x10(r31)
+  827237F4  13A05987             stvewx128 v61,0,r11
+  827237F8  81010050             lwz r8,0x50(r1)
+  827237FC  FC40A850             fneg f2,f21
+  82723800  D041005C             stfs f2,0x5c(r1)
+  82723804  FC20B850             fneg f1,f23
+  82723808  D0210060             stfs f1,0x60(r1)
+  8272380C  93BF0018             stw r29,0x18(r31)
+  82723810  C3A9B1FC             lfs f29,-0x4e04(r9)
+  82723814  93BF001C             stw r29,0x1c(r31)
+  82723818  911F0014             stw r8,0x14(r31)
+  8272381C  D3A10058             stfs f29,0x58(r1)
+  82723820  4BB7C1F9             bl 0x8229fa18
+  82723824  C19E0000             lfs f12,0x0(r30)
+  82723828  C1610068             lfs f11,0x68(r1)
+  8272382C  38E10080             addi r7,r1,0x80
+  82723830  ED4C582A             fadds f10,f12,f11
+  82723834  D55F0020             stfsu f10,0x20(r31)
+  82723838  D3410080             stfs f26,0x80(r1)
+  8272383C  38C10050             addi r6,r1,0x50
+  82723840  D3610084             stfs f27,0x84(r1)
+  82723844  FC00A850             fneg f0,f21
+  82723848  C121006C             lfs f9,0x6c(r1)
+  8272384C  FDA0C050             fneg f13,f24
+  82723850  13E038C7             lvx128 v63,0,r7
+  82723854  179FFAF5             vor128 v60,v63,v63
+  82723858  C11E0004             lfs f8,0x4(r30)
+  8272385C  1B8DFED5             vpkd3d128 v60,v63,0xd,0x3
+  82723860  ECE8482A             fadds f7,f8,f9
+  82723864  C0C10070             lfs f6,0x70(r1)
+  82723868  D0FF0004             stfs f7,0x4(r31)
+  8272386C  38A10068             addi r5,r1,0x68
+  82723870  C0BE0008             lfs f5,0x8(r30)
+  82723874  EC85302A             fadds f4,f5,f6
+  82723878  D3FF000C             stfs f31,0xc(r31)
+  8272387C  1B60E735             vspltw128 v59,v60,0x0
+  82723880  D09F0008             stfs f4,0x8(r31)
+  82723884  81610054             lwz r11,0x54(r1)
+  82723888  917F0010             stw r11,0x10(r31)
+  8272388C  13603187             stvewx128 v59,0,r6
+  82723890  81410050             lwz r10,0x50(r1)
+  82723894  D001005C             stfs f0,0x5c(r1)
+  82723898  D1A10060             stfs f13,0x60(r1)
+  8272389C  93BF0018             stw r29,0x18(r31)
+  827238A0  D3A10058             stfs f29,0x58(r1)
+  827238A4  93BF001C             stw r29,0x1c(r31)
+  827238A8  7F84E378             or r4,r28,r28
+  827238AC  38610058             addi r3,r1,0x58
+  827238B0  915F0014             stw r10,0x14(r31)
+  827238B4  4BB7C165             bl 0x8229fa18
+  827238B8  39210080             addi r9,r1,0x80
+  827238BC  D3410080             stfs f26,0x80(r1)
+  827238C0  39010050             addi r8,r1,0x50
+  827238C4  D3210084             stfs f25,0x84(r1)
+  827238C8  38A10068             addi r5,r1,0x68
+  827238CC  C07E0000             lfs f3,0x0(r30)
+  827238D0  7F84E378             or r4,r28,r28
+  827238D4  C0410068             lfs f2,0x68(r1)
+  827238D8  38610058             addi r3,r1,0x58
+  827238DC  EC23102A             fadds f1,f3,f2
+  827238E0  D43F0020             stfsu f1,0x20(r31)
+  827238E4  C001006C             lfs f0,0x6c(r1)
+  827238E8  C1BE0004             lfs f13,0x4(r30)
+  827238EC  ED8D002A             fadds f12,f13,f0
+  827238F0  13E048C7             lvx128 v63,0,r9
+  827238F4  C1610070             lfs f11,0x70(r1)
+  827238F8  D19F0004             stfs f12,0x4(r31)
+  827238FC  C15E0008             lfs f10,0x8(r30)
+  82723900  ED2A582A             fadds f9,f10,f11
+  82723904  175FFAF5             vor128 v58,v63,v63
+  82723908  D13F0008             stfs f9,0x8(r31)
+  8272390C  D3FF000C             stfs f31,0xc(r31)
+  82723910  80E10054             lwz r7,0x54(r1)
+  82723914  90FF0010             stw r7,0x10(r31)
+  82723918  1B4DFED5             vpkd3d128 v58,v63,0xd,0x3
+  8272391C  1B20D735             vspltw128 v57,v58,0x0
+  82723920  13204187             stvewx128 v57,0,r8
+  82723924  80C10050             lwz r6,0x50(r1)
+  82723928  D2A1005C             stfs f21,0x5c(r1)
+  8272392C  D2E10060             stfs f23,0x60(r1)
+  82723930  D3C10058             stfs f30,0x58(r1)
+  82723934  93BF0018             stw r29,0x18(r31)
+  82723938  93BF001C             stw r29,0x1c(r31)
+  8272393C  90DF0014             stw r6,0x14(r31)
+  82723940  4BB7C0D9             bl 0x8229fa18
+  82723944  38A10080             addi r5,r1,0x80
+  82723948  D3810080             stfs f28,0x80(r1)
+  8272394C  38810050             addi r4,r1,0x50
+  82723950  D3210084             stfs f25,0x84(r1)
+  82723954  C11E0000             lfs f8,0x0(r30)
+  82723958  C0E10068             lfs f7,0x68(r1)
+  8272395C  13E028C7             lvx128 v63,0,r5
+  82723960  ECC8382A             fadds f6,f8,f7
+  82723964  D4DF0020             stfsu f6,0x20(r31)
+  82723968  C0A1006C             lfs f5,0x6c(r1)
+  8272396C  C09E0004             lfs f4,0x4(r30)
+  82723970  EC64282A             fadds f3,f4,f5
+  82723974  D07F0004             stfs f3,0x4(r31)
+  82723978  171FFAF5             vor128 v56,v63,v63
+  8272397C  C0410070             lfs f2,0x70(r1)
+  82723980  1B0DFED5             vpkd3d128 v56,v63,0xd,0x3
+  82723984  1AE0C735             vspltw128 v55,v56,0x0
+  82723988  C03E0008             lfs f1,0x8(r30)
+  8272398C  EC01102A             fadds f0,f1,f2
+  82723990  D01F0008             stfs f0,0x8(r31)
+  82723994  D3FF000C             stfs f31,0xc(r31)
+  82723998  80610054             lwz r3,0x54(r1)
+  8272399C  907F0010             stw r3,0x10(r31)
+  827239A0  12E02187             stvewx128 v55,0,r4
+  827239A4  81610050             lwz r11,0x50(r1)
+  827239A8  93BF0018             stw r29,0x18(r31)
+  827239AC  93BF001C             stw r29,0x1c(r31)
+  827239B0  917F0014             stw r11,0x14(r31)
+  827239B4  38210120             addi r1,r1,0x120
+  827239B8  3981FFC8             subi r12,r1,0x38
+  827239BC  481F2E0D             bl 0x829167c8
+  827239C0  481F2D40             b 0x82916700
 
 ; 82723120  R_CodeSurfVertIter_Begin  (gfx_d3d/r_codesurf.cpp:451)
   82723120  81630010             lwz r11,0x10(r3)

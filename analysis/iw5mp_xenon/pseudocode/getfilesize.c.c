@@ -2,24 +2,24 @@
 
 // 828A4F80  GetFileSize  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/getfilesize.c:56)
 
-DWORD GetFileSize(HANDLE hFile,LPDWORD lpFileSizeHigh)
+ulong GetFileSize(void *param_1,ulong *param_2)
 
 {
-  BOOL BVar1;
-  LARGE_INTEGER local_20;
+  int iVar1;
+  _LARGE_INTEGER local_20;
   
-  BVar1 = GetFileSizeEx(hFile,&local_20);
-  if (BVar1 == 0) {
-    local_20.s.HighPart = 0xffffffff;
+  iVar1 = GetFileSizeEx(param_1,&local_20);
+  if (iVar1 == 0) {
+    local_20._s_0.LowPart = 0xffffffff;
   }
   else {
-    if (lpFileSizeHigh != (LPDWORD)0x0) {
-      *lpFileSizeHigh = local_20.s.LowPart;
+    if (param_2 != (ulong *)0x0) {
+      *param_2 = local_20._s_0.HighPart;
     }
-    if (local_20.s.HighPart == 0xffffffff) {
+    if (local_20._s_0.LowPart == 0xffffffff) {
       SetLastError(0);
     }
   }
-  return local_20.s.HighPart;
+  return local_20._s_0.LowPart;
 }
 

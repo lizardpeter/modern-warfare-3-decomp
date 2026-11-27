@@ -4,7 +4,7 @@
 
 /* WARNING: Control flow encountered bad instruction data */
 
-void __fls_getvalue(void)
+void * __fls_getvalue(ulong param_1)
 
 {
                     /* WARNING: Bad instruction - Truncating control flow here */
@@ -19,16 +19,18 @@ void __fls_getvalue(void)
 ulong __get_flsindex(void)
 
 {
-  return DAT_829b03e0;
+  return __flsindex;
 }
 
 
 // 8291C9E0  __set_flsgetvalue  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/tidtable.c:94)
 
-undefined8 __set_flsgetvalue(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+_func___cdecl_void_ptr_ulong * __set_flsgetvalue(void)
 
 {
-  return 0;
+  return (_func___cdecl_void_ptr_ulong *)0x0;
 }
 
 
@@ -36,7 +38,7 @@ undefined8 __set_flsgetvalue(void)
 
 /* WARNING: Control flow encountered bad instruction data */
 
-void __fls_setvalue(void)
+int __fls_setvalue(ulong param_1,void *param_2)
 
 {
                     /* WARNING: Bad instruction - Truncating control flow here */
@@ -52,23 +54,24 @@ int _mtinit(void)
 
 {
   int iVar1;
-  DWORD DVar2;
-  DWORD *lpTlsValue;
-  BOOL BVar3;
+  DWORD dwTlsIndex;
+  ulong *lpTlsValue;
+  BOOL BVar2;
+  ulong uVar3;
   
   _init_pointers();
   iVar1 = _mtinitlocks();
-  if ((((iVar1 != 0) && (DVar2 = TlsAlloc(), DAT_829b03e0 = DVar2, DVar2 != 0xffffffff)) &&
-      (lpTlsValue = calloc(1,0xc4), lpTlsValue != (DWORD *)0x0)) &&
-     (BVar3 = TlsSetValue(DVar2,lpTlsValue), BVar3 != 0)) {
+  if ((((iVar1 != 0) && (dwTlsIndex = TlsAlloc(), __flsindex = dwTlsIndex, dwTlsIndex != 0xffffffff)
+       ) && (lpTlsValue = calloc(1,0xc4), lpTlsValue != (ulong *)0x0)) &&
+     (BVar2 = TlsSetValue(dwTlsIndex,lpTlsValue), BVar2 != 0)) {
     lpTlsValue[2] = 0;
-    lpTlsValue[0x17] = (DWORD)&DAT_82215760;
+    lpTlsValue[0x17] = (ulong)&_XcptActTab;
     lpTlsValue[5] = 1;
-    DVar2 = GetCurrentThreadId();
-    *lpTlsValue = DVar2;
+    uVar3 = GetCurrentThreadId();
+    *lpTlsValue = uVar3;
     lpTlsValue[1] = 0xffffffff;
-    DAT_84895e04 = mtxthreadnotification;
-    XRegisterThreadNotifyRoutine(0xffffffff84895dfc,1);
+    g_XThreadNotification.pfnNotifyRoutine = _mtxthreadnotification;
+    XRegisterThreadNotifyRoutine(&g_XThreadNotification,1);
     return 1;
   }
   _mtterm();
@@ -83,9 +86,9 @@ int _mtinit(void)
 void _mtterm(void)
 
 {
-  if (DAT_829b03e0 != 0xffffffff) {
-    TlsFree(DAT_829b03e0);
-    DAT_829b03e0 = 0xffffffff;
+  if (__flsindex != 0xffffffff) {
+    TlsFree(__flsindex);
+    __flsindex = 0xffffffff;
   }
   _mtdeletelocks();
   return;
@@ -94,12 +97,12 @@ void _mtterm(void)
 
 // 8291CA38  _initptd  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/tidtable.c:265)
 
-void _initptd(_ptiddata _Ptd,pthreadlocinfo _Locale)
+void _initptd(_tiddata *param_1,threadlocaleinfostruct *param_2)
 
 {
-  _Ptd->_terrno = 0;
-  _Ptd->_pxcptacttab = &DAT_82215760;
-  _Ptd->_holdrand = 1;
+  param_1->_terrno = 0;
+  param_1->_pxcptacttab = &_XcptActTab;
+  param_1->_holdrand = 1;
   return;
 }
 
@@ -108,53 +111,53 @@ void _initptd(_ptiddata _Ptd,pthreadlocinfo _Locale)
 
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
-_ptiddata _getptd_noexit(void)
+_tiddata * _getptd_noexit(void)
 
 {
-  DWORD dwErrCode;
-  LPVOID pvVar1;
-  BOOL BVar2;
-  DWORD *lpTlsValue;
-  DWORD DVar3;
-  _ptiddata p_Var4;
-  ulonglong uVar5;
+  ulong uVar1;
+  LPVOID pvVar2;
+  BOOL BVar3;
+  ulong *lpTlsValue;
+  ulong uVar4;
+  _tiddata *p_Var5;
+  ulonglong uVar6;
   
   __savegprlr_29();
-  dwErrCode = GetLastError();
-  pvVar1 = TlsGetValue(DAT_829b03e0);
-  uVar5 = (ulonglong)(int)pvVar1;
-  if (uVar5 == 0) {
-    BVar2 = TlsSetValue(DAT_829b03e0,(LPVOID)0x1);
-    uVar5 = 0;
-    if (BVar2 != 0) {
+  uVar1 = GetLastError();
+  pvVar2 = TlsGetValue(__flsindex);
+  uVar6 = (ulonglong)(int)pvVar2;
+  if (uVar6 == 0) {
+    BVar3 = TlsSetValue(__flsindex,(LPVOID)0x1);
+    uVar6 = 0;
+    if (BVar3 != 0) {
       lpTlsValue = calloc(1,0xc4);
-      uVar5 = (ulonglong)(int)lpTlsValue;
-      if (uVar5 == 0) {
-        TlsSetValue(DAT_829b03e0,(LPVOID)0x0);
+      uVar6 = (ulonglong)(int)lpTlsValue;
+      if (uVar6 == 0) {
+        TlsSetValue(__flsindex,(LPVOID)0x0);
       }
       else {
-        BVar2 = TlsSetValue(DAT_829b03e0,lpTlsValue);
-        if (BVar2 == 0) {
+        BVar3 = TlsSetValue(__flsindex,lpTlsValue);
+        if (BVar3 == 0) {
           free(lpTlsValue);
-          uVar5 = 0;
+          uVar6 = 0;
         }
         else {
           lpTlsValue[2] = 0;
-          lpTlsValue[0x17] = (DWORD)&DAT_82215760;
+          lpTlsValue[0x17] = (ulong)&_XcptActTab;
           lpTlsValue[5] = 1;
-          DVar3 = GetCurrentThreadId();
-          *lpTlsValue = DVar3;
+          uVar4 = GetCurrentThreadId();
+          *lpTlsValue = uVar4;
           lpTlsValue[1] = 0xffffffff;
         }
       }
     }
   }
   else {
-    uVar5 = -(ulonglong)(uVar5 != 1) & uVar5;
+    uVar6 = -(ulonglong)(uVar6 != 1) & uVar6;
   }
-  SetLastError(dwErrCode);
-  p_Var4 = (_ptiddata)__restgprlr_29(uVar5);
-  return p_Var4;
+  SetLastError(uVar1);
+  p_Var5 = (_tiddata *)__restgprlr_29(uVar6);
+  return p_Var5;
 }
 
 
@@ -162,13 +165,14 @@ _ptiddata _getptd_noexit(void)
 
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
-_ptiddata _getptd(void)
+_tiddata * _getptd(void)
 
 {
-  _ptiddata p_Var1;
+  _tiddata *p_Var1;
   
   p_Var1 = _getptd_noexit();
-  if (p_Var1 == (_ptiddata)0x0) {
+  if (p_Var1 == (_tiddata *)0x0) {
+                    /* WARNING: Subroutine does not return */
     _amsg_exit(0x10);
   }
   return p_Var1;
@@ -177,35 +181,35 @@ _ptiddata _getptd(void)
 
 // 8291CB70  _freefls  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/tidtable.c:410)
 
-void _freefls(void *_PerFiberData)
+void _freefls(void *param_1)
 
 {
-  if (_PerFiberData != (void *)0x0) {
-    if (*(void **)((int)_PerFiberData + 0x24) != (void *)0x0) {
-      free(*(void **)((int)_PerFiberData + 0x24));
+  if (param_1 != (void *)0x0) {
+    if (*(void **)((int)param_1 + 0x24) != (void *)0x0) {
+      free(*(void **)((int)param_1 + 0x24));
     }
-    if (*(void **)((int)_PerFiberData + 0x2c) != (void *)0x0) {
-      free(*(void **)((int)_PerFiberData + 0x2c));
+    if (*(void **)((int)param_1 + 0x2c) != (void *)0x0) {
+      free(*(void **)((int)param_1 + 0x2c));
     }
-    if (*(void **)((int)_PerFiberData + 0x34) != (void *)0x0) {
-      free(*(void **)((int)_PerFiberData + 0x34));
+    if (*(void **)((int)param_1 + 0x34) != (void *)0x0) {
+      free(*(void **)((int)param_1 + 0x34));
     }
-    if (*(void **)((int)_PerFiberData + 0x3c) != (void *)0x0) {
-      free(*(void **)((int)_PerFiberData + 0x3c));
+    if (*(void **)((int)param_1 + 0x3c) != (void *)0x0) {
+      free(*(void **)((int)param_1 + 0x3c));
     }
-    if (*(void **)((int)_PerFiberData + 0x40) != (void *)0x0) {
-      free(*(void **)((int)_PerFiberData + 0x40));
+    if (*(void **)((int)param_1 + 0x40) != (void *)0x0) {
+      free(*(void **)((int)param_1 + 0x40));
     }
-    if (*(void **)((int)_PerFiberData + 0x44) != (void *)0x0) {
-      free(*(void **)((int)_PerFiberData + 0x44));
+    if (*(void **)((int)param_1 + 0x44) != (void *)0x0) {
+      free(*(void **)((int)param_1 + 0x44));
     }
-    if (*(void **)((int)_PerFiberData + 0x48) != (void *)0x0) {
-      free(*(void **)((int)_PerFiberData + 0x48));
+    if (*(void **)((int)param_1 + 0x48) != (void *)0x0) {
+      free(*(void **)((int)param_1 + 0x48));
     }
-    if (*(undefined **)((int)_PerFiberData + 0x5c) != &DAT_82215760) {
-      free(*(undefined **)((int)_PerFiberData + 0x5c));
+    if (*(_XCPT_ACTION_0_ **)((int)param_1 + 0x5c) != &_XcptActTab) {
+      free(*(_XCPT_ACTION_0_ **)((int)param_1 + 0x5c));
     }
-    free(_PerFiberData);
+    free(param_1);
   }
   return;
 }
@@ -213,15 +217,15 @@ void _freefls(void *_PerFiberData)
 
 // 8291CC30  _freeptd  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/tidtable.c:474)
 
-void _freeptd(_ptiddata _Ptd)
+void _freeptd(_tiddata *param_1)
 
 {
-  if (DAT_829b03e0 != 0xffffffff) {
-    if (_Ptd == (_ptiddata)0x0) {
-      _Ptd = TlsGetValue(DAT_829b03e0);
+  if (__flsindex != 0xffffffff) {
+    if (param_1 == (_tiddata *)0x0) {
+      param_1 = TlsGetValue(__flsindex);
     }
-    TlsSetValue(DAT_829b03e0,(LPVOID)0x0);
-    _freefls(_Ptd);
+    TlsSetValue(__flsindex,(LPVOID)0x0);
+    _freefls(param_1);
   }
   return;
 }

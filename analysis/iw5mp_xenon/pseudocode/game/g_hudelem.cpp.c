@@ -2,339 +2,330 @@
 
 // 824705B0  TRACK_g_hudelem  (game/g_hudelem.cpp:439)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void TRACK_g_hudelem(void)
 
 {
-  track_static_alloc_internal(0xffffffff833464f0,0x2d000,0xffffffff82070400,10);
+  track_static_alloc_internal(g_hudelems,0x2d000,"g_hudelems",10);
   return;
 }
 
 
 // 824705D0  HudElem_ClearTypeSettings  (game/g_hudelem.cpp:456)
 
-void HudElem_ClearTypeSettings(int param_1)
+void HudElem_ClearTypeSettings(game_hudelem_s *param_1)
 
 {
-  *(undefined4 *)(param_1 + 0x44) = 0;
-  *(undefined4 *)(param_1 + 0x48) = 0;
-  *(undefined4 *)(param_1 + 0x4c) = 0;
-  *(undefined4 *)(param_1 + 0x60) = 0;
-  *(undefined4 *)(param_1 + 0x68) = 0;
-  *(undefined4 *)(param_1 + 100) = 0;
-  *(undefined4 *)(param_1 + 0x6c) = 0;
-  *(undefined4 *)(param_1 + 0x80) = 0;
-  *(undefined4 *)(param_1 + 0x50) = 0;
-  *(undefined4 *)(param_1 + 0x54) = 0;
-  *(undefined4 *)(param_1 + 0x58) = 0;
-  *(undefined4 *)(param_1 + 0x5c) = 0;
-  *(undefined4 *)(param_1 + 0x78) = 0;
-  *(undefined4 *)(param_1 + 0x7c) = 0;
-  *(undefined4 *)(param_1 + 0x84) = 0;
+  (param_1->elem).width = 0;
+  (param_1->elem).height = 0;
+  (param_1->elem).materialIndex = 0;
+  (param_1->elem).fromX = 0.0;
+  (param_1->elem).fromAlignOrg = 0;
+  (param_1->elem).fromY = 0.0;
+  (param_1->elem).fromAlignScreen = 0;
+  (param_1->elem).value = 0.0;
+  (param_1->elem).fromWidth = 0;
+  (param_1->elem).fromHeight = 0;
+  (param_1->elem).scaleStartTime = 0;
+  (param_1->elem).scaleTime = 0;
+  (param_1->elem).time = 0;
+  (param_1->elem).duration = 0;
+  (param_1->elem).text = 0;
   return;
 }
 
 
 // 82470620  HudElem_SetDefaults  (game/g_hudelem.cpp:480)
 
-void HudElem_SetDefaults(undefined4 *param_1)
+void HudElem_SetDefaults(game_hudelem_s *param_1)
 
 {
-  if (param_1 == (undefined4 *)0x0) {
-    MyAssertHandler(0xffffffff82070460,0x1e1,0,0xffffffff82000f98,0xffffffff8207045c);
+  if (param_1 == (game_hudelem_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_hudelem.cpp",0x1e1,0,
+                    "%s");
   }
-  if (0x3ff < (uint)((int)(param_1 + 0x1f32e6c4) / 0xb4)) {
-    MyAssertHandler(0xffffffff82070460,0x1e2,0,0xffffffff82070410,(int)(param_1 + 0x1f32e6c4) / 0xb4
-                    ,0x400);
+  if (0x3ff < (uint)((int)&param_1[0xb17c98].elem.color / 0xb4)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_hudelem.cpp",0x1e2,0,
+                    "hud - g_hudelems doesn\'t index ARRAY_COUNT( g_hudelems )\n\t%i not in [0, %i)"
+                   );
   }
-  param_1[9] = 0;
-  *param_1 = 1;
-  param_1[4] = 0x7ff;
-  param_1[1] = 0;
-  param_1[10] = 0;
-  param_1[2] = 0;
-  param_1[0xb] = 0;
-  param_1[3] = 0;
-  param_1[0xc] = 0xffffffff;
-  param_1[0x22] = 0;
-  param_1[0x23] = 0;
-  param_1[5] = 0;
-  param_1[0xd] = 0;
-  param_1[6] = 0;
-  param_1[0xe] = 0;
-  param_1[0x18] = 0;
-  param_1[0xf] = 0;
-  param_1[0x19] = 0;
-  param_1[0x10] = 0;
-  param_1[0x20] = 0;
-  param_1[0x29] = 0;
-  param_1[0x24] = 0;
-  param_1[0x25] = 0;
-  param_1[0x26] = 0;
-  param_1[0x27] = 0;
-  param_1[0x28] = 0;
-  param_1[0x1c] = 0;
-  param_1[0x1d] = 0;
-  param_1[0x2c] = 1;
-  param_1[7] = 0;
-  param_1[8] = 0;
-  param_1[0x11] = 0;
-  param_1[0x12] = 0;
-  param_1[0x13] = 0;
-  param_1[0x1a] = 0;
-  param_1[0x1b] = 0;
-  param_1[0x14] = 0;
-  param_1[0x15] = 0;
-  param_1[0x16] = 0;
-  param_1[0x17] = 0;
-  param_1[0x1e] = 0;
-  param_1[0x1f] = 0;
-  param_1[0x21] = 0;
+  (param_1->elem).font = 0;
+  (param_1->elem).type = HE_TYPE_TEXT;
+  (param_1->elem).targetEntNum = 0x7ff;
+  (param_1->elem).x = 0.0;
+  (param_1->elem).alignOrg = 0;
+  (param_1->elem).y = 0.0;
+  (param_1->elem).alignScreen = 0;
+  (param_1->elem).z = 0.0;
+  (param_1->elem).color.rgba = -1;
+  (param_1->elem).sort = 0.0;
+  (param_1->elem).glowColor.rgba = 0;
+  (param_1->elem).fontScale = 0.0;
+  (param_1->elem).fromColor.rgba = 0;
+  (param_1->elem).fromFontScale = 0.0;
+  (param_1->elem).fadeStartTime = 0;
+  (param_1->elem).fromX = 0.0;
+  (param_1->elem).fadeTime = 0;
+  (param_1->elem).fromY = 0.0;
+  (param_1->elem).label = 0;
+  (param_1->elem).value = 0.0;
+  (param_1->elem).flags = 0;
+  (param_1->elem).fxBirthTime = 0;
+  (param_1->elem).fxLetterTime = 0;
+  (param_1->elem).fxDecayStartTime = 0;
+  (param_1->elem).fxDecayDuration = 0;
+  (param_1->elem).soundID = 0;
+  (param_1->elem).moveStartTime = 0;
+  (param_1->elem).moveTime = 0;
+  param_1->archived = 1;
+  (param_1->elem).fontScaleStartTime = 0;
+  (param_1->elem).fontScaleTime = 0;
+  (param_1->elem).width = 0;
+  (param_1->elem).height = 0;
+  (param_1->elem).materialIndex = 0;
+  (param_1->elem).fromAlignOrg = 0;
+  (param_1->elem).fromAlignScreen = 0;
+  (param_1->elem).fromWidth = 0;
+  (param_1->elem).fromHeight = 0;
+  (param_1->elem).scaleStartTime = 0;
+  (param_1->elem).scaleTime = 0;
+  (param_1->elem).time = 0;
+  (param_1->elem).duration = 0;
+  (param_1->elem).text = 0;
   return;
 }
 
 
 // 82470780  HudElem_Alloc  (game/g_hudelem.cpp:528)
 
-void HudElem_Alloc(undefined8 param_1,undefined4 param_2)
+game_hudelem_s * HudElem_Alloc(int param_1,int param_2)
 
 {
-  undefined4 uVar1;
-  int *piVar2;
+  int iVar1;
+  game_hudelem_s *pgVar2;
   int iVar3;
   ulonglong uVar4;
-  int iVar5;
-  undefined4 *puVar6;
   
-  uVar1 = __savegprlr_25();
-  piVar2 = &DAT_833464f0;
+  iVar1 = __savegprlr_25(param_1);
+  pgVar2 = g_hudelems;
   iVar3 = 0;
   uVar4 = 0;
   do {
-    if (*piVar2 == 0) {
-      iVar5 = iVar3 * 0xb4;
-      puVar6 = &DAT_833464f0 + iVar3 * 0x2d;
-      if (puVar6 == (undefined4 *)0x0) {
-        MyAssertHandler(0xffffffff82070460,0x1e1,0,0xffffffff82000f98,0xffffffff8207045c);
+    if ((pgVar2->elem).type == HE_TYPE_FREE) {
+      pgVar2 = g_hudelems + iVar3;
+      if (pgVar2 == (game_hudelem_s *)0x0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_hudelem.cpp",0x1e1,
+                        0,"%s");
       }
-      if (0x3ff < (uint)(iVar5 / 0xb4)) {
-        MyAssertHandler(0xffffffff82070460,0x1e2,0,0xffffffff82070410,iVar5 / 0xb4,0x400);
+      if (0x3ff < (uint)((iVar3 * 0xb4) / 0xb4)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_hudelem.cpp",0x1e2,
+                        0,
+                        "hud - g_hudelems doesn\'t index ARRAY_COUNT( g_hudelems )\n\t%i not in [0, %i)"
+                       );
       }
-      *(undefined4 *)(iVar5 + -0x7ccb9aec) = 0;
-      *(undefined4 *)(iVar5 + -0x7ccb9ae8) = 0;
-      *(undefined4 *)(iVar5 + -0x7ccb9ae4) = 0;
-      *(undefined4 *)(iVar5 + -0x7ccb9a84) = 0;
-      *(undefined4 *)(iVar5 + -0x7ccb9adc) = 0;
-      *(undefined4 *)(iVar5 + -0x7ccb9b0c) = 0;
-      *puVar6 = 1;
-      *(undefined4 *)(iVar5 + -0x7ccb9b08) = 0;
-      *(undefined4 *)(iVar5 + -0x7ccb9b00) = 0x7ff;
-      *(undefined4 *)(iVar5 + -0x7ccb9b04) = 0;
-      *(undefined4 *)(iVar5 + -0x7ccb9ae0) = 0xffffffff;
-      *(undefined4 *)(iVar5 + -0x7ccb9a88) = 0;
-      *(undefined4 *)(iVar5 + -0x7ccb9ad8) = 0;
-      *(undefined4 *)(iVar5 + -0x7ccb9afc) = 0;
-      *(undefined4 *)(iVar5 + -0x7ccb9ad4) = 0;
-      *(undefined4 *)(iVar5 + -0x7ccb9af8) = 0;
-      *(undefined4 *)(iVar5 + -0x7ccb9ad0) = 0;
-      *(undefined4 *)(iVar5 + -0x7ccb9ab0) = 0;
-      *(undefined4 *)(iVar5 + -0x7ccb9a6c) = 0;
-      *(undefined4 *)(iVar5 + -0x7ccb9aac) = 0;
-      *(undefined4 *)(iVar5 + -0x7ccb9a80) = 0;
-      *(undefined4 *)(iVar5 + -0x7ccb9a90) = 0;
-      *(undefined4 *)(iVar5 + -0x7ccb9a7c) = 0;
-      *(undefined4 *)(iVar5 + -0x7ccb9a78) = 0;
-      *(undefined4 *)(iVar5 + -0x7ccb9a74) = 0;
-      *(undefined4 *)(iVar5 + -0x7ccb9a70) = 0;
-      *(undefined4 *)(iVar5 + -0x7ccb9aa0) = 0;
-      *(undefined4 *)(iVar5 + -0x7ccb9a9c) = 0;
-      (&DAT_833465a0)[iVar3 * 0x2d] = 1;
-      *(undefined4 *)(iVar5 + -0x7ccb9af4) = 0;
-      *(undefined4 *)(iVar5 + -0x7ccb9af0) = 0;
-      *(undefined4 *)(iVar5 + -0x7ccb9acc) = 0;
-      *(undefined4 *)(iVar5 + -0x7ccb9ac8) = 0;
-      (&DAT_8334653c)[iVar3 * 0x2d] = 0;
-      *(undefined4 *)(iVar5 + -0x7ccb9aa8) = 0;
-      *(undefined4 *)(iVar5 + -0x7ccb9aa4) = 0;
-      *(undefined4 *)(iVar5 + -0x7ccb9ac0) = 0;
-      *(undefined4 *)(iVar5 + -0x7ccb9abc) = 0;
-      *(undefined4 *)(iVar5 + -0x7ccb9ab8) = 0;
-      *(undefined4 *)(iVar5 + -0x7ccb9ab4) = 0;
-      *(undefined4 *)(iVar5 + -0x7ccb9a98) = 0;
-      *(undefined4 *)(iVar5 + -0x7ccb9a94) = 0;
-      (&DAT_83346574)[iVar3 * 0x2d] = 0;
-      (&DAT_83346598)[iVar3 * 0x2d] = uVar1;
-      (&DAT_8334659c)[iVar3 * 0x2d] = param_2;
-      __restgprlr_25(puVar6);
-      return;
+      g_hudelems[iVar3].elem.font = 0;
+      g_hudelems[iVar3].elem.alignOrg = 0;
+      g_hudelems[iVar3].elem.alignScreen = 0;
+      g_hudelems[iVar3].elem.glowColor.rgba = 0;
+      g_hudelems[iVar3].elem.fromColor.rgba = 0;
+      g_hudelems[iVar3].elem.x = 0.0;
+      (pgVar2->elem).type = HE_TYPE_TEXT;
+      g_hudelems[iVar3].elem.y = 0.0;
+      g_hudelems[iVar3].elem.targetEntNum = 0x7ff;
+      g_hudelems[iVar3].elem.z = 0.0;
+      g_hudelems[iVar3].elem.color.rgba = -1;
+      g_hudelems[iVar3].elem.sort = 0.0;
+      g_hudelems[iVar3].elem.fadeStartTime = 0;
+      g_hudelems[iVar3].elem.fontScale = 0.0;
+      g_hudelems[iVar3].elem.fadeTime = 0;
+      g_hudelems[iVar3].elem.fromFontScale = 0.0;
+      g_hudelems[iVar3].elem.label = 0;
+      g_hudelems[iVar3].elem.fromX = 0.0;
+      g_hudelems[iVar3].elem.flags = 0;
+      g_hudelems[iVar3].elem.fromY = 0.0;
+      g_hudelems[iVar3].elem.fxBirthTime = 0;
+      g_hudelems[iVar3].elem.value = 0.0;
+      g_hudelems[iVar3].elem.fxLetterTime = 0;
+      g_hudelems[iVar3].elem.fxDecayStartTime = 0;
+      g_hudelems[iVar3].elem.fxDecayDuration = 0;
+      g_hudelems[iVar3].elem.soundID = 0;
+      g_hudelems[iVar3].elem.moveStartTime = 0;
+      g_hudelems[iVar3].elem.moveTime = 0;
+      g_hudelems[iVar3].archived = 1;
+      g_hudelems[iVar3].elem.fontScaleStartTime = 0;
+      g_hudelems[iVar3].elem.fontScaleTime = 0;
+      g_hudelems[iVar3].elem.width = 0;
+      g_hudelems[iVar3].elem.height = 0;
+      g_hudelems[iVar3].elem.materialIndex = 0;
+      g_hudelems[iVar3].elem.fromAlignOrg = 0;
+      g_hudelems[iVar3].elem.fromAlignScreen = 0;
+      g_hudelems[iVar3].elem.fromWidth = 0;
+      g_hudelems[iVar3].elem.fromHeight = 0;
+      g_hudelems[iVar3].elem.scaleStartTime = 0;
+      g_hudelems[iVar3].elem.scaleTime = 0;
+      g_hudelems[iVar3].elem.time = 0;
+      g_hudelems[iVar3].elem.duration = 0;
+      g_hudelems[iVar3].elem.text = 0;
+      g_hudelems[iVar3].clientNum = iVar1;
+      g_hudelems[iVar3].team = param_2;
+      pgVar2 = (game_hudelem_s *)__restgprlr_25(pgVar2);
+      return pgVar2;
     }
     uVar4 = uVar4 + 0xb4;
     iVar3 = iVar3 + 1;
-    piVar2 = piVar2 + 0x2d;
+    pgVar2 = pgVar2 + 1;
   } while ((uVar4 & 0xffffffff) < 0x2d000);
-  __restgprlr_25(0);
-  return;
+  pgVar2 = (game_hudelem_s *)__restgprlr_25(0);
+  return pgVar2;
 }
 
 
 // 82470920  HudElem_Free  (game/g_hudelem.cpp:570)
 
-void HudElem_Free(int *param_1)
+void HudElem_Free(game_hudelem_s *param_1)
 
 {
-  if (param_1 == (int *)0x0) {
-    MyAssertHandler(0xffffffff82070460,0x23b,0,0xffffffff82000f98,0xffffffff8207045c);
+  he_type_t hVar1;
+  
+  if (param_1 == (game_hudelem_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_hudelem.cpp",0x23b,0,
+                    "%s");
   }
-  if (0x3ff < (uint)((int)(param_1 + 0x1f32e6c4) / 0xb4)) {
-    MyAssertHandler(0xffffffff82070460,0x23c,0,0xffffffff82070410,(int)(param_1 + 0x1f32e6c4) / 0xb4
-                    ,0x400);
+  if (0x3ff < (uint)((int)&param_1[0xb17c98].elem.color / 0xb4)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_hudelem.cpp",0x23c,0,
+                    "hud - g_hudelems doesn\'t index ARRAY_COUNT( g_hudelems )\n\t%i not in [0, %i)"
+                   );
   }
-  if ((*param_1 < 1) || (0xd < *param_1)) {
-    MyAssertHandler(0xffffffff82070460,0x23d,0,0xffffffff820704a0,0xffffffff820704c0);
+  hVar1 = (param_1->elem).type;
+  if (((int)hVar1 < 1) || (0xd < (int)hVar1)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_hudelem.cpp",0x23d,0,
+                    "%s\n\t(hud->elem.type) = %i");
   }
   Scr_FreeHudElem(param_1);
-  *param_1 = 0;
+  (param_1->elem).type = HE_TYPE_FREE;
   return;
 }
 
 
 // 82470A00  HudElem_ClientDisconnect  (game/g_hudelem.cpp:591)
-
-void HudElem_ClientDisconnect(void)
-
-{
-  int *piVar1;
-  uint uVar2;
-  int *piVar3;
-  
-  piVar1 = (int *)__savegprlr_19();
-  uVar2 = 0;
-  do {
-    piVar3 = (int *)((int)&DAT_833464f0 + uVar2);
-    if (*(int *)((int)&DAT_833464f0 + uVar2) != 0) {
-      if (*(int *)((int)&DAT_83346598 + uVar2) == *piVar1) {
-        if (piVar3 == (int *)0x0) {
-          MyAssertHandler(0xffffffff82070460,0x23b,0,0xffffffff82000f98,0xffffffff8207045c);
-        }
-        if (0x3ff < (uint)((int)uVar2 / 0xb4)) {
-          MyAssertHandler(0xffffffff82070460,0x23c,0,0xffffffff82070410,(int)uVar2 / 0xb4,0x400);
-        }
-        if ((*piVar3 < 1) || (0xd < *piVar3)) {
-          MyAssertHandler(0xffffffff82070460,0x23d,0,0xffffffff820704a0,0xffffffff820704c0);
-        }
-        Scr_FreeHudElem(piVar3);
-        *piVar3 = 0;
-      }
-    }
-    uVar2 = uVar2 + 0xb4;
-  } while (uVar2 < 0x2d000);
-  __restgprlr_19();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 82470B10  HudElem_DestroyAll  (game/g_hudelem.cpp:608)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void HudElem_DestroyAll(void)
 
 {
-  void *pvVar1;
+  he_type_t hVar1;
   longlong lVar2;
   int iVar3;
-  int *piVar4;
+  game_hudelem_s *pgVar4;
   
   __savegprlr_20();
-  piVar4 = &DAT_833464f0;
+  pgVar4 = g_hudelems;
   iVar3 = 0;
   lVar2 = 0x400;
   do {
-    if (*piVar4 != 0) {
-      if (piVar4 == (int *)0x0) {
-        MyAssertHandler(0xffffffff82070460,0x23b,0,0xffffffff82000f98,0xffffffff8207045c);
+    if ((pgVar4->elem).type != HE_TYPE_FREE) {
+      if (pgVar4 == (game_hudelem_s *)0x0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_hudelem.cpp",0x23b,
+                        0,"%s");
       }
       if (0x3ff < (uint)(iVar3 / 0xb4)) {
-        MyAssertHandler(0xffffffff82070460,0x23c,0,0xffffffff82070410,iVar3 / 0xb4,0x400);
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_hudelem.cpp",0x23c,
+                        0,
+                        "hud - g_hudelems doesn\'t index ARRAY_COUNT( g_hudelems )\n\t%i not in [0, %i)"
+                       );
       }
-      if ((*piVar4 < 1) || (0xd < *piVar4)) {
-        MyAssertHandler(0xffffffff82070460,0x23d,0,0xffffffff820704a0,0xffffffff820704c0);
+      hVar1 = (pgVar4->elem).type;
+      if (((int)hVar1 < 1) || (0xd < (int)hVar1)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_hudelem.cpp",0x23d,
+                        0,"%s\n\t(hud->elem.type) = %i");
       }
-      Scr_FreeHudElem(piVar4);
-      *piVar4 = 0;
+      Scr_FreeHudElem(pgVar4);
+      (pgVar4->elem).type = HE_TYPE_FREE;
     }
     lVar2 = lVar2 + -1;
-    piVar4 = piVar4 + 0x2d;
+    pgVar4 = pgVar4 + 1;
     iVar3 = iVar3 + 0xb4;
   } while (lVar2 != 0);
-  pvVar1 = memset(&DAT_833464f0,0,0x2d000);
-  __restgprlr_20(pvVar1);
+  memset();
+  __restgprlr_20();
   return;
 }
 
 
 // 82470C20  HudElem_SetEnumString  (game/g_hudelem.cpp:624)
 
-void HudElem_SetEnumString(undefined8 param_1,ulonglong param_2,ulonglong param_3,longlong param_4)
+void HudElem_SetEnumString
+               (game_hudelem_s *param_1,game_hudelem_field_t *param_2,char **param_3,int param_4)
 
 {
   int iVar1;
   undefined4 *puVar2;
+  int iVar3;
+  char *pcVar4;
   int iVar5;
-  undefined8 uVar3;
-  int iVar6;
-  undefined8 uVar4;
-  char *_Source;
+  ulonglong uVar6;
   uint uVar7;
   ulonglong uVar8;
-  int iVar10;
-  longlong lVar9;
+  int iVar9;
   int iVar11;
+  longlong lVar10;
   char acStack_850 [2047];
   undefined1 local_51;
   
-  iVar5 = __savegprlr_23();
-  if (iVar5 == 0) {
-    MyAssertHandler(0xffffffff82070460,0x276,0,0xffffffff82000f98,0xffffffff8207045c);
+  lVar10 = (longlong)param_4;
+  uVar8 = (ulonglong)(int)param_3;
+  uVar6 = (ulonglong)(int)param_2;
+  iVar3 = __savegprlr_23(param_1);
+  if (iVar3 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_hudelem.cpp",0x276,0,
+                    "%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82070460,0x277,0,0xffffffff82000f98,0xffffffff8207057c);
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_hudelem.cpp",0x277,0,
+                    "%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82070460,0x278,0,0xffffffff82000f98,0xffffffff82070574);
+  if ((uVar8 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_hudelem.cpp",0x278,0,
+                    "%s");
   }
-  iVar11 = (int)param_4;
+  iVar11 = (int)lVar10;
   if (iVar11 < 1) {
-    MyAssertHandler(0xffffffff82070460,0x279,0,0xffffffff8207054c,0xffffffff82070564,param_4);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_hudelem.cpp",0x279,0,
+                    "%s\n\t(nameCount) = %i");
   }
-  puVar2 = (undefined4 *)param_2;
+  puVar2 = (undefined4 *)uVar6;
   iVar1 = puVar2[2];
-  uVar3 = Scr_GetString(0);
-  iVar10 = 0;
-  uVar8 = param_3;
+  pcVar4 = Scr_GetString(0);
+  iVar9 = 0;
   if (0 < iVar11) {
     do {
-      iVar6 = I_stricmp(uVar3,*(undefined4 *)uVar8);
-      if (iVar6 == 0) {
-        uVar7 = *(uint *)(iVar1 + iVar5) & ~(puVar2[4] << (puVar2[5] & 0x3f));
-        *(uint *)(iVar1 + iVar5) = uVar7;
-        *(uint *)(iVar1 + iVar5) = iVar10 << (puVar2[5] & 0x3f) | uVar7;
+      iVar5 = I_stricmp(pcVar4,(char *)*(undefined4 *)uVar8);
+      if (iVar5 == 0) {
+        uVar7 = *(uint *)(iVar1 + iVar3) & ~(puVar2[4] << (puVar2[5] & 0x3f));
+        *(uint *)(iVar1 + iVar3) = uVar7;
+        *(uint *)(iVar1 + iVar3) = iVar9 << (puVar2[5] & 0x3f) | uVar7;
         __restgprlr_23();
         return;
       }
-      iVar10 = iVar10 + 1;
+      iVar9 = iVar9 + 1;
       uVar8 = uVar8 + 4;
-    } while (iVar10 < iVar11);
+    } while (iVar9 < iVar11);
   }
-  uVar4 = SL_ConvertToString(*(undefined2 *)*puVar2);
-  sprintf(acStack_850,"\"%s\" is not a valid value for hudelem field \"%s\"\nShould be one of:",
-          uVar3,uVar4);
+  SL_ConvertToString((uint)*(ushort *)*puVar2);
+  sprintf(acStack_850,"\"%s\" is not a valid value for hudelem field \"%s\"\nShould be one of:");
   if (0 < iVar11) {
-    lVar9 = param_3 - 4;
     do {
-      lVar9 = lVar9 + 4;
-      _Source = (char *)va(0xffffffff820209e8,*(undefined4 *)lVar9);
-      strncat(acStack_850,_Source,0x800);
-      param_4 = param_4 + -1;
+      pcVar4 = va(" %s");
+      strncat(acStack_850,pcVar4,0x800);
+      lVar10 = lVar10 + -1;
       local_51 = 0;
-    } while (param_4 != 0);
+    } while (lVar10 != 0);
   }
   Scr_Error(acStack_850);
   __restgprlr_23();
@@ -345,33 +336,42 @@ void HudElem_SetEnumString(undefined8 param_1,ulonglong param_2,ulonglong param_
 // 82470DD0  HudElem_GetEnumString  (game/g_hudelem.cpp:658)
 
 void HudElem_GetEnumString
-               (undefined8 param_1,ulonglong param_2,ulonglong param_3,undefined8 param_4)
+               (game_hudelem_s *param_1,game_hudelem_field_t *param_2,char **param_3,int param_4)
 
 {
   int iVar1;
   int iVar2;
-  uint uVar3;
+  ulonglong uVar3;
+  ulonglong uVar4;
+  uint uVar5;
   
-  iVar2 = __savegprlr_26();
+  uVar4 = (ulonglong)(int)param_3;
+  uVar3 = (ulonglong)(int)param_2;
+  iVar2 = __savegprlr_26(param_1);
   if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff82070460,0x296,0,0xffffffff82000f98,0xffffffff8207045c);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_hudelem.cpp",0x296,0,
+                    "%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82070460,0x297,0,0xffffffff82000f98,0xffffffff8207057c);
+  if ((uVar3 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_hudelem.cpp",0x297,0,
+                    "%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82070460,0x298,0,0xffffffff82000f98,0xffffffff82070574);
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_hudelem.cpp",0x298,0,
+                    "%s");
   }
-  if ((int)param_4 < 1) {
-    MyAssertHandler(0xffffffff82070460,0x299,0,0xffffffff8207054c,0xffffffff82070564,param_4);
+  if (param_4 < 1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_hudelem.cpp",0x299,0,
+                    "%s\n\t(nameCount) = %i");
   }
-  iVar1 = (int)param_2;
-  uVar3 = *(int *)(*(int *)(iVar1 + 8) + iVar2) >> (*(uint *)(iVar1 + 0x14) & 0x3f) &
+  iVar1 = (int)uVar3;
+  uVar5 = *(int *)(*(int *)(iVar1 + 8) + iVar2) >> (*(uint *)(iVar1 + 0x14) & 0x3f) &
           *(uint *)(iVar1 + 0x10);
-  if (((int)uVar3 < 0) || ((int)param_4 <= (int)uVar3)) {
-    MyAssertHandler(0xffffffff82070460,0x29d,0,0xffffffff8200aef4,0xffffffff82070580,uVar3);
+  if (((int)uVar5 < 0) || (param_4 <= (int)uVar5)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_hudelem.cpp",0x29d,0,
+                    "%s\n\t(index) = %i");
   }
-  Scr_AddString(*(undefined4 *)(uVar3 * 4 + (int)param_3));
+  Scr_AddString(*(char **)(uVar5 * 4 + (int)uVar4));
   __restgprlr_26();
   return;
 }
@@ -379,48 +379,51 @@ void HudElem_GetEnumString
 
 // 82470EF8  HudElem_SetLocalizedString  (game/g_hudelem.cpp:677)
 
-void HudElem_SetLocalizedString(int param_1,int param_2)
+void HudElem_SetLocalizedString(game_hudelem_s *param_1,int param_2)
 
 {
-  undefined4 uVar1;
+  char *pcVar1;
+  int iVar2;
   
-  Scr_GetIString(0);
-  uVar1 = G_LocalizedStringIndex();
-  *(undefined4 *)((&DAT_8206fff0)[param_2 * 8] + param_1) = uVar1;
+  pcVar1 = Scr_GetIString(0);
+  iVar2 = G_LocalizedStringIndex(pcVar1);
+  *(int *)((int)&(param_1->elem).type + fields[param_2].ofs) = iVar2;
   return;
 }
 
 
 // 82470F50  HudElem_GetLocalizedString  (game/g_hudelem.cpp:702)
 
-void HudElem_GetLocalizedString(void)
+void HudElem_GetLocalizedString(game_hudelem_s *param_1,int param_2)
 
 {
-  Scr_Error(0xffffffff820705a4);
+  Scr_Error("cannot read label");
   return;
 }
 
 
 // 82470F60  HudElem_SetFlag  (game/g_hudelem.cpp:708)
 
-void HudElem_SetFlag(undefined8 param_1,ulonglong param_2,uint param_3)
+void HudElem_SetFlag(game_hudelem_s *param_1,int param_2,int param_3)
 
 {
   int iVar1;
   uint uVar2;
   int iVar3;
   int iVar4;
-  uint uVar5;
+  ulonglong uVar5;
+  uint uVar6;
   
-  iVar3 = __savegprlr_29();
-  iVar1 = *(int *)((int)&DAT_8206fff0 + (int)((param_2 & 0xffffffff) << 5));
+  uVar5 = (ulonglong)param_2;
+  iVar3 = __savegprlr_29(param_1);
+  iVar1 = *(int *)((int)&fields[0].ofs + (int)((uVar5 & 0xffffffff) << 5));
   iVar4 = Scr_GetInt(0);
   uVar2 = *(uint *)(iVar1 + iVar3);
-  uVar5 = uVar2 | param_3;
+  uVar6 = uVar2 | param_3;
   if (iVar4 == 0) {
-    uVar5 = uVar2 & ~param_3;
+    uVar6 = uVar2 & ~param_3;
   }
-  *(uint *)(iVar1 + iVar3) = uVar5;
+  *(uint *)(iVar1 + iVar3) = uVar6;
   __restgprlr_29();
   return;
 }
@@ -428,20 +431,21 @@ void HudElem_SetFlag(undefined8 param_1,ulonglong param_2,uint param_3)
 
 // 82470FB0  HudElem_GetFlag  (game/g_hudelem.cpp:725)
 
-void HudElem_GetFlag(int param_1,int param_2,uint param_3)
+void HudElem_GetFlag(game_hudelem_s *param_1,int param_2,int param_3)
 
 {
-  if ((&DAT_8206fff0)[param_2 * 8] != 0xa4) {
-    MyAssertHandler(0xffffffff82070460,0x2d6,0,0xffffffff82000f98,0xffffffff820705b8);
+  if (fields[param_2].ofs != 0xa4) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_hudelem.cpp",0x2d6,0,
+                    "%s");
   }
-  Scr_AddBool((*(uint *)(param_1 + 0xa4) & param_3) != 0);
+  Scr_AddBool((uint)(((param_1->elem).flags & param_3) != 0));
   return;
 }
 
 
 // 82471040  HudElem_SetFlagForeground  (game/g_hudelem.cpp:736)
 
-void HudElem_SetFlagForeground(int param_1,int param_2)
+void HudElem_SetFlagForeground(game_hudelem_s *param_1,int param_2)
 
 {
   int iVar1;
@@ -449,21 +453,21 @@ void HudElem_SetFlagForeground(int param_1,int param_2)
   int iVar3;
   uint uVar4;
   
-  iVar1 = (&DAT_8206fff0)[param_2 * 8];
+  iVar1 = fields[param_2].ofs;
   iVar3 = Scr_GetInt(0);
-  uVar2 = *(uint *)(iVar1 + param_1);
+  uVar2 = *(uint *)((int)&(param_1->elem).type + iVar1);
   uVar4 = uVar2 | 1;
   if (iVar3 == 0) {
     uVar4 = uVar2 & 0xfffffffe;
   }
-  *(uint *)(iVar1 + param_1) = uVar4;
+  *(uint *)((int)&(param_1->elem).type + iVar1) = uVar4;
   return;
 }
 
 
 // 824710A8  HudElem_GetFlagForeground  (game/g_hudelem.cpp:742)
 
-void HudElem_GetFlagForeground(undefined8 param_1,undefined8 param_2)
+void HudElem_GetFlagForeground(game_hudelem_s *param_1,int param_2)
 
 {
   HudElem_GetFlag(param_1,param_2,1);
@@ -473,7 +477,7 @@ void HudElem_GetFlagForeground(undefined8 param_1,undefined8 param_2)
 
 // 824710B0  HudElem_SetFlagLowresBackground  (game/g_hudelem.cpp:748)
 
-void HudElem_SetFlagLowresBackground(int param_1,int param_2)
+void HudElem_SetFlagLowresBackground(game_hudelem_s *param_1,int param_2)
 
 {
   int iVar1;
@@ -481,21 +485,21 @@ void HudElem_SetFlagLowresBackground(int param_1,int param_2)
   int iVar3;
   uint uVar4;
   
-  iVar1 = (&DAT_8206fff0)[param_2 * 8];
+  iVar1 = fields[param_2].ofs;
   iVar3 = Scr_GetInt(0);
-  uVar2 = *(uint *)(iVar1 + param_1);
+  uVar2 = *(uint *)((int)&(param_1->elem).type + iVar1);
   uVar4 = uVar2 | 0x100;
   if (iVar3 == 0) {
     uVar4 = uVar2 & 0xfffffeff;
   }
-  *(uint *)(iVar1 + param_1) = uVar4;
+  *(uint *)((int)&(param_1->elem).type + iVar1) = uVar4;
   return;
 }
 
 
 // 82471118  HudElem_GetFlagLowresBackground  (game/g_hudelem.cpp:754)
 
-void HudElem_GetFlagLowresBackground(undefined8 param_1,undefined8 param_2)
+void HudElem_GetFlagLowresBackground(game_hudelem_s *param_1,int param_2)
 
 {
   HudElem_GetFlag(param_1,param_2,0x100);
@@ -505,7 +509,7 @@ void HudElem_GetFlagLowresBackground(undefined8 param_1,undefined8 param_2)
 
 // 82471120  HudElem_SetFlagHideWhenDead  (game/g_hudelem.cpp:760)
 
-void HudElem_SetFlagHideWhenDead(int param_1,int param_2)
+void HudElem_SetFlagHideWhenDead(game_hudelem_s *param_1,int param_2)
 
 {
   int iVar1;
@@ -513,21 +517,21 @@ void HudElem_SetFlagHideWhenDead(int param_1,int param_2)
   int iVar3;
   uint uVar4;
   
-  iVar1 = (&DAT_8206fff0)[param_2 * 8];
+  iVar1 = fields[param_2].ofs;
   iVar3 = Scr_GetInt(0);
-  uVar2 = *(uint *)(iVar1 + param_1);
+  uVar2 = *(uint *)((int)&(param_1->elem).type + iVar1);
   uVar4 = uVar2 | 2;
   if (iVar3 == 0) {
     uVar4 = uVar2 & 0xfffffffd;
   }
-  *(uint *)(iVar1 + param_1) = uVar4;
+  *(uint *)((int)&(param_1->elem).type + iVar1) = uVar4;
   return;
 }
 
 
 // 82471188  HudElem_GetFlagHideWhenDead  (game/g_hudelem.cpp:766)
 
-void HudElem_GetFlagHideWhenDead(undefined8 param_1,undefined8 param_2)
+void HudElem_GetFlagHideWhenDead(game_hudelem_s *param_1,int param_2)
 
 {
   HudElem_GetFlag(param_1,param_2,2);
@@ -537,7 +541,7 @@ void HudElem_GetFlagHideWhenDead(undefined8 param_1,undefined8 param_2)
 
 // 82471190  HudElem_SetFlagHideWhenInMenu  (game/g_hudelem.cpp:772)
 
-void HudElem_SetFlagHideWhenInMenu(int param_1,int param_2)
+void HudElem_SetFlagHideWhenInMenu(game_hudelem_s *param_1,int param_2)
 
 {
   int iVar1;
@@ -545,21 +549,21 @@ void HudElem_SetFlagHideWhenInMenu(int param_1,int param_2)
   int iVar3;
   uint uVar4;
   
-  iVar1 = (&DAT_8206fff0)[param_2 * 8];
+  iVar1 = fields[param_2].ofs;
   iVar3 = Scr_GetInt(0);
-  uVar2 = *(uint *)(iVar1 + param_1);
+  uVar2 = *(uint *)((int)&(param_1->elem).type + iVar1);
   uVar4 = uVar2 | 4;
   if (iVar3 == 0) {
     uVar4 = uVar2 & 0xfffffffb;
   }
-  *(uint *)(iVar1 + param_1) = uVar4;
+  *(uint *)((int)&(param_1->elem).type + iVar1) = uVar4;
   return;
 }
 
 
 // 824711F8  HudElem_GetFlagHideWhenInMenu  (game/g_hudelem.cpp:778)
 
-void HudElem_GetFlagHideWhenInMenu(undefined8 param_1,undefined8 param_2)
+void HudElem_GetFlagHideWhenInMenu(game_hudelem_s *param_1,int param_2)
 
 {
   HudElem_GetFlag(param_1,param_2,4);
@@ -569,7 +573,7 @@ void HudElem_GetFlagHideWhenInMenu(undefined8 param_1,undefined8 param_2)
 
 // 82471200  HudElem_SetFlagHideIn3rdPerson  (game/g_hudelem.cpp:799)
 
-void HudElem_SetFlagHideIn3rdPerson(int param_1,int param_2)
+void HudElem_SetFlagHideIn3rdPerson(game_hudelem_s *param_1,int param_2)
 
 {
   int iVar1;
@@ -577,21 +581,21 @@ void HudElem_SetFlagHideIn3rdPerson(int param_1,int param_2)
   int iVar3;
   uint uVar4;
   
-  iVar1 = (&DAT_8206fff0)[param_2 * 8];
+  iVar1 = fields[param_2].ofs;
   iVar3 = Scr_GetInt(0);
-  uVar2 = *(uint *)(iVar1 + param_1);
+  uVar2 = *(uint *)((int)&(param_1->elem).type + iVar1);
   uVar4 = uVar2 | 0x800;
   if (iVar3 == 0) {
     uVar4 = uVar2 & 0xfffff7ff;
   }
-  *(uint *)(iVar1 + param_1) = uVar4;
+  *(uint *)((int)&(param_1->elem).type + iVar1) = uVar4;
   return;
 }
 
 
 // 82471268  HudElem_GetFlagHideIn3rdPerson  (game/g_hudelem.cpp:805)
 
-void HudElem_GetFlagHideIn3rdPerson(undefined8 param_1,undefined8 param_2)
+void HudElem_GetFlagHideIn3rdPerson(game_hudelem_s *param_1,int param_2)
 
 {
   HudElem_GetFlag(param_1,param_2,0x800);
@@ -601,20 +605,20 @@ void HudElem_GetFlagHideIn3rdPerson(undefined8 param_1,undefined8 param_2)
 
 // 82471270  HudElem_SetBoolean  (game/g_hudelem.cpp:811)
 
-void HudElem_SetBoolean(int param_1,int param_2)
+void HudElem_SetBoolean(game_hudelem_s *param_1,int param_2)
 
 {
-  undefined4 uVar1;
+  int iVar1;
   
-  uVar1 = Scr_GetInt(0);
-  *(undefined4 *)((&DAT_8206fff0)[param_2 * 8] + param_1) = uVar1;
+  iVar1 = Scr_GetInt(0);
+  *(int *)((int)&(param_1->elem).type + fields[param_2].ofs) = iVar1;
   return;
 }
 
 
 // 824712C8  HudElem_SetFlagHideWhenInDemo  (game/g_hudelem.cpp:825)
 
-void HudElem_SetFlagHideWhenInDemo(int param_1,int param_2)
+void HudElem_SetFlagHideWhenInDemo(game_hudelem_s *param_1,int param_2)
 
 {
   int iVar1;
@@ -622,21 +626,21 @@ void HudElem_SetFlagHideWhenInDemo(int param_1,int param_2)
   int iVar3;
   uint uVar4;
   
-  iVar1 = (&DAT_8206fff0)[param_2 * 8];
+  iVar1 = fields[param_2].ofs;
   iVar3 = Scr_GetInt(0);
-  uVar2 = *(uint *)(iVar1 + param_1);
+  uVar2 = *(uint *)((int)&(param_1->elem).type + iVar1);
   uVar4 = uVar2 | 0x1000;
   if (iVar3 == 0) {
     uVar4 = uVar2 & 0xffffefff;
   }
-  *(uint *)(iVar1 + param_1) = uVar4;
+  *(uint *)((int)&(param_1->elem).type + iVar1) = uVar4;
   return;
 }
 
 
 // 82471330  HudElem_GetFlagHideWhenInDemo  (game/g_hudelem.cpp:831)
 
-void HudElem_GetFlagHideWhenInDemo(undefined8 param_1,undefined8 param_2)
+void HudElem_GetFlagHideWhenInDemo(game_hudelem_s *param_1,int param_2)
 
 {
   HudElem_GetFlag(param_1,param_2,0x1000);
@@ -646,57 +650,60 @@ void HudElem_GetFlagHideWhenInDemo(undefined8 param_1,undefined8 param_2)
 
 // 82471338  HudElem_SetColor  (game/g_hudelem.cpp:838)
 
-void HudElem_SetColor(undefined8 param_1,ulonglong param_2)
+void HudElem_SetColor(game_hudelem_s *param_1,int param_2)
 
 {
   int iVar1;
-  double dVar2;
+  ulonglong uVar2;
   double dVar3;
   double dVar4;
   double dVar5;
   double dVar6;
   double dVar7;
+  double dVar8;
   float local_48;
   float local_44;
   float local_40;
   
-  iVar1 = __savefpr_28();
-  if (*(int *)((int)&DAT_8206fff0 + (int)((param_2 & 0xffffffff) << 5)) != 0x30) {
-    MyAssertHandler(0xffffffff82070460,0x349,0,0xffffffff82000f98,0xffffffff820705e4);
+  uVar2 = (ulonglong)param_2;
+  iVar1 = __savefpr_28(param_1);
+  if (*(int *)((int)&fields[0].ofs + (int)((uVar2 & 0xffffffff) << 5)) != 0x30) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_hudelem.cpp",0x349,0,
+                    "%s");
   }
   Scr_GetVector(0,&local_48);
-  dVar7 = 1.0;
-  dVar6 = 0.0;
-  dVar5 = 255.0;
-  dVar4 = 0.5;
-  dVar3 = dVar7;
+  dVar8 = 1.0;
+  dVar7 = 0.0;
+  dVar6 = 255.0;
+  dVar5 = 0.5;
+  dVar4 = dVar8;
   if ((float)((double)local_48 - 1.0) < 0.0) {
-    dVar3 = (double)local_48;
+    dVar4 = (double)local_48;
   }
-  dVar2 = dVar6;
-  if (-dVar3 < 0.0) {
-    dVar2 = dVar3;
-  }
-  dVar2 = floor((double)(float)(dVar2 * 255.0 + 0.5));
   dVar3 = dVar7;
-  if ((float)((double)local_44 - dVar7) < 0.0) {
-    dVar3 = (double)local_44;
+  if (-dVar4 < 0.0) {
+    dVar3 = dVar4;
   }
-  *(char *)(iVar1 + 0x30) = (char)(int)dVar2;
-  dVar2 = dVar6;
-  if (-dVar3 < 0.0) {
-    dVar2 = dVar3;
+  dVar3 = floor((double)(float)(dVar3 * 255.0 + 0.5));
+  dVar4 = dVar8;
+  if ((float)((double)local_44 - dVar8) < 0.0) {
+    dVar4 = (double)local_44;
   }
-  dVar3 = floor((double)(float)(dVar2 * dVar5 + dVar4));
-  if ((float)((double)local_40 - dVar7) < 0.0) {
-    dVar7 = (double)local_40;
+  *(char *)(iVar1 + 0x30) = (char)(int)dVar3;
+  dVar3 = dVar7;
+  if (-dVar4 < 0.0) {
+    dVar3 = dVar4;
   }
-  *(char *)(iVar1 + 0x31) = (char)(int)dVar3;
-  if (-dVar7 < 0.0) {
-    dVar6 = dVar7;
+  dVar4 = floor((double)(float)(dVar3 * dVar6 + dVar5));
+  if ((float)((double)local_40 - dVar8) < 0.0) {
+    dVar8 = (double)local_40;
   }
-  dVar7 = floor((double)(float)(dVar6 * dVar5 + dVar4));
-  *(char *)(iVar1 + 0x32) = (char)(int)dVar7;
+  *(char *)(iVar1 + 0x31) = (char)(int)dVar4;
+  if (-dVar8 < 0.0) {
+    dVar7 = dVar8;
+  }
+  dVar8 = floor((double)(float)(dVar7 * dVar6 + dVar5));
+  *(char *)(iVar1 + 0x32) = (char)(int)dVar8;
   __restfpr_28();
   return;
 }
@@ -704,19 +711,20 @@ void HudElem_SetColor(undefined8 param_1,ulonglong param_2)
 
 // 82471470  HudElem_GetColor  (game/g_hudelem.cpp:851)
 
-void HudElem_GetColor(int param_1,int param_2)
+void HudElem_GetColor(game_hudelem_s *param_1,int param_2)
 
 {
   float local_28;
   float local_24;
   float local_20;
   
-  if ((&DAT_8206fff0)[param_2 * 8] != 0x30) {
-    MyAssertHandler(0xffffffff82070460,0x356,0,0xffffffff82000f98,0xffffffff820705e4);
+  if (fields[param_2].ofs != 0x30) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_hudelem.cpp",0x356,0,
+                    "%s");
   }
-  local_20 = (float)*(byte *)(param_1 + 0x32) * 0.003921569;
-  local_24 = (float)*(byte *)(param_1 + 0x31) * 0.003921569;
-  local_28 = (float)*(byte *)(param_1 + 0x30) * 0.003921569;
+  local_20 = (float)(param_1->elem).color._s_0.b * 0.003921569;
+  local_24 = (float)(param_1->elem).color._s_0.g * 0.003921569;
+  local_28 = (float)(param_1->elem).color._s_0.r * 0.003921569;
   Scr_AddVector(&local_28);
   return;
 }
@@ -724,96 +732,102 @@ void HudElem_GetColor(int param_1,int param_2)
 
 // 82471540  HudElem_SetAlpha  (game/g_hudelem.cpp:864)
 
-void HudElem_SetAlpha(int param_1,int param_2)
+void HudElem_SetAlpha(game_hudelem_s *param_1,int param_2)
 
 {
-  double dVar1;
+  float fVar1;
   double dVar2;
+  float fVar3;
   
-  if ((&DAT_8206fff0)[param_2 * 8] != 0x30) {
-    MyAssertHandler(0xffffffff82070460,0x363,0,0xffffffff82000f98,0xffffffff820705e4);
+  if (fields[param_2].ofs != 0x30) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_hudelem.cpp",0x363,0,
+                    "%s");
   }
-  dVar1 = (double)Scr_GetFloat(0);
-  dVar2 = 1.0;
-  if ((float)(dVar1 - 1.0) < 0.0) {
-    dVar2 = dVar1;
+  fVar3 = Scr_GetFloat(0);
+  fVar1 = 1.0;
+  if (fVar3 - 1.0 < 0.0) {
+    fVar1 = fVar3;
   }
-  dVar1 = 0.0;
-  if (-dVar2 < 0.0) {
-    dVar1 = dVar2;
+  fVar3 = 0.0;
+  if (-fVar1 < 0.0) {
+    fVar3 = fVar1;
   }
-  dVar2 = floor((double)(float)(dVar1 * 255.0 + 0.5));
-  *(char *)(param_1 + 0x33) = (char)(int)dVar2;
+  dVar2 = floor((double)(fVar3 * 255.0 + 0.5));
+  (param_1->elem).color._s_0.a = (uchar)(int)dVar2;
   return;
 }
 
 
 // 82471600  HudElem_GetAlpha  (game/g_hudelem.cpp:875)
 
-void HudElem_GetAlpha(int param_1,int param_2)
+void HudElem_GetAlpha(game_hudelem_s *param_1,int param_2)
 
 {
-  if ((&DAT_8206fff0)[param_2 * 8] != 0x30) {
-    MyAssertHandler(0xffffffff82070460,0x36c,0,0xffffffff82000f98,0xffffffff820705e4);
+  if (fields[param_2].ofs != 0x30) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_hudelem.cpp",0x36c,0,
+                    "%s");
   }
-  Scr_AddFloat((double)((float)*(byte *)(param_1 + 0x33) * 0.003921569));
+  Scr_AddFloat((float)(param_1->elem).color._s_0.a * 0.003921569);
   return;
 }
 
 
 // 82471690  HudElem_SetGlowColor  (game/g_hudelem.cpp:883)
 
-void HudElem_SetGlowColor(undefined8 param_1,ulonglong param_2)
+void HudElem_SetGlowColor(game_hudelem_s *param_1,int param_2)
 
 {
   int iVar1;
-  double dVar2;
+  ulonglong uVar2;
   double dVar3;
   double dVar4;
   double dVar5;
   double dVar6;
   double dVar7;
+  double dVar8;
   float local_48;
   float local_44;
   float local_40;
   
-  iVar1 = __savefpr_28();
-  if (*(int *)((int)&DAT_8206fff0 + (int)((param_2 & 0xffffffff) << 5)) != 0x8c) {
-    MyAssertHandler(0xffffffff82070460,0x376,0,0xffffffff82000f98,0xffffffff82070610);
+  uVar2 = (ulonglong)param_2;
+  iVar1 = __savefpr_28(param_1);
+  if (*(int *)((int)&fields[0].ofs + (int)((uVar2 & 0xffffffff) << 5)) != 0x8c) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_hudelem.cpp",0x376,0,
+                    "%s");
   }
   Scr_GetVector(0,&local_48);
-  dVar7 = 1.0;
-  dVar6 = 0.0;
-  dVar5 = 255.0;
-  dVar4 = 0.5;
-  dVar3 = dVar7;
+  dVar8 = 1.0;
+  dVar7 = 0.0;
+  dVar6 = 255.0;
+  dVar5 = 0.5;
+  dVar4 = dVar8;
   if ((float)((double)local_48 - 1.0) < 0.0) {
-    dVar3 = (double)local_48;
+    dVar4 = (double)local_48;
   }
-  dVar2 = dVar6;
-  if (-dVar3 < 0.0) {
-    dVar2 = dVar3;
-  }
-  dVar2 = floor((double)(float)(dVar2 * 255.0 + 0.5));
   dVar3 = dVar7;
-  if ((float)((double)local_44 - dVar7) < 0.0) {
-    dVar3 = (double)local_44;
+  if (-dVar4 < 0.0) {
+    dVar3 = dVar4;
   }
-  *(char *)(iVar1 + 0x8c) = (char)(int)dVar2;
-  dVar2 = dVar6;
-  if (-dVar3 < 0.0) {
-    dVar2 = dVar3;
+  dVar3 = floor((double)(float)(dVar3 * 255.0 + 0.5));
+  dVar4 = dVar8;
+  if ((float)((double)local_44 - dVar8) < 0.0) {
+    dVar4 = (double)local_44;
   }
-  dVar3 = floor((double)(float)(dVar2 * dVar5 + dVar4));
-  if ((float)((double)local_40 - dVar7) < 0.0) {
-    dVar7 = (double)local_40;
+  *(char *)(iVar1 + 0x8c) = (char)(int)dVar3;
+  dVar3 = dVar7;
+  if (-dVar4 < 0.0) {
+    dVar3 = dVar4;
   }
-  *(char *)(iVar1 + 0x8d) = (char)(int)dVar3;
-  if (-dVar7 < 0.0) {
-    dVar6 = dVar7;
+  dVar4 = floor((double)(float)(dVar3 * dVar6 + dVar5));
+  if ((float)((double)local_40 - dVar8) < 0.0) {
+    dVar8 = (double)local_40;
   }
-  dVar7 = floor((double)(float)(dVar6 * dVar5 + dVar4));
-  *(char *)(iVar1 + 0x8e) = (char)(int)dVar7;
+  *(char *)(iVar1 + 0x8d) = (char)(int)dVar4;
+  if (-dVar8 < 0.0) {
+    dVar7 = dVar8;
+  }
+  dVar8 = floor((double)(float)(dVar7 * dVar6 + dVar5));
+  *(char *)(iVar1 + 0x8e) = (char)(int)dVar8;
   __restfpr_28();
   return;
 }
@@ -821,19 +835,20 @@ void HudElem_SetGlowColor(undefined8 param_1,ulonglong param_2)
 
 // 824717C8  HudElem_GetGlowColor  (game/g_hudelem.cpp:896)
 
-void HudElem_GetGlowColor(int param_1,int param_2)
+void HudElem_GetGlowColor(game_hudelem_s *param_1,int param_2)
 
 {
   float local_28;
   float local_24;
   float local_20;
   
-  if ((&DAT_8206fff0)[param_2 * 8] != 0x8c) {
-    MyAssertHandler(0xffffffff82070460,899,0,0xffffffff82000f98,0xffffffff82070610);
+  if (fields[param_2].ofs != 0x8c) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_hudelem.cpp",899,0,"%s"
+                   );
   }
-  local_20 = (float)*(byte *)(param_1 + 0x8e) * 0.003921569;
-  local_24 = (float)*(byte *)(param_1 + 0x8d) * 0.003921569;
-  local_28 = (float)*(byte *)(param_1 + 0x8c) * 0.003921569;
+  local_20 = (float)(param_1->elem).glowColor._s_0.b * 0.003921569;
+  local_24 = (float)(param_1->elem).glowColor._s_0.g * 0.003921569;
+  local_28 = (float)(param_1->elem).glowColor._s_0.r * 0.003921569;
   Scr_AddVector(&local_28);
   return;
 }
@@ -841,226 +856,232 @@ void HudElem_GetGlowColor(int param_1,int param_2)
 
 // 82471898  HudElem_SetGlowAlpha  (game/g_hudelem.cpp:909)
 
-void HudElem_SetGlowAlpha(int param_1,int param_2)
+void HudElem_SetGlowAlpha(game_hudelem_s *param_1,int param_2)
 
 {
-  double dVar1;
+  float fVar1;
   double dVar2;
+  float fVar3;
   
-  if ((&DAT_8206fff0)[param_2 * 8] != 0x8c) {
-    MyAssertHandler(0xffffffff82070460,0x390,0,0xffffffff82000f98,0xffffffff82070610);
+  if (fields[param_2].ofs != 0x8c) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_hudelem.cpp",0x390,0,
+                    "%s");
   }
-  dVar1 = (double)Scr_GetFloat(0);
-  dVar2 = 1.0;
-  if ((float)(dVar1 - 1.0) < 0.0) {
-    dVar2 = dVar1;
+  fVar3 = Scr_GetFloat(0);
+  fVar1 = 1.0;
+  if (fVar3 - 1.0 < 0.0) {
+    fVar1 = fVar3;
   }
-  dVar1 = 0.0;
-  if (-dVar2 < 0.0) {
-    dVar1 = dVar2;
+  fVar3 = 0.0;
+  if (-fVar1 < 0.0) {
+    fVar3 = fVar1;
   }
-  dVar2 = floor((double)(float)(dVar1 * 255.0 + 0.5));
-  *(char *)(param_1 + 0x8f) = (char)(int)dVar2;
+  dVar2 = floor((double)(fVar3 * 255.0 + 0.5));
+  (param_1->elem).glowColor._s_0.a = (uchar)(int)dVar2;
   return;
 }
 
 
 // 82471958  HudElem_GetGlowAlpha  (game/g_hudelem.cpp:920)
 
-void HudElem_GetGlowAlpha(int param_1,int param_2)
+void HudElem_GetGlowAlpha(game_hudelem_s *param_1,int param_2)
 
 {
-  if ((&DAT_8206fff0)[param_2 * 8] != 0x8c) {
-    MyAssertHandler(0xffffffff82070460,0x399,0,0xffffffff82000f98,0xffffffff82070610);
+  if (fields[param_2].ofs != 0x8c) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_hudelem.cpp",0x399,0,
+                    "%s");
   }
-  Scr_AddFloat((double)((float)*(byte *)(param_1 + 0x8f) * 0.003921569));
+  Scr_AddFloat((float)(param_1->elem).glowColor._s_0.a * 0.003921569);
   return;
 }
 
 
 // 824719E8  HudElem_SetFontScale  (game/g_hudelem.cpp:928)
 
-void HudElem_SetFontScale(int param_1,int param_2)
+void HudElem_SetFontScale(game_hudelem_s *param_1,int param_2)
 
 {
-  double dVar1;
+  char *pcVar1;
   double dVar2;
+  double dVar3;
+  float fVar4;
   
-  if ((&DAT_8206fff0)[param_2 * 8] != 0x14) {
-    MyAssertHandler(0xffffffff82070460,0x3a3,0,0xffffffff82000f98,0xffffffff820706d0);
+  if (fields[param_2].ofs != 0x14) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_hudelem.cpp",0x3a3,0,
+                    "%s");
   }
-  dVar1 = (double)Scr_GetFloat(0);
-  dVar2 = 0.0;
-  if (dVar1 <= 0.0) {
-    va(0xffffffff820706ac,dVar1);
-    Scr_Error();
+  fVar4 = Scr_GetFloat(0);
+  dVar2 = (double)fVar4;
+  dVar3 = 0.0;
+  if (dVar2 <= 0.0) {
+    pcVar1 = va("font scale was %g; should be > 0");
+    Scr_Error(pcVar1);
   }
-  if (dVar2 <= dVar1) {
-    if (dVar1 <= 6.400000095367432) goto LAB_82471ae8;
-    va(dVar1,0xffffffff82070640,dVar1,0x40199999a0000000);
+  if (dVar3 <= dVar2) {
+    if (dVar2 <= 6.400000095367432) goto LAB_82471ae8;
+    pcVar1 = va("font scale %f is above the expected maximum %f");
   }
   else {
-    va(dVar1,0xffffffff8207067c,dVar1,0);
+    pcVar1 = va("font scale %f is below the expected minimum %f");
   }
-  Scr_Error();
+  Scr_Error(pcVar1);
 LAB_82471ae8:
-  *(float *)(param_1 + 0x14) = (float)dVar1;
+  (param_1->elem).fontScale = (float)dVar2;
   return;
 }
 
 
 // 82471B08  HudElem_SetFont  (game/g_hudelem.cpp:949)
 
-void HudElem_SetFont(undefined8 param_1,ulonglong param_2)
+void HudElem_SetFont(game_hudelem_s *param_1,int param_2)
 
 {
-  HudElem_SetEnumString(param_1,(param_2 & 0x7ffffff) * 0x20 + -0x7df90018,0xffffffff82969638,8);
+  HudElem_SetEnumString(param_1,fields + param_2,g_he_font,8);
   return;
 }
 
 
 // 82471B28  HudElem_GetFont  (game/g_hudelem.cpp:955)
 
-void HudElem_GetFont(undefined8 param_1,ulonglong param_2)
+void HudElem_GetFont(game_hudelem_s *param_1,int param_2)
 
 {
-  HudElem_GetEnumString(param_1,(param_2 & 0x7ffffff) * 0x20 + -0x7df90018,0xffffffff82969638,8);
+  HudElem_GetEnumString(param_1,fields + param_2,g_he_font,8);
   return;
 }
 
 
 // 82471B48  HudElem_SetAlignX  (game/g_hudelem.cpp:961)
 
-void HudElem_SetAlignX(undefined8 param_1,ulonglong param_2)
+void HudElem_SetAlignX(game_hudelem_s *param_1,int param_2)
 
 {
-  HudElem_SetEnumString(param_1,(param_2 & 0x7ffffff) * 0x20 + -0x7df90018,0xffffffff82969658,3);
+  HudElem_SetEnumString(param_1,fields + param_2,g_he_alignx,3);
   return;
 }
 
 
 // 82471B68  HudElem_GetAlignX  (game/g_hudelem.cpp:967)
 
-void HudElem_GetAlignX(undefined8 param_1,ulonglong param_2)
+void HudElem_GetAlignX(game_hudelem_s *param_1,int param_2)
 
 {
-  HudElem_GetEnumString(param_1,(param_2 & 0x7ffffff) * 0x20 + -0x7df90018,0xffffffff82969658,3);
+  HudElem_GetEnumString(param_1,fields + param_2,g_he_alignx,3);
   return;
 }
 
 
 // 82471B88  HudElem_SetAlignY  (game/g_hudelem.cpp:973)
 
-void HudElem_SetAlignY(undefined8 param_1,ulonglong param_2)
+void HudElem_SetAlignY(game_hudelem_s *param_1,int param_2)
 
 {
-  HudElem_SetEnumString(param_1,(param_2 & 0x7ffffff) * 0x20 + -0x7df90018,0xffffffff82969664,3);
+  HudElem_SetEnumString(param_1,fields + param_2,g_he_aligny,3);
   return;
 }
 
 
 // 82471BA8  HudElem_GetAlignY  (game/g_hudelem.cpp:979)
 
-void HudElem_GetAlignY(undefined8 param_1,ulonglong param_2)
+void HudElem_GetAlignY(game_hudelem_s *param_1,int param_2)
 
 {
-  HudElem_GetEnumString(param_1,(param_2 & 0x7ffffff) * 0x20 + -0x7df90018,0xffffffff82969664,3);
+  HudElem_GetEnumString(param_1,fields + param_2,g_he_aligny,3);
   return;
 }
 
 
 // 82471BC8  HudElem_SetHorzAlign  (game/g_hudelem.cpp:985)
 
-void HudElem_SetHorzAlign(undefined8 param_1,ulonglong param_2)
+void HudElem_SetHorzAlign(game_hudelem_s *param_1,int param_2)
 
 {
-  HudElem_SetEnumString(param_1,(param_2 & 0x7ffffff) * 0x20 + -0x7df90018,0xffffffff82969670,0xb);
+  HudElem_SetEnumString(param_1,fields + param_2,g_he_horzalign,0xb);
   return;
 }
 
 
 // 82471BE8  HudElem_GetHorzAlign  (game/g_hudelem.cpp:991)
 
-void HudElem_GetHorzAlign(undefined8 param_1,ulonglong param_2)
+void HudElem_GetHorzAlign(game_hudelem_s *param_1,int param_2)
 
 {
-  HudElem_GetEnumString(param_1,(param_2 & 0x7ffffff) * 0x20 + -0x7df90018,0xffffffff82969670,0xb);
+  HudElem_GetEnumString(param_1,fields + param_2,g_he_horzalign,0xb);
   return;
 }
 
 
 // 82471C08  HudElem_SetVertAlign  (game/g_hudelem.cpp:997)
 
-void HudElem_SetVertAlign(undefined8 param_1,ulonglong param_2)
+void HudElem_SetVertAlign(game_hudelem_s *param_1,int param_2)
 
 {
-  HudElem_SetEnumString(param_1,(param_2 & 0x7ffffff) * 0x20 + -0x7df90018,0xffffffff8296969c,0xb);
+  HudElem_SetEnumString(param_1,fields + param_2,g_he_vertalign,0xb);
   return;
 }
 
 
 // 82471C28  HudElem_GetVertAlign  (game/g_hudelem.cpp:1003)
 
-void HudElem_GetVertAlign(undefined8 param_1,ulonglong param_2)
+void HudElem_GetVertAlign(game_hudelem_s *param_1,int param_2)
 
 {
-  HudElem_GetEnumString(param_1,(param_2 & 0x7ffffff) * 0x20 + -0x7df90018,0xffffffff8296969c,0xb);
+  HudElem_GetEnumString(param_1,fields + param_2,g_he_vertalign,0xb);
   return;
 }
 
 
 // 82471C48  HudElem_DumpHudElems  (game/g_hudelem.cpp:1061)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "ConfigString": Some values do not have unique names */
+
 void HudElem_DumpHudElems(void)
 
 {
-  uint uVar1;
+  int iVar1;
   longlong lVar2;
-  longlong lVar3;
-  longlong lVar4;
-  int *piVar5;
-  undefined1 auStack_490 [1168];
+  int *piVar3;
+  char acStack_490 [1168];
   
   __savegprlr_15();
-  piVar5 = &DAT_83346598;
-  lVar2 = 0;
-  lVar3 = 0;
-  lVar4 = 0x400;
+  piVar3 = &g_hudelems[0].clientNum;
+  lVar2 = 0x400;
   do {
-    if (piVar5[-0x2a] != 0) {
-      Com_Printf(0x17,0xffffffff8207072c,(&PTR_DAT_829696d8)[piVar5[-0x2a]]);
-      if (piVar5[1] != 0) {
-        Com_Printf(0x17,0xffffffff82070734,(&PTR_s_invalid_829696c8)[piVar5[1]]);
+    if ((((game_hudelem_s *)(piVar3 + -0x2a))->elem).type != HE_TYPE_FREE) {
+      Com_Printf(0x17,"%12s");
+      if (piVar3[1] != 0) {
+        Com_Printf(0x17,"\t%s");
       }
-      if (*piVar5 != 0x7ff) {
-        Com_Printf(0x17,0xffffffff82070738);
+      if (*piVar3 != 0x7ff) {
+        Com_Printf(0x17,"\tclient %i");
       }
-      if (piVar5[2] == 0) {
-        Com_Printf(0x17,0xffffffff82070750);
-        lVar3 = lVar3 + 1;
+      if (piVar3[2] == 0) {
+        Com_Printf(0x17,"\tcurrent");
       }
       else {
-        Com_Printf(0x17,0xffffffff82070744);
-        lVar2 = lVar2 + 1;
+        Com_Printf(0x17,"\tarchived");
       }
-      uVar1 = piVar5[-9];
-      if (0xeea < (int)((ulonglong)uVar1 + 0x1d6)) {
-        MyAssertHandler(0xffffffff8206c268,0x285,0,0xffffffff82000f98,0xffffffff82016960);
+      iVar1 = piVar3[-9];
+      if (0xeea < (int)(iVar1 + CS_LOCALIZED_STRINGS)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\../bgame/bg_public.h"
+                        ,0x285,0,"%s");
       }
-      SV_GetConfigstring((ulonglong)uVar1 + 0x1d6,auStack_490,0x400);
-      Com_Printf(0x17,0xffffffff8207075c,auStack_490);
-      uVar1 = piVar5[-0x17];
-      if (0xeea < (int)((ulonglong)uVar1 + 0xbd4)) {
-        MyAssertHandler(0xffffffff8206c268,0x285,0,0xffffffff82000f98,0xffffffff82016960);
+      SV_GetConfigstring(iVar1 + CS_LOCALIZED_STRINGS,acStack_490,0x400);
+      Com_Printf(0x17,"\ttext \"%s\"");
+      iVar1 = piVar3[-0x17];
+      if (0xeea < (int)(iVar1 + CS_SERVER_MATERIALS)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\../bgame/bg_public.h"
+                        ,0x285,0,"%s");
       }
-      SV_GetConfigstring((ulonglong)uVar1 + 0xbd4,auStack_490,0x400);
-      Com_Printf(0x17,0xffffffff82070768,auStack_490);
-      Com_Printf(0x17,0xffffffff820044d8);
+      SV_GetConfigstring(iVar1 + CS_SERVER_MATERIALS,acStack_490,0x400);
+      Com_Printf(0x17,"\tmaterial \"%s\"");
+      Com_Printf(0x17,"\n");
     }
-    lVar4 = lVar4 + -1;
-    piVar5 = piVar5 + 0x2d;
-  } while (lVar4 != 0);
-  Com_Printf(0x17,0xffffffff82070700,lVar2,lVar3,lVar3 + lVar2);
+    lVar2 = lVar2 + -1;
+    piVar3 = piVar3 + 0x2d;
+  } while (lVar2 != 0);
+  Com_Printf(0x17,"\n%i archived + %i current = %i hud elems\n");
   __restgprlr_15();
   return;
 }
@@ -1068,28 +1089,30 @@ void HudElem_DumpHudElems(void)
 
 // 82471E20  Scr_GetHudElemField  (game/g_hudelem.cpp:1115)
 
-void Scr_GetHudElemField(undefined8 param_1,ulonglong param_2)
+void Scr_GetHudElemField(int param_1,int param_2)
 
 {
   int iVar1;
-  ulonglong uVar2;
-  longlong lVar3;
+  uint uVar2;
+  ulonglong uVar3;
   
-  uVar2 = __savegprlr_28();
-  if (0x15 < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82070460,0x45f,0,0xffffffff82000f98,0xffffffff820707a8);
+  uVar3 = (ulonglong)param_2;
+  uVar2 = __savegprlr_28(param_1);
+  if (0x15 < (uVar3 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_hudelem.cpp",0x45f,0,
+                    "%s");
   }
-  if (0x3ff < (uVar2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82070460,0x460,0,0xffffffff82000f98,0xffffffff82070778);
+  if (0x3ff < uVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_hudelem.cpp",0x460,0,
+                    "%s");
   }
-  iVar1 = (int)param_2;
-  lVar3 = uVar2 * 0xb4 + -0x7ccb9b10;
-  if (*(code **)(&DAT_82070004 + iVar1 * 0x20) != (code *)0x0) {
-    (**(code **)(&DAT_82070004 + iVar1 * 0x20))(lVar3,param_2);
+  iVar1 = (int)uVar3;
+  if (fields[iVar1].getter != (_func___cdecl_void_game_hudelem_s_ptr_int *)0x0) {
+    (*fields[iVar1].getter)(g_hudelems + uVar2,iVar1);
     __restgprlr_28();
     return;
   }
-  Scr_GetGenericField(lVar3,(&DAT_8206fff4)[iVar1 * 8],(&DAT_8206fff0)[iVar1 * 8]);
+  Scr_GetGenericField((uchar *)(g_hudelems + uVar2),fields[iVar1].type,fields[iVar1].ofs);
   __restgprlr_28();
   return;
 }
@@ -1097,28 +1120,30 @@ void Scr_GetHudElemField(undefined8 param_1,ulonglong param_2)
 
 // 82471EE0  Scr_SetHudElemField  (game/g_hudelem.cpp:1136)
 
-void Scr_SetHudElemField(undefined8 param_1,ulonglong param_2)
+void Scr_SetHudElemField(int param_1,int param_2)
 
 {
   int iVar1;
-  ulonglong uVar2;
-  longlong lVar3;
+  uint uVar2;
+  ulonglong uVar3;
   
-  uVar2 = __savegprlr_28();
-  if (0x15 < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82070460,0x474,0,0xffffffff82000f98,0xffffffff820707a8);
+  uVar3 = (ulonglong)param_2;
+  uVar2 = __savegprlr_28(param_1);
+  if (0x15 < (uVar3 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_hudelem.cpp",0x474,0,
+                    "%s");
   }
-  if (0x3ff < (uVar2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82070460,0x475,0,0xffffffff82000f98,0xffffffff82070778);
+  if (0x3ff < uVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_hudelem.cpp",0x475,0,
+                    "%s");
   }
-  iVar1 = (int)param_2;
-  lVar3 = uVar2 * 0xb4 + -0x7ccb9b10;
-  if (*(code **)(&DAT_82070000 + iVar1 * 0x20) != (code *)0x0) {
-    (**(code **)(&DAT_82070000 + iVar1 * 0x20))(lVar3,param_2);
+  iVar1 = (int)uVar3;
+  if (fields[iVar1].setter != (_func___cdecl_void_game_hudelem_s_ptr_int *)0x0) {
+    (*fields[iVar1].setter)(g_hudelems + uVar2,iVar1);
     __restgprlr_28();
     return;
   }
-  Scr_SetGenericField(lVar3,(&DAT_8206fff4)[iVar1 * 8],(&DAT_8206fff0)[iVar1 * 8]);
+  Scr_SetGenericField((uchar *)(g_hudelems + uVar2),fields[iVar1].type,fields[iVar1].ofs);
   __restgprlr_28();
   return;
 }
@@ -1126,127 +1151,112 @@ void Scr_SetHudElemField(undefined8 param_1,ulonglong param_2)
 
 // 82471FA0  Scr_FreeHudElemConstStrings  (game/g_hudelem.cpp:1157)
 
-void Scr_FreeHudElemConstStrings(longlong param_1)
+void Scr_FreeHudElemConstStrings(game_hudelem_s *param_1)
 
 {
-  uint *puVar1;
-  uint *puVar2;
+  int *piVar1;
+  int *piVar2;
   
-  puVar2 = &DAT_8206fff0;
+  piVar2 = &fields[0].ofs;
   do {
-    if (puVar2[1] == 5) {
-      Scr_SetString((ulonglong)*puVar2 + param_1,0);
+    if (piVar2[1] == F_STRING) {
+      Scr_SetString((ushort *)((int)&(param_1->elem).type + *piVar2),0);
     }
-    puVar1 = puVar2 + 6;
-    puVar2 = puVar2 + 8;
-  } while (*puVar1 != 0);
+    piVar1 = piVar2 + 6;
+    piVar2 = piVar2 + 8;
+  } while (*piVar1 != 0);
   return;
 }
 
 
 // 82472018  GScr_NewHudElem  (game/g_hudelem.cpp:1178)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void GScr_NewHudElem(void)
 
 {
-  ulonglong uVar1;
+  game_hudelem_s *pgVar1;
   
-  uVar1 = HudElem_Alloc(0x7ff,0);
-  if ((uVar1 & 0xffffffff) == 0) {
-    Scr_Error(0xffffffff820707d8);
+  pgVar1 = HudElem_Alloc(0x7ff,0);
+  if (pgVar1 == (game_hudelem_s *)0x0) {
+    Scr_Error("out of hudelems");
   }
-  Scr_AddHudElem(uVar1);
+  Scr_AddHudElem(pgVar1);
   return;
 }
 
 
 // 82472068  GScr_NewClientHudElem  (game/g_hudelem.cpp:1203)
-
-void GScr_NewClientHudElem(void)
-
-{
-  undefined4 *puVar2;
-  ulonglong uVar1;
-  
-  __savegprlr_29();
-  puVar2 = (undefined4 *)Scr_GetEntity(0);
-  if (puVar2 == (undefined4 *)0x0) {
-    MyAssertHandler(0xffffffff82070460,0x4b8,0,0xffffffff82000f98,0xffffffff82002614);
-  }
-  if (*(char *)((int)puVar2 + 0x103) == '\0') {
-    MyAssertHandler(0xffffffff82070460,0x4b9,0,0xffffffff82000f98,0xffffffff8206caf8);
-  }
-  if (puVar2[0x56] == 0) {
-    Scr_ParamError(0,0xffffffff820707e8);
-  }
-  uVar1 = HudElem_Alloc(*puVar2,0);
-  if ((uVar1 & 0xffffffff) == 0) {
-    Scr_Error(0xffffffff820707d8);
-  }
-  Scr_AddHudElem(uVar1);
-  __restgprlr_29();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 82472130  GScr_NewTeamHudElem  (game/g_hudelem.cpp:1237)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void GScr_NewTeamHudElem(void)
 
 {
-  short sVar2;
-  ulonglong uVar1;
-  undefined8 uVar3;
+  uint uVar1;
+  char *pcVar2;
+  game_hudelem_s *pgVar3;
+  int iVar4;
   
-  sVar2 = Scr_GetConstString(0);
-  if (sVar2 == DAT_835a0b8c) {
-    uVar3 = 2;
+  uVar1 = Scr_GetConstString(0);
+  uVar1 = uVar1 & 0xffff;
+  if (uVar1 == scr_const.allies) {
+    iVar4 = 2;
   }
-  else if (sVar2 == DAT_835a0b94) {
-    uVar3 = 1;
+  else if (uVar1 == scr_const.axis) {
+    iVar4 = 1;
   }
-  else if (sVar2 == DAT_835a0d72) {
-    uVar3 = 3;
+  else if (uVar1 == scr_const.spectator) {
+    iVar4 = 3;
   }
   else {
-    uVar3 = Scr_GetString(0);
-    uVar3 = va(0xffffffff820707f8,uVar3);
-    Scr_ParamError(0,uVar3);
-    uVar3 = 0;
+    Scr_GetString(0);
+    pcVar2 = va("team \"%s\" should be \"allies\", \"axis\", or \"spectator\"");
+    Scr_ParamError(0,pcVar2);
+    iVar4 = 0;
   }
-  uVar1 = HudElem_Alloc(0x7ff,uVar3);
-  if ((uVar1 & 0xffffffff) == 0) {
-    Scr_Error(0xffffffff820707d8);
+  pgVar3 = HudElem_Alloc(0x7ff,iVar4);
+  if (pgVar3 == (game_hudelem_s *)0x0) {
+    Scr_Error("out of hudelems");
   }
-  Scr_AddHudElem(uVar1);
+  Scr_AddHudElem(pgVar3);
   return;
 }
 
 
 // 824721F8  GScr_AddFieldsForHudElems  (game/g_hudelem.cpp:1271)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void GScr_AddFieldsForHudElems(void)
 
 {
   uint uVar1;
   int iVar2;
-  undefined **ppuVar3;
+  game_hudelem_field_t *pgVar3;
   
   __savegprlr_24();
-  ppuVar3 = &PTR_DAT_8206ffe8;
+  pgVar3 = fields;
   iVar2 = 0;
   do {
     uVar1 = iVar2 >> 5;
     if ((uVar1 & 0xe000) != 0) {
-      MyAssertHandler(0xffffffff82070460,0x4fc,0,0xffffffff82000f98,0xffffffff82070830);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_hudelem.cpp",0x4fc,0,
+                      "%s");
     }
     if (uVar1 != (uVar1 & 0xffff)) {
-      MyAssertHandler(0xffffffff82070460,0x4fd,0,0xffffffff82000f98,0xffffffff8206c644);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_hudelem.cpp",0x4fd,0,
+                      "%s");
     }
-    Scr_AddClassField(1,*(undefined2 *)*ppuVar3,ppuVar3[1],uVar1 & 0xffff);
-    ppuVar3 = ppuVar3 + 8;
+    Scr_AddClassField(1,(uint)*pgVar3->name,pgVar3->canonicalString,uVar1 & 0xffff);
+    pgVar3 = pgVar3 + 1;
     iVar2 = iVar2 + 0x20;
-  } while (*ppuVar3 != (undefined *)0x0);
+  } while (pgVar3->name != (ushort *)0x0);
   __restgprlr_24();
   return;
 }
@@ -1254,84 +1264,93 @@ void GScr_AddFieldsForHudElems(void)
 
 // 824722B8  HECmd_GetHudElem  (game/g_hudelem.cpp:1284)
 
-longlong HECmd_GetHudElem(undefined4 param_1)
+game_hudelem_s * HECmd_GetHudElem(scr_entref_t param_1)
 
 {
-  ulonglong uVar1;
+  ushort uVar1;
   ushort uStack00000014;
-  short sStack00000016;
+  ushort uStack00000016;
   
-  sStack00000016 = (short)param_1;
+  uStack00000016 = param_1.classnum;
   _uStack00000014 = param_1;
-  if (sStack00000016 == 1) {
-    uStack00000014 = (ushort)((uint)param_1 >> 0x10);
-    uVar1 = (ulonglong)uStack00000014;
-    if (0x3ff < uVar1) {
-      MyAssertHandler(0xffffffff82070460,0x507,0,0xffffffff82000f98,0xffffffff82070878);
+  if (uStack00000016 == 1) {
+    uStack00000014 = param_1.entnum;
+    uVar1 = uStack00000014;
+    if (0x3ff < uStack00000014) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_hudelem.cpp",0x507,0,
+                      "%s");
     }
-    return uVar1 * 0xb4 + -0x7ccb9b10;
+    return g_hudelems + uVar1;
   }
-  Scr_ObjectError(0xffffffff82070864);
-  return 0;
+  Scr_ObjectError("not a hud element");
+  return (game_hudelem_s *)0x0;
 }
 
 
 // 82472350  HECmd_SetText  (game/g_hudelem.cpp:1308)
 
-void HECmd_SetText(void)
+void HECmd_SetText(scr_entref_t param_1)
 
 {
-  undefined4 *puVar1;
-  undefined4 uVar2;
-  undefined1 auStack_410 [1024];
+  game_hudelem_s *pgVar1;
+  int iVar2;
+  char acStack_410 [1024];
   
-  puVar1 = (undefined4 *)HECmd_GetHudElem();
-  puVar1[0x11] = 0;
-  puVar1[0x12] = 0;
-  puVar1[0x18] = 0;
-  puVar1[0x13] = 0;
-  puVar1[0x19] = 0;
-  puVar1[0x1a] = 0;
-  puVar1[0x20] = 0;
-  puVar1[0x1b] = 0;
-  puVar1[0x14] = 0;
-  puVar1[0x15] = 0;
-  puVar1[0x16] = 0;
-  puVar1[0x17] = 0;
-  puVar1[0x1e] = 0;
-  puVar1[0x1f] = 0;
-  puVar1[0x21] = 0;
-  Scr_ConstructMessageString(0,0,0xffffffff820708a4,auStack_410,0x400);
-  *puVar1 = 1;
-  uVar2 = G_LocalizedStringIndex(auStack_410);
-  puVar1[0x21] = uVar2;
-  puVar1[0x29] = puVar1[0x29] | 1;
+  pgVar1 = HECmd_GetHudElem(param_1);
+  (pgVar1->elem).width = 0;
+  (pgVar1->elem).height = 0;
+  (pgVar1->elem).fromX = 0.0;
+  (pgVar1->elem).materialIndex = 0;
+  (pgVar1->elem).fromY = 0.0;
+  (pgVar1->elem).fromAlignOrg = 0;
+  (pgVar1->elem).value = 0.0;
+  (pgVar1->elem).fromAlignScreen = 0;
+  (pgVar1->elem).fromWidth = 0;
+  (pgVar1->elem).fromHeight = 0;
+  (pgVar1->elem).scaleStartTime = 0;
+  (pgVar1->elem).scaleTime = 0;
+  (pgVar1->elem).time = 0;
+  (pgVar1->elem).duration = 0;
+  (pgVar1->elem).text = 0;
+  Scr_ConstructMessageString(0,0,"Hud Elem String",acStack_410,0x400);
+  (pgVar1->elem).type = HE_TYPE_TEXT;
+  iVar2 = G_LocalizedStringIndex(acStack_410);
+  (pgVar1->elem).text = iVar2;
+  (pgVar1->elem).flags = (pgVar1->elem).flags | 1;
   return;
 }
 
 
 // 82472400  HECmd_ClearAllTextAfterHudElem  (game/g_hudelem.cpp:1339)
 
-void HECmd_ClearAllTextAfterHudElem(void)
+/* WARNING: Enum "ConfigString": Some values do not have unique names */
+
+void HECmd_ClearAllTextAfterHudElem(scr_entref_t param_1)
 
 {
   int iVar1;
-  longlong lVar2;
+  scr_entref_t sVar2;
+  game_hudelem_s *pgVar3;
+  ConfigString CVar4;
   
-  __savegprlr_27();
-  iVar1 = HECmd_GetHudElem();
-  if (*(int *)(iVar1 + 0x84) == 0) {
-    Scr_Error(0xffffffff820708b8);
+  sVar2 = (scr_entref_t)__savegprlr_27(param_1);
+  pgVar3 = HECmd_GetHudElem(sVar2);
+  if ((pgVar3->elem).text == 0) {
+    Scr_Error(
+             "Hud elem doesn\'t reference any text.  Make sure to call setText before using clearAllTextAfterHudElem."
+             );
   }
-  if ((int)(*(uint *)(iVar1 + 0x84) + 1) < 0x1ff) {
-    lVar2 = (ulonglong)*(uint *)(iVar1 + 0x84) + 0x1d7;
+  iVar1 = (pgVar3->elem).text;
+  if (iVar1 + 1 < 0x1ff) {
+    CVar4 = iVar1 + (CS_LOCALIZED_STRINGS|CS_SYSTEMINFO);
     do {
-      if (0xeea < (int)lVar2) {
-        MyAssertHandler(0xffffffff8206c268,0x285,0,0xffffffff82000f98,0xffffffff82016960);
+      if (0xeea < (int)CVar4) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\../bgame/bg_public.h"
+                        ,0x285,0,"%s");
       }
-      SV_SetConfigstring(lVar2,0xffffffff820068af);
-      lVar2 = lVar2 + 1;
-    } while ((int)lVar2 < 0x3d5);
+      SV_SetConfigstring(CVar4,"");
+      CVar4 = CVar4 + CS_SYSTEMINFO;
+    } while ((int)CVar4 < 0x3d5);
   }
   __restgprlr_27();
   return;
@@ -1340,553 +1359,299 @@ void HECmd_ClearAllTextAfterHudElem(void)
 
 // 824724A0  HECmd_SetMaterial  (game/g_hudelem.cpp:1370)
 
-void HECmd_SetMaterial(void)
+void HECmd_SetMaterial(scr_entref_t param_1)
 
 {
-  undefined4 *puVar2;
-  int iVar3;
+  scr_entref_t sVar1;
+  game_hudelem_s *pgVar2;
+  uint uVar3;
   char *pcVar4;
-  undefined4 uVar5;
-  undefined8 uVar1;
-  undefined8 uVar6;
-  undefined8 uVar7;
+  int iVar5;
+  int iVar6;
+  int iVar7;
   
-  __savegprlr_27();
-  puVar2 = (undefined4 *)HECmd_GetHudElem();
-  iVar3 = Scr_GetNumParam();
-  if ((iVar3 != 1) && (iVar3 != 3)) {
-    Scr_Error(0xffffffff82070970);
+  sVar1 = (scr_entref_t)__savegprlr_27(param_1);
+  pgVar2 = HECmd_GetHudElem(sVar1);
+  uVar3 = Scr_GetNumParam();
+  if ((uVar3 != 1) && (uVar3 != 3)) {
+    Scr_Error("USAGE: <hudelem> setShader(\"materialname\"[, optional_width, optional_height]);");
   }
-  pcVar4 = (char *)Scr_GetString(0);
+  pcVar4 = Scr_GetString(0);
   if (*pcVar4 == '\0') {
-    Scr_ParamError(0,0xffffffff82070940);
-    uVar5 = 0;
+    Scr_ParamError(0,"Trying to set the material to an empty string");
+    iVar5 = 0;
   }
   else {
-    uVar5 = G_MaterialIndex();
+    iVar5 = G_MaterialIndex(pcVar4);
   }
-  if (iVar3 == 1) {
-    uVar6 = 0;
-    uVar7 = 0;
+  if (uVar3 == 1) {
+    iVar6 = 0;
+    iVar7 = 0;
   }
   else {
-    uVar6 = Scr_GetInt(1);
-    if ((int)uVar6 < 0) {
-      uVar7 = va(0xffffffff82070930,uVar6);
-      Scr_ParamError(1,uVar7);
+    iVar6 = Scr_GetInt(1);
+    if (iVar6 < 0) {
+      pcVar4 = va("width %i < 0");
+      Scr_ParamError(1,pcVar4);
     }
-    uVar7 = Scr_GetInt(2);
-    if ((int)uVar7 < 0) {
-      uVar1 = va(0xffffffff82070920,uVar7);
-      Scr_ParamError(2,uVar1);
+    iVar7 = Scr_GetInt(2);
+    if (iVar7 < 0) {
+      pcVar4 = va("height %i < 0");
+      Scr_ParamError(2,pcVar4);
     }
   }
-  puVar2[0x13] = uVar5;
-  puVar2[0x11] = (int)uVar6;
-  puVar2[0x12] = (int)uVar7;
-  puVar2[0x1a] = 0;
-  puVar2[0x1b] = 0;
-  puVar2[0x14] = 0;
-  puVar2[0x18] = 0;
-  puVar2[0x15] = 0;
-  puVar2[0x19] = 0;
-  puVar2[0x16] = 0;
-  puVar2[0x20] = 0;
-  puVar2[0x17] = 0;
-  puVar2[0x1e] = 0;
-  puVar2[0x1f] = 0;
-  puVar2[0x21] = 0;
-  *puVar2 = 4;
+  (pgVar2->elem).materialIndex = iVar5;
+  (pgVar2->elem).width = iVar6;
+  (pgVar2->elem).height = iVar7;
+  (pgVar2->elem).fromAlignOrg = 0;
+  (pgVar2->elem).fromAlignScreen = 0;
+  (pgVar2->elem).fromWidth = 0;
+  (pgVar2->elem).fromX = 0.0;
+  (pgVar2->elem).fromHeight = 0;
+  (pgVar2->elem).fromY = 0.0;
+  (pgVar2->elem).scaleStartTime = 0;
+  (pgVar2->elem).value = 0.0;
+  (pgVar2->elem).scaleTime = 0;
+  (pgVar2->elem).time = 0;
+  (pgVar2->elem).duration = 0;
+  (pgVar2->elem).text = 0;
+  (pgVar2->elem).type = HE_TYPE_MATERIAL;
   __restgprlr_27();
   return;
 }
 
 
 // 824725D8  HECmd_SetTargetEnt  (game/g_hudelem.cpp:1431)
-
-void HECmd_SetTargetEnt(void)
-
-{
-  int iVar1;
-  undefined4 *puVar2;
-  
-  iVar1 = HECmd_GetHudElem();
-  puVar2 = (undefined4 *)Scr_GetEntity(0);
-  *(undefined4 *)(iVar1 + 0x10) = *puVar2;
-  *(byte *)((int)puVar2 + 0x102) = *(byte *)((int)puVar2 + 0x102) & 0xfe;
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 82472620  HECmd_ClearTargetEnt  (game/g_hudelem.cpp:1460)
 
-void HECmd_ClearTargetEnt(void)
+void HECmd_ClearTargetEnt(scr_entref_t param_1)
 
 {
-  int iVar1;
+  game_hudelem_s *pgVar1;
   
-  iVar1 = HECmd_GetHudElem();
-  *(undefined4 *)(iVar1 + 0x10) = 0x7ff;
+  pgVar1 = HECmd_GetHudElem(param_1);
+  (pgVar1->elem).targetEntNum = 0x7ff;
   return;
 }
 
 
 // 82472648  HECmd_SetTimer_Internal  (game/g_hudelem.cpp:1469)
-
-void HECmd_SetTimer_Internal(undefined8 param_1,undefined8 param_2,undefined8 param_3)
-
-{
-  int *piVar2;
-  int iVar3;
-  undefined8 uVar1;
-  int iVar4;
-  double dVar5;
-  
-  __savegprlr_29();
-  piVar2 = (int *)HECmd_GetHudElem();
-  iVar4 = (int)param_2;
-  if (((((iVar4 != 5) && (iVar4 != 6)) && (iVar4 != 7)) && ((iVar4 != 8 && (iVar4 != 9)))) &&
-     (iVar4 != 10)) {
-    MyAssertHandler(0xffffffff82070460,0x5c2,0,0xffffffff82065e94,0xffffffff82070a00,param_2);
-  }
-  iVar3 = Scr_GetNumParam();
-  if (iVar3 != 1) {
-    va(0xffffffff820709d8,param_3);
-    Scr_Error();
-  }
-  dVar5 = (double)Scr_GetFloat(0);
-  dVar5 = ceil((double)(float)(dVar5 * 1000.0));
-  iVar3 = (int)dVar5;
-  if (((iVar3 < 1) && (iVar4 != 6)) && (iVar4 != 9)) {
-    uVar1 = va(0xffffffff820709c0,(double)((float)(longlong)iVar3 * 0.001));
-    Scr_ParamError(0,uVar1);
-  }
-  *piVar2 = iVar4;
-  piVar2[0x11] = 0;
-  piVar2[0x12] = 0;
-  piVar2[0x13] = 0;
-  piVar2[0x18] = 0;
-  piVar2[0x1a] = 0;
-  piVar2[0x19] = 0;
-  piVar2[0x1b] = 0;
-  piVar2[0x20] = 0;
-  piVar2[0x14] = 0;
-  piVar2[0x15] = 0;
-  piVar2[0x16] = 0;
-  piVar2[0x17] = 0;
-  piVar2[0x1e] = 0;
-  piVar2[0x1f] = 0;
-  piVar2[0x21] = 0;
-  if ((iVar4 != 7) && (iVar4 != 10)) {
-    piVar2[0x1e] = DAT_83580fac + iVar3;
-    __restgprlr_29();
-    return;
-  }
-  piVar2[0x1e] = iVar3;
-  __restgprlr_29();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure gclient_s_s_0_s_0_s_0
 
 // 824727E0  HECmd_SetClock_Internal  (game/g_hudelem.cpp:1494)
-
-void HECmd_SetClock_Internal(undefined8 param_1,undefined8 param_2,undefined8 param_3)
-
-{
-  int iVar1;
-  int *piVar4;
-  int iVar5;
-  undefined8 uVar2;
-  int iVar6;
-  undefined8 uVar3;
-  int iVar7;
-  int iVar8;
-  undefined8 uVar9;
-  double dVar10;
-  double dVar11;
-  double dVar12;
-  
-  __savegprlr_24();
-  piVar4 = (int *)HECmd_GetHudElem();
-  iVar8 = (int)param_2;
-  if ((iVar8 != 0xb) && (iVar8 != 0xc)) {
-    MyAssertHandler(0xffffffff82070460,0x5e0,0,0xffffffff82065e94,0xffffffff82070b4c,param_2);
-  }
-  iVar5 = Scr_GetNumParam();
-  if ((iVar5 != 3) && (iVar5 != 5)) {
-    va(0xffffffff82070ae8,param_3);
-    Scr_Error();
-  }
-  dVar10 = (double)Scr_GetFloat(0);
-  dVar12 = 1000.0;
-  dVar10 = ceil((double)(float)(dVar10 * 1000.0));
-  dVar11 = 0.0010000000474974513;
-  iVar7 = (int)dVar10;
-  if ((iVar7 < 1) && (iVar8 != 0xc)) {
-    uVar2 = va(0xffffffff820709c0,(double)(float)((double)(longlong)iVar7 * 0.0010000000474974513));
-    Scr_ParamError(0,uVar2);
-  }
-  dVar10 = (double)Scr_GetFloat(1);
-  dVar10 = ceil((double)(float)(dVar10 * dVar12));
-  iVar1 = (int)dVar10;
-  if (iVar1 < 1) {
-    uVar2 = va(0xffffffff82070ac8,(double)(float)((double)(longlong)iVar1 * dVar11));
-    Scr_ParamError(1,uVar2);
-  }
-  Scr_GetString(2);
-  iVar6 = G_MaterialIndex();
-  if (iVar5 == 3) {
-    uVar2 = 0;
-    uVar9 = 0;
-  }
-  else {
-    uVar2 = Scr_GetInt(3);
-    if ((int)uVar2 < 0) {
-      uVar9 = va(0xffffffff82070930,uVar2);
-      Scr_ParamError(3,uVar9);
-    }
-    uVar9 = Scr_GetInt(4);
-    if ((int)uVar9 < 0) {
-      uVar3 = va(0xffffffff82070920,uVar9);
-      Scr_ParamError(4,uVar3);
-    }
-  }
-  piVar4[0x11] = 0;
-  piVar4[0x12] = 0;
-  piVar4[0x13] = 0;
-  piVar4[0x1e] = 0;
-  piVar4[0x1f] = 0;
-  *piVar4 = iVar8;
-  piVar4[0x1a] = 0;
-  piVar4[0x18] = 0;
-  piVar4[0x1b] = 0;
-  piVar4[0x19] = 0;
-  piVar4[0x14] = 0;
-  piVar4[0x20] = 0;
-  piVar4[0x15] = 0;
-  piVar4[0x16] = 0;
-  piVar4[0x17] = 0;
-  piVar4[0x21] = 0;
-  iVar7 = DAT_83580fac + iVar7;
-  piVar4[0x1f] = iVar1;
-  piVar4[0x13] = iVar6;
-  piVar4[0x11] = (int)uVar2;
-  piVar4[0x1e] = iVar7;
-  piVar4[0x12] = (int)uVar9;
-  __restgprlr_24();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure gclient_s_s_0_s_0_s_0
 
 // 82472A48  HECmd_SetTimer  (game/g_hudelem.cpp:1556)
 
-void HECmd_SetTimer(undefined8 param_1)
+void HECmd_SetTimer(scr_entref_t param_1)
 
 {
-  HECmd_SetTimer_Internal(param_1,5,0xffffffff82070b88);
+  HECmd_SetTimer_Internal(param_1,HE_TYPE_TIMER_DOWN,"setTimer");
   return;
 }
 
 
 // 82472A58  HECmd_SetTimerUp  (game/g_hudelem.cpp:1573)
-
-void HECmd_SetTimerUp(void)
-
-{
-  undefined4 *puVar1;
-  int iVar2;
-  double dVar3;
-  
-  puVar1 = (undefined4 *)HECmd_GetHudElem();
-  iVar2 = Scr_GetNumParam();
-  if (iVar2 != 1) {
-    va(0xffffffff820709d8,0xffffffff82070b94);
-    Scr_Error();
-  }
-  dVar3 = (double)Scr_GetFloat(0);
-  dVar3 = ceil((double)(float)(dVar3 * 1000.0));
-  puVar1[0x1e] = 0;
-  puVar1[0x11] = 0;
-  puVar1[0x18] = 0;
-  puVar1[0x12] = 0;
-  puVar1[0x19] = 0;
-  puVar1[0x13] = 0;
-  puVar1[0x20] = 0;
-  puVar1[0x1a] = 0;
-  puVar1[0x1b] = 0;
-  puVar1[0x14] = 0;
-  puVar1[0x15] = 0;
-  puVar1[0x16] = 0;
-  puVar1[0x17] = 0;
-  puVar1[0x1f] = 0;
-  puVar1[0x21] = 0;
-  *puVar1 = 6;
-  puVar1[0x1e] = DAT_83580fac + (int)dVar3;
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure gclient_s_s_0_s_0_s_0
 
 // 82472B38  HECmd_SetTimerStatic  (game/g_hudelem.cpp:1590)
 
-void HECmd_SetTimerStatic(void)
+void HECmd_SetTimerStatic(scr_entref_t param_1)
 
 {
-  undefined4 *puVar2;
-  int iVar3;
-  undefined8 uVar1;
+  game_hudelem_s *pgVar1;
+  uint uVar2;
+  char *pcVar3;
   double dVar4;
+  float fVar5;
   
-  puVar2 = (undefined4 *)HECmd_GetHudElem();
-  iVar3 = Scr_GetNumParam();
-  if (iVar3 != 1) {
-    va(0xffffffff820709d8,0xffffffff82070ba0);
-    Scr_Error();
+  pgVar1 = HECmd_GetHudElem(param_1);
+  uVar2 = Scr_GetNumParam();
+  if (uVar2 != 1) {
+    pcVar3 = va("USAGE: <hudelem> %s(time_in_seconds);\n");
+    Scr_Error(pcVar3);
   }
-  dVar4 = (double)Scr_GetFloat(0);
-  dVar4 = ceil((double)(float)(dVar4 * 1000.0));
-  iVar3 = (int)dVar4;
-  if (iVar3 < 1) {
-    uVar1 = va(0xffffffff820709c0,(double)((float)(longlong)iVar3 * 0.001));
-    Scr_ParamError(0,uVar1);
+  fVar5 = Scr_GetFloat(0);
+  dVar4 = ceil((double)(fVar5 * 1000.0));
+  if ((int)dVar4 < 1) {
+    pcVar3 = va("time %g should be > 0");
+    Scr_ParamError(0,pcVar3);
   }
-  puVar2[0x1e] = iVar3;
-  puVar2[0x11] = 0;
-  puVar2[0x12] = 0;
-  puVar2[0x13] = 0;
-  puVar2[0x18] = 0;
-  puVar2[0x1a] = 0;
-  puVar2[0x19] = 0;
-  puVar2[0x1b] = 0;
-  puVar2[0x20] = 0;
-  puVar2[0x14] = 0;
-  puVar2[0x15] = 0;
-  puVar2[0x16] = 0;
-  puVar2[0x17] = 0;
-  puVar2[0x1f] = 0;
-  puVar2[0x21] = 0;
-  *puVar2 = 7;
+  (pgVar1->elem).time = (int)dVar4;
+  (pgVar1->elem).width = 0;
+  (pgVar1->elem).height = 0;
+  (pgVar1->elem).materialIndex = 0;
+  (pgVar1->elem).fromX = 0.0;
+  (pgVar1->elem).fromAlignOrg = 0;
+  (pgVar1->elem).fromY = 0.0;
+  (pgVar1->elem).fromAlignScreen = 0;
+  (pgVar1->elem).value = 0.0;
+  (pgVar1->elem).fromWidth = 0;
+  (pgVar1->elem).fromHeight = 0;
+  (pgVar1->elem).scaleStartTime = 0;
+  (pgVar1->elem).scaleTime = 0;
+  (pgVar1->elem).duration = 0;
+  (pgVar1->elem).text = 0;
+  (pgVar1->elem).type = HE_TYPE_TIMER_STATIC;
   return;
 }
 
 
 // 82472C50  HECmd_SetTenthsTimer  (game/g_hudelem.cpp:1607)
-
-void HECmd_SetTenthsTimer(void)
-
-{
-  undefined4 *puVar2;
-  int iVar3;
-  undefined8 uVar1;
-  double dVar4;
-  
-  puVar2 = (undefined4 *)HECmd_GetHudElem();
-  iVar3 = Scr_GetNumParam();
-  if (iVar3 != 1) {
-    va(0xffffffff820709d8,0xffffffff82070bb0);
-    Scr_Error();
-  }
-  dVar4 = (double)Scr_GetFloat(0);
-  dVar4 = ceil((double)(float)(dVar4 * 1000.0));
-  iVar3 = (int)dVar4;
-  if (iVar3 < 1) {
-    uVar1 = va(0xffffffff820709c0,(double)((float)(longlong)iVar3 * 0.001));
-    Scr_ParamError(0,uVar1);
-  }
-  puVar2[0x1f] = 0;
-  puVar2[0x1e] = 0;
-  puVar2[0x18] = 0;
-  puVar2[0x11] = 0;
-  puVar2[0x19] = 0;
-  puVar2[0x12] = 0;
-  puVar2[0x20] = 0;
-  puVar2[0x13] = 0;
-  puVar2[0x1a] = 0;
-  puVar2[0x1b] = 0;
-  puVar2[0x14] = 0;
-  puVar2[0x15] = 0;
-  puVar2[0x16] = 0;
-  puVar2[0x17] = 0;
-  puVar2[0x21] = 0;
-  *puVar2 = 8;
-  puVar2[0x1e] = DAT_83580fac + iVar3;
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure gclient_s_s_0_s_0_s_0
 
 // 82472D80  HECmd_SetTenthsTimerUp  (game/g_hudelem.cpp:1624)
-
-void HECmd_SetTenthsTimerUp(void)
-
-{
-  undefined4 *puVar1;
-  int iVar2;
-  double dVar3;
-  
-  puVar1 = (undefined4 *)HECmd_GetHudElem();
-  iVar2 = Scr_GetNumParam();
-  if (iVar2 != 1) {
-    va(0xffffffff820709d8,0xffffffff82070bc0);
-    Scr_Error();
-  }
-  dVar3 = (double)Scr_GetFloat(0);
-  dVar3 = ceil((double)(float)(dVar3 * 1000.0));
-  puVar1[0x1e] = 0;
-  puVar1[0x11] = 0;
-  puVar1[0x18] = 0;
-  puVar1[0x12] = 0;
-  puVar1[0x19] = 0;
-  puVar1[0x13] = 0;
-  puVar1[0x20] = 0;
-  puVar1[0x1a] = 0;
-  puVar1[0x1b] = 0;
-  puVar1[0x14] = 0;
-  puVar1[0x15] = 0;
-  puVar1[0x16] = 0;
-  puVar1[0x17] = 0;
-  puVar1[0x1f] = 0;
-  puVar1[0x21] = 0;
-  *puVar1 = 9;
-  puVar1[0x1e] = DAT_83580fac + (int)dVar3;
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure gclient_s_s_0_s_0_s_0
 
 // 82472E60  HECmd_SetTenthsTimerStatic  (game/g_hudelem.cpp:1641)
 
-void HECmd_SetTenthsTimerStatic(void)
+void HECmd_SetTenthsTimerStatic(scr_entref_t param_1)
 
 {
-  undefined4 *puVar2;
-  int iVar3;
-  undefined8 uVar1;
+  game_hudelem_s *pgVar1;
+  uint uVar2;
+  char *pcVar3;
   double dVar4;
+  float fVar5;
   
-  puVar2 = (undefined4 *)HECmd_GetHudElem();
-  iVar3 = Scr_GetNumParam();
-  if (iVar3 != 1) {
-    va(0xffffffff820709d8,0xffffffff82070ba0);
-    Scr_Error();
+  pgVar1 = HECmd_GetHudElem(param_1);
+  uVar2 = Scr_GetNumParam();
+  if (uVar2 != 1) {
+    pcVar3 = va("USAGE: <hudelem> %s(time_in_seconds);\n");
+    Scr_Error(pcVar3);
   }
-  dVar4 = (double)Scr_GetFloat(0);
-  dVar4 = ceil((double)(float)(dVar4 * 1000.0));
-  iVar3 = (int)dVar4;
-  if (iVar3 < 1) {
-    uVar1 = va(0xffffffff820709c0,(double)((float)(longlong)iVar3 * 0.001));
-    Scr_ParamError(0,uVar1);
+  fVar5 = Scr_GetFloat(0);
+  dVar4 = ceil((double)(fVar5 * 1000.0));
+  if ((int)dVar4 < 1) {
+    pcVar3 = va("time %g should be > 0");
+    Scr_ParamError(0,pcVar3);
   }
-  puVar2[0x1e] = iVar3;
-  puVar2[0x11] = 0;
-  puVar2[0x12] = 0;
-  puVar2[0x13] = 0;
-  puVar2[0x18] = 0;
-  puVar2[0x1a] = 0;
-  puVar2[0x19] = 0;
-  puVar2[0x1b] = 0;
-  puVar2[0x20] = 0;
-  puVar2[0x14] = 0;
-  puVar2[0x15] = 0;
-  puVar2[0x16] = 0;
-  puVar2[0x17] = 0;
-  puVar2[0x1f] = 0;
-  puVar2[0x21] = 0;
-  *puVar2 = 10;
+  (pgVar1->elem).time = (int)dVar4;
+  (pgVar1->elem).width = 0;
+  (pgVar1->elem).height = 0;
+  (pgVar1->elem).materialIndex = 0;
+  (pgVar1->elem).fromX = 0.0;
+  (pgVar1->elem).fromAlignOrg = 0;
+  (pgVar1->elem).fromY = 0.0;
+  (pgVar1->elem).fromAlignScreen = 0;
+  (pgVar1->elem).value = 0.0;
+  (pgVar1->elem).fromWidth = 0;
+  (pgVar1->elem).fromHeight = 0;
+  (pgVar1->elem).scaleStartTime = 0;
+  (pgVar1->elem).scaleTime = 0;
+  (pgVar1->elem).duration = 0;
+  (pgVar1->elem).text = 0;
+  (pgVar1->elem).type = HE_TYPE_TENTHS_TIMER_STATIC;
   return;
 }
 
 
 // 82472F78  HECmd_SetClock  (game/g_hudelem.cpp:1662)
 
-void HECmd_SetClock(undefined8 param_1)
+void HECmd_SetClock(scr_entref_t param_1)
 
 {
-  HECmd_SetClock_Internal(param_1,0xb,0xffffffff82070bd4);
+  HECmd_SetClock_Internal(param_1,HE_TYPE_CLOCK_DOWN,"setClock");
   return;
 }
 
 
 // 82472F88  HECmd_SetClockUp  (game/g_hudelem.cpp:1683)
 
-void HECmd_SetClockUp(undefined8 param_1)
+void HECmd_SetClockUp(scr_entref_t param_1)
 
 {
-  HECmd_SetClock_Internal(param_1,0xc,0xffffffff82070be0);
+  HECmd_SetClock_Internal(param_1,HE_TYPE_CLOCK_UP,"setClockUp");
   return;
 }
 
 
 // 82472F98  HECmd_SetValue  (game/g_hudelem.cpp:1700)
 
-void HECmd_SetValue(void)
+void HECmd_SetValue(scr_entref_t param_1)
 
 {
-  undefined4 *puVar1;
-  double dVar2;
+  game_hudelem_s *pgVar1;
+  float fVar2;
   
-  puVar1 = (undefined4 *)HECmd_GetHudElem();
-  dVar2 = (double)Scr_GetFloat(0);
-  puVar1[0x20] = (float)dVar2;
-  puVar1[0x11] = 0;
-  puVar1[0x12] = 0;
-  puVar1[0x13] = 0;
-  puVar1[0x18] = 0;
-  puVar1[0x1a] = 0;
-  puVar1[0x19] = 0;
-  puVar1[0x1b] = 0;
-  puVar1[0x14] = 0;
-  puVar1[0x15] = 0;
-  puVar1[0x16] = 0;
-  puVar1[0x17] = 0;
-  puVar1[0x1e] = 0;
-  puVar1[0x1f] = 0;
-  puVar1[0x21] = 0;
-  *puVar1 = 2;
+  pgVar1 = HECmd_GetHudElem(param_1);
+  fVar2 = Scr_GetFloat(0);
+  (pgVar1->elem).value = fVar2;
+  (pgVar1->elem).width = 0;
+  (pgVar1->elem).height = 0;
+  (pgVar1->elem).materialIndex = 0;
+  (pgVar1->elem).fromX = 0.0;
+  (pgVar1->elem).fromAlignOrg = 0;
+  (pgVar1->elem).fromY = 0.0;
+  (pgVar1->elem).fromAlignScreen = 0;
+  (pgVar1->elem).fromWidth = 0;
+  (pgVar1->elem).fromHeight = 0;
+  (pgVar1->elem).scaleStartTime = 0;
+  (pgVar1->elem).scaleTime = 0;
+  (pgVar1->elem).time = 0;
+  (pgVar1->elem).duration = 0;
+  (pgVar1->elem).text = 0;
+  (pgVar1->elem).type = HE_TYPE_VALUE;
   return;
 }
 
 
 // 82473020  HECmd_SetWaypoint  (game/g_hudelem.cpp:1727)
 
-void HECmd_SetWaypoint(void)
+void HECmd_SetWaypoint(scr_entref_t param_1)
 
 {
-  undefined4 *puVar1;
-  int iVar2;
-  int iVar3;
-  uint uVar4;
+  uint uVar1;
+  game_hudelem_s *pgVar2;
+  uint uVar3;
+  int iVar4;
+  uint uVar5;
   
-  puVar1 = (undefined4 *)HECmd_GetHudElem();
-  iVar2 = Scr_GetNumParam();
-  iVar3 = Scr_GetInt(0);
-  *puVar1 = 0xd;
-  puVar1[0x20] = (float)(longlong)iVar3;
-  uVar4 = puVar1[0x29] | 0x200;
-  if (iVar3 < 1) {
-    uVar4 = puVar1[0x29] & 0xfffffdff;
+  pgVar2 = HECmd_GetHudElem(param_1);
+  uVar3 = Scr_GetNumParam();
+  iVar4 = Scr_GetInt(0);
+  (pgVar2->elem).type = HE_TYPE_WAYPOINT;
+  uVar1 = (pgVar2->elem).flags;
+  (pgVar2->elem).value = (float)(longlong)iVar4;
+  uVar5 = uVar1 | 0x200;
+  if (iVar4 < 1) {
+    uVar5 = uVar1 & 0xfffffdff;
   }
-  puVar1[0x29] = uVar4;
-  if (2 < iVar2) {
-    iVar3 = Scr_GetInt(2);
-    uVar4 = puVar1[0x29] | 0x10;
-    if (iVar3 == 0) {
-      uVar4 = puVar1[0x29] & 0xffffffef;
+  (pgVar2->elem).flags = uVar5;
+  if (2 < (int)uVar3) {
+    iVar4 = Scr_GetInt(2);
+    uVar1 = (pgVar2->elem).flags;
+    uVar5 = uVar1 | 0x10;
+    if (iVar4 == 0) {
+      uVar5 = uVar1 & 0xffffffef;
     }
-    puVar1[0x29] = uVar4;
+    (pgVar2->elem).flags = uVar5;
   }
-  if (1 < iVar2) {
-    iVar3 = Scr_GetInt(1);
-    uVar4 = puVar1[0x29] | 8;
-    if (iVar3 == 0) {
-      uVar4 = puVar1[0x29] & 0xfffffff7;
+  if (1 < (int)uVar3) {
+    iVar4 = Scr_GetInt(1);
+    uVar1 = (pgVar2->elem).flags;
+    uVar5 = uVar1 | 8;
+    if (iVar4 == 0) {
+      uVar5 = uVar1 & 0xfffffff7;
     }
-    puVar1[0x29] = uVar4;
+    (pgVar2->elem).flags = uVar5;
   }
-  if (3 < iVar2) {
-    iVar2 = Scr_GetInt(3);
-    uVar4 = puVar1[0x29] | 0x400;
-    if (iVar2 == 0) {
-      uVar4 = puVar1[0x29] & 0xfffffbff;
+  if (3 < (int)uVar3) {
+    iVar4 = Scr_GetInt(3);
+    uVar1 = (pgVar2->elem).flags;
+    uVar5 = uVar1 | 0x400;
+    if (iVar4 == 0) {
+      uVar5 = uVar1 & 0xfffffbff;
     }
-    puVar1[0x29] = uVar4;
+    (pgVar2->elem).flags = uVar5;
   }
   return;
 }
@@ -1894,357 +1659,154 @@ void HECmd_SetWaypoint(void)
 
 // 82473118  HECmd_SetWaypointEdgeStyle_RotatingIcon  (game/g_hudelem.cpp:1786)
 
-void HECmd_SetWaypointEdgeStyle_RotatingIcon(void)
+void HECmd_SetWaypointEdgeStyle_RotatingIcon(scr_entref_t param_1)
 
 {
-  int *piVar1;
+  game_hudelem_s *pgVar1;
   
-  piVar1 = (int *)HECmd_GetHudElem();
-  if (*piVar1 != 0xd) {
-    Scr_Error(0xffffffff82070bec);
+  pgVar1 = HECmd_GetHudElem(param_1);
+  if ((pgVar1->elem).type != HE_TYPE_WAYPOINT) {
+    Scr_Error("Hudelem needs to be of \'waypoint\' type.\n");
   }
-  piVar1[0x29] = piVar1[0x29] | 0x20;
+  (pgVar1->elem).flags = (pgVar1->elem).flags | 0x20;
   return;
 }
 
 
 // 82473168  HECmd_SetWaypointEdgeStyle_SecondaryArrow  (game/g_hudelem.cpp:1809)
 
-void HECmd_SetWaypointEdgeStyle_SecondaryArrow(void)
+void HECmd_SetWaypointEdgeStyle_SecondaryArrow(scr_entref_t param_1)
 
 {
-  int *piVar1;
+  game_hudelem_s *pgVar1;
   
-  piVar1 = (int *)HECmd_GetHudElem();
-  if (*piVar1 != 0xd) {
-    Scr_Error(0xffffffff82070bec);
+  pgVar1 = HECmd_GetHudElem(param_1);
+  if ((pgVar1->elem).type != HE_TYPE_WAYPOINT) {
+    Scr_Error("Hudelem needs to be of \'waypoint\' type.\n");
   }
-  piVar1[0x29] = piVar1[0x29] & 0xffffffdf;
+  (pgVar1->elem).flags = (pgVar1->elem).flags & 0xffffffdf;
   return;
 }
 
 
 // 824731B8  HECmd_SetWaypointIconOffscreenOnly  (game/g_hudelem.cpp:1832)
 
-void HECmd_SetWaypointIconOffscreenOnly(void)
+void HECmd_SetWaypointIconOffscreenOnly(scr_entref_t param_1)
 
 {
-  int *piVar1;
+  game_hudelem_s *pgVar1;
   
-  piVar1 = (int *)HECmd_GetHudElem();
-  if (*piVar1 != 0xd) {
-    Scr_Error(0xffffffff82070bec);
+  pgVar1 = HECmd_GetHudElem(param_1);
+  if ((pgVar1->elem).type != HE_TYPE_WAYPOINT) {
+    Scr_Error("Hudelem needs to be of \'waypoint\' type.\n");
   }
-  piVar1[0x29] = piVar1[0x29] | 0x40;
+  (pgVar1->elem).flags = (pgVar1->elem).flags | 0x40;
   return;
 }
 
 
 // 82473208  HECmd_FadeOverTime  (game/g_hudelem.cpp:1856)
-
-void HECmd_FadeOverTime(void)
-
-{
-  int iVar2;
-  undefined8 uVar1;
-  double dVar3;
-  
-  iVar2 = HECmd_GetHudElem();
-  dVar3 = (double)Scr_GetFloat(0);
-  if (0.0 < dVar3) {
-    if (dVar3 <= 60.0) goto LAB_82473290;
-    uVar1 = va(dVar3,0xffffffff82070c18,dVar3);
-  }
-  else {
-    uVar1 = va(0xffffffff82070c2c,dVar3);
-  }
-  Scr_ParamError(0,uVar1);
-LAB_82473290:
-  BG_LerpHudColors(iVar2,DAT_83580fac,iVar2 + 0x34);
-  *(undefined4 *)(iVar2 + 0x38) = DAT_83580fac;
-  dVar3 = floor((double)(float)(dVar3 * 1000.0 + 0.5));
-  *(int *)(iVar2 + 0x3c) = (int)dVar3;
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure gclient_s_s_0_s_0_s_0
 
 // 824732F8  HECmd_ChangeFontScaleOverTime  (game/g_hudelem.cpp:1889)
-
-void HECmd_ChangeFontScaleOverTime(void)
-
-{
-  int iVar2;
-  undefined8 uVar1;
-  double dVar3;
-  
-  iVar2 = HECmd_GetHudElem();
-  dVar3 = (double)Scr_GetFloat(0);
-  if (0.0 < dVar3) {
-    if (dVar3 <= 60.0) goto LAB_82473380;
-    uVar1 = va(dVar3,0xffffffff82070c40,dVar3);
-  }
-  else {
-    uVar1 = va(0xffffffff82070c54,dVar3);
-  }
-  Scr_ParamError(0,uVar1);
-LAB_82473380:
-  BG_LerpFontScale(iVar2,DAT_83580fac,iVar2 + 0x18);
-  *(undefined4 *)(iVar2 + 0x1c) = DAT_83580fac;
-  dVar3 = floor((double)(float)(dVar3 * 1000.0 + 0.5));
-  *(int *)(iVar2 + 0x20) = (int)dVar3;
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure gclient_s_s_0_s_0_s_0
 
 // 824733E8  HECmd_ScaleOverTime  (game/g_hudelem.cpp:1924)
-
-void HECmd_ScaleOverTime(void)
-
-{
-  undefined4 uVar1;
-  undefined4 uVar2;
-  int iVar4;
-  int iVar5;
-  undefined8 uVar3;
-  undefined4 uVar6;
-  undefined4 uVar7;
-  double dVar8;
-  
-  __savegprlr_29();
-  iVar4 = HECmd_GetHudElem();
-  iVar5 = Scr_GetNumParam();
-  if (iVar5 != 3) {
-    Scr_Error(0xffffffff82070c68);
-  }
-  dVar8 = (double)Scr_GetFloat(0);
-  if (0.0 < dVar8) {
-    if (dVar8 <= 60.0) goto LAB_82473480;
-    uVar3 = va(dVar8,0xffffffff82070c40,dVar8);
-  }
-  else {
-    uVar3 = va(0xffffffff82070c54,dVar8);
-  }
-  Scr_ParamError(0,uVar3);
-LAB_82473480:
-  uVar6 = Scr_GetInt(1);
-  uVar7 = Scr_GetInt(2);
-  *(undefined4 *)(iVar4 + 0x58) = DAT_83580fac;
-  dVar8 = floor((double)(float)(dVar8 * 1000.0 + 0.5));
-  uVar1 = *(undefined4 *)(iVar4 + 0x44);
-  uVar2 = *(undefined4 *)(iVar4 + 0x48);
-  *(undefined4 *)(iVar4 + 0x44) = uVar6;
-  *(undefined4 *)(iVar4 + 0x48) = uVar7;
-  *(undefined4 *)(iVar4 + 0x50) = uVar1;
-  *(undefined4 *)(iVar4 + 0x54) = uVar2;
-  *(int *)(iVar4 + 0x5c) = (int)dVar8;
-  __restgprlr_29();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure gclient_s_s_0_s_0_s_0
 
 // 824734F8  HECmd_MoveOverTime  (game/g_hudelem.cpp:1965)
-
-void HECmd_MoveOverTime(void)
-
-{
-  int iVar2;
-  undefined8 uVar1;
-  double dVar3;
-  
-  iVar2 = HECmd_GetHudElem();
-  dVar3 = (double)Scr_GetFloat(0);
-  if (0.0 < dVar3) {
-    if (dVar3 <= 60.0) goto LAB_8247357c;
-    uVar1 = va(dVar3,0xffffffff82070ca8,dVar3);
-  }
-  else {
-    uVar1 = va(0xffffffff82070cbc,dVar3);
-  }
-  Scr_ParamError(0,uVar1);
-LAB_8247357c:
-  *(undefined4 *)(iVar2 + 0x70) = DAT_83580fac;
-  dVar3 = floor((double)(float)(dVar3 * 1000.0 + 0.5));
-  *(undefined4 *)(iVar2 + 0x60) = *(undefined4 *)(iVar2 + 4);
-  *(undefined4 *)(iVar2 + 100) = *(undefined4 *)(iVar2 + 8);
-  *(undefined4 *)(iVar2 + 0x68) = *(undefined4 *)(iVar2 + 0x28);
-  *(undefined4 *)(iVar2 + 0x6c) = *(undefined4 *)(iVar2 + 0x2c);
-  *(int *)(iVar2 + 0x74) = (int)dVar3;
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure gclient_s_s_0_s_0_s_0
 
 // 824735F0  HECmd_Reset  (game/g_hudelem.cpp:1997)
 
-void HECmd_Reset(void)
+void HECmd_Reset(scr_entref_t param_1)
 
 {
-  HECmd_GetHudElem();
-  HudElem_SetDefaults();
+  game_hudelem_s *pgVar1;
+  
+  pgVar1 = HECmd_GetHudElem(param_1);
+  HudElem_SetDefaults(pgVar1);
   return;
 }
 
 
 // 82473618  HECmd_Destroy  (game/g_hudelem.cpp:2016)
 
-void HECmd_Destroy(void)
+void HECmd_Destroy(scr_entref_t param_1)
 
 {
-  HECmd_GetHudElem();
-  HudElem_Free();
+  game_hudelem_s *pgVar1;
+  
+  pgVar1 = HECmd_GetHudElem(param_1);
+  HudElem_Free(pgVar1);
   return;
 }
 
 
 // 82473640  HECmd_SetPlayerNameString  (game/g_hudelem.cpp:2035)
-
-void HECmd_SetPlayerNameString(void)
-
-{
-  undefined4 *puVar1;
-  int *piVar2;
-  
-  puVar1 = (undefined4 *)HECmd_GetHudElem();
-  piVar2 = (int *)Scr_GetEntity(0);
-  if (piVar2 == (int *)0x0) {
-    Com_Printf(0x17,0xffffffff82070d20);
-    return;
-  }
-  if (piVar2[0x56] == 0) {
-    Com_Printf(0x17,0xffffffff82070cd0);
-    return;
-  }
-  puVar1[0x11] = 0;
-  puVar1[0x12] = 0;
-  puVar1[0x13] = 0;
-  puVar1[0x20] = 0;
-  puVar1[0x1a] = 0;
-  puVar1[0x18] = 0;
-  puVar1[0x1b] = 0;
-  puVar1[0x19] = 0;
-  puVar1[0x14] = 0;
-  puVar1[0x15] = 0;
-  puVar1[0x16] = 0;
-  puVar1[0x17] = 0;
-  puVar1[0x1e] = 0;
-  puVar1[0x1f] = 0;
-  puVar1[0x21] = 0;
-  *puVar1 = 3;
-  puVar1[0x20] = (float)(longlong)*piVar2;
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 82473740  GetIntGTZero  (game/g_hudelem.cpp:2141)
 
-undefined8 GetIntGTZero(undefined8 param_1)
+int GetIntGTZero(uint param_1)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
+  int iVar1;
+  char *pcVar2;
   
-  uVar1 = Scr_GetInt();
-  if ((int)uVar1 < 0) {
-    uVar2 = va(0xffffffff82070d58,uVar1);
-    Scr_ParamError(param_1,uVar2);
+  iVar1 = Scr_GetInt(param_1);
+  if (iVar1 < 0) {
+    pcVar2 = va("Time (%i) must be greater than zero.");
+    Scr_ParamError(param_1,pcVar2);
   }
-  return uVar1;
+  return iVar1;
 }
 
 
 // 824737A0  HECmd_SetPulseFX  (game/g_hudelem.cpp:2166)
-
-void HECmd_SetPulseFX(void)
-
-{
-  undefined8 uVar1;
-  int iVar3;
-  undefined8 uVar2;
-  ulonglong uVar4;
-  longlong lVar5;
-  int iVar6;
-  uint uVar7;
-  
-  uVar1 = __savegprlr_28();
-  iVar3 = Scr_GetNumParam();
-  if (iVar3 != 3) {
-    Scr_Error(0xffffffff82070d80);
-  }
-  iVar3 = HECmd_GetHudElem(uVar1);
-  *(undefined4 *)(iVar3 + 0x90) = DAT_83580fac;
-  uVar1 = Scr_GetInt(0);
-  if ((int)uVar1 < 0) {
-    uVar2 = va(0xffffffff82070d58,uVar1);
-    Scr_ParamError(0,uVar2);
-  }
-  *(int *)(iVar3 + 0x94) = (int)uVar1;
-  uVar1 = Scr_GetInt(1);
-  if ((int)uVar1 < 0) {
-    uVar2 = va(0xffffffff82070d58,uVar1);
-    Scr_ParamError(1,uVar2);
-  }
-  *(int *)(iVar3 + 0x98) = (int)uVar1;
-  uVar1 = Scr_GetInt(2);
-  if ((int)uVar1 < 0) {
-    uVar2 = va(0xffffffff82070d58,uVar1);
-    Scr_ParamError(2,uVar2);
-  }
-  *(int *)(iVar3 + 0x9c) = (int)uVar1;
-  if (*(int *)(iVar3 + 0xa8) != 0x7ff) {
-    iVar6 = *(int *)(iVar3 + 0xa8) * 0x3980 + DAT_83580b00;
-    uVar4 = (ulonglong)*(uint *)(iVar6 + 0x3900) + 1;
-    lVar5 = uVar4 + ((longlong)((int)uVar4 >> 4) + (ulonglong)((int)uVar4 < 0 && (uVar4 & 0xf) != 0)
-                    & 0xfffffff) * -0x10;
-    *(int *)(iVar6 + 0x3900) = (int)lVar5;
-    if (lVar5 == 0) {
-      *(undefined4 *)(iVar6 + 0x3900) = 1;
-    }
-    *(undefined4 *)(iVar3 + 0xa0) = *(undefined4 *)(iVar6 + 0x3900);
-    __restgprlr_28();
-    return;
-  }
-  uVar7 = DAT_8358336c + 1;
-  DAT_8358336c = uVar7 + (((int)uVar7 >> 4) + (uint)((int)uVar7 < 0 && (uVar7 & 0xf) != 0) &
-                         0xfffffff) * -0x10;
-  *(int *)(iVar3 + 0xa0) = DAT_8358336c + 0x10;
-  __restgprlr_28();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure gclient_s_s_0_s_0_s_0
 
 // 824738F8  HudElem_GetMethod  (game/g_hudelem.cpp:2239)
 
-void HudElem_GetMethod(void)
+uint HudElem_GetMethod(char **param_1)
 
 {
   char cVar1;
   char cVar2;
-  undefined4 *puVar3;
+  uint *puVar3;
   undefined4 *puVar4;
   uint uVar5;
   int iVar6;
-  int *piVar7;
+  BuiltinMethodDef *pBVar7;
   char *pcVar8;
   char *pcVar9;
   longlong lVar10;
+  int *piVar11;
   
-  puVar4 = (undefined4 *)__savegprlr_29();
+  puVar4 = (undefined4 *)__savegprlr_29(param_1);
   if (puVar4 == (undefined4 *)0x0) {
     lVar10 = 0x1a;
-    puVar4 = (undefined4 *)&UNK_820702bc;
+    piVar11 = &fields[0x16].shift;
     do {
-      puVar3 = puVar4 + 4;
-      puVar4 = puVar4 + 3;
-      Scr_RegisterFunction(*puVar3,0,*puVar4);
+      puVar3 = (uint *)(piVar11 + 4);
+      piVar11 = piVar11 + 3;
+      Scr_RegisterFunction(*puVar3,0,*piVar11);
       lVar10 = lVar10 + -1;
     } while (lVar10 != 0);
-    __restgprlr_29(0);
-    return;
+    uVar5 = __restgprlr_29(0);
+    return uVar5;
   }
-  piVar7 = &DAT_820702c8;
+  pBVar7 = methods;
   iVar6 = 0;
   uVar5 = 0;
   do {
-    pcVar8 = (&PTR_s_attach_8298e238)[*piVar7 + -0x8000];
+    pcVar8 = *(char **)(&g_scr_meth_names + (pBVar7->name - 0x8000) * 4);
     pcVar9 = (char *)*puVar4;
     do {
       cVar1 = *pcVar9;
@@ -2254,220 +1816,82 @@ void HudElem_GetMethod(void)
       pcVar8 = pcVar8 + 1;
     } while (cVar1 == cVar2);
     if (cVar1 == cVar2) {
-      *puVar4 = (&PTR_s_attach_8298e238)[(&DAT_820702c8)[iVar6 * 3] + -0x8000];
-      __restgprlr_29((&DAT_820702c8)[iVar6 * 3]);
-      return;
+      *puVar4 = *(undefined4 *)(&g_scr_meth_names + (methods[iVar6].name - 0x8000) * 4);
+      uVar5 = __restgprlr_29(methods[iVar6].name);
+      return uVar5;
     }
     uVar5 = uVar5 + 0xc;
     iVar6 = iVar6 + 1;
-    piVar7 = piVar7 + 3;
+    pBVar7 = pBVar7 + 1;
     if (0x137 < uVar5) {
-      __restgprlr_29(0);
-      return;
+      uVar5 = __restgprlr_29(0);
+      return uVar5;
     }
   } while( true );
 }
 
 
 // 824739F0  HudElem_UpdateClient  (game/g_hudelem.cpp:2285)
-
-void HudElem_UpdateClient(undefined8 param_1,ulonglong param_2,ulonglong param_3)
-
-{
-  byte bVar1;
-  byte bVar2;
-  int iVar3;
-  int iVar4;
-  byte *pbVar5;
-  byte *pbVar6;
-  int iVar7;
-  longlong lVar8;
-  int iVar9;
-  int iVar10;
-  int iVar11;
-  int *piVar12;
-  byte *pbVar13;
-  
-  iVar3 = __savegprlr_21();
-  iVar4 = (int)param_2;
-  if ((iVar4 < 0) || (DAT_83580fa4 <= iVar4)) {
-    MyAssertHandler(0xffffffff82070460,0x8f4,0,0xffffffff82037188,0xffffffff82070f34,param_2);
-  }
-  if (*(char *)((int)((param_2 + (param_2 & 0x3fffffff) * 4 & 0xffffffff) << 7) + DAT_83580b04 +
-               0x103) == '\0') {
-    MyAssertHandler(0xffffffff82070460,0x8f5,0,0xffffffff82000f98,0xffffffff82070f0c);
-  }
-  if (iVar3 == 0) {
-    MyAssertHandler(0xffffffff82070460,0x8f6,0,0xffffffff82000f98,0xffffffff820386a4);
-  }
-  iVar11 = 0;
-  iVar7 = 0;
-  piVar12 = &DAT_83346598;
-  iVar10 = iVar3 + 0xa14;
-  iVar9 = iVar3 + 0x1e6c;
-  lVar8 = 0x400;
-  do {
-    if (((piVar12[-0x2a] != 0) && ((piVar12[1] == 0 || (piVar12[1] == *(int *)(iVar3 + 0x33d4)))))
-       && ((*piVar12 == 0x7ff || (*piVar12 == iVar4)))) {
-      if (piVar12[2] == 0) {
-        if (((param_3 & 2) != 0) && (iVar7 < 0x1f)) {
-          Com_Memcpy(iVar10,piVar12 + -0x2a,0xa8);
-          iVar7 = iVar7 + 1;
-          iVar10 = iVar10 + 0xa8;
-        }
-      }
-      else if (((param_3 & 1) != 0) && (iVar11 < 0x1f)) {
-        Com_Memcpy(iVar9,piVar12 + -0x2a,0xa8);
-        iVar11 = iVar11 + 1;
-        iVar9 = iVar9 + 0xa8;
-      }
-    }
-    lVar8 = lVar8 + -1;
-    piVar12 = piVar12 + 0x2d;
-  } while (lVar8 != 0);
-  if (((param_3 & 1) != 0) && (iVar11 < 0x1f)) {
-    piVar12 = (int *)(iVar11 * 0xa8 + iVar3 + 0x1e6c);
-    do {
-      if (*piVar12 == 0) {
-        if (iVar11 < 0x1f) {
-          iVar4 = 0x1f - iVar11;
-          pbVar13 = (byte *)(iVar11 * 0xa8 + iVar3 + 0x1e6c);
-          do {
-            pbVar5 = &DAT_833734f8;
-            pbVar6 = pbVar13;
-            do {
-              bVar1 = *pbVar6;
-              bVar2 = *pbVar5;
-              if ((ulonglong)bVar1 - (ulonglong)bVar2 != 0) break;
-              pbVar6 = pbVar6 + 1;
-              pbVar5 = pbVar5 + 1;
-            } while (pbVar6 != pbVar13 + 0xa8);
-            if ((int)((ulonglong)bVar1 - (ulonglong)bVar2) != 0) {
-              MyAssertHandler(0xffffffff82070460,0x926,0,0xffffffff82000f98,0xffffffff82070e68);
-            }
-            iVar4 = iVar4 + -1;
-            pbVar13 = pbVar13 + 0xa8;
-          } while (iVar4 != 0);
-        }
-        break;
-      }
-      Com_Memset(piVar12,0,0xa8);
-      if (*piVar12 != 0) {
-        MyAssertHandler(0xffffffff82070460,0x91f,0,0xffffffff82000f98,0xffffffff82070ed0);
-      }
-      iVar11 = iVar11 + 1;
-      piVar12 = piVar12 + 0x2a;
-    } while (iVar11 < 0x1f);
-  }
-  if (((param_3 & 2) != 0) && (iVar7 < 0x1f)) {
-    piVar12 = (int *)(iVar7 * 0xa8 + iVar3 + 0xa14);
-    while (*piVar12 != 0) {
-      Com_Memset(piVar12,0,0xa8);
-      if (*piVar12 != 0) {
-        MyAssertHandler(0xffffffff82070460,0x931,0,0xffffffff82000f98,0xffffffff82070e2c);
-      }
-      iVar7 = iVar7 + 1;
-      piVar12 = piVar12 + 0x2a;
-      if (0x1e < iVar7) {
-        __restgprlr_21();
-        return;
-      }
-    }
-    if (iVar7 < 0x1f) {
-      iVar4 = 0x1f - iVar7;
-      pbVar13 = (byte *)(iVar7 * 0xa8 + iVar3 + 0xa14);
-      do {
-        pbVar5 = &DAT_833734f8;
-        pbVar6 = pbVar13;
-        do {
-          bVar1 = *pbVar6;
-          bVar2 = *pbVar5;
-          if ((ulonglong)bVar1 - (ulonglong)bVar2 != 0) break;
-          pbVar6 = pbVar6 + 1;
-          pbVar5 = pbVar5 + 1;
-        } while (pbVar6 != pbVar13 + 0xa8);
-        if ((int)((ulonglong)bVar1 - (ulonglong)bVar2) != 0) {
-          MyAssertHandler(0xffffffff82070460,0x938,0,0xffffffff82000f98,0xffffffff82070dc8);
-        }
-        iVar4 = iVar4 + -1;
-        pbVar13 = pbVar13 + 0xa8;
-      } while (iVar4 != 0);
-    }
-  }
-  __restgprlr_21();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure gclient_s_s_0_s_0_s_0
 
 // 82473D80  HudElem_ClearClientSingle  (game/g_hudelem.cpp:2368)
 
-void HudElem_ClearClientSingle(undefined8 param_1,longlong param_2)
+void HudElem_ClearClientSingle(hudelem_s *param_1,int param_2)
 
 {
   longlong lVar1;
-  void *pvVar3;
-  longlong lVar2;
-  int iVar4;
-  byte *pbVar5;
+  int iVar2;
+  hudelem_s *phVar3;
+  longlong lVar4;
+  longlong lVar5;
   longlong lVar6;
-  int *_Dst;
-  longlong lVar7;
   
-  lVar1 = __savegprlr_25();
-  lVar7 = 0;
-  iVar4 = (int)param_2;
-  lVar2 = lVar1;
-  lVar6 = lVar1;
-  if (0 < iVar4) {
-    while (_Dst = (int *)lVar6, *_Dst != 0) {
-      pvVar3 = memset(_Dst,0,0xa8);
-      lVar2 = (longlong)(int)pvVar3;
-      if (*_Dst != 0) {
-        lVar2 = MyAssertHandler(0xffffffff82070460,0x946,0,0xffffffff82000f98,0xffffffff82070fb8);
+  lVar5 = (longlong)param_2;
+  lVar1 = __savegprlr_25(param_1);
+  lVar6 = 0;
+  iVar2 = (int)lVar5;
+  lVar4 = lVar1;
+  if (0 < iVar2) {
+    while (*(int *)lVar4 != 0) {
+      memset();
+      if (*(int *)lVar4 != 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_hudelem.cpp",0x946,
+                        0,"%s");
       }
-      lVar7 = lVar7 + 1;
-      lVar6 = lVar6 + 0xa8;
-      if (iVar4 <= (int)lVar7) {
-        __restgprlr_25(lVar2);
+      lVar6 = lVar6 + 1;
+      lVar4 = lVar4 + 0xa8;
+      if (iVar2 <= (int)lVar6) {
+        __restgprlr_25();
         return;
       }
     }
-    if ((int)lVar7 < iVar4) {
-      lVar1 = lVar7 * 0xa8 + lVar1;
-      param_2 = param_2 - lVar7;
+    if ((int)lVar6 < iVar2) {
+      lVar1 = lVar6 * 0xa8 + lVar1;
+      lVar5 = lVar5 - lVar6;
       do {
-        lVar6 = lVar1;
-        pbVar5 = &DAT_833734f8;
+        lVar4 = lVar1;
+        phVar3 = &g_dummyHudCurrent;
         do {
-          lVar7 = (ulonglong)*(byte *)lVar6 - (ulonglong)*pbVar5;
-          if (lVar7 != 0) break;
-          lVar6 = lVar6 + 1;
-          pbVar5 = pbVar5 + 1;
-        } while ((int)lVar6 != (int)lVar1 + 0xa8);
-        if ((int)lVar7 != 0) {
-          lVar2 = MyAssertHandler(0xffffffff82070460,0x94d,0,0xffffffff82000f98,0xffffffff82070f68);
+          lVar6 = (ulonglong)*(byte *)lVar4 - (ulonglong)(byte)*(undefined1 *)&phVar3->type;
+          if (lVar6 != 0) break;
+          lVar4 = lVar4 + 1;
+          phVar3 = (hudelem_s *)((int)&phVar3->type + 1);
+        } while ((int)lVar4 != (int)lVar1 + 0xa8);
+        if ((int)lVar6 != 0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_hudelem.cpp",
+                          0x94d,0,"%s");
         }
-        param_2 = param_2 + -1;
+        lVar5 = lVar5 + -1;
         lVar1 = lVar1 + 0xa8;
-      } while (param_2 != 0);
+      } while (lVar5 != 0);
     }
   }
-  __restgprlr_25(lVar2);
+  __restgprlr_25();
   return;
 }
 
 
 // 82473E98  HudElem_ClearClient  (game/g_hudelem.cpp:2388)
-
-void HudElem_ClearClient(longlong param_1,uint param_2)
-
-{
-  if ((param_2 & 2) != 0) {
-    HudElem_ClearClientSingle(param_1 + 0xa14,0x1f);
-  }
-  if ((param_2 & 1) != 0) {
-    HudElem_ClearClientSingle(param_1 + 0x1e6c,0x1f);
-  }
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure gclient_s_s_0_s_0_s_0

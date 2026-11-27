@@ -1042,7 +1042,7 @@ LAB_826e93b8:
   826E93C4  606307E9             ori r3,r3,0x7e9
   826E93C8  4E800020             blr
 
-; 826E8578  bdAddr::~bdAddr  (line unknown)
+; 826E8578  ~bdAddr  (line unknown)
   826E8578  4820E850             b 0x828f6dc8
 
 ; 82940410  `dynamic_atexit_destructor_for_'g_dwControllerData''  (line unknown)

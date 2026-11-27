@@ -17,7 +17,7 @@ LAB_828b4e64:
   828B4E70  40810008             ble 0x828b4e78
   828B4E74  7C0A222C             dcbt r10,r4
 LAB_828b4e78:
-  828B4E78  7C2C1FEC             dcbzl r12,r3
+  828B4E78  7C2C1FEC             dcbz128 r12,r3
 LAB_828b4e7c:
   828B4E7C  7C2020CE             lvx v1,0,r4
   828B4E80  39640040             addi r11,r4,0x40

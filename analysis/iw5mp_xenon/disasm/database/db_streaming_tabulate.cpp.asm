@@ -120,10 +120,14 @@ LAB_82401218:
   8240121C  485154E0             b 0x829166fc
 
 ; 82401058  __lvx  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/vectorintrinsics.h:98)
+  82401058  102320C3             lvx128 v1,r3,r4
+  8240105C  4E800020             blr
 
 ; 82401060  __stvx  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/vectorintrinsics.h:104)
+  82401060  102321C3             stvx128 v1,r3,r4
+  82401064  4E800020             blr
 
-; 82403C98  SpuBitArrayIterator::Advance  (spu/spu_array.h:113)
+; 82403C98  Advance  (spu/spu_array.h:113)
   82403C98  7D8802A6             mfspr r12,LR
   82403C9C  9181FFF8             stw r12,-0x8(r1)
   82403CA0  FBC1FFE8             std r30,-0x18(r1)
@@ -1276,66 +1280,396 @@ LAB_82402994:
   8293D444  3D408330             lis r10,-0x7cd0
   8293D448  392BE3B0             subi r9,r11,0x1c50
   8293D44C  390A70C0             addi r8,r10,0x70c0
-  8293D450  13E048C7             vcmpequd v31,v0,v9
+  8293D450  13E048C7             lvx128 v63,0,r9
+  8293D454  13E041C7             stvx128 v63,0,r8
+  8293D458  4E800020             blr
 
 ; 8293D460  `dynamic_initializer_for_'g_streamBitMask1''  (database/db_streaming_tabulate.cpp:876)
   8293D460  3D608206             lis r11,-0x7dfa
   8293D464  3D408330             lis r10,-0x7cd0
   8293D468  392BE3C0             subi r9,r11,0x1c40
   8293D46C  390A7100             addi r8,r10,0x7100
-  8293D470  13E048C7             vcmpequd v31,v0,v9
+  8293D470  13E048C7             lvx128 v63,0,r9
+  8293D474  13E041C7             stvx128 v63,0,r8
+  8293D478  4E800020             blr
 
 ; 8293D480  `dynamic_initializer_for_'g_streamBitMask2''  (database/db_streaming_tabulate.cpp:877)
   8293D480  3D608206             lis r11,-0x7dfa
   8293D484  3D408330             lis r10,-0x7cd0
   8293D488  392BE3D0             subi r9,r11,0x1c30
   8293D48C  390A70A0             addi r8,r10,0x70a0
-  8293D490  13E048C7             vcmpequd v31,v0,v9
+  8293D490  13E048C7             lvx128 v63,0,r9
+  8293D494  13E041C7             stvx128 v63,0,r8
+  8293D498  4E800020             blr
 
 ; 8293D4A0  `dynamic_initializer_for_'g_streamBitMask3''  (database/db_streaming_tabulate.cpp:878)
   8293D4A0  3D608206             lis r11,-0x7dfa
   8293D4A4  3D408330             lis r10,-0x7cd0
   8293D4A8  392BE3E0             subi r9,r11,0x1c20
   8293D4AC  390A70D0             addi r8,r10,0x70d0
-  8293D4B0  13E048C7             vcmpequd v31,v0,v9
+  8293D4B0  13E048C7             lvx128 v63,0,r9
+  8293D4B4  13E041C7             stvx128 v63,0,r8
+  8293D4B8  4E800020             blr
 
 ; 8293D4C0  `dynamic_initializer_for_'g_streamBitMask4''  (database/db_streaming_tabulate.cpp:879)
   8293D4C0  3D608206             lis r11,-0x7dfa
   8293D4C4  3D408330             lis r10,-0x7cd0
   8293D4C8  392BE3F0             subi r9,r11,0x1c10
   8293D4CC  390A70E0             addi r8,r10,0x70e0
-  8293D4D0  13E048C7             vcmpequd v31,v0,v9
+  8293D4D0  13E048C7             lvx128 v63,0,r9
+  8293D4D4  13E041C7             stvx128 v63,0,r8
+  8293D4D8  4E800020             blr
 
 ; 8293D4E0  `dynamic_initializer_for_'g_streamBitMask5''  (database/db_streaming_tabulate.cpp:880)
   8293D4E0  3D608206             lis r11,-0x7dfa
   8293D4E4  3D408330             lis r10,-0x7cd0
   8293D4E8  392BE400             subi r9,r11,0x1c00
   8293D4EC  390A70B0             addi r8,r10,0x70b0
-  8293D4F0  13E048C7             vcmpequd v31,v0,v9
+  8293D4F0  13E048C7             lvx128 v63,0,r9
+  8293D4F4  13E041C7             stvx128 v63,0,r8
+  8293D4F8  4E800020             blr
 
 ; 8293D500  `dynamic_initializer_for_'g_streamBitMask6''  (database/db_streaming_tabulate.cpp:881)
   8293D500  3D608206             lis r11,-0x7dfa
   8293D504  3D408330             lis r10,-0x7cd0
   8293D508  392BE410             subi r9,r11,0x1bf0
   8293D50C  390A70F0             addi r8,r10,0x70f0
-  8293D510  13E048C7             vcmpequd v31,v0,v9
+  8293D510  13E048C7             lvx128 v63,0,r9
+  8293D514  13E041C7             stvx128 v63,0,r8
+  8293D518  4E800020             blr
 
 ; 8293D520  `dynamic_initializer_for_'g_streamBitMask7''  (database/db_streaming_tabulate.cpp:882)
   8293D520  3D608206             lis r11,-0x7dfa
   8293D524  3D408330             lis r10,-0x7cd0
   8293D528  392BE420             subi r9,r11,0x1be0
   8293D52C  390A7110             addi r8,r10,0x7110
-  8293D530  13E048C7             vcmpequd v31,v0,v9
+  8293D530  13E048C7             lvx128 v63,0,r9
+  8293D534  13E041C7             stvx128 v63,0,r8
+  8293D538  4E800020             blr
 
 ; 82401CF8  DB_StreamCheckPriority  (database/db_streaming_tabulate.cpp:886)
   82401CF8  7D8802A6             mfspr r12,LR
   82401CFC  485149A9             bl 0x829166a4
   82401D00  3980FFA0             li r12,-0x60
+  82401D04  13E161CF             stvx128 v127,r1,r12
+  82401D08  9421FF30             stwu r1,-0xd0(r1)
+  82401D0C  3D608206             lis r11,-0x7dfa
+  82401D10  7C7F1B78             or r31,r3,r3
+  82401D14  7C9B2378             or r27,r4,r4
+  82401D18  3860FFFF             li r3,-0x1
+  82401D1C  388BE754             subi r4,r11,0x18ac
+  82401D20  7CBC2B78             or r28,r5,r5
+  82401D24  7CDE3378             or r30,r6,r6
+  82401D28  4849F8B1             bl 0x828a15d8
+  82401D2C  39210050             addi r9,r1,0x50
+  82401D30  93E10050             stw r31,0x50(r1)
+  82401D34  3D008330             lis r8,-0x7cd0
+  82401D38  1BE0077C             vspltisw128 v127,0x0
+  82401D3C  3F408330             lis r26,-0x7cd0
+  82401D40  390870F0             addi r8,r8,0x70f0
+  82401D44  3CE08330             lis r7,-0x7cd0
+  82401D48  13E04C07             lvlx128 v63,0,r9
+  82401D4C  3D208330             lis r9,-0x7cd0
+  82401D50  3CC08330             lis r6,-0x7cd0
+  82401D54  1BC0FF35             vspltw128 v62,v63,0x0
+  82401D58  39297110             addi r9,r9,0x7110
+  82401D5C  12E040C7             lvx128 v55,0,r8
+  82401D60  3CA08330             lis r5,-0x7cd0
+  82401D64  1BEEF2B5             vcsxwfp128 v63,v62,0xe
+  82401D68  3F208330             lis r25,-0x7cd0
+  82401D6C  3C808330             lis r4,-0x7cd0
+  82401D70  3F008405             lis r24,-0x7bfb
+  82401D74  12C048C7             lvx128 v54,0,r9
+  82401D78  393A7100             addi r9,r26,0x7100
+  82401D7C  39400298             li r10,0x298
+  82401D80  38E770B0             addi r7,r7,0x70b0
+  82401D84  38C670E0             addi r6,r6,0x70e0
+  82401D88  38A570D0             addi r5,r5,0x70d0
+  82401D8C  391970C0             addi r8,r25,0x70c0
+  82401D90  138048C7             lvx128 v60,0,r9
+  82401D94  3AE470A0             addi r23,r4,0x70a0
+  82401D98  7D4903A6             mtspr CTR,r10
+  82401D9C  3B58F730             subi r26,r24,0x8d0
+  82401DA0  130038C7             lvx128 v56,0,r7
+  82401DA4  7FBCD850             subf r29,r28,r27
+  82401DA8  132030C7             lvx128 v57,0,r6
+  82401DAC  134028C7             lvx128 v58,0,r5
+  82401DB0  38600010             li r3,0x10
+  82401DB4  13A040C7             lvx128 v61,0,r8
+  82401DB8  7F8BE378             or r11,r28,r28
+  82401DBC  1360B8C7             lvx128 v59,0,r23
+  82401DC0  7F7FDB78             or r31,r27,r27
+  82401DC4  13C0D0C7             lvx128 v62,0,r26
+  82401DC8  7D5DE214             add r10,r29,r28
+  82401DCC  38800070             li r4,0x70
+  82401DD0  38A00060             li r5,0x60
+  82401DD4  38C00050             li r6,0x50
+  82401DD8  38E00040             li r7,0x40
+  82401DDC  39000030             li r8,0x30
+  82401DE0  39200020             li r9,0x20
+LAB_82401de4:
+  82401DE4  12A0F8C7             lvx128 v53,0,r31
+  82401DE8  1A8EAAB5             vcsxwfp128 v52,v53,0xe
+  82401DEC  127F18C7             lvx128 v51,r31,r3
+  82401DF0  1A4E9AB5             vcsxwfp128 v50,v51,0xe
+  82401DF4  123F48C7             lvx128 v49,r31,r9
+  82401DF8  1A0E8AB5             vcsxwfp128 v48,v49,0xe
+  82401DFC  115F38C7             lvx128 v42,r31,r7
+  82401E00  11E058C7             lvx128 v47,0,r11
+  82401E04  18EE52B5             vcsxwfp128 v39,v42,0xe
+  82401E08  11DF40C7             lvx128 v46,r31,r8
+  82401E0C  19BF7925             vcmpgtfp128 v45,v63,v47
+  82401E10  198E72B5             vcsxwfp128 v44,v46,0xe
+  82401E14  116B18C7             lvx128 v43,r11,r3
+  82401E18  1103F447             lvrx128 v40,r3,r30
+  82401E1C  193F5925             vcmpgtfp128 v41,v63,v43
+  82401E20  10C0F407             lvlx128 v38,0,r30
+  82401E24  3BDE0004             addi r30,r30,0x4
+  82401E28  148642F5             vor128 v36,v38,v40
+  82401E2C  10AB48C7             lvx128 v37,r11,r9
+  82401E30  185F2925             vcmpgtfp128 v34,v63,v37
+  82401E34  107F30C7             lvx128 v35,r31,r6
+  82401E38  12BF28C7             lvx128 v53,r31,r5
+  82401E3C  182E1AB5             vcsxwfp128 v33,v35,0xe
+  82401E40  100B40C7             lvx128 v32,r11,r8
+  82401E44  18CEAAB5             vcsxwfp128 v38,v53,0xe
+  82401E48  1A3FA125             vcmpgtfp128 v49,v63,v52
+  82401E4C  15FE2275             vandc128 v47,v62,v36
+  82401E50  19DF9125             vcmpgtfp128 v46,v63,v50
+  82401E54  110A20C7             lvx128 v40,r10,r4
+  82401E58  195F8125             vcmpgtfp128 v42,v63,v48
+  82401E5C  10AB30C7             lvx128 v37,r11,r6
+  82401E60  1A9F3925             vcmpgtfp128 v52,v63,v39
+  82401E64  12AB28C7             lvx128 v53,r11,r5
+  82401E68  1A7F0125             vcmpgtfp128 v51,v63,v32
+  82401E6C  18607F35             vspltw128 v35,v47,0x0
+  82401E70  189F6125             vcmpgtfp128 v36,v63,v44
+  82401E74  116B38C7             lvx128 v43,r11,r7
+  82401E78  1A0E42B5             vcsxwfp128 v48,v40,0xe
+  82401E7C  124B20C7             lvx128 v50,r11,r4
+  82401E80  19FF2925             vcmpgtfp128 v47,v63,v37
+  82401E84  396B0080             addi r11,r11,0x80
+  82401E88  199FA925             vcmpgtfp128 v44,v63,v53
+  82401E8C  3BFF0080             addi r31,r31,0x80
+  82401E90  181F5925             vcmpgtfp128 v32,v63,v43
+  82401E94  7D5D5A14             add r10,r29,r11
+  82401E98  191F9125             vcmpgtfp128 v40,v63,v50
+  82401E9C  197F0925             vcmpgtfp128 v43,v63,v33
+  82401EA0  14ED8A75             vandc128 v39,v45,v49
+  82401EA4  183F3125             vcmpgtfp128 v33,v63,v38
+  82401EA8  14A97275             vandc128 v37,v41,v46
+  82401EAC  14425275             vandc128 v34,v34,v42
+  82401EB0  16A7EA35             vand128 v53,v39,v61
+  82401EB4  1645E235             vand128 v50,v37,v60
+  82401EB8  16332275             vandc128 v49,v51,v36
+  82401EBC  19BF8125             vcmpgtfp128 v45,v63,v48
+  82401EC0  15C2DA35             vand128 v46,v34,v59
+  82401EC4  15551A35             vand128 v42,v53,v35
+  82401EC8  15321A35             vand128 v41,v50,v35
+  82401ECC  14E0A275             vandc128 v39,v32,v52
+  82401ED0  14D1D235             vand128 v38,v49,v58
+  82401ED4  14BF56F5             vor128 v37,v127,v42
+  82401ED8  148E1A35             vand128 v36,v46,v35
+  82401EDC  144F5A75             vandc128 v34,v47,v43
+  82401EE0  1407CA35             vand128 v32,v39,v57
+  82401EE4  16A54AF5             vor128 v53,v37,v41
+  82401EE8  16861A35             vand128 v52,v38,v35
+  82401EEC  15E86A75             vandc128 v47,v40,v45
+  82401EF0  166C0A75             vandc128 v51,v44,v33
+  82401EF4  163522F5             vor128 v49,v53,v36
+  82401EF8  1642C235             vand128 v50,v34,v56
+  82401EFC  16001A35             vand128 v48,v32,v35
+  82401F00  15D3BA35             vand128 v46,v51,v55
+  82401F04  15B1A2F5             vor128 v45,v49,v52
+  82401F08  15921A35             vand128 v44,v50,v35
+  82401F0C  156FB235             vand128 v43,v47,v54
+  82401F10  154E1A35             vand128 v42,v46,v35
+  82401F14  152D82F5             vor128 v41,v45,v48
+  82401F18  150B1A35             vand128 v40,v43,v35
+  82401F1C  14E962F5             vor128 v39,v41,v44
+  82401F20  14C752F5             vor128 v38,v39,v42
+  82401F24  17E642FD             vor128 v127,v38,v40
+  82401F28  4200FEBC             bdnz 0x82401de4
+  82401F2C  3D200001             lis r9,0x1
+  82401F30  3D408206             lis r10,-0x7dfa
+  82401F34  613E4C00             ori r30,r9,0x4c00
+  82401F38  3D208200             lis r9,-0x7e00
+  82401F3C  7D1CF214             add r8,r28,r30
+  82401F40  3BAAE4F8             subi r29,r10,0x1b08
+  82401F44  7F0B4040             cmplw cr6,r11,r8
+  82401F48  3B890F98             addi r28,r9,0xf98
+  82401F4C  419A0020             beq cr6,0x82401f6c
+  82401F50  3D608206             lis r11,-0x7dfa
+  82401F54  7F86E378             or r6,r28,r28
+  82401F58  38EBE718             subi r7,r11,0x18e8
+  82401F5C  7FA3EB78             or r3,r29,r29
+  82401F60  38A00000             li r5,0x0
+  82401F64  388003E5             li r4,0x3e5
+  82401F68  481D2599             bl 0x825d4500
+LAB_82401f6c:
+  82401F6C  7D7BF214             add r11,r27,r30
+  82401F70  7F1F5840             cmplw cr6,r31,r11
+  82401F74  419A0020             beq cr6,0x82401f94
+  82401F78  3D608206             lis r11,-0x7dfa
+  82401F7C  7F86E378             or r6,r28,r28
+  82401F80  38EBE6DC             subi r7,r11,0x1924
+  82401F84  7FA3EB78             or r3,r29,r29
+  82401F88  38A00000             li r5,0x0
+  82401F8C  388003E6             li r4,0x3e6
+  82401F90  481D2571             bl 0x825d4500
+LAB_82401f94:
+  82401F94  39610060             addi r11,r1,0x60
+  82401F98  13E059CF             stvx128 v127,0,r11
+  82401F9C  4849F7A5             bl 0x828a1740
+  82401FA0  8141006C             lwz r10,0x6c(r1)
+  82401FA4  81210068             lwz r9,0x68(r1)
+  82401FA8  81010064             lwz r8,0x64(r1)
+  82401FAC  7D474B78             or r7,r10,r9
+  82401FB0  80C10060             lwz r6,0x60(r1)
+  82401FB4  7CE54378             or r5,r7,r8
+  82401FB8  7CA43378             or r4,r5,r6
+  82401FBC  3064FFFF             subic r3,r4,0x1
+  82401FC0  7C632110             subfe r3,r3,r4
+  82401FC4  382100D0             addi r1,r1,0xd0
+  82401FC8  3800FFA0             li r0,-0x60
+  82401FCC  13E100CF             lvx128 v127,r1,r0
+  82401FD0  48514724             b 0x829166f4
 
 ; 82401FD8  DB_StreamCheckPriority2  (database/db_streaming_tabulate.cpp:1011)
   82401FD8  7D8802A6             mfspr r12,LR
   82401FDC  485146D9             bl 0x829166b4
   82401FE0  3980FFC0             li r12,-0x40
+  82401FE4  13E161CF             stvx128 v127,r1,r12
+  82401FE8  9421FF50             stwu r1,-0xb0(r1)
+  82401FEC  3D608206             lis r11,-0x7dfa
+  82401FF0  7C7D1B78             or r29,r3,r3
+  82401FF4  7C9E2378             or r30,r4,r4
+  82401FF8  3860FFFF             li r3,-0x1
+  82401FFC  388BE764             subi r4,r11,0x189c
+  82402000  7CBF2B78             or r31,r5,r5
+  82402004  4849F5D5             bl 0x828a15d8
+  82402008  39000298             li r8,0x298
+  8240200C  3CE08330             lis r7,-0x7cd0
+  82402010  93A10050             stw r29,0x50(r1)
+  82402014  39210050             addi r9,r1,0x50
+  82402018  1BE0077C             vspltisw128 v127,0x0
+  8240201C  38E770F0             addi r7,r7,0x70f0
+  82402020  3FA08330             lis r29,-0x7cd0
+  82402024  7D0903A6             mtspr CTR,r8
+  82402028  3D008330             lis r8,-0x7cd0
+  8240202C  3CC08330             lis r6,-0x7cd0
+  82402030  39087110             addi r8,r8,0x7110
+  82402034  13E04C07             lvlx128 v63,0,r9
+  82402038  3CA08330             lis r5,-0x7cd0
+  8240203C  12E038C7             lvx128 v55,0,r7
+  82402040  3C808330             lis r4,-0x7cd0
+  82402044  1BC0FF35             vspltw128 v62,v63,0x0
+  82402048  3F808330             lis r28,-0x7cd0
+  8240204C  12C040C7             lvx128 v54,0,r8
+  82402050  3C608330             lis r3,-0x7cd0
+  82402054  1BEEF2B5             vcsxwfp128 v63,v62,0xe
+  82402058  3F608405             lis r27,-0x7bfb
+  8240205C  391D7100             addi r8,r29,0x7100
+  82402060  38C670B0             addi r6,r6,0x70b0
+  82402064  38A570E0             addi r5,r5,0x70e0
+  82402068  388470D0             addi r4,r4,0x70d0
+  8240206C  38FC70C0             addi r7,r28,0x70c0
+  82402070  386370A0             addi r3,r3,0x70a0
+  82402074  138040C7             lvx128 v60,0,r8
+  82402078  3BBBF730             subi r29,r27,0x8d0
+  8240207C  130030C7             lvx128 v56,0,r6
+  82402080  132028C7             lvx128 v57,0,r5
+  82402084  39400010             li r10,0x10
+  82402088  134020C7             lvx128 v58,0,r4
+  8240208C  7FCBF378             or r11,r30,r30
+  82402090  13A038C7             lvx128 v61,0,r7
+  82402094  39200070             li r9,0x70
+  82402098  136018C7             lvx128 v59,0,r3
+  8240209C  38800020             li r4,0x20
+  824020A0  13C0E8C7             lvx128 v62,0,r29
+  824020A4  38A00030             li r5,0x30
+  824020A8  38C00040             li r6,0x40
+  824020AC  38E00050             li r7,0x50
+  824020B0  39000060             li r8,0x60
+LAB_824020b4:
+  824020B4  12A058C7             lvx128 v53,0,r11
+  824020B8  1A9FA925             vcmpgtfp128 v52,v63,v53
+  824020BC  126AFC47             lvrx128 v51,r10,r31
+  824020C0  1240FC07             lvlx128 v50,0,r31
+  824020C4  3BFF0004             addi r31,r31,0x4
+  824020C8  122B50C7             lvx128 v49,r11,r10
+  824020CC  16129AF5             vor128 v48,v50,v51
+  824020D0  19FF8925             vcmpgtfp128 v47,v63,v49
+  824020D4  11CB20C7             lvx128 v46,r11,r4
+  824020D8  19BF7125             vcmpgtfp128 v45,v63,v46
+  824020DC  118B28C7             lvx128 v44,r11,r5
+  824020E0  197F6125             vcmpgtfp128 v43,v63,v44
+  824020E4  114B30C7             lvx128 v42,r11,r6
+  824020E8  153E8275             vandc128 v41,v62,v48
+  824020EC  191F5125             vcmpgtfp128 v40,v63,v42
+  824020F0  10EB38C7             lvx128 v39,r11,r7
+  824020F4  10AB40C7             lvx128 v37,r11,r8
+  824020F8  18DF3925             vcmpgtfp128 v38,v63,v39
+  824020FC  106B48C7             lvx128 v35,r11,r9
+  82402100  189F2925             vcmpgtfp128 v36,v63,v37
+  82402104  18404F35             vspltw128 v34,v41,0x0
+  82402108  183F1925             vcmpgtfp128 v33,v63,v35
+  8240210C  396B0080             addi r11,r11,0x80
+  82402110  1414EA35             vand128 v32,v52,v61
+  82402114  16AFE235             vand128 v53,v47,v60
+  82402118  16801235             vand128 v52,v32,v34
+  8240211C  166DDA35             vand128 v51,v45,v59
+  82402120  164BD235             vand128 v50,v43,v58
+  82402124  16351235             vand128 v49,v53,v34
+  82402128  161FA6F5             vor128 v48,v127,v52
+  8240212C  15F31235             vand128 v47,v51,v34
+  82402130  15C8CA35             vand128 v46,v40,v57
+  82402134  15B21235             vand128 v45,v50,v34
+  82402138  15908AF5             vor128 v44,v48,v49
+  8240213C  1566C235             vand128 v43,v38,v56
+  82402140  1524BA35             vand128 v41,v36,v55
+  82402144  14C1B235             vand128 v38,v33,v54
+  82402148  150C7AF5             vor128 v40,v44,v47
+  8240214C  154E1235             vand128 v42,v46,v34
+  82402150  14EB1235             vand128 v39,v43,v34
+  82402154  14A91235             vand128 v37,v41,v34
+  82402158  14886AF5             vor128 v36,v40,v45
+  8240215C  14661235             vand128 v35,v38,v34
+  82402160  144452F5             vor128 v34,v36,v42
+  82402164  14223AF5             vor128 v33,v34,v39
+  82402168  14012AF5             vor128 v32,v33,v37
+  8240216C  17E01AFD             vor128 v127,v32,v35
+  82402170  4200FF44             bdnz 0x824020b4
+  82402174  3D5E0001             addis r10,r30,0x1
+  82402178  394A4C00             addi r10,r10,0x4c00
+  8240217C  7F0B5040             cmplw cr6,r11,r10
+  82402180  419A0028             beq cr6,0x824021a8
+  82402184  3D608206             lis r11,-0x7dfa
+  82402188  3D408200             lis r10,-0x7e00
+  8240218C  3D208206             lis r9,-0x7dfa
+  82402190  38EBE718             subi r7,r11,0x18e8
+  82402194  38CA0F98             addi r6,r10,0xf98
+  82402198  3869E4F8             subi r3,r9,0x1b08
+  8240219C  38A00000             li r5,0x0
+  824021A0  3880043D             li r4,0x43d
+  824021A4  481D235D             bl 0x825d4500
+LAB_824021a8:
+  824021A8  39610060             addi r11,r1,0x60
+  824021AC  13E059CF             stvx128 v127,0,r11
+  824021B0  4849F591             bl 0x828a1740
+  824021B4  8141006C             lwz r10,0x6c(r1)
+  824021B8  81210068             lwz r9,0x68(r1)
+  824021BC  81010064             lwz r8,0x64(r1)
+  824021C0  7D474B78             or r7,r10,r9
+  824021C4  80C10060             lwz r6,0x60(r1)
+  824021C8  7CE54378             or r5,r7,r8
+  824021CC  7CA43378             or r4,r5,r6
+  824021D0  3064FFFF             subic r3,r4,0x1
+  824021D4  7C632110             subfe r3,r3,r4
+  824021D8  382100B0             addi r1,r1,0xb0
+  824021DC  3800FFC0             li r0,-0x40
+  824021E0  13E100CF             lvx128 v127,r1,r0
+  824021E4  48514520             b 0x82916704
 
 ; 824021E8  DB_StreamTabulationTouchWeaponModels  (database/db_streaming_tabulate.cpp:1119)
   824021E8  4E800020             blr
@@ -1349,9 +1683,36 @@ LAB_82402994:
   82402204  39200020             li r9,0x20
   82402208  7D0903A6             mtspr CTR,r8
   8240220C  39000030             li r8,0x30
-  82402210  13E03C07             vcmpneb. v31,v0,v7
+  82402210  13E03C07             lvlx128 v63,0,r7
   82402214  38E00040             li r7,0x40
   82402218  38800050             li r4,0x50
+  8240221C  1BE0FF35             vspltw128 v63,v63,0x0
+  82402220  38A00060             li r5,0x60
+  82402224  38C00070             li r6,0x70
+LAB_82402228:
+  82402228  13E059C7             stvx128 v63,0,r11
+  8240222C  13EB51C7             stvx128 v63,r11,r10
+  82402230  13EB49C7             stvx128 v63,r11,r9
+  82402234  13EB41C7             stvx128 v63,r11,r8
+  82402238  13EB39C7             stvx128 v63,r11,r7
+  8240223C  13EB21C7             stvx128 v63,r11,r4
+  82402240  13EB29C7             stvx128 v63,r11,r5
+  82402244  13EB31C7             stvx128 v63,r11,r6
+  82402248  396B0080             addi r11,r11,0x80
+  8240224C  4200FFDC             bdnz 0x82402228
+  82402250  3D430001             addis r10,r3,0x1
+  82402254  394A4C00             addi r10,r10,0x4c00
+  82402258  7F0B5040             cmplw cr6,r11,r10
+  8240225C  4D9A0020             beqlr cr6
+  82402260  3D608206             lis r11,-0x7dfa
+  82402264  3D408200             lis r10,-0x7e00
+  82402268  3D208206             lis r9,-0x7dfa
+  8240226C  38EBE718             subi r7,r11,0x18e8
+  82402270  38CA0F98             addi r6,r10,0xf98
+  82402274  3869E4F8             subi r3,r9,0x1b08
+  82402278  38A00000             li r5,0x0
+  8240227C  388004B9             li r4,0x4b9
+  82402280  481D2280             b 0x825d4500
 
 ; 824029A8  DB_StreamCombineInternal  (database/db_streaming_tabulate.cpp:1214)
   824029A8  7D8802A6             mfspr r12,LR

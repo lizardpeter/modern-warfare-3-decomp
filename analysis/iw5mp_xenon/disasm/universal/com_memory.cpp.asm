@@ -541,9 +541,6 @@ LAB_825e4018:
   825E4020  388B5740             addi r4,r11,0x5740
   825E4024  38600004             li r3,0x4
   825E4028  4806AD69             bl 0x8264ed90
-  825E402C  38600000             li r3,0x0
-  825E4030  38210070             addi r1,r1,0x70
-  825E4034  483326D8             b 0x8291670c
 LAB_825e4038:
   825E4038  2B1F0000             cmplwi cr6,r31,0x0
   825E403C  419AFFDC             beq cr6,0x825e4018
@@ -3068,7 +3065,7 @@ LAB_825e263c:
   825E2644  38210080             addi r1,r1,0x80
   825E2648  483340BC             b 0x82916704
 
-; 825E2650  LargeLocal::LargeLocal  (universal/com_memory.cpp:3299)
+; 825E2650  LargeLocal  (universal/com_memory.cpp:3299)
   825E2650  7D8802A6             mfspr r12,LR
   825E2654  48334065             bl 0x829166b8
   825E2658  9421FF80             stwu r1,-0x80(r1)
@@ -3132,7 +3129,7 @@ LAB_825e271c:
   825E272C  38210080             addi r1,r1,0x80
   825E2730  48333FD8             b 0x82916708
 
-; 825E2738  LargeLocal::PopBuf  (universal/com_memory.cpp:3319)
+; 825E2738  PopBuf  (universal/com_memory.cpp:3319)
   825E2738  7D8802A6             mfspr r12,LR
   825E273C  48333F81             bl 0x829166bc
   825E2740  9421FF90             stwu r1,-0x70(r1)
@@ -3192,13 +3189,13 @@ LAB_825e27f8:
   825E2804  38210070             addi r1,r1,0x70
   825E2808  48333F04             b 0x8291670c
 
-; 825E2810  LargeLocal::~LargeLocal  (universal/com_memory.cpp:3342)
+; 825E2810  ~LargeLocal  (universal/com_memory.cpp:3342)
   825E2810  81630004             lwz r11,0x4(r3)
   825E2814  2F0B0000             cmpwi cr6,r11,0x0
   825E2818  4D9A0020             beqlr cr6
   825E281C  4BFFFF1C             b 0x825e2738
 
-; 825E2828  LargeLocal::GetBuf  (universal/com_memory.cpp:3354)
+; 825E2828  GetBuf  (universal/com_memory.cpp:3354)
   825E2828  7D8802A6             mfspr r12,LR
   825E282C  48333E91             bl 0x829166bc
   825E2830  9421FF90             stwu r1,-0x70(r1)
@@ -3811,7 +3808,6 @@ LAB_825e2c88:
   825E2CC0  7F24CB78             or r4,r25,r25
   825E2CC4  386B5C80             addi r3,r11,0x5c80
   825E2CC8  4806B709             bl 0x8264e3d0
-  825E2CCC  80FF0200             lwz r7,0x200(r31)
 LAB_825e2cd0:
   825E2CD0  54EB1838             rlwinm r11,r7,0x3,0x0,0x1c
   825E2CD4  395F0210             addi r10,r31,0x210
@@ -3880,7 +3876,6 @@ LAB_825e2d8c:
   825E2DC4  7F24CB78             or r4,r25,r25
   825E2DC8  386B5C80             addi r3,r11,0x5c80
   825E2DCC  4806B605             bl 0x8264e3d0
-  825E2DD0  80FF0200             lwz r7,0x200(r31)
 LAB_825e2dd4:
   825E2DD4  54EB1838             rlwinm r11,r7,0x3,0x0,0x1c
   825E2DD8  395F0210             addi r10,r31,0x210

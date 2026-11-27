@@ -2,112 +2,83 @@
 
 // 82754048  TRACK_r_material  (gfx_d3d/r_material.cpp:260)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
 void TRACK_r_material(void)
 
 {
-  track_static_alloc_internal(0xffffffff821c7bc0,0x1f0,0xffffffff821c7db0,0x12);
+  track_static_alloc_internal(s_builtInMaterials,0x1f0,"s_builtInMaterials",0x12);
   return;
 }
 
 
 // 82754068  Material_Alloc  (gfx_d3d/r_material.cpp:270)
 
-void Material_Alloc(undefined8 param_1)
+void * Material_Alloc(int param_1)
 
 {
-  Hunk_Alloc(param_1,0xffffffff821c7dc4,0x16);
-  return;
+  void *pvVar1;
+  
+  pvVar1 = Hunk_Alloc(param_1,"Material_Alloc",0x16);
+  return pvVar1;
 }
 
 
 // 82754078  Load_CreateMaterialVertexShader  (gfx_d3d/r_material.cpp:335)
-
-void Load_CreateMaterialVertexShader(undefined8 param_1,longlong param_2)
-
-{
-  ulonglong uVar1;
-  
-  uVar1 = __savegprlr_27();
-  if (DAT_84616688 == 0) {
-    MyAssertHandler(0xffffffff821c7df8,0x150,0,0xffffffff82000f98,0xffffffff821c5e94);
-  }
-  if ((uVar1 & 0xffffffff) != (param_2 + 4U & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821c7df8,0x151,0,0xffffffff82000f98,0xffffffff821c7dd4);
-  }
-  XGRegisterVertexShader(*(undefined4 *)(param_2 + 4U),*(undefined4 *)((int)param_2 + 8));
-  __restgprlr_27();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GPU_TESSELLATORPACKET_s_0_s_0
 
 // 82754108  Load_CreateMaterialPixelShader  (gfx_d3d/r_material.cpp:348)
-
-void Load_CreateMaterialPixelShader(undefined8 param_1,longlong param_2)
-
-{
-  ulonglong uVar1;
-  undefined4 *puVar2;
-  
-  uVar1 = __savegprlr_27();
-  if (DAT_84616688 == 0) {
-    MyAssertHandler(0xffffffff821c7df8,0x15d,0,0xffffffff82000f98,0xffffffff821c5e94);
-  }
-  if ((uVar1 & 0xffffffff) != (param_2 + 4U & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821c7df8,0x15e,0,0xffffffff82000f98,0xffffffff821c7dd4);
-  }
-  puVar2 = (undefined4 *)(param_2 + 4U);
-  if (*(short *)((int)param_2 + 0xe) != 0) {
-    XGRegisterPixelShader(*puVar2,*(undefined4 *)((int)param_2 + 8));
-    __restgprlr_27();
-    return;
-  }
-  *puVar2 = 0;
-  __restgprlr_27();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GPU_TESSELLATORPACKET_s_0_s_0
 
 // 827541B8  Load_BindVertexShader  (gfx_d3d/r_material.cpp:666)
 
-void Load_BindVertexShader(undefined8 param_1,ulonglong param_2)
+void Load_BindVertexShader(MaterialVertexShader **param_1,MaterialPass *param_2)
 
 {
   int iVar1;
   int iVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
-  uint uVar5;
-  int iVar6;
-  undefined4 local_40;
+  D3DVertexDeclaration *pDVar3;
+  D3DVertexShader *pDVar4;
+  ulonglong uVar5;
+  ulonglong uVar6;
+  ulonglong uVar7;
+  uint uVar8;
+  ulong local_40;
   undefined4 local_3c;
   
-  uVar3 = __savegprlr_26();
-  uVar5 = 0;
-  uVar4 = param_2;
+  uVar6 = (ulonglong)(int)param_2;
+  uVar5 = __savegprlr_26(param_1);
+  uVar8 = 0;
+  uVar7 = uVar6;
   do {
-    uVar4 = uVar4 + 4;
-    if ((uVar4 & 0xffffffff) == (uVar3 & 0xffffffff)) break;
-    uVar5 = uVar5 + 1;
-  } while (uVar5 < 0x15);
-  if (uVar5 == 0x15) {
-    MyAssertHandler(0xffffffff821c7df8,0x2a8,0,0xffffffff82000f98,0xffffffff821c7e48);
+    uVar7 = uVar7 + 4;
+    if ((uVar7 & 0xffffffff) == (uVar5 & 0xffffffff)) break;
+    uVar8 = uVar8 + 1;
+  } while (uVar8 < 0x15);
+  if (uVar8 == 0x15) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_material.cpp",0x2a8,
+                    0,"%s");
   }
-  iVar6 = uVar5 * 4;
-  iVar1 = ((int *)param_2)[uVar5 + 1];
+  iVar1 = ((int *)uVar6)[uVar8 + 1];
   if (iVar1 != 0) {
-    iVar2 = *(int *)param_2;
+    iVar2 = *(int *)uVar6;
     if (iVar2 == 0) {
-      MyAssertHandler(0xffffffff821c7df8,0x2b0,0,0xffffffff82000f98,0xffffffff821c7e3c);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_material.cpp",
+                      0x2b0,0,"%s");
     }
-    iVar2 = *(int *)(iVar6 + iVar2 + 4);
-    if (iVar2 != 0) {
-      iVar1 = *(int *)(iVar1 + 4);
-      if (iVar1 == 0) {
-        MyAssertHandler(0xffffffff821c7df8,0x2b6,0,0xffffffff82000f98,0xffffffff8200f900);
+    pDVar3 = *(D3DVertexDeclaration **)(uVar8 * 4 + iVar2 + 4);
+    if (pDVar3 != (D3DVertexDeclaration *)0x0) {
+      pDVar4 = *(D3DVertexShader **)(iVar1 + 4);
+      if (pDVar4 == (D3DVertexShader *)0x0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_material.cpp",
+                        0x2b6,0,"%s");
       }
-      local_40 = *(undefined4 *)(&DAT_829a2d68 + iVar6);
-      local_3c = *(undefined4 *)(&DAT_821bd950 + iVar6);
-      D3DVertexShader_Bind(iVar1,0,iVar2,&local_40,0);
+      local_40 = g_streamStride[uVar8];
+      local_3c = *(undefined4 *)(&g_layerDataStride + uVar8 * 4);
+      D3DVertexShader_Bind(pDVar4,0,pDVar3,&local_40,(D3DPixelShader *)0x0);
     }
   }
   __restgprlr_26();
@@ -116,318 +87,101 @@ void Load_BindVertexShader(undefined8 param_1,ulonglong param_2)
 
 
 // 827542D0  Material_FindTechniqueSet_FastFile  (gfx_d3d/r_material.cpp:749)
-
-void Material_FindTechniqueSet_FastFile(undefined8 param_1,int param_2)
-
-{
-  undefined8 uVar1;
-  undefined8 uVar2;
-  int iVar3;
-  
-  uVar1 = __savegprlr_29();
-  uVar2 = DB_FindXAssetHeader(7,uVar1,1);
-  if (param_2 == 0) {
-    iVar3 = DB_IsXAssetDefault(7,uVar1);
-    uVar1 = 0;
-    if (iVar3 != 0) goto LAB_8275431c;
-  }
-  uVar1 = uVar2;
-LAB_8275431c:
-  __restgprlr_29(uVar1);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
 
 // 82754328  Material_FindTechniqueSet  (gfx_d3d/r_material.cpp:761)
-
-void Material_FindTechniqueSet(undefined8 param_1,int param_2)
-
-{
-  undefined8 uVar1;
-  undefined8 uVar2;
-  int iVar3;
-  
-  uVar1 = __savegprlr_29();
-  uVar2 = DB_FindXAssetHeader(7,uVar1,1);
-  if (param_2 == 0) {
-    iVar3 = DB_IsXAssetDefault(7,uVar1);
-    uVar1 = 0;
-    if (iVar3 != 0) goto LAB_82754374;
-  }
-  uVar1 = uVar2;
-LAB_82754374:
-  __restgprlr_29(uVar1);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
 
 // 82754380  Material_DirtySort  (gfx_d3d/r_material.cpp:997)
-
-void Material_DirtySort(void)
-
-{
-  DAT_84616500 = 1;
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
 
 // 82754398  Material_IsDefault  (gfx_d3d/r_material.cpp:1097)
-
-void Material_IsDefault(void)
-
-{
-  int iVar1;
-  
-  iVar1 = __savegprlr_28();
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff821c7df8,0x44a,0,0xffffffff82000f98,0xffffffff82020dcc);
-  }
-  if (DAT_84616528 == 0) {
-    MyAssertHandler(0xffffffff821c7df8,1099,0,0xffffffff82000f98,0xffffffff821c7e64);
-  }
-  if (*(int *)(iVar1 + 0x48) == *(int *)(DAT_84616528 + 0x48)) {
-    if (*(int *)(iVar1 + 0x4c) == *(int *)(DAT_84616528 + 0x4c)) {
-      __restgprlr_28(*(int *)(DAT_84616528 + 0x44) == *(int *)(iVar1 + 0x44));
-      return;
-    }
-  }
-  __restgprlr_28(0);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
 
 // 82754458  Material_Register_FastFile  (gfx_d3d/r_material.cpp:1169)
-
-void Material_Register_FastFile(undefined8 param_1)
-
-{
-  DB_FindXAssetHeader(5,param_1,1);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
 
 // 82754468  Material_Register  (gfx_d3d/r_material.cpp:1176)
-
-void Material_Register(undefined8 param_1)
-
-{
-  DB_FindXAssetHeader(5,param_1,1);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
 
 // 82754478  Material_LoadRawImage  (gfx_d3d/r_material.cpp:1199)
-
-undefined4 Material_LoadRawImage(void)
-
-{
-  return DAT_84616528;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
 
 // 82754488  Material_RegisterHandle  (gfx_d3d/r_material.cpp:1244)
-
-void Material_RegisterHandle(void)
-
-{
-  char *pcVar2;
-  ulonglong uVar1;
-  
-  pcVar2 = (char *)__savegprlr_28();
-  if (pcVar2 == (char *)0x0) {
-    MyAssertHandler(0xffffffff821c7df8,0x4df,0,0xffffffff82000f98,0xffffffff82021a74);
-  }
-  uVar1 = (ulonglong)DAT_84616528;
-  if (uVar1 == 0) {
-    MyAssertHandler(0xffffffff821c7df8,0x4e0,0,0xffffffff82000f98,0xffffffff821c7e64);
-    uVar1 = (ulonglong)DAT_84616528;
-  }
-  if (*pcVar2 != '\0') {
-    uVar1 = DB_FindXAssetHeader(5,pcVar2,1);
-  }
-  __restgprlr_28(uVar1);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
 
 // 82754528  Material_RegisterRawImage  (gfx_d3d/r_material.cpp:1335)
-
-void Material_RegisterRawImage(void)
-
-{
-  int iVar1;
-  
-  iVar1 = __savegprlr_29();
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff821c7df8,0x53a,0,0xffffffff82000f98,0xffffffff82021a74);
-  }
-  if (DAT_84616528 == 0) {
-    MyAssertHandler(0xffffffff821c7df8,0x53b,0,0xffffffff82000f98,0xffffffff821c7e64);
-  }
-  __restgprlr_29(DAT_84616528);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
 
 // 827545A8  R_GetMaterialMemory  (gfx_d3d/r_material.cpp:1359)
-
-undefined4 R_GetMaterialMemory(int param_1)
-
-{
-  int iVar1;
-  int iVar2;
-  
-  if (DAT_8461658c != 0) {
-    iVar1 = 0;
-    if (0 < *(int *)(DAT_8461658c + 0x158)) {
-      iVar2 = 0;
-      do {
-        if (param_1 == *(int *)(iVar2 + *(int *)(DAT_8461658c + 0x15c))) {
-          return *(undefined4 *)(iVar1 * 8 + *(int *)(DAT_8461658c + 0x15c) + 4);
-        }
-        iVar1 = iVar1 + 1;
-        iVar2 = iVar2 + 8;
-      } while (iVar1 < *(int *)(DAT_8461658c + 0x158));
-    }
-  }
-  return 0;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
 
 // 82754608  R_GetMaterialList  (gfx_d3d/r_material.cpp:1377)
-
-void R_GetMaterialList(undefined8 param_1,uint *param_2)
-
-{
-  uint uVar1;
-  uint uVar2;
-  uint uVar3;
-  uint *puVar4;
-  
-  uVar2 = __savegprlr_29();
-  puVar4 = param_2;
-  uVar3 = R_GetMaterialMemory();
-  if (uVar3 != 0) {
-    if (0x165f < *puVar4) {
-      MyAssertHandler(0xffffffff821c7df8,0x56b,0,0xffffffff82000f98,0xffffffff821c7e78);
-    }
-    uVar1 = *param_2;
-    param_2[uVar1 * 2 + 1] = uVar2;
-    param_2[uVar1 * 2 + 2] = uVar3;
-    *param_2 = *param_2 + 1;
-  }
-  __restgprlr_29();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
 
 // 82754688  R_MaterialCompare  (gfx_d3d/r_material.cpp:1396)
 
-ulonglong R_MaterialCompare(int param_1,int param_2)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+bool R_MaterialCompare(MaterialMemory *param_1,MaterialMemory *param_2)
 
 {
-  return ((~(ulonglong)(*(uint *)(param_2 + 4) ^ *(uint *)(param_1 + 4)) & 0xffffffff) >> 0x1f) +
-         (ulonglong)(*(uint *)(param_2 + 4) <= *(uint *)(param_1 + 4)) & 1;
+  return (bool)((char)((~(ulonglong)(uint)(param_2->memory ^ param_1->memory) & 0xffffffff) >> 0x1f)
+                + ((uint)param_2->memory <= (uint)param_1->memory) & 1);
 }
 
 
 // 82754D88  R_MaterialList_f  (gfx_d3d/r_material.cpp:1402)
-
-void R_MaterialList_f(void)
-
-{
-  undefined4 *puVar1;
-  int iVar2;
-  int iVar3;
-  longlong lVar4;
-  undefined8 uVar5;
-  longlong lVar6;
-  int iVar7;
-  uint uVar8;
-  double dVar9;
-  double dVar10;
-  double dVar11;
-  
-  __savegprlr_21();
-  lVar6 = -0xb3e0;
-  _RtlCheckStack12();
-  lVar6 = ZEXT48(&stack0x00000000) + lVar6;
-  iVar3 = (int)lVar6;
-  *(BADSPACEBASE **)iVar3 = register0x0000000c;
-  iVar7 = 0;
-  Com_Printf(8,0xffffffff82031b7c);
-  *(undefined4 *)(iVar3 + 0x60) = 0;
-  DB_EnumXAssets(5,0xffffffff82754608,lVar6 + 0x60,0);
-  lVar4 = ((ulonglong)*(uint *)(iVar3 + 0x60) & 0x1fffffff) * 8 + lVar6 + 100;
-  std___Sort<MaterialMemory_*,int,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>
-            (lVar6 + 100,lVar4,(int)lVar4 - (iVar3 + 100) >> 3,0xffffffff82754688);
-  Com_Printf(8,0xffffffff821c80f4);
-  uVar8 = 0;
-  if (*(int *)(iVar3 + 0x60) != 0) {
-    dVar10 = 10.0;
-    dVar11 = 0.0009765625;
-    lVar6 = lVar6 + 0x68;
-    do {
-      puVar1 = (undefined4 *)((int *)lVar6)[-1];
-      if (puVar1 == (undefined4 *)0x0) {
-        MyAssertHandler(0xffffffff821c7df8,0x591,0,0xffffffff82000f98,0xffffffff82020dcc);
-      }
-      iVar2 = *(int *)lVar6;
-      iVar7 = iVar2 + iVar7;
-      *(longlong *)(iVar3 + 0x50) = (longlong)iVar2;
-      dVar9 = (double)(float)((double)*(longlong *)(iVar3 + 0x50) * dVar11);
-      uVar5 = 0xffffffff821c80dc;
-      if (dVar10 <= dVar9) {
-        uVar5 = 0xffffffff821c80e4;
-      }
-      *(double *)(iVar3 + 0x20) = dVar9;
-      Com_Printf(8,uVar5,*(undefined8 *)(iVar3 + 0x20));
-      Com_Printf(8,0xffffffff821c80ec,*puVar1);
-      uVar8 = uVar8 + 1;
-      lVar6 = lVar6 + 8;
-    } while (uVar8 < *(uint *)(iVar3 + 0x60));
-  }
-  Com_Printf(8,0xffffffff82031b7c);
-  *(longlong *)(iVar3 + 0x50) = (longlong)iVar7;
-  *(double *)(iVar3 + 0x20) = (double)((float)*(longlong *)(iVar3 + 0x50) * 9.536743e-07);
-  Com_Printf(8,0xffffffff821c80c0,*(undefined8 *)(iVar3 + 0x20));
-  Com_Printf(8,0xffffffff821c80a0,*(undefined4 *)(iVar3 + 0x60));
-  Com_Printf(8,0xffffffff82175868);
-  __restgprlr_21();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
 
 // 827546A8  Material_GetName  (gfx_d3d/r_material.cpp:1477)
 
-undefined4 Material_GetName(ulonglong param_1)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+char * Material_GetName(Material *param_1)
 
 {
-  undefined4 *puVar1;
+  Material *pMVar1;
   
-  if ((param_1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821c7df8,0x5c6,0,0xffffffff82000f98,0xffffffff820363b8);
+  if (param_1 == (Material *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_material.cpp",0x5c6,
+                    0,"%s");
   }
-  puVar1 = (undefined4 *)Material_FromHandle(param_1);
-  return *puVar1;
+  pMVar1 = Material_FromHandle(param_1);
+  return (char *)(pMVar1->info).field0_0x0._padding_;
 }
 
 
 // 82754708  Material_GetNameWithoutPrefix  (gfx_d3d/r_material.cpp:1484)
 
-char * Material_GetNameWithoutPrefix(ulonglong param_1)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+char * Material_GetNameWithoutPrefix(Material *param_1)
 
 {
   char cVar1;
   char *pcVar2;
-  undefined4 *puVar3;
+  Material *pMVar3;
   char *pcVar4;
   
-  if ((param_1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821c7df8,0x5cf,0,0xffffffff82000f98,0xffffffff820363b8);
+  if (param_1 == (Material *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_material.cpp",0x5cf,
+                    0,"%s");
   }
-  puVar3 = (undefined4 *)Material_FromHandle(param_1);
-  pcVar2 = (char *)*puVar3;
+  pMVar3 = Material_FromHandle(param_1);
+  pcVar2 = (char *)(pMVar3->info).field0_0x0._padding_;
   cVar1 = *pcVar2;
   pcVar4 = pcVar2;
   while (cVar1 != '\0') {
@@ -442,48 +196,16 @@ char * Material_GetNameWithoutPrefix(ulonglong param_1)
 
 
 // 82754798  Material_LoadBuiltIn  (gfx_d3d/r_material.cpp:1501)
-
-void Material_LoadBuiltIn(undefined8 param_1,longlong param_2)
-
-{
-  int iVar1;
-  undefined4 uVar2;
-  undefined4 *puVar3;
-  
-  iVar1 = __savegprlr_26();
-  if (0 < (int)param_2) {
-    puVar3 = (undefined4 *)(iVar1 + 4);
-    do {
-      if (*(int *)*puVar3 != 0) {
-        MyAssertHandler(0xffffffff821c7df8,0x5e2,0,0xffffffff82000f98,0xffffffff821c7eb4);
-      }
-      uVar2 = DB_FindXAssetHeader(5,puVar3[-1],1);
-      *(undefined4 *)*puVar3 = uVar2;
-      if (*(int *)*puVar3 == 0) {
-        Com_Error(0,0xffffffff821c7edc,puVar3[-1]);
-      }
-      param_2 = param_2 + -1;
-      puVar3 = puVar3 + 2;
-    } while (param_2 != 0);
-  }
-  __restgprlr_26();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
 
 // 82754848  Material_Init  (gfx_d3d/r_material.cpp:1583)
-
-void Material_Init(void)
-
-{
-  Material_LoadBuiltIn(0xffffffff821c7bc0,0x3e);
-  DAT_84618170 = DAT_84616630;
-  DB_FindXAssetHeader(5,0xffffffff821c7efc,1);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
 
 // 827548A0  Material_FinishLoading  (gfx_d3d/r_material.cpp:1607)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Material_FinishLoading(void)
 
@@ -493,153 +215,116 @@ void Material_FinishLoading(void)
 
 
 // 827548A8  Material_CollateTechniqueSets  (gfx_d3d/r_material.cpp:1787)
-
-void Material_CollateTechniqueSets(undefined4 param_1,int param_2)
-
-{
-  if (0x2ff < *(uint *)(param_2 + 0xc00)) {
-    MyAssertHandler(0xffffffff821c7df8,0x6ff,0,0xffffffff821c7f18,*(uint *)(param_2 + 0xc00),0x300);
-  }
-  *(undefined4 *)(*(int *)(param_2 + 0xc00) * 4 + param_2) = param_1;
-  *(int *)(param_2 + 0xc00) = *(int *)(param_2 + 0xc00) + 1;
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
 
 // 82754920  Material_ForEachTechniqueSet_FastFile  (gfx_d3d/r_material.cpp:1819)
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
 
-void Material_ForEachTechniqueSet_FastFile(code *param_1)
-
-{
-  undefined4 auStack_c20 [768];
-  int local_20;
-  
-  local_20 = 0;
-  DB_EnumXAssets(7,0xffffffff827548a8,auStack_c20,0);
-  while (local_20 != 0) {
-    local_20 = local_20 + -1;
-    (*param_1)(auStack_c20[local_20]);
-  }
-  return;
-}
-
+// 827549A0  Material_ForEachTechniqueSet  (gfx_d3d/r_material.cpp:1835)
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
 
 // 827549A8  ValidMaterialCallback  (gfx_d3d/r_material.cpp:1851)
-
-void ValidMaterialCallback(int param_1,undefined1 *param_2)
-
-{
-  if (*(int *)(param_2 + 4) != param_1) {
-    return;
-  }
-  *param_2 = 1;
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
 
 // 827549C0  IsValidMaterialHandle  (gfx_d3d/r_material.cpp:1862)
-
-void IsValidMaterialHandle(void)
-
-{
-  undefined4 *puVar1;
-  uint uVar2;
-  undefined8 uVar3;
-  char local_30 [4];
-  undefined4 *local_2c;
-  
-  puVar1 = (undefined4 *)__savegprlr_29();
-  local_30[0] = '\0';
-  local_2c = puVar1;
-  DB_EnumXAssets(5,0xffffffff827549a8,local_30,1);
-  uVar2 = Material_FromHandle(puVar1);
-  if ((uVar2 & 3) != 0) {
-    MyAssertHandler(0xffffffff821c7df8,0x74e,0,0xffffffff82000f98,0xffffffff821c7f80);
-  }
-  if (local_30[0] == '\0') {
-    MyAssertHandler(0xffffffff821c7df8,0x74f,0,0xffffffff82000f98,0xffffffff821c7f60);
-  }
-  if (((puVar1 == (undefined4 *)0x0) || ((char *)*puVar1 == (char *)0x0)) ||
-     (uVar3 = 1, *(char *)*puVar1 == '\0')) {
-    uVar3 = 0;
-  }
-  __restgprlr_29(uVar3);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
 
 // 82754A90  Material_Process2DTextureCoordsForAtlasing  (gfx_d3d/r_material.cpp:1879)
 
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
 void Material_Process2DTextureCoordsForAtlasing
-               (undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4,
-               ulonglong param_5)
+               (Material *param_1,float *param_2,float *param_3,float *param_4,float *param_5)
 
 {
   uint uVar1;
   uint uVar2;
-  int iVar4;
-  undefined8 uVar3;
+  int iVar3;
+  ulonglong uVar4;
   ulonglong uVar5;
   ulonglong uVar6;
   ulonglong uVar7;
   ulonglong uVar8;
+  ulonglong uVar9;
+  ulonglong uVar10;
+  ulonglong uVar11;
   float local_70;
   float local_6c;
   float local_68;
   float local_64 [25];
   
-  iVar4 = __savegprlr_22();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821c7df8,0x759,0,0xffffffff82000f98,0xffffffff82181e90);
+  uVar7 = (ulonglong)(int)param_5;
+  uVar6 = (ulonglong)(int)param_4;
+  uVar5 = (ulonglong)(int)param_3;
+  uVar4 = (ulonglong)(int)param_2;
+  iVar3 = __savegprlr_22(param_1);
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_material.cpp",0x759,
+                    0,"%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821c7df8,0x75a,0,0xffffffff82000f98,0xffffffff82181e94);
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_material.cpp",0x75a,
+                    0,"%s");
   }
-  if ((param_4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821c7df8,0x75b,0,0xffffffff82000f98,0xffffffff8219c174);
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_material.cpp",0x75b,
+                    0,"%s");
   }
-  if ((param_5 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821c7df8,0x75c,0,0xffffffff82000f98,0xffffffff8219c170);
+  if ((uVar7 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_material.cpp",0x75c,
+                    0,"%s");
   }
-  if ((iVar4 != 0) && ((*(char *)(iVar4 + 7) != '\x01' || (*(char *)(iVar4 + 6) != '\x01')))) {
-    if (*(int *)(DAT_845aa658 + 0xc) < 1) {
-      MyAssertHandler(0xffffffff821c7df8,0x763,0,0xffffffff82000f98,0xffffffff821c807c);
+  if ((iVar3 != 0) && ((*(char *)(iVar3 + 7) != '\x01' || (*(char *)(iVar3 + 6) != '\x01')))) {
+    if ((r_atlasAnimFPS->current).integer < 1) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_material.cpp",
+                      0x763,0,"%s");
     }
-    if (*(char *)(iVar4 + 7) == '\0') {
-      MyAssertHandler(0xffffffff821c7df8,0x764,0,0xffffffff82000f98,0xffffffff821c8050);
+    if (*(char *)(iVar3 + 7) == '\0') {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_material.cpp",
+                      0x764,0,"%s");
     }
-    if (*(char *)(iVar4 + 6) == '\0') {
-      MyAssertHandler(0xffffffff821c7df8,0x765,0,0xffffffff82000f98,0xffffffff821c8028);
+    if (*(char *)(iVar3 + 6) == '\0') {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_material.cpp",
+                      0x765,0,"%s");
     }
-    uVar2 = DAT_84618168;
-    if (((*(char *)(iVar4 + 7) != '\0') && (*(char *)(iVar4 + 6) != '\0')) &&
-       (0 < *(int *)(DAT_845aa658 + 0xc))) {
-      uVar1 = *(uint *)(DAT_845aa658 + 0xc);
-      uVar7 = (ulonglong)uVar1;
-      uVar6 = (ulonglong)DAT_84618168;
-      if (uVar7 == 0) {
-        MyAssertHandler(0xffffffff821c7df8,0x778,0,0xffffffff82000f98,0xffffffff821c8024);
+    uVar2 = rg.textureAtlasTime;
+    if (((*(char *)(iVar3 + 7) != '\0') && (*(char *)(iVar3 + 6) != '\0')) &&
+       (0 < (r_atlasAnimFPS->current).integer)) {
+      uVar1 = (r_atlasAnimFPS->current).integer;
+      uVar10 = (ulonglong)uVar1;
+      uVar9 = (ulonglong)rg.textureAtlasTime;
+      if (uVar10 == 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_material.cpp",
+                        0x778,0,"%s");
       }
-      uVar8 = (longlong)(int)(uint)*(byte *)(iVar4 + 6) * (longlong)(int)(uint)*(byte *)(iVar4 + 7);
-      if (uVar8 == 0) {
-        MyAssertHandler(0xffffffff821c7df8,0x77a,0,0xffffffff82000f98,0xffffffff821c8018);
+      uVar11 = (longlong)(int)(uint)*(byte *)(iVar3 + 6) * (longlong)(int)(uint)*(byte *)(iVar3 + 7)
+      ;
+      if (uVar11 == 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_material.cpp",
+                        0x77a,0,"%s");
       }
-      uVar5 = (uVar8 * 1000) / uVar7;
-      trapWord(6,uVar7,0);
-      trapWord(6,uVar5,0);
-      uVar5 = ((longlong)(int)(uVar2 - (int)(uVar6 / uVar5) * (int)uVar5) * (longlong)(int)uVar1 &
+      uVar8 = (uVar11 * 1000) / uVar10;
+      trapWord(6,uVar10,0);
+      trapWord(6,uVar8,0);
+      uVar9 = ((longlong)(int)(uVar2 - (int)(uVar9 / uVar8) * (int)uVar8) * (longlong)(int)uVar1 &
               0xffffffffU) / 1000;
-      if (uVar8 <= uVar5) {
-        uVar3 = va(0xffffffff821c7fe4,uVar5,uVar6,uVar7,uVar8);
-        MyAssertHandler(0xffffffff821c7df8,0x77f,0,0xffffffff820011f4,0xffffffff821c7fcc,uVar3);
+      if (uVar11 <= uVar9) {
+        va("frame:%i  ms:%i  fps:%i  fc:%i  msTtP:%i  msSLB:%i\n");
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_material.cpp",
+                        0x77f,0,"%s\n\t%s");
       }
       TextureAtlas_GetCoords_ByIndex
-                (uVar5,*(undefined1 *)(iVar4 + 7),*(undefined1 *)(iVar4 + 6),&local_6c,&local_70,
-                 local_64,&local_68);
-      *(float *)param_2 = *(float *)param_2 * local_70 + local_6c;
-      *(float *)param_3 = *(float *)param_3 * local_70 + local_6c;
-      *(float *)param_4 = *(float *)param_4 * local_68 + local_64[0];
-      *(float *)param_5 = *(float *)param_5 * local_68 + local_64[0];
+                ((uint)uVar9,(uint)*(byte *)(iVar3 + 7),(uint)*(byte *)(iVar3 + 6),&local_6c,
+                 &local_70,local_64,&local_68);
+      *(float *)uVar4 = *(float *)uVar4 * local_70 + local_6c;
+      *(float *)uVar5 = *(float *)uVar5 * local_70 + local_6c;
+      *(float *)uVar6 = *(float *)uVar6 * local_68 + local_64[0];
+      *(float *)uVar7 = *(float *)uVar7 * local_68 + local_64[0];
     }
   }
   __restgprlr_22();
@@ -649,243 +334,281 @@ void Material_Process2DTextureCoordsForAtlasing
 
 // 82754D50  Material_GetDefault2DTextureCoordsForAtlasing  (gfx_d3d/r_material.cpp:1938)
 
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
 void Material_GetDefault2DTextureCoordsForAtlasing
-               (undefined8 param_1,undefined4 *param_2,undefined4 *param_3,undefined4 *param_4,
-               undefined4 *param_5)
+               (Material *param_1,float *param_2,float *param_3,float *param_4,float *param_5)
 
 {
-  *param_2 = 0;
-  *param_3 = 0x3f800000;
-  *param_4 = 0;
-  *param_5 = 0x3f800000;
-  Material_Process2DTextureCoordsForAtlasing();
+  *param_2 = 0.0;
+  *param_3 = 1.0;
+  *param_4 = 0.0;
+  *param_5 = 1.0;
+  Material_Process2DTextureCoordsForAtlasing(param_1,param_2,param_3,param_4,param_5);
   return;
 }
 
 
 // 82754D78  Material_SetTextureAtlasTime  (gfx_d3d/r_material.cpp:1948)
 
-void Material_SetTextureAtlasTime(undefined4 param_1)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void Material_SetTextureAtlasTime(uint param_1)
 
 {
-  DAT_84618168 = param_1;
+  rg.textureAtlasTime = param_1;
   return;
 }
 
 
-// 82754F70  std::_Push_heap<MaterialMemory_*,int,MaterialMemory,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2455)
+// 82754F70  _Push_heap<MaterialMemory_*,int,MaterialMemory,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2455)
 
-void std___Push_heap<MaterialMemory_*,int,MaterialMemory,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>
-               (undefined8 param_1,ulonglong param_2,int param_3,undefined8 param_4,code *param_5)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void std::
+     _Push_heap<MaterialMemory_*,int,MaterialMemory,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>
+               (MaterialMemory *param_1,int param_2,int param_3,MaterialMemory *param_4,
+               _func___cdecl_bool_MaterialMemory_ptr_MaterialMemory_ptr *param_5)
 
 {
   int iVar1;
   int iVar2;
-  int iVar3;
-  ulonglong uVar4;
+  ulonglong uVar3;
+  MaterialMemory *pMVar4;
   ulonglong uVar5;
-  longlong lVar6;
-  char cVar7;
-  uint uVar8;
-  longlong lVar9;
-  undefined4 *puVar10;
+  int iVar6;
+  bool bVar7;
+  ulonglong uVar8;
+  uint uVar9;
   
-  lVar6 = __savegprlr_25();
-  iVar2 = (int)param_2;
-  uVar8 = iVar2 - 1;
-  iVar1 = (int)lVar6;
-  uVar5 = (longlong)((int)uVar8 >> 1) + (ulonglong)((int)uVar8 < 0 && (uVar8 & 1) != 0);
-  while (uVar4 = uVar5, param_3 < iVar2) {
-    lVar9 = (uVar4 & 0x1fffffff) * 8 + lVar6;
-    cVar7 = (*param_5)(lVar9,param_4);
-    if (cVar7 == '\0') break;
-    iVar3 = (int)((param_2 & 0xffffffff) << 3);
-    puVar10 = (undefined4 *)lVar9;
-    iVar2 = (int)uVar4;
-    uVar8 = iVar2 - 1;
-    *(undefined4 *)(iVar3 + iVar1) = *puVar10;
-    *(undefined4 *)(iVar3 + iVar1 + 4) = puVar10[1];
-    uVar5 = (longlong)((int)uVar8 >> 1) + (ulonglong)((int)uVar8 < 0 && (uVar8 & 1) != 0);
-    param_2 = uVar4;
+  uVar8 = (ulonglong)param_2;
+  iVar6 = __savegprlr_25(param_1);
+  iVar1 = (int)uVar8;
+  uVar9 = iVar1 - 1;
+  uVar5 = (longlong)((int)uVar9 >> 1) + (ulonglong)((int)uVar9 < 0 && (uVar9 & 1) != 0);
+  while (uVar3 = uVar5, param_3 < iVar1) {
+    iVar1 = (int)uVar3;
+    pMVar4 = (MaterialMemory *)(iVar1 * 8 + iVar6);
+    bVar7 = (*param_5)(pMVar4,param_4);
+    if (!bVar7) break;
+    iVar2 = (int)((uVar8 & 0xffffffff) << 3);
+    uVar9 = iVar1 - 1;
+    *(Material **)(iVar2 + iVar6) = pMVar4->material;
+    *(int *)(iVar2 + iVar6 + 4) = pMVar4->memory;
+    uVar5 = (longlong)((int)uVar9 >> 1) + (ulonglong)((int)uVar9 < 0 && (uVar9 & 1) != 0);
+    uVar8 = uVar3;
   }
-  iVar2 = (int)((param_2 & 0x1fffffff) << 3);
-  *(undefined4 *)(iVar2 + iVar1) = *(undefined4 *)param_4;
-  *(undefined4 *)(iVar2 + iVar1 + 4) = ((undefined4 *)param_4)[1];
+  iVar1 = (int)((uVar8 & 0x1fffffff) << 3);
+  *(Material **)(iVar1 + iVar6) = param_4->material;
+  *(int *)(iVar1 + iVar6 + 4) = param_4->memory;
   __restgprlr_25();
   return;
 }
 
 
-// 82755018  std::_Adjust_heap<MaterialMemory_*,int,MaterialMemory,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2565)
+// 82755018  _Adjust_heap<MaterialMemory_*,int,MaterialMemory,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2565)
 
-void std___Adjust_heap<MaterialMemory_*,int,MaterialMemory,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>
-               (undefined8 param_1,ulonglong param_2,ulonglong param_3,undefined8 param_4,
-               code *param_5)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void std::
+     _Adjust_heap<MaterialMemory_*,int,MaterialMemory,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>
+               (MaterialMemory *param_1,int param_2,int param_3,MaterialMemory *param_4,
+               _func___cdecl_bool_MaterialMemory_ptr_MaterialMemory_ptr *param_5)
 
 {
   int iVar1;
-  int iVar2;
-  longlong lVar3;
-  longlong lVar4;
-  char cVar5;
-  uint uVar6;
-  ulonglong uVar7;
-  undefined4 *puVar8;
+  MaterialMemory *pMVar2;
+  int iVar3;
+  bool bVar4;
+  ulonglong uVar5;
+  ulonglong uVar6;
+  uint uVar7;
+  ulonglong uVar8;
   ulonglong uVar9;
   int iVar11;
   ulonglong uVar10;
   
-  lVar3 = __savegprlr_25();
-  uVar9 = (param_2 + 1 & 0x7fffffff) << 1;
-  iVar1 = (int)lVar3;
+  uVar6 = (ulonglong)param_3;
+  uVar5 = (ulonglong)param_2;
+  iVar3 = __savegprlr_25(param_1);
+  uVar9 = (uVar5 + 1 & 0x7fffffff) << 1;
   iVar11 = (int)uVar9;
-  uVar7 = param_2;
-  while (uVar10 = uVar9, iVar11 < (int)param_3) {
-    lVar4 = (uVar10 & 0x1fffffff) * 8 + lVar3;
-    cVar5 = (*param_5)(lVar4,lVar4 + -8);
-    if (cVar5 != '\0') {
+  uVar8 = uVar5;
+  while (uVar10 = uVar9, iVar11 < (int)uVar6) {
+    pMVar2 = (MaterialMemory *)((int)uVar10 * 8 + iVar3);
+    bVar4 = (*param_5)(pMVar2,pMVar2 + -1);
+    if (bVar4) {
       uVar10 = uVar10 - 1;
     }
     iVar11 = (int)((uVar10 & 0xffffffff) << 3);
-    iVar2 = (int)((uVar7 & 0xffffffff) << 3);
+    iVar1 = (int)((uVar8 & 0xffffffff) << 3);
     uVar9 = (uVar10 + 1 & 0x7fffffff) << 1;
-    *(undefined4 *)(iVar2 + iVar1) = *(undefined4 *)(iVar11 + iVar1);
-    *(undefined4 *)(iVar2 + iVar1 + 4) = *(undefined4 *)(iVar11 + iVar1 + 4);
+    *(undefined4 *)(iVar1 + iVar3) = *(undefined4 *)(iVar11 + iVar3);
+    *(undefined4 *)(iVar1 + iVar3 + 4) = *(undefined4 *)(iVar11 + iVar3 + 4);
     iVar11 = (int)uVar9;
-    uVar7 = uVar10;
+    uVar8 = uVar10;
   }
-  if (iVar11 == (int)param_3) {
-    iVar2 = (int)((uVar7 & 0xffffffff) << 3);
-    iVar11 = (int)((param_3 & 0xffffffff) << 3) + iVar1;
-    uVar7 = param_3 - 1;
-    *(undefined4 *)(iVar2 + iVar1) = *(undefined4 *)(iVar11 + -8);
-    *(undefined4 *)(iVar2 + iVar1 + 4) = *(undefined4 *)(iVar11 + -4);
+  if (iVar11 == (int)uVar6) {
+    iVar1 = (int)((uVar8 & 0xffffffff) << 3);
+    iVar11 = (int)((uVar6 & 0xffffffff) << 3) + iVar3;
+    uVar8 = uVar6 - 1;
+    *(undefined4 *)(iVar1 + iVar3) = *(undefined4 *)(iVar11 + -8);
+    *(undefined4 *)(iVar1 + iVar3 + 4) = *(undefined4 *)(iVar11 + -4);
   }
-  iVar11 = (int)uVar7;
-  uVar6 = iVar11 - 1;
-  uVar9 = (longlong)((int)uVar6 >> 1) + (ulonglong)((int)uVar6 < 0 && (uVar6 & 1) != 0);
-  while (uVar10 = uVar9, (int)param_2 < iVar11) {
-    lVar4 = (uVar10 & 0x1fffffff) * 8 + lVar3;
-    cVar5 = (*param_5)(lVar4,param_4);
-    if (cVar5 == '\0') break;
-    iVar2 = (int)((uVar7 & 0xffffffff) << 3);
-    puVar8 = (undefined4 *)lVar4;
-    iVar11 = (int)uVar10;
-    uVar6 = iVar11 - 1;
-    *(undefined4 *)(iVar2 + iVar1) = *puVar8;
-    *(undefined4 *)(iVar2 + iVar1 + 4) = puVar8[1];
-    uVar9 = (longlong)((int)uVar6 >> 1) + (ulonglong)((int)uVar6 < 0 && (uVar6 & 1) != 0);
-    uVar7 = uVar10;
+  iVar11 = (int)uVar8;
+  uVar7 = iVar11 - 1;
+  uVar9 = (longlong)((int)uVar7 >> 1) + (ulonglong)((int)uVar7 < 0 && (uVar7 & 1) != 0);
+  while (uVar6 = uVar9, (int)uVar5 < iVar11) {
+    iVar11 = (int)uVar6;
+    pMVar2 = (MaterialMemory *)(iVar11 * 8 + iVar3);
+    bVar4 = (*param_5)(pMVar2,param_4);
+    if (!bVar4) break;
+    iVar1 = (int)((uVar8 & 0xffffffff) << 3);
+    uVar7 = iVar11 - 1;
+    *(Material **)(iVar1 + iVar3) = pMVar2->material;
+    *(int *)(iVar1 + iVar3 + 4) = pMVar2->memory;
+    uVar9 = (longlong)((int)uVar7 >> 1) + (ulonglong)((int)uVar7 < 0 && (uVar7 & 1) != 0);
+    uVar8 = uVar6;
   }
-  iVar11 = (int)((uVar7 & 0x1fffffff) << 3);
-  *(undefined4 *)(iVar11 + iVar1) = *(undefined4 *)param_4;
-  *(undefined4 *)(iVar11 + iVar1 + 4) = ((undefined4 *)param_4)[1];
+  iVar11 = (int)((uVar8 & 0x1fffffff) << 3);
+  *(Material **)(iVar11 + iVar3) = param_4->material;
+  *(int *)(iVar11 + iVar3 + 4) = param_4->memory;
   __restgprlr_25();
   return;
 }
 
 
-// 82755160  std::_Make_heap<MaterialMemory_*,int,MaterialMemory,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2658)
+// 82755160  _Make_heap<MaterialMemory_*,int,MaterialMemory,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2658)
 
-void std___Make_heap<MaterialMemory_*,int,MaterialMemory,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>
-               (undefined8 param_1,int param_2,undefined8 param_3)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void std::
+     _Make_heap<MaterialMemory_*,int,MaterialMemory,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>
+               (MaterialMemory *param_1,MaterialMemory *param_2,
+               _func___cdecl_bool_MaterialMemory_ptr_MaterialMemory_ptr *param_3,int *param_4,
+               MaterialMemory *param_5)
 
 {
   uint uVar1;
-  int iVar2;
+  MaterialMemory *pMVar2;
   int iVar3;
-  longlong lVar4;
+  ulonglong uVar4;
   longlong lVar5;
-  char cVar6;
+  bool bVar6;
   longlong lVar7;
-  ulonglong uVar8;
+  longlong lVar8;
   int iVar9;
   ulonglong uVar10;
   ulonglong uVar11;
   ulonglong uVar12;
   ulonglong uVar13;
-  undefined8 local_50 [10];
+  uint uVar14;
+  MaterialMemory local_50 [10];
   
-  lVar4 = __savegprlr_24();
-  iVar2 = (int)lVar4;
-  uVar1 = param_2 - iVar2 >> 3;
-  uVar10 = (longlong)(param_2 - iVar2 >> 4) + (ulonglong)((int)uVar1 < 0 && (uVar1 & 1) != 0);
-  if (0 < (longlong)uVar10) {
-    uVar8 = (uVar10 + 1 & 0x7fffffff) << 1;
-    lVar7 = (uVar10 & 0x1fffffff) * 8 + lVar4;
+  lVar8 = (longlong)(int)param_3;
+  lVar7 = (longlong)(int)param_2;
+  lVar5 = __savegprlr_24(param_1,lVar7,lVar8,param_4,param_5);
+  pMVar2 = (MaterialMemory *)lVar5;
+  iVar9 = (int)lVar7 - (int)pMVar2;
+  uVar1 = iVar9 >> 3;
+  uVar11 = (longlong)(iVar9 >> 4) + (ulonglong)((int)uVar1 < 0 && (uVar1 & 1) != 0);
+  if (0 < (longlong)uVar11) {
+    uVar10 = (uVar11 + 1 & 0x7fffffff) << 1;
+    lVar5 = (uVar11 & 0x1fffffff) * 8 + lVar5;
     do {
-      lVar7 = lVar7 + -8;
-      local_50[0] = *(undefined8 *)lVar7;
-      uVar8 = uVar8 - 2;
-      uVar10 = uVar10 - 1;
-      iVar9 = (int)uVar8;
-      uVar13 = uVar8;
-      uVar11 = uVar10;
-      while (uVar12 = uVar13, iVar9 < (int)uVar1) {
-        lVar5 = (uVar12 & 0x1fffffff) * 8 + lVar4;
-        cVar6 = (*(code *)param_3)(lVar5,lVar5 + -8);
-        if (cVar6 != '\0') {
+      lVar5 = lVar5 + -8;
+      local_50[0] = *(MaterialMemory *)lVar5;
+      uVar10 = uVar10 - 2;
+      uVar11 = uVar11 - 1;
+      uVar14 = (uint)uVar10;
+      uVar13 = uVar10;
+      uVar4 = uVar11;
+      while (uVar12 = uVar13, (int)uVar14 < (int)uVar1) {
+        bVar6 = (*(_func___cdecl_bool_MaterialMemory_ptr_MaterialMemory_ptr *)lVar8)
+                          (pMVar2 + (int)uVar12,pMVar2 + (int)uVar12 + -1);
+        if (bVar6) {
           uVar12 = uVar12 - 1;
         }
         iVar9 = (int)((uVar12 & 0xffffffff) << 3);
-        iVar3 = (int)((uVar11 & 0xffffffff) << 3);
+        iVar3 = (int)((uVar4 & 0xffffffff) << 3);
         uVar13 = (uVar12 + 1 & 0x7fffffff) << 1;
-        *(undefined4 *)(iVar3 + iVar2) = *(undefined4 *)(iVar9 + iVar2);
-        *(undefined4 *)(iVar3 + iVar2 + 4) = *(undefined4 *)(iVar9 + iVar2 + 4);
-        iVar9 = (int)uVar13;
-        uVar11 = uVar12;
+        *(undefined4 *)((int)&pMVar2->material + iVar3) =
+             *(undefined4 *)((int)&pMVar2->material + iVar9);
+        *(undefined4 *)((int)&pMVar2->memory + iVar3) =
+             *(undefined4 *)((int)&pMVar2->memory + iVar9);
+        uVar14 = (uint)uVar13;
+        uVar4 = uVar12;
       }
-      if ((uint)uVar12 == uVar1) {
-        iVar3 = (int)((uVar11 & 0xffffffff) << 3);
-        iVar9 = uVar1 * 8 + iVar2;
-        uVar11 = (longlong)(int)uVar1 - 1;
-        *(undefined4 *)(iVar3 + iVar2) = *(undefined4 *)(iVar9 + -8);
-        *(undefined4 *)(iVar3 + iVar2 + 4) = *(undefined4 *)(iVar9 + -4);
+      iVar9 = (int)uVar4;
+      if (uVar14 == uVar1) {
+        iVar3 = (int)((uVar4 & 0xffffffff) << 3);
+        iVar9 = uVar1 - 1;
+        *(Material **)((int)&pMVar2->material + iVar3) = pMVar2[uVar1 - 1].material;
+        *(int *)((int)&pMVar2->memory + iVar3) = pMVar2[uVar1 - 1].memory;
       }
-      std___Push_heap<MaterialMemory_*,int,MaterialMemory,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>
-                (lVar4,uVar11,uVar10,local_50,param_3);
-    } while (0 < (int)uVar10);
+      _Push_heap<MaterialMemory_*,int,MaterialMemory,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>
+                (pMVar2,iVar9,(int)uVar11,local_50,
+                 (_func___cdecl_bool_MaterialMemory_ptr_MaterialMemory_ptr *)lVar8);
+    } while (0 < (int)uVar11);
   }
   __restgprlr_24();
   return;
 }
 
 
-// 82755780  std::_Sort_heap<MaterialMemory_*,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2700)
+// 82755780  _Sort_heap<MaterialMemory_*,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2700)
 
-void std___Sort_heap<MaterialMemory_*,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>
-               (undefined8 param_1,longlong param_2,undefined8 param_3)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void std::
+     _Sort_heap<MaterialMemory_*,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>
+               (MaterialMemory *param_1,MaterialMemory *param_2,
+               _func___cdecl_bool_MaterialMemory_ptr_MaterialMemory_ptr *param_3)
 
 {
   longlong lVar1;
-  longlong lVar2;
-  undefined8 *puVar3;
-  undefined8 local_30 [6];
+  MaterialMemory *pMVar2;
+  longlong lVar3;
+  longlong lVar4;
+  MaterialMemory *pMVar5;
+  MaterialMemory local_30 [6];
   
-  lVar1 = __savegprlr_29();
-  lVar2 = param_2 - lVar1;
-  if (8 < (int)((uint)lVar2 & 0xfffffff8)) {
-    param_2 = param_2 + -8;
+  lVar4 = (longlong)(int)param_2;
+  lVar1 = __savegprlr_29(param_1);
+  lVar3 = lVar4 - lVar1;
+  if (8 < (int)((uint)lVar3 & 0xfffffff8)) {
+    lVar4 = lVar4 + -8;
     do {
-      puVar3 = (undefined8 *)param_2;
-      local_30[0] = *puVar3;
-      *(undefined4 *)puVar3 = *(undefined4 *)lVar1;
-      *(undefined4 *)((int)puVar3 + 4) = ((undefined4 *)lVar1)[1];
-      std___Adjust_heap<MaterialMemory_*,int,MaterialMemory,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>
-                (lVar1,0,(int)lVar2 + -8 >> 3,local_30,param_3);
-      param_2 = param_2 + -8;
-      lVar2 = (param_2 - lVar1) + 8;
-    } while (8 < (int)((uint)lVar2 & 0xfffffff8));
+      pMVar2 = (MaterialMemory *)lVar1;
+      pMVar5 = (MaterialMemory *)lVar4;
+      local_30[0] = *pMVar5;
+      pMVar5->material = pMVar2->material;
+      pMVar5->memory = pMVar2->memory;
+      _Adjust_heap<MaterialMemory_*,int,MaterialMemory,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>
+                (pMVar2,0,(int)lVar3 + -8 >> 3,local_30,param_3);
+      lVar4 = lVar4 + -8;
+      lVar3 = (lVar4 - lVar1) + 8;
+    } while (8 < (int)((uint)lVar3 & 0xfffffff8));
   }
   __restgprlr_29();
   return;
 }
 
 
-// 827553D0  std::_Insertion_sort1<MaterialMemory_*,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&),MaterialMemory>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3650)
+// 827553D0  _Insertion_sort1<MaterialMemory_*,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&),MaterialMemory>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3650)
 
-void std___Insertion_sort1<MaterialMemory_*,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&),MaterialMemory>
-               (undefined8 param_1,ulonglong param_2,code *param_3)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void std::
+     _Insertion_sort1<MaterialMemory_*,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&),MaterialMemory>
+               (MaterialMemory *param_1,MaterialMemory *param_2,
+               _func___cdecl_bool_MaterialMemory_ptr_MaterialMemory_ptr *param_3,
+               MaterialMemory *param_4)
 
 {
   undefined4 *puVar1;
@@ -893,342 +616,372 @@ void std___Insertion_sort1<MaterialMemory_*,bool_(__cdecl*)(MaterialMemory_const
   ulonglong uVar3;
   char cVar4;
   ulonglong uVar5;
-  ulonglong uVar7;
+  longlong lVar6;
+  code *pcVar7;
   ulonglong uVar8;
-  undefined8 *puVar9;
+  ulonglong uVar10;
+  ulonglong uVar11;
+  undefined8 *puVar12;
   undefined8 local_50 [10];
-  ulonglong uVar6;
+  ulonglong uVar9;
   
-  uVar3 = __savegprlr_25();
-  if (((uVar3 & 0xffffffff) != (param_2 & 0xffffffff)) &&
-     (uVar8 = uVar3 + 8, uVar7 = uVar3, (uVar8 & 0xffffffff) != (param_2 & 0xffffffff))) {
+  lVar6 = (longlong)(int)param_3;
+  uVar5 = (ulonglong)(int)param_2;
+  uVar3 = __savegprlr_25(param_1,uVar5,lVar6,param_4);
+  if (((uVar3 & 0xffffffff) != (uVar5 & 0xffffffff)) &&
+     (uVar11 = uVar3 + 8, uVar10 = uVar3, (uVar11 & 0xffffffff) != (uVar5 & 0xffffffff))) {
     do {
-      local_50[0] = *(undefined8 *)uVar8;
-      cVar4 = (*param_3)(local_50,uVar3);
+      local_50[0] = *(undefined8 *)uVar11;
+      pcVar7 = (code *)lVar6;
+      cVar4 = (*pcVar7)(local_50,uVar3);
       if (cVar4 == '\0') {
-        cVar4 = (*param_3)(local_50,uVar7);
-        uVar5 = uVar7;
-        uVar6 = uVar8;
-        while (uVar2 = uVar5, puVar9 = (undefined8 *)uVar6, cVar4 != '\0') {
-          *(undefined4 *)puVar9 = *(undefined4 *)uVar2;
-          *(undefined4 *)((int)puVar9 + 4) = ((undefined4 *)uVar2)[1];
-          cVar4 = (*param_3)(local_50,uVar2 - 8);
-          uVar5 = uVar2 - 8;
-          uVar6 = uVar2;
+        cVar4 = (*pcVar7)(local_50,uVar10);
+        uVar8 = uVar10;
+        uVar9 = uVar11;
+        while (uVar2 = uVar8, puVar12 = (undefined8 *)uVar9, cVar4 != '\0') {
+          *(undefined4 *)puVar12 = *(undefined4 *)uVar2;
+          *(undefined4 *)((int)puVar12 + 4) = ((undefined4 *)uVar2)[1];
+          cVar4 = (*pcVar7)(local_50,uVar2 - 8);
+          uVar8 = uVar2 - 8;
+          uVar9 = uVar2;
         }
-        *puVar9 = local_50[0];
+        *puVar12 = local_50[0];
       }
       else {
-        uVar6 = uVar8;
-        if ((uVar3 & 0xffffffff) != (uVar8 & 0xffffffff)) {
+        uVar9 = uVar11;
+        if ((uVar3 & 0xffffffff) != (uVar11 & 0xffffffff)) {
           do {
-            uVar5 = uVar6 - 8;
-            puVar1 = (undefined4 *)uVar6;
-            *puVar1 = *(undefined4 *)uVar5;
+            uVar8 = uVar9 - 8;
+            puVar1 = (undefined4 *)uVar9;
+            *puVar1 = *(undefined4 *)uVar8;
             puVar1[1] = puVar1[-1];
-            uVar6 = uVar5;
-          } while ((uVar5 & 0xffffffff) != (uVar3 & 0xffffffff));
+            uVar9 = uVar8;
+          } while ((uVar8 & 0xffffffff) != (uVar3 & 0xffffffff));
         }
         *(undefined8 *)uVar3 = local_50[0];
       }
-      uVar8 = uVar8 + 8;
-      uVar7 = uVar7 + 8;
-    } while ((uVar8 & 0xffffffff) != (param_2 & 0xffffffff));
+      uVar11 = uVar11 + 8;
+      uVar10 = uVar10 + 8;
+    } while ((uVar11 & 0xffffffff) != (uVar5 & 0xffffffff));
   }
   __restgprlr_25();
   return;
 }
 
 
-// 82755268  std::_Med3<MaterialMemory_*,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3683)
+// 82755268  _Med3<MaterialMemory_*,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3683)
 
-void std___Med3<MaterialMemory_*,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,code *param_4)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void std::_Med3<MaterialMemory_*,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>
+               (MaterialMemory *param_1,MaterialMemory *param_2,MaterialMemory *param_3,
+               _func___cdecl_bool_MaterialMemory_ptr_MaterialMemory_ptr *param_4)
 
 {
-  undefined8 *puVar1;
-  char cVar2;
-  undefined8 *puVar3;
-  undefined8 *puVar4;
-  undefined8 uVar5;
+  MaterialMemory *pMVar1;
+  bool bVar2;
   
-  puVar1 = (undefined8 *)__savegprlr_28();
-  cVar2 = (*param_4)(param_2,puVar1);
-  puVar3 = (undefined8 *)param_2;
-  if (cVar2 != '\0') {
-    uVar5 = *puVar3;
-    *(undefined4 *)puVar3 = *(undefined4 *)puVar1;
-    *(undefined4 *)((int)puVar3 + 4) = *(undefined4 *)((int)puVar1 + 4);
-    *puVar1 = uVar5;
+  pMVar1 = (MaterialMemory *)__savegprlr_28(param_1);
+  bVar2 = (*param_4)(param_2,pMVar1);
+  if (bVar2) {
+    param_2->material = pMVar1->material;
+    param_2->memory = pMVar1->memory;
+    *pMVar1 = *param_2;
   }
-  cVar2 = (*param_4)(param_3,param_2);
-  if (cVar2 != '\0') {
-    puVar4 = (undefined8 *)param_3;
-    uVar5 = *puVar4;
-    *(undefined4 *)puVar4 = *(undefined4 *)puVar3;
-    *(undefined4 *)((int)puVar4 + 4) = *(undefined4 *)((int)puVar3 + 4);
-    *puVar3 = uVar5;
+  bVar2 = (*param_4)(param_3,param_2);
+  if (bVar2) {
+    param_3->material = param_2->material;
+    param_3->memory = param_2->memory;
+    *param_2 = *param_3;
   }
-  cVar2 = (*param_4)(param_2,puVar1);
-  if (cVar2 != '\0') {
-    uVar5 = *puVar3;
-    *(undefined4 *)puVar3 = *(undefined4 *)puVar1;
-    *(undefined4 *)((int)puVar3 + 4) = *(undefined4 *)((int)puVar1 + 4);
-    *puVar1 = uVar5;
+  bVar2 = (*param_4)(param_2,pMVar1);
+  if (bVar2) {
+    param_2->material = pMVar1->material;
+    param_2->memory = pMVar1->memory;
+    *pMVar1 = *param_2;
   }
   __restgprlr_28();
   return;
 }
 
 
-// 82755328  std::_Median<MaterialMemory_*,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3695)
+// 82755328  _Median<MaterialMemory_*,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3695)
 
-void std___Median<MaterialMemory_*,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>
-               (undefined8 param_1,longlong param_2,longlong param_3,undefined8 param_4)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void std::_Median<MaterialMemory_*,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>
+               (MaterialMemory *param_1,MaterialMemory *param_2,MaterialMemory *param_3,
+               _func___cdecl_bool_MaterialMemory_ptr_MaterialMemory_ptr *param_4)
 
 {
   int iVar1;
-  ulonglong uVar2;
-  longlong lVar3;
-  uint uVar5;
-  ulonglong uVar4;
-  longlong lVar6;
+  int iVar2;
+  MaterialMemory *pMVar3;
+  MaterialMemory *pMVar4;
+  uint uVar6;
+  ulonglong uVar5;
   
-  lVar3 = __savegprlr_26();
-  iVar1 = (int)param_3 - (int)lVar3 >> 3;
+  pMVar3 = (MaterialMemory *)__savegprlr_26(param_1);
+  iVar1 = (int)param_3 - (int)pMVar3 >> 3;
   if (0x28 < iVar1) {
-    uVar5 = iVar1 + 1;
-    uVar4 = (longlong)((int)uVar5 >> 3) + (ulonglong)((int)uVar5 < 0 && (uVar5 & 7) != 0);
-    uVar2 = uVar4 & 0x1fffffff;
-    uVar4 = uVar4 & 0xfffffff;
-    lVar6 = uVar2 * 8 + lVar3;
-    std___Med3<MaterialMemory_*,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>
-              (lVar3,lVar6,uVar4 * 0x10 + lVar3);
-    std___Med3<MaterialMemory_*,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>
-              (param_2 + uVar2 * -8,param_2,uVar2 * 8 + param_2,param_4);
-    lVar3 = param_3 + uVar2 * -8;
-    std___Med3<MaterialMemory_*,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>
-              (param_3 + uVar4 * -0x10,lVar3,param_3,param_4);
-    std___Med3<MaterialMemory_*,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>
-              (lVar6,param_2,lVar3,param_4);
+    uVar6 = iVar1 + 1;
+    uVar5 = (longlong)((int)uVar6 >> 3) + (ulonglong)((int)uVar6 < 0 && (uVar6 & 7) != 0);
+    iVar2 = (int)((uVar5 & 0xffffffff) << 4);
+    iVar1 = (int)((uVar5 & 0x1fffffff) << 3);
+    pMVar4 = (MaterialMemory *)((int)&pMVar3->material + iVar1);
+    _Med3<MaterialMemory_*,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>
+              (pMVar3,pMVar4,(MaterialMemory *)((int)&pMVar3->material + iVar2),param_4);
+    _Med3<MaterialMemory_*,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>
+              ((MaterialMemory *)((int)param_2 - iVar1),param_2,
+               (MaterialMemory *)((int)&param_2->material + iVar1),param_4);
+    _Med3<MaterialMemory_*,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>
+              ((MaterialMemory *)((int)param_3 - iVar2),(MaterialMemory *)((int)param_3 - iVar1),
+               param_3,param_4);
+    _Med3<MaterialMemory_*,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>
+              (pMVar4,param_2,(MaterialMemory *)((int)param_3 - iVar1),param_4);
     __restgprlr_26();
     return;
   }
-  std___Med3<MaterialMemory_*,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>
-            (lVar3,param_2,param_3);
+  _Med3<MaterialMemory_*,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>
+            (pMVar3,param_2,param_3,param_4);
   __restgprlr_26();
   return;
 }
 
 
-// 827554D0  std::_Unguarded_partition<MaterialMemory_*,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3712)
+// 827554D0  _Unguarded_partition<MaterialMemory_*,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3712)
 
-void std___Unguarded_partition<MaterialMemory_*,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>
-               (undefined8 param_1,ulonglong param_2,ulonglong param_3,code *param_4)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+pair<MaterialMemory_*,MaterialMemory_*>
+std::
+_Unguarded_partition<MaterialMemory_*,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>
+          (MaterialMemory *param_1,MaterialMemory *param_2,
+          _func___cdecl_bool_MaterialMemory_ptr_MaterialMemory_ptr *param_3)
 
 {
-  bool bVar1;
-  uint uVar2;
-  undefined4 *puVar3;
-  char cVar4;
-  undefined8 uVar5;
-  int iVar7;
+  uint uVar1;
+  MaterialMemory *pMVar2;
+  undefined4 *puVar4;
+  bool bVar5;
+  pair<MaterialMemory_*,MaterialMemory_*> pVar3;
   ulonglong uVar6;
-  ulonglong uVar8;
-  undefined8 *puVar9;
-  undefined8 *puVar10;
-  undefined8 *puVar12;
+  ulonglong uVar7;
+  _func___cdecl_bool_MaterialMemory_ptr_MaterialMemory_ptr *in_r6;
+  undefined8 uVar8;
+  int iVar10;
+  ulonglong uVar9;
   ulonglong uVar11;
-  ulonglong uVar13;
+  MaterialMemory *pMVar12;
+  undefined8 *puVar13;
   ulonglong uVar14;
-  ulonglong uVar15;
+  undefined8 *puVar15;
+  ulonglong uVar16;
+  ulonglong uVar17;
+  undefined8 *puVar18;
   
-  puVar3 = (undefined4 *)__savegprlr_23();
-  iVar7 = (int)param_3 - (int)param_2;
-  uVar2 = iVar7 >> 3;
-  uVar15 = ((longlong)(iVar7 >> 4) + (ulonglong)((int)uVar2 < 0 && (uVar2 & 1) != 0) & 0x1fffffff) *
-           8 + param_2;
-  std___Median<MaterialMemory_*,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>
-            (param_2,uVar15,param_3 - 8);
-  uVar8 = uVar15 + 8;
-  if ((param_2 & 0xffffffff) < (uVar15 & 0xffffffff)) {
+  uVar7 = (ulonglong)(int)param_3;
+  uVar6 = (ulonglong)(int)param_2;
+  puVar4 = (undefined4 *)__savegprlr_23(param_1);
+  iVar10 = (int)uVar7 - (int)(MaterialMemory *)uVar6;
+  uVar1 = iVar10 >> 3;
+  uVar17 = ((longlong)(iVar10 >> 4) + (ulonglong)((int)uVar1 < 0 && (uVar1 & 1) != 0) & 0x1fffffff)
+           * 8 + uVar6;
+  _Median<MaterialMemory_*,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>
+            ((MaterialMemory *)uVar6,(MaterialMemory *)uVar17,(MaterialMemory *)((int)uVar7 + -8),
+             in_r6);
+  uVar11 = uVar17 + 8;
+  if ((uVar6 & 0xffffffff) < (uVar17 & 0xffffffff)) {
     do {
-      uVar13 = uVar15 - 8;
-      cVar4 = (*param_4)(uVar13,uVar15);
-      if ((cVar4 != '\0') || (cVar4 = (*param_4)(uVar15,uVar13), cVar4 != '\0')) break;
-      uVar15 = uVar13;
-    } while ((param_2 & 0xffffffff) < (uVar13 & 0xffffffff));
+      uVar16 = uVar17 - 8;
+      bVar5 = (*in_r6)((MaterialMemory *)uVar16,(MaterialMemory *)uVar17);
+      if ((bVar5) || (bVar5 = (*in_r6)((MaterialMemory *)uVar17,(MaterialMemory *)uVar16), bVar5))
+      break;
+      uVar17 = uVar16;
+    } while ((uVar6 & 0xffffffff) < (uVar16 & 0xffffffff));
   }
-  uVar11 = uVar8;
-  uVar13 = uVar15;
-  if ((uVar8 & 0xffffffff) < (param_3 & 0xffffffff)) {
+  uVar14 = uVar11;
+  uVar16 = uVar17;
+  if ((uVar11 & 0xffffffff) < (uVar7 & 0xffffffff)) {
     do {
-      cVar4 = (*param_4)(uVar8,uVar15);
-      uVar11 = uVar8;
-      if ((cVar4 != '\0') || (cVar4 = (*param_4)(uVar15,uVar8), cVar4 != '\0')) break;
-      uVar8 = uVar8 + 8;
-      uVar11 = uVar8;
-    } while ((uVar8 & 0xffffffff) < (param_3 & 0xffffffff));
+      bVar5 = (*in_r6)((MaterialMemory *)uVar11,(MaterialMemory *)uVar17);
+      uVar14 = uVar11;
+      if ((bVar5) || (bVar5 = (*in_r6)((MaterialMemory *)uVar17,(MaterialMemory *)uVar11), bVar5))
+      break;
+      uVar11 = uVar11 + 8;
+      uVar14 = uVar11;
+    } while ((uVar11 & 0xffffffff) < (uVar7 & 0xffffffff));
   }
   do {
-    uVar6 = uVar8;
-    if ((uVar11 & 0xffffffff) < (param_3 & 0xffffffff)) {
+    uVar9 = uVar11;
+    if ((uVar14 & 0xffffffff) < (uVar7 & 0xffffffff)) {
       do {
-        cVar4 = (*param_4)(uVar13,uVar11);
-        uVar8 = uVar6;
-        if (cVar4 == '\0') {
-          cVar4 = (*param_4)(uVar11,uVar13);
-          if (cVar4 != '\0') break;
-          puVar12 = (undefined8 *)uVar11;
-          uVar8 = uVar6 + 8;
-          puVar9 = (undefined8 *)uVar6;
-          uVar5 = *puVar9;
-          *(undefined4 *)puVar9 = *(undefined4 *)puVar12;
-          *(undefined4 *)((int)puVar9 + 4) = *(undefined4 *)((int)puVar12 + 4);
-          *puVar12 = uVar5;
+        pMVar2 = (MaterialMemory *)uVar14;
+        bVar5 = (*in_r6)((MaterialMemory *)uVar16,pMVar2);
+        uVar11 = uVar9;
+        if (!bVar5) {
+          bVar5 = (*in_r6)(pMVar2,(MaterialMemory *)uVar16);
+          if (bVar5) break;
+          uVar11 = uVar9 + 8;
+          pMVar12 = (MaterialMemory *)uVar9;
+          pMVar12->material = pMVar2->material;
+          pMVar12->memory = pMVar2->memory;
+          *pMVar2 = *pMVar12;
         }
-        uVar11 = uVar11 + 8;
-        uVar6 = uVar8;
-      } while ((uVar11 & 0xffffffff) < (param_3 & 0xffffffff));
+        uVar14 = uVar14 + 8;
+        uVar9 = uVar11;
+      } while ((uVar14 & 0xffffffff) < (uVar7 & 0xffffffff));
     }
-    bVar1 = (uVar15 & 0xffffffff) == (param_2 & 0xffffffff);
-    uVar6 = uVar15;
-    if ((param_2 & 0xffffffff) < (uVar15 & 0xffffffff)) {
+    bVar5 = (uVar17 & 0xffffffff) == (uVar6 & 0xffffffff);
+    uVar9 = uVar17;
+    if ((uVar6 & 0xffffffff) < (uVar17 & 0xffffffff)) {
       do {
-        uVar14 = uVar6 - 8;
-        cVar4 = (*param_4)(uVar14,uVar13);
-        if (cVar4 == '\0') {
-          cVar4 = (*param_4)(uVar13,uVar14);
-          if (cVar4 != '\0') break;
-          uVar13 = uVar13 - 8;
-          puVar9 = (undefined8 *)uVar13;
-          uVar5 = *puVar9;
-          *(undefined4 *)puVar9 = *(undefined4 *)(undefined8 *)uVar14;
-          *(undefined4 *)((int)puVar9 + 4) = *(undefined4 *)((int)uVar6 + -4);
-          *(undefined8 *)uVar14 = uVar5;
+        pMVar2 = (MaterialMemory *)(uVar9 - 8);
+        bVar5 = (*in_r6)(pMVar2,(MaterialMemory *)uVar16);
+        if (!bVar5) {
+          bVar5 = (*in_r6)((MaterialMemory *)uVar16,pMVar2);
+          if (bVar5) break;
+          uVar16 = uVar16 - 8;
+          pMVar12 = (MaterialMemory *)uVar16;
+          pMVar12->material = pMVar2->material;
+          pMVar12->memory = *(int *)((int)uVar9 + -4);
+          *pMVar2 = *pMVar12;
         }
-        uVar15 = uVar15 - 8;
-        uVar6 = uVar14;
-      } while ((param_2 & 0xffffffff) < (uVar15 & 0xffffffff));
-      bVar1 = (uVar15 & 0xffffffff) == (param_2 & 0xffffffff);
+        uVar17 = uVar17 - 8;
+        uVar9 = uVar9 - 8;
+      } while ((uVar6 & 0xffffffff) < (uVar17 & 0xffffffff));
+      bVar5 = (uVar17 & 0xffffffff) == (uVar6 & 0xffffffff);
     }
-    puVar9 = (undefined8 *)uVar11;
-    puVar12 = (undefined8 *)uVar13;
-    if (bVar1) {
-      puVar10 = (undefined8 *)uVar8;
-      if ((uVar11 & 0xffffffff) == (param_3 & 0xffffffff)) {
-        *puVar3 = puVar12;
-        puVar3[1] = puVar10;
-        __restgprlr_23(puVar3);
-        return;
+    puVar15 = (undefined8 *)uVar14;
+    puVar18 = (undefined8 *)uVar16;
+    if (bVar5) {
+      puVar13 = (undefined8 *)uVar11;
+      if ((uVar14 & 0xffffffff) == (uVar7 & 0xffffffff)) {
+        *puVar4 = puVar18;
+        puVar4[1] = puVar13;
+        pVar3 = (pair<MaterialMemory_*,MaterialMemory_*>)__restgprlr_23(puVar4);
+        return pVar3;
       }
-      if ((uVar8 & 0xffffffff) != (uVar11 & 0xffffffff)) {
-        uVar5 = *puVar12;
-        *(undefined4 *)puVar12 = *(undefined4 *)puVar10;
-        *(undefined4 *)((int)puVar12 + 4) = *(undefined4 *)((int)puVar10 + 4);
-        *puVar10 = uVar5;
+      if ((uVar11 & 0xffffffff) != (uVar14 & 0xffffffff)) {
+        uVar8 = *puVar18;
+        *(undefined4 *)puVar18 = *(undefined4 *)puVar13;
+        *(undefined4 *)((int)puVar18 + 4) = *(undefined4 *)((int)puVar13 + 4);
+        *puVar13 = uVar8;
       }
-      uVar8 = uVar8 + 8;
-      uVar5 = *puVar12;
-      *(undefined4 *)puVar12 = *(undefined4 *)puVar9;
-      *(undefined4 *)((int)puVar12 + 4) = *(undefined4 *)((int)puVar9 + 4);
-      *puVar9 = uVar5;
       uVar11 = uVar11 + 8;
-      uVar13 = uVar13 + 8;
+      uVar8 = *puVar18;
+      *(undefined4 *)puVar18 = *(undefined4 *)puVar15;
+      *(undefined4 *)((int)puVar18 + 4) = *(undefined4 *)((int)puVar15 + 4);
+      *puVar15 = uVar8;
+      uVar14 = uVar14 + 8;
+      uVar16 = uVar16 + 8;
     }
     else {
-      uVar6 = uVar15 - 8;
-      puVar10 = (undefined8 *)uVar6;
-      if ((uVar11 & 0xffffffff) == (param_3 & 0xffffffff)) {
-        uVar13 = uVar13 - 8;
-        puVar9 = (undefined8 *)uVar13;
-        if ((uVar6 & 0xffffffff) != (uVar13 & 0xffffffff)) {
-          uVar5 = *puVar10;
-          *(undefined4 *)puVar10 = *(undefined4 *)puVar9;
-          *(undefined4 *)((int)puVar10 + 4) = *(undefined4 *)((int)puVar12 + -4);
-          *puVar9 = uVar5;
+      uVar9 = uVar17 - 8;
+      puVar13 = (undefined8 *)uVar9;
+      if ((uVar14 & 0xffffffff) == (uVar7 & 0xffffffff)) {
+        uVar16 = uVar16 - 8;
+        puVar15 = (undefined8 *)uVar16;
+        if ((uVar9 & 0xffffffff) != (uVar16 & 0xffffffff)) {
+          uVar8 = *puVar13;
+          *(undefined4 *)puVar13 = *(undefined4 *)puVar15;
+          *(undefined4 *)((int)puVar13 + 4) = *(undefined4 *)((int)puVar18 + -4);
+          *puVar15 = uVar8;
         }
-        uVar8 = uVar8 - 8;
-        puVar10 = (undefined8 *)uVar8;
-        uVar5 = *puVar9;
-        *(undefined4 *)puVar9 = *(undefined4 *)puVar10;
-        *(undefined4 *)((int)puVar12 + -4) = *(undefined4 *)((int)puVar10 + 4);
-        *puVar10 = uVar5;
-        uVar15 = uVar6;
+        uVar11 = uVar11 - 8;
+        puVar13 = (undefined8 *)uVar11;
+        uVar8 = *puVar15;
+        *(undefined4 *)puVar15 = *(undefined4 *)puVar13;
+        *(undefined4 *)((int)puVar18 + -4) = *(undefined4 *)((int)puVar13 + 4);
+        *puVar13 = uVar8;
+        uVar17 = uVar9;
       }
       else {
-        uVar5 = *puVar9;
-        *(undefined4 *)puVar9 = *(undefined4 *)puVar10;
-        *(undefined4 *)((int)puVar9 + 4) = *(undefined4 *)((int)uVar15 + -4);
-        *puVar10 = uVar5;
-        uVar15 = uVar6;
-        uVar11 = uVar11 + 8;
+        uVar8 = *puVar15;
+        *(undefined4 *)puVar15 = *(undefined4 *)puVar13;
+        *(undefined4 *)((int)puVar15 + 4) = *(undefined4 *)((int)uVar17 + -4);
+        *puVar13 = uVar8;
+        uVar17 = uVar9;
+        uVar14 = uVar14 + 8;
       }
     }
   } while( true );
 }
 
 
-// 82755800  std::_Sort<MaterialMemory_*,int,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3771)
+// 82755800  _Sort<MaterialMemory_*,int,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3771)
 
-void std___Sort<MaterialMemory_*,int,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>
-               (undefined8 param_1,ulonglong param_2,ulonglong param_3,undefined8 param_4)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void std::_Sort<MaterialMemory_*,int,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>
+               (MaterialMemory *param_1,MaterialMemory *param_2,int param_3,
+               _func___cdecl_bool_MaterialMemory_ptr_MaterialMemory_ptr *param_4)
 
 {
-  ulonglong uVar1;
-  int iVar2;
+  MaterialMemory *pMVar1;
+  ulonglong uVar2;
+  int iVar4;
   ulonglong uVar3;
-  ulonglong uVar4;
-  int iVar5;
-  uint local_40;
-  uint local_3c;
+  ulonglong uVar5;
+  int iVar6;
+  MaterialMemory *pMVar7;
+  MaterialMemory local_40 [8];
   
-  uVar1 = __savegprlr_26();
-  iVar2 = (int)param_2 - (int)uVar1;
+  uVar3 = (ulonglong)param_3;
+  uVar2 = (ulonglong)(int)param_2;
+  pMVar1 = (MaterialMemory *)__savegprlr_26(param_1);
+  pMVar7 = (MaterialMemory *)uVar2;
+  iVar4 = (int)pMVar7 - (int)pMVar1;
   do {
-    iVar2 = iVar2 >> 3;
-    if (iVar2 < 0x21) {
+    iVar4 = iVar4 >> 3;
+    if (iVar4 < 0x21) {
 LAB_827558b8:
-      if (1 < iVar2) {
-        std___Insertion_sort1<MaterialMemory_*,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&),MaterialMemory>
-                  (uVar1,param_2,param_4,0);
+      if (1 < iVar4) {
+        _Insertion_sort1<MaterialMemory_*,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&),MaterialMemory>
+                  (pMVar1,pMVar7,param_4,(MaterialMemory *)0x0);
       }
       __restgprlr_26();
       return;
     }
-    iVar5 = (int)param_3;
-    if (iVar5 < 1) {
-      if (0x20 < iVar2) {
-        if (1 < iVar2) {
-          std___Make_heap<MaterialMemory_*,int,MaterialMemory,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>
-                    (uVar1,param_2,param_4,0,0);
+    pMVar7 = (MaterialMemory *)uVar2;
+    iVar6 = (int)uVar3;
+    if (iVar6 < 1) {
+      if (0x20 < iVar4) {
+        if (1 < iVar4) {
+          _Make_heap<MaterialMemory_*,int,MaterialMemory,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>
+                    (pMVar1,pMVar7,param_4,(int *)0x0,(MaterialMemory *)0x0);
         }
-        std___Sort_heap<MaterialMemory_*,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>
-                  (uVar1,param_2,param_4);
+        _Sort_heap<MaterialMemory_*,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>
+                  (pMVar1,pMVar7,param_4);
         __restgprlr_26();
         return;
       }
       goto LAB_827558b8;
     }
-    std___Unguarded_partition<MaterialMemory_*,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>
-              (&local_40,uVar1,param_2,param_4);
-    param_3 = (longlong)(iVar5 >> 1) + (ulonglong)(iVar5 < 0 && (param_3 & 1) != 0);
-    param_3 = (longlong)((int)param_3 >> 1) + (ulonglong)((int)param_3 < 0 && (param_3 & 1) != 0) +
-              param_3;
-    uVar4 = (ulonglong)local_3c;
-    uVar3 = (ulonglong)local_40;
-    if ((int)(local_40 - (int)uVar1 & 0xfffffff8) < (int)((int)param_2 - local_3c & 0xfffffff8)) {
-      std___Sort<MaterialMemory_*,int,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>
-                (uVar1,uVar3,param_3,param_4);
-      uVar1 = uVar4;
-      uVar3 = param_2;
+    _Unguarded_partition<MaterialMemory_*,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>
+              (local_40,pMVar1,(_func___cdecl_bool_MaterialMemory_ptr_MaterialMemory_ptr *)pMVar7);
+    iVar4 = local_40[0].memory;
+    uVar3 = (longlong)(iVar6 >> 1) + (ulonglong)(iVar6 < 0 && (uVar3 & 1) != 0);
+    uVar3 = (longlong)((int)uVar3 >> 1) + (ulonglong)((int)uVar3 < 0 && (uVar3 & 1) != 0) + uVar3;
+    uVar5 = ZEXT48(local_40[0].material);
+    if ((int)((int)local_40[0].material - (int)pMVar1 & 0xfffffff8U) <
+        (int)((int)pMVar7 - local_40[0].memory & 0xfffffff8U)) {
+      _Sort<MaterialMemory_*,int,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>
+                (pMVar1,(MaterialMemory *)local_40[0].material,(int)uVar3,param_4);
+      uVar5 = uVar2;
+      pMVar1 = (MaterialMemory *)iVar4;
     }
     else {
-      std___Sort<MaterialMemory_*,int,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>
-                (uVar4,param_2,param_3,param_4);
+      _Sort<MaterialMemory_*,int,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>
+                ((MaterialMemory *)local_40[0].memory,pMVar7,(int)uVar3,param_4);
     }
-    iVar2 = (int)uVar3 - (int)uVar1;
-    param_2 = uVar3;
+    pMVar7 = (MaterialMemory *)uVar5;
+    iVar4 = (int)pMVar7 - (int)pMVar1;
+    uVar2 = uVar5;
   } while( true );
 }
 

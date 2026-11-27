@@ -2,51 +2,56 @@
 
 // 827D0738  CL_Demo_InitMemoryFileHandlerSystem  (client_demo/cl_demo_filesystem.cpp:54)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void CL_Demo_InitMemoryFileHandlerSystem(void)
 
 {
-  DAT_8484f5a0 = 0;
-  DAT_8484f5a4 = 0;
-  DAT_8484f5a8 = 0;
-  DAT_8484f5ac = 0;
+  s_memoryFileHandler.ptr = (uchar *)0x0;
+  s_memoryFileHandler.size = 0;
+  s_memoryFileHandler.offset = 0;
+  s_memoryFileHandler.active = 0;
   return;
 }
 
 
 // 827D0758  CL_Demo_SetMemoryFileHandlerSystemActive  (client_demo/cl_demo_filesystem.cpp:66)
 
-void CL_Demo_SetMemoryFileHandlerSystemActive(undefined4 param_1)
+void CL_Demo_SetMemoryFileHandlerSystemActive(int param_1)
 
 {
-  DAT_8484f5ac = param_1;
+  s_memoryFileHandler.active = param_1;
   return;
 }
 
 
 // 827D0768  CL_Demo_AllocateDemoDownloadMemory  (client_demo/cl_demo_filesystem.cpp:78)
 
-void CL_Demo_AllocateDemoDownloadMemory(void)
+void CL_Demo_AllocateDemoDownloadMemory(int param_1)
 
 {
-  undefined8 uVar1;
-  char cVar2;
+  uint uVar1;
+  bool bVar2;
   
-  uVar1 = __savegprlr_28();
-  cVar2 = Sys_IsMainThread();
-  if (cVar2 == '\0') {
-    MyAssertHandler(0xffffffff821dc678,0x4f,0,0xffffffff82000f98,0xffffffff82010b48);
+  uVar1 = __savegprlr_28(param_1);
+  bVar2 = Sys_IsMainThread();
+  if (!bVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_filesystem.cpp"
+                    ,0x4f,0,"%s");
   }
   if (0x9fffff < (int)uVar1) {
-    MyAssertHandler(0xffffffff821dc678,0x50,0,0xffffffff82000f98,0xffffffff821dc654);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_filesystem.cpp"
+                    ,0x50,0,"%s");
   }
-  if (DAT_8484f5a0 != 0) {
-    MyAssertHandler(0xffffffff821dc678,0x51,0,0xffffffff82000f98,0xffffffff821dc634);
+  if (s_memoryFileHandler.ptr != (uchar *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_filesystem.cpp"
+                    ,0x51,0,"%s");
   }
-  PMem_BeginAlloc(PTR_s__demoDownloadBuffer_829a358c,0);
-  DAT_8484f5a0 = PMem_Alloc_NoDebug(uVar1,4,4);
-  PMem_EndAlloc(PTR_s__demoDownloadBuffer_829a358c,0);
-  DAT_8484f5a8 = 0;
-  DAT_8484f5a4 = (int)uVar1;
+  PMem_BeginAlloc(g_demoDownloadBufferName,0);
+  s_memoryFileHandler.ptr = PMem_Alloc_NoDebug(uVar1,4,4);
+  PMem_EndAlloc(g_demoDownloadBufferName,0);
+  s_memoryFileHandler.offset = 0;
+  s_memoryFileHandler.size = uVar1;
   __restgprlr_28();
   return;
 }
@@ -54,155 +59,167 @@ void CL_Demo_AllocateDemoDownloadMemory(void)
 
 // 827D0858  CL_Demo_DeallocateDemoDownloadMemory  (client_demo/cl_demo_filesystem.cpp:99)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void CL_Demo_DeallocateDemoDownloadMemory(void)
 
 {
-  if (DAT_8484f5a0 == 0) {
-    MyAssertHandler(0xffffffff821dc678,100,0,0xffffffff82000f98,0xffffffff821dc6c8);
+  if (s_memoryFileHandler.ptr == (uchar *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_filesystem.cpp"
+                    ,100,0,"%s");
   }
-  PMem_Free(PTR_s__demoDownloadBuffer_829a358c,0);
-  DAT_8484f5a0 = 0;
-  DAT_8484f5a4 = 0;
+  PMem_Free(g_demoDownloadBufferName,0);
+  s_memoryFileHandler.ptr = (uchar *)0x0;
+  s_memoryFileHandler.size = 0;
   return;
 }
 
 
 // 827D08D8  CL_Demo_IsDemoDownloadMemoryAllocated  (client_demo/cl_demo_filesystem.cpp:114)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 bool CL_Demo_IsDemoDownloadMemoryAllocated(void)
 
 {
-  return DAT_8484f5a0 != 0;
+  return (bool)('\x01' - (s_memoryFileHandler.ptr == (uchar *)0x0));
 }
 
 
 // 827D08F0  CL_Demo_GetAllocatedDemoDownloadBuffer  (client_demo/cl_demo_filesystem.cpp:126)
 
-undefined4 CL_Demo_GetAllocatedDemoDownloadBuffer(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+uchar * CL_Demo_GetAllocatedDemoDownloadBuffer(void)
 
 {
-  return DAT_8484f5a0;
+  return s_memoryFileHandler.ptr;
 }
 
 
 // 827D0900  CL_Demo_OpenFileForWrite  (client_demo/cl_demo_filesystem.cpp:138)
 
-void CL_Demo_OpenFileForWrite(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+void * CL_Demo_OpenFileForWrite(int param_1,char *param_2,char *param_3)
 
 {
-  undefined8 uVar1;
-  char cVar5;
-  undefined8 uVar2;
-  char *pcVar3;
-  int iVar4;
+  int iVar1;
+  bool bVar4;
+  void *pvVar2;
+  MemcardError *pMVar3;
   
-  uVar1 = __savegprlr_28();
-  cVar5 = Memcard_IsDeviceSelected();
-  if (cVar5 == '\0') {
-    Com_PrintWarning(0xe,0xffffffff821dc750);
-    __restgprlr_28(0);
-    return;
+  iVar1 = __savegprlr_28(param_1);
+  bVar4 = Memcard_IsDeviceSelected(iVar1);
+  if (!bVar4) {
+    Com_PrintWarning(0xe,"No memcard device selected. Client demo (replay) will not be written.\n");
+    pvVar2 = (void *)__restgprlr_28(0);
+    return pvVar2;
   }
   R_BeginRemoteScreenUpdate();
-  uVar2 = OpenContextFile(param_2,param_3,4,uVar1);
+  pvVar2 = OpenContextFile(param_2,param_3,MEMCARD_WRITE_DEMO,iVar1);
   R_EndRemoteScreenUpdate();
-  pcVar3 = (char *)Memcard_GetOpenError();
-  if (*pcVar3 != '\0') {
-    iVar4 = Memcard_GetOpenError();
-    Com_PrintError(0xe,0xffffffff821dc71c,param_2,*(undefined4 *)(iVar4 + 8));
-    __restgprlr_28(0);
-    return;
+  pMVar3 = Memcard_GetOpenError();
+  if (pMVar3->isError != false) {
+    Memcard_GetOpenError();
+    Com_PrintError(0xe,"Unable to open file %s for write due to error %s\n");
+    pvVar2 = (void *)__restgprlr_28(0);
+    return pvVar2;
   }
-  DAT_8484f5b0 = DAT_8484f5b0 + 1;
-  if (*(char *)(DAT_8484f0c0 + 0xc) != '\0') {
-    Com_Printf(0xe,0xffffffff821dc6e8,uVar1,param_2,param_3,uVar2);
+  g_demoHandleCount = g_demoHandleCount + 1;
+  if ((cl_demo_log->current).enabled != false) {
+    Com_Printf(0xe,"CL_Demo_OpenFileForWrite( %d, %s, %s ) = %08x (%d)\n");
   }
-  __restgprlr_28(uVar2);
-  return;
+  pvVar2 = (void *)__restgprlr_28(pvVar2);
+  return pvVar2;
 }
 
 
 // 827D1878  CL_Demo_Write  (client_demo/cl_demo_filesystem.cpp:212)
 
-void CL_Demo_Write(undefined8 param_1,size_t param_2,undefined8 param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void CL_Demo_Write(void *param_1,int param_2,int param_3)
 
 {
-  int iVar1;
-  void *_Src;
-  void *pvVar2;
-  char cVar3;
-  size_t _Size;
-  int *piVar4;
+  clientConnection_t *pcVar1;
+  bool bVar2;
+  int iVar3;
+  bool *pbVar4;
+  int *piVar5;
   
-  _Src = (void *)__savegprlr_24();
-  pvVar2 = (void *)CL_GetLocalClientConnection(param_3);
-  if (*(int *)((int)pvVar2 + 0x4024c) != 0) {
-    piVar4 = (int *)((int)pvVar2 + 0x54204);
-    iVar1 = *piVar4;
-    if (0x7fff < (int)(iVar1 + param_2)) {
-      _Size = 0x7fff - iVar1;
-      if (0 < (int)_Size) {
-        memcpy((void *)((int)pvVar2 +
-                       (uint)*(byte *)((int)pvVar2 + 0x54208) * 0x8000 + iVar1 + 0x44204),_Src,_Size
-              );
-        _Src = (void *)(_Size + (int)_Src);
-        param_2 = param_2 - _Size;
-        *piVar4 = _Size + *piVar4;
+  __savegprlr_24(param_1);
+  pcVar1 = CL_GetLocalClientConnection(param_3);
+  if ((pcVar1->clientDemo).demoFileHandle != (void *)0x0) {
+    piVar5 = &(pcVar1->clientDemo).bufferIndex;
+    if (0x7fff < *piVar5 + param_2) {
+      iVar3 = 0x7fff - *piVar5;
+      if (0 < iVar3) {
+        memcpy();
+        param_2 = param_2 - iVar3;
+        *piVar5 = iVar3 + *piVar5;
       }
-      cVar3 = CL_Demo_FlushToHardDrive
-                        ((int)pvVar2 + (uint)*(byte *)((int)pvVar2 + 0x54208) * 0x8000 + 0x44204,
-                         *piVar4,param_3,0);
-      *(char *)((int)pvVar2 + 0x54208) = *(char *)((int)pvVar2 + 0x54208) == '\0';
-      if (cVar3 == '\0') {
+      pbVar4 = &(pcVar1->clientDemo).currentActiveBufferFlag;
+      bVar2 = CL_Demo_FlushToHardDrive
+                        ((pcVar1->clientDemo).buffer + (pcVar1->clientDemo).currentActiveBufferFlag,
+                         *piVar5,param_3,false);
+      *pbVar4 = *pbVar4 == false;
+      if (!bVar2) {
         CL_Demo_End(param_3);
         __restgprlr_24();
         return;
       }
     }
-    if ((int)param_2 < 1) {
-      MyAssertHandler(0xffffffff821dc678,0xfc,0,0xffffffff82000f98,0xffffffff82034a78);
+    if (param_2 < 1) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_filesystem.cpp"
+                      ,0xfc,0,"%s");
     }
-    pvVar2 = memcpy((void *)((int)pvVar2 +
-                            *piVar4 + (uint)*(byte *)((int)pvVar2 + 0x54208) * 0x8000 + 0x44204),
-                    _Src,param_2);
-    *piVar4 = param_2 + *piVar4;
+    memcpy();
+    *piVar5 = param_2 + *piVar5;
   }
-  __restgprlr_24(pvVar2);
+  __restgprlr_24();
   return;
 }
 
 
 // 827D09F0  CL_Demo_ReachedFileSizeLimit  (client_demo/cl_demo_filesystem.cpp:292)
 
-longlong CL_Demo_ReachedFileSizeLimit(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+bool CL_Demo_ReachedFileSizeLimit(LocalClientNum_t param_1)
 
 {
-  int iVar1;
+  uint uVar1;
+  clientConnection_t *pcVar2;
   
-  iVar1 = CL_GetLocalClientConnection();
-  return (longlong)((int)*(uint *)(iVar1 + 0x5420c) >> 0x1f) +
-         (ulonglong)(0x9bffff < *(uint *)(iVar1 + 0x5420c));
+  pcVar2 = CL_GetLocalClientConnection(param_1);
+  uVar1 = (pcVar2->clientDemo).bytesWritten;
+  return (bool)((char)((int)uVar1 >> 0x1f) + (0x9bffff < uVar1));
 }
 
 
 // 827D19D8  CL_Demo_FlushToHardDriveAndEndDemo  (client_demo/cl_demo_filesystem.cpp:311)
 
-void CL_Demo_FlushToHardDriveAndEndDemo(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void CL_Demo_FlushToHardDriveAndEndDemo(LocalClientNum_t param_1)
 
 {
-  undefined8 uVar1;
-  int iVar2;
-  byte *pbVar3;
+  LocalClientNum_t LVar1;
+  clientConnection_t *pcVar2;
+  int *piVar3;
+  bool *pbVar4;
   
-  uVar1 = __savegprlr_28();
-  iVar2 = CL_GetLocalClientConnection();
-  Com_PrintError(0xe,0xffffffff821dcacc);
-  pbVar3 = (byte *)(iVar2 + 0x54208);
-  CL_Demo_FlushToHardDrive
-            ((uint)*pbVar3 * 0x8000 + iVar2 + 0x44204,*(undefined4 *)(iVar2 + 0x54204),uVar1,1);
-  *(undefined4 *)(iVar2 + 0x54204) = 0;
-  *pbVar3 = *pbVar3 == 0;
-  CL_Demo_End(uVar1);
+  LVar1 = __savegprlr_28(param_1);
+  pcVar2 = CL_GetLocalClientConnection(LVar1);
+  Com_PrintError(0xe,"We have reached the max file size of a demo.\n");
+  pbVar4 = &(pcVar2->clientDemo).currentActiveBufferFlag;
+  piVar3 = &(pcVar2->clientDemo).bufferIndex;
+  CL_Demo_FlushToHardDrive((pcVar2->clientDemo).buffer + *pbVar4,*piVar3,LVar1,true);
+  *piVar3 = 0;
+  *pbVar4 = *pbVar4 == false;
+  CL_Demo_End(LVar1);
   __restgprlr_28();
   return;
 }
@@ -210,165 +227,180 @@ void CL_Demo_FlushToHardDriveAndEndDemo(void)
 
 // 827D0A30  CL_Demo_FlushToHardDrive  (client_demo/cl_demo_filesystem.cpp:336)
 
-void CL_Demo_FlushToHardDrive(undefined8 param_1,undefined8 param_2,undefined8 param_3,uint param_4)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+bool CL_Demo_FlushToHardDrive(void *param_1,int param_2,LocalClientNum_t param_3,bool param_4)
 
 {
-  undefined8 uVar1;
-  int iVar2;
-  BOOL BVar3;
-  DWORD DVar4;
-  char *pcVar5;
-  int iVar6;
-  DWORD local_40 [16];
+  void *pvVar1;
+  clientConnection_t *pcVar2;
+  int iVar3;
+  undefined1 uVar5;
+  MemcardError *pMVar4;
+  uint uVar6;
+  int *piVar7;
+  _OVERLAPPED *p_Var8;
+  void **ppvVar9;
+  ulong local_40 [16];
   
-  uVar1 = __savegprlr_27();
-  iVar2 = CL_GetLocalClientConnection(param_3);
-  BVar3 = GetOverlappedResult(*(HANDLE *)(iVar2 + 0x4024c),(LPOVERLAPPED)(iVar2 + 0x54210),local_40,
-                              param_4 & 0xff);
-  if (BVar3 == 0) {
-    DVar4 = MemCard_GetLastError();
-    Com_PrintError(0xe,0xffffffff821dc7c4,DVar4);
-    *(undefined1 *)(iVar2 + 0x54209) = 1;
-    *(undefined4 *)(iVar2 + 0x54204) = 0;
-    __restgprlr_27(0);
-    return;
+  uVar6 = (uint)param_4;
+  pvVar1 = (void *)__savegprlr_27(param_1);
+  pcVar2 = CL_GetLocalClientConnection(param_3);
+  ppvVar9 = &(pcVar2->clientDemo).demoFileHandle;
+  p_Var8 = &(pcVar2->clientDemo).overlapped;
+  iVar3 = GetOverlappedResult(*ppvVar9,p_Var8,local_40,uVar6 & 0xff);
+  if (iVar3 == 0) {
+    MemCard_GetLastError();
+    Com_PrintError(0xe,"Unable to write demo file due to error %d\n");
+    (pcVar2->clientDemo).fileWriteFailed = true;
+    (pcVar2->clientDemo).bufferIndex = 0;
+    uVar5 = __restgprlr_27(0);
+    return (bool)uVar5;
   }
-  *(int *)(iVar2 + 0x5420c) = *(int *)(iVar2 + 0x5420c) + local_40[0];
-  WriteToMemoryCardFileAsync
-            (*(undefined4 *)(iVar2 + 0x4024c),uVar1,param_2,(LPOVERLAPPED)(iVar2 + 0x54210));
-  pcVar5 = (char *)Memcard_GetWriteError();
-  if (*pcVar5 != '\0') {
-    iVar6 = Memcard_GetOpenError();
-    Com_PrintError(0xe,0xffffffff821dc798,*(undefined4 *)(iVar6 + 8));
-    *(undefined1 *)(iVar2 + 0x54209) = 1;
-    *(undefined4 *)(iVar2 + 0x54204) = 0;
-    __restgprlr_27(0);
-    return;
+  piVar7 = &(pcVar2->clientDemo).bytesWritten;
+  *piVar7 = *piVar7 + local_40[0];
+  WriteToMemoryCardFileAsync(*ppvVar9,pvVar1,param_2,p_Var8);
+  pMVar4 = Memcard_GetWriteError();
+  if (pMVar4->isError != false) {
+    Memcard_GetOpenError();
+    Com_PrintError(0xe,"Unable to write demo file due to error %s\n");
+    (pcVar2->clientDemo).fileWriteFailed = true;
+    (pcVar2->clientDemo).bufferIndex = 0;
+    uVar5 = __restgprlr_27(0);
+    return (bool)uVar5;
   }
-  *(undefined4 *)(iVar2 + 0x54204) = 0;
-  __restgprlr_27(1);
-  return;
+  (pcVar2->clientDemo).bufferIndex = 0;
+  uVar5 = __restgprlr_27(1);
+  return (bool)uVar5;
 }
 
 
 // 827D0B60  CL_Demo_OpenFileForRead  (client_demo/cl_demo_filesystem.cpp:417)
 
-void CL_Demo_OpenFileForRead(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+void * CL_Demo_OpenFileForRead(int param_1,char *param_2,char *param_3)
 
 {
-  undefined8 uVar1;
-  char cVar5;
-  undefined8 uVar2;
-  char *pcVar3;
-  int iVar4;
+  int iVar1;
+  void *pvVar2;
+  bool bVar4;
+  MemcardError *pMVar3;
   
-  uVar1 = __savegprlr_27();
-  if (DAT_8484f5ac != 0) {
-    if (DAT_8484f5a0 == 0) {
-      MyAssertHandler(0xffffffff821dc678,0x1a9,0,0xffffffff82000f98,0xffffffff821dc6c8);
+  iVar1 = __savegprlr_27(param_1);
+  if (s_memoryFileHandler.active != 0) {
+    if (s_memoryFileHandler.ptr == (uchar *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_filesystem.cpp"
+                      ,0x1a9,0,"%s");
     }
-    __restgprlr_27(1);
-    return;
+    pvVar2 = (void *)__restgprlr_27(1);
+    return pvVar2;
   }
-  cVar5 = Memcard_SelectSaveDevice(uVar1,0,0xa00000);
-  if (cVar5 != '\0') {
+  bVar4 = Memcard_SelectSaveDevice(iVar1,false,0xa00000);
+  if (bVar4) {
     R_BeginRemoteScreenUpdate();
-    uVar2 = OpenContextFile(param_2,param_3,5,uVar1);
+    pvVar2 = OpenContextFile(param_2,param_3,MEMCARD_READ_DEMO,iVar1);
     R_EndRemoteScreenUpdate();
-    pcVar3 = (char *)Memcard_GetOpenError();
-    if (*pcVar3 == '\0') {
-      DAT_8484f5b0 = DAT_8484f5b0 + 1;
-      if (*(char *)(DAT_8484f0c0 + 0xc) != '\0') {
-        Com_Printf(0xe,0xffffffff821dc7f0,uVar1,param_2,param_3,uVar2);
+    pMVar3 = Memcard_GetOpenError();
+    if (pMVar3->isError == false) {
+      g_demoHandleCount = g_demoHandleCount + 1;
+      if ((cl_demo_log->current).enabled != false) {
+        Com_Printf(0xe,"CL_Demo_OpenFileForRead( %d, %s, %s ) = %08x (%d)\n");
       }
-      __restgprlr_27(uVar2);
-      return;
+      pvVar2 = (void *)__restgprlr_27(pvVar2);
+      return pvVar2;
     }
-    iVar4 = Memcard_GetOpenError();
-    Com_PrintError(0xe,0xffffffff821dc824,param_2,*(undefined4 *)(iVar4 + 8));
+    Memcard_GetOpenError();
+    Com_PrintError(0xe,"Unable to open file %s for read due to error %s\n");
   }
-  __restgprlr_27(0);
-  return;
+  pvVar2 = (void *)__restgprlr_27(0);
+  return pvVar2;
 }
 
 
 // 827D0C88  CL_Demo_ReadInternal  (client_demo/cl_demo_filesystem.cpp:485)
 
-void CL_Demo_ReadInternal(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+int CL_Demo_ReadInternal(void *param_1,void *param_2,int param_3)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
-  undefined8 uVar3;
-  undefined1 local_40;
-  undefined4 local_38;
+  void *pvVar1;
+  int iVar2;
+  uint uVar3;
+  longlong lVar4;
+  MemcardError local_40 [5];
   
-  uVar1 = __savegprlr_28();
-  if (DAT_8484f5ac != 0) {
-    memcpy((void *)param_2,(void *)(DAT_8484f5a8 + DAT_8484f5a0),(size_t)param_3);
-    DAT_8484f5a8 = DAT_8484f5a8 + (size_t)param_3;
-    if (*(char *)(DAT_8484f0c0 + 0xc) != '\0') {
-      Com_BlockChecksumKey32(param_2,param_3,0);
-      Com_Printf(0xe,0xffffffff821dc8c8,uVar1,param_2,param_3,param_3,DAT_8484f5a0,DAT_8484f5a8);
+  lVar4 = (longlong)param_3;
+  pvVar1 = (void *)__savegprlr_28(param_1);
+  uVar3 = (uint)lVar4;
+  if (s_memoryFileHandler.active != 0) {
+    memcpy();
+    s_memoryFileHandler.offset = s_memoryFileHandler.offset + uVar3;
+    if ((cl_demo_log->current).enabled != false) {
+      Com_BlockChecksumKey32(param_2,uVar3,0);
+      Com_Printf(0xe,"CL_Demo_ReadInternal( %08x, %p, %d ) = %d (memory %p %d) (crc 0x%08x)\n");
     }
-    __restgprlr_28(param_3);
-    return;
+    iVar2 = __restgprlr_28(lVar4);
+    return iVar2;
   }
-  uVar2 = ReadFromMemoryCard(uVar1,param_2);
-  if (local_40 != '\0') {
-    Com_PrintError(10,0xffffffff821dc898,local_38);
-    __restgprlr_28(0);
-    return;
+  iVar2 = ReadFromMemoryCard(pvVar1,param_2,uVar3,local_40);
+  if (local_40[0].isError != false) {
+    Com_PrintError(10,"Couldn\'t read from demo file due to error %s\n");
+    iVar2 = __restgprlr_28(0);
+    return iVar2;
   }
-  if (*(char *)(DAT_8484f0c0 + 0xc) != '\0') {
-    uVar3 = Com_BlockChecksumKey32(param_2,param_3,0);
-    Com_Printf(0xe,0xffffffff821dc858,uVar1,param_2,param_3,uVar2,uVar3);
+  if ((cl_demo_log->current).enabled != false) {
+    Com_BlockChecksumKey32(param_2,uVar3,0);
+    Com_Printf(0xe,"CL_Demo_ReadInternal( %x, %p, %d ) = %d (file) (crc 0x%08x)\n");
   }
-  __restgprlr_28(uVar2);
-  return;
+  iVar2 = __restgprlr_28(iVar2);
+  return iVar2;
 }
 
 
 // 827D0DC8  CL_Demo_Read  (client_demo/cl_demo_filesystem.cpp:546)
 
-void CL_Demo_Read(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+int CL_Demo_Read(void *param_1,int param_2,int param_3)
 
 {
-  undefined8 uVar1;
+  void *pvVar1;
+  clientConnection_t *pcVar2;
   int iVar3;
-  undefined8 uVar2;
+  clientDemoPlayback_t *pcVar4;
   
-  uVar1 = __savegprlr_28();
-  iVar3 = CL_GetLocalClientConnection(param_3);
-  uVar2 = CL_Demo_ReadInternal(*(undefined4 *)(iVar3 + 0x4024c),uVar1,param_2);
-  iVar3 = CL_Demo_GetPlaybackData();
-  *(int *)(iVar3 + 0x18) = *(int *)(iVar3 + 0x18) + (int)uVar2;
-  if (*(char *)(DAT_8484f0c0 + 0xc) != '\0') {
-    Com_Printf(0xe,0xffffffff821dc928,uVar1,param_2,param_3,uVar2);
+  pvVar1 = (void *)__savegprlr_28(param_1);
+  pcVar2 = CL_GetLocalClientConnection(param_3);
+  iVar3 = CL_Demo_ReadInternal((pcVar2->clientDemo).demoFileHandle,pvVar1,param_2);
+  pcVar4 = CL_Demo_GetPlaybackData();
+  pcVar4->totalBytesRead = pcVar4->totalBytesRead + iVar3;
+  if ((cl_demo_log->current).enabled != false) {
+    Com_Printf(0xe,"CL_Demo_Read( %p, %d, %d ) = %d\n");
   }
-  if ((int)uVar2 != (int)param_2) {
-    Com_Error(1,0xffffffff821dc910);
-    __restgprlr_28(0);
-    return;
+  if (iVar3 != param_2) {
+    Com_Error(ERR_DROP,"EXE_ERR_READING_DEMO");
+    iVar3 = __restgprlr_28(0);
+    return iVar3;
   }
-  __restgprlr_28(uVar2);
-  return;
+  iVar3 = __restgprlr_28(iVar3);
+  return iVar3;
 }
 
 
 // 827D0E80  CL_Demo_CloseFileInternal  (client_demo/cl_demo_filesystem.cpp:578)
 
-void CL_Demo_CloseFileInternal(undefined8 param_1)
+void CL_Demo_CloseFileInternal(void *param_1)
 
 {
-  if (DAT_8484f5ac != 0) {
-    DAT_8484f5a8 = 0;
-    DAT_8484f5ac = 0;
+  if (s_memoryFileHandler.active != 0) {
+    s_memoryFileHandler.offset = 0;
+    s_memoryFileHandler.active = 0;
     return;
   }
-  DAT_8484f5b0 = DAT_8484f5b0 + -1;
-  if (*(char *)(DAT_8484f0c0 + 0xc) != '\0') {
-    Com_Printf(0xe,0xffffffff821dc94c,param_1);
+  g_demoHandleCount = g_demoHandleCount + -1;
+  if ((cl_demo_log->current).enabled != false) {
+    Com_Printf(0xe,"CL_Demo_CloseFileInternal( %08x ) (%d)\n");
   }
   CloseContextFile(param_1);
   return;
@@ -377,7 +409,9 @@ void CL_Demo_CloseFileInternal(undefined8 param_1)
 
 // 827D0F20  CL_Demo_CloseFile  (client_demo/cl_demo_filesystem.cpp:611)
 
-void CL_Demo_CloseFile(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CL_Demo_CloseFile(LocalClientNum_t param_1,void *param_2)
 
 {
   CL_Demo_CloseFileInternal(param_2);
@@ -387,80 +421,84 @@ void CL_Demo_CloseFile(undefined8 param_1,undefined8 param_2)
 
 // 827D0F28  CL_Demo_SeekFile  (client_demo/cl_demo_filesystem.cpp:637)
 
-void CL_Demo_SeekFile(undefined8 param_1,undefined8 param_2,ulonglong param_3)
+int CL_Demo_SeekFile(void *param_1,long param_2,int param_3)
 
 {
-  int iVar1;
-  undefined8 uVar2;
-  BOOL BVar3;
-  DWORD dwMoveMethod;
-  int iVar4;
+  void *pvVar1;
+  char *pcVar2;
+  int iVar3;
+  ulonglong uVar4;
+  ulong uVar5;
   
-  uVar2 = __savegprlr_28();
-  iVar4 = (int)param_2;
-  if (DAT_8484f5ac == 0) {
-    if ((param_3 & 0xffffffff) == 0) {
-      dwMoveMethod = 1;
+  uVar4 = (ulonglong)param_3;
+  pvVar1 = (void *)__savegprlr_28(param_1);
+  if (s_memoryFileHandler.active == 0) {
+    if ((uVar4 & 0xffffffff) == 0) {
+      uVar5 = 1;
     }
-    else if ((param_3 & 0xffffffff) == 1) {
-      dwMoveMethod = 2;
+    else if ((uVar4 & 0xffffffff) == 1) {
+      uVar5 = 2;
     }
     else {
-      if (2 < (param_3 & 0xffffffff)) {
-        if (DAT_84013128 == 0) {
-          uVar2 = va(0xffffffff821dc9c8,param_3);
-          MyAssertHandler(0xffffffff821dc678,0x2b2,0,uVar2);
+      if (2 < (uVar4 & 0xffffffff)) {
+        if (alwaysfails == 0) {
+          pcVar2 = va("Bad origin %i in CL_Demo_SeekFile");
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_filesystem.cpp"
+                          ,0x2b2,0,pcVar2);
         }
-        __restgprlr_28(1);
-        return;
+        iVar3 = __restgprlr_28(1);
+        return iVar3;
       }
-      dwMoveMethod = 0;
+      uVar5 = 0;
     }
-    BVar3 = SetFilePointerEx((HANDLE)uVar2,(LARGE_INTEGER)(longlong)iVar4,(PLARGE_INTEGER)0x0,
-                             dwMoveMethod);
-    if (*(char *)(DAT_8484f0c0 + 0xc) != '\0') {
-      Com_Printf(0xe,0xffffffff821dc974,uVar2,param_2,param_3,BVar3 == 0);
+    iVar3 = SetFilePointerEx(pvVar1,(_LARGE_INTEGER)(longlong)param_2,(_LARGE_INTEGER *)0x0,uVar5);
+    if ((cl_demo_log->current).enabled != false) {
+      Com_Printf(0xe,"CL_Demo_SeekFile( 0x%x, %d, %d ) = %d\n");
     }
-    __restgprlr_28(BVar3 == 0);
-    return;
+    iVar3 = __restgprlr_28(iVar3 == 0);
+    return iVar3;
   }
-  iVar1 = DAT_8484f5a8;
-  if (((param_3 & 0xffffffff) == 0) || (iVar1 = DAT_8484f5a4, (param_3 & 0xffffffff) == 1)) {
-    iVar4 = iVar1 + iVar4;
+  iVar3 = s_memoryFileHandler.offset;
+  if (((uVar4 & 0xffffffff) == 0) || (iVar3 = s_memoryFileHandler.size, (uVar4 & 0xffffffff) == 1))
+  {
+    param_2 = iVar3 + param_2;
   }
-  else if (2 < (param_3 & 0xffffffff)) {
-    if (DAT_84013128 == 0) {
-      uVar2 = va(0xffffffff821dc9c8,param_3);
-      MyAssertHandler(0xffffffff821dc678,0x295,0,uVar2);
+  else if (2 < (uVar4 & 0xffffffff)) {
+    if (alwaysfails == 0) {
+      pcVar2 = va("Bad origin %i in CL_Demo_SeekFile");
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_filesystem.cpp"
+                      ,0x295,0,pcVar2);
     }
-    __restgprlr_28(1);
-    return;
+    iVar3 = __restgprlr_28(1);
+    return iVar3;
   }
-  DAT_8484f5a8 = iVar4;
-  if (*(char *)(DAT_8484f0c0 + 0xc) != '\0') {
-    Com_Printf(0xe,0xffffffff821dc99c,param_2,param_3);
+  s_memoryFileHandler.offset = param_2;
+  if ((cl_demo_log->current).enabled != false) {
+    Com_Printf(0xe,"CL_Demo_SeekFile( <memory>, %d, %d ) = 0\n");
   }
-  __restgprlr_28(0);
-  return;
+  iVar3 = __restgprlr_28(0);
+  return iVar3;
 }
 
 
 // 827D1A60  CL_Demo_DeleteFile  (client_demo/cl_demo_filesystem.cpp:732)
 
-void CL_Demo_DeleteFile(undefined8 param_1,ulonglong param_2)
+void CL_Demo_DeleteFile(int param_1,char *param_2)
 
 {
-  int iVar1;
-  undefined1 auStack_120 [264];
+  void *pvVar1;
+  char acStack_120 [264];
   
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821dc678,0x2e2,0,0xffffffff82000f98,0xffffffff8208e528);
+  if (param_2 == (char *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_filesystem.cpp"
+                    ,0x2e2,0,"%s");
   }
-  Com_sprintf(auStack_120,0x100,0xffffffff821db7f8,param_2);
-  iVar1 = OpenContextFile(auStack_120,0xffffffff821db7e4,0,param_1);
-  if ((iVar1 != 0) ||
-     (iVar1 = OpenContextFile(auStack_120,0xffffffff821db7e4,5,param_1), iVar1 != 0)) {
-    DeleteContextFile();
+  Com_sprintf(acStack_120,0x100,"%s.demo");
+  pvVar1 = OpenContextFile(acStack_120,"GAME_REPLAY_FILE",MEMCARD_READ,param_1);
+  if ((pvVar1 != (void *)0x0) ||
+     (pvVar1 = OpenContextFile(acStack_120,"GAME_REPLAY_FILE",MEMCARD_READ_DEMO,param_1),
+     pvVar1 != (void *)0x0)) {
+    DeleteContextFile(pvVar1);
   }
   return;
 }
@@ -468,10 +506,10 @@ void CL_Demo_DeleteFile(undefined8 param_1,ulonglong param_2)
 
 // 827D10C8  CL_Demo_GetFullName  (client_demo/cl_demo_filesystem.cpp:758)
 
-void CL_Demo_GetFullName(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+void CL_Demo_GetFullName(char *param_1,int param_2,char *param_3,bool param_4)
 
 {
-  Com_sprintf(param_1,param_2,0xffffffff821db7f8,param_3);
+  Com_sprintf(param_1,param_2,"%s.demo");
   return;
 }
 
@@ -487,97 +525,99 @@ bool CL_Demo_IsFileNameValid(char *param_1)
 
 // 827D10F0  CL_Demo_EncodeFileName  (client_demo/cl_demo_filesystem.cpp:781)
 
-void CL_Demo_EncodeFileName(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+void CL_Demo_EncodeFileName(char *param_1,int param_2,int param_3)
 
 {
-  ulonglong uVar1;
-  undefined8 uVar2;
+  undefined8 uVar1;
+  char *pcVar2;
+  int iVar3;
+  longlong lVar4;
   
-  uVar2 = __savegprlr_29();
-  if ((int)param_2 < 0xf) {
-    MyAssertHandler(0xffffffff821dc678,0x30e,0,0xffffffff82000f98,0xffffffff821dc9f8);
+  lVar4 = (longlong)param_2;
+  pcVar2 = (char *)__savegprlr_29(param_1,lVar4,param_3);
+  if ((int)lVar4 < 0xf) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_filesystem.cpp"
+                    ,0x30e,0,"%s");
   }
   uVar1 = TBLr;
-  Com_sprintf(uVar2,param_2,0xffffffff821dc9ec,0x78,(uVar1 & 0xffffffff) % 1000,param_3);
-  __restgprlr_29();
+  iVar3 = Com_sprintf(pcVar2,(int)lVar4,"%c%04x_%08x");
+  __restgprlr_29(iVar3);
   return;
 }
 
 
 // 827D1178  CL_Demo_DecodeFileName  (client_demo/cl_demo_filesystem.cpp:789)
 
-undefined4 CL_Demo_DecodeFileName(char *param_1,int param_2)
+int CL_Demo_DecodeFileName(char *param_1,int param_2)
 
 {
-  undefined4 local_20 [4];
-  
-  local_20[0] = 0;
   if (param_2 < 0xe) {
-    MyAssertHandler(0xffffffff821dc678,0x31a,0,0xffffffff82000f98,0xffffffff821dca08);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_filesystem.cpp"
+                    ,0x31a,0,"%s");
   }
   if (*param_1 == 'x') {
-    sscanf(param_1 + 6,"%08x",local_20);
+    sscanf(param_1 + 6,"%08x");
   }
-  return local_20[0];
+  return 0;
 }
 
 
 // 827D11F8  CL_Demo_EnumInit  (client_demo/cl_demo_filesystem.cpp:814)
 
-void * CL_Demo_EnumInit(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void CL_Demo_EnumInit(void)
 
 {
-  void *pvVar1;
-  
-  DAT_848728cc = 0;
-  pvVar1 = memset(&DAT_8484f5b8,0,0x23300);
-  DAT_848728b8 = 1;
-  DAT_848728b9 = 1;
-  DAT_848728ba = 1;
-  DAT_848728bb = 1;
-  return pvVar1;
+  s_clientDemoEnumInfo.numDevicesEnumerated = 0;
+  memset();
+  s_clientDemoEnumInfo.askForDeviceSelection[0] = true;
+  s_clientDemoEnumInfo.askForDeviceSelection[1] = true;
+  s_clientDemoEnumInfo.askForDeviceSelection[2] = true;
+  s_clientDemoEnumInfo.askForDeviceSelection[3] = true;
+  return;
 }
 
 
 // 827D1260  CL_Demo_CompareFileMetaInformation  (client_demo/cl_demo_filesystem.cpp:846)
 
-longlong CL_Demo_CompareFileMetaInformation(uint *param_1,uint *param_2)
+int CL_Demo_CompareFileMetaInformation(void *param_1,void *param_2)
 
 {
   uint uVar1;
   uint uVar2;
   
-  uVar1 = *param_1;
-  uVar2 = *param_2;
+  uVar1 = *(uint *)param_1;
+  uVar2 = *(uint *)param_2;
   if ((int)uVar1 < (int)uVar2) {
     return 1;
   }
-  return (ulonglong)(uVar1 >> 0x1f) - ((ulonglong)(uVar2 >> 0x1f) + (ulonglong)(uVar2 < uVar1));
+  return -((int)uVar1 >> 0x1f) - ((uint)(uVar2 < uVar1) - ((int)uVar2 >> 0x1f));
 }
 
 
 // 827D1290  CL_Demo_EnumSortInfo  (client_demo/cl_demo_filesystem.cpp:870)
 
-void CL_Demo_EnumSortInfo(int param_1)
+void CL_Demo_EnumSortInfo(clientDemoDeviceEnumInfo_t *param_1)
 
 {
-  if (*(int *)(param_1 + 0x10) == 0) {
+  if (param_1->count == 0) {
     return;
   }
-  qsort((void *)(param_1 + 0x20),0x32,0x2d0,CL_Demo_CompareFileMetaInformation);
+  qsort(param_1->metaInfo,0x32,0x2d0,CL_Demo_CompareFileMetaInformation);
   return;
 }
 
 
 // 827D12B8  CL_Demo_EnumSetFileSizeForIndex  (client_demo/cl_demo_filesystem.cpp:883)
 
-void CL_Demo_EnumSetFileSizeForIndex(int param_1,undefined8 param_2,int param_3)
+void CL_Demo_EnumSetFileSizeForIndex(clientDemoDeviceEnumInfo_t *param_1,void *param_2,int param_3)
 
 {
-  undefined4 uVar1;
+  int iVar1;
   
-  uVar1 = FS_FileGetFileSize(param_2);
-  *(undefined4 *)(param_3 * 0x2d0 + param_1 + 0x2e4) = uVar1;
+  iVar1 = FS_FileGetFileSize(param_2);
+  param_1->metaInfo[param_3].size = iVar1;
   return;
 }
 
@@ -585,15 +625,14 @@ void CL_Demo_EnumSetFileSizeForIndex(int param_1,undefined8 param_2,int param_3)
 // 827D1B20  CL_Demo_EnumUpdateMetaInformation  (client_demo/cl_demo_filesystem.cpp:900)
 
 void CL_Demo_EnumUpdateMetaInformation
-               (undefined8 param_1,longlong param_2,ulonglong param_3,int param_4,undefined8 param_5
-               ,undefined8 param_6,undefined8 param_7,undefined8 param_8)
+               (undefined8 param_1,int param_2,ulonglong param_3,int param_4,undefined8 param_5,
+               undefined8 param_6,undefined8 param_7,undefined8 param_8)
 
 {
   int iVar1;
-  ulonglong uVar2;
-  int iVar3;
-  undefined4 uVar4;
-  longlong lVar5;
+  int iVar2;
+  clientDemoDeviceEnumInfo_t *pcVar3;
+  char *pcVar4;
   int iStack00000038;
   undefined8 in_stack_00000040;
   undefined8 in_stack_00000048;
@@ -601,222 +640,126 @@ void CL_Demo_EnumUpdateMetaInformation
   int in_stack_0000025c;
   int in_stack_00000264;
   int in_stack_00000268;
-  undefined4 in_stack_00000270;
-  undefined4 in_stack_00000274;
+  int in_stack_00000270;
+  int in_stack_00000274;
   int in_stack_00000278;
   int in_stack_0000027c;
-  undefined4 in_stack_00000280;
-  undefined8 in_stack_00000fb8;
+  int in_stack_00000280;
+  ulong64 in_stack_00000fb8;
   
-  __savegprlr_26();
+  iVar2 = __savegprlr_26();
   _iStack00000038 = param_5;
   in_stack_00000040 = param_6;
   in_stack_00000048 = param_7;
   in_stack_00000050 = param_8;
-  uVar2 = CL_Demo_GetDeviceEnumInfo();
-  if ((uVar2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821dc678,0x389,0,0xffffffff82000f98,0xffffffff82021a7c);
+  pcVar3 = CL_Demo_GetDeviceEnumInfo(iVar2);
+  if (pcVar3 == (clientDemoDeviceEnumInfo_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_filesystem.cpp"
+                    ,0x389,0,"%s");
   }
   if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821dc678,0x38a,0,0xffffffff82000f98,0xffffffff820363b8);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_filesystem.cpp"
+                    ,0x38a,0,"%s");
   }
-  lVar5 = param_2 * 0x2d0 + uVar2;
-  I_strncpyz(lVar5 + 0x128,&stack0x0000013c,0x100);
-  I_strncpyz(lVar5 + 0x28,(int)&stack0x00000038 + 4,0x100);
-  iVar1 = (int)lVar5;
-  *(int *)(iVar1 + 0x24) = iStack00000038 - param_4;
-  *(undefined4 *)(iVar1 + 0x20) = in_stack_00000280;
-  *(undefined8 *)(iVar1 + 0x2c8) = in_stack_00000fb8;
-  I_strncpyz(lVar5 + 0x2a8,&stack0x0000023c,0x20);
-  *(undefined4 *)(iVar1 + 0x2d0) = in_stack_00000270;
-  *(undefined4 *)(iVar1 + 0x2d4) = in_stack_00000274;
+  I_strncpyz(pcVar3->metaInfo[param_2].mapName,&stack0x0000013c,0x100);
+  pcVar4 = pcVar3->metaInfo[param_2].gameType;
+  I_strncpyz(pcVar4,(char *)((int)&stack0x00000038 + 4),0x100);
+  pcVar3->metaInfo[param_2].duration = iStack00000038 - param_4;
+  pcVar3->metaInfo[param_2].createTime = in_stack_00000280;
+  pcVar3->metaInfo[param_2].authorXuid = in_stack_00000fb8;
+  I_strncpyz(pcVar3->metaInfo[param_2].authorName,&stack0x0000023c,0x20);
+  pcVar3->metaInfo[param_2].kills = in_stack_00000270;
+  pcVar3->metaInfo[param_2].deaths = in_stack_00000274;
   if (in_stack_0000025c == 0) {
-    *(int *)(iVar1 + 0x2d8) = in_stack_00000278;
-    *(int *)(iVar1 + 0x2dc) = in_stack_0000027c;
+    pcVar3->metaInfo[param_2].ourTeamScore = in_stack_00000278;
+    pcVar3->metaInfo[param_2].otherTeamScore = in_stack_0000027c;
     if (in_stack_00000278 < in_stack_0000027c) {
-      *(undefined4 *)(iVar1 + 0x2e0) = 2;
+      pcVar3->metaInfo[param_2].matchResult = MATCH_RESULT_LOSS;
       goto LAB_827d1d0c;
     }
   }
   else {
     if (in_stack_0000025c == 3) {
       in_stack_0000025c = 2;
-      *(int *)(iVar1 + 0x2d8) = in_stack_00000268;
+      pcVar3->metaInfo[param_2].ourTeamScore = in_stack_00000268;
     }
     else if (in_stack_0000025c == 2) {
-      *(int *)(iVar1 + 0x2d8) = in_stack_00000268;
+      pcVar3->metaInfo[param_2].ourTeamScore = in_stack_00000268;
     }
     else {
-      *(int *)(iVar1 + 0x2d8) = in_stack_00000264;
+      pcVar3->metaInfo[param_2].ourTeamScore = in_stack_00000264;
       in_stack_00000264 = in_stack_00000268;
     }
-    *(int *)(iVar1 + 0x2dc) = in_stack_00000264;
-    iVar3 = I_stricmp(lVar5 + 0x28,0xffffffff821dcafc);
-    if (iVar3 == 0) {
-      *(undefined4 *)(iVar1 + 0x2e0) = 1;
+    pcVar3->metaInfo[param_2].otherTeamScore = in_stack_00000264;
+    iVar2 = I_stricmp(pcVar4,"infect");
+    if (iVar2 == 0) {
+      pcVar3->metaInfo[param_2].matchResult = MATCH_RESULT_WIN;
       if (in_stack_00000268 == 0) {
         if (in_stack_0000025c == 2) {
-          *(undefined4 *)(iVar1 + 0x2e0) = 2;
+          pcVar3->metaInfo[param_2].matchResult = MATCH_RESULT_LOSS;
         }
       }
       else if (in_stack_0000025c != 2) {
-        *(undefined4 *)(iVar1 + 0x2e0) = 2;
+        pcVar3->metaInfo[param_2].matchResult = MATCH_RESULT_LOSS;
       }
       goto LAB_827d1d0c;
     }
-    *(undefined4 *)(iVar1 + 0x2e0) = 0;
-    if (*(int *)(iVar1 + 0x2d8) <= *(int *)(iVar1 + 0x2dc)) {
-      if (*(int *)(iVar1 + 0x2d8) < *(int *)(iVar1 + 0x2dc)) {
-        *(undefined4 *)(iVar1 + 0x2e0) = 2;
+    iVar2 = pcVar3->metaInfo[param_2].ourTeamScore;
+    iVar1 = pcVar3->metaInfo[param_2].otherTeamScore;
+    pcVar3->metaInfo[param_2].matchResult = MATCH_RESULT_DRAW;
+    if (iVar2 <= iVar1) {
+      if (iVar2 < iVar1) {
+        pcVar3->metaInfo[param_2].matchResult = MATCH_RESULT_LOSS;
       }
       goto LAB_827d1d0c;
     }
   }
-  *(undefined4 *)(iVar1 + 0x2e0) = 1;
+  pcVar3->metaInfo[param_2].matchResult = MATCH_RESULT_WIN;
 LAB_827d1d0c:
-  uVar4 = FS_FileGetFileSize(param_3);
-  *(undefined4 *)(iVar1 + 0x2e4) = uVar4;
-  *(undefined1 *)(iVar1 + 0x2e8) = 0;
-  *(undefined1 *)(iVar1 + 0x2e9) = 1;
+  iVar2 = FS_FileGetFileSize((_iobuf *)param_3);
+  pcVar3->metaInfo[param_2].size = iVar2;
+  pcVar3->metaInfo[param_2].corruptFile = false;
+  pcVar3->metaInfo[param_2].exists = true;
   __restgprlr_26();
   return;
 }
 
 
 // 827D1D28  CL_Demo_EnumPopulateMetaInformationForAllFiles  (client_demo/cl_demo_filesystem.cpp:986)
-
-void CL_Demo_EnumPopulateMetaInformationForAllFiles(void)
-
-{
-  int iVar1;
-  bool bVar2;
-  undefined8 uVar3;
-  int iVar5;
-  char cVar8;
-  ulonglong uVar4;
-  int iVar6;
-  undefined4 uVar7;
-  longlong lVar9;
-  char *pcVar10;
-  longlong lVar11;
-  char *pcVar12;
-  
-  __savegprlr_22();
-  lVar9 = -0x50e0;
-  uVar3 = _RtlCheckStack12();
-  lVar9 = ZEXT48(&stack0x00000000) + lVar9;
-  iVar1 = (int)lVar9;
-  *(BADSPACEBASE **)iVar1 = register0x0000000c;
-  iVar5 = CL_Demo_GetDeviceEnumInfo();
-  if ((iVar5 != 0) && (*(char *)(iVar5 + 0x18) == '\0')) {
-    if ((DAT_82aa1c14 == 0) || (cVar8 = CL_IsControllerActive(uVar3), cVar8 == '\0')) {
-      bVar2 = false;
-    }
-    else {
-      bVar2 = true;
-      UI_BeginReadingDeviceUI(0);
-    }
-    pcVar10 = (char *)(iVar5 + 0x2e8);
-    lVar11 = 0;
-    pcVar12 = pcVar10;
-    do {
-      if (pcVar12[1] != '\0') {
-        Com_sprintf(lVar9 + 0xfd0,0x100,0xffffffff821db7f8,pcVar12 + -0xc0);
-        uVar4 = CL_Demo_OpenFileForRead(uVar3,lVar9 + 0xfd0,0xffffffff821db7e4);
-        if ((uVar4 & 0xffffffff) == 0) {
-          *pcVar12 = '\x01';
-        }
-        else {
-          CL_Demo_ReadInternal(uVar4,lVar9 + 0x2060,0x3020);
-          iVar6 = CL_Demo_SeekFile(uVar4,0xfffffffffffffff8,1);
-          if (iVar6 == 0) {
-            CL_Demo_ReadInternal(uVar4,lVar9 + 0xfc4,4);
-            CL_Demo_ReadInternal(uVar4,lVar9 + 0xfc0,4);
-            iVar6 = *(int *)(iVar1 + 0xfc0);
-            if (((((iVar6 < 1) || (1 < iVar6)) || ((int)*(uint *)(iVar1 + 0xfc4) < 0)) ||
-                ((iVar6 != *(int *)(iVar1 + 0x2060) ||
-                 (iVar6 = CL_Demo_SeekFile(uVar4,-8 - (ulonglong)*(uint *)(iVar1 + 0xfc4),1),
-                 iVar6 != 0)))) ||
-               ((iVar6 = CL_Demo_ReadFooterInternalUI
-                                   (uVar4,lVar9 + 0x10d0,*(undefined4 *)(iVar1 + 0xfc0)), iVar6 == 0
-                || (*(int *)(iVar1 + 0x10d8) - *(int *)(iVar1 + 0x10d4) < 0x3e9))))
-            goto LAB_827d1ef4;
-            *(undefined8 *)(iVar1 + 0xfb8) = *(undefined8 *)(iVar1 + 0x2070);
-            memcpy((void *)(iVar1 + 0x58),(void *)(iVar1 + 0x10f8),0xf60);
-            CL_Demo_EnumUpdateMetaInformation
-                      (uVar3,lVar11,uVar4,*(undefined8 *)(iVar1 + 0x10d0),
-                       *(undefined8 *)(iVar1 + 0x10d8),*(undefined8 *)(iVar1 + 0x10e0),
-                       *(undefined8 *)(iVar1 + 0x10e8),*(undefined8 *)(iVar1 + 0x10f0));
-          }
-          else {
-LAB_827d1ef4:
-            *pcVar12 = '\x01';
-            uVar7 = FS_FileGetFileSize(uVar4);
-            *(undefined4 *)(pcVar12 + -4) = uVar7;
-          }
-          CL_Demo_CloseFileInternal(uVar4);
-        }
-      }
-      lVar11 = lVar11 + 1;
-      pcVar12 = pcVar12 + 0x2d0;
-    } while ((int)lVar11 < 0x32);
-    lVar9 = 0x32;
-    do {
-      if ((pcVar10[1] != '\0') && (*pcVar10 != '\0')) {
-        CL_Demo_DeleteFile(uVar3,pcVar10 + -0xc0);
-        *(longlong *)(iVar5 + 8) = (longlong)*(int *)(pcVar10 + -4) + *(longlong *)(iVar5 + 8);
-        memset(pcVar10 + -0x2c8,0,0x2d0);
-        *(int *)(iVar5 + 0x10) = *(int *)(iVar5 + 0x10) + -1;
-      }
-      lVar9 = lVar9 + -1;
-      pcVar10 = pcVar10 + 0x2d0;
-    } while (lVar9 != 0);
-    if (*(int *)(iVar5 + 0x10) != 0) {
-      qsort((void *)(iVar5 + 0x20),0x32,0x2d0,CL_Demo_CompareFileMetaInformation);
-    }
-    *(undefined1 *)(iVar5 + 0x18) = 1;
-    if (bVar2) {
-      UI_EndReadingSaveDeviceUI(0);
-    }
-  }
-  __restgprlr_22();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 827D1FC0  CL_Demo_EnumPopulateMetaInformationForAllFilesReduced  (client_demo/cl_demo_filesystem.cpp:1126)
 
-void CL_Demo_EnumPopulateMetaInformationForAllFilesReduced(void)
+void CL_Demo_EnumPopulateMetaInformationForAllFilesReduced(int param_1)
 
 {
   int iVar1;
-  int iVar2;
+  clientDemoDeviceEnumInfo_t *pcVar2;
   int iVar3;
   char *pcVar4;
-  undefined4 local_40 [16];
   
-  __savegprlr_26();
-  iVar2 = CL_Demo_GetDeviceEnumInfo();
-  if (iVar2 != 0) {
-    iVar1 = *(int *)(iVar2 + 0x10);
+  iVar1 = __savegprlr_26(param_1);
+  pcVar2 = CL_Demo_GetDeviceEnumInfo(iVar1);
+  if (pcVar2 != (clientDemoDeviceEnumInfo_t *)0x0) {
+    iVar1 = pcVar2->count;
     iVar3 = 0;
     if (0 < iVar1) {
-      pcVar4 = (char *)(iVar2 + 0x228);
+      pcVar4 = pcVar2->metaInfo[0].fileName;
       do {
-        local_40[0] = 0;
         if (*pcVar4 == 'x') {
-          sscanf(pcVar4 + 6,"%08x",local_40);
+          sscanf(pcVar4 + 6,"%08x");
         }
         iVar3 = iVar3 + 1;
-        pcVar4[0xc0] = '\0';
-        pcVar4[0xc1] = '\x01';
-        *(undefined4 *)(pcVar4 + -0x208) = local_40[0];
+        pcVar4[0xc0] = false;
+        pcVar4[0xc1] = true;
+        ((clientDemoLocalFileMetaInformation_t *)(pcVar4 + -0x208))->createTime = 0;
         pcVar4 = pcVar4 + 0x2d0;
-        iVar1 = *(int *)(iVar2 + 0x10);
+        iVar1 = pcVar2->count;
       } while (iVar3 < iVar1);
     }
     if (iVar1 != 0) {
-      qsort((void *)(iVar2 + 0x20),0x32,0x2d0,CL_Demo_CompareFileMetaInformation);
+      qsort(pcVar2->metaInfo,0x32,0x2d0,CL_Demo_CompareFileMetaInformation);
     }
   }
   __restgprlr_26();
@@ -826,235 +769,106 @@ void CL_Demo_EnumPopulateMetaInformationForAllFilesReduced(void)
 
 // 827D1300  CL_Demo_EnumUserSignedOut  (client_demo/cl_demo_filesystem.cpp:1148)
 
-void CL_Demo_EnumUserSignedOut(void)
+void CL_Demo_EnumUserSignedOut(int param_1)
 
 {
-  void *pvVar1;
-  int *piVar2;
-  int *piVar3;
-  ulonglong uVar4;
-  int iVar5;
+  ulong uVar1;
+  int iVar2;
+  ulong *puVar3;
+  clientDemoEnumInfo_t *pcVar4;
+  uint uVar5;
   
-  pvVar1 = (void *)__savegprlr_29();
-  piVar3 = &DAT_8484f5b8;
-  (&DAT_848728b8)[(int)pvVar1] = 1;
-  iVar5 = (&DAT_848728bc)[(int)pvVar1];
-  if (iVar5 != 0) {
-    uVar4 = 0;
-    (&DAT_848728bc)[(int)pvVar1] = 0;
-    piVar2 = &DAT_848728bc;
+  iVar2 = __savegprlr_29(param_1);
+  pcVar4 = &s_clientDemoEnumInfo;
+  s_clientDemoEnumInfo.askForDeviceSelection[iVar2] = true;
+  uVar1 = s_clientDemoEnumInfo.selectedDevice[iVar2];
+  if (uVar1 != 0) {
+    uVar5 = 0;
+    s_clientDemoEnumInfo.selectedDevice[iVar2] = 0;
+    puVar3 = s_clientDemoEnumInfo.selectedDevice;
     do {
-      if ((*piVar2 != 0) && (*piVar2 == iVar5)) goto LAB_827d144c;
-      piVar2 = piVar2 + 1;
-    } while ((int)piVar2 < -0x7b78d734);
+      if ((*puVar3 != 0) && (*puVar3 == uVar1)) goto LAB_827d144c;
+      puVar3 = puVar3 + 1;
+    } while ((int)puVar3 < -0x7b78d734);
     do {
-      if (*piVar3 == iVar5) break;
-      piVar3 = piVar3 + 0x2330;
-      uVar4 = uVar4 + 1;
-    } while ((int)piVar3 < -0x7b78d748);
-    if (3 < (uVar4 & 0xffffffff)) {
-      MyAssertHandler(0xffffffff821dc678,0x49f,0,0xffffffff821dca18,uVar4,4);
+      if (pcVar4->deviceEnumInfo[0].deviceID == uVar1) break;
+      pcVar4 = (clientDemoEnumInfo_t *)(pcVar4->deviceEnumInfo + 1);
+      uVar5 = uVar5 + 1;
+    } while ((int)pcVar4 < -0x7b78d748);
+    if (3 < uVar5) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_filesystem.cpp"
+                      ,0x49f,0,
+                      "i doesn\'t index CLIENT_DEMO_ENUM_MAX_DEVICE_COUNT\n\t%i not in [0, %i)");
     }
-    iVar5 = (int)uVar4;
-    if (iVar5 != DAT_848728cc + -1) {
-      memmove(&DAT_8484f5b8 + iVar5 * 0x2330,&DAT_84858278 + iVar5 * 0x2330,
-              ((DAT_848728cc - iVar5) + -1) * 0x8cc0);
+    if (uVar5 != s_clientDemoEnumInfo.numDevicesEnumerated - 1U) {
+      memmove();
     }
-    pvVar1 = memset((void *)(DAT_848728cc * 0x8cc0 + -0x7b7b9708),0,0x8cc0);
-    DAT_848728cc = DAT_848728cc + -1;
+    memset();
+    s_clientDemoEnumInfo.numDevicesEnumerated = s_clientDemoEnumInfo.numDevicesEnumerated + -1;
   }
 LAB_827d144c:
-  __restgprlr_29(pvVar1);
+  __restgprlr_29();
   return;
 }
 
 
 // 827D2070  CL_Demo_EnumFrame  (client_demo/cl_demo_filesystem.cpp:1206)
-
-void CL_Demo_EnumFrame(void)
-
-{
-  bool bVar1;
-  ulonglong uVar2;
-  char cVar8;
-  ulonglong uVar3;
-  int iVar4;
-  int iVar5;
-  int iVar6;
-  char *pcVar7;
-  uint *puVar9;
-  undefined4 local_1f0;
-  undefined1 auStack_1ec [12];
-  undefined1 auStack_1e0 [264];
-  byte local_d8 [56];
-  undefined1 auStack_a0 [16];
-  undefined8 local_90;
-  
-  uVar2 = __savegprlr_24();
-  if (DAT_82aa1a88 != 0) goto LAB_827d246c;
-  cVar8 = Memcard_IsDeviceSelected();
-  puVar9 = &DAT_8484f5b8;
-  if (cVar8 == '\0') {
-    cVar8 = Live_IsSignedIn(uVar2);
-    iVar6 = (int)uVar2;
-    if ((cVar8 == '\0') || (cVar8 = Live_UserIsGuest(uVar2), cVar8 != '\0')) {
-      (&DAT_848728b8)[iVar6] = 1;
-      if (*(int *)((int)&DAT_848728bc + (int)((uVar2 & 0xffffffff) << 2)) != 0) {
-        CL_Demo_EnumUserSignedOut(uVar2);
-        __restgprlr_24();
-        return;
-      }
-      goto LAB_827d246c;
-    }
-    if ((((&DAT_848728b8)[iVar6] == '\0') || (cVar8 = Lobby_IsInLobby(), cVar8 != '\0')) ||
-       (cVar8 = GPad_IsActive(uVar2), cVar8 == '\0')) goto LAB_827d246c;
-    (&DAT_848728b8)[iVar6] = 0;
-    cVar8 = Memcard_SelectSaveDevice(uVar2,0,0xa00000);
-    if (cVar8 == '\0') {
-      Com_PrintWarning(0xe,0xffffffff821dcc20);
-      __restgprlr_24();
-      return;
-    }
-  }
-  if (DAT_848728cc == 4) goto LAB_827d246c;
-  if (DAT_848728cc < 0) {
-    MyAssertHandler(0xffffffff821dc678,0x4fc,0,0xffffffff82000f98,0xffffffff821dcbec);
-  }
-  uVar3 = Memcard_GetSelectedDeviceID(uVar2);
-  iVar6 = (int)((uVar2 & 0xffffffff) << 2);
-  iVar4 = 0;
-  *(int *)((int)&DAT_848728bc + iVar6) = (int)uVar3;
-  if (0 < DAT_848728cc) {
-    do {
-      if ((ulonglong)*puVar9 == (uVar3 & 0xffffffff)) goto LAB_827d246c;
-      iVar4 = iVar4 + 1;
-      puVar9 = puVar9 + 0x2330;
-    } while (iVar4 < DAT_848728cc);
-  }
-  if (DAT_82aa1c14 == 0) {
-LAB_827d224c:
-    bVar1 = false;
-  }
-  else {
-    cVar8 = CL_IsControllerActive(uVar2);
-    bVar1 = true;
-    if (cVar8 == '\0') goto LAB_827d224c;
-  }
-  if (bVar1) {
-    UI_BeginReadingDeviceUI(0);
-  }
-  iVar4 = XContentGetDeviceData(uVar3,auStack_a0);
-  if (iVar4 == 0) {
-    DAT_848728d0 = XContentCalculateSize(0xa00000,0);
-    iVar5 = XContentCreateEnumerator(uVar2,uVar3,1,0,1,0,&local_1f0);
-    iVar4 = DAT_848728cc;
-    if (iVar5 == 0) {
-      iVar6 = DAT_848728cc * 0x8cc0;
-      (&DAT_8484f5b8)[DAT_848728cc * 0x2330] = (int)uVar3;
-      *(undefined8 *)(&DAT_8484f5c0 + iVar6) = local_90;
-      iVar6 = XEnumerate(local_1f0,auStack_1e0,0x134,auStack_1ec,0);
-      while (iVar6 == 0) {
-        local_d8[0] = local_d8[0] & 0x7f;
-        pcVar7 = strstr((char *)local_d8,".demo");
-        if (pcVar7 != (char *)0x0) {
-          if ((local_d8[0] == 0x78) && ((int)(&DAT_8484f5c8)[iVar4 * 0x2330] < 0x32)) {
-            I_strncpyz(&DAT_8484f5b8 +
-                       iVar4 * 0x2330 + (&DAT_8484f5c8)[iVar4 * 0x2330] * 0xb4 + 0x8a,local_d8,0x80)
-            ;
-            iVar6 = (&DAT_8484f5c8)[iVar4 * 0x2330];
-            (&DAT_8484f5c8)[iVar4 * 0x2330] = iVar6 + 1;
-            pcVar7 = strrchr((char *)(&DAT_8484f5b8 + iVar4 * 0x2330 + iVar6 * 0xb4 + 0x8a),0x2e);
-            *pcVar7 = '\0';
-          }
-          else {
-            if ((int)(&DAT_8484f5c8)[iVar4 * 0x2330] < 0x32) {
-              Com_PrintWarning(0xe,0xffffffff821dcb04,local_d8);
-            }
-            else {
-              Com_PrintError(0xe,0xffffffff821dcb48,0x32,local_d8);
-            }
-            pcVar7 = strrchr((char *)local_d8,0x2e);
-            *pcVar7 = '\0';
-            CL_Demo_DeleteFile(uVar2,local_d8);
-          }
-        }
-        iVar6 = XEnumerate(local_1f0,auStack_1e0,0x134,auStack_1ec,0);
-      }
-      XCloseHandle(local_1f0);
-      DAT_848728cc = DAT_848728cc + 1;
-      CL_Demo_EnumPopulateMetaInformationForAllFilesReduced(uVar2);
-    }
-    else {
-      Com_PrintWarning(0xe,0xffffffff821dcb94);
-      *(undefined4 *)((int)&DAT_848728bc + iVar6) = 0;
-      Memcard_UnselectSaveDevice(uVar2);
-    }
-  }
-  else {
-    Com_PrintWarning(0xe,0xffffffff821dcbc0);
-  }
-  if (bVar1) {
-    UI_EndReadingSaveDeviceUI(0);
-  }
-LAB_827d246c:
-  __restgprlr_24();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 827D2478  CL_Demo_EnumFinishAddingCorruptDemoFile  (client_demo/cl_demo_filesystem.cpp:1483)
 
-void CL_Demo_EnumFinishAddingCorruptDemoFile
-               (undefined8 param_1,longlong param_2,undefined8 param_3,undefined4 param_4)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CL_Demo_EnumFinishAddingCorruptDemoFile(int param_1,int param_2,char *param_3,int param_4)
 
 {
   bool bVar1;
-  ulonglong uVar2;
-  char cVar3;
-  int iVar4;
-  int iVar5;
-  longlong lVar6;
-  undefined *_Base;
+  int iVar2;
+  clientDemoDeviceEnumInfo_t *pcVar3;
+  bool bVar4;
+  ulong64 uVar5;
+  int iVar6;
+  LocalClientNum_t LVar7;
+  clientDemoLocalFileMetaInformation_t *pcVar8;
   
-  __savegprlr_27();
-  uVar2 = CL_Demo_GetDeviceEnumInfo();
-  if ((uVar2 & 0xffffffff) != 0) {
-    lVar6 = param_2 * 0x2d0 + uVar2;
-    iVar5 = (int)lVar6;
-    *(undefined4 *)(iVar5 + 0x2e4) = param_4;
-    *(undefined1 *)(iVar5 + 0x2e9) = 1;
-    *(undefined1 *)(iVar5 + 0x2e8) = 1;
-    I_strncpyz(lVar6 + 0x228,param_3,0x80);
-    iVar4 = (int)uVar2;
-    lVar6 = *(longlong *)(iVar4 + 8) - (longlong)*(int *)(iVar5 + 0x2e4);
-    *(longlong *)(iVar4 + 8) = lVar6;
-    if (lVar6 == 0) {
-      MyAssertHandler(0xffffffff821dc678,0x5dc,0,0xffffffff82000f98,0xffffffff821dcc68);
+  iVar2 = __savegprlr_27(param_1);
+  pcVar3 = CL_Demo_GetDeviceEnumInfo(iVar2);
+  if (pcVar3 != (clientDemoDeviceEnumInfo_t *)0x0) {
+    pcVar3->metaInfo[param_2].size = param_4;
+    pcVar3->metaInfo[param_2].exists = true;
+    pcVar3->metaInfo[param_2].corruptFile = true;
+    I_strncpyz(pcVar3->metaInfo[param_2].fileName,param_3,0x80);
+    uVar5 = pcVar3->availableFreeSpace - (longlong)pcVar3->metaInfo[param_2].size;
+    pcVar3->availableFreeSpace = uVar5;
+    if (uVar5 == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_filesystem.cpp"
+                      ,0x5dc,0,"%s");
     }
-    *(int *)(iVar4 + 0x10) = *(int *)(iVar4 + 0x10) + 1;
+    pcVar3->count = pcVar3->count + 1;
   }
   bVar1 = true;
-  lVar6 = 0;
-  if (0 < DAT_82aa1ae8) {
+  LVar7 = LOCAL_CLIENT_0;
+  if (0 < cl_maxLocalClients) {
     do {
-      cVar3 = CL_Demo_IsRecording(lVar6);
-      lVar6 = lVar6 + 1;
-      bVar1 = (bool)(cVar3 == '\0' & bVar1);
-    } while ((int)lVar6 < DAT_82aa1ae8);
+      bVar4 = CL_Demo_IsRecording(LVar7);
+      LVar7 = LVar7 + LOCAL_CLIENT_1;
+      bVar1 = (bool)(!bVar4 & bVar1);
+    } while ((int)LVar7 < cl_maxLocalClients);
     if (!bVar1) goto LAB_827d25c8;
   }
-  iVar5 = 0;
-  if (0 < DAT_848728cc) {
-    _Base = &DAT_8484f5d8;
-    iVar4 = DAT_848728cc;
+  iVar2 = 0;
+  if (0 < s_clientDemoEnumInfo.numDevicesEnumerated) {
+    pcVar8 = s_clientDemoEnumInfo.deviceEnumInfo[0].metaInfo;
+    iVar6 = s_clientDemoEnumInfo.numDevicesEnumerated;
     do {
-      if (*(int *)(_Base + -0x10) != 0) {
-        qsort(_Base,0x32,0x2d0,CL_Demo_CompareFileMetaInformation);
-        iVar4 = DAT_848728cc;
+      if (*(int *)((int)(pcVar8 + -1) + 0x2c0) != 0) {
+        qsort(pcVar8,0x32,0x2d0,CL_Demo_CompareFileMetaInformation);
+        iVar6 = s_clientDemoEnumInfo.numDevicesEnumerated;
       }
-      iVar5 = iVar5 + 1;
-      _Base = _Base + 0x8cc0;
-    } while (iVar5 < iVar4);
+      iVar2 = iVar2 + 1;
+      pcVar8 = (clientDemoLocalFileMetaInformation_t *)((int)(pcVar8 + 0x32) + 0x20);
+    } while (iVar2 < iVar6);
   }
 LAB_827d25c8:
   __restgprlr_27();
@@ -1064,62 +878,62 @@ LAB_827d25c8:
 
 // 827D25D0  CL_Demo_EnumFinishAddingDemoFile  (client_demo/cl_demo_filesystem.cpp:1535)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 void CL_Demo_EnumFinishAddingDemoFile
-               (undefined8 param_1,longlong param_2,undefined8 param_3,undefined8 param_4,
+               (undefined8 param_1,undefined8 param_2,char *param_3,undefined8 param_4,
                undefined8 param_5,undefined8 param_6,undefined8 param_7,undefined8 param_8)
 
 {
   bool bVar1;
   undefined8 uVar2;
-  ulonglong uVar3;
-  char cVar4;
-  int iVar5;
-  longlong lVar6;
+  clientDemoDeviceEnumInfo_t *pcVar3;
+  bool bVar4;
+  ulong64 uVar5;
+  int iVar6;
   int iVar7;
-  undefined *_Base;
+  LocalClientNum_t LVar8;
+  clientDemoLocalFileMetaInformation_t *pcVar9;
   undefined8 in_stack_00000050;
-  undefined1 auStack_fb8 [3936];
-  undefined8 local_58;
   
   uVar2 = __savegprlr_23();
-  uVar3 = CL_Demo_GetDeviceEnumInfo();
-  if ((uVar3 & 0xffffffff) != 0) {
-    local_58 = Live_GetXuid(uVar2);
-    memcpy(auStack_fb8,&stack0x00000058,0xf60);
+  pcVar3 = CL_Demo_GetDeviceEnumInfo((int)uVar2);
+  if (pcVar3 != (clientDemoDeviceEnumInfo_t *)0x0) {
+    Live_GetXuid((int)uVar2);
+    memcpy();
     CL_Demo_EnumUpdateMetaInformation
               (uVar2,param_2,param_4,param_5,param_6,param_7,param_8,in_stack_00000050);
-    lVar6 = param_2 * 0x2d0 + uVar3;
-    I_strncpyz(lVar6 + 0x228,param_3,0x80);
-    iVar7 = (int)uVar3;
-    lVar6 = *(longlong *)(iVar7 + 8) - (longlong)*(int *)((int)lVar6 + 0x2e4);
-    *(longlong *)(iVar7 + 8) = lVar6;
-    if (lVar6 == 0) {
-      MyAssertHandler(0xffffffff821dc678,0x610,0,0xffffffff82000f98,0xffffffff821dcc68);
+    I_strncpyz(pcVar3->metaInfo[(int)param_2].fileName,param_3,0x80);
+    uVar5 = pcVar3->availableFreeSpace - (longlong)pcVar3->metaInfo[(int)param_2].size;
+    pcVar3->availableFreeSpace = uVar5;
+    if (uVar5 == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_filesystem.cpp"
+                      ,0x610,0,"%s");
     }
-    *(int *)(iVar7 + 0x10) = *(int *)(iVar7 + 0x10) + 1;
+    pcVar3->count = pcVar3->count + 1;
   }
   bVar1 = true;
-  lVar6 = 0;
-  if (0 < DAT_82aa1ae8) {
+  LVar8 = LOCAL_CLIENT_0;
+  if (0 < cl_maxLocalClients) {
     do {
-      cVar4 = CL_Demo_IsRecording(lVar6);
-      lVar6 = lVar6 + 1;
-      bVar1 = (bool)(cVar4 == '\0' & bVar1);
-    } while ((int)lVar6 < DAT_82aa1ae8);
+      bVar4 = CL_Demo_IsRecording(LVar8);
+      LVar8 = LVar8 + LOCAL_CLIENT_1;
+      bVar1 = (bool)(!bVar4 & bVar1);
+    } while ((int)LVar8 < cl_maxLocalClients);
     if (!bVar1) goto LAB_827d2778;
   }
   iVar7 = 0;
-  if (0 < DAT_848728cc) {
-    _Base = &DAT_8484f5d8;
-    iVar5 = DAT_848728cc;
+  if (0 < s_clientDemoEnumInfo.numDevicesEnumerated) {
+    pcVar9 = s_clientDemoEnumInfo.deviceEnumInfo[0].metaInfo;
+    iVar6 = s_clientDemoEnumInfo.numDevicesEnumerated;
     do {
-      if (*(int *)(_Base + -0x10) != 0) {
-        qsort(_Base,0x32,0x2d0,CL_Demo_CompareFileMetaInformation);
-        iVar5 = DAT_848728cc;
+      if (*(int *)((int)(pcVar9 + -1) + 0x2c0) != 0) {
+        qsort(pcVar9,0x32,0x2d0,CL_Demo_CompareFileMetaInformation);
+        iVar6 = s_clientDemoEnumInfo.numDevicesEnumerated;
       }
       iVar7 = iVar7 + 1;
-      _Base = _Base + 0x8cc0;
-    } while (iVar7 < iVar5);
+      pcVar9 = (clientDemoLocalFileMetaInformation_t *)((int)(pcVar9 + 0x32) + 0x20);
+    } while (iVar7 < iVar6);
   }
 LAB_827d2778:
   __restgprlr_23();
@@ -1129,122 +943,128 @@ LAB_827d2778:
 
 // 827D1458  CL_Demo_GetDeviceEnumInfo  (client_demo/cl_demo_filesystem.cpp:1587)
 
-void CL_Demo_GetDeviceEnumInfo(void)
+clientDemoDeviceEnumInfo_t * CL_Demo_GetDeviceEnumInfo(int param_1)
 
 {
-  int iVar1;
+  ulong uVar1;
   int iVar2;
-  char cVar4;
-  int iVar3;
-  int iVar5;
-  int *piVar6;
+  bool bVar5;
+  clientDemoDeviceEnumInfo_t *pcVar3;
+  ulong uVar4;
+  int iVar6;
+  clientDemoEnumInfo_t *pcVar7;
   
-  iVar2 = __savegprlr_26();
-  cVar4 = Live_UserIsGuest();
-  if (cVar4 == '\0') {
-    cVar4 = Sys_IsMainThread();
-    if (cVar4 == '\0') {
-      piVar6 = &DAT_8484f5b8;
-      if (((&DAT_848728bc)[iVar2] != 0) && (iVar5 = 0, 0 < DAT_848728cc)) {
-        do {
-          if (*piVar6 == (&DAT_848728bc)[iVar2]) {
-            __restgprlr_26((longlong)iVar5 * 0x8cc0 + -0x7b7b0a48);
-            return;
-          }
-          iVar5 = iVar5 + 1;
-          piVar6 = piVar6 + 0x2330;
-        } while (iVar5 < DAT_848728cc);
-      }
-    }
-    else {
-      cVar4 = Memcard_IsDeviceSelected(iVar2);
-      if (cVar4 != '\0') {
-        piVar6 = &DAT_8484f5b8;
-        iVar5 = 0;
-        if (0 < DAT_848728cc) {
+  iVar2 = __savegprlr_26(param_1);
+  bVar5 = Live_UserIsGuest(iVar2);
+  if (!bVar5) {
+    bVar5 = Sys_IsMainThread();
+    if (bVar5) {
+      bVar5 = Memcard_IsDeviceSelected(iVar2);
+      if (bVar5) {
+        pcVar7 = &s_clientDemoEnumInfo;
+        iVar6 = 0;
+        if (0 < s_clientDemoEnumInfo.numDevicesEnumerated) {
           do {
-            iVar1 = *piVar6;
-            iVar3 = Memcard_GetSelectedDeviceID(iVar2);
-            if (iVar1 == iVar3) {
-              __restgprlr_26((longlong)iVar5 * 0x8cc0 + -0x7b7b0a48);
-              return;
+            uVar1 = pcVar7->deviceEnumInfo[0].deviceID;
+            uVar4 = Memcard_GetSelectedDeviceID(iVar2);
+            if (uVar1 == uVar4) {
+              pcVar3 = (clientDemoDeviceEnumInfo_t *)
+                       __restgprlr_26((longlong)iVar6 * 0x8cc0 + -0x7b7b0a48);
+              return pcVar3;
             }
-            iVar5 = iVar5 + 1;
-            piVar6 = piVar6 + 0x2330;
-          } while (iVar5 < DAT_848728cc);
-          __restgprlr_26(0);
-          return;
+            iVar6 = iVar6 + 1;
+            pcVar7 = (clientDemoEnumInfo_t *)(pcVar7->deviceEnumInfo + 1);
+          } while (iVar6 < s_clientDemoEnumInfo.numDevicesEnumerated);
+          pcVar3 = (clientDemoDeviceEnumInfo_t *)__restgprlr_26(0);
+          return pcVar3;
         }
       }
     }
+    else {
+      pcVar7 = &s_clientDemoEnumInfo;
+      if ((s_clientDemoEnumInfo.selectedDevice[iVar2] != 0) &&
+         (iVar6 = 0, 0 < s_clientDemoEnumInfo.numDevicesEnumerated)) {
+        do {
+          if (pcVar7->deviceEnumInfo[0].deviceID == s_clientDemoEnumInfo.selectedDevice[iVar2]) {
+            pcVar3 = (clientDemoDeviceEnumInfo_t *)
+                     __restgprlr_26((longlong)iVar6 * 0x8cc0 + -0x7b7b0a48);
+            return pcVar3;
+          }
+          iVar6 = iVar6 + 1;
+          pcVar7 = (clientDemoEnumInfo_t *)(pcVar7->deviceEnumInfo + 1);
+        } while (iVar6 < s_clientDemoEnumInfo.numDevicesEnumerated);
+      }
+    }
   }
-  __restgprlr_26(0);
-  return;
+  pcVar3 = (clientDemoDeviceEnumInfo_t *)__restgprlr_26(0);
+  return pcVar3;
 }
 
 
 // 827D1590  CL_Demo_EnumCount  (client_demo/cl_demo_filesystem.cpp:1637)
 
-undefined4 CL_Demo_EnumCount(void)
+int CL_Demo_EnumCount(int param_1)
 
 {
-  int iVar1;
+  clientDemoDeviceEnumInfo_t *pcVar1;
   
-  iVar1 = CL_Demo_GetDeviceEnumInfo();
-  if (iVar1 == 0) {
+  pcVar1 = CL_Demo_GetDeviceEnumInfo(param_1);
+  if (pcVar1 == (clientDemoDeviceEnumInfo_t *)0x0) {
     return 0;
   }
-  return *(undefined4 *)(iVar1 + 0x10);
+  return pcVar1->count;
 }
 
 
 // 827D15D0  CL_Demo_EnumFileName  (client_demo/cl_demo_filesystem.cpp:1656)
 
-longlong CL_Demo_EnumFileName(undefined8 param_1,longlong param_2)
+char * CL_Demo_EnumFileName(int param_1,int param_2)
 
 {
-  ulonglong uVar1;
-  longlong lVar2;
+  clientDemoDeviceEnumInfo_t *pcVar1;
+  char *pcVar2;
   
-  if (0x31 < (int)param_2) {
-    MyAssertHandler(0xffffffff821dc678,0x67b,0,0xffffffff82000f98,0xffffffff821dca60);
+  if (0x31 < param_2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_filesystem.cpp"
+                    ,0x67b,0,"%s");
   }
-  uVar1 = CL_Demo_GetDeviceEnumInfo(param_1);
-  if ((uVar1 & 0xffffffff) == 0) {
-    lVar2 = -0x7dff9751;
+  pcVar1 = CL_Demo_GetDeviceEnumInfo(param_1);
+  if (pcVar1 == (clientDemoDeviceEnumInfo_t *)0x0) {
+    pcVar2 = "";
   }
   else {
-    lVar2 = param_2 * 0x2d0 + uVar1 + 0x228;
+    pcVar2 = pcVar1->metaInfo[param_2].fileName;
   }
-  return lVar2;
+  return pcVar2;
 }
 
 
 // 827D1658  CL_Demo_FeederIndexToEnumIndex  (client_demo/cl_demo_filesystem.cpp:1676)
 
-longlong CL_Demo_FeederIndexToEnumIndex(undefined8 param_1,int param_2)
+int CL_Demo_FeederIndexToEnumIndex(int param_1,int param_2)
 
 {
-  int iVar1;
+  clientDemoDeviceEnumInfo_t *pcVar1;
   int iVar2;
-  char *pcVar3;
-  longlong lVar4;
+  bool *pbVar3;
+  int iVar4;
   
   if (0x31 < param_2) {
-    MyAssertHandler(0xffffffff821dc678,0x691,0,0xffffffff82000f98,0xffffffff821dca60);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_filesystem.cpp"
+                    ,0x691,0,"%s");
   }
-  iVar1 = CL_Demo_GetDeviceEnumInfo(param_1);
-  if (iVar1 != 0) {
+  pcVar1 = CL_Demo_GetDeviceEnumInfo(param_1);
+  if (pcVar1 != (clientDemoDeviceEnumInfo_t *)0x0) {
     iVar2 = -1;
-    lVar4 = 0;
-    pcVar3 = (char *)(iVar1 + 0x2e9);
+    iVar4 = 0;
+    pbVar3 = &pcVar1->metaInfo[0].exists;
     do {
-      if ((*pcVar3 != '\0') && (iVar2 = iVar2 + 1, param_2 == iVar2)) {
-        return lVar4;
+      if ((*pbVar3 != false) && (iVar2 = iVar2 + 1, param_2 == iVar2)) {
+        return iVar4;
       }
-      lVar4 = lVar4 + 1;
-      pcVar3 = pcVar3 + 0x2d0;
-    } while ((int)lVar4 < 0x32);
+      iVar4 = iVar4 + 1;
+      pbVar3 = pbVar3 + 0x2d0;
+    } while (iVar4 < 0x32);
   }
   return -1;
 }
@@ -1252,22 +1072,22 @@ longlong CL_Demo_FeederIndexToEnumIndex(undefined8 param_1,int param_2)
 
 // 827D1708  CL_Demo_EnumSetIndex  (client_demo/cl_demo_filesystem.cpp:1711)
 
-void CL_Demo_EnumSetIndex(undefined8 param_1,undefined8 param_2)
+void CL_Demo_EnumSetIndex(int param_1,int param_2)
 
 {
-  undefined8 uVar1;
-  int iVar2;
-  int iVar3;
+  int iVar1;
+  clientDemoDeviceEnumInfo_t *pcVar2;
   
-  uVar1 = __savegprlr_29();
-  if (0x31 < (int)param_2) {
-    MyAssertHandler(0xffffffff821dc678,0x6b3,0,0xffffffff82000f98,0xffffffff821dca60);
+  iVar1 = __savegprlr_29(param_1);
+  if (0x31 < param_2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_filesystem.cpp"
+                    ,0x6b3,0,"%s");
   }
-  iVar2 = CL_Demo_GetDeviceEnumInfo(uVar1);
-  if (iVar2 != 0) {
-    iVar3 = CL_Demo_FeederIndexToEnumIndex(uVar1,param_2);
-    if (-1 < iVar3) {
-      *(int *)(iVar2 + 0x14) = iVar3;
+  pcVar2 = CL_Demo_GetDeviceEnumInfo(iVar1);
+  if (pcVar2 != (clientDemoDeviceEnumInfo_t *)0x0) {
+    iVar1 = CL_Demo_FeederIndexToEnumIndex(iVar1,param_2);
+    if (-1 < iVar1) {
+      pcVar2->index = iVar1;
     }
   }
   __restgprlr_29();
@@ -1277,35 +1097,35 @@ void CL_Demo_EnumSetIndex(undefined8 param_1,undefined8 param_2)
 
 // 827D1780  CL_Demo_EnumGetIndex  (client_demo/cl_demo_filesystem.cpp:1734)
 
-undefined4 CL_Demo_EnumGetIndex(void)
+int CL_Demo_EnumGetIndex(int param_1)
 
 {
-  int iVar1;
+  clientDemoDeviceEnumInfo_t *pcVar1;
   
-  iVar1 = CL_Demo_GetDeviceEnumInfo();
-  if (iVar1 == 0) {
+  pcVar1 = CL_Demo_GetDeviceEnumInfo(param_1);
+  if (pcVar1 == (clientDemoDeviceEnumInfo_t *)0x0) {
     return 0;
   }
-  return *(undefined4 *)(iVar1 + 0x14);
+  return pcVar1->index;
 }
 
 
 // 827D17C0  CL_Demo_EnumIsValidFile  (client_demo/cl_demo_filesystem.cpp:1753)
 
-undefined8 CL_Demo_EnumIsValidFile(undefined8 param_1,undefined8 param_2)
+int CL_Demo_EnumIsValidFile(int param_1,int param_2)
 
 {
-  int iVar1;
-  int iVar2;
+  clientDemoDeviceEnumInfo_t *pcVar1;
   
-  iVar1 = CL_Demo_GetDeviceEnumInfo();
-  if (iVar1 != 0) {
-    iVar2 = (int)param_2;
-    if ((iVar2 < 0) || (0x32 < iVar2)) {
-      MyAssertHandler(0xffffffff821dc678,0x6e1,0,0xffffffff821dca88,param_2,0,0x32);
+  pcVar1 = CL_Demo_GetDeviceEnumInfo(param_1);
+  if (pcVar1 != (clientDemoDeviceEnumInfo_t *)0x0) {
+    if ((param_2 < 0) || (0x32 < param_2)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_filesystem.cpp"
+                      ,0x6e1,0,"index not in [0, MAX_CLIENT_DEMO_ENUM_COUNT]\n\t%i not in [%i, %i]")
+      ;
     }
-    iVar1 = iVar2 * 0x2d0 + iVar1;
-    if ((*(char *)(iVar1 + 0x2e8) == '\0') && (*(char *)(iVar1 + 0x2e9) != '\0')) {
+    if ((pcVar1->metaInfo[param_2].corruptFile == false) &&
+       (pcVar1->metaInfo[param_2].exists != false)) {
       return 1;
     }
   }
@@ -1315,9 +1135,11 @@ undefined8 CL_Demo_EnumIsValidFile(undefined8 param_1,undefined8 param_2)
 
 // 827D1860  CL_Demo_GetMaximumFinalDemoSize  (client_demo/cl_demo_filesystem.cpp:1776)
 
-undefined8 CL_Demo_GetMaximumFinalDemoSize(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+ulong64 CL_Demo_GetMaximumFinalDemoSize(void)
 
 {
-  return DAT_848728d0;
+  return s_clientDemoEnumInfo.maxDemoFileSize;
 }
 

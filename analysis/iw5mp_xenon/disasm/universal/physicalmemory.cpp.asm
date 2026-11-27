@@ -1725,9 +1725,6 @@ LAB_82606ea8:
   82606EB4  38600009             li r3,0x9
   82606EB8  7F24CB78             or r4,r25,r25
   82606EBC  48047ED5             bl 0x8264ed90
-  82606EC0  7FE3FB78             or r3,r31,r31
-  82606EC4  38210090             addi r1,r1,0x90
-  82606EC8  4830F834             b 0x829166fc
 LAB_82606ecc:
   82606ECC  2B080000             cmplwi cr6,r8,0x0
   82606ED0  419A0024             beq cr6,0x82606ef4

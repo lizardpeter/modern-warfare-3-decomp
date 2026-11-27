@@ -2,48 +2,54 @@
 
 // 827626A8  R_CullSphereFromLightRegionHull  (gfx_d3d/r_primarylights_cull.h:7)
 
-undefined8 R_CullSphereFromLightRegionHull(double param_1,float *param_2,float *param_3)
+bool R_CullSphereFromLightRegionHull(GfxLightRegionHull *param_1,float *param_2,float param_3)
 
 {
   float fVar1;
   float fVar2;
   float fVar3;
-  float fVar4;
+  uint uVar4;
   int iVar5;
   float *pfVar6;
   
-  fVar1 = *param_3;
-  if ((((((ABS(fVar1 - *param_2) < (float)((double)param_2[9] + param_1)) &&
-         (fVar2 = param_3[1], ABS(fVar2 - param_2[1]) < (float)((double)param_2[10] + param_1))) &&
-        (fVar3 = param_3[2], ABS(fVar3 - param_2[2]) < (float)((double)param_2[0xb] + param_1))) &&
-       ((ABS((fVar2 + fVar1) - param_2[3]) < (float)((double)param_2[0xc] + param_1) &&
-        (ABS((fVar1 - fVar2) - param_2[4]) < (float)((double)param_2[0xd] + param_1))))) &&
-      ((ABS((fVar3 + fVar1) - param_2[5]) < (float)((double)param_2[0xe] + param_1) &&
-       ((ABS((fVar1 - fVar3) - param_2[6]) < (float)((double)param_2[0xf] + param_1) &&
-        (ABS((fVar3 + fVar2) - param_2[7]) < (float)((double)param_2[0x10] + param_1))))))) &&
-     (ABS((fVar2 - fVar3) - param_2[8]) < (float)((double)param_2[0x11] + param_1))) {
-    fVar4 = 0.0;
-    if (param_2[0x12] != 0.0) {
+  fVar1 = *param_2;
+  if ((((((ABS(fVar1 - param_1->kdopMidPoint[0]) < param_1->kdopHalfSize[0] + param_3) &&
+         (fVar2 = param_2[1],
+         ABS(fVar2 - param_1->kdopMidPoint[1]) < param_1->kdopHalfSize[1] + param_3)) &&
+        (fVar3 = param_2[2],
+        ABS(fVar3 - param_1->kdopMidPoint[2]) < param_1->kdopHalfSize[2] + param_3)) &&
+       ((ABS((fVar2 + fVar1) - param_1->kdopMidPoint[3]) < param_1->kdopHalfSize[3] + param_3 &&
+        (ABS((fVar1 - fVar2) - param_1->kdopMidPoint[4]) < param_1->kdopHalfSize[4] + param_3)))) &&
+      ((ABS((fVar3 + fVar1) - param_1->kdopMidPoint[5]) < param_1->kdopHalfSize[5] + param_3 &&
+       ((ABS((fVar1 - fVar3) - param_1->kdopMidPoint[6]) < param_1->kdopHalfSize[6] + param_3 &&
+        (ABS((fVar3 + fVar2) - param_1->kdopMidPoint[7]) < param_1->kdopHalfSize[7] + param_3))))))
+     && (ABS((fVar2 - fVar3) - param_1->kdopMidPoint[8]) < param_1->kdopHalfSize[8] + param_3)) {
+    uVar4 = 0;
+    if (param_1->axisCount != 0) {
       iVar5 = 0;
       do {
-        pfVar6 = (float *)(iVar5 + (int)param_2[0x13]);
-        if ((float)((double)*(float *)(iVar5 + (int)param_2[0x13] + 0x10) + param_1) <=
+        pfVar6 = (float *)((int)param_1->axis->dir + iVar5);
+        if (*(float *)((int)param_1->axis->dir + iVar5 + 0x10) + param_3 <=
             ABS((*pfVar6 * fVar1 + pfVar6[2] * fVar3 + pfVar6[1] * fVar2) - pfVar6[3])) {
-          return 1;
+          return true;
         }
-        fVar4 = (float)((int)fVar4 + 1);
+        uVar4 = uVar4 + 1;
         iVar5 = iVar5 + 0x14;
-      } while ((uint)fVar4 < (uint)param_2[0x12]);
+      } while (uVar4 < param_1->axisCount);
     }
-    return 0;
+    return false;
   }
-  return 1;
+  return true;
 }
 
 
 // 82762980  R_ShadowedSpotLightScore  (gfx_d3d/r_primarylights.cpp:45)
 
-void R_ShadowedSpotLightScore(undefined8 param_1,int param_2)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+float R_ShadowedSpotLightScore(GfxViewParms *param_1,GfxLight *param_2)
 
 {
   float fVar1;
@@ -52,280 +58,170 @@ void R_ShadowedSpotLightScore(undefined8 param_1,int param_2)
   int iVar4;
   double dVar5;
   double dVar6;
-  double dVar7;
   
-  iVar4 = __savegprlr_27();
-  dVar5 = (double)DAT_847ee924;
-  dVar7 = 0.0;
-  if ((((uint)DAT_847ee924 & 0x7f800000) == 0x7f800000) || (dVar5 < 0.0)) {
-    MyAssertHandler(dVar5,0xffffffff821caab8,0x34,0,0xffffffff821caa18,0xffffffff821caa50,dVar5);
-    dVar5 = (double)DAT_847ee924;
+  iVar4 = __savegprlr_27(param_1);
+  dVar6 = 0.0;
+  if ((((uint)scene.sceneSMLightScoreEyeProjectDist & 0x7f800000) == 0x7f800000) ||
+     (scene.sceneSMLightScoreEyeProjectDist < 0.0)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_primarylights.cpp",
+                    0x34,0,"%s\n\t(scene.sceneSMLightScoreEyeProjectDist) = %g");
   }
-  dVar6 = (double)DAT_847ee928;
-  if ((((uint)DAT_847ee928 & 0x7f800000) == 0x7f800000) || (dVar6 < dVar7)) {
-    MyAssertHandler(0xffffffff821caab8,0x35,0,0xffffffff821ca97c,0xffffffff821ca9b0,dVar6);
-    dVar6 = (double)DAT_847ee928;
-    dVar5 = (double)DAT_847ee924;
+  dVar5 = (double)scene.sceneSMlightScorespotProjectFrac;
+  if ((((uint)scene.sceneSMlightScorespotProjectFrac & 0x7f800000) == 0x7f800000) || (dVar5 < dVar6)
+     ) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_primarylights.cpp",
+                    0x35,0,"%s\n\t(scene.sceneSMlightScorespotProjectFrac) = %g");
+    dVar5 = (double)scene.sceneSMlightScorespotProjectFrac;
   }
-  fVar1 = -(float)((double)*(float *)(param_2 + 0x34) * dVar6);
-  fVar3 = *(float *)(param_2 + 0x14) * fVar1 +
-          (*(float *)(param_2 + 0x2c) -
-          (float)((double)*(float *)(iVar4 + 0x110) * dVar5 + (double)*(float *)(iVar4 + 0x104)));
-  fVar2 = *(float *)(param_2 + 0x18) * fVar1 +
-          (*(float *)(param_2 + 0x30) -
-          (float)((double)*(float *)(iVar4 + 0x114) * dVar5 + (double)*(float *)(iVar4 + 0x108)));
-  fVar1 = *(float *)(param_2 + 0x10) * fVar1 +
-          (*(float *)(param_2 + 0x28) -
-          (float)((double)*(float *)(iVar4 + 0x10c) * dVar5 + (double)*(float *)(iVar4 + 0x100)));
-  __restgprlr_27((double)((float)((double)(*(float *)(param_2 + 0xc) * 0.114 +
-                                          *(float *)(param_2 + 8) * 0.587 +
-                                          *(float *)(param_2 + 4) * 0.299) *
-                                 (double)*(float *)(param_2 + 0x34)) /
-                         (SQRT(fVar1 * fVar1 + fVar2 * fVar2 + fVar3 * fVar3) + 1.0)));
-  return;
+  fVar1 = -(float)((double)param_2->radius * dVar5);
+  fVar3 = param_2->dir[1] * fVar1 +
+          (param_2->origin[1] -
+          (*(float *)(iVar4 + 0x110) * scene.sceneSMLightScoreEyeProjectDist +
+          *(float *)(iVar4 + 0x104)));
+  fVar2 = param_2->dir[2] * fVar1 +
+          (param_2->origin[2] -
+          (*(float *)(iVar4 + 0x114) * scene.sceneSMLightScoreEyeProjectDist +
+          *(float *)(iVar4 + 0x108)));
+  fVar1 = param_2->dir[0] * fVar1 +
+          (param_2->origin[0] -
+          (*(float *)(iVar4 + 0x10c) * scene.sceneSMLightScoreEyeProjectDist +
+          *(float *)(iVar4 + 0x100)));
+  dVar6 = (double)__restgprlr_27((double)((float)((double)(param_2->color[2] * 0.114 +
+                                                          param_2->color[1] * 0.587 +
+                                                          param_2->color[0] * 0.299) *
+                                                 (double)param_2->radius) /
+                                         (SQRT(fVar1 * fVar1 + fVar2 * fVar2 + fVar3 * fVar3) + 1.0)
+                                         ));
+  return (float)dVar6;
 }
 
 
 // 827628F0  Com_CullSphereFromPrimaryLight  (qcommon/com_bsp_api.h:48)
 
-undefined8
-Com_CullSphereFromPrimaryLight(double param_1,char *param_2,float *param_3,undefined8 param_4)
+bool Com_CullSphereFromPrimaryLight(ComPrimaryLight *param_1,float *param_2,float param_3)
 
 {
-  undefined8 uVar1;
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  bool bVar5;
+  float *in_r5;
   
-  if ((float)((double)*(float *)(param_2 + 0x34) + param_1) *
-      (float)((double)*(float *)(param_2 + 0x34) + param_1) <=
-      (param_3[1] - *(float *)(param_2 + 0x2c)) * (param_3[1] - *(float *)(param_2 + 0x2c)) +
-      (*param_3 - *(float *)(param_2 + 0x28)) * (*param_3 - *(float *)(param_2 + 0x28)) +
-      (param_3[2] - *(float *)(param_2 + 0x30)) * (param_3[2] - *(float *)(param_2 + 0x30))) {
-    return 1;
+  fVar2 = param_2[2] - param_1->origin[2];
+  fVar3 = *param_2 - param_1->origin[0];
+  fVar1 = param_1->radius + param_3;
+  fVar4 = param_2[1] - param_1->origin[1];
+  if (fVar1 * fVar1 <= fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2) {
+    return true;
   }
-  if (*param_2 == '\x02') {
-    if (0.0 <= (double)*(float *)(param_2 + 0x40)) {
-      uVar1 = CullSphereFromCone((double)*(float *)(param_2 + 0x40),param_1,param_2 + 0x28,
-                                 param_2 + 0x10,param_4,param_3);
-      return uVar1;
-    }
+  if ((param_1->type == '\x02') && (0.0 <= param_1->cosHalfFovExpanded)) {
+    bVar5 = CullSphereFromCone(param_1->origin,param_1->dir,param_1->cosHalfFovExpanded,in_r5,
+                               param_3);
+    return bVar5;
   }
-  return 0;
+  return false;
 }
 
 
 // 82762840  R_CullSphereFromLightRegion  (gfx_d3d/r_primarylights_cull.h:53)
 
-void R_CullSphereFromLightRegion(undefined8 param_1,float *param_2,float *param_3)
+bool R_CullSphereFromLightRegion
+               (GfxLightRegion *param_1,float *param_2,float *param_3,float param_4)
 
 {
   uint uVar1;
   uint uVar2;
   uint *puVar3;
-  char cVar4;
-  uint uVar5;
-  longlong lVar6;
-  undefined8 extraout_f1;
-  undefined8 uVar7;
+  undefined1 uVar4;
+  bool bVar5;
+  uint uVar6;
+  int iVar7;
+  double extraout_f1;
+  double dVar8;
   float local_40;
   float local_3c;
   float local_38;
   
-  puVar3 = (uint *)__savegprlr_28();
+  puVar3 = (uint *)__savegprlr_28((double)param_4,param_1);
   uVar1 = *puVar3;
   if (uVar1 == 0) {
 LAB_82762860:
-    __restgprlr_28(0);
-    return;
+    uVar4 = __restgprlr_28(0);
+    return (bool)uVar4;
   }
-  uVar5 = 0;
+  uVar6 = 0;
   local_40 = *param_3 - *param_2;
   local_3c = param_3[1] - param_2[1];
   local_38 = param_3[2] - param_2[2];
   if (uVar1 != 0) {
     uVar2 = puVar3[1];
-    lVar6 = 0;
-    uVar7 = extraout_f1;
+    iVar7 = 0;
+    dVar8 = extraout_f1;
     do {
-      cVar4 = R_CullSphereFromLightRegionHull(uVar7,lVar6 + (ulonglong)uVar2,&local_40);
-      if (cVar4 == '\0') goto LAB_82762860;
-      uVar5 = uVar5 + 1;
-      lVar6 = lVar6 + 0x50;
-    } while (uVar5 < uVar1);
+      bVar5 = R_CullSphereFromLightRegionHull
+                        ((GfxLightRegionHull *)(iVar7 + uVar2),&local_40,(float)dVar8);
+      if (!bVar5) goto LAB_82762860;
+      uVar6 = uVar6 + 1;
+      iVar7 = iVar7 + 0x50;
+    } while (uVar6 < uVar1);
   }
-  __restgprlr_28(1);
-  return;
+  uVar4 = __restgprlr_28(1);
+  return (bool)uVar4;
 }
 
 
 // 82762B38  R_DoesLightDirMatchSunShadowLightDir  (gfx_d3d/r_primarylights.cpp:65)
-
-bool R_DoesLightDirMatchSunShadowLightDir(int param_1)
-
-{
-  int iVar1;
-  
-  if (DAT_84628b00 == 0) {
-    MyAssertHandler(0xffffffff821caab8,0x44,0,0xffffffff82000f98,0xffffffff821b90d8);
-  }
-  iVar1 = param_1 * 0x4c + DAT_84628b00;
-  return 0.9999 < *(float *)(iVar1 + 0x89c18) * *(float *)(DAT_84628b00 + 0x15dc) +
-                  *(float *)(iVar1 + 0x89c14) * *(float *)(DAT_84628b00 + 0x15d8) +
-                  *(float *)(iVar1 + 0x89c10) * *(float *)(DAT_84628b00 + 0x15d4);
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0
 
 // 82762BF0  R_AddPotentiallyShadowedLight  (gfx_d3d/r_primarylights.cpp:76)
-
-void R_AddPotentiallyShadowedLight
-               (undefined8 param_1,ulonglong param_2,longlong param_3,ulonglong param_4)
-
-{
-  int iVar1;
-  int *piVar2;
-  longlong lVar3;
-  char cVar6;
-  ulonglong uVar4;
-  char *pcVar5;
-  double extraout_f1;
-  double dVar7;
-  double dVar8;
-  
-  lVar3 = __savegprlr_25();
-  dVar8 = extraout_f1;
-  if (DAT_84628b00 == 0) {
-    MyAssertHandler(0xffffffff821caab8,0x53,0,0xffffffff82000f98,0xffffffff821b90d8);
-  }
-  if ((param_2 & 0xffffffff) != 0) {
-    if ((ulonglong)*(uint *)(DAT_8461658c + 0x1c) < (param_2 & 0xffffffff)) {
-      if ((*(char *)(((int)param_2 + 0x1d00) * 0x4c + DAT_84628b00 + 1) != '\0') &&
-         (*(char *)(DAT_845aa5a0 + 0xc) != '\0')) {
-        dVar7 = (double)R_ShadowedSpotLightScore(lVar3);
-        dVar8 = (double)(float)(dVar7 * dVar8);
-        if ((double)*(float *)(DAT_845aa6e8 + 0xc) <= dVar8) {
-          if ((*(char *)(DAT_845aa588 + 0xc) != '\0') &&
-             (uVar4 = Com_GetPrimaryLightCount(), (param_2 & 0xffffffff) < (uVar4 & 0xffffffff))) {
-            dVar7 = (double)(*(float *)(DAT_845aa7e0 + 0xc) * 1048576.0);
-            pcVar5 = (char *)Com_GetPrimaryLight(param_2);
-            if ((*pcVar5 != '\x02') && (*pcVar5 != '\x03')) {
-              MyAssertHandler(0xffffffff821caab8,0x71,0,0xffffffff821cab00,0xffffffff821cab20);
-            }
-            cVar6 = Com_CullSphereFromPrimaryLight(dVar7,pcVar5,lVar3 + 0x100);
-            if ((cVar6 != '\0') ||
-               (cVar6 = R_CullSphereFromLightRegion
-                                  (dVar7,(ulonglong)*(uint *)(DAT_8461658c + 0x228) +
-                                         (param_2 & 0x1fffffff) * 8,pcVar5 + 0x28,lVar3 + 0x100),
-               cVar6 != '\0')) goto LAB_82762c9c;
-          }
-          uVar4 = param_4;
-          if ((param_4 & 0xffffffff) != 0) {
-            lVar3 = (param_4 + 1 & 0x1fffffff) * 8 + param_3;
-            do {
-              iVar1 = (int)lVar3;
-              if (dVar8 <= (double)*(float *)(iVar1 + -0xc)) break;
-              uVar4 = uVar4 - 1;
-              lVar3 = lVar3 + -8;
-              *(undefined8 *)lVar3 = *(undefined8 *)(iVar1 + -0x10);
-            } while (uVar4 != 0);
-          }
-          piVar2 = (int *)((int)((uVar4 & 0xffffffff) << 3) + (int)param_3);
-          piVar2[1] = (int)(float)dVar8;
-          *piVar2 = (int)param_2;
-          uVar4 = (ulonglong)*(uint *)(DAT_845aa5fc + 0xc);
-          if ((int)(param_4 + 1) < (int)*(uint *)(DAT_845aa5fc + 0xc)) {
-            uVar4 = param_4 + 1;
-          }
-          if ((int)*(uint *)(DAT_845aa5a4 + 0xc) <= (int)uVar4) {
-            uVar4 = (ulonglong)*(uint *)(DAT_845aa5a4 + 0xc);
-          }
-          __restgprlr_25(uVar4);
-          return;
-        }
-      }
-    }
-    else {
-      cVar6 = R_DoesLightDirMatchSunShadowLightDir(param_2);
-      if (cVar6 != '\0') {
-        Com_BitSetAssert(DAT_84628b00 + 0x1524,param_2,0x20);
-      }
-    }
-  }
-LAB_82762c9c:
-  __restgprlr_25(param_4);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0
 
 // 82764328  R_AddShadowsForLight  (gfx_d3d/r_primarylights.cpp:135)
-
-void R_AddShadowsForLight(undefined8 param_1,ulonglong param_2)
-
-{
-  int iVar1;
-  ulonglong uVar2;
-  undefined8 extraout_f1;
-  undefined8 uVar3;
-  
-  iVar1 = __savegprlr_27();
-  uVar2 = (ulonglong)DAT_84628b00;
-  uVar3 = extraout_f1;
-  if (uVar2 == 0) {
-    MyAssertHandler(0xffffffff821caab8,0x88,0,0xffffffff82000f98,0xffffffff821b90d8);
-    uVar2 = (ulonglong)DAT_84628b00;
-  }
-  if (*(char *)(iVar1 + 0x924) == '\0') {
-    MyAssertHandler(0xffffffff821caab8,0x89,0,0xffffffff82000f98,0xffffffff821cad98);
-    uVar2 = (ulonglong)DAT_84628b00;
-  }
-  if ((param_2 & 0xffffffff) < (ulonglong)*(uint *)(iVar1 + 0x1b0)) {
-    if (*(char *)((int)param_2 * 0x4c + (int)uVar2 + 0x89c01) != '\0') {
-      R_AddSpotShadowsForLight(uVar3,iVar1,(param_2 + 0x1d00) * 0x4c + uVar2,param_2);
-      Com_BitSetAssert((ulonglong)DAT_84628b00 + 0x1524,param_2,0x20);
-      __restgprlr_27();
-      return;
-    }
-  }
-  if ((param_2 & 0xffffffff) < (ulonglong)*(uint *)(DAT_8461658c + 0x20)) {
-    MyAssertHandler(0xffffffff821caab8,0x8f,0,0xffffffff82000f98,0xffffffff821cad70);
-  }
-  __restgprlr_27();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0
 
 // 82762E50  R_AddShadowedLightToShadowHistory  (gfx_d3d/r_primarylights.cpp:153)
 
 void R_AddShadowedLightToShadowHistory
-               (undefined8 param_1,double param_2,undefined8 param_3,ulonglong param_4)
+               (GfxShadowedLightHistory *param_1,uint param_2,float param_3,float param_4)
 
 {
   float fVar1;
   undefined4 uVar2;
   undefined4 uVar3;
   undefined4 uVar4;
-  int iVar5;
+  uint *puVar5;
   int iVar6;
   float fVar7;
   longlong lVar8;
   int iVar9;
-  longlong lVar10;
-  ulonglong uVar11;
-  longlong lVar12;
-  ulonglong uVar13;
+  ulonglong uVar10;
+  longlong lVar11;
+  ulonglong uVar12;
+  longlong lVar13;
+  ulonglong uVar14;
   double extraout_f1;
+  double dVar15;
   
-  lVar8 = __savegprlr_27();
-  iVar5 = (int)lVar8;
-  uVar11 = (ulonglong)*(uint *)(iVar5 + 0x50);
-  uVar13 = 0;
-  if (uVar11 != 0) {
-    lVar10 = lVar8 + 0x20;
+  dVar15 = (double)param_4;
+  uVar10 = (ulonglong)(int)param_2;
+  lVar8 = __savegprlr_27((double)param_3,param_1);
+  puVar5 = (uint *)lVar8;
+  uVar12 = (ulonglong)puVar5[0x14];
+  uVar14 = 0;
+  if (uVar12 != 0) {
+    lVar11 = lVar8 + 0x20;
     do {
-      if ((ulonglong)*(byte *)lVar10 == (param_4 & 0xffffffff)) {
-        lVar10 = (uVar13 + (uVar13 & 0x7fffffff) * 2 & 0x3fffffff) * 4 + lVar8;
-        iVar6 = (int)lVar10;
+      if ((ulonglong)*(byte *)lVar11 == (uVar10 & 0xffffffff)) {
+        lVar11 = (uVar14 + (uVar14 & 0x7fffffff) * 2 & 0x3fffffff) * 4 + lVar8;
+        iVar6 = (int)lVar11;
         *(undefined1 *)(iVar6 + 0x21) = 0;
-        fVar1 = (float)((double)*(float *)(iVar6 + 0x28) + param_2);
-        *(float *)((int)((uVar13 + 3 + (uVar13 + 3 & 0x7fffffff) * 2 & 0xffffffff) << 2) + iVar5) =
-             (float)extraout_f1;
+        fVar1 = (float)((double)*(float *)(iVar6 + 0x28) + dVar15);
+        *(float *)((int)((uVar14 + 3 + (uVar14 + 3 & 0x7fffffff) * 2 & 0xffffffff) << 2) +
+                  (int)puVar5) = (float)extraout_f1;
         fVar7 = 1.0;
         if (fVar1 - 1.0 < 0.0) {
           fVar7 = fVar1;
@@ -333,48 +229,49 @@ void R_AddShadowedLightToShadowHistory
         *(float *)(iVar6 + 0x28) = fVar7;
         goto LAB_82762f5c;
       }
-      uVar13 = uVar13 + 1;
-      lVar10 = lVar10 + 0xc;
-    } while ((uVar13 & 0xffffffff) != (ulonglong)*(uint *)(iVar5 + 0x50));
+      uVar14 = uVar14 + 1;
+      lVar11 = lVar11 + 0xc;
+    } while ((uVar14 & 0xffffffff) != (ulonglong)puVar5[0x14]);
   }
-  if ((uVar11 < *(uint *)(DAT_845aa5fc + 0xc)) && (uVar11 < *(uint *)(DAT_845aa5a4 + 0xc))) {
-    lVar10 = (uVar11 + ((ulonglong)*(uint *)(iVar5 + 0x50) & 0x7fffffff) * 2 & 0x3fffffff) * 4 +
-             lVar8;
-    *(float *)((int)((uVar11 + 3 + (uVar11 + 3 & 0x7fffffff) * 2 & 0xffffffff) << 2) + iVar5) =
-         (float)extraout_f1;
-    iVar6 = (int)lVar10;
-    *(char *)(iVar6 + 0x20) = (char)param_4;
-    if ((param_4 & 0xff) != (param_4 & 0xffffffff)) {
-      MyAssertHandler(0xffffffff821caab8,0xb1,0,0xffffffff82000f98,0xffffffff821cab80);
+  if ((uVar12 < (sm_maxLights->current).unsignedInt) &&
+     (uVar12 < (sm_spotLimit->current).unsignedInt)) {
+    lVar11 = (uVar12 + ((ulonglong)puVar5[0x14] & 0x7fffffff) * 2 & 0x3fffffff) * 4 + lVar8;
+    *(float *)((int)((uVar12 + 3 + (uVar12 + 3 & 0x7fffffff) * 2 & 0xffffffff) << 2) + (int)puVar5)
+         = (float)extraout_f1;
+    iVar6 = (int)lVar11;
+    *(char *)(iVar6 + 0x20) = (char)uVar10;
+    if ((uVar10 & 0xff) != (uVar10 & 0xffffffff)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_primarylights.cpp"
+                      ,0xb1,0,"%s");
     }
     *(undefined1 *)(iVar6 + 0x21) = 0;
-    iVar9 = Com_BitCheckAssert(lVar8,param_4,0x20);
+    iVar9 = Com_BitCheckAssert(puVar5,(int)uVar10,0x20);
     if (iVar9 == 0) {
-      param_2 = 1.0;
+      dVar15 = 1.0;
     }
-    *(float *)(iVar6 + 0x28) = (float)param_2;
-    *(int *)(iVar5 + 0x50) = *(int *)(iVar5 + 0x50) + 1;
-    uVar13 = uVar11;
+    *(float *)(iVar6 + 0x28) = (float)dVar15;
+    puVar5[0x14] = puVar5[0x14] + 1;
+    uVar14 = uVar12;
 LAB_82762f5c:
-    if ((uVar13 & 0xffffffff) != 0) {
-      lVar12 = (uVar13 + 2 + (uVar13 + 2 & 0x7fffffff) * 2 & 0x3fffffff) * 4 + lVar8;
+    if ((uVar14 & 0xffffffff) != 0) {
+      lVar13 = (uVar14 + 2 + (uVar14 + 2 & 0x7fffffff) * 2 & 0x3fffffff) * 4 + lVar8;
       do {
-        if (((float *)lVar12)[3] <= *(float *)lVar12) break;
-        uVar13 = uVar13 - 1;
-        iVar5 = (int)lVar10;
-        lVar12 = lVar12 + -0xc;
-        uVar2 = *(undefined4 *)(iVar5 + 0x20);
-        uVar3 = *(undefined4 *)(iVar5 + 0x24);
-        uVar4 = *(undefined4 *)(iVar5 + 0x28);
-        *(undefined4 *)(iVar5 + 0x20) = *(undefined4 *)(iVar5 + 0x14);
-        *(undefined4 *)(iVar5 + 0x24) = *(undefined4 *)(iVar5 + 0x18);
-        *(undefined4 *)(iVar5 + 0x28) = *(undefined4 *)(iVar5 + 0x1c);
-        lVar10 = (uVar13 + (uVar13 & 0x7fffffff) * 2 & 0x3fffffff) * 4 + lVar8;
-        iVar5 = (int)lVar10;
-        *(undefined4 *)(iVar5 + 0x20) = uVar2;
-        *(undefined4 *)(iVar5 + 0x24) = uVar3;
-        *(undefined4 *)(iVar5 + 0x28) = uVar4;
-      } while (uVar13 != 0);
+        if (((float *)lVar13)[3] <= *(float *)lVar13) break;
+        uVar14 = uVar14 - 1;
+        iVar6 = (int)lVar11;
+        lVar13 = lVar13 + -0xc;
+        uVar2 = *(undefined4 *)(iVar6 + 0x20);
+        uVar3 = *(undefined4 *)(iVar6 + 0x24);
+        uVar4 = *(undefined4 *)(iVar6 + 0x28);
+        *(undefined4 *)(iVar6 + 0x20) = *(undefined4 *)(iVar6 + 0x14);
+        *(undefined4 *)(iVar6 + 0x24) = *(undefined4 *)(iVar6 + 0x18);
+        *(undefined4 *)(iVar6 + 0x28) = *(undefined4 *)(iVar6 + 0x1c);
+        lVar11 = (uVar14 + (uVar14 & 0x7fffffff) * 2 & 0x3fffffff) * 4 + lVar8;
+        iVar6 = (int)lVar11;
+        *(undefined4 *)(iVar6 + 0x20) = uVar2;
+        *(undefined4 *)(iVar6 + 0x24) = uVar3;
+        *(undefined4 *)(iVar6 + 0x28) = uVar4;
+      } while (uVar14 != 0);
     }
   }
   __restgprlr_27();
@@ -384,7 +281,7 @@ LAB_82762f5c:
 
 // 82763028  R_FadeOutShadowHistoryEntries  (gfx_d3d/r_primarylights.cpp:196)
 
-void R_FadeOutShadowHistoryEntries(undefined8 param_1,longlong param_2)
+void R_FadeOutShadowHistoryEntries(uint *param_1,GfxShadowedLightHistory *param_2,float param_3)
 
 {
   byte bVar1;
@@ -394,61 +291,66 @@ void R_FadeOutShadowHistoryEntries(undefined8 param_1,longlong param_2)
   int iVar5;
   int iVar6;
   longlong lVar7;
-  float *pfVar8;
-  longlong lVar9;
-  byte *pbVar10;
+  longlong lVar8;
+  float *pfVar9;
+  longlong lVar10;
+  byte *pbVar11;
   double extraout_f1;
-  double dVar11;
   double dVar12;
   double dVar13;
+  double dVar14;
   
-  iVar4 = __savegprlr_17();
-  iVar3 = (int)param_2;
+  lVar7 = (longlong)(int)param_2;
+  iVar4 = __savegprlr_17((double)param_3,param_1);
+  iVar3 = (int)lVar7;
   iVar6 = 0;
   if (*(int *)(iVar3 + 0x50) != 0) {
-    dVar13 = 0.009999999776482582;
-    dVar11 = 0.0;
-    lVar9 = param_2 + 0x20;
-    lVar7 = param_2 + 0x28;
-    param_2 = param_2 + 0x15;
-    dVar12 = extraout_f1;
+    dVar14 = 0.009999999776482582;
+    dVar12 = 0.0;
+    lVar10 = lVar7 + 0x20;
+    lVar8 = lVar7 + 0x28;
+    lVar7 = lVar7 + 0x15;
+    dVar13 = extraout_f1;
     do {
-      pfVar8 = (float *)lVar7;
-      if ((double)*pfVar8 <= dVar11) {
-        MyAssertHandler(0xffffffff821caab8,0xca,0,0xffffffff82000f98,0xffffffff821cabc8);
+      pfVar9 = (float *)lVar8;
+      if ((double)*pfVar9 <= dVar12) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_primarylights.cpp"
+                        ,0xca,0,"%s");
       }
-      pbVar10 = (byte *)lVar9;
-      bVar1 = *pbVar10;
+      pbVar11 = (byte *)lVar10;
+      bVar1 = *pbVar11;
       if (iVar4 == 0) {
-        MyAssertHandler(0xffffffff82003098,0xb,0,0xffffffff82000f98,0xffffffff8200308c);
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_bitops.h",
+                        0xb,0,"%s");
       }
       if (0x7ffffff7 < (ulonglong)bVar1) {
-        MyAssertHandler(0xffffffff82003098,0xc,0,0xffffffff82003058,(ulonglong)bVar1,0x7ffffff8);
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_bitops.h",
+                        0xc,0,"bitNum doesn\'t index size * 8\n\t%i not in [0, %i)");
       }
       if ((1 << (bVar1 & 0x1f) & *(uint *)(((int)(uint)bVar1 >> 5) * 4 + iVar4)) == 0) {
 LAB_82763188:
         iVar5 = *(int *)(iVar3 + 0x50) + -1;
         *(int *)(iVar3 + 0x50) = iVar5;
         iVar5 = iVar5 * 0xc + iVar3;
-        *(undefined4 *)pbVar10 = *(undefined4 *)(iVar5 + 0x20);
-        *(undefined4 *)(pbVar10 + 4) = *(undefined4 *)(iVar5 + 0x24);
-        *(undefined4 *)(pbVar10 + 8) = *(undefined4 *)(iVar5 + 0x28);
+        *(undefined4 *)pbVar11 = *(undefined4 *)(iVar5 + 0x20);
+        *(undefined4 *)(pbVar11 + 4) = *(undefined4 *)(iVar5 + 0x24);
+        *(undefined4 *)(pbVar11 + 8) = *(undefined4 *)(iVar5 + 0x28);
       }
-      else if (*(char *)((int)param_2 + 0xc) == '\0') {
+      else if (*(char *)((int)lVar7 + 0xc) == '\0') {
         iVar6 = iVar6 + 1;
-        param_2 = param_2 + 0xc;
-        *(undefined1 *)param_2 = 1;
         lVar7 = lVar7 + 0xc;
-        lVar9 = lVar9 + 0xc;
+        *(undefined1 *)lVar7 = 1;
+        lVar8 = lVar8 + 0xc;
+        lVar10 = lVar10 + 0xc;
       }
       else {
-        fVar2 = *pfVar8;
-        *pfVar8 = (float)((double)fVar2 - dVar12);
-        if ((double)(float)((double)fVar2 - dVar12) < dVar13) goto LAB_82763188;
+        fVar2 = *pfVar9;
+        *pfVar9 = (float)((double)fVar2 - dVar13);
+        if ((double)(float)((double)fVar2 - dVar13) < dVar14) goto LAB_82763188;
         iVar6 = iVar6 + 1;
-        param_2 = param_2 + 0xc;
         lVar7 = lVar7 + 0xc;
-        lVar9 = lVar9 + 0xc;
+        lVar8 = lVar8 + 0xc;
+        lVar10 = lVar10 + 0xc;
       }
     } while (iVar6 != *(int *)(iVar3 + 0x50));
   }
@@ -459,886 +361,90 @@ LAB_82763188:
 
 // 827631E0  R_ClearShadowedPrimaryLightHistory  (gfx_d3d/r_primarylights.cpp:227)
 
-void R_ClearShadowedPrimaryLightHistory(int param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void R_ClearShadowedPrimaryLightHistory(LocalClientNum_t param_1)
 
 {
-  param_1 = param_1 * 0x58;
-  *(undefined4 *)(&DAT_84628998 + param_1) = 0;
-  *(undefined4 *)(&DAT_8462899c + param_1) = 0;
-  Com_Memset(&DAT_84628948 + param_1,0,0x20);
+  s_shadowHistory[param_1].entryCount = 0;
+  s_shadowHistory[param_1].lastUpdateTime = 0;
+  Com_Memset(s_shadowHistory + param_1,0,0x20);
   return;
 }
 
 
 // 82763208  R_AddDynamicSceneLight  (gfx_d3d/r_primarylights.cpp:238)
-
-void R_AddDynamicSceneLight(undefined8 param_1,void *param_2)
-
-{
-  int iVar1;
-  int iVar2;
-  
-  iVar2 = __savegprlr_28();
-  if (0xfc < *(uint *)(iVar2 + 0x1b0)) {
-    MyAssertHandler(0xffffffff821caab8,0xf1,0,0xffffffff821cabf8,*(uint *)(iVar2 + 0x1b0),0xfd);
-  }
-  if (DAT_84628b00 == 0) {
-    MyAssertHandler(0xffffffff821caab8,0xf2,0,0xffffffff82000f98,0xffffffff821b90d8);
-  }
-  iVar1 = *(int *)(iVar2 + 0x1b0);
-  *(int *)(iVar2 + 0x1b0) = iVar1 + 1;
-  memcpy((void *)((iVar1 + 0x1d00) * 0x4c + DAT_84628b00),param_2,0x4c);
-  __restgprlr_28(iVar1);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0
 
 // 827632B0  R_IsPrimaryLight  (gfx_d3d/r_primarylights.cpp:252)
-
-byte R_IsPrimaryLight(ulonglong param_1)
-
-{
-  return -(param_1 < *(uint *)(DAT_8461658c + 0x20)) & 1;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
 
 // 82764458  R_ChooseShadowedLights  (gfx_d3d/r_primarylights.cpp:258)
-
-void R_ChooseShadowedLights(undefined8 param_1,longlong param_2,undefined8 param_3)
-
-{
-  int iVar1;
-  uint uVar2;
-  int iVar3;
-  float *pfVar4;
-  bool bVar5;
-  int iVar6;
-  int iVar7;
-  char cVar8;
-  int iVar9;
-  ulonglong uVar10;
-  undefined4 *puVar11;
-  longlong lVar12;
-  undefined4 *puVar13;
-  ulonglong uVar14;
-  uint uVar15;
-  uint uVar16;
-  float *pfVar17;
-  longlong lVar18;
-  double dVar19;
-  double dVar20;
-  double dVar21;
-  undefined4 auStack_f4 [8];
-  float fStack_d4;
-  undefined1 local_d0 [208];
-  
-  iVar6 = __savegprlr_15();
-  if (DAT_84628b00 == 0) {
-    MyAssertHandler(0xffffffff821caab8,0x114,0,0xffffffff82000f98,0xffffffff821b90d8);
-  }
-  iVar3 = (int)param_3;
-  iVar9 = *(int *)(iVar3 + 0x928) * 0x58;
-  uVar10 = (ulonglong)*(uint *)(iVar3 + 0x180) - (ulonglong)*(uint *)(&DAT_8462899c + iVar9);
-  if (uVar10 == 0) {
-    uVar10 = 1;
-    if (*(int *)(DAT_8461658c + 0x1c) != 0) {
-      do {
-        if (((*(char *)(iVar3 + 0x1ae) == '\0') &&
-            (iVar7 = Com_BitCheckAssert(iVar6,uVar10,0xfffffff), iVar7 != 0)) ||
-           (bVar5 = false, *(char *)(iVar3 + 0x1ae) == '\x01')) {
-          bVar5 = true;
-        }
-        if ((bVar5) && (cVar8 = R_DoesLightDirMatchSunShadowLightDir(uVar10), cVar8 != '\0')) {
-          Com_BitSetAssert(DAT_84628b00 + 0x1524,uVar10,0x20);
-        }
-        uVar10 = uVar10 + 1;
-      } while ((uVar10 & 0xffffffff) <= (ulonglong)*(uint *)(DAT_8461658c + 0x1c));
-    }
-  }
-  else {
-    *(uint *)(&DAT_8462899c + iVar9) = *(uint *)(iVar3 + 0x180);
-    dVar20 = (double)((0.001 / *(float *)(DAT_845aa5bc + 0xc)) * (float)(uVar10 & 0xffffffff));
-    R_FadeOutShadowHistoryEntries(dVar20,iVar6,&DAT_84628948 + iVar9);
-    puVar11 = auStack_f4;
-    puVar13 = (undefined4 *)(iVar6 + -4);
-    lVar18 = 8;
-    do {
-      puVar13 = puVar13 + 1;
-      puVar11 = puVar11 + 1;
-      *puVar11 = *puVar13;
-      lVar18 = lVar18 + -1;
-    } while (lVar18 != 0);
-    uVar10 = 0;
-    if (*(uint *)(iVar3 + 0x1b0) < *(uint *)(DAT_8461658c + 0x20)) {
-      MyAssertHandler(0xffffffff821caab8,0x12f,0,0xffffffff82000f98,0xffffffff821cae4c);
-    }
-    uVar14 = ((ulonglong)*(uint *)(iVar3 + 0x1b0) + 0x1f & 0xffffffff) >> 5;
-    if (uVar14 != 0) {
-      lVar18 = 0;
-      dVar21 = 1.0;
-      iVar7 = (int)param_2;
-      do {
-        cVar8 = *(char *)(iVar3 + 0x1ae);
-        uVar16 = *(uint *)((iVar6 - iVar7) + (int)(uint *)param_2);
-        uVar15 = *(uint *)param_2;
-        if ((cVar8 != '\0') &&
-           (lVar12 = ((ulonglong)*(uint *)(DAT_8461658c + 0x1c) - lVar18) + 1, -1 < lVar12)) {
-          iVar1 = 1 << ((uint)lVar12 & 0x3f);
-          if (cVar8 == '\x01') {
-            uVar16 = iVar1 - 1U | uVar16;
-          }
-          else {
-            if (cVar8 != '\x02') {
-              MyAssertHandler(0xffffffff821caab8,0x144,0,0xffffffff821cae1c,0xffffffff821cade0);
-            }
-            uVar16 = uVar16 & ~(iVar1 - 1U);
-          }
-        }
-        while (LZCOUNT(uVar16) != 0x20) {
-          lVar12 = 0x1f - LZCOUNT(uVar16);
-          uVar2 = 1 << ((uint)lVar12 & 0x3f);
-          uVar16 = uVar16 & ~uVar2;
-          dVar19 = dVar21;
-          if ((uVar2 & uVar15) != 0) {
-            dVar19 = (double)*(float *)(DAT_845aa8cc + 0xc);
-          }
-          uVar10 = R_AddPotentiallyShadowedLight(dVar19,param_3,lVar18 + lVar12,local_d0,uVar10);
-        }
-        uVar14 = uVar14 - 1;
-        param_2 = param_2 + 4;
-        lVar18 = lVar18 + 0x20;
-      } while (uVar14 != 0);
-    }
-    if ((uVar10 & 0xffffffff) != 0) {
-      pfVar17 = &fStack_d4;
-      do {
-        pfVar4 = pfVar17 + 1;
-        pfVar17 = pfVar17 + 2;
-        R_AddShadowedLightToShadowHistory((double)*pfVar17,dVar20,&DAT_84628948 + iVar9,*pfVar4);
-        uVar10 = uVar10 - 1;
-      } while (uVar10 != 0);
-    }
-    puVar13 = auStack_f4;
-    puVar11 = (undefined4 *)(iVar9 + -0x7b9d76bc);
-    lVar18 = 8;
-    do {
-      puVar13 = puVar13 + 1;
-      puVar11 = puVar11 + 1;
-      *puVar11 = *puVar13;
-      lVar18 = lVar18 + -1;
-    } while (lVar18 != 0);
-  }
-  if (*(int *)(DAT_84628b00 + 0x2800) != 0) {
-    MyAssertHandler(0xffffffff821caab8,0x162,1,0xffffffff821cadb0,*(int *)(DAT_84628b00 + 0x2800),0)
-    ;
-  }
-  if (((*(char *)(DAT_845aa8a0 + 0xc) != '\0') && (DAT_84618158 == 0)) &&
-     (cVar8 = R_AnySunHasShadowMap(DAT_84628b00), cVar8 == '\0')) {
-    DAT_84618158 = 1;
-  }
-  uVar15 = 0;
-  if (*(int *)(&DAT_84628998 + iVar9) != 0) {
-    pfVar17 = (float *)(iVar9 + -0x7b9d769c);
-    do {
-      pfVar4 = pfVar17 + 1;
-      pfVar17 = pfVar17 + 3;
-      R_AddShadowsForLight((double)*pfVar17,param_3,*(undefined1 *)pfVar4);
-      uVar15 = uVar15 + 1;
-    } while (uVar15 < *(uint *)(&DAT_84628998 + iVar9));
-  }
-  __restgprlr_15();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0
 
 // 827632D0  R_HasShadowedLightForModelsOnly  (gfx_d3d/r_primarylights.cpp:373)
-
-void R_HasShadowedLightForModelsOnly(undefined8 param_1,int param_2)
-
-{
-  byte bVar1;
-  int iVar2;
-  int iVar3;
-  uint uVar4;
-  byte *pbVar5;
-  
-  iVar2 = __savegprlr_21();
-  if (0.0 < *(float *)(DAT_845aa8cc + 0xc)) {
-    if (DAT_84628b00 == 0) {
-      MyAssertHandler(0xffffffff821caab8,0x17b,0,0xffffffff82000f98,0xffffffff821b90d8);
-    }
-    uVar4 = 0;
-    iVar3 = *(int *)(param_2 + 0x928) * 0x58;
-    if (*(int *)(&DAT_84628998 + iVar3) != 0) {
-      pbVar5 = &DAT_84628968 + iVar3;
-      do {
-        bVar1 = *pbVar5;
-        if (iVar2 == 0) {
-          MyAssertHandler(0xffffffff82003098,0xb,0,0xffffffff82000f98,0xffffffff8200308c);
-        }
-        if (0x7ffffff7 < (ulonglong)bVar1) {
-          MyAssertHandler(0xffffffff82003098,0xc,0,0xffffffff82003058,(ulonglong)bVar1,0x7ffffff8);
-        }
-        if ((1 << (bVar1 & 0x1f) & *(uint *)(((int)(uint)bVar1 >> 5) * 4 + iVar2)) != 0) {
-          __restgprlr_21(1);
-          return;
-        }
-        uVar4 = uVar4 + 1;
-        pbVar5 = pbVar5 + 0xc;
-      } while (uVar4 < *(uint *)(&DAT_84628998 + iVar3));
-    }
-  }
-  __restgprlr_21(0);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0
 
 // 82763418  R_GetPrimaryLightEntityShadowBit  (gfx_d3d/r_primarylights.cpp:399)
-
-void R_GetPrimaryLightEntityShadowBit(undefined8 param_1,int param_2,ulonglong param_3)
-
-{
-  int iVar1;
-  ulonglong uVar2;
-  longlong lVar3;
-  
-  iVar1 = __savegprlr_28();
-  uVar2 = (ulonglong)*(uint *)(DAT_8461658c + 0x1c) + 1;
-  if (((param_3 & 0xffffffff) < (uVar2 & 0xffffffff)) ||
-     ((ulonglong)(*(int *)(DAT_8461658c + 0x20) - 1) < (param_3 & 0xffffffff))) {
-    MyAssertHandler(0xffffffff821caab8,0x194,0,0xffffffff821cac48,param_3,uVar2,
-                    (ulonglong)*(uint *)(DAT_8461658c + 0x20) - 1);
-  }
-  lVar3 = (ulonglong)*(uint *)(DAT_8461658c + 0x1c) + 1;
-  __restgprlr_28(((longlong)(DAT_84613764 * iVar1 + param_2) *
-                  (longlong)(*(int *)(DAT_8461658c + 0x20) - (int)lVar3) - lVar3) + param_3);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
 
 // 827634C0  R_GetPrimaryLightDynEntShadowBit  (gfx_d3d/r_primarylights.cpp:414)
-
-void R_GetPrimaryLightDynEntShadowBit(undefined8 param_1,ulonglong param_2)
-
-{
-  int iVar1;
-  longlong lVar2;
-  
-  iVar1 = __savegprlr_29();
-  if ((param_2 & 0xffffffff) <= (ulonglong)*(uint *)(DAT_8461658c + 0x1c)) {
-    MyAssertHandler(0xffffffff821caab8,0x1a3,0,0xffffffff821cacc8,param_2);
-  }
-  lVar2 = (ulonglong)*(uint *)(DAT_8461658c + 0x1c) + 1;
-  __restgprlr_29(((longlong)(*(int *)(DAT_8461658c + 0x20) - (int)lVar2) * (longlong)iVar1 - lVar2)
-                 + param_2);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
 
 // 82763538  R_LinkSphereEntityToPrimaryLights  (gfx_d3d/r_primarylights.cpp:429)
-
-void R_LinkSphereEntityToPrimaryLights(undefined8 param_1,undefined8 param_2,float *param_3)
-
-{
-  undefined8 uVar1;
-  undefined8 uVar2;
-  char cVar3;
-  int iVar4;
-  uint uVar5;
-  char *pcVar6;
-  double extraout_f1;
-  double dVar7;
-  double dVar8;
-  
-  uVar1 = __savegprlr_15();
-  uVar5 = *(int *)(DAT_8461658c + 0x1c) + 1;
-  if (*(int *)(DAT_8461658c + 0x1c) + 1U < *(uint *)(DAT_8461658c + 0x20)) {
-    iVar4 = uVar5 * 0x50;
-    dVar7 = 0.0;
-    dVar8 = extraout_f1;
-    do {
-      uVar2 = R_GetPrimaryLightEntityShadowBit(uVar1,param_2,uVar5);
-      if (DAT_835f15dc == 0) {
-        MyAssertHandler(0xffffffff821b9aa0,0x1f,0,0xffffffff82000f98,0xffffffff82015af4);
-      }
-      if (DAT_835f15e0 <= uVar5) {
-        MyAssertHandler(0xffffffff821b9aa0,0x20,0,0xffffffff82015b08,uVar5);
-      }
-      pcVar6 = (char *)(iVar4 + DAT_835f15e4);
-      if ((*(char *)(iVar4 + DAT_835f15e4) != '\x02') && (*(char *)(iVar4 + DAT_835f15e4) != '\x03')
-         ) {
-        MyAssertHandler(0xffffffff821caab8,0x1b7,0,0xffffffff82083930,0xffffffff82083948);
-      }
-      if ((param_3[1] - *(float *)(pcVar6 + 0x2c)) * (param_3[1] - *(float *)(pcVar6 + 0x2c)) +
-          (*param_3 - *(float *)(pcVar6 + 0x28)) * (*param_3 - *(float *)(pcVar6 + 0x28)) +
-          (param_3[2] - *(float *)(pcVar6 + 0x30)) * (param_3[2] - *(float *)(pcVar6 + 0x30)) <
-          (float)((double)*(float *)(pcVar6 + 0x34) + dVar8) *
-          (float)((double)*(float *)(pcVar6 + 0x34) + dVar8)) {
-        if (((*pcVar6 != '\x02') || ((double)*(float *)(pcVar6 + 0x40) < dVar7)) ||
-           (cVar3 = CullSphereFromCone((double)*(float *)(pcVar6 + 0x40),dVar8,pcVar6 + 0x28,
-                                       pcVar6 + 0x10), cVar3 == '\0')) {
-          Com_BitSetAssert(*(undefined4 *)(DAT_8461658c + 0x214),uVar2,0xfffffff);
-        }
-        else {
-          Com_BitClearAssert(*(undefined4 *)(DAT_8461658c + 0x214),uVar2,0xfffffff);
-        }
-      }
-      else {
-        Com_BitClearAssert(*(undefined4 *)(DAT_8461658c + 0x214),uVar2,0xfffffff);
-      }
-      uVar5 = uVar5 + 1;
-      iVar4 = iVar4 + 0x50;
-    } while (uVar5 < *(uint *)(DAT_8461658c + 0x20));
-  }
-  __restgprlr_15();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
 
 // 82763750  R_LinkBoxEntityToPrimaryLights  (gfx_d3d/r_primarylights.cpp:459)
-
-void R_LinkBoxEntityToPrimaryLights(undefined8 param_1,undefined4 param_2,undefined8 param_3)
-
-{
-  char *pcVar1;
-  int iVar2;
-  undefined8 uVar3;
-  undefined8 uVar4;
-  char cVar5;
-  float *pfVar6;
-  longlong lVar7;
-  longlong lVar8;
-  ulonglong uVar9;
-  longlong lVar10;
-  double dVar11;
-  double dVar12;
-  double dVar13;
-  double dVar14;
-  
-  uVar3 = __savegprlr();
-  uVar9 = (ulonglong)*(uint *)(DAT_8461658c + 0x1c) + 1;
-  if ((uVar9 & 0xffffffff) < (ulonglong)*(uint *)(DAT_8461658c + 0x20)) {
-    dVar14 = 0.0;
-    lVar7 = (uVar9 + (uVar9 & 0x3fffffff) * 4 & 0xfffffff) << 4;
-    lVar8 = (uVar9 & 0x1fffffff) << 3;
-    do {
-      uVar4 = R_GetPrimaryLightEntityShadowBit(uVar3,param_2,uVar9);
-      if (DAT_835f15dc == 0) {
-        MyAssertHandler(0xffffffff821b9aa0,0x1f,0,0xffffffff82000f98,0xffffffff82015af4);
-      }
-      if ((ulonglong)DAT_835f15e0 <= (uVar9 & 0xffffffff)) {
-        MyAssertHandler(0xffffffff821b9aa0,0x20,0,0xffffffff82015b08,uVar9);
-      }
-      lVar10 = lVar7 + (ulonglong)DAT_835f15e4;
-      cVar5 = *(char *)((int)lVar7 + DAT_835f15e4);
-      if ((cVar5 != '\x02') && (cVar5 != '\x03')) {
-        MyAssertHandler(0xffffffff821caab8,0x1d4,0,0xffffffff82083930,0xffffffff82083948);
-      }
-      pfVar6 = (float *)param_3;
-      pcVar1 = (char *)lVar10;
-      dVar13 = (double)(ABS(*(float *)(pcVar1 + 0x28) - *pfVar6) - pfVar6[3]);
-      dVar12 = (double)(ABS(*(float *)(pcVar1 + 0x2c) - pfVar6[1]) - pfVar6[4]);
-      dVar11 = (double)(ABS(*(float *)(pcVar1 + 0x30) - pfVar6[2]) - pfVar6[5]);
-      if (dVar13 < 0.0) {
-        dVar13 = dVar14;
-      }
-      if (dVar12 < 0.0) {
-        dVar12 = dVar14;
-      }
-      if (dVar11 < 0.0) {
-        dVar11 = dVar14;
-      }
-      if ((float)(dVar11 * dVar11 +
-                 (double)(float)(dVar12 * dVar12 + (double)(float)(dVar13 * dVar13))) <
-          *(float *)(pcVar1 + 0x34) * *(float *)(pcVar1 + 0x34)) {
-        if (((*pcVar1 != '\x02') || ((double)*(float *)(pcVar1 + 0x40) < dVar14)) ||
-           (cVar5 = CullBoxFromCone(lVar10 + 0x28,lVar10 + 0x10), cVar5 == '\0')) {
-          iVar2 = DAT_8461658c;
-          cVar5 = R_CullBoxFromLightRegion
-                            ((ulonglong)*(uint *)(DAT_8461658c + 0x228) + lVar8,lVar10 + 0x28,
-                             param_3);
-          if (cVar5 == '\0') {
-            Com_BitSetAssert(*(undefined4 *)(iVar2 + 0x214),uVar4,0xfffffff);
-          }
-          else {
-            Com_BitClearAssert();
-          }
-        }
-        else {
-          Com_BitClearAssert(*(undefined4 *)(DAT_8461658c + 0x214),uVar4,0xfffffff);
-        }
-      }
-      else {
-        Com_BitClearAssert(*(undefined4 *)(DAT_8461658c + 0x214),uVar4,0xfffffff);
-      }
-      uVar9 = uVar9 + 1;
-      lVar7 = lVar7 + 0x50;
-      lVar8 = lVar8 + 8;
-    } while ((uVar9 & 0xffffffff) < (ulonglong)*(uint *)(DAT_8461658c + 0x20));
-  }
-  __restgprlr();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
 
 // 82764830  R_LinkDynEntToPrimaryLights  (gfx_d3d/r_primarylights.cpp:495)
-
-void R_LinkDynEntToPrimaryLights(undefined8 param_1,longlong param_2,undefined8 param_3)
-
-{
-  int iVar1;
-  float *pfVar2;
-  float fVar3;
-  int iVar4;
-  int iVar5;
-  char cVar6;
-  uint uVar7;
-  longlong lVar8;
-  longlong lVar9;
-  longlong lVar10;
-  ulonglong uVar11;
-  longlong lVar12;
-  char *pcVar13;
-  double dVar14;
-  double dVar15;
-  double dVar16;
-  uint local_b0;
-  
-  iVar5 = __savegprlr();
-  local_b0 = 0;
-  dVar16 = 3.4028234663852886e+38;
-  uVar11 = (ulonglong)*(uint *)(DAT_8461658c + 0x1c) + 1;
-  uVar7 = 0;
-  if ((uVar11 & 0xffffffff) < (ulonglong)*(uint *)(DAT_8461658c + 0x20)) {
-    lVar9 = (uVar11 + (uVar11 & 0x3fffffff) * 4 & 0xfffffff) << 4;
-    dVar15 = 0.0;
-    lVar10 = (uVar11 & 0x1fffffff) << 3;
-    do {
-      if ((uVar11 & 0xffffffff) <= (ulonglong)*(uint *)(DAT_8461658c + 0x1c)) {
-        MyAssertHandler(0xffffffff821caab8,0x1a3,0,0xffffffff821cacc8,uVar11);
-      }
-      lVar8 = (ulonglong)*(uint *)(DAT_8461658c + 0x1c) + 1;
-      lVar8 = ((longlong)(*(int *)(DAT_8461658c + 0x20) - (int)lVar8) * (longlong)iVar5 - lVar8) +
-              uVar11;
-      if (DAT_835f15dc == 0) {
-        MyAssertHandler(0xffffffff821b9aa0,0x1f,0,0xffffffff82000f98,"comWorld.isInUse");
-      }
-      if ((ulonglong)DAT_835f15e0 <= (uVar11 & 0xffffffff)) {
-        MyAssertHandler(0xffffffff821b9aa0,0x20,0,0xffffffff82015b08,uVar11);
-      }
-      lVar12 = lVar9 + (ulonglong)DAT_835f15e4;
-      cVar6 = *(char *)((int)lVar9 + DAT_835f15e4);
-      if ((cVar6 != '\x02') && (cVar6 != '\x03')) {
-        MyAssertHandler(0xffffffff821caab8,0x1fd,0,0xffffffff82083930,0xffffffff82083948);
-      }
-      pcVar13 = (char *)lVar12;
-      if ((*pcVar13 != '\x02') || ((double)*(float *)(pcVar13 + 0x40) < dVar15)) {
-        cVar6 = CullBoxFromSphere((double)*(float *)(pcVar13 + 0x34),lVar12 + 0x28);
-      }
-      else {
-        cVar6 = CullBoxFromConicSectionOfSphere
-                          ((double)*(float *)(pcVar13 + 0x40),(double)*(float *)(pcVar13 + 0x34),
-                           lVar12 + 0x28,lVar12 + 0x10);
-      }
-      iVar4 = DAT_8461658c;
-      iVar1 = (int)((param_2 + 0x86U & 0x3fffffff) << 2);
-      if (cVar6 == '\0') {
-        cVar6 = R_CullBoxFromLightRegion
-                          ((ulonglong)*(uint *)(DAT_8461658c + 0x228) + lVar10,lVar12 + 0x28,param_3
-                          );
-        if (cVar6 == '\0') {
-          Com_BitSetAssert(*(undefined4 *)(iVar1 + iVar4),lVar8,0xfffffff);
-          pfVar2 = (float *)param_3;
-          fVar3 = *pfVar2 - *(float *)(lVar12 + 0x28);
-          dVar14 = (double)((pfVar2[1] - *(float *)(pcVar13 + 0x2c)) *
-                            (pfVar2[1] - *(float *)(pcVar13 + 0x2c)) +
-                           fVar3 * fVar3 +
-                           (pfVar2[2] - *(float *)(pcVar13 + 0x30)) *
-                           (pfVar2[2] - *(float *)(pcVar13 + 0x30)));
-          if (dVar14 < dVar16) {
-            local_b0 = (uint)uVar11;
-            dVar16 = dVar14;
-          }
-        }
-        else {
-          Com_BitClearAssert();
-        }
-      }
-      else {
-        Com_BitClearAssert(*(undefined4 *)(iVar1 + DAT_8461658c),lVar8,0xfffffff);
-      }
-      uVar11 = uVar11 + 1;
-      lVar9 = lVar9 + 0x50;
-      lVar10 = lVar10 + 8;
-      uVar7 = local_b0;
-    } while ((uVar11 & 0xffffffff) < (ulonglong)*(uint *)(DAT_8461658c + 0x20));
-  }
-  if ((int)param_2 == 0) {
-    if (uVar7 != (uVar7 & 0xff)) {
-      MyAssertHandler(0xffffffff82016410,0x1ce,0,0xffffffff8201645c,uVar7,uVar7 & 0xff);
-    }
-    *(char *)(*(int *)(DAT_8461658c + 0x220) + iVar5) = (char)uVar7;
-  }
-  __restgprlr();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
 
 // 827639B8  R_UnlinkEntityFromPrimaryLights  (gfx_d3d/r_primarylights.cpp:540)
-
-void R_UnlinkEntityFromPrimaryLights(undefined8 param_1,undefined8 param_2)
-
-{
-  int iVar1;
-  int iVar2;
-  undefined8 uVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  
-  uVar3 = __savegprlr_20();
-  uVar5 = (ulonglong)*(uint *)(DAT_8461658c + 0x1c) + 1;
-  if ((uVar5 & 0xffffffff) < (ulonglong)*(uint *)(DAT_8461658c + 0x20)) {
-    do {
-      uVar4 = R_GetPrimaryLightEntityShadowBit(uVar3,param_2,uVar5);
-      iVar1 = *(int *)(DAT_8461658c + 0x214);
-      if (iVar1 == 0) {
-        MyAssertHandler(0xffffffff82003098,0x19,0,0xffffffff82000f98,0xffffffff8200308c);
-      }
-      if (0x7ffffff7 < (uVar4 & 0xffffffff)) {
-        MyAssertHandler(0xffffffff82003098,0x1a,0,0xffffffff82003058,uVar4,0x7ffffff8);
-      }
-      iVar2 = ((int)(uint)uVar4 >> 5) * 4;
-      uVar5 = uVar5 + 1;
-      *(uint *)(iVar2 + iVar1) = *(uint *)(iVar2 + iVar1) & ~(1 << ((uint)uVar4 & 0x1f));
-    } while ((uVar5 & 0xffffffff) < (ulonglong)*(uint *)(DAT_8461658c + 0x20));
-  }
-  __restgprlr_20();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
 
 // 82763AB0  R_UnlinkDynEntFromPrimaryLights  (gfx_d3d/r_primarylights.cpp:554)
-
-void R_UnlinkDynEntFromPrimaryLights(undefined8 param_1,longlong param_2)
-
-{
-  int iVar1;
-  int iVar2;
-  int iVar3;
-  longlong lVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  
-  iVar3 = __savegprlr_18();
-  uVar6 = (ulonglong)*(uint *)(DAT_8461658c + 0x1c) + 1;
-  if ((uVar6 & 0xffffffff) < (ulonglong)*(uint *)(DAT_8461658c + 0x20)) {
-    do {
-      if ((uVar6 & 0xffffffff) <= (ulonglong)*(uint *)(DAT_8461658c + 0x1c)) {
-        MyAssertHandler(0xffffffff821caab8,0x1a3,0,0xffffffff821cacc8,uVar6);
-      }
-      lVar4 = (ulonglong)*(uint *)(DAT_8461658c + 0x1c) + 1;
-      iVar1 = *(int *)((int)((param_2 + 0x86U & 0xffffffff) << 2) + DAT_8461658c);
-      uVar5 = ((longlong)(*(int *)(DAT_8461658c + 0x20) - (int)lVar4) * (longlong)iVar3 - lVar4) +
-              uVar6;
-      if (iVar1 == 0) {
-        MyAssertHandler(0xffffffff82003098,0x19,0,0xffffffff82000f98,0xffffffff8200308c);
-      }
-      if (0x7ffffff7 < (uVar5 & 0xffffffff)) {
-        MyAssertHandler(0xffffffff82003098,0x1a,0,0xffffffff82003058,uVar5,0x7ffffff8);
-      }
-      iVar2 = ((int)(uint)uVar5 >> 5) * 4;
-      uVar6 = uVar6 + 1;
-      *(uint *)(iVar2 + iVar1) = *(uint *)(iVar2 + iVar1) & ~(1 << ((uint)uVar5 & 0x1f));
-    } while ((uVar6 & 0xffffffff) < (ulonglong)*(uint *)(DAT_8461658c + 0x20));
-  }
-  __restgprlr_18();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
 
 // 82763BE8  R_IsEntityVisibleToPrimaryLight  (gfx_d3d/r_primarylights.cpp:568)
-
-void R_IsEntityVisibleToPrimaryLight(void)
-
-{
-  undefined8 uVar1;
-  
-  uVar1 = R_GetPrimaryLightEntityShadowBit();
-  Com_BitCheckAssert(*(undefined4 *)(DAT_8461658c + 0x214),uVar1,0xfffffff);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
 
 // 82763C28  R_IsDynEntVisibleToPrimaryLight  (gfx_d3d/r_primarylights.cpp:578)
-
-void R_IsDynEntVisibleToPrimaryLight(undefined8 param_1,int param_2,undefined8 param_3)
-
-{
-  undefined8 uVar1;
-  
-  uVar1 = R_GetPrimaryLightDynEntShadowBit(param_1,param_3);
-  Com_BitCheckAssert(*(undefined4 *)((param_2 + 0x86) * 4 + DAT_8461658c),uVar1,0xfffffff);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
 
 // 82763C80  R_IsEntityVisibleToShadowedPrimaryLight  (gfx_d3d/r_primarylights.cpp:588)
-
-undefined8 R_IsEntityVisibleToShadowedPrimaryLight(longlong param_1,ulonglong param_2)
-
-{
-  undefined8 uVar1;
-  
-  if ((ulonglong)*(uint *)(DAT_8461658c + 0x20) <= (param_2 & 0xffffffff)) {
-    return 0;
-  }
-  uVar1 = Com_BitCheckAssert(*(undefined4 *)(DAT_8461658c + 0x214),param_1 + param_2,0xfffffff);
-  return uVar1;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
 
 // 82763CB8  R_IsEntityVisibleToAnyShadowedPrimaryLight  (gfx_d3d/r_primarylights.cpp:597)
-
-void R_IsEntityVisibleToAnyShadowedPrimaryLight(undefined8 param_1,int param_2)
-
-{
-  int iVar1;
-  int iVar2;
-  longlong lVar3;
-  longlong lVar4;
-  int iVar5;
-  int iVar6;
-  uint uVar7;
-  int iVar8;
-  
-  iVar1 = __savegprlr_27();
-  if (DAT_84628b00 == 0) {
-    MyAssertHandler(0xffffffff821caab8,0x25b,0,0xffffffff82000f98,0xffffffff821b90d8);
-  }
-  iVar1 = *(int *)(iVar1 + 0x930) * DAT_84613764;
-  lVar4 = (ulonglong)*(uint *)(DAT_8461658c + 0x1c) + 1;
-  lVar3 = (ulonglong)*(uint *)(DAT_8461658c + 0x20) - lVar4;
-  if ((lVar3 + 1U & 0xffffffff) < (ulonglong)*(uint *)(DAT_84628b00 + 0x2800)) {
-    MyAssertHandler(0xffffffff821caab8,0x264,0,0xffffffff821cad08);
-  }
-  uVar7 = 0;
-  if (*(int *)(DAT_84628b00 + 0x2800) != 0) {
-    iVar8 = 0;
-    iVar6 = DAT_84628b00;
-    iVar2 = DAT_84628b00;
-    iVar5 = DAT_8461658c;
-    do {
-      if (((ulonglong)*(byte *)(iVar2 + 0x29c0) < (ulonglong)*(uint *)(iVar5 + 0x20)) &&
-         (iVar2 = Com_BitCheckAssert(*(undefined4 *)(iVar5 + 0x214),
-                                     (ulonglong)*(byte *)(iVar2 + 0x29c0) +
-                                     ((longlong)(iVar1 + param_2) * (longlong)(int)lVar3 - lVar4),
-                                     0xfffffff), iVar6 = DAT_84628b00, iVar5 = DAT_8461658c,
-         iVar2 != 0)) {
-        __restgprlr_27(1);
-        return;
-      }
-      uVar7 = uVar7 + 1;
-      iVar8 = iVar8 + 0x1d0;
-      iVar2 = iVar8 + iVar6;
-    } while (uVar7 < *(uint *)(iVar6 + 0x2800));
-  }
-  __restgprlr_27(0);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0
 
 // 82763DF0  R_IsDynEntVisibleToShadowedPrimaryLight  (gfx_d3d/r_primarylights.cpp:626)
-
-undefined8 R_IsDynEntVisibleToShadowedPrimaryLight(longlong param_1,int param_2,ulonglong param_3)
-
-{
-  undefined8 uVar1;
-  
-  if ((ulonglong)*(uint *)(DAT_8461658c + 0x20) <= (param_3 & 0xffffffff)) {
-    return 0;
-  }
-  uVar1 = Com_BitCheckAssert(*(undefined4 *)((param_2 + 0x86) * 4 + DAT_8461658c),param_1 + param_3,
-                             0xfffffff);
-  return uVar1;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
 
 // 82763E30  R_IsDynEntVisibleToAnyShadowedPrimaryLight  (gfx_d3d/r_primarylights.cpp:637)
-
-void R_IsDynEntVisibleToAnyShadowedPrimaryLight(undefined8 param_1,longlong param_2)
-
-{
-  int iVar1;
-  int iVar2;
-  longlong lVar3;
-  longlong lVar4;
-  int iVar5;
-  int iVar6;
-  uint uVar7;
-  int iVar8;
-  
-  iVar1 = __savegprlr_26();
-  if (DAT_84628b00 == 0) {
-    MyAssertHandler(0xffffffff821caab8,0x283,0,0xffffffff82000f98,0xffffffff821b90d8);
-  }
-  lVar4 = (ulonglong)*(uint *)(DAT_8461658c + 0x1c) + 1;
-  lVar3 = (ulonglong)*(uint *)(DAT_8461658c + 0x20) - lVar4;
-  if ((lVar3 + 1U & 0xffffffff) < (ulonglong)*(uint *)(DAT_84628b00 + 0x2800)) {
-    MyAssertHandler(0xffffffff821caab8,0x289,0,0xffffffff821cad08);
-  }
-  uVar7 = 0;
-  if (*(int *)(DAT_84628b00 + 0x2800) != 0) {
-    iVar8 = 0;
-    iVar6 = DAT_84628b00;
-    iVar2 = DAT_84628b00;
-    iVar5 = DAT_8461658c;
-    do {
-      if (((ulonglong)*(byte *)(iVar2 + 0x29c0) < (ulonglong)*(uint *)(iVar5 + 0x20)) &&
-         (iVar2 = Com_BitCheckAssert(*(undefined4 *)
-                                      ((int)((param_2 + 0x86U & 0xffffffff) << 2) + iVar5),
-                                     (ulonglong)*(byte *)(iVar2 + 0x29c0) +
-                                     ((longlong)(int)lVar3 * (longlong)iVar1 - lVar4),0xfffffff),
-         iVar6 = DAT_84628b00, iVar5 = DAT_8461658c, iVar2 != 0)) {
-        __restgprlr_26(1);
-        return;
-      }
-      uVar7 = uVar7 + 1;
-      iVar8 = iVar8 + 0x1d0;
-      iVar2 = iVar8 + iVar6;
-    } while (uVar7 < *(uint *)(iVar6 + 0x2800));
-  }
-  __restgprlr_26(0);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0
 
 // 82763F58  R_GetNonSunPrimaryLightForBox  (gfx_d3d/r_primarylights.cpp:663)
-
-void R_GetNonSunPrimaryLightForBox(void)
-
-{
-  int iVar1;
-  undefined8 uVar2;
-  char cVar3;
-  longlong lVar4;
-  longlong lVar5;
-  ulonglong uVar6;
-  longlong lVar7;
-  char *pcVar8;
-  double dVar9;
-  
-  uVar2 = __savegprlr_17();
-  uVar6 = (ulonglong)*(uint *)(DAT_8461658c + 0x1c) + 1;
-  if ((uVar6 & 0xffffffff) < (ulonglong)*(uint *)(DAT_8461658c + 0x20)) {
-    lVar5 = (uVar6 + (uVar6 & 0x3fffffff) * 4 & 0xfffffff) << 4;
-    dVar9 = 0.0;
-    lVar4 = (uVar6 & 0x1fffffff) << 3;
-    do {
-      if (DAT_835f15dc == 0) {
-        MyAssertHandler(0xffffffff821b9aa0,0x1f,0,0xffffffff82000f98,0xffffffff82015af4);
-      }
-      if ((ulonglong)DAT_835f15e0 <= (uVar6 & 0xffffffff)) {
-        MyAssertHandler(0xffffffff821b9aa0,0x20,0,0xffffffff82015b08,uVar6);
-      }
-      lVar7 = lVar5 + (ulonglong)DAT_835f15e4;
-      cVar3 = *(char *)((int)lVar5 + DAT_835f15e4);
-      if ((cVar3 != '\x02') && (cVar3 != '\x03')) {
-        MyAssertHandler(0xffffffff821caab8,0x29f,0,0xffffffff82083930,0xffffffff82083948);
-      }
-      pcVar8 = (char *)lVar7;
-      if ((*pcVar8 != '\x02') || ((double)*(float *)(pcVar8 + 0x40) < dVar9)) {
-        cVar3 = CullBoxFromSphere((double)*(float *)(pcVar8 + 0x34),lVar7 + 0x28);
-      }
-      else {
-        cVar3 = CullBoxFromConicSectionOfSphere
-                          ((double)*(float *)(pcVar8 + 0x40),(double)*(float *)(pcVar8 + 0x34),
-                           lVar7 + 0x28,lVar7 + 0x10);
-      }
-      iVar1 = DAT_8461658c;
-      if ((cVar3 == '\0') &&
-         (cVar3 = R_CullBoxFromLightRegion
-                            ((ulonglong)*(uint *)(DAT_8461658c + 0x228) + lVar4,lVar7 + 0x28,uVar2),
-         cVar3 == '\0')) {
-        __restgprlr_17(uVar6);
-        return;
-      }
-      uVar6 = uVar6 + 1;
-      lVar5 = lVar5 + 0x50;
-      lVar4 = lVar4 + 8;
-    } while ((uVar6 & 0xffffffff) < (ulonglong)*(uint *)(iVar1 + 0x20));
-  }
-  __restgprlr_17(0);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
 
 // 82764110  R_GetNonSunPrimaryLightForSphere  (gfx_d3d/r_primarylights.cpp:685)
-
-void R_GetNonSunPrimaryLightForSphere(void)
-
-{
-  char *pcVar1;
-  float *pfVar2;
-  char cVar3;
-  longlong lVar4;
-  longlong lVar5;
-  ulonglong uVar6;
-  longlong lVar7;
-  double extraout_f1;
-  double dVar8;
-  double dVar9;
-  
-  pfVar2 = (float *)__savegprlr_17();
-  uVar6 = (ulonglong)*(uint *)(DAT_8461658c + 0x1c) + 1;
-  if ((uVar6 & 0xffffffff) < (ulonglong)*(uint *)(DAT_8461658c + 0x20)) {
-    lVar5 = (uVar6 + (uVar6 & 0x3fffffff) * 4 & 0xfffffff) << 4;
-    dVar8 = 0.0;
-    lVar4 = (uVar6 & 0x1fffffff) << 3;
-    dVar9 = extraout_f1;
-    do {
-      if (DAT_835f15dc == 0) {
-        MyAssertHandler(0xffffffff821b9aa0,0x1f,0,0xffffffff82000f98,0xffffffff82015af4);
-      }
-      if ((ulonglong)DAT_835f15e0 <= (uVar6 & 0xffffffff)) {
-        MyAssertHandler(0xffffffff821b9aa0,0x20,0,0xffffffff82015b08,uVar6,DAT_835f15e0);
-      }
-      lVar7 = lVar5 + (ulonglong)DAT_835f15e4;
-      cVar3 = *(char *)((int)lVar5 + DAT_835f15e4);
-      if ((cVar3 != '\x02') && (cVar3 != '\x03')) {
-        MyAssertHandler(0xffffffff821caab8,0x2b5,0,0xffffffff82083930,0xffffffff82083948);
-      }
-      pcVar1 = (char *)lVar7;
-      if ((pfVar2[1] - *(float *)(pcVar1 + 0x2c)) * (pfVar2[1] - *(float *)(pcVar1 + 0x2c)) +
-          (*pfVar2 - *(float *)(pcVar1 + 0x28)) * (*pfVar2 - *(float *)(pcVar1 + 0x28)) +
-          (pfVar2[2] - *(float *)(pcVar1 + 0x30)) * (pfVar2[2] - *(float *)(pcVar1 + 0x30)) <
-          (float)((double)*(float *)(pcVar1 + 0x34) + dVar9) *
-          (float)((double)*(float *)(pcVar1 + 0x34) + dVar9)) {
-        if ((*pcVar1 != '\x02') || ((double)*(float *)(pcVar1 + 0x40) < dVar8)) {
-          cVar3 = '\0';
-        }
-        else {
-          cVar3 = CullSphereFromCone((double)*(float *)(pcVar1 + 0x40),dVar9,lVar7 + 0x28,
-                                     lVar7 + 0x10);
-        }
-      }
-      else {
-        cVar3 = '\x01';
-      }
-      if (cVar3 == '\0') {
-        cVar3 = R_CullSphereFromLightRegion
-                          (dVar9,(ulonglong)*(uint *)(DAT_8461658c + 0x228) + lVar4,lVar7 + 0x28,
-                           pfVar2);
-        if (cVar3 == '\0') {
-          __restgprlr_17(uVar6);
-          return;
-        }
-      }
-      uVar6 = uVar6 + 1;
-      lVar5 = lVar5 + 0x50;
-      lVar4 = lVar4 + 8;
-    } while ((uVar6 & 0xffffffff) < (ulonglong)*(uint *)(DAT_8461658c + 0x20));
-  }
-  __restgprlr_17(0);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0

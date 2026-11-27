@@ -2,7 +2,7 @@
 
 // 82916F08  sin  (<external>/bt/278379/vctools/crt/src/fpw32/tran/sincos.c:190)
 
-double sin(double _X)
+double sin(double param_1)
 
 {
   float fVar1;
@@ -11,55 +11,59 @@ double sin(double _X)
   double dVar4;
   double dVar5;
   
-  dVar2 = ABS(_X);
-  fVar1 = DAT_829aff3c;
-  if (_X < 0.0) {
-    fVar1 = DAT_829aff40;
+  dVar2 = ABS(param_1);
+  fVar1 = gConstSin.one;
+  if (param_1 < 0.0) {
+    fVar1 = gConstSin.minus_one;
   }
-  dVar4 = (double)(longlong)(DAT_829aff28 * dVar2);
-  dVar3 = -(DAT_829aff50 * dVar4 - -(DAT_829aff48 * dVar4 - dVar2));
+  dVar4 = (double)(longlong)(gConstSin.PI_INV * dVar2);
+  dVar3 = -(gConstSin._C2.dbl * dVar4 - -(gConstSin._C1.dbl * dVar4 - dVar2));
   dVar5 = dVar3 * dVar3;
-  dVar3 = ((((((((DAT_829aff90 * dVar5 + DAT_829aff88) * dVar5 + DAT_829aff80) * dVar5 +
-               DAT_829aff78) * dVar5 + DAT_829aff70) * dVar5 + DAT_829aff68) * dVar5 + DAT_829aff60)
-            * dVar5 + DAT_829aff58) * dVar5 + 1.0) * dVar3;
+  dVar3 = ((((((((gConstSin.SinCosCoeffr8 * dVar5 + gConstSin.SinCosCoeffr7) * dVar5 +
+                gConstSin.SinCosCoeffr6) * dVar5 + gConstSin.SinCosCoeffr5) * dVar5 +
+              gConstSin.SinCosCoeffr4) * dVar5 + gConstSin.SinCosCoeffr3) * dVar5 +
+            gConstSin.SinCosCoeffr2) * dVar5 + gConstSin.SinCosCoeffr1) * dVar5 + 1.0) * dVar3;
   if (((longlong)dVar4 & 1U) != 0) {
     dVar3 = -dVar3;
   }
-  if ((dVar2 != 0.0) && (_X = DAT_829b0420, dVar2 - DAT_829aff30 < 0.0)) {
-    _X = dVar3 * (double)fVar1;
+  if ((dVar2 != 0.0) && (param_1 = _d_ind, dVar2 - gConstSin.YMAX < 0.0)) {
+    param_1 = dVar3 * (double)fVar1;
   }
-  return _X;
+  return param_1;
 }
 
 
 // 82916FE8  cos  (<external>/bt/278379/vctools/crt/src/fpw32/tran/sincos.c:236)
 
-double cos(double _X)
+double cos(double param_1)
 
 {
   double dVar1;
-  double dVar2;
+  _dbl _Var2;
   double dVar3;
   double dVar4;
+  double dVar5;
+  _dbl _Var6;
   
-  dVar1 = ABS(_X);
-  dVar3 = (double)(longlong)(DAT_829aff28 * (DAT_829aff20 + dVar1));
-  dVar2 = dVar3 - (double)DAT_829aff44;
-  dVar2 = -(DAT_829aff50 * dVar2 - -(DAT_829aff48 * dVar2 - dVar1));
-  dVar4 = dVar2 * dVar2;
-  dVar2 = ((((((((DAT_829aff90 * dVar4 + DAT_829aff88) * dVar4 + DAT_829aff80) * dVar4 +
-               DAT_829aff78) * dVar4 + DAT_829aff70) * dVar4 + DAT_829aff68) * dVar4 + DAT_829aff60)
-            * dVar4 + DAT_829aff58) * dVar4 + 1.0) * dVar2;
-  if (((longlong)dVar3 & 1U) != 0) {
-    dVar2 = -dVar2;
+  dVar1 = ABS(param_1);
+  dVar4 = (double)(longlong)(gConstSin.PI_INV * (gConstSin.PI_OVER_TWO + dVar1));
+  dVar3 = dVar4 - (double)gConstSin.one_half;
+  dVar3 = -(gConstSin._C2.dbl * dVar3 - -(gConstSin._C1.dbl * dVar3 - dVar1));
+  dVar5 = dVar3 * dVar3;
+  _Var6.dbl = ((((((((gConstSin.SinCosCoeffr8 * dVar5 + gConstSin.SinCosCoeffr7) * dVar5 +
+                    gConstSin.SinCosCoeffr6) * dVar5 + gConstSin.SinCosCoeffr5) * dVar5 +
+                  gConstSin.SinCosCoeffr4) * dVar5 + gConstSin.SinCosCoeffr3) * dVar5 +
+                gConstSin.SinCosCoeffr2) * dVar5 + gConstSin.SinCosCoeffr1) * dVar5 + 1.0) * dVar3;
+  if (((longlong)dVar4 & 1U) != 0) {
+    _Var6.dbl = -_Var6.dbl;
   }
-  if (dVar1 == (double)DAT_829aff38) {
-    return (double)DAT_829aff3c;
+  if (dVar1 == (double)gConstSin.zero) {
+    return (double)gConstSin.one;
   }
-  dVar3 = DAT_829b0420;
-  if ((DAT_829aff20 + dVar1) - DAT_829aff30 < 0.0) {
-    dVar3 = dVar2;
+  _Var2 = _d_ind;
+  if ((gConstSin.PI_OVER_TWO + dVar1) - gConstSin.YMAX < 0.0) {
+    _Var2 = _Var6;
   }
-  return dVar3;
+  return _Var2.dbl;
 }
 

@@ -2,228 +2,236 @@
 
 // 828CAE40  NellyAskToEnv  (<external>/Xenon/mar09/core/private/xam/codecs/nci/dec/src/asktoenvinline.c:194)
 
-void NellyAskToEnv(undefined8 param_1,double param_2,undefined8 param_3,undefined8 param_4,
-                  longlong param_5,undefined8 param_6,short param_7,short param_8,int param_9,
-                  longlong param_10)
+void NellyAskToEnv(float *param_1,float param_2,float *param_3,float param_4,short param_5,
+                  short param_6,float *param_7,float *param_8)
 
 {
   float fVar1;
   float fVar2;
   undefined4 uVar3;
   undefined4 *puVar4;
-  int iVar5;
-  int iVar6;
-  ulonglong uVar7;
-  int iVar8;
+  void *pvVar5;
+  ulonglong uVar6;
+  int iVar7;
+  float *pfVar8;
   longlong lVar9;
+  short sVar11;
   longlong lVar10;
-  longlong lVar11;
+  short sVar13;
   longlong lVar12;
-  longlong lVar13;
-  int iVar14;
+  int in_r9;
+  longlong lVar14;
   longlong lVar15;
-  int iVar16;
-  ulonglong uVar17;
-  float *pfVar18;
-  longlong lVar19;
+  longlong in_r10;
+  float *pfVar17;
+  longlong lVar16;
+  int iVar18;
+  ulonglong uVar19;
   longlong lVar20;
   longlong lVar21;
   longlong lVar22;
-  double dVar23;
-  double extraout_f1;
-  double dVar24;
+  longlong lVar23;
+  longlong lVar24;
   double dVar25;
+  double extraout_f1;
   double dVar26;
-  undefined4 local_2d0 [84];
-  undefined4 local_180 [96];
+  double dVar27;
+  double dVar28;
+  double dVar29;
+  float local_2d0 [84];
+  float local_180 [96];
   
-  uVar7 = ZEXT48(&stack0x00000000);
-  __savegprlr_23();
-  iVar8 = __savefpr_28();
-  lVar19 = param_5 + 0x90c;
-  lVar20 = param_5 + 0x808;
-  dVar24 = extraout_f1;
-  (*DAT_848958c8)(param_5,0,0x90c);
-  lVar12 = param_5 + -4;
-  pfVar18 = (float *)(iVar8 + -4);
-  lVar21 = 0xc;
+  dVar26 = (double)param_4;
+  sVar13 = (short)param_8;
+  sVar11 = (short)param_7;
+  lVar20 = (longlong)param_5;
+  uVar6 = ZEXT48(&stack0x00000000);
+  __savegprlr_23((double)param_2,param_1,param_3,lVar20,param_6);
+  iVar7 = __savefpr_28();
+  lVar21 = lVar20 + 0x90c;
+  lVar22 = lVar20 + 0x808;
+  pvVar5 = (void *)lVar20;
+  dVar27 = extraout_f1;
+  (*memsetfunc)(pvVar5,0,0x90c);
+  lVar14 = lVar20 + -4;
+  pfVar17 = (float *)(iVar7 + -4);
+  lVar23 = 0xc;
   do {
-    pfVar18 = pfVar18 + 1;
-    lVar12 = lVar12 + 4;
-    *(undefined4 *)lVar12 =
-         *(undefined4 *)(PTR_DAT_829afe80 + ((int)(*pfVar18 * 40.743664 + 0.5) & 0xffU) * 4);
-    lVar21 = lVar21 + -1;
-  } while (lVar21 != 0);
-  lVar9 = param_5 + 0xe0;
-  lVar11 = 0;
-  dVar25 = 1.0;
-  lVar15 = 0;
-  iVar8 = (int)param_5;
-  *(undefined4 *)(iVar8 + 0xe0) = 0x3f800000;
-  lVar12 = uVar7 - 0x1c0;
-  lVar21 = lVar9;
+    pfVar17 = pfVar17 + 1;
+    lVar14 = lVar14 + 4;
+    *(float *)lVar14 = trigTBL_32[(int)(*pfVar17 * 40.743664 + 0.5) & 0xff];
+    lVar23 = lVar23 + -1;
+  } while (lVar23 != 0);
+  lVar9 = lVar20 + 0xe0;
+  lVar12 = 0;
+  dVar28 = 1.0;
+  lVar16 = 0;
+  *(undefined4 *)((int)pvVar5 + 0xe0) = 0x3f800000;
+  lVar14 = uVar6 - 0x1c0;
+  lVar23 = lVar9;
   do {
-    lVar13 = lVar12;
-    fVar2 = *(float *)((int)lVar15 + iVar8);
-    *(float *)((int)lVar15 + (int)lVar13 + 4) = -fVar2;
-    if (0 < (int)lVar11) {
-      lVar12 = lVar15 + lVar21 + 4;
-      lVar22 = lVar11;
-      lVar10 = lVar13;
+    lVar15 = lVar14;
+    fVar2 = *(float *)((int)lVar16 + (int)pvVar5);
+    *(float *)((int)lVar16 + (int)lVar15 + 4) = -fVar2;
+    if (0 < (int)lVar12) {
+      lVar14 = lVar16 + lVar23 + 4;
+      lVar24 = lVar12;
+      lVar10 = lVar15;
       do {
         lVar10 = lVar10 + 4;
-        lVar12 = lVar12 + -4;
+        lVar14 = lVar14 + -4;
         *(float *)lVar10 =
-             -(*(float *)lVar12 * fVar2 -
-              *(float *)(((int)lVar21 - (int)lVar13) + (int)(float *)lVar10));
-        lVar22 = lVar22 + -1;
-      } while (lVar22 != 0);
+             -(*(float *)lVar14 * fVar2 -
+              *(float *)(((int)lVar23 - (int)lVar15) + (int)(float *)lVar10));
+        lVar24 = lVar24 + -1;
+      } while (lVar24 != 0);
     }
-    lVar15 = lVar15 + 4;
-    lVar11 = lVar11 + 1;
-    lVar12 = lVar21;
-    lVar21 = lVar13;
-  } while ((int)lVar15 < 0x30);
-  iVar5 = (int)param_10;
-  lVar12 = 0xc;
+    lVar16 = lVar16 + 4;
+    lVar12 = lVar12 + 1;
+    lVar14 = lVar23;
+    lVar23 = lVar15;
+  } while ((int)lVar16 < 0x30);
+  iVar7 = (int)in_r10;
+  lVar14 = 0xc;
   do {
-    puVar4 = (undefined4 *)param_10;
-    *puVar4 = *(undefined4 *)(((int)lVar9 - iVar5) + (int)puVar4);
-    *(undefined4 *)((param_9 - iVar5) + (int)puVar4) =
-         *(undefined4 *)((iVar8 - iVar5) + (int)puVar4);
-    param_10 = param_10 + 4;
-    lVar12 = lVar12 + -1;
-  } while (lVar12 != 0);
-  *(float *)(iVar8 + 0x30) = (float)dVar24;
-  uVar17 = 1;
-  lVar21 = param_5 + 0x34;
-  puVar4 = (undefined4 *)(param_5 + 0x30);
-  lVar12 = lVar21;
+    puVar4 = (undefined4 *)in_r10;
+    *puVar4 = *(undefined4 *)(((int)lVar9 - iVar7) + (int)puVar4);
+    *(undefined4 *)((in_r9 - iVar7) + (int)puVar4) =
+         *(undefined4 *)(((int)pvVar5 - iVar7) + (int)puVar4);
+    in_r10 = in_r10 + 4;
+    lVar14 = lVar14 + -1;
+  } while (lVar14 != 0);
+  *(float *)((int)pvVar5 + 0x30) = (float)dVar27;
+  uVar19 = 1;
+  lVar23 = lVar20 + 0x34;
+  pfVar17 = (float *)(lVar20 + 0x30);
+  lVar14 = lVar23;
   do {
-    fVar2 = -(*(float *)(((int)lVar9 - (int)puVar4) + (int)(float *)lVar12) *
-             (float)(longlong)(int)uVar17);
-    if (1 < (int)uVar17) {
-      lVar13 = uVar17 - 1;
-      lVar15 = lVar9;
-      lVar11 = lVar12;
+    fVar2 = -(*(float *)(((int)lVar9 - (int)pfVar17) + (int)(float *)lVar14) *
+             (float)(longlong)(int)uVar19);
+    if (1 < (int)uVar19) {
+      lVar15 = uVar19 - 1;
+      lVar16 = lVar9;
+      lVar12 = lVar14;
       do {
-        lVar11 = lVar11 + -4;
-        lVar15 = lVar15 + 4;
-        fVar2 = -(*(float *)lVar11 * *(float *)lVar15 - fVar2);
-        lVar13 = lVar13 + -1;
-      } while (lVar13 != 0);
+        lVar12 = lVar12 + -4;
+        lVar16 = lVar16 + 4;
+        fVar2 = -(*(float *)lVar12 * *(float *)lVar16 - fVar2);
+        lVar15 = lVar15 + -1;
+      } while (lVar15 != 0);
     }
-    uVar17 = uVar17 + 1;
-    *(float *)lVar12 = fVar2;
-    lVar12 = lVar12 + 4;
-  } while ((int)uVar17 < 0xd);
-  dVar26 = 0.0;
-  if ((int)uVar17 < 0x2c) {
-    lVar9 = (uVar17 & 0x3fffffff) * 4 + param_5 + 0x30;
-    lVar12 = 0x2c - uVar17;
+    uVar19 = uVar19 + 1;
+    *(float *)lVar14 = fVar2;
+    lVar14 = lVar14 + 4;
+  } while ((int)uVar19 < 0xd);
+  dVar29 = 0.0;
+  if ((int)uVar19 < 0x2c) {
+    lVar9 = (uVar19 & 0x3fffffff) * 4 + lVar20 + 0x30;
+    lVar14 = 0x2c - uVar19;
     do {
-      lVar15 = param_5 + 0xe0;
-      lVar13 = 0xc;
-      lVar11 = lVar9;
-      dVar23 = dVar26;
+      lVar16 = lVar20 + 0xe0;
+      lVar15 = 0xc;
+      lVar12 = lVar9;
+      dVar25 = dVar29;
       do {
-        lVar11 = lVar11 + -4;
-        lVar15 = lVar15 + 4;
-        dVar23 = -(double)(float)((double)*(float *)lVar11 * (double)*(float *)lVar15 - dVar23);
-        lVar13 = lVar13 + -1;
-      } while (lVar13 != 0);
-      *(float *)lVar9 = (float)dVar23;
-      lVar12 = lVar12 + -1;
+        lVar12 = lVar12 + -4;
+        lVar16 = lVar16 + 4;
+        dVar25 = -(double)(float)((double)*(float *)lVar12 * (double)*(float *)lVar16 - dVar25);
+        lVar15 = lVar15 + -1;
+      } while (lVar15 != 0);
+      *(float *)lVar9 = (float)dVar25;
+      lVar14 = lVar14 + -1;
       lVar9 = lVar9 + 4;
-    } while (lVar12 != 0);
+    } while (lVar14 != 0);
   }
   lVar9 = 0x2b;
-  iVar5 = (int)PTR_DAT_829afe8c - (int)puVar4;
-  lVar12 = lVar21;
+  iVar7 = (int)CsTable - (int)pfVar17;
+  lVar14 = lVar23;
   do {
-    pfVar18 = (float *)lVar12;
-    *pfVar18 = *(float *)(iVar5 + (int)pfVar18) * *pfVar18;
-    lVar12 = lVar12 + 4;
+    pfVar8 = (float *)lVar14;
+    *pfVar8 = *(float *)(iVar7 + (int)pfVar8) * *pfVar8;
+    lVar14 = lVar14 + 4;
     lVar9 = lVar9 + -1;
   } while (lVar9 != 0);
-  (*DAT_848958c8)(uVar7 - 0x2d0,0,0x104);
-  (*DAT_848958c8)(uVar7 - 0x180,0,0x104);
-  local_2d0[0] = *puVar4;
-  lVar15 = uVar7 - 0x180;
-  lVar9 = uVar7 - 0x1d0;
-  lVar11 = uVar7 - 0x84;
-  lVar13 = 0x15;
-  lVar12 = uVar7 - 0x2d0;
+  (*memsetfunc)(&stack0x00000000 + -0x2d0,0,0x104);
+  (*memsetfunc)(&stack0x00000000 + -0x180,0,0x104);
+  local_2d0[0] = *pfVar17;
+  lVar16 = uVar6 - 0x180;
+  lVar9 = uVar6 - 0x1d0;
+  lVar12 = uVar6 - 0x84;
+  lVar15 = 0x15;
+  lVar14 = uVar6 - 0x2d0;
   do {
-    fVar2 = *(float *)lVar21;
-    fVar1 = ((float *)lVar21)[1];
-    *(float *)lVar15 = fVar2 * 1.6931472;
-    *(float *)lVar11 = fVar2 * 0.30685282;
-    lVar12 = lVar12 + 4;
-    *(float *)lVar12 = fVar1 * 1.6931472;
+    fVar2 = *(float *)lVar23;
+    fVar1 = ((float *)lVar23)[1];
+    *(float *)lVar16 = fVar2 * 1.6931472;
+    *(float *)lVar12 = fVar2 * 0.30685282;
+    lVar14 = lVar14 + 4;
+    *(float *)lVar14 = fVar1 * 1.6931472;
     lVar9 = lVar9 + -4;
     *(float *)lVar9 = fVar1 * 0.30685282;
-    lVar15 = lVar15 + 4;
-    lVar11 = lVar11 + -4;
-    lVar21 = lVar21 + 8;
-    lVar13 = lVar13 + -1;
-  } while (lVar13 != 0);
-  fVar2 = *(float *)lVar21;
-  *(float *)lVar15 = fVar2 * 1.6931472;
-  *(float *)lVar11 = fVar2 * 0.30685282;
-  realFft(uVar7 - 0x2d0,uVar7 - 0x180,0x80);
-  iVar14 = (int)lVar19;
-  iVar5 = (int)lVar20;
-  lVar12 = (lVar19 - param_5) + -0x90c;
-  lVar21 = 0x41;
+    lVar16 = lVar16 + 4;
+    lVar12 = lVar12 + -4;
+    lVar23 = lVar23 + 8;
+    lVar15 = lVar15 + -1;
+  } while (lVar15 != 0);
+  fVar2 = *(float *)lVar23;
+  *(float *)lVar16 = fVar2 * 1.6931472;
+  *(float *)lVar12 = fVar2 * 0.30685282;
+  pfVar8 = local_180;
+  realFft(local_2d0,pfVar8,0x80);
+  iVar7 = (int)lVar21;
+  pfVar17 = (float *)lVar22;
+  lVar14 = (lVar21 - lVar20) + -0x90c;
+  lVar23 = 0x41;
   do {
-    iVar6 = (int)lVar12;
-    uVar3 = *(undefined4 *)((int)local_180 + iVar6);
-    lVar12 = lVar12 + 4;
-    *(undefined4 *)((iVar5 - iVar14) + (int)(undefined4 *)lVar19) =
-         *(undefined4 *)((int)local_2d0 + iVar6);
-    *(undefined4 *)lVar19 = uVar3;
-    lVar19 = lVar19 + 4;
-    lVar21 = lVar21 + -1;
-  } while (lVar21 != 0);
-  PostFilter(dVar24,lVar20);
-  if (param_2 == dVar25) {
-    if ((param_7 == 0) && (param_8 == 0)) goto LAB_828cb27c;
+    iVar18 = (int)lVar14;
+    uVar3 = *(undefined4 *)((int)local_180 + iVar18);
+    lVar14 = lVar14 + 4;
+    *(undefined4 *)(((int)pfVar17 - iVar7) + (int)(undefined4 *)lVar21) =
+         *(undefined4 *)((int)local_2d0 + iVar18);
+    *(undefined4 *)lVar21 = uVar3;
+    lVar21 = lVar21 + 4;
+    lVar23 = lVar23 + -1;
+  } while (lVar23 != 0);
+  PostFilter(pfVar17,(float)dVar27,pfVar8);
+  if (dVar26 == dVar28) {
+    if ((sVar11 == 0) && (sVar13 == 0)) goto LAB_828cb27c;
   }
-  iVar14 = 0;
-  lVar12 = 0x41;
-  dVar24 = dVar26;
+  iVar7 = 0;
+  lVar14 = 0x41;
+  dVar27 = dVar29;
   do {
-    pfVar18 = (float *)param_5;
-    if (iVar14 < param_8) {
-      fVar2 = *(float *)((iVar5 - iVar8) + (int)pfVar18);
+    pfVar8 = (float *)lVar20;
+    if (iVar7 < sVar13) {
+      fVar2 = *(float *)(((int)pfVar17 - (int)pvVar5) + (int)pfVar8);
     }
     else {
-      iVar16 = (int)((double)(longlong)iVar14 * param_2) + (int)param_7;
-      iVar6 = iVar16 * 4;
-      *pfVar18 = *(float *)(iVar6 + iVar5);
-      if (iVar16 < 0x41) {
-        fVar2 = *(float *)(iVar6 + iVar5);
+      iVar18 = (int)((double)(longlong)iVar7 * dVar26) + (int)sVar11;
+      *pfVar8 = pfVar17[iVar18];
+      if (iVar18 < 0x41) {
+        fVar2 = pfVar17[iVar18];
       }
       else {
-        fVar2 = *(float *)(iVar8 + 0x908);
+        fVar2 = *(float *)((int)pvVar5 + 0x908);
       }
     }
-    *pfVar18 = fVar2;
-    iVar14 = iVar14 + 1;
-    dVar26 = (double)(float)((double)*(float *)((iVar5 - iVar8) + (int)pfVar18) + dVar26);
-    param_5 = param_5 + 4;
-    dVar24 = (double)(float)(dVar24 + (double)*pfVar18);
-    lVar12 = lVar12 + -1;
-  } while (lVar12 != 0);
-  lVar12 = 0x41;
-  do {
-    *(float *)lVar20 =
-         *(float *)((iVar8 - iVar5) + (int)(float *)lVar20) + (float)(dVar26 - dVar24) * 0.015384615
-    ;
+    *pfVar8 = fVar2;
+    iVar7 = iVar7 + 1;
+    dVar29 = (double)(float)((double)*(float *)(((int)pfVar17 - (int)pvVar5) + (int)pfVar8) + dVar29
+                            );
     lVar20 = lVar20 + 4;
-    lVar12 = lVar12 + -1;
-  } while (lVar12 != 0);
+    dVar27 = (double)(float)(dVar27 + (double)*pfVar8);
+    lVar14 = lVar14 + -1;
+  } while (lVar14 != 0);
+  lVar14 = 0x41;
+  do {
+    *(float *)lVar22 =
+         *(float *)(((int)pvVar5 - (int)pfVar17) + (int)(float *)lVar22) +
+         (float)(dVar29 - dVar27) * 0.015384615;
+    lVar22 = lVar22 + 4;
+    lVar14 = lVar14 + -1;
+  } while (lVar14 != 0);
 LAB_828cb27c:
   __restfpr_28();
   __restgprlr_23();

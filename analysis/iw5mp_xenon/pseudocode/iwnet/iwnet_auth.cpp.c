@@ -2,29 +2,35 @@
 
 // 826E2800  IWNet_IsLoggedIn  (iwnet/iwnet_auth.cpp:129)
 
-undefined8 IWNet_IsLoggedIn(void)
+bool IWNet_IsLoggedIn(int param_1)
 
 {
-  return 1;
+  return true;
 }
 
 
 // 826E2808  IWNet_WriteTicket  (iwnet/iwnet_auth.cpp:149)
 
-void IWNet_WriteTicket(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void IWNet_WriteTicket(msg_t *param_1,IwNetTicket *param_2)
 
 {
-  ulonglong uVar1;
+  msg_t *pmVar1;
+  ulonglong uVar2;
   
-  uVar1 = __savegprlr_28();
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821a84dc,0x96,0,0xffffffff82000f98,0xffffffff82004d74);
+  uVar2 = (ulonglong)(int)param_2;
+  pmVar1 = (msg_t *)__savegprlr_28(param_1);
+  if (pmVar1 == (msg_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\iwnet\\iwnet_auth.cpp",0x96,0,
+                    "%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821a84dc,0x97,0,0xffffffff82000f98,0xffffffff821a84d4);
+  if ((uVar2 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\iwnet\\iwnet_auth.cpp",0x97,0,
+                    "%s");
   }
-  MSG_WriteData(uVar1,param_2,0x10);
-  MSG_WriteInt64(uVar1,*(undefined8 *)((int)param_2 + 0x10));
+  MSG_WriteData(pmVar1,(void *)uVar2,0x10);
+  MSG_WriteInt64(pmVar1,*(ulong64 *)((int)(void *)uVar2 + 0x10));
   __restgprlr_28();
   return;
 }
@@ -32,24 +38,25 @@ void IWNet_WriteTicket(undefined8 param_1,ulonglong param_2)
 
 // 826E2898  IWNet_GetCurrentTicket  (iwnet/iwnet_auth.cpp:175)
 
-undefined8 IWNet_GetCurrentTicket(void)
+IwNetTicket * IWNet_GetCurrentTicket(int param_1)
 
 {
-  memset(&DAT_844cf520,0,0x18);
-  return 0xffffffff844cf520;
+  memset();
+  return &ticket;
 }
 
 
 // 826E28D8  IWNet_AuthInit  (iwnet/iwnet_auth.cpp:1130)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void IWNet_AuthInit(void)
 
 {
-  undefined8 uVar1;
-  
-  uVar1 = Dvar_RegisterBool(0xffffffff821a851c,0,4,0xffffffff821a8534);
-  DAT_844cf538 = (undefined4)uVar1;
-  Dvar_SetBool(uVar1,1);
+  iwnet_allclientsauthed =
+       Dvar_RegisterBool("iwnet_allclientsauthed",false,4,
+                         "True if all local clients are authed and playable");
+  Dvar_SetBool(iwnet_allclientsauthed,true);
   return;
 }
 

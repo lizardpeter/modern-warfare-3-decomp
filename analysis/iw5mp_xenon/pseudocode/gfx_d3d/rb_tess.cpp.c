@@ -2,6 +2,8 @@
 
 // 827AD7A0  TRACK_rb_tess  (gfx_d3d/rb_tess.cpp:85)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void TRACK_rb_tess(void)
 
 {
@@ -10,704 +12,58 @@ void TRACK_rb_tess(void)
 
 
 // 827AD7A8  RB_ShowTess  (gfx_d3d/rb_tess.cpp:93)
-
-void RB_ShowTess(undefined8 param_1,ulonglong param_2,ulonglong param_3,undefined8 param_4)
-
-{
-  int iVar1;
-  int iVar3;
-  int iVar4;
-  uint *puVar5;
-  undefined8 uVar2;
-  undefined4 *puVar6;
-  ulonglong uVar7;
-  ulonglong uVar8;
-  ulonglong uVar9;
-  undefined4 local_58;
-  undefined4 local_54;
-  float local_50;
-  
-  iVar3 = __savegprlr_24();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821d8c80,0x6b,0,0xffffffff82000f98,0xffffffff82002650);
-  }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821d8c80,0x6c,0,0xffffffff82000f98,0xffffffff821d8c74);
-  }
-  puVar6 = (undefined4 *)param_2;
-  local_58 = *puVar6;
-  local_54 = puVar6[1];
-  local_50 = (float)puVar6[2];
-  if (*(int *)(iVar3 + 0xec) == 0) {
-    MyAssertHandler(0xffffffff821d8c80,0x70,0,0xffffffff82000f98,0xffffffff821d7bf8);
-  }
-  iVar1 = *(int *)(iVar3 + 0xf0);
-  iVar4 = Material_GetTechniqueSet(*(undefined4 *)(iVar3 + 0xec));
-  if (iVar4 == 0) {
-    MyAssertHandler(0xffffffff821b93c0,0x76,0,0xffffffff82000f98,0xffffffff821bb4c4);
-  }
-  puVar5 = *(uint **)((iVar1 + 3) * 4 + iVar4);
-  if (puVar5 == (uint *)0x0) {
-    MyAssertHandler(0xffffffff821d8c80,0x73,0,0xffffffff82000f98,0xffffffff821bfa10);
-  }
-  iVar1 = *(int *)(DAT_845aa6d8 + 0xc);
-  if (iVar1 - 1U < 5) {
-    if (iVar1 == 2) {
-      puVar5 = (uint *)Material_GetTechniqueSet(*(undefined4 *)(iVar3 + 0xec));
-      if (puVar5 == (uint *)0x0) {
-        MyAssertHandler(0xffffffff821d8c80,0x93,0,0xffffffff82000f98,0xffffffff821bb4c4);
-      }
-      uVar7 = 0xffffffff821d8c4c;
-      uVar8 = (ulonglong)*puVar5;
-    }
-    else if (iVar1 == 3) {
-      uVar7 = 0xffffffff821d8c48;
-      uVar8 = (ulonglong)**(uint **)(iVar3 + 0xec);
-    }
-    else if (iVar1 == 4) {
-      if (*(short *)((int)puVar5 + 6) == 0) {
-        MyAssertHandler(0xffffffff821d8c80,0x7e,0,0xffffffff82000f98,0xffffffff821d8c60);
-      }
-      if ((uint *)puVar5[0x18] == (uint *)0x0) {
-        uVar8 = 0xffffffff821d8c58;
-      }
-      else {
-        uVar8 = (ulonglong)*(uint *)puVar5[0x18];
-      }
-      uVar7 = 0xffffffff821d8c54;
-      local_50 = ((float)(longlong)*(int *)(iVar3 + 0xf0) - 16.0) * 0.3 + local_50;
-    }
-    else if (iVar1 == 1) {
-      uVar7 = 0xffffffff821b8dcc;
-      local_50 = ((float)(longlong)*(int *)(iVar3 + 0xf0) - 16.0) * 0.3 + local_50;
-      uVar8 = (ulonglong)*puVar5;
-    }
-    else {
-      if (*(short *)((int)puVar5 + 6) == 0) {
-        MyAssertHandler(0xffffffff821d8c80,0x88,0,0xffffffff82000f98,0xffffffff821d8c60);
-      }
-      if ((uint *)puVar5[0x19] == (uint *)0x0) {
-        uVar8 = 0xffffffff821d8c58;
-      }
-      else {
-        uVar8 = (ulonglong)*(uint *)puVar5[0x19];
-      }
-      uVar7 = 0xffffffff821d8c50;
-      local_50 = ((float)(longlong)*(int *)(iVar3 + 0xf0) - 16.0) * 0.3 + local_50;
-    }
-  }
-  else {
-    if (DAT_84013128 == 0) {
-      uVar2 = va(0xffffffff821d8c24);
-      MyAssertHandler(0xffffffff821d8c80,0x9e,0,uVar2);
-    }
-    uVar7 = 0xffffffff82014c14;
-    uVar8 = uVar7;
-  }
-  uVar9 = (ulonglong)uRam000013ec;
-  va(0xffffffff821d8c18,param_3,uVar7,uVar8);
-  R_AddDebugString(0x3fe3333340000000,uVar9 + 0x18f0,&local_58,param_4);
-  __restgprlr_24();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0
 
 // 827ADB20  R_SetVertexDeclTypeNormal  (gfx_d3d/rb_tess.cpp:172)
-
-void R_SetVertexDeclTypeNormal(int param_1,undefined4 param_2)
-
-{
-  *(undefined4 *)(param_1 + 200) = param_2;
-  R_UpdateVertexDecl();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GPUTEXTURE_FETCH_CONSTANT_s_0_s_0
 
 // 827ADB28  R_SetVertexDeclTypeWorld  (gfx_d3d/rb_tess.cpp:179)
-
-void R_SetVertexDeclTypeWorld(int param_1)
-
-{
-  int iVar1;
-  
-  if ((*(ushort *)(*(int *)(param_1 + 0xf4) + 4) & 0x20) == 0) {
-    iVar1 = 8;
-  }
-  else {
-    iVar1 = *(byte *)(*(int *)(*(int *)(param_1 + 0xec) + 0x44) + 4) + 8;
-  }
-  *(int *)(param_1 + 200) = iVar1;
-  R_UpdateVertexDecl();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GPUTEXTURE_FETCH_CONSTANT_s_0_s_0
 
 // 827ADB60  R_TessCodeSurfList_SetArgs  (gfx_d3d/rb_tess.cpp:192)
-
-void R_TessCodeSurfList_SetArgs(undefined8 param_1,int param_2,longlong param_3,longlong param_4)
-
-{
-  undefined4 *puVar1;
-  short *psVar2;
-  int iVar3;
-  ulonglong uVar4;
-  short *psVar5;
-  undefined4 *puVar6;
-  longlong lVar7;
-  ulonglong uVar8;
-  
-  iVar3 = __savegprlr_21();
-  uVar4 = (ulonglong)*(ushort *)(param_2 + 0xe);
-  if (uVar4 != 0) {
-    lVar7 = ((ulonglong)*(ushort *)(param_2 + 0xc) + param_4 & 0xfffffff) * 0x10 + param_3 + 8;
-    uVar8 = 0x50;
-    psVar5 = (short *)(iVar3 + 0x162e);
-    puVar6 = (undefined4 *)(iVar3 + 0x1308);
-    do {
-      if (0x51 < (uVar8 & 0xffffffff)) {
-        MyAssertHandler(0xffffffff821d8c80,0xcf,0,0xffffffff821d8cf4,0xffffffff821d8cc0,uVar8);
-      }
-      if (0x51 < (uVar8 & 0xffffffff)) {
-        MyAssertHandler(0xffffffff821bda94,0x2ae,0,0xffffffff821bde90,uVar8,0x52);
-      }
-      puVar1 = (undefined4 *)lVar7;
-      puVar6[-2] = puVar1[-2];
-      puVar6[-1] = puVar1[-1];
-      *puVar6 = *puVar1;
-      puVar6[1] = puVar1[1];
-      if (0x89 < (uVar8 & 0xffffffff)) {
-        MyAssertHandler(0xffffffff821bda94,0x250,0,0xffffffff821bde40,uVar8,0x8a);
-      }
-      psVar2 = psVar5 + 1;
-      uVar4 = uVar4 - 1;
-      lVar7 = lVar7 + 0x10;
-      uVar8 = uVar8 + 1;
-      puVar6 = puVar6 + 4;
-      psVar5 = psVar5 + 1;
-      *psVar5 = *psVar2 + 1;
-    } while (uVar4 != 0);
-  }
-  __restgprlr_21();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0
 
 // 827ADC88  R_SetObjectIdentityPlacement  (gfx_d3d/rb_tess.cpp:221)
-
-void R_SetObjectIdentityPlacement(int param_1)
-
-{
-  if (*(undefined4 **)(param_1 + 0x16c4) != &DAT_848210c0) {
-    *(undefined4 **)(param_1 + 0x16c4) = &DAT_848210c0;
-    R_ChangeObjectScaledPlacementRemote(param_1,0xffffffff848210c0);
-  }
-  R_ChangeDepthHackNearClip(param_1,0);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0
 
 // 827ADCE8  R_TessCodeSurfList  (gfx_d3d/rb_tess.cpp:233)
-
-void R_TessCodeSurfList(undefined8 param_1,uint *param_2)
-
-{
-  uint uVar1;
-  int iVar2;
-  int iVar3;
-  uint uVar4;
-  undefined8 *puVar6;
-  undefined8 uVar5;
-  longlong lVar7;
-  int iVar8;
-  undefined8 uVar9;
-  undefined8 uVar10;
-  int iVar11;
-  int iVar12;
-  int *piVar13;
-  bool bVar14;
-  int local_b8;
-  int iStack_b4;
-  undefined4 local_b0;
-  int local_ac;
-  int local_a8;
-  
-  puVar6 = (undefined8 *)__savegprlr();
-  Profile_Begin(0x61);
-  uVar1 = *(uint *)(*(int *)(puVar6 + 1) + 0x20);
-  if (1 < uVar1) {
-    MyAssertHandler(0xffffffff821d8c80,0xfe,0,0xffffffff821d8df0,uVar1,2);
-  }
-  uVar9 = *puVar6;
-  R_SetupPassPixelShaderArgs(uVar9);
-  local_b8 = (int)((ulonglong)uVar9 >> 0x20);
-  piVar13 = (int *)*param_2;
-  iVar2 = *piVar13;
-  if (*(undefined4 **)(local_b8 + 0x16c4) != &DAT_848210c0) {
-    *(undefined4 **)(local_b8 + 0x16c4) = &DAT_848210c0;
-    R_ChangeObjectScaledPlacementRemote(local_b8,0xffffffff848210c0);
-  }
-  R_ChangeDepthHackNearClip(local_b8,0);
-  iStack_b4 = (int)uVar9;
-  *(undefined4 *)(iStack_b4 + 200) = 1;
-  R_UpdateVertexDecl(iStack_b4);
-  bVar14 = *(int *)(local_b8 + 0x16f8) == 0;
-  lVar7 = -(ulonglong)bVar14;
-  if (*(char *)(iStack_b4 + 0xb11) != '\0') {
-    lVar7 = -(ulonglong)(lVar7 != 2 && bVar14);
-  }
-  if ((int)lVar7 != *(int *)(iStack_b4 + 0x100)) {
-    R_ChangeDepthRange(iStack_b4);
-  }
-  iVar3 = *(int *)(local_b8 + 0x13ec);
-  iVar8 = uVar1 * 0x5c + iVar3;
-  R_SetMeshStream(iStack_b4,iVar8 + 0x1340);
-  uVar10 = 0;
-  local_a8 = 0;
-  iVar11 = 0;
-  local_b0 = 0x4000;
-  local_ac = 0;
-  if (uVar1 == 0) {
-    uVar10 = 0x100;
-    iVar12 = 0xf00;
-  }
-  else {
-    iVar12 = 0x6000;
-  }
-  do {
-    if (piVar13[1] == 0) {
-      MyAssertHandler(0xffffffff821d8c80,0x13b,0,0xffffffff821d8d28,0xffffffff821d8d0c);
-    }
-    uVar1 = *(uint *)(iVar8 + 0x1368);
-    uVar4 = piVar13[2];
-    if ((uVar4 < uVar1) || (iVar12 * 2 + uVar1 < piVar13[1] * 6 + uVar4)) {
-      uVar5 = va(0xffffffff821d8d48,uVar4,uVar1,
-                 (ulonglong)(uint)piVar13[1] + ((ulonglong)(uint)piVar13[1] & 0x7fffffff) * 2,iVar12
-                 ,**(undefined4 **)(iStack_b4 + 0xec));
-      MyAssertHandler(0xffffffff821d8c80,0x13e,0,0xffffffff820011f4,0xffffffff821d8d60,uVar5);
-    }
-    if ((*(short *)((int)piVar13 + 0xe) != 0) || (local_ac * 6 + iVar11 != piVar13[2])) {
-      if (local_ac != 0) {
-        local_a8 = iVar11 - *(int *)(iVar8 + 0x1368) >> 1;
-        R_DrawIndexedPrimitive(iStack_b4 + 0xc0,&local_b0);
-        local_ac = 0;
-      }
-      iVar11 = piVar13[2];
-      R_TessCodeSurfList_SetArgs(local_b8,piVar13,iVar3 + 0x24e00,uVar10);
-      R_SetupPassPerObjectArgs(uVar9);
-      R_SetupPassPerPrimArgs(uVar9);
-    }
-    local_ac = local_ac + piVar13[1];
-    if (param_2[1] <= *param_2) {
-      MyAssertHandler(0xffffffff821bba30,0x4d,0,0xffffffff82000f98,0xffffffff821bba7c);
-    }
-    uVar1 = *param_2;
-    piVar13 = (int *)(uVar1 + 0x10);
-    *param_2 = (uint)piVar13;
-  } while ((uVar1 + 0x10 != param_2[1]) && (*piVar13 == iVar2));
-  if (local_ac != 0) {
-    local_a8 = iVar11 - *(int *)(iVar8 + 0x1368) >> 1;
-    R_DrawIndexedPrimitive(iStack_b4 + 0xc0,&local_b0);
-  }
-  Profile_EndInternal(0);
-  __restgprlr();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0
 
 // 827AFF38  R_TessSparkSurfList  (gfx_d3d/rb_tess.cpp:373)
-
-void R_TessSparkSurfList(undefined8 param_1,uint *param_2)
-
-{
-  int iVar1;
-  uint uVar2;
-  undefined8 *puVar4;
-  undefined8 uVar3;
-  longlong lVar5;
-  int iVar6;
-  ulonglong uVar7;
-  uint *puVar8;
-  ulonglong uVar9;
-  int iVar10;
-  bool bVar11;
-  uint local_c0;
-  int local_b8;
-  int iStack_b4;
-  undefined4 local_b0;
-  int local_ac;
-  undefined4 local_a8;
-  
-  puVar4 = (undefined8 *)__savegprlr();
-  Profile_Begin(0x61);
-  uVar3 = *puVar4;
-  R_SetupPassPixelShaderArgs();
-  local_b8 = (int)((ulonglong)uVar3 >> 0x20);
-  if (*(undefined4 **)(local_b8 + 0x16c4) != &DAT_848210c0) {
-    *(undefined4 **)(local_b8 + 0x16c4) = &DAT_848210c0;
-    R_ChangeObjectScaledPlacementRemote(local_b8,0xffffffff848210c0);
-  }
-  R_ChangeDepthHackNearClip(local_b8,0);
-  iStack_b4 = (int)uVar3;
-  *(undefined4 *)(iStack_b4 + 200) = 0x14;
-  R_UpdateVertexDecl(iStack_b4);
-  bVar11 = *(int *)(local_b8 + 0x16f8) == 0;
-  lVar5 = -(ulonglong)bVar11;
-  if (*(char *)(iStack_b4 + 0xb11) != '\0') {
-    lVar5 = -(ulonglong)(lVar5 != 2 && bVar11);
-  }
-  if ((int)lVar5 != *(int *)(iStack_b4 + 0x100)) {
-    R_ChangeDepthRange(iStack_b4);
-  }
-  iVar1 = *(int *)(local_b8 + 0x13ec);
-  local_b0 = 0x9000;
-  local_c0._0_2_ = (ushort)(*(uint *)*param_2 >> 0x10);
-  uVar9 = (ulonglong)local_c0._0_2_;
-  uVar7 = 0xffffffff821e0000;
-  iVar10 = iStack_b4 + 0xc0;
-  local_c0 = *(uint *)*param_2;
-  do {
-    local_c0 = local_c0 & 0xffff;
-    if (*(uint *)(iVar1 + 0x156c) <= local_c0) {
-      MyAssertHandler(0xffffffff821d8c80,0x1ac,0,0xffffffff821d9238,local_c0,
-                      *(undefined4 *)(iVar1 + 0x156c),uVar7);
-    }
-    iVar6 = local_c0 * 0x50 + iVar1;
-    if (*(undefined **)(iStack_b4 + 0xc4) != &DAT_84821144) {
-      R_ChangeIndices(iVar10,0xffffffff84821144);
-    }
-    if (((*(int *)(iStack_b4 + 0xd4) != iVar1 + 0x14e4) ||
-        (*(int *)(iStack_b4 + 0xd8) != *(int *)(iVar6 + 0x64808) * *(int *)(iVar1 + 0x1508))) ||
-       (*(int *)(iStack_b4 + 0xd0) != *(int *)(iVar1 + 0x1508))) {
-      R_ChangeStreamSource(iVar10,0,iVar1 + 0x14e4);
-    }
-    if (((*(int *)(iStack_b4 + 0xe0) != 0) || (*(int *)(iStack_b4 + 0xe4) != 0)) ||
-       (*(int *)(iStack_b4 + 0xdc) != 0)) {
-      R_ChangeStreamSource(iVar10,1,0,0,0);
-    }
-    local_a8 = 0;
-    if (*(int *)(iVar6 + 0x64800) == 0) {
-      MyAssertHandler(0xffffffff821d8c80,0x1b4,0,0xffffffff821d92ac,0xffffffff821d9290);
-    }
-    R_SetParticleCloudConstants(local_b8,iVar6 + 0x64810,0);
-    R_SetupPassPerObjectArgs(uVar3);
-    R_SetupPassPerPrimArgs(uVar3);
-    local_ac = *(int *)(iVar6 + 0x64800);
-    R_DrawIndexedPrimitive(iVar10,&local_b0);
-    if (param_2[1] <= *param_2) {
-      MyAssertHandler(0xffffffff821cf760,0x55,0,0xffffffff82000f98,0xffffffff821cf7ac);
-    }
-    uVar2 = *param_2;
-    puVar8 = (uint *)(uVar2 + 4);
-    *param_2 = (uint)puVar8;
-    if (uVar2 + 4 == param_2[1]) break;
-    uVar2 = *puVar8;
-    local_c0._0_2_ = (ushort)(uVar2 >> 0x10);
-    uVar7 = (ulonglong)local_c0._0_2_;
-    local_c0 = uVar2;
-  } while (uVar7 == uVar9);
-  Profile_EndInternal(0);
-  __restgprlr();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0
 
 // 827AE030  R_Tess_DeclForMarkType  (gfx_d3d/rb_tess.cpp:463)
 
-undefined8 R_Tess_DeclForMarkType(void)
+MaterialVertexDeclType R_Tess_DeclForMarkType(uint param_1)
 
 {
-  return 8;
+  return VERTDECL_WORLD;
 }
 
 
 // 827AE038  R_TessGlassSurfList  (gfx_d3d/rb_tess.cpp:473)
-
-void R_TessGlassSurfList(undefined8 param_1,uint *param_2)
-
-{
-  ushort uVar1;
-  short sVar2;
-  int iVar3;
-  int iVar4;
-  int iVar5;
-  uint uVar6;
-  int iVar7;
-  undefined8 *puVar9;
-  undefined8 uVar8;
-  DWORD DVar10;
-  longlong lVar11;
-  uint uVar12;
-  uint uVar13;
-  int *piVar14;
-  bool bVar15;
-  short local_c0;
-  int local_b0;
-  int iStack_ac;
-  undefined4 local_a8;
-  int local_a4;
-  int local_a0;
-  
-  puVar9 = (undefined8 *)__savegprlr();
-  Profile_Begin(0x61);
-  uVar8 = *puVar9;
-  R_SetupPassPixelShaderArgs();
-  local_b0 = (int)((ulonglong)uVar8 >> 0x20);
-  iVar3 = *(int *)((int)puVar9 + 0xc);
-  if (*(undefined4 **)(local_b0 + 0x16c4) != &DAT_848210c0) {
-    *(undefined4 **)(local_b0 + 0x16c4) = &DAT_848210c0;
-    R_ChangeObjectScaledPlacementRemote(local_b0,0xffffffff848210c0);
-  }
-  R_ChangeDepthHackNearClip(local_b0,0);
-  iStack_ac = (int)uVar8;
-  *(undefined4 *)(iStack_ac + 200) = 1;
-  piVar14 = (int *)*param_2;
-  R_UpdateVertexDecl(iStack_ac);
-  bVar15 = *(int *)(local_b0 + 0x16f8) == 0;
-  lVar11 = -(ulonglong)bVar15;
-  if (*(char *)(iStack_ac + 0xb11) != '\0') {
-    lVar11 = -(ulonglong)(lVar11 != 2 && bVar15);
-  }
-  if ((int)lVar11 != *(int *)(iStack_ac + 0x100)) {
-    R_ChangeDepthRange(iStack_ac);
-  }
-  iVar4 = *(int *)(local_b0 + 0x13ec);
-  R_SetMeshStream(iStack_ac,iVar4 + 0x13f8);
-  uVar13 = 0;
-  local_a4 = 0;
-  local_a0 = 0;
-  local_a8 = 0x2100;
-  if (iVar3 != 9) {
-    R_SetupPassPerObjectArgs(uVar8);
-  }
-  iVar5 = *piVar14;
-  local_c0 = 0;
-  while( true ) {
-    uVar1 = *(ushort *)((int)piVar14 + 6);
-    if (uVar1 == 0) {
-      MyAssertHandler(0xffffffff821d8c80,0x221,0,0xffffffff821d8e5c,0xffffffff821d8e40,0);
-    }
-    uVar12 = uVar13;
-    if ((iVar3 == 9) && (sVar2 = *(short *)(piVar14 + 3), sVar2 != local_c0)) {
-      if (local_a4 != 0) {
-        R_SetupPassPerPrimArgs(uVar8);
-        local_a0 = (int)(uVar13 - *(int *)(iVar4 + 0x1420)) >> 1;
-        R_DrawIndexedPrimitive(iStack_ac + 0xc0,&local_a8);
-        uVar13 = 0;
-        local_a4 = 0;
-      }
-      R_SetModelLightingCoordsForSource(sVar2,local_b0);
-      R_SetReflectionProbe(uVar8,*(undefined1 *)((int)piVar14 + 5));
-      R_SetupPassPerObjectArgs(uVar8);
-      uVar12 = uVar13;
-      local_c0 = sVar2;
-    }
-    uVar6 = piVar14[2];
-    if (uVar6 < *(uint *)(iVar4 + 0x1420)) {
-      MyAssertHandler(0xffffffff821d8c80,0x23d,0,0xffffffff821d8e7c,uVar6);
-    }
-    if (*(int *)(iVar4 + 0x1420) + 0x9000U < (uint)uVar1 * 6 + uVar6) {
-      MyAssertHandler(0xffffffff821d8c80,0x23e,0,0xffffffff821d8eb8);
-    }
-    uVar13 = uVar12;
-    if ((local_a4 * 6 + uVar12 != uVar6) && (uVar13 = uVar6, local_a4 != 0)) {
-      R_SetupPassPerPrimArgs(uVar8);
-      local_a0 = (int)(uVar12 - *(int *)(iVar4 + 0x1420)) >> 1;
-      R_DrawIndexedPrimitive(iStack_ac + 0xc0,&local_a8);
-      local_a4 = 0;
-    }
-    local_a4 = (uint)uVar1 + local_a4;
-    if (param_2[1] <= *param_2) {
-      MyAssertHandler(0xffffffff821c36e0,0x42,0,0xffffffff82000f98,0xffffffff821c372c);
-    }
-    uVar12 = *param_2;
-    piVar14 = (int *)(uVar12 + 0x10);
-    *param_2 = (uint)piVar14;
-    if ((uVar12 + 0x10 == param_2[1]) || (*piVar14 != iVar5)) break;
-    DVar10 = GetCurrentProcessorNumber();
-    iVar7 = *(int *)(&DAT_846177e4 + DVar10 * 4);
-    DVar10 = GetCurrentProcessorNumber();
-    if (iVar7 != *(int *)(&DAT_846177e4 + DVar10 * 4)) {
-      MyAssertHandler(0xffffffff821bdad0,0x496,0,0xffffffff82000f98,0xffffffff821bdb14);
-    }
-    if ((iVar7 != 0) &&
-       ((longlong)((ulonglong)*(uint *)(iVar7 + 0x20) - (ulonglong)*(uint *)(iVar7 + 4)) < 0)) {
-      R_CmdBufReserveMemory(iVar7);
-    }
-  }
-  if (local_a4 != 0) {
-    R_SetupPassPerPrimArgs(uVar8);
-    local_a0 = (int)(uVar13 - *(int *)(iVar4 + 0x1420)) >> 1;
-    R_DrawIndexedPrimitive(iStack_ac + 0xc0,&local_a8);
-  }
-  Profile_EndInternal(0);
-  __restgprlr();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0
 
 // 827AE408  R_TessMarkSurfList  (gfx_d3d/rb_tess.cpp:683)
-
-void R_TessMarkSurfList(undefined8 param_1,uint *param_2)
-
-{
-  byte bVar1;
-  int iVar2;
-  int iVar3;
-  int iVar4;
-  uint uVar5;
-  undefined8 *puVar7;
-  undefined8 uVar6;
-  longlong lVar8;
-  uint uVar9;
-  uint uVar10;
-  int *piVar11;
-  uint uVar12;
-  bool bVar13;
-  undefined4 local_c0;
-  int local_b0;
-  int iStack_ac;
-  undefined4 local_a8;
-  int local_a4;
-  int local_a0;
-  
-  puVar7 = (undefined8 *)__savegprlr();
-  Profile_Begin(0x61);
-  uVar6 = *puVar7;
-  R_SetupPassPixelShaderArgs();
-  local_b0 = (int)((ulonglong)uVar6 >> 0x20);
-  iVar2 = *(int *)((int)puVar7 + 0xc);
-  if (*(undefined4 **)(local_b0 + 0x16c4) != &DAT_848210c0) {
-    *(undefined4 **)(local_b0 + 0x16c4) = &DAT_848210c0;
-    R_ChangeObjectScaledPlacementRemote(local_b0,0xffffffff848210c0);
-  }
-  R_ChangeDepthHackNearClip(local_b0,0);
-  iStack_ac = (int)uVar6;
-  *(undefined4 *)(iStack_ac + 200) = 8;
-  piVar11 = (int *)*param_2;
-  R_UpdateVertexDecl(iStack_ac);
-  bVar13 = *(int *)(local_b0 + 0x16f8) == 0;
-  lVar8 = -(ulonglong)bVar13;
-  if (*(char *)(iStack_ac + 0xb11) != '\0') {
-    lVar8 = -(ulonglong)(lVar8 != 2 && bVar13);
-  }
-  if ((int)lVar8 != *(int *)(iStack_ac + 0x100)) {
-    R_ChangeDepthRange(iStack_ac);
-  }
-  iVar3 = *(int *)(local_b0 + 0x13ec);
-  R_SetMeshStream(iStack_ac,iVar3 + 0x1454);
-  iVar4 = *piVar11;
-  local_a8 = 0x1800;
-  local_c0 = 0x1fff0000;
-  local_a0 = 0;
-  local_a4 = 0;
-  uVar9 = 0;
-  do {
-    if ((iVar2 == 9) && (uVar12 = piVar11[3], local_c0 != uVar12)) {
-      if (local_a4 != 0) {
-        R_SetupPassPerPrimArgs(uVar6);
-        local_a0 = (int)(uVar9 - *(int *)(iVar3 + 0x147c)) >> 1;
-        R_DrawIndexedPrimitive(iStack_ac + 0xc0,&local_a8);
-        uVar9 = 0;
-        local_a4 = 0;
-      }
-      bVar1 = *(byte *)((int)piVar11 + 10);
-      if (bVar1 == 1) {
-        if (DAT_846178cc == 0) {
-          MyAssertHandler(0xffffffff821d8c80,0x316,0,0xffffffff82000f98,0xffffffff821b8f14);
-        }
-        local_c0._2_2_ =
-             *(undefined2 *)((uVar12 & 0xffff) * 0x2c + *(int *)(DAT_846178cc + 0x58) + 0x22);
-LAB_827ae668:
-        R_SetModelLightingCoordsForSource(local_c0._2_2_,local_b0);
-      }
-      else {
-        if ((2 < bVar1) && (bVar1 < 5)) {
-          local_c0._2_2_ = (undefined2)uVar12;
-          goto LAB_827ae668;
-        }
-        if ((bVar1 != 0) && (bVar1 != 2)) {
-          MyAssertHandler(0xffffffff821d8c80,0x325,0,"%s\n\t(markType) = %i",0xffffffff821d8f20);
-        }
-        local_c0._0_1_ = (undefined1)(uVar12 >> 0x18);
-        R_SetLightmap(uVar6,local_c0._0_1_);
-      }
-      local_c0._1_1_ = (undefined1)(uVar12 >> 0x10);
-      R_SetReflectionProbe(uVar6,local_c0._1_1_);
-      R_SetupPassPerObjectArgs(uVar6);
-      local_c0 = uVar12;
-    }
-    uVar12 = (uint)*(ushort *)(piVar11 + 2);
-    if (uVar12 == 0) {
-      MyAssertHandler(0xffffffff821d8c80,0x330,0,0xffffffff821d8f94,0xffffffff821d8f78,0);
-    }
-    uVar5 = piVar11[1];
-    if (uVar5 < *(uint *)(iVar3 + 0x147c)) {
-      MyAssertHandler(0xffffffff821d8c80,0x332,0,0xffffffff82000f98,0xffffffff821d8fb4);
-    }
-    if (*(int *)(iVar3 + 0x147c) + 0x4800U < uVar12 * 6 + uVar5) {
-      MyAssertHandler(0xffffffff821d8c80,0x333,0,0xffffffff82000f98,0xffffffff821d8fe8);
-    }
-    uVar10 = uVar9;
-    if ((local_a4 * 6 + uVar9 != uVar5) && (uVar10 = uVar5, local_a4 != 0)) {
-      R_SetupPassPerPrimArgs(uVar6);
-      local_a0 = (int)(uVar9 - *(int *)(iVar3 + 0x147c)) >> 1;
-      R_DrawIndexedPrimitive(iStack_ac + 0xc0,&local_a8);
-      local_a4 = 0;
-    }
-    local_a4 = uVar12 + local_a4;
-    if (param_2[1] <= *param_2) {
-      MyAssertHandler(0xffffffff821c7620,0x42,0,0xffffffff82000f98,0xffffffff821c766c);
-    }
-    uVar9 = *param_2;
-    piVar11 = (int *)(uVar9 + 0x10);
-    *param_2 = (uint)piVar11;
-    if ((uVar9 + 0x10 == param_2[1]) || (uVar9 = uVar10, *piVar11 != iVar4)) {
-      if (local_a4 != 0) {
-        R_SetupPassPerPrimArgs(uVar6);
-        local_a0 = (int)(uVar10 - *(int *)(iVar3 + 0x147c)) >> 1;
-        R_DrawIndexedPrimitive(iStack_ac + 0xc0,&local_a8);
-      }
-      Profile_EndInternal(0);
-      __restgprlr();
-      return;
-    }
-  } while( true );
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0
 
 // 827AE808  RB_GetCameraViewAxis  (gfx_d3d/rb_tess.cpp:873)
-
-void RB_GetCameraViewAxis(int param_1,undefined4 *param_2)
-
-{
-  undefined4 uVar1;
-  undefined4 uVar2;
-  
-  if (*(int *)(param_1 + 0x16fc) != 1) {
-    MyAssertHandler(0xffffffff821d8c80,0x36c,0,0xffffffff821be65c,0xffffffff821be678);
-  }
-  uVar1 = *(undefined4 *)(param_1 + 0x13f8);
-  uVar2 = *(undefined4 *)(param_1 + 0x13f4);
-  *param_2 = *(undefined4 *)(param_1 + 0x13f0);
-  param_2[1] = uVar2;
-  param_2[2] = uVar1;
-  uVar1 = *(undefined4 *)(param_1 + 0x1408);
-  uVar2 = *(undefined4 *)(param_1 + 0x1404);
-  param_2[3] = *(undefined4 *)(param_1 + 0x1400);
-  param_2[4] = uVar2;
-  param_2[5] = uVar1;
-  uVar1 = *(undefined4 *)(param_1 + 0x1418);
-  uVar2 = *(undefined4 *)(param_1 + 0x1414);
-  param_2[6] = *(undefined4 *)(param_1 + 0x1410);
-  param_2[7] = uVar2;
-  param_2[8] = uVar1;
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0
 
 // 827AE8B8  R_CreateParticleCloud2dAxis  (gfx_d3d/rb_tess.cpp:886)
 
-void R_CreateParticleCloud2dAxis(undefined8 param_1,undefined8 param_2,float *param_3)
+void R_CreateParticleCloud2dAxis
+               (GfxParticleCloud *param_1,float (*param_2) [3],float (*param_3) [2])
 
 {
   float fVar1;
@@ -717,7 +73,7 @@ void R_CreateParticleCloud2dAxis(undefined8 param_1,undefined8 param_2,float *pa
   bool bVar5;
   int iVar6;
   int iVar7;
-  float *pfVar8;
+  float (*pafVar8) [2];
   double dVar9;
   double dVar10;
   double dVar11;
@@ -728,10 +84,11 @@ void R_CreateParticleCloud2dAxis(undefined8 param_1,undefined8 param_2,float *pa
   float local_50;
   float local_4c;
   
-  iVar6 = __savegprlr_28();
+  iVar6 = __savegprlr_28(param_1);
   dVar10 = 0.0010000000474974513;
   if (*(float *)(iVar6 + 0x30) != *(float *)(iVar6 + 0x34)) {
-    iVar7 = VecNCompareCustomEpsilon(0x3f50624de0000000,iVar6 + 0x10,iVar6 + 0x20);
+    iVar7 = VecNCompareCustomEpsilon
+                      ((float *)(iVar6 + 0x10),(float *)(iVar6 + 0x20),0.001,(int)param_3);
     bVar5 = false;
     if (iVar7 == 0) goto LAB_827ae918;
   }
@@ -754,823 +111,80 @@ LAB_827ae918:
     local_58 = fVar3 * fVar1 * local_58;
     Vec3RotateTranspose(&local_60,param_2,&local_50);
     if ((dVar10 <= (double)local_50) || (dVar10 <= (double)local_4c)) {
-      *param_3 = local_4c;
-      pfVar8 = param_3 + 2;
-      param_3[1] = (float)((double)local_50 * -1.0);
-      param_3[2] = local_50;
-      param_3[3] = local_4c;
-      dVar12 = (double)SQRT(*param_3 * *param_3 + param_3[1] * param_3[1]);
+      (*param_3)[0] = local_4c;
+      pafVar8 = param_3 + 1;
+      (*param_3)[1] = (float)((double)local_50 * -1.0);
+      param_3[1][0] = local_50;
+      param_3[1][1] = local_4c;
+      dVar12 = (double)SQRT((*param_3)[0] * (*param_3)[0] + (*param_3)[1] * (*param_3)[1]);
       if (dVar12 <= 0.0) {
-        MyAssertHandler(dVar12,0xffffffff821d8c80,0x3a1,0,0xffffffff821d90a0,0xffffffff821d90bc,
-                        dVar12);
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_tess.cpp",0x3a1
+                        ,0,"%s\n\t(viewAxisLength) = %g");
       }
-      if (dVar10 <= ABS((double)(float)(dVar12 - (double)SQRT(*pfVar8 * *pfVar8 +
-                                                              param_3[3] * param_3[3])))) {
-        MyAssertHandler(0xffffffff821d8c80,0x3a2,0,0xffffffff82000f98,0xffffffff821d9058);
+      if (dVar10 <= ABS((double)(float)(dVar12 - (double)SQRT((*pafVar8)[0] * (*pafVar8)[0] +
+                                                              param_3[1][1] * param_3[1][1])))) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_tess.cpp",0x3a2
+                        ,0,"%s");
       }
+      fVar3 = (*param_3)[0];
       fVar2 = (float)((double)(float)(dVar11 / dVar12) * (double)*(float *)(iVar6 + 0x30));
-      param_3[1] = param_3[1] * fVar2;
-      *param_3 = fVar2 * *param_3;
+      (*param_3)[1] = (*param_3)[1] * fVar2;
+      (*param_3)[0] = fVar2 * fVar3;
       if (dVar12 < (double)*(float *)(iVar6 + 0x30)) {
         fVar2 = (float)((double)(float)(dVar11 / dVar12) * (double)*(float *)(iVar6 + 0x30));
-        *pfVar8 = fVar2 * *pfVar8;
-        param_3[3] = fVar2 * param_3[3];
+        (*pafVar8)[0] = fVar2 * (*pafVar8)[0];
+        param_3[1][1] = fVar2 * param_3[1][1];
       }
       __restgprlr_28();
       return;
     }
   }
-  *param_3 = *(float *)(iVar6 + 0x30);
-  param_3[1] = 0.0;
+  (*param_3)[0] = *(float *)(iVar6 + 0x30);
+  (*param_3)[1] = 0.0;
   fVar2 = *(float *)(iVar6 + 0x34);
-  param_3[2] = 0.0;
-  param_3[3] = fVar2;
+  param_3[1][0] = 0.0;
+  param_3[1][1] = fVar2;
   __restgprlr_28();
   return;
 }
 
 
 // 827AEB10  R_SetParticleCloudConstants  (gfx_d3d/rb_tess.cpp:944)
-
-void R_SetParticleCloudConstants(undefined8 param_1,ulonglong param_2,longlong param_3)
-
-{
-  float fVar1;
-  int iVar2;
-  int iVar3;
-  double dVar4;
-  double dVar5;
-  double dVar6;
-  double dVar7;
-  ulonglong local_90;
-  undefined4 local_88;
-  undefined4 local_84;
-  float local_80;
-  float fStack_7c;
-  float local_78;
-  float local_74;
-  undefined1 auStack_70 [112];
-  
-  __savegprlr_29();
-  iVar3 = __savefpr_28();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821d8c80,0x3b6,0,0xffffffff82000f98,0xffffffff821d90d4);
-  }
-  RB_GetCameraViewAxis(iVar3,auStack_70);
-  R_CreateParticleCloud2dAxis(param_2,auStack_70,&local_80);
-  local_88 = local_78;
-  local_84 = local_74;
-  R_SetCodeConstantFromVec4(iVar3,param_3 + 0x47,&local_90);
-  iVar2 = (int)param_2;
-  local_90 = (ulonglong)*(byte *)(iVar2 + 0x2e);
-  local_78 = (float)*(byte *)(iVar2 + 0x2f) * 0.003921569;
-  dVar5 = (double)local_78;
-  dVar6 = (double)((float)local_90 * 0.003921569);
-  fVar1 = (float)*(byte *)(iVar2 + 0x2d) * 0.003921569;
-  dVar7 = (double)fVar1;
-  _local_80 = CONCAT44(fVar1,(float)local_90 * 0.003921569);
-  local_74 = (float)*(byte *)(iVar2 + 0x2c) * 0.003921569;
-  dVar4 = (double)local_74;
-  R_SetCodeConstantFromVec4(iVar3,param_3 + 0x4a,&local_80);
-  if ((int)param_3 == 0) {
-    *(float *)(iVar3 + 0xe60) = (float)dVar7;
-    *(float *)(iVar3 + 0xe64) = (float)dVar6;
-    *(float *)(iVar3 + 0xe68) = (float)dVar5;
-    *(float *)(iVar3 + 0xe6c) = (float)dVar4;
-    R_DirtyCodeConstant(iVar3,6);
-    fVar1 = *(float *)(iVar2 + 0x3c);
-    dVar4 = 0.0;
-    *(undefined4 *)(iVar3 + 0x12d8) = 0;
-    *(float *)(iVar3 + 0x12d4) = fVar1 * 0.001;
-    *(undefined4 *)(iVar3 + 0x12dc) = 0;
-    *(float *)(iVar3 + 0x12d0) = (fVar1 - 500.0) * 0.001;
-    R_DirtyCodeConstant(iVar3,0x4d);
-    *(float *)(iVar3 + 0x12e0) = (float)dVar4;
-    *(float *)(iVar3 + 0x12e4) = (float)dVar4;
-    *(undefined4 *)(iVar3 + 0x12ec) = *(undefined4 *)(iVar3 + 0x1548);
-    *(undefined4 *)(iVar3 + 0x12e8) = 0xbf800000;
-    R_DirtyCodeConstant(iVar3,0x4e);
-  }
-  __restfpr_28();
-  __restgprlr_29();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0
 
 // 827AECD0  R_TessParticleCloudList  (gfx_d3d/rb_tess.cpp:969)
-
-void R_TessParticleCloudList(undefined8 param_1,int *param_2)
-
-{
-  undefined8 *puVar1;
-  longlong lVar2;
-  int iVar3;
-  undefined8 uVar4;
-  int iVar5;
-  int iVar6;
-  uint uVar7;
-  int iVar8;
-  int iVar9;
-  bool bVar10;
-  int local_58;
-  int iStack_54;
-  int local_50;
-  int local_4c;
-  undefined4 local_48;
-  
-  puVar1 = (undefined8 *)__savegprlr_26();
-  Profile_Begin(0x62);
-  uVar4 = *puVar1;
-  local_58 = (int)((ulonglong)uVar4 >> 0x20);
-  uVar7 = *(uint *)*param_2;
-  *param_2 = (int)((uint *)*param_2 + 1);
-  uVar7 = uVar7 >> 8 & 0xff;
-  iVar6 = *(int *)(local_58 + 0x13ec);
-  if (*(uint *)(iVar6 + 0x1560) <= uVar7) {
-    MyAssertHandler(0xffffffff821d8c80,0x3ee,0,0xffffffff821d9140,uVar7,
-                    *(undefined4 *)(iVar6 + 0x1560));
-  }
-  iVar6 = (uVar7 + 0x1970) * 0x40 + iVar6;
-  Profile_Begin(0x5d);
-  R_SetParticleCloudConstants(local_58,iVar6,0);
-  if ((*(uint *)(iVar6 + 0x38) & 4) != 0) {
-    if ((*(uint *)(iVar6 + 0x78) & 4) == 0) {
-      MyAssertHandler(0xffffffff821d8c80,0x3f7,0,0xffffffff82000f98);
-    }
-    if ((*(uint *)(iVar6 + 0xb8) & 4) == 0) {
-      MyAssertHandler(0xffffffff821d8c80,0x3f8,0,0xffffffff82000f98);
-    }
-    R_SetParticleCloudConstants(local_58,iVar6 + 0x40,1);
-    R_SetParticleCloudConstants(local_58,iVar6 + 0x80,2);
-  }
-  Profile_EndInternal(0);
-  R_SetupPassPixelShaderArgs(uVar4);
-  R_ChangeDepthHackNearClip(local_58,0);
-  iStack_54 = (int)uVar4;
-  *(undefined4 *)(iStack_54 + 200) = 0x14;
-  R_UpdateVertexDecl(iStack_54);
-  bVar10 = *(int *)(local_58 + 0x16f8) == 0;
-  lVar2 = -(ulonglong)bVar10;
-  if (*(char *)(iStack_54 + 0xb11) != '\0') {
-    lVar2 = -(ulonglong)(lVar2 != 2 && bVar10);
-  }
-  if ((int)lVar2 != *(int *)(iStack_54 + 0x100)) {
-    R_ChangeDepthRange(iStack_54);
-  }
-  iVar9 = iStack_54 + 0xc0;
-  if ((*(uint *)(iVar6 + 0x38) & 4) == 0) {
-    if (*(undefined **)(iStack_54 + 0xc4) != &DAT_84821104) {
-      R_ChangeIndices(iVar9,0xffffffff84821104);
-    }
-    R_SetStreamSource(iVar9,0xffffffff848210e4,0,0x14);
-    iVar8 = 4;
-    iVar5 = 2;
-  }
-  else {
-    if (*(undefined **)(iStack_54 + 0xc4) != &DAT_84821144) {
-      R_ChangeIndices(iVar9,0xffffffff84821144);
-    }
-    iVar8 = 8;
-    iVar5 = 6;
-    R_SetStreamSource(iVar9,0xffffffff84821124,0,0x14);
-  }
-  if (*(int *)(local_58 + 0x16c4) != iVar6) {
-    *(int *)(local_58 + 0x16c4) = iVar6;
-    R_ChangeObjectScaledPlacement(local_58,iVar6);
-  }
-  if ((*(uint *)(iVar6 + 0x38) & 4) != 0) {
-    iVar3 = iVar6 + 0x40;
-    if (*(int *)(local_58 + 0x16c8) != iVar3) {
-      *(int *)(local_58 + 0x16c8) = iVar3;
-      R_ChangeObjectPlacementAlternate(local_58,iVar3,1);
-    }
-    iVar3 = iVar6 + 0x80;
-    if (*(int *)(local_58 + 0x16cc) != iVar3) {
-      *(int *)(local_58 + 0x16cc) = iVar3;
-      R_ChangeObjectPlacementAlternate(local_58,iVar3,2);
-    }
-  }
-  R_SetupPassPerObjectArgs(uVar4);
-  R_SetupPassPerPrimArgs(uVar4);
-  local_48 = 0;
-  local_4c = 0x400 >> (*(uint *)(iVar6 + 0x38) & 3);
-  local_50 = local_4c * iVar8;
-  local_4c = local_4c * iVar5;
-  R_DrawIndexedPrimitive(iVar9,&local_50);
-  Profile_EndInternal(0);
-  __restgprlr_26();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0
 
 // 827AEFB8  R_DrawXModelSkinnedCached  (gfx_d3d/rb_tess.cpp:1130)
-
-void R_DrawXModelSkinnedCached(undefined8 param_1,ulonglong param_2,undefined8 param_3)
-
-{
-  int iVar1;
-  int iVar2;
-  int iVar4;
-  undefined4 uVar5;
-  undefined8 uVar3;
-  int iVar6;
-  ulonglong uVar7;
-  longlong lVar8;
-  uint local_60;
-  uint local_5c;
-  undefined4 local_58;
-  
-  iVar4 = __savegprlr_23();
-  Profile_Begin(100);
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821d8c80,0x47f,0,0xffffffff82000f98,0xffffffff821beabc);
-  }
-  iVar1 = (int)param_2;
-  if (*(short *)(iVar1 + 2) == 0) {
-    MyAssertHandler(0xffffffff821d8c80,0x480,0,0xffffffff82000f98,0xffffffff821d91f0);
-  }
-  if ((*(byte *)(iVar1 + 1) & 0x40) == 0) {
-    MyAssertHandler(0xffffffff821d8c80,0x482,0,0xffffffff82000f98,0xffffffff821d91d4);
-  }
-  if ((int)param_3 < 0) {
-    MyAssertHandler(0xffffffff821d8c80,0x484,0,0xffffffff82000f98,0xffffffff821d91b8);
-  }
-  uVar7 = param_2 + 0x48;
-  local_58 = 0;
-  local_60 = (uint)*(ushort *)(iVar1 + 2);
-  local_5c = (uint)*(ushort *)(iVar1 + 4);
-  if (uVar7 == 0) {
-    MyAssertHandler(0xffffffff821d8c80,0x490,0,0xffffffff82000f98,0xffffffff821ba260);
-  }
-  iVar6 = iVar4 + 0xc0;
-  if ((ulonglong)*(uint *)(iVar4 + 0xc4) != (uVar7 & 0xffffffff)) {
-    R_ChangeIndices(iVar6,uVar7);
-  }
-  iVar2 = iRam000013ec;
-  if (*(int *)(iRam000013ec + 0x1570) == 0) {
-    MyAssertHandler(0xffffffff821d8c80,0x499,0,0xffffffff82000f98,0xffffffff821d91a0);
-  }
-  lVar8 = (ulonglong)*(uint *)(iVar2 + 0x1570) + 8;
-  uVar5 = XSurfaceGetModelSkinnedCachedVertDecl(param_2);
-  *(undefined4 *)(iVar4 + 200) = uVar5;
-  R_UpdateVertexDecl(iVar4);
-  if ((*(byte *)(iVar1 + 1) & 0x20) == 0) {
-    R_SetStreamSource(iVar6,lVar8,param_3,0x20);
-  }
-  else {
-    uVar3 = XSurfaceGetVert0Size(param_2);
-    R_SetDoubleStreamSource(iVar6,lVar8,param_3,0x18,param_2 + 0x20,0,uVar3);
-  }
-  R_DrawIndexedPrimitive(iVar6,&local_60);
-  if (*(int *)(DAT_845aa6d8 + 0xc) != 0) {
-    lVar8 = R_GetActiveWorldMatrix(0);
-    RB_ShowTess(iVar4,lVar8 + 0x30,0xffffffff821d9198,0xffffffff821818b8);
-  }
-  Profile_EndInternal(0);
-  __restgprlr_23();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0
 
 // 827AF1E0  R_DrawXModelSkinnedModelSurf  (gfx_d3d/rb_tess.cpp:1279)
-
-void R_DrawXModelSkinnedModelSurf(undefined8 param_1,undefined4 *param_2)
-
-{
-  if (param_2 == (undefined4 *)0x0) {
-    MyAssertHandler(0xffffffff821d8c80,0x500,0,0xffffffff82000f98,0xffffffff821cd2c0);
-  }
-  R_DrawXModelSkinnedCached(param_1,param_2[5],*param_2);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0
 
 // 827AF250  R_TessXModelSkinnedDrawSurfList  (gfx_d3d/rb_tess.cpp:1296)
-
-void R_TessXModelSkinnedDrawSurfList(undefined8 param_1,int *param_2)
-
-{
-  float fVar1;
-  ushort uVar2;
-  ushort uVar3;
-  int iVar4;
-  uint uVar5;
-  int iVar6;
-  undefined4 *puVar7;
-  ulonglong *puVar8;
-  undefined4 uVar9;
-  int iVar10;
-  DWORD DVar11;
-  uint uVar12;
-  uint *puVar13;
-  ulonglong uVar14;
-  ulonglong uVar15;
-  uint uVar16;
-  ulonglong uVar17;
-  ulonglong uVar18;
-  ulonglong uVar19;
-  double dVar20;
-  int local_90;
-  int iStack_8c;
-  
-  puVar8 = (ulonglong *)__savegprlr_17();
-  Profile_Begin(99);
-  uVar14 = *puVar8;
-  uVar18 = *(ulonglong *)*param_2;
-  iVar10 = *(int *)(puVar8 + 1);
-  iVar4 = *(int *)((int)puVar8 + 0xc);
-  local_90 = (int)(uVar14 >> 0x20);
-  uVar5 = *(uint *)(local_90 + 0x13ec);
-  uVar15 = (ulonglong)uVar5;
-  uVar19 = ((uVar18 & 0x7fff) + 0x1380) * 4 + uVar15;
-  iVar6 = (int)uVar19;
-  uVar9 = XSurfaceGetModelSkinnedCachedVertDeclForSurfaceFlags
-                    (*(undefined1 *)(*(int *)(iVar6 + 0x14) + 1));
-  if (*(int *)(local_90 + 0x16c4) != local_90 + 0x16d8) {
-    *(int *)(local_90 + 0x16c4) = local_90 + 0x16d8;
-    R_ChangeObjectScaledPlacementRemote(local_90);
-  }
-  iStack_8c = (int)uVar14;
-  uVar17 = uVar14 & 0xffffffff;
-  *(undefined4 *)(iStack_8c + 200) = uVar9;
-  R_UpdateVertexDecl(uVar17);
-  if (*(int *)(iVar10 + 0x18) == 0) {
-    if (iVar4 == 9) {
-      MyAssertHandler(0xffffffff821d8c80,0x5e0,0,0xffffffff82000f98,0xffffffff821d9204);
-    }
-    uVar2 = *(ushort *)(iVar6 + 10);
-    if (uVar2 == 0) {
-      fVar1 = 0.0;
-    }
-    else {
-      fVar1 = *(float *)((uVar2 + 0xc880) * 8 + uVar5 + 4);
-    }
-    dVar20 = (double)fVar1;
-    iVar10 = R_UpdateMaterialTime(dVar20,local_90);
-    R_SetupPassPixelShaderArgs(uVar14);
-    if (iVar10 != 0) {
-      R_SetupPassVertexShaderArgs(uVar14);
-    }
-    R_ChangeDepthHackNearClip(local_90,0);
-    if (*(int *)(iStack_8c + 0x100) != -1) {
-      R_ChangeDepthRange(uVar17,0xffffffffffffffff);
-    }
-    R_SetupPassPerObjectArgs(uVar14);
-    R_SetupPassPerPrimArgs(uVar14);
-    do {
-      do {
-        if ((uVar19 & 0xffffffff) == 0) {
-          MyAssertHandler(0xffffffff821d8c80,0x500,0,0xffffffff82000f98,0xffffffff821cd2c0);
-        }
-        R_DrawXModelSkinnedCached(uVar14,((undefined4 *)uVar19)[5],*(undefined4 *)uVar19);
-        iVar10 = *param_2;
-        puVar8 = (ulonglong *)(iVar10 + 8);
-        *param_2 = (int)puVar8;
-        if ((iVar10 + 8 == param_2[1]) ||
-           (uVar17 = *puVar8, (uVar17 & 0xffffffffe0800000) != (uVar18 & 0xffffffffe0800000)))
-        goto LAB_827af7fc;
-        DVar11 = GetCurrentProcessorNumber();
-        iVar10 = *(int *)(&DAT_846177e4 + DVar11 * 4);
-        DVar11 = GetCurrentProcessorNumber();
-        if (iVar10 != *(int *)(&DAT_846177e4 + DVar11 * 4)) {
-          MyAssertHandler(0xffffffff821bdad0,0x496,0,0xffffffff82000f98,0xffffffff821bdb14);
-        }
-        if (iVar10 != 0) {
-          if ((longlong)((ulonglong)*(uint *)(iVar10 + 0x20) - (ulonglong)*(uint *)(iVar10 + 4)) < 0
-             ) {
-            R_CmdBufReserveMemory(iVar10);
-          }
-        }
-        uVar19 = ((uVar17 & 0x7fff) + 0x1380) * 4 + uVar15;
-      } while ((uVar17 & 0x800000) == 0);
-      uVar3 = *(ushort *)((int)uVar19 + 10);
-      if (uVar3 == 0) {
-        MyAssertHandler(0xffffffff821d8c80,0x61a,0,0xffffffff82000f98,0xffffffff821bf0ec);
-      }
-    } while ((uVar3 == uVar2) || ((double)*(float *)((uVar3 + 0xc880) * 8 + uVar5 + 4) == dVar20));
-  }
-  else {
-    uVar2 = *(ushort *)(iVar6 + 10);
-    if (uVar2 == 0) {
-      uVar16 = 0;
-      fVar1 = 0.0;
-    }
-    else {
-      puVar13 = (uint *)((uVar2 + 0xc880) * 8 + uVar5);
-      fVar1 = (float)puVar13[1];
-      uVar16 = *puVar13 & 2;
-    }
-    dVar20 = (double)fVar1;
-    iVar10 = R_UpdateMaterialTime(dVar20,local_90);
-    R_SetupPassPixelShaderArgs(uVar14);
-    if (iVar10 != 0) {
-      R_SetupPassVertexShaderArgs(uVar14);
-    }
-    R_ChangeDepthHackNearClip(local_90,uVar16);
-    uVar12 = uVar16;
-    if (*(char *)(iStack_8c + 0xb11) != '\0') {
-      uVar12 = -(uint)(uVar16 != 2) & uVar16;
-    }
-    if (uVar12 != *(uint *)(iStack_8c + 0x100)) {
-      R_ChangeDepthRange(uVar17);
-    }
-    if (iVar4 == 9) {
-      R_SetupPassPerObjectArgs(uVar14);
-      uVar17 = uVar18 & 0xffffffffff800000;
-      while( true ) {
-        do {
-          do {
-            puVar7 = (undefined4 *)uVar19;
-            R_SetModelLightingCoordsForSource(*(undefined2 *)(puVar7 + 3),local_90);
-            R_SetModelAmbientColorForSource(uVar19 + 0x10,local_90);
-            R_SetReflectionProbe(uVar14,uVar18 >> 0xf & 0xff);
-            R_SetupPassPerPrimArgs(uVar14);
-            R_DrawXModelSkinnedCached(uVar14,puVar7[5],*puVar7);
-            iVar10 = *param_2;
-            puVar8 = (ulonglong *)(iVar10 + 8);
-            *param_2 = (int)puVar8;
-            if ((iVar10 + 8 == param_2[1]) ||
-               (uVar18 = *puVar8, (uVar18 & 0xffffffffff800000) != uVar17)) goto LAB_827af7fc;
-            DVar11 = GetCurrentProcessorNumber();
-            R_CmdBufCheckReserveMemory(*(undefined4 *)(&DAT_846177e4 + DVar11 * 4));
-            uVar19 = ((uVar18 & 0x7fff) + 0x1380) * 4 + uVar15;
-          } while ((uVar18 & 0x800000) == 0);
-          uVar3 = *(ushort *)((int)uVar19 + 10);
-          if (uVar3 == 0) {
-            MyAssertHandler(0xffffffff821d8c80,0x598,0,0xffffffff82000f98,0xffffffff821bf0ec);
-          }
-        } while (uVar3 == uVar2);
-        puVar13 = (uint *)((uVar3 + 0xc880) * 8 + uVar5);
-        if ((*puVar13 & 2) != uVar16) break;
-        if ((double)(float)puVar13[1] != dVar20) {
-          Profile_EndInternal(0);
-          __restgprlr_17();
-          return;
-        }
-      }
-    }
-    else {
-      R_SetupPassPerObjectArgs(uVar14);
-      R_SetupPassPerPrimArgs(uVar14);
-      while( true ) {
-        do {
-          do {
-            if ((uVar19 & 0xffffffff) == 0) {
-              MyAssertHandler(0xffffffff821d8c80,0x500,0,0xffffffff82000f98,0xffffffff821cd2c0);
-            }
-            R_DrawXModelSkinnedCached(uVar14,((undefined4 *)uVar19)[5],*(undefined4 *)uVar19);
-            iVar10 = *param_2;
-            puVar8 = (ulonglong *)(iVar10 + 8);
-            *param_2 = (int)puVar8;
-            if ((iVar10 + 8 == param_2[1]) ||
-               (uVar17 = *puVar8, (uVar17 & 0xffffffffe0800000) != (uVar18 & 0xffffffffe0800000)))
-            goto LAB_827af7fc;
-            DVar11 = GetCurrentProcessorNumber();
-            R_CmdBufCheckReserveMemory(*(undefined4 *)(&DAT_846177e4 + DVar11 * 4));
-            uVar19 = ((uVar17 & 0x7fff) + 0x1380) * 4 + uVar15;
-          } while ((uVar17 & 0x800000) == 0);
-          uVar3 = *(ushort *)((int)uVar19 + 10);
-          if (uVar3 == 0) {
-            MyAssertHandler(0xffffffff821d8c80,0x5cc,0,0xffffffff82000f98,0xffffffff821bf0ec);
-          }
-        } while (uVar3 == uVar2);
-        puVar13 = (uint *)((uVar3 + 0xc880) * 8 + uVar5);
-        if ((*puVar13 & 2) != uVar16) break;
-        if ((double)(float)puVar13[1] != dVar20) {
-          Profile_EndInternal(0);
-          __restgprlr_17();
-          return;
-        }
-      }
-    }
-  }
-LAB_827af7fc:
-  Profile_EndInternal(0);
-  __restgprlr_17();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0
 
 // 827AF810  R_TessXModelRigidDrawSurfList  (gfx_d3d/rb_tess.cpp:2079)
-
-void R_TessXModelRigidDrawSurfList(undefined8 param_1,undefined8 param_2)
-
-{
-  float fVar1;
-  int iVar2;
-  int iVar3;
-  int iVar4;
-  ulonglong *puVar5;
-  undefined4 uVar6;
-  int iVar7;
-  uint *puVar8;
-  ulonglong uVar9;
-  ulonglong uVar10;
-  uint uVar11;
-  int local_60;
-  int iStack_5c;
-  
-  puVar5 = (ulonglong *)__savegprlr_23();
-  Profile_Begin(0x66);
-  uVar9 = *puVar5;
-  uVar10 = *(ulonglong *)*(undefined4 *)param_2;
-  iVar7 = *(int *)(puVar5 + 1);
-  iVar2 = *(int *)((int)puVar5 + 0xc);
-  local_60 = (int)(uVar9 >> 0x20);
-  iVar3 = *(int *)(local_60 + 0x13ec);
-  iVar4 = (((uint)uVar10 & 0x7fff) + 0x1380) * 4 + iVar3;
-  uVar6 = XSurfaceGetModelVertDecl(*(undefined4 *)(iVar4 + 0x14));
-  iVar7 = *(int *)(iVar7 + 0x18);
-  *(undefined4 *)(local_60 + 0x16c4) = 3;
-  iStack_5c = (int)uVar9;
-  if (iVar7 == 0) {
-    if (iVar2 == 9) {
-      MyAssertHandler(0xffffffff821d8c80,0x894,0,0xffffffff82000f98,0xffffffff821d9204);
-    }
-    R_SetupPassPixelShaderArgs(uVar9);
-    R_ChangeDepthHackNearClip(local_60,0);
-    *(undefined4 *)(iStack_5c + 200) = uVar6;
-    R_UpdateVertexDecl(uVar9 & 0xffffffff);
-    if (*(int *)(iStack_5c + 0x100) != -1) {
-      R_ChangeDepthRange(uVar9 & 0xffffffff,0xffffffffffffffff);
-    }
-    R_SetupPassPerObjectArgs(uVar9);
-    R_DrawXModelRigidSurf(puVar5,param_2);
-    Profile_EndInternal(0);
-    __restgprlr_23();
-    return;
-  }
-  if ((uVar10 & 0x800000) == 0) {
-    uVar11 = 0;
-    fVar1 = 0.0;
-  }
-  else {
-    uVar11 = (uint)*(ushort *)(iVar4 + 10);
-    if (uVar11 == 0) {
-      MyAssertHandler(0xffffffff821d8c80,0x84d,0,0xffffffff82000f98,0xffffffff821bf0ec);
-    }
-    puVar8 = (uint *)((uVar11 + 0xc880) * 8 + iVar3);
-    fVar1 = (float)puVar8[1];
-    uVar11 = *puVar8 & 2;
-  }
-  iVar7 = R_UpdateMaterialTime((double)fVar1,local_60);
-  R_SetupPassPixelShaderArgs(uVar9);
-  if (iVar7 != 0) {
-    R_SetupPassVertexShaderArgs(uVar9);
-  }
-  R_ChangeDepthHackNearClip(local_60,uVar11);
-  *(undefined4 *)(iStack_5c + 200) = uVar6;
-  R_UpdateVertexDecl(uVar9 & 0xffffffff);
-  if (*(char *)(iStack_5c + 0xb11) != '\0') {
-    uVar11 = -(uint)(uVar11 != 2) & uVar11;
-  }
-  if (uVar11 != *(uint *)(iStack_5c + 0x100)) {
-    R_ChangeDepthRange(uVar9 & 0xffffffff);
-  }
-  if (iVar2 == 9) {
-    R_SetupPassPerObjectArgs(uVar9);
-    R_DrawXModelRigidSurfLit(puVar5,param_2);
-    Profile_EndInternal(0);
-    __restgprlr_23();
-    return;
-  }
-  R_SetupPassPerObjectArgs(uVar9);
-  R_DrawXModelRigidSurfCamera(puVar5,param_2);
-  Profile_EndInternal(0);
-  __restgprlr_23();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0
 
 // 827AFA30  R_TessStaticModelRigidDrawSurfList  (gfx_d3d/rb_tess.cpp:2749)
-
-void R_TessStaticModelRigidDrawSurfList(undefined8 param_1,undefined8 param_2)
-
-{
-  undefined4 uVar1;
-  int iVar2;
-  ulonglong *puVar4;
-  ulonglong uVar3;
-  longlong lVar5;
-  bool bVar6;
-  int local_40;
-  int iStack_3c;
-  
-  puVar4 = (ulonglong *)__savegprlr_26();
-  Profile_Begin(0x67);
-  uVar3 = *puVar4;
-  uVar1 = *(undefined4 *)(puVar4 + 1);
-  iVar2 = *(int *)((int)puVar4 + 0xc);
-  R_SetupPassPixelShaderArgs();
-  local_40 = (int)(uVar3 >> 0x20);
-  *(undefined4 *)(local_40 + 0x16c4) = 3;
-  R_ChangeDepthHackNearClip(local_40,0);
-  iStack_3c = (int)uVar3;
-  *(undefined4 *)(iStack_3c + 200) = 1;
-  R_UpdateVertexDecl(uVar3 & 0xffffffff);
-  bVar6 = *(int *)(local_40 + 0x16f8) == 0;
-  lVar5 = -(ulonglong)bVar6;
-  if (*(char *)(iStack_3c + 0xb11) != '\0') {
-    lVar5 = -(ulonglong)(lVar5 != 2 && bVar6);
-  }
-  if ((int)lVar5 != *(int *)(iStack_3c + 0x100)) {
-    R_ChangeDepthRange(uVar3 & 0xffffffff);
-  }
-  if (iVar2 == 9) {
-    R_SetupPassPerObjectArgs(uVar3);
-    R_DrawStaticModelSurfLit(param_2,uVar3,uVar1);
-    Profile_EndInternal(0);
-    __restgprlr_26();
-    return;
-  }
-  R_SetupPassPerObjectArgs(uVar3);
-  R_DrawStaticModelSurf(param_2,uVar3,uVar1);
-  Profile_EndInternal(0);
-  __restgprlr_26();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0
 
 // 827AD778  D3DDevice_SetStreamSource_Inline  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/d3d9.h:2778)
-
-void D3DDevice_SetStreamSource_Inline(void)
-
-{
-  D3DDevice_SetStreamSource();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GPU_TESSELLATORPACKET_s_0_s_0
 
 // 827AFB20  R_TessTrianglesList  (gfx_d3d/rb_tess.cpp:2969)
-
-void R_TessTrianglesList(undefined8 param_1,undefined8 param_2,undefined8 param_3)
-
-{
-  undefined4 uVar1;
-  int iVar2;
-  ulonglong *puVar4;
-  ulonglong uVar3;
-  longlong lVar5;
-  int iVar6;
-  ulonglong uVar7;
-  bool bVar8;
-  int local_50;
-  int iStack_4c;
-  
-  puVar4 = (ulonglong *)__savegprlr_25();
-  Profile_Begin(0x69);
-  uVar3 = *puVar4;
-  uVar1 = *(undefined4 *)(puVar4 + 1);
-  iVar2 = *(int *)((int)puVar4 + 0xc);
-  R_SetupPassPixelShaderArgs();
-  local_50 = (int)(uVar3 >> 0x20);
-  if (*(undefined4 **)(local_50 + 0x16c4) != &DAT_848210c0) {
-    *(undefined4 **)(local_50 + 0x16c4) = &DAT_848210c0;
-    R_ChangeObjectScaledPlacementRemote(local_50,0xffffffff848210c0);
-  }
-  R_ChangeDepthHackNearClip(local_50,0);
-  iStack_4c = (int)uVar3;
-  uVar7 = uVar3 & 0xffffffff;
-  if ((*(ushort *)(*(int *)(iStack_4c + 0xf4) + 4) & 0x20) == 0) {
-    iVar6 = 8;
-  }
-  else {
-    iVar6 = *(byte *)(*(int *)(*(int *)(iStack_4c + 0xec) + 0x44) + 4) + 8;
-  }
-  *(int *)(iStack_4c + 200) = iVar6;
-  R_UpdateVertexDecl(uVar7);
-  bVar8 = *(int *)(local_50 + 0x16f8) == 0;
-  lVar5 = -(ulonglong)bVar8;
-  if (*(char *)(iStack_4c + 0xb11) != '\0') {
-    lVar5 = -(ulonglong)(lVar5 != 2 && bVar8);
-  }
-  if ((int)lVar5 != *(int *)(iStack_4c + 0x100)) {
-    R_ChangeDepthRange(uVar7);
-  }
-  if (*(int *)(iStack_4c + 0xc4) != DAT_84613714 + 0x8c) {
-    R_ChangeIndices(uVar7 + 0xc0);
-  }
-  if (iVar2 == 9) {
-    R_SetupPassPerObjectArgs(uVar3);
-    R_SetupPassPerPrimArgs(uVar3);
-    R_DrawBspSurfsLit(param_2,uVar3,uVar1,param_3);
-    Profile_EndInternal(0);
-    __restgprlr_25();
-    return;
-  }
-  R_SetupPassPerObjectArgs(uVar3);
-  R_SetupPassPerPrimArgs(uVar3);
-  R_DrawBspSurfs(param_2,uVar3,uVar1,param_3);
-  Profile_EndInternal(0);
-  __restgprlr_25();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0
 
 // 827AFC98  R_TessBModel  (gfx_d3d/rb_tess.cpp:3383)
-
-void R_TessBModel(undefined8 param_1,int *param_2)
-
-{
-  ushort uVar1;
-  int iVar2;
-  int iVar3;
-  int iVar4;
-  int iVar5;
-  undefined8 *puVar6;
-  DWORD DVar7;
-  longlong lVar8;
-  int iVar9;
-  ulonglong *puVar10;
-  ulonglong uVar11;
-  ulonglong uVar12;
-  undefined8 uVar13;
-  ulonglong uVar14;
-  bool bVar15;
-  int local_a0;
-  int iStack_9c;
-  uint local_98;
-  uint local_94;
-  undefined4 local_90;
-  
-  puVar6 = (undefined8 *)__savegprlr_16();
-  Profile_Begin(0x6a);
-  uVar13 = *puVar6;
-  iVar2 = *(int *)((int)puVar6 + 0xc);
-  local_a0 = (int)((ulonglong)uVar13 >> 0x20);
-  iVar3 = *(int *)(local_a0 + 0x13ec);
-  R_ChangeDepthHackNearClip(local_a0,0);
-  R_SetupPassPixelShaderArgs(uVar13);
-  iStack_9c = (int)uVar13;
-  if ((*(ushort *)(*(int *)(iStack_9c + 0xf4) + 4) & 0x20) == 0) {
-    iVar9 = 8;
-  }
-  else {
-    iVar9 = *(byte *)(*(int *)(*(int *)(iStack_9c + 0xec) + 0x44) + 4) + 8;
-  }
-  *(int *)(iStack_9c + 200) = iVar9;
-  R_UpdateVertexDecl(iStack_9c);
-  bVar15 = *(int *)(local_a0 + 0x16f8) == 0;
-  lVar8 = -(ulonglong)bVar15;
-  if (*(char *)(iStack_9c + 0xb11) != '\0') {
-    lVar8 = -(ulonglong)(lVar8 != 2 && bVar15);
-  }
-  if ((int)lVar8 != *(int *)(iStack_9c + 0x100)) {
-    R_ChangeDepthRange(iStack_9c);
-  }
-  iVar9 = iStack_9c + 0xc0;
-  if (*(int *)(iStack_9c + 0xc4) != DAT_84613714 + 0x8c) {
-    R_ChangeIndices(iVar9);
-  }
-  if (iVar2 != 9) {
-    R_SetupPassPerObjectArgs(uVar13);
-  }
-  uVar14 = *(ulonglong *)*param_2;
-  uVar12 = 0xffffffffffffffff;
-  uVar11 = uVar14 & 0xffffffffe0800000;
-  while( true ) {
-    if ((iVar2 == 9) && ((uVar14 & 0xffffffffffff8000) != uVar12)) {
-      R_SetLightmap(uVar13,uVar14 >> 0x18 & 0x1f);
-      R_SetReflectionProbe(uVar13,uVar14 >> 0xf & 0xff);
-      R_SetupPassPerObjectArgs(uVar13);
-      uVar12 = uVar14 & 0xffffffffffff8000;
-    }
-    iVar5 = (((uint)uVar14 & 0x7fff) + 0x1380) * 4;
-    iVar4 = *(int *)(iVar5 + iVar3);
-    if (*(int *)(local_a0 + 0x16c4) != iVar4) {
-      *(int *)(local_a0 + 0x16c4) = iVar4;
-      R_ChangeObjectPlacementRemote(local_a0);
-    }
-    iVar4 = *(int *)(iVar5 + iVar3 + 4);
-    uVar1 = *(ushort *)(iVar4 + 10);
-    if (uVar1 == 0) {
-      MyAssertHandler(0xffffffff821d8c80,0xd94,0,0xffffffff82000f98,0xffffffff821d9224);
-    }
-    local_94 = (uint)uVar1;
-    local_98 = (uint)*(ushort *)(iVar4 + 8);
-    R_SetStreamsForBspSurface(iVar9,iVar4);
-    R_SetupPassPerPrimArgs(uVar13);
-    local_90 = *(undefined4 *)(iVar4 + 0xc);
-    R_DrawIndexedPrimitive(iVar9,&local_98);
-    iVar4 = *param_2;
-    puVar10 = (ulonglong *)(iVar4 + 8);
-    *param_2 = (int)puVar10;
-    if ((iVar4 + 8 == param_2[1]) || (uVar14 = *puVar10, (uVar14 & 0xffffffffe0800000) != uVar11))
-    break;
-    DVar7 = GetCurrentProcessorNumber();
-    iVar4 = *(int *)(&DAT_846177e4 + DVar7 * 4);
-    DVar7 = GetCurrentProcessorNumber();
-    if (iVar4 != *(int *)(&DAT_846177e4 + DVar7 * 4)) {
-      MyAssertHandler(0xffffffff821bdad0,0x496,0,0xffffffff82000f98,0xffffffff821bdb14);
-    }
-    if (iVar4 != 0) {
-      if ((longlong)((ulonglong)*(uint *)(iVar4 + 0x20) - (ulonglong)*(uint *)(iVar4 + 4)) < 0) {
-        R_CmdBufReserveMemory(iVar4);
-      }
-    }
-  }
-  Profile_EndInternal(0);
-  __restgprlr_16();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0

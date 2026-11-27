@@ -2,33 +2,36 @@
 
 // 82613B58  ReverseAdjacencyWinding  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/common/brush_edges.cpp:65)
 
-void ReverseAdjacencyWinding(int *param_1)
+/* WARNING: Type propagation algorithm not settling */
+
+void ReverseAdjacencyWinding(adjacencyWinding_t *param_1)
 
 {
   int iVar1;
-  int *piVar2;
+  adjacencyWinding_t *paVar2;
+  int *piVar3;
   
-  piVar2 = param_1 + 1;
-  param_1 = param_1 + *param_1;
-  if (param_1 <= piVar2) {
+  piVar3 = param_1->sides;
+  paVar2 = (adjacencyWinding_t *)(param_1->sides + param_1->numsides + -1);
+  if (paVar2 <= param_1->sides) {
     return;
   }
   do {
-    iVar1 = *piVar2;
-    *piVar2 = *param_1;
-    piVar2 = piVar2 + 1;
-    *param_1 = iVar1;
-    param_1 = param_1 + -1;
-  } while (piVar2 < param_1);
+    iVar1 = *piVar3;
+    *piVar3 = paVar2->numsides;
+    piVar3 = piVar3 + 1;
+    paVar2->numsides = iVar1;
+    paVar2 = (adjacencyWinding_t *)((int)(paVar2 + 0xffffffff) + 0x30);
+  } while (piVar3 < paVar2);
   return;
 }
 
 
 // 82613B98  RepresentativeTriangleFromWinding  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/common/brush_edges.cpp:86)
 
-void RepresentativeTriangleFromWinding
-               (undefined8 param_1,int param_2,float *param_3,int *param_4,int *param_5,int *param_6
-               )
+float RepresentativeTriangleFromWinding
+                (float (*param_1) [3],int param_2,float *param_3,int *param_4,int *param_5,
+                int *param_6)
 
 {
   int iVar1;
@@ -50,7 +53,7 @@ void RepresentativeTriangleFromWinding
   float local_7c;
   float local_78;
   
-  iVar1 = __savegprlr_20();
+  iVar1 = __savegprlr_20(param_1);
   iVar3 = 2;
   *param_4 = 0;
   *param_5 = 1;
@@ -94,14 +97,14 @@ void RepresentativeTriangleFromWinding
       pfVar2 = pfVar2 + 3;
     } while (iVar3 < param_2);
   }
-  __restgprlr_20(dVar9);
-  return;
+  dVar9 = (double)__restgprlr_20(dVar9);
+  return (float)dVar9;
 }
 
 
 // 82613D00  IntAlreadyInList  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/common/brush_edges.cpp:128)
 
-undefined8 IntAlreadyInList(int *param_1,int param_2,int param_3)
+bool IntAlreadyInList(int *param_1,int param_2,int param_3)
 
 {
   int iVar1;
@@ -110,55 +113,57 @@ undefined8 IntAlreadyInList(int *param_1,int param_2,int param_3)
   if (0 < param_2) {
     do {
       if (*param_1 == param_3) {
-        return 1;
+        return true;
       }
       iVar1 = iVar1 + 1;
       param_1 = param_1 + 1;
     } while (iVar1 < param_2);
   }
-  return 0;
+  return false;
 }
 
 
 // 82613D40  GetPointListAllowDupes  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/common/brush_edges.cpp:140)
 
-longlong GetPointListAllowDupes(int param_1,int param_2,int param_3,int param_4,int param_5)
+int GetPointListAllowDupes
+              (int param_1,SimplePlaneIntersection *param_2,int param_3,
+              SimplePlaneIntersection **param_4,int param_5)
 
 {
-  undefined4 *puVar1;
+  SimplePlaneIntersection **ppSVar1;
   int iVar2;
-  longlong lVar3;
+  int iVar3;
   int *piVar4;
   
-  lVar3 = 0;
+  iVar3 = 0;
   iVar2 = 0;
   if (0 < param_3) {
-    puVar1 = (undefined4 *)(param_4 + -4);
-    piVar4 = (int *)(param_2 + 0x10);
+    ppSVar1 = param_4 + -1;
+    piVar4 = param_2->planeIndex + 1;
     do {
       if (((param_1 == piVar4[-1]) || (param_1 == *piVar4)) || (param_1 == piVar4[1])) {
-        if ((int)lVar3 == param_5) {
+        if (iVar3 == param_5) {
           return 0;
         }
-        lVar3 = lVar3 + 1;
-        puVar1 = puVar1 + 1;
-        *puVar1 = piVar4 + -4;
+        iVar3 = iVar3 + 1;
+        ppSVar1 = ppSVar1 + 1;
+        *ppSVar1 = (SimplePlaneIntersection *)(piVar4 + -4);
       }
       iVar2 = iVar2 + 1;
       piVar4 = piVar4 + 6;
     } while (iVar2 < param_3);
   }
-  return lVar3;
+  return iVar3;
 }
 
 
 // 82613DB0  IsPtFormedByThisPlane  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/common/brush_edges.cpp:162)
 
-bool IsPtFormedByThisPlane(int param_1,int param_2)
+bool IsPtFormedByThisPlane(int param_1,SimplePlaneIntersection *param_2)
 
 {
-  if ((*(int *)(param_2 + 0xc) != param_1) && (*(int *)(param_2 + 0x10) != param_1)) {
-    return param_1 == *(int *)(param_2 + 0x14);
+  if ((param_2->planeIndex[0] != param_1) && (param_2->planeIndex[1] != param_1)) {
+    return param_1 == param_2->planeIndex[2];
   }
   return true;
 }
@@ -166,7 +171,9 @@ bool IsPtFormedByThisPlane(int param_1,int param_2)
 
 // 82613DE8  PlaneInCommonExcluding  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/common/brush_edges.cpp:175)
 
-undefined8 PlaneInCommonExcluding(int param_1,int param_2,int param_3,undefined4 *param_4)
+bool PlaneInCommonExcluding
+               (SimplePlaneIntersection *param_1,SimplePlaneIntersection *param_2,int param_3,
+               int *param_4)
 
 {
   int iVar1;
@@ -175,14 +182,14 @@ undefined8 PlaneInCommonExcluding(int param_1,int param_2,int param_3,undefined4
   int *piVar4;
   
   iVar1 = 0;
-  piVar2 = (int *)(param_1 + 0xc);
+  piVar2 = param_1->planeIndex;
   do {
     iVar3 = 0;
-    piVar4 = (int *)(param_2 + 0xc);
+    piVar4 = param_2->planeIndex;
     do {
       if ((*piVar2 == *piVar4) && (*piVar2 != param_3)) {
-        *param_4 = *(undefined4 *)((iVar1 + 3) * 4 + param_1);
-        return 1;
+        *param_4 = param_1->planeIndex[iVar1];
+        return true;
       }
       iVar3 = iVar3 + 1;
       piVar4 = piVar4 + 1;
@@ -190,7 +197,7 @@ undefined8 PlaneInCommonExcluding(int param_1,int param_2,int param_3,undefined4
     iVar1 = iVar1 + 1;
     piVar2 = piVar2 + 1;
     if (2 < iVar1) {
-      return 0;
+      return false;
     }
   } while( true );
 }
@@ -198,256 +205,279 @@ undefined8 PlaneInCommonExcluding(int param_1,int param_2,int param_3,undefined4
 
 // 82613E68  SecondPlane  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/common/brush_edges.cpp:191)
 
-ulonglong SecondPlane(int param_1,int param_2)
+int SecondPlane(SimplePlaneIntersection *param_1,int param_2)
 
 {
   int iVar1;
   int *piVar2;
   
   iVar1 = 0;
-  piVar2 = (int *)(param_1 + 0xc);
+  piVar2 = param_1->planeIndex;
   do {
     if (*piVar2 != param_2) {
-      return (ulonglong)*(uint *)((iVar1 + 3) * 4 + param_1);
+      return param_1->planeIndex[iVar1];
     }
     iVar1 = iVar1 + 1;
     piVar2 = piVar2 + 1;
   } while (iVar1 < 3);
-  if (DAT_84013128 == 0) {
-    MyAssertHandler(0xffffffff8218448c,0xc6,0,0xffffffff821844cc);
+  if (alwaysfails == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\common\\brush_edges.cpp",0xc6,0,
+                    "all planes identical");
   }
-  return 0xffffffffffffffff;
+  return -1;
 }
 
 
 // 82613EF8  ThirdPlane  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/common/brush_edges.cpp:205)
 
-ulonglong ThirdPlane(int param_1,int param_2,int param_3)
+int ThirdPlane(SimplePlaneIntersection *param_1,int param_2,int param_3)
 
 {
   int iVar1;
   int *piVar2;
   
   iVar1 = 0;
-  piVar2 = (int *)(param_1 + 0xc);
+  piVar2 = param_1->planeIndex;
   while ((*piVar2 == param_2 || (*piVar2 == param_3))) {
     iVar1 = iVar1 + 1;
     piVar2 = piVar2 + 1;
     if (2 < iVar1) {
-      if (DAT_84013128 == 0) {
-        MyAssertHandler(0xffffffff8218448c,0xd4,0,0xffffffff821844e4);
+      if (alwaysfails == 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\common\\brush_edges.cpp",0xd4,0,
+                        "no third plane");
       }
-      return 0xffffffffffffffff;
+      return -1;
     }
   }
-  return (ulonglong)*(uint *)((iVar1 + 3) * 4 + param_1);
+  return param_1->planeIndex[iVar1];
 }
 
 
 // 82613F90  NextPointFormedByThisPlane  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/common/brush_edges.cpp:218)
 
-void NextPointFormedByThisPlane(int param_1,int *param_2,int *param_3)
+SimplePlaneIntersection **
+NextPointFormedByThisPlane
+          (int param_1,SimplePlaneIntersection **param_2,SimplePlaneIntersection **param_3)
 
 {
-  int iVar1;
+  SimplePlaneIntersection *pSVar1;
   bool bVar2;
   
   if (param_2 == param_3) {
-    return;
+    return param_2;
   }
   while( true ) {
-    iVar1 = *param_2;
-    if (*(int *)(iVar1 + 0xc) == param_1) {
+    pSVar1 = *param_2;
+    if (pSVar1->planeIndex[0] == param_1) {
       bVar2 = true;
     }
-    else if (*(int *)(iVar1 + 0x10) == param_1) {
+    else if (pSVar1->planeIndex[1] == param_1) {
       bVar2 = true;
     }
     else {
-      bVar2 = param_1 == *(int *)(iVar1 + 0x14);
+      bVar2 = param_1 == pSVar1->planeIndex[2];
     }
     if (bVar2) break;
     param_2 = param_2 + 1;
     if (param_2 == param_3) {
-      return;
+      return param_2;
     }
   }
-  return;
+  return param_2;
 }
 
 
 // 82613FF8  NumberOfOccurancesOfPlane  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/common/brush_edges.cpp:228)
 
-void NumberOfOccurancesOfPlane(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+int NumberOfOccurancesOfPlane(int param_1,SimplePlaneIntersection **param_2,int param_3)
 
 {
   int iVar1;
   bool bVar2;
-  undefined8 uVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  longlong lVar6;
-  int iVar7;
+  int iVar4;
+  SimplePlaneIntersection **ppSVar5;
+  ulonglong uVar3;
+  ulonglong uVar6;
+  longlong lVar7;
   
-  uVar3 = __savegprlr_29();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8218448c,0xe8,0,0xffffffff82000f98,0xffffffff82082274);
+  uVar6 = (ulonglong)param_3;
+  uVar3 = (ulonglong)(int)param_2;
+  iVar4 = __savegprlr_29(param_1);
+  if ((uVar3 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\common\\brush_edges.cpp",0xe8,0,"%s"
+                   );
   }
-  if ((int)param_3 == 0) {
-    __restgprlr_29(0);
-    return;
+  if ((int)uVar6 == 0) {
+    iVar4 = __restgprlr_29(0);
+    return iVar4;
   }
-  uVar5 = (param_3 & 0x3fffffff) * 4 + param_2;
-  lVar6 = 0;
-  uVar4 = NextPointFormedByThisPlane(uVar3,param_2);
-  if ((uVar4 & 0xffffffff) != (uVar5 & 0xffffffff)) {
+  uVar6 = (uVar6 & 0x3fffffff) * 4 + uVar3;
+  lVar7 = 0;
+  ppSVar5 = NextPointFormedByThisPlane
+                      (iVar4,(SimplePlaneIntersection **)uVar3,(SimplePlaneIntersection **)uVar6);
+  uVar3 = (ulonglong)(int)ppSVar5;
+  if (ZEXT48(ppSVar5) != (uVar6 & 0xffffffff)) {
     do {
-      uVar4 = uVar4 + 4;
-      lVar6 = lVar6 + 1;
-      if ((uVar4 & 0xffffffff) == (uVar5 & 0xffffffff)) break;
+      uVar3 = uVar3 + 4;
+      lVar7 = lVar7 + 1;
+      if ((uVar3 & 0xffffffff) == (uVar6 & 0xffffffff)) break;
       do {
-        iVar1 = *(int *)uVar4;
-        iVar7 = (int)uVar3;
-        if (*(int *)(iVar1 + 0xc) == iVar7) {
+        iVar1 = *(int *)uVar3;
+        if (*(int *)(iVar1 + 0xc) == iVar4) {
           bVar2 = true;
         }
-        else if (*(int *)(iVar1 + 0x10) == iVar7) {
+        else if (*(int *)(iVar1 + 0x10) == iVar4) {
           bVar2 = true;
         }
         else {
-          bVar2 = iVar7 == *(int *)(iVar1 + 0x14);
+          bVar2 = iVar4 == *(int *)(iVar1 + 0x14);
         }
-      } while ((!bVar2) && (uVar4 = uVar4 + 4, (uVar4 & 0xffffffff) != (uVar5 & 0xffffffff)));
-    } while ((uVar4 & 0xffffffff) != (uVar5 & 0xffffffff));
+      } while ((!bVar2) && (uVar3 = uVar3 + 4, (uVar3 & 0xffffffff) != (uVar6 & 0xffffffff)));
+    } while ((uVar3 & 0xffffffff) != (uVar6 & 0xffffffff));
   }
-  __restgprlr_29(lVar6);
-  return;
+  iVar4 = __restgprlr_29(lVar7);
+  return iVar4;
 }
 
 
 // 826140E8  FindCycleBFS  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/common/brush_edges.cpp:254)
 
-void FindCycleBFS(undefined8 param_1,longlong param_2,ulonglong param_3,undefined8 param_4,
-                 undefined8 param_5,undefined8 param_6,int *param_7,int *param_8)
+bool FindCycleBFS(int param_1,SimplePlaneIntersection **param_2,int param_3,
+                 SimplePlaneIntersection *param_4,SimplePlaneIntersection *param_5,int param_6,
+                 SimplePlaneIntersection **param_7,int *param_8)
 
 {
-  int iVar1;
+  SimplePlaneIntersection *pSVar1;
   bool bVar2;
-  undefined8 uVar3;
-  int iVar5;
-  ulonglong uVar4;
+  SimplePlaneIntersection **ppSVar3;
+  int iVar4;
+  SimplePlaneIntersection **ppSVar5;
   int iVar6;
-  int iVar7;
-  int *piVar8;
-  int iVar9;
+  undefined1 uVar7;
+  longlong lVar8;
+  int *piVar9;
   int iVar10;
-  ulonglong uVar11;
-  int iVar12;
-  uint uVar13;
-  int *piVar14;
+  int iVar11;
+  ulonglong uVar12;
+  int iVar13;
+  uint uVar14;
+  int *piVar15;
+  SimplePlaneIntersection **ppSStack00000044;
   int aiStack_40b0 [4];
-  int local_40a0;
+  SimplePlaneIntersection *local_40a0;
   int local_409c [4135];
   
-  uVar3 = __savegprlr();
-  iVar5 = (int)param_4;
-  iVar7 = (int)param_6;
-  if (*(int *)(iVar5 + 0xc) == iVar7) {
+  uVar12 = (ulonglong)param_3;
+  lVar8 = (longlong)(int)param_2;
+  __savegprlr();
+  if (param_4->planeIndex[0] == param_6) {
     bVar2 = true;
   }
-  else if (*(int *)(iVar5 + 0x10) == iVar7) {
-    bVar2 = true;
-  }
-  else {
-    bVar2 = iVar7 == *(int *)(iVar5 + 0x14);
-  }
-  if (!bVar2) {
-    MyAssertHandler(0xffffffff8218448c,0x10a,0,0xffffffff82000f98,0xffffffff82184590);
-  }
-  iVar1 = (int)param_5;
-  if (*(int *)(iVar1 + 0xc) == iVar7) {
-    bVar2 = true;
-  }
-  else if (*(int *)(iVar1 + 0x10) == iVar7) {
+  else if (param_4->planeIndex[1] == param_6) {
     bVar2 = true;
   }
   else {
-    bVar2 = iVar7 == *(int *)(iVar1 + 0x14);
+    bVar2 = param_6 == param_4->planeIndex[2];
+  }
+  ppSStack00000044 = param_7;
+  if (!bVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\common\\brush_edges.cpp",0x10a,0,
+                    "%s");
+  }
+  if (param_5->planeIndex[0] == param_6) {
+    bVar2 = true;
+  }
+  else if (param_5->planeIndex[1] == param_6) {
+    bVar2 = true;
+  }
+  else {
+    bVar2 = param_6 == param_5->planeIndex[2];
   }
   if (!bVar2) {
-    MyAssertHandler(0xffffffff8218448c,0x10b,0,0xffffffff82000f98,0xffffffff82184560);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\common\\brush_edges.cpp",0x10b,0,
+                    "%s");
   }
-  local_40a0 = iVar5;
-  local_409c[0] = ThirdPlane(param_4,uVar3,param_6);
+  local_40a0 = param_4;
+  local_409c[0] = ThirdPlane(param_4,param_1,param_6);
   local_409c[2] = 0;
   local_409c[1] = 1;
-  iVar10 = 0;
-  uVar13 = 1;
-  iVar5 = ThirdPlane(param_5,uVar3,param_6);
-  uVar11 = (param_3 & 0x3fffffff) * 4 + param_2;
-  iVar12 = 0;
+  iVar11 = 0;
+  uVar14 = 1;
+  iVar4 = ThirdPlane(param_5,param_1,param_6);
+  uVar12 = (uVar12 & 0x3fffffff) * 4 + lVar8;
+  iVar13 = 0;
   do {
-    uVar4 = NextPointFormedByThisPlane(*(undefined4 *)((int)local_409c + iVar12),param_2,uVar11);
-    if ((uVar4 & 0xffffffff) != (uVar11 & 0xffffffff)) {
-      piVar14 = aiStack_40b0 + uVar13 * 4 + 3;
+    ppSVar5 = NextPointFormedByThisPlane
+                        (*(int *)((int)local_409c + iVar13),(SimplePlaneIntersection **)lVar8,
+                         (SimplePlaneIntersection **)uVar12);
+    if (ZEXT48(ppSVar5) != (uVar12 & 0xffffffff)) {
+      piVar15 = aiStack_40b0 + uVar14 * 4 + 3;
       do {
-        iVar6 = ThirdPlane(*(int *)uVar4,uVar3,*(undefined4 *)((int)local_409c + iVar12));
-        if (iVar6 != iVar7) {
-          iVar9 = 0;
-          if (0 < (int)uVar13) {
-            piVar8 = local_409c;
+        iVar6 = ThirdPlane(*ppSVar5,param_1,*(int *)((int)local_409c + iVar13));
+        if (iVar6 != param_6) {
+          iVar10 = 0;
+          if (0 < (int)uVar14) {
+            piVar9 = local_409c;
             do {
-              if (*piVar8 == iVar6) {
-                if (iVar9 < (int)uVar13) goto LAB_82614328;
+              if (*piVar9 == iVar6) {
+                if (iVar10 < (int)uVar14) goto LAB_82614328;
                 break;
               }
-              iVar9 = iVar9 + 1;
-              piVar8 = piVar8 + 4;
-            } while (iVar9 < (int)uVar13);
+              iVar10 = iVar10 + 1;
+              piVar9 = piVar9 + 4;
+            } while (iVar10 < (int)uVar14);
           }
-          if (0x3ff < uVar13) {
-            MyAssertHandler(0xffffffff8218448c,299,0,0xffffffff82184520,uVar13,0x400);
+          if (0x3ff < uVar14) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\common\\brush_edges.cpp",299
+                            ,0,"queueHead doesn\'t index ARRAY_COUNT( queue )\n\t%i not in [0, %i)")
+            ;
           }
-          iVar9 = *(int *)uVar4;
-          piVar14[2] = iVar6;
-          uVar13 = uVar13 + 1;
-          piVar14[1] = iVar9;
-          piVar14[3] = *(int *)((int)local_409c + iVar12 + 4) + 1;
-          piVar14 = piVar14 + 4;
-          *piVar14 = (int)&local_40a0 + iVar12;
-          if (iVar6 == iVar5) {
-            piVar14 = aiStack_40b0 + uVar13 * 4;
-            if (aiStack_40b0[uVar13 * 4 + 1] != iVar5) {
-              MyAssertHandler(0xffffffff8218448c,0x13e,1,0xffffffff82000f98,0xffffffff82184504);
+          pSVar1 = *ppSVar5;
+          piVar15[2] = iVar6;
+          uVar14 = uVar14 + 1;
+          piVar15[1] = (int)pSVar1;
+          piVar15[3] = *(int *)((int)local_409c + iVar13 + 4) + 1;
+          piVar15 = piVar15 + 4;
+          *piVar15 = (int)&local_40a0 + iVar13;
+          if (iVar6 == iVar4) {
+            piVar15 = aiStack_40b0 + uVar14 * 4;
+            if (aiStack_40b0[uVar14 * 4 + 1] != iVar4) {
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\common\\brush_edges.cpp",
+                              0x13e,1,"%s");
             }
-            iVar5 = aiStack_40b0[uVar13 * 4 + 2];
-            *param_8 = iVar5 + 1;
-            piVar8 = param_7 + iVar5 + 1;
+            ppSVar3 = ppSStack00000044;
+            iVar4 = aiStack_40b0[uVar14 * 4 + 2];
+            *param_8 = iVar4 + 1;
+            ppSVar5 = ppSStack00000044 + iVar4 + 1;
             do {
-              iVar5 = iVar5 + -1;
-              piVar8 = piVar8 + -1;
-              *piVar8 = *piVar14;
-              piVar14 = (int *)piVar14[3];
-            } while (piVar14 != (int *)0x0);
-            if (iVar5 != 0) {
-              MyAssertHandler(0xffffffff8218448c,0x146,1,0xffffffff82000f98,0xffffffff821844f4);
+              iVar4 = iVar4 + -1;
+              ppSVar5 = ppSVar5 + -1;
+              *ppSVar5 = (SimplePlaneIntersection *)*piVar15;
+              piVar15 = (int *)piVar15[3];
+            } while (piVar15 != (int *)0x0);
+            if (iVar4 != 0) {
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\common\\brush_edges.cpp",
+                              0x146,1,"%s");
             }
-            *param_7 = iVar1;
-            __restgprlr(1);
-            return;
+            *ppSVar3 = param_5;
+            uVar7 = 1;
+            __restgprlr();
+            return (bool)uVar7;
           }
         }
 LAB_82614328:
-        uVar4 = NextPointFormedByThisPlane
-                          (*(undefined4 *)((int)local_409c + iVar12),uVar4 + 4,uVar11);
-      } while ((uVar4 & 0xffffffff) != (uVar11 & 0xffffffff));
+        ppSVar5 = NextPointFormedByThisPlane
+                            (*(int *)((int)local_409c + iVar13),ppSVar5 + 1,
+                             (SimplePlaneIntersection **)uVar12);
+      } while (ZEXT48(ppSVar5) != (uVar12 & 0xffffffff));
     }
-    iVar10 = iVar10 + 1;
-    iVar12 = iVar12 + 0x10;
-    if ((int)uVar13 <= iVar10) {
+    iVar11 = iVar11 + 1;
+    iVar13 = iVar13 + 0x10;
+    if ((int)uVar14 <= iVar11) {
+      uVar7 = 0;
       *param_8 = 0;
-      __restgprlr(0);
-      return;
+      __restgprlr();
+      return (bool)uVar7;
     }
   } while( true );
 }
@@ -455,177 +485,196 @@ LAB_82614328:
 
 // 82614408  RemovePtsWithPlanesThatOccurLessThanTwice  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/common/brush_edges.cpp:333)
 
-void RemovePtsWithPlanesThatOccurLessThanTwice(undefined8 param_1,ulonglong param_2)
+int RemovePtsWithPlanesThatOccurLessThanTwice(SimplePlaneIntersection **param_1,int param_2)
 
 {
-  undefined4 uVar1;
+  SimplePlaneIntersection **ppSVar1;
   ulonglong uVar2;
-  ulonglong uVar3;
+  SimplePlaneIntersection **ppSVar3;
   int iVar4;
-  ulonglong uVar5;
-  longlong lVar6;
-  ulonglong uVar7;
-  int *_Dst;
+  int iVar5;
+  ulonglong uVar6;
+  longlong lVar7;
+  int iVar9;
+  ulonglong uVar8;
   
-  uVar2 = __savegprlr_24();
-  uVar7 = 0;
-  if (0 < (int)param_2) {
+  uVar8 = (ulonglong)param_2;
+  uVar2 = __savegprlr_24(param_1);
+  iVar5 = 0;
+  if (0 < (int)uVar8) {
     do {
-      iVar4 = (int)((uVar7 & 0x3fffffff) << 2);
-      _Dst = (int *)(iVar4 + (int)uVar2);
-      uVar1 = *(undefined4 *)(*(int *)(iVar4 + (int)uVar2) + 0xc);
+      ppSVar1 = (SimplePlaneIntersection **)uVar2;
+      iVar4 = ppSVar1[iVar5]->planeIndex[0];
       if ((uVar2 & 0xffffffff) == 0) {
-        MyAssertHandler(0xffffffff8218448c,0xe8,0,0xffffffff82000f98,0xffffffff82082274);
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\common\\brush_edges.cpp",0xe8,0,
+                        "%s");
       }
-      if ((int)param_2 == 0) {
+      iVar9 = (int)uVar8;
+      if (iVar9 == 0) {
 LAB_826144f8:
-        memmove(_Dst,_Dst + 1,(size_t)(((param_2 - uVar7) - 1 & 0xffffffff) << 2));
-        param_2 = param_2 - 1;
-        uVar7 = 0;
+        memmove();
+        uVar8 = uVar8 - 1;
+        iVar5 = 0;
       }
       else {
-        uVar5 = (param_2 & 0x3fffffff) * 4 + uVar2;
-        lVar6 = 0;
-        uVar3 = NextPointFormedByThisPlane(uVar1,uVar2);
-        if ((uVar3 & 0xffffffff) == (uVar5 & 0xffffffff)) goto LAB_826144f8;
+        uVar6 = (uVar8 & 0x3fffffff) * 4 + uVar2;
+        lVar7 = 0;
+        ppSVar3 = NextPointFormedByThisPlane(iVar4,ppSVar1,(SimplePlaneIntersection **)uVar6);
+        if (ZEXT48(ppSVar3) == (uVar6 & 0xffffffff)) goto LAB_826144f8;
         do {
-          lVar6 = lVar6 + 1;
-          uVar3 = NextPointFormedByThisPlane(uVar1,uVar3 + 4);
-        } while ((uVar3 & 0xffffffff) != (uVar5 & 0xffffffff));
-        if ((((int)lVar6 < 2) ||
-            (iVar4 = NumberOfOccurancesOfPlane(*(undefined4 *)(*_Dst + 0x10),uVar2,param_2),
+          lVar7 = lVar7 + 1;
+          ppSVar3 = NextPointFormedByThisPlane(iVar4,ppSVar3 + 1,(SimplePlaneIntersection **)uVar6);
+        } while (ZEXT48(ppSVar3) != (uVar6 & 0xffffffff));
+        if ((((int)lVar7 < 2) ||
+            (iVar4 = NumberOfOccurancesOfPlane(ppSVar1[iVar5]->planeIndex[1],ppSVar1,iVar9),
             iVar4 < 2)) ||
-           (iVar4 = NumberOfOccurancesOfPlane(*(undefined4 *)(*_Dst + 0x14),uVar2,param_2),
+           (iVar4 = NumberOfOccurancesOfPlane(ppSVar1[iVar5]->planeIndex[2],ppSVar1,iVar9),
            iVar4 < 2)) goto LAB_826144f8;
-        uVar7 = uVar7 + 1;
+        iVar5 = iVar5 + 1;
       }
-    } while ((int)uVar7 < (int)param_2);
+    } while (iVar5 < (int)uVar8);
   }
-  __restgprlr_24(uVar7);
-  return;
+  iVar5 = __restgprlr_24(iVar5);
+  return iVar5;
 }
 
 
 // 82614530  RemoveNextPointFormedByThisPlane  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/common/brush_edges.cpp:355)
 
-undefined4 RemoveNextPointFormedByThisPlane(undefined8 param_1,undefined8 param_2,ulonglong param_3)
+SimplePlaneIntersection *
+RemoveNextPointFormedByThisPlane
+          (int param_1,SimplePlaneIntersection **param_2,SimplePlaneIntersection **param_3)
 
 {
-  undefined4 uVar1;
-  undefined4 *_Dst;
-  ulonglong uVar2;
+  SimplePlaneIntersection *pSVar1;
+  SimplePlaneIntersection **ppSVar2;
+  ulonglong uVar3;
   
-  uVar2 = NextPointFormedByThisPlane();
-  if ((uVar2 & 0xffffffff) == (param_3 & 0xffffffff)) {
-    return 0;
+  uVar3 = (ulonglong)(int)param_3;
+  ppSVar2 = NextPointFormedByThisPlane(param_1,param_2,param_3);
+  if (ZEXT48(ppSVar2) == (uVar3 & 0xffffffff)) {
+    return (SimplePlaneIntersection *)0x0;
   }
-  _Dst = (undefined4 *)uVar2;
-  uVar1 = *_Dst;
-  memmove(_Dst,_Dst + 1,(((int)param_3 - (int)_Dst) + -4 >> 2) << 2);
-  return uVar1;
+  pSVar1 = *ppSVar2;
+  memmove();
+  return pSVar1;
 }
 
 
 // 82614598  GetPtsFormedByPlane  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/common/brush_edges.cpp:371)
 
-void GetPtsFormedByPlane(undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4,
-                        int param_5)
+int GetPtsFormedByPlane(int param_1,SimplePlaneIntersection **param_2,int param_3,
+                       SimplePlaneIntersection **param_4,int param_5)
 
 {
   int iVar1;
   bool bVar2;
-  undefined8 uVar3;
-  ulonglong uVar4;
-  longlong lVar5;
-  int iVar6;
+  int iVar3;
+  SimplePlaneIntersection **ppSVar4;
+  ulonglong uVar5;
+  ulonglong uVar6;
   longlong lVar7;
-  ulonglong uVar8;
-  undefined4 *puVar9;
+  longlong lVar8;
+  ulonglong uVar9;
+  undefined4 *puVar10;
   
-  uVar3 = __savegprlr_23();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8218448c,0x177,0,0xffffffff82000f98,0xffffffff82082274);
+  uVar5 = (ulonglong)(int)param_4;
+  uVar9 = (ulonglong)param_3;
+  uVar6 = (ulonglong)(int)param_2;
+  iVar3 = __savegprlr_23(param_1);
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\common\\brush_edges.cpp",0x177,0,
+                    "%s");
   }
-  if ((param_4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8218448c,0x178,0,0xffffffff82000f98,0xffffffff82012420);
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\common\\brush_edges.cpp",0x178,0,
+                    "%s");
   }
-  if ((int)param_3 == 0) {
-    __restgprlr_23(0);
-    return;
+  if ((int)uVar9 == 0) {
+    iVar3 = __restgprlr_23(0);
+    return iVar3;
   }
-  uVar8 = (param_3 & 0x3fffffff) * 4 + param_2;
-  lVar5 = 0;
-  uVar4 = NextPointFormedByThisPlane(uVar3,param_2,uVar8);
-  if ((uVar4 & 0xffffffff) != (uVar8 & 0xffffffff)) {
-    lVar7 = param_4 - 4;
+  uVar9 = (uVar9 & 0x3fffffff) * 4 + uVar6;
+  lVar7 = 0;
+  ppSVar4 = NextPointFormedByThisPlane
+                      (iVar3,(SimplePlaneIntersection **)uVar6,(SimplePlaneIntersection **)uVar9);
+  uVar6 = (ulonglong)(int)ppSVar4;
+  if (ZEXT48(ppSVar4) != (uVar9 & 0xffffffff)) {
+    lVar8 = uVar5 - 4;
     do {
-      if (param_5 <= (int)lVar5) {
-        MyAssertHandler(0xffffffff8218448c,0x183,0,0xffffffff82000f98,0xffffffff821845c0);
+      if (param_5 <= (int)lVar7) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\common\\brush_edges.cpp",0x183,0
+                        ,"%s");
       }
-      puVar9 = (undefined4 *)uVar4;
-      uVar4 = uVar4 + 4;
-      lVar5 = lVar5 + 1;
-      lVar7 = lVar7 + 4;
-      *(undefined4 *)lVar7 = *puVar9;
-      if ((uVar4 & 0xffffffff) != (uVar8 & 0xffffffff)) {
+      puVar10 = (undefined4 *)uVar6;
+      uVar6 = uVar6 + 4;
+      lVar7 = lVar7 + 1;
+      lVar8 = lVar8 + 4;
+      *(undefined4 *)lVar8 = *puVar10;
+      if ((uVar6 & 0xffffffff) != (uVar9 & 0xffffffff)) {
         do {
-          iVar1 = *(int *)uVar4;
-          iVar6 = (int)uVar3;
-          if (*(int *)(iVar1 + 0xc) == iVar6) {
+          iVar1 = *(int *)uVar6;
+          if (*(int *)(iVar1 + 0xc) == iVar3) {
             bVar2 = true;
           }
-          else if (*(int *)(iVar1 + 0x10) == iVar6) {
+          else if (*(int *)(iVar1 + 0x10) == iVar3) {
             bVar2 = true;
           }
           else {
-            bVar2 = iVar6 == *(int *)(iVar1 + 0x14);
+            bVar2 = iVar3 == *(int *)(iVar1 + 0x14);
           }
-        } while ((!bVar2) && (uVar4 = uVar4 + 4, (uVar4 & 0xffffffff) != (uVar8 & 0xffffffff)));
+        } while ((!bVar2) && (uVar6 = uVar6 + 4, (uVar6 & 0xffffffff) != (uVar9 & 0xffffffff)));
       }
-    } while ((uVar4 & 0xffffffff) != (uVar8 & 0xffffffff));
+    } while ((uVar6 & 0xffffffff) != (uVar9 & 0xffffffff));
   }
-  __restgprlr_23(lVar5);
-  return;
+  iVar3 = __restgprlr_23(lVar7);
+  return iVar3;
 }
 
 
 // 82614700  CyclePerimiter  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/common/brush_edges.cpp:399)
 
-double CyclePerimiter(undefined4 *param_1,int param_2)
+float CyclePerimiter(SimplePlaneIntersection **param_1,int param_2)
 
 {
-  float *pfVar1;
-  float *pfVar2;
-  double dVar3;
+  SimplePlaneIntersection *pSVar1;
+  SimplePlaneIntersection *pSVar2;
+  float fVar3;
+  float fVar4;
+  float fVar5;
+  float fVar6;
+  longlong lVar7;
   
   if (param_2 < 3) {
-    MyAssertHandler(0xffffffff8218448c,0x193,0,0xffffffff82000f98,0xffffffff821845d8);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\common\\brush_edges.cpp",0x193,0,
+                    "%s");
   }
-  pfVar1 = (float *)*param_1;
-  pfVar2 = (float *)param_1[param_2 + -1];
-  dVar3 = (double)SQRT((*pfVar2 - *pfVar1) * (*pfVar2 - *pfVar1) +
-                       (pfVar2[2] - pfVar1[2]) * (pfVar2[2] - pfVar1[2]) +
-                       (pfVar2[1] - pfVar1[1]) * (pfVar2[1] - pfVar1[1]));
+  pSVar1 = *param_1;
+  pSVar2 = param_1[param_2 + -1];
+  fVar3 = pSVar2->xyz[1] - pSVar1->xyz[1];
+  fVar4 = pSVar2->xyz[2] - pSVar1->xyz[2];
+  fVar5 = pSVar2->xyz[0] - pSVar1->xyz[0];
+  fVar3 = SQRT(fVar5 * fVar5 + fVar4 * fVar4 + fVar3 * fVar3);
   if (1 < param_2) {
-    param_2 = param_2 + -1;
+    lVar7 = (longlong)param_2 + -1;
     do {
-      pfVar1 = (float *)*param_1;
+      pSVar1 = *param_1;
       param_1 = param_1 + 1;
-      pfVar2 = (float *)*param_1;
-      dVar3 = (double)(float)((double)SQRT((*pfVar1 - *pfVar2) * (*pfVar1 - *pfVar2) +
-                                           (pfVar1[2] - pfVar2[2]) * (pfVar1[2] - pfVar2[2]) +
-                                           (pfVar1[1] - pfVar2[1]) * (pfVar1[1] - pfVar2[1])) +
-                             dVar3);
-      param_2 = param_2 + -1;
-    } while (param_2 != 0);
+      pSVar2 = *param_1;
+      fVar4 = pSVar1->xyz[1] - pSVar2->xyz[1];
+      fVar5 = pSVar1->xyz[2] - pSVar2->xyz[2];
+      fVar6 = pSVar1->xyz[0] - pSVar2->xyz[0];
+      fVar3 = SQRT(fVar6 * fVar6 + fVar5 * fVar5 + fVar4 * fVar4) + fVar3;
+      lVar7 = lVar7 + -1;
+    } while (lVar7 != 0);
   }
-  return dVar3;
+  return fVar3;
 }
 
 
 // 82614800  IsConvex  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/common/brush_edges.cpp:414)
 
-void IsConvex(undefined8 param_1,ulonglong param_2)
+bool IsConvex(float (*param_1) [3],uint param_2)
 
 {
   float fVar1;
@@ -634,16 +683,16 @@ void IsConvex(undefined8 param_1,ulonglong param_2)
   int iVar4;
   int iVar5;
   longlong lVar6;
-  longlong lVar7;
+  undefined1 uVar7;
   ulonglong uVar8;
-  ulonglong uVar9;
-  longlong lVar10;
-  longlong lVar11;
-  ulonglong uVar12;
+  longlong lVar9;
+  ulonglong uVar10;
+  ulonglong uVar11;
+  longlong lVar12;
   longlong lVar13;
-  bool bVar14;
-  double dVar15;
-  double dVar16;
+  ulonglong uVar14;
+  longlong lVar15;
+  bool bVar16;
   double dVar17;
   double dVar18;
   double dVar19;
@@ -657,6 +706,8 @@ void IsConvex(undefined8 param_1,ulonglong param_2)
   double dVar27;
   double dVar28;
   double dVar29;
+  double dVar30;
+  double dVar31;
   float local_100;
   float local_fc;
   float local_f8;
@@ -667,161 +718,167 @@ void IsConvex(undefined8 param_1,ulonglong param_2)
   float local_dc;
   float local_d8;
   
-  __savegprlr_21();
+  uVar8 = (ulonglong)(int)param_2;
+  __savegprlr_21(param_1);
   lVar6 = __savefpr_19();
-  if ((param_2 & 0xffffffff) < 3) {
-    MyAssertHandler(0xffffffff8218448c,0x1a8,0,0xffffffff82000f98,0xffffffff82184620);
+  if ((uVar8 & 0xffffffff) < 3) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\common\\brush_edges.cpp",0x1a8,0,
+                    "%s");
   }
-  uVar8 = param_2 - 1;
-  dVar18 = 0.01;
-  dVar22 = 1.0;
-  uVar9 = 0;
-  dVar23 = 0.0;
+  uVar10 = uVar8 - 1;
+  dVar20 = 0.01;
+  dVar24 = 1.0;
+  uVar11 = 0;
+  dVar25 = 0.0;
   iVar2 = (int)lVar6;
-  if ((param_2 & 0xffffffff) == 0) {
-    dVar21 = (double)local_f8;
-    dVar20 = (double)local_fc;
-    dVar19 = (double)local_100;
+  if ((uVar8 & 0xffffffff) == 0) {
+    dVar23 = (double)local_f8;
+    dVar22 = (double)local_fc;
+    dVar21 = (double)local_100;
   }
   else {
-    lVar13 = lVar6 + 8;
-    lVar7 = ((param_2 - 2) + (param_2 - 2 & 0x7fffffff) * 2 & 0x3fffffff) << 2;
-    uVar12 = uVar9;
-    lVar10 = (uVar8 + (uVar8 & 0x7fffffff) * 2 & 0x3fffffff) << 2;
+    lVar15 = lVar6 + 8;
+    lVar9 = ((uVar8 - 2) + (uVar8 - 2 & 0x7fffffff) * 2 & 0x3fffffff) << 2;
+    uVar14 = uVar11;
+    lVar12 = (uVar10 + (uVar10 & 0x7fffffff) * 2 & 0x3fffffff) << 2;
     do {
-      local_f0 = *(float *)((int)lVar10 + iVar2);
-      iVar4 = (int)lVar7 + iVar2;
-      iVar5 = (int)lVar10 + iVar2;
-      local_e0 = local_f0 - *(float *)((int)lVar7 + iVar2);
-      dVar29 = (double)local_e0;
-      pfVar3 = (float *)lVar13;
+      local_f0 = *(float *)((int)lVar12 + iVar2);
+      iVar4 = (int)lVar9 + iVar2;
+      iVar5 = (int)lVar12 + iVar2;
+      local_e0 = local_f0 - *(float *)((int)lVar9 + iVar2);
+      dVar31 = (double)local_e0;
+      pfVar3 = (float *)lVar15;
       local_f0 = pfVar3[-2] - local_f0;
-      dVar26 = (double)local_f0;
+      dVar28 = (double)local_f0;
       local_e8 = *(float *)(iVar5 + 8);
       local_d8 = local_e8 - *(float *)(iVar4 + 8);
-      dVar28 = (double)local_d8;
+      dVar30 = (double)local_d8;
       local_dc = *(float *)(iVar5 + 4);
       local_ec = pfVar3[-1] - local_dc;
-      dVar25 = (double)local_ec;
+      dVar27 = (double)local_ec;
       local_dc = local_dc - *(float *)(iVar4 + 4);
-      dVar27 = (double)local_dc;
+      dVar29 = (double)local_dc;
       local_e8 = *pfVar3 - local_e8;
-      dVar24 = (double)local_e8;
-      if ((double)(float)(dVar27 * dVar27 +
-                         (double)(float)(dVar28 * dVar28 + (double)(float)(dVar29 * dVar29))) <=
-          dVar23) {
-        MyAssertHandler(0xffffffff8218448c,0x1b2,0,0xffffffff82000f98,0xffffffff821845e8);
+      dVar26 = (double)local_e8;
+      if ((double)(float)(dVar29 * dVar29 +
+                         (double)(float)(dVar30 * dVar30 + (double)(float)(dVar31 * dVar31))) <=
+          dVar25) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\common\\brush_edges.cpp",0x1b2,0
+                        ,"%s");
       }
-      if ((double)(float)(dVar26 * dVar26 +
-                         (double)(float)(dVar24 * dVar24 + (double)(float)(dVar25 * dVar25))) <=
-          dVar23) {
-        MyAssertHandler(0xffffffff8218448c,0x1b3,0,0xffffffff82000f98,0xffffffff82184604);
-      }
-      Vec3Cross(&local_e0,&local_f0,&local_100);
-      dVar16 = (double)SQRT(local_100 * local_100 + local_f8 * local_f8 + local_fc * local_fc);
-      dVar19 = dVar22;
-      if (-dVar16 < 0.0) {
-        dVar19 = dVar16;
-      }
-      fVar1 = (float)(dVar22 / dVar19);
-      local_100 = local_100 * fVar1;
-      dVar19 = (double)local_100;
-      local_fc = local_fc * fVar1;
-      dVar20 = (double)local_fc;
-      local_f8 = local_f8 * fVar1;
-      dVar21 = (double)local_f8;
-      uVar9 = uVar12;
-      if (dVar18 <= dVar16) break;
-      if ((double)(float)(dVar24 * dVar28 +
-                         (double)(float)(dVar25 * dVar27 + (double)(float)(dVar26 * dVar29))) <
-          dVar23) goto LAB_826149ec;
-      uVar9 = uVar12 + 1;
-      lVar11 = (-8 - lVar6) + lVar13;
-      lVar13 = lVar13 + 0xc;
-      lVar7 = lVar10;
-      uVar8 = uVar12;
-      uVar12 = uVar9;
-      lVar10 = lVar11;
-    } while ((uVar9 & 0xffffffff) < (param_2 & 0xffffffff));
-  }
-  uVar12 = uVar9 + 1;
-  if ((uVar12 & 0xffffffff) < (param_2 & 0xffffffff)) {
-    lVar13 = (uVar12 + (uVar12 & 0x7fffffff) * 2 & 0x3fffffff) * 4 + lVar6 + 8;
-    dVar24 = 0.5;
-    lVar7 = (uVar8 + (uVar8 & 0x7fffffff) * 2 & 0x3fffffff) << 2;
-    lVar10 = (uVar9 + (uVar9 & 0x7fffffff) * 2 & 0x3fffffff) << 2;
-    do {
-      local_f0 = *(float *)((int)lVar10 + iVar2);
-      iVar4 = (int)lVar7 + iVar2;
-      iVar5 = (int)lVar10 + iVar2;
-      local_e0 = local_f0 - *(float *)((int)lVar7 + iVar2);
-      dVar16 = (double)local_e0;
-      pfVar3 = (float *)lVar13;
-      local_f0 = pfVar3[-2] - local_f0;
-      dVar27 = (double)local_f0;
-      local_e8 = *(float *)(iVar5 + 8);
-      local_d8 = local_e8 - *(float *)(iVar4 + 8);
-      dVar29 = (double)local_d8;
-      local_dc = *(float *)(iVar5 + 4);
-      local_ec = pfVar3[-1] - local_dc;
-      dVar26 = (double)local_ec;
-      local_dc = local_dc - *(float *)(iVar4 + 4);
-      dVar28 = (double)local_dc;
-      local_e8 = *pfVar3 - local_e8;
-      dVar25 = (double)local_e8;
       if ((double)(float)(dVar28 * dVar28 +
-                         (double)(float)(dVar29 * dVar29 + (double)(float)(dVar16 * dVar16))) <=
-          dVar23) {
-        MyAssertHandler(0xffffffff8218448c,0x1ca,0,0xffffffff82000f98,0xffffffff821845e8);
-      }
-      if ((double)(float)(dVar27 * dVar27 +
-                         (double)(float)(dVar25 * dVar25 + (double)(float)(dVar26 * dVar26))) <=
-          dVar23) {
-        MyAssertHandler(0xffffffff8218448c,0x1cb,0,0xffffffff82000f98,0xffffffff82184604);
+                         (double)(float)(dVar26 * dVar26 + (double)(float)(dVar27 * dVar27))) <=
+          dVar25) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\common\\brush_edges.cpp",0x1b3,0
+                        ,"%s");
       }
       Vec3Cross(&local_e0,&local_f0,&local_100);
-      dVar17 = (double)SQRT(local_100 * local_100 + local_f8 * local_f8 + local_fc * local_fc);
-      dVar15 = dVar22;
-      if (-dVar17 < 0.0) {
-        dVar15 = dVar17;
+      dVar18 = (double)SQRT(local_100 * local_100 + local_f8 * local_f8 + local_fc * local_fc);
+      dVar21 = dVar24;
+      if (-dVar18 < 0.0) {
+        dVar21 = dVar18;
       }
-      fVar1 = (float)(dVar22 / dVar15);
+      fVar1 = (float)(dVar24 / dVar21);
+      local_100 = local_100 * fVar1;
+      dVar21 = (double)local_100;
+      local_fc = local_fc * fVar1;
+      dVar22 = (double)local_fc;
+      local_f8 = local_f8 * fVar1;
+      dVar23 = (double)local_f8;
+      uVar11 = uVar14;
+      if (dVar20 <= dVar18) break;
+      if ((double)(float)(dVar26 * dVar30 +
+                         (double)(float)(dVar27 * dVar29 + (double)(float)(dVar28 * dVar31))) <
+          dVar25) goto LAB_826149ec;
+      uVar11 = uVar14 + 1;
+      lVar13 = (-8 - lVar6) + lVar15;
+      lVar15 = lVar15 + 0xc;
+      lVar9 = lVar12;
+      uVar10 = uVar14;
+      uVar14 = uVar11;
+      lVar12 = lVar13;
+    } while ((uVar11 & 0xffffffff) < (uVar8 & 0xffffffff));
+  }
+  uVar14 = uVar11 + 1;
+  if ((uVar14 & 0xffffffff) < (uVar8 & 0xffffffff)) {
+    lVar15 = (uVar14 + (uVar14 & 0x7fffffff) * 2 & 0x3fffffff) * 4 + lVar6 + 8;
+    dVar26 = 0.5;
+    lVar9 = (uVar10 + (uVar10 & 0x7fffffff) * 2 & 0x3fffffff) << 2;
+    lVar12 = (uVar11 + (uVar11 & 0x7fffffff) * 2 & 0x3fffffff) << 2;
+    do {
+      local_f0 = *(float *)((int)lVar12 + iVar2);
+      iVar4 = (int)lVar9 + iVar2;
+      iVar5 = (int)lVar12 + iVar2;
+      local_e0 = local_f0 - *(float *)((int)lVar9 + iVar2);
+      dVar18 = (double)local_e0;
+      pfVar3 = (float *)lVar15;
+      local_f0 = pfVar3[-2] - local_f0;
+      dVar29 = (double)local_f0;
+      local_e8 = *(float *)(iVar5 + 8);
+      local_d8 = local_e8 - *(float *)(iVar4 + 8);
+      dVar31 = (double)local_d8;
+      local_dc = *(float *)(iVar5 + 4);
+      local_ec = pfVar3[-1] - local_dc;
+      dVar28 = (double)local_ec;
+      local_dc = local_dc - *(float *)(iVar4 + 4);
+      dVar30 = (double)local_dc;
+      local_e8 = *pfVar3 - local_e8;
+      dVar27 = (double)local_e8;
+      if ((double)(float)(dVar30 * dVar30 +
+                         (double)(float)(dVar31 * dVar31 + (double)(float)(dVar18 * dVar18))) <=
+          dVar25) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\common\\brush_edges.cpp",0x1ca,0
+                        ,"%s");
+      }
+      if ((double)(float)(dVar29 * dVar29 +
+                         (double)(float)(dVar27 * dVar27 + (double)(float)(dVar28 * dVar28))) <=
+          dVar25) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\common\\brush_edges.cpp",0x1cb,0
+                        ,"%s");
+      }
+      Vec3Cross(&local_e0,&local_f0,&local_100);
+      dVar19 = (double)SQRT(local_100 * local_100 + local_f8 * local_f8 + local_fc * local_fc);
+      dVar17 = dVar24;
+      if (-dVar19 < 0.0) {
+        dVar17 = dVar19;
+      }
+      fVar1 = (float)(dVar24 / dVar17);
       local_100 = local_100 * fVar1;
       local_fc = local_fc * fVar1;
       local_f8 = local_f8 * fVar1;
-      if (dVar18 <= dVar17) {
-        bVar14 = (double)(float)((double)local_f8 * dVar21 +
-                                (double)(float)((double)local_fc * dVar20 +
-                                               (double)(float)((double)local_100 * dVar19))) <
-                 dVar24;
+      if (dVar20 <= dVar19) {
+        bVar16 = (double)(float)((double)local_f8 * dVar23 +
+                                (double)(float)((double)local_fc * dVar22 +
+                                               (double)(float)((double)local_100 * dVar21))) <
+                 dVar26;
       }
       else {
-        bVar14 = (double)(float)(dVar25 * dVar29 +
-                                (double)(float)(dVar26 * dVar28 + (double)(float)(dVar27 * dVar16)))
-                 < dVar23;
+        bVar16 = (double)(float)(dVar27 * dVar31 +
+                                (double)(float)(dVar28 * dVar30 + (double)(float)(dVar29 * dVar18)))
+                 < dVar25;
       }
-      if (bVar14) {
+      if (bVar16) {
 LAB_826149ec:
         __restfpr_19(0);
-        __restgprlr_21();
-        return;
+        uVar7 = __restgprlr_21();
+        return (bool)uVar7;
       }
-      uVar12 = uVar12 + 1;
-      lVar11 = lVar13 + (-8 - lVar6);
-      lVar13 = lVar13 + 0xc;
-      lVar7 = lVar10;
-      lVar10 = lVar11;
-    } while ((uVar12 & 0xffffffff) < (param_2 & 0xffffffff));
+      uVar14 = uVar14 + 1;
+      lVar13 = lVar15 + (-8 - lVar6);
+      lVar15 = lVar15 + 0xc;
+      lVar9 = lVar12;
+      lVar12 = lVar13;
+    } while ((uVar14 & 0xffffffff) < (uVar8 & 0xffffffff));
   }
   __restfpr_19(1);
-  __restgprlr_21();
-  return;
+  uVar7 = __restgprlr_21();
+  return (bool)uVar7;
 }
 
 
 // 82614BB8  TestConvexWithoutNearPoints  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/common/brush_edges.cpp:480)
 
-void TestConvexWithoutNearPoints(undefined8 param_1,ulonglong param_2)
+bool TestConvexWithoutNearPoints(SimplePlaneIntersection **param_1,uint param_2)
 
 {
   undefined4 *puVar1;
@@ -836,30 +893,33 @@ void TestConvexWithoutNearPoints(undefined8 param_1,ulonglong param_2)
   float fVar10;
   ulonglong uVar11;
   longlong lVar12;
-  longlong lVar13;
-  ulonglong uVar14;
+  undefined1 uVar13;
+  bool bVar14;
   longlong lVar15;
   ulonglong uVar16;
-  double dVar17;
+  longlong lVar17;
+  ulonglong uVar18;
+  double dVar19;
   float afStack_303c [3087];
   
+  uVar18 = (ulonglong)(int)param_2;
   uVar11 = ZEXT48(&stack0x00000000);
-  lVar12 = __savegprlr_29();
+  lVar12 = __savegprlr_29(param_1);
   iVar5 = (int)(uVar11 - 0x3080);
   *(BADSPACEBASE **)iVar5 = register0x0000000c;
-  uVar14 = 0;
-  if (3 < (int)param_2) {
-    lVar15 = uVar11 - 0x3034;
-    lVar13 = lVar12 + -4;
+  uVar16 = 0;
+  if (3 < (int)uVar18) {
+    lVar17 = uVar11 - 0x3034;
+    lVar15 = lVar12 + -4;
     do {
-      iVar6 = (int)lVar13;
+      iVar6 = (int)lVar15;
       puVar1 = *(undefined4 **)(iVar6 + 4);
-      uVar14 = uVar14 + 4;
+      uVar16 = uVar16 + 4;
       puVar2 = *(undefined4 **)(iVar6 + 8);
       puVar3 = *(undefined4 **)(iVar6 + 0xc);
-      lVar13 = lVar13 + 0x10;
-      puVar4 = (undefined4 *)*(undefined4 *)lVar13;
-      iVar6 = (int)lVar15;
+      lVar15 = lVar15 + 0x10;
+      puVar4 = (undefined4 *)*(undefined4 *)lVar15;
+      iVar6 = (int)lVar17;
       *(undefined4 *)(iVar6 + 4) = *puVar1;
       *(undefined4 *)(iVar6 + 8) = puVar1[1];
       *(undefined4 *)(iVar6 + 0xc) = puVar1[2];
@@ -871,790 +931,833 @@ void TestConvexWithoutNearPoints(undefined8 param_1,ulonglong param_2)
       *(undefined4 *)(iVar6 + 0x24) = puVar3[2];
       *(undefined4 *)(iVar6 + 0x28) = *puVar4;
       *(undefined4 *)(iVar6 + 0x2c) = puVar4[1];
-      lVar15 = lVar15 + 0x30;
-      *(undefined4 *)lVar15 = puVar4[2];
-    } while ((uVar14 & 0xffffffff) < (param_2 - 3 & 0xffffffff));
+      lVar17 = lVar17 + 0x30;
+      *(undefined4 *)lVar17 = puVar4[2];
+    } while ((uVar16 & 0xffffffff) < (uVar18 - 3 & 0xffffffff));
   }
-  if ((uVar14 & 0xffffffff) < (param_2 & 0xffffffff)) {
-    lVar15 = param_2 - uVar14;
-    lVar12 = (uVar14 & 0x3fffffff) * 4 + lVar12 + -4;
-    lVar13 = (uVar14 + (uVar14 & 0x7fffffff) * 2 & 0x3fffffff) * 4 + (uVar11 - 0x3080) + 0x4c;
+  if ((uVar16 & 0xffffffff) < (uVar18 & 0xffffffff)) {
+    lVar17 = uVar18 - uVar16;
+    lVar12 = (uVar16 & 0x3fffffff) * 4 + lVar12 + -4;
+    lVar15 = (uVar16 + (uVar16 & 0x7fffffff) * 2 & 0x3fffffff) * 4 + (uVar11 - 0x3080) + 0x4c;
     do {
       lVar12 = lVar12 + 4;
       puVar1 = (undefined4 *)*(undefined4 *)lVar12;
-      *(undefined4 *)((int)lVar13 + 4) = *puVar1;
-      *(undefined4 *)((int)lVar13 + 8) = puVar1[1];
-      lVar13 = lVar13 + 0xc;
-      *(undefined4 *)lVar13 = puVar1[2];
-      lVar15 = lVar15 + -1;
-    } while (lVar15 != 0);
+      *(undefined4 *)((int)lVar15 + 4) = *puVar1;
+      *(undefined4 *)((int)lVar15 + 8) = puVar1[1];
+      lVar15 = lVar15 + 0xc;
+      *(undefined4 *)lVar15 = puVar1[2];
+      lVar17 = lVar17 + -1;
+    } while (lVar17 != 0);
   }
-  uVar14 = 1;
-  dVar17 = 1.0;
-  if (1 < (param_2 & 0xffffffff)) {
+  uVar16 = 1;
+  dVar19 = 1.0;
+  if (1 < (uVar18 & 0xffffffff)) {
     lVar12 = uVar11 - 0x3028;
     do {
       pfVar7 = (float *)lVar12;
-      if (dVar17 <= (double)((pfVar7[-1] - pfVar7[2]) * (pfVar7[-1] - pfVar7[2]) +
+      if (dVar19 <= (double)((pfVar7[-1] - pfVar7[2]) * (pfVar7[-1] - pfVar7[2]) +
                             (*pfVar7 - pfVar7[3]) * (*pfVar7 - pfVar7[3]) +
                             (pfVar7[-2] - pfVar7[1]) * (pfVar7[-2] - pfVar7[1]))) {
-        uVar14 = uVar14 + 1;
+        uVar16 = uVar16 + 1;
         lVar12 = lVar12 + 0xc;
       }
       else {
-        uVar16 = (param_2 - uVar14) - 1;
-        memmove(pfVar7 + 1,pfVar7 + 4,
-                (size_t)((uVar16 + (uVar16 & 0x7fffffff) * 2 & 0xffffffff) << 2));
-        param_2 = param_2 - 1;
+        memmove();
+        uVar18 = uVar18 - 1;
       }
-    } while ((uVar14 & 0xffffffff) < (param_2 & 0xffffffff));
+    } while ((uVar16 & 0xffffffff) < (uVar18 & 0xffffffff));
   }
-  iVar6 = (int)param_2;
+  iVar6 = (int)uVar18;
   fVar8 = afStack_303c[iVar6 * 3] - *(float *)(iVar5 + 0x50);
   fVar9 = afStack_303c[iVar6 * 3 + 2] - *(float *)(iVar5 + 0x58);
   fVar10 = afStack_303c[iVar6 * 3 + 1] - *(float *)(iVar5 + 0x54);
-  if ((double)(fVar10 * fVar10 + fVar9 * fVar9 + fVar8 * fVar8) < dVar17) {
-    param_2 = param_2 - 1;
+  if ((double)(fVar10 * fVar10 + fVar9 * fVar9 + fVar8 * fVar8) < dVar19) {
+    uVar18 = uVar18 - 1;
   }
-  if ((param_2 & 0xffffffff) < 3) {
-    __restgprlr_29(0);
-    return;
+  if ((uVar18 & 0xffffffff) < 3) {
+    uVar13 = __restgprlr_29(0);
+    return (bool)uVar13;
   }
-  IsConvex(uVar11 - 0x3030,param_2);
-  __restgprlr_29();
-  return;
+  bVar14 = IsConvex((float (*) [3])(iVar5 + 0x50),(uint)uVar18);
+  uVar13 = __restgprlr_29(bVar14);
+  return (bool)uVar13;
 }
 
 
 // 82614DD0  CycleLess  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/common/brush_edges.cpp:512)
 
-ulonglong CycleLess(double param_1,double param_2,char param_3,char param_4,undefined8 param_5,
-                   undefined8 param_6,ulonglong param_7,ulonglong param_8)
+bool CycleLess(bool param_1,bool param_2,float param_3,float param_4,int param_5,int param_6)
 
 {
-  if (param_3 == '\0') {
-    if (param_4 != '\0') {
-      return 1;
+  ulonglong in_r7;
+  ulonglong in_r8;
+  
+  if (param_1) {
+    if (!param_2) {
+      return false;
     }
   }
-  else if (param_4 == '\0') {
-    return 0;
+  else if (param_2) {
+    return true;
   }
-  if ((double)(float)(param_2 - 1.0) <= param_1) {
-    if (param_2 < (double)(float)(param_1 - 1.0)) {
-      return 0;
+  if (param_4 - 1.0 <= param_3) {
+    if (param_4 < param_3 - 1.0) {
+      return false;
     }
-    return ((~(param_7 ^ param_8) & 0xffffffff) >> 0x1f) + (ulonglong)(param_7 <= param_8) & 1;
+    return (bool)((char)((~(in_r7 ^ in_r8) & 0xffffffff) >> 0x1f) + (in_r7 <= in_r8) & 1);
   }
-  return 1;
+  return true;
 }
 
 
 // 82614E38  ChooseEdgeToRemove  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/common/brush_edges.cpp:537)
 
-/* WARNING: Type propagation algorithm not settling */
-
-void ChooseEdgeToRemove(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-                       undefined4 *param_5)
+int ChooseEdgeToRemove(int param_1,int param_2,SimplePlaneIntersection **param_3,int param_4,
+                      SimplePlaneIntersection **param_5)
 
 {
-  undefined8 uVar1;
-  char cVar2;
-  char cVar3;
-  char cVar4;
-  byte bVar5;
-  ulonglong uVar6;
-  bool bVar7;
+  int iVar1;
+  bool bVar2;
+  bool bVar3;
+  bool bVar4;
+  ulonglong uVar5;
+  double dVar6;
+  double dVar7;
   double dVar8;
-  double dVar9;
-  double dVar10;
-  byte local_3090 [8];
+  char local_3090 [8];
   uint local_3088 [4];
   float local_3078 [6];
-  undefined1 auStack_3060 [4096];
-  undefined1 auStack_2060 [4096];
-  undefined1 auStack_1060 [4192];
+  SimplePlaneIntersection *apSStack_3060 [1024];
+  SimplePlaneIntersection *apSStack_2060 [1024];
+  SimplePlaneIntersection *apSStack_1060 [1048];
   
-  uVar1 = __savegprlr_25();
-  cVar2 = FindCycleBFS(uVar1,param_3,param_4,*param_5,param_5[1],param_2,auStack_3060,local_3088);
-  cVar3 = FindCycleBFS(uVar1,param_3,param_4,*param_5,param_5[2],param_2,auStack_2060,local_3088 + 1
-                      );
-  cVar4 = FindCycleBFS(uVar1,param_3,param_4,param_5[1],param_5[2],param_2,auStack_1060,
-                       local_3088 + 2);
-  if (((cVar2 == '\0') || (cVar3 == '\0')) || (cVar4 == '\0')) {
-    MyAssertHandler(0xffffffff8218448c,0x230,0,0xffffffff82000f98,0xffffffff8218462c);
+  iVar1 = __savegprlr_25(param_1);
+  bVar2 = FindCycleBFS(iVar1,param_3,param_4,*param_5,param_5[1],param_2,apSStack_3060,
+                       (int *)local_3088);
+  bVar3 = FindCycleBFS(iVar1,param_3,param_4,*param_5,param_5[2],param_2,apSStack_2060,
+                       (int *)(local_3088 + 1));
+  bVar4 = FindCycleBFS(iVar1,param_3,param_4,param_5[1],param_5[2],param_2,apSStack_1060,
+                       (int *)(local_3088 + 2));
+  if (((!bVar2) || (!bVar3)) || (!bVar4)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\common\\brush_edges.cpp",0x230,0,
+                    "%s");
   }
-  dVar8 = (double)CyclePerimiter(auStack_3060,local_3088[0]);
-  local_3078[0] = (float)dVar8;
-  dVar9 = (double)CyclePerimiter(auStack_2060,local_3088[1]);
-  local_3078[1] = (float)dVar9;
-  dVar10 = (double)CyclePerimiter(auStack_1060,local_3088[2]);
-  local_3078[2] = (float)dVar10;
-  bVar5 = TestConvexWithoutNearPoints(auStack_3060,local_3088[0]);
-  local_3090[0] = bVar5;
-  cVar2 = TestConvexWithoutNearPoints(auStack_2060,local_3088[1]);
-  local_3090[1] = cVar2;
-  local_3090[2] = TestConvexWithoutNearPoints(auStack_1060,local_3088[2]);
-  if (bVar5 == 0) {
-    if (cVar2 == '\0') goto LAB_82614fdc;
-    uVar6 = 1;
-  }
-  else if (cVar2 == '\0') {
-    uVar6 = 0;
-  }
-  else {
+  local_3078[0] = CyclePerimiter(apSStack_3060,local_3088[0]);
+  dVar6 = (double)local_3078[0];
+  local_3078[1] = CyclePerimiter(apSStack_2060,local_3088[1]);
+  dVar7 = (double)local_3078[1];
+  local_3078[2] = CyclePerimiter(apSStack_1060,local_3088[2]);
+  dVar8 = (double)local_3078[2];
+  bVar2 = TestConvexWithoutNearPoints(apSStack_3060,local_3088[0]);
+  local_3090[0] = bVar2;
+  bVar3 = TestConvexWithoutNearPoints(apSStack_2060,local_3088[1]);
+  local_3090[1] = bVar3;
+  local_3090[2] = TestConvexWithoutNearPoints(apSStack_1060,local_3088[2]);
+  if (bVar2) {
+    if (bVar3) {
 LAB_82614fdc:
-    if ((double)(float)(dVar9 - 1.0) <= dVar8) {
-      if ((double)(float)(dVar8 - 1.0) <= dVar9) {
-        uVar6 = ((~(ulonglong)(local_3088[0] ^ local_3088[1]) & 0xffffffff) >> 0x1f) +
-                (ulonglong)(local_3088[0] <= local_3088[1]) & 1;
+      if ((double)(float)(dVar7 - 1.0) <= dVar6) {
+        if ((double)(float)(dVar6 - 1.0) <= dVar7) {
+          uVar5 = ((~(ulonglong)(local_3088[0] ^ local_3088[1]) & 0xffffffff) >> 0x1f) +
+                  (ulonglong)(local_3088[0] <= local_3088[1]) & 1;
+        }
+        else {
+          uVar5 = 0;
+        }
       }
       else {
-        uVar6 = 0;
+        uVar5 = 1;
       }
     }
     else {
-      uVar6 = 1;
+      uVar5 = 0;
     }
   }
-  bVar7 = uVar6 != 0;
-  if (local_3090[bVar7] == 0) {
-    if (local_3090[2] != '\0') {
-      uVar6 = 1;
+  else {
+    if (!bVar3) goto LAB_82614fdc;
+    uVar5 = 1;
+  }
+  bVar2 = uVar5 != 0;
+  if (local_3090[bVar2] == '\0') {
+    if ((bool)local_3090[2]) {
+      uVar5 = 1;
       goto LAB_826150a8;
     }
   }
-  else if (local_3090[2] == '\0') {
-    uVar6 = 0;
+  else if (!(bool)local_3090[2]) {
+    uVar5 = 0;
     goto LAB_826150a8;
   }
-  if ((float)(dVar10 - 1.0) <= local_3078[bVar7]) {
-    if ((double)(local_3078[bVar7] - 1.0) <= dVar10) {
-      uVar6 = ((~(ulonglong)(local_3088[bVar7] ^ local_3088[2]) & 0xffffffff) >> 0x1f) +
-              (ulonglong)(local_3088[bVar7] <= local_3088[2]) & 1;
+  if ((float)(dVar8 - 1.0) <= local_3078[bVar2]) {
+    if ((double)(local_3078[bVar2] - 1.0) <= dVar8) {
+      uVar5 = ((~(ulonglong)(local_3088[bVar2] ^ local_3088[2]) & 0xffffffff) >> 0x1f) +
+              (ulonglong)(local_3088[bVar2] <= local_3088[2]) & 1;
     }
     else {
-      uVar6 = 0;
+      uVar5 = 0;
     }
   }
   else {
-    uVar6 = 1;
+    uVar5 = 1;
   }
 LAB_826150a8:
-  if (uVar6 != 0) {
-    __restgprlr_25(0);
-    return;
+  if (uVar5 != 0) {
+    iVar1 = __restgprlr_25(0);
+    return iVar1;
   }
-  __restgprlr_25(2 - (ulonglong)bVar7);
-  return;
+  iVar1 = __restgprlr_25(2 - (ulonglong)bVar2);
+  return iVar1;
 }
 
 
 // 826150E8  PartitionEdges  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/common/brush_edges.cpp:588)
 
-void PartitionEdges(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-                   int param_5,int param_6,longlong param_7)
+int PartitionEdges(int param_1,int param_2,SimplePlaneIntersection **param_3,int param_4,
+                  SimplePlaneIntersection **param_5,int param_6,int *param_7)
 
 {
   int iVar1;
-  undefined4 uVar2;
+  SimplePlaneIntersection *pSVar2;
   int iVar3;
-  void *_Src;
-  int iVar4;
-  undefined8 uVar5;
-  char cVar6;
-  undefined4 *puVar7;
+  bool bVar4;
+  longlong lVar5;
+  longlong lVar6;
+  longlong lVar7;
   longlong lVar8;
   longlong lVar9;
-  longlong lVar10;
-  int iVar11;
-  ulonglong uVar12;
-  int iVar13;
-  longlong lVar14;
-  undefined1 auStack_1080 [16];
-  undefined1 auStack_1070 [4208];
+  int iVar10;
+  ulonglong uVar11;
+  int iVar12;
+  int aiStack_1080 [4];
+  SimplePlaneIntersection *apSStack_1070 [1052];
   
-  uVar5 = __savegprlr_19();
-  lVar10 = 1;
-  puVar7 = (undefined4 *)param_7;
-  *puVar7 = 1;
-  lVar9 = param_7;
+  lVar5 = (longlong)(int)param_7;
+  iVar3 = __savegprlr_19(param_1);
+  lVar9 = 1;
+  *(undefined4 *)lVar5 = 1;
+  lVar8 = lVar5;
   if (1 < param_6) {
     do {
-      iVar1 = *(int *)lVar9;
-      uVar12 = 0;
-      iVar11 = (int)lVar10;
-      if (0 < iVar11) {
-        lVar14 = param_7;
+      iVar1 = *(int *)lVar8;
+      uVar11 = 0;
+      iVar10 = (int)lVar9;
+      lVar7 = lVar5;
+      if (0 < iVar10) {
 LAB_82615144:
-        cVar6 = FindCycleBFS(uVar5,param_3,param_4,
-                             *(undefined4 *)(*(int *)lVar14 * 4 + param_5 + -4),
-                             *(undefined4 *)(iVar1 * 4 + param_5),param_2,auStack_1070,auStack_1080)
-        ;
-        if (cVar6 == '\0') goto code_r0x82615180;
-        iVar13 = (int)uVar12;
-        if (iVar13 < iVar11 + -1) {
-          iVar4 = (int)((uVar12 & 0xffffffff) << 2);
-          uVar2 = *(undefined4 *)(iVar1 * 4 + param_5);
-          iVar3 = *(int *)(iVar4 + (int)puVar7);
-          _Src = (void *)(iVar3 * 4 + param_5);
-          memmove((void *)((int)_Src + 4),_Src,(iVar1 - iVar3) * 4);
-          *(undefined4 *)(*(int *)(iVar4 + (int)puVar7) * 4 + param_5) = uVar2;
+        bVar4 = FindCycleBFS(iVar3,param_3,param_4,param_5[*(int *)lVar7 + -1],param_5[iVar1],
+                             param_2,apSStack_1070,aiStack_1080);
+        if (!bVar4) goto code_r0x82615180;
+        iVar12 = (int)uVar11;
+        if (iVar12 < iVar10 + -1) {
+          pSVar2 = param_5[iVar1];
+          memmove();
+          param_5[*(int *)((int)((uVar11 & 0xffffffff) << 2) + (int)(undefined4 *)lVar5)] = pSVar2;
         }
-        if (iVar13 < iVar11) {
-          lVar8 = lVar10 - uVar12;
-          lVar14 = (uVar12 & 0x3fffffff) * 4 + param_7 + -4;
+        if (iVar12 < iVar10) {
+          lVar6 = lVar9 - uVar11;
+          lVar7 = (uVar11 & 0x3fffffff) * 4 + lVar5 + -4;
           do {
-            iVar13 = (int)lVar14;
-            lVar14 = lVar14 + 4;
-            *(int *)lVar14 = *(int *)(iVar13 + 4) + 1;
-            lVar8 = lVar8 + -1;
-          } while (lVar8 != 0);
+            iVar12 = (int)lVar7;
+            lVar7 = lVar7 + 4;
+            *(int *)lVar7 = *(int *)(iVar12 + 4) + 1;
+            lVar6 = lVar6 + -1;
+          } while (lVar6 != 0);
           goto LAB_826151fc;
         }
         goto LAB_82615200;
       }
 LAB_826151fc:
-      iVar13 = (int)uVar12;
+      iVar12 = (int)uVar11;
 LAB_82615200:
-      if (iVar13 == iVar11) {
-        lVar10 = lVar10 + 1;
-        lVar9 = lVar9 + 4;
-        *(int *)lVar9 = iVar1 + 1;
+      if (iVar12 == iVar10) {
+        lVar9 = lVar9 + 1;
+        lVar8 = lVar8 + 4;
+        *(int *)lVar8 = iVar1 + 1;
       }
-    } while (*(int *)lVar9 < param_6);
+    } while (*(int *)lVar8 < param_6);
   }
-  __restgprlr_19(lVar10);
-  return;
+  iVar3 = __restgprlr_19(lVar9);
+  return iVar3;
 code_r0x82615180:
-  uVar12 = uVar12 + 1;
-  lVar14 = lVar14 + 4;
-  if (iVar11 <= (int)uVar12) goto LAB_826151fc;
+  uVar11 = uVar11 + 1;
+  lVar7 = lVar7 + 4;
+  if (iVar10 <= (int)uVar11) goto LAB_826151fc;
   goto LAB_82615144;
 }
 
 
 // 82615228  Remove  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/common/brush_edges.cpp:635)
 
-void Remove(undefined8 param_1,longlong param_2,ulonglong param_3)
+int Remove(SimplePlaneIntersection **param_1,int param_2,SimplePlaneIntersection *param_3)
 
 {
-  void *_Dst;
-  uint *puVar2;
-  ulonglong uVar1;
+  SimplePlaneIntersection **ppSVar2;
   int iVar3;
-  uint *puVar4;
-  ulonglong uVar5;
-  int *_Dst_00;
+  ulonglong uVar1;
+  longlong lVar4;
+  int iVar5;
+  SimplePlaneIntersection **ppSVar6;
+  ulonglong uVar7;
+  int *piVar8;
   
-  puVar2 = (uint *)__savegprlr_28();
-  uVar5 = 0;
-  iVar3 = (int)param_2;
-  puVar4 = puVar2;
+  uVar7 = (ulonglong)(int)param_3;
+  lVar4 = (longlong)param_2;
+  ppSVar2 = (SimplePlaneIntersection **)__savegprlr_28(param_1);
+  iVar5 = 0;
+  iVar3 = (int)lVar4;
+  ppSVar6 = ppSVar2;
   if (0 < iVar3) {
     do {
-      if ((ulonglong)*puVar4 == (param_3 & 0xffffffff)) break;
-      uVar5 = uVar5 + 1;
-      puVar4 = puVar4 + 1;
-    } while ((int)uVar5 < iVar3);
+      if (ZEXT48(*ppSVar6) == (uVar7 & 0xffffffff)) break;
+      iVar5 = iVar5 + 1;
+      ppSVar6 = ppSVar6 + 1;
+    } while (iVar5 < iVar3);
   }
-  if ((int)uVar5 != iVar3) {
-    _Dst = (void *)((int)((uVar5 & 0xffffffff) << 2) + (int)puVar2);
-    memmove(_Dst,(void *)((int)_Dst + 4),(size_t)(((param_2 - uVar5) - 1 & 0xffffffff) << 2));
-    uVar1 = param_2 - 1;
-    uVar5 = uVar1;
-    if ((2 < (int)uVar1) && (uVar5 = 0, 0 < (int)uVar1)) {
+  if (iVar5 != iVar3) {
+    memmove();
+    uVar1 = lVar4 - 1;
+    uVar7 = uVar1;
+    if ((2 < (int)uVar1) && (uVar7 = 0, 0 < (int)uVar1)) {
       do {
-        iVar3 = (int)((uVar5 & 0x3fffffff) << 2);
-        _Dst_00 = (int *)(iVar3 + (int)puVar2);
+        iVar3 = (int)((uVar7 & 0xffffffff) << 2);
+        piVar8 = (int *)(iVar3 + (int)ppSVar2);
+        iVar5 = (int)uVar1;
         iVar3 = NumberOfOccurancesOfPlane
-                          (*(undefined4 *)(*(int *)(iVar3 + (int)puVar2) + 0xc),puVar2,uVar1);
+                          (*(int *)(*(int *)(iVar3 + (int)ppSVar2) + 0xc),ppSVar2,iVar5);
         if ((iVar3 < 2) ||
-           ((iVar3 = NumberOfOccurancesOfPlane(*(undefined4 *)(*_Dst_00 + 0x10),puVar2,uVar1),
-            iVar3 < 2 ||
-            (iVar3 = NumberOfOccurancesOfPlane(*(undefined4 *)(*_Dst_00 + 0x14),puVar2,uVar1),
-            iVar3 < 2)))) {
-          memmove(_Dst_00,_Dst_00 + 1,(size_t)(((uVar1 - uVar5) - 1 & 0xffffffff) << 2));
+           ((iVar3 = NumberOfOccurancesOfPlane(*(int *)(*piVar8 + 0x10),ppSVar2,iVar5), iVar3 < 2 ||
+            (iVar3 = NumberOfOccurancesOfPlane(*(int *)(*piVar8 + 0x14),ppSVar2,iVar5), iVar3 < 2)))
+           ) {
+          memmove();
           uVar1 = uVar1 - 1;
-          uVar5 = 0;
+          uVar7 = 0;
         }
         else {
-          uVar5 = uVar5 + 1;
+          uVar7 = uVar7 + 1;
         }
-      } while ((int)uVar5 < (int)uVar1);
+      } while ((int)uVar7 < (int)uVar1);
     }
-    __restgprlr_28(uVar5);
-    return;
+    iVar3 = __restgprlr_28(uVar7);
+    return iVar3;
   }
-  __restgprlr_28(param_2);
-  return;
+  iVar3 = __restgprlr_28(lVar4);
+  return iVar3;
 }
 
 
 // 82615350  ReduceToACycle  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/common/brush_edges.cpp:655)
 
-void ReduceToACycle(undefined8 param_1,longlong param_2,undefined8 param_3)
+int ReduceToACycle(int param_1,SimplePlaneIntersection **param_2,int param_3)
 
 {
-  undefined4 uVar1;
-  uint uVar2;
-  undefined4 uVar3;
-  uint uVar4;
+  uint uVar1;
+  char *pcVar2;
+  uint uVar3;
+  int iVar4;
   int iVar5;
-  bool bVar6;
-  undefined8 uVar7;
-  longlong lVar8;
-  undefined8 uVar9;
+  int iVar7;
+  longlong lVar6;
   int iVar10;
-  char cVar11;
-  char cVar12;
-  longlong lVar13;
-  ulonglong uVar14;
-  longlong lVar15;
-  int iVar16;
-  ulonglong uVar17;
-  longlong lVar18;
-  int iVar19;
+  bool bVar11;
+  bool bVar12;
+  SimplePlaneIntersection *pSVar13;
+  longlong lVar14;
+  ulonglong uVar15;
+  longlong lVar16;
+  int iVar17;
+  uint uVar18;
+  longlong lVar19;
   int iVar20;
-  longlong lVar21;
+  int iVar21;
   longlong lVar22;
-  double dVar23;
+  longlong lVar23;
   double dVar24;
   double dVar25;
+  double dVar26;
+  float fVar27;
+  int iVar8;
+  SimplePlaneIntersection **ppSVar9;
   
+  lVar22 = (longlong)(int)param_2;
   __savegprlr();
-  lVar15 = -0x5110;
-  uVar7 = _RtlCheckStack12();
-  lVar15 = ZEXT48(&stack0x00000000) + lVar15;
-  iVar5 = (int)lVar15;
+  lVar16 = -0x5110;
+  iVar7 = _RtlCheckStack12();
+  lVar16 = ZEXT48(&stack0x00000000) + lVar16;
+  iVar5 = (int)lVar16;
   *(BADSPACEBASE **)iVar5 = register0x0000000c;
-  lVar8 = RemovePtsWithPlanesThatOccurLessThanTwice(param_2,param_3);
-  if ((int)lVar8 < 3) goto LAB_826157c4;
-  uVar17 = 0;
-  *(undefined **)(iVar5 + 0x50) = &DAT_82000f98;
-  lVar18 = lVar8;
-  lVar22 = param_2;
-  if ((int)lVar8 < 1) {
+  ppSVar9 = (SimplePlaneIntersection **)lVar22;
+  iVar8 = RemovePtsWithPlanesThatOccurLessThanTwice(ppSVar9,param_3);
+  lVar6 = (longlong)iVar8;
+  if (iVar8 < 3) goto LAB_826157c4;
+  uVar18 = 0;
+  *(char **)(iVar5 + 0x50) = "%s";
+  lVar19 = lVar6;
+  if (iVar8 < 1) {
 LAB_82615474:
-    MyAssertHandler(0xffffffff8218448c,0x2ba,1,0xffffffff82000f98,0xffffffff821846ac);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\common\\brush_edges.cpp",0x2ba,1,
+                    "%s");
   }
   else {
     do {
-      iVar16 = 0xc;
-      lVar21 = (uVar17 & 0x3fffffff) * 4 + lVar15 + 0x105c;
+      iVar17 = 0xc;
+      lVar23 = ((ulonglong)uVar18 & 0x3fffffff) * 4 + lVar16 + 0x105c;
       do {
-        iVar10 = *(int *)(*(int *)lVar22 + iVar16);
-        if ((int)uVar7 != iVar10) {
-          iVar19 = 0;
-          if (0 < (int)uVar17) {
-            lVar13 = lVar15 + 0x1060;
+        iVar4 = *(int *)(*(int *)lVar22 + iVar17);
+        if (iVar7 != iVar4) {
+          iVar10 = 0;
+          if (0 < (int)uVar18) {
+            lVar14 = lVar16 + 0x1060;
             do {
-              if (*(int *)lVar13 == iVar10) {
-                bVar6 = true;
+              if (*(int *)lVar14 == iVar4) {
+                bVar11 = true;
                 goto LAB_82615414;
               }
-              iVar19 = iVar19 + 1;
-              lVar13 = lVar13 + 4;
-            } while (iVar19 < (int)uVar17);
+              iVar10 = iVar10 + 1;
+              lVar14 = lVar14 + 4;
+            } while (iVar10 < (int)uVar18);
           }
-          bVar6 = false;
+          bVar11 = false;
 LAB_82615414:
-          if (!bVar6) {
-            if (0x3ff < (uVar17 & 0xffffffff)) {
-              MyAssertHandler(0xffffffff8218448c,0x2b3,0,0xffffffff821846c0,uVar17,0x400);
+          if (!bVar11) {
+            if (0x3ff < uVar18) {
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\common\\brush_edges.cpp",
+                              0x2b3,0,
+                              "planeCount doesn\'t index ARRAY_COUNT( planeList )\n\t%i not in [0, %i)"
+                             );
             }
-            uVar17 = uVar17 + 1;
-            lVar21 = lVar21 + 4;
-            *(undefined4 *)lVar21 = *(undefined4 *)(*(int *)lVar22 + iVar16);
+            uVar18 = uVar18 + 1;
+            lVar23 = lVar23 + 4;
+            *(undefined4 *)lVar23 = *(undefined4 *)(*(int *)lVar22 + iVar17);
           }
         }
-        iVar16 = iVar16 + 4;
-      } while (iVar16 < 0x18);
-      lVar18 = lVar18 + -1;
+        iVar17 = iVar17 + 4;
+      } while (iVar17 < 0x18);
+      lVar19 = lVar19 + -1;
       lVar22 = lVar22 + 4;
-    } while (lVar18 != 0);
-    if ((int)uVar17 < 3) goto LAB_82615474;
+    } while (lVar19 != 0);
+    if ((int)uVar18 < 3) goto LAB_82615474;
   }
-  iVar16 = 0;
-  if (0 < (int)uVar17) {
-    dVar25 = 1.0;
-    lVar18 = lVar15 + 0x1060;
+  iVar17 = 0;
+  if (0 < (int)uVar18) {
+    dVar26 = 1.0;
+    lVar22 = lVar16 + 0x1060;
     do {
-      uVar1 = *(undefined4 *)lVar18;
-      uVar9 = GetPtsFormedByPlane(uVar1,param_2,lVar8,lVar15 + 0x60,0x400);
-      iVar10 = (int)uVar9;
-      while (2 < iVar10) {
-        iVar10 = PartitionEdges(uVar7,uVar1,param_2,lVar8,lVar15 + 0x60,uVar9,lVar15 + 0x2060);
-        iVar19 = 0;
+      iVar4 = *(int *)lVar22;
+      iVar10 = GetPtsFormedByPlane(iVar4,ppSVar9,(int)lVar6,
+                                   (SimplePlaneIntersection **)(iVar5 + 0x60),0x400);
+      while (iVar8 = (int)lVar6, 2 < iVar10) {
+        iVar10 = PartitionEdges(iVar7,iVar4,ppSVar9,iVar8,(SimplePlaneIntersection **)(iVar5 + 0x60)
+                                ,iVar10,(int *)(iVar5 + 0x2060));
+        iVar20 = 0;
         if (0 < iVar10) {
-          lVar22 = lVar15 + 0x2060;
-          uVar14 = 0;
+          lVar19 = lVar16 + 0x2060;
+          uVar15 = 0;
           do {
-            if (1 < iVar19) break;
-            uVar2 = *(uint *)lVar22;
-            lVar21 = uVar2 - uVar14;
-            if (lVar21 < 1) {
-              MyAssertHandler(0xffffffff8218448c,0x2c8,0,*(undefined4 *)(iVar5 + 0x50),
-                              0xffffffff82184654);
+            if (1 < iVar20) break;
+            uVar1 = *(uint *)lVar19;
+            lVar23 = uVar1 - uVar15;
+            if (lVar23 < 1) {
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\common\\brush_edges.cpp",
+                              0x2c8,0,*(char **)(iVar5 + 0x50));
             }
-            iVar20 = (int)lVar21;
-            if (iVar20 == 1) {
-              uVar3 = *(undefined4 *)((int)(uVar14 << 2) + iVar5 + 0x60);
+            iVar21 = (int)lVar23;
+            if (iVar21 == 1) {
+              pSVar13 = *(SimplePlaneIntersection **)((int)(uVar15 << 2) + iVar5 + 0x60);
 LAB_826155c0:
-              lVar8 = Remove(param_2,lVar8,uVar3);
+              iVar8 = Remove(ppSVar9,iVar8,pSVar13);
+              lVar6 = (longlong)iVar8;
               break;
             }
-            if (2 < iVar20) {
-              lVar22 = ChooseEdgeToRemove(uVar7,uVar1,param_2,lVar8,
-                                          (uVar14 & 0x3fffffff) * 4 + lVar15 + 0x60);
-              uVar3 = *(undefined4 *)((int)((lVar22 + uVar14 & 0xffffffff) << 2) + iVar5 + 0x60);
+            if (2 < iVar21) {
+              iVar10 = ChooseEdgeToRemove(iVar7,iVar4,ppSVar9,iVar8,
+                                          (SimplePlaneIntersection **)
+                                          ((int)(uVar15 << 2) + iVar5 + 0x60));
+              pSVar13 = *(SimplePlaneIntersection **)
+                         ((int)(((longlong)iVar10 + uVar15 & 0xffffffff) << 2) + iVar5 + 0x60);
               goto LAB_826155c0;
             }
-            iVar19 = iVar19 + 1;
-            lVar22 = lVar22 + 4;
-            uVar14 = (ulonglong)uVar2;
-          } while (iVar19 < iVar10);
-          if (iVar19 == 2) {
-            uVar3 = *(undefined4 *)(iVar5 + 0x50);
+            iVar20 = iVar20 + 1;
+            lVar19 = lVar19 + 4;
+            uVar15 = (ulonglong)uVar1;
+          } while (iVar20 < iVar10);
+          if (iVar20 == 2) {
+            pcVar2 = *(char **)(iVar5 + 0x50);
             if (*(int *)(iVar5 + 0x2060) != 2) {
-              MyAssertHandler(0xffffffff8218448c,0x2dd,0,uVar3,0xffffffff82184668);
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\common\\brush_edges.cpp",
+                              0x2dd,0,pcVar2);
             }
             if (*(int *)(iVar5 + 0x2064) != 4) {
-              MyAssertHandler(0xffffffff8218448c,0x2de,0,uVar3,0xffffffff8218467c);
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\common\\brush_edges.cpp",
+                              0x2de,0,pcVar2);
             }
-            cVar11 = FindCycleBFS(uVar7,param_2,lVar8,*(undefined4 *)(iVar5 + 0x60),
-                                  *(undefined4 *)(iVar5 + 100),uVar1,lVar15 + 0x3060,lVar15 + 0x58);
-            cVar12 = FindCycleBFS(uVar7,param_2,lVar8,*(undefined4 *)(iVar5 + 0x68),
-                                  *(undefined4 *)(iVar5 + 0x6c),uVar1,lVar15 + 0x4060,lVar15 + 0x5c)
+            iVar8 = (int)lVar6;
+            bVar11 = FindCycleBFS(iVar7,ppSVar9,iVar8,*(SimplePlaneIntersection **)(iVar5 + 0x60),
+                                  *(SimplePlaneIntersection **)(iVar5 + 100),iVar4,
+                                  (SimplePlaneIntersection **)(iVar5 + 0x3060),(int *)(iVar5 + 0x58)
+                                 );
+            bVar12 = FindCycleBFS(iVar7,ppSVar9,iVar8,*(SimplePlaneIntersection **)(iVar5 + 0x68),
+                                  *(SimplePlaneIntersection **)(iVar5 + 0x6c),iVar4,
+                                  (SimplePlaneIntersection **)(iVar5 + 0x4060),(int *)(iVar5 + 0x5c)
+                                 );
+            if ((!bVar11) || (!bVar12)) {
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\common\\brush_edges.cpp",
+                              0x2e8,0,pcVar2);
+            }
+            uVar1 = *(uint *)(iVar5 + 0x58);
+            fVar27 = CyclePerimiter((SimplePlaneIntersection **)(iVar5 + 0x3060),uVar1);
+            dVar24 = (double)fVar27;
+            uVar3 = *(uint *)(iVar5 + 0x5c);
+            fVar27 = CyclePerimiter((SimplePlaneIntersection **)(iVar5 + 0x4060),uVar3);
+            dVar25 = (double)fVar27;
+            bVar11 = TestConvexWithoutNearPoints((SimplePlaneIntersection **)(iVar5 + 0x3060),uVar1)
             ;
-            if ((cVar11 == '\0') || (cVar12 == '\0')) {
-              MyAssertHandler(0xffffffff8218448c,0x2e8,0,uVar3,0xffffffff82184690);
-            }
-            uVar2 = *(uint *)(iVar5 + 0x58);
-            dVar23 = (double)CyclePerimiter(lVar15 + 0x3060,uVar2);
-            uVar4 = *(uint *)(iVar5 + 0x5c);
-            dVar24 = (double)CyclePerimiter(lVar15 + 0x4060,uVar4);
-            cVar11 = TestConvexWithoutNearPoints(lVar15 + 0x3060,uVar2);
-            cVar12 = TestConvexWithoutNearPoints(lVar15 + 0x4060,uVar4);
-            if (cVar11 == '\0') {
-              if (cVar12 == '\0') goto LAB_82615710;
-              uVar14 = 1;
-            }
-            else if (cVar12 == '\0') {
-              uVar14 = 0;
-            }
-            else {
+            bVar12 = TestConvexWithoutNearPoints((SimplePlaneIntersection **)(iVar5 + 0x4060),uVar3)
+            ;
+            if (bVar11) {
+              if (bVar12) {
 LAB_82615710:
-              if ((double)(float)(dVar24 - dVar25) <= dVar23) {
-                if ((double)(float)(dVar23 - dVar25) <= dVar24) {
-                  uVar14 = ((~(ulonglong)(uVar2 ^ uVar4) & 0xffffffff) >> 0x1f) +
-                           (ulonglong)(uVar2 <= uVar4) & 1;
+                if ((double)(float)(dVar25 - dVar26) <= dVar24) {
+                  if ((double)(float)(dVar24 - dVar26) <= dVar25) {
+                    uVar15 = ((~(ulonglong)(uVar1 ^ uVar3) & 0xffffffff) >> 0x1f) +
+                             (ulonglong)(uVar1 <= uVar3) & 1;
+                  }
+                  else {
+                    uVar15 = 0;
+                  }
                 }
                 else {
-                  uVar14 = 0;
+                  uVar15 = 1;
                 }
               }
               else {
-                uVar14 = 1;
+                uVar15 = 0;
               }
             }
-            if (uVar14 == 0) {
-              uVar9 = Remove(param_2,lVar8,*(undefined4 *)(iVar5 + 0x68));
-              uVar3 = *(undefined4 *)(iVar5 + 0x6c);
+            else {
+              if (!bVar12) goto LAB_82615710;
+              uVar15 = 1;
+            }
+            if (uVar15 == 0) {
+              iVar8 = Remove(ppSVar9,iVar8,*(SimplePlaneIntersection **)(iVar5 + 0x68));
+              pSVar13 = *(SimplePlaneIntersection **)(iVar5 + 0x6c);
             }
             else {
-              uVar9 = Remove(param_2,lVar8,*(undefined4 *)(iVar5 + 0x60));
-              uVar3 = *(undefined4 *)(iVar5 + 100);
+              iVar8 = Remove(ppSVar9,iVar8,*(SimplePlaneIntersection **)(iVar5 + 0x60));
+              pSVar13 = *(SimplePlaneIntersection **)(iVar5 + 100);
             }
-            lVar8 = Remove(param_2,uVar9,uVar3);
+            iVar8 = Remove(ppSVar9,iVar8,pSVar13);
+            lVar6 = (longlong)iVar8;
           }
         }
-        if ((int)lVar8 < 3) goto LAB_826157c4;
-        uVar9 = GetPtsFormedByPlane(uVar1,param_2,lVar8,lVar15 + 0x60,0x400);
-        iVar10 = (int)uVar9;
+        iVar8 = (int)lVar6;
+        if (iVar8 < 3) goto LAB_826157c4;
+        iVar10 = GetPtsFormedByPlane(iVar4,ppSVar9,iVar8,(SimplePlaneIntersection **)(iVar5 + 0x60),
+                                     0x400);
       }
-      iVar16 = iVar16 + 1;
-      lVar18 = lVar18 + 4;
-    } while (iVar16 < (int)uVar17);
+      iVar17 = iVar17 + 1;
+      lVar22 = lVar22 + 4;
+    } while (iVar17 < (int)uVar18);
   }
 LAB_826157c4:
-  __restgprlr(lVar8);
-  return;
+  __restgprlr();
+  return iVar8;
 }
 
 
 // 826157E0  NumberOfUniquePoints  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/common/brush_edges.cpp:776)
 
-void NumberOfUniquePoints(undefined8 param_1,longlong param_2)
+int NumberOfUniquePoints(SimplePlaneIntersection **param_1,int param_2)
 
 {
   undefined4 *puVar1;
   int iVar2;
-  undefined4 *puVar3;
+  int iVar3;
+  undefined8 in_r5;
   longlong lVar4;
-  int iVar5;
-  undefined4 *puVar6;
-  int iVar7;
-  undefined8 uVar8;
+  undefined4 *puVar5;
+  longlong lVar6;
+  undefined4 *puVar7;
+  int iVar8;
+  double dVar9;
   undefined4 uStack_1044;
   undefined4 local_1040 [1040];
   
-  puVar1 = (undefined4 *)__savegprlr_26();
+  lVar4 = (longlong)param_2;
+  puVar1 = (undefined4 *)__savegprlr_26(param_1);
   if (puVar1 == (undefined4 *)0x0) {
-    MyAssertHandler(0xffffffff8218448c,0x30e,0,0xffffffff82000f98,0xffffffff82082274);
+    in_r5 = 0;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\common\\brush_edges.cpp",0x30e,0,
+                    "%s");
   }
-  if ((int)param_2 < 3) {
-    MyAssertHandler(0xffffffff8218448c,0x30f,0,0xffffffff82000f98,0xffffffff821845d8);
+  if ((int)lVar4 < 3) {
+    in_r5 = 0;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\common\\brush_edges.cpp",0x30f,0,
+                    "%s");
   }
-  lVar4 = 0;
-  if (0 < (int)param_2) {
-    puVar3 = &uStack_1044;
-    uVar8 = 0x3f847ae140000000;
+  lVar6 = 0;
+  if (0 < (int)lVar4) {
+    puVar5 = &uStack_1044;
+    dVar9 = 0.009999999776482582;
     do {
-      iVar7 = 0;
-      iVar5 = (int)lVar4;
-      if (0 < iVar5) {
-        puVar6 = local_1040;
+      iVar8 = 0;
+      iVar3 = (int)lVar6;
+      if (0 < iVar3) {
+        puVar7 = local_1040;
         do {
-          iVar2 = VecNCompareCustomEpsilon(uVar8,*puVar1,*puVar6);
+          iVar2 = VecNCompareCustomEpsilon
+                            ((float *)*puVar1,(float *)*puVar7,(float)dVar9,(int)in_r5);
           if (iVar2 != 0) break;
-          iVar7 = iVar7 + 1;
-          puVar6 = puVar6 + 1;
-        } while (iVar7 < iVar5);
+          iVar8 = iVar8 + 1;
+          puVar7 = puVar7 + 1;
+        } while (iVar8 < iVar3);
       }
-      if (iVar7 == iVar5) {
-        lVar4 = lVar4 + 1;
-        puVar3 = puVar3 + 1;
-        *puVar3 = *puVar1;
+      if (iVar8 == iVar3) {
+        lVar6 = lVar6 + 1;
+        puVar5 = puVar5 + 1;
+        *puVar5 = *puVar1;
       }
-      param_2 = param_2 + -1;
+      lVar4 = lVar4 + -1;
       puVar1 = puVar1 + 1;
-    } while (param_2 != 0);
+    } while (lVar4 != 0);
   }
-  __restgprlr_26(lVar4);
-  return;
+  iVar3 = __restgprlr_26(lVar6);
+  return iVar3;
 }
 
 
 // 826158E8  BuildBrushdAdjacencyWindingForSide  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/common/brush_edges.cpp:802)
 
-void BuildBrushdAdjacencyWindingForSide
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-               ulonglong param_5,int param_6)
+adjacencyWinding_t *
+BuildBrushdAdjacencyWindingForSide
+          (float *param_1,int param_2,SimplePlaneIntersection *param_3,int param_4,
+          adjacencyWinding_t *param_5,int param_6)
 
 {
   undefined4 uVar1;
-  undefined4 *puVar2;
-  undefined4 uVar3;
-  int iVar4;
-  int *_Dst;
-  bool bVar5;
+  uint uVar2;
+  SimplePlaneIntersection *pSVar3;
+  undefined4 *puVar4;
+  int iVar5;
   int iVar6;
-  float *pfVar10;
-  undefined8 uVar7;
-  int iVar11;
-  ulonglong uVar8;
-  ulonglong uVar9;
-  int iVar12;
-  char cVar14;
-  char cVar15;
-  uint uVar13;
+  float *pfVar7;
+  int iVar8;
+  int iVar9;
+  int iVar10;
+  SimplePlaneIntersection **ppSVar11;
+  SimplePlaneIntersection *pSVar12;
+  bool bVar14;
+  bool bVar15;
+  adjacencyWinding_t *paVar13;
   longlong lVar16;
-  undefined4 *puVar17;
-  longlong lVar18;
+  longlong lVar17;
+  undefined4 *puVar18;
   longlong lVar19;
-  int iVar20;
-  uint uVar21;
+  longlong lVar20;
+  ulonglong uVar21;
   ulonglong uVar22;
-  uint *puVar23;
-  double dVar24;
+  uint uVar23;
+  ulonglong uVar24;
   double dVar25;
   double dVar26;
+  double dVar27;
+  float fVar28;
   
+  uVar21 = (ulonglong)(int)param_5;
   __savegprlr();
-  lVar18 = -0x6120;
-  pfVar10 = (float *)_RtlCheckStack12();
-  lVar18 = ZEXT48(&stack0x00000000) + lVar18;
-  iVar4 = (int)lVar18;
-  *(BADSPACEBASE **)iVar4 = register0x0000000c;
-  uVar7 = GetPointListAllowDupes(param_2,param_3,param_4,lVar18 + 0x2070,0x400);
-  if ((2 < (int)uVar7) && (iVar11 = NumberOfUniquePoints(lVar18 + 0x2070,uVar7), 2 < iVar11)) {
-    uVar8 = ReduceToACycle(param_2,lVar18 + 0x2070,uVar7);
-    if (2 < (int)uVar8) {
-      lVar19 = 0;
-      if ((int)uVar8 == 0) {
-        uVar21 = *(uint *)(iVar4 + 0x50);
+  lVar19 = -0x6120;
+  pfVar7 = (float *)_RtlCheckStack12();
+  iVar5 = (int)(ZEXT48(&stack0x00000000) + lVar19);
+  *(BADSPACEBASE **)iVar5 = register0x0000000c;
+  iVar8 = GetPointListAllowDupes
+                    (param_2,param_3,param_4,(SimplePlaneIntersection **)(iVar5 + 0x2070),0x400);
+  if ((2 < iVar8) &&
+     (iVar9 = NumberOfUniquePoints((SimplePlaneIntersection **)(iVar5 + 0x2070),iVar8), 2 < iVar9))
+  {
+    iVar8 = ReduceToACycle(param_2,(SimplePlaneIntersection **)(iVar5 + 0x2070),iVar8);
+    uVar22 = (ulonglong)iVar8;
+    if (2 < iVar8) {
+      lVar20 = 0;
+      if (iVar8 == 0) {
+        uVar23 = *(uint *)(iVar5 + 0x50);
       }
       else {
-        dVar26 = 1.0;
+        dVar27 = 1.0;
         do {
-          uVar8 = uVar8 - 1;
-          lVar16 = (uVar8 & 0x3fffffff) * 4;
-          iVar6 = (int)(lVar19 << 0xc);
-          iVar20 = iVar4 + 0x50;
-          uVar3 = *(undefined4 *)((int)lVar16 + (int)(lVar18 + 0x2070));
-          uVar22 = lVar16 + lVar18 + 0x2070;
-          iVar11 = (int)(lVar19 << 2);
-          *(undefined4 *)(iVar11 + iVar20) = 1;
-          *(undefined4 *)(iVar6 + iVar4 + 0x70) = uVar3;
-          uVar7 = SecondPlane(uVar3,param_2);
-          if ((int)uVar8 != 0) {
+          uVar22 = uVar22 - 1;
+          lVar17 = ZEXT48(&stack0x00000000) + lVar19 + 0x2070;
+          lVar16 = (uVar22 & 0x3fffffff) * 4;
+          iVar6 = (int)(lVar20 << 0xc);
+          iVar9 = iVar5 + 0x50;
+          pSVar12 = *(SimplePlaneIntersection **)((int)lVar16 + (int)lVar17);
+          uVar24 = lVar16 + lVar17;
+          iVar8 = (int)(lVar20 << 2);
+          *(undefined4 *)(iVar8 + iVar9) = 1;
+          *(SimplePlaneIntersection **)(iVar6 + iVar5 + 0x70) = pSVar12;
+          iVar10 = SecondPlane(pSVar12,param_2);
+          if ((int)uVar22 != 0) {
             do {
-              uVar9 = NextPointFormedByThisPlane(uVar7,lVar18 + 0x2070,uVar22);
-              if ((uVar9 & 0xffffffff) == (uVar22 & 0xffffffff)) {
-                iVar12 = 0;
+              ppSVar11 = NextPointFormedByThisPlane
+                                   (iVar10,(SimplePlaneIntersection **)(iVar5 + 0x2070),
+                                    (SimplePlaneIntersection **)uVar24);
+              if (ZEXT48(ppSVar11) == (uVar24 & 0xffffffff)) {
+                pSVar12 = (SimplePlaneIntersection *)0x0;
               }
               else {
-                _Dst = (int *)uVar9;
-                iVar12 = *_Dst;
-                memmove(_Dst,_Dst + 1,(((int)uVar22 - (int)_Dst) + -4 >> 2) << 2);
+                pSVar12 = *ppSVar11;
+                memmove();
               }
-              uVar21 = *(uint *)(iVar11 + iVar20);
-              *(int *)((int)(((ulonglong)uVar21 + lVar19 * 0x400 & 0xffffffff) << 2) + iVar4 + 0x70)
-                   = iVar12;
-              if (iVar12 == 0) break;
-              uVar7 = ThirdPlane(iVar12,param_2,uVar7);
-              uVar8 = uVar8 - 1;
-              *(uint *)(iVar11 + iVar20) = uVar21 + 1;
-              uVar22 = uVar22 - 4;
-            } while (uVar8 != 0);
+              uVar23 = *(uint *)(iVar8 + iVar9);
+              *(SimplePlaneIntersection **)
+               ((int)(((ulonglong)uVar23 + lVar20 * 0x400 & 0xffffffff) << 2) + iVar5 + 0x70) =
+                   pSVar12;
+              if (pSVar12 == (SimplePlaneIntersection *)0x0) break;
+              iVar10 = ThirdPlane(pSVar12,param_2,iVar10);
+              uVar22 = uVar22 - 1;
+              *(uint *)(iVar8 + iVar9) = uVar23 + 1;
+              uVar24 = uVar24 - 4;
+            } while (uVar22 != 0);
           }
-          iVar11 = *(int *)(iVar6 + iVar4 + 0x70);
-          iVar20 = (int)uVar7;
-          if (*(int *)(iVar11 + 0xc) == iVar20) {
-            bVar5 = true;
+          iVar8 = *(int *)(iVar6 + iVar5 + 0x70);
+          if (*(int *)(iVar8 + 0xc) == iVar10) {
+            bVar14 = true;
           }
-          else if (*(int *)(iVar11 + 0x10) == iVar20) {
-            bVar5 = true;
-          }
-          else {
-            bVar5 = iVar20 == *(int *)(iVar11 + 0x14);
-          }
-          if (!bVar5) {
-            MyAssertHandler(0xffffffff8218448c,0x355,1,0xffffffff82000f98,0xffffffff821847c4);
-          }
-          uVar21 = *(uint *)(iVar4 + 0x50);
-          if ((int)lVar19 == 0) {
-            lVar19 = 1;
+          else if (*(int *)(iVar8 + 0x10) == iVar10) {
+            bVar14 = true;
           }
           else {
-            dVar24 = (double)CyclePerimiter(lVar18 + 0x70,uVar21);
-            uVar13 = *(uint *)(iVar4 + 0x54);
-            dVar25 = (double)CyclePerimiter(lVar18 + 0x1070,uVar13);
-            cVar14 = TestConvexWithoutNearPoints(lVar18 + 0x70,uVar21);
-            cVar15 = TestConvexWithoutNearPoints(lVar18 + 0x1070,uVar13);
-            if (cVar14 == '\0') {
-              if (cVar15 == '\0') goto LAB_82615b38;
-              uVar22 = 1;
-            }
-            else if (cVar15 == '\0') {
-              uVar22 = 0;
-            }
-            else {
+            bVar14 = iVar10 == *(int *)(iVar8 + 0x14);
+          }
+          if (!bVar14) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\common\\brush_edges.cpp",
+                            0x355,1,"%s");
+          }
+          uVar23 = *(uint *)(iVar5 + 0x50);
+          if ((int)lVar20 == 0) {
+            lVar20 = 1;
+          }
+          else {
+            fVar28 = CyclePerimiter((SimplePlaneIntersection **)(iVar5 + 0x70),uVar23);
+            dVar25 = (double)fVar28;
+            uVar2 = *(uint *)(iVar5 + 0x54);
+            fVar28 = CyclePerimiter((SimplePlaneIntersection **)(iVar5 + 0x1070),uVar2);
+            dVar26 = (double)fVar28;
+            bVar14 = TestConvexWithoutNearPoints((SimplePlaneIntersection **)(iVar5 + 0x70),uVar23);
+            bVar15 = TestConvexWithoutNearPoints((SimplePlaneIntersection **)(iVar5 + 0x1070),uVar2)
+            ;
+            if (bVar14) {
+              if (bVar15) {
 LAB_82615b38:
-              if ((double)(float)(dVar25 - dVar26) <= dVar24) {
-                if ((double)(float)(dVar24 - dVar26) <= dVar25) {
-                  uVar22 = ((~(ulonglong)(uVar21 ^ uVar13) & 0xffffffff) >> 0x1f) +
-                           (ulonglong)(uVar21 <= uVar13) & 1;
+                if ((double)(float)(dVar26 - dVar27) <= dVar25) {
+                  if ((double)(float)(dVar25 - dVar27) <= dVar26) {
+                    uVar24 = ((~(ulonglong)(uVar23 ^ uVar2) & 0xffffffff) >> 0x1f) +
+                             (ulonglong)(uVar23 <= uVar2) & 1;
+                  }
+                  else {
+                    uVar24 = 0;
+                  }
                 }
                 else {
-                  uVar22 = 0;
+                  uVar24 = 1;
                 }
               }
               else {
-                uVar22 = 1;
+                uVar24 = 0;
               }
             }
-            if (uVar22 != 0) {
-              memcpy((void *)(iVar4 + 0x70),(void *)(iVar4 + 0x1070),uVar13 << 2);
-              *(uint *)(iVar4 + 0x50) = uVar13;
-              uVar21 = uVar13;
+            else {
+              if (!bVar15) goto LAB_82615b38;
+              uVar24 = 1;
+            }
+            if (uVar24 != 0) {
+              memcpy();
+              *(uint *)(iVar5 + 0x50) = uVar2;
+              uVar23 = uVar2;
             }
           }
-        } while ((int)uVar8 != 0);
+        } while ((int)uVar22 != 0);
       }
-      if ((int)uVar21 < 3) {
-        MyAssertHandler(0xffffffff8218448c,0x367,1,0xffffffff82000f98,0xffffffff821847b0);
+      if ((int)uVar23 < 3) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\common\\brush_edges.cpp",0x367,1
+                        ,"%s");
       }
-      uVar8 = 0;
-      if ((param_5 & 0xffffffff) == 0) {
-        if (DAT_84013128 == 0) {
-          MyAssertHandler(0xffffffff8218448c,0x37a,0,0xffffffff82184780);
+      uVar22 = 0;
+      if ((uVar21 & 0xffffffff) == 0) {
+        if (alwaysfails == 0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\common\\brush_edges.cpp",0x37a
+                          ,0,"Not supported");
         }
-        MyAssertHandler(0xffffffff8218448c,0x37e,0,0xffffffff82000f98,0xffffffff82082330);
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\common\\brush_edges.cpp",0x37e,0
+                        ,"%s");
       }
       else {
-        uVar8 = param_5;
-        if (param_6 < (int)uVar21) {
-          Com_PrintError(1,0xffffffff82184790);
+        uVar22 = uVar21;
+        if (param_6 < (int)uVar23) {
+          Com_PrintError(1,"Brush face has too many edges");
           goto LAB_82615bfc;
         }
       }
-      puVar2 = *(undefined4 **)(iVar4 + 0x70);
-      uVar22 = uVar8 + 4;
-      uVar3 = *(undefined4 *)(uVar21 * 4 + iVar4 + 0x6c);
-      cVar14 = PlaneInCommonExcluding(puVar2,uVar3,param_2,uVar22);
-      if (cVar14 == '\0') {
-        MyAssertHandler(0xffffffff8218448c,899,1,0xffffffff82000f98,0xffffffff8218477c);
+      pSVar12 = *(SimplePlaneIntersection **)(iVar5 + 0x70);
+      uVar21 = uVar22 + 4;
+      pSVar3 = *(SimplePlaneIntersection **)(uVar23 * 4 + iVar5 + 0x6c);
+      bVar14 = PlaneInCommonExcluding(pSVar12,pSVar3,param_2,(int *)uVar21);
+      if (!bVar14) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\common\\brush_edges.cpp",899,1,
+                        "%s");
       }
-      *(undefined4 *)(iVar4 + 0x3070) = *puVar2;
-      *(undefined4 *)(iVar4 + 0x3074) = puVar2[1];
-      uVar1 = puVar2[2];
-      puVar23 = (uint *)uVar8;
-      *puVar23 = 1;
-      *(undefined4 *)(iVar4 + 0x3078) = uVar1;
-      if (1 < (int)uVar21) {
+      *(float *)(iVar5 + 0x3070) = pSVar12->xyz[0];
+      *(float *)(iVar5 + 0x3074) = pSVar12->xyz[1];
+      fVar28 = pSVar12->xyz[2];
+      paVar13 = (adjacencyWinding_t *)uVar22;
+      paVar13->numsides = 1;
+      *(float *)(iVar5 + 0x3078) = fVar28;
+      if (1 < (int)uVar23) {
         do {
-          uVar13 = ThirdPlane(*(undefined4 *)(*puVar23 * 4 + iVar4 + 0x6c),param_2,puVar23[*puVar23]
-                             );
-          puVar23[*puVar23 + 1] = uVar13;
-          uVar13 = *puVar23;
-          puVar2 = *(undefined4 **)(uVar13 * 4 + iVar4 + 0x70);
-          puVar17 = (undefined4 *)(uVar13 * 0xc + iVar4 + 0x3070);
-          *puVar17 = *puVar2;
-          puVar17[1] = puVar2[1];
-          uVar1 = puVar2[2];
-          *puVar23 = uVar13 + 1;
-          puVar17[2] = uVar1;
-        } while ((int)(uVar13 + 1) < (int)uVar21);
+          iVar8 = ThirdPlane(*(SimplePlaneIntersection **)(paVar13->numsides * 4 + iVar5 + 0x6c),
+                             param_2,paVar13->sides[paVar13->numsides + -1]);
+          paVar13->sides[paVar13->numsides] = iVar8;
+          iVar8 = paVar13->numsides;
+          puVar4 = *(undefined4 **)(iVar8 * 4 + iVar5 + 0x70);
+          puVar18 = (undefined4 *)(iVar8 * 0xc + iVar5 + 0x3070);
+          *puVar18 = *puVar4;
+          puVar18[1] = puVar4[1];
+          uVar1 = puVar4[2];
+          paVar13->numsides = iVar8 + 1;
+          puVar18[2] = uVar1;
+        } while (iVar8 + 1 < (int)uVar23);
       }
-      iVar11 = ThirdPlane(uVar3,param_2,puVar23[*puVar23]);
-      if (*(int *)uVar22 != iVar11) {
-        MyAssertHandler(0xffffffff8218448c,0x38c,1,0xffffffff82000f98,0xffffffff82184708);
+      iVar8 = ThirdPlane(pSVar3,param_2,paVar13->sides[paVar13->numsides + -1]);
+      if (*(int *)uVar21 != iVar8) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\common\\brush_edges.cpp",0x38c,1
+                        ,"%s");
       }
-      dVar26 = (double)RepresentativeTriangleFromWinding
-                                 (lVar18 + 0x3070,*puVar23,pfVar10,lVar18 + 0x50,lVar18 + 0x58,
-                                  lVar18 + 0x5c);
-      if (0.0010000000474974513 <= dVar26) {
-        PlaneFromPoints(lVar18 + 0x60,
-                        ((ulonglong)*(uint *)(iVar4 + 0x50) +
-                         ((ulonglong)*(uint *)(iVar4 + 0x50) & 0x7fffffff) * 2 & 0x3fffffff) * 4 +
-                        lVar18 + 0x3070,
-                        ((ulonglong)*(uint *)(iVar4 + 0x58) +
-                         ((ulonglong)*(uint *)(iVar4 + 0x58) & 0x7fffffff) * 2 & 0x3fffffff) * 4 +
-                        lVar18 + 0x3070,
-                        ((ulonglong)*(uint *)(iVar4 + 0x5c) +
-                         ((ulonglong)*(uint *)(iVar4 + 0x5c) & 0x7fffffff) * 2 & 0x3fffffff) * 4 +
-                        lVar18 + 0x3070);
-        if ((pfVar10[2] * *(float *)(iVar4 + 0x68) +
-             pfVar10[1] * *(float *)(iVar4 + 100) + *pfVar10 * *(float *)(iVar4 + 0x60) < 0.0) &&
-           (uVar9 = ((ulonglong)*puVar23 & 0x3fffffff) * 4 + uVar8,
-           (uVar22 & 0xffffffff) < (uVar9 & 0xffffffff))) {
+      fVar28 = RepresentativeTriangleFromWinding
+                         ((float (*) [3])(iVar5 + 0x3070),paVar13->numsides,pfVar7,
+                          (int *)(iVar5 + 0x50),(int *)(iVar5 + 0x58),(int *)(iVar5 + 0x5c));
+      if (0.001 <= fVar28) {
+        PlaneFromPoints((float *)(iVar5 + 0x60),
+                        (float *)(*(int *)(iVar5 + 0x50) * 0xc + iVar5 + 0x3070),
+                        (float *)(*(int *)(iVar5 + 0x58) * 0xc + iVar5 + 0x3070),
+                        (float *)(*(int *)(iVar5 + 0x5c) * 0xc + iVar5 + 0x3070));
+        if ((pfVar7[2] * *(float *)(iVar5 + 0x68) +
+             pfVar7[1] * *(float *)(iVar5 + 100) + *pfVar7 * *(float *)(iVar5 + 0x60) < 0.0) &&
+           (uVar22 = ((ulonglong)(uint)paVar13->numsides & 0x3fffffff) * 4 + uVar22,
+           (uVar21 & 0xffffffff) < (uVar22 & 0xffffffff))) {
           do {
-            uVar3 = *(undefined4 *)uVar22;
-            *(undefined4 *)uVar22 = *(undefined4 *)uVar9;
-            uVar22 = uVar22 + 4;
-            *(undefined4 *)uVar9 = uVar3;
-            uVar9 = uVar9 - 4;
-          } while ((uVar22 & 0xffffffff) < (uVar9 & 0xffffffff));
+            uVar1 = *(undefined4 *)uVar21;
+            *(undefined4 *)uVar21 = *(undefined4 *)uVar22;
+            uVar21 = uVar21 + 4;
+            *(undefined4 *)uVar22 = uVar1;
+            uVar22 = uVar22 - 4;
+          } while ((uVar21 & 0xffffffff) < (uVar22 & 0xffffffff));
         }
-        __restgprlr(uVar8);
-        return;
+        __restgprlr();
+        return paVar13;
       }
     }
   }
 LAB_82615bfc:
-  __restgprlr(0);
-  return;
+  paVar13 = (adjacencyWinding_t *)0x0;
+  __restgprlr();
+  return paVar13;
 }
 

@@ -2,23 +2,25 @@
 
 // 8292B538  _setmode_nolock  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/setmode.c:100)
 
-int _setmode_nolock(int _FileHandle,int _Mode)
+int _setmode_nolock(int param_1,int param_2)
 
 {
   byte bVar1;
   int iVar2;
   int iVar3;
+  int iVar4;
   
-  iVar2 = (_FileHandle & 0x1fU) * 0x48;
-  iVar3 = (&DAT_84897dc0)[_FileHandle >> 5] + iVar2;
-  bVar1 = *(byte *)(iVar3 + 4);
-  if (_Mode == 0x4000) {
-    *(byte *)(iVar3 + 4) = *(byte *)(iVar3 + 4) | 0x80;
-    iVar2 = (&DAT_84897dc0)[_FileHandle >> 5] + iVar2;
-    *(byte *)(iVar2 + 0x28) = *(byte *)(iVar2 + 0x28) & 1;
+  iVar2 = (param_1 >> 5) * 4;
+  iVar3 = (param_1 & 0x1fU) * 0x48;
+  iVar4 = *(int *)(&__pioinfo + iVar2) + iVar3;
+  bVar1 = *(byte *)(iVar4 + 4);
+  if (param_2 == 0x4000) {
+    *(byte *)(iVar4 + 4) = *(byte *)(iVar4 + 4) | 0x80;
+    iVar3 = *(int *)(&__pioinfo + iVar2) + iVar3;
+    *(byte *)(iVar3 + 0x28) = *(byte *)(iVar3 + 0x28) & 1;
   }
-  else if (_Mode == 0x8000) {
-    *(byte *)(iVar3 + 4) = *(byte *)(iVar3 + 4) & 0x7f;
+  else if (param_2 == 0x8000) {
+    *(byte *)(iVar4 + 4) = *(byte *)(iVar4 + 4) & 0x7f;
   }
   if ((bVar1 & 0x80) == 0) {
     return 0x8000;
@@ -29,22 +31,22 @@ int _setmode_nolock(int _FileHandle,int _Mode)
 
 // 8292B5C8  _get_fmode  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/setmode.c:139)
 
-errno_t _get_fmode(int *_PMode)
+int _get_fmode(int *param_1)
 
 {
   int *piVar1;
-  errno_t eVar2;
+  int iVar2;
   
-  if (_PMode == (int *)0x0) {
+  if (param_1 == (int *)0x0) {
     piVar1 = _errno();
     *piVar1 = 0x16;
     _invalid_parameter_noinfo();
-    eVar2 = 0x16;
+    iVar2 = 0x16;
   }
   else {
-    eVar2 = 0;
-    *_PMode = DAT_848960a4;
+    iVar2 = 0;
+    *param_1 = _fmode;
   }
-  return eVar2;
+  return iVar2;
 }
 

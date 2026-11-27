@@ -2,24 +2,27 @@
 
 // 822F3078  GetRumbleGlobals  (cgame/cg_rumble.cpp:150)
 
-longlong GetRumbleGlobals(longlong param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+RumbleGlobals * GetRumbleGlobals(LocalClientNum_t param_1)
 
 {
-  return param_1 * 0x4390 + -0x7d5b18d0;
+  return rumbleGlobArray + param_1;
 }
 
 
 // 822F3090  Rumble_Strcpy  (cgame/cg_rumble.cpp:156)
 
-void Rumble_Strcpy(int param_1,char *param_2)
+void Rumble_Strcpy(uchar *param_1,char *param_2)
 
 {
   char cVar1;
+  int iVar2;
   
-  param_1 = param_1 - (int)param_2;
+  iVar2 = (int)param_1 - (int)param_2;
   do {
     cVar1 = *param_2;
-    param_2[param_1] = cVar1;
+    param_2[iVar2] = cVar1;
     param_2 = param_2 + 1;
   } while (cVar1 != '\0');
   return;
@@ -28,255 +31,291 @@ void Rumble_Strcpy(int param_1,char *param_2)
 
 // 822F30B0  ParseRumbleGraph  (cgame/cg_rumble.cpp:162)
 
-void ParseRumbleGraph(undefined8 param_1,int param_2,undefined8 param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+bool ParseRumbleGraph(RumbleGraph *param_1,char *param_2,char *param_3)
 
 {
   int iVar1;
   char *pcVar2;
   uint uVar3;
-  float *pfVar4;
-  ulonglong uVar5;
+  undefined1 uVar4;
+  float *pfVar5;
   double dVar6;
   double dVar7;
-  int in_stack_0000001c;
+  char *pcStack0000001c;
   
-  iVar1 = __savegprlr_27();
-  in_stack_0000001c = param_2;
+  pcStack0000001c = param_2;
+  iVar1 = __savegprlr_27(param_1);
   if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff82021908,0xa8,0,0xffffffff82000f98,0xffffffff82021900);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_rumble.cpp",0xa8,0,
+                    "%s");
   }
-  if (in_stack_0000001c == 0) {
-    MyAssertHandler(0xffffffff82021908,0xa9,0,0xffffffff82000f98,0xffffffff8200e484);
+  if (pcStack0000001c == (char *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_rumble.cpp",0xa9,0,
+                    "%s");
   }
   Com_BeginParseSession(param_3);
-  pcVar2 = (char *)Com_Parse(&stack0x0000001c);
+  pcVar2 = Com_Parse(&stack0x0000001c);
   uVar3 = atoi(pcVar2);
   if (0x10 < (int)uVar3) {
     Com_EndParseSession();
-    Com_Error(1,0xffffffff820218e0,param_3);
-    __restgprlr_27(0);
-    return;
+    Com_Error(ERR_DROP,"\x15\"%s\" has too many graph knots");
+    uVar4 = __restgprlr_27(0);
+    return (bool)uVar4;
   }
   if ((int)uVar3 < 0) {
     Com_EndParseSession();
-    Com_Error(1,0xffffffff820218c0,param_3);
-    __restgprlr_27(0);
-    return;
+    Com_Error(ERR_DROP,"\x15\"%s\" has negative graph knots");
+    uVar4 = __restgprlr_27(0);
+    return (bool)uVar4;
   }
   *(short *)(iVar1 + 0xc0) = (short)uVar3;
   if ((uVar3 & 0xffff) != uVar3) {
-    MyAssertHandler(0xffffffff82021908,0xc0,0,0xffffffff82000f98,0xffffffff820218a0);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_rumble.cpp",0xc0,0,
+                    "%s");
   }
-  uVar5 = 0;
+  uVar3 = 0;
   if (*(short *)(iVar1 + 0xc0) != 0) {
-    pfVar4 = (float *)(iVar1 + 0x3c);
+    pfVar5 = (float *)(iVar1 + 0x3c);
     while( true ) {
-      pcVar2 = (char *)Com_Parse(&stack0x0000001c);
+      pcVar2 = Com_Parse(&stack0x0000001c);
       if ((*pcVar2 == '\0') || (*pcVar2 == '}')) break;
       dVar6 = atof(pcVar2);
       dVar6 = (double)(float)dVar6;
-      pcVar2 = (char *)Com_Parse(&stack0x0000001c);
+      pcVar2 = Com_Parse(&stack0x0000001c);
       if ((*pcVar2 == '\0') || (*pcVar2 == '}')) break;
       dVar7 = atof(pcVar2);
       dVar7 = (double)(float)dVar7;
-      if (0xf < (uVar5 & 0xffffffff)) {
-        MyAssertHandler(0xffffffff82021908,0xd0,0,0xffffffff82021858,uVar5,0x10);
+      if (0xf < uVar3) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_rumble.cpp",0xd0,
+                        0,
+                        "knotCountIndex doesn\'t index MAX_RUMBLE_GRAPH_KNOTS\n\t%i not in [0, %i)")
+        ;
       }
-      pfVar4[1] = (float)dVar6;
-      uVar5 = uVar5 + 1;
-      pfVar4 = pfVar4 + 2;
-      *pfVar4 = (float)dVar7;
-      if ((int)(uint)*(ushort *)(iVar1 + 0xc0) <= (int)uVar5) break;
+      pfVar5[1] = (float)dVar6;
+      uVar3 = uVar3 + 1;
+      pfVar5 = pfVar5 + 2;
+      *pfVar5 = (float)dVar7;
+      if ((int)(uint)*(ushort *)(iVar1 + 0xc0) <= (int)uVar3) break;
     }
   }
   Com_EndParseSession();
-  __restgprlr_27((uint)*(ushort *)(iVar1 + 0xc0) == (uint)uVar5);
-  return;
+  uVar4 = __restgprlr_27(*(ushort *)(iVar1 + 0xc0) == uVar3);
+  return (bool)uVar4;
 }
 
 
 // 822F32A0  ReadRumbleGraph  (cgame/cg_rumble.cpp:218)
 
-void ReadRumbleGraph(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+bool ReadRumbleGraph(RumbleGraph *param_1,char *param_2)
 
 {
-  int iVar2;
-  undefined8 uVar1;
-  char cVar3;
+  RumbleGraph *pRVar1;
+  char *pcVar2;
+  bool bVar3;
+  undefined1 uVar4;
+  ulonglong uVar5;
   char acStack_2070 [64];
-  undefined1 auStack_2030 [8240];
+  char acStack_2030 [8240];
   
-  iVar2 = __savegprlr_28();
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff82021908,0xdf,0,0xffffffff82000f98,0xffffffff82021900);
+  uVar5 = (ulonglong)(int)param_2;
+  pRVar1 = (RumbleGraph *)__savegprlr_28(param_1);
+  if (pRVar1 == (RumbleGraph *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_rumble.cpp",0xdf,0,
+                    "%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82021908,0xe0,0,0xffffffff82000f98,0xffffffff820219a4);
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_rumble.cpp",0xe0,0,
+                    "%s");
   }
-  sprintf(acStack_2070,"rumble/%s",param_2);
-  uVar1 = Com_LoadInfoString(acStack_2070,0xffffffff82021974,0xffffffff82021988,auStack_2030);
-  *(undefined2 *)(iVar2 + 0xc0) = 0;
-  cVar3 = ParseRumbleGraph(iVar2,uVar1,param_2);
-  if (cVar3 == '\0') {
-    Com_Error(1,0xffffffff82021948,acStack_2070);
+  sprintf(acStack_2070,"rumble/%s");
+  pcVar2 = Com_LoadInfoString(acStack_2070,"rumble graph file","RUMBLEGRAPHFILE",acStack_2030);
+  pRVar1->knotCount = 0;
+  bVar3 = ParseRumbleGraph(pRVar1,pcVar2,(char *)uVar5);
+  if (!bVar3) {
+    Com_Error(ERR_DROP,"\x15\"%s\" Error in parsing a rumble graph file");
   }
-  I_strncpyz(iVar2,param_2,0x40);
-  __restgprlr_28(1);
-  return;
+  I_strncpyz((char *)pRVar1,(char *)uVar5,0x40);
+  uVar4 = __restgprlr_28(1);
+  return (bool)uVar4;
 }
 
 
 // 822F3398  LoadRumbleGraph  (cgame/cg_rumble.cpp:241)
 
-void LoadRumbleGraph(undefined8 param_1,int param_2,undefined8 param_3,undefined8 param_4)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+bool LoadRumbleGraph(RumbleGraph *param_1,RumbleInfo *param_2,char *param_3,char *param_4)
 
 {
-  int iVar1;
+  RumbleGraph *pRVar1;
   int iVar2;
-  short *psVar3;
-  int iVar4;
-  int iVar5;
+  undefined1 uVar3;
+  ushort *puVar4;
+  RumbleGraph *pRVar5;
+  int iVar6;
   
-  iVar1 = __savegprlr_24();
-  *(undefined4 *)(param_2 + 0xc) = 0;
-  *(undefined4 *)(param_2 + 0x10) = 0;
-  iVar4 = 0;
-  iVar5 = iVar1;
+  pRVar1 = (RumbleGraph *)__savegprlr_24(param_1);
+  param_2->highRumbleGraph = (RumbleGraph *)0x0;
+  param_2->lowRumbleGraph = (RumbleGraph *)0x0;
+  iVar6 = 0;
+  pRVar5 = pRVar1;
   do {
-    if (*(short *)(iVar5 + 0xc0) == 0) break;
-    iVar2 = I_stricmp(iVar5,param_3);
+    if (pRVar5->knotCount == 0) break;
+    iVar2 = I_stricmp(pRVar5->graphName,param_3);
     if (iVar2 == 0) {
-      *(int *)(param_2 + 0xc) = iVar5;
+      param_2->highRumbleGraph = pRVar5;
     }
-    iVar2 = I_stricmp(iVar5,param_4);
+    iVar2 = I_stricmp(pRVar5->graphName,param_4);
     if (iVar2 == 0) {
-      *(int *)(param_2 + 0x10) = iVar5;
+      param_2->lowRumbleGraph = pRVar5;
     }
-    iVar4 = iVar4 + 1;
-    iVar5 = iVar5 + 0xec;
-  } while (iVar4 < 0x40);
-  if ((*(int *)(param_2 + 0xc) == 0) || (*(int *)(param_2 + 0x10) == 0)) {
-    if (iVar4 == 0x40) {
-      Com_Error(1,0xffffffff820219b4);
+    iVar6 = iVar6 + 1;
+    pRVar5 = pRVar5 + 1;
+  } while (iVar6 < 0x40);
+  if ((param_2->highRumbleGraph == (RumbleGraph *)0x0) ||
+     (param_2->lowRumbleGraph == (RumbleGraph *)0x0)) {
+    if (iVar6 == 0x40) {
+      Com_Error(ERR_DROP,"\x15No more room to allocate anymore rumble graphs");
     }
-    iVar5 = iVar4 * 0xec + iVar1;
-    if (*(int *)(param_2 + 0xc) == 0) {
-      ReadRumbleGraph(iVar5,param_3);
-      *(int *)(param_2 + 0xc) = iVar5;
+    pRVar5 = pRVar1 + iVar6;
+    if (param_2->highRumbleGraph == (RumbleGraph *)0x0) {
+      ReadRumbleGraph(pRVar5,param_3);
+      param_2->highRumbleGraph = pRVar5;
     }
     else {
-      ReadRumbleGraph(iVar5,param_4);
-      *(int *)(param_2 + 0x10) = iVar5;
+      ReadRumbleGraph(pRVar5,param_4);
+      param_2->lowRumbleGraph = pRVar5;
     }
-    if ((*(int *)(param_2 + 0xc) == 0) || (*(int *)(param_2 + 0x10) == 0)) {
-      iVar5 = 0;
-      psVar3 = (short *)(iVar1 + 0x1ac);
+    if ((param_2->highRumbleGraph == (RumbleGraph *)0x0) ||
+       (param_2->lowRumbleGraph == (RumbleGraph *)0x0)) {
+      iVar6 = 0;
+      puVar4 = &pRVar1[1].knotCount;
       do {
-        if (psVar3[-0x76] == 0) break;
-        if (*psVar3 == 0) {
-          iVar5 = iVar5 + 1;
+        if (puVar4[-0x76] == 0) break;
+        if (*puVar4 == 0) {
+          iVar6 = iVar6 + 1;
           break;
         }
-        if (psVar3[0x76] == 0) {
-          iVar5 = iVar5 + 2;
+        if (puVar4[0x76] == 0) {
+          iVar6 = iVar6 + 2;
           break;
         }
-        if (psVar3[0xec] == 0) {
-          iVar5 = iVar5 + 3;
+        if (puVar4[0xec] == 0) {
+          iVar6 = iVar6 + 3;
           break;
         }
-        iVar5 = iVar5 + 4;
-        psVar3 = psVar3 + 0x1d8;
-      } while (iVar5 < 0x40);
-      if (iVar5 == 0x40) {
-        Com_Error(1,0xffffffff820219b4);
+        iVar6 = iVar6 + 4;
+        puVar4 = puVar4 + 0x1d8;
+      } while (iVar6 < 0x40);
+      if (iVar6 == 0x40) {
+        Com_Error(ERR_DROP,"\x15No more room to allocate anymore rumble graphs");
       }
-      iVar1 = iVar5 * 0xec + iVar1;
-      ReadRumbleGraph(iVar1,param_4);
-      *(int *)(param_2 + 0x10) = iVar1;
+      ReadRumbleGraph(pRVar1 + iVar6,param_4);
+      param_2->lowRumbleGraph = pRVar1 + iVar6;
     }
   }
-  __restgprlr_24(1);
-  return;
+  uVar3 = __restgprlr_24(1);
+  return (bool)uVar3;
 }
 
 
 // 822F3530  CG_LoadRumble  (cgame/cg_rumble.cpp:299)
 
-void CG_LoadRumble(undefined8 param_1,ulonglong param_2,ulonglong param_3,undefined4 param_4)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+bool CG_LoadRumble(RumbleGraph *param_1,RumbleInfo *param_2,char *param_3,int param_4)
 
 {
-  undefined4 *puVar1;
-  undefined8 uVar2;
-  undefined8 uVar3;
-  undefined8 uVar4;
-  int iVar5;
-  char cVar6;
-  undefined1 auStack_20c0 [64];
-  undefined1 auStack_2080 [64];
-  undefined1 auStack_2040 [8256];
+  RumbleGraph *pRVar1;
+  char *pcVar2;
+  char *pcVar3;
+  int iVar4;
+  undefined1 uVar6;
+  bool bVar7;
+  ulonglong uVar8;
+  ulonglong uVar9;
+  char acStack_20c0 [64];
+  char acStack_2080 [64];
+  char acStack_2040 [8256];
+  RumbleInfo *pRVar5;
   
-  uVar2 = __savegprlr_26();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82021908,0x133,0,0xffffffff82000f98,0xffffffff82021a7c);
+  uVar9 = (ulonglong)(int)param_3;
+  uVar8 = (ulonglong)(int)param_2;
+  pRVar1 = (RumbleGraph *)__savegprlr_26(param_1);
+  if ((uVar8 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_rumble.cpp",0x133,0,
+                    "%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82021908,0x134,0,0xffffffff82000f98,0xffffffff82021a74);
+  if ((uVar9 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_rumble.cpp",0x134,0,
+                    "%s");
   }
-  uVar3 = va(0xffffffff82021998,param_3);
-  uVar3 = Com_LoadInfoString(uVar3,0xffffffff82021a58,0xffffffff82021a6c,auStack_2040);
-  uVar4 = Info_ValueForKey(uVar3,0xffffffff82021a48);
-  I_strncpyz(auStack_20c0,uVar4,0x40);
-  uVar4 = Info_ValueForKey(uVar3,0xffffffff82021a38);
-  I_strncpyz(auStack_2080,uVar4,0x40);
-  iVar5 = ParseConfigStringToStruct(param_2,0xffffffff82963560,4,uVar3,0,0,0xffffffff822f3090);
-  if (iVar5 != 0) {
-    puVar1 = (undefined4 *)param_2;
-    if ((puVar1[6] != 0) && ((float)puVar1[2] == 0.0)) {
-      Com_Error(1,0xffffffff820219e8,param_3);
+  pcVar2 = va("rumble/%s");
+  pcVar2 = Com_LoadInfoString(pcVar2,"rumble info file","RUMBLE",acStack_2040);
+  pcVar3 = Info_ValueForKey(pcVar2,"highRumbleFile");
+  I_strncpyz(acStack_20c0,pcVar3,0x40);
+  pcVar3 = Info_ValueForKey(pcVar2,"lowRumbleFile");
+  I_strncpyz(acStack_2080,pcVar3,0x40);
+  pRVar5 = (RumbleInfo *)uVar8;
+  iVar4 = ParseConfigStringToStruct
+                    ((uchar *)pRVar5,rumbleFields,4,pcVar2,0,
+                     (_func_int_uchar_ptr_char_ptr_int_int *)0x0,Rumble_Strcpy);
+  if (iVar4 != 0) {
+    if ((pRVar5->broadcast != 0) && (pRVar5->range == 0.0)) {
+      Com_Error(ERR_DROP,
+                "\x15Rumble info file [%s] cannot have broadcast set to true and range set to 0\n");
     }
-    cVar6 = LoadRumbleGraph(uVar2,param_2,auStack_20c0,auStack_2080);
-    if (cVar6 != '\0') {
-      *puVar1 = param_4;
-      puVar1[1] = (float)puVar1[1] * 1000.0;
-      DAT_82a5f584 = 1;
-      __restgprlr_26(1);
-      return;
+    bVar7 = LoadRumbleGraph(pRVar1,pRVar5,acStack_20c0,acStack_2080);
+    if (bVar7) {
+      pRVar5->rumbleNameIndex = param_4;
+      pRVar5->duration = pRVar5->duration * 1000.0;
+      updateRumbleDevGuiGlobal = true;
+      uVar6 = __restgprlr_26(1);
+      return (bool)uVar6;
     }
   }
-  __restgprlr_26(0);
-  return;
+  uVar6 = __restgprlr_26(0);
+  return (bool)uVar6;
 }
 
 
 // 822F36D8  CG_RegisterRumbles  (cgame/cg_rumble.cpp:339)
 
-void CG_RegisterRumbles(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CG_RegisterRumbles(LocalClientNum_t param_1)
 
 {
   longlong lVar1;
-  char *pcVar2;
-  char cVar3;
-  longlong lVar4;
+  RumbleGraph *pRVar2;
+  char *pcVar3;
+  bool bVar4;
   longlong lVar5;
-  longlong lVar6;
+  int iVar6;
   
-  lVar1 = __savegprlr_26();
-  lVar4 = lVar1 * 0x4390 + -0x7d5b18d0;
-  if (lVar4 == 0) {
-    MyAssertHandler(0xffffffff82021908,0x158,0,0xffffffff82000f98,0xffffffff82021ab4);
+  lVar1 = __savegprlr_26(param_1);
+  lVar5 = lVar1 * 0x4390 + -0x7d5b18d0;
+  if (lVar5 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_rumble.cpp",0x158,0,
+                    "%s");
   }
-  Com_Memset(lVar4,0,0x4390);
-  lVar6 = 0x3da;
+  pRVar2 = (RumbleGraph *)lVar5;
+  Com_Memset(pRVar2,0,0x4390);
+  iVar6 = 0x3da;
   lVar5 = lVar1 * 0x4390 + -0x7d5addac;
   lVar1 = 0x1f;
   do {
-    pcVar2 = (char *)CL_GetConfigString(lVar6);
-    if ((*pcVar2 != '\0') && (cVar3 = CG_LoadRumble(lVar4,lVar5,pcVar2,lVar6), cVar3 == '\0')) {
-      Com_Error(1,0xffffffff82021a84,pcVar2);
+    pcVar3 = CL_GetConfigString(iVar6);
+    if ((*pcVar3 != '\0') &&
+       (bVar4 = CG_LoadRumble(pRVar2,(RumbleInfo *)lVar5,pcVar3,iVar6), !bVar4)) {
+      Com_Error(ERR_DROP,"\x15couldn\'t register rumble \'%s\' -- see console\n");
     }
     lVar1 = lVar1 + -1;
-    lVar6 = lVar6 + 1;
+    iVar6 = iVar6 + 1;
     lVar5 = lVar5 + 0x24;
   } while (lVar1 != 0);
   __restgprlr_26();
@@ -285,327 +324,64 @@ void CG_RegisterRumbles(void)
 
 
 // 822F37A0  DrawActiveRumbles  (cgame/cg_rumble.cpp:367)
-
-void DrawActiveRumbles(undefined8 param_1,longlong param_2)
-
-{
-  int iVar1;
-  undefined4 *puVar2;
-  undefined8 uVar3;
-  int iVar4;
-  longlong lVar5;
-  double dVar6;
-  double dVar7;
-  double dVar8;
-  undefined4 local_78;
-  undefined4 local_74;
-  undefined4 local_70;
-  undefined4 local_68;
-  undefined4 local_64;
-  undefined4 local_60;
-  
-  uVar3 = __savegprlr_25();
-  param_2 = param_2 + 0x1c;
-  dVar6 = 0.0;
-  dVar7 = 1.0;
-  local_68 = 0;
-  lVar5 = 0x20;
-  local_64 = 0;
-  local_60 = 0x3f800000;
-  do {
-    puVar2 = (undefined4 *)param_2;
-    iVar1 = puVar2[-7];
-    if (iVar1 != 0) {
-      iVar4 = CG_GetLocalClientGlobals(uVar3);
-      dVar8 = (double)((float)(longlong)(*(int *)(iVar4 + 0x6b98c) - puVar2[-6]) /
-                      *(float *)(iVar1 + 4));
-      if (puVar2[-4] == 1) {
-        iVar4 = CG_GetEntity(uVar3,puVar2[-2]);
-        local_78 = *(undefined4 *)(iVar4 + 0x14);
-        local_74 = *(undefined4 *)(iVar4 + 0x18);
-        local_70 = *(undefined4 *)(iVar4 + 0x1c);
-      }
-      else {
-        local_78 = puVar2[-2];
-        local_74 = puVar2[-1];
-        local_70 = *puVar2;
-      }
-      if (dVar6 < (double)*(float *)(iVar1 + 8)) {
-        CG_DebugCircle(&local_78);
-        CG_DebugCircle((double)((float)(dVar7 - dVar8) * *(float *)(iVar1 + 8)),&local_78);
-      }
-    }
-    lVar5 = lVar5 + -1;
-    param_2 = param_2 + 0x20;
-  } while (lVar5 != 0);
-  __restgprlr_25();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 822F38E8  InvalidateActiveRumble  (cgame/cg_rumble.cpp:429)
 
-void InvalidateActiveRumble(undefined4 *param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void InvalidateActiveRumble(ActiveRumble *param_1)
 
 {
-  *param_1 = 0;
-  param_1[1] = 0xffffffff;
-  param_1[3] = 0;
+  param_1->rumbleInfo = (RumbleInfo *)0x0;
+  param_1->startTime = -1;
+  param_1->sourceType = RUMBLESOURCE_INVALID;
   return;
 }
 
 
 // 822F3900  RemoveInactiveRumbles  (cgame/cg_rumble.cpp:478)
-
-void RemoveInactiveRumbles(undefined8 param_1,longlong param_2)
-
-{
-  uint uVar1;
-  int *piVar2;
-  undefined8 uVar3;
-  int iVar4;
-  int iVar5;
-  longlong lVar6;
-  
-  uVar3 = __savegprlr_22();
-  iVar4 = CG_GetLocalClientGlobals();
-  param_2 = param_2 + 4;
-  lVar6 = 0x20;
-  do {
-    piVar2 = (int *)param_2;
-    if (piVar2[-1] != 0) {
-      if (piVar2[2] == 0) {
-        MyAssertHandler(0xffffffff82021908,0x1ef,0,0xffffffff82000f98,0xffffffff82021ac0);
-      }
-      if ((piVar2[2] == 1) && (*(char *)(piVar2 + 1) != '\0')) {
-        iVar5 = CG_GetEntity(uVar3,piVar2[4]);
-        if (piVar2[4] == *(int *)(iVar4 + 0x150)) {
-          uVar1 = *(uint *)(iVar4 + 0xf8);
-        }
-        else {
-          uVar1 = *(uint *)(iVar5 + 0xcc);
-        }
-        if (((*(uint *)(iVar5 + 0x1c4) & 1) != 0) && ((uVar1 & 0x8000) != 0)) goto LAB_822f39d8;
-LAB_822f3a30:
-        piVar2[2] = 0;
-        piVar2[-1] = 0;
-        *piVar2 = -1;
-      }
-      else {
-LAB_822f39d8:
-        if (*(float *)(piVar2[-1] + 4) + (float)(longlong)*piVar2 <=
-            (float)(longlong)*(int *)(iVar4 + 0x6b98c)) {
-          if (*(char *)(piVar2 + 1) == '\0') goto LAB_822f3a30;
-          *piVar2 = *(int *)(iVar4 + 0x6b98c);
-        }
-      }
-    }
-    lVar6 = lVar6 + -1;
-    param_2 = param_2 + 0x20;
-    if (lVar6 == 0) {
-      __restgprlr_22();
-      return;
-    }
-  } while( true );
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 822F3A50  ShouldNotRumble  (cgame/cg_rumble.cpp:541)
-
-undefined8 ShouldNotRumble(undefined8 param_1)
-
-{
-  int iVar2;
-  char cVar3;
-  undefined8 uVar1;
-  
-  iVar2 = CG_GetLocalClientGlobals();
-  cVar3 = CL_Demo_IsPlaying(param_1);
-  if ((cVar3 == '\0') &&
-     ((*(int *)(iVar2 + 0x335c) == 0 ||
-      ((*(int *)(iVar2 + 0x150) == *(int *)(iVar2 + 0x3334) && (*(int *)(iVar2 + 4) != 5)))))) {
-    uVar1 = 0;
-  }
-  else {
-    uVar1 = 1;
-  }
-  return uVar1;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 822F3AD0  CalcActiveRumbles  (cgame/cg_rumble.cpp:561)
-
-void CalcActiveRumbles(undefined8 param_1,longlong param_2,float *param_3)
-
-{
-  int iVar1;
-  int *piVar2;
-  float fVar3;
-  float fVar4;
-  float fVar5;
-  undefined8 uVar6;
-  int iVar7;
-  int iVar8;
-  int iVar9;
-  longlong lVar10;
-  double dVar11;
-  double dVar12;
-  double dVar13;
-  double dVar14;
-  undefined8 uVar15;
-  undefined8 uVar16;
-  double dVar17;
-  double dVar18;
-  double dVar19;
-  double dVar20;
-  double dVar21;
-  
-  __savegprlr_18();
-  uVar6 = __savefpr_22();
-  iVar7 = CG_GetLocalClientGlobals();
-  dVar18 = -1.0;
-  uVar16 = 0;
-  dVar17 = 0.003921568859368563;
-  dVar20 = 0.0;
-  dVar21 = 1.0;
-  uVar15 = 0x3ff0000000000000;
-  iVar9 = 0;
-  param_2 = param_2 + 0xc;
-  lVar10 = 0x20;
-  dVar19 = dVar18;
-  do {
-    piVar2 = (int *)param_2;
-    iVar1 = piVar2[-3];
-    if (iVar1 != 0) {
-      if (*piVar2 == 0) {
-        MyAssertHandler(0xffffffff82021908,0x24d,0,0xffffffff82000f98,0xffffffff82021ac0);
-      }
-      iVar8 = *piVar2;
-      dVar14 = (double)((float)(longlong)(*(int *)(iVar7 + 0x6b98c) - piVar2[-2]) /
-                       *(float *)(iVar1 + 4));
-      dVar11 = dVar21;
-      if ((float)(dVar14 - dVar21) < 0.0) {
-        dVar11 = dVar14;
-      }
-      dVar13 = dVar20;
-      if (-dVar14 < 0.0) {
-        dVar13 = dVar11;
-      }
-      if (*(int *)(iVar1 + 0x18) == 0) {
-        dVar11 = dVar21;
-        if ((iVar8 != 1) || (piVar2[2] == *(int *)(iVar7 + 0x150))) goto LAB_822f3cf8;
-      }
-      else {
-        if (iVar8 == 1) {
-          iVar8 = CG_GetEntity(uVar6,piVar2[2]);
-          fVar3 = *param_3 - *(float *)(iVar8 + 0x14);
-          fVar4 = param_3[2] - *(float *)(iVar8 + 0x1c);
-          fVar5 = param_3[1] - *(float *)(iVar8 + 0x18);
-          fVar3 = fVar4 * fVar4 + fVar3 * fVar3;
-        }
-        else {
-          if (iVar8 != 2) {
-            MyAssertHandler(0xffffffff82021908,0x25f,0,0xffffffff82000f98,0xffffffff82021b18);
-          }
-          fVar5 = param_3[1] - (float)piVar2[3];
-          fVar3 = (param_3[2] - (float)piVar2[4]) * (param_3[2] - (float)piVar2[4]) +
-                  (*param_3 - (float)piVar2[2]) * (*param_3 - (float)piVar2[2]);
-        }
-        dVar14 = (double)SQRT(fVar5 * fVar5 + fVar3);
-        if (dVar14 <= (double)*(float *)(iVar1 + 8)) {
-          dVar11 = dVar21;
-          if (*(int *)(iVar1 + 0x14) != 0) {
-            if ((double)*(float *)(iVar1 + 8) == dVar20) {
-              MyAssertHandler(0xffffffff82021908,0x268,0,0xffffffff82000f98,0xffffffff82021b3c);
-            }
-            dVar14 = (double)(float)(dVar14 / (double)*(float *)(iVar1 + 8));
-            dVar11 = dVar21;
-            if ((float)(dVar14 - dVar21) < 0.0) {
-              dVar11 = dVar14;
-            }
-            dVar12 = dVar20;
-            if (-dVar14 < 0.0) {
-              dVar12 = dVar11;
-            }
-            dVar11 = (double)(float)(dVar21 - dVar12);
-          }
-LAB_822f3cf8:
-          dVar14 = (double)(float)((double)*(byte *)(piVar2 + 1) * dVar17);
-          if ((dVar14 < dVar20) || (dVar21 < dVar14)) {
-            MyAssertHandler(dVar14,uVar16,uVar15,0xffffffff82021908,0x27a,1,0xffffffff82021ae8,
-                            dVar14,uVar16,uVar15);
-          }
-          dVar12 = (double)GraphGetValueFromFraction
-                                     (dVar13,*(undefined2 *)(*(int *)(iVar1 + 0x10) + 0xc0),
-                                      *(int *)(iVar1 + 0x10) + 0x40);
-          dVar12 = (double)(float)((double)(float)(dVar12 * dVar14) * dVar11);
-          dVar13 = (double)GraphGetValueFromFraction
-                                     (dVar13,*(undefined2 *)(*(int *)(iVar1 + 0xc) + 0xc0),
-                                      *(int *)(iVar1 + 0xc) + 0x40);
-          dVar11 = (double)(float)((double)(float)(dVar13 * dVar14) * dVar11);
-          if (dVar19 < dVar12) {
-            dVar19 = dVar12;
-          }
-          if (dVar18 < dVar11) {
-            dVar18 = dVar11;
-          }
-          iVar9 = iVar9 + 1;
-        }
-      }
-    }
-    lVar10 = lVar10 + -1;
-    param_2 = param_2 + 0x20;
-    if (lVar10 == 0) {
-      if (iVar9 != 0) {
-        uVar6 = CL_ControllerIndexFromClientNum(uVar6);
-        GPad_SetLowRumble(dVar19);
-        GPad_SetHighRumble(dVar18,uVar6);
-        DAT_82a5f57c = (float)dVar18;
-        DAT_82a5f580 = (float)dVar19;
-        __restfpr_22();
-        __restgprlr_18();
-        return;
-      }
-      uVar6 = CL_ControllerIndexFromClientNum(uVar6);
-      GPad_SetLowRumble(dVar20);
-      GPad_SetHighRumble(dVar20,uVar6);
-      __restfpr_22();
-      __restgprlr_18();
-      return;
-    }
-  } while( true );
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 822F5218  CG_UpdateRumble  (cgame/cg_rumble.cpp:670)
 
-void CG_UpdateRumble(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CG_UpdateRumble(LocalClientNum_t param_1)
 
 {
-  int iVar1;
+  LocalClientNum_t LVar1;
   int iVar2;
-  int iVar3;
+  ActiveRumble *pAVar3;
   undefined4 *puVar4;
-  undefined *puVar5;
-  undefined8 uVar6;
+  double dVar5;
   
-  iVar1 = __savegprlr_29();
-  if (DAT_82a5f584 != '\0') {
-    CG_InitDevguiRumbleGraph();
+  LVar1 = __savegprlr_29(param_1);
+  if (updateRumbleDevGuiGlobal != false) {
+    CG_InitDevguiRumbleGraph(LVar1);
   }
-  iVar3 = iVar1 * 0x4390;
-  puVar5 = &DAT_82a526b0 + iVar3;
-  iVar2 = ShouldNotRumble(iVar1);
+  pAVar3 = rumbleGlobArray[LVar1].activeRumbles;
+  iVar2 = ShouldNotRumble(LVar1);
   if (iVar2 == 0) {
-    RemoveInactiveRumbles(iVar1,puVar5);
-    CalcActiveRumbles(iVar1,puVar5,&DAT_82a52ab0 + iVar3);
-    if (*(char *)(DAT_82a3d450 + 0xc) != '\0') {
-      DrawActiveRumbles(iVar1,puVar5);
+    RemoveInactiveRumbles(LVar1,pAVar3);
+    CalcActiveRumbles(LVar1,pAVar3,rumbleGlobArray[LVar1].receiverPos);
+    if ((cg_drawRumbleDebug->current).enabled != false) {
+      DrawActiveRumbles(LVar1,pAVar3);
     }
     __restgprlr_29();
     return;
   }
-  puVar4 = (undefined4 *)(iVar3 + -0x7d5ad964);
+  puVar4 = (undefined4 *)(LVar1 * 0x4390 + -0x7d5ad964);
   iVar2 = 0;
   do {
     if ((int)puVar4[6] < 1) break;
@@ -627,12 +403,12 @@ void CG_UpdateRumble(void)
     puVar4 = puVar4 + 0x20;
     *puVar4 = 0;
   } while (iVar2 < 0x20);
-  if (DAT_82966e98 == 0) {
-    iVar1 = DAT_82b5c820;
+  if (cl_multi_gamepads_enabled == 0) {
+    LVar1 = cl_controller_in_use;
   }
-  uVar6 = 0;
-  GPad_SetLowRumble(0,iVar1);
-  GPad_SetHighRumble(uVar6,iVar1);
+  dVar5 = 0.0;
+  GPad_SetLowRumble(LVar1,0.0);
+  GPad_SetHighRumble(LVar1,(float)dVar5);
   __restgprlr_29();
   return;
 }
@@ -640,22 +416,25 @@ void CG_UpdateRumble(void)
 
 // 822F3E30  GetRumbleInfoIndexFromName  (cgame/cg_rumble.cpp:721)
 
-longlong GetRumbleInfoIndexFromName(char *param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+int GetRumbleInfoIndexFromName(LocalClientNum_t param_1,char *param_2)
 
 {
   char cVar1;
   char cVar2;
   char *pcVar3;
   char *pcVar4;
-  longlong lVar5;
+  int iVar5;
   
-  if (param_1 == (char *)0x0) {
-    MyAssertHandler(0xffffffff82021908,0x2d3,0,0xffffffff82000f98,0xffffffff82016f44);
+  if (param_1 == LOCAL_CLIENT_0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_rumble.cpp",0x2d3,0,
+                    "%s");
   }
-  lVar5 = 1;
+  iVar5 = 1;
   do {
-    pcVar3 = (char *)CL_GetConfigString(lVar5 + 0x3d9);
-    pcVar4 = param_1;
+    pcVar3 = CL_GetConfigString(iVar5 + 0x3d9);
+    pcVar4 = (char *)param_1;
     do {
       cVar1 = *pcVar3;
       cVar2 = *pcVar4;
@@ -664,10 +443,10 @@ longlong GetRumbleInfoIndexFromName(char *param_1)
       pcVar4 = pcVar4 + 1;
     } while (cVar1 == cVar2);
     if (cVar1 == cVar2) {
-      return lVar5;
+      return iVar5;
     }
-    lVar5 = lVar5 + 1;
-    if (0x1f < (int)lVar5) {
+    iVar5 = iVar5 + 1;
+    if (0x1f < iVar5) {
       return -1;
     }
   } while( true );
@@ -675,466 +454,139 @@ longlong GetRumbleInfoIndexFromName(char *param_1)
 
 
 // 822F3EE8  FindClosestToDyingActiveRumble  (cgame/cg_rumble.cpp:739)
-
-void FindClosestToDyingActiveRumble(undefined8 param_1,longlong param_2)
-
-{
-  int *piVar1;
-  int iVar2;
-  longlong lVar3;
-  longlong lVar4;
-  double dVar5;
-  double dVar6;
-  
-  iVar2 = __savegprlr_23();
-  dVar6 = 0.0;
-  lVar3 = 0x20;
-  lVar4 = 0;
-  param_2 = param_2 + 0xc;
-  do {
-    piVar1 = (int *)param_2;
-    if (piVar1[-3] == 0) {
-      MyAssertHandler(0xffffffff82021908,0x2f1,0,0xffffffff82000f98,0xffffffff82021bb0);
-    }
-    if (*piVar1 == 0) {
-      MyAssertHandler(0xffffffff82021908,0x2f2,0,0xffffffff82000f98,0xffffffff82021ac0);
-    }
-    if ((*(char *)(piVar1 + -1) == '\0') &&
-       ((*piVar1 != 1 || (piVar1[2] != *(int *)(iVar2 + 0x150))))) {
-      dVar5 = (double)((float)(longlong)(*(int *)(iVar2 + 0x6b98c) - piVar1[-2]) /
-                      *(float *)(piVar1[-3] + 4));
-      if (dVar6 < dVar5) {
-        lVar3 = lVar4;
-        dVar6 = dVar5;
-      }
-    }
-    lVar4 = lVar4 + 1;
-    param_2 = param_2 + 0x20;
-  } while ((int)lVar4 < 0x20);
-  if ((int)lVar3 == 0x20) {
-    Com_PrintWarning(0x10,0xffffffff82021b48);
-    __restgprlr_23(0);
-    return;
-  }
-  __restgprlr_23(lVar3);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 822F4030  GetDuplicateRumbleIfExists  (cgame/cg_rumble.cpp:792)
-
-void GetDuplicateRumbleIfExists
-               (undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4,
-               float param_5,float param_6,float *param_7)
-
-{
-  float *pfVar1;
-  int iVar3;
-  longlong lVar2;
-  longlong lVar4;
-  bool bVar5;
-  
-  iVar3 = __savegprlr_24();
-  if (iVar3 == 0) {
-    MyAssertHandler(0xffffffff82021908,0x31c,0,0xffffffff82000f98,0xffffffff82002798);
-  }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82021908,0x31d,0,0xffffffff82000f98,0xffffffff82021be0);
-  }
-  if (param_5 == 0.0) {
-    MyAssertHandler(0xffffffff82021908,0x31e,0,0xffffffff82000f98,0xffffffff82021bc0);
-  }
-  iVar3 = 0;
-  lVar4 = param_2 + 0x1c;
-  do {
-    pfVar1 = (float *)lVar4;
-    lVar2 = lVar4 + -0x1c;
-    if ((((ulonglong)(uint)pfVar1[-7] == (param_3 & 0xffffffff)) &&
-        ((ulonglong)*(byte *)(pfVar1 + -5) == (param_4 & 0xff))) && (pfVar1[-4] == param_5)) {
-      if (param_5 == 1.4013e-45) {
-        bVar5 = pfVar1[-2] == param_6;
-      }
-      else {
-        if (param_5 != 2.8026e-45) goto LAB_822f4164;
-        if ((pfVar1[-2] != *param_7) || (pfVar1[-1] != param_7[1])) goto LAB_822f4150;
-        bVar5 = *pfVar1 == param_7[2];
-      }
-      if (bVar5) goto LAB_822f4164;
-    }
-LAB_822f4150:
-    iVar3 = iVar3 + 1;
-    lVar4 = lVar4 + 0x20;
-  } while (iVar3 < 0x20);
-  lVar2 = 0;
-LAB_822f4164:
-  __restgprlr_24(lVar2);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 822F4170  NextAvailableRumble  (cgame/cg_rumble.cpp:824)
-
-void NextAvailableRumble(undefined8 param_1,longlong param_2)
-
-{
-  int *piVar1;
-  int iVar3;
-  longlong lVar2;
-  int iVar4;
-  longlong lVar5;
-  uint uVar6;
-  uint uVar7;
-  double dVar8;
-  double dVar9;
-  
-  iVar3 = __savegprlr_22();
-  iVar4 = 0;
-  lVar5 = param_2 + 0x44;
-  do {
-    piVar1 = (int *)lVar5;
-    lVar2 = lVar5 + -0x44;
-    if (piVar1[-0x10] < 1) break;
-    lVar2 = lVar5 + -0x24;
-    if (piVar1[-8] < 1) {
-      iVar4 = iVar4 + 1;
-      break;
-    }
-    lVar2 = lVar5 + -4;
-    if (*piVar1 < 1) {
-      iVar4 = iVar4 + 2;
-      break;
-    }
-    lVar2 = lVar5 + 0x1c;
-    if (piVar1[8] < 1) {
-      iVar4 = iVar4 + 3;
-      break;
-    }
-    iVar4 = iVar4 + 4;
-    lVar5 = lVar5 + 0x80;
-  } while (iVar4 < 0x20);
-  if (iVar4 == 0x20) {
-    dVar9 = 0.0;
-    uVar6 = 0x20;
-    uVar7 = 0;
-    lVar5 = param_2 + 0xc;
-    do {
-      piVar1 = (int *)lVar5;
-      if (piVar1[-3] == 0) {
-        MyAssertHandler(0xffffffff82021908,0x2f1,0,0xffffffff82000f98,0xffffffff82021bb0);
-      }
-      if (*piVar1 == 0) {
-        MyAssertHandler(0xffffffff82021908,0x2f2,0,0xffffffff82000f98,0xffffffff82021ac0);
-      }
-      if ((*(char *)(piVar1 + -1) == '\0') &&
-         (((*piVar1 != 1 || (piVar1[2] != *(int *)(iVar3 + 0x150))) &&
-          (dVar8 = (double)((float)(longlong)(*(int *)(iVar3 + 0x6b98c) - piVar1[-2]) /
-                           *(float *)(piVar1[-3] + 4)), dVar9 < dVar8)))) {
-        dVar9 = dVar8;
-        uVar6 = uVar7;
-      }
-      uVar7 = uVar7 + 1;
-      lVar5 = lVar5 + 0x20;
-    } while ((int)uVar7 < 0x20);
-    if (uVar6 == 0x20) {
-      Com_PrintWarning(0x10,0xffffffff82021b48);
-      uVar6 = 0;
-    }
-    lVar2 = ((ulonglong)uVar6 & 0x7ffffff) * 0x20 + param_2;
-  }
-  __restgprlr_22(lVar2);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 822F4328  PlayRumbleInternal  (cgame/cg_rumble.cpp:849)
-
-void PlayRumbleInternal(undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4,
-                       undefined8 param_5,ulonglong param_6,undefined8 param_7,ulonglong param_8)
-
-{
-  undefined4 uVar1;
-  int iVar2;
-  char cVar7;
-  int iVar3;
-  int iVar4;
-  undefined4 *puVar5;
-  int iVar6;
-  float *pfVar8;
-  int iVar9;
-  ulonglong uVar10;
-  int iVar11;
-  undefined *puVar12;
-  undefined *puVar13;
-  double extraout_f1;
-  double dVar14;
-  double dVar15;
-  undefined1 uStack_89;
-  
-  iVar2 = __savegprlr_18();
-  dVar15 = extraout_f1;
-  cVar7 = CL_Demo_IsPlaying();
-  if (cVar7 != '\0') goto LAB_822f46c0;
-  iVar3 = CG_GetLocalClientGlobals(iVar2);
-  iVar11 = (int)param_4;
-  if (iVar11 == 0) {
-    MyAssertHandler(0xffffffff82021908,0x360,0,0xffffffff82000f98,0xffffffff82021bc0);
-  }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82021908,0x361,0,0xffffffff82000f98,0xffffffff82016f44);
-  }
-  if (*(char *)param_2 == '\0') {
-    MyAssertHandler(0xffffffff82021908,0x362,0,0xffffffff82000f98,0xffffffff82021e0c);
-  }
-  iVar4 = GetRumbleInfoIndexFromName(param_2);
-  if (iVar4 < 0) {
-    Com_Error(1,0xffffffff82021dc0,param_2);
-  }
-  iVar9 = iVar2 * 0x4390;
-  puVar12 = &DAT_82a526b0 + iVar9;
-  iVar4 = iVar4 * 0x24 + iVar9;
-  puVar13 = &DAT_82a4e730 + iVar4 + 0x3b00;
-  if (*(int *)(&DAT_82a4e730 + iVar4 + 0x3b00) == 0) {
-    Com_Error(1,0xffffffff82021d38,param_2);
-  }
-  puVar5 = (undefined4 *)
-           GetDuplicateRumbleIfExists(iVar3,puVar12,puVar13,param_3,param_4,param_5,param_6);
-  if (puVar5 == (undefined4 *)0x0) {
-    puVar5 = (undefined4 *)NextAvailableRumble(iVar3,puVar12);
-LAB_822f44b4:
-    if (iVar11 == 1) {
-      iVar6 = CG_GetEntity(iVar2,param_5);
-      if (*(int *)(&DAT_82a4e730 + iVar4 + 0x3b18) == 0) {
-        if ((*(uint *)(iVar6 + 0x1c4) & 1) == 0) goto LAB_822f46c0;
-        if (*(int *)(iVar6 + 200) != 1) {
-          Com_PrintError(0x10,0xffffffff82021cc0,param_5,*(int *)(iVar6 + 200),
-                         (double)*(float *)(iVar6 + 0x6c),(double)*(float *)(iVar6 + 0x70),
-                         (double)*(float *)(iVar6 + 0x74),param_2);
-          __restgprlr_18();
-          return;
-        }
-      }
-      puVar5[5] = (int)param_5;
-    }
-    else {
-      if (iVar11 != 2) {
-        MyAssertHandler(0xffffffff82021908,0x393,0,0xffffffff82000f98,0xffffffff82021ca4);
-      }
-      if ((param_6 & 0xffffffff) == 0) {
-        MyAssertHandler(0xffffffff82021908,0x394,0,0xffffffff82000f98,0xffffffff82002114);
-      }
-      pfVar8 = (float *)param_6;
-      if (*(int *)(&DAT_82a4e730 + iVar4 + 0x3b18) == 0) {
-        Com_PrintError(0x10,0xffffffff82021c48,param_2,(double)*pfVar8,(double)pfVar8[1],
-                       (double)pfVar8[2]);
-        __restgprlr_18();
-        return;
-      }
-      puVar5[5] = *pfVar8;
-      puVar5[6] = pfVar8[1];
-      puVar5[7] = pfVar8[2];
-    }
-    puVar5[3] = iVar11;
-    uVar1 = *(undefined4 *)(iVar3 + 0x6b98c);
-    *puVar5 = puVar13;
-    *(char *)(puVar5 + 2) = (char)param_3;
-    puVar5[1] = uVar1;
-  }
-  else if ((param_8 & 0xff) == 0) goto LAB_822f44b4;
-  dVar14 = 1.0;
-  if ((dVar15 < 0.0) || (1.0 < dVar15)) {
-    Com_PrintWarning(dVar15,0x10,0xffffffff82021c18,param_2,dVar15);
-    dVar15 = dVar14;
-  }
-  uStack_89 = (undefined1)(longlong)(dVar15 * 255.0);
-  uVar10 = (longlong)(dVar15 * 255.0) & 0xff;
-  *(undefined1 *)(puVar5 + 4) = uStack_89;
-  if (0xff < uVar10) {
-    MyAssertHandler(0xffffffff82021908,0x3ad,1,0xffffffff82021be8,uVar10,0,0xff);
-  }
-  iVar3 = ShouldNotRumble(iVar2);
-  if (iVar3 == 0) {
-    CalcActiveRumbles(iVar2,puVar12,&DAT_82a52ab0 + iVar9);
-  }
-LAB_822f46c0:
-  __restgprlr_18();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 822F46D0  CG_PlayRumbleOnEntity  (cgame/cg_rumble.cpp:954)
 
-void CG_PlayRumbleOnEntity(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CG_PlayRumbleOnEntity(LocalClientNum_t param_1,char *param_2,int param_3)
 
 {
-  undefined8 in_r9;
+  bool in_r9;
   
-  PlayRumbleInternal(0x3ff0000000000000,param_1,param_2,0,1,param_3,0,in_r9,0);
+  PlayRumbleInternal(param_1,param_2,false,RUMBLESOURCE_ENTITY,param_3,(float *)0x0,1.0,in_r9);
   return;
 }
 
 
 // 822F46F0  CG_PlayRumbleOnPosition  (cgame/cg_rumble.cpp:960)
 
-void CG_PlayRumbleOnPosition(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CG_PlayRumbleOnPosition(LocalClientNum_t param_1,char *param_2,float *param_3)
 
 {
-  undefined8 in_r9;
+  bool in_r9;
   
-  PlayRumbleInternal(0x3ff0000000000000,param_1,param_2,0,2,0,param_3,in_r9,0);
+  PlayRumbleInternal(param_1,param_2,false,RUMBLESOURCE_POS,0,param_3,1.0,in_r9);
   return;
 }
 
 
 // 822F4710  CG_PlayRumbleLoopOnEntity  (cgame/cg_rumble.cpp:966)
 
-void CG_PlayRumbleLoopOnEntity(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CG_PlayRumbleLoopOnEntity(LocalClientNum_t param_1,char *param_2,int param_3)
 
 {
-  undefined8 in_r9;
+  bool in_r9;
   
-  PlayRumbleInternal(0x3ff0000000000000,param_1,param_2,1,1,param_3,0,in_r9,0);
+  PlayRumbleInternal(param_1,param_2,true,RUMBLESOURCE_ENTITY,param_3,(float *)0x0,1.0,in_r9);
   return;
 }
 
 
 // 822F4730  CG_PlayRumbleLoopOnPosition  (cgame/cg_rumble.cpp:972)
 
-void CG_PlayRumbleLoopOnPosition(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CG_PlayRumbleLoopOnPosition(LocalClientNum_t param_1,char *param_2,float *param_3)
 
 {
-  undefined8 in_r9;
+  bool in_r9;
   
-  PlayRumbleInternal(0x3ff0000000000000,param_1,param_2,1,2,0,param_3,in_r9,0);
+  PlayRumbleInternal(param_1,param_2,true,RUMBLESOURCE_POS,0,param_3,1.0,in_r9);
   return;
 }
 
 
 // 822F4750  CG_PlayRumbleOnClient  (cgame/cg_rumble.cpp:978)
-
-void CG_PlayRumbleOnClient(undefined8 param_1,undefined8 param_2)
-
-{
-  undefined8 uVar1;
-  int iVar2;
-  
-  uVar1 = __savegprlr_29();
-  iVar2 = CG_GetLocalClientGlobals();
-  if (*(int *)(iVar2 + 0x335c) == 0) {
-    MyAssertHandler(0xffffffff82021908,0x3d6,0,0xffffffff82000f98,0xffffffff82002858);
-  }
-  PlayRumbleInternal(0x3ff0000000000000,uVar1,param_2,0,1,*(undefined4 *)(iVar2 + 0x150),0);
-  __restgprlr_29();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 822F47D0  CG_PlayRumbleOnClientSafe  (cgame/cg_rumble.cpp:988)
-
-void CG_PlayRumbleOnClientSafe(undefined8 param_1,undefined8 param_2)
-
-{
-  undefined8 uVar1;
-  int iVar2;
-  
-  uVar1 = __savegprlr_29();
-  iVar2 = GetRumbleInfoIndexFromName(param_2);
-  if (iVar2 < 0) {
-    Com_PrintWarning(0xe,0xffffffff82021e1c,param_2);
-    __restgprlr_29();
-    return;
-  }
-  iVar2 = CG_GetLocalClientGlobals(uVar1);
-  if (*(int *)(iVar2 + 0x335c) == 0) {
-    MyAssertHandler(0xffffffff82021908,1000,0,0xffffffff82000f98,0xffffffff82002858);
-  }
-  PlayRumbleInternal(0x3ff0000000000000,uVar1,param_2,0,1,*(undefined4 *)(iVar2 + 0x150),0);
-  __restgprlr_29();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 822F4880  CG_PlayRumbleOnClientScaledWithUpdate  (cgame/cg_rumble.cpp:1006)
-
-void CG_PlayRumbleOnClientScaledWithUpdate(undefined8 param_1,undefined8 param_2)
-
-{
-  undefined8 uVar1;
-  int iVar2;
-  undefined8 extraout_f1;
-  undefined8 uVar3;
-  
-  uVar1 = __savegprlr_29();
-  uVar3 = extraout_f1;
-  iVar2 = CG_GetLocalClientGlobals();
-  if (*(int *)(iVar2 + 0x335c) == 0) {
-    MyAssertHandler(0xffffffff82021908,0x3f2,0,0xffffffff82000f98,0xffffffff82002858);
-  }
-  PlayRumbleInternal(uVar3,uVar1,param_2,0,1,*(undefined4 *)(iVar2 + 0x150),0);
-  __restgprlr_29();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 822F4908  CG_PlayLoopRumbleOnClient  (cgame/cg_rumble.cpp:1016)
-
-void CG_PlayLoopRumbleOnClient(undefined8 param_1,undefined8 param_2)
-
-{
-  undefined8 uVar1;
-  int iVar2;
-  
-  uVar1 = __savegprlr_29();
-  iVar2 = CG_GetLocalClientGlobals();
-  if (*(int *)(iVar2 + 0x335c) == 0) {
-    MyAssertHandler(0xffffffff82021908,0x3fc,0,0xffffffff82000f98,0xffffffff82002858);
-  }
-  PlayRumbleInternal(0x3ff0000000000000,uVar1,param_2,1,1,*(undefined4 *)(iVar2 + 0x150),0);
-  __restgprlr_29();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 822F4988  CG_StopRumble  (cgame/cg_rumble.cpp:1026)
 
-void CG_StopRumble(undefined8 param_1,int param_2,longlong param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CG_StopRumble(LocalClientNum_t param_1,int param_2,char *param_3)
 
 {
   char cVar1;
   int iVar2;
   char *pcVar3;
   longlong lVar4;
-  char *pcVar5;
-  int *piVar6;
+  longlong lVar5;
+  char *pcVar6;
+  int *piVar7;
   
-  iVar2 = __savegprlr_24();
-  piVar6 = (int *)(&DAT_82a526b0 + iVar2 * 0x4390);
+  lVar4 = (longlong)(int)param_3;
+  iVar2 = __savegprlr_24(param_1);
+  piVar7 = (int *)(iVar2 * 0x4390 + -0x7d5ad950);
   iVar2 = 0;
   do {
-    if ((0 < piVar6[1]) && (piVar6[3] == 1)) {
-      if (*piVar6 == 0) {
-        MyAssertHandler(0xffffffff82021908,0x414,0,0xffffffff82000f98,0xffffffff82021bb0);
+    if ((0 < piVar7[1]) && (piVar7[3] == 1)) {
+      if (*piVar7 == 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_rumble.cpp",0x414
+                        ,0,"%s");
       }
-      pcVar3 = (char *)CL_GetConfigString(*(undefined4 *)*piVar6);
-      lVar4 = param_3;
-      if (piVar6[5] == param_2) {
+      pcVar3 = CL_GetConfigString(*(int *)*piVar7);
+      lVar5 = lVar4;
+      if (piVar7[5] == param_2) {
         do {
           cVar1 = *pcVar3;
-          pcVar5 = (char *)lVar4;
+          pcVar6 = (char *)lVar5;
           if (cVar1 == '\0') break;
           pcVar3 = pcVar3 + 1;
-          lVar4 = lVar4 + 1;
-        } while (cVar1 == *pcVar5);
-        if (cVar1 == *pcVar5) {
-          *piVar6 = 0;
-          piVar6[3] = 0;
-          piVar6[1] = -1;
+          lVar5 = lVar5 + 1;
+        } while (cVar1 == *pcVar6);
+        if (cVar1 == *pcVar6) {
+          *piVar7 = 0;
+          piVar7[3] = 0;
+          piVar7[1] = -1;
           __restgprlr_24();
           return;
         }
       }
     }
     iVar2 = iVar2 + 1;
-    piVar6 = piVar6 + 8;
+    piVar7 = piVar7 + 8;
     if (0x1f < iVar2) {
       __restgprlr_24();
       return;
@@ -1145,111 +597,117 @@ void CG_StopRumble(undefined8 param_1,int param_2,longlong param_3)
 
 // 822F4A88  CG_StopAllRumbles  (cgame/cg_rumble.cpp:1056)
 
-void CG_StopAllRumbles(int param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CG_StopAllRumbles(LocalClientNum_t param_1)
 
 {
-  undefined4 *puVar1;
-  longlong lVar2;
+  RumbleGraph **ppRVar1;
+  int iVar2;
   longlong lVar3;
   double dVar4;
   
   lVar3 = 0x20;
-  lVar2 = 0;
-  puVar1 = (undefined4 *)(param_1 * 0x4390 + -0x7d5ad964);
+  iVar2 = 0;
+  ppRVar1 = &rumbleGlobArray[param_1].infos[0x1f].lowRumbleGraph;
   do {
-    puVar1[6] = 0xffffffff;
-    puVar1[5] = 0;
-    puVar1 = puVar1 + 8;
-    *puVar1 = 0;
+    ppRVar1[6] = (RumbleGraph *)0xffffffff;
+    ppRVar1[5] = (RumbleGraph *)0x0;
+    ppRVar1 = ppRVar1 + 8;
+    *ppRVar1 = (RumbleGraph *)0x0;
     lVar3 = lVar3 + -1;
   } while (lVar3 != 0);
   dVar4 = 0.0;
   do {
-    GPad_SetLowRumble(dVar4,lVar2);
-    GPad_SetHighRumble(dVar4,lVar2);
-    GPad_StopRumbles(lVar2);
-    lVar2 = lVar2 + 1;
-  } while ((int)lVar2 < 4);
-  DAT_82a5f57c = (float)dVar4;
-  DAT_82a5f580 = (float)dVar4;
+    GPad_SetLowRumble(iVar2,(float)dVar4);
+    GPad_SetHighRumble(iVar2,(float)dVar4);
+    GPad_StopRumbles(iVar2);
+    iVar2 = iVar2 + 1;
+  } while (iVar2 < 4);
+  highRumbleDebugGlobal = (float)dVar4;
+  lowRumbleDebugGlobal = (float)dVar4;
   return;
 }
 
 
 // 822F4B30  CG_SetRumbleReceiver  (cgame/cg_rumble.cpp:1083)
 
-void CG_SetRumbleReceiver(int param_1,undefined4 param_2,undefined4 *param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CG_SetRumbleReceiver(LocalClientNum_t param_1,int param_2,float *param_3)
 
 {
-  param_1 = param_1 * 0x4390;
-  *(undefined4 *)(&DAT_82a52abc + param_1) = param_2;
-  *(undefined4 *)(&DAT_82a52ab0 + param_1) = *param_3;
-  *(undefined4 *)(&DAT_82a52ab4 + param_1) = param_3[1];
-  *(undefined4 *)(&DAT_82a52ab8 + param_1) = param_3[2];
+  rumbleGlobArray[param_1].receiverEntNum = param_2;
+  rumbleGlobArray[param_1].receiverPos[0] = *param_3;
+  rumbleGlobArray[param_1].receiverPos[1] = param_3[1];
+  rumbleGlobArray[param_1].receiverPos[2] = param_3[2];
   return;
 }
 
 
 // 822F4B60  CG_DrawRumbleDebug  (cgame/cg_rumble.cpp:1176)
 
-void CG_DrawRumbleDebug(undefined8 param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CG_DrawRumbleDebug(LocalClientNum_t param_1)
 
 {
-  va(0xffffffff82021e58,(double)DAT_82a5f580,(double)DAT_82a5f57c);
-  ScrPlace_GetActivePlacement(param_1);
-  CG_DrawSmallDevStringColor(0,0x4072c00000000000);
+  char *pcVar1;
+  ScreenPlacement *pSVar2;
+  
+  pcVar1 = va("Rumble: Low %.3f, High %.3f\n");
+  pSVar2 = ScrPlace_GetActivePlacement(param_1);
+  CG_DrawSmallDevStringColor(pSVar2,0.0,300.0,"etected",(float *)0x82010000,(int)pcVar1);
   return;
 }
 
 
 // 822F4BF0  RumbleGraphEventSaveToFile  (cgame/cg_rumble.cpp:1183)
 
-void RumbleGraphEventSaveToFile(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void RumbleGraphEventSaveToFile(RumbleDevguiGraphInfo *param_1)
 
 {
   char cVar1;
   ushort uVar2;
-  int iVar4;
-  ulonglong uVar3;
-  float *pfVar5;
-  char *pcVar6;
-  ulonglong uVar7;
-  int iVar8;
+  int iVar3;
+  void *pvVar4;
+  char *pcVar5;
+  ulonglong uVar6;
   char acStack_530 [256];
   char local_430 [1072];
   
-  iVar4 = __savegprlr_27();
-  sprintf(acStack_530,"rumble\\%s",(ulonglong)*(uint *)(iVar4 + 4));
-  uVar3 = FS_FOpenTextFileWrite(acStack_530);
-  if ((uVar3 & 0xffffffff) != 0) {
-    uVar2 = **(ushort **)(*(int *)(iVar4 + 4) + 200);
-    uVar7 = (ulonglong)uVar2;
-    Com_sprintf(local_430,0x400,0xffffffff82021eb0,uVar7);
-    pcVar6 = local_430;
+  iVar3 = __savegprlr_27(param_1);
+  sprintf(acStack_530,"rumble\\%s");
+  pvVar4 = FS_FOpenTextFileWrite(acStack_530);
+  if (pvVar4 != (void *)0x0) {
+    uVar2 = **(ushort **)(*(int *)(iVar3 + 4) + 200);
+    uVar6 = (ulonglong)uVar2;
+    Com_sprintf(local_430,0x400,"RUMBLEGRAPHFILE\n\n%d\n");
+    pcVar5 = local_430;
     do {
-      cVar1 = *pcVar6;
-      pcVar6 = pcVar6 + 1;
+      cVar1 = *pcVar5;
+      pcVar5 = pcVar5 + 1;
     } while (cVar1 != '\0');
-    FS_Write(local_430,pcVar6 + (-1 - (int)local_430),uVar3);
+    FS_Write(local_430,(int)(pcVar5 + (-1 - (int)local_430)),pvVar4);
     if (0x10 < uVar2) {
-      MyAssertHandler(0xffffffff82021908,0x4b1,0,0xffffffff82021e84,uVar7,0x10);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_rumble.cpp",0x4b1,0
+                      ,"knotCount <= MAX_RUMBLE_GRAPH_KNOTS\n\t%i, %i");
     }
     if (uVar2 != 0) {
-      iVar8 = 0;
       do {
-        pfVar5 = (float *)(*(int *)(*(int *)(iVar4 + 4) + 0xc4) + iVar8);
-        Com_sprintf(local_430,0x400,0xffffffff82021e78,(double)*pfVar5,(double)pfVar5[1]);
-        pcVar6 = local_430;
+        Com_sprintf(local_430,0x400,"%.4f %.4f\n");
+        pcVar5 = local_430;
         do {
-          cVar1 = *pcVar6;
-          pcVar6 = pcVar6 + 1;
+          cVar1 = *pcVar5;
+          pcVar5 = pcVar5 + 1;
         } while (cVar1 != '\0');
-        FS_Write(local_430,pcVar6 + (-1 - (int)local_430),uVar3);
-        uVar7 = uVar7 - 1;
-        iVar8 = iVar8 + 8;
-      } while (uVar7 != 0);
+        FS_Write(local_430,(int)(pcVar5 + (-1 - (int)local_430)),pvVar4);
+        uVar6 = uVar6 - 1;
+      } while (uVar6 != 0);
     }
-    FS_FCloseFile(uVar3);
+    FS_FCloseFile(pvVar4);
   }
   __restgprlr_27();
   return;
@@ -1258,53 +716,61 @@ void RumbleGraphEventSaveToFile(void)
 
 // 822F4D40  RumbleGraphEventCallback  (cgame/cg_rumble.cpp:1214)
 
-void RumbleGraphEventCallback(undefined8 param_1,ulonglong param_2,undefined8 param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void RumbleGraphEventCallback(DevGraph *param_1,DevEventType param_2,LocalClientNum_t param_3)
 
 {
   bool bVar1;
-  int *piVar2;
+  RumbleDevguiGraphInfo *pRVar2;
+  dvar_t *pdVar3;
   int iVar4;
-  undefined8 uVar3;
+  char *pcVar5;
+  ulonglong uVar6;
   
-  iVar4 = __savegprlr_27();
+  uVar6 = (ulonglong)(int)param_2;
+  iVar4 = __savegprlr_27(param_1);
   if (iVar4 == 0) {
-    MyAssertHandler(0xffffffff82021908,0x4c2,0,0xffffffff82000f98,0xffffffff82021900);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_rumble.cpp",0x4c2,0,
+                    "%s");
   }
   if (*(int *)(iVar4 + 0x18) == 0) {
-    MyAssertHandler(0xffffffff82021908,0x4c3,0,0xffffffff82000f98,0xffffffff82021eec);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_rumble.cpp",0x4c3,0,
+                    "%s");
   }
-  piVar2 = *(int **)(iVar4 + 0x18);
-  if (piVar2[1] == 0) {
-    MyAssertHandler(0xffffffff82021908,0x4c6,0,0xffffffff82000f98,0xffffffff82021ed4);
+  pRVar2 = *(RumbleDevguiGraphInfo **)(iVar4 + 0x18);
+  if (pRVar2->rumbleGraph == (RumbleGraph *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_rumble.cpp",0x4c6,0,
+                    "%s");
   }
-  if (((param_2 & 0xffffffff) < 6) && (bVar1 = (int)param_2 != 0, param_2 != 1 || !bVar1)) {
-    if (param_2 == 2 && bVar1) {
+  if (((uVar6 & 0xffffffff) < 6) && (bVar1 = (int)uVar6 != 0, uVar6 != 1 || !bVar1)) {
+    if (uVar6 == 2 && bVar1) {
       CG_StopAllRumbles(param_3);
-      uVar3 = CL_GetConfigString(*(undefined4 *)*piVar2);
-      if (*(char *)(DAT_82a5f574 + 0xc) != '\0') {
-        CG_PlayLoopRumbleOnClient();
+      pcVar5 = CL_GetConfigString(pRVar2->rumbleInfo->rumbleNameIndex);
+      if ((cg_rumble_devgui_loop->current).enabled != false) {
+        CG_PlayLoopRumbleOnClient(param_3,pcVar5);
         __restgprlr_27();
         return;
       }
-      CG_PlayRumbleOnClient(param_3,uVar3);
+      CG_PlayRumbleOnClient(param_3,pcVar5);
       __restgprlr_27();
       return;
     }
-    if (param_2 != 3 || !bVar1) {
-      if (param_2 != 4 || !bVar1) {
+    if (uVar6 != 3 || !bVar1) {
+      if (uVar6 != 4 || !bVar1) {
         if (!bVar1) {
-          Dvar_SetBool(DAT_82a5f574,0);
-          Dvar_SetFloat((double)(*(float *)(*piVar2 + 4) * 0.001),DAT_82a5f570);
+          Dvar_SetBool(cg_rumble_devgui_loop,false);
+          Dvar_SetFloat(cg_rumble_devgui_duration,pRVar2->rumbleInfo->duration * 0.001);
           __restgprlr_27();
           return;
         }
-        RumbleGraphEventSaveToFile(piVar2);
+        RumbleGraphEventSaveToFile(pRVar2);
         __restgprlr_27();
         return;
       }
-      iVar4 = *(int *)(*piVar2 + 0x1c);
-      if (*(char *)(iVar4 + 0xb) != '\0') {
-        *(float *)(*piVar2 + 4) = *(float *)(iVar4 + 0xc) * 1000.0;
+      pdVar3 = pRVar2->rumbleInfo->durationDvar;
+      if (pdVar3->modified != false) {
+        pRVar2->rumbleInfo->duration = (pdVar3->current).value * 1000.0;
       }
     }
   }
@@ -1315,61 +781,66 @@ void RumbleGraphEventCallback(undefined8 param_1,ulonglong param_2,undefined8 pa
 
 // 822F4EC8  RumbleGraphTextCallback  (cgame/cg_rumble.cpp:1261)
 
-void RumbleGraphTextCallback(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void RumbleGraphTextCallback
+               (DevGraph *param_1,float param_2,float param_3,char *param_4,int param_5)
 
 {
-  int *piVar1;
-  int iVar2;
+  int iVar1;
   char *in_r6;
-  double extraout_f1;
-  double dVar3;
   
-  iVar2 = __savegprlr_28();
-  dVar3 = extraout_f1;
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff82021908,0x4f0,0,0xffffffff82000f98,0xffffffff82021900);
+  iVar1 = __savegprlr_28((double)param_2,param_1,param_4,param_5);
+  if (iVar1 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_rumble.cpp",0x4f0,0,
+                    "%s");
   }
-  if (*(int *)(iVar2 + 0x18) == 0) {
-    MyAssertHandler(0xffffffff82021908,0x4f1,0,0xffffffff82000f98,0xffffffff82021eec);
+  if (*(int *)(iVar1 + 0x18) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_rumble.cpp",0x4f1,0,
+                    "%s");
   }
-  piVar1 = *(int **)(iVar2 + 0x18);
-  if (piVar1[1] == 0) {
-    MyAssertHandler(0xffffffff82021908,0x4f4,0,0xffffffff82000f98,0xffffffff82021ed4);
+  if (*(int *)(*(int *)(iVar1 + 0x18) + 4) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_rumble.cpp",0x4f4,0,
+                    "%s");
   }
-  dVar3 = (double)((float)((double)*(float *)(*piVar1 + 4) * dVar3) * 0.001);
-  iVar2 = sprintf(in_r6,"Time: %.3f sec, Rumble Value: %.3f",dVar3,param_2,dVar3,param_2);
-  __restgprlr_28(iVar2);
+  iVar1 = sprintf(in_r6,"Time: %.3f sec, Rumble Value: %.3f");
+  __restgprlr_28(iVar1);
   return;
 }
 
 
 // 822F4FC0  InitDevguiRumbleGraphInteral  (cgame/cg_rumble.cpp:1275)
 
-void InitDevguiRumbleGraphInteral(undefined8 param_1,ulonglong param_2,undefined4 param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void InitDevguiRumbleGraphInteral(char *param_1,RumbleGraph *param_2,RumbleInfo *param_3)
 
 {
   int iVar1;
   ulonglong uVar2;
   char acStack_130 [304];
   
-  uVar2 = __savegprlr_27();
+  uVar2 = (ulonglong)(int)param_2;
+  iVar1 = __savegprlr_27(param_1);
+  if (iVar1 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_rumble.cpp",0x4ff,0,
+                    "%s");
+  }
   if ((uVar2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82021908,0x4ff,0,0xffffffff82000f98,0xffffffff82016f44);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_rumble.cpp",0x500,0,
+                    "%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82021908,0x500,0,0xffffffff82000f98,0xffffffff82021f2c);
-  }
-  iVar1 = (int)param_2;
+  iVar1 = (int)uVar2;
   *(code **)(iVar1 + 0xd4) = RumbleGraphEventCallback;
   *(int *)(iVar1 + 0xc4) = iVar1 + 0x40;
   *(int *)(iVar1 + 200) = iVar1 + 0xc0;
   *(code **)(iVar1 + 0xd8) = RumbleGraphTextCallback;
   *(undefined2 *)(iVar1 + 0xcc) = 0x10;
   *(int *)(iVar1 + 0xe8) = iVar1;
-  *(undefined4 *)(iVar1 + 0xe4) = param_3;
+  *(RumbleInfo **)(iVar1 + 0xe4) = param_3;
   *(int *)(iVar1 + 0xdc) = iVar1 + 0xe4;
-  sprintf(acStack_130,"Rumble/%s/%s",uVar2,param_2);
-  DevGui_AddGraph(acStack_130,param_2 + 0xc4);
+  sprintf(acStack_130,"Rumble/%s/%s");
+  DevGui_AddGraph(acStack_130,(DevGraph *)(iVar1 + 0xc4));
   __restgprlr_27();
   return;
 }
@@ -1377,45 +848,50 @@ void InitDevguiRumbleGraphInteral(undefined8 param_1,ulonglong param_2,undefined
 
 // 822F50A0  CG_InitDevguiRumbleGraph  (cgame/cg_rumble.cpp:1299)
 
-void CG_InitDevguiRumbleGraph(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CG_InitDevguiRumbleGraph(LocalClientNum_t param_1)
 
 {
   int iVar1;
   char *pcVar2;
-  char cVar3;
-  longlong lVar4;
+  bool bVar3;
+  ushort in_r4;
+  char *in_r5;
+  RumbleInfo *pRVar4;
   char acStack_150 [336];
   
-  iVar1 = __savegprlr_23();
-  DAT_82a5f570 = Dvar_RegisterFloat(0x3ff0000000000000,0x3f847ae140000000,0x4024000000000000,
-                                    0xffffffff82021fac);
-  DAT_82a5f574 = Dvar_RegisterBool(0xffffffff82021f80,0,0,0xffffffff82021f68);
-  iVar1 = iVar1 * 0x4390 + -0x7d5addac;
-  lVar4 = 1;
+  iVar1 = __savegprlr_23(param_1);
+  cg_rumble_devgui_duration =
+       Dvar_RegisterFloat("cg_rumble_devgui_duration",1.0,0.01,10.0,in_r4,in_r5);
+  cg_rumble_devgui_loop =
+       Dvar_RegisterBool("cg_rumble_devgui_loop",false,0,"Enable a looping rumble");
+  pRVar4 = (RumbleInfo *)(iVar1 * 0x4390 + -0x7d5addac);
+  iVar1 = 1;
   do {
-    pcVar2 = (char *)CL_GetConfigString(lVar4 + 0x3d9);
+    pcVar2 = CL_GetConfigString(iVar1 + 0x3d9);
     if (*pcVar2 != '\0') {
-      sprintf(acStack_150,"Rumble/%s",pcVar2);
-      cVar3 = DevGui_DoesMenuExist(acStack_150);
-      if (cVar3 == '\0') {
-        if (*(int *)(iVar1 + 0xc) != 0) {
-          InitDevguiRumbleGraphInteral(pcVar2,*(int *)(iVar1 + 0xc),iVar1);
+      sprintf(acStack_150,"Rumble/%s");
+      bVar3 = DevGui_DoesMenuExist(acStack_150);
+      if (!bVar3) {
+        if (pRVar4->highRumbleGraph != (RumbleGraph *)0x0) {
+          InitDevguiRumbleGraphInteral(pcVar2,pRVar4->highRumbleGraph,pRVar4);
         }
-        if (*(int *)(iVar1 + 0x10) != 0) {
-          InitDevguiRumbleGraphInteral(pcVar2,*(int *)(iVar1 + 0x10),iVar1);
+        if (pRVar4->lowRumbleGraph != (RumbleGraph *)0x0) {
+          InitDevguiRumbleGraphInteral(pcVar2,pRVar4->lowRumbleGraph,pRVar4);
         }
-        *(undefined4 *)(iVar1 + 0x1c) = DAT_82a5f570;
-        sprintf(acStack_150,"Rumble/%s/Duration",pcVar2);
-        DevGui_AddDvar(acStack_150,DAT_82a5f570);
-        *(undefined4 *)(iVar1 + 0x20) = DAT_82a5f574;
-        sprintf(acStack_150,"Rumble/%s/Loop",pcVar2);
-        DevGui_AddDvar(acStack_150,DAT_82a5f574);
-        DAT_82a5f584 = 0;
+        pRVar4->durationDvar = cg_rumble_devgui_duration;
+        sprintf(acStack_150,"Rumble/%s/Duration");
+        DevGui_AddDvar(acStack_150,cg_rumble_devgui_duration);
+        pRVar4->loopDvar = cg_rumble_devgui_loop;
+        sprintf(acStack_150,"Rumble/%s/Loop");
+        DevGui_AddDvar(acStack_150,cg_rumble_devgui_loop);
+        updateRumbleDevGuiGlobal = false;
       }
     }
-    lVar4 = lVar4 + 1;
-    iVar1 = iVar1 + 0x24;
-  } while ((int)lVar4 < 0x20);
+    iVar1 = iVar1 + 1;
+    pRVar4 = pRVar4 + 1;
+  } while (iVar1 < 0x20);
   __restgprlr_23();
   return;
 }

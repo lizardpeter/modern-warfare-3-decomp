@@ -2,79 +2,79 @@
 
 // 8291BD08  fseek  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/fseek.c:96)
 
-int fseek(FILE *_File,long _Offset,int _Origin)
+int fseek(_iobuf *param_1,long param_2,int param_3)
 
 {
   longlong lVar1;
-  FILE *_File_00;
-  int *piVar3;
+  _iobuf *p_Var3;
+  int *piVar4;
   ulonglong uVar2;
-  uint uVar4;
-  int iVar5;
-  FILE *pFStack00000014;
+  uint uVar5;
+  int iVar6;
+  _iobuf *p_Stack00000014;
   
-  lVar1 = __savegprlr_28(_File);
-  _File_00 = (FILE *)lVar1;
-  pFStack00000014 = _File_00;
-  if ((lVar1 == 0) || (((_Origin != 0 && (_Origin != 1)) && (_Origin != 2)))) {
-    piVar3 = _errno();
-    *piVar3 = 0x16;
+  lVar1 = __savegprlr_28(param_1);
+  p_Var3 = (_iobuf *)lVar1;
+  p_Stack00000014 = p_Var3;
+  if ((lVar1 == 0) || (((param_3 != 0 && (param_3 != 1)) && (param_3 != 2)))) {
+    piVar4 = _errno();
+    *piVar4 = 0x16;
     _invalid_parameter_noinfo();
     uVar2 = 0xffffffffffffffff;
   }
   else {
-    _lock_file(_File_00);
-    uVar4 = _fseek_nolock(_File_00,_Offset,_Origin);
+    _lock_file(p_Var3);
+    uVar5 = _fseek_nolock(p_Var3,param_2,param_3);
     FUN_8291bdbc();
-    uVar2 = (ulonglong)uVar4;
+    uVar2 = (ulonglong)uVar5;
   }
-  iVar5 = __restgprlr_28(uVar2);
-  return iVar5;
+  iVar6 = __restgprlr_28(uVar2);
+  return iVar6;
 }
 
 
 // 8291BC38  _fseek_nolock  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/fseek.c:136)
 
-int _fseek_nolock(FILE *_File,long _Offset,int _Origin)
+int _fseek_nolock(_iobuf *param_1,long param_2,int param_3)
 
 {
   uint uVar1;
-  FILE *_File_00;
-  int *piVar3;
+  _iobuf *p_Var3;
+  int *piVar4;
   longlong lVar2;
-  long lVar4;
-  int iVar5;
+  long lVar5;
+  int iVar6;
   
-  _File_00 = (FILE *)__savegprlr_29(_File);
-  if ((_File_00->_flag & 0x83U) == 0) {
-    piVar3 = _errno();
+  p_Var3 = (_iobuf *)__savegprlr_29(param_1);
+  if ((p_Var3->_flag & 0x83U) == 0) {
+    piVar4 = _errno();
     lVar2 = -1;
-    *piVar3 = 0x16;
+    *piVar4 = 0x16;
   }
   else {
-    _File_00->_flag = _File_00->_flag & 0xffffffef;
-    if (_Origin == 1) {
-      lVar4 = _ftell_nolock(_File_00);
-      _Offset = lVar4 + _Offset;
-      _Origin = 0;
+    p_Var3->_flag = p_Var3->_flag & 0xffffffef;
+    if (param_3 == 1) {
+      lVar5 = _ftell_nolock(p_Var3);
+      param_2 = lVar5 + param_2;
+      param_3 = 0;
     }
-    _flush(_File_00);
-    uVar1 = _File_00->_flag;
+    _flush(p_Var3);
+    uVar1 = p_Var3->_flag;
     if ((uVar1 & 0x80) == 0) {
       if ((uVar1 & 1) != 0) {
         if (((uVar1 & 8) != 0) && ((uVar1 & 0x400) == 0)) {
-          _File_00->_bufsiz = 0x200;
+          p_Var3->_bufsiz = 0x200;
         }
       }
     }
     else {
-      _File_00->_flag = uVar1 & 0xfffffffc;
+      p_Var3->_flag = uVar1 & 0xfffffffc;
     }
-    iVar5 = _fileno(_File_00);
-    lVar4 = _lseek(iVar5,_Offset,_Origin);
-    lVar2 = -(ulonglong)(lVar4 == -1);
+    iVar6 = _fileno(p_Var3);
+    lVar5 = _lseek(iVar6,param_2,param_3);
+    lVar2 = -(ulonglong)(lVar5 == -1);
   }
-  iVar5 = __restgprlr_29(lVar2);
-  return iVar5;
+  iVar6 = __restgprlr_29(lVar2);
+  return iVar6;
 }
 

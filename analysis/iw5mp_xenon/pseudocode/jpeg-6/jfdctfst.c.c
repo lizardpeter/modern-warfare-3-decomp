@@ -2,7 +2,7 @@
 
 // 827C6460  jpeg_fdct_ifast  (jpeg-6/jfdctfst.c:115)
 
-void jpeg_fdct_ifast(void)
+void jpeg_fdct_ifast(int *param_1)
 
 {
   int iVar1;
@@ -26,7 +26,7 @@ void jpeg_fdct_ifast(void)
   int iVar19;
   longlong lVar20;
   
-  iVar1 = __savegprlr_17();
+  iVar1 = __savegprlr_17(param_1);
   piVar13 = (int *)(iVar1 + -4);
   lVar20 = 2;
   do {

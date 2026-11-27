@@ -2,66 +2,70 @@
 
 // 829168A0  memmove  (<external>/bt/278379/vctools/crt/xb/xbox/memmovep.asm:50)
 
-void * memmove(void *_Dst,void *_Src,size_t _Size)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void memmove(void)
 
 {
   undefined4 *puVar1;
   undefined1 *puVar2;
   int iVar3;
   uint uVar4;
-  void *pvVar5;
-  undefined4 *puVar6;
-  uint uVar7;
-  ulonglong uVar8;
+  int in_r3;
+  undefined4 *puVar5;
+  int in_r4;
+  uint uVar6;
+  uint in_r5;
+  ulonglong uVar7;
   
-  if (_Dst == _Src) {
-    return _Dst;
+  if (in_r3 == in_r4) {
+    return;
   }
-  if ((int)_Src <= (int)_Dst) {
-    iVar3 = _Size + 1;
-    uVar7 = (int)_Src + _Size;
-    for (puVar6 = (undefined4 *)((int)_Dst + _Size); iVar3 = iVar3 + -1,
-        iVar3 != 0 && ((uint)puVar6 & 3) != 0; puVar6 = (undefined4 *)((int)puVar6 + -1)) {
-      _Size = _Size - 1;
-      puVar2 = (undefined1 *)(uVar7 - 1);
-      uVar7 = uVar7 - 1;
-      *(undefined1 *)((int)puVar6 + -1) = *puVar2;
+  if (in_r4 <= in_r3) {
+    iVar3 = in_r5 + 1;
+    uVar6 = in_r4 + in_r5;
+    for (puVar5 = (undefined4 *)(in_r3 + in_r5); iVar3 = iVar3 + -1,
+        iVar3 != 0 && ((uint)puVar5 & 3) != 0; puVar5 = (undefined4 *)((int)puVar5 + -1)) {
+      in_r5 = in_r5 - 1;
+      puVar2 = (undefined1 *)(uVar6 - 1);
+      uVar6 = uVar6 - 1;
+      *(undefined1 *)((int)puVar5 + -1) = *puVar2;
     }
-    uVar8 = (ulonglong)(_Size >> 2);
-    if (uVar8 != 0) {
-      if ((uVar7 & 3) == 0) {
+    uVar7 = (ulonglong)(in_r5 >> 2);
+    if (uVar7 != 0) {
+      if ((uVar6 & 3) == 0) {
         do {
-          puVar1 = (undefined4 *)(uVar7 - 4);
-          uVar7 = uVar7 - 4;
-          puVar6[-1] = *puVar1;
-          puVar6 = puVar6 + -1;
-          uVar8 = uVar8 - 1;
-        } while (uVar8 != 0);
+          puVar1 = (undefined4 *)(uVar6 - 4);
+          uVar6 = uVar6 - 4;
+          puVar5[-1] = *puVar1;
+          puVar5 = puVar5 + -1;
+          uVar7 = uVar7 - 1;
+        } while (uVar7 != 0);
       }
       else {
         do {
-          puVar6 = puVar6 + -1;
-          puVar1 = (undefined4 *)(uVar7 - 4);
-          uVar7 = uVar7 - 4;
-          *puVar6 = *puVar1;
-          uVar8 = uVar8 - 1;
-        } while (uVar8 != 0);
+          puVar5 = puVar5 + -1;
+          puVar1 = (undefined4 *)(uVar6 - 4);
+          uVar6 = uVar6 - 4;
+          *puVar5 = *puVar1;
+          uVar7 = uVar7 - 1;
+        } while (uVar7 != 0);
       }
     }
-    uVar4 = _Size & 3;
+    uVar4 = in_r5 & 3;
     if (uVar4 != 0) {
       do {
-        puVar2 = (undefined1 *)(uVar7 - 1);
-        uVar7 = uVar7 - 1;
-        *(undefined1 *)((int)puVar6 + -1) = *puVar2;
-        puVar6 = (undefined4 *)((int)puVar6 + -1);
+        puVar2 = (undefined1 *)(uVar6 - 1);
+        uVar6 = uVar6 - 1;
+        *(undefined1 *)((int)puVar5 + -1) = *puVar2;
+        puVar5 = (undefined4 *)((int)puVar5 + -1);
         uVar4 = uVar4 - 1;
       } while (uVar4 != 0);
-      return puVar6;
+      return;
     }
-    return puVar6;
+    return;
   }
-  pvVar5 = memcpy(_Dst,_Src,_Size);
-  return pvVar5;
+  memcpy();
+  return;
 }
 

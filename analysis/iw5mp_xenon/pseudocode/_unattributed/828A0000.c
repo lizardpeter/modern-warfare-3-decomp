@@ -116,12 +116,12 @@ undefined8 FUN_828a89c8(void)
 
 // 828ABA00  FUN_828aba00  (line unknown)
 
-LONG FUN_828aba00(_EXCEPTION_POINTERS *param_1)
+long FUN_828aba00(_EXCEPTION_POINTERS *param_1)
 
 {
-  LONG LVar1;
+  long lVar1;
   
-  LVar1 = UnhandledExceptionFilter(param_1);
-  return LVar1;
+  lVar1 = UnhandledExceptionFilter(param_1);
+  return lVar1;
 }
 

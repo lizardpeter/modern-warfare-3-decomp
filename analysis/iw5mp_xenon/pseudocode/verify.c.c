@@ -2,23 +2,21 @@
 
 // 828ABDB0  XVerifySameFamily  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/verify.c:19)
 
-ulonglong XVerifySameFamily(ulonglong param_1)
+ulong XVerifySameFamily(ulong param_1)
 
 {
   int iVar1;
-  ulonglong uVar2;
+  ulong uVar2;
   int local_20 [2];
   
   uVar2 = 0x65b;
-  if ((param_1 & 0xffffffff) == 0) {
+  if (param_1 == 0) {
     uVar2 = 0;
   }
   else {
     iVar1 = XamGetExecutionId(local_20);
     if (-1 < iVar1) {
-      uVar2 = -(ulonglong)
-               ((param_1 & 0xffffffff) >> 0x10 != (ulonglong)*(ushort *)(local_20[0] + 0xc)) & 0x65b
-      ;
+      uVar2 = -(uint)(param_1 >> 0x10 != (uint)*(ushort *)(local_20[0] + 0xc)) & 0x65b;
     }
   }
   return uVar2;

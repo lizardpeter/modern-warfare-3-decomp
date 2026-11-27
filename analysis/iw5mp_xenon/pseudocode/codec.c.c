@@ -2,55 +2,61 @@
 
 // 828BFDE0  CodecProcess  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/codec.c:75)
 
-void CodecProcess(undefined8 param_1,longlong param_2,ulonglong param_3)
+undefined4 CodecProcess(CODEC_PROCESSOR *param_1,ulong param_2,ulong param_3)
 
 {
   code *pcVar1;
   bool bVar2;
   int iVar3;
-  int *piVar4;
-  uint uVar5;
-  undefined8 uVar6;
-  ulonglong uVar7;
+  PACKET_CONTEXT *pPVar4;
+  undefined4 uVar5;
+  longlong lVar6;
+  uint uVar7;
+  int *piVar8;
+  undefined8 uVar9;
+  ulonglong uVar10;
+  ulonglong uVar11;
   
-  iVar3 = __savegprlr_27();
-  uVar6 = 0;
-  piVar4 = (int *)(iVar3 + 0x10);
-  uVar5 = 0;
-  while ((piVar4[-2] == 0 || (*piVar4 != 1))) {
-    uVar5 = uVar5 + 1;
-    piVar4 = piVar4 + 1;
-    if (1 < uVar5) {
+  uVar10 = (ulonglong)(int)param_3;
+  lVar6 = (longlong)(int)param_2;
+  iVar3 = __savegprlr_27(param_1);
+  uVar9 = 0;
+  piVar8 = (int *)(iVar3 + 0x10);
+  uVar7 = 0;
+  while ((piVar8[-2] == 0 || (*piVar8 != 1))) {
+    uVar7 = uVar7 + 1;
+    piVar8 = piVar8 + 1;
+    if (1 < uVar7) {
       bVar2 = false;
 LAB_828bfe2c:
-      uVar7 = param_2 - param_3;
-      if ((int)param_3 != -1) {
-        piVar4 = *(int **)(*(int *)(iVar3 + 4) + 8);
-        while (((uVar7 & 0xffffffff) != 0 && (uVar7 = uVar7 - 1, piVar4 != (int *)0x0))) {
-          *(undefined4 *)*piVar4 = 0;
-          *(undefined4 *)(*piVar4 + 4) = *(undefined4 *)(*piVar4 + 0xc);
-          piVar4 = (int *)PacketProcessorRetireContext(*(undefined4 *)(iVar3 + 4));
+      uVar11 = lVar6 - uVar10;
+      if ((int)uVar10 != -1) {
+        for (pPVar4 = *(PACKET_CONTEXT **)(*(int *)(iVar3 + 4) + 8);
+            ((uVar11 & 0xffffffff) != 0 && (uVar11 = uVar11 - 1, pPVar4 != (PACKET_CONTEXT *)0x0));
+            pPVar4 = PacketProcessorRetireContext(*(PACKET_PROCESSOR **)(iVar3 + 4),pPVar4)) {
+          pPVar4->Packet->Status = 0;
+          pPVar4->Packet->Offset = pPVar4->Packet->Length;
         }
       }
       if (bVar2) {
         pcVar1 = *(code **)(*(int *)(iVar3 + 0x18) + 8);
         if (pcVar1 == (code *)0x0) {
-          uVar6 = 1;
+          uVar9 = 1;
         }
         else {
-          uVar6 = (*pcVar1)(iVar3,param_3);
+          uVar9 = (*pcVar1)(iVar3,uVar10);
         }
       }
       else {
-        piVar4 = *(int **)(*(int *)(iVar3 + 4) + 8);
-        while (((param_3 & 0xffffffff) != 0 && (param_3 = param_3 - 1, piVar4 != (int *)0x0))) {
-          *(undefined4 *)*piVar4 = 0;
-          *(undefined4 *)(*piVar4 + 4) = *(undefined4 *)(*piVar4 + 0xc);
-          piVar4 = (int *)PacketProcessorRetireContext(*(undefined4 *)(iVar3 + 4));
+        for (pPVar4 = *(PACKET_CONTEXT **)(*(int *)(iVar3 + 4) + 8);
+            ((uVar10 & 0xffffffff) != 0 && (uVar10 = uVar10 - 1, pPVar4 != (PACKET_CONTEXT *)0x0));
+            pPVar4 = PacketProcessorRetireContext(*(PACKET_PROCESSOR **)(iVar3 + 4),pPVar4)) {
+          pPVar4->Packet->Status = 0;
+          pPVar4->Packet->Offset = pPVar4->Packet->Length;
         }
       }
-      __restgprlr_27(uVar6);
-      return;
+      uVar5 = __restgprlr_27(uVar9);
+      return uVar5;
     }
   }
   bVar2 = true;
@@ -60,168 +66,180 @@ LAB_828bfe2c:
 
 // 828BFF08  CodecFlush  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/codec.c:166)
 
-void CodecFlush(undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4)
+undefined4
+CodecFlush(CODEC_PROCESSOR *param_1,XMEDIAPACKET **param_2,XMEDIAPACKET **param_3,ulong param_4)
 
 {
   int iVar1;
-  undefined4 *puVar2;
-  int *piVar3;
+  PACKET_CONTEXT *pPVar2;
+  undefined4 uVar3;
   ulonglong uVar4;
+  ulonglong uVar5;
+  ulonglong uVar6;
+  int *piVar7;
+  uint uVar8;
   
-  iVar1 = __savegprlr_26();
-  uVar4 = 0;
-  if ((param_2 & 0xffffffff) != 0) {
-    *(undefined4 *)param_2 = 0;
+  uVar6 = (ulonglong)(int)param_4;
+  uVar5 = (ulonglong)(int)param_3;
+  uVar4 = (ulonglong)(int)param_2;
+  iVar1 = __savegprlr_26(param_1);
+  uVar8 = 0;
+  if ((uVar4 & 0xffffffff) != 0) {
+    *(undefined4 *)uVar4 = 0;
   }
-  if ((param_3 & 0xffffffff) != 0) {
-    *(undefined4 *)param_3 = 0;
+  if ((uVar5 & 0xffffffff) != 0) {
+    *(undefined4 *)uVar5 = 0;
   }
   if (*(int *)(iVar1 + 4) != 0) {
-    puVar2 = *(undefined4 **)(*(int *)(iVar1 + 4) + 8);
-    if ((param_2 & 0xffffffff) == 0) {
-      while (puVar2 != (undefined4 *)0x0) {
-        *(undefined4 *)*puVar2 = 0xc0000001;
-        puVar2 = (undefined4 *)PacketProcessorRetireContext(*(undefined4 *)(iVar1 + 4));
+    pPVar2 = *(PACKET_CONTEXT **)(*(int *)(iVar1 + 4) + 8);
+    if ((uVar4 & 0xffffffff) == 0) {
+      for (; pPVar2 != (PACKET_CONTEXT *)0x0;
+          pPVar2 = PacketProcessorRetireContext(*(PACKET_PROCESSOR **)(iVar1 + 4),pPVar2)) {
+        pPVar2->Packet->Status = -0x3fffffff;
       }
     }
-    else if (puVar2 != (undefined4 *)0x0) {
-      *(undefined4 *)*puVar2 = 0xc0000001;
-      *(undefined4 *)param_2 = *puVar2;
-      PacketProcessorRetireContext(*(undefined4 *)(iVar1 + 4));
+    else if (pPVar2 != (PACKET_CONTEXT *)0x0) {
+      pPVar2->Packet->Status = -0x3fffffff;
+      *(undefined4 *)uVar4 = pPVar2->Packet;
+      PacketProcessorRetireContext(*(PACKET_PROCESSOR **)(iVar1 + 4),pPVar2);
     }
   }
-  piVar3 = (int *)(iVar1 + 8);
+  piVar7 = (int *)(iVar1 + 8);
   do {
-    if ((*piVar3 != 0) &&
-       (((param_3 & 0xffffffff) == 0 || ((uVar4 & 0xffffffff) == (param_4 & 0xffffffff))))) {
-      puVar2 = *(undefined4 **)(*piVar3 + 8);
-      if ((param_3 & 0xffffffff) != 0) {
-        if (puVar2 != (undefined4 *)0x0) {
-          *(undefined4 *)*puVar2 = 0xc0000001;
-          *(undefined4 *)param_3 = *puVar2;
-          PacketProcessorRetireContext
-                    (*(undefined4 *)((int)((uVar4 + 2 & 0xffffffff) << 2) + iVar1));
+    if ((*piVar7 != 0) &&
+       (((uVar5 & 0xffffffff) == 0 || ((ulonglong)uVar8 == (uVar6 & 0xffffffff))))) {
+      pPVar2 = *(PACKET_CONTEXT **)(*piVar7 + 8);
+      if ((uVar5 & 0xffffffff) != 0) {
+        if (pPVar2 != (PACKET_CONTEXT *)0x0) {
+          pPVar2->Packet->Status = -0x3fffffff;
+          *(undefined4 *)uVar5 = pPVar2->Packet;
+          PacketProcessorRetireContext(*(PACKET_PROCESSOR **)((uVar8 + 2) * 4 + iVar1),pPVar2);
         }
         break;
       }
-      while (puVar2 != (undefined4 *)0x0) {
-        *(undefined4 *)*puVar2 = 0xc0000001;
-        puVar2 = (undefined4 *)PacketProcessorRetireContext(*piVar3);
+      for (; pPVar2 != (PACKET_CONTEXT *)0x0;
+          pPVar2 = PacketProcessorRetireContext((PACKET_PROCESSOR *)*piVar7,pPVar2)) {
+        pPVar2->Packet->Status = -0x3fffffff;
       }
     }
-    uVar4 = uVar4 + 1;
-    piVar3 = piVar3 + 1;
-  } while ((uVar4 & 0xffffffff) < 2);
-  __restgprlr_26(0);
-  return;
+    uVar8 = uVar8 + 1;
+    piVar7 = piVar7 + 1;
+  } while (uVar8 < 2);
+  uVar3 = __restgprlr_26(0);
+  return uVar3;
 }
 
 
 // 828BFDB8  CodecSubmit  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/codec.c:274)
 
-void CodecSubmit(int param_1,int param_2,undefined8 param_3)
+undefined4 CodecSubmit(CODEC_PROCESSOR *param_1,ulong param_2,XMEDIAPACKET *param_3)
 
 {
-  undefined4 uVar1;
+  PACKET_PROCESSOR *pPVar1;
+  T_HRESULT TVar2;
   
   if (param_2 == 2) {
-    uVar1 = *(undefined4 *)(param_1 + 4);
+    pPVar1 = param_1->InputPackets;
   }
   else {
-    uVar1 = *(undefined4 *)((param_2 + 2) * 4 + param_1);
+    pPVar1 = param_1->Outputs[param_2];
   }
-  PacketProcessorSubmit(uVar1,param_3);
-  return;
+  TVar2 = PacketProcessorSubmit(pPVar1,param_3);
+  return TVar2;
 }
 
 
 // 828C00E0  CodecCreate  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/codec.c:360)
 
-void CodecCreate(undefined8 param_1,undefined4 *param_2,undefined8 param_3,longlong param_4,
-                undefined4 *param_5)
+undefined4
+CodecCreate(XHVENGINE *param_1,CODEC_TYPE *param_2,ulong param_3,ulong *param_4,
+           CODEC_PROCESSOR **param_5)
 
 {
-  undefined4 uVar1;
-  undefined4 *puVar2;
-  uint uVar3;
-  undefined4 *puVar4;
-  longlong lVar5;
+  XHVENGINE *pXVar1;
+  CODEC_PROCESSOR *pCVar2;
+  int iVar3;
+  undefined4 uVar4;
+  uint uVar5;
+  longlong lVar6;
+  longlong lVar7;
   
-  uVar1 = __savegprlr_25();
-  puVar2 = (undefined4 *)XMemAlloc(param_2[4],0x648a0008);
-  if (puVar2 == (undefined4 *)0x0) {
-    lVar5 = -0x7ff8fff2;
+  lVar6 = (longlong)(int)param_4;
+  pXVar1 = (XHVENGINE *)__savegprlr_25(param_1);
+  pCVar2 = XMemAlloc(param_2->CodecSize,0x648a0008);
+  if ((longlong)(int)pCVar2 == 0) {
+    iVar3 = -0x7ff8fff2;
   }
   else {
-    *puVar2 = uVar1;
-    lVar5 = PacketProcessorCreate(param_3,puVar2 + 1);
-    if (-1 < lVar5) {
-      uVar3 = 0;
-      puVar4 = puVar2 + 2;
+    pCVar2->XHVEngine = pXVar1;
+    iVar3 = PacketProcessorCreate(param_3,&pCVar2->InputPackets);
+    if (-1 < iVar3) {
+      uVar5 = 0;
+      lVar7 = (longlong)(int)pCVar2 + 8;
       do {
-        if (*(int *)param_4 != 0) {
-          lVar5 = PacketProcessorCreate(*(int *)param_4,puVar4);
-          if (lVar5 < 0) goto LAB_828c01a8;
+        if (*(ulong *)lVar6 != 0) {
+          iVar3 = PacketProcessorCreate(*(ulong *)lVar6,(PACKET_PROCESSOR **)lVar7);
+          if (iVar3 < 0) goto LAB_828c01a8;
         }
-        uVar3 = uVar3 + 1;
-        puVar4 = puVar4 + 1;
-        param_4 = param_4 + 4;
-      } while (uVar3 < 2);
-      puVar2[6] = param_2;
-      if ((code *)*param_2 == (code *)0x0) {
-        lVar5 = 1;
+        uVar5 = uVar5 + 1;
+        lVar7 = lVar7 + 4;
+        lVar6 = lVar6 + 4;
+      } while (uVar5 < 2);
+      pCVar2->CodecType = param_2;
+      if (param_2->CreateProc == (_func___cdecl_T_HRESULT_void_ptr *)0x0) {
+        iVar3 = 1;
       }
       else {
-        lVar5 = (*(code *)*param_2)(puVar2);
+        iVar3 = (*param_2->CreateProc)(pCVar2);
       }
-      if (-1 < (int)lVar5) goto LAB_828c01b4;
+      if (-1 < iVar3) goto LAB_828c01b4;
     }
   }
 LAB_828c01a8:
-  CodecDestroy(puVar2);
-  puVar2 = (undefined4 *)0x0;
+  CodecDestroy(pCVar2);
+  pCVar2 = (CODEC_PROCESSOR *)0x0;
 LAB_828c01b4:
-  *param_5 = puVar2;
-  __restgprlr_25(lVar5);
-  return;
+  *param_5 = pCVar2;
+  uVar4 = __restgprlr_25(iVar3);
+  return uVar4;
 }
 
 
 // 828C0038  CodecDestroy  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/codec.c:444)
 
-void CodecDestroy(void)
+void CodecDestroy(CODEC_PROCESSOR *param_1)
 
 {
-  code *pcVar1;
-  int iVar2;
+  _func___cdecl_T_HRESULT_void_ptr *p_Var1;
+  CODEC_PROCESSOR *pCVar2;
   longlong lVar3;
-  int *piVar4;
+  PACKET_PROCESSOR **ppPVar4;
   
-  iVar2 = __savegprlr_28();
-  if (iVar2 != 0) {
-    CodecFlush(iVar2,0,0,0);
-    if (*(int *)(iVar2 + 0x18) != 0) {
-      pcVar1 = *(code **)(*(int *)(iVar2 + 0x18) + 4);
-      if (pcVar1 != (code *)0x0) {
-        (*pcVar1)(iVar2);
+  pCVar2 = (CODEC_PROCESSOR *)__savegprlr_28(param_1);
+  if (pCVar2 != (CODEC_PROCESSOR *)0x0) {
+    CodecFlush(pCVar2,(XMEDIAPACKET **)0x0,(XMEDIAPACKET **)0x0,0);
+    if (pCVar2->CodecType != (CODEC_TYPE *)0x0) {
+      p_Var1 = pCVar2->CodecType->DestroyProc;
+      if (p_Var1 != (_func___cdecl_T_HRESULT_void_ptr *)0x0) {
+        (*p_Var1)(pCVar2);
       }
-      *(undefined4 *)(iVar2 + 0x18) = 0;
+      pCVar2->CodecType = (CODEC_TYPE *)0x0;
     }
-    if (*(int *)(iVar2 + 4) != 0) {
-      PacketProcessorDestroy();
-      *(undefined4 *)(iVar2 + 4) = 0;
+    if (pCVar2->InputPackets != (PACKET_PROCESSOR *)0x0) {
+      PacketProcessorDestroy(pCVar2->InputPackets);
+      pCVar2->InputPackets = (PACKET_PROCESSOR *)0x0;
     }
-    piVar4 = (int *)(iVar2 + 8);
+    ppPVar4 = pCVar2->Outputs;
     lVar3 = 2;
     do {
-      if (*piVar4 != 0) {
-        PacketProcessorDestroy();
-        *piVar4 = 0;
+      if (*ppPVar4 != (PACKET_PROCESSOR *)0x0) {
+        PacketProcessorDestroy(*ppPVar4);
+        *ppPVar4 = (PACKET_PROCESSOR *)0x0;
       }
       lVar3 = lVar3 + -1;
-      piVar4 = piVar4 + 1;
+      ppPVar4 = ppPVar4 + 1;
     } while (lVar3 != 0);
-    XMemFree(iVar2,0x648a0008);
+    XMemFree(pCVar2,0x648a0008);
   }
   __restgprlr_28();
   return;

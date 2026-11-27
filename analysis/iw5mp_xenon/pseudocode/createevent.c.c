@@ -2,43 +2,43 @@
 
 // 828A92C0  CreateEventA  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/createevent.c:80)
 
-HANDLE CreateEventA(LPSECURITY_ATTRIBUTES lpEventAttributes,BOOL bManualReset,BOOL bInitialState,
-                   LPCSTR lpName)
+void * CreateEventA(void *param_1,int param_2,int param_3,char *param_4)
 
 {
-  undefined8 uVar1;
-  int iVar2;
-  HANDLE pvVar3;
-  longlong lVar4;
-  ulonglong uVar5;
+  _OBJECT_ATTRIBUTES *p_Var1;
+  long lVar2;
+  long lVar3;
+  void *pvVar4;
+  longlong lVar5;
   ulonglong uVar6;
+  ulonglong uVar7;
   undefined4 local_40 [2];
-  undefined1 auStack_38 [8];
-  undefined1 auStack_30 [48];
+  _STRING _Stack_38;
+  _OBJECT_ATTRIBUTES a_Stack_30 [4];
   
-  uVar6 = (ulonglong)(int)lpName;
-  uVar5 = (ulonglong)bInitialState;
-  lVar4 = (longlong)bManualReset;
-  __savegprlr_29(lpEventAttributes,lVar4,uVar5);
-  if ((uVar6 & 0xffffffff) == 0) {
-    uVar1 = 0;
+  uVar7 = (ulonglong)(int)param_4;
+  uVar6 = (ulonglong)param_3;
+  lVar5 = (longlong)param_2;
+  __savegprlr_29(param_1,lVar5,uVar6);
+  if ((uVar7 & 0xffffffff) == 0) {
+    p_Var1 = (_OBJECT_ATTRIBUTES *)0x0;
   }
   else {
-    uVar1 = XapiFormatObjectAttributes(auStack_30,auStack_38,uVar6);
+    p_Var1 = XapiFormatObjectAttributes(a_Stack_30,&_Stack_38,(uchar *)uVar7);
   }
-  iVar2 = NtCreateEvent(local_40,uVar1,(int)lVar4 == 0,uVar5 & 0xff);
-  if (iVar2 < 0) {
-    RtlSetLastNTError();
+  lVar2 = NtCreateEvent(local_40,p_Var1,(int)lVar5 == 0,uVar6 & 0xff);
+  if (lVar2 < 0) {
+    RtlSetLastNTError(lVar2);
     local_40[0] = 0;
   }
   else {
-    uVar1 = 0xb7;
-    if (iVar2 != 0x40000000) {
-      uVar1 = 0;
+    lVar3 = 0xb7;
+    if (lVar2 != 0x40000000) {
+      lVar3 = 0;
     }
-    RtlSetLastError(uVar1);
+    RtlSetLastError(lVar3);
   }
-  pvVar3 = (HANDLE)__restgprlr_29(local_40[0]);
-  return pvVar3;
+  pvVar4 = (void *)__restgprlr_29(local_40[0]);
+  return pvVar4;
 }
 

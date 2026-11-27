@@ -2,69 +2,74 @@
 
 // 828ABE68  UnicodeToUTF8  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/unicodetoutf8.c:32)
 
-void UnicodeToUTF8(undefined8 param_1,longlong param_2,ulonglong param_3,int param_4)
+int UnicodeToUTF8(wchar_t *param_1,int param_2,char *param_3,int param_4)
 
 {
   wchar_t wVar1;
-  wchar_t *_Str;
-  size_t sVar2;
-  byte bVar3;
-  longlong lVar4;
-  longlong lVar5;
+  wchar_t *pwVar2;
+  uint uVar3;
+  int iVar4;
+  byte bVar5;
+  longlong lVar6;
+  longlong lVar7;
+  longlong lVar8;
+  ulonglong uVar9;
   
-  _Str = (wchar_t *)__savegprlr_27();
-  lVar5 = 0;
-  if ((int)param_2 == -1) {
-    sVar2 = wcslen(_Str);
-    param_2 = (longlong)(int)sVar2 + 1;
+  uVar9 = (ulonglong)(int)param_3;
+  lVar8 = (longlong)param_2;
+  pwVar2 = (wchar_t *)__savegprlr_27(param_1);
+  lVar7 = 0;
+  if ((int)lVar8 == -1) {
+    uVar3 = wcslen(pwVar2);
+    lVar8 = (longlong)(int)uVar3 + 1;
   }
-  if (0 < (int)param_2) {
+  if (0 < (int)lVar8) {
     do {
-      wVar1 = *_Str;
+      wVar1 = *pwVar2;
       if ((ushort)wVar1 < 0x80) {
-        lVar5 = lVar5 + 1;
-        if (((int)lVar5 <= param_4) && ((param_3 & 0xffffffff) != 0)) {
-          *(byte *)param_3 = (byte)wVar1;
+        lVar7 = lVar7 + 1;
+        if (((int)lVar7 <= param_4) && ((uVar9 & 0xffffffff) != 0)) {
+          *(byte *)uVar9 = (byte)wVar1;
 LAB_828abf70:
-          param_3 = param_3 + 1;
+          uVar9 = uVar9 + 1;
         }
       }
       else {
-        lVar4 = lVar5 + 1;
+        lVar6 = lVar7 + 1;
         if ((ushort)wVar1 < 0x800) {
-          if (((int)lVar4 <= param_4) && ((param_3 & 0xffffffff) != 0)) {
-            bVar3 = (byte)((ushort)wVar1 >> 6) & 0x1f | 0xc0;
+          if (((int)lVar6 <= param_4) && ((uVar9 & 0xffffffff) != 0)) {
+            bVar5 = (byte)((ushort)wVar1 >> 6) & 0x1f | 0xc0;
 LAB_828abf48:
-            *(byte *)param_3 = bVar3;
-            param_3 = param_3 + 1;
+            *(byte *)uVar9 = bVar5;
+            uVar9 = uVar9 + 1;
           }
         }
         else {
-          if (((int)lVar4 <= param_4) && ((param_3 & 0xffffffff) != 0)) {
-            *(byte *)param_3 = (byte)((ushort)wVar1 >> 0xc) | 0xe0;
-            param_3 = param_3 + 1;
+          if (((int)lVar6 <= param_4) && ((uVar9 & 0xffffffff) != 0)) {
+            *(byte *)uVar9 = (byte)((ushort)wVar1 >> 0xc) | 0xe0;
+            uVar9 = uVar9 + 1;
           }
-          lVar4 = lVar5 + 2;
-          if (((int)lVar4 <= param_4) && ((param_3 & 0xffffffff) != 0)) {
-            bVar3 = (byte)((ushort)*_Str >> 6) & 0x3f | 0x80;
+          lVar6 = lVar7 + 2;
+          if (((int)lVar6 <= param_4) && ((uVar9 & 0xffffffff) != 0)) {
+            bVar5 = (byte)((ushort)*pwVar2 >> 6) & 0x3f | 0x80;
             goto LAB_828abf48;
           }
         }
-        lVar5 = lVar4 + 1;
-        if (((int)lVar5 <= param_4) && ((param_3 & 0xffffffff) != 0)) {
-          *(byte *)param_3 = (byte)*_Str & 0x3f | 0x80;
+        lVar7 = lVar6 + 1;
+        if (((int)lVar7 <= param_4) && ((uVar9 & 0xffffffff) != 0)) {
+          *(byte *)uVar9 = (byte)*pwVar2 & 0x3f | 0x80;
           goto LAB_828abf70;
         }
       }
-      _Str = _Str + 1;
-      param_2 = param_2 + -1;
-    } while (param_2 != 0);
+      pwVar2 = pwVar2 + 1;
+      lVar8 = lVar8 + -1;
+    } while (lVar8 != 0);
   }
-  if ((param_4 != 0) && (param_4 < (int)lVar5)) {
+  if ((param_4 != 0) && (param_4 < (int)lVar7)) {
     SetLastError(0x7a);
-    lVar5 = 0;
+    lVar7 = 0;
   }
-  __restgprlr_27(lVar5);
-  return;
+  iVar4 = __restgprlr_27(lVar7);
+  return iVar4;
 }
 

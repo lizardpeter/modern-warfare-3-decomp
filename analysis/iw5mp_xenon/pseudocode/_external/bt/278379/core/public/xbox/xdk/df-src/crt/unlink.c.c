@@ -2,27 +2,26 @@
 
 // 8291B300  remove  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/unlink.c:42)
 
-int remove(char *_Filename)
+int remove(char *param_1)
 
 {
-  BOOL BVar1;
+  int iVar1;
   ulong uVar2;
-  int iVar3;
   
-  BVar1 = DeleteFileA(_Filename);
-  if (BVar1 == 0) {
+  iVar1 = DeleteFileA(param_1);
+  if (iVar1 == 0) {
     uVar2 = GetLastError();
   }
   else {
     uVar2 = 0;
   }
   if (uVar2 == 0) {
-    iVar3 = 0;
+    iVar1 = 0;
   }
   else {
     _dosmaperr(uVar2);
-    iVar3 = -1;
+    iVar1 = -1;
   }
-  return iVar3;
+  return iVar1;
 }
 

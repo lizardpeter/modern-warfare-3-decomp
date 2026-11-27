@@ -5,20 +5,20 @@
 void _dosmaperr(ulong param_1)
 
 {
-  _ptiddata p_Var1;
+  _tiddata *p_Var1;
   int iVar2;
   int *piVar3;
   ulong *puVar4;
   
   p_Var1 = _getptd_noexit();
-  piVar3 = (int *)&DAT_829b05a8;
-  puVar4 = &DAT_829b05ac;
-  if (p_Var1 != (_ptiddata)0x0) {
+  piVar3 = &ErrnoNoMem;
+  puVar4 = &DoserrorNoMem;
+  if (p_Var1 != (_tiddata *)0x0) {
     puVar4 = &p_Var1->_tdoserrno;
   }
   *puVar4 = param_1;
   p_Var1 = _getptd_noexit();
-  if (p_Var1 != (_ptiddata)0x0) {
+  if (p_Var1 != (_tiddata *)0x0) {
     piVar3 = &p_Var1->_terrno;
   }
   iVar2 = _get_errno_from_oserr(param_1);
@@ -32,17 +32,17 @@ void _dosmaperr(ulong param_1)
 int _get_errno_from_oserr(ulong param_1)
 
 {
-  ulong *puVar1;
+  errentry *peVar1;
   uint uVar2;
   
   uVar2 = 0;
-  puVar1 = &DAT_829b0440;
+  peVar1 = errtable;
   do {
-    if (param_1 == *puVar1) {
-      return *(int *)(uVar2 * 8 + -0x7d64fbbc);
+    if (param_1 == peVar1->oscode) {
+      return errtable[uVar2].errnocode;
     }
     uVar2 = uVar2 + 1;
-    puVar1 = puVar1 + 2;
+    peVar1 = peVar1 + 1;
   } while (uVar2 < 0x2d);
   if ((0x12 < param_1) && (param_1 < 0x25)) {
     return 0xd;
@@ -61,12 +61,12 @@ int _get_errno_from_oserr(ulong param_1)
 int * _errno(void)
 
 {
-  _ptiddata p_Var1;
+  _tiddata *p_Var1;
   int *piVar2;
   
   p_Var1 = _getptd_noexit();
-  if (p_Var1 == (_ptiddata)0x0) {
-    piVar2 = (int *)&DAT_829b05a8;
+  if (p_Var1 == (_tiddata *)0x0) {
+    piVar2 = &ErrnoNoMem;
   }
   else {
     piVar2 = &p_Var1->_terrno;
@@ -82,12 +82,12 @@ int * _errno(void)
 ulong * __doserrno(void)
 
 {
-  _ptiddata p_Var1;
+  _tiddata *p_Var1;
   ulong *puVar2;
   
   p_Var1 = _getptd_noexit();
-  if (p_Var1 == (_ptiddata)0x0) {
-    puVar2 = &DAT_829b05ac;
+  if (p_Var1 == (_tiddata *)0x0) {
+    puVar2 = &DoserrorNoMem;
   }
   else {
     puVar2 = &p_Var1->_tdoserrno;

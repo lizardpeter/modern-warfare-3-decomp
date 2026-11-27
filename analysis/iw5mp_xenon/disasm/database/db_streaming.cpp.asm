@@ -33,8 +33,12 @@ LAB_823ff210:
   823FF230  485174DC             b 0x8291670c
 
 ; 823F6E38  __lvx  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/vectorintrinsics.h:98)
+  823F6E38  102320C3             lvx128 v1,r3,r4
+  823F6E3C  4E800020             blr
 
 ; 823F6E40  __stvx  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/vectorintrinsics.h:104)
+  823F6E40  102321C3             stvx128 v1,r3,r4
+  823F6E44  4E800020             blr
 
 ; 823FD528  DB_DisplayStreamMemory  (database/db_streaming.cpp:168)
   823FD528  7D8802A6             mfspr r12,LR
@@ -2975,6 +2979,7 @@ LAB_823f8ba8:
   823F8C04  39E0FFE0             li r15,-0x20
   823F8C08  3A0000E0             li r16,0xe0
   823F8C0C  3A2000F0             li r17,0xf0
+LAB_823f8c10:
   823F8C10  38A00001             li r5,0x1
   823F8C14  80610050             lwz r3,0x50(r1)
   823F8C18  38801000             li r4,0x1000
@@ -2996,23 +3001,49 @@ LAB_823f8c40:
   823F8C54  7E499378             or r9,r18,r18
   823F8C58  7E689B78             or r8,r19,r19
   823F8C5C  7E87A378             or r7,r20,r20
-  823F8C60  13EB50C7             vcmpequd v31,v11,v10
-  823F8C64  13C058C7             vcmpequd v30,v0,v11
-  823F8C68  13AB48C7             vcmpequd v29,v11,v9
-  823F8C6C  138B40C7             vcmpequd v28,v11,v8
-  823F8C70  136B38C7             vcmpequd v27,v11,v7
-  823F8C74  134BA8C7             vcmpequd v26,v11,v21
-  823F8C78  132BB0C7             vcmpequd v25,v11,v22
-  823F8C7C  130BB8C7             vcmpequd v24,v11,v23
-  823F8C80  12EBC0C7             vcmpequd v23,v11,v24
-  823F8C84  12CBC8C7             vcmpequd v22,v11,v25
-  823F8C88  12ABD0C7             vcmpequd v21,v11,v26
-  823F8C8C  128BD8C7             vcmpequd v20,v11,v27
-  823F8C90  126BE0C7             vcmpequd v19,v11,v28
-  823F8C94  124BE8C7             vcmpequd v18,v11,v29
-  823F8C98  122BF0C7             vcmpequd v17,v11,v30
-  823F8C9C  120B78C7             vcmpequd v16,v11,v15
+LAB_823f8c60:
+  823F8C60  13EB50C7             lvx128 v63,r11,r10
+  823F8C64  13C058C7             lvx128 v62,0,r11
+  823F8C68  13AB48C7             lvx128 v61,r11,r9
+  823F8C6C  138B40C7             lvx128 v60,r11,r8
+  823F8C70  136B38C7             lvx128 v59,r11,r7
+  823F8C74  134BA8C7             lvx128 v58,r11,r21
+  823F8C78  132BB0C7             lvx128 v57,r11,r22
+  823F8C7C  130BB8C7             lvx128 v56,r11,r23
+  823F8C80  12EBC0C7             lvx128 v55,r11,r24
+  823F8C84  12CBC8C7             lvx128 v54,r11,r25
+  823F8C88  12ABD0C7             lvx128 v53,r11,r26
+  823F8C8C  128BD8C7             lvx128 v52,r11,r27
+  823F8C90  126BE0C7             lvx128 v51,r11,r28
+  823F8C94  124BE8C7             lvx128 v50,r11,r29
+  823F8C98  122BF0C7             lvx128 v49,r11,r30
+  823F8C9C  120B78C7             lvx128 v48,r11,r15
   823F8CA0  396B0100             addi r11,r11,0x100
+  823F8CA4  1200F9C7             stvx128 v48,0,r31
+  823F8CA8  13FF91C7             stvx128 v63,r31,r18
+  823F8CAC  13DF99C7             stvx128 v62,r31,r19
+  823F8CB0  13BFA1C7             stvx128 v61,r31,r20
+  823F8CB4  139FA9C7             stvx128 v60,r31,r21
+  823F8CB8  137FB1C7             stvx128 v59,r31,r22
+  823F8CBC  135FB9C7             stvx128 v58,r31,r23
+  823F8CC0  133FC1C7             stvx128 v57,r31,r24
+  823F8CC4  131FC9C7             stvx128 v56,r31,r25
+  823F8CC8  12FFD1C7             stvx128 v55,r31,r26
+  823F8CCC  12DFD9C7             stvx128 v54,r31,r27
+  823F8CD0  12BFE1C7             stvx128 v53,r31,r28
+  823F8CD4  129FE9C7             stvx128 v52,r31,r29
+  823F8CD8  127FF1C7             stvx128 v51,r31,r30
+  823F8CDC  125F81C7             stvx128 v50,r31,r16
+  823F8CE0  123F89C7             stvx128 v49,r31,r17
+  823F8CE4  3BFF0100             addi r31,r31,0x100
+  823F8CE8  4200FF78             bdnz 0x823f8c60
+  823F8CEC  81610054             lwz r11,0x54(r1)
+  823F8CF0  356BFFFF             subic. r11,r11,0x1
+  823F8CF4  91610054             stw r11,0x54(r1)
+  823F8CF8  4082FF18             bne 0x823f8c10
+  823F8CFC  83810124             lwz r28,0x124(r1)
+  823F8D00  8321012C             lwz r25,0x12c(r1)
+  823F8D04  83410058             lwz r26,0x58(r1)
 LAB_823f8d08:
   823F8D08  2B1C0000             cmplwi cr6,r28,0x0
   823F8D0C  419A0074             beq cr6,0x823f8d80
@@ -4497,11 +4528,222 @@ LAB_823fa1d8:
   823FA26C  3B200050             li r25,0x50
   823FA270  3B400060             li r26,0x60
   823FA274  3B600070             li r27,0x70
-  823FA278  13CA58C7             vcmpequd v30,v10,v11
+LAB_823fa278:
+  823FA278  13CA58C7             lvx128 v62,r10,r11
   823FA27C  7D46FA14             add r10,r6,r31
   823FA280  7E48FA14             add r18,r8,r31
-  823FA284  13E0F0C7             vcmpequd v31,v0,v30
+  823FA284  13E0F0C7             lvx128 v63,0,r30
   823FA288  7E27FA14             add r17,r7,r31
+  823FA28C  1BAEFA35             vcfpsxws128 v61,v63,0xe
+  823FA290  7E05FA14             add r16,r5,r31
+  823FA294  1B8EF235             vcfpsxws128 v60,v62,0xe
+  823FA298  7DE4FA14             add r15,r4,r31
+  823FA29C  7DC3FA14             add r14,r3,r31
+  823FA2A0  130A58C7             lvx128 v56,r10,r11
+  823FA2A4  137258C7             lvx128 v59,r18,r11
+  823FA2A8  1AAEC235             vcfpsxws128 v53,v56,0xe
+  823FA2AC  135158C7             lvx128 v58,r17,r11
+  823FA2B0  1B2EDA35             vcfpsxws128 v57,v59,0xe
+  823FA2B4  12D058C7             lvx128 v54,r16,r11
+  823FA2B8  1AEED235             vcfpsxws128 v55,v58,0xe
+  823FA2BC  128F58C7             lvx128 v52,r15,r11
+  823FA2C0  1A6EB235             vcfpsxws128 v51,v54,0xe
+  823FA2C4  124E58C7             lvx128 v50,r14,r11
+  823FA2C8  1A2EA235             vcfpsxws128 v49,v52,0xe
+  823FA2CC  1A0E9235             vcfpsxws128 v48,v50,0xe
+  823FA2D0  3BDE0080             addi r30,r30,0x80
+  823FA2D4  13A0F9C7             stvx128 v61,0,r31
+  823FA2D8  139FE1C7             stvx128 v60,r31,r28
+  823FA2DC  12BFC1C7             stvx128 v53,r31,r24
+  823FA2E0  133FB1C7             stvx128 v57,r31,r22
+  823FA2E4  12FFB9C7             stvx128 v55,r31,r23
+  823FA2E8  127FC9C7             stvx128 v51,r31,r25
+  823FA2EC  123FD1C7             stvx128 v49,r31,r26
+  823FA2F0  121FD9C7             stvx128 v48,r31,r27
+  823FA2F4  3BFF0080             addi r31,r31,0x80
+  823FA2F8  7D49FA14             add r10,r9,r31
+  823FA2FC  4200FF7C             bdnz 0x823fa278
+  823FA300  3D408206             lis r10,-0x7dfa
+  823FA304  3D608206             lis r11,-0x7dfa
+  823FA308  3B205300             li r25,0x5300
+  823FA30C  3B9D0A80             addi r28,r29,0xa80
+  823FA310  3F00FFE0             lis r24,-0x20
+  823FA314  3B6AD31C             subi r27,r10,0x2ce4
+  823FA318  3B4BD2E0             subi r26,r11,0x2d20
+LAB_823fa31c:
+  823FA31C  811C0000             lwz r8,0x0(r28)
+  823FA320  7F08C000             cmpw cr6,r8,r24
+  823FA324  4199001C             bgt cr6,0x823fa340
+  823FA328  7F47D378             or r7,r26,r26
+  823FA32C  7F66DB78             or r6,r27,r27
+  823FA330  7E83A378             or r3,r20,r20
+  823FA334  38A00000             li r5,0x0
+  823FA338  388008BE             li r4,0x8be
+  823FA33C  481DA1C5             bl 0x825d4500
+LAB_823fa340:
+  823FA340  3739FFFF             subic. r25,r25,0x1
+  823FA344  3B9C0004             addi r28,r28,0x4
+  823FA348  4082FFD4             bne 0x823fa31c
+  823FA34C  4BFFD30D             bl 0x823f7658
+  823FA350  3D750001             addis r11,r21,0x1
+  823FA354  82E10050             lwz r23,0x50(r1)
+  823FA358  396B4C00             addi r11,r11,0x4c00
+  823FA35C  7F1E5840             cmplw cr6,r30,r11
+  823FA360  419A0020             beq cr6,0x823fa380
+  823FA364  3D608206             lis r11,-0x7dfa
+  823FA368  7E83A378             or r3,r20,r20
+  823FA36C  7EE6BB78             or r6,r23,r23
+  823FA370  38EBD870             subi r7,r11,0x2790
+  823FA374  38A00000             li r5,0x0
+  823FA378  388008C3             li r4,0x8c3
+  823FA37C  481DA185             bl 0x825d4500
+LAB_823fa380:
+  823FA380  3D7D0001             addis r11,r29,0x1
+  823FA384  396B5680             addi r11,r11,0x5680
+  823FA388  7F1F5840             cmplw cr6,r31,r11
+  823FA38C  419A0020             beq cr6,0x823fa3ac
+  823FA390  3D608206             lis r11,-0x7dfa
+  823FA394  7EE6BB78             or r6,r23,r23
+  823FA398  38EBD820             subi r7,r11,0x27e0
+  823FA39C  7E83A378             or r3,r20,r20
+  823FA3A0  38A00000             li r5,0x0
+  823FA3A4  388008C4             li r4,0x8c4
+  823FA3A8  481DA159             bl 0x825d4500
+LAB_823fa3ac:
+  823FA3AC  484A7395             bl 0x828a1740
+  823FA3B0  38600000             li r3,0x0
+  823FA3B4  4BE66B65             bl 0x82260f18
+  823FA3B8  48395AA1             bl 0x8278fe58
+  823FA3BC  2F030000             cmpwi cr6,r3,0x0
+  823FA3C0  419A001C             beq cr6,0x823fa3dc
+  823FA3C4  7EE6BB78             or r6,r23,r23
+  823FA3C8  80E10058             lwz r7,0x58(r1)
+  823FA3CC  7E83A378             or r3,r20,r20
+  823FA3D0  38A00000             li r5,0x0
+  823FA3D4  388008C9             li r4,0x8c9
+  823FA3D8  481DA129             bl 0x825d4500
+LAB_823fa3dc:
+  823FA3DC  3D60000B             lis r11,0xb
+  823FA3E0  92A10080             stw r21,0x80(r1)
+  823FA3E4  3D4082C4             lis r10,-0x7d3c
+  823FA3E8  93A10084             stw r29,0x84(r1)
+  823FA3EC  3D2082C4             lis r9,-0x7d3c
+  823FA3F0  6168B118             ori r8,r11,0xb118
+  823FA3F4  38610080             addi r3,r1,0x80
+  823FA3F8  80EA5B80             lwz r7,0x5b80(r10)
+  823FA3FC  80C95B98             lwz r6,0x5b98(r9)
+  823FA400  7D75402E             lwzx r11,r21,r8
+  823FA404  90E1008C             stw r7,0x8c(r1)
+  823FA408  90C10090             stw r6,0x90(r1)
+  823FA40C  91610088             stw r11,0x88(r1)
+  823FA410  48006169             bl 0x82400578
+  823FA414  3CA08206             lis r5,-0x7dfa
+  823FA418  3860FFFF             li r3,-0x1
+  823FA41C  3885D810             subi r4,r5,0x27f0
+  823FA420  484A71B9             bl 0x828a15d8
+  823FA424  3C800001             lis r4,0x1
+  823FA428  83010054             lwz r24,0x54(r1)
+  823FA42C  3B800000             li r28,0x0
+  823FA430  6083FC80             ori r3,r4,0xfc80
+  823FA434  3BC00000             li r30,0x0
+  823FA438  7D5D182E             lwzx r10,r29,r3
+  823FA43C  2B0A0000             cmplwi cr6,r10,0x0
+  823FA440  419A0098             beq cr6,0x823fa4d8
+  823FA444  3D7D0001             addis r11,r29,0x1
+  823FA448  3D208299             lis r9,-0x7d67
+  823FA44C  3BEB5680             addi r31,r11,0x5680
+  823FA450  3D608206             lis r11,-0x7dfa
+  823FA454  3B492400             addi r26,r9,0x2400
+  823FA458  3B2BD7D0             subi r25,r11,0x2830
+LAB_823fa45c:
+  823FA45C  A13F0000             lhz r9,0x0(r31)
+  823FA460  3D750006             addis r11,r21,0x6
+  823FA464  5528E8FA             rlwinm r8,r9,0x1d,0x3,0x1d
+  823FA468  5527167A             rlwinm r7,r9,0x2,0x19,0x1d
+  823FA46C  38CB6F80             addi r6,r11,0x6f80
+  823FA470  7D3B4B78             or r27,r9,r9
+  823FA474  7CA7D02E             lwzx r5,r7,r26
+  823FA478  7C88302E             lwzx r4,r8,r6
+  823FA47C  7C832838             and r3,r4,r5
+  823FA480  2B030000             cmplwi cr6,r3,0x0
+  823FA484  419A0028             beq cr6,0x823fa4ac
+  823FA488  7F27CB78             or r7,r25,r25
+  823FA48C  7EE6BB78             or r6,r23,r23
+  823FA490  7E83A378             or r3,r20,r20
+  823FA494  38A00000             li r5,0x0
+  823FA498  388008E5             li r4,0x8e5
+  823FA49C  481DA065             bl 0x825d4500
+  823FA4A0  3D600001             lis r11,0x1
+  823FA4A4  616AFC80             ori r10,r11,0xfc80
+  823FA4A8  7D5D502E             lwzx r10,r29,r10
+LAB_823fa4ac:
+  823FA4AC  576B103A             rlwinm r11,r27,0x2,0x0,0x1d
+  823FA4B0  393D0A80             addi r9,r29,0xa80
+  823FA4B4  7D0B482E             lwzx r8,r11,r9
+  823FA4B8  2F084000             cmpwi cr6,r8,0x4000
+  823FA4BC  4098001C             bge cr6,0x823fa4d8
+  823FA4C0  7D6BC02E             lwzx r11,r11,r24
+  823FA4C4  3BDE0001             addi r30,r30,0x1
+  823FA4C8  3BFF0002             addi r31,r31,0x2
+  823FA4CC  7F1E5040             cmplw cr6,r30,r10
+  823FA4D0  7F8BE214             add r28,r11,r28
+  823FA4D4  4198FF88             blt cr6,0x823fa45c
+LAB_823fa4d8:
+  823FA4D8  9393007C             stw r28,0x7c(r19)
+  823FA4DC  484A7265             bl 0x828a1740
+  823FA4E0  4BFFF6A1             bl 0x823f9b80
+  823FA4E4  7C2004AC             sync 0x1
+  823FA4E8  8161005C             lwz r11,0x5c(r1)
+  823FA4EC  7D685B78             or r8,r11,r11
+LAB_823fa4f0:
+  823FA4F0  7D2000A6             mfmsr r9
+  823FA4F4  7DA10164             mtmsrd r13,1
+  823FA4F8  7D404028             lwarx r10,0,r8
+  823FA4FC  394AFFFF             subi r10,r10,0x1
+  823FA500  7D40412D             stwcx. r10,0,r8
+  823FA504  7D210164             mtmsrd r9,1
+  823FA508  4082FFE8             bne 0x823fa4f0
+  823FA50C  80EB0000             lwz r7,0x0(r11)
+  823FA510  2F070000             cmpwi cr6,r7,0x0
+  823FA514  40980020             bge cr6,0x823fa534
+  823FA518  7E83A378             or r3,r20,r20
+  823FA51C  80E10060             lwz r7,0x60(r1)
+  823FA520  38A00000             li r5,0x0
+  823FA524  810B0000             lwz r8,0x0(r11)
+  823FA528  388008F6             li r4,0x8f6
+  823FA52C  80C10064             lwz r6,0x64(r1)
+  823FA530  481D9FD1             bl 0x825d4500
+LAB_823fa534:
+  823FA534  484A720D             bl 0x828a1740
+  823FA538  80F8D2C0             lwz r7,-0x2d40(r24)
+  823FA53C  81730064             lwz r11,0x64(r19)
+  823FA540  7F075840             cmplw cr6,r7,r11
+  823FA544  419A0020             beq cr6,0x823fa564
+  823FA548  7E83A378             or r3,r20,r20
+  823FA54C  80C10068             lwz r6,0x68(r1)
+  823FA550  7D685B78             or r8,r11,r11
+  823FA554  38A00000             li r5,0x0
+  823FA558  388008FF             li r4,0x8ff
+  823FA55C  481D9FA5             bl 0x825d4500
+  823FA560  81730064             lwz r11,0x64(r19)
+LAB_823fa564:
+  823FA564  80F3005C             lwz r7,0x5c(r19)
+  823FA568  7F0B3840             cmplw cr6,r11,r7
+  823FA56C  419A0024             beq cr6,0x823fa590
+  823FA570  7CE83B78             or r8,r7,r7
+  823FA574  80C1006C             lwz r6,0x6c(r1)
+  823FA578  7E83A378             or r3,r20,r20
+  823FA57C  7D675B78             or r7,r11,r11
+  823FA580  38A00000             li r5,0x0
+  823FA584  38800900             li r4,0x900
+  823FA588  481D9F79             bl 0x825d4500
+  823FA58C  80F3005C             lwz r7,0x5c(r19)
+LAB_823fa590:
+  823FA590  81130004             lwz r8,0x4(r19)
+  823FA594  7F074040             cmplw cr6,r7,r8
+  823FA598  419A0018             beq cr6,0x823fa5b0
+  823FA59C  80C10070             lwz r6,0x70(r1)
+  823FA5A0  38800901             li r4,0x901
 LAB_823fa5a4:
   823FA5A4  38A00000             li r5,0x0
   823FA5A8  7E83A378             or r3,r20,r20
@@ -4939,7 +5181,7 @@ LAB_823fab20:
   823FAB20  382100A0             addi r1,r1,0xa0
   823FAB24  4851BBD0             b 0x829166f4
 
-; 823FF3A0  std::_Push_heap<unsigned_short_*,int,unsigned_short,int_(__cdecl*)(unsigned_int,unsigned_int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2455)
+; 823FF3A0  _Push_heap<unsigned_short_*,int,unsigned_short,int_(__cdecl*)(unsigned_int,unsigned_int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2455)
   823FF3A0  7D8802A6             mfspr r12,LR
   823FF3A4  48517309             bl 0x829166ac
   823FF3A8  9421FF70             stwu r1,-0x90(r1)
@@ -4977,7 +5219,7 @@ LAB_823ff414:
   823FF420  38210090             addi r1,r1,0x90
   823FF424  485172D8             b 0x829166fc
 
-; 823FF428  std::_Push_heap<XAssetHeader_*,int,XAssetHeader,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2455)
+; 823FF428  _Push_heap<XAssetHeader_*,int,XAssetHeader,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2455)
   823FF428  7D8802A6             mfspr r12,LR
   823FF42C  48517281             bl 0x829166ac
   823FF430  9421FF70             stwu r1,-0x90(r1)
@@ -5266,7 +5508,7 @@ LAB_823fae90:
   823FAEA0  382100E0             addi r1,r1,0xe0
   823FAEA4  4851B830             b 0x829166d4
 
-; 823FF4B8  std::_Adjust_heap<unsigned_short_*,int,unsigned_short,int_(__cdecl*)(unsigned_int,unsigned_int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2565)
+; 823FF4B8  _Adjust_heap<unsigned_short_*,int,unsigned_short,int_(__cdecl*)(unsigned_int,unsigned_int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2565)
   823FF4B8  7D8802A6             mfspr r12,LR
   823FF4BC  485171F1             bl 0x829166ac
   823FF4C0  9421FF70             stwu r1,-0x90(r1)
@@ -5339,7 +5581,7 @@ LAB_823ff5a8:
   823FF5B4  38210090             addi r1,r1,0x90
   823FF5B8  48517144             b 0x829166fc
 
-; 823FF5C0  std::_Adjust_heap<XAssetHeader_*,int,XAssetHeader,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2565)
+; 823FF5C0  _Adjust_heap<XAssetHeader_*,int,XAssetHeader,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2565)
   823FF5C0  7D8802A6             mfspr r12,LR
   823FF5C4  485170E9             bl 0x829166ac
   823FF5C8  9421FF70             stwu r1,-0x90(r1)
@@ -5576,7 +5818,7 @@ LAB_823fb0e4:
   823FB0E4  382100D0             addi r1,r1,0xd0
   823FB0E8  4851B5F4             b 0x829166dc
 
-; 823FF6D0  std::_Make_heap<unsigned_short_*,int,unsigned_short,int_(__cdecl*)(unsigned_int,unsigned_int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2658)
+; 823FF6D0  _Make_heap<unsigned_short_*,int,unsigned_short,int_(__cdecl*)(unsigned_int,unsigned_int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2658)
   823FF6D0  7D8802A6             mfspr r12,LR
   823FF6D4  48516FD5             bl 0x829166a8
   823FF6D8  9421FF60             stwu r1,-0xa0(r1)
@@ -5640,7 +5882,7 @@ LAB_823ff7a8:
   823FF7A8  382100A0             addi r1,r1,0xa0
   823FF7AC  48516F4C             b 0x829166f8
 
-; 823FF888  std::_Make_heap<XAssetHeader_*,int,XAssetHeader,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2658)
+; 823FF888  _Make_heap<XAssetHeader_*,int,XAssetHeader,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2658)
   823FF888  7D8802A6             mfspr r12,LR
   823FF88C  48516E1D             bl 0x829166a8
   823FF890  9421FF60             stwu r1,-0xa0(r1)
@@ -6433,7 +6675,7 @@ LAB_823fbb00:
   823FBB54  CBE1FF90             lfd f31,-0x70(r1)
   823FBB58  4851AB90             b 0x829166e8
 
-; 824001C0  std::_Sort_heap<unsigned_short_*,int_(__cdecl*)(unsigned_int,unsigned_int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2700)
+; 824001C0  _Sort_heap<unsigned_short_*,int_(__cdecl*)(unsigned_int,unsigned_int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2700)
   824001C0  7D8802A6             mfspr r12,LR
   824001C4  485164F5             bl 0x829166b8
   824001C8  9421FF80             stwu r1,-0x80(r1)
@@ -6464,7 +6706,7 @@ LAB_82400224:
   82400224  38210080             addi r1,r1,0x80
   82400228  485164E0             b 0x82916708
 
-; 82400230  std::_Sort_heap<XAssetHeader_*,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2700)
+; 82400230  _Sort_heap<XAssetHeader_*,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2700)
   82400230  7D8802A6             mfspr r12,LR
   82400234  48516485             bl 0x829166b8
   82400238  9421FF80             stwu r1,-0x80(r1)
@@ -8423,7 +8665,7 @@ LAB_823ff068:
   823FF06C  382100F0             addi r1,r1,0xf0
   823FF070  48517660             b 0x829166d0
 
-; 823FF7B0  std::_Insertion_sort1<unsigned_short_*,int_(__cdecl*)(unsigned_int,unsigned_int),unsigned_short>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3650)
+; 823FF7B0  _Insertion_sort1<unsigned_short_*,int_(__cdecl*)(unsigned_int,unsigned_int),unsigned_short>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3650)
   823FF7B0  7D8802A6             mfspr r12,LR
   823FF7B4  48516EF1             bl 0x829166a4
   823FF7B8  9421FF60             stwu r1,-0xa0(r1)
@@ -8484,7 +8726,7 @@ LAB_823ff87c:
   823FF87C  382100A0             addi r1,r1,0xa0
   823FF880  48516E74             b 0x829166f4
 
-; 823FFC08  std::_Insertion_sort1<XAssetHeader_*,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&),XAssetHeader>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3650)
+; 823FFC08  _Insertion_sort1<XAssetHeader_*,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&),XAssetHeader>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3650)
   823FFC08  7D8802A6             mfspr r12,LR
   823FFC0C  48516AA1             bl 0x829166ac
   823FFC10  9421FF60             stwu r1,-0xa0(r1)
@@ -8553,7 +8795,7 @@ LAB_823ffcec:
   823FFCEC  382100A0             addi r1,r1,0xa0
   823FFCF0  48516A0C             b 0x829166fc
 
-; 823FF970  std::_Med3<unsigned_short_*,int_(__cdecl*)(unsigned_int,unsigned_int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3683)
+; 823FF970  _Med3<unsigned_short_*,int_(__cdecl*)(unsigned_int,unsigned_int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3683)
   823FF970  7D8802A6             mfspr r12,LR
   823FF974  48516D45             bl 0x829166b8
   823FF978  9421FF80             stwu r1,-0x80(r1)
@@ -8597,7 +8839,7 @@ LAB_823ffa04:
   823FFA04  38210080             addi r1,r1,0x80
   823FFA08  48516D00             b 0x82916708
 
-; 823FFA10  std::_Med3<XAssetHeader_*,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3683)
+; 823FFA10  _Med3<XAssetHeader_*,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3683)
   823FFA10  7D8802A6             mfspr r12,LR
   823FFA14  48516CA5             bl 0x829166b8
   823FFA18  9421FF80             stwu r1,-0x80(r1)
@@ -8644,7 +8886,7 @@ LAB_823ffab0:
   823FFAB0  38210080             addi r1,r1,0x80
   823FFAB4  48516C54             b 0x82916708
 
-; 823FFAB8  std::_Median<unsigned_short_*,int_(__cdecl*)(unsigned_int,unsigned_int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3695)
+; 823FFAB8  _Median<unsigned_short_*,int_(__cdecl*)(unsigned_int,unsigned_int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3695)
   823FFAB8  7D8802A6             mfspr r12,LR
   823FFABC  48516BF5             bl 0x829166b0
   823FFAC0  9421FF70             stwu r1,-0x90(r1)
@@ -8689,7 +8931,7 @@ LAB_823ffb4c:
   823FFB58  38210090             addi r1,r1,0x90
   823FFB5C  48516BA4             b 0x82916700
 
-; 823FFB60  std::_Median<XAssetHeader_*,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3695)
+; 823FFB60  _Median<XAssetHeader_*,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3695)
   823FFB60  7D8802A6             mfspr r12,LR
   823FFB64  48516B4D             bl 0x829166b0
   823FFB68  9421FF70             stwu r1,-0x90(r1)
@@ -8734,7 +8976,7 @@ LAB_823ffbf4:
   823FFC00  38210090             addi r1,r1,0x90
   823FFC04  48516AFC             b 0x82916700
 
-; 823FFCF8  std::_Unguarded_partition<unsigned_short_*,int_(__cdecl*)(unsigned_int,unsigned_int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3712)
+; 823FFCF8  _Unguarded_partition<unsigned_short_*,int_(__cdecl*)(unsigned_int,unsigned_int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3712)
   823FFCF8  7D8802A6             mfspr r12,LR
   823FFCFC  485169A9             bl 0x829166a4
   823FFD00  9421FF60             stwu r1,-0xa0(r1)
@@ -8900,7 +9142,7 @@ LAB_823fff30:
   823FFF3C  382100A0             addi r1,r1,0xa0
   823FFF40  485167B4             b 0x829166f4
 
-; 823FFF48  std::_Unguarded_partition<XAssetHeader_*,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3712)
+; 823FFF48  _Unguarded_partition<XAssetHeader_*,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3712)
   823FFF48  7D8802A6             mfspr r12,LR
   823FFF4C  48516759             bl 0x829166a4
   823FFF50  9421FF60             stwu r1,-0xa0(r1)
@@ -9271,7 +9513,7 @@ LAB_823fc93c:
   823FC954  EBE1FFF0             ld r31,-0x10(r1)
   823FC958  4E800020             blr
 
-; 824002A0  std::_Sort<unsigned_short_*,int,int_(__cdecl*)(unsigned_int,unsigned_int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3771)
+; 824002A0  _Sort<unsigned_short_*,int,int_(__cdecl*)(unsigned_int,unsigned_int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3771)
   824002A0  7D8802A6             mfspr r12,LR
   824002A4  4851640D             bl 0x829166b0
   824002A8  9421FF70             stwu r1,-0x90(r1)
@@ -9351,7 +9593,7 @@ LAB_824003a4:
   824003B4  38210090             addi r1,r1,0x90
   824003B8  48516348             b 0x82916700
 
-; 824003C0  std::_Sort<XAssetHeader_*,int,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3771)
+; 824003C0  _Sort<XAssetHeader_*,int,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3771)
   824003C0  7D8802A6             mfspr r12,LR
   824003C4  485162ED             bl 0x829166b0
   824003C8  9421FF70             stwu r1,-0x90(r1)

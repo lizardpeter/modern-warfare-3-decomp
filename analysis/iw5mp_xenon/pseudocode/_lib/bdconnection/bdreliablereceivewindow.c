@@ -8,7 +8,8 @@ void __unwind_72367(void)
   int in_r12;
   
   _eh_vector_destructor_iterator_
-            ((ulonglong)*(uint *)(in_r12 + 0x14) + 0xc,4,0x80,0xffffffff82930ab8);
+            ((void *)(*(int *)(in_r12 + 0x14) + 0xc),4,0x80,
+             bdReference<bdDataChunk>::~bdReference<bdDataChunk>);
   return;
 }
 
@@ -22,7 +23,8 @@ void __unwind_72417(void)
   
   if ((*(uint *)(in_r12 + -0x38) & 1) != 0) {
     *(uint *)(in_r12 + -0x38) = *(uint *)(in_r12 + -0x38) & 0xfffffffe;
-    bdReference<bdDataChunk>___bdReference<bdDataChunk>(*(undefined4 *)(in_r12 + 0x14));
+    bdReference<bdDataChunk>::~bdReference<bdDataChunk>
+              (*(bdReference<bdDataChunk> **)(in_r12 + 0x14));
   }
   return;
 }
@@ -35,7 +37,7 @@ void __unwind_72488(void)
 {
   int in_r12;
   
-  bdSAckChunk__operator_delete(*(undefined4 *)(in_r12 + -0x98));
+  bdMemory::__3bdSAckChunk__SAXPAX_Z(*(void **)(in_r12 + -0x98));
   return;
 }
 
@@ -47,7 +49,8 @@ void __unwind_72559(void)
 {
   int in_r12;
   
-  bdReference<bdDataChunk>___bdReference<bdDataChunk>(*(undefined4 *)(in_r12 + 0x1c));
+  bdReference<bdDataChunk>::~bdReference<bdDataChunk>(*(bdReference<bdDataChunk> **)(in_r12 + 0x1c))
+  ;
   return;
 }
 

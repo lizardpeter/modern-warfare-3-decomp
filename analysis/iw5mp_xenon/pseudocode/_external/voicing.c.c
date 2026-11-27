@@ -2,28 +2,29 @@
 
 // 828C9748  ScaleAndCompress  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/voicing.c:160)
 
-void ScaleAndCompress(double param_1,float *param_2,longlong param_3,undefined8 param_4,
-                     float *param_5)
+void ScaleAndCompress(float *param_1,int param_2,float param_3,float *param_4)
 
 {
   float fVar1;
   float fVar2;
   float fVar3;
+  float *in_r6;
+  longlong lVar4;
   
-  fVar1 = (float)((double)*param_2 * param_1);
+  fVar1 = *param_1 * param_3;
   fVar3 = 1.0;
   for (fVar2 = fVar1 + 1e-07; fVar2 < 0.1; fVar2 = fVar2 * 10.0) {
     fVar3 = fVar3 * 0.56234133;
   }
-  param_3 = param_3 + -1;
-  *param_5 = (-(fVar2 * 0.48015624 - 1.0000972) * fVar2 + 0.46449155) * fVar3;
-  if (0 < param_3) {
+  lVar4 = (longlong)param_2 + -1;
+  *in_r6 = (-(fVar2 * 0.48015624 - 1.0000972) * fVar2 + 0.46449155) * fVar3;
+  if (0 < lVar4) {
     do {
-      param_2 = param_2 + 1;
-      param_3 = param_3 + -1;
-      fVar2 = (float)((double)*param_2 * param_1);
+      param_1 = param_1 + 1;
+      lVar4 = lVar4 + -1;
+      fVar2 = *param_1 * param_3;
       if (fVar2 == fVar1) {
-        fVar1 = *param_5;
+        fVar1 = *in_r6;
       }
       else {
         fVar1 = 1.0;
@@ -32,10 +33,10 @@ void ScaleAndCompress(double param_1,float *param_2,longlong param_3,undefined8 
         }
         fVar1 = (-(fVar3 * 0.48015624 - 1.0000972) * fVar3 + 0.46449155) * fVar1;
       }
-      param_5 = param_5 + 1;
-      *param_5 = fVar1;
+      in_r6 = in_r6 + 1;
+      *in_r6 = fVar1;
       fVar1 = fVar2;
-    } while (0 < (int)param_3);
+    } while (0 < (int)lVar4);
     return;
   }
   return;
@@ -44,31 +45,29 @@ void ScaleAndCompress(double param_1,float *param_2,longlong param_3,undefined8 
 
 // 828C9830  ModifyPv  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/voicing.c:295)
 
-double ModifyPv(double param_1,double param_2,double param_3,double param_4,double param_5)
+float ModifyPv(float param_1,float param_2,float param_3,float param_4,float param_5)
 
 {
-  double dVar1;
+  float fVar1;
   
-  if (param_1 <= 0.009999999776482582) {
+  if (param_1 <= 0.01) {
     param_2 = 0.0;
   }
-  if (0.44999998807907104 <= param_1) {
-    dVar1 = (double)(float)(param_1 - 0.44999998807907104);
-    if ((float)((double)(float)(param_4 * 0.5) * dVar1) < 1.0) {
-      dVar1 = (double)(float)(dVar1 + 0.0714285746216774);
+  if (0.45 <= param_1) {
+    fVar1 = param_1 - 0.45;
+    if (param_4 * 0.5 * fVar1 < 1.0) {
+      fVar1 = fVar1 + 0.071428575;
     }
-    if (param_2 < dVar1) {
-      param_2 = dVar1;
+    if (param_2 < fVar1) {
+      param_2 = fVar1;
     }
   }
-  if ((param_2 < param_3) && (0.0714285746216774 <= param_3)) {
-    if ((param_4 < (double)(float)(param_5 * 1.25)) &&
-       ((double)(float)(param_5 * 0.800000011920929) < param_4)) {
-      param_2 = (double)(float)(param_2 * 0.699999988079071 +
-                               (double)(float)(param_3 * 0.30000001192092896));
+  if ((param_2 < param_3) && (0.071428575 <= param_3)) {
+    if ((param_4 < param_5 * 1.25) && (param_5 * 0.8 < param_4)) {
+      param_2 = param_2 * (float)0x3f333333 + param_3 * 0.3;
     }
-    if (param_2 < 0.0714285746216774) {
-      param_2 = (double)(float)(param_2 + 0.0714285746216774);
+    if (param_2 < 0.071428575) {
+      param_2 = param_2 + 0.071428575;
     }
   }
   return param_2;
@@ -77,119 +76,127 @@ double ModifyPv(double param_1,double param_2,double param_3,double param_4,doub
 
 // 828C9900  NellySTCVoicing  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/voicing.c:373)
 
-void NellySTCVoicing(undefined8 param_1,undefined8 param_2,float *param_3,float *param_4,
-                    longlong param_5,undefined8 param_6,int param_7)
+void NellySTCVoicing(float *param_1,float *param_2,float *param_3,float *param_4,float *param_5,
+                    float *param_6,int param_7,int param_8)
 
 {
   float fVar1;
-  float *pfVar2;
+  float fVar2;
+  float *pfVar3;
   float *pfVar4;
-  undefined8 uVar3;
-  int iVar5;
-  longlong lVar6;
-  int iVar7;
-  double dVar8;
-  double dVar9;
+  float *pfVar5;
+  float *pfVar6;
+  int iVar8;
+  longlong lVar7;
+  float fVar9;
   double dVar10;
   double dVar11;
   double dVar12;
   double dVar13;
+  double dVar14;
+  double dVar15;
   float local_7c0;
-  int local_7bc;
+  float local_7bc;
   longlong local_7b8;
   float local_7b0;
   float local_7ac;
   float local_7a8;
-  undefined4 local_7a4;
+  float *local_7a4;
   longlong local_7a0;
-  undefined1 auStack_790 [400];
-  undefined1 auStack_600 [400];
+  int aiStack_790 [100];
+  float afStack_600 [100];
   float afStack_470 [284];
   
-  __savegprlr_23();
-  pfVar4 = (float *)__savefpr_28();
-  dVar13 = (double)*param_3;
-  fVar1 = (float)(dVar13 * 0.16796875);
-  dVar11 = 1.0;
+  lVar7 = (longlong)(int)param_5;
+  __savegprlr_23(param_1);
+  pfVar3 = (float *)__savefpr_28();
+  pfVar6 = (float *)lVar7;
+  dVar15 = (double)*param_3;
+  fVar1 = (float)(dVar15 * 0.16796875);
+  dVar13 = 1.0;
   if (fVar1 < 0.0) {
     fVar1 = fVar1 - 1.0;
   }
-  iVar5 = (int)fVar1;
-  if (iVar5 < 5) {
-    iVar5 = 5;
+  iVar8 = (int)fVar1;
+  if (iVar8 < 5) {
+    iVar8 = 5;
   }
-  dVar8 = (double)(((float)(longlong)iVar5 + 0.125) * (float)(512.0 / dVar13));
-  if (160.0 < dVar8) {
-    dVar8 = 160.0;
+  dVar10 = (double)(((float)(longlong)iVar8 + 0.125) * (float)(512.0 / dVar15));
+  if (160.0 < dVar10) {
+    dVar10 = 160.0;
   }
-  local_7bc = 0;
-  dVar12 = 0.5;
-  local_7b8 = (longlong)(int)(dVar8 + 0.5);
-  lVar6 = (ulonglong)(uint)(int)(dVar8 + 0.5) + 1;
+  local_7bc = 0.0;
+  dVar14 = 0.5;
+  local_7b8 = (longlong)(int)(dVar10 + 0.5);
+  iVar8 = (int)(dVar10 + 0.5) + 1;
   if (0 < param_7) {
     do {
-      if (dVar8 < (double)*(float *)(local_7bc * 4 + (int)param_6)) break;
-      local_7bc = local_7bc + 1;
-    } while (local_7bc < param_7);
+      if (dVar10 < (double)param_6[(int)local_7bc]) break;
+      local_7bc = (float)((int)local_7bc + 1);
+    } while ((int)local_7bc < param_7);
   }
-  iVar5 = local_7bc;
-  if (local_7bc < 1) {
-    dVar13 = 0.0;
+  fVar1 = local_7bc;
+  if ((int)local_7bc < 1) {
+    dVar15 = 0.0;
     local_7a8 = 0.0;
-    dVar8 = dVar13;
+    dVar10 = dVar15;
     local_7ac = *param_3;
   }
   else {
-    FindMaxValueFlt(param_5,local_7bc,&local_7bc,&local_7b0);
-    FindMaxValueFlt(param_2,lVar6,&local_7bc,&local_7c0);
-    dVar9 = (double)local_7b0;
+    FindMaxValueFlt(pfVar6,(int)local_7bc,(int *)&local_7bc,&local_7b0);
+    pfVar4 = &local_7bc;
+    FindMaxValueFlt(param_2,iVar8,(int *)pfVar4,&local_7c0);
+    dVar12 = (double)local_7b0;
     if ((double)local_7b0 <= (double)local_7c0) {
       local_7b0 = local_7c0;
-      dVar9 = (double)local_7c0;
+      dVar12 = (double)local_7c0;
     }
-    dVar8 = 0.0;
-    dVar10 = dVar11;
-    if (dVar9 != 0.0) {
-      dVar10 = (double)(float)(dVar11 / dVar9);
+    dVar10 = 0.0;
+    dVar11 = dVar13;
+    if (dVar12 != 0.0) {
+      dVar11 = (double)(float)(dVar13 / dVar12);
     }
-    ScaleAndCompress(dVar10,param_5,iVar5);
-    ScaleAndCompress(param_2,lVar6);
-    if (0 < iVar5) {
-      lVar6 = param_5;
-      iVar7 = iVar5;
+    dVar12 = (double)(float)dVar11;
+    ScaleAndCompress(pfVar6,(int)fVar1,(float)dVar11,pfVar4);
+    pfVar5 = afStack_470;
+    ScaleAndCompress(param_2,iVar8,(float)dVar12,pfVar4);
+    if (0 < (int)fVar1) {
+      fVar9 = fVar1;
       do {
-        pfVar2 = (float *)lVar6;
-        local_7c0 = *(float *)(((int)param_6 - (int)param_5) + (int)pfVar2);
-        fVar1 = *pfVar2;
-        local_7a0 = (longlong)(int)((double)local_7c0 + dVar12);
-        if (fVar1 < afStack_470[(int)((double)local_7c0 + dVar12)]) {
-          local_7c0 = fVar1 / afStack_470[(int)((double)local_7c0 + dVar12)];
+        pfVar4 = (float *)lVar7;
+        local_7c0 = *(float *)(((int)param_6 - (int)pfVar6) + (int)pfVar4);
+        fVar2 = *pfVar4;
+        local_7a0 = (longlong)(int)((double)local_7c0 + dVar14);
+        if (fVar2 < afStack_470[(int)((double)local_7c0 + dVar14)]) {
+          local_7c0 = fVar2 / afStack_470[(int)((double)local_7c0 + dVar14)];
           local_7c0 = local_7c0 * local_7c0;
-          *pfVar2 = local_7c0 * local_7c0 * fVar1;
+          *pfVar4 = local_7c0 * local_7c0 * fVar2;
         }
-        lVar6 = lVar6 + 4;
-        iVar7 = iVar7 + -1;
-      } while (iVar7 != 0);
+        lVar7 = lVar7 + 4;
+        fVar9 = (float)((int)fVar9 + -1);
+      } while (fVar9 != 0.0);
     }
-    uVar3 = NellySquareLawPeaks(0x404b333340000000,param_5,param_6,iVar5);
-    NellyRefineC0(dVar13,uVar3,auStack_600,auStack_790,local_7a4,&local_7b8,&local_7ac,&local_7a8);
-    dVar13 = (double)local_7a8;
+    NellySquareLawPeaks(pfVar6,param_6,(int)fVar1,54.4,pfVar5,afStack_600,aiStack_790,
+                        (int)&local_7a4);
+    NellyRefineC0((float)dVar15,pfVar6,afStack_600,(int)aiStack_790,local_7a4,(float *)&local_7b8,
+                  &local_7ac);
+    dVar15 = (double)local_7a8;
   }
-  dVar12 = -(double)(float)((double)*pfVar4 * dVar12 - 4.5);
-  if (dVar13 <= dVar8) {
-    dVar13 = 9.999999974752427e-07;
+  dVar14 = -(double)(float)((double)*pfVar3 * dVar14 - 4.5);
+  if (dVar15 <= dVar10) {
+    dVar15 = 9.999999974752427e-07;
   }
-  if (dVar11 <= dVar13) {
-    dVar13 = 0.9999989867210388;
+  if (dVar13 <= dVar15) {
+    dVar15 = 0.9999989867210388;
   }
-  dVar13 = log10((double)(float)(dVar11 - dVar13));
-  dVar13 = (double)((float)dVar13 * -10.0);
-  if ((dVar12 <= dVar13) && (dVar8 = dVar11, dVar13 <= 13.0)) {
-    dVar8 = (double)((float)(dVar13 - dVar12) / (float)(13.0 - dVar12));
+  dVar15 = log10((double)(float)(dVar13 - dVar15));
+  dVar15 = (double)((float)dVar15 * -10.0);
+  if ((dVar14 <= dVar15) && (dVar10 = dVar13, dVar15 <= 13.0)) {
+    dVar10 = (double)((float)(dVar15 - dVar14) / (float)(13.0 - dVar14));
   }
-  *pfVar4 = (float)dVar8;
+  *pfVar3 = (float)dVar10;
   *param_3 = local_7ac;
-  *param_4 = (float)dVar8;
+  *param_4 = (float)dVar10;
   __restfpr_28();
   __restgprlr_23();
   return;

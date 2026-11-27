@@ -2,23 +2,26 @@
 
 // 82702BF8  FriendsMenu_ShowErrorMessage  (social/social_friends.cpp:48)
 
-void FriendsMenu_ShowErrorMessage(ulonglong param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void FriendsMenu_ShowErrorMessage(char *param_1)
 
 {
-  char cVar1;
+  bool bVar1;
   
-  if ((param_1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821b2e60,0x31,0,0xffffffff82000f98,0xffffffff8201805c);
+  if (param_1 == (char *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_friends.cpp",
+                    0x31,0,"%s");
   }
   Com_SetErrorMessage(param_1);
-  cVar1 = CL_AllLocalClientsDisconnected();
-  if (cVar1 == '\0') {
-    Dvar_SetBool(DAT_83667390,0);
+  bVar1 = CL_AllLocalClientsDisconnected();
+  if (!bVar1) {
+    Dvar_SetBool(ui_errorRemoveKeyCatcher,false);
   }
-  UI_OpenMenu(0,0xffffffff82036918);
-  cVar1 = Key_IsCatcherActive(0,0x10);
-  if (cVar1 == '\0') {
-    Key_AddCatcher(0,0x10);
+  UI_OpenMenu(LOCAL_CLIENT_0,"error_popmenu_party");
+  bVar1 = Key_IsCatcherActive(LOCAL_CLIENT_0,0x10);
+  if (!bVar1) {
+    Key_AddCatcher(LOCAL_CLIENT_0,0x10);
   }
   return;
 }
@@ -26,7 +29,7 @@ void FriendsMenu_ShowErrorMessage(ulonglong param_1)
 
 // 82702CA8  FriendsMenu_GetFriendId  (social/social_friends.cpp:63)
 
-undefined8 FriendsMenu_GetFriendId(int param_1,int param_2)
+ulong64 FriendsMenu_GetFriendId(int param_1,int param_2)
 
 {
   bool bVar1;
@@ -35,44 +38,87 @@ undefined8 FriendsMenu_GetFriendId(int param_1,int param_2)
     bVar1 = false;
   }
   if (!bVar1) {
-    MyAssertHandler(0xffffffff821b2e60,0x40,0,0xffffffff82000f98,0xffffffff821b2ea4);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_friends.cpp",
+                    0x40,0,"%s");
   }
-  return *(undefined8 *)(&DAT_84546e68 + (param_1 * 0xce + param_2) * 8);
+  return g_friendListGlobal[param_1].friends[param_2];
 }
 
 
 // 82702D40  Friends_Init  (social/social_friends.cpp:71)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Friends_Init(void)
 
 {
-  void *pvVar1;
-  
-  pvVar1 = memset(&DAT_84546e40,0,0x19c0);
-  Friends_Init_Platform(pvVar1);
+  memset();
+  Friends_Init_Platform();
+  return;
+}
+
+
+// 82702D78  Friends_Shutdown  (social/social_friends.cpp:79)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void Friends_Shutdown(void)
+
+{
+  TaskManager_DestructTaskSet(&tasks);
   return;
 }
 
 
 // 82702D80  Friends_Reset  (social/social_friends.cpp:85)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Friends_Reset(void)
 
 {
-  void *pvVar1;
-  
-  pvVar1 = memset(&DAT_84546e40,0,0x19c0);
-  Friends_Reset_Platform(pvVar1);
+  memset();
+  Friends_Reset_Platform();
+  return;
+}
+
+
+// 82702DB8  Friends_ResetUser  (social/social_friends.cpp:93)
+
+void Friends_ResetUser(int param_1)
+
+{
+  if (3 < (uint)param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_friends.cpp",0x13d
+                    ,0,"localControllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
+  }
+  memset();
+  memset();
   return;
 }
 
 
 // 82702DC0  Friends_GetNumFriends  (social/social_friends.cpp:99)
 
-undefined4 Friends_GetNumFriends(int param_1)
+uint Friends_GetNumFriends(int param_1)
 
 {
-  return *(undefined4 *)(&DAT_84546e60 + param_1 * 0x670);
+  return g_friendListGlobal[param_1].count;
+}
+
+
+// 82702DD8  Friends_Update  (social/social_friends.cpp:105)
+
+void Friends_Update(int param_1)
+
+{
+  bool bVar1;
+  
+  bVar1 = Friends_UpdateNeeded(param_1);
+  if (bVar1) {
+    EnumerateFriends(param_1);
+  }
+  return;
 }
 
 
@@ -87,16 +133,17 @@ void Friends_MarkForUpdate(int param_1)
     bVar1 = false;
   }
   if (!bVar1) {
-    MyAssertHandler(0xffffffff821b2e60,0x70,0,0xffffffff82000f98,0xffffffff821b2ea4);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_friends.cpp",
+                    0x70,0,"%s");
   }
-  (&DAT_845474a8)[param_1 * 0x670] = 1;
+  g_friendListGlobal[param_1].dirty = true;
   return;
 }
 
 
 // 82702E68  Friends_FindIndex  (social/social_friends.cpp:119)
 
-int Friends_FindIndex(int param_1,longlong param_2)
+int Friends_FindIndex(int param_1,ulong64 param_2)
 
 {
   bool bVar1;
@@ -106,16 +153,17 @@ int Friends_FindIndex(int param_1,longlong param_2)
     bVar1 = false;
   }
   if (!bVar1) {
-    MyAssertHandler(0xffffffff821b2e60,0x7a,0,0xffffffff82000f98,0xffffffff821b2ea4);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_friends.cpp",
+                    0x7a,0,"%s");
   }
   iVar2 = 0;
-  if (0 < *(int *)(&DAT_84546e60 + param_1 * 0x670)) {
+  if (0 < (int)g_friendListGlobal[param_1].count) {
     do {
-      if (*(longlong *)(&DAT_84546e68 + (param_1 * 0xce + iVar2) * 8) == param_2) {
+      if (g_friendListGlobal[param_1].friends[iVar2] == param_2) {
         return iVar2;
       }
       iVar2 = iVar2 + 1;
-    } while (iVar2 < *(int *)(&DAT_84546e60 + param_1 * 0x670));
+    } while (iVar2 < (int)g_friendListGlobal[param_1].count);
   }
   return -1;
 }
@@ -123,32 +171,32 @@ int Friends_FindIndex(int param_1,longlong param_2)
 
 // 82702F30  Friends_FindSortedIndex  (social/social_friends.cpp:137)
 
-longlong Friends_FindSortedIndex(longlong param_1,longlong param_2)
+int Friends_FindSortedIndex(int param_1,ulong64 param_2)
 
 {
   bool bVar1;
-  int iVar3;
   longlong lVar2;
   
-  iVar3 = (int)param_1;
-  if ((iVar3 < 0) || (bVar1 = true, 3 < iVar3)) {
+  if ((param_1 < 0) || (bVar1 = true, 3 < param_1)) {
     bVar1 = false;
   }
   if (!bVar1) {
-    MyAssertHandler(0xffffffff821b2e60,0x8d,0,0xffffffff82000f98,0xffffffff821b2ea4);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_friends.cpp",
+                    0x8d,0,"%s");
   }
   lVar2 = 0;
-  if (0 < *(int *)(&DAT_84546e60 + iVar3 * 0x670)) {
+  if (0 < (int)g_friendListGlobal[param_1].count) {
     do {
-      if (*(longlong *)
-           (&DAT_84546e68 +
+      if (*(ulong64 *)
+           ((int)g_friendListGlobal[0].friends +
            (int)(((ulonglong)
-                  *(uint *)(&DAT_84547318 + (int)((param_1 * 0x19c + lVar2 & 0xffffffffU) << 2)) +
-                  param_1 * 0xce & 0xffffffff) << 3)) == param_2) {
-        return lVar2;
+                  *(uint *)((int)g_friendListGlobal[0].sortedFriends +
+                           (int)(((longlong)param_1 * 0x19c + lVar2 & 0xffffffffU) << 2)) +
+                  (longlong)param_1 * 0xce & 0xffffffff) << 3)) == param_2) {
+        return (int)lVar2;
       }
       lVar2 = lVar2 + 1;
-    } while ((int)lVar2 < *(int *)(&DAT_84546e60 + iVar3 * 0x670));
+    } while ((int)lVar2 < (int)g_friendListGlobal[param_1].count);
   }
   return -1;
 }
@@ -156,29 +204,29 @@ longlong Friends_FindSortedIndex(longlong param_1,longlong param_2)
 
 // 82703D48  Friends_IsFriendByID  (social/social_friends.cpp:157)
 
-longlong Friends_IsFriendByID(undefined8 param_1)
+bool Friends_IsFriendByID(int param_1,ulong64 param_2)
 
 {
-  undefined8 uVar1;
-  ulonglong uVar2;
+  int iVar1;
+  FriendStatus FVar2;
   
-  uVar1 = Friends_FindIndex();
-  if ((int)uVar1 == -1) {
-    return 0;
+  iVar1 = Friends_FindIndex(param_1,param_2);
+  if (iVar1 == -1) {
+    return false;
   }
-  uVar2 = FriendsMenu_GetStatus(param_1,uVar1);
-  return (longlong)((int)uVar2 >> 0x1f) + (ulonglong)(1 < uVar2);
+  FVar2 = FriendsMenu_GetStatus(param_1,iVar1);
+  return (bool)((char)((int)FVar2 >> 0x1f) + (FRIEND_STATUS_REQUEST_RECEIVED < FVar2));
 }
 
 
 // 82703010  Friends_PickRandomOnline  (social/social_friends.cpp:175)
 
-undefined8 Friends_PickRandomOnline(int param_1)
+ulong64 Friends_PickRandomOnline(int param_1)
 
 {
   bool bVar1;
   int iVar2;
-  int *piVar3;
+  FriendStatus *pFVar3;
   int iVar4;
   ulonglong uVar5;
   int *piVar6;
@@ -189,29 +237,29 @@ undefined8 Friends_PickRandomOnline(int param_1)
     bVar1 = false;
   }
   if (!bVar1) {
-    MyAssertHandler(0xffffffff821b2e60,0xb5,0,0xffffffff82000f98,0xffffffff821b2ea4);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_friends.cpp",
+                    0xb5,0,"%s");
   }
-  param_1 = param_1 * 0x670;
-  uVar5 = (ulonglong)*(uint *)(&DAT_84546e60 + param_1);
+  uVar5 = (ulonglong)g_friendListGlobal[param_1].count;
   if (uVar5 != 0) {
     iVar2 = 0;
     iVar4 = 0;
     if (uVar5 != 0) {
-      piVar3 = (int *)(&DAT_84547188 + param_1);
+      pFVar3 = g_friendListGlobal[param_1].status;
       piVar6 = &iStack_1a4;
       do {
-        if (*piVar3 == 6) {
+        if (*pFVar3 == FRIEND_STATUS_PRESENT) {
           piVar6 = piVar6 + 1;
           *piVar6 = iVar4;
           iVar2 = iVar2 + 1;
         }
         iVar4 = iVar4 + 1;
-        piVar3 = piVar3 + 1;
+        pFVar3 = pFVar3 + 1;
         uVar5 = uVar5 - 1;
       } while (uVar5 != 0);
       if (iVar2 != 0) {
-        iVar2 = irand(0);
-        return *(undefined8 *)(&DAT_84546e40 + (local_1a0[iVar2] + 5) * 8 + param_1);
+        iVar2 = irand(0,iVar2);
+        return g_friendListGlobal[param_1].friends[local_1a0[iVar2]];
       }
     }
   }
@@ -221,129 +269,260 @@ undefined8 Friends_PickRandomOnline(int param_1)
 
 // 82703120  Live_Friends_GetUserId  (social/social_friends.cpp:206)
 
-undefined8 Live_Friends_GetUserId(int param_1,uint param_2)
+ulong64 Live_Friends_GetUserId(int param_1,uint param_2)
 
 {
-  if (*(uint *)(&DAT_84546e60 + param_1 * 0x670) <= param_2) {
-    MyAssertHandler(0xffffffff821b2e60,0xd2,0,0xffffffff821b2ee0,param_2);
+  if (g_friendListGlobal[param_1].count <= param_2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_friends.cpp",
+                    0xd2,0,"friendIndex doesn\'t index fl->count\n\t%i not in [0, %i)");
   }
-  return *(undefined8 *)(&DAT_84546e40 + (param_2 + 5) * 8 + param_1 * 0x670);
+  return g_friendListGlobal[param_1].friends[param_2];
+}
+
+
+// 82703198  Friends_GetPresence  (social/social_friends.cpp:215)
+
+void Friends_GetPresence(int param_1,ulong64 param_2,char *param_3,int param_4)
+
+{
+  uint uVar1;
+  uint uVar3;
+  int iVar4;
+  char *pcVar5;
+  longlong lVar2;
+  char *pcVar8;
+  ulonglong uVar7;
+  bool bVar6;
+  
+  uVar7 = (ulonglong)(int)param_3;
+  uVar3 = __savegprlr_26(param_1);
+  if ((uVar7 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_friends.cpp",0x15e
+                    ,0,"%s");
+  }
+  if (param_4 < 1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_friends.cpp",0x15f
+                    ,0,"%s");
+  }
+  if (3 < uVar3) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_friends.cpp",0x49,
+                    0,"localControllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
+  }
+  iVar4 = Friends_FindIndex(uVar3,param_2);
+  pcVar8 = (char *)uVar7;
+  if (iVar4 == -1) {
+    *pcVar8 = '\0';
+    __restgprlr_26();
+    return;
+  }
+  uVar1 = friendLists[uVar3][0].friends[iVar4].dwFriendState;
+  if ((uVar1 & 0x40000000) == 0) {
+    if ((uVar1 & 0x80000000) == 0) {
+      if (friendLists[uVar3][0].friends[iVar4].dwTitleID == 0x415608cb) {
+        if (friendLists[uVar3][0].friends[iVar4].cchRichPresence != 0) {
+          bVar6 = MakeWideCharNameSafeForAllLanguages
+                            (pcVar8,friendLists[uVar3][0].friends[iVar4].wszRichPresence,param_4);
+          lVar2 = (longlong)bVar6;
+          if (lVar2 != 0) goto LAB_82641870;
+        }
+LAB_826417f0:
+        pcVar5 = "XBOXLIVE_ONLINE";
+      }
+      else {
+        if ((uVar1 & 1) != 0) {
+          if ((uVar1 & 0xf0000) == 0x10000) {
+            pcVar5 = "XBOXLIVE_AWAY";
+            goto LAB_82641858;
+          }
+          if ((uVar1 & 1) != 0) {
+            if ((uVar1 & 0xf0000) == 0x20000) {
+              pcVar5 = "XBOXLIVE_BUSY";
+              goto LAB_82641858;
+            }
+            if ((uVar1 & 1) != 0) goto LAB_826417f0;
+          }
+        }
+        pcVar5 = "XBOXLIVE_OFFLINE";
+      }
+    }
+    else {
+      pcVar5 = "XBOXLIVE_FRIEND_REQUEST_RECEIVED";
+    }
+  }
+  else {
+    pcVar5 = "XBOXLIVE_FRIEND_REQUEST_PENDING";
+  }
+LAB_82641858:
+  SEH_SafeTranslateString(pcVar5);
+  iVar4 = Com_sprintf(pcVar8,param_4,"%s");
+  lVar2 = (longlong)iVar4;
+LAB_82641870:
+  __restgprlr_26(lVar2);
+  return;
+}
+
+
+// 827031A0  Friends_Gamertag  (social/social_friends.cpp:221)
+
+void Friends_Gamertag(int param_1,ulong64 param_2,char *param_3,int param_4)
+
+{
+  uint uVar1;
+  int iVar2;
+  ulonglong uVar3;
+  
+  uVar3 = (ulonglong)(int)param_3;
+  uVar1 = __savegprlr_26(param_1);
+  if ((uVar3 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_friends.cpp",0x17f
+                    ,0,"%s");
+  }
+  if (param_4 < 1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_friends.cpp",0x180
+                    ,0,"%s");
+  }
+  if (3 < uVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_friends.cpp",0x49,
+                    0,"localControllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
+  }
+  iVar2 = Friends_FindIndex(uVar1,param_2);
+  if (iVar2 < 0) {
+    *(char *)uVar3 = '\0';
+    __restgprlr_26();
+    return;
+  }
+  I_strncpyz((char *)uVar3,friendLists[uVar1][0].friends[iVar2].szGamertag,param_4);
+  __restgprlr_26();
+  return;
 }
 
 
 // 82704198  FriendsMenu_JoinOnPresence  (social/social_friends.cpp:227)
 
-void FriendsMenu_JoinOnPresence(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+bool FriendsMenu_JoinOnPresence(int param_1,ulong64 param_2,char **param_3)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
-  char cVar3;
-  int *piVar4;
+  int iVar2;
+  uint uVar3;
+  undefined1 uVar4;
   bool bVar5;
+  XNKID XVar1;
   
-  uVar1 = __savegprlr_26();
-  if (((int)uVar1 < 0) || (bVar5 = true, 3 < (int)uVar1)) {
+  iVar2 = __savegprlr_26(param_1);
+  if ((iVar2 < 0) || (bVar5 = true, 3 < iVar2)) {
     bVar5 = false;
   }
   if (!bVar5) {
-    MyAssertHandler(0xffffffff821b2e60,0xe7,0,0xffffffff82000f98,0xffffffff821b2ea4);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_friends.cpp",
+                    0xe7,0,"%s");
   }
-  uVar2 = Friends_FindIndex(uVar1,param_2);
-  piVar4 = (int *)param_3;
-  if ((int)uVar2 == -1) {
-    Com_PrintWarning(0x10,0xffffffff821b3148);
-    *piVar4 = (int)"MENU_JOIN_SYSTEM_ERROR";
-    __restgprlr_26(0);
-    return;
+  uVar3 = Friends_FindIndex(iVar2,param_2);
+  if (uVar3 == 0xffffffff) {
+    Com_PrintWarning(0x10,
+                     "FriendsMenu_JoinOnPresence() failed because the friend info was not found.\n")
+    ;
+    *param_3 = "MENU_JOIN_SYSTEM_ERROR";
+    uVar4 = __restgprlr_26(0);
+    return (bool)uVar4;
   }
-  cVar3 = FriendsMenu_IsUserJoinable(uVar1,uVar2,0,param_3);
-  if (cVar3 == '\0') {
-    if (*piVar4 == 0) {
-      MyAssertHandler(0xffffffff821b2e60,0xfb,0,0xffffffff82000f98,0xffffffff8218ea18);
+  bVar5 = FriendsMenu_IsUserJoinable(iVar2,uVar3,false,param_3);
+  if (!bVar5) {
+    if (*param_3 == (char *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_friends.cpp",
+                      0xfb,0,"%s");
     }
-    Com_PrintWarning(0x10,0xffffffff821b30d8,*piVar4);
-    __restgprlr_26(0);
-    return;
+    Com_PrintWarning(0x10,
+                     "FriendsMenu_JoinOnPresence() failed because the player is not joinable. Error \'%s\'\n"
+                    );
+    uVar4 = __restgprlr_26(0);
+    return (bool)uVar4;
   }
-  uVar2 = Friends_GetSessionInfo_Platform(uVar1,uVar2);
-  cVar3 = Friends_IsSessionInfoValid_Platform();
-  if (cVar3 == '\0') {
-    Com_PrintWarning(0x10,0xffffffff821b3090);
-    *piVar4 = (int)"MENU_JOIN_SESSION_INVALID";
-    __restgprlr_26(0);
-    return;
+  XVar1 = Friends_GetSessionInfo_Platform(iVar2,uVar3);
+  bVar5 = Friends_IsSessionInfoValid_Platform(XVar1);
+  if (!bVar5) {
+    Com_PrintWarning(0x10,"FriendsMenu_JoinOnPresence() failed due to invalid/empty session data.\n"
+                    );
+    *param_3 = "MENU_JOIN_SESSION_INVALID";
+    uVar4 = __restgprlr_26(0);
+    return (bool)uVar4;
   }
-  Friends_StartJoiningFriend_Platform(uVar1,param_2,uVar2,0);
-  __restgprlr_26(1);
-  return;
+  Friends_StartJoiningFriend_Platform(iVar2,param_2,XVar1,false);
+  uVar4 = __restgprlr_26(1);
+  return (bool)uVar4;
 }
 
 
 // 827031A8  FriendsMenu_FeederItemText  (social/social_friends.cpp:271)
 
-void FriendsMenu_FeederItemText(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+char * FriendsMenu_FeederItemText(int param_1,int param_2,int param_3,Font_s *param_4,float param_5)
 
 {
   bool bVar1;
-  undefined8 uVar2;
-  int iVar3;
+  int iVar2;
+  char *pcVar3;
+  ulonglong uVar4;
+  ulonglong uVar5;
   
-  uVar2 = __savegprlr_27();
-  iVar3 = (int)uVar2;
-  if ((iVar3 < 0) || (bVar1 = true, 3 < iVar3)) {
+  uVar5 = (ulonglong)param_3;
+  uVar4 = (ulonglong)param_2;
+  iVar2 = __savegprlr_27((double)param_5,param_1,uVar4,uVar5,param_4);
+  if ((iVar2 < 0) || (bVar1 = true, 3 < iVar2)) {
     bVar1 = false;
   }
   if (!bVar1) {
-    MyAssertHandler(0xffffffff821b2e60,0x113,0,0xffffffff82000f98,0xffffffff821b2ea4);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_friends.cpp",
+                    0x113,0,"%s");
   }
-  if (2 < (param_3 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821b2e60,0x114,0,0xffffffff821b2f50,param_3,3);
+  if (2 < (uVar5 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_friends.cpp",
+                    0x114,0,"column doesn\'t index NUM_FRIENDS_FEEDER_COLUMNS\n\t%i not in [0, %i)")
+    ;
   }
-  iVar3 = iVar3 * 0x670;
-  if ((ulonglong)*(uint *)(&DAT_84546e60 + iVar3) <= (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821b2e60,0x118,0,0xffffffff821b2f18,param_2);
+  if ((ulonglong)g_friendListGlobal[iVar2].count <= (uVar4 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_friends.cpp",
+                    0x118,0,"index doesn\'t index fl->count\n\t%i not in [0, %i)");
   }
-  if ((param_3 & 0xffffffff) != 0) {
-    if (((param_3 & 0xffffffff) != 1) && (2 < (param_3 & 0xffffffff))) {
-      __restgprlr_27(0xffffffff84548800);
-      return;
+  if ((uVar5 & 0xffffffff) != 0) {
+    if (((uVar5 & 0xffffffff) != 1) && (2 < (uVar5 & 0xffffffff))) {
+      pcVar3 = (char *)__restgprlr_27(0xffffffff84548800);
+      return pcVar3;
     }
-    DAT_84548800 = 0;
-    __restgprlr_27(0xffffffff84548800);
-    return;
+    g_friendFeederText[0] = '\0';
+    pcVar3 = (char *)__restgprlr_27(0xffffffff84548800);
+    return pcVar3;
   }
   Friends_Gamertag_Platform
-            (uVar2,*(undefined8 *)
-                    (&DAT_84546e40 +
-                    (*(int *)(&DAT_84546e40 + (int)((param_2 + 0x136 & 0xffffffff) << 2) + iVar3) +
-                    5) * 8 + iVar3),0xffffffff84548800,0x80);
-  __restgprlr_27(0xffffffff84548800);
-  return;
+            (iVar2,g_friendListGlobal[iVar2].friends
+                   [*(int *)((int)g_friendListGlobal[iVar2].friends +
+                            (int)((uVar4 + 0x136 & 0xffffffff) << 2) + -0x28)],g_friendFeederText,
+             0x80);
+  pcVar3 = (char *)__restgprlr_27(0xffffffff84548800);
+  return pcVar3;
 }
 
 
 // 827032E8  FriendsMenu_FeederSelection  (social/social_friends.cpp:302)
 
-void FriendsMenu_FeederSelection(int param_1,uint param_2)
+void FriendsMenu_FeederSelection(int param_1,int param_2)
 
 {
   bool bVar1;
-  uint *puVar2;
+  FriendListGlobal *pFVar2;
   
   if ((param_1 < 0) || (bVar1 = true, 3 < param_1)) {
     bVar1 = false;
   }
   if (!bVar1) {
-    MyAssertHandler(0xffffffff821b2e60,0x131,0,0xffffffff82000f98,0xffffffff821b2ea4);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_friends.cpp",
+                    0x131,0,"%s");
   }
-  param_1 = param_1 * 0x670;
-  puVar2 = (uint *)(&DAT_84546e40 + param_1);
-  if ((-1 < (int)param_2) && (param_2 < *(uint *)(&DAT_84546e60 + param_1))) {
-    *puVar2 = param_2;
-    *(uint *)(&DAT_84546e44 + param_1) = puVar2[param_2 + 0x136];
-    *(undefined8 *)(&DAT_84546e50 + param_1) =
-         *(undefined8 *)(puVar2 + (puVar2[param_2 + 0x136] + 5) * 2);
+  pFVar2 = g_friendListGlobal + param_1;
+  if ((-1 < param_2) && ((uint)param_2 < g_friendListGlobal[param_1].count)) {
+    pFVar2->actualIndex = param_2;
+    g_friendListGlobal[param_1].currentIndex = pFVar2->sortedFriends[param_2];
+    g_friendListGlobal[param_1].currentFriend = pFVar2->friends[pFVar2->sortedFriends[param_2]];
   }
   return;
 }
@@ -351,35 +530,35 @@ void FriendsMenu_FeederSelection(int param_1,uint param_2)
 
 // 827033B0  FriendsMenu_FeederStoreXUID  (social/social_friends.cpp:319)
 
-void FriendsMenu_FeederStoreXUID(void)
+void FriendsMenu_FeederStoreXUID(int param_1)
 
 {
   uint uVar1;
-  bool bVar2;
-  undefined8 uVar3;
-  int iVar4;
-  char cVar6;
-  uint uVar5;
+  int iVar2;
+  bool bVar4;
+  uint uVar3;
   
-  uVar3 = __savegprlr_28();
-  iVar4 = (int)uVar3;
-  if ((iVar4 < 0) || (bVar2 = true, 3 < iVar4)) {
-    bVar2 = false;
+  iVar2 = __savegprlr_28(param_1);
+  if ((iVar2 < 0) || (bVar4 = true, 3 < iVar2)) {
+    bVar4 = false;
   }
-  if (!bVar2) {
-    MyAssertHandler(0xffffffff821b2e60,0x142,0,0xffffffff82000f98,0xffffffff821b2ea4);
+  if (!bVar4) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_friends.cpp",
+                    0x142,0,"%s");
   }
-  cVar6 = Friends_IsConnected_Platform(uVar3);
-  if (cVar6 != '\0') {
-    iVar4 = iVar4 * 0x670;
-    uVar1 = *(uint *)(&DAT_84546e60 + iVar4);
+  bVar4 = Friends_IsConnected_Platform(iVar2);
+  if (bVar4) {
+    uVar1 = g_friendListGlobal[iVar2].count;
     if (uVar1 != 0) {
-      uVar5 = Friends_FindIndex(uVar3,*(undefined8 *)(&DAT_84546e50 + iVar4));
-      if (uVar1 <= uVar5) {
-        uVar3 = Friends_FindIndex(uVar3,*(undefined8 *)(&DAT_84546e50 + iVar4));
-        MyAssertHandler(0xffffffff821b2e60,0x14c,0,0xffffffff821b2f98,uVar3,uVar1);
+      uVar3 = Friends_FindIndex(iVar2,g_friendListGlobal[iVar2].currentFriend);
+      if (uVar1 <= uVar3) {
+        Friends_FindIndex(iVar2,g_friendListGlobal[iVar2].currentFriend);
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_friends.cpp"
+                        ,0x14c,0,
+                        "Friends_FindIndex( localControllerIndex, fl->currentFriend ) doesn\'t index fl->count\n\t%i not in [0, %i)"
+                       );
       }
-      *(undefined8 *)(&DAT_84546e58 + iVar4) = *(undefined8 *)(&DAT_84546e50 + iVar4);
+      g_friendListGlobal[iVar2].storedFriend = g_friendListGlobal[iVar2].currentFriend;
     }
   }
   __restgprlr_28();
@@ -398,63 +577,59 @@ void FriendsMenu_FeederClearXUID(int param_1)
     bVar1 = false;
   }
   if (!bVar1) {
-    MyAssertHandler(0xffffffff821b2e60,0x156,0,0xffffffff82000f98,0xffffffff821b2ea4);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_friends.cpp",
+                    0x156,0,"%s");
   }
-  *(undefined8 *)(&DAT_84546e58 + param_1 * 0x670) = 0;
+  g_friendListGlobal[param_1].storedFriend = 0;
   return;
 }
 
 
 // 82703518  FriendsMenu_FeederGamerTag  (social/social_friends.cpp:350)
 
-undefined8 FriendsMenu_FeederGamerTag(undefined8 param_1)
+char * FriendsMenu_FeederGamerTag(int param_1)
 
 {
   bool bVar1;
-  int iVar3;
-  undefined8 uVar2;
+  char *pcVar2;
   
-  iVar3 = (int)param_1;
-  if ((iVar3 < 0) || (bVar1 = true, 3 < iVar3)) {
+  if ((param_1 < 0) || (bVar1 = true, 3 < param_1)) {
     bVar1 = false;
   }
   if (!bVar1) {
-    MyAssertHandler(0xffffffff821b2e60,0x161,0,0xffffffff82000f98,0xffffffff821b2ea4);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_friends.cpp",
+                    0x161,0,"%s");
   }
-  if (*(longlong *)(&DAT_84546e58 + iVar3 * 0x670) == 0) {
-    uVar2 = 0xffffffff820068af;
+  if (g_friendListGlobal[param_1].storedFriend == 0) {
+    pcVar2 = "";
   }
   else {
-    uVar2 = 0xffffffff84548800;
+    pcVar2 = g_friendFeederText;
     Friends_Gamertag_Platform
-              (param_1,*(longlong *)(&DAT_84546e58 + iVar3 * 0x670),0xffffffff84548800,0x80);
+              (param_1,g_friendListGlobal[param_1].storedFriend,g_friendFeederText,0x80);
   }
-  return uVar2;
+  return pcVar2;
 }
 
 
 // 827035D8  FriendsMenu_FeederOnShowCard  (social/social_friends.cpp:366)
 
-void FriendsMenu_FeederOnShowCard(undefined8 param_1)
+void FriendsMenu_FeederOnShowCard(int param_1)
 
 {
   bool bVar1;
-  int iVar2;
-  char cVar3;
   
-  iVar2 = (int)param_1;
-  if ((iVar2 < 0) || (bVar1 = true, 3 < iVar2)) {
+  if ((param_1 < 0) || (bVar1 = true, 3 < param_1)) {
     bVar1 = false;
   }
   if (!bVar1) {
-    MyAssertHandler(0xffffffff821b2e60,0x171,0,0xffffffff82000f98,0xffffffff821b2ea4);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_friends.cpp",
+                    0x171,0,"%s");
   }
-  cVar3 = Friends_IsConnected_Platform(param_1);
-  if (cVar3 != '\0') {
-    if ((*(int *)(&DAT_84546e60 + iVar2 * 0x670) != 0) &&
-       (*(longlong *)(&DAT_84546e58 + iVar2 * 0x670) != 0)) {
-      Friends_ShowPlayerCard_Platform(param_1);
-    }
+  bVar1 = Friends_IsConnected_Platform(param_1);
+  if (((bVar1) && (g_friendListGlobal[param_1].count != 0)) &&
+     (g_friendListGlobal[param_1].storedFriend != 0)) {
+    Friends_ShowPlayerCard_Platform(param_1,g_friendListGlobal[param_1].storedFriend);
   }
   return;
 }
@@ -462,55 +637,61 @@ void FriendsMenu_FeederOnShowCard(undefined8 param_1)
 
 // 82704310  FriendsMenu_FeederOnInviteRequest  (social/social_friends.cpp:384)
 
-void FriendsMenu_FeederOnInviteRequest(void)
+void FriendsMenu_FeederOnInviteRequest(int param_1)
 
 {
-  bool bVar1;
-  undefined8 uVar2;
-  int iVar4;
-  char cVar5;
-  ulonglong uVar3;
-  undefined4 local_30 [12];
+  int iVar1;
+  bool bVar3;
+  uint uVar2;
+  char *local_30 [12];
   
-  uVar2 = __savegprlr_28();
-  iVar4 = (int)uVar2;
-  if ((iVar4 < 0) || (bVar1 = true, 3 < iVar4)) {
-    bVar1 = false;
+  iVar1 = __savegprlr_28(param_1);
+  if ((iVar1 < 0) || (bVar3 = true, 3 < iVar1)) {
+    bVar3 = false;
   }
-  if (!bVar1) {
-    MyAssertHandler(0xffffffff821b2e60,0x186,0,0xffffffff82000f98,0xffffffff821b2ea4);
+  if (!bVar3) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_friends.cpp",
+                    0x186,0,"%s");
   }
-  cVar5 = Friends_IsConnected_Platform(uVar2);
-  if (cVar5 != '\0') {
-    iVar4 = iVar4 * 0x670;
-    cVar5 = FriendsMenu_IsAllowedToInvite(uVar2,local_30);
-    if (cVar5 == '\0') {
-      Com_PrintError(0x10,0xffffffff821b32e0);
+  bVar3 = Friends_IsConnected_Platform(iVar1);
+  if (bVar3) {
+    bVar3 = FriendsMenu_IsAllowedToInvite(iVar1,local_30);
+    if (!bVar3) {
+      Com_PrintError(0x10,
+                     "FriendsMenu_FeederOnInviteRequest() failed because we are not allowed to invite anyone right now.\n"
+                    );
       FriendsMenu_ShowErrorMessage(local_30[0]);
       __restgprlr_28();
       return;
     }
-    uVar3 = Friends_FindIndex(uVar2,*(undefined8 *)(&DAT_84546e58 + iVar4));
-    if ((int)uVar3 == -1) {
-      Com_PrintError(0x10,0xffffffff821b3278);
-      FriendsMenu_ShowErrorMessage(0xffffffff821b325c);
+    uVar2 = Friends_FindIndex(iVar1,g_friendListGlobal[iVar1].storedFriend);
+    if (uVar2 == 0xffffffff) {
+      Com_PrintError(0x10,
+                     "FriendsMenu_FeederOnInviteRequest() failed because the currently selected friend was not found.\n"
+                    );
+      FriendsMenu_ShowErrorMessage("MENU_INVITE_FRIEND_UNKNOWN");
       __restgprlr_28();
       return;
     }
-    if ((ulonglong)*(uint *)(&DAT_84546e60 + iVar4) <= (uVar3 & 0xffffffff)) {
-      MyAssertHandler(0xffffffff821b2e60,0x19c,0,0xffffffff821b2ee0,uVar3);
+    if (g_friendListGlobal[iVar1].count <= uVar2) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_friends.cpp",
+                      0x19c,0,"friendIndex doesn\'t index fl->count\n\t%i not in [0, %i)");
     }
-    cVar5 = FriendsMenu_IsUserInvitable(uVar2,uVar3,local_30);
-    if (cVar5 == '\0') {
-      Com_PrintError(0x10,0xffffffff821b3200);
+    bVar3 = FriendsMenu_IsUserInvitable(iVar1,uVar2,local_30);
+    if (!bVar3) {
+      Com_PrintError(0x10,
+                     "FriendsMenu_FeederOnInviteRequest() failed because friend is not available for invites.\n"
+                    );
       FriendsMenu_ShowErrorMessage(local_30[0]);
       __restgprlr_28();
       return;
     }
-    uVar2 = Friends_SendInviteMessage_Platform(uVar2,*(undefined8 *)(&DAT_84546e58 + iVar4));
-    if ((int)uVar2 < 0) {
-      Com_PrintError(0x10,0xffffffff821b3198,uVar2);
-      FriendsMenu_ShowErrorMessage(0xffffffff8218bbfc);
+    iVar1 = Friends_SendInviteMessage_Platform(iVar1,g_friendListGlobal[iVar1].storedFriend);
+    if (iVar1 < 0) {
+      Com_PrintError(0x10,
+                     "FriendsMenu_FeederOnInviteRequest() FriendsMenu_SendInviteMessage_Platform failed with error code %x.\n"
+                    );
+      FriendsMenu_ShowErrorMessage("PLATFORM_INVITE_SYSTEM_ERROR");
     }
   }
   __restgprlr_28();
@@ -520,55 +701,57 @@ void FriendsMenu_FeederOnInviteRequest(void)
 
 // 82703DB8  FriendsMenu_GetSelectedFeederXuid  (social/social_friends.cpp:431)
 
-void FriendsMenu_GetSelectedFeederXuid(undefined8 param_1,ulonglong param_2)
+int FriendsMenu_GetSelectedFeederXuid(int param_1,ulong64 *param_2)
 
 {
-  undefined8 uVar1;
-  char cVar4;
-  undefined8 uVar2;
-  int iVar3;
-  undefined8 uVar5;
+  int iVar1;
+  bool bVar4;
+  int iVar2;
+  FriendStatus FVar3;
+  ulonglong uVar5;
+  ulong64 uVar6;
   
-  uVar1 = __savegprlr_29();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821b2e60,0x1b0,0,0xffffffff82000f98,0xffffffff82032494);
+  uVar5 = (ulonglong)(int)param_2;
+  iVar1 = __savegprlr_29(param_1);
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_friends.cpp",
+                    0x1b0,0,"%s");
   }
-  cVar4 = Friends_IsConnected_Platform(uVar1);
-  if (cVar4 != '\0') {
-    uVar5 = *(undefined8 *)(&DAT_84546e50 + (int)uVar1 * 0x670);
-    uVar2 = Friends_FindIndex(uVar1,uVar5);
-    if (((int)uVar2 != -1) && (iVar3 = FriendsMenu_GetStatus(uVar1,uVar2), 1 < iVar3)) {
-      *(undefined8 *)param_2 = uVar5;
-      __restgprlr_29(1);
-      return;
+  bVar4 = Friends_IsConnected_Platform(iVar1);
+  if (bVar4) {
+    uVar6 = g_friendListGlobal[iVar1].currentFriend;
+    iVar2 = Friends_FindIndex(iVar1,uVar6);
+    if ((iVar2 != -1) && (FVar3 = FriendsMenu_GetStatus(iVar1,iVar2), 1 < (int)FVar3)) {
+      *(ulong64 *)uVar5 = uVar6;
+      iVar1 = __restgprlr_29(1);
+      return iVar1;
     }
   }
-  __restgprlr_29(0);
-  return;
+  iVar1 = __restgprlr_29(0);
+  return iVar1;
 }
 
 
 // 827044A8  FriendsMenu_FeederOnJoinRequest  (social/social_friends.cpp:454)
 
-void FriendsMenu_FeederOnJoinRequest(void)
+void FriendsMenu_FeederOnJoinRequest(int param_1)
 
 {
   int iVar1;
-  undefined8 uVar2;
-  char cVar4;
-  int iVar3;
+  bool bVar3;
+  int iVar2;
   char *local_30 [12];
   
-  uVar2 = __savegprlr_29();
-  cVar4 = Friends_IsConnected_Platform();
-  if (cVar4 != '\0') {
-    iVar1 = (int)uVar2 * 0x670;
-    iVar3 = Friends_FindIndex(uVar2,*(undefined8 *)(&DAT_84546e58 + iVar1));
-    if ((iVar3 != -1) &&
-       (cVar4 = FriendsMenu_JoinOnPresence(uVar2,*(undefined8 *)(&DAT_84546e58 + iVar1),local_30),
-       cVar4 == '\0')) {
+  iVar1 = __savegprlr_29(param_1);
+  bVar3 = Friends_IsConnected_Platform(iVar1);
+  if (bVar3) {
+    iVar2 = Friends_FindIndex(iVar1,g_friendListGlobal[iVar1].storedFriend);
+    if ((iVar2 != -1) &&
+       (bVar3 = FriendsMenu_JoinOnPresence(iVar1,g_friendListGlobal[iVar1].storedFriend,local_30),
+       !bVar3)) {
       if (*local_30[0] == '\0') {
-        MyAssertHandler(0xffffffff821b2e60,0x1d1,0,0xffffffff82000f98,0xffffffff8218ea18);
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_friends.cpp"
+                        ,0x1d1,0,"%s");
       }
       FriendsMenu_ShowErrorMessage(local_30[0]);
     }
@@ -580,37 +763,33 @@ void FriendsMenu_FeederOnJoinRequest(void)
 
 // 82703E68  FriendsMenu_FeederOnReportRequest  (social/social_friends.cpp:473)
 
-void FriendsMenu_FeederOnReportRequest(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void FriendsMenu_FeederOnReportRequest(int param_1,ReportOffense param_2)
 
 {
-  bool bVar1;
-  undefined8 uVar2;
-  int iVar3;
-  char cVar5;
-  int iVar4;
-  undefined1 auStack_30 [48];
+  int iVar1;
+  bool bVar4;
+  int iVar2;
+  char *pcVar3;
+  LocalClientNum_t aLStack_30 [12];
   
-  uVar2 = __savegprlr_29();
-  iVar3 = (int)uVar2;
-  if ((iVar3 < 0) || (bVar1 = true, 3 < iVar3)) {
-    bVar1 = false;
+  iVar1 = __savegprlr_29(param_1);
+  if ((iVar1 < 0) || (bVar4 = true, 3 < iVar1)) {
+    bVar4 = false;
   }
-  if (!bVar1) {
-    MyAssertHandler(0xffffffff821b2e60,0x1dd,0,0xffffffff82000f98,0xffffffff821b2ea4);
+  if (!bVar4) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_friends.cpp",
+                    0x1dd,0,"%s");
   }
-  cVar5 = Friends_IsConnected_Platform(uVar2);
-  if (cVar5 != '\0') {
-    iVar3 = iVar3 * 0x670;
-    if (*(int *)(&DAT_84546e60 + iVar3) != 0) {
-      iVar4 = Friends_FindIndex(uVar2,*(undefined8 *)(&DAT_84546e58 + iVar3));
-      if (-1 < iVar4) {
-        LiveAntiCheat_ReportPlayer(uVar2,param_2,*(undefined8 *)(&DAT_84546e58 + iVar3));
-        cVar5 = CL_DoesControllerIndexHaveALocalClientNum(uVar2,auStack_30);
-        if (cVar5 != '\0') {
-          FriendsMenu_GetReportSubmitString(param_2);
-          FriendsMenu_ShowErrorMessage();
-        }
-      }
+  bVar4 = Friends_IsConnected_Platform(iVar1);
+  if (((bVar4) && (g_friendListGlobal[iVar1].count != 0)) &&
+     (iVar2 = Friends_FindIndex(iVar1,g_friendListGlobal[iVar1].storedFriend), -1 < iVar2)) {
+    LiveAntiCheat_ReportPlayer(iVar1,param_2,g_friendListGlobal[iVar1].storedFriend);
+    bVar4 = CL_DoesControllerIndexHaveALocalClientNum(iVar1,aLStack_30);
+    if (bVar4) {
+      pcVar3 = FriendsMenu_GetReportSubmitString(param_2);
+      FriendsMenu_ShowErrorMessage(pcVar3);
     }
   }
   __restgprlr_29();
@@ -620,109 +799,120 @@ void FriendsMenu_FeederOnReportRequest(undefined8 param_1,undefined8 param_2)
 
 // 82703690  FriendsMenu_GetReportSubmitString  (social/social_friends.cpp:500)
 
-undefined8 FriendsMenu_GetReportSubmitString(undefined4 param_1)
+char * FriendsMenu_GetReportSubmitString(ReportOffense param_1)
 
 {
   switch(param_1) {
-  case 0:
-  case 1:
-  case 7:
-  case 0xb:
-    return 0xffffffff8208ba80;
+  case REPORT_BOOSTING_LOBBY_CLIENT:
+  case REPORT_BOOSTING_LOBBY_SERVER:
+  case REPORT_BOOSTING_LOBBY_PLAYER:
+  case REPORT_BOOSTING_COOP_PLAYER:
+    return "MENU_REPORT_BOOSTING_SUBMIT";
   default:
-    return 0xffffffff8208bad8;
-  case 5:
-  case 9:
-    return 0xffffffff8208bab8;
-  case 6:
-  case 10:
-    return 0xffffffff8208ba9c;
+    return "MENU_REPORT_OFFENSIVE_SUBMIT";
+  case REPORT_EXPLOITING_LOBBY_PLAYER:
+  case REPORT_EXPLOITING_COOP_PLAYER:
+    return "MENU_REPORT_EXPLOITING_SUBMIT";
+  case REPORT_CHEATING_LOBBY_PLAYER:
+  case REPORT_CHEATING_COOP_PLAYER:
+    return "MENU_REPORT_CHEATING_SUBMIT";
   }
 }
 
 
 // 82703710  FriendsMenu_FeederOverrideCursorPos  (social/social_friends.cpp:525)
 
-void FriendsMenu_FeederOverrideCursorPos
-               (undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4)
+void FriendsMenu_FeederOverrideCursorPos(int param_1,int param_2,int *param_3,int *param_4)
 
 {
-  longlong lVar1;
-  int iVar2;
-  uint uVar3;
-  uint *puVar4;
-  uint *puVar5;
-  ulonglong uVar6;
-  bool bVar9;
-  ulonglong uVar7;
-  int iVar8;
+  bool bVar1;
+  longlong lVar2;
+  int iVar3;
+  uint uVar4;
+  ulonglong uVar5;
+  uint *puVar6;
+  uint *puVar7;
+  ulonglong uVar8;
+  ulonglong uVar9;
+  int iVar10;
   
-  lVar1 = __savegprlr_20();
-  iVar2 = (int)lVar1;
-  if ((iVar2 < 0) || (bVar9 = true, 3 < iVar2)) {
-    bVar9 = false;
+  uVar8 = (ulonglong)(int)param_4;
+  uVar9 = (ulonglong)(int)param_3;
+  uVar5 = (ulonglong)param_2;
+  lVar2 = __savegprlr_20(param_1);
+  iVar3 = (int)lVar2;
+  if ((iVar3 < 0) || (bVar1 = true, 3 < iVar3)) {
+    bVar1 = false;
   }
-  if (!bVar9) {
-    MyAssertHandler(0xffffffff821b2e60,0x210,0,0xffffffff82000f98,0xffffffff821b2ea4);
+  if (!bVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_friends.cpp",
+                    0x210,0,"%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821b2e60,0x212,0,0xffffffff82000f98,0xffffffff8218eadc);
+  if ((uVar9 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_friends.cpp",
+                    0x212,0,"%s");
   }
-  if ((param_4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821b2e60,0x213,0,0xffffffff82000f98,0xffffffff82182238);
+  if ((uVar8 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_friends.cpp",
+                    0x213,0,"%s");
   }
-  puVar4 = (uint *)param_3;
-  if ((int)*puVar4 < 0) {
-    MyAssertHandler(0xffffffff821b2e60,0x216,0,0xffffffff82000f98,0xffffffff8218eacc);
+  puVar6 = (uint *)uVar9;
+  if ((int)*puVar6 < 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_friends.cpp",
+                    0x216,0,"%s");
   }
-  puVar5 = (uint *)param_4;
-  if ((int)*puVar5 < 0) {
-    MyAssertHandler(0xffffffff821b2e60,0x217,0,0xffffffff82000f98,0xffffffff8218eabc);
+  puVar7 = (uint *)uVar8;
+  if ((int)*puVar7 < 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_friends.cpp",
+                    0x217,0,"%s");
   }
-  iVar2 = iVar2 * 0x670;
-  uVar3 = Friends_FindSortedIndex(lVar1,*(undefined8 *)(&DAT_84546e50 + iVar2));
-  if ((ulonglong)*(uint *)(&DAT_84546e60 + iVar2) == 0) {
-    *puVar4 = 0;
-    *puVar5 = 0;
+  uVar4 = Friends_FindSortedIndex(iVar3,g_friendListGlobal[iVar3].currentFriend);
+  if ((ulonglong)g_friendListGlobal[iVar3].count == 0) {
+    *puVar6 = 0;
+    *puVar7 = 0;
   }
-  else if (uVar3 == 0xffffffff) {
-    uVar6 = (ulonglong)*(uint *)(&DAT_84546e60 + iVar2) - 1;
-    uVar7 = (ulonglong)*puVar4;
-    if ((int)uVar6 <= (int)*puVar4) {
-      uVar7 = uVar6;
+  else if (uVar4 == 0xffffffff) {
+    uVar8 = (ulonglong)g_friendListGlobal[iVar3].count - 1;
+    uVar9 = (ulonglong)*puVar6;
+    if ((int)uVar8 <= (int)*puVar6) {
+      uVar9 = uVar8;
     }
-    uVar7 = ((uVar7 & 0xffffffff) >> 0x1f) - (ulonglong)(uVar7 != 0) & uVar7;
-    *puVar4 = (uint)uVar7;
-    uVar3 = *(uint *)(&DAT_84547318 + (int)((lVar1 * 0x19c + uVar7 & 0xffffffff) << 2));
-    *(uint *)(&DAT_84546e44 + iVar2) = uVar3;
-    *(undefined8 *)(&DAT_84546e50 + iVar2) =
-         *(undefined8 *)(&DAT_84546e68 + (int)((lVar1 * 0xce + (ulonglong)uVar3 & 0xffffffff) << 3))
-    ;
+    uVar9 = ((uVar9 & 0xffffffff) >> 0x1f) - (ulonglong)(uVar9 != 0) & uVar9;
+    *puVar6 = (uint)uVar9;
+    uVar4 = *(uint *)((int)g_friendListGlobal[0].sortedFriends +
+                     (int)((lVar2 * 0x19c + uVar9 & 0xffffffff) << 2));
+    g_friendListGlobal[iVar3].currentIndex = uVar4;
+    g_friendListGlobal[iVar3].currentFriend =
+         *(ulong64 *)
+          ((int)g_friendListGlobal[0].friends +
+          (int)((lVar2 * 0xce + (ulonglong)uVar4 & 0xffffffff) << 3));
   }
   else {
-    *puVar4 = uVar3;
-    *(uint *)(&DAT_84546e40 + iVar2) = uVar3;
-    *(uint *)(&DAT_84546e44 + iVar2) = uVar3;
+    *puVar6 = uVar4;
+    g_friendListGlobal[iVar3].actualIndex = uVar4;
+    g_friendListGlobal[iVar3].currentIndex = uVar4;
   }
-  uVar3 = *puVar4;
-  if ((int)*puVar5 <= (int)uVar3) {
-    iVar8 = uVar3 - (int)param_2;
-    if (iVar8 < (int)*puVar5) goto LAB_827038fc;
-    uVar3 = iVar8 + 1;
+  uVar4 = *puVar6;
+  if ((int)*puVar7 <= (int)uVar4) {
+    iVar10 = uVar4 - (int)uVar5;
+    if (iVar10 < (int)*puVar7) goto LAB_827038fc;
+    uVar4 = iVar10 + 1;
   }
-  *puVar5 = uVar3;
+  *puVar7 = uVar4;
 LAB_827038fc:
-  if ((int)*puVar4 < 0) {
-    MyAssertHandler(0xffffffff821b2e60,0x239,1,0xffffffff82000f98,0xffffffff8218eacc);
+  if ((int)*puVar6 < 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_friends.cpp",
+                    0x239,1,"%s");
   }
-  if ((int)*puVar5 < 0) {
-    MyAssertHandler(0xffffffff821b2e60,0x23a,1,0xffffffff82000f98,0xffffffff8218eabc);
+  if ((int)*puVar7 < 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_friends.cpp",
+                    0x23a,1,"%s");
   }
-  if ((param_2 & 0xffffffff) <= ((ulonglong)*puVar4 - (ulonglong)*puVar5 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821b2e60,0x23b,1,0xffffffff8218ea78,
-                    (ulonglong)*puVar4 - (ulonglong)*puVar5,param_2);
+  if ((uVar5 & 0xffffffff) <= ((ulonglong)*puVar6 - (ulonglong)*puVar7 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_friends.cpp",
+                    0x23b,1,"(*cursorPos - *startPos) doesn\'t index viewmax\n\t%i not in [0, %i)");
   }
-  *(uint *)(&DAT_84546e48 + iVar2) = *puVar5;
+  g_friendListGlobal[iVar3].currentStartPos = *puVar7;
   __restgprlr_20();
   return;
 }
@@ -730,268 +920,297 @@ LAB_827038fc:
 
 // 82704550  FriendsMenu_FeederFriendInvitable  (social/social_friends.cpp:578)
 
-void FriendsMenu_FeederFriendInvitable(void)
+bool FriendsMenu_FeederFriendInvitable(int param_1)
 
 {
-  bool bVar1;
-  undefined8 uVar2;
-  int iVar4;
-  char cVar5;
-  ulonglong uVar3;
-  undefined1 auStack_30 [48];
+  int iVar1;
+  bool bVar3;
+  undefined1 uVar4;
+  uint uVar2;
+  char *apcStack_30 [12];
   
-  uVar2 = __savegprlr_28();
-  iVar4 = (int)uVar2;
-  if ((iVar4 < 0) || (bVar1 = true, 3 < iVar4)) {
-    bVar1 = false;
+  iVar1 = __savegprlr_28(param_1);
+  if ((iVar1 < 0) || (bVar3 = true, 3 < iVar1)) {
+    bVar3 = false;
   }
-  if (!bVar1) {
-    MyAssertHandler(0xffffffff821b2e60,0x247,0,0xffffffff82000f98,0xffffffff821b2ea4);
+  if (!bVar3) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_friends.cpp",
+                    0x247,0,"%s");
   }
-  cVar5 = Friends_IsConnected_Platform(uVar2);
-  if (cVar5 != '\0') {
-    cVar5 = FriendsMenu_IsAllowedToInvite(uVar2,auStack_30);
-    if ((cVar5 != '\0') &&
-       (uVar3 = Friends_FindIndex(uVar2,*(undefined8 *)(&DAT_84546e58 + iVar4 * 0x670)),
-       (int)uVar3 != -1)) {
-      if ((ulonglong)*(uint *)(&DAT_84546e60 + iVar4 * 0x670) <= (uVar3 & 0xffffffff)) {
-        MyAssertHandler(0xffffffff821b2e60,0x255,0,0xffffffff821b2ee0,uVar3);
+  bVar3 = Friends_IsConnected_Platform(iVar1);
+  if (bVar3) {
+    bVar3 = FriendsMenu_IsAllowedToInvite(iVar1,apcStack_30);
+    if ((bVar3) &&
+       (uVar2 = Friends_FindIndex(iVar1,g_friendListGlobal[iVar1].storedFriend), uVar2 != 0xffffffff
+       )) {
+      if (g_friendListGlobal[iVar1].count <= uVar2) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_friends.cpp"
+                        ,0x255,0,"friendIndex doesn\'t index fl->count\n\t%i not in [0, %i)");
       }
-      cVar5 = FriendsMenu_IsUserInvitable(uVar2,uVar3,auStack_30);
-      __restgprlr_28(cVar5 != '\0');
-      return;
+      bVar3 = FriendsMenu_IsUserInvitable(iVar1,uVar2,apcStack_30);
+      uVar4 = __restgprlr_28(bVar3);
+      return (bool)uVar4;
     }
   }
-  __restgprlr_28(0);
-  return;
+  uVar4 = __restgprlr_28(0);
+  return (bool)uVar4;
 }
 
 
 // 82704658  FriendsMenu_FeederFriendJoinable  (social/social_friends.cpp:606)
 
-undefined8 FriendsMenu_FeederFriendJoinable(undefined8 param_1)
+bool FriendsMenu_FeederFriendJoinable(int param_1)
 
 {
-  bool bVar1;
-  int iVar3;
-  char cVar4;
-  undefined8 uVar2;
-  undefined1 auStack_20 [8];
+  bool bVar3;
+  uint uVar2;
+  XNKID XVar1;
+  char *apcStack_20 [2];
   
-  iVar3 = (int)param_1;
-  if ((iVar3 < 0) || (bVar1 = true, 3 < iVar3)) {
-    bVar1 = false;
+  if ((param_1 < 0) || (bVar3 = true, 3 < param_1)) {
+    bVar3 = false;
   }
-  if (!bVar1) {
-    MyAssertHandler(0xffffffff821b2e60,0x264,0,0xffffffff82000f98,0xffffffff821b2ea4);
+  if (!bVar3) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_friends.cpp",
+                    0x264,0,"%s");
   }
-  cVar4 = Friends_IsConnected_Platform(param_1);
-  if (((cVar4 != '\0') &&
-      (uVar2 = Friends_FindIndex(param_1,*(undefined8 *)(&DAT_84546e58 + iVar3 * 0x670)),
-      (int)uVar2 != -1)) &&
-     (cVar4 = FriendsMenu_IsUserJoinable(param_1,uVar2,0,auStack_20), cVar4 != '\0')) {
-    Friends_GetSessionInfo_Platform(param_1,uVar2);
-    cVar4 = Friends_IsSessionInfoValid_Platform();
-    if (cVar4 != '\0') {
-      uVar2 = FriendsMenu_IsAllowedToJoin_Platform(param_1,auStack_20);
-      return uVar2;
+  bVar3 = Friends_IsConnected_Platform(param_1);
+  if (((bVar3) &&
+      (uVar2 = Friends_FindIndex(param_1,g_friendListGlobal[param_1].storedFriend),
+      uVar2 != 0xffffffff)) &&
+     (bVar3 = FriendsMenu_IsUserJoinable(param_1,uVar2,false,apcStack_20), bVar3)) {
+    XVar1 = Friends_GetSessionInfo_Platform(param_1,uVar2);
+    bVar3 = Friends_IsSessionInfoValid_Platform(XVar1);
+    if (bVar3) {
+      bVar3 = FriendsMenu_IsAllowedToJoin_Platform(param_1,apcStack_20);
+      return bVar3;
     }
   }
-  return 0;
+  return false;
 }
 
 
 // 82703988  FriendsMenu_GetStatus  (social/social_friends.cpp:638)
 
-void FriendsMenu_GetStatus(undefined8 param_1,ulonglong param_2)
+FriendStatus FriendsMenu_GetStatus(int param_1,int param_2)
 
 {
   bool bVar1;
   longlong lVar2;
   int iVar3;
+  FriendStatus FVar4;
+  ulonglong uVar5;
   
-  lVar2 = __savegprlr_28();
+  uVar5 = (ulonglong)param_2;
+  lVar2 = __savegprlr_28(param_1);
   iVar3 = (int)lVar2;
   if ((iVar3 < 0) || (bVar1 = true, 3 < iVar3)) {
     bVar1 = false;
   }
   if (!bVar1) {
-    MyAssertHandler(0xffffffff821b2e60,0x27f,0,0xffffffff82000f98,0xffffffff821b2ea4);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_friends.cpp",
+                    0x27f,0,"%s");
   }
-  if ((ulonglong)*(uint *)(&DAT_84546e60 + iVar3 * 0x670) <= (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821b2e60,0x280,0,0xffffffff8218ae68,param_2);
+  if ((ulonglong)g_friendListGlobal[iVar3].count <= (uVar5 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_friends.cpp",
+                    0x280,0,
+                    "friendIndex doesn\'t index g_friendListGlobal[ localControllerIndex ].count\n\t%i not in [0, %i)"
+                   );
   }
-  __restgprlr_28(*(undefined4 *)(&DAT_84547188 + (int)((lVar2 * 0x19c + param_2 & 0xffffffff) << 2))
-                );
-  return;
+  FVar4 = __restgprlr_28(*(undefined4 *)
+                          ((int)g_friendListGlobal[0].status +
+                          (int)((lVar2 * 0x19c + uVar5 & 0xffffffff) << 2)));
+  return FVar4;
 }
 
 
 // 82703A40  FriendsMenu_IsAllowedToInvite  (social/social_friends.cpp:647)
 
-void FriendsMenu_IsAllowedToInvite(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+bool FriendsMenu_IsAllowedToInvite(int param_1,char **param_2)
 
 {
-  undefined8 uVar1;
-  char cVar3;
-  undefined8 uVar2;
-  undefined4 *puVar4;
+  int iVar1;
+  bool bVar3;
+  undefined1 uVar4;
+  SessionData *pSVar2;
+  ulonglong uVar5;
+  char **ppcVar6;
   
-  uVar1 = __savegprlr_29();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821b2e60,0x288,0,0xffffffff82000f98,0xffffffff8207965c);
+  uVar5 = (ulonglong)(int)param_2;
+  iVar1 = __savegprlr_29(param_1);
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_friends.cpp",
+                    0x288,0,"%s");
   }
-  cVar3 = Friends_IsConnected_Platform(uVar1);
-  puVar4 = (undefined4 *)param_2;
-  if (cVar3 == '\0') {
-    *puVar4 = "PLATFORM_INVITE_NOT_CONNECTED";
-    __restgprlr_29(0);
-    return;
+  bVar3 = Friends_IsConnected_Platform(iVar1);
+  ppcVar6 = (char **)uVar5;
+  if (!bVar3) {
+    *ppcVar6 = "PLATFORM_INVITE_NOT_CONNECTED";
+    uVar4 = __restgprlr_29(0);
+    return (bool)uVar4;
   }
-  uVar2 = Live_GetSharableSession();
-  cVar3 = Session_IsValid();
-  if (cVar3 == '\0') {
-    *puVar4 = "MENU_INVITE_SESSION_INVALID";
-    __restgprlr_29(0);
-    return;
+  pSVar2 = Live_GetSharableSession();
+  bVar3 = Session_IsValid(pSVar2);
+  if (!bVar3) {
+    *ppcVar6 = "MENU_INVITE_SESSION_INVALID";
+    uVar4 = __restgprlr_29(0);
+    return (bool)uVar4;
   }
-  cVar3 = Session_IsFull(uVar2);
-  if (cVar3 != '\0') {
-    *puVar4 = "MENU_INVITE_SESSION_FULL";
-    __restgprlr_29(0);
-    return;
+  bVar3 = Session_IsFull(pSVar2);
+  if (bVar3) {
+    *ppcVar6 = "MENU_INVITE_SESSION_FULL";
+    uVar4 = __restgprlr_29(0);
+    return (bool)uVar4;
   }
-  FriendsMenu_IsAllowedToInvite_Platform(uVar1,param_2);
-  __restgprlr_29();
-  return;
+  bVar3 = FriendsMenu_IsAllowedToInvite_Platform(iVar1,ppcVar6);
+  uVar4 = __restgprlr_29(bVar3);
+  return (bool)uVar4;
 }
 
 
 // 82703F48  FriendsMenu_IsUserJoinable_Internal  (social/social_friends.cpp:676)
 
-void FriendsMenu_IsUserJoinable_Internal(undefined8 param_1,undefined8 param_2,undefined4 *param_3)
+bool FriendsMenu_IsUserJoinable_Internal(int param_1,uint param_2,bool param_3,char **param_4)
 
 {
-  undefined8 uVar1;
-  int iVar2;
-  char cVar3;
+  int iVar1;
+  FriendStatus FVar2;
+  undefined1 uVar3;
+  bool bVar4;
+  longlong lVar5;
+  int iVar6;
+  ulonglong uVar7;
+  undefined4 *puVar8;
   
-  uVar1 = __savegprlr_29();
-  if (param_3 == (undefined4 *)0x0) {
-    MyAssertHandler(0xffffffff821b2e60,0x2a7);
+  uVar7 = (ulonglong)param_3;
+  lVar5 = (longlong)(int)param_2;
+  iVar1 = __savegprlr_29(param_1,lVar5,uVar7,param_4);
+  puVar8 = (undefined4 *)uVar7;
+  if ((uVar7 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_friends.cpp",
+                    0x2a7,(int)puVar8,"%s");
   }
-  iVar2 = FriendsMenu_GetStatus(uVar1,param_2);
-  if (iVar2 == 0) {
-    *param_3 = "MENU_FRIEND_STILL_PENDING";
-    __restgprlr_29();
-    return;
+  iVar6 = (int)lVar5;
+  FVar2 = FriendsMenu_GetStatus(iVar1,iVar6);
+  if (FVar2 == FRIEND_STATUS_REQUEST_PENDING) {
+    *puVar8 = "MENU_FRIEND_STILL_PENDING";
+    uVar3 = __restgprlr_29();
+    return (bool)uVar3;
   }
-  if (iVar2 == 1) {
-    *param_3 = "MENU_FRIEND_NOT_CONFIRMED";
-    __restgprlr_29(0);
-    return;
+  if (FVar2 == FRIEND_STATUS_REQUEST_RECEIVED) {
+    *puVar8 = "MENU_FRIEND_NOT_CONFIRMED";
+    uVar3 = __restgprlr_29(0);
+    return (bool)uVar3;
   }
-  if (iVar2 == 2) {
-    *param_3 = "MENU_FRIEND_NOT_IN_GAME";
-    __restgprlr_29(0);
-    return;
+  if (FVar2 == FRIEND_STATUS_OFFLINE) {
+    *puVar8 = "MENU_FRIEND_NOT_IN_GAME";
+    uVar3 = __restgprlr_29(0);
+    return (bool)uVar3;
   }
-  cVar3 = FriendsMenu_IsAlreadyConnected(uVar1,param_2);
-  if (cVar3 != '\0') {
-    *param_3 = "MENU_FRIEND_ALREADY_CONNECTED";
-    __restgprlr_29(0);
-    return;
+  bVar4 = FriendsMenu_IsAlreadyConnected(iVar1,iVar6);
+  if (bVar4) {
+    *puVar8 = "MENU_FRIEND_ALREADY_CONNECTED";
+    uVar3 = __restgprlr_29(0);
+    return (bool)uVar3;
   }
-  cVar3 = FriendsMenu_GetIsSessionValid_Platform(uVar1,param_2);
-  if (cVar3 == '\0') {
-    *param_3 = "MENU_JOIN_SESSION_INVALID";
-    __restgprlr_29(0);
-    return;
+  bVar4 = FriendsMenu_GetIsSessionValid_Platform(iVar1,iVar6);
+  if (!bVar4) {
+    *puVar8 = "MENU_JOIN_SESSION_INVALID";
+    uVar3 = __restgprlr_29(0);
+    return (bool)uVar3;
   }
-  cVar3 = FriendsMenu_GetIsSessionFull_Platform(uVar1,param_2);
-  if (cVar3 != '\0') {
-    *param_3 = "XBOXLIVE_JOIN_FULL_GAME";
-    __restgprlr_29(0);
-    return;
+  bVar4 = FriendsMenu_GetIsSessionFull_Platform(iVar1,iVar6);
+  if (bVar4) {
+    *puVar8 = "XBOXLIVE_JOIN_FULL_GAME";
+    uVar3 = __restgprlr_29(0);
+    return (bool)uVar3;
   }
-  __restgprlr_29(1);
-  return;
+  uVar3 = __restgprlr_29(1);
+  return (bool)uVar3;
 }
 
 
 // 82704090  FriendsMenu_IsUserJoinable  (social/social_friends.cpp:737)
 
-undefined8
-FriendsMenu_IsUserJoinable
-          (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
+bool FriendsMenu_IsUserJoinable(int param_1,uint param_2,bool param_3,char **param_4)
 
 {
-  char cVar2;
-  undefined8 uVar1;
+  bool bVar1;
   
-  cVar2 = FriendsMenu_IsUserJoinable_Internal(param_1,param_2,param_4);
-  if (cVar2 == '\0') {
-    uVar1 = 0;
+  bVar1 = FriendsMenu_IsUserJoinable_Internal(param_1,param_2,SUB41(param_4,0),param_4);
+  if (bVar1) {
+    bVar1 = FriendsMenu_IsAllowedToJoin_Platform(param_1,param_4);
   }
   else {
-    uVar1 = FriendsMenu_IsAllowedToJoin_Platform(param_1,param_4);
+    bVar1 = false;
   }
-  return uVar1;
+  return bVar1;
 }
 
 
 // 827040F0  FriendsMenu_IsUserInvitable  (social/social_friends.cpp:758)
 
-void FriendsMenu_IsUserInvitable(undefined8 param_1,undefined8 param_2,undefined4 *param_3)
+bool FriendsMenu_IsUserInvitable(int param_1,uint param_2,char **param_3)
 
 {
-  undefined8 uVar1;
-  int iVar2;
-  char cVar3;
+  int iVar1;
+  FriendStatus FVar2;
+  undefined1 uVar3;
+  bool bVar4;
+  ulonglong uVar5;
+  undefined4 *puVar6;
   
-  uVar1 = __savegprlr_29();
-  if (param_3 == (undefined4 *)0x0) {
-    MyAssertHandler(0xffffffff821b2e60,0x2f9);
+  uVar5 = (ulonglong)(int)param_3;
+  iVar1 = __savegprlr_29(param_1);
+  puVar6 = (undefined4 *)uVar5;
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_friends.cpp",
+                    0x2f9,(int)puVar6,"%s");
   }
-  iVar2 = FriendsMenu_GetStatus(uVar1,param_2);
-  if (iVar2 == 2) {
-    *param_3 = "MENU_FRIEND_OFFLINE";
-    __restgprlr_29(0);
-    return;
+  FVar2 = FriendsMenu_GetStatus(iVar1,param_2);
+  if (FVar2 == FRIEND_STATUS_OFFLINE) {
+    *puVar6 = "MENU_FRIEND_OFFLINE";
+    uVar3 = __restgprlr_29(0);
+    return (bool)uVar3;
   }
-  cVar3 = FriendsMenu_IsAlreadyConnected(uVar1,param_2);
-  if (cVar3 != '\0') {
-    *param_3 = "MENU_FRIEND_ALREADY_CONNECTED";
-    __restgprlr_29(0);
-    return;
+  bVar4 = FriendsMenu_IsAlreadyConnected(iVar1,param_2);
+  if (bVar4) {
+    *puVar6 = "MENU_FRIEND_ALREADY_CONNECTED";
+    uVar3 = __restgprlr_29(0);
+    return (bool)uVar3;
   }
-  __restgprlr_29(1);
-  return;
+  uVar3 = __restgprlr_29(1);
+  return (bool)uVar3;
 }
 
 
 // 82703B20  FriendsMenu_IsAlreadyConnected  (social/social_friends.cpp:782)
 
-ulonglong FriendsMenu_IsAlreadyConnected(void)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+bool FriendsMenu_IsAlreadyConnected(int param_1,int param_2)
 
 {
-  undefined8 uVar1;
-  int iVar3;
-  ulonglong uVar2;
+  ulong64 uVar1;
+  int iVar2;
   
-  uVar1 = FriendsMenu_GetFriendId();
-  iVar3 = Party_InParty(0xffffffff82b55118);
-  if (iVar3 != 0) {
-    if (DAT_82b55118 == 0) {
-      MyAssertHandler(0xffffffff821b2e60,0x31b,0,0xffffffff82000f98,0xffffffff821b3000);
+  uVar1 = FriendsMenu_GetFriendId(param_1,param_2);
+  iVar2 = Party_InParty(&g_partyData);
+  if (iVar2 != 0) {
+    if (g_partyData.session == (SessionData *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_friends.cpp",
+                      0x31b,0,"%s");
     }
-    iVar3 = Session_FindRegisteredUser(DAT_82b55118,uVar1);
-    if (-1 < iVar3) {
-      return 1;
+    iVar2 = Session_FindRegisteredUser(g_partyData.session,uVar1);
+    if (-1 < iVar2) {
+      return true;
     }
   }
-  uVar2 = Session_FindRegisteredUser(0xffffffff844c7860,uVar1);
-  return (uVar2 & 0xffffffff) >> 0x1f ^ 1;
+  iVar2 = Session_FindRegisteredUser(&g_serverSession,uVar1);
+  return (bool)((byte)((uint)iVar2 >> 0x1f) ^ 1);
 }
 
 
@@ -1000,62 +1219,52 @@ ulonglong FriendsMenu_IsAlreadyConnected(void)
 bool FriendsMenu_IsSlotSelected(int param_1,int param_2)
 
 {
-  param_1 = param_1 * 0x670;
-  if (*(int *)(&DAT_84546e60 + param_1) == 0) {
+  if (g_friendListGlobal[param_1].count == 0) {
     return false;
   }
-  return param_2 == *(int *)(&DAT_84546e40 + param_1) - *(int *)(&DAT_84546e48 + param_1);
+  return param_2 ==
+         g_friendListGlobal[param_1].actualIndex - g_friendListGlobal[param_1].currentStartPos;
 }
 
 
 // 82703C18  FriendsMenu_GetPresenceForSlot  (social/social_friends.cpp:822)
 
-undefined8 FriendsMenu_GetPresenceForSlot(int param_1,int param_2)
+char * FriendsMenu_GetPresenceForSlot(int param_1,int param_2)
 
 {
-  int iVar1;
+  uint uVar1;
   
-  iVar1 = param_1 * 0x670;
-  if ((uint)(*(int *)(&DAT_84546e48 + iVar1) + param_2) < *(uint *)(&DAT_84546e60 + iVar1)) {
+  uVar1 = g_friendListGlobal[param_1].currentStartPos + param_2;
+  if (uVar1 < g_friendListGlobal[param_1].count) {
     Friends_GetPresence_Platform
-              (param_1,*(undefined8 *)
-                        (&DAT_84546e40 +
-                        (*(int *)(&DAT_84546e40 +
-                                 (*(int *)(&DAT_84546e48 + iVar1) + param_2 + 0x136U) * 4 + iVar1) +
-                        5) * 8 + iVar1),0xffffffff84546dc0,0x80);
-    return 0xffffffff84546dc0;
+              (param_1,g_friendListGlobal[param_1].friends
+                       [g_friendListGlobal[param_1].sortedFriends[uVar1]],g_currentPresenceText,0x80
+              );
+    return g_currentPresenceText;
   }
-  return 0xffffffff820068af;
+  return "";
 }
 
 
 // 82703CB0  FriendsMenu_GetCurrentIndexName  (social/social_friends.cpp:843)
 
-undefined8 FriendsMenu_GetCurrentIndexName(int param_1)
+char * FriendsMenu_GetCurrentIndexName(int param_1)
 
 {
-  int iVar1;
-  
-  iVar1 = param_1 * 0x670;
   Friends_Gamertag_Platform
-            (param_1,*(undefined8 *)
-                      (&DAT_84546e40 +
-                      (*(int *)(&DAT_84546e40 +
-                               (*(int *)(&DAT_84546e44 + iVar1) + 0x136) * 4 + iVar1) + 5) * 8 +
-                      iVar1),0xffffffff84548880,0x20);
-  return 0xffffffff84548880;
+            (param_1,g_friendListGlobal[param_1].friends
+                     [g_friendListGlobal[param_1].sortedFriends
+                      [g_friendListGlobal[param_1].currentIndex]],g_friendFeederName,0x20);
+  return g_friendFeederName;
 }
 
 
 // 82703D18  FriendsMenu_GetCurrentIndexXUID  (social/social_friends.cpp:856)
 
-undefined8 FriendsMenu_GetCurrentIndexXUID(int param_1)
+ulong64 FriendsMenu_GetCurrentIndexXUID(int param_1)
 
 {
-  param_1 = param_1 * 0x670;
-  return *(undefined8 *)
-          (&DAT_84546e40 +
-          (*(int *)(&DAT_84546e40 + (*(int *)(&DAT_84546e44 + param_1) + 0x136) * 4 + param_1) + 5)
-          * 8 + param_1);
+  return g_friendListGlobal[param_1].friends
+         [g_friendListGlobal[param_1].sortedFriends[g_friendListGlobal[param_1].currentIndex]];
 }
 

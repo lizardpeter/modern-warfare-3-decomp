@@ -41,7 +41,13 @@ LAB_828cb4cc:
   828CB4D4  4C810020             blelr
   828CB4D8  7CEA3B78             or r10,r7,r7
   828CB4DC  7D6903A6             mtspr CTR,r11
-  828CB4E0  13E050C7             vcmpequd v31,v0,v10
+LAB_828cb4e0:
+  828CB4E0  13E050C7             lvx128 v63,0,r10
+  828CB4E4  1BE0FEB5             vexptefp128 v63,v63
+  828CB4E8  13E051C7             stvx128 v63,0,r10
+  828CB4EC  394A0010             addi r10,r10,0x10
+  828CB4F0  4200FFF0             bdnz 0x828cb4e0
+  828CB4F4  4E800020             blr
 
 ; 828CB4F8  NellySWSynth  (<external>/Xenon/mar09/core/private/xam/codecs/nci/dec/src/swsynth.c:380)
   828CB4F8  7D8802A6             mfspr r12,LR

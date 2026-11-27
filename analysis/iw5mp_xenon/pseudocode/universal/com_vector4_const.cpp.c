@@ -2,1264 +2,1185 @@
 
 // 8293DA80  `dynamic_initializer_for_'g_fltMin''  (universal/com_vector4_const.cpp:16)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_fltMin__(void)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs41 [16];
-  
-  altv207_13(in_vs32,in_vs41);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  g_fltMin.field0_0x0.vector4_f32[0] = (float)0x800000;
+  g_fltMin.field0_0x0.vector4_f32[1] = (float)0x800000;
+  g_fltMin.field0_0x0.vector4_f32[2] = (float)0x800000;
+  g_fltMin.field0_0x0.vector4_f32[3] = (float)0x800000;
+  return;
 }
 
 
 // 8293DAA0  `dynamic_initializer_for_'g_negativeZero''  (universal/com_vector4_const.cpp:24)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_negativeZero__(void)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs41 [16];
-  
-  altv207_13(in_vs32,in_vs41);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  g_negativeZero.field0_0x0.vector4_f32[0] = (float)0x80000000;
+  g_negativeZero.field0_0x0.vector4_f32[1] = (float)0x80000000;
+  g_negativeZero.field0_0x0.vector4_f32[2] = (float)0x80000000;
+  g_negativeZero.field0_0x0.vector4_f32[3] = (float)0x80000000;
+  return;
 }
 
 
 // 8293DAC0  `dynamic_initializer_for_'g_maskOffSignBit''  (universal/com_vector4_const.cpp:25)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_maskOffSignBit__(void)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs41 [16];
-  
-  altv207_13(in_vs32,in_vs41);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  g_maskOffSignBit.field0_0x0.vector4_f32[0] = (float)0x7fffffff;
+  g_maskOffSignBit.field0_0x0.vector4_f32[1] = (float)0x7fffffff;
+  g_maskOffSignBit.field0_0x0.vector4_f32[2] = (float)0x7fffffff;
+  g_maskOffSignBit.field0_0x0.vector4_f32[3] = (float)0x7fffffff;
+  return;
 }
 
 
 // 8293DAE0  `dynamic_initializer_for_'g_negativeOne''  (universal/com_vector4_const.cpp:26)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_negativeOne__(void)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs41 [16];
-  
-  altv207_13(in_vs32,in_vs41);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  g_negativeOne.field0_0x0.vector4_f32[0] = (float)0xffffffff;
+  g_negativeOne.field0_0x0.vector4_f32[1] = (float)0xffffffff;
+  g_negativeOne.field0_0x0.vector4_f32[2] = (float)0xffffffff;
+  g_negativeOne.field0_0x0.vector4_f32[3] = (float)0xffffffff;
+  return;
 }
 
 
 // 8293DB00  `dynamic_initializer_for_'g_inc''  (universal/com_vector4_const.cpp:27)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_inc__(void)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs41 [16];
-  
-  altv207_13(in_vs32,in_vs41);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  g_inc.field0_0x0.vector4_f32[0] = (float)1;
+  g_inc.field0_0x0.vector4_f32[1] = (float)1;
+  g_inc.field0_0x0.vector4_f32[2] = (float)1;
+  g_inc.field0_0x0.vector4_f32[3] = (float)1;
+  return;
 }
 
 
 // 8293DB20  `dynamic_initializer_for_'g_XYZW''  (universal/com_vector4_const.cpp:36)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_XYZW__(void)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs41 [16];
-  
-  altv207_13(in_vs32,in_vs41);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  g_XYZW.field0_0x0.vector4_f32[0] = (float)0x10203;
+  g_XYZW.field0_0x0.vector4_f32[1] = (float)0x4050607;
+  g_XYZW.field0_0x0.vector4_f32[2] = (float)0x8090a0b;
+  g_XYZW.field0_0x0.vector4_f32[3] = (float)0xc0d0e0f;
+  return;
 }
 
 
 // 8293DB40  `dynamic_initializer_for_'g_YXZW''  (universal/com_vector4_const.cpp:37)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_YXZW__(void)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs41 [16];
-  
-  altv207_13(in_vs32,in_vs41);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  g_YXZW.field0_0x0.vector4_f32[0] = (float)0x4050607;
+  g_YXZW.field0_0x0.vector4_f32[1] = (float)0x10203;
+  g_YXZW.field0_0x0.vector4_f32[2] = (float)0x8090a0b;
+  g_YXZW.field0_0x0.vector4_f32[3] = (float)0xc0d0e0f;
+  return;
 }
 
 
 // 8293DB60  `dynamic_initializer_for_'g_XZYW''  (universal/com_vector4_const.cpp:38)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_XZYW__(void)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs41 [16];
-  
-  altv207_13(in_vs32,in_vs41);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  g_XZYW.field0_0x0.vector4_f32[0] = (float)0x10203;
+  g_XZYW.field0_0x0.vector4_f32[1] = (float)0x8090a0b;
+  g_XZYW.field0_0x0.vector4_f32[2] = (float)0x4050607;
+  g_XZYW.field0_0x0.vector4_f32[3] = (float)0xc0d0e0f;
+  return;
 }
 
 
 // 8293DB80  `dynamic_initializer_for_'g_YXWZ''  (universal/com_vector4_const.cpp:39)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_YXWZ__(void)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs41 [16];
-  
-  altv207_13(in_vs32,in_vs41);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  g_YXWZ.field0_0x0.vector4_f32[0] = (float)0x4050607;
+  g_YXWZ.field0_0x0.vector4_f32[1] = (float)0x10203;
+  g_YXWZ.field0_0x0.vector4_f32[2] = (float)0xc0d0e0f;
+  g_YXWZ.field0_0x0.vector4_f32[3] = (float)0x8090a0b;
+  return;
 }
 
 
 // 8293DBA0  `dynamic_initializer_for_'g_XxZz''  (universal/com_vector4_const.cpp:40)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_XxZz__(void)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs41 [16];
-  
-  altv207_13(in_vs32,in_vs41);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  g_XxZz.field0_0x0.vector4_f32[0] = (float)0x10203;
+  g_XxZz.field0_0x0.vector4_f32[1] = (float)0x10111213;
+  g_XxZz.field0_0x0.vector4_f32[2] = (float)0x8090a0b;
+  g_XxZz.field0_0x0.vector4_f32[3] = (float)0x18191a1b;
+  return;
 }
 
 
 // 8293DBC0  `dynamic_initializer_for_'g_YyWw''  (universal/com_vector4_const.cpp:41)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_YyWw__(void)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs41 [16];
-  
-  altv207_13(in_vs32,in_vs41);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  g_YyWw.field0_0x0.vector4_f32[0] = (float)0x4050607;
+  g_YyWw.field0_0x0.vector4_f32[1] = (float)0x14151617;
+  g_YyWw.field0_0x0.vector4_f32[2] = (float)0xc0d0e0f;
+  g_YyWw.field0_0x0.vector4_f32[3] = (float)0x1c1d1e1f;
+  return;
 }
 
 
 // 8293DBE0  `dynamic_initializer_for_'g_XYxy''  (universal/com_vector4_const.cpp:42)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_XYxy__(void)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs41 [16];
-  
-  altv207_13(in_vs32,in_vs41);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  g_XYxy.field0_0x0.vector4_f32[0] = (float)0x10203;
+  g_XYxy.field0_0x0.vector4_f32[1] = (float)0x4050607;
+  g_XYxy.field0_0x0.vector4_f32[2] = (float)0x10111213;
+  g_XYxy.field0_0x0.vector4_f32[3] = (float)0x14151617;
+  return;
 }
 
 
 // 8293DC00  `dynamic_initializer_for_'g_ZWzw''  (universal/com_vector4_const.cpp:43)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_ZWzw__(void)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs41 [16];
-  
-  altv207_13(in_vs32,in_vs41);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  g_ZWzw.field0_0x0.vector4_f32[0] = (float)0x8090a0b;
+  g_ZWzw.field0_0x0.vector4_f32[1] = (float)0xc0d0e0f;
+  g_ZWzw.field0_0x0.vector4_f32[2] = (float)0x18191a1b;
+  g_ZWzw.field0_0x0.vector4_f32[3] = (float)0x1c1d1e1f;
+  return;
 }
 
 
 // 8293DC20  `dynamic_initializer_for_'g_XYZx''  (universal/com_vector4_const.cpp:44)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_XYZx__(void)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs41 [16];
-  
-  altv207_13(in_vs32,in_vs41);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  g_XYZx.field0_0x0.vector4_f32[0] = (float)0x10203;
+  g_XYZx.field0_0x0.vector4_f32[1] = (float)0x4050607;
+  g_XYZx.field0_0x0.vector4_f32[2] = (float)0x8090a0b;
+  g_XYZx.field0_0x0.vector4_f32[3] = (float)0x10111213;
+  return;
 }
 
 
 // 8293DC40  `dynamic_initializer_for_'g_YZXW''  (universal/com_vector4_const.cpp:45)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_YZXW__(void)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs41 [16];
-  
-  altv207_13(in_vs32,in_vs41);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  g_YZXW.field0_0x0.vector4_f32[0] = (float)0x4050607;
+  g_YZXW.field0_0x0.vector4_f32[1] = (float)0x8090a0b;
+  g_YZXW.field0_0x0.vector4_f32[2] = (float)0x10203;
+  g_YZXW.field0_0x0.vector4_f32[3] = (float)0xc0d0e0f;
+  return;
 }
 
 
 // 8293DC60  `dynamic_initializer_for_'g_ZXYW''  (universal/com_vector4_const.cpp:46)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_ZXYW__(void)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs41 [16];
-  
-  altv207_13(in_vs32,in_vs41);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  g_ZXYW.field0_0x0.vector4_f32[0] = (float)0x8090a0b;
+  g_ZXYW.field0_0x0.vector4_f32[1] = (float)0x10203;
+  g_ZXYW.field0_0x0.vector4_f32[2] = (float)0x4050607;
+  g_ZXYW.field0_0x0.vector4_f32[3] = (float)0xc0d0e0f;
+  return;
 }
 
 
 // 8293DC80  `dynamic_initializer_for_'g_WxyW''  (universal/com_vector4_const.cpp:47)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_WxyW__(void)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs41 [16];
-  
-  altv207_13(in_vs32,in_vs41);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  g_WxyW.field0_0x0.vector4_f32[0] = (float)0xc0d0e0f;
+  g_WxyW.field0_0x0.vector4_f32[1] = (float)0x10111213;
+  g_WxyW.field0_0x0.vector4_f32[2] = (float)0x14151617;
+  g_WxyW.field0_0x0.vector4_f32[3] = (float)0xc0d0e0f;
+  return;
 }
 
 
 // 8293DCA0  `dynamic_initializer_for_'g_ZWxW''  (universal/com_vector4_const.cpp:48)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_ZWxW__(void)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs41 [16];
-  
-  altv207_13(in_vs32,in_vs41);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  g_ZWxW.field0_0x0.vector4_f32[0] = (float)0x8090a0b;
+  g_ZWxW.field0_0x0.vector4_f32[1] = (float)0xc0d0e0f;
+  g_ZWxW.field0_0x0.vector4_f32[2] = (float)0x10111213;
+  g_ZWxW.field0_0x0.vector4_f32[3] = (float)0xc0d0e0f;
+  return;
 }
 
 
 // 8293DCC0  `dynamic_initializer_for_'g_YZWx''  (universal/com_vector4_const.cpp:49)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_YZWx__(void)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs41 [16];
-  
-  altv207_13(in_vs32,in_vs41);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  g_YZWx.field0_0x0.vector4_f32[0] = (float)0x4050607;
+  g_YZWx.field0_0x0.vector4_f32[1] = (float)0x8090a0b;
+  g_YZWx.field0_0x0.vector4_f32[2] = (float)0xc0d0e0f;
+  g_YZWx.field0_0x0.vector4_f32[3] = (float)0x10111213;
+  return;
 }
 
 
 // 8293DCE0  `dynamic_initializer_for_'g_XXXX''  (universal/com_vector4_const.cpp:50)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_XXXX__(void)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs41 [16];
-  
-  altv207_13(in_vs32,in_vs41);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  g_XXXX.field0_0x0.vector4_f32[0] = (float)0x10203;
+  g_XXXX.field0_0x0.vector4_f32[1] = (float)0x10203;
+  g_XXXX.field0_0x0.vector4_f32[2] = (float)0x10203;
+  g_XXXX.field0_0x0.vector4_f32[3] = (float)0x10203;
+  return;
 }
 
 
 // 8293DD00  `dynamic_initializer_for_'g_YYYY''  (universal/com_vector4_const.cpp:51)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_YYYY__(void)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs41 [16];
-  
-  altv207_13(in_vs32,in_vs41);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  g_YYYY.field0_0x0.vector4_f32[0] = (float)0x4050607;
+  g_YYYY.field0_0x0.vector4_f32[1] = (float)0x4050607;
+  g_YYYY.field0_0x0.vector4_f32[2] = (float)0x4050607;
+  g_YYYY.field0_0x0.vector4_f32[3] = (float)0x4050607;
+  return;
 }
 
 
 // 8293DD20  `dynamic_initializer_for_'g_ZZZZ''  (universal/com_vector4_const.cpp:52)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_ZZZZ__(void)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs41 [16];
-  
-  altv207_13(in_vs32,in_vs41);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  g_ZZZZ.field0_0x0.vector4_f32[0] = (float)0x8090a0b;
+  g_ZZZZ.field0_0x0.vector4_f32[1] = (float)0x8090a0b;
+  g_ZZZZ.field0_0x0.vector4_f32[2] = (float)0x8090a0b;
+  g_ZZZZ.field0_0x0.vector4_f32[3] = (float)0x8090a0b;
+  return;
 }
 
 
 // 8293DD40  `dynamic_initializer_for_'g_WWWW''  (universal/com_vector4_const.cpp:53)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_WWWW__(void)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs41 [16];
-  
-  altv207_13(in_vs32,in_vs41);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  g_WWWW.field0_0x0.vector4_f32[0] = (float)0xc0d0e0f;
+  g_WWWW.field0_0x0.vector4_f32[1] = (float)0xc0d0e0f;
+  g_WWWW.field0_0x0.vector4_f32[2] = (float)0xc0d0e0f;
+  g_WWWW.field0_0x0.vector4_f32[3] = (float)0xc0d0e0f;
+  return;
 }
 
 
 // 8293DD60  `dynamic_initializer_for_'g_xYZW''  (universal/com_vector4_const.cpp:54)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_xYZW__(void)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs41 [16];
-  
-  altv207_13(in_vs32,in_vs41);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  g_xYZW.field0_0x0.vector4_f32[0] = (float)0x10111213;
+  g_xYZW.field0_0x0.vector4_f32[1] = (float)0x4050607;
+  g_xYZW.field0_0x0.vector4_f32[2] = (float)0x8090a0b;
+  g_xYZW.field0_0x0.vector4_f32[3] = (float)0xc0d0e0f;
+  return;
 }
 
 
 // 8293DD80  `dynamic_initializer_for_'g_XyZW''  (universal/com_vector4_const.cpp:55)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_XyZW__(void)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs41 [16];
-  
-  altv207_13(in_vs32,in_vs41);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  g_XyZW.field0_0x0.vector4_f32[0] = (float)0x10203;
+  g_XyZW.field0_0x0.vector4_f32[1] = (float)0x14151617;
+  g_XyZW.field0_0x0.vector4_f32[2] = (float)0x8090a0b;
+  g_XyZW.field0_0x0.vector4_f32[3] = (float)0xc0d0e0f;
+  return;
 }
 
 
 // 8293DDA0  `dynamic_initializer_for_'g_XYzW''  (universal/com_vector4_const.cpp:56)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_XYzW__(void)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs41 [16];
-  
-  altv207_13(in_vs32,in_vs41);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  g_XYzW.field0_0x0.vector4_f32[0] = (float)0x10203;
+  g_XYzW.field0_0x0.vector4_f32[1] = (float)0x4050607;
+  g_XYzW.field0_0x0.vector4_f32[2] = (float)0x18191a1b;
+  g_XYzW.field0_0x0.vector4_f32[3] = (float)0xc0d0e0f;
+  return;
 }
 
 
 // 8293DDC0  `dynamic_initializer_for_'g_XYZw''  (universal/com_vector4_const.cpp:57)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_XYZw__(void)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs41 [16];
-  
-  altv207_13(in_vs32,in_vs41);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  g_XYZw.field0_0x0.vector4_f32[0] = (float)0x10203;
+  g_XYZw.field0_0x0.vector4_f32[1] = (float)0x4050607;
+  g_XYZw.field0_0x0.vector4_f32[2] = (float)0x8090a0b;
+  g_XYZw.field0_0x0.vector4_f32[3] = (float)0x1c1d1e1f;
+  return;
 }
 
 
 // 8293DDE0  `dynamic_initializer_for_'g_XxYy''  (universal/com_vector4_const.cpp:59)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_XxYy__(void)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs41 [16];
-  
-  altv207_13(in_vs32,in_vs41);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  g_XxYy.field0_0x0.vector4_f32[0] = (float)0x10203;
+  g_XxYy.field0_0x0.vector4_f32[1] = (float)0x10111213;
+  g_XxYy.field0_0x0.vector4_f32[2] = (float)0x4050607;
+  g_XxYy.field0_0x0.vector4_f32[3] = (float)0x14151617;
+  return;
 }
 
 
 // 8293DE00  `dynamic_initializer_for_'g_ZzWw''  (universal/com_vector4_const.cpp:60)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_ZzWw__(void)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs41 [16];
-  
-  altv207_13(in_vs32,in_vs41);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  g_ZzWw.field0_0x0.vector4_f32[0] = (float)0x8090a0b;
+  g_ZzWw.field0_0x0.vector4_f32[1] = (float)0x18191a1b;
+  g_ZzWw.field0_0x0.vector4_f32[2] = (float)0xc0d0e0f;
+  g_ZzWw.field0_0x0.vector4_f32[3] = (float)0x1c1d1e1f;
+  return;
 }
 
 
 // 8293DE20  `dynamic_initializer_for_'g_Xxxx''  (universal/com_vector4_const.cpp:62)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_Xxxx__(void)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs41 [16];
-  
-  altv207_13(in_vs32,in_vs41);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  g_Xxxx.field0_0x0.vector4_f32[0] = (float)0x10203;
+  g_Xxxx.field0_0x0.vector4_f32[1] = (float)0x10111213;
+  g_Xxxx.field0_0x0.vector4_f32[2] = (float)0x10111213;
+  g_Xxxx.field0_0x0.vector4_f32[3] = (float)0x10111213;
+  return;
 }
 
 
 // 8293DE40  `dynamic_initializer_for_'g_Yyyy''  (universal/com_vector4_const.cpp:63)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_Yyyy__(void)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs41 [16];
-  
-  altv207_13(in_vs32,in_vs41);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  g_Yyyy.field0_0x0.vector4_f32[0] = (float)0x4050607;
+  g_Yyyy.field0_0x0.vector4_f32[1] = (float)0x14151617;
+  g_Yyyy.field0_0x0.vector4_f32[2] = (float)0x14151617;
+  g_Yyyy.field0_0x0.vector4_f32[3] = (float)0x14151617;
+  return;
 }
 
 
 // 8293DE60  `dynamic_initializer_for_'g_yYyy''  (universal/com_vector4_const.cpp:64)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_yYyy__(void)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs41 [16];
-  
-  altv207_13(in_vs32,in_vs41);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  g_yYyy.field0_0x0.vector4_f32[0] = (float)0x14151617;
+  g_yYyy.field0_0x0.vector4_f32[1] = (float)0x4050607;
+  g_yYyy.field0_0x0.vector4_f32[2] = (float)0x14151617;
+  g_yYyy.field0_0x0.vector4_f32[3] = (float)0x14151617;
+  return;
 }
 
 
 // 8293DE80  `dynamic_initializer_for_'g_yyYy''  (universal/com_vector4_const.cpp:65)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_yyYy__(void)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs41 [16];
-  
-  altv207_13(in_vs32,in_vs41);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  g_yyYy.field0_0x0.vector4_f32[0] = (float)0x14151617;
+  g_yyYy.field0_0x0.vector4_f32[1] = (float)0x14151617;
+  g_yyYy.field0_0x0.vector4_f32[2] = (float)0x4050607;
+  g_yyYy.field0_0x0.vector4_f32[3] = (float)0x14151617;
+  return;
 }
 
 
 // 8293DEA0  `dynamic_initializer_for_'g_yyyY''  (universal/com_vector4_const.cpp:66)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_yyyY__(void)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs41 [16];
-  
-  altv207_13(in_vs32,in_vs41);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  g_yyyY.field0_0x0.vector4_f32[0] = (float)0x14151617;
+  g_yyyY.field0_0x0.vector4_f32[1] = (float)0x14151617;
+  g_yyyY.field0_0x0.vector4_f32[2] = (float)0x14151617;
+  g_yyyY.field0_0x0.vector4_f32[3] = (float)0x4050607;
+  return;
 }
 
 
 // 8293DEC0  `dynamic_initializer_for_'g_zzZz''  (universal/com_vector4_const.cpp:67)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_zzZz__(void)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs41 [16];
-  
-  altv207_13(in_vs32,in_vs41);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  g_zzZz.field0_0x0.vector4_f32[0] = (float)0x18191a1b;
+  g_zzZz.field0_0x0.vector4_f32[1] = (float)0x18191a1b;
+  g_zzZz.field0_0x0.vector4_f32[2] = (float)0x8090a0b;
+  g_zzZz.field0_0x0.vector4_f32[3] = (float)0x18191a1b;
+  return;
 }
 
 
 // 8293DEE0  `dynamic_initializer_for_'g_ZWxy''  (universal/com_vector4_const.cpp:69)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_ZWxy__(void)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs41 [16];
-  
-  altv207_13(in_vs32,in_vs41);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  g_ZWxy.field0_0x0.vector4_f32[0] = (float)0x8090a0b;
+  g_ZWxy.field0_0x0.vector4_f32[1] = (float)0xc0d0e0f;
+  g_ZWxy.field0_0x0.vector4_f32[2] = (float)0x10111213;
+  g_ZWxy.field0_0x0.vector4_f32[3] = (float)0x14151617;
+  return;
 }
 
 
 // 8293DF00  `dynamic_initializer_for_'g_XZxz''  (universal/com_vector4_const.cpp:70)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_XZxz__(void)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs41 [16];
-  
-  altv207_13(in_vs32,in_vs41);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  g_XZxz.field0_0x0.vector4_f32[0] = (float)0x10203;
+  g_XZxz.field0_0x0.vector4_f32[1] = (float)0x8090a0b;
+  g_XZxz.field0_0x0.vector4_f32[2] = (float)0x10111213;
+  g_XZxz.field0_0x0.vector4_f32[3] = (float)0x18191a1b;
+  return;
 }
 
 
 // 8293DF20  `dynamic_initializer_for_'g_YXyx''  (universal/com_vector4_const.cpp:71)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_YXyx__(void)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs41 [16];
-  
-  altv207_13(in_vs32,in_vs41);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  g_YXyx.field0_0x0.vector4_f32[0] = (float)0x4050607;
+  g_YXyx.field0_0x0.vector4_f32[1] = (float)0x10203;
+  g_YXyx.field0_0x0.vector4_f32[2] = (float)0x14151617;
+  g_YXyx.field0_0x0.vector4_f32[3] = (float)0x10111213;
+  return;
 }
 
 
 // 8293DF40  `dynamic_initializer_for_'g_YZWW''  (universal/com_vector4_const.cpp:72)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_YZWW__(void)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs41 [16];
-  
-  altv207_13(in_vs32,in_vs41);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  g_YZWW.field0_0x0.vector4_f32[0] = (float)0x4050607;
+  g_YZWW.field0_0x0.vector4_f32[1] = (float)0x8090a0b;
+  g_YZWW.field0_0x0.vector4_f32[2] = (float)0xc0d0e0f;
+  g_YZWW.field0_0x0.vector4_f32[3] = (float)0xc0d0e0f;
+  return;
 }
 
 
 // 8293DF60  `dynamic_initializer_for_'g_YyXx''  (universal/com_vector4_const.cpp:74)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_YyXx__(void)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs41 [16];
-  
-  altv207_13(in_vs32,in_vs41);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  g_YyXx.field0_0x0.vector4_f32[0] = (float)0x4050607;
+  g_YyXx.field0_0x0.vector4_f32[1] = (float)0x14151617;
+  g_YyXx.field0_0x0.vector4_f32[2] = (float)0x10203;
+  g_YyXx.field0_0x0.vector4_f32[3] = (float)0x10111213;
+  return;
 }
 
 
 // 8293DF80  `dynamic_initializer_for_'g_ZzZz''  (universal/com_vector4_const.cpp:75)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_ZzZz__(void)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs41 [16];
-  
-  altv207_13(in_vs32,in_vs41);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  g_ZzZz.field0_0x0.vector4_f32[0] = (float)0x8090a0b;
+  g_ZzZz.field0_0x0.vector4_f32[1] = (float)0x18191a1b;
+  g_ZzZz.field0_0x0.vector4_f32[2] = (float)0x8090a0b;
+  g_ZzZz.field0_0x0.vector4_f32[3] = (float)0x18191a1b;
+  return;
 }
 
 
 // 8293DFA0  `dynamic_initializer_for_'g_YyYy''  (universal/com_vector4_const.cpp:76)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_YyYy__(void)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs41 [16];
-  
-  altv207_13(in_vs32,in_vs41);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  g_YyYy.field0_0x0.vector4_f32[0] = (float)0x4050607;
+  g_YyYy.field0_0x0.vector4_f32[1] = (float)0x14151617;
+  g_YyYy.field0_0x0.vector4_f32[2] = (float)0x4050607;
+  g_YyYy.field0_0x0.vector4_f32[3] = (float)0x14151617;
+  return;
 }
 
 
 // 8293DFC0  `dynamic_initializer_for_'g_XYzw''  (universal/com_vector4_const.cpp:77)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_XYzw__(void)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs41 [16];
-  
-  altv207_13(in_vs32,in_vs41);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  g_XYzw.field0_0x0.vector4_f32[0] = (float)0x10203;
+  g_XYzw.field0_0x0.vector4_f32[1] = (float)0x4050607;
+  g_XYzw.field0_0x0.vector4_f32[2] = (float)0x18191a1b;
+  g_XYzw.field0_0x0.vector4_f32[3] = (float)0x1c1d1e1f;
+  return;
 }
 
 
 // 8293DFE0  `dynamic_initializer_for_'g_zwXY''  (universal/com_vector4_const.cpp:78)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_zwXY__(void)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs41 [16];
-  
-  altv207_13(in_vs32,in_vs41);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  g_zwXY.field0_0x0.vector4_f32[0] = (float)0x18191a1b;
+  g_zwXY.field0_0x0.vector4_f32[1] = (float)0x1c1d1e1f;
+  g_zwXY.field0_0x0.vector4_f32[2] = (float)0x10203;
+  g_zwXY.field0_0x0.vector4_f32[3] = (float)0x4050607;
+  return;
 }
 
 
 // 8293E000  `dynamic_initializer_for_'g_ZzXx''  (universal/com_vector4_const.cpp:79)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_ZzXx__(void)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs41 [16];
-  
-  altv207_13(in_vs32,in_vs41);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  g_ZzXx.field0_0x0.vector4_f32[0] = (float)0x8090a0b;
+  g_ZzXx.field0_0x0.vector4_f32[1] = (float)0x18191a1b;
+  g_ZzXx.field0_0x0.vector4_f32[2] = (float)0x10203;
+  g_ZzXx.field0_0x0.vector4_f32[3] = (float)0x10111213;
+  return;
 }
 
 
 // 8293E020  `dynamic_initializer_for_'g_WwYy''  (universal/com_vector4_const.cpp:80)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_WwYy__(void)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs41 [16];
-  
-  altv207_13(in_vs32,in_vs41);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  g_WwYy.field0_0x0.vector4_f32[0] = (float)0xc0d0e0f;
+  g_WwYy.field0_0x0.vector4_f32[1] = (float)0x1c1d1e1f;
+  g_WwYy.field0_0x0.vector4_f32[2] = (float)0x4050607;
+  g_WwYy.field0_0x0.vector4_f32[3] = (float)0x14151617;
+  return;
 }
 
 
 // 8293E040  `dynamic_initializer_for_'g_XWxw''  (universal/com_vector4_const.cpp:82)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_XWxw__(void)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs41 [16];
-  
-  altv207_13(in_vs32,in_vs41);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  g_XWxw.field0_0x0.vector4_f32[0] = (float)0x10203;
+  g_XWxw.field0_0x0.vector4_f32[1] = (float)0xc0d0e0f;
+  g_XWxw.field0_0x0.vector4_f32[2] = (float)0x10111213;
+  g_XWxw.field0_0x0.vector4_f32[3] = (float)0x1c1d1e1f;
+  return;
 }
 
 
 // 8293E060  `dynamic_initializer_for_'g_YZyz''  (universal/com_vector4_const.cpp:83)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_YZyz__(void)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs41 [16];
-  
-  altv207_13(in_vs32,in_vs41);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  g_YZyz.field0_0x0.vector4_f32[0] = (float)0x4050607;
+  g_YZyz.field0_0x0.vector4_f32[1] = (float)0x8090a0b;
+  g_YZyz.field0_0x0.vector4_f32[2] = (float)0x14151617;
+  g_YZyz.field0_0x0.vector4_f32[3] = (float)0x18191a1b;
+  return;
 }
 
 
 // 8293E080  `dynamic_initializer_for_'g_YWyw''  (universal/com_vector4_const.cpp:84)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_YWyw__(void)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs41 [16];
-  
-  altv207_13(in_vs32,in_vs41);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  g_YWyw.field0_0x0.vector4_f32[0] = (float)0x4050607;
+  g_YWyw.field0_0x0.vector4_f32[1] = (float)0xc0d0e0f;
+  g_YWyw.field0_0x0.vector4_f32[2] = (float)0x14151617;
+  g_YWyw.field0_0x0.vector4_f32[3] = (float)0x1c1d1e1f;
+  return;
 }
 
 
 // 8293E0A0  `dynamic_initializer_for_'g_ebCDEFGH''  (universal/com_vector4_const.cpp:86)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_ebCDEFGH__(void)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs41 [16];
-  
-  altv207_13(in_vs32,in_vs41);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  g_ebCDEFGH.field0_0x0.vector4_f32[0] = (float)0x18191213;
+  g_ebCDEFGH.field0_0x0.vector4_f32[1] = (float)0x4050607;
+  g_ebCDEFGH.field0_0x0.vector4_f32[2] = (float)0x8090a0b;
+  g_ebCDEFGH.field0_0x0.vector4_f32[3] = (float)0xc0d0e0f;
+  return;
 }
 
 
 // 8293E0C0  `dynamic_initializer_for_'g_ABebEFGH''  (universal/com_vector4_const.cpp:87)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_ABebEFGH__(void)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs41 [16];
-  
-  altv207_13(in_vs32,in_vs41);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  g_ABebEFGH.field0_0x0.vector4_f32[0] = (float)0x10203;
+  g_ABebEFGH.field0_0x0.vector4_f32[1] = (float)0x18191213;
+  g_ABebEFGH.field0_0x0.vector4_f32[2] = (float)0x8090a0b;
+  g_ABebEFGH.field0_0x0.vector4_f32[3] = (float)0xc0d0e0f;
+  return;
 }
 
 
 // 8293E0E0  `dynamic_initializer_for_'g_ABCDebGH''  (universal/com_vector4_const.cpp:88)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_ABCDebGH__(void)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs41 [16];
-  
-  altv207_13(in_vs32,in_vs41);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  g_ABCDebGH.field0_0x0.vector4_f32[0] = (float)0x10203;
+  g_ABCDebGH.field0_0x0.vector4_f32[1] = (float)0x4050607;
+  g_ABCDebGH.field0_0x0.vector4_f32[2] = (float)0x18191213;
+  g_ABCDebGH.field0_0x0.vector4_f32[3] = (float)0xc0d0e0f;
+  return;
 }
 
 
 // 8293E100  `dynamic_initializer_for_'g_ABCDEFeb''  (universal/com_vector4_const.cpp:89)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_ABCDEFeb__(void)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs41 [16];
-  
-  altv207_13(in_vs32,in_vs41);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  g_ABCDEFeb.field0_0x0.vector4_f32[0] = (float)0x10203;
+  g_ABCDEFeb.field0_0x0.vector4_f32[1] = (float)0x4050607;
+  g_ABCDEFeb.field0_0x0.vector4_f32[2] = (float)0x8090a0b;
+  g_ABCDEFeb.field0_0x0.vector4_f32[3] = (float)0x18191213;
+  return;
 }
 
 
 // 8293E120  `dynamic_initializer_for_'g_AbCdEfGh''  (universal/com_vector4_const.cpp:90)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_AbCdEfGh__(void)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs41 [16];
-  
-  altv207_13(in_vs32,in_vs41);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  g_AbCdEfGh.field0_0x0.vector4_f32[0] = (float)0x11213;
+  g_AbCdEfGh.field0_0x0.vector4_f32[1] = (float)0x4051617;
+  g_AbCdEfGh.field0_0x0.vector4_f32[2] = (float)0x8091a1b;
+  g_AbCdEfGh.field0_0x0.vector4_f32[3] = (float)0xc0d1e1f;
+  return;
 }
 
 
 // 8293E140  `dynamic_initializer_for_'g_PPPPPPPPPPPPPPPP''  (universal/com_vector4_const.cpp:92)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_PPPPPPPPPPPPPPPP__(void)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs41 [16];
-  
-  altv207_13(in_vs32,in_vs41);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  g_PPPPPPPPPPPPPPPP.field0_0x0.vector4_f32[0] = (float)0xf0f0f0f;
+  g_PPPPPPPPPPPPPPPP.field0_0x0.vector4_f32[1] = (float)0xf0f0f0f;
+  g_PPPPPPPPPPPPPPPP.field0_0x0.vector4_f32[2] = (float)0xf0f0f0f;
+  g_PPPPPPPPPPPPPPPP.field0_0x0.vector4_f32[3] = (float)0xf0f0f0f;
+  return;
 }
 
 
 // 8293E160  `dynamic_initializer_for_'g_DDDDDDDDDDDDDDDD''  (universal/com_vector4_const.cpp:93)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_DDDDDDDDDDDDDDDD__(void)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs41 [16];
-  
-  altv207_13(in_vs32,in_vs41);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  g_DDDDDDDDDDDDDDDD.field0_0x0.vector4_f32[0] = (float)0x3030303;
+  g_DDDDDDDDDDDDDDDD.field0_0x0.vector4_f32[1] = (float)0x3030303;
+  g_DDDDDDDDDDDDDDDD.field0_0x0.vector4_f32[2] = (float)0x3030303;
+  g_DDDDDDDDDDDDDDDD.field0_0x0.vector4_f32[3] = (float)0x3030303;
+  return;
 }
 
 
 // 8293E180  `dynamic_initializer_for_'g_keepYZW''  (universal/com_vector4_const.cpp:117)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_keepYZW__(void)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs41 [16];
-  
-  altv207_13(in_vs32,in_vs41);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  g_keepYZW.field0_0x0.vector4_f32[0] = (float)0;
+  g_keepYZW.field0_0x0.vector4_f32[1] = (float)0xffffffff;
+  g_keepYZW.field0_0x0.vector4_f32[2] = (float)0xffffffff;
+  g_keepYZW.field0_0x0.vector4_f32[3] = (float)0xffffffff;
+  return;
 }
 
 
 // 8293E1A0  `dynamic_initializer_for_'g_keepXZW''  (universal/com_vector4_const.cpp:118)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_keepXZW__(void)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs41 [16];
-  
-  altv207_13(in_vs32,in_vs41);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  g_keepXZW.field0_0x0.vector4_f32[0] = (float)0xffffffff;
+  g_keepXZW.field0_0x0.vector4_f32[1] = (float)0;
+  g_keepXZW.field0_0x0.vector4_f32[2] = (float)0xffffffff;
+  g_keepXZW.field0_0x0.vector4_f32[3] = (float)0xffffffff;
+  return;
 }
 
 
 // 8293E1C0  `dynamic_initializer_for_'g_keepXYW''  (universal/com_vector4_const.cpp:119)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_keepXYW__(void)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs41 [16];
-  
-  altv207_13(in_vs32,in_vs41);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  g_keepXYW.field0_0x0.vector4_f32[0] = (float)0xffffffff;
+  g_keepXYW.field0_0x0.vector4_f32[1] = (float)0xffffffff;
+  g_keepXYW.field0_0x0.vector4_f32[2] = (float)0;
+  g_keepXYW.field0_0x0.vector4_f32[3] = (float)0xffffffff;
+  return;
 }
 
 
 // 8293E1E0  `dynamic_initializer_for_'g_keepXYZ''  (universal/com_vector4_const.cpp:120)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_keepXYZ__(void)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs41 [16];
-  
-  altv207_13(in_vs32,in_vs41);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  g_keepXYZ.field0_0x0.vector4_f32[0] = (float)0xffffffff;
+  g_keepXYZ.field0_0x0.vector4_f32[1] = (float)0xffffffff;
+  g_keepXYZ.field0_0x0.vector4_f32[2] = (float)0xffffffff;
+  g_keepXYZ.field0_0x0.vector4_f32[3] = (float)0;
+  return;
 }
 
 
 // 8293E200  `dynamic_initializer_for_'g_keepXY''  (universal/com_vector4_const.cpp:121)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_keepXY__(void)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs41 [16];
-  
-  altv207_13(in_vs32,in_vs41);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  g_keepXY.field0_0x0.vector4_f32[0] = (float)0xffffffff;
+  g_keepXY.field0_0x0.vector4_f32[1] = (float)0xffffffff;
+  g_keepXY.field0_0x0.vector4_f32[2] = (float)0;
+  g_keepXY.field0_0x0.vector4_f32[3] = (float)0;
+  return;
 }
 
 
 // 8293E220  `dynamic_initializer_for_'g_keepZW''  (universal/com_vector4_const.cpp:122)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_keepZW__(void)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs41 [16];
-  
-  altv207_13(in_vs32,in_vs41);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  g_keepZW.field0_0x0.vector4_f32[0] = (float)0;
+  g_keepZW.field0_0x0.vector4_f32[1] = (float)0;
+  g_keepZW.field0_0x0.vector4_f32[2] = (float)0xffffffff;
+  g_keepZW.field0_0x0.vector4_f32[3] = (float)0xffffffff;
+  return;
 }
 
 
 // 8293E240  `dynamic_initializer_for_'g_keepX''  (universal/com_vector4_const.cpp:123)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_keepX__(void)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs41 [16];
-  
-  altv207_13(in_vs32,in_vs41);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  g_keepX.field0_0x0.vector4_f32[0] = (float)0xffffffff;
+  g_keepX.field0_0x0.vector4_f32[1] = (float)0;
+  g_keepX.field0_0x0.vector4_f32[2] = (float)0;
+  g_keepX.field0_0x0.vector4_f32[3] = (float)0;
+  return;
 }
 
 
 // 8293E260  `dynamic_initializer_for_'g_keepZ''  (universal/com_vector4_const.cpp:124)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_keepZ__(void)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs41 [16];
-  
-  altv207_13(in_vs32,in_vs41);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  g_keepZ.field0_0x0.vector4_f32[0] = (float)0;
+  g_keepZ.field0_0x0.vector4_f32[1] = (float)0;
+  g_keepZ.field0_0x0.vector4_f32[2] = (float)0xffffffff;
+  g_keepZ.field0_0x0.vector4_f32[3] = (float)0;
+  return;
 }
 
 
 // 8293E280  `dynamic_initializer_for_'g_packedMaskQuat''  (universal/com_vector4_const.cpp:128)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_packedMaskQuat__(void)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs41 [16];
-  
-  altv207_13(in_vs32,in_vs41);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  g_packedMaskQuat.field0_0x0.vector4_f32[0] = (float)0x1ff;
+  g_packedMaskQuat.field0_0x0.vector4_f32[1] = (float)0x3ff;
+  g_packedMaskQuat.field0_0x0.vector4_f32[2] = (float)0x3ff;
+  g_packedMaskQuat.field0_0x0.vector4_f32[3] = (float)0;
+  return;
 }
 
 
 // 8293E2A0  `dynamic_initializer_for_'g_unpackSignBitQuat''  (universal/com_vector4_const.cpp:129)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_unpackSignBitQuat__(void)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs41 [16];
-  
-  altv207_13(in_vs32,in_vs41);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  g_unpackSignBitQuat.field0_0x0.vector4_f32[0] = (float)0x200;
+  g_unpackSignBitQuat.field0_0x0.vector4_f32[1] = (float)0x400;
+  g_unpackSignBitQuat.field0_0x0.vector4_f32[2] = (float)0x400;
+  g_unpackSignBitQuat.field0_0x0.vector4_f32[3] = (float)0;
+  return;
 }
 
 
 // 8293E2C0  `dynamic_initializer_for_'g_unpackAndQuat''  (universal/com_vector4_const.cpp:132)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_unpackAndQuat__(void)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs41 [16];
-  
-  altv207_13(in_vs32,in_vs41);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  g_unpackAndQuat.field0_0x0.vector4_f32[0] = (float)0xffffffff;
+  g_unpackAndQuat.field0_0x0.vector4_f32[1] = (float)0xffffffff;
+  g_unpackAndQuat.field0_0x0.vector4_f32[2] = (float)0xffffffff;
+  g_unpackAndQuat.field0_0x0.vector4_f32[3] = (float)0;
+  return;
 }
 
 
 // 8293E2E0  `dynamic_initializer_for_'g_packMantissa''  (universal/com_vector4_const.cpp:133)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_packMantissa__(void)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs41 [16];
-  
-  altv207_13(in_vs32,in_vs41);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  g_packMantissa.field0_0x0.vector4_f32[0] = (float)0x40400000;
+  g_packMantissa.field0_0x0.vector4_f32[1] = (float)0x40400000;
+  g_packMantissa.field0_0x0.vector4_f32[2] = (float)0x40400000;
+  g_packMantissa.field0_0x0.vector4_f32[3] = (float)0;
+  return;
 }
 
 
 // 8293E300  `dynamic_initializer_for_'g_packedMaskSimpleQuat''  (universal/com_vector4_const.cpp:135)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_packedMaskSimpleQuat__(void)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs41 [16];
-  
-  altv207_13(in_vs32,in_vs41);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  g_packedMaskSimpleQuat.field0_0x0.vector4_f32[0] = (float)0;
+  g_packedMaskSimpleQuat.field0_0x0.vector4_f32[1] = (float)0;
+  g_packedMaskSimpleQuat.field0_0x0.vector4_f32[2] = (float)0x3fff;
+  g_packedMaskSimpleQuat.field0_0x0.vector4_f32[3] = (float)0;
+  return;
 }
 
 
 // 8293E320  `dynamic_initializer_for_'g_unpackSignBitSimpleQuat''  (universal/com_vector4_const.cpp:136)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_unpackSignBitSimpleQuat__(void)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs41 [16];
-  
-  altv207_13(in_vs32,in_vs41);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  g_unpackSignBitSimpleQuat.field0_0x0.vector4_f32[0] = (float)0;
+  g_unpackSignBitSimpleQuat.field0_0x0.vector4_f32[1] = (float)0;
+  g_unpackSignBitSimpleQuat.field0_0x0.vector4_f32[2] = (float)0x4000;
+  g_unpackSignBitSimpleQuat.field0_0x0.vector4_f32[3] = (float)0;
+  return;
 }
 
 
 // 8293E340  `dynamic_initializer_for_'g_unpackAndSimpleQuat''  (universal/com_vector4_const.cpp:139)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_unpackAndSimpleQuat__(void)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs41 [16];
-  
-  altv207_13(in_vs32,in_vs41);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  g_unpackAndSimpleQuat.field0_0x0.vector4_f32[0] = (float)0;
+  g_unpackAndSimpleQuat.field0_0x0.vector4_f32[1] = (float)0;
+  g_unpackAndSimpleQuat.field0_0x0.vector4_f32[2] = (float)0xffffffff;
+  g_unpackAndSimpleQuat.field0_0x0.vector4_f32[3] = (float)0;
+  return;
 }
 
 
 // 8293E360  `dynamic_initializer_for_'g_unpackQuatRotateMask''  (universal/com_vector4_const.cpp:141)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_unpackQuatRotateMask__(void)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs41 [16];
-  
-  altv207_13(in_vs32,in_vs41);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  g_unpackQuatRotateMask.field0_0x0.vector4_f32[0] = (float)0;
+  g_unpackQuatRotateMask.field0_0x0.vector4_f32[1] = (float)0;
+  g_unpackQuatRotateMask.field0_0x0.vector4_f32[2] = (float)0;
+  g_unpackQuatRotateMask.field0_0x0.vector4_f32[3] = (float)0xc;
+  return;
 }
 
 
 // 8293E380  `dynamic_initializer_for_'g_unpackQuatSignBit''  (universal/com_vector4_const.cpp:142)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_unpackQuatSignBit__(void)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs41 [16];
-  
-  altv207_13(in_vs32,in_vs41);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  g_unpackQuatSignBit.field0_0x0.vector4_f32[0] = (float)0x80000000;
+  g_unpackQuatSignBit.field0_0x0.vector4_f32[1] = (float)0x80000000;
+  g_unpackQuatSignBit.field0_0x0.vector4_f32[2] = (float)0x80000000;
+  g_unpackQuatSignBit.field0_0x0.vector4_f32[3] = (float)0x80000000;
+  return;
 }
 
 
 // 8293E3A0  `dynamic_initializer_for_'g_unpackSimpleQuatRotateMask''  (universal/com_vector4_const.cpp:143)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_unpackSimpleQuatRotateMask__(void)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs41 [16];
-  
-  altv207_13(in_vs32,in_vs41);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  g_unpackSimpleQuatRotateMask.field0_0x0.vector4_f32[0] = (float)0;
+  g_unpackSimpleQuatRotateMask.field0_0x0.vector4_f32[1] = (float)0;
+  g_unpackSimpleQuatRotateMask.field0_0x0.vector4_f32[2] = (float)0;
+  g_unpackSimpleQuatRotateMask.field0_0x0.vector4_f32[3] = (float)4;
+  return;
 }
 
 
 // 8293E3C0  `dynamic_initializer_for_'g_unpackQuatRotateAdd''  (universal/com_vector4_const.cpp:144)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_unpackQuatRotateAdd__(void)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs41 [16];
-  
-  altv207_13(in_vs32,in_vs41);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  g_unpackQuatRotateAdd.field0_0x0.vector4_f32[0] = (float)0x10203;
+  g_unpackQuatRotateAdd.field0_0x0.vector4_f32[1] = (float)0x4050607;
+  g_unpackQuatRotateAdd.field0_0x0.vector4_f32[2] = (float)0x8090a0b;
+  g_unpackQuatRotateAdd.field0_0x0.vector4_f32[3] = (float)0xc0d0e0f;
+  return;
 }
 
 
 // 8293E3E0  `dynamic_initializer_for_'g_unpackSimpleQuatRotateAdd''  (universal/com_vector4_const.cpp:145)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_unpackSimpleQuatRotateAdd__(void)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs41 [16];
-  
-  altv207_13(in_vs32,in_vs41);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  g_unpackSimpleQuatRotateAdd.field0_0x0.vector4_f32[0] = (float)0x10203;
+  g_unpackSimpleQuatRotateAdd.field0_0x0.vector4_f32[1] = (float)0x10203;
+  g_unpackSimpleQuatRotateAdd.field0_0x0.vector4_f32[2] = (float)0x8090a0b;
+  g_unpackSimpleQuatRotateAdd.field0_0x0.vector4_f32[3] = (float)0xc0d0e0f;
+  return;
 }
 
 
 // 8293E400  `dynamic_initializer_for_'g_unpackShiftQuat''  (universal/com_vector4_const.cpp:151)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_unpackShiftQuat__(void)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs41 [16];
-  
-  altv207_13(in_vs32,in_vs41);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  g_unpackShiftQuat.field0_0x0.vector4_f32[0] = (float)0;
+  g_unpackShiftQuat.field0_0x0.vector4_f32[1] = (float)9;
+  g_unpackShiftQuat.field0_0x0.vector4_f32[2] = (float)0x13;
+  g_unpackShiftQuat.field0_0x0.vector4_f32[3] = (float)0x1b;
+  return;
 }
 
 
 // 8293E420  `dynamic_initializer_for_'g_unpackSignShiftQuat''  (universal/com_vector4_const.cpp:152)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_unpackSignShiftQuat__(void)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs41 [16];
-  
-  altv207_13(in_vs32,in_vs41);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  g_unpackSignShiftQuat.field0_0x0.vector4_f32[0] = (float)1;
+  g_unpackSignShiftQuat.field0_0x0.vector4_f32[1] = (float)1;
+  g_unpackSignShiftQuat.field0_0x0.vector4_f32[2] = (float)1;
+  g_unpackSignShiftQuat.field0_0x0.vector4_f32[3] = (float)1;
+  return;
 }
 
 
 // 8293E440  `dynamic_initializer_for_'g_unpackShiftSimpleQuat''  (universal/com_vector4_const.cpp:153)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_unpackShiftSimpleQuat__(void)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs41 [16];
-  
-  altv207_13(in_vs32,in_vs41);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  g_unpackShiftSimpleQuat.field0_0x0.vector4_f32[0] = (float)0;
+  g_unpackShiftSimpleQuat.field0_0x0.vector4_f32[1] = (float)0;
+  g_unpackShiftSimpleQuat.field0_0x0.vector4_f32[2] = (float)0x10;
+  g_unpackShiftSimpleQuat.field0_0x0.vector4_f32[3] = (float)0x1c;
+  return;
 }
 

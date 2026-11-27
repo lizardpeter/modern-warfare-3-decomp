@@ -602,8 +602,6 @@ LAB_824fd7dc:
   824FD7E4  3864D880             subi r3,r4,0x2780
   824FD7E8  808BA50C             lwz r4,-0x5af4(r11)
   824FD7EC  48150BE5             bl 0x8264e3d0
-  824FD7F0  382100A0             addi r1,r1,0xa0
-  824FD7F4  48418F10             b 0x82916704
 
 ; 824FD7F8  Com_ClientDObjCreate  (qcommon/dobj_management.cpp:463)
   824FD7F8  7D8802A6             mfspr r12,LR
@@ -1350,7 +1348,7 @@ LAB_824fd4b4:
   824FD4D4  EBE1FFF0             ld r31,-0x10(r1)
   824FD4D8  4E800020             blr
 
-; 824FDB30  std::_Push_heap<`anonymous_namespace'::DObjModelInstanceCount_*,int,A0x329c26b1::DObjModelInstanceCount>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2410)
+; 824FDB30  _Push_heap<`anonymous_namespace'::DObjModelInstanceCount_*,int,A0x329c26b1::DObjModelInstanceCount>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2410)
   824FDB30  FBE1FFF8             std r31,-0x8(r1)
   824FDB34  3964FFFF             subi r11,r4,0x1
   824FDB38  7F052000             cmpw cr6,r5,r4
@@ -1386,7 +1384,7 @@ LAB_824fdb90:
   824FDBA8  EBE1FFF8             ld r31,-0x8(r1)
   824FDBAC  4E800020             blr
 
-; 824FDBB0  std::_Adjust_heap<`anonymous_namespace'::DObjModelInstanceCount_*,int,A0x329c26b1::DObjModelInstanceCount>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2502)
+; 824FDBB0  _Adjust_heap<`anonymous_namespace'::DObjModelInstanceCount_*,int,A0x329c26b1::DObjModelInstanceCount>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2502)
   824FDBB0  FBC1FFF0             std r30,-0x10(r1)
   824FDBB4  FBE1FFF8             std r31,-0x8(r1)
   824FDBB8  39640001             addi r11,r4,0x1
@@ -1465,7 +1463,7 @@ LAB_824fdca8:
   824FDCC4  EBE1FFF8             ld r31,-0x8(r1)
   824FDCC8  4E800020             blr
 
-; 824FDCD0  std::_Make_heap<`anonymous_namespace'::DObjModelInstanceCount_*,int,A0x329c26b1::DObjModelInstanceCount>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2631)
+; 824FDCD0  _Make_heap<`anonymous_namespace'::DObjModelInstanceCount_*,int,A0x329c26b1::DObjModelInstanceCount>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2631)
   824FDCD0  7D8802A6             mfspr r12,LR
   824FDCD4  484189E1             bl 0x829166b4
   824FDCD8  9421FF70             stwu r1,-0x90(r1)
@@ -1533,7 +1531,7 @@ LAB_824fddb8:
   824FDDB8  38210090             addi r1,r1,0x90
   824FDDBC  48418948             b 0x82916704
 
-; 824FE190  std::_Sort_heap<`anonymous_namespace'::DObjModelInstanceCount_*>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2683)
+; 824FE190  _Sort_heap<`anonymous_namespace'::DObjModelInstanceCount_*>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2683)
   824FE190  7D8802A6             mfspr r12,LR
   824FE194  9181FFF8             stw r12,-0x8(r1)
   824FE198  FBC1FFE8             std r30,-0x18(r1)
@@ -1572,7 +1570,7 @@ LAB_824fe204:
   824FE214  EBE1FFF0             ld r31,-0x10(r1)
   824FE218  4E800020             blr
 
-; 824FDED8  std::_Insertion_sort1<`anonymous_namespace'::DObjModelInstanceCount_*,A0x329c26b1::DObjModelInstanceCount>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3493)
+; 824FDED8  _Insertion_sort1<`anonymous_namespace'::DObjModelInstanceCount_*,A0x329c26b1::DObjModelInstanceCount>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3493)
   824FDED8  7F032040             cmplw cr6,r3,r4
   824FDEDC  4D9A0020             beqlr cr6
   824FDEE0  39230008             addi r9,r3,0x8
@@ -1623,7 +1621,7 @@ LAB_824fdf70:
   824FDF78  409AFF74             bne cr6,0x824fdeec
   824FDF7C  4E800020             blr
 
-; 824FDDC0  std::_Med3<`anonymous_namespace'::DObjModelInstanceCount_*>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3524)
+; 824FDDC0  _Med3<`anonymous_namespace'::DObjModelInstanceCount_*>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3524)
   824FDDC0  81630004             lwz r11,0x4(r3)
   824FDDC4  81440004             lwz r10,0x4(r4)
   824FDDC8  7F0A5840             cmplw cr6,r10,r11
@@ -1658,7 +1656,7 @@ LAB_824fde10:
   824FDE34  F9430000             std r10,0x0(r3)
   824FDE38  4E800020             blr
 
-; 824FDE40  std::_Median<`anonymous_namespace'::DObjModelInstanceCount_*>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3535)
+; 824FDE40  _Median<`anonymous_namespace'::DObjModelInstanceCount_*>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3535)
   824FDE40  7D8802A6             mfspr r12,LR
   824FDE44  48418871             bl 0x829166b4
   824FDE48  9421FF80             stwu r1,-0x80(r1)
@@ -1699,7 +1697,7 @@ LAB_824fdec4:
   824FDED0  38210080             addi r1,r1,0x80
   824FDED4  48418830             b 0x82916704
 
-; 824FDF80  std::_Unguarded_partition<`anonymous_namespace'::DObjModelInstanceCount_*>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3551)
+; 824FDF80  _Unguarded_partition<`anonymous_namespace'::DObjModelInstanceCount_*>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3551)
   824FDF80  7D8802A6             mfspr r12,LR
   824FDF84  48418735             bl 0x829166b8
   824FDF88  9421FF80             stwu r1,-0x80(r1)
@@ -1850,7 +1848,7 @@ LAB_824fe17c:
   824FE188  38210080             addi r1,r1,0x80
   824FE18C  4841857C             b 0x82916708
 
-; 824FE220  std::_Sort<`anonymous_namespace'::DObjModelInstanceCount_*,int>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3609)
+; 824FE220  _Sort<`anonymous_namespace'::DObjModelInstanceCount_*,int>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3609)
   824FE220  7D8802A6             mfspr r12,LR
   824FE224  48418491             bl 0x829166b4
   824FE228  9421FF70             stwu r1,-0x90(r1)

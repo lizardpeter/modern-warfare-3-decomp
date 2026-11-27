@@ -2,22 +2,24 @@
 
 // 82811818  vp8_init_scan_order_mask  (WebM_atvi_opt/vpx/vp8/common/entropy.c:80)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void vp8_init_scan_order_mask(void)
 
 {
-  int *piVar1;
+  uchar *puVar1;
   ulonglong uVar2;
-  undefined2 uVar3;
+  short sVar3;
   longlong lVar4;
   
   uVar2 = 1;
   lVar4 = 0x10;
-  piVar1 = (int *)&UNK_821e74ac;
+  puVar1 = Pcat1;
   do {
-    piVar1 = piVar1 + 1;
-    uVar3 = (undefined2)uVar2;
+    puVar1 = (uchar *)((int)puVar1 + 4);
+    sVar3 = (short)uVar2;
     uVar2 = (uVar2 & 0x7fffffff) << 1 | uVar2 >> 0x1f;
-    *(undefined2 *)(&DAT_8487a8f0 + *piVar1 * 2) = uVar3;
+    vp8_default_zig_zag_mask[*(int *)puVar1] = sVar3;
     lVar4 = lVar4 + -1;
   } while (lVar4 != 0);
   return;
@@ -26,23 +28,24 @@ void vp8_init_scan_order_mask(void)
 
 // 82811858  init_bit_tree  (WebM_atvi_opt/vpx/vp8/common/entropy.c:91)
 
-void init_bit_tree(char *param_1,longlong param_2)
+void init_bit_tree(char *param_1,int param_2)
 
 {
   char cVar1;
-  char cVar2;
+  longlong lVar2;
+  char cVar3;
   
-  cVar2 = '\x01';
-  if (1 < (int)param_2) {
-    param_2 = param_2 + -1;
+  cVar3 = '\x01';
+  if (1 < param_2) {
+    lVar2 = (longlong)param_2 + -1;
     do {
-      cVar1 = cVar2 << 1;
-      cVar2 = cVar2 + '\x01';
+      cVar1 = cVar3 << 1;
+      cVar3 = cVar3 + '\x01';
       param_1[1] = cVar1;
       *param_1 = cVar1;
       param_1 = param_1 + 2;
-      param_2 = param_2 + -1;
-    } while (param_2 != 0);
+      lVar2 = lVar2 + -1;
+    } while (lVar2 != 0);
   }
   param_1[1] = '\0';
   *param_1 = '\0';
@@ -52,94 +55,57 @@ void init_bit_tree(char *param_1,longlong param_2)
 
 // 82811898  init_bit_trees  (WebM_atvi_opt/vpx/vp8/common/entropy.c:104)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void init_bit_trees(void)
 
 {
-  DAT_8487a91d = 0;
-  DAT_8487a91c = 0;
-  DAT_8487a8e9 = 2;
-  DAT_8487a8e5 = 2;
-  DAT_8487a921 = 2;
-  DAT_8487a8e8 = 2;
-  DAT_8487a920 = 2;
-  DAT_8487a8eb = 4;
-  DAT_8487a927 = 0;
-  DAT_8487a923 = 4;
-  DAT_8487a8e4 = 2;
-  DAT_8487a8e7 = 0;
-  DAT_8487a8e6 = 0;
-  DAT_8487a8ed = 0;
-  DAT_8487a8ec = 0;
-  DAT_8487a926 = 0;
-  DAT_8487a8dd = 6;
-  DAT_8487a8d9 = 2;
-  DAT_8487a8ea = 4;
-  DAT_8487a922 = 4;
-  DAT_8487a925 = 6;
-  DAT_8487a924 = 6;
-  DAT_8487a8dc = 6;
-  DAT_8487a8b1 = 2;
-  DAT_8487a8df = 8;
-  DAT_8487a8d8 = 2;
-  DAT_8487a8db = 4;
-  DAT_8487a8da = 4;
-  DAT_8487a8b0 = 2;
-  DAT_8487a8b7 = 8;
-  DAT_8487a8b3 = 4;
-  DAT_8487a8b6 = 8;
-  DAT_8487a8de = 8;
-  DAT_8487a8e1 = 0;
-  DAT_8487a8e0 = 0;
-  DAT_8487a8b9 = 10;
-  DAT_8487a8b8 = 10;
-  DAT_8487a8bb = 0xc;
-  DAT_8487a8b2 = 4;
-  DAT_8487a8b5 = 6;
-  DAT_8487a8b4 = 6;
-  DAT_8487a8ba = 0xc;
-  DAT_8487a8bd = 0xe;
-  DAT_8487a8bc = 0xe;
-  DAT_8487a8bf = 0x10;
-  DAT_8487a8be = 0x10;
-  DAT_8487a8c1 = 0x12;
-  DAT_8487a8c0 = 0x12;
-  DAT_8487a8c3 = 0x14;
-  DAT_8487a8c2 = 0x14;
-  DAT_8487a8c5 = 0;
-  DAT_8487a8c4 = 0;
+  cat1[1] = '\0';
+  cat1[0] = '\0';
+  builtin_strncpy(cat3,"\x02\x02\x04\x04",5);
+  cat2[1] = '\x02';
+  builtin_strncpy(cat4,"\x02\x02\x04\x04\x06\x06",7);
+  cat4[7] = '\0';
+  cat2[0] = '\x02';
+  cat2[3] = '\0';
+  cat2[2] = '\0';
+  cat3[5] = '\0';
+  builtin_strncpy(cat5,"\x02\x02\x04\x04\x06\x06\b\b",9);
+  builtin_strncpy(cat6,"\x02\x02\x04\x04\x06\x06\b\b\n\n\f\f\x0e\x0e\x10\x10\x12\x12\x14\x14",0x15);
+  cat5[9] = '\0';
+  cat6[0x15] = '\0';
   return;
 }
 
 
 // 82811A28  vp8_default_coef_probs  (WebM_atvi_opt/vpx/vp8/common/entropy.c:134)
 
-void vp8_default_coef_probs(void)
+void vp8_default_coef_probs(VP8Common *param_1)
 
 {
-  longlong lVar1;
-  ulonglong uVar2;
-  longlong lVar3;
-  longlong lVar4;
-  longlong lVar5;
-  undefined1 auStack_a0 [160];
+  int iVar1;
+  longlong lVar2;
+  int iVar3;
+  int iVar4;
+  uint auStack_a0 [40];
   
-  lVar1 = __savegprlr_25();
-  lVar4 = 0;
+  iVar1 = __savegprlr_25(param_1);
+  iVar3 = 0;
   do {
-    lVar3 = 8;
+    lVar2 = 8;
     do {
-      lVar5 = 0;
+      iVar4 = 0;
       do {
-        uVar2 = lVar4 + lVar5;
         vp8_tree_probs_from_distribution
-                  (0xc,0xffffffff84897bc0,0xffffffff821e74f8,uVar2 * 0xb + lVar1 + 0x67ee,auStack_a0
-                   ,(uVar2 + (uVar2 & 0x7fffffff) * 2 & 0xfffffff) * 0x10 + -0x7de18ad0,0x100,1);
-        lVar5 = lVar5 + 1;
-      } while ((int)lVar5 < 3);
-      lVar3 = lVar3 + -1;
-      lVar4 = lVar4 + 3;
-    } while (lVar3 != 0);
-  } while ((int)lVar4 < 0x60);
+                  (0xc,vp8_coef_encodings,&vp8_coef_tree,
+                   (uchar *)((iVar3 + iVar4) * 0xb + iVar1 + 0x67ee),(uint (*) [2])auStack_a0,
+                   default_coef_counts[0][0][iVar3 + iVar4],0x100,1);
+        iVar4 = iVar4 + 1;
+      } while (iVar4 < 3);
+      lVar2 = lVar2 + -1;
+      iVar3 = iVar3 + 3;
+    } while (lVar2 != 0);
+  } while (iVar3 < 0x60);
   __restgprlr_25();
   return;
 }
@@ -147,11 +113,13 @@ void vp8_default_coef_probs(void)
 
 // 82811AC0  vp8_coef_tree_initialize  (WebM_atvi_opt/vpx/vp8/common/entropy.c:163)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void vp8_coef_tree_initialize(void)
 
 {
   init_bit_trees();
-  vp8_tokens_from_tree(0xffffffff84897bc0,0xffffffff821e74f8);
+  vp8_tokens_from_tree(vp8_coef_encodings,&vp8_coef_tree);
   return;
 }
 

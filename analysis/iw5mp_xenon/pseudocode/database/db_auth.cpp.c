@@ -2,25 +2,32 @@
 
 // 823A21B8  DBX_AuthBoth_GenerateHash  (database/db_auth.cpp:179)
 
-void DBX_AuthBoth_GenerateHash(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+void DBX_AuthBoth_GenerateHash(uchar *param_1,uint param_2,DB_AuthHash *param_3)
 
 {
   undefined8 uVar1;
-  undefined8 uVar2;
+  int iVar2;
+  longlong lVar3;
+  longlong lVar4;
   undefined1 auStack_b0 [176];
   
-  uVar1 = __savegprlr_26();
-  uVar2 = sha256_init(auStack_b0);
-  if ((int)uVar2 != 0) {
-    MyAssertHandler(0xffffffff82059004,0xb9,0,0xffffffff82058ff0,0xffffffff82058fd8,uVar2);
+  lVar4 = (longlong)(int)param_3;
+  lVar3 = (longlong)(int)param_2;
+  uVar1 = __savegprlr_26(param_1,lVar3,lVar4);
+  iVar2 = sha256_init(auStack_b0);
+  if (iVar2 != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_auth.cpp",0xb9,0,
+                    "%s\n\t(result) = %i");
   }
-  uVar1 = sha256_process(auStack_b0,uVar1,param_2);
-  if ((int)uVar1 != 0) {
-    MyAssertHandler(0xffffffff82059004,0xbb,0,0xffffffff82058ff0,0xffffffff82058fd8,uVar1);
+  iVar2 = sha256_process(auStack_b0,uVar1,lVar3);
+  if (iVar2 != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_auth.cpp",0xbb,0,
+                    "%s\n\t(result) = %i");
   }
-  uVar1 = sha256_done(auStack_b0,param_3);
-  if ((int)uVar1 != 0) {
-    MyAssertHandler(0xffffffff82059004,0xbd,0,0xffffffff82058ff0,0xffffffff82058fd8,uVar1);
+  iVar2 = sha256_done(auStack_b0,lVar4);
+  if (iVar2 != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_auth.cpp",0xbd,0,
+                    "%s\n\t(result) = %i");
   }
   __restgprlr_26();
   return;
@@ -29,277 +36,304 @@ void DBX_AuthBoth_GenerateHash(undefined8 param_1,undefined8 param_2,undefined8 
 
 // 823A2280  DBX_AuthLoad_ValidateHash  (database/db_auth.cpp:201)
 
-bool DBX_AuthLoad_ValidateHash(undefined8 param_1,undefined8 param_2,byte *param_3)
+bool DBX_AuthLoad_ValidateHash(uchar *param_1,uint param_2,DB_AuthHash *param_3)
 
 {
   byte bVar1;
   byte bVar2;
-  byte *pbVar3;
-  byte *pbVar4;
-  byte local_30 [32];
+  DB_AuthHash *pDVar3;
+  uchar *puVar4;
+  DB_AuthHash local_30;
   
-  DBX_AuthBoth_GenerateHash(param_1,param_2,local_30);
-  pbVar4 = local_30;
-  pbVar3 = param_3 + 0x20;
+  DBX_AuthBoth_GenerateHash(param_1,param_2,&local_30);
+  puVar4 = local_30.bytes;
+  pDVar3 = param_3 + 1;
   do {
-    bVar1 = *param_3;
-    bVar2 = *pbVar4;
+    bVar1 = param_3->bytes[0];
+    bVar2 = *puVar4;
     if ((ulonglong)bVar1 - (ulonglong)bVar2 != 0) break;
-    param_3 = param_3 + 1;
-    pbVar4 = pbVar4 + 1;
-  } while (param_3 != pbVar3);
+    param_3 = (DB_AuthHash *)((int)param_3 + 1);
+    puVar4 = puVar4 + 1;
+  } while (param_3 != pDVar3);
   return (int)((ulonglong)bVar1 - (ulonglong)bVar2) == 0;
 }
 
 
 // 823A22E8  DBX_AuthLoad_ValidateSignature_Try  (database/db_auth.cpp:209)
 
-void DBX_AuthLoad_ValidateSignature_Try(undefined8 param_1,undefined8 param_2)
+bool DBX_AuthLoad_ValidateSignature_Try(DB_AuthHash *param_1,DB_AuthSignature *param_2)
 
 {
   undefined8 uVar1;
   undefined8 uVar2;
-  undefined8 uVar3;
+  undefined1 uVar4;
+  int iVar3;
+  longlong lVar5;
   int local_60 [4];
   undefined1 auStack_50 [80];
   
-  uVar1 = __savegprlr_29();
+  lVar5 = (longlong)(int)param_2;
+  uVar1 = __savegprlr_29(param_1,lVar5);
   uVar2 = find_hash(0xffffffff8221ad8c);
   if ((int)uVar2 == -1) {
-    MyAssertHandler(0xffffffff82059004,0xd8,0,0xffffffff82000f98,0xffffffff82059044);
-    __restgprlr_29(0);
-    return;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_auth.cpp",0xd8,0,
+                    "%s");
+    uVar4 = __restgprlr_29(0);
+    return (bool)uVar4;
   }
-  uVar3 = rsa_import(0xffffffff82058ec8,0x10e,auStack_50);
-  if ((int)uVar3 != 0) {
-    MyAssertHandler(0xffffffff82059004,0xde,0,0xffffffff82058ff0,0xffffffff82058fd8,uVar3);
-    __restgprlr_29(0);
-    return;
+  iVar3 = rsa_import(0xffffffff82058ec8,0x10e,auStack_50);
+  if (iVar3 != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_auth.cpp",0xde,0,
+                    "%s\n\t(result) = %i");
+    uVar4 = __restgprlr_29(0);
+    return (bool)uVar4;
   }
   local_60[0] = 0;
-  uVar1 = rsa_verify_hash_ex(param_2,0x100,uVar1,0x20,3,uVar2,8,local_60);
+  iVar3 = rsa_verify_hash_ex(lVar5,0x100,uVar1,0x20,3,uVar2,8,local_60);
   rsa_free(auStack_50);
-  if ((int)uVar1 != 0) {
-    MyAssertHandler(0xffffffff82059004,0xe8,0,0xffffffff82058ff0,0xffffffff82058fd8,uVar1);
-    __restgprlr_29(0);
-    return;
+  if (iVar3 != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_auth.cpp",0xe8,0,
+                    "%s\n\t(result) = %i");
+    uVar4 = __restgprlr_29(0);
+    return (bool)uVar4;
   }
-  __restgprlr_29(local_60[0] == 1);
-  return;
+  uVar4 = __restgprlr_29(local_60[0] == 1);
+  return (bool)uVar4;
 }
 
 
 // 823A2428  DBX_AuthLoad_ValidateSignature  (database/db_auth.cpp:244)
 
-undefined8 DBX_AuthLoad_ValidateSignature(undefined8 param_1,undefined8 param_2)
+bool DBX_AuthLoad_ValidateSignature(DB_AuthHash *param_1,DB_AuthSignature *param_2)
 
 {
-  undefined8 uVar1;
-  longlong lVar2;
+  DB_AuthHash *pDVar1;
+  bool bVar2;
+  int iVar3;
   
-  lVar2 = -0xbbf0;
-  uVar1 = _RtlCheckStack12();
-  *(BADSPACEBASE **)(int)(ZEXT48(&stack0x00000000) + lVar2) = register0x0000000c;
-  tom_game_mem_begin(ZEXT48(&stack0x00000000) + lVar2 + 0x50,48000);
-  uVar1 = DBX_AuthLoad_ValidateSignature_Try(uVar1,param_2);
+  iVar3 = -0xbbf0;
+  pDVar1 = (DB_AuthHash *)_RtlCheckStack12(param_1);
+  *(BADSPACEBASE **)(&stack0x00000000 + iVar3) = register0x0000000c;
+  tom_game_mem_begin(&stack0x00000000 + iVar3 + 0x50,48000);
+  bVar2 = DBX_AuthLoad_ValidateSignature_Try(pDVar1,param_2);
   tom_game_mem_end();
-  return uVar1;
+  return bVar2;
 }
 
 
 // 823A2490  DBX_AuthLoad_ProcessHeader  (database/db_auth.cpp:260)
 
-void DBX_AuthLoad_ProcessHeader(void)
+bool DBX_AuthLoad_ProcessHeader(uchar *param_1)
 
 {
   byte bVar1;
   byte bVar2;
-  byte *_Src;
-  char cVar3;
-  byte *pbVar4;
-  byte *pbVar5;
+  byte *pbVar3;
+  undefined1 uVar4;
+  bool bVar5;
+  byte *pbVar6;
+  byte *pbVar7;
+  char *pcVar8;
   
-  _Src = (byte *)__savegprlr_29();
-  pbVar5 = &DAT_8205914c;
-  pbVar4 = _Src;
+  pbVar3 = (byte *)__savegprlr_29(param_1);
+  pbVar7 = &s_IWffs100;
+  pbVar6 = pbVar3;
   do {
-    bVar1 = *pbVar5;
-    bVar2 = *pbVar4;
+    bVar1 = *pbVar7;
+    bVar2 = *pbVar6;
     if ((ulonglong)bVar1 - (ulonglong)bVar2 != 0) break;
-    pbVar5 = pbVar5 + 1;
-    pbVar4 = pbVar4 + 1;
-  } while (pbVar5 != &DAT_82059154);
+    pbVar7 = pbVar7 + 1;
+    pbVar6 = pbVar6 + 1;
+  } while (pbVar7 != &DAT_82059154);
   if ((int)((ulonglong)bVar1 - (ulonglong)bVar2) != 0) {
-    if (DAT_84013128 == 0) {
-      MyAssertHandler(0xffffffff82059004,0x10c,0,0xffffffff82059100);
+    if (alwaysfails == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_auth.cpp",0x10c,
+                      0,"DB_Auth: Missing magic (not an authenticated fastfile, or out of date?)\n")
+      ;
     }
-    __restgprlr_29(0);
-    return;
+    uVar4 = __restgprlr_29(0);
+    return (bool)uVar4;
   }
-  if (_Src[0x14b] != 0) {
-    if (DAT_84013128 == 0) {
-      MyAssertHandler(0xffffffff82059004,0x113,0,0xffffffff820590d8);
+  if (pbVar3[0x14b] != 0) {
+    if (alwaysfails == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_auth.cpp",0x113,
+                      0,"DB_Auth: Filename not zero-padded\n");
     }
-    __restgprlr_29(0);
-    return;
+    uVar4 = __restgprlr_29(0);
+    return (bool)uVar4;
   }
-  pbVar4 = _Src + 300;
-  cVar3 = DBX_AuthLoad_ValidateHash(pbVar4,0x1ea4,_Src + 0xc);
-  if (cVar3 == '\0') {
-    if (DAT_84013128 == 0) {
-      MyAssertHandler(0xffffffff82059004,0x119,0,0xffffffff820590ac);
+  pbVar6 = pbVar3 + 300;
+  bVar5 = DBX_AuthLoad_ValidateHash(pbVar6,0x1ea4,(DB_AuthHash *)(pbVar3 + 0xc));
+  if (!bVar5) {
+    if (alwaysfails == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_auth.cpp",0x119,
+                      0,"DB_Auth: Subheader hash validation failed.\n");
     }
-    __restgprlr_29(0);
-    return;
+    uVar4 = __restgprlr_29(0);
+    return (bool)uVar4;
   }
-  cVar3 = DBX_AuthLoad_ValidateSignature(_Src + 0xc,_Src + 0x2c);
-  if (cVar3 == '\0') {
-    if (DAT_84013128 == 0) {
-      MyAssertHandler(0xffffffff82059004,0x11f,0,0xffffffff82059078);
+  bVar5 = DBX_AuthLoad_ValidateSignature
+                    ((DB_AuthHash *)(pbVar3 + 0xc),(DB_AuthSignature *)(pbVar3 + 0x2c));
+  if (!bVar5) {
+    if (alwaysfails == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_auth.cpp",0x11f,
+                      0,"DB_Auth: Subheader signature validation failed.\n");
     }
-    __restgprlr_29(0);
-    return;
+    uVar4 = __restgprlr_29(0);
+    return (bool)uVar4;
   }
-  pbVar5 = &DAT_82b6cd84;
+  pcVar8 = g_authLoad.expectedFastfileName;
   do {
-    bVar1 = *pbVar5;
-    bVar2 = *pbVar4;
+    bVar1 = *pcVar8;
+    bVar2 = *pbVar6;
     if ((ulonglong)bVar1 - (ulonglong)bVar2 != 0) break;
-    pbVar5 = pbVar5 + 1;
-    pbVar4 = pbVar4 + 1;
-  } while (pbVar5 != &DAT_82b6cda4);
+    pcVar8 = pcVar8 + 1;
+    pbVar6 = pbVar6 + 1;
+  } while ((DB_AuthHeader *)pcVar8 != &g_authLoad.header);
   if ((int)((ulonglong)bVar1 - (ulonglong)bVar2) != 0) {
-    if (DAT_84013128 == 0) {
-      MyAssertHandler(0xffffffff82059004,0x126,0,0xffffffff82059054);
+    if (alwaysfails == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_auth.cpp",0x126,
+                      0,"DB_Auth: Filename didn\'t match.\n");
     }
-    __restgprlr_29(0);
-    return;
+    uVar4 = __restgprlr_29(0);
+    return (bool)uVar4;
   }
-  memcpy(&DAT_82b6cda4,_Src,0x1fd0);
-  DAT_82b70d84 = 0;
-  DAT_82b70d80 = 1;
-  __restgprlr_29(1);
-  return;
+  memcpy();
+  g_authLoad.authedChunkInGroupCount = 0;
+  g_authLoad.authedGroupCount = 1;
+  uVar4 = __restgprlr_29(1);
+  return (bool)uVar4;
 }
 
 
 // 823A26A0  DBX_AuthLoad_ProcessMasterBlock  (database/db_auth.cpp:710)
 
-void DBX_AuthLoad_ProcessMasterBlock(void)
+/* WARNING: Type propagation algorithm not settling */
+
+bool DBX_AuthLoad_ProcessMasterBlock(uchar *param_1)
 
 {
-  byte bVar1;
-  byte bVar2;
-  int iVar3;
-  undefined8 uVar4;
-  byte *pbVar5;
-  byte *pbVar6;
-  byte local_50 [80];
+  uint uVar1;
+  uchar *puVar2;
+  undefined1 uVar3;
+  longlong lVar4;
+  DB_AuthHash *pDVar5;
+  DB_AuthHash local_50 [2];
   
-  uVar4 = __savegprlr_27();
-  if (DAT_82b70d80 == 0) {
-    MyAssertHandler(0xffffffff82059004,0x2c9,0,0xffffffff82000f98,0xffffffff820591b0);
+  puVar2 = (uchar *)__savegprlr_27(param_1);
+  if (g_authLoad.authedGroupCount == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_auth.cpp",0x2c9,0,
+                    "%s");
   }
-  iVar3 = DAT_82b70d80 * 0x20;
-  pbVar6 = &DAT_82b6ced4 + iVar3;
-  DBX_AuthBoth_GenerateHash(uVar4,0x2000,local_50);
-  pbVar5 = local_50;
+  uVar1 = g_authLoad.authedGroupCount;
+  pDVar5 = g_authLoad.header.subheader.masterBlockHashes + (g_authLoad.authedGroupCount - 1);
+  DBX_AuthBoth_GenerateHash(puVar2,0x2000,local_50);
+  puVar2 = local_50[0].bytes;
   do {
-    bVar1 = *pbVar6;
-    bVar2 = *pbVar5;
-    if ((ulonglong)bVar1 - (ulonglong)bVar2 != 0) break;
-    pbVar6 = pbVar6 + 1;
-    pbVar5 = pbVar5 + 1;
-  } while (pbVar6 != (byte *)(iVar3 + -0x7d49310c));
-  if ((int)((ulonglong)bVar1 - (ulonglong)bVar2) != 0) {
-    if (DAT_84013128 == 0) {
-      MyAssertHandler(0xffffffff82059004,0x2ce,0,0xffffffff82059180);
+    lVar4 = (ulonglong)pDVar5->bytes[0] - (ulonglong)*puVar2;
+    if (lVar4 != 0) break;
+    pDVar5 = (DB_AuthHash *)(pDVar5->bytes + 1);
+    puVar2 = puVar2 + 1;
+  } while (pDVar5 != g_authLoad.header.subheader.masterBlockHashes + uVar1);
+  if ((int)lVar4 != 0) {
+    if (alwaysfails == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_auth.cpp",0x2ce,
+                      0,"DB_Auth: Master block hash validation failed.\n");
     }
-    __restgprlr_27(0);
-    return;
+    uVar3 = __restgprlr_27(0);
+    return (bool)uVar3;
   }
-  memcpy(&DAT_82b6ed80,(void *)uVar4,0x2000);
-  if (DAT_82b70d84 != 0) {
-    MyAssertHandler(0xffffffff82059004,0x2d5,0,0xffffffff82000f98,0xffffffff82059158);
+  memcpy();
+  if (g_authLoad.authedChunkInGroupCount != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_auth.cpp",0x2d5,0,
+                    "%s");
   }
-  DAT_82b70d84 = 1;
-  __restgprlr_27(1);
-  return;
+  g_authLoad.authedChunkInGroupCount = 1;
+  uVar3 = __restgprlr_27(1);
+  return (bool)uVar3;
 }
 
 
 // 823A27C8  DBX_AuthLoad_ProcessDataBlock  (database/db_auth.cpp:733)
 
-void DBX_AuthLoad_ProcessDataBlock(void)
+bool DBX_AuthLoad_ProcessDataBlock(uchar *param_1)
 
 {
   byte bVar1;
   byte bVar2;
-  undefined8 uVar3;
-  int iVar4;
-  byte *pbVar5;
-  byte *pbVar6;
-  byte local_40 [64];
+  uint uVar3;
+  uchar *puVar4;
+  undefined1 uVar5;
+  uchar *puVar6;
+  DB_AuthHash local_40 [2];
   
-  uVar3 = __savegprlr_29();
-  if ((DAT_82b70d84 == 0) || (0xff < DAT_82b70d84 - 1U)) {
-    MyAssertHandler(0xffffffff82059004,0x2e0,0,0xffffffff82059200,0xffffffff82059230);
+  puVar4 = (uchar *)__savegprlr_29(param_1);
+  if ((g_authLoad.authedChunkInGroupCount == 0) || (0xff < g_authLoad.authedChunkInGroupCount - 1))
+  {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_auth.cpp",0x2e0,0,
+                    "%s\n\t(g_authLoad.authedChunkInGroupCount) = %i");
   }
-  iVar4 = DAT_82b70d84 * 0x20;
-  pbVar6 = &DAT_82b6ed60 + iVar4;
-  DBX_AuthBoth_GenerateHash(uVar3,0x2000,local_40);
-  pbVar5 = local_40;
+  uVar3 = g_authLoad.authedChunkInGroupCount;
+  puVar6 = g_authLoad.header.subheader.masterBlockHashes[g_authLoad.authedChunkInGroupCount + 0xf3].
+           bytes + 0xc;
+  DBX_AuthBoth_GenerateHash(puVar4,0x2000,local_40);
+  puVar4 = local_40[0].bytes;
   do {
-    bVar1 = *pbVar6;
-    bVar2 = *pbVar5;
+    bVar1 = *puVar6;
+    bVar2 = *puVar4;
     if ((ulonglong)bVar1 - (ulonglong)bVar2 != 0) break;
-    pbVar6 = pbVar6 + 1;
-    pbVar5 = pbVar5 + 1;
-  } while (pbVar6 != &DAT_82b6ed80 + iVar4);
+    puVar6 = puVar6 + 1;
+    puVar4 = puVar4 + 1;
+  } while ((DB_AuthHash *)puVar6 != g_authLoad.masterBlock.chunkHashes + uVar3);
   if ((int)((ulonglong)bVar1 - (ulonglong)bVar2) != 0) {
-    if (DAT_84013128 == 0) {
-      MyAssertHandler(0xffffffff82059004,0x2e5,0,0xffffffff820591d0);
+    if (alwaysfails == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_auth.cpp",0x2e5,
+                      0,"DB_Auth: Data block hash validation failed.\n");
     }
-    __restgprlr_29(0);
-    return;
+    uVar5 = __restgprlr_29(0);
+    return (bool)uVar5;
   }
-  DAT_82b70d84 = DAT_82b70d84 + 1;
-  if (DAT_82b70d84 == 0x101) {
-    DAT_82b70d80 = DAT_82b70d80 + 1;
-    DAT_82b70d84 = 0;
+  g_authLoad.authedChunkInGroupCount = g_authLoad.authedChunkInGroupCount + 1;
+  if (g_authLoad.authedChunkInGroupCount == 0x101) {
+    g_authLoad.authedGroupCount = g_authLoad.authedGroupCount + 1;
+    g_authLoad.authedChunkInGroupCount = 0;
   }
-  __restgprlr_29(1);
-  return;
+  uVar5 = __restgprlr_29(1);
+  return (bool)uVar5;
 }
 
 
 // 823A28E0  DBX_AuthLoad_ProcessChunk  (database/db_auth.cpp:757)
 
-void DBX_AuthLoad_ProcessChunk(undefined8 param_1,undefined1 *param_2)
+bool DBX_AuthLoad_ProcessChunk(uchar *param_1,bool *param_2)
 
 {
-  if (DAT_82b70d80 == 0) {
-    *param_2 = 1;
-    DBX_AuthLoad_ProcessHeader();
-    return;
+  bool bVar1;
+  
+  if (g_authLoad.authedGroupCount == 0) {
+    *param_2 = true;
+    bVar1 = DBX_AuthLoad_ProcessHeader(param_1);
+    return bVar1;
   }
-  if (DAT_82b70d84 == 0) {
-    *param_2 = 1;
-    DBX_AuthLoad_ProcessMasterBlock();
-    return;
+  if (g_authLoad.authedChunkInGroupCount == 0) {
+    *param_2 = true;
+    bVar1 = DBX_AuthLoad_ProcessMasterBlock(param_1);
+    return bVar1;
   }
-  *param_2 = 0;
-  DBX_AuthLoad_ProcessDataBlock();
-  return;
+  *param_2 = false;
+  bVar1 = DBX_AuthLoad_ProcessDataBlock(param_1);
+  return bVar1;
 }
 
 
 // 823A2928  DB_AuthInitLZX  (database/db_auth.cpp:777)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void DB_AuthInitLZX(void)
 
 {
-  int iVar1;
+  ulong uVar1;
   undefined4 local_20;
   undefined4 local_1c;
   undefined4 local_18;
@@ -307,29 +341,31 @@ void DB_AuthInitLZX(void)
   local_20 = 0;
   local_1c = 0x80000;
   local_18 = 0;
-  iVar1 = XMemGetDecompressionContextSize(1,&local_20,1);
-  if (iVar1 != 0x94933) {
-    MyAssertHandler(0xffffffff82059004,0x310,0,0xffffffff82000f98,0xffffffff820592a8);
+  uVar1 = XMemGetDecompressionContextSize(XMEMCODEC_LZX,&local_20,1);
+  if (uVar1 != 0x94933) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_auth.cpp",0x310,0,
+                    "%s");
   }
-  DAT_82c07734 = XMemInitializeDecompressionContext(1,&local_20,1,0xffffffff82b72e00,0x94933);
+  g_lzxDecmpContext =
+       XMemInitializeDecompressionContext(XMEMCODEC_LZX,&local_20,1,g_LZXInternalState,0x94933);
   return;
 }
 
 
 // 823A29C8  DB_AuthLoad_InflateLZX  (database/db_auth.cpp:791)
 
-void DB_AuthLoad_InflateLZX(void)
+int DB_AuthLoad_InflateLZX(db_z_stream_s *param_1)
 
 {
   int iVar1;
   int *piVar3;
   int iVar4;
   undefined8 uVar2;
-  uint local_30;
-  int local_2c [11];
+  ulong local_30;
+  ulong local_2c [11];
   
-  piVar3 = (int *)__savegprlr_28();
-  if (piVar3[3] == 0) {
+  piVar3 = (int *)__savegprlr_28(param_1);
+  if ((void *)piVar3[3] == (void *)0x0) {
     if (piVar3[4] != 0) {
       do {
         local_30 = piVar3[4];
@@ -337,7 +373,8 @@ void DB_AuthLoad_InflateLZX(void)
         if (0x10000 < local_30) {
           local_30 = 0x10000;
         }
-        iVar4 = XMemDecompressStream(DAT_82c07734,0xffffffff82b5cd80,&local_30,*piVar3,local_2c);
+        iVar4 = XMemDecompressStream
+                          (g_lzxDecmpContext,db_zipMemory,&local_30,(void *)*piVar3,local_2c);
         if ((local_2c[0] == 0) && (local_30 == 0)) break;
         iVar1 = piVar3[4];
         piVar3[4] = iVar1 - local_30;
@@ -353,7 +390,8 @@ void DB_AuthLoad_InflateLZX(void)
   else {
     local_2c[0] = piVar3[1];
     local_30 = piVar3[4];
-    iVar4 = XMemDecompressStream(DAT_82c07734,piVar3[3],&local_30,*piVar3,local_2c);
+    iVar4 = XMemDecompressStream
+                      (g_lzxDecmpContext,(void *)piVar3[3],&local_30,(void *)*piVar3,local_2c);
     piVar3[4] = piVar3[4] - local_30;
     piVar3[3] = local_30 + piVar3[3];
     piVar3[5] = piVar3[5] + local_30;
@@ -366,106 +404,110 @@ LAB_823a2b18:
   }
   uVar2 = 0;
 LAB_823a2b28:
-  __restgprlr_28(uVar2);
-  return;
+  iVar4 = __restgprlr_28(uVar2);
+  return iVar4;
 }
 
 
 // 823A2B30  DBX_AuthLoad_InflateCopyBuffer  (database/db_auth.cpp:847)
 
-void DBX_AuthLoad_InflateCopyBuffer(undefined8 param_1,undefined8 param_2)
+int DBX_AuthLoad_InflateCopyBuffer(db_z_stream_s *param_1,int param_2)
 
 {
   bool bVar1;
   int *piVar2;
-  char cVar3;
-  size_t _Size;
-  undefined8 uVar4;
+  bool bVar4;
+  int iVar3;
   
-  piVar2 = (int *)__savegprlr_20();
+  piVar2 = (int *)__savegprlr_20(param_1);
 LAB_823a2b88:
   do {
-    if (DAT_82b70db8 < 0x2000) {
-      _Size = piVar2[1];
-      if ((int)(0x2000 - DAT_82b70db8) < piVar2[1]) {
-        _Size = 0x2000 - DAT_82b70db8;
+    if (g_authLoad.copyBufferEnd < 0x2000) {
+      iVar3 = piVar2[1];
+      if ((int)(0x2000 - g_authLoad.copyBufferEnd) < piVar2[1]) {
+        iVar3 = 0x2000 - g_authLoad.copyBufferEnd;
       }
-      memcpy(&DAT_82b70dc4 + DAT_82b70db8,(void *)*piVar2,_Size);
-      piVar2[2] = piVar2[2] + _Size;
-      *piVar2 = *piVar2 + _Size;
-      piVar2[1] = piVar2[1] - _Size;
-      DAT_82b70db8 = DAT_82b70db8 + _Size;
-      if (0x2000 < DAT_82b70db8) {
-        MyAssertHandler(0xffffffff82059004,0x35f,0,0xffffffff82000f98,0xffffffff82059330);
+      memcpy();
+      piVar2[2] = piVar2[2] + iVar3;
+      *piVar2 = *piVar2 + iVar3;
+      piVar2[1] = piVar2[1] - iVar3;
+      g_authLoad.copyBufferEnd = g_authLoad.copyBufferEnd + iVar3;
+      if (0x2000 < g_authLoad.copyBufferEnd) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_auth.cpp",
+                        0x35f,0,"%s");
       }
-      if (DAT_82b70db8 < 0x2000) {
+      if (g_authLoad.copyBufferEnd < 0x2000) {
         if (piVar2[1] != 0) {
-          MyAssertHandler(0xffffffff82059004,0x363,0,0xffffffff82000f98,0xffffffff8205931c);
-          __restgprlr_20(0);
-          return;
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_auth.cpp",
+                          0x363,0,"%s");
+          iVar3 = __restgprlr_20(0);
+          return iVar3;
         }
         goto LAB_823a2d90;
       }
-      if (DAT_82b70d80 == 0) {
+      if (g_authLoad.authedGroupCount == 0) {
         bVar1 = true;
-        cVar3 = DBX_AuthLoad_ProcessHeader();
+        bVar4 = DBX_AuthLoad_ProcessHeader(g_authLoad.copyBuffer);
       }
-      else if (DAT_82b70d84 == 0) {
+      else if (g_authLoad.authedChunkInGroupCount == 0) {
         bVar1 = true;
-        cVar3 = DBX_AuthLoad_ProcessMasterBlock();
+        bVar4 = DBX_AuthLoad_ProcessMasterBlock(g_authLoad.copyBuffer);
       }
       else {
         bVar1 = false;
-        cVar3 = DBX_AuthLoad_ProcessDataBlock(0xffffffff82b70dc4);
+        bVar4 = DBX_AuthLoad_ProcessDataBlock(g_authLoad.copyBuffer);
       }
-      if (cVar3 == '\0') {
-        DAT_82b70db8 = 0;
-        __restgprlr_20(0xfffffffffffffffa);
-        return;
+      if (bVar4 == false) {
+        g_authLoad.copyBufferEnd = 0;
+        iVar3 = __restgprlr_20(0xfffffffffffffffa);
+        return iVar3;
       }
       if (bVar1) {
-        DAT_82b70db8 = 0;
+        g_authLoad.copyBufferEnd = 0;
         goto LAB_823a2b88;
       }
-      DAT_82b70d8c = (undefined *)0x2000;
-      DAT_82b70d88 = &DAT_82b70dc4;
+      g_authLoad.stream.avail_in = 0x2000;
+      g_authLoad.stream.next_in = g_authLoad.copyBuffer;
     }
-    if (DAT_82b70db8 != 0x2000) {
-      MyAssertHandler(0xffffffff82059004,0x379,0,0xffffffff82000f98,0xffffffff82059360);
+    if (g_authLoad.copyBufferEnd != 0x2000) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_auth.cpp",0x379,
+                      0,"%s");
     }
-    if (DAT_82b70d8c == (undefined *)0x0) {
-      MyAssertHandler(0xffffffff82059004,0x37b,0,0xffffffff82000f98,0xffffffff82059390);
+    if (g_authLoad.stream.avail_in == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_auth.cpp",0x37b,
+                      0,"%s");
     }
-    DAT_82b70d9c = piVar2[5];
-    DAT_82b70d94 = piVar2[3];
-    DAT_82b70d98 = piVar2[4];
-    if (DAT_82967310 == 0) {
-      uVar4 = db_inflate(0xffffffff82b70d88,param_2);
+    g_authLoad.stream.total_out = piVar2[5];
+    g_authLoad.stream.next_out = (uchar *)piVar2[3];
+    g_authLoad.stream.avail_out = piVar2[4];
+    if (g_compressor == DB_COMPRESSOR_ZLIB) {
+      iVar3 = db_inflate(&g_authLoad.stream,param_2);
     }
-    else if (DAT_82967310 == 1) {
-      uVar4 = DB_AuthLoad_InflateLZX(0xffffffff82b70d88);
+    else if (g_compressor == DB_COMPRESSOR_LZX) {
+      iVar3 = DB_AuthLoad_InflateLZX(&g_authLoad.stream);
     }
     else {
-      uVar4 = 0xfffffffffffffffd;
+      iVar3 = -3;
     }
-    if ((DAT_82b70d98 != 0) && (DAT_82b70d8c != (undefined *)0x0)) {
-      MyAssertHandler(0xffffffff82059004,0x391,0,0xffffffff82000f98,0xffffffff820593ac);
+    if ((g_authLoad.stream.avail_out != 0) && (g_authLoad.stream.avail_in != 0)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_auth.cpp",0x391,
+                      0,"%s");
     }
-    piVar2[5] = DAT_82b70d9c;
-    piVar2[3] = DAT_82b70d94;
-    piVar2[4] = DAT_82b70d98;
-    if (DAT_82b70d8c == (undefined *)0x0) {
-      DAT_82b70d88 = DAT_82b70d8c;
-      DAT_82b70db8 = 0;
+    piVar2[5] = g_authLoad.stream.total_out;
+    piVar2[3] = (int)g_authLoad.stream.next_out;
+    piVar2[4] = g_authLoad.stream.avail_out;
+    if (g_authLoad.stream.avail_in == 0) {
+      g_authLoad.stream.next_in = (uchar *)g_authLoad.stream.avail_in;
+      g_authLoad.copyBufferEnd = 0;
     }
-    if ((int)uVar4 != 0) {
-      __restgprlr_20(uVar4);
-      return;
+    if (iVar3 != 0) {
+      iVar3 = __restgprlr_20(iVar3);
+      return iVar3;
     }
-    if (DAT_82b70d98 == 0) {
+    if (g_authLoad.stream.avail_out == 0) {
 LAB_823a2d90:
-      __restgprlr_20(0);
-      return;
+      iVar3 = __restgprlr_20(0);
+      return iVar3;
     }
   } while( true );
 }
@@ -473,113 +515,117 @@ LAB_823a2d90:
 
 // 823A2DF0  DB_AuthLoad_InflateInit  (database/db_auth.cpp:936)
 
-void DB_AuthLoad_InflateInit(undefined8 param_1,int param_2,undefined8 param_3)
+int DB_AuthLoad_InflateInit(db_z_stream_s *param_1,int param_2,char *param_3)
 
 {
-  undefined4 *_Src;
-  int iVar1;
+  db_z_stream_s *pdVar1;
+  int iVar2;
   
-  _Src = (undefined4 *)__savegprlr_27();
-  memset(&DAT_82b6cd80,0,0x6044);
-  memcpy(&DAT_82b70d88,_Src,0x30);
-  DAT_82b70d90 = 0;
-  DAT_82b70d8c = 0;
-  DAT_82b70d88 = 0;
-  DAT_82b6cd80 = param_2;
-  I_strncpyz(0xffffffff82b6cd84,param_3,0x20);
-  if (DAT_82b6cd80 == 0) {
-    if (DAT_82967310 == 0) {
-      DB_Zip_InitThreadMemory(_Src,0xffffffff82b5cd80,0x10000);
+  pdVar1 = (db_z_stream_s *)__savegprlr_27(param_1);
+  memset();
+  memcpy();
+  g_authLoad.stream.total_in = 0;
+  g_authLoad.stream.avail_in = 0;
+  g_authLoad.stream.next_in = (uchar *)0x0;
+  g_authLoad.isSecure = param_2;
+  I_strncpyz(g_authLoad.expectedFastfileName,param_3,0x20);
+  if (g_authLoad.isSecure == 0) {
+    if (g_compressor == DB_COMPRESSOR_ZLIB) {
+      DB_Zip_InitThreadMemory(pdVar1,db_zipMemory,0x10000);
 LAB_823a2f78:
-      db_inflateInit_(_Src,0xffffffff820593e8,0x30);
-      __restgprlr_27();
-      return;
+      iVar2 = db_inflateInit_(pdVar1,"1.1.4",0x30);
+      iVar2 = __restgprlr_27(iVar2);
+      return iVar2;
     }
-    if ((DAT_82967310 == 1) && (iVar1 = XMemResetDecompressionContext(DAT_82c07734), iVar1 == 0)) {
-      _Src[2] = 0;
-      _Src[5] = 0;
-      __restgprlr_27(0);
-      return;
+    if ((g_compressor == DB_COMPRESSOR_LZX) &&
+       (iVar2 = XMemResetDecompressionContext(g_lzxDecmpContext), iVar2 == 0)) {
+      pdVar1->total_in = 0;
+      pdVar1->total_out = 0;
+      iVar2 = __restgprlr_27(0);
+      return iVar2;
     }
   }
   else {
-    memcpy(&DAT_84897ee0,&PTR_s_LibTomMath_8221d840,0xc4);
-    iVar1 = register_hash(0xffffffff8221d908);
-    if (iVar1 == -1) {
-      MyAssertHandler(0xffffffff82059004,0x3cd,0,0xffffffff82000f98,0xffffffff82059044);
+    memcpy();
+    iVar2 = register_hash(0xffffffff8221d908);
+    if (iVar2 == -1) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_auth.cpp",0x3cd,
+                      0,"%s");
     }
-    if (DAT_82967310 == 0) {
-      DB_Zip_InitThreadMemory(0xffffffff82b70d88,0xffffffff82b5cd80,0x10000);
-      _Src = &DAT_82b70d88;
+    if (g_compressor == DB_COMPRESSOR_ZLIB) {
+      DB_Zip_InitThreadMemory(&g_authLoad.stream,db_zipMemory,0x10000);
+      pdVar1 = &g_authLoad.stream;
       goto LAB_823a2f78;
     }
-    if ((DAT_82967310 == 1) && (iVar1 = XMemResetDecompressionContext(DAT_82c07734), iVar1 == 0)) {
-      DAT_82b70d90 = 0;
-      DAT_82b70d9c = 0;
-      __restgprlr_27();
-      return;
+    if (g_compressor == DB_COMPRESSOR_LZX) {
+      iVar2 = XMemResetDecompressionContext(g_lzxDecmpContext);
+      if (iVar2 == 0) {
+        g_authLoad.stream.total_in = 0;
+        g_authLoad.stream.total_out = 0;
+        iVar2 = __restgprlr_27();
+        return iVar2;
+      }
     }
   }
-  __restgprlr_27(0xfffffffffffffffd);
-  return;
+  iVar2 = __restgprlr_27(0xfffffffffffffffd);
+  return iVar2;
 }
 
 
 // 823A2F90  DB_AuthLoad_InflateEnd  (database/db_auth.cpp:997)
 
-void * DB_AuthLoad_InflateEnd(undefined8 param_1)
+void DB_AuthLoad_InflateEnd(db_z_stream_s *param_1)
 
 {
-  void *pvVar1;
-  
-  if (DAT_82b6cd80 == 0) {
-    pvVar1 = memset(&DAT_82b6cd80,0,0x6044);
-    if (DAT_82967310 == 0) {
+  if (g_authLoad.isSecure == 0) {
+    memset();
+    if (g_compressor == DB_COMPRESSOR_ZLIB) {
       db_inflateEnd(param_1);
-      pvVar1 = (void *)DB_Zip_ShutdownThreadMemory(param_1);
+      DB_Zip_ShutdownThreadMemory(param_1);
     }
   }
   else {
-    if (DAT_82967310 == 0) {
-      db_inflateEnd(0xffffffff82b70d88);
-      DB_Zip_ShutdownThreadMemory(0xffffffff82b70d88);
+    if (g_compressor == DB_COMPRESSOR_ZLIB) {
+      db_inflateEnd(&g_authLoad.stream);
+      DB_Zip_ShutdownThreadMemory(&g_authLoad.stream);
     }
-    memcpy((void *)param_1,&DAT_82b70d88,0x30);
-    pvVar1 = memset(&DAT_82b6cd80,0,0x6044);
+    memcpy();
+    memset();
   }
-  return pvVar1;
+  return;
 }
 
 
 // 823A3048  DB_AuthLoad_Inflate  (database/db_auth.cpp:1041)
 
-undefined8 DB_AuthLoad_Inflate(int param_1,undefined8 param_2)
+int DB_AuthLoad_Inflate(db_z_stream_s *param_1,int param_2,int param_3)
 
 {
-  undefined8 uVar1;
+  int iVar1;
   
-  if (*(int *)(param_1 + 0x10) == 0) {
-    MyAssertHandler(0xffffffff82059004,0x412,0,0xffffffff82000f98,0xffffffff820593f0);
+  if (param_1->avail_out == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_auth.cpp",0x412,0,
+                    "%s");
   }
-  if (DAT_82b6cd80 == 0) {
-    if (DAT_82967310 == 0) {
-      if (*(int *)(param_1 + 4) == 0) {
-        uVar1 = 0;
+  if (g_authLoad.isSecure == 0) {
+    if (g_compressor == DB_COMPRESSOR_ZLIB) {
+      if (param_1->avail_in == 0) {
+        iVar1 = 0;
       }
       else {
-        uVar1 = db_inflate(param_1,param_2);
+        iVar1 = db_inflate(param_1,param_2);
       }
     }
-    else if (DAT_82967310 == 1) {
-      uVar1 = DB_AuthLoad_InflateLZX(param_1);
+    else if (g_compressor == DB_COMPRESSOR_LZX) {
+      iVar1 = DB_AuthLoad_InflateLZX(param_1);
     }
     else {
-      uVar1 = 0xfffffffffffffffd;
+      iVar1 = -3;
     }
   }
   else {
-    uVar1 = DBX_AuthLoad_InflateCopyBuffer(param_1,param_2);
+    iVar1 = DBX_AuthLoad_InflateCopyBuffer(param_1,param_2);
   }
-  return uVar1;
+  return iVar1;
 }
 

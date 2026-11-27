@@ -2,7 +2,7 @@
 
 // 828C8048  EstOnset  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/estonset.c:62)
 
-void EstOnset(undefined8 param_1,undefined8 param_2,undefined8 param_3,int param_4,longlong param_5)
+int EstOnset(void *param_1,void *param_2,int param_3,int param_4,float *param_5)
 
 {
   double dVar1;
@@ -21,68 +21,70 @@ void EstOnset(undefined8 param_1,undefined8 param_2,undefined8 param_3,int param
   int iVar14;
   int iVar15;
   longlong lVar16;
-  double dVar17;
+  longlong lVar17;
   double dVar18;
   double dVar19;
   double dVar20;
   double dVar21;
   double dVar22;
   double dVar23;
+  double dVar24;
   
-  __savegprlr_24();
+  lVar16 = (longlong)(int)param_5;
+  __savegprlr_24(param_1);
   iVar10 = __savefpr_26();
   iVar6 = iVar10 + 0x10;
   iVar14 = *(int *)(iVar10 + 0x28);
   iVar5 = *(int *)(iVar10 + 0x2c);
-  dVar21 = (double)*(float *)(iVar10 + 0x20);
-  dVar20 = (double)*(float *)(iVar10 + 0x24);
-  dVar19 = 1.0;
-  dVar18 = 0.1599999964237213;
-  dVar23 = (double)*(float *)(iVar14 * 4 + iVar10);
+  dVar22 = (double)*(float *)(iVar10 + 0x20);
+  dVar21 = (double)*(float *)(iVar10 + 0x24);
+  dVar20 = 1.0;
+  dVar19 = 0.1599999964237213;
+  dVar24 = (double)*(float *)(iVar14 * 4 + iVar10);
   iVar15 = 0;
-  dVar22 = (double)*(float *)(iVar14 * 4 + iVar6);
-  GetFrameSpCBM(param_2,param_3,0xa1,param_5);
+  dVar23 = (double)*(float *)(iVar14 * 4 + iVar6);
+  GetFrameSpCBM(param_2,param_3,0xa1,(float *)lVar16);
   iVar13 = 0;
-  lVar16 = 0x50;
+  lVar17 = 0x50;
   do {
-    fVar3 = *(float *)param_5;
+    fVar3 = *(float *)lVar16;
     fVar4 = fVar3 * 0.03100586;
     uVar11 = iVar14 + 1;
     iVar14 = uVar11 + (((int)uVar11 >> 2) + (uint)((int)uVar11 < 0 && (uVar11 & 3) != 0) &
                       0x3fffffff) * -4;
-    fVar7 = fVar3 * fVar4 + (float)(dVar23 * 0.968994140625);
-    dVar23 = (double)fVar7;
-    fVar8 = ((float *)param_5)[1] * fVar4 + (float)(dVar22 * 0.968994140625);
-    dVar22 = (double)fVar8;
+    fVar7 = fVar3 * fVar4 + (float)(dVar24 * 0.968994140625);
+    dVar24 = (double)fVar7;
+    fVar8 = ((float *)lVar16)[1] * fVar4 + (float)(dVar23 * 0.968994140625);
+    dVar23 = (double)fVar8;
     iVar12 = iVar14 * 4;
     fVar3 = *(float *)(iVar12 + iVar10);
     fVar4 = *(float *)(iVar12 + iVar6);
     *(float *)(iVar12 + iVar10) = fVar7;
     *(float *)(iVar12 + iVar6) = fVar8;
-    dVar1 = dVar20 * dVar23;
-    dVar2 = dVar21 * dVar23;
-    dVar17 = dVar21 * dVar22;
-    fVar3 = (float)(dVar21 + dVar23) - fVar3;
-    dVar21 = (double)fVar3;
-    fVar4 = (float)(dVar20 + dVar22) - fVar4;
-    dVar20 = (double)fVar4;
-    dVar17 = ABS((double)(float)(dVar17 - (double)(float)dVar1));
+    dVar1 = dVar21 * dVar24;
+    dVar2 = dVar22 * dVar24;
+    dVar18 = dVar22 * dVar23;
+    fVar3 = (float)(dVar22 + dVar24) - fVar3;
+    dVar22 = (double)fVar3;
+    fVar4 = (float)(dVar21 + dVar23) - fVar4;
+    dVar21 = (double)fVar4;
+    dVar18 = ABS((double)(float)(dVar18 - (double)(float)dVar1));
     if (iVar5 + -0x96 <= iVar13) {
-      if ((int)(float)((double)(float)dVar2 * dVar18) < (int)(float)(dVar17 * dVar19)) {
-        dVar18 = dVar17;
-        dVar19 = (double)(float)dVar2;
+      if ((int)(float)((double)(float)dVar2 * dVar19) < (int)(float)(dVar18 * dVar20)) {
+        dVar19 = dVar18;
+        dVar20 = (double)(float)dVar2;
         iVar15 = iVar13;
       }
     }
     iVar13 = iVar13 + 2;
-    param_5 = param_5 + 8;
-    lVar16 = lVar16 + -1;
-  } while (lVar16 != 0);
+    lVar16 = lVar16 + 8;
+    lVar17 = lVar17 + -1;
+  } while (lVar17 != 0);
   *(float *)(iVar10 + 0x20) = fVar3;
   *(float *)(iVar10 + 0x24) = fVar4;
   *(int *)(iVar10 + 0x2c) = iVar15;
   *(int *)(iVar10 + 0x28) = iVar14;
-  iVar14 = (int)param_3 - (param_4 >> 1);
+  iVar14 = param_3 - (param_4 >> 1);
   if (iVar15 < 0x51) {
     uVar9 = -(ulonglong)(uint)(int)((float)(longlong)(iVar14 * iVar15) * 0.0125 + 0.5);
     if ((int)uVar9 < -0x28) {
@@ -98,40 +100,40 @@ void EstOnset(undefined8 param_1,undefined8 param_2,undefined8 param_3,int param
     }
   }
   __restfpr_26(uVar9);
-  __restgprlr_24();
-  return;
+  iVar14 = __restgprlr_24();
+  return iVar14;
 }
 
 
 // 828C8250  NellyInitEstOnset  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/estonset.c:179)
 
-bool NellyInitEstOnset(int *param_1)
+short NellyInitEstOnset(void **param_1)
 
 {
-  int iVar1;
+  void *pvVar1;
   
-  iVar1 = (*DAT_848958c0)(1,0x30);
-  *param_1 = iVar1;
-  if (iVar1 != 0) {
-    *(undefined4 *)(iVar1 + 0x2c) = 0;
-    *(undefined4 *)(iVar1 + 0x28) = 0;
-    *(undefined4 *)(iVar1 + 0x20) = 0;
-    *(undefined4 *)(iVar1 + 0x24) = 0;
-    (*DAT_848958c8)(iVar1,0,0x10);
-    (*DAT_848958c8)(iVar1 + 0x10,0,0x10);
+  pvVar1 = (*callocfunc)(1,0x30);
+  *param_1 = pvVar1;
+  if (pvVar1 != (void *)0x0) {
+    *(undefined4 *)((int)pvVar1 + 0x2c) = 0;
+    *(undefined4 *)((int)pvVar1 + 0x28) = 0;
+    *(undefined4 *)((int)pvVar1 + 0x20) = 0;
+    *(undefined4 *)((int)pvVar1 + 0x24) = 0;
+    (*memsetfunc)(pvVar1,0,0x10);
+    (*memsetfunc)((void *)((int)pvVar1 + 0x10),0,0x10);
   }
-  return iVar1 == 0;
+  return (short)(pvVar1 == (void *)0x0);
 }
 
 
 // 828C8300  NellyFreeEstOnset  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/estonset.c:200)
 
-undefined8 NellyFreeEstOnset(int *param_1)
+short NellyFreeEstOnset(void **param_1)
 
 {
-  if (*param_1 != 0) {
-    (*DAT_848958c4)();
-    *param_1 = 0;
+  if (*param_1 != (void *)0x0) {
+    (*freefunc)(*param_1);
+    *param_1 = (void *)0x0;
   }
   return 0;
 }

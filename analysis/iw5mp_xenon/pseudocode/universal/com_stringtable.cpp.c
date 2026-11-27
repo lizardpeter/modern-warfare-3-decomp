@@ -2,198 +2,185 @@
 
 // 825E7638  StringTable_LookupRowNumForValue  (universal/com_stringtable.cpp:16)
 
-void StringTable_LookupRowNumForValue(undefined8 param_1,longlong param_2,undefined8 param_3)
+int StringTable_LookupRowNumForValue(StringTable *param_1,int param_2,char *param_3)
 
 {
-  int *piVar1;
+  char *pcVar1;
   undefined4 *puVar2;
   int iVar3;
   int iVar4;
-  ulonglong uVar5;
+  int iVar5;
+  longlong lVar6;
+  ulonglong uVar7;
   
-  puVar2 = (undefined4 *)__savegprlr_25();
-  iVar3 = StringTable_HashString(param_3);
-  if (puVar2 == (undefined4 *)0x0) {
-    MyAssertHandler(0xffffffff82176fa0,0x17,0,0xffffffff82000f98,0xffffffff820362e8);
+  lVar6 = (longlong)param_2;
+  iVar3 = __savegprlr_25(param_1);
+  iVar4 = StringTable_HashString(param_3);
+  if (iVar3 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_stringtable.cpp"
+                    ,0x17,0,"%s");
   }
-  if (puVar2[1] != 0) {
-    if ((int)puVar2[1] <= (int)param_2) {
-      Com_Error(1,0xffffffff82176f58,param_2);
+  if (*(int *)(iVar3 + 4) != 0) {
+    if (*(int *)(iVar3 + 4) <= (int)lVar6) {
+      Com_Error(ERR_DROP,"Unable to compare against column number %i - there are only %i columns");
     }
-    uVar5 = (ulonglong)(uint)puVar2[2];
-    while (uVar5 = uVar5 - 1, -1 < (longlong)uVar5) {
-      piVar1 = (int *)((int)(((longlong)(int)puVar2[1] * (longlong)(int)uVar5 + param_2 &
-                             0xffffffffU) << 3) + puVar2[3]);
-      if (((piVar1[1] == iVar3) && (*piVar1 != 0)) && (iVar4 = I_stricmp(param_3), iVar4 == 0)) {
-        __restgprlr_25(uVar5);
-        return;
+    uVar7 = (ulonglong)*(uint *)(iVar3 + 8);
+    while (uVar7 = uVar7 - 1, -1 < (longlong)uVar7) {
+      puVar2 = (undefined4 *)
+               ((int)(((longlong)*(int *)(iVar3 + 4) * (longlong)(int)uVar7 + lVar6 & 0xffffffffU)
+                     << 3) + *(int *)(iVar3 + 0xc));
+      if (((puVar2[1] == iVar4) && (pcVar1 = (char *)*puVar2, pcVar1 != (char *)0x0)) &&
+         (iVar5 = I_stricmp(param_3,pcVar1), iVar5 == 0)) {
+        iVar3 = __restgprlr_25(uVar7);
+        return iVar3;
       }
     }
-    if (DAT_83667358 == 0) {
-      MyAssertHandler(0xffffffff82176fa0,0x27,0,0xffffffff82000f98,0xffffffff8208bf80);
+    if (stringtable_debug == (dvar_t *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_stringtable.cpp"
+                      ,0x27,0,"%s");
     }
-    if (*(int *)(DAT_83667358 + 0xc) != 0) {
-      Com_PrintError(0xd,0xffffffff82176f28,param_3,param_2,*puVar2);
+    if ((stringtable_debug->current).integer != 0) {
+      Com_PrintError(0xd,"Unable to find \'%s\' in column %i of table %s\n");
     }
   }
-  __restgprlr_25(0xffffffffffffffff);
-  return;
+  iVar3 = __restgprlr_25(0xffffffffffffffff);
+  return iVar3;
 }
 
 
 // 825E7780  StringTable_GetColumnValueForRow  (universal/com_stringtable.cpp:47)
 
-void StringTable_GetColumnValueForRow(undefined8 param_1,undefined8 param_2,longlong param_3)
+char * StringTable_GetColumnValueForRow(StringTable *param_1,int param_2,int param_3)
 
 {
   int iVar1;
   char *pcVar2;
-  undefined4 *puVar3;
-  ulonglong uVar4;
-  int iVar5;
+  longlong lVar3;
   
-  puVar3 = (undefined4 *)__savegprlr_25();
-  if (puVar3 == (undefined4 *)0x0) {
-    MyAssertHandler(0xffffffff82176fa0,0x31,0,0xffffffff82000f98,0xffffffff820362e8);
+  lVar3 = (longlong)param_3;
+  iVar1 = __savegprlr_25(param_1);
+  if (iVar1 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_stringtable.cpp"
+                    ,0x31,0,"%s");
   }
-  if (((((int)param_3 < (int)puVar3[1]) && (iVar5 = (int)param_2, iVar5 < (int)puVar3[2])) &&
-      (-1 < iVar5)) && (-1 < (int)param_3)) {
-    pcVar2 = *(char **)((int)(((longlong)(int)puVar3[1] * (longlong)iVar5 + param_3 & 0xffffffffU)
-                             << 3) + puVar3[3]);
-    if (pcVar2 != (char *)0x0) {
-      if (*pcVar2 == '\0') {
-        if (DAT_83667358 == 0) {
-          MyAssertHandler(0xffffffff82176fa0,0x3c,0,0xffffffff82000f98,0xffffffff8208bf80);
-        }
-        if (*(int *)(DAT_83667358 + 0xc) != 0) {
-          iVar1 = puVar3[1];
-          if (iVar1 < 2) {
-            uVar4 = 0xffffffff820068af;
-          }
-          else {
-            uVar4 = (ulonglong)*(uint *)((iVar1 * iVar5 + 1) * 8 + puVar3[3]);
-          }
-          Com_PrintError(0xd,0xffffffff82177040,param_2,param_3,
-                         *(undefined4 *)(iVar1 * iVar5 * 8 + puVar3[3]),uVar4);
-        }
+  if (((((int)lVar3 < *(int *)(iVar1 + 4)) && (param_2 < *(int *)(iVar1 + 8))) && (-1 < param_2)) &&
+     ((-1 < (int)lVar3 &&
+      (pcVar2 = *(char **)((int)(((longlong)*(int *)(iVar1 + 4) * (longlong)param_2 + lVar3 &
+                                 0xffffffffU) << 3) + *(int *)(iVar1 + 0xc)), pcVar2 != (char *)0x0)
+      ))) {
+    if (*pcVar2 == '\0') {
+      if (stringtable_debug == (dvar_t *)0x0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_stringtable.cpp"
+                        ,0x3c,0,"%s");
       }
-      __restgprlr_25(pcVar2);
-      return;
+      if ((stringtable_debug->current).integer != 0) {
+        Com_PrintError(0xd,
+                       "Looking up row %i, column %i of table \'%s\' results in an empty string (first column is %s, second column is %s for that row)\n"
+                      );
+      }
     }
+    pcVar2 = (char *)__restgprlr_25(pcVar2);
+    return pcVar2;
   }
-  if (DAT_83667358 == 0) {
-    MyAssertHandler(0xffffffff82176fa0,0x34,0,0xffffffff82000f98,0xffffffff8208bf80);
+  if (stringtable_debug == (dvar_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_stringtable.cpp"
+                    ,0x34,0,"%s");
   }
-  if (*(int *)(DAT_83667358 + 0xc) != 0) {
-    Com_PrintError(0xd,0xffffffff82176fe8,param_2,param_3,*puVar3,puVar3[2],puVar3[1]);
+  if ((stringtable_debug->current).integer != 0) {
+    Com_PrintError(0xd,
+                   "Trying to read row %i, column %i, but the table \'%s\' has %i rows and %i columns\n"
+                  );
   }
-  __restgprlr_25(0xffffffff820068af);
-  return;
+  pcVar2 = (char *)__restgprlr_25(0xffffffff820068af);
+  return pcVar2;
 }
 
 
 // 825E7928  StringTable_Lookup  (universal/com_stringtable.cpp:69)
 
-undefined8
-StringTable_Lookup(ulonglong param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
+char * StringTable_Lookup(StringTable *param_1,int param_2,char *param_3,int param_4)
 
 {
-  undefined8 uVar1;
+  int iVar1;
+  char *pcVar2;
   
-  if ((param_1 & 0xffffffff) == 0) {
-    Com_PrintError(0xd,0xffffffff821770c0);
-    uVar1 = 0xffffffff820068af;
+  if (param_1 == (StringTable *)0x0) {
+    Com_PrintError(0xd,"Unable to find the lookup table in the fastfile, aborting lookup\n");
+    pcVar2 = "";
   }
   else {
-    uVar1 = StringTable_LookupRowNumForValue(param_1);
-    uVar1 = StringTable_GetColumnValueForRow(param_1,uVar1,param_4);
+    iVar1 = StringTable_LookupRowNumForValue(param_1,param_2,param_3);
+    pcVar2 = StringTable_GetColumnValueForRow(param_1,iVar1,param_4);
   }
-  return uVar1;
+  return pcVar2;
 }
 
 
 // 825E7998  StringTable_GetRowCount  (universal/com_stringtable.cpp:79)
 
-undefined4 StringTable_GetRowCount(int param_1)
+int StringTable_GetRowCount(StringTable *param_1)
 
 {
-  if (param_1 == 0) {
-    MyAssertHandler(0xffffffff82176fa0,0x50,0,0xffffffff82000f98,0xffffffff820362e8);
+  if (param_1 == (StringTable *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_stringtable.cpp"
+                    ,0x50,0,"%s");
   }
-  return *(undefined4 *)(param_1 + 8);
+  return param_1->rowCount;
 }
 
 
 // 825E79F0  StringTable_Checksum  (universal/com_stringtable.cpp:85)
 
-void StringTable_Checksum(undefined8 param_1,undefined8 param_2)
+uint StringTable_Checksum(StringTable *param_1,uint param_2)
 
 {
   char cVar1;
   char *pcVar2;
-  undefined4 *puVar4;
-  undefined8 uVar3;
+  undefined4 *puVar3;
+  uint uVar4;
   char *pcVar5;
   int iVar6;
   int iVar7;
   int iVar8;
   
-  puVar4 = (undefined4 *)__savegprlr_29();
-  pcVar2 = (char *)*puVar4;
+  puVar3 = (undefined4 *)__savegprlr_29(param_1);
+  pcVar2 = (char *)*puVar3;
   pcVar5 = pcVar2;
   do {
     cVar1 = *pcVar5;
     pcVar5 = pcVar5 + 1;
   } while (cVar1 != '\0');
-  uVar3 = Com_BlockChecksumKey32(pcVar2,pcVar5 + (-1 - (int)pcVar2),param_2);
+  uVar4 = Com_BlockChecksumKey32(pcVar2,(uint)(pcVar5 + (-1 - (int)pcVar2)),param_2);
   iVar7 = 0;
-  if (0 < (int)puVar4[1]) {
-    iVar6 = puVar4[2];
+  if (0 < (int)puVar3[1]) {
+    iVar6 = puVar3[2];
     do {
       iVar8 = 0;
       if (0 < iVar6) {
         do {
-          pcVar2 = *(char **)((puVar4[1] * iVar8 + iVar7) * 8 + puVar4[3]);
+          pcVar2 = *(char **)((puVar3[1] * iVar8 + iVar7) * 8 + puVar3[3]);
           pcVar5 = pcVar2;
           do {
             cVar1 = *pcVar5;
             pcVar5 = pcVar5 + 1;
           } while (cVar1 != '\0');
-          uVar3 = Com_BlockChecksumKey32(pcVar2,pcVar5 + (-1 - (int)pcVar2),uVar3);
-          iVar6 = puVar4[2];
+          uVar4 = Com_BlockChecksumKey32(pcVar2,(uint)(pcVar5 + (-1 - (int)pcVar2)),uVar4);
+          iVar6 = puVar3[2];
           iVar8 = iVar8 + 1;
         } while (iVar8 < iVar6);
       }
       iVar7 = iVar7 + 1;
-    } while (iVar7 < (int)puVar4[1]);
+    } while (iVar7 < (int)puVar3[1]);
   }
-  __restgprlr_29();
-  return;
+  uVar4 = __restgprlr_29();
+  return uVar4;
 }
 
 
 // 825E7AB8  StringTable_GetAsset_FastFile  (universal/com_stringtable.cpp:109)
-
-void StringTable_GetAsset_FastFile(undefined8 param_1,undefined4 *param_2)
-
-{
-  undefined4 uVar1;
-  
-  uVar1 = DB_FindXAssetHeader(0x26,param_1,1);
-  *param_2 = uVar1;
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
 
 // 825E7AF8  StringTable_GetAsset  (universal/com_stringtable.cpp:115)
-
-void StringTable_GetAsset(undefined8 param_1,undefined4 *param_2)
-
-{
-  undefined4 uVar1;
-  
-  uVar1 = DB_FindXAssetHeader(0x26,param_1,1);
-  *param_2 = uVar1;
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0

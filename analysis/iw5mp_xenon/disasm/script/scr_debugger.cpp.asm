@@ -439,15 +439,15 @@ LAB_82529cf8:
   82529D2C  91630014             stw r11,0x14(r3)
   82529D30  4E800020             blr
 
-; 82529D38  Scr_ScriptWindow::operator_new  (script/scr_debugger.cpp:720)
+; 82529D38  operator_new  (script/scr_debugger.cpp:720)
   82529D38  3D608215             lis r11,-0x7deb
   82529D3C  388BF7A4             subi r4,r11,0x85c
   82529D40  480BADB0             b 0x825e4af0
 
-; 82529D48  Scr_ScriptWindow::operator_delete  (script/scr_debugger.cpp:732)
+; 82529D48  ??3Scr_ScriptWindow@@SAXPAX@Z  (script/scr_debugger.cpp:732)
   82529D48  480B8DF8             b 0x825e2b40
 
-; 8252DE08  Scr_ScriptWindow::SetScriptFile  (script/scr_debugger.cpp:769)
+; 8252DE08  SetScriptFile  (script/scr_debugger.cpp:769)
   8252DE08  7D8802A6             mfspr r12,LR
   8252DE0C  483E88A5             bl 0x829166b0
   8252DE10  9421FF70             stwu r1,-0x90(r1)
@@ -561,7 +561,7 @@ LAB_8252df5c:
   8252DF90  38210090             addi r1,r1,0x90
   8252DF94  483E876C             b 0x82916700
 
-; 82529D50  Scr_ScriptWindow::SetCurrentLine  (script/scr_debugger.cpp:798)
+; 82529D50  SetCurrentLine  (script/scr_debugger.cpp:798)
   82529D50  7D8802A6             mfspr r12,LR
   82529D54  483EC951             bl 0x829166a4
   82529D58  9421FF60             stwu r1,-0xa0(r1)
@@ -692,7 +692,7 @@ LAB_82529f14:
   82529F14  382100A0             addi r1,r1,0xa0
   82529F18  483EC7DC             b 0x829166f4
 
-; 82529F20  Scr_ScriptWindow::GetFilename  (script/scr_debugger.cpp:861)
+; 82529F20  GetFilename  (script/scr_debugger.cpp:861)
   82529F20  81630008             lwz r11,0x8(r3)
   82529F24  2B0BFFFE             cmplwi cr6,r11,0xfffe
   82529F28  409A0010             bne cr6,0x82529f38
@@ -707,7 +707,7 @@ LAB_82529f38:
   82529F48  80680004             lwz r3,0x4(r8)
   82529F4C  4E800020             blr
 
-; 82529F50  Scr_ScriptWindow::AddBreakpoint  (script/scr_debugger.cpp:1043)
+; 82529F50  AddBreakpoint  (script/scr_debugger.cpp:1043)
   82529F50  7D8802A6             mfspr r12,LR
   82529F54  483EC755             bl 0x829166a8
   82529F58  9421FF60             stwu r1,-0xa0(r1)
@@ -885,7 +885,7 @@ LAB_8252a150:
   8252A168  38210090             addi r1,r1,0x90
   8252A16C  483EC590             b 0x829166fc
 
-; 8252A170  Scr_ScriptWindow::GetSourcePos  (script/scr_debugger.cpp:1158)
+; 8252A170  GetSourcePos  (script/scr_debugger.cpp:1158)
   8252A170  7D8802A6             mfspr r12,LR
   8252A174  483EC52D             bl 0x829166a0
   8252A178  9421FF50             stwu r1,-0xb0(r1)
@@ -1013,7 +1013,7 @@ LAB_8252a31c:
   8252A32C  EBE1FFF0             ld r31,-0x10(r1)
   8252A330  4E800020             blr
 
-; 8252F8D0  Scr_ScriptWindow::AddBreakpointAtSourcePos  (script/scr_debugger.cpp:1217)
+; 8252F8D0  AddBreakpointAtSourcePos  (script/scr_debugger.cpp:1217)
   8252F8D0  7D8802A6             mfspr r12,LR
   8252F8D4  483E6DCD             bl 0x829166a0
   8252F8D8  9421FF50             stwu r1,-0xb0(r1)
@@ -1148,7 +1148,7 @@ LAB_8252fa70:
   8252FAB0  382100B0             addi r1,r1,0xb0
   8252FAB4  483E6C3C             b 0x829166f0
 
-; 82530570  Scr_ScriptWindow::ToggleBreakpointInternal  (script/scr_debugger.cpp:1313)
+; 82530570  ToggleBreakpointInternal  (script/scr_debugger.cpp:1313)
   82530570  7D8802A6             mfspr r12,LR
   82530574  483E6115             bl 0x82916688
   82530578  9421FF20             stwu r1,-0xe0(r1)
@@ -1379,7 +1379,7 @@ LAB_8253089c:
   8253089C  382100E0             addi r1,r1,0xe0
   825308A0  483E5E38             b 0x829166d8
 
-; 8252A338  Scr_ScriptWindow::GetBreakpointCodePos  (script/scr_debugger.cpp:1464)
+; 8252A338  GetBreakpointCodePos  (script/scr_debugger.cpp:1464)
   8252A338  7D8802A6             mfspr r12,LR
   8252A33C  483EC36D             bl 0x829166a8
   8252A340  9421FF60             stwu r1,-0xa0(r1)
@@ -1748,7 +1748,7 @@ LAB_8252a738:
   8252A780  EBE1FFF0             ld r31,-0x10(r1)
   8252A784  4E800020             blr
 
-; 8252A788  Scr_ScriptWindow::RunToCursor  (script/scr_debugger.cpp:1805)
+; 8252A788  RunToCursor  (script/scr_debugger.cpp:1805)
   8252A788  7D8802A6             mfspr r12,LR
   8252A78C  9181FFF8             stw r12,-0x8(r1)
   8252A790  FBE1FFF0             std r31,-0x10(r1)
@@ -1802,7 +1802,7 @@ LAB_8252a7e8:
   8252A844  EBE1FFF0             ld r31,-0x10(r1)
   8252A848  4E800020             blr
 
-; 82530988  Scr_ScriptWindow::EnterCallInternal  (script/scr_debugger.cpp:2067)
+; 82530988  EnterCallInternal  (script/scr_debugger.cpp:2067)
   82530988  7D8802A6             mfspr r12,LR
   8253098C  483E5D31             bl 0x829166bc
   82530990  9421FF70             stwu r1,-0x90(r1)
@@ -1934,7 +1934,7 @@ LAB_82530b08:
   82530B54  EBE1FFF0             ld r31,-0x10(r1)
   82530B58  4E800020             blr
 
-; 8252A850  Scr_ScriptWindow::Init  (script/scr_debugger.cpp:2456)
+; 8252A850  Init  (script/scr_debugger.cpp:2456)
   8252A850  7D8802A6             mfspr r12,LR
   8252A854  483EBE69             bl 0x829166bc
   8252A858  9421FF90             stwu r1,-0x70(r1)
@@ -2088,13 +2088,13 @@ LAB_8252aa50:
   8252AA6C  EBE1FFF0             ld r31,-0x10(r1)
   8252AA70  4E800020             blr
 
-; 8252AA78  Scr_AbstractScriptList::Init  (script/scr_debugger.cpp:2638)
+; 8252AA78  Init  (script/scr_debugger.cpp:2638)
   8252AA78  39600000             li r11,0x0
   8252AA7C  91630004             stw r11,0x4(r3)
   8252AA80  91630008             stw r11,0x8(r3)
   8252AA84  4E800020             blr
 
-; 8252AA88  Scr_AbstractScriptList::Shutdown  (script/scr_debugger.cpp:2655)
+; 8252AA88  Shutdown  (script/scr_debugger.cpp:2655)
   8252AA88  7D8802A6             mfspr r12,LR
   8252AA8C  9181FFF8             stw r12,-0x8(r1)
   8252AA90  FBE1FFF0             std r31,-0x10(r1)
@@ -2113,7 +2113,7 @@ LAB_8252aab4:
   8252AAC0  EBE1FFF0             ld r31,-0x10(r1)
   8252AAC4  4E800020             blr
 
-; 8252DFF0  Scr_ScriptList::AddFile  (script/scr_debugger.cpp:2953)
+; 8252DFF0  AddFile  (script/scr_debugger.cpp:2953)
   8252DFF0  7D8802A6             mfspr r12,LR
   8252DFF4  483E86C5             bl 0x829166b8
   8252DFF8  9421FF80             stwu r1,-0x80(r1)
@@ -2171,7 +2171,7 @@ LAB_8252e0a0:
   8252AACC  80630000             lwz r3,0x0(r3)
   8252AAD0  480E14C0             b 0x8260bf90
 
-; 8252E0B8  Scr_ScriptList::Init  (script/scr_debugger.cpp:3134)
+; 8252E0B8  Init  (script/scr_debugger.cpp:3134)
   8252E0B8  7D8802A6             mfspr r12,LR
   8252E0BC  483E85ED             bl 0x829166a8
   8252E0C0  9421F710             stwu r1,-0x8f0(r1)
@@ -2324,7 +2324,7 @@ LAB_8252e2cc:
   8252E2E4  382108F0             addi r1,r1,0x8f0
   8252E2E8  483E8410             b 0x829166f8
 
-; 8252AAD8  Scr_ScriptList::Shutdown  (script/scr_debugger.cpp:3219)
+; 8252AAD8  Shutdown  (script/scr_debugger.cpp:3219)
   8252AAD8  7D8802A6             mfspr r12,LR
   8252AADC  483EBBD5             bl 0x829166b0
   8252AAE0  9421FF70             stwu r1,-0x90(r1)
@@ -2387,7 +2387,7 @@ LAB_8252abb0:
   8252ABB0  38210090             addi r1,r1,0x90
   8252ABB4  483EBB4C             b 0x82916700
 
-; 8252ABB8  Scr_ScriptCallStack::UpdateStack  (script/scr_debugger.cpp:3599)
+; 8252ABB8  UpdateStack  (script/scr_debugger.cpp:3599)
   8252ABB8  7D8802A6             mfspr r12,LR
   8252ABBC  483EBAD9             bl 0x82916694
   8252ABC0  9421FF40             stwu r1,-0xc0(r1)
@@ -2551,7 +2551,7 @@ LAB_8252ade4:
   8252ADF0  409AFFF4             bne cr6,0x8252ade4
   8252ADF4  4E800020             blr
 
-; 8252ADF8  Scr_ScriptWatch::GetElementWithId_r  (script/scr_debugger.cpp:4157)
+; 8252ADF8  GetElementWithId_r  (script/scr_debugger.cpp:4157)
   8252ADF8  7D8802A6             mfspr r12,LR
   8252ADFC  483EB8C1             bl 0x829166bc
   8252AE00  9421FF90             stwu r1,-0x70(r1)
@@ -2586,12 +2586,12 @@ LAB_8252ae5c:
   8252AE60  38210070             addi r1,r1,0x70
   8252AE64  483EB8A8             b 0x8291670c
 
-; 8252AE68  Scr_ScriptWatch::GetElementWithId  (script/scr_debugger.cpp:4184)
+; 8252AE68  GetElementWithId  (script/scr_debugger.cpp:4184)
   8252AE68  7C852378             or r5,r4,r4
   8252AE6C  80830008             lwz r4,0x8(r3)
   8252AE70  4BFFFF88             b 0x8252adf8
 
-; 8252AE78  Scr_ScriptWatch::GetElementRef  (script/scr_debugger.cpp:4196)
+; 8252AE78  GetElementRef  (script/scr_debugger.cpp:4196)
   8252AE78  7D8802A6             mfspr r12,LR
   8252AE7C  483EB839             bl 0x829166b4
   8252AE80  9421FF80             stwu r1,-0x80(r1)
@@ -2626,7 +2626,7 @@ LAB_8252aee4:
   8252AEE8  38210080             addi r1,r1,0x80
   8252AEEC  483EB818             b 0x82916704
 
-; 8252AEF0  Scr_ScriptWatch::GetElementPrev  (script/scr_debugger.cpp:4216)
+; 8252AEF0  GetElementPrev  (script/scr_debugger.cpp:4216)
   8252AEF0  7D8802A6             mfspr r12,LR
   8252AEF4  9181FFF8             stw r12,-0x8(r1)
   8252AEF8  9421FFA0             stwu r1,-0x60(r1)
@@ -2670,7 +2670,7 @@ LAB_8252af58:
   8252AF74  5563F7FE             rlwinm r3,r11,0x1e,0x1f,0x1f
   8252AF78  4E800020             blr
 
-; 8252FAB8  Scr_ScriptWatch::ToggleExpandElement  (script/scr_debugger.cpp:4324)
+; 8252FAB8  ToggleExpandElement  (script/scr_debugger.cpp:4324)
   8252FAB8  7D8802A6             mfspr r12,LR
   8252FABC  9181FFF8             stw r12,-0x8(r1)
   8252FAC0  FBE1FFF0             std r31,-0x10(r1)
@@ -2716,7 +2716,7 @@ LAB_8252fb44:
   8252FB50  EBE1FFF0             ld r31,-0x10(r1)
   8252FB54  4E800020             blr
 
-; 8252FB58  Scr_ScriptWatch::ExpandElement  (script/scr_debugger.cpp:4371)
+; 8252FB58  ExpandElement  (script/scr_debugger.cpp:4371)
   8252FB58  7D8802A6             mfspr r12,LR
   8252FB5C  9181FFF8             stw r12,-0x8(r1)
   8252FB60  FBC1FFE8             std r30,-0x18(r1)
@@ -2810,7 +2810,7 @@ LAB_8252fc74:
 ; 8252AF88  Scr_ToggleExpandElementRemote  (script/scr_debugger.cpp:4495)
   8252AF88  4E800020             blr
 
-; 8252E2F0  Scr_ScriptWatch::CreateBreakpointElement  (script/scr_debugger.cpp:4516)
+; 8252E2F0  CreateBreakpointElement  (script/scr_debugger.cpp:4516)
   8252E2F0  7D8802A6             mfspr r12,LR
   8252E2F4  483E83C5             bl 0x829166b8
   8252E2F8  9421FDF0             stwu r1,-0x210(r1)
@@ -2867,7 +2867,7 @@ LAB_8252e334:
   8252E3B8  38210210             addi r1,r1,0x210
   8252E3BC  483E834C             b 0x82916708
 
-; 8252FC90  Scr_ScriptWatch::PasteNonBreakpointElement  (script/scr_debugger.cpp:4552)
+; 8252FC90  PasteNonBreakpointElement  (script/scr_debugger.cpp:4552)
   8252FC90  7D8802A6             mfspr r12,LR
   8252FC94  483E6A29             bl 0x829166bc
   8252FC98  9421FF90             stwu r1,-0x70(r1)
@@ -3035,7 +3035,7 @@ LAB_8252fdbc:
   8252FDE4  EBE1FFF0             ld r31,-0x10(r1)
   8252FDE8  4E800020             blr
 
-; 8252FDF0  Scr_ScriptWatch::DeleteElementInternal  (script/scr_debugger.cpp:5064)
+; 8252FDF0  DeleteElementInternal  (script/scr_debugger.cpp:5064)
   8252FDF0  7D8802A6             mfspr r12,LR
   8252FDF4  483E68C9             bl 0x829166bc
   8252FDF8  9421FF90             stwu r1,-0x70(r1)
@@ -3111,7 +3111,7 @@ LAB_8252fee8:
   8252FEF8  EBE1FFF0             ld r31,-0x10(r1)
   8252FEFC  4E800020             blr
 
-; 8252FF00  Scr_ScriptWatch::BackspaceElementInternal  (script/scr_debugger.cpp:5156)
+; 8252FF00  BackspaceElementInternal  (script/scr_debugger.cpp:5156)
   8252FF00  7D8802A6             mfspr r12,LR
   8252FF04  483E67B5             bl 0x829166b8
   8252FF08  9421FF80             stwu r1,-0x80(r1)
@@ -3191,14 +3191,14 @@ LAB_82530008:
   82530018  EBE1FFF0             ld r31,-0x10(r1)
   8253001C  4E800020             blr
 
-; 8252AF90  Scr_ScriptWatch::Init  (script/scr_debugger.cpp:5482)
+; 8252AF90  Init  (script/scr_debugger.cpp:5482)
   8252AF90  39600000             li r11,0x0
   8252AF94  91630008             stw r11,0x8(r3)
   8252AF98  91630010             stw r11,0x10(r3)
   8252AF9C  9163000C             stw r11,0xc(r3)
   8252AFA0  4E800020             blr
 
-; 82530020  Scr_ScriptWatch::Shutdown  (script/scr_debugger.cpp:5584)
+; 82530020  Shutdown  (script/scr_debugger.cpp:5584)
   82530020  7D8802A6             mfspr r12,LR
   82530024  9181FFF8             stw r12,-0x8(r1)
   82530028  FBC1FFE8             std r30,-0x18(r1)
@@ -3412,7 +3412,7 @@ LAB_8252b130:
 ; 8252B150  Scr_FreeWatchElementChildrenRemote  (script/scr_debugger.cpp:5730)
   8252B150  4E800020             blr
 
-; 8252E4B8  Scr_ScriptWatch::FreeWatchElement  (script/scr_debugger.cpp:5750)
+; 8252E4B8  FreeWatchElement  (script/scr_debugger.cpp:5750)
   8252E4B8  7D8802A6             mfspr r12,LR
   8252E4BC  483E8201             bl 0x829166bc
   8252E4C0  9421FF90             stwu r1,-0x70(r1)
@@ -4255,7 +4255,7 @@ LAB_8252bbe0:
 ; 8252BBF8  Scr_SortElementChildrenRemote  (script/scr_debugger.cpp:6438)
   8252BBF8  4E800020             blr
 
-; 8252E5D0  Scr_ScriptWatch::EvaluateWatchChildren  (script/scr_debugger.cpp:6473)
+; 8252E5D0  EvaluateWatchChildren  (script/scr_debugger.cpp:6473)
   8252E5D0  7D8802A6             mfspr r12,LR
   8252E5D4  483E80AD             bl 0x82916680
   8252E5D8  9421FE40             stwu r1,-0x1c0(r1)
@@ -5240,7 +5240,7 @@ LAB_8252f398:
 ; 8252BC00  Scr_SetChildCountRemote  (script/scr_debugger.cpp:6934)
   8252BC00  4E800020             blr
 
-; 8252BC08  Scr_ScriptWatch::PostEvaluateWatchElement  (script/scr_debugger.cpp:7056)
+; 8252BC08  PostEvaluateWatchElement  (script/scr_debugger.cpp:7056)
   8252BC08  7D8802A6             mfspr r12,LR
   8252BC0C  483EAAA5             bl 0x829166b0
   8252BC10  9421FE70             stwu r1,-0x190(r1)
@@ -5357,7 +5357,7 @@ LAB_8252bd68:
   8252BDB0  38210190             addi r1,r1,0x190
   8252BDB4  483EA94C             b 0x82916700
 
-; 8252BDB8  Scr_ScriptWatch::EvaluateWatchChildElement  (script/scr_debugger.cpp:7106)
+; 8252BDB8  EvaluateWatchChildElement  (script/scr_debugger.cpp:7106)
   8252BDB8  7D8802A6             mfspr r12,LR
   8252BDBC  483EA8F1             bl 0x829166ac
   8252BDC0  9421FF60             stwu r1,-0xa0(r1)
@@ -5487,7 +5487,7 @@ LAB_8252bf70:
   8252BF80  382100A0             addi r1,r1,0xa0
   8252BF84  483EA778             b 0x829166fc
 
-; 8252BF88  Scr_ScriptWatch::EvaluateWatchElementExpression  (script/scr_debugger.cpp:7193)
+; 8252BF88  EvaluateWatchElementExpression  (script/scr_debugger.cpp:7193)
   8252BF88  7D8802A6             mfspr r12,LR
   8252BF8C  483EA729             bl 0x829166b4
   8252BF90  9421FF80             stwu r1,-0x80(r1)
@@ -5556,7 +5556,7 @@ LAB_8252c060:
   8252C074  38210080             addi r1,r1,0x80
   8252C078  483EA68C             b 0x82916704
 
-; 8252F3A0  Scr_ScriptWatch::EvaluateWatchElement  (script/scr_debugger.cpp:7226)
+; 8252F3A0  EvaluateWatchElement  (script/scr_debugger.cpp:7226)
   8252F3A0  7D8802A6             mfspr r12,LR
   8252F3A4  9181FFF8             stw r12,-0x8(r1)
   8252F3A8  FBC1FFE8             std r30,-0x18(r1)
@@ -5595,7 +5595,7 @@ LAB_8252f3d0:
   8252F428  EBE1FFF0             ld r31,-0x10(r1)
   8252F42C  4E800020             blr
 
-; 8252C080  Scr_ScriptWatch::CreateWatchElement  (script/scr_debugger.cpp:7264)
+; 8252C080  CreateWatchElement  (script/scr_debugger.cpp:7264)
   8252C080  7D8802A6             mfspr r12,LR
   8252C084  483EA635             bl 0x829166b8
   8252C088  9421FF80             stwu r1,-0x80(r1)
@@ -5667,7 +5667,7 @@ LAB_82530cb0:
   82530CB0  38210070             addi r1,r1,0x70
   82530CB4  483E5A58             b 0x8291670c
 
-; 82530088  Scr_ScriptWatch::AddElement  (script/scr_debugger.cpp:7361)
+; 82530088  AddElement  (script/scr_debugger.cpp:7361)
   82530088  7D8802A6             mfspr r12,LR
   8253008C  483E6629             bl 0x829166b4
   82530090  9421FF70             stwu r1,-0x90(r1)
@@ -5795,7 +5795,7 @@ LAB_82530254:
   82530254  38210090             addi r1,r1,0x90
   82530258  483E64AC             b 0x82916704
 
-; 8252C120  Scr_ScriptWatch::CloneElement  (script/scr_debugger.cpp:7502)
+; 8252C120  CloneElement  (script/scr_debugger.cpp:7502)
   8252C120  7D8802A6             mfspr r12,LR
   8252C124  9181FFF8             stw r12,-0x8(r1)
   8252C128  FBC1FFE8             std r30,-0x18(r1)
@@ -5877,7 +5877,7 @@ LAB_8252f4bc:
   8252F4CC  EBE1FFF0             ld r31,-0x10(r1)
   8252F4D0  4E800020             blr
 
-; 8252F4D8  Scr_ScriptWatch::Evaluate  (script/scr_debugger.cpp:7616)
+; 8252F4D8  Evaluate  (script/scr_debugger.cpp:7616)
   8252F4D8  7D8802A6             mfspr r12,LR
   8252F4DC  483E71DD             bl 0x829166b8
   8252F4E0  9421FE70             stwu r1,-0x190(r1)
@@ -6384,7 +6384,7 @@ LAB_825326a0:
   825326A0  382100F0             addi r1,r1,0xf0
   825326A4  483E402C             b 0x829166d0
 
-; 8252C208  Scr_ScriptWatch::DisplayThreadPos  (script/scr_debugger.cpp:7863)
+; 8252C208  DisplayThreadPos  (script/scr_debugger.cpp:7863)
   8252C208  7D8802A6             mfspr r12,LR
   8252C20C  9181FFF8             stw r12,-0x8(r1)
   8252C210  FBC1FFE8             std r30,-0x18(r1)
@@ -6929,7 +6929,7 @@ LAB_8252c92c:
   8252C944  382100C0             addi r1,r1,0xc0
   8252C948  483E9DA4             b 0x829166ec
 
-; 8252C950  Scr_ScriptWatch::UpdateBreakpoints  (script/scr_debugger.cpp:8167)
+; 8252C950  UpdateBreakpoints  (script/scr_debugger.cpp:8167)
   8252C950  7D8802A6             mfspr r12,LR
   8252C954  483E9D55             bl 0x829166a8
   8252C958  9421FF60             stwu r1,-0xa0(r1)
@@ -7020,7 +7020,7 @@ LAB_8252ca7c:
   8252CA80  382100A0             addi r1,r1,0xa0
   8252CA84  483E9C74             b 0x829166f8
 
-; 8252CA88  Scr_ScriptWatch::AddBreakpoint  (script/scr_debugger.cpp:8210)
+; 8252CA88  AddBreakpoint  (script/scr_debugger.cpp:8210)
   8252CA88  7D8802A6             mfspr r12,LR
   8252CA8C  483E9C31             bl 0x829166bc
   8252CA90  9421FF90             stwu r1,-0x70(r1)
@@ -7056,7 +7056,7 @@ LAB_8252caf8:
   8252CB00  38210070             addi r1,r1,0x70
   8252CB04  483E9C08             b 0x8291670c
 
-; 8252CB08  Scr_ScriptWatch::RemoveBreakpoint  (script/scr_debugger.cpp:8228)
+; 8252CB08  RemoveBreakpoint  (script/scr_debugger.cpp:8228)
   8252CB08  7D8802A6             mfspr r12,LR
   8252CB0C  9181FFF8             stw r12,-0x8(r1)
   8252CB10  FBE1FFF0             std r31,-0x10(r1)
@@ -7095,7 +7095,7 @@ LAB_8252cb7c:
   8252CB8C  EBE1FFF0             ld r31,-0x10(r1)
   8252CB90  4E800020             blr
 
-; 8252F678  Scr_ScriptWatch::ToggleWatchElementBreakpoint  (script/scr_debugger.cpp:8242)
+; 8252F678  ToggleWatchElementBreakpoint  (script/scr_debugger.cpp:8242)
   8252F678  7D8802A6             mfspr r12,LR
   8252F67C  9181FFF8             stw r12,-0x8(r1)
   8252F680  FBC1FFE8             std r30,-0x18(r1)
@@ -7136,7 +7136,7 @@ LAB_8252f6e4:
   8252F6FC  EBE1FFF0             ld r31,-0x10(r1)
   8252F700  4E800020             blr
 
-; 82530260  Scr_ScriptWatch::ToggleBreakpointInternal  (script/scr_debugger.cpp:8280)
+; 82530260  ToggleBreakpointInternal  (script/scr_debugger.cpp:8280)
   82530260  7D8802A6             mfspr r12,LR
   82530264  483E6459             bl 0x829166bc
   82530268  9421FF90             stwu r1,-0x70(r1)
@@ -7297,7 +7297,7 @@ LAB_82530490:
   825304A0  EBE1FFF0             ld r31,-0x10(r1)
   825304A4  4E800020             blr
 
-; 8252CB98  Scr_ScriptWatch::SortHitBreakpointsTop  (script/scr_debugger.cpp:8416)
+; 8252CB98  SortHitBreakpointsTop  (script/scr_debugger.cpp:8416)
   8252CB98  7D8802A6             mfspr r12,LR
   8252CB9C  9181FFF8             stw r12,-0x8(r1)
   8252CBA0  9421FFA0             stwu r1,-0x60(r1)
@@ -9684,31 +9684,31 @@ LAB_82530ecc:
   82530EDC  7C0903A6             mtspr CTR,r0
 switchD:
   82530EE0  4E800420             bctr
-caseD_82530f8c:
+caseD_0:
   82530F8C  4BFFFCC5             bl 0x82530c50
   82530F90  480000E4             b 0x82531074
-caseD_82530f94:
+caseD_2:
   82530F94  4BFFFBCD             bl 0x82530b60
   82530F98  480000DC             b 0x82531074
-caseD_82530f9c:
+caseD_4:
   82530F9C  4BFFEDAD             bl 0x8252fd48
   82530FA0  480000D4             b 0x82531074
-caseD_82530fa4:
+caseD_6:
   82530FA4  4BFFEED5             bl 0x8252fe78
   82530FA8  480000CC             b 0x82531074
-caseD_82530fac:
+caseD_8:
   82530FAC  4BFFEFED             bl 0x8252ff98
   82530FB0  480000C4             b 0x82531074
-caseD_82530fb4:
+caseD_a:
   82530FB4  4BFFE47D             bl 0x8252f430
   82530FB8  480000BC             b 0x82531074
-caseD_82530fbc:
+caseD_c:
   82530FBC  4BFFEC55             bl 0x8252fc10
   82530FC0  480000B4             b 0x82531074
-caseD_82530fc4:
+caseD_10:
   82530FC4  4BFFF8E5             bl 0x825308a8
   82530FC8  480000AC             b 0x82531074
-caseD_82530fcc:
+caseD_14:
   82530FCC  481253DD             bl 0x826563a8
   82530FD0  907F0390             stw r3,0x390(r31)
   82530FD4  481253D5             bl 0x826563a8
@@ -9717,7 +9717,7 @@ caseD_82530fcc:
   82530FE0  917F0394             stw r11,0x394(r31)
   82530FE4  4BFF960D             bl 0x8252a5f0
   82530FE8  4800008C             b 0x82531074
-caseD_82530fec:
+caseD_15:
   82530FEC  481253BD             bl 0x826563a8
   82530FF0  817F0018             lwz r11,0x18(r31)
   82530FF4  546A103A             rlwinm r10,r3,0x2,0x0,0x1d
@@ -9727,13 +9727,13 @@ caseD_82530fec:
   82531004  7FC3F378             or r3,r30,r30
   82531008  4BFF9781             bl 0x8252a788
   8253100C  48000068             b 0x82531074
-caseD_82531010:
+caseD_16:
   82531010  4BFFF421             bl 0x82530430
   82531014  48000060             b 0x82531074
-caseD_82531018:
+caseD_22:
   82531018  4BFFCCC9             bl 0x8252dce0
   8253101C  48000058             b 0x82531074
-caseD_82531020:
+caseD_23:
   82531020  48125389             bl 0x826563a8
   82531024  7C651B78             or r5,r3,r3
   82531028  2F030000             cmpwi cr6,r3,0x0
@@ -9747,7 +9747,7 @@ caseD_82531020:
   82531048  387F0028             addi r3,r31,0x28
   8253104C  4BFFB1BD             bl 0x8252c208
   82531050  48000024             b 0x82531074
-caseD_82531054:
+caseD_29:
   82531054  48125355             bl 0x826563a8
   82531058  817F0018             lwz r11,0x18(r31)
   8253105C  546A103A             rlwinm r10,r3,0x2,0x0,0x1d
@@ -9762,7 +9762,7 @@ LAB_82531074:
   8253107C  3963FFFB             subi r11,r3,0x5
   82531080  2B0B0029             cmplwi cr6,r11,0x29
   82531084  4099FE48             ble cr6,0x82530ecc
-caseD_82531088:
+caseD_1:
   82531088  4BFFFC31             bl 0x82530cb8
   8253108C  38600001             li r3,0x1
   82531090  481219A1             bl 0x82652a30

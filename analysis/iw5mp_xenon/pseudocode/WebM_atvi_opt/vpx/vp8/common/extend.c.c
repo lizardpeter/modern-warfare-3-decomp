@@ -3,62 +3,74 @@
 // 82811E40  extend_plane_borders  (WebM_atvi_opt/vpx/vp8/common/extend.c:31)
 
 void extend_plane_borders
-               (undefined8 param_1,longlong param_2,longlong param_3,longlong param_4,
-               longlong param_5,longlong param_6,longlong param_7,size_t param_8)
+               (uchar *param_1,int param_2,int param_3,int param_4,int param_5,int param_6,
+               int param_7,int param_8)
 
 {
   byte *pbVar1;
   longlong lVar2;
   longlong lVar3;
-  size_t _Size;
   longlong lVar5;
   longlong lVar6;
-  longlong lVar7;
+  uint uVar7;
   longlong lVar8;
-  int iVar9;
-  size_t _Size_00;
+  longlong lVar9;
+  longlong lVar10;
+  longlong lVar11;
+  longlong lVar12;
+  longlong lVar13;
+  int iVar14;
+  uint uVar17;
+  longlong lVar15;
+  longlong lVar16;
   void *pvVar4;
   
-  lVar2 = __savegprlr_19();
-  lVar6 = lVar2 - param_6;
-  lVar5 = param_3 + 1;
-  _Size_00 = (size_t)param_6;
+  lVar16 = (longlong)param_7;
+  lVar15 = (longlong)param_6;
+  lVar13 = (longlong)param_5;
+  lVar8 = (longlong)param_4;
+  lVar6 = (longlong)param_3;
+  lVar5 = (longlong)param_2;
+  lVar2 = __savegprlr_19(param_1);
+  lVar10 = lVar2 - lVar15;
+  lVar9 = lVar6 + 1;
+  uVar17 = (uint)lVar15;
   lVar3 = lVar2;
-  if (0 < lVar5) {
-    lVar8 = lVar6 + param_4 + param_6 + -1;
-    lVar7 = lVar6;
+  if (0 < lVar9) {
+    lVar12 = lVar10 + lVar8 + lVar15 + -1;
+    lVar11 = lVar10;
     do {
-      pbVar1 = (byte *)lVar8;
-      if (_Size_00 != 0) {
-        vpx_memset((void *)lVar7,(uint)pbVar1[1 - (int)param_4],_Size_00);
+      pbVar1 = (byte *)lVar12;
+      if (uVar17 != 0) {
+        vpx_memset((void *)lVar11,(uint)pbVar1[1 - (int)lVar8],uVar17);
       }
       pvVar4 = vpx_memset(pbVar1 + 1,(uint)*pbVar1,param_8);
       lVar3 = (longlong)(int)pvVar4;
-      lVar5 = lVar5 + -1;
-      lVar7 = lVar7 + param_2;
-      lVar8 = lVar8 + param_2;
-    } while (lVar5 != 0);
+      lVar9 = lVar9 + -1;
+      lVar11 = lVar11 + lVar5;
+      lVar12 = lVar12 + lVar5;
+    } while (lVar9 != 0);
   }
-  iVar9 = (int)param_2;
-  lVar5 = ((longlong)iVar9 * (longlong)(int)param_3 - param_6) + lVar2;
-  param_6 = (lVar2 - (longlong)iVar9 * (longlong)(int)param_5) - param_6;
-  _Size = (int)param_4 + _Size_00 + param_8 + 1;
-  if (0 < (int)param_5) {
+  iVar14 = (int)lVar5;
+  lVar9 = ((longlong)iVar14 * (longlong)(int)lVar6 - lVar15) + lVar2;
+  lVar15 = (lVar2 - (longlong)iVar14 * (longlong)(int)lVar13) - lVar15;
+  uVar7 = (int)lVar8 + uVar17 + param_8 + 1;
+  if (0 < (int)lVar13) {
     do {
-      pvVar4 = vpx_memcpy((void *)param_6,(void *)lVar6,_Size);
+      pvVar4 = vpx_memcpy((void *)lVar15,(void *)lVar10,uVar7);
       lVar3 = (longlong)(int)pvVar4;
-      param_5 = param_5 + -1;
-      param_6 = param_6 + param_2;
-    } while (param_5 != 0);
+      lVar13 = lVar13 + -1;
+      lVar15 = lVar15 + lVar5;
+    } while (lVar13 != 0);
   }
-  if (0 < (int)param_7) {
+  if (0 < (int)lVar16) {
     do {
-      pvVar4 = vpx_memcpy((void *)lVar5,
-                          (void *)((((int)param_3 + -1) * iVar9 - _Size_00) + (int)lVar2),_Size);
+      pvVar4 = vpx_memcpy((void *)lVar9,(void *)((((int)lVar6 + -1) * iVar14 - uVar17) + (int)lVar2)
+                          ,uVar7);
       lVar3 = (longlong)(int)pvVar4;
-      param_7 = param_7 + -1;
-      lVar5 = lVar5 + param_2;
-    } while (param_7 != 0);
+      lVar16 = lVar16 + -1;
+      lVar9 = lVar9 + lVar5;
+    } while (lVar16 != 0);
   }
   __restgprlr_19(lVar3);
   return;
@@ -67,30 +79,29 @@ void extend_plane_borders
 
 // 82811F58  vp8_extend_to_multiple_of16  (WebM_atvi_opt/vpx/vp8/common/extend.c:80)
 
-void vp8_extend_to_multiple_of16(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+void vp8_extend_to_multiple_of16(YV12_BUFFER_CONFIG *param_1,int param_2,int param_3)
 
 {
-  ulonglong uVar1;
-  ulonglong uVar2;
-  int iVar3;
-  longlong lVar4;
-  longlong lVar5;
+  int iVar1;
+  int iVar2;
+  uint uVar3;
+  uint uVar4;
+  int iVar5;
   
-  iVar3 = __savegprlr_27();
-  if (((-(int)param_2 & 0xfU) != 0) || ((-(int)param_3 & 0xfU) != 0)) {
+  iVar5 = __savegprlr_27(param_1);
+  if (((-param_2 & 0xfU) != 0) || ((-param_3 & 0xfU) != 0)) {
     extend_plane_borders
-              (*(undefined4 *)(iVar3 + 0x18),*(undefined4 *)(iVar3 + 8),param_3,param_2,0,0);
-    lVar5 = (longlong)((int)param_3 + 1 >> 1);
-    lVar4 = (longlong)((int)param_2 + 1 >> 1);
-    uVar1 = -lVar5 & 7;
-    uVar2 = -lVar4 & 7;
-    if (((int)uVar2 != 0) || ((int)uVar1 != 0)) {
+              (*(uchar **)(iVar5 + 0x18),*(int *)(iVar5 + 8),param_3,param_2,0,0,-param_3 & 0xfU,
+               -param_2 & 0xfU);
+    iVar1 = param_3 + 1 >> 1;
+    iVar2 = param_2 + 1 >> 1;
+    uVar3 = -iVar1 & 7;
+    uVar4 = -iVar2 & 7;
+    if ((uVar4 != 0) || (uVar3 != 0)) {
       extend_plane_borders
-                (*(undefined4 *)(iVar3 + 0x1c),*(undefined4 *)(iVar3 + 0x14),lVar5,lVar4,0,0,uVar1,
-                 uVar2);
+                (*(uchar **)(iVar5 + 0x1c),*(int *)(iVar5 + 0x14),iVar1,iVar2,0,0,uVar3,uVar4);
       extend_plane_borders
-                (*(undefined4 *)(iVar3 + 0x20),*(undefined4 *)(iVar3 + 0x14),lVar5,lVar4,0,0,uVar1,
-                 uVar2);
+                (*(uchar **)(iVar5 + 0x20),*(int *)(iVar5 + 0x14),iVar1,iVar2,0,0,uVar3,uVar4);
     }
   }
   __restgprlr_27();
@@ -100,18 +111,18 @@ void vp8_extend_to_multiple_of16(undefined8 param_1,undefined8 param_2,undefined
 
 // 82812030  vp8_extend_mb_row  (WebM_atvi_opt/vpx/vp8/common/extend.c:105)
 
-void vp8_extend_mb_row(int param_1,int param_2,int param_3,int param_4)
+void vp8_extend_mb_row(YV12_BUFFER_CONFIG *param_1,uchar *param_2,uchar *param_3,uchar *param_4)
 
 {
   int iVar1;
-  undefined1 *puVar2;
-  undefined1 *puVar3;
-  undefined1 *puVar4;
+  uchar *puVar2;
+  uchar *puVar3;
+  uchar *puVar4;
   
-  puVar4 = (undefined1 *)(*(int *)(param_1 + 8) * 0xe + param_2);
-  iVar1 = *(int *)(param_1 + 0x14) * 6;
-  puVar3 = (undefined1 *)(iVar1 + param_3);
-  puVar2 = (undefined1 *)(iVar1 + param_4);
+  puVar4 = param_2 + param_1->y_stride * 0xe;
+  iVar1 = param_1->uv_stride * 6;
+  puVar3 = param_3 + iVar1;
+  puVar2 = param_4 + iVar1;
   *puVar4 = puVar4[-1];
   *puVar3 = puVar3[-1];
   *puVar2 = puVar2[-1];
@@ -124,9 +135,9 @@ void vp8_extend_mb_row(int param_1,int param_2,int param_3,int param_4)
   puVar4[3] = puVar4[-1];
   puVar3[3] = puVar3[-1];
   puVar2[3] = puVar2[-1];
-  puVar4 = puVar4 + *(int *)(param_1 + 8);
-  puVar3 = puVar3 + *(int *)(param_1 + 0x14);
-  puVar2 = puVar2 + *(int *)(param_1 + 0x14);
+  puVar4 = puVar4 + param_1->y_stride;
+  puVar3 = puVar3 + param_1->uv_stride;
+  puVar2 = puVar2 + param_1->uv_stride;
   *puVar4 = puVar4[-1];
   *puVar3 = puVar3[-1];
   *puVar2 = puVar2[-1];

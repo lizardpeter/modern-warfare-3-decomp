@@ -2,195 +2,74 @@
 
 // 8279DE80  TRACK_rb_drawprofile  (gfx_d3d/rb_drawprofile.cpp:110)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
 void TRACK_rb_drawprofile(void)
 
 {
-  track_static_alloc_internal(0xffffffff84840368,0x8008,0xffffffff821d606c,0);
+  track_static_alloc_internal(&drawProfGlob,0x8008,"drawProfGlob",0);
   return;
 }
 
 
 // 8279DEA0  RB_DrawProfileBackground  (gfx_d3d/rb_drawprofile.cpp:117)
-
-void RB_DrawProfileBackground(double param_1)
-
-{
-  RB_DrawStretchPic((double)(DAT_8484036c * 14.5),(double)(float)(param_1 + 1.0),
-                    (double)(DAT_8484036c * 101.0),(double)(DAT_84840370 - 2.0),0,0,
-                    0x3ff0000000000000,DAT_8461652c);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
 
 // 8279DF30  RB_DrawProfileString  (gfx_d3d/rb_drawprofile.cpp:130)
 
-void RB_DrawProfileString
-               (double param_1,int param_2,undefined8 param_3,undefined8 param_4,undefined8 param_5)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void RB_DrawProfileString(int param_1,float param_2,char *param_3,GfxColor param_4)
 
 {
-  RB_DrawText((double)((float)(longlong)param_2 * DAT_8484036c),
-              (double)(float)((double)DAT_84840370 + param_1),param_4,DAT_84840368,param_4,param_5,
-              param_5);
+  RB_DrawText((char *)param_4,drawProfGlob.font,(float)(longlong)param_1 * drawProfGlob.fontWidth,
+              drawProfGlob.fontHeight + param_2,param_4);
   return;
 }
 
 
 // 8279DF88  RB_DrawProfileRect  (gfx_d3d/rb_drawprofile.cpp:139)
-
-void RB_DrawProfileRect(void)
-
-{
-  RB_DrawStretchPic(DAT_8461652c);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
 
 // 8279DFD8  RB_DrawProfileBar  (gfx_d3d/rb_drawprofile.cpp:145)
-
-void RB_DrawProfileBar(undefined8 param_1,double param_2,double param_3)
-
-{
-  uint in_r6;
-  double dVar1;
-  double dVar2;
-  
-  dVar2 = 1.0;
-  dVar1 = (double)(float)((double)in_r6 * param_3);
-  if ((1.0 <= dVar1) && (dVar2 = dVar1, 64.0 < dVar1)) {
-    dVar2 = 64.0;
-  }
-  RB_DrawStretchPic(param_1,(double)(float)((double)(float)(param_2 + 64.0) - dVar2),
-                    0x3ff0000000000000,dVar2,0,0,0x3ff0000000000000,DAT_8461652c);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
 
 // 8279E070  RB_DrawProfileHistoryGraph  (gfx_d3d/rb_drawprofile.cpp:159)
-
-void RB_DrawProfileHistoryGraph
-               (undefined8 param_1,double param_2,undefined8 param_3,int param_4,int param_5)
-
-{
-  uint uVar1;
-  undefined4 *puVar2;
-  int iVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  int iVar7;
-  ulonglong uVar6;
-  double extraout_f1;
-  double dVar8;
-  double dVar9;
-  double dVar10;
-  double dVar11;
-  double dVar12;
-  double dVar13;
-  double dVar14;
-  double dVar15;
-  undefined8 uVar16;
-  double dVar17;
-  
-  __savegprlr_23();
-  puVar2 = (undefined4 *)__savefpr_23();
-  dVar13 = extraout_f1;
-  if (puVar2 == (undefined4 *)0x0) {
-    MyAssertHandler(0xffffffff821d6088,0xa7,0,0xffffffff82000f98,0xffffffff8207a0cc);
-  }
-  param_5 = param_5 * 0x4b8;
-  if (*(int *)(&DAT_8484037c + param_5) != param_4) {
-    uVar1 = *(uint *)(&DAT_84840380 + param_5);
-    *(uint *)(&DAT_84840380 + param_5) = uVar1 + 1;
-    iVar7 = (uVar1 % 100) * 0xc + param_5;
-    *(undefined4 *)(&DAT_84840384 + iVar7) = *puVar2;
-    *(undefined4 *)(&DAT_84840388 + iVar7) = puVar2[1];
-    *(undefined4 *)(&DAT_8484038c + iVar7) = puVar2[2];
-    *(int *)(&DAT_8484037c + param_5) = param_4;
-  }
-  dVar17 = 1.0;
-  uVar16 = 0;
-  dVar15 = 64.0;
-  RB_DrawStretchPic(dVar13,(double)(float)(param_2 - (double)DAT_84840370),0x4059000000000000,
-                    (double)(float)((double)DAT_84840370 + 64.0),0,0,0x3ff0000000000000,
-                    0x3ff0000000000000,DAT_8461652c);
-  iVar7 = *(int *)(DAT_845aa59c + 0xc);
-  if (iVar7 < 1) {
-    iVar7 = 1;
-  }
-  iVar3 = Sys_GetValue(0);
-  dVar11 = 99.0;
-  uVar4 = (ulonglong)*(uint *)(&DAT_84840380 + param_5) - 100;
-  uVar4 = ((uVar4 & 0xffffffff) >> 0x1f) - 1 & uVar4;
-  dVar10 = (double)((float)((double)*(float *)(iVar3 + 0x4ac0) * dVar15) / (float)(longlong)iVar7);
-  if ((int)uVar4 < (int)*(uint *)(&DAT_84840380 + param_5)) {
-    dVar14 = (double)(float)(dVar13 + 99.0);
-    dVar12 = (double)(float)(param_2 + dVar15);
-    uVar6 = uVar4;
-    do {
-      iVar7 = (int)uVar6;
-      uVar1 = iVar7 / 100 + (iVar7 >> 0x1f);
-      uVar5 = uVar6 + ((longlong)(int)uVar1 + (ulonglong)(uVar1 >> 0x1f)) * -100;
-      dVar8 = (double)(float)((double)*(uint *)(&DAT_84840388 +
-                                               (int)((uVar5 + (uVar5 & 0x7fffffff) * 2 & 0xffffffff)
-                                                    << 2) + param_5) * dVar10);
-      dVar9 = dVar17;
-      if ((dVar17 <= dVar8) && (dVar9 = dVar8, dVar15 < dVar8)) {
-        dVar9 = dVar15;
-      }
-      RB_DrawStretchPic((double)(float)(dVar14 - (double)(longlong)
-                                                         (*(int *)(&DAT_84840380 + param_5) - iVar7)
-                                       ),(double)(float)(dVar12 - dVar9),dVar17,dVar9,uVar16,uVar16,
-                        dVar17,dVar17,DAT_8461652c);
-      uVar6 = uVar6 + 1;
-    } while ((int)uVar6 < *(int *)(&DAT_84840380 + param_5));
-  }
-  if ((int)uVar4 < *(int *)(&DAT_84840380 + param_5)) {
-    dVar11 = (double)(float)(dVar13 + dVar11);
-    dVar13 = (double)(float)(param_2 + dVar15);
-    do {
-      iVar7 = (int)uVar4;
-      uVar1 = iVar7 / 100 + (iVar7 >> 0x1f);
-      uVar6 = uVar4 + ((longlong)(int)uVar1 + (ulonglong)(uVar1 >> 0x1f)) * -100;
-      dVar14 = (double)(float)((double)*(uint *)(&DAT_8484038c +
-                                                (int)((uVar6 + (uVar6 & 0x7fffffff) * 2 & 0xffffffff
-                                                      ) << 2) + param_5) * dVar10);
-      dVar12 = dVar17;
-      if ((dVar17 <= dVar14) && (dVar12 = dVar14, dVar15 < dVar14)) {
-        dVar12 = dVar15;
-      }
-      RB_DrawStretchPic((double)(float)(dVar11 - (double)(longlong)
-                                                         (*(int *)(&DAT_84840380 + param_5) - iVar7)
-                                       ),(double)(float)(dVar13 - dVar12),dVar17,dVar12,uVar16,
-                        uVar16,dVar17,dVar17,DAT_8461652c);
-      uVar4 = uVar4 + 1;
-    } while ((int)uVar4 < *(int *)(&DAT_84840380 + param_5));
-  }
-  __restfpr_23();
-  __restgprlr_23();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
 
 // 8279E3B0  RB_DrawProfileHistoryLabel  (gfx_d3d/rb_drawprofile.cpp:208)
 
-void RB_DrawProfileHistoryLabel(undefined8 param_1,undefined8 param_2)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void RB_DrawProfileHistoryLabel(int param_1,float param_2,float param_3)
 
 {
-  undefined *puVar1;
+  char *pcVar1;
   int iVar2;
-  undefined8 extraout_f1;
-  double dVar3;
-  undefined8 uVar4;
-  undefined1 auStack_a0 [160];
+  GfxColor GVar3;
+  double extraout_f1;
+  double dVar4;
+  double dVar5;
+  double dVar6;
+  char acStack_a0 [160];
   
-  iVar2 = __savegprlr_29();
-  puVar1 = (&PTR_DAT_82993038)[iVar2];
-  uVar4 = extraout_f1;
-  dVar3 = floor((double)(100.0 / DAT_8484036c + 0.5));
-  if (100 < ((ulonglong)(uint)(int)dVar3 + 1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821d6088,0xd7,0,0xffffffff82000f98,0xffffffff821d60d0);
+  dVar5 = (double)param_3;
+  iVar2 = __savegprlr_29((double)param_2,param_1);
+  pcVar1 = *(char **)(&prof_enumNames + iVar2 * 4);
+  dVar6 = extraout_f1;
+  dVar4 = floor((double)(100.0 / drawProfGlob.fontWidth + 0.5));
+  GVar3.packed = (int)dVar4 + 1;
+  if (100 < GVar3.packed) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_drawprofile.cpp",
+                    0xd7,0,"%s");
   }
-  I_strncpyz(auStack_a0,puVar1,(ulonglong)(uint)(int)dVar3 + 1);
-  RB_DrawText(uVar4,param_2,auStack_a0,DAT_84840368);
+  I_strncpyz(acStack_a0,pcVar1,GVar3.packed);
+  RB_DrawText(acStack_a0,drawProfGlob.font,(float)dVar6,(float)dVar5,GVar3);
   __restgprlr_29();
   return;
 }
@@ -198,14 +77,14 @@ void RB_DrawProfileHistoryLabel(undefined8 param_1,undefined8 param_2)
 
 // 8279E480  RB_GetProfileHistoryProbeIndex  (gfx_d3d/rb_drawprofile.cpp:222)
 
-int RB_GetProfileHistoryProbeIndex(int param_1,int param_2)
+int RB_GetProfileHistoryProbeIndex(int param_1,ProfileSettings *param_2)
 
 {
-  if (*(int *)((&DAT_845aa61c)[param_1] + 0xc) != 0) {
-    return *(int *)((&DAT_845aa61c)[param_1] + 0xc);
+  if (*(int *)(*(int *)(&prof_probe + param_1 * 4) + 0xc) != 0) {
+    return *(int *)(*(int *)(&prof_probe + param_1 * 4) + 0xc);
   }
-  if (param_2 != 0) {
-    return *(int *)((param_1 + 3) * 4 + param_2);
+  if (param_2 != (ProfileSettings *)0x0) {
+    return param_2->defaultProbeIndex[param_1];
   }
   return 0;
 }
@@ -213,95 +92,99 @@ int RB_GetProfileHistoryProbeIndex(int param_1,int param_2)
 
 // 8279E4C0  RB_DrawProfileHistory  (gfx_d3d/rb_drawprofile.cpp:235)
 
-void RB_DrawProfileHistory(void)
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void RB_DrawProfileHistory(ProfileSettings *param_1)
 
 {
-  uint uVar1;
+  int iVar1;
+  int iVar2;
   int iVar3;
-  undefined8 uVar2;
   longlong lVar4;
-  uint *puVar5;
+  int *piVar5;
   double dVar6;
   double dVar7;
   double dVar8;
   double dVar9;
-  uint local_70 [4];
+  int local_70 [4];
   int local_60;
   
-  __savegprlr_27();
-  iVar3 = __savefpr_28();
-  local_70[0] = *(uint *)(DAT_845aa61c + 0xc);
+  __savegprlr_27(param_1);
+  iVar2 = __savefpr_28();
+  local_70[0] = *(int *)(_prof_probe + 0xc);
   if (local_70[0] == 0) {
-    if (iVar3 == 0) {
+    if (iVar2 == 0) {
       local_70[0] = 0;
     }
     else {
-      local_70[0] = *(uint *)(iVar3 + 0xc);
+      local_70[0] = *(int *)(iVar2 + 0xc);
     }
   }
   local_70[1] = *(int *)(DAT_845aa620 + 0xc);
   if (local_70[1] == 0) {
-    if (iVar3 == 0) {
+    if (iVar2 == 0) {
       local_70[1] = 0;
     }
     else {
-      local_70[1] = *(int *)(iVar3 + 0x10);
+      local_70[1] = *(int *)(iVar2 + 0x10);
     }
   }
   local_70[2] = *(int *)(DAT_845aa624 + 0xc);
   if (local_70[2] == 0) {
-    if (iVar3 == 0) {
+    if (iVar2 == 0) {
       local_70[2] = 0;
     }
     else {
-      local_70[2] = *(int *)(iVar3 + 0x14);
+      local_70[2] = *(int *)(iVar2 + 0x14);
     }
   }
   local_70[3] = *(int *)(DAT_845aa628 + 0xc);
   if (local_70[3] == 0) {
-    if (iVar3 == 0) {
+    if (iVar2 == 0) {
       local_70[3] = 0;
     }
     else {
-      local_70[3] = *(int *)(iVar3 + 0x18);
+      local_70[3] = *(int *)(iVar2 + 0x18);
     }
   }
   local_60 = *(int *)(DAT_845aa62c + 0xc);
   if (local_60 == 0) {
-    if (iVar3 == 0) {
+    if (iVar2 == 0) {
       local_60 = 0;
     }
     else {
-      local_60 = *(int *)(iVar3 + 0x1c);
+      local_60 = *(int *)(iVar2 + 0x1c);
     }
   }
-  lVar4 = 0;
-  puVar5 = local_70;
+  iVar2 = 0;
+  piVar5 = local_70;
   dVar6 = 14.5;
-  dVar9 = (double)(DAT_8484036c * 14.5);
+  dVar9 = (double)(drawProfGlob.fontWidth * 14.5);
   dVar7 = 104.0;
-  dVar8 = (double)(DAT_8461372c - 0x62);
+  dVar8 = (double)(vidConfig.displayHeight - 0x62);
   do {
-    uVar1 = *puVar5;
-    if (uVar1 != 0) {
-      uVar2 = Profile_GetEnumParity((ulonglong)uVar1);
-      RB_DrawProfileHistoryGraph(dVar9,dVar8,(ulonglong)uVar1 * 0x38 + -0x7b7bddc8,uVar2,lVar4);
+    iVar1 = *piVar5;
+    if (iVar1 != 0) {
+      iVar3 = Profile_GetEnumParity(iVar1);
+      RB_DrawProfileHistoryGraph
+                (&drawProfGlob.global[iVar1].read,iVar3,iVar2,(float)dVar9,(float)dVar8);
       dVar9 = (double)(float)(dVar9 + dVar7);
     }
-    lVar4 = lVar4 + 1;
-    puVar5 = puVar5 + 1;
-  } while ((int)lVar4 < 5);
-  dVar8 = (double)(float)((double)DAT_8484036c * dVar6);
-  puVar5 = local_70;
+    iVar2 = iVar2 + 1;
+    piVar5 = piVar5 + 1;
+  } while (iVar2 < 5);
+  dVar8 = (double)(float)((double)drawProfGlob.fontWidth * dVar6);
+  piVar5 = local_70;
   lVar4 = 5;
-  dVar6 = (double)(DAT_8461372c - 0x62);
+  dVar6 = (double)(vidConfig.displayHeight - 0x62);
   do {
-    if (*puVar5 != 0) {
-      RB_DrawProfileHistoryLabel(dVar8,dVar6);
+    if (*piVar5 != 0) {
+      RB_DrawProfileHistoryLabel(*piVar5,(float)dVar8,(float)dVar6);
       dVar8 = (double)(float)(dVar8 + dVar7);
     }
     lVar4 = lVar4 + -1;
-    puVar5 = puVar5 + 1;
+    piVar5 = piVar5 + 1;
   } while (lVar4 != 0);
   __restfpr_28();
   __restgprlr_27();
@@ -310,318 +193,287 @@ void RB_DrawProfileHistory(void)
 
 
 // 8279E6A0  RB_DrawAllProfileBackgrounds  (gfx_d3d/rb_drawprofile.cpp:271)
-
-void RB_DrawAllProfileBackgrounds(undefined8 param_1,longlong param_2)
-
-{
-  int iVar1;
-  int iVar2;
-  double dVar3;
-  double dVar4;
-  double dVar5;
-  double dVar6;
-  double dVar7;
-  undefined8 uVar8;
-  double dVar9;
-  
-  __savegprlr_25();
-  iVar1 = __savefpr_26();
-  if ((iVar1 != 0) && (*(int *)(iVar1 + 8) != (int)param_2)) {
-    MyAssertHandler(0xffffffff821d6088,0x113,0,0xffffffff82000f98,0xffffffff821d60f4);
-  }
-  dVar7 = (double)(DAT_84840370 * 3.0);
-  RB_DrawProfileBackground(dVar7);
-  if (0 < (int)param_2) {
-    dVar3 = (double)DAT_84840370;
-    uVar8 = 0;
-    dVar4 = 14.5;
-    iVar2 = 0;
-    dVar9 = 1.0;
-    dVar5 = 101.0;
-    dVar6 = 2.0;
-    do {
-      dVar7 = (double)(float)(dVar3 + dVar7);
-      if ((iVar1 == 0) || (*(int *)(*(int *)(iVar1 + 4) + iVar2) != 0)) {
-        RB_DrawStretchPic((double)(float)((double)DAT_8484036c * dVar4),
-                          (double)(float)(dVar7 + dVar9),
-                          (double)(float)((double)DAT_8484036c * dVar5),
-                          (double)(float)(dVar3 - dVar6),uVar8,uVar8,dVar9,dVar9,DAT_8461652c);
-        dVar3 = (double)DAT_84840370;
-      }
-      param_2 = param_2 + -1;
-      iVar2 = iVar2 + 8;
-    } while (param_2 != 0);
-  }
-  __restfpr_26();
-  __restgprlr_25();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
 
 // 8279E7D0  RB_DrawProfileLabels  (gfx_d3d/rb_drawprofile.cpp:290)
 
-double RB_DrawProfileLabels
-                 (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+float RB_DrawProfileLabels(void)
 
 {
-  double dVar1;
+  GfxColor in_r5;
+  GfxColor GVar1;
+  double dVar2;
   
-  dVar1 = (double)(float)((double)DAT_84840370 * 3.0);
-  RB_DrawText((double)(DAT_8484036c * 15.0),(double)(float)((double)DAT_84840370 + dVar1),
-              0xffffffff821d61b0,DAT_84840368,param_3,param_4,DAT_84840378);
-  RB_DrawText((double)(DAT_8484036c * 42.0),(double)(float)((double)DAT_84840370 + dVar1),
-              0xffffffff821d61a8,DAT_84840368);
-  RB_DrawText((double)(DAT_8484036c * 48.0),(double)(float)((double)DAT_84840370 + dVar1),
-              0xffffffff821d61a0,DAT_84840368);
-  RB_DrawText((double)(DAT_8484036c * 54.0),(double)(float)((double)DAT_84840370 + dVar1),
-              0xffffffff821d6194,DAT_84840368);
-  RB_DrawText((double)(DAT_8484036c * 60.0),(double)(float)((double)DAT_84840370 + dVar1),
-              0xffffffff821d618c,DAT_84840368);
-  RB_DrawText((double)(DAT_8484036c * 67.0),(double)(float)((double)DAT_84840370 + dVar1),
-              0xffffffff821d6180,DAT_84840368,0xffffffff821d0000,0xffffffff821d0000,DAT_84840378);
-  RB_DrawText((double)(DAT_8484036c * 74.0),(double)(float)((double)DAT_84840370 + dVar1),
-              0xffffffff821d6174,DAT_84840368);
-  RB_DrawText((double)(DAT_8484036c * 80.0),(double)(float)((double)DAT_84840370 + dVar1),
-              0xffffffff821d616c,DAT_84840368);
-  RB_DrawText((double)(DAT_8484036c * 86.0),(double)(float)((double)DAT_84840370 + dVar1),
-              0xffffffff821d6160,DAT_84840368,0xffffffff821d0000,0xffffffff821d0000,DAT_84840378);
-  RB_DrawText((double)(DAT_8484036c * 93.0),(double)(float)((double)DAT_84840370 + dVar1),
-              0xffffffff821d6154,DAT_84840368);
-  RB_DrawText((double)(DAT_8484036c * 98.0),(double)(float)((double)DAT_84840370 + dVar1),
-              0xffffffff821d6148,DAT_84840368);
-  RB_DrawText((double)(DAT_8484036c * 103.0),(double)(float)((double)DAT_84840370 + dVar1),
-              0xffffffff821d613c,DAT_84840368,0xffffffff821d0000,0xffffffff821d0000,DAT_84840378);
-  RB_DrawText((double)(DAT_8484036c * 109.0),(double)(float)((double)DAT_84840370 + dVar1),
-              0xffffffff821d6130,DAT_84840368);
-  return (double)(float)((double)DAT_84840370 + dVar1);
+  dVar2 = (double)(float)((double)drawProfGlob.fontHeight * 3.0);
+  RB_DrawText("Probe Name",drawProfGlob.font,drawProfGlob.fontWidth * 15.0,
+              (float)((double)drawProfGlob.fontHeight + dVar2),in_r5);
+  RB_DrawText("  Self",drawProfGlob.font,drawProfGlob.fontWidth * 42.0,
+              (float)((double)drawProfGlob.fontHeight + dVar2),in_r5);
+  GVar1.packed = (int)"c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_local_mp.h" +
+                 0x28;
+  RB_DrawText(" Total",drawProfGlob.font,drawProfGlob.fontWidth * 48.0,
+              (float)((double)drawProfGlob.fontHeight + dVar2),(GfxColor)0x82010000);
+  RB_DrawText(" AvSlf",drawProfGlob.font,drawProfGlob.fontWidth * 54.0,
+              (float)((double)drawProfGlob.fontHeight + dVar2),GVar1);
+  RB_DrawText(" MaxSlf",drawProfGlob.font,drawProfGlob.fontWidth * 60.0,
+              (float)((double)drawProfGlob.fontHeight + dVar2),GVar1);
+  GVar1.packed = (int)"Vec3IsNormalized( axis[0] )" + 0x14;
+  RB_DrawText("  Tally",drawProfGlob.font,drawProfGlob.fontWidth * 67.0,
+              (float)((double)drawProfGlob.fontHeight + dVar2),(GfxColor)0x821d0000);
+  RB_DrawText(" AvTot",drawProfGlob.font,drawProfGlob.fontWidth * 74.0,
+              (float)((double)drawProfGlob.fontHeight + dVar2),GVar1);
+  RB_DrawText("   Min",drawProfGlob.font,drawProfGlob.fontWidth * 80.0,
+              (float)((double)drawProfGlob.fontHeight + dVar2),GVar1);
+  GVar1.packed = (int)"Vec3IsNormalized( axis[0] )" + 0x14;
+  RB_DrawText("    Max",drawProfGlob.font,drawProfGlob.fontWidth * 86.0,
+              (float)((double)drawProfGlob.fontHeight + dVar2),(GfxColor)0x821d0000);
+  RB_DrawText("  Hit",drawProfGlob.font,drawProfGlob.fontWidth * 93.0,
+              (float)((double)drawProfGlob.fontHeight + dVar2),GVar1);
+  RB_DrawText("  AvH",drawProfGlob.font,drawProfGlob.fontWidth * 98.0,
+              (float)((double)drawProfGlob.fontHeight + dVar2),GVar1);
+  GVar1.packed = (int)"Vec3IsNormalized( axis[0] )" + 0x14;
+  RB_DrawText("   ApH",drawProfGlob.font,drawProfGlob.fontWidth * 103.0,
+              (float)((double)drawProfGlob.fontHeight + dVar2),(GfxColor)0x821d0000);
+  RB_DrawText("  MaxH",drawProfGlob.font,drawProfGlob.fontWidth * 109.0,
+              (float)((double)drawProfGlob.fontHeight + dVar2),GVar1);
+  return (float)((double)drawProfGlob.fontHeight + dVar2);
 }
 
 
 // 8279EA60  RB_DrawProfile2Labels  (gfx_d3d/rb_drawprofile.cpp:314)
 
-double RB_DrawProfile2Labels
-                 (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+float RB_DrawProfile2Labels(void)
 
 {
+  GfxColor in_r5;
   double dVar1;
   
-  dVar1 = (double)(float)((double)DAT_84840370 * 3.0);
-  RB_DrawText((double)(DAT_8484036c * 15.0),(double)(float)((double)DAT_84840370 + dVar1),
-              0xffffffff821d61b0,DAT_84840368,param_3,param_4,DAT_84840378);
-  RB_DrawText((double)(DAT_8484036c * 48.0),(double)(float)((double)DAT_84840370 + dVar1),
-              0xffffffff821d61a0,DAT_84840368,param_3,0xffffffff821d0000,DAT_84840378);
-  return (double)(float)((double)DAT_84840370 + dVar1);
+  dVar1 = (double)(float)((double)drawProfGlob.fontHeight * 3.0);
+  RB_DrawText("Probe Name",drawProfGlob.font,drawProfGlob.fontWidth * 15.0,
+              (float)((double)drawProfGlob.fontHeight + dVar1),in_r5);
+  RB_DrawText(" Total",drawProfGlob.font,drawProfGlob.fontWidth * 48.0,
+              (float)((double)drawProfGlob.fontHeight + dVar1),in_r5);
+  return (float)((double)drawProfGlob.fontHeight + dVar1);
 }
 
 
 // 8279EB08  RB_DrawProfileRow  (gfx_d3d/rb_drawprofile.cpp:334)
 
-void RB_DrawProfileRow(undefined8 param_1,longlong param_2)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+float RB_DrawProfileRow(int param_1,int param_2,float param_3)
 
 {
-  uint uVar1;
-  int iVar3;
-  int iVar4;
-  int iVar5;
-  undefined8 uVar2;
+  int iVar1;
+  void *pvVar2;
+  char *pcVar3;
+  GfxColor GVar4;
   double extraout_f1;
+  double dVar5;
   double dVar6;
   double dVar7;
   double dVar8;
-  double dVar9;
-  double dVar10;
-  double dVar11;
-  undefined1 auStack_90 [144];
+  char acStack_90 [144];
   
-  __savegprlr_26();
-  iVar3 = __savefpr_26();
-  if (iVar3 == 0) {
-    __restfpr_26((double)(float)((double)DAT_84840370 + extraout_f1));
-    __restgprlr_26();
-    return;
+  __savegprlr_26((double)param_3,param_1);
+  iVar1 = __savefpr_26();
+  if (iVar1 != 0) {
+    dVar5 = extraout_f1;
+    if (drawProfGlob.global[iVar1].sequence == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_drawprofile.cpp",
+                      0x160,0,"%s");
+    }
+    pvVar2 = Sys_GetValue(0);
+    dVar8 = (double)(float)(((double)*(float *)((int)pvVar2 + 0x4ac0) *
+                            drawProfGlob.global[iVar1].selfClks) /
+                           (double)(longlong)drawProfGlob.global[iVar1].sequence);
+    Sys_GetValue(0);
+    dVar6 = 0.0;
+    dVar7 = (double)((float)drawProfGlob.global[iVar1].hits /
+                    (float)(longlong)drawProfGlob.global[iVar1].sequence);
+    GVar4.packed = 0x1c - param_2;
+    I_strncpyz(acStack_90,*(char **)(&prof_enumNames + iVar1 * 4),GVar4.packed);
+    RB_DrawText(acStack_90,drawProfGlob.font,
+                (float)(longlong)(param_2 + 0xf) * drawProfGlob.fontWidth,
+                (float)((double)drawProfGlob.fontHeight + dVar5),GVar4);
+    Sys_GetValue(0);
+    pcVar3 = va("%6.2f");
+    GVar4.packed = (int)"How long an enemy is visible on the motion tracker after being detected" +
+                   0x20;
+    RB_DrawText(pcVar3,drawProfGlob.font,drawProfGlob.fontWidth * 42.0,
+                (float)((double)drawProfGlob.fontHeight + dVar5),(GfxColor)0x82020000);
+    Sys_GetValue(0);
+    pcVar3 = va("%6.2f");
+    RB_DrawText(pcVar3,drawProfGlob.font,drawProfGlob.fontWidth * 48.0,
+                (float)((double)drawProfGlob.fontHeight + dVar5),GVar4);
+    if (30.0 < dVar8) {
+      dVar8 = dVar6;
+    }
+    pcVar3 = va("%6.2f");
+    RB_DrawText(pcVar3,drawProfGlob.font,drawProfGlob.fontWidth * 54.0,
+                (float)((double)drawProfGlob.fontHeight + dVar5),GVar4);
+    Sys_GetValue(0);
+    pcVar3 = va("%7.2f");
+    RB_DrawText(pcVar3,drawProfGlob.font,drawProfGlob.fontWidth * 60.0,
+                (float)((double)drawProfGlob.fontHeight + dVar5),GVar4);
+    g_tally = (float)((double)g_tally + dVar8);
+    pcVar3 = va("%6.2f");
+    GVar4.packed = (int)"Vec3IsNormalized( axis[0] )" + 0x14;
+    RB_DrawText(pcVar3,drawProfGlob.font,drawProfGlob.fontWidth * 67.0,
+                (float)((double)drawProfGlob.fontHeight + dVar5),(GfxColor)0x821d0000);
+    pcVar3 = va("%6.2f");
+    RB_DrawText(pcVar3,drawProfGlob.font,drawProfGlob.fontWidth * 74.0,
+                (float)((double)drawProfGlob.fontHeight + dVar5),GVar4);
+    Sys_GetValue(0);
+    pcVar3 = va("%6.2f");
+    RB_DrawText(pcVar3,drawProfGlob.font,drawProfGlob.fontWidth * 80.0,
+                (float)((double)drawProfGlob.fontHeight + dVar5),GVar4);
+    Sys_GetValue(0);
+    pcVar3 = va("%7.2f");
+    GVar4.packed = (int)"Vec3IsNormalized( axis[0] )" + 0x14;
+    RB_DrawText(pcVar3,drawProfGlob.font,drawProfGlob.fontWidth * 86.0,
+                (float)((double)drawProfGlob.fontHeight + dVar5),(GfxColor)0x821d0000);
+    pcVar3 = va("%5u");
+    RB_DrawText(pcVar3,drawProfGlob.font,drawProfGlob.fontWidth * 93.0,
+                (float)((double)drawProfGlob.fontHeight + dVar5),GVar4);
+    if ((dVar7 == dVar6) || (10.0 <= dVar7)) {
+      pcVar3 = "%5.0f";
+    }
+    else {
+      pcVar3 = "%5.1f";
+    }
+    pcVar3 = va(pcVar3);
+    RB_DrawText(pcVar3,drawProfGlob.font,drawProfGlob.fontWidth * 98.0,
+                (float)((double)drawProfGlob.fontHeight + dVar5),GVar4);
+    if (dVar7 == dVar6) {
+      pcVar3 = "      ";
+    }
+    else {
+      pcVar3 = va("%6.2f");
+    }
+    RB_DrawText(pcVar3,drawProfGlob.font,drawProfGlob.fontWidth * 103.0,
+                (float)((double)drawProfGlob.fontHeight + dVar5),GVar4);
+    pcVar3 = va("%5u");
+    RB_DrawText(pcVar3,drawProfGlob.font,drawProfGlob.fontWidth * 109.0,
+                (float)((double)drawProfGlob.fontHeight + dVar5),GVar4);
+    __restfpr_26((double)(float)((double)drawProfGlob.fontHeight + dVar5));
+    dVar5 = (double)__restgprlr_26();
+    return (float)dVar5;
   }
-  dVar11 = extraout_f1;
-  if ((&DAT_84842210)[iVar3 * 0xe] == 0) {
-    MyAssertHandler(0xffffffff821d6088,0x160,0,0xffffffff82000f98,0xffffffff821d61e8);
-  }
-  iVar4 = Sys_GetValue(0);
-  dVar10 = (double)(float)(((double)*(float *)(iVar4 + 0x4ac0) * (double)(&DAT_84842220)[iVar3 * 7])
-                          / (double)(longlong)(int)(&DAT_84842210)[iVar3 * 0xe]);
-  iVar5 = Sys_GetValue(0);
-  iVar4 = (&DAT_84842210)[iVar3 * 0xe];
-  uVar1 = (&DAT_84842230)[iVar3 * 0xe];
-  dVar8 = 0.0;
-  dVar7 = (double)(float)(((double)*(float *)(iVar5 + 0x4ac0) * (double)(&DAT_84842218)[iVar3 * 7])
-                         / (double)(longlong)iVar4);
-  dVar9 = (double)(float)((double)(uint)(&DAT_84842214)[iVar3 * 0xe] / (double)(longlong)iVar4);
-  dVar6 = dVar8;
-  if (dVar9 != 0.0) {
-    dVar6 = (double)(float)(dVar7 / dVar9);
-  }
-  I_strncpyz(auStack_90,(&PTR_DAT_82993038)[iVar3],0x1c - param_2);
-  RB_DrawText((double)((float)(longlong)((int)param_2 + 0xf) * DAT_8484036c),
-              (double)(float)((double)DAT_84840370 + dVar11),auStack_90,DAT_84840368);
-  iVar4 = Sys_GetValue(0);
-  uVar2 = va(0xffffffff821d61e0,
-             (double)((float)(uint)(&DAT_84842240)[iVar3 * 0xe] * *(float *)(iVar4 + 0x4ac0)));
-  RB_DrawText((double)(DAT_8484036c * 42.0),(double)(float)((double)DAT_84840370 + dVar11),uVar2,
-              DAT_84840368);
-  iVar4 = Sys_GetValue(0);
-  uVar2 = va(0xffffffff821d61e0,
-             (double)((float)*(uint *)((int)&DAT_84842238 + iVar3 * 0x38 + 4) *
-                     *(float *)(iVar4 + 0x4ac0)));
-  RB_DrawText((double)(DAT_8484036c * 48.0),(double)(float)((double)DAT_84840370 + dVar11),uVar2,
-              DAT_84840368);
-  if (30.0 < dVar10) {
-    dVar10 = dVar8;
-  }
-  uVar2 = va(dVar10,0xffffffff821d61e0,dVar10);
-  RB_DrawText((double)(DAT_8484036c * 54.0),(double)(float)((double)DAT_84840370 + dVar11),uVar2,
-              DAT_84840368);
-  iVar4 = Sys_GetValue(0);
-  uVar2 = va(0xffffffff821d61d8,
-             (double)((float)(uint)(&DAT_84842228)[iVar3 * 0xe] * *(float *)(iVar4 + 0x4ac0)));
-  RB_DrawText((double)(DAT_8484036c * 60.0),(double)(float)((double)DAT_84840370 + dVar11),uVar2,
-              DAT_84840368);
-  DAT_84840360 = (float)((double)DAT_84840360 + dVar10);
-  uVar2 = va(0xffffffff821d61e0,(double)DAT_84840360);
-  RB_DrawText((double)(DAT_8484036c * 67.0),(double)(float)((double)DAT_84840370 + dVar11),uVar2,
-              DAT_84840368);
-  uVar2 = va(dVar7,0xffffffff821d61e0,dVar7);
-  RB_DrawText((double)(DAT_8484036c * 74.0),(double)(float)((double)DAT_84840370 + dVar11),uVar2,
-              DAT_84840368);
-  iVar4 = Sys_GetValue(0);
-  uVar2 = va(0xffffffff821d61e0,(double)((float)uVar1 * *(float *)(iVar4 + 0x4ac0)));
-  RB_DrawText((double)(DAT_8484036c * 80.0),(double)(float)((double)DAT_84840370 + dVar11),uVar2,
-              DAT_84840368);
-  iVar4 = Sys_GetValue(0);
-  uVar2 = va(0xffffffff821d61d8,
-             (double)((float)(uint)(&DAT_84842234)[iVar3 * 0xe] * *(float *)(iVar4 + 0x4ac0)));
-  RB_DrawText((double)(DAT_8484036c * 86.0),(double)(float)((double)DAT_84840370 + dVar11),uVar2,
-              DAT_84840368);
-  uVar2 = va(0xffffffff821d61d4,*(undefined4 *)(&DAT_84842238 + iVar3 * 7));
-  RB_DrawText((double)(DAT_8484036c * 93.0),(double)(float)((double)DAT_84840370 + dVar11),uVar2,
-              DAT_84840368);
-  if ((dVar9 == dVar8) || (10.0 <= dVar9)) {
-    uVar2 = 0xffffffff821d61c4;
-  }
-  else {
-    uVar2 = 0xffffffff821d61cc;
-  }
-  uVar2 = va(dVar9,uVar2,dVar9);
-  RB_DrawText((double)(DAT_8484036c * 98.0),(double)(float)((double)DAT_84840370 + dVar11),uVar2,
-              DAT_84840368);
-  if (dVar9 == dVar8) {
-    uVar2 = 0xffffffff821d61bc;
-  }
-  else {
-    uVar2 = va(dVar6,0xffffffff821d61e0,dVar6);
-  }
-  RB_DrawText((double)(DAT_8484036c * 103.0),(double)(float)((double)DAT_84840370 + dVar11),uVar2,
-              DAT_84840368);
-  uVar2 = va(0xffffffff821d61d4,(&DAT_8484222c)[iVar3 * 0xe]);
-  RB_DrawText((double)(DAT_8484036c * 109.0),(double)(float)((double)DAT_84840370 + dVar11),uVar2,
-              DAT_84840368);
-  __restfpr_26((double)(float)((double)DAT_84840370 + dVar11));
-  __restgprlr_26();
-  return;
+  __restfpr_26((double)(float)((double)drawProfGlob.fontHeight + extraout_f1));
+  dVar5 = (double)__restgprlr_26();
+  return (float)dVar5;
 }
 
 
 // 8279F088  RB_DrawProfile2Value  (gfx_d3d/rb_drawprofile.cpp:399)
 
-void RB_DrawProfile2Value
-               (undefined8 param_1,double param_2,undefined8 param_3,undefined8 param_4,
-               ulonglong param_5,undefined8 param_6,undefined8 param_7,undefined8 param_8,
-               undefined8 param_9)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+float RB_DrawProfile2Value
+                (int param_1,float param_2,int param_3,float param_4,char *param_5,int param_6,
+                int param_7)
 
 {
   double dVar1;
-  longlong lVar2;
-  undefined8 uVar3;
+  int iVar2;
+  char *pcVar3;
+  GfxColor GVar4;
+  int in_r8;
+  int in_r9;
   double extraout_f1;
-  double dVar4;
-  undefined1 auStack_70 [112];
+  double dVar5;
+  char acStack_70 [112];
   
-  lVar2 = __savegprlr_27();
-  dVar4 = extraout_f1;
-  I_strncpyz(auStack_70,param_7,0x22 - lVar2);
-  RB_DrawProfileBackground(dVar4);
-  RB_DrawText((double)((float)(longlong)((int)lVar2 + 0xf) * DAT_8484036c),
-              (double)(float)((double)DAT_84840370 + dVar4),auStack_70,DAT_84840368);
-  if (*(int *)(DAT_841849a8 + 0xc) == 1) {
-    uVar3 = va(0xffffffff821d620c,
-               (double)(float)((double)((float)DAT_841db430 /
-                                       (float)(longlong)*(int *)(DAT_841849b4 + 0xc)) * param_2));
-    dVar1 = (double)DAT_84840370 + dVar4;
+  iVar2 = __savegprlr_27((double)param_2,param_1,param_3,param_5,param_6);
+  GVar4.packed = 0x22 - iVar2;
+  dVar5 = extraout_f1;
+  I_strncpyz(acStack_70,(char *)param_7,GVar4.packed);
+  RB_DrawProfileBackground((float)dVar5);
+  RB_DrawText(acStack_70,drawProfGlob.font,(float)(longlong)(iVar2 + 0xf) * drawProfGlob.fontWidth,
+              (float)((double)drawProfGlob.fontHeight + dVar5),GVar4);
+  if ((profile2_mode->current).integer == 1) {
+    pcVar3 = va("%5.2f");
+    dVar1 = (double)drawProfGlob.fontHeight + dVar5;
   }
   else {
-    uVar3 = va(0xffffffff821d6204,
-               (double)(float)((double)(100.0 / (float)(longlong)
-                                                       (int)((param_5 + (param_5 & 0x7fffffff) * 2 &
-                                                             0xffffffff) << 1)) * param_2));
-    dVar1 = (double)DAT_84840370 + dVar4;
+    pcVar3 = va("%5.2f%%");
+    GVar4.packed = (int)"c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_local_mp.h" +
+                   0x28;
+    dVar1 = (double)drawProfGlob.fontHeight + dVar5;
   }
-  RB_DrawText((double)(DAT_8484036c * 48.0),(double)(float)dVar1,uVar3,DAT_84840368);
-  if ((int)param_8 != 0) {
-    uVar3 = va(0xffffffff821d61fc,param_8);
-    RB_DrawText((double)(DAT_8484036c * 54.0),(double)(float)((double)DAT_84840370 + dVar4),uVar3,
-                DAT_84840368);
+  RB_DrawText(pcVar3,drawProfGlob.font,drawProfGlob.fontWidth * 48.0,(float)dVar1,GVar4);
+  if (in_r8 != 0) {
+    pcVar3 = va("% 5d");
+    RB_DrawText(pcVar3,drawProfGlob.font,drawProfGlob.fontWidth * 54.0,
+                (float)((double)drawProfGlob.fontHeight + dVar5),GVar4);
   }
-  if ((int)param_9 != 0) {
-    uVar3 = va(0xffffffff821d61fc,param_9);
-    RB_DrawText((double)(DAT_8484036c * 60.0),(double)(float)((double)DAT_84840370 + dVar4),uVar3,
-                DAT_84840368);
+  if (in_r9 != 0) {
+    pcVar3 = va("% 5d");
+    RB_DrawText(pcVar3,drawProfGlob.font,drawProfGlob.fontWidth * 60.0,
+                (float)((double)drawProfGlob.fontHeight + dVar5),GVar4);
   }
-  __restgprlr_27((double)(float)((double)DAT_84840370 + dVar4));
-  return;
+  dVar5 = (double)__restgprlr_27((double)(float)((double)drawProfGlob.fontHeight + dVar5));
+  return (float)dVar5;
 }
 
 
 // 8279F288  RB_DrawProfile2Row  (gfx_d3d/rb_drawprofile.cpp:445)
 
-double RB_DrawProfile2Row(double param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4,
-                         undefined8 param_5,ulonglong param_6)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+float RB_DrawProfile2Row(int param_1,int param_2,float param_3,int param_4,int param_5)
 
 {
-  if ((int)param_2 == 0) {
-    RB_DrawProfileBackground();
-    return (double)(float)((double)DAT_84840370 + param_1);
+  int in_r7;
+  double dVar1;
+  float fVar2;
+  
+  dVar1 = (double)param_3;
+  if (param_1 == 0) {
+    RB_DrawProfileBackground(param_3);
+    return (float)((double)drawProfGlob.fontHeight + dVar1);
   }
-  if ((float)(longlong)
-             *(int *)(&DAT_84184e38 +
-                     (int)((((param_6 & 0xfffffff) * 0x10 - param_6) + param_2 & 0xffffffff) << 2))
-      != 0.0) {
-    param_1 = (double)RB_DrawProfile2Value
-                                (param_3,param_3,param_5,param_5,
-                                 *(undefined4 *)
-                                  ((int)&PTR_DAT_82993e28 + (int)((param_2 & 0xffffffff) << 2)),0,0)
-    ;
+  if ((float)(longlong)g_prof2_history[in_r7][param_1] != 0.0) {
+    fVar2 = RB_DrawProfile2Value
+                      (param_2,param_3,param_2,(float)(longlong)g_prof2_history[in_r7][param_1],
+                       (char *)param_5,param_5,*(int *)(&prof2_enumNames + param_1 * 4));
+    dVar1 = (double)fVar2;
   }
-  return param_1;
+  return (float)dVar1;
 }
 
 
 // 8279F348  RB_DrawProfile2Total_FX  (gfx_d3d/rb_drawprofile.cpp:471)
 
-void RB_DrawProfile2Total_FX(void)
+float RB_DrawProfile2Total_FX(int param_1,float param_2,int param_3,int param_4)
 
 {
+  float fVar1;
   int in_r6;
   
-  in_r6 = in_r6 * 0x3c;
-  if ((float)((double)(longlong)*(int *)(&DAT_84184e58 + in_r6) +
-             (double)(longlong)*(int *)(&DAT_84184e5c + in_r6)) +
-      (float)(longlong)*(int *)(&DAT_84184e60 + in_r6) +
-      (float)(longlong)*(int *)(&DAT_84184e64 + in_r6) +
-      (float)(longlong)*(int *)(&DAT_84184e68 + in_r6) != 0.0) {
-    RB_DrawProfile2Value();
+  fVar1 = (float)(longlong)g_prof2_history[in_r6][8] + (float)(longlong)g_prof2_history[in_r6][9] +
+          (float)(longlong)g_prof2_history[in_r6][10] + (float)(longlong)g_prof2_history[in_r6][0xb]
+          + (float)(longlong)g_prof2_history[in_r6][0xc];
+  if (fVar1 != 0.0) {
+    param_2 = RB_DrawProfile2Value
+                        (param_1,param_2,g_prof2_history[in_r6][0xc],fVar1,(char *)param_4,
+                         g_prof2_history[in_r6][8],-0x7de29dec);
   }
-  return;
+  return param_2;
 }
 
 
 // 8279F430  RB_DrawProfileOverlay  (gfx_d3d/rb_drawprofile.cpp:504)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void RB_DrawProfileOverlay(void)
 
@@ -630,21 +482,23 @@ void RB_DrawProfileOverlay(void)
   int iVar2;
   int iVar3;
   int iVar4;
+  float fVar5;
   
   __savegprlr_29();
-  iVar1 = *(int *)(DAT_841849ac + 0xc) + -8;
+  iVar1 = (profile->current).integer + -8;
   iVar2 = iVar1 * 0x20;
-  RB_DrawAllProfileBackgrounds(&PTR_DAT_82180c40 + iVar1 * 8,*(undefined4 *)(&DAT_82180c48 + iVar2))
-  ;
-  RB_DrawProfileHistory(&PTR_DAT_82180c40 + iVar1 * 8);
-  RB_DrawProfileLabels();
+  RB_DrawAllProfileBackgrounds
+            ((ProfileSettings *)(&s_profileArrays + iVar2),*(int *)(&DAT_82180c48 + iVar2));
+  RB_DrawProfileHistory((ProfileSettings *)(&s_profileArrays + iVar2));
+  fVar5 = RB_DrawProfileLabels();
   iVar4 = 0;
-  DAT_84840360 = 0;
+  g_tally = 0.0;
   if (0 < *(int *)(&DAT_82180c48 + iVar2)) {
     iVar3 = 0;
     do {
-      RB_DrawProfileRow(*(undefined4 *)((&PTR_DAT_82180c44)[iVar1 * 8] + iVar3),
-                        *(undefined4 *)((int)((&PTR_DAT_82180c44)[iVar1 * 8] + iVar3) + 4));
+      fVar5 = RB_DrawProfileRow(*(int *)((&PTR_s_profileMain_82180c44)[iVar1 * 8] + iVar3),
+                                *(int *)((int)((&PTR_s_profileMain_82180c44)[iVar1 * 8] + iVar3) + 4
+                                        ),fVar5);
       iVar4 = iVar4 + 1;
       iVar3 = iVar3 + 8;
     } while (iVar4 < *(int *)(&DAT_82180c48 + iVar2));
@@ -655,114 +509,62 @@ void RB_DrawProfileOverlay(void)
 
 
 // 8279F4C8  RB_DrawProfile2Overlay  (gfx_d3d/rb_drawprofile.cpp:526)
-
-void RB_DrawProfile2Overlay(void)
-
-{
-  int iVar1;
-  uint uVar2;
-  int iVar3;
-  ulonglong uVar4;
-  longlong lVar5;
-  ulonglong uVar6;
-  int iVar7;
-  int iVar8;
-  undefined8 uVar9;
-  
-  __savegprlr_25();
-  lVar5 = (ulonglong)*(uint *)(DAT_84821000 + 0x4db8) + 4;
-  iVar3 = (int)lVar5;
-  uVar2 = iVar3 / 5 + (iVar3 >> 0x1f);
-  uVar4 = (longlong)(int)uVar2 + (ulonglong)(uVar2 >> 0x1f);
-  uVar6 = lVar5 - (uVar4 + (uVar4 & 0x3fffffff) * 4);
-  lVar5 = uVar6 + 4;
-  iVar3 = (int)lVar5;
-  uVar2 = iVar3 / 5 + (iVar3 >> 0x1f);
-  uVar4 = (longlong)(int)uVar2 + (ulonglong)(uVar2 >> 0x1f);
-  if (*(int *)(&DAT_84184f64 + (int)((uVar6 & 0xffffffff) << 2)) !=
-      *(int *)(&DAT_84184f64 + (int)((lVar5 - (uVar4 + (uVar4 & 0x3fffffff) * 4) & 0xffffffff) << 2)
-              )) {
-    RB_EndSurfaceIfNeeded();
-    iVar1 = *(int *)(DAT_84184998 + 0xc) * 0x20;
-    uVar9 = RB_DrawProfile2Labels();
-    iVar3 = *(int *)(&DAT_821810a0 + iVar1);
-    iVar8 = 0;
-    if (0 < iVar3) {
-      iVar7 = 0;
-      do {
-        uVar9 = RB_DrawProfile2Row(uVar9,*(undefined4 *)(iVar7 + *(int *)(&DAT_8218109c + iVar1)),
-                                   ((undefined4 *)(iVar7 + *(int *)(&DAT_8218109c + iVar1)))[1]);
-        iVar3 = *(int *)(&DAT_821810a0 + iVar1);
-        iVar8 = iVar8 + 1;
-        iVar7 = iVar7 + 8;
-      } while (iVar8 < iVar3);
-    }
-    if (iVar3 < 1) {
-      MyAssertHandler(0xffffffff821d6088,0x22a,0,0xffffffff82000f98,0xffffffff821d624c);
-    }
-    if (*(int *)(DAT_84184998 + 0xc) == 2) {
-      iVar3 = *(int *)(&DAT_821810a0 + iVar1) * 8 + *(int *)(&DAT_8218109c + iVar1);
-      if (*(int *)(iVar3 + -8) != 0) {
-        MyAssertHandler(0xffffffff821d6088,0x231,0,0xffffffff82000f98,0xffffffff821d6224);
-      }
-      RB_DrawProfile2Total_FX(uVar9,*(undefined4 *)(iVar3 + -4));
-    }
-    iVar3 = R_HasDeviceOwnership();
-    if (iVar3 == 0) {
-      MyAssertHandler(0xffffffff821ca3d0,0xaf,0,0xffffffff82000f98,0xffffffff8217d420);
-    }
-    if (DAT_8483400c != 0) {
-      RB_EndTessSurface();
-    }
-  }
-  __restgprlr_25();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0
 
 // 8279F6B8  CompareSelfTimes  (gfx_d3d/rb_drawprofile.cpp:582)
 
-longlong CompareSelfTimes(uint *param_1,uint *param_2)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+int CompareSelfTimes(void *param_1,void *param_2)
 
 {
-  if ((ulonglong)(uint)(&DAT_84842240)[*param_2 * 0xe] -
-      (ulonglong)(uint)(&DAT_84842240)[*param_1 * 0xe] != 0) {
-    return (ulonglong)(uint)(&DAT_84842240)[*param_2 * 0xe] -
-           (ulonglong)(uint)(&DAT_84842240)[*param_1 * 0xe];
+  longlong lVar1;
+  
+  lVar1 = (ulonglong)drawProfGlob.global[*(int *)param_2].read.self.value[0] -
+          (ulonglong)drawProfGlob.global[*(int *)param_1].read.self.value[0];
+  if (lVar1 != 0) {
+    return (int)lVar1;
   }
-  return (ulonglong)*param_2 - (ulonglong)*param_1;
+  return *(int *)param_2 - *(int *)param_1;
 }
 
 
 // 8279F6F0  CompareTotalTimes  (gfx_d3d/rb_drawprofile.cpp:594)
 
-longlong CompareTotalTimes(uint *param_1,uint *param_2)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+int CompareTotalTimes(void *param_1,void *param_2)
 
 {
   longlong lVar1;
   
-  lVar1 = (ulonglong)*(uint *)((int)&DAT_84842238 + *param_2 * 0x38 + 4) -
-          (ulonglong)*(uint *)((int)&DAT_84842238 + *param_1 * 0x38 + 4);
+  lVar1 = (ulonglong)drawProfGlob.global[*(int *)param_2].read.total.value[0] -
+          (ulonglong)drawProfGlob.global[*(int *)param_1].read.total.value[0];
   if (lVar1 != 0) {
-    return lVar1;
+    return (int)lVar1;
   }
-  return (ulonglong)*param_2 - (ulonglong)*param_1;
+  return *(int *)param_2 - *(int *)param_1;
 }
 
 
 // 8279F728  CompareAvgTotalTimes  (gfx_d3d/rb_drawprofile.cpp:606)
 
-int CompareAvgTotalTimes(int *param_1,int *param_2)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+int CompareAvgTotalTimes(void *param_1,void *param_2)
 
 {
   int iVar1;
   int iVar2;
   double dVar3;
   
-  iVar1 = *param_1;
-  iVar2 = *param_2;
-  dVar3 = (double)(longlong)(int)(&DAT_84842210)[iVar1 * 0xe] * (double)(&DAT_84842218)[iVar2 * 7] -
-          (double)(longlong)(int)(&DAT_84842210)[iVar2 * 0xe] * (double)(&DAT_84842218)[iVar1 * 7];
+  iVar1 = *(int *)param_1;
+  iVar2 = *(int *)param_2;
+  dVar3 = (double)(longlong)drawProfGlob.global[iVar1].sequence *
+          drawProfGlob.global[iVar2].totalClks -
+          (double)(longlong)drawProfGlob.global[iVar2].sequence *
+          drawProfGlob.global[iVar1].totalClks;
   if (dVar3 < 0.0) {
     return -1;
   }
@@ -775,34 +577,43 @@ int CompareAvgTotalTimes(int *param_1,int *param_2)
 
 // 8279F7B8  CompareMaxTimes  (gfx_d3d/rb_drawprofile.cpp:620)
 
-longlong CompareMaxTimes(uint *param_1,uint *param_2)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+int CompareMaxTimes(void *param_1,void *param_2)
 
 {
-  if ((double)(longlong)(int)((&DAT_84842234)[*param_2 * 0xe] - (&DAT_84842234)[*param_1 * 0xe]) <
-      0.0) {
+  double dVar1;
+  
+  dVar1 = (double)(longlong)
+                  (int)(drawProfGlob.global[*(int *)param_2].max.value[0] -
+                       drawProfGlob.global[*(int *)param_1].max.value[0]);
+  if (dVar1 < 0.0) {
     return -1;
   }
-  if (0.0 < (double)(longlong)
-                    (int)((&DAT_84842234)[*param_2 * 0xe] - (&DAT_84842234)[*param_1 * 0xe])) {
+  if (0.0 < dVar1) {
     return 1;
   }
-  return (ulonglong)*param_2 - (ulonglong)*param_1;
+  return *(int *)param_2 - *(int *)param_1;
 }
 
 
 // 8279F820  CompareAvgSelfTimes  (gfx_d3d/rb_drawprofile.cpp:634)
 
-int CompareAvgSelfTimes(int *param_1,int *param_2)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+int CompareAvgSelfTimes(void *param_1,void *param_2)
 
 {
   int iVar1;
   int iVar2;
   double dVar3;
   
-  iVar1 = *param_1;
-  iVar2 = *param_2;
-  dVar3 = (double)(longlong)(int)(&DAT_84842210)[iVar1 * 0xe] * (double)(&DAT_84842220)[iVar2 * 7] -
-          (double)(longlong)(int)(&DAT_84842210)[iVar2 * 0xe] * (double)(&DAT_84842220)[iVar1 * 7];
+  iVar1 = *(int *)param_1;
+  iVar2 = *(int *)param_2;
+  dVar3 = (double)(longlong)drawProfGlob.global[iVar1].sequence *
+          drawProfGlob.global[iVar2].selfClks -
+          (double)(longlong)drawProfGlob.global[iVar2].sequence *
+          drawProfGlob.global[iVar1].selfClks;
   if (dVar3 < 0.0) {
     return -1;
   }
@@ -815,61 +626,69 @@ int CompareAvgSelfTimes(int *param_1,int *param_2)
 
 // 8279F8B0  CompareMaxSelfTimes  (gfx_d3d/rb_drawprofile.cpp:648)
 
-longlong CompareMaxSelfTimes(uint *param_1,uint *param_2)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+int CompareMaxSelfTimes(void *param_1,void *param_2)
 
 {
-  if ((double)(longlong)(int)((&DAT_84842228)[*param_2 * 0xe] - (&DAT_84842228)[*param_1 * 0xe]) <
-      0.0) {
+  double dVar1;
+  
+  dVar1 = (double)(longlong)
+                  (int)(drawProfGlob.global[*(int *)param_2].maxSelf.value[0] -
+                       drawProfGlob.global[*(int *)param_1].maxSelf.value[0]);
+  if (dVar1 < 0.0) {
     return -1;
   }
-  if (0.0 < (double)(longlong)
-                    (int)((&DAT_84842228)[*param_2 * 0xe] - (&DAT_84842228)[*param_1 * 0xe])) {
+  if (0.0 < dVar1) {
     return 1;
   }
-  return (ulonglong)*param_2 - (ulonglong)*param_1;
+  return *(int *)param_2 - *(int *)param_1;
 }
 
 
 // 8279F918  RB_DrawSlowProfileOverlay  (gfx_d3d/rb_drawprofile.cpp:662)
 
-void RB_DrawSlowProfileOverlay(void)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void RB_DrawSlowProfileOverlay(_func___cdecl_int_void_ptr_void_ptr *param_1)
 
 {
-  _PtFuncCompare *_PtFuncCompare;
-  int iVar1;
-  int *piVar2;
-  int iVar3;
-  undefined4 *puVar4;
+  _func___cdecl_int_void_ptr_void_ptr *p_Var1;
+  int iVar2;
+  uint uVar3;
+  ProfileAtom *pPVar4;
   longlong lVar5;
+  float fVar6;
   
-  _PtFuncCompare = (_PtFuncCompare *)__savegprlr_29();
-  iVar1 = Sys_Milliseconds();
-  if ((*(float *)(DAT_845aa6a8 + 0xc) * 1000.0 <= (float)(longlong)(iVar1 - DAT_84842208)) ||
-     (iVar1 - DAT_84842208 < 0)) {
-    iVar3 = 0;
-    piVar2 = (int *)0x84841b10;
+  p_Var1 = (_func___cdecl_int_void_ptr_void_ptr *)__savegprlr_29(param_1);
+  iVar2 = Sys_Milliseconds();
+  if (((prof_sortTime->current).value * 1000.0 <=
+       (float)(longlong)(iVar2 - drawProfGlob.lastSortTime)) ||
+     (iVar2 - drawProfGlob.lastSortTime < 0)) {
+    uVar3 = 0;
+    pPVar4 = &drawProfGlob.log[4].history[99].self;
     lVar5 = 0x1bd;
-    DAT_84842208 = iVar1;
+    drawProfGlob.lastSortTime = iVar2;
     do {
-      piVar2 = piVar2 + 1;
-      *piVar2 = iVar3;
-      iVar3 = iVar3 + 1;
+      pPVar4 = pPVar4 + 1;
+      pPVar4->value[0] = uVar3;
+      uVar3 = uVar3 + 1;
       lVar5 = lVar5 + -1;
     } while (lVar5 != 0);
-    qsort(&DAT_84841b14,0x1bd,4,_PtFuncCompare);
+    qsort(drawProfGlob.sortedProbeIndices,0x1bd,4,p_Var1);
   }
-  RB_DrawAllProfileBackgrounds(0,*(undefined4 *)(DAT_841432a0 + 0xc));
-  RB_DrawProfileHistory(0);
-  RB_DrawProfileLabels();
-  iVar1 = 0;
-  DAT_84840360 = 0;
-  if (0 < *(int *)(DAT_841432a0 + 0xc)) {
-    puVar4 = (undefined4 *)0x84841b10;
+  RB_DrawAllProfileBackgrounds((ProfileSettings *)0x0,(profile_rowcount->current).integer);
+  RB_DrawProfileHistory((ProfileSettings *)0x0);
+  fVar6 = RB_DrawProfileLabels();
+  iVar2 = 0;
+  g_tally = 0.0;
+  if (0 < (profile_rowcount->current).integer) {
+    pPVar4 = &drawProfGlob.log[4].history[99].self;
     do {
-      puVar4 = puVar4 + 1;
-      RB_DrawProfileRow(*puVar4,0);
-      iVar1 = iVar1 + 1;
-    } while (iVar1 < *(int *)(DAT_841432a0 + 0xc));
+      pPVar4 = pPVar4 + 1;
+      fVar6 = RB_DrawProfileRow(pPVar4->value[0],0,fVar6);
+      iVar2 = iVar2 + 1;
+    } while (iVar2 < (profile_rowcount->current).integer);
   }
   __restgprlr_29();
   return;
@@ -878,169 +697,190 @@ void RB_DrawSlowProfileOverlay(void)
 
 // 8279FA20  RB_AddProfileThread  (gfx_d3d/rb_drawprofile.cpp:688)
 
-void RB_AddProfileThread(void)
+/* WARNING: Type propagation algorithm not settling */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void RB_AddProfileThread(int param_1)
 
 {
-  int iVar1;
-  int *piVar2;
-  int *piVar3;
+  uint uVar1;
+  ProfileStack *pPVar2;
+  ProfileReadable *pPVar3;
+  ProfileAtom *pPVar4;
   
-  iVar1 = Profile_GetStackForContext();
-  piVar2 = (int *)(iVar1 + 0x420);
-  piVar3 = &DAT_84842240;
+  pPVar2 = Profile_GetStackForContext(param_1);
+  pPVar3 = (ProfileReadable *)(pPVar2->prof_pStack + 0xfe);
+  pPVar4 = &drawProfGlob.global[0].read.self;
   do {
-    piVar3[-0xb] = piVar3[-0xb] + piVar2[10];
-    *piVar3 = piVar2[0xc] + *piVar3;
-    piVar3[-1] = piVar3[-1] + piVar2[0xb];
-    *(double *)(piVar3 + -8) = *(double *)(piVar3 + -8) + (double)(uint)piVar2[0xc];
-    *(double *)(piVar3 + -10) = *(double *)(piVar3 + -10) + (double)(uint)piVar2[0xb];
-    piVar2 = piVar2 + 10;
-    piVar3[-2] = piVar3[-2] + *piVar2;
-    piVar3 = piVar3 + 0xe;
-  } while ((int)piVar3 < -0x7b7b7c68);
+    pPVar4[-0xb] = (ProfileAtom)
+                   (*(int *)(pPVar4 + -0xb) + ((ProfileReadable *)((int)(pPVar3 + 3) + 4))->hits);
+    pPVar4->value[0] = ((ProfileAtom *)(pPVar3 + 4))->value[0] + pPVar4->value[0];
+    pPVar4[-1].value[0] = pPVar4[-1].value[0] + ((ProfileAtom *)((int)(pPVar3 + 3) + 8))->value[0];
+    uVar1 = ((ProfileReadable *)(pPVar4 + -2))->hits;
+    *(double *)(pPVar4 + -8) =
+         *(double *)(pPVar4 + -8) + (double)((ProfileAtom *)(pPVar3 + 4))->value[0];
+    *(double *)(pPVar4 + -10) =
+         *(double *)(pPVar4 + -10) + (double)((ProfileAtom *)((int)(pPVar3 + 3) + 8))->value[0];
+    pPVar3 = (ProfileReadable *)((int)(pPVar3 + 3) + 4);
+    ((ProfileReadable *)(pPVar4 + -2))->hits = uVar1 + pPVar3->hits;
+    pPVar4 = pPVar4 + 0xe;
+  } while ((int)pPVar4 < -0x7b7b7c68);
   return;
 }
 
 
 // 8279FAE8  RB_IsUsingAnyProfile  (gfx_d3d/rb_drawprofile.cpp:719)
 
-undefined8 RB_IsUsingAnyProfile(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+bool RB_IsUsingAnyProfile(void)
 
 {
   int *piVar1;
   ulonglong uVar2;
   
-  if (*(int *)(DAT_841849ac + 0xc) != 0) {
-    if (*(int *)(DAT_841849ac + 0xc) != 1) {
-      return 1;
+  if ((profile->current).integer != 0) {
+    if ((profile->current).integer != 1) {
+      return true;
     }
     uVar2 = 0;
-    piVar1 = &DAT_845aa61c;
+    piVar1 = (int *)&prof_probe;
     do {
       if (*(int *)(*piVar1 + 0xc) != 0) {
-        return 1;
+        return true;
       }
       uVar2 = uVar2 + 4;
       piVar1 = piVar1 + 1;
     } while ((uVar2 & 0xffffffff) < 0x14);
   }
-  return 0;
+  return false;
 }
 
 
 // 8279FB40  RB_DrawProfile  (gfx_d3d/rb_drawprofile.cpp:739)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
 void RB_DrawProfile(void)
 
 {
   uint uVar1;
-  char cVar3;
-  int iVar2;
-  undefined4 *puVar4;
-  undefined8 *puVar5;
-  uint *puVar6;
-  longlong lVar7;
+  dvar_t *pdVar2;
+  bool bVar5;
+  int iVar3;
+  int iVar4;
+  char cVar6;
+  ProfileAtom *pPVar7;
+  ProfileReadable *pPVar8;
+  uint *puVar9;
   
   __savegprlr_24();
-  cVar3 = RB_IsUsingAnyProfile();
-  if (cVar3 != '\0') {
-    if (*(int *)(DAT_841849ac + 0xc) == 0) {
-      MyAssertHandler(0xffffffff821d6088,0x2ed,0,0xffffffff82000f98,0xffffffff821d6268);
+  bVar5 = RB_IsUsingAnyProfile();
+  if (bVar5) {
+    if ((profile->current).integer == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_drawprofile.cpp",
+                      0x2ed,0,"%s");
     }
-    iVar2 = DAT_841849ac;
-    cVar3 = *(char *)(DAT_841849ac + 0xb);
-    if (*(char *)(DAT_841849b8 + 0xb) != '\0') {
-      cVar3 = '\x01';
+    pdVar2 = profile;
+    cVar6 = profile->modified;
+    if (profile_thread->modified != false) {
+      cVar6 = '\x01';
     }
-    lVar7 = 0;
-    if (cVar3 == '\0') {
-      puVar5 = &DAT_84842238;
+    iVar4 = 0;
+    if (cVar6 == '\0') {
+      pPVar8 = &drawProfGlob.global[0].read;
       do {
-        *puVar5 = 0;
-        *(undefined4 *)(puVar5 + 1) = 0;
-        puVar5 = puVar5 + 7;
-      } while ((int)puVar5 < -0x7b7b7c70);
+        pPVar8->hits = 0;
+        pPVar8->total = (uint  [1])0x0;
+        (pPVar8->self).value[0] = 0;
+        pPVar8 = (ProfileReadable *)((int)(pPVar8 + 4) + 8);
+      } while ((int)pPVar8 < -0x7b7b7c70);
     }
     else {
-      memset(&DAT_84842210,0,0x6158);
-      puVar4 = &DAT_84842230;
+      memset();
+      pPVar7 = &drawProfGlob.global[0].min;
       do {
-        *puVar4 = 0xffffffff;
-        puVar4 = puVar4 + 0xe;
-      } while ((int)puVar4 < -0x7b7b7c78);
-      Dvar_ClearModified(iVar2);
-      Dvar_ClearModified(DAT_841849b8);
+        pPVar7->value[0] = 0xffffffff;
+        pPVar7 = pPVar7 + 0xe;
+      } while ((int)pPVar7 < -0x7b7b7c78);
+      Dvar_ClearModified(pdVar2);
+      Dvar_ClearModified(profile_thread);
     }
-    iVar2 = Profile_GetDisplayThread();
-    if (iVar2 < DAT_84613770) {
-      RB_AddProfileThread();
+    iVar3 = Profile_GetDisplayThread();
+    if (iVar3 < gfxCfg.threadContextCount) {
+      RB_AddProfileThread(iVar3);
     }
-    else if (0 < DAT_84613770) {
+    else if (0 < gfxCfg.threadContextCount) {
       do {
-        RB_AddProfileThread(lVar7);
-        lVar7 = lVar7 + 1;
-      } while ((int)lVar7 < DAT_84613770);
+        RB_AddProfileThread(iVar4);
+        iVar4 = iVar4 + 1;
+      } while (iVar4 < gfxCfg.threadContextCount);
     }
-    puVar6 = &DAT_8484222c;
+    puVar9 = &drawProfGlob.global[0].maxHits;
     do {
-      puVar6[-7] = puVar6[-7] + 1;
-      uVar1 = puVar6[4];
-      if (puVar6[2] < uVar1) {
-        puVar6[2] = uVar1;
+      ((ProfileReadableGlobal *)(puVar9 + -7))->sequence =
+           ((ProfileReadableGlobal *)(puVar9 + -7))->sequence + 1;
+      uVar1 = ((ProfileAtom *)(puVar9 + 4))->value[0];
+      if (((ProfileAtom *)(puVar9 + 2))->value[0] < uVar1) {
+        ((ProfileAtom *)(puVar9 + 2))->value[0] = uVar1;
       }
-      if (uVar1 < puVar6[1]) {
-        puVar6[1] = uVar1;
+      if (uVar1 < ((ProfileAtom *)(puVar9 + 1))->value[0]) {
+        ((ProfileAtom *)(puVar9 + 1))->value[0] = uVar1;
       }
-      if (*puVar6 < puVar6[3]) {
-        *puVar6 = puVar6[3];
+      if (*puVar9 < ((ProfileReadable *)(puVar9 + 3))->hits) {
+        *puVar9 = ((ProfileReadable *)(puVar9 + 3))->hits;
       }
-      if (puVar6[-1] < puVar6[5]) {
-        puVar6[-1] = puVar6[5];
+      if (((ProfileAtom *)(puVar9 + -1))->value[0] < ((ProfileAtom *)(puVar9 + 5))->value[0]) {
+        ((ProfileAtom *)(puVar9 + -1))->value[0] = ((ProfileAtom *)(puVar9 + 5))->value[0];
       }
-      puVar6 = puVar6 + 0xe;
-    } while ((int)puVar6 < -0x7b7b7c7c);
-    iVar2 = R_HasDeviceOwnership();
-    if (iVar2 == 0) {
-      MyAssertHandler(0xffffffff821ca3d0,0xaf,0,0xffffffff82000f98,0xffffffff8217d420);
+      puVar9 = puVar9 + 0xe;
+    } while ((int)puVar9 < -0x7b7b7c7c);
+    iVar4 = R_HasDeviceOwnership();
+    if (iVar4 == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.h",0xaf,0
+                      ,"%s");
     }
-    if (DAT_8483400c != 0) {
+    if (tess.vertexCount != 0) {
       RB_EndTessSurface();
     }
-    iVar2 = *(int *)(DAT_841849ac + 0xc);
-    if (iVar2 - 1U < 7) {
-      if (iVar2 == 1) {
-        RB_DrawProfileHistory(0);
+    iVar4 = (profile->current).integer;
+    if (iVar4 - 1U < 7) {
+      if (iVar4 == 1) {
+        RB_DrawProfileHistory((ProfileSettings *)0x0);
       }
-      else if (iVar2 == 2) {
-        RB_DrawSlowProfileOverlay(0xffffffff8279f6b8);
+      else if (iVar4 == 2) {
+        RB_DrawSlowProfileOverlay(CompareSelfTimes);
       }
-      else if (iVar2 == 3) {
-        RB_DrawSlowProfileOverlay(0xffffffff8279f6f0);
+      else if (iVar4 == 3) {
+        RB_DrawSlowProfileOverlay(CompareTotalTimes);
       }
-      else if (iVar2 == 4) {
-        RB_DrawSlowProfileOverlay(0xffffffff8279f820);
+      else if (iVar4 == 4) {
+        RB_DrawSlowProfileOverlay(CompareAvgSelfTimes);
       }
-      else if (iVar2 == 5) {
-        RB_DrawSlowProfileOverlay(0xffffffff8279f728);
+      else if (iVar4 == 5) {
+        RB_DrawSlowProfileOverlay(CompareAvgTotalTimes);
       }
-      else if (iVar2 == 6) {
-        RB_DrawSlowProfileOverlay(0xffffffff8279f7b8);
+      else if (iVar4 == 6) {
+        RB_DrawSlowProfileOverlay(CompareMaxTimes);
       }
       else {
-        RB_DrawSlowProfileOverlay(0xffffffff8279f8b0);
+        RB_DrawSlowProfileOverlay(CompareMaxSelfTimes);
       }
     }
     else {
-      if (iVar2 == 0) {
-        MyAssertHandler(0xffffffff821d6088,0x34f,0,0xffffffff82000f98,0xffffffff821d6268);
+      if (iVar4 == 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_drawprofile.cpp"
+                        ,0x34f,0,"%s");
       }
       RB_DrawProfileOverlay();
     }
-    iVar2 = R_HasDeviceOwnership();
-    if (iVar2 == 0) {
-      MyAssertHandler(0xffffffff821ca3d0,0xaf,0,0xffffffff82000f98,0xffffffff8217d420);
+    iVar4 = R_HasDeviceOwnership();
+    if (iVar4 == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.h",0xaf,0
+                      ,"%s");
     }
-    if (DAT_8483400c != 0) {
+    if (tess.vertexCount != 0) {
       RB_EndTessSurface();
     }
   }
@@ -1051,21 +891,26 @@ void RB_DrawProfile(void)
 
 // 8279FE50  RB_IsUsingAnyProfile2  (gfx_d3d/rb_drawprofile.cpp:858)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 bool RB_IsUsingAnyProfile2(void)
 
 {
-  return *(int *)(DAT_84184998 + 0xc) != 0;
+  return (bool)('\x01' - ((profile2->current).integer == 0));
 }
 
 
 // 8279FE68  RB_DrawProfile2  (gfx_d3d/rb_drawprofile.cpp:867)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void RB_DrawProfile2(void)
 
 {
-  if (*(int *)(DAT_84184998 + 0xc) != 0) {
-    if (*(int *)(DAT_84184998 + 0xc) == 0) {
-      MyAssertHandler(0xffffffff821d6088,0x367,0,0xffffffff82000f98,0xffffffff821d6298);
+  if ((profile2->current).integer != 0) {
+    if ((profile2->current).integer == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_drawprofile.cpp",
+                      0x367,0,"%s");
     }
     RB_DrawProfile2Overlay();
   }
@@ -1075,19 +920,24 @@ void RB_DrawProfile2(void)
 
 // 8279FED8  RB_DrawProfileScript  (gfx_d3d/rb_drawprofile.cpp:877)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
 void RB_DrawProfileScript(void)
 
 {
-  int iVar1;
-  int iVar3;
-  undefined8 uVar2;
+  ProfileScript *pPVar1;
+  char *pcVar2;
+  SourceBufferInfo *pSVar3;
   int iVar4;
-  int iVar5;
-  int *piVar6;
-  char *pcVar7;
+  char *in_r4;
+  GfxColor in_r5;
+  undefined8 uVar5;
+  ulonglong uVar6;
+  GfxColor GVar7;
   longlong lVar8;
-  uint *puVar9;
-  double dVar10;
+  int *piVar9;
+  char (*pacVar10) [20];
   double dVar11;
   double dVar12;
   double dVar13;
@@ -1097,155 +947,151 @@ void RB_DrawProfileScript(void)
   double dVar17;
   double dVar18;
   double dVar19;
+  double dVar20;
   
   __savegprlr_22();
   __savefpr_23();
-  if (*(char *)(DAT_845aa5f0 + 0xc) == '\0') {
-    if ((*(char *)(DAT_845aa5f4 + 0xc) != '\0') && (iVar3 = Scr_GetSourceBufferLookup(), iVar3 != 0)
-       ) {
-      iVar4 = Profile_GetScript();
-      dVar10 = 30.0;
-      RB_DrawProfileBackground(0x403e000000000000);
-      RB_DrawProfileString(dVar10,0xf);
-      RB_DrawProfileString(dVar10,0x2f);
-      RB_DrawProfileString(dVar10,0x3b);
-      RB_DrawProfileString(dVar10,0x47);
-      RB_DrawProfileString(dVar10,0x53);
-      RB_DrawProfileString(dVar10,0x5f,0xffffffff821d0000,0xffffffff821d62e8,DAT_84840378);
-      RB_DrawProfileString(dVar10,0x6b);
-      dVar17 = (double)DAT_84840370;
-      dVar19 = (double)(float)(dVar17 + dVar10);
-      dVar15 = 71.0;
-      dVar18 = 59.0;
-      dVar14 = 47.0;
-      dVar10 = 0.0;
-      dVar16 = 15.0;
-      dVar11 = 107.0;
-      piVar6 = (int *)(iVar4 + 0x600);
-      dVar12 = 95.0;
+  if ((profile_script->current).enabled == false) {
+    if (((profile_script_by_file->current).enabled != false) &&
+       (pSVar3 = Scr_GetSourceBufferLookup(), pSVar3 != (SourceBufferInfo *)0x0)) {
+      pPVar1 = Profile_GetScript();
+      dVar11 = 30.0;
+      RB_DrawProfileBackground(30.0);
+      RB_DrawProfileString(0xf,(float)dVar11,in_r4,(GfxColor)0x821d630c);
+      RB_DrawProfileString(0x2f,(float)dVar11,in_r4,(GfxColor)0x821d6304);
+      RB_DrawProfileString(0x3b,(float)dVar11,in_r4,(GfxColor)0x821d6300);
+      RB_DrawProfileString(0x47,(float)dVar11,in_r4,(GfxColor)0x821d62fc);
+      RB_DrawProfileString(0x53,(float)dVar11,in_r4,(GfxColor)0x821d62f4);
+      pcVar2 = "is[0] )";
+      RB_DrawProfileString(0x5f,(float)dVar11,"is[0] )",(GfxColor)0x821d62e8);
+      RB_DrawProfileString(0x6b,(float)dVar11,pcVar2,(GfxColor)0x821d62e0);
+      dVar18 = (double)drawProfGlob.fontHeight;
+      dVar20 = (double)(float)(dVar18 + dVar11);
+      uVar6 = 0xffffffff821d0000;
+      dVar16 = 71.0;
+      dVar19 = 59.0;
+      dVar15 = 47.0;
+      dVar11 = 0.0;
+      dVar17 = 15.0;
+      dVar12 = 107.0;
+      piVar9 = pPVar1->scriptSrcBufferIndex;
+      dVar13 = 95.0;
       lVar8 = 0x20;
-      dVar13 = 83.0;
+      dVar14 = 83.0;
       do {
-        iVar1 = *piVar6 * 0x2c + iVar3;
-        if ((double)*(float *)(iVar1 + 0x24) != dVar10) {
-          RB_DrawProfileBackground(dVar19);
-          RB_DrawText((double)(float)((double)DAT_8484036c * dVar16),
-                      (double)(float)((double)DAT_84840370 + dVar19),*(undefined4 *)(iVar1 + 4),
-                      DAT_84840368);
-          iVar5 = Sys_GetValue(0);
-          uVar2 = va(0xffffffff821d61e0,
-                     (double)((float)(longlong)*(int *)(iVar1 + 0x18) * *(float *)(iVar5 + 0x4ac0)))
-          ;
-          RB_DrawText((double)(float)((double)DAT_8484036c * dVar14),
-                      (double)(float)((double)DAT_84840370 + dVar19),uVar2,DAT_84840368);
-          iVar5 = Sys_GetValue(0);
-          uVar2 = va(0xffffffff821d61e0,
-                     (double)((float)(longlong)*(int *)(iVar1 + 0x1c) * *(float *)(iVar5 + 0x4ac0)))
-          ;
-          RB_DrawText((double)(float)((double)DAT_8484036c * dVar18),
-                      (double)(float)((double)DAT_84840370 + dVar19),uVar2,DAT_84840368);
-          iVar5 = Sys_GetValue(0);
-          uVar2 = va(0xffffffff821d61e0,
-                     (double)((float)(longlong)*(int *)(iVar1 + 0x20) * *(float *)(iVar5 + 0x4ac0)))
-          ;
-          RB_DrawText((double)(float)((double)DAT_8484036c * dVar15),
-                      (double)(float)((double)DAT_84840370 + dVar19),uVar2,DAT_84840368);
-          uVar2 = va(0xffffffff821d6314,(double)*(float *)(iVar1 + 0x28));
-          RB_DrawText((double)(float)((double)DAT_8484036c * dVar13),
-                      (double)(float)((double)DAT_84840370 + dVar19),uVar2,DAT_84840368);
-          uVar2 = va(0xffffffff821d6314,
-                     (double)(*(float *)(iVar1 + 0x24) - *(float *)(iVar1 + 0x28)));
-          RB_DrawText((double)(float)((double)DAT_8484036c * dVar12),
-                      (double)(float)((double)DAT_84840370 + dVar19),uVar2,DAT_84840368);
-          uVar2 = va(0xffffffff821d6314,(double)*(float *)(iVar1 + 0x24));
-          RB_DrawText((double)(float)((double)DAT_8484036c * dVar11),
-                      (double)(float)((double)DAT_84840370 + dVar19),uVar2,DAT_84840368);
-          dVar17 = (double)DAT_84840370;
-          dVar19 = (double)(float)(dVar17 + dVar19);
+        GVar7.packed = (uint)uVar6;
+        iVar4 = *piVar9;
+        if ((double)pSVar3[iVar4].totalTime != dVar11) {
+          RB_DrawProfileBackground((float)dVar20);
+          RB_DrawText(pSVar3[iVar4].buf,drawProfGlob.font,
+                      (float)((double)drawProfGlob.fontWidth * dVar17),
+                      (float)((double)drawProfGlob.fontHeight + dVar20),GVar7);
+          Sys_GetValue(0);
+          pcVar2 = va("%6.2f");
+          RB_DrawText(pcVar2,drawProfGlob.font,(float)((double)drawProfGlob.fontWidth * dVar15),
+                      (float)((double)drawProfGlob.fontHeight + dVar20),GVar7);
+          Sys_GetValue(0);
+          pcVar2 = va("%6.2f");
+          RB_DrawText(pcVar2,drawProfGlob.font,(float)((double)drawProfGlob.fontWidth * dVar19),
+                      (float)((double)drawProfGlob.fontHeight + dVar20),GVar7);
+          Sys_GetValue(0);
+          uVar6 = (ulonglong)(uint)pSVar3[iVar4].maxTime;
+          pcVar2 = va("%6.2f");
+          RB_DrawText(pcVar2,drawProfGlob.font,(float)((double)drawProfGlob.fontWidth * dVar16),
+                      (float)((double)drawProfGlob.fontHeight + dVar20),(GfxColor)(uint)uVar6);
+          pcVar2 = va("%8.0f");
+          RB_DrawText(pcVar2,drawProfGlob.font,(float)((double)drawProfGlob.fontWidth * dVar14),
+                      (float)((double)drawProfGlob.fontHeight + dVar20),(GfxColor)(uint)uVar6);
+          pcVar2 = va("%8.0f");
+          RB_DrawText(pcVar2,drawProfGlob.font,(float)((double)drawProfGlob.fontWidth * dVar13),
+                      (float)((double)drawProfGlob.fontHeight + dVar20),(GfxColor)(uint)uVar6);
+          pcVar2 = va("%8.0f");
+          RB_DrawText(pcVar2,drawProfGlob.font,(float)((double)drawProfGlob.fontWidth * dVar12),
+                      (float)((double)drawProfGlob.fontHeight + dVar20),(GfxColor)(uint)uVar6);
+          dVar18 = (double)drawProfGlob.fontHeight;
+          dVar20 = (double)(float)(dVar18 + dVar20);
         }
+        GVar7.packed = (uint)uVar6;
         lVar8 = lVar8 + -1;
-        piVar6 = piVar6 + 1;
+        piVar9 = piVar9 + 1;
       } while (lVar8 != 0);
-      dVar17 = (double)(float)(dVar17 + dVar19);
-      RB_DrawProfileBackground(dVar17);
-      RB_DrawText((double)(float)((double)DAT_8484036c * dVar16),
-                  (double)(float)((double)DAT_84840370 + dVar17),0xffffffff821d62e0,DAT_84840368);
-      iVar3 = Sys_GetValue(0);
-      uVar2 = va(0xffffffff821d61e0,
-                 (double)((float)*(uint *)(iVar4 + 0x680) * *(float *)(iVar3 + 0x4ac0)));
-      RB_DrawText((double)(float)((double)DAT_8484036c * dVar14),
-                  (double)(float)((double)DAT_84840370 + dVar17),uVar2,DAT_84840368);
-      iVar3 = Sys_GetValue(0);
-      uVar2 = va(0xffffffff821d61e0,
-                 (double)((float)*(uint *)(iVar4 + 0x684) * *(float *)(iVar3 + 0x4ac0)));
-      RB_DrawText((double)(float)((double)DAT_8484036c * dVar18),
-                  (double)(float)((double)DAT_84840370 + dVar17),uVar2,DAT_84840368);
-      iVar3 = Sys_GetValue(0);
-      uVar2 = va(0xffffffff821d61e0,
-                 (double)((float)*(uint *)(iVar4 + 0x688) * *(float *)(iVar3 + 0x4ac0)));
-      RB_DrawText((double)(float)((double)DAT_8484036c * dVar15),
-                  (double)(float)((double)DAT_84840370 + dVar17),uVar2,DAT_84840368);
+      dVar11 = (double)(float)(dVar18 + dVar20);
+      RB_DrawProfileBackground((float)(dVar18 + dVar20));
+      RB_DrawText("Total",drawProfGlob.font,(float)((double)drawProfGlob.fontWidth * dVar17),
+                  (float)((double)drawProfGlob.fontHeight + dVar11),GVar7);
+      Sys_GetValue(0);
+      pcVar2 = va("%6.2f");
+      RB_DrawText(pcVar2,drawProfGlob.font,(float)((double)drawProfGlob.fontWidth * dVar15),
+                  (float)((double)drawProfGlob.fontHeight + dVar11),GVar7);
+      Sys_GetValue(0);
+      pcVar2 = va("%6.2f");
+      RB_DrawText(pcVar2,drawProfGlob.font,(float)((double)drawProfGlob.fontWidth * dVar19),
+                  (float)((double)drawProfGlob.fontHeight + dVar11),GVar7);
+      Sys_GetValue(0);
+      pcVar2 = va("%6.2f");
+      RB_DrawText(pcVar2,drawProfGlob.font,(float)((double)drawProfGlob.fontWidth * dVar16),
+                  (float)((double)drawProfGlob.fontHeight + dVar11),GVar7);
     }
   }
   else {
-    iVar3 = Profile_GetScript();
-    dVar17 = 30.0;
-    RB_DrawProfileBackground(0x403e000000000000);
-    dVar15 = 19.0;
-    RB_DrawText((double)(DAT_8484036c * 19.0),(double)(float)((double)DAT_84840370 + dVar17),
-                0xffffffff821d61b0,DAT_84840368);
-    dVar13 = 42.0;
-    RB_DrawText((double)(DAT_8484036c * 42.0),(double)(float)((double)DAT_84840370 + dVar17),
-                0xffffffff821d633c,DAT_84840368);
-    dVar12 = 52.0;
-    RB_DrawText((double)(DAT_8484036c * 52.0),(double)(float)((double)DAT_84840370 + dVar17),
-                0xffffffff821d6330,DAT_84840368);
-    dVar11 = 62.0;
-    RB_DrawText((double)(DAT_8484036c * 62.0),(double)(float)((double)DAT_84840370 + dVar17),
-                0xffffffff821d6324,DAT_84840368);
-    dVar10 = 72.0;
-    RB_DrawText((double)(DAT_8484036c * 72.0),(double)(float)((double)DAT_84840370 + dVar17),
-                0xffffffff821d631c,DAT_84840368);
-    dVar18 = (double)(float)((double)DAT_84840370 + dVar17);
-    puVar9 = (uint *)(iVar3 + 0x200);
-    pcVar7 = (char *)(iVar3 + 0x380);
-    dVar17 = 15.0;
-    lVar8 = 0;
+    pPVar1 = Profile_GetScript();
+    dVar18 = 30.0;
+    RB_DrawProfileBackground(30.0);
+    dVar16 = 19.0;
+    RB_DrawText("Probe Name",drawProfGlob.font,drawProfGlob.fontWidth * 19.0,
+                (float)((double)drawProfGlob.fontHeight + dVar18),in_r5);
+    dVar14 = 42.0;
+    RB_DrawText(" Current",drawProfGlob.font,drawProfGlob.fontWidth * 42.0,
+                (float)((double)drawProfGlob.fontHeight + dVar18),in_r5);
+    uVar5 = 0xffffffff821d0000;
+    dVar13 = 52.0;
+    RB_DrawText(" Avg",drawProfGlob.font,drawProfGlob.fontWidth * 52.0,
+                (float)((double)drawProfGlob.fontHeight + dVar18),(GfxColor)0x821d0000);
+    dVar12 = 62.0;
+    RB_DrawText(" Max",drawProfGlob.font,drawProfGlob.fontWidth * 62.0,
+                (float)((double)drawProfGlob.fontHeight + dVar18),(GfxColor)(uint)uVar5);
+    dVar11 = 72.0;
+    RB_DrawText("  Total",drawProfGlob.font,drawProfGlob.fontWidth * 72.0,
+                (float)((double)drawProfGlob.fontHeight + dVar18),(GfxColor)(uint)uVar5);
+    dVar19 = (double)(float)((double)drawProfGlob.fontHeight + dVar18);
+    pacVar10 = pPVar1->profileScriptNames;
+    dVar18 = 15.0;
+    iVar4 = 0;
     do {
-      if (*pcVar7 != '\0') {
-        RB_DrawProfileBackground(dVar18);
-        uVar2 = va(0xffffffff82165e30,lVar8);
-        RB_DrawText((double)(float)((double)DAT_8484036c * dVar17),
-                    (double)(float)((double)DAT_84840370 + dVar18),uVar2,DAT_84840368);
-        RB_DrawText((double)(float)((double)DAT_8484036c * dVar15),
-                    (double)(float)((double)DAT_84840370 + dVar18),pcVar7,DAT_84840368);
-        iVar3 = Sys_GetValue(0);
-        uVar2 = va(0xffffffff821d61e0,(double)((float)puVar9[-0x20] * *(float *)(iVar3 + 0x4ac0)));
-        RB_DrawText((double)(float)((double)DAT_8484036c * dVar13),
-                    (double)(float)((double)DAT_84840370 + dVar18),uVar2,DAT_84840368);
-        iVar3 = Sys_GetValue(0);
-        uVar2 = va(0xffffffff821d61e0,(double)((float)*puVar9 * *(float *)(iVar3 + 0x4ac0)));
-        RB_DrawText((double)(float)((double)DAT_8484036c * dVar12),
-                    (double)(float)((double)DAT_84840370 + dVar18),uVar2,DAT_84840368);
-        iVar3 = Sys_GetValue(0);
-        uVar2 = va(0xffffffff821d61e0,(double)((float)puVar9[0x20] * *(float *)(iVar3 + 0x4ac0)));
-        RB_DrawText((double)(float)((double)DAT_8484036c * dVar11),
-                    (double)(float)((double)DAT_84840370 + dVar18),uVar2,DAT_84840368);
-        uVar2 = va(0xffffffff821d6314,(double)(float)puVar9[0x40]);
-        RB_DrawText((double)(float)((double)DAT_8484036c * dVar10),
-                    (double)(float)((double)DAT_84840370 + dVar18),uVar2,DAT_84840368);
-        dVar18 = (double)(float)((double)DAT_84840370 + dVar18);
+      if ((*pacVar10)[0] != '\0') {
+        RB_DrawProfileBackground((float)dVar19);
+        pcVar2 = va("%02d");
+        RB_DrawText(pcVar2,drawProfGlob.font,(float)((double)drawProfGlob.fontWidth * dVar18),
+                    (float)((double)drawProfGlob.fontHeight + dVar19),(GfxColor)(uint)uVar5);
+        RB_DrawText(*pacVar10,drawProfGlob.font,(float)((double)drawProfGlob.fontWidth * dVar16),
+                    (float)((double)drawProfGlob.fontHeight + dVar19),(GfxColor)(uint)uVar5);
+        Sys_GetValue(0);
+        pcVar2 = va("%6.2f");
+        RB_DrawText(pcVar2,drawProfGlob.font,(float)((double)drawProfGlob.fontWidth * dVar14),
+                    (float)((double)drawProfGlob.fontHeight + dVar19),(GfxColor)(uint)uVar5);
+        Sys_GetValue(0);
+        pcVar2 = va("%6.2f");
+        RB_DrawText(pcVar2,drawProfGlob.font,(float)((double)drawProfGlob.fontWidth * dVar13),
+                    (float)((double)drawProfGlob.fontHeight + dVar19),(GfxColor)(uint)uVar5);
+        Sys_GetValue(0);
+        pcVar2 = va("%6.2f");
+        RB_DrawText(pcVar2,drawProfGlob.font,(float)((double)drawProfGlob.fontWidth * dVar12),
+                    (float)((double)drawProfGlob.fontHeight + dVar19),(GfxColor)(uint)uVar5);
+        pcVar2 = va("%8.0f");
+        RB_DrawText(pcVar2,drawProfGlob.font,(float)((double)drawProfGlob.fontWidth * dVar11),
+                    (float)((double)drawProfGlob.fontHeight + dVar19),(GfxColor)(uint)uVar5);
+        dVar19 = (double)(float)((double)drawProfGlob.fontHeight + dVar19);
       }
-      lVar8 = lVar8 + 1;
-      puVar9 = puVar9 + 1;
-      pcVar7 = pcVar7 + 0x14;
-    } while ((int)lVar8 < 0x20);
+      iVar4 = iVar4 + 1;
+      pacVar10 = pacVar10 + 1;
+    } while (iVar4 < 0x20);
   }
-  iVar3 = R_HasDeviceOwnership();
-  if (iVar3 == 0) {
-    MyAssertHandler(0xffffffff821ca3d0,0xaf,0,0xffffffff82000f98,0xffffffff8217d420);
+  iVar4 = R_HasDeviceOwnership();
+  if (iVar4 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.h",0xaf,0,
+                    "%s");
   }
-  if (DAT_8483400c != 0) {
+  if (tess.vertexCount != 0) {
     RB_EndTessSurface();
   }
   __restfpr_23();
@@ -1256,26 +1102,30 @@ void RB_DrawProfileScript(void)
 
 // 827A06D8  RB_ProfileInit  (gfx_d3d/rb_drawprofile.cpp:973)
 
-void * RB_ProfileInit(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void RB_ProfileInit(void)
 
 {
   int iVar1;
-  void *pvVar2;
   
-  DAT_84840368 = R_RegisterFont(0xffffffff82031290,3);
-  iVar1 = R_TextWidth(0xffffffff821c3a6c,1);
-  DAT_8484036c = (float)(longlong)iVar1;
-  iVar1 = R_TextHeight(DAT_84840368);
-  DAT_84840370 = (float)(longlong)iVar1;
-  DAT_84840374 = 0xffffffff;
-  DAT_84840378 = 0xffffff00;
-  pvVar2 = memset(&DAT_8484037c,0,0x1798);
-  DAT_84842208 = 0;
-  return pvVar2;
+  drawProfGlob.font = R_RegisterFont("fonts/consoleFont",3);
+  iVar1 = R_TextWidth("#",1,drawProfGlob.font);
+  drawProfGlob.fontWidth = (float)(longlong)iVar1;
+  iVar1 = R_TextHeight(drawProfGlob.font);
+  drawProfGlob.fontHeight = (float)(longlong)iVar1;
+  drawProfGlob.textColor.packed = 0xffffffff;
+  drawProfGlob.labelColor.packed = 0xffffff00;
+  memset();
+  drawProfGlob.lastSortTime = 0;
+  return;
 }
 
 
 // 827A0798  RB_ProfileDevGui  (gfx_d3d/rb_drawprofile.cpp:1011)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void RB_ProfileDevGui(void)
 

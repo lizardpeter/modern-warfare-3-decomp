@@ -2,34 +2,33 @@
 
 // 8292B6F0  CreateWaitableTimerA  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/createwaitabletimer.c:22)
 
-HANDLE CreateWaitableTimerA
-                 (LPSECURITY_ATTRIBUTES lpTimerAttributes,BOOL bManualReset,LPCSTR lpTimerName)
+void * CreateWaitableTimerA(void *param_1,int param_2,char *param_3)
 
 {
-  undefined8 uVar1;
-  int iVar2;
-  DWORD dwErrCode;
-  HANDLE local_30 [2];
-  undefined1 auStack_28 [8];
-  undefined1 auStack_20 [16];
+  _OBJECT_ATTRIBUTES *p_Var1;
+  long lVar2;
+  ulong uVar3;
+  void *local_30 [2];
+  _STRING _Stack_28;
+  _OBJECT_ATTRIBUTES _Stack_20;
   
-  if (lpTimerName == (LPCSTR)0x0) {
-    uVar1 = 0;
+  if (param_3 == (char *)0x0) {
+    p_Var1 = (_OBJECT_ATTRIBUTES *)0x0;
   }
   else {
-    uVar1 = XapiFormatObjectAttributes(auStack_20,auStack_28);
+    p_Var1 = XapiFormatObjectAttributes(&_Stack_20,&_Stack_28,(uchar *)param_3);
   }
-  iVar2 = NtCreateTimer(local_30,uVar1,bManualReset == 0);
-  if (iVar2 < 0) {
-    RtlSetLastNTError();
-    local_30[0] = (HANDLE)0x0;
+  lVar2 = NtCreateTimer(local_30,p_Var1,param_2 == 0);
+  if (lVar2 < 0) {
+    RtlSetLastNTError(lVar2);
+    local_30[0] = (void *)0x0;
   }
   else {
-    dwErrCode = 0xb7;
-    if (iVar2 != 0x40000000) {
-      dwErrCode = 0;
+    uVar3 = 0xb7;
+    if (lVar2 != 0x40000000) {
+      uVar3 = 0;
     }
-    SetLastError(dwErrCode);
+    SetLastError(uVar3);
   }
   return local_30[0];
 }

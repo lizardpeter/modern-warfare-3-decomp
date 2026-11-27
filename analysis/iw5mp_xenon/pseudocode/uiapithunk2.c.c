@@ -2,10 +2,12 @@
 
 // 828AAAF0  XShowRequiredGameVoiceChannelUI  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/uiapithunk2.c:185)
 
-undefined8 XShowRequiredGameVoiceChannelUI(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+ulong XShowRequiredGameVoiceChannelUI(void)
 
 {
-  undefined8 uVar1;
+  ulong uVar1;
   
   uVar1 = XamShowGameVoiceChannelUI(1);
   return uVar1;

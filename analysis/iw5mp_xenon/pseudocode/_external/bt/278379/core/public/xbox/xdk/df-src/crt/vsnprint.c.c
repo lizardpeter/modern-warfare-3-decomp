@@ -2,7 +2,7 @@
 
 // 829170E0  _vsnprintf_l  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/vsprintf.c:107)
 
-int _vsnprintf_l(char *_DstBuf,size_t _MaxCount,char *_Format,_locale_t _Locale,va_list _ArgList)
+int _vsnprintf_l(char *param_1,uint param_2,char *param_3,localeinfo_struct *param_4,char *param_5)
 
 {
   char *pcVar1;
@@ -10,13 +10,13 @@ int _vsnprintf_l(char *_DstBuf,size_t _MaxCount,char *_Format,_locale_t _Locale,
   int iVar3;
   ulonglong uVar4;
   ulonglong uVar5;
-  FILE local_60 [3];
+  _iobuf local_60 [3];
   
-  uVar4 = (ulonglong)(int)_Format;
-  uVar5 = (ulonglong)(int)_MaxCount;
-  pcVar1 = (char *)__savegprlr_26(_DstBuf);
+  uVar4 = (ulonglong)(int)param_3;
+  uVar5 = (ulonglong)(int)param_2;
+  pcVar1 = (char *)__savegprlr_26(param_1);
   local_60[0]._ptr = (char *)0x0;
-  memset(&local_60[0]._cnt,0,0x1c);
+  memset();
   if (((uVar4 & 0xffffffff) == 0) || (((uVar5 & 0xffffffff) != 0 && (pcVar1 == (char *)0x0)))) {
     piVar2 = _errno();
     *piVar2 = 0x16;
@@ -31,7 +31,7 @@ int _vsnprintf_l(char *_DstBuf,size_t _MaxCount,char *_Format,_locale_t _Locale,
     local_60[0]._flag = 0x42;
     local_60[0]._ptr = pcVar1;
     local_60[0]._base = pcVar1;
-    iVar3 = _output_l(local_60,(char *)uVar4,_Locale,_ArgList);
+    iVar3 = _output_l(local_60,(char *)uVar4,param_4,param_5);
     if (pcVar1 != (char *)0x0) {
       uVar5 = (ulonglong)(uint)local_60[0]._cnt;
       local_60[0]._cnt = (int)(uVar5 - 1);
@@ -50,12 +50,12 @@ int _vsnprintf_l(char *_DstBuf,size_t _MaxCount,char *_Format,_locale_t _Locale,
 
 // 829171C8  _vsnprintf  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/vsprintf.c:187)
 
-int _vsnprintf(char *_Dest,size_t _Count,char *_Format,va_list _Args)
+int _vsnprintf(char *param_1,uint param_2,char *param_3,char *param_4)
 
 {
   int iVar1;
   
-  iVar1 = _vsnprintf_l(_Dest,_Count,_Format,(_locale_t)0x0,_Args);
+  iVar1 = _vsnprintf_l(param_1,param_2,param_3,(localeinfo_struct *)0x0,param_4);
   return iVar1;
 }
 

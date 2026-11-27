@@ -2,15 +2,15 @@
 
 // 829220C8  _copysign  (<external>/bt/278379/vctools/crt/src/fpw32/tran/ieeemisc.c:46)
 
-double _copysign(double _Number,double _Sign)
+double _copysign(double param_1,double param_2)
 
 {
   uint uStack00000010;
   uint uStack00000018;
   
-  uStack00000018 = (uint)((ulonglong)_Sign >> 0x20);
-  uStack00000010 = (uint)((ulonglong)_Number >> 0x20);
-  return (double)CONCAT44(uStack00000010 & 0x7fffffff | uStack00000018 & 0x80000000,SUB84(_Number,0)
+  uStack00000018 = (uint)((ulonglong)param_2 >> 0x20);
+  uStack00000010 = (uint)((ulonglong)param_1 >> 0x20);
+  return (double)CONCAT44(uStack00000010 & 0x7fffffff | uStack00000018 & 0x80000000,SUB84(param_1,0)
                          );
 }
 

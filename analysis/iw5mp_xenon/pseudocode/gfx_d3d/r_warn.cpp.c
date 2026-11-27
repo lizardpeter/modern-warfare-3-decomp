@@ -2,94 +2,82 @@
 
 // 82788F00  R_UpdateFrameRate  (gfx_d3d/r_warn.cpp:166)
 
-void R_UpdateFrameRate(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+float R_UpdateFrameRate(void)
 
 {
-  longlong lVar1;
+  int iVar1;
   longlong lVar2;
+  double dVar3;
   
   __savegprlr_29();
-  if (DAT_847eec24 == DAT_84617abc) {
-    __restgprlr_29((double)DAT_847eec20);
-    return;
+  if (frameCount == rg.frontEndFrameCount) {
+    dVar3 = (double)__restgprlr_29((double)frameRate);
+    return (float)dVar3;
   }
-  if (DAT_847eec24 == 0) {
-    DAT_847eec1c = Sys_Milliseconds();
-    DAT_847eec24 = DAT_84617abc;
-    __restgprlr_29((double)DAT_847eec20);
-    return;
+  if (frameCount == 0) {
+    previous = Sys_Milliseconds();
+    frameCount = rg.frontEndFrameCount;
+    dVar3 = (double)__restgprlr_29((double)frameRate);
+    return (float)dVar3;
   }
-  if (DAT_847eec24 + 1 != DAT_84617abc) {
+  if (frameCount + 1 != rg.frontEndFrameCount) {
 LAB_82788f64:
-    DAT_847eec20 = 0.0;
-    DAT_847eec24 = DAT_84617abc;
-    __restgprlr_29();
-    return;
+    frameRate = 0.0;
+    frameCount = rg.frontEndFrameCount;
+    dVar3 = (double)__restgprlr_29();
+    return (float)dVar3;
   }
-  lVar1 = Sys_Milliseconds();
-  lVar2 = lVar1 - (ulonglong)DAT_847eec1c;
-  DAT_847eec1c = (uint)lVar1;
+  iVar1 = Sys_Milliseconds();
+  lVar2 = (longlong)iVar1 - (ulonglong)(uint)previous;
+  previous = iVar1;
   if (lVar2 == 0) {
     lVar2 = 1;
   }
   else if ((int)lVar2 < 0) goto LAB_82788f64;
-  DAT_847eec24 = DAT_84617abc;
-  DAT_847eec20 = 1000.0 / (float)(longlong)(int)lVar2;
-  __restgprlr_29();
-  return;
+  frameCount = rg.frontEndFrameCount;
+  frameRate = 1000.0 / (float)(longlong)(int)lVar2;
+  dVar3 = (double)__restgprlr_29();
+  return (float)dVar3;
 }
 
 
 // 82788FF0  R_WarnInit  (gfx_d3d/r_warn.cpp:213)
 
-void * R_WarnInit(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void R_WarnInit(void)
 
 {
-  void *pvVar1;
-  
-  pvVar1 = memset(&DAT_847eec30,0,0x134);
-  return pvVar1;
+  memset();
+  return;
 }
 
 
 // 82789008  R_WarnOncePerFrame  (gfx_d3d/r_warn.cpp:219)
 
-/* WARNING: Restarted to delay deadcode elimination for space: stack */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
 
-void R_WarnOncePerFrame(int param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-                       undefined8 param_5,undefined8 param_6,undefined8 param_7,undefined8 param_8)
+void R_WarnOncePerFrame(GfxWarningType param_1)
 
 {
-  char *_Format;
-  double dVar1;
-  int iStack00000014;
-  undefined8 uStack00000018;
-  undefined8 uStack00000020;
-  undefined8 uStack00000028;
-  undefined8 uStack00000030;
-  undefined8 uStack00000038;
-  undefined8 uStack00000040;
-  undefined8 uStack00000048;
+  float fVar1;
+  GfxWarningType GStack00000014;
   char acStack_420 [1032];
   
-  uStack00000018 = param_2;
-  uStack00000020 = param_3;
-  uStack00000028 = param_4;
-  uStack00000030 = param_5;
-  uStack00000038 = param_6;
-  uStack00000040 = param_7;
-  uStack00000048 = param_8;
-  iStack00000014 = param_1;
-  if (DAT_847eec28 == 0) {
-    MyAssertHandler(0xffffffff821d3b70,0xe0,0,0xffffffff82000f98,0xffffffff821d3bb0);
+  GStack00000014 = param_1;
+  if (r_warningRepeatDelay == (dvar_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_warn.cpp",0xe0,0,
+                    "%s");
   }
-  dVar1 = (double)R_UpdateFrameRate();
-  if (*(uint *)(&DAT_847eec30 + iStack00000014 * 4) < DAT_84617abc) {
-    _Format = (&PTR_s_entity_buffer_exceeded___not_dra_829a2f50)[iStack00000014];
-    *(uint *)(&DAT_847eec30 + iStack00000014 * 4) =
-         (int)((double)*(float *)(DAT_847eec28 + 0xc) * dVar1) + DAT_84617abc;
-    _vsnprintf(acStack_420,0x400,_Format,(va_list)&stack0x00000018);
-    Com_PrintWarning(8,0xffffffff82000f98,acStack_420);
+  fVar1 = R_UpdateFrameRate();
+  if (s_warnCount[GStack00000014] < rg.frontEndFrameCount) {
+    s_warnCount[GStack00000014] =
+         (int)((r_warningRepeatDelay->current).value * fVar1) + rg.frontEndFrameCount;
+    _vsnprintf(acStack_420,0x400,s_warnFormat[GStack00000014],&stack0x00000018);
+    Com_PrintWarning(8,"%s");
   }
   return;
 }
@@ -97,10 +85,15 @@ void R_WarnOncePerFrame(int param_1,undefined8 param_2,undefined8 param_3,undefi
 
 // 82789110  R_WarnInitDvars  (gfx_d3d/r_warn.cpp:293)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void R_WarnInitDvars(void)
 
 {
-  DAT_847eec28 = Dvar_RegisterFloat(0x4014000000000000,0,0x403e000000000000,0xffffffff821d3bb0);
+  ushort in_r4;
+  char *in_r5;
+  
+  r_warningRepeatDelay = Dvar_RegisterFloat("r_warningRepeatDelay",5.0,0.0,30.0,in_r4,in_r5);
   return;
 }
 

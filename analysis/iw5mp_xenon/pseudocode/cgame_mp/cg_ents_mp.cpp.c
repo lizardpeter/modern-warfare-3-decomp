@@ -2,1756 +2,287 @@
 
 // 822C43F0  Com_GetPrimaryLightCount  (qcommon/com_bsp_api.h:22)
 
-undefined4 Com_GetPrimaryLightCount(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+uint Com_GetPrimaryLightCount(void)
 
 {
-  if (DAT_835f15dc == 0) {
-    MyAssertHandler(0xffffffff82015aa8,0x17,0,0xffffffff82000f98,0xffffffff82015af4);
+  if (comWorld.isInUse == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\../qcommon/com_bsp_api.h"
+                    ,0x17,0,"%s");
   }
-  return DAT_835f15e0;
+  return comWorld.primaryLightCount;
 }
 
 
 // 822C4450  Com_GetPrimaryLight  (qcommon/com_bsp_api.h:30)
 
-void Com_GetPrimaryLight(void)
+ComPrimaryLight * Com_GetPrimaryLight(uint param_1)
 
 {
   ulonglong uVar1;
+  ComPrimaryLight *pCVar2;
   
-  uVar1 = __savegprlr_29();
-  if (DAT_835f15dc == 0) {
-    MyAssertHandler(0xffffffff82015aa8,0x1f,0,0xffffffff82000f98,0xffffffff82015af4);
+  uVar1 = __savegprlr_29(param_1);
+  if (comWorld.isInUse == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\../qcommon/com_bsp_api.h"
+                    ,0x1f,0,"%s");
   }
-  if ((ulonglong)DAT_835f15e0 <= (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82015aa8,0x20,0,0xffffffff82015b08,uVar1);
+  if ((ulonglong)comWorld.primaryLightCount <= (uVar1 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\../qcommon/com_bsp_api.h"
+                    ,0x20,0,
+                    "primaryLightIndex doesn\'t index comWorld.primaryLightCount\n\t%i not in [0, %i)"
+                   );
   }
-  __restgprlr_29((uVar1 + (uVar1 & 0x3fffffff) * 4 & 0xfffffff) * 0x10 + (ulonglong)DAT_835f15e4);
-  return;
+  pCVar2 = (ComPrimaryLight *)
+           __restgprlr_29((uVar1 + (uVar1 & 0x3fffffff) * 4 & 0xfffffff) * 0x10 +
+                          ZEXT48(comWorld.primaryLights));
+  return pCVar2;
 }
 
 
 // 822C44E0  CG_CalcLightingOrigin  (cgame_mp/cg_ents_mp.cpp:67)
-
-void CG_CalcLightingOrigin(int param_1,undefined8 param_2,undefined8 param_3)
-
-{
-  undefined1 auStack_70 [32];
-  undefined1 auStack_50 [36];
-  undefined4 local_2c;
-  undefined4 local_28;
-  undefined4 local_24;
-  
-  DObjPhysicsGetBounds(param_2,auStack_70);
-  AnglesToAxis(param_1 + 0x20,auStack_50);
-  local_2c = *(undefined4 *)(param_1 + 0x14);
-  local_28 = *(undefined4 *)(param_1 + 0x18);
-  local_24 = *(undefined4 *)(param_1 + 0x1c);
-  MatrixTransformVector43(auStack_70,auStack_50,param_3);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure LerpEntityStatePlayer
 
 // 822C7CA8  CG_PreProcess_GetDObj_General  (cgame_mp/cg_ents_mp.cpp:84)
-
-void CG_PreProcess_GetDObj_General(undefined8 param_1,int param_2)
-
-{
-  uint uVar1;
-  undefined8 uVar2;
-  int iVar3;
-  
-  uVar2 = __savegprlr_29();
-  if (*(int *)(param_2 + 200) == 6) {
-    uVar1 = *(uint *)(param_2 + 0x11c);
-  }
-  else {
-    uVar1 = *(uint *)(param_2 + 0x150);
-  }
-  if (0x3ff < uVar1) {
-    MyAssertHandler(0xffffffff82015c18,0x5c,0,0xffffffff82016484,uVar1,0x400);
-  }
-  iVar3 = CG_GetLocalClientStaticGlobals(uVar2);
-  CG_PreProcess_GetDObj
-            (uVar2,*(undefined4 *)(param_2 + 0xc4),*(undefined4 *)(param_2 + 200),
-             *(undefined4 *)((uVar1 + 0x66) * 4 + iVar3),0);
-  __restgprlr_29();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure LerpEntityStatePlayer
 
 // 822C7D38  CG_General  (cgame_mp/cg_ents_mp.cpp:105)
-
-void CG_General(undefined8 param_1,undefined8 param_2)
-
-{
-  int iVar1;
-  ulonglong uVar2;
-  undefined1 auStack_30 [48];
-  
-  __savegprlr_29();
-  iVar1 = (int)param_2;
-  if ((*(uint *)(iVar1 + 0xcc) & 0x20) == 0) {
-    uVar2 = CG_PreProcess_GetDObj_General();
-    if ((uVar2 & 0xffffffff) != 0) {
-      CG_CalcLightingOrigin(param_2,uVar2,auStack_30);
-      R_AddDObjToScene(0,uVar2,param_2,*(undefined4 *)(iVar1 + 0xc4),*(uint *)(iVar1 + 0xcc) & 0x400
-                       ,auStack_30);
-    }
-  }
-  __restgprlr_29();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure LerpEntityStatePlayer
 
 // 822C7DA8  CG_Item  (cgame_mp/cg_ents_mp.cpp:131)
-
-void CG_Item(undefined8 param_1,undefined8 param_2)
-
-{
-  uint uVar1;
-  int iVar2;
-  uint uVar3;
-  undefined8 uVar4;
-  int iVar6;
-  uint uVar7;
-  ulonglong uVar5;
-  undefined4 *puVar8;
-  char local_460 [8];
-  undefined4 local_458;
-  undefined4 local_454;
-  float local_450;
-  undefined1 auStack_440 [1088];
-  
-  uVar4 = __savegprlr_26();
-  iVar2 = (int)param_2;
-  puVar8 = (undefined4 *)(iVar2 + 0xc4);
-  if ((*(uint *)(iVar2 + 0xcc) & 0x20) == 0) {
-    iVar6 = CG_IsItemPickupPredicted();
-    if (iVar6 == 0) {
-      uVar1 = *(uint *)(iVar2 + 0x18c);
-      uVar3 = uVar1 & 0xff;
-      if (((uVar1 & 0xff) == 0) || (0xef < uVar3)) {
-        MyAssertHandler(0xffffffff82015c18,0x97,0,0xffffffff82016500,uVar3,1,0xef);
-      }
-      uVar7 = BG_GetAlternateWeapon(uVar1,0);
-      if (*(int *)(*(int *)((&DAT_829d84a0)[uVar7 & 0xff] + 0x1e0) + (uVar1 >> 6 & 0x3c)) == 0) {
-        uVar4 = BG_GetWeaponName(uVar1,auStack_440,0x400);
-        Com_PrintError(0x11,0xffffffff820164bc,uVar3,uVar1 >> 8 & 0xf,uVar4);
-        __restgprlr_26();
-        return;
-      }
-      uVar5 = CG_PreProcess_Weapon_GetDObj(uVar4,*puVar8,uVar1,local_460);
-      if ((uVar5 & 0xffffffff) != 0) {
-        if ((local_460[0] != '\0') ||
-           (iVar6 = CG_CheckDObjWeaponID(uVar4,*puVar8,*(undefined4 *)(iVar2 + 0x18c)), iVar6 == 0))
-        {
-          BG_UpdateWeaponHidePartBitsForDObj(uVar5,uVar1,0);
-          BG_SetWeaponIronSights(uVar1,uVar5,0);
-          CG_SetDObjWeaponID(uVar4,*puVar8,uVar1);
-        }
-        local_458 = *(undefined4 *)(iVar2 + 0x14);
-        local_454 = *(undefined4 *)(iVar2 + 0x18);
-        local_450 = *(float *)(iVar2 + 0x1c) + 4.0;
-        R_AddDObjToScene(0,uVar5,param_2,*puVar8,*(uint *)(iVar2 + 0xcc) & 0x400,&local_458);
-      }
-    }
-  }
-  __restgprlr_26();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure LerpEntityStatePlayer
 
 // 822C4558  CG_AddEntityLoopSound  (cgame_mp/cg_ents_mp.cpp:180)
-
-void CG_AddEntityLoopSound(undefined8 param_1,int param_2)
-
-{
-  int iVar1;
-  float *pfVar2;
-  float local_30;
-  float local_2c;
-  float local_28;
-  
-  if (*(int *)(param_2 + 0x160) == 0xffffff) {
-    iVar1 = R_GetBrushModel(*(undefined4 *)(param_2 + 0x150));
-    pfVar2 = &local_30;
-    local_30 = *(float *)(iVar1 + 0x18) + *(float *)(param_2 + 0x14);
-    local_2c = *(float *)(param_2 + 0x18) + *(float *)(iVar1 + 0x1c);
-    local_28 = *(float *)(param_2 + 0x1c) + *(float *)(iVar1 + 0x20);
-  }
-  else {
-    pfVar2 = (float *)(param_2 + 0x14);
-  }
-  CG_PlaySoundAliasByName
-            (param_1,*(undefined4 *)(param_2 + 0xc4),pfVar2,*(undefined4 *)(param_2 + 0x148));
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure LerpEntityStatePlayer
 
 // 822C45F8  CG_Player_PreControllers  (cgame_mp/cg_ents_mp.cpp:202)
-
-void CG_Player_PreControllers(undefined8 param_1,undefined8 param_2,longlong param_3)
-
-{
-  uint uVar1;
-  int iVar2;
-  int iVar3;
-  int iVar4;
-  longlong lVar5;
-  undefined **ppuVar6;
-  
-  __savegprlr_25();
-  iVar3 = CG_GetLocalClientGlobals();
-  iVar2 = (int)param_3;
-  uVar1 = *(uint *)(iVar2 + 200);
-  *(char *)(iVar2 + 2) = (char)uVar1;
-  if ((uVar1 & 0xff) != uVar1) {
-    MyAssertHandler(0xffffffff82015c18,0xd5,0,0xffffffff82000f98,0xffffffff82015bec);
-  }
-  if (0x11 < *(uint *)(iVar2 + 0x154)) {
-    MyAssertHandler(0xffffffff82015c18,0xd7,0,0xffffffff82015bb0,*(uint *)(iVar2 + 0x154),0x12);
-  }
-  iVar4 = *(int *)(iVar2 + 0x154) * 0x590 + iVar3;
-  if (*(int *)(iVar4 + 0x100b88) == 0) {
-    *(undefined4 *)(iVar2 + 0x2c) = 0;
-    __restgprlr_25();
-    return;
-  }
-  *(undefined4 *)(iVar4 + 0x100fb0) = *(undefined4 *)(iVar2 + 0x194);
-  *(undefined4 *)(iVar4 + 0x100fb4) = *(undefined4 *)(iVar2 + 0x198);
-  *(undefined4 *)(iVar4 + 0x100fb8) = *(undefined4 *)(iVar2 + 0x11c);
-  *(undefined4 *)(iVar4 + 0x100fbc) = *(undefined4 *)(iVar2 + 0x120);
-  BG_Player_DoControllersSetup
-            (param_3 + 0xc4,(int *)(iVar4 + 0x100b88),*(undefined4 *)(iVar3 + 0x6b988));
-  lVar5 = 0;
-  ppuVar6 = &PTR_DAT_82960b58;
-  do {
-    DObjGetBoneIndex(param_2,*(undefined2 *)*ppuVar6,param_3 + 0x30 + lVar5);
-    ppuVar6 = ppuVar6 + 1;
-    lVar5 = lVar5 + 1;
-  } while ((int)ppuVar6 < -0x7d69f498);
-  *(int *)(iVar2 + 0x2c) = iVar4 + 0x100fc8;
-  __restgprlr_25();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure LerpEntityStatePlayer
 
 // 822C4730  CG_Turret_PreControllers  (cgame_mp/cg_ents_mp.cpp:239)
-
-void CG_Turret_PreControllers(undefined8 param_1,ulonglong param_2,ulonglong param_3)
-
-{
-  byte bVar1;
-  int iVar2;
-  undefined8 uVar3;
-  int iVar4;
-  int iVar5;
-  uint uVar6;
-  int iVar7;
-  char cVar8;
-  float *pfVar9;
-  double dVar10;
-  double dVar11;
-  double dVar12;
-  double dVar13;
-  double dVar14;
-  double dVar15;
-  double dVar16;
-  
-  __savegprlr_24();
-  uVar3 = __savefpr_26();
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82015c18,0xfc,0,0xffffffff82000f98,0xffffffff82002118);
-  }
-  iVar2 = (int)param_3;
-  if (*(int *)(iVar2 + 200) != 0xb) {
-    MyAssertHandler(0xffffffff82015c18,0xfd,0,0xffffffff82000f98,0xffffffff82012a64);
-  }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82015c18,0xfe,0,0xffffffff82000f98,0xffffffff820040b4);
-  }
-  iVar4 = DObjGetTree(param_2);
-  if (iVar4 == 0) {
-    MyAssertHandler(0xffffffff82015c18,0xff,0,0xffffffff82000f98,0xffffffff82015ca4);
-  }
-  *(undefined1 *)(iVar2 + 0x38) = 0;
-  if ((*(uint *)(iVar2 + 0xcc) & 0x3800) != 0) {
-    *(undefined1 *)(iVar2 + 3) = 0;
-  }
-  iVar5 = CG_GetLocalClientGlobals(uVar3);
-  *(byte *)(iVar2 + 0x39) = (byte)(*(uint *)(iVar2 + 0xcc) >> 0xd) & 1;
-  dVar13 = (double)*(float *)(iVar2 + 0xa8);
-  dVar16 = 0.0027777778450399637;
-  dVar12 = (double)((float)((double)*(float *)(iVar2 + 0x118) - dVar13) * 0.0027777778);
-  pfVar9 = (float *)(iVar5 + 0x6b980);
-  dVar15 = 0.5;
-  dVar11 = (double)*pfVar9;
-  dVar10 = floor((double)(float)(dVar12 + 0.5));
-  dVar14 = 360.0;
-  *(float *)(iVar2 + 0x2c) =
-       (float)((double)(float)((double)(float)(dVar12 - (double)(float)dVar10) * dVar11) * 360.0 +
-              dVar13);
-  dVar13 = (double)*(float *)(iVar2 + 0xac);
-  dVar12 = (double)(float)((double)(float)((double)*(float *)(iVar2 + 0x11c) - dVar13) * dVar16);
-  dVar11 = (double)*pfVar9;
-  dVar10 = floor((double)(float)(dVar12 + dVar15));
-  *(float *)(iVar2 + 0x30) =
-       (float)((double)(float)((double)(float)(dVar12 - (double)(float)dVar10) * dVar11) * dVar14 +
-              dVar13);
-  dVar12 = (double)*(float *)(iVar2 + 0xb0);
-  dVar13 = (double)(float)((double)(float)((double)*(float *)(iVar2 + 0x120) - dVar12) * dVar16);
-  dVar11 = (double)*pfVar9;
-  dVar10 = floor((double)(float)(dVar13 + dVar15));
-  *(float *)(iVar2 + 0x34) =
-       (float)((double)(float)((double)(float)(dVar13 - (double)(float)dVar10) * dVar11) * dVar14 +
-              dVar12);
-  uVar6 = BG_GetAlternateWeapon(*(undefined4 *)(iVar2 + 0x18c),0);
-  iVar4 = (&DAT_829d84a0)[uVar6 & 0xff];
-  if (iVar4 == 0) {
-    MyAssertHandler(0xffffffff82015c18,0x114,1,0xffffffff82000f98,0xffffffff8200a88c);
-  }
-  if (*(char *)(iVar4 + 0x796) != '\0') {
-    dVar10 = (double)BG_Turret_ComputeBarrelSpinRate
-                               (iVar4,param_3 + 0x118,*(undefined4 *)(iVar5 + 0x6b98c));
-    dVar10 = (double)AngleNormalize360((double)((float)((double)((float)(longlong)
-                                                                        *(int *)(iVar5 + 0x6b988) *
-                                                                *(float *)(iVar4 + 0x6fc)) * dVar10)
-                                                * 0.36 + *(float *)(iVar2 + 0x40)));
-    *(float *)(iVar2 + 0x40) = (float)dVar10;
-  }
-  DObjGetBoneIndex(param_2,DAT_835a0c3a,param_3 + 0x3a);
-  DObjGetBoneIndex(param_2,DAT_835a0c3c,param_3 + 0x3b);
-  DObjGetBoneIndex(param_2,DAT_835a0c3e,param_3 + 0x3c);
-  DObjGetBoneIndex(param_2,DAT_835a0c48,param_3 + 0x3d);
-  bVar1 = *(byte *)(iVar2 + 0x3e);
-  iVar7 = DObjGetBoneIndex(param_2,DAT_835a0d12,param_3 + 0x3e);
-  if ((((uint)LZCOUNT(bVar1 - 0xfe) >> 5 != 0) && (iVar7 == 0)) &&
-     (*(char *)(iVar4 + 0x796) != '\0')) {
-    uVar3 = DObjGetName(param_2);
-    Com_PrintWarning(0x11,0xffffffff82015c60,uVar3);
-  }
-  iVar4 = DObjGetTree(param_2);
-  if (iVar4 != 0) {
-    if (((*(uint *)(iVar5 + 0xf8) & 0x3800) == 0) ||
-       (*(int *)(iVar5 + 0x1bc) != *(int *)(iVar2 + 0xc4))) {
-      cVar8 = ((*(uint *)(iVar2 + 0xcc) & 0x800000) != 0) + '\x01';
-    }
-    else {
-      cVar8 = '\x01';
-    }
-    XAnimSetGoalWeightKnobAll(0x3ff0000000000000,0x3fb99999a0000000,param_2,cVar8,0);
-  }
-  __restfpr_26();
-  __restgprlr_24();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure LerpEntityStatePlayer
 
 // 822C7F48  CG_Turret  (cgame_mp/cg_ents_mp.cpp:314)
-
-void CG_Turret(undefined8 param_1,ulonglong param_2)
-
-{
-  int iVar1;
-  undefined8 uVar2;
-  ulonglong uVar3;
-  char cVar5;
-  int iVar4;
-  longlong lVar6;
-  int *piVar7;
-  undefined4 local_40;
-  undefined4 local_3c;
-  float local_38;
-  
-  uVar2 = __savegprlr_27();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82015c18,0x13f,0,0xffffffff82000f98,0xffffffff82002118);
-  }
-  iVar1 = (int)param_2;
-  if ((*(uint *)(iVar1 + 0x1c4) & 1) != 0) {
-    lVar6 = param_2 + 0xc4;
-    if (lVar6 == 0) {
-      MyAssertHandler(0xffffffff82015c18,0x144,0,0xffffffff82000f98,0xffffffff82016544);
-    }
-    if ((*(uint *)(iVar1 + 0xcc) & 0x20) == 0) {
-      uVar3 = CG_PreProcess_GetDObj_General(uVar2,param_2);
-      if ((uVar3 & 0xffffffff) != 0) {
-        CG_Turret_PreControllers(uVar2,uVar3,param_2);
-        CG_Turret_UpdateBarrelSpinSound(uVar2,param_2);
-        CG_Turret_UpdateBarrelSpinRumble(uVar2,param_2);
-        CG_Turret_UpdateHeat(uVar2,param_2);
-        cVar5 = CG_PlayerUsingScopedTurret(uVar2);
-        piVar7 = (int *)lVar6;
-        if (cVar5 != '\0') {
-          iVar4 = CG_GetLocalClientGlobals(uVar2);
-          if ((*(int *)(iVar4 + 0x6b9a0) == 0) &&
-             (iVar4 = CG_GetLocalClientGlobals(uVar2), *(int *)(iVar4 + 0x1bc) == *piVar7))
-          goto LAB_822c8100;
-        }
-        Turret_PlaceSentry_Client(uVar2,lVar6,param_2 + 0x14,param_2 + 0x20);
-        local_40 = *(undefined4 *)(iVar1 + 0x14);
-        local_3c = *(undefined4 *)(iVar1 + 0x18);
-        local_38 = *(float *)(iVar1 + 0x1c) + 32.0;
-        R_AddDObjToScene(0,uVar3,param_2,*piVar7,
-                         (ulonglong)*(uint *)(iVar1 + 0xcc) & 0x400 | 0x400000004,&local_40);
-        Compass_TurretUpdateInfo(uVar2,param_2);
-        if (((*(uint *)(iVar1 + 0xcc) & 0x10000) != 0) ||
-           (cVar5 = CG_LaserForceOnEnabled(), cVar5 != '\0')) {
-          CG_LaserAdd(uVar2,*piVar7);
-        }
-      }
-    }
-  }
-LAB_822c8100:
-  __restgprlr_27();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure LerpEntityStatePlayer
 
 // 822C4AB8  JavelinSoftLaunch  (cgame_mp/cg_ents_mp.cpp:367)
-
-void JavelinSoftLaunch(undefined8 param_1,int param_2,longlong param_3)
-
-{
-  undefined8 uVar1;
-  uint uVar3;
-  ulonglong uVar2;
-  ulonglong uVar4;
-  
-  uVar1 = __savegprlr_29();
-  uVar3 = BG_GetAlternateWeapon(uVar1,0);
-  if (*(int *)((&DAT_829d84a0)[uVar3 & 0xff] + 0x564) != 3) {
-    __restgprlr_29(0);
-    return;
-  }
-  uVar2 = BG_ProjIgnitionDelay(uVar1,0);
-  uVar4 = param_3 - (ulonglong)*(uint *)(param_2 + 0x54);
-  __restgprlr_29(((uVar4 & 0xffffffff) >> 0x1f) + (longlong)((int)uVar2 >> 0x1f) +
-                 (ulonglong)(uVar4 <= uVar2));
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 822C4B30  ShouldWarnForStick  (cgame_mp/cg_ents_mp.cpp:382)
 
-bool ShouldWarnForStick(undefined8 param_1,undefined8 param_2)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+bool ShouldWarnForStick(Weapon param_1,bool param_2)
 
 {
-  uint uVar1;
-  int iVar2;
-  bool bVar3;
+  int iVar1;
+  Weapon WVar2;
+  bool bVar4;
+  weapType_t wVar3;
   
-  uVar1 = BG_GetAlternateWeapon();
-  if ((*(int *)((&DAT_829d84a0)[uVar1 & 0xff] + 0x530) == 0) ||
-     (*(int *)((&DAT_829d84a0)[uVar1 & 0xff] + 0x530) == 5)) {
-    bVar3 = false;
+  WVar2 = BG_GetAlternateWeapon(param_1,param_2);
+  iVar1 = *(int *)(*(int *)((int)bg_weaponDefs +
+                           ((uint)(((ulonglong)WVar2 & 0xffffffff) << 2) & 0x3fc)) + 0x530);
+  if ((iVar1 == 0) || (iVar1 == 5)) {
+    bVar4 = false;
   }
   else {
-    iVar2 = BG_GetWeaponType(param_1,param_2);
-    bVar3 = iVar2 == 2;
+    wVar3 = BG_GetWeaponType(param_1,param_2);
+    bVar4 = wVar3 == WEAPTYPE_GRENADE;
   }
-  return bVar3;
+  return bVar4;
 }
 
 
 // 822C4BB0  UpdateScramblerEffect  (cgame_mp/cg_ents_mp.cpp:399)
-
-void UpdateScramblerEffect(undefined8 param_1,ulonglong param_2)
-
-{
-  float fVar1;
-  int iVar2;
-  float fVar3;
-  float fVar4;
-  float fVar5;
-  int iVar6;
-  int iVar7;
-  ulonglong uVar8;
-  int iVar9;
-  bool bVar10;
-  
-  uVar8 = __savegprlr_29();
-  if (3 < (uVar8 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82015c18,0x195,0,0xffffffff820011a8,uVar8,4);
-  }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82015c18,0x196,0,0xffffffff82000f98,0xffffffff82002118);
-  }
-  iVar2 = (int)param_2;
-  if ((*(uint *)(iVar2 + 0x1c4) & 1) == 0) goto LAB_822c4d6c;
-  if (0x11 < *(uint *)(iVar2 + 0x13c)) {
-    MyAssertHandler(0xffffffff82015c18,0x19b,0,0xffffffff820125f8,*(uint *)(iVar2 + 0x13c),0x12);
-  }
-  iVar9 = CG_GetLocalClientGlobals(uVar8);
-  iVar6 = *(int *)(iVar9 + 0x3334) * 0x590 + iVar9;
-  iVar7 = *(int *)(iVar2 + 0x13c) * 0x590 + iVar9;
-  if ((*(int *)(iVar6 + 0x100b88) == 0) || (*(int *)(iVar7 + 0x100b88) == 0)) goto LAB_822c4d6c;
-  if (*(int *)(iVar6 + 0x100bb4) == 0) {
-LAB_822c4cc0:
-    bVar10 = false;
-  }
-  else {
-    bVar10 = true;
-    if (*(int *)(iVar6 + 0x100bb4) != *(int *)(iVar7 + 0x100bb4)) goto LAB_822c4cc0;
-  }
-  if ((!bVar10) && (*(int *)(iVar9 + 0x3334) != *(int *)(iVar2 + 0x13c))) {
-    fVar3 = *(float *)(iVar9 + 0x1c) - *(float *)(iVar2 + 0x14);
-    fVar4 = *(float *)(iVar9 + 0x24) - *(float *)(iVar2 + 0x1c);
-    fVar5 = *(float *)(iVar9 + 0x20) - *(float *)(iVar2 + 0x18);
-    fVar1 = *(float *)(iVar9 + 0x108450);
-    fVar3 = SQRT(fVar5 * fVar5 + fVar4 * fVar4 + fVar3 * fVar3);
-    if ((fVar1 < 0.0) || (fVar3 < fVar1)) {
-      *(float *)(iVar9 + 0x108450) = fVar3;
-    }
-  }
-  if (*(int *)(iVar6 + 0x100bb4) == 0) {
-LAB_822c4d50:
-    bVar10 = false;
-  }
-  else {
-    bVar10 = true;
-    if (*(int *)(iVar6 + 0x100bb4) != *(int *)(iVar7 + 0x100bb4)) goto LAB_822c4d50;
-  }
-  if (bVar10) {
-    CG_CompassUpdateScrambler(uVar8,param_2);
-  }
-LAB_822c4d6c:
-  __restgprlr_29();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure LerpEntityStatePlayer
 
 // 822C4D78  UpdatePortableRadarEffect  (cgame_mp/cg_ents_mp.cpp:439)
-
-void UpdatePortableRadarEffect(undefined8 param_1,ulonglong param_2)
-
-{
-  int iVar1;
-  bool bVar2;
-  int iVar3;
-  int iVar4;
-  ulonglong uVar5;
-  int iVar6;
-  char cVar7;
-  
-  uVar5 = __savegprlr_27();
-  if (3 < (uVar5 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82015c18,0x1bc,0,0xffffffff820011a8,uVar5,4);
-  }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82015c18,0x1bd,0,0xffffffff82000f98,0xffffffff82002118);
-  }
-  iVar1 = (int)param_2;
-  if ((*(uint *)(iVar1 + 0x1c4) & 1) != 0) {
-    if (0x11 < *(uint *)(iVar1 + 0x13c)) {
-      MyAssertHandler(0xffffffff82015c18,0x1c2,0,0xffffffff820125f8,*(uint *)(iVar1 + 0x13c),0x12);
-    }
-    iVar6 = CG_GetLocalClientGlobals(uVar5);
-    iVar3 = *(int *)(iVar6 + 0x3334) * 0x590 + iVar6;
-    iVar4 = *(int *)(iVar1 + 0x13c) * 0x590 + iVar6;
-    if (((*(int *)(iVar3 + 0x100b88) != 0) && (*(int *)(iVar4 + 0x100b88) != 0)) &&
-       ((cVar7 = BG_HasPerk(iVar6 + 0x4ec,0x2d), cVar7 != '\0' || (*(int *)(iVar6 + 0x1f8) == 0))))
-    {
-      iVar3 = *(int *)(iVar3 + 0x100bb4);
-      if ((iVar3 == 0) || (bVar2 = true, iVar3 != *(int *)(iVar4 + 0x100bb4))) {
-        bVar2 = false;
-      }
-      if ((bVar2) || (*(int *)(iVar6 + 0x3334) == *(int *)(iVar1 + 0x13c))) {
-        CG_CompassUpdatePortableRadar(uVar5,param_2);
-      }
-    }
-  }
-  __restgprlr_27();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure LerpEntityStatePlayer
 
 // 822CA2B0  truncate_cast<unsigned_char>  (universal/assertive.h:461)
 
-ulonglong truncate_cast<unsigned_char>(ulonglong param_1)
+uchar truncate_cast<unsigned_char>(int param_1)
 
 {
-  ulonglong uVar1;
-  
-  uVar1 = param_1 & 0xff;
-  if ((int)param_1 != (int)uVar1) {
-    MyAssertHandler(0xffffffff82016410,0x1ce,0,0xffffffff8201645c,param_1,uVar1);
+  if (param_1 != (param_1 & 0xffU)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/assertive.h"
+                    ,0x1ce,0,"i == static_cast< Type >( i )\n\t%i, %i");
   }
-  return uVar1;
+  return (uchar)param_1;
 }
 
 
 // 822C8108  CG_Missile  (cgame_mp/cg_ents_mp.cpp:476)
-
-void CG_Missile(undefined8 param_1,longlong param_2)
-
-{
-  int iVar1;
-  int iVar2;
-  undefined8 uVar3;
-  int iVar8;
-  uint uVar9;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  int iVar10;
-  int iVar11;
-  char cVar12;
-  undefined8 uVar6;
-  ulonglong uVar7;
-  longlong lVar13;
-  undefined4 *puVar14;
-  undefined4 local_60;
-  undefined4 local_5c;
-  float local_58;
-  
-  uVar3 = __savegprlr_23();
-  iVar2 = (int)param_2;
-  lVar13 = param_2 + 0xc4;
-  if ((*(uint *)(iVar2 + 0xcc) & 0x20) == 0) {
-    iVar8 = CG_GetLocalClientGlobals();
-    iVar8 = *(int *)(iVar8 + 0x6b98c);
-    if (*(int *)(iVar2 + 0x118) <= iVar8) {
-      uVar9 = BG_GetNumWeapons();
-      if (uVar9 <= *(byte *)(iVar2 + 399)) {
-        *(undefined1 *)(iVar2 + 399) = 0;
-      }
-      uVar9 = BG_GetAlternateWeapon(*(undefined4 *)(iVar2 + 0x18c),*(int *)(iVar2 + 400) != 0);
-      iVar1 = (&DAT_829d84a0)[uVar9 & 0xff];
-      uVar4 = BG_ProjTrailEffect(*(undefined4 *)(iVar2 + 0x18c),*(int *)(iVar2 + 400) != 0);
-      uVar5 = BG_ProjIgnitionSound(*(undefined4 *)(iVar2 + 0x18c),*(int *)(iVar2 + 400) != 0);
-      iVar10 = CG_EntGetLinkToParent(uVar3,param_2);
-      puVar14 = (undefined4 *)lVar13;
-      if ((iVar10 == 0) ||
-         (iVar11 = CG_GetLocalClientGlobals(uVar3),
-         *(int *)(iVar10 + 0xc4) != *(int *)(iVar11 + 0x150))) {
-        if (*(char *)(iVar1 + 0x797) != '\0') {
-          CG_PlayMissileProjectedConeSound(uVar3,param_2);
-        }
-        if (*(int *)(iVar1 + 0x60) != 0) {
-          CG_PlaySoundAlias(uVar3,*puVar14,param_2 + 0x14);
-        }
-        uVar6 = BG_ProjectileModel(*(undefined4 *)(iVar2 + 0x18c),*(int *)(iVar2 + 400) != 0);
-        uVar7 = CG_PreProcess_GetDObj(uVar3,*puVar14,*(undefined4 *)(iVar2 + 200),uVar6,0);
-        if ((uVar7 & 0xffffffff) != 0) {
-          if ((((*(uint *)(iVar2 + 0x1c4) & 2) == 0) && ((*(uint *)(iVar2 + 0x1c4) & 0x40) == 0)) &&
-             (cVar12 = JavelinSoftLaunch(*(undefined4 *)(iVar2 + 0x18c),lVar13,iVar8),
-             cVar12 == '\0')) {
-            *(uint *)(iVar2 + 0x1c4) = *(uint *)(iVar2 + 0x1c4) | 2;
-            if ((uVar4 & 0xffffffff) != 0) {
-              CG_PlayBoltedEffect(uVar3,uVar4,*puVar14,DAT_835a0c54);
-            }
-          }
-          else {
-            uVar9 = *(uint *)(iVar2 + 0x1c4);
-            if ((((uVar9 & 0x40) != 0) && ((uVar9 & 2) != 0)) &&
-               (*(uint *)(iVar2 + 0x1c4) = uVar9 & 0xfffffffd, (uVar4 & 0xffffffff) != 0)) {
-              CG_StopBoltedEffects(uVar3,uVar4,*puVar14,DAT_835a0c54);
-            }
-          }
-          if (((*(uint *)(iVar2 + 0x1c4) & 0x100) == 0) &&
-             (cVar12 = JavelinSoftLaunch(*(undefined4 *)(iVar2 + 0x18c),lVar13,iVar8),
-             cVar12 == '\0')) {
-            uVar4 = BG_ProjIgnitionEffect(*(undefined4 *)(iVar2 + 0x18c),*(int *)(iVar2 + 400) != 0)
-            ;
-            *(uint *)(iVar2 + 0x1c4) = *(uint *)(iVar2 + 0x1c4) | 0x100;
-            if ((uVar4 & 0xffffffff) != 0) {
-              CG_PlayBoltedEffect(uVar3,uVar4,*puVar14,DAT_835a0c54);
-            }
-            if ((uVar5 & 0xffffffff) != 0) {
-              CG_PlaySoundAlias(uVar3,*puVar14,param_2 + 0x14,uVar5);
-            }
-          }
-          if ((*(uint *)(iVar2 + 0x1c4) & 0x80) == 0) {
-            *(uint *)(iVar2 + 0x1c4) = *(uint *)(iVar2 + 0x1c4) | 0x80;
-            if (*(int *)(iVar1 + 0x554) != 0) {
-              CG_PlayBoltedEffect(uVar3,*(int *)(iVar1 + 0x554),*puVar14,DAT_835a0c54);
-            }
-          }
-          local_60 = *(undefined4 *)(iVar2 + 0x14);
-          local_5c = *(undefined4 *)(iVar2 + 0x18);
-          local_58 = *(float *)(iVar2 + 0x1c) + 4.0;
-          R_AddDObjToScene(0,uVar7,param_2,*puVar14,*(uint *)(iVar2 + 0xcc) & 0x400,&local_60);
-          Compass_MissileUpdateInfo(uVar3,param_2);
-          uVar3 = CG_GetLocalClientGlobals(uVar3);
-          CG_AddHudGrenade(uVar3,param_2);
-        }
-      }
-      else {
-        cVar12 = ShouldWarnForStick(*(undefined4 *)(iVar2 + 0x18c),*(int *)(iVar2 + 400) != 0);
-        if (cVar12 != '\0') {
-          *(int *)(iVar11 + 0x108480) = iVar8;
-        }
-        if (((*(uint *)(iVar2 + 0x1c4) & 0x100) == 0) &&
-           (cVar12 = JavelinSoftLaunch(*(undefined4 *)(iVar2 + 0x18c),lVar13,iVar8), cVar12 == '\0')
-           ) {
-          *(uint *)(iVar2 + 0x1c4) = *(uint *)(iVar2 + 0x1c4) | 0x100;
-          if ((uVar5 & 0xffffffff) != 0) {
-            CG_PlaySoundAlias(uVar3,*puVar14,param_2 + 0x14,uVar5);
-          }
-        }
-        uVar9 = *(uint *)(iVar2 + 0x1c4);
-        if ((((uVar9 & 0x40) != 0) && ((uVar9 & 2) != 0)) &&
-           (*(uint *)(iVar2 + 0x1c4) = uVar9 & 0xfffffffd, (uVar4 & 0xffffffff) != 0)) {
-          CG_StopBoltedEffects(uVar3,uVar4,*puVar14,DAT_835a0c54);
-        }
-        if ((*(uint *)(iVar2 + 0x1c4) & 0x80) != 0) {
-          *(uint *)(iVar2 + 0x1c4) = *(uint *)(iVar2 + 0x1c4) & 0xffffff7f;
-          if (*(int *)(iVar1 + 0x554) != 0) {
-            CG_StopBoltedEffects(uVar3,*(int *)(iVar1 + 0x554),*puVar14,DAT_835a0c54);
-            __restgprlr_23();
-            return;
-          }
-        }
-      }
-    }
-  }
-  __restgprlr_23();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure LerpEntityStatePlayer
 
 // 822C4EE0  CG_UpdateBModelWorldBounds  (cgame_mp/cg_ents_mp.cpp:590)
-
-/* WARNING: Control flow encountered bad instruction data */
-
-void CG_UpdateBModelWorldBounds(void)
-
-{
-  __savegprlr_21();
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure LerpEntityStatePlayer
 
 // 822C5198  AnyLocalPlayersIsWeaponLinkedToEnt  (cgame_mp/cg_ents_mp.cpp:621)
-
-void AnyLocalPlayersIsWeaponLinkedToEnt(void)
-
-{
-  int iVar2;
-  char cVar3;
-  undefined8 uVar1;
-  int iVar4;
-  undefined4 *puVar5;
-  ulonglong uVar6;
-  
-  iVar2 = __savegprlr_19();
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff82015c18,0x270,0,0xffffffff82000f98,0xffffffff82002118);
-  }
-  uVar6 = 0;
-  iVar4 = 0;
-  puVar5 = &DAT_82b3e54c;
-  do {
-    cVar3 = CL_IsLocalClientActive(uVar6);
-    if (cVar3 != '\0') {
-      if (DAT_82a383cc == 0) {
-        if (3 < (uVar6 & 0xffffffff)) {
-          MyAssertHandler(0xffffffff82001158,0x4aa,0,0xffffffff820011a8,uVar6,4);
-        }
-        uVar1 = va(0xffffffff82001208,*puVar5,uVar6);
-        MyAssertHandler(0xffffffff8200ffd8,0x682,0,0xffffffff820011f4,0xffffffff820011fc,uVar1);
-      }
-      if (3 < (uVar6 & 0xffffffff)) {
-        MyAssertHandler(0xffffffff8200ffd8,0x684,0,0xffffffff820011a8,uVar6,4);
-      }
-      if (((*(uint *)(iVar4 + DAT_82a383cc + 0x14) & 4) != 0) &&
-         (*(int *)(iVar4 + DAT_82a383cc + 0x1d8) == *(int *)(iVar2 + 0xc4))) {
-        __restgprlr_19(1);
-        return;
-      }
-    }
-    puVar5 = puVar5 + 0x79;
-    uVar6 = uVar6 + 1;
-    iVar4 = iVar4 + 0x108600;
-    if (-0x7d4c1325 < (int)puVar5) {
-      __restgprlr_19(0);
-      return;
-    }
-  } while( true );
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure LerpEntityStatePlayer
 
 // 822C8530  CG_ScriptMover  (cgame_mp/cg_ents_mp.cpp:645)
-
-void CG_ScriptMover(undefined8 param_1,longlong param_2)
-
-{
-  undefined4 uVar1;
-  int iVar2;
-  undefined8 uVar3;
-  char cVar5;
-  ulonglong uVar4;
-  undefined1 auStack_40 [64];
-  
-  uVar3 = __savegprlr_28();
-  iVar2 = (int)param_2;
-  if ((*(uint *)(iVar2 + 0xcc) & 0x20) == 0) {
-    if ((*(uint *)(iVar2 + 0xcc) & 0x400000) != 0) {
-      UpdateScramblerEffect(uVar3,param_2);
-    }
-    if ((*(uint *)(iVar2 + 0xcc) & 0x2000000) != 0) {
-      UpdatePortableRadarEffect(uVar3,param_2);
-    }
-    uVar4 = CG_PreProcess_GetDObj_General(uVar3,param_2);
-    if ((uVar4 & 0xffffffff) != 0) {
-      if ((*(int *)(iVar2 + 200) == 6) && (DAT_82a3d568 != 0)) {
-        CG_UpdateScriptModelAnim(uVar3,param_2,uVar4);
-      }
-      CG_CalcLightingOrigin(param_2,uVar4,auStack_40);
-      R_AddDObjToScene(0,uVar4,param_2,*(undefined4 *)(iVar2 + 0xc4),*(uint *)(iVar2 + 0xcc) & 0x400
-                       ,auStack_40);
-      __restgprlr_28();
-      return;
-    }
-    if (*(int *)(iVar2 + 0x160) == 0xffffff) {
-      uVar1 = *(undefined4 *)(iVar2 + 0xc4);
-      uVar3 = R_GetBrushModel(*(undefined4 *)(iVar2 + 0x150));
-      R_AddBrushModelToSceneFromAngles(uVar3,param_2 + 0x14,param_2 + 0x20,uVar1);
-    }
-  }
-  else if ((*(int *)(iVar2 + 0x160) != 0xffffff) &&
-          (((*(byte *)(iVar2 + 0x1a4) & 1) != 0 ||
-           (cVar5 = AnyLocalPlayersIsWeaponLinkedToEnt(param_2), cVar5 != '\0')))) {
-    CG_PreProcess_GetDObj_General(uVar3,param_2);
-    __restgprlr_28();
-    return;
-  }
-  __restgprlr_28();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure LerpEntityStatePlayer
 
 // 822C5310  CG_AdjustPositionForMover  (cgame_mp/cg_ents_mp.cpp:688)
-
-void CG_AdjustPositionForMover
-               (undefined8 param_1,float *param_2,undefined8 param_3,undefined8 param_4,
-               undefined8 param_5,float *param_6,float *param_7)
-
-{
-  undefined8 uVar1;
-  int iVar2;
-  float local_80;
-  float local_7c;
-  float local_78;
-  float local_70;
-  float local_6c;
-  float local_68;
-  float local_60;
-  float local_5c;
-  float local_58;
-  float local_50;
-  float local_4c;
-  float local_48;
-  
-  uVar1 = __savegprlr_25();
-  if (param_7 != (float *)0x0) {
-    *param_7 = 0.0;
-    param_7[1] = 0.0;
-    param_7[2] = 0.0;
-  }
-  if ((0 < (int)param_3) && ((int)param_3 < 0x7fe)) {
-    iVar2 = CG_GetEntity(uVar1,param_3);
-    if ((*(int *)(iVar2 + 200) == 6) || (*(int *)(iVar2 + 200) == 0xd)) {
-      BG_EvaluateTrajectory(iVar2 + 0x60,param_4,&local_80);
-      BG_EvaluateTrajectory(iVar2 + 0x84,param_4,&local_60);
-      BG_EvaluateTrajectory(iVar2 + 0x60,param_5,&local_70);
-      BG_EvaluateTrajectory(iVar2 + 0x84,param_5,&local_50);
-      *param_6 = *param_2 + (local_70 - local_80);
-      param_6[1] = param_2[1] + (local_6c - local_7c);
-      param_6[2] = param_2[2] + (local_68 - local_78);
-      if (param_7 != (float *)0x0) {
-        *param_7 = local_50 - local_60;
-        param_7[1] = local_4c - local_5c;
-        param_7[2] = local_48 - local_58;
-        __restgprlr_25();
-        return;
-      }
-      goto LAB_822c5464;
-    }
-  }
-  *param_6 = *param_2;
-  param_6[1] = param_2[1];
-  param_6[2] = param_2[2];
-LAB_822c5464:
-  __restgprlr_25();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure LerpEntityStatePlayer
 
 // 822C5470  CG_SetFrameInterpolation  (cgame_mp/cg_ents_mp.cpp:734)
-
-void CG_SetFrameInterpolation(void)
-
-{
-  uint uVar1;
-  float fVar2;
-  int iVar3;
-  char cVar4;
-  longlong lVar5;
-  float *pfVar6;
-  double dVar7;
-  
-  __savegprlr_29();
-  iVar3 = CG_GetLocalClientGlobals();
-  if (*(int *)(iVar3 + 0x3358) == 0) {
-    MyAssertHandler(0xffffffff82015c18,0x2e3,0,0xffffffff82000f98,0xffffffff82015cb8);
-  }
-  if (*(int *)(iVar3 + 0x335c) == 0) {
-    MyAssertHandler(0xffffffff82015c18,0x2e4,0,0xffffffff82000f98,0xffffffff82002858);
-  }
-  pfVar6 = (float *)(iVar3 + 0x6b980);
-  uVar1 = *(uint *)(*(int *)(iVar3 + 0x3358) + 0x3308);
-  dVar7 = 1.0;
-  lVar5 = (ulonglong)*(uint *)(*(int *)(iVar3 + 0x335c) + 0x3308) - (ulonglong)uVar1;
-  if (lVar5 == 0) {
-    *pfVar6 = 0.0;
-    *(undefined4 *)(iVar3 + 0x6b984) = 1;
-  }
-  else {
-    *(undefined4 *)(iVar3 + 0x6b984) = 0;
-    fVar2 = (float)(longlong)(int)(*(int *)(iVar3 + 0x6b98c) - uVar1) / (float)(longlong)(int)lVar5;
-    *pfVar6 = fVar2;
-    if (0.0 <= fVar2) {
-      if (fVar2 <= 1.0) goto LAB_822c55ac;
-    }
-    else {
-      *pfVar6 = 0.0;
-    }
-    *(undefined4 *)(iVar3 + 0x6b984) = 1;
-  }
-LAB_822c55ac:
-  cVar4 = CL_Demo_GetJumpTimeFlag();
-  if (cVar4 != '\0') {
-    *pfVar6 = (float)dVar7;
-  }
-  __restgprlr_29();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 822C55D0  CG_ProcessClientNoteTracks  (cgame_mp/cg_ents_mp.cpp:778)
-
-void CG_ProcessClientNoteTracks(undefined8 param_1,ulonglong param_2)
-
-{
-  int iVar2;
-  longlong lVar1;
-  int iVar3;
-  int iVar4;
-  int iVar5;
-  int local_70 [28];
-  
-  iVar2 = __savegprlr_20();
-  iVar4 = (int)param_2;
-  if ((-1 < iVar4) && (iVar4 < 0x12)) {
-    lVar1 = DObjGetClientNotifyList(local_70);
-    if (0 < (int)lVar1) {
-      iVar5 = 0;
-      do {
-        if (((undefined4 *)(iVar5 + local_70[0]))[1] == 1) {
-          iVar3 = I_stricmp(*(undefined4 *)(iVar5 + local_70[0]),0xffffffff82015cc8);
-          if (iVar3 == 0) {
-            if (0x11 < (param_2 & 0xffffffff)) {
-              MyAssertHandler(0xffffffff82015c18,0x31a,0,0xffffffff82014c1c,param_2,0x12);
-            }
-            iVar3 = iVar4 * 0x590 + iVar2;
-            *(undefined4 *)(iVar3 + 0x100fc0) = 1;
-          }
-          else {
-            iVar3 = I_stricmp(*(undefined4 *)(iVar5 + local_70[0]),0xffffffff82015ce0);
-            if (iVar3 != 0) goto LAB_822c56ec;
-            if (0x11 < (param_2 & 0xffffffff)) {
-              MyAssertHandler(0xffffffff82015c18,800,0,0xffffffff82014c1c,param_2,0x12);
-            }
-            iVar3 = iVar4 * 0x590 + iVar2;
-            *(undefined4 *)(iVar3 + 0x100fc0) = 0;
-          }
-          *(undefined4 *)(iVar3 + 0x100fc4) = 1;
-        }
-LAB_822c56ec:
-        lVar1 = lVar1 + -1;
-        iVar5 = iVar5 + 0xc;
-      } while (lVar1 != 0);
-    }
-  }
-  __restgprlr_20();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 822C5700  CG_UpdateClientDobjPartBits  (cgame_mp/cg_ents_mp.cpp:817)
-
-void CG_UpdateClientDobjPartBits(undefined8 param_1,undefined8 param_2,undefined8 param_3)
-
-{
-  int iVar1;
-  int iVar3;
-  ulonglong uVar2;
-  
-  iVar3 = __savegprlr_29();
-  if (iVar3 == 0) {
-    MyAssertHandler(0xffffffff82015c18,0x334,0,0xffffffff82000f98,0xffffffff82002118);
-  }
-  iVar1 = *(int *)(iVar3 + 200);
-  if ((((iVar1 != 3) && (iVar1 != 1)) && (iVar1 != 2)) &&
-     (uVar2 = Com_GetClientDObj(param_2,param_3), (uVar2 & 0xffffffff) != 0)) {
-    DObjSetHidePartBits(uVar2,iVar3 + 0x1a8);
-  }
-  __restgprlr_29();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure LerpEntityStatePlayer
 
 // 822C9638  CG_CalcParentLinkPositions  (cgame_mp/cg_ents_mp.cpp:837)
-
-void CG_CalcParentLinkPositions(undefined8 param_1,undefined8 param_2)
-
-{
-  undefined8 uVar1;
-  int iVar5;
-  int iVar6;
-  ulonglong uVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
-  int iVar7;
-  longlong lVar8;
-  undefined1 auStack_d0 [36];
-  undefined4 local_ac;
-  undefined4 local_a8;
-  undefined4 local_a4;
-  undefined1 auStack_a0 [36];
-  undefined4 local_7c;
-  undefined4 local_78;
-  undefined4 local_74;
-  undefined1 auStack_70 [36];
-  undefined4 local_4c;
-  undefined4 local_48;
-  undefined4 local_44;
-  
-  uVar1 = __savegprlr_26();
-  iVar5 = CG_GetEntity();
-  if (*(short *)(iVar5 + 0x1a6) == 0) {
-    MyAssertHandler(0xffffffff82015c18,0x354,0,0xffffffff82000f98,0xffffffff8201675c);
-  }
-  lVar8 = (longlong)*(short *)(iVar5 + 0x1a6) + -1;
-  iVar6 = CG_GetEntity(uVar1,lVar8);
-  if ((*(uint *)(iVar6 + 0x1c4) & 1) == 0) {
-    Com_PrintWarning(0xe,0xffffffff82016724,param_2,lVar8);
-    *(undefined4 *)(iVar5 + 0x14) = 0;
-    *(undefined4 *)(iVar5 + 0x18) = 0;
-    *(undefined4 *)(iVar5 + 0x1c) = 0;
-    *(undefined4 *)(iVar5 + 0x20) = 0;
-    *(undefined4 *)(iVar5 + 0x24) = 0;
-    *(undefined4 *)(iVar5 + 0x28) = 0;
-    __restgprlr_26();
-    return;
-  }
-  if ((*(byte *)(iVar5 + 0x1a4) & 2) != 0) {
-    AnglesToAxis(iVar6 + 0x20,auStack_d0);
-    local_ac = *(undefined4 *)(iVar6 + 0x14);
-    local_a8 = *(undefined4 *)(iVar6 + 0x18);
-    local_a4 = *(undefined4 *)(iVar6 + 0x1c);
-    goto LAB_822c9728;
-  }
-  uVar2 = Com_GetClientDObj(*(undefined4 *)(iVar6 + 0xc4),uVar1);
-  if ((uVar2 & 0xffffffff) == 0) {
-    Com_PrintWarning(0xe,0xffffffff820166ec,param_2,lVar8);
-  }
-  else {
-    uVar3 = CL_GetConfigString((ulonglong)*(byte *)(iVar5 + 0x1a5) + 0xcd4);
-    if ((uVar3 & 0xffffffff) == 0) {
-      uVar1 = DObjGetName(uVar2);
-      Com_PrintWarning(0xe,0xffffffff820166a0,param_2,uVar1);
-    }
-    else {
-      uVar4 = SL_FindString(uVar3);
-      if ((uVar4 & 0xffffffff) != 0) {
-        iVar7 = CG_DObjGetWorldTagMatrix(iVar6,uVar2,uVar4,auStack_d0,&local_ac);
-        if (iVar7 == 0) {
-          uVar1 = DObjGetName(uVar2);
-          Com_PrintWarning(0xe,0xffffffff82016608,uVar3,lVar8,uVar1,param_2);
-          iVar7 = CG_DObjGetWorldTagMatrix(iVar6,uVar2,DAT_835a0c5c,auStack_d0,&local_ac);
-          if (iVar7 == 0) goto LAB_822c989c;
-        }
-LAB_822c9728:
-        AnglesToAxis(iVar5 + 0x10c,auStack_a0);
-        local_7c = *(undefined4 *)(iVar5 + 0xe8);
-        local_78 = *(undefined4 *)(iVar5 + 0xec);
-        local_74 = *(undefined4 *)(iVar5 + 0xf0);
-        MatrixMultiply43(auStack_a0,auStack_d0,auStack_70);
-        *(undefined4 *)(iVar5 + 0x14) = local_4c;
-        *(undefined4 *)(iVar5 + 0x18) = local_48;
-        *(undefined4 *)(iVar5 + 0x1c) = local_44;
-        AxisToAngles(auStack_70,iVar5 + 0x20);
-        __restgprlr_26();
-        return;
-      }
-      uVar1 = DObjGetName(uVar2);
-      Com_PrintWarning(0xe,0xffffffff82016658,uVar3,uVar1);
-    }
-  }
-LAB_822c989c:
-  *(undefined4 *)(iVar5 + 0x14) = *(undefined4 *)(iVar6 + 0x14);
-  *(undefined4 *)(iVar5 + 0x18) = *(undefined4 *)(iVar6 + 0x18);
-  *(undefined4 *)(iVar5 + 0x1c) = *(undefined4 *)(iVar6 + 0x1c);
-  *(undefined4 *)(iVar5 + 0x20) = *(undefined4 *)(iVar6 + 0x20);
-  *(undefined4 *)(iVar5 + 0x24) = *(undefined4 *)(iVar6 + 0x24);
-  *(undefined4 *)(iVar5 + 0x28) = *(undefined4 *)(iVar6 + 0x28);
-  __restgprlr_26();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure LerpEntityStatePlayer
 
 // 822C98D8  CG_AddPacketEntity  (cgame_mp/cg_ents_mp.cpp:917)
-
-void CG_AddPacketEntity(undefined8 param_1,undefined8 param_2)
-
-{
-  float fVar1;
-  float fVar2;
-  float fVar3;
-  int iVar4;
-  int iVar5;
-  int iVar6;
-  int iVar7;
-  char cVar8;
-  char cVar9;
-  float *pfVar10;
-  float *pfVar11;
-  double dVar12;
-  double dVar13;
-  double dVar14;
-  double dVar15;
-  double dVar16;
-  double dVar17;
-  
-  __savegprlr_21();
-  iVar5 = __savefpr_26();
-  iVar6 = CG_GetEntity();
-  dVar17 = (double)*(float *)(iVar6 + 0x14);
-  iVar7 = *(int *)(iVar6 + 200);
-  dVar14 = (double)*(float *)(iVar6 + 0x20);
-  dVar16 = (double)*(float *)(iVar6 + 0x18);
-  dVar15 = (double)*(float *)(iVar6 + 0x1c);
-  pfVar11 = (float *)(iVar6 + 0x14);
-  dVar13 = (double)*(float *)(iVar6 + 0x24);
-  dVar12 = (double)*(float *)(iVar6 + 0x28);
-  if (*(short *)(iVar6 + 0x1a6) == 0) {
-    CG_CalcEntityLerpPositions(iVar5,iVar6);
-  }
-  else {
-    CG_CalcParentLinkPositions(iVar5,param_2);
-  }
-  if (((iVar7 == 6) || (iVar7 == 0xd)) && (*(int *)(iVar6 + 0x160) == 0xffffff)) {
-    if ((((((double)*pfVar11 != dVar17) || ((double)*(float *)(iVar6 + 0x18) != dVar16)) ||
-         ((double)*(float *)(iVar6 + 0x1c) != dVar15)) ||
-        (((double)*(float *)(iVar6 + 0x20) != dVar14 || ((double)*(float *)(iVar6 + 0x24) != dVar13)
-         ))) || (cVar8 = '\0', (double)*(float *)(iVar6 + 0x28) != dVar12)) {
-      cVar8 = '\x01';
-    }
-    if (cVar8 != '\0') {
-      CG_UpdateBModelWorldBounds(iVar5,iVar6,0);
-    }
-  }
-  else {
-    if (((((double)*pfVar11 != dVar17) || ((double)*(float *)(iVar6 + 0x18) != dVar16)) ||
-        (((double)*(float *)(iVar6 + 0x1c) != dVar15 ||
-         (((double)*(float *)(iVar6 + 0x20) != dVar14 ||
-          ((double)*(float *)(iVar6 + 0x24) != dVar13)))))) ||
-       (cVar8 = '\0', (double)*(float *)(iVar6 + 0x28) != dVar12)) {
-      cVar8 = '\x01';
-    }
-    if ((&DAT_82a3d64c)[iVar5] == 0) {
-      MyAssertHandler(0xffffffff82015c18,0x3af,0,0xffffffff82000f98,0xffffffff82016300);
-    }
-    iVar7 = (&DAT_82a3d64c)[iVar5];
-    iVar4 = (int)param_2 * 0xc;
-    fVar3 = *(float *)(iVar4 + iVar7) - *pfVar11;
-    fVar1 = *(float *)(iVar4 + iVar7 + 4) - *(float *)(iVar6 + 0x18);
-    fVar2 = *(float *)(iVar4 + iVar7 + 8) - *(float *)(iVar6 + 0x1c);
-    if (256.0 < fVar3 * fVar3 + fVar2 * fVar2 + fVar1 * fVar1) {
-      if (iVar7 == 0) {
-        MyAssertHandler(0xffffffff82015c18,0x3b4,0,0xffffffff82000f98,0xffffffff82016300);
-      }
-      pfVar10 = (float *)((&DAT_82a3d64c)[iVar5] + iVar4);
-      *pfVar10 = *pfVar11;
-      pfVar10[1] = *(float *)(iVar6 + 0x18);
-      pfVar10[2] = *(float *)(iVar6 + 0x1c);
-      iVar7 = Com_GetClientDObj(param_2,iVar5);
-      if (iVar7 != 0) {
-        dVar12 = (double)DObjGetRadius();
-        R_LinkDObjEntity((double)(float)(dVar12 + 16.0),iVar5,param_2,pfVar11);
-      }
-    }
-  }
-  if (*(int *)(iVar6 + 0x10) == -1) {
-    cVar8 = CG_IsEntityLinked(iVar5,param_2);
-    if (cVar8 != '\0') {
-      CG_UnlinkEntity(iVar5,param_2);
-      __restfpr_26();
-      __restgprlr_21();
-      return;
-    }
-  }
-  else {
-    cVar9 = CG_IsEntityLinked(iVar5,param_2);
-    if (cVar9 == '\0') {
-      cVar8 = CG_EntityNeedsLinked(iVar5,param_2);
-    }
-    if (cVar8 != '\0') {
-      CG_LinkEntity(iVar5,param_2);
-    }
-    CG_UpdateClientDobjPartBits(iVar6,param_2,iVar5);
-    CG_ProcessEntity(iVar5,iVar6);
-  }
-  __restfpr_26();
-  __restgprlr_21();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure LerpEntityStatePlayer
 
 // 822C8698  CG_AddPacketFxEntity  (cgame_mp/cg_ents_mp.cpp:1002)
-
-void CG_AddPacketFxEntity(undefined8 param_1,undefined8 param_2)
-
-{
-  int iVar1;
-  
-  iVar1 = CG_GetEntity();
-  *(undefined4 *)(iVar1 + 0x14) = *(undefined4 *)(iVar1 + 0xdc);
-  *(undefined4 *)(iVar1 + 0x18) = *(undefined4 *)(iVar1 + 0xe0);
-  *(undefined4 *)(iVar1 + 0x1c) = *(undefined4 *)(iVar1 + 0xe4);
-  *(undefined4 *)(iVar1 + 0x20) = *(undefined4 *)(iVar1 + 0x100);
-  *(undefined4 *)(iVar1 + 0x24) = *(undefined4 *)(iVar1 + 0x104);
-  *(undefined4 *)(iVar1 + 0x28) = *(undefined4 *)(iVar1 + 0x108);
-  CG_ProcessFxEntity(param_1,param_2,iVar1);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure LerpEntityStatePlayer
 
 // 822C5788  CG_ShouldDelayEntityPacketPostPS  (cgame_mp/cg_ents_mp.cpp:1012)
-
-void CG_ShouldDelayEntityPacketPostPS(undefined8 param_1,ulonglong param_2)
-
-{
-  int iVar1;
-  ulonglong uVar2;
-  int iVar4;
-  undefined8 uVar3;
-  int iVar5;
-  
-  uVar2 = __savegprlr_28();
-  if ((ulonglong)DAT_82aa1ae8 <= (uVar2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82015c18,0x3f8,0,0xffffffff8200d150,uVar2);
-  }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82015c18,0x3f9,0,0xffffffff82000f98,0xffffffff82002118);
-  }
-  iVar4 = CG_GetLocalClientGlobals(uVar2);
-  if (iVar4 == 0) {
-    MyAssertHandler(0xffffffff82015c18,0x3fc,1,0xffffffff82000f98,0xffffffff82002798);
-  }
-  iVar1 = (int)param_2;
-  if (*(int *)(iVar1 + 200) == 0xb) {
-    if ((*(uint *)(iVar4 + 0xf8) & 0x3800) == 0) {
-      iVar5 = 0x7ff;
-    }
-    else {
-      iVar5 = *(int *)(iVar4 + 0x1bc);
-    }
-    if ((*(int *)(iVar1 + 0xc4) == iVar5) ||
-       ((*(int *)(iVar1 + 0x13c) == *(int *)(iVar4 + 0x150) && (*(char *)(iVar1 + 0x134) != '\0'))))
-    {
-      __restgprlr_28(1);
-      return;
-    }
-  }
-  else if (*(int *)(iVar4 + 0x1084d0) != 0x7ff) {
-    uVar3 = 1;
-    if (*(int *)(iVar1 + 0xc4) == *(int *)(iVar4 + 0x1084d0)) goto LAB_822c58b0;
-  }
-  uVar3 = 0;
-LAB_822c58b0:
-  __restgprlr_28(uVar3);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure LerpEntityStatePlayer
 
 // 822C9BE8  UpdatePacketEnt  (cgame_mp/cg_ents_mp.cpp:1062)
-
-void UpdatePacketEnt(undefined8 param_1,undefined8 param_2,undefined4 *param_3,int *param_4,
-                    ulonglong param_5)
-
-{
-  uint uVar1;
-  undefined8 uVar2;
-  int iVar3;
-  uint uVar4;
-  
-  uVar2 = __savegprlr_27();
-  iVar3 = CG_GetEntity();
-  uVar1 = *(uint *)(iVar3 + 200);
-  if (uVar1 < 0x12) {
-    uVar4 = *(uint *)(iVar3 + 0x1c4);
-    *(uint *)(iVar3 + 0x1c4) = uVar4 | 0x10;
-    if ((param_5 & 0xff) == 0) {
-      uVar4 = uVar4 & 0xffffffdf | 0x10;
-    }
-    else {
-      uVar4 = uVar4 | 0x30;
-    }
-    *(uint *)(iVar3 + 0x1c4) = uVar4;
-    if ((7 < uVar1) && (uVar1 < 10)) {
-      CG_AddPacketFxEntity(uVar2,param_2);
-      __restgprlr_27();
-      return;
-    }
-    iVar3 = CG_ShouldDelayEntityPacketPostPS(uVar2);
-    if (iVar3 != 0) {
-      if (1 < *param_4) {
-        Com_PrintError(0xe,0xffffffff82016770,*param_3,param_2);
-        __restgprlr_27();
-        return;
-      }
-      param_3[*param_4] = (int)param_2;
-      *param_4 = *param_4 + 1;
-      __restgprlr_27();
-      return;
-    }
-    CG_AddPacketEntity(uVar2,param_2);
-  }
-  __restgprlr_27();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure LerpEntityStatePlayer
 
 // 822C58B8  DelayListInit  (cgame_mp/cg_ents_mp.cpp:1112)
-
-void DelayListInit(undefined4 *param_1)
-
-{
-  if (param_1 == (undefined4 *)0x0) {
-    MyAssertHandler(0xffffffff82015c18,0x459,0,0xffffffff82000f98,0xffffffff82015cf8);
-  }
-  *param_1 = 0;
-  param_1[1] = 0;
-  param_1[2] = 0;
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure LerpEntityStatePlayer
 
 // 822C5920  DelayListAdd  (cgame_mp/cg_ents_mp.cpp:1122)
-
-void DelayListAdd(undefined8 param_1,ulonglong param_2)
-
-{
-  uint uVar1;
-  uint *puVar2;
-  
-  puVar2 = (uint *)__savegprlr_26();
-  if (puVar2 == (uint *)0x0) {
-    MyAssertHandler(0xffffffff82015c18,0x463,0,0xffffffff82000f98,0xffffffff82015cf8);
-  }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82015c18,0x464,0,0xffffffff82000f98,0xffffffff82002118);
-  }
-  for (uVar1 = *puVar2; (ulonglong)uVar1 != 0; uVar1 = *(uint *)(uVar1 + 0x1e4)) {
-    if ((ulonglong)uVar1 == (param_2 & 0xffffffff)) {
-      MyAssertHandler(0xffffffff82015c18,0x468,0,0xffffffff82000f98,0xffffffff82015d34);
-    }
-  }
-  uVar1 = (uint)param_2;
-  *(undefined4 *)(uVar1 + 0x1e4) = 0;
-  if (*puVar2 == 0) {
-    if (puVar2[1] != 0) {
-      MyAssertHandler(0xffffffff82015c18,0x46f,0,0xffffffff82000f98,0xffffffff82015d18);
-    }
-    *puVar2 = uVar1;
-    puVar2[1] = uVar1;
-    puVar2[2] = 1;
-    __restgprlr_26();
-    return;
-  }
-  if (puVar2[1] == 0) {
-    MyAssertHandler(0xffffffff82015c18,0x476,0,0xffffffff82000f98,0xffffffff82015d04);
-  }
-  *(uint *)(puVar2[1] + 0x1e4) = uVar1;
-  puVar2[1] = uVar1;
-  puVar2[2] = puVar2[2] + 1;
-  __restgprlr_26();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure LerpEntityStatePlayer
 
 // 822C5A68  DelayListRemove  (cgame_mp/cg_ents_mp.cpp:1150)
-
-void DelayListRemove(undefined8 param_1,ulonglong param_2,ulonglong param_3)
-
-{
-  uint uVar1;
-  uint *puVar2;
-  
-  puVar2 = (uint *)__savegprlr_27();
-  if (puVar2 == (uint *)0x0) {
-    MyAssertHandler(0xffffffff82015c18,0x47f,0,0xffffffff82000f98,0xffffffff82015cf8);
-  }
-  if ((int)puVar2[2] < 1) {
-    MyAssertHandler(0xffffffff82015c18,0x480,0,0xffffffff82000f98,0xffffffff82015d5c);
-  }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82015c18,0x481,0,0xffffffff82000f98,0xffffffff82002118);
-  }
-  if ((param_2 & 0xffffffff) == (ulonglong)puVar2[1]) {
-    puVar2[1] = (uint)param_3;
-  }
-  if ((param_2 & 0xffffffff) == (ulonglong)*puVar2) {
-    *puVar2 = *(uint *)(*puVar2 + 0x1e4);
-  }
-  if ((param_3 & 0xffffffff) != 0) {
-    *(undefined4 *)((uint)param_3 + 0x1e4) = *(undefined4 *)((int)param_2 + 0x1e4);
-  }
-  uVar1 = puVar2[2];
-  puVar2[2] = (uint)((ulonglong)uVar1 - 1);
-  if ((longlong)((ulonglong)uVar1 - 1) < 0) {
-    MyAssertHandler(0xffffffff82015c18,0x48c,0,0xffffffff82000f98,0xffffffff82015d48);
-  }
-  __restgprlr_27();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure LerpEntityStatePlayer
 
 // 822C5B68  CG_EntGetLinkToParent  (cgame_mp/cg_ents_mp.cpp:1169)
-
-void CG_EntGetLinkToParent(undefined8 param_1,ulonglong param_2)
-
-{
-  int iVar1;
-  undefined8 uVar2;
-  int iVar3;
-  longlong lVar4;
-  
-  uVar2 = __savegprlr_29();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82015c18,0x495,0,0xffffffff82000f98,0xffffffff82002118);
-  }
-  iVar1 = (int)param_2;
-  if (*(short *)(iVar1 + 0x1a6) != 0) {
-    lVar4 = (longlong)*(short *)(iVar1 + 0x1a6) + -1;
-    iVar3 = CG_GetEntity(uVar2,lVar4);
-    if ((*(uint *)(iVar3 + 0x1c4) & 1) != 0) goto LAB_822c5bf8;
-    Com_PrintWarning(0xe,0xffffffff82015d70,*(undefined4 *)(iVar1 + 0xc4),
-                     *(undefined4 *)(iVar1 + 200),lVar4);
-  }
-  iVar3 = 0;
-LAB_822c5bf8:
-  __restgprlr_29(iVar3);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure LerpEntityStatePlayer
 
 // 822C5C00  EntPacketUpdateNeedsDelayed  (cgame_mp/cg_ents_mp.cpp:1192)
-
-void EntPacketUpdateNeedsDelayed(undefined8 param_1,undefined8 param_2,uint param_3)
-
-{
-  undefined8 uVar1;
-  int iVar2;
-  int iVar3;
-  
-  uVar1 = __savegprlr_29();
-  iVar2 = CG_EntGetLinkToParent();
-  if (((iVar2 == 0) ||
-      (iVar3 = CG_GetLocalClientGlobals(uVar1),
-      (*(uint *)(iVar2 + 0x1c4) & 0x10) != 0 &&
-      (*(uint *)(iVar2 + 0x1c4) >> 5 & 1) == (param_3 & 0xff))) ||
-     (uVar1 = 1, *(int *)(iVar2 + 0xc4) == *(int *)(iVar3 + 0x150))) {
-    uVar1 = 0;
-  }
-  __restgprlr_29(uVar1);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure LerpEntityStatePlayer
 
 // 822C9CD8  UpdateDelayedPacketEnts  (cgame_mp/cg_ents_mp.cpp:1212)
-
-void UpdateDelayedPacketEnts
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-               undefined8 param_5)
-
-{
-  undefined4 uVar1;
-  int *piVar2;
-  int iVar3;
-  bool bVar4;
-  int iVar5;
-  int iVar6;
-  ulonglong uVar7;
-  int iVar8;
-  int iVar9;
-  int iVar10;
-  ulonglong uVar11;
-  
-  uVar7 = __savegprlr();
-  CG_GetLocalClientGlobals();
-  piVar2 = (int *)param_2;
-  iVar9 = piVar2[2];
-  if (iVar9 == 0) {
-LAB_822c9f30:
-    __restgprlr();
-    return;
-  }
-  do {
-    iVar10 = 0;
-    iVar3 = *piVar2;
-    iVar6 = 0;
-    while (iVar5 = iVar3, iVar5 != 0) {
-      if (*(short *)(iVar5 + 0x1a6) == 0) {
-LAB_822c9e60:
-        bVar4 = false;
-      }
-      else {
-        uVar11 = (longlong)*(short *)(iVar5 + 0x1a6) - 1;
-        if (0x7ff < (uVar11 & 0xffffffff)) {
-          MyAssertHandler(0xffffffff8200ffd8,0x6b4,0,0xffffffff820012f4,uVar11,0x800);
-        }
-        if ((ulonglong)DAT_82a38328 <= (uVar7 & 0xffffffff)) {
-          MyAssertHandler(0xffffffff8200ffd8,0x6b9,0,0xffffffff820012b0,uVar7);
-        }
-        iVar3 = ((int)uVar7 * 0x800 + (int)uVar11) * 0x1ec + DAT_82a3ce28;
-        if ((*(uint *)(iVar3 + 0x1c4) & 1) == 0) {
-          Com_PrintWarning(0xe,0xffffffff82015d70,*(undefined4 *)(iVar5 + 0xc4),
-                           *(undefined4 *)(iVar5 + 200),uVar11);
-          goto LAB_822c9e60;
-        }
-        iVar8 = CG_GetLocalClientGlobals(uVar7);
-        if ((*(uint *)(iVar3 + 0x1c4) & 0x10) == 0) {
-          bVar4 = false;
-        }
-        else {
-          bVar4 = (*(uint *)(iVar3 + 0x1c4) >> 5 & 1) == ((uint)param_5 & 0xff);
-        }
-        if ((bVar4) || (bVar4 = true, *(int *)(iVar3 + 0xc4) == *(int *)(iVar8 + 0x150)))
-        goto LAB_822c9e60;
-      }
-      if (bVar4) {
-        iVar10 = iVar10 + 1;
-        if (99 < iVar10) {
-          Com_PrintWarning(0xe,0xffffffff8201687c,*(undefined4 *)(iVar5 + 0xc4));
-          __restgprlr();
-          return;
-        }
-        iVar3 = *(int *)(iVar5 + 0x1e4);
-        iVar6 = iVar5;
-      }
-      else {
-        uVar1 = *(undefined4 *)(iVar5 + 0xc4);
-        iVar3 = *(int *)(iVar5 + 0x1e4);
-        DelayListRemove(param_2,iVar5,iVar6);
-        UpdatePacketEnt(uVar7,uVar1,param_3,param_4,param_5);
-      }
-    }
-    iVar3 = piVar2[2];
-    if (iVar9 <= iVar3) {
-      MyAssertHandler(0xffffffff82015c18,0x4e8,0,"delayList->size < sizeAtStart\n\t%i, %i",iVar3,
-                      iVar9);
-      iVar3 = piVar2[2];
-      if (iVar9 <= iVar3) {
-        Com_PrintWarning(0xe,0xffffffff82016838,iVar3);
-        goto LAB_822c9f30;
-      }
-    }
-    iVar9 = iVar3;
-    if (iVar9 == 0) {
-      __restgprlr();
-      return;
-    }
-  } while( true );
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure LerpEntityStatePlayer
 
 // 822C9F38  CG_AddPacketEntities  (cgame_mp/cg_ents_mp.cpp:1268)
-
-void CG_AddPacketEntities(undefined8 param_1,undefined8 param_2)
-
-{
-  byte bVar1;
-  uint uVar2;
-  bool bVar3;
-  ulonglong uVar4;
-  int iVar6;
-  int iVar7;
-  longlong lVar5;
-  int iVar8;
-  int iVar9;
-  int iVar10;
-  int iVar11;
-  ulonglong uVar12;
-  int iVar13;
-  int local_b0 [2];
-  undefined4 local_a8;
-  undefined4 local_a4;
-  undefined4 local_a0;
-  
-  uVar4 = __savegprlr();
-  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff82016904);
-  Profile_Begin(0x13c);
-  iVar6 = CG_GetLocalClientStaticGlobals(uVar4);
-  bVar1 = *(byte *)(iVar6 + 0x4090);
-  *(bool *)(iVar6 + 0x4090) = bVar1 == 0;
-  iVar7 = CG_GetLocalClientGlobals(uVar4);
-  *(undefined4 *)(iVar7 + 0x797e4) = 0;
-  iVar6 = *(int *)(*(int *)(iVar7 + 0x335c) + 0x330c);
-  if (iVar6 != 0) {
-    lVar5 = CG_GetEntity(uVar4,*(undefined4 *)(*(int *)(iVar7 + 0x335c) + 0x3314));
-    dataCacheBlockTouch(lVar5 + 0xc4);
-  }
-  iVar11 = 0;
-  local_b0[0] = 0;
-  CG_AddClientSideSounds(uVar4);
-  local_a8 = 0;
-  local_a4 = 0;
-  local_a0 = 0;
-  iVar13 = 0;
-  if (0 < iVar6) {
-    iVar10 = 0;
-    do {
-      iVar13 = iVar13 + 1;
-      iVar8 = *(int *)(iVar7 + 0x335c) + iVar10;
-      uVar12 = (ulonglong)*(uint *)(iVar8 + 0x3314);
-      if (iVar13 < iVar6) {
-        lVar5 = CG_GetEntity(uVar4,*(undefined4 *)(iVar8 + 0x3414));
-        dataCacheBlockTouch(lVar5 + 0xc4);
-      }
-      if (0x7ff < uVar12) {
-        MyAssertHandler(0xffffffff8200ffd8,0x6b4,0,0xffffffff820012f4,uVar12,0x800);
-      }
-      if ((ulonglong)DAT_82a38328 <= (uVar4 & 0xffffffff)) {
-        MyAssertHandler(0xffffffff8200ffd8,0x6b9,0,0xffffffff820012b0,uVar4);
-      }
-      lVar5 = ((uVar4 & 0x1fffff) * 0x800 + uVar12) * 0x1ec + (ulonglong)DAT_82a3ce28;
-      iVar8 = CG_EntGetLinkToParent(uVar4,lVar5);
-      if (((iVar8 == 0) ||
-          (iVar9 = CG_GetLocalClientGlobals(uVar4),
-          (*(uint *)(iVar8 + 0x1c4) & 0x10) != 0 &&
-          (*(uint *)(iVar8 + 0x1c4) >> 5 & 1) == (uint)bVar1)) ||
-         (bVar3 = true, *(int *)(iVar8 + 0xc4) == *(int *)(iVar9 + 0x150))) {
-        bVar3 = false;
-      }
-      if (bVar3) {
-        DelayListAdd(&local_a8,lVar5);
-      }
-      else {
-        UpdatePacketEnt(uVar4,uVar12,param_2,local_b0,bVar1);
-      }
-      iVar10 = iVar10 + 0x100;
-    } while (iVar13 < iVar6);
-  }
-  UpdateDelayedPacketEnts(uVar4,&local_a8,param_2,local_b0,bVar1);
-  iVar6 = local_b0[0];
-  if ((DAT_82a3d568 != 0) && (0 < *(int *)(*(int *)(iVar7 + 0x335c) + 0x330c))) {
-    iVar13 = 0;
-    do {
-      uVar12 = (ulonglong)*(uint *)(*(int *)(iVar7 + 0x335c) + iVar13 + 0x3314);
-      if (0x7ff < uVar12) {
-        MyAssertHandler(0xffffffff8200ffd8,0x6b4,0,0xffffffff820012f4,uVar12,0x800);
-      }
-      if ((ulonglong)DAT_82a38328 <= (uVar4 & 0xffffffff)) {
-        MyAssertHandler(0xffffffff8200ffd8,0x6b9,0,0xffffffff820012b0,uVar4,DAT_82a38328);
-      }
-      lVar5 = ((uVar4 & 0x1fffff) * 0x800 + uVar12) * 0x1ec + (ulonglong)DAT_82a3ce28;
-      uVar2 = *(uint *)((int)lVar5 + 200);
-      if ((uVar2 != 8) && (uVar2 != 9)) {
-        iVar10 = CG_ShouldDelayEntityPacketPostPS(uVar4,lVar5);
-        if (iVar10 == 0) {
-          if (uVar2 < 0x12) {
-            CG_CheckEntEvents(uVar4,lVar5,0);
-          }
-          else {
-            CG_CheckEvents();
-          }
-        }
-        else if (2 < iVar6) {
-          MyAssertHandler(0xffffffff82015c18,0x532,0,0xffffffff82000f98,0xffffffff820168dc);
-        }
-      }
-      iVar11 = iVar11 + 1;
-      iVar13 = iVar13 + 0x100;
-    } while (iVar11 < *(int *)(*(int *)(iVar7 + 0x335c) + 0x330c));
-  }
-  Profile_EndInternal(0);
-  PIXEndNamedEvent();
-  __restgprlr(iVar6);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure clientInfo_t
 
 // 822C5C88  CG_DObjUpdateInfo  (cgame_mp/cg_ents_mp.cpp:1354)
-
-void CG_DObjUpdateInfo(int param_1,undefined8 param_2)
-
-{
-  DObjUpdateClientInfo((double)((float)(longlong)*(int *)(param_1 + 0x6b988) * 0.001),param_2);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 822C8718  CG_DObjGetLocalBoneMatrix  (cgame_mp/cg_ents_mp.cpp:1366)
 
-void CG_DObjGetLocalBoneMatrix(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+DObjAnimMat * CG_DObjGetLocalBoneMatrix(cpose_t *param_1,DObj *param_2,int param_3)
 
 {
-  undefined8 uVar1;
-  ulonglong uVar2;
+  cpose_t *pcVar1;
+  DObjAnimMat *pDVar2;
+  ulonglong uVar3;
+  ulonglong uVar4;
   
-  uVar1 = __savegprlr_29();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82015c18,0x559,0,0xffffffff82000f98,0xffffffff820040b4);
+  uVar4 = (ulonglong)param_3;
+  uVar3 = (ulonglong)(int)param_2;
+  pcVar1 = (cpose_t *)__savegprlr_29(param_1);
+  if ((uVar3 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_ents_mp.cpp",0x559
+                    ,0,"%s");
   }
   Profile_Begin(0x136);
-  CG_DObjCalcBone(uVar1,param_2,param_3);
-  Profile_EndInternal(0);
-  uVar2 = DObjGetRotTransArray(param_2);
-  if ((uVar2 & 0xffffffff) != 0) {
-    __restgprlr_29((param_3 & 0x7ffffff) * 0x20 + uVar2);
-    return;
+  CG_DObjCalcBone(pcVar1,(DObj *)uVar3,(int)uVar4);
+  Profile_EndInternal((double *)0x0);
+  pDVar2 = DObjGetRotTransArray((DObj *)uVar3);
+  if (pDVar2 != (DObjAnimMat *)0x0) {
+    pDVar2 = (DObjAnimMat *)__restgprlr_29((uVar4 & 0x7ffffff) * 0x20 + (longlong)(int)pDVar2);
+    return pDVar2;
   }
-  __restgprlr_29(0);
-  return;
+  pDVar2 = (DObjAnimMat *)__restgprlr_29(0);
+  return pDVar2;
 }
 
 
 // 822C87A8  CG_DObjGetLocalTagMatrix  (cgame_mp/cg_ents_mp.cpp:1387)
 
-void CG_DObjGetLocalTagMatrix(undefined8 param_1,ulonglong param_2,undefined8 param_3)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+DObjAnimMat * CG_DObjGetLocalTagMatrix(cpose_t *param_1,DObj *param_2,uint param_3)
 
 {
-  undefined8 uVar1;
+  cpose_t *pcVar1;
   int iVar2;
-  undefined1 local_30 [48];
+  DObjAnimMat *pDVar3;
+  ulonglong uVar4;
+  byte local_30 [48];
   
-  uVar1 = __savegprlr_29();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82015c18,0x56e,0,0xffffffff82000f98,0xffffffff820040b4);
+  uVar4 = (ulonglong)(int)param_2;
+  pcVar1 = (cpose_t *)__savegprlr_29(param_1);
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_ents_mp.cpp",0x56e
+                    ,0,"%s");
   }
   local_30[0] = 0xfe;
-  iVar2 = DObjGetBoneIndex(param_2,param_3,local_30);
+  iVar2 = DObjGetBoneIndex((DObj *)uVar4,param_3,local_30);
   if (iVar2 == 0) {
-    __restgprlr_29();
-    return;
+    pDVar3 = (DObjAnimMat *)__restgprlr_29();
+    return pDVar3;
   }
-  CG_DObjGetLocalBoneMatrix(uVar1,param_2,local_30[0]);
-  __restgprlr_29();
-  return;
+  pDVar3 = CG_DObjGetLocalBoneMatrix(pcVar1,(DObj *)uVar4,(uint)local_30[0]);
+  pDVar3 = (DObjAnimMat *)__restgprlr_29(pDVar3);
+  return pDVar3;
 }
 
 
 // 822C8830  CG_DObjGetWorldBoneMatrix  (cgame_mp/cg_ents_mp.cpp:1407)
 
-void CG_DObjGetWorldBoneMatrix
-               (undefined8 param_1,ulonglong param_2,undefined8 param_3,float *param_4,
-               float *param_5)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+int CG_DObjGetWorldBoneMatrix
+              (cpose_t *param_1,DObj *param_2,int param_3,float (*param_4) [3],float *param_5)
 
 {
   float fVar1;
@@ -1762,140 +293,151 @@ void CG_DObjGetWorldBoneMatrix
   float fVar6;
   float fVar7;
   float fVar8;
-  int iVar9;
-  ulonglong uVar10;
-  float *pfVar11;
+  refdef_t *prVar9;
+  cpose_t *pcVar10;
+  DObjAnimMat *pDVar11;
+  int iVar12;
+  ulonglong uVar13;
   
-  uVar10 = __savegprlr_24();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82015c18,0x582,0,0xffffffff82000f98,0xffffffff820040b4);
+  uVar13 = (ulonglong)(int)param_2;
+  pcVar10 = (cpose_t *)__savegprlr_24(param_1);
+  if ((uVar13 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_ents_mp.cpp",0x582
+                    ,0,"%s");
   }
-  if ((uVar10 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82015c18,0x583,0,0xffffffff82000f98,0xffffffff82013bec);
+  if (pcVar10 == (cpose_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_ents_mp.cpp",0x583
+                    ,0,"%s");
   }
-  if (DAT_82a3d5f8 == 0) {
-    MyAssertHandler(0xffffffff82015c18,0x584,0,0xffffffff82000f98,0xffffffff82016548);
+  if (g_activeRefDef == (refdef_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_ents_mp.cpp",0x584
+                    ,0,"%s");
   }
-  pfVar11 = (float *)CG_DObjGetLocalBoneMatrix(uVar10,param_2,param_3);
-  if (pfVar11 == (float *)0x0) {
-    __restgprlr_24();
-    return;
+  pDVar11 = CG_DObjGetLocalBoneMatrix(pcVar10,(DObj *)uVar13,param_3);
+  if (pDVar11 == (DObjAnimMat *)0x0) {
+    iVar12 = __restgprlr_24();
+    return iVar12;
   }
-  if (((uint)*pfVar11 & 0x7f800000) != 0x7f800000) {
-    if (((uint)pfVar11[1] & 0x7f800000) != 0x7f800000) {
-      if (((uint)pfVar11[2] & 0x7f800000) != 0x7f800000) {
-        if (((uint)pfVar11[3] & 0x7f800000) != 0x7f800000) goto LAB_822c8980;
-      }
-    }
+  if ((((((uint)pDVar11->quat[0] & 0x7f800000) == 0x7f800000) ||
+       (((uint)pDVar11->quat[1] & 0x7f800000) == 0x7f800000)) ||
+      (((uint)pDVar11->quat[2] & 0x7f800000) == 0x7f800000)) ||
+     (((uint)pDVar11->quat[3] & 0x7f800000) == 0x7f800000)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\../xanim/xanim_public.h"
+                    ,0x205,0,"%s");
   }
-  MyAssertHandler(0xffffffff82015a60,0x205,0,0xffffffff82000f98,0xffffffff820159f0);
-LAB_822c8980:
-  if (((uint)pfVar11[7] & 0x7f800000) == 0x7f800000) {
-    MyAssertHandler(0xffffffff82015a60,0x206,0,0xffffffff82000f98,0xffffffff820159d4);
+  if (((uint)pDVar11->transWeight & 0x7f800000) == 0x7f800000) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\../xanim/xanim_public.h"
+                    ,0x206,0,"%s");
   }
-  iVar9 = DAT_82a3d5f8;
-  fVar1 = pfVar11[2];
-  fVar2 = pfVar11[7];
-  fVar3 = pfVar11[1];
+  prVar9 = g_activeRefDef;
+  fVar1 = pDVar11->quat[2];
+  fVar2 = pDVar11->transWeight;
+  fVar3 = pDVar11->quat[1];
   fVar7 = fVar3 * fVar2;
-  fVar8 = *pfVar11 * fVar2;
-  fVar4 = pfVar11[3];
+  fVar8 = pDVar11->quat[0] * fVar2;
+  fVar4 = pDVar11->quat[3];
   fVar5 = fVar1 * fVar1 * fVar2;
-  fVar6 = *pfVar11 * fVar8;
+  fVar6 = pDVar11->quat[0] * fVar8;
   fVar2 = fVar4 * fVar1 * fVar2;
-  param_4[2] = fVar1 * fVar8 - fVar4 * fVar7;
-  param_4[5] = fVar1 * fVar7 + fVar4 * fVar8;
-  param_4[1] = fVar2 + fVar3 * fVar8;
-  param_4[3] = fVar3 * fVar8 - fVar2;
-  param_4[6] = fVar4 * fVar7 + fVar1 * fVar8;
-  *param_4 = 1.0 - (fVar5 + fVar3 * fVar7);
-  param_4[4] = 1.0 - (fVar5 + fVar6);
-  param_4[7] = fVar1 * fVar7 - fVar4 * fVar8;
-  param_4[8] = 1.0 - (fVar3 * fVar7 + fVar6);
-  *param_5 = pfVar11[4] + *(float *)(iVar9 + 0x4c);
-  param_5[1] = pfVar11[5] + *(float *)(iVar9 + 0x50);
-  param_5[2] = pfVar11[6] + *(float *)(iVar9 + 0x54);
-  __restgprlr_24(1);
-  return;
+  (*param_4)[2] = fVar1 * fVar8 - fVar4 * fVar7;
+  param_4[1][2] = fVar1 * fVar7 + fVar4 * fVar8;
+  (*param_4)[1] = fVar2 + fVar3 * fVar8;
+  param_4[1][0] = fVar3 * fVar8 - fVar2;
+  param_4[2][0] = fVar4 * fVar7 + fVar1 * fVar8;
+  (*param_4)[0] = 1.0 - (fVar5 + fVar3 * fVar7);
+  param_4[1][1] = 1.0 - (fVar5 + fVar6);
+  param_4[2][1] = fVar1 * fVar7 - fVar4 * fVar8;
+  param_4[2][2] = 1.0 - (fVar3 * fVar7 + fVar6);
+  *param_5 = pDVar11->trans[0] + prVar9->viewOffset[0];
+  param_5[1] = pDVar11->trans[1] + prVar9->viewOffset[1];
+  param_5[2] = pDVar11->trans[2] + prVar9->viewOffset[2];
+  iVar12 = __restgprlr_24(1);
+  return iVar12;
 }
 
 
 // 822C8A98  CG_DObjGetWorldBoneBindMatrix  (cgame_mp/cg_ents_mp.cpp:1425)
 
-void CG_DObjGetWorldBoneBindMatrix
-               (undefined8 param_1,ulonglong param_2,ulonglong param_3,float *param_4,float *param_5
-               )
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+int CG_DObjGetWorldBoneBindMatrix
+              (cpose_t *param_1,DObj *param_2,int param_3,float (*param_4) [3],float *param_5)
 
 {
-  ulonglong uVar1;
+  float fVar1;
   float fVar2;
   float fVar3;
   float fVar4;
-  float fVar5;
+  refdef_t *prVar5;
   int iVar6;
-  float local_60;
-  float local_5c;
-  float local_58;
-  float local_54;
-  float local_50;
-  float local_4c;
-  float local_48;
-  float local_44;
+  ulonglong uVar7;
+  DObjAnimMat local_60 [3];
   
-  iVar6 = __savegprlr_25();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82015c18,0x594,0,0xffffffff82000f98,0xffffffff820040b4);
+  uVar7 = (ulonglong)(int)param_2;
+  iVar6 = __savegprlr_25(param_1);
+  if ((uVar7 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_ents_mp.cpp",0x594
+                    ,0,"%s");
   }
   if (iVar6 == 0) {
-    MyAssertHandler(0xffffffff82015c18,0x595,0,0xffffffff82000f98,0xffffffff82013bec);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_ents_mp.cpp",0x595
+                    ,0,"%s");
   }
-  if (DAT_82a3d5f8 == 0) {
-    MyAssertHandler(0xffffffff82015c18,0x596,0,0xffffffff82000f98,0xffffffff82016548);
+  if (g_activeRefDef == (refdef_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_ents_mp.cpp",0x596
+                    ,0,"%s");
   }
-  uVar1 = param_3 & 0xff;
-  if ((int)param_3 != (int)uVar1) {
-    MyAssertHandler(0xffffffff82016410,0x1ce,0,0xffffffff8201645c,param_3,uVar1);
+  if (param_3 != (param_3 & 0xffU)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/assertive.h"
+                    ,0x1ce,0,"i == static_cast< Type >( i )\n\t%i, %i");
   }
-  DObjGetBasePoseMatrix(param_2,uVar1,&local_60);
-  if (((uint)local_60 & 0x7f800000) != 0x7f800000) {
-    if (((uint)local_5c & 0x7f800000) != 0x7f800000) {
-      if (((uint)local_58 & 0x7f800000) != 0x7f800000) {
-        if (((uint)local_54 & 0x7f800000) != 0x7f800000) goto LAB_822c8c10;
+  DObjGetBasePoseMatrix((DObj *)uVar7,(uchar)param_3,local_60);
+  if (((uint)local_60[0].quat[0] & 0x7f800000) != 0x7f800000) {
+    if (((uint)local_60[0].quat[1] & 0x7f800000) != 0x7f800000) {
+      if (((uint)local_60[0].quat[2] & 0x7f800000) != 0x7f800000) {
+        if (((uint)local_60[0].quat[3] & 0x7f800000) != 0x7f800000) goto LAB_822c8c10;
       }
     }
   }
-  MyAssertHandler(0xffffffff82015a60,0x205,0,0xffffffff82000f98,0xffffffff820159f0);
+  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\../xanim/xanim_public.h",
+                  0x205,0,"%s");
 LAB_822c8c10:
-  if (((uint)local_44 & 0x7f800000) == 0x7f800000) {
-    MyAssertHandler(0xffffffff82015a60,0x206,0,0xffffffff82000f98,0xffffffff820159d4);
+  if (((uint)local_60[0].transWeight & 0x7f800000) == 0x7f800000) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\../xanim/xanim_public.h"
+                    ,0x206,0,"%s");
   }
-  iVar6 = DAT_82a3d5f8;
-  fVar2 = local_44 * local_5c;
-  fVar5 = local_44 * local_60;
-  fVar4 = local_58 * local_44 * local_58;
-  fVar3 = local_54 * local_44 * local_58;
-  param_4[5] = local_58 * fVar2 + local_54 * fVar5;
-  param_4[2] = local_58 * fVar5 - local_54 * fVar2;
-  param_4[6] = local_54 * fVar2 + local_58 * fVar5;
-  param_4[1] = fVar3 + fVar5 * local_5c;
-  param_4[7] = local_58 * fVar2 - local_54 * fVar5;
-  param_4[3] = fVar5 * local_5c - fVar3;
-  *param_4 = 1.0 - (fVar4 + fVar2 * local_5c);
-  param_4[4] = 1.0 - (fVar4 + local_60 * fVar5);
-  param_4[8] = 1.0 - (fVar2 * local_5c + local_60 * fVar5);
-  *param_5 = *(float *)(iVar6 + 0x4c) + local_50;
-  param_5[1] = *(float *)(iVar6 + 0x50) + local_4c;
-  param_5[2] = *(float *)(iVar6 + 0x54) + local_48;
-  __restgprlr_25(1);
-  return;
+  prVar5 = g_activeRefDef;
+  fVar1 = local_60[0].transWeight * local_60[0].quat[1];
+  fVar4 = local_60[0].transWeight * local_60[0].quat[0];
+  fVar3 = local_60[0].quat[2] * local_60[0].transWeight * local_60[0].quat[2];
+  fVar2 = local_60[0].quat[3] * local_60[0].transWeight * local_60[0].quat[2];
+  param_4[1][2] = local_60[0].quat[2] * fVar1 + local_60[0].quat[3] * fVar4;
+  (*param_4)[2] = local_60[0].quat[2] * fVar4 - local_60[0].quat[3] * fVar1;
+  param_4[2][0] = local_60[0].quat[3] * fVar1 + local_60[0].quat[2] * fVar4;
+  (*param_4)[1] = fVar2 + fVar4 * local_60[0].quat[1];
+  param_4[2][1] = local_60[0].quat[2] * fVar1 - local_60[0].quat[3] * fVar4;
+  param_4[1][0] = fVar4 * local_60[0].quat[1] - fVar2;
+  (*param_4)[0] = 1.0 - (fVar3 + fVar1 * local_60[0].quat[1]);
+  param_4[1][1] = 1.0 - (fVar3 + local_60[0].quat[0] * fVar4);
+  param_4[2][2] = 1.0 - (fVar1 * local_60[0].quat[1] + local_60[0].quat[0] * fVar4);
+  *param_5 = prVar5->viewOffset[0] + local_60[0].trans[0];
+  param_5[1] = prVar5->viewOffset[1] + local_60[0].trans[1];
+  param_5[2] = prVar5->viewOffset[2] + local_60[0].trans[2];
+  iVar6 = __restgprlr_25(1);
+  return iVar6;
 }
 
 
 // 822C8D28  CG_DObjGetWorldTagMatrix  (cgame_mp/cg_ents_mp.cpp:1446)
 
-void CG_DObjGetWorldTagMatrix
-               (undefined8 param_1,ulonglong param_2,undefined8 param_3,float *param_4,
-               float *param_5)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+int CG_DObjGetWorldTagMatrix
+              (cpose_t *param_1,DObj *param_2,uint param_3,float (*param_4) [3],float *param_5)
 
 {
   float fVar1;
@@ -1906,275 +448,135 @@ void CG_DObjGetWorldTagMatrix
   float fVar6;
   float fVar7;
   float fVar8;
-  int iVar9;
-  ulonglong uVar10;
-  float *pfVar11;
+  refdef_t *prVar9;
+  cpose_t *pcVar10;
+  DObjAnimMat *pDVar11;
+  int iVar12;
+  ulonglong uVar13;
   
-  uVar10 = __savegprlr_24();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82015c18,0x5a9,0,0xffffffff82000f98,0xffffffff820040b4);
+  uVar13 = (ulonglong)(int)param_2;
+  pcVar10 = (cpose_t *)__savegprlr_24(param_1);
+  if ((uVar13 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_ents_mp.cpp",0x5a9
+                    ,0,"%s");
   }
-  if ((uVar10 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82015c18,0x5aa,0,0xffffffff82000f98,0xffffffff82013bec);
+  if (pcVar10 == (cpose_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_ents_mp.cpp",0x5aa
+                    ,0,"%s");
   }
-  if (DAT_82a3d5f8 == 0) {
-    MyAssertHandler(0xffffffff82015c18,0x5ab,0,0xffffffff82000f98,0xffffffff82016548);
+  if (g_activeRefDef == (refdef_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_ents_mp.cpp",0x5ab
+                    ,0,"%s");
   }
-  pfVar11 = (float *)CG_DObjGetLocalTagMatrix(uVar10,param_2,param_3);
-  if (pfVar11 == (float *)0x0) {
-    __restgprlr_24();
-    return;
+  pDVar11 = CG_DObjGetLocalTagMatrix(pcVar10,(DObj *)uVar13,param_3);
+  if (pDVar11 == (DObjAnimMat *)0x0) {
+    iVar12 = __restgprlr_24();
+    return iVar12;
   }
-  if (((uint)*pfVar11 & 0x7f800000) != 0x7f800000) {
-    if (((uint)pfVar11[1] & 0x7f800000) != 0x7f800000) {
-      if (((uint)pfVar11[2] & 0x7f800000) != 0x7f800000) {
-        if (((uint)pfVar11[3] & 0x7f800000) != 0x7f800000) goto LAB_822c8e78;
-      }
-    }
+  if ((((((uint)pDVar11->quat[0] & 0x7f800000) == 0x7f800000) ||
+       (((uint)pDVar11->quat[1] & 0x7f800000) == 0x7f800000)) ||
+      (((uint)pDVar11->quat[2] & 0x7f800000) == 0x7f800000)) ||
+     (((uint)pDVar11->quat[3] & 0x7f800000) == 0x7f800000)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\../xanim/xanim_public.h"
+                    ,0x205,0,"%s");
   }
-  MyAssertHandler(0xffffffff82015a60,0x205,0,0xffffffff82000f98,0xffffffff820159f0);
-LAB_822c8e78:
-  if (((uint)pfVar11[7] & 0x7f800000) == 0x7f800000) {
-    MyAssertHandler(0xffffffff82015a60,0x206,0,0xffffffff82000f98,0xffffffff820159d4);
+  if (((uint)pDVar11->transWeight & 0x7f800000) == 0x7f800000) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\../xanim/xanim_public.h"
+                    ,0x206,0,"%s");
   }
-  iVar9 = DAT_82a3d5f8;
-  fVar1 = pfVar11[2];
-  fVar2 = pfVar11[7];
-  fVar3 = pfVar11[1];
+  prVar9 = g_activeRefDef;
+  fVar1 = pDVar11->quat[2];
+  fVar2 = pDVar11->transWeight;
+  fVar3 = pDVar11->quat[1];
   fVar7 = fVar3 * fVar2;
-  fVar8 = *pfVar11 * fVar2;
-  fVar4 = pfVar11[3];
+  fVar8 = pDVar11->quat[0] * fVar2;
+  fVar4 = pDVar11->quat[3];
   fVar5 = fVar1 * fVar1 * fVar2;
-  fVar6 = *pfVar11 * fVar8;
+  fVar6 = pDVar11->quat[0] * fVar8;
   fVar2 = fVar4 * fVar1 * fVar2;
-  param_4[2] = fVar1 * fVar8 - fVar4 * fVar7;
-  param_4[5] = fVar1 * fVar7 + fVar4 * fVar8;
-  param_4[1] = fVar2 + fVar3 * fVar8;
-  param_4[3] = fVar3 * fVar8 - fVar2;
-  param_4[6] = fVar4 * fVar7 + fVar1 * fVar8;
-  *param_4 = 1.0 - (fVar5 + fVar3 * fVar7);
-  param_4[4] = 1.0 - (fVar5 + fVar6);
-  param_4[7] = fVar1 * fVar7 - fVar4 * fVar8;
-  param_4[8] = 1.0 - (fVar3 * fVar7 + fVar6);
-  *param_5 = pfVar11[4] + *(float *)(iVar9 + 0x4c);
-  param_5[1] = pfVar11[5] + *(float *)(iVar9 + 0x50);
-  param_5[2] = pfVar11[6] + *(float *)(iVar9 + 0x54);
-  __restgprlr_24(1);
-  return;
+  (*param_4)[2] = fVar1 * fVar8 - fVar4 * fVar7;
+  param_4[1][2] = fVar1 * fVar7 + fVar4 * fVar8;
+  (*param_4)[1] = fVar2 + fVar3 * fVar8;
+  param_4[1][0] = fVar3 * fVar8 - fVar2;
+  param_4[2][0] = fVar4 * fVar7 + fVar1 * fVar8;
+  (*param_4)[0] = 1.0 - (fVar5 + fVar3 * fVar7);
+  param_4[1][1] = 1.0 - (fVar5 + fVar6);
+  param_4[2][1] = fVar1 * fVar7 - fVar4 * fVar8;
+  param_4[2][2] = 1.0 - (fVar3 * fVar7 + fVar6);
+  *param_5 = pDVar11->trans[0] + prVar9->viewOffset[0];
+  param_5[1] = pDVar11->trans[1] + prVar9->viewOffset[1];
+  param_5[2] = pDVar11->trans[2] + prVar9->viewOffset[2];
+  iVar12 = __restgprlr_24(1);
+  return iVar12;
 }
 
 
 // 822C8F90  CG_DObjGetWorldTagPos  (cgame_mp/cg_ents_mp.cpp:1470)
 
-void CG_DObjGetWorldTagPos(undefined8 param_1,ulonglong param_2,undefined8 param_3,float *param_4)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+int CG_DObjGetWorldTagPos(cpose_t *param_1,DObj *param_2,uint param_3,float *param_4)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  int iVar3;
+  refdef_t *prVar1;
+  cpose_t *pcVar2;
+  DObjAnimMat *pDVar3;
+  int iVar4;
+  ulonglong uVar5;
   
-  uVar2 = __savegprlr_25();
-  if (DAT_82a3d5f8 == 0) {
-    MyAssertHandler(0xffffffff82015c18,0x5c0,0,0xffffffff82000f98,0xffffffff82016548);
+  uVar5 = (ulonglong)(int)param_2;
+  pcVar2 = (cpose_t *)__savegprlr_25(param_1);
+  if (g_activeRefDef == (refdef_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_ents_mp.cpp",0x5c0
+                    ,0,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82015c18,0x5c2,0,0xffffffff82000f98,0xffffffff820040b4);
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_ents_mp.cpp",0x5c2
+                    ,0,"%s");
   }
-  if ((uVar2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82015c18,0x5c3,0,0xffffffff82000f98,0xffffffff82013bec);
+  if (pcVar2 == (cpose_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_ents_mp.cpp",0x5c3
+                    ,0,"%s");
   }
-  iVar3 = CG_DObjGetLocalTagMatrix(uVar2,param_2,param_3);
-  iVar1 = DAT_82a3d5f8;
-  if (iVar3 == 0) {
-    __restgprlr_25();
-    return;
+  pDVar3 = CG_DObjGetLocalTagMatrix(pcVar2,(DObj *)uVar5,param_3);
+  prVar1 = g_activeRefDef;
+  if (pDVar3 == (DObjAnimMat *)0x0) {
+    iVar4 = __restgprlr_25();
+    return iVar4;
   }
-  *param_4 = *(float *)(DAT_82a3d5f8 + 0x4c) + *(float *)(iVar3 + 0x10);
-  param_4[1] = *(float *)(iVar3 + 0x14) + *(float *)(iVar1 + 0x50);
-  param_4[2] = *(float *)(iVar3 + 0x18) + *(float *)(iVar1 + 0x54);
-  __restgprlr_25(1);
-  return;
+  *param_4 = g_activeRefDef->viewOffset[0] + pDVar3->trans[0];
+  param_4[1] = pDVar3->trans[1] + prVar1->viewOffset[1];
+  param_4[2] = pDVar3->trans[2] + prVar1->viewOffset[2];
+  iVar4 = __restgprlr_25(1);
+  return iVar4;
 }
 
 
 // 822C5CE0  CG_GetPose  (cgame_mp/cg_ents_mp.cpp:1492)
-
-void CG_GetPose(undefined8 param_1,longlong param_2)
-
-{
-  undefined8 uVar1;
-  longlong lVar2;
-  int iVar3;
-  
-  uVar1 = __savegprlr_29();
-  iVar3 = (int)param_2;
-  if ((iVar3 < 0) || (0x801 < iVar3)) {
-    MyAssertHandler(0xffffffff82015c18,0x5d9,0,0xffffffff82015e04,0xffffffff82015e18,param_2);
-  }
-  if (iVar3 < 0x800) {
-    CG_GetEntity(uVar1,param_2);
-    __restgprlr_29();
-    return;
-  }
-  if (0x801 < iVar3) {
-    MyAssertHandler(0xffffffff82015c18,0x5e1,0,0xffffffff82015da8,param_2,0x800,0x801);
-  }
-  lVar2 = CG_GetLocalClientGlobals(uVar1);
-  if (param_2 == 0x800) {
-    __restgprlr_29(lVar2 + 0x106fa8);
-    return;
-  }
-  __restgprlr_29(lVar2 + 0x107004);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure LerpEntityStatePlayer
 
 // 822C5DA8  CG_SoundBlend  (cgame_mp/cg_ents_mp.cpp:1525)
-
-void CG_SoundBlend(undefined8 param_1,longlong param_2)
-
-{
-  int iVar1;
-  undefined8 uVar2;
-  undefined8 uVar3;
-  char cVar7;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  int iVar6;
-  double dVar8;
-  
-  uVar2 = __savegprlr_26();
-  iVar1 = (int)param_2;
-  if (((ulonglong)*(uint *)(iVar1 + 0x17c) != 0) && (*(int *)(iVar1 + 0x180) != 0)) {
-    uVar3 = CL_GetConfigString((ulonglong)*(uint *)(iVar1 + 0x17c) + 0x824);
-    cVar7 = CG_ShouldPlaySoundOnLocalClient
-                      (uVar2,*(undefined4 *)(iVar1 + 0xc4),param_2 + 0x14,uVar3);
-    if (cVar7 != '\0') {
-      CL_GetConfigString((ulonglong)*(uint *)(iVar1 + 0x17c) + 0x824);
-      uVar4 = CL_PickSoundAlias();
-      CL_GetConfigString((ulonglong)*(uint *)(iVar1 + 0x180) + 0x824);
-      uVar5 = CL_PickSoundAlias();
-      if (((uVar4 & 0xffffffff) != 0) && ((uVar5 & 0xffffffff) != 0)) {
-        iVar6 = CG_GetLocalClientGlobals(uVar2);
-        uVar3 = 0x3ff0000000000000;
-        dVar8 = (double)((*(float *)(iVar1 + 0x118) - *(float *)(iVar1 + 0xa8)) *
-                         *(float *)(iVar6 + 0x6b980) + *(float *)(iVar1 + 0xa8));
-        if ((dVar8 < 0.0) || (1.0 < dVar8)) {
-          MyAssertHandler(0xffffffff82015c18,0x610,0,0xffffffff82000f98,0xffffffff82015e44);
-        }
-        CG_GenerateSndEntHandle(uVar2,*(undefined4 *)(iVar1 + 0xc4));
-        SND_PlayBlendedSoundAliases(dVar8,uVar3,uVar4,uVar5);
-      }
-    }
-  }
-  __restgprlr_26();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure LerpEntityStatePlayer
 
 // 822C5EF0  CG_StartFx  (cgame_mp/cg_ents_mp.cpp:1560)
-
-void CG_StartFx(undefined8 param_1,undefined8 param_2,longlong param_3,undefined8 param_4,
-               undefined8 param_5)
-
-{
-  int iVar1;
-  undefined8 uVar2;
-  char cVar3;
-  undefined1 auStack_70 [112];
-  
-  uVar2 = __savegprlr_25();
-  AnglesToAxis(param_3 + 0x20,auStack_70);
-  iVar1 = *(int *)((int)param_3 + 0x19c);
-  cVar3 = CL_Demo_IsPlaying(uVar2);
-  if ((cVar3 == '\0') || (0 < iVar1)) {
-    if ((iVar1 < 1) || (0xff < iVar1)) {
-      MyAssertHandler(0xffffffff82015c18,0x626,0,0xffffffff82015e70,iVar1,1,0xff);
-    }
-    iVar1 = *(int *)(&DAT_82a3ca20 + iVar1 * 4);
-    if (iVar1 == 0) {
-      MyAssertHandler(0xffffffff82015c18,0x628,0,0xffffffff82000f98,0xffffffff82015e68);
-    }
-    FX_SpawnOrientedEffectForCEntity(uVar2,iVar1,param_4,param_3 + 0x14,auStack_70,param_2,param_5);
-  }
-  __restgprlr_25();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure LerpEntityStatePlayer
 
 // 822C5FE0  CG_Fx  (cgame_mp/cg_ents_mp.cpp:1583)
-
-void CG_Fx(undefined8 param_1,undefined8 param_2,undefined8 param_3)
-
-{
-  int iVar1;
-  undefined8 uVar2;
-  
-  uVar2 = __savegprlr_29();
-  iVar1 = (int)param_3;
-  if (*(int *)(iVar1 + 0x2c) != *(int *)(iVar1 + 0x138)) {
-    if (*(int *)(iVar1 + 0x30) != 0) {
-      FX_AssertAllocatedEffect();
-      FX_ThroughWithEffect(uVar2,*(undefined4 *)(iVar1 + 0x30));
-    }
-    *(undefined4 *)(iVar1 + 0x2c) = 0;
-    *(undefined4 *)(iVar1 + 0x30) = 0;
-    CG_StartFx(uVar2,param_2,param_3,*(undefined4 *)(iVar1 + 0x138),*(undefined4 *)(iVar1 + 0x138));
-  }
-  __restgprlr_29();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure LerpEntityStatePlayer
 
 // 822C6050  CG_LoopFx  (cgame_mp/cg_ents_mp.cpp:1601)
-
-void CG_LoopFx(undefined8 param_1,undefined8 param_2,undefined8 param_3)
-
-{
-  float fVar1;
-  uint uVar2;
-  int iVar3;
-  float fVar4;
-  float fVar5;
-  int iVar6;
-  float fVar7;
-  undefined8 uVar8;
-  int iVar9;
-  
-  uVar8 = __savegprlr_26();
-  iVar9 = CG_GetLocalClientGlobals();
-  iVar3 = (int)param_3;
-  fVar1 = *(float *)(iVar3 + 0x118);
-  if (fVar1 != 0.0) {
-    fVar7 = *(float *)(iVar3 + 0x1c) - *(float *)(iVar9 + 0x24);
-    fVar4 = *(float *)(iVar3 + 0x14) - *(float *)(iVar9 + 0x1c);
-    fVar5 = *(float *)(iVar3 + 0x18) - *(float *)(iVar9 + 0x20);
-    if (fVar1 * fVar1 <= fVar5 * fVar5 + fVar4 * fVar4 + fVar7 * fVar7) goto LAB_822c615c;
-  }
-  uVar2 = *(uint *)(iVar3 + 0x11c);
-  if ((int)uVar2 < 1) {
-    MyAssertHandler(0xffffffff82015c18,0x64c,0,0xffffffff82000f98,0xffffffff82015eac);
-  }
-  if (*(int *)(iVar3 + 0x30) == 0) {
-    CG_StartFx(uVar8,param_2,param_3,(ulonglong)*(uint *)(iVar9 + 0x6b98c),
-               (ulonglong)*(uint *)(iVar9 + 0x6b98c) + (ulonglong)uVar2);
-  }
-  if (*(int *)(iVar3 + 0x2c) <= *(int *)(iVar9 + 0x6b98c)) {
-    do {
-      FX_RetriggerEffect(uVar8,*(undefined4 *)(iVar3 + 0x30),*(undefined4 *)(iVar3 + 0x2c));
-      iVar6 = uVar2 + *(int *)(iVar3 + 0x2c);
-      *(int *)(iVar3 + 0x2c) = iVar6;
-    } while (iVar6 <= *(int *)(iVar9 + 0x6b98c));
-  }
-LAB_822c615c:
-  __restgprlr_26();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure LerpEntityStatePlayer
 
 // 822C6168  CG_ClampPrimaryLightOrigin  (cgame_mp/cg_ents_mp.cpp:1628)
 
-void CG_ClampPrimaryLightOrigin(int param_1,int param_2)
+void CG_ClampPrimaryLightOrigin(GfxLight *param_1,ComPrimaryLight *param_2)
 
 {
   float fVar1;
@@ -2183,25 +585,25 @@ void CG_ClampPrimaryLightOrigin(int param_1,int param_2)
   float fVar4;
   float fVar5;
   
-  fVar2 = *(float *)(param_1 + 0x2c) - *(float *)(param_2 + 0x2c);
-  fVar5 = *(float *)(param_1 + 0x30) - *(float *)(param_2 + 0x30);
-  fVar3 = *(float *)(param_1 + 0x28) - *(float *)(param_2 + 0x28);
-  fVar1 = *(float *)(param_2 + 0x48);
+  fVar2 = param_1->origin[1] - param_2->origin[1];
+  fVar5 = param_1->origin[2] - param_2->origin[2];
+  fVar3 = param_1->origin[0] - param_2->origin[0];
+  fVar1 = param_2->translationLimit;
   fVar4 = fVar3 * fVar3 + fVar5 * fVar5 + fVar2 * fVar2;
   if (fVar4 < fVar1 * fVar1) {
     return;
   }
   fVar1 = fVar1 / SQRT(fVar4);
-  *(float *)(param_1 + 0x28) = fVar1 * fVar3 + *(float *)(param_2 + 0x28);
-  *(float *)(param_1 + 0x2c) = fVar1 * fVar2 + *(float *)(param_2 + 0x2c);
-  *(float *)(param_1 + 0x30) = fVar5 * fVar1 + *(float *)(param_2 + 0x30);
+  param_1->origin[0] = fVar1 * fVar3 + param_2->origin[0];
+  param_1->origin[1] = fVar1 * fVar2 + param_2->origin[1];
+  param_1->origin[2] = fVar5 * fVar1 + param_2->origin[2];
   return;
 }
 
 
 // 822C61E0  CG_ClampPrimaryLightDir  (cgame_mp/cg_ents_mp.cpp:1644)
 
-void CG_ClampPrimaryLightDir(undefined8 param_1,int param_2)
+void CG_ClampPrimaryLightDir(GfxLight *param_1,ComPrimaryLight *param_2)
 
 {
   float fVar1;
@@ -2210,38 +612,35 @@ void CG_ClampPrimaryLightDir(undefined8 param_1,int param_2)
   float fVar4;
   float fVar5;
   float fVar6;
+  float fVar7;
   int iVar8;
-  undefined8 uVar7;
-  double dVar9;
   
-  iVar8 = __savegprlr_28();
-  fVar1 = *(float *)(param_2 + 0x10);
-  fVar2 = *(float *)(param_2 + 0x14);
-  fVar3 = *(float *)(param_2 + 0x18);
-  fVar4 = *(float *)(param_2 + 0x44);
-  fVar5 = fVar3 * *(float *)(iVar8 + 0x18) +
+  iVar8 = __savegprlr_28(param_1);
+  fVar1 = param_2->dir[0];
+  fVar2 = param_2->dir[1];
+  fVar3 = param_2->dir[2];
+  fVar4 = param_2->rotationLimit;
+  fVar6 = fVar3 * *(float *)(iVar8 + 0x18) +
           fVar2 * *(float *)(iVar8 + 0x14) + fVar1 * *(float *)(iVar8 + 0x10);
-  if (fVar5 < fVar4) {
-    fVar6 = -fVar5;
-    fVar5 = SQRT(-(fVar4 * fVar4 - 1.0) / -(fVar5 * fVar5 - 1.0));
-    fVar1 = fVar1 * fVar4 + (fVar1 * fVar6 + *(float *)(iVar8 + 0x10)) * fVar5;
-    dVar9 = (double)fVar1;
+  if (fVar6 < fVar4) {
+    fVar5 = -fVar6;
+    fVar7 = SQRT(-(fVar4 * fVar4 - 1.0) / -(fVar6 * fVar6 - 1.0));
+    fVar1 = fVar1 * fVar4 + (fVar1 * fVar5 + *(float *)(iVar8 + 0x10)) * fVar7;
     *(float *)(iVar8 + 0x10) = fVar1;
-    fVar1 = (fVar2 * fVar6 + *(float *)(iVar8 + 0x14)) * fVar5 + fVar4 * *(float *)(param_2 + 0x14);
-    *(float *)(iVar8 + 0x14) = fVar1;
-    fVar2 = *(float *)(param_2 + 0x18) * fVar4 + (fVar3 * fVar6 + *(float *)(iVar8 + 0x18)) * fVar5;
+    fVar6 = (fVar2 * fVar5 + *(float *)(iVar8 + 0x14)) * fVar7 + fVar4 * param_2->dir[1];
+    *(float *)(iVar8 + 0x14) = fVar6;
+    fVar2 = param_2->dir[2] * fVar4 + (fVar3 * fVar5 + *(float *)(iVar8 + 0x18)) * fVar7;
     *(float *)(iVar8 + 0x18) = fVar2;
-    if (0.002 <= ABS((fVar1 * fVar1 + fVar2 * fVar2 + (float)(dVar9 * dVar9)) - 1.0)) {
-      uVar7 = va(0xffffffff82015f2c,dVar9,(double)*(float *)(iVar8 + 0x14),
-                 (double)*(float *)(iVar8 + 0x18),
-                 (double)SQRT(fVar1 * fVar1 + fVar2 * fVar2 + (float)(dVar9 * dVar9)));
-      MyAssertHandler(0xffffffff82015c18,0x679,0,0xffffffff820011f4,0xffffffff82015f0c,uVar7);
+    if (0.002 <= ABS((fVar6 * fVar6 + fVar2 * fVar2 + fVar1 * fVar1) - 1.0)) {
+      va("(%g %g %g) len %g");
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_ents_mp.cpp",
+                      0x679,0,"%s\n\t%s");
     }
-    if (0.001 < ABS((*(float *)(param_2 + 0x18) * *(float *)(iVar8 + 0x18) +
-                    *(float *)(iVar8 + 0x14) * *(float *)(param_2 + 0x14) +
-                    *(float *)(iVar8 + 0x10) * *(float *)(param_2 + 0x10)) -
-                    *(float *)(param_2 + 0x44))) {
-      MyAssertHandler(0xffffffff82015c18,0x67a,0,0xffffffff82000f98,0xffffffff82015eb8);
+    if (0.001 < ABS((param_2->dir[2] * *(float *)(iVar8 + 0x18) +
+                    *(float *)(iVar8 + 0x14) * param_2->dir[1] +
+                    *(float *)(iVar8 + 0x10) * param_2->dir[0]) - param_2->rotationLimit)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_ents_mp.cpp",
+                      0x67a,0,"%s");
     }
   }
   __restgprlr_28();
@@ -2250,541 +649,68 @@ void CG_ClampPrimaryLightDir(undefined8 param_1,int param_2)
 
 
 // 822C6398  CG_PrimaryLight  (cgame_mp/cg_ents_mp.cpp:1663)
-
-void CG_PrimaryLight(undefined8 param_1,longlong param_2)
-
-{
-  byte bVar1;
-  byte bVar2;
-  float fVar3;
-  float fVar4;
-  float fVar5;
-  int iVar6;
-  float fVar7;
-  float fVar8;
-  undefined8 uVar9;
-  undefined8 uVar10;
-  int iVar11;
-  int iVar12;
-  int iVar13;
-  float *pfVar14;
-  double dVar15;
-  double dVar16;
-  double dVar17;
-  double dVar18;
-  undefined1 auStack_68 [104];
-  
-  uVar9 = __savegprlr_24();
-  iVar6 = (int)param_2;
-  if (*(int *)(iVar6 + 200) != 10) {
-    MyAssertHandler(0xffffffff82015c18,0x689,0,0xffffffff82000f98,0xffffffff8201605c);
-  }
-  if (*(int *)(iVar6 + 0x150) == 0) {
-    MyAssertHandler(0xffffffff82015c18,0x68a,0,0xffffffff82000f98,0xffffffff82016020);
-  }
-  if (DAT_835f15dc == 0) {
-    MyAssertHandler(0xffffffff82015aa8,0x17,0,0xffffffff82000f98,0xffffffff82015af4);
-  }
-  if (DAT_835f15e0 <= *(uint *)(iVar6 + 0x150)) {
-    uVar10 = Com_GetPrimaryLightCount();
-    MyAssertHandler(0xffffffff82015c18,0x68b,0,0xffffffff82015fc0,*(undefined4 *)(iVar6 + 0x150),
-                    uVar10);
-  }
-  iVar11 = CG_GetLocalClientGlobals(uVar9);
-  iVar13 = *(int *)(iVar6 + 0x150) * 0x4c + iVar11;
-  iVar12 = Com_GetPrimaryLight(*(int *)(iVar6 + 0x150));
-  bVar1 = *(byte *)(iVar6 + 0x118);
-  fVar3 = *(float *)(iVar6 + 0xac);
-  fVar4 = *(float *)(iVar6 + 0x11c);
-  bVar2 = *(byte *)(iVar6 + 0x11a);
-  pfVar14 = (float *)(iVar11 + 0x6b980);
-  fVar5 = *pfVar14;
-  dVar17 = 1.0;
-  fVar7 = (float)*(byte *)(iVar6 + 0xaa) * 0.003921569 * fVar3;
-  fVar8 = (float)*(byte *)(iVar6 + 0xa9) * 0.003921569 * fVar3;
-  fVar3 = fVar3 * (float)*(byte *)(iVar6 + 0xa8) * 0.003921569;
-  *(float *)(iVar13 + 0x6bb28) =
-       ((float)*(byte *)(iVar6 + 0x119) * 0.003921569 * fVar4 - fVar8) * fVar5 + fVar8;
-  *(float *)(iVar13 + 0x6bb2c) = ((float)bVar2 * 0.003921569 * fVar4 - fVar7) * fVar5 + fVar7;
-  *(float *)(iVar13 + 0x6bb24) = (fVar4 * (float)bVar1 * 0.003921569 - fVar3) * fVar5 + fVar3;
-  if (*(float *)(iVar12 + 0x44) < 1.0) {
-    BG_EvaluateTrajectory(param_2 + 0xf4,*(undefined4 *)(iVar11 + 0x6b98c),auStack_68);
-    AngleVectors(auStack_68,iVar13 + 0x6bb30,0,0);
-    *(float *)(iVar13 + 0x6bb30) = -*(float *)(iVar13 + 0x6bb30);
-    *(float *)(iVar13 + 0x6bb34) = -*(float *)(iVar13 + 0x6bb34);
-    *(float *)(iVar13 + 0x6bb38) = -*(float *)(iVar13 + 0x6bb38);
-    if (-1.0 < *(float *)(iVar12 + 0x44)) {
-      CG_ClampPrimaryLightDir(iVar13 + 0x6bb20,iVar12);
-    }
-  }
-  dVar18 = 0.0;
-  if (0.0 < *(float *)(iVar12 + 0x48)) {
-    BG_EvaluateTrajectory(param_2 + 0xd0,*(undefined4 *)(iVar11 + 0x6b98c),iVar13 + 0x6bb48);
-    CG_ClampPrimaryLightOrigin(iVar13 + 0x6bb20,iVar12);
-  }
-  *(float *)(iVar13 + 0x6bb54) =
-       (*(float *)(iVar6 + 0x120) - *(float *)(iVar6 + 0xb0)) * *pfVar14 + *(float *)(iVar6 + 0xb0);
-  fVar3 = (*(float *)(iVar6 + 0x124) - *(float *)(iVar6 + 0xb4)) * *pfVar14 +
-          *(float *)(iVar6 + 0xb4);
-  dVar15 = (double)fVar3;
-  *(float *)(iVar13 + 0x6bb58) = fVar3;
-  fVar3 = (*(float *)(iVar6 + 0x128) - *(float *)(iVar6 + 0xb8)) * *pfVar14 +
-          *(float *)(iVar6 + 0xb8);
-  dVar16 = (double)fVar3;
-  *(float *)(iVar13 + 0x6bb5c) = fVar3;
-  *(uint *)(iVar13 + 0x6bb60) =
-       (int)((float)(longlong)(int)((uint)*(byte *)(iVar6 + 0x11b) - (uint)*(byte *)(iVar6 + 0xab))
-            * *pfVar14) + (uint)*(byte *)(iVar6 + 0xab);
-  if (((dVar15 <= dVar18) || (dVar16 <= dVar15)) || (dVar17 < dVar16)) {
-    uVar9 = va(0xffffffff82015fb4,dVar15,(double)*(float *)(iVar13 + 0x6bb5c));
-    MyAssertHandler(0xffffffff82015c18,0x6ae,0,0xffffffff820011f4,0xffffffff82015f40,uVar9);
-  }
-  __restgprlr_24();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure LerpEntityStatePlayer
 
 // 822C6748  CG_InterpolateEntityPosition  (cgame_mp/cg_ents_mp.cpp:1722)
-
-void CG_InterpolateEntityPosition(undefined8 param_1,longlong param_2)
-
-{
-  int iVar1;
-  int iVar2;
-  double dVar3;
-  double dVar4;
-  double dVar5;
-  double dVar6;
-  double dVar7;
-  double dVar8;
-  double dVar9;
-  double dVar10;
-  double dVar11;
-  float local_88;
-  float local_84;
-  float local_80;
-  float local_78;
-  float local_74;
-  float local_70;
-  
-  __savegprlr_27();
-  iVar2 = __savefpr_25();
-  if (*(int *)(iVar2 + 0x3358) == 0) {
-    MyAssertHandler(0xffffffff82015c18,0x6bf,0,0xffffffff82000f98,0xffffffff82015cb8);
-  }
-  if (*(int *)(iVar2 + 0x335c) == 0) {
-    MyAssertHandler(0xffffffff82015c18,0x6c0,0,0xffffffff82000f98,0xffffffff82002858);
-  }
-  iVar1 = (int)param_2;
-  if (*(int *)(iVar1 + 0xd0) == 9) {
-    MyAssertHandler(0xffffffff82015c18,0x6c1,0,0xffffffff82000f98,0xffffffff82016088);
-  }
-  dVar11 = (double)*(float *)(iVar2 + 0x6b980);
-  BG_EvaluateTrajectory(param_2 + 0x60,*(undefined4 *)(*(int *)(iVar2 + 0x3358) + 0x3308),&local_88)
-  ;
-  BG_EvaluateTrajectory(param_2 + 0xd0,*(undefined4 *)(*(int *)(iVar2 + 0x335c) + 0x3308),&local_78)
-  ;
-  *(float *)(iVar1 + 0x14) =
-       (float)((double)(float)((double)local_78 - (double)local_88) * dVar11 + (double)local_88);
-  *(float *)(iVar1 + 0x18) =
-       (float)((double)(float)((double)local_74 - (double)local_84) * dVar11 + (double)local_84);
-  *(float *)(iVar1 + 0x1c) =
-       (float)((double)(float)((double)local_70 - (double)local_80) * dVar11 + (double)local_80);
-  BG_EvaluateTrajectory(param_2 + 0x84,*(undefined4 *)(*(int *)(iVar2 + 0x3358) + 0x3308),&local_88)
-  ;
-  BG_EvaluateTrajectory(param_2 + 0xf4,*(undefined4 *)(*(int *)(iVar2 + 0x335c) + 0x3308),&local_78)
-  ;
-  dVar3 = (double)local_88;
-  dVar10 = 0.0027777778450399637;
-  dVar9 = 0.5;
-  dVar6 = (double)((float)((double)local_78 - dVar3) * 0.0027777778);
-  dVar5 = floor((double)(float)(dVar6 + 0.5));
-  dVar4 = (double)local_84;
-  dVar8 = 360.0;
-  dVar7 = (double)(float)((double)(float)((double)local_74 - dVar4) * dVar10);
-  *(float *)(iVar1 + 0x20) =
-       (float)((double)(float)((double)(float)(dVar6 - (double)(float)dVar5) * dVar11) * 360.0 +
-              dVar3);
-  dVar5 = floor((double)(float)(dVar7 + dVar9));
-  dVar3 = (double)local_80;
-  dVar6 = (double)(float)((double)(float)((double)local_70 - dVar3) * dVar10);
-  *(float *)(iVar1 + 0x24) =
-       (float)((double)(float)((double)(float)(dVar7 - (double)(float)dVar5) * dVar11) * dVar8 +
-              dVar4);
-  dVar4 = floor((double)(float)(dVar6 + dVar9));
-  *(float *)(iVar1 + 0x28) =
-       (float)((double)(float)((double)(float)(dVar6 - (double)(float)dVar4) * dVar11) * dVar8 +
-              dVar3);
-  if (*(int *)(iVar1 + 200) == 1) {
-    if (0x11 < *(uint *)(iVar1 + 0x154)) {
-      MyAssertHandler(0xffffffff82015c18,0x6d5,0,0xffffffff82014d30,*(uint *)(iVar1 + 0x154),0x12);
-    }
-    iVar2 = *(int *)(iVar1 + 0x154) * 0x590 + iVar2;
-    dVar4 = (double)(longlong)*(int *)(iVar1 + 0xa8);
-    dVar5 = (double)(float)((double)(float)((double)(longlong)*(int *)(iVar1 + 0x118) - dVar4) *
-                           dVar10);
-    dVar3 = floor((double)(float)(dVar5 + dVar9));
-    *(float *)(iVar2 + 0x100fa0) =
-         (float)((double)(float)((double)(float)(dVar5 - (double)(float)dVar3) * dVar11) * dVar8 +
-                dVar4);
-    *(undefined4 *)(iVar2 + 0x100fa4) = *(undefined4 *)(iVar1 + 0x20);
-    *(undefined4 *)(iVar2 + 0x100fa8) = *(undefined4 *)(iVar1 + 0x24);
-    *(undefined4 *)(iVar2 + 0x100fac) = *(undefined4 *)(iVar1 + 0x28);
-    *(undefined4 *)(iVar1 + 0x20) = 0;
-    *(undefined4 *)(iVar1 + 0x28) = 0;
-  }
-  __restfpr_25();
-  __restgprlr_27();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure LerpEntityStatePlayer
 
 // 822C6A08  CG_CreatePhysicsObject  (cgame_mp/cg_ents_mp.cpp:1764)
-
-void CG_CreatePhysicsObject(undefined8 param_1,longlong param_2)
-
-{
-  float fVar1;
-  int iVar2;
-  undefined8 uVar3;
-  ulonglong uVar4;
-  int iVar5;
-  char in_RESERVE;
-  byte in_cr0;
-  double dVar6;
-  double dVar7;
-  undefined4 local_70;
-  undefined4 local_6c;
-  undefined4 local_68;
-  undefined4 local_60;
-  undefined4 local_5c;
-  undefined4 local_58;
-  float local_50;
-  float local_4c;
-  float local_48;
-  undefined1 auStack_40 [64];
-  
-  uVar3 = __savegprlr_28();
-  iVar2 = (int)param_2;
-  local_60 = *(undefined4 *)(iVar2 + 0x6c);
-  local_5c = *(undefined4 *)(iVar2 + 0x70);
-  local_58 = *(undefined4 *)(iVar2 + 0x74);
-  local_70 = 0;
-  local_6c = 0;
-  local_68 = 0;
-  AnglesToQuat(param_2 + 0x90,auStack_40);
-  uVar4 = Com_GetClientDObj(*(undefined4 *)(iVar2 + 0xc4),uVar3);
-  if ((uVar4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82015c18,0x6f4,0,0xffffffff82000f98,0xffffffff820040b4);
-  }
-  iVar5 = DObjGetPhysPreset(uVar4);
-  if (iVar5 == 0) {
-    *(undefined4 *)(iVar2 + 0x10) = 0xffffffff;
-    uVar3 = DObjGetName(uVar4);
-    Com_PrintWarning(1,0xffffffff820160e4,uVar3);
-    __restgprlr_28();
-    return;
-  }
-  uVar3 = Phys_ObjCreate(1,&local_60,auStack_40,&local_70,iVar5);
-  if ((int)uVar3 == 0) {
-    uVar3 = DObjGetName();
-    Com_PrintWarning(1,0xffffffff820160b8,uVar3);
-    *(undefined4 *)(iVar2 + 0x10) = 0xffffffff;
-    __restgprlr_28();
-    return;
-  }
-  Phys_ObjSetCollisionFromDObj(uVar4,1,uVar3,0);
-  local_4c = *(float *)(iVar2 + 0xa0);
-  local_48 = *(float *)(iVar2 + 0xa4);
-  local_50 = *(float *)(iVar2 + 0x9c);
-  dVar6 = (double)SQRT(local_50 * local_50 + local_48 * local_48 + local_4c * local_4c);
-  dVar7 = 1.0;
-  if (-dVar6 < 0.0) {
-    dVar7 = dVar6;
-  }
-  fVar1 = (float)(1.0 / dVar7);
-  local_48 = local_48 * fVar1;
-  local_50 = fVar1 * local_50;
-  local_4c = local_4c * fVar1;
-  Phys_ObjBulletImpact(dVar6,(double)*(float *)(iVar5 + 0x14),1,uVar3,param_2 + 0x78,&local_50);
-  *(int *)(iVar2 + 0x10) = (int)uVar3;
-  do {
-    if (in_RESERVE != '\0') {
-      DAT_8427b880 = storeWordConditionalIndexed((ulonglong)DAT_8427b880 + 1,0,0xffffffff8427b880);
-      in_cr0 = 2;
-    }
-  } while (!(bool)(in_cr0 >> 1 & 1));
-  __restgprlr_28();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure LerpEntityStatePlayer
 
 // 822C4370  CG_GenerateSndEntHandle  (cgame_mp/cg_local_mp.h:1807)
-
-ulonglong CG_GenerateSndEntHandle(ulonglong param_1,ulonglong param_2)
-
-{
-  ulonglong uVar1;
-  ulonglong uVar2;
-  int iVar3;
-  
-  uVar1 = (param_2 & 0x3fffffff) << 2;
-  if (((int)param_1 < DAT_82aa1ae8) && (iVar3 = CL_GetLocalClientConnectionState(), 9 < iVar3)) {
-    iVar3 = CG_GetLocalClientGlobals(param_1);
-    uVar2 = ((ulonglong)*(uint *)(iVar3 + 0x7a708) & 1) << 0x11;
-  }
-  else {
-    uVar2 = (uVar1 | param_1 & 3) << 0x32;
-  }
-  return uVar2 | (uVar1 & 0x3fff | param_1 & 3) << 0x12;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 822C6BC0  CG_UpdatePhysicsPose  (cgame_mp/cg_ents_mp.cpp:1813)
-
-void CG_UpdatePhysicsPose(int param_1)
-
-{
-  undefined1 auStack_20 [16];
-  
-  if ((*(int *)(param_1 + 0x10) == 0) || (*(int *)(param_1 + 0x10) == -1)) {
-    MyAssertHandler(0xffffffff82015c18,0x718,0,0xffffffff82000f98,0xffffffff82016128);
-  }
-  Phys_ObjGetInterpolatedState(1,*(undefined4 *)(param_1 + 0x10),param_1 + 0x14,auStack_20);
-  UnitQuatToAngles(auStack_20,param_1 + 0x20);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure LerpEntityStatePlayer
 
 // 822C6C40  CG_ExpiredLaunch  (cgame_mp/cg_ents_mp.cpp:1824)
-
-undefined8 CG_ExpiredLaunch(undefined8 param_1,int param_2)
-
-{
-  int iVar2;
-  undefined8 uVar1;
-  
-  if ((*(uint *)(param_2 + 0x1c4) & 1) == 0) {
-    MyAssertHandler(0xffffffff82015c18,0x723,0,0xffffffff82000f98,0xffffffff82012adc);
-  }
-  iVar2 = CG_GetLocalClientGlobals(param_1);
-  if ((*(int *)(param_2 + 0x10) == 0) &&
-     (*(int *)(param_2 + 0xd4) + 1000 < *(int *)(iVar2 + 0x6b98c))) {
-    uVar1 = 1;
-    *(undefined4 *)(param_2 + 0x10) = 0xffffffff;
-  }
-  else {
-    uVar1 = 0;
-  }
-  return uVar1;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure LerpEntityStatePlayer
 
 // 822C9098  CG_CalcEntityPhysicsPositions  (cgame_mp/cg_ents_mp.cpp:1841)
-
-void CG_CalcEntityPhysicsPositions(undefined8 param_1,ulonglong param_2)
-
-{
-  uint uVar1;
-  int iVar2;
-  undefined8 uVar3;
-  int iVar4;
-  char cVar5;
-  
-  uVar3 = __savegprlr_28();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82015c18,0x736,0,0xffffffff82000f98,0xffffffff82002118);
-  }
-  iVar2 = (int)param_2;
-  if ((*(int *)(iVar2 + 0x60) != 9) || (*(int *)(iVar2 + 0x84) != 9)) {
-    MyAssertHandler(0xffffffff82015c18,0x737,0,0xffffffff82000f98,0xffffffff82016558);
-  }
-  if ((((*(uint *)(iVar2 + 0x1c4) & 1) != 0) && ((*(uint *)(iVar2 + 0xcc) & 0x20) == 0)) &&
-     (*(int *)(iVar2 + 0x160) != 0xffffff)) {
-    if (*(int *)(iVar2 + 200) == 6) {
-      uVar1 = *(uint *)(iVar2 + 0x11c);
-    }
-    else {
-      uVar1 = *(uint *)(iVar2 + 0x150);
-    }
-    if (0x3ff < uVar1) {
-      MyAssertHandler(0xffffffff82015c18,0x746,0,0xffffffff82016484,uVar1,0x400);
-    }
-    if (((-1 < (int)uVar1) && ((int)uVar1 < 0x400)) &&
-       ((iVar4 = CG_PreProcess_GetDObj_General(uVar3,param_2), iVar4 != 0 &&
-        (cVar5 = CG_ExpiredLaunch(uVar3,param_2), cVar5 == '\0')))) {
-      if (*(int *)(iVar2 + 0x10) == 0) {
-        CG_CreatePhysicsObject(uVar3,param_2);
-      }
-      if (*(int *)(iVar2 + 0x10) == -1) {
-        *(undefined4 *)(iVar2 + 0x14) = *(undefined4 *)(iVar2 + 0x6c);
-        *(undefined4 *)(iVar2 + 0x18) = *(undefined4 *)(iVar2 + 0x70);
-        *(undefined4 *)(iVar2 + 0x1c) = *(undefined4 *)(iVar2 + 0x74);
-        *(undefined4 *)(iVar2 + 0x20) = *(undefined4 *)(iVar2 + 0x90);
-        *(undefined4 *)(iVar2 + 0x24) = *(undefined4 *)(iVar2 + 0x94);
-        *(undefined4 *)(iVar2 + 0x28) = *(undefined4 *)(iVar2 + 0x98);
-        __restgprlr_28();
-        return;
-      }
-      CG_UpdatePhysicsPose(param_2);
-    }
-  }
-  __restgprlr_28();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure LerpEntityStatePlayer
 
 // 822C6CF0  CG_AnyOtherLocalPlayersInKillCam  (cgame_mp/cg_ents_mp.cpp:1891)
-
-void CG_AnyOtherLocalPlayersInKillCam(void)
-
-{
-  int iVar2;
-  char cVar3;
-  undefined8 uVar1;
-  int iVar4;
-  int iVar5;
-  ulonglong uVar6;
-  
-  iVar2 = __savegprlr_20();
-  uVar6 = 0;
-  if (0 < DAT_82aa1ae8) {
-    iVar5 = 0;
-    iVar4 = DAT_82aa1ae8;
-    do {
-      if (((int)uVar6 != iVar2) &&
-         (cVar3 = CL_IsLocalClientActive(uVar6), iVar4 = DAT_82aa1ae8, cVar3 != '\0')) {
-        if (DAT_82a383cc == 0) {
-          uVar1 = CL_GetLocalClientConnectionState(uVar6);
-          uVar1 = va(0xffffffff82001208,uVar1,uVar6);
-          MyAssertHandler(0xffffffff8200ffd8,0x682,0,0xffffffff820011f4,0xffffffff820011fc,uVar1);
-        }
-        if (3 < (uVar6 & 0xffffffff)) {
-          MyAssertHandler(0xffffffff8200ffd8,0x684,0,0xffffffff820011a8,uVar6,4);
-        }
-        iVar4 = DAT_82aa1ae8;
-        if (*(int *)(iVar5 + DAT_82a383cc + 0x7a708) != 0) {
-          __restgprlr_20(1);
-          return;
-        }
-      }
-      uVar6 = uVar6 + 1;
-      iVar5 = iVar5 + 0x108600;
-    } while ((int)uVar6 < iVar4);
-  }
-  __restgprlr_20(0);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 822C6E18  CG_CreateRagdollObject  (cgame_mp/cg_ents_mp.cpp:1910)
-
-void CG_CreateRagdollObject(undefined8 param_1,int param_2)
-
-{
-  undefined8 uVar1;
-  int iVar2;
-  char cVar4;
-  undefined4 uVar3;
-  uint uVar5;
-  longlong lVar6;
-  
-  uVar1 = __savegprlr_28();
-  iVar2 = CG_GetLocalClientGlobals();
-  cVar4 = CG_AnyOtherLocalPlayersInKillCam(uVar1);
-  if (*(int *)(iVar2 + 0x7a708) == 0) {
-    uVar5 = *(uint *)(param_2 + 0xcc) >> 0x14 & 1;
-  }
-  else {
-    uVar5 = 0;
-  }
-  if (((*(int *)(param_2 + 200) != 2) || (*(int *)(param_2 + 0x1e8) != *(int *)(iVar2 + 0x3334))) ||
-     (lVar6 = 0, *(int *)(iVar2 + 0x7a708) == 0)) {
-    lVar6 = 1;
-  }
-  if (cVar4 == '\0') {
-    uVar3 = Ragdoll_CreateRagdollForDObj(uVar1,*(undefined4 *)(param_2 + 0xc4),uVar5,lVar6,0,0);
-  }
-  else {
-    uVar3 = 0;
-  }
-  *(undefined1 *)(param_2 + 4) = 1;
-  if (lVar6 == 0) {
-    *(undefined4 *)(param_2 + 0xc) = uVar3;
-    __restgprlr_28();
-    return;
-  }
-  *(undefined4 *)(param_2 + 8) = uVar3;
-  __restgprlr_28();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure LerpEntityStatePlayer
 
 // 822C6EE8  CG_UpdateRagdollPose  (cgame_mp/cg_ents_mp.cpp:1950)
-
-void CG_UpdateRagdollPose(int param_1)
-
-{
-  int iVar1;
-  
-  if ((*(int *)(param_1 + 8) == 0) && (*(int *)(param_1 + 0xc) == 0)) {
-    MyAssertHandler(0xffffffff82015c18,0x79f,0,0xffffffff82000f98,0xffffffff82016180);
-  }
-  iVar1 = *(int *)(param_1 + 0xc);
-  if (iVar1 == 0) {
-    iVar1 = *(int *)(param_1 + 8);
-  }
-  Ragdoll_GetRootOrigin(iVar1,param_1 + 0x14);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure LerpEntityStatePlayer
 
 // 822C6F68  CG_CalcEntityRagdollPositions  (cgame_mp/cg_ents_mp.cpp:1961)
-
-void CG_CalcEntityRagdollPositions(undefined8 param_1,ulonglong param_2)
-
-{
-  int iVar1;
-  undefined8 uVar2;
-  char cVar3;
-  
-  uVar2 = __savegprlr_28();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82015c18,0x7aa,0,0xffffffff82000f98,0xffffffff82002118);
-  }
-  cVar3 = CG_IsRagdollTrajectory(param_2 + 0xd0);
-  if ((cVar3 == '\0') && (cVar3 = CG_IsRagdollTrajectory(param_2 + 0xf4), cVar3 == '\0')) {
-    MyAssertHandler(0xffffffff82015c18,0x7ab,0,0xffffffff82000f98,0xffffffff820161e8);
-  }
-  iVar1 = (int)param_2;
-  if ((*(int *)(iVar1 + 8) == 0) && (*(int *)(iVar1 + 0xc) == 0)) {
-    CG_CreateRagdollObject(uVar2,param_2);
-  }
-  if ((*(int *)(iVar1 + 8) != 0) || (*(int *)(iVar1 + 0xc) != 0)) {
-    CG_UpdateRagdollPose(param_2);
-  }
-  __restgprlr_28();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure LerpEntityStatePlayer
 
 // 822C7040  GrenadeBouncedThisFrame  (cgame_mp/cg_ents_mp.cpp:1978)
 
-bool GrenadeBouncedThisFrame(int *param_1,int *param_2)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+bool GrenadeBouncedThisFrame(trajectory_t *param_1,trajectory_t *param_2)
 
 {
-  int iVar1;
+  trType_t tVar1;
   bool bVar2;
   
-  iVar1 = *param_1;
-  if ((iVar1 != 5) && (iVar1 != 6)) {
+  tVar1 = param_1->trType;
+  if ((tVar1 != TR_GRAVITY) && (tVar1 != TR_LOW_GRAVITY)) {
     return false;
   }
-  if (iVar1 != *param_2) {
+  if (tVar1 != param_2->trType) {
     return true;
   }
-  if ((((float)param_1[3] != (float)param_2[3]) || ((float)param_1[4] != (float)param_2[4])) ||
-     (bVar2 = true, (float)param_1[5] != (float)param_2[5])) {
+  if (((param_1->trBase[0] != param_2->trBase[0]) || (param_1->trBase[1] != param_2->trBase[1])) ||
+     (bVar2 = true, param_1->trBase[2] != param_2->trBase[2])) {
     bVar2 = false;
   }
   return !bVar2;
@@ -2792,578 +718,127 @@ bool GrenadeBouncedThisFrame(int *param_1,int *param_2)
 
 
 // 822C9230  CG_CalcEntityLerpPositions  (cgame_mp/cg_ents_mp.cpp:1996)
-
-void CG_CalcEntityLerpPositions(undefined8 param_1,ulonglong param_2)
-
-{
-  int iVar1;
-  int iVar2;
-  undefined8 uVar3;
-  int iVar4;
-  char cVar6;
-  int iVar5;
-  longlong lVar7;
-  int iVar8;
-  longlong lVar9;
-  undefined4 *puVar10;
-  undefined4 *puVar11;
-  
-  uVar3 = __savegprlr_25();
-  iVar4 = CG_GetLocalClientGlobals();
-  iVar2 = (int)param_2;
-  iVar8 = *(int *)(iVar2 + 0x60);
-  lVar7 = param_2 + 0x60;
-  if (iVar8 == 9) {
-    CG_CalcEntityPhysicsPositions(uVar3,param_2);
-    __restgprlr_25();
-    return;
-  }
-  if ((((iVar8 == 1) && (*(int *)(iVar2 + 0xd0) != 9)) ||
-      ((iVar8 == 3 && (*(int *)(iVar2 + 0xc4) < 0x12)))) ||
-     ((*(int *)(iVar2 + 200) == 4 &&
-      (cVar6 = GrenadeBouncedThisFrame(lVar7,param_2 + 0xd0), cVar6 != '\0')))) {
-    CG_InterpolateEntityPosition(iVar4,param_2);
-    __restgprlr_25();
-    return;
-  }
-  lVar9 = param_2 + 0x14;
-  puVar10 = (undefined4 *)(iVar4 + 0x6b98c);
-  BG_EvaluateTrajectory(lVar7,*puVar10,lVar9);
-  BG_EvaluateTrajectory(param_2 + 0x84,*puVar10,param_2 + 0x20);
-  if (*(int *)(iVar2 + 200) == 1) {
-    if (0x11 < *(uint *)(iVar2 + 0x154)) {
-      MyAssertHandler(0xffffffff82015c18,0x7f4,0,0xffffffff82014d30,*(uint *)(iVar2 + 0x154),0x12);
-    }
-    iVar1 = *(int *)(iVar2 + 0x118);
-    iVar8 = *(int *)(iVar2 + 0x154) * 0x590 + iVar4 + 0x100b88;
-  }
-  else {
-    if (*(int *)(iVar2 + 200) != 2) goto LAB_822c9400;
-    iVar8 = *(int *)(iVar2 + 0xc4);
-    if (7 < iVar8 - 0x12U) {
-      MyAssertHandler(0xffffffff82015c18,0x802,0,0xffffffff82000f98,0xffffffff820165b0);
-    }
-    iVar5 = CG_GetLocalClientStaticGlobals(uVar3);
-    iVar1 = *(int *)(iVar2 + 0x118);
-    iVar8 = iVar5 + (iVar8 + -0x12) * 0x590 + 0x1410;
-  }
-  *(float *)(iVar8 + 0x418) = (float)(longlong)iVar1;
-  puVar11 = (undefined4 *)(param_2 + 0x20);
-  *(undefined4 *)(iVar8 + 0x41c) = *puVar11;
-  *(undefined4 *)(iVar8 + 0x420) = *(undefined4 *)(iVar2 + 0x24);
-  *(undefined4 *)(iVar8 + 0x424) = *(undefined4 *)(iVar2 + 0x28);
-  *(undefined4 *)(iVar2 + 0x28) = 0;
-  *puVar11 = 0;
-LAB_822c9400:
-  if ((param_2 & 0xffffffff) != (ulonglong)*(uint *)(iVar4 + 0x3300)) {
-    CG_AdjustPositionForMover
-              (uVar3,lVar9,*(undefined4 *)(iVar2 + 0x144),
-               *(undefined4 *)(*(int *)(iVar4 + 0x3358) + 0x3308),*puVar10,lVar9,0);
-    VehicleCl_PredictEntityPushing
-              (uVar3,*(undefined4 *)(iVar2 + 0x144),
-               *(undefined4 *)(*(int *)(iVar4 + 0x3358) + 0x3308),*puVar10,lVar9);
-  }
-  cVar6 = CG_IsRagdollTrajectory(param_2 + 0xd0);
-  if (cVar6 != '\0') {
-    CG_CalcEntityRagdollPositions(uVar3,param_2);
-  }
-  __restgprlr_25();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure LerpEntityStatePlayer
 
 // 822C70B8  CG_CalcFxEntityLerpPositions  (cgame_mp/cg_ents_mp.cpp:2085)
-
-void CG_CalcFxEntityLerpPositions(int param_1)
-
-{
-  *(undefined4 *)(param_1 + 0x14) = *(undefined4 *)(param_1 + 0xdc);
-  *(undefined4 *)(param_1 + 0x18) = *(undefined4 *)(param_1 + 0xe0);
-  *(undefined4 *)(param_1 + 0x1c) = *(undefined4 *)(param_1 + 0xe4);
-  *(undefined4 *)(param_1 + 0x20) = *(undefined4 *)(param_1 + 0x100);
-  *(undefined4 *)(param_1 + 0x24) = *(undefined4 *)(param_1 + 0x104);
-  *(undefined4 *)(param_1 + 0x28) = *(undefined4 *)(param_1 + 0x108);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure LerpEntityStatePlayer
 
 // 822C70F0  CG_GetAnimations  (cgame_mp/cg_ents_mp.cpp:2098)
-
-ulonglong CG_GetAnimations(undefined8 param_1,undefined8 param_2,int param_3)
-
-{
-  ulonglong uVar1;
-  int iVar3;
-  longlong lVar2;
-  
-  if (param_3 == 0xb) {
-    iVar3 = CG_GetEntity(param_1);
-    if (*(char *)(iVar3 + 399) == '\0') {
-      MyAssertHandler(0xffffffff82015c18,0x83b,0,0xffffffff82000f98,0xffffffff82016254);
-    }
-    lVar2 = CG_GetLocalClientGlobals(param_1);
-    uVar1 = CG_CreateTurretAnims(*(undefined4 *)(iVar3 + 0x18c),lVar2 + 0x76ee4);
-  }
-  else if (param_3 == 0xc) {
-    iVar3 = CG_GetLocalClientStaticGlobals(param_1);
-    if (*(int *)(iVar3 + 0x4094) == 0) {
-      MyAssertHandler(0xffffffff82015c18,0x842,0,0xffffffff82000f98,0xffffffff82016278);
-    }
-    uVar1 = (ulonglong)*(uint *)(iVar3 + 0x4094);
-  }
-  else {
-    uVar1 = 0;
-  }
-  return uVar1;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure clientInfo_t
 
 // 822C71D8  CG_PreProcess_GetDObj  (cgame_mp/cg_ents_mp.cpp:2130)
-
-void CG_PreProcess_GetDObj
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,ulonglong param_4,
-               ulonglong param_5)
-
-{
-  int iVar3;
-  ulonglong uVar1;
-  int iVar4;
-  int iVar5;
-  char cVar6;
-  ulonglong uVar2;
-  undefined4 *puVar7;
-  undefined8 uVar8;
-  undefined1 uVar9;
-  char in_RESERVE;
-  byte in_cr0;
-  undefined4 *local_70;
-  undefined2 local_6c;
-  undefined1 local_6a;
-  
-  iVar3 = __savegprlr_20();
-  uVar1 = Com_GetClientDObj(param_2,iVar3);
-  iVar4 = CG_GetEntity(iVar3,param_2);
-  uVar9 = 0;
-  uVar8 = 0;
-  if ((uVar1 & 0xffffffff) == 0) {
-LAB_822c72e4:
-    if ((param_4 & 0xffffffff) != 0) {
-      if (*(int *)(iVar4 + 0x1e0) != 0) {
-        MyAssertHandler(0xffffffff82015c18,0x880,0,0xffffffff82000f98,0xffffffff82010090);
-      }
-      iVar5 = CG_GetAnimations(iVar3,param_2,param_3);
-      if (iVar5 == 0) {
-        uVar2 = 0;
-      }
-      else {
-        uVar2 = Com_XAnimCreateSmallTree();
-        if ((uVar2 & 0xffffffff) == 0) {
-          MyAssertHandler(0xffffffff82015c18,0x885,0,0xffffffff82000f98,0xffffffff820100a4);
-        }
-      }
-      *(int *)(iVar4 + 0x1e0) = (int)uVar2;
-      local_6c = 0;
-      local_6a = 1;
-      local_70 = (undefined4 *)param_4;
-      uVar1 = Com_ClientDObjCreate(&local_70,1,uVar2,param_2,iVar3);
-      CG_SetDObjInfo(iVar3,param_2,param_3,param_4);
-      if (((uVar2 & 0xffffffff) != 0) && (iVar5 = DObjGetTree(uVar1), iVar5 == 0)) {
-        MyAssertHandler(0xffffffff82015c18,0x899,0,0xffffffff820011f4,0xffffffff82015ca4,
-                        *(undefined4 *)param_4);
-      }
-      if ((&DAT_82a3d64c)[iVar3] == 0) {
-        MyAssertHandler(0xffffffff82015c18,0x89c,0,0xffffffff82000f98,0xffffffff82016300);
-      }
-      puVar7 = (undefined4 *)(*(int *)(iVar4 + 0xc4) * 0xc + (&DAT_82a3d64c)[iVar3]);
-      *puVar7 = 0x48000000;
-      puVar7[1] = 0x48000000;
-      puVar7[2] = 0x48000000;
-      if ((int)param_3 == 0xc) {
-        XAnimSetCompleteGoalWeight(0x3ff0000000000000,0x3fc99999a0000000,0x3ff8000000000000,uVar1,1)
-        ;
-      }
-      uVar9 = 1;
-    }
-    if ((uVar1 & 0xffffffff) == 0) goto LAB_822c74cc;
-  }
-  else if (((param_4 & 0xffffffff) == 0) ||
-          (iVar5 = CG_CheckDObjInfoMatches(iVar3,param_2,param_3,param_4), iVar5 == 0)) {
-    uVar8 = DObjGetName(uVar1);
-    if ((*(int *)(iVar4 + 0x10) != -1) && (*(int *)(iVar4 + 0x10) != 0)) {
-      cVar6 = CG_IsEntityLinked(iVar3,*(undefined4 *)(iVar4 + 0xc4));
-      if (cVar6 != '\0') {
-        CG_UnlinkEntity(iVar3,*(undefined4 *)(iVar4 + 0xc4));
-      }
-      Phys_ObjDestroy(1,*(undefined4 *)(iVar4 + 0x10));
-      *(undefined4 *)(iVar4 + 0x10) = 0;
-      do {
-        if (in_RESERVE != '\0') {
-          DAT_8427b880 = storeWordConditionalIndexed
-                                   ((ulonglong)DAT_8427b880 - 1,0,0xffffffff8427b880);
-          in_cr0 = 2;
-        }
-      } while (!(bool)(in_cr0 >> 1 & 1));
-    }
-    FX_MarkEntDetachAll(iVar3,param_2);
-    CG_SafeDObjFree(iVar3,param_2);
-    uVar1 = 0;
-    goto LAB_822c72e4;
-  }
-  iVar3 = DObjGetTree(uVar1);
-  if ((iVar3 == 0) && ((int)param_3 == 0xb)) {
-    DObjDumpInfo(uVar1);
-    Com_Error(1,0xffffffff82016290,uVar9,uVar8);
-  }
-LAB_822c74cc:
-  if ((param_5 & 0xffffffff) != 0) {
-    *(undefined1 *)param_5 = uVar9;
-  }
-  __restgprlr_20(uVar1);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure LerpEntityStatePlayer
 
 // 822C74E8  CG_PreProcess_Weapon_GetDObj  (cgame_mp/cg_ents_mp.cpp:2241)
-
-void CG_PreProcess_Weapon_GetDObj
-               (undefined8 param_1,longlong param_2,ulonglong param_3,ulonglong param_4)
-
-{
-  int iVar1;
-  int iVar2;
-  bool bVar3;
-  int iVar5;
-  int iVar6;
-  ulonglong uVar4;
-  int iVar7;
-  char cVar10;
-  uint uVar8;
-  uint uVar9;
-  undefined4 *puVar11;
-  uint uVar12;
-  undefined1 *puVar13;
-  char in_RESERVE;
-  byte in_cr0;
-  undefined1 auStack_1a2 [2];
-  int local_1a0;
-  undefined2 local_19c;
-  undefined1 local_19a [2];
-  int local_198;
-  undefined2 local_194;
-  undefined1 local_192;
-  
-  iVar5 = __savegprlr();
-  if (((int)param_2 < 0) || (0x7ff < (int)param_2)) {
-    MyAssertHandler(0xffffffff82015c18,0x8d0,0,0xffffffff82000f98,0xffffffff82016344);
-  }
-  if ((param_4 & 0xffffffff) != 0) {
-    *(undefined1 *)param_4 = 0;
-  }
-  iVar6 = CG_GetLocalClientGlobals(iVar5);
-  uVar4 = Com_GetClientDObj(param_2,iVar5);
-  iVar7 = CG_GetEntity(iVar5,param_2);
-  if ((*(int *)((int)((param_2 + 0x1c161U & 0xffffffff) << 2) + iVar6) != 3) ||
-     (bVar3 = true,
-     (ulonglong)*(uint *)((int)((param_2 + 0x1d161U & 0xffffffff) << 2) + iVar6) !=
-     (param_3 & 0xffffffff))) {
-    bVar3 = false;
-  }
-  if (((uVar4 & 0xffffffff) != 0) && (!bVar3)) {
-    if ((*(int *)(iVar7 + 0x10) != -1) && (*(int *)(iVar7 + 0x10) != 0)) {
-      cVar10 = CG_IsEntityLinked(iVar5,*(undefined4 *)(iVar7 + 0xc4));
-      if (cVar10 != '\0') {
-        CG_UnlinkEntity(iVar5,*(undefined4 *)(iVar7 + 0xc4));
-      }
-      Phys_ObjDestroy(1,*(undefined4 *)(iVar7 + 0x10));
-      *(undefined4 *)(iVar7 + 0x10) = 0;
-      do {
-        if (in_RESERVE != '\0') {
-          DAT_8427b880 = storeWordConditionalIndexed
-                                   ((ulonglong)DAT_8427b880 - 1,0,0xffffffff8427b880);
-          in_cr0 = 2;
-        }
-      } while (!(bool)(in_cr0 >> 1 & 1));
-    }
-    FX_MarkEntDetachAll(iVar5,param_2);
-    CG_SafeDObjFree(iVar5,param_2);
-    uVar4 = 0;
-  }
-  uVar8 = BG_GetAlternateWeapon(param_3,0);
-  iVar6 = (&DAT_829d84a0)[uVar8 & 0xff];
-  if (((uVar4 & 0xffffffff) == 0) &&
-     (uVar8 = (uint)((param_3 & 0xffffffff) >> 6) & 0x3c,
-     *(int *)(*(int *)(iVar6 + 0x1e0) + uVar8) != 0)) {
-    if (*(int *)(iVar7 + 0x1e0) != 0) {
-      MyAssertHandler(0xffffffff82015c18,0x8f1,0,0xffffffff82000f98,0xffffffff82010090);
-    }
-    *(undefined4 *)(iVar7 + 0x1e0) = 0;
-    local_19c = 0;
-    uVar12 = 1;
-    local_1a0 = *(int *)(*(int *)(iVar6 + 0x1e0) + uVar8);
-    local_19a[0] = 1;
-    uVar9 = BG_GetAlternateWeapon(param_3,0);
-    uVar4 = (param_3 & 0xffffffff) >> 0xc & 7;
-    iVar2 = (&DAT_829d80d8)[uVar9 & 0xff];
-    if (uVar4 != 0) {
-      iVar1 = *(int *)((int)(uVar4 << 2) + *(int *)(iVar2 + 0x10) + -4);
-      if (iVar1 == 0) {
-        MyAssertHandler(0xffffffff82015c18,0x90b,1,0xffffffff82000f98,0xffffffff8200e66c);
-      }
-      iVar1 = *(int *)(*(int *)(iVar1 + 0x14) + uVar8);
-      if (iVar1 != 0) {
-        local_194 = 0;
-        uVar12 = 2;
-        local_192 = 1;
-        local_198 = iVar1;
-      }
-    }
-    uVar4 = (param_3 & 0xffffffff) >> 0xf & 3;
-    uVar9 = uVar12;
-    if (uVar4 != 0) {
-      if (0x1f < uVar12) {
-        MyAssertHandler(0xffffffff82015c18,0x917,0,0xffffffff82000f98,0xffffffff82016328);
-      }
-      iVar1 = *(int *)((int)(uVar4 << 2) + *(int *)(iVar2 + 0x14) + -4);
-      if (iVar1 == 0) {
-        MyAssertHandler(0xffffffff82015c18,0x919,1,0xffffffff82000f98,0xffffffff8200e66c);
-      }
-      iVar1 = *(int *)(*(int *)(iVar1 + 0x14) + uVar8);
-      if (iVar1 != 0) {
-        uVar9 = uVar12 + 1;
-        (&local_1a0)[uVar12 * 2] = iVar1;
-        *(undefined2 *)(local_19a + uVar12 * 8 + -2) = 0;
-        local_19a[uVar12 * 8] = 1;
-      }
-    }
-    if (((param_3 & 0xffffffff) >> 0x11 & 0xf) != 0) {
-      uVar4 = 1;
-      uVar12 = 0;
-      puVar13 = auStack_1a2 + uVar9 * 8;
-      do {
-        if (((param_3 & 0xffffffff) >> 0x11 & uVar4 & 0xf) != 0) {
-          if (0x1f < (int)uVar9) {
-            MyAssertHandler(0xffffffff82015c18,0x929,0,0xffffffff82000f98,0xffffffff82016328);
-          }
-          iVar1 = *(int *)(*(int *)(iVar2 + 0x18) + uVar12);
-          if (iVar1 == 0) {
-            MyAssertHandler(0xffffffff82015c18,0x92b,1,0xffffffff82000f98,0xffffffff8200e66c);
-          }
-          iVar1 = *(int *)(*(int *)(iVar1 + 0x14) + uVar8);
-          if (iVar1 != 0) {
-            *(undefined2 *)(puVar13 + 6) = 0;
-            uVar9 = uVar9 + 1;
-            *(int *)(puVar13 + 2) = iVar1;
-            puVar13 = puVar13 + 8;
-            *puVar13 = 1;
-          }
-        }
-        uVar12 = uVar12 + 4;
-        uVar4 = (uVar4 & 0x7fffffff) << 1;
-      } while (uVar12 < 0x10);
-      param_4 = param_4 & 0xffffffff;
-    }
-    uVar4 = Com_ClientDObjCreate(&local_1a0,uVar9 & 0xffff,0,param_2,iVar5);
-    CG_SetDObjInfo(iVar5,param_2,3,*(undefined4 *)(*(int *)(iVar6 + 0x1e0) + uVar8));
-    if ((&DAT_82a3d64c)[iVar5] == 0) {
-      MyAssertHandler(0xffffffff82015c18,0x940,0,0xffffffff82000f98,0xffffffff82016300);
-    }
-    puVar11 = (undefined4 *)(*(int *)(iVar7 + 0xc4) * 0xc + (&DAT_82a3d64c)[iVar5]);
-    *puVar11 = 0x48000000;
-    puVar11[1] = 0x48000000;
-    puVar11[2] = 0x48000000;
-    if ((param_4 & 0xffffffff) != 0) {
-      *(undefined1 *)param_4 = 1;
-      __restgprlr(uVar4);
-      return;
-    }
-  }
-  __restgprlr(uVar4);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 822C7960  CG_DObjCalcBone  (cgame_mp/cg_ents_mp.cpp:2385)
 
-void CG_DObjCalcBone(undefined8 param_1,ulonglong param_2,undefined8 param_3)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+void CG_DObjCalcBone(cpose_t *param_1,DObj *param_2,int param_3)
 
 {
-  ulonglong uVar1;
-  int iVar2;
-  undefined1 auStack_50 [80];
+  cpose_t *pcVar1;
+  DObj *pDVar2;
+  int iVar3;
+  ulonglong uVar4;
+  int aiStack_50 [20];
   
-  uVar1 = __savegprlr_27();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82015c18,0x954,0,0xffffffff82000f98,0xffffffff820040b4);
+  uVar4 = (ulonglong)(int)param_2;
+  pcVar1 = (cpose_t *)__savegprlr_27(param_1);
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_ents_mp.cpp",0x954
+                    ,0,"%s");
   }
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82015c18,0x955,0,0xffffffff82000f98,0xffffffff82013bec);
+  if (pcVar1 == (cpose_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_ents_mp.cpp",0x955
+                    ,0,"%s");
   }
-  DObjLock(param_2);
-  iVar2 = CL_DObjCreateSkelForBone(param_2,param_3);
-  if (iVar2 == 0) {
-    DObjGetHierarchyBits(param_2,param_3,auStack_50);
-    CG_DoControllers(uVar1,param_2,auStack_50);
-    DObjCalcSkel(param_2,auStack_50);
+  pDVar2 = (DObj *)uVar4;
+  DObjLock(pDVar2);
+  iVar3 = CL_DObjCreateSkelForBone(pDVar2,param_3);
+  if (iVar3 == 0) {
+    DObjGetHierarchyBits(pDVar2,param_3,aiStack_50);
+    CG_DoControllers(pcVar1,pDVar2,aiStack_50);
+    DObjCalcSkel(pDVar2,aiStack_50);
   }
-  DObjUnlock(param_2);
+  DObjUnlock(pDVar2);
   __restgprlr_27();
   return;
 }
 
 
 // 822C9478  CG_ProcessEntity  (cgame_mp/cg_ents_mp.cpp:2414)
-
-void CG_ProcessEntity(undefined8 param_1,undefined8 param_2)
-
-{
-  int iVar1;
-  undefined8 uVar2;
-  
-  uVar2 = __savegprlr_29();
-  iVar1 = (int)param_2;
-  if (*(int *)(iVar1 + 0x148) != 0) {
-    CG_AddEntityLoopSound();
-  }
-  if (*(uint *)(iVar1 + 200) != (uint)*(byte *)(iVar1 + 2)) {
-    MyAssertHandler(0xffffffff82015c18,0x972,0,0xffffffff82000f98,0xffffffff820163b8);
-  }
-  switch(*(int *)(iVar1 + 200)) {
-  case 0:
-    CG_General(uVar2,param_2);
-    __restgprlr_29();
-    return;
-  case 1:
-    CG_Player(uVar2,param_2);
-    __restgprlr_29();
-    return;
-  case 2:
-    CG_Corpse(uVar2,param_2);
-    __restgprlr_29();
-    return;
-  case 3:
-    CG_Item(uVar2,param_2);
-    __restgprlr_29();
-    return;
-  case 4:
-    CG_Missile(uVar2,param_2);
-    __restgprlr_29();
-    return;
-  default:
-    if (*(int *)(iVar1 + 200) != 5) {
-      MyAssertHandler(0xffffffff82015c18,0x977,0,0xffffffff82016370,0xffffffff820165dc);
-    }
-    __restgprlr_29();
-    return;
-  case 6:
-    break;
-  case 7:
-    CG_SoundBlend(uVar2,param_2);
-    __restgprlr_29();
-    return;
-  case 10:
-    CG_PrimaryLight(uVar2,param_2);
-    __restgprlr_29();
-    return;
-  case 0xb:
-    CG_Turret(uVar2,param_2);
-    __restgprlr_29();
-    return;
-  case 0xc:
-  case 0xe:
-    VehicleCl_ProcessEntity(uVar2,param_2);
-    __restgprlr_29();
-    return;
-  case 0xd:
-    CG_CompassUpdatePlaneInfo(uVar2,*(undefined4 *)(iVar1 + 0xc4));
-  }
-  CG_ScriptMover(uVar2,param_2);
-  __restgprlr_29();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure LerpEntityStatePlayer
 
 // 822C7A28  CG_ProcessFxEntity  (cgame_mp/cg_ents_mp.cpp:2474)
-
-void CG_ProcessFxEntity(undefined8 param_1,undefined8 param_2,undefined8 param_3)
-
-{
-  int iVar1;
-  undefined8 uVar2;
-  
-  uVar2 = __savegprlr_27();
-  iVar1 = (int)param_3;
-  if (*(int *)(iVar1 + 0x148) != 0) {
-    MyAssertHandler(0xffffffff82015c18,0x9ab,0,0xffffffff82000f98,0xffffffff820163e4);
-  }
-  if (*(uint *)(iVar1 + 200) != (uint)*(byte *)(iVar1 + 2)) {
-    MyAssertHandler(0xffffffff82015c18,0x9ac,0,0xffffffff82000f98,0xffffffff820163b8);
-  }
-  if (*(int *)(iVar1 + 200) != 9) {
-    if (*(int *)(iVar1 + 200) != 8) {
-      MyAssertHandler(0xffffffff82015c18,0x9b1,0,0xffffffff82016370,0xffffffff82016394);
-    }
-    CG_Fx(uVar2,param_2,param_3);
-    __restgprlr_27();
-    return;
-  }
-  CG_LoopFx(uVar2,param_2,param_3);
-  __restgprlr_27();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure LerpEntityStatePlayer
 
 // 822C7B08  CG_GetPoseOrigin  (cgame_mp/cg_ents_mp.cpp:2493)
 
-void CG_GetPoseOrigin(int param_1,undefined4 *param_2)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+void CG_GetPoseOrigin(cpose_t *param_1,float *param_2)
 
 {
-  if (param_1 == 0) {
-    MyAssertHandler(0xffffffff82015c18,0x9be,0,0xffffffff82000f98,0xffffffff82013bec);
+  if (param_1 == (cpose_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_ents_mp.cpp",0x9be
+                    ,0,"%s");
   }
-  *param_2 = *(undefined4 *)(param_1 + 0x14);
-  param_2[1] = *(undefined4 *)(param_1 + 0x18);
-  param_2[2] = *(undefined4 *)(param_1 + 0x1c);
+  *param_2 = param_1->origin[0];
+  param_2[1] = param_1->origin[1];
+  param_2[2] = param_1->origin[2];
   return;
 }
 
 
 // 822C7B80  CG_GetPoseAngles  (cgame_mp/cg_ents_mp.cpp:2500)
 
-void CG_GetPoseAngles(int param_1,undefined4 *param_2)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+void CG_GetPoseAngles(cpose_t *param_1,float *param_2)
 
 {
-  if (param_1 == 0) {
-    MyAssertHandler(0xffffffff82015c18,0x9c5,0,0xffffffff82000f98,0xffffffff82013bec);
+  if (param_1 == (cpose_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_ents_mp.cpp",0x9c5
+                    ,0,"%s");
   }
-  *param_2 = *(undefined4 *)(param_1 + 0x20);
-  param_2[1] = *(undefined4 *)(param_1 + 0x24);
-  param_2[2] = *(undefined4 *)(param_1 + 0x28);
+  *param_2 = param_1->angles[0];
+  param_2[1] = param_1->angles[1];
+  param_2[2] = param_1->angles[2];
   return;
 }
 
 
 // 822C7BF8  CG_GetEntityOrigin  (cgame_mp/cg_ents_mp.cpp:2507)
-
-longlong CG_GetEntityOrigin(void)
-
-{
-  longlong lVar1;
-  
-  lVar1 = CG_GetEntity();
-  return lVar1 + 0x14;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure LerpEntityStatePlayer
 
 // 822C7C20  CG_PredictiveSkinCEntity  (cgame_mp/cg_ents_mp.cpp:2526)
 
-void CG_PredictiveSkinCEntity(int param_1,int param_2)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+void CG_PredictiveSkinCEntity(GfxSceneEntity *param_1,int param_2)
 
 {
-  if (param_1 == 0) {
-    MyAssertHandler(0xffffffff82015c18,0x9e1,0,0xffffffff82000f98,0xffffffff82016400);
+  if (param_1 == (GfxSceneEntity *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_ents_mp.cpp",0x9e1
+                    ,0,"%s");
   }
-  if ((param_2 != 0) || (*(char *)(*(int *)(param_1 + 0x70) + 3) != '\0')) {
-    *(undefined1 *)(*(int *)(param_1 + 0x70) + 3) = 0;
+  if ((param_2 != 0) || (((param_1->info).pose)->cullIn != '\0')) {
+    ((param_1->info).pose)->cullIn = '\0';
     R_UpdateXModelBoundsDelayed(param_1);
   }
   return;

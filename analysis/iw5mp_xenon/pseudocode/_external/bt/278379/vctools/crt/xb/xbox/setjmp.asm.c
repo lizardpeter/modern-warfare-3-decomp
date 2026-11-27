@@ -2,11 +2,16 @@
 
 // 829188C0  setjmp  (<external>/bt/278379/vctools/crt/xb/xbox/setjmp.asm:72)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
-void setjmp(undefined8 *param_1)
+void setjmp(void)
 
 {
+  bool bVar1;
+  bool bVar2;
+  bool bVar3;
+  longlong in_r3;
+  undefined8 *puVar4;
   undefined8 in_r13;
   undefined8 unaff_r14;
   undefined8 unaff_r15;
@@ -26,6 +31,15 @@ void setjmp(undefined8 *param_1)
   undefined8 unaff_r29;
   undefined8 unaff_r30;
   undefined8 unaff_r31;
+  byte in_xer_so;
+  byte in_cr1;
+  byte in_cr2;
+  byte in_cr3;
+  byte unaff_cr4;
+  byte in_cr5;
+  byte in_cr6;
+  byte in_cr7;
+  undefined4 in_LR;
   undefined8 in_f14;
   undefined8 in_f15;
   undefined8 in_f16;
@@ -44,51 +58,190 @@ void setjmp(undefined8 *param_1)
   undefined8 in_f29;
   undefined8 in_f30;
   undefined8 in_f31;
+  undefined1 in_v64 [16];
+  undefined1 in_v65 [16];
+  undefined1 in_v66 [16];
+  undefined1 in_v67 [16];
+  undefined1 in_v68 [16];
+  undefined1 in_v69 [16];
+  undefined1 in_v70 [16];
+  undefined1 in_v71 [16];
+  undefined1 in_v72 [16];
+  undefined1 in_v73 [16];
+  undefined1 in_v74 [16];
+  undefined1 in_v75 [16];
+  undefined1 in_v76 [16];
+  undefined1 in_v77 [16];
+  undefined1 in_v78 [16];
+  undefined1 in_v79 [16];
+  undefined1 in_v80 [16];
+  undefined1 in_v81 [16];
+  undefined1 in_v82 [16];
+  undefined1 in_v83 [16];
+  undefined1 in_v84 [16];
+  undefined1 in_v85 [16];
+  undefined1 in_v86 [16];
+  undefined1 in_v87 [16];
+  undefined1 in_v88 [16];
+  undefined1 in_v89 [16];
+  undefined1 in_v90 [16];
+  undefined1 in_v91 [16];
+  undefined1 in_v92 [16];
+  undefined1 in_v93 [16];
+  undefined1 in_v94 [16];
+  undefined1 in_v95 [16];
+  undefined1 in_v96 [16];
+  undefined1 in_v97 [16];
+  undefined1 in_v98 [16];
+  undefined1 in_v99 [16];
+  undefined1 in_v100 [16];
+  undefined1 in_v101 [16];
+  undefined1 in_v102 [16];
+  undefined1 in_v103 [16];
+  undefined1 in_v104 [16];
+  undefined1 in_v105 [16];
+  undefined1 in_v106 [16];
+  undefined1 in_v107 [16];
+  undefined1 in_v108 [16];
+  undefined1 in_v109 [16];
+  undefined1 in_v110 [16];
+  undefined1 in_v111 [16];
+  undefined1 in_v112 [16];
+  undefined1 in_v113 [16];
+  undefined1 in_v114 [16];
+  undefined1 in_v115 [16];
+  undefined1 in_v116 [16];
+  undefined1 in_v117 [16];
+  undefined1 in_v118 [16];
+  undefined1 in_v119 [16];
+  undefined1 in_v120 [16];
+  undefined1 in_v121 [16];
+  undefined1 in_v122 [16];
+  undefined1 in_v123 [16];
+  undefined1 in_v124 [16];
+  undefined1 in_v125 [16];
+  undefined1 in_v126 [16];
+  undefined1 in_v127 [16];
   
+  bVar1 = (int)_setjmpexused < 0;
+  bVar2 = 0 < (int)_setjmpexused;
+  bVar3 = _setjmpexused == (code *)0x0;
                     /* WARNING: Could not recover jumptable at 0x829188d0. Too many branches */
                     /* WARNING: Treating indirect jump as call */
-  if (DAT_84897ed4 != (code *)0x0) {
-    (*DAT_84897ed4)();
+  if (!bVar3) {
+    (*_setjmpexused)();
     return;
   }
-  *param_1 = in_f14;
-  param_1[1] = in_f15;
-  param_1[2] = in_f16;
-  param_1[3] = in_f17;
-  param_1[4] = in_f18;
-  param_1[5] = in_f19;
-  param_1[6] = in_f20;
-  param_1[7] = in_f21;
-  param_1[8] = in_f22;
-  param_1[9] = in_f23;
-  param_1[10] = in_f24;
-  param_1[0xb] = in_f25;
-  param_1[0xc] = in_f26;
-  param_1[0xd] = in_f27;
-  param_1[0xe] = in_f28;
-  param_1[0xf] = in_f29;
-  param_1[0x10] = in_f30;
-  param_1[0x11] = in_f31;
-  param_1[0x13] = in_r13;
-  param_1[0x14] = unaff_r14;
-  param_1[0x15] = unaff_r15;
-  param_1[0x16] = unaff_r16;
-  param_1[0x17] = unaff_r17;
-  param_1[0x18] = unaff_r18;
-  param_1[0x19] = unaff_r19;
-  param_1[0x1a] = unaff_r20;
-  param_1[0x1b] = unaff_r21;
-  param_1[0x1c] = unaff_r22;
-  param_1[0x1d] = unaff_r23;
-  param_1[0x1e] = unaff_r24;
-  param_1[0x1f] = unaff_r25;
-  param_1[0x20] = unaff_r26;
-  param_1[0x21] = unaff_r27;
-  param_1[0x22] = unaff_r28;
-  param_1[0x23] = unaff_r29;
-  param_1[0x24] = unaff_r30;
-  param_1[0x25] = unaff_r31;
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  puVar4 = (undefined8 *)in_r3;
+  *puVar4 = in_f14;
+  puVar4[1] = in_f15;
+  puVar4[2] = in_f16;
+  puVar4[3] = in_f17;
+  puVar4[4] = in_f18;
+  puVar4[5] = in_f19;
+  puVar4[6] = in_f20;
+  puVar4[7] = in_f21;
+  puVar4[8] = in_f22;
+  puVar4[9] = in_f23;
+  puVar4[10] = in_f24;
+  puVar4[0xb] = in_f25;
+  puVar4[0xc] = in_f26;
+  puVar4[0xd] = in_f27;
+  puVar4[0xe] = in_f28;
+  puVar4[0xf] = in_f29;
+  puVar4[0x10] = in_f30;
+  puVar4[0x11] = in_f31;
+  puVar4[0x13] = in_r13;
+  puVar4[0x14] = unaff_r14;
+  puVar4[0x15] = unaff_r15;
+  puVar4[0x16] = unaff_r16;
+  puVar4[0x17] = unaff_r17;
+  puVar4[0x18] = unaff_r18;
+  puVar4[0x19] = unaff_r19;
+  puVar4[0x1a] = unaff_r20;
+  puVar4[0x1b] = unaff_r21;
+  puVar4[0x1c] = unaff_r22;
+  puVar4[0x1d] = unaff_r23;
+  puVar4[0x1e] = unaff_r24;
+  puVar4[0x1f] = unaff_r25;
+  puVar4[0x20] = unaff_r26;
+  puVar4[0x21] = unaff_r27;
+  puVar4[0x22] = unaff_r28;
+  puVar4[0x23] = unaff_r29;
+  puVar4[0x24] = unaff_r30;
+  puVar4[0x25] = unaff_r31;
+  storeVectorLeftIndexed(in_v64,in_r3 + 0x140);
+  storeVectorLeftIndexed(in_v65,in_r3 + 0x150);
+  storeVectorLeftIndexed(in_v66,in_r3 + 0x160);
+  storeVectorLeftIndexed(in_v67,in_r3 + 0x170);
+  storeVectorLeftIndexed(in_v68,in_r3 + 0x180);
+  storeVectorLeftIndexed(in_v69,in_r3 + 400);
+  storeVectorLeftIndexed(in_v70,in_r3 + 0x1a0);
+  storeVectorLeftIndexed(in_v71,in_r3 + 0x1b0);
+  storeVectorLeftIndexed(in_v72,in_r3 + 0x1c0);
+  storeVectorLeftIndexed(in_v73,in_r3 + 0x1d0);
+  storeVectorLeftIndexed(in_v74,in_r3 + 0x1e0);
+  storeVectorLeftIndexed(in_v75,in_r3 + 0x1f0);
+  storeVectorLeftIndexed(in_v76,in_r3 + 0x200);
+  storeVectorLeftIndexed(in_v77,in_r3 + 0x210);
+  storeVectorLeftIndexed(in_v78,in_r3 + 0x220);
+  storeVectorLeftIndexed(in_v79,in_r3 + 0x230);
+  storeVectorLeftIndexed(in_v80,in_r3 + 0x240);
+  storeVectorLeftIndexed(in_v81,in_r3 + 0x250);
+  storeVectorLeftIndexed(in_v82,in_r3 + 0x260);
+  storeVectorLeftIndexed(in_v83,in_r3 + 0x270);
+  storeVectorLeftIndexed(in_v84,in_r3 + 0x280);
+  storeVectorLeftIndexed(in_v85,in_r3 + 0x290);
+  storeVectorLeftIndexed(in_v86,in_r3 + 0x2a0);
+  storeVectorLeftIndexed(in_v87,in_r3 + 0x2b0);
+  storeVectorLeftIndexed(in_v88,in_r3 + 0x2c0);
+  storeVectorLeftIndexed(in_v89,in_r3 + 0x2d0);
+  storeVectorLeftIndexed(in_v90,in_r3 + 0x2e0);
+  storeVectorLeftIndexed(in_v91,in_r3 + 0x2f0);
+  storeVectorLeftIndexed(in_v92,in_r3 + 0x300);
+  storeVectorLeftIndexed(in_v93,in_r3 + 0x310);
+  storeVectorLeftIndexed(in_v94,in_r3 + 800);
+  storeVectorLeftIndexed(in_v95,in_r3 + 0x330);
+  storeVectorLeftIndexed(in_v96,in_r3 + 0x340);
+  storeVectorLeftIndexed(in_v97,in_r3 + 0x350);
+  storeVectorLeftIndexed(in_v98,in_r3 + 0x360);
+  storeVectorLeftIndexed(in_v99,in_r3 + 0x370);
+  storeVectorLeftIndexed(in_v100,in_r3 + 0x380);
+  storeVectorLeftIndexed(in_v101,in_r3 + 0x390);
+  storeVectorLeftIndexed(in_v102,in_r3 + 0x3a0);
+  storeVectorLeftIndexed(in_v103,in_r3 + 0x3b0);
+  storeVectorLeftIndexed(in_v104,in_r3 + 0x3c0);
+  storeVectorLeftIndexed(in_v105,in_r3 + 0x3d0);
+  storeVectorLeftIndexed(in_v106,in_r3 + 0x3e0);
+  storeVectorLeftIndexed(in_v107,in_r3 + 0x3f0);
+  storeVectorLeftIndexed(in_v108,in_r3 + 0x400);
+  storeVectorLeftIndexed(in_v109,in_r3 + 0x410);
+  storeVectorLeftIndexed(in_v110,in_r3 + 0x420);
+  storeVectorLeftIndexed(in_v111,in_r3 + 0x430);
+  storeVectorLeftIndexed(in_v112,in_r3 + 0x440);
+  storeVectorLeftIndexed(in_v113,in_r3 + 0x450);
+  storeVectorLeftIndexed(in_v114,in_r3 + 0x460);
+  storeVectorLeftIndexed(in_v115,in_r3 + 0x470);
+  storeVectorLeftIndexed(in_v116,in_r3 + 0x480);
+  storeVectorLeftIndexed(in_v117,in_r3 + 0x490);
+  storeVectorLeftIndexed(in_v118,in_r3 + 0x4a0);
+  storeVectorLeftIndexed(in_v119,in_r3 + 0x4b0);
+  storeVectorLeftIndexed(in_v120,in_r3 + 0x4c0);
+  storeVectorLeftIndexed(in_v121,in_r3 + 0x4d0);
+  storeVectorLeftIndexed(in_v122,in_r3 + 0x4e0);
+  storeVectorLeftIndexed(in_v123,in_r3 + 0x4f0);
+  storeVectorLeftIndexed(in_v124,in_r3 + 0x500);
+  storeVectorLeftIndexed(in_v125,in_r3 + 0x510);
+  storeVectorLeftIndexed(in_v126,in_r3 + 0x520);
+  storeVectorLeftIndexed(in_v127,in_r3 + 0x530);
+  *(undefined4 *)((int)puVar4 + 0x134) = in_LR;
+  *(uint *)(puVar4 + 0x26) =
+       (uint)(byte)(bVar1 << 3 | bVar2 << 2 | bVar3 << 1 | in_xer_so & 1) << 0x1c |
+       (uint)(in_cr1 & 0xf) << 0x18 | (uint)(in_cr2 & 0xf) << 0x14 | (uint)(in_cr3 & 0xf) << 0x10 |
+       (uint)(unaff_cr4 & 0xf) << 0xc | (uint)(in_cr5 & 0xf) << 8 | (uint)(in_cr6 & 0xf) << 4 |
+       (uint)(in_cr7 & 0xf);
+  puVar4[0x12] = ZEXT48(&stack0x00000000);
+  *(undefined4 *)(puVar4 + 0x27) = 0;
+  return;
 }
 

@@ -2,55 +2,60 @@
 
 // 827578C8  Material_NextTechniqueSetNameToken  (gfx_d3d/r_material_override.cpp:86)
 
-void Material_NextTechniqueSetNameToken(undefined8 param_1,int param_2)
+uint Material_NextTechniqueSetNameToken(char **param_1,char *param_2)
 
 {
   char cVar1;
   int *piVar2;
   int iVar3;
-  int iVar4;
+  uint uVar4;
+  int iVar5;
   
-  piVar2 = (int *)__savegprlr_29();
-  iVar4 = 0;
+  piVar2 = (int *)__savegprlr_29(param_1);
+  iVar5 = 0;
   if (*(char *)*piVar2 != '\0') {
-    while (cVar1 = *(char *)*piVar2, *(char *)(iVar4 + param_2) = cVar1, cVar1 != '_') {
-      if (((iVar4 != 0) && (iVar3 = isdigit((int)*(char *)(iVar4 + param_2 + -1)), iVar3 != 0)) &&
-         (iVar3 = isdigit((int)*(char *)(iVar4 + param_2)), iVar3 == 0)) goto LAB_82757978;
+    while (cVar1 = *(char *)*piVar2, param_2[iVar5] = cVar1, cVar1 != '_') {
+      if (((iVar5 != 0) && (iVar3 = isdigit((int)param_2[iVar5 + -1]), iVar3 != 0)) &&
+         (iVar3 = isdigit((int)param_2[iVar5]), iVar3 == 0)) goto LAB_82757978;
       iVar3 = *piVar2;
-      iVar4 = iVar4 + 1;
+      iVar5 = iVar5 + 1;
       *piVar2 = iVar3 + 1;
       if (*(char *)(iVar3 + 1) == '\0') {
-        *(undefined1 *)(iVar4 + param_2) = 0;
-        __restgprlr_29(iVar4);
-        return;
+        param_2[iVar5] = '\0';
+        uVar4 = __restgprlr_29(iVar5);
+        return uVar4;
       }
     }
     *piVar2 = *piVar2 + 1;
   }
 LAB_82757978:
-  *(undefined1 *)(iVar4 + param_2) = 0;
-  __restgprlr_29(iVar4);
-  return;
+  param_2[iVar5] = '\0';
+  uVar4 = __restgprlr_29(iVar5);
+  return uVar4;
 }
 
 
 // 82757990  Material_GetRemappedFeatures_RunTime  (gfx_d3d/r_material_override.cpp:107)
 
-void Material_GetRemappedFeatures_RunTime(undefined8 param_1,ulonglong param_2)
+void Material_GetRemappedFeatures_RunTime(uint *param_1,uint *param_2)
 
 {
   uint *puVar1;
+  ulonglong uVar2;
   
-  puVar1 = (uint *)__savegprlr_28();
+  uVar2 = (ulonglong)(int)param_2;
+  puVar1 = (uint *)__savegprlr_28(param_1);
   if (puVar1 == (uint *)0x0) {
-    MyAssertHandler(0xffffffff821c8b08,0x6c,0,0xffffffff82000f98,0xffffffff82147094);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_material_override.cpp"
+                    ,0x6c,0,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821c8b08,0x6d,0,0xffffffff82000f98,0xffffffff8200e26c);
+  if ((uVar2 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_material_override.cpp"
+                    ,0x6d,0,"%s");
   }
   *puVar1 = 0;
-  *(undefined4 *)param_2 = 0;
-  if (*(char *)(DAT_845aa850 + 0xc) != '\0') {
+  *(undefined4 *)uVar2 = 0;
+  if ((r_envMapOverride->current).enabled != false) {
     *puVar1 = *puVar1 | 0x20;
   }
   __restgprlr_28();
@@ -60,21 +65,21 @@ void Material_GetRemappedFeatures_RunTime(undefined8 param_1,ulonglong param_2)
 
 // 82757A30  Material_FindFeature  (gfx_d3d/r_material_override.cpp:143)
 
-undefined4 * Material_FindFeature(char *param_1,undefined4 *param_2,uint param_3)
+GfxMtlFeatureMap * Material_FindFeature(char *param_1,GfxMtlFeatureMap *param_2,uint param_3)
 
 {
   char cVar1;
   char cVar2;
   uint uVar3;
-  undefined4 *puVar4;
+  GfxMtlFeatureMap *pGVar4;
   char *pcVar5;
   char *pcVar6;
   
   uVar3 = 0;
-  puVar4 = param_2;
+  pGVar4 = param_2;
   if (param_3 != 0) {
     do {
-      pcVar5 = (char *)*puVar4;
+      pcVar5 = pGVar4->name;
       pcVar6 = param_1;
       do {
         cVar1 = *pcVar6;
@@ -84,193 +89,204 @@ undefined4 * Material_FindFeature(char *param_1,undefined4 *param_2,uint param_3
         pcVar5 = pcVar5 + 1;
       } while (cVar1 == cVar2);
       if (cVar1 == cVar2) {
-        return param_2 + uVar3 * 4;
+        return param_2 + uVar3;
       }
       uVar3 = uVar3 + 1;
-      puVar4 = puVar4 + 4;
+      pGVar4 = pGVar4 + 1;
     } while (uVar3 < param_3);
   }
-  return (undefined4 *)0x0;
+  return (GfxMtlFeatureMap *)0x0;
 }
 
 
 // 82757A98  Material_ExtendTechniqueSetName  (gfx_d3d/r_material_override.cpp:157)
 
-void Material_ExtendTechniqueSetName
-               (undefined8 param_1,longlong param_2,undefined8 param_3,longlong param_4,
-               ulonglong param_5)
+uint Material_ExtendTechniqueSetName
+               (char *param_1,uint param_2,char *param_3,uint param_4,bool param_5)
 
 {
   int iVar1;
-  longlong lVar2;
+  uint uVar2;
+  longlong lVar3;
+  longlong lVar4;
+  ulonglong uVar5;
+  longlong lVar6;
   
-  iVar1 = __savegprlr_27();
-  lVar2 = param_2;
-  if ((param_5 & 0xff) != 0) {
-    lVar2 = param_2 + 1;
-    *(undefined1 *)(iVar1 + (int)param_2) = 0x5f;
+  uVar5 = (ulonglong)param_5;
+  lVar4 = (longlong)(int)param_4;
+  lVar3 = (longlong)(int)param_2;
+  iVar1 = __savegprlr_27(param_1,lVar3,param_3);
+  lVar6 = lVar3;
+  if ((uVar5 & 0xff) != 0) {
+    lVar6 = lVar3 + 1;
+    *(undefined1 *)(iVar1 + (int)lVar3) = 0x5f;
   }
-  if (0x3f < (lVar2 + param_4 & 0xffffffffU)) {
-    Com_Error(1,0xffffffff821c8b58,iVar1,param_3,0x3f);
+  if (0x3f < (lVar6 + lVar4 & 0xffffffffU)) {
+    Com_Error(ERR_DROP,"Can\'t extend techset name \'%s\' with \'%s\'; would exceed %i chars");
   }
-  memcpy((void *)(iVar1 + (int)lVar2),(void *)param_3,(int)param_4 + 1);
-  __restgprlr_27(lVar2 + param_4);
-  return;
+  memcpy();
+  uVar2 = __restgprlr_27(lVar6 + lVar4);
+  return uVar2;
 }
 
 
 // 82757B10  Material_RemapTechniqueSetName  (gfx_d3d/r_material_override.cpp:262)
 
 void Material_RemapTechniqueSetName
-               (undefined8 param_1,undefined8 param_2,ulonglong param_3,ulonglong param_4,
-               longlong param_5,ulonglong param_6)
+               (char *param_1,char *param_2,uint param_3,uint param_4,GfxMtlFeatureMap *param_5,
+               uint param_6)
 
 {
   char cVar1;
   char cVar2;
-  undefined4 *puVar3;
+  int iVar3;
   uint *puVar4;
-  int iVar5;
-  undefined1 *puVar6;
+  bool bVar5;
+  uint uVar6;
   ulonglong uVar7;
-  char *pcVar8;
-  bool bVar10;
-  char *pcVar9;
-  uint uVar11;
-  ulonglong uVar12;
-  longlong lVar13;
-  uint uVar14;
-  uint local_f0 [4];
+  ulonglong uVar8;
+  longlong lVar9;
+  ulonglong uVar10;
+  ulonglong uVar11;
+  char *pcVar12;
+  char *pcVar13;
+  char *pcVar14;
+  ulonglong uVar15;
+  longlong lVar16;
+  char *pcVar17;
+  char *local_f0 [4];
   char local_e0 [224];
   
-  local_f0[0] = __savegprlr();
-  if (local_f0[0] == 0) {
-    MyAssertHandler(0xffffffff821c8b08,0x111,0,0xffffffff82000f98,0xffffffff821c8bf8);
+  uVar11 = (ulonglong)(int)param_6;
+  lVar9 = (longlong)(int)param_5;
+  uVar8 = (ulonglong)(int)param_4;
+  uVar7 = (ulonglong)(int)param_3;
+  uVar10 = (ulonglong)(int)param_1;
+  __savegprlr();
+  if ((uVar10 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_material_override.cpp"
+                    ,0x111,0,"%s");
   }
-  uVar11 = 0;
-  puVar6 = (undefined1 *)param_2;
-  *puVar6 = 0;
+  pcVar14 = (char *)0x0;
+  local_f0[0] = (char *)uVar10;
+  *param_2 = '\0';
 LAB_82757b98:
   do {
-    if ((uVar11 == 0) || (bVar10 = true, *(char *)(local_f0[0] - 1) != '_')) {
-      bVar10 = false;
+    if ((pcVar14 == (char *)0x0) || (bVar5 = true, local_f0[0][-1] != '_')) {
+      bVar5 = false;
     }
-    iVar5 = Material_NextTechniqueSetNameToken(local_f0,local_e0);
-    if (iVar5 == 0) {
+    uVar6 = Material_NextTechniqueSetNameToken(local_f0,local_e0);
+    if (uVar6 == 0) {
       __restgprlr();
       return;
     }
-    uVar7 = 0;
-    lVar13 = param_5;
-    if ((param_6 & 0xffffffff) != 0) {
+    uVar10 = 0;
+    lVar16 = lVar9;
+    if ((uVar11 & 0xffffffff) != 0) {
       do {
-        pcVar8 = (char *)*(undefined4 *)lVar13;
-        pcVar9 = local_e0;
+        pcVar12 = (char *)*(undefined4 *)lVar16;
+        pcVar13 = local_e0;
         do {
-          cVar1 = *pcVar9;
-          cVar2 = *pcVar8;
+          cVar1 = *pcVar13;
+          cVar2 = *pcVar12;
           if (cVar1 == '\0') break;
-          pcVar9 = pcVar9 + 1;
-          pcVar8 = pcVar8 + 1;
+          pcVar13 = pcVar13 + 1;
+          pcVar12 = pcVar12 + 1;
         } while (cVar1 == cVar2);
         if (cVar1 == cVar2) {
-          uVar7 = (uVar7 & 0xfffffff) * 0x10 + param_5;
-          if ((uVar7 & 0xffffffff) != 0) {
-            puVar3 = (undefined4 *)uVar7;
-            uVar7 = (ulonglong)(uint)puVar3[1];
-            if ((uVar7 & param_3) != 0) {
-              if (puVar3[2] == 0) {
-                if ((uVar7 & param_4) != 0) {
-                  MyAssertHandler(0xffffffff821c8b08,0x133,0,0xffffffff821c8bbc,0xffffffff821c8b98,
-                                  *puVar3);
+          uVar10 = (uVar10 & 0xfffffff) * 0x10 + lVar9;
+          if ((uVar10 & 0xffffffff) != 0) {
+            iVar3 = (int)uVar10;
+            uVar10 = (ulonglong)*(uint *)(iVar3 + 4);
+            if ((uVar10 & uVar7) != 0) {
+              if (*(int *)(iVar3 + 8) == 0) {
+                if ((uVar10 & uVar8) != 0) {
+                  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_material_override.cpp"
+                                  ,0x133,0,"%s\n\t(feature->name) = %s");
                 }
               }
-              else if ((uVar7 & param_4) != 0) {
-                uVar12 = 0;
-                lVar13 = param_5 + 8;
+              else if ((uVar10 & uVar8) != 0) {
+                uVar15 = 0;
+                lVar16 = lVar9 + 8;
                 while( true ) {
-                  if ((uVar12 & 0xffffffff) == (param_6 & 0xffffffff)) {
-                    MyAssertHandler(0xffffffff821c8b08,0x13d,0,0xffffffff82000f98,0xffffffff821c8bd8
-                                   );
+                  if ((uVar15 & 0xffffffff) == (uVar11 & 0xffffffff)) {
+                    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_material_override.cpp"
+                                    ,0x13d,0,"%s");
                   }
-                  puVar4 = (uint *)lVar13;
-                  if ((puVar4[-1] == puVar3[1]) && ((ulonglong)*puVar4 == (uVar7 & param_4))) break;
-                  uVar12 = uVar12 + 1;
-                  lVar13 = lVar13 + 0x10;
+                  puVar4 = (uint *)lVar16;
+                  if ((puVar4[-1] == *(uint *)(iVar3 + 4)) &&
+                     ((ulonglong)*puVar4 == (uVar10 & uVar8))) break;
+                  uVar15 = uVar15 + 1;
+                  lVar16 = lVar16 + 0x10;
                 }
-                pcVar8 = (char *)puVar4[-2];
-                pcVar9 = pcVar8;
+                pcVar12 = (char *)puVar4[-2];
+                pcVar13 = pcVar12;
                 do {
-                  cVar1 = *pcVar9;
-                  pcVar9 = pcVar9 + 1;
+                  cVar1 = *pcVar13;
+                  pcVar13 = pcVar13 + 1;
                 } while (cVar1 != '\0');
-                uVar14 = uVar11;
-                if (bVar10) {
-                  uVar14 = uVar11 + 1;
-                  puVar6[uVar11] = 0x5f;
+                pcVar17 = pcVar14;
+                if (bVar5) {
+                  pcVar17 = pcVar14 + 1;
+                  param_2[(int)pcVar14] = '_';
                 }
-                uVar11 = (((int)pcVar9 - (int)pcVar8) - 1U) + uVar14;
-                if (0x3f < uVar11) {
-                  Com_Error(1,0xffffffff821c8b58,param_2,pcVar8,0x3f);
+                pcVar14 = pcVar13 + (int)(pcVar17 + (-1 - (int)pcVar12));
+                if ((char *)0x3f < pcVar14) {
+                  Com_Error(ERR_DROP,
+                            "Can\'t extend techset name \'%s\' with \'%s\'; would exceed %i chars");
                 }
-                memcpy(puVar6 + uVar14,pcVar8,(int)pcVar9 - (int)pcVar8);
+                memcpy();
               }
               goto LAB_82757b98;
             }
           }
           break;
         }
-        uVar7 = uVar7 + 1;
-        lVar13 = lVar13 + 0x10;
-      } while ((uVar7 & 0xffffffff) < (param_6 & 0xffffffff));
+        uVar10 = uVar10 + 1;
+        lVar16 = lVar16 + 0x10;
+      } while ((uVar10 & 0xffffffff) < (uVar11 & 0xffffffff));
     }
-    uVar14 = uVar11;
-    if (bVar10) {
-      uVar14 = uVar11 + 1;
-      puVar6[uVar11] = 0x5f;
+    pcVar12 = pcVar14;
+    if (bVar5) {
+      pcVar12 = pcVar14 + 1;
+      param_2[(int)pcVar14] = '_';
     }
-    uVar11 = uVar14 + iVar5;
-    if (0x3f < uVar11) {
-      Com_Error(1,0xffffffff821c8b58,param_2,local_e0,0x3f);
+    pcVar14 = pcVar12 + uVar6;
+    if ((char *)0x3f < pcVar14) {
+      Com_Error(ERR_DROP,"Can\'t extend techset name \'%s\' with \'%s\'; would exceed %i chars");
     }
-    memcpy(puVar6 + uVar14,local_e0,iVar5 + 1);
+    memcpy();
   } while( true );
 }
 
 
 // 82757DB0  AssertValidRemappedTechniqueSet  (gfx_d3d/r_material_override.cpp:337)
 
-void AssertValidRemappedTechniqueSet(void)
+void AssertValidRemappedTechniqueSet(MaterialTechniqueSet *param_1)
 
 {
-  undefined4 *puVar1;
-  undefined4 *puVar3;
-  undefined8 uVar2;
-  longlong lVar4;
-  uint uVar5;
+  int iVar1;
+  uint uVar2;
   
-  puVar3 = (undefined4 *)__savegprlr_24();
-  if (puVar3 == (undefined4 *)0x0) {
-    MyAssertHandler(0xffffffff821c8b08,0x154,0,0xffffffff82000f98,0xffffffff821bb4c4);
+  iVar1 = __savegprlr_24(param_1);
+  if (iVar1 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_material_override.cpp"
+                    ,0x154,0,"%s");
   }
-  if (puVar3[2] == 0) {
-    MyAssertHandler(0xffffffff821c8b08,0x155,0,0xffffffff82000f98,0xffffffff821c8c90);
+  if (*(int *)(iVar1 + 8) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_material_override.cpp"
+                    ,0x155,0,"%s");
   }
-  if ((undefined4 *)puVar3[2] != puVar3) {
-    lVar4 = 0;
-    uVar5 = 0xc;
+  if (*(int *)(iVar1 + 8) != iVar1) {
+    uVar2 = 0xc;
     do {
-      if (*(int *)(uVar5 + (int)puVar3) == 0) {
-        puVar1 = *(undefined4 **)(uVar5 + (int)puVar3[2]);
-        if (puVar1 != (undefined4 *)0x0) {
-          uVar2 = va(0xffffffff821c8c0c,lVar4,*puVar3,0xffffffff821c8c04,*(undefined4 *)puVar3[2],
-                     *puVar1);
-          MyAssertHandler(0xffffffff821c8b08,0x15a,0,0xffffffff820011f4,0xffffffff821c8c20,uVar2);
-        }
+      if ((*(int *)(uVar2 + iVar1) == 0) && (*(int *)(uVar2 + *(int *)(iVar1 + 8)) != 0)) {
+        va("%i: %s:%s -> %s:%s");
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_material_override.cpp"
+                        ,0x15a,0,"%s\n\t%s");
       }
-      uVar5 = uVar5 + 4;
-      lVar4 = lVar4 + 1;
-    } while (uVar5 < 0xa0);
+      uVar2 = uVar2 + 4;
+    } while (uVar2 < 0xa0);
   }
   __restgprlr_24();
   return;
@@ -279,106 +295,89 @@ void AssertValidRemappedTechniqueSet(void)
 
 // 82757EC0  Material_OriginalRemapTechniqueSet  (gfx_d3d/r_material_override.cpp:353)
 
-void Material_OriginalRemapTechniqueSet(int param_1)
+void Material_OriginalRemapTechniqueSet(MaterialTechniqueSet *param_1)
 
 {
-  if (param_1 == 0) {
-    MyAssertHandler(0xffffffff821c8b08,0x162,0,0xffffffff82000f98,0xffffffff821bb4c4);
+  if (param_1 == (MaterialTechniqueSet *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_material_override.cpp"
+                    ,0x162,0,"%s");
   }
-  *(int *)(param_1 + 8) = param_1;
+  param_1->remappedTechniqueSet = param_1;
   return;
 }
 
 
 // 82757F18  Material_RemapTechniqueSet  (gfx_d3d/r_material_override.cpp:377)
 
-void Material_RemapTechniqueSet(undefined4 *param_1)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+
+void Material_RemapTechniqueSet(MaterialTechniqueSet *param_1)
 
 {
   char cVar1;
   char cVar2;
   int iVar3;
-  char *pcVar4;
+  MaterialTechniqueSet *pMVar4;
   char *pcVar5;
+  char *pcVar6;
   char local_110 [256];
   
-  if (param_1 == (undefined4 *)0x0) {
-    MyAssertHandler(0xffffffff821c8b08,0x17c,0,0xffffffff82000f98,0xffffffff821bb4c4);
+  if (param_1 == (MaterialTechniqueSet *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_material_override.cpp"
+                    ,0x17c,0,"%s");
   }
-  iVar3 = DB_IsXAssetDefault(7,*param_1);
+  iVar3 = DB_IsXAssetDefault(ASSET_TYPE_TECHNIQUE_SET,param_1->name);
   if (iVar3 == 0) {
     Material_RemapTechniqueSetName
-              (*param_1,local_110,DAT_84618264,DAT_84618268,0xffffffff821c8af4,1);
-    pcVar5 = (char *)*param_1;
-    pcVar4 = local_110;
+              (param_1->name,local_110,mtlOverrideGlob.remapMask,mtlOverrideGlob.remapValue,
+               s_materialFeatures,1);
+    pcVar6 = param_1->name;
+    pcVar5 = local_110;
     do {
-      cVar1 = *pcVar5;
-      cVar2 = *pcVar4;
+      cVar1 = *pcVar6;
+      cVar2 = *pcVar5;
       if (cVar1 == '\0') break;
+      pcVar6 = pcVar6 + 1;
       pcVar5 = pcVar5 + 1;
-      pcVar4 = pcVar4 + 1;
     } while (cVar1 == cVar2);
     if (cVar1 != cVar2) {
-      iVar3 = Material_FindTechniqueSet(local_110,0);
-      param_1[2] = iVar3;
-      if (iVar3 != 0) {
+      pMVar4 = Material_FindTechniqueSet(local_110,MTL_TECHSET_NOT_FOUND_RETURN_NULL);
+      param_1->remappedTechniqueSet = pMVar4;
+      if (pMVar4 != (MaterialTechniqueSet *)0x0) {
         AssertValidRemappedTechniqueSet(param_1);
         return;
       }
     }
   }
-  param_1[2] = param_1;
+  param_1->remappedTechniqueSet = param_1;
   return;
 }
 
 
 // 82758018  Material_OverrideTechniqueSets  (gfx_d3d/r_material_override.cpp:407)
-
-void Material_OverrideTechniqueSets(void)
-
-{
-  char cVar1;
-  int local_10;
-  int local_c [3];
-  
-  cVar1 = Sys_IsRenderThread();
-  if (cVar1 == '\0') {
-    cVar1 = Sys_IsMainThread();
-    if (cVar1 == '\0') {
-      MyAssertHandler(0xffffffff821c8b08,0x1a2,1,0xffffffff82000f98,0xffffffff82010b48);
-    }
-    Material_GetRemappedFeatures_RunTime(local_c,&local_10);
-    if (((DAT_84618261 != '\0') || (DAT_84618264 != local_c[0])) || (DAT_84618268 != local_10)) {
-      DAT_84618261 = '\0';
-      DAT_84616500 = 1;
-      DAT_84618264 = local_c[0];
-      DAT_84618268 = local_10;
-      R_SyncRenderThread();
-      Material_ForEachTechniqueSet(0xffffffff82757f18);
-    }
-  }
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
 
 // 827580E8  Material_WouldTechniqueSetBeOverridden  (gfx_d3d/r_material_override.cpp:441)
 
-bool Material_WouldTechniqueSetBeOverridden(undefined4 *param_1)
+bool Material_WouldTechniqueSetBeOverridden(MaterialTechniqueSet *param_1)
 
 {
   longlong lVar1;
   byte *pbVar2;
   byte *pbVar3;
-  undefined4 local_120;
-  undefined4 local_11c [3];
+  uint local_120;
+  uint local_11c [3];
   byte local_110 [256];
   
-  if (param_1 == (undefined4 *)0x0) {
-    MyAssertHandler(0xffffffff821c8b08,0x1be,0,0xffffffff82000f98,0xffffffff821bb4c4);
+  if (param_1 == (MaterialTechniqueSet *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_material_override.cpp"
+                    ,0x1be,0,"%s");
   }
   Material_GetRemappedFeatures_RunTime(&local_120,local_11c);
-  Material_RemapTechniqueSetName(*param_1,local_110,local_120,local_11c[0],0xffffffff821c8af4,1);
-  pbVar3 = (byte *)*param_1;
+  Material_RemapTechniqueSetName
+            (param_1->name,(char *)local_110,local_120,local_11c[0],s_materialFeatures,1);
+  pbVar3 = (byte *)param_1->name;
   pbVar2 = local_110;
   do {
     lVar1 = (ulonglong)*pbVar3 - (ulonglong)*pbVar2;
@@ -386,16 +385,18 @@ bool Material_WouldTechniqueSetBeOverridden(undefined4 *param_1)
     pbVar3 = pbVar3 + 1;
     pbVar2 = pbVar2 + 1;
   } while ((int)lVar1 == 0);
-  return lVar1 != 0;
+  return (bool)('\x01' - (lVar1 == 0));
 }
 
 
 // 827581A0  Material_DirtyTechniqueSetOverrides  (gfx_d3d/r_material_override.cpp:457)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Material_DirtyTechniqueSetOverrides(void)
 
 {
-  DAT_84618261 = 1;
+  mtlOverrideGlob.isDirty = true;
   return;
 }
 

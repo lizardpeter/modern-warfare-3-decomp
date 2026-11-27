@@ -2,44 +2,115 @@
 
 // 828C9EA8  NellyLogEnvelopeToAs  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/libtran.c:106)
 
-/* WARNING: Control flow encountered bad instruction data */
-
-void NellyLogEnvelopeToAs(void)
+void NellyLogEnvelopeToAs(float *param_1,int param_2,float *param_3,float *param_4,float *param_5)
 
 {
-  undefined8 uVar1;
-  undefined1 in_vs32 [16];
-  undefined1 in_vs40 [16];
-  undefined1 in_vs41 [16];
-  undefined1 in_vs43 [16];
+  float fVar1;
+  longlong lVar2;
+  float *pfVar3;
+  float *pfVar4;
+  undefined1 (*pauVar6) [16];
+  ulonglong uVar5;
+  float *pfVar7;
+  longlong lVar8;
+  ulonglong uVar9;
+  undefined1 auVar10 [16];
+  undefined1 auVar11 [16];
+  undefined1 auVar12 [16];
+  undefined1 auVar13 [16];
+  undefined1 auVar14 [16];
+  undefined1 auVar15 [16];
+  float fVar16;
+  float local_2a0 [4];
+  float local_290;
+  float local_28c;
+  float local_288 [14];
+  float local_250;
+  float local_24c [3];
+  undefined1 local_240 [256];
+  float local_140 [80];
   
-  uVar1 = __savegprlr_27();
-  NellyWarpSC36(uVar1,uVar1);
-  altv300_21(in_vs43,in_vs41);
-  altv300_21(in_vs32,in_vs43);
-  altv300_21(in_vs43,in_vs40);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  lVar2 = __savegprlr_27(param_1);
+  NellyWarpSC36((float *)lVar2,(float *)lVar2);
+  pauVar6 = (undefined1 (*) [16])local_240;
+  lVar2 = lVar2 + 0x20;
+  lVar8 = 8;
+  do {
+    auVar14 = loadVectorLeftIndexed(lVar2 + -0x10);
+    auVar13 = loadVectorLeftIndexed(lVar2);
+    auVar11 = loadVectorLeftIndexed(lVar2 + -0x20);
+    auVar12 = vectorRotateLeftImmediateAndMaskInsert(auVar11,auVar14,4,3);
+    auVar11 = loadVectorLeftIndexed(lVar2 + 0x30);
+    auVar14 = loadVectorLeftIndexed(lVar2 + 0x20);
+    auVar15 = vectorRotateLeftImmediateAndMaskInsert(auVar14,auVar11,4,3);
+    auVar10 = loadVectorLeftIndexed(lVar2 + 0x40);
+    auVar14 = loadVectorLeftIndexed(lVar2 + 0x10);
+    auVar12 = vectorRotateLeftImmediateAndMaskInsert(auVar12,auVar13,2,2);
+    auVar11 = loadVectorLeftIndexed(lVar2 + 0x50);
+    lVar2 = lVar2 + 0x80;
+    auVar10 = vectorRotateLeftImmediateAndMaskInsert(auVar15,auVar10,2,2);
+    auVar14 = vectorRotateLeftImmediateAndMaskInsert(auVar12,auVar14,1,1);
+    auVar10 = vectorRotateLeftImmediateAndMaskInsert(auVar10,auVar11,1,1);
+    auVar11 = vector2RaisedToTheExponentEstimateFloatingPoint128(auVar14);
+    auVar14 = vector2RaisedToTheExponentEstimateFloatingPoint128(auVar10);
+    pauVar6[-1] = auVar11;
+    *pauVar6 = auVar14;
+    pauVar6 = pauVar6 + 2;
+    lVar8 = lVar8 + -1;
+  } while (lVar8 != 0);
+  (*memsetfunc)(local_140,0,0x104);
+  inverseRealFft(&local_250,local_140,0x80);
+  pfVar4 = local_24c;
+  uVar5 = (longlong)(param_2 >> 1) - 1;
+  pfVar7 = local_288;
+  local_290 = local_250 * 0.0078125;
+  local_28c = local_140[0] * 0.007812492;
+  if (0 < (int)uVar5) {
+    pfVar3 = local_140;
+    uVar9 = uVar5;
+    do {
+      fVar16 = *pfVar4;
+      pfVar4 = pfVar4 + 1;
+      pfVar3 = pfVar3 + 1;
+      fVar1 = *pfVar3;
+      *pfVar7 = fVar16 * 0.007812492;
+      pfVar7[1] = fVar1 * 0.007812492;
+      pfVar7 = pfVar7 + 2;
+      uVar9 = uVar9 - 1;
+    } while (uVar9 != 0);
+  }
+  if ((int)((uVar5 & 0xffffffff) << 1) != param_2) {
+    *pfVar7 = *pfVar4 * 0.007812492;
+  }
+  NellyDurbin(&local_290,param_2,param_4,param_5,local_2a0);
+  fVar16 = NellyLog2(local_2a0[0]);
+  *param_3 = fVar16 * 0.5;
+  __restgprlr_27();
+  return;
 }
 
 
 // 828C9E68  K2ASK  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/libtran.c:549)
 
-void K2ASK(undefined8 param_1,longlong param_2,longlong param_3)
+void K2ASK(int param_1,float *param_2,float *param_3)
 
 {
   longlong lVar1;
-  double dVar2;
+  longlong lVar2;
+  longlong lVar3;
+  double dVar4;
   
-  lVar1 = __savegprlr_29();
+  lVar2 = (longlong)(int)param_3;
+  lVar3 = (longlong)(int)param_2;
+  lVar1 = __savegprlr_29(param_1);
   if ((int)lVar1 != 0) {
-    param_2 = param_2 + -4;
-    param_3 = param_3 + -4;
+    lVar3 = lVar3 + -4;
+    lVar2 = lVar2 + -4;
     do {
-      param_2 = param_2 + 4;
-      dVar2 = asin((double)*(float *)param_2);
-      param_3 = param_3 + 4;
-      *(float *)param_3 = (float)dVar2;
+      lVar3 = lVar3 + 4;
+      dVar4 = asin((double)*(float *)lVar3);
+      lVar2 = lVar2 + 4;
+      *(float *)lVar2 = (float)dVar4;
       lVar1 = lVar1 + -1;
     } while (lVar1 != 0);
   }

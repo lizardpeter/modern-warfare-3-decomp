@@ -2,16 +2,17 @@
 
 // 82328AE8  vmMain  (cgame_mp/dedicated_cgame.cpp:9)
 
-undefined8 vmMain(void)
+int vmMain(int param_1,int param_2,int param_3,int param_4,int param_5,int param_6,int param_7,
+          int param_8,int param_9,int param_10,int param_11,int param_12,int param_13)
 
 {
-  return 0xffffffffffffffff;
+  return -1;
 }
 
 
 // 82328AF0  dllEntry  (cgame_mp/dedicated_cgame.cpp:21)
 
-void dllEntry(void)
+void dllEntry(_func___cdecl_int_int *param_1)
 
 {
   return;
@@ -19,6 +20,8 @@ void dllEntry(void)
 
 
 // 82328AF8  DummyCGameFunction  (cgame_mp/dedicated_cgame.cpp:30)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void DummyCGameFunction(void)
 

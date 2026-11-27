@@ -437,13 +437,52 @@ LAB_824c42e4:
   824C4318  38E00008             li r7,0x8
   824C431C  3889F950             subi r4,r9,0x6b0
   824C4320  3863A060             subi r3,r3,0x5fa0
+LAB_824c4324:
   824C4324  396B0020             addi r11,r11,0x20
-  824C4328  13E5FC47             vcmpneh. v31,v5,v31
-  824C432C  13C0FC07             vcmpneb. v30,v0,v31
+  824C4328  13E5FC47             lvrx128 v63,r5,r31
+  824C432C  13C0FC07             lvlx128 v62,0,r31
   824C4330  39080001             addi r8,r8,0x1
   824C4334  392B000C             addi r9,r11,0xc
-  824C4338  13BE5447             vcmpneh. v29,v30,v10
-  824C433C  13805407             vcmpneb. v28,v0,v10
+  824C4338  13BE5447             lvrx128 v61,r30,r10
+  824C433C  13805407             lvlx128 v60,0,r10
+  824C4340  177EFAF5             vor128 v59,v62,v63
+  824C4344  175CEAF5             vor128 v58,v60,v61
+  824C4348  13E020C7             lvx128 v63,0,r4
+  824C434C  13205C07             lvlx128 v57,0,r11
+  824C4350  13055C47             lvrx128 v56,r5,r11
+  824C4354  12E04C07             lvlx128 v55,0,r9
+  824C4358  16D9C2F5             vor128 v54,v57,v56
+  824C435C  12A54C47             lvrx128 v53,r5,r9
+  824C4360  169BFA35             vand128 v52,v59,v63
+  824C4364  1677AAF5             vor128 v51,v55,v53
+  824C4368  13C018C7             lvx128 v62,0,r3
+  824C436C  165AFA35             vand128 v50,v58,v63
+  824C4370  1636FA35             vand128 v49,v54,v63
+  824C4374  1613FA35             vand128 v48,v51,v63
+  824C4378  15F49075             vsubfp128 v47,v52,v50
+  824C437C  15D49035             vaddfp128 v46,v52,v50
+  824C4380  15B18075             vsubfp128 v45,v49,v48
+  824C4384  15918035             vaddfp128 v44,v49,v48
+  824C4388  196D7AE5             vminfp128 v43,v45,v47
+  824C438C  194C72A5             vmaxfp128 v42,v44,v46
+  824C4390  152B5035             vaddfp128 v41,v43,v42
+  824C4394  1509F0B5             vmulfp128 v40,v41,v62
+  824C4398  14E85875             vsubfp128 v39,v40,v43
+  824C439C  18C04735             vspltw128 v38,v40,0x0
+  824C43A0  18A14735             vspltw128 v37,v40,0x1
+  824C43A4  18824735             vspltw128 v36,v40,0x2
+  824C43A8  10C0F987             stvewx128 v38,0,r31
+  824C43AC  10BF3187             stvewx128 v37,r31,r6
+  824C43B0  109F3987             stvewx128 v36,r31,r7
+  824C43B4  18603F35             vspltw128 v35,v39,0x0
+  824C43B8  18413F35             vspltw128 v34,v39,0x1
+  824C43BC  18223F35             vspltw128 v33,v39,0x2
+  824C43C0  10605187             stvewx128 v35,0,r10
+  824C43C4  104A3187             stvewx128 v34,r10,r6
+  824C43C8  102A3987             stvewx128 v33,r10,r7
+  824C43CC  A13C0000             lhz r9,0x0(r28)
+  824C43D0  7F084840             cmplw cr6,r8,r9
+  824C43D4  4198FF50             blt cr6,0x824c4324
 LAB_824c43d8:
   824C43D8  38210080             addi r1,r1,0x80
   824C43DC  4845232C             b 0x82916708

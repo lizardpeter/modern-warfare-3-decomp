@@ -7,7 +7,7 @@ void __unwind_72237(void)
 {
   int in_r12;
   
-  bdTaskByteBuffer__operator_delete(*(undefined4 *)(in_r12 + -0x58));
+  bdMemory::__3bdTaskByteBuffer__SAXPAX_Z(*(void **)(in_r12 + -0x58));
   return;
 }
 
@@ -17,9 +17,10 @@ void __unwind_72237(void)
 void __unwind_72238(void)
 
 {
-  longlong in_r12;
+  int in_r12;
   
-  bdReference<bdTaskByteBuffer>___bdReference<bdTaskByteBuffer>(in_r12 + -0x60);
+  bdReference<bdTaskByteBuffer>::~bdReference<bdTaskByteBuffer>
+            ((bdReference<bdTaskByteBuffer> *)(in_r12 + -0x60));
   return;
 }
 
@@ -33,7 +34,8 @@ void __unwind_72239(void)
   
   if ((*(uint *)(in_r12 + -0x5c) & 1) != 0) {
     *(uint *)(in_r12 + -0x5c) = *(uint *)(in_r12 + -0x5c) & 0xfffffffe;
-    bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(*(undefined4 *)(in_r12 + 0x14));
+    bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>
+              (*(bdReference<bdRemoteTask> **)(in_r12 + 0x14));
   }
   return;
 }
@@ -46,7 +48,7 @@ void __unwind_72310(void)
 {
   int in_r12;
   
-  bdTaskByteBuffer__operator_delete(*(undefined4 *)(in_r12 + -0x58));
+  bdMemory::__3bdTaskByteBuffer__SAXPAX_Z(*(void **)(in_r12 + -0x58));
   return;
 }
 
@@ -56,9 +58,10 @@ void __unwind_72310(void)
 void __unwind_72311(void)
 
 {
-  longlong in_r12;
+  int in_r12;
   
-  bdReference<bdTaskByteBuffer>___bdReference<bdTaskByteBuffer>(in_r12 + -0x60);
+  bdReference<bdTaskByteBuffer>::~bdReference<bdTaskByteBuffer>
+            ((bdReference<bdTaskByteBuffer> *)(in_r12 + -0x60));
   return;
 }
 
@@ -72,7 +75,8 @@ void __unwind_72312(void)
   
   if ((*(uint *)(in_r12 + -0x5c) & 1) != 0) {
     *(uint *)(in_r12 + -0x5c) = *(uint *)(in_r12 + -0x5c) & 0xfffffffe;
-    bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(*(undefined4 *)(in_r12 + 0x14));
+    bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>
+              (*(bdReference<bdRemoteTask> **)(in_r12 + 0x14));
   }
   return;
 }

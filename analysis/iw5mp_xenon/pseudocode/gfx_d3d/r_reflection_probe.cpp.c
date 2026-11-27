@@ -2,87 +2,92 @@
 
 // 82764B18  R_CalcCubeMapViewValues  (gfx_d3d/r_reflection_probe.cpp:48)
 
-void R_CalcCubeMapViewValues(undefined4 *param_1,longlong param_2,int param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void R_CalcCubeMapViewValues(refdef_t *param_1,CubemapShot param_2,int param_3)
 
 {
-  int iVar1;
-  double dVar2;
+  longlong lVar1;
+  int iVar2;
+  double dVar3;
   
-  iVar1 = param_3 + 2;
-  param_1[2] = iVar1;
-  param_1[3] = iVar1;
-  dVar2 = 0.0;
-  param_1[0x12] = 0;
-  *param_1 = 0;
-  param_1[1] = 0;
-  param_1[4] = (float)((double)(longlong)iVar1 / (double)(longlong)param_3);
-  param_1[5] = (float)((double)(longlong)iVar1 / (double)(longlong)param_3);
-  if ((param_2 - 1U & 0xffffffff) < 6) {
-    if ((int)(param_2 - 1U) == 0) {
-      param_1[10] = 0;
-      param_1[0xb] = 0;
-      param_1[9] = 0x3f800000;
-      param_1[0xc] = 0;
-      param_1[0xd] = 0x3f800000;
+  lVar1 = (longlong)(int)param_2;
+  iVar2 = param_3 + 2;
+  (param_1->displayViewport).width = iVar2;
+  (param_1->displayViewport).height = iVar2;
+  dVar3 = 0.0;
+  (param_1->view).zNear = 0.0;
+  (param_1->displayViewport).x = 0;
+  (param_1->displayViewport).y = 0;
+  (param_1->view).tanHalfFovX = (float)(longlong)iVar2 / (float)(longlong)param_3;
+  (param_1->view).tanHalfFovY = (float)(longlong)iVar2 / (float)(longlong)param_3;
+  if ((lVar1 - 1U & 0xffffffff) < 6) {
+    if ((int)(lVar1 - 1U) == 0) {
+      (param_1->view).axis[0][1] = 0.0;
+      (param_1->view).axis[0][2] = 0.0;
+      (param_1->view).axis[0][0] = 1.0;
+      (param_1->view).axis[1][0] = 0.0;
+      (param_1->view).axis[1][1] = 1.0;
       goto LAB_82764ce0;
     }
-    if (param_2 != 2) {
-      if (param_2 == 3) goto LAB_82764c90;
-      if (param_2 != 4) {
-        if (param_2 == 5) {
-          param_1[9] = 0;
-          param_1[10] = 0;
-          param_1[0xb] = 0x3f800000;
-          param_1[0xc] = 0;
-          param_1[0xd] = 0x3f800000;
-          param_1[0xe] = 0;
-          param_1[0xf] = 0xbf800000;
-          param_1[0x11] = 0;
+    if (lVar1 != 2) {
+      if (lVar1 == 3) goto LAB_82764c90;
+      if (lVar1 != 4) {
+        if (lVar1 == 5) {
+          (param_1->view).axis[0][0] = 0.0;
+          (param_1->view).axis[0][1] = 0.0;
+          (param_1->view).axis[0][2] = 1.0;
+          (param_1->view).axis[1][0] = 0.0;
+          (param_1->view).axis[1][1] = 1.0;
+          (param_1->view).axis[1][2] = 0.0;
+          (param_1->view).axis[2][0] = -1.0;
+          (param_1->view).axis[2][2] = 0.0;
         }
         else {
-          param_1[9] = 0;
-          param_1[10] = 0;
-          param_1[0xb] = 0xbf800000;
-          param_1[0xc] = 0;
-          param_1[0xd] = 0x3f800000;
-          param_1[0xe] = 0;
-          param_1[0xf] = 0x3f800000;
-          param_1[0x11] = 0;
+          (param_1->view).axis[0][0] = 0.0;
+          (param_1->view).axis[0][1] = 0.0;
+          (param_1->view).axis[0][2] = -1.0;
+          (param_1->view).axis[1][0] = 0.0;
+          (param_1->view).axis[1][1] = 1.0;
+          (param_1->view).axis[1][2] = 0.0;
+          (param_1->view).axis[2][0] = 1.0;
+          (param_1->view).axis[2][2] = 0.0;
         }
         goto LAB_82764cec;
       }
-      param_1[9] = 0;
-      param_1[0xb] = 0;
-      param_1[10] = 0xbf800000;
-      param_1[0xc] = 0x3f800000;
+      (param_1->view).axis[0][0] = 0.0;
+      (param_1->view).axis[0][2] = 0.0;
+      (param_1->view).axis[0][1] = -1.0;
+      (param_1->view).axis[1][0] = 1.0;
       goto LAB_82764cdc;
     }
-    param_1[10] = 0;
-    param_1[0xb] = 0;
-    param_1[9] = 0xbf800000;
-    param_1[0xc] = 0;
-    param_1[0xd] = 0xbf800000;
-    param_1[0xe] = 0;
-    param_1[0x11] = 0x3f800000;
+    (param_1->view).axis[0][1] = 0.0;
+    (param_1->view).axis[0][2] = 0.0;
+    (param_1->view).axis[0][0] = -1.0;
+    (param_1->view).axis[1][0] = 0.0;
+    (param_1->view).axis[1][1] = -1.0;
+    (param_1->view).axis[1][2] = 0.0;
+    (param_1->view).axis[2][2] = 1.0;
   }
   else {
 LAB_82764c90:
-    if ((int)param_2 != 3) {
-      MyAssertHandler(0xffffffff821cae88,0x55,1,0xffffffff821caed4,0xffffffff821caeec);
+    if (param_2 != CUBEMAPSHOT_BACK) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_reflection_probe.cpp"
+                      ,0x55,1,"%s\n\t(cubemapShot) = %i");
     }
-    param_1[9] = (float)dVar2;
-    param_1[0xb] = (float)dVar2;
-    param_1[10] = 0x3f800000;
-    param_1[0xc] = 0xbf800000;
+    (param_1->view).axis[0][0] = (float)dVar3;
+    (param_1->view).axis[0][2] = (float)dVar3;
+    (param_1->view).axis[0][1] = 1.0;
+    (param_1->view).axis[1][0] = -1.0;
 LAB_82764cdc:
-    param_1[0xd] = (float)dVar2;
+    (param_1->view).axis[1][1] = (float)dVar3;
 LAB_82764ce0:
-    param_1[0xe] = (float)dVar2;
-    param_1[0x11] = 0x3f800000;
+    (param_1->view).axis[1][2] = (float)dVar3;
+    (param_1->view).axis[2][2] = 1.0;
   }
-  param_1[0xf] = (float)dVar2;
+  (param_1->view).axis[2][0] = (float)dVar3;
 LAB_82764cec:
-  param_1[0x10] = (float)dVar2;
+  (param_1->view).axis[2][1] = (float)dVar3;
   return;
 }
 

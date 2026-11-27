@@ -2,28 +2,32 @@
 
 // 825B3830  TRACK_ui_memtrack  (ui/ui_mem_track.cpp:20)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void TRACK_ui_memtrack(void)
 
 {
-  DAT_8367aa78 = &DAT_820068af;
+  g_mem_track_filename = "";
   return;
 }
 
 
 // 825B3848  UI_track_init  (ui/ui_mem_track.cpp:43)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void UI_track_init(void)
 
 {
-  DAT_8367aa78 = "ui_main";
+  g_mem_track_filename = "ui_main";
   TRACK_ui_main();
-  DAT_8367aa78 = "ui_shared";
+  g_mem_track_filename = "ui_shared";
   TRACK_ui_shared();
-  DAT_8367aa78 = "ui_utils";
+  g_mem_track_filename = "ui_utils";
   TRACK_ui_utils();
-  DAT_8367aa78 = "ui_atoms";
+  g_mem_track_filename = "ui_atoms";
   TRACK_ui_atoms();
-  DAT_8367aa78 = &DAT_820068af;
+  g_mem_track_filename = "";
   return;
 }
 

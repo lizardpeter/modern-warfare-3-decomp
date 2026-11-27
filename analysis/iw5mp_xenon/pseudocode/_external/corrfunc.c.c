@@ -2,39 +2,36 @@
 
 // 828CD410  corrfunc  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/corrfunc.c:54)
 
-void corrfunc(double param_1,double param_2,double param_3,double param_4)
+void corrfunc(float param_1,float param_2,float param_3,float *param_4,int param_5,float *param_6,
+             float param_7,ulong *param_8,float *param_9)
 
 {
   float fVar1;
-  int *piVar2;
-  float *in_r6;
-  longlong in_r7;
+  float fVar2;
+  int *piVar3;
   float *in_r8;
   int in_r10;
-  float *pfVar3;
-  longlong lVar4;
-  double dVar5;
+  float *pfVar4;
+  longlong lVar5;
   float *in_stack_00000054;
   
-  for (; param_2 <= param_3; param_2 = (double)(float)(param_1 + param_2)) {
-    dVar5 = param_4;
-    if (0 < (int)in_r7) {
-      lVar4 = in_r7;
-      pfVar3 = in_r8;
+  for (; param_2 <= param_3; param_2 = param_1 + param_2) {
+    fVar2 = param_7;
+    if (0 < (int)param_9) {
+      lVar5 = (longlong)(int)param_9;
+      pfVar4 = in_r8;
       do {
-        piVar2 = (int *)((in_r10 - (int)in_r8) + (int)pfVar3);
-        fVar1 = *pfVar3;
-        pfVar3 = pfVar3 + 1;
-        dVar5 = (double)(float)((double)*(float *)(PTR_DAT_829afe88 +
-                                                  (*piVar2 * (int)(param_2 * 4096.0 + 0.5) +
-                                                   0x800000U >> 0x16 & 0x3fc)) * (double)fVar1 +
-                               dVar5);
-        lVar4 = lVar4 + -1;
-      } while (lVar4 != 0);
+        piVar3 = (int *)((in_r10 - (int)in_r8) + (int)pfVar4);
+        fVar1 = *pfVar4;
+        pfVar4 = pfVar4 + 1;
+        fVar2 = *(float *)((*piVar3 * (int)(param_2 * 4096.0 + 0.5) + 0x800000U >> 0x16 & 0x3fc) +
+                          (int)cosTBL_32) * fVar1 + fVar2;
+        lVar5 = lVar5 + -1;
+      } while (lVar5 != 0);
     }
-    if ((double)*in_r6 < dVar5) {
-      *in_r6 = (float)dVar5;
-      *in_stack_00000054 = (float)param_2;
+    if ((float)*param_8 < fVar2) {
+      *param_8 = (ulong)fVar2;
+      *in_stack_00000054 = param_2;
     }
   }
   return;

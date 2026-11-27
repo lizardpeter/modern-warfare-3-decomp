@@ -39,7 +39,7 @@ LAB_828ed4f8:
   828ED500  38210070             addi r1,r1,0x70
   828ED504  48029208             b 0x8291670c
 
-; 828EC830  XAUDIO::CPCMSourceEffect::AddRef  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.h:99)
+; 828EC830  AddRef  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.h:99)
   828EC830  81230008             lwz r9,0x8(r3)
   828EC834  7C6B1B78             or r11,r3,r3
   828EC838  39430004             addi r10,r3,0x4
@@ -47,7 +47,7 @@ LAB_828ed4f8:
   828EC840  906B0008             stw r3,0x8(r11)
   828EC844  4E800020             blr
 
-; 828EC848  XAUDIO::CPCMSourceEffect::Release  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.h:104)
+; 828EC848  Release  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.h:104)
   828EC848  7D8802A6             mfspr r12,LR
   828EC84C  9181FFF8             stw r12,-0x8(r1)
   828EC850  9421FFA0             stwu r1,-0x60(r1)
@@ -68,7 +68,7 @@ LAB_828ec880:
   828EC888  7D8803A6             mtspr LR,r12
   828EC88C  4E800020             blr
 
-; 828EC890  XAUDIO::CPCMSourceEffect::GetInfo  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.h:109)
+; 828EC890  GetInfo  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.h:109)
   828EC890  3D608220             lis r11,-0x7de0
   828EC894  39400004             li r10,0x4
   828EC898  38600000             li r3,0x0
@@ -77,13 +77,13 @@ LAB_828ec880:
   828EC8A4  B1640002             sth r11,0x2(r4)
   828EC8A8  4E800020             blr
 
-; 828EC8B0  XAUDIO::CPCMSourceEffect::GetContext  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.h:114)
+; 828EC8B0  GetContext  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.h:114)
   828EC8B0  8163000C             lwz r11,0xc(r3)
   828EC8B4  38600000             li r3,0x0
   828EC8B8  91640000             stw r11,0x0(r4)
   828EC8BC  4E800020             blr
 
-; 828ED380  XAUDIO::CPCMSourceEffect::CPCMSourceEffect  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.cpp:116)
+; 828ED380  CPCMSourceEffect  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.cpp:116)
   828ED380  7D8802A6             mfspr r12,LR
   828ED384  48029331             bl 0x829166b4
   828ED388  9421FF70             stwu r1,-0x90(r1)
@@ -153,35 +153,35 @@ LAB_828ec880:
   828ED488  38210090             addi r1,r1,0x90
   828ED48C  48029278             b 0x82916704
 
-; 828EC8C0  XAUDIO::CPCMSourceEffect::SubmitPacket  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.h:119)
+; 828EC8C0  SubmitPacket  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.h:119)
   828EC8C0  38630010             addi r3,r3,0x10
   828EC8C4  4BFEF63C             b 0x828dbf00
 
-; 828EC8C8  XAUDIO::CPCMSourceEffect::SubmitSourceBuffer  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.h:124)
+; 828EC8C8  SubmitSourceBuffer  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.h:124)
   828EC8C8  38630010             addi r3,r3,0x10
   828EC8CC  4BFEF8EC             b 0x828dc1b8
 
-; 828EC8D0  XAUDIO::CPCMSourceEffect::FlushPackets  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.h:129)
+; 828EC8D0  FlushPackets  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.h:129)
   828EC8D0  38630010             addi r3,r3,0x10
   828EC8D4  4BFEF0FC             b 0x828db9d0
 
-; 828EC8D8  XAUDIO::CPCMSourceEffect::FlushSourceBuffers  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.h:134)
+; 828EC8D8  FlushSourceBuffers  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.h:134)
   828EC8D8  38630010             addi r3,r3,0x10
   828EC8DC  4BFEF0F4             b 0x828db9d0
 
-; 828EC8E0  XAUDIO::CPCMSourceEffect::GetState  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.h:140)
+; 828EC8E0  GetState  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.h:140)
   828EC8E0  896300AC             lbz r11,0xac(r3)
   828EC8E4  38600000             li r3,0x0
   828EC8E8  99640000             stb r11,0x0(r4)
   828EC8EC  4E800020             blr
 
-; 828EC8F0  XAUDIO::CPCMSourceEffect::GetVolume  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.h:145)
+; 828EC8F0  GetVolume  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.h:145)
   828EC8F0  C0030070             lfs f0,0x70(r3)
   828EC8F4  38600000             li r3,0x0
   828EC8F8  D0040000             stfs f0,0x0(r4)
   828EC8FC  4E800020             blr
 
-; 828EC900  XAUDIO::CPCMSourceEffect::GetPitch  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.h:150)
+; 828EC900  GetPitch  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.h:150)
   828EC900  7D8802A6             mfspr r12,LR
   828EC904  9181FFF8             stw r12,-0x8(r1)
   828EC908  FBE1FFF0             std r31,-0x10(r1)
@@ -201,13 +201,13 @@ LAB_828ec880:
   828EC940  EBE1FFF0             ld r31,-0x10(r1)
   828EC944  4E800020             blr
 
-; 828EC948  XAUDIO::CPCMSourceEffect::GetFrequencyScale  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.h:155)
+; 828EC948  GetFrequencyScale  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.h:155)
   828EC948  C0030074             lfs f0,0x74(r3)
   828EC94C  38600000             li r3,0x0
   828EC950  D0040000             stfs f0,0x0(r4)
   828EC954  4E800020             blr
 
-; 828EC958  XAUDIO::CPCMSourceEffect::GetPacketPosition  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.h:160)
+; 828EC958  GetPacketPosition  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.h:160)
   828EC958  7C6B1B78             or r11,r3,r3
   828EC95C  A143006C             lhz r10,0x6c(r3)
   828EC960  38600000             li r3,0x0
@@ -216,7 +216,7 @@ LAB_828ec880:
   828EC96C  91040000             stw r8,0x0(r4)
   828EC970  4E800020             blr
 
-; 828ECF68  XAUDIO::CPCMSourceEffect::SetPacketPosition  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.h:167)
+; 828ECF68  SetPacketPosition  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.h:167)
   828ECF68  7D8802A6             mfspr r12,LR
   828ECF6C  48029749             bl 0x829166b4
   828ECF70  9421FF80             stwu r1,-0x80(r1)
@@ -273,13 +273,13 @@ LAB_828ed02c:
   828ED030  38210080             addi r1,r1,0x80
   828ED034  480296D0             b 0x82916704
 
-; 828EC978  XAUDIO::CPCMSourceEffect::GetStreamPosition  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.h:177)
+; 828EC978  GetStreamPosition  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.h:177)
   828EC978  816300A8             lwz r11,0xa8(r3)
   828EC97C  38600000             li r3,0x0
   828EC980  91640000             stw r11,0x0(r4)
   828EC984  4E800020             blr
 
-; 828ECB70  XAUDIO::CPCMSourceEffect::SetFormat  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.cpp:181)
+; 828ECB70  SetFormat  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.cpp:181)
   828ECB70  7D8802A6             mfspr r12,LR
   828ECB74  9181FFF8             stw r12,-0x8(r1)
   828ECB78  FBE1FFF0             std r31,-0x10(r1)
@@ -306,7 +306,7 @@ LAB_828ecbbc:
   828ECBC8  EBE1FFF0             ld r31,-0x10(r1)
   828ECBCC  4E800020             blr
 
-; 828ED038  XAUDIO::CPCMSourceEffect::Start  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.h:184)
+; 828ED038  Start  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.h:184)
   828ED038  7D8802A6             mfspr r12,LR
   828ED03C  4802967D             bl 0x829166b8
   828ED040  9421FF80             stwu r1,-0x80(r1)
@@ -375,7 +375,7 @@ LAB_828ed120:
   828ED124  38210080             addi r1,r1,0x80
   828ED128  480295E0             b 0x82916708
 
-; 828ED130  XAUDIO::CPCMSourceEffect::Stop  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.h:189)
+; 828ED130  Stop  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.h:189)
   828ED130  7D8802A6             mfspr r12,LR
   828ED134  48029581             bl 0x829166b4
   828ED138  9421FF80             stwu r1,-0x80(r1)
@@ -460,7 +460,7 @@ LAB_828ed258:
   828ED25C  38210080             addi r1,r1,0x80
   828ED260  480294A4             b 0x82916704
 
-; 828ED290  XAUDIO::CPCMSourceEffect::Discontinuity  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.h:194)
+; 828ED290  Discontinuity  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.h:194)
   828ED290  7D8802A6             mfspr r12,LR
   828ED294  48029425             bl 0x829166b8
   828ED298  9421FF80             stwu r1,-0x80(r1)
@@ -526,7 +526,7 @@ LAB_828ed374:
   828ED378  38210080             addi r1,r1,0x80
   828ED37C  4802938C             b 0x82916708
 
-; 828EC988  XAUDIO::CPCMSourceEffect::GetPacketLoopCount  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.h:199)
+; 828EC988  GetPacketLoopCount  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.h:199)
   828EC988  7D8802A6             mfspr r12,LR
   828EC98C  9181FFF8             stw r12,-0x8(r1)
   828EC990  FBE1FFF0             std r31,-0x10(r1)
@@ -550,7 +550,7 @@ LAB_828ec9c8:
   828EC9D4  EBE1FFF0             ld r31,-0x10(r1)
   828EC9D8  4E800020             blr
 
-; 828EC9E0  XAUDIO::CPCMSourceEffect::SetPacketLoopCount  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.h:204)
+; 828EC9E0  SetPacketLoopCount  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.h:204)
   828EC9E0  7D8802A6             mfspr r12,LR
   828EC9E4  9181FFF8             stw r12,-0x8(r1)
   828EC9E8  FBE1FFF0             std r31,-0x10(r1)
@@ -573,7 +573,7 @@ LAB_828eca1c:
   828ECA28  EBE1FFF0             ld r31,-0x10(r1)
   828ECA2C  4E800020             blr
 
-; 828ECA30  XAUDIO::CPCMSourceEffect::GetPacketContext  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.h:209)
+; 828ECA30  GetPacketContext  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.h:209)
   828ECA30  7D8802A6             mfspr r12,LR
   828ECA34  9181FFF8             stw r12,-0x8(r1)
   828ECA38  FBE1FFF0             std r31,-0x10(r1)
@@ -597,7 +597,7 @@ LAB_828eca70:
   828ECA7C  EBE1FFF0             ld r31,-0x10(r1)
   828ECA80  4E800020             blr
 
-; 828ECA88  XAUDIO::CPCMSourceEffect::GetFormat  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.h:214)
+; 828ECA88  GetFormat  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.h:214)
   828ECA88  7D8802A6             mfspr r12,LR
   828ECA8C  9181FFF8             stw r12,-0x8(r1)
   828ECA90  FBC1FFE8             std r30,-0x18(r1)
@@ -626,12 +626,12 @@ LAB_828ecad4:
   828ECAE4  EBE1FFF0             ld r31,-0x10(r1)
   828ECAE8  4E800020             blr
 
-; 828ECAF0  XAUDIO::CPCMSourceEffect::QueryInterface  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.h:219)
+; 828ECAF0  QueryInterface  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.h:219)
   828ECAF0  3963FFFC             subi r11,r3,0x4
   828ECAF4  91640000             stw r11,0x0(r4)
   828ECAF8  4E800020             blr
 
-; 828ECBD0  XAUDIO::CPCMSourceEffect::SetVolume  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.cpp:220)
+; 828ECBD0  SetVolume  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.cpp:220)
   828ECBD0  7D8802A6             mfspr r12,LR
   828ECBD4  48029AE5             bl 0x829166b8
   828ECBD8  DBE1FFD0             stfd f31,-0x30(r1)
@@ -685,19 +685,19 @@ LAB_828ecc84:
   828ECC8C  CBE1FFD0             lfd f31,-0x30(r1)
   828ECC90  48029A78             b 0x82916708
 
-; 828ECB00  XAUDIO::CPCMSourceEffect::QueryInterface  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.h:224)
+; 828ECB00  QueryInterface  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.h:224)
   828ECB00  90640000             stw r3,0x0(r4)
   828ECB04  4E800020             blr
 
-; 828ECB08  XAUDIO::CPCMSourceEffect::GetParam  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.h:229)
+; 828ECB08  GetParam  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.h:229)
   828ECB08  38630004             addi r3,r3,0x4
   828ECB0C  4BFE67F4             b 0x828d3300
 
-; 828ECB10  XAUDIO::CPCMSourceEffect::SetParam  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.h:234)
+; 828ECB10  SetParam  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.h:234)
   828ECB10  38630004             addi r3,r3,0x4
   828ECB14  4BFE68E4             b 0x828d33f8
 
-; 828ECC98  XAUDIO::CPCMSourceEffect::SetPitch  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.cpp:256)
+; 828ECC98  SetPitch  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.cpp:256)
   828ECC98  7D8802A6             mfspr r12,LR
   828ECC9C  48029A1D             bl 0x829166b8
   828ECCA0  DBE1FFD0             stfd f31,-0x30(r1)
@@ -772,7 +772,7 @@ LAB_828ecda0:
   828ECDA8  CBE1FFD0             lfd f31,-0x30(r1)
   828ECDAC  4802995C             b 0x82916708
 
-; 828ECDB0  XAUDIO::CPCMSourceEffect::SetFrequencyScale  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.cpp:292)
+; 828ECDB0  SetFrequencyScale  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.cpp:292)
   828ECDB0  7D8802A6             mfspr r12,LR
   828ECDB4  48029905             bl 0x829166b8
   828ECDB8  DBE1FFD0             stfd f31,-0x30(r1)
@@ -842,7 +842,7 @@ LAB_828ecea4:
   828ECEAC  CBE1FFD0             lfd f31,-0x30(r1)
   828ECEB0  48029858             b 0x82916708
 
-; 828ED508  XAUDIO::CPCMSourceEffect::Process  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.cpp:330)
+; 828ED508  Process  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.cpp:330)
   828ED508  7D8802A6             mfspr r12,LR
   828ED50C  48029195             bl 0x829166a0
   828ED510  DBE1FFA0             stfd f31,-0x60(r1)
@@ -1339,15 +1339,15 @@ LAB_828edc04:
   828EDC08  CBE1FFA0             lfd f31,-0x60(r1)
   828EDC0C  48028AE4             b 0x829166f0
 
-; 828EC820  [thunk]:XAUDIO::CPCMSourceEffect::`vector_deleting_destructor'  (line unknown)
+; 828EC820  `vector_deleting_destructor'`adjustor{4}'  (line unknown)
   828EC820  3863FFFC             subi r3,r3,0x4
   828EC824  480002F4             b 0x828ecb18
 
-; 828EC828  [thunk]:XAUDIO::CPCMSourceEffect::`vector_deleting_destructor'  (line unknown)
+; 828EC828  `vector_deleting_destructor'`adjustor{16}'  (line unknown)
   828EC828  3863FFF0             subi r3,r3,0x10
   828EC82C  480002EC             b 0x828ecb18
 
-; 828ECB18  XAUDIO::CPCMSourceEffect::`scalar_deleting_destructor'  (line unknown)
+; 828ECB18  `scalar_deleting_destructor'  (line unknown)
   828ECB18  7D8802A6             mfspr r12,LR
   828ECB1C  9181FFF8             stw r12,-0x8(r1)
   828ECB20  FBE1FFF0             std r31,-0x10(r1)
@@ -1371,102 +1371,102 @@ LAB_828edc04:
   828ECB68  EBE1FFF0             ld r31,-0x10(r1)
   828ECB6C  4E800020             blr
 
-; 828ECEB8  [thunk]:XAUDIO::CPCMSourceEffect::GetVolume`adjustor{16}'  (line unknown)
+; 828ECEB8  GetVolume`adjustor{16}'  (line unknown)
   828ECEB8  3863FFF0             subi r3,r3,0x10
   828ECEBC  4BFFFA34             b 0x828ec8f0
 
-; 828ECEC0  [thunk]:XAUDIO::CPCMSourceEffect::GetPitch`adjustor{16}'  (line unknown)
+; 828ECEC0  GetPitch`adjustor{16}'  (line unknown)
   828ECEC0  3863FFF0             subi r3,r3,0x10
   828ECEC4  4BFFFA3C             b 0x828ec900
 
-; 828ECEC8  [thunk]:XAUDIO::CPCMSourceEffect::SetFormat`adjustor{16}'  (line unknown)
+; 828ECEC8  SetFormat`adjustor{16}'  (line unknown)
   828ECEC8  3863FFF0             subi r3,r3,0x10
   828ECECC  4BFFFCA4             b 0x828ecb70
 
-; 828ECED0  [thunk]:XAUDIO::CPCMSourceEffect::GetFrequencyScale`adjustor{16}'  (line unknown)
+; 828ECED0  GetFrequencyScale`adjustor{16}'  (line unknown)
   828ECED0  3863FFF0             subi r3,r3,0x10
   828ECED4  4BFFFA74             b 0x828ec948
 
-; 828ECED8  [thunk]:XAUDIO::CPCMSourceEffect::SetVolume`adjustor{16}'  (line unknown)
+; 828ECED8  SetVolume`adjustor{16}'  (line unknown)
   828ECED8  3863FFF0             subi r3,r3,0x10
   828ECEDC  4BFFFCF4             b 0x828ecbd0
 
-; 828ECEE0  [thunk]:XAUDIO::CPCMSourceEffect::GetPacketContext`adjustor{16}'  (line unknown)
+; 828ECEE0  GetPacketContext`adjustor{16}'  (line unknown)
   828ECEE0  3863FFF0             subi r3,r3,0x10
   828ECEE4  4BFFFB4C             b 0x828eca30
 
-; 828ECEE8  [thunk]:XAUDIO::CPCMSourceEffect::SetPacketLoopCount`adjustor{16}'  (line unknown)
+; 828ECEE8  SetPacketLoopCount`adjustor{16}'  (line unknown)
   828ECEE8  3863FFF0             subi r3,r3,0x10
   828ECEEC  4BFFFAF4             b 0x828ec9e0
 
-; 828ECEF0  [thunk]:XAUDIO::CPCMSourceEffect::GetFormat`adjustor{16}'  (line unknown)
+; 828ECEF0  GetFormat`adjustor{16}'  (line unknown)
   828ECEF0  3863FFF0             subi r3,r3,0x10
   828ECEF4  4BFFFB94             b 0x828eca88
 
-; 828ECEF8  [thunk]:XAUDIO::CPCMSourceEffect::FlushSourceBuffers`adjustor{16}'  (line unknown)
+; 828ECEF8  FlushSourceBuffers`adjustor{16}'  (line unknown)
   828ECEF8  3863FFF0             subi r3,r3,0x10
   828ECEFC  4BFFF9DC             b 0x828ec8d8
 
-; 828ECF00  [thunk]:XAUDIO::CPCMSourceEffect::GetState`adjustor{16}'  (line unknown)
+; 828ECF00  GetState`adjustor{16}'  (line unknown)
   828ECF00  3863FFF0             subi r3,r3,0x10
   828ECF04  4BFFF9DC             b 0x828ec8e0
 
-; 828ECF08  [thunk]:XAUDIO::CPCMSourceEffect::GetParam`adjustor{4}'  (line unknown)
+; 828ECF08  GetParam`adjustor{4}'  (line unknown)
   828ECF08  3863FFFC             subi r3,r3,0x4
   828ECF0C  4BFFFBFC             b 0x828ecb08
 
-; 828ECF10  [thunk]:XAUDIO::CPCMSourceEffect::FlushPackets`adjustor{16}'  (line unknown)
+; 828ECF10  FlushPackets`adjustor{16}'  (line unknown)
   828ECF10  3863FFF0             subi r3,r3,0x10
   828ECF14  4BFFF9BC             b 0x828ec8d0
 
-; 828ECF18  [thunk]:XAUDIO::CPCMSourceEffect::SetPitch`adjustor{16}'  (line unknown)
+; 828ECF18  SetPitch`adjustor{16}'  (line unknown)
   828ECF18  3863FFF0             subi r3,r3,0x10
   828ECF1C  4BFFFD7C             b 0x828ecc98
 
-; 828ECF20  [thunk]:XAUDIO::CPCMSourceEffect::SetFrequencyScale`adjustor{16}'  (line unknown)
+; 828ECF20  SetFrequencyScale`adjustor{16}'  (line unknown)
   828ECF20  3863FFF0             subi r3,r3,0x10
   828ECF24  4BFFFE8C             b 0x828ecdb0
 
-; 828ECF28  [thunk]:XAUDIO::CPCMSourceEffect::Release`adjustor{4}'  (line unknown)
+; 828ECF28  Release`adjustor{4}'  (line unknown)
   828ECF28  3863FFFC             subi r3,r3,0x4
   828ECF2C  4BFFF91C             b 0x828ec848
 
-; 828ECF30  [thunk]:XAUDIO::CPCMSourceEffect::SubmitSourceBuffer`adjustor{16}'  (line unknown)
+; 828ECF30  SubmitSourceBuffer`adjustor{16}'  (line unknown)
   828ECF30  3863FFF0             subi r3,r3,0x10
   828ECF34  4BFFF994             b 0x828ec8c8
 
-; 828ECF38  [thunk]:XAUDIO::CPCMSourceEffect::GetInfo`adjustor{4}'  (line unknown)
+; 828ECF38  GetInfo`adjustor{4}'  (line unknown)
   828ECF38  3863FFFC             subi r3,r3,0x4
   828ECF3C  4BFFF954             b 0x828ec890
 
-; 828ECF40  [thunk]:XAUDIO::CPCMSourceEffect::GetContext`adjustor{4}'  (line unknown)
+; 828ECF40  GetContext`adjustor{4}'  (line unknown)
   828ECF40  3863FFFC             subi r3,r3,0x4
   828ECF44  4BFFF96C             b 0x828ec8b0
 
-; 828ECF48  [thunk]:XAUDIO::CPCMSourceEffect::SetParam`adjustor{4}'  (line unknown)
+; 828ECF48  SetParam`adjustor{4}'  (line unknown)
   828ECF48  3863FFFC             subi r3,r3,0x4
   828ECF4C  4BFFFBC4             b 0x828ecb10
 
-; 828ECF50  [thunk]:XAUDIO::CPCMSourceEffect::AddRef`adjustor{4}'  (line unknown)
+; 828ECF50  AddRef`adjustor{4}'  (line unknown)
   828ECF50  3863FFFC             subi r3,r3,0x4
   828ECF54  4BFFF8DC             b 0x828ec830
 
-; 828ECF58  [thunk]:XAUDIO::CPCMSourceEffect::SubmitPacket`adjustor{16}'  (line unknown)
+; 828ECF58  SubmitPacket`adjustor{16}'  (line unknown)
   828ECF58  3863FFF0             subi r3,r3,0x10
   828ECF5C  4BFFF964             b 0x828ec8c0
 
-; 828ECF60  [thunk]:XAUDIO::CPCMSourceEffect::GetPacketLoopCount`adjustor{16}'  (line unknown)
+; 828ECF60  GetPacketLoopCount`adjustor{16}'  (line unknown)
   828ECF60  3863FFF0             subi r3,r3,0x10
   828ECF64  4BFFFA24             b 0x828ec988
 
-; 828ED280  [thunk]:XAUDIO::CPCMSourceEffect::Start`adjustor{16}'  (line unknown)
+; 828ED280  Start`adjustor{16}'  (line unknown)
   828ED280  3863FFF0             subi r3,r3,0x10
   828ED284  4BFFFDB4             b 0x828ed038
 
-; 828ED288  [thunk]:XAUDIO::CPCMSourceEffect::Stop`adjustor{16}'  (line unknown)
+; 828ED288  Stop`adjustor{16}'  (line unknown)
   828ED288  3863FFF0             subi r3,r3,0x10
   828ED28C  4BFFFEA4             b 0x828ed130
 
-; 828ED490  [thunk]:XAUDIO::CPCMSourceEffect::Discontinuity`adjustor{16}'  (line unknown)
+; 828ED490  Discontinuity`adjustor{16}'  (line unknown)
   828ED490  3863FFF0             subi r3,r3,0x10
   828ED494  4BFFFDFC             b 0x828ed290

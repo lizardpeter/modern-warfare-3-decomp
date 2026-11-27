@@ -119,8 +119,12 @@ LAB_82602ed4:
   82602F28  483137E0             b 0x82916708
 
 ; 82602D78  __lvx  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/vectorintrinsics.h:98)
+  82602D78  102320C3             lvx128 v1,r3,r4
+  82602D7C  4E800020             blr
 
 ; 82602D80  __stvx  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/vectorintrinsics.h:104)
+  82602D80  102321C3             stvx128 v1,r3,r4
+  82602D84  4E800020             blr
 
 ; 82602F30  FFT  (universal/fft.cpp:276)
   82602F30  7D8802A6             mfspr r12,LR
@@ -336,8 +340,32 @@ LAB_826031c8:
   82603258  5486103A             rlwinm r6,r4,0x2,0x0,0x1d
   8260325C  7C6B1B78             or r11,r3,r3
   82603260  7FCAF378             or r10,r30,r30
-  82603264  13E0D8C7             vcmpequd v31,v0,v27
+  82603264  13E0D8C7             lvx128 v63,0,r27
   82603268  7D39D050             subf r9,r25,r26
+  8260326C  11A0C0C3             lvx128 v13,0,r24
+LAB_82603270:
+  82603270  100050C3             lvx128 v0,0,r10
+  82603274  7CE43A14             add r7,r4,r7
+  82603278  13C950C7             lvx128 v62,r9,r10
+  8260327C  17BF00B4             vmulfp128 v61,v63,v0
+  82603280  159FF0B1             vmulfp128 v12,v63,v62
+  82603284  138958C7             lvx128 v60,r9,r11
+  82603288  176DF095             vmulfp128 v59,v13,v62
+  8260328C  134058C7             lvx128 v58,0,r11
+  82603290  7F07F840             cmplw cr6,r7,r31
+  82603294  100D602E             vmaddfp v0,v13,v0,v12
+  82603298  173BE875             vsubfp128 v57,v59,v61
+  8260329C  171A0074             vsubfp128 v56,v58,v0
+  826032A0  16FCC875             vsubfp128 v55,v60,v57
+  826032A4  16DA0034             vaddfp128 v54,v58,v0
+  826032A8  16BCC835             vaddfp128 v53,v60,v57
+  826032AC  130051C7             stvx128 v56,0,r10
+  826032B0  12E951C7             stvx128 v55,r9,r10
+  826032B4  7D465214             add r10,r6,r10
+  826032B8  12C059C7             stvx128 v54,0,r11
+  826032BC  12A959C7             stvx128 v53,r9,r11
+  826032C0  7D665A14             add r11,r6,r11
+  826032C4  4198FFAC             blt cr6,0x82603270
 LAB_826032c8:
   826032C8  39080004             addi r8,r8,0x4
   826032CC  38630010             addi r3,r3,0x10

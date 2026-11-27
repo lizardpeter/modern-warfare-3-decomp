@@ -2,15 +2,15 @@
 
 // 828A9268  ResetEvent  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/resetevent.c:46)
 
-BOOL ResetEvent(HANDLE hEvent)
+int ResetEvent(void *param_1)
 
 {
-  int iVar1;
+  long lVar1;
   
-  iVar1 = NtClearEvent(hEvent);
-  if (iVar1 < 0) {
-    RtlSetLastNTError();
+  lVar1 = NtClearEvent(param_1);
+  if (lVar1 < 0) {
+    RtlSetLastNTError(lVar1);
   }
-  return (BOOL)(iVar1 >= 0);
+  return (int)(lVar1 >= 0);
 }
 

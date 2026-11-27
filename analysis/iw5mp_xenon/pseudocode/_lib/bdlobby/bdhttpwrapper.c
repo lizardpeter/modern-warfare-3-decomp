@@ -7,7 +7,7 @@ void __unwind_72383(void)
 {
   int in_r12;
   
-  bdHTTPWrapperBase___bdHTTPWrapperBase(*(undefined4 *)(in_r12 + 0x14));
+  bdHTTPWrapperBase::~bdHTTPWrapperBase(*(bdHTTPWrapperBase **)(in_r12 + 0x14));
   return;
 }
 
@@ -19,7 +19,7 @@ void __unwind_72517(void)
 {
   int in_r12;
   
-  bdHTTPWrapperBase___bdHTTPWrapperBase(*(undefined4 *)(in_r12 + 0x14));
+  bdHTTPWrapperBase::~bdHTTPWrapperBase(*(bdHTTPWrapperBase **)(in_r12 + 0x14));
   return;
 }
 
@@ -31,7 +31,7 @@ void __unwind_72518(void)
 {
   int in_r12;
   
-  bdHTTPClient___bdHTTPClient((ulonglong)*(uint *)(in_r12 + 0x14) + 0x28);
+  bdHTTPClient::~bdHTTPClient((bdHTTPClient *)(*(int *)(in_r12 + 0x14) + 0x28));
   return;
 }
 

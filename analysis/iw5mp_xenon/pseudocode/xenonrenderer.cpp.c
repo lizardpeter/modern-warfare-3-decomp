@@ -2,7 +2,7 @@
 
 // 828D21C0  XAudioQueryNativeRenderEffectSize  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xenonrenderer.cpp:48)
 
-undefined8 XAudioQueryNativeRenderEffectSize(undefined8 param_1,undefined4 *param_2)
+undefined4 XAudioQueryNativeRenderEffectSize(XAUDIOFXINIT *param_1,ulong *param_2)
 
 {
   *param_2 = 0x1c;
@@ -10,338 +10,386 @@ undefined8 XAudioQueryNativeRenderEffectSize(undefined8 param_1,undefined4 *para
 }
 
 
-// 828D2030  XAUDIO::CXenonRenderer::AddRef  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xenonrenderer.h:71)
+// 828D2030  AddRef  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xenonrenderer.h:71)
 
-void XAUDIO__CXenonRenderer__AddRef(int param_1)
+ulong __thiscall XAUDIO::CXenonRenderer::AddRef(CXenonRenderer *this)
 
 {
-  *(int *)(param_1 + 8) = *(int *)(param_1 + 8) + 1;
-  return;
+  ulong uVar1;
+  
+  uVar1 = this->_padding_ + 1;
+  this->_padding_ = uVar1;
+  return uVar1;
 }
 
 
-// 828D2048  XAUDIO::CXenonRenderer::Release  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xenonrenderer.h:76)
+// 828D2048  Release  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xenonrenderer.h:76)
 
-longlong XAUDIO__CXenonRenderer__Release(int param_1)
+ulong __thiscall XAUDIO::CXenonRenderer::Release(CXenonRenderer *this)
 
 {
   longlong lVar1;
   
-  lVar1 = (ulonglong)*(uint *)(param_1 + 8) - 1;
-  *(int *)(param_1 + 8) = (int)lVar1;
+  lVar1 = (ulonglong)(uint)this->_padding_ - 1;
+  this->_padding_ = (int)lVar1;
   if (lVar1 == 0) {
-    (**(code **)(*(int *)(param_1 + 4) + 0xc))((int *)(param_1 + 4));
+    (**(code **)(this->_padding_ + 0xc))(&this->_padding_);
     lVar1 = 0;
   }
-  return lVar1;
+  return (ulong)lVar1;
 }
 
 
-// 828D2090  XAUDIO::CXenonRenderer::GetInfo  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xenonrenderer.h:81)
+// 828D2090  GetInfo  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xenonrenderer.h:81)
 
-undefined8 XAUDIO__CXenonRenderer__GetInfo(undefined8 param_1,undefined1 *param_2)
+undefined4 __thiscall XAUDIO::CXenonRenderer::GetInfo(CXenonRenderer *this,XAUDIOFXINFO *param_1)
 
 {
-  *param_2 = 2;
-  *(undefined2 *)(param_2 + 2) = 0;
+  param_1->DataFlow = '\x02';
+  param_1->TrailFrames = 0;
   return 0;
 }
 
 
 // 828D2248  XAudioCreateNativeRenderEffect  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xenonrenderer.cpp:81)
 
-void XAudioCreateNativeRenderEffect(undefined8 param_1,undefined8 param_2,undefined4 *param_3)
+undefined4
+XAudioCreateNativeRenderEffect
+          (XAUDIOFXINIT *param_1,IXAudioBatchAllocator *param_2,IXAudioEffect **param_3)
 
 {
+  XAUDIORENDERFXINIT *pXVar1;
+  CXenonRenderer *this;
   int iVar2;
-  undefined4 *puVar3;
-  undefined8 uVar1;
+  undefined4 uVar3;
+  longlong lVar4;
   
-  iVar2 = __savegprlr_27();
-  puVar3 = (undefined4 *)(**(code **)(*(int *)param_2 + 0x14))(param_2,0x1c);
-  if (puVar3 == (undefined4 *)0x0) {
-    __restgprlr_27(0xffffffff8007000e);
-    return;
+  lVar4 = (longlong)(int)param_2;
+  pXVar1 = (XAUDIORENDERFXINIT *)__savegprlr_27(param_1);
+  this = (CXenonRenderer *)(**(code **)((int)*(IXAudioBatchAllocator *)lVar4 + 0x14))(lVar4,0x1c);
+  if (this == (CXenonRenderer *)0x0) {
+    uVar3 = __restgprlr_27(0xffffffff8007000e);
+    return uVar3;
   }
-  puVar3[2] = 1;
-  puVar3[1] = &PTR_XAUDIO__CEffect___scalar_deleting_destructor__8220735c;
-  puVar3[3] = *(undefined4 *)(iVar2 + 4);
-  *puVar3 = &PTR_XAUDIO__CXenonRenderer__AddRef_82207394;
-  puVar3[4] = 0;
-  puVar3[1] = &PTR__thunk__XAUDIO__CXenonRenderer___vector_deleting_destructor__82207378;
-  puVar3[5] = 0;
-  uVar1 = XAUDIO__CXenonRenderer__Initialize(puVar3,iVar2,param_2);
-  if (-1 < (int)uVar1) {
-    *param_3 = puVar3;
-    __restgprlr_27();
-    return;
+  this->_padding_ = 1;
+  this->_padding_ = (int)&XAUDIO::CEffect::_vftable_;
+  this->_padding_ = (int)(pXVar1->EffectHeader).pContext;
+  this->_padding_ = (int)&XAUDIO::CXenonRenderer::_vftable__for__IXAudioRenderEffect__;
+  this->m_pXBMSampleDestPrev = (void *)0x0;
+  this->_padding_ = (int)&XAUDIO::CXenonRenderer::_vftable__for__XAUDIO__CEffect__;
+  this->m_XBMSampleCount = 0;
+  iVar2 = XAUDIO::CXenonRenderer::Initialize(this,pXVar1,(IXAudioBatchAllocator *)lVar4);
+  if (-1 < iVar2) {
+    *param_3 = (IXAudioEffect *)this;
+    uVar3 = __restgprlr_27();
+    return uVar3;
   }
-  (**(code **)(puVar3[1] + 0xc))(puVar3 + 1);
-  __restgprlr_27(uVar1);
-  return;
+  (**(code **)(this->_padding_ + 0xc))(&this->_padding_);
+  uVar3 = __restgprlr_27(iVar2);
+  return uVar3;
 }
 
 
-// 828D20A8  XAUDIO::CXenonRenderer::GetContext  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xenonrenderer.h:89)
+// 828D20A8  GetContext  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xenonrenderer.h:89)
 
-undefined8 XAUDIO__CXenonRenderer__GetContext(int param_1,undefined4 *param_2)
+undefined4 __thiscall XAUDIO::CXenonRenderer::GetContext(CXenonRenderer *this,void **param_1)
 
 {
-  *param_2 = *(undefined4 *)(param_1 + 0xc);
+  *param_1 = (void *)this->_padding_;
   return 0;
 }
 
 
-// 828D20B8  XAUDIO::CXenonRenderer::GetParam  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xenonrenderer.h:94)
+// 828D20B8  GetParam  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xenonrenderer.h:94)
 
-undefined8 XAUDIO__CXenonRenderer__GetParam(void)
+undefined4 __thiscall
+XAUDIO::CXenonRenderer::GetParam
+          (CXenonRenderer *this,uchar param_1,uchar param_2,XAUDIOFXPARAM *param_3)
 
 {
-  return 0xffffffff80004001;
+  return 0x80004001;
 }
 
 
-// 828D20C8  XAUDIO::CXenonRenderer::SetParam  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xenonrenderer.h:100)
+// 828D20C8  SetParam  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xenonrenderer.h:100)
 
-undefined8 XAUDIO__CXenonRenderer__SetParam(void)
+undefined4 __thiscall
+XAUDIO::CXenonRenderer::SetParam
+          (CXenonRenderer *this,uchar param_1,uchar param_2,XAUDIOFXPARAM *param_3)
 
 {
-  return 0xffffffff80004001;
+  return 0x80004001;
 }
 
 
-// 828D20D8  XAUDIO::CXenonRenderer::QueryInterface  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xenonrenderer.h:106)
+// 828D20D8  QueryInterface  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xenonrenderer.h:106)
 
-void XAUDIO__CXenonRenderer__QueryInterface(int param_1,int *param_2)
+void __thiscall XAUDIO::CXenonRenderer::QueryInterface(CXenonRenderer *this,IXAudioEffect **param_1)
 
 {
-  *param_2 = param_1 + -4;
+  *param_1 = (IXAudioEffect *)&this[-1].m_hDriverClient;
   return;
 }
 
 
-// 828D20E8  XAUDIO::CXenonRenderer::QueryInterface  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xenonrenderer.h:111)
+// 828D20E8  QueryInterface  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xenonrenderer.h:111)
 
-void XAUDIO__CXenonRenderer__QueryInterface(undefined4 param_1,undefined4 *param_2)
+void __thiscall
+XAUDIO::CXenonRenderer::QueryInterface(CXenonRenderer *this,IXAudioRenderEffect **param_1)
 
 {
-  *param_2 = param_1;
+  *param_1 = (IXAudioRenderEffect *)this;
   return;
 }
 
 
-// 828D2200  XAUDIO::CXenonRenderer::CXenonRenderer  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xenonrenderer.cpp:130)
+// 828D2200  CXenonRenderer  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xenonrenderer.cpp:130)
 
-void XAUDIO__CXenonRenderer__CXenonRenderer(undefined4 *param_1,int param_2)
+CXenonRenderer * __thiscall
+XAUDIO::CXenonRenderer::CXenonRenderer
+          (CXenonRenderer *this,XAUDIORENDERFXINIT *param_1,IXAudioBatchAllocator *param_2)
 
 {
-  param_1[2] = 1;
-  param_1[1] = &PTR_XAUDIO__CEffect___scalar_deleting_destructor__8220735c;
-  param_1[3] = *(undefined4 *)(param_2 + 4);
-  *param_1 = &PTR_XAUDIO__CXenonRenderer__AddRef_82207394;
-  param_1[4] = 0;
-  param_1[1] = &PTR__thunk__XAUDIO__CXenonRenderer___vector_deleting_destructor__82207378;
-  param_1[5] = 0;
-  return;
+  this->_padding_ = 1;
+  this->_padding_ = (int)&CEffect::_vftable_;
+  this->_padding_ = (int)(param_1->EffectHeader).pContext;
+  this->_padding_ = (int)&_vftable__for__IXAudioRenderEffect__;
+  this->m_pXBMSampleDestPrev = (void *)0x0;
+  this->_padding_ = (int)&_vftable__for__XAUDIO__CEffect__;
+  this->m_XBMSampleCount = 0;
+  return this;
 }
 
 
-// 828D1F70  XAUDIO::CXenonRenderer::~CXenonRenderer  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xenonrenderer.cpp:155)
+// 828D1F70  ~CXenonRenderer  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xenonrenderer.cpp:155)
 
-void XAUDIO__CXenonRenderer___CXenonRenderer(undefined4 *param_1)
+void __thiscall XAUDIO::CXenonRenderer::~CXenonRenderer(CXenonRenderer *this)
 
 {
   int iVar1;
   char in_RESERVE;
   byte in_cr0;
   
-  *param_1 = &PTR_XAUDIO__CXenonRenderer__AddRef_82207394;
-  param_1[1] = &PTR__thunk__XAUDIO__CXenonRenderer___vector_deleting_destructor__82207378;
-  DAT_84898204 = 0x1800;
+  this->_padding_ = (int)&_vftable__for__IXAudioRenderEffect__;
+  this->_padding_ = (int)&_vftable__for__XAUDIO__CEffect__;
+  XBM__CaptureCompletionSignalXAudio = 0x1800;
   do {
-    if (DAT_829a8258 != 0) {
+    if (XBM__AudioSampleBuffer != 0) {
       if (in_RESERVE != '\0') {
-        DAT_829a8258 = storeWordConditionalIndexed((ulonglong)DAT_829a8258,0,0xffffffff829a8258);
+        XBM__AudioSampleBuffer =
+             storeWordConditionalIndexed
+                       ((ulonglong)(uint)XBM__AudioSampleBuffer,0,0xffffffff829a8258);
       }
       break;
     }
     if (in_RESERVE != '\0') {
-      DAT_829a8258 = storeWordConditionalIndexed(0x1800,0,0xffffffff829a8258);
+      XBM__AudioSampleBuffer = storeWordConditionalIndexed(0x1800,0,0xffffffff829a8258);
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
-  if ((param_1[6] != 0) && (iVar1 = XAudioUnregisterRenderDriverClient(), -1 < iVar1)) {
-    param_1[6] = 0;
+  if ((this->m_hDriverClient != (void *)0x0) &&
+     (iVar1 = XAudioUnregisterRenderDriverClient(), -1 < iVar1)) {
+    this->m_hDriverClient = (void *)0x0;
   }
-  param_1[1] = &PTR_XAUDIO__CObjectRefCount___scalar_deleting_destructor__82207330;
+  this->_padding_ = (int)&CObjectRefCount::_vftable_;
   return;
 }
 
 
-// 828D1E28  XAUDIO::CXenonRenderer::Initialize  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xenonrenderer.cpp:184)
+// 828D1E28  Initialize  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xenonrenderer.cpp:184)
 
-void XAUDIO__CXenonRenderer__Initialize(int *param_1,int param_2)
+undefined4 __thiscall
+XAUDIO::CXenonRenderer::Initialize
+          (CXenonRenderer *this,XAUDIORENDERFXINIT *param_1,IXAudioBatchAllocator *param_2)
 
 {
-  DAT_84898204 = 0;
+  undefined4 uVar1;
+  
+  XBM__CaptureCompletionSignalXAudio = 0;
                     /* WARNING: Could not recover jumptable at 0x828d1e44. Too many branches */
                     /* WARNING: Treating indirect jump as call */
-  (**(code **)(*param_1 + 0x1c))(param_1,*(undefined4 *)(param_2 + 8));
-  return;
+  uVar1 = (**(code **)(this->_padding_ + 0x1c))(this,param_1->pfnRenderCallback,param_2);
+  return uVar1;
 }
 
 
-// 828D20F0  XAUDIO::CXenonRenderer::Process  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xenonrenderer.cpp:213)
+// 828D20F0  Process  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xenonrenderer.cpp:213)
 
-void XAUDIO__CXenonRenderer__Process(int *param_1,undefined8 param_2)
+int __thiscall
+XAUDIO::CXenonRenderer::Process
+          (CXenonRenderer *this,IXAudioFrameBuffer *param_1,IXAudioFrameBuffer *param_2)
 
 {
   int iVar1;
-  undefined1 auStack_20 [8];
-  undefined4 local_18;
+  XAUDIOFRAMEBUFDATA XStack_20;
   
-  iVar1 = XAudioFrameBuffer_GetProcessingData(param_2,auStack_20);
+  iVar1 = XAudioFrameBuffer_GetProcessingData(param_1,&XStack_20);
   if (-1 < iVar1) {
-    (**(code **)(*param_1 + 0x20))(param_1,auStack_20);
-    XAudioSubmitRenderDriverFrame(param_1[6],local_18);
+    (**(code **)(this->_padding_ + 0x20))(this,&XStack_20);
+    iVar1 = XAudioSubmitRenderDriverFrame(this->m_hDriverClient,XStack_20.pSampleBuffer);
   }
-  return;
+  return iVar1;
 }
 
 
-// 828D1E48  XAUDIO::CXenonRenderer::SetCallback  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xenonrenderer.cpp:277)
+// 828D1E48  SetCallback  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xenonrenderer.cpp:277)
 
-void XAUDIO__CXenonRenderer__SetCallback(undefined8 param_1,ulonglong param_2)
+undefined4 __thiscall
+XAUDIO::CXenonRenderer::SetCallback
+          (CXenonRenderer *this,_func___cdecl_void_XAUDIORENDERFXCALLBACK_ptr *param_1)
 
 {
   int iVar2;
   undefined8 uVar1;
+  undefined4 uVar3;
+  ulonglong uVar4;
   undefined4 local_30;
   undefined4 local_2c;
   
-  iVar2 = __savegprlr_29();
+  uVar4 = (ulonglong)(int)param_1;
+  iVar2 = __savegprlr_29(this);
   uVar1 = 0;
   if (*(int *)(iVar2 + 0x18) != 0) {
     uVar1 = XAudioUnregisterRenderDriverClient(*(int *)(iVar2 + 0x18));
     if ((int)uVar1 < 0) goto LAB_828d1ea8;
     *(undefined4 *)(iVar2 + 0x18) = 0;
   }
-  if ((param_2 & 0xffffffff) != 0) {
+  if ((uVar4 & 0xffffffff) != 0) {
     local_2c = *(undefined4 *)(iVar2 + 0xc);
-    local_30 = (undefined4)param_2;
+    local_30 = (undefined4)uVar4;
     uVar1 = XAudioRegisterRenderDriverClient(&local_30,(undefined4 *)(iVar2 + 0x18));
   }
 LAB_828d1ea8:
-  __restgprlr_29(uVar1);
-  return;
-}
-
-
-// 828D1EB0  XAUDIO::CXenonRenderer::CaptureXBMAudioFrame  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xenonrenderer.cpp:323)
-
-ulonglong XAUDIO__CXenonRenderer__CaptureXBMAudioFrame(ulonglong param_1,int param_2)
-
-{
-  int iVar1;
-  void *pvVar2;
-  ulonglong uVar3;
-  uint uVar4;
-  char in_RESERVE;
-  byte in_cr0;
-  
-  uVar3 = param_1;
-  if (DAT_829a8258 != (void *)0x1800) {
-    do {
-      pvVar2 = DAT_829a8258;
-      uVar3 = ZEXT48(DAT_829a8258);
-      if (in_RESERVE != '\0') {
-        DAT_829a8258 = (void *)storeWordConditionalIndexed(uVar3 + 0x1800,0,0xffffffff829a8258);
-        in_cr0 = 2;
-      }
-    } while (!(bool)(in_cr0 >> 1 & 1));
-    iVar1 = (int)param_1;
-    if (uVar3 == 0) {
-      *(undefined4 *)(iVar1 + 0x10) = DAT_84898204;
-    }
-    else {
-      if ((uVar3 - *(uint *)(iVar1 + 0x10) & 0xffffffff) == 0x1800) {
-        uVar4 = *(int *)(iVar1 + 0x14) + 1;
-      }
-      else {
-        uVar4 = 1;
-      }
-      *(uint *)(iVar1 + 0x14) = uVar4;
-      *(void **)(iVar1 + 0x10) = pvVar2;
-      if (uVar4 < 0xf) {
-        pvVar2 = memcpy(pvVar2,*(void **)(param_2 + 8),0x1800);
-        sync(1);
-        return (longlong)(int)pvVar2;
-      }
-    }
-  }
+  uVar3 = __restgprlr_29(uVar1);
   return uVar3;
 }
 
 
-// 828D2028  [thunk]:XAUDIO::CXenonRenderer::`vector_deleting_destructor'  (line unknown)
+// 828D1EB0  CaptureXBMAudioFrame  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xenonrenderer.cpp:323)
 
-void _thunk__XAUDIO__CXenonRenderer___vector_deleting_destructor_(longlong param_1)
-
-{
-  XAUDIO__CXenonRenderer___scalar_deleting_destructor_(param_1 + -4);
-  return;
-}
-
-
-// 828D2150  [thunk]:XAUDIO::CXenonRenderer::GetContext`adjustor{4}'  (line unknown)
-
-void _thunk__XAUDIO__CXenonRenderer__GetContext_adjustor_4__(longlong param_1)
+void __thiscall
+XAUDIO::CXenonRenderer::CaptureXBMAudioFrame(CXenonRenderer *this,XAUDIOFRAMEBUFDATA *param_1)
 
 {
-  XAUDIO__CXenonRenderer__GetContext(param_1 + -4);
-  return;
-}
-
-
-// 828D2158  [thunk]:XAUDIO::CXenonRenderer::Release`adjustor{4}'  (line unknown)
-
-void _thunk__XAUDIO__CXenonRenderer__Release_adjustor_4__(longlong param_1)
-
-{
-  XAUDIO__CXenonRenderer__Release(param_1 + -4);
-  return;
-}
-
-
-// 828D2160  [thunk]:XAUDIO::CXenonRenderer::AddRef`adjustor{4}'  (line unknown)
-
-void _thunk__XAUDIO__CXenonRenderer__AddRef_adjustor_4__(longlong param_1)
-
-{
-  XAUDIO__CXenonRenderer__AddRef(param_1 + -4);
-  return;
-}
-
-
-// 828D2168  XAUDIO::CEffect::`scalar_deleting_destructor'  (line unknown)
-
-undefined4 * XAUDIO__CEffect___scalar_deleting_destructor_(undefined4 *param_1,ulonglong param_2)
-
-{
-  *param_1 = &PTR_XAUDIO__CObjectRefCount___scalar_deleting_destructor__82207330;
-  if ((param_2 & 1) != 0) {
-    XAUDIO__CXMemMemoryManager__XMemFree(0xffffffff8489594c,param_1,0x61820000);
+  long lVar1;
+  ulonglong uVar2;
+  uint uVar3;
+  char in_RESERVE;
+  byte in_cr0;
+  
+  if (XBM__AudioSampleBuffer != 0x1800) {
+    do {
+      lVar1 = XBM__AudioSampleBuffer;
+      uVar2 = (ulonglong)(uint)XBM__AudioSampleBuffer;
+      if (in_RESERVE != '\0') {
+        XBM__AudioSampleBuffer = storeWordConditionalIndexed(uVar2 + 0x1800,0,0xffffffff829a8258);
+        in_cr0 = 2;
+      }
+    } while (!(bool)(in_cr0 >> 1 & 1));
+    if (uVar2 == 0) {
+      this->m_pXBMSampleDestPrev = (void *)XBM__CaptureCompletionSignalXAudio;
+    }
+    else {
+      if ((uVar2 - ZEXT48(this->m_pXBMSampleDestPrev) & 0xffffffff) == 0x1800) {
+        uVar3 = this->m_XBMSampleCount + 1;
+      }
+      else {
+        uVar3 = 1;
+      }
+      this->m_XBMSampleCount = uVar3;
+      this->m_pXBMSampleDestPrev = (void *)lVar1;
+      if (uVar3 < 0xf) {
+        memcpy();
+        sync(1);
+        return;
+      }
+    }
   }
-  return param_1;
+  return;
 }
 
 
-// 828D21D0  XAUDIO::CXenonRenderer::`scalar_deleting_destructor'  (line unknown)
+// 828D2028  `vector_deleting_destructor'`adjustor{4}'  (line unknown)
 
-undefined8 XAUDIO__CXenonRenderer___scalar_deleting_destructor_(undefined8 param_1)
+/* [thunk]:public: virtual void * __cdecl XAUDIO::CXenonRenderer::`vector deleting
+   destructor'`adjustor{4}' (unsigned int) */
+
+void * __thiscall
+XAUDIO::CXenonRenderer::_vector_deleting_destructor__adjustor_4__(CXenonRenderer *this,uint param_1)
 
 {
-  XAUDIO__CXenonRenderer___CXenonRenderer();
-  return param_1;
+  void *pvVar1;
+  
+  pvVar1 = _scalar_deleting_destructor_((CXenonRenderer *)&this[-1].m_hDriverClient,param_1);
+  return pvVar1;
+}
+
+
+// 828D2150  GetContext`adjustor{4}'  (line unknown)
+
+/* [thunk]:public: virtual long __cdecl XAUDIO::CXenonRenderer::GetContext`adjustor{4}' (void * *)
+    */
+
+long __thiscall XAUDIO::CXenonRenderer::GetContext_adjustor_4__(CXenonRenderer *this,void **param_1)
+
+{
+  long lVar1;
+  
+  lVar1 = GetContext((CXenonRenderer *)&this[-1].m_hDriverClient,param_1);
+  return lVar1;
+}
+
+
+// 828D2158  Release`adjustor{4}'  (line unknown)
+
+/* [thunk]:public: virtual unsigned long __cdecl XAUDIO::CXenonRenderer::Release`adjustor{4}' (void)
+    */
+
+ulong __thiscall XAUDIO::CXenonRenderer::Release_adjustor_4__(CXenonRenderer *this)
+
+{
+  ulong uVar1;
+  
+  uVar1 = Release((CXenonRenderer *)&this[-1].m_hDriverClient);
+  return uVar1;
+}
+
+
+// 828D2160  AddRef`adjustor{4}'  (line unknown)
+
+/* [thunk]:public: virtual unsigned long __cdecl XAUDIO::CXenonRenderer::AddRef`adjustor{4}' (void)
+    */
+
+ulong __thiscall XAUDIO::CXenonRenderer::AddRef_adjustor_4__(CXenonRenderer *this)
+
+{
+  ulong uVar1;
+  
+  uVar1 = AddRef((CXenonRenderer *)&this[-1].m_hDriverClient);
+  return uVar1;
+}
+
+
+// 828D2168  `scalar_deleting_destructor'  (line unknown)
+
+void * __thiscall XAUDIO::CEffect::_scalar_deleting_destructor_(CEffect *this,uint param_1)
+
+{
+  this->_padding_ = (int)&CObjectRefCount::_vftable_;
+  if ((param_1 & 1) != 0) {
+    CXMemMemoryManager::XMemFree(&g_MemoryManager,this,0x61820000);
+  }
+  return this;
+}
+
+
+// 828D21D0  `scalar_deleting_destructor'  (line unknown)
+
+void * __thiscall
+XAUDIO::CXenonRenderer::_scalar_deleting_destructor_(CXenonRenderer *this,uint param_1)
+
+{
+  ~CXenonRenderer(this);
+  return this;
 }
 

@@ -2,24 +2,25 @@
 
 // 8291A400  longjmp  (<external>/bt/278379/vctools/crt/xb/xbox/longjmp.asm:75)
 
-/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
-void longjmp(int *_Buf,int _Value)
+void longjmp(void)
 
 {
+  undefined4 *in_r3;
+  PVOID in_r4;
   PEXCEPTION_RECORD ExceptionRecord;
   
   ExceptionRecord = (PEXCEPTION_RECORD)0x0;
-  if (_Value == 0) {
-    _Value = 1;
+  if (in_r4 == (PVOID)0x0) {
+    in_r4 = (PVOID)0x1;
   }
-  if (_Buf[0x4e] == 0) {
-    _NLG_Notify(_Buf[0x4d]);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-    halt_baddata();
+  if (in_r3[0x4e] == 0) {
+    _NLG_Notify();
+    return;
   }
-  _NLG_Notify(_Buf[1]);
-  RtlUnwind((PVOID)*_Buf,(PVOID)_Buf[1],ExceptionRecord,(PVOID)_Value);
+  _NLG_Notify();
+  RtlUnwind((PVOID)*in_r3,(PVOID)in_r3[1],ExceptionRecord,in_r4);
   return;
 }
 

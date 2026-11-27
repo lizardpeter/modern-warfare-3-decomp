@@ -2,40 +2,45 @@
 
 // 822B3A08  CG_DrawScriptUsage  (cgame/cg_draw_debug.cpp:214)
 
-void CG_DrawScriptUsage(void)
+void CG_DrawScriptUsage(ScreenPlacement *param_1)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
-  undefined8 uVar3;
-  undefined8 uVar4;
-  undefined8 uVar5;
+  ScreenPlacement *pSVar1;
+  char *pcVar2;
+  char *pcVar3;
+  float *pfVar4;
+  double dVar5;
+  double dVar6;
   
-  uVar1 = __savegprlr_28();
-  uVar2 = Scr_GetMaxChild0ScriptVars();
-  uVar3 = Scr_GetNumChild0ScriptVars();
-  va(0xffffffff82013478,uVar3,uVar2);
-  uVar5 = 0x407b800000000000;
-  uVar4 = 0x4032000000000000;
-  CG_DrawStringExt(0x407b800000000000,0x4056800000000000,0x4032000000000000,uVar1);
-  uVar2 = Scr_GetMaxChild1ScriptVars();
-  uVar3 = Scr_GetNumChild1ScriptVars();
-  va(0xffffffff8201345c,uVar3,uVar2);
-  CG_DrawStringExt(uVar5,0x405b000000000000,uVar4,uVar1);
-  uVar2 = Scr_GetMaxParent0ScriptVars();
-  uVar3 = Scr_GetNumParent0ScriptVars();
-  va(0xffffffff82013440,uVar3,uVar2);
-  CG_DrawStringExt(uVar5,0x405f800000000000,uVar4,uVar1);
-  uVar2 = Scr_GetMaxParent1ScriptVars();
-  uVar3 = Scr_GetNumParent1ScriptVars();
-  va(0xffffffff82013424,uVar3,uVar2);
-  CG_DrawStringExt(uVar5,0x4062000000000000,uVar4,uVar1);
-  uVar2 = Scr_GetNumScriptThreads();
-  va(0xffffffff82013410,uVar2);
-  CG_DrawStringExt(uVar5,0x4064400000000000,uVar4,uVar1);
-  uVar2 = Scr_GetStringUsage();
-  va(0xffffffff820133f8,uVar2);
-  CG_DrawStringExt(uVar5,0x4066800000000000,uVar4,uVar1);
+  pSVar1 = (ScreenPlacement *)__savegprlr_28(param_1);
+  Scr_GetMaxChild0ScriptVars();
+  pcVar2 = (char *)Scr_GetNumChild0ScriptVars();
+  pcVar3 = va("num child0 vars: %d/%d");
+  dVar6 = 440.0;
+  dVar5 = 18.0;
+  CG_DrawStringExt(pSVar1,440.0,90.0,pcVar2,(float *)&IMAGE_DOS_HEADER_82000000,(int)pcVar3,
+                   -0x7de7e748,18.0,1);
+  pfVar4 = (float *)Scr_GetMaxChild1ScriptVars();
+  pcVar2 = (char *)Scr_GetNumChild1ScriptVars();
+  pcVar3 = va("num child1 vars: %d/%d");
+  CG_DrawStringExt(pSVar1,(float)dVar6,108.0,pcVar2,pfVar4,(int)pcVar3,-0x7de7e748,(float)dVar5,1);
+  Scr_GetMaxParent0ScriptVars();
+  pcVar2 = (char *)Scr_GetNumParent0ScriptVars();
+  pcVar3 = va("num parent0 vars: %d/%d");
+  CG_DrawStringExt(pSVar1,(float)dVar6,126.0,pcVar2,(float *)0x82010000,(int)pcVar3,-0x7de7e748,
+                   (float)dVar5,1);
+  pfVar4 = (float *)Scr_GetMaxParent1ScriptVars();
+  pcVar2 = (char *)Scr_GetNumParent1ScriptVars();
+  pcVar3 = va("num parent1 vars: %d/%d");
+  CG_DrawStringExt(pSVar1,(float)dVar6,144.0,pcVar2,pfVar4,(int)pcVar3,-0x7de7e748,(float)dVar5,1);
+  pcVar2 = (char *)Scr_GetNumScriptThreads();
+  pcVar3 = va("num threads: %d");
+  pfVar4 = (float *)0x82010000;
+  CG_DrawStringExt(pSVar1,(float)dVar6,162.0,pcVar2,(float *)0x82010000,(int)pcVar3,-0x7de7e748,
+                   (float)dVar5,1);
+  pcVar2 = (char *)Scr_GetStringUsage();
+  pcVar3 = va("string usage: %d");
+  CG_DrawStringExt(pSVar1,(float)dVar6,180.0,pcVar2,pfVar4,(int)pcVar3,-0x7de7e748,(float)dVar5,1);
   __restgprlr_28();
   return;
 }
@@ -43,52 +48,57 @@ void CG_DrawScriptUsage(void)
 
 // 822B3C00  CG_CalculateFPS  (cgame/cg_draw_debug.cpp:227)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void CG_CalculateFPS(void)
 
 {
   int iVar1;
   uint uVar2;
-  longlong lVar3;
+  ulong64 uVar3;
   
-  lVar3 = R_GPU_GetMicroseconds();
-  if (lVar3 == 0) {
-    lVar3 = Sys_Microseconds();
+  uVar3 = R_GPU_GetMicroseconds();
+  if (uVar3 == 0) {
+    uVar3 = Sys_Microseconds();
   }
-  uVar2 = DAT_82a1eca8 & 0x1f;
-  iVar1 = (int)DAT_82a1eca0;
-  DAT_82a1eca8 = DAT_82a1eca8 + 1;
-  DAT_82a1eca0 = lVar3;
-  (&DAT_82a1ecd8)[uVar2] = (int)lVar3 - iVar1;
+  uVar2 = fps_index & 0x1f;
+  iVar1 = (int)previous;
+  fps_index = fps_index + 1;
+  previous = uVar3;
+  (&DAT_82a1ecd8)[uVar2] = (int)uVar3 - iVar1;
   return;
 }
 
 
 // 822B3C68  CG_GetLastFrameTimesUSec  (cgame/cg_draw_debug.cpp:251)
 
-ulonglong CG_GetLastFrameTimesUSec(int param_1,ulonglong param_2)
+uint CG_GetLastFrameTimesUSec(uint *param_1,uint param_2)
 
 {
   ulonglong uVar1;
-  undefined4 *puVar2;
+  uint *puVar2;
   uint uVar3;
   uint uVar4;
   uint uVar5;
   ulonglong uVar6;
+  ulonglong uVar7;
   
-  if (param_1 == 0) {
-    MyAssertHandler(0xffffffff82013490,0x100,0,0xffffffff82000f98,0xffffffff820134d4);
+  uVar6 = (ulonglong)(int)param_2;
+  if (param_1 == (uint *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_debug.cpp",0x100
+                    ,0,"%s");
   }
-  if (0x20 < (param_2 & 0xffffffff)) {
-    param_2 = 0x20;
+  if (0x20 < param_2) {
+    uVar6 = 0x20;
   }
-  if ((ulonglong)DAT_82a1eca8 < (param_2 & 0xffffffff)) {
-    param_2 = (ulonglong)DAT_82a1eca8;
+  if ((ulonglong)fps_index < (uVar6 & 0xffffffff)) {
+    uVar6 = (ulonglong)fps_index;
   }
   uVar1 = 0;
-  if ((param_2 & 0xffffffff) != 0) {
-    puVar2 = (undefined4 *)(param_1 + -4);
-    uVar6 = param_2;
-    uVar5 = DAT_82a1eca8 & 0x1f;
+  if ((uVar6 & 0xffffffff) != 0) {
+    puVar2 = param_1 + -1;
+    uVar7 = uVar6;
+    uVar5 = fps_index & 0x1f;
     do {
       uVar4 = uVar5 - 1;
       uVar3 = uVar4;
@@ -97,590 +107,309 @@ ulonglong CG_GetLastFrameTimesUSec(int param_1,ulonglong param_2)
       }
       puVar2 = puVar2 + 1;
       *puVar2 = (&DAT_82a1ecd8)[uVar3];
-      uVar6 = uVar6 - 1;
-      uVar1 = param_2;
+      uVar7 = uVar7 - 1;
+      uVar1 = uVar6;
       uVar5 = uVar4;
-    } while (uVar6 != 0);
+    } while (uVar7 != 0);
   }
-  return uVar1;
+  return (uint)uVar1;
 }
 
 
 // 822B3D38  CG_CornerDebugPrint  (cgame/cg_draw_debug.cpp:290)
 
-void CG_CornerDebugPrint(undefined8 param_1,undefined8 param_2,double param_3)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+float CG_CornerDebugPrint(ScreenPlacement *param_1,float param_2,float param_3,float param_4,
+                         char *param_5,char *param_6,float *param_7)
 
 {
-  undefined8 uVar1;
+  ScreenPlacement *pSVar1;
   int iVar2;
   int iVar3;
+  Font_s *in_r7;
   double extraout_f1;
   double dVar4;
+  double dVar5;
+  double dVar6;
   
-  uVar1 = __savegprlr_27();
-  if (*(char *)(DAT_82a3d618 + 0xc) == '\0') {
-    iVar3 = CG_DrawDevString();
+  dVar5 = (double)param_4;
+  dVar4 = (double)param_3;
+  pSVar1 = (ScreenPlacement *)__savegprlr_27((double)param_2,param_1);
+  if ((cg_drawFPSLabels->current).enabled == false) {
+    iVar3 = CG_DrawDevString(pSVar1,(float)extraout_f1,(float)dVar4,1.0,1.1,param_5,(float *)param_6
+                             ,-0x7e000000,in_r7);
   }
   else {
-    dVar4 = (double)(float)(extraout_f1 - param_3);
-    iVar2 = CG_DrawDevString(dVar4);
-    iVar3 = CG_DrawDevString(dVar4,param_2,0x3ff0000000000000,0x3ff19999a0000000,uVar1);
+    dVar6 = (double)(float)(extraout_f1 - dVar5);
+    iVar2 = CG_DrawDevString(pSVar1,(float)(extraout_f1 - dVar5),(float)dVar4,1.0,1.1,param_5,
+                             (float *)param_6,(int)param_7,in_r7);
+    iVar3 = CG_DrawDevString(pSVar1,(float)dVar6,(float)dVar4,1.0,1.1,param_5,(float *)param_6,
+                             (int)param_7,in_r7);
     if (iVar3 <= iVar2) {
       iVar3 = iVar2;
     }
   }
-  __restgprlr_27((double)((float)(longlong)iVar3 * 0.75));
-  return;
+  dVar4 = (double)__restgprlr_27((double)((float)(longlong)iVar3 * 0.75));
+  return (float)dVar4;
 }
 
 
 // 822B3E38  CG_CornerDebugPrintCaption  (cgame/cg_draw_debug.cpp:311)
 
-double CG_CornerDebugPrintCaption(double param_1,undefined8 param_2,double param_3)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+float CG_CornerDebugPrintCaption
+                (ScreenPlacement *param_1,float param_2,float param_3,float param_4,char *param_5,
+                float *param_6)
 
 {
   int iVar1;
+  Font_s *in_r7;
   
-  if (*(char *)(DAT_82a3d618 + 0xc) == '\0') {
-    iVar1 = CG_DrawDevString(param_1,param_2,0x3ff0000000000000,0x3ff19999a0000000);
+  if ((cg_drawFPSLabels->current).enabled == false) {
+    iVar1 = CG_DrawDevString(param_1,param_2,param_3,1.0,1.1,param_5,param_6,-0x7e000000,in_r7);
   }
   else {
-    iVar1 = CG_DrawDevString((double)(float)(param_1 - param_3),param_2,0x3ff0000000000000,
-                             0x3ff19999a0000000);
+    iVar1 = CG_DrawDevString(param_1,param_2 - param_4,param_3,1.0,1.1,param_5,param_6,-0x7e000000,
+                             in_r7);
   }
-  return (double)((float)(longlong)iVar1 * 0.75);
+  return (float)(longlong)iVar1 * 0.75;
 }
 
 
 // 822B3ED8  CG_CornerDebugFarRight  (cgame/cg_draw_debug.cpp:324)
 
-double CG_CornerDebugFarRight(int param_1)
+float CG_CornerDebugFarRight(ScreenPlacement *param_1)
 
 {
-  return (double)((*(float *)(param_1 + 0x30) - *(float *)(param_1 + 0x28)) +
-                 *(float *)(DAT_82a3d628 + 0xc));
+  return (param_1->virtualViewableMax[0] - param_1->virtualViewableMin[0]) +
+         (cg_debugInfoCornerOffset->current).value;
 }
 
 
 // 822B3EF8  CG_CornerDebugLabelWidth  (cgame/cg_draw_debug.cpp:330)
 
-double CG_CornerDebugLabelWidth(undefined4 param_1)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+float CG_CornerDebugLabelWidth(char *param_1)
 
 {
   int iVar1;
   
-  iVar1 = R_TextWidth(param_1,0,DAT_82a39350);
-  return (double)(longlong)iVar1;
+  iVar1 = R_TextWidth(param_1,0,cgMedia.smallDevFont);
+  return (float)(longlong)iVar1;
 }
 
 
 // 822B3F40  CG_DrawHostName  (cgame/cg_draw_debug.cpp:344)
 
-void CG_DrawHostName(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+float CG_DrawHostName(LocalClientNum_t param_1,ScreenPlacement *param_2,float param_3)
 
 {
-  int iVar1;
+  ScreenPlacement *pSVar1;
   int iVar2;
+  char *pcVar3;
   double extraout_f1;
-  double dVar3;
   double dVar4;
+  float fVar5;
   
-  iVar1 = __savegprlr_28();
+  pSVar1 = (ScreenPlacement *)__savegprlr_28((double)param_3,param_1,param_2);
   dVar4 = extraout_f1;
-  if (DAT_82b58fac == 0) {
-    MyAssertHandler(0xffffffff82013490,0x159,0,0xffffffff82000f98,0xffffffff8201351c);
+  if (party_hostname == (dvar_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_debug.cpp",0x159
+                    ,0,"%s");
   }
-  if (*(int *)(DAT_82b58fac + 0xc) == 0) {
-    MyAssertHandler(0xffffffff82013490,0x15a,0,0xffffffff82000f98,0xffffffff820134fc);
+  if ((party_hostname->current).integer == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_debug.cpp",0x15a
+                    ,0,"%s");
   }
-  if (**(char **)(DAT_82b58fac + 0xc) != '\0') {
-    iVar2 = R_TextWidth(0xffffffff820134ec,0,DAT_82a39350);
-    dVar3 = (double)CG_CornerDebugPrint((double)((*(float *)(iVar1 + 0x30) -
-                                                 *(float *)(iVar1 + 0x28)) +
-                                                *(float *)(DAT_82a3d628 + 0xc)),dVar4,
-                                        (double)(longlong)iVar2,iVar1);
-    __restgprlr_28((double)(float)(dVar3 + dVar4));
-    return;
+  if (*(party_hostname->current).string != '\0') {
+    pcVar3 = (char *)0x0;
+    iVar2 = R_TextWidth(" cg ms/frame",0,cgMedia.smallDevFont);
+    fVar5 = CG_CornerDebugPrint(pSVar1,(pSVar1->virtualViewableMax[0] -
+                                       pSVar1->virtualViewableMin[0]) +
+                                       (cg_debugInfoCornerOffset->current).value,(float)dVar4,
+                                (float)(longlong)iVar2,pcVar3,"c\\cgame_mp\\cg_local_mp.h",
+                                (float *)0x82180000);
+    dVar4 = (double)__restgprlr_28((double)(float)((double)fVar5 + dVar4));
+    return (float)dVar4;
   }
-  __restgprlr_28(dVar4);
-  return;
+  dVar4 = (double)__restgprlr_28(dVar4);
+  return (float)dVar4;
 }
 
 
 // 822B4068  CG_DrawTeamDebug  (cgame/cg_draw_debug.cpp:357)
 
-double CG_DrawTeamDebug(double param_1,int param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+float CG_DrawTeamDebug(LocalClientNum_t param_1,ScreenPlacement *param_2,float param_3)
 
 {
   int iVar1;
-  double dVar2;
+  char *pcVar2;
+  double dVar3;
+  float fVar4;
   
-  if (DAT_82b5b398 != '\0') {
-    iVar1 = R_TextWidth(0xffffffff820134ec,0,DAT_82a39350);
-    dVar2 = (double)CG_CornerDebugPrint((double)((*(float *)(param_2 + 0x30) -
-                                                 *(float *)(param_2 + 0x28)) +
-                                                *(float *)(DAT_82a3d628 + 0xc)),param_1,
-                                        (double)(longlong)iVar1,param_2);
-    param_1 = (double)(float)(dVar2 + param_1);
+  dVar3 = (double)param_3;
+  if (party_drawTeamDebug[0] != '\0') {
+    pcVar2 = (char *)0x0;
+    iVar1 = R_TextWidth(" cg ms/frame",0,cgMedia.smallDevFont);
+    fVar4 = CG_CornerDebugPrint((ScreenPlacement *)param_1,
+                                (*(float *)(param_1 + 0x30) - *(float *)(param_1 + 0x28)) +
+                                (cg_debugInfoCornerOffset->current).value,(float)dVar3,
+                                (float)(longlong)iVar1,pcVar2,"c\\cgame_mp\\cg_local_mp.h",
+                                (float *)0x82180000);
+    dVar3 = (double)(float)((double)fVar4 + dVar3);
   }
-  return param_1;
+  return (float)dVar3;
 }
 
 
 // 822B4130  CG_DrawFPS  (cgame/cg_draw_debug.cpp:373)
-
-void CG_DrawFPS(undefined8 param_1,undefined8 param_2,undefined8 param_3,int param_4)
-
-{
-  uint uVar1;
-  float fVar2;
-  uint *puVar3;
-  undefined8 uVar4;
-  int iVar5;
-  float *pfVar6;
-  int iVar7;
-  longlong lVar8;
-  longlong lVar9;
-  uint *puVar10;
-  ulonglong uVar11;
-  ulonglong uVar12;
-  ulonglong uVar13;
-  longlong lVar14;
-  double extraout_f1;
-  double dVar15;
-  double dVar16;
-  double dVar17;
-  double dVar18;
-  double dVar19;
-  double dVar20;
-  double dVar21;
-  double dVar22;
-  double dVar23;
-  double dVar24;
-  double dVar25;
-  double dVar26;
-  undefined4 uStack_158;
-  int local_110 [2];
-  ulonglong local_108;
-  ulonglong local_100;
-  ulonglong local_f8;
-  ulonglong local_f0;
-  longlong local_e8;
-  float local_e0;
-  float local_dc;
-  float local_d8;
-  float local_d4;
-  
-  __savegprlr_16();
-  uVar4 = __savefpr_24();
-  if (DAT_82a1eca8 < 0x20) {
-    __restfpr_24();
-    __restgprlr_16();
-    return;
-  }
-  uVar13 = 0xffffffffffffffff;
-  uVar12 = 0;
-  lVar8 = 0;
-  lVar9 = 0;
-  lVar14 = 0x10;
-  puVar10 = &DAT_82a1ecdc;
-  dVar25 = (double)((*(float *)((int)param_2 + 0x30) - *(float *)((int)param_2 + 0x28)) +
-                   *(float *)(DAT_82a3d628 + 0xc));
-  do {
-    uVar11 = (ulonglong)puVar10[-1];
-    lVar8 = uVar11 + lVar8;
-    if (uVar11 < (uVar13 & 0xffffffff)) {
-      uVar13 = uVar11;
-    }
-    if (uVar12 < uVar11) {
-      uVar12 = uVar11;
-    }
-    uVar11 = (ulonglong)*puVar10;
-    lVar9 = lVar9 + uVar11;
-    if (uVar11 < (uVar13 & 0xffffffff)) {
-      uVar13 = uVar11;
-    }
-    if (uVar12 < uVar11) {
-      uVar12 = uVar11;
-    }
-    puVar10 = puVar10 + 2;
-    lVar14 = lVar14 + -1;
-  } while (lVar14 != 0);
-  uVar11 = lVar9 + lVar8;
-  dVar23 = 0.0;
-  lVar8 = 8;
-  puVar10 = (uint *)0x82a1ecd4;
-  fVar2 = (float)(uVar11 & 0xffffffff) * 0.03125;
-  dVar18 = dVar23;
-  dVar19 = dVar23;
-  dVar20 = dVar23;
-  dVar21 = dVar23;
-  do {
-    local_f8 = (ulonglong)puVar10[2];
-    local_108 = (ulonglong)puVar10[3];
-    puVar3 = puVar10 + 1;
-    puVar10 = puVar10 + 4;
-    local_100 = (ulonglong)*puVar10;
-    dVar20 = (double)(float)(ABS((double)((float)local_f8 - fVar2)) + dVar20);
-    dVar19 = (double)(float)(ABS((double)((float)local_108 - fVar2)) + dVar19);
-    dVar21 = (double)(float)(ABS((double)((float)*puVar3 - fVar2)) + dVar21);
-    dVar18 = (double)(float)(ABS((double)((float)local_100 - fVar2)) + dVar18);
-    lVar8 = lVar8 + -1;
-  } while (lVar8 != 0);
-  dVar18 = (double)((float)((double)(float)((double)(float)(dVar20 + dVar19) + dVar18) + dVar21) *
-                   0.03125);
-  if ((uVar11 & 0xffffffff) == 0) {
-    uVar11 = 1;
-  }
-  if ((uVar13 & 0xffffffff) == 0) {
-    uVar13 = 1;
-  }
-  dVar21 = 1000000.0;
-  dVar24 = 0.5;
-  dVar19 = extraout_f1;
-  local_f0 = uVar12;
-  dVar20 = floor((double)((float)(1000000.0 / (double)uVar12) + 0.5));
-  local_e8 = (longlong)(int)dVar20;
-  dVar21 = floor((double)(float)((double)(float)(dVar21 / (double)(uVar13 & 0xffffffff)) + dVar24));
-  dVar22 = (double)(uVar11 & 0xffffffff);
-  local_e8 = (longlong)(int)dVar21;
-  dVar15 = floor((double)(float)((double)(float)(32000000.0 / dVar22) + dVar24));
-  iVar7 = (int)dVar15;
-  local_e8 = (longlong)iVar7;
-  dVar15 = (double)local_e8;
-  PIXAddNamedCounter(dVar15,CONCAT44((float)local_e8,uStack_158),0xffffffff82013708);
-  iVar5 = R_TextWidth(0xffffffff820134ec,0,DAT_82a39350);
-  local_e8 = (longlong)iVar5;
-  dVar26 = (double)local_e8;
-  if (3 < *(int *)(DAT_82a3824c + 0xc)) {
-    iVar5 = CG_GetLocalClientGlobals(uVar4);
-    va(0xffffffff820136f0,(double)*(float *)(iVar5 + 0x6b9c8),(double)*(float *)(iVar5 + 0x6b9cc),
-       (double)*(float *)(iVar5 + 0x6b9d0),(double)*(float *)(iVar5 + 460000));
-    dVar16 = (double)CG_CornerDebugPrint(dVar25,dVar19,dVar26,param_2);
-    dVar19 = (double)(float)(dVar16 + dVar19);
-  }
-  dVar16 = (double)(((float)(dVar15 - 60.0) + 10.0) * 0.1);
-  dVar15 = 1.0;
-  if ((float)(dVar16 - 1.0) < 0.0) {
-    dVar15 = dVar16;
-  }
-  dVar17 = dVar23;
-  if (-dVar16 < 0.0) {
-    dVar17 = dVar15;
-  }
-  local_d8 = (float)(dVar17 * 1.0 + 0.0);
-  local_d4 = (float)(dVar17 * 0.0 + 1.0);
-  local_e0 = (float)(dVar17 * 0.0 + 1.0);
-  local_dc = (float)(dVar17 * 1.0 + 0.0);
-  if (*(int *)(DAT_82a3824c + 0xc) < 2) {
-    va(0xffffffff8200c28c,iVar7);
-    dVar18 = (double)CG_CornerDebugPrint(dVar25,dVar19,dVar26,param_2);
-    dVar18 = dVar18 + dVar19;
-  }
-  else {
-    dVar18 = floor((double)(float)(dVar18 * 0.0010000000474974513 + dVar24));
-    local_e8 = (longlong)(int)dVar18;
-    va(0xffffffff820136cc,(int)dVar20,(int)dVar21,(int)dVar18,iVar7);
-    dVar18 = (double)CG_CornerDebugPrint(dVar25,dVar19,dVar26,param_2);
-    dVar19 = (double)(float)(dVar18 + dVar19);
-    va(0xffffffff820136b0,(uVar13 & 0xffffffff) / 1000,uVar12 / 1000,
-       (double)(float)(dVar22 * 3.125000148429535e-05));
-    dVar18 = (double)CG_CornerDebugPrint(dVar25,dVar19,dVar26,param_2);
-    dVar18 = dVar18 + dVar19;
-  }
-  dVar18 = (double)(float)dVar18;
-  pfVar6 = (float *)SV_GetProfileTimes();
-  if (dVar23 < (double)*pfVar6) {
-    if (*(int *)(DAT_82a3824c + 0xc) < 2) {
-      va(0xffffffff8201366c,(double)*pfVar6);
-      dVar19 = (double)CG_CornerDebugPrint(dVar25,dVar18,dVar26,param_2);
-      dVar18 = (double)(float)(dVar19 + dVar18);
-    }
-    else {
-      va(0xffffffff8201369c,(double)pfVar6[2],(double)pfVar6[3],(double)*pfVar6);
-      dVar19 = (double)CG_CornerDebugPrint(dVar25,dVar18,dVar26,param_2);
-      dVar19 = (double)(float)(dVar19 + dVar18);
-      dVar18 = (double)CG_CornerDebugPrint(dVar25,dVar19,dVar26,param_2);
-      dVar18 = (double)(float)(dVar18 + dVar19);
-      va(0xffffffff82013674,(double)(50.0 / pfVar6[1]),(double)pfVar6[1]);
-    }
-  }
-  DB_GetStreamMemoryStats(local_110,&local_f0);
-  iVar7 = PMem_GetShippingFreeAmount_NoStreaming();
-  local_e8 = (longlong)(iVar7 - local_110[0]);
-  dVar20 = 9.5367431640625e-07;
-  va((double)(float)((double)local_e8 * 9.5367431640625e-07),0xffffffff82013658,
-     (double)(float)((double)local_e8 * 9.5367431640625e-07));
-  dVar19 = (double)CG_CornerDebugPrint(dVar25,dVar18,dVar26,param_2);
-  dVar18 = (double)(float)(dVar19 + dVar18);
-  if (1 < *(int *)(DAT_82a3824c + 0xc)) {
-    iVar7 = PMem_GetLegacyFreeAmount();
-    local_e8 = (longlong)iVar7;
-    va((double)(float)((double)local_e8 * dVar20),0xffffffff82013658,
-       (double)(float)((double)local_e8 * dVar20));
-    dVar19 = (double)CG_CornerDebugPrint(dVar25,dVar18,dVar26,param_2);
-    dVar18 = (double)(float)(dVar19 + dVar18);
-  }
-  if (2 < *(int *)(DAT_82a3824c + 0xc)) {
-    R_TrackStatistics(0xffffffff82a1ecac);
-    if (*(char *)(DAT_82a3d618 + 0xc) == '\0') {
-      iVar7 = CG_DrawDevString(dVar25,dVar18,0x3ff0000000000000,0x3ff19999a0000000,param_2);
-    }
-    else {
-      iVar7 = CG_DrawDevString((double)(float)(dVar25 - dVar26),dVar18,0x3ff0000000000000,
-                               0x3ff19999a0000000,param_2);
-    }
-    local_e8 = (longlong)iVar7;
-    dVar19 = (double)(float)((double)local_e8 * 0.75 + dVar18);
-    va(0xffffffff82013628,
-       (longlong)((int)DAT_82a1ecc8 >> 10) +
-       (ulonglong)((int)DAT_82a1ecc8 < 0 && (DAT_82a1ecc8 & 0x3ff) != 0),
-       (longlong)((int)DAT_82a1ecc4 >> 10) +
-       (ulonglong)((int)DAT_82a1ecc4 < 0 && (DAT_82a1ecc4 & 0x3ff) != 0));
-    dVar18 = (double)CG_CornerDebugPrint(dVar25,dVar19,dVar26,param_2);
-    dVar18 = (double)(float)(dVar18 + dVar19);
-    if (*(char *)(DAT_845aa6d4 + 0xc) != '\0') {
-      va(0xffffffff8200c28c,DAT_82a1eccc);
-      dVar19 = (double)CG_CornerDebugPrint(dVar25,dVar18,dVar26,param_2);
-      dVar18 = (double)(float)(dVar19 + dVar18);
-    }
-    va(0xffffffff8200c28c,DAT_82a1ecb4 / 3);
-    dVar19 = (double)CG_CornerDebugPrint(dVar25,dVar18,dVar26,param_2);
-    dVar18 = (double)(float)(dVar19 + dVar18);
-    if (DAT_82a1ecb8 != 0) {
-      va(0xffffffff8200c28c,DAT_82a1ecb8 / 3);
-      dVar19 = (double)CG_CornerDebugPrint(dVar25,dVar18,dVar26,param_2);
-      dVar18 = (double)(float)(dVar19 + dVar18);
-    }
-    va(0xffffffff8200c28c,DAT_82a1ecac / 3);
-    dVar19 = (double)CG_CornerDebugPrint(dVar25,dVar18,dVar26,param_2);
-    dVar19 = (double)(float)(dVar19 + dVar18);
-    va(0xffffffff8200c28c,DAT_82a1ecb0 / 3);
-    dVar18 = (double)CG_CornerDebugPrint(dVar25,dVar19,dVar26,param_2);
-    dVar19 = (double)(float)(dVar18 + dVar19);
-    va(0xffffffff8200c28c,DAT_82a1ecbc);
-    dVar18 = (double)CG_CornerDebugPrint(dVar25,dVar19,dVar26,param_2);
-    dVar19 = (double)(float)(dVar18 + dVar19);
-    va(0xffffffff8200c28c,DAT_82a1ecd0);
-    dVar18 = (double)CG_CornerDebugPrint(dVar25,dVar19,dVar26,param_2);
-    dVar18 = (double)(float)(dVar18 + dVar19);
-    DAT_82a1ecd0 = 0xae00;
-    if (*(char *)(DAT_82a3d618 + 0xc) == '\0') {
-      iVar7 = CG_DrawDevString(dVar25,dVar18,0x3ff0000000000000,0x3ff19999a0000000,param_2);
-    }
-    else {
-      iVar7 = CG_DrawDevString((double)(float)(dVar25 - dVar26),dVar18,0x3ff0000000000000,
-                               0x3ff19999a0000000,param_2);
-    }
-    local_e8 = (longlong)iVar7;
-    uVar1 = *(uint *)(param_4 + 8);
-    dVar18 = (double)(float)((double)local_e8 * 0.75 + dVar18);
-    iVar7 = XenonTotalMemory();
-    if (iVar7 < (int)uVar1) {
-      iVar7 = XenonTotalMemory();
-      local_e8 = (longlong)iVar7;
-      va(0xffffffff82013590,(double)(float)((double)local_e8 * dVar20),
-         (longlong)((int)uVar1 >> 0x14) + (ulonglong)((int)uVar1 < 0 && (uVar1 & 0xfffff) != 0));
-    }
-    else {
-      va(0xffffffff8200c28c,
-         (longlong)((int)uVar1 >> 0x14) + (ulonglong)((int)uVar1 < 0 && (uVar1 & 0xfffff) != 0));
-    }
-    dVar19 = (double)CG_CornerDebugPrint(dVar25,dVar18,dVar26,param_2);
-    dVar18 = (double)(float)(dVar19 + dVar18);
-    *(undefined4 *)(param_4 + 8) = 0;
-  }
-  Phys_PerformanceEndFrame();
-  Phys_GetPerformance(&local_108,&local_f8,&local_100);
-  if (1 < *(int *)(DAT_82a3824c + 0xc)) {
-    va(0xffffffff82013578,local_f8._0_4_,local_100._0_4_,(double)local_108._0_4_);
-    dVar19 = (double)CG_CornerDebugPrint(dVar25,dVar18,dVar26,param_2);
-    dVar18 = (double)(float)(dVar19 + dVar18);
-  }
-  if (1 < *(int *)(DAT_82a3824c + 0xc)) {
-    lVar8 = Com_GetFreeDObjCount();
-    lVar9 = Com_GetMaxDObjCount();
-    va(0xffffffff82013564,lVar9 - lVar8);
-    dVar19 = (double)CG_CornerDebugPrint(dVar25,dVar18,dVar26,param_2);
-    dVar18 = (double)(float)(dVar19 + dVar18);
-  }
-  if (*(char *)(DAT_82a38280 + 0xc) != '\0') {
-    iVar7 = FX_GetSystem(uVar4);
-    va(0xffffffff8201353c,*(undefined4 *)(iVar7 + 0x250),*(undefined4 *)(iVar7 + 0x254),
-       *(undefined4 *)(iVar7 + 600),*(undefined4 *)(iVar7 + 0x25c));
-    dVar25 = (double)CG_CornerDebugPrint(dVar25,dVar18,dVar26,param_2);
-    dVar18 = (double)(float)(dVar25 + dVar18);
-  }
-  __restfpr_24(dVar18);
-  __restgprlr_16();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 822B4D58  CG_DrawSnapshot  (cgame/cg_draw_debug.cpp:712)
-
-void CG_DrawSnapshot(void)
-
-{
-  undefined8 uVar1;
-  int iVar2;
-  int iVar3;
-  int iVar4;
-  int iVar5;
-  double extraout_f1;
-  double dVar6;
-  double dVar7;
-  double dVar8;
-  double dVar9;
-  
-  uVar1 = __savegprlr_26();
-  dVar7 = extraout_f1;
-  iVar2 = CG_GetLocalClientGlobals();
-  iVar3 = CG_GetLocalClientStaticGlobals(uVar1);
-  iVar4 = ScrPlace_GetActivePlacement(uVar1);
-  dVar9 = (double)((*(float *)(iVar4 + 0x30) - *(float *)(iVar4 + 0x28)) +
-                  *(float *)(DAT_82a3d628 + 0xc));
-  iVar5 = R_TextWidth(0xffffffff82013738,0,DAT_82a39350);
-  dVar8 = (double)(longlong)iVar5;
-  dVar6 = (double)CG_CornerDebugPrintCaption(dVar9,dVar7,dVar8,iVar4);
-  dVar6 = (double)(float)(dVar6 + dVar7);
-  va(0xffffffff8200c28c,*(undefined4 *)(*(int *)(iVar2 + 0x335c) + 0x3308));
-  dVar7 = (double)CG_CornerDebugPrint(dVar9,dVar6,dVar8,iVar4);
-  dVar6 = (double)(float)(dVar7 + dVar6);
-  va(0xffffffff8200c28c,*(undefined4 *)(iVar2 + 0x3350));
-  dVar7 = (double)CG_CornerDebugPrint(dVar9,dVar6,dVar8,iVar4);
-  dVar6 = (double)(float)(dVar7 + dVar6);
-  va(0xffffffff8200c28c,*(undefined4 *)(iVar3 + 0x18));
-  dVar7 = (double)CG_CornerDebugPrint(dVar9,dVar6,dVar8,iVar4);
-  __restgprlr_26((double)(float)(dVar7 + dVar6));
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 822B4ED0  CG_DrawStatmon  (cgame/cg_draw_debug.cpp:741)
 
-void CG_DrawStatmon(undefined8 param_1,undefined8 param_2,longlong param_3)
+float CG_DrawStatmon(ScreenPlacement *param_1,float param_2,meminfo_t *param_3)
 
 {
   uint uVar1;
-  int iVar2;
+  ScreenPlacement *pSVar2;
   int iVar3;
-  longlong lVar4;
-  int *piVar5;
+  char *pcVar4;
+  char *pcVar5;
+  double in_r5;
+  undefined8 uVar6;
+  float *pfVar7;
+  longlong lVar8;
+  int *piVar9;
   double extraout_f1;
-  double dVar6;
-  double dVar7;
-  double dVar8;
-  undefined8 uVar9;
   double dVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  double dVar14;
+  float fVar15;
   
-  __savegprlr_23();
-  iVar2 = __savefpr_28();
-  uVar9 = 0;
-  dVar7 = 0.0009765625;
-  lVar4 = param_3 + 0xc;
-  piVar5 = &DAT_8201318c;
-  dVar8 = (double)((*(float *)(iVar2 + 0x30) - *(float *)(iVar2 + 0x28)) +
-                  *(float *)(DAT_82a3d628 + 0xc));
-  dVar10 = extraout_f1;
+  __savegprlr_23((double)param_2,param_1,param_3);
+  pSVar2 = (ScreenPlacement *)__savefpr_28();
+  uVar6 = 0xffffffff82010000;
+  dVar13 = 0.0;
+  dVar11 = 0.0009765625;
+  lVar8 = (longlong)in_r5 + 0xc;
+  piVar9 = &meminfoData[0].budgetKB;
+  dVar12 = (double)((pSVar2->virtualViewableMax[0] - pSVar2->virtualViewableMin[0]) +
+                   (cg_debugInfoCornerOffset->current).value);
+  dVar10 = in_r5;
+  dVar14 = extraout_f1;
   do {
-    iVar3 = *piVar5;
-    if (iVar3 != 0) {
-      if (iVar3 << 10 < (int)*(uint *)lVar4) {
-        va(0xffffffff82013760,piVar5[-1],(double)(float)((double)(longlong)iVar3 * dVar7));
-        CG_CornerDebugPrint(dVar8,dVar10,uVar9,iVar2);
-        uVar1 = *(uint *)lVar4;
-        va(0xffffffff8200c28c,
-           (longlong)((int)uVar1 >> 0x14) + (ulonglong)((int)uVar1 < 0 && (uVar1 & 0xfffff) != 0));
-        dVar6 = (double)CG_CornerDebugPrint(dVar8,dVar10,uVar9,iVar2);
-        dVar10 = (double)(float)(dVar6 + dVar10);
-      }
+    iVar3 = *piVar9;
+    if ((iVar3 != 0) && (iVar3 << 10 < (int)*(uint *)lVar8)) {
+      pcVar4 = ((<unnamed_type_meminfoData> *)(piVar9 + -1))->name;
+      dVar10 = (double)(float)((double)(longlong)iVar3 * dVar11);
+      va("%s (%g)      ");
+      CG_CornerDebugPrint(pSVar2,(float)dVar12,(float)dVar14,(float)dVar13,pcVar4,SUB84(dVar10,0),
+                          (float *)uVar6);
+      uVar1 = *(uint *)lVar8;
+      pcVar4 = (char *)(((int)uVar1 >> 0x14) + (uint)((int)uVar1 < 0 && (uVar1 & 0xfffff) != 0));
+      va("%i");
+      fVar15 = CG_CornerDebugPrint(pSVar2,(float)dVar12,(float)dVar14,(float)dVar13,pcVar4,
+                                   SUB84(dVar10,0),(float *)uVar6);
+      dVar14 = (double)(float)((double)fVar15 + dVar14);
     }
-    piVar5 = piVar5 + 2;
-    lVar4 = lVar4 + 4;
-  } while ((int)piVar5 < -0x7dfecd44);
+    pfVar7 = (float *)uVar6;
+    pcVar4 = SUB84(dVar10,0);
+    piVar9 = piVar9 + 2;
+    lVar8 = lVar8 + 4;
+  } while ((int)piVar9 < -0x7dfecd44);
   iVar3 = XenonTotalMemory();
-  if (iVar3 < *(int *)((int)param_3 + 8)) {
+  if (iVar3 < *(int *)(SUB84(in_r5,0) + 8)) {
     iVar3 = XenonTotalMemory();
-    va(0xffffffff82013748,(double)((float)(longlong)iVar3 * 9.536743e-07));
-    CG_CornerDebugPrint(dVar8,dVar10,uVar9,iVar2);
-    uVar1 = *(uint *)((int)param_3 + 8);
-    va(0xffffffff8200c28c,
-       (longlong)((int)uVar1 >> 0x14) + (ulonglong)((int)uVar1 < 0 && (uVar1 & 0xfffff) != 0));
-    dVar7 = (double)CG_CornerDebugPrint(dVar8,dVar10,uVar9,iVar2);
-    __restfpr_28((double)(float)(dVar7 + dVar10));
-    __restgprlr_23();
-    return;
+    pcVar5 = SUB84((double)((float)(longlong)iVar3 * 9.536743e-07),0);
+    va("xenon mem (%g)      ");
+    CG_CornerDebugPrint(pSVar2,(float)dVar12,(float)dVar14,(float)dVar13,pcVar5,pcVar4,pfVar7);
+    uVar1 = *(uint *)(SUB84(in_r5,0) + 8);
+    pcVar5 = (char *)(((int)uVar1 >> 0x14) + (uint)((int)uVar1 < 0 && (uVar1 & 0xfffff) != 0));
+    va("%i");
+    fVar15 = CG_CornerDebugPrint(pSVar2,(float)dVar12,(float)dVar14,(float)dVar13,pcVar5,pcVar4,
+                                 pfVar7);
+    __restfpr_28((double)(float)((double)fVar15 + dVar14));
+    dVar10 = (double)__restgprlr_23();
+    return (float)dVar10;
   }
-  __restfpr_28(dVar10);
-  __restgprlr_23();
-  return;
+  __restfpr_28(dVar14);
+  dVar10 = (double)__restgprlr_23();
+  return (float)dVar10;
 }
 
 
 // 822B50C8  CG_DrawViewpos  (cgame/cg_draw_debug.cpp:833)
-
-double CG_DrawViewpos(double param_1,undefined8 param_2,int param_3)
-
-{
-  int iVar1;
-  double dVar2;
-  double dVar3;
-  undefined1 local_40 [8];
-  longlong local_38;
-  
-  local_40[0] = 0;
-  dVar3 = (double)((*(float *)(param_3 + 0x30) - *(float *)(param_3 + 0x28)) +
-                  *(float *)(DAT_82a3d628 + 0xc));
-  iVar1 = R_TextWidth(local_40,0,DAT_82a39350);
-  local_38 = (longlong)iVar1;
-  dVar2 = (double)local_38;
-  iVar1 = CG_GetLocalClientGlobals(param_2);
-  va(0xffffffff82013774,(double)*(float *)(iVar1 + 0x6b9c8),(double)*(float *)(iVar1 + 0x6b9cc),
-     (double)*(float *)(iVar1 + 0x6b9d0));
-  dVar2 = (double)CG_CornerDebugPrint(dVar3,param_1,dVar2,param_3);
-  return (double)(float)(dVar2 + param_1);
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 822B51E8  CG_DrawCommonMPDebugInfo  (cgame/cg_draw_debug.cpp:854)
 
-void CG_DrawCommonMPDebugInfo(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+void CG_DrawCommonMPDebugInfo(LocalClientNum_t param_1,float param_2)
 
 {
-  undefined8 uVar1;
-  int iVar2;
+  LocalClientNum_t LVar1;
+  ScreenPlacement *pSVar2;
   int iVar3;
-  char cVar4;
-  undefined8 uVar5;
-  undefined8 extraout_f1;
-  double dVar6;
-  double dVar7;
-  undefined8 uVar8;
+  StatsSource SVar4;
+  bool bVar5;
+  char *pcVar6;
+  char *pcVar7;
+  char *pcVar8;
+  double extraout_f1;
+  double dVar9;
+  double dVar10;
+  double dVar11;
   
-  uVar1 = __savegprlr_29();
-  uVar8 = extraout_f1;
-  iVar2 = ScrPlace_GetActivePlacement();
-  dVar7 = (double)((*(float *)(iVar2 + 0x30) - *(float *)(iVar2 + 0x28)) +
-                  *(float *)(DAT_82a3d628 + 0xc));
-  iVar3 = R_TextWidth(0xffffffff820134ec,0,DAT_82a39350);
-  dVar6 = (double)(longlong)iVar3;
-  if (*(char *)(DAT_82a3837c + 0xc) != '\0') {
-    uVar1 = CL_ControllerIndexFromClientNum(uVar1);
-    uVar5 = 0xffffffff820137b0;
-    iVar3 = LiveStorage_GetActiveStatsSource();
-    if (iVar3 == 1) {
-      uVar5 = 0xffffffff820137a8;
+  LVar1 = __savegprlr_29((double)param_2,param_1);
+  dVar11 = extraout_f1;
+  pSVar2 = ScrPlace_GetActivePlacement(LVar1);
+  dVar10 = (double)((pSVar2->virtualViewableMax[0] - pSVar2->virtualViewableMin[0]) +
+                   (cg_debugInfoCornerOffset->current).value);
+  iVar3 = R_TextWidth(" cg ms/frame",0,cgMedia.smallDevFont);
+  pcVar8 = g_mdlprv.model.clones[0x18].objBuf + 4;
+  dVar9 = (double)(longlong)iVar3;
+  if ((cg_drawStatsSource->current).enabled != false) {
+    iVar3 = CL_ControllerIndexFromClientNum(LVar1);
+    pcVar6 = "online";
+    SVar4 = LiveStorage_GetActiveStatsSource(iVar3);
+    if (SVar4 == STATS_OFFLINE) {
+      pcVar6 = "offline";
     }
-    cVar4 = LiveStorage_DoWeHaveStats(uVar1);
-    if (cVar4 == '\0') {
-      uVar1 = 0xffffffff82013798;
+    bVar5 = LiveStorage_DoWeHaveStats(iVar3);
+    if (bVar5) {
+      pcVar7 = "";
     }
     else {
-      uVar1 = 0xffffffff820068af;
+      pcVar7 = " (not fetched)";
     }
-    va(0xffffffff82013790,uVar5,uVar1);
-    CG_CornerDebugPrint(dVar7,uVar8,dVar6,iVar2);
+    va("%s%s");
+    CG_CornerDebugPrint(pSVar2,(float)dVar10,(float)dVar11,(float)dVar9,pcVar6,pcVar7,
+                        (float *)pcVar8);
   }
   __restgprlr_29();
   return;
@@ -689,112 +418,143 @@ void CG_DrawCommonMPDebugInfo(void)
 
 // 822B5310  CG_DrawPartyAndPresenceDebugInfo  (cgame/cg_draw_debug.cpp:885)
 
-void CG_DrawPartyAndPresenceDebugInfo(undefined8 param_1,float *param_2,int param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+void CG_DrawPartyAndPresenceDebugInfo
+               (LocalClientNum_t param_1,ScreenPlacement *param_2,float *param_3,int param_4)
 
 {
-  bool bVar1;
-  float fVar2;
-  int iVar5;
-  int iVar6;
-  char cVar7;
-  undefined8 uVar3;
-  undefined8 uVar4;
-  undefined8 uVar8;
-  char *pcVar9;
-  longlong lVar10;
-  longlong lVar11;
-  double dVar12;
+  ulonglong uVar1;
+  ScreenPlacement *pSVar2;
+  int iVar3;
+  int iVar4;
+  bool bVar7;
+  char *pcVar5;
+  char *pcVar6;
+  Font_s *pFVar8;
+  ulonglong uVar9;
+  float *pfVar10;
+  PartyMember *pPVar11;
+  longlong lVar12;
   double dVar13;
-  undefined1 auStack_e0 [224];
+  float fVar14;
+  char acStack_e0 [224];
   
-  iVar5 = __savegprlr_15();
-  if (DAT_82b5700c != 0) {
-    if (param_3 == 0) {
-      iVar6 = R_TextWidth(0xffffffff820034a0,0,DAT_82a39350);
+  pSVar2 = (ScreenPlacement *)__savegprlr_15(param_1);
+  if (g_partyData.inParty != 0) {
+    if (param_3 == (float *)0x0) {
+      iVar3 = R_TextWidth(" ",0,cgMedia.smallDevFont);
     }
     else {
-      iVar6 = R_TextWidth(0xffffffff82013850,0,DAT_82a39350);
+      iVar3 = R_TextWidth(" extra hack",0,cgMedia.smallDevFont);
     }
-    dVar13 = (double)(longlong)iVar6;
-    *param_2 = *param_2 + 10.0;
-    iVar6 = R_TextWidth(0xffffffff82013840,0,DAT_82a39350);
-    dVar12 = (double)CG_CornerDebugPrint((double)((*(float *)(iVar5 + 0x30) -
-                                                  *(float *)(iVar5 + 0x28)) +
-                                                 *(float *)(DAT_82a3d628 + 0xc)),(double)*param_2,
-                                         (double)(float)((double)(longlong)iVar6 + dVar13),iVar5);
-    *param_2 = (float)(dVar12 + (double)*param_2);
-    if (DAT_82b55120 == 0) {
-      MyAssertHandler(0xffffffff82013490,0x387,0,0xffffffff82000f98,0xffffffff8201381c);
+    pcVar5 = (char *)0x0;
+    dVar13 = (double)(longlong)iVar3;
+    param_2->scaleVirtualToReal[0] = param_2->scaleVirtualToReal[0] + 10.0;
+    pFVar8 = cgMedia.smallDevFont;
+    iVar3 = R_TextWidth(" private party",0,cgMedia.smallDevFont);
+    fVar14 = CG_CornerDebugPrint(pSVar2,(pSVar2->virtualViewableMax[0] -
+                                        pSVar2->virtualViewableMin[0]) +
+                                        (cg_debugInfoCornerOffset->current).value,
+                                 param_2->scaleVirtualToReal[0],
+                                 (float)((double)(longlong)iVar3 + dVar13),pcVar5,(char *)pFVar8,
+                                 (float *)param_4);
+    param_2->scaleVirtualToReal[0] = fVar14 + param_2->scaleVirtualToReal[0];
+    if (g_partyData.presenceSession == (SessionData *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_debug.cpp",
+                      0x387,0,"%s");
     }
-    iVar6 = Party_IsRunning(0xffffffff82b55118);
-    bVar1 = iVar6 == 1;
-    if ((bool)*(char *)(DAT_82b55120 + 0x50) != bVar1) {
-      iVar6 = R_TextWidth(0xffffffff82013810,0,DAT_82a39350);
-      dVar12 = (double)CG_CornerDebugPrint((double)((*(float *)(iVar5 + 0x30) -
-                                                    *(float *)(iVar5 + 0x28)) +
-                                                   *(float *)(DAT_82a3d628 + 0xc)),(double)*param_2,
-                                           (double)(float)((double)(longlong)iVar6 + dVar13),iVar5);
-      *param_2 = (float)(dVar12 + (double)*param_2);
+    iVar3 = Party_IsRunning(&g_partyData);
+    uVar9 = (ulonglong)((g_partyData.presenceSession)->dyn).keysGenerated;
+    uVar1 = (ulonglong)(iVar3 == 1);
+    if (uVar9 != uVar1) {
+      pcVar5 = (char *)0x0;
+      pFVar8 = cgMedia.smallDevFont;
+      iVar4 = R_TextWidth(" presence",0,cgMedia.smallDevFont);
+      fVar14 = CG_CornerDebugPrint(pSVar2,(pSVar2->virtualViewableMax[0] -
+                                          pSVar2->virtualViewableMin[0]) +
+                                          (cg_debugInfoCornerOffset->current).value,
+                                   param_2->scaleVirtualToReal[0],
+                                   (float)((double)(longlong)iVar4 + dVar13),pcVar5,(char *)pFVar8,
+                                   (float *)uVar9);
+      param_2->scaleVirtualToReal[0] = fVar14 + param_2->scaleVirtualToReal[0];
     }
-    if ((*(int *)(DAT_82b55120 + 0x10) != 0) != bVar1) {
-      iVar6 = R_TextWidth(0xffffffff82013810,0,DAT_82a39350);
-      dVar12 = (double)CG_CornerDebugPrint((double)((*(float *)(iVar5 + 0x30) -
-                                                    *(float *)(iVar5 + 0x28)) +
-                                                   *(float *)(DAT_82a3d628 + 0xc)),(double)*param_2,
-                                           (double)(float)((double)(longlong)iVar6 + dVar13),iVar5);
-      *param_2 = (float)(dVar12 + (double)*param_2);
+    if ((((g_partyData.presenceSession)->dyn).sessionHandle != (void *)0x0) != (iVar3 == 1)) {
+      pcVar5 = (char *)0x0;
+      pFVar8 = cgMedia.smallDevFont;
+      iVar3 = R_TextWidth(" presence",0,cgMedia.smallDevFont);
+      fVar14 = CG_CornerDebugPrint(pSVar2,(pSVar2->virtualViewableMax[0] -
+                                          pSVar2->virtualViewableMin[0]) +
+                                          (cg_debugInfoCornerOffset->current).value,
+                                   param_2->scaleVirtualToReal[0],
+                                   (float)((double)(longlong)iVar3 + dVar13),pcVar5,(char *)pFVar8,
+                                   (float *)uVar9);
+      param_2->scaleVirtualToReal[0] = fVar14 + param_2->scaleVirtualToReal[0];
     }
-    cVar7 = Session_IsValid(DAT_82b55120);
-    if ((bool)cVar7 != bVar1) {
-      iVar6 = R_TextWidth(0xffffffff82013810,0,DAT_82a39350);
-      dVar12 = (double)CG_CornerDebugPrint((double)((*(float *)(iVar5 + 0x30) -
-                                                    *(float *)(iVar5 + 0x28)) +
-                                                   *(float *)(DAT_82a3d628 + 0xc)),(double)*param_2,
-                                           (double)(float)((double)(longlong)iVar6 + dVar13),iVar5);
-      *param_2 = (float)(dVar12 + (double)*param_2);
+    bVar7 = Session_IsValid(g_partyData.presenceSession);
+    if ((longlong)bVar7 != uVar1) {
+      pcVar5 = (char *)0x0;
+      pFVar8 = cgMedia.smallDevFont;
+      iVar3 = R_TextWidth(" presence",0,cgMedia.smallDevFont);
+      fVar14 = CG_CornerDebugPrint(pSVar2,(pSVar2->virtualViewableMax[0] -
+                                          pSVar2->virtualViewableMin[0]) +
+                                          (cg_debugInfoCornerOffset->current).value,
+                                   param_2->scaleVirtualToReal[0],
+                                   (float)((double)(longlong)iVar3 + dVar13),pcVar5,(char *)pFVar8,
+                                   (float *)uVar9);
+      param_2->scaleVirtualToReal[0] = fVar14 + param_2->scaleVirtualToReal[0];
     }
-    lVar11 = 0;
-    lVar10 = 0x12;
-    pcVar9 = &DAT_82b55170;
+    iVar3 = 0;
+    lVar12 = 0x12;
+    pPVar11 = g_partyData.partyMembers;
     do {
-      if (*pcVar9 == '\0') {
-        cVar7 = Party_IsHost();
-        if (cVar7 != '\0') {
-          iVar6 = R_TextWidth(0xffffffff820137c8,0,DAT_82a39350);
-          fVar2 = (*(float *)(iVar5 + 0x30) - *(float *)(iVar5 + 0x28)) +
-                  *(float *)(DAT_82a3d628 + 0xc);
+      if (pPVar11->status == '\0') {
+        bVar7 = Party_IsHost(&g_partyData,iVar3);
+        if (bVar7) {
+          pcVar6 = (char *)0x0;
+          pFVar8 = cgMedia.smallDevFont;
+          iVar4 = R_TextWidth(" host",0,cgMedia.smallDevFont);
+          fVar14 = (pSVar2->virtualViewableMax[0] - pSVar2->virtualViewableMin[0]) +
+                   (cg_debugInfoCornerOffset->current).value;
           goto LAB_822b572c;
         }
       }
       else {
-        uVar3 = Party_GetMemberStatus(0xffffffff82b55118,lVar11);
-        uVar4 = Party_GetMemberName(0xffffffff82b55118,lVar11);
-        cVar7 = Party_IsHost(0xffffffff82b55118,lVar11);
-        uVar8 = 0xffffffff820137d8;
-        if (cVar7 == '\0') {
-          uVar8 = 0xffffffff820068af;
-        }
-        Com_sprintf(auStack_e0,0x40,0xffffffff820137e0,uVar4,lVar11,uVar8);
-        iVar6 = R_TextWidth(uVar3,0,DAT_82a39350);
-        fVar2 = (*(float *)(iVar5 + 0x30) - *(float *)(iVar5 + 0x28)) +
-                *(float *)(DAT_82a3d628 + 0xc);
+        pcVar5 = Party_GetMemberStatus(&g_partyData,iVar3);
+        pcVar6 = Party_GetMemberName(&g_partyData,iVar3);
+        uVar9 = (ulonglong)(int)pcVar6;
+        Party_IsHost(&g_partyData,iVar3);
+        Com_sprintf(acStack_e0,0x40,"%s %i%s ");
+        pcVar6 = (char *)0x0;
+        pFVar8 = cgMedia.smallDevFont;
+        iVar4 = R_TextWidth(pcVar5,0,cgMedia.smallDevFont);
+        fVar14 = (pSVar2->virtualViewableMax[0] - pSVar2->virtualViewableMin[0]) +
+                 (cg_debugInfoCornerOffset->current).value;
 LAB_822b572c:
-        dVar12 = (double)CG_CornerDebugPrint((double)fVar2,(double)*param_2,
-                                             (double)(float)((double)(longlong)iVar6 + dVar13),iVar5
-                                            );
-        *param_2 = (float)(dVar12 + (double)*param_2);
+        fVar14 = CG_CornerDebugPrint(pSVar2,fVar14,param_2->scaleVirtualToReal[0],
+                                     (float)((double)(longlong)iVar4 + dVar13),pcVar6,(char *)pFVar8
+                                     ,(float *)uVar9);
+        param_2->scaleVirtualToReal[0] = fVar14 + param_2->scaleVirtualToReal[0];
       }
-      lVar10 = lVar10 + -1;
-      lVar11 = lVar11 + 1;
-      pcVar9 = pcVar9 + 0x150;
-    } while (lVar10 != 0);
-    if (DAT_82b57018 != 0) {
-      iVar6 = R_TextWidth(0xffffffff820137b8,0,DAT_82a39350);
-      dVar12 = (double)CG_CornerDebugPrint((double)((*(float *)(iVar5 + 0x30) -
-                                                    *(float *)(iVar5 + 0x28)) +
-                                                   *(float *)(DAT_82a3d628 + 0xc)),(double)*param_2,
-                                           (double)(float)((double)(longlong)iVar6 + dVar13),iVar5);
-      *param_2 = (float)(dVar12 + (double)*param_2);
+      pfVar10 = (float *)uVar9;
+      lVar12 = lVar12 + -1;
+      iVar3 = iVar3 + 1;
+      pPVar11 = pPVar11 + 1;
+    } while (lVar12 != 0);
+    if (g_partyData.backingOut != 0) {
+      pcVar5 = (char *)0x0;
+      pFVar8 = cgMedia.smallDevFont;
+      iVar3 = R_TextWidth(" backing out",0,cgMedia.smallDevFont);
+      fVar14 = CG_CornerDebugPrint(pSVar2,(pSVar2->virtualViewableMax[0] -
+                                          pSVar2->virtualViewableMin[0]) +
+                                          (cg_debugInfoCornerOffset->current).value,
+                                   param_2->scaleVirtualToReal[0],
+                                   (float)((double)(longlong)iVar3 + dVar13),pcVar5,(char *)pFVar8,
+                                   pfVar10);
+      param_2->scaleVirtualToReal[0] = fVar14 + param_2->scaleVirtualToReal[0];
     }
   }
   __restgprlr_15();
@@ -804,90 +564,113 @@ LAB_822b572c:
 
 // 822B57E0  CG_DrawHostDebugInfo  (cgame/cg_draw_debug.cpp:940)
 
-void CG_DrawHostDebugInfo(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+float CG_DrawHostDebugInfo(LocalClientNum_t param_1)
 
 {
-  undefined8 uVar1;
-  int iVar2;
+  LocalClientNum_t LVar1;
+  ScreenPlacement *pSVar2;
   int iVar3;
-  double dVar4;
-  double dVar5;
-  longlong local_40 [8];
+  char *pcVar4;
+  Font_s *pFVar5;
+  float *in_r6;
+  double dVar6;
+  float fVar7;
+  float local_40 [2];
   
-  uVar1 = __savegprlr_27();
-  if (DAT_82b58fac == 0) {
-    MyAssertHandler(0xffffffff82013490,0x3b4,0,0xffffffff82000f98,0xffffffff8201351c);
+  LVar1 = __savegprlr_27(param_1);
+  if (party_hostname == (dvar_t *)0x0) {
+    in_r6 = (float *)"%s";
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_debug.cpp",0x3b4
+                    ,0,"%s");
   }
-  if (*(int *)(DAT_82b58fac + 0xc) == 0) {
-    MyAssertHandler(0xffffffff82013490,0x3b5,0,0xffffffff82000f98,0xffffffff820134fc);
+  if ((party_hostname->current).integer == 0) {
+    in_r6 = (float *)"%s";
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_debug.cpp",0x3b5
+                    ,0,"%s");
   }
-  local_40[0]._0_4_ = *(float *)(DAT_82a3d628 + 0x10);
-  dVar5 = (double)local_40[0]._0_4_;
-  if (*(int *)(DAT_82a3824c + 0xc) == 0) {
-    __restgprlr_27(dVar5);
-    return;
+  local_40[0] = (cg_debugInfoCornerOffset->current).vector[1];
+  dVar6 = (double)local_40[0];
+  if ((cg_drawFPS->current).integer == 0) {
+    dVar6 = (double)__restgprlr_27(dVar6);
+    return (float)dVar6;
   }
-  if (DAT_82a39350 == 0) {
-    DAT_82a39350 = CL_RegisterFont(0xffffffff82013870,1);
+  if (cgMedia.smallDevFont == (Font_s *)0x0) {
+    cgMedia.smallDevFont = CL_RegisterFont("fonts/smalldevfont",1);
   }
-  iVar2 = ScrPlace_GetActivePlacement(uVar1);
-  if (**(char **)(DAT_82b58fac + 0xc) != '\0') {
-    iVar3 = R_TextWidth(0xffffffff8201385c,0,DAT_82a39350);
-    local_40[0] = (longlong)iVar3;
-    dVar4 = (double)CG_CornerDebugPrint((double)((*(float *)(iVar2 + 0x30) -
-                                                 *(float *)(iVar2 + 0x28)) +
-                                                *(float *)(DAT_82a3d628 + 0xc)),dVar5,
-                                        (double)local_40[0],iVar2);
-    local_40[0]._0_4_ = (float)(dVar4 + dVar5);
+  pSVar2 = ScrPlace_GetActivePlacement(LVar1);
+  if (*(party_hostname->current).string != '\0') {
+    pcVar4 = (char *)0x0;
+    pFVar5 = cgMedia.smallDevFont;
+    iVar3 = R_TextWidth(" g-host extra hack",0,cgMedia.smallDevFont);
+    local_40 = (float  [2])(longlong)iVar3;
+    fVar7 = CG_CornerDebugPrint(pSVar2,(pSVar2->virtualViewableMax[0] -
+                                       pSVar2->virtualViewableMin[0]) +
+                                       (cg_debugInfoCornerOffset->current).value,(float)dVar6,
+                                (float)(longlong)local_40,pcVar4,(char *)pFVar5,in_r6);
+    local_40[0] = (float)((double)fVar7 + dVar6);
   }
-  CG_DrawPartyAndPresenceDebugInfo(iVar2,local_40,1);
-  __restgprlr_27((double)local_40[0]._0_4_);
-  return;
+  CG_DrawPartyAndPresenceDebugInfo
+            ((LocalClientNum_t)pSVar2,(ScreenPlacement *)local_40,(float *)0x1,(int)in_r6);
+  dVar6 = (double)__restgprlr_27((double)local_40[0]);
+  return (float)dVar6;
 }
 
 
 // 822B5968  CG_DrawLiveDebugInfo  (cgame/cg_draw_debug.cpp:1005)
 
-void CG_DrawLiveDebugInfo(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+void CG_DrawLiveDebugInfo(LocalClientNum_t param_1,float param_2)
 
 {
-  undefined8 uVar1;
-  int iVar3;
-  ulonglong uVar2;
+  LocalClientNum_t LVar1;
+  ScreenPlacement *pSVar2;
+  uint uVar3;
+  char *in_r4;
+  char *in_r5;
+  float *in_r6;
   double extraout_f1;
   double dVar4;
-  undefined8 uVar5;
+  double dVar5;
   double dVar6;
-  double dVar7;
+  float fVar7;
   
-  uVar1 = __savegprlr_27();
-  if (*(int *)(DAT_82a3824c + 0xc) != 0) {
-    dVar7 = extraout_f1;
-    if (DAT_82a39350 == 0) {
-      DAT_82a39350 = CL_RegisterFont(0xffffffff82013870,1);
+  LVar1 = __savegprlr_27((double)param_2,param_1);
+  if ((cg_drawFPS->current).integer != 0) {
+    dVar6 = extraout_f1;
+    if (cgMedia.smallDevFont == (Font_s *)0x0) {
+      in_r4 = (char *)0x1;
+      cgMedia.smallDevFont = CL_RegisterFont("fonts/smalldevfont",1);
     }
-    iVar3 = ScrPlace_GetActivePlacement(uVar1);
-    uVar2 = Live_GetStatusFlags(uVar1);
-    uVar5 = 0x4049000000000000;
-    dVar6 = (double)((*(float *)(iVar3 + 0x30) - *(float *)(iVar3 + 0x28)) +
-                    *(float *)(DAT_82a3d628 + 0xc));
-    if ((uVar2 & 4) != 0) {
-      dVar4 = (double)CG_CornerDebugPrint(dVar6,dVar7,0x4049000000000000,iVar3);
-      dVar7 = (double)(float)(dVar4 + dVar7);
+    pSVar2 = ScrPlace_GetActivePlacement(LVar1);
+    uVar3 = Live_GetStatusFlags(LVar1);
+    dVar4 = 50.0;
+    fVar7 = (pSVar2->virtualViewableMax[0] - pSVar2->virtualViewableMin[0]) +
+            (cg_debugInfoCornerOffset->current).value;
+    dVar5 = (double)fVar7;
+    if ((uVar3 & 4) != 0) {
+      fVar7 = CG_CornerDebugPrint(pSVar2,fVar7,(float)dVar6,50.0,in_r4,in_r5,in_r6);
+      dVar6 = (double)(float)((double)fVar7 + dVar6);
     }
-    if ((uVar2 & 0x80) != 0) {
-      dVar4 = (double)CG_CornerDebugPrint(dVar6,dVar7,uVar5,iVar3);
-      dVar7 = (double)(float)(dVar4 + dVar7);
+    if ((uVar3 & 0x80) != 0) {
+      fVar7 = CG_CornerDebugPrint(pSVar2,(float)dVar5,(float)dVar6,(float)dVar4,in_r4,in_r5,in_r6);
+      dVar6 = (double)(float)((double)fVar7 + dVar6);
     }
-    if ((uVar2 & 0x20) != 0) {
-      dVar4 = (double)CG_CornerDebugPrint(dVar6,dVar7,uVar5,iVar3);
-      dVar7 = (double)(float)(dVar4 + dVar7);
+    if ((uVar3 & 0x20) != 0) {
+      fVar7 = CG_CornerDebugPrint(pSVar2,(float)dVar5,(float)dVar6,(float)dVar4,in_r4,in_r5,in_r6);
+      dVar6 = (double)(float)((double)fVar7 + dVar6);
     }
-    if ((uVar2 & 8) != 0) {
-      dVar6 = (double)CG_CornerDebugPrint(dVar6,dVar7,uVar5,iVar3);
-      dVar7 = (double)(float)(dVar6 + dVar7);
+    if ((uVar3 & 8) != 0) {
+      fVar7 = CG_CornerDebugPrint(pSVar2,(float)dVar5,(float)dVar6,(float)dVar4,in_r4,in_r5,in_r6);
+      dVar6 = (double)(float)((double)fVar7 + dVar6);
     }
-    CG_DrawCommonMPDebugInfo(dVar7,uVar1);
+    CG_DrawCommonMPDebugInfo(LVar1,(float)dVar6);
   }
   __restgprlr_27();
   return;
@@ -896,53 +679,60 @@ void CG_DrawLiveDebugInfo(void)
 
 // 822B5B00  CG_DrawUpperRightDebugInfo  (cgame/cg_draw_debug.cpp:1056)
 
-void CG_DrawUpperRightDebugInfo(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
+
+void CG_DrawUpperRightDebugInfo(LocalClientNum_t param_1,ScreenPlacement *param_2)
 
 {
-  undefined8 uVar1;
-  int iVar2;
-  double dVar3;
-  float local_e0 [4];
-  undefined1 auStack_d0 [208];
+  LocalClientNum_t LVar1;
+  playerState_s *ppVar2;
+  meminfo_t *pmVar3;
+  meminfo_t *in_r5;
+  undefined1 *in_r6;
+  float fVar4;
+  undefined1 local_e0 [224];
   
-  uVar1 = __savegprlr_29();
-  track_getbasicinfo(auStack_d0);
-  iVar2 = CG_GetPredictedPlayerState(uVar1);
-  if (*(int *)(iVar2 + 4) != 4) {
-    if (*(int *)(DAT_82a3824c + 0xc) < 3) {
-      R_TrackStatistics(0);
+  LVar1 = __savegprlr_29(param_1);
+  pmVar3 = (meminfo_t *)param_2;
+  track_getbasicinfo((meminfo_t *)(local_e0 + 0x10));
+  ppVar2 = CG_GetPredictedPlayerState(LVar1);
+  if ((ppVar2->field0_0x0).remoteEyesEnt != 4) {
+    if ((cg_drawFPS->current).integer < 3) {
+      R_TrackStatistics((trStatistics_t *)0x0);
     }
-    local_e0[0] = *(float *)(DAT_82a3d628 + 0x10);
-    dVar3 = (double)local_e0[0];
-    if (*(int *)(DAT_82a3824c + 0xc) != 0) {
-      dVar3 = (double)CG_DrawFPS(uVar1,param_2);
-      local_e0[0] = (float)dVar3;
+    fVar4 = (cg_debugInfoCornerOffset->current).vector[1];
+    if ((cg_drawFPS->current).integer != 0) {
+      in_r6 = local_e0 + 0x10;
+      pmVar3 = (meminfo_t *)param_2;
+      local_e0._0_4_ = fVar4;
+      fVar4 = CG_DrawFPS(LVar1,param_2,fVar4,in_r5);
     }
-    if (*(char *)(DAT_8365e12c + 0xc) != '\0') {
-      dVar3 = (double)CG_DrawStatmon(param_2);
-      local_e0[0] = (float)dVar3;
+    local_e0._0_4_ = fVar4;
+    if ((com_statmon->current).enabled != false) {
+      local_e0._0_4_ = CG_DrawStatmon(param_2,fVar4,pmVar3);
     }
-    if (*(int *)(DAT_82a3824c + 0xc) != 0) {
-      dVar3 = (double)CG_DrawHostName(param_2);
-      local_e0[0] = (float)dVar3;
+    if ((cg_drawFPS->current).integer != 0) {
+      local_e0._0_4_ =
+           CG_DrawHostName((LocalClientNum_t)param_2,(ScreenPlacement *)pmVar3,(float)local_e0._0_4_
+                          );
     }
-    if (*(int *)(DAT_82a3824c + 0xc) != 0) {
-      dVar3 = (double)CG_DrawTeamDebug(param_2);
-      local_e0[0] = (float)dVar3;
+    if ((cg_drawFPS->current).integer != 0) {
+      local_e0._0_4_ =
+           CG_DrawTeamDebug((LocalClientNum_t)param_2,(ScreenPlacement *)pmVar3,
+                            (float)local_e0._0_4_);
     }
-    if (*(char *)(DAT_82a382e0 + 0xc) != '\0') {
-      dVar3 = (double)CG_DrawSnapshot(uVar1);
-      local_e0[0] = (float)dVar3;
+    if ((cg_drawSnapshot->current).enabled != false) {
+      local_e0._0_4_ = CG_DrawSnapshot(LVar1,(float)local_e0._0_4_);
     }
-    if (*(char *)(DAT_82a2f808 + 0xc) != '\0') {
-      dVar3 = (double)CG_DrawViewpos(uVar1,param_2);
-      local_e0[0] = (float)dVar3;
+    if ((cg_drawViewpos->current).enabled != false) {
+      local_e0._0_4_ = CG_DrawViewpos(LVar1,param_2,(float)local_e0._0_4_);
     }
-    if (*(int *)(DAT_82a3824c + 0xc) != 0) {
-      CG_DrawPartyAndPresenceDebugInfo(param_2,local_e0,0);
-      dVar3 = (double)local_e0[0];
+    if ((cg_drawFPS->current).integer != 0) {
+      CG_DrawPartyAndPresenceDebugInfo
+                ((LocalClientNum_t)param_2,(ScreenPlacement *)local_e0,(float *)0x0,(int)in_r6);
     }
-    CG_DrawCommonMPDebugInfo(dVar3,uVar1);
+    CG_DrawCommonMPDebugInfo(LVar1,(float)local_e0._0_4_);
   }
   __restgprlr_29();
   return;
@@ -951,16 +741,19 @@ void CG_DrawUpperRightDebugInfo(undefined8 param_1,undefined8 param_2)
 
 // 822B5C58  CG_DrawVersion  (cgame/cg_draw_debug.cpp:1139)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
 void CG_DrawVersion(void)
 
 {
-  int iVar3;
-  undefined8 uVar1;
-  undefined8 uVar2;
+  int iVar1;
+  ScreenPlacement *pSVar2;
+  Font_s *pFVar3;
   double dVar4;
   double dVar5;
   double dVar6;
-  undefined8 uVar7;
+  double dVar7;
   undefined4 local_80;
   undefined4 local_7c;
   undefined4 local_78;
@@ -992,25 +785,26 @@ void CG_DrawVersion(void)
   local_74[1] = '3';
   local_74[2] = '3';
   local_74[3] = '3';
-  iVar3 = ScrPlace_IsFullScreenActive();
-  if (iVar3 == 0) {
-    MyAssertHandler(0xffffffff82013490,0x47f,0,0xffffffff82000f98,0xffffffff820138cc);
+  iVar1 = ScrPlace_IsFullScreenActive();
+  if (iVar1 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_debug.cpp",0x47f
+                    ,0,"%s");
   }
-  uVar1 = ScrPlace_GetUnsafeFullPlacement();
-  uVar2 = UI_GetFontHandle(0x3fe2aaaaa0000000,uVar1,0);
-  uVar7 = 0x3fd0000000000000;
-  iVar3 = UI_TextWidth(0x3fd0000000000000,*(undefined4 *)(DAT_83666170 + 0xc),0,uVar2);
-  dVar5 = (double)(longlong)iVar3;
-  iVar3 = UI_TextHeight(uVar7,uVar2);
-  dVar4 = (double)(longlong)iVar3;
-  UI_DrawText((double)(float)(dVar6 - (double)(float)((double)*(float *)(DAT_82a38250 + 0xc) + dVar5
-                                                     )),
-              (double)(float)(dVar6 - (double)(float)((double)*(float *)(DAT_82a2f7fc + 0xc) + dVar4
-                                                     )),uVar7,uVar1,
-              *(undefined4 *)(DAT_83666170 + 0xc),0x7fffffff,uVar2,&local_80,(longlong)iVar3,3,3);
-  UI_DrawText((double)(float)(-dVar5 - (double)*(float *)(DAT_82a38250 + 0xc)),
-              (double)(float)(-dVar4 - (double)*(float *)(DAT_82a2f7fc + 0xc)),uVar7,uVar1,
-              *(undefined4 *)(DAT_83666170 + 0xc),0x7fffffff,uVar2,DAT_82a38250,DAT_82a2f7fc,3,3);
+  pSVar2 = ScrPlace_GetUnsafeFullPlacement();
+  pFVar3 = UI_GetFontHandle(pSVar2,0,0.5833333);
+  dVar7 = 0.25;
+  iVar1 = UI_TextWidth((version->current).string,0,pFVar3,0.25);
+  dVar5 = (double)(longlong)iVar1;
+  iVar1 = UI_TextHeight(pFVar3,(float)dVar7);
+  dVar4 = (double)(longlong)iVar1;
+  UI_DrawText(pSVar2,(version->current).string,0x7fffffff,pFVar3,
+              (float)(dVar6 - (double)(float)((double)(cg_drawVersionX->current).value + dVar5)),
+              (float)(dVar6 - (double)(float)((double)(cg_drawVersionY->current).value + dVar4)),
+              (int)&local_80,iVar1,(float)dVar7,(float *)0x3,3);
+  UI_DrawText(pSVar2,(version->current).string,0x7fffffff,pFVar3,
+              (float)(-dVar5 - (double)(cg_drawVersionX->current).value),
+              (float)(-dVar4 - (double)(cg_drawVersionY->current).value),(int)cg_drawVersionX,
+              (int)cg_drawVersionY,(float)dVar7,(float *)0x3,3);
   __restfpr_28();
   __restgprlr_26();
   return;
@@ -1018,141 +812,149 @@ void CG_DrawVersion(void)
 
 
 // 822B3780  CL_GetLocalClientUIGlobals  (client_mp/client_mp.h:1149)
-
-longlong CL_GetLocalClientUIGlobals(ulonglong param_1)
-
-{
-  if (3 < (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82001158,0x47f,0,0xffffffff820011a8,param_1,4);
-  }
-  return param_1 * 0x1e4 + -0x7d4c1b10;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure MigrationPers
 
 // 822B5E18  CG_SounsdEqAnyEnabled  (cgame/cg_draw_debug.cpp:1198)
 
-undefined8
-CG_SounsdEqAnyEnabled(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
+bool CG_SounsdEqAnyEnabled(snd_eqoverlay_info_t param_1)
 
 {
+  undefined8 in_r5;
   int iVar1;
-  int *piVar2;
-  int *piVar3;
+  SndEqParams **ppSVar2;
+  SndEqParams **ppSVar3;
   int iVar4;
-  undefined8 uStack00000010;
-  undefined8 uStack00000018;
-  undefined8 uStack00000020;
-  undefined8 uStack00000028;
+  undefined4 uStack00000024;
   
-  uStack00000010 = param_1;
   iVar1 = 0;
-  uStack00000018 = param_2;
-  piVar2 = (int *)&stack0x00000010;
-  uStack00000020 = param_3;
-  uStack00000028 = param_4;
+  ppSVar2 = param_1.params[0] + 2;
+  param_1.lerp = (float)((ulonglong)in_r5 >> 0x20);
+  uStack00000024 = (undefined4)in_r5;
   do {
     iVar4 = 0;
-    piVar3 = piVar2;
+    ppSVar3 = ppSVar2;
     do {
-      if (*(char *)(*piVar3 + 0x10) != '\0') {
-        return 1;
+      if ((*ppSVar3)->enabled != false) {
+        return true;
       }
       iVar4 = iVar4 + 1;
-      piVar3 = piVar3 + 3;
+      ppSVar3 = ppSVar3 + 3;
     } while (iVar4 < 2);
     iVar1 = iVar1 + 1;
-    piVar2 = piVar2 + 1;
+    ppSVar2 = ppSVar2 + 1;
   } while (iVar1 < 3);
-  return 0;
+  return false;
 }
 
 
 // 822B5E78  CG_DrawSoundEqOverlay  (cgame/cg_draw_debug.cpp:1212)
 
-void CG_DrawSoundEqOverlay(void)
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
+void CG_DrawSoundEqOverlay(ScreenPlacement *param_1)
 
 {
-  int *piVar1;
-  bool bVar2;
-  undefined8 uVar3;
-  int iVar5;
-  char cVar6;
-  undefined8 uVar4;
-  longlong lVar7;
-  int iVar8;
-  int iVar9;
-  int iVar10;
-  longlong lVar11;
+  SndEqParams *pSVar1;
+  snd_eqoverlay_info_t sVar2;
+  ScreenPlacement *pSVar3;
+  int iVar4;
+  bool bVar8;
+  char *pcVar5;
+  char *pcVar6;
+  char *pcVar7;
+  float *in_r5;
+  float *pfVar9;
+  float *pfVar10;
+  int iVar11;
   int iVar12;
-  double dVar13;
-  double dVar14;
-  undefined8 uVar15;
+  int iVar13;
+  int iVar14;
+  int iVar15;
   double dVar16;
   double dVar17;
   double dVar18;
   double dVar19;
-  undefined8 local_7d0 [3];
-  float local_7b8 [494];
+  double dVar20;
+  double dVar21;
+  double dVar22;
+  undefined1 in_stack_fffff7d8 [16];
+  double in_stack_fffff7e8;
+  float in_stack_fffff7f0;
+  snd_eqoverlay_info_t local_7d0 [71];
   
-  __savegprlr_15();
-  uVar3 = __savefpr_25();
-  iVar5 = SND_GetSoundEqOverlay(local_7d0,0x40);
-  if (0 < iVar5) {
-    dVar17 = 10.0;
-    uVar15 = 0;
-    CG_DrawStringExt(0,0,0x4024000000000000,uVar3);
-    lVar7 = 0;
-    if (0 < iVar5) {
-      dVar13 = 100.0;
-      dVar14 = 340.0;
-      dVar16 = 20.0;
-      iVar8 = 0;
-      iVar9 = 0;
-      dVar19 = dVar17;
+  __savegprlr_15(param_1);
+  pSVar3 = (ScreenPlacement *)__savefpr_25();
+  pcVar5 = (char *)0x40;
+  iVar4 = SND_GetSoundEqOverlay(local_7d0,0x40);
+  if (0 < iVar4) {
+    dVar20 = 10.0;
+    dVar18 = 0.0;
+    CG_DrawStringExt(pSVar3,0.0,0.0,pcVar5,in_r5,-0x7dfec6c8,-0x7de7e748,10.0,0);
+    iVar11 = 0;
+    if (0 < iVar4) {
+      dVar16 = 100.0;
+      dVar17 = 340.0;
+      dVar19 = 20.0;
+      iVar12 = 0;
+      iVar13 = 0;
+      dVar22 = dVar20;
       do {
-        cVar6 = CG_SounsdEqAnyEnabled
-                          (*(undefined8 *)((int)local_7d0 + iVar8),
-                           *(undefined8 *)((int)local_7d0 + iVar8 + 8),
-                           *(undefined8 *)((int)local_7d0 + iVar8 + 0x10),
-                           (ulonglong)*(uint *)((int)local_7b8 + iVar8) << 0x20);
-        if (cVar6 != '\0') {
-          uVar4 = SND_GetEntChannelName(lVar7);
-          va(0xffffffff82000f98,uVar4);
-          CG_DrawStringExt(uVar15,dVar19,dVar17,uVar3);
-          dVar19 = (double)(float)(dVar19 + dVar17);
-          iVar10 = 0;
+        pfVar9 = (float *)*(undefined8 *)((int)local_7d0[0].params[1] + iVar12 + 4);
+        sVar2.params[0][0] = (SndEqParams *)in_stack_fffff7d8._0_4_;
+        sVar2.params[0][1] = (SndEqParams *)in_stack_fffff7d8._4_4_;
+        sVar2.params[0][2] = (SndEqParams *)in_stack_fffff7d8._8_4_;
+        sVar2.params[1][0] = (SndEqParams *)in_stack_fffff7d8._12_4_;
+        sVar2.params[1]._4_8_ = in_stack_fffff7e8;
+        sVar2.lerp = in_stack_fffff7f0;
+        bVar8 = CG_SounsdEqAnyEnabled(sVar2);
+        if (bVar8) {
+          pcVar5 = SND_GetEntChannelName(iVar11);
+          pcVar6 = va("%s");
+          CG_DrawStringExt(pSVar3,(float)dVar18,(float)dVar22,pcVar5,pfVar9,(int)pcVar6,-0x7de7e748,
+                           (float)dVar20,0);
+          dVar22 = (double)(float)(dVar22 + dVar20);
+          iVar14 = 0;
           do {
-            bVar2 = false;
-            lVar11 = 0;
-            iVar12 = 0;
-            dVar18 = dVar16;
+            pcVar5 = (char *)0x0;
+            iVar15 = 0;
+            dVar21 = dVar19;
+            pfVar9 = (float *)0x0;
             do {
-              piVar1 = *(int **)((int)local_7d0 + (iVar9 + iVar12 + iVar10) * 4);
-              va(0xffffffff820138ec,lVar11,iVar10,(&PTR_s_lowpass_829a6558)[*piVar1],
-                 (double)(float)piVar1[2],(double)(float)piVar1[1],(double)(float)piVar1[3]);
-              if ((bVar2) || (bVar2 = false, *(char *)(piVar1 + 4) != '\0')) {
-                bVar2 = true;
+              pfVar10 = pfVar9;
+              pSVar1 = local_7d0[0].params[0][iVar13 + iVar15 + iVar14];
+              pcVar6 = pcVar5;
+              pcVar7 = va("eqIndex: %1i band: %1i filter: %-8s %6.2f Hz %2.2f dB q: %2.2f");
+              if ((pfVar10 != (float *)0x0) || (pfVar9 = (float *)0x0, pSVar1->enabled != false)) {
+                pfVar9 = (float *)0x1;
               }
-              if (*(char *)(piVar1 + 4) != '\0') {
-                CG_DrawStringExt((double)(float)(dVar18 + dVar16),dVar19,dVar17,uVar3);
+              if (pSVar1->enabled != false) {
+                CG_DrawStringExt(pSVar3,(float)(dVar21 + dVar19),(float)dVar22,pcVar6,pfVar10,
+                                 (int)pcVar7,-0x7de7e748,(float)dVar20,0);
               }
-              iVar12 = iVar12 + 3;
-              dVar18 = (double)(float)(dVar18 + dVar14);
-              lVar11 = lVar11 + 1;
-            } while (iVar12 < 6);
-            if (bVar2) {
-              va(0xffffffff8201392c,
-                 (double)(float)((double)*(float *)((int)local_7b8 + iVar8) * dVar13));
-              CG_DrawStringExt(uVar15,dVar19,dVar17,uVar3);
-              dVar19 = (double)(float)(dVar19 + dVar17);
+              iVar15 = iVar15 + 3;
+              dVar21 = (double)(float)(dVar21 + dVar17);
+              pcVar5 = pcVar5 + 1;
+            } while (iVar15 < 6);
+            if (pfVar9 != (float *)0x0) {
+              in_stack_fffff7e8 =
+                   (double)(float)((double)*(float *)((int)(local_7d0[0].params + 2) + iVar12) *
+                                  dVar16);
+              pcVar6 = SUB84(in_stack_fffff7e8,0);
+              pcVar5 = va("%.2f%%");
+              CG_DrawStringExt(pSVar3,(float)dVar18,(float)dVar22,pcVar6,pfVar10,(int)pcVar5,
+                               -0x7de7e7c8,(float)dVar20,0);
+              dVar22 = (double)(float)(dVar22 + dVar20);
             }
-            iVar10 = iVar10 + 1;
-          } while (iVar10 < 3);
+            iVar14 = iVar14 + 1;
+          } while (iVar14 < 3);
         }
-        lVar7 = lVar7 + 1;
-        iVar9 = iVar9 + 7;
-        iVar8 = iVar8 + 0x1c;
-      } while ((int)lVar7 < iVar5);
+        iVar11 = iVar11 + 1;
+        iVar13 = iVar13 + 7;
+        iVar12 = iVar12 + 0x1c;
+      } while (iVar11 < iVar4);
     }
   }
   __restfpr_25();
@@ -1162,147 +964,65 @@ void CG_DrawSoundEqOverlay(void)
 
 
 // 822B6110  CG_DrawSoundOverlay  (cgame/cg_draw_debug.cpp:1341)
-
-void CG_DrawSoundOverlay(void)
-
-{
-  float fVar1;
-  bool bVar2;
-  undefined8 uVar3;
-  int iVar6;
-  undefined8 uVar4;
-  undefined8 uVar5;
-  int iVar7;
-  longlong lVar8;
-  int *piVar9;
-  double dVar10;
-  double dVar11;
-  double dVar12;
-  double dVar13;
-  double dVar14;
-  double dVar15;
-  double dVar16;
-  byte local_4a20 [4];
-  undefined4 local_4a1c;
-  float local_4a18 [2];
-  undefined1 auStack_4a10 [64];
-  undefined1 local_49d0 [284];
-  int aiStack_48b4 [4653];
-  
-  __savegprlr();
-  uVar3 = __savefpr_26();
-  iVar7 = *(int *)(DAT_82a3d5a4 + 0xc);
-  iVar6 = SND_GetSoundOverlay(iVar7,local_49d0,0x40,&local_4a1c,local_4a20,local_4a18);
-  if (0 < iVar6) {
-    if ((iVar7 < 4) || (bVar2 = true, 6 < iVar7)) {
-      bVar2 = false;
-    }
-    uVar4 = Dvar_GetInt(0xffffffff82013aa0);
-    uVar5 = va(0xffffffff82013a7c,*(undefined4 *)(*(int *)(DAT_82a3d5a4 + 0x40) + iVar7 * 4));
-    dVar15 = 0.0;
-    dVar14 = 12.0;
-    CG_DrawStringExt(0,0,0x4028000000000000,uVar3,0xffffffff82000000,0xffffffff82000000,uVar5,
-                     0xffffffff821818b8,0,1);
-    va(0xffffffff82013a4c,local_4a1c,uVar4,local_4a20[0],(double)local_4a18[0]);
-    CG_DrawStringExt(dVar15,dVar14,dVar14,uVar3);
-    lVar8 = 0;
-    fVar1 = 24.0;
-    if (0 < iVar6) {
-      dVar11 = 1.0;
-      piVar9 = aiStack_48b4;
-      do {
-        dVar13 = (double)fVar1;
-        if (*(char *)(piVar9 + -0x47) == '\0') {
-          va(0xffffffff8201230c,lVar8);
-        }
-        else {
-          uVar4 = 0xffffffff82013950;
-          if (*(byte *)(piVar9 + -1) < local_4a20[0]) {
-            uVar4 = 0xffffffff82013954;
-          }
-          uVar5 = 0xffffffff82013958;
-          if (*(char *)((int)piVar9 + -3) == '\0') {
-            uVar5 = 0xffffffff8201394c;
-          }
-          if (bVar2) {
-            uVar4 = SND_GetVolModName(*piVar9);
-            Com_sprintf(auStack_4a10,0x40,0xffffffff82000f98,uVar4);
-            dVar10 = (double)(float)piVar9[-3];
-            dVar12 = (double)(float)(&DAT_8488cba0)[*piVar9 * 3];
-            dVar16 = dVar11;
-            if (dVar15 < dVar10) {
-              dVar16 = (double)(float)((double)(float)piVar9[-2] * dVar10 +
-                                      (double)(float)(dVar11 - dVar10));
-            }
-            iVar7 = SND_GetEntChannelFromName(piVar9 + -0x17);
-            dVar10 = (double)*(float *)(iVar7 * 0xc + DAT_84886910);
-            va((double)(float)piVar9[-7],dVar10,dVar12,(double)(float)(&DAT_848859fc)[iVar7 * 3],
-               dVar16,0xffffffff82013960,lVar8,uVar5,piVar9 + -0x17,auStack_4a10,piVar9 + -0x27,
-               (double)(float)piVar9[-7],dVar10);
-          }
-          else {
-            va(0xffffffff820139e8,lVar8,uVar5,piVar9 + -0x17,piVar9 + -0x27,piVar9 + -0x47,uVar4);
-          }
-        }
-        CG_DrawStringExt(dVar15,dVar13,dVar14,uVar3);
-        lVar8 = lVar8 + 1;
-        fVar1 = (float)(dVar13 + dVar14);
-        piVar9 = piVar9 + 0x49;
-      } while ((int)lVar8 < iVar6);
-    }
-  }
-  __restfpr_26();
-  __restgprlr();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 822B6480  CG_DrawPerformanceWarnings  (cgame/cg_draw_debug.cpp:1478)
 
-void CG_DrawPerformanceWarnings(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void CG_DrawPerformanceWarnings(LocalClientNum_t param_1)
 
 {
   double dVar1;
-  undefined8 uVar2;
+  LocalClientNum_t LVar2;
   int iVar3;
-  int iVar4;
-  int iVar5;
-  double dVar6;
-  double dVar7;
+  ScreenPlacement *pSVar4;
+  longlong lVar5;
+  int in_r5;
+  float *in_r6;
+  Material *in_r7;
+  int iVar6;
+  int iVar7;
   double dVar8;
   double dVar9;
   double dVar10;
   double dVar11;
+  double dVar12;
+  double dVar13;
   int local_60;
-  int local_5c [23];
+  statmonitor_s *local_5c [23];
   
-  __savegprlr_28();
-  uVar2 = __savefpr_26();
+  __savegprlr_28(param_1);
+  LVar2 = __savefpr_26();
   iVar3 = Sys_Milliseconds();
-  StatMon_GetStatsArray(local_5c,&local_60);
-  uVar2 = ScrPlace_GetActivePlacement(uVar2);
-  iVar4 = 0;
-  dVar7 = 2.0;
-  dVar10 = 200.0;
+  lVar5 = ZEXT48(&stack0x00000000) - 0x60;
+  StatMon_GetStatsArray(local_5c,(int *)lVar5);
+  pSVar4 = ScrPlace_GetActivePlacement(LVar2);
+  iVar6 = 0;
+  dVar9 = 2.0;
+  dVar12 = 200.0;
   if (0 < local_60) {
-    iVar5 = 0;
-    dVar6 = 68.0;
-    dVar8 = 34.0;
-    dVar9 = 32.0;
-    dVar11 = dVar7;
+    iVar7 = 0;
+    dVar8 = 68.0;
+    dVar10 = 34.0;
+    dVar11 = 32.0;
+    dVar13 = dVar9;
     do {
-      if (iVar3 <= *(int *)(iVar5 + local_5c[0])) {
-        UI_DrawHandlePic(dVar11,dVar10,dVar9,dVar9,uVar2);
+      if (iVar3 <= *(int *)((int)&local_5c[0]->endtime + iVar7)) {
+        UI_DrawHandlePic(pSVar4,(float)dVar13,(float)dVar12,(float)dVar11,(float)dVar11,(int)lVar5,
+                         in_r5,in_r6,in_r7);
       }
-      dVar1 = dVar11 + dVar8;
-      dVar11 = (double)(float)dVar1;
-      if (dVar6 < (double)(float)((double)(float)dVar1 + dVar9)) {
-        dVar10 = (double)(float)(dVar10 + dVar8);
-        dVar11 = dVar7;
+      dVar1 = dVar13 + dVar10;
+      dVar13 = (double)(float)dVar1;
+      if (dVar8 < (double)(float)((double)(float)dVar1 + dVar11)) {
+        dVar12 = (double)(float)(dVar12 + dVar10);
+        dVar13 = dVar9;
       }
-      iVar4 = iVar4 + 1;
-      iVar5 = iVar5 + 8;
-    } while (iVar4 < local_60);
+      iVar6 = iVar6 + 1;
+      iVar7 = iVar7 + 8;
+    } while (iVar6 < local_60);
   }
   __restfpr_26();
   __restgprlr_28();
@@ -1311,87 +1031,20 @@ void CG_DrawPerformanceWarnings(void)
 
 
 // 822B6578  CG_DrawMaterialInternal  (cgame/cg_draw_debug.cpp:1513)
-
-void CG_DrawMaterialInternal(undefined8 param_1,ulonglong param_2)
-
-{
-  undefined8 uVar1;
-  char *pcVar3;
-  longlong lVar2;
-  int iVar4;
-  undefined8 uVar5;
-  double dVar6;
-  undefined8 uVar7;
-  undefined1 auStack_b0 [8];
-  longlong local_a8;
-  undefined4 local_a0;
-  undefined4 local_9c;
-  undefined4 local_98;
-  undefined4 local_90;
-  undefined4 local_8c;
-  undefined4 local_88;
-  undefined1 auStack_80 [16];
-  int local_70 [28];
-  
-  uVar1 = __savegprlr_25();
-  local_70[3] = 0x2810011;
-  local_70[0] = 0;
-  local_70[1] = 1;
-  local_70[2] = 0x2806831;
-  local_70[4] = 0x2807821;
-  LargeLocal__LargeLocal(auStack_b0,0x3000);
-  pcVar3 = (char *)LargeLocal__GetBuf(auStack_b0);
-  local_90 = 0xbf800000;
-  local_8c = 0xbf800000;
-  local_88 = 0xbf800000;
-  local_a0 = 0x3f800000;
-  local_9c = 0x3f800000;
-  local_98 = 0x3f800000;
-  if ((int)param_2 == 0) {
-    MyAssertHandler(0xffffffff82013490,0x605,0,0xffffffff82000f98,0xffffffff82013b04);
-  }
-  else if (4 < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82013490,0x606,0,0xffffffff82013ab8,param_2,5);
-  }
-  lVar2 = CG_GetLocalClientGlobals(uVar1);
-  iVar4 = *(int *)((int)local_70 + (int)((param_2 & 0xffffffff) << 2));
-  iVar4 = R_PickMaterialFromRender
-                    (iVar4 != 0x2810011,iVar4,lVar2 + 0x6b9c8,lVar2 + 0x6b9d4,auStack_80,pcVar3,
-                     pcVar3 + 0x1000,pcVar3 + 0x2000);
-  if (iVar4 != 0) {
-    uVar1 = ScrPlace_GetActivePlacement(uVar1);
-    uVar5 = 0xffffffff821818b8;
-    dVar6 = 240.0;
-    uVar7 = 0x4020000000000000;
-    iVar4 = CG_DrawSmallDevStringColor(0x4020000000000000,0x406e000000000000);
-    local_a8 = (longlong)iVar4;
-    dVar6 = (double)(float)((double)local_a8 + dVar6);
-    iVar4 = CG_DrawSmallDevStringColor(uVar7,dVar6,uVar1);
-    local_a8 = (longlong)iVar4;
-    if (*pcVar3 == '\n') {
-      CG_DrawSmallDevStringColor(uVar7,(double)(float)((double)local_a8 + dVar6),uVar1);
-    }
-    else {
-      CG_DrawSmallDevStringColor(uVar7,(double)(float)((double)local_a8 + dVar6),uVar1);
-      uVar5 = 0xffffffff821817e8;
-    }
-    CL_AddDebugBox(lVar2 + 0x6b9d4,auStack_80,&local_90,&local_a0,uVar5,1,0,0);
-  }
-  LargeLocal___LargeLocal(auStack_b0);
-  __restgprlr_25();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 822B67C0  CG_DrawMaterial  (cgame/cg_draw_debug.cpp:1575)
 
-void CG_DrawMaterial(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CG_DrawMaterial(LocalClientNum_t param_1,int param_2)
 
 {
-  char cVar1;
+  bool bVar1;
   
-  cVar1 = Sys_IsMainThread();
-  if (cVar1 != '\0') {
+  bVar1 = Sys_IsMainThread();
+  if (bVar1) {
     CG_DrawMaterialInternal(param_1,param_2);
   }
   return;
@@ -1400,19 +1053,27 @@ void CG_DrawMaterial(undefined8 param_1,undefined8 param_2)
 
 // 822B6810  CG_DrawFxText  (cgame/cg_draw_debug.cpp:1609)
 
-void CG_DrawFxText(undefined8 param_1,ulonglong param_2,float *param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+void CG_DrawFxText(LocalClientNum_t param_1,char *param_2,float *param_3)
 
 {
-  undefined8 uVar1;
+  LocalClientNum_t LVar1;
+  ScreenPlacement *pSVar2;
+  ulonglong uVar3;
   
-  uVar1 = __savegprlr_29();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82013490,0x64d,0,0xffffffff82000f98,0xffffffff82013b1c);
+  uVar3 = (ulonglong)(int)param_2;
+  LVar1 = __savegprlr_29(param_1);
+  if ((uVar3 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_debug.cpp",0x64d
+                    ,0,"%s");
   }
-  uVar1 = ScrPlace_GetActivePlacement(uVar1);
-  CL_DrawText((double)*param_3,(double)param_3[1],(double)DAT_8296220c,uVar1,param_2,0x7fffffff,
-              DAT_82a39350,0x80,0xffffffff82a383d8,1,1);
-  param_3[1] = param_3[1] + DAT_82962208;
+  pSVar2 = ScrPlace_GetActivePlacement(LVar1);
+  CL_DrawText(pSVar2,(char *)uVar3,0x7fffffff,cgMedia.smallDevFont,*param_3,param_3[1],0x80,
+              -0x7d5c7c28,MY_TEXTSIZE,MY_TEXTSIZE,(float *)0x1,1);
+  param_3[1] = param_3[1] + FX_PROFILE_LINE_HEIGHT;
   __restgprlr_29();
   return;
 }
@@ -1420,292 +1081,219 @@ void CG_DrawFxText(undefined8 param_1,ulonglong param_2,float *param_3)
 
 // 822B68C8  CG_DrawFxProfile  (cgame/cg_draw_debug.cpp:1621)
 
-void CG_DrawFxProfile(undefined8 param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CG_DrawFxProfile(LocalClientNum_t param_1)
 
 {
-  undefined4 local_10;
-  undefined4 local_c;
+  float local_10;
+  float local_c;
   
-  local_10 = 0;
-  local_c = DAT_82962208;
-  FX_DrawProfile(param_1,0xffffffff822b6810,&local_10);
+  local_10 = 0.0;
+  local_c = FX_PROFILE_LINE_HEIGHT;
+  FX_DrawProfile(param_1,CG_DrawFxText,&local_10);
   return;
 }
 
 
 // 822B6910  CG_DrawFxMarkProfile  (cgame/cg_draw_debug.cpp:1630)
 
-void CG_DrawFxMarkProfile(undefined8 param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CG_DrawFxMarkProfile(LocalClientNum_t param_1)
 
 {
-  undefined4 local_10;
-  undefined4 local_c;
+  float local_10;
+  float local_c;
   
-  local_10 = 0;
-  local_c = DAT_82962208;
-  FX_DrawMarkProfile(param_1,0xffffffff822b6810,&local_10);
+  local_10 = 0.0;
+  local_c = FX_PROFILE_LINE_HEIGHT;
+  FX_DrawMarkProfile(param_1,CG_DrawFxText,&local_10);
   return;
 }
 
 
 // 822B6958  CG_DrawDebugPlayerHealth  (cgame/cg_draw_debug.cpp:1641)
-
-void CG_DrawDebugPlayerHealth(void)
-
-{
-  undefined8 uVar1;
-  int iVar2;
-  double dVar3;
-  double dVar4;
-  double dVar5;
-  double dVar6;
-  undefined8 uVar7;
-  undefined8 uVar8;
-  
-  __savegprlr_29();
-  uVar1 = __savefpr_27();
-  if (*(char *)(DAT_829c4034 + 0xc) == '\0') {
-    MyAssertHandler(0xffffffff82013490,0x66e,0,0xffffffff82000f98,0xffffffff82013b24);
-  }
-  iVar2 = CG_GetLocalClientGlobals(uVar1);
-  dVar6 = 1.0;
-  if ((*(int *)(iVar2 + 0x19c) == 0) || (*(int *)(iVar2 + 0x1a4) == 0)) {
-    dVar4 = 0.0;
-  }
-  else {
-    dVar3 = (double)((float)(longlong)*(int *)(iVar2 + 0x19c) /
-                    (float)(longlong)*(int *)(iVar2 + 0x1a4));
-    dVar5 = dVar6;
-    if ((float)(dVar3 - 1.0) < 0.0) {
-      dVar5 = dVar3;
-    }
-    dVar4 = 0.0;
-    if (-dVar3 < 0.0) {
-      dVar4 = dVar5;
-    }
-  }
-  uVar8 = 0;
-  ScrPlace_GetActivePlacement(uVar1);
-  uVar7 = 0x4024000000000000;
-  dVar5 = 100.0;
-  CL_DrawStretchPic(0x4024000000000000,0x4024000000000000,0x4059000000000000,0x4024000000000000,
-                    uVar8,uVar8,dVar6,dVar6);
-  ScrPlace_GetActivePlacement(uVar1);
-  CL_DrawStretchPic(uVar7,uVar7,(double)(float)(dVar4 * dVar5),uVar7,uVar8,uVar8,dVar4,dVar6);
-  __restfpr_27();
-  __restgprlr_29();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 822B6AF8  CG_DrawNetFieldString  (cgame/cg_draw_debug.cpp:1671)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
 void CG_DrawNetFieldString
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-               undefined8 param_5)
+               (LocalClientNum_t param_1,char *param_2,float param_3,float param_4,float param_5,
+               float *param_6)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
-  undefined8 uVar3;
+  LocalClientNum_t LVar1;
+  ScreenPlacement *pSVar2;
+  Font_s *pFVar3;
+  longlong lVar4;
+  int in_r7;
+  int in_r8;
+  double extraout_f1;
+  double dVar5;
+  double dVar6;
+  double dVar7;
   
-  uVar3 = __savegprlr_29();
-  uVar1 = ScrPlace_GetActivePlacement();
-  uVar2 = UI_GetFontHandle(param_3,uVar1,0);
-  UI_DrawText(uVar3,param_2,param_3,uVar1,param_5,0x7fffffff,uVar2);
+  dVar6 = (double)param_5;
+  dVar5 = (double)param_4;
+  lVar4 = (longlong)(int)param_2;
+  LVar1 = __savegprlr_29((double)param_3,param_1,lVar4,param_6);
+  dVar7 = extraout_f1;
+  pSVar2 = ScrPlace_GetActivePlacement(LVar1);
+  pFVar3 = UI_GetFontHandle(pSVar2,0,(float)dVar6);
+  UI_DrawText(pSVar2,(char *)lVar4,0x7fffffff,pFVar3,(float)dVar7,(float)dVar5,in_r7,in_r8,
+              (float)dVar6,(float *)0x0,0);
   __restgprlr_29();
   return;
 }
 
 
 // 822B37E8  CG_GetLocalClientStaticGlobals  (cgame_mp/cg_local_mp.h:1678)
-
-longlong CG_GetLocalClientStaticGlobals(ulonglong param_1)
-
-{
-  undefined8 uVar1;
-  
-  if (3 < (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82001158,0x47f,0,0xffffffff820011a8,param_1,4);
-  }
-  if ((&DAT_82b3e4f3)[(int)param_1 * 0x1e4] == '\0') {
-    MyAssertHandler(0xffffffff820100f8,0x692,0,0xffffffff82000f98,0xffffffff82013318);
-  }
-  if ((ulonglong)DAT_82aa1ae8 <= (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff820100f8,0x695,0,0xffffffff8200d150,param_1);
-  }
-  if (DAT_82a383cc == 0) {
-    uVar1 = CL_GetLocalClientConnectionState(param_1);
-    uVar1 = va(0xffffffff820132c0,uVar1,param_1);
-    MyAssertHandler(0xffffffff820100f8,0x696,0,0xffffffff820011f4,0xffffffff820011fc,uVar1);
-  }
-  return param_1 * 0x4098 + (ulonglong)DAT_82a383b0;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure clientInfo_t
 
 // 822B6B88  CG_DrawNetFieldLine  (cgame/cg_draw_debug.cpp:1683)
-
-void CG_DrawNetFieldLine(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4
-                        ,double param_5,undefined8 param_6,undefined8 param_7)
-
-{
-  float fVar1;
-  undefined8 uVar2;
-  double dVar3;
-  double dVar4;
-  double dVar5;
-  double dVar6;
-  double dVar7;
-  double dVar8;
-  double dVar9;
-  double dVar10;
-  double dVar11;
-  
-  uVar2 = __savefpr_25();
-  dVar3 = (double)ScrPlace_ApplyXWithoutSplitScreenScaling(uVar2,param_7,0);
-  dVar4 = (double)ScrPlace_ApplyYWithoutSplitScreenScaling(param_2,uVar2,param_7,0);
-  dVar5 = (double)ScrPlace_ApplyXWithoutSplitScreenScaling(param_3,uVar2,param_7,0);
-  dVar6 = (double)ScrPlace_ApplyYWithoutSplitScreenScaling(param_4,uVar2,param_7,0);
-  dVar7 = dVar3;
-  dVar9 = dVar5;
-  if (dVar3 <= dVar5) {
-    dVar7 = dVar5;
-    dVar9 = dVar3;
-  }
-  dVar10 = dVar6;
-  dVar8 = dVar4;
-  if (dVar4 <= dVar6) {
-    dVar10 = dVar4;
-    dVar8 = dVar6;
-  }
-  dVar3 = (double)(float)(dVar5 - dVar3);
-  dVar11 = 0.5;
-  dVar5 = (double)(float)((double)(float)(dVar7 - dVar9) * 0.5 + dVar9);
-  dVar9 = (double)(float)((double)(float)(dVar8 - dVar10) * 0.5 + dVar10);
-  dVar10 = (double)SQRT((float)(dVar6 - dVar4) * (float)(dVar6 - dVar4) + (float)(dVar3 * dVar3));
-  dVar7 = acos((double)(float)(dVar3 / dVar10));
-  fVar1 = (float)dVar7 * 57.295776;
-  if (dVar6 < dVar4) {
-    fVar1 = -fVar1;
-  }
-  for (; fVar1 < 0.0; fVar1 = fVar1 + 360.0) {
-  }
-  R_AddCmdDrawStretchPicRotateXY
-            (-(double)(float)(dVar10 * dVar11 - dVar5),-(double)(float)(param_5 * dVar11 - dVar9),
-             dVar10,param_5,0,0,0x3ff0000000000000);
-  __restfpr_25();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 822B3920  CG_GetLocalClientViewModelHand  (cgame_mp/cg_local_mp.h:1698)
 
-void CG_GetLocalClientViewModelHand(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+WeaponHand * CG_GetLocalClientViewModelHand(LocalClientNum_t param_1,int param_2)
 
 {
   ulonglong uVar1;
-  undefined8 uVar2;
+  WeaponHand *pWVar2;
+  ulonglong uVar3;
   
-  uVar1 = __savegprlr_28();
-  if (1 < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff820100f8,0x6a3,0,0xffffffff820133b8,param_2,2);
+  uVar3 = (ulonglong)param_2;
+  uVar1 = __savegprlr_28(param_1);
+  if (1 < (uVar3 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\../cgame_mp/cg_local_mp.h"
+                    ,0x6a3,0,"index doesn\'t index MAX_PLAYER_WEAPON_STATES\n\t%i not in [0, %i)");
   }
   if (3 < (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff820100f8,0x6a5,0,0xffffffff820011a8,uVar1,4);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\../cgame_mp/cg_local_mp.h"
+                    ,0x6a5,0,
+                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
   if ((uVar1 + (uVar1 & 0x3fffffff) * 4 & 0x1fffffff) == 0xfab8567) {
-    uVar2 = CL_GetLocalClientConnectionState(uVar1);
-    uVar2 = va(0xffffffff82013358,uVar2,uVar1);
-    MyAssertHandler(0xffffffff820100f8,0x6a6,0,0xffffffff820011f4,0xffffffff82013330,uVar2);
+    CL_GetLocalClientConnectionState((LocalClientNum_t)uVar1);
+    va(
+      "Trying to access unallocated cg_viewModelHand when connectionstate is %i for localClientNum %i"
+      );
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\../cgame_mp/cg_local_mp.h"
+                    ,0x6a6,0,"%s\n\t%s");
   }
-  param_2 = (uVar1 & 0x7fffffff) * 2 + param_2;
-  __restgprlr_28((param_2 + (param_2 & 0x3fffffff) * 4 & 0x3fffffff) * 4 + -0x7d5c2b38);
-  return;
+  uVar3 = (uVar1 & 0x7fffffff) * 2 + uVar3;
+  pWVar2 = (WeaponHand *)
+           __restgprlr_28((uVar3 + (uVar3 & 0x3fffffff) * 4 & 0x3fffffff) * 4 + -0x7d5c2b38);
+  return pWVar2;
 }
 
 
 // 822B6D08  CG_DrawNetFieldHistogram  (cgame/cg_draw_debug.cpp:1731)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
 void CG_DrawNetFieldHistogram
-               (undefined8 param_1,double param_2,undefined8 param_3,longlong param_4,
-               ulonglong param_5,undefined8 param_6)
+               (LocalClientNum_t param_1,uint *param_2,uint param_3,char *param_4,float param_5,
+               float param_6)
 
 {
   ulonglong uVar1;
-  undefined8 uVar2;
-  undefined8 uVar3;
-  undefined8 uVar4;
-  undefined8 uVar5;
+  LocalClientNum_t LVar2;
+  ScreenPlacement *pSVar3;
+  ScreenPlacement *pSVar4;
+  Font_s *pFVar5;
   longlong lVar6;
-  uint uVar7;
-  ulonglong uVar8;
-  double extraout_f1;
-  double dVar9;
-  undefined8 uVar10;
-  double dVar11;
-  double dVar12;
-  double dVar13;
-  undefined8 uVar14;
+  ulonglong uVar7;
+  undefined8 uVar8;
+  undefined8 uVar9;
+  longlong lVar10;
+  uint uVar11;
+  longlong lVar12;
+  ulonglong uVar13;
+  double dVar14;
   double dVar15;
   double dVar16;
   double dVar17;
+  double dVar18;
+  double dVar19;
+  double dVar20;
+  double dVar21;
+  double dVar22;
   char acStack_4b0 [1200];
   
-  __savegprlr_20();
-  uVar2 = __savefpr_24();
-  dVar16 = extraout_f1;
-  uVar3 = ScrPlace_GetActivePlacement();
-  sprintf(acStack_4b0,"%s     Average Bit Cost: %.2f (%.2f bytes)   Max Cost: %.2f (%.2f bytes)",
-          dVar16,(double)(float)(dVar16 * 0.125),param_2,param_6,dVar16,
-          (double)(float)(dVar16 * 0.125),param_2,(double)(float)(param_2 * 0.125));
-  dVar16 = 100.0;
-  CG_DrawNetFieldString(0x4059000000000000,0x4059000000000000,0x3fd8000000000000,uVar2,acStack_4b0);
-  uVar14 = 0x3ff8000000000000;
-  CG_DrawNetFieldLine(dVar16,0x4077200000000000,dVar16,0x4062c00000000000,0x3ff8000000000000,uVar3);
-  dVar12 = 350.0;
-  CG_DrawNetFieldLine(0x4054000000000000,0x4075e00000000000,0x4084500000000000,0x4075e00000000000,
-                      uVar14,uVar3);
-  uVar7 = 1;
-  lVar6 = param_4;
-  uVar8 = param_5;
-  uVar1 = param_5 & 0xffffffff;
+  uVar7 = (ulonglong)(int)param_3;
+  lVar12 = (longlong)(int)param_2;
+  __savegprlr_20((double)param_5,param_1);
+  LVar2 = __savefpr_24();
+  pSVar3 = ScrPlace_GetActivePlacement(LVar2);
+  sprintf(acStack_4b0,"%s     Average Bit Cost: %.2f (%.2f bytes)   Max Cost: %.2f (%.2f bytes)");
+  dVar21 = 100.0;
+  CG_DrawNetFieldString(LVar2,acStack_4b0,100.0,100.0,0.375,(float *)param_4);
+  lVar6 = -0x7dff0000;
+  dVar19 = 1.5;
+  CG_DrawNetFieldLine(pSVar3,(float)dVar21,370.0,(float)dVar21,150.0,1.5,(float *)0x82010000);
+  dVar17 = 350.0;
+  CG_DrawNetFieldLine(pSVar3,80.0,350.0,650.0,350.0,(float)dVar19,(float *)lVar6);
+  uVar11 = 1;
+  lVar10 = lVar12;
+  uVar13 = uVar7;
+  uVar1 = uVar7 & 0xffffffff;
   while (uVar1 != 0) {
-    if (uVar7 < *(uint *)lVar6) {
-      uVar7 = *(uint *)lVar6;
+    if (uVar11 < *(uint *)lVar10) {
+      uVar11 = *(uint *)lVar10;
     }
-    lVar6 = lVar6 + 4;
-    uVar8 = uVar8 - 1;
-    uVar1 = uVar8;
+    lVar10 = lVar10 + 4;
+    uVar13 = uVar13 - 1;
+    uVar1 = uVar13;
   }
-  uVar8 = 0;
-  dVar11 = (double)(200.0 / (float)uVar7);
-  dVar9 = (double)(550.0 / (float)(param_5 & 0xffffffff));
-  dVar13 = -(double)(float)((double)*(uint *)param_4 * dVar11 - dVar12);
-  if ((param_5 & 0xffffffff) != 0) {
-    uVar10 = 0x3fd2aaaaa0000000;
-    uVar14 = 0x3ff0000000000000;
+  uVar13 = 0;
+  dVar16 = (double)(200.0 / (float)uVar11);
+  dVar19 = (double)(550.0 / (float)(uVar7 & 0xffffffff));
+  dVar18 = -(double)(float)((double)*(uint *)lVar12 * dVar16 - dVar17);
+  if ((uVar7 & 0xffffffff) != 0) {
+    uVar8 = 0xffffffff82000000;
+    dVar15 = 0.2916666567325592;
+    uVar9 = 0xffffffff82180000;
+    dVar14 = 1.0;
     do {
-      dVar15 = (double)(float)(dVar16 + dVar9);
-      dVar17 = -(double)(float)((double)*(uint *)param_4 * dVar11 - dVar12);
-      CG_DrawNetFieldLine(dVar16,dVar13,dVar15,dVar17,uVar14,uVar3);
-      dVar16 = dVar15;
-      if (dVar17 < dVar13) {
-        sprintf(acStack_4b0,"%d",uVar8);
-        uVar4 = ScrPlace_GetActivePlacement(uVar2);
-        uVar5 = UI_GetFontHandle(uVar10,uVar4,0);
-        UI_DrawText(dVar15,dVar17,uVar10,uVar4,acStack_4b0,0x7fffffff,uVar5);
-        dVar16 = dVar15;
+      dVar20 = (double)(float)(dVar21 + dVar19);
+      dVar22 = -(double)(float)((double)*(uint *)lVar12 * dVar16 - dVar17);
+      CG_DrawNetFieldLine(pSVar3,(float)dVar21,(float)dVar18,(float)(dVar21 + dVar19),(float)dVar22,
+                          (float)dVar14,(float *)lVar6);
+      dVar21 = dVar20;
+      if (dVar22 < dVar18) {
+        sprintf(acStack_4b0,"%d");
+        pSVar4 = ScrPlace_GetActivePlacement(LVar2);
+        pFVar5 = UI_GetFontHandle(pSVar4,0,(float)dVar15);
+        lVar6 = ZEXT48(&stack0x00000000) - 0x4b0;
+        UI_DrawText(pSVar4,(char *)lVar6,0x7fffffff,pFVar5,(float)dVar20,(float)dVar22,(int)uVar8,
+                    (int)uVar9,(float)dVar15,(float *)0x0,0);
+        dVar21 = dVar20;
       }
-      if ((dVar17 == dVar12) && (dVar13 != dVar12)) {
-        sprintf(acStack_4b0,"%d",uVar8);
-        uVar4 = ScrPlace_GetActivePlacement(uVar2);
-        uVar5 = UI_GetFontHandle(uVar10,uVar4,0);
-        UI_DrawText(dVar16,dVar17,uVar10,uVar4,acStack_4b0,0x7fffffff,uVar5);
+      if ((dVar22 == dVar17) && (dVar18 != dVar17)) {
+        sprintf(acStack_4b0,"%d");
+        pSVar4 = ScrPlace_GetActivePlacement(LVar2);
+        pFVar5 = UI_GetFontHandle(pSVar4,0,(float)dVar15);
+        lVar6 = ZEXT48(&stack0x00000000) - 0x4b0;
+        UI_DrawText(pSVar4,(char *)lVar6,0x7fffffff,pFVar5,(float)dVar21,(float)dVar22,(int)uVar8,
+                    (int)uVar9,(float)dVar15,(float *)0x0,0);
       }
-      dVar13 = dVar17;
-      uVar8 = uVar8 + 1;
-      param_4 = param_4 + 4;
-    } while ((uVar8 & 0xffffffff) < (param_5 & 0xffffffff));
+      dVar18 = dVar22;
+      uVar13 = uVar13 + 1;
+      lVar12 = lVar12 + 4;
+    } while ((uVar13 & 0xffffffff) < (uVar7 & 0xffffffff));
   }
   __restfpr_24();
   __restgprlr_20();
@@ -1715,165 +1303,184 @@ void CG_DrawNetFieldHistogram
 
 // 822B7018  CG_DrawDebugBones  (cgame/cg_draw_debug.cpp:1793)
 
-void CG_DrawDebugBones(undefined8 param_1,ulonglong param_2,undefined8 param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+void CG_DrawDebugBones(LocalClientNum_t param_1,bool param_2,int param_3)
 
 {
   float fVar1;
   float fVar2;
   float fVar3;
-  float fVar4;
-  undefined8 uVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  int iVar8;
+  LocalClientNum_t LVar4;
+  DObj *pDVar5;
+  cpose_t *pcVar6;
+  int iVar7;
+  XModel *pXVar8;
   int iVar9;
-  int iVar10;
-  char *_Str1;
-  int iVar11;
-  longlong lVar12;
-  int iVar13;
-  longlong lVar14;
-  int iVar15;
+  char *pcVar10;
+  ulonglong uVar11;
+  char *pcVar12;
+  float *pfVar13;
+  char *pcVar14;
+  float (*pafVar15) [3];
   int iVar16;
-  longlong lVar17;
-  longlong lVar18;
-  double dVar19;
-  double dVar20;
+  int iVar17;
+  int iVar18;
+  int iVar19;
+  longlong lVar20;
   double dVar21;
   double dVar22;
   double dVar23;
+  double dVar24;
+  double dVar25;
+  float fVar26;
   float local_1c0;
   float local_1bc;
   float local_1b8;
-  undefined1 auStack_1b0 [16];
+  float afStack_1b0 [4];
   float local_1a0;
   float local_19c;
   float local_198;
   float local_190;
   float local_18c;
   float local_188;
-  undefined1 auStack_180 [16];
-  undefined1 auStack_170 [16];
-  undefined1 auStack_160 [48];
-  undefined1 auStack_130 [48];
-  undefined1 auStack_100 [48];
-  undefined1 auStack_d0 [208];
+  float afStack_180 [4];
+  float afStack_170 [4];
+  float afStack_160 [12];
+  float afStack_130 [12];
+  float afStack_100 [12];
+  float afStack_d0 [52];
   
-  uVar5 = __savegprlr_15();
-  uVar6 = Com_GetClientDObj(param_3,uVar5);
-  if ((uVar6 & 0xffffffff) != 0) {
-    uVar7 = CG_GetPose(uVar5,param_3);
-    if ((uVar7 & 0xffffffff) == 0) {
-      MyAssertHandler(0xffffffff82013490,0x729,0,0xffffffff82000f98,0xffffffff82013bec);
+  uVar11 = (ulonglong)param_2;
+  LVar4 = __savegprlr_15(param_1);
+  pDVar5 = Com_GetClientDObj(param_3,LVar4);
+  if (pDVar5 != (DObj *)0x0) {
+    pcVar6 = CG_GetPose(LVar4,param_3);
+    if (pcVar6 == (cpose_t *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_debug.cpp",
+                      0x729,0,"%s");
     }
-    iVar8 = DObjGetNumModels(uVar6);
-    if (iVar8 < 1) {
-      MyAssertHandler(0xffffffff82013490,0x72c,0,0xffffffff82000f98,0xffffffff82013bdc);
+    iVar7 = DObjGetNumModels(pDVar5);
+    if (iVar7 < 1) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_debug.cpp",
+                      0x72c,0,"%s");
     }
-    dVar20 = (double)DObjGetRadius(uVar6);
-    if (10.0 <= dVar20) {
-      fVar2 = (float)(dVar20 * 0.0017500000540167093);
+    fVar26 = DObjGetRadius(pDVar5);
+    if (10.0 <= fVar26) {
+      fVar26 = fVar26 * 0.00175;
     }
     else {
-      fVar2 = 0.05;
+      fVar26 = 0.05;
     }
-    dVar22 = (double)fVar2;
-    iVar13 = 0;
-    lVar12 = 0;
-    lVar14 = 0;
-    dVar20 = 0.8191519975662231;
-    if (0 < iVar8) {
-      dVar23 = 1.0;
+    dVar23 = (double)fVar26;
+    pcVar14 = (char *)0x0;
+    iVar16 = 0;
+    iVar17 = 0;
+    dVar25 = 0.8191519975662231;
+    if (0 < iVar7) {
+      dVar24 = 1.0;
       do {
-        iVar9 = DObjGetModel(uVar6,lVar14);
-        iVar10 = XModelNumBones();
-        iVar15 = 0;
-        if (0 < iVar10) {
-          iVar16 = 0;
+        pXVar8 = DObjGetModel(pDVar5,iVar17);
+        iVar9 = XModelNumBones(pXVar8);
+        pcVar12 = (char *)0x0;
+        if (0 < iVar9) {
+          iVar18 = 0;
           do {
-            _Str1 = (char *)SL_ConvertToString(*(undefined2 *)(*(int *)(iVar9 + 0x24) + iVar16));
-            CG_DObjGetWorldBoneMatrix(uVar7,uVar6,iVar15,auStack_160,&local_1c0);
-            if (((0 < *(int *)(DAT_82a3d5e8 + 0xc)) &&
-                (iVar11 = strncmp(_Str1,"tag_",4), iVar11 == 0)) ||
-               (0 < *(int *)(DAT_82a382ec + 0xc))) {
-              CL_AddOrientedDebugStar(dVar22,&local_1c0,auStack_160,0xffffffff821817f8);
-              CL_GetViewForward(uVar5,&local_190);
-              CL_GetViewPos(uVar5,&local_1a0);
-              fVar2 = local_1bc - local_19c;
-              fVar3 = local_1b8 - local_198;
-              fVar4 = local_1c0 - local_1a0;
-              dVar21 = (double)SQRT(fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2);
-              dVar19 = dVar23;
-              if (-dVar21 < 0.0) {
-                dVar19 = dVar21;
+            pcVar10 = SL_ConvertToString((uint)*(ushort *)((int)pXVar8->boneNames + iVar18));
+            pafVar15 = (float (*) [3])afStack_160;
+            CG_DObjGetWorldBoneMatrix(pcVar6,pDVar5,(int)pcVar12,pafVar15,&local_1c0);
+            if (((0 < (cg_drawDebugTags->current).integer) && (strncmp(), pcVar10 == (char *)0x0))
+               || (0 < (cg_drawDebugBones->current).integer)) {
+              CL_AddOrientedDebugStar
+                        (&local_1c0,(float (*) [3])afStack_160,colorGreen,(float)dVar23,
+                         (int)pafVar15,0);
+              CL_GetViewForward(LVar4,&local_190);
+              CL_GetViewPos(LVar4,&local_1a0);
+              fVar26 = local_1bc - local_19c;
+              fVar2 = local_1b8 - local_198;
+              fVar3 = local_1c0 - local_1a0;
+              dVar22 = (double)SQRT(fVar3 * fVar3 + fVar2 * fVar2 + fVar26 * fVar26);
+              dVar21 = dVar24;
+              if (-dVar22 < 0.0) {
+                dVar21 = dVar22;
               }
-              fVar1 = (float)(dVar23 / dVar19);
-              dVar19 = (double)(local_188 * fVar3 * fVar1 +
-                               local_18c * fVar2 * fVar1 + local_190 * fVar1 * fVar4);
-              if (dVar20 < dVar19) {
-                lVar12 = lVar14;
-                dVar20 = dVar19;
-                iVar13 = iVar15;
+              fVar1 = (float)(dVar24 / dVar21);
+              dVar21 = (double)(local_188 * fVar2 * fVar1 +
+                               local_18c * fVar26 * fVar1 + local_190 * fVar1 * fVar3);
+              if (dVar25 < dVar21) {
+                dVar25 = dVar21;
+                iVar16 = iVar17;
+                pcVar14 = pcVar12;
               }
             }
-            iVar15 = iVar15 + 1;
-            iVar16 = iVar16 + 2;
-          } while (iVar15 < iVar10);
+            pcVar12 = pcVar12 + 1;
+            iVar18 = iVar18 + 2;
+          } while ((int)pcVar12 < iVar9);
         }
-        lVar14 = lVar14 + 1;
-      } while ((int)lVar14 < iVar8);
+        iVar17 = iVar17 + 1;
+      } while (iVar17 < iVar7);
     }
-    lVar14 = 0;
-    if (0 < iVar8) {
+    iVar17 = 0;
+    if (0 < iVar7) {
       do {
-        iVar9 = DObjGetModel(uVar6,lVar14);
-        iVar10 = XModelNumBones();
-        lVar18 = 0;
-        if (0 < iVar10) {
-          iVar15 = 0;
+        pXVar8 = DObjGetModel(pDVar5,iVar17);
+        iVar9 = XModelNumBones(pXVar8);
+        lVar20 = 0;
+        if (0 < iVar9) {
+          iVar18 = 0;
           do {
-            SL_ConvertToString(*(undefined2 *)(*(int *)(iVar9 + 0x24) + iVar15));
-            CG_DObjGetWorldBoneMatrix(uVar7,uVar6,lVar18,auStack_160,&local_1c0);
-            CG_DObjGetWorldBoneBindMatrix(uVar7,uVar6,lVar18,auStack_130,auStack_1b0);
-            if (*(int *)(iVar9 + 0x28) != 0) {
-              lVar17 = lVar18 - (ulonglong)
-                                *(byte *)((*(int *)(iVar9 + 0x28) - (uint)*(byte *)(iVar9 + 5)) +
-                                         (int)lVar18);
-              if ((-1 < lVar17) && ((int)lVar17 < (int)(uint)*(byte *)(iVar9 + 4))) {
-                CG_DObjGetWorldBoneMatrix(uVar7,uVar6,lVar17,auStack_100,auStack_180);
-                CG_DObjGetWorldBoneBindMatrix(uVar7,uVar6,lVar17,auStack_d0,auStack_170);
-                if (((int)lVar18 != iVar13) ||
-                   (uVar5 = 0xffffffff821817f8, (int)lVar14 != (int)lVar12)) {
-                  uVar5 = 0xffffffff821818b8;
-                }
-                CL_AddDebugLine(&local_1c0,auStack_180,uVar5,0,0,0);
-                if ((param_2 & 0xff) != 0) {
-                  CL_AddDebugLine(auStack_1b0,auStack_170,0xffffffff821817e8,0,0,0);
-                }
+            SL_ConvertToString((uint)*(ushort *)((int)pXVar8->boneNames + iVar18));
+            pcVar12 = (char *)lVar20;
+            CG_DObjGetWorldBoneMatrix
+                      (pcVar6,pDVar5,(int)pcVar12,(float (*) [3])afStack_160,&local_1c0);
+            CG_DObjGetWorldBoneBindMatrix
+                      (pcVar6,pDVar5,(int)pcVar12,(float (*) [3])afStack_130,afStack_1b0);
+            if (((pXVar8->parentList != (uchar *)0x0) &&
+                (-1 < (longlong)
+                      (lVar20 - (ulonglong)
+                                (byte)pcVar12[(int)pXVar8->parentList - (uint)pXVar8->numRootBones])
+                )) && (iVar19 = (int)(lVar20 - (ulonglong)
+                                               (byte)pcVar12[(int)pXVar8->parentList -
+                                                             (uint)pXVar8->numRootBones]),
+                      iVar19 < (int)(uint)pXVar8->numBones)) {
+              CG_DObjGetWorldBoneMatrix(pcVar6,pDVar5,iVar19,(float (*) [3])afStack_100,afStack_180)
+              ;
+              CG_DObjGetWorldBoneBindMatrix
+                        (pcVar6,pDVar5,iVar19,(float (*) [3])afStack_d0,afStack_170);
+              if ((pcVar12 != pcVar14) || (pfVar13 = colorGreen, iVar17 != iVar16)) {
+                pfVar13 = colorWhite;
+              }
+              CL_AddDebugLine(&local_1c0,afStack_180,pfVar13,0,0,0);
+              if ((uVar11 & 0xff) != 0) {
+                CL_AddDebugLine(afStack_1b0,afStack_170,colorRed,0,0,0);
               }
             }
-            lVar18 = lVar18 + 1;
-            iVar15 = iVar15 + 2;
-          } while ((int)lVar18 < iVar10);
+            lVar20 = lVar20 + 1;
+            iVar18 = iVar18 + 2;
+          } while ((int)lVar20 < iVar9);
         }
-        lVar14 = lVar14 + 1;
-      } while ((int)lVar14 < iVar8);
+        iVar17 = iVar17 + 1;
+      } while (iVar17 < iVar7);
     }
-    iVar8 = DObjGetModel(uVar6,lVar12);
-    SL_ConvertToString(*(undefined2 *)(*(int *)(iVar8 + 0x24) + iVar13 * 2));
-    CG_DObjGetWorldBoneMatrix(uVar7,uVar6,iVar13,auStack_160,&local_1c0);
-    CL_AddDebugString(dVar22,&local_1c0,0xffffffff821817f8);
-    if ((param_2 & 0xff) != 0) {
-      CG_DObjGetWorldBoneBindMatrix(uVar7,uVar6,iVar13,auStack_130,auStack_1b0);
-      CL_AddDebugString(dVar22,auStack_1b0,0xffffffff821817e8);
-      CL_AddDebugLine(&local_1c0,auStack_1b0,0xffffffff82181838,0,0,0);
+    pXVar8 = DObjGetModel(pDVar5,iVar16);
+    pcVar10 = SL_ConvertToString((uint)pXVar8->boneNames[(int)pcVar14]);
+    pcVar12 = pcVar14;
+    CG_DObjGetWorldBoneMatrix(pcVar6,pDVar5,(int)pcVar14,(float (*) [3])afStack_160,&local_1c0);
+    CL_AddDebugString(&local_1c0,colorGreen,(float)dVar23,pcVar12,(int)pcVar10,0);
+    if ((uVar11 & 0xff) != 0) {
+      CG_DObjGetWorldBoneBindMatrix
+                (pcVar6,pDVar5,(int)pcVar14,(float (*) [3])afStack_130,afStack_1b0);
+      CL_AddDebugString(afStack_1b0,colorRed,(float)dVar23,pcVar14,(int)pcVar10,0);
+      CL_AddDebugLine(&local_1c0,afStack_1b0,colorYellow,0,0,0);
     }
     __restgprlr_15();
     return;
   }
-  Com_Printf(uVar6,0xffffffff82013bf4,param_3);
-  Dvar_SetInt(DAT_82a3d5e8,0);
-  Dvar_SetInt(DAT_82a382ec,0);
+  Com_Printf(0,"Entity %i is not a dynamic object.\n");
+  Dvar_SetInt(cg_drawDebugTags,0);
+  Dvar_SetInt(cg_drawDebugBones,0);
   __restgprlr_15();
   return;
 }
@@ -1881,67 +1488,72 @@ void CG_DrawDebugBones(undefined8 param_1,ulonglong param_2,undefined8 param_3)
 
 // 822B74E0  CG_DrawDebugOverlays  (cgame/cg_draw_debug.cpp:1925)
 
-void CG_DrawDebugOverlays(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CG_DrawDebugOverlays(LocalClientNum_t param_1)
 
 {
-  int iVar1;
-  undefined8 uVar2;
-  char cVar5;
-  undefined8 uVar3;
-  undefined8 uVar4;
-  ulonglong uVar6;
-  undefined8 uVar7;
-  undefined8 uVar8;
+  uint uVar1;
+  LocalClientNum_t LVar2;
+  bool bVar5;
+  uint *puVar3;
+  uint uVar4;
+  int iVar6;
+  char *pcVar7;
+  double dVar8;
+  float fVar9;
   
-  uVar2 = __savegprlr_27();
-  iVar1 = *(int *)(DAT_82a3d594 + 0xc);
-  if (iVar1 == 0) {
-    if (*(char *)(DAT_82a3d450 + 0xc) != '\0') {
-      CG_DrawRumbleDebug(uVar2);
+  LVar2 = __savegprlr_27(param_1);
+  iVar6 = (cg_drawMaterial->current).integer;
+  if (iVar6 == 0) {
+    if ((cg_drawRumbleDebug->current).enabled != false) {
+      CG_DrawRumbleDebug(LVar2);
     }
-    if (*(char *)(DAT_829c4034 + 0xc) != '\0') {
-      CG_DrawDebugPlayerHealth(uVar2);
+    if ((player_debugHealth->current).enabled != false) {
+      CG_DrawDebugPlayerHealth(LVar2);
     }
-    AimAssist_DrawDebugOverlay(uVar2);
-    if (0 < *(int *)(DAT_8332cbbc + 0xc)) {
-      FX_DrawDebug3D((double)(longlong)*(int *)(DAT_8332cbbc + 0xc),uVar2);
+    AimAssist_DrawDebugOverlay(LVar2);
+    if (0 < (fx_debug3D->current).integer) {
+      FX_DrawDebug3D(LVar2,(float)(longlong)(fx_debug3D->current).integer);
     }
-    if ((0 < *(int *)(DAT_82a382ec + 0xc)) || (0 < *(int *)(DAT_82a3d5e8 + 0xc))) {
-      iVar1 = *(int *)(DAT_82a382ec + 0xc);
-      if (0 < *(int *)(DAT_82a3d5e8 + 0xc)) {
-        iVar1 = *(int *)(DAT_82a3d5e8 + 0xc);
+    if ((0 < (cg_drawDebugBones->current).integer) || (0 < (cg_drawDebugTags->current).integer)) {
+      iVar6 = (cg_drawDebugBones->current).integer;
+      if (0 < (cg_drawDebugTags->current).integer) {
+        iVar6 = (cg_drawDebugTags->current).integer;
       }
-      CG_DrawDebugBones(uVar2,*(undefined1 *)(DAT_82a383d0 + 0xc),iVar1);
+      CG_DrawDebugBones(LVar2,(cg_drawDebugBonesBind->current).enabled,iVar6);
     }
-    if (*(char *)(DAT_82a38368 + 0xc) != '\0') {
-      CG_DrawTriggerState(uVar2);
+    if ((cg_drawDebugClientTriggers->current).enabled != false) {
+      CG_DrawTriggerState(LVar2);
     }
-    if (*(char *)(DAT_82a3d448 + 0xc) != '\0') {
-      Dvar_SetBool(DAT_82a3d448,0);
+    if ((cg_resetHistograms->current).enabled != false) {
+      Dvar_SetBool(cg_resetHistograms,false);
       ResetNetFieldHistograms();
     }
-    if (*(char *)(DAT_82a38358 + 0xc) == '\0') {
-      iVar1 = *(int *)(DAT_82a3d4b0 + 0xc);
-      if (iVar1 < 0) goto LAB_822b76f0;
-      uVar3 = GetEntityStateHistogram(iVar1,*(undefined1 *)(DAT_82a3d59c + 0xc));
-      uVar4 = GetNumEntityStateFields(iVar1);
-      uVar7 = GetAveragePacketBitCost(iVar1,*(undefined1 *)(DAT_82a3d59c + 0xc));
-      uVar8 = GetMaxPacketBitCost(iVar1,*(undefined1 *)(DAT_82a3d59c + 0xc));
-      uVar6 = ZEXT48((&PTR_s_General_82962210)[iVar1]);
+    if ((cg_drawPlayerStateHistogram->current).enabled == false) {
+      uVar1 = (cg_drawEntityPacketHistogram->current).unsignedInt;
+      if ((int)uVar1 < 0) goto LAB_822b76f0;
+      puVar3 = GetEntityStateHistogram(uVar1,(cg_drawOnlyFirstEntityPacket->current).enabled);
+      uVar4 = GetNumEntityStateFields(uVar1);
+      fVar9 = GetAveragePacketBitCost(uVar1,(cg_drawOnlyFirstEntityPacket->current).enabled);
+      dVar8 = (double)fVar9;
+      fVar9 = GetMaxPacketBitCost(uVar1,(cg_drawOnlyFirstEntityPacket->current).enabled);
+      pcVar7 = netfieldnames[uVar1];
     }
     else {
-      uVar3 = GetPlayerStateHistogram();
+      puVar3 = GetPlayerStateHistogram();
       uVar4 = GetNumPlayerStateFields();
-      uVar7 = GetAveragePlayerStatePacketBitCost();
-      uVar8 = GetMaxPlayerStatePacketBitCost();
-      uVar6 = 0xffffffff82013c18;
+      fVar9 = GetAveragePlayerStatePacketBitCost();
+      dVar8 = (double)fVar9;
+      fVar9 = GetMaxPlayerStatePacketBitCost();
+      pcVar7 = "Player State";
     }
-    CG_DrawNetFieldHistogram(uVar7,uVar8,uVar2,uVar3,uVar4,uVar6);
+    CG_DrawNetFieldHistogram(LVar2,puVar3,uVar4,pcVar7,(float)dVar8,fVar9);
   }
   else {
-    cVar5 = Sys_IsMainThread();
-    if (cVar5 != '\0') {
-      CG_DrawMaterialInternal(uVar2,iVar1);
+    bVar5 = Sys_IsMainThread();
+    if (bVar5) {
+      CG_DrawMaterialInternal(LVar2,iVar6);
       __restgprlr_27();
       return;
     }
@@ -1954,235 +1566,125 @@ LAB_822b76f0:
 
 // 822B7700  CG_DrawFullScreenDebugOverlays  (cgame/cg_draw_debug.cpp:2027)
 
-void CG_DrawFullScreenDebugOverlays(undefined8 param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CG_DrawFullScreenDebugOverlays(LocalClientNum_t param_1)
 
 {
-  int iVar2;
-  undefined8 uVar1;
-  undefined4 local_30;
-  undefined4 local_2c;
-  undefined4 local_28;
-  undefined4 local_24;
+  int iVar1;
+  ScreenPlacement *pSVar2;
+  float local_30;
+  float local_2c;
+  float local_28;
+  float local_24;
   
-  iVar2 = ScrPlace_IsFullScreenActive();
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff82013490,0x7ef,0,0xffffffff82000f98,0xffffffff820138cc);
+  iVar1 = ScrPlace_IsFullScreenActive();
+  if (iVar1 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_debug.cpp",0x7ef
+                    ,0,"%s");
   }
-  uVar1 = ScrPlace_GetActivePlacement(param_1);
-  if (*(char *)(DAT_82a2f804 + 0xc) != '\0') {
+  pSVar2 = ScrPlace_GetActivePlacement(param_1);
+  if ((cg_drawVersion->current).enabled != false) {
     CG_DrawVersion();
   }
-  if (*(char *)(DAT_8488fd70 + 0xc) != '\0') {
-    CG_DrawSoundEqOverlay(uVar1);
+  if ((snd_drawEqChannels->current).enabled != false) {
+    CG_DrawSoundEqOverlay(pSVar2);
   }
   CG_DrawPerformanceWarnings(param_1);
-  if ((int)*(uint *)(DAT_8332cb98 + 0xc) < 1) {
-    if ((int)*(uint *)(DAT_8332cc2c + 0xc) < 1) {
-      if (*(int *)(DAT_82a3d5a4 + 0xc) == 0) {
-        if (*(char *)(DAT_82a3d494 + 0xc) == '\0') {
-          if (*(char *)(DAT_82a3d450 + 0xc) != '\0') {
+  if ((fx_mark_profile->current).integer < 1) {
+    if ((fx_profile->current).integer < 1) {
+      if ((snd_drawInfo->current).integer == 0) {
+        if ((cg_drawScriptUsage->current).enabled == false) {
+          if ((cg_drawRumbleDebug->current).enabled != false) {
             CG_DrawRumbleDebug(param_1);
           }
-          CG_ModelPreviewerDrawInfo(param_1,uVar1);
-          if (*(char *)(DAT_8427b954 + 0xc) != '\0') {
-            Phys_DrawDebugText(uVar1);
+          CG_ModelPreviewerDrawInfo(param_1,pSVar2);
+          if ((phys_drawDebugInfo->current).enabled != false) {
+            Phys_DrawDebugText(pSVar2);
           }
           Ragdoll_DebugDraw(param_1);
-          if (*(char *)(DAT_8332cc34 + 0xc) != '\0') {
+          if ((glass_debug->current).enabled != false) {
             CG_Glass_DrawDebug();
           }
-          CG_DrawUpperRightDebugInfo(param_1,uVar1);
+          CG_DrawUpperRightDebugInfo(param_1,pSVar2);
         }
         else {
-          CG_DrawScriptUsage(uVar1);
+          CG_DrawScriptUsage(pSVar2);
         }
       }
       else {
-        CG_DrawSoundOverlay(uVar1);
+        CG_DrawSoundOverlay(pSVar2);
       }
     }
     else {
-      local_28 = 0;
-      local_24 = DAT_82962208;
-      FX_DrawProfile((ulonglong)*(uint *)(DAT_8332cc2c + 0xc) - 1,0xffffffff822b6810,&local_28);
+      local_28 = 0.0;
+      local_24 = FX_PROFILE_LINE_HEIGHT;
+      FX_DrawProfile((fx_profile->current).integer - LOCAL_CLIENT_1,CG_DrawFxText,&local_28);
     }
   }
   else {
-    local_30 = 0;
-    local_2c = DAT_82962208;
-    FX_DrawMarkProfile((ulonglong)*(uint *)(DAT_8332cb98 + 0xc) - 1,0xffffffff822b6810,&local_30);
+    local_30 = 0.0;
+    local_2c = FX_PROFILE_LINE_HEIGHT;
+    FX_DrawMarkProfile((fx_mark_profile->current).integer - LOCAL_CLIENT_1,CG_DrawFxText,&local_30);
   }
   return;
 }
 
 
 // 822B78E0  CG_Debug_DrawViewmodelInfo  (cgame/cg_draw_debug.cpp:2115)
-
-void CG_Debug_DrawViewmodelInfo(void)
-
-{
-  char cVar1;
-  undefined4 uVar2;
-  uint *puVar3;
-  int *piVar4;
-  undefined4 *puVar5;
-  undefined8 uVar6;
-  int iVar12;
-  ulonglong uVar7;
-  undefined8 uVar8;
-  undefined8 uVar9;
-  uint uVar13;
-  undefined8 uVar10;
-  undefined8 uVar11;
-  undefined4 *puVar14;
-  char *pcVar15;
-  ulonglong uVar16;
-  ulonglong uVar17;
-  ulonglong uVar18;
-  undefined4 *puVar19;
-  ulonglong uVar20;
-  longlong lVar21;
-  undefined8 uVar22;
-  double dVar23;
-  double dVar24;
-  double dVar25;
-  double dVar26;
-  double dVar27;
-  double dVar28;
-  double dVar29;
-  double dVar30;
-  double dVar31;
-  double dVar32;
-  double dVar33;
-  double dVar34;
-  char local_ce0 [2048];
-  undefined1 auStack_4e0 [1248];
-  
-  __savegprlr_20();
-  uVar6 = __savefpr_17();
-  iVar12 = CG_GetLocalClientGlobals();
-  uVar7 = BG_GetViewmodelWeapon();
-  uVar2 = *(undefined4 *)(iVar12 + 0x76ecc);
-  uVar8 = ScrPlace_GetActivePlacement(uVar6);
-  uVar9 = UI_GetFontHandle(0x3fd0000000000000,uVar8,6);
-  if ((uVar7 & 0xff) != 0) {
-    uVar13 = BG_GetAlternateWeapon(uVar7,*(uint *)(iVar12 + 0x374) >> 0xf & 1);
-    puVar3 = *(uint **)(*(int *)((&DAT_829d84a0)[uVar13 & 0xff] + 4) +
-                       ((uint)((uVar7 & 0xffffffff) >> 6) & 0x3c));
-    if (puVar3 == (uint *)0x0) {
-      uVar20 = 0;
-    }
-    else {
-      uVar20 = (ulonglong)*puVar3;
-    }
-    uVar22 = CG_GetViewFov(uVar6);
-    uVar16 = 0xffffffff82003484;
-    uVar17 = uVar16;
-    if (*(uint **)(iVar12 + 0x76ee8) != (uint *)0x0) {
-      uVar17 = (ulonglong)**(uint **)(iVar12 + 0x76ee8);
-    }
-    uVar18 = uVar16;
-    if (*(uint **)(iVar12 + 0x76ee4) != (uint *)0x0) {
-      uVar18 = (ulonglong)**(uint **)(iVar12 + 0x76ee4);
-    }
-    if (uVar20 == 0) {
-      uVar20 = uVar16;
-    }
-    dVar23 = (double)*(float *)(iVar12 + 0x28);
-    dVar34 = (double)*(float *)(iVar12 + 0x68);
-    dVar33 = (double)*(float *)(iVar12 + 100);
-    dVar32 = (double)*(float *)(iVar12 + 0x60);
-    dVar31 = (double)*(float *)(iVar12 + 0x1c8);
-    dVar30 = (double)*(float *)(iVar12 + 0x1c4);
-    dVar29 = (double)*(float *)(iVar12 + 0x1c0);
-    dVar28 = (double)*(float *)(iVar12 + 0x160);
-    dVar27 = (double)*(float *)(iVar12 + 0x15c);
-    dVar26 = (double)*(float *)(iVar12 + 0x158);
-    dVar25 = (double)*(float *)(iVar12 + 0x378);
-    dVar24 = (double)SQRT((float)(dVar23 * dVar23 +
-                                 (double)(*(float *)(iVar12 + 0x2c) * *(float *)(iVar12 + 0x2c))));
-    uVar10 = BG_GetWeaponName(uVar2,auStack_4e0,0x400);
-    uVar11 = BG_GetWeaponName(uVar7,auStack_4e0,0x400);
-    Com_sprintf(dVar25,uVar22,dVar26,dVar27,dVar28,dVar29,dVar30,dVar31,dVar32,dVar33,dVar34,dVar24,
-                dVar23,local_ce0,0x800,0xffffffff82013cd0,uVar11,uVar20,uVar10,uVar18,uVar17);
-    lVar21 = 0;
-    if (-1 < *(int *)(iVar12 + 0x390)) {
-      puVar19 = (undefined4 *)(iVar12 + 0x228);
-      do {
-        puVar14 = (undefined4 *)CG_GetLocalClientViewModelHand(uVar6,lVar21);
-        pcVar15 = local_ce0;
-        do {
-          cVar1 = *pcVar15;
-          pcVar15 = pcVar15 + 1;
-        } while (cVar1 != '\0');
-        uVar7 = uVar16;
-        if ((uint *)puVar14[2] != (uint *)0x0) {
-          uVar7 = (ulonglong)*(uint *)puVar14[2];
-        }
-        piVar4 = puVar19 + 9;
-        puVar5 = puVar19 + 6;
-        puVar19 = puVar19 + 7;
-        Com_sprintf(local_ce0 + (int)(pcVar15 + (-1 - (int)local_ce0)),
-                    0x800 - (int)(pcVar15 + (-1 - (int)local_ce0)),0xffffffff82013ca8,
-                    *(undefined4 *)(&DAT_82962130 + *piVar4 * 4),
-                    ((-(ulonglong)(lVar21 != 0) & 0xfffffffe) << 0x20 |
-                    -(ulonglong)(lVar21 != 0) & 0xfffffffa) + 0x52,*puVar5,*puVar19,uVar7);
-        pcVar15 = local_ce0;
-        do {
-          cVar1 = *pcVar15;
-          pcVar15 = pcVar15 + 1;
-        } while (cVar1 != '\0');
-        DObjDisplayAnimToBuffer
-                  (*puVar14,0xffffffff820068af,local_ce0 + (int)(pcVar15 + (-1 - (int)local_ce0)),
-                   0x800 - (int)(pcVar15 + (-1 - (int)local_ce0)));
-        lVar21 = lVar21 + 1;
-      } while ((int)lVar21 <= *(int *)(iVar12 + 0x390));
-    }
-    UI_DrawText(0,0x4034000000000000,0x3fd0000000000000,uVar8,local_ce0,0x800,uVar9,3,
-                0xffffffff821818b8,1,1);
-  }
-  __restfpr_17();
-  __restgprlr_20();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 822B7C60  CG_Debug_DrawFontTest  (cgame/cg_draw_debug.cpp:2185)
 
-void CG_Debug_DrawFontTest(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void CG_Debug_DrawFontTest(LocalClientNum_t param_1)
 
 {
-  undefined8 uVar1;
-  undefined4 *puVar2;
-  undefined1 auStack_250 [592];
+  LocalClientNum_t LVar1;
+  ScreenPlacement *pSVar2;
+  Font_s *pFVar3;
+  char *pcVar4;
+  char *pcVar5;
+  int iVar6;
+  char acStack_250 [592];
   
-  __savegprlr_23();
-  uVar1 = ScrPlace_GetActivePlacement();
-  puVar2 = (undefined4 *)UI_GetFontHandle(0x3fd99999a0000000,uVar1,1);
-  Com_sprintf(auStack_250,0x200,0xffffffff82013e00,*puVar2,0xffffffff82013e44);
-  UI_FilterStringForButtonAnimation(auStack_250,0x200);
-  UI_DrawText(0xc039000000000000,0x4024000000000000,0x3fd99999a0000000,uVar1,auStack_250,0x7fffffff,
-              puVar2,0xffffffff82180000,0x7fff0000,1,1);
-  puVar2 = (undefined4 *)UI_GetFontHandle(0x3fd99999a0000000,uVar1,2);
-  Com_sprintf(auStack_250,0x200,0xffffffff82013e00,*puVar2,0xffffffff82013e44);
-  UI_FilterStringForButtonAnimation(auStack_250,0x200);
-  UI_DrawText(0xc039000000000000,0x4041800000000000,0x3fd99999a0000000,uVar1,auStack_250,0x7fffffff,
-              puVar2);
-  puVar2 = (undefined4 *)UI_GetFontHandle(0x3fd99999a0000000,uVar1,3);
-  Com_sprintf(auStack_250,0x200,0xffffffff82013e00,*puVar2,0xffffffff82013e44);
-  UI_FilterStringForButtonAnimation(auStack_250,0x200);
-  UI_DrawText(0xc039000000000000,0x404e000000000000,0x3fd99999a0000000,uVar1,auStack_250,0x7fffffff,
-              puVar2);
-  puVar2 = (undefined4 *)UI_GetFontHandle(0x3fd99999a0000000,uVar1,5);
-  Com_sprintf(auStack_250,0x200,0xffffffff82013e00,*puVar2,0xffffffff82013e44);
-  UI_FilterStringForButtonAnimation(auStack_250,0x200);
-  UI_DrawText(0xc039000000000000,0x4055400000000000,0x3fd99999a0000000,uVar1,auStack_250,0x7fffffff,
-              puVar2);
-  puVar2 = (undefined4 *)UI_GetFontHandle(0x3fd99999a0000000,uVar1,6);
-  Com_sprintf(auStack_250,0x200,0xffffffff82013e00,*puVar2,0xffffffff82013e44);
-  UI_FilterStringForButtonAnimation(auStack_250,0x200);
-  UI_DrawText(0xc039000000000000,0x405b800000000000,0x3fd99999a0000000,uVar1,auStack_250,0x7fffffff,
-              puVar2);
+  LVar1 = __savegprlr_23(param_1);
+  pSVar2 = ScrPlace_GetActivePlacement(LVar1);
+  pFVar3 = UI_GetFontHandle(pSVar2,1,0.4);
+  pcVar5 = "\x01\x02\x03\x04\x05\x06\x0e\x0f\x10\x11\x12\x13\x14\x15\x16\x17";
+  Com_sprintf(acStack_250,0x200,"%s: %s All those moments will be lost in time, like tears in rain."
+             );
+  UI_FilterStringForButtonAnimation(acStack_250,0x200);
+  iVar6 = 0x7fff0000;
+  UI_DrawText(pSVar2,acStack_250,0x7fffffff,pFVar3,-25.0,10.0,-0x7de80000,0x7fff0000,0.4,
+              (float *)0x1,1);
+  pFVar3 = UI_GetFontHandle(pSVar2,2,0.4);
+  pcVar4 = pcVar5;
+  Com_sprintf(acStack_250,0x200,"%s: %s All those moments will be lost in time, like tears in rain."
+             );
+  UI_FilterStringForButtonAnimation(acStack_250,0x200);
+  UI_DrawText(pSVar2,acStack_250,0x7fffffff,pFVar3,-25.0,35.0,(int)pcVar4,iVar6,0.4,(float *)0x1,1);
+  pFVar3 = UI_GetFontHandle(pSVar2,3,0.4);
+  pcVar4 = pcVar5;
+  Com_sprintf(acStack_250,0x200,"%s: %s All those moments will be lost in time, like tears in rain."
+             );
+  UI_FilterStringForButtonAnimation(acStack_250,0x200);
+  UI_DrawText(pSVar2,acStack_250,0x7fffffff,pFVar3,-25.0,60.0,(int)pcVar4,iVar6,0.4,(float *)0x1,1);
+  pFVar3 = UI_GetFontHandle(pSVar2,5,0.4);
+  pcVar4 = pcVar5;
+  Com_sprintf(acStack_250,0x200,"%s: %s All those moments will be lost in time, like tears in rain."
+             );
+  UI_FilterStringForButtonAnimation(acStack_250,0x200);
+  UI_DrawText(pSVar2,acStack_250,0x7fffffff,pFVar3,-25.0,85.0,(int)pcVar4,iVar6,0.4,(float *)0x1,1);
+  pFVar3 = UI_GetFontHandle(pSVar2,6,0.4);
+  Com_sprintf(acStack_250,0x200,"%s: %s All those moments will be lost in time, like tears in rain."
+             );
+  UI_FilterStringForButtonAnimation(acStack_250,0x200);
+  UI_DrawText(pSVar2,acStack_250,0x7fffffff,pFVar3,-25.0,110.0,(int)pcVar5,-0x7dff0000,0.4,
+              (float *)0x1,1);
   __restgprlr_23();
   return;
 }
@@ -2190,7 +1692,7 @@ void CG_Debug_DrawFontTest(void)
 
 // 822B7EC0  CG_Debug_DrawSaveInfo  (cgame/cg_draw_debug.cpp:2261)
 
-void CG_Debug_DrawSaveInfo(void)
+void CG_Debug_DrawSaveInfo(int param_1)
 
 {
   return;
@@ -2198,438 +1700,73 @@ void CG_Debug_DrawSaveInfo(void)
 
 
 // 822B7EC8  CG_Debug_DrawPSFlags  (cgame/cg_draw_debug.cpp:2293)
-
-void CG_Debug_DrawPSFlags(void)
-
-{
-  ulonglong uVar1;
-  ulonglong uVar2;
-  undefined8 uVar3;
-  int iVar8;
-  undefined8 uVar4;
-  undefined8 uVar5;
-  longlong lVar6;
-  longlong lVar7;
-  
-  uVar2 = ZEXT48(&stack0x00000000);
-  uVar3 = __savegprlr_25();
-  iVar8 = CG_GetLocalClientGlobals();
-  uVar3 = ScrPlace_GetActivePlacement(uVar3);
-  uVar4 = UI_GetFontHandle((double)DAT_82962288,uVar3,6);
-  uVar5 = UI_GetFontHandle((double)DAT_82962284,uVar3,6);
-  UI_DrawText((double)DAT_82962280,(double)DAT_82a1ed58,(double)DAT_82962284,uVar3,
-              0xffffffff820145d8,0x800,uVar5);
-  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0xc) & 1) != 0);
-  lVar6 = Com_sprintf(uVar2 - 0x840,0x800,0xffffffff820145c8,
-                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0xc) & 4) != 0);
-  lVar7 = Com_sprintf(lVar6 + (uVar2 - 0x840),0x800 - lVar6,0xffffffff820145b8,
-                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  lVar7 = lVar7 + lVar6;
-  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0xc) & 8) != 0);
-  lVar6 = Com_sprintf(lVar7 + (uVar2 - 0x840),0x800 - lVar7,0xffffffff820145a8,
-                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  lVar6 = lVar6 + lVar7;
-  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0xc) & 0x10) != 0);
-  lVar7 = Com_sprintf(lVar6 + (uVar2 - 0x840),0x800 - lVar6,0xffffffff82014590,
-                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  lVar7 = lVar7 + lVar6;
-  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0xc) & 0x20) != 0);
-  lVar6 = Com_sprintf(lVar7 + (uVar2 - 0x840),0x800 - lVar7,0xffffffff82014578,
-                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  lVar6 = lVar6 + lVar7;
-  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0xc) & 0x40) != 0);
-  lVar7 = Com_sprintf(lVar6 + (uVar2 - 0x840),0x800 - lVar6,0xffffffff82014568,
-                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  lVar7 = lVar7 + lVar6;
-  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0xc) & 0x80) != 0);
-  lVar6 = Com_sprintf(lVar7 + (uVar2 - 0x840),0x800 - lVar7,0xffffffff8201454c,
-                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  lVar6 = lVar6 + lVar7;
-  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0xc) & 0x100) != 0);
-  lVar7 = Com_sprintf(lVar6 + (uVar2 - 0x840),0x800 - lVar6,0xffffffff82014534,
-                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  lVar7 = lVar7 + lVar6;
-  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0xc) & 0x200) != 0);
-  lVar6 = Com_sprintf(lVar7 + (uVar2 - 0x840),0x800 - lVar7,0xffffffff82014514,
-                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  lVar6 = lVar6 + lVar7;
-  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0xc) & 0x400) != 0);
-  lVar7 = Com_sprintf(lVar6 + (uVar2 - 0x840),0x800 - lVar6,0xffffffff82014500,
-                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  lVar7 = lVar7 + lVar6;
-  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0xc) & 0x800) != 0);
-  lVar6 = Com_sprintf(lVar7 + (uVar2 - 0x840),0x800 - lVar7,0xffffffff820144f0,
-                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  lVar6 = lVar6 + lVar7;
-  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0xc) & 0x1000) != 0);
-  lVar7 = Com_sprintf(lVar6 + (uVar2 - 0x840),0x800 - lVar6,0xffffffff820144dc,
-                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  lVar7 = lVar7 + lVar6;
-  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0xc) & 0x2000) != 0);
-  lVar6 = Com_sprintf(lVar7 + (uVar2 - 0x840),0x800 - lVar7,0xffffffff820144cc,
-                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  lVar6 = lVar6 + lVar7;
-  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0xc) & 0x4000) != 0);
-  lVar7 = Com_sprintf(lVar6 + (uVar2 - 0x840),0x800 - lVar6,0xffffffff820144b8,
-                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  lVar7 = lVar7 + lVar6;
-  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0xc) & 0x8000) != 0);
-  lVar6 = Com_sprintf(lVar7 + (uVar2 - 0x840),0x800 - lVar7,0xffffffff820144a0,
-                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  lVar6 = lVar6 + lVar7;
-  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0xc) & 0x10000) != 0);
-  lVar7 = Com_sprintf(lVar6 + (uVar2 - 0x840),0x800 - lVar6,0xffffffff82014488,
-                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  lVar7 = lVar7 + lVar6;
-  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0xc) & 0x20000) != 0);
-  lVar6 = Com_sprintf(lVar7 + (uVar2 - 0x840),0x800 - lVar7,0xffffffff82014474,
-                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  lVar6 = lVar6 + lVar7;
-  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0xc) & 0x40000) != 0);
-  lVar7 = Com_sprintf(lVar6 + (uVar2 - 0x840),0x800 - lVar6,0xffffffff82014464,
-                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  lVar7 = lVar7 + lVar6;
-  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0xc) & 0x80000) != 0);
-  lVar6 = Com_sprintf(lVar7 + (uVar2 - 0x840),0x800 - lVar7,0xffffffff82014448,
-                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  lVar6 = lVar6 + lVar7;
-  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0xc) & 0x100000) != 0);
-  lVar7 = Com_sprintf(lVar6 + (uVar2 - 0x840),0x800 - lVar6,0xffffffff82014430,
-                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0xc) & 0x400000) != 0);
-  Com_sprintf(lVar7 + lVar6 + (uVar2 - 0x840),0x800 - (lVar7 + lVar6),0xffffffff82014420,
-              (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  UI_DrawText((double)DAT_82962278,(double)DAT_8296227c,(double)DAT_82962288,uVar3,uVar2 - 0x840,
-              0x800,uVar4);
-  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x374) & 1) != 0);
-  lVar6 = Com_sprintf(uVar2 - 0x840,0x800,0xffffffff8201440c,
-                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x374) & 2) != 0);
-  lVar7 = Com_sprintf(lVar6 + (uVar2 - 0x840),0x800 - lVar6,0xffffffff820143f4,
-                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  lVar7 = lVar7 + lVar6;
-  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x374) & 4) != 0);
-  lVar6 = Com_sprintf(lVar7 + (uVar2 - 0x840),0x800 - lVar7,0xffffffff820143dc,
-                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  lVar6 = lVar6 + lVar7;
-  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x374) & 8) != 0);
-  lVar7 = Com_sprintf(lVar6 + (uVar2 - 0x840),0x800 - lVar6,0xffffffff820143c4,
-                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  lVar7 = lVar7 + lVar6;
-  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x374) & 0x10) != 0);
-  lVar6 = Com_sprintf(lVar7 + (uVar2 - 0x840),0x800 - lVar7,0xffffffff820143b0,
-                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  lVar6 = lVar6 + lVar7;
-  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x374) & 0x20) != 0);
-  lVar7 = Com_sprintf(lVar6 + (uVar2 - 0x840),0x800 - lVar6,0xffffffff820143a0,
-                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  lVar7 = lVar7 + lVar6;
-  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x374) & 0x40) != 0);
-  lVar6 = Com_sprintf(lVar7 + (uVar2 - 0x840),0x800 - lVar7,0xffffffff82014384,
-                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  lVar6 = lVar6 + lVar7;
-  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x374) & 0x80) != 0);
-  lVar7 = Com_sprintf(lVar6 + (uVar2 - 0x840),0x800 - lVar6,0xffffffff8201436c,
-                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  lVar7 = lVar7 + lVar6;
-  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x374) & 0x100) != 0);
-  lVar6 = Com_sprintf(lVar7 + (uVar2 - 0x840),0x800 - lVar7,0xffffffff82014350,
-                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  lVar6 = lVar6 + lVar7;
-  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x374) & 0x200) != 0);
-  lVar7 = Com_sprintf(lVar6 + (uVar2 - 0x840),0x800 - lVar6,0xffffffff82014334,
-                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  lVar7 = lVar7 + lVar6;
-  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x374) & 0x400) != 0);
-  lVar6 = Com_sprintf(lVar7 + (uVar2 - 0x840),0x800 - lVar7,0xffffffff82014318,
-                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  lVar6 = lVar6 + lVar7;
-  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x374) & 0x800) != 0);
-  lVar7 = Com_sprintf(lVar6 + (uVar2 - 0x840),0x800 - lVar6,0xffffffff820142f8,
-                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  lVar7 = lVar7 + lVar6;
-  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x374) & 0x1000) != 0);
-  lVar6 = Com_sprintf(lVar7 + (uVar2 - 0x840),0x800 - lVar7,0xffffffff820142d8,
-                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  lVar6 = lVar6 + lVar7;
-  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x374) & 0x2000) != 0);
-  lVar7 = Com_sprintf(lVar6 + (uVar2 - 0x840),0x800 - lVar6,0xffffffff820142b8,
-                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  lVar7 = lVar7 + lVar6;
-  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x374) & 0x4000) != 0);
-  lVar6 = Com_sprintf(lVar7 + (uVar2 - 0x840),0x800 - lVar7,0xffffffff820142a0,
-                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  lVar6 = lVar6 + lVar7;
-  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x374) & 0x10000) != 0);
-  lVar7 = Com_sprintf(lVar6 + (uVar2 - 0x840),0x800 - lVar6,0xffffffff82014280,
-                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x374) & 0x20000) != 0);
-  Com_sprintf(lVar7 + lVar6 + (uVar2 - 0x840),0x800 - (lVar7 + lVar6),0xffffffff82014264,
-              (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  UI_DrawText((double)DAT_82962270,(double)DAT_82962274,(double)DAT_82962288,uVar3,uVar2 - 0x840,
-              0x800,uVar4);
-  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x10) & 1) != 0);
-  lVar6 = Com_sprintf(uVar2 - 0x840,0x800,0xffffffff8201424c,
-                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x10) & 2) != 0);
-  lVar7 = Com_sprintf(lVar6 + (uVar2 - 0x840),0x800 - lVar6,0xffffffff82014238,
-                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  lVar7 = lVar7 + lVar6;
-  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x10) & 4) != 0);
-  lVar6 = Com_sprintf(lVar7 + (uVar2 - 0x840),0x800 - lVar7,0xffffffff82014220,
-                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  lVar6 = lVar6 + lVar7;
-  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x10) & 8) != 0);
-  lVar7 = Com_sprintf(lVar6 + (uVar2 - 0x840),0x800 - lVar6,0xffffffff82014208,
-                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  lVar7 = lVar7 + lVar6;
-  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x10) & 0x10) != 0);
-  lVar6 = Com_sprintf(lVar7 + (uVar2 - 0x840),0x800 - lVar7,0xffffffff820141e4,
-                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  lVar6 = lVar6 + lVar7;
-  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x10) & 0x20) != 0);
-  lVar7 = Com_sprintf(lVar6 + (uVar2 - 0x840),0x800 - lVar6,0xffffffff820141c4,
-                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  lVar7 = lVar7 + lVar6;
-  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x10) & 0x40) != 0);
-  lVar6 = Com_sprintf(lVar7 + (uVar2 - 0x840),0x800 - lVar7,0xffffffff820141a8,
-                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  lVar6 = lVar6 + lVar7;
-  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x10) & 0x80) != 0);
-  lVar7 = Com_sprintf(lVar6 + (uVar2 - 0x840),0x800 - lVar6,0xffffffff8201418c,
-                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  lVar7 = lVar7 + lVar6;
-  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x10) & 0x100) != 0);
-  lVar6 = Com_sprintf(lVar7 + (uVar2 - 0x840),0x800 - lVar7,0xffffffff82014164,
-                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  lVar6 = lVar6 + lVar7;
-  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x10) & 0x200) != 0);
-  lVar7 = Com_sprintf(lVar6 + (uVar2 - 0x840),0x800 - lVar6,0xffffffff82014144,
-                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  lVar7 = lVar7 + lVar6;
-  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x10) & 0x400) != 0);
-  lVar6 = Com_sprintf(lVar7 + (uVar2 - 0x840),0x800 - lVar7,0xffffffff82014130,
-                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  lVar6 = lVar6 + lVar7;
-  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x10) & 0x800) != 0);
-  lVar7 = Com_sprintf(lVar6 + (uVar2 - 0x840),0x800 - lVar6,0xffffffff82014120,
-                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  lVar7 = lVar7 + lVar6;
-  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x10) & 0x1000) != 0);
-  lVar6 = Com_sprintf(lVar7 + (uVar2 - 0x840),0x800 - lVar7,0xffffffff82014110,
-                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  lVar6 = lVar6 + lVar7;
-  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x10) & 0x2000) != 0);
-  lVar7 = Com_sprintf(lVar6 + (uVar2 - 0x840),0x800 - lVar6,0xffffffff820140f4,
-                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  lVar7 = lVar7 + lVar6;
-  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x10) & 0x4000) != 0);
-  lVar6 = Com_sprintf(lVar7 + (uVar2 - 0x840),0x800 - lVar7,0xffffffff820140d8,
-                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  lVar6 = lVar6 + lVar7;
-  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x10) & 0x8000) != 0);
-  lVar7 = Com_sprintf(lVar6 + (uVar2 - 0x840),0x800 - lVar6,0xffffffff820140c8,
-                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  lVar7 = lVar7 + lVar6;
-  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x10) & 0x10000) != 0);
-  lVar6 = Com_sprintf(lVar7 + (uVar2 - 0x840),0x800 - lVar7,0xffffffff820140b0,
-                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  lVar6 = lVar6 + lVar7;
-  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x10) & 0x20000) != 0);
-  lVar7 = Com_sprintf(lVar6 + (uVar2 - 0x840),0x800 - lVar6,0xffffffff82014090,
-                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  lVar7 = lVar7 + lVar6;
-  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x10) & 0x40000) != 0);
-  lVar6 = Com_sprintf(lVar7 + (uVar2 - 0x840),0x800 - lVar7,0xffffffff82014074,
-                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  lVar6 = lVar6 + lVar7;
-  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x10) & 0x80000) != 0);
-  lVar7 = Com_sprintf(lVar6 + (uVar2 - 0x840),0x800 - lVar6,0xffffffff8201405c,
-                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x10) & 0x100000) != 0);
-  Com_sprintf(lVar7 + lVar6 + (uVar2 - 0x840),0x800 - (lVar7 + lVar6),0xffffffff82014040,
-              (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  UI_DrawText((double)DAT_82962268,(double)DAT_8296226c,(double)DAT_82962288,uVar3,uVar2 - 0x840,
-              0x800,uVar4);
-  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x14) & 1) != 0);
-  lVar6 = Com_sprintf(uVar2 - 0x840,0x800,0xffffffff82014028,
-                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x14) & 2) != 0);
-  lVar7 = Com_sprintf(lVar6 + (uVar2 - 0x840),0x800 - lVar6,0xffffffff82014014,
-                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  lVar7 = lVar7 + lVar6;
-  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x14) & 4) != 0);
-  lVar6 = Com_sprintf(lVar7 + (uVar2 - 0x840),0x800 - lVar7,0xffffffff82013ffc,
-                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x14) & 8) != 0);
-  Com_sprintf(lVar6 + lVar7 + (uVar2 - 0x840),0x800 - (lVar6 + lVar7),0xffffffff82013fe8,
-              (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  UI_DrawText((double)DAT_82962260,(double)DAT_82962264,(double)DAT_82962288,uVar3,uVar2 - 0x840,
-              0x800,uVar4);
-  uVar1 = -(ulonglong)((*(uint *)(*(int *)(iVar8 + 0x3300) + 0xcc) & 1) != 0);
-  lVar6 = Com_sprintf(uVar2 - 0x840,0x800,0xffffffff82013fd0,
-                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  uVar1 = -(ulonglong)((*(uint *)(*(int *)(iVar8 + 0x3300) + 0xcc) & 2) != 0);
-  lVar7 = Com_sprintf(lVar6 + (uVar2 - 0x840),0x800 - lVar6,0xffffffff82013fbc,
-                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  lVar7 = lVar7 + lVar6;
-  uVar1 = -(ulonglong)((*(uint *)(*(int *)(iVar8 + 0x3300) + 0xcc) & 4) != 0);
-  lVar6 = Com_sprintf(lVar7 + (uVar2 - 0x840),0x800 - lVar7,0xffffffff82013fa8,
-                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  lVar6 = lVar6 + lVar7;
-  uVar1 = -(ulonglong)((*(uint *)(*(int *)(iVar8 + 0x3300) + 0xcc) & 8) != 0);
-  lVar7 = Com_sprintf(lVar6 + (uVar2 - 0x840),0x800 - lVar6,0xffffffff82013f98,
-                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  lVar7 = lVar7 + lVar6;
-  uVar1 = -(ulonglong)((*(uint *)(*(int *)(iVar8 + 0x3300) + 0xcc) & 0x20) != 0);
-  lVar6 = Com_sprintf(lVar7 + (uVar2 - 0x840),0x800 - lVar7,0xffffffff82013f88,
-                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  lVar6 = lVar6 + lVar7;
-  uVar1 = -(ulonglong)((*(uint *)(*(int *)(iVar8 + 0x3300) + 0xcc) & 0x800000) != 0);
-  lVar7 = Com_sprintf(lVar6 + (uVar2 - 0x840),0x800 - lVar6,0xffffffff82013f78,
-                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  lVar7 = lVar7 + lVar6;
-  uVar1 = -(ulonglong)((*(uint *)(*(int *)(iVar8 + 0x3300) + 0xcc) & 0x800) != 0);
-  lVar6 = Com_sprintf(lVar7 + (uVar2 - 0x840),0x800 - lVar7,0xffffffff82013f5c,
-                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  lVar6 = lVar6 + lVar7;
-  uVar1 = -(ulonglong)((*(uint *)(*(int *)(iVar8 + 0x3300) + 0xcc) & 0x1000) != 0);
-  lVar7 = Com_sprintf(lVar6 + (uVar2 - 0x840),0x800 - lVar6,0xffffffff82013f40,
-                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  lVar7 = lVar7 + lVar6;
-  uVar1 = -(ulonglong)((*(uint *)(*(int *)(iVar8 + 0x3300) + 0xcc) & 0x4000) != 0);
-  lVar6 = Com_sprintf(lVar7 + (uVar2 - 0x840),0x800 - lVar7,0xffffffff82013f2c,
-                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  lVar6 = lVar6 + lVar7;
-  uVar1 = -(ulonglong)((*(uint *)(*(int *)(iVar8 + 0x3300) + 0xcc) & 0x8000) != 0);
-  lVar7 = Com_sprintf(lVar6 + (uVar2 - 0x840),0x800 - lVar6,0xffffffff82013f18,
-                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  lVar7 = lVar7 + lVar6;
-  uVar1 = -(ulonglong)((*(uint *)(*(int *)(iVar8 + 0x3300) + 0xcc) & 0x10000) != 0);
-  lVar6 = Com_sprintf(lVar7 + (uVar2 - 0x840),0x800 - lVar7,0xffffffff82013f04,
-                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  lVar6 = lVar6 + lVar7;
-  uVar1 = -(ulonglong)((*(uint *)(*(int *)(iVar8 + 0x3300) + 0xcc) & 0x20000) != 0);
-  lVar7 = Com_sprintf(lVar6 + (uVar2 - 0x840),0x800 - lVar6,0xffffffff82013ef4,
-                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  lVar7 = lVar7 + lVar6;
-  uVar1 = -(ulonglong)((*(uint *)(*(int *)(iVar8 + 0x3300) + 0xcc) & 0x40000) != 0);
-  lVar6 = Com_sprintf(lVar7 + (uVar2 - 0x840),0x800 - lVar7,0xffffffff82013ee8,
-                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  lVar6 = lVar6 + lVar7;
-  uVar1 = -(ulonglong)((*(uint *)(*(int *)(iVar8 + 0x3300) + 0xcc) & 0x80000) != 0);
-  lVar7 = Com_sprintf(lVar6 + (uVar2 - 0x840),0x800 - lVar6,0xffffffff82013edc,
-                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  lVar7 = lVar7 + lVar6;
-  uVar1 = -(ulonglong)((*(uint *)(*(int *)(iVar8 + 0x3300) + 0xcc) & 0x100000) != 0);
-  lVar6 = Com_sprintf(lVar7 + (uVar2 - 0x840),0x800 - lVar7,0xffffffff82013ed0,
-                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  lVar6 = lVar6 + lVar7;
-  uVar1 = -(ulonglong)((*(uint *)(*(int *)(iVar8 + 0x3300) + 0xcc) & 0x200000) != 0);
-  lVar7 = Com_sprintf(lVar6 + (uVar2 - 0x840),0x800 - lVar6,0xffffffff82013eb8,
-                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  lVar7 = lVar7 + lVar6;
-  uVar1 = -(ulonglong)((*(uint *)(*(int *)(iVar8 + 0x3300) + 0xcc) & 0x400000) != 0);
-  lVar6 = Com_sprintf(lVar7 + (uVar2 - 0x840),0x800 - lVar7,0xffffffff82013ea8,
-                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  lVar6 = lVar6 + lVar7;
-  uVar1 = -(ulonglong)((*(uint *)(*(int *)(iVar8 + 0x3300) + 0xcc) & 0x40) != 0);
-  lVar7 = Com_sprintf(lVar6 + (uVar2 - 0x840),0x800 - lVar6,0xffffffff82013e94,
-                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  lVar7 = lVar7 + lVar6;
-  uVar1 = -(ulonglong)((*(uint *)(*(int *)(iVar8 + 0x3300) + 0xcc) & 0x80) != 0);
-  lVar6 = Com_sprintf(lVar7 + (uVar2 - 0x840),0x800 - lVar7,0xffffffff82013e84,
-                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  lVar6 = lVar6 + lVar7;
-  uVar1 = -(ulonglong)((*(uint *)(*(int *)(iVar8 + 0x3300) + 0xcc) & 0x100) != 0);
-  lVar7 = Com_sprintf(lVar6 + (uVar2 - 0x840),0x800 - lVar6,0xffffffff82013e78,
-                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  lVar7 = lVar7 + lVar6;
-  uVar1 = -(ulonglong)((*(uint *)(*(int *)(iVar8 + 0x3300) + 0xcc) & 0x200) != 0);
-  lVar6 = Com_sprintf(lVar7 + (uVar2 - 0x840),0x800 - lVar7,0xffffffff82013e64,
-                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
-  Com_sprintf(lVar6 + lVar7 + (uVar2 - 0x840),0x800 - (lVar6 + lVar7),0xffffffff82013e58,0x30);
-  UI_DrawText((double)DAT_82962258,(double)DAT_8296225c,(double)DAT_82962288,uVar3,uVar2 - 0x840,
-              0x800,uVar4,0xffffffff82960000,0xffffffff82960000,1,1);
-  __restgprlr_25();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 822B91D8  WarningColor  (cgame/cg_draw_debug.cpp:2542)
 
-undefined8 WarningColor(double param_1)
+char * WarningColor(float param_1)
 
 {
-  if (0.949999988079071 <= param_1) {
-    return 0xffffffff82013958;
+  if (0.95 <= param_1) {
+    return "^1";
   }
   if (0.75 <= param_1) {
-    return 0xffffffff82013954;
+    return "^3";
   }
-  return 0xffffffff8201394c;
+  return "^7";
 }
 
 
 // 822B9220  CG_Debug_DrawGameETCounts  (cgame/cg_draw_debug.cpp:2556)
 
-void CG_Debug_DrawGameETCounts(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void CG_Debug_DrawGameETCounts(LocalClientNum_t param_1)
 
 {
-  ulonglong uVar1;
-  undefined8 uVar2;
-  undefined8 uVar3;
-  undefined8 uVar4;
-  char cVar7;
-  longlong lVar5;
-  longlong lVar6;
-  undefined8 uVar8;
-  undefined4 *puVar9;
-  double dVar10;
-  double dVar11;
+  LocalClientNum_t LVar1;
+  ScreenPlacement *pSVar2;
+  Font_s *pFVar3;
+  Font_s *pFVar4;
+  bool bVar8;
+  int iVar5;
+  int iVar6;
+  int iVar7;
+  char acStack_870 [2160];
   
-  uVar1 = ZEXT48(&stack0x00000000);
-  __savegprlr_20();
-  uVar2 = ScrPlace_GetActivePlacement();
-  uVar3 = UI_GetFontHandle((double)DAT_829622a4,uVar2,DAT_829622a8);
-  uVar4 = UI_GetFontHandle((double)DAT_8296229c,uVar2,DAT_829622a0);
-  UI_DrawText((double)DAT_82962298,(double)DAT_82a1ed5c,(double)DAT_8296229c,uVar2,
-              0xffffffff82014704,0x800,uVar4,0xffffffff82010000,0xffffffff82960000,2,1);
-  cVar7 = G_LogDebugEntInfoResults();
-  if (cVar7 != '\0') {
-    lVar5 = Com_sprintf(uVar1 - 0x870,0x800,0xffffffff820146cc);
-    lVar6 = Com_sprintf(lVar5 + (uVar1 - 0x870),0x800 - lVar5,0xffffffff82014688);
-    lVar6 = lVar6 + lVar5;
-    puVar9 = &DAT_83346290;
-    dVar11 = 100.0;
+  LVar1 = __savegprlr_20(param_1);
+  pSVar2 = ScrPlace_GetActivePlacement(LVar1);
+  pFVar3 = UI_GetFontHandle(pSVar2,MY_FONTTYPE1,MY_SCALE1);
+  pFVar4 = UI_GetFontHandle(pSVar2,MY_FONTTYPE2,MY_SCALE2);
+  UI_DrawText(pSVar2,"Entity Counts",0x800,pFVar4,MY_LABEL_X,MY_LABEL_Y,-0x7dff0000,-0x7d6a0000,
+              MY_SCALE2,(float *)0x2,1);
+  bVar8 = G_LogDebugEntInfoResults();
+  if (bVar8) {
+    iVar5 = Com_sprintf(acStack_870,0x800,"           (current)                   (max witnessed)\n"
+                       );
+    iVar6 = Com_sprintf(acStack_870 + iVar5,0x800 - iVar5,
+                        "===============================================================\n");
+    iVar6 = iVar6 + iVar5;
+    iVar5 = -0x7ccb9d70;
     do {
-      lVar5 = Com_sprintf(lVar6 + (uVar1 - 0x870),0x800 - lVar6,0xffffffff82014654,puVar9[-2],
-                          (double)(float)((double)(float)puVar9[2] * dVar11),puVar9[-1],*puVar9,
-                          (double)(float)((double)(float)puVar9[3] * dVar11));
-      puVar9 = puVar9 + 6;
-      lVar6 = lVar5 + lVar6;
-    } while ((int)puVar9 < -0x7ccb9bbf);
-    lVar5 = Com_sprintf(lVar6 + (uVar1 - 0x870),0x800 - lVar6,0xffffffff82014628);
-    dVar10 = (double)DAT_83346460;
-    lVar5 = lVar5 + lVar6;
-    uVar8 = 0xffffffff82013958;
-    uVar4 = uVar8;
-    if ((dVar10 < 0.949999988079071) && (uVar4 = 0xffffffff82013954, dVar10 < 0.75)) {
-      uVar4 = 0xffffffff8201394c;
-    }
-    lVar6 = Com_sprintf(lVar5 + (uVar1 - 0x870),0x800 - lVar5,0xffffffff820145f8,DAT_83346450,uVar4,
-                        (double)(float)(dVar10 * dVar11),DAT_83346454,DAT_8334645c);
-    lVar6 = lVar6 + lVar5;
-    lVar5 = Com_sprintf(lVar6 + (uVar1 - 0x870),0x800 - lVar6,0xffffffff820145f4);
-    dVar10 = (double)DAT_83346478;
-    if ((dVar10 < 0.949999988079071) && (uVar8 = 0xffffffff82013954, dVar10 < 0.75)) {
-      uVar8 = 0xffffffff8201394c;
-    }
-    Com_sprintf(lVar5 + lVar6 + (uVar1 - 0x870),0x800 - (lVar5 + lVar6),0xffffffff820145f8,
-                DAT_83346468,uVar8,(double)(float)(dVar10 * dVar11),DAT_8334646c,DAT_83346474);
-    UI_DrawText((double)DAT_8296228c,(double)DAT_82962290,(double)DAT_829622a4,uVar2,uVar1 - 0x870,
-                0x800,uVar3,0xffffffff82960000,0xffffffff82960000,1,1);
+      iVar7 = Com_sprintf(acStack_870 + iVar6,0x800 - iVar6,
+                          " %-20s -%3.0f%%  %4i        ^7%4i,%3.0f%%^7\n");
+      iVar5 = iVar5 + 0x18;
+      iVar6 = iVar7 + iVar6;
+    } while (iVar5 < -0x7ccb9bbf);
+    iVar5 = Com_sprintf(acStack_870 + iVar6,0x800 - iVar6,
+                        "---------------------------------------\n");
+    iVar5 = iVar5 + iVar6;
+    iVar6 = Com_sprintf(acStack_870 + iVar5,0x800 - iVar5,
+                        " %-20s -%s%3.0f%%  %4i^7/%4i   ^7%4i,%3.0f%%^7\n");
+    iVar6 = iVar6 + iVar5;
+    iVar5 = Com_sprintf(acStack_870 + iVar6,0x800 - iVar6,"\n\n");
+    Com_sprintf(acStack_870 + iVar5 + iVar6,0x800 - (iVar5 + iVar6),
+                " %-20s -%s%3.0f%%  %4i^7/%4i   ^7%4i,%3.0f%%^7\n");
+    UI_DrawText(pSVar2,acStack_870,0x800,pFVar3,MY_X,MY_Y,-0x7d6a0000,-0x7d6a0000,MY_SCALE1,
+                (float *)0x1,1);
   }
   __restgprlr_20();
   return;

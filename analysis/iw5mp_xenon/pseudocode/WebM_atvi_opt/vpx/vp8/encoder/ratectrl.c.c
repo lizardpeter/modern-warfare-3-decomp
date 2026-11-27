@@ -2,69 +2,67 @@
 
 // 82835F18  vp8_save_coding_context  (WebM_atvi_opt/vpx/vp8/encoder/ratectrl.c:230)
 
-void vp8_save_coding_context(int param_1)
+void vp8_save_coding_context(VP8_COMP *param_1)
 
 {
-  *(undefined4 *)(param_1 + 0x22da8) = *(undefined4 *)(param_1 + 0x22b40);
-  *(undefined4 *)(param_1 + 0x22db0) = *(undefined4 *)(param_1 + 0x20f70);
-  *(undefined4 *)(param_1 + 0x22db4) = *(undefined4 *)(param_1 + 0x26ea8);
-  *(undefined4 *)(param_1 + 0x22dac) = *(undefined4 *)(param_1 + 0x1e744);
-  vpx_memcpy((void *)(param_1 + 0x22dc8),(void *)(param_1 + 0x21bee),0x26);
-  vpx_memcpy((void *)(param_1 + 0x22df0),(void *)(param_1 + 0x10d10),0x4000);
-  vpx_memcpy((void *)(param_1 + 0x26df7),(void *)(param_1 + 0x21335),4);
-  vpx_memcpy((void *)(param_1 + 0x26df0),(void *)(param_1 + 0x217c4),4);
-  vpx_memcpy((void *)(param_1 + 0x26dfb),(void *)(param_1 + 0x21339),3);
-  vpx_memcpy((void *)(param_1 + 0x26df4),(void *)(param_1 + 0x217c8),3);
-  vpx_memcpy((void *)(param_1 + 0x26e00),(void *)(param_1 + 0x26fe0),0x14);
-  vpx_memcpy((void *)(param_1 + 0x26e14),(void *)(param_1 + 0x26ff4),0x10);
-  *(undefined4 *)(param_1 + 0x26e34) = *(undefined4 *)(param_1 + 0x2e878);
+  (param_1->coding_context).frames_since_key = param_1->frames_since_key;
+  (param_1->coding_context).filter_level = (param_1->common).filter_level;
+  (param_1->coding_context).frames_till_gf_update_due = param_1->frames_till_gf_update_due;
+  (param_1->coding_context).frames_since_golden = (param_1->common).frames_since_golden;
+  vpx_memcpy((param_1->coding_context).mvc,(param_1->common).fc.mvc,0x26);
+  vpx_memcpy((param_1->coding_context).mvcosts,(param_1->mb).mvcosts,0x4000);
+  vpx_memcpy((param_1->coding_context).kf_ymode_prob,(param_1->common).kf_ymode_prob,4);
+  vpx_memcpy((param_1->coding_context).ymode_prob,(param_1->common).fc.ymode_prob,4);
+  vpx_memcpy((param_1->coding_context).kf_uv_mode_prob,(param_1->common).kf_uv_mode_prob,3);
+  vpx_memcpy((param_1->coding_context).uv_mode_prob,(param_1->common).fc.uv_mode_prob,3);
+  vpx_memcpy((param_1->coding_context).ymode_count,param_1->ymode_count,0x14);
+  vpx_memcpy((param_1->coding_context).uv_mode_count,param_1->uv_mode_count,0x10);
+  (param_1->coding_context).this_frame_percent_intra = param_1->this_frame_percent_intra;
   return;
 }
 
 
 // 82836040  vp8_restore_coding_context  (WebM_atvi_opt/vpx/vp8/encoder/ratectrl.c:270)
 
-void * vp8_restore_coding_context(int param_1)
+void vp8_restore_coding_context(VP8_COMP *param_1)
 
 {
-  void *pvVar1;
-  
-  *(undefined4 *)(param_1 + 0x22b40) = *(undefined4 *)(param_1 + 0x22da8);
-  *(undefined4 *)(param_1 + 0x20f70) = *(undefined4 *)(param_1 + 0x22db0);
-  *(undefined4 *)(param_1 + 0x26ea8) = *(undefined4 *)(param_1 + 0x22db4);
-  *(undefined4 *)(param_1 + 0x1e744) = *(undefined4 *)(param_1 + 0x22dac);
-  vpx_memcpy((void *)(param_1 + 0x21bee),(void *)(param_1 + 0x22dc8),0x26);
-  vpx_memcpy((void *)(param_1 + 0x10d10),(void *)(param_1 + 0x22df0),0x4000);
-  vpx_memcpy((void *)(param_1 + 0x21335),(void *)(param_1 + 0x26df7),4);
-  vpx_memcpy((void *)(param_1 + 0x217c4),(void *)(param_1 + 0x26df0),4);
-  vpx_memcpy((void *)(param_1 + 0x21339),(void *)(param_1 + 0x26dfb),3);
-  vpx_memcpy((void *)(param_1 + 0x217c8),(void *)(param_1 + 0x26df4),3);
-  vpx_memcpy((void *)(param_1 + 0x26fe0),(void *)(param_1 + 0x26e00),0x14);
-  pvVar1 = vpx_memcpy((void *)(param_1 + 0x26ff4),(void *)(param_1 + 0x26e14),0x10);
-  *(undefined4 *)(param_1 + 0x2e878) = *(undefined4 *)(param_1 + 0x26e34);
-  return pvVar1;
+  param_1->frames_since_key = (param_1->coding_context).frames_since_key;
+  (param_1->common).filter_level = (param_1->coding_context).filter_level;
+  param_1->frames_till_gf_update_due = (param_1->coding_context).frames_till_gf_update_due;
+  (param_1->common).frames_since_golden = (param_1->coding_context).frames_since_golden;
+  vpx_memcpy((param_1->common).fc.mvc,(param_1->coding_context).mvc,0x26);
+  vpx_memcpy((param_1->mb).mvcosts,(param_1->coding_context).mvcosts,0x4000);
+  vpx_memcpy((param_1->common).kf_ymode_prob,(param_1->coding_context).kf_ymode_prob,4);
+  vpx_memcpy((param_1->common).fc.ymode_prob,(param_1->coding_context).ymode_prob,4);
+  vpx_memcpy((param_1->common).kf_uv_mode_prob,(param_1->coding_context).kf_uv_mode_prob,3);
+  vpx_memcpy((param_1->common).fc.uv_mode_prob,(param_1->coding_context).uv_mode_prob,3);
+  vpx_memcpy(param_1->ymode_count,(param_1->coding_context).ymode_count,0x14);
+  vpx_memcpy(param_1->uv_mode_count,(param_1->coding_context).uv_mode_count,0x10);
+  param_1->this_frame_percent_intra = (param_1->coding_context).this_frame_percent_intra;
+  return;
 }
 
 
 // 82836168  vp8_setup_key_frame  (WebM_atvi_opt/vpx/vp8/encoder/ratectrl.c:309)
 
-void vp8_setup_key_frame(void)
+void vp8_setup_key_frame(VP8_COMP *param_1)
 
 {
   uint uVar1;
   int iVar2;
   int iVar3;
-  undefined4 local_30;
-  undefined4 local_2c;
+  int local_30 [12];
   
-  iVar2 = __savegprlr_29();
-  vp8_default_coef_probs(iVar2 + 0x1afe0);
-  vp8_kf_default_bmode_probs(iVar2 + 0x20fb1);
-  vpx_memcpy((void *)(iVar2 + 0x21bee),&DAT_821e8944,0x26);
-  local_30 = 1;
-  local_2c = 1;
+  iVar2 = __savegprlr_29(param_1);
+  vp8_default_coef_probs((VP8Common *)(iVar2 + 0x1afe0));
+  vp8_kf_default_bmode_probs((uchar (*) [10] [9])(iVar2 + 0x20fb1));
+  vpx_memcpy((mv_context *)(iVar2 + 0x21bee),vp8_default_mv_context,0x26);
+  local_30[0] = 1;
+  local_30[1] = 1;
   vp8_build_component_cost_table
-            (iVar2 + 0x14d10,iVar2 + 0x18d18,(void *)(iVar2 + 0x21bee),&local_30);
+            ((int **)(iVar2 + 0x14d10),(int **)(iVar2 + 0x18d18),(mv_context *)(iVar2 + 0x21bee),
+             local_30);
   vpx_memset((void *)(iVar2 + 0x21c14),0,0x26);
   uVar1 = *(int *)(iVar2 + 0x1e728) * 3;
   *(uint *)(iVar2 + 0x20f70) = ((int)uVar1 >> 3) + (uint)((int)uVar1 < 0 && (uVar1 & 7) != 0);
@@ -81,34 +79,34 @@ void vp8_setup_key_frame(void)
 
 // 82837920  vp8_calc_auto_iframe_target_size  (WebM_atvi_opt/vpx/vp8/encoder/ratectrl.c:337)
 
-void vp8_calc_auto_iframe_target_size(int param_1)
+void vp8_calc_auto_iframe_target_size(VP8_COMP *param_1)
 
 {
   int iVar1;
   double dVar2;
   
-  if (-1 < *(int *)(param_1 + 0x229d0)) {
-    vp8_calc_iframe_target_size();
+  if (-1 < (param_1->oxcf).fixed_q) {
+    vp8_calc_iframe_target_size(param_1);
     return;
   }
-  if (*(int *)(param_1 + 0x2e82c) == 2) {
-    *(undefined4 *)(param_1 + 0x26e70) = *(undefined4 *)(param_1 + 0x26f30);
+  if (param_1->pass == 2) {
+    param_1->this_frame_target = param_1->per_frame_bandwidth;
   }
   else {
-    dVar2 = *(double *)(param_1 + 0x26f48) * 0.5;
-    iVar1 = (*(int *)(&DAT_821ed130 + *(int *)(param_1 + 0x26f68) * 4) *
-            (int)(*(double *)(param_1 + 0x26f48) * 2.0 - 16.0)) / 100;
-    if ((double)*(uint *)(param_1 + 0x22b40) < dVar2) {
-      iVar1 = (int)((double)(*(uint *)(param_1 + 0x22b40) * iVar1) / dVar2);
+    dVar2 = param_1->output_frame_rate * 0.5;
+    iVar1 = (vp8_kf_boost_qadjustment[param_1->ni_av_qi] *
+            (int)(param_1->output_frame_rate * 2.0 - 16.0)) / 100;
+    if ((double)param_1->frames_since_key < dVar2) {
+      iVar1 = (int)((double)(param_1->frames_since_key * iVar1) / dVar2);
     }
     if (iVar1 < 0x10) {
       iVar1 = 0x10;
     }
-    *(undefined4 *)(param_1 + 0x26fc0) = *(undefined4 *)(param_1 + 0x26fbc);
-    *(int *)(param_1 + 0x26e70) = *(int *)(param_1 + 0x26f30) * (iVar1 + 0x10) >> 4;
+    param_1->active_worst_quality = param_1->worst_quality;
+    param_1->this_frame_target = param_1->per_frame_bandwidth * (iVar1 + 0x10) >> 4;
   }
-  if (*(int *)(param_1 + 0x2e82c) != 2) {
-    *(undefined4 *)(param_1 + 0x22a90) = 0;
+  if (param_1->pass != 2) {
+    param_1->source_alt_ref_pending = 0;
   }
   return;
 }
@@ -116,7 +114,7 @@ void vp8_calc_auto_iframe_target_size(int param_1)
 
 // 82836258  calc_gf_params  (WebM_atvi_opt/vpx/vp8/encoder/ratectrl.c:408)
 
-void calc_gf_params(void)
+void calc_gf_params(VP8_COMP *param_1)
 
 {
   int iVar1;
@@ -132,7 +130,7 @@ void calc_gf_params(void)
   uint uVar11;
   ulonglong uVar12;
   
-  iVar4 = __savegprlr_28();
+  iVar4 = __savegprlr_28(param_1);
   iVar2 = *(int *)(iVar4 + 0x229d0);
   iVar3 = iVar2;
   if (iVar2 < 0) {
@@ -162,12 +160,12 @@ void calc_gf_params(void)
     if (0xe < iVar8) {
       iVar8 = 0xe;
     }
-    uVar11 = (((*(int *)(&DAT_821ed908 + iVar8 * 4) * *(int *)(&DAT_821ed330 + iVar3 * 4)) / 100) *
-             *(int *)(&DAT_821ed770 + (int)((uVar5 & 0xffffffff) << 2))) / 100;
+    uVar11 = (((vp8_gf_intra_useage_adjustment[iVar8] * vp8_gf_boost_qadjustment[iVar3]) / 100) *
+             *(int *)((int)vp8_gf_adjust_table + (int)((uVar5 & 0xffffffff) << 2))) / 100;
     if ((*(int *)(iVar4 + 0x2f0a0) == 0) && (*(int *)(iVar4 + 0x2e7f4) == 2)) {
       uVar11 = ((int)uVar11 >> 1) + (uint)((int)uVar11 < 0 && (uVar11 & 1) != 0);
     }
-    uVar9 = *(uint *)(&DAT_821ed530 + iVar3 * 4);
+    uVar9 = vp8_kf_gf_boost_qlimits[iVar3];
     if ((((int)uVar11 <= (int)uVar9) || (iVar1 != 0)) && (uVar9 = uVar11, (int)uVar11 < 0x6e)) {
       uVar9 = 0x6e;
     }
@@ -189,8 +187,9 @@ void calc_gf_params(void)
     if (0x5db < iVar2) {
       *piVar10 = *piVar10 + 1;
     }
-    if (*piVar10 < *(int *)(&DAT_821ed958 + (int)((uVar5 & 0xffffffff) << 2))) {
-      *piVar10 = *(int *)(&DAT_821ed958 + (int)((uVar5 & 0xffffffff) << 2));
+    iVar2 = *(int *)((int)vp8_gf_interval_table + (int)((uVar5 & 0xffffffff) << 2));
+    if (*piVar10 < iVar2) {
+      *piVar10 = iVar2;
     }
     if (*(int *)(iVar4 + 0x26ee8) < *piVar10) {
       *piVar10 = *(int *)(iVar4 + 0x26ee8);
@@ -209,20 +208,19 @@ void calc_gf_params(void)
 
 // 82836500  baseline_bits_at_q  (WebM_atvi_opt/vpx/vp8/encoder/ratectrl.c:573)
 
-longlong baseline_bits_at_q(int param_1,int param_2,int param_3)
+int baseline_bits_at_q(int param_1,int param_2,int param_3)
 
 {
   if (0x800 < param_3) {
-    return (longlong)(*(int *)(&DAT_821ecd30 + (param_1 * 0x80 + param_2) * 4) >> 9) *
-           (longlong)param_3;
+    return (vp8_bits_per_mb[param_1][param_2] >> 9) * param_3;
   }
-  return (longlong)(*(int *)(&DAT_821ecd30 + (param_1 * 0x80 + param_2) * 4) * param_3 >> 9);
+  return vp8_bits_per_mb[param_1][param_2] * param_3 >> 9;
 }
 
 
 // 82836538  vp8_calc_iframe_target_size  (WebM_atvi_opt/vpx/vp8/encoder/ratectrl.c:587)
 
-void vp8_calc_iframe_target_size(int param_1)
+void vp8_calc_iframe_target_size(VP8_COMP *param_1)
 
 {
   int iVar1;
@@ -230,51 +228,51 @@ void vp8_calc_iframe_target_size(int param_1)
   int iVar3;
   int iVar4;
   
-  iVar4 = *(int *)(param_1 + 0x229d0);
+  iVar4 = (param_1->oxcf).fixed_q;
   iVar2 = iVar4;
   if (iVar4 < 0) {
-    iVar2 = *(int *)(param_1 + 0x26f74);
+    iVar2 = param_1->avg_frame_qindex;
   }
   iVar3 = 100;
-  if (*(int *)(param_1 + 0x2e80c) == 1) {
-    if (*(uint *)(param_1 + 0x22b40) < 0x10) {
-      iVar1 = *(int *)(&DAT_821ed730 + *(uint *)(param_1 + 0x22b40) * 4) *
-              *(int *)(&DAT_821ed130 + iVar2 * 4);
+  if (param_1->auto_adjust_key_quantizer == 1) {
+    if (param_1->frames_since_key < 0x10) {
+      iVar1 = vp8_kf_boost_seperationt_adjustment[param_1->frames_since_key] *
+              vp8_kf_boost_qadjustment[iVar2];
     }
     else {
-      iVar1 = *(int *)(&DAT_821ed130 + iVar2 * 4) * 100;
+      iVar1 = vp8_kf_boost_qadjustment[iVar2] * 100;
     }
     iVar1 = iVar1 / 100;
-    iVar3 = *(int *)(&DAT_821ed530 + iVar2 * 4);
+    iVar3 = vp8_kf_gf_boost_qlimits[iVar2];
     if ((iVar1 <= iVar3) && (iVar3 = iVar1, iVar1 < 0x78)) {
       iVar3 = 0x78;
     }
   }
-  *(int *)(param_1 + 0x2e744) = iVar3;
-  if (*(int *)(param_1 + 0x2e82c) != 2) {
-    *(undefined4 *)(param_1 + 0x22a90) = 0;
+  param_1->last_boost = iVar3;
+  if (param_1->pass != 2) {
+    param_1->source_alt_ref_pending = 0;
   }
   if (-1 < iVar4) {
-    iVar4 = *(int *)(param_1 + 0x1e704);
+    iVar4 = (param_1->common).MBs;
     if (iVar4 < 0x801) {
-      iVar4 = *(int *)(&DAT_821ecd30 + iVar2 * 4) * iVar4 >> 9;
+      iVar4 = vp8_bits_per_mb[0][iVar2] * iVar4 >> 9;
     }
     else {
-      iVar4 = (*(int *)(&DAT_821ecd30 + iVar2 * 4) >> 9) * iVar4;
+      iVar4 = (vp8_bits_per_mb[0][iVar2] >> 9) * iVar4;
     }
-    *(int *)(param_1 + 0x26e70) = (iVar4 * iVar3) / 100;
+    param_1->this_frame_target = (iVar4 * iVar3) / 100;
     return;
   }
-  if (*(int *)(param_1 + 0x22a1c) == 1) {
-    *(int *)(param_1 + 0x26e70) = *(int *)(param_1 + 0x26f34) << 1;
+  if ((param_1->oxcf).error_resilient_mode == 1) {
+    param_1->this_frame_target = param_1->av_per_frame_bandwidth << 1;
     return;
   }
-  *(int *)(param_1 + 0x26e70) =
-       (((int)((double)(longlong)*(int *)(&DAT_821ecd30 + iVar2 * 4) *
-               *(double *)(param_1 + 0x26e90) + 0.5) * *(int *)(param_1 + 0x1e704) >> 9) * iVar3) /
-       100;
-  if (*(int *)(param_1 + 0x2e82c) < 2) {
-    *(undefined4 *)(param_1 + 0x26fc0) = *(undefined4 *)(param_1 + 0x26fbc);
+  param_1->this_frame_target =
+       (((int)((double)(longlong)vp8_bits_per_mb[0][iVar2] *
+               param_1->key_frame_rate_correction_factor + 0.5) * (param_1->common).MBs >> 9) *
+       iVar3) / 100;
+  if (param_1->pass < 2) {
+    param_1->active_worst_quality = param_1->worst_quality;
     return;
   }
   return;
@@ -283,310 +281,316 @@ void vp8_calc_iframe_target_size(int param_1)
 
 // 82836738  vp8_calc_pframe_target_size  (WebM_atvi_opt/vpx/vp8/encoder/ratectrl.c:665)
 
-void vp8_calc_pframe_target_size(void)
+void vp8_calc_pframe_target_size(VP8_COMP *param_1)
 
 {
   int iVar1;
-  int iVar2;
+  VP8_COMP *pVVar2;
   ulonglong uVar3;
   int iVar4;
   int iVar5;
-  uint uVar6;
-  ulonglong uVar7;
-  int iVar8;
-  longlong lVar9;
+  int iVar6;
+  uint uVar7;
+  int *piVar9;
+  ulonglong uVar8;
   int iVar10;
-  uint uVar11;
-  uint uVar12;
-  int *piVar13;
-  int *piVar14;
-  uint *puVar15;
+  longlong lVar11;
+  int iVar12;
+  uint uVar13;
+  uint uVar14;
+  int *piVar15;
   int *piVar16;
+  int *piVar17;
   
-  iVar2 = __savegprlr_18();
-  piVar13 = (int *)(iVar2 + 0x2e82c);
-  iVar8 = *piVar13;
+  pVVar2 = (VP8_COMP *)__savegprlr_18(param_1);
+  piVar15 = &pVVar2->pass;
+  iVar10 = *piVar15;
   iVar4 = 0;
-  if (iVar8 == 2) {
-    iVar1 = *(int *)(iVar2 + 0x26f34) >> 5;
-    lVar9 = (longlong)iVar1;
-    iVar4 = *(int *)(iVar2 + 0x26f38);
+  if (iVar10 == 2) {
+    iVar1 = pVVar2->av_per_frame_bandwidth >> 5;
+    lVar11 = (longlong)iVar1;
+    iVar4 = pVVar2->min_frame_bandwidth;
     if (iVar4 < iVar1) {
 LAB_828367a0:
-      iVar4 = (int)lVar9;
+      iVar4 = (int)lVar11;
     }
   }
   else {
-    uVar11 = *(uint *)(iVar2 + 0x26f30);
-    lVar9 = (longlong)((int)uVar11 >> 2) + (ulonglong)((int)uVar11 < 0 && (uVar11 & 3) != 0);
-    if (0 < lVar9) goto LAB_828367a0;
+    uVar13 = pVVar2->per_frame_bandwidth;
+    lVar11 = (longlong)((int)uVar13 >> 2) + (ulonglong)((int)uVar13 < 0 && (uVar13 & 3) != 0);
+    if (0 < lVar11) goto LAB_828367a0;
   }
-  if (*(int *)(iVar2 + 0x20f84) == 0) {
-    if (iVar8 == 2) {
-      *(undefined4 *)(iVar2 + 0x26e70) = *(undefined4 *)(iVar2 + 0x26f30);
+  iVar1 = (pVVar2->common).refresh_alt_ref_frame;
+  if (iVar1 == 0) {
+    if (iVar10 == 2) {
+      pVVar2->this_frame_target = pVVar2->per_frame_bandwidth;
     }
     else {
-      iVar1 = *(int *)(iVar2 + 0x26ee0);
-      if (iVar1 < 1) {
-        *(undefined4 *)(iVar2 + 0x26e70) = *(undefined4 *)(iVar2 + 0x26f30);
+      iVar6 = pVVar2->kf_overspend_bits;
+      if (iVar6 < 1) {
+        pVVar2->this_frame_target = pVVar2->per_frame_bandwidth;
       }
       else {
-        iVar10 = *(int *)(iVar2 + 0x26ee4);
-        if (iVar1 < *(int *)(iVar2 + 0x26ee4)) {
-          iVar10 = iVar1;
+        iVar12 = pVVar2->kf_bitrate_adjustment;
+        if (iVar6 < pVVar2->kf_bitrate_adjustment) {
+          iVar12 = iVar6;
         }
-        iVar5 = *(int *)(iVar2 + 0x26f30) - iVar4;
-        if (iVar5 < iVar10) {
-          iVar10 = iVar5;
+        iVar5 = pVVar2->per_frame_bandwidth - iVar4;
+        if (iVar5 < iVar12) {
+          iVar12 = iVar5;
         }
-        iVar5 = *(int *)(iVar2 + 0x26f30) - iVar10;
-        *(int *)(iVar2 + 0x26e70) = iVar5;
-        *(int *)(iVar2 + 0x26ee0) = iVar1 - iVar10;
+        iVar5 = pVVar2->per_frame_bandwidth - iVar12;
+        pVVar2->this_frame_target = iVar5;
+        pVVar2->kf_overspend_bits = iVar6 - iVar12;
         if (iVar5 < iVar4) {
-          *(int *)(iVar2 + 0x26e70) = iVar4;
+          pVVar2->this_frame_target = iVar4;
         }
       }
-      piVar14 = (int *)(iVar2 + 0x26e70);
-      iVar1 = *(int *)(iVar2 + 0x26eb0);
-      if ((0 < iVar1) && (iVar10 = *piVar14, iVar4 < iVar10)) {
-        iVar5 = *(int *)(iVar2 + 0x26ed4);
-        if (iVar1 < *(int *)(iVar2 + 0x26ed4)) {
-          iVar5 = iVar1;
+      piVar9 = &pVVar2->this_frame_target;
+      iVar6 = pVVar2->gf_overspend_bits;
+      if ((0 < iVar6) && (iVar12 = *piVar9, iVar4 < iVar12)) {
+        iVar5 = pVVar2->non_gf_bitrate_adjustment;
+        if (iVar6 < pVVar2->non_gf_bitrate_adjustment) {
+          iVar5 = iVar6;
         }
-        if (iVar10 - iVar4 < iVar5) {
-          iVar5 = iVar10 - iVar4;
+        if (iVar12 - iVar4 < iVar5) {
+          iVar5 = iVar12 - iVar4;
         }
-        *(int *)(iVar2 + 0x26eb0) = iVar1 - iVar5;
-        *piVar14 = iVar10 - iVar5;
+        pVVar2->gf_overspend_bits = iVar6 - iVar5;
+        *piVar9 = iVar12 - iVar5;
       }
-      if (((0x96 < *(int *)(iVar2 + 0x2e744)) && (0 < *(int *)(iVar2 + 0x26ea8))) &&
-         (iVar1 = *(int *)(iVar2 + 0x26eac), 7 < iVar1)) {
-        iVar10 = *(int *)(iVar2 + 0x2e744) + -100 >> 5;
-        if (iVar10 < 1) {
-          iVar10 = 1;
+      if (((0x96 < pVVar2->last_boost) && (0 < pVVar2->frames_till_gf_update_due)) &&
+         (iVar6 = pVVar2->current_gf_interval, 7 < iVar6)) {
+        iVar12 = pVVar2->last_boost + -100 >> 5;
+        if (iVar12 < 1) {
+          iVar12 = 1;
         }
-        else if (10 < iVar10) {
-          iVar10 = 10;
+        else if (10 < iVar12) {
+          iVar12 = 10;
         }
-        iVar10 = (iVar10 * *piVar14) / 100;
-        iVar5 = *piVar14 - iVar4;
-        if (iVar5 < iVar10) {
-          iVar10 = iVar5;
+        iVar12 = (iVar12 * *piVar9) / 100;
+        iVar5 = *piVar9 - iVar4;
+        if (iVar5 < iVar12) {
+          iVar12 = iVar5;
         }
-        if (*(int *)(iVar2 + 0x1e744) == iVar1 >> 1) {
-          *piVar14 = (iVar1 + -1) * iVar10 + *piVar14;
+        if ((pVVar2->common).frames_since_golden == iVar6 >> 1) {
+          *piVar9 = (iVar6 + -1) * iVar12 + *piVar9;
         }
         else {
-          *piVar14 = *piVar14 - iVar10;
+          *piVar9 = *piVar9 - iVar12;
         }
       }
     }
   }
-  else if (iVar8 == 2) {
-    *(undefined4 *)(iVar2 + 0x26f30) = *(undefined4 *)(iVar2 + 0x26eb8);
-    *(undefined4 *)(iVar2 + 0x26e70) = *(undefined4 *)(iVar2 + 0x26eb8);
+  else if (iVar10 == 2) {
+    pVVar2->per_frame_bandwidth = pVVar2->gf_bits;
+    pVVar2->this_frame_target = pVVar2->gf_bits;
   }
-  iVar1 = *(int *)(iVar2 + 0x229c0);
-  if ((0 < iVar1) && (iVar1 < 0x65)) {
-    *(int *)(iVar2 + 0x26e70) = (iVar1 * *(int *)(iVar2 + 0x26e70)) / 100;
+  iVar6 = (pVVar2->oxcf).under_shoot_pct;
+  if ((0 < iVar6) && (iVar6 < 0x65)) {
+    pVVar2->this_frame_target = (iVar6 * pVVar2->this_frame_target) / 100;
   }
-  piVar14 = (int *)(iVar2 + 0x26e70);
-  if (*(int *)(iVar2 + 0x26e70) < iVar4) {
-    *piVar14 = iVar4;
+  piVar9 = &pVVar2->this_frame_target;
+  if (pVVar2->this_frame_target < iVar4) {
+    *piVar9 = iVar4;
   }
-  if (*(int *)(iVar2 + 0x20f84) == 0) {
-    *(int *)(iVar2 + 0x26f44) = *piVar14;
+  if (iVar1 == 0) {
+    pVVar2->inter_frame_target = *piVar9;
   }
-  if (iVar8 != 0) goto LAB_82836cb0;
-  if (*(int *)(iVar2 + 0x26f90) == 0) {
-    *(undefined4 *)(iVar2 + 0x26fc0) = *(undefined4 *)(iVar2 + 0x26fbc);
+  if (iVar10 != 0) goto LAB_82836cb0;
+  if (pVVar2->buffered_mode == 0) {
+    pVVar2->active_worst_quality = pVVar2->worst_quality;
     goto LAB_82836cb0;
   }
-  uVar11 = *(uint *)(iVar2 + 0x26f94);
-  uVar6 = *(uint *)(iVar2 + 0x229c8);
-  uVar3 = (longlong)((int)uVar6 / 100) + 1;
-  if ((int)uVar11 < (int)uVar6) {
+  uVar13 = pVVar2->buffer_level;
+  uVar7 = (pVVar2->oxcf).optimal_buffer_level;
+  uVar3 = (longlong)((int)uVar7 / 100) + 1;
+  if ((int)uVar13 < (int)uVar7) {
 LAB_82836ad0:
-    uVar12 = 0;
-    if ((*(int *)(iVar2 + 0x229bc) == 0) && ((int)uVar11 < (int)uVar6)) {
-      uVar7 = (ulonglong)uVar6 - (ulonglong)uVar11;
+    iVar4 = (pVVar2->oxcf).end_usage;
+    uVar14 = 0;
+    if ((iVar4 == 0) && ((int)uVar13 < (int)uVar7)) {
+      uVar8 = (ulonglong)uVar7 - (ulonglong)uVar13;
       trapWord(6,uVar3,0);
-      uVar12 = (int)uVar7 / (int)uVar3;
-      trapWord(5,uVar3 & ~(((uVar7 & 0x7fffffff) << 1 | (uVar7 & 0xffffffff) >> 0x1f) - 1),0xffff);
-      if ((int)uVar12 < 0x65) {
-        if ((int)uVar12 < 0) {
-          uVar12 = 0;
+      uVar14 = (int)uVar8 / (int)uVar3;
+      trapWord(5,uVar3 & ~(((uVar8 & 0x7fffffff) << 1 | (uVar8 & 0xffffffff) >> 0x1f) - 1),0xffff);
+      if ((int)uVar14 < 0x65) {
+        if ((int)uVar14 < 0) {
+          uVar14 = 0;
         }
       }
       else {
-        uVar12 = 100;
+        uVar14 = 100;
       }
     }
-    else if (*(int *)(iVar2 + 0x26f98) < 0) {
-      uVar7 = (ulonglong)(*(int *)(iVar2 + 0x26f98) * -100);
-      uVar3 = *(longlong *)(iVar2 + 0x26f88) << 3;
+    else if (pVVar2->bits_off_target < 0) {
+      uVar8 = (ulonglong)(pVVar2->bits_off_target * -100);
+      uVar3 = pVVar2->total_byte_count << 3;
       trapDoubleWordImmediate(6,uVar3,0);
-      uVar12 = (uint)((longlong)uVar7 / (longlong)uVar3);
-      trapDoubleWordImmediate(5,uVar3 & ~((uVar7 << 1 | uVar7 >> 0x3f) - 1),0xffff);
-      if ((int)uVar12 < 0x65) {
-        uVar12 = -((int)uVar12 >> 0x1f) - 1U & uVar12;
+      uVar14 = (uint)((longlong)uVar8 / (longlong)uVar3);
+      trapDoubleWordImmediate(5,uVar3 & ~((uVar8 << 1 | uVar8 >> 0x3f) - 1),0xffff);
+      if ((int)uVar14 < 0x65) {
+        uVar14 = -((int)uVar14 >> 0x1f) - 1U & uVar14;
       }
       else {
-        uVar12 = 100;
+        uVar14 = 100;
       }
     }
-    *piVar14 = (int)((100 - (((int)uVar12 >> 1) + (uint)((int)uVar12 < 0 && (uVar12 & 1) != 0))) *
-                    *piVar14) / 100;
-    if (*(int *)(iVar2 + 0x2e814) == 0) {
+    *piVar9 = (int)((100 - (((int)uVar14 >> 1) + (uint)((int)uVar14 < 0 && (uVar14 & 1) != 0))) *
+                   *piVar9) / 100;
+    if (pVVar2->auto_worst_q == 0) {
 LAB_82836c60:
       iVar4 = 0x26fbc;
       goto LAB_82836c64;
     }
-    uVar12 = *(uint *)(iVar2 + 0x26f98);
-    if ((*(int *)(iVar2 + 0x229bc) == 0) && ((int)uVar11 < (int)uVar12)) {
-      uVar12 = uVar11;
+    uVar14 = pVVar2->bits_off_target;
+    if ((iVar4 == 0) && ((int)uVar13 < (int)uVar14)) {
+      uVar14 = uVar13;
     }
-    if ((int)uVar6 <= (int)uVar12) {
+    if ((int)uVar7 <= (int)uVar14) {
       iVar4 = 0x26f68;
       goto LAB_82836c64;
     }
-    iVar4 = ((int)uVar6 >> 2) + (uint)((int)uVar6 < 0 && (uVar6 & 3) != 0);
-    if ((int)uVar12 <= iVar4) goto LAB_82836c60;
-    uVar6 = uVar6 * 3;
-    uVar3 = (longlong)((int)uVar6 >> 2) + (ulonglong)((int)uVar6 < 0 && (uVar6 & 3) != 0);
-    uVar11 = (*(int *)(iVar2 + 0x26fbc) - *(int *)(iVar2 + 0x26f68)) * (uVar12 - iVar4);
+    iVar4 = ((int)uVar7 >> 2) + (uint)((int)uVar7 < 0 && (uVar7 & 3) != 0);
+    if ((int)uVar14 <= iVar4) goto LAB_82836c60;
+    uVar7 = uVar7 * 3;
+    uVar3 = (longlong)((int)uVar7 >> 2) + (ulonglong)((int)uVar7 < 0 && (uVar7 & 3) != 0);
+    uVar13 = (pVVar2->worst_quality - pVVar2->ni_av_qi) * (uVar14 - iVar4);
     trapWord(6,uVar3,0);
-    *(int *)(iVar2 + 0x26fc0) = *(int *)(iVar2 + 0x26fbc) - (int)uVar11 / (int)uVar3;
-    trapWord(5,uVar3 & ~((((ulonglong)uVar11 & 0x7fffffff) << 1 | (ulonglong)(uVar11 >> 0x1f)) - 1),
+    pVVar2->active_worst_quality = pVVar2->worst_quality - (int)uVar13 / (int)uVar3;
+    trapWord(5,uVar3 & ~((((ulonglong)uVar13 & 0x7fffffff) << 1 | (ulonglong)(uVar13 >> 0x1f)) - 1),
              0xffff);
   }
   else {
-    iVar4 = *(int *)(iVar2 + 0x26f98);
-    if (iVar4 < (int)uVar6) goto LAB_82836ad0;
-    if ((int)uVar6 < iVar4) {
-      uVar7 = (ulonglong)(int)((iVar4 - uVar6) * 100);
-      uVar3 = *(longlong *)(iVar2 + 0x26f88) << 3;
-      uVar11 = (uint)((longlong)uVar7 / (longlong)uVar3);
+    iVar4 = pVVar2->bits_off_target;
+    if (iVar4 < (int)uVar7) goto LAB_82836ad0;
+    if ((int)uVar7 < iVar4) {
+      uVar8 = (ulonglong)(int)((iVar4 - uVar7) * 100);
+      uVar3 = pVVar2->total_byte_count << 3;
+      uVar13 = (uint)((longlong)uVar8 / (longlong)uVar3);
       trapDoubleWordImmediate(6,uVar3,0);
-      trapDoubleWordImmediate(5,uVar3 & ~((uVar7 << 1 | uVar7 >> 0x3f) - 1),0xffff);
-      if ((int)uVar11 < 0x65) {
-        uVar11 = -((int)uVar11 >> 0x1f) - 1U & uVar11;
+      trapDoubleWordImmediate(5,uVar3 & ~((uVar8 << 1 | uVar8 >> 0x3f) - 1),0xffff);
+      if ((int)uVar13 < 0x65) {
+        uVar13 = -((int)uVar13 >> 0x1f) - 1U & uVar13;
       }
       else {
-        uVar11 = 100;
+        uVar13 = 100;
       }
-      *piVar14 = (int)((((int)uVar11 >> 1) + (uint)((int)uVar11 < 0 && (uVar11 & 1) != 0) + 100) *
-                      *piVar14) / 100;
+      *piVar9 = (int)((((int)uVar13 >> 1) + (uint)((int)uVar13 < 0 && (uVar13 & 1) != 0) + 100) *
+                     *piVar9) / 100;
     }
-    if (*(int *)(iVar2 + 0x2e814) == 0) goto LAB_82836c60;
+    if (pVVar2->auto_worst_q == 0) goto LAB_82836c60;
     iVar4 = 0x26f68;
 LAB_82836c64:
-    *(undefined4 *)(iVar2 + 0x26fc0) = *(undefined4 *)(iVar2 + iVar4);
+    pVVar2->active_worst_quality = *(int *)((int)pVVar2->Y1quant[0] + iVar4);
   }
-  iVar4 = *(int *)(iVar2 + 0x26fc4);
-  *(int *)(iVar2 + 0x26fc8) = iVar4;
-  if (*(int *)(iVar2 + 0x26fc0) <= iVar4) {
-    *(int *)(iVar2 + 0x26fc0) = iVar4 + 1;
+  iVar4 = pVVar2->best_quality;
+  pVVar2->active_best_quality = iVar4;
+  if (pVVar2->active_worst_quality <= iVar4) {
+    pVVar2->active_worst_quality = iVar4 + 1;
   }
 LAB_82836cb0:
-  if ((((*(int *)(iVar2 + 0x26fcc) != 0) && (*(int *)(iVar2 + 0x26f90) != 0)) &&
-      (*(int *)(iVar2 + 0x229bc) == 0)) && (*(int *)(iVar2 + 0x1e6f8) != 0)) {
-    if (*(int *)(iVar2 + 0x26f94) < 0) {
-      *(undefined4 *)(iVar2 + 0x26fd0) = 1;
+  if ((((pVVar2->drop_frames_allowed != 0) && (pVVar2->buffered_mode != 0)) &&
+      ((pVVar2->oxcf).end_usage == 0)) && ((pVVar2->common).frame_type != KEY_FRAME)) {
+    if (pVVar2->buffer_level < 0) {
+      pVVar2->drop_frame = 1;
     }
-    if (*(int *)(iVar2 + 0x26fd0) == 0) {
-      *(undefined4 *)(iVar2 + 0x26fd4) = 0;
+    if (pVVar2->drop_frame == 0) {
+      pVVar2->drop_count = 0;
     }
     else {
-      iVar4 = *(int *)(iVar2 + 0x26f34) + *(int *)(iVar2 + 0x26f98);
-      *(int *)(iVar2 + 0x26f98) = iVar4;
-      *(int *)(iVar2 + 0x26f94) = iVar4;
+      iVar4 = pVVar2->av_per_frame_bandwidth + pVVar2->bits_off_target;
+      pVVar2->bits_off_target = iVar4;
+      pVVar2->buffer_level = iVar4;
     }
   }
-  if (((*(int *)(iVar2 + 0x22a1c) == 0) &&
-      (puVar15 = (uint *)(iVar2 + 0x26ea8), *(int *)(iVar2 + 0x26ea8) == 0)) &&
-     (*(int *)(iVar2 + 0x26fd0) == 0)) {
-    piVar16 = (int *)(iVar2 + 0x229d0);
-    iVar4 = *piVar16;
+  if ((((pVVar2->oxcf).error_resilient_mode == 0) &&
+      (piVar16 = &pVVar2->frames_till_gf_update_due, pVVar2->frames_till_gf_update_due == 0)) &&
+     (pVVar2->drop_frame == 0)) {
+    piVar17 = &(pVVar2->oxcf).fixed_q;
+    iVar4 = *piVar17;
     if (iVar4 < 0) {
-      iVar4 = *(int *)(iVar2 + 0x26e7c);
+      iVar4 = pVVar2->last_q[1];
     }
-    uVar11 = *(int *)(iVar2 + 0x30e10) * 100;
-    uVar3 = (longlong)*(int *)(iVar2 + 0x1e70c) * (longlong)*(int *)(iVar2 + 0x1e708);
-    lVar9 = (ulonglong)*(uint *)(iVar2 + 0x2e864) + (ulonglong)*(uint *)(iVar2 + 0x2e860);
-    uVar7 = (ulonglong)*(uint *)(iVar2 + 0x2e85c) + (ulonglong)*(uint *)(iVar2 + 0x2e858) + lVar9;
-    iVar10 = 0;
-    iVar1 = (int)uVar11 / (int)uVar3;
+    uVar13 = pVVar2->gf_active_count * 100;
+    uVar3 = (longlong)(pVVar2->common).mb_cols * (longlong)(pVVar2->common).mb_rows;
+    lVar11 = (ulonglong)(uint)pVVar2->recent_ref_frame_usage[3] +
+             (ulonglong)(uint)pVVar2->recent_ref_frame_usage[2];
+    uVar8 = (ulonglong)(uint)pVVar2->recent_ref_frame_usage[1] +
+            (ulonglong)(uint)pVVar2->recent_ref_frame_usage[0] + lVar11;
+    iVar6 = 0;
+    iVar1 = (int)uVar13 / (int)uVar3;
     trapWord(6,uVar3,0);
-    trapWord(5,uVar3 & ~((((ulonglong)uVar11 & 0x7fffffff) << 1 | (ulonglong)(uVar11 >> 0x1f)) - 1),
+    trapWord(5,uVar3 & ~((((ulonglong)uVar13 & 0x7fffffff) << 1 | (ulonglong)(uVar13 >> 0x1f)) - 1),
              0xffff);
-    if (uVar7 != 0) {
-      uVar3 = lVar9 * 100;
-      iVar10 = (int)uVar3 / (int)uVar7;
-      trapWord(6,uVar7,0);
-      trapWord(5,uVar7 & ~(((uVar3 & 0x7fffffff) << 1 | (uVar3 & 0xffffffff) >> 0x1f) - 1),0xffff);
+    if (uVar8 != 0) {
+      uVar3 = lVar11 * 100;
+      iVar6 = (int)uVar3 / (int)uVar8;
+      trapWord(6,uVar8,0);
+      trapWord(5,uVar8 & ~(((uVar3 & 0x7fffffff) << 1 | (uVar3 & 0xffffffff) >> 0x1f) - 1),0xffff);
     }
-    if (iVar10 < iVar1) {
-      iVar10 = iVar1;
+    if (iVar6 < iVar1) {
+      iVar6 = iVar1;
     }
-    if ((*(int *)(iVar2 + 0x2e7fc) == 0) ||
-       (((iVar8 == 0 && ((*(int *)(iVar2 + 0x2e878) < 0xf || (4 < iVar10)))) || (iVar8 == 2)))) {
-      *(undefined4 *)(iVar2 + 0x20f80) = 1;
+    if ((pVVar2->auto_gold == 0) ||
+       (((iVar10 == 0 && ((pVVar2->this_frame_percent_intra < 0xf || (4 < iVar6)))) || (iVar10 == 2)
+        ))) {
+      (pVVar2->common).refresh_golden_frame = 1;
     }
-    if (*(int *)(iVar2 + 0x20f80) == 1) {
-      *(undefined4 *)(iVar2 + 0x26ed8) = 0;
-      if (*(int *)(iVar2 + 0x2e800) != 0) {
-        iVar2 = calc_gf_params();
+    if ((pVVar2->common).refresh_golden_frame == 1) {
+      pVVar2->initial_gf_use = 0;
+      if (pVVar2->auto_adjust_gold_quantizer != 0) {
+        calc_gf_params(pVVar2);
       }
-      if (*(int *)(iVar2 + 0x22a94) == 0) {
-        if (-1 < *piVar16) {
-          iVar8 = *(int *)(iVar2 + 0x1e704);
-          iVar4 = (&DAT_821ecf30)[iVar4];
-          if (0x800 < iVar8) {
-            *(uint *)(iVar2 + 0x26eac) = *puVar15;
-            *piVar14 = (*(int *)(iVar2 + 0x2e744) * (iVar4 >> 9) * iVar8) / 100;
+      if (pVVar2->source_alt_ref_active == 0) {
+        if (-1 < *piVar17) {
+          iVar10 = (pVVar2->common).MBs;
+          iVar4 = vp8_bits_per_mb[1][iVar4];
+          if (0x800 < iVar10) {
+            pVVar2->current_gf_interval = *piVar16;
+            *piVar9 = (pVVar2->last_boost * (iVar4 >> 9) * iVar10) / 100;
             __restgprlr_18();
             return;
           }
-          *(uint *)(iVar2 + 0x26eac) = *puVar15;
-          *piVar14 = (*(int *)(iVar2 + 0x2e744) * (iVar4 * iVar8 >> 9)) / 100;
+          pVVar2->current_gf_interval = *piVar16;
+          *piVar9 = (pVVar2->last_boost * (iVar4 * iVar10 >> 9)) / 100;
           __restgprlr_18();
           return;
         }
-        if (*piVar13 == 2) {
-          *piVar14 = *(int *)(iVar2 + 0x26f30);
-          *(uint *)(iVar2 + 0x26eac) = *puVar15;
+        if (*piVar15 == 2) {
+          *piVar9 = pVVar2->per_frame_bandwidth;
+          pVVar2->current_gf_interval = *piVar16;
           __restgprlr_18();
           return;
         }
-        uVar11 = *(uint *)(iVar2 + 0x2e744);
-        uVar3 = (ulonglong)uVar11;
-        uVar6 = *(int *)(iVar2 + 0x26f44) * (int)((ulonglong)*puVar15 + 1);
-        uVar7 = (((ulonglong)*puVar15 + 1) * 100 + uVar3) - 100;
-        while (iVar8 = (int)uVar7, 1000 < (int)uVar11) {
+        uVar13 = pVVar2->last_boost;
+        uVar3 = (ulonglong)uVar13;
+        uVar7 = pVVar2->inter_frame_target * (int)((ulonglong)(uint)*piVar16 + 1);
+        uVar8 = (((ulonglong)(uint)*piVar16 + 1) * 100 + uVar3) - 100;
+        while (iVar10 = (int)uVar8, 1000 < (int)uVar13) {
           uVar3 = (longlong)((int)uVar3 >> 1) + (ulonglong)((int)uVar3 < 0 && (uVar3 & 1) != 0);
-          uVar7 = (longlong)(iVar8 >> 1) + (ulonglong)(iVar8 < 0 && (uVar7 & 1) != 0);
-          uVar11 = (uint)uVar3;
+          uVar8 = (longlong)(iVar10 >> 1) + (ulonglong)(iVar10 < 0 && (uVar8 & 1) != 0);
+          uVar13 = (uint)uVar3;
         }
-        trapWord(6,uVar7,0);
-        if (iVar8 < (int)uVar6 >> 7) {
-          *piVar14 = ((int)uVar6 / iVar8) * uVar11;
-          *(uint *)(iVar2 + 0x26eac) = *puVar15;
-          trapWord(5,uVar7 & ~((((ulonglong)uVar6 & 0x7fffffff) << 1 | (ulonglong)(uVar6 >> 0x1f)) -
+        trapWord(6,uVar8,0);
+        if (iVar10 < (int)uVar7 >> 7) {
+          *piVar9 = ((int)uVar7 / iVar10) * uVar13;
+          pVVar2->current_gf_interval = *piVar16;
+          trapWord(5,uVar8 & ~((((ulonglong)uVar7 & 0x7fffffff) << 1 | (ulonglong)(uVar7 >> 0x1f)) -
                               1),0xffff);
           __restgprlr_18();
           return;
         }
-        uVar3 = (longlong)(int)uVar6 * (longlong)(int)uVar11;
-        *piVar14 = (int)uVar3 / iVar8;
-        trapWord(5,uVar7 & ~(((uVar3 & 0x7fffffff) << 1 | (uVar3 & 0xffffffff) >> 0x1f) - 1),0xffff)
+        uVar3 = (longlong)(int)uVar7 * (longlong)(int)uVar13;
+        *piVar9 = (int)uVar3 / iVar10;
+        trapWord(5,uVar8 & ~(((uVar3 & 0x7fffffff) << 1 | (uVar3 & 0xffffffff) >> 0x1f) - 1),0xffff)
         ;
-        *(uint *)(iVar2 + 0x26eac) = *puVar15;
+        pVVar2->current_gf_interval = *piVar16;
         __restgprlr_18();
         return;
       }
-      *piVar14 = 0;
-      *(uint *)(iVar2 + 0x26eac) = *puVar15;
+      *piVar9 = 0;
+      pVVar2->current_gf_interval = *piVar16;
     }
   }
   __restgprlr_18();
@@ -596,91 +600,91 @@ LAB_82836cb0:
 
 // 82837038  vp8_update_rate_correction_factors  (WebM_atvi_opt/vpx/vp8/encoder/ratectrl.c:1146)
 
-void vp8_update_rate_correction_factors(undefined8 param_1,ulonglong param_2)
+void vp8_update_rate_correction_factors(VP8_COMP *param_1,int param_2)
 
 {
   int iVar1;
   int iVar2;
-  uint uVar3;
-  int iVar4;
-  ulonglong uVar5;
+  ulonglong uVar3;
+  uint uVar4;
+  int iVar5;
   ulonglong uVar6;
-  double dVar7;
+  ulonglong uVar7;
   double dVar8;
   double dVar9;
+  double dVar10;
   
-  iVar2 = __savegprlr_26();
+  uVar3 = (ulonglong)param_2;
+  iVar2 = __savegprlr_26(param_1);
   iVar1 = *(int *)(iVar2 + 0x1e6f8);
-  iVar4 = 100;
+  iVar5 = 100;
   if (iVar1 == 0) {
-    dVar9 = *(double *)(iVar2 + 0x26e90);
+    dVar10 = *(double *)(iVar2 + 0x26e90);
   }
   else if ((*(int *)(iVar2 + 0x20f84) == 0) && (*(int *)(iVar2 + 0x20f80) == 0)) {
-    dVar9 = *(double *)(iVar2 + 0x26e88);
+    dVar10 = *(double *)(iVar2 + 0x26e88);
   }
   else {
-    dVar9 = *(double *)(iVar2 + 0x26e98);
+    dVar10 = *(double *)(iVar2 + 0x26e98);
   }
-  uVar5 = (ulonglong)*(uint *)(iVar2 + 0x26f78);
-  uVar6 = (ulonglong)
-          (uint)(int)(((double)(longlong)
-                               *(int *)(&DAT_821ecd30 +
-                                       (iVar1 * 0x80 + *(int *)(iVar2 + 0x1e728)) * 4) * dVar9 + 0.5
-                      ) * (double)(longlong)*(int *)(iVar2 + 0x1e704) * 0.001953125);
+  uVar6 = (ulonglong)*(uint *)(iVar2 + 0x26f78);
+  uVar7 = (ulonglong)
+          (uint)(int)(((double)(longlong)vp8_bits_per_mb[iVar1][*(int *)(iVar2 + 0x1e728)] * dVar10
+                      + 0.5) * (double)(longlong)*(int *)(iVar2 + 0x1e704) * 0.001953125);
   if (0 < (int)*(uint *)(iVar2 + 0x26f78)) {
-    dVar7 = 0.99;
+    dVar8 = 0.99;
     do {
-      dVar8 = dVar7 + 3.90625e-05;
-      uVar6 = (ulonglong)(uint)(int)((double)(longlong)(int)uVar6 * dVar7);
-      dVar7 = dVar8;
-      if (0.999 <= dVar8) {
-        dVar7 = 0.999;
+      dVar9 = dVar8 + 3.90625e-05;
+      uVar7 = (ulonglong)(uint)(int)((double)(longlong)(int)uVar7 * dVar8);
+      dVar8 = dVar9;
+      if (0.999 <= dVar9) {
+        dVar8 = 0.999;
       }
-      uVar5 = uVar5 - 1;
-    } while (uVar5 != 0);
+      uVar6 = uVar6 - 1;
+    } while (uVar6 != 0);
   }
-  if (0 < (int)uVar6) {
-    trapWord(6,uVar6,0);
-    uVar3 = *(int *)(iVar2 + 0x26e74) * 100;
-    iVar4 = (int)uVar3 / (int)uVar6;
-    trapWord(5,uVar6 & ~((((ulonglong)uVar3 & 0x7fffffff) << 1 | (ulonglong)(uVar3 >> 0x1f)) - 1),
+  if (0 < (int)uVar7) {
+    trapWord(6,uVar7,0);
+    uVar4 = *(int *)(iVar2 + 0x26e74) * 100;
+    iVar5 = (int)uVar4 / (int)uVar7;
+    trapWord(5,uVar7 & ~((((ulonglong)uVar4 & 0x7fffffff) << 1 | (ulonglong)(uVar4 >> 0x1f)) - 1),
              0xffff);
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    dVar7 = 0.75;
+  if ((uVar3 & 0xffffffff) == 0) {
+    dVar8 = 0.75;
   }
-  else if ((param_2 & 0xffffffff) == 1) {
-    dVar7 = 0.375;
-  }
-  else {
-    dVar7 = 0.25;
-  }
-  if (iVar4 < 0x67) {
-    if (0x62 < iVar4) goto LAB_828372ac;
-    dVar8 = 0.01;
-    dVar9 = (double)(longlong)(int)-((double)(longlong)(100 - iVar4) * dVar7 - 100.5) * dVar9 * 0.01
-    ;
-    if (0.01 <= dVar9) goto LAB_828372ac;
+  else if ((uVar3 & 0xffffffff) == 1) {
+    dVar8 = 0.375;
   }
   else {
-    dVar8 = 50.0;
-    dVar9 = (double)(longlong)(int)((double)(longlong)(iVar4 + -100) * dVar7 + 100.5) * dVar9 * 0.01
-    ;
-    if (dVar9 <= 50.0) goto LAB_828372ac;
+    dVar8 = 0.25;
   }
-  dVar9 = dVar8;
+  if (iVar5 < 0x67) {
+    if (0x62 < iVar5) goto LAB_828372ac;
+    dVar9 = 0.01;
+    dVar10 = (double)(longlong)(int)-((double)(longlong)(100 - iVar5) * dVar8 - 100.5) * dVar10 *
+             0.01;
+    if (0.01 <= dVar10) goto LAB_828372ac;
+  }
+  else {
+    dVar9 = 50.0;
+    dVar10 = (double)(longlong)(int)((double)(longlong)(iVar5 + -100) * dVar8 + 100.5) * dVar10 *
+             0.01;
+    if (dVar10 <= 50.0) goto LAB_828372ac;
+  }
+  dVar10 = dVar9;
 LAB_828372ac:
   if (iVar1 == 0) {
-    *(double *)(iVar2 + 0x26e90) = dVar9;
+    *(double *)(iVar2 + 0x26e90) = dVar10;
     __restgprlr_26();
     return;
   }
   if ((*(int *)(iVar2 + 0x20f84) == 0) && (*(int *)(iVar2 + 0x20f80) == 0)) {
-    *(double *)(iVar2 + 0x26e88) = dVar9;
+    *(double *)(iVar2 + 0x26e88) = dVar10;
     __restgprlr_26();
     return;
   }
-  *(double *)(iVar2 + 0x26e98) = dVar9;
+  *(double *)(iVar2 + 0x26e98) = dVar10;
   __restgprlr_26();
   return;
 }
@@ -688,72 +692,74 @@ LAB_828372ac:
 
 // 828372E8  vp8_regulate_q  (WebM_atvi_opt/vpx/vp8/encoder/ratectrl.c:1265)
 
-void vp8_regulate_q(undefined8 param_1,ulonglong param_2)
+int vp8_regulate_q(VP8_COMP *param_1,int param_2)
 
 {
   int iVar1;
   uint uVar2;
   int iVar3;
   int iVar4;
-  int iVar5;
-  int iVar7;
-  ulonglong uVar6;
+  ulonglong uVar5;
+  int iVar6;
   int iVar8;
+  ulonglong uVar7;
   int iVar9;
-  int *piVar10;
-  int iVar11;
-  double dVar12;
+  int iVar10;
+  int *piVar11;
+  int iVar12;
   double dVar13;
+  double dVar14;
   
-  iVar3 = __savegprlr_27();
-  piVar10 = (int *)(iVar3 + 0x26f78);
+  uVar5 = (ulonglong)param_2;
+  iVar3 = __savegprlr_27(param_1);
+  piVar11 = (int *)(iVar3 + 0x26f78);
   iVar4 = *(int *)(iVar3 + 0x26fc0);
-  iVar11 = *(int *)(iVar3 + 0x229d0);
-  *piVar10 = 0;
-  if (iVar11 < 0) {
+  iVar12 = *(int *)(iVar3 + 0x229d0);
+  *piVar11 = 0;
+  if (iVar12 < 0) {
     iVar1 = *(int *)(iVar3 + 0x1e6f8);
-    iVar11 = 0x7fffffff;
+    iVar12 = 0x7fffffff;
     if (iVar1 == 0) {
-      iVar7 = 0x26e90;
+      iVar8 = 0x26e90;
     }
     else if ((*(int *)(iVar3 + 0x20f84) == 0) && (*(int *)(iVar3 + 0x20f80) == 0)) {
-      iVar7 = 0x26e88;
+      iVar8 = 0x26e88;
     }
     else {
-      iVar7 = 0x26e98;
+      iVar8 = 0x26e98;
     }
-    if ((int)param_2 < 0x3fffff) {
-      uVar6 = (param_2 & 0x7fffff) << 9;
+    if ((int)uVar5 < 0x3fffff) {
+      uVar7 = (uVar5 & 0x7fffff) << 9;
       uVar2 = *(uint *)(iVar3 + 0x1e704);
       trapWord(6,(ulonglong)uVar2,0);
-      iVar5 = (int)uVar6 / (int)uVar2;
-      trapWord(5,(ulonglong)uVar2 &
-                 ~(((uVar6 & 0x7fffffff) << 1 | (param_2 & 0x7fffff) >> 0x16) - 1),0xffff);
+      iVar6 = (int)uVar7 / (int)uVar2;
+      trapWord(5,(ulonglong)uVar2 & ~(((uVar7 & 0x7fffffff) << 1 | (uVar5 & 0x7fffff) >> 0x16) - 1),
+               0xffff);
     }
     else {
       uVar2 = *(uint *)(iVar3 + 0x1e704);
       trapWord(6,(ulonglong)uVar2,0);
-      iVar5 = (int)param_2 / (int)uVar2 << 9;
+      iVar6 = (int)uVar5 / (int)uVar2 << 9;
       trapWord(5,(ulonglong)uVar2 &
-                 ~(((param_2 & 0x7fffffff) << 1 | (param_2 & 0xffffffff) >> 0x1f) - 1),0xffff);
+                 ~(((uVar5 & 0x7fffffff) << 1 | (uVar5 & 0xffffffff) >> 0x1f) - 1),0xffff);
     }
-    iVar9 = *(int *)(iVar3 + 0x26fc8);
+    iVar10 = *(int *)(iVar3 + 0x26fc8);
     do {
-      iVar8 = (int)((double)(longlong)*(int *)(&DAT_821ecd30 + (iVar1 * 0x80 + iVar9) * 4) *
-                    *(double *)(iVar3 + iVar7) + 0.5);
-      if (iVar8 <= iVar5) {
-        iVar4 = iVar9;
-        if (iVar11 < iVar5 - iVar8) {
-          iVar4 = iVar9 + -1;
+      iVar9 = (int)((double)(longlong)vp8_bits_per_mb[iVar1][iVar10] * *(double *)(iVar3 + iVar8) +
+                   0.5);
+      if (iVar9 <= iVar6) {
+        iVar4 = iVar10;
+        if (iVar12 < iVar6 - iVar9) {
+          iVar4 = iVar10 + -1;
         }
         break;
       }
-      iVar9 = iVar9 + 1;
-      iVar11 = iVar8 - iVar5;
-    } while (iVar9 <= iVar4);
-    iVar11 = iVar4;
+      iVar10 = iVar10 + 1;
+      iVar12 = iVar9 - iVar6;
+    } while (iVar10 <= iVar4);
+    iVar12 = iVar4;
     if (0x7e < iVar4) {
-      dVar12 = 0.99;
+      dVar13 = 0.99;
       if (iVar1 == 0) {
         iVar4 = 0;
       }
@@ -766,21 +772,21 @@ void vp8_regulate_q(undefined8 param_1,ulonglong param_2)
       }
       if (iVar4 != 0) {
         while( true ) {
-          iVar3 = *piVar10;
-          *piVar10 = iVar3 + 1;
+          iVar3 = *piVar11;
+          *piVar11 = iVar3 + 1;
           if (iVar4 < iVar3 + 1) {
-            *piVar10 = iVar4;
+            *piVar11 = iVar4;
           }
-          dVar13 = dVar12 + 3.90625e-05;
-          iVar8 = (int)((double)(longlong)iVar8 * dVar12);
-          dVar12 = dVar13;
-          if (0.999 <= dVar13) {
-            dVar12 = 0.999;
+          dVar14 = dVar13 + 3.90625e-05;
+          iVar9 = (int)((double)(longlong)iVar9 * dVar13);
+          dVar13 = dVar14;
+          if (0.999 <= dVar14) {
+            dVar13 = 0.999;
           }
-          if (iVar8 <= iVar5) break;
-          if (iVar4 <= *piVar10) {
-            __restgprlr_27();
-            return;
+          if (iVar9 <= iVar6) break;
+          if (iVar4 <= *piVar11) {
+            iVar4 = __restgprlr_27();
+            return iVar4;
           }
         }
       }
@@ -788,26 +794,26 @@ void vp8_regulate_q(undefined8 param_1,ulonglong param_2)
   }
   else {
     if (*(int *)(iVar3 + 0x1e6f8) == 0) {
-      __restgprlr_27(*(undefined4 *)(iVar3 + 0x22a08));
-      return;
+      iVar4 = __restgprlr_27(*(undefined4 *)(iVar3 + 0x22a08));
+      return iVar4;
     }
     if (*(int *)(iVar3 + 0x20f84) != 0) {
-      __restgprlr_27(*(undefined4 *)(iVar3 + 0x22a04));
-      return;
+      iVar4 = __restgprlr_27(*(undefined4 *)(iVar3 + 0x22a04));
+      return iVar4;
     }
     if (*(int *)(iVar3 + 0x20f80) != 0) {
-      __restgprlr_27(*(undefined4 *)(iVar3 + 0x22a0c));
-      return;
+      iVar4 = __restgprlr_27(*(undefined4 *)(iVar3 + 0x22a0c));
+      return iVar4;
     }
   }
-  __restgprlr_27(iVar11);
-  return;
+  iVar4 = __restgprlr_27(iVar12);
+  return iVar4;
 }
 
 
 // 828375B8  vp8_adjust_key_frame_context  (WebM_atvi_opt/vpx/vp8/encoder/ratectrl.c:1427)
 
-void vp8_adjust_key_frame_context(void)
+void vp8_adjust_key_frame_context(VP8_COMP *param_1)
 
 {
   int *piVar1;
@@ -816,7 +822,7 @@ void vp8_adjust_key_frame_context(void)
   int iVar4;
   ulonglong uVar5;
   ulonglong uVar6;
-  uint *puVar7;
+  GPUANISOFILTER *pGVar7;
   int iVar8;
   uint uVar9;
   int iVar10;
@@ -825,7 +831,7 @@ void vp8_adjust_key_frame_context(void)
   longlong *plVar13;
   longlong lVar14;
   
-  iVar2 = __savegprlr_29();
+  iVar2 = __savegprlr_29(param_1);
   piVar3 = (int *)(iVar2 + 0x26e74);
   plVar13 = (longlong *)(iVar2 + 0x26ef8);
   uVar6 = 0;
@@ -840,7 +846,7 @@ void vp8_adjust_key_frame_context(void)
       iVar4 = 1;
     }
     iVar8 = 0;
-    puVar7 = (uint *)&UNK_821ecd18;
+    pGVar7 = anisoFilterMap + 0x40;
     lVar14 = 5;
     piVar11 = (int *)(iVar2 + 0x26f08);
     do {
@@ -856,9 +862,9 @@ void vp8_adjust_key_frame_context(void)
       iVar8 = iVar8 + 1;
       *piVar11 = iVar10;
       piVar11 = piVar11 + 1;
-      puVar7 = puVar7 + 1;
-      uVar6 = *puVar7 + uVar6;
-      uVar5 = (longlong)(int)*puVar7 * (longlong)*piVar1 + uVar5;
+      pGVar7 = pGVar7 + 4;
+      uVar6 = (uint)*(undefined4 *)pGVar7 + uVar6;
+      uVar5 = (longlong)(int)*(undefined4 *)pGVar7 * (longlong)*piVar1 + uVar5;
       lVar14 = lVar14 + -1;
     } while (lVar14 != 0);
     uVar5 = (uVar5 & 0xffffffff) / (uVar6 & 0xffffffff);
@@ -893,54 +899,54 @@ void vp8_adjust_key_frame_context(void)
 
 // 82837770  vp8_compute_frame_size_bounds  (WebM_atvi_opt/vpx/vp8/encoder/ratectrl.c:1514)
 
-void vp8_compute_frame_size_bounds(int param_1,int *param_2,int *param_3)
+void vp8_compute_frame_size_bounds(VP8_COMP *param_1,int *param_2,int *param_3)
 
 {
   int iVar1;
   uint uVar2;
   uint uVar3;
   
-  if (-1 < *(int *)(param_1 + 0x229d0)) {
+  if (-1 < (param_1->oxcf).fixed_q) {
     *param_2 = 0;
     *param_3 = 0x7fffffff;
     return;
   }
-  if (((*(int *)(param_1 + 0x1e6f8) == 0) || (*(int *)(param_1 + 0x20f84) != 0)) ||
-     (*(int *)(param_1 + 0x20f80) != 0)) {
-    uVar3 = *(int *)(param_1 + 0x26e70) * 9;
+  if ((((param_1->common).frame_type == KEY_FRAME) || ((param_1->common).refresh_alt_ref_frame != 0)
+      ) || ((param_1->common).refresh_golden_frame != 0)) {
+    uVar3 = param_1->this_frame_target * 9;
     *param_3 = ((int)uVar3 >> 3) + (uint)((int)uVar3 < 0 && (uVar3 & 7) != 0);
-    uVar3 = *(int *)(param_1 + 0x26e70) * 7;
+    uVar3 = param_1->this_frame_target * 7;
     *param_2 = ((int)uVar3 >> 3) + (uint)((int)uVar3 < 0 && (uVar3 & 7) != 0);
     return;
   }
-  if (*(int *)(param_1 + 0x229bc) == 0) {
-    if (*(int *)(param_1 + 0x229cc) + *(int *)(param_1 + 0x229c8) >> 1 <=
-        *(int *)(param_1 + 0x26f94)) {
-      iVar1 = *(int *)(param_1 + 0x26e70);
+  if ((param_1->oxcf).end_usage == 0) {
+    iVar1 = (param_1->oxcf).optimal_buffer_level;
+    if ((param_1->oxcf).maximum_buffer_size + iVar1 >> 1 <= param_1->buffer_level) {
+      iVar1 = param_1->this_frame_target;
       uVar3 = iVar1 * 0xc;
       uVar2 = uVar3 | (uint)(iVar1 * 3) >> 0x1e;
       *param_3 = ((int)uVar2 >> 3) + (uint)((int)uVar2 < 0 && (uVar3 & 4) != 0);
-      iVar1 = *(int *)(param_1 + 0x26e70);
+      iVar1 = param_1->this_frame_target;
       uVar3 = iVar1 * 6;
       uVar2 = uVar3 | (uint)(iVar1 * 3) >> 0x1f;
       *param_2 = ((int)uVar2 >> 3) + (uint)((int)uVar2 < 0 && (uVar3 & 6) != 0);
       return;
     }
-    if (*(int *)(param_1 + 0x26f94) <= *(int *)(param_1 + 0x229c8) >> 1) {
-      uVar3 = *(uint *)(param_1 + 0x26e70);
-      uVar2 = uVar3 * 10;
-      uVar3 = uVar2 | uVar3 * 5 >> 0x1f;
-      *param_3 = ((int)uVar3 >> 3) + (uint)((int)uVar3 < 0 && (uVar2 & 6) != 0);
-      uVar3 = *(uint *)(param_1 + 0x26e70);
+    if (param_1->buffer_level <= iVar1 >> 1) {
+      iVar1 = param_1->this_frame_target;
+      uVar3 = iVar1 * 10;
+      uVar2 = uVar3 | (uint)(iVar1 * 5) >> 0x1f;
+      *param_3 = ((int)uVar2 >> 3) + (uint)((int)uVar2 < 0 && (uVar3 & 6) != 0);
+      uVar3 = param_1->this_frame_target;
       uVar2 = uVar3 << 2;
       uVar3 = uVar2 | uVar3 >> 0x1e;
       *param_2 = ((int)uVar3 >> 3) + (uint)((int)uVar3 < 0 && (uVar2 & 4) != 0);
       return;
     }
   }
-  uVar3 = *(int *)(param_1 + 0x26e70) * 0xb;
+  uVar3 = param_1->this_frame_target * 0xb;
   *param_3 = ((int)uVar3 >> 3) + (uint)((int)uVar3 < 0 && (uVar3 & 7) != 0);
-  uVar3 = *(int *)(param_1 + 0x26e70) * 5;
+  uVar3 = param_1->this_frame_target * 5;
   *param_2 = ((int)uVar3 >> 3) + (uint)((int)uVar3 < 0 && (uVar3 & 7) != 0);
   return;
 }

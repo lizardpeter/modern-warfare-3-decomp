@@ -2,149 +2,250 @@
 
 // 825A4BA0  UI_GetClientInfo  (ui_mp/ui_main_mp.cpp:448)
 
-longlong UI_GetClientInfo(ulonglong param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+uiInfo_s * UI_GetClientInfo(LocalClientNum_t param_1)
 
 {
-  if (3 < (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8216ab14,0x1c2,0,0xffffffff820011a8,param_1,4);
+  if (LOCAL_CLIENT_3 < param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x1c2,0,
+                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  return param_1 * 0x22ac + -0x7c08e128;
+  return uiInfoArray + param_1;
 }
 
 
 // 825A4C08  UI_GetLocalVarsContext  (ui_mp/ui_main_mp.cpp:467)
 
-longlong UI_GetLocalVarsContext(ulonglong param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+UILocalVarContext * UI_GetLocalVarsContext(LocalClientNum_t param_1)
 
 {
-  if (3 < (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8216ab14,0x1c2,0,0xffffffff820011a8,param_1,4);
+  if (LOCAL_CLIENT_3 < param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x1c2,0,
+                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  return param_1 * 0x22ac + -0x7c08d6ac;
+  return &uiInfoArray[param_1].uiDC.localVars;
 }
 
 
 // 825A4C70  UI_GetClientDC  (ui_mp/ui_main_mp.cpp:473)
 
-longlong UI_GetClientDC(ulonglong param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+UiContext * UI_GetClientDC(LocalClientNum_t param_1)
 
 {
-  if (3 < (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8216ab14,0x1c2,0,0xffffffff820011a8,param_1,4);
+  if (LOCAL_CLIENT_3 < param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x1c2,0,
+                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  return param_1 * 0x22ac + -0x7c08e128;
+  return &uiInfoArray[param_1].uiDC;
 }
 
 
 // 825A4CD8  UI_RegisterDvars  (ui_mp/ui_main_mp.cpp:479)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
 
 void UI_RegisterDvars(void)
 
 {
   float fVar1;
   int iVar2;
-  undefined8 uVar3;
-  undefined8 uVar4;
-  undefined8 uVar5;
-  undefined8 uVar6;
-  undefined8 uVar7;
-  undefined8 uVar8;
+  ushort uVar3;
+  char *pcVar4;
+  IMAGE_DOS_HEADER *pIVar5;
+  ushort uVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
   
   __savefpr_26();
-  DAT_83fe7480 = Dvar_RegisterString(0xffffffff8216b944,0xffffffff820068af,0,0xffffffff8216b958);
-  DAT_83f7a9a4 = Dvar_RegisterString(0xffffffff8216b92c,0xffffffff820068af,0,0xffffffff8216b8e0);
-  DAT_83f71e04 = Dvar_RegisterString(0xffffffff8216b8b8,0xffffffff820068af,0,0xffffffff8216b8cc);
-  Dvar_RegisterBool(0xffffffff8216b8ac,1,0,0);
-  Dvar_RegisterBool(0xffffffff8201b16c,1,0,0);
-  Dvar_RegisterBool(0xffffffff82062c48,1,0,0);
-  Dvar_RegisterString(0xffffffff8216b894,0xffffffff820068af,0,0xffffffff8216b89c);
-  Dvar_RegisterString(0xffffffff8216b88c,0xffffffff820068af,0,0xffffffff8216b89c);
-  Dvar_RegisterString(0xffffffff8216b884,0xffffffff820068af,0,0xffffffff8216b89c);
-  Dvar_RegisterString(0xffffffff8216b87c,0xffffffff820068af,0,0xffffffff8216b89c);
-  Dvar_RegisterString(0xffffffff8216b874,0xffffffff820068af,0,0xffffffff8216b89c);
-  Dvar_RegisterString(0xffffffff8216b86c,0xffffffff820068af,0,0xffffffff8216b89c);
-  Dvar_RegisterString(0xffffffff8216b864,0xffffffff820068af,0,0xffffffff8216b89c);
-  Dvar_RegisterString(0xffffffff8216b85c,0xffffffff820068af,0,0xffffffff8216b89c);
-  Dvar_RegisterString(0xffffffff8216b854,0xffffffff820068af,0,0xffffffff8216b89c);
-  Dvar_RegisterString(0xffffffff8216b848,0xffffffff820068af,0,0xffffffff8216b89c);
-  Dvar_RegisterString(0xffffffff8216b83c,0xffffffff820068af,0,0xffffffff8216b89c);
-  Dvar_RegisterString(0xffffffff8216b830,0xffffffff820068af,0,0xffffffff8216b89c);
-  Dvar_RegisterString(0xffffffff8216b824,0xffffffff820068af,0,0xffffffff8216b89c);
-  Dvar_RegisterString(0xffffffff8216b818,0xffffffff820068af,0,0xffffffff8216b89c);
-  Dvar_RegisterString(0xffffffff8216b80c,0xffffffff820068af,0,0xffffffff8216b89c);
-  Dvar_RegisterString(0xffffffff8216b800,0xffffffff820068af,0,0xffffffff8216b89c);
-  DAT_83f71e68 = Dvar_RegisterInt(0xffffffff8216b7f0,0,0,2,0,0xffffffff8216b7b0);
+  uVar6 = 0x68af;
+  ui_customModeName = Dvar_RegisterString("ui_customModeName","",0,"Custom game mode name");
+  ui_customModeEditName =
+       Dvar_RegisterString("ui_customModeEditName","",0,
+                           "Name to give the currently edited custom game mode when editing is complete"
+                          );
+  ui_customClassName = Dvar_RegisterString("ui_customClassName","",0,"Custom Class name");
+  Dvar_RegisterBool("g_allowvote",true,0,(char *)0x0);
+  Dvar_RegisterBool("cg_brass",true,0,(char *)0x0);
+  Dvar_RegisterBool("fx_marks",true,0,(char *)0x0);
+  Dvar_RegisterString("server1","",0,"Server display");
+  Dvar_RegisterString("server2","",0,"Server display");
+  Dvar_RegisterString("server3","",0,"Server display");
+  Dvar_RegisterString("server4","",0,"Server display");
+  Dvar_RegisterString("server5","",0,"Server display");
+  Dvar_RegisterString("server6","",0,"Server display");
+  Dvar_RegisterString("server7","",0,"Server display");
+  Dvar_RegisterString("server8","",0,"Server display");
+  Dvar_RegisterString("server9","",0,"Server display");
+  Dvar_RegisterString("server10","",0,"Server display");
+  Dvar_RegisterString("server11","",0,"Server display");
+  Dvar_RegisterString("server12","",0,"Server display");
+  Dvar_RegisterString("server13","",0,"Server display");
+  Dvar_RegisterString("server14","",0,"Server display");
+  Dvar_RegisterString("server15","",0,"Server display");
+  Dvar_RegisterString("server16","",0,"Server display");
+  pcVar4 = (char *)0x0;
+  uVar3 = 0;
+  ui_netSource = Dvar_RegisterInt("ui_netSource",0,0,2,0,
+                                  "The network source where:\n  0:Local\n  1:Internet\n  2:Favourites"
+                                 );
   iVar2 = R_IsHiDef();
-  uVar8 = 0x3ff0000000000000;
-  uVar7 = 0;
+  dVar12 = 1.0;
+  dVar11 = 0.0;
   if (iVar2 == 0) {
-    DAT_83f7a9a0 = Dvar_RegisterFloat(0x3fd8000000000000,0,0x3ff0000000000000,0xffffffff8216b78c);
+    ui_smallFont = Dvar_RegisterFloat("ui_smallFont",0.375,0.0,1.0,uVar3,pcVar4);
     fVar1 = 0.5832;
   }
   else {
-    DAT_83f7a9a0 = Dvar_RegisterFloat(0x3fe20418a0000000,0,0x3ff0000000000000,0xffffffff8216b78c);
+    ui_smallFont = Dvar_RegisterFloat("ui_smallFont",0.563,0.0,1.0,uVar3,pcVar4);
     fVar1 = 0.688;
   }
-  DAT_83f71e74 = Dvar_RegisterFloat((double)fVar1,uVar7,uVar8,0xffffffff8216b764);
-  DAT_83f71e88 = Dvar_RegisterFloat(uVar8,uVar7,uVar8,0xffffffff8216b73c);
-  DAT_83f71ec0 = Dvar_RegisterInt(0xffffffff8216b718,0,0,0x7fffffff,0,0xffffffff8216b728);
-  DAT_83f71eb0 = Dvar_RegisterString(0xffffffff8202c6b0,0xffffffff820068af,0,0xffffffff8215e82c);
-  DAT_83f71e10 = Dvar_RegisterString(0xffffffff8202c6bc,0xffffffff820068af,0,0xffffffff82045c48);
-  DAT_83f71eb4 = Dvar_RegisterString(0xffffffff8216aa90,0xffffffff820068af,0,0xffffffff8216b6f8);
-  DAT_83f71e14 = Dvar_RegisterString(0xffffffff8216aa58,0xffffffff820068af,0,0xffffffff8216b6d4);
-  DAT_83f71e6c = Dvar_RegisterString(0xffffffff8216aa74,0xffffffff820068af,0,0xffffffff8216b6b0);
-  DAT_83f7a9a8 = Dvar_RegisterString(0xffffffff8216aa3c,0xffffffff820068af,0,0xffffffff8216b68c);
-  DAT_83f71e80 = Dvar_RegisterBool(0xffffffff8216b648,0,0,0xffffffff8216b65c);
-  DAT_83f71ed4 = Dvar_RegisterInt(0xffffffff8216b614,0,0,0x7fffffff,0,0xffffffff8216b630);
-  DAT_83f7a98c = Dvar_RegisterString(0xffffffff8216b5e0,0xffffffff820068af,0,0xffffffff8216b5f8);
-  DAT_83f7a9ac = Dvar_RegisterInt(0xffffffff8216b588,7000,0,0x7fffffff,0,0xffffffff8216b5a0);
-  DAT_83f7a998 = Dvar_RegisterVec2(0xc049000000000000,0x4046800000000000,0xc0c3880000000000,
-                                   0x40c3880000000000,0xffffffff8216b554);
-  DAT_83f71e94 = Dvar_RegisterFloat(0x3fcd70a3e0000000,uVar7,uVar8,0xffffffff8216b51c);
-  DAT_83f71e00 = Dvar_RegisterBool(0xffffffff8216b4e0,0,4,0xffffffff8216b4ec);
-  DAT_83f71e70 = Dvar_RegisterString(0xffffffff8216b4a0,0xffffffff820068af,0,0xffffffff8216b4b0);
-  uVar5 = 0x3fc99999a0000000;
-  DAT_83f71e58 = Dvar_RegisterColor(0x3fc99999a0000000,0x3fc99999a0000000,0x3fc99999a0000000,uVar8,
-                                    0xffffffff8216b44c);
-  DAT_83f71e5c = Dvar_RegisterColor(uVar8,uVar8,uVar8,uVar8,0xffffffff8216b3fc);
-  DAT_83fe742c = Dvar_RegisterFloat(uVar8,uVar7,uVar8,0xffffffff8216b3a8);
-  uVar6 = 0x3fd99999a0000000;
-  uVar4 = 0x3fe99999a0000000;
-  DAT_83f71ec8 = Dvar_RegisterColor(uVar8,0x3fe99999a0000000,0x3fd99999a0000000,uVar8,
-                                    0xffffffff8216b354);
-  uVar3 = 0x3fe0000000000000;
-  DAT_83fe7470 = Dvar_RegisterColor(uVar8,uVar8,uVar8,0x3fe0000000000000,0xffffffff8216b2f0);
-  DAT_83f71e0c = Dvar_RegisterColor(0x3fee147ae0000000,0x3fe8a3d700000000,0x3fd47ae140000000,uVar3,
-                                    0xffffffff8216b2cc);
-  DAT_83f7a988 = Dvar_RegisterColor(uVar8,uVar4,uVar6,uVar8,0xffffffff8202ca58);
-  DAT_83f71ed0 = Dvar_RegisterColor(0x3fe8f5c280000000,0x3fe8f5c280000000,0x3fe8f5c280000000,uVar8,
-                                    0xffffffff8216b26c);
-  DAT_83fe7478 = Dvar_RegisterBool(0xffffffff8216b210,0,0,0xffffffff8216b1ec);
-  DAT_83f71e64 = Dvar_RegisterInt(0xffffffff8216b18c,0x1e,1,0x7fffffff,0,0xffffffff8216b1a8);
-  DAT_83f71ec4 = Dvar_RegisterInt(0xffffffff8216b174,0x1e,0,0x7fffffff,0,0xffffffff8216b130);
-  DAT_83f71e60 = Dvar_RegisterInt(0xffffffff8216b0c8,8,1,0x7fffffff,0,0xffffffff8216b0e8);
-  DAT_83f7a99c = Dvar_RegisterInt(0xffffffff8216b0ac,4,1,0x7fffffff,0,0xffffffff8216b068);
-  uVar3 = 0x3fe3333340000000;
-  DAT_83fe7474 = Dvar_RegisterFloat(0x3fe3333340000000,uVar7,uVar8,0xffffffff8216b008);
-  DAT_83f71e78 = Dvar_RegisterBool(0xffffffff8216afbc,0,0,0xffffffff8216afd4);
-  DAT_83f71e7c = Dvar_RegisterVec4(0x3fd3333340000000,uVar3,0x3fd3333340000000,uVar8,uVar7,uVar8,
-                                   0xffffffff8216af50);
-  DAT_83f71e8c = Dvar_RegisterBool(0xffffffff8216af3c,1,0,0xffffffff8216af20);
-  DAT_83f71ea8 = Dvar_RegisterBool(0xffffffff8216aeec,0,4,0xffffffff8216aefc);
-  DAT_83f71eac = Dvar_RegisterBool(0xffffffff8216aedc,0,4,0xffffffff8216aea4);
-  DAT_83f71e98 = Dvar_RegisterBool(0xffffffff8216ae60,0,4,0xffffffff8216ae78);
-  DAT_83f7a994 = Dvar_RegisterBool(0xffffffff8216ae20,0,4,0xffffffff8216ae34);
-  uVar3 = 0x47efffffe0000000;
-  DAT_83f71e08 = Dvar_RegisterFloat(0x403e000000000000,0x3810000000000000,0x47efffffe0000000,
-                                    0xffffffff8216ade4);
-  DAT_83f71ea0 = Dvar_RegisterFloat(uVar8,uVar7,uVar3,0xffffffff8216ad90);
-  DAT_83f71eb8 = Dvar_RegisterFloat(0x4008000000000000,uVar7,uVar3,0xffffffff8216ad2c);
-  DAT_83fe7428 = Dvar_RegisterFloat(uVar5,uVar7,uVar3,0xffffffff8216acc0);
-  DAT_83f71ecc = Dvar_RegisterFloat(0x4044000000000000,uVar8,uVar3,0xffffffff8216ac84);
-  DAT_83f71e9c = Dvar_RegisterBool(0xffffffff8216ac74,0,0,0xffffffff8216ac50);
-  DAT_83f71e90 = Dvar_RegisterBool(0xffffffff8216ac0c,1,0,0xffffffff8216ac28);
-  DAT_83fe747c = Dvar_RegisterBool(0xffffffff8216abc4,0,0,0xffffffff8216abd8);
-  DAT_83f71ea4 = Dvar_RegisterInt(0xffffffff8216ab54,0x4b0,0,0x7fffffff,0,0xffffffff8216ab78);
+  pcVar4 = "story";
+  uVar3 = 0;
+  ui_bigFont = Dvar_RegisterFloat("ui_bigFont",fVar1,(float)dVar11,(float)dVar12,0,"story");
+  ui_extraBigFont =
+       Dvar_RegisterFloat("ui_extraBigFont",(float)dVar12,(float)dVar11,(float)dVar12,uVar3,pcVar4);
+  ui_currentMap = Dvar_RegisterInt("ui_currentMap",0,0,0x7fffffff,0,"Current map index");
+  ui_gametype = Dvar_RegisterString("ui_gametype","",0,"Current game type");
+  ui_mapname = Dvar_RegisterString("ui_mapname","",0,"Current map name");
+  ui_mapvote_entrya_mapname =
+       Dvar_RegisterString("ui_mapvote_entrya_mapname","",0,"Primary map vote entry map name");
+  ui_mapvote_entryb_mapname =
+       Dvar_RegisterString("ui_mapvote_entryb_mapname","",0,"Secondary map vote entry map name");
+  ui_mapvote_entrya_gametype =
+       Dvar_RegisterString("ui_mapvote_entrya_gametype","",0,"Primary map vote entry game type");
+  ui_mapvote_entryb_gametype =
+       Dvar_RegisterString("ui_mapvote_entryb_gametype","",0,"Secondary map vote entry game type");
+  ui_onlineRequired =
+       Dvar_RegisterBool("ui_onlineRequired",false,0,"UI requires online connection to be present.")
+  ;
+  ui_currentFeederMapIndex =
+       Dvar_RegisterInt("ui_currentFeederMapIndex",0,0,0x7fffffff,0,"Currently selected map");
+  ui_selectedFeederMap =
+       Dvar_RegisterString("ui_selectedFeederMap","",0,"Current preview game type");
+  ui_serverStatusTimeOut =
+       Dvar_RegisterInt("ui_serverStatusTimeOut",7000,0,0x7fffffff,0,
+                        "Time in milliseconds before a server status request times out");
+  pcVar4 = "story";
+  ui_buildLocation = Dvar_RegisterVec2("ui_buildLocation",-50.0,45.0,-10000.0,10000.0,0,"story");
+  ui_buildSize = Dvar_RegisterFloat("ui_buildSize",0.23,(float)dVar11,(float)dVar12,0,pcVar4);
+  ui_showList = Dvar_RegisterBool("ui_showList",false,4,
+                                  "Show onscreen list of currently visible menus");
+  pcVar4 = (char *)0x0;
+  ui_showMenuOnly =
+       Dvar_RegisterString("ui_showMenuOnly","",0,"If set, only menus using this name will draw.");
+  dVar9 = 0.20000000298023224;
+  ui_playlistCategoryColor[0] =
+       Dvar_RegisterColor("ui_playlistCategoryDisabledColor",0.2,0.2,0.2,(float)dVar12,uVar6,pcVar4)
+  ;
+  pcVar4 = ui_arenaBuf + 0x6200;
+  uVar3 = 0;
+  ui_playlistCategoryColor[1] =
+       Dvar_RegisterColor("ui_playlistCategoryEnabledColor",(float)dVar12,(float)dVar12,
+                          (float)dVar12,(float)dVar12,0,ui_arenaBuf + 0x6200);
+  ui_playlistActionButtonAlpha =
+       Dvar_RegisterFloat("ui_playlistActionButtonAlpha",(float)dVar12,(float)dVar11,(float)dVar12,
+                          uVar3,pcVar4);
+  pIVar5 = &IMAGE_DOS_HEADER_82000000;
+  uVar3 = 0;
+  dVar10 = 0.4000000059604645;
+  dVar8 = 0.800000011920929;
+  ui_playerPartyColor =
+       Dvar_RegisterColor("ui_playerPartyColor",(float)dVar12,0.8,0.4,(float)dVar12,0,
+                          IMAGE_DOS_HEADER_82000000.e_magic);
+  dVar7 = 0.5;
+  ui_inactiveBaseColor =
+       Dvar_RegisterColor("ui_inactiveBaseColor",(float)dVar12,(float)dVar12,(float)dVar12,0.5,uVar3
+                          ,pIVar5->e_magic);
+  uVar3 = 0;
+  ui_inactivePartyColor =
+       Dvar_RegisterColor("ui_inactivePartyColor",0.94,0.77,0.32,(float)dVar7,0,
+                          (char *)(sharedUiInfo.serverStatus.displayServers + 0x3783));
+  pcVar4 = "bind <key> [command] : attach a command to a key\n";
+  ui_myPartyColor =
+       Dvar_RegisterColor("ui_myPartyColor",(float)dVar12,(float)dVar8,(float)dVar10,(float)dVar12,
+                          uVar3,"bind <key> [command] : attach a command to a key\n");
+  lobby_searchingPartyColor =
+       Dvar_RegisterColor("lobby_searchingPartyColor",0.78,0.78,0.78,(float)dVar12,0,pcVar4);
+  ui_partyFull = Dvar_RegisterBool("ui_partyFull",false,0,"True if the current party is full.");
+  lobby_numAnimationFrames =
+       Dvar_RegisterInt("lobby_numAnimationFrames",0x1e,1,0x7fffffff,0,
+                        "How many animation tiles are in the searching_for_player texture");
+  lobby_animationSpeed =
+       Dvar_RegisterInt("lobby_animationSpeed",0x1e,0,0x7fffffff,0,
+                        "How long each frame of the animation should draw, in milliseconds");
+  lobby_animationTilesWide =
+       Dvar_RegisterInt("lobby_animationTilesWide",8,1,0x7fffffff,0,
+                        "How many animation tiles wide is the searching_for_player texture");
+  lobby_animationTilesHigh =
+       Dvar_RegisterInt("lobby_animationTilesHigh",4,1,0x7fffffff,0,
+                        "How many animation tiles high is the searching_for_player texture");
+  dVar7 = 0.6000000238418579;
+  ui_borderLowLightScale =
+       Dvar_RegisterFloat("ui_borderLowLightScale",0.6,(float)dVar11,(float)dVar12,0,
+                          IMAGE_DOS_HEADER_82000000.e_magic);
+  ui_cinematicsTimestamp =
+       Dvar_RegisterBool("ui_cinematicsTimestamp",false,0,
+                         "Shows cinematics timestamp on subtitle UI elements.");
+  ui_connectScreenTextGlowColor =
+       Dvar_RegisterVec4("ui_connectScreenTextGlowColor",0.3,(float)dVar7,0.3,(float)dVar12,
+                         (float)dVar11,(float)dVar12,0,"story");
+  ui_drawCrosshair = Dvar_RegisterBool("ui_drawCrosshair",true,0,"Whether to draw crosshairs.");
+  ui_debugMode = Dvar_RegisterBool("ui_debugMode",false,4,"Draw ui debug info on the screen.");
+  ui_hud_hardcore =
+       Dvar_RegisterBool("ui_hud_hardcore",false,4,
+                         "Whether the HUD should be suppressed for hardcore mode");
+  ui_allow_classchange =
+       Dvar_RegisterBool("ui_allow_classchange",false,4,"Whether the UI should allow changing class"
+                        );
+  ui_allow_teamchange =
+       Dvar_RegisterBool("ui_allow_teamchange",false,4,"Whether the UI should allow changing team");
+  uVar3 = 0;
+  dVar7 = 3.4028234663852886e+38;
+  ui_textScrollSpeed =
+       Dvar_RegisterFloat("ui_textScrollSpeed",30.0,1.1754944e-38,3.4028235e+38,0,
+                          IMAGE_DOS_HEADER_82000000.e_magic);
+  pcVar4 = "story";
+  ui_textScrollPauseStart =
+       Dvar_RegisterFloat("ui_textScrollPauseStart",(float)dVar12,(float)dVar11,(float)dVar7,uVar3,
+                          "story");
+  uVar3 = 0;
+  ui_textScrollPauseEnd =
+       Dvar_RegisterFloat("ui_textScrollPauseEnd",3.0,(float)dVar11,(float)dVar7,0,pcVar4);
+  pcVar4 = "story";
+  ui_textScrollFadeTime =
+       Dvar_RegisterFloat("ui_textScrollFadeTime",(float)dVar9,(float)dVar11,(float)dVar7,uVar3,
+                          "story");
+  ui_sliderSteps = Dvar_RegisterFloat("ui_sliderSteps",40.0,(float)dVar12,(float)dVar7,0,pcVar4);
+  ui_showDLCMaps = Dvar_RegisterBool("ui_showDLCMaps",false,0,"Whether to display the DLC maps.");
+  accessToSubscriberContent =
+       Dvar_RegisterBool("accessToSubscriberContent",true,0,
+                         "Whether to display the subscriber maps.");
+  uiscript_verbose =
+       Dvar_RegisterBool("uiscript_verbose",false,0,
+                         "Turns on extra ui script debugging console prints");
+  ui_playlistPopulationRefreshTime =
+       Dvar_RegisterInt("ui_playlistPopulationRefreshTime",0x4b0,0,0x7fffffff,0,
+                        "The number of seconds before the playlist population heatmap is refreshed."
+                       );
   __restfpr_26();
   return;
 }
@@ -152,42 +253,52 @@ void UI_RegisterDvars(void)
 
 // 825A5810  TRACK_ui_main  (ui_mp/ui_main_mp.cpp:662)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
 void TRACK_ui_main(void)
 
 {
-  track_static_alloc_internal(0xffffffff83f7a9b0,0x6ca78,0xffffffff8216b988,0x23);
-  track_static_alloc_internal(0xffffffff83f71ed8,0x8ab0,0xffffffff8216b97c,0x23);
-  track_static_alloc_internal(0xffffffff82991f60,0x30,0xffffffff8216b970,0x23);
+  track_static_alloc_internal(&sharedUiInfo,0x6ca78,"sharedUiInfo",0x23);
+  track_static_alloc_internal(uiInfoArray,0x8ab0,"uiInfoArray",0x23);
+  track_static_alloc_internal(MonthAbbrev,0x30,"MonthAbbrev",0x23);
   return;
 }
 
 
 // 825A5888  UI_AssetCache  (ui_mp/ui_main_mp.cpp:678)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
 void UI_AssetCache(void)
 
 {
   __savegprlr_29();
-  DAT_83f7a9d0 = Material_RegisterHandle(0xffffffff8201e1d4,3);
-  DAT_83f7a9c0 = Material_RegisterHandle(0xffffffff8216badc,3);
-  DAT_83f7a9b4 = Material_RegisterHandle(0xffffffff8216bac0,3);
-  DAT_83f7a9b0 = Material_RegisterHandle(0xffffffff8216baa8,3);
-  DAT_83f7a9b8 = Material_RegisterHandle(0xffffffff8216ba90,3);
-  DAT_83f7a9bc = Material_RegisterHandle(0xffffffff8216ba74,3);
-  DAT_83f7a9c4 = Material_RegisterHandle(0xffffffff8216badc,3);
-  DAT_83f7a9c8 = Material_RegisterHandle(0xffffffff8216ba68,3);
-  DAT_83f7a9cc = Material_RegisterHandle(0xffffffff8216ba58,3);
-  DAT_83f7a9d8 = Material_RegisterHandle(0xffffffff8216ba44,3);
-  DAT_83f7a9dc = Material_RegisterHandle(0xffffffff8216ba2c,3);
-  DAT_83f7a9e0 = CL_RegisterFont(0xffffffff8216ba1c,0);
-  DAT_83f7a9e4 = CL_RegisterFont(0xffffffff8216ba0c,0);
-  DAT_83f7a9e8 = CL_RegisterFont(0xffffffff8205b098,0);
-  DAT_83f7a9ec = CL_RegisterFont(0xffffffff8216b9fc,0);
-  DAT_83f7a9f0 = CL_RegisterFont(0xffffffff8216b9e8,0);
-  DAT_83f7a9f4 = CL_RegisterFont(0xffffffff8216b9d4,0);
-  DAT_83f7a9f8 = CL_RegisterFont(0xffffffff8216b9c0,0);
-  DAT_83f7a9fc = CL_RegisterFont(0xffffffff8216b9ac,0);
-  DAT_83f7aa00 = CL_RegisterFont(0xffffffff8216b998,0);
+  sharedUiInfo.assets.whiteMaterial = Material_RegisterHandle("white",3);
+  sharedUiInfo.assets.scrollBar = Material_RegisterHandle("ui_scrollbar",3);
+  sharedUiInfo.assets.scrollBarArrowDown = Material_RegisterHandle("ui_scrollbar_arrow_dwn_a",3);
+  sharedUiInfo.assets.scrollBarArrowUp = Material_RegisterHandle("ui_scrollbar_arrow_up_a",3);
+  sharedUiInfo.assets.scrollBarArrowLeft = Material_RegisterHandle("ui_scrollbar_arrow_left",3);
+  sharedUiInfo.assets.scrollBarArrowRight = Material_RegisterHandle("ui_scrollbar_arrow_right",3);
+  sharedUiInfo.assets.scrollBarThumb = Material_RegisterHandle("ui_scrollbar",3);
+  sharedUiInfo.assets.sliderBar = Material_RegisterHandle("ui_slider2",3);
+  sharedUiInfo.assets.sliderThumb = Material_RegisterHandle("ui_sliderbutt_1",3);
+  sharedUiInfo.assets.textDecodeCharacters = Material_RegisterHandle("decode_characters",3);
+  sharedUiInfo.assets.textDecodeCharactersGlow = Material_RegisterHandle("decode_characters_glow",3)
+  ;
+  sharedUiInfo.assets.bigFont = CL_RegisterFont("fonts/bigfont",0);
+  sharedUiInfo.assets.smallFont = CL_RegisterFont("fonts/smallfont",0);
+  sharedUiInfo.assets.consoleFont = CL_RegisterFont("fonts/consolefont",0);
+  sharedUiInfo.assets.boldFont = CL_RegisterFont("fonts/boldfont",0);
+  sharedUiInfo.assets.textFont = CL_RegisterFont("fonts/normalfont",0);
+  sharedUiInfo.assets.extraBigFont = CL_RegisterFont("fonts/extrabigfont",0);
+  sharedUiInfo.assets.objectiveFont = CL_RegisterFont("fonts/objectivefont",0);
+  sharedUiInfo.assets.hudBigFont = CL_RegisterFont("fonts/hudbigfont",0);
+  sharedUiInfo.assets.hudSmallFont = CL_RegisterFont("fonts/hudsmallfont",0);
   __restgprlr_29();
   return;
 }
@@ -195,21 +306,24 @@ void UI_AssetCache(void)
 
 // 825A5A38  UI_SetScissorRect  (ui_mp/ui_main_mp.cpp:706)
 
-void UI_SetScissorRect(double param_1,double param_2,double param_3,double param_4,
-                      undefined8 param_5)
+void UI_SetScissorRect(ScreenPlacement *param_1,float param_2,float param_3,float param_4,
+                      float param_5,int param_6,int param_7)
 
 {
+  int in_r8;
+  int in_r9;
   float fStack0000001c;
   float fStack00000024;
   float fStack0000002c;
   float fStack00000034;
   
-  fStack0000001c = (float)param_1;
-  fStack00000024 = (float)param_2;
-  fStack0000002c = (float)param_3;
-  fStack00000034 = (float)param_4;
+  fStack0000001c = param_2;
+  fStack00000024 = param_3;
+  fStack0000002c = param_4;
+  fStack00000034 = param_5;
   ScrPlace_ApplyRectClamped
-            (param_5,&stack0x0000001c,&stack0x00000024,&stack0x0000002c,&stack0x00000034);
+            (param_1,&stack0x0000001c,&stack0x00000024,&stack0x0000002c,&stack0x00000034,in_r8,in_r9
+            );
   R_AddCmdSetScissorRect
             ((int)(fStack0000001c + 0.5),(int)(fStack00000024 + 0.5),(int)(fStack0000002c + 0.5),
              (int)(fStack00000034 + 0.5));
@@ -217,24 +331,57 @@ void UI_SetScissorRect(double param_1,double param_2,double param_3,double param
 }
 
 
-// 825A5AE0  UI_DrawSides  (ui_mp/ui_main_mp.cpp:719)
+// 825A5AD8  UI_ClearScissorRect  (ui_mp/ui_main_mp.cpp:713)
 
-void UI_DrawSides(undefined8 param_1,undefined8 param_2,double param_3,undefined8 param_4,
-                 double param_5)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "GfxRenderCommand": Some values do not have unique names */
+/* void __cdecl UI_ClearScissorRect(void) */
+
+void UI_ClearScissorRect(void)
 
 {
-  undefined8 uVar1;
+  void *pvVar1;
+  
+  pvVar1 = R_GetCommandBuffer(RC_CLEAR_SCISSOR,4);
+  if (pvVar1 == (void *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x9d7,0,"%s");
+  }
+  return;
+}
+
+
+// 825A5AE0  UI_DrawSides  (ui_mp/ui_main_mp.cpp:719)
+
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void UI_DrawSides(ScreenPlacement *param_1,float param_2,float param_3,float param_4,float param_5,
+                 int param_6,int param_7,float param_8,float *param_9)
+
+{
+  ScreenPlacement *pSVar1;
+  Material *in_r7;
   double extraout_f1;
   double dVar2;
-  undefined8 uVar3;
+  double dVar3;
+  double dVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
   
-  __savegprlr_27();
-  uVar1 = __savefpr_26();
-  uVar3 = 0;
-  dVar2 = extraout_f1;
-  CL_DrawStretchPic();
-  CL_DrawStretchPic((double)(float)((double)(float)(dVar2 + param_3) - param_5),param_2,param_5,
-                    param_4,uVar3,uVar3,uVar3,uVar3,uVar1);
+  dVar5 = (double)param_8;
+  dVar4 = (double)param_5;
+  dVar3 = (double)param_4;
+  dVar2 = (double)param_3;
+  __savegprlr_27((double)param_2,param_1);
+  pSVar1 = (ScreenPlacement *)__savefpr_26();
+  dVar7 = 0.0;
+  dVar6 = extraout_f1;
+  CL_DrawStretchPic(pSVar1,(float)extraout_f1,(float)dVar2,(float)dVar5,(float)dVar4,param_6,param_7
+                    ,0.0,0.0,0.0,0.0,param_9,in_r7);
+  CL_DrawStretchPic(pSVar1,(float)((double)(float)(dVar6 + dVar3) - dVar5),(float)dVar2,(float)dVar5
+                    ,(float)dVar4,param_6,param_7,(float)dVar7,(float)dVar7,(float)dVar7,
+                    (float)dVar7,param_9,in_r7);
   __restfpr_26();
   __restgprlr_27();
   return;
@@ -243,22 +390,35 @@ void UI_DrawSides(undefined8 param_1,undefined8 param_2,double param_3,undefined
 
 // 825A5BA0  UI_DrawTopBottom  (ui_mp/ui_main_mp.cpp:726)
 
-void UI_DrawTopBottom(undefined8 param_1,double param_2,undefined8 param_3,double param_4,
-                     double param_5)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void UI_DrawTopBottom(ScreenPlacement *param_1,float param_2,float param_3,float param_4,
+                     float param_5,int param_6,int param_7,float param_8,float *param_9)
 
 {
-  undefined8 uVar1;
-  undefined8 extraout_f1;
-  undefined8 uVar2;
-  undefined8 uVar3;
+  ScreenPlacement *pSVar1;
+  Material *in_r7;
+  double extraout_f1;
+  double dVar2;
+  double dVar3;
+  double dVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
   
-  __savegprlr_27();
-  uVar1 = __savefpr_26();
-  uVar3 = 0;
-  uVar2 = extraout_f1;
-  CL_DrawStretchPic();
-  CL_DrawStretchPic(uVar2,(double)(float)((double)(float)(param_2 + param_4) - param_5),param_3,
-                    param_5,uVar3,uVar3,uVar3,uVar3,uVar1);
+  dVar5 = (double)param_8;
+  dVar4 = (double)param_5;
+  dVar3 = (double)param_4;
+  dVar2 = (double)param_3;
+  __savegprlr_27((double)param_2,param_1);
+  pSVar1 = (ScreenPlacement *)__savefpr_26();
+  dVar7 = 0.0;
+  dVar6 = extraout_f1;
+  CL_DrawStretchPic(pSVar1,(float)extraout_f1,(float)dVar2,(float)dVar3,(float)dVar5,param_6,param_7
+                    ,0.0,0.0,0.0,0.0,param_9,in_r7);
+  CL_DrawStretchPic(pSVar1,(float)dVar6,(float)((double)(float)(dVar2 + dVar4) - dVar5),(float)dVar3
+                    ,(float)dVar5,param_6,param_7,(float)dVar7,(float)dVar7,(float)dVar7,
+                    (float)dVar7,param_9,in_r7);
   __restfpr_26();
   __restgprlr_27();
   return;
@@ -267,19 +427,29 @@ void UI_DrawTopBottom(undefined8 param_1,double param_2,undefined8 param_3,doubl
 
 // 825A5C60  UI_DrawRect  (ui_mp/ui_main_mp.cpp:740)
 
-void UI_DrawRect(undefined8 param_1,double param_2,undefined8 param_3,double param_4,double param_5)
+void UI_DrawRect(ScreenPlacement *param_1,float param_2,float param_3,float param_4,float param_5,
+                int param_6,int param_7,float param_8,float *param_9)
 
 {
-  undefined8 uVar1;
-  undefined8 extraout_f1;
-  undefined8 uVar2;
+  ScreenPlacement *pSVar1;
+  double extraout_f1;
+  double dVar2;
+  double dVar3;
+  double dVar4;
+  double dVar5;
+  double dVar6;
   
-  __savegprlr_28();
-  uVar1 = __savefpr_27();
-  uVar2 = extraout_f1;
-  UI_DrawTopBottom();
-  UI_DrawSides(uVar2,(double)(float)(param_2 + param_5),param_3,
-               -(double)(float)(param_5 * 2.0 - param_4),param_5,uVar1);
+  dVar3 = (double)param_4;
+  dVar4 = (double)param_5;
+  dVar5 = (double)param_8;
+  dVar2 = (double)param_3;
+  __savegprlr_28((double)param_2,param_1);
+  pSVar1 = (ScreenPlacement *)__savefpr_27();
+  dVar6 = extraout_f1;
+  UI_DrawTopBottom(pSVar1,(float)extraout_f1,(float)dVar2,(float)dVar3,(float)dVar4,param_6,param_7,
+                   (float)dVar5,param_9);
+  UI_DrawSides(pSVar1,(float)dVar6,(float)(dVar2 + dVar5),(float)dVar3,-(float)(dVar5 * 2.0 - dVar4)
+               ,param_6,param_7,(float)dVar5,param_9);
   __restfpr_27();
   __restgprlr_28();
   return;
@@ -288,25 +458,32 @@ void UI_DrawRect(undefined8 param_1,double param_2,undefined8 param_3,double par
 
 // 825A5CE0  UI_DrawHighlightRect  (ui_mp/ui_main_mp.cpp:747)
 
-/* WARNING: Type propagation algorithm not settling */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
 
 void UI_DrawHighlightRect
-               (undefined8 param_1,double param_2,double param_3,double param_4,double param_5)
+               (ScreenPlacement *param_1,float param_2,float param_3,float param_4,float param_5,
+               int param_6,int param_7,float param_8,float *param_9,float *param_10)
 
 {
-  undefined4 uVar1;
-  undefined8 uVar2;
-  undefined8 in_r8;
-  undefined8 in_r9;
+  ScreenPlacement *pSVar1;
+  int in_r8;
+  int in_r9;
   double extraout_f1;
-  float in_stack_0000001c;
-  float in_stack_00000024;
-  float in_stack_0000002c;
-  float in_stack_00000034;
-  undefined4 in_stack_00000054;
-  undefined4 in_stack_0000005c;
+  double dVar2;
+  double dVar3;
+  double dVar4;
+  double dVar5;
+  float fStack0000001c;
+  float fStack00000024;
+  float fStack0000002c;
+  float fStack00000034;
+  float *in_stack_00000054;
+  float *in_stack_0000005c;
   float local_60;
-  float local_5c [4];
+  float local_5c;
+  float local_58;
+  float local_54;
+  float local_50;
   float local_4c;
   float local_48;
   float local_44;
@@ -315,55 +492,59 @@ void UI_DrawHighlightRect
   float local_38;
   float local_34;
   
-  uVar2 = __savegprlr_29();
-  in_stack_0000001c = (float)extraout_f1;
-  in_stack_00000024 = (float)param_2;
-  in_stack_0000002c = (float)param_3;
-  in_stack_00000034 = (float)param_4;
-  ScrPlace_ApplyRect(uVar2,&stack0x0000001c,&stack0x00000024,&stack0x0000002c,&stack0x00000034);
-  local_5c[0] = (float)param_5;
-  local_60 = (float)param_5;
-  local_5c[1] = 0.0;
-  local_5c[2] = 0.0;
-  ScrPlace_ApplyRect(uVar2,local_5c + 1,local_5c + 2,local_5c,&local_60,in_r8,in_r9);
-  uVar1 = in_stack_00000054;
-  local_44 = in_stack_00000024;
-  local_48 = in_stack_0000001c + in_stack_0000002c;
-  local_38 = local_5c[0] + in_stack_0000001c;
-  local_3c = local_60 + in_stack_00000024;
-  local_5c[3] = in_stack_0000001c;
-  local_40 = local_48 - local_5c[0];
-  local_4c = in_stack_00000024;
+  dVar5 = (double)param_8;
+  dVar4 = (double)param_5;
+  dVar3 = (double)param_4;
+  dVar2 = (double)param_3;
+  pSVar1 = (ScreenPlacement *)
+           __savegprlr_29((double)param_2,param_1,param_6,param_7,param_9,param_10);
+  fStack0000001c = (float)extraout_f1;
+  fStack00000024 = (float)dVar2;
+  fStack0000002c = (float)dVar3;
+  fStack00000034 = (float)dVar4;
+  ScrPlace_ApplyRect(pSVar1,&stack0x0000001c,&stack0x00000024,&stack0x0000002c,&stack0x00000034,
+                     in_r8,in_r9);
+  local_5c = (float)dVar5;
+  local_60 = (float)dVar5;
+  local_58 = 0.0;
+  local_54 = 0.0;
+  ScrPlace_ApplyRect(pSVar1,&local_58,&local_54,&local_5c,&local_60,in_r8,in_r9);
+  local_44 = fStack00000024;
+  local_48 = fStack0000001c + fStack0000002c;
+  local_38 = local_5c + fStack0000001c;
+  local_3c = local_60 + fStack00000024;
+  local_50 = fStack0000001c;
+  local_40 = local_48 - local_5c;
+  local_4c = fStack00000024;
   local_34 = local_3c;
-  R_AddCmdDrawQuadPic(local_5c + 3,in_stack_00000054,DAT_83f7a9d0);
-  local_34 = in_stack_00000024 + in_stack_00000034;
-  local_48 = local_5c[0] + in_stack_0000001c;
-  local_5c[3] = in_stack_0000001c;
-  local_44 = local_60 + in_stack_00000024;
-  local_38 = in_stack_0000001c;
-  local_4c = in_stack_00000024;
+  R_AddCmdDrawQuadPic((float (*) [2])&local_50,in_stack_00000054,sharedUiInfo.assets.whiteMaterial);
+  local_34 = fStack00000024 + fStack00000034;
+  local_48 = local_5c + fStack0000001c;
+  local_50 = fStack0000001c;
+  local_44 = local_60 + fStack00000024;
+  local_38 = fStack0000001c;
+  local_4c = fStack00000024;
   local_3c = local_34 - local_60;
   local_40 = local_48;
-  R_AddCmdDrawQuadPic(local_5c + 3,uVar1,DAT_83f7a9d0);
-  uVar1 = in_stack_0000005c;
-  local_5c[3] = in_stack_0000001c;
-  local_4c = in_stack_00000024 + in_stack_00000034;
-  local_38 = in_stack_0000001c + in_stack_0000002c;
-  local_48 = local_5c[0] + in_stack_0000001c;
+  R_AddCmdDrawQuadPic((float (*) [2])&local_50,in_stack_00000054,sharedUiInfo.assets.whiteMaterial);
+  local_50 = fStack0000001c;
+  local_4c = fStack00000024 + fStack00000034;
+  local_38 = fStack0000001c + fStack0000002c;
+  local_48 = local_5c + fStack0000001c;
   local_44 = local_4c - local_60;
-  local_40 = local_38 - local_5c[0];
+  local_40 = local_38 - local_5c;
   local_3c = local_44;
   local_34 = local_4c;
-  R_AddCmdDrawQuadPic(local_5c + 3,in_stack_0000005c,DAT_83f7a9d0);
-  local_44 = in_stack_00000024 + in_stack_00000034;
-  local_5c[3] = in_stack_0000001c + in_stack_0000002c;
-  local_34 = local_60 + in_stack_00000024;
-  local_4c = in_stack_00000024;
+  R_AddCmdDrawQuadPic((float (*) [2])&local_50,in_stack_0000005c,sharedUiInfo.assets.whiteMaterial);
+  local_44 = fStack00000024 + fStack00000034;
+  local_50 = fStack0000001c + fStack0000002c;
+  local_34 = local_60 + fStack00000024;
+  local_4c = fStack00000024;
   local_3c = local_44 - local_60;
-  local_40 = local_5c[3] - local_5c[0];
-  local_48 = local_5c[3];
+  local_40 = local_50 - local_5c;
+  local_48 = local_50;
   local_38 = local_40;
-  R_AddCmdDrawQuadPic(local_5c + 3,uVar1,DAT_83f7a9d0);
+  R_AddCmdDrawQuadPic((float (*) [2])&local_50,in_stack_0000005c,sharedUiInfo.assets.whiteMaterial);
   __restgprlr_29();
   return;
 }
@@ -371,42 +552,60 @@ void UI_DrawHighlightRect
 
 // 825A5ED8  UI_TextWidthModCase  (ui_mp/ui_main_mp.cpp:789)
 
-void UI_TextWidthModCase(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4
-                        ,undefined8 param_5)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+int UI_TextWidthModCase(char *param_1,int param_2,Font_s *param_3,float param_4,int param_5)
 
 {
-  undefined8 uVar1;
+  char *pcVar1;
   int iVar2;
-  double dVar3;
+  longlong lVar3;
+  longlong lVar4;
+  int in_r7;
+  double extraout_f1;
+  double dVar5;
+  float fVar6;
   
-  uVar1 = __savegprlr_28();
-  dVar3 = (double)R_NormalizedTextScale(param_3);
-  iVar2 = R_TextWidthModCase(uVar1,param_2,param_3,param_5);
-  dVar3 = floor((double)(float)((double)(longlong)iVar2 * dVar3 + 0.5));
-  __restgprlr_28((int)dVar3);
-  return;
+  lVar4 = (longlong)(int)param_3;
+  lVar3 = (longlong)param_2;
+  pcVar1 = (char *)__savegprlr_28((double)param_4,param_1,lVar3,lVar4,param_5);
+  fVar6 = R_NormalizedTextScale((Font_s *)lVar4,(float)extraout_f1);
+  dVar5 = (double)fVar6;
+  iVar2 = R_TextWidthModCase(pcVar1,(int)lVar3,(Font_s *)lVar4,in_r7);
+  dVar5 = floor((double)(float)((double)(longlong)iVar2 * dVar5 + 0.5));
+  iVar2 = __restgprlr_28((int)dVar5);
+  return iVar2;
 }
 
 
 // 825A5F58  UI_TextWidth  (ui_mp/ui_main_mp.cpp:798)
 
-void UI_TextWidth(void)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+int UI_TextWidth(char *param_1,int param_2,Font_s *param_3,float param_4)
 
 {
-  UI_TextWidthModCase();
-  return;
+  int iVar1;
+  int in_r6;
+  
+  iVar1 = UI_TextWidthModCase(param_1,param_2,param_3,param_4,in_r6);
+  return iVar1;
 }
 
 
 // 825A5F60  UI_TextHeight  (ui_mp/ui_main_mp.cpp:804)
 
-int UI_TextHeight(undefined8 param_1)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+int UI_TextHeight(Font_s *param_1,float param_2)
 
 {
   int iVar1;
   double dVar2;
+  float fVar3;
   
-  dVar2 = (double)R_NormalizedTextScale();
+  fVar3 = R_NormalizedTextScale(param_1,param_2);
+  dVar2 = (double)fVar3;
   iVar1 = R_TextHeight(param_1);
   dVar2 = floor((double)(float)((double)(longlong)iVar1 * dVar2 + 0.5));
   return (int)dVar2;
@@ -415,177 +614,222 @@ int UI_TextHeight(undefined8 param_1)
 
 // 825AF818  UI_TruncateEscapeCharacterTextWithEllipsis  (ui_mp/ui_main_mp.cpp:813)
 
-void UI_TruncateEscapeCharacterTextWithEllipsis
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,int param_4)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+char * UI_TruncateEscapeCharacterTextWithEllipsis
+                 (char *param_1,Font_s *param_2,float param_3,int param_4)
 
 {
   char cVar1;
-  char *pcVar4;
-  int iVar5;
-  undefined8 uVar2;
-  undefined8 uVar3;
-  char *pcVar6;
-  char *_Str;
-  undefined8 extraout_f1;
-  undefined1 local_850 [1024];
+  char *pcVar3;
+  int iVar4;
+  ulonglong uVar2;
+  longlong lVar5;
+  Font_s *pFVar7;
+  undefined8 uVar6;
+  int in_r6;
+  char *pcVar8;
+  ulonglong uVar9;
+  ulonglong uVar10;
+  double extraout_f1;
+  double dVar11;
+  char local_850 [1024];
   char acStack_450 [1104];
   
-  pcVar4 = (char *)__savegprlr_24();
-  if (((pcVar4 != (char *)0x0) && (*pcVar4 != '\0')) &&
-     (uVar3 = extraout_f1, iVar5 = UI_TextWidthModCase(pcVar4,0,param_2), pcVar6 = pcVar4,
-     param_4 < iVar5)) {
-    do {
-      cVar1 = *pcVar6;
-      pcVar6 = pcVar6 + 1;
-    } while (cVar1 != '\0');
-    if ((char *)0x3ff < pcVar6 + (-1 - (int)pcVar4)) {
-      MyAssertHandler(0xffffffff8216ab14,0x33f,0,0xffffffff82000f98,0xffffffff8216caa8);
-    }
-    I_strncpyz(acStack_450,pcVar4,0x400);
-    pcVar4 = strchr(acStack_450,10);
-    local_850[0] = 0;
-    pcVar6 = acStack_450;
-    while ((pcVar4 != (char *)0x0 && (_Str = pcVar4 + 1, pcVar4[1] != '\0'))) {
-      *pcVar4 = '\0';
-      uVar2 = UI_TruncateTextWithEllipsis(uVar3,pcVar6,param_2);
-      pcVar4 = strrchr(pcVar6,0x5e);
-      if (pcVar4 != (char *)0x0) {
-        uVar2 = va(0xffffffff8216ca98,uVar2,0x5e,pcVar4[1]);
+  lVar5 = (longlong)(int)param_2;
+  pcVar3 = (char *)__savegprlr_24((double)param_3,param_1,lVar5,param_4);
+  if ((pcVar3 != (char *)0x0) && (*pcVar3 != '\0')) {
+    pFVar7 = (Font_s *)lVar5;
+    dVar11 = extraout_f1;
+    iVar4 = UI_TextWidthModCase(pcVar3,0,pFVar7,(float)extraout_f1,in_r6);
+    pcVar8 = pcVar3;
+    if (in_r6 < iVar4) {
+      do {
+        cVar1 = *pcVar8;
+        pcVar8 = pcVar8 + 1;
+      } while (cVar1 != '\0');
+      if ((char *)0x3ff < pcVar8 + (-1 - (int)pcVar3)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",
+                        0x33f,0,"%s");
       }
-      uVar2 = va(0xffffffff8216caa0,local_850,uVar2);
-      I_strncpyz(local_850,uVar2,0x400);
-      pcVar4 = strchr(_Str,10);
-      pcVar6 = _Str;
+      uVar6 = 0x400;
+      I_strncpyz(acStack_450,pcVar3,0x400);
+      uVar2 = ZEXT48(&stack0x00000000) - 0x450;
+      uVar10 = ZEXT48(&stack0x00000000) - 0x450;
+      strchr();
+      iVar4 = (int)uVar6;
+      local_850[0] = '\0';
+      pcVar3 = (char *)uVar10;
+      while ((uVar2 & 0xffffffff) != 0) {
+        pcVar3 = (char *)uVar10;
+        iVar4 = (int)uVar6;
+        uVar9 = uVar2 + 1;
+        if (((undefined1 *)uVar2)[1] == '\0') break;
+        *(undefined1 *)uVar2 = 0;
+        UI_TruncateTextWithEllipsis(pcVar3,pFVar7,(float)dVar11,iVar4);
+        strrchr();
+        if ((uVar10 & 0xffffffff) != 0) {
+          va("%s%c%c");
+        }
+        pcVar3 = va("%s%s\n");
+        uVar6 = 0x400;
+        I_strncpyz(local_850,pcVar3,0x400);
+        uVar2 = uVar9;
+        strchr();
+        iVar4 = (int)uVar6;
+        uVar10 = uVar9;
+        pcVar3 = (char *)uVar9;
+      }
+      UI_TruncateTextWithEllipsis(pcVar3,pFVar7,(float)dVar11,iVar4);
+      pcVar3 = va("%s%s");
+      pcVar3 = (char *)__restgprlr_24(pcVar3);
+      return pcVar3;
     }
-    uVar3 = UI_TruncateTextWithEllipsis(uVar3,pcVar6,param_2);
-    va(0xffffffff82013790,local_850,uVar3);
-    __restgprlr_24();
-    return;
   }
-  __restgprlr_24(pcVar4);
-  return;
+  pcVar3 = (char *)__restgprlr_24(pcVar3);
+  return pcVar3;
 }
 
 
 // 825ACFA8  UI_TruncateTextWithEllipsis  (ui_mp/ui_main_mp.cpp:858)
 
-void UI_TruncateTextWithEllipsis
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,int param_4)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+char * UI_TruncateTextWithEllipsis(char *param_1,Font_s *param_2,float param_3,int param_4)
 
 {
   uint uVar1;
   ulonglong uVar2;
+  int iVar3;
+  char *pcVar4;
   int iVar5;
-  undefined8 uVar3;
-  int iVar6;
-  undefined8 uVar4;
+  Font_s *pFVar6;
+  int in_r6;
   ulonglong uVar7;
-  char *pcVar10;
-  ulonglong uVar8;
-  longlong lVar9;
-  int iVar11;
-  ulonglong uVar12;
-  ulonglong uVar13;
-  undefined8 extraout_f1;
+  longlong lVar8;
+  int iVar9;
+  ulonglong uVar10;
+  ulonglong uVar11;
+  double extraout_f1;
+  double dVar12;
+  double dVar13;
   double dVar14;
-  double dVar15;
-  undefined8 uVar16;
+  float fVar15;
   
-  uVar2 = __savegprlr_20();
-  if ((((uVar2 & 0xffffffff) != 0) && (*(char *)uVar2 != '\0')) &&
-     (uVar16 = extraout_f1, iVar5 = UI_TextWidthModCase(uVar2,0,param_2), uVar8 = uVar2,
-     param_4 < iVar5)) {
-    do {
-      pcVar10 = (char *)uVar8;
-      uVar8 = uVar8 + 1;
-    } while (*pcVar10 != '\0');
-    uVar7 = (uVar8 - uVar2) - 1;
-    uVar8 = uVar7 & 0xffffffff;
-    uVar3 = UI_SafeTranslateString(0xffffffff8216c7f4);
-    iVar6 = UI_TextWidthModCase(uVar16,uVar3,0,param_2);
-    iVar11 = (int)uVar7;
-    uVar1 = (uint)(((float)(longlong)(param_4 - iVar6) / (float)(longlong)iVar5) *
-                  (float)(longlong)iVar11);
-    uVar7 = (ulonglong)uVar1;
-    if (iVar11 <= (int)uVar1) {
-      uVar7 = uVar8;
+  lVar8 = (longlong)(int)param_2;
+  uVar2 = __savegprlr_20((double)param_3,param_1,lVar8,param_4);
+  if (((uVar2 & 0xffffffff) != 0) && (*(char *)uVar2 != '\0')) {
+    pFVar6 = (Font_s *)lVar8;
+    dVar14 = extraout_f1;
+    iVar5 = in_r6;
+    iVar3 = UI_TextWidthModCase((char *)uVar2,0,pFVar6,(float)extraout_f1,in_r6);
+    uVar7 = uVar2;
+    if (in_r6 < iVar3) {
+      do {
+        pcVar4 = (char *)uVar7;
+        uVar7 = uVar7 + 1;
+      } while (*pcVar4 != '\0');
+      uVar7 = (uVar7 - uVar2) - 1;
+      uVar2 = uVar7 & 0xffffffff;
+      pcVar4 = UI_SafeTranslateString("MENU_ELLIPSIS");
+      iVar5 = UI_TextWidthModCase(pcVar4,0,pFVar6,(float)dVar14,iVar5);
+      iVar9 = (int)uVar7;
+      uVar1 = (uint)(((float)(longlong)(in_r6 - iVar5) / (float)(longlong)iVar3) *
+                    (float)(longlong)iVar9);
+      uVar7 = (ulonglong)uVar1;
+      if (iVar9 <= (int)uVar1) {
+        uVar7 = uVar2;
+      }
+      uVar7 = (uVar7 >> 0x1f) - (ulonglong)(uVar7 != 0) & uVar7;
+      dVar13 = 0.5;
+      uVar10 = uVar7;
+      do {
+        pcVar4 = va("%s");
+        pcVar4[(int)uVar10] = '\0';
+        pcVar4 = va("%s%s");
+        fVar15 = R_NormalizedTextScale(pFVar6,(float)dVar14);
+        dVar12 = (double)fVar15;
+        iVar5 = R_TextWidthModCase(pcVar4,0,pFVar6,0);
+        dVar12 = floor((double)(float)((double)(longlong)iVar5 * dVar12 + dVar13));
+        lVar8 = 1;
+        if (in_r6 < (int)dVar12) {
+          lVar8 = -1;
+        }
+        uVar11 = lVar8 + uVar10;
+        if (iVar9 <= (int)(lVar8 + uVar10)) {
+          uVar11 = uVar2;
+        }
+        uVar11 = ((uVar11 & 0xffffffff) >> 0x1f) - (ulonglong)(uVar11 != 0) & uVar11;
+        iVar5 = (int)uVar11;
+      } while ((iVar5 != (int)uVar10) &&
+              (iVar3 = (int)uVar7, uVar7 = uVar10, uVar10 = uVar11, iVar5 != iVar3));
+      pcVar4 = (char *)__restgprlr_20(pcVar4);
+      return pcVar4;
     }
-    uVar7 = (uVar7 >> 0x1f) - (ulonglong)(uVar7 != 0) & uVar7;
-    dVar15 = 0.5;
-    uVar12 = uVar7;
-    do {
-      iVar5 = va(0xffffffff82000f98,uVar2);
-      *(undefined1 *)(iVar5 + (int)uVar12) = 0;
-      uVar4 = va(0xffffffff82013790,iVar5,uVar3);
-      dVar14 = (double)R_NormalizedTextScale(uVar16,param_2);
-      iVar5 = R_TextWidthModCase(uVar4,0,param_2,0);
-      dVar14 = floor((double)(float)((double)(longlong)iVar5 * dVar14 + dVar15));
-      lVar9 = 1;
-      if (param_4 < (int)dVar14) {
-        lVar9 = -1;
-      }
-      uVar13 = lVar9 + uVar12;
-      if (iVar11 <= (int)(lVar9 + uVar12)) {
-        uVar13 = uVar8;
-      }
-      uVar13 = ((uVar13 & 0xffffffff) >> 0x1f) - (ulonglong)(uVar13 != 0) & uVar13;
-      iVar5 = (int)uVar13;
-    } while ((iVar5 != (int)uVar12) &&
-            (iVar6 = (int)uVar7, uVar7 = uVar12, uVar12 = uVar13, iVar5 != iVar6));
-    __restgprlr_20(uVar4);
-    return;
   }
-  __restgprlr_20(uVar2);
-  return;
+  pcVar4 = (char *)__restgprlr_20(uVar2);
+  return pcVar4;
 }
 
 
 // 825A5FD8  UI_GetLocalClientUIContextMilliseconds  (ui_mp/ui_main_mp.cpp:901)
 
-undefined4 UI_GetLocalClientUIContextMilliseconds(uint param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+int UI_GetLocalClientUIContextMilliseconds(LocalClientNum_t param_1)
 
 {
-  if (3 < param_1) {
-    MyAssertHandler(0xffffffff8216ab14,0x1c2,0,0xffffffff820011a8,param_1,4);
+  if (LOCAL_CLIENT_3 < param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x1c2,0,
+                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
   if (param_1 * 0x22ac == 0x7c08e128) {
-    MyAssertHandler(0xffffffff8216ab14,0x389,0,0xffffffff82000f98,0xffffffff8216baec);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x389,0,
+                    "%s");
   }
-  return *(undefined4 *)(&DAT_83f71ee0 + param_1 * 0x22ac);
+  return uiInfoArray[param_1].uiDC.realTime;
 }
 
 
 // 825A6070  UI_DrawText  (ui_mp/ui_main_mp.cpp:911)
 
-void UI_DrawText(undefined8 param_1,double param_2,undefined8 param_3,undefined8 param_4,
-                undefined8 param_5,undefined8 param_6,undefined8 param_7,undefined8 param_8,
-                undefined8 param_9,undefined8 param_10,undefined8 param_11)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void UI_DrawText(ScreenPlacement *param_1,char *param_2,int param_3,Font_s *param_4,float param_5,
+                float param_6,int param_7,int param_8,float param_9,float *param_10,int param_11)
 
 {
-  undefined8 uVar1;
+  ScreenPlacement *pSVar1;
+  float *pfVar2;
+  float *pfVar3;
   double extraout_f1;
-  double dVar2;
-  double dVar3;
-  float in_stack_00000034;
-  float in_stack_0000003c;
-  undefined4 in_stack_00000064;
+  double dVar4;
+  double dVar5;
+  float fStack00000034;
+  float fStack0000003c;
   float local_50;
   float local_4c [19];
   
-  uVar1 = __savegprlr_26();
-  in_stack_00000034 = (float)extraout_f1;
-  in_stack_0000003c = (float)param_2;
-  dVar2 = (double)R_NormalizedTextScale(param_3,param_7);
-  local_4c[0] = (float)dVar2;
-  local_50 = (float)dVar2;
-  ScrPlace_ApplyRect(uVar1,&stack0x00000034,&stack0x0000003c,local_4c,&local_50,param_10,param_11);
-  dVar3 = 0.5;
-  dVar2 = floor((double)(in_stack_00000034 + 0.5));
-  in_stack_00000034 = (float)dVar2;
-  dVar2 = floor((double)(float)((double)in_stack_0000003c + dVar3));
-  in_stack_0000003c = (float)dVar2;
-  CL_DrawTextPhysical((double)in_stack_00000034,(double)in_stack_0000003c,(double)local_4c[0],
-                      (double)local_50,param_5,param_6,param_7);
+  dVar5 = (double)param_9;
+  dVar4 = (double)param_6;
+  pSVar1 = (ScreenPlacement *)__savegprlr_26((double)param_5,param_1);
+  fStack00000034 = (float)extraout_f1;
+  fStack0000003c = (float)dVar4;
+  local_50 = R_NormalizedTextScale(param_4,(float)dVar5);
+  pfVar3 = &local_50;
+  pfVar2 = local_4c;
+  local_4c[0] = local_50;
+  ScrPlace_ApplyRect(pSVar1,&stack0x00000034,&stack0x0000003c,pfVar2,pfVar3,(int)param_10,param_11);
+  dVar5 = 0.5;
+  dVar4 = floor((double)(fStack00000034 + 0.5));
+  fStack00000034 = (float)dVar4;
+  dVar4 = floor((double)(float)((double)fStack0000003c + dVar5));
+  fStack0000003c = (float)dVar4;
+  CL_DrawTextPhysical(param_2,param_3,param_4,fStack00000034,fStack0000003c,local_4c[0],local_50,
+                      pfVar2,(int)pfVar3);
   __restgprlr_26();
   return;
 }
@@ -593,51 +837,64 @@ void UI_DrawText(undefined8 param_1,double param_2,undefined8 param_3,undefined8
 
 // 825A6138  UI_DrawTextWithGlow  (ui_mp/ui_main_mp.cpp:928)
 
-void UI_DrawTextWithGlow(undefined8 param_1,double param_2,undefined8 param_3,undefined8 param_4,
-                        undefined8 param_5,undefined8 param_6,undefined8 param_7,undefined8 param_8,
-                        undefined8 param_9,undefined8 param_10,undefined8 param_11)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void UI_DrawTextWithGlow(ScreenPlacement *param_1,char *param_2,int param_3,Font_s *param_4,
+                        float param_5,float param_6,int param_7,int param_8,float param_9,
+                        float *param_10,int param_11,float *param_12,bool param_13,bool param_14,
+                        Material *param_15,Material *param_16,int param_17,int param_18,int param_19
+                        ,int param_20)
 
 {
-  undefined8 uVar1;
+  ScreenPlacement *pSVar1;
+  float *pfVar2;
   double extraout_f1;
-  double dVar2;
   double dVar3;
-  float in_stack_00000034;
-  float in_stack_0000003c;
-  undefined4 in_stack_0000005c;
-  undefined4 in_stack_00000064;
-  undefined4 in_stack_0000006c;
+  double dVar4;
+  float fStack00000034;
+  float fStack0000003c;
+  Material *in_stack_0000005c;
+  float *in_stack_00000064;
+  undefined1 in_stack_0000006f;
   char in_stack_00000077;
-  undefined1 in_stack_0000007f;
-  undefined4 in_stack_00000084;
-  undefined4 in_stack_0000008c;
-  undefined4 in_stack_00000094;
-  undefined4 in_stack_0000009c;
-  undefined4 in_stack_000000a4;
-  undefined4 in_stack_000000ac;
+  float *in_stack_0000008c;
+  int in_stack_00000094;
+  float *in_stack_0000009c;
+  Material *in_stack_000000a4;
+  int in_stack_ffffff28;
+  int in_stack_ffffff2c;
+  int in_stack_ffffff30;
+  int in_stack_ffffff34;
   float local_50;
   float local_4c [19];
   
-  uVar1 = __savegprlr_26();
-  in_stack_00000034 = (float)extraout_f1;
-  in_stack_0000003c = (float)param_2;
-  dVar2 = (double)R_NormalizedTextScale(param_3,param_7);
-  local_4c[0] = (float)dVar2;
-  local_50 = (float)dVar2;
-  ScrPlace_ApplyRect(uVar1,&stack0x00000034,&stack0x0000003c,local_4c,&local_50,param_10,param_11);
-  dVar3 = 0.5;
-  dVar2 = floor((double)(in_stack_00000034 + 0.5));
-  in_stack_00000034 = (float)dVar2;
-  dVar2 = floor((double)(float)((double)in_stack_0000003c + dVar3));
-  in_stack_0000003c = (float)dVar2;
+  dVar4 = (double)param_9;
+  dVar3 = (double)param_6;
+  pSVar1 = (ScreenPlacement *)__savegprlr_26((double)param_5,param_1);
+  fStack00000034 = (float)extraout_f1;
+  fStack0000003c = (float)dVar3;
+  local_50 = R_NormalizedTextScale(param_4,(float)dVar4);
+  pfVar2 = local_4c;
+  local_4c[0] = local_50;
+  ScrPlace_ApplyRect(pSVar1,&stack0x00000034,&stack0x0000003c,pfVar2,&local_50,(int)param_10,
+                     param_11);
+  dVar4 = 0.5;
+  dVar3 = floor((double)(fStack00000034 + 0.5));
+  fStack00000034 = (float)dVar3;
+  dVar3 = floor((double)(float)((double)fStack0000003c + dVar4));
+  fStack0000003c = (float)dVar3;
   if (in_stack_00000077 != '\0') {
-    R_AddCmdDrawTextSubtitle();
+    R_AddCmdDrawTextSubtitle
+              (param_2,param_3,param_4,fStack00000034,fStack0000003c,local_4c[0],local_50,0.0,pfVar2
+               ,(int)in_stack_0000005c,in_stack_00000064,(bool)in_stack_0000006f);
     __restgprlr_26();
     return;
   }
   CL_DrawTextPhysicalWithEffects
-            ((double)in_stack_00000034,(double)in_stack_0000003c,(double)local_4c[0],
-             (double)local_50,param_5,param_6,param_7);
+            (param_2,param_3,param_4,fStack00000034,fStack0000003c,local_4c[0],local_50,
+             in_stack_0000008c,in_stack_00000094,in_stack_0000009c,in_stack_000000a4,
+             in_stack_0000005c,in_stack_ffffff28,in_stack_ffffff2c,in_stack_ffffff30,
+             in_stack_ffffff34);
   __restgprlr_26();
   return;
 }
@@ -645,29 +902,36 @@ void UI_DrawTextWithGlow(undefined8 param_1,double param_2,undefined8 param_3,un
 
 // 825A6280  UI_DrawTextNoSnap  (ui_mp/ui_main_mp.cpp:948)
 
-void UI_DrawTextNoSnap(undefined8 param_1,double param_2,undefined8 param_3,undefined8 param_4,
-                      undefined8 param_5,undefined8 param_6,undefined8 param_7,undefined8 param_8,
-                      undefined8 param_9,undefined8 param_10,undefined8 param_11)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void UI_DrawTextNoSnap(ScreenPlacement *param_1,char *param_2,int param_3,Font_s *param_4,
+                      float param_5,float param_6,int param_7,int param_8,float param_9,
+                      float *param_10,int param_11)
 
 {
-  undefined8 uVar1;
+  ScreenPlacement *pSVar1;
+  float *pfVar2;
+  float *pfVar3;
   double extraout_f1;
-  double dVar2;
-  float in_stack_00000034;
-  float in_stack_0000003c;
-  undefined4 in_stack_00000064;
+  double dVar4;
+  double dVar5;
+  float fStack00000034;
+  float fStack0000003c;
   float local_40;
   float local_3c [15];
   
-  uVar1 = __savegprlr_26();
-  in_stack_00000034 = (float)extraout_f1;
-  in_stack_0000003c = (float)param_2;
-  dVar2 = (double)R_NormalizedTextScale(param_3,param_7);
-  local_3c[0] = (float)dVar2;
-  local_40 = (float)dVar2;
-  ScrPlace_ApplyRect(uVar1,&stack0x00000034,&stack0x0000003c,local_3c,&local_40,param_10,param_11);
-  CL_DrawTextPhysical((double)in_stack_00000034,(double)in_stack_0000003c,(double)local_3c[0],
-                      (double)local_40,param_5,param_6,param_7);
+  dVar4 = (double)param_6;
+  dVar5 = (double)param_9;
+  pSVar1 = (ScreenPlacement *)__savegprlr_26((double)param_5,param_1);
+  fStack00000034 = (float)extraout_f1;
+  fStack0000003c = (float)dVar4;
+  local_40 = R_NormalizedTextScale(param_4,(float)dVar5);
+  pfVar3 = &local_40;
+  pfVar2 = local_3c;
+  local_3c[0] = local_40;
+  ScrPlace_ApplyRect(pSVar1,&stack0x00000034,&stack0x0000003c,pfVar2,pfVar3,(int)param_10,param_11);
+  CL_DrawTextPhysical(param_2,param_3,param_4,fStack00000034,fStack0000003c,local_3c[0],local_40,
+                      pfVar2,(int)pfVar3);
   __restgprlr_26();
   return;
 }
@@ -675,39 +939,45 @@ void UI_DrawTextNoSnap(undefined8 param_1,double param_2,undefined8 param_3,unde
 
 // 825A6318  UI_DrawTextWithCursor  (ui_mp/ui_main_mp.cpp:961)
 
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
 void UI_DrawTextWithCursor
-               (undefined8 param_1,double param_2,undefined8 param_3,undefined8 param_4,
-               undefined8 param_5,undefined8 param_6,undefined8 param_7,undefined8 param_8,
-               undefined8 param_9,undefined8 param_10,undefined8 param_11)
+               (ScreenPlacement *param_1,char *param_2,int param_3,Font_s *param_4,float param_5,
+               float param_6,int param_7,int param_8,float param_9,float *param_10,int param_11,
+               int param_12,char param_13)
 
 {
-  undefined8 uVar1;
+  ScreenPlacement *pSVar1;
+  float *pfVar2;
   double extraout_f1;
-  double dVar2;
   double dVar3;
-  float in_stack_00000034;
-  float in_stack_0000003c;
-  undefined4 in_stack_00000064;
-  undefined4 in_stack_0000006c;
-  undefined1 in_stack_00000077;
+  double dVar4;
+  float fStack00000034;
+  float fStack0000003c;
+  int in_stack_00000064;
+  int in_stack_0000006c;
+  char in_stack_00000077;
   float local_50;
   float local_4c [19];
   
-  uVar1 = __savegprlr_26();
-  in_stack_00000034 = (float)extraout_f1;
-  in_stack_0000003c = (float)param_2;
-  dVar2 = (double)R_NormalizedTextScale(param_3,param_7);
-  local_4c[0] = (float)dVar2;
-  local_50 = (float)dVar2;
-  ScrPlace_ApplyRect(uVar1,&stack0x00000034,&stack0x0000003c,local_4c,&local_50,param_10,param_11);
-  dVar3 = 0.5;
-  dVar2 = floor((double)(in_stack_00000034 + 0.5));
-  in_stack_00000034 = (float)dVar2;
-  dVar2 = floor((double)(float)((double)in_stack_0000003c + dVar3));
-  in_stack_0000003c = (float)dVar2;
+  dVar4 = (double)param_9;
+  dVar3 = (double)param_6;
+  pSVar1 = (ScreenPlacement *)__savegprlr_26((double)param_5,param_1);
+  fStack00000034 = (float)extraout_f1;
+  fStack0000003c = (float)dVar3;
+  local_50 = R_NormalizedTextScale(param_4,(float)dVar4);
+  pfVar2 = local_4c;
+  local_4c[0] = local_50;
+  ScrPlace_ApplyRect(pSVar1,&stack0x00000034,&stack0x0000003c,pfVar2,&local_50,(int)param_10,
+                     param_11);
+  dVar4 = 0.5;
+  dVar3 = floor((double)(fStack00000034 + 0.5));
+  fStack00000034 = (float)dVar3;
+  dVar3 = floor((double)(float)((double)fStack0000003c + dVar4));
+  fStack0000003c = (float)dVar3;
   CL_DrawTextPhysicalWithCursor
-            ((double)in_stack_00000034,(double)in_stack_0000003c,(double)local_4c[0],
-             (double)local_50,param_5,param_6,param_7);
+            (param_2,param_3,param_4,fStack00000034,fStack0000003c,local_4c[0],local_50,pfVar2,
+             in_stack_00000064,in_stack_0000006c,in_stack_00000077);
   __restgprlr_26();
   return;
 }
@@ -715,89 +985,96 @@ void UI_DrawTextWithCursor
 
 // 825A63F0  UI_GetFontHandle  (ui_mp/ui_main_mp.cpp:978)
 
-undefined4 UI_GetFontHandle(double param_1,undefined8 param_2,int param_3)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+Font_s * UI_GetFontHandle(ScreenPlacement *param_1,int param_2,float param_3)
 
 {
   int iVar1;
   double dVar2;
   
-  if (param_3 == 2) {
-    return DAT_83f7a9e0;
+  if (param_2 == 2) {
+    return sharedUiInfo.assets.bigFont;
   }
-  if (param_3 == 3) {
-    return DAT_83f7a9e4;
+  if (param_2 == 3) {
+    return sharedUiInfo.assets.smallFont;
   }
-  if (param_3 == 5) {
-    return DAT_83f7a9e8;
+  if (param_2 == 5) {
+    return sharedUiInfo.assets.consoleFont;
   }
-  if (param_3 != 6) {
-    if (param_3 == 4) {
-      return DAT_83f7a9ec;
+  if (param_2 != 6) {
+    if (param_2 == 4) {
+      return sharedUiInfo.assets.boldFont;
     }
-    if (param_3 == 7) {
-      return DAT_83f7a9f0;
+    if (param_2 == 7) {
+      return sharedUiInfo.assets.textFont;
     }
-    if (param_3 != 8) {
-      if (param_3 == 9) {
-        return DAT_83f7a9fc;
+    if (param_2 != 8) {
+      if (param_2 == 9) {
+        return sharedUiInfo.assets.hudBigFont;
       }
-      if (param_3 == 10) {
-        return DAT_83f7aa00;
+      if (param_2 == 10) {
+        return sharedUiInfo.assets.hudSmallFont;
       }
-      dVar2 = (double)(float)((double)DAT_82b5c7fc * param_1);
+      dVar2 = (double)(cg_hudSplitscreenScale * param_3);
       iVar1 = R_IsHiDef();
       if (iVar1 != 0) {
         dVar2 = (double)(float)(dVar2 * 1.5);
       }
-      if (dVar2 <= (double)*(float *)(DAT_83f7a9a0 + 0xc)) {
-        return DAT_83f7a9e4;
+      if (dVar2 <= (double)(ui_smallFont->current).value) {
+        return sharedUiInfo.assets.smallFont;
       }
-      if (dVar2 < (double)*(float *)(DAT_83f71e88 + 0xc)) {
-        if (dVar2 < (double)*(float *)(DAT_83f71e74 + 0xc)) {
-          return DAT_83f7a9f0;
+      if (dVar2 < (double)(ui_extraBigFont->current).value) {
+        if (dVar2 < (double)(ui_bigFont->current).value) {
+          return sharedUiInfo.assets.textFont;
         }
-        return DAT_83f7a9e0;
+        return sharedUiInfo.assets.bigFont;
       }
     }
-    return DAT_83f7a9f4;
+    return sharedUiInfo.assets.extraBigFont;
   }
-  return DAT_83f7a9f8;
+  return sharedUiInfo.assets.objectiveFont;
 }
 
 
 // 825A65C8  UI_UpdateTime  (ui_mp/ui_main_mp.cpp:1030)
 
-void UI_UpdateTime(uint param_1,int param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void UI_UpdateTime(LocalClientNum_t param_1,int param_2)
 
 {
   uint uVar1;
-  int iVar2;
-  int iVar4;
-  longlong lVar3;
+  int iVar3;
+  longlong lVar2;
   
-  if (3 < param_1) {
-    MyAssertHandler(0xffffffff8216ab14,0x1c2,0,0xffffffff820011a8,param_1,4);
+  if (LOCAL_CLIENT_3 < param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x1c2,0,
+                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  iVar4 = param_1 * 0x22ac;
-  uVar1 = *(uint *)(&DAT_83f74168 + iVar4);
-  iVar2 = *(int *)(&DAT_83f71ee0 + iVar4);
-  *(int *)(&DAT_83f71ee0 + iVar4) = param_2;
-  *(int *)(&DAT_83f71ee4 + iVar4) = param_2 - iVar2;
-  *(int *)(&DAT_83f71ed8 +
+  uVar1 = uiInfoArray[param_1].timeIndex;
+  iVar3 = uiInfoArray[param_1].uiDC.realTime;
+  uiInfoArray[param_1].uiDC.realTime = param_2;
+  iVar3 = param_2 - iVar3;
+  uiInfoArray[param_1].uiDC.frameTime = iVar3;
+  *(int *)((int)uiInfoArray +
           (uVar1 + (((int)uVar1 >> 2) + (uint)((int)uVar1 < 0 && (uVar1 & 3) != 0) & 0x3fffffff) *
-                   -4 + 0x8a5) * 4 + iVar4) = param_2 - iVar2;
-  iVar2 = *(int *)(&DAT_83f74168 + iVar4);
-  *(int *)(&DAT_83f74168 + iVar4) = iVar2 + 1;
-  if (4 < iVar2 + 1) {
-    lVar3 = (ulonglong)*(uint *)(&DAT_83f74178 + iVar4) +
-            (ulonglong)*(uint *)(&DAT_83f74174 + iVar4) +
-            (ulonglong)*(uint *)(&DAT_83f74170 + iVar4) +
-            (ulonglong)*(uint *)(&DAT_83f7416c + iVar4);
-    if (lVar3 == 0) {
-      lVar3 = 1;
+                   -4 + 0x8a5) * 4 + param_1 * 0x22ac) = iVar3;
+  iVar3 = uiInfoArray[param_1].timeIndex + 1;
+  uiInfoArray[param_1].timeIndex = iVar3;
+  if (4 < iVar3) {
+    lVar2 = (ulonglong)(uint)uiInfoArray[param_1].previousTimes[3] +
+            (ulonglong)(uint)uiInfoArray[param_1].previousTimes[2] +
+            (ulonglong)(uint)uiInfoArray[param_1].previousTimes[1] +
+            (ulonglong)(uint)uiInfoArray[param_1].previousTimes[0];
+    if (lVar2 == 0) {
+      lVar2 = 1;
     }
-    trapWord(6,lVar3,0);
-    *(float *)(&DAT_83f71f04 + iVar4) = (float)(longlong)(4000 / (int)lVar3);
+    trapWord(6,lVar2,0);
+    uiInfoArray[param_1].uiDC.FPS = (float)(longlong)(4000 / (int)lVar2);
   }
   return;
 }
@@ -805,65 +1082,74 @@ void UI_UpdateTime(uint param_1,int param_2)
 
 // 825A66C8  UI_DrawBuildNumber  (ui_mp/ui_main_mp.cpp:1059)
 
-void UI_DrawBuildNumber(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void UI_DrawBuildNumber(LocalClientNum_t param_1)
 
 {
-  undefined8 uVar1;
-  int iVar3;
-  undefined2 uVar4;
-  undefined8 uVar2;
-  undefined4 uVar5;
-  double dVar6;
+  LocalClientNum_t LVar1;
+  int iVar2;
+  char *pcVar3;
+  ScreenPlacement *pSVar4;
+  char *pcVar5;
+  Font_s *pFVar6;
   double dVar7;
   double dVar8;
+  double dVar9;
   
-  uVar1 = __savegprlr_28();
-  iVar3 = LiveStorage_ShouldDrawFFotDVersion();
-  if (iVar3 == 0) {
-    dVar7 = (double)*(float *)(DAT_83f71e94 + 0xc);
-    ScrPlace_GetActivePlacement(uVar1);
-    dVar7 = (double)(float)((double)DAT_82b5c7fc * dVar7);
-    iVar3 = R_IsHiDef();
-    if (iVar3 != 0) {
-      dVar7 = (double)(float)(dVar7 * 1.5);
+  LVar1 = __savegprlr_28(param_1);
+  iVar2 = LiveStorage_ShouldDrawFFotDVersion();
+  if (iVar2 == 0) {
+    dVar8 = (double)(ui_buildSize->current).value;
+    ScrPlace_GetActivePlacement(LVar1);
+    dVar8 = (double)(float)((double)cg_hudSplitscreenScale * dVar8);
+    iVar2 = R_IsHiDef();
+    if (iVar2 != 0) {
+      dVar8 = (double)(float)(dVar8 * 1.5);
     }
-    uVar5 = DAT_83f7a9e4;
-    if ((((double)*(float *)(DAT_83f7a9a0 + 0xc) < dVar7) &&
-        (uVar5 = DAT_83f7a9f4, dVar7 < (double)*(float *)(DAT_83f71e88 + 0xc))) &&
-       (uVar5 = DAT_83f7a9f0, (double)*(float *)(DAT_83f71e74 + 0xc) <= dVar7)) {
-      uVar5 = DAT_83f7a9e0;
+    pFVar6 = sharedUiInfo.assets.smallFont;
+    if ((((double)(ui_smallFont->current).value < dVar8) &&
+        (pFVar6 = sharedUiInfo.assets.extraBigFont, dVar8 < (double)(ui_extraBigFont->current).value
+        )) && (pFVar6 = sharedUiInfo.assets.textFont, (double)(ui_bigFont->current).value <= dVar8))
+    {
+      pFVar6 = sharedUiInfo.assets.bigFont;
     }
-    dVar8 = (double)*(float *)(DAT_83f71e94 + 0xc);
-    dVar6 = (double)*(float *)(DAT_83f7a998 + 0x10);
-    dVar7 = (double)*(float *)(DAT_83f7a998 + 0xc);
-    uVar2 = getBuildNumberAsInt();
-    uVar2 = va(0xffffffff8216baf8,0xffffffff8202e2c4,uVar2);
-    uVar1 = ScrPlace_GetActivePlacement(uVar1);
-    UI_DrawText(dVar7,dVar6,dVar8,uVar1,uVar2,0x40,uVar5);
+    dVar9 = (double)(ui_buildSize->current).value;
+    dVar7 = (double)(ui_buildLocation->current).vector[1];
+    dVar8 = (double)(ui_buildLocation->current).value;
+    getBuildNumberAsInt();
+    pcVar5 = "%s.%i";
+    pcVar3 = va("%s.%i");
+    pSVar4 = ScrPlace_GetActivePlacement(LVar1);
+    UI_DrawText(pSVar4,pcVar3,0x40,pFVar6,(float)dVar8,(float)dVar7,-0x7de80000,(int)pcVar5,
+                (float)dVar9,(float *)0x3,0);
     __restgprlr_28();
     return;
   }
-  uVar4 = LiveStorage_GetFFotDVersion();
-  dVar7 = (double)*(float *)(DAT_83f71e94 + 0xc);
-  ScrPlace_GetActivePlacement(uVar1);
-  dVar7 = (double)(float)((double)DAT_82b5c7fc * dVar7);
-  iVar3 = R_IsHiDef();
-  if (iVar3 != 0) {
-    dVar7 = (double)(float)(dVar7 * 1.5);
+  LiveStorage_GetFFotDVersion();
+  dVar8 = (double)(ui_buildSize->current).value;
+  ScrPlace_GetActivePlacement(LVar1);
+  dVar8 = (double)(float)((double)cg_hudSplitscreenScale * dVar8);
+  iVar2 = R_IsHiDef();
+  if (iVar2 != 0) {
+    dVar8 = (double)(float)(dVar8 * 1.5);
   }
-  uVar5 = DAT_83f7a9e4;
-  if ((((double)*(float *)(DAT_83f7a9a0 + 0xc) < dVar7) &&
-      (uVar5 = DAT_83f7a9f4, dVar7 < (double)*(float *)(DAT_83f71e88 + 0xc))) &&
-     (uVar5 = DAT_83f7a9f0, (double)*(float *)(DAT_83f71e74 + 0xc) <= dVar7)) {
-    uVar5 = DAT_83f7a9e0;
+  pFVar6 = sharedUiInfo.assets.smallFont;
+  if ((((double)(ui_smallFont->current).value < dVar8) &&
+      (pFVar6 = sharedUiInfo.assets.extraBigFont, dVar8 < (double)(ui_extraBigFont->current).value))
+     && (pFVar6 = sharedUiInfo.assets.textFont, (double)(ui_bigFont->current).value <= dVar8)) {
+    pFVar6 = sharedUiInfo.assets.bigFont;
   }
-  dVar8 = (double)*(float *)(DAT_83f71e94 + 0xc);
-  dVar6 = (double)*(float *)(DAT_83f7a998 + 0x10);
-  dVar7 = (double)*(float *)(DAT_83f7a998 + 0xc);
-  uVar2 = getBuildNumberAsInt();
-  uVar2 = va(0xffffffff8216bb00,0xffffffff8202e2c4,uVar2,uVar4);
-  uVar1 = ScrPlace_GetActivePlacement(uVar1);
-  UI_DrawText(dVar7,dVar6,dVar8,uVar1,uVar2,0x40,uVar5);
+  dVar9 = (double)(ui_buildSize->current).value;
+  dVar7 = (double)(ui_buildLocation->current).vector[1];
+  dVar8 = (double)(ui_buildLocation->current).value;
+  getBuildNumberAsInt();
+  pcVar5 = "%s.%i.%i";
+  pcVar3 = va("%s.%i.%i");
+  pSVar4 = ScrPlace_GetActivePlacement(LVar1);
+  UI_DrawText(pSVar4,pcVar3,0x40,pFVar6,(float)dVar8,(float)dVar7,-0x7de80000,(int)pcVar5,
+              (float)dVar9,(float *)0x3,0);
   __restgprlr_28();
   return;
 }
@@ -871,206 +1157,226 @@ void UI_DrawBuildNumber(void)
 
 // 825B3730  UI_RefreshViewport  (ui_mp/ui_main_mp.cpp:1080)
 
-void UI_RefreshViewport(uint param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void UI_RefreshViewport(LocalClientNum_t param_1)
 
 {
-  int iVar1;
-  char cVar2;
-  undefined4 *puVar3;
+  uiInfo_s *puVar1;
+  int iVar2;
+  bool bVar5;
+  connstate_t cVar3;
+  menuDef_t *pmVar4;
   
-  if (3 < param_1) {
-    MyAssertHandler(0xffffffff8216ab14,0x1c2,0,0xffffffff820011a8,param_1,4);
+  if (LOCAL_CLIENT_3 < param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x1c2,0,
+                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  puVar3 = (undefined4 *)(&DAT_83f71ed8 + param_1 * 0x22ac);
-  iVar1 = Menu_Count(puVar3);
-  if (0 < iVar1) {
-    Menu_PaintViewport(puVar3);
-    UI_DoServerRefresh(puVar3);
-    UI_BuildServerStatus(puVar3,0);
-    cVar2 = CL_AllLocalClientsDisconnected();
-    if ((cVar2 != '\0') && (iVar1 = CL_GetLocalClientConnectionState(param_1), iVar1 == 0)) {
+  puVar1 = uiInfoArray + param_1;
+  iVar2 = Menu_Count(&puVar1->uiDC);
+  if (0 < iVar2) {
+    Menu_PaintViewport(&puVar1->uiDC);
+    UI_DoServerRefresh(puVar1);
+    UI_BuildServerStatus(puVar1,0);
+    bVar5 = CL_AllLocalClientsDisconnected();
+    if ((bVar5) && (cVar3 = CL_GetLocalClientConnectionState(param_1), cVar3 == CA_DISCONNECTED)) {
       UI_DrawBuildNumber(param_1);
     }
   }
-  iVar1 = Menu_GetFocused(puVar3);
-  if ((iVar1 == 0) && (cVar2 = Key_IsCatcherActive(param_1,0x10), cVar2 != '\0')) {
-    Key_RemoveCatcher(param_1,0xffffffffffffffef);
+  pmVar4 = Menu_GetFocused(&puVar1->uiDC);
+  if ((pmVar4 == (menuDef_t *)0x0) && (bVar5 = Key_IsCatcherActive(param_1,0x10), bVar5)) {
+    Key_RemoveCatcher(param_1,-0x11);
   }
-  UI_KeyboardUpdate(*puVar3);
+  UI_KeyboardUpdate((puVar1->uiDC).localClientNum);
   return;
 }
 
 
 // 825A6970  UI_RefreshFullscreen  (ui_mp/ui_main_mp.cpp:1134)
 
-void UI_RefreshFullscreen(ulonglong param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void UI_RefreshFullscreen(LocalClientNum_t param_1)
 
 {
-  if (3 < (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8216ab14,0x1c2,0,0xffffffff820011a8,param_1,4);
+  if (LOCAL_CLIENT_3 < param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x1c2,0,
+                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  Menu_PaintFullscreen(param_1 * 0x22ac + -0x7c08e128);
+  Menu_PaintFullscreen(&uiInfoArray[param_1].uiDC);
   return;
 }
 
 
 // 825A69D8  UI_Shutdown  (ui_mp/ui_main_mp.cpp:1143)
 
-void UI_Shutdown(ulonglong param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void UI_Shutdown(LocalClientNum_t param_1)
 
 {
-  if (3 < (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8216ab14,0x1c2,0,0xffffffff820011a8,param_1,4);
+  if (LOCAL_CLIENT_3 < param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x1c2,0,
+                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  Menus_CloseAll(param_1 * 0x22ac + -0x7c08e128);
-  DAT_83f7a9d0 = 0;
-  UILocalVar_Shutdown(param_1 * 0x22ac + -0x7c08d6ac);
+  Menus_CloseAll(&uiInfoArray[param_1].uiDC);
+  sharedUiInfo.assets.whiteMaterial = (Material *)0x0;
+  UILocalVar_Shutdown(&uiInfoArray[param_1].uiDC.localVars);
   LAN_SaveServersToCache();
   return;
 }
 
 
 // 825A6A60  GetMenuBuffer_FastFile  (ui_mp/ui_main_mp.cpp:1196)
-
-void GetMenuBuffer_FastFile(void)
-
-{
-  undefined8 uVar1;
-  undefined8 uVar2;
-  int iVar4;
-  undefined8 uVar3;
-  
-  uVar1 = __savegprlr_29();
-  uVar2 = DB_FindXAssetHeader(0x24,uVar1,1);
-  iVar4 = DB_IsXAssetDefault(0x24,uVar1);
-  if (iVar4 != 0) {
-    Com_PrintError(0xd,0xffffffff8216bb24,uVar1);
-    __restgprlr_29(0);
-    return;
-  }
-  uVar1 = DB_GetRawFileLen(uVar2);
-  uVar3 = Z_VirtualAlloc(uVar1,0xffffffff8216bb0c,10);
-  DB_GetRawBuffer(uVar2,uVar3,uVar1);
-  __restgprlr_29(uVar3);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
 
 // 825A6B00  Load_ScriptMenuInternal  (ui_mp/ui_main_mp.cpp:1229)
 
-void Load_ScriptMenuInternal(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+MenuList * Load_ScriptMenuInternal(char *param_1,int param_2)
 
 {
-  undefined1 auStack_120 [264];
+  MenuList *pMVar1;
+  char acStack_120 [264];
   
-  memcpy(auStack_120,"ui_mp/scriptmenus/",0x13);
-  I_strncat(auStack_120,0x100,param_1);
-  I_strncat(auStack_120,0x100,0xffffffff8216bb4c);
-  UI_LoadMenu(auStack_120,param_2);
-  return;
+  memcpy();
+  I_strncat(acStack_120,0x100,param_1);
+  I_strncat(acStack_120,0x100,".menu");
+  pMVar1 = UI_LoadMenu(acStack_120,param_2);
+  return pMVar1;
 }
 
 
 // 825A6B78  Load_ScriptMenu  (ui_mp/ui_main_mp.cpp:1247)
 
-ulonglong Load_ScriptMenu(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+int Load_ScriptMenu(LocalClientNum_t param_1,char *param_2,int param_3)
 
 {
-  ulonglong uVar1;
-  undefined8 uVar2;
+  MenuList *pMVar1;
+  uiInfo_s *puVar2;
   
-  uVar1 = Load_ScriptMenuInternal(param_2,param_3);
-  if ((uVar1 & 0xffffffff) != 0) {
-    uVar2 = UI_GetClientInfo(param_1);
-    UI_AddMenuList(uVar2,uVar1,1);
-    uVar1 = 1;
+  pMVar1 = Load_ScriptMenuInternal(param_2,param_3);
+  if (pMVar1 != (MenuList *)0x0) {
+    puVar2 = UI_GetClientInfo(param_1);
+    UI_AddMenuList(&puVar2->uiDC,pMVar1,1);
   }
-  return uVar1;
+  return (uint)(pMVar1 != (MenuList *)0x0);
 }
 
 
 // 825A6BD8  UI_GetLevelShot  (ui_mp/ui_main_mp.cpp:1262)
 
-undefined8 UI_GetLevelShot(undefined8 param_1)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+Material * UI_GetLevelShot(int param_1)
 
 {
-  longlong lVar1;
-  undefined8 uVar2;
+  mapInfo *pmVar1;
+  Material *pMVar2;
   
   UI_UpdateArenas();
-  if (((int)param_1 < 0) || (DAT_83f7df64 <= (int)param_1)) {
+  if ((param_1 < 0) || (sharedUiInfo.mapCount <= param_1)) {
     param_1 = 0;
   }
-  lVar1 = UI_GetMapInfo_Sorted(param_1);
-  if (lVar1 + 0x50 != 0) {
-    uVar2 = Material_RegisterHandle(lVar1 + 0x50,3);
-    return uVar2;
+  pmVar1 = UI_GetMapInfo_Sorted(param_1);
+  if ((longlong)(int)pmVar1 + 0x50 != 0) {
+    pMVar2 = Material_RegisterHandle((char *)((longlong)(int)pmVar1 + 0x50),3);
+    return pMVar2;
   }
-  return 0;
+  return (Material *)0x0;
 }
 
 
 // 825AD1D8  UI_DrawMapCustomData  (ui_mp/ui_main_mp.cpp:1368)
 
-void UI_DrawMapCustomData(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void UI_DrawMapCustomData
+               (LocalClientNum_t param_1,rectDef_s *param_2,Font_s *param_3,float param_4,
+               float *param_5,int param_6,int param_7,char *param_8)
 
 {
-  float *pfVar1;
-  undefined8 uVar2;
-  char *pcVar3;
-  int iVar4;
-  undefined8 uVar5;
-  undefined8 in_r10;
-  undefined8 extraout_f1;
-  double dVar6;
-  double dVar7;
+  LocalClientNum_t LVar1;
+  mapInfo *pmVar2;
+  int iVar3;
+  char *pcVar4;
+  ScreenPlacement *pSVar5;
+  Font_s *pFVar6;
+  Material *pMVar7;
+  char *in_r10;
+  double extraout_f1;
   double dVar8;
-  undefined8 uVar9;
+  double dVar9;
   double dVar10;
+  double dVar11;
+  undefined1 in_stack_ffffff0b;
   
-  __savegprlr_23();
-  uVar2 = __savefpr_28();
-  uVar9 = extraout_f1;
-  pcVar3 = (char *)UI_GetMapInfo_Sorted(*(undefined4 *)(DAT_83f71ed4 + 0xc));
-  iVar4 = I_strcmp(0xffffffff8216a6a4,in_r10);
-  pfVar1 = (float *)param_2;
-  if (iVar4 == 0) {
-    if (*pcVar3 == '\x15') {
-      pcVar3 = pcVar3 + 1;
-      uVar5 = 0;
+  __savegprlr_23((double)param_4,param_1);
+  LVar1 = __savefpr_28();
+  dVar8 = extraout_f1;
+  pMVar7 = (Material *)param_6;
+  pFVar6 = param_3;
+  pmVar2 = UI_GetMapInfo_Sorted((ui_currentFeederMapIndex->current).integer);
+  iVar3 = I_strcmp("longname",in_r10);
+  if (iVar3 == 0) {
+    if (pmVar2->mapName[0] == '\x15') {
+      pmVar2 = (mapInfo *)(pmVar2->mapName + 1);
+      pcVar4 = (char *)0x0;
     }
     else {
-      uVar5 = SEH_StringEd_GetString(pcVar3);
+      pcVar4 = SEH_StringEd_GetString(pmVar2->mapName);
     }
-    uVar5 = UI_CheckStringTranslation(pcVar3,uVar5);
-    dVar7 = (double)pfVar1[1];
-    dVar6 = (double)*pfVar1;
-    uVar2 = ScrPlace_GetActivePlacement(uVar2);
-    UI_DrawWrappedText(dVar6,dVar7,uVar9,uVar2,uVar5,param_2,param_3);
+    pcVar4 = UI_CheckStringTranslation(pmVar2->mapName,pcVar4);
+    dVar10 = (double)param_2->y;
+    dVar9 = (double)param_2->x;
+    pSVar5 = ScrPlace_GetActivePlacement(LVar1);
+    UI_DrawWrappedText(pSVar5,pcVar4,param_2,param_3,(float)dVar9,(float)dVar10,(float)dVar8,
+                       (float *)pMVar7,param_7,0,(rectDef_s *)param_6,(bool)in_stack_ffffff0b);
     __restfpr_28();
     __restgprlr_23();
     return;
   }
-  iVar4 = I_strcmp(0xffffffff8212f570,in_r10);
-  if (iVar4 == 0) {
-    uVar5 = UI_SafeTranslateString(pcVar3 + 0x30);
-    dVar7 = (double)pfVar1[1];
-    dVar6 = (double)*pfVar1;
-    uVar2 = ScrPlace_GetActivePlacement(uVar2);
-    UI_DrawWrappedText(dVar6,dVar7,uVar9,uVar2,uVar5,param_2,param_3);
+  iVar3 = I_strcmp("description",in_r10);
+  if (iVar3 == 0) {
+    pcVar4 = UI_SafeTranslateString(pmVar2->mapDescription);
+    dVar10 = (double)param_2->y;
+    dVar9 = (double)param_2->x;
+    pSVar5 = ScrPlace_GetActivePlacement(LVar1);
+    UI_DrawWrappedText(pSVar5,pcVar4,param_2,param_3,(float)dVar9,(float)dVar10,(float)dVar8,
+                       (float *)pMVar7,param_7,0,(rectDef_s *)param_6,(bool)in_stack_ffffff0b);
     __restfpr_28();
     __restgprlr_23();
     return;
   }
-  iVar4 = I_strcmp(0xffffffff8216a6b0,in_r10);
-  if (iVar4 == 0) {
-    UI_GetLevelShot(*(undefined4 *)(DAT_83f71ed4 + 0xc));
-    dVar10 = (double)pfVar1[3];
-    dVar8 = (double)pfVar1[2];
-    dVar7 = (double)pfVar1[1];
-    dVar6 = (double)*pfVar1;
-    ScrPlace_GetActivePlacement(uVar2);
-    UI_DrawHandlePic(dVar6,dVar7,dVar8,dVar10);
+  iVar3 = I_strcmp("mapimage",in_r10);
+  if (iVar3 == 0) {
+    UI_GetLevelShot((ui_currentFeederMapIndex->current).integer);
+    dVar11 = (double)param_2->h;
+    dVar10 = (double)param_2->w;
+    dVar9 = (double)param_2->y;
+    dVar8 = (double)param_2->x;
+    pSVar5 = ScrPlace_GetActivePlacement(LVar1);
+    UI_DrawHandlePic(pSVar5,(float)dVar8,(float)dVar9,(float)dVar10,(float)dVar11,(int)in_r10,
+                     (int)pFVar6,param_5,pMVar7);
   }
   __restfpr_28();
   __restgprlr_23();
@@ -1080,393 +1386,435 @@ void UI_DrawMapCustomData(undefined8 param_1,undefined8 param_2,undefined8 param
 
 // 825AD3B8  UI_GetMapDisplayName  (ui_mp/ui_main_mp.cpp:1395)
 
-void UI_GetMapDisplayName(void)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+char * UI_GetMapDisplayName(char *param_1)
 
 {
   undefined8 uVar1;
   int iVar2;
-  int iVar3;
-  char *pcVar4;
+  char *pcVar3;
+  int iVar4;
+  mapInfo *pmVar5;
   
-  uVar1 = __savegprlr_28();
+  uVar1 = __savegprlr_28(param_1);
   UI_UpdateArenas();
-  iVar3 = 0;
-  if (0 < DAT_83f7df64) {
-    pcVar4 = &DAT_83f7df68;
+  iVar4 = 0;
+  if (0 < sharedUiInfo.mapCount) {
+    pmVar5 = sharedUiInfo.mapList;
     do {
-      iVar2 = I_stricmp(uVar1,pcVar4 + 0x20);
+      iVar2 = I_stricmp((char *)uVar1,pmVar5->mapLoadName);
       if (iVar2 == 0) {
-        if (*pcVar4 == '\x15') {
-          UI_CheckStringTranslation(pcVar4 + 1,0);
-          __restgprlr_28();
-          return;
+        if (pmVar5->mapName[0] == '\x15') {
+          pcVar3 = UI_CheckStringTranslation(pmVar5->mapName + 1,(char *)0x0);
+          pcVar3 = (char *)__restgprlr_28(pcVar3);
+          return pcVar3;
         }
-        uVar1 = SEH_StringEd_GetString(pcVar4);
-        UI_CheckStringTranslation(pcVar4,uVar1);
-        __restgprlr_28();
-        return;
+        pcVar3 = SEH_StringEd_GetString(pmVar5->mapName);
+        pcVar3 = UI_CheckStringTranslation(pmVar5->mapName,pcVar3);
+        pcVar3 = (char *)__restgprlr_28(pcVar3);
+        return pcVar3;
       }
-      iVar3 = iVar3 + 1;
-      pcVar4 = pcVar4 + 0xa78;
-    } while (iVar3 < DAT_83f7df64);
+      iVar4 = iVar4 + 1;
+      pmVar5 = pmVar5 + 1;
+    } while (iVar4 < sharedUiInfo.mapCount);
   }
-  __restgprlr_28(uVar1);
-  return;
+  pcVar3 = (char *)__restgprlr_28(uVar1);
+  return pcVar3;
 }
 
 
 // 825AD460  UI_GetCurrentMapName  (ui_mp/ui_main_mp.cpp:1412)
 
-void UI_GetCurrentMapName(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+char * UI_GetCurrentMapName(void)
 
 {
-  Party_GetMapName();
-  UI_GetMapDisplayName();
-  return;
+  char *pcVar1;
+  
+  pcVar1 = Party_GetMapName();
+  pcVar1 = UI_GetMapDisplayName(pcVar1);
+  return pcVar1;
 }
 
 
 // 825AD488  UI_GetMapVoteMapName  (ui_mp/ui_main_mp.cpp:1418)
 
-void UI_GetMapVoteMapName(ulonglong param_1)
+char * UI_GetMapVoteMapName(int param_1)
 
 {
-  undefined8 uVar1;
+  char *pcVar1;
   
-  if (1 < (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8216ab14,0x58c,0,0xffffffff82042398,param_1,2);
+  if (1 < (uint)param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x58c,0,
+                    "entry doesn\'t index NUM_MAP_VOTE_ENTRIES\n\t%i not in [0, %i)");
   }
-  if ((int)param_1 == 1) {
-    uVar1 = 0xffffffff8216aa58;
+  if (param_1 == 1) {
+    pcVar1 = "ui_mapvote_entryb_mapname";
   }
   else {
-    uVar1 = 0xffffffff8216aa90;
+    pcVar1 = "ui_mapvote_entrya_mapname";
   }
-  Dvar_GetString(uVar1);
-  UI_GetMapDisplayName();
-  return;
+  pcVar1 = Dvar_GetString(pcVar1);
+  pcVar1 = UI_GetMapDisplayName(pcVar1);
+  return pcVar1;
 }
 
 
 // 825A6C58  UI_GetMapImageFromName  (ui_mp/ui_main_mp.cpp:1438)
 
-void UI_GetMapImageFromName(void)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+char * UI_GetMapImageFromName(char *param_1)
 
 {
-  ulonglong uVar1;
+  char *pcVar1;
   int iVar2;
   int iVar3;
   longlong lVar4;
   
-  uVar1 = __savegprlr_28();
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8216ab14,0x5a2,0,0xffffffff82000f98,0xffffffff82010974);
+  pcVar1 = (char *)__savegprlr_28(param_1);
+  if (pcVar1 == (char *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x5a2,0,
+                    "%s");
   }
   UI_UpdateArenas();
   iVar3 = 0;
-  if (0 < DAT_83f7df64) {
+  if (0 < sharedUiInfo.mapCount) {
     lVar4 = -0x7c082098;
     do {
-      iVar2 = I_stricmp(uVar1,lVar4 + 0x20);
+      iVar2 = I_stricmp(pcVar1,(char *)((int)lVar4 + 0x20));
       if (iVar2 == 0) {
-        __restgprlr_28(lVar4 + 0x50);
-        return;
+        pcVar1 = (char *)__restgprlr_28(lVar4 + 0x50);
+        return pcVar1;
       }
       iVar3 = iVar3 + 1;
       lVar4 = lVar4 + 0xa78;
-    } while (iVar3 < DAT_83f7df64);
+    } while (iVar3 < sharedUiInfo.mapCount);
   }
-  __restgprlr_28(0xffffffff820068af);
-  return;
+  pcVar1 = (char *)__restgprlr_28(0xffffffff820068af);
+  return pcVar1;
 }
 
 
 // 825A6CF8  UI_GetCurrentMapImage  (ui_mp/ui_main_mp.cpp:1458)
 
-void UI_GetCurrentMapImage(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+char * UI_GetCurrentMapImage(void)
 
 {
-  Party_GetMapName();
-  UI_GetMapImageFromName();
-  return;
+  char *pcVar1;
+  
+  pcVar1 = Party_GetMapName();
+  pcVar1 = UI_GetMapImageFromName(pcVar1);
+  return pcVar1;
 }
 
 
 // 825A6D20  UI_GetMapVoteMapImage  (ui_mp/ui_main_mp.cpp:1464)
 
-void UI_GetMapVoteMapImage(ulonglong param_1)
+char * UI_GetMapVoteMapImage(int param_1)
 
 {
-  undefined8 uVar1;
+  char *pcVar1;
   
-  if (1 < (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8216ab14,0x5ba,0,0xffffffff82042398,param_1,2);
+  if (1 < (uint)param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x5ba,0,
+                    "entry doesn\'t index NUM_MAP_VOTE_ENTRIES\n\t%i not in [0, %i)");
   }
-  if ((int)param_1 == 1) {
-    uVar1 = 0xffffffff8216aa58;
+  if (param_1 == 1) {
+    pcVar1 = "ui_mapvote_entryb_mapname";
   }
   else {
-    uVar1 = 0xffffffff8216aa90;
+    pcVar1 = "ui_mapvote_entrya_mapname";
   }
-  Dvar_GetString(uVar1);
-  UI_GetMapImageFromName();
-  return;
+  pcVar1 = Dvar_GetString(pcVar1);
+  pcVar1 = UI_GetMapImageFromName(pcVar1);
+  return pcVar1;
 }
 
 
 // 825A6D98  UI_GetMapCustom  (ui_mp/ui_main_mp.cpp:1485)
 
-void UI_GetMapCustom(undefined8 param_1,undefined8 param_2)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+char * UI_GetMapCustom(char *param_1,char *param_2)
 
 {
-  undefined8 uVar1;
+  char *pcVar1;
   int iVar2;
   int iVar3;
   int iVar4;
-  int *piVar5;
+  char (*pacVar5) [16];
   int *piVar6;
   
-  uVar1 = __savegprlr_24();
+  pcVar1 = (char *)__savegprlr_24(param_1);
   UI_UpdateArenas();
   iVar4 = 0;
-  if (0 < DAT_83f7df64) {
-    piVar6 = &DAT_83f7e9d8;
+  if (0 < sharedUiInfo.mapCount) {
+    piVar6 = &sharedUiInfo.mapList[0].mapCustomCount;
     do {
-      iVar2 = I_stricmp(param_2,piVar6 + -0x294);
+      iVar2 = I_stricmp(param_2,(char *)(piVar6 + -0x294));
       if (iVar2 == 0) {
         iVar2 = 0;
         if (0 < *piVar6) {
-          piVar5 = piVar6 + -0x280;
+          pacVar5 = (char (*) [16])(piVar6 + -0x280);
           do {
-            iVar3 = I_stricmp(uVar1,piVar5);
+            iVar3 = I_stricmp(pcVar1,*pacVar5);
             if (iVar3 == 0) {
-              __restgprlr_24(piVar6 + iVar2 * 0x10 + -0x200);
-              return;
+              pcVar1 = (char *)__restgprlr_24(piVar6 + iVar2 * 0x10 + -0x200);
+              return pcVar1;
             }
             iVar2 = iVar2 + 1;
-            piVar5 = piVar5 + 4;
+            pacVar5 = pacVar5 + 1;
           } while (iVar2 < *piVar6);
         }
       }
       iVar4 = iVar4 + 1;
       piVar6 = piVar6 + 0x29e;
-    } while (iVar4 < DAT_83f7df64);
+    } while (iVar4 < sharedUiInfo.mapCount);
   }
-  __restgprlr_24(0xffffffff820068af);
-  return;
+  pcVar1 = (char *)__restgprlr_24(0xffffffff820068af);
+  return pcVar1;
 }
 
 
 // 825A6E58  UI_GetCurrentMapCustom  (ui_mp/ui_main_mp.cpp:1512)
 
-void UI_GetCurrentMapCustom(undefined8 param_1)
+char * UI_GetCurrentMapCustom(char *param_1)
 
 {
-  undefined8 uVar1;
+  char *pcVar1;
   
-  uVar1 = Party_GetMapName();
-  UI_GetMapCustom(param_1,uVar1);
-  return;
+  pcVar1 = Party_GetMapName();
+  pcVar1 = UI_GetMapCustom(param_1,pcVar1);
+  return pcVar1;
 }
 
 
 // 825A6E90  UI_GetCurrentPreviewMapCustom  (ui_mp/ui_main_mp.cpp:1521)
 
-void UI_GetCurrentPreviewMapCustom(undefined8 param_1)
+char * UI_GetCurrentPreviewMapCustom(char *param_1)
 
 {
-  UI_GetMapCustom(param_1,*(undefined4 *)(DAT_83f7a98c + 0xc));
-  return;
+  char *pcVar1;
+  
+  pcVar1 = UI_GetMapCustom(param_1,(ui_selectedFeederMap->current).string);
+  return pcVar1;
 }
 
 
 // 825AD500  UI_GetMapDisplayNameFromPartialLoadNameMatch  (ui_mp/ui_main_mp.cpp:1526)
 
-void UI_GetMapDisplayNameFromPartialLoadNameMatch(undefined8 param_1,ulonglong param_2)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+char * UI_GetMapDisplayNameFromPartialLoadNameMatch(char *param_1,int *param_2)
 
 {
   char cVar1;
-  undefined8 uVar2;
+  char *pcVar2;
   int iVar3;
-  char *pcVar4;
+  ulonglong uVar4;
   char *pcVar5;
-  int iVar6;
-  char *pcVar7;
+  mapInfo *pmVar6;
+  int iVar7;
+  char *pcVar8;
   
-  uVar2 = __savegprlr_26();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8216ab14,0x5fa,0,0xffffffff82000f98,0xffffffff8216c804);
+  uVar4 = (ulonglong)(int)param_2;
+  pcVar2 = (char *)__savegprlr_26(param_1);
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x5fa,0,
+                    "%s");
   }
   UI_UpdateArenas();
-  iVar6 = 0;
-  if (0 < DAT_83f7df64) {
-    pcVar7 = &DAT_83f7df88;
+  iVar7 = 0;
+  if (0 < sharedUiInfo.mapCount) {
+    pcVar8 = sharedUiInfo.mapList[0].mapLoadName;
     do {
-      pcVar5 = pcVar7 + -0x20;
-      pcVar4 = pcVar7;
+      pmVar6 = (mapInfo *)(pcVar8 + -0x20);
+      pcVar5 = pcVar8;
       do {
-        cVar1 = *pcVar4;
-        pcVar4 = pcVar4 + 1;
+        cVar1 = *pcVar5;
+        pcVar5 = pcVar5 + 1;
       } while (cVar1 != '\0');
-      *(undefined4 *)param_2 = pcVar4 + (-1 - (int)pcVar7);
-      iVar3 = I_strnicmp(uVar2,pcVar7);
+      *(undefined4 *)uVar4 = pcVar5 + (-1 - (int)pcVar8);
+      iVar3 = I_strnicmp(pcVar2,pcVar8,(int)(pcVar5 + (-1 - (int)pcVar8)));
       if (iVar3 == 0) {
-        if (*pcVar5 == '\x15') {
-          UI_CheckStringTranslation(pcVar7 + -0x1f,0);
-          __restgprlr_26();
-          return;
+        if (pmVar6->mapName[0] == '\x15') {
+          pcVar2 = UI_CheckStringTranslation(pcVar8 + -0x1f,(char *)0x0);
+          pcVar2 = (char *)__restgprlr_26(pcVar2);
+          return pcVar2;
         }
-        uVar2 = SEH_StringEd_GetString(pcVar5);
-        UI_CheckStringTranslation(pcVar5,uVar2);
-        __restgprlr_26();
-        return;
+        pcVar2 = SEH_StringEd_GetString((char *)pmVar6);
+        pcVar2 = UI_CheckStringTranslation((char *)pmVar6,pcVar2);
+        pcVar2 = (char *)__restgprlr_26(pcVar2);
+        return pcVar2;
       }
-      iVar6 = iVar6 + 1;
-      pcVar7 = pcVar7 + 0xa78;
-    } while (iVar6 < DAT_83f7df64);
+      iVar7 = iVar7 + 1;
+      pcVar8 = pcVar8 + 0xa78;
+    } while (iVar7 < sharedUiInfo.mapCount);
   }
-  __restgprlr_26(0);
-  return;
+  pcVar2 = (char *)__restgprlr_26(0);
+  return pcVar2;
 }
 
 
 // 825AD600  UI_GetGameTypeDisplayName  (ui_mp/ui_main_mp.cpp:1548)
 
-void UI_GetGameTypeDisplayName(void)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+char * UI_GetGameTypeDisplayName(char *param_1)
 
 {
   undefined8 uVar1;
   int iVar2;
-  int iVar3;
-  longlong lVar4;
+  char *pcVar3;
+  char *pcVar4;
+  gameTypeInfo *pgVar5;
+  int iVar6;
   
-  uVar1 = __savegprlr_28();
+  uVar1 = __savegprlr_28(param_1);
   UI_UpdateGameTypesList();
-  iVar3 = 0;
-  if (0 < DAT_83f7aed4) {
-    lVar4 = -0x7c085128;
+  iVar6 = 0;
+  if (0 < sharedUiInfo.numGameTypes) {
+    pgVar5 = sharedUiInfo.gameTypes;
     do {
-      iVar2 = I_stricmp(uVar1,lVar4);
+      iVar2 = I_stricmp((char *)uVar1,pgVar5->gameType);
       if (iVar2 == 0) {
-        iVar3 = iVar3 * 0x6c;
-        if ((&DAT_83f7aee4)[iVar3] == '\x15') {
-          UI_CheckStringTranslation(&DAT_83f7aee5 + iVar3,0);
-          __restgprlr_28();
-          return;
+        pcVar3 = sharedUiInfo.gameTypes[iVar6].gameTypeName;
+        if (sharedUiInfo.gameTypes[iVar6].gameTypeName[0] == '\x15') {
+          pcVar3 = UI_CheckStringTranslation
+                             (sharedUiInfo.gameTypes[iVar6].gameTypeName + 1,(char *)0x0);
+          pcVar3 = (char *)__restgprlr_28(pcVar3);
+          return pcVar3;
         }
-        uVar1 = SEH_StringEd_GetString(&DAT_83f7aee4 + iVar3);
-        UI_CheckStringTranslation(&DAT_83f7aee4 + iVar3,uVar1);
-        __restgprlr_28();
-        return;
+        pcVar4 = SEH_StringEd_GetString(pcVar3);
+        pcVar3 = UI_CheckStringTranslation(pcVar3,pcVar4);
+        pcVar3 = (char *)__restgprlr_28(pcVar3);
+        return pcVar3;
       }
-      iVar3 = iVar3 + 1;
-      lVar4 = lVar4 + 0x6c;
-    } while (iVar3 < DAT_83f7aed4);
+      iVar6 = iVar6 + 1;
+      pgVar5 = pgVar5 + 1;
+    } while (iVar6 < sharedUiInfo.numGameTypes);
   }
-  __restgprlr_28(uVar1);
-  return;
+  pcVar3 = (char *)__restgprlr_28(uVar1);
+  return pcVar3;
 }
 
 
 // 825AD6B0  UI_GetCustomizedGameTypeDefaultDisplayName  (ui_mp/ui_main_mp.cpp:1563)
 
-void UI_GetCustomizedGameTypeDefaultDisplayName(void)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+char * UI_GetCustomizedGameTypeDefaultDisplayName(char *param_1)
 
 {
   undefined8 uVar1;
   int iVar2;
-  int iVar3;
-  longlong lVar4;
+  char *pcVar3;
+  char *pcVar4;
+  gameTypeInfo *pgVar5;
+  int iVar6;
   
-  uVar1 = __savegprlr_28();
+  uVar1 = __savegprlr_28(param_1);
   UI_UpdateGameTypesList();
-  iVar3 = 0;
-  if (0 < DAT_83f7aed4) {
-    lVar4 = -0x7c085128;
+  iVar6 = 0;
+  if (0 < sharedUiInfo.numGameTypes) {
+    pgVar5 = sharedUiInfo.gameTypes;
     do {
-      iVar2 = I_stricmp(uVar1,lVar4);
+      iVar2 = I_stricmp((char *)uVar1,pgVar5->gameType);
       if (iVar2 == 0) {
-        iVar3 = iVar3 * 0x6c;
-        if ((&DAT_83f7af04)[iVar3] == '\x15') {
-          UI_CheckStringTranslation(&DAT_83f7af05 + iVar3,0);
-          __restgprlr_28();
-          return;
+        pcVar3 = sharedUiInfo.gameTypes[iVar6].customizedGameTypeName;
+        if (sharedUiInfo.gameTypes[iVar6].customizedGameTypeName[0] == '\x15') {
+          pcVar3 = UI_CheckStringTranslation
+                             (sharedUiInfo.gameTypes[iVar6].customizedGameTypeName + 1,(char *)0x0);
+          pcVar3 = (char *)__restgprlr_28(pcVar3);
+          return pcVar3;
         }
-        uVar1 = SEH_StringEd_GetString(&DAT_83f7af04 + iVar3);
-        UI_CheckStringTranslation(&DAT_83f7af04 + iVar3,uVar1);
-        __restgprlr_28();
-        return;
+        pcVar4 = SEH_StringEd_GetString(pcVar3);
+        pcVar3 = UI_CheckStringTranslation(pcVar3,pcVar4);
+        pcVar3 = (char *)__restgprlr_28(pcVar3);
+        return pcVar3;
       }
-      iVar3 = iVar3 + 1;
-      lVar4 = lVar4 + 0x6c;
-    } while (iVar3 < DAT_83f7aed4);
+      iVar6 = iVar6 + 1;
+      pgVar5 = pgVar5 + 1;
+    } while (iVar6 < sharedUiInfo.numGameTypes);
   }
-  __restgprlr_28(uVar1);
-  return;
+  pcVar3 = (char *)__restgprlr_28(uVar1);
+  return pcVar3;
 }
 
 
 // 825AD760  UI_GetCustomizedGameTypeDefaultDisplayDesc  (ui_mp/ui_main_mp.cpp:1578)
 
-void UI_GetCustomizedGameTypeDefaultDisplayDesc(void)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+char * UI_GetCustomizedGameTypeDefaultDisplayDesc(char *param_1)
 
 {
   undefined8 uVar1;
   int iVar2;
-  int iVar3;
-  longlong lVar4;
+  char *pcVar3;
+  char *pcVar4;
+  gameTypeInfo *pgVar5;
+  int iVar6;
   
-  uVar1 = __savegprlr_28();
+  uVar1 = __savegprlr_28(param_1);
   UI_UpdateGameTypesList();
-  iVar3 = 0;
-  if (0 < DAT_83f7aed4) {
-    lVar4 = -0x7c085128;
+  iVar6 = 0;
+  if (0 < sharedUiInfo.numGameTypes) {
+    pgVar5 = sharedUiInfo.gameTypes;
     do {
-      iVar2 = I_stricmp(uVar1,lVar4);
+      iVar2 = I_stricmp((char *)uVar1,pgVar5->gameType);
       if (iVar2 == 0) {
-        iVar3 = iVar3 * 0x6c;
-        if ((&DAT_83f7af24)[iVar3] == '\x15') {
-          UI_CheckStringTranslation(&DAT_83f7af25 + iVar3,0);
-          __restgprlr_28();
-          return;
+        pcVar3 = sharedUiInfo.gameTypes[iVar6].customizedGameTypeDesc;
+        if (sharedUiInfo.gameTypes[iVar6].customizedGameTypeDesc[0] == '\x15') {
+          pcVar3 = UI_CheckStringTranslation
+                             (sharedUiInfo.gameTypes[iVar6].customizedGameTypeDesc + 1,(char *)0x0);
+          pcVar3 = (char *)__restgprlr_28(pcVar3);
+          return pcVar3;
         }
-        uVar1 = SEH_StringEd_GetString(&DAT_83f7af24 + iVar3);
-        UI_CheckStringTranslation(&DAT_83f7af24 + iVar3,uVar1);
-        __restgprlr_28();
-        return;
+        pcVar4 = SEH_StringEd_GetString(pcVar3);
+        pcVar3 = UI_CheckStringTranslation(pcVar3,pcVar4);
+        pcVar3 = (char *)__restgprlr_28(pcVar3);
+        return pcVar3;
       }
-      iVar3 = iVar3 + 1;
-      lVar4 = lVar4 + 0x6c;
-    } while (iVar3 < DAT_83f7aed4);
+      iVar6 = iVar6 + 1;
+      pgVar5 = pgVar5 + 1;
+    } while (iVar6 < sharedUiInfo.numGameTypes);
   }
-  __restgprlr_28(uVar1);
-  return;
+  pcVar3 = (char *)__restgprlr_28(uVar1);
+  return pcVar3;
 }
 
 
 // 825AD810  UI_OwnerDrawWidth  (ui_mp/ui_main_mp.cpp:1593)
 
-undefined8
-UI_OwnerDrawWidth(undefined8 param_1,int param_2,undefined8 param_3,undefined8 param_4,
-                 undefined8 param_5)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+int UI_OwnerDrawWidth(int param_1,Font_s *param_2,float param_3)
 
 {
-  int iVar3;
-  undefined8 uVar1;
-  ulonglong uVar2;
+  int iVar1;
+  char *pcVar2;
+  int in_r6;
+  double dVar3;
   
-  if (param_2 == 0x15e) {
-    iVar3 = Display_KeyBindPending();
-    if (iVar3 == 0) {
-      uVar1 = 0xffffffff8216c814;
+  dVar3 = (double)param_3;
+  if (param_1 == 0x15e) {
+    iVar1 = Display_KeyBindPending();
+    if (iVar1 == 0) {
+      pcVar2 = "EXE_KEYCHANGE";
     }
     else {
-      uVar1 = 0xffffffff8216c824;
+      pcVar2 = "EXE_KEYWAIT";
     }
-    uVar2 = UI_SafeTranslateString(uVar1);
-    if ((uVar2 & 0xffffffff) != 0) {
-      uVar1 = UI_TextWidthModCase(param_1,uVar2,0,param_3,param_5,0);
-      return uVar1;
+    pcVar2 = UI_SafeTranslateString(pcVar2);
+    if (pcVar2 != (char *)0x0) {
+      iVar1 = UI_TextWidthModCase(pcVar2,0,param_2,(float)dVar3,in_r6);
+      return iVar1;
     }
   }
   return 0;
@@ -1475,128 +1823,142 @@ UI_OwnerDrawWidth(undefined8 param_1,int param_2,undefined8 param_3,undefined8 p
 
 // 825A6EA0  UI_BuildPlayerList  (ui_mp/ui_main_mp.cpp:1650)
 
-void UI_BuildPlayerList(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void UI_BuildPlayerList(LocalClientNum_t param_1)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
-  char *_Str;
-  int iVar3;
+  LocalClientNum_t LVar1;
+  char *pcVar2;
+  char *pcVar3;
   int iVar4;
-  undefined8 *puVar5;
+  int iVar5;
   longlong lVar6;
-  undefined1 auStack_860 [48];
-  undefined1 auStack_830 [2096];
+  char acStack_860 [48];
+  uiClientState_s uStack_830;
   
-  uVar1 = __savegprlr_28();
-  CL_GetClientState(uVar1,auStack_830);
-  uVar2 = CL_GetConfigString(0);
-  _Str = (char *)Info_ValueForKey(uVar2,0xffffffff82022f7c);
-  iVar3 = atoi(_Str);
-  puVar5 = (undefined8 *)0x83f7ae80;
+  LVar1 = __savegprlr_28(param_1);
+  CL_GetClientState(LVar1,&uStack_830);
+  pcVar2 = CL_GetConfigString(0);
+  pcVar2 = Info_ValueForKey(pcVar2,"sv_maxclients");
+  pcVar3 = (char *)atoi(pcVar2);
+  pcVar2 = sharedUiInfo.teamNames[0x11] + 0x18;
   lVar6 = 9;
   do {
-    puVar5 = puVar5 + 1;
-    *puVar5 = 0xffffffffffffffff;
+    pcVar2 = pcVar2 + 8;
+    pcVar2[0] = -1;
+    pcVar2[1] = -1;
+    pcVar2[2] = -1;
+    pcVar2[3] = -1;
+    pcVar2[4] = -1;
+    pcVar2[5] = -1;
+    pcVar2[6] = -1;
+    pcVar2[7] = -1;
     lVar6 = lVar6 + -1;
   } while (lVar6 != 0);
-  lVar6 = 0;
-  DAT_83f7aa04 = 0;
-  if (0 < iVar3) {
+  iVar5 = 0;
+  sharedUiInfo.playerCount = 0;
+  pcVar2 = pcVar3;
+  if (0 < (int)pcVar3) {
     do {
-      iVar4 = CL_GetClientName(uVar1,lVar6,auStack_860,0x2a);
+      iVar4 = CL_GetClientName(LVar1,iVar5,acStack_860,0x2a);
+      pcVar2 = (char *)0x0;
       if (iVar4 != 0) {
-        (&DAT_83f7ae88)[DAT_83f7aa04] = (int)lVar6;
-        I_strncpyz(((ulonglong)DAT_83f7aa04 & 0x7ffffff) * 0x20 + -0x7c0855f8,auStack_860,0x20);
-        I_CleanStr(((ulonglong)DAT_83f7aa04 & 0x7ffffff) * 0x20 + -0x7c0855f8);
-        DAT_83f7aa04 = DAT_83f7aa04 + 1;
+        sharedUiInfo.playerClientNums[sharedUiInfo.playerCount] = iVar5;
+        I_strncpyz(sharedUiInfo.playerNames[sharedUiInfo.playerCount],acStack_860,0x20);
+        pcVar2 = I_CleanStr(sharedUiInfo.playerNames[sharedUiInfo.playerCount]);
+        sharedUiInfo.playerCount = sharedUiInfo.playerCount + 1;
       }
-      lVar6 = lVar6 + 1;
-    } while ((int)lVar6 < iVar3);
+      iVar5 = iVar5 + 1;
+    } while (iVar5 < (int)pcVar3);
   }
-  __restgprlr_28();
+  __restgprlr_28(pcVar2);
   return;
 }
 
 
 // 825A6F88  UI_BuildCustomGameTypeList  (ui_mp/ui_main_mp.cpp:1679)
 
-void UI_BuildCustomGameTypeList(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void UI_BuildCustomGameTypeList(LocalClientNum_t param_1)
 
 {
   char cVar1;
   char cVar2;
-  longlong lVar3;
-  void *pvVar6;
-  int iVar7;
-  longlong lVar4;
+  int iVar3;
+  int iVar4;
+  int iVar5;
+  char *pcVar6;
+  char *pcVar7;
   char *pcVar8;
-  ulonglong uVar5;
-  char *pcVar9;
-  char *pcVar10;
-  longlong lVar11;
-  ulonglong uVar12;
+  uint uVar9;
+  longlong lVar10;
   
-  lVar3 = __savegprlr_24();
-  DAT_83f7bc58 = 0;
-  pvVar6 = memset(&DAT_83f7bc5c,0,0xd80);
-  lVar4 = (longlong)(int)pvVar6;
-  uVar12 = 0xffffffffffffffff;
-  lVar11 = 0;
-  pcVar10 = &DAT_8404fd23;
+  iVar3 = __savegprlr_24(param_1);
+  sharedUiInfo.numCustomGameTypes = 0;
+  memset();
+  uVar9 = 0xffffffff;
+  iVar5 = 0;
+  pcVar8 = savedContentDiscoveryBuffer[0].szFileName + 3;
   do {
-    if (*(int *)(pcVar10 + -0x107) != 0) {
-      iVar7 = strncmp(pcVar10 + -3,"CM_",3);
-      lVar4 = (longlong)iVar7;
-      if (iVar7 == 0) {
-        if (DAT_83f7bc58 == 0x20) {
-          Com_Printf(0x10,0xffffffff8216bb68);
+    if (*(ulong *)(pcVar8 + -0x107) != 0) {
+      pcVar6 = pcVar8 + -3;
+      strncmp();
+      if (pcVar6 == (char *)0x0) {
+        if (sharedUiInfo.numCustomGameTypes == 0x20) {
+          Com_Printf(0x10,"Error, reached max custom gametypes limit\n");
           __restgprlr_24();
           return;
         }
-        lVar4 = I_strncpyz((ulonglong)DAT_83f7bc58 * 0x6c + -0x7c084398,pcVar10,0x20);
-        DAT_83f7bc58 = DAT_83f7bc58 + 1;
-        pcVar8 = *(char **)(DAT_83fe7480 + 0xc);
-        pcVar9 = pcVar10;
+        I_strncpyz(sharedUiInfo.customGameTypes[sharedUiInfo.numCustomGameTypes].gameTypeName,pcVar8
+                   ,0x20);
+        sharedUiInfo.numCustomGameTypes = sharedUiInfo.numCustomGameTypes + 1;
+        pcVar6 = (ui_customModeName->current).string;
+        pcVar7 = pcVar8;
         do {
-          cVar1 = *pcVar9;
-          cVar2 = *pcVar8;
+          cVar1 = *pcVar7;
+          cVar2 = *pcVar6;
           if (cVar1 == '\0') break;
-          pcVar9 = pcVar9 + 1;
-          pcVar8 = pcVar8 + 1;
+          pcVar7 = pcVar7 + 1;
+          pcVar6 = pcVar6 + 1;
         } while (cVar1 == cVar2);
         if (cVar1 == cVar2) {
-          lVar4 = CustomGameTypes_GetGametypeCount();
-          uVar12 = lVar4 + lVar11;
+          iVar4 = CustomGameTypes_GetGametypeCount();
+          uVar9 = iVar4 + iVar5;
         }
-        lVar11 = lVar11 + 1;
+        iVar5 = iVar5 + 1;
       }
     }
-    pcVar10 = pcVar10 + 0x134;
-  } while ((int)pcVar10 < -0x7bfadc5d);
-  if ((int)uVar12 < 0) {
-    uVar12 = 0;
-    iVar7 = CustomGameTypes_GetGametypeCount(lVar4);
-    if (0 < iVar7) {
+    pcVar8 = pcVar8 + 0x134;
+  } while ((int)pcVar8 < -0x7bfadc5d);
+  if ((int)uVar9 < 0) {
+    lVar10 = 0;
+    iVar5 = CustomGameTypes_GetGametypeCount();
+    if (0 < iVar5) {
       do {
-        pcVar8 = (char *)CustomGameTypes_GetGametypeInternalName(uVar12);
-        pcVar10 = *(char **)(DAT_83f71eb0 + 0xc);
+        pcVar6 = CustomGameTypes_GetGametypeInternalName((int)lVar10);
+        pcVar8 = (ui_gametype->current).string;
         do {
-          cVar1 = *pcVar10;
-          cVar2 = *pcVar8;
+          cVar1 = *pcVar8;
+          cVar2 = *pcVar6;
           if (cVar1 == '\0') break;
-          pcVar10 = pcVar10 + 1;
           pcVar8 = pcVar8 + 1;
+          pcVar6 = pcVar6 + 1;
         } while (cVar1 == cVar2);
         if (cVar1 == cVar2) break;
-        uVar12 = uVar12 + 1;
-        iVar7 = CustomGameTypes_GetGametypeCount();
-      } while ((int)uVar12 < iVar7);
+        lVar10 = lVar10 + 1;
+        iVar5 = CustomGameTypes_GetGametypeCount();
+      } while ((int)lVar10 < iVar5);
     }
-    uVar5 = CustomGameTypes_GetGametypeCount();
-    uVar12 = -(ulonglong)(uVar5 != uVar12) & uVar12;
+    iVar5 = CustomGameTypes_GetGametypeCount();
+    uVar9 = -(uint)(iVar5 != lVar10) & (uint)lVar10;
   }
-  Menu_SetFeederSelection(lVar3 * 0x22ac + -0x7c08e128,0,0x19,uVar12,0);
+  Menu_SetFeederSelection(&uiInfoArray[iVar3].uiDC,(menuDef_t *)0x0,0x19,uVar9,(char *)0x0);
   __restgprlr_24();
   return;
 }
@@ -1604,101 +1966,86 @@ void UI_BuildCustomGameTypeList(void)
 
 // 825AD898  UI_DrawKeyBindStatus  (ui_mp/ui_main_mp.cpp:1782)
 
-void UI_DrawKeyBindStatus(undefined8 param_1,float *param_2,undefined8 param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void UI_DrawKeyBindStatus
+               (LocalClientNum_t param_1,rectDef_s *param_2,Font_s *param_3,float param_4,
+               float *param_5,int param_6)
 
 {
-  undefined8 uVar1;
-  int iVar2;
-  char *pcVar3;
-  undefined8 uVar4;
-  undefined8 extraout_f1;
-  double dVar5;
-  double dVar6;
-  undefined8 uVar7;
+  byte bVar1;
+  byte bVar2;
+  float *pfVar3;
+  LocalClientNum_t LVar4;
+  int iVar5;
+  char *pcVar6;
+  char *pcVar7;
+  ScreenPlacement *pSVar8;
+  longlong lVar9;
+  longlong lVar10;
+  int in_r8;
+  double extraout_f1;
+  double dVar11;
+  double dVar12;
+  double dVar13;
   
-  uVar1 = __savegprlr_25();
-  uVar7 = extraout_f1;
-  iVar2 = Display_KeyBindPending();
-  if (iVar2 == 0) {
-    pcVar3 = "EXE_KEYCHANGE";
+  lVar10 = (longlong)(int)param_3;
+  lVar9 = (longlong)(int)param_2;
+  LVar4 = __savegprlr_25((double)param_4,param_1,lVar9,lVar10,param_5);
+  dVar13 = extraout_f1;
+  iVar5 = Display_KeyBindPending();
+  if (iVar5 == 0) {
+    pcVar7 = "EXE_KEYCHANGE";
   }
   else {
-    pcVar3 = "EXE_KEYWAIT";
+    pcVar7 = "EXE_KEYWAIT";
   }
-  if (*pcVar3 == '\x15') {
-    pcVar3 = pcVar3 + 1;
-    uVar4 = 0;
+  if (*pcVar7 == '\x15') {
+    pcVar7 = pcVar7 + 1;
+    pcVar6 = (char *)0x0;
   }
   else {
-    uVar4 = SEH_StringEd_GetString();
+    pcVar6 = SEH_StringEd_GetString(pcVar7);
   }
-  uVar4 = UI_CheckStringTranslation(pcVar3,uVar4);
-  dVar6 = (double)param_2[1];
-  dVar5 = (double)*param_2;
-  uVar1 = ScrPlace_GetActivePlacement(uVar1);
-  UI_DrawText(dVar5,dVar6,uVar7,uVar1,uVar4,0x7fffffff,param_3);
+  pcVar7 = UI_CheckStringTranslation(pcVar7,pcVar6);
+  pfVar3 = (float *)lVar9;
+  bVar1 = *(byte *)((int)pfVar3 + 0x11);
+  bVar2 = *(byte *)(pfVar3 + 4);
+  dVar12 = (double)pfVar3[1];
+  dVar11 = (double)*pfVar3;
+  pSVar8 = ScrPlace_GetActivePlacement(LVar4);
+  UI_DrawText(pSVar8,pcVar7,0x7fffffff,(Font_s *)lVar10,(float)dVar11,(float)dVar12,param_6,in_r8,
+              (float)dVar13,(float *)(uint)bVar2,(uint)bVar1);
   __restgprlr_25();
   return;
 }
 
 
 // 825A7140  UI_DrawMapLevelshot  (ui_mp/ui_main_mp.cpp:1791)
-
-void UI_DrawMapLevelshot(void)
-
-{
-  uint uVar3;
-  ulonglong uVar1;
-  int iVar4;
-  ulonglong uVar2;
-  undefined *puVar5;
-  
-  uVar3 = __savegprlr_28();
-  if (3 < uVar3) {
-    MyAssertHandler(0xffffffff8216ab14,0x1c2,0,0xffffffff820011a8,uVar3,4);
-  }
-  puVar5 = &DAT_83f71ed8 + uVar3 * 0x22ac;
-  uVar1 = Menus_FindByName(puVar5,0xffffffff8216bbd4);
-  if (((uVar1 & 0xffffffff) == 0) || (iVar4 = Menus_MenuIsInStack(puVar5,uVar1), iVar4 == 0)) {
-    if ((DAT_83fe7484 == '\0') ||
-       (uVar1 = DB_FindXAssetHeader(0x18,0xffffffff82031c20,1), (uVar1 & 0xffffffff) == 0)) {
-      ScrPlace_GetActivePlacement(uVar3);
-      UI_FillRect(0,0,0x4084000000000000,0x407e000000000000);
-      __restgprlr_28();
-      return;
-    }
-    uVar2 = DB_GetLoadedFlags();
-    if ((uVar2 & 8) == 0) {
-      MyAssertHandler(0xffffffff8216ab14,0x728,0,0xffffffff82000f98,0xffffffff8216bb98);
-    }
-    iVar4 = Menus_MenuIsInStack(puVar5,uVar1);
-    if (iVar4 == 0) {
-      Menus_Open(puVar5,uVar1);
-    }
-    *(undefined4 *)(&DAT_83f71f08 + uVar3 * 0x22ac) = 0;
-    Window_SetDynamicFlags(uVar3,uVar1 + 4,0x4004);
-    Menu_Paint(puVar5,uVar1);
-  }
-  __restgprlr_28();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
 
 // 825A72B0  UI_LoadIngameMenus  (ui_mp/ui_main_mp.cpp:1846)
 
-void UI_LoadIngameMenus(int param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void UI_LoadIngameMenus(LocalClientNum_t param_1)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
+  MenuList *pMVar1;
+  uiInfo_s *puVar2;
   
-  if ((&DAT_83f7a990)[param_1] == '\0') {
-    (&DAT_83f7a990)[param_1] = 1;
-    uVar1 = UI_LoadMenus(0xffffffff8216bc08,3);
-    uVar2 = UI_GetClientInfo(param_1);
-    UI_AddMenuList(uVar2,uVar1,1);
-    uVar1 = UI_LoadMenus(0xffffffff8216bbec,3);
-    UI_AddMenuList(uVar2,uVar1,0);
+  if (g_ingameMenusLoaded[param_1] == false) {
+    g_ingameMenusLoaded[param_1] = true;
+    pMVar1 = UI_LoadMenus("ui_mp/ingame.txt",3);
+    puVar2 = UI_GetClientInfo(param_1);
+    UI_AddMenuList(&puVar2->uiDC,pMVar1,1);
+    pMVar1 = UI_LoadMenus("ui_mp/patch_mp_ingame.txt",3);
+    UI_AddMenuList(&puVar2->uiDC,pMVar1,0);
   }
   return;
 }
@@ -1706,22 +2053,22 @@ void UI_LoadIngameMenus(int param_1)
 
 // 825A7348  UI_SetMap  (ui_mp/ui_main_mp.cpp:1864)
 
-void UI_SetMap(undefined8 param_1,undefined8 param_2)
+void UI_SetMap(char *param_1,char *param_2)
 
 {
   char *pcVar1;
   
-  pcVar1 = (char *)__savegprlr_29();
-  I_strncpyz(0xffffffff83f71e18,pcVar1,0x40);
-  I_strncpyz(0xffffffff83fe7430,param_2,0x40);
+  pcVar1 = (char *)__savegprlr_29(param_1);
+  I_strncpyz(g_mapname,pcVar1,0x40);
+  I_strncpyz(&DAT_83fe7430,param_2,0x40);
   if (*pcVar1 != '\0') {
-    Dvar_SetStringByName(0xffffffff8202c6bc,pcVar1);
-    Dvar_SetStringByName(0xffffffff8202c6b0,param_2);
-    DAT_83fe7484 = 1;
+    Dvar_SetStringByName("ui_mapname",pcVar1);
+    Dvar_SetStringByName("ui_gametype",param_2);
+    g_showLoadingScreenMenu = true;
     __restgprlr_29();
     return;
   }
-  DAT_83fe7484 = 0;
+  g_showLoadingScreenMenu = false;
   __restgprlr_29();
   return;
 }
@@ -1729,27 +2076,39 @@ void UI_SetMap(undefined8 param_1,undefined8 param_2)
 
 // 825A73D8  UI_DrawLocalTalking  (ui_mp/ui_main_mp.cpp:1950)
 
-void UI_DrawLocalTalking(undefined8 param_1,undefined8 param_2,float *param_3)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void UI_DrawLocalTalking(SessionData *param_1,LocalClientNum_t param_2,rectDef_s *param_3,
+                        float *param_4)
 
 {
-  char cVar2;
-  int iVar1;
-  double dVar3;
-  double dVar4;
-  double dVar5;
+  SessionData *pSVar1;
+  bool bVar4;
+  int iVar2;
+  ScreenPlacement *pSVar3;
+  rectDef_s *prVar5;
+  Material *in_r7;
   double dVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
   
-  __savegprlr_27();
-  __savefpr_28();
-  cVar2 = Voice_IsLocalClientTalking();
-  if ((cVar2 != '\0') && (iVar1 = CL_Demo_IsRenderingMovie(param_2), iVar1 == 0)) {
-    Material_RegisterHandle(0xffffffff82021060,7);
-    dVar6 = (double)param_3[3];
-    dVar5 = (double)param_3[2];
-    dVar4 = (double)param_3[1];
-    dVar3 = (double)*param_3;
-    ScrPlace_GetActivePlacement(param_2);
-    UI_DrawHandlePic(dVar3,dVar4,dVar5,dVar6);
+  __savegprlr_27(param_1);
+  pSVar1 = (SessionData *)__savefpr_28();
+  prVar5 = param_3;
+  bVar4 = Voice_IsLocalClientTalking(pSVar1,param_2);
+  if ((bVar4) && (iVar2 = CL_Demo_IsRenderingMovie(param_2), iVar2 == 0)) {
+    iVar2 = 7;
+    Material_RegisterHandle("voice_on",7);
+    dVar9 = (double)param_3->h;
+    dVar8 = (double)param_3->w;
+    dVar7 = (double)param_3->y;
+    dVar6 = (double)param_3->x;
+    pSVar3 = ScrPlace_GetActivePlacement(param_2);
+    UI_DrawHandlePic(pSVar3,(float)dVar6,(float)dVar7,(float)dVar8,(float)dVar9,iVar2,(int)prVar5,
+                     param_4,in_r7);
   }
   __restfpr_28();
   __restgprlr_27();
@@ -1759,78 +2118,88 @@ void UI_DrawLocalTalking(undefined8 param_1,undefined8 param_2,float *param_3)
 
 // 825A7480  UI_GetTalkerClientNum  (ui_mp/ui_main_mp.cpp:1969)
 
-void UI_GetTalkerClientNum(undefined8 param_1,int param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+int UI_GetTalkerClientNum(LocalClientNum_t param_1,int param_2)
 
 {
-  char cVar3;
-  ulonglong uVar1;
+  bool bVar3;
+  SessionData *pSVar1;
   int iVar2;
   longlong lVar4;
   
-  __savegprlr_28();
-  cVar3 = Lobby_IsInRunningLobby();
-  if (cVar3 == '\0') {
-    iVar2 = Party_InParty(0xffffffff82b55118);
-    if (iVar2 == 0) {
-      uVar1 = 0xffffffff844c7860;
-    }
-    else {
-      uVar1 = (ulonglong)DAT_82b55118;
-    }
+  __savegprlr_28(param_1);
+  bVar3 = Lobby_IsInRunningLobby();
+  if (bVar3) {
+    pSVar1 = Lobby_GetSession();
   }
   else {
-    uVar1 = Lobby_GetSession();
+    iVar2 = Party_InParty(&g_partyData);
+    pSVar1 = g_partyData.session;
+    if (iVar2 == 0) {
+      pSVar1 = &g_serverSession;
+    }
   }
   iVar2 = 0;
   lVar4 = 0;
   do {
-    cVar3 = CL_IsClientLocal(lVar4);
-    if ((cVar3 == '\0') && (cVar3 = CL_IsPlayerTalking(uVar1,lVar4), cVar3 != '\0')) {
+    bVar3 = CL_IsClientLocal((int)lVar4);
+    if ((!bVar3) && (bVar3 = CL_IsPlayerTalking(pSVar1,(int)lVar4), bVar3)) {
       if (iVar2 == param_2) {
-        __restgprlr_28(lVar4);
-        return;
+        iVar2 = __restgprlr_28(lVar4);
+        return iVar2;
       }
       iVar2 = iVar2 + 1;
     }
     lVar4 = lVar4 + 1;
   } while ((int)lVar4 < 0x12);
-  __restgprlr_28(0xffffffffffffffff);
-  return;
+  iVar2 = __restgprlr_28(0xffffffffffffffff);
+  return iVar2;
 }
 
 
 // 825A7538  UI_DrawTalkerNum  (ui_mp/ui_main_mp.cpp:2009)
 
-void UI_DrawTalkerNum(undefined8 param_1,undefined8 param_2,float *param_3,undefined8 param_4)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void UI_DrawTalkerNum(LocalClientNum_t param_1,int param_2,rectDef_s *param_3,Font_s *param_4,
+                     float *param_5,float param_6,int param_7)
 
 {
-  float fVar1;
-  undefined8 uVar2;
-  undefined8 uVar3;
+  LocalClientNum_t LVar1;
+  int iVar2;
+  ScreenPlacement *pSVar3;
   int iVar4;
-  undefined8 extraout_f1;
-  undefined8 uVar5;
-  undefined1 auStack_80 [128];
+  char *pcVar5;
+  float *pfVar6;
+  double extraout_f1;
+  double dVar7;
+  char acStack_80 [128];
   
-  uVar2 = __savegprlr_25();
-  uVar5 = extraout_f1;
-  uVar3 = UI_GetTalkerClientNum();
-  if (-1 < (int)uVar3) {
-    iVar4 = CL_GetClientName(uVar2,uVar3,auStack_80,0x2a);
-    if (iVar4 == 0) {
-      Com_PrintWarning(0xd,0xffffffff8216bc1c,uVar3);
+  LVar1 = __savegprlr_25((double)param_6,param_1);
+  dVar7 = extraout_f1;
+  iVar2 = UI_GetTalkerClientNum(LVar1,param_2);
+  if (-1 < iVar2) {
+    pfVar6 = (float *)0x2a;
+    pcVar5 = acStack_80;
+    iVar2 = CL_GetClientName(LVar1,iVar2,pcVar5,0x2a);
+    if (iVar2 == 0) {
+      Com_PrintWarning(0xd,"Unable to find client %i but they are talking\n");
       __restgprlr_25();
       return;
     }
-    Material_RegisterHandle(0xffffffff82021060,7);
-    iVar4 = UI_TextHeight(uVar5,param_4);
-    uVar2 = ScrPlace_GetActivePlacement(uVar2);
-    UI_DrawHandlePic((double)*param_3,(double)param_3[1],(double)param_3[2],(double)param_3[3]);
-    fVar1 = (float)(longlong)iVar4;
-    UI_DrawText((double)(*param_3 + param_3[2] + 2.0),
-                (double)((param_3[3] - fVar1) * 0.5 + fVar1 + param_3[1]),uVar5,uVar2,auStack_80,
-                0x20,param_4,0xffffffff82000000,(longlong)iVar4,*(undefined1 *)(param_3 + 4),
-                *(undefined1 *)((int)param_3 + 0x11));
+    iVar4 = 7;
+    Material_RegisterHandle("voice_on",7);
+    iVar2 = UI_TextHeight(param_4,(float)dVar7);
+    pSVar3 = ScrPlace_GetActivePlacement(LVar1);
+    UI_DrawHandlePic(pSVar3,param_3->x,param_3->y,param_3->w,param_3->h,iVar4,(int)pcVar5,pfVar6,
+                     (Material *)param_5);
+    UI_DrawText(pSVar3,acStack_80,0x20,param_4,param_3->x + param_3->w + 2.0,
+                (param_3->h - (float)(longlong)iVar2) * 0.5 + (float)(longlong)iVar2 + param_3->y,
+                -0x7e000000,iVar2,(float)dVar7,(float *)(uint)param_3->horzAlign,
+                (uint)param_3->vertAlign);
   }
   __restgprlr_25();
   return;
@@ -1839,26 +2208,38 @@ void UI_DrawTalkerNum(undefined8 param_1,undefined8 param_2,float *param_3,undef
 
 // 825A7680  UI_DrawReservedSlots  (ui_mp/ui_main_mp.cpp:2044)
 
-void UI_DrawReservedSlots(undefined8 param_1,float *param_2,undefined8 param_3)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void UI_DrawReservedSlots
+               (LocalClientNum_t param_1,rectDef_s *param_2,Font_s *param_3,float *param_4,
+               float param_5,int param_6)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
-  undefined8 extraout_f1;
-  double dVar3;
-  double dVar4;
-  double dVar5;
-  undefined8 uVar6;
+  byte bVar1;
+  byte bVar2;
+  LocalClientNum_t LVar3;
+  char *pcVar4;
+  ScreenPlacement *pSVar5;
+  int in_r8;
+  double extraout_f1;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
   
-  __savegprlr_25();
-  uVar1 = __savefpr_28();
-  uVar6 = extraout_f1;
-  uVar2 = va(0xffffffff8200c28c,(ulonglong)*(uint *)(DAT_83d0b554 + 0xc) - 1);
-  dVar5 = (double)param_2[1];
-  dVar4 = (double)param_2[2];
-  dVar3 = (double)*param_2;
-  uVar1 = ScrPlace_GetActivePlacement(uVar1);
-  UI_DrawText((double)((float)(dVar4 + dVar3) + 2.0),dVar5,uVar6,uVar1,uVar2,0x7fffffff,param_3);
+  __savegprlr_25((double)param_5,param_1);
+  LVar3 = __savefpr_28();
+  dVar9 = extraout_f1;
+  pcVar4 = va("%i");
+  bVar1 = param_2->vertAlign;
+  bVar2 = param_2->horzAlign;
+  dVar8 = (double)param_2->y;
+  dVar7 = (double)param_2->w;
+  dVar6 = (double)param_2->x;
+  pSVar5 = ScrPlace_GetActivePlacement(LVar3);
+  UI_DrawText(pSVar5,pcVar4,0x7fffffff,param_3,(float)(dVar7 + dVar6) + 2.0,(float)dVar8,param_6,
+              in_r8,(float)dVar9,(float *)(uint)bVar2,(uint)bVar1);
   __restfpr_28();
   __restgprlr_25();
   return;
@@ -1867,32 +2248,49 @@ void UI_DrawReservedSlots(undefined8 param_1,float *param_2,undefined8 param_3)
 
 // 825AF9C8  UI_DrawLoggedInUser  (ui_mp/ui_main_mp.cpp:2053)
 
-void UI_DrawLoggedInUser(undefined8 param_1,float *param_2,undefined8 param_3)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void UI_DrawLoggedInUser(ScreenPlacement *param_1,rectDef_s *param_2,Font_s *param_3,float param_4,
+                        float *param_5,int param_6)
 
 {
-  undefined8 uVar1;
-  char *pcVar3;
-  undefined8 uVar2;
-  undefined8 extraout_f1;
-  double dVar4;
-  double dVar5;
-  undefined8 uVar6;
+  byte bVar1;
+  byte bVar2;
+  float *pfVar3;
+  ScreenPlacement *pSVar4;
+  char *pcVar5;
+  char *pcVar6;
+  longlong lVar7;
+  longlong lVar8;
+  int in_r8;
+  double extraout_f1;
+  double dVar9;
+  double dVar10;
+  double dVar11;
   
-  uVar1 = __savegprlr_25();
-  if (DAT_82966e98 == 0) {
-    uVar6 = extraout_f1;
-    pcVar3 = (char *)Live_GetLocalClientName(DAT_82b5c820);
-    if (*pcVar3 == '\0') {
-      dVar5 = (double)param_2[1];
-      dVar4 = (double)*param_2;
-      uVar2 = UI_SafeTranslateString(0xffffffff8216c830);
-      UI_DrawText(dVar4,dVar5,uVar6,uVar1,uVar2,0x7fffffff,param_3);
+  lVar8 = (longlong)(int)param_3;
+  lVar7 = (longlong)(int)param_2;
+  pSVar4 = (ScreenPlacement *)__savegprlr_25((double)param_4,param_1,lVar7,lVar8,param_5);
+  if (cl_multi_gamepads_enabled == 0) {
+    dVar11 = extraout_f1;
+    pcVar5 = Live_GetLocalClientName(cl_controller_in_use);
+    pfVar3 = (float *)lVar7;
+    if (*pcVar5 == '\0') {
+      bVar1 = *(byte *)((int)pfVar3 + 0x11);
+      dVar10 = (double)pfVar3[1];
+      bVar2 = *(byte *)(pfVar3 + 4);
+      dVar9 = (double)*pfVar3;
+      pcVar5 = UI_SafeTranslateString("XBOXLIVE_NOTSIGNEDIN");
+      UI_DrawText(pSVar4,pcVar5,0x7fffffff,(Font_s *)lVar8,(float)dVar9,(float)dVar10,param_6,in_r8,
+                  (float)dVar11,(float *)(uint)bVar2,(uint)bVar1);
       __restgprlr_25();
       return;
     }
-    uVar2 = UI_SafeTranslateString(0xffffffff8216cad0);
-    uVar2 = UI_ReplaceConversionString(uVar2,pcVar3);
-    UI_DrawText((double)*param_2,(double)param_2[1],uVar6,uVar1,uVar2,0x7fffffff,param_3);
+    pcVar6 = UI_SafeTranslateString("XBOXLIVE_SIGNEDINAS");
+    pcVar5 = UI_ReplaceConversionString(pcVar6,pcVar5);
+    UI_DrawText(pSVar4,pcVar5,0x7fffffff,(Font_s *)lVar8,*pfVar3,pfVar3[1],param_6,in_r8,
+                (float)dVar11,(float *)(uint)*(byte *)(pfVar3 + 4),
+                (uint)*(byte *)((int)pfVar3 + 0x11));
   }
   __restgprlr_25();
   return;
@@ -1901,35 +2299,52 @@ void UI_DrawLoggedInUser(undefined8 param_1,float *param_2,undefined8 param_3)
 
 // 825AD978  UI_DrawLoggedInUserName  (ui_mp/ui_main_mp.cpp:2074)
 
-void UI_DrawLoggedInUserName(undefined8 param_1,float *param_2,undefined8 param_3)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void UI_DrawLoggedInUserName
+               (ScreenPlacement *param_1,rectDef_s *param_2,Font_s *param_3,float param_4,
+               float *param_5,int param_6)
 
 {
-  undefined8 uVar1;
-  char *pcVar3;
-  undefined8 uVar2;
-  char *pcVar4;
-  undefined8 extraout_f1;
-  double dVar5;
-  double dVar6;
-  undefined8 uVar7;
+  byte bVar1;
+  byte bVar2;
+  float *pfVar3;
+  ScreenPlacement *pSVar4;
+  char *pcVar5;
+  char *pcVar6;
+  longlong lVar7;
+  longlong lVar8;
+  int in_r8;
+  double extraout_f1;
+  double dVar9;
+  double dVar10;
+  double dVar11;
   
-  uVar1 = __savegprlr_25();
-  if (DAT_82966e98 == 0) {
-    uVar7 = extraout_f1;
-    pcVar3 = (char *)Live_GetLocalClientName(DAT_82b5c820);
-    if (*pcVar3 == '\0') {
-      dVar6 = (double)param_2[1];
-      dVar5 = (double)*param_2;
-      uVar2 = UI_SafeTranslateString(0xffffffff8216c830);
-      UI_DrawText(dVar5,dVar6,uVar7,uVar1,uVar2,0x7fffffff,param_3);
+  lVar8 = (longlong)(int)param_3;
+  lVar7 = (longlong)(int)param_2;
+  pSVar4 = (ScreenPlacement *)__savegprlr_25((double)param_4,param_1,lVar7,lVar8,param_5);
+  if (cl_multi_gamepads_enabled == 0) {
+    dVar11 = extraout_f1;
+    pcVar5 = Live_GetLocalClientName(cl_controller_in_use);
+    pfVar3 = (float *)lVar7;
+    if (*pcVar5 == '\0') {
+      bVar1 = *(byte *)((int)pfVar3 + 0x11);
+      dVar10 = (double)pfVar3[1];
+      bVar2 = *(byte *)(pfVar3 + 4);
+      dVar9 = (double)*pfVar3;
+      pcVar5 = UI_SafeTranslateString("XBOXLIVE_NOTSIGNEDIN");
+      UI_DrawText(pSVar4,pcVar5,0x7fffffff,(Font_s *)lVar8,(float)dVar9,(float)dVar10,param_6,in_r8,
+                  (float)dVar11,(float *)(uint)bVar2,(uint)bVar1);
       __restgprlr_25();
       return;
     }
-    pcVar4 = (char *)GamerProfile_GetClanName(DAT_82b5c820);
-    if (*pcVar4 != '\0') {
-      pcVar3 = (char *)va(0xffffffff820223e0,pcVar4,pcVar3);
+    pcVar6 = GamerProfile_GetClanName(cl_controller_in_use);
+    if (*pcVar6 != '\0') {
+      pcVar5 = va("[%s]%s");
     }
-    UI_DrawText((double)*param_2,(double)param_2[1],uVar7,uVar1,pcVar3,0x7fffffff,param_3);
+    UI_DrawText(pSVar4,pcVar5,0x7fffffff,(Font_s *)lVar8,*pfVar3,pfVar3[1],param_6,in_r8,
+                (float)dVar11,(float *)(uint)*(byte *)(pfVar3 + 4),
+                (uint)*(byte *)((int)pfVar3 + 0x11));
   }
   __restgprlr_25();
   return;
@@ -1938,174 +2353,194 @@ void UI_DrawLoggedInUserName(undefined8 param_1,float *param_2,undefined8 param_
 
 // 825ADAB0  GetXpLockDescription  (ui_mp/ui_main_mp.cpp:2101)
 
-void GetXpLockDescription(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+char * GetXpLockDescription(LocalClientNum_t param_1,uint param_2)
 
 {
-  undefined8 uVar1;
-  char *pcVar2;
-  undefined8 uVar3;
-  undefined1 auStack_460 [16];
-  undefined1 local_450 [8];
-  longlong local_448;
-  undefined8 local_440;
-  undefined8 local_438;
-  undefined8 local_430;
-  undefined1 auStack_420 [1056];
+  LocalClientNum_t LVar1;
+  int iVar2;
+  char *pcVar3;
+  char *pcVar4;
+  char acStack_460 [16];
+  ConversionArguments local_450;
+  char acStack_420 [1056];
   
-  __savegprlr_29();
-  uVar1 = CL_ControllerIndexFromClientNum();
-  PlaylistFeeder_GetUnlockXp(uVar1,param_2);
-  uVar1 = CL_GetRankForXpMP();
-  pcVar2 = (char *)CL_GetRankDataMP(uVar1,5);
-  if (*pcVar2 == '\x15') {
-    pcVar2 = pcVar2 + 1;
-    uVar3 = 0;
+  LVar1 = __savegprlr_29(param_1);
+  iVar2 = CL_ControllerIndexFromClientNum(LVar1);
+  iVar2 = PlaylistFeeder_GetUnlockXp(iVar2,param_2);
+  iVar2 = CL_GetRankForXpMP(iVar2);
+  pcVar3 = CL_GetRankDataMP(iVar2,RANKTABLE_FULLRANK);
+  if (*pcVar3 == '\x15') {
+    pcVar3 = pcVar3 + 1;
+    pcVar4 = (char *)0x0;
   }
   else {
-    uVar3 = SEH_StringEd_GetString(pcVar2);
+    pcVar4 = SEH_StringEd_GetString(pcVar3);
   }
-  pcVar2 = (char *)UI_CheckStringTranslation(pcVar2,uVar3);
-  uVar3 = CL_GetRankDataMP(uVar1,0xe);
-  Com_sprintf(auStack_460,5,0xffffffff82000f98,uVar3);
-  if (*pcVar2 == '\0') {
-    Com_PrintWarning(0xd,0xffffffff8216c858,uVar1);
+  pcVar3 = UI_CheckStringTranslation(pcVar3,pcVar4);
+  CL_GetRankDataMP(iVar2,RANKTABLE_DISPLAYLEVEL);
+  Com_sprintf(acStack_460,5,"%s");
+  if (*pcVar3 == '\0') {
+    Com_PrintWarning(0xd,"Empty rank string for rank %i\n");
   }
-  local_440 = 0;
-  local_438 = 0;
-  local_430 = 0;
-  local_448 = ZEXT48(auStack_460) << 0x20;
-  uVar1 = SEH_StringEd_GetString(0xffffffff8216c848);
-  uVar1 = UI_CheckStringTranslation(0xffffffff8216c848,uVar1);
-  UI_ReplaceConversions(uVar1,local_450,auStack_420,0x400);
-  va(auStack_420);
-  __restgprlr_29();
-  return;
+  local_450.args[3] = (char *)0x0;
+  local_450.args[4] = (char *)0x0;
+  local_450.args[5] = (char *)0x0;
+  local_450.args[6] = (char *)0x0;
+  local_450.args[7] = (char *)0x0;
+  local_450.args[8] = (char *)0x0;
+  local_450.argCount = 2;
+  local_450.args[0] = pcVar3;
+  local_450.args._4_8_ = ZEXT48(acStack_460) << 0x20;
+  pcVar3 = SEH_StringEd_GetString("MPUI_UNLOCKXP");
+  pcVar3 = UI_CheckStringTranslation("MPUI_UNLOCKXP",pcVar3);
+  UI_ReplaceConversions(pcVar3,&local_450,acStack_420,0x400);
+  pcVar3 = va(acStack_420);
+  pcVar3 = (char *)__restgprlr_29(pcVar3);
+  return pcVar3;
 }
 
 
 // 825AFAE8  UI_DrawPlaylistDescription  (ui_mp/ui_main_mp.cpp:2129)
 
-void UI_DrawPlaylistDescription(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void UI_DrawPlaylistDescription
+               (LocalClientNum_t param_1,rectDef_s *param_2,Font_s *param_3,float *param_4,
+               float param_5,int param_6,int param_7)
 
 {
-  bool bVar1;
-  undefined8 uVar2;
-  undefined8 uVar3;
-  undefined8 uVar4;
-  undefined8 uVar5;
-  undefined8 uVar6;
-  undefined8 uVar7;
-  ulonglong uVar8;
-  ulonglong uVar9;
-  char cVar10;
-  undefined8 extraout_f1;
-  undefined8 uVar11;
-  undefined4 local_8a0;
-  undefined4 local_89c;
+  LocalClientNum_t LVar1;
+  uint uVar2;
+  int iVar3;
+  int iVar4;
+  int iVar5;
+  int iVar6;
+  PlaylistLockState PVar7;
+  uint uVar8;
+  char *pcVar9;
+  bool bVar11;
+  ScreenPlacement *pSVar10;
+  float *pfVar12;
+  char *pcVar13;
+  IMAGE_DOS_HEADER *pIVar14;
+  double extraout_f1;
+  double dVar15;
+  undefined1 in_stack_fffff6fb;
+  int local_8a0;
+  uint local_89c;
   char local_870 [2160];
   
-  uVar2 = __savegprlr_21();
-  uVar11 = extraout_f1;
-  uVar3 = PlaylistFeeder_GetSelectedIndex();
-  uVar4 = CL_ControllerIndexFromClientNum(uVar2);
-  uVar5 = CL_GetLocalClientActiveCount();
-  if ((int)uVar5 < 1) {
-    uVar5 = 1;
+  LVar1 = __savegprlr_21((double)param_5,param_1);
+  dVar15 = extraout_f1;
+  uVar2 = PlaylistFeeder_GetSelectedIndex(LVar1);
+  iVar3 = CL_ControllerIndexFromClientNum(LVar1);
+  iVar4 = CL_GetLocalClientActiveCount();
+  if (iVar4 < 1) {
+    iVar4 = 1;
   }
-  uVar6 = GetPartyMemberCount();
-  if ((int)uVar5 < (int)uVar6) {
-    uVar5 = uVar6;
+  iVar5 = GetPartyMemberCount();
+  if (iVar4 < iVar5) {
+    iVar4 = iVar5;
   }
-  uVar6 = Live_GetPrestigeMP(uVar4);
-  uVar7 = Live_GetXpMP(uVar4);
-  uVar8 = PlaylistFeeder_IsLocked(uVar4,uVar3,uVar7,uVar6,uVar5);
-  local_8a0 = PlaylistFeeder_GetActivePlayersCount(uVar2,uVar3);
-  local_89c = ComGroups_GetCount(0xffffffff8203373c);
-  uVar5 = ComGroups_GetCount(0xffffffff820137b0);
-  uVar6 = SEH_StringEd_GetString(0xffffffff8216cbf4);
-  uVar6 = UI_CheckStringTranslation(0xffffffff8216cbf4,uVar6);
-  uVar6 = UI_ReplaceConversionInts(uVar6,2,&local_8a0);
-  Dvar_SetStringByName(0xffffffff8216cbe0,uVar6);
-  uVar6 = SEH_StringEd_GetString(0xffffffff8216cbc8);
-  uVar6 = UI_CheckStringTranslation(0xffffffff8216cbc8,uVar6);
-  uVar5 = UI_ReplaceConversionInt(uVar6,uVar5);
-  Dvar_SetStringByName(0xffffffff8216cbb0,uVar5);
-  uVar9 = PlaylistFeeder_GetItemName(uVar2,uVar3);
-  if ((uVar9 & 0xffffffff) == 0) {
-    uVar9 = 0xffffffff820068af;
+  iVar5 = Live_GetPrestigeMP(iVar3);
+  iVar6 = Live_GetXpMP(iVar3);
+  PVar7 = PlaylistFeeder_IsLocked(iVar3,uVar2,iVar6,iVar5,iVar4);
+  local_8a0 = PlaylistFeeder_GetActivePlayersCount(LVar1,uVar2);
+  local_89c = ComGroups_GetCount("playlist");
+  uVar8 = ComGroups_GetCount("online");
+  pIVar14 = (IMAGE_DOS_HEADER *)0x82170000;
+  pcVar9 = SEH_StringEd_GetString("XBOXLIVE_PLAYLISTUSERCOUNT");
+  pcVar9 = UI_CheckStringTranslation("XBOXLIVE_PLAYLISTUSERCOUNT",pcVar9);
+  pcVar9 = UI_ReplaceConversionInts(pcVar9,2,&local_8a0);
+  pcVar13 = "story";
+  Dvar_SetStringByName("playlist_population",pcVar9);
+  pfVar12 = (float *)0x82170000;
+  pcVar9 = SEH_StringEd_GetString("XBOXLIVE_TOTALUSERCOUNT");
+  pcVar9 = UI_CheckStringTranslation("XBOXLIVE_TOTALUSERCOUNT",pcVar9);
+  pcVar9 = UI_ReplaceConversionInt(pcVar9,uVar8);
+  Dvar_SetStringByName("playlist_totalonline",pcVar9);
+  pcVar9 = PlaylistFeeder_GetItemName(LVar1,uVar2);
+  if (pcVar9 == (char *)0x0) {
+    pcVar9 = "";
   }
-  Dvar_SetStringByName(0xffffffff8216cba0,uVar9);
-  uVar9 = PlaylistFeeder_GetItemImage(uVar2,uVar3);
-  if ((uVar9 & 0xffffffff) == 0) {
-    uVar9 = 0xffffffff820068af;
+  Dvar_SetStringByName("playlist_name",pcVar9);
+  pcVar9 = PlaylistFeeder_GetItemImage(LVar1,uVar2);
+  if (pcVar9 == (char *)0x0) {
+    pcVar9 = "";
   }
-  Dvar_SetStringByName(0xffffffff8216cb90,uVar9);
+  Dvar_SetStringByName("playlist_image",pcVar9);
   local_870[0] = '\0';
-  if (5 < (uVar8 & 0xffffffff)) {
-    if (DAT_84013128 == 0) {
-      uVar5 = va(0xffffffff8216cae4,uVar8);
-      MyAssertHandler(0xffffffff8216ab14,0x8b1,0,uVar5);
+  if (PLS_DLC < PVar7) {
+    if (alwaysfails == 0) {
+      pcVar9 = va("Unknown playlist lock state: %i\n");
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x8b1,
+                      0,pcVar9);
     }
 LAB_825aff10:
     __restgprlr_21();
     return;
   }
-  bVar1 = (int)uVar8 != 0;
-  if (uVar8 == 1 && bVar1) goto LAB_825aff10;
-  if (uVar8 == 2 && bVar1) {
-    uVar5 = GetXpLockDescription(uVar2,uVar3);
+  if (PVar7 == PLS_FETCHING) goto LAB_825aff10;
+  if (PVar7 == PLS_XP) {
+    pcVar9 = GetXpLockDescription(LVar1,uVar2);
   }
-  else if (uVar8 == 3 && bVar1) {
-    uVar5 = PlaylistFeeder_GetItemPlaylistId(uVar2,uVar3);
-    uVar5 = Playlist_GetMaxPartySize(uVar4,uVar5);
-    uVar3 = UI_SafeTranslateString(0xffffffff8216cb5c);
-    uVar5 = UI_ReplaceConversionInt(uVar3,uVar5);
+  else if (PVar7 == PLS_MAXPARTY) {
+    iVar4 = PlaylistFeeder_GetItemPlaylistId(LVar1,uVar2);
+    iVar4 = Playlist_GetMaxPartySize(iVar3,iVar4);
+    pcVar9 = UI_SafeTranslateString("MPUI_MAXPARTYSIZE");
+    pcVar9 = UI_ReplaceConversionInt(pcVar9,iVar4);
   }
-  else if (uVar8 == 4 && bVar1) {
-    uVar5 = PlaylistFeeder_GetItemPlaylistId(uVar2,uVar3);
-    uVar5 = Playlist_GetMinPartySize(uVar4,uVar5);
-    uVar3 = UI_SafeTranslateString(0xffffffff8216cb48);
-    uVar5 = UI_ReplaceConversionInt(uVar3,uVar5);
+  else if (PVar7 == PLS_MINPARTY) {
+    iVar4 = PlaylistFeeder_GetItemPlaylistId(LVar1,uVar2);
+    iVar4 = Playlist_GetMinPartySize(iVar3,iVar4);
+    pcVar9 = UI_SafeTranslateString("MPUI_MINPARTYSIZE");
+    pcVar9 = UI_ReplaceConversionInt(pcVar9,iVar4);
   }
   else {
-    if (!bVar1) {
-      uVar5 = PlaylistFeeder_GetItemDesc(uVar2,uVar3);
-      I_strncpyz(local_870,uVar5,0x800);
+    if (PVar7 == PLS_UNLOCKED) {
+      pcVar9 = PlaylistFeeder_GetItemDesc(LVar1,uVar2);
+      I_strncpyz(local_870,pcVar9,0x800);
       if (local_870[0] == '\0') goto LAB_825aff10;
-      cVar10 = PlaylistFeeder_DoWeHaveRequiredDLC(uVar4,uVar3);
-      if (cVar10 == '\0') {
-        I_strncat(local_870,0x800,0xffffffff820145f4);
-        uVar5 = UI_SafeTranslateString(0xffffffff8216cb70);
-        I_strncat(local_870,0x800,uVar5);
-        I_strncat(local_870,0x800,0xffffffff820044d8);
+      bVar11 = PlaylistFeeder_DoWeHaveRequiredDLC(iVar3,uVar2);
+      if (!bVar11) {
+        I_strncat(local_870,0x800,"\n\n");
+        pcVar9 = UI_SafeTranslateString("PLATFORM_PLAYLIST_REQUIRES_DLC");
+        I_strncat(local_870,0x800,pcVar9);
+        pIVar14 = &IMAGE_DOS_HEADER_82000000;
+        I_strncat(local_870,0x800,"\n");
       }
       goto LAB_825afe90;
     }
-    cVar10 = PlaylistFeeder_DoWeHaveRequiredDLC(uVar4,uVar3);
-    if (cVar10 == '\0') {
-      uVar5 = PlaylistFeeder_GetItemDesc(uVar2);
-      I_strncpyz(local_870,uVar5,0x800);
-      I_strncat(local_870,0x800,0xffffffff820145f4);
-      uVar5 = UI_SafeTranslateString(0xffffffff8216cb70);
-      I_strncat(local_870,0x800,uVar5);
-      I_strncat(local_870,0x800,0xffffffff820044d8);
+    bVar11 = PlaylistFeeder_DoWeHaveRequiredDLC(iVar3,uVar2);
+    if (!bVar11) {
+      pcVar9 = PlaylistFeeder_GetItemDesc(LVar1,uVar2);
+      I_strncpyz(local_870,pcVar9,0x800);
+      I_strncat(local_870,0x800,"\n\n");
+      pcVar9 = UI_SafeTranslateString("PLATFORM_PLAYLIST_REQUIRES_DLC");
+      I_strncat(local_870,0x800,pcVar9);
+      pIVar14 = &IMAGE_DOS_HEADER_82000000;
+      I_strncat(local_870,0x800,"\n");
       goto LAB_825afe90;
     }
-    cVar10 = PlaylistFeeder_DoesEveryoneHaveRequiredDLC(uVar4,uVar3);
-    if (cVar10 == '\0') {
-      I_strncat(local_870,0x800,0xffffffff820145f4);
-      uVar5 = UI_SafeTranslateString(0xffffffff8216cb28);
-      I_strncat(local_870,0x800,uVar5);
-      I_strncat(local_870,0x800,0xffffffff820044d8);
+    bVar11 = PlaylistFeeder_DoesEveryoneHaveRequiredDLC(iVar3,uVar2);
+    if (!bVar11) {
+      I_strncat(local_870,0x800,"\n\n");
+      pcVar9 = UI_SafeTranslateString("DLC_NOTEVERYONEHASREQUIREDDLC");
+      I_strncat(local_870,0x800,pcVar9);
+      pIVar14 = &IMAGE_DOS_HEADER_82000000;
+      I_strncat(local_870,0x800,"\n");
       goto LAB_825afe90;
     }
-    uVar5 = UI_SafeTranslateString(0xffffffff8216cb08);
+    pcVar9 = UI_SafeTranslateString("DLC_PLAYLIST_MAPS_NOT_ENABLED");
   }
-  I_strncpyz(local_870,uVar5,0x800);
+  I_strncpyz(local_870,pcVar9,0x800);
 LAB_825afe90:
-  uVar5 = ScrPlace_GetActivePlacement(uVar2);
-  UI_DrawWrappedText((double)*(float *)param_2,(double)((float *)param_2)[1],uVar11,uVar5,local_870,
-                     param_2,param_3);
+  pSVar10 = ScrPlace_GetActivePlacement(LVar1);
+  UI_DrawWrappedText(pSVar10,local_870,param_2,param_3,param_2->x,param_2->y,(float)dVar15,pfVar12,
+                     (int)pcVar13,(int)pIVar14,(rectDef_s *)param_4,(bool)in_stack_fffff6fb);
   __restgprlr_21();
   return;
 }
@@ -2113,68 +2548,104 @@ LAB_825afe90:
 
 // 825AFF20  UI_OwnerDraw  (ui_mp/ui_main_mp.cpp:2237)
 
-void UI_OwnerDraw(undefined8 param_1,double param_2,double param_3,double param_4,double param_5,
-                 double param_6,undefined8 param_7,undefined8 param_8)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void UI_OwnerDraw(LocalClientNum_t param_1,float param_2,float param_3,float param_4,float param_5,
+                 int param_6,int param_7,float param_8,float param_9,int param_10,int param_11,
+                 int param_12,float param_13,Font_s *param_14,float param_15,float *param_16,
+                 Material *param_17,int param_18,rectDef_s param_19,int param_20,char *param_21)
 
 {
-  undefined8 uVar1;
-  int iVar3;
-  undefined8 uVar2;
-  uint in_r8;
-  uint in_r9;
+  LocalClientNum_t LVar1;
+  int iVar2;
+  ScreenPlacement *pSVar3;
+  SessionData *pSVar4;
+  char *pcVar5;
+  Font_s *pFVar6;
   double extraout_f1;
-  double dVar4;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  double dVar14;
   int in_stack_0000005c;
-  undefined4 in_stack_0000007c;
-  undefined4 in_stack_0000008c;
-  undefined8 in_stack_000000a0;
-  undefined8 in_stack_000000a8;
-  uint in_stack_000000b0;
-  float local_c0;
-  float local_bc;
-  float local_b8;
-  float local_b4;
-  undefined1 local_b0;
-  byte local_af;
+  Material *in_stack_00000064;
+  char *in_stack_0000006c;
+  Font_s *in_stack_0000007c;
+  float *in_stack_0000008c;
+  int in_stack_0000009c;
+  int in_stack_000000a4;
+  int in_stack_000000ac;
+  float *in_stack_000000b0;
+  rectDef_s in_stack_fffffe88;
+  int in_stack_fffffe9c;
+  int in_stack_fffffea0;
+  rectDef_s local_c0 [9];
   
-  __savegprlr_21();
-  uVar1 = __savefpr_24();
-  dVar4 = extraout_f1;
-  iVar3 = CL_IsCgameInitialized();
-  if ((iVar3 != 0) && (iVar3 = CG_HasSnapshot(uVar1), iVar3 != 0)) {
-    CG_OwnerDraw(dVar4,param_2,param_3,param_4,param_5,param_6,param_7,param_8,uVar1,
-                 in_stack_000000a0,in_stack_000000a8,(ulonglong)in_stack_000000b0 << 0x20);
+  dVar12 = (double)param_13;
+  dVar13 = (double)param_15;
+  dVar10 = (double)param_8;
+  dVar11 = (double)param_9;
+  dVar9 = (double)param_5;
+  dVar8 = (double)param_4;
+  dVar7 = (double)param_3;
+  pcVar5 = (char *)param_11;
+  __savegprlr_21((double)param_2,param_1,param_6,param_7);
+  LVar1 = __savefpr_24();
+  dVar14 = extraout_f1;
+  pFVar6 = (Font_s *)param_12;
+  iVar2 = CL_IsCgameInitialized(LVar1);
+  if ((iVar2 != 0) && (iVar2 = CG_HasSnapshot(LVar1), iVar2 != 0)) {
+    param_10 = 0;
+    CG_OwnerDraw(LVar1,in_stack_fffffe88,(float)dVar14,(float)dVar7,(float)dVar8,(float)dVar9,
+                 in_stack_000000a4,in_stack_000000ac,(float)dVar10,(float)dVar11,0,(int)pcVar5,
+                 (float)dVar12,pFVar6,(float)dVar13,in_stack_000000b0,in_stack_00000064,
+                 in_stack_fffffe9c,in_stack_fffffea0);
   }
-  uVar2 = ScrPlace_GetActivePlacement(uVar1);
-  local_b0 = (undefined1)in_r8;
-  local_c0 = (float)(dVar4 + param_5);
-  local_bc = (float)(param_2 + param_6);
-  local_af = (byte)in_r9;
-  local_b8 = (float)param_3;
-  local_b4 = (float)param_4;
-  if ((in_r8 & 0xff) != in_r8) {
-    MyAssertHandler(0xffffffff8216ab14,0x8cb,0,0xffffffff82000f98,0xffffffff82021088);
+  pSVar3 = ScrPlace_GetActivePlacement(LVar1);
+  local_c0[0].horzAlign = (uchar)param_12;
+  local_c0[0].x = (float)(dVar14 + dVar10);
+  local_c0[0].y = (float)(dVar7 + dVar11);
+  local_c0[0].vertAlign = (uchar)param_14;
+  local_c0[0].w = (float)dVar8;
+  local_c0[0].h = (float)dVar9;
+  if ((Font_s *)(param_12 & 0xffU) != (Font_s *)param_12) {
+    pcVar5 = "rect.horzAlign == horzAlign";
+    param_10 = (int)"%s";
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x8cb,0,
+                    "%s");
   }
-  if (local_af != in_r9) {
-    MyAssertHandler(0xffffffff8216ab14,0x8cc,0,0xffffffff82000f98,0xffffffff8202106c);
+  if ((Font_s *)(uint)local_c0[0].vertAlign != param_14) {
+    pcVar5 = "rect.vertAlign == vertAlign";
+    param_10 = (int)"%s";
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x8cc,0,
+                    "%s");
   }
   switch(in_stack_0000005c) {
   case 0x15e:
-    UI_DrawKeyBindStatus(param_8,uVar1,&local_c0,in_stack_0000007c);
+    UI_DrawKeyBindStatus
+              (LVar1,local_c0,in_stack_0000007c,(float)dVar13,(float *)param_10,
+               (int)in_stack_0000008c);
     __restfpr_24();
     __restgprlr_21();
     return;
   case 0x16c:
-    ProfLoad_DrawOverlay(uVar2,&local_c0);
+    ProfLoad_DrawOverlay(pSVar3,local_c0);
     __restfpr_24();
     __restgprlr_21();
     return;
   case 0x16e:
-    uVar2 = 0xffffffff844c7860;
-    if ((DAT_844c6c18 != 0) && (DAT_844c7870 == 0)) {
-      uVar2 = 0xffffffff844c6c08;
+    pSVar4 = &g_serverSession;
+    if ((g_partySession.dyn.sessionHandle != (void *)0x0) &&
+       (g_serverSession.dyn.sessionHandle == (void *)0x0)) {
+      pSVar4 = &g_partySession;
     }
-    UI_DrawLocalTalking(uVar2,uVar1,&local_c0,in_stack_0000008c);
+    UI_DrawLocalTalking(pSVar4,LVar1,local_c0,in_stack_0000008c);
     __restfpr_24();
     __restgprlr_21();
     return;
@@ -2182,48 +2653,58 @@ void UI_OwnerDraw(undefined8 param_1,double param_2,double param_3,double param_
   case 0x170:
   case 0x171:
   case 0x172:
-    UI_DrawTalkerNum(param_8,uVar1,in_stack_0000005c + -0x16f,&local_c0,in_stack_0000007c,
-                     in_stack_0000008c);
+    UI_DrawTalkerNum(LVar1,in_stack_0000005c + -0x16f,local_c0,in_stack_0000007c,in_stack_0000008c,
+                     (float)dVar13,(int)pFVar6);
     __restfpr_24();
     __restgprlr_21();
     return;
   case 0x174:
-    UI_DrawLoggedInUser(param_8,uVar2,&local_c0,in_stack_0000007c);
+    UI_DrawLoggedInUser(pSVar3,local_c0,in_stack_0000007c,(float)dVar13,(float *)param_10,
+                        (int)in_stack_0000008c);
     __restfpr_24();
     __restgprlr_21();
     return;
   case 0x175:
-    UI_DrawReservedSlots(param_8,uVar1,&local_c0,in_stack_0000007c,in_stack_0000008c);
+    UI_DrawReservedSlots
+              (LVar1,local_c0,in_stack_0000007c,in_stack_0000008c,(float)dVar13,(int)pcVar5);
     __restfpr_24();
     __restgprlr_21();
     return;
   case 0x177:
-    UI_DrawPlaylistDescription(param_8,uVar1,&local_c0,in_stack_0000007c,in_stack_0000008c);
+    UI_DrawPlaylistDescription
+              (LVar1,local_c0,in_stack_0000007c,in_stack_0000008c,(float)dVar13,(int)pcVar5,
+               in_stack_0000009c);
     __restfpr_24();
     __restgprlr_21();
     return;
   case 0x178:
-    UI_DrawLoggedInUserName(param_8,uVar2,&local_c0,in_stack_0000007c);
+    UI_DrawLoggedInUserName
+              (pSVar3,local_c0,in_stack_0000007c,(float)dVar13,(float *)param_10,
+               (int)in_stack_0000008c);
     __restfpr_24();
     __restgprlr_21();
     return;
   case 0x17a:
-    UI_DrawMapCustomData(param_8,uVar1,&local_c0,in_stack_0000007c);
+    UI_DrawMapCustomData
+              (LVar1,local_c0,in_stack_0000007c,(float)dVar13,(float *)param_10,
+               (int)in_stack_0000008c,in_stack_0000009c,in_stack_0000006c);
     __restfpr_24();
     __restgprlr_21();
     return;
   case 0x17b:
-    UI_ScreenshotViewerDraw(uVar1,&local_c0,in_stack_0000008c);
+    UI_ScreenshotViewerDraw(LVar1,local_c0,in_stack_0000008c);
     __restfpr_24();
     __restgprlr_21();
     return;
   case 0x17c:
-    UI_ScreenshotThumbnailDraw(param_8,uVar1,&local_c0,in_stack_0000007c);
+    UI_ScreenshotThumbnailDraw
+              (LVar1,local_c0,in_stack_0000007c,(float)dVar13,(float *)param_10,
+               (int)in_stack_0000008c);
     __restfpr_24();
     __restgprlr_21();
     return;
   case 0x17d:
-    UI_DrawPlaylistPopulation(uVar1,&local_c0,in_stack_0000008c);
+    UI_DrawPlaylistPopulation(LVar1,local_c0,in_stack_0000008c);
   }
   __restfpr_24();
   __restgprlr_21();
@@ -2233,7 +2714,7 @@ void UI_OwnerDraw(undefined8 param_1,double param_2,double param_3,double param_
 
 // 825A7738  UI_OwnerDrawVisible  (ui_mp/ui_main_mp.cpp:2352)
 
-undefined8 UI_OwnerDrawVisible(void)
+int UI_OwnerDrawVisible(int param_1)
 
 {
   return 1;
@@ -2242,7 +2723,7 @@ undefined8 UI_OwnerDrawVisible(void)
 
 // 825A7740  UI_OwnerDrawHandleKey  (ui_mp/ui_main_mp.cpp:2562)
 
-undefined8 UI_OwnerDrawHandleKey(void)
+int UI_OwnerDrawHandleKey(int param_1,int param_2,float *param_3,int param_4)
 
 {
   return 0;
@@ -2251,74 +2732,90 @@ undefined8 UI_OwnerDrawHandleKey(void)
 
 // 825A7748  UI_ServersQsortCompare  (ui_mp/ui_main_mp.cpp:2599)
 
-void UI_ServersQsortCompare(undefined4 *param_1,undefined4 *param_2)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+int UI_ServersQsortCompare(void *param_1,void *param_2)
 
 {
-  LAN_CompareServers(*(undefined4 *)(DAT_83f71e68 + 0xc),DAT_83fd21e0,DAT_83fd21e4,*param_1,*param_2
-                    );
-  return;
+  int iVar1;
+  
+  iVar1 = LAN_CompareServers((ui_netSource->current).integer,sharedUiInfo.serverStatus.sortKey,
+                             sharedUiInfo.serverStatus.sortDir,*(int *)param_1,*(int *)param_2);
+  return iVar1;
 }
 
 
 // 825A7780  UI_ServersSort  (ui_mp/ui_main_mp.cpp:2610)
 
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
 void UI_ServersSort(int param_1,int param_2)
 
 {
-  if ((param_2 == 0) && (DAT_83fd21e0 == param_1)) {
+  if ((param_2 == 0) && (sharedUiInfo.serverStatus.sortKey == param_1)) {
     return;
   }
-  DAT_83fd21e0 = param_1;
-  qsort(&DAT_83fd21f4,DAT_83fe5a74,4,UI_ServersQsortCompare);
+  sharedUiInfo.serverStatus.sortKey = param_1;
+  qsort(sharedUiInfo.serverStatus.displayServers,sharedUiInfo.serverStatus.numDisplayServers,4,
+        UI_ServersQsortCompare);
   return;
 }
 
 
 // 825A77D8  UI_CheckExecKey  (ui_mp/ui_main_mp.cpp:2880)
 
-undefined8 UI_CheckExecKey(ulonglong param_1,int param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+int UI_CheckExecKey(LocalClientNum_t param_1,int param_2)
 
 {
-  int *piVar2;
-  undefined8 uVar1;
+  ItemKeyHandler *pIVar1;
+  menuDef_t *pmVar2;
+  int iVar3;
   
-  if (3 < (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8216ab14,0x1c2,0,0xffffffff820011a8,param_1,4);
+  if (LOCAL_CLIENT_3 < param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x1c2,0,
+                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  piVar2 = (int *)Menu_GetFocused(param_1 * 0x22ac + -0x7c08e128);
-  if (DAT_8400c164 == 0) {
-    if ((param_2 < 0x101) && (piVar2 != (int *)0x0)) {
-      for (piVar2 = *(int **)(*piVar2 + 0x2c); piVar2 != (int *)0x0; piVar2 = (int *)piVar2[2]) {
-        if (*piVar2 == param_2) goto LAB_825a7844;
+  pmVar2 = Menu_GetFocused(&uiInfoArray[param_1].uiDC);
+  if (g_editingField == 0) {
+    if ((param_2 < 0x101) && (pmVar2 != (menuDef_t *)0x0)) {
+      for (pIVar1 = pmVar2->data->onKey; pIVar1 != (ItemKeyHandler *)0x0; pIVar1 = pIVar1->next) {
+        if (pIVar1->key == param_2) goto LAB_825a7844;
       }
     }
-    uVar1 = 0;
+    iVar3 = 0;
   }
   else {
 LAB_825a7844:
-    uVar1 = 1;
+    iVar3 = 1;
   }
-  return uVar1;
+  return iVar3;
 }
 
 
 // 825A78A0  UI_VerifyLanguage  (ui_mp/ui_main_mp.cpp:2965)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void UI_VerifyLanguage(void)
 
 {
+  int iVar1;
   int iVar2;
   int iVar3;
-  undefined8 uVar1;
   
   __savegprlr_29();
-  iVar2 = Dvar_GetInt(0xffffffff82164748);
-  iVar3 = Dvar_GetInt(0xffffffff8216bc60);
-  uVar1 = SEH_VerifyLanguageSelection();
-  if ((int)uVar1 != iVar3) {
-    Dvar_SetIntByName(0xffffffff8216bc60,uVar1);
+  iVar1 = Dvar_GetInt("loc_language");
+  iVar2 = Dvar_GetInt("ui_language");
+  iVar3 = SEH_VerifyLanguageSelection(iVar2);
+  if (iVar3 != iVar2) {
+    Dvar_SetIntByName("ui_language",iVar3);
   }
-  Dvar_SetBoolByName(0xffffffff8216bc4c,iVar3 != iVar2);
+  Dvar_SetBoolByName("ui_languagechanged",iVar2 != iVar1);
   __restgprlr_29();
   return;
 }
@@ -2326,14 +2823,21 @@ void UI_VerifyLanguage(void)
 
 // 825B0340  UI_UpdateDisplayServers  (ui_mp/ui_main_mp.cpp:3054)
 
-void UI_UpdateDisplayServers(undefined8 param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void UI_UpdateDisplayServers(uiInfo_s *param_1)
 
 {
   int iVar1;
   
-  iVar1 = LAN_GetServerCount(*(undefined4 *)(DAT_83f71e68 + 0xc));
-  if ((DAT_83fe5a78 != iVar1) && (DAT_83fe5a78 = iVar1, DAT_83fe5a74 != 0)) {
-    DAT_83fd21f0 = 0;
+  iVar1 = LAN_GetServerCount((ui_netSource->current).integer);
+  if ((sharedUiInfo.serverStatus.serverCount != iVar1) &&
+     (sharedUiInfo.serverStatus.serverCount = iVar1,
+     sharedUiInfo.serverStatus.numDisplayServers != 0)) {
+    sharedUiInfo.serverStatus.currentServer = 0;
     UI_BuildServerDisplayList(param_1,1);
   }
   return;
@@ -2342,126 +2846,164 @@ void UI_UpdateDisplayServers(undefined8 param_1)
 
 // 825A7910  UI_GetOpenOrCloseMenuOnDvarArgs  (ui_mp/ui_main_mp.cpp:3075)
 
-void UI_GetOpenOrCloseMenuOnDvarArgs
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-               undefined8 param_5,undefined8 param_6,undefined8 param_7,undefined8 param_8)
+bool UI_GetOpenOrCloseMenuOnDvarArgs
+               (char **param_1,char *param_2,char *param_3,int param_4,char *param_5,int param_6,
+               char *param_7,int param_8)
 
 {
-  undefined8 uVar1;
+  char **ppcVar1;
   int iVar2;
+  undefined1 uVar3;
   
-  uVar1 = __savegprlr_26();
-  iVar2 = String_Parse(uVar1,param_3,param_4);
+  ppcVar1 = (char **)__savegprlr_26(param_1,param_2);
+  iVar2 = String_Parse(ppcVar1,param_3,param_4);
   if (iVar2 == 0) {
-    Com_Printf(0xd,0xffffffff8216bca0,param_2);
-    __restgprlr_26(0);
-    return;
+    Com_Printf(0xd,"%s: invalid dvar name.\n");
+    uVar3 = __restgprlr_26(0);
+    return (bool)uVar3;
   }
-  iVar2 = String_Parse(uVar1,param_5,param_6);
+  iVar2 = String_Parse(ppcVar1,param_5,param_6);
   if (iVar2 == 0) {
-    Com_Printf(0xd,0xffffffff8216bc84,param_2);
-    __restgprlr_26(0);
-    return;
+    Com_Printf(0xd,"%s: invalid test value.\n");
+    uVar3 = __restgprlr_26(0);
+    return (bool)uVar3;
   }
-  iVar2 = String_Parse(uVar1,param_7,param_8);
+  iVar2 = String_Parse(ppcVar1,param_7,param_8);
   if (iVar2 == 0) {
-    Com_Printf(0xd,0xffffffff8216bc6c,param_2);
-    __restgprlr_26(0);
-    return;
+    Com_Printf(0xd,"%s: invalid menu name.\n");
+    uVar3 = __restgprlr_26(0);
+    return (bool)uVar3;
   }
-  __restgprlr_26(1);
-  return;
+  uVar3 = __restgprlr_26(1);
+  return (bool)uVar3;
 }
 
 
 // 825A79E8  UI_DvarValueTest  (ui_mp/ui_main_mp.cpp:3099)
 
-void UI_DvarValueTest(undefined8 param_1,ulonglong param_2,ulonglong param_3,uint param_4)
+bool UI_DvarValueTest(char *param_1,char *param_2,char *param_3,bool param_4)
 
 {
-  ulonglong uVar1;
-  int iVar3;
-  undefined8 uVar2;
+  int iVar1;
+  dvar_t *pdVar2;
+  undefined1 uVar4;
+  char *pcVar3;
+  ulonglong uVar5;
+  ulonglong uVar6;
+  uint uVar7;
   
-  uVar1 = __savegprlr_26();
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8216ab14,0xc20,0,0xffffffff82000f98,0xffffffff8200b0fc);
+  uVar7 = (uint)param_4;
+  uVar6 = (ulonglong)(int)param_3;
+  uVar5 = (ulonglong)(int)param_2;
+  iVar1 = __savegprlr_26(param_1,uVar5,uVar6,param_4);
+  if (iVar1 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0xc20,0,
+                    "%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8216ab14,0xc21,0,0xffffffff82000f98,0xffffffff8208db40);
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0xc21,0,
+                    "%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8216ab14,0xc22,0,0xffffffff82000f98,0xffffffff8216bcd4);
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0xc22,0,
+                    "%s");
   }
-  iVar3 = Dvar_FindVar(param_2);
-  if (iVar3 == 0) {
-    Com_Printf(0xd,0xffffffff8216bcb8,uVar1,param_2);
-    __restgprlr_26(0);
-    return;
+  pdVar2 = Dvar_FindVar((char *)uVar5);
+  if (pdVar2 == (dvar_t *)0x0) {
+    Com_Printf(0xd,"%s: cannot find dvar %s\n");
+    uVar4 = __restgprlr_26(0);
+    return (bool)uVar4;
   }
-  uVar2 = Dvar_GetVariantString(param_2);
-  iVar3 = I_stricmp(param_3,uVar2);
-  __restgprlr_26((param_4 & 0xff) == (uint)(iVar3 == 0));
-  return;
+  pcVar3 = Dvar_GetVariantString((char *)uVar5);
+  iVar1 = I_stricmp((char *)uVar6,pcVar3);
+  uVar4 = __restgprlr_26((uVar7 & 0xff) == (uint)(iVar1 == 0));
+  return (bool)uVar4;
 }
 
 
 // 825A7AE8  UI_OpenMenuOnDvar  (ui_mp/ui_main_mp.cpp:3122)
 
-void UI_OpenMenuOnDvar(undefined8 param_1,ulonglong param_2,ulonglong param_3,undefined8 param_4,
-                      undefined8 param_5)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void UI_OpenMenuOnDvar(uiInfo_s *param_1,char *param_2,char *param_3,char *param_4,char *param_5)
 
 {
-  undefined8 uVar1;
+  UiContext *pUVar1;
   int iVar2;
-  char cVar3;
+  bool bVar4;
+  ulonglong uVar5;
+  ulonglong uVar6;
+  char *pcVar3;
   
-  uVar1 = __savegprlr_24();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8216ab14,0xc35,0,0xffffffff82000f98,0xffffffff8200b0fc);
+  uVar6 = (ulonglong)(int)param_3;
+  uVar5 = (ulonglong)(int)param_2;
+  pUVar1 = (UiContext *)__savegprlr_24(param_1);
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0xc35,0,
+                    "%s");
   }
-  iVar2 = I_stricmp(param_2,0xffffffff8216bd64);
-  if ((iVar2 != 0) && (iVar2 = I_stricmp(param_2,0xffffffff8216bd50), iVar2 != 0)) {
-    MyAssertHandler(0xffffffff8216ab14,0xc36,0,0xffffffff8216bcec,0xffffffff8216bd00,param_2);
+  pcVar3 = (char *)uVar5;
+  iVar2 = I_stricmp(pcVar3,"openMenuOnDvar");
+  if ((iVar2 != 0) && (iVar2 = I_stricmp(pcVar3,"openMenuOnDvarNot"), iVar2 != 0)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0xc36,0,
+                    "%s\n\t(cmd) = %s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8216ab14,0xc37,0,0xffffffff82000f98,0xffffffff8216bce0);
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0xc37,0,
+                    "%s");
   }
-  iVar2 = I_stricmp(param_2,0xffffffff8216bd64);
-  cVar3 = UI_DvarValueTest(param_2,param_4,param_5,iVar2 == 0);
-  if (cVar3 != '\0') {
-    Menus_OpenByName(uVar1,param_3);
+  iVar2 = I_stricmp(pcVar3,"openMenuOnDvar");
+  bVar4 = UI_DvarValueTest(pcVar3,param_4,param_5,iVar2 == 0);
+  iVar2 = 0;
+  if (bVar4) {
+    iVar2 = Menus_OpenByName(pUVar1,(char *)uVar6);
   }
-  __restgprlr_24();
+  __restgprlr_24(iVar2);
   return;
 }
 
 
 // 825A7C00  UI_CloseMenuOnDvar  (ui_mp/ui_main_mp.cpp:3136)
 
-void UI_CloseMenuOnDvar(undefined8 param_1,ulonglong param_2,ulonglong param_3,undefined8 param_4,
-                       undefined8 param_5)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void UI_CloseMenuOnDvar(uiInfo_s *param_1,char *param_2,char *param_3,char *param_4,char *param_5)
 
 {
-  undefined8 uVar1;
+  UiContext *pUVar1;
   int iVar2;
-  char cVar3;
+  bool bVar4;
+  ulonglong uVar5;
+  ulonglong uVar6;
+  char *pcVar3;
   
-  uVar1 = __savegprlr_24();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8216ab14,0xc43,0,0xffffffff82000f98,0xffffffff8200b0fc);
+  uVar6 = (ulonglong)(int)param_3;
+  uVar5 = (ulonglong)(int)param_2;
+  pUVar1 = (UiContext *)__savegprlr_24(param_1);
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0xc43,0,
+                    "%s");
   }
-  iVar2 = I_stricmp(param_2,0xffffffff8216bde0);
-  if ((iVar2 != 0) && (iVar2 = I_stricmp(param_2,0xffffffff8216bdcc), iVar2 != 0)) {
-    MyAssertHandler(0xffffffff8216ab14,0xc44,0,0xffffffff8216bcec,0xffffffff8216bd78,param_2);
+  pcVar3 = (char *)uVar5;
+  iVar2 = I_stricmp(pcVar3,"closeMenuOnDvar");
+  if ((iVar2 != 0) && (iVar2 = I_stricmp(pcVar3,"closeMenuOnDvarNot"), iVar2 != 0)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0xc44,0,
+                    "%s\n\t(cmd) = %s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8216ab14,0xc45,0,0xffffffff82000f98,0xffffffff8216bce0);
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0xc45,0,
+                    "%s");
   }
-  iVar2 = I_stricmp(param_2,0xffffffff8216bde0);
-  cVar3 = UI_DvarValueTest(param_2,param_4,param_5,iVar2 == 0);
-  if (cVar3 != '\0') {
-    Menus_CloseByName(uVar1,param_3);
+  iVar2 = I_stricmp(pcVar3,"closeMenuOnDvar");
+  bVar4 = UI_DvarValueTest(pcVar3,param_4,param_5,iVar2 == 0);
+  if (bVar4) {
+    Menus_CloseByName(pUVar1,(char *)uVar6);
   }
   __restgprlr_24();
   return;
@@ -2470,30 +3012,35 @@ void UI_CloseMenuOnDvar(undefined8 param_1,ulonglong param_2,ulonglong param_3,u
 
 // 825A7D18  UI_ResetVScroll  (ui_mp/ui_main_mp.cpp:3150)
 
-void UI_ResetVScroll(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void UI_ResetVScroll(uiInfo_s *param_1,char *param_2)
 
 {
-  int iVar2;
-  ulonglong uVar1;
-  int iVar3;
-  undefined4 *puVar4;
-  longlong lVar5;
+  UiContext *pUVar1;
+  menuDef_t *pmVar2;
+  itemDef_t *piVar3;
+  textScrollDef_s *ptVar4;
+  int iVar5;
   
-  iVar2 = __savegprlr_29();
-  lVar5 = 0;
-  uVar1 = Menu_GetTopOfStack(iVar2,0);
-  if ((uVar1 & 0xffffffff) != 0) {
-    while ((iVar3 = Menu_FindItemByName(uVar1,param_2), iVar3 == 0 ||
-           (*(int *)(iVar3 + 0x100) != 0x15))) {
-      lVar5 = lVar5 + 1;
-      uVar1 = Menu_GetTopOfStack(iVar2,lVar5);
-      if ((uVar1 & 0xffffffff) == 0) {
+  pUVar1 = (UiContext *)__savegprlr_29(param_1);
+  iVar5 = 0;
+  pmVar2 = Menu_GetTopOfStack(pUVar1,0);
+  if (pmVar2 != (menuDef_t *)0x0) {
+    while ((piVar3 = Menu_FindItemByName(pmVar2,param_2), piVar3 == (itemDef_t *)0x0 ||
+           (piVar3->type != 0x15))) {
+      iVar5 = iVar5 + 1;
+      pmVar2 = Menu_GetTopOfStack(pUVar1,iVar5);
+      if (pmVar2 == (menuDef_t *)0x0) {
         __restgprlr_29();
         return;
       }
     }
-    puVar4 = (undefined4 *)Item_GetTextScrollDef();
-    *puVar4 = *(undefined4 *)(iVar2 + 8);
+    ptVar4 = Item_GetTextScrollDef(piVar3);
+    ptVar4->startTime = pUVar1->realTime;
   }
   __restgprlr_29();
   return;
@@ -2502,1088 +3049,134 @@ void UI_ResetVScroll(undefined8 param_1,undefined8 param_2)
 
 // 825A7D90  UI_Map  (ui_mp/ui_main_mp.cpp:3449)
 
-void UI_Map(undefined8 param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void UI_Map(LocalClientNum_t param_1)
 
 {
   char *pcVar1;
   
-  pcVar1 = (char *)Party_GetMapName();
+  pcVar1 = Party_GetMapName();
   if (pcVar1 == (char *)0x0) {
-    MyAssertHandler(0xffffffff8216ab14,0xd7c,0,0xffffffff82000f98,0xffffffff82043710);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0xd7c,0,
+                    "%s");
   }
   if (*pcVar1 != '\0') {
-    SV_StartMapForParty(param_1,pcVar1,0,0);
+    SV_StartMapForParty(param_1,pcVar1,false,false);
   }
   return;
+}
+
+
+// 825A7E18  CL_startSingleplayer  (ui_mp/ui_main_mp.cpp:3461)
+
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CL_startSingleplayer(LocalClientNum_t param_1)
+
+{
+  bool bVar1;
+  
+  bVar1 = Sys_IsMainThread();
+  if (!bVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
+                    0x12a8,0,"%s");
+  }
+  LB_EndOngoingTasks();
+  Session_EmptyGraveYard();
+  Com_SyncThreads();
+  Sys_SuspendOtherThreads();
+  R_ShutdownDirect3D();
+  g_launchData.skipMovies = true;
+  g_launchData.activeController = (byte)cl_controller_in_use | 4;
+  XSetLaunchData(0xffffffff84259cc8,1000);
+                    /* WARNING: Subroutine does not return */
+  XLaunchNewImage("1-iw5sp.exe",0);
 }
 
 
 // 825B03D0  UI_RunMenuScript  (ui_mp/ui_main_mp.cpp:3472)
-
-void UI_RunMenuScript(undefined8 param_1,undefined8 param_2,undefined8 param_3)
-
-{
-  uint uVar1;
-  undefined4 uVar2;
-  undefined8 uVar3;
-  int iVar7;
-  undefined8 uVar4;
-  char *pcVar8;
-  char cVar11;
-  undefined8 uVar5;
-  char *pcVar9;
-  ulonglong uVar6;
-  undefined1 *puVar10;
-  char *pcVar12;
-  int local_e60;
-  undefined4 local_e5c;
-  int local_e58 [2];
-  char acStack_e50 [1024];
-  char acStack_a50 [128];
-  char local_9d0 [256];
-  undefined1 auStack_8d0 [128];
-  undefined1 auStack_850 [1024];
-  undefined1 auStack_450 [1104];
-  
-  uVar3 = __savegprlr_24();
-  if ((int)uVar3 == -1) {
-    MyAssertHandler(0xffffffff8216ab14,0xd9e,0,0xffffffff82000f98,0xffffffff8216d6b4);
-  }
-  iVar7 = String_Parse(param_2,&stack0x00000000 + -0xe50,0x400);
-  if (iVar7 == 0) {
-    Com_PrintWarning(0xd,0xffffffff8216d690,param_3);
-    __restgprlr_24();
-    return;
-  }
-  uVar4 = UI_GetClientInfo(uVar3);
-  iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216d684);
-  if (iVar7 == 0) {
-    if (*(char *)(DAT_82aa1ae4 + 0xc) != '\0') {
-      Dvar_SetBool(DAT_82aa1aa8,1);
-    }
-    Dvar_SetBoolByName(0xffffffff8201a868,0);
-    Dvar_SetStringByName(0xffffffff82022f8c,*(undefined4 *)(DAT_83f71eb0 + 0xc));
-    Cbuf_AddCall(uVar3,0xffffffff825a7d90);
-    __restgprlr_24();
-    return;
-  }
-  iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216d678);
-  if (iVar7 == 0) {
-    UIScript_ClearError(uVar3);
-    __restgprlr_24();
-    return;
-  }
-  iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216d668);
-  if (iVar7 == 0) {
-    UI_StartServerRefresh(uVar3,1);
-    UI_BuildServerDisplayList(uVar4,1);
-    __restgprlr_24();
-    return;
-  }
-  iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216d658);
-  if (iVar7 == 0) {
-    UI_StartServerRefresh(uVar3,0);
-    UI_BuildServerDisplayList(uVar4,1);
-    __restgprlr_24();
-    return;
-  }
-  iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216d648);
-  if (iVar7 == 0) {
-    if (*(int *)(DAT_83f71e68 + 0xc) == 0) {
-      UI_StartServerRefresh(uVar3,1);
-    }
-    UI_BuildServerDisplayList(uVar4,1);
-    UI_FeederSelection(0x4000000000000000,uVar3);
-    __restgprlr_24();
-    return;
-  }
-  iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216d63c);
-  if (iVar7 == 0) {
-    if (*(char *)(DAT_82aa1ae4 + 0xc) != '\0') {
-      Dvar_SetBool(DAT_82aa1aa8,0);
-    }
-    Dvar_SetBoolByName(0xffffffff8201a868,0);
-    UI_UpdateDisplayServers(uVar4);
-    if ((-1 < DAT_83fd21f0) && (DAT_83fd21f0 < (int)DAT_83fe5a74)) {
-      uVar2 = *(undefined4 *)(&DAT_83fd21f4 + DAT_83fd21f0 * 4);
-      uVar4 = CL_ControllerIndexFromClientNum(uVar3);
-      LAN_GetServerInfo(*(undefined4 *)(DAT_83f71e68 + 0xc),uVar2,0xffffffff83fe7ce8,0x400);
-      pcVar8 = (char *)Info_ValueForKey(0xffffffff83fe7ce8,0xffffffff82034478);
-      iVar7 = atoi(pcVar8);
-      if ((iVar7 != 0) == (bool)*(char *)(DAT_82b3e4c8 + 0xc)) {
-        cVar11 = LiveStorage_DoWeHaveStats(uVar4);
-        if (cVar11 == '\0') {
-          MyAssertHandler(0xffffffff8216ab14,0xe76,0,0xffffffff82000f98,0xffffffff820879bc);
-        }
-      }
-      else {
-        Dvar_SetBool();
-        cVar11 = LiveStorage_DoWeHaveStats(uVar4);
-        if (cVar11 == '\0') {
-          if (*(float *)(DAT_82b3e4c8 + 0xc) == 0.0) {
-            MyAssertHandler(0xffffffff8216ab14,0xe6d,0,0xffffffff82000f98,0xffffffff8216d61c);
-          }
-          iVar7 = LiveStorage_GetActiveStatsSource(uVar4);
-          if (iVar7 != 0) {
-            uVar5 = LiveStorage_GetActiveStatsSource(uVar4);
-            MyAssertHandler(0xffffffff8216ab14,0xe6e,0,0xffffffff8216d5d0,uVar5,0);
-          }
-          ShowPopupGettingData(uVar4);
-          LiveStorage_DownloadStats(uVar4);
-        }
-      }
-      LAN_GetServerAddressString
-                (*(undefined4 *)(DAT_83f71e68 + 0xc),
-                 *(undefined4 *)(&DAT_83fd21f4 + DAT_83fd21f0 * 4),&stack0x00000000 + -0x850,0x400);
-      Com_sprintf(&stack0x00000000 + -0x450,0x400,0xffffffff8216d5c0,&stack0x00000000 + -0x850);
-      cVar11 = Menu_IsMenuOpenAndVisible(uVar3,0xffffffff820861dc);
-      puVar10 = &stack0x00000000 + -0x450;
-      if (cVar11 != '\0') {
-        LiveStorage_SetPostDownloadCommand();
-        __restgprlr_24();
-        return;
-      }
-LAB_825b1924:
-      Cbuf_AddText(uVar3,puVar10);
-      __restgprlr_24();
-      return;
-    }
-  }
-  else {
-    iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216d5b4);
-    if (iVar7 == 0) {
-      Dvar_SetIntByName(0xffffffff82018374,1);
-      Key_SetCatcher(uVar3,0x10);
-      Menus_CloseAll(uVar4);
-      Menus_OpenByName(uVar4,0xffffffff8216d5a8);
-      __restgprlr_24();
-      return;
-    }
-    iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216d5a0);
-    if (iVar7 == 0) {
-      Cbuf_AddText(uVar3,0xffffffff82035014);
-      Key_SetCatcher(uVar3,0x10);
-      Menus_CloseAll(uVar4);
-      Menus_OpenByName(uVar4,0xffffffff8207b5b4);
-      __restgprlr_24();
-      return;
-    }
-    iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216d594);
-    if (iVar7 == 0) {
-      iVar7 = Int_Parse(param_2,&stack0x00000000 + -0xe58);
-      if (iVar7 != 0) {
-        if (local_e58[0] == DAT_83fd21e0) {
-          DAT_83fd21e4 = (uint)LZCOUNT(DAT_83fd21e4) >> 5;
-        }
-        DAT_83fd21e0 = local_e58[0];
-        qsort(&DAT_83fd21f4,DAT_83fe5a74,4,UI_ServersQsortCompare);
-        __restgprlr_24();
-        return;
-      }
-    }
-    else {
-      iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216d588);
-      if (iVar7 == 0) {
-        Key_RemoveCatcher(uVar3,0xffffffffffffffef);
-        Key_ClearStates(uVar3);
-        Dvar_SetIntByName(0xffffffff82018374,0);
-LAB_825b0994:
-        Menus_CloseAll(uVar4);
-        __restgprlr_24();
-        return;
-      }
-      iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8206a378);
-      if (iVar7 != 0) {
-        iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff82031bc8);
-        if (iVar7 == 0) {
-          Cbuf_AddCall(uVar3,0xffffffff825a7e18);
-          __restgprlr_24();
-          return;
-        }
-        iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216d57c);
-        if (iVar7 == 0) {
-          uVar3 = Dvar_GetInt(0xffffffff82164748);
-          Dvar_SetIntByName(0xffffffff8216bc60,uVar3);
-        }
-        else {
-          iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216d56c);
-          if (iVar7 != 0) {
-            iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216bd64);
-            if ((iVar7 == 0) ||
-               (iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216bd50), iVar7 == 0)) {
-              cVar11 = UI_GetOpenOrCloseMenuOnDvarArgs
-                                 (param_2,&stack0x00000000 + -0xe50,&stack0x00000000 + -0x8d0,0x80,
-                                  &stack0x00000000 + -0x9d0,0x100,&stack0x00000000 + -0xa50,0x80);
-              if (cVar11 != '\0') {
-                UI_OpenMenuOnDvar(uVar4,&stack0x00000000 + -0xe50,&stack0x00000000 + -0xa50,
-                                  &stack0x00000000 + -0x8d0,&stack0x00000000 + -0x9d0);
-              }
-            }
-            else {
-              iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216bde0);
-              if ((iVar7 == 0) ||
-                 (iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216bdcc), iVar7 == 0)) {
-                cVar11 = UI_GetOpenOrCloseMenuOnDvarArgs
-                                   (param_2,&stack0x00000000 + -0xe50,&stack0x00000000 + -0x8d0,0x80
-                                    ,&stack0x00000000 + -0x9d0,0x100,&stack0x00000000 + -0xa50,0x80)
-                ;
-                if (cVar11 != '\0') {
-                  UI_CloseMenuOnDvar(uVar4,&stack0x00000000 + -0xe50,&stack0x00000000 + -0xa50,
-                                     &stack0x00000000 + -0x8d0,&stack0x00000000 + -0x9d0);
-                  __restgprlr_24();
-                  return;
-                }
-              }
-              else {
-                iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216d55c);
-                if (iVar7 == 0) {
-                  iVar7 = String_Parse(param_2,&stack0x00000000 + -0x850,0x400);
-                  if (iVar7 != 0) {
-                    UI_ResetVScroll(uVar4,&stack0x00000000 + -0x850);
-                    __restgprlr_24();
-                    return;
-                  }
-                }
-                else {
-                  iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216d544);
-                  if (iVar7 == 0) goto LAB_825b0994;
-                  iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216d530);
-                  if (iVar7 == 0) {
-                    CL_ControllerIndexFromClientNum(uVar3);
-                    Content_FindSavedContent();
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216d51c);
-                  if (iVar7 == 0) {
-                    LB_ForceRefresh();
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216d50c);
-                  if (iVar7 == 0) {
-                    LB_OnSelect(uVar3);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216d4fc);
-                  if (iVar7 == 0) {
-                    iVar7 = String_Parse(param_2,&stack0x00000000 + -0xa50,0x80);
-                    if (iVar7 == 0) {
-                      Com_PrintError(0xd,0xffffffff8216d4bc);
-                      __restgprlr_24();
-                      return;
-                    }
-                    LB_OpenLeaderboard(&stack0x00000000 + -0xa50);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216d4a8);
-                  if (iVar7 == 0) {
-                    iVar7 = String_Parse(param_2,&stack0x00000000 + -0x8d0,0x80);
-                    if (iVar7 == 0) {
-                      Com_PrintError(0xd,0xffffffff8216d2d0);
-                      __restgprlr_24();
-                      return;
-                    }
-                    pcVar9 = (char *)Dvar_GetString(&stack0x00000000 + -0x8d0);
-                    pcVar8 = pcVar9;
-                    if (pcVar9 != (char *)0x0) {
-                      do {
-                        cVar11 = *pcVar8;
-                        pcVar8 = pcVar8 + 1;
-                      } while (cVar11 != '\0');
-                      if ((int)pcVar8 - (int)pcVar9 != 1) {
-                        pcVar8 = strstr(pcVar9," ");
-                        if (pcVar8 == (char *)0x0) {
-                          Com_PrintError(0xd,0xffffffff8216d468);
-                          __restgprlr_24();
-                          return;
-                        }
-                        strncpy(local_9d0,pcVar9,(int)pcVar8 - (int)pcVar9);
-                        pcVar12 = pcVar8 + 1;
-                        iVar7 = -(int)pcVar12;
-                        do {
-                          cVar11 = *pcVar12;
-                          pcVar12[(int)(acStack_a50 + iVar7)] = cVar11;
-                          pcVar12 = pcVar12 + 1;
-                        } while (cVar11 != '\0');
-                        local_9d0[(int)pcVar8 - (int)pcVar9] = '\0';
-                        iVar7 = I_stricmp(&stack0x00000000 + -0x9d0,0xffffffff8216d458);
-                        if (iVar7 != 0) {
-                          cVar11 = Dvar_GetBool(0xffffffff8216d34c);
-                          if (cVar11 != '\0') {
-                            pcVar9 = "_HC";
-                            pcVar8 = &stack0x00000000 + -0x9d0;
-                            do {
-                              pcVar12 = pcVar8;
-                              pcVar8 = pcVar12 + 1;
-                            } while (*pcVar12 != '\0');
-                            do {
-                              cVar11 = *pcVar9;
-                              pcVar9 = pcVar9 + 1;
-                              *pcVar12 = cVar11;
-                              pcVar12 = pcVar12 + 1;
-                            } while (cVar11 != '\0');
-                          }
-                          Com_Printf(0xd,0xffffffff8216d358,&stack0x00000000 + -0x9d0,
-                                     &stack0x00000000 + -0xa50);
-                          LB_OpenLeaderboardExt(&stack0x00000000 + -0x9d0,&stack0x00000000 + -0xa50)
-                          ;
-                          __restgprlr_24();
-                          return;
-                        }
-                        uVar3 = UI_GetLocalVarsContext(uVar3);
-                        uVar6 = UILocalVar_Find(uVar3,&stack0x00000000 + -0xa50);
-                        if ((uVar6 & 0xffffffff) == 0) {
-                          Com_PrintError(0xd,0xffffffff8216d3d8,0xffffffff8216d458,
-                                         &stack0x00000000 + -0xa50);
-                          __restgprlr_24();
-                          return;
-                        }
-                        StringTable_GetAsset(0xffffffff8216d3c0,&stack0x00000000 + -0xe58);
-                        if (local_e58[0] != 0) {
-                          uVar3 = UILocalVar_GetInt(uVar6);
-                          pcVar9 = (char *)StringTable_GetColumnValueForRow(local_e58[0],uVar3,0);
-                          pcVar8 = pcVar9;
-                          do {
-                            cVar11 = *pcVar8;
-                            pcVar8 = pcVar8 + 1;
-                          } while (cVar11 != '\0');
-                          if ((int)pcVar8 - (int)pcVar9 != 1) {
-                            Com_Printf(0xd,0xffffffff8216d358,&stack0x00000000 + -0x9d0,pcVar9);
-                            LB_OpenLeaderboardExt(&stack0x00000000 + -0x9d0,pcVar9);
-                            __restgprlr_24();
-                            return;
-                          }
-                          Com_PrintError(0xd,0xffffffff8216d378,0xffffffff8216d458);
-                          __restgprlr_24();
-                          return;
-                        }
-                        goto LAB_825b1fcc;
-                      }
-                    }
-                    Com_PrintError(0xd,0xffffffff8216d30c);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216d2bc);
-                  if (iVar7 == 0) {
-                    LB_ClearLeaderboard();
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216d2ac);
-                  if (iVar7 == 0) {
-                    CL_ControllerIndexFromClientNum(uVar3);
-                    FriendsMenu_FeederStoreXUID();
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216d29c);
-                  if (iVar7 == 0) {
-                    CL_ControllerIndexFromClientNum(uVar3);
-                    FriendsMenu_FeederClearXUID();
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216d28c);
-                  if (iVar7 == 0) {
-                    CL_ControllerIndexFromClientNum(uVar3);
-                    FriendsMenu_FeederOnInviteRequest();
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216d280);
-                  if (iVar7 == 0) {
-                    CL_ControllerIndexFromClientNum(uVar3);
-                    FriendsMenu_FeederOnJoinRequest();
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216d270);
-                  if (iVar7 == 0) {
-                    CL_ControllerIndexFromClientNum(uVar3);
-                    FriendsMenu_FeederOnShowCard();
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216d258);
-                  if (iVar7 == 0) {
-                    uVar3 = CL_ControllerIndexFromClientNum(uVar3);
-                    FriendsMenu_FeederOnReportRequest(uVar3,4);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216d240);
-                  if (iVar7 == 0) {
-                    uVar3 = CL_ControllerIndexFromClientNum(uVar3);
-                    FriendsMenu_FeederOnReportRequest(uVar3,5);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216d22c);
-                  if (iVar7 == 0) {
-                    uVar3 = CL_ControllerIndexFromClientNum(uVar3);
-                    FriendsMenu_FeederOnReportRequest(uVar3,6);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216d218);
-                  if (iVar7 == 0) {
-                    uVar3 = CL_ControllerIndexFromClientNum(uVar3);
-                    FriendsMenu_FeederOnReportRequest(uVar3,7);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216d200);
-                  if (iVar7 == 0) {
-                    CL_ControllerIndexFromClientNum(uVar3);
-                    MeetPlayer_FeederStoreXUID();
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216d1e8);
-                  if (iVar7 == 0) {
-                    CL_ControllerIndexFromClientNum(uVar3);
-                    MeetPlayer_FeederClearXUID();
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216d1d0);
-                  if (iVar7 == 0) {
-                    CL_ControllerIndexFromClientNum(uVar3);
-                    MeetPlayer_FeederOnShowCard();
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216d1b4);
-                  if (iVar7 == 0) {
-                    CL_ControllerIndexFromClientNum(uVar3);
-                    MeetPlayer_FeederOnFriendRequest();
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216d19c);
-                  if (iVar7 == 0) {
-                    uVar4 = CL_ControllerIndexFromClientNum(uVar3);
-                    MeetPlayer_FeederOnShowGroups(uVar3,uVar4);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216d188);
-                  if (iVar7 == 0) {
-                    CL_ControllerIndexFromClientNum(uVar3);
-                    MeetPlayer_FeederOnJoinRequest();
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216d174);
-                  if (iVar7 == 0) {
-                    CL_ControllerIndexFromClientNum(uVar3);
-                    MeetPlayer_FeederOnInviteRequest();
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216d158);
-                  if (iVar7 == 0) {
-                    uVar3 = CL_ControllerIndexFromClientNum(uVar3);
-                    MeetPlayer_FeederOnReportRequest(uVar3,4);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216d13c);
-                  if (iVar7 == 0) {
-                    uVar3 = CL_ControllerIndexFromClientNum(uVar3);
-                    MeetPlayer_FeederOnReportRequest(uVar3,5);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216d120);
-                  if (iVar7 == 0) {
-                    uVar3 = CL_ControllerIndexFromClientNum(uVar3);
-                    MeetPlayer_FeederOnReportRequest(uVar3,6);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216d104);
-                  if (iVar7 == 0) {
-                    uVar3 = CL_ControllerIndexFromClientNum(uVar3);
-                    MeetPlayer_FeederOnReportRequest(uVar3,7);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216d0f0);
-                  if (iVar7 == 0) {
-                    CL_ControllerIndexFromClientNum(uVar3);
-                    LiveParty_StoreXUID();
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216d0dc);
-                  if (iVar7 == 0) {
-                    CL_ControllerIndexFromClientNum(uVar3);
-                    LiveParty_ClearXUID();
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216d0c8);
-                  if (iVar7 == 0) {
-                    CL_ControllerIndexFromClientNum(uVar3);
-                    LiveParty_FeederOnShowCard();
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216d0b8);
-                  if (iVar7 == 0) {
-                    CL_ControllerIndexFromClientNum(uVar3);
-                    LiveParty_FeederOnInviteRequest();
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216d0a4);
-                  if (iVar7 == 0) {
-                    CL_ControllerIndexFromClientNum(uVar3);
-                    LiveParty_InviteAll();
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216d094);
-                  if (iVar7 == 0) {
-                    CL_ControllerIndexFromClientNum(uVar3);
-                    LiveParty_FeederOnJoinRequest();
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216d088);
-                  if (iVar7 == 0) {
-                    CL_ControllerIndexFromClientNum(uVar3);
-                    LiveParty_OpenUI();
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216d06c);
-                  if (iVar7 == 0) {
-                    uVar3 = CL_ControllerIndexFromClientNum(uVar3);
-                    LiveParty_FeederOnReportRequest(uVar3,4);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216d050);
-                  if (iVar7 == 0) {
-                    uVar3 = CL_ControllerIndexFromClientNum(uVar3);
-                    LiveParty_FeederOnReportRequest(uVar3,5);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216d038);
-                  if (iVar7 == 0) {
-                    uVar3 = CL_ControllerIndexFromClientNum(uVar3);
-                    LiveParty_FeederOnReportRequest(uVar3,6);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216d020);
-                  if (iVar7 == 0) {
-                    uVar3 = CL_ControllerIndexFromClientNum(uVar3);
-                    LiveParty_FeederOnReportRequest(uVar3,7);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216d008);
-                  if (iVar7 == 0) {
-                    Com_Memset(0xffffffff82aa2a04,0,0x440);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216cff4);
-                  if (iVar7 == 0) {
-                    CL_ControllerIndexFromClientNum(uVar3);
-                    Facebook_FeederStoreXUID();
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216cfe0);
-                  if (iVar7 == 0) {
-                    CL_ControllerIndexFromClientNum(uVar3);
-                    Facebook_FeederClearXUID();
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216cfcc);
-                  if (iVar7 == 0) {
-                    CL_ControllerIndexFromClientNum(uVar3);
-                    Facebook_FeederOnShowCard();
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216cfb4);
-                  if (iVar7 == 0) {
-                    CL_ControllerIndexFromClientNum(uVar3);
-                    Facebook_FeederOnFriendRequest();
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216cfa0);
-                  if (iVar7 == 0) {
-                    CL_ControllerIndexFromClientNum(uVar3);
-                    Facebook_FeederPageRight();
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216cf8c);
-                  if (iVar7 == 0) {
-                    CL_ControllerIndexFromClientNum(uVar3);
-                    Facebook_FeederPageLeft();
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216cf7c);
-                  if (iVar7 == 0) {
-                    CL_ControllerIndexFromClientNum(uVar3);
-                    Facebook_FeederJoin();
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216cf6c);
-                  if (iVar7 == 0) {
-                    CL_ControllerIndexFromClientNum(uVar3);
-                    Facebook_FeederInvite();
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216cf54);
-                  if (iVar7 == 0) {
-                    uVar3 = CL_ControllerIndexFromClientNum(uVar3);
-                    Facebook_FeederOnReportRequest(uVar3,4);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216cf3c);
-                  if (iVar7 == 0) {
-                    uVar3 = CL_ControllerIndexFromClientNum(uVar3);
-                    Facebook_FeederOnReportRequest(uVar3,5);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216cf24);
-                  if (iVar7 == 0) {
-                    uVar3 = CL_ControllerIndexFromClientNum(uVar3);
-                    Facebook_FeederOnReportRequest(uVar3,6);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216cf0c);
-                  if (iVar7 == 0) {
-                    uVar3 = CL_ControllerIndexFromClientNum(uVar3);
-                    Facebook_FeederOnReportRequest(uVar3,7);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216cef8);
-                  if (iVar7 == 0) {
-                    CL_ControllerIndexFromClientNum(uVar3);
-                    EliteClan_FeederStoreXUID();
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216cee4);
-                  if (iVar7 == 0) {
-                    CL_ControllerIndexFromClientNum(uVar3);
-                    EliteClan_FeederClearXUID();
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216ced0);
-                  if (iVar7 == 0) {
-                    CL_ControllerIndexFromClientNum(uVar3);
-                    EliteClan_FeederOnShowCard();
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216ceb8);
-                  if (iVar7 == 0) {
-                    CL_ControllerIndexFromClientNum(uVar3);
-                    EliteClan_FeederOnFriendRequest();
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216cea8);
-                  if (iVar7 == 0) {
-                    CL_ControllerIndexFromClientNum(uVar3);
-                    EliteClan_FeederOnJoin();
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216ce98);
-                  if (iVar7 == 0) {
-                    CL_ControllerIndexFromClientNum(uVar3);
-                    EliteClan_FeederOnInvite();
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216ce7c);
-                  if (iVar7 == 0) {
-                    uVar3 = CL_ControllerIndexFromClientNum(uVar3);
-                    EliteClan_FeederOnReportRequest(uVar3,4);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216ce60);
-                  if (iVar7 == 0) {
-                    uVar3 = CL_ControllerIndexFromClientNum(uVar3);
-                    EliteClan_FeederOnReportRequest(uVar3,5);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216ce48);
-                  if (iVar7 == 0) {
-                    uVar3 = CL_ControllerIndexFromClientNum(uVar3);
-                    EliteClan_FeederOnReportRequest(uVar3,6);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216ce30);
-                  if (iVar7 == 0) {
-                    uVar3 = CL_ControllerIndexFromClientNum(uVar3);
-                    EliteClan_FeederOnReportRequest(uVar3,7);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216ce24);
-                  if (iVar7 == 0) {
-                    CL_ControllerIndexFromClientNum(uVar3);
-                    uVar4 = CL_Demo_EnumGetIndex();
-                    uVar5 = CL_ControllerIndexFromClientNum(uVar3);
-                    uVar4 = CL_Demo_EnumFileName(uVar5,uVar4);
-                    uVar4 = va(0xffffffff8216ce10,uVar4);
-                    Cbuf_AddText(uVar3,uVar4);
-                    __restgprlr_24();
-                    return;
-                  }
-                  iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216cdf8);
-                  if (iVar7 == 0) {
-                    iVar7 = Int_Parse(param_2,&stack0x00000000 + -0xe5c);
-                    if ((iVar7 != 0) &&
-                       (iVar7 = Int_Parse(param_2,&stack0x00000000 + -0xe60), iVar7 != 0)) {
-                      CL_Demo_SwitchTransition(local_e5c,local_e60);
-                      __restgprlr_24();
-                      return;
-                    }
-                  }
-                  else {
-                    iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216cde8);
-                    if (iVar7 == 0) {
-                      if (-1 < *(int *)(DAT_8484f0c8 + 0xc)) {
-                        puVar10 = (undefined1 *)va(0xffffffff8216cdcc);
-                        goto LAB_825b1924;
-                      }
-                    }
-                    else {
-                      iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216cdc0);
-                      if (iVar7 == 0) {
-                        iVar7 = Int_Parse(param_2,&stack0x00000000 + -0xe60);
-                        if (iVar7 != 0) {
-                          CL_Demo_MoveSegment((ulonglong)*(uint *)(DAT_8484f0d8 + 0xc) - 1,local_e60
-                                             );
-                          if (local_e60 != 0) {
-                            uVar1 = *(uint *)(DAT_8484f0d8 + 0xc);
-                            iVar7 = CL_Demo_GetSegmentCount();
-                            if ((int)uVar1 < iVar7) {
-                              Dvar_SetInt(DAT_8484f0d8,(ulonglong)uVar1 + 1);
-                              __restgprlr_24();
-                              return;
-                            }
-                            if (local_e60 != 0) goto LAB_825b1fcc;
-                          }
-                          if (1 < (int)*(uint *)(DAT_8484f0d8 + 0xc)) {
-                            Dvar_SetInt(DAT_8484f0d8,(ulonglong)*(uint *)(DAT_8484f0d8 + 0xc) - 1);
-                            __restgprlr_24();
-                            return;
-                          }
-                        }
-                      }
-                      else {
-                        iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216cdb0);
-                        if (iVar7 == 0) {
-                          if (-1 < *(int *)(DAT_8484f0c8 + 0xc)) {
-                            CL_Demo_DeleteSegment();
-                            __restgprlr_24();
-                            return;
-                          }
-                        }
-                        else {
-                          iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216cd98);
-                          if (iVar7 == 0) {
-                            if (-1 < *(int *)(DAT_8484f0d8 + 0xc)) {
-                              uVar4 = va(0xffffffff8216cd8c);
-                              uVar3 = UI_GetClientDC(uVar3);
-                              Menus_SetFocusToItem(uVar3,0xffffffff82014a90,uVar4);
-                              __restgprlr_24();
-                              return;
-                            }
-                          }
-                          else {
-                            iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216cd68);
-                            if (iVar7 == 0) {
-                              CL_ControllerIndexFromClientNum(uVar3);
-                              CL_Demo_EnumPopulateMetaInformationForAllFiles();
-                              __restgprlr_24();
-                              return;
-                            }
-                            iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216cd5c);
-                            if (iVar7 != 0) {
-                              iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216cccc);
-                              if (iVar7 == 0) {
-                                String_Parse(param_2,&stack0x00000000 + -0xe50,0x400);
-                                iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216ccc4);
-                                if (iVar7 == 0) {
-                                  PlaylistFeeder_CloseMenu(uVar3,0);
-                                  __restgprlr_24();
-                                  return;
-                                }
-                                iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216cd44);
-                                if (iVar7 == 0) {
-                                  PlaylistFeeder_CloseMenu(uVar3,1);
-                                  __restgprlr_24();
-                                  return;
-                                }
-                                iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216cd54);
-                                if (iVar7 == 0) {
-                                  String_Parse(param_2,&stack0x00000000 + -0xe50,0x400);
-                                  iVar7 = atoi(acStack_e50);
-                                  PlaylistFeeder_OpenMenu(uVar3,iVar7);
-                                  __restgprlr_24();
-                                  return;
-                                }
-                                iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216ccb8);
-                                if (iVar7 == 0) {
-                                  PlaylistFeeder_DoAction(uVar3);
-                                  __restgprlr_24();
-                                  return;
-                                }
-                              }
-                              else {
-                                iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216cca8);
-                                if (iVar7 == 0) {
-                                  UI_UpdateArenas();
-                                  __restgprlr_24();
-                                  return;
-                                }
-                                iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216cc94);
-                                if (iVar7 == 0) {
-                                  uVar3 = UI_GetClientDC(uVar3);
-                                  Menu_SetFeederSelection(uVar3,0,0x26,0,0);
-                                  __restgprlr_24();
-                                  return;
-                                }
-                                iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216cc80);
-                                if (iVar7 == 0) {
-                                  CL_ControllerIndexFromClientNum(uVar3);
-                                  Commerce_ShowStore();
-                                  __restgprlr_24();
-                                  return;
-                                }
-                                iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216cc6c);
-                                if (iVar7 == 0) {
-                                  CL_ControllerIndexFromClientNum(uVar3);
-                                  Live_LaunchEliteSearch();
-                                  __restgprlr_24();
-                                  return;
-                                }
-                                iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216cc58);
-                                if (iVar7 == 0) {
-                                  CL_ControllerIndexFromClientNum(uVar3);
-                                  Live_LaunchEliteLaunch();
-                                  __restgprlr_24();
-                                  return;
-                                }
-                                iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216cc44);
-                                if (iVar7 == 0) {
-                                  CL_ControllerIndexFromClientNum(uVar3);
-                                  Live_LaunchEliteStore();
-                                  __restgprlr_24();
-                                  return;
-                                }
-                                iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216cc34);
-                                if (iVar7 == 0) {
-                                  UserGroups_ShowLobbyGroups(uVar3);
-                                  __restgprlr_24();
-                                  return;
-                                }
-                              }
-LAB_825b1f14:
-                              Com_PrintError(0xd,0xffffffff8216cc10,&stack0x00000000 + -0xe50,
-                                             param_3);
-                              __restgprlr_24();
-                              return;
-                            }
-                            String_Parse(param_2,&stack0x00000000 + -0xe50,0x400);
-                            iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216cd54);
-                            if (iVar7 == 0) {
-                              OnlineVault_ShowVault(uVar3,param_2);
-                              __restgprlr_24();
-                              return;
-                            }
-                            iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216cd50);
-                            if (iVar7 == 0) {
-                              OnlineVault_CloseFeederMenu(uVar3,0);
-                              __restgprlr_24();
-                              return;
-                            }
-                            iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216cd44);
-                            if (iVar7 == 0) {
-                              OnlineVault_CloseFeederMenu(uVar3,1);
-                              __restgprlr_24();
-                              return;
-                            }
-                            iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216cd3c);
-                            if (iVar7 == 0) {
-                              uVar3 = CL_ControllerIndexFromClientNum(uVar3);
-                              OnlineVault_FeederSelectedItem_Load(uVar3,0);
-                              __restgprlr_24();
-                              return;
-                            }
-                            iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216cd28);
-                            if (iVar7 == 0) {
-LAB_825b1cd8:
-                              uVar3 = CL_ControllerIndexFromClientNum(uVar3);
-                              OnlineVault_FeederSelectedItem_Load(uVar3,1);
-                              __restgprlr_24();
-                              return;
-                            }
-                            iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216cd20);
-                            if (iVar7 == 0) {
-                              CL_ControllerIndexFromClientNum(uVar3);
-                              OnlineVault_FeederSelectedItem_TrySave();
-                              __restgprlr_24();
-                              return;
-                            }
-                            iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216cd18);
-                            if (iVar7 == 0) {
-                              CL_ControllerIndexFromClientNum(uVar3);
-                              OnlineVault_FeederSelectedItem_Save();
-                              __restgprlr_24();
-                              return;
-                            }
-                            iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216cd10);
-                            if (iVar7 == 0) {
-                              CL_ControllerIndexFromClientNum(uVar3);
-                              OnlineVault_FeederSelectedItem_Rename();
-                              __restgprlr_24();
-                              return;
-                            }
-                            iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216cd08);
-                            if (iVar7 == 0) {
-                              CL_ControllerIndexFromClientNum(uVar3);
-                              OnlineVault_FeederSelectedItem_Delete();
-                              __restgprlr_24();
-                              return;
-                            }
-                            iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216cd00);
-                            if (iVar7 == 0) {
-                              CL_ControllerIndexFromClientNum(uVar3);
-                              OnlineVault_AbortOperation();
-                              __restgprlr_24();
-                              return;
-                            }
-                            iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216ccec);
-                            if (iVar7 == 0) {
-                              if (*(int *)(DAT_84545c8c + 0xc) != 0) {
-                                CL_ControllerIndexFromClientNum(uVar3);
-                                OnlineVault_FeederSelectedItem_FacebookUploadPhoto();
-                                __restgprlr_24();
-                                return;
-                              }
-                            }
-                            else {
-                              iVar7 = I_stricmp(&stack0x00000000 + -0xe50,0xffffffff8216ccd8);
-                              if (iVar7 != 0) goto LAB_825b1f14;
-                              if (*(int *)(DAT_84545cb8 + 0xc) != 0) goto LAB_825b1cd8;
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-            goto LAB_825b1fcc;
-          }
-        }
-        UI_VerifyLanguage();
-        __restgprlr_24();
-        return;
-      }
-    }
-  }
-LAB_825b1fcc:
-  __restgprlr_24();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 825A7E20  UI_InsertServerIntoDisplayList  (ui_mp/ui_main_mp.cpp:4610)
 
-void UI_InsertServerIntoDisplayList(undefined8 param_1,ulonglong param_2)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void UI_InsertServerIntoDisplayList(int param_1,int param_2)
 
 {
-  undefined8 uVar1;
+  int iVar1;
   int iVar2;
   int iVar3;
-  int iVar4;
-  longlong lVar5;
-  ulonglong uVar6;
-  longlong lVar7;
+  ulonglong uVar4;
+  int iVar5;
+  longlong lVar6;
+  ulonglong uVar7;
+  longlong lVar8;
   
-  uVar1 = __savegprlr_24();
-  iVar4 = (int)param_2;
-  if (iVar4 < 0) {
-    MyAssertHandler(0xffffffff8216ab14,0x1207,0,0xffffffff82000f98,0xffffffff8216bf8c);
+  uVar4 = (ulonglong)param_2;
+  iVar1 = __savegprlr_24(param_1);
+  iVar5 = (int)uVar4;
+  if (iVar5 < 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x1207,0
+                    ,"%s");
   }
-  if (iVar4 < (int)DAT_83fe5a74) {
-    iVar3 = (int)((param_2 & 0xffffffff) << 2);
-    iVar2 = LAN_CompareServers(*(undefined4 *)(DAT_83f71e68 + 0xc),DAT_83fd21e0,DAT_83fd21e4,uVar1,
-                               *(undefined4 *)(&DAT_83fd21f4 + iVar3));
-    iVar3 = LAN_CompareServers(*(undefined4 *)(DAT_83f71e68 + 0xc),DAT_83fd21e0,DAT_83fd21e4,
-                               *(undefined4 *)(&DAT_83fd21f4 + iVar3),uVar1);
+  if (iVar5 < sharedUiInfo.serverStatus.numDisplayServers) {
+    iVar3 = (int)((uVar4 & 0xffffffff) << 2);
+    iVar2 = LAN_CompareServers((ui_netSource->current).integer,sharedUiInfo.serverStatus.sortKey,
+                               sharedUiInfo.serverStatus.sortDir,iVar1,
+                               *(int *)((int)sharedUiInfo.serverStatus.displayServers + iVar3));
+    iVar3 = LAN_CompareServers((ui_netSource->current).integer,sharedUiInfo.serverStatus.sortKey,
+                               sharedUiInfo.serverStatus.sortDir,
+                               *(int *)((int)sharedUiInfo.serverStatus.displayServers + iVar3),iVar1
+                              );
     if (iVar2 != -iVar3) {
-      MyAssertHandler(0xffffffff8216ab14,0x120c,0,0xffffffff82000f98,0xffffffff8216bed0);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x120c
+                      ,0,"%s");
     }
     if (0 < iVar2) {
-      MyAssertHandler(0xffffffff8216ab14,0x120d,0,0xffffffff82000f98,0xffffffff8216bec0);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x120d
+                      ,0,"%s");
     }
   }
-  if (0 < iVar4) {
-    iVar3 = (int)((param_2 & 0xffffffff) << 2);
-    iVar2 = LAN_CompareServers(*(undefined4 *)(DAT_83f71e68 + 0xc),DAT_83fd21e0,DAT_83fd21e4,uVar1,
-                               *(undefined4 *)((int)&DAT_83fd21f0 + iVar3));
-    iVar3 = LAN_CompareServers(*(undefined4 *)(DAT_83f71e68 + 0xc),DAT_83fd21e0,DAT_83fd21e4,
-                               *(undefined4 *)((int)&DAT_83fd21f0 + iVar3),uVar1);
+  if (0 < iVar5) {
+    iVar3 = (int)((uVar4 & 0xffffffff) << 2);
+    iVar2 = LAN_CompareServers((ui_netSource->current).integer,sharedUiInfo.serverStatus.sortKey,
+                               sharedUiInfo.serverStatus.sortDir,iVar1,
+                               *(int *)((int)sharedUiInfo.serverStatus.displayServers + iVar3 + -4))
+    ;
+    iVar3 = LAN_CompareServers((ui_netSource->current).integer,sharedUiInfo.serverStatus.sortKey,
+                               sharedUiInfo.serverStatus.sortDir,
+                               *(int *)((int)sharedUiInfo.serverStatus.displayServers + iVar3 + -4),
+                               iVar1);
     if (iVar2 != -iVar3) {
-      MyAssertHandler(0xffffffff8216ab14,0x1212,0,0xffffffff82000f98,0xffffffff8216be00);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x1212
+                      ,0,"%s");
     }
     if (iVar2 < 0) {
-      MyAssertHandler(0xffffffff8216ab14,0x1213,0,0xffffffff82000f98,0xffffffff8216bdf0);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x1213
+                      ,0,"%s");
     }
   }
-  if ((-1 < iVar4) && (iVar4 <= (int)DAT_83fe5a74)) {
-    if ((iVar4 <= DAT_83fd21f0) && (DAT_83fe5a74 != 0)) {
-      DAT_83fd21f0 = DAT_83fd21f0 + 1;
+  if ((-1 < iVar5) && (iVar5 <= sharedUiInfo.serverStatus.numDisplayServers)) {
+    if ((iVar5 <= sharedUiInfo.serverStatus.currentServer) &&
+       (sharedUiInfo.serverStatus.numDisplayServers != 0)) {
+      sharedUiInfo.serverStatus.currentServer = sharedUiInfo.serverStatus.currentServer + 1;
     }
-    uVar6 = (ulonglong)DAT_83fe5a74 + 1;
-    DAT_83fe5a74 = (uint)uVar6;
-    if (iVar4 < (int)DAT_83fe5a74) {
-      lVar5 = uVar6 - param_2;
-      lVar7 = (uVar6 & 0x3fffffff) * 4 + -0x7c02de0c;
+    uVar7 = (ulonglong)(uint)sharedUiInfo.serverStatus.numDisplayServers + 1;
+    sharedUiInfo.serverStatus.numDisplayServers = (int)uVar7;
+    if (iVar5 < sharedUiInfo.serverStatus.numDisplayServers) {
+      lVar6 = uVar7 - uVar4;
+      lVar8 = (uVar7 & 0x3fffffff) * 4 + -0x7c02de0c;
       do {
-        *(undefined4 *)lVar7 = ((undefined4 *)lVar7)[-1];
-        lVar7 = lVar7 + -4;
-        lVar5 = lVar5 + -1;
-      } while (lVar5 != 0);
+        *(undefined4 *)lVar8 = ((undefined4 *)lVar8)[-1];
+        lVar8 = lVar8 + -4;
+        lVar6 = lVar6 + -1;
+      } while (lVar6 != 0);
     }
-    *(int *)(&DAT_83fd21f4 + (int)((param_2 & 0xffffffff) << 2)) = (int)uVar1;
+    *(int *)((int)sharedUiInfo.serverStatus.displayServers + (int)((uVar4 & 0xffffffff) << 2)) =
+         iVar1;
   }
   __restgprlr_24();
   return;
@@ -3592,46 +3185,54 @@ void UI_InsertServerIntoDisplayList(undefined8 param_1,ulonglong param_2)
 
 // 825A80B0  UI_BinaryServerInsertion  (ui_mp/ui_main_mp.cpp:4683)
 
-void UI_BinaryServerInsertion(void)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void UI_BinaryServerInsertion(int param_1)
 
 {
   int iVar1;
-  undefined8 uVar2;
+  int iVar2;
   int iVar3;
   int iVar4;
   int iVar5;
   int iVar6;
   int iVar7;
   
-  uVar2 = __savegprlr_20();
+  iVar2 = __savegprlr_20(param_1);
   iVar5 = 0;
-  iVar6 = DAT_83fe5a74;
-  if (0 < DAT_83fe5a74) {
+  iVar4 = 0;
+  iVar6 = sharedUiInfo.serverStatus.numDisplayServers;
+  if (0 < sharedUiInfo.serverStatus.numDisplayServers) {
     do {
       iVar1 = iVar6 >> 1;
       iVar7 = iVar5 + iVar1;
-      iVar3 = LAN_CompareServers(*(undefined4 *)(DAT_83f71e68 + 0xc),DAT_83fd21e0,DAT_83fd21e4,uVar2
-                                 ,*(undefined4 *)(&DAT_83fd21f4 + iVar7 * 4));
-      iVar4 = LAN_CompareServers(*(undefined4 *)(DAT_83f71e68 + 0xc),DAT_83fd21e0,DAT_83fd21e4,
-                                 *(undefined4 *)(&DAT_83fd21f4 + iVar7 * 4),uVar2);
+      iVar3 = LAN_CompareServers((ui_netSource->current).integer,sharedUiInfo.serverStatus.sortKey,
+                                 sharedUiInfo.serverStatus.sortDir,iVar2,
+                                 sharedUiInfo.serverStatus.displayServers[iVar7]);
+      iVar4 = LAN_CompareServers((ui_netSource->current).integer,sharedUiInfo.serverStatus.sortKey,
+                                 sharedUiInfo.serverStatus.sortDir,
+                                 sharedUiInfo.serverStatus.displayServers[iVar7],iVar2);
       if (iVar3 != -iVar4) {
-        MyAssertHandler(0xffffffff8216ab14,0x1259,0,0xffffffff82000f98,0xffffffff8216bfa0);
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",
+                        0x1259,0,"%s");
       }
       if (iVar3 == 0) {
-        UI_InsertServerIntoDisplayList(uVar2,iVar7);
+        UI_InsertServerIntoDisplayList(iVar2,iVar7);
         __restgprlr_20();
         return;
       }
+      iVar4 = iVar5;
       if (0 < iVar3) {
-        iVar5 = iVar7;
+        iVar4 = iVar7;
       }
       iVar6 = iVar6 - iVar1;
+      iVar5 = iVar4;
     } while (0 < iVar1);
     if (0 < iVar3) {
-      iVar5 = iVar5 + 1;
+      iVar4 = iVar4 + 1;
     }
   }
-  UI_InsertServerIntoDisplayList(uVar2,iVar5);
+  UI_InsertServerIntoDisplayList(iVar2,iVar4);
   __restgprlr_20();
   return;
 }
@@ -3639,113 +3240,124 @@ void UI_BinaryServerInsertion(void)
 
 // 825A81E0  UI_ClearDisplayedServers  (ui_mp/ui_main_mp.cpp:4731)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
 void UI_ClearDisplayedServers(void)
 
 {
-  DAT_83fe5a74 = 0;
-  DAT_83fe5a7c = 0;
-  DAT_83fe5a78 = LAN_GetServerCount(*(undefined4 *)(DAT_83f71e68 + 0xc));
+  sharedUiInfo.serverStatus.numDisplayServers = 0;
+  sharedUiInfo.serverStatus.numPlayersOnServers = 0;
+  sharedUiInfo.serverStatus.serverCount = LAN_GetServerCount((ui_netSource->current).integer);
   return;
 }
 
 
 // 825ADBC0  UI_BuildServerDisplayList  (ui_mp/ui_main_mp.cpp:4744)
 
-void UI_BuildServerDisplayList(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void UI_BuildServerDisplayList(uiInfo_s *param_1,int param_2)
 
 {
   char cVar1;
-  int iVar3;
-  undefined8 uVar2;
-  char *pcVar4;
+  UiContext *pUVar2;
+  char *pcVar3;
+  int iVar4;
   int iVar5;
   int iVar6;
-  char *pcVar7;
-  int iVar8;
-  longlong lVar9;
-  undefined1 auStack_460 [1120];
+  int iVar7;
+  char *pcVar8;
+  ulonglong uVar9;
+  char acStack_460 [1120];
   
-  iVar3 = __savegprlr_22();
-  if ((int)param_2 == 0) {
-    if (*(int *)(iVar3 + 8) <= DAT_83fe5a80) goto LAB_825adf20;
+  uVar9 = (ulonglong)param_2;
+  pUVar2 = (UiContext *)__savegprlr_22(param_1);
+  if ((int)uVar9 == 0) {
+    if (pUVar2->realTime <= sharedUiInfo.serverStatus.nextDisplayRefresh) goto LAB_825adf20;
   }
   else {
-    param_2 = -(ulonglong)(param_2 != 2) & param_2;
+    uVar9 = -(ulonglong)(uVar9 != 2) & uVar9;
   }
-  uVar2 = Dvar_GetString(0xffffffff82032dec);
-  I_strncpyz(0xffffffff83fe5aa0,uVar2,0x400);
-  pcVar7 = &DAT_83fe5aa0;
+  pcVar3 = Dvar_GetString("cl_motdString");
+  I_strncpyz(sharedUiInfo.serverStatus.motd,pcVar3,0x400);
+  pcVar3 = sharedUiInfo.serverStatus.motd;
   do {
-    pcVar4 = pcVar7;
-    pcVar7 = pcVar4 + 1;
-  } while (*pcVar4 != '\0');
-  pcVar4 = pcVar4 + 0x7c01a560;
-  if (pcVar4 == (char *)0x0) {
-    uVar2 = SEH_StringEd_GetString(0xffffffff8216c890);
-    uVar2 = UI_CheckStringTranslation(0xffffffff8216c890,uVar2);
-    pcVar4 = (char *)va(0xffffffff8216c888,uVar2,0xffffffff8202e2c4);
-    pcVar7 = pcVar4;
+    pcVar8 = pcVar3;
+    pcVar3 = pcVar8 + 1;
+  } while (*pcVar8 != '\0');
+  pcVar8 = pcVar8 + 0x7c01a560;
+  if (pcVar8 == (char *)0x0) {
+    pcVar3 = SEH_StringEd_GetString("EXE_COD_MULTIPLAYER");
+    UI_CheckStringTranslation("EXE_COD_MULTIPLAYER",pcVar3);
+    pcVar3 = va("%s - %s");
+    iVar4 = -0x7c01a560 - (int)pcVar3;
     do {
-      cVar1 = *pcVar7;
-      (&DAT_83fe5aa0)[(int)pcVar7 - (int)pcVar4] = cVar1;
-      pcVar7 = pcVar7 + 1;
+      cVar1 = *pcVar3;
+      pcVar3[iVar4] = cVar1;
+      pcVar3 = pcVar3 + 1;
     } while (cVar1 != '\0');
-    pcVar7 = &DAT_83fe5aa0;
+    pcVar3 = sharedUiInfo.serverStatus.motd;
     do {
-      pcVar4 = pcVar7;
-      pcVar7 = pcVar4 + 1;
-    } while (*pcVar4 != '\0');
-    pcVar4 = pcVar4 + 0x7c01a560;
+      pcVar8 = pcVar3;
+      pcVar3 = pcVar8 + 1;
+    } while (*pcVar8 != '\0');
+    pcVar8 = pcVar8 + 0x7c01a560;
   }
-  if (pcVar4 != DAT_83fe5a88) {
-    DAT_83fe5a8c = 0xffffffff;
-    DAT_83fe5a88 = pcVar4;
+  if (pcVar8 != (char *)sharedUiInfo.serverStatus.motdLen) {
+    sharedUiInfo.serverStatus.motdWidth = -1;
+    sharedUiInfo.serverStatus.motdLen = (int)pcVar8;
   }
-  if ((int)param_2 != 0) {
-    DAT_83fe78b8 = 0;
+  if ((int)uVar9 != 0) {
+    numclean = 0;
     UI_ClearDisplayedServers();
-    if (-1 < DAT_83fd21f0) {
-      Menu_SetFeederSelection(iVar3,0,2,0,0);
+    if (-1 < sharedUiInfo.serverStatus.currentServer) {
+      Menu_SetFeederSelection(pUVar2,(menuDef_t *)0x0,2,0,(char *)0x0);
     }
-    LAN_MarkServerDirty(*(undefined4 *)(DAT_83f71e68 + 0xc),0xffffffffffffffff,1);
+    LAN_MarkServerDirty((ui_netSource->current).integer,-1,1);
   }
-  iVar5 = LAN_GetServerCount(*(undefined4 *)(DAT_83f71e68 + 0xc));
-  iVar6 = LAN_WaitServerResponse(*(undefined4 *)(DAT_83f71e68 + 0xc));
-  if ((iVar6 == 0) && ((*(int *)(DAT_83f71e68 + 0xc) != 0 || (iVar5 != 0)))) {
-    qsort(&DAT_83fd21f4,DAT_83fe5a74,4,UI_ServersQsortCompare);
-    lVar9 = 0;
-    if (0 < iVar5) {
+  iVar4 = LAN_GetServerCount((ui_netSource->current).integer);
+  iVar5 = LAN_WaitServerResponse((ui_netSource->current).integer);
+  if ((iVar5 == 0) && (((ui_netSource->current).integer != 0 || (iVar4 != 0)))) {
+    qsort(sharedUiInfo.serverStatus.displayServers,sharedUiInfo.serverStatus.numDisplayServers,4,
+          UI_ServersQsortCompare);
+    iVar5 = 0;
+    if (0 < iVar4) {
       do {
-        iVar6 = LAN_ServerIsDirty(*(undefined4 *)(DAT_83f71e68 + 0xc),lVar9);
+        iVar6 = LAN_ServerIsDirty((ui_netSource->current).integer,iVar5);
         if ((iVar6 != 0) &&
-           ((iVar6 = LAN_GetServerPing(*(undefined4 *)(DAT_83f71e68 + 0xc),lVar9), 0 < iVar6 ||
-            (*(int *)(DAT_83f71e68 + 0xc) == 2)))) {
-          LAN_GetServerInfo(*(undefined4 *)(DAT_83f71e68 + 0xc),lVar9,auStack_460,0x400);
-          pcVar7 = (char *)Info_ValueForKey(auStack_460,0xffffffff82014e8c);
-          iVar8 = atoi(pcVar7);
-          DAT_83fe5a7c = DAT_83fe5a7c + iVar8;
-          uVar2 = Info_ValueForKey(auStack_460,0xffffffff82049fa0);
-          iVar8 = I_strnicmp(uVar2,0xffffffff8216c878,0xf);
-          if (iVar8 == 0) {
-            LAN_MarkServerDirty(*(undefined4 *)(DAT_83f71e68 + 0xc),lVar9,0);
+           ((iVar6 = LAN_GetServerPing((ui_netSource->current).integer,iVar5), 0 < iVar6 ||
+            ((ui_netSource->current).integer == 2)))) {
+          LAN_GetServerInfo((ui_netSource->current).integer,iVar5,acStack_460,0x400);
+          pcVar3 = Info_ValueForKey(acStack_460,"clients");
+          iVar7 = atoi(pcVar3);
+          sharedUiInfo.serverStatus.numPlayersOnServers =
+               sharedUiInfo.serverStatus.numPlayersOnServers + iVar7;
+          pcVar3 = Info_ValueForKey(acStack_460,"addr");
+          iVar7 = I_strnicmp(pcVar3,"000.000.000.000",0xf);
+          if (iVar7 == 0) {
+            LAN_MarkServerDirty((ui_netSource->current).integer,iVar5,0);
           }
           else {
-            UI_BinaryServerInsertion(lVar9);
+            UI_BinaryServerInsertion(iVar5);
             if (0 < iVar6) {
-              LAN_MarkServerDirty(*(undefined4 *)(DAT_83f71e68 + 0xc),lVar9,0);
-              DAT_83fe78b8 = DAT_83fe78b8 + 1;
+              LAN_MarkServerDirty((ui_netSource->current).integer,iVar5,0);
+              numclean = numclean + 1;
             }
           }
         }
-        lVar9 = lVar9 + 1;
-      } while ((int)lVar9 < iVar5);
+        iVar5 = iVar5 + 1;
+      } while (iVar5 < iVar4);
     }
-    DAT_83fd21d8 = *(undefined4 *)(iVar3 + 8);
+    sharedUiInfo.serverStatus.refreshtime = pUVar2->realTime;
     __restgprlr_22();
     return;
   }
   UI_ClearDisplayedServers();
-  DAT_83fe5a80 = *(int *)(iVar3 + 8) + 500;
+  sharedUiInfo.serverStatus.nextDisplayRefresh = pUVar2->realTime + 500;
 LAB_825adf20:
   __restgprlr_22();
   return;
@@ -3754,24 +3366,31 @@ LAB_825adf20:
 
 // 825B1FD8  UI_BuildServerStatus  (ui_mp/ui_main_mp.cpp:5317)
 
-void UI_BuildServerStatus(int param_1,int param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void UI_BuildServerStatus(uiInfo_s *param_1,int param_2)
 
 {
   if (param_2 == 0) {
-    if (DAT_83fe6b5c == 0) {
+    if (sharedUiInfo.nextServerStatusRefresh == 0) {
       return;
     }
-    if (*(int *)(param_1 + 8) < DAT_83fe6b5c) {
+    if ((param_1->uiDC).realTime < sharedUiInfo.nextServerStatusRefresh) {
       return;
     }
   }
   else {
-    Menu_SetFeederSelection(param_1,0,0xc,0,0);
-    DAT_83fe6b58 = 0;
+    Menu_SetFeederSelection(&param_1->uiDC,(menuDef_t *)0x0,0xc,0,(char *)0x0);
+    sharedUiInfo.serverStatusInfo.numLines = 0;
   }
   UI_UpdateDisplayServers(param_1);
-  if (((-1 < DAT_83fd21f0) && (DAT_83fd21f0 <= DAT_83fe5a74)) && (DAT_83fe5a74 != 0)) {
-    DAT_83fe6b5c = *(int *)(param_1 + 8) + 500;
+  if (((-1 < sharedUiInfo.serverStatus.currentServer) &&
+      (sharedUiInfo.serverStatus.currentServer <= sharedUiInfo.serverStatus.numDisplayServers)) &&
+     (sharedUiInfo.serverStatus.numDisplayServers != 0)) {
+    sharedUiInfo.nextServerStatusRefresh = (param_1->uiDC).realTime + 500;
   }
   return;
 }
@@ -3779,75 +3398,84 @@ void UI_BuildServerStatus(int param_1,int param_2)
 
 // 825A8248  UI_Feeder_GetUsedGPadCount  (ui_mp/ui_main_mp.cpp:5369)
 
-longlong UI_Feeder_GetUsedGPadCount(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+int UI_Feeder_GetUsedGPadCount(void)
 
 {
-  char cVar1;
-  longlong lVar2;
-  longlong lVar3;
-  undefined4 local_20 [2];
+  bool bVar1;
+  int iVar2;
+  int iVar3;
+  LocalClientNum_t local_20 [2];
   
-  lVar2 = 0;
-  lVar3 = 0;
+  iVar2 = 0;
+  iVar3 = 0;
   do {
-    cVar1 = CL_DoesControllerIndexHaveALocalClientNum(lVar3,local_20);
-    if ((cVar1 != '\0') && (cVar1 = CL_IsLocalClientActive(local_20[0]), cVar1 != '\0')) {
-      lVar2 = lVar2 + 1;
+    bVar1 = CL_DoesControllerIndexHaveALocalClientNum(iVar3,local_20);
+    if ((bVar1) && (bVar1 = CL_IsLocalClientActive(local_20[0]), bVar1)) {
+      iVar2 = iVar2 + 1;
     }
-    lVar3 = lVar3 + 1;
-  } while ((int)lVar3 < 4);
-  return lVar2;
+    iVar3 = iVar3 + 1;
+  } while (iVar3 < 4);
+  return iVar2;
 }
 
 
 // 825A82C0  UI_Feeder_GetNonUsedGPadCount  (ui_mp/ui_main_mp.cpp:5393)
 
-longlong UI_Feeder_GetNonUsedGPadCount(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+int UI_Feeder_GetNonUsedGPadCount(void)
 
 {
-  char cVar1;
-  longlong lVar2;
-  longlong lVar3;
-  undefined1 auStack_20 [8];
+  bool bVar1;
+  int iVar2;
+  int iVar3;
+  LocalClientNum_t aLStack_20 [2];
   
-  lVar2 = 0;
-  lVar3 = 0;
+  iVar2 = 0;
+  iVar3 = 0;
   do {
-    cVar1 = GPad_IsActive(lVar3);
-    if ((cVar1 != '\0') &&
-       (cVar1 = CL_DoesControllerIndexHaveALocalClientNum(lVar3,auStack_20), cVar1 == '\0')) {
-      lVar2 = lVar2 + 1;
+    bVar1 = GPad_IsActive(iVar3);
+    if ((bVar1) && (bVar1 = CL_DoesControllerIndexHaveALocalClientNum(iVar3,aLStack_20), !bVar1)) {
+      iVar2 = iVar2 + 1;
     }
-    lVar3 = lVar3 + 1;
-  } while ((int)lVar3 < 4);
-  return lVar2;
+    iVar3 = iVar3 + 1;
+  } while (iVar3 < 4);
+  return iVar2;
 }
 
 
 // 825A8338  UI_FeederCount_NonPlayingLocalClients  (ui_mp/ui_main_mp.cpp:5418)
 
-ulonglong UI_FeederCount_NonPlayingLocalClients(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+int UI_FeederCount_NonPlayingLocalClients(uiInfo_s *param_1)
 
 {
-  char cVar4;
-  ulonglong uVar1;
-  int iVar3;
-  longlong lVar2;
-  ulonglong uVar5;
+  bool bVar3;
+  uint uVar1;
+  int iVar2;
+  uint uVar4;
   
-  if ((*(int *)(DAT_84546d98 + 0xc) != 0) && (cVar4 = Menus_ActiveMenuAllowSignin(), cVar4 != '\0'))
-  {
+  if (((splitscreen_online_enabled->current).integer != 0) &&
+     (bVar3 = Menus_ActiveMenuAllowSignin(&param_1->uiDC), bVar3)) {
     uVar1 = UI_Feeder_GetNonUsedGPadCount();
-    if (((int)uVar1 < 1) && (iVar3 = UI_Feeder_GetUsedGPadCount(), iVar3 + (int)uVar1 < 4)) {
+    if (((int)uVar1 < 1) && (iVar2 = UI_Feeder_GetUsedGPadCount(), (int)(iVar2 + uVar1) < 4)) {
       uVar1 = uVar1 + 1;
     }
-    lVar2 = UI_Feeder_GetUsedGPadCount();
-    uVar5 = 2 - lVar2;
-    uVar5 = ((uVar5 & 0xffffffff) >> 0x1f) - (ulonglong)(uVar5 != 0) & uVar5;
-    if ((int)uVar1 <= (int)uVar5) {
-      uVar5 = uVar1;
+    iVar2 = UI_Feeder_GetUsedGPadCount();
+    uVar4 = (uint)(2 - (longlong)iVar2);
+    uVar4 = -((int)uVar4 >> 0x1f) - (uint)(2 - (longlong)iVar2 != 0) & uVar4;
+    if ((int)uVar1 <= (int)uVar4) {
+      uVar4 = uVar1;
     }
-    return uVar5;
+    return uVar4;
   }
   return 0;
 }
@@ -3855,262 +3483,283 @@ ulonglong UI_FeederCount_NonPlayingLocalClients(void)
 
 // 825A83F0  UI_FeederCount_PartyMembers  (ui_mp/ui_main_mp.cpp:5447)
 
-void UI_FeederCount_PartyMembers(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+int UI_FeederCount_PartyMembers(uiInfo_s *param_1)
 
 {
-  undefined8 uVar1;
-  int iVar4;
-  longlong lVar2;
-  ulonglong uVar3;
-  longlong lVar5;
+  uiInfo_s *puVar2;
+  int iVar3;
+  ulonglong uVar1;
+  longlong lVar4;
   
-  uVar1 = __savegprlr_29();
-  lVar5 = 0;
-  iVar4 = Party_IsRunning(0xffffffff82b55118);
-  if ((iVar4 != 0) && (iVar4 = Party_AreWeHost(0xffffffff82b55118), iVar4 != 0)) {
-    lVar5 = UI_FeederCount_NonPlayingLocalClients(uVar1);
+  puVar2 = (uiInfo_s *)__savegprlr_29(param_1);
+  lVar4 = 0;
+  iVar3 = Party_IsRunning(&g_partyData);
+  if ((iVar3 != 0) && (iVar3 = Party_AreWeHost(&g_partyData), iVar3 != 0)) {
+    iVar3 = UI_FeederCount_NonPlayingLocalClients(puVar2);
+    lVar4 = (longlong)iVar3;
   }
-  lVar2 = GetPartyMemberCount();
-  uVar3 = lVar2 + lVar5;
-  if ((int)*(uint *)(DAT_82b59048 + 0xc) < (int)(lVar2 + lVar5)) {
-    uVar3 = (ulonglong)*(uint *)(DAT_82b59048 + 0xc);
+  iVar3 = GetPartyMemberCount();
+  uVar1 = iVar3 + lVar4;
+  if ((party_maxplayers->current).integer < (int)(iVar3 + lVar4)) {
+    uVar1 = (ulonglong)(uint)(party_maxplayers->current).integer;
   }
-  __restgprlr_29(uVar3);
-  return;
+  iVar3 = __restgprlr_29(uVar1);
+  return iVar3;
 }
 
 
 // 825B20B8  UI_FeederCount  (ui_mp/ui_main_mp.cpp:5468)
 
-void UI_FeederCount(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+int UI_FeederCount(LocalClientNum_t param_1,float param_2)
 
 {
-  ulonglong uVar1;
-  undefined8 uVar2;
-  int iVar4;
-  char cVar5;
-  longlong lVar3;
+  LocalClientNum_t LVar2;
+  int iVar3;
+  uiInfo_s *puVar4;
+  bool bVar8;
+  PartyData *pPVar5;
+  SessionData *pSVar6;
+  uint uVar7;
+  longlong lVar1;
+  int *in_r4;
   double extraout_f1;
-  double dVar6;
-  undefined4 local_30;
+  double dVar9;
+  int local_30;
   
-  uVar1 = __savegprlr_29();
-  dVar6 = extraout_f1;
-  uVar2 = CL_ControllerIndexFromClientNum();
-  if (3 < (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8216ab14,0x1c2,0,0xffffffff820011a8,uVar1,4);
+  LVar2 = __savegprlr_29((double)param_2,param_1);
+  dVar9 = extraout_f1;
+  iVar3 = CL_ControllerIndexFromClientNum(LVar2);
+  if (LOCAL_CLIENT_3 < LVar2) {
+    in_r4 = (int *)0x1c2;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x1c2,0,
+                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  if (dVar6 == 3.0) {
+  if (dVar9 == 3.0) {
     UI_UpdateArenas();
-    __restgprlr_29(DAT_83f7df64);
-    return;
+    iVar3 = __restgprlr_29(sharedUiInfo.mapCount);
+    return iVar3;
   }
-  if (dVar6 == 2.0) {
-    UI_GetClientInfo(uVar1);
-    UI_UpdateDisplayServers();
-    __restgprlr_29(DAT_83fe5a74);
-    return;
+  if (dVar9 == 2.0) {
+    puVar4 = UI_GetClientInfo(LVar2);
+    UI_UpdateDisplayServers(puVar4);
+    iVar3 = __restgprlr_29(sharedUiInfo.serverStatus.numDisplayServers);
+    return iVar3;
   }
-  if (dVar6 == 12.0) {
-    __restgprlr_29(DAT_83fe6b58);
-    return;
+  if (dVar9 == 12.0) {
+    iVar3 = __restgprlr_29(sharedUiInfo.serverStatusInfo.numLines);
+    return iVar3;
   }
-  if (dVar6 == 6.0) {
-    iVar4 = UI_GetClientInfo(uVar1);
-    if (*(int *)(iVar4 + 0x2288) < *(int *)(iVar4 + 8)) {
-      *(int *)(iVar4 + 0x2288) = *(int *)(iVar4 + 8) + 3000;
-      UI_BuildPlayerList(uVar1);
+  if (dVar9 == 6.0) {
+    puVar4 = UI_GetClientInfo(LVar2);
+    iVar3 = (puVar4->uiDC).realTime;
+    if (puVar4->playerRefresh < iVar3) {
+      puVar4->playerRefresh = iVar3 + 3000;
+      UI_BuildPlayerList(LVar2);
     }
-    __restgprlr_29(DAT_83f7aa04);
-    return;
+    iVar3 = __restgprlr_29(sharedUiInfo.playerCount);
+    return iVar3;
   }
-  if (dVar6 == 17.0) {
-    cVar5 = Live_IsSignedIn(uVar2);
-    if (cVar5 != '\0') {
-      iVar4 = Lobby_GetPartyData();
-      if (*(int *)(iVar4 + 0x1ee0) == 0) {
-        uVar2 = GetLobbyMemberCount();
-        if ((DAT_82b5700c != 0) && ((int)uVar2 == 0)) {
-          uVar2 = GetPartyMemberCount();
-          if ((int)uVar2 < 1) {
-            __restgprlr_29(1);
-            return;
+  if (dVar9 == 17.0) {
+    bVar8 = Live_IsSignedIn(iVar3);
+    if (bVar8) {
+      pPVar5 = Lobby_GetPartyData();
+      if (pPVar5->gameStartTime == 0) {
+        iVar3 = GetLobbyMemberCount();
+        if ((g_partyData.inParty != 0) && (iVar3 == 0)) {
+          iVar3 = GetPartyMemberCount();
+          if (iVar3 < 1) {
+            iVar3 = __restgprlr_29(1);
+            return iVar3;
           }
           goto LAB_825b25f4;
         }
       }
       else {
-        uVar2 = GetLobbyMemberCount();
+        iVar3 = GetLobbyMemberCount();
       }
-      if ((int)uVar2 < 1) goto LAB_825b2240;
+      if (iVar3 < 1) goto LAB_825b2240;
       goto LAB_825b25f4;
     }
   }
   else {
-    if (dVar6 == 18.0) {
-      Lobby_GetSession();
-      Session_CountTotalSlots();
-      __restgprlr_29();
-      return;
+    if (dVar9 == 18.0) {
+      pSVar6 = Lobby_GetSession();
+      iVar3 = Session_CountTotalSlots(pSVar6);
+      iVar3 = __restgprlr_29(iVar3);
+      return iVar3;
     }
-    if (dVar6 == 23.0) {
-      cVar5 = Live_IsSignedIn(uVar2);
-      if (cVar5 != '\0') {
-        uVar2 = UI_FeederCount_PartyMembers(uVar1 * 0x22ac + -0x7c08e128);
-        if ((int)uVar2 < 1) {
-          __restgprlr_29(1);
-          return;
+    if (dVar9 == 23.0) {
+      bVar8 = Live_IsSignedIn(iVar3);
+      if (bVar8) {
+        iVar3 = UI_FeederCount_PartyMembers(uiInfoArray + LVar2);
+        if (iVar3 < 1) {
+          iVar3 = __restgprlr_29(1);
+          return iVar3;
         }
         goto LAB_825b25f4;
       }
     }
     else {
-      cVar5 = GetTeam(dVar6,uVar1);
-      if (cVar5 == '\0') {
-        if (dVar6 == 29.0) {
-          cVar5 = Live_IsSignedIn(uVar2);
-          if (cVar5 != '\0') {
-            Friends_GetNumFriends(uVar2);
-            __restgprlr_29();
-            return;
-          }
+      bVar8 = GetTeam(LVar2,(float)dVar9,in_r4);
+      if (bVar8) {
+        bVar8 = Live_IsSignedIn(iVar3);
+        if (bVar8) {
+          iVar3 = GetTeamMemberCount(local_30);
+          iVar3 = __restgprlr_29(iVar3);
+          return iVar3;
         }
-        else if (dVar6 == 31.0) {
-          cVar5 = Live_IsSignedIn(uVar2);
-          if (cVar5 != '\0') {
-            MeetPlayer_Sort(uVar2);
-            MeetPlayer_GetCount(uVar2);
-            __restgprlr_29();
-            return;
-          }
+      }
+      else if (dVar9 == 29.0) {
+        bVar8 = Live_IsSignedIn(iVar3);
+        if (bVar8) {
+          uVar7 = Friends_GetNumFriends(iVar3);
+          iVar3 = __restgprlr_29(uVar7);
+          return iVar3;
         }
-        else {
-          if (dVar6 == 32.0) {
-            LiveParty_GetCount();
-            __restgprlr_29();
-            return;
-          }
-          if (dVar6 == 24.0) {
-            PlaylistFeeder_GetCount();
-            __restgprlr_29();
-            return;
-          }
-          if (dVar6 == 30.0) {
-            Content_GetKnownContentPackCount();
-            __restgprlr_29();
-            return;
-          }
-          if (dVar6 == 21.0) {
-            if (DAT_82966e98 != 0) {
-              CL_GetLocalClientActiveCount();
-              __restgprlr_29();
-              return;
-            }
-LAB_825b2240:
-            __restgprlr_29(1);
-            return;
-          }
-          if (dVar6 == 25.0) {
-            lVar3 = CustomGameTypes_GetGametypeCount();
-            __restgprlr_29(lVar3 + (ulonglong)DAT_83f7bc58);
-            return;
-          }
-          if (dVar6 == 26.0) {
-            LB_FeederCount(uVar1);
-            __restgprlr_29();
-            return;
-          }
-          if (dVar6 == 35.0) goto LAB_825b2240;
-          if (dVar6 == 33.0) {
-            CL_ControllerIndexFromClientNum(uVar1);
-            cVar5 = Live_IsSignedIn();
-            if (cVar5 != '\0') {
-              CL_ControllerIndexFromClientNum(uVar1);
-              Facebook_Sort();
-              CL_ControllerIndexFromClientNum(uVar1);
-              Facebook_GetCount();
-              __restgprlr_29();
-              return;
-            }
-          }
-          else if (dVar6 == 34.0) {
-            CL_ControllerIndexFromClientNum(uVar1);
-            cVar5 = Live_IsSignedIn();
-            if (cVar5 != '\0') {
-              CL_ControllerIndexFromClientNum(uVar1);
-              EliteClan_Sort();
-              CL_ControllerIndexFromClientNum(uVar1);
-              EliteClan_GetCount();
-              __restgprlr_29();
-              return;
-            }
-          }
-          else {
-            if (dVar6 == 37.0) {
-              CL_ControllerIndexFromClientNum(uVar1);
-              uVar2 = CL_Demo_EnumCount();
-              if (0x31 < (int)uVar2) {
-                __restgprlr_29(0x32);
-                return;
-              }
-              goto LAB_825b25f4;
-            }
-            if (dVar6 == 36.0) {
-              CL_ControllerIndexFromClientNum(uVar1);
-              OnlineVault_FeederGetCount();
-              __restgprlr_29();
-              return;
-            }
-            if (dVar6 == 1.0) {
-              UI_GetMapCount();
-              __restgprlr_29();
-              return;
-            }
-            if (dVar6 == 38.0) {
-              CL_ControllerIndexFromClientNum(uVar1);
-              lVar3 = LiveStorage_SortedChallengeCurrentCount();
-              if (9 < (int)lVar3) {
-                lVar3 = 10;
-              }
-              __restgprlr_29(lVar3 + -2);
-              return;
-            }
-          }
+      }
+      else if (dVar9 == 31.0) {
+        bVar8 = Live_IsSignedIn(iVar3);
+        if (bVar8) {
+          MeetPlayer_Sort(iVar3);
+          iVar3 = MeetPlayer_GetCount(iVar3);
+          iVar3 = __restgprlr_29(iVar3);
+          return iVar3;
         }
       }
       else {
-        cVar5 = Live_IsSignedIn(uVar2);
-        if (cVar5 != '\0') {
-          GetTeamMemberCount(local_30);
-          __restgprlr_29();
-          return;
+        if (dVar9 == 32.0) {
+          iVar3 = LiveParty_GetCount();
+          iVar3 = __restgprlr_29(iVar3);
+          return iVar3;
+        }
+        if (dVar9 == 24.0) {
+          iVar3 = PlaylistFeeder_GetCount();
+          iVar3 = __restgprlr_29(iVar3);
+          return iVar3;
+        }
+        if (dVar9 == 30.0) {
+          iVar3 = Content_GetKnownContentPackCount();
+          iVar3 = __restgprlr_29(iVar3);
+          return iVar3;
+        }
+        if (dVar9 == 21.0) {
+          if (cl_multi_gamepads_enabled != 0) {
+            iVar3 = CL_GetLocalClientActiveCount();
+            iVar3 = __restgprlr_29(iVar3);
+            return iVar3;
+          }
+LAB_825b2240:
+          iVar3 = __restgprlr_29(1);
+          return iVar3;
+        }
+        if (dVar9 == 25.0) {
+          iVar3 = CustomGameTypes_GetGametypeCount();
+          iVar3 = __restgprlr_29((longlong)iVar3 + (ulonglong)(uint)sharedUiInfo.numCustomGameTypes)
+          ;
+          return iVar3;
+        }
+        if (dVar9 == 26.0) {
+          iVar3 = LB_FeederCount(LVar2);
+          iVar3 = __restgprlr_29(iVar3);
+          return iVar3;
+        }
+        if (dVar9 == 35.0) goto LAB_825b2240;
+        if (dVar9 == 33.0) {
+          iVar3 = CL_ControllerIndexFromClientNum(LVar2);
+          bVar8 = Live_IsSignedIn(iVar3);
+          if (bVar8) {
+            iVar3 = CL_ControllerIndexFromClientNum(LVar2);
+            Facebook_Sort(iVar3);
+            iVar3 = CL_ControllerIndexFromClientNum(LVar2);
+            iVar3 = Facebook_GetCount(iVar3);
+            iVar3 = __restgprlr_29(iVar3);
+            return iVar3;
+          }
+        }
+        else if (dVar9 == 34.0) {
+          iVar3 = CL_ControllerIndexFromClientNum(LVar2);
+          bVar8 = Live_IsSignedIn(iVar3);
+          if (bVar8) {
+            iVar3 = CL_ControllerIndexFromClientNum(LVar2);
+            EliteClan_Sort(iVar3);
+            iVar3 = CL_ControllerIndexFromClientNum(LVar2);
+            iVar3 = EliteClan_GetCount(iVar3);
+            iVar3 = __restgprlr_29(iVar3);
+            return iVar3;
+          }
+        }
+        else {
+          if (dVar9 == 37.0) {
+            iVar3 = CL_ControllerIndexFromClientNum(LVar2);
+            iVar3 = CL_Demo_EnumCount(iVar3);
+            if (0x31 < iVar3) {
+              iVar3 = __restgprlr_29(0x32);
+              return iVar3;
+            }
+            goto LAB_825b25f4;
+          }
+          if (dVar9 == 36.0) {
+            iVar3 = CL_ControllerIndexFromClientNum(LVar2);
+            iVar3 = OnlineVault_FeederGetCount(iVar3);
+            iVar3 = __restgprlr_29(iVar3);
+            return iVar3;
+          }
+          if (dVar9 == 1.0) {
+            iVar3 = UI_GetMapCount();
+            iVar3 = __restgprlr_29(iVar3);
+            return iVar3;
+          }
+          if (dVar9 == 38.0) {
+            iVar3 = CL_ControllerIndexFromClientNum(LVar2);
+            iVar3 = LiveStorage_SortedChallengeCurrentCount(iVar3);
+            lVar1 = (longlong)iVar3;
+            if (9 < iVar3) {
+              lVar1 = 10;
+            }
+            iVar3 = __restgprlr_29(lVar1 + -2);
+            return iVar3;
+          }
         }
       }
     }
   }
-  uVar2 = 0;
+  iVar3 = 0;
 LAB_825b25f4:
-  __restgprlr_29(uVar2);
-  return;
+  iVar3 = __restgprlr_29(iVar3);
+  return iVar3;
 }
 
 
 // 825A8460  UI_SelectedMap  (ui_mp/ui_main_mp.cpp:5691)
 
-longlong UI_SelectedMap(int param_1)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+int UI_SelectedMap(int param_1)
 
 {
-  longlong lVar1;
+  int iVar1;
   
   UI_UpdateArenas();
-  lVar1 = 0;
-  if (0 < DAT_83f7df64) {
+  iVar1 = 0;
+  if (0 < sharedUiInfo.mapCount) {
     do {
-      if ((int)lVar1 == param_1) {
-        return lVar1;
+      if (iVar1 == param_1) {
+        return iVar1;
       }
-      lVar1 = lVar1 + 1;
-    } while ((int)lVar1 < DAT_83f7df64);
+      iVar1 = iVar1 + 1;
+    } while (iVar1 < sharedUiInfo.mapCount);
   }
   return -1;
 }
@@ -4118,28 +3767,29 @@ longlong UI_SelectedMap(int param_1)
 
 // 825A84C0  UI_GetListIndexFromMapIndex  (ui_mp/ui_main_mp.cpp:5717)
 
-longlong UI_GetListIndexFromMapIndex(undefined8 param_1)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+int UI_GetListIndexFromMapIndex(int param_1)
 
 {
-  longlong lVar1;
+  int iVar1;
   int iVar2;
-  int iVar3;
   
   UI_UpdateArenas();
-  iVar3 = (int)param_1;
-  if ((iVar3 < 0) || (DAT_83f7df64 < iVar3)) {
-    MyAssertHandler(0xffffffff8216ab14,0x1658,0,0xffffffff8216c060,0xffffffff8216c078,param_1);
+  if ((param_1 < 0) || (sharedUiInfo.mapCount < param_1)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x1658,0
+                    ,"%s\n\t(testMapIndex) = %i");
   }
-  lVar1 = 0;
+  iVar1 = 0;
   iVar2 = 0;
-  if (0 < DAT_83f7df64) {
+  if (0 < sharedUiInfo.mapCount) {
     do {
-      if (iVar2 == iVar3) {
-        return lVar1;
+      if (iVar2 == param_1) {
+        return iVar1;
       }
       iVar2 = iVar2 + 1;
-      lVar1 = lVar1 + 1;
-    } while (iVar2 < DAT_83f7df64);
+      iVar1 = iVar1 + 1;
+    } while (iVar2 < sharedUiInfo.mapCount);
   }
   return 0;
 }
@@ -4147,49 +3797,57 @@ longlong UI_GetListIndexFromMapIndex(undefined8 param_1)
 
 // 825A8568  UI_UpdatePendingPings  (ui_mp/ui_main_mp.cpp:5749)
 
-void UI_UpdatePendingPings(int param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void UI_UpdatePendingPings(uiInfo_s *param_1)
 
 {
-  LAN_ResetPings(*(undefined4 *)(DAT_83f71e68 + 0xc));
-  DAT_83fd21ec = 1;
-  DAT_83fd21d8 = *(int *)(param_1 + 8) + 1000;
+  LAN_ResetPings((ui_netSource->current).integer);
+  sharedUiInfo.serverStatus.refreshActive = 1;
+  sharedUiInfo.serverStatus.refreshtime = (param_1->uiDC).realTime + 1000;
   return;
 }
 
 
 // 825A85D0  UpdatePartyDvars  (ui_mp/ui_main_mp.cpp:5759)
 
-void UpdatePartyDvars(undefined8 param_1,undefined8 param_2,longlong param_3)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void UpdatePartyDvars(LocalClientNum_t param_1,uint param_2,PartyData *param_3,ulong64 param_4)
 
 {
   int iVar1;
-  undefined8 uVar2;
-  char cVar6;
-  undefined8 uVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
+  bool bVar4;
+  uint uVar2;
+  uint uVar3;
+  ulong64 uVar5;
   
-  uVar2 = __savegprlr_28();
-  if ((bool)*(char *)(DAT_82b590c8 + 0xc) != (param_3 != 0)) {
-    Dvar_SetBool(DAT_82b590c8,param_3 != 0);
+  uVar5 = (ulong64)(int)param_3;
+  iVar1 = __savegprlr_28(param_1);
+  if ((party_playerVisible->current).enabled != (uVar5 != 0)) {
+    Dvar_SetBool(party_playerVisible,uVar5 != 0);
   }
-  cVar6 = Live_XUIDIsLocalPlayer(param_3);
-  if (*(char *)(DAT_82b590b8 + 0xc) != cVar6) {
-    uVar3 = Live_XUIDIsLocalPlayer(param_3);
-    Dvar_SetBool(DAT_82b590b8,uVar3);
+  bVar4 = Live_XUIDIsLocalPlayer(uVar5);
+  if ((party_IsLocalClientSelected->current).enabled != bVar4) {
+    bVar4 = Live_XUIDIsLocalPlayer(uVar5);
+    Dvar_SetBool(party_IsLocalClientSelected,bVar4);
   }
-  uVar4 = Session_CountTotalSlots(*(undefined4 *)param_2);
-  uVar5 = PartyClient_CountMembersEvenIfInactive(param_2);
-  iVar1 = (int)uVar5 >> 0x1f;
-  if ((iVar1 - ((int)uVar4 >> 0x1f)) + (uint)(uVar4 <= uVar5) != (uint)*(byte *)(DAT_83fe7478 + 0xc)
-     ) {
-    Dvar_SetBool(DAT_83fe7478,
-                 ((uVar4 & 0xffffffff) >> 0x1f) + (longlong)iVar1 + (ulonglong)(uVar4 <= uVar5));
+  uVar2 = Session_CountTotalSlots(((PartyData *)param_2)->session);
+  uVar3 = PartyClient_CountMembersEvenIfInactive((PartyData *)param_2);
+  if ((((int)uVar3 >> 0x1f) - ((int)uVar2 >> 0x1f)) + (uint)(uVar2 <= uVar3) !=
+      (uint)(ui_partyFull->current).color[0]) {
+    Dvar_SetBool(ui_partyFull,
+                 (bool)(((char)((int)uVar3 >> 0x1f) - (char)((int)uVar2 >> 0x1f)) + (uVar2 <= uVar3)
+                       ));
   }
-  if ((int)uVar2 != *(int *)(DAT_82b58f9c + 0xc)) {
-    Dvar_SetInt(DAT_82b58f9c,uVar2);
-    uVar2 = Sys_Milliseconds();
-    Dvar_SetInt(DAT_82b58f98,uVar2);
+  if (iVar1 != (party_selectedIndex->current).integer) {
+    Dvar_SetInt(party_selectedIndex,iVar1);
+    iVar1 = Sys_Milliseconds();
+    Dvar_SetInt(party_selectedIndexChangedTime,iVar1);
   }
   __restgprlr_28();
   return;
@@ -4198,17 +3856,19 @@ void UpdatePartyDvars(undefined8 param_1,undefined8 param_2,longlong param_3)
 
 // 825A86E0  UI_FeederMaterialAnimation  (ui_mp/ui_main_mp.cpp:5785)
 
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
 void UI_FeederMaterialAnimation
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-               float *param_5,float *param_6,undefined4 *param_7)
+               (int param_1,char *param_2,float *param_3,float *param_4,float *param_5,
+               float *param_6,Material **param_7)
 
 {
   uint uVar1;
   uint uVar2;
   uint uVar3;
   longlong lVar4;
-  undefined4 uVar6;
-  ulonglong uVar5;
+  Material *pMVar5;
+  uint uVar6;
   int iVar7;
   ulonglong uVar8;
   ulonglong uVar9;
@@ -4216,32 +3876,35 @@ void UI_FeederMaterialAnimation
   float local_50;
   float local_4c [19];
   
-  lVar4 = __savegprlr_24();
-  uVar6 = Material_RegisterHandle(param_2,7);
-  *param_7 = uVar6;
-  uVar9 = (longlong)*(int *)(DAT_83f71e64 + 0xc) * (longlong)*(int *)(DAT_83f71ec4 + 0xc);
-  uVar5 = Sys_Milliseconds();
-  uVar1 = *(uint *)(DAT_83f71ec4 + 0xc);
-  uVar2 = *(uint *)(DAT_83f71e64 + 0xc);
+  lVar4 = __savegprlr_24(param_1);
+  pMVar5 = Material_RegisterHandle(param_2,7);
+  *param_7 = pMVar5;
+  uVar9 = (longlong)(lobby_numAnimationFrames->current).integer *
+          (longlong)(lobby_animationSpeed->current).integer;
+  uVar6 = Sys_Milliseconds();
+  uVar1 = (lobby_animationSpeed->current).integer;
+  uVar2 = (lobby_numAnimationFrames->current).integer;
   iVar7 = (int)(lVar4 * 0x102b);
   uVar3 = iVar7 / 0x16af + (iVar7 >> 0x1f);
-  uVar8 = (uVar5 - (longlong)((int)uVar5 / (int)uVar9) * (longlong)(int)uVar9) + lVar4 * 0x1d63;
+  uVar8 = ((longlong)(int)uVar6 - (longlong)((int)uVar6 / (int)uVar9) * (longlong)(int)uVar9) +
+          lVar4 * 0x1d63;
   uVar10 = (longlong)((int)uVar8 / (int)uVar1) +
            lVar4 * 0x102b + ((longlong)(int)uVar3 + (ulonglong)(uVar3 >> 0x1f)) * -0x16af;
   trapWord(6,uVar9,0);
-  uVar8 = (ulonglong)uVar1 & ~(((uVar8 & 0x7fffffff) << 1 | (uVar8 & 0xffffffff) >> 0x1f) - 1);
   trapWord(6,(ulonglong)uVar1,0);
   trapWord(6,(ulonglong)uVar2,0);
-  trapWord(5,uVar9 & ~(((uVar5 & 0x7fffffff) << 1 | (uVar5 & 0xffffffff) >> 0x1f) - 1),0xffff);
-  trapWord(5,uVar8,0xffff);
+  trapWord(5,uVar9 & ~((((ulonglong)uVar6 & 0x7fffffff) << 1 | (ulonglong)(uVar6 >> 0x1f)) - 1),
+           0xffff);
+  trapWord(5,(ulonglong)uVar1 & ~(((uVar8 & 0x7fffffff) << 1 | (uVar8 & 0xffffffff) >> 0x1f) - 1),
+           0xffff);
   trapWord(5,(ulonglong)uVar2 & ~(((uVar10 & 0x7fffffff) << 1 | (uVar10 & 0xffffffff) >> 0x1f) - 1),
            0xffff);
   TextureAtlas_GetCoords_ByIndex
-            (uVar10 - (longlong)((int)uVar10 / (int)uVar2) * (longlong)(int)uVar2,
-             *(undefined4 *)(DAT_83f71e60 + 0xc),*(undefined4 *)(DAT_83f7a99c + 0xc),param_3,
-             &local_50,param_4,local_4c,uVar8);
-  *param_5 = *(float *)param_3 + local_50;
-  *param_6 = *(float *)param_4 + local_4c[0];
+            ((int)uVar10 - ((int)uVar10 / (int)uVar2) * uVar2,
+             (lobby_animationTilesWide->current).unsignedInt,
+             (lobby_animationTilesHigh->current).unsignedInt,param_3,&local_50,param_4,local_4c);
+  *param_5 = *param_3 + local_50;
+  *param_6 = *param_4 + local_4c[0];
   __restgprlr_24();
   return;
 }
@@ -4249,911 +3912,964 @@ void UI_FeederMaterialAnimation
 
 // 825A8820  GetNonUsedGPadControllerIndex  (ui_mp/ui_main_mp.cpp:5804)
 
-void GetNonUsedGPadControllerIndex(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+int GetNonUsedGPadControllerIndex(int param_1)
 
 {
   int iVar1;
-  char cVar2;
+  bool bVar2;
   longlong lVar3;
   longlong lVar4;
-  undefined1 auStack_30 [48];
+  LocalClientNum_t aLStack_30 [12];
   
-  iVar1 = __savegprlr_29();
+  iVar1 = __savegprlr_29(param_1);
   lVar3 = 0;
   lVar4 = 0;
   do {
-    cVar2 = GPad_IsActive(lVar4);
-    if ((cVar2 != '\0') &&
-       (cVar2 = CL_DoesControllerIndexHaveALocalClientNum(lVar4,auStack_30), cVar2 == '\0')) {
+    bVar2 = GPad_IsActive((int)lVar4);
+    if ((bVar2) &&
+       (bVar2 = CL_DoesControllerIndexHaveALocalClientNum((int)lVar4,aLStack_30), !bVar2)) {
       if ((int)lVar3 == iVar1) {
-        __restgprlr_29(lVar4);
-        return;
+        iVar1 = __restgprlr_29(lVar4);
+        return iVar1;
       }
       lVar3 = lVar3 + 1;
     }
     lVar4 = lVar4 + 1;
   } while ((int)lVar4 < 4);
   if (-1 < (int)lVar3) {
-    MyAssertHandler(0xffffffff8216ab14,0x16c1,0,0xffffffff82000f98,0xffffffff8216c0b8);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x16c1,0
+                    ,"%s");
   }
-  __restgprlr_29(lVar3);
-  return;
+  iVar1 = __restgprlr_29(lVar3);
+  return iVar1;
 }
 
 
 // 825ADF28  UI_FeederItemText_NonPlayingLocalClients  (ui_mp/ui_main_mp.cpp:5832)
 
-undefined8
-UI_FeederItemText_NonPlayingLocalClients(undefined8 param_1,longlong param_2,longlong param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+char * UI_FeederItemText_NonPlayingLocalClients(uiInfo_s *param_1,int param_2,int param_3)
 
 {
-  char cVar3;
-  int iVar2;
-  undefined8 uVar1;
+  bool bVar3;
+  int iVar1;
+  char *pcVar2;
   int iVar4;
   
-  if (((*(int *)(DAT_84546d98 + 0xc) != 0) && (cVar3 = Menus_ActiveMenuAllowSignin(), cVar3 != '\0')
-      ) && (iVar2 = CL_GetNumActiveSplitscreenControllers(), iVar2 < 2)) {
-    iVar2 = UI_Feeder_GetNonUsedGPadCount();
-    iVar4 = (int)(param_2 - param_3);
-    if (iVar4 < iVar2) {
-      GetNonUsedGPadControllerIndex(param_2 - param_3);
-      cVar3 = Live_IsSignedIn();
-      if (cVar3 != '\0') {
-        uVar1 = UI_SafeTranslateString(0xffffffff8216c904);
-        return uVar1;
+  if ((((splitscreen_online_enabled->current).integer != 0) &&
+      (bVar3 = Menus_ActiveMenuAllowSignin(&param_1->uiDC), bVar3)) &&
+     (iVar1 = CL_GetNumActiveSplitscreenControllers(), iVar1 < 2)) {
+    iVar1 = UI_Feeder_GetNonUsedGPadCount();
+    iVar4 = param_2 - param_3;
+    if (iVar4 < iVar1) {
+      iVar1 = GetNonUsedGPadControllerIndex(iVar4);
+      bVar3 = Live_IsSignedIn(iVar1);
+      if (bVar3) {
+        pcVar2 = UI_SafeTranslateString("PLATFORM_UI_FEEDER_SECONDARY_CONTROLLER_PLAY");
+        return pcVar2;
       }
-      uVar1 = UI_SafeTranslateString(0xffffffff8216c8d4);
-      return uVar1;
+      pcVar2 = UI_SafeTranslateString("PLATFORM_UI_FEEDER_SECONDARY_CONTROLLER_SIGNIN");
+      return pcVar2;
     }
-    if (iVar4 == iVar2) {
-      uVar1 = UI_SafeTranslateString(0xffffffff8216c8a4);
-      return uVar1;
+    if (iVar4 == iVar1) {
+      pcVar2 = UI_SafeTranslateString("PLATFORM_UI_FEEDER_SECONDARY_CONTROLLER_PLUGIN");
+      return pcVar2;
     }
   }
-  return 0xffffffff820068af;
+  return "";
 }
 
 
 // 825ADFF0  UI_FeederItemText_PartyMembers  (ui_mp/ui_main_mp.cpp:5865)
 
-void UI_FeederItemText_PartyMembers
-               (undefined8 param_1,int param_2,undefined8 param_3,ulonglong param_4,
-               undefined8 param_5,undefined8 param_6,undefined8 param_7,undefined8 param_8)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+char * UI_FeederItemText_PartyMembers
+                 (LocalClientNum_t param_1,itemDef_t *param_2,float param_3,int param_4,int param_5,
+                 float *param_6,float *param_7,float *param_8,float *param_9,Material **param_10)
 
 {
-  bool bVar1;
-  int iVar4;
-  undefined8 uVar2;
-  int iVar5;
-  char cVar8;
-  undefined4 uVar6;
-  uint uVar7;
-  undefined8 uVar3;
-  int iVar9;
-  undefined4 *in_stack_00000054;
+  LocalClientNum_t LVar1;
+  int iVar2;
+  char *pcVar3;
+  bool bVar6;
+  Material *pMVar4;
+  uiInfo_s *puVar5;
+  ulonglong uVar7;
+  ulonglong uVar8;
+  Material **in_stack_00000054;
   
-  iVar4 = __savegprlr_23();
-  uVar2 = GetPartyMemberCount();
-  if ((param_4 & 0xffffffff) < 5) {
-    bVar1 = (int)param_4 != 0;
-    iVar5 = (int)uVar2;
-    iVar9 = (int)param_3;
-    if (param_4 == 1 && bVar1) {
-      if ((-1 < iVar9) && (iVar9 < iVar5)) {
-        GetPartyMemberPartyIcon(iVar4,param_3,in_stack_00000054);
-        __restgprlr_23(0xffffffff820068af);
-        return;
+  uVar7 = (ulonglong)param_5;
+  LVar1 = __savegprlr_23((double)param_3,param_1);
+  uVar8 = uVar7;
+  iVar2 = GetPartyMemberCount();
+  if ((uVar7 & 0xffffffff) < 5) {
+    bVar6 = (int)uVar7 != 0;
+    if (uVar7 == 1 && bVar6) {
+      if ((-1 < param_4) && (param_4 < iVar2)) {
+        GetPartyMemberPartyIcon(LVar1,param_4,in_stack_00000054);
+        pcVar3 = (char *)__restgprlr_23(0xffffffff820068af);
+        return pcVar3;
       }
     }
     else {
-      if (param_4 == 2 && bVar1) {
-        if ((iVar5 == 0) && (iVar9 == 0)) {
-          PartyUI_GetLocalClientName(iVar4,0xffffffff83fe78bc,0x2a);
-          __restgprlr_23();
-          return;
+      if (uVar7 == 2 && bVar6) {
+        if ((iVar2 == 0) && (param_4 == LOCAL_CLIENT_0)) {
+          pcVar3 = PartyUI_GetLocalClientName(LVar1,clientBuff,0x2a);
+          pcVar3 = (char *)__restgprlr_23(pcVar3);
+          return pcVar3;
         }
-        if (iVar9 < 0) {
-          if (iVar9 < iVar5) goto LAB_825ae0cc;
+        if (param_4 < 0) {
+          if (param_4 < iVar2) goto LAB_825ae0cc;
         }
-        else if (iVar9 < iVar5) {
-          if (*(int *)((iVar4 + 0x5f) * 4 + param_2) == iVar9) {
-            DAT_83fd1d70 = GetPartyMemberXuid(iVar4,param_3);
-            UpdatePartyDvars(param_3,0xffffffff82b55118);
+        else if (param_4 < iVar2) {
+          if (param_2->cursorPos[LVar1] == param_4) {
+            sharedUiInfo.partyMemberXuid = GetPartyMemberXuid(LVar1,param_4);
+            UpdatePartyDvars(param_4,0x82b55118,(PartyData *)sharedUiInfo.partyMemberXuid,uVar8);
           }
-          GetPartyMemberName(iVar4,param_3);
-          __restgprlr_23();
-          return;
+          pcVar3 = GetPartyMemberName(LVar1,param_4);
+          pcVar3 = (char *)__restgprlr_23(pcVar3);
+          return pcVar3;
         }
-        uVar3 = UI_GetClientInfo(iVar4);
-        UI_FeederItemText_NonPlayingLocalClients(uVar3,param_3,uVar2);
-        __restgprlr_23();
-        return;
+        puVar5 = UI_GetClientInfo(LVar1);
+        pcVar3 = UI_FeederItemText_NonPlayingLocalClients(puVar5,param_4,iVar2);
+        pcVar3 = (char *)__restgprlr_23(pcVar3);
+        return pcVar3;
       }
-      if (param_4 == 3 && bVar1) {
-        if (iVar5 == 0) {
-          PartyUI_GetLocalClientRank(iVar4,0,in_stack_00000054);
-          __restgprlr_23();
-          return;
+      if (uVar7 == 3 && bVar6) {
+        if (iVar2 == 0) {
+          pcVar3 = PartyUI_GetLocalClientRank(LVar1,0,in_stack_00000054);
+          pcVar3 = (char *)__restgprlr_23(pcVar3);
+          return pcVar3;
         }
-        if ((-1 < iVar9) && (iVar9 < iVar5)) {
-          GetPartyMemberRankIcon(iVar4,param_3,in_stack_00000054);
-          __restgprlr_23(0xffffffff820068af);
-          return;
-        }
-      }
-      else if (bVar1) {
-        if (iVar5 == 0) {
-          PartyUI_GetLocalClientRank(iVar4,1,in_stack_00000054);
-          __restgprlr_23();
-          return;
-        }
-        if ((-1 < iVar9) && (iVar9 < iVar5)) {
-          GetPartyMemberRank(iVar4,param_3);
-          __restgprlr_23();
-          return;
+        if ((-1 < param_4) && (param_4 < iVar2)) {
+          GetPartyMemberRankIcon(LVar1,param_4,in_stack_00000054);
+          pcVar3 = (char *)__restgprlr_23(0xffffffff820068af);
+          return pcVar3;
         }
       }
-      else if ((-1 < iVar9) && (iVar9 < iVar5)) {
-        iVar5 = IsPartyMemberAway(iVar4,param_3);
-        if (iVar5 != 0) {
+      else if (bVar6) {
+        if (iVar2 == 0) {
+          pcVar3 = PartyUI_GetLocalClientRank(LVar1,1,in_stack_00000054);
+          pcVar3 = (char *)__restgprlr_23(pcVar3);
+          return pcVar3;
+        }
+        if ((-1 < param_4) && (param_4 < iVar2)) {
+          pcVar3 = GetPartyMemberRank(LVar1,param_4);
+          pcVar3 = (char *)__restgprlr_23(pcVar3);
+          return pcVar3;
+        }
+      }
+      else if ((-1 < param_4) && (param_4 < iVar2)) {
+        iVar2 = IsPartyMemberAway(LVar1,param_4);
+        if (iVar2 != 0) {
           UI_FeederMaterialAnimation
-                    (param_3,0xffffffff8216c0d0,param_5,param_6,param_7,param_8,in_stack_00000054);
-          __restgprlr_23(0xffffffff820068af);
-          return;
+                    (param_4,"party_inactive",param_6,param_7,param_8,param_9,in_stack_00000054);
+          pcVar3 = (char *)__restgprlr_23(0xffffffff820068af);
+          return pcVar3;
         }
-        cVar8 = IsPartyMemberMuted(iVar4,param_3);
-        if (cVar8 == '\0') {
-          cVar8 = IsHeadsetPresentForPartyMember(iVar4,param_3);
-          if (cVar8 != '\0') {
-            uVar7 = IsPartyMemberTalking(iVar4,param_3);
-            *in_stack_00000054 = (&DAT_83fd1d80)[uVar7 & 0xff];
-            __restgprlr_23(0xffffffff820068af);
-            return;
-          }
+        bVar6 = IsPartyMemberMuted(LVar1,param_4);
+        if (bVar6) {
+          pMVar4 = Material_RegisterHandle("voice_off",7);
+          *in_stack_00000054 = pMVar4;
         }
         else {
-          uVar6 = Material_RegisterHandle(0xffffffff820223f4,7);
-          *in_stack_00000054 = uVar6;
+          bVar6 = IsHeadsetPresentForPartyMember(LVar1,param_4);
+          if (bVar6) {
+            bVar6 = IsPartyMemberTalking(LVar1,param_4);
+            *in_stack_00000054 = sharedUiInfo.talkingIcons[bVar6];
+            pcVar3 = (char *)__restgprlr_23(0xffffffff820068af);
+            return pcVar3;
+          }
         }
       }
     }
   }
 LAB_825ae0cc:
-  __restgprlr_23(0xffffffff820068af);
-  return;
+  pcVar3 = (char *)__restgprlr_23(0xffffffff820068af);
+  return pcVar3;
 }
 
 
 // 825A88C0  UI_FeederItemText_TeamAndEnemyMembers  (ui_mp/ui_main_mp.cpp:5957)
 
-void UI_FeederItemText_TeamAndEnemyMembers
-               (undefined8 param_1,int param_2,undefined8 param_3,undefined8 param_4,
-               ulonglong param_5,undefined8 param_6)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+char * UI_FeederItemText_TeamAndEnemyMembers
+                 (LocalClientNum_t param_1,itemDef_t *param_2,float param_3,int param_4,int param_5,
+                 float *param_6,float *param_7,float *param_8,float *param_9,Material **param_10)
 
 {
-  int iVar3;
+  LocalClientNum_t LVar3;
   int iVar4;
-  uint uVar5;
-  undefined8 uVar1;
-  undefined8 uVar2;
-  char cVar7;
-  undefined4 uVar6;
-  int iVar8;
-  undefined4 local_40;
+  ulong64 uVar1;
+  PartyData *pPVar5;
+  ulong64 uVar2;
+  bool bVar8;
+  Material *pMVar6;
+  char *pcVar7;
+  longlong lVar9;
+  ulonglong uVar10;
+  LocalClientNum_t LVar11;
+  double extraout_f1;
+  int local_40;
   
-  iVar3 = __savegprlr_27();
-  GetTeam();
+  uVar10 = (ulonglong)(int)param_6;
+  uVar1 = (ulong64)param_5;
+  lVar9 = (longlong)(int)param_2;
+  LVar3 = __savegprlr_27((double)param_3,param_1,lVar9,param_4);
+  uVar2 = uVar1;
+  GetTeam(LVar3,(float)extraout_f1,(int *)lVar9);
   iVar4 = GetTeamMemberCount(local_40);
-  if (7 < (param_5 & 0xffffffff)) goto LAB_825a8b50;
-  iVar8 = (int)param_4;
-  if ((int)param_5 == 0) {
-    if ((iVar8 < 0) || (iVar4 <= iVar8)) goto LAB_825a8b50;
-    cVar7 = IsTeamMemberMuted(iVar3,local_40,param_4);
-    if (cVar7 == '\0') {
-      cVar7 = IsHeadsetPresentForTeamMember(iVar3,local_40,param_4);
-      if (cVar7 != '\0') {
-        uVar5 = IsTeamMemberTalking(iVar3,local_40,param_4);
-        *(undefined4 *)param_6 = (&DAT_83fd1d80)[uVar5 & 0xff];
-        __restgprlr_27(0xffffffff820068af);
-        return;
+  if (7 < (uVar10 & 0xffffffff)) goto LAB_825a8b50;
+  LVar11 = (LocalClientNum_t)uVar1;
+  if ((int)uVar10 == 0) {
+    if (((int)LVar11 < 0) || (iVar4 <= (int)LVar11)) goto LAB_825a8b50;
+    bVar8 = IsTeamMemberMuted(LVar3,local_40,LVar11);
+    if (!bVar8) {
+      bVar8 = IsHeadsetPresentForTeamMember(LVar3,local_40,LVar11);
+      if (bVar8) {
+        bVar8 = IsTeamMemberTalking(LVar3,local_40,LVar11);
+        *param_7 = (float)sharedUiInfo.talkingIcons[bVar8];
+        pcVar7 = (char *)__restgprlr_27(0xffffffff820068af);
+        return pcVar7;
       }
       goto LAB_825a8b50;
     }
-    uVar2 = 7;
-    uVar1 = 0xffffffff820223f4;
+    iVar4 = 7;
+    pcVar7 = "voice_off";
   }
   else {
-    if (param_5 == 1) {
-      if ((-1 < iVar8) && (iVar8 < iVar4)) {
-        GetTeamMembersPartyIcon(iVar3,local_40,param_4,param_6);
-        __restgprlr_27(0xffffffff820068af);
-        return;
+    if (uVar10 == 1) {
+      if ((-1 < (int)LVar11) && ((int)LVar11 < iVar4)) {
+        GetTeamMembersPartyIcon(LVar3,local_40,LVar11,(Material **)param_7);
+        pcVar7 = (char *)__restgprlr_27(0xffffffff820068af);
+        return pcVar7;
       }
       goto LAB_825a8b50;
     }
-    if (param_5 == 2) {
-      if ((-1 < iVar8) && (iVar8 < iVar4)) {
-        if (*(int *)((iVar3 + 0x5f) * 4 + param_2) == iVar8) {
-          uVar1 = GetTeamMemberXuid(iVar3,local_40,param_4);
-          uVar2 = Lobby_GetPartyData();
-          UpdatePartyDvars(param_4,uVar2,uVar1);
+    if (uVar10 == 2) {
+      if ((-1 < (int)LVar11) && ((int)LVar11 < iVar4)) {
+        if (((int *)lVar9)[LVar3 + 0x5f] == LVar11) {
+          uVar1 = GetTeamMemberXuid(LVar3,local_40,LVar11);
+          pPVar5 = Lobby_GetPartyData();
+          UpdatePartyDvars(LVar11,(uint)pPVar5,(PartyData *)uVar1,uVar2);
         }
-        GetTeamMemberName(iVar3,local_40,param_4);
-        __restgprlr_27();
-        return;
+        pcVar7 = GetTeamMemberName(LVar3,local_40,LVar11);
+        pcVar7 = (char *)__restgprlr_27(pcVar7);
+        return pcVar7;
       }
       goto LAB_825a8b50;
     }
-    if (param_5 == 3) {
-      if ((-1 < iVar8) && (iVar8 < iVar4)) {
-        GetTeamMemberRankIcon(iVar3,local_40,param_4,param_6);
-        __restgprlr_27(0xffffffff820068af);
-        return;
+    if (uVar10 == 3) {
+      if ((-1 < (int)LVar11) && ((int)LVar11 < iVar4)) {
+        GetTeamMemberRankIcon(LVar3,local_40,LVar11,(Material **)param_7);
+        pcVar7 = (char *)__restgprlr_27(0xffffffff820068af);
+        return pcVar7;
       }
       goto LAB_825a8b50;
     }
-    if (param_5 == 4) {
-      if ((-1 < iVar8) && (iVar8 < iVar4)) {
-        GetTeamMemberRank(iVar3,local_40,param_4);
-        __restgprlr_27();
-        return;
+    if (uVar10 == 4) {
+      if ((-1 < (int)LVar11) && ((int)LVar11 < iVar4)) {
+        pcVar7 = GetTeamMemberRank(LVar3,local_40,LVar11);
+        pcVar7 = (char *)__restgprlr_27(pcVar7);
+        return pcVar7;
       }
       goto LAB_825a8b50;
     }
-    if (param_5 == 5) {
-      if ((-1 < iVar8) && (iVar8 < iVar4)) {
-        GetTeamMemberStat(iVar3,local_40,param_4,0);
-        __restgprlr_27();
-        return;
+    if (uVar10 == 5) {
+      if ((-1 < (int)LVar11) && ((int)LVar11 < iVar4)) {
+        pcVar7 = GetTeamMemberStat(LVar3,local_40,LVar11,0);
+        pcVar7 = (char *)__restgprlr_27(pcVar7);
+        return pcVar7;
       }
       goto LAB_825a8b50;
     }
-    if (param_5 == 6) {
-      if ((-1 < iVar8) && (iVar8 < iVar4)) {
-        GetTeamMemberSkill(iVar3,local_40,param_4);
-        __restgprlr_27();
-        return;
+    if (uVar10 == 6) {
+      if ((-1 < (int)LVar11) && ((int)LVar11 < iVar4)) {
+        pcVar7 = GetTeamMemberSkill(LVar3,local_40,LVar11);
+        pcVar7 = (char *)__restgprlr_27(pcVar7);
+        return pcVar7;
       }
       goto LAB_825a8b50;
     }
-    if ((iVar8 < 0) || (iVar4 <= iVar8)) goto LAB_825a8b50;
-    uVar1 = GetTeamMemberXuid(iVar3,local_40,param_4);
-    uVar2 = CL_ControllerIndexFromClientNum(iVar3);
-    cVar7 = UserGroups_DoesXUIDHaveGroups(uVar2,uVar1);
-    if (cVar7 == '\0') goto LAB_825a8b50;
-    uVar2 = 3;
-    uVar1 = 0xffffffff8216c0c4;
+    if (((int)LVar11 < 0) || (iVar4 <= (int)LVar11)) goto LAB_825a8b50;
+    uVar2 = GetTeamMemberXuid(LVar3,local_40,LVar11);
+    iVar4 = CL_ControllerIndexFromClientNum(LVar3);
+    bVar8 = UserGroups_DoesXUIDHaveGroups(iVar4,uVar2);
+    if (!bVar8) goto LAB_825a8b50;
+    iVar4 = 3;
+    pcVar7 = "group_icon";
   }
-  uVar6 = Material_RegisterHandle(uVar1,uVar2);
-  *(undefined4 *)param_6 = uVar6;
+  pMVar6 = Material_RegisterHandle(pcVar7,iVar4);
+  *param_7 = (float)pMVar6;
 LAB_825a8b50:
-  __restgprlr_27(0xffffffff820068af);
-  return;
+  pcVar7 = (char *)__restgprlr_27(0xffffffff820068af);
+  return pcVar7;
 }
 
 
 // 825A8B60  UI_FeederItemText_LobbyMembers  (ui_mp/ui_main_mp.cpp:6044)
 
-void UI_FeederItemText_LobbyMembers
-               (undefined8 param_1,int param_2,undefined8 param_3,ulonglong param_4,
-               undefined8 param_5,undefined8 param_6,undefined8 param_7,undefined8 param_8)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+char * UI_FeederItemText_LobbyMembers
+                 (LocalClientNum_t param_1,itemDef_t *param_2,float param_3,int param_4,int param_5,
+                 float *param_6,float *param_7,float *param_8,float *param_9,Material **param_10)
 
 {
-  bool bVar1;
+  LocalClientNum_t LVar2;
   int iVar3;
   int iVar4;
-  int iVar5;
-  char cVar8;
-  undefined8 uVar2;
-  uint uVar6;
-  undefined4 uVar7;
-  undefined8 uVar9;
-  int iVar10;
-  undefined4 *in_stack_00000054;
+  ulong64 uVar1;
+  bool bVar8;
+  char *pcVar5;
+  PartyData *pPVar6;
+  Material *pMVar7;
+  ulonglong uVar9;
+  ulonglong uVar10;
+  Material **in_stack_00000054;
   
-  iVar3 = __savegprlr_23();
-  iVar4 = GetLobbyMemberCount();
-  if (7 < (param_4 & 0xffffffff)) goto LAB_825a90c8;
-  bVar1 = (int)param_4 != 0;
-  iVar10 = (int)param_3;
-  if (param_4 == 1 && bVar1) {
-    if (iVar4 == 0) {
-      if ((DAT_82b5700c != 0) && (iVar4 = GetPartyMemberCount(), iVar10 < iVar4)) {
-        GetPartyMemberPartyIcon(iVar3,param_3,in_stack_00000054);
-        __restgprlr_23(0xffffffff820068af);
-        return;
+  uVar9 = (ulonglong)param_5;
+  LVar2 = __savegprlr_23((double)param_3,param_1);
+  uVar10 = uVar9;
+  iVar3 = GetLobbyMemberCount();
+  if (7 < (uVar9 & 0xffffffff)) goto LAB_825a90c8;
+  bVar8 = (int)uVar9 != 0;
+  if (uVar9 == 1 && bVar8) {
+    if (iVar3 == 0) {
+      if ((g_partyData.inParty != 0) && (iVar3 = GetPartyMemberCount(), param_4 < iVar3)) {
+        GetPartyMemberPartyIcon(LVar2,param_4,in_stack_00000054);
+        pcVar5 = (char *)__restgprlr_23(0xffffffff820068af);
+        return pcVar5;
       }
     }
-    else if ((-1 < iVar10) && (iVar10 < iVar4)) {
-      GetLobbyMemberPartyIcon(iVar3,param_3,in_stack_00000054);
-      __restgprlr_23(0xffffffff820068af);
-      return;
+    else if ((-1 < param_4) && (param_4 < iVar3)) {
+      GetLobbyMemberPartyIcon(LVar2,param_4,in_stack_00000054);
+      pcVar5 = (char *)__restgprlr_23(0xffffffff820068af);
+      return pcVar5;
     }
     goto LAB_825a90c8;
   }
-  if (param_4 != 2 || !bVar1) {
-    if (param_4 == 3 && bVar1) {
-      if (iVar4 == 0) {
-        if ((DAT_82b5700c != 0) && (iVar5 = GetPartyMemberCount(), iVar10 < iVar5)) {
-          GetPartyMemberRankIcon(iVar3,param_3,in_stack_00000054);
-          __restgprlr_23(0xffffffff820068af);
-          return;
+  if (uVar9 != 2 || !bVar8) {
+    if (uVar9 == 3 && bVar8) {
+      if (iVar3 == 0) {
+        if ((g_partyData.inParty != 0) && (iVar4 = GetPartyMemberCount(), param_4 < iVar4)) {
+          GetPartyMemberRankIcon(LVar2,param_4,in_stack_00000054);
+          pcVar5 = (char *)__restgprlr_23(0xffffffff820068af);
+          return pcVar5;
         }
-        if (iVar10 == 0) {
-          PartyUI_GetLocalClientRank(iVar3,0,in_stack_00000054);
-          __restgprlr_23();
-          return;
+        if (param_4 == LOCAL_CLIENT_0) {
+          pcVar5 = PartyUI_GetLocalClientRank(LVar2,0,in_stack_00000054);
+          pcVar5 = (char *)__restgprlr_23(pcVar5);
+          return pcVar5;
         }
       }
-      if ((-1 < iVar10) && (iVar10 < iVar4)) {
-        GetLobbyMemberRankIcon(iVar3,param_3,in_stack_00000054);
-        __restgprlr_23(0xffffffff820068af);
-        return;
+      if ((-1 < param_4) && (param_4 < iVar3)) {
+        GetLobbyMemberRankIcon(LVar2,param_4,in_stack_00000054);
+        pcVar5 = (char *)__restgprlr_23(0xffffffff820068af);
+        return pcVar5;
       }
     }
-    else if (param_4 == 4 && bVar1) {
-      if (iVar4 == 0) {
-        if ((DAT_82b5700c != 0) && (iVar5 = GetPartyMemberCount(), iVar10 < iVar5)) {
-          GetPartyMemberRank(iVar3,param_3);
-          __restgprlr_23();
-          return;
+    else if (uVar9 == 4 && bVar8) {
+      if (iVar3 == 0) {
+        if ((g_partyData.inParty != 0) && (iVar4 = GetPartyMemberCount(), param_4 < iVar4)) {
+          pcVar5 = GetPartyMemberRank(LVar2,param_4);
+          pcVar5 = (char *)__restgprlr_23(pcVar5);
+          return pcVar5;
         }
-        if (iVar10 == 0) {
-          PartyUI_GetLocalClientRank(iVar3,1,in_stack_00000054);
-          __restgprlr_23();
-          return;
+        if (param_4 == LOCAL_CLIENT_0) {
+          pcVar5 = PartyUI_GetLocalClientRank(LVar2,1,in_stack_00000054);
+          pcVar5 = (char *)__restgprlr_23(pcVar5);
+          return pcVar5;
         }
       }
-      if ((-1 < iVar10) && (iVar10 < iVar4)) {
-        GetLobbyMemberRank(iVar3,param_3);
-        __restgprlr_23();
-        return;
+      if ((-1 < param_4) && (param_4 < iVar3)) {
+        pcVar5 = GetLobbyMemberRank(LVar2,param_4);
+        pcVar5 = (char *)__restgprlr_23(pcVar5);
+        return pcVar5;
       }
     }
-    else if (param_4 == 5 && bVar1) {
-      if ((iVar4 == 0) &&
-         ((iVar10 == 0 || ((DAT_82b5700c != 0 && (iVar5 = GetPartyMemberCount(), iVar10 < iVar5)))))
-         ) {
-        PartyUI_GetEmptyClientStat(iVar3,0);
-        __restgprlr_23();
-        return;
+    else if (uVar9 == 5 && bVar8) {
+      if ((iVar3 == 0) &&
+         ((param_4 == LOCAL_CLIENT_0 ||
+          ((g_partyData.inParty != 0 && (iVar4 = GetPartyMemberCount(), param_4 < iVar4)))))) {
+        pcVar5 = PartyUI_GetEmptyClientStat(LVar2,0);
+        pcVar5 = (char *)__restgprlr_23(pcVar5);
+        return pcVar5;
       }
-      if ((-1 < iVar10) && (iVar10 < iVar4)) {
-        GetLobbyMemberStat(iVar3,param_3,0);
-        __restgprlr_23();
-        return;
+      if ((-1 < param_4) && (param_4 < iVar3)) {
+        pcVar5 = GetLobbyMemberStat(LVar2,param_4,0);
+        pcVar5 = (char *)__restgprlr_23(pcVar5);
+        return pcVar5;
       }
     }
-    else if (param_4 != 6 || !bVar1) {
-      if (bVar1) {
-        if (((iVar4 < 1) || (iVar10 < 0)) || (iVar4 <= iVar10)) goto LAB_825a90c8;
-        uVar2 = GetLobbyMemberXuid(iVar3,param_3);
-        uVar9 = CL_ControllerIndexFromClientNum(iVar3);
-        cVar8 = UserGroups_DoesXUIDHaveGroups(uVar9,uVar2);
-        if (cVar8 == '\0') goto LAB_825a90c8;
-        uVar9 = 3;
-        uVar2 = 0xffffffff8216c0c4;
+    else if (uVar9 != 6 || !bVar8) {
+      if (bVar8) {
+        if (((iVar3 < 1) || (param_4 < 0)) || (iVar3 <= param_4)) goto LAB_825a90c8;
+        uVar1 = GetLobbyMemberXuid(LVar2,param_4);
+        iVar3 = CL_ControllerIndexFromClientNum(LVar2);
+        bVar8 = UserGroups_DoesXUIDHaveGroups(iVar3,uVar1);
+        if (!bVar8) goto LAB_825a90c8;
+        iVar3 = 3;
+        pcVar5 = "group_icon";
       }
       else {
-        if (((iVar4 == 0) && (DAT_82b5700c != 0)) && (iVar5 = GetPartyMemberCount(), iVar10 < iVar5)
-           ) {
-          GetPartyMemberXuid(iVar3,param_3);
-          cVar8 = Live_XUIDIsLocalPlayer();
-          if (cVar8 == '\0') {
+        if (((iVar3 == 0) && (g_partyData.inParty != 0)) &&
+           (iVar4 = GetPartyMemberCount(), param_4 < iVar4)) {
+          uVar1 = GetPartyMemberXuid(LVar2,param_4);
+          bVar8 = Live_XUIDIsLocalPlayer(uVar1);
+          if (!bVar8) {
 LAB_825a8c04:
             UI_FeederMaterialAnimation
-                      (param_3,0xffffffff8216c0d0,param_5,param_6,param_7,param_8,in_stack_00000054)
-            ;
-            __restgprlr_23(0xffffffff820068af);
-            return;
+                      (param_4,"party_inactive",param_6,param_7,param_8,param_9,in_stack_00000054);
+            pcVar5 = (char *)__restgprlr_23(0xffffffff820068af);
+            return pcVar5;
           }
-          cVar8 = IsPartyMemberMuted(iVar3,param_3);
-          if (cVar8 == '\0') {
-            cVar8 = IsHeadsetPresentForPartyMember(iVar3,param_3);
-            if (cVar8 != '\0') {
-              uVar6 = IsPartyMemberTalking(iVar3,param_3);
-              *in_stack_00000054 = (&DAT_83fd1d80)[uVar6 & 0xff];
-              __restgprlr_23(0xffffffff820068af);
-              return;
+          bVar8 = IsPartyMemberMuted(LVar2,param_4);
+          if (!bVar8) {
+            bVar8 = IsHeadsetPresentForPartyMember(LVar2,param_4);
+            if (bVar8) {
+              bVar8 = IsPartyMemberTalking(LVar2,param_4);
+              *in_stack_00000054 = sharedUiInfo.talkingIcons[bVar8];
+              pcVar5 = (char *)__restgprlr_23(0xffffffff820068af);
+              return pcVar5;
             }
             goto LAB_825a90c8;
           }
         }
         else {
-          if ((iVar10 < 0) || (iVar4 <= iVar10)) goto LAB_825a90c8;
-          iVar4 = IsLobbyMemberAway(iVar3,param_3);
-          if (iVar4 != 0) goto LAB_825a8c04;
-          cVar8 = IsLobbyMemberMuted(iVar3,param_3);
-          if (cVar8 == '\0') {
-            cVar8 = IsHeadsetPresentForLobbyMember(iVar3,param_3);
-            if (cVar8 != '\0') {
-              uVar6 = IsLobbyMemberTalking(iVar3,param_3);
-              *in_stack_00000054 = (&DAT_83fd1d80)[uVar6 & 0xff];
-              __restgprlr_23(0xffffffff820068af);
-              return;
+          if ((param_4 < 0) || (iVar3 <= param_4)) goto LAB_825a90c8;
+          iVar3 = IsLobbyMemberAway(LVar2,param_4);
+          if (iVar3 != 0) goto LAB_825a8c04;
+          bVar8 = IsLobbyMemberMuted(LVar2,param_4);
+          if (!bVar8) {
+            bVar8 = IsHeadsetPresentForLobbyMember(LVar2,param_4);
+            if (bVar8) {
+              bVar8 = IsLobbyMemberTalking(LVar2,param_4);
+              *in_stack_00000054 = sharedUiInfo.talkingIcons[bVar8];
+              pcVar5 = (char *)__restgprlr_23(0xffffffff820068af);
+              return pcVar5;
             }
             goto LAB_825a90c8;
           }
         }
-        uVar9 = 7;
-        uVar2 = 0xffffffff820223f4;
+        iVar3 = 7;
+        pcVar5 = "voice_off";
       }
-      uVar7 = Material_RegisterHandle(uVar2,uVar9);
-      *in_stack_00000054 = uVar7;
+      pMVar7 = Material_RegisterHandle(pcVar5,iVar3);
+      *in_stack_00000054 = pMVar7;
     }
     goto LAB_825a90c8;
   }
-  if ((iVar4 == 0) && (iVar10 == 0)) {
-    CL_ControllerIndexFromClientNum(iVar3);
-    uVar2 = Live_GetXuid();
-    DAT_83fd1d70 = uVar2;
-    uVar9 = Lobby_GetPartyData();
-    UpdatePartyDvars(0,uVar9,uVar2);
+  if ((iVar3 == 0) && (param_4 == LOCAL_CLIENT_0)) {
+    iVar4 = CL_ControllerIndexFromClientNum(LVar2);
+    uVar1 = Live_GetXuid(iVar4);
+    sharedUiInfo.partyMemberXuid = uVar1;
+    pPVar6 = Lobby_GetPartyData();
+    UpdatePartyDvars(LOCAL_CLIENT_0,(uint)pPVar6,(PartyData *)uVar1,uVar10);
 LAB_825a8e6c:
-    if ((DAT_82b5700c != 0) && (iVar5 = GetPartyMemberCount(), iVar10 < iVar5)) {
-      GetPartyMemberName(iVar3,param_3);
-      __restgprlr_23();
-      return;
+    if ((g_partyData.inParty != 0) && (iVar4 = GetPartyMemberCount(), param_4 < iVar4)) {
+      pcVar5 = GetPartyMemberName(LVar2,param_4);
+      pcVar5 = (char *)__restgprlr_23(pcVar5);
+      return pcVar5;
     }
-    if (iVar10 == 0) {
-      PartyUI_GetLocalClientName(iVar3,0xffffffff83fe748c,0x2a);
-      __restgprlr_23();
-      return;
+    if (param_4 == LOCAL_CLIENT_0) {
+      pcVar5 = PartyUI_GetLocalClientName(LVar2,clientBuff,0x2a);
+      pcVar5 = (char *)__restgprlr_23(pcVar5);
+      return pcVar5;
     }
   }
   else {
-    if ((-1 < iVar10) && ((iVar10 < iVar4 && (*(int *)((iVar3 + 0x5f) * 4 + param_2) == iVar10)))) {
-      uVar2 = GetLobbyMemberXuid(iVar3,param_3);
-      DAT_83fd1d70 = uVar2;
-      uVar9 = Lobby_GetPartyData();
-      UpdatePartyDvars(param_3,uVar9,uVar2);
+    if ((-1 < param_4) && ((param_4 < iVar3 && (param_2->cursorPos[LVar2] == param_4)))) {
+      uVar1 = GetLobbyMemberXuid(LVar2,param_4);
+      sharedUiInfo.partyMemberXuid = uVar1;
+      pPVar6 = Lobby_GetPartyData();
+      UpdatePartyDvars(param_4,(uint)pPVar6,(PartyData *)uVar1,uVar10);
     }
-    if (iVar4 == 0) goto LAB_825a8e6c;
+    if (iVar3 == 0) goto LAB_825a8e6c;
   }
-  if ((-1 < iVar10) && (iVar10 < iVar4)) {
-    GetLobbyMemberName(iVar3,param_3);
-    __restgprlr_23();
-    return;
+  if ((-1 < param_4) && (param_4 < iVar3)) {
+    pcVar5 = GetLobbyMemberName(LVar2,param_4);
+    pcVar5 = (char *)__restgprlr_23(pcVar5);
+    return pcVar5;
   }
 LAB_825a90c8:
-  __restgprlr_23(0xffffffff820068af);
-  return;
+  pcVar5 = (char *)__restgprlr_23(0xffffffff820068af);
+  return pcVar5;
 }
 
 
 // 825AE2B0  UI_FeederItemText_Searching  (ui_mp/ui_main_mp.cpp:6220)
 
-void UI_FeederItemText_Searching
-               (undefined8 param_1,int param_2,undefined8 param_3,undefined8 param_4,float *param_5,
-               float *param_6,undefined4 *param_7)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+char * UI_FeederItemText_Searching
+                 (LocalClientNum_t param_1,itemDef_t *param_2,float param_3,int param_4,int param_5,
+                 float *param_6,float *param_7,float *param_8,float *param_9,Material **param_10)
 
 {
   uint uVar1;
   uint uVar2;
-  uint uVar3;
-  longlong lVar4;
-  int iVar7;
-  undefined4 uVar8;
-  ulonglong uVar5;
-  undefined8 uVar6;
-  ulonglong uVar9;
+  longlong lVar3;
+  int iVar4;
+  PartyData *pPVar5;
+  Material *pMVar6;
+  uint uVar7;
+  char *pcVar8;
+  uint uVar9;
   ulonglong uVar10;
   ulonglong uVar11;
-  undefined8 uVar12;
+  ulonglong uVar12;
   float local_60;
   float local_5c [23];
   
-  lVar4 = __savegprlr_23();
-  iVar7 = GetLobbyMemberCount();
-  if (iVar7 == 0) {
-    iVar7 = GetPartyMemberCount();
+  lVar3 = __savegprlr_23((double)param_3,param_1);
+  iVar4 = GetLobbyMemberCount();
+  if (iVar4 == 0) {
+    iVar4 = GetPartyMemberCount();
   }
-  if (((int)lVar4 != 0) && (iVar7 <= (int)lVar4)) {
-    if (param_2 == 0) {
-      iVar7 = Lobby_GetPartyData();
-      if ((*(int *)(iVar7 + 0x1ee0) == 0) && (*(char *)(DAT_84253bb8 + 0xc) == '\0')) {
-        uVar5 = Sys_Milliseconds();
-        iVar7 = (int)(lVar4 * 0x5003);
-        uVar1 = iVar7 / 0x96 + (iVar7 >> 0x1f);
-        uVar9 = lVar4 * 0x5003 + ((longlong)(int)uVar1 + (ulonglong)(uVar1 >> 0x1f)) * -0x96 + 300;
-        uVar1 = (int)uVar5 / (int)uVar9 & 3;
-        trapWord(6,uVar9,0);
-        trapWord(5,uVar9 & ~(((uVar5 & 0x7fffffff) << 1 | (uVar5 & 0xffffffff) >> 0x1f) - 1),0xffff)
-        ;
-        if (uVar1 == 1) {
-          uVar12 = 0xffffffff820185b4;
-        }
-        else if (uVar1 == 2) {
-          uVar12 = 0xffffffff820185b8;
-        }
-        else if (uVar1 == 3) {
-          uVar12 = 0xffffffff820185bc;
-        }
-        else {
-          uVar12 = 0xffffffff820068af;
-        }
-        uVar6 = UI_SafeTranslateString(0xffffffff8216c934);
-        va(0xffffffff82013790,uVar6,uVar12);
-        __restgprlr_23();
-        return;
+  if (((int)lVar3 != 0) && (iVar4 <= (int)lVar3)) {
+    if (param_2 == (itemDef_t *)0x0) {
+      pPVar5 = Lobby_GetPartyData();
+      if ((pPVar5->gameStartTime == 0) && ((xblive_privatematch->current).enabled == false)) {
+        uVar9 = Sys_Milliseconds();
+        iVar4 = (int)(lVar3 * 0x5003);
+        uVar1 = iVar4 / 0x96 + (iVar4 >> 0x1f);
+        uVar10 = lVar3 * 0x5003 + ((longlong)(int)uVar1 + (ulonglong)(uVar1 >> 0x1f)) * -0x96 + 300;
+        trapWord(6,uVar10,0);
+        trapWord(5,uVar10 & ~((((ulonglong)uVar9 & 0x7fffffff) << 1 | (ulonglong)(uVar9 >> 0x1f)) -
+                             1),0xffff);
+        UI_SafeTranslateString("MP_SEARCHING_FOR_PLAYER");
+        pcVar8 = va("%s%s");
+        pcVar8 = (char *)__restgprlr_23(pcVar8);
+        return pcVar8;
       }
     }
     else {
-      iVar7 = Lobby_GetPartyData();
-      if ((*(int *)(iVar7 + 0x1ee0) == 0) && (*(char *)(DAT_84253bb8 + 0xc) == '\0')) {
-        uVar8 = Material_RegisterHandle(0xffffffff8216c94c,7);
-        *param_7 = uVar8;
-        uVar10 = (longlong)*(int *)(DAT_83f71e64 + 0xc) * (longlong)*(int *)(DAT_83f71ec4 + 0xc);
-        uVar5 = Sys_Milliseconds();
-        uVar1 = *(uint *)(DAT_83f71ec4 + 0xc);
-        uVar2 = *(uint *)(DAT_83f71e64 + 0xc);
-        iVar7 = (int)(lVar4 * 0x102b);
-        uVar3 = iVar7 / 0x16af + (iVar7 >> 0x1f);
-        uVar9 = (uVar5 - (longlong)((int)uVar5 / (int)uVar10) * (longlong)(int)uVar10) +
-                lVar4 * 0x1d63;
-        uVar11 = (longlong)((int)uVar9 / (int)uVar1) +
-                 lVar4 * 0x102b + ((longlong)(int)uVar3 + (ulonglong)(uVar3 >> 0x1f)) * -0x16af;
-        trapWord(6,uVar10,0);
-        uVar9 = (ulonglong)uVar1 & ~(((uVar9 & 0x7fffffff) << 1 | (uVar9 & 0xffffffff) >> 0x1f) - 1)
-        ;
+      pPVar5 = Lobby_GetPartyData();
+      if ((pPVar5->gameStartTime == 0) && ((xblive_privatematch->current).enabled == false)) {
+        pMVar6 = Material_RegisterHandle("searching_for_player",7);
+        *param_8 = (float)pMVar6;
+        uVar11 = (longlong)(lobby_numAnimationFrames->current).integer *
+                 (longlong)(lobby_animationSpeed->current).integer;
+        uVar7 = Sys_Milliseconds();
+        uVar1 = (lobby_animationSpeed->current).integer;
+        uVar9 = (lobby_numAnimationFrames->current).integer;
+        iVar4 = (int)(lVar3 * 0x102b);
+        uVar2 = iVar4 / 0x16af + (iVar4 >> 0x1f);
+        uVar10 = ((longlong)(int)uVar7 -
+                 (longlong)((int)uVar7 / (int)uVar11) * (longlong)(int)uVar11) + lVar3 * 0x1d63;
+        uVar12 = (longlong)((int)uVar10 / (int)uVar1) +
+                 lVar3 * 0x102b + ((longlong)(int)uVar2 + (ulonglong)(uVar2 >> 0x1f)) * -0x16af;
+        trapWord(6,uVar11,0);
         trapWord(6,(ulonglong)uVar1,0);
-        trapWord(6,(ulonglong)uVar2,0);
-        trapWord(5,uVar10 & ~(((uVar5 & 0x7fffffff) << 1 | (uVar5 & 0xffffffff) >> 0x1f) - 1),0xffff
-                );
-        trapWord(5,uVar9,0xffff);
-        trapWord(5,(ulonglong)uVar2 &
-                   ~(((uVar11 & 0x7fffffff) << 1 | (uVar11 & 0xffffffff) >> 0x1f) - 1),0xffff);
+        trapWord(6,(ulonglong)uVar9,0);
+        trapWord(5,uVar11 & ~((((ulonglong)uVar7 & 0x7fffffff) << 1 | (ulonglong)(uVar7 >> 0x1f)) -
+                             1),0xffff);
+        trapWord(5,(ulonglong)uVar1 &
+                   ~(((uVar10 & 0x7fffffff) << 1 | (uVar10 & 0xffffffff) >> 0x1f) - 1),0xffff);
+        trapWord(5,(ulonglong)uVar9 &
+                   ~(((uVar12 & 0x7fffffff) << 1 | (uVar12 & 0xffffffff) >> 0x1f) - 1),0xffff);
         TextureAtlas_GetCoords_ByIndex
-                  (uVar11 - (longlong)((int)uVar11 / (int)uVar2) * (longlong)(int)uVar2,
-                   *(undefined4 *)(DAT_83f71e60 + 0xc),*(undefined4 *)(DAT_83f7a99c + 0xc),param_3,
-                   &local_60,param_4,local_5c,uVar9);
-        *param_5 = *(float *)param_3 + local_60;
-        *param_6 = *(float *)param_4 + local_5c[0];
+                  ((int)uVar12 - ((int)uVar12 / (int)uVar9) * uVar9,
+                   (lobby_animationTilesWide->current).unsignedInt,
+                   (lobby_animationTilesHigh->current).unsignedInt,(float *)param_4,&local_60,
+                   (float *)param_5,local_5c);
+        *param_6 = *(float *)param_4 + local_60;
+        *param_7 = *(float *)param_5 + local_5c[0];
       }
     }
   }
-  __restgprlr_23(0xffffffff820068af);
-  return;
+  pcVar8 = (char *)__restgprlr_23(0xffffffff820068af);
+  return pcVar8;
 }
 
 
 // 825B2600  UI_FeederItemText  (ui_mp/ui_main_mp.cpp:6288)
 
-void UI_FeederItemText(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-                      undefined8 param_5,ulonglong param_6,ulonglong param_7,undefined8 param_8,
-                      undefined8 param_9,undefined8 param_10)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+char * UI_FeederItemText(LocalClientNum_t param_1,itemDef_t *param_2,float param_3,int param_4,
+                        int param_5,float *param_6,float *param_7,float *param_8,float *param_9,
+                        Material **param_10,float param_11)
 
 {
-  bool bVar1;
-  undefined8 uVar2;
-  int iVar6;
-  int iVar7;
-  char *pcVar8;
-  int iVar9;
-  undefined8 uVar3;
-  ulonglong uVar4;
-  char cVar11;
-  undefined4 uVar10;
-  longlong lVar5;
+  LocalClientNum_t LVar1;
+  LocalClientNum_t LVar2;
+  int iVar3;
+  mapInfo *pmVar4;
+  char *pcVar5;
+  uiInfo_s *puVar6;
+  uint uVar7;
+  ScreenPlacement *pSVar8;
+  Font_s *pFVar9;
+  bool bVar12;
+  Material *pMVar10;
+  int iVar11;
+  itemDef_t *piVar13;
+  ulonglong uVar14;
+  ulonglong uVar15;
+  longlong lVar16;
+  itemDef_t *piVar17;
   double extraout_f1;
-  double dVar12;
-  undefined4 in_stack_00000054;
-  undefined4 *in_stack_0000005c;
+  double dVar18;
+  float *in_stack_00000054;
+  Material **in_stack_0000005c;
+  Material **in_stack_ffffff68;
   
-  uVar2 = __savegprlr_26();
-  *in_stack_0000005c = 0;
+  dVar18 = (double)param_11;
+  uVar15 = (ulonglong)(int)param_6;
+  uVar14 = (ulonglong)param_5;
+  lVar16 = (longlong)(int)param_2;
+  LVar1 = __savegprlr_26((double)param_3,param_1,lVar16,param_4);
+  *in_stack_0000005c = (Material *)0x0;
+  LVar2 = (LocalClientNum_t)uVar14;
   if (extraout_f1 == 3.0) {
-    iVar6 = UI_SelectedMap(param_6);
-    if (-1 < iVar6) {
-      UI_GetMapInfo_Sorted();
-      UI_SafeTranslateString();
-      __restgprlr_26();
-      return;
+    iVar3 = UI_SelectedMap(LVar2);
+    if (-1 < iVar3) {
+      pmVar4 = UI_GetMapInfo_Sorted(iVar3);
+      pcVar5 = UI_SafeTranslateString(pmVar4->mapName);
+      pcVar5 = (char *)__restgprlr_26(pcVar5);
+      return pcVar5;
     }
   }
   else {
-    iVar6 = (int)param_7;
-    iVar9 = (int)param_6;
+    piVar17 = (itemDef_t *)uVar15;
     if (extraout_f1 == 2.0) {
-      iVar7 = UI_GetClientInfo(uVar2);
-      UI_UpdateDisplayServers();
-      if ((-1 < iVar9) && (iVar9 < DAT_83fe5a74)) {
-        if ((DAT_82991f90 != iVar6) || (*(int *)(iVar7 + 8) + 5000 < DAT_83fe8114)) {
-          LAN_GetServerInfo(*(undefined4 *)(DAT_83f71e68 + 0xc),
-                            *(undefined4 *)(&DAT_83fd21f4 + (int)((param_6 & 0xffffffff) << 2)),
-                            0xffffffff83fe8118,0x400);
-          DAT_83fe8114 = *(int *)(iVar7 + 8);
-          DAT_82991f90 = iVar6;
+      puVar6 = UI_GetClientInfo(LVar1);
+      UI_UpdateDisplayServers(puVar6);
+      if ((-1 < (int)LVar2) && ((int)LVar2 < sharedUiInfo.serverStatus.numDisplayServers)) {
+        if (((itemDef_t *)lastColumn != piVar17) || ((puVar6->uiDC).realTime + 5000 < lastTime)) {
+          LAN_GetServerInfo((ui_netSource->current).integer,
+                            *(int *)((int)sharedUiInfo.serverStatus.displayServers +
+                                    (int)((uVar14 & 0xffffffff) << 2)),info,0x400);
+          lastTime = (puVar6->uiDC).realTime;
+          lastColumn = (int)piVar17;
         }
-        pcVar8 = (char *)Info_ValueForKey(0xffffffff83fe8118,0xffffffff82031bf4);
-        iVar9 = atoi(pcVar8);
-        if ((param_7 & 0xffffffff) < 5) {
-          bVar1 = iVar6 != 0;
-          if (param_7 == 1 && bVar1) {
-            Info_ValueForKey(0xffffffff83fe8118,0xffffffff82010974);
-            UI_GetMapDisplayName();
-            __restgprlr_26();
-            return;
+        pcVar5 = Info_ValueForKey(info,"ping");
+        iVar3 = atoi(pcVar5);
+        if ((uVar15 & 0xffffffff) < 5) {
+          bVar12 = piVar17 != (itemDef_t *)0x0;
+          if (uVar15 == 1 && bVar12) {
+            pcVar5 = Info_ValueForKey(info,"mapname");
+            pcVar5 = UI_GetMapDisplayName(pcVar5);
+            pcVar5 = (char *)__restgprlr_26(pcVar5);
+            return pcVar5;
           }
-          if (param_7 == 2 && bVar1) {
-            uVar2 = Info_ValueForKey(0xffffffff83fe8118,0xffffffff82022f7c);
-            uVar3 = Info_ValueForKey(0xffffffff83fe8118,0xffffffff82014e8c);
-            Com_sprintf(0xffffffff83fe80e8,0x2a,0xffffffff8216d7ec,uVar3,uVar2);
-            __restgprlr_26(0xffffffff83fe80e8);
-            return;
+          if (uVar15 == 2 && bVar12) {
+            Info_ValueForKey(info,"sv_maxclients");
+            Info_ValueForKey(info,"clients");
+            Com_sprintf(clientBuff,0x2a,"%s (%s)");
+            pcVar5 = (char *)__restgprlr_26(0xffffffff83fe80e8);
+            return pcVar5;
           }
-          if (param_7 == 3 && bVar1) {
-            iVar6 = Info_ValueForKey(0xffffffff83fe8118,0xffffffff820337c4);
-            if ((iVar6 != 0) &&
-               (pcVar8 = (char *)Info_ValueForKey(0xffffffff83fe8118,0xffffffff820337c4),
-               *pcVar8 != '\0')) {
-              Info_ValueForKey(0xffffffff83fe8118,0xffffffff820337c4);
-              UI_GetGameTypeDisplayName();
-              __restgprlr_26();
-              return;
+          if (uVar15 == 3 && bVar12) {
+            pcVar5 = Info_ValueForKey(info,"gametype");
+            if ((pcVar5 != (char *)0x0) &&
+               (pcVar5 = Info_ValueForKey(info,"gametype"), *pcVar5 != '\0')) {
+              pcVar5 = Info_ValueForKey(info,"gametype");
+              pcVar5 = UI_GetGameTypeDisplayName(pcVar5);
+              pcVar5 = (char *)__restgprlr_26(pcVar5);
+              return pcVar5;
             }
-            __restgprlr_26(0xffffffff82014c14);
-            return;
+            pcVar5 = (char *)__restgprlr_26(0xffffffff82014c14);
+            return pcVar5;
           }
-          if (bVar1) {
-            if (iVar9 < 1) {
-              __restgprlr_26(0xffffffff820185bc);
-              return;
+          if (bVar12) {
+            if (iVar3 < 1) {
+              pcVar5 = (char *)__restgprlr_26(0xffffffff820185bc);
+              return pcVar5;
             }
-            Info_ValueForKey(0xffffffff83fe8118,0xffffffff82031bf4);
-            __restgprlr_26();
-            return;
+            pcVar5 = Info_ValueForKey(info,"ping");
+            pcVar5 = (char *)__restgprlr_26(pcVar5);
+            return pcVar5;
           }
-          if (iVar9 < 1) {
-            Info_ValueForKey(0xffffffff83fe8118,0xffffffff82049fa0);
-            __restgprlr_26();
-            return;
+          if (iVar3 < 1) {
+            pcVar5 = Info_ValueForKey(info,"addr");
+            pcVar5 = (char *)__restgprlr_26(pcVar5);
+            return pcVar5;
           }
-          uVar2 = Info_ValueForKey(0xffffffff83fe8118,0xffffffff820344a4);
-          I_strncpyz(0xffffffff83fe80e8,uVar2,0x2a);
-          __restgprlr_26(0xffffffff83fe80e8);
-          return;
+          pcVar5 = Info_ValueForKey(info,"hostname");
+          I_strncpyz(clientBuff,pcVar5,0x2a);
+          pcVar5 = (char *)__restgprlr_26(0xffffffff83fe80e8);
+          return pcVar5;
         }
       }
     }
     else if (extraout_f1 == 12.0) {
-      if ((((-1 < iVar9) && (iVar9 < DAT_83fe6b58)) && (-1 < iVar6)) && (iVar6 < 4)) {
-        if (**(char **)(&DAT_83fe5f20 +
-                       (int)(((param_6 & 0x3fffffff) * 4 + param_7 & 0xffffffff) << 2)) == '@') {
-          UI_SafeTranslateString
-                    (*(char **)(&DAT_83fe5f20 +
-                               (int)(((param_6 & 0x3fffffff) * 4 + param_7 & 0xffffffff) << 2)) + 1)
-          ;
-          __restgprlr_26();
-          return;
+      if ((((-1 < (int)LVar2) && ((int)LVar2 < sharedUiInfo.serverStatusInfo.numLines)) &&
+          (-1 < (int)piVar17)) && ((int)piVar17 < 4)) {
+        pcVar5 = *(char **)((int)sharedUiInfo.serverStatusInfo.lines[0] +
+                           (int)(((uVar14 & 0x3fffffff) * 4 + uVar15 & 0xffffffff) << 2));
+        if (*pcVar5 == '@') {
+          pcVar5 = UI_SafeTranslateString(pcVar5 + 1);
+          pcVar5 = (char *)__restgprlr_26(pcVar5);
+          return pcVar5;
         }
 LAB_825b3068:
-        __restgprlr_26();
-        return;
+        pcVar5 = (char *)__restgprlr_26(pcVar5);
+        return pcVar5;
       }
     }
     else if (extraout_f1 == 6.0) {
-      if ((-1 < iVar9) && (iVar9 < DAT_83f7aa04)) {
-        __restgprlr_26((param_6 & 0x7ffffff) * 0x20 + -0x7c0855f8);
-        return;
+      if ((-1 < (int)LVar2) && ((int)LVar2 < sharedUiInfo.playerCount)) {
+        pcVar5 = (char *)__restgprlr_26((uVar14 & 0x7ffffff) * 0x20 + -0x7c0855f8);
+        return pcVar5;
       }
     }
     else {
+      piVar13 = (itemDef_t *)lVar16;
       if (extraout_f1 == 17.0) {
-        UI_FeederItemText_LobbyMembers
-                  (uVar2,param_4,param_6,param_7,param_8,param_9,param_10,in_stack_00000054);
-        __restgprlr_26();
-        return;
+        pcVar5 = UI_FeederItemText_LobbyMembers
+                           (LVar1,piVar13,(float)extraout_f1,LVar2,(int)piVar17,param_7,param_8,
+                            param_9,in_stack_00000054,in_stack_ffffff68);
+        pcVar5 = (char *)__restgprlr_26(pcVar5);
+        return pcVar5;
       }
       if (extraout_f1 == 18.0) {
-        UI_FeederItemText_Searching
-                  (param_6,param_7,param_8,param_9,param_10,in_stack_00000054,in_stack_0000005c);
-        __restgprlr_26();
-        return;
+        pcVar5 = UI_FeederItemText_Searching
+                           (LVar2,piVar17,(float)extraout_f1,(int)param_7,(int)param_8,param_9,
+                            in_stack_00000054,(float *)in_stack_0000005c,param_9,in_stack_ffffff68);
+        pcVar5 = (char *)__restgprlr_26(pcVar5);
+        return pcVar5;
       }
       if (extraout_f1 == 23.0) {
-        UI_FeederItemText_PartyMembers
-                  (uVar2,param_4,param_6,param_7,param_8,param_9,param_10,in_stack_00000054);
-        __restgprlr_26();
-        return;
+        pcVar5 = UI_FeederItemText_PartyMembers
+                           (LVar1,piVar13,(float)extraout_f1,LVar2,(int)piVar17,param_7,param_8,
+                            param_9,in_stack_00000054,in_stack_ffffff68);
+        pcVar5 = (char *)__restgprlr_26(pcVar5);
+        return pcVar5;
       }
       if ((extraout_f1 == 27.0) || (extraout_f1 == 28.0)) {
-        UI_FeederItemText_TeamAndEnemyMembers
-                  (uVar2,param_4,param_8,param_6,param_7,in_stack_0000005c);
+        pcVar5 = UI_FeederItemText_TeamAndEnemyMembers
+                           (LVar1,piVar13,(float)extraout_f1,(int)param_7,LVar2,(float *)piVar17,
+                            (float *)in_stack_0000005c,(float *)0x0,param_9,in_stack_ffffff68);
         goto LAB_825b3068;
       }
-      iVar7 = (int)param_4;
       if (extraout_f1 == 29.0) {
-        if (-1 < iVar9) {
-          CL_ControllerIndexFromClientNum(uVar2);
-          uVar4 = Friends_GetNumFriends();
-          if ((param_6 & 0xffffffff) < (uVar4 & 0xffffffff)) {
-            dVar12 = (double)*(float *)(iVar7 + 0x11c);
-            uVar10 = *(undefined4 *)(iVar7 + 0x10c);
-            uVar3 = ScrPlace_GetActivePlacement(uVar2);
-            uVar3 = UI_GetFontHandle(dVar12,uVar3,uVar10);
-            uVar2 = CL_ControllerIndexFromClientNum(uVar2);
-            FriendsMenu_FeederItemText(dVar12,uVar2,param_6,param_7,uVar3);
-            __restgprlr_26();
-            return;
+        if (-1 < (int)LVar2) {
+          iVar3 = CL_ControllerIndexFromClientNum(LVar1);
+          uVar7 = Friends_GetNumFriends(iVar3);
+          if ((uVar14 & 0xffffffff) < (ulonglong)uVar7) {
+            dVar18 = (double)piVar13->textscale;
+            iVar3 = piVar13->fontEnum;
+            pSVar8 = ScrPlace_GetActivePlacement(LVar1);
+            pFVar9 = UI_GetFontHandle(pSVar8,iVar3,(float)dVar18);
+            iVar3 = CL_ControllerIndexFromClientNum(LVar1);
+            pcVar5 = FriendsMenu_FeederItemText(iVar3,LVar2,(int)piVar17,pFVar9,(float)dVar18);
+            pcVar5 = (char *)__restgprlr_26(pcVar5);
+            return pcVar5;
           }
         }
       }
       else if (extraout_f1 == 31.0) {
-        if (-1 < iVar9) {
-          CL_ControllerIndexFromClientNum(uVar2);
-          iVar6 = MeetPlayer_GetCount();
-          if (iVar9 < iVar6) {
-            dVar12 = (double)*(float *)(iVar7 + 0x11c);
-            uVar10 = *(undefined4 *)(iVar7 + 0x10c);
-            uVar3 = ScrPlace_GetActivePlacement(uVar2);
-            uVar3 = UI_GetFontHandle(dVar12,uVar3,uVar10);
-            uVar2 = CL_ControllerIndexFromClientNum(uVar2);
-            MeetPlayer_FeederItemText(dVar12,uVar2,param_6,param_7,uVar3);
-            __restgprlr_26();
-            return;
+        if (-1 < (int)LVar2) {
+          iVar3 = CL_ControllerIndexFromClientNum(LVar1);
+          iVar3 = MeetPlayer_GetCount(iVar3);
+          if ((int)LVar2 < iVar3) {
+            dVar18 = (double)piVar13->textscale;
+            iVar3 = piVar13->fontEnum;
+            pSVar8 = ScrPlace_GetActivePlacement(LVar1);
+            pFVar9 = UI_GetFontHandle(pSVar8,iVar3,(float)dVar18);
+            iVar3 = CL_ControllerIndexFromClientNum(LVar1);
+            pcVar5 = MeetPlayer_FeederItemText(iVar3,LVar2,(int)piVar17,pFVar9,(float)dVar18);
+            pcVar5 = (char *)__restgprlr_26(pcVar5);
+            return pcVar5;
           }
         }
       }
       else if (extraout_f1 == 32.0) {
-        if ((-1 < iVar9) && (iVar6 = LiveParty_GetCount(), iVar9 < iVar6)) {
-          dVar12 = (double)*(float *)(iVar7 + 0x11c);
-          uVar10 = *(undefined4 *)(iVar7 + 0x10c);
-          uVar3 = ScrPlace_GetActivePlacement(uVar2);
-          uVar3 = UI_GetFontHandle(dVar12,uVar3,uVar10);
-          uVar2 = CL_ControllerIndexFromClientNum(uVar2);
-          LiveParty_FeederItemText(dVar12,uVar2,param_6,param_7,uVar3);
-          __restgprlr_26();
-          return;
+        if ((-1 < (int)LVar2) && (iVar3 = LiveParty_GetCount(), (int)LVar2 < iVar3)) {
+          dVar18 = (double)piVar13->textscale;
+          iVar3 = piVar13->fontEnum;
+          pSVar8 = ScrPlace_GetActivePlacement(LVar1);
+          pFVar9 = UI_GetFontHandle(pSVar8,iVar3,(float)dVar18);
+          iVar3 = CL_ControllerIndexFromClientNum(LVar1);
+          pcVar5 = LiveParty_FeederItemText(iVar3,LVar2,(int)piVar17,pFVar9,(float)dVar18);
+          pcVar5 = (char *)__restgprlr_26(pcVar5);
+          return pcVar5;
         }
       }
       else {
         if (extraout_f1 == 24.0) {
-          PlaylistFeeder_GetItemName(uVar2,param_6);
-          __restgprlr_26();
-          return;
+          pcVar5 = PlaylistFeeder_GetItemName(LVar1,LVar2);
+          pcVar5 = (char *)__restgprlr_26(pcVar5);
+          return pcVar5;
         }
         if (extraout_f1 == 30.0) {
-          if ((-1 < iVar9) && (iVar7 = Content_GetKnownContentPackCount(), iVar9 < iVar7)) {
-            if (iVar6 == 0) {
-              cVar11 = Lobby_IsInRunningLobby();
-              if ((cVar11 == '\0') &&
-                 ((iVar6 = Party_InParty(0xffffffff82b55118), iVar6 == 0 ||
-                  (iVar6 = Party_AreWeHost(0xffffffff82b55118), iVar6 != 0)))) {
-                cVar11 = Content_IsIndexedContentPackEnabled(param_6);
+          if ((-1 < (int)LVar2) && (iVar3 = Content_GetKnownContentPackCount(), (int)LVar2 < iVar3))
+          {
+            if (piVar17 == (itemDef_t *)0x0) {
+              bVar12 = Lobby_IsInRunningLobby();
+              if ((bVar12) ||
+                 ((iVar3 = Party_InParty(&g_partyData), iVar3 != 0 &&
+                  (iVar3 = Party_AreWeHost(&g_partyData), iVar3 == 0)))) {
+                bVar12 = Party_IsIndexedContentPackEnabled(LVar2);
               }
               else {
-                cVar11 = Party_IsIndexedContentPackEnabled(param_6);
+                bVar12 = Content_IsIndexedContentPackEnabled(LVar2);
               }
-              if (cVar11 == '\0') {
-                uVar2 = 0xffffffff8216d7b4;
+              if (bVar12 == false) {
+                pcVar5 = "mappack_checkbox_unchecked";
               }
               else {
-                uVar2 = 0xffffffff8216d7d0;
+                pcVar5 = "mappack_checkbox_checked";
               }
             }
             else {
-              if (iVar6 == 1) {
-                Content_GetIndexedContentPackName(param_6);
-                UI_SafeTranslateString();
-                __restgprlr_26();
-                return;
+              if (piVar17 == (itemDef_t *)0x1) {
+                pcVar5 = Content_GetIndexedContentPackName(LVar2);
+                pcVar5 = UI_SafeTranslateString(pcVar5);
+                pcVar5 = (char *)__restgprlr_26(pcVar5);
+                return pcVar5;
               }
-              if ((iVar6 != 2) ||
-                 (cVar11 = Content_DoWeHaveIndexedContentPack(param_6), cVar11 != '\0'))
-              goto LAB_825b2c64;
-              uVar2 = 0xffffffff8216d7a4;
+              if ((piVar17 != (itemDef_t *)0x2) ||
+                 (bVar12 = Content_DoWeHaveIndexedContentPack(LVar2), bVar12)) goto LAB_825b2c64;
+              pcVar5 = "specialty_new";
             }
-            uVar10 = Material_RegisterHandle(uVar2,7);
-            *in_stack_0000005c = uVar10;
+            pMVar10 = Material_RegisterHandle(pcVar5,7);
+            *in_stack_0000005c = pMVar10;
           }
         }
         else if (extraout_f1 == 21.0) {
-          if ((-1 < iVar9) && (iVar6 = CL_GetLocalClientActiveCount(), iVar9 < iVar6)) {
-            uVar4 = CL_ControllerIndexFromActiveClient(param_6);
-            if (3 < (uVar4 & 0xffffffff)) {
-              MyAssertHandler(0xffffffff8216ab14,0x197f,0,0xffffffff8216d750,uVar4,4);
+          if ((-1 < (int)LVar2) && (iVar3 = CL_GetLocalClientActiveCount(), (int)LVar2 < iVar3)) {
+            LVar1 = CL_ControllerIndexFromActiveClient(LVar2);
+            if (LOCAL_CLIENT_3 < LVar1) {
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp"
+                              ,0x197f,0,
+                              "activeLocalClientIndex doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)"
+                             );
             }
-            if (DAT_82966e98 == 0) {
-              cVar11 = CL_IsLocalClientActive(0);
-              if (cVar11 == '\0') {
-                MyAssertHandler(0xffffffff8216ab14,0x1983,0,0xffffffff82000f98,0xffffffff82050270);
+            if (cl_multi_gamepads_enabled == 0) {
+              bVar12 = CL_IsLocalClientActive(LOCAL_CLIENT_0);
+              if (!bVar12) {
+                MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp"
+                                ,0x1983,0,"%s");
               }
             }
             else {
-              cVar11 = CL_IsLocalClientActive(uVar4);
-              if (cVar11 == '\0') {
-                MyAssertHandler(0xffffffff8216ab14,0x1981,0,0xffffffff8216d6e0,0xffffffff8216d708,
-                                uVar4);
+              bVar12 = CL_IsLocalClientActive(LVar1);
+              if (!bVar12) {
+                MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp"
+                                ,0x1981,0,"%s\n\t(activeLocalClientIndex) = %i");
               }
             }
-            PartyUI_GetLocalClientName(uVar4,0xffffffff83fe80e8,0x2a);
-            __restgprlr_26();
-            return;
+            pcVar5 = PartyUI_GetLocalClientName(LVar1,clientBuff,0x2a);
+            pcVar5 = (char *)__restgprlr_26(pcVar5);
+            return pcVar5;
           }
         }
         else if (extraout_f1 == 25.0) {
-          lVar5 = CustomGameTypes_GetGametypeCount();
-          if ((-1 < iVar9) && (iVar9 < (int)lVar5)) {
-            CustomGameTypes_GetGametypeLocalizedName(param_6);
-            __restgprlr_26();
-            return;
+          iVar3 = CustomGameTypes_GetGametypeCount();
+          if ((-1 < (int)LVar2) && ((int)LVar2 < iVar3)) {
+            pcVar5 = CustomGameTypes_GetGametypeLocalizedName(LVar2);
+            pcVar5 = (char *)__restgprlr_26(pcVar5);
+            return pcVar5;
           }
-          lVar5 = param_6 - lVar5;
-          if ((-1 < lVar5) && ((int)lVar5 < DAT_83f7bc58)) {
-            __restgprlr_26(lVar5 * 0x6c + -0x7c084398);
-            return;
+          lVar16 = uVar14 - (longlong)iVar3;
+          if ((-1 < lVar16) && ((int)lVar16 < sharedUiInfo.numCustomGameTypes)) {
+            pcVar5 = (char *)__restgprlr_26(lVar16 * 0x6c + -0x7c084398);
+            return pcVar5;
           }
         }
         else {
           if (extraout_f1 == 26.0) {
-            LB_FeederItemText(uVar2,param_6,param_7,in_stack_0000005c);
-            __restgprlr_26();
-            return;
+            pcVar5 = LB_FeederItemText(LVar1,LVar2,(int)piVar17,in_stack_0000005c);
+            pcVar5 = (char *)__restgprlr_26(pcVar5);
+            return pcVar5;
           }
           if (extraout_f1 == 35.0) {
-            LB_FeederItemText_Player(uVar2,param_7,in_stack_0000005c);
-            __restgprlr_26();
-            return;
+            pcVar5 = LB_FeederItemText_Player(LVar1,(int)piVar17,in_stack_0000005c);
+            pcVar5 = (char *)__restgprlr_26(pcVar5);
+            return pcVar5;
           }
           if (extraout_f1 == 33.0) {
-            if (-1 < iVar9) {
-              CL_ControllerIndexFromClientNum(uVar2);
-              iVar6 = Facebook_GetCount();
-              if (iVar9 < iVar6) {
-                dVar12 = (double)*(float *)(iVar7 + 0x11c);
-                uVar10 = *(undefined4 *)(iVar7 + 0x10c);
-                uVar3 = ScrPlace_GetActivePlacement(uVar2);
-                uVar3 = UI_GetFontHandle(dVar12,uVar3,uVar10);
-                uVar2 = CL_ControllerIndexFromClientNum(uVar2);
-                Facebook_FeederItemText(dVar12,uVar2,param_6,param_7,in_stack_0000005c,uVar3);
-                __restgprlr_26();
-                return;
+            if (-1 < (int)LVar2) {
+              iVar3 = CL_ControllerIndexFromClientNum(LVar1);
+              iVar3 = Facebook_GetCount(iVar3);
+              if ((int)LVar2 < iVar3) {
+                dVar18 = (double)piVar13->textscale;
+                iVar3 = piVar13->fontEnum;
+                pSVar8 = ScrPlace_GetActivePlacement(LVar1);
+                pFVar9 = UI_GetFontHandle(pSVar8,iVar3,(float)dVar18);
+                iVar3 = CL_ControllerIndexFromClientNum(LVar1);
+                pcVar5 = Facebook_FeederItemText
+                                   (iVar3,LVar2,(int)piVar17,in_stack_0000005c,pFVar9,(float)dVar18)
+                ;
+                pcVar5 = (char *)__restgprlr_26(pcVar5);
+                return pcVar5;
               }
             }
           }
           else if (extraout_f1 == 34.0) {
-            if (-1 < iVar9) {
-              CL_ControllerIndexFromClientNum(uVar2);
-              iVar6 = EliteClan_GetCount();
-              if (iVar9 < iVar6) {
-                dVar12 = (double)*(float *)(iVar7 + 0x11c);
-                uVar10 = *(undefined4 *)(iVar7 + 0x10c);
-                uVar3 = ScrPlace_GetActivePlacement(uVar2);
-                uVar3 = UI_GetFontHandle(dVar12,uVar3,uVar10);
-                uVar2 = CL_ControllerIndexFromClientNum(uVar2);
-                EliteClan_FeederItemText(dVar12,uVar2,param_6,param_7,uVar3);
-                __restgprlr_26();
-                return;
+            if (-1 < (int)LVar2) {
+              iVar3 = CL_ControllerIndexFromClientNum(LVar1);
+              iVar3 = EliteClan_GetCount(iVar3);
+              if ((int)LVar2 < iVar3) {
+                dVar18 = (double)piVar13->textscale;
+                iVar3 = piVar13->fontEnum;
+                pSVar8 = ScrPlace_GetActivePlacement(LVar1);
+                pFVar9 = UI_GetFontHandle(pSVar8,iVar3,(float)dVar18);
+                iVar3 = CL_ControllerIndexFromClientNum(LVar1);
+                pcVar5 = EliteClan_FeederItemText(iVar3,LVar2,(int)piVar17,pFVar9,(float)dVar18);
+                pcVar5 = (char *)__restgprlr_26(pcVar5);
+                return pcVar5;
               }
             }
           }
           else if (extraout_f1 == 37.0) {
-            if (-1 < iVar9) {
-              CL_ControllerIndexFromClientNum(uVar2);
-              iVar6 = CL_Demo_EnumCount();
-              if (iVar9 < iVar6) {
-                uVar3 = CL_ControllerIndexFromClientNum(uVar2);
-                uVar3 = CL_Demo_FeederIndexToEnumIndex(uVar3,param_6);
-                uVar2 = CL_ControllerIndexFromClientNum(uVar2);
-                CL_Demo_RecentGames_FeederItemText(uVar2,uVar3);
-                __restgprlr_26();
-                return;
+            if (-1 < (int)LVar2) {
+              iVar3 = CL_ControllerIndexFromClientNum(LVar1);
+              iVar3 = CL_Demo_EnumCount(iVar3);
+              if ((int)LVar2 < iVar3) {
+                iVar3 = CL_ControllerIndexFromClientNum(LVar1);
+                iVar3 = CL_Demo_FeederIndexToEnumIndex(iVar3,LVar2);
+                iVar11 = CL_ControllerIndexFromClientNum(LVar1);
+                pcVar5 = CL_Demo_RecentGames_FeederItemText(iVar11,iVar3);
+                pcVar5 = (char *)__restgprlr_26(pcVar5);
+                return pcVar5;
               }
             }
           }
           else {
             if (extraout_f1 == 36.0) {
-              uVar2 = CL_ControllerIndexFromClientNum(uVar2);
-              OnlineVault_FeederItemText(param_2,uVar2,param_6,param_7,in_stack_0000005c,param_4);
-              __restgprlr_26();
-              return;
+              iVar3 = CL_ControllerIndexFromClientNum(LVar1);
+              pcVar5 = OnlineVault_FeederItemText
+                                 (iVar3,LVar2,(int)piVar17,in_stack_0000005c,piVar13,(float)dVar18);
+              pcVar5 = (char *)__restgprlr_26(pcVar5);
+              return pcVar5;
             }
             if (extraout_f1 == 1.0) {
-              UI_FeederItemText_Maps(uVar2,param_4,param_6,param_7,in_stack_0000005c);
-              __restgprlr_26();
-              return;
+              pcVar5 = UI_FeederItemText_Maps(LVar1,piVar13,LVar2,(int)piVar17,in_stack_0000005c);
+              pcVar5 = (char *)__restgprlr_26(pcVar5);
+              return pcVar5;
             }
           }
         }
@@ -5161,50 +4877,52 @@ LAB_825b3068:
     }
   }
 LAB_825b2c64:
-  __restgprlr_26(0xffffffff820068af);
-  return;
+  pcVar5 = (char *)__restgprlr_26(0xffffffff820068af);
+  return pcVar5;
 }
 
 
 // 825A90D8  UI_FeederDoubleClick  (ui_mp/ui_main_mp.cpp:6634)
 
-undefined1
-UI_FeederDoubleClick(double param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+int UI_FeederDoubleClick(LocalClientNum_t param_1,float param_2,int param_3)
 
 {
-  undefined1 uVar4;
-  undefined8 uVar1;
-  int iVar3;
-  char cVar5;
-  longlong lVar2;
+  bool bVar4;
+  int iVar1;
+  int iVar2;
+  mapInfo *pmVar3;
+  uint in_r5;
+  double dVar5;
   
-  if (param_1 == 24.0) {
-    uVar4 = PlaylistFeeder_DoubleClick(param_2,param_4);
-    return uVar4;
+  dVar5 = (double)param_2;
+  if (dVar5 == 24.0) {
+    bVar4 = PlaylistFeeder_DoubleClick(param_1,in_r5);
+    return (uint)bVar4;
   }
-  if (param_1 == 30.0) {
-    uVar1 = CL_ControllerIndexFromClientNum();
-    if ((-1 < (int)param_4) && (iVar3 = Content_GetKnownContentPackCount(), (int)param_4 < iVar3)) {
-      cVar5 = Content_DoWeHaveIndexedContentPack(param_4);
-      if (cVar5 == '\0') {
-        Live_ShowMarketplaceUI(uVar1);
-        return 1;
-      }
-      cVar5 = Lobby_IsInRunningLobby();
-      if (cVar5 != '\0') {
-        return 0;
-      }
-      iVar3 = Party_InParty(0xffffffff82b55118);
-      if ((iVar3 != 0) && (iVar3 = Party_AreWeHost(0xffffffff82b55118), iVar3 == 0)) {
-        return 0;
-      }
-      cVar5 = Content_IsIndexedContentPackEnabled(param_4);
-      Content_SetIndexedContentPackEnabled(param_4,cVar5 == '\0');
+  if (((dVar5 == 30.0) && (iVar1 = CL_ControllerIndexFromClientNum(param_1), -1 < (int)in_r5)) &&
+     (iVar2 = Content_GetKnownContentPackCount(), (int)in_r5 < iVar2)) {
+    bVar4 = Content_DoWeHaveIndexedContentPack(in_r5);
+    if (!bVar4) {
+      Live_ShowMarketplaceUI(iVar1);
+      return 1;
     }
+    bVar4 = Lobby_IsInRunningLobby();
+    if (bVar4) {
+      return 0;
+    }
+    iVar1 = Party_InParty(&g_partyData);
+    if ((iVar1 != 0) && (iVar1 = Party_AreWeHost(&g_partyData), iVar1 == 0)) {
+      return 0;
+    }
+    bVar4 = Content_IsIndexedContentPackEnabled(in_r5);
+    Content_SetIndexedContentPackEnabled(in_r5,!bVar4);
   }
-  if (param_1 == 3.0) {
-    lVar2 = UI_GetMapInfo_Sorted(*(undefined4 *)(DAT_83f71ed4 + 0xc));
-    Dvar_SetStringByName(0xffffffff8202c6bc,lVar2 + 0x20);
+  if (dVar5 == 3.0) {
+    pmVar3 = UI_GetMapInfo_Sorted((ui_currentFeederMapIndex->current).integer);
+    Dvar_SetStringByName("ui_mapname",pmVar3->mapLoadName);
   }
   return 0;
 }
@@ -5212,164 +4930,178 @@ UI_FeederDoubleClick(double param_1,undefined8 param_2,undefined8 param_3,undefi
 
 // 825A9210  UI_FeederItemEnabled  (ui_mp/ui_main_mp.cpp:6685)
 
-void UI_FeederItemEnabled(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+int UI_FeederItemEnabled(LocalClientNum_t param_1,float param_2,int param_3)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
-  undefined1 uVar3;
+  LocalClientNum_t LVar1;
+  int iVar2;
+  bool bVar4;
+  int iVar3;
+  uint in_r5;
   double extraout_f1;
-  double dVar4;
+  double dVar5;
   
-  uVar1 = __savegprlr_29();
-  dVar4 = extraout_f1;
-  uVar2 = CL_ControllerIndexFromClientNum();
-  if (dVar4 == 24.0) {
-    uVar3 = PlaylistFeeder_ItemEnabled(uVar1,param_3);
-    __restgprlr_29(uVar3);
-    return;
+  LVar1 = __savegprlr_29((double)param_2,param_1,param_3);
+  dVar5 = extraout_f1;
+  iVar2 = CL_ControllerIndexFromClientNum(LVar1);
+  if (dVar5 == 24.0) {
+    bVar4 = PlaylistFeeder_ItemEnabled(LVar1,in_r5);
+    iVar2 = __restgprlr_29(bVar4);
+    return iVar2;
   }
-  if (dVar4 == 36.0) {
-    OnlineVault_FeederItemEnabled(uVar2,param_3);
-    __restgprlr_29();
-    return;
+  if (dVar5 == 36.0) {
+    iVar2 = OnlineVault_FeederItemEnabled(iVar2,in_r5);
+    iVar2 = __restgprlr_29(iVar2);
+    return iVar2;
   }
-  if (dVar4 == 37.0) {
-    uVar1 = CL_Demo_FeederIndexToEnumIndex(uVar2,param_3);
-    CL_Demo_EnumIsValidFile(uVar2,uVar1);
-    __restgprlr_29();
-    return;
+  if (dVar5 == 37.0) {
+    iVar3 = CL_Demo_FeederIndexToEnumIndex(iVar2,in_r5);
+    iVar2 = CL_Demo_EnumIsValidFile(iVar2,iVar3);
+    iVar2 = __restgprlr_29(iVar2);
+    return iVar2;
   }
-  __restgprlr_29(1);
-  return;
+  iVar2 = __restgprlr_29(1);
+  return iVar2;
 }
 
 
 // 825A92D0  MapIsPresentInRotation  (ui_mp/ui_main_mp.cpp:6714)
 
-void MapIsPresentInRotation(void)
+bool MapIsPresentInRotation(char *param_1)
 
 {
-  uint *puVar1;
-  undefined8 uVar2;
-  char cVar4;
-  int iVar3;
-  uint uVar5;
-  uint *puVar6;
+  LobbyMapRotation *pLVar1;
+  char *pcVar2;
+  bool bVar5;
+  GameStateInfo *pGVar3;
+  int iVar4;
+  undefined1 uVar6;
+  uint uVar7;
+  <unnamed_type_entry> *p<Var8;
   
-  uVar2 = __savegprlr_28();
-  cVar4 = Lobby_IsInLobby();
-  if (((cVar4 != '\0') && (cVar4 = Lobby_AreWeHost(), cVar4 != '\0')) &&
-     (*(char *)(DAT_84253bb8 + 0xc) != '\0')) {
-    iVar3 = GameStateInfo_Get();
-    puVar1 = *(uint **)(iVar3 + 0x14);
-    if (((puVar1 != (uint *)0x0) && (*(int *)(iVar3 + 0xc) != 0)) && (uVar5 = 0, *puVar1 != 0)) {
-      puVar6 = puVar1 + 1;
+  pcVar2 = (char *)__savegprlr_28(param_1);
+  bVar5 = Lobby_IsInLobby();
+  if (((bVar5) && (bVar5 = Lobby_AreWeHost(), bVar5)) &&
+     ((xblive_privatematch->current).enabled != false)) {
+    pGVar3 = GameStateInfo_Get();
+    pLVar1 = pGVar3->mapRotation;
+    if (((pLVar1 != (LobbyMapRotation *)0x0) && (pGVar3->usingRotation != 0)) &&
+       (uVar7 = 0, pLVar1->entryCount != 0)) {
+      p<Var8 = pLVar1->entry;
       do {
-        iVar3 = I_strncmp(uVar2,puVar6,0x10);
-        if (iVar3 == 0) {
-          __restgprlr_28(1);
-          return;
+        iVar4 = I_strncmp(pcVar2,p<Var8->name,0x10);
+        if (iVar4 == 0) {
+          uVar6 = __restgprlr_28(1);
+          return (bool)uVar6;
         }
-        uVar5 = uVar5 + 1;
-        puVar6 = puVar6 + 5;
-      } while (uVar5 < *puVar1);
+        uVar7 = uVar7 + 1;
+        p<Var8 = p<Var8 + 1;
+      } while (uVar7 < pLVar1->entryCount);
     }
   }
-  __restgprlr_28(0);
-  return;
+  uVar6 = __restgprlr_28(0);
+  return (bool)uVar6;
 }
 
 
 // 825A9388  UI_FeederItemImage  (ui_mp/ui_main_mp.cpp:6738)
 
-void UI_FeederItemImage(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+Material * UI_FeederItemImage(LocalClientNum_t param_1,float param_2,int param_3)
 
 {
-  undefined8 uVar1;
+  LocalClientNum_t LVar1;
+  Material *pMVar2;
   int iVar3;
-  longlong lVar2;
-  int iVar4;
-  char cVar5;
+  GameStateInfo *pGVar4;
+  bool bVar5;
+  int in_r5;
   int iVar6;
-  uint *puVar7;
+  char *pcVar7;
+  int *piVar8;
   double extraout_f1;
   
-  uVar1 = __savegprlr_26();
+  LVar1 = __savegprlr_26((double)param_2,param_1,param_3);
   if (extraout_f1 == 24.0) {
-    PlaylistFeeder_ItemImage(uVar1,param_3);
-    __restgprlr_26();
-    return;
+    pMVar2 = PlaylistFeeder_ItemImage(LVar1,in_r5);
+    pMVar2 = (Material *)__restgprlr_26(pMVar2);
+    return pMVar2;
   }
   if (extraout_f1 == 3.0) {
-    UI_SelectedMap(param_3);
-    UI_GetLevelShot();
-    __restgprlr_26();
-    return;
+    iVar3 = UI_SelectedMap(in_r5);
+    pMVar2 = UI_GetLevelShot(iVar3);
+    pMVar2 = (Material *)__restgprlr_26(pMVar2);
+    return pMVar2;
   }
   if (extraout_f1 == 1.0) {
-    iVar3 = GameStateInfo_Get();
-    lVar2 = UI_GetMapIdForNum(param_3);
-    if (((*(int *)(iVar3 + 0xc) != 0) && (-1 < (int)param_3)) && ((int)param_3 < DAT_83f7df64)) {
-      lVar2 = lVar2 * 0xa78 + -0x7c082078;
-      iVar4 = I_strcmp(lVar2,0xffffffff8216a698);
-      if (iVar4 == 0) {
-        iVar4 = 0;
-        if (0 < DAT_83f7df64) {
-          puVar7 = &DAT_83f7e9dc;
-          iVar6 = DAT_83f7df64;
+    pGVar4 = GameStateInfo_Get();
+    iVar3 = UI_GetMapIdForNum(in_r5);
+    if (((pGVar4->usingRotation != 0) && (-1 < in_r5)) && (in_r5 < sharedUiInfo.mapCount)) {
+      pcVar7 = sharedUiInfo.mapList[iVar3].mapLoadName;
+      iVar3 = I_strcmp(pcVar7,"bonus_map");
+      if (iVar3 == 0) {
+        iVar3 = 0;
+        if (0 < sharedUiInfo.mapCount) {
+          piVar8 = &sharedUiInfo.mapList[0].mapPack;
+          iVar6 = sharedUiInfo.mapCount;
           do {
-            if (((0 < (int)*puVar7) &&
-                ((*(char *)(DAT_83f71e90 + 0xc) != '\0' ||
-                 (cVar5 = Content_DoWeHaveContentPack(2 << (*puVar7 & 0x3f)), iVar6 = DAT_83f7df64,
-                 cVar5 != '\0')))) &&
-               (cVar5 = MapIsPresentInRotation(puVar7 + -0x295), iVar6 = DAT_83f7df64, cVar5 != '\0'
-               )) goto LAB_825a94c0;
-            iVar4 = iVar4 + 1;
-            puVar7 = puVar7 + 0x29e;
-          } while (iVar4 < iVar6);
+            if (((0 < *piVar8) &&
+                (((accessToSubscriberContent->current).enabled != false ||
+                 (bVar5 = Content_DoWeHaveContentPack(2 << (*piVar8 & 0x3fU)),
+                 iVar6 = sharedUiInfo.mapCount, bVar5)))) &&
+               (bVar5 = MapIsPresentInRotation((char *)(piVar8 + -0x295)),
+               iVar6 = sharedUiInfo.mapCount, bVar5)) goto LAB_825a94c0;
+            iVar3 = iVar3 + 1;
+            piVar8 = piVar8 + 0x29e;
+          } while (iVar3 < iVar6);
         }
       }
       else {
-        cVar5 = MapIsPresentInRotation(lVar2);
-        if (cVar5 != '\0') {
+        bVar5 = MapIsPresentInRotation(pcVar7);
+        if (bVar5) {
 LAB_825a94c0:
-          Material_RegisterHandle(0xffffffff8216c0f4,3);
-          __restgprlr_26();
-          return;
+          pMVar2 = Material_RegisterHandle("box_check",3);
+          pMVar2 = (Material *)__restgprlr_26(pMVar2);
+          return pMVar2;
         }
       }
-      if (0xf < **(uint **)(iVar3 + 0x14)) {
-        Material_RegisterHandle(0xffffffff8216c0e0,3);
-        __restgprlr_26();
-        return;
+      if (0xf < pGVar4->mapRotation->entryCount) {
+        pMVar2 = Material_RegisterHandle("box_x",3);
+        pMVar2 = (Material *)__restgprlr_26(pMVar2);
+        return pMVar2;
       }
-      Material_RegisterHandle(0xffffffff8216c0e8,3);
-      __restgprlr_26();
-      return;
+      pMVar2 = Material_RegisterHandle("box_empty",3);
+      pMVar2 = (Material *)__restgprlr_26(pMVar2);
+      return pMVar2;
     }
   }
-  __restgprlr_26(0);
-  return;
+  pMVar2 = (Material *)__restgprlr_26(0);
+  return pMVar2;
 }
 
 
 // 825A9538  UI_FeederGetColorPulsed  (ui_mp/ui_main_mp.cpp:6787)
 
-void UI_FeederGetColorPulsed(undefined8 param_1,float *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void UI_FeederGetColorPulsed(LocalClientNum_t param_1,float *param_2)
 
 {
   float fVar1;
-  char cVar3;
+  bool bVar3;
   int iVar2;
   double dVar4;
   
-  cVar3 = CL_Demo_IsPlaying();
-  if (cVar3 == '\0') {
-    iVar2 = UI_GetLocalClientUIContextMilliseconds(param_1);
+  bVar3 = CL_Demo_IsPlaying(param_1);
+  if (bVar3) {
+    iVar2 = GetUIMilliseconds();
   }
   else {
-    iVar2 = GetUIMilliseconds();
+    iVar2 = UI_GetLocalClientUIContextMilliseconds(param_1);
   }
   dVar4 = sin((double)((float)(longlong)iVar2 * 0.0125));
   param_2[3] = 1.0;
@@ -5383,82 +5115,99 @@ void UI_FeederGetColorPulsed(undefined8 param_1,float *param_2)
 
 // 825A95F0  UI_FeederItemColor  (ui_mp/ui_main_mp.cpp:6810)
 
-void UI_FeederItemColor(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-                       longlong param_5,undefined8 param_6,ulonglong param_7)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void UI_FeederItemColor(LocalClientNum_t param_1,itemDef_t *param_2,float param_3,int param_4,
+                       int param_5,float *param_6,bool param_7)
 
 {
-  undefined4 uVar1;
-  undefined4 *puVar2;
-  undefined8 uVar3;
-  int iVar5;
+  float fVar1;
+  LocalClientNum_t LVar3;
+  listBoxDef_s *plVar4;
   int iVar6;
-  undefined8 uVar4;
   int iVar7;
-  char cVar9;
-  int iVar8;
+  ulong64 uVar2;
+  bool bVar9;
+  char *pcVar8;
+  longlong lVar10;
+  itemDef_t *piVar11;
+  longlong lVar12;
+  float *pfVar13;
+  ulonglong in_r9;
   double extraout_f1;
-  double dVar10;
-  undefined4 local_50;
+  double dVar14;
+  itemDef_t *local_50;
+  itemDef_t *piVar5;
   
-  uVar3 = __savegprlr_26();
-  dVar10 = extraout_f1;
-  iVar5 = Item_GetListBoxDef(param_2);
-  if (iVar5 == 0) {
-    MyAssertHandler(0xffffffff8216ab14,0x1aa0,0,0xffffffff82000f98,0xffffffff8216c128);
+  pfVar13 = (float *)(int)param_7;
+  lVar12 = (longlong)(int)param_6;
+  lVar10 = (longlong)(int)param_2;
+  LVar3 = __savegprlr_26((double)param_3,param_1,lVar10,param_4);
+  piVar5 = (itemDef_t *)lVar10;
+  dVar14 = extraout_f1;
+  piVar11 = piVar5;
+  plVar4 = Item_GetListBoxDef(piVar5);
+  if (plVar4 == (listBoxDef_s *)0x0) {
+    piVar11 = (itemDef_t *)0x1aa0;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x1aa0,0
+                    ,"%s");
   }
-  iVar8 = (int)param_4;
-  puVar2 = (undefined4 *)param_6;
-  iVar5 = (int)param_2;
-  if (dVar10 == 17.0) {
+  if (dVar14 == 17.0) {
     iVar6 = GetLobbyMemberCount();
-    if ((param_5 - 1U & 0xffffffff) < 6) {
-      if (((int)(param_5 - 1U) == 0) || (param_5 != 2)) {
-        if ((iVar6 == 0) && ((DAT_82b5700c != 0 && (iVar7 = GetPartyMemberCount(), iVar8 < iVar7))))
-        {
-          GetPartyMemberXuid(uVar3,param_4);
-          cVar9 = Live_XUIDIsLocalPlayer();
-          if (cVar9 == '\0') goto LAB_825a9828;
+    if ((lVar12 - 1U & 0xffffffff) < 6) {
+      if (((int)(lVar12 - 1U) == 0) || (lVar12 != 2)) {
+        if ((iVar6 == 0) &&
+           ((g_partyData.inParty != 0 && (iVar7 = GetPartyMemberCount(), param_5 < iVar7)))) {
+          piVar11 = (itemDef_t *)param_5;
+          uVar2 = GetPartyMemberXuid(LVar3,param_5);
+          bVar9 = Live_XUIDIsLocalPlayer(uVar2);
+          if (!bVar9) goto LAB_825a9828;
         }
-        if ((-1 < iVar8) && (iVar8 < iVar6)) goto LAB_825a981c;
+        if ((-1 < param_5) && (param_5 < iVar6)) goto LAB_825a981c;
       }
       else {
         if (iVar6 == 0) {
-          if ((DAT_82b5700c != 0) && (iVar7 = GetPartyMemberCount(), iVar8 < iVar7)) {
-            GetPartyMemberXuid(uVar3,param_4);
-            cVar9 = Live_XUIDIsLocalPlayer();
-            if (cVar9 != '\0') {
-              Dvar_GetUnpackedColor(DAT_83f71ec8,param_6);
+          if ((g_partyData.inParty != 0) && (iVar7 = GetPartyMemberCount(), param_5 < iVar7)) {
+            uVar2 = GetPartyMemberXuid(LVar3,param_5);
+            bVar9 = Live_XUIDIsLocalPlayer(uVar2);
+            if (bVar9) {
+              Dvar_GetUnpackedColor(ui_playerPartyColor,pfVar13);
               __restgprlr_26();
               return;
             }
             goto LAB_825a9700;
           }
-          if (iVar8 == 0) goto LAB_825a9720;
+          if ((itemDef_t *)param_5 == (itemDef_t *)0x0) goto LAB_825a9720;
         }
-        if (-1 < iVar8) {
-          if (iVar6 <= iVar8) {
-            Dvar_GetUnpackedColor(DAT_83f71ed0,param_6);
+        if (-1 < param_5) {
+          if (iVar6 <= param_5) {
+            Dvar_GetUnpackedColor(lobby_searchingPartyColor,pfVar13);
             __restgprlr_26();
             return;
           }
-          uVar4 = GetLobbyMemberXuid(uVar3,param_4);
-          cVar9 = Live_XUIDIsLocalPlayer();
-          if (cVar9 != '\0') {
+          uVar2 = GetLobbyMemberXuid(LVar3,param_5);
+          bVar9 = Live_XUIDIsLocalPlayer(uVar2);
+          if (bVar9) {
 LAB_825a9720:
-            Dvar_GetUnpackedColor(DAT_83f71ec8,param_6);
+            Dvar_GetUnpackedColor(ui_playerPartyColor,pfVar13);
             __restgprlr_26();
             return;
           }
-          iVar8 = Party_IsPlayerInPrivateParty(uVar4);
-          if (iVar8 != 0) {
-            iVar5 = IsLobbyMemberAway(uVar3,param_4);
+          iVar6 = Party_IsPlayerInPrivateParty(uVar2);
+          if (iVar6 != 0) {
+            iVar6 = IsLobbyMemberAway(LVar3,param_5);
             goto LAB_825a96f4;
           }
 LAB_825a981c:
-          iVar8 = IsLobbyMemberAway(uVar3,param_4);
-          if (iVar8 != 0) {
+          piVar11 = (itemDef_t *)param_5;
+          iVar6 = IsLobbyMemberAway(LVar3,param_5);
+          if (iVar6 != 0) {
 LAB_825a9828:
-            Dvar_GetUnpackedColor(DAT_83fe7470,param_6);
+            Dvar_GetUnpackedColor(ui_inactiveBaseColor,pfVar13);
             __restgprlr_26();
             return;
           }
@@ -5466,133 +5215,137 @@ LAB_825a9828:
       }
     }
   }
-  else if (dVar10 == 23.0) {
+  else if (dVar14 == 23.0) {
     iVar6 = GetPartyMemberCount();
-    if ((int)param_5 == 2) {
-      if ((-1 < iVar8) && (iVar8 < iVar6)) {
-        GetPartyMemberXuid(uVar3,param_4);
-        cVar9 = Live_XUIDIsLocalPlayer();
-        if (cVar9 != '\0') goto LAB_825a9720;
-        iVar5 = IsPartyMemberAway(uVar3,param_4);
+    if ((int)lVar12 == 2) {
+      if ((-1 < param_5) && (param_5 < iVar6)) {
+        uVar2 = GetPartyMemberXuid(LVar3,param_5);
+        bVar9 = Live_XUIDIsLocalPlayer(uVar2);
+        if (bVar9) goto LAB_825a9720;
+        iVar6 = IsPartyMemberAway(LVar3,param_5);
 LAB_825a96f4:
-        if (iVar5 == 0) {
-          Dvar_GetUnpackedColor(DAT_83f7a988,param_6);
+        if (iVar6 == 0) {
+          Dvar_GetUnpackedColor(ui_myPartyColor,pfVar13);
           __restgprlr_26();
           return;
         }
 LAB_825a9700:
-        Dvar_GetUnpackedColor(DAT_83f71e0c,param_6);
+        Dvar_GetUnpackedColor(ui_inactivePartyColor,pfVar13);
         __restgprlr_26();
         return;
       }
       if (iVar6 == 0) {
-        Dvar_GetUnpackedColor(DAT_83f71ec8,param_6);
+        Dvar_GetUnpackedColor(ui_playerPartyColor,pfVar13);
         __restgprlr_26();
         return;
       }
     }
-    else if (((iVar6 != 0) && (-1 < iVar8)) && (iVar8 < iVar6)) {
-      GetPartyMemberXuid(uVar3,param_4);
-      cVar9 = Live_XUIDIsLocalPlayer();
-      if ((cVar9 == '\0') && (iVar8 = IsPartyMemberAway(uVar3,param_4), iVar8 != 0)) {
-        Dvar_GetUnpackedColor(DAT_83fe7470,param_6);
+    else if (((iVar6 != 0) && (-1 < param_5)) && (param_5 < iVar6)) {
+      piVar11 = (itemDef_t *)param_5;
+      uVar2 = GetPartyMemberXuid(LVar3,param_5);
+      bVar9 = Live_XUIDIsLocalPlayer(uVar2);
+      if ((!bVar9) &&
+         (piVar11 = (itemDef_t *)param_5, iVar6 = IsPartyMemberAway(LVar3,param_5), iVar6 != 0)) {
+        Dvar_GetUnpackedColor(ui_inactiveBaseColor,pfVar13);
         __restgprlr_26();
         return;
       }
     }
   }
-  else if ((dVar10 == 27.0) || (dVar10 == 28.0)) {
-    GetTeam(dVar10,uVar3);
-    if ((-1 < iVar8) && (iVar6 = GetTeamMemberCount(local_50), iVar8 < iVar6)) {
-      uVar4 = GetTeamMemberXuid(uVar3,local_50,param_4);
-      cVar9 = Live_XUIDIsLocalPlayer();
-      if (cVar9 != '\0') goto LAB_825a9720;
-      iVar8 = Party_IsPlayerInPrivateParty(uVar4);
-      if (iVar8 != 0) {
-        Dvar_GetUnpackedColor(DAT_83f7a988,param_6);
+  else if ((dVar14 == 27.0) || (dVar14 == 28.0)) {
+    GetTeam(LVar3,(float)dVar14,(int *)piVar11);
+    if ((-1 < param_5) && (iVar6 = GetTeamMemberCount((int)local_50), param_5 < iVar6)) {
+      piVar11 = local_50;
+      uVar2 = GetTeamMemberXuid(LVar3,(int)local_50,param_5);
+      bVar9 = Live_XUIDIsLocalPlayer(uVar2);
+      if (bVar9) goto LAB_825a9720;
+      iVar6 = Party_IsPlayerInPrivateParty(uVar2);
+      if (iVar6 != 0) {
+        Dvar_GetUnpackedColor(ui_myPartyColor,pfVar13);
         __restgprlr_26();
         return;
       }
     }
   }
   else {
-    if (dVar10 == 24.0) {
-      PlaylistFeeder_ItemColor(uVar3,param_2,param_4,param_6,param_7);
+    if (dVar14 == 24.0) {
+      PlaylistFeeder_ItemColor(LVar3,piVar5,param_5,pfVar13,SUB81(in_r9,0));
       __restgprlr_26();
       return;
     }
-    if ((dVar10 == 37.0) || (dVar10 == 36.0)) {
-      iVar8 = UI_FeederItemEnabled(dVar10,uVar3);
-      if ((iVar8 != 0) && ((param_7 & 0xff) != 0)) {
-        *puVar2 = *(undefined4 *)(iVar5 + 0x5c);
-        puVar2[1] = *(undefined4 *)(iVar5 + 0x60);
-        puVar2[2] = *(undefined4 *)(iVar5 + 100);
-        puVar2[3] = *(undefined4 *)(iVar5 + 0x68);
-        UI_FeederGetColorPulsed(uVar3,param_6);
+    if ((dVar14 == 37.0) || (dVar14 == 36.0)) {
+      iVar6 = UI_FeederItemEnabled(LVar3,(float)dVar14,(int)piVar11);
+      if ((iVar6 != 0) && ((in_r9 & 0xff) != 0)) {
+        *pfVar13 = (piVar5->window).foreColor[0];
+        pfVar13[1] = (piVar5->window).foreColor[1];
+        pfVar13[2] = (piVar5->window).foreColor[2];
+        pfVar13[3] = (piVar5->window).foreColor[3];
+        UI_FeederGetColorPulsed(LVar3,pfVar13);
         __restgprlr_26();
         return;
       }
-      if ((param_7 & 0xff) != 0) {
-        *puVar2 = 0;
-        puVar2[1] = 0;
-        puVar2[2] = 0;
-        puVar2[3] = 0x3f800000;
+      if ((in_r9 & 0xff) != 0) {
+        *pfVar13 = 0.0;
+        pfVar13[1] = 0.0;
+        pfVar13[2] = 0.0;
+        pfVar13[3] = 1.0;
         __restgprlr_26();
         return;
       }
     }
-    else if (dVar10 == 33.0) {
-      cVar9 = Facebook_FeederItemColor(uVar3,param_4,param_5,param_6);
-      if (cVar9 != '\0') goto LAB_825a9c30;
+    else if (dVar14 == 33.0) {
+      piVar11 = (itemDef_t *)param_5;
+      bVar9 = Facebook_FeederItemColor(LVar3,param_5,(int)lVar12,pfVar13);
+      if (bVar9) goto LAB_825a9c30;
     }
-    else if (dVar10 == 1.0) {
-      iVar6 = UI_FeederItemEnabled(dVar10,uVar3);
-      if (iVar8 == 0) {
-        uVar4 = UI_GetMapLoadNameForCurrentIndex(0);
-        iVar8 = I_strcmp(0xffffffff8216a698,uVar4);
-        if (iVar8 != 0) goto LAB_825a9b24;
-        *puVar2 = 0x3f7df3b6;
-        puVar2[1] = 0x3f68b439;
-        puVar2[2] = 0x3e53f7cf;
-        puVar2[3] = 0x3f800000;
+    else if (dVar14 == 1.0) {
+      iVar6 = UI_FeederItemEnabled(LVar3,(float)dVar14,(int)piVar11);
+      if ((itemDef_t *)param_5 == (itemDef_t *)0x0) {
+        pcVar8 = UI_GetMapLoadNameForCurrentIndex(0);
+        iVar7 = I_strcmp("bonus_map",pcVar8);
+        if (iVar7 != 0) goto LAB_825a9b24;
+        *pfVar13 = 0.992;
+        pfVar13[1] = 0.909;
+        pfVar13[2] = 0.207;
+        pfVar13[3] = 1.0;
       }
       else {
 LAB_825a9b24:
         if (iVar6 == 0) {
-          *puVar2 = *(undefined4 *)(iVar5 + 0x9c);
-          puVar2[1] = *(undefined4 *)(iVar5 + 0xa0);
-          puVar2[2] = *(undefined4 *)(iVar5 + 0xa4);
-          uVar1 = *(undefined4 *)(iVar5 + 0xa8);
+          *pfVar13 = (piVar5->window).disableColor[0];
+          pfVar13[1] = (piVar5->window).disableColor[1];
+          pfVar13[2] = (piVar5->window).disableColor[2];
+          fVar1 = (piVar5->window).disableColor[3];
         }
         else {
-          *puVar2 = *(undefined4 *)(iVar5 + 0x5c);
-          puVar2[1] = *(undefined4 *)(iVar5 + 0x60);
-          puVar2[2] = *(undefined4 *)(iVar5 + 100);
-          uVar1 = *(undefined4 *)(iVar5 + 0x68);
+          *pfVar13 = (piVar5->window).foreColor[0];
+          pfVar13[1] = (piVar5->window).foreColor[1];
+          pfVar13[2] = (piVar5->window).foreColor[2];
+          fVar1 = (piVar5->window).foreColor[3];
         }
-        puVar2[3] = uVar1;
+        pfVar13[3] = fVar1;
       }
-      if (((param_7 & 0xff) != 0) && (iVar6 != 0)) {
-        UI_FeederGetColorPulsed(uVar3,param_6);
+      if (((in_r9 & 0xff) != 0) && (iVar6 != 0)) {
+        UI_FeederGetColorPulsed(LVar3,pfVar13);
         __restgprlr_26();
         return;
       }
       goto LAB_825a9c30;
     }
   }
-  iVar8 = UI_FeederItemEnabled(dVar10,uVar3);
-  if (iVar8 != 0) {
-    *puVar2 = *(undefined4 *)(iVar5 + 0x5c);
-    puVar2[1] = *(undefined4 *)(iVar5 + 0x60);
-    puVar2[2] = *(undefined4 *)(iVar5 + 100);
-    puVar2[3] = *(undefined4 *)(iVar5 + 0x68);
+  iVar6 = UI_FeederItemEnabled(LVar3,(float)dVar14,(int)piVar11);
+  if (iVar6 != 0) {
+    *pfVar13 = (piVar5->window).foreColor[0];
+    pfVar13[1] = (piVar5->window).foreColor[1];
+    pfVar13[2] = (piVar5->window).foreColor[2];
+    pfVar13[3] = (piVar5->window).foreColor[3];
     __restgprlr_26();
     return;
   }
-  *puVar2 = *(undefined4 *)(iVar5 + 0x9c);
-  puVar2[1] = *(undefined4 *)(iVar5 + 0xa0);
-  puVar2[2] = *(undefined4 *)(iVar5 + 0xa4);
-  puVar2[3] = *(undefined4 *)(iVar5 + 0xa8);
+  *pfVar13 = (piVar5->window).disableColor[0];
+  pfVar13[1] = (piVar5->window).disableColor[1];
+  pfVar13[2] = (piVar5->window).disableColor[2];
+  pfVar13[3] = (piVar5->window).disableColor[3];
 LAB_825a9c30:
   __restgprlr_26();
   return;
@@ -5601,8 +5354,14 @@ LAB_825a9c30:
 
 // 825A9C40  UI_FeederBackColor  (ui_mp/ui_main_mp.cpp:7042)
 
-void UI_FeederBackColor(undefined8 param_1,int param_2,undefined8 param_3,ulonglong param_4,
-                       undefined4 *param_5)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void UI_FeederBackColor(LocalClientNum_t param_1,itemDef_t *param_2,float param_3,int param_4,
+                       float *param_5)
 
 {
   undefined4 uVar1;
@@ -5610,11 +5369,14 @@ void UI_FeederBackColor(undefined8 param_1,int param_2,undefined8 param_3,ulongl
   undefined4 uVar3;
   int iVar4;
   int iVar5;
-  int iVar6;
-  undefined8 *puVar7;
-  undefined4 *puVar8;
-  int iVar9;
-  double dVar10;
+  PartyData *pPVar6;
+  longlong lVar7;
+  ulonglong uVar8;
+  undefined4 *in_r7;
+  undefined8 *puVar9;
+  undefined4 *puVar10;
+  int iVar11;
+  double dVar12;
   undefined8 local_90;
   undefined4 local_88;
   undefined4 local_84;
@@ -5639,7 +5401,9 @@ void UI_FeederBackColor(undefined8 param_1,int param_2,undefined8 param_3,ulongl
   undefined4 local_38;
   undefined4 local_34;
   
-  dVar10 = (double)__savegprlr_28();
+  uVar8 = (ulonglong)(int)param_5;
+  lVar7 = (longlong)(int)param_2;
+  dVar12 = (double)__savegprlr_28((double)param_3,param_1,lVar7,param_4);
   local_90 = 0x3e4ccccd3e4ccccd;
   local_88 = 0x3e4ccccd;
   local_84 = 0x3f000000;
@@ -5663,16 +5427,16 @@ void UI_FeederBackColor(undefined8 param_1,int param_2,undefined8 param_3,ulongl
   local_5c = 0x3e1cac08;
   local_58 = 0x3e1cac08;
   local_54 = 0x3f000000;
-  if ((int)dVar10 - 0x11U < 0xc) {
-    iVar9 = (int)param_4;
-    iVar4 = iVar9 >> 1;
-    switch((int)dVar10) {
+  if ((int)dVar12 - 0x11U < 0xc) {
+    iVar11 = (int)uVar8;
+    iVar4 = iVar11 >> 1;
+    switch((int)dVar12) {
     case 0x11:
     case 0x17:
-      puVar7 = &local_90;
-      if (param_4 ==
-          ((longlong)iVar4 + (ulonglong)(iVar9 < 0 && (param_4 & 1) != 0) & 0x7fffffff) * 2) {
-        puVar7 = (undefined8 *)&local_80;
+      puVar9 = &local_90;
+      if (uVar8 == ((longlong)iVar4 + (ulonglong)(iVar11 < 0 && (uVar8 & 1) != 0) & 0x7fffffff) * 2)
+      {
+        puVar9 = (undefined8 *)&local_80;
       }
       break;
     case 0x12:
@@ -5680,16 +5444,16 @@ void UI_FeederBackColor(undefined8 param_1,int param_2,undefined8 param_3,ulongl
       if (iVar5 == 0) {
         iVar5 = GetPartyMemberCount();
       }
-      iVar6 = Lobby_GetPartyData();
-      if ((((*(int *)(iVar6 + 0x1ee0) != 0) || (*(char *)(DAT_84253bb8 + 0xc) != '\0')) ||
-          (iVar9 == 0)) || (iVar9 < iVar5)) goto switchD_825a9d2c_caseD_13;
-      puVar7 = &local_90;
-      if (param_4 ==
-          ((longlong)iVar4 + (ulonglong)(iVar9 < 0 && (param_4 & 1) != 0) & 0x7fffffff) * 2) {
-        *param_5 = local_80;
-        param_5[1] = local_7c;
-        param_5[2] = local_78;
-        param_5[3] = local_74;
+      pPVar6 = Lobby_GetPartyData();
+      if ((((pPVar6->gameStartTime != 0) || ((xblive_privatematch->current).enabled != false)) ||
+          (iVar11 == 0)) || (iVar11 < iVar5)) goto switchD_825a9d2c_caseD_13;
+      puVar9 = &local_90;
+      if (uVar8 == ((longlong)iVar4 + (ulonglong)(iVar11 < 0 && (uVar8 & 1) != 0) & 0x7fffffff) * 2)
+      {
+        *in_r7 = local_80;
+        in_r7[1] = local_7c;
+        in_r7[2] = local_78;
+        in_r7[3] = local_74;
         __restgprlr_28();
         return;
       }
@@ -5697,51 +5461,52 @@ void UI_FeederBackColor(undefined8 param_1,int param_2,undefined8 param_3,ulongl
     default:
       goto switchD_825a9d2c_caseD_13;
     case 0x1b:
-      puVar8 = &local_50;
-      if (param_4 ==
-          ((longlong)iVar4 + (ulonglong)(iVar9 < 0 && (param_4 & 1) != 0) & 0x7fffffff) * 2) {
-        puVar8 = &local_40;
+      puVar10 = &local_50;
+      if (uVar8 == ((longlong)iVar4 + (ulonglong)(iVar11 < 0 && (uVar8 & 1) != 0) & 0x7fffffff) * 2)
+      {
+        puVar10 = &local_40;
       }
-      uVar1 = puVar8[1];
-      uVar2 = puVar8[2];
-      uVar3 = puVar8[3];
-      *param_5 = *puVar8;
-      param_5[1] = uVar1;
-      param_5[2] = uVar2;
-      param_5[3] = uVar3;
+      uVar1 = puVar10[1];
+      uVar2 = puVar10[2];
+      uVar3 = puVar10[3];
+      *in_r7 = *puVar10;
+      in_r7[1] = uVar1;
+      in_r7[2] = uVar2;
+      in_r7[3] = uVar3;
       __restgprlr_28();
       return;
     case 0x1c:
-      puVar8 = &local_70;
-      if (param_4 ==
-          ((longlong)iVar4 + (ulonglong)(iVar9 < 0 && (param_4 & 1) != 0) & 0x7fffffff) * 2) {
-        puVar8 = &local_60;
+      puVar10 = &local_70;
+      if (uVar8 == ((longlong)iVar4 + (ulonglong)(iVar11 < 0 && (uVar8 & 1) != 0) & 0x7fffffff) * 2)
+      {
+        puVar10 = &local_60;
       }
-      uVar1 = puVar8[1];
-      uVar2 = puVar8[2];
-      uVar3 = puVar8[3];
-      *param_5 = *puVar8;
-      param_5[1] = uVar1;
-      param_5[2] = uVar2;
-      param_5[3] = uVar3;
+      uVar1 = puVar10[1];
+      uVar2 = puVar10[2];
+      uVar3 = puVar10[3];
+      *in_r7 = *puVar10;
+      in_r7[1] = uVar1;
+      in_r7[2] = uVar2;
+      in_r7[3] = uVar3;
       __restgprlr_28();
       return;
     }
-    uVar1 = *(undefined4 *)((int)puVar7 + 4);
-    uVar2 = *(undefined4 *)(puVar7 + 1);
-    uVar3 = *(undefined4 *)((int)puVar7 + 0xc);
-    *param_5 = *(undefined4 *)puVar7;
-    param_5[1] = uVar1;
-    param_5[2] = uVar2;
-    param_5[3] = uVar3;
+    uVar1 = *(undefined4 *)((int)puVar9 + 4);
+    uVar2 = *(undefined4 *)(puVar9 + 1);
+    uVar3 = *(undefined4 *)((int)puVar9 + 0xc);
+    *in_r7 = *(undefined4 *)puVar9;
+    in_r7[1] = uVar1;
+    in_r7[2] = uVar2;
+    in_r7[3] = uVar3;
     __restgprlr_28();
     return;
   }
 switchD_825a9d2c_caseD_13:
-  *param_5 = *(undefined4 *)(param_2 + 0x6c);
-  param_5[1] = *(undefined4 *)(param_2 + 0x70);
-  param_5[2] = *(undefined4 *)(param_2 + 0x74);
-  param_5[3] = *(undefined4 *)(param_2 + 0x78);
+  iVar4 = (int)lVar7;
+  *in_r7 = *(undefined4 *)(iVar4 + 0x6c);
+  in_r7[1] = *(undefined4 *)(iVar4 + 0x70);
+  in_r7[2] = *(undefined4 *)(iVar4 + 0x74);
+  in_r7[3] = *(undefined4 *)(iVar4 + 0x78);
   __restgprlr_28();
   return;
 }
@@ -5749,292 +5514,338 @@ switchD_825a9d2c_caseD_13:
 
 // 825B3078  UI_FeederData  (ui_mp/ui_main_mp.cpp:7089)
 
-void UI_FeederData(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined4 *param_4,
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+
+bool UI_FeederData(LocalClientNum_t param_1,itemDef_t *param_2,char *param_3,char **param_4,
                   float *param_5)
 
 {
-  int iVar1;
-  ulonglong uVar2;
+  ulonglong uVar1;
+  listBoxDef_s *plVar2;
   int iVar3;
-  int iVar4;
+  undefined1 uVar4;
+  char *pcVar5;
   
-  uVar2 = __savegprlr_27();
-  *param_4 = 0;
-  iVar3 = Item_GetListBoxDef(param_2);
-  if (iVar3 != 0) {
-    iVar4 = I_stricmp(param_3,0xffffffff82031d80);
-    iVar1 = (int)param_2;
-    if (iVar4 == 0) {
-      iVar3 = UI_FeederCount((double)*(float *)(iVar1 + 0x178),uVar2);
-      *param_5 = (float)(longlong)iVar3;
-      __restgprlr_27(1);
-      return;
-    }
-    iVar4 = I_stricmp(param_3,0xffffffff8216d7f4);
-    if (iVar4 == 0) {
-      *param_5 = (float)(longlong)*(int *)((int)((uVar2 + 0x5f & 0xffffffff) << 2) + iVar1);
-      __restgprlr_27(1);
-      return;
-    }
-    iVar4 = I_stricmp(param_3,0xffffffff8202bebc);
-    if (iVar4 == 0) {
-      *param_5 = (float)(longlong)*(int *)((int)((uVar2 & 0xffffffff) << 2) + iVar3);
-      __restgprlr_27(1);
-      return;
-    }
-    iVar3 = I_stricmp(param_3,0xffffffff8212d2c4);
+  uVar1 = __savegprlr_27(param_1);
+  *param_4 = (char *)0x0;
+  plVar2 = Item_GetListBoxDef(param_2);
+  if (plVar2 != (listBoxDef_s *)0x0) {
+    iVar3 = I_stricmp(param_3,"count");
     if (iVar3 == 0) {
-      iVar3 = UI_FeederItemEnabled((double)*(float *)(iVar1 + 0x178),uVar2);
+      iVar3 = UI_FeederCount((LocalClientNum_t)uVar1,param_2->special);
       *param_5 = (float)(longlong)iVar3;
-      __restgprlr_27(1);
-      return;
+      uVar4 = __restgprlr_27(1);
+      return (bool)uVar4;
+    }
+    iVar3 = I_stricmp(param_3,"selection");
+    if (iVar3 == 0) {
+      *param_5 = (float)(longlong)
+                        *(int *)((int)(param_2->window).dynamicFlags +
+                                (int)((uVar1 + 0x5f & 0xffffffff) << 2) + -0x48);
+      uVar4 = __restgprlr_27(1);
+      return (bool)uVar4;
+    }
+    iVar3 = I_stricmp(param_3,"start");
+    if (iVar3 == 0) {
+      *param_5 = (float)(longlong)*(int *)((int)plVar2->startPos + (int)((uVar1 & 0xffffffff) << 2))
+      ;
+      uVar4 = __restgprlr_27(1);
+      return (bool)uVar4;
+    }
+    pcVar5 = "enabled";
+    iVar3 = I_stricmp(param_3,"enabled");
+    if (iVar3 == 0) {
+      iVar3 = UI_FeederItemEnabled((LocalClientNum_t)uVar1,param_2->special,(int)pcVar5);
+      *param_5 = (float)(longlong)iVar3;
+      uVar4 = __restgprlr_27(1);
+      return (bool)uVar4;
     }
   }
-  __restgprlr_27(0);
-  return;
+  uVar4 = __restgprlr_27(0);
+  return (bool)uVar4;
 }
 
 
 // 825A9EE8  UI_FeederDataExtended  (ui_mp/ui_main_mp.cpp:7125)
 
-undefined8 UI_FeederDataExtended(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+
+bool UI_FeederDataExtended
+               (LocalClientNum_t param_1,itemDef_t *param_2,char *param_3,char **param_4,
+               float *param_5)
 
 {
-  return 0;
+  return false;
 }
 
 
 // 825AE528  UI_OverrideCursorPos  (ui_mp/ui_main_mp.cpp:7132)
 
-void UI_OverrideCursorPos(undefined8 param_1,longlong param_2)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void UI_OverrideCursorPos(LocalClientNum_t param_1,itemDef_t *param_2)
 
 {
   float fVar1;
-  int iVar2;
-  uint uVar3;
-  int iVar4;
-  int iVar5;
+  uint uVar2;
+  int iVar3;
+  ulonglong uVar4;
+  LocalClientNum_t LVar5;
+  bool bVar12;
   int iVar6;
-  uint uVar7;
-  ulonglong uVar8;
-  char cVar15;
-  undefined8 uVar9;
-  undefined8 uVar10;
-  longlong lVar11;
-  int iVar12;
-  int iVar13;
-  undefined4 uVar14;
-  ulonglong uVar16;
-  longlong lVar17;
-  int *piVar18;
-  double dVar19;
-  double dVar20;
+  uiInfo_s *puVar7;
+  int iVar8;
+  int iVar9;
+  listBoxDef_s *plVar10;
+  char *pcVar11;
+  ulonglong uVar13;
+  longlong lVar14;
+  int *piVar15;
+  double dVar16;
+  double dVar17;
   
-  uVar8 = __savegprlr_22();
-  iVar2 = (int)param_2;
-  dVar20 = 17.0;
-  dVar19 = 23.0;
-  if ((*(float *)(iVar2 + 0x178) != 17.0) && (*(float *)(iVar2 + 0x178) != 23.0)) {
-    cVar15 = GetTeam();
-    if (cVar15 == '\0') {
-      fVar1 = *(float *)(iVar2 + 0x178);
+  uVar4 = __savegprlr_22(param_1);
+  fVar1 = param_2->special;
+  dVar17 = 17.0;
+  dVar16 = 23.0;
+  LVar5 = (LocalClientNum_t)uVar4;
+  if ((fVar1 != 17.0) && (fVar1 != 23.0)) {
+    bVar12 = GetTeam(LVar5,fVar1,(int *)param_2);
+    if (!bVar12) {
+      fVar1 = param_2->special;
       if (fVar1 == 3.0) {
-        uVar9 = UI_GetListIndexFromMapIndex(*(undefined4 *)(DAT_83f71ed4 + 0xc));
-        *(int *)((int)((uVar8 + 0x5f & 0xffffffff) << 2) + iVar2) = (int)uVar9;
-        uVar10 = UI_GetClientInfo(uVar8);
-        Menu_SetFeederSelection(uVar10,*(undefined4 *)(iVar2 + 0x134),3,uVar9,0);
+        iVar6 = UI_GetListIndexFromMapIndex((ui_currentFeederMapIndex->current).integer);
+        *(int *)((int)(param_2->window).dynamicFlags +
+                (int)((uVar4 + 0x5f & 0xffffffff) << 2) + -0x48) = iVar6;
+        puVar7 = UI_GetClientInfo(LVar5);
+        Menu_SetFeederSelection(&puVar7->uiDC,param_2->parent,3,iVar6,(char *)0x0);
         __restgprlr_22();
         return;
       }
       if (fVar1 == 24.0) {
-        PlaylistFeeder_OverrideCursorPos(uVar8,param_2);
+        PlaylistFeeder_OverrideCursorPos(LVar5,param_2);
         __restgprlr_22();
         return;
       }
       if (fVar1 == 2.0) {
-        iVar13 = *(int *)(iVar2 + 0x18c);
-        iVar12 = (int)((uVar8 + 4 & 0x3fffffff) << 2);
-        if (*(int *)(iVar12 + iVar13) == 0) {
-          *(undefined4 *)((int)((uVar8 + 0x5f & 0xffffffff) << 2) + iVar2) = 0xffffffff;
+        plVar10 = (param_2->typeData).listBox;
+        iVar6 = (int)((uVar4 + 4 & 0x3fffffff) << 2);
+        if (*(int *)((int)plVar10->startPos + iVar6) == 0) {
+          *(undefined4 *)
+           ((int)(param_2->window).dynamicFlags + (int)((uVar4 + 0x5f & 0xffffffff) << 2) + -0x48) =
+               0xffffffff;
           __restgprlr_22();
           return;
         }
-        iVar5 = (int)((uVar8 + 0x5f & 0x3fffffff) << 2);
-        iVar6 = (int)((uVar8 & 0x3fffffff) << 2);
-        if (*(int *)(iVar5 + iVar2) < *(int *)(iVar6 + iVar13)) {
-          *(int *)(iVar5 + iVar2) = *(int *)(iVar6 + iVar13);
+        iVar3 = (int)((uVar4 + 0x5f & 0x3fffffff) << 2);
+        iVar9 = (int)((uVar4 & 0x3fffffff) << 2);
+        iVar8 = *(int *)((int)plVar10->startPos + iVar9);
+        if (*(int *)((int)(param_2->window).dynamicFlags + iVar3 + -0x48) < iVar8) {
+          *(int *)((int)(param_2->window).dynamicFlags + iVar3 + -0x48) = iVar8;
         }
-        if (*(int *)(iVar12 + iVar13) <= *(int *)(iVar5 + iVar2)) {
-          *(int *)(iVar5 + iVar2) = *(int *)(iVar12 + iVar13) + -1;
+        iVar8 = *(int *)((int)plVar10->startPos + iVar6);
+        if (iVar8 <= *(int *)((int)(param_2->window).dynamicFlags + iVar3 + -0x48)) {
+          *(int *)((int)(param_2->window).dynamicFlags + iVar3 + -0x48) = iVar8 + -1;
         }
-        uVar16 = (ulonglong)DAT_83fd21f0;
-        if ((int)DAT_83fd21f0 < (int)DAT_83fe5a74) {
+        uVar13 = (ulonglong)(uint)sharedUiInfo.serverStatus.currentServer;
+        if (sharedUiInfo.serverStatus.currentServer < sharedUiInfo.serverStatus.numDisplayServers) {
 LAB_825ae6d4:
-          if ((int)uVar16 < 0) goto LAB_825aed34;
+          if ((int)uVar13 < 0) goto LAB_825aed34;
         }
         else {
-          uVar16 = (ulonglong)DAT_83fe5a74 - 1;
-          if (0 < (longlong)uVar16) {
-            DAT_83fd21f0 = (uint)uVar16;
+          uVar13 = (ulonglong)(uint)sharedUiInfo.serverStatus.numDisplayServers - 1;
+          if (0 < (longlong)uVar13) {
+            sharedUiInfo.serverStatus.currentServer = (int)uVar13;
             goto LAB_825ae6d4;
           }
-          uVar16 = 0;
-          DAT_83fd21f0 = 0;
+          uVar13 = 0;
+          sharedUiInfo.serverStatus.currentServer = 0;
         }
-        uVar3 = *(uint *)(iVar5 + iVar2);
-        if (((int)uVar3 < *(int *)(iVar6 + iVar13)) || (*(int *)(iVar12 + iVar13) < (int)uVar3))
-        goto LAB_825aed34;
-        lVar11 = Item_ListBox_MaxScroll(uVar8,param_2);
-        lVar17 = (ulonglong)*(uint *)(iVar6 + iVar13) + (uVar16 - uVar3);
-        if ((int)lVar11 <= (int)lVar17) {
-          lVar17 = lVar11;
+        uVar2 = *(uint *)((int)(param_2->window).dynamicFlags + iVar3 + -0x48);
+        if (((int)uVar2 < *(int *)((int)plVar10->startPos + iVar9)) ||
+           (*(int *)((int)plVar10->startPos + iVar6) < (int)uVar2)) goto LAB_825aed34;
+        iVar8 = Item_ListBox_MaxScroll(LVar5,param_2);
+        lVar14 = (ulonglong)*(uint *)((int)plVar10->startPos + iVar9) + (uVar13 - uVar2);
+        if (iVar8 <= (int)lVar14) {
+          lVar14 = (longlong)iVar8;
         }
-        iVar4 = *(int *)(iVar12 + iVar13);
-        *(uint *)(iVar6 + iVar13) =
-             -((int)(uint)lVar17 >> 0x1f) - (uint)(lVar17 != 0) & (uint)lVar17;
-        *(int *)(iVar12 + iVar13) = iVar4 + (int)(uVar16 - uVar3);
-        *(uint *)(iVar5 + iVar2) = DAT_83fd21f0;
+        iVar8 = *(int *)((int)plVar10->startPos + iVar6);
+        *(uint *)((int)plVar10->startPos + iVar9) =
+             -((int)(uint)lVar14 >> 0x1f) - (uint)(lVar14 != 0) & (uint)lVar14;
+        *(int *)((int)plVar10->startPos + iVar6) = iVar8 + (int)(uVar13 - uVar2);
+        *(int *)((int)(param_2->window).dynamicFlags + iVar3 + -0x48) =
+             sharedUiInfo.serverStatus.currentServer;
       }
-      if (*(float *)(iVar2 + 0x178) == 25.0) {
-        uVar16 = (ulonglong)DAT_83f7bc58;
-        lVar17 = CustomGameTypes_GetGametypeCount();
-        if ((longlong)(lVar17 + uVar16) < 0) {
-          MyAssertHandler(0xffffffff8216ab14,0x1c49,0,0xffffffff82000f98,0xffffffff8216c9f0);
+      if (param_2->special == 25.0) {
+        uVar13 = (ulonglong)(uint)sharedUiInfo.numCustomGameTypes;
+        iVar6 = CustomGameTypes_GetGametypeCount();
+        if ((longlong)((longlong)iVar6 + uVar13) < 0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",
+                          0x1c49,0,"%s");
         }
-        uVar16 = (ulonglong)DAT_83f7bc58;
-        lVar17 = CustomGameTypes_GetGametypeCount();
-        uVar3 = DAT_83f7bc58;
-        if (lVar17 + uVar16 == 0) {
+        uVar13 = (ulonglong)(uint)sharedUiInfo.numCustomGameTypes;
+        iVar8 = CustomGameTypes_GetGametypeCount();
+        iVar6 = sharedUiInfo.numCustomGameTypes;
+        if ((longlong)iVar8 + uVar13 == 0) {
 LAB_825ae7b0:
-          *(undefined4 *)((int)((uVar8 + 0x5f & 0xffffffff) << 2) + iVar2) = 0;
+          *(undefined4 *)
+           ((int)(param_2->window).dynamicFlags + (int)((uVar4 + 0x5f & 0xffffffff) << 2) + -0x48) =
+               0;
           __restgprlr_22();
           return;
         }
-        iVar13 = (int)((uVar8 + 0x5f & 0xffffffff) << 2);
-        iVar12 = CustomGameTypes_GetGametypeCount();
-        uVar7 = DAT_83f7bc58;
-        if ((int)(iVar12 + uVar3) <= *(int *)(iVar13 + iVar2)) {
-          iVar12 = CustomGameTypes_GetGametypeCount();
-          *(uint *)(iVar13 + iVar2) = iVar12 + (uVar7 - 1);
+        iVar8 = (int)((uVar4 + 0x5f & 0xffffffff) << 2);
+        iVar9 = CustomGameTypes_GetGametypeCount();
+        iVar3 = sharedUiInfo.numCustomGameTypes;
+        if (iVar9 + iVar6 <= *(int *)((int)(param_2->window).dynamicFlags + iVar8 + -0x48)) {
+          iVar6 = CustomGameTypes_GetGametypeCount();
+          *(int *)((int)(param_2->window).dynamicFlags + iVar8 + -0x48) = iVar6 + iVar3 + -1;
           __restgprlr_22();
           return;
         }
       }
       else {
-        if (*(float *)(iVar2 + 0x178) == 26.0) {
-          uVar16 = Item_GetListBoxDef(param_2);
-          if ((uVar16 & 0xffffffff) == 0) {
-            MyAssertHandler(0xffffffff8216ab14,0x1c5b,0,0xffffffff82000f98,0xffffffff8216c128);
+        if (param_2->special == 26.0) {
+          plVar10 = Item_GetListBoxDef(param_2);
+          if (plVar10 == (listBoxDef_s *)0x0) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",
+                            0x1c5b,0,"%s");
           }
-          uVar9 = Item_ListBox_Viewmax(uVar8,param_2);
+          iVar6 = Item_ListBox_Viewmax(LVar5,param_2);
           LB_OverrideCursorPos
-                    (uVar9,(uVar8 + 0x5f & 0x3fffffff) * 4 + param_2,
-                     (uVar8 & 0x3fffffff) * 4 + uVar16);
+                    (iVar6,(int *)((int)(param_2->window).dynamicFlags +
+                                  (int)((uVar4 + 0x5f & 0xffffffff) << 2) + -0x48),
+                     (int *)((int)plVar10->startPos + (int)((uVar4 & 0xffffffff) << 2)));
         }
-        if (*(float *)(iVar2 + 0x178) == 29.0) {
-          uVar16 = Item_GetListBoxDef(param_2);
-          if ((uVar16 & 0xffffffff) == 0) {
-            MyAssertHandler(0xffffffff8216ab14,0x1c69,0,0xffffffff82000f98,0xffffffff8216c128);
+        if (param_2->special == 29.0) {
+          plVar10 = Item_GetListBoxDef(param_2);
+          if (plVar10 == (listBoxDef_s *)0x0) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",
+                            0x1c69,0,"%s");
           }
-          uVar9 = Item_ListBox_Viewmax(uVar8,param_2);
-          uVar10 = CL_ControllerIndexFromClientNum(uVar8);
+          iVar6 = Item_ListBox_Viewmax(LVar5,param_2);
+          iVar8 = CL_ControllerIndexFromClientNum(LVar5);
           FriendsMenu_FeederOverrideCursorPos
-                    (uVar10,uVar9,(uVar8 + 0x5f & 0x3fffffff) * 4 + param_2,
-                     (uVar8 & 0x3fffffff) * 4 + uVar16);
+                    (iVar8,iVar6,
+                     (int *)((int)(param_2->window).dynamicFlags +
+                            (int)((uVar4 + 0x5f & 0xffffffff) << 2) + -0x48),
+                     (int *)((int)plVar10->startPos + (int)((uVar4 & 0xffffffff) << 2)));
         }
-        if (*(float *)(iVar2 + 0x178) == 31.0) {
-          uVar16 = Item_GetListBoxDef(param_2);
-          if ((uVar16 & 0xffffffff) == 0) {
-            MyAssertHandler(0xffffffff8216ab14,0x1c77,0,0xffffffff82000f98,0xffffffff8216c128);
+        if (param_2->special == 31.0) {
+          plVar10 = Item_GetListBoxDef(param_2);
+          if (plVar10 == (listBoxDef_s *)0x0) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",
+                            0x1c77,0,"%s");
           }
-          uVar9 = Item_ListBox_Viewmax(uVar8,param_2);
-          uVar10 = CL_ControllerIndexFromClientNum(uVar8);
+          iVar6 = Item_ListBox_Viewmax(LVar5,param_2);
+          iVar8 = CL_ControllerIndexFromClientNum(LVar5);
           MeetPlayer_FeederOverrideCursorPos
-                    (uVar10,uVar9,(uVar8 + 0x5f & 0x3fffffff) * 4 + param_2,
-                     (uVar8 & 0x3fffffff) * 4 + uVar16);
+                    (iVar8,iVar6,
+                     (int *)((int)(param_2->window).dynamicFlags +
+                            (int)((uVar4 + 0x5f & 0xffffffff) << 2) + -0x48),
+                     (int *)((int)plVar10->startPos + (int)((uVar4 & 0xffffffff) << 2)));
         }
-        if (*(float *)(iVar2 + 0x178) == 32.0) {
-          uVar16 = Item_GetListBoxDef(param_2);
-          if ((uVar16 & 0xffffffff) == 0) {
-            MyAssertHandler(0xffffffff8216ab14,0x1c85,0,0xffffffff82000f98,0xffffffff8216c128);
+        if (param_2->special == 32.0) {
+          plVar10 = Item_GetListBoxDef(param_2);
+          if (plVar10 == (listBoxDef_s *)0x0) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",
+                            0x1c85,0,"%s");
           }
-          uVar9 = Item_ListBox_Viewmax(uVar8,param_2);
+          iVar6 = Item_ListBox_Viewmax(LVar5,param_2);
           LiveParty_FeederOverrideCursorPos
-                    (uVar9,(uVar8 + 0x5f & 0x3fffffff) * 4 + param_2,
-                     (uVar8 & 0x3fffffff) * 4 + uVar16);
+                    (iVar6,(int *)((int)(param_2->window).dynamicFlags +
+                                  (int)((uVar4 + 0x5f & 0xffffffff) << 2) + -0x48),
+                     (int *)((int)plVar10->startPos + (int)((uVar4 & 0xffffffff) << 2)));
         }
-        if (*(float *)(iVar2 + 0x178) == 33.0) {
-          uVar16 = Item_GetListBoxDef(param_2);
-          if ((uVar16 & 0xffffffff) == 0) {
-            MyAssertHandler(0xffffffff8216ab14,0x1c93,0,0xffffffff82000f98,0xffffffff8216c128);
+        if (param_2->special == 33.0) {
+          plVar10 = Item_GetListBoxDef(param_2);
+          if (plVar10 == (listBoxDef_s *)0x0) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",
+                            0x1c93,0,"%s");
           }
-          uVar9 = Item_ListBox_Viewmax(uVar8,param_2);
-          uVar10 = CL_ControllerIndexFromClientNum(uVar8);
+          iVar6 = Item_ListBox_Viewmax(LVar5,param_2);
+          iVar8 = CL_ControllerIndexFromClientNum(LVar5);
           Facebook_FeederOverrideCursorPos
-                    (uVar10,uVar9,(uVar8 + 0x5f & 0x3fffffff) * 4 + param_2,
-                     (uVar8 & 0x3fffffff) * 4 + uVar16);
+                    (iVar8,iVar6,
+                     (int *)((int)(param_2->window).dynamicFlags +
+                            (int)((uVar4 + 0x5f & 0xffffffff) << 2) + -0x48),
+                     (int *)((int)plVar10->startPos + (int)((uVar4 & 0xffffffff) << 2)));
         }
-        if (*(float *)(iVar2 + 0x178) == 34.0) {
-          uVar16 = Item_GetListBoxDef(param_2);
-          if ((uVar16 & 0xffffffff) == 0) {
-            MyAssertHandler(0xffffffff8216ab14,0x1ca1,0,0xffffffff82000f98,0xffffffff8216c128);
+        if (param_2->special == 34.0) {
+          plVar10 = Item_GetListBoxDef(param_2);
+          if (plVar10 == (listBoxDef_s *)0x0) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",
+                            0x1ca1,0,"%s");
           }
-          uVar9 = Item_ListBox_Viewmax(uVar8,param_2);
-          uVar10 = CL_ControllerIndexFromClientNum(uVar8);
+          iVar6 = Item_ListBox_Viewmax(LVar5,param_2);
+          iVar8 = CL_ControllerIndexFromClientNum(LVar5);
           EliteClan_FeederOverrideCursorPos
-                    (uVar10,uVar9,(uVar8 + 0x5f & 0x3fffffff) * 4 + param_2,
-                     (uVar8 & 0x3fffffff) * 4 + uVar16);
+                    (iVar8,iVar6,
+                     (int *)((int)(param_2->window).dynamicFlags +
+                            (int)((uVar4 + 0x5f & 0xffffffff) << 2) + -0x48),
+                     (int *)((int)plVar10->startPos + (int)((uVar4 & 0xffffffff) << 2)));
         }
-        fVar1 = *(float *)(iVar2 + 0x178);
+        fVar1 = param_2->special;
         if (fVar1 == 37.0) {
-          CL_ControllerIndexFromClientNum(uVar8);
-          iVar13 = CL_Demo_EnumCount();
-          if (iVar13 < 0) {
-            MyAssertHandler(0xffffffff8216ab14,0x1cad,0,0xffffffff82000f98,0xffffffff8216c9a0);
+          iVar6 = CL_ControllerIndexFromClientNum(LVar5);
+          iVar6 = CL_Demo_EnumCount(iVar6);
+          if (iVar6 < 0) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",
+                            0x1cad,0,"%s");
           }
-          CL_ControllerIndexFromClientNum(uVar8);
-          iVar13 = CL_Demo_EnumCount();
-          if (iVar13 == 0) goto LAB_825ae7b0;
-          iVar12 = (int)((uVar8 + 0x5f & 0xffffffff) << 2);
-          if (iVar13 <= *(int *)(iVar12 + iVar2)) {
-            *(int *)(iVar12 + iVar2) = iVar13 + -1;
+          iVar6 = CL_ControllerIndexFromClientNum(LVar5);
+          iVar6 = CL_Demo_EnumCount(iVar6);
+          if (iVar6 == 0) goto LAB_825ae7b0;
+          iVar8 = (int)((uVar4 + 0x5f & 0xffffffff) << 2);
+          if (iVar6 <= *(int *)((int)(param_2->window).dynamicFlags + iVar8 + -0x48)) {
+            *(int *)((int)(param_2->window).dynamicFlags + iVar8 + -0x48) = iVar6 + -1;
             __restgprlr_22();
             return;
           }
         }
         else {
           if (fVar1 == 36.0) {
-            uVar9 = CL_ControllerIndexFromClientNum(uVar8);
-            OnlineVault_FeederOverrideCursorPos(uVar9,param_2);
+            iVar6 = CL_ControllerIndexFromClientNum(LVar5);
+            OnlineVault_FeederOverrideCursorPos(iVar6,param_2);
             __restgprlr_22();
             return;
           }
           if (fVar1 == 1.0) {
-            iVar12 = UI_GetMapCount();
-            iVar13 = (int)((uVar8 + 0x5f & 0x3fffffff) << 2);
-            if (iVar12 <= *(int *)(iVar13 + iVar2)) {
-              *(undefined4 *)(iVar13 + iVar2) = 0;
+            iVar8 = UI_GetMapCount();
+            iVar6 = (int)((uVar4 + 0x5f & 0x3fffffff) << 2);
+            if (iVar8 <= *(int *)((int)(param_2->window).dynamicFlags + iVar6 + -0x48)) {
+              *(undefined4 *)((int)(param_2->window).dynamicFlags + iVar6 + -0x48) = 0;
             }
-            if (iVar12 == 0) {
-              *(undefined4 *)(iVar13 + iVar2) = 0;
-              Dvar_SetStringByName(0xffffffff8216b5e0,0xffffffff820068af);
+            if (iVar8 == 0) {
+              *(undefined4 *)((int)(param_2->window).dynamicFlags + iVar6 + -0x48) = 0;
+              Dvar_SetStringByName("ui_selectedFeederMap","");
               __restgprlr_22();
               return;
             }
-            cVar15 = Dvar_GetBool(0xffffffff8216c988);
-            if (cVar15 != '\0') {
-              *(undefined4 *)(iVar13 + iVar2) = 0;
-              Dvar_SetBoolByName(0xffffffff8216c988,0);
+            bVar12 = Dvar_GetBool("ui_mapPackChanged");
+            if (bVar12) {
+              *(undefined4 *)((int)(param_2->window).dynamicFlags + iVar6 + -0x48) = 0;
+              Dvar_SetBoolByName("ui_mapPackChanged",false);
               __restgprlr_22();
               return;
             }
-            uVar9 = UI_GetMapLoadNameForCurrentIndex(*(undefined4 *)(iVar13 + iVar2));
-            iVar12 = I_strcmp(*(undefined4 *)(DAT_83f7a98c + 0xc),uVar9);
-            if (iVar12 != 0) {
-              uVar14 = UI_GetIndexForMapLoadName(*(undefined4 *)(DAT_83f7a98c + 0xc));
-              *(undefined4 *)(iVar13 + iVar2) = uVar14;
-              uVar9 = UI_GetMapLoadNameForCurrentIndex();
-              Dvar_SetStringByName(0xffffffff8216b5e0,uVar9);
+            pcVar11 = UI_GetMapLoadNameForCurrentIndex
+                                (*(int *)((int)(param_2->window).dynamicFlags + iVar6 + -0x48));
+            iVar8 = I_strcmp((ui_selectedFeederMap->current).string,pcVar11);
+            if (iVar8 != 0) {
+              iVar8 = UI_GetIndexForMapLoadName((ui_selectedFeederMap->current).string);
+              *(int *)((int)(param_2->window).dynamicFlags + iVar6 + -0x48) = iVar8;
+              pcVar11 = UI_GetMapLoadNameForCurrentIndex(iVar8);
+              Dvar_SetStringByName("ui_selectedFeederMap",pcVar11);
               __restgprlr_22();
               return;
             }
@@ -6044,36 +5855,36 @@ LAB_825ae7b0:
       goto LAB_825aed34;
     }
   }
-  if ((double)*(float *)(iVar2 + 0x178) == dVar20) {
-    uVar9 = GetLobbyMemberCount();
+  if ((double)param_2->special == dVar17) {
+    iVar6 = GetLobbyMemberCount();
   }
-  else if ((double)*(float *)(iVar2 + 0x178) == dVar19) {
-    uVar9 = GetPartyMemberCount();
+  else if ((double)param_2->special == dVar16) {
+    iVar6 = GetPartyMemberCount();
   }
   else {
-    uVar9 = GetTeamMemberCount(0);
+    iVar6 = GetTeamMemberCount(0);
   }
-  iVar13 = (int)uVar9;
-  if (iVar13 < 0) {
-    MyAssertHandler(0xffffffff8216ab14,0x1bef,0,0xffffffff8216c964,0xffffffff8216c978,uVar9);
+  if (iVar6 < 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x1bef,0
+                    ,"%s\n\t(count) = %i");
   }
-  iVar12 = (int)((uVar8 + 0x5f & 0x3fffffff) << 2);
-  piVar18 = (int *)(iVar12 + iVar2);
-  if (iVar13 == 0) {
-    *(undefined4 *)(iVar12 + iVar2) = 0;
+  iVar8 = (int)((uVar4 + 0x5f & 0x3fffffff) << 2);
+  piVar15 = (int *)((int)(param_2->window).dynamicFlags + iVar8 + -0x48);
+  if (iVar6 == 0) {
+    *(undefined4 *)((int)(param_2->window).dynamicFlags + iVar8 + -0x48) = 0;
   }
-  else if (iVar13 <= *(int *)(iVar12 + iVar2)) {
-    *piVar18 = iVar13 + -1;
+  else if (iVar6 <= *(int *)((int)(param_2->window).dynamicFlags + iVar8 + -0x48)) {
+    *piVar15 = iVar6 + -1;
   }
-  iVar2 = *(int *)(iVar2 + 0x18c);
-  if (iVar2 != 0) {
-    iVar12 = Item_ListBox_Viewmax(uVar8,param_2);
-    iVar13 = (int)((uVar8 & 0x3fffffff) << 2);
-    if (*piVar18 < *(int *)(iVar13 + iVar2)) {
-      *(int *)(iVar13 + iVar2) = *piVar18;
+  plVar10 = (param_2->typeData).listBox;
+  if (plVar10 != (listBoxDef_s *)0x0) {
+    iVar8 = Item_ListBox_Viewmax(LVar5,param_2);
+    iVar6 = (int)((uVar4 & 0x3fffffff) << 2);
+    if (*piVar15 < *(int *)((int)plVar10->startPos + iVar6)) {
+      *(int *)((int)plVar10->startPos + iVar6) = *piVar15;
     }
-    if (*(int *)(iVar13 + iVar2) <= *piVar18 - iVar12) {
-      *(int *)(iVar13 + iVar2) = (*piVar18 - iVar12) + 1;
+    if (*(int *)((int)plVar10->startPos + iVar6) <= *piVar15 - iVar8) {
+      *(int *)((int)plVar10->startPos + iVar6) = (*piVar15 - iVar8) + 1;
     }
   }
 LAB_825aed34:
@@ -6084,136 +5895,148 @@ LAB_825aed34:
 
 // 825AED48  UI_FeederSelection  (ui_mp/ui_main_mp.cpp:7392)
 
-void UI_FeederSelection(undefined8 param_1,undefined8 param_2,ulonglong param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+
+void UI_FeederSelection(LocalClientNum_t param_1,float param_2,int param_3)
 
 {
-  ulonglong uVar1;
-  longlong lVar2;
+  LocalClientNum_t LVar1;
+  uint uVar2;
   int iVar3;
-  int iVar4;
-  undefined8 uVar5;
-  int iVar6;
+  char *pcVar4;
+  int iVar5;
+  ulonglong in_r5;
   double extraout_f1;
-  double dVar7;
+  double dVar6;
   
-  uVar1 = __savegprlr_29();
-  iVar6 = (int)param_3;
-  dVar7 = extraout_f1;
-  if (iVar6 < 0) {
-    MyAssertHandler(0xffffffff8216ab14,0x1ce4,0,0xffffffff82000f98,0xffffffff8216ca60);
+  LVar1 = __savegprlr_29((double)param_2,param_1,param_3);
+  uVar2 = (uint)in_r5;
+  dVar6 = extraout_f1;
+  if ((int)uVar2 < 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x1ce4,0
+                    ,"%s");
   }
-  if (3 < (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8216ab14,0x1c2,0,0xffffffff820011a8,uVar1,4);
+  if (LOCAL_CLIENT_3 < LVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x1c2,0,
+                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  if (dVar7 == 3.0) {
-    uVar1 = UI_SelectedMap(param_3);
-    uVar1 = ((uVar1 & 0xffffffff) >> 0x1f) - 1 & uVar1;
-    Dvar_SetInt(DAT_83f71ec0,uVar1);
-    Dvar_SetInt(DAT_83f71ed4,uVar1);
+  if (dVar6 == 3.0) {
+    uVar2 = UI_SelectedMap(uVar2);
+    uVar2 = -((int)uVar2 >> 0x1f) - 1U & uVar2;
+    Dvar_SetInt(ui_currentMap,uVar2);
+    Dvar_SetInt(ui_currentFeederMapIndex,uVar2);
     __restgprlr_29();
     return;
   }
-  if (dVar7 == 1.0) {
-    lVar2 = UI_GetMapIdForNum(param_3);
-    if ((-1 < (int)lVar2) && ((int)lVar2 < DAT_83f7df64)) {
-      Dvar_SetString(DAT_83f7a98c,lVar2 * 0xa78 + -0x7c082078);
+  if (dVar6 == 1.0) {
+    iVar3 = UI_GetMapIdForNum(uVar2);
+    if ((-1 < iVar3) && (iVar3 < sharedUiInfo.mapCount)) {
+      Dvar_SetString(ui_selectedFeederMap,sharedUiInfo.mapList[iVar3].mapLoadName);
       __restgprlr_29();
       return;
     }
     goto LAB_825af1a0;
   }
-  if (dVar7 == 2.0) {
-    if (0 < DAT_83fe5a74) {
-      DAT_83fd21f0 = iVar6;
+  if (dVar6 == 2.0) {
+    if (0 < sharedUiInfo.serverStatus.numDisplayServers) {
+      sharedUiInfo.serverStatus.currentServer = uVar2;
     }
-    LAN_GetServerInfo(*(undefined4 *)(DAT_83f71e68 + 0xc),
-                      *(undefined4 *)(&DAT_83fd21f4 + (int)((param_3 & 0xffffffff) << 2)),
-                      0xffffffff83fe78e8,0x400);
+    LAN_GetServerInfo((ui_netSource->current).integer,
+                      *(int *)((int)sharedUiInfo.serverStatus.displayServers +
+                              (int)((in_r5 & 0xffffffff) << 2)),info,0x400);
     __restgprlr_29();
     return;
   }
-  if (dVar7 == 6.0) {
-    *(int *)(&DAT_83f74164 + (int)uVar1 * 0x22ac) = iVar6;
+  if (dVar6 == 6.0) {
+    uiInfoArray[LVar1].playerIndex = uVar2;
     __restgprlr_29();
     return;
   }
-  if (dVar7 == 17.0) {
-    if (-1 < iVar6) goto LAB_825af1a0;
-    uVar5 = 0x1d12;
+  if (dVar6 == 17.0) {
+    if (-1 < (int)uVar2) goto LAB_825af1a0;
+    iVar3 = 0x1d12;
   }
-  else if (dVar7 == 23.0) {
-    if (-1 < iVar6) goto LAB_825af1a0;
-    uVar5 = 0x1d17;
+  else if (dVar6 == 23.0) {
+    if (-1 < (int)uVar2) goto LAB_825af1a0;
+    iVar3 = 0x1d17;
   }
   else {
-    if ((dVar7 != 27.0) && (dVar7 != 28.0)) {
-      if (dVar7 == 24.0) {
-        PlaylistFeeder_Selected(param_3);
+    if ((dVar6 != 27.0) && (dVar6 != 28.0)) {
+      if (dVar6 == 24.0) {
+        PlaylistFeeder_Selected(uVar2);
         __restgprlr_29();
         return;
       }
-      if (dVar7 == 25.0) {
-        if ((-1 < iVar6) && (iVar3 = CustomGameTypes_GetGametypeCount(), iVar6 < iVar3)) {
-          uVar5 = CustomGameTypes_GetGametypeInternalName(param_3);
-          Dvar_SetStringByName(0xffffffff8202c6b0,uVar5);
-          uVar5 = CustomGameTypes_GetGametypeLocalizedName(param_3);
-          Dvar_SetStringByName(0xffffffff8216ca4c,uVar5);
-          Dvar_SetStringByName(0xffffffff8216ca38,0xffffffff820068af);
+      if (dVar6 == 25.0) {
+        if ((-1 < (int)uVar2) && (iVar3 = CustomGameTypes_GetGametypeCount(), (int)uVar2 < iVar3)) {
+          pcVar4 = CustomGameTypes_GetGametypeInternalName(uVar2);
+          Dvar_SetStringByName("ui_gametype",pcVar4);
+          pcVar4 = CustomGameTypes_GetGametypeLocalizedName(uVar2);
+          Dvar_SetStringByName("ui_gametype_text",pcVar4);
+          Dvar_SetStringByName("ui_custommodeName","");
           __restgprlr_29();
           return;
         }
-        lVar2 = CustomGameTypes_GetGametypeCount();
-        iVar3 = DAT_83f7bc58;
-        if ((-1 < (longlong)(param_3 - lVar2)) &&
-           (iVar4 = CustomGameTypes_GetGametypeCount(), iVar6 - iVar4 < iVar3)) {
-          lVar2 = CustomGameTypes_GetGametypeCount();
-          Dvar_SetStringByName(0xffffffff8216ca4c,(param_3 - lVar2) * 0x6c + -0x7c084398);
-          lVar2 = CustomGameTypes_GetGametypeCount();
-          Dvar_SetStringByName(0xffffffff8216ca38,(param_3 - lVar2) * 0x6c + -0x7c084398);
+        iVar5 = CustomGameTypes_GetGametypeCount();
+        iVar3 = sharedUiInfo.numCustomGameTypes;
+        if ((-1 < (longlong)(in_r5 - (longlong)iVar5)) &&
+           (iVar5 = CustomGameTypes_GetGametypeCount(), (int)(uVar2 - iVar5) < iVar3)) {
+          iVar3 = CustomGameTypes_GetGametypeCount();
+          Dvar_SetStringByName
+                    ("ui_gametype_text",
+                     (char *)((int)&sharedUiInfo + (uVar2 - iVar3) * 0x6c + 0x12b8));
+          iVar3 = CustomGameTypes_GetGametypeCount();
+          Dvar_SetStringByName
+                    ("ui_custommodeName",
+                     (char *)((int)&sharedUiInfo + (uVar2 - iVar3) * 0x6c + 0x12b8));
           __restgprlr_29();
           return;
         }
       }
       else {
-        if (dVar7 == 26.0) {
-          LB_FeederSelection(uVar1,param_3);
+        if (dVar6 == 26.0) {
+          LB_FeederSelection(LVar1,uVar2);
         }
-        if (dVar7 == 29.0) {
-          uVar5 = CL_ControllerIndexFromClientNum(uVar1);
-          FriendsMenu_FeederSelection(uVar5,param_3);
+        if (dVar6 == 29.0) {
+          iVar3 = CL_ControllerIndexFromClientNum(LVar1);
+          FriendsMenu_FeederSelection(iVar3,uVar2);
         }
-        if (dVar7 == 31.0) {
-          uVar5 = CL_ControllerIndexFromClientNum(uVar1);
-          MeetPlayer_FeederSelection(uVar5,param_3);
+        if (dVar6 == 31.0) {
+          iVar3 = CL_ControllerIndexFromClientNum(LVar1);
+          MeetPlayer_FeederSelection(iVar3,uVar2);
         }
-        if (dVar7 == 32.0) {
-          LiveParty_FeederSelection(param_3);
+        if (dVar6 == 32.0) {
+          LiveParty_FeederSelection(uVar2);
         }
-        if (dVar7 == 33.0) {
-          uVar5 = CL_ControllerIndexFromClientNum(uVar1);
-          Facebook_FeederSelection(uVar5,param_3);
+        if (dVar6 == 33.0) {
+          iVar3 = CL_ControllerIndexFromClientNum(LVar1);
+          Facebook_FeederSelection(iVar3,uVar2);
         }
-        if (dVar7 == 34.0) {
-          uVar5 = CL_ControllerIndexFromClientNum(uVar1);
-          EliteClan_FeederSelection(uVar5,param_3);
+        if (dVar6 == 34.0) {
+          iVar3 = CL_ControllerIndexFromClientNum(LVar1);
+          EliteClan_FeederSelection(iVar3,uVar2);
         }
-        if (dVar7 == 37.0) {
-          uVar5 = CL_ControllerIndexFromClientNum(uVar1);
-          CL_Demo_EnumSetIndex(uVar5,param_3);
+        if (dVar6 == 37.0) {
+          iVar3 = CL_ControllerIndexFromClientNum(LVar1);
+          CL_Demo_EnumSetIndex(iVar3,uVar2);
         }
-        if (dVar7 == 36.0) {
-          uVar5 = CL_ControllerIndexFromClientNum(uVar1);
-          OnlineVault_FeederSelection(uVar5,param_3);
+        if (dVar6 == 36.0) {
+          iVar3 = CL_ControllerIndexFromClientNum(LVar1);
+          OnlineVault_FeederSelection(iVar3,uVar2);
           __restgprlr_29();
           return;
         }
       }
       goto LAB_825af1a0;
     }
-    if (-1 < iVar6) goto LAB_825af1a0;
-    uVar5 = 0x1d1c;
+    if (-1 < (int)uVar2) goto LAB_825af1a0;
+    iVar3 = 0x1d1c;
   }
-  MyAssertHandler(0xffffffff8216ab14,uVar5,0,0xffffffff8200aef4,0xffffffff820127c0,param_3);
+  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",iVar3,0,
+                  "%s\n\t(index) = %i");
 LAB_825af1a0:
   __restgprlr_29();
   return;
@@ -6222,61 +6045,65 @@ LAB_825af1a0:
 
 // 825A9EF0  UI_GetGameTypesList_FastFile  (ui_mp/ui_main_mp.cpp:7623)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
 void UI_GetGameTypesList_FastFile(void)
 
 {
-  undefined8 uVar1;
-  uint uVar3;
-  ulonglong uVar2;
-  longlong lVar4;
-  longlong lVar5;
-  longlong lVar6;
-  uint local_50;
-  undefined4 local_4c;
-  undefined1 auStack_48 [72];
+  int iVar1;
+  int iVar2;
+  char *pcVar3;
+  char *pcVar4;
+  gameTypeInfo *pgVar5;
+  gameTypeInfo *pgVar6;
+  char *local_50;
+  char *local_4c;
+  LargeLocal aLStack_48 [9];
   
   __savegprlr_26();
-  LargeLocal__LargeLocal(auStack_48,0x18000);
-  uVar1 = LargeLocal__GetBuf(auStack_48);
-  uVar3 = DB_ReadRawFile(0xffffffff8207c914,uVar1,0x18000);
-  if ((uVar3 != 0) && (local_50 = uVar3, uVar1 = Com_Parse(&local_50), local_50 != 0)) {
-    while ((DAT_83f7aed4 != 0x20 && (DAT_83f7d1dc != 0x20))) {
-      lVar5 = (ulonglong)DAT_83f7aed4 * 0x6c;
-      lVar4 = (ulonglong)DAT_83f7d1dc * 0x6c;
-      lVar6 = lVar5 + -0x7c085128;
-      I_strncpyz(lVar6,uVar1,0xc);
-      I_strncpyz(lVar4 + -0x7c082e20,uVar1,0xc);
-      va(0xffffffff8207c870,uVar1);
-      uVar2 = GetMenuBuffer_FastFile();
-      local_4c = (undefined4)uVar2;
-      if ((uVar2 & 0xffffffff) == 0) {
-        I_strncpyz(lVar5 + -0x7c08511c,lVar6,0x20);
-        I_strncpyz(lVar5 + -0x7c0850fc,lVar6,0x20);
-        I_strncpyz(lVar5 + -0x7c0850dc,lVar6,0x20);
-        I_strncpyz(lVar4 + -0x7c082e14,lVar6,0x20);
+  LargeLocal::LargeLocal(aLStack_48,0x18000);
+  pcVar3 = LargeLocal::GetBuf(aLStack_48);
+  pcVar3 = DB_ReadRawFile("maps/mp/gametypes/_gametypes.txt",pcVar3,0x18000);
+  if ((pcVar3 != (char *)0x0) &&
+     (local_50 = pcVar3, pcVar3 = Com_Parse(&local_50), local_50 != (char *)0x0)) {
+    while ((iVar2 = sharedUiInfo.numJoinGameTypes, iVar1 = sharedUiInfo.numGameTypes,
+           sharedUiInfo.numGameTypes != 0x20 && (sharedUiInfo.numJoinGameTypes != 0x20))) {
+      pgVar6 = sharedUiInfo.gameTypes + sharedUiInfo.numGameTypes;
+      pgVar5 = sharedUiInfo.joinGameTypes + sharedUiInfo.numJoinGameTypes;
+      I_strncpyz(pgVar6->gameType,pcVar3,0xc);
+      I_strncpyz(pgVar5->gameType,pcVar3,0xc);
+      pcVar3 = va("maps/mp/gametypes/%s.txt");
+      pcVar3 = GetMenuBuffer_FastFile(pcVar3);
+      local_4c = pcVar3;
+      if (pcVar3 == (char *)0x0) {
+        I_strncpyz(sharedUiInfo.gameTypes[iVar1].gameTypeName,pgVar6->gameType,0x20);
+        I_strncpyz(sharedUiInfo.gameTypes[iVar1].customizedGameTypeName,pgVar6->gameType,0x20);
+        I_strncpyz(sharedUiInfo.gameTypes[iVar1].customizedGameTypeDesc,pgVar6->gameType,0x20);
+        I_strncpyz(sharedUiInfo.joinGameTypes[iVar2].gameTypeName,pgVar6->gameType,0x20);
       }
       else {
-        uVar1 = Com_Parse(&local_4c);
-        I_strncpyz(lVar5 + -0x7c08511c,uVar1,0x20);
-        I_strncpyz(lVar4 + -0x7c082e14,uVar1,0x20);
-        uVar1 = Com_Parse(&local_4c);
-        I_strncpyz(lVar5 + -0x7c0850fc,uVar1,0x20);
-        uVar1 = Com_Parse(&local_4c);
-        I_strncpyz(lVar5 + -0x7c0850dc,uVar1,0x20);
-        Z_VirtualFree(uVar2,10);
+        pcVar4 = Com_Parse(&local_4c);
+        I_strncpyz(sharedUiInfo.gameTypes[iVar1].gameTypeName,pcVar4,0x20);
+        I_strncpyz(sharedUiInfo.joinGameTypes[iVar2].gameTypeName,pcVar4,0x20);
+        pcVar4 = Com_Parse(&local_4c);
+        I_strncpyz(sharedUiInfo.gameTypes[iVar1].customizedGameTypeName,pcVar4,0x20);
+        pcVar4 = Com_Parse(&local_4c);
+        I_strncpyz(sharedUiInfo.gameTypes[iVar1].customizedGameTypeDesc,pcVar4,0x20);
+        Z_VirtualFree(pcVar3,10);
       }
-      DAT_83f7aed4 = DAT_83f7aed4 + 1;
-      DAT_83f7d1dc = DAT_83f7d1dc + 1;
-      uVar1 = Com_Parse(&local_50);
-      if (local_50 == 0) {
-        LargeLocal___LargeLocal(auStack_48);
+      sharedUiInfo.numGameTypes = sharedUiInfo.numGameTypes + 1;
+      sharedUiInfo.numJoinGameTypes = sharedUiInfo.numJoinGameTypes + 1;
+      pcVar3 = Com_Parse(&local_50);
+      if (local_50 == (char *)0x0) {
+        LargeLocal::~LargeLocal(aLStack_48);
         __restgprlr_26();
         return;
       }
     }
-    Com_Printf(0xd,0xffffffff8207c830,0x1f);
+    Com_Printf(0xd,"Too many game type scripts found! Only loading the first %i\n");
   }
-  LargeLocal___LargeLocal(auStack_48);
+  LargeLocal::~LargeLocal(aLStack_48);
   __restgprlr_26();
   return;
 }
@@ -6284,20 +6111,23 @@ void UI_GetGameTypesList_FastFile(void)
 
 // 825AA0E0  UI_UpdateGameTypesList  (ui_mp/ui_main_mp.cpp:7692)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
 void UI_UpdateGameTypesList(void)
 
 {
-  if (DAT_83f7aed0 != 0) {
-    DAT_83f7aed0 = 0;
-    DAT_83f7aed4 = 0;
-    DAT_83f7d1dc = 0;
-    I_strncpyz(0xffffffff83f7d1e0,0xffffffff8216c17c,0xc);
-    (&DAT_83f7d1ec)[DAT_83f7d1dc * 0x6c] = 0;
-    DAT_83f7d1dc = DAT_83f7d1dc + 1;
+  if (sharedUiInfo.updateGameTypeList != 0) {
+    sharedUiInfo.updateGameTypeList = 0;
+    sharedUiInfo.numGameTypes = 0;
+    sharedUiInfo.numJoinGameTypes = 0;
+    I_strncpyz(sharedUiInfo.joinGameTypes[0].gameType,"All",0xc);
+    sharedUiInfo.joinGameTypes[sharedUiInfo.numJoinGameTypes].gameTypeName[0] = '\0';
+    sharedUiInfo.numJoinGameTypes = sharedUiInfo.numJoinGameTypes + 1;
     UI_GetGameTypesList_FastFile();
   }
-  if (DAT_83f7aed4 == 0) {
-    Com_Error(0,0xffffffff8216c144);
+  if (sharedUiInfo.numGameTypes == 0) {
+    Com_Error(ERR_FATAL,"\x15No game type scripts found in maps/mp/gametypes folder");
   }
   return;
 }
@@ -6305,14 +6135,17 @@ void UI_UpdateGameTypesList(void)
 
 // 825AA188  UI_GetGameTypesList  (ui_mp/ui_main_mp.cpp:7717)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
 void UI_GetGameTypesList(void)
 
 {
-  ulonglong uVar1;
+  uint uVar1;
   
   uVar1 = DB_GetLoadedFlags();
   if ((uVar1 & 2) != 0) {
-    DAT_83f7aed0 = 1;
+    sharedUiInfo.updateGameTypeList = 1;
   }
   return;
 }
@@ -6320,132 +6153,158 @@ void UI_GetGameTypesList(void)
 
 // 825AA1C8  UI_GetRandomGametype  (ui_mp/ui_main_mp.cpp:7738)
 
-longlong UI_GetRandomGametype(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+char * UI_GetRandomGametype(void)
 
 {
   int iVar1;
   
   UI_UpdateGameTypesList();
   iVar1 = rand();
-  return ((ulonglong)((longlong)iVar1 * (longlong)DAT_83f7aed4) >> 0xf & 0xffffffff) * 0x6c +
-         -0x7c085128;
+  return sharedUiInfo.gameTypes
+         [(int)((ulonglong)((longlong)iVar1 * (longlong)sharedUiInfo.numGameTypes) >> 0xf)].gameType
+  ;
 }
 
 
 // 825AA218  UI_GetGametypeCount  (ui_mp/ui_main_mp.cpp:7746)
 
-undefined4 UI_GetGametypeCount(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+int UI_GetGametypeCount(void)
 
 {
   UI_UpdateGameTypesList();
-  return DAT_83f7aed4;
+  return sharedUiInfo.numGameTypes;
 }
 
 
 // 825AA248  UI_GetCustomGametypeCount  (ui_mp/ui_main_mp.cpp:7753)
 
-undefined4 UI_GetCustomGametypeCount(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+int UI_GetCustomGametypeCount(void)
 
 {
-  return DAT_83f7bc58;
+  return sharedUiInfo.numCustomGameTypes;
 }
 
 
 // 825AA258  UI_Pause  (ui_mp/ui_main_mp.cpp:7759)
 
-void UI_Pause(undefined8 param_1,int param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void UI_Pause(LocalClientNum_t param_1,int param_2)
 
 {
   if (param_2 != 0) {
-    Dvar_SetIntByName(0xffffffff82018374,1);
+    Dvar_SetIntByName("cl_paused",1);
     Key_SetCatcher(param_1,0x10);
     return;
   }
-  Key_RemoveCatcher(param_1,0xffffffffffffffef);
+  Key_RemoveCatcher(param_1,-0x11);
   Key_ClearStates(param_1);
-  Dvar_SetIntByName(0xffffffff82018374,0);
+  Dvar_SetIntByName("cl_paused",0);
   return;
 }
 
 
 // 825AA2E0  UI_OpenMenu_f  (ui_mp/ui_main_mp.cpp:7778)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
 void UI_OpenMenu_f(void)
 
 {
-  ulonglong uVar1;
-  undefined1 auStack_50 [64];
+  LocalClientNum_t LVar1;
+  char acStack_50 [64];
   
-  Cmd_ArgsBuffer(1,auStack_50,0x40);
-  uVar1 = Cmd_LocalClientNum();
-  if (3 < (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8216ab14,0x1c2,0,0xffffffff820011a8,uVar1,4);
+  Cmd_ArgsBuffer(1,acStack_50,0x40);
+  LVar1 = Cmd_LocalClientNum();
+  if (LOCAL_CLIENT_3 < LVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x1c2,0,
+                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  Menus_OpenByName(uVar1 * 0x22ac + -0x7c08e128,auStack_50);
+  Menus_OpenByName(&uiInfoArray[LVar1].uiDC,acStack_50);
   return;
 }
 
 
 // 825AA360  UI_ListMenus_f  (ui_mp/ui_main_mp.cpp:7792)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
 void UI_ListMenus_f(void)
 
 {
-  ulonglong uVar1;
+  LocalClientNum_t LVar1;
   
-  uVar1 = Cmd_LocalClientNum();
-  if (3 < (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8216ab14,0x1c2,0,0xffffffff820011a8,uVar1,4);
+  LVar1 = Cmd_LocalClientNum();
+  if (LOCAL_CLIENT_3 < LVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x1c2,0,
+                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  Menus_PrintAllLoadedMenus(uVar1 * 0x22ac + -0x7c08e128);
+  Menus_PrintAllLoadedMenus(&uiInfoArray[LVar1].uiDC);
   return;
 }
 
 
 // 825AA3D0  CL_SelectStringTableEntryInDvar  (ui_mp/ui_main_mp.cpp:7802)
 
-void CL_SelectStringTableEntryInDvar(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+void CL_SelectStringTableEntryInDvar(char *param_1,int param_2,char *param_3)
 
 {
-  uint _Seed;
+  uint uVar1;
   int iVar2;
-  undefined8 uVar1;
-  int local_30 [2];
+  char *pcVar3;
+  StringTable *local_30 [2];
   longlong local_28;
   
   StringTable_GetAsset(param_1,local_30);
-  _Seed = Sys_Milliseconds();
-  srand(_Seed);
+  uVar1 = Sys_Milliseconds();
+  srand(uVar1);
   iVar2 = rand();
-  iVar2 = (int)((float)((double)(longlong)iVar2 * (double)(longlong)*(int *)(local_30[0] + 8)) *
-               3.051851e-05);
+  iVar2 = (int)((float)(longlong)iVar2 * (float)(longlong)local_30[0]->rowCount * 3.051851e-05);
   local_28 = (longlong)iVar2;
-  uVar1 = StringTable_GetColumnValueForRow(local_30[0],iVar2,param_2);
-  Dvar_SetStringByName(param_3,uVar1);
+  pcVar3 = StringTable_GetColumnValueForRow(local_30[0],iVar2,param_2);
+  Dvar_SetStringByName(param_3,pcVar3);
   return;
 }
 
 
 // 825AA480  CL_SelectStringTableEntryInDvar_f  (ui_mp/ui_main_mp.cpp:7815)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void CL_SelectStringTableEntryInDvar_f(void)
 
 {
-  int iVar3;
-  undefined8 uVar1;
-  char *_Str;
-  undefined8 uVar2;
+  int iVar1;
+  char *pcVar2;
+  char *pcVar3;
   
-  iVar3 = Cmd_Argc();
-  if (iVar3 < 4) {
-    Com_Printf(0x10,0xffffffff8216c180);
+  iVar1 = Cmd_Argc();
+  if (iVar1 < 4) {
+    Com_Printf(0x10,"usage: selectStringTableEntryInDvar <tableFileName> <columnNum> <dvarName>");
   }
   else {
-    uVar1 = Cmd_Argv(3);
-    _Str = (char *)Cmd_Argv(2);
-    iVar3 = atoi(_Str);
-    uVar2 = Cmd_Argv(1);
-    CL_SelectStringTableEntryInDvar(uVar2,iVar3,uVar1);
+    pcVar2 = Cmd_Argv(3);
+    pcVar3 = Cmd_Argv(2);
+    iVar1 = atoi(pcVar3);
+    pcVar3 = Cmd_Argv(1);
+    CL_SelectStringTableEntryInDvar(pcVar3,iVar1,pcVar2);
   }
   return;
 }
@@ -6453,46 +6312,59 @@ void CL_SelectStringTableEntryInDvar_f(void)
 
 // 825AA500  UI_CloseMenu_f  (ui_mp/ui_main_mp.cpp:7883)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
 void UI_CloseMenu_f(void)
 
 {
-  ulonglong uVar1;
-  undefined1 auStack_50 [64];
+  LocalClientNum_t LVar1;
+  char acStack_50 [64];
   
-  Cmd_ArgsBuffer(1,auStack_50,0x40);
-  uVar1 = Cmd_LocalClientNum();
-  if (3 < (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8216ab14,0x1c2,0,0xffffffff820011a8,uVar1,4);
+  Cmd_ArgsBuffer(1,acStack_50,0x40);
+  LVar1 = Cmd_LocalClientNum();
+  if (LOCAL_CLIENT_3 < LVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x1c2,0,
+                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  Menus_CloseByName(uVar1 * 0x22ac + -0x7c08e128,auStack_50);
+  Menus_CloseByName(&uiInfoArray[LVar1].uiDC,acStack_50);
   return;
 }
 
 
 // 825AA580  UI_LoadMenuLists  (ui_mp/ui_main_mp.cpp:7895)
 
-void UI_LoadMenuLists(uint param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void UI_LoadMenuLists(LocalClientNum_t param_1)
 
 {
-  undefined8 uVar1;
-  char cVar2;
-  undefined *puVar3;
+  MenuList *pMVar1;
+  bool bVar2;
+  uiInfo_s *puVar3;
   
-  if (3 < param_1) {
-    MyAssertHandler(0xffffffff8216ab14,0x1c2,0,0xffffffff820011a8,param_1,4);
+  if (LOCAL_CLIENT_3 < param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x1c2,0,
+                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  puVar3 = &DAT_83f71ed8 + param_1 * 0x22ac;
-  *(undefined4 *)(&DAT_83f7290c + param_1 * 0x22ac) = 0;
-  uVar1 = UI_LoadMenus(0xffffffff8216c20c,3);
-  UI_AddMenuList(puVar3,uVar1,1);
-  cVar2 = G_ExitAfterToolComplete();
-  if ((cVar2 == '\0') && (DAT_83f71e18 == '\0')) {
-    uVar1 = UI_LoadMenus(0xffffffff8216c1fc,3);
-    UI_AddMenuList(puVar3,uVar1,1);
-    uVar1 = UI_LoadMenus(0xffffffff8216c1e0,3);
-    UI_AddMenuList(puVar3,uVar1,1);
-    uVar1 = UI_LoadMenus(0xffffffff8216c1cc,3);
-    UI_AddMenuList(puVar3,uVar1,1);
+  puVar3 = uiInfoArray + param_1;
+  uiInfoArray[param_1].uiDC.menuCount = 0;
+  pMVar1 = UI_LoadMenus("ui_mp/code.txt",3);
+  UI_AddMenuList(&puVar3->uiDC,pMVar1,1);
+  bVar2 = G_ExitAfterToolComplete();
+  if ((!bVar2) && (g_mapname[0] == '\0')) {
+    pMVar1 = UI_LoadMenus("ui_mp/menus.txt",3);
+    UI_AddMenuList(&puVar3->uiDC,pMVar1,1);
+    pMVar1 = UI_LoadMenus("ui_mp/patch_mp_menus.txt",3);
+    UI_AddMenuList(&puVar3->uiDC,pMVar1,1);
+    pMVar1 = UI_LoadMenus("ui/test_menus.txt",3);
+    UI_AddMenuList(&puVar3->uiDC,pMVar1,1);
   }
   return;
 }
@@ -6500,64 +6372,75 @@ void UI_LoadMenuLists(uint param_1)
 
 // 825AA690  UI_Init  (ui_mp/ui_main_mp.cpp:7933)
 
-void UI_Init(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void UI_Init(LocalClientNum_t param_1)
 
 {
-  uint uVar1;
-  uint uVar2;
-  int iVar3;
-  uint *_Dst;
-  double dVar4;
-  double dVar5;
+  int iVar1;
+  int iVar2;
+  LocalClientNum_t LVar3;
+  uint uVar4;
+  uiInfo_s *puVar5;
+  double dVar6;
+  float fVar7;
   
-  uVar1 = __savegprlr_27();
+  LVar3 = __savegprlr_27(param_1);
   Expressions_LogicTableInit();
-  if (3 < uVar1) {
-    MyAssertHandler(0xffffffff8216ab14,0x1c2,0,0xffffffff820011a8,uVar1,4);
+  if (LOCAL_CLIENT_3 < LVar3) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x1c2,0,
+                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  iVar3 = uVar1 * 0x22ac;
-  _Dst = (uint *)(&DAT_83f71ed8 + iVar3);
-  memset(_Dst,0,0x22ac);
-  *_Dst = uVar1;
-  (&DAT_83f7a990)[uVar1] = 0;
+  puVar5 = uiInfoArray + LVar3;
+  memset();
+  (puVar5->uiDC).localClientNum = LVar3;
+  g_ingameMenusLoaded[LVar3] = false;
   DB_ResetZoneSize(0,1);
   UI_RegisterDvars();
-  (&DAT_83f74180)[iVar3] = 1;
-  Menu_Setup(_Dst);
-  CL_GetScreenDimensions(&DAT_83f71ef8 + iVar3,&DAT_83f71efc + iVar3,iVar3 + -0x7c08e100);
-  dVar5 = 0.0;
-  if (*(int *)(&DAT_83f71efc + iVar3) * 0x280 < *(int *)(&DAT_83f71ef8 + iVar3) * 0x1e0) {
-    *(float *)(&DAT_83f71edc + iVar3) =
-         -((float)(longlong)*(int *)(&DAT_83f71efc + iVar3) * 1.3333334 -
-          (float)(longlong)*(int *)(&DAT_83f71ef8 + iVar3)) * 0.5;
+  uiInfoArray[LVar3].allowScriptMenuResponse = true;
+  Menu_Setup(&puVar5->uiDC);
+  CL_GetScreenDimensions
+            (&uiInfoArray[LVar3].uiDC.screenWidth,&uiInfoArray[LVar3].uiDC.screenHeight,
+             &uiInfoArray[LVar3].uiDC.screenAspect);
+  iVar1 = uiInfoArray[LVar3].uiDC.screenHeight;
+  iVar2 = uiInfoArray[LVar3].uiDC.screenWidth;
+  dVar6 = 0.0;
+  if (iVar1 * 0x280 < iVar2 * 0x1e0) {
+    uiInfoArray[LVar3].uiDC.bias =
+         -((float)(longlong)iVar1 * 1.3333334 - (float)(longlong)iVar2) * 0.5;
   }
   else {
-    *(undefined4 *)(&DAT_83f71edc + iVar3) = 0;
+    uiInfoArray[LVar3].uiDC.bias = 0.0;
   }
-  uVar2 = DB_GetLoadedFlags();
-  if ((uVar2 & 2) != 0) {
-    DAT_83f7aed0 = 1;
+  uVar4 = DB_GetLoadedFlags();
+  if ((uVar4 & 2) != 0) {
+    sharedUiInfo.updateGameTypeList = 1;
   }
   UI_LoadArenas();
-  if (*(int *)(&DAT_83f7290c + iVar3) != 0) {
-    MyAssertHandler(0xffffffff8216ab14,0x1f38,0,0xffffffff82000f98,0xffffffff8216c2ac);
+  if (uiInfoArray[LVar3].uiDC.menuCount != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x1f38,0
+                    ,"%s");
   }
-  UI_LoadMenuLists(uVar1);
+  UI_LoadMenuLists(LVar3);
   UI_AssetCache();
-  Menus_CloseAll(_Dst);
-  DAT_83fd1d80 = Material_RegisterHandle(0xffffffff8216c29c,3);
-  DAT_83fd1d84 = Material_RegisterHandle(0xffffffff8216c290,3);
+  Menus_CloseAll(&puVar5->uiDC);
+  sharedUiInfo.talkingIcons[0] = Material_RegisterHandle("nottalkingicon",3);
+  sharedUiInfo.talkingIcons[1] = Material_RegisterHandle("talkingicon",3);
   LAN_LoadCachedServers();
-  if (DAT_83fd21e0 != 4) {
-    DAT_83fd21e0 = 4;
-    qsort(&DAT_83fd21f4,DAT_83fe5a74,4,UI_ServersQsortCompare);
+  if (sharedUiInfo.serverStatus.sortKey != 4) {
+    sharedUiInfo.serverStatus.sortKey = 4;
+    qsort(sharedUiInfo.serverStatus.displayServers,sharedUiInfo.serverStatus.numDisplayServers,4,
+          UI_ServersQsortCompare);
   }
-  dVar4 = (double)Dvar_GetFloat(0xffffffff82032eac);
-  Dvar_SetBoolByName(0xffffffff8216c280,dVar4 < dVar5);
-  DAT_83fd1d70 = 0;
-  DAT_83fd1d78 = 0;
-  Dvar_RegisterBool(0xffffffff8216c250,1,0x2000,0xffffffff8216c260);
-  DAT_83f71ebc = Dvar_RegisterInt(0xffffffff8216c21c,0,0,2,0,0xffffffff8216c22c);
+  fVar7 = Dvar_GetFloat("m_pitch");
+  Dvar_SetBoolByName("ui_mousePitch",(double)fVar7 < dVar6);
+  sharedUiInfo.partyMemberXuid = 0;
+  sharedUiInfo.savedPartyMemberXuid = 0;
+  Dvar_RegisterBool("ui_multiplayer",true,0x2000,"True if the game is multiplayer");
+  uiscript_debug = Dvar_RegisterInt("uiscript_debug",0,0,2,0,"spam debug info for the ui script");
   __restgprlr_27();
   return;
 }
@@ -6565,41 +6448,47 @@ void UI_Init(void)
 
 // 825AA938  UI_KeyEvent  (ui_mp/ui_main_mp.cpp:8061)
 
-void UI_KeyEvent(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void UI_KeyEvent(LocalClientNum_t param_1,int param_2,int param_3)
 
 {
-  uint uVar1;
-  int iVar2;
-  char cVar4;
-  int *piVar3;
-  undefined4 *puVar5;
+  LocalClientNum_t LVar1;
+  uiInfo_s *puVar2;
+  int iVar3;
+  bool bVar5;
+  menuDef_t *pmVar4;
   
-  uVar1 = __savegprlr_27();
-  if (3 < uVar1) {
-    MyAssertHandler(0xffffffff8216ab14,0x1c2,0,0xffffffff820011a8,uVar1,4);
+  LVar1 = __savegprlr_27(param_1);
+  if (LOCAL_CLIENT_3 < LVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x1c2,0,
+                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  puVar5 = (undefined4 *)(&DAT_83f71ed8 + uVar1 * 0x22ac);
-  iVar2 = Menu_Count(puVar5);
-  if (((iVar2 != 0) && (cVar4 = Sys_IsMainThread(), cVar4 != '\0')) &&
-     (iVar2 = R_IsInRemoteScreenUpdate(), iVar2 == 0)) {
-    piVar3 = (int *)Menu_GetFocused(puVar5);
-    if (piVar3 != (int *)0x0) {
-      if ((((int)param_2 == 2) && ((int)param_3 != 0)) &&
-         ((iVar2 = Menus_AnyFullScreenVisible(puVar5), iVar2 == 0 && (*(int *)(*piVar3 + 0x24) == 0)
-          ))) {
-        Menus_CloseAll(puVar5);
+  puVar2 = uiInfoArray + LVar1;
+  iVar3 = Menu_Count(&puVar2->uiDC);
+  if (((iVar3 != 0) && (bVar5 = Sys_IsMainThread(), bVar5)) &&
+     (iVar3 = R_IsInRemoteScreenUpdate(), iVar3 == 0)) {
+    pmVar4 = Menu_GetFocused(&puVar2->uiDC);
+    if (pmVar4 != (menuDef_t *)0x0) {
+      if (((param_2 == 2) && (param_3 != 0)) &&
+         ((iVar3 = Menus_AnyFullScreenVisible(&puVar2->uiDC), iVar3 == 0 &&
+          (pmVar4->data->onESC == (MenuEventHandlerSet *)0x0)))) {
+        Menus_CloseAll(&puVar2->uiDC);
       }
-      cVar4 = Key_IsCatcherActive(*puVar5,0x10);
-      if (cVar4 != '\0') {
-        Menu_HandleKey(puVar5,piVar3,param_2,param_3);
+      bVar5 = Key_IsCatcherActive((puVar2->uiDC).localClientNum,0x10);
+      if (bVar5) {
+        Menu_HandleKey(&puVar2->uiDC,pmVar4,param_2,param_3);
       }
-      iVar2 = Menu_GetFocused(puVar5);
-      if (iVar2 != 0) goto LAB_825aaa74;
+      pmVar4 = Menu_GetFocused(&puVar2->uiDC);
+      if (pmVar4 != (menuDef_t *)0x0) goto LAB_825aaa74;
     }
-    cVar4 = Key_IsCatcherActive(*puVar5,0x10);
-    if (cVar4 != '\0') {
-      Key_RemoveCatcher(uVar1,0xffffffffffffffef);
-      Dvar_SetIntByName(0xffffffff82018374,0);
+    bVar5 = Key_IsCatcherActive((puVar2->uiDC).localClientNum,0x10);
+    if (bVar5) {
+      Key_RemoveCatcher(LVar1,-0x11);
+      Dvar_SetIntByName("cl_paused",0);
     }
   }
 LAB_825aaa74:
@@ -6610,487 +6499,568 @@ LAB_825aaa74:
 
 // 825AAA80  UI_GetActiveMenu  (ui_mp/ui_main_mp.cpp:8155)
 
-undefined4 UI_GetActiveMenu(ulonglong param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+uiMenuCommand_t UI_GetActiveMenu(LocalClientNum_t param_1)
 
 {
-  if (3 < (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8216ab14,0x1c2,0,0xffffffff820011a8,param_1,4);
+  if (LOCAL_CLIENT_3 < param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x1c2,0,
+                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  return *(undefined4 *)(&DAT_83f7417c + (int)param_1 * 0x22ac);
+  return uiInfoArray[param_1].currentMenuType;
 }
 
 
 // 825AAAE8  UI_GetTopActiveMenuName  (ui_mp/ui_main_mp.cpp:8161)
 
-void UI_GetTopActiveMenuName(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+char * UI_GetTopActiveMenuName(LocalClientNum_t param_1)
 
 {
   int iVar1;
-  int iVar2;
-  ulonglong uVar3;
-  longlong lVar4;
+  uint uVar2;
+  char *pcVar3;
+  ulonglong uVar4;
+  longlong lVar5;
   
-  uVar3 = __savegprlr_29();
-  if (3 < (uVar3 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8216ab14,0x1c2,0,0xffffffff820011a8,uVar3,4);
+  uVar2 = __savegprlr_29(param_1);
+  if (3 < uVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x1c2,0,
+                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  iVar2 = (int)uVar3 * 0x22ac;
-  lVar4 = (ulonglong)*(uint *)(&DAT_83f72950 + iVar2) - 1;
-  if ((-1 < lVar4) && ((int)lVar4 < *(int *)(&DAT_83f7290c + iVar2))) {
-    iVar1 = (int)(((ulonglong)*(uint *)(&DAT_83f72950 + iVar2) + 0x28d & 0xffffffff) << 2);
-    if (*(int *)(&DAT_83f71ed8 + iVar1 + iVar2) == 0) {
-      MyAssertHandler(0xffffffff8216ab14,0x1fea,0,0xffffffff82000f98,0xffffffff8216c2c4);
+  uVar4 = (ulonglong)(uint)uiInfoArray[uVar2].uiDC.openMenuCount;
+  lVar5 = uVar4 - 1;
+  if ((-1 < lVar5) && ((int)lVar5 < uiInfoArray[uVar2].uiDC.menuCount)) {
+    iVar1 = (int)((uVar4 + 0x28d & 0xffffffff) << 2);
+    if (*(int *)((int)uiInfoArray[uVar2].uiDC.Menus + iVar1 + -0x34) == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x1fea
+                      ,0,"%s");
     }
-    __restgprlr_29(*(undefined4 *)(*(int *)(&DAT_83f71ed8 + iVar1 + iVar2) + 4));
-    return;
+    pcVar3 = (char *)__restgprlr_29(*(undefined4 *)
+                                     (*(int *)((int)uiInfoArray[uVar2].uiDC.Menus + iVar1 + -0x34) +
+                                     4));
+    return pcVar3;
   }
-  __restgprlr_29(0);
-  return;
+  pcVar3 = (char *)__restgprlr_29(0);
+  return pcVar3;
 }
 
 
 // 825AABA0  UI_SetActiveMenu  (ui_mp/ui_main_mp.cpp:8214)
 
-void UI_SetActiveMenu(undefined8 param_1,int param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+int UI_SetActiveMenu(LocalClientNum_t param_1,int param_2)
 
 {
-  undefined1 uVar1;
-  uint uVar4;
-  int iVar5;
-  char cVar8;
-  undefined8 uVar2;
-  char *pcVar6;
-  undefined8 uVar3;
-  char *pcVar7;
-  undefined4 *puVar9;
-  longlong lVar10;
+  char cVar1;
+  LocalClientNum_t LVar2;
+  uiInfo_s *puVar3;
+  int iVar4;
+  LocalClientNum_t LVar5;
+  bool bVar12;
+  PartyHostData *pPVar6;
+  PartyData *pPVar7;
+  SessionData *pSVar8;
+  char *pcVar9;
+  ClientDemoPlayingFlag CVar10;
+  char *pcVar11;
   
-  uVar4 = __savegprlr_26();
-  if (3 < uVar4) {
-    MyAssertHandler(0xffffffff8216ab14,0x1c2,0,0xffffffff820011a8,uVar4,4);
+  LVar2 = __savegprlr_26(param_1);
+  if (LOCAL_CLIENT_3 < LVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x1c2,0,
+                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  puVar9 = (undefined4 *)(&DAT_83f71ed8 + uVar4 * 0x22ac);
-  iVar5 = Menu_Count(puVar9);
-  if (iVar5 < 1) goto switchD_825aac50_caseD_4;
-  if (param_2 == 5) {
-    MyAssertHandler(0xffffffff8216ab14,0x2024,0,0xffffffff82000f98,0xffffffff8216c588);
+  puVar3 = uiInfoArray + LVar2;
+  iVar4 = Menu_Count(&puVar3->uiDC);
+  if (iVar4 < 1) goto switchD_825aac50_caseD_4;
+  if (param_2 == UIMENU_SCRIPT_POPUP) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x2024,0
+                    ,"%s");
   }
-  *(int *)(&DAT_83f7417c + uVar4 * 0x22ac) = param_2;
+  uiInfoArray[LVar2].currentMenuType = param_2;
   switch(param_2) {
   case 0:
-    Key_RemoveCatcher(uVar4,0xffffffffffffffef);
-    Dvar_SetIntByName(0xffffffff82018374,0);
-    Menus_CloseAll(puVar9);
-    __restgprlr_26(1);
-    return;
+    Key_RemoveCatcher(LVar2,-0x11);
+    Dvar_SetIntByName("cl_paused",0);
+    Menus_CloseAll(&puVar3->uiDC);
+    iVar4 = __restgprlr_26(1);
+    return iVar4;
   case 1:
-    if (uVar4 != 0) {
-      MyAssertHandler(0xffffffff8216ab14,0x2031,0,0xffffffff820300d8,0xffffffff8216c570,uVar4);
+    if (LVar2 != LOCAL_CLIENT_0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x2031
+                      ,0,"%s\n\t(localClientNum) = %i");
     }
-    Key_SetCatcher(uVar4,0x10);
-    Menus_OpenByName(puVar9,0xffffffff8207b5b4);
-    Menus_CloseAllBehindMain(puVar9);
-    pcVar7 = (char *)Dvar_GetString(0xffffffff8202c6c8);
-    pcVar6 = pcVar7;
+    Key_SetCatcher(LVar2,0x10);
+    Menus_OpenByName(&puVar3->uiDC,"main");
+    Menus_CloseAllBehindMain(&puVar3->uiDC);
+    pcVar11 = Dvar_GetString("com_errorMessage");
+    pcVar9 = pcVar11;
     do {
-      cVar8 = *pcVar6;
-      pcVar6 = pcVar6 + 1;
-    } while (cVar8 != '\0');
-    if (((int)pcVar6 - (int)pcVar7 != 1) &&
-       (iVar5 = I_stricmp(pcVar7,0xffffffff82031834), iVar5 != 0)) {
-      Menus_OpenByName(puVar9,0xffffffff82032618);
+      cVar1 = *pcVar9;
+      pcVar9 = pcVar9 + 1;
+    } while (cVar1 != '\0');
+    if (((int)pcVar9 - (int)pcVar11 != 1) && (iVar4 = I_stricmp(pcVar11,";"), iVar4 != 0)) {
+      Menus_OpenByName(&puVar3->uiDC,"error_popmenu");
     }
-    Dvar_SetBool(DAT_82aa1af8,0);
-    Dvar_SetBool(DAT_82aa1ae4,0);
-    cVar8 = Live_HasAcceptedInvitation();
-    if (cVar8 == '\0') {
-      Dvar_SetBool(DAT_82b3ecb8,0);
+    Dvar_SetBool(onlinegame,false);
+    Dvar_SetBool(systemlink,false);
+    bVar12 = Live_HasAcceptedInvitation();
+    if (!bVar12) {
+      Dvar_SetBool(splitscreen,false);
     }
-    Lobby_GetPartyData();
-    Party_StopParty();
-    Party_StopParty(0xffffffff82b55118);
-    cVar8 = Lobby_IsInLobby();
-    if (cVar8 != '\0') {
-      MyAssertHandler(0xffffffff8216ab14,0x204e,0,0xffffffff82000f98,0xffffffff82052d20);
+    pPVar7 = Lobby_GetPartyData();
+    Party_StopParty(pPVar7);
+    Party_StopParty(&g_partyData);
+    bVar12 = Lobby_IsInLobby();
+    if (bVar12) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x204e
+                      ,0,"%s");
     }
-    if (DAT_82b5700c != 0) {
-      MyAssertHandler(0xffffffff8216ab14,0x204f,0,0xffffffff82000f98,0xffffffff8216c558);
+    if (g_partyData.inParty != 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x204f
+                      ,0,"%s");
     }
-    Lobby_GetPartyData();
-    Party_Sleep();
-    Party_Sleep(0xffffffff82b55118);
-    iVar5 = Lobby_GetPartyData();
-    if (*(int *)(iVar5 + 0x1ef8) != 0) {
-      MyAssertHandler(0xffffffff8216ab14,0x2053,0,0xffffffff82000f98,0xffffffff8216c52c);
+    pPVar7 = Lobby_GetPartyData();
+    Party_Sleep(pPVar7);
+    Party_Sleep(&g_partyData);
+    pPVar7 = Lobby_GetPartyData();
+    if (pPVar7->party_systemActive != 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x2053
+                      ,0,"%s");
     }
-    if (DAT_82b57010 != 0) {
-      MyAssertHandler(0xffffffff8216ab14,0x2054,0,0xffffffff82000f98,0xffffffff8203bc58);
+    if (g_partyData.party_systemActive != 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x2054
+                      ,0,"%s");
     }
-    cVar8 = Live_HasAcceptedInvitation();
-    if (cVar8 == '\0') {
-      Dvar_SetBool(DAT_82b3ecb8,0);
+    bVar12 = Live_HasAcceptedInvitation();
+    if (!bVar12) {
+      Dvar_SetBool(splitscreen,false);
     }
-    if (*(char *)(DAT_82aa1af8 + 0xc) != '\0') {
-      MyAssertHandler(0xffffffff8216ab14,0x205e,0,0xffffffff82000f98,0xffffffff8203030c);
+    if ((onlinegame->current).enabled != false) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x205e
+                      ,0,"%s");
     }
-    uVar3 = CL_ControllerIndexFromClientNum(uVar4);
-    uVar3 = Cmd_ExecuteSingleCommand(uVar4,uVar3,0xffffffff8216c4fc);
-    SND_FadeAllSounds(0x3ff0000000000000,uVar3,1000);
-    __restgprlr_26(1);
-    return;
+    iVar4 = CL_ControllerIndexFromClientNum(LVar2);
+    Cmd_ExecuteSingleCommand(LVar2,iVar4,"forcesplitscreencontrol UI_SetActiveMenu_MAIN\n");
+    SND_FadeAllSounds(1.0,LVar2);
+    iVar4 = __restgprlr_26(1);
+    return iVar4;
   case 2:
-    cVar8 = CL_AllLocalClientsDisconnected();
-    if (cVar8 != '\0') {
-      MyAssertHandler(0xffffffff8216ab14,0x2069,0,0xffffffff820011f4,0xffffffff8216c4a8,
-                      0xffffffff8216c4cc);
+    bVar12 = CL_AllLocalClientsDisconnected();
+    if (bVar12) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x2069
+                      ,0,"%s\n\t%s");
     }
-    Key_SetCatcher(uVar4,0x10);
-    Menus_CloseAll(puVar9);
-    cVar8 = CL_Demo_IsPlaying(uVar4);
-    if (cVar8 == '\0') {
-      uVar3 = CG_ScriptMainMenu(*puVar9);
-      iVar5 = Menus_OpenByName(puVar9,uVar3);
-      if (iVar5 == 0) {
-        Menus_OpenByName(puVar9,0xffffffff8207b5b4);
-        Menus_CloseAllBehindMain(puVar9);
+    Key_SetCatcher(LVar2,0x10);
+    Menus_CloseAll(&puVar3->uiDC);
+    bVar12 = CL_Demo_IsPlaying(LVar2);
+    if (!bVar12) {
+      pcVar9 = CG_ScriptMainMenu((puVar3->uiDC).localClientNum);
+      iVar4 = Menus_OpenByName(&puVar3->uiDC,pcVar9);
+      if (iVar4 == 0) {
+        Menus_OpenByName(&puVar3->uiDC,"main");
+        Menus_CloseAllBehindMain(&puVar3->uiDC);
       }
-      __restgprlr_26(1);
-      return;
+      iVar4 = __restgprlr_26(1);
+      return iVar4;
     }
-    iVar5 = CL_Demo_IsCapturingScreenshot(uVar4);
-    if (iVar5 == 0) {
-      iVar5 = CL_Demo_IsRenderingMovie(uVar4);
-      if (iVar5 != 0) {
-        CL_Demo_CancelRendering(1);
-        Cbuf_AddText(uVar4,0xffffffff82030b34);
-        __restgprlr_26(1);
-        return;
+    iVar4 = CL_Demo_IsCapturingScreenshot(LVar2);
+    if (iVar4 == 0) {
+      iVar4 = CL_Demo_IsRenderingMovie(LVar2);
+      if (iVar4 != 0) {
+        CL_Demo_CancelRendering(true);
+        Cbuf_AddText(LVar2,"disconnect");
+        iVar4 = __restgprlr_26(1);
+        return iVar4;
       }
-      cVar8 = CL_Demo_IsClipPreviewRunning();
-      if (cVar8 != '\0') {
+      bVar12 = CL_Demo_IsClipPreviewRunning();
+      if (bVar12) {
         CL_Demo_CancelPreview();
-        __restgprlr_26(1);
-        return;
+        iVar4 = __restgprlr_26(1);
+        return iVar4;
       }
-      Menus_OpenByName(puVar9,0xffffffff82014aa8);
-      cVar8 = CL_Demo_IsPaused();
-      if (cVar8 == '\0') {
+      Menus_OpenByName(&puVar3->uiDC,"demo_ingame");
+      bVar12 = CL_Demo_IsPaused();
+      if (!bVar12) {
         CL_Demo_Pause();
       }
-      __restgprlr_26(1);
-      return;
+      iVar4 = __restgprlr_26(1);
+      return iVar4;
     }
   default:
 switchD_825aac50_caseD_4:
-    __restgprlr_26(0);
-    return;
+    iVar4 = __restgprlr_26(0);
+    return iVar4;
   case 3:
-    pcVar6 = (char *)Dvar_GetString(0xffffffff8202c6c8);
-    if (*pcVar6 == '\0') {
-      MyAssertHandler(0xffffffff8216ab14,0x2183,0,0xffffffff82000f98,0xffffffff8208bd94);
+    pcVar9 = Dvar_GetString("com_errorMessage");
+    if (*pcVar9 == '\0') {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x2183
+                      ,0,"%s");
     }
-    Key_SetCatcher(uVar4,0x10);
-    Menus_CloseAll(puVar9);
-    Menus_OpenByName(puVar9,0xffffffff8216bbd4);
-    __restgprlr_26(1);
-    return;
+    Key_SetCatcher(LVar2,0x10);
+    Menus_CloseAll(&puVar3->uiDC);
+    Menus_OpenByName(&puVar3->uiDC,"pregame_loaderror_mp");
+    iVar4 = __restgprlr_26(1);
+    return iVar4;
   case 6:
-    Key_SetCatcher(uVar4,0x10);
-    Menus_CloseAll(puVar9);
-    Menus_OpenByName(puVar9,0xffffffff8202ec34);
-    pcVar7 = (char *)Dvar_GetString(0xffffffff8202c6c8);
-    pcVar6 = pcVar7;
+    Key_SetCatcher(LVar2,0x10);
+    Menus_CloseAll(&puVar3->uiDC);
+    Menus_OpenByName(&puVar3->uiDC,"scoreboard");
+    pcVar11 = Dvar_GetString("com_errorMessage");
+    pcVar9 = pcVar11;
     do {
-      cVar8 = *pcVar6;
-      pcVar6 = pcVar6 + 1;
-    } while (cVar8 != '\0');
-    if (((int)pcVar6 - (int)pcVar7 != 1) &&
-       (iVar5 = I_stricmp(pcVar7,0xffffffff82031834), iVar5 != 0)) {
-      Menus_OpenByName(puVar9,0xffffffff82032618);
+      cVar1 = *pcVar9;
+      pcVar9 = pcVar9 + 1;
+    } while (cVar1 != '\0');
+    if (((int)pcVar9 - (int)pcVar11 != 1) && (iVar4 = I_stricmp(pcVar11,";"), iVar4 != 0)) {
+      Menus_OpenByName(&puVar3->uiDC,"error_popmenu");
     }
-    __restgprlr_26(1);
-    return;
+    iVar4 = __restgprlr_26(1);
+    return iVar4;
   case 7:
-    if (uVar4 != 0) {
-      MyAssertHandler(0xffffffff8216ab14,0x20a4,0,0xffffffff820300d8,0xffffffff8216c570,uVar4);
+    if (LVar2 != LOCAL_CLIENT_0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x20a4
+                      ,0,"%s\n\t(localClientNum) = %i");
     }
-    Key_SetCatcher(uVar4,0x10);
-    Key_ClearStates(uVar4);
-    Dvar_SetBool(DAT_82b3ecac,0);
+    Key_SetCatcher(LVar2,0x10);
+    Key_ClearStates(LVar2);
+    Dvar_SetBool(splitscreen_ingame,false);
     CL_EnsureUnpluggedSplitscreenControllersAreInactive();
-    if (DAT_82966e98 != 0) {
+    if (cl_multi_gamepads_enabled != 0) {
       GPad_UpdateAll();
-      lVar10 = 0;
+      iVar4 = 0;
       do {
-        cVar8 = CL_IsSplitscreenControllerActive(lVar10);
-        if (cVar8 != '\0') {
-          uVar3 = CL_LocalClientNumFromControllerIndex(lVar10);
-          CL_SetLocalClientActive(uVar3,1);
+        bVar12 = CL_IsSplitscreenControllerActive(iVar4);
+        if (bVar12) {
+          LVar2 = CL_LocalClientNumFromControllerIndex(iVar4);
+          CL_SetLocalClientActive(LVar2,true);
         }
-        lVar10 = lVar10 + 1;
-      } while ((int)lVar10 < 4);
+        iVar4 = iVar4 + 1;
+      } while (iVar4 < 4);
     }
-    Menus_OpenByName(puVar9,0xffffffff8207b5b4);
-    Menus_SetFocusToItem(puVar9,0xffffffff8207b5b4,0xffffffff8203364c);
-    Menus_CloseAllBehindMain(puVar9);
-    pcVar7 = (char *)Dvar_GetString(0xffffffff8202c6c8);
-    pcVar6 = pcVar7;
+    Menus_OpenByName(&puVar3->uiDC,"main");
+    Menus_SetFocusToItem(&puVar3->uiDC,"main","splitscreen");
+    Menus_CloseAllBehindMain(&puVar3->uiDC);
+    pcVar11 = Dvar_GetString("com_errorMessage");
+    pcVar9 = pcVar11;
     do {
-      cVar8 = *pcVar6;
-      pcVar6 = pcVar6 + 1;
-    } while (cVar8 != '\0');
-    if (((int)pcVar6 - (int)pcVar7 == 1) ||
-       (iVar5 = I_stricmp(pcVar7,0xffffffff82031834), iVar5 == 0)) {
-      uVar3 = 0xffffffff82057bf8;
+      cVar1 = *pcVar9;
+      pcVar9 = pcVar9 + 1;
+    } while (cVar1 != '\0');
+    if (((int)pcVar9 - (int)pcVar11 == 1) || (iVar4 = I_stricmp(pcVar11,";"), iVar4 == 0)) {
+      pcVar9 = "menu_gamesetup_splitscreen";
     }
     else {
-      uVar3 = 0xffffffff8216c490;
+      pcVar9 = "error_popmenu_submenu";
     }
-    uVar3 = Menus_OpenByName(puVar9,uVar3);
-    SND_FadeAllSounds(0x3ff0000000000000,uVar3,1000);
-    __restgprlr_26(1);
-    return;
+    iVar4 = Menus_OpenByName(&puVar3->uiDC,pcVar9);
+    SND_FadeAllSounds(1.0,iVar4);
+    iVar4 = __restgprlr_26(1);
+    return iVar4;
   case 8:
-    if (uVar4 != 0) {
-      MyAssertHandler(0xffffffff8216ab14,0x20c8,0,0xffffffff820300d8,0xffffffff8216c570,uVar4);
+    if (LVar2 != LOCAL_CLIENT_0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x20c8
+                      ,0,"%s\n\t(localClientNum) = %i");
     }
-    Key_SetCatcher(uVar4,0x10);
-    Menus_OpenByName(puVar9,0xffffffff8207b5b4);
-    Menus_SetFocusToItem(puVar9,0xffffffff8207b5b4,0xffffffff8216c484);
-    Menus_CloseAllBehindMain(puVar9);
-    pcVar7 = (char *)Dvar_GetString(0xffffffff8202c6c8);
-    pcVar6 = pcVar7;
+    Key_SetCatcher(LVar2,0x10);
+    Menus_OpenByName(&puVar3->uiDC,"main");
+    Menus_SetFocusToItem(&puVar3->uiDC,"main","system_link");
+    Menus_CloseAllBehindMain(&puVar3->uiDC);
+    pcVar11 = Dvar_GetString("com_errorMessage");
+    pcVar9 = pcVar11;
     do {
-      cVar8 = *pcVar6;
-      pcVar6 = pcVar6 + 1;
-    } while (cVar8 != '\0');
-    if (((int)pcVar6 - (int)pcVar7 == 1) ||
-       (iVar5 = I_stricmp(pcVar7,0xffffffff82031834), iVar5 == 0)) {
-      uVar3 = 0xffffffff82057c38;
+      cVar1 = *pcVar9;
+      pcVar9 = pcVar9 + 1;
+    } while (cVar1 != '\0');
+    if (((int)pcVar9 - (int)pcVar11 == 1) || (iVar4 = I_stricmp(pcVar11,";"), iVar4 == 0)) {
+      pcVar9 = "menu_systemlink";
     }
     else {
-      CL_ControllerIndexFromClientNum(uVar4);
-      cVar8 = Live_IsSignedIn();
-      if (cVar8 == '\0') {
-        uVar3 = 0xffffffff82032618;
+      iVar4 = CL_ControllerIndexFromClientNum(LVar2);
+      bVar12 = Live_IsSignedIn(iVar4);
+      if (bVar12) {
+        Menus_OpenByName(&puVar3->uiDC,"menu_systemlink");
+        pcVar9 = "error_popmenu_submenu";
       }
       else {
-        Menus_OpenByName(puVar9,0xffffffff82057c38);
-        uVar3 = 0xffffffff8216c490;
+        pcVar9 = "error_popmenu";
       }
     }
-    uVar3 = Menus_OpenByName(puVar9,uVar3);
-    if (*(char *)(DAT_82b3ecb8 + 0xc) == '\0') {
-      uVar3 = CL_ControllerIndexFromClientNum(uVar4);
-      uVar3 = Cmd_ExecuteSingleCommand(uVar4,uVar3,0xffffffff8216c444);
+    LVar5 = Menus_OpenByName(&puVar3->uiDC,pcVar9);
+    if ((splitscreen->current).enabled == false) {
+      iVar4 = CL_ControllerIndexFromClientNum(LVar2);
+      LVar5 = LVar2;
+      Cmd_ExecuteSingleCommand
+                (LVar2,iVar4,"forcenosplitscreencontrol UI_SetActiveMenu_SYSTEMLINKJOINGAME\n");
     }
-    SND_FadeAllSounds(0x3ff0000000000000,uVar3,1000);
-    __restgprlr_26(1);
-    return;
+    SND_FadeAllSounds(1.0,LVar5);
+    iVar4 = __restgprlr_26(1);
+    return iVar4;
   case 9:
-    if (uVar4 != 0) {
-      MyAssertHandler(0xffffffff8216ab14,0x2155,0,0xffffffff820300d8,0xffffffff8216c570,uVar4);
+    if (LVar2 != LOCAL_CLIENT_0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x2155
+                      ,0,"%s\n\t(localClientNum) = %i");
     }
-    uVar3 = Key_SetCatcher(uVar4,0x10);
-    if (*(char *)(DAT_82b3ecb8 + 0xc) == '\0') {
-      uVar3 = CL_ControllerIndexFromClientNum(uVar4);
-      uVar3 = Cmd_ExecuteSingleCommand(uVar4,uVar3,0xffffffff8216c388);
+    LVar5 = LVar2;
+    Key_SetCatcher(LVar2,0x10);
+    if ((splitscreen->current).enabled == false) {
+      iVar4 = CL_ControllerIndexFromClientNum(LVar2);
+      LVar5 = LVar2;
+      Cmd_ExecuteSingleCommand(LVar2,iVar4,"forcenosplitscreencontrol UI_SetActiveMenu_PARTY\n");
     }
-    SND_FadeAllSounds(0x3ff0000000000000,uVar3,1000);
-    uVar3 = CL_ControllerIndexFromClientNum(uVar4);
-    Cbuf_ExecuteBuffer(uVar4,uVar3,0xffffffff820495d8);
-    Dvar_SetBool(DAT_82aa1ae4,0);
-    Dvar_SetBool(DAT_84253bb8,0);
-    Dvar_SetBool(DAT_82aa1af8,1);
-    Lobby_GetPartyData();
-    Party_Sleep();
-    iVar5 = Lobby_GetSession();
-    if (*(int *)(iVar5 + 0x10) != 0) {
-      Lobby_GetPartyData();
-      Party_StopParty();
+    SND_FadeAllSounds(1.0,LVar5);
+    iVar4 = CL_ControllerIndexFromClientNum(LVar2);
+    Cbuf_ExecuteBuffer(LVar2,iVar4,"exec default_xboxlive.cfg");
+    Dvar_SetBool(systemlink,false);
+    Dvar_SetBool(xblive_privatematch,false);
+    Dvar_SetBool(onlinegame,true);
+    pPVar7 = Lobby_GetPartyData();
+    Party_Sleep(pPVar7);
+    pSVar8 = Lobby_GetSession();
+    if ((pSVar8->dyn).sessionHandle != (void *)0x0) {
+      pPVar7 = Lobby_GetPartyData();
+      Party_StopParty(pPVar7);
     }
-    Party_Awake(0xffffffff82b55118,uVar3,0);
-    Menus_OpenByName(puVar9,0xffffffff8207b5b4);
-    Menus_OpenByName(puVar9,0xffffffff82057c28);
-    Menus_CloseAllBehindMain(puVar9);
-    pcVar7 = (char *)Dvar_GetString(0xffffffff8202c6c8);
-    pcVar6 = pcVar7;
+    Party_Awake(&g_partyData,iVar4,0);
+    Menus_OpenByName(&puVar3->uiDC,"main");
+    Menus_OpenByName(&puVar3->uiDC,"menu_xboxlive");
+    Menus_CloseAllBehindMain(&puVar3->uiDC);
+    pcVar11 = Dvar_GetString("com_errorMessage");
+    pcVar9 = pcVar11;
     do {
-      cVar8 = *pcVar6;
-      pcVar6 = pcVar6 + 1;
-    } while (cVar8 != '\0');
-    if (((int)pcVar6 - (int)pcVar7 != 1) &&
-       (iVar5 = I_stricmp(pcVar7,0xffffffff82031834), iVar5 != 0)) {
-      Menus_OpenByName(puVar9,0xffffffff82036918);
+      cVar1 = *pcVar9;
+      pcVar9 = pcVar9 + 1;
+    } while (cVar1 != '\0');
+    if (((int)pcVar9 - (int)pcVar11 != 1) && (iVar4 = I_stricmp(pcVar11,";"), iVar4 != 0)) {
+      Menus_OpenByName(&puVar3->uiDC,"error_popmenu_party");
     }
-    __restgprlr_26(1);
-    return;
+    iVar4 = __restgprlr_26(1);
+    return iVar4;
   case 10:
-    uVar1 = *(undefined1 *)(DAT_84253bb8 + 0xc);
-    if (uVar4 != 0) {
-      MyAssertHandler(0xffffffff8216ab14,0x20f2,0,0xffffffff820300d8,0xffffffff8216c570,uVar4);
+    bVar12 = (xblive_privatematch->current).enabled;
+    if (LVar2 != LOCAL_CLIENT_0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x20f2
+                      ,0,"%s\n\t(localClientNum) = %i");
     }
-    uVar3 = Key_SetCatcher(uVar4,0x10);
-    if (*(char *)(DAT_82b3ecb8 + 0xc) == '\0') {
-      uVar3 = CL_ControllerIndexFromClientNum(uVar4);
-      uVar3 = Cmd_ExecuteSingleCommand(uVar4,uVar3,0xffffffff8216c40c);
+    LVar5 = LVar2;
+    Key_SetCatcher(LVar2,0x10);
+    if ((splitscreen->current).enabled == false) {
+      iVar4 = CL_ControllerIndexFromClientNum(LVar2);
+      LVar5 = LVar2;
+      Cmd_ExecuteSingleCommand(LVar2,iVar4,"forcenosplitscreencontrol UI_SetActiveMenu_GAMELOBBY\n")
+      ;
     }
-    SND_FadeAllSounds(0x3ff0000000000000,uVar3,1000);
-    uVar3 = CL_ControllerIndexFromClientNum(uVar4);
-    Dvar_SetBool(DAT_82aa1ae4,0);
-    Dvar_SetBool(DAT_82aa1af8,1);
-    Cbuf_ExecuteBuffer(uVar4,uVar3,0xffffffff820495d8);
-    Dvar_SetBool(DAT_84253bb8,uVar1);
-    uVar2 = Lobby_GetPartyData();
-    Party_Awake(uVar2,uVar3,0);
-    Menus_OpenByName(puVar9,0xffffffff8207b5b4);
-    Menus_OpenByName(puVar9,0xffffffff82057c28);
-    Menus_OpenByName(puVar9,0xffffffff8203bbd8);
-    cVar8 = Lobby_AreWeHost();
-    if (cVar8 != '\0') {
-      iVar5 = Lobby_GetHostData();
-      *(undefined1 *)(iVar5 + 0x14) = 1;
-      iVar5 = Lobby_GetHostData();
-      *(undefined4 *)(iVar5 + 0x18) = 0;
+    SND_FadeAllSounds(1.0,LVar5);
+    iVar4 = CL_ControllerIndexFromClientNum(LVar2);
+    Dvar_SetBool(systemlink,false);
+    Dvar_SetBool(onlinegame,true);
+    Cbuf_ExecuteBuffer(LVar2,iVar4,"exec default_xboxlive.cfg");
+    Dvar_SetBool(xblive_privatematch,bVar12);
+    pPVar7 = Lobby_GetPartyData();
+    Party_Awake(pPVar7,iVar4,0);
+    Menus_OpenByName(&puVar3->uiDC,"main");
+    Menus_OpenByName(&puVar3->uiDC,"menu_xboxlive");
+    Menus_OpenByName(&puVar3->uiDC,"menu_xboxlive_lobby");
+    bVar12 = Lobby_AreWeHost();
+    if (bVar12) {
+      pPVar6 = Lobby_GetHostData();
+      pPVar6->firstLobby = true;
+      pPVar6 = Lobby_GetHostData();
+      pPVar6->lastFindBestTime = 0;
     }
-    Menus_CloseAllBehindMain(puVar9);
-    pcVar7 = (char *)Dvar_GetString(0xffffffff8202c6c8);
-    pcVar6 = pcVar7;
+    Menus_CloseAllBehindMain(&puVar3->uiDC);
+    pcVar11 = Dvar_GetString("com_errorMessage");
+    pcVar9 = pcVar11;
     do {
-      cVar8 = *pcVar6;
-      pcVar6 = pcVar6 + 1;
-    } while (cVar8 != '\0');
-    if (((int)pcVar6 - (int)pcVar7 != 1) &&
-       (iVar5 = I_stricmp(pcVar7,0xffffffff82031834), iVar5 != 0)) {
-      Menus_OpenByName(puVar9,0xffffffff8216c3f8);
+      cVar1 = *pcVar9;
+      pcVar9 = pcVar9 + 1;
+    } while (cVar1 != '\0');
+    if (((int)pcVar9 - (int)pcVar11 != 1) && (iVar4 = I_stricmp(pcVar11,";"), iVar4 != 0)) {
+      Menus_OpenByName(&puVar3->uiDC,"error_popmenu_lobby");
     }
     break;
   case 0xb:
-    uVar1 = *(undefined1 *)(DAT_84253bb8 + 0xc);
-    if (uVar4 != 0) {
-      MyAssertHandler(0xffffffff8216ab14,0x212a,0,0xffffffff820300d8,0xffffffff8216c570,uVar4);
+    bVar12 = (xblive_privatematch->current).enabled;
+    if (LVar2 != LOCAL_CLIENT_0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x212a
+                      ,0,"%s\n\t(localClientNum) = %i");
     }
-    uVar3 = Key_SetCatcher(uVar4,0x10);
-    if (*(char *)(DAT_82b3ecb8 + 0xc) == '\0') {
-      uVar3 = CL_ControllerIndexFromClientNum(uVar4);
-      uVar3 = Cmd_ExecuteSingleCommand(uVar4,uVar3,0xffffffff8216c3bc);
+    LVar5 = LVar2;
+    Key_SetCatcher(LVar2,0x10);
+    if ((splitscreen->current).enabled == false) {
+      iVar4 = CL_ControllerIndexFromClientNum(LVar2);
+      LVar5 = LVar2;
+      Cmd_ExecuteSingleCommand
+                (LVar2,iVar4,"forcenosplitscreencontrol UI_SetActiveMenu_PRIVATELOBBY\n");
     }
-    SND_FadeAllSounds(0x3ff0000000000000,uVar3,1000);
-    uVar3 = CL_ControllerIndexFromClientNum(uVar4);
-    Dvar_SetBool(DAT_82aa1ae4,0);
-    Dvar_SetBool(DAT_82aa1af8,1);
-    Dvar_SetBool(DAT_84253bb8,uVar1);
-    Party_Sleep(0xffffffff82b55118);
-    uVar2 = Lobby_GetPartyData();
-    Party_Awake(uVar2,uVar3,0);
-    Menus_OpenByName(puVar9,0xffffffff8207b5b4);
-    Menus_OpenByName(puVar9,0xffffffff82057c28);
-    Menus_OpenByName(puVar9,0xffffffff8203bc8c);
-    Menus_CloseAllBehindMain(puVar9);
-    pcVar7 = (char *)Dvar_GetString(0xffffffff8202c6c8);
-    pcVar6 = pcVar7;
+    SND_FadeAllSounds(1.0,LVar5);
+    iVar4 = CL_ControllerIndexFromClientNum(LVar2);
+    Dvar_SetBool(systemlink,false);
+    Dvar_SetBool(onlinegame,true);
+    Dvar_SetBool(xblive_privatematch,bVar12);
+    Party_Sleep(&g_partyData);
+    pPVar7 = Lobby_GetPartyData();
+    Party_Awake(pPVar7,iVar4,0);
+    Menus_OpenByName(&puVar3->uiDC,"main");
+    Menus_OpenByName(&puVar3->uiDC,"menu_xboxlive");
+    Menus_OpenByName(&puVar3->uiDC,"menu_xboxlive_privatelobby");
+    Menus_CloseAllBehindMain(&puVar3->uiDC);
+    pcVar11 = Dvar_GetString("com_errorMessage");
+    pcVar9 = pcVar11;
     do {
-      cVar8 = *pcVar6;
-      pcVar6 = pcVar6 + 1;
-    } while (cVar8 != '\0');
-    if (((int)pcVar6 - (int)pcVar7 != 1) &&
-       (iVar5 = I_stricmp(pcVar7,0xffffffff82031834), iVar5 != 0)) {
-      Menus_OpenByName(puVar9,0xffffffff8216c3f8);
-      __restgprlr_26(1);
-      return;
+      cVar1 = *pcVar9;
+      pcVar9 = pcVar9 + 1;
+    } while (cVar1 != '\0');
+    if (((int)pcVar9 - (int)pcVar11 != 1) && (iVar4 = I_stricmp(pcVar11,";"), iVar4 != 0)) {
+      Menus_OpenByName(&puVar3->uiDC,"error_popmenu_lobby");
+      iVar4 = __restgprlr_26(1);
+      return iVar4;
     }
     break;
   case 0xd:
-    Key_SetCatcher(uVar4,0x10);
-    Menus_CloseAll(puVar9);
-    Menus_OpenByName(puVar9,0xffffffff8216c374);
-    __restgprlr_26(1);
-    return;
+    Key_SetCatcher(LVar2,0x10);
+    Menus_CloseAll(&puVar3->uiDC);
+    Menus_OpenByName(&puVar3->uiDC,"ingame_migration");
+    iVar4 = __restgprlr_26(1);
+    return iVar4;
   case 0xe:
-    iVar5 = CL_Demo_GetPlayingFlag();
-    if (iVar5 == 0) {
-      MyAssertHandler(0xffffffff8216ab14,0x2193,0,0xffffffff82000f98,0xffffffff8216c338);
+    CVar10 = CL_Demo_GetPlayingFlag();
+    if (CVar10 == CLIENT_DEMO_PLAYING_FLAG_NONE) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x2193
+                      ,0,"%s");
     }
-    if (*(char *)(DAT_82b3ecb8 + 0xc) != '\0') {
-      MyAssertHandler(0xffffffff8216ab14,0x2195,0,0xffffffff82000f98,0xffffffff820439fc);
+    if ((splitscreen->current).enabled != false) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x2195
+                      ,0,"%s");
     }
-    Key_SetCatcher(uVar4,0x10);
-    uVar3 = CL_ControllerIndexFromClientNum(uVar4);
-    Cmd_ExecuteSingleCommand(uVar4,uVar3,0xffffffff8216c2fc);
-    Menus_OpenByName(puVar9,0xffffffff8207b5b4);
-    Menus_OpenByName(puVar9,0xffffffff8216c2f0);
-    Menus_CloseAllBehindMain(puVar9);
-    pcVar7 = (char *)Dvar_GetString(0xffffffff8202c6c8);
-    pcVar6 = pcVar7;
+    Key_SetCatcher(LVar2,0x10);
+    iVar4 = CL_ControllerIndexFromClientNum(LVar2);
+    Cmd_ExecuteSingleCommand
+              (LVar2,iVar4,"forcenosplitscreencontrol UI_SetActiveMenu_UIMENU_VAULT\n");
+    Menus_OpenByName(&puVar3->uiDC,"main");
+    Menus_OpenByName(&puVar3->uiDC,"popup_vault");
+    Menus_CloseAllBehindMain(&puVar3->uiDC);
+    pcVar11 = Dvar_GetString("com_errorMessage");
+    pcVar9 = pcVar11;
     do {
-      cVar8 = *pcVar6;
-      pcVar6 = pcVar6 + 1;
-    } while (cVar8 != '\0');
-    if (((int)pcVar6 - (int)pcVar7 != 1) &&
-       (iVar5 = I_stricmp(pcVar7,0xffffffff82031834), iVar5 != 0)) {
-      Menus_OpenByName(puVar9,0xffffffff82036918);
+      cVar1 = *pcVar9;
+      pcVar9 = pcVar9 + 1;
+    } while (cVar1 != '\0');
+    if (((int)pcVar9 - (int)pcVar11 != 1) && (iVar4 = I_stricmp(pcVar11,";"), iVar4 != 0)) {
+      Menus_OpenByName(&puVar3->uiDC,"error_popmenu_party");
     }
-    iVar5 = CL_Demo_GetPlayingFlag();
-    if (iVar5 == 2) {
-      CL_ControllerIndexFromClientNum(uVar4);
-      CL_Demo_SaveRenderedMovie();
+    CVar10 = CL_Demo_GetPlayingFlag();
+    if (CVar10 == CLIENT_DEMO_PLAYING_FLAG_RENDER) {
+      iVar4 = CL_ControllerIndexFromClientNum(LVar2);
+      CL_Demo_SaveRenderedMovie(iVar4);
     }
-    CL_Demo_SetPlayingFlag(0);
-    __restgprlr_26(1);
-    return;
+    CL_Demo_SetPlayingFlag(CLIENT_DEMO_PLAYING_FLAG_NONE);
+    iVar4 = __restgprlr_26(1);
+    return iVar4;
   }
-  __restgprlr_26(1);
-  return;
+  iVar4 = __restgprlr_26(1);
+  return iVar4;
 }
 
 
 // 825AB9B8  UI_IsFullscreen  (ui_mp/ui_main_mp.cpp:8628)
 
-void UI_IsFullscreen(ulonglong param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+int UI_IsFullscreen(LocalClientNum_t param_1)
 
 {
-  if (3 < (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8216ab14,0x1c2,0,0xffffffff820011a8,param_1,4);
+  int iVar1;
+  
+  if (LOCAL_CLIENT_3 < param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x1c2,0,
+                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  Menus_AnyFullScreenVisible(param_1 * 0x22ac + -0x7c08e128);
-  return;
+  iVar1 = Menus_AnyFullScreenVisible(&uiInfoArray[param_1].uiDC);
+  return iVar1;
 }
 
 
 // 825ABA20  UI_ShowAcceptInviteWarning  (ui_mp/ui_main_mp.cpp:8636)
 
-void UI_ShowAcceptInviteWarning(ulonglong param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void UI_ShowAcceptInviteWarning(LocalClientNum_t param_1)
 
 {
-  if (3 < (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8216ab14,0x1c2,0,0xffffffff820011a8,param_1,4);
+  if (LOCAL_CLIENT_3 < param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x1c2,0,
+                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
   Key_SetCatcher(param_1,0x10);
-  Menus_OpenByName(param_1 * 0x22ac + -0x7c08e128,0xffffffff8216c5a4);
+  Menus_OpenByName(&uiInfoArray[param_1].uiDC,"acceptinvite_warning");
   return;
 }
 
 
 // 825ABAA0  Text_PaintCenter  (ui_mp/ui_main_mp.cpp:8647)
 
-void Text_PaintCenter(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void Text_PaintCenter(ScreenPlacement *param_1,float param_2,float param_3,Font_s *param_4,
+                     float param_5,float *param_6,char *param_7,float *param_8)
 
 {
-  undefined8 uVar1;
+  ScreenPlacement *pSVar1;
   uint uVar2;
-  undefined8 in_r6;
-  undefined8 in_r9;
+  Font_s *pFVar3;
+  longlong lVar4;
+  int iVar5;
+  char *in_r9;
   double extraout_f1;
-  double dVar3;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  float *in_stack_ffffff08;
+  undefined1 in_stack_ffffff0f;
+  undefined1 in_stack_ffffff13;
+  Material *in_stack_ffffff14;
+  Material *in_stack_ffffff18;
+  int in_stack_ffffff1c;
+  int in_stack_ffffff20;
+  int in_stack_ffffff24;
+  int in_stack_ffffff28;
   
-  uVar1 = __savegprlr_27();
-  dVar3 = extraout_f1;
-  uVar2 = UI_TextWidthModCase(param_3,in_r9,0,in_r6);
-  UI_DrawTextWithGlow((double)(float)(dVar3 - (double)(longlong)
-                                                      (int)(((int)uVar2 >> 1) +
-                                                           (uint)((int)uVar2 < 0 && (uVar2 & 1) != 0
-                                                                 ))),param_2,param_3,uVar1,in_r9,
-                      0x7fffffff,in_r6);
+  dVar7 = (double)param_5;
+  dVar6 = (double)param_3;
+  lVar4 = (longlong)(int)param_7;
+  pSVar1 = (ScreenPlacement *)__savegprlr_27((double)param_2,param_1,param_4,param_6,lVar4,param_8);
+  iVar5 = 0;
+  pFVar3 = (Font_s *)lVar4;
+  dVar8 = extraout_f1;
+  uVar2 = UI_TextWidthModCase(in_r9,0,pFVar3,(float)dVar7,(int)pFVar3);
+  UI_DrawTextWithGlow(pSVar1,in_r9,0x7fffffff,pFVar3,
+                      (float)(dVar8 - (double)(longlong)
+                                              (int)(((int)uVar2 >> 1) +
+                                                   (uint)((int)uVar2 < 0 && (uVar2 & 1) != 0))),
+                      (float)dVar6,iVar5,6,(float)dVar7,(float *)0x0,0,in_stack_ffffff08,
+                      (bool)in_stack_ffffff0f,(bool)in_stack_ffffff13,in_stack_ffffff14,
+                      in_stack_ffffff18,in_stack_ffffff1c,in_stack_ffffff20,in_stack_ffffff24,
+                      in_stack_ffffff28);
   __restgprlr_27();
   return;
 }
@@ -7098,40 +7068,51 @@ void Text_PaintCenter(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 // 825ABB80  Text_PaintCenterWithDots  (ui_mp/ui_main_mp.cpp:8657)
 
-void Text_PaintCenterWithDots(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void Text_PaintCenterWithDots
+               (ScreenPlacement *param_1,float param_2,float param_3,Font_s *param_4,float param_5,
+               float *param_6,char *param_7,float *param_8)
 
 {
-  undefined8 uVar1;
-  int iVar2;
-  uint uVar3;
-  undefined8 in_r6;
+  ScreenPlacement *pSVar1;
+  uint uVar2;
+  char *pcVar3;
   longlong lVar4;
-  undefined8 in_r9;
-  undefined8 uVar5;
+  Font_s *pFVar5;
+  Font_s *pFVar6;
+  char *in_r9;
+  int iVar7;
   double extraout_f1;
-  double dVar6;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  float *in_stack_fffffef8;
+  undefined1 in_stack_fffffeff;
+  undefined1 in_stack_ffffff03;
+  Material *in_stack_ffffff04;
+  Material *in_stack_ffffff08;
+  int in_stack_ffffff0c;
+  int in_stack_ffffff10;
+  int in_stack_ffffff14;
+  int in_stack_ffffff18;
   
-  uVar1 = __savegprlr_25();
-  dVar6 = extraout_f1;
-  iVar2 = Sys_Milliseconds();
-  uVar3 = iVar2 / 500 & 3;
-  if (uVar3 == 1) {
-    uVar5 = 0xffffffff82046284;
-  }
-  else if (uVar3 == 2) {
-    uVar5 = 0xffffffff82046288;
-  }
-  else if (uVar3 == 3) {
-    uVar5 = 0xffffffff820185bc;
-  }
-  else {
-    uVar5 = 0xffffffff8204628c;
-  }
-  uVar3 = UI_TextWidthModCase(param_3,in_r9,0,in_r6);
-  uVar5 = va(0xffffffff82013790,in_r9,uVar5);
-  lVar4 = (longlong)(int)(((int)uVar3 >> 1) + (uint)((int)uVar3 < 0 && (uVar3 & 1) != 0));
-  UI_DrawTextWithGlow((double)(float)(dVar6 - (double)lVar4),param_2,param_3,uVar1,uVar5,0x7fffffff,
-                      in_r6,6,lVar4,0,0);
+  dVar9 = (double)param_5;
+  dVar8 = (double)param_3;
+  lVar4 = (longlong)(int)param_7;
+  pSVar1 = (ScreenPlacement *)__savegprlr_25((double)param_2,param_1,param_4,param_6,lVar4,param_8);
+  pFVar5 = (Font_s *)lVar4;
+  dVar10 = extraout_f1;
+  pFVar6 = pFVar5;
+  Sys_Milliseconds();
+  uVar2 = UI_TextWidthModCase(in_r9,0,pFVar5,(float)dVar9,(int)pFVar6);
+  pcVar3 = va("%s%s");
+  iVar7 = ((int)uVar2 >> 1) + (uint)((int)uVar2 < 0 && (uVar2 & 1) != 0);
+  UI_DrawTextWithGlow(pSVar1,pcVar3,0x7fffffff,pFVar5,(float)(dVar10 - (double)(longlong)iVar7),
+                      (float)dVar8,6,iVar7,(float)dVar9,(float *)0x0,0,in_stack_fffffef8,
+                      (bool)in_stack_fffffeff,(bool)in_stack_ffffff03,in_stack_ffffff04,
+                      in_stack_ffffff08,in_stack_ffffff0c,in_stack_ffffff10,in_stack_ffffff14,
+                      in_stack_ffffff18);
   __restgprlr_25();
   return;
 }
@@ -7139,193 +7120,131 @@ void Text_PaintCenterWithDots(undefined8 param_1,undefined8 param_2,undefined8 p
 
 // 825B31E8  UI_GetConnectInfoString  (ui_mp/ui_main_mp.cpp:8690)
 
-undefined8 UI_GetConnectInfoString(int *param_1)
+char * UI_GetConnectInfoString(uiClientState_s *param_1)
 
 {
-  int iVar1;
-  undefined8 uVar2;
+  connstate_t cVar1;
+  char *pcVar2;
   
-  if (param_1 == (int *)0x0) {
-    MyAssertHandler(0xffffffff8216ab14,0x21f3,0,0xffffffff82000f98,0xffffffff82003870);
+  if (param_1 == (uiClientState_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x21f3,0
+                    ,"%s");
   }
-  iVar1 = *param_1;
-  if (6 < iVar1 - 3U) {
-    return 0;
+  cVar1 = param_1->connState;
+  if (6 < cVar1 - CA_CONNECTING) {
+    return (char *)0x0;
   }
-  if (iVar1 == 4) {
-    uVar2 = UI_SafeTranslateString(0xffffffff8216d840);
-    uVar2 = UI_ReplaceConversionInt(uVar2,param_1[1]);
-    return uVar2;
+  if (cVar1 == CA_CHALLENGING) {
+    pcVar2 = UI_SafeTranslateString("EXE_AWAITINGCHALLENGE");
+    pcVar2 = UI_ReplaceConversionInt(pcVar2,param_1->connectPacketCount);
+    return pcVar2;
   }
-  if (iVar1 != 5) {
-    if (iVar1 == 6) {
-      uVar2 = UI_SafeTranslateString(0xffffffff8216d814);
-      return uVar2;
+  if (cVar1 != CA_CONNECTED) {
+    if (cVar1 == CA_SENDINGSTATS) {
+      pcVar2 = UI_SafeTranslateString("EXE_UPLOADINGSTATS");
+      return pcVar2;
     }
-    if (((iVar1 != 7) && (iVar1 != 8)) && (iVar1 == 3)) {
-      uVar2 = UI_SafeTranslateString(0xffffffff8216d858);
-      uVar2 = UI_ReplaceConversionInt(uVar2,param_1[1]);
-      return uVar2;
+    if (((cVar1 != CA_REQUESTING_MATCH_RULES) && (cVar1 != CA_LOADING)) && (cVar1 == CA_CONNECTING))
+    {
+      pcVar2 = UI_SafeTranslateString("EXE_AWAITINGCONNECTION");
+      pcVar2 = UI_ReplaceConversionInt(pcVar2,param_1->connectPacketCount);
+      return pcVar2;
     }
-    uVar2 = UI_SafeTranslateString(0xffffffff8216d800);
-    return uVar2;
+    pcVar2 = UI_SafeTranslateString("EXE_AWAITINGHOST");
+    return pcVar2;
   }
-  uVar2 = UI_SafeTranslateString(0xffffffff8216d828);
-  return uVar2;
+  pcVar2 = UI_SafeTranslateString("EXE_AWAITINGGAMESTATE");
+  return pcVar2;
 }
 
 
 // 825B3320  UI_GetConnectionInfo  (ui_mp/ui_main_mp.cpp:8726)
 
-undefined8 UI_GetConnectionInfo(undefined8 param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+char * UI_GetConnectionInfo(LocalClientNum_t param_1)
 
 {
-  longlong lVar1;
-  char cVar3;
-  undefined8 uVar2;
+  int iVar1;
+  bool bVar3;
+  char *pcVar2;
   bool bVar4;
-  double dVar5;
-  undefined1 auStack_820 [8];
-  undefined1 auStack_818 [2048];
+  float fVar5;
+  uiClientState_s uStack_820;
   
-  bVar4 = DAT_83f71e18 != '\0';
-  CL_GetClientState(param_1,auStack_820);
-  lVar1 = I_stricmp(auStack_818,0xffffffff8202c774);
-  dVar5 = (double)DB_GetLoadedFraction(lVar1,-lVar1);
-  cVar3 = CL_Demo_IsPlaying(param_1);
-  if (cVar3 != '\0' || dVar5 != 1.0 && (lVar1 == 0 || bVar4)) {
+  bVar4 = g_mapname[0] != '\0';
+  CL_GetClientState(param_1,&uStack_820);
+  iVar1 = I_stricmp(uStack_820.servername,"localhost");
+  fVar5 = DB_GetLoadedFraction();
+  bVar3 = CL_Demo_IsPlaying(param_1);
+  if (bVar3 || fVar5 != 1.0 && (iVar1 == 0 || bVar4)) {
 LAB_825b33fc:
-    uVar2 = 0;
+    pcVar2 = (char *)0x0;
   }
   else {
-    if ((*(char *)(DAT_82b3ecb8 + 0xc) == '\0') || (*(char *)(DAT_82aa1af8 + 0xc) == '\0')) {
-      if (cVar3 != '\0' || dVar5 != 1.0 && (lVar1 == 0 || bVar4)) goto LAB_825b33fc;
+    if (((splitscreen->current).enabled == false) || ((onlinegame->current).enabled == false)) {
+      if (bVar3 || fVar5 != 1.0 && (iVar1 == 0 || bVar4)) goto LAB_825b33fc;
     }
     else {
-      CL_GetClientState(0,auStack_820);
+      CL_GetClientState(LOCAL_CLIENT_0,&uStack_820);
     }
-    uVar2 = UI_GetConnectInfoString(auStack_820);
+    pcVar2 = UI_GetConnectInfoString(&uStack_820);
   }
-  return uVar2;
+  return pcVar2;
 }
 
 
 // 825B3418  UI_DrawConnectScreen  (ui_mp/ui_main_mp.cpp:8778)
-
-void UI_DrawConnectScreen(void)
-
-{
-  char cVar1;
-  bool bVar2;
-  ulonglong uVar3;
-  undefined8 uVar4;
-  char *pcVar5;
-  int iVar6;
-  char *pcVar7;
-  char *pcVar8;
-  double dVar9;
-  undefined8 uVar10;
-  undefined8 uVar11;
-  double dVar12;
-  char local_8c0 [64];
-  int local_880 [258];
-  undefined1 auStack_478 [1144];
-  
-  __savegprlr_23();
-  uVar3 = __savefpr_28();
-  if (3 < (uVar3 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8216aac8,0x4c5,0,0xffffffff820011a8,uVar3,4);
-  }
-  if (*(int *)(&DAT_82b3e4f4 + (int)uVar3 * 0x1e4) == 0) {
-    CG_DrawInformation(uVar3);
-    uVar4 = ScrPlace_GetActivePlacement(uVar3);
-    if (DAT_83f7a9f8 == 0) {
-      MyAssertHandler(0xffffffff8216ab14,0x2274,0,0xffffffff82000f98,0xffffffff82058ccc);
-    }
-    CL_GetClientState(uVar3,local_880);
-    uVar10 = 0x3fe0000000000000;
-    uVar11 = 0x4074000000000000;
-    if (local_880[0] < 5) {
-      iVar6 = 0;
-      bVar2 = false;
-      dVar12 = 299.0;
-      pcVar5 = (char *)UI_SafeTranslateString(auStack_478);
-      pcVar7 = pcVar5;
-      do {
-        cVar1 = *pcVar7;
-        pcVar7 = pcVar7 + 1;
-      } while (cVar1 != '\0');
-      pcVar8 = (char *)0x0;
-      if (0 < (int)(pcVar7 + (-1 - (int)pcVar5))) {
-        dVar9 = 22.0;
-        do {
-          local_8c0[iVar6] = pcVar5[(int)pcVar8];
-          if ((0x28 < iVar6) && (0 < (int)pcVar8)) {
-            bVar2 = true;
-          }
-          if (((0x39 < iVar6) || (pcVar8 == pcVar7 + (-2 - (int)pcVar5))) ||
-             ((bVar2 && (pcVar5[(int)pcVar8] == ' ')))) {
-            local_8c0[iVar6 + 1] = '\0';
-            Text_PaintCenter(uVar11,dVar12,uVar10,uVar4);
-            bVar2 = false;
-            dVar12 = (double)(float)(dVar12 + dVar9);
-            iVar6 = -1;
-          }
-          pcVar8 = pcVar8 + 1;
-          iVar6 = iVar6 + 1;
-        } while ((int)pcVar8 < (int)(pcVar7 + (-1 - (int)pcVar5)));
-      }
-    }
-    if ((((*(char *)(DAT_82aa1ae4 + 0xc) != '\0') && (2 < local_880[0])) && (local_880[0] < 8)) &&
-       ((iVar6 = UI_GetConnectInfoString(local_880), iVar6 != 0 &&
-        ((*(char *)(DAT_82aa1aa8 + 0xc) == '\0' || (local_880[0] == 3)))))) {
-      Text_PaintCenterWithDots(uVar11,0x4062200000000000,uVar10,uVar4);
-    }
-  }
-  __restfpr_28();
-  __restgprlr_23();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure MigrationPers
 
 // 825ABCD0  UI_GetBlurRadius  (ui_mp/ui_main_mp.cpp:8892)
 
-double UI_GetBlurRadius(uint param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+float UI_GetBlurRadius(LocalClientNum_t param_1)
 
 {
   float fVar1;
-  int iVar2;
   
-  if (3 < param_1) {
-    MyAssertHandler(0xffffffff8216ab14,0x1c2,0,0xffffffff820011a8,param_1,4);
+  if (LOCAL_CLIENT_3 < param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x1c2,0,
+                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  iVar2 = param_1 * 0x22ac;
-  if (iVar2 == 0x7c08e128) {
-    MyAssertHandler(0xffffffff8216ab14,0x22c0,0,0xffffffff82000f98,0xffffffff8216c5bc);
+  if (param_1 * 0x22ac == 0x7c08e128) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x22c0,0
+                    ,"%s");
   }
-  if (*(int *)(&DAT_83f7417c + iVar2) == 6) {
+  if (uiInfoArray[param_1].currentMenuType == UIMENU_SCOREBOARD) {
     fVar1 = 0.0;
   }
   else {
-    fVar1 = *(float *)(&DAT_83f71f08 + iVar2);
+    fVar1 = uiInfoArray[param_1].uiDC.blurRadiusOut;
   }
-  return (double)fVar1;
+  return fVar1;
 }
 
 
 // 825ABD80  UI_StopServerRefresh  (ui_mp/ui_main_mp.cpp:8917)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
 void UI_StopServerRefresh(void)
 
 {
-  longlong lVar1;
+  int iVar1;
   
-  if (DAT_83fd21ec != 0) {
-    DAT_83fd21ec = 0;
-    Com_Printf(0xd,0xffffffff8216c604,DAT_83fe5a74,DAT_83fe5a7c);
-    lVar1 = LAN_GetServerCount(*(undefined4 *)(DAT_83f71e68 + 0xc));
-    if (0 < (longlong)(lVar1 - (ulonglong)DAT_83fe5a74)) {
-      Com_Printf(0xd,0xffffffff8216c5c4);
+  if (sharedUiInfo.serverStatus.refreshActive != 0) {
+    sharedUiInfo.serverStatus.refreshActive = 0;
+    Com_Printf(0xd,"%d servers listed in browser with %d players.\n");
+    iVar1 = LAN_GetServerCount((ui_netSource->current).integer);
+    if (0 < (longlong)
+            ((longlong)iVar1 - (ulonglong)(uint)sharedUiInfo.serverStatus.numDisplayServers)) {
+      Com_Printf(0xd,"%d servers not listed (filtered out by game browser settings)\n");
     }
   }
   return;
@@ -7334,36 +7253,42 @@ void UI_StopServerRefresh(void)
 
 // 825B3670  UI_DoServerRefresh  (ui_mp/ui_main_mp.cpp:8942)
 
-void UI_DoServerRefresh(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void UI_DoServerRefresh(uiInfo_s *param_1)
 
 {
   bool bVar1;
-  int iVar2;
+  uiInfo_s *puVar2;
   int iVar3;
   
-  iVar2 = __savegprlr_29();
+  puVar2 = (uiInfo_s *)__savegprlr_29(param_1);
   bVar1 = false;
-  if (DAT_83fd21ec == 0) goto LAB_825b3728;
-  if (*(int *)(DAT_83f71e68 + 0xc) != 2) {
-    if (*(int *)(DAT_83f71e68 + 0xc) == 0) {
-      iVar3 = LAN_GetServerCount();
+  if (sharedUiInfo.serverStatus.refreshActive == 0) goto LAB_825b3728;
+  iVar3 = (ui_netSource->current).integer;
+  if (iVar3 != 2) {
+    if (iVar3 == 0) {
+      iVar3 = LAN_GetServerCount(0);
       if (iVar3 == 0) {
 LAB_825b36d8:
         bVar1 = true;
       }
     }
     else {
-      iVar3 = LAN_WaitServerResponse();
+      iVar3 = LAN_WaitServerResponse(iVar3);
       if (iVar3 != 0) goto LAB_825b36d8;
     }
   }
-  if ((DAT_83fd21d8 <= *(int *)(iVar2 + 8)) || (!bVar1)) {
-    UI_UpdateDisplayServers(iVar2);
+  if ((sharedUiInfo.serverStatus.refreshtime <= (puVar2->uiDC).realTime) || (!bVar1)) {
+    UI_UpdateDisplayServers(puVar2);
     if (!bVar1) {
-      UI_BuildServerDisplayList(iVar2,2);
+      UI_BuildServerDisplayList(puVar2,2);
       UI_StopServerRefresh();
     }
-    UI_BuildServerDisplayList(iVar2,0);
+    UI_BuildServerDisplayList(puVar2,0);
   }
 LAB_825b3728:
   __restgprlr_29();
@@ -7373,56 +7298,55 @@ LAB_825b3728:
 
 // 825AF1B0  UI_StartServerRefresh  (ui_mp/ui_main_mp.cpp:9005)
 
-void UI_StartServerRefresh(undefined8 param_1,int param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void UI_StartServerRefresh(LocalClientNum_t param_1,int param_2)
 
 {
-  uint uVar1;
-  undefined8 uVar2;
-  int iVar3;
-  char *pcVar4;
+  LocalClientNum_t LVar1;
+  char *pcVar2;
+  char *pcVar3;
   char acStack_80 [32];
-  undefined1 auStack_60 [4];
-  undefined4 local_5c;
-  undefined4 local_58;
-  undefined4 local_54;
-  int local_50;
-  uint local_4c;
+  qtime_s aqStack_60 [2];
   
-  uVar1 = __savegprlr_27();
-  if (3 < uVar1) {
-    MyAssertHandler(0xffffffff8216ab14,0x1c2,0,0xffffffff820011a8,uVar1,4);
+  LVar1 = __savegprlr_27(param_1);
+  if (LOCAL_CLIENT_3 < LVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x1c2,0,
+                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  iVar3 = uVar1 * 0x22ac;
-  Com_RealTime(0,auStack_60);
-  _snprintf(acStack_80,0x18,"ui_lastServerRefresh_%i",(ulonglong)*(uint *)(DAT_83f71e68 + 0xc));
-  pcVar4 = (&PTR_s_EXE_MONTH_ABV_JANUARY_82991f60)[local_50];
-  if (*pcVar4 == '\x15') {
-    pcVar4 = pcVar4 + 1;
-    uVar2 = 0;
+  Com_RealTime(0,aqStack_60);
+  _snprintf(acStack_80,0x18,"ui_lastServerRefresh_%i");
+  pcVar3 = MonthAbbrev[aqStack_60[0].tm_mon];
+  if (*pcVar3 == '\x15') {
+    pcVar3 = pcVar3 + 1;
+    pcVar2 = (char *)0x0;
   }
   else {
-    uVar2 = SEH_StringEd_GetString(pcVar4);
+    pcVar2 = SEH_StringEd_GetString(pcVar3);
   }
-  uVar2 = UI_CheckStringTranslation(pcVar4,uVar2);
-  uVar2 = va(0xffffffff8216ca6c,uVar2,local_54,(ulonglong)local_4c + 0x76c,local_58,local_5c);
-  Dvar_SetStringByName(acStack_80,uVar2);
+  UI_CheckStringTranslation(pcVar3,pcVar2);
+  pcVar3 = va("%s %i, %i   %i:%02i");
+  Dvar_SetStringByName(acStack_80,pcVar3);
   if (param_2 == 0) {
-    UI_UpdatePendingPings(&DAT_83f71ed8 + iVar3);
+    UI_UpdatePendingPings(uiInfoArray + LVar1);
     __restgprlr_27();
     return;
   }
-  DAT_83fe5a80 = *(int *)(&DAT_83f71ee0 + iVar3) + 1000;
-  DAT_83fd21ec = 1;
+  sharedUiInfo.serverStatus.nextDisplayRefresh = uiInfoArray[LVar1].uiDC.realTime + 1000;
+  sharedUiInfo.serverStatus.refreshActive = 1;
   UI_ClearDisplayedServers();
-  LAN_MarkServerDirty(*(undefined4 *)(DAT_83f71e68 + 0xc),0xffffffffffffffff,1);
-  LAN_ResetPings(*(undefined4 *)(DAT_83f71e68 + 0xc));
-  if (*(int *)(DAT_83f71e68 + 0xc) == 0) {
-    CL_LocalServers(uVar1);
-    DAT_83fd21d8 = *(int *)(&DAT_83f71ee0 + iVar3) + 1000;
+  LAN_MarkServerDirty((ui_netSource->current).integer,-1,1);
+  LAN_ResetPings((ui_netSource->current).integer);
+  if ((ui_netSource->current).integer == 0) {
+    CL_LocalServers(LVar1);
+    sharedUiInfo.serverStatus.refreshtime = uiInfoArray[LVar1].uiDC.realTime + 1000;
     __restgprlr_27();
     return;
   }
-  DAT_83fd21d8 = *(int *)(&DAT_83f71ee0 + iVar3) + 5000;
+  sharedUiInfo.serverStatus.refreshtime = uiInfoArray[LVar1].uiDC.realTime + 5000;
   __restgprlr_27();
   return;
 }
@@ -7430,7 +7354,7 @@ void UI_StartServerRefresh(undefined8 param_1,int param_2)
 
 // 825ABE30  UI_CheckStringTranslation  (ui_mp/ui_main_mp.cpp:9067)
 
-ulonglong UI_CheckStringTranslation(char *param_1,ulonglong param_2)
+char * UI_CheckStringTranslation(char *param_1,char *param_2)
 
 {
   char cVar1;
@@ -7439,24 +7363,24 @@ ulonglong UI_CheckStringTranslation(char *param_1,ulonglong param_2)
   undefined *puVar4;
   longlong lVar5;
   
-  if ((param_2 & 0xffffffff) == 0) {
-    if (*(char *)(DAT_83f5de0c + 0xc) == '\0') {
-      iVar2 = (int)&DAT_83fe74b8 - (int)param_1;
+  if (param_2 == (char *)0x0) {
+    if ((loc_warnings->current).enabled == false) {
+      iVar2 = (int)errorString - (int)param_1;
       do {
         cVar1 = *param_1;
         param_1[iVar2] = cVar1;
         param_1 = param_1 + 1;
       } while (cVar1 != '\0');
-      param_2 = 0xffffffff83fe74b8;
+      param_2 = errorString;
     }
     else {
-      if (*(char *)(DAT_83f5de04 + 0xc) == '\0') {
-        Com_PrintWarning(0xd,0xffffffff8216c634,param_1);
+      if ((loc_warningsAsErrors->current).enabled == false) {
+        Com_PrintWarning(0xd,"WARNING: Could not translate string \"%s\"\n");
       }
       else {
-        Com_Error(6,0xffffffff8216c660);
+        Com_Error(ERR_LOCALIZATION,"Could not translate string \"%s\"");
       }
-      param_2 = 0xffffffff83fe74b8;
+      param_2 = errorString;
       puVar3 = (undefined1 *)0x83fe74b7;
       puVar4 = &UNK_8216486b;
       lVar5 = 0x11;
@@ -7466,8 +7390,8 @@ ulonglong UI_CheckStringTranslation(char *param_1,ulonglong param_2)
         *puVar3 = *puVar4;
         lVar5 = lVar5 + -1;
       } while (lVar5 != 0);
-      I_strncat(0xffffffff83fe74b8,0x400,param_1);
-      I_strncat(0xffffffff83fe74b8,0x400,0xffffffff82164864);
+      I_strncat(errorString,0x400,param_1);
+      I_strncat(errorString,0x400,"^1)^7");
     }
   }
   return param_2;
@@ -7476,136 +7400,154 @@ ulonglong UI_CheckStringTranslation(char *param_1,ulonglong param_2)
 
 // 825ABF48  UI_SafeTranslateString  (ui_mp/ui_main_mp.cpp:9104)
 
-void UI_SafeTranslateString(char *param_1)
+char * UI_SafeTranslateString(char *param_1)
 
 {
-  undefined8 uVar1;
+  char *pcVar1;
   
   if (*param_1 == '\x15') {
     param_1 = param_1 + 1;
-    uVar1 = 0;
+    pcVar1 = (char *)0x0;
   }
   else {
-    uVar1 = SEH_StringEd_GetString(param_1);
+    pcVar1 = SEH_StringEd_GetString(param_1);
   }
-  UI_CheckStringTranslation(param_1,uVar1);
-  return;
+  pcVar1 = UI_CheckStringTranslation(param_1,pcVar1);
+  return pcVar1;
 }
 
 
 // 825ABFA0  UI_SafeLocalizeTextMessage  (ui_mp/ui_main_mp.cpp:9121)
 
-void UI_SafeLocalizeTextMessage(undefined8 param_1)
+char * UI_SafeLocalizeTextMessage(char *param_1)
 
 {
-  undefined8 uVar1;
+  char *pcVar1;
   
-  uVar1 = SEH_LocalizeTextMessage(param_1,0xffffffff8216c680,0);
-  UI_CheckStringTranslation(param_1,uVar1);
-  return;
+  pcVar1 = SEH_LocalizeTextMessage(param_1,"UI_SafeLocalizeTextMessage",LOCMSG_SAFE);
+  pcVar1 = UI_CheckStringTranslation(param_1,pcVar1);
+  return pcVar1;
 }
 
 
 // 825ABFE8  UI_AnyFullScreenMenuVisible  (ui_mp/ui_main_mp.cpp:9130)
 
-void UI_AnyFullScreenMenuVisible(ulonglong param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+int UI_AnyFullScreenMenuVisible(LocalClientNum_t param_1)
 
 {
-  if (3 < (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8216ab14,0x1c2,0,0xffffffff820011a8,param_1,4);
+  int iVar1;
+  
+  if (LOCAL_CLIENT_3 < param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x1c2,0,
+                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  Menus_AnyFullScreenVisible(param_1 * 0x22ac + -0x7c08e128);
-  return;
+  iVar1 = Menus_AnyFullScreenVisible(&uiInfoArray[param_1].uiDC);
+  return iVar1;
 }
 
 
 // 825AC050  UI_AnyMenuActive  (ui_mp/ui_main_mp.cpp:9139)
 
-ulonglong UI_AnyMenuActive(undefined8 param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+int UI_AnyMenuActive(LocalClientNum_t param_1)
 
 {
-  char cVar2;
-  int iVar1;
+  uint uVar1;
+  bool bVar3;
+  uiInfo_s *puVar2;
   
-  cVar2 = Key_IsCatcherActive(param_1,0x10);
-  if (cVar2 == '\0') {
+  bVar3 = Key_IsCatcherActive(param_1,0x10);
+  if (!bVar3) {
     return 0;
   }
-  iVar1 = UI_GetClientInfo(param_1);
-  return (-(ulonglong)*(uint *)(iVar1 + 0xa78) & ~(ulonglong)*(uint *)(iVar1 + 0xa78) & 0xffffffff)
-         >> 0x1f;
+  puVar2 = UI_GetClientInfo(param_1);
+  uVar1 = (puVar2->uiDC).openMenuCount;
+  return (-uVar1 & ~uVar1) >> 0x1f;
 }
 
 
 // 825AF358  UI_ReplaceConversionString  (ui_mp/ui_main_mp.cpp:9151)
 
-void UI_ReplaceConversionString(undefined8 param_1,undefined4 param_2)
+char * UI_ReplaceConversionString(char *param_1,char *param_2)
 
 {
-  undefined4 local_440;
-  undefined4 uStack_43c;
-  undefined8 local_438;
-  undefined8 local_430;
-  undefined8 local_428;
-  undefined8 local_420;
-  undefined1 auStack_410 [1040];
+  char *pcVar1;
+  ConversionArguments local_440;
+  char acStack_410 [1040];
   
-  local_438 = 0;
-  local_430 = 0;
-  local_428 = 0;
-  local_420 = 0;
-  _local_440 = CONCAT44(1,param_2);
-  UI_ReplaceConversions(param_1,&local_440,auStack_410,0x400);
-  va(0xffffffff82000f98,auStack_410);
-  return;
+  local_440.args[1] = (char *)0x0;
+  local_440.args[2] = (char *)0x0;
+  local_440.args[3] = (char *)0x0;
+  local_440.args[4] = (char *)0x0;
+  local_440.args[5] = (char *)0x0;
+  local_440.args[6] = (char *)0x0;
+  local_440.args[7] = (char *)0x0;
+  local_440.args[8] = (char *)0x0;
+  local_440.argCount = 1;
+  local_440.args[0] = param_2;
+  UI_ReplaceConversions(param_1,&local_440,acStack_410,0x400);
+  pcVar1 = va("%s");
+  return pcVar1;
 }
 
 
 // 825AF3C0  UI_ReplaceConversionInt  (ui_mp/ui_main_mp.cpp:9164)
 
-void UI_ReplaceConversionInt(undefined8 param_1,undefined8 param_2)
+char * UI_ReplaceConversionInt(char *param_1,int param_2)
 
 {
-  undefined8 local_460;
-  undefined8 local_458;
-  undefined8 local_450;
-  undefined8 local_448;
-  undefined8 local_440;
+  char *pcVar1;
+  ConversionArguments local_460;
   char acStack_430 [32];
-  undefined1 auStack_410 [1024];
+  char acStack_410 [1024];
   
-  local_460 = 0;
-  local_458 = 0;
-  local_450 = 0;
-  local_448 = 0;
-  local_440 = 0;
-  sprintf(acStack_430,"%d",param_2);
-  local_460 = CONCAT44(1,acStack_430);
-  UI_ReplaceConversions(param_1,&local_460,auStack_410,0x400);
-  va(0xffffffff82000f98,auStack_410);
-  return;
+  local_460.argCount = 0;
+  local_460.args[0] = (char *)0x0;
+  local_460.args[1] = (char *)0x0;
+  local_460.args[2] = (char *)0x0;
+  local_460.args[3] = (char *)0x0;
+  local_460.args[4] = (char *)0x0;
+  local_460.args[5] = (char *)0x0;
+  local_460.args[6] = (char *)0x0;
+  local_460.args[7] = (char *)0x0;
+  local_460.args[8] = (char *)0x0;
+  sprintf(acStack_430,"%d");
+  local_460.argCount = 1;
+  local_460.args[0] = acStack_430;
+  UI_ReplaceConversions(param_1,&local_460,acStack_410,0x400);
+  pcVar1 = va("%s");
+  return pcVar1;
 }
 
 
 // 825AF450  UI_ReplaceConversionInts  (ui_mp/ui_main_mp.cpp:9179)
 
-/* WARNING: Restarted to delay deadcode elimination for space: stack */
-
-void UI_ReplaceConversionInts(undefined8 param_1,ulonglong param_2,int param_3)
+char * UI_ReplaceConversionInts(char *param_1,int param_2,int *param_3)
 
 {
   char cVar1;
   char *pcVar2;
-  char *_Str;
-  char *pcVar3;
+  undefined4 uVar3;
   char *pcVar4;
-  int iVar5;
+  char *pcVar5;
   char *pcVar6;
   int iVar7;
-  ulonglong uVar8;
-  char *pcVar9;
-  undefined4 *puVar10;
-  char *pcVar11;
+  char *pcVar8;
+  ulonglong uVar9;
+  int iVar10;
+  ulonglong uVar11;
+  char *pcVar12;
+  undefined4 *puVar13;
+  char *pcVar14;
   undefined4 uStack_6ac;
   undefined8 local_6a8;
   undefined8 local_6a0;
@@ -7614,101 +7556,114 @@ void UI_ReplaceConversionInts(undefined8 param_1,ulonglong param_2,int param_3)
   char acStack_681 [1025];
   char acStack_280 [640];
   
-  _Str = (char *)__savegprlr_17();
+  uVar9 = (ulonglong)param_2;
+  pcVar4 = (char *)__savegprlr_17(param_1);
   local_6a8 = 0;
   local_6a0 = 0;
   local_698 = 0;
   local_690 = 0;
-  if (0 < (int)param_2) {
-    puVar10 = &uStack_6ac;
-    pcVar3 = acStack_280;
-    uVar8 = param_2;
+  uStack_6ac = 0;
+  uVar3 = uStack_6ac;
+  uStack_6ac = 0;
+  if (0 < (int)uVar9) {
+    puVar13 = &uStack_6ac;
+    pcVar5 = acStack_280;
+    uVar11 = uVar9;
     do {
-      sprintf(pcVar3,"%d",(ulonglong)*(uint *)((param_3 - (int)&uStack_6ac) + (int)puVar10));
-      *puVar10 = pcVar3;
-      uVar8 = uVar8 - 1;
-      pcVar3 = pcVar3 + 0x20;
-      puVar10 = puVar10 + 1;
-    } while (uVar8 != 0);
-    param_2 = param_2 & 0xffffffff;
+      sprintf(pcVar5,"%d");
+      *puVar13 = pcVar5;
+      uVar11 = uVar11 - 1;
+      pcVar5 = pcVar5 + 0x20;
+      puVar13 = puVar13 + 1;
+    } while (uVar11 != 0);
+    uVar9 = uVar9 & 0xffffffff;
+    uVar3 = uStack_6ac;
   }
-  if (_Str == (char *)0x0) {
-    MyAssertHandler(0xffffffff8216ab14,0x2418,0,0xffffffff82000f98,0xffffffff8216c780);
+  uStack_6ac = uVar3;
+  if (pcVar4 == (char *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x2418,0
+                    ,"%s");
   }
-  pcVar3 = strstr(_Str,"&&");
-  if (pcVar3 == (char *)0x0) {
-    I_strncpyz(acStack_681 + 1,_Str,0x400);
-    va(0xffffffff82000f98,acStack_681 + 1);
-    __restgprlr_17();
-    return;
+  pcVar5 = strstr(pcVar4,"&&");
+  if (pcVar5 == (char *)0x0) {
+    I_strncpyz(acStack_681 + 1,pcVar4,0x400);
+    pcVar4 = va("%s");
+    pcVar4 = (char *)__restgprlr_17(pcVar4);
+    return pcVar4;
   }
-  pcVar3 = _Str;
-  if (9 < (int)param_2) {
-    MyAssertHandler(0xffffffff8216ab14,0x2421,0,0xffffffff8216c738,0xffffffff8216c758,param_2);
+  pcVar5 = pcVar4;
+  if (9 < (int)uVar9) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x2421,0
+                    ,"%s\n\t(arguments->argCount) = %i");
   }
   do {
-    cVar1 = *pcVar3;
-    pcVar3 = pcVar3 + 1;
+    cVar1 = *pcVar5;
+    pcVar5 = pcVar5 + 1;
   } while (cVar1 != '\0');
-  pcVar3 = pcVar3 + (-1 - (int)_Str);
-  if ((int)pcVar3 < 1) {
-    MyAssertHandler(0xffffffff8216ab14,0x2425,0,0xffffffff8216c6fc,0xffffffff8216c71c,pcVar3);
+  pcVar5 = pcVar5 + (-1 - (int)pcVar4);
+  if ((int)pcVar5 < 1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x2425,0
+                    ,"%s\n\t(sourceStringLength) = %i");
   }
-  memset(acStack_681 + 1,0,0x400);
-  pcVar6 = (char *)0x0;
-  iVar7 = 0;
-  if (0 < (int)pcVar3) {
+  memset();
+  pcVar8 = (char *)0x0;
+  iVar10 = 0;
+  if (0 < (int)pcVar5) {
     do {
-      pcVar4 = _Str + iVar7;
-      iVar5 = strncmp(pcVar4,"&&",2);
-      if (iVar5 == 0) {
-        iVar5 = isdigit((int)(_Str + iVar7)[2]);
-        if (iVar5 == 0) goto LAB_825af70c;
-        uVar8 = (longlong)(_Str + iVar7)[2] - 0x31;
-        if (((longlong)uVar8 < 0) || ((int)param_2 <= (int)uVar8)) {
-          MyAssertHandler(0xffffffff8216ab14,0x2433,0,0xffffffff82012bbc,0xffffffff8216c69c,uVar8);
+      pcVar14 = pcVar4 + iVar10;
+      pcVar6 = pcVar14;
+      strncmp();
+      if (pcVar6 == (char *)0x0) {
+        iVar7 = isdigit((int)(pcVar4 + iVar10)[2]);
+        if (iVar7 == 0) goto LAB_825af70c;
+        uVar11 = (longlong)(pcVar4 + iVar10)[2] - 0x31;
+        if (((longlong)uVar11 < 0) || ((int)uVar9 <= (int)uVar11)) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",
+                          0x2433,0,"%s\n\t(argIndex) = %i");
         }
-        if (8 < (int)uVar8) {
-          MyAssertHandler(0xffffffff8216ab14,0x2434,0,0xffffffff82012bbc,0xffffffff8216c6d0,uVar8);
+        if (8 < (int)uVar11) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",
+                          0x2434,0,"%s\n\t(argIndex) = %i");
         }
-        pcVar4 = *(char **)((int)&uStack_6ac + (int)((uVar8 & 0xffffffff) << 2));
-        pcVar11 = pcVar4;
-        if (pcVar4 == (char *)0x0) {
-          MyAssertHandler(0xffffffff8216ab14,0x2436,0,0xffffffff82000f98,0xffffffff8216c6e0);
+        pcVar6 = *(char **)((int)&uStack_6ac + (int)((uVar11 & 0xffffffff) << 2));
+        pcVar14 = pcVar6;
+        if (pcVar6 == (char *)0x0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",
+                          0x2436,0,"%s");
         }
         do {
-          cVar1 = *pcVar11;
-          pcVar11 = pcVar11 + 1;
+          cVar1 = *pcVar14;
+          pcVar14 = pcVar14 + 1;
         } while (cVar1 != '\0');
-        iVar5 = 0;
-        pcVar11 = pcVar11 + (-1 - (int)pcVar4);
-        pcVar9 = pcVar6;
-        if (0 < (int)pcVar11) {
-          pcVar9 = pcVar11 + (int)pcVar6;
-          pcVar6 = acStack_681 + (int)pcVar6;
+        iVar7 = 0;
+        pcVar14 = pcVar14 + (-1 - (int)pcVar6);
+        pcVar12 = pcVar8;
+        if (0 < (int)pcVar14) {
+          pcVar12 = pcVar14 + (int)pcVar8;
+          pcVar8 = acStack_681 + (int)pcVar8;
           do {
-            pcVar2 = pcVar4 + iVar5;
-            iVar5 = iVar5 + 1;
-            pcVar6 = pcVar6 + 1;
-            *pcVar6 = *pcVar2;
-            pcVar11 = pcVar11 + -1;
-          } while (pcVar11 != (char *)0x0);
+            pcVar2 = pcVar6 + iVar7;
+            iVar7 = iVar7 + 1;
+            pcVar8 = pcVar8 + 1;
+            *pcVar8 = *pcVar2;
+            pcVar14 = pcVar14 + -1;
+          } while (pcVar14 != (char *)0x0);
         }
-        iVar7 = iVar7 + 3;
-        pcVar6 = pcVar9;
+        iVar10 = iVar10 + 3;
+        pcVar8 = pcVar12;
       }
       else {
 LAB_825af70c:
-        iVar7 = iVar7 + 1;
-        acStack_681[(int)(pcVar6 + 1)] = *pcVar4;
-        pcVar6 = pcVar6 + 1;
+        iVar10 = iVar10 + 1;
+        acStack_681[(int)(pcVar8 + 1)] = *pcVar14;
+        pcVar8 = pcVar8 + 1;
       }
-    } while (iVar7 < (int)pcVar3);
+    } while (iVar10 < (int)pcVar5);
   }
   UI_FilterStringForButtonAnimation(acStack_681 + 1,0x400);
-  va(0xffffffff82000f98,acStack_681 + 1);
-  __restgprlr_17();
-  return;
+  pcVar4 = va("%s");
+  pcVar4 = (char *)__restgprlr_17(pcVar4);
+  return pcVar4;
 }
 
 
@@ -7742,98 +7697,106 @@ void UI_FilterStringForButtonAnimation(char *param_1,uint param_2)
 
 // 825AC180  UI_ReplaceConversions  (ui_mp/ui_main_mp.cpp:9232)
 
-void UI_ReplaceConversions
-               (undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4)
+void UI_ReplaceConversions(char *param_1,ConversionArguments *param_2,char *param_3,int param_4)
 
 {
   char cVar1;
-  undefined1 *puVar2;
-  char *_Str;
+  char *pcVar2;
   char *pcVar3;
-  void *_Dst;
-  char *pcVar4;
-  int iVar5;
+  int iVar4;
+  ulonglong uVar5;
   int *piVar6;
   longlong lVar7;
-  int iVar8;
+  char *pcVar8;
   int iVar9;
   int iVar10;
-  longlong lVar11;
+  int iVar11;
+  char *pcVar13;
+  longlong lVar12;
   
-  _Str = (char *)__savegprlr_16();
-  if (_Str == (char *)0x0) {
-    MyAssertHandler(0xffffffff8216ab14,0x2418,0,0xffffffff82000f98,0xffffffff8216c780);
+  uVar5 = (ulonglong)(int)param_2;
+  pcVar2 = (char *)__savegprlr_16(param_1);
+  if (pcVar2 == (char *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x2418,0
+                    ,"%s");
   }
-  pcVar3 = strstr(_Str,"&&");
+  pcVar3 = strstr(pcVar2,"&&");
   if (pcVar3 == (char *)0x0) {
-    I_strncpyz(param_3,_Str,param_4);
+    I_strncpyz(param_3,pcVar2,param_4);
     __restgprlr_16();
     return;
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8216ab14,0x2420,0,0xffffffff82000f98,0xffffffff8216c774);
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x2420,0
+                    ,"%s");
   }
-  piVar6 = (int *)param_2;
-  pcVar3 = _Str;
+  piVar6 = (int *)uVar5;
+  pcVar3 = pcVar2;
   if (9 < *piVar6) {
-    MyAssertHandler(0xffffffff8216ab14,0x2421,0,0xffffffff8216c738,0xffffffff8216c758);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x2421,0
+                    ,"%s\n\t(arguments->argCount) = %i");
   }
   do {
     cVar1 = *pcVar3;
     pcVar3 = pcVar3 + 1;
   } while (cVar1 != '\0');
-  pcVar3 = pcVar3 + (-1 - (int)_Str);
+  pcVar3 = pcVar3 + (-1 - (int)pcVar2);
   if ((int)pcVar3 < 1) {
-    MyAssertHandler(0xffffffff8216ab14,0x2425,0,0xffffffff8216c6fc,0xffffffff8216c71c,pcVar3);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x2425,0
+                    ,"%s\n\t(sourceStringLength) = %i");
   }
-  _Dst = (void *)param_3;
-  memset(_Dst,0,(size_t)param_4);
+  memset();
+  iVar11 = 0;
   iVar10 = 0;
-  iVar9 = 0;
   if (0 < (int)pcVar3) {
     do {
-      pcVar4 = _Str + iVar9;
-      iVar5 = strncmp(pcVar4,"&&",2);
-      if (iVar5 == 0) {
-        iVar5 = isdigit((int)(_Str + iVar9)[2]);
-        if (iVar5 == 0) goto LAB_825ac3f0;
-        lVar7 = (longlong)(_Str + iVar9)[2];
-        lVar11 = lVar7 + -0x31;
-        if ((lVar11 < 0) || (*piVar6 <= (int)lVar11)) {
-          MyAssertHandler(0xffffffff8216ab14,0x2433,0,0xffffffff82012bbc,0xffffffff8216c69c,lVar11);
+      pcVar13 = pcVar2 + iVar10;
+      pcVar8 = pcVar13;
+      strncmp();
+      if (pcVar8 == (char *)0x0) {
+        iVar4 = isdigit((int)(pcVar2 + iVar10)[2]);
+        if (iVar4 == 0) goto LAB_825ac3f0;
+        lVar7 = (longlong)(pcVar2 + iVar10)[2];
+        lVar12 = lVar7 + -0x31;
+        iVar4 = (int)lVar12;
+        if ((lVar12 < 0) || (*piVar6 <= iVar4)) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",
+                          0x2433,0,"%s\n\t(argIndex) = %i");
         }
-        if (8 < (int)lVar11) {
-          MyAssertHandler(0xffffffff8216ab14,0x2434,0,0xffffffff82012bbc,0xffffffff8216c6d0,lVar11);
+        if (8 < iVar4) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",
+                          0x2434,0,"%s\n\t(argIndex) = %i");
         }
-        iVar5 = (int)((lVar7 - 0x30U & 0x3fffffff) << 2);
-        if (*(int *)(iVar5 + (int)piVar6) == 0) {
-          MyAssertHandler(0xffffffff8216ab14,0x2436,0,0xffffffff82000f98,0xffffffff8216c6e0);
+        iVar4 = (int)((lVar7 - 0x30U & 0x3fffffff) << 2);
+        if (*(int *)(iVar4 + (int)piVar6) == 0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",
+                          0x2436,0,"%s");
         }
-        pcVar4 = *(char **)(iVar5 + (int)piVar6);
+        pcVar8 = *(char **)(iVar4 + (int)piVar6);
         do {
-          cVar1 = *pcVar4;
-          pcVar4 = pcVar4 + 1;
+          cVar1 = *pcVar8;
+          pcVar8 = pcVar8 + 1;
         } while (cVar1 != '\0');
-        iVar8 = 0;
-        pcVar4 = pcVar4 + (-1 - (int)*(char **)(iVar5 + (int)piVar6));
-        if (0 < (int)pcVar4) {
+        iVar9 = 0;
+        pcVar8 = pcVar8 + (-1 - (int)*(char **)(iVar4 + (int)piVar6));
+        if (0 < (int)pcVar8) {
           do {
-            puVar2 = (undefined1 *)(*(int *)(iVar5 + (int)piVar6) + iVar8);
-            iVar8 = iVar8 + 1;
-            *(undefined1 *)(iVar10 + (int)_Dst) = *puVar2;
-            iVar10 = iVar10 + 1;
-            pcVar4 = pcVar4 + -1;
-          } while (pcVar4 != (char *)0x0);
+            pcVar13 = (char *)(*(int *)(iVar4 + (int)piVar6) + iVar9);
+            iVar9 = iVar9 + 1;
+            param_3[iVar11] = *pcVar13;
+            iVar11 = iVar11 + 1;
+            pcVar8 = pcVar8 + -1;
+          } while (pcVar8 != (char *)0x0);
         }
-        iVar9 = iVar9 + 3;
+        iVar10 = iVar10 + 3;
       }
       else {
 LAB_825ac3f0:
-        iVar9 = iVar9 + 1;
-        *(char *)(iVar10 + (int)_Dst) = *pcVar4;
         iVar10 = iVar10 + 1;
+        param_3[iVar11] = *pcVar13;
+        iVar11 = iVar11 + 1;
       }
-    } while (iVar9 < (int)pcVar3);
+    } while (iVar10 < (int)pcVar3);
   }
   UI_FilterStringForButtonAnimation(param_3,param_4);
   __restgprlr_16();
@@ -7843,13 +7806,19 @@ LAB_825ac3f0:
 
 // 825AC420  UI_CloseAll  (ui_mp/ui_main_mp.cpp:9295)
 
-void UI_CloseAll(ulonglong param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void UI_CloseAll(LocalClientNum_t param_1)
 
 {
-  if (3 < (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8216ab14,0x1c2,0,0xffffffff820011a8,param_1,4);
+  if (LOCAL_CLIENT_3 < param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x1c2,0,
+                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  Menus_CloseAll(param_1 * 0x22ac + -0x7c08e128);
+  Menus_CloseAll(&uiInfoArray[param_1].uiDC);
   UI_SetActiveMenu(param_1,0);
   return;
 }
@@ -7857,30 +7826,37 @@ void UI_CloseAll(ulonglong param_1)
 
 // 825AC498  UI_CloseFocusedMenu  (ui_mp/ui_main_mp.cpp:9305)
 
-void UI_CloseFocusedMenu(ulonglong param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void UI_CloseFocusedMenu(LocalClientNum_t param_1)
 
 {
   int iVar1;
-  char cVar2;
-  longlong lVar3;
+  menuDef_t *pmVar2;
+  bool bVar3;
+  uiInfo_s *puVar4;
   
-  if (3 < (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8216ab14,0x1c2,0,0xffffffff820011a8,param_1,4);
+  if (LOCAL_CLIENT_3 < param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x1c2,0,
+                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  lVar3 = param_1 * 0x22ac + -0x7c08e128;
-  iVar1 = Menu_Count(lVar3);
+  puVar4 = uiInfoArray + param_1;
+  iVar1 = Menu_Count(&puVar4->uiDC);
   if (0 < iVar1) {
-    iVar1 = Menu_GetFocused(lVar3);
-    if (iVar1 == 0) {
-      cVar2 = Key_IsCatcherActive(param_1,0x10);
-      if (cVar2 != '\0') {
-        Key_RemoveCatcher(param_1,0xffffffffffffffef);
+    pmVar2 = Menu_GetFocused(&puVar4->uiDC);
+    if (pmVar2 == (menuDef_t *)0x0) {
+      bVar3 = Key_IsCatcherActive(param_1,0x10);
+      if (bVar3) {
+        Key_RemoveCatcher(param_1,-0x11);
       }
     }
     else {
-      iVar1 = Menus_AnyFullScreenVisible(lVar3);
+      iVar1 = Menus_AnyFullScreenVisible(&puVar4->uiDC);
       if (iVar1 == 0) {
-        Menus_CloseAll(lVar3);
+        Menus_CloseAll(&puVar4->uiDC);
       }
     }
   }
@@ -7890,14 +7866,16 @@ void UI_CloseFocusedMenu(ulonglong param_1)
 
 // 825AC568  UI_Popup  (ui_mp/ui_main_mp.cpp:9330)
 
-undefined8 UI_Popup(undefined8 param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+int UI_Popup(LocalClientNum_t param_1,char *param_2)
 
 {
-  char cVar2;
+  bool bVar2;
   int iVar1;
   
-  cVar2 = CL_AllowPopup();
-  if ((cVar2 != '\0') && (iVar1 = UI_IsFullscreen(param_1), iVar1 == 0)) {
+  bVar2 = CL_AllowPopup(param_1);
+  if ((bVar2) && (iVar1 = UI_IsFullscreen(param_1), iVar1 == 0)) {
     return 1;
   }
   return 0;
@@ -7906,60 +7884,72 @@ undefined8 UI_Popup(undefined8 param_1)
 
 // 825AC5B8  UI_PopupScriptMenu  (ui_mp/ui_main_mp.cpp:9345)
 
-void UI_PopupScriptMenu(undefined8 param_1,undefined8 param_2,ulonglong param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+int UI_PopupScriptMenu(LocalClientNum_t param_1,char *param_2,bool param_3)
 
 {
-  uint uVar1;
-  int iVar2;
-  int iVar3;
-  undefined *puVar4;
+  LocalClientNum_t LVar1;
+  uiInfo_s *puVar2;
+  menuDef_t *pmVar3;
+  int iVar4;
+  ulonglong uVar5;
   
-  uVar1 = __savegprlr_28();
-  if (3 < uVar1) {
-    MyAssertHandler(0xffffffff8216ab14,0x1c2,0,0xffffffff820011a8,uVar1,4);
+  uVar5 = (ulonglong)param_3;
+  LVar1 = __savegprlr_28(param_1);
+  if (LOCAL_CLIENT_3 < LVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x1c2,0,
+                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  iVar3 = uVar1 * 0x22ac;
-  puVar4 = &DAT_83f71ed8 + iVar3;
-  iVar2 = Menu_GetFocused(puVar4);
-  if (iVar2 != 0) {
-    if ((*(int *)(&DAT_83f7417c + iVar3) != 5) && (*(int *)(&DAT_83f7417c + iVar3) != 6)) {
-      __restgprlr_28(0);
-      return;
+  puVar2 = uiInfoArray + LVar1;
+  pmVar3 = Menu_GetFocused(&puVar2->uiDC);
+  if (pmVar3 != (menuDef_t *)0x0) {
+    if ((uiInfoArray[LVar1].currentMenuType != UIMENU_SCRIPT_POPUP) &&
+       (uiInfoArray[LVar1].currentMenuType != UIMENU_SCOREBOARD)) {
+      iVar4 = __restgprlr_28(0);
+      return iVar4;
     }
-    iVar2 = I_stricmp(*(undefined4 *)(iVar2 + 4),param_2);
-    if (iVar2 == 0) goto LAB_825ac69c;
+    iVar4 = I_stricmp((pmVar3->window).name,param_2);
+    if (iVar4 == 0) goto LAB_825ac69c;
   }
-  *(undefined4 *)(&DAT_83f7417c + iVar3) = 5;
-  if ((param_3 & 0xff) == 0) {
-    *(undefined4 *)(&DAT_83f71ee8 + iVar3) = 0x441fc000;
-    *(undefined4 *)(&DAT_83f71eec + iVar3) = 0x43ef8000;
+  uiInfoArray[LVar1].currentMenuType = UIMENU_SCRIPT_POPUP;
+  if ((uVar5 & 0xff) == 0) {
+    uiInfoArray[LVar1].uiDC.cursor.x = 639.0;
+    uiInfoArray[LVar1].uiDC.cursor.y = 479.0;
   }
-  Key_SetCatcher(uVar1,0x10);
-  Menus_CloseAll(puVar4);
-  Menus_OpenByName(puVar4,param_2);
+  Key_SetCatcher(LVar1,0x10);
+  Menus_CloseAll(&puVar2->uiDC);
+  Menus_OpenByName(&puVar2->uiDC,param_2);
 LAB_825ac69c:
-  __restgprlr_28(1);
-  return;
+  iVar4 = __restgprlr_28(1);
+  return iVar4;
 }
 
 
 // 825AC6A8  UI_ClosePopupScriptMenu  (ui_mp/ui_main_mp.cpp:9376)
 
-void UI_ClosePopupScriptMenu(undefined8 param_1,undefined1 param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void UI_ClosePopupScriptMenu(LocalClientNum_t param_1,bool param_2)
 
 {
-  int iVar1;
-  ulonglong uVar2;
+  LocalClientNum_t LVar1;
   
-  uVar2 = __savegprlr_29();
-  if (3 < (uVar2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8216ab14,0x1c2,0,0xffffffff820011a8,uVar2,4);
+  LVar1 = __savegprlr_29(param_1);
+  if (LOCAL_CLIENT_3 < LVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x1c2,0,
+                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  iVar1 = (int)uVar2 * 0x22ac;
-  if (*(int *)(&DAT_83f7417c + iVar1) == 5) {
-    (&DAT_83f74180)[iVar1] = param_2;
-    UI_CloseFocusedMenu(uVar2);
-    (&DAT_83f74180)[iVar1] = 1;
+  if (uiInfoArray[LVar1].currentMenuType == UIMENU_SCRIPT_POPUP) {
+    uiInfoArray[LVar1].allowScriptMenuResponse = param_2;
+    UI_CloseFocusedMenu(LVar1);
+    uiInfoArray[LVar1].allowScriptMenuResponse = true;
   }
   __restgprlr_29();
   return;
@@ -7968,28 +7958,41 @@ void UI_ClosePopupScriptMenu(undefined8 param_1,undefined1 param_2)
 
 // 825AC720  UI_AllowScriptMenuResponse  (ui_mp/ui_main_mp.cpp:9390)
 
-undefined1 UI_AllowScriptMenuResponse(ulonglong param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+bool UI_AllowScriptMenuResponse(LocalClientNum_t param_1)
 
 {
-  if (3 < (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8216ab14,0x1c2,0,0xffffffff820011a8,param_1,4);
+  if (LOCAL_CLIENT_3 < param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x1c2,0,
+                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  return (&DAT_83f74180)[(int)param_1 * 0x22ac];
+  return uiInfoArray[param_1].allowScriptMenuResponse;
 }
 
 
 // 825AC788  UI_CloseInGameMenu  (ui_mp/ui_main_mp.cpp:9396)
 
-void UI_CloseInGameMenu(ulonglong param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void UI_CloseInGameMenu(LocalClientNum_t param_1)
 
 {
   int iVar1;
+  uiMenuCommand_t uVar2;
   
-  if (3 < (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8216ab14,0x1c2,0,0xffffffff820011a8,param_1,4);
+  if (LOCAL_CLIENT_3 < param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x1c2,0,
+                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  iVar1 = Menus_AnyFullScreenVisible(param_1 * 0x22ac + -0x7c08e128);
-  if ((iVar1 == 0) && (iVar1 = UI_GetActiveMenu(param_1), iVar1 == 2)) {
+  iVar1 = Menus_AnyFullScreenVisible(&uiInfoArray[param_1].uiDC);
+  if ((iVar1 == 0) && (uVar2 = UI_GetActiveMenu(param_1), uVar2 == UIMENU_INGAME)) {
     UI_CloseFocusedMenu(param_1);
   }
   return;
@@ -7998,35 +8001,40 @@ void UI_CloseInGameMenu(ulonglong param_1)
 
 // 825AF748  UI_ReturnToSplitScreenMenu  (ui_mp/ui_main_mp.cpp:9404)
 
-void UI_ReturnToSplitScreenMenu(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void UI_ReturnToSplitScreenMenu(LocalClientNum_t param_1)
 
 {
-  undefined8 uVar1;
-  char cVar6;
-  ulonglong uVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  longlong lVar7;
+  LocalClientNum_t LVar1;
+  bool bVar7;
+  uiInfo_s *puVar2;
+  menuDef_t *pmVar3;
+  menuDef_t *pmVar4;
+  menuDef_t *pmVar5;
+  menuDef_t *pmVar6;
+  int iVar8;
   
-  uVar1 = __savegprlr_27();
-  cVar6 = Menu_IsMenuOpenAndVisible(uVar1,0xffffffff82057bf8);
-  if (cVar6 != '\0') {
-    uVar1 = UI_GetClientInfo(uVar1);
-    uVar2 = Menus_FindByName(uVar1,0xffffffff82057bf8);
-    uVar3 = Menus_FindByName(uVar1,0xffffffff8216c794);
-    uVar4 = Menus_FindByName(uVar1,0xffffffff820861dc);
-    lVar7 = 0;
-    uVar5 = Menu_GetTopOfStack(uVar1,0);
-    while (((uVar5 & 0xffffffff) != 0 && ((uVar5 & 0xffffffff) != (uVar2 & 0xffffffff)))) {
-      if (((uVar5 & 0xffffffff) == (uVar3 & 0xffffffff)) ||
-         ((uVar5 & 0xffffffff) == (uVar4 & 0xffffffff))) {
-        lVar7 = lVar7 + 1;
+  LVar1 = __savegprlr_27(param_1);
+  bVar7 = Menu_IsMenuOpenAndVisible(LVar1,"menu_gamesetup_splitscreen");
+  if (bVar7) {
+    puVar2 = UI_GetClientInfo(LVar1);
+    pmVar3 = Menus_FindByName(&puVar2->uiDC,"menu_gamesetup_splitscreen");
+    pmVar4 = Menus_FindByName(&puVar2->uiDC,"readingsavedevice");
+    pmVar5 = Menus_FindByName(&puVar2->uiDC,"popup_gettingdata");
+    iVar8 = 0;
+    pmVar6 = Menu_GetTopOfStack(&puVar2->uiDC,0);
+    while ((pmVar6 != (menuDef_t *)0x0 && (pmVar6 != pmVar3))) {
+      if ((pmVar6 == pmVar4) || (pmVar6 == pmVar5)) {
+        iVar8 = iVar8 + 1;
       }
       else {
-        Menus_ForceClose(uVar1,uVar5);
+        Menus_ForceClose(&puVar2->uiDC,pmVar6);
       }
-      uVar5 = Menu_GetTopOfStack(uVar1,lVar7);
+      pmVar6 = Menu_GetTopOfStack(&puVar2->uiDC,iVar8);
     }
   }
   __restgprlr_27();
@@ -8034,83 +8042,134 @@ void UI_ReturnToSplitScreenMenu(void)
 }
 
 
-// 825AC818  Menu_IsMenuOpenAndVisible  (ui_mp/ui_main_mp.cpp:9445)
+// 825AC810  UI_CloseAllMenus  (ui_mp/ui_main_mp.cpp:9439)
 
-bool Menu_IsMenuOpenAndVisible(ulonglong param_1,undefined8 param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* void __cdecl UI_CloseAllMenus(enum LocalClientNum_t) */
+
+void UI_CloseAllMenus(LocalClientNum_t param_1)
 
 {
-  ulonglong uVar1;
-  int iVar2;
-  char cVar3;
-  bool bVar4;
-  longlong lVar5;
-  
-  if (3 < (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8216ab14,0x1c2,0,0xffffffff820011a8,param_1,4);
+  if (LOCAL_CLIENT_3 < param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x1c2,0,
+                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  lVar5 = param_1 * 0x22ac + -0x7c08e128;
-  uVar1 = Menus_FindByName(lVar5,param_2);
-  if (((uVar1 & 0xffffffff) == 0) || (iVar2 = Menus_MenuIsInStack(lVar5,uVar1), iVar2 == 0)) {
-    bVar4 = false;
+  Menus_CloseAll(&uiInfoArray[param_1].uiDC);
+  UI_SetActiveMenu(param_1,0);
+  return;
+}
+
+
+// 825AC818  Menu_IsMenuOpenAndVisible  (ui_mp/ui_main_mp.cpp:9445)
+
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+bool Menu_IsMenuOpenAndVisible(LocalClientNum_t param_1,char *param_2)
+
+{
+  menuDef_t *pmVar1;
+  char cVar3;
+  int iVar2;
+  bool bVar4;
+  uiInfo_s *puVar5;
+  
+  if (LOCAL_CLIENT_3 < param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x1c2,0,
+                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
+  }
+  puVar5 = uiInfoArray + param_1;
+  pmVar1 = Menus_FindByName(&puVar5->uiDC,param_2);
+  if ((pmVar1 == (menuDef_t *)0x0) ||
+     (iVar2 = Menus_MenuIsInStack(&puVar5->uiDC,pmVar1), iVar2 == 0)) {
+    cVar3 = '\0';
   }
   else {
-    cVar3 = Menu_IsVisible(lVar5,uVar1);
-    bVar4 = cVar3 != '\0';
+    bVar4 = Menu_IsVisible(&puVar5->uiDC,pmVar1);
+    cVar3 = '\x01' - !bVar4;
   }
-  return bVar4;
+  return (bool)cVar3;
 }
 
 
 // 825AC8D8  UI_OpenMenu  (ui_mp/ui_main_mp.cpp:9465)
 
-void UI_OpenMenu(ulonglong param_1,undefined8 param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void UI_OpenMenu(LocalClientNum_t param_1,char *param_2)
 
 {
-  if (3 < (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8216ab14,0x1c2,0,0xffffffff820011a8,param_1,4);
+  if (LOCAL_CLIENT_3 < param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x1c2,0,
+                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  Menus_OpenByName(param_1 * 0x22ac + -0x7c08e128,param_2);
+  Menus_OpenByName(&uiInfoArray[param_1].uiDC,param_2);
   return;
 }
 
 
 // 825AC950  UI_CloseMenu  (ui_mp/ui_main_mp.cpp:9474)
 
-void UI_CloseMenu(ulonglong param_1,undefined8 param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void UI_CloseMenu(LocalClientNum_t param_1,char *param_2)
 
 {
-  if (3 < (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8216ab14,0x1c2,0,0xffffffff820011a8,param_1,4);
+  if (LOCAL_CLIENT_3 < param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x1c2,0,
+                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  Menus_CloseByName(param_1 * 0x22ac + -0x7c08e128,param_2);
+  Menus_CloseByName(&uiInfoArray[param_1].uiDC,param_2);
   return;
 }
 
 
 // 825AC9C8  UI_EscMenu  (ui_mp/ui_main_mp.cpp:9484)
 
-void UI_EscMenu(ulonglong param_1,undefined8 param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void UI_EscMenu(LocalClientNum_t param_1,char *param_2)
 
 {
-  if (3 < (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8216ab14,0x1c2,0,0xffffffff820011a8,param_1,4);
+  if (LOCAL_CLIENT_3 < param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x1c2,0,
+                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  Menus_EscByName(param_1 * 0x22ac + -0x7c08e128,param_2);
+  Menus_EscByName(&uiInfoArray[param_1].uiDC,param_2);
   return;
 }
 
 
 // 825ACA40  UI_ShowReadingSaveDevicePopup  (ui_mp/ui_main_mp.cpp:9494)
 
-void UI_ShowReadingSaveDevicePopup(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void UI_ShowReadingSaveDevicePopup(LocalClientNum_t param_1)
 
 {
-  char cVar2;
+  bool bVar2;
   int iVar1;
   
-  cVar2 = CL_AllLocalClientsDisconnected();
-  if ((cVar2 != '\0') && (iVar1 = Menus_AnyFullScreenVisible(0xffffffff83f71ed8), iVar1 != 0)) {
-    Menus_OpenByName(0xffffffff83f71ed8,0xffffffff8216c794);
+  bVar2 = CL_AllLocalClientsDisconnected();
+  if ((bVar2) && (iVar1 = Menus_AnyFullScreenVisible(&uiInfoArray[0].uiDC), iVar1 != 0)) {
+    Menus_OpenByName(&uiInfoArray[0].uiDC,"readingsavedevice");
   }
   return;
 }
@@ -8118,15 +8177,20 @@ void UI_ShowReadingSaveDevicePopup(void)
 
 // 825ACAA0  UI_HideReadingSaveDevicePopup  (ui_mp/ui_main_mp.cpp:9504)
 
-void UI_HideReadingSaveDevicePopup(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void UI_HideReadingSaveDevicePopup(LocalClientNum_t param_1)
 
 {
-  char cVar2;
+  bool bVar2;
   int iVar1;
   
-  cVar2 = CL_AllLocalClientsDisconnected();
-  if ((cVar2 != '\0') && (iVar1 = Menus_AnyFullScreenVisible(0xffffffff83f71ed8), iVar1 != 0)) {
-    Menus_CloseByName(0xffffffff83f71ed8,0xffffffff8216c794);
+  bVar2 = CL_AllLocalClientsDisconnected();
+  if ((bVar2) && (iVar1 = Menus_AnyFullScreenVisible(&uiInfoArray[0].uiDC), iVar1 != 0)) {
+    Menus_CloseByName(&uiInfoArray[0].uiDC,"readingsavedevice");
   }
   return;
 }
@@ -8134,51 +8198,61 @@ void UI_HideReadingSaveDevicePopup(void)
 
 // 825ACB00  UI_BeginReadingDeviceUI  (ui_mp/ui_main_mp.cpp:9514)
 
-void UI_BeginReadingDeviceUI(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void UI_BeginReadingDeviceUI(LocalClientNum_t param_1)
 
 {
   int iVar1;
-  char cVar2;
+  bool bVar2;
   
   iVar1 = Sys_Milliseconds();
-  if (iVar1 < DAT_83fe7488) {
-    MyAssertHandler(0xffffffff8216ab14,0x252c,0,0xffffffff82000f98,0xffffffff8216c7a8);
+  if (iVar1 < g_remoteScreenUpdateMinEndTime) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x252c,0
+                    ,"%s");
   }
-  cVar2 = CL_AllLocalClientsDisconnected();
-  if ((cVar2 != '\0') && (iVar1 = Menus_AnyFullScreenVisible(0xffffffff83f71ed8), iVar1 != 0)) {
-    Menus_OpenByName(0xffffffff83f71ed8,0xffffffff8216c794);
+  bVar2 = CL_AllLocalClientsDisconnected();
+  if ((bVar2) && (iVar1 = Menus_AnyFullScreenVisible(&uiInfoArray[0].uiDC), iVar1 != 0)) {
+    Menus_OpenByName(&uiInfoArray[0].uiDC,"readingsavedevice");
   }
   R_BeginRemoteScreenUpdate();
   iVar1 = Sys_Milliseconds();
-  DAT_83fe7488 = iVar1 + 1000;
+  g_remoteScreenUpdateMinEndTime = iVar1 + 1000;
   return;
 }
 
 
 // 825ACBB0  UI_EndReadingSaveDeviceUI  (ui_mp/ui_main_mp.cpp:9525)
 
-void UI_EndReadingSaveDeviceUI(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void UI_EndReadingSaveDeviceUI(LocalClientNum_t param_1)
 
 {
-  longlong lVar1;
-  char cVar3;
-  int iVar2;
+  int iVar1;
+  bool bVar2;
   
-  lVar1 = Sys_Milliseconds();
-  lVar1 = (ulonglong)DAT_83fe7488 - lVar1;
-  if ((int)lVar1 < 0x3e9) {
-    if ((int)lVar1 < 1) goto LAB_825acbe8;
+  iVar1 = Sys_Milliseconds();
+  iVar1 = g_remoteScreenUpdateMinEndTime - iVar1;
+  if (iVar1 < 0x3e9) {
+    if (iVar1 < 1) goto LAB_825acbe8;
   }
   else {
-    lVar1 = 1000;
+    iVar1 = 1000;
   }
-  Sys_Sleep(lVar1);
+  Sys_Sleep(iVar1);
 LAB_825acbe8:
-  DAT_83fe7488 = 0;
+  g_remoteScreenUpdateMinEndTime = 0;
   R_EndRemoteScreenUpdate();
-  cVar3 = CL_AllLocalClientsDisconnected();
-  if ((cVar3 != '\0') && (iVar2 = Menus_AnyFullScreenVisible(0xffffffff83f71ed8), iVar2 != 0)) {
-    Menus_CloseByName(0xffffffff83f71ed8,0xffffffff8216c794);
+  bVar2 = CL_AllLocalClientsDisconnected();
+  if ((bVar2) && (iVar1 = Menus_AnyFullScreenVisible(&uiInfoArray[0].uiDC), iVar1 != 0)) {
+    Menus_CloseByName(&uiInfoArray[0].uiDC,"readingsavedevice");
   }
   return;
 }
@@ -8186,101 +8260,133 @@ LAB_825acbe8:
 
 // 825ACC48  UI_ShouldDrawCrosshair  (ui_mp/ui_main_mp.cpp:9539)
 
-undefined1 UI_ShouldDrawCrosshair(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+bool UI_ShouldDrawCrosshair(void)
 
 {
-  return *(undefined1 *)(DAT_83f71e8c + 0xc);
+  return (ui_drawCrosshair->current).enabled;
 }
 
 
 // 825ACC58  UI_MissingMapError  (ui_mp/ui_main_mp.cpp:9553)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 void UI_MissingMapError(void)
 
 {
-  UI_SetErrorAction(1);
-  Lobby_GetPartyData();
-  Party_StopParty();
-  Com_Error(1,0xffffffff8216c7e0);
+  PartyData *pPVar1;
+  
+  UI_SetErrorAction(UI_ERROR_ACTION_SHOWMARKETPLACE);
+  pPVar1 = Lobby_GetPartyData();
+  Party_StopParty(pPVar1);
+  Com_Error(ERR_DROP,"PLATFORM_MISSINGMAP");
   return;
 }
 
 
 // 825ACC98  UI_AmISelected  (ui_mp/ui_main_mp.cpp:9564)
 
-undefined8 UI_AmISelected(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+bool UI_AmISelected(LocalClientNum_t param_1)
 
 {
-  longlong lVar1;
-  undefined8 uVar2;
+  int iVar2;
+  ulong64 uVar1;
+  bool bVar3;
   
-  CL_ControllerIndexFromClientNum();
-  lVar1 = Live_GetXuid();
-  if ((lVar1 == 0) || (uVar2 = 1, lVar1 != DAT_83fd1d70)) {
-    uVar2 = 0;
+  iVar2 = CL_ControllerIndexFromClientNum(param_1);
+  uVar1 = Live_GetXuid(iVar2);
+  if ((uVar1 == 0) || (bVar3 = true, uVar1 != sharedUiInfo.partyMemberXuid)) {
+    bVar3 = false;
   }
-  return uVar2;
+  return bVar3;
 }
 
 
 // 825ACCF0  UI_IsSelectedPlayerFriend  (ui_mp/ui_main_mp.cpp:9578)
 
-undefined8 UI_IsSelectedPlayerFriend(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+bool UI_IsSelectedPlayerFriend(LocalClientNum_t param_1)
 
 {
-  return 0;
+  return false;
 }
 
 
 // 825ACCF8  UI_IsSelectedPlayerGuest  (ui_mp/ui_main_mp.cpp:9588)
 
-undefined8 UI_IsSelectedPlayerGuest(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+bool UI_IsSelectedPlayerGuest(LocalClientNum_t param_1)
 
 {
-  return 0;
+  return false;
 }
 
 
 // 825ACD00  UI_GetSelectedPartyMemberXUID  (ui_mp/ui_main_mp.cpp:9599)
 
-undefined8 UI_GetSelectedPartyMemberXUID(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+ulong64 UI_GetSelectedPartyMemberXUID(LocalClientNum_t param_1)
 
 {
-  return DAT_83fd1d70;
+  return sharedUiInfo.partyMemberXuid;
 }
 
 
 // 825ACD18  UI_GetSavedPartyMemberXUID  (ui_mp/ui_main_mp.cpp:9605)
 
-undefined8 UI_GetSavedPartyMemberXUID(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+ulong64 UI_GetSavedPartyMemberXUID(LocalClientNum_t param_1)
 
 {
-  return DAT_83fd1d78;
+  return sharedUiInfo.savedPartyMemberXuid;
 }
 
 
 // 825ACD30  UI_MyChangesSaveDynamicFlags  (ui_mp/ui_main_mp.cpp:9709)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
 void UI_MyChangesSaveDynamicFlags(void)
 
 {
-  ulonglong uVar1;
-  ulonglong uVar2;
+  uiInfo_s *puVar1;
+  LocalClientNum_t LVar2;
   
   __savegprlr_25();
-  uVar1 = 0xffffffff83f71ed8;
-  uVar2 = 0;
+  puVar1 = uiInfoArray;
+  LVar2 = LOCAL_CLIENT_0;
   do {
-    if (3 < (uVar2 & 0xffffffff)) {
-      MyAssertHandler(0xffffffff8216ab14,0x1c2,0,0xffffffff820011a8,uVar2,4);
+    if (LOCAL_CLIENT_3 < LVar2) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x1c2,
+                      0,
+                      "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)")
+      ;
     }
-    if ((uVar1 & 0xffffffff) == 0) {
-      MyAssertHandler(0xffffffff8216ab14,0x25f5,0,0xffffffff82000f98,0xffffffff8216c5bc);
+    if (puVar1 == (uiInfo_s *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x25f5
+                      ,0,"%s");
     }
-    UI_MyChangesSaveDynamicFlagsForClient(uVar1,uVar2);
-    uVar1 = uVar1 + 0x22ac;
-    uVar2 = uVar2 + 1;
-  } while ((int)uVar1 < -0x7c085678);
+    UI_MyChangesSaveDynamicFlagsForClient(&puVar1->uiDC,LVar2);
+    puVar1 = puVar1 + 1;
+    LVar2 = LVar2 + LOCAL_CLIENT_1;
+  } while ((int)puVar1 < -0x7c085678);
   __restgprlr_25();
   return;
 }
@@ -8288,26 +8394,36 @@ void UI_MyChangesSaveDynamicFlags(void)
 
 // 825ACDE0  UI_MyChangesRestoreDynamicFlags  (ui_mp/ui_main_mp.cpp:9726)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
 void UI_MyChangesRestoreDynamicFlags(void)
 
 {
-  ulonglong uVar1;
-  ulonglong uVar2;
+  uiInfo_s *puVar1;
+  LocalClientNum_t LVar2;
   
   __savegprlr_25();
-  uVar1 = 0xffffffff83f71ed8;
-  uVar2 = 0;
+  puVar1 = uiInfoArray;
+  LVar2 = LOCAL_CLIENT_0;
   do {
-    if (3 < (uVar2 & 0xffffffff)) {
-      MyAssertHandler(0xffffffff8216ab14,0x1c2,0,0xffffffff820011a8,uVar2,4);
+    if (LOCAL_CLIENT_3 < LVar2) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x1c2,
+                      0,
+                      "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)")
+      ;
     }
-    if ((uVar1 & 0xffffffff) == 0) {
-      MyAssertHandler(0xffffffff8216ab14,0x2606,0,0xffffffff82000f98,0xffffffff8216c5bc);
+    if (puVar1 == (uiInfo_s *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x2606
+                      ,0,"%s");
     }
-    UI_MyChangesRestoreDynamicFlagsForClient(uVar1,uVar2);
-    uVar1 = uVar1 + 0x22ac;
-    uVar2 = uVar2 + 1;
-  } while ((int)uVar1 < -0x7c085678);
+    UI_MyChangesRestoreDynamicFlagsForClient(&puVar1->uiDC,LVar2);
+    puVar1 = puVar1 + 1;
+    LVar2 = LVar2 + LOCAL_CLIENT_1;
+  } while ((int)puVar1 < -0x7c085678);
   __restgprlr_25();
   return;
 }
@@ -8315,28 +8431,38 @@ void UI_MyChangesRestoreDynamicFlags(void)
 
 // 825ACE90  UI_ErrorCleanup  (ui_mp/ui_main_mp.cpp:9744)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
 void UI_ErrorCleanup(void)
 
 {
-  ulonglong uVar1;
-  ulonglong uVar2;
+  uint uVar1;
+  uiInfo_s *puVar2;
   
   __savegprlr_25();
   Sys_AbortUIOwnership();
   UI_ClearCompletionResolve();
-  uVar1 = 0xffffffff83f71ed8;
-  uVar2 = 0;
+  puVar2 = uiInfoArray;
+  uVar1 = 0;
   do {
-    if (3 < (uVar2 & 0xffffffff)) {
-      MyAssertHandler(0xffffffff8216ab14,0x1c2,0,0xffffffff820011a8,uVar2,4);
+    if (3 < uVar1) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x1c2,
+                      0,
+                      "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)")
+      ;
     }
-    if ((uVar1 & 0xffffffff) == 0) {
-      MyAssertHandler(0xffffffff8216ab14,0x261e,0,0xffffffff82000f98,0xffffffff8216c5bc);
+    if (puVar2 == (uiInfo_s *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x261e
+                      ,0,"%s");
     }
-    Menus_ErrorCleanup(uVar1);
-    uVar1 = uVar1 + 0x22ac;
-    uVar2 = uVar2 + 1;
-  } while ((int)uVar1 < -0x7c085678);
+    Menus_ErrorCleanup(&puVar2->uiDC);
+    puVar2 = puVar2 + 1;
+    uVar1 = uVar1 + 1;
+  } while ((int)puVar2 < -0x7c085678);
   __restgprlr_25();
   return;
 }
@@ -8344,13 +8470,21 @@ void UI_ErrorCleanup(void)
 
 // 825ACF40  UI_AllowSignin  (ui_mp/ui_main_mp.cpp:9767)
 
-void UI_AllowSignin(ulonglong param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+bool UI_AllowSignin(LocalClientNum_t param_1)
 
 {
-  if (3 < (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8216ab14,0x1c2,0,0xffffffff820011a8,param_1,4);
+  bool bVar1;
+  
+  if (LOCAL_CLIENT_3 < param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui_mp\\ui_main_mp.cpp",0x1c2,0,
+                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  Menus_ActiveMenuAllowSignin(param_1 * 0x22ac + -0x7c08e128);
-  return;
+  bVar1 = Menus_ActiveMenuAllowSignin(&uiInfoArray[param_1].uiDC);
+  return bVar1;
 }
 

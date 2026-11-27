@@ -7114,7 +7114,7 @@ LAB_82600c50:
   82600C74  EBE1FFF0             ld r31,-0x10(r1)
   82600C78  4E800020             blr
 
-; 826024B8  std::_Push_heap<dvar_t_const_*_*,int,dvar_t_const_*,bool_(__cdecl*)(dvar_t_const_*,dvar_t_const_*)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2455)
+; 826024B8  _Push_heap<dvar_t_const_*_*,int,dvar_t_const_*,bool_(__cdecl*)(dvar_t_const_*,dvar_t_const_*)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2455)
   826024B8  7D8802A6             mfspr r12,LR
   826024BC  483141F1             bl 0x829166ac
   826024C0  9421FF70             stwu r1,-0x90(r1)
@@ -7443,7 +7443,7 @@ LAB_8260107c:
   8260108C  EBE1FFF0             ld r31,-0x10(r1)
   82601090  4E800020             blr
 
-; 82602548  std::_Adjust_heap<dvar_t_const_*_*,int,dvar_t_const_*,bool_(__cdecl*)(dvar_t_const_*,dvar_t_const_*)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2565)
+; 82602548  _Adjust_heap<dvar_t_const_*_*,int,dvar_t_const_*,bool_(__cdecl*)(dvar_t_const_*,dvar_t_const_*)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2565)
   82602548  7D8802A6             mfspr r12,LR
   8260254C  48314161             bl 0x829166ac
   82602550  9421FF70             stwu r1,-0x90(r1)
@@ -7743,7 +7743,7 @@ LAB_82601308:
   8260132C  EBE1FFF0             ld r31,-0x10(r1)
   82601330  4E800020             blr
 
-; 82602658  std::_Make_heap<dvar_t_const_*_*,int,dvar_t_const_*,bool_(__cdecl*)(dvar_t_const_*,dvar_t_const_*)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2658)
+; 82602658  _Make_heap<dvar_t_const_*_*,int,dvar_t_const_*,bool_(__cdecl*)(dvar_t_const_*,dvar_t_const_*)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2658)
   82602658  7D8802A6             mfspr r12,LR
   8260265C  4831404D             bl 0x829166a8
   82602660  9421FF60             stwu r1,-0xa0(r1)
@@ -7975,7 +7975,7 @@ LAB_82601594:
   826015A4  EBE1FFF0             ld r31,-0x10(r1)
   826015A8  4E800020             blr
 
-; 82602BE8  std::_Sort_heap<dvar_t_const_*_*,bool_(__cdecl*)(dvar_t_const_*,dvar_t_const_*)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2700)
+; 82602BE8  _Sort_heap<dvar_t_const_*_*,bool_(__cdecl*)(dvar_t_const_*,dvar_t_const_*)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2700)
   82602BE8  7D8802A6             mfspr r12,LR
   82602BEC  48313ACD             bl 0x829166b8
   82602BF0  9421FF80             stwu r1,-0x80(r1)
@@ -8782,7 +8782,7 @@ LAB_82601f98:
   826024B0  7D8803A6             mtspr LR,r12
   826024B4  4E800020             blr
 
-; 82602748  std::_Insertion_sort1<dvar_t_const_*_*,bool_(__cdecl*)(dvar_t_const_*,dvar_t_const_*),dvar_t_const_*>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3650)
+; 82602748  _Insertion_sort1<dvar_t_const_*_*,bool_(__cdecl*)(dvar_t_const_*,dvar_t_const_*),dvar_t_const_*>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3650)
   82602748  7D8802A6             mfspr r12,LR
   8260274C  48313F5D             bl 0x829166a8
   82602750  9421FF60             stwu r1,-0xa0(r1)
@@ -8845,7 +8845,7 @@ LAB_8260281c:
   8260281C  382100A0             addi r1,r1,0xa0
   82602820  48313ED8             b 0x829166f8
 
-; 82602828  std::_Med3<dvar_t_const_*_*,bool_(__cdecl*)(dvar_t_const_*,dvar_t_const_*)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3683)
+; 82602828  _Med3<dvar_t_const_*_*,bool_(__cdecl*)(dvar_t_const_*,dvar_t_const_*)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3683)
   82602828  7D8802A6             mfspr r12,LR
   8260282C  48313E8D             bl 0x829166b8
   82602830  9421FF80             stwu r1,-0x80(r1)
@@ -8892,7 +8892,7 @@ LAB_826028c8:
   826028C8  38210080             addi r1,r1,0x80
   826028CC  48313E3C             b 0x82916708
 
-; 826028D0  std::_Median<dvar_t_const_*_*,bool_(__cdecl*)(dvar_t_const_*,dvar_t_const_*)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3695)
+; 826028D0  _Median<dvar_t_const_*_*,bool_(__cdecl*)(dvar_t_const_*,dvar_t_const_*)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3695)
   826028D0  7D8802A6             mfspr r12,LR
   826028D4  48313DDD             bl 0x829166b0
   826028D8  9421FF70             stwu r1,-0x90(r1)
@@ -8937,7 +8937,7 @@ LAB_82602964:
   82602970  38210090             addi r1,r1,0x90
   82602974  48313D8C             b 0x82916700
 
-; 82602978  std::_Unguarded_partition<dvar_t_const_*_*,bool_(__cdecl*)(dvar_t_const_*,dvar_t_const_*)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3712)
+; 82602978  _Unguarded_partition<dvar_t_const_*_*,bool_(__cdecl*)(dvar_t_const_*,dvar_t_const_*)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3712)
   82602978  7D8802A6             mfspr r12,LR
   8260297C  48313D29             bl 0x829166a4
   82602980  9421FF60             stwu r1,-0xa0(r1)
@@ -9111,7 +9111,7 @@ LAB_82602bd0:
   82602BDC  382100A0             addi r1,r1,0xa0
   82602BE0  48313B14             b 0x829166f4
 
-; 82602C58  std::_Sort<dvar_t_const_*_*,int,bool_(__cdecl*)(dvar_t_const_*,dvar_t_const_*)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3771)
+; 82602C58  _Sort<dvar_t_const_*_*,int,bool_(__cdecl*)(dvar_t_const_*,dvar_t_const_*)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3771)
   82602C58  7D8802A6             mfspr r12,LR
   82602C5C  48313A55             bl 0x829166b0
   82602C60  9421FF70             stwu r1,-0x90(r1)

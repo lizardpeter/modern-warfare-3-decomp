@@ -4,17 +4,546 @@
   827E67C0  3D60821E             lis r11,-0x7de2
   827E67C4  39400010             li r10,0x10
   827E67C8  392BF2E0             subi r9,r11,0xd20
+  827E67CC  100950C3             lvx128 v0,r9,r10
+  827E67D0  10E048C3             lvx128 v7,0,r9
+  827E67D4  17E11004             vperm128 v63,v1,v2,v0
+  827E67D8  17C32004             vperm128 v62,v3,v4,v0
+  827E67DC  143FF1E1             vperm128 v1,v63,v62,v7
+  827E67E0  4E800020             blr
 
-; 827E67E8  jpeg_encode::dct_vmx  (mjpeg/jpeg.cpp:87)
+; 827E67E8  dct_vmx  (mjpeg/jpeg.cpp:87)
   827E67E8  7D8802A6             mfspr r12,LR
   827E67EC  4812FEA5             bl 0x82916690
   827E67F0  7D2C42E6             mftb r9,TBLr
   827E67F4  3D00829A             lis r8,-0x7d66
   827E67F8  39650010             addi r11,r5,0x10
-  827E67FC  13E028C7             vcmpequd v31,v0,v5
+  827E67FC  13E028C7             lvx128 v63,0,r5
   827E6800  38E84A70             addi r7,r8,0x4a70
+  827E6804  1BC0FB85             vupkhsb128 v62,v63
+  827E6808  38A00010             li r5,0x10
+  827E680C  1BA0FBC5             vupklsb128 v61,v63
+  827E6810  39400010             li r10,0x10
+  827E6814  3C608487             lis r3,-0x7b79
+  827E6818  138058C7             lvx128 v60,0,r11
+  827E681C  396B0010             addi r11,r11,0x10
+  827E6820  13E038C7             lvx128 v63,0,r7
+  827E6824  39032A40             addi r8,r3,0x2a40
+  827E6828  15BEFA31             vand128 v13,v62,v63
+  827E682C  1B60E385             vupkhsb128 v59,v60
+  827E6830  1B40E3C5             vupklsb128 v58,v60
+  827E6834  100728C3             lvx128 v0,r7,r5
+  827E6838  159DFA31             vand128 v12,v61,v63
+  827E683C  38A00020             li r5,0x20
+  827E6840  132058C7             lvx128 v57,0,r11
+  827E6844  3BE00020             li r31,0x20
+  827E6848  153BFA31             vand128 v9,v59,v63
+  827E684C  130B50C7             lvx128 v56,r11,r10
+  827E6850  151AFA31             vand128 v8,v58,v63
+  827E6854  1AE0CB85             vupkhsb128 v55,v57
+  827E6858  116D0740             vsubshs v11,v13,v0
+  827E685C  1AC0CBC5             vupklsb128 v54,v57
+  827E6860  114C0740             vsubshs v10,v12,v0
+  827E6864  1AA0C385             vupkhsb128 v53,v56
+  827E6868  10890740             vsubshs v4,v9,v0
+  827E686C  1A80C3C5             vupklsb128 v52,v56
+  827E6870  10680740             vsubshs v3,v8,v0
+  827E6874  13C828C7             lvx128 v62,r8,r5
+  827E6878  1A605FE4             vupklsb128 v51,v11
+  827E687C  14D7FA31             vand128 v6,v55,v63
+  827E6880  1A4057E4             vupklsb128 v50,v10
+  827E6884  14B6FA31             vand128 v5,v54,v63
+  827E6888  1A205FA4             vupkhsb128 v49,v11
+  827E688C  17F5FA31             vand128 v31,v53,v63
+  827E6890  194027E4             vupklsb128 v42,v4
+  827E6894  17B4FA31             vand128 v29,v52,v63
+  827E6898  19E09AB5             vcsxwfp128 v47,v51,0x0
+  827E689C  19001FE4             vupklsb128 v40,v3
+  827E68A0  19C092B5             vcsxwfp128 v46,v50,0x0
+  827E68A4  10460740             vsubshs v2,v6,v0
+  827E68A8  19A08AB5             vcsxwfp128 v45,v49,0x0
+  827E68AC  10250740             vsubshs v1,v5,v0
+  827E68B0  188052B5             vcsxwfp128 v36,v42,0x0
+  827E68B4  13DF0740             vsubshs v30,v31,v0
+  827E68B8  180042B5             vcsxwfp128 v32,v40,0x0
+  827E68BC  139D0740             vsubshs v28,v29,v0
+  827E68C0  10E7F8C3             lvx128 v7,r7,r31
+  827E68C4  1A0057A4             vupkhsb128 v48,v10
+  827E68C8  196027A4             vupkhsb128 v43,v4
+  827E68CC  5529003E             rlwinm r9,r9,0x0,0x0,0x1f
+  827E68D0  19201FA4             vupkhsb128 v41,v3
+  827E68D4  3D00829A             lis r8,-0x7d66
+  827E68D8  18E017E4             vupklsb128 v39,v2
+  827E68DC  18C00FE4             vupklsb128 v38,v1
+  827E68E0  198082B5             vcsxwfp128 v44,v48,0x0
+  827E68E4  18A017A4             vupkhsb128 v37,v2
+  827E68E8  18405AB5             vcsxwfp128 v34,v43,0x0
+  827E68EC  18600FA4             vupkhsb128 v35,v1
+  827E68F0  1B404AB5             vcsxwfp128 v58,v41,0x0
+  827E68F4  142FF1E5             vperm128 v33,v47,v62,v7
+  827E68F8  1BE03AB5             vcsxwfp128 v63,v39,0x0
+  827E68FC  1B20F7E4             vupklsb128 v57,v30
+  827E6900  1B8032B5             vcsxwfp128 v60,v38,0x0
+  827E6904  1AC0E7E4             vupklsb128 v54,v28
+  827E6908  1B002AB5             vcsxwfp128 v56,v37,0x0
+  827E690C  1BA0F7A4             vupkhsb128 v61,v30
+  827E6910  1AE01AB5             vcsxwfp128 v55,v35,0x0
+  827E6914  176EF1E5             vperm128 v59,v46,v62,v7
+  827E6918  164D0835             vaddfp128 v50,v45,v33
+  827E691C  1AA0CAB5             vcsxwfp128 v53,v57,0x0
+  827E6920  1684F1E5             vperm128 v52,v36,v62,v7
+  827E6924  1660F1E5             vperm128 v51,v32,v62,v7
+  827E6928  160D0875             vsubfp128 v48,v45,v33
+  827E692C  1A20E7A4             vupkhsb128 v49,v28
+  827E6930  19E0B2B5             vcsxwfp128 v47,v54,0x0
+  827E6934  15ACD875             vsubfp128 v45,v44,v59
+  827E6938  38A00030             li r5,0x30
+  827E693C  15CCD835             vaddfp128 v46,v44,v59
+  827E6940  39685420             addi r11,r8,0x5420
+  827E6944  1980EAB5             vcsxwfp128 v44,v61,0x0
+  827E6948  1495F1E5             vperm128 v36,v53,v62,v7
+  827E694C  1542A035             vaddfp128 v42,v34,v52
+  827E6950  153FF1E5             vperm128 v41,v63,v62,v7
+  827E6954  1502A075             vsubfp128 v40,v34,v52
+  827E6958  14FCF1E5             vperm128 v39,v60,v62,v7
+  827E695C  14DA9835             vaddfp128 v38,v58,v51
+  827E6960  13E728C7             lvx128 v63,r7,r5
+  827E6964  14BA9875             vsubfp128 v37,v58,v51
+  827E6968  13A058C7             lvx128 v61,0,r11
+  827E696C  19608AB5             vcsxwfp128 v43,v49,0x0
+  827E6970  144FF1E5             vperm128 v34,v47,v62,v7
+  827E6974  1472F9F5             vmsum4fp128 v35,v50,v63
+  827E6978  17573835             vaddfp128 v58,v55,v39
+  827E697C  1430E9F5             vmsum4fp128 v33,v48,v61
+  827E6980  14184835             vaddfp128 v32,v56,v41
+  827E6984  16973875             vsubfp128 v52,v55,v39
+  827E6988  3D00821E             lis r8,-0x7de2
+  827E698C  17184875             vsubfp128 v56,v56,v41
+  827E6990  3BE00010             li r31,0x10
+  827E6994  172DE9F5             vmsum4fp128 v57,v45,v61
+  827E6998  3CA0829A             lis r5,-0x7d66
+  827E699C  176EF9F5             vmsum4fp128 v59,v46,v63
+  827E69A0  3908F2E0             subi r8,r8,0xd20
+  827E69A4  16CC2035             vaddfp128 v54,v44,v36
+  827E69A8  38A553C0             addi r5,r5,0x53c0
+  827E69AC  162C2075             vsubfp128 v49,v44,v36
+  827E69B0  16AAF9F5             vmsum4fp128 v53,v42,v63
+  827E69B4  1668E9F5             vmsum4fp128 v51,v40,v61
+  827E69B8  3D60829A             lis r11,-0x7d66
+  827E69BC  15E6F9F5             vmsum4fp128 v47,v38,v63
+  827E69C0  1585E9F5             vmsum4fp128 v44,v37,v61
+  827E69C4  1008F8C3             lvx128 v0,r8,r31
+  827E69C8  152B1035             vaddfp128 v41,v43,v34
+  827E69CC  13C028C7             lvx128 v62,0,r5
+  827E69D0  14EB1075             vsubfp128 v39,v43,v34
+  827E69D4  145AF9F5             vmsum4fp128 v34,v58,v63
+  827E69D8  1480F9F5             vmsum4fp128 v36,v32,v63
+  827E69DC  396B5380             addi r11,r11,0x5380
+  827E69E0  176AF1F1             vmsum4fp128 v27,v42,v62
+  827E69E4  38A00040             li r5,0x40
+  827E69E8  16F8E9F5             vmsum4fp128 v55,v56,v61
+  827E69EC  3FE0829A             lis r31,-0x7d66
+  827E69F0  174EF1F1             vmsum4fp128 v26,v46,v62
+  827E69F4  1712F1F1             vmsum4fp128 v24,v50,v62
+  827E69F8  3BFF5400             addi r31,r31,0x5400
+  827E69FC  1576F9F5             vmsum4fp128 v43,v54,v63
+  827E6A00  138058C7             lvx128 v60,0,r11
+  827E6A04  1731E9F1             vmsum4fp128 v25,v49,v61
+  827E6A08  3D60829A             lis r11,-0x7d66
+  827E6A0C  1721C825             vperm128 v57,v33,v57,v0
+  827E6A10  1426F1F5             vmsum4fp128 v33,v38,v62
+  827E6A14  1463D825             vperm128 v35,v35,v59,v0
+  827E6A18  1774E9F5             vmsum4fp128 v59,v52,v61
+  827E6A1C  16F6F1F1             vmsum4fp128 v23,v54,v62
+  827E6A20  396B5370             addi r11,r11,0x5370
+  827E6A24  1669F9F1             vmsum4fp128 v19,v41,v63
+  827E6A28  13E728C7             lvx128 v63,r7,r5
+  827E6A2C  17A7E9F5             vmsum4fp128 v61,v39,v61
+  827E6A30  16B57825             vperm128 v53,v53,v47,v0
+  827E6A34  15E0F1F5             vmsum4fp128 v47,v32,v62
+  827E6A38  15936025             vperm128 v44,v51,v44,v0
+  827E6A3C  167AF1F5             vmsum4fp128 v51,v58,v62
+  827E6A40  16C5E1F1             vmsum4fp128 v22,v37,v60
+  827E6A44  16A8E1F1             vmsum4fp128 v21,v40,v60
+  827E6A48  14822025             vperm128 v36,v34,v36,v0
+  827E6A4C  168DE1F1             vmsum4fp128 v20,v45,v60
+  827E6A50  1649F1F1             vmsum4fp128 v18,v41,v62
+  827E6A54  1630E1F1             vmsum4fp128 v17,v48,v60
+  827E6A58  143B0805             vperm128 v33,v27,v33,v0
+  827E6A5C  145BB825             vperm128 v34,v59,v55,v0
+  827E6A60  1778D004             vperm128 v59,v24,v26,v0
+  827E6A64  161DC820             vperm128 v16,v61,v25,v0
+  827E6A68  16F37825             vperm128 v55,v51,v47,v0
+  827E6A6C  1666F9F5             vmsum4fp128 v51,v38,v63
+  827E6A70  15F35805             vperm128 v47,v19,v43,v0
+  827E6A74  156AF9F5             vmsum4fp128 v43,v42,v63
+  827E6A78  15D2F9F1             vmsum4fp128 v14,v50,v63
+  827E6A7C  10E040C3             lvx128 v7,0,r8
+  827E6A80  15EEF9F1             vmsum4fp128 v15,v46,v63
+  827E6A84  13A0F8C7             lvx128 v61,0,r31
+  827E6A88  13C058C7             lvx128 v62,0,r11
+  827E6A8C  143B09E5             vperm128 v33,v59,v33,v7
+  827E6A90  1766E9F5             vmsum4fp128 v59,v38,v61
+  827E6A94  1463A9E5             vperm128 v35,v35,v53,v7
+  827E6A98  159961E5             vperm128 v44,v57,v44,v7
+  827E6A9C  154AE9F5             vmsum4fp128 v42,v42,v61
+  827E6AA0  1730F1F5             vmsum4fp128 v57,v48,v62
+  827E6AA4  15EF21E5             vperm128 v47,v47,v36,v7
+  827E6AA8  16ADF1F5             vmsum4fp128 v53,v45,v62
+  827E6AAC  3D00829A             lis r8,-0x7d66
+  827E6AB0  149011C5             vperm128 v36,v16,v34,v7
+  827E6AB4  15A0F9F1             vmsum4fp128 v13,v32,v63
+  827E6AB8  157AF9F1             vmsum4fp128 v11,v58,v63
+  827E6ABC  1192B82B             vperm v12,v18,v23,v0
+  827E6AC0  1556F9F1             vmsum4fp128 v10,v54,v63
+  827E6AC4  166B9825             vperm128 v51,v43,v51,v0
+  827E6AC8  1529F9F1             vmsum4fp128 v9,v41,v63
+  827E6ACC  14D5B004             vperm128 v38,v21,v22,v0
+  827E6AD0  17F1A004             vperm128 v63,v17,v20,v0
+  827E6AD4  38A85390             addi r5,r8,0x5390
+  827E6AD8  146C2031             vaddfp128 v3,v44,v36
+  827E6ADC  144CB9C5             vperm128 v34,v12,v55,v7
+  827E6AE0  158C2075             vsubfp128 v44,v44,v36
+  827E6AE4  1496E9F5             vmsum4fp128 v36,v54,v61
+  827E6AE8  175AE9F5             vmsum4fp128 v58,v58,v61
+  827E6AEC  14A37831             vaddfp128 v5,v35,v47
+  827E6AF0  16FF31E5             vperm128 v55,v63,v38,v7
+  827E6AF4  1400E9F5             vmsum4fp128 v32,v32,v61
+  827E6AF8  13E028C7             lvx128 v63,0,r5
+  827E6AFC  14637875             vsubfp128 v35,v35,v47
+  827E6B00  156E7804             vperm128 v43,v14,v15,v0
+  827E6B04  14D8E1F5             vmsum4fp128 v38,v56,v60
+  827E6B08  15CEE9F5             vmsum4fp128 v46,v46,v61
+  827E6B0C  14211031             vaddfp128 v1,v33,v34
+  827E6B10  1652E9F5             vmsum4fp128 v50,v50,v61
+  827E6B14  3D60829A             lis r11,-0x7d66
+  827E6B18  17F4F1F1             vmsum4fp128 v31,v52,v62
+  827E6B1C  3D00829A             lis r8,-0x7d66
+  827E6B20  16CB99E5             vperm128 v54,v43,v51,v7
+  827E6B24  166DF9F5             vmsum4fp128 v51,v45,v63
+  827E6B28  156AD825             vperm128 v43,v42,v59,v0
+  827E6B2C  1554E1F5             vmsum4fp128 v42,v52,v60
+  827E6B30  15F9A825             vperm128 v47,v57,v53,v0
+  827E6B34  15B0F9F5             vmsum4fp128 v45,v48,v63
+  827E6B38  1771E1F5             vmsum4fp128 v59,v49,v60
+  827E6B3C  108B682B             vperm v4,v11,v13,v0
+  827E6B40  1727E1F5             vmsum4fp128 v57,v39,v60
+  827E6B44  16A5F1F5             vmsum4fp128 v53,v37,v62
+  827E6B48  1049502B             vperm v2,v9,v10,v0
+  827E6B4C  1608F1F5             vmsum4fp128 v48,v40,v62
+  827E6B50  1798F1F5             vmsum4fp128 v60,v56,v62
+  827E6B54  17D1F1F1             vmsum4fp128 v30,v49,v62
+  827E6B58  17A9E9F5             vmsum4fp128 v61,v41,v61
+  827E6B5C  152221C4             vperm128 v41,v2,v4,v7
+  827E6B60  17C7F1F5             vmsum4fp128 v62,v39,v62
+  827E6B64  141A0025             vperm128 v32,v58,v32,v0
+  827E6B68  1754F9F5             vmsum4fp128 v58,v52,v63
+  827E6B6C  1691F9F5             vmsum4fp128 v52,v49,v63
+  827E6B70  14A5F9F5             vmsum4fp128 v37,v37,v63
+  827E6B74  16527025             vperm128 v50,v50,v46,v0
+  827E6B78  15D8F9F5             vmsum4fp128 v46,v56,v63
+  827E6B7C  1508F9F5             vmsum4fp128 v40,v40,v63
+  827E6B80  162A3025             vperm128 v49,v42,v38,v0
+  827E6B84  1547F9F5             vmsum4fp128 v42,v39,v63
+  827E6B88  165259E5             vperm128 v50,v50,v43,v7
+  827E6B8C  14F9D825             vperm128 v39,v57,v59,v0
+  827E6B90  14D0A825             vperm128 v38,v48,v53,v0
+  827E6B94  16A11075             vsubfp128 v53,v33,v34
+  827E6B98  14564875             vsubfp128 v34,v54,v41
+  827E6B9C  156789E5             vperm128 v43,v39,v49,v7
+  827E6BA0  14F64835             vaddfp128 v39,v54,v41
+  827E6BA4  171D2025             vperm128 v56,v61,v36,v0
+  827E6BA8  149FE005             vperm128 v36,v31,v60,v0
+  827E6BAC  17FEF024             vperm128 v63,v62,v30,v0
+  827E6BB0  14CF31E5             vperm128 v38,v47,v38,v7
+  827E6BB4  161801E5             vperm128 v48,v56,v32,v7
+  827E6BB8  143F21E5             vperm128 v33,v63,v36,v7
+  827E6BBC  140D9825             vperm128 v32,v45,v51,v0
+  827E6BC0  15F75875             vsubfp128 v47,v55,v43
+  827E6BC4  15A60835             vaddfp128 v45,v38,v33
+  827E6BC8  167A7025             vperm128 v51,v58,v46,v0
+  827E6BCC  16375835             vaddfp128 v49,v55,v43
+  827E6BD0  3FC0829A             lis r30,-0x7d66
+  827E6BD4  17E82825             vperm128 v63,v40,v37,v0
+  827E6BD8  3CA0829A             lis r5,-0x7d66
+  827E6BDC  15CAA025             vperm128 v46,v42,v52,v0
+  827E6BE0  3FE0829A             lis r31,-0x7d66
+  827E6BE4  396B53E0             addi r11,r11,0x53e0
+  827E6BE8  16D28035             vaddfp128 v54,v50,v48
+  827E6BEC  390853D0             addi r8,r8,0x53d0
+  827E6BF0  15328075             vsubfp128 v41,v50,v48
+  827E6BF4  3BA00060             li r29,0x60
+  827E6BF8  1560F9E5             vperm128 v43,v32,v63,v7
+  827E6BFC  3B800050             li r28,0x50
+  827E6C00  150E99E5             vperm128 v40,v46,v51,v7
+  827E6C04  3BDE53B0             addi r30,r30,0x53b0
+  827E6C08  15460875             vsubfp128 v42,v38,v33
+  827E6C0C  38A553F0             addi r5,r5,0x53f0
+  827E6C10  13E058C7             lvx128 v63,0,r11
+  827E6C14  3BFF53A0             addi r31,r31,0x53a0
+  827E6C18  13A040C7             lvx128 v61,0,r8
+  827E6C1C  13C7E8C7             lvx128 v62,r7,r29
+  827E6C20  140B4035             vaddfp128 v32,v43,v40
+  827E6C24  1387E0C7             lvx128 v60,r7,r28
+  827E6C28  16EB4075             vsubfp128 v55,v43,v40
+  827E6C2C  1320F0C7             lvx128 v57,0,r30
+  827E6C30  14A5F1D5             vmsum4fp128 v37,v5,v62
+  827E6C34  136028C7             lvx128 v59,0,r5
+  827E6C38  1423E9D5             vmsum4fp128 v33,v3,v61
+  827E6C3C  1340F8C7             lvx128 v58,0,r31
+  827E6C40  170DE1F5             vmsum4fp128 v56,v45,v60
+  827E6C44  14CCF9F5             vmsum4fp128 v38,v44,v63
+  827E6C48  3D60829A             lis r11,-0x7d66
+  827E6C4C  1483F9F5             vmsum4fp128 v36,v35,v63
+  827E6C50  112030C3             lvx128 v9,0,r6
+  827E6C54  1687E1F5             vmsum4fp128 v52,v39,v60
+  827E6C58  390B5410             addi r8,r11,0x5410
+  827E6C5C  1661E9D5             vmsum4fp128 v51,v1,v61
+  827E6C60  116650C3             lvx128 v11,r6,r10
+  827E6C64  1643F1D5             vmsum4fp128 v50,v3,v62
+  827E6C68  1611E9F5             vmsum4fp128 v48,v49,v61
+  827E6C6C  17AFC9F1             vmsum4fp128 v29,v47,v57
+  827E6C70  1782C9F1             vmsum4fp128 v28,v34,v57
+  827E6C74  1775F9F1             vmsum4fp128 v27,v53,v63
+  827E6C78  156CD9F5             vmsum4fp128 v43,v44,v59
+  827E6C7C  15C1F1D5             vmsum4fp128 v46,v1,v62
+  827E6C80  1505D1D5             vmsum4fp128 v40,v5,v58
+  827E6C84  1743D9F1             vmsum4fp128 v26,v35,v59
+  827E6C88  1736E1F1             vmsum4fp128 v25,v54,v60
+  827E6C8C  170AC9F1             vmsum4fp128 v24,v42,v57
+  827E6C90  16E7E9F1             vmsum4fp128 v23,v39,v61
+  827E6C94  14C53025             vperm128 v38,v37,v38,v0
+  827E6C98  14AFF9F5             vmsum4fp128 v37,v47,v63
+  827E6C9C  14812025             vperm128 v36,v33,v36,v0
+  827E6CA0  1422F9F5             vmsum4fp128 v33,v34,v63
+  827E6CA4  1694C025             vperm128 v52,v52,v56,v0
+  827E6CA8  130040C7             lvx128 v56,0,r8
+  827E6CAC  16CDE9F1             vmsum4fp128 v22,v45,v61
+  827E6CB0  16A9C9F1             vmsum4fp128 v21,v41,v57
+  827E6CB4  14C431E5             vperm128 v38,v36,v38,v7
+  827E6CB8  1680E1F1             vmsum4fp128 v20,v32,v60
+  827E6CBC  1673E824             vperm128 v51,v51,v29,v0
+  827E6CC0  1483D1D5             vmsum4fp128 v36,v3,v58
+  827E6CC4  161C8005             vperm128 v48,v28,v48,v0
+  827E6CC8  1675D9F1             vmsum4fp128 v19,v53,v59
+  827E6CCC  165B9005             vperm128 v50,v27,v50,v0
+  827E6CD0  1651F1F1             vmsum4fp128 v18,v49,v62
+  827E6CD4  1627F1F1             vmsum4fp128 v17,v39,v62
+  827E6CD8  15CB7025             vperm128 v46,v43,v46,v0
+  827E6CDC  1563C1F5             vmsum4fp128 v43,v35,v56
+  827E6CE0  1693A1E5             vperm128 v52,v51,v52,v7
+  827E6CE4  166FD9F5             vmsum4fp128 v51,v47,v59
+  827E6CE8  151A4005             vperm128 v40,v26,v40,v0
+  827E6CEC  1601D1D1             vmsum4fp128 v16,v1,v58
+  827E6CF0  165091E5             vperm128 v50,v48,v50,v7
+  827E6CF4  15ECC1F1             vmsum4fp128 v15,v44,v56
+  827E6CF8  1600E9F5             vmsum4fp128 v48,v32,v61
+  827E6CFC  15C871E5             vperm128 v46,v40,v46,v7
+  827E6D00  1517C9F5             vmsum4fp128 v40,v55,v57
+  827E6D04  15645825             vperm128 v43,v36,v43,v0
+  827E6D08  1551D1F1             vmsum4fp128 v10,v49,v58
+  827E6D0C  190033F1             vrfiz128 v8,v38
+  827E6D10  1495C9F1             vmsum4fp128 v4,v53,v57
+  827E6D14  14360805             vperm128 v33,v22,v33,v0
+  827E6D18  1631E1F5             vmsum4fp128 v49,v49,v60
+  827E6D1C  14D4A804             vperm128 v38,v20,v21,v0
+  827E6D20  15B6E9F1             vmsum4fp128 v13,v54,v61
+  827E6D24  18C0A3F1             vrfiz128 v6,v52
+  827E6D28  1485E9D5             vmsum4fp128 v36,v5,v61
+  827E6D2C  17B29804             vperm128 v61,v18,v19,v0
+  827E6D30  1441E1D1             vmsum4fp128 v2,v1,v60
+  827E6D34  3BC00070             li r30,0x70
+  827E6D38  158CC9F5             vmsum4fp128 v44,v44,v57
+  827E6D3C  14C609E5             vperm128 v38,v38,v33,v7
+  827E6D40  1723C9F5             vmsum4fp128 v57,v35,v57
+  827E6D44  14338824             vperm128 v33,v51,v17,v0
+  827E6D48  1463E1D5             vmsum4fp128 v35,v3,v60
+  827E6D4C  157D59E5             vperm128 v43,v61,v43,v7
+  827E6D50  1785E1D5             vmsum4fp128 v60,v5,v60
+  827E6D54  11D8C82B             vperm v14,v24,v25,v0
+  827E6D58  158AF9F1             vmsum4fp128 v12,v42,v63
+  827E6D5C  14A5B824             vperm128 v37,v37,v23,v0
+  827E6D60  14E7D1F5             vmsum4fp128 v39,v39,v58
+  827E6D64  102F802B             vperm v1,v15,v16,v0
+  827E6D68  17A9F9F5             vmsum4fp128 v61,v41,v63
+  827E6D6C  38A00020             li r5,0x20
+  827E6D70  17A0F1F1             vmsum4fp128 v29,v32,v62
+  827E6D74  39000030             li r8,0x30
+  827E6D78  166DF1F5             vmsum4fp128 v51,v45,v62
+  827E6D7C  14A571E4             vperm128 v37,v37,v14,v7
+  827E6D80  16088025             vperm128 v48,v40,v48,v0
+  827E6D84  150AD9F5             vmsum4fp128 v40,v42,v59
+  827E6D88  1797F9F1             vmsum4fp128 v28,v55,v63
+  827E6D8C  39640010             addi r11,r4,0x10
+  827E6D90  1682D9F5             vmsum4fp128 v52,v34,v59
+  827E6D94  3BE00050             li r31,0x50
+  827E6D98  17C9D9F1             vmsum4fp128 v30,v41,v59
+  827E6D9C  17F12024             vperm128 v63,v49,v4,v0
+  827E6DA0  15EFC1F5             vmsum4fp128 v47,v47,v56
+  827E6DA4  142109C5             vperm128 v33,v1,v33,v7
+  827E6DA8  16B5C1F5             vmsum4fp128 v53,v53,v56
+  827E6DAC  18A073F1             vrfiz128 v5,v46
+  827E6DB0  17D6F1F5             vmsum4fp128 v62,v54,v62
+  827E6DB4  3BA00040             li r29,0x40
+  827E6DB8  162C1024             vperm128 v49,v44,v2,v0
+  827E6DBC  16D6D1F5             vmsum4fp128 v54,v54,v58
+  827E6DC0  15992025             vperm128 v44,v57,v36,v0
+  827E6DC4  1729C1F5             vmsum4fp128 v57,v41,v56
+  827E6DC8  188093F1             vrfiz128 v4,v50
+  827E6DCC  3B800060             li r28,0x60
+  827E6DD0  149C1825             vperm128 v36,v60,v35,v0
+  827E6DD4  1797C1F5             vmsum4fp128 v60,v55,v56
+  827E6DD8  1471F9E5             vperm128 v35,v49,v63,v7
+  827E6DDC  1620D1F5             vmsum4fp128 v49,v32,v58
+  827E6DE0  13EC682B             vperm v31,v12,v13,v0
+  827E6DE4  11A7F0C3             lvx128 v13,r7,r30
+  827E6DE8  3BC00080             li r30,0x80
+  827E6DEC  184033F1             vrfiz128 v2,v38
+  827E6DF0  18602BF1             vrfiz128 v3,v37
+  827E6DF4  3B600070             li r27,0x70
+  827E6DF8  167D9825             vperm128 v51,v61,v51,v0
+  827E6DFC  19801BF1             vrfiz128 v12,v35
+  827E6E00  15274025             vperm128 v41,v39,v40,v0
+  827E6E04  14F7D9F5             vmsum4fp128 v39,v55,v59
+  827E6E08  150461E5             vperm128 v40,v36,v44,v7
+  827E6E0C  1462C1F5             vmsum4fp128 v35,v34,v56
+  827E6E10  16945024             vperm128 v52,v52,v10,v0
+  827E6E14  148AC1F5             vmsum4fp128 v36,v42,v56
+  827E6E18  17BDF004             vperm128 v61,v29,v30,v0
+  827E6E1C  144DD1F5             vmsum4fp128 v34,v45,v58
+  827E6E20  13E7F0C7             lvx128 v63,r7,r30
+  827E6E24  161F81C5             vperm128 v48,v31,v48,v7
+  827E6E28  14157825             vperm128 v32,v53,v47,v0
+  827E6E2C  194043F1             vrfiz128 v10,v40
+  827E6E30  177EE024             vperm128 v59,v62,v28,v0
+  827E6E34  3B400080             li r26,0x80
+  827E6E38  1753A1E5             vperm128 v58,v51,v52,v7
+  827E6E3C  170049E5             vperm128 v56,v32,v41,v7
+  827E6E40  16FBE9E5             vperm128 v55,v59,v61,v7
+  827E6E44  118C6AEE             vmaddfp v12,v12,v11,v13
+  827E6E48  16B9E025             vperm128 v53,v57,v60,v0
+  827E6E4C  116A6A6E             vmaddfp v11,v10,v9,v13
+  827E6E50  1664B025             vperm128 v51,v36,v54,v0
+  827E6E54  18205BF1             vrfiz128 v1,v43
+  827E6E58  16421825             vperm128 v50,v34,v35,v0
+  827E6E5C  16878825             vperm128 v52,v39,v49,v0
+  827E6E60  3A400080             li r18,0x80
+  827E6E64  1BE00BF1             vrfiz128 v31,v33
+  827E6E68  3B200090             li r25,0x90
+  827E6E6C  1BA0D3F1             vrfiz128 v29,v58
+  827E6E70  3B0000A0             li r24,0xa0
+  827E6E74  1920BBF1             vrfiz128 v9,v55
+  827E6E78  3AE000B0             li r23,0xb0
+  827E6E7C  1940C3F1             vrfiz128 v10,v56
+  827E6E80  1634A9E5             vperm128 v49,v52,v53,v7
+  827E6E84  1BC083F1             vrfiz128 v30,v48
+  827E6E88  161299E5             vperm128 v48,v50,v51,v7
+  827E6E8C  3AC000C0             li r22,0xc0
+  827E6E90  3AA000D0             li r21,0xd0
+  827E6E94  3A8000F0             li r20,0xf0
+  827E6E98  18E08BF1             vrfiz128 v7,v49
+  827E6E9C  19E06234             vcfpsxws128 v47,v12,0x0
+  827E6EA0  3A6000E0             li r19,0xe0
+  827E6EA4  19C05A34             vcfpsxws128 v46,v11,0x0
+  827E6EA8  196083F1             vrfiz128 v11,v48
+  827E6EAC  19AFF975             vsraw128 v45,v47,v63
+  827E6EB0  198EF975             vsraw128 v44,v46,v63
+  827E6EB4  156C6AA5             vpkswss128 v43,v44,v45
+  827E6EB8  116021C7             stvx128 v43,0,r4
+  827E6EBC  38800080             li r4,0x80
+  827E6EC0  118640C3             lvx128 v12,r6,r8
+  827E6EC4  39000080             li r8,0x80
+  827E6EC8  13E7F0C7             lvx128 v63,r7,r30
+  827E6ECC  100628C3             lvx128 v0,r6,r5
+  827E6ED0  1008682E             vmaddfp v0,v8,v0,v13
+  827E6ED4  11866B2E             vmaddfp v12,v6,v12,v13
+  827E6ED8  38A00080             li r5,0x80
+  827E6EDC  19200234             vcfpsxws128 v41,v0,0x0
+  827E6EE0  19406234             vcfpsxws128 v42,v12,0x0
+  827E6EE4  18E9F975             vsraw128 v39,v41,v63
+  827E6EE8  190AF975             vsraw128 v40,v42,v63
+  827E6EEC  14C742A5             vpkswss128 v38,v39,v40
+  827E6EF0  10C059C7             stvx128 v38,0,r11
+  827E6EF4  396B0010             addi r11,r11,0x10
+  827E6EF8  1186E8C3             lvx128 v12,r6,r29
+  827E6EFC  13E790C7             lvx128 v63,r7,r18
+  827E6F00  1006F8C3             lvx128 v0,r6,r31
+  827E6F04  1005682E             vmaddfp v0,v5,v0,v13
+  827E6F08  11846B2E             vmaddfp v12,v4,v12,v13
+  827E6F0C  3BE00080             li r31,0x80
+  827E6F10  18800234             vcfpsxws128 v36,v0,0x0
+  827E6F14  18A06234             vcfpsxws128 v37,v12,0x0
+  827E6F18  1864F975             vsraw128 v35,v36,v63
+  827E6F1C  1845F975             vsraw128 v34,v37,v63
+  827E6F20  14221AA5             vpkswss128 v33,v34,v35
+  827E6F24  102059C7             stvx128 v33,0,r11
+  827E6F28  396B0010             addi r11,r11,0x10
+  827E6F2C  1186D8C3             lvx128 v12,r6,r27
+  827E6F30  13E728C7             lvx128 v63,r7,r5
+  827E6F34  1006E0C3             lvx128 v0,r6,r28
+  827E6F38  1003682E             vmaddfp v0,v3,v0,v13
+  827E6F3C  11826B2E             vmaddfp v12,v2,v12,v13
+  827E6F40  1BC00234             vcfpsxws128 v62,v0,0x0
+  827E6F44  18006234             vcfpsxws128 v32,v12,0x0
+  827E6F48  1B9EF975             vsraw128 v60,v62,v63
+  827E6F4C  1BA0F975             vsraw128 v61,v32,v63
+  827E6F50  177CEAA5             vpkswss128 v59,v60,v61
+  827E6F54  136059C7             stvx128 v59,0,r11
+  827E6F58  396B0010             addi r11,r11,0x10
+  827E6F5C  1186C8C3             lvx128 v12,r6,r25
+  827E6F60  13E720C7             lvx128 v63,r7,r4
+  827E6F64  1006D0C3             lvx128 v0,r6,r26
+  827E6F68  1001682E             vmaddfp v0,v1,v0,v13
+  827E6F6C  119F6B2E             vmaddfp v12,v31,v12,v13
+  827E6F70  1B200234             vcfpsxws128 v57,v0,0x0
+  827E6F74  1B406234             vcfpsxws128 v58,v12,0x0
+  827E6F78  1AF9F975             vsraw128 v55,v57,v63
+  827E6F7C  1B1AF975             vsraw128 v56,v58,v63
+  827E6F80  16D7C2A5             vpkswss128 v54,v55,v56
+  827E6F84  12C059C7             stvx128 v54,0,r11
+  827E6F88  1006C0C3             lvx128 v0,r6,r24
+  827E6F8C  396B0010             addi r11,r11,0x10
+  827E6F90  1186B8C3             lvx128 v12,r6,r23
+  827E6F94  101E682E             vmaddfp v0,v30,v0,v13
+  827E6F98  119D6B2E             vmaddfp v12,v29,v12,v13
+  827E6F9C  13E740C7             lvx128 v63,r7,r8
+  827E6FA0  1A800234             vcfpsxws128 v52,v0,0x0
+  827E6FA4  1AA06234             vcfpsxws128 v53,v12,0x0
+  827E6FA8  1A54F975             vsraw128 v50,v52,v63
+  827E6FAC  1A75F975             vsraw128 v51,v53,v63
+  827E6FB0  16329AA5             vpkswss128 v49,v50,v51
+  827E6FB4  122059C7             stvx128 v49,0,r11
+  827E6FB8  396B0010             addi r11,r11,0x10
+  827E6FBC  1186A8C3             lvx128 v12,r6,r21
+  827E6FC0  13E7F8C7             lvx128 v63,r7,r31
+  827E6FC4  1006B0C3             lvx128 v0,r6,r22
+  827E6FC8  100A682E             vmaddfp v0,v10,v0,v13
+  827E6FCC  11896B2E             vmaddfp v12,v9,v12,v13
+  827E6FD0  19E00234             vcfpsxws128 v47,v0,0x0
+  827E6FD4  1A006234             vcfpsxws128 v48,v12,0x0
+  827E6FD8  19AFF975             vsraw128 v45,v47,v63
+  827E6FDC  19D0F975             vsraw128 v46,v48,v63
+  827E6FE0  158D72A5             vpkswss128 v44,v45,v46
+  827E6FE4  118059C7             stvx128 v44,0,r11
+  827E6FE8  118698C3             lvx128 v12,r6,r19
+  827E6FEC  13E7F0C7             lvx128 v63,r7,r30
+  827E6FF0  1006A0C3             lvx128 v0,r6,r20
+  827E6FF4  1007682E             vmaddfp v0,v7,v0,v13
+  827E6FF8  11AB6B2E             vmaddfp v13,v11,v12,v13
+  827E6FFC  19600234             vcfpsxws128 v43,v0,0x0
+  827E7000  19406A34             vcfpsxws128 v42,v13,0x0
+  827E7004  192BF975             vsraw128 v41,v43,v63
+  827E7008  190AF975             vsraw128 v40,v42,v63
+  827E700C  14E84AA5             vpkswss128 v39,v40,v41
+  827E7010  10EB51C7             stvx128 v39,r11,r10
+  827E7014  7CEC42E6             mftb r7,TBLr
+  827E7018  54E6003E             rlwinm r6,r7,0x0,0x0,0x1f
+  827E701C  E9632A40             ld r11,0x2a40(r3)
+  827E7020  7D493050             subf r10,r9,r6
+  827E7024  7D6A5A14             add r11,r10,r11
+  827E7028  F9632A40             std r11,0x2a40(r3)
+  827E702C  4812F6B4             b 0x829166e0
 
-; 827E7030  jpeg_encode::dct  (mjpeg/jpeg.cpp:285)
+; 827E7030  dct  (mjpeg/jpeg.cpp:285)
   827E7030  7D8802A6             mfspr r12,LR
   827E7034  4812F64D             bl 0x82916680
   827E7038  39200008             li r9,0x8
@@ -208,7 +737,7 @@ LAB_827e71c8:
   827E7320  4200FEA8             bdnz 0x827e71c8
   827E7324  4812F3AC             b 0x829166d0
 
-; 827E7328  jpeg_encode::init_quant  (mjpeg/jpeg.cpp:542)
+; 827E7328  init_quant  (mjpeg/jpeg.cpp:542)
   827E7328  7D8802A6             mfspr r12,LR
   827E732C  4812F391             bl 0x829166bc
   827E7330  39600008             li r11,0x8
@@ -642,7 +1171,7 @@ LAB_827e7928:
   827E795C  4200FA04             bdnz 0x827e7360
   827E7960  4812EDAC             b 0x8291670c
 
-; 827E7968  jpeg_encode::quant  (mjpeg/jpeg.cpp:606)
+; 827E7968  quant  (mjpeg/jpeg.cpp:606)
   827E7968  FBC1FFF0             std r30,-0x10(r1)
   827E796C  FBE1FFF8             std r31,-0x8(r1)
   827E7970  7D2C42E6             mftb r9,TBLr
@@ -709,7 +1238,7 @@ LAB_827e7998:
   827E7A60  EBE1FFF8             ld r31,-0x8(r1)
   827E7A64  4E800020             blr
 
-; 827E7A68  jpeg_encode::huffman  (mjpeg/jpeg.cpp:647)
+; 827E7A68  huffman  (mjpeg/jpeg.cpp:647)
   827E7A68  7D8802A6             mfspr r12,LR
   827E7A6C  4812EC35             bl 0x829166a0
   827E7A70  7C6B1B78             or r11,r3,r3
@@ -1106,7 +1635,7 @@ LAB_827e7fe4:
   827E8000  F9692A48             std r11,0x2a48(r9)
   827E8004  4812E6EC             b 0x829166f0
 
-; 827E8008  jpeg_encode::do_block  (mjpeg/jpeg.cpp:713)
+; 827E8008  do_block  (mjpeg/jpeg.cpp:713)
   827E8008  7D8802A6             mfspr r12,LR
   827E800C  4812E6AD             bl 0x829166b8
   827E8010  9421FF80             stwu r1,-0x80(r1)
@@ -1234,7 +1763,7 @@ LAB_827e7fe4:
   827E81F0  91230000             stw r9,0x0(r3)
   827E81F4  4E800020             blr
 
-; 827E81F8  jpeg_encode::write_header  (mjpeg/jpeg.cpp:763)
+; 827E81F8  write_header  (mjpeg/jpeg.cpp:763)
   827E81F8  7D8802A6             mfspr r12,LR
   827E81FC  4812E485             bl 0x82916680
   827E8200  DBA1FF50             stfd f29,-0xb0(r1)
@@ -2165,7 +2694,7 @@ LAB_827e8f70:
   827E8F94  CBE1FF60             lfd f31,-0xa0(r1)
   827E8F98  4812D738             b 0x829166d0
 
-; 827E8FA0  jpeg_encode::begin  (mjpeg/jpeg.cpp:1105)
+; 827E8FA0  begin  (mjpeg/jpeg.cpp:1105)
   827E8FA0  7D8802A6             mfspr r12,LR
   827E8FA4  4812D709             bl 0x829166ac
   827E8FA8  9421FF70             stwu r1,-0x90(r1)
@@ -2227,7 +2756,7 @@ LAB_827e8f70:
   827E9088  38210090             addi r1,r1,0x90
   827E908C  4812D670             b 0x829166fc
 
-; 827E9090  jpeg_encode::end  (mjpeg/jpeg.cpp:1141)
+; 827E9090  end  (mjpeg/jpeg.cpp:1141)
   827E9090  A1630284             lhz r11,0x284(r3)
   827E9094  2B0B0000             cmplwi cr6,r11,0x0
   827E9098  419A0054             beq cr6,0x827e90ec
@@ -2261,7 +2790,7 @@ LAB_827e90ec:
   827E90FC  38640001             addi r3,r4,0x1
   827E9100  4E800020             blr
 
-; 827E9108  jpeg_encode::encode  (mjpeg/jpeg.cpp:1162)
+; 827E9108  encode  (mjpeg/jpeg.cpp:1162)
   827E9108  7D8802A6             mfspr r12,LR
   827E910C  4812D575             bl 0x82916680
   827E9110  9421FF10             stwu r1,-0xf0(r1)

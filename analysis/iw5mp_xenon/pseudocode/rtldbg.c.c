@@ -2,10 +2,10 @@
 
 // 828B5060  RtlOutputDebugString  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/rtldbg.c:43)
 
-void RtlOutputDebugString(undefined2 *param_1)
+void RtlOutputDebugString(_STRING *param_1)
 
 {
-  RtlDebugPrintHelper(*(undefined4 *)(param_1 + 2),*param_1);
+  RtlDebugPrintHelper();
   return;
 }
 

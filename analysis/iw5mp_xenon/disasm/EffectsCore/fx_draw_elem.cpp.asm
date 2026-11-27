@@ -87,6 +87,10 @@ LAB_824199b8:
   824199BC  394000E0             li r10,0xe0
   824199C0  392000D0             li r9,0xd0
   824199C4  7FE3FB78             or r3,r31,r31
+  824199C8  107F58C3             lvx128 v3,r31,r11
+  824199CC  105F50C3             lvx128 v2,r31,r10
+  824199D0  103F48C3             lvx128 v1,r31,r9
+  824199D4  48002075             bl 0x8241ba48
 LAB_824199d8:
   824199D8  38210090             addi r1,r1,0x90
   824199DC  484FCD28             b 0x82916704
@@ -181,11 +185,20 @@ LAB_82419b20:
   82419B30  3CE08405             lis r7,-0x7bfb
   82419B34  7FE3FB78             or r3,r31,r31
   82419B38  38C7F950             subi r6,r7,0x6b0
-  82419B3C  13E05C07             vcmpneb. v31,v0,v11
-  82419B40  13C05407             vcmpneb. v30,v0,v10
-  82419B44  13A04C07             vcmpneb. v29,v0,v9
-  82419B48  13885C47             vcmpneh. v28,v8,v11
-  82419B4C  13684C47             vcmpneh. v27,v8,v9
+  82419B3C  13E05C07             lvlx128 v63,0,r11
+  82419B40  13C05407             lvlx128 v62,0,r10
+  82419B44  13A04C07             lvlx128 v61,0,r9
+  82419B48  13885C47             lvrx128 v60,r8,r11
+  82419B4C  13684C47             lvrx128 v59,r8,r9
+  82419B50  175FE2F5             vor128 v58,v63,v60
+  82419B54  13285447             lvrx128 v57,r8,r10
+  82419B58  171DDAF5             vor128 v56,v61,v59
+  82419B5C  16FECAF5             vor128 v55,v62,v57
+  82419B60  13E030C7             lvx128 v63,0,r6
+  82419B64  147AFA31             vand128 v3,v58,v63
+  82419B68  1458FA31             vand128 v2,v56,v63
+  82419B6C  1437FA31             vand128 v1,v55,v63
+  82419B70  48001ED9             bl 0x8241ba48
 LAB_82419b74:
   82419B74  38210090             addi r1,r1,0x90
   82419B78  484FCB8C             b 0x82916704
@@ -796,8 +809,33 @@ LAB_824196ac:
   824196E0  390000C0             li r8,0xc0
   824196E4  D001FFFC             stfs f0,-0x4(r1)
   824196E8  38E1FFF0             subi r7,r1,0x10
-  824196EC  13E048C7             vcmpequd v31,v0,v9
+  824196EC  13E048C7             lvx128 v63,0,r9
   824196F0  38A1FFF0             subi r5,r1,0x10
+  824196F4  13E341C7             stvx128 v63,r3,r8
+  824196F8  38C000D0             li r6,0xd0
+  824196FC  C0CB0080             lfs f6,0x80(r11)
+  82419700  388000E0             li r4,0xe0
+  82419704  C0AB0084             lfs f5,0x84(r11)
+  82419708  C0EB007C             lfs f7,0x7c(r11)
+  8241970C  FC403850             fneg f2,f7
+  82419710  FC802850             fneg f4,f5
+  82419714  D001FFFC             stfs f0,-0x4(r1)
+  82419718  FC603050             fneg f3,f6
+  8241971C  D041FFF0             stfs f2,-0x10(r1)
+  82419720  D061FFF4             stfs f3,-0xc(r1)
+  82419724  D081FFF8             stfs f4,-0x8(r1)
+  82419728  13C038C7             lvx128 v62,0,r7
+  8241972C  13C331C7             stvx128 v62,r3,r6
+  82419730  C02B008C             lfs f1,0x8c(r11)
+  82419734  C1AB0090             lfs f13,0x90(r11)
+  82419738  C18B0088             lfs f12,0x88(r11)
+  8241973C  D181FFF0             stfs f12,-0x10(r1)
+  82419740  D001FFFC             stfs f0,-0x4(r1)
+  82419744  D021FFF4             stfs f1,-0xc(r1)
+  82419748  D1A1FFF8             stfs f13,-0x8(r1)
+  8241974C  13A028C7             lvx128 v61,0,r5
+  82419750  13A321C7             stvx128 v61,r3,r4
+  82419754  4E800020             blr
 
 ; 82419758  FXIR_DrawElement  (EffectsCore/fx_draw_elem.cpp:388)
   82419758  7D8802A6             mfspr r12,LR

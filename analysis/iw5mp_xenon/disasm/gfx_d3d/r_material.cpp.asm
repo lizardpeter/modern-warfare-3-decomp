@@ -1082,7 +1082,7 @@ LAB_82754d48:
   82754D80  906A0818             stw r3,0x818(r10)
   82754D84  4E800020             blr
 
-; 82754F70  std::_Push_heap<MaterialMemory_*,int,MaterialMemory,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2455)
+; 82754F70  _Push_heap<MaterialMemory_*,int,MaterialMemory,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2455)
   82754F70  7D8802A6             mfspr r12,LR
   82754F74  481C1739             bl 0x829166ac
   82754F78  9421FF70             stwu r1,-0x90(r1)
@@ -1128,7 +1128,7 @@ LAB_82754ff8:
   82755010  38210090             addi r1,r1,0x90
   82755014  481C16E8             b 0x829166fc
 
-; 82755018  std::_Adjust_heap<MaterialMemory_*,int,MaterialMemory,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2565)
+; 82755018  _Adjust_heap<MaterialMemory_*,int,MaterialMemory,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2565)
   82755018  7D8802A6             mfspr r12,LR
   8275501C  481C1691             bl 0x829166ac
   82755020  9421FF70             stwu r1,-0x90(r1)
@@ -1217,7 +1217,7 @@ LAB_8275513c:
   82755154  38210090             addi r1,r1,0x90
   82755158  481C15A4             b 0x829166fc
 
-; 82755160  std::_Make_heap<MaterialMemory_*,int,MaterialMemory,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2658)
+; 82755160  _Make_heap<MaterialMemory_*,int,MaterialMemory,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2658)
   82755160  7D8802A6             mfspr r12,LR
   82755164  481C1545             bl 0x829166a8
   82755168  9421FF60             stwu r1,-0xa0(r1)
@@ -1290,7 +1290,7 @@ LAB_8275525c:
   8275525C  382100A0             addi r1,r1,0xa0
   82755260  481C1498             b 0x829166f8
 
-; 82755780  std::_Sort_heap<MaterialMemory_*,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2700)
+; 82755780  _Sort_heap<MaterialMemory_*,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2700)
   82755780  7D8802A6             mfspr r12,LR
   82755784  481C0F39             bl 0x829166bc
   82755788  9421FF80             stwu r1,-0x80(r1)
@@ -1325,7 +1325,7 @@ LAB_827557f4:
   827557F4  38210080             addi r1,r1,0x80
   827557F8  481C0F14             b 0x8291670c
 
-; 827553D0  std::_Insertion_sort1<MaterialMemory_*,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&),MaterialMemory>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3650)
+; 827553D0  _Insertion_sort1<MaterialMemory_*,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&),MaterialMemory>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3650)
   827553D0  7D8802A6             mfspr r12,LR
   827553D4  481C12D9             bl 0x829166ac
   827553D8  9421FF60             stwu r1,-0xa0(r1)
@@ -1399,7 +1399,7 @@ LAB_827554c8:
   827554C8  382100A0             addi r1,r1,0xa0
   827554CC  481C1230             b 0x829166fc
 
-; 82755268  std::_Med3<MaterialMemory_*,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3683)
+; 82755268  _Med3<MaterialMemory_*,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3683)
   82755268  7D8802A6             mfspr r12,LR
   8275526C  481C144D             bl 0x829166b8
   82755270  9421FF80             stwu r1,-0x80(r1)
@@ -1452,7 +1452,7 @@ LAB_82755320:
   82755320  38210080             addi r1,r1,0x80
   82755324  481C13E4             b 0x82916708
 
-; 82755328  std::_Median<MaterialMemory_*,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3695)
+; 82755328  _Median<MaterialMemory_*,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3695)
   82755328  7D8802A6             mfspr r12,LR
   8275532C  481C1385             bl 0x829166b0
   82755330  9421FF70             stwu r1,-0x90(r1)
@@ -1497,7 +1497,7 @@ LAB_827553bc:
   827553C8  38210090             addi r1,r1,0x90
   827553CC  481C1334             b 0x82916700
 
-; 827554D0  std::_Unguarded_partition<MaterialMemory_*,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3712)
+; 827554D0  _Unguarded_partition<MaterialMemory_*,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3712)
   827554D0  7D8802A6             mfspr r12,LR
   827554D4  481C11D1             bl 0x829166a4
   827554D8  9421FF60             stwu r1,-0xa0(r1)
@@ -1687,7 +1687,7 @@ LAB_82755768:
   82755774  382100A0             addi r1,r1,0xa0
   82755778  481C0F7C             b 0x829166f4
 
-; 82755800  std::_Sort<MaterialMemory_*,int,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3771)
+; 82755800  _Sort<MaterialMemory_*,int,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3771)
   82755800  7D8802A6             mfspr r12,LR
   82755804  481C0EAD             bl 0x829166b0
   82755808  9421FF70             stwu r1,-0x90(r1)

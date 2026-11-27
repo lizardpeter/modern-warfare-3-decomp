@@ -2,82 +2,84 @@
 
 // 8265C7C8  inflate_flush  (zlib/infutil.c:29)
 
-void inflate_flush(undefined8 param_1,int param_2,ulonglong param_3)
+int inflate_flush(inflate_blocks_state *param_1,z_stream_s *param_2,int param_3)
 
 {
-  void *pvVar1;
+  uint uVar1;
   uint uVar2;
-  size_t sVar3;
-  int iVar4;
-  undefined4 uVar5;
-  ulonglong uVar6;
-  int iVar7;
-  ulonglong uVar8;
-  void *pvVar9;
+  int iVar3;
+  undefined4 uVar4;
+  int iVar5;
+  longlong lVar6;
+  ulonglong uVar7;
+  int iVar8;
+  ulonglong uVar9;
   ulonglong uVar10;
-  ulonglong uVar11;
+  int iVar11;
+  ulonglong uVar12;
+  ulonglong uVar13;
   
-  iVar4 = __savegprlr_26();
-  pvVar9 = *(void **)(iVar4 + 0x30);
-  uVar10 = ZEXT48(pvVar9);
-  uVar6 = (ulonglong)*(uint *)(iVar4 + 0x34);
-  pvVar1 = *(void **)(param_2 + 0xc);
-  uVar8 = ZEXT48(pvVar1);
-  if (uVar6 < uVar10) {
-    uVar6 = (ulonglong)*(uint *)(iVar4 + 0x2c);
+  uVar9 = (ulonglong)param_3;
+  lVar6 = (longlong)(int)param_2;
+  iVar3 = __savegprlr_26(param_1,lVar6,uVar9);
+  uVar12 = (ulonglong)*(uint *)(iVar3 + 0x30);
+  uVar7 = (ulonglong)*(uint *)(iVar3 + 0x34);
+  iVar5 = (int)lVar6;
+  uVar10 = (ulonglong)*(uint *)(iVar5 + 0xc);
+  if (uVar7 < uVar12) {
+    uVar7 = (ulonglong)*(uint *)(iVar3 + 0x2c);
   }
-  uVar2 = *(uint *)(param_2 + 0x10);
-  uVar11 = uVar6 - uVar10;
-  if ((ulonglong)uVar2 < (uVar6 - uVar10 & 0xffffffff)) {
-    uVar11 = (ulonglong)uVar2;
+  uVar1 = *(uint *)(iVar5 + 0x10);
+  uVar13 = uVar7 - uVar12;
+  if ((ulonglong)uVar1 < (uVar7 - uVar12 & 0xffffffff)) {
+    uVar13 = (ulonglong)uVar1;
   }
-  if ((uVar11 & 0xffffffff) != 0) {
-    param_3 = -(ulonglong)(param_3 != 0xfffffffffffffffb) & param_3;
+  if ((uVar13 & 0xffffffff) != 0) {
+    uVar9 = -(ulonglong)(uVar9 != 0xfffffffffffffffb) & uVar9;
   }
-  sVar3 = (size_t)uVar11;
-  *(uint *)(param_2 + 0x10) = uVar2 - sVar3;
-  *(size_t *)(param_2 + 0x14) = *(int *)(param_2 + 0x14) + sVar3;
-  if (*(code **)(iVar4 + 0x38) != (code *)0x0) {
-    uVar5 = (**(code **)(iVar4 + 0x38))(*(undefined4 *)(iVar4 + 0x3c),uVar10,uVar11);
-    *(undefined4 *)(iVar4 + 0x3c) = uVar5;
-    *(undefined4 *)(param_2 + 0x30) = uVar5;
+  *(uint *)(iVar5 + 0x10) = uVar1 - (int)uVar13;
+  *(int *)(iVar5 + 0x14) = *(int *)(iVar5 + 0x14) + (int)uVar13;
+  if (*(code **)(iVar3 + 0x38) != (code *)0x0) {
+    uVar4 = (**(code **)(iVar3 + 0x38))(*(undefined4 *)(iVar3 + 0x3c),uVar12,uVar13);
+    *(undefined4 *)(iVar3 + 0x3c) = uVar4;
+    *(undefined4 *)(iVar5 + 0x30) = uVar4;
   }
-  if (uVar8 != 0) {
-    memcpy(pvVar1,pvVar9,sVar3);
-    uVar8 = uVar11 + uVar8;
+  if (uVar10 != 0) {
+    memcpy();
+    uVar10 = uVar13 + uVar10;
   }
-  pvVar9 = (void *)uVar8;
-  iVar7 = (int)(uVar11 + uVar10);
-  if ((uVar11 + uVar10 & 0xffffffff) == (ulonglong)*(uint *)(iVar4 + 0x2c)) {
-    pvVar1 = *(void **)(iVar4 + 0x28);
-    if (*(uint *)(iVar4 + 0x34) == *(uint *)(iVar4 + 0x2c)) {
-      *(void **)(iVar4 + 0x34) = pvVar1;
+  iVar11 = (int)uVar10;
+  iVar8 = (int)(uVar13 + uVar12);
+  if ((uVar13 + uVar12 & 0xffffffff) == (ulonglong)*(uint *)(iVar3 + 0x2c)) {
+    uVar1 = *(uint *)(iVar3 + 0x28);
+    if (*(uint *)(iVar3 + 0x34) == *(uint *)(iVar3 + 0x2c)) {
+      *(uint *)(iVar3 + 0x34) = uVar1;
     }
-    uVar2 = *(uint *)(param_2 + 0x10);
-    uVar6 = (ulonglong)*(uint *)(iVar4 + 0x34) - ZEXT48(pvVar1);
-    if ((ulonglong)uVar2 < (uVar6 & 0xffffffff)) {
-      uVar6 = (ulonglong)uVar2;
+    uVar2 = *(uint *)(iVar5 + 0x10);
+    uVar7 = (ulonglong)*(uint *)(iVar3 + 0x34) - (ulonglong)uVar1;
+    if ((ulonglong)uVar2 < (uVar7 & 0xffffffff)) {
+      uVar7 = (ulonglong)uVar2;
     }
-    if ((uVar6 & 0xffffffff) != 0) {
-      param_3 = -(ulonglong)(param_3 != 0xfffffffffffffffb) & param_3;
+    if ((uVar7 & 0xffffffff) != 0) {
+      uVar9 = -(ulonglong)(uVar9 != 0xfffffffffffffffb) & uVar9;
     }
-    sVar3 = (size_t)uVar6;
-    *(uint *)(param_2 + 0x10) = uVar2 - sVar3;
-    *(size_t *)(param_2 + 0x14) = *(int *)(param_2 + 0x14) + sVar3;
-    if (*(code **)(iVar4 + 0x38) != (code *)0x0) {
-      uVar5 = (**(code **)(iVar4 + 0x38))(*(undefined4 *)(iVar4 + 0x3c),ZEXT48(pvVar1),uVar6);
-      *(undefined4 *)(iVar4 + 0x3c) = uVar5;
-      *(undefined4 *)(param_2 + 0x30) = uVar5;
+    iVar8 = (int)uVar7;
+    *(uint *)(iVar5 + 0x10) = uVar2 - iVar8;
+    *(int *)(iVar5 + 0x14) = *(int *)(iVar5 + 0x14) + iVar8;
+    if (*(code **)(iVar3 + 0x38) != (code *)0x0) {
+      uVar4 = (**(code **)(iVar3 + 0x38))(*(undefined4 *)(iVar3 + 0x3c),(ulonglong)uVar1,uVar7);
+      *(undefined4 *)(iVar3 + 0x3c) = uVar4;
+      *(undefined4 *)(iVar5 + 0x30) = uVar4;
     }
-    if ((uVar8 & 0xffffffff) != 0) {
-      memcpy(pvVar9,pvVar1,sVar3);
-      pvVar9 = (void *)(sVar3 + (int)pvVar9);
+    if ((uVar10 & 0xffffffff) != 0) {
+      memcpy();
+      iVar11 = iVar8 + iVar11;
     }
-    iVar7 = sVar3 + (int)pvVar1;
+    iVar8 = iVar8 + uVar1;
   }
-  *(void **)(param_2 + 0xc) = pvVar9;
-  *(int *)(iVar4 + 0x30) = iVar7;
-  __restgprlr_26(param_3);
-  return;
+  *(int *)(iVar5 + 0xc) = iVar11;
+  *(int *)(iVar3 + 0x30) = iVar8;
+  iVar5 = __restgprlr_26(uVar9);
+  return iVar5;
 }
 

@@ -2,20 +2,20 @@
 
 // 827FBB18  PrivateMapRotation_ResetWeights  (bgame/bg_maprotation.cpp:12)
 
-void PrivateMapRotation_ResetWeights(uint *param_1)
+void PrivateMapRotation_ResetWeights(LobbyMapRotation *param_1)
 
 {
-  uint *puVar1;
+  LobbyMapRotation *pLVar1;
   uint uVar2;
   
   uVar2 = 0;
-  puVar1 = param_1;
-  if (*param_1 != 0) {
+  pLVar1 = param_1;
+  if (param_1->entryCount != 0) {
     do {
       uVar2 = uVar2 + 1;
-      puVar1[5] = 1;
-      puVar1 = puVar1 + 5;
-    } while (uVar2 < *param_1);
+      pLVar1 = (LobbyMapRotation *)&pLVar1->entry[0].weight;
+      *(int *)pLVar1 = 1;
+    } while (uVar2 < param_1->entryCount);
     return;
   }
   return;
@@ -24,7 +24,7 @@ void PrivateMapRotation_ResetWeights(uint *param_1)
 
 // 827FBB48  PrivateMapRotation_CalculateTotalWeight  (bgame/bg_maprotation.cpp:20)
 
-void PrivateMapRotation_CalculateTotalWeight(void)
+int PrivateMapRotation_CalculateTotalWeight(LobbyMapRotation *param_1)
 
 {
   uint *puVar1;
@@ -34,13 +34,15 @@ void PrivateMapRotation_CalculateTotalWeight(void)
   uint *puVar5;
   ulonglong uVar6;
   
-  puVar1 = (uint *)__savegprlr_26();
+  puVar1 = (uint *)__savegprlr_26(param_1);
   do {
     if (puVar1 == (uint *)0x0) {
-      MyAssertHandler(0xffffffff821e2120,0x17,0,0xffffffff82000f98,0xffffffff821e2114);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_maprotation.cpp",
+                      0x17,0,"%s");
     }
     if (*puVar1 == 0) {
-      MyAssertHandler(0xffffffff821e2120,0x18,0,0xffffffff82000f98,0xffffffff821e2164);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_maprotation.cpp",
+                      0x18,0,"%s");
     }
     uVar3 = (ulonglong)*puVar1;
     iVar2 = 0;
@@ -57,8 +59,8 @@ void PrivateMapRotation_CalculateTotalWeight(void)
         uVar6 = uVar6 - 1;
       } while (uVar6 != 0);
       if (iVar2 != 0) {
-        __restgprlr_26();
-        return;
+        iVar2 = __restgprlr_26();
+        return iVar2;
       }
     }
     uVar4 = 0;
@@ -76,72 +78,80 @@ void PrivateMapRotation_CalculateTotalWeight(void)
 
 // 827FBC40  PrivateMapRotation_GetIndexByWeight  (bgame/bg_maprotation.cpp:48)
 
-void PrivateMapRotation_GetIndexByWeight(undefined8 param_1,ulonglong param_2)
+int PrivateMapRotation_GetIndexByWeight(LobbyMapRotation *param_1,int param_2)
 
 {
   uint *puVar1;
-  uint *puVar5;
+  LobbyMapRotation *pLVar3;
+  uint uVar4;
   ulonglong uVar2;
-  undefined8 uVar3;
-  ulonglong uVar4;
+  int iVar5;
   longlong lVar6;
+  ulonglong uVar7;
   
-  puVar5 = (uint *)__savegprlr_28();
-  if (puVar5 == (uint *)0x0) {
-    MyAssertHandler(0xffffffff821e2120,0x32,0,0xffffffff82000f98,0xffffffff821e2114);
+  uVar7 = (ulonglong)param_2;
+  pLVar3 = (LobbyMapRotation *)__savegprlr_28(param_1);
+  if (pLVar3 == (LobbyMapRotation *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_maprotation.cpp",0x32
+                    ,0,"%s");
   }
-  if (*puVar5 == 0) {
-    MyAssertHandler(0xffffffff821e2120,0x33,0,0xffffffff82000f98,0xffffffff821e2164);
+  if (pLVar3->entryCount == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_maprotation.cpp",0x33
+                    ,0,"%s");
   }
-  uVar2 = PrivateMapRotation_CalculateTotalWeight(puVar5);
-  if ((uVar2 & 0xffffffff) <= (param_2 & 0xffffffff)) {
-    uVar3 = PrivateMapRotation_CalculateTotalWeight(puVar5);
-    MyAssertHandler(0xffffffff821e2120,0x34,0,0xffffffff821e2180,param_2,uVar3);
+  uVar4 = PrivateMapRotation_CalculateTotalWeight(pLVar3);
+  if ((ulonglong)uVar4 <= (uVar7 & 0xffffffff)) {
+    PrivateMapRotation_CalculateTotalWeight(pLVar3);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_maprotation.cpp",0x34
+                    ,0,
+                    "weight doesn\'t index PrivateMapRotation_CalculateTotalWeight( mapRot )\n\t%i not in [0, %i)"
+                   );
   }
-  uVar4 = (ulonglong)*puVar5;
-  lVar6 = param_2 + 1;
-  uVar2 = 0;
-  if (uVar4 != 0) {
-    puVar1 = puVar5 + 0x51;
-    uVar2 = 0;
+  uVar2 = (ulonglong)pLVar3->entryCount;
+  lVar6 = uVar7 + 1;
+  uVar7 = 0;
+  if (uVar2 != 0) {
+    puVar1 = &pLVar3->lastPlayedIndex;
+    uVar7 = 0;
     while( true ) {
-      puVar5 = puVar5 + 5;
-      if ((((uVar2 & 0xffffffff) != (ulonglong)*puVar1) || (uVar4 < 2)) &&
-         (lVar6 = lVar6 - (ulonglong)*puVar5, lVar6 < 1)) break;
-      uVar2 = uVar2 + 1;
-      if (uVar4 <= (uVar2 & 0xffffffff)) {
-        __restgprlr_28();
-        return;
+      pLVar3 = (LobbyMapRotation *)&pLVar3->entry[0].weight;
+      if ((((uVar7 & 0xffffffff) != (ulonglong)*puVar1) || (uVar2 < 2)) &&
+         (lVar6 = lVar6 - (ulonglong)*(uint *)pLVar3, lVar6 < 1)) break;
+      uVar7 = uVar7 + 1;
+      if (uVar2 <= (uVar7 & 0xffffffff)) {
+        iVar5 = __restgprlr_28();
+        return iVar5;
       }
     }
   }
-  __restgprlr_28(uVar2);
-  return;
+  iVar5 = __restgprlr_28(uVar7);
+  return iVar5;
 }
 
 
 // 827FBD48  PrivateMapRotation_SetInitialMapSelection  (bgame/bg_maprotation.cpp:68)
 
-void PrivateMapRotation_SetInitialMapSelection(uint *param_1,uint param_2)
+void PrivateMapRotation_SetInitialMapSelection(LobbyMapRotation *param_1,uint param_2)
 
 {
-  uint *puVar1;
+  LobbyMapRotation *pLVar1;
   uint uVar2;
   
-  if (param_1 == (uint *)0x0) {
-    MyAssertHandler(0xffffffff821e2120,0x45,0,0xffffffff82000f98,0xffffffff821e2114);
+  if (param_1 == (LobbyMapRotation *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_maprotation.cpp",0x45
+                    ,0,"%s");
   }
-  param_1[0x52] = param_2;
-  param_1[0x51] = 0xffff;
-  Dvar_SetString(DAT_83f71e10,param_1 + param_2 * 5 + 1);
+  param_1->nextIndex = param_2;
+  param_1->lastPlayedIndex = 0xffff;
+  Dvar_SetString(ui_mapname,param_1->entry[param_2].name);
   uVar2 = 0;
-  puVar1 = param_1;
-  if (*param_1 != 0) {
+  pLVar1 = param_1;
+  if (param_1->entryCount != 0) {
     do {
       uVar2 = uVar2 + 1;
-      puVar1[5] = 1;
-      puVar1 = puVar1 + 5;
-    } while (uVar2 < *param_1);
+      pLVar1 = (LobbyMapRotation *)&pLVar1->entry[0].weight;
+      *(int *)pLVar1 = 1;
+    } while (uVar2 < param_1->entryCount);
   }
   return;
 }
@@ -149,58 +159,65 @@ void PrivateMapRotation_SetInitialMapSelection(uint *param_1,uint param_2)
 
 // 827FBE08  PrivateMapRotation_GetNextMapSelection  (bgame/bg_maprotation.cpp:79)
 
-void PrivateMapRotation_GetNextMapSelection(void)
+char * PrivateMapRotation_GetNextMapSelection(LobbyMapRotation *param_1)
 
 {
-  uint *puVar2;
-  undefined8 uVar1;
-  uint uVar3;
+  LobbyMapRotation *pLVar1;
+  char *pcVar2;
+  int iVar3;
+  uint uVar4;
   
-  puVar2 = (uint *)__savegprlr_28();
-  if (puVar2 == (uint *)0x0) {
-    MyAssertHandler(0xffffffff821e2120,0x50,0,0xffffffff82000f98,0xffffffff821e2114);
+  pLVar1 = (LobbyMapRotation *)__savegprlr_28(param_1);
+  if (pLVar1 == (LobbyMapRotation *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_maprotation.cpp",0x50
+                    ,0,"%s");
   }
-  uVar3 = *puVar2;
-  if (uVar3 == 0) {
-    __restgprlr_28(0);
-    return;
+  uVar4 = pLVar1->entryCount;
+  if (uVar4 == 0) {
+    pcVar2 = (char *)__restgprlr_28(0);
+    return pcVar2;
   }
-  if ((puVar2[0x52] == 0xffff) || (uVar3 <= puVar2[0x52])) {
-    if (uVar3 == 0) {
-      MyAssertHandler(0xffffffff821e2120,0x56,0,0xffffffff82000f98,0xffffffff821e2164);
+  if ((pLVar1->nextIndex == 0xffff) || (uVar4 <= pLVar1->nextIndex)) {
+    if (uVar4 == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_maprotation.cpp",
+                      0x56,0,"%s");
     }
-    uVar1 = PrivateMapRotation_CalculateTotalWeight(puVar2);
-    if ((int)uVar1 < 1) {
-      MyAssertHandler(0xffffffff821e2120,0x58,0,0xffffffff82000f98,0xffffffff821e2228);
+    iVar3 = PrivateMapRotation_CalculateTotalWeight(pLVar1);
+    if (iVar3 < 1) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_maprotation.cpp",
+                      0x58,0,"%s");
     }
-    uVar1 = irand(0,uVar1);
-    uVar3 = PrivateMapRotation_GetIndexByWeight(puVar2,uVar1);
-    puVar2[0x52] = uVar3;
+    iVar3 = irand(0,iVar3);
+    uVar4 = PrivateMapRotation_GetIndexByWeight(pLVar1,iVar3);
+    pLVar1->nextIndex = uVar4;
   }
-  if (*puVar2 <= puVar2[0x52]) {
-    MyAssertHandler(0xffffffff821e2120,0x5d,0,0xffffffff821e21e0);
+  if (pLVar1->entryCount <= pLVar1->nextIndex) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_maprotation.cpp",0x5d
+                    ,0,"mapRot->nextIndex doesn\'t index mapRot->entryCount\n\t%i not in [0, %i)");
   }
-  Dvar_SetString(DAT_83f71e10,puVar2 + puVar2[0x52] * 5 + 1);
-  __restgprlr_28(puVar2 + puVar2[0x52] * 5 + 1);
-  return;
+  Dvar_SetString(ui_mapname,pLVar1->entry[pLVar1->nextIndex].name);
+  pcVar2 = (char *)__restgprlr_28(pLVar1->entry + pLVar1->nextIndex);
+  return pcVar2;
 }
 
 
 // 827FBF58  PrivateMapRotation_ClearNextMapSelection  (bgame/bg_maprotation.cpp:101)
 
-void PrivateMapRotation_ClearNextMapSelection(void)
+void PrivateMapRotation_ClearNextMapSelection(LobbyMapRotation *param_1)
 
 {
   int iVar1;
   int iVar2;
   
-  iVar2 = __savegprlr_29();
+  iVar2 = __savegprlr_29(param_1);
   if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff821e2120,0x66,0,0xffffffff82000f98,0xffffffff821e2114);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_maprotation.cpp",0x66
+                    ,0,"%s");
   }
   if (*(int *)(iVar2 + 0x148) != 0xffff) {
     if (*(int *)((*(int *)(iVar2 + 0x148) + 1) * 0x14 + iVar2) < 1) {
-      MyAssertHandler(0xffffffff821e2120,0x6a,0,0xffffffff82000f98,0xffffffff821e2238);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_maprotation.cpp",
+                      0x6a,0,"%s");
     }
     iVar1 = (*(int *)(iVar2 + 0x148) + 1) * 0x14;
     *(int *)(iVar1 + iVar2) = *(int *)(iVar1 + iVar2) + -1;
@@ -214,7 +231,7 @@ void PrivateMapRotation_ClearNextMapSelection(void)
 
 // 827FC020  PrivateMapRotation_AddNewEntry  (bgame/bg_maprotation.cpp:114)
 
-void PrivateMapRotation_AddNewEntry(undefined8 param_1,undefined8 param_2)
+int PrivateMapRotation_AddNewEntry(LobbyMapRotation *param_1,char *param_2)
 
 {
   uint uVar1;
@@ -224,18 +241,19 @@ void PrivateMapRotation_AddNewEntry(undefined8 param_1,undefined8 param_2)
   uint uVar5;
   ulonglong uVar6;
   
-  puVar2 = (uint *)__savegprlr_27();
+  puVar2 = (uint *)__savegprlr_27(param_1);
   if (puVar2 == (uint *)0x0) {
-    MyAssertHandler(0xffffffff821e2120,0x75,0,0xffffffff82000f98,0xffffffff82136374);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_maprotation.cpp",0x75
+                    ,0,"%s");
   }
   uVar6 = 0;
   if (*puVar2 != 0) {
     puVar4 = puVar2 + 1;
     do {
-      iVar3 = I_strncmp(param_2,puVar4,0x10);
+      iVar3 = I_strncmp(param_2,(char *)puVar4,0x10);
       if (iVar3 == 0) {
-        __restgprlr_27(uVar6);
-        return;
+        iVar3 = __restgprlr_27(uVar6);
+        return iVar3;
       }
       uVar6 = uVar6 + 1;
       puVar4 = puVar4 + 5;
@@ -243,14 +261,15 @@ void PrivateMapRotation_AddNewEntry(undefined8 param_1,undefined8 param_2)
   }
   uVar1 = *puVar2;
   if (uVar1 < 0x10) {
-    I_strncpyz(puVar2 + uVar1 * 5 + 1,param_2,0x10);
-    puVar2[uVar1 * 5 + 5] = 1;
+    puVar4 = puVar2 + uVar1 * 5;
+    I_strncpyz((char *)(puVar4 + 1),param_2,0x10);
+    puVar4[5] = 1;
     uVar5 = *puVar2;
     *puVar2 = uVar5 + 1;
     if (uVar5 + 1 == 1) {
       puVar2[0x52] = uVar1;
       puVar2[0x51] = 0xffff;
-      Dvar_SetString(DAT_83f71e10,puVar2 + uVar1 * 5 + 1);
+      Dvar_SetString(ui_mapname,(char *)(puVar4 + 1));
       uVar5 = 0;
       puVar4 = puVar2;
       if (*puVar2 != 0) {
@@ -261,106 +280,96 @@ void PrivateMapRotation_AddNewEntry(undefined8 param_1,undefined8 param_2)
         } while (uVar5 < *puVar2);
       }
     }
-    __restgprlr_27(uVar1);
-    return;
+    iVar3 = __restgprlr_27(uVar1);
+    return iVar3;
   }
-  __restgprlr_27(0xffff);
-  return;
+  iVar3 = __restgprlr_27(0xffff);
+  return iVar3;
 }
 
 
 // 827FC160  PrivateMapRotation_RemoveEntry  (bgame/bg_maprotation.cpp:143)
 
-void PrivateMapRotation_RemoveEntry(undefined8 param_1,undefined8 param_2)
+void PrivateMapRotation_RemoveEntry(LobbyMapRotation *param_1,char *param_2)
 
 {
   uint uVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
-  uint *puVar4;
-  void *pvVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  longlong lVar8;
-  ulonglong uVar9;
+  LobbyMapRotation *pLVar2;
+  int iVar3;
+  <unnamed_type_entry> *p<Var4;
+  uint uVar5;
   
-  uVar2 = __savegprlr_23();
-  uVar3 = uVar2;
-  if ((uVar2 & 0xffffffff) == 0) {
-    uVar3 = MyAssertHandler(0xffffffff821e2120,0x92,0,0xffffffff82000f98,0xffffffff82136374);
+  pLVar2 = (LobbyMapRotation *)__savegprlr_23(param_1);
+  if (pLVar2 == (LobbyMapRotation *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_maprotation.cpp",0x92
+                    ,0,"%s");
   }
-  puVar4 = (uint *)uVar2;
-  uVar9 = 0;
-  if (*puVar4 != 0) {
-    lVar8 = uVar2 + 4;
+  uVar5 = 0;
+  if (pLVar2->entryCount != 0) {
+    p<Var4 = pLVar2->entry;
     do {
-      uVar3 = I_strncmp(param_2,lVar8,0x10);
-      if ((int)uVar3 == 0) break;
-      uVar9 = uVar9 + 1;
-      lVar8 = lVar8 + 0x14;
-    } while ((uVar9 & 0xffffffff) < (ulonglong)*puVar4);
+      iVar3 = I_strncmp(param_2,p<Var4->name,0x10);
+      if (iVar3 == 0) break;
+      uVar5 = uVar5 + 1;
+      p<Var4 = p<Var4 + 1;
+    } while (uVar5 < pLVar2->entryCount);
   }
-  if ((uVar9 & 0xffffffff) == (ulonglong)*puVar4) goto LAB_827fc378;
-  uVar6 = (ulonglong)*puVar4 - 1;
-  *puVar4 = (uint)uVar6;
-  if ((uVar6 & 0xffffffff) != (uVar9 & 0xffffffff)) {
-    uVar3 = (uVar6 - uVar9) + (uVar6 - uVar9 & 0x3fffffff) * 4;
-    if ((int)((uint)((uVar3 & 0xffffffff) << 2) | (uint)uVar3 >> 0x1e) < 0) {
-      MyAssertHandler(0xffffffff821e2120,0xa2,0,0xffffffff820011f4,0xffffffff821e2520,
-                      0xffffffff821e2578);
+  uVar1 = pLVar2->entryCount;
+  if (uVar5 == uVar1) goto LAB_827fc378;
+  pLVar2->entryCount = uVar1 - 1;
+  if (uVar1 - 1 != uVar5) {
+    iVar3 = (uVar1 - 1) - uVar5;
+    if ((int)(iVar3 * 0x14 | (uint)(iVar3 * 5) >> 0x1e) < 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_maprotation.cpp",
+                      0xa2,0,"%s\n\t%s");
     }
-    uVar3 = uVar9 + (uVar9 & 0x3fffffff) * 4 & 0x3fffffff;
-    lVar8 = uVar3 * 4 + uVar2;
-    uVar6 = lVar8 + 0x18;
-    if ((uVar6 & 0xffffffff) < (uVar2 + 4 & 0xffffffff)) {
+    uVar1 = uVar5 * 5 & 0x3fffffff;
+    if (pLVar2->entry + uVar5 + 1 < pLVar2->entry) {
 LAB_827fc298:
-      MyAssertHandler(0xffffffff821e2120,0xa2,0,0xffffffff820011f4,0xffffffff821e2398,
-                      0xffffffff821e24d0);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_maprotation.cpp",
+                      0xa2,0,"%s\n\t%s");
     }
-    else if ((uVar2 + 0x144 & 0xffffffff) <
-             ((*puVar4 + uVar9 + (*puVar4 + uVar9 & 0x3fffffff) * 4 & 0x3fffffff) * 4 + uVar3 * -4 +
-              uVar2 + 0x18 & 0xffffffff)) goto LAB_827fc298;
-    uVar7 = lVar8 + 4;
-    if ((uVar7 & 0xffffffff) < (uVar2 + 4 & 0xffffffff)) {
+    else if (&pLVar2->lastPlayedIndex <
+             (undefined1 *)((int)pLVar2 + (pLVar2->entryCount + uVar5) * 0x14 + uVar1 * -4 + 0x18))
+    goto LAB_827fc298;
+    if (pLVar2->entry + uVar5 < pLVar2->entry) {
 LAB_827fc2f0:
-      MyAssertHandler(0xffffffff821e2120,0xa2,0,0xffffffff820011f4,0xffffffff821e2268,
-                      0xffffffff821e24d0);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_maprotation.cpp",
+                      0xa2,0,"%s\n\t%s");
     }
-    else if ((uVar2 + 0x144 & 0xffffffff) <
-             ((*puVar4 + uVar9 + (*puVar4 + uVar9 & 0x3fffffff) * 4 & 0x3fffffff) * 4 + uVar3 * -4 +
-              uVar2 + 4 & 0xffffffff)) goto LAB_827fc2f0;
-    pvVar5 = memmove((void *)uVar7,(void *)uVar6,
-                     (size_t)(((*puVar4 - uVar9) + (*puVar4 - uVar9 & 0x3fffffff) * 4 & 0xffffffff)
-                             << 2));
-    uVar3 = (ulonglong)(int)pvVar5;
+    else if (&pLVar2->lastPlayedIndex <
+             (undefined1 *)((int)pLVar2 + (pLVar2->entryCount + uVar5) * 0x14 + uVar1 * -4 + 4))
+    goto LAB_827fc2f0;
+    memmove();
   }
-  uVar1 = puVar4[0x52];
-  if ((uVar9 & 0xffffffff) < (ulonglong)uVar1) {
-    puVar4[0x52] = uVar1 - 1;
+  uVar1 = pLVar2->nextIndex;
+  if (uVar5 < uVar1) {
+    pLVar2->nextIndex = uVar1 - 1;
   }
-  else if (((ulonglong)uVar1 == (uVar9 & 0xffffffff)) && (*puVar4 != 0)) {
-    uVar3 = PrivateMapRotation_GetNextMapSelection(uVar2);
+  else if ((uVar1 == uVar5) && (pLVar2->entryCount != 0)) {
+    PrivateMapRotation_GetNextMapSelection(pLVar2);
   }
-  if ((uVar9 & 0xffffffff) <= (ulonglong)puVar4[0x51]) {
-    puVar4[0x51] = 0xffff;
+  if (uVar5 <= pLVar2->lastPlayedIndex) {
+    pLVar2->lastPlayedIndex = 0xffff;
   }
 LAB_827fc378:
-  __restgprlr_23(uVar3);
+  __restgprlr_23();
   return;
 }
 
 
 // 827FC380  PrivateMapRotation_ClearAll  (bgame/bg_maprotation.cpp:178)
 
-void PrivateMapRotation_ClearAll(undefined4 *param_1)
+void PrivateMapRotation_ClearAll(LobbyMapRotation *param_1)
 
 {
-  if (param_1 == (undefined4 *)0x0) {
-    MyAssertHandler(0xffffffff821e2120,0xb3,0,0xffffffff82000f98,0xffffffff82136374);
+  if (param_1 == (LobbyMapRotation *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_maprotation.cpp",0xb3
+                    ,0,"%s");
   }
-  *param_1 = 0;
-  param_1[0x52] = 0xffff;
-  param_1[0x51] = 0xffff;
+  param_1->entryCount = 0;
+  param_1->nextIndex = 0xffff;
+  param_1->lastPlayedIndex = 0xffff;
   return;
 }
 

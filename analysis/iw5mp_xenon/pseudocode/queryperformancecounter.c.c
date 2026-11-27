@@ -2,16 +2,16 @@
 
 // 828AAD38  QueryPerformanceCounter  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/queryperformancecounter.c:44)
 
-BOOL QueryPerformanceCounter(LARGE_INTEGER *lpPerformanceCount)
+int QueryPerformanceCounter(_LARGE_INTEGER *param_1)
 
 {
-  LONGLONG LVar1;
+  ulonglong uVar1;
   
-  LVar1 = (LONGLONG)TBLr;
-  if (((ulonglong)LVar1 & 0xffffffff) == 0) {
-    LVar1 = (LONGLONG)TBLr;
+  uVar1 = TBLr;
+  if ((uVar1 & 0xffffffff) == 0) {
+    uVar1 = TBLr;
   }
-  lpPerformanceCount->QuadPart = LVar1;
+  param_1->QuadPart = uVar1;
   return 1;
 }
 

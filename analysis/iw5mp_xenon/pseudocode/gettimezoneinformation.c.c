@@ -2,54 +2,53 @@
 
 // 8292B810  GetTimeZoneInformation  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/gettimezoneinformation.c:74)
 
-DWORD GetTimeZoneInformation(LPTIME_ZONE_INFORMATION lpTimeZoneInformation)
+ulong GetTimeZoneInformation(_TIME_ZONE_INFORMATION *param_1)
 
 {
-  longlong lVar1;
-  DWORD dwErrCode;
-  DWORD DVar2;
-  char cVar3;
+  ulong uVar1;
+  ulong uVar2;
+  uchar uVar3;
+  longlong lVar4;
+  longlong lVar5;
   int local_40 [2];
-  longlong local_38;
-  longlong local_30;
-  longlong local_28 [2];
+  _LARGE_INTEGER local_38;
+  _LARGE_INTEGER local_30;
+  _LARGE_INTEGER local_28 [2];
   
-  lVar1 = (longlong)(int)lpTimeZoneInformation;
-  DVar2 = 0;
-  dwErrCode = XapipQueryTimeZoneInformation(lVar1,local_40);
-  if (dwErrCode == 0) {
+  uVar2 = 0;
+  uVar1 = XapipQueryTimeZoneInformation(param_1,local_40);
+  if (uVar1 == 0) {
     if (local_40[0] == 0) {
-      lpTimeZoneInformation->StandardBias = 0;
-      memset(&lpTimeZoneInformation->StandardDate,0,0x10);
-      lpTimeZoneInformation->DaylightBias = 0;
-      memset(&lpTimeZoneInformation->DaylightDate,0,0x10);
-      memset(lpTimeZoneInformation->DaylightName,0,0x40);
+      param_1->StandardBias = 0;
+      memset();
+      param_1->DaylightBias = 0;
+      memset();
+      memset();
     }
     KeQuerySystemTime(&local_38);
-    if (((((lpTimeZoneInformation->StandardDate).wMonth != 0) &&
-         ((lpTimeZoneInformation->DaylightDate).wMonth != 0)) &&
-        (cVar3 = RtlpCutoverTimeToSystemTime(lVar1 + 0x44,local_28,&local_38,1), cVar3 != '\0')) &&
-       (cVar3 = RtlpCutoverTimeToSystemTime(lVar1 + 0x98,&local_30,&local_38,1), cVar3 != '\0')) {
-      lVar1 = (longlong)(lpTimeZoneInformation->Bias * 0x3c) * 10000000;
-      local_28[0] = (longlong)(lpTimeZoneInformation->DaylightBias * 0x3c) * 10000000 + lVar1 +
-                    local_28[0];
-      local_30 = (longlong)(lpTimeZoneInformation->StandardBias * 0x3c) * 10000000 + lVar1 +
-                 local_30;
-      if (local_30 < local_28[0]) {
-        if ((local_38 < local_30) || (local_28[0] <= local_38)) {
+    if (((((param_1->StandardDate).wMonth != 0) && ((param_1->DaylightDate).wMonth != 0)) &&
+        (uVar3 = RtlpCutoverTimeToSystemTime(&param_1->StandardDate,local_28,&local_38,'\x01'),
+        uVar3 != '\0')) &&
+       (uVar3 = RtlpCutoverTimeToSystemTime(&param_1->DaylightDate,&local_30,&local_38,'\x01'),
+       uVar3 != '\0')) {
+      lVar5 = (longlong)(param_1->Bias * 0x3c) * 10000000;
+      lVar4 = (longlong)(param_1->DaylightBias * 0x3c) * 10000000 + lVar5 + local_28[0].QuadPart;
+      lVar5 = (longlong)(param_1->StandardBias * 0x3c) * 10000000 + lVar5 + local_30.QuadPart;
+      if (lVar5 < lVar4) {
+        if ((local_38.QuadPart < lVar5) || (lVar4 <= local_38.QuadPart)) {
           return 1;
         }
       }
-      else if ((local_28[0] <= local_38) && (local_38 < local_30)) {
+      else if ((lVar4 <= local_38.QuadPart) && (local_38.QuadPart < lVar5)) {
         return 1;
       }
-      DVar2 = 2;
+      uVar2 = 2;
     }
   }
   else {
-    SetLastError(dwErrCode);
-    DVar2 = 0xffffffff;
+    SetLastError(uVar1);
+    uVar2 = 0xffffffff;
   }
-  return DVar2;
+  return uVar2;
 }
 

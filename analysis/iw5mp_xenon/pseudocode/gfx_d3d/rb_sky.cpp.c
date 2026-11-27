@@ -2,379 +2,96 @@
 
 // 827AB460  TRACK_rb_sky  (gfx_d3d/rb_sky.cpp:29)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void TRACK_rb_sky(void)
 
 {
-  track_static_alloc_internal(0xffffffff8484c750,0x70,0xffffffff821d7ffc,0x12);
+  track_static_alloc_internal(sunFlareArray,0x70,"sunFlareArray",0x12);
   return;
 }
 
 
 // 827AB480  RB_TessSunBillboard  (gfx_d3d/rb_sky.cpp:36)
 
-void RB_TessSunBillboard(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4
-                        ,undefined8 param_5,undefined8 param_6)
+void RB_TessSunBillboard(float *param_1,float param_2,float param_3,GfxColor param_4)
 
 {
-  RB_TessRectBillboard(param_1,param_2,0,param_3,0,param_5,param_6,param_6);
+  GfxColor in_r5;
+  
+  RB_TessRectBillboard(param_1,false,param_2,param_3,in_r5,0.0);
   return;
 }
 
 
 // 827AB498  RB_DrawSunSprite  (gfx_d3d/rb_sky.cpp:42)
-
-void RB_DrawSunSprite(void)
-
-{
-  double dVar1;
-  undefined8 uVar2;
-  undefined1 auStack_30 [12];
-  int local_24;
-  
-  if (DAT_8461658c == 0) {
-    MyAssertHandler(0xffffffff821d800c,0x30,0,0xffffffff82000f98,0xffffffff821b9c84);
-  }
-  if ((*(int *)(DAT_8461658c + 0x164) != 0) && (uVar2 = 0, 0.0 < *(float *)(DAT_8461658c + 0x16c)))
-  {
-    RB_SetTessTechnique(*(int *)(DAT_8461658c + 0x164),4,5);
-    RB_SetIdentity();
-    R_GetViewport(0xffffffff8484c7e0,auStack_30);
-    dVar1 = (double)(*(float *)(DAT_8461658c + 0x16c) * (float)(longlong)local_24 * 0.0020833334);
-    RB_TessRectBillboard(dVar1,dVar1,uVar2,DAT_8461658c + 0x1b4,0);
-    RB_EndTessSurface();
-  }
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0
 
 // 827AB598  RB_DrawSunFlareCore  (gfx_d3d/rb_sky.cpp:66)
-
-void RB_DrawSunFlareCore(double param_1,double param_2)
-
-{
-  uint uVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
-  double dVar4;
-  undefined8 uVar5;
-  undefined1 auStack_40 [12];
-  int local_34;
-  
-  uVar5 = 0;
-  if ((param_1 < 0.0) || (1.0 < param_1)) {
-    MyAssertHandler(param_1,0xffffffff821d800c,0x49,0,0xffffffff820153c8,0xffffffff821d804c,param_1)
-    ;
-  }
-  dVar4 = floor((double)(float)(param_1 * 255.0 + 0.5));
-  uVar1 = (uint)dVar4;
-  uVar2 = (ulonglong)uVar1 & 0xff;
-  if ((uVar1 & 0xff) != 0) {
-    RB_SetTessTechnique(*(undefined4 *)(DAT_8461658c + 0x168),4,5);
-    RB_SetIdentity();
-    R_GetViewport(0xffffffff8484c7e0,auStack_40);
-    uVar3 = (((ulonglong)uVar1 & 0xff) << 8 | 0xff0000 | uVar2) << 8;
-    dVar4 = (double)((float)((double)(longlong)local_34 * param_2) * 0.0020833334);
-    RB_TessRectBillboard(dVar4,dVar4,uVar5,DAT_8461658c + 0x1b4,0,local_34,uVar3,uVar3 | uVar2);
-    RB_EndTessSurface();
-  }
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0
 
 // 827AB6F0  RB_DrawSunFlare  (gfx_d3d/rb_sky.cpp:92)
-
-void RB_DrawSunFlare(void)
-
-{
-  float fVar1;
-  float *pfVar2;
-  double dVar3;
-  double dVar4;
-  double dVar5;
-  double dVar6;
-  
-  pfVar2 = (float *)__savegprlr_26();
-  if (pfVar2 == (float *)0x0) {
-    MyAssertHandler(0xffffffff821d800c,0x61,0,0xffffffff82000f98,0xffffffff821d8158);
-  }
-  if ((*(int *)(DAT_8461658c + 0x168) != 0) &&
-     (fVar1 = pfVar2[5], *(float *)(DAT_8461658c + 0x174) < fVar1)) {
-    dVar5 = 0.0;
-    if (fVar1 < *(float *)(DAT_8461658c + 0x17c)) {
-      dVar6 = (double)((fVar1 - *(float *)(DAT_8461658c + 0x174)) /
-                      (*(float *)(DAT_8461658c + 0x17c) - *(float *)(DAT_8461658c + 0x174)));
-      if ((dVar6 < 0.0) || (1.0 < dVar6)) {
-        MyAssertHandler(dVar6,0xffffffff821d800c,0x6e,1,0xffffffff8200ab18,0xffffffff8200ab28,dVar6)
-        ;
-      }
-    }
-    else {
-      dVar6 = 1.0;
-    }
-    if ((double)*(float *)(DAT_8461658c + 0x180) < dVar5) {
-      MyAssertHandler(0xffffffff821d800c,0x6f,1,0xffffffff821d8108,0xffffffff821d8130,
-                      (double)*(float *)(DAT_8461658c + 0x180));
-    }
-    dVar4 = (double)(float)((double)*(float *)(DAT_8461658c + 0x180) * dVar6);
-    dVar6 = (double)(float)((double)*(float *)(DAT_8461658c + 0x178) * dVar6 +
-                           (double)*(float *)(DAT_8461658c + 0x170));
-    if ((double)*pfVar2 < dVar5) {
-      MyAssertHandler(0xffffffff821d800c,0x74,0,0xffffffff821d80e4,0xffffffff821d80c0,
-                      (double)*pfVar2);
-    }
-    if ((double)pfVar2[4] < dVar5) {
-      MyAssertHandler(0xffffffff821d800c,0x75,0,0xffffffff821d8078,0xffffffff821d809c,
-                      (double)pfVar2[4]);
-    }
-    dVar3 = (double)R_UpdateOverTime((double)*pfVar2,(double)pfVar2[4]);
-    *pfVar2 = (float)dVar3;
-    if (dVar3 < dVar5) {
-      MyAssertHandler(0xffffffff821d800c,0x79,0,0xffffffff821d80e4,0xffffffff821d80c0,dVar3);
-    }
-    if (dVar4 < dVar5) {
-      MyAssertHandler(dVar4,0xffffffff821d800c,0x7a,0,0xffffffff820153c8,0xffffffff821d8068,dVar4);
-    }
-    RB_DrawSunFlareCore((double)(float)((double)*pfVar2 * dVar4),dVar6);
-  }
-  __restgprlr_26();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
 
 // 827AB940  RB_CalcSunBlind  (gfx_d3d/rb_sky.cpp:129)
-
-void RB_CalcSunBlind(undefined8 param_1,undefined8 param_2,float *param_3,float *param_4)
-
-{
-  int iVar1;
-  double dVar2;
-  double dVar3;
-  double dVar4;
-  double dVar5;
-  
-  __savegprlr_23();
-  iVar1 = __savefpr_28();
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff821d800c,0x86,0,0xffffffff82000f98,0xffffffff821d8158);
-  }
-  if (DAT_8461658c == 0) {
-    MyAssertHandler(0xffffffff821d800c,0x87,0,0xffffffff82000f98,0xffffffff821b9c84);
-  }
-  dVar4 = 0.0;
-  dVar2 = 1.0;
-  dVar3 = (double)(*(float *)(DAT_8461658c + 0x1bc) * *(float *)(DAT_8484deb0 + 0x114) +
-                  *(float *)(DAT_8461658c + 0x1b8) * *(float *)(DAT_8484deb0 + 0x110) +
-                  *(float *)(DAT_8461658c + 0x1b4) * *(float *)(DAT_8484deb0 + 0x10c));
-  if (0.0 < *(float *)(DAT_8461658c + 0x194)) {
-    dVar5 = dVar4;
-    if (((double)*(float *)(DAT_8461658c + 0x18c) < dVar3) &&
-       (dVar5 = dVar2, dVar3 < (double)*(float *)(DAT_8461658c + 400))) {
-      dVar5 = (double)((float)(dVar3 - (double)*(float *)(DAT_8461658c + 0x18c)) /
-                      (float)((double)*(float *)(DAT_8461658c + 400) -
-                             (double)*(float *)(DAT_8461658c + 0x18c)));
-      if (dVar5 < 0.0) {
-        MyAssertHandler(dVar5,0xffffffff821d800c,0x97,0,0xffffffff821d81f0,0xffffffff821d81dc,dVar5)
-        ;
-      }
-      if (dVar2 < dVar5) {
-        MyAssertHandler(dVar5,0xffffffff821d800c,0x98,0,0xffffffff821d81f0,0xffffffff821d81c8,dVar5)
-        ;
-      }
-    }
-    dVar5 = (double)(float)((double)*(float *)(iVar1 + 0x10) * dVar5);
-    if (dVar5 < dVar4) {
-      MyAssertHandler(dVar5,0xffffffff821d800c,0x9a,0,0xffffffff821d81f0,0xffffffff821d81dc,dVar5);
-    }
-    if (dVar2 < dVar5) {
-      MyAssertHandler(dVar5,0xffffffff821d800c,0x9b,0,0xffffffff821d81f0,0xffffffff821d81c8,dVar5);
-    }
-    dVar5 = (double)R_UpdateOverTime((double)*(float *)(iVar1 + 4),dVar5);
-    *(float *)(iVar1 + 4) = (float)dVar5;
-    if (dVar5 < dVar4) {
-      MyAssertHandler(0xffffffff821d800c,0x9d,0,0xffffffff821d81a4,0xffffffff821d8184,dVar5);
-    }
-    if (dVar2 < (double)*(float *)(iVar1 + 4)) {
-      MyAssertHandler(0xffffffff821d800c,0x9e,0,0xffffffff821d81a4,0xffffffff821d8164,
-                      (double)*(float *)(iVar1 + 4));
-    }
-    *param_3 = *(float *)(DAT_8461658c + 0x194) * *(float *)(iVar1 + 4);
-  }
-  else {
-    *param_3 = 0.0;
-  }
-  if (dVar4 < (double)*(float *)(DAT_8461658c + 0x1a8)) {
-    if (((double)*(float *)(DAT_8461658c + 0x1a0) < dVar3) &&
-       (dVar4 = dVar2, dVar3 < (double)*(float *)(DAT_8461658c + 0x1a4))) {
-      dVar4 = (double)((float)(dVar3 - (double)*(float *)(DAT_8461658c + 0x1a0)) /
-                      (float)((double)*(float *)(DAT_8461658c + 0x1a4) -
-                             (double)*(float *)(DAT_8461658c + 0x1a0)));
-    }
-    dVar4 = (double)R_UpdateOverTime((double)*(float *)(iVar1 + 8),
-                                     (double)(float)((double)*(float *)(iVar1 + 0x10) * dVar4));
-    *(float *)(iVar1 + 8) = (float)dVar4;
-    *param_4 = (float)((double)*(float *)(DAT_8461658c + 0x1a8) * dVar4);
-    __restfpr_28();
-    __restgprlr_23();
-    return;
-  }
-  *param_4 = (float)dVar4;
-  __restfpr_28();
-  __restgprlr_23();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
 
 // 827ABC68  RB_AddSunEffects  (gfx_d3d/rb_sky.cpp:182)
-
-void RB_AddSunEffects(void)
-
-{
-  float fVar1;
-  int iVar2;
-  
-  iVar2 = __savegprlr_28();
-  if (DAT_8461658c == 0) {
-    MyAssertHandler(0xffffffff821d800c,0xb7,0,0xffffffff82000f98,0xffffffff821b9c84);
-  }
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff821d800c,0xb8,0,0xffffffff82000f98,0xffffffff821d8158);
-  }
-  fVar1 = *(float *)(DAT_8461658c + 0x1bc) * *(float *)(DAT_8484deb0 + 0x114) +
-          *(float *)(DAT_8461658c + 0x1b8) * *(float *)(DAT_8484deb0 + 0x110) +
-          *(float *)(DAT_8461658c + 0x1b4) * *(float *)(DAT_8484deb0 + 0x10c);
-  *(float *)(iVar2 + 0x14) = fVar1;
-  if (0.0 < fVar1) {
-    RB_DrawSunSprite();
-  }
-  __restgprlr_28();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
 
 // 827ABD38  RB_DrawBlindAndGlare  (gfx_d3d/rb_sky.cpp:195)
-
-void RB_DrawBlindAndGlare(ulonglong param_1,undefined8 param_2)
-
-{
-  float local_40;
-  undefined4 local_3c;
-  undefined1 local_38 [8];
-  undefined4 local_30;
-  undefined4 local_2c;
-  undefined4 local_28;
-  float local_24;
-  
-  if ((param_1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821d800c,200,0,0xffffffff82000f98,0xffffffff821d8158);
-  }
-  RB_CalcSunBlind(param_1,param_2,&local_40,&local_3c);
-  if (0.01 < local_40) {
-    local_30 = local_3c;
-    local_2c = local_3c;
-    local_28 = local_3c;
-    local_24 = local_40;
-    R_ConvertColorToBytes(&local_30,local_38);
-    RB_DrawFullScreenColoredQuad(0,0,0x3ff0000000000000,DAT_84616554);
-  }
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
 
 // 827ABE10  RB_DrawSun  (gfx_d3d/rb_sky.cpp:217)
-
-void RB_DrawSun(void)
-
-{
-  uint uVar1;
-  double dVar2;
-  
-  uVar1 = __savegprlr_28();
-  if (DAT_8461658c == 0) {
-    MyAssertHandler(0xffffffff821d800c,0xdc,0,0xffffffff82000f98,0xffffffff821b9c84);
-  }
-  if (DAT_84613760 <= uVar1) {
-    MyAssertHandler(0xffffffff821d800c,0xdd,0,0xffffffff821d77f8,uVar1);
-  }
-  if ((*(char *)(DAT_845aa684 + 0xc) != '\0') && (*(char *)(DAT_8461658c + 0x160) != '\0')) {
-    RB_SetIdentity();
-    if ((&DAT_8484c768)[uVar1 * 0xe] == -1) {
-      MyAssertHandler(0xffffffff821d800c,0xec,0,0xffffffff82000f98,0xffffffff821d8208);
-    }
-    RB_SetOcclusionQueryPosition((&DAT_8484c768)[uVar1 * 0xe],DAT_8461658c + 0x1b4);
-    dVar2 = (double)RB_GetOcclusionQueryVisibility((&DAT_8484c768)[uVar1 * 0xe]);
-    (&DAT_8484c760)[uVar1 * 7] = (float)dVar2;
-    RB_AddSunEffects(&DAT_8484c750 + uVar1 * 7);
-    RB_EndSurfaceIfNeeded();
-  }
-  __restgprlr_28();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
 
 // 827ABF20  RB_DrawSunPostEffects  (gfx_d3d/rb_sky.cpp:249)
-
-void RB_DrawSunPostEffects(void)
-
-{
-  uint uVar1;
-  uint uVar2;
-  longlong lVar3;
-  
-  uVar2 = __savegprlr_28();
-  if (DAT_84613760 <= uVar2) {
-    MyAssertHandler(0xffffffff821d800c,0xfd,0,0xffffffff821d77f8,uVar2);
-  }
-  uVar1 = (&DAT_8484c75c)[uVar2 * 7];
-  if ((uVar1 == 0) ||
-     (lVar3 = (ulonglong)DAT_8484dee0 - (ulonglong)uVar1, (int)DAT_8484dee0 < (int)uVar1)) {
-    lVar3 = 10;
-  }
-  (&DAT_8484c75c)[uVar2 * 7] = DAT_8484dee0;
-  if (*(char *)(DAT_845aa684 + 0xc) != '\0') {
-    if (DAT_8461658c == 0) {
-      MyAssertHandler(0xffffffff821d800c,0x10d,0,0xffffffff82000f98,0xffffffff821b9c84);
-    }
-    if (*(char *)(DAT_8461658c + 0x160) != '\0') {
-      RB_DrawSunFlare(&DAT_8484c750 + uVar2 * 7,lVar3);
-      RB_DrawBlindAndGlare(&DAT_8484c750 + uVar2 * 7,lVar3);
-    }
-  }
-  __restgprlr_28();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0
 
 // 827AC020  RB_AllocSunSpriteQueries  (gfx_d3d/rb_sky.cpp:279)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void RB_AllocSunSpriteQueries(void)
 
 {
   uint uVar1;
-  undefined2 uVar2;
-  undefined2 *puVar3;
-  ulonglong uVar4;
-  undefined8 uVar5;
+  ushort uVar2;
+  uchar *puVar3;
+  LocalClientNum_t LVar4;
+  double dVar5;
   
   __savegprlr_28();
-  if (4 < DAT_84613760) {
-    MyAssertHandler(0xffffffff821d800c,0x11b,0,0xffffffff821d824c,0xffffffff821d8278);
+  if (4 < gfxCfg.maxClientRenderViews) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_sky.cpp",0x11b,0,
+                    "%s\n\t(gfxCfg.maxClientRenderViews) = %i");
   }
-  if (DAT_8484c7c4 != '\0') {
-    MyAssertHandler(0xffffffff821d800c,0x11d,0,0xffffffff82000f98,0xffffffff821d823c);
+  if (sunQueryInited != false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_sky.cpp",0x11d,0,
+                    "%s");
   }
-  uVar4 = 0;
-  if (DAT_84613760 != 0) {
-    puVar3 = (undefined2 *)0x8484c74c;
-    uVar5 = 0;
+  LVar4 = LOCAL_CLIENT_0;
+  if (gfxCfg.maxClientRenderViews != 0) {
+    puVar3 = debugLineVerts[0x3ff].color;
+    dVar5 = 0.0;
     do {
-      uVar2 = RB_AllocOcclusionQuery(uVar5,uVar4,0,0);
-      uVar1 = DAT_84613760;
-      uVar4 = uVar4 + 1;
-      puVar3 = puVar3 + 0xe;
-      *puVar3 = uVar2;
-    } while ((uVar4 & 0xffffffff) < (ulonglong)uVar1);
+      uVar2 = RB_AllocOcclusionQuery(LVar4,(float *)0x0,false,(float)dVar5);
+      uVar1 = gfxCfg.maxClientRenderViews;
+      LVar4 = LVar4 + LOCAL_CLIENT_1;
+      puVar3 = puVar3 + 0x1c;
+      *(ushort *)puVar3 = uVar2;
+    } while (LVar4 < uVar1);
   }
-  DAT_8484c7c4 = 1;
+  sunQueryInited = true;
   __restgprlr_28();
   return;
 }

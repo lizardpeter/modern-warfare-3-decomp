@@ -2,60 +2,86 @@
 
 // 827CC020  CL_Demo_RegisterDvars  (client_demo/cl_demo_common.cpp:98)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void CL_Demo_RegisterDvars(void)
 
 {
-  DAT_8484f0d4 = Dvar_RegisterBool(0xffffffff821db47c,1,0,0xffffffff821db48c);
-  DAT_8484f0bc = Dvar_RegisterBool(0xffffffff821db44c,0,0,0xffffffff821db45c);
-  DAT_8484f0b4 = Dvar_RegisterInt(0xffffffff821db408,0xffffffffffffffff,0xffffffffffffffff,0x12,0,
-                                  0xffffffff821db418);
-  DAT_8484f0dc = Dvar_RegisterInt(0xffffffff821db3f0,10,0,0x7fffffff,0,0xffffffff821db3c0);
-  DAT_8484f0c4 = Dvar_RegisterInt(0xffffffff821db358,0,0,0x7fffffff,0,0xffffffff821db380);
-  DAT_8484f0e0 = Dvar_RegisterString(0xffffffff821db324,0xffffffff820068af,0x2000,0xffffffff821db338
-                                    );
-  DAT_8484f0e8 = Dvar_RegisterString(0xffffffff821db30c,0xffffffff820068af,0x2000,0xffffffff821db2e8
-                                    );
-  DAT_8484f0c8 = Dvar_RegisterInt(0xffffffff821db2a8,0xffffffffffffffff,0xffffffffffffffff,10,0,
-                                  0xffffffff821db2c4);
-  DAT_8484f0d8 = Dvar_RegisterInt(0xffffffff821db28c,0xffffffffffffffff,0xffffffffffffffff,10,0,
-                                  0xffffffff821db2c4);
-  DAT_8484f0b8 = Dvar_RegisterInt(0xffffffff821db26c,0,0,0x7fffffff,0,0xffffffff821db250);
-  DAT_8484f0e4 = Dvar_RegisterFloat(0x4080000000000000,0,0x47efffffe0000000,0xffffffff821db1f8);
-  DAT_8484f0d0 = Dvar_RegisterBool(0xffffffff821db1e4,0,0,0xffffffff821db1c8);
-  DAT_8484f0c0 = Dvar_RegisterBool(0xffffffff821db1a4,0,0,0xffffffff821db1b0);
-  DAT_8484f0b0 = Dvar_RegisterInt(0xffffffff821db188,0x3c0,0x140,0x500,0,0xffffffff821db158);
-  DAT_8484f0f0 = Dvar_RegisterInt(0xffffffff821db11c,0x2d0,0xb4,0x2d0,0,0xffffffff821db134);
-  DAT_8484f0ec = Dvar_RegisterInt(0xffffffff821db0dc,0x1e,0xc,0x3c,0,0xffffffff821db0f0);
-  DAT_8484f0cc = Dvar_RegisterBool(0xffffffff821db0c8,0,0,0xffffffff821db0b0);
+  cl_demo_enabled =
+       Dvar_RegisterBool("cl_demo_enabled",true,0,
+                         "Used to turn off/on the client demo recording system");
+  cl_demo_pause = Dvar_RegisterBool("cl_demo_pause",false,0,"Used to pause a demo playback.");
+  cl_demo_client =
+       Dvar_RegisterInt("cl_demo_client",-1,-1,0x12,0,
+                        "The client number of the current viewing client.");
+  cl_demo_keyframerate =
+       Dvar_RegisterInt("cl_demo_keyframerate",10,0,0x7fffffff,0,
+                        "The frequency of generating a keyframe in sec.");
+  cl_demo_playercard_display_start_time =
+       Dvar_RegisterInt("cl_demo_playercard_display_start_time",0,0,0x7fffffff,0,
+                        "Used to turn on/off the playercard display for the demo players");
+  cl_demo_errortitle =
+       Dvar_RegisterString("cl_demo_errortitle","",0x2000,"Most recent demo error\'s title.");
+  cl_demo_errormessage =
+       Dvar_RegisterString("cl_demo_errormessage","",0x2000,"Most recent demo error\'s message.");
+  cl_demo_ui_selected_segment =
+       Dvar_RegisterInt("cl_demo_ui_selected_segment",-1,-1,10,0,"Used by the manage segements UI.")
+  ;
+  cl_demo_ui_segment_position =
+       Dvar_RegisterInt("cl_demo_ui_segment_position",-1,-1,10,0,"Used by the manage segements UI.")
+  ;
+  cl_demo_drawdebuginformation =
+       Dvar_RegisterInt("cl_demo_drawdebuginformation",0,0,0x7fffffff,0,"Debug entity information");
+  cl_demo_debuginformationdisplaydistance =
+       Dvar_RegisterFloat("cl_demo_debuginformationdisplaydistance",512.0,0.0,3.4028235e+38,0,
+                          IMAGE_DOS_HEADER_82000000.e_magic);
+  cl_demo_drawprofile =
+       Dvar_RegisterBool("cl_demo_drawprofile",false,0,"Debug profiling information");
+  cl_demo_log = Dvar_RegisterBool("cl_demo_log",false,0,"Log demo state to TTY");
+  cl_demo_render_width_wide =
+       Dvar_RegisterInt("cl_demo_render_width_wide",0x3c0,0x140,0x500,0,
+                        "Width of the rendered demo movie (widescreen).");
+  cl_demo_render_height =
+       Dvar_RegisterInt("cl_demo_render_height",0x2d0,0xb4,0x2d0,0,
+                        "Height of the rendered demo movie.");
+  cl_demo_render_fps =
+       Dvar_RegisterInt("cl_demo_render_fps",0x1e,0xc,0x3c,0,
+                        "Refresh rate of the rendered demo movie.");
+  cl_demo_uploadfb = Dvar_RegisterBool("cl_demo_uploadfb",false,0,"Should we upload to FB");
   return;
 }
 
 
 // 827CE3C0  CL_Demo_RegisterCommands  (client_demo/cl_demo_common.cpp:134)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void CL_Demo_RegisterCommands(void)
 
 {
   __savegprlr_28();
-  Cmd_AddCommandInternal(0xffffffff821dbc04,0xffffffff827cd288,0xffffffff8484f238);
-  Cmd_AddCommandInternal(0xffffffff821dbbf0,0xffffffff827cd288,0xffffffff8484f224);
-  Cmd_AddCommandInternal(0xffffffff821dbbdc,0xffffffff827cde88,0xffffffff8484f210);
-  Cmd_AddCommandInternal(0xffffffff821dbbc8,0xffffffff827cdf58,0xffffffff8484f1fc);
-  Cmd_AddCommandInternal(0xffffffff821dbbb4,0xffffffff827cdff8,0xffffffff8484f1e8);
-  Cmd_AddCommandInternal(0xffffffff821dbb9c,0xffffffff827ce1e8,0xffffffff8484f1d4);
-  Cmd_AddCommandInternal(0xffffffff821dbb88,0xffffffff827cd930,0xffffffff8484f1c0);
-  Cmd_AddCommandInternal(0xffffffff821dbb74,0xffffffff827cc348,0xffffffff8484f1ac);
-  Cmd_SetAutoComplete(0xffffffff821dbc04,0xffffffff821dbb6c,0xffffffff82031c70);
-  Cmd_SetAutoComplete(0xffffffff821dbbf0,0xffffffff821dbb6c,0xffffffff82031c70);
-  Cmd_AddCommandInternal(0xffffffff821dbb5c,0xffffffff827cc320,0xffffffff8484f198);
-  Cmd_AddCommandInternal(0xffffffff821dbb48,0xffffffff827cd200,0xffffffff8484f184);
-  Cmd_AddCommandInternal(0xffffffff821dbb38,0xffffffff827cd780,0xffffffff8484f170);
-  Cmd_AddCommandInternal(0xffffffff821dbb28,0xffffffff827cd870,0xffffffff8484f15c);
-  Cmd_AddCommandInternal(0xffffffff821db44c,0xffffffff827cdbc0,0xffffffff8484f148);
-  Cmd_AddCommandInternal(0xffffffff821dbb10,0xffffffff827cdc38,0xffffffff8484f134);
-  Cmd_AddCommandInternal(0xffffffff821dbaf8,0xffffffff827cdcf0,0xffffffff8484f120);
-  Cmd_AddCommandInternal(0xffffffff821dbae0,0xffffffff827cdd78,0xffffffff8484f10c);
-  Cmd_AddCommandInternal(0xffffffff821dbac8,0xffffffff827cde00,0xffffffff8484f0f8);
+  Cmd_AddCommandInternal("cl_demo_play",CL_Demo_Play_f,&CL_Demo_Play_f_VAR);
+  Cmd_AddCommandInternal("cl_demo_timedemo",CL_Demo_Play_f,&CL_Demo_Play_f_VAR);
+  Cmd_AddCommandInternal("cl_demo_previewclip",CL_Demo_PreviewClip_f,&CL_Demo_PreviewClip_f_VAR);
+  Cmd_AddCommandInternal("cl_demo_deleteclip",CL_Demo_DeleteClip_f,&CL_Demo_DeleteClip_f_VAR);
+  Cmd_AddCommandInternal("cl_demo_savesegment",CL_Demo_SaveSegment_f,&CL_Demo_SaveSegment_f_VAR);
+  Cmd_AddCommandInternal
+            ("cl_demo_previewsegment",CL_Demo_PreviewSegment_f,&CL_Demo_PreviewSegment_f_VAR);
+  Cmd_AddCommandInternal("cl_demo_jumptostart",CL_Demo_JumpToStart_f,&CL_Demo_JumpToStart_f_VAR);
+  Cmd_AddCommandInternal("cl_demo_keyboard",CL_Demo_Keyboard_f,&CL_Demo_Keyboard_f_VAR);
+  Cmd_SetAutoComplete("cl_demo_play","demos","demo");
+  Cmd_SetAutoComplete("cl_demo_timedemo","demos","demo");
+  Cmd_AddCommandInternal("cl_demo_record",CL_Demo_Record_f,&CL_Demo_Record_f_VAR);
+  Cmd_AddCommandInternal("cl_demo_stoprecord",CL_Demo_StopRecord_f,&CL_Demo_StopRecord_f_VAR);
+  Cmd_AddCommandInternal("cl_demo_forward",CL_Demo_Forward_f,&CL_Demo_Forward_f_VAR);
+  Cmd_AddCommandInternal("cl_demo_back",CL_Demo_Back_f,&CL_Demo_Back_f_VAR);
+  Cmd_AddCommandInternal("cl_demo_pause",CL_Demo_Pause_f,&CL_Demo_Pause_f_VAR);
+  Cmd_AddCommandInternal("cl_demo_switchplayer",CL_Demo_SwitchPlayer_f,&CL_Demo_SwitchPlayer_f_VAR);
+  Cmd_AddCommandInternal("cl_demo_switchcamera",CL_Demo_SwitchCamera_f,&CL_Demo_SwitchCamera_f_VAR);
+  Cmd_AddCommandInternal
+            ("cl_demo_startcliprecord",CL_Demo_StartClipRecord_f,&CL_Demo_StartClipRecord_f_VAR);
+  Cmd_AddCommandInternal
+            ("cl_demo_pausecliprecord",CL_Demo_PauseClipRecord_f,&CL_Demo_PauseClipRecord_f_VAR);
   __restgprlr_28();
   return;
 }
@@ -63,352 +89,209 @@ void CL_Demo_RegisterCommands(void)
 
 // 827CC320  CL_Demo_Record_f  (client_demo/cl_demo_common.cpp:173)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 void CL_Demo_Record_f(void)
 
 {
-  Cmd_LocalClientNum();
-  CL_Demo_StartRecord();
+  LocalClientNum_t LVar1;
+  
+  LVar1 = Cmd_LocalClientNum();
+  CL_Demo_StartRecord(LVar1);
   return;
 }
 
 
 // 827CD200  CL_Demo_StopRecord_f  (client_demo/cl_demo_common.cpp:189)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
 void CL_Demo_StopRecord_f(void)
 
 {
-  undefined8 uVar1;
-  int iVar2;
+  LocalClientNum_t LVar1;
+  clientConnection_t *pcVar2;
   
-  uVar1 = Cmd_LocalClientNum();
-  if (((DAT_82aa1a9c != 0) && (iVar2 = CL_GetLocalClientConnection(), iVar2 != 0)) &&
-     (*(int *)(iVar2 + 0x40250) == 1)) {
-    CL_Demo_End(uVar1);
+  LVar1 = Cmd_LocalClientNum();
+  if (((clientConnections != (clientConnection_t *)0x0) &&
+      (pcVar2 = CL_GetLocalClientConnection(LVar1), pcVar2 != (clientConnection_t *)0x0)) &&
+     ((pcVar2->clientDemo).state == 1)) {
+    CL_Demo_End(LVar1);
     return;
   }
-  Com_Printf(0,0xffffffff821db72c);
+  Com_Printf(0,"Not recording a demo.\n");
   return;
 }
 
 
 // 827CD288  CL_Demo_Play_f  (client_demo/cl_demo_common.cpp:215)
-
-void CL_Demo_Play_f(void)
-
-{
-  int iVar1;
-  char *pcVar2;
-  char *pcVar3;
-  int iVar4;
-  int iVar5;
-  char cVar9;
-  int iVar6;
-  int *piVar7;
-  void *pvVar8;
-  char *pcVar10;
-  char *pcVar11;
-  undefined8 uVar12;
-  longlong lVar13;
-  undefined1 local_2a0 [16];
-  char local_290 [64];
-  undefined1 auStack_250 [256];
-  undefined1 auStack_150 [336];
-  
-  __savegprlr_24();
-  iVar1 = Cmd_Argc();
-  if ((iVar1 < 2) && (iVar1 = Cmd_Argc(), 4 < iVar1)) {
-    Com_Printf(0,0xffffffff821db830);
-    __restgprlr_24();
-    return;
-  }
-  if (*(char *)(DAT_83666174 + 0xc) != '\0') {
-    Com_Printf(0xe,0xffffffff821db808);
-    __restgprlr_24();
-    return;
-  }
-  iVar4 = 0;
-  iVar5 = 0;
-  pcVar2 = (char *)Cmd_Argv(1);
-  iVar1 = Cmd_Argc();
-  if (2 < iVar1) {
-    pcVar3 = (char *)Cmd_Argv(2);
-    iVar4 = atoi(pcVar3);
-  }
-  CL_Demo_SetMemoryFileHandlerSystemActive(iVar4);
-  iVar1 = Cmd_Argc();
-  if (3 < iVar1) {
-    pcVar3 = (char *)Cmd_Argv(3);
-    iVar5 = atoi(pcVar3);
-  }
-  if ((iVar4 == 0) && (cVar9 = CL_Demo_IsDemoDownloadMemoryAllocated(), cVar9 != '\0')) {
-    CL_Demo_DeallocateDemoDownloadMemory();
-  }
-  Com_sprintf(&stack0x00000000 + -0x290,0x40,0xffffffff821db800);
-  pcVar3 = pcVar2;
-  do {
-    pcVar10 = pcVar3;
-    pcVar3 = pcVar10 + 1;
-  } while (*pcVar10 != '\0');
-  pcVar11 = &stack0x00000000 + -0x290;
-  pcVar3 = pcVar11;
-  do {
-    cVar9 = *pcVar3;
-    pcVar3 = pcVar3 + 1;
-  } while (cVar9 != '\0');
-  iVar1 = I_stricmp((int)pcVar10 - (int)(pcVar3 + (-1 - (int)pcVar11)),&stack0x00000000 + -0x290);
-  uVar12 = 0xffffffff82000f98;
-  if (iVar1 != 0) {
-    uVar12 = 0xffffffff821db7f8;
-  }
-  Com_sprintf(&stack0x00000000 + -0x250,0x100,uVar12,pcVar2);
-  Com_sprintf(&stack0x00000000 + -0x150,0x100,0xffffffff82000f98,&stack0x00000000 + -0x250);
-  uVar12 = Cmd_LocalControllerIndex();
-  iVar1 = CL_Demo_OpenFileForRead(uVar12,&stack0x00000000 + -0x150,0xffffffff821db7e4);
-  if (iVar1 != 0) {
-    CL_SetLocalClientActive(0,1);
-    lVar13 = 1;
-    do {
-      CL_SetLocalClientActive(lVar13,0);
-      lVar13 = lVar13 + 1;
-    } while ((int)lVar13 < 4);
-    uVar12 = 2;
-    if (iVar5 == 0) {
-      uVar12 = 1;
-    }
-    CL_Demo_SetPlayingFlag(uVar12);
-    Dvar_SetBool(DAT_83f71e80,0);
-    R_SyncRenderThread();
-    DAT_82b3f850 = 1;
-    DB_LoadXAssets(&stack0x00000000 + -0x2a0,1,0);
-    uVar12 = 3;
-    if (iVar5 != 0) {
-      uVar12 = 7;
-    }
-    CL_AllocatePerLocalClientMemory(uVar12);
-    CL_ForceNoSplitscreenControl(0xffffffff821db794,DAT_82b5c824);
-    uVar12 = Cmd_LocalClientNum();
-    CL_SetLocalClientActive(uVar12,1);
-    (&DAT_82b3e54c)[(int)uVar12 * 0x79] = 5;
-    DAT_82aa30e0 = 0;
-    Con_Close(uVar12);
-    iVar4 = SV_GetTotalSizeForClientMemory(0,2,0x12);
-    iVar6 = CL_Demo_GetPlaybackData();
-    if (*(uint *)(iVar6 + 4) < iVar4 + 0x100000U) {
-      iVar4 = CL_GetLocalClientConnection(uVar12);
-      *(int *)(iVar4 + 0x4024c) = iVar1;
-      *(undefined4 *)(iVar4 + 0x54228) = 0;
-      *(code **)(iVar4 + 0x5422c) = CL_Demo_Read;
-      I_strncpyz(iVar4 + 0x40148,pcVar2,0x100);
-      I_strncpyz(0xffffffff82aa1b08,pcVar2,0x100);
-      piVar7 = (int *)CL_Demo_GetPlaybackData();
-      *piVar7 = (int)uVar12;
-      iVar1 = CL_Demo_GetPlaybackData();
-      *(undefined4 *)(iVar1 + 0x1c) = 0x3f800000;
-      iVar1 = CL_Demo_GetPlaybackData();
-      *(undefined4 *)(iVar1 + 0x10) = 0xffffffff;
-      iVar1 = CL_Demo_GetPlaybackData();
-      *(undefined4 *)(iVar1 + 0x205f28) = 0xffffffff;
-      iVar1 = CL_Demo_GetPlaybackData();
-      *(undefined4 *)(iVar1 + 0x14) = 0xffffffff;
-      *(char *)(iVar4 + 0x54230) = '\x01' - (iVar5 == 0);
-      iVar1 = CL_GetLocalClientConnection(uVar12);
-      if (iVar1 != 0) {
-        *(undefined4 *)(iVar1 + 0x40250) = 2;
-      }
-      *(undefined4 *)(iVar4 + 0x44200) = 0;
-      CL_Demo_ReadHeader(uVar12);
-      if (((0 < *(int *)(iVar4 + 0x40258)) && (*(int *)(iVar4 + 0x40258) < 2)) &&
-         (iVar1 = CL_Demo_ReadFooter(uVar12), iVar1 != 0)) {
-        if (*(int *)(iVar4 + 0x40274) == 1) {
-          iVar5 = iVar4 + 0x43384;
-          LoadMapLoadscreen(iVar5);
-          UI_SetMap(iVar5,iVar4 + 0x43284);
-          R_SyncRenderThread();
-          DAT_82b3f850 = 0;
-          SCR_UpdateScreen();
-          iVar1 = Hunk_Inuse();
-          if (iVar1 == 0) {
-            Hunk_Begin();
-          }
-          CL_ShutdownAll();
-          Com_Restart();
-          CL_InitRenderer();
-          CL_StartHunkUsers();
-          DB_LoadLevelXAssets(iVar5,0);
-          if (*(char *)(iVar4 + 0x40278) != '\0') {
-            iVar1 = CL_Demo_GetPlaybackData();
-            pvVar8 = memcpy((void *)(iVar1 + 0x4c),(void *)(iVar4 + 0x4027c),0x2ffc);
-            UI_ExpressionState_PlayerDataModified(pvVar8);
-          }
-          Dvar_SetBool(DAT_8484f0bc,0);
-          Dvar_SetInt(DAT_8484f0b4,*(undefined4 *)(iVar4 + 0x4025c));
-          __restgprlr_24();
-          return;
-        }
-        Com_Error(1,0xffffffff821db744,(&PTR_s_Debug_829a3300)[*(int *)(iVar4 + 0x40274)],
-                  PTR_DAT_829a3304);
-        __restgprlr_24();
-        return;
-      }
-      Com_Error(1,0xffffffff82035f64);
-      __restgprlr_24();
-      return;
-    }
-    Com_Error(1,0xffffffff821db77c);
-    __restgprlr_24();
-    return;
-  }
-  Com_Printf(0,0xffffffff821db7a4);
-  __restgprlr_24();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 827CD780  CL_Demo_Forward_f  (client_demo/cl_demo_common.cpp:429)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void CL_Demo_Forward_f(void)
 
 {
-  undefined8 uVar1;
-  int iVar2;
-  char cVar3;
+  LocalClientNum_t LVar1;
+  clientConnection_t *pcVar2;
+  bool bVar3;
   
-  uVar1 = Cmd_LocalClientNum();
-  if (((DAT_82aa1a9c == 0) || (iVar2 = CL_GetLocalClientConnection(), iVar2 == 0)) ||
-     (*(int *)(iVar2 + 0x40250) != 2)) {
-    Com_PrintError(0xe,0xffffffff821db8c0);
+  LVar1 = Cmd_LocalClientNum();
+  if (((clientConnections == (clientConnection_t *)0x0) ||
+      (pcVar2 = CL_GetLocalClientConnection(LVar1), pcVar2 == (clientConnection_t *)0x0)) ||
+     ((pcVar2->clientDemo).state != 2)) {
+    Com_PrintError(0xe,"We are not playing a demo.\n");
     return;
   }
-  cVar3 = CL_Demo_IsPlaybackMemoryAllocated();
-  if (cVar3 == '\0') {
-    Com_PrintError(0xe,0xffffffff821db8a0);
+  bVar3 = CL_Demo_IsPlaybackMemoryAllocated();
+  if (!bVar3) {
+    Com_PrintError(0xe,"Playback memory is not inited.\n");
     return;
   }
-  cVar3 = CL_Demo_IsCompleted();
-  if (cVar3 != '\0') {
-    Com_PrintError(0xe,0xffffffff821db874);
+  bVar3 = CL_Demo_IsCompleted();
+  if (bVar3) {
+    Com_PrintError(0xe,"We cannot forward a demo that is completed\n");
     return;
   }
-  CL_Demo_JumpForward(uVar1);
+  CL_Demo_JumpForward(LVar1);
   return;
 }
 
 
 // 827CD870  CL_Demo_Back_f  (client_demo/cl_demo_common.cpp:464)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
 void CL_Demo_Back_f(void)
 
 {
-  undefined8 uVar1;
-  int iVar2;
-  char cVar3;
+  LocalClientNum_t LVar1;
+  clientConnection_t *pcVar2;
+  bool bVar3;
   
-  uVar1 = Cmd_LocalClientNum();
-  if (((DAT_82aa1a9c != 0) && (iVar2 = CL_GetLocalClientConnection(), iVar2 != 0)) &&
-     (*(int *)(iVar2 + 0x40250) == 2)) {
-    cVar3 = CL_Demo_IsPlaybackMemoryAllocated();
-    if (cVar3 == '\0') {
-      Com_PrintError(0xe,0xffffffff821db8a0);
+  LVar1 = Cmd_LocalClientNum();
+  if (((clientConnections != (clientConnection_t *)0x0) &&
+      (pcVar2 = CL_GetLocalClientConnection(LVar1), pcVar2 != (clientConnection_t *)0x0)) &&
+     ((pcVar2->clientDemo).state == 2)) {
+    bVar3 = CL_Demo_IsPlaybackMemoryAllocated();
+    if (!bVar3) {
+      Com_PrintError(0xe,"Playback memory is not inited.\n");
       return;
     }
-    CL_Demo_JumpBack(uVar1);
+    CL_Demo_JumpBack(LVar1);
     return;
   }
-  Com_PrintError(0xe,0xffffffff821db8c0);
+  Com_PrintError(0xe,"We are not playing a demo.\n");
   return;
 }
 
 
 // 827CD930  CL_Demo_JumpToStart_f  (client_demo/cl_demo_common.cpp:492)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
 void CL_Demo_JumpToStart_f(void)
 
 {
-  int iVar1;
-  undefined8 uVar2;
+  LocalClientNum_t LVar1;
+  clientConnection_t *pcVar2;
+  bool bVar5;
+  clientDemoPlayback_t *pcVar3;
   int iVar4;
-  char cVar6;
-  int iVar5;
-  undefined8 uVar3;
-  ulonglong uVar7;
-  int *piVar8;
-  ulonglong uVar9;
+  ulonglong uVar6;
+  int *piVar7;
+  ulonglong uVar8;
   
   __savegprlr_28();
-  uVar2 = Cmd_LocalClientNum();
-  if (((DAT_82aa1a9c != 0) && (iVar4 = CL_GetLocalClientConnection(), iVar4 != 0)) &&
-     (*(int *)(iVar4 + 0x40250) == 2)) {
-    cVar6 = CL_Demo_IsPlaybackMemoryAllocated();
-    if (cVar6 == '\0') {
-      Com_PrintError(0xe,0xffffffff821db8a0);
+  LVar1 = Cmd_LocalClientNum();
+  if (((clientConnections != (clientConnection_t *)0x0) &&
+      (pcVar2 = CL_GetLocalClientConnection(LVar1), pcVar2 != (clientConnection_t *)0x0)) &&
+     ((pcVar2->clientDemo).state == 2)) {
+    bVar5 = CL_Demo_IsPlaybackMemoryAllocated();
+    if (!bVar5) {
+      Com_PrintError(0xe,"Playback memory is not inited.\n");
       __restgprlr_28();
       return;
     }
-    iVar4 = CL_Demo_GetPlaybackData();
-    iVar5 = CL_GetLocalClientConnection(uVar2);
-    uVar9 = 0xffffffffffffffff;
-    piVar8 = (int *)(iVar4 + 0x203050);
-    uVar7 = 2;
+    pcVar3 = CL_Demo_GetPlaybackData();
+    pcVar2 = CL_GetLocalClientConnection(LVar1);
+    uVar8 = 0xffffffffffffffff;
+    piVar7 = &pcVar3->keyFrame[0].keyframeSnapshotTime;
+    uVar6 = 2;
     do {
-      if ((0 < piVar8[5]) &&
-         (((int)uVar9 == -1 ||
-          (*piVar8 < *(int *)((int)((uVar9 + (uVar9 & 0x7fffffff) * 2 & 0xffffffff) << 4) + iVar4 +
-                             0x203050))))) {
-        uVar9 = uVar7 - 2;
+      if ((0 < piVar7[5]) &&
+         (((int)uVar8 == -1 ||
+          (*piVar7 < *(int *)((int)&pcVar3->keyFrame[0].keyframeSnapshotTime +
+                             (int)((uVar8 + (uVar8 & 0x7fffffff) * 2 & 0xffffffff) << 4)))))) {
+        uVar8 = uVar6 - 2;
       }
-      if ((0 < piVar8[0x11]) &&
-         (((int)uVar9 == -1 ||
-          (piVar8[0xc] <
-           *(int *)((int)((uVar9 + (uVar9 & 0x7fffffff) * 2 & 0xffffffff) << 4) + iVar4 + 0x203050))
-          ))) {
-        uVar9 = uVar7 - 1;
+      if ((0 < piVar7[0x11]) &&
+         (((int)uVar8 == -1 ||
+          (piVar7[0xc] <
+           *(int *)((int)&pcVar3->keyFrame[0].keyframeSnapshotTime +
+                   (int)((uVar8 + (uVar8 & 0x7fffffff) * 2 & 0xffffffff) << 4)))))) {
+        uVar8 = uVar6 - 1;
       }
-      if ((0 < piVar8[0x1d]) &&
-         (((int)uVar9 == -1 ||
-          (piVar8[0x18] <
-           *(int *)((int)((uVar9 + (uVar9 & 0x7fffffff) * 2 & 0xffffffff) << 4) + iVar4 + 0x203050))
-          ))) {
-        uVar9 = uVar7;
+      if ((0 < piVar7[0x1d]) &&
+         (((int)uVar8 == -1 ||
+          (piVar7[0x18] <
+           *(int *)((int)&pcVar3->keyFrame[0].keyframeSnapshotTime +
+                   (int)((uVar8 + (uVar8 & 0x7fffffff) * 2 & 0xffffffff) << 4)))))) {
+        uVar8 = uVar6;
       }
-      if ((0 < piVar8[0x29]) &&
-         (((int)uVar9 == -1 ||
-          (piVar8[0x24] <
-           *(int *)((int)((uVar9 + (uVar9 & 0x7fffffff) * 2 & 0xffffffff) << 4) + iVar4 + 0x203050))
-          ))) {
-        uVar9 = uVar7 + 1;
+      if ((0 < piVar7[0x29]) &&
+         (((int)uVar8 == -1 ||
+          (piVar7[0x24] <
+           *(int *)((int)&pcVar3->keyFrame[0].keyframeSnapshotTime +
+                   (int)((uVar8 + (uVar8 & 0x7fffffff) * 2 & 0xffffffff) << 4)))))) {
+        uVar8 = uVar6 + 1;
       }
-      if ((0 < piVar8[0x35]) &&
-         (((int)uVar9 == -1 ||
-          (piVar8[0x30] <
-           *(int *)((int)((uVar9 + (uVar9 & 0x7fffffff) * 2 & 0xffffffff) << 4) + iVar4 + 0x203050))
-          ))) {
-        uVar9 = uVar7 + 2;
+      if ((0 < piVar7[0x35]) &&
+         (((int)uVar8 == -1 ||
+          (piVar7[0x30] <
+           *(int *)((int)&pcVar3->keyFrame[0].keyframeSnapshotTime +
+                   (int)((uVar8 + (uVar8 & 0x7fffffff) * 2 & 0xffffffff) << 4)))))) {
+        uVar8 = uVar6 + 2;
       }
-      piVar8 = piVar8 + 0x3c;
-      iVar1 = (int)uVar7;
-      uVar7 = uVar7 + 5;
-    } while (iVar1 + 3 < 0xfa);
-    if ((int)uVar9 != -1) {
-      if (*(int *)((int)((uVar9 + (uVar9 & 0x7fffffff) * 2 & 0xffffffff) << 4) + iVar4 + 0x203064)
-          == 0) {
-        MyAssertHandler(0xffffffff821db600,0x21a,0,0xffffffff82000f98,0xffffffff821db8dc);
+      piVar7 = piVar7 + 0x3c;
+      iVar4 = (int)uVar6;
+      uVar6 = uVar6 + 5;
+    } while (iVar4 + 3 < 0xfa);
+    if ((int)uVar8 != -1) {
+      if (*(int *)((int)&pcVar3->keyFrame[0].size +
+                  (int)((uVar8 + (uVar8 & 0x7fffffff) * 2 & 0xffffffff) << 4)) == 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_common.cpp"
+                        ,0x21a,0,"%s");
       }
-      cVar6 = CL_Demo_IsPaused();
-      if (cVar6 != '\0') {
+      bVar5 = CL_Demo_IsPaused();
+      if (bVar5) {
         CL_Demo_Pause();
       }
-      cVar6 = CL_Demo_IsClipPlaying();
-      if (cVar6 == '\0') {
-        Dvar_SetInt(DAT_8484f0b4,*(undefined4 *)(iVar5 + 0x4025c));
-        uVar3 = Sys_Milliseconds();
-        Dvar_SetInt(DAT_8484f0c4,uVar3);
+      bVar5 = CL_Demo_IsClipPlaying();
+      if (!bVar5) {
+        Dvar_SetInt(cl_demo_client,(pcVar2->clientDemo).header.defaultClientNum);
+        iVar4 = Sys_Milliseconds();
+        Dvar_SetInt(cl_demo_playercard_display_start_time,iVar4);
       }
-      CL_Demo_ProcessKeyFrameJump(uVar2,uVar9);
+      CL_Demo_ProcessKeyFrameJump(LVar1,(int)uVar8);
     }
     __restgprlr_28();
     return;
   }
-  Com_PrintError(0xe,0xffffffff821db8c0);
+  Com_PrintError(0xe,"We are not playing a demo.\n");
   __restgprlr_28();
   return;
 }
@@ -416,47 +299,60 @@ void CL_Demo_JumpToStart_f(void)
 
 // 827CDBC0  CL_Demo_Pause_f  (client_demo/cl_demo_common.cpp:560)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
 void CL_Demo_Pause_f(void)
 
 {
-  int iVar1;
+  LocalClientNum_t LVar1;
+  clientConnection_t *pcVar2;
   
-  Cmd_LocalClientNum();
-  if (((DAT_82aa1a9c != 0) && (iVar1 = CL_GetLocalClientConnection(), iVar1 != 0)) &&
-     (*(int *)(iVar1 + 0x40250) == 2)) {
+  LVar1 = Cmd_LocalClientNum();
+  if (((clientConnections != (clientConnection_t *)0x0) &&
+      (pcVar2 = CL_GetLocalClientConnection(LVar1), pcVar2 != (clientConnection_t *)0x0)) &&
+     ((pcVar2->clientDemo).state == 2)) {
     CL_Demo_Pause();
     return;
   }
-  Com_PrintError(0xe,0xffffffff821db8c0);
+  Com_PrintError(0xe,"We are not playing a demo.\n");
   return;
 }
 
 
 // 827CDC38  CL_Demo_SwitchPlayer_f  (client_demo/cl_demo_common.cpp:582)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
 void CL_Demo_SwitchPlayer_f(void)
 
 {
-  int iVar2;
-  undefined8 uVar1;
-  char *_Str;
-  int iVar3;
+  int iVar1;
+  LocalClientNum_t LVar2;
+  char *pcVar3;
+  clientConnection_t *pcVar4;
   
-  iVar2 = Cmd_Argc();
-  if (iVar2 == 2) {
-    uVar1 = Cmd_LocalClientNum();
-    _Str = (char *)Cmd_Argv(1);
-    iVar2 = atoi(_Str);
-    if (((DAT_82aa1a9c == 0) || (iVar3 = CL_GetLocalClientConnection(uVar1), iVar3 == 0)) ||
-       (*(int *)(iVar3 + 0x40250) != 2)) {
-      Com_PrintError(0xe,0xffffffff821db8c0);
+  iVar1 = Cmd_Argc();
+  if (iVar1 == 2) {
+    LVar2 = Cmd_LocalClientNum();
+    pcVar3 = Cmd_Argv(1);
+    iVar1 = atoi(pcVar3);
+    if (((clientConnections == (clientConnection_t *)0x0) ||
+        (pcVar4 = CL_GetLocalClientConnection(LVar2), pcVar4 == (clientConnection_t *)0x0)) ||
+       ((pcVar4->clientDemo).state != 2)) {
+      Com_PrintError(0xe,"We are not playing a demo.\n");
     }
     else {
-      CL_Demo_SwitchPlayer(uVar1,iVar2);
+      CL_Demo_SwitchPlayer(LVar2,iVar1);
     }
   }
   else {
-    Com_Printf(0,0xffffffff821db908);
+    Com_Printf(0,
+               "Usage: demo_switchplayer <direction>. <direction> is 0: clockwise 1: anticlockwise.\n"
+              );
   }
   return;
 }
@@ -464,162 +360,199 @@ void CL_Demo_SwitchPlayer_f(void)
 
 // 827CDCF0  CL_Demo_SwitchCamera_f  (client_demo/cl_demo_common.cpp:612)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
 void CL_Demo_SwitchCamera_f(void)
 
 {
-  undefined8 uVar1;
-  int iVar2;
+  LocalClientNum_t LVar1;
+  clientConnection_t *pcVar2;
   
-  uVar1 = Cmd_LocalClientNum();
-  if (((DAT_82aa1a9c != 0) && (iVar2 = CL_GetLocalClientConnection(), iVar2 != 0)) &&
-     (*(int *)(iVar2 + 0x40250) == 2)) {
-    CL_Demo_SwitchCamera(uVar1);
+  LVar1 = Cmd_LocalClientNum();
+  if (((clientConnections != (clientConnection_t *)0x0) &&
+      (pcVar2 = CL_GetLocalClientConnection(LVar1), pcVar2 != (clientConnection_t *)0x0)) &&
+     ((pcVar2->clientDemo).state == 2)) {
+    CL_Demo_SwitchCamera(LVar1);
     return;
   }
-  Com_Printf(0,0xffffffff821db960);
+  Com_Printf(0,"Cannot switch camera when we are not playing a demo.\n");
   return;
 }
 
 
 // 827CDD78  CL_Demo_StartClipRecord_f  (client_demo/cl_demo_common.cpp:634)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
 void CL_Demo_StartClipRecord_f(void)
 
 {
-  undefined8 uVar1;
-  int iVar2;
+  LocalClientNum_t LVar1;
+  clientConnection_t *pcVar2;
   
-  uVar1 = Cmd_LocalClientNum();
-  if (((DAT_82aa1a9c != 0) && (iVar2 = CL_GetLocalClientConnection(), iVar2 != 0)) &&
-     (*(int *)(iVar2 + 0x40250) == 2)) {
-    CL_Demo_StartClipRecord(uVar1);
+  LVar1 = Cmd_LocalClientNum();
+  if (((clientConnections != (clientConnection_t *)0x0) &&
+      (pcVar2 = CL_GetLocalClientConnection(LVar1), pcVar2 != (clientConnection_t *)0x0)) &&
+     ((pcVar2->clientDemo).state == 2)) {
+    CL_Demo_StartClipRecord(LVar1);
     return;
   }
-  Com_PrintError(0xe,0xffffffff821db8c0);
+  Com_PrintError(0xe,"We are not playing a demo.\n");
   return;
 }
 
 
 // 827CDE00  CL_Demo_PauseClipRecord_f  (client_demo/cl_demo_common.cpp:656)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
 void CL_Demo_PauseClipRecord_f(void)
 
 {
-  undefined8 uVar1;
-  int iVar2;
+  LocalClientNum_t LVar1;
+  clientConnection_t *pcVar2;
   
-  uVar1 = Cmd_LocalClientNum();
-  if (((DAT_82aa1a9c != 0) && (iVar2 = CL_GetLocalClientConnection(), iVar2 != 0)) &&
-     (*(int *)(iVar2 + 0x40250) == 2)) {
-    CL_Demo_PauseClipRecord(uVar1);
+  LVar1 = Cmd_LocalClientNum();
+  if (((clientConnections != (clientConnection_t *)0x0) &&
+      (pcVar2 = CL_GetLocalClientConnection(LVar1), pcVar2 != (clientConnection_t *)0x0)) &&
+     ((pcVar2->clientDemo).state == 2)) {
+    CL_Demo_PauseClipRecord(LVar1);
     return;
   }
-  Com_PrintError(0xe,0xffffffff821db8c0);
+  Com_PrintError(0xe,"We are not playing a demo.\n");
   return;
 }
 
 
 // 827CDE88  CL_Demo_PreviewClip_f  (client_demo/cl_demo_common.cpp:678)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
 void CL_Demo_PreviewClip_f(void)
 
 {
-  undefined8 uVar1;
-  int iVar2;
+  LocalClientNum_t LVar1;
+  clientConnection_t *pcVar2;
+  clientDemoPlayback_t *pcVar3;
   
-  uVar1 = Cmd_LocalClientNum();
-  if (((DAT_82aa1a9c != 0) && (iVar2 = CL_GetLocalClientConnection(), iVar2 != 0)) &&
-     (*(int *)(iVar2 + 0x40250) == 2)) {
-    CL_Demo_WriteRestorePoint(uVar1,0);
-    Com_Printf(0xe,0xffffffff821db998);
-    iVar2 = CL_Demo_GetPlaybackData();
-    *(undefined1 *)(iVar2 + 0x5bef59) = 1;
-    CL_Demo_SetCompleted(0);
-    CL_Demo_PreviewSegment(uVar1,0);
+  LVar1 = Cmd_LocalClientNum();
+  if (((clientConnections != (clientConnection_t *)0x0) &&
+      (pcVar2 = CL_GetLocalClientConnection(LVar1), pcVar2 != (clientConnection_t *)0x0)) &&
+     ((pcVar2->clientDemo).state == 2)) {
+    CL_Demo_WriteRestorePoint(LVar1,0);
+    Com_Printf(0xe,"Clip: Starting clip previewing\n");
+    pcVar3 = CL_Demo_GetPlaybackData();
+    pcVar3->previewAllSegments = true;
+    CL_Demo_SetCompleted(false);
+    CL_Demo_PreviewSegment(LVar1,0);
     CL_Demo_ActivateTransitionScreen(1);
     return;
   }
-  Com_PrintError(0xe,0xffffffff821db8c0);
+  Com_PrintError(0xe,"We are not playing a demo.\n");
   return;
 }
 
 
 // 827CDF58  CL_Demo_DeleteClip_f  (client_demo/cl_demo_common.cpp:708)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
 void CL_Demo_DeleteClip_f(void)
 
 {
-  int iVar1;
+  LocalClientNum_t LVar1;
+  clientConnection_t *pcVar2;
+  clientDemoPlayback_t *pcVar3;
   
-  Cmd_LocalClientNum();
-  if (((DAT_82aa1a9c != 0) && (iVar1 = CL_GetLocalClientConnection(), iVar1 != 0)) &&
-     (*(int *)(iVar1 + 0x40250) == 2)) {
-    Com_Printf(0xe,0xffffffff821db9b8);
-    iVar1 = CL_Demo_GetPlaybackData();
-    *(undefined4 *)(iVar1 + 0x51e1f8) = 0;
-    *(undefined4 *)(iVar1 + 0x5bef4c) = 0;
+  LVar1 = Cmd_LocalClientNum();
+  if (((clientConnections != (clientConnection_t *)0x0) &&
+      (pcVar2 = CL_GetLocalClientConnection(LVar1), pcVar2 != (clientConnection_t *)0x0)) &&
+     ((pcVar2->clientDemo).state == 2)) {
+    Com_Printf(0xe,"Clip: Deleting clip\n");
+    pcVar3 = CL_Demo_GetPlaybackData();
+    pcVar3->clipRecordBufIndex = 0;
+    pcVar3->segmentCount = 0;
     return;
   }
-  Com_PrintError(0xe,0xffffffff821db8c0);
+  Com_PrintError(0xe,"We are not playing a demo.\n");
   return;
 }
 
 
 // 827CDFF8  CL_Demo_SaveSegment_f  (client_demo/cl_demo_common.cpp:735)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
 void CL_Demo_SaveSegment_f(void)
 
 {
-  int iVar2;
-  undefined8 uVar1;
-  char *_Str;
-  int iVar3;
-  char cVar4;
-  undefined8 uVar5;
-  int *piVar6;
+  int iVar1;
+  LocalClientNum_t LVar2;
+  clientConnection_t *pcVar3;
+  char *pcVar4;
+  clientDemoPlayback_t *pcVar5;
+  bool bVar6;
+  int *piVar7;
   
   __savegprlr_27();
-  iVar2 = Cmd_Argc();
-  if (iVar2 != 2) {
-    Com_Printf(0,0xffffffff821dba18);
+  iVar1 = Cmd_Argc();
+  if (iVar1 != 2) {
+    Com_Printf(0,"Usage: demo_savesegment <discard>");
     __restgprlr_27();
     return;
   }
-  uVar1 = Cmd_LocalClientNum();
-  if (((DAT_82aa1a9c == 0) || (iVar2 = CL_GetLocalClientConnection(), iVar2 == 0)) ||
-     (*(int *)(iVar2 + 0x40250) != 2)) {
-    Com_PrintError(0xe,0xffffffff821db8c0);
+  LVar2 = Cmd_LocalClientNum();
+  if (((clientConnections == (clientConnection_t *)0x0) ||
+      (pcVar3 = CL_GetLocalClientConnection(LVar2), pcVar3 == (clientConnection_t *)0x0)) ||
+     ((pcVar3->clientDemo).state != 2)) {
+    Com_PrintError(0xe,"We are not playing a demo.\n");
     __restgprlr_27();
     return;
   }
-  _Str = (char *)Cmd_Argv(1);
-  iVar2 = atoi(_Str);
-  Com_Printf(0xe,0xffffffff821dba04);
-  iVar3 = CL_Demo_GetPlaybackData();
-  if (iVar2 == 0) {
-    piVar6 = (int *)(iVar3 + 0x5bef4c);
-    iVar2 = *piVar6 * 0x100a8 + iVar3;
-    *(int *)(iVar2 + 0x51e8d4) = *(int *)(iVar3 + 0x51e1f8) - *(int *)(iVar2 + 0x51e8d0);
-    iVar2 = CL_Demo_GetClipTime();
-    *(int *)(*piVar6 * 0x100a8 + iVar3 + 0x51e8dc) = iVar2 - *(int *)(iVar3 + 0x51e860);
-    if (*(int *)(*piVar6 * 0x100a8 + iVar3 + 0x51e8d4) < 1) {
-      MyAssertHandler(0xffffffff821db600,0x302,0,0xffffffff82000f98,0xffffffff821db9d0);
+  pcVar4 = Cmd_Argv(1);
+  iVar1 = atoi(pcVar4);
+  Com_Printf(0xe,"Clip: Saving clip\n");
+  pcVar5 = CL_Demo_GetPlaybackData();
+  if (iVar1 == 0) {
+    piVar7 = &pcVar5->segmentCount;
+    pcVar5->segments[*piVar7].size =
+         pcVar5->clipRecordBufIndex - pcVar5->segments[*piVar7].clipBufferIndex;
+    iVar1 = CL_Demo_GetClipTime();
+    pcVar5->segments[*piVar7].duration = iVar1 - pcVar5->prevClipTime;
+    if (pcVar5->segments[*piVar7].size < 1) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_common.cpp"
+                      ,0x302,0,"%s");
     }
-    *piVar6 = *piVar6 + 1;
-    CL_Demo_SetClipModified(1);
-    cVar4 = CL_Demo_IsCompleted();
-    if (cVar4 != '\0') goto LAB_827ce1c4;
-    uVar5 = 1;
+    *piVar7 = *piVar7 + 1;
+    CL_Demo_SetClipModified(true);
+    bVar6 = CL_Demo_IsCompleted();
+    if (bVar6) goto LAB_827ce1c4;
+    iVar1 = 1;
   }
   else {
-    uVar5 = 0;
-    *(undefined4 *)(iVar3 + 0x51e1f8) = *(undefined4 *)(iVar3 + 0x51e85c);
-    *(undefined4 *)(iVar3 + 0x51e4c0) = *(undefined4 *)(iVar3 + 0x51e860);
+    iVar1 = 0;
+    pcVar5->clipRecordBufIndex = pcVar5->prevClipRecordBufIndex;
+    pcVar5->clipTime = pcVar5->prevClipTime;
   }
-  CL_Demo_ReadRestorePoint(uVar1,uVar5);
+  CL_Demo_ReadRestorePoint(LVar2,iVar1);
 LAB_827ce1c4:
   CL_Demo_ActivateTransitionScreen(1);
-  *(undefined1 *)(iVar3 + 0x5bef48) = 0;
+  pcVar5->pendingSegmentSave = false;
   __restgprlr_27();
   return;
 }
@@ -627,55 +560,64 @@ LAB_827ce1c4:
 
 // 827CE1E8  CL_Demo_PreviewSegment_f  (client_demo/cl_demo_common.cpp:792)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
 void CL_Demo_PreviewSegment_f(void)
 
 {
-  int iVar2;
-  undefined8 uVar1;
-  int iVar3;
-  char *_Str;
+  int iVar1;
+  LocalClientNum_t LVar2;
+  clientConnection_t *pcVar3;
+  clientDemoPlayback_t *pcVar4;
+  char *pcVar5;
   
   __savegprlr_29();
-  iVar2 = Cmd_Argc();
-  if ((iVar2 != 1) && (iVar2 = Cmd_Argc(), iVar2 != 2)) {
-    Com_Printf(0,0xffffffff821dba9c);
+  iVar1 = Cmd_Argc();
+  if ((iVar1 != 1) && (iVar1 = Cmd_Argc(), iVar1 != 2)) {
+    Com_Printf(0,"Usage: demo_previewsegment [segmentIndex].\n");
     __restgprlr_29();
     return;
   }
-  uVar1 = Cmd_LocalClientNum();
-  if ((DAT_82aa1a9c != 0) &&
-     ((iVar2 = CL_GetLocalClientConnection(), iVar2 != 0 && (*(int *)(iVar2 + 0x40250) == 2)))) {
-    iVar2 = CL_Demo_GetPlaybackData();
-    iVar3 = Cmd_Argc();
-    if (iVar3 == 2) {
-      if (*(char *)(iVar2 + 0x5bef48) != '\0') {
-        MyAssertHandler(0xffffffff821db600,0x32f,0,0xffffffff82000f98,0xffffffff821dba7c);
+  LVar2 = Cmd_LocalClientNum();
+  if ((clientConnections != (clientConnection_t *)0x0) &&
+     ((pcVar3 = CL_GetLocalClientConnection(LVar2), pcVar3 != (clientConnection_t *)0x0 &&
+      ((pcVar3->clientDemo).state == 2)))) {
+    pcVar4 = CL_Demo_GetPlaybackData();
+    iVar1 = Cmd_Argc();
+    if (iVar1 == 2) {
+      if (pcVar4->pendingSegmentSave != false) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_common.cpp"
+                        ,0x32f,0,"%s");
       }
-      _Str = (char *)Cmd_Argv(1);
-      iVar3 = atoi(_Str);
-      if ((iVar3 < 0) || (*(int *)(iVar2 + 0x5bef4c) <= iVar3)) {
-        Com_PrintError(0xe,0xffffffff821dba5c);
+      pcVar5 = Cmd_Argv(1);
+      iVar1 = atoi(pcVar5);
+      if ((iVar1 < 0) || (pcVar4->segmentCount <= iVar1)) {
+        Com_PrintError(0xe,"Bad segment index specified.\n");
         __restgprlr_29();
         return;
       }
-      if (*(char *)(iVar2 + 0x5bef59) == '\0') {
-        CL_Demo_WriteRestorePoint(uVar1,0);
-        CL_Demo_PreviewSegment(uVar1,iVar3);
+      if (pcVar4->previewAllSegments == false) {
+        CL_Demo_WriteRestorePoint(LVar2,0);
+        CL_Demo_PreviewSegment(LVar2,iVar1);
         __restgprlr_29();
         return;
       }
     }
     else {
-      if (*(char *)(iVar2 + 0x5bef48) == '\0') {
-        MyAssertHandler(0xffffffff821db600,0x33e,0,0xffffffff82000f98,0xffffffff821dba3c);
+      if (pcVar4->pendingSegmentSave == false) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_common.cpp"
+                        ,0x33e,0,"%s");
       }
-      iVar3 = -1;
+      iVar1 = -1;
     }
-    CL_Demo_PreviewSegment(uVar1,iVar3);
+    CL_Demo_PreviewSegment(LVar2,iVar1);
     __restgprlr_29();
     return;
   }
-  Com_PrintError(0xe,0xffffffff821db8c0);
+  Com_PrintError(0xe,"We are not playing a demo.\n");
   __restgprlr_29();
   return;
 }
@@ -683,44 +625,52 @@ void CL_Demo_PreviewSegment_f(void)
 
 // 827CC348  CL_Demo_Keyboard_f  (client_demo/cl_demo_common.cpp:845)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 void CL_Demo_Keyboard_f(void)
 
 {
-  int iVar3;
-  undefined8 uVar1;
-  undefined8 uVar2;
+  int iVar1;
+  char *pcVar2;
+  LocalClientNum_t LVar3;
   
-  iVar3 = Cmd_Argc();
-  if (iVar3 != 2) {
-    Com_Printf(0,0xffffffff821db4c4);
+  iVar1 = Cmd_Argc();
+  if (iVar1 != 2) {
+    Com_Printf(0,"Usage: cl_demo_keyboard <type>\n");
     return;
   }
-  uVar1 = Cmd_Argv(1);
-  uVar2 = Cmd_LocalClientNum();
-  CL_Demo_Keyboard(uVar2,uVar1);
+  pcVar2 = Cmd_Argv(1);
+  LVar3 = Cmd_LocalClientNum();
+  CL_Demo_Keyboard(LVar3,pcVar2);
   return;
 }
 
 
 // 827CC3B8  CL_Demo_GetExeModeType  (client_demo/cl_demo_common.cpp:889)
 
-undefined8 CL_Demo_GetExeModeType(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+clientDemoExeModeType CL_Demo_GetExeModeType(void)
 
 {
-  return 1;
+  return CLIENT_DEMO_EXE_MODE_TEST;
 }
 
 
 // 827CC3C0  CL_Demo_SetDemoState  (client_demo/cl_demo_common.cpp:917)
 
-void CL_Demo_SetDemoState(undefined8 param_1,undefined4 param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void CL_Demo_SetDemoState(LocalClientNum_t param_1,int param_2)
 
 {
-  int iVar1;
+  clientConnection_t *pcVar1;
   
-  iVar1 = CL_GetLocalClientConnection();
-  if (iVar1 != 0) {
-    *(undefined4 *)(iVar1 + 0x40250) = param_2;
+  pcVar1 = CL_GetLocalClientConnection(param_1);
+  if (pcVar1 != (clientConnection_t *)0x0) {
+    (pcVar1->clientDemo).state = param_2;
   }
   return;
 }
@@ -728,13 +678,17 @@ void CL_Demo_SetDemoState(undefined8 param_1,undefined4 param_2)
 
 // 827CC400  CL_Demo_GetDemoState  (client_demo/cl_demo_common.cpp:936)
 
-undefined4 CL_Demo_GetDemoState(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+int CL_Demo_GetDemoState(LocalClientNum_t param_1)
 
 {
-  int iVar1;
+  clientConnection_t *pcVar1;
   
-  if ((DAT_82aa1a9c != 0) && (iVar1 = CL_GetLocalClientConnection(), iVar1 != 0)) {
-    return *(undefined4 *)(iVar1 + 0x40250);
+  if ((clientConnections != (clientConnection_t *)0x0) &&
+     (pcVar1 = CL_GetLocalClientConnection(param_1), pcVar1 != (clientConnection_t *)0x0)) {
+    return (pcVar1->clientDemo).state;
   }
   return 0;
 }
@@ -742,26 +696,32 @@ undefined4 CL_Demo_GetDemoState(void)
 
 // 827CC458  CL_Demo_IsEnabled  (client_demo/cl_demo_common.cpp:958)
 
-undefined1 CL_Demo_IsEnabled(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+bool CL_Demo_IsEnabled(void)
 
 {
-  if (((DAT_82aa1a88 == 0) && (*(int *)(DAT_84545cc4 + 0xc) != 0)) &&
-     (*(char *)(DAT_82aa1af8 + 0xc) != '\0')) {
-    return *(undefined1 *)(DAT_8484f0d4 + 0xc);
+  if (((g_generateAllMaps == 0) && ((theater_active->current).integer != 0)) &&
+     ((onlinegame->current).enabled != false)) {
+    return (cl_demo_enabled->current).enabled;
   }
-  return 0;
+  return false;
 }
 
 
 // 827CC4A8  CL_Demo_IsIdle  (client_demo/cl_demo_common.cpp:981)
 
-bool CL_Demo_IsIdle(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+bool CL_Demo_IsIdle(LocalClientNum_t param_1)
 
 {
-  int iVar1;
+  clientConnection_t *pcVar1;
   
-  if ((DAT_82aa1a9c != 0) && (iVar1 = CL_GetLocalClientConnection(), iVar1 != 0)) {
-    return *(int *)(iVar1 + 0x40250) == 0;
+  if ((clientConnections != (clientConnection_t *)0x0) &&
+     (pcVar1 = CL_GetLocalClientConnection(param_1), pcVar1 != (clientConnection_t *)0x0)) {
+    return (pcVar1->clientDemo).state == 0;
   }
   return true;
 }
@@ -769,426 +729,151 @@ bool CL_Demo_IsIdle(void)
 
 // 827CC510  CL_Demo_IsRecording  (client_demo/cl_demo_common.cpp:993)
 
-bool CL_Demo_IsRecording(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+bool CL_Demo_IsRecording(LocalClientNum_t param_1)
 
 {
-  int iVar1;
+  clientConnection_t *pcVar1;
+  int iVar2;
   
-  if ((DAT_82aa1a9c == 0) || (iVar1 = CL_GetLocalClientConnection(), iVar1 == 0)) {
-    iVar1 = 0;
+  if ((clientConnections == (clientConnection_t *)0x0) ||
+     (pcVar1 = CL_GetLocalClientConnection(param_1), pcVar1 == (clientConnection_t *)0x0)) {
+    iVar2 = 0;
   }
   else {
-    iVar1 = *(int *)(iVar1 + 0x40250);
+    iVar2 = (pcVar1->clientDemo).state;
   }
-  return iVar1 == 1;
+  return iVar2 == 1;
 }
 
 
 // 827CC568  CL_Demo_IsPlaying  (client_demo/cl_demo_common.cpp:1005)
 
-bool CL_Demo_IsPlaying(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+bool CL_Demo_IsPlaying(LocalClientNum_t param_1)
 
 {
-  int iVar1;
+  clientConnection_t *pcVar1;
+  int iVar2;
   
-  if ((DAT_82aa1a9c == 0) || (iVar1 = CL_GetLocalClientConnection(), iVar1 == 0)) {
-    iVar1 = 0;
+  if ((clientConnections == (clientConnection_t *)0x0) ||
+     (pcVar1 = CL_GetLocalClientConnection(param_1), pcVar1 == (clientConnection_t *)0x0)) {
+    iVar2 = 0;
   }
   else {
-    iVar1 = *(int *)(iVar1 + 0x40250);
+    iVar2 = (pcVar1->clientDemo).state;
   }
-  return iVar1 == 2;
+  return iVar2 == 2;
 }
 
 
 // 827CC5C0  CL_Demo_WriteHeader  (client_demo/cl_demo_common.cpp:1017)
 
-void CL_Demo_WriteHeader(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void CL_Demo_WriteHeader(LocalClientNum_t param_1,clientDemoHeader_t *param_2)
 
 {
-  int iVar1;
+  clientConnection_t *pcVar1;
   
-  iVar1 = CL_GetLocalClientConnection();
-  (**(code **)(iVar1 + 0x54228))(param_2,0x3020,param_1);
+  pcVar1 = CL_GetLocalClientConnection(param_1);
+  (*(pcVar1->clientDemo).demoWrite)(param_2,0x3020,param_1);
   return;
 }
 
 
 // 827CC620  CL_Demo_WriteFooter  (client_demo/cl_demo_common.cpp:1033)
 
-void CL_Demo_WriteFooter(undefined8 param_1,longlong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void CL_Demo_WriteFooter(LocalClientNum_t param_1,clientDemoFooter_t *param_2)
 
 {
-  uint uVar1;
-  undefined8 uVar2;
-  int iVar3;
-  char *_Str;
-  int iVar4;
-  undefined4 *puVar5;
+  LocalClientNum_t LVar1;
+  clientConnection_t *pcVar2;
+  char *pcVar3;
+  uint uVar4;
+  _func___cdecl_void_void_ptr_int_int **pp_Var5;
   int local_30 [12];
   
-  uVar2 = __savegprlr_28();
-  iVar3 = CL_GetLocalClientConnection();
+  LVar1 = __savegprlr_28(param_1);
+  pcVar2 = CL_GetLocalClientConnection(LVar1);
   local_30[0] = 0;
-  puVar5 = (undefined4 *)(iVar3 + 0x54228);
-  (*(code *)*puVar5)(param_2,0x254,uVar2);
+  pp_Var5 = &(pcVar2->clientDemo).demoWrite;
+  (**pp_Var5)(param_2,0x254,LVar1);
   local_30[0] = local_30[0] + 0x254;
-  (*(code *)*puVar5)(param_2 + 0x618,4,uVar2);
-  iVar3 = (int)param_2;
-  uVar1 = *(uint *)(iVar3 + 0x618);
+  (**pp_Var5)(&param_2->numConnectedPlayers,4,LVar1);
   local_30[0] = local_30[0] + 4;
-  if (uVar1 != 0) {
-    (*(code *)*puVar5)(param_2 + 600,
-                       ((ulonglong)uVar1 + ((ulonglong)uVar1 & 0x7fffffff) * 2 & 0x1fffffff) << 3,
-                       uVar2);
-    local_30[0] = *(int *)(param_2 + 0x618) * 0x18 + local_30[0];
+  if (param_2->numConnectedPlayers != 0) {
+    (**pp_Var5)(param_2->connectedPlayers,param_2->numConnectedPlayers * 0x18,LVar1);
+    local_30[0] = param_2->numConnectedPlayers * 0x18 + local_30[0];
   }
-  (*(code *)*puVar5)(param_2 + 0xf80,4,uVar2);
+  (**pp_Var5)(&param_2->numBookmarks,4,LVar1);
   local_30[0] = local_30[0] + 4;
-  if (*(int *)(iVar3 + 0xf80) != 0) {
-    (*(code *)*puVar5)(param_2 + 0x620,*(int *)(iVar3 + 0xf80) << 3,uVar2);
-    local_30[0] = *(int *)(param_2 + 0xf80) * 8 + local_30[0];
+  if (param_2->numBookmarks != 0) {
+    (**pp_Var5)(param_2->bookmarks,param_2->numBookmarks << 3,LVar1);
+    local_30[0] = param_2->numBookmarks * 8 + local_30[0];
   }
-  (*(code *)*puVar5)(local_30,4,uVar2);
-  (*(code *)*puVar5)(param_2,4,uVar2);
-  _Str = (char *)CL_GetConfigString(0x3d5);
-  iVar4 = atoi(_Str);
-  *(int *)(iVar3 + 0x61c) = iVar4;
+  (**pp_Var5)(local_30,4,LVar1);
+  (**pp_Var5)(param_2,4,LVar1);
+  pcVar3 = CL_GetConfigString(0x3d5);
+  uVar4 = atoi(pcVar3);
+  param_2->matchID = uVar4;
   __restgprlr_28();
   return;
 }
 
 
 // 827CC788  CL_Demo_WriteConfigStrings  (client_demo/cl_demo_common.cpp:1082)
-
-void CL_Demo_WriteConfigStrings(undefined8 param_1,undefined8 param_2,ulonglong param_3)
-
-{
-  bool bVar1;
-  char cVar2;
-  char cVar3;
-  int iVar6;
-  char *pcVar7;
-  undefined8 uVar4;
-  undefined8 uVar5;
-  char *pcVar8;
-  int iVar9;
-  char *pcVar10;
-  longlong lVar11;
-  longlong lVar12;
-  int iVar13;
-  int iVar14;
-  
-  __savegprlr_16();
-  MSG_WriteByte(param_2,1);
-  lVar11 = 0;
-  lVar12 = 0;
-  iVar6 = CCS_GetConfigStringNum(0);
-  iVar13 = 0;
-  do {
-    if ((iVar13 == 1) || (iVar13 == 0)) {
-LAB_827cc874:
-      lVar11 = lVar11 + 1;
-    }
-    else {
-      pcVar10 = &DAT_82ae6ca4 + (&DAT_82ae30f8)[iVar13];
-      if (((param_3 & 0xff) == 0) || (iVar6 != iVar13)) {
-        if ((&DAT_82ae30f8)[iVar13] != 0) goto LAB_827cc874;
-      }
-      else {
-        pcVar7 = (char *)CCS_GetConfigStringValue(lVar12);
-        if (iVar13 < 0x3d6) {
-          do {
-            cVar2 = *pcVar7;
-            cVar3 = *pcVar10;
-            if (cVar2 == '\0') break;
-            pcVar7 = pcVar7 + 1;
-            pcVar10 = pcVar10 + 1;
-          } while (cVar2 == cVar3);
-          bVar1 = cVar2 == cVar3;
-        }
-        else {
-          iVar6 = I_stricmp(pcVar7,pcVar10);
-          bVar1 = iVar6 == 0;
-        }
-        if (!bVar1) {
-          lVar11 = lVar11 + 1;
-        }
-        lVar12 = lVar12 + 1;
-        iVar6 = CCS_GetConfigStringNum(lVar12);
-      }
-    }
-    iVar13 = iVar13 + 1;
-  } while (iVar13 < 0xeeb);
-  MSG_WriteShort(param_2,lVar11);
-  lVar12 = 0;
-  uVar4 = CCS_GetConfigStringNum(0);
-  iVar13 = 0;
-  iVar6 = -1;
-  iVar14 = 0;
-  do {
-    if (iVar14 == 1) {
-      uVar5 = Dvar_InfoString_Big(0x1000);
-      MSG_WriteBit1(param_2);
-      MSG_WriteBit1(param_2);
-      MSG_WriteBigString(param_2,uVar5);
-      iVar6 = 1;
-LAB_827ccaf8:
-      iVar13 = iVar13 + 1;
-    }
-    else {
-      pcVar10 = &DAT_82ae6ca4 + (&DAT_82ae30f8)[iVar14];
-      if (iVar14 == 0) {
-        MSG_WriteBit1(param_2);
-        MSG_WriteBit1(param_2);
-        MSG_WriteBigString(param_2,pcVar10);
-        iVar6 = 0;
-        goto LAB_827ccaf8;
-      }
-      if ((param_3 & 0xff) == 0) {
-LAB_827ccaac:
-        if ((&DAT_82ae30f8)[iVar14] != 0) {
-          if (iVar14 == iVar6 + 1) {
-            MSG_WriteBit1();
-          }
-          else {
-            MSG_WriteBit0(param_2);
-            MSG_WriteBits(param_2,iVar14,0xc);
-          }
-          MSG_WriteBit1(param_2);
-          MSG_WriteBigString(param_2,pcVar10);
-          goto LAB_827ccaf8;
-        }
-      }
-      else {
-        iVar9 = (int)uVar4;
-        if (((iVar9 != 0) && (iVar9 < iVar14)) && (DAT_84013128 == 0)) {
-          uVar5 = va(0xffffffff821db550,uVar4,lVar12);
-          MyAssertHandler(0xffffffff821db600,0x49e,0,uVar5);
-        }
-        if (iVar9 != iVar14) goto LAB_827ccaac;
-        bVar1 = false;
-        pcVar8 = (char *)CCS_GetConfigStringValue(lVar12);
-        pcVar7 = pcVar10;
-        if (iVar14 < 0x3d6) {
-          do {
-            cVar2 = *pcVar8;
-            cVar3 = *pcVar7;
-            if (cVar2 == '\0') break;
-            pcVar8 = pcVar8 + 1;
-            pcVar7 = pcVar7 + 1;
-          } while (cVar2 == cVar3);
-          if (cVar2 == cVar3) goto LAB_827cc9f8;
-LAB_827cca04:
-          bVar1 = true;
-        }
-        else {
-          iVar9 = I_stricmp(pcVar8,pcVar10);
-          if (iVar9 != 0) goto LAB_827cca04;
-LAB_827cc9f8:
-          if ((&DAT_82ae30f8)[iVar14] == 0) goto LAB_827cca04;
-        }
-        if (bVar1) {
-          if ((&DAT_82ae30f8)[iVar14] == 0) {
-            MSG_WriteBit0(param_2);
-            MSG_WriteBits(param_2,iVar14,0xc);
-            MSG_WriteBit1(param_2);
-            pcVar10 = "";
-          }
-          else if (iVar14 == iVar6 + 1) {
-            MSG_WriteBit1();
-            MSG_WriteBit1(param_2);
-          }
-          else {
-            MSG_WriteBit0(param_2);
-            MSG_WriteBits(param_2,iVar14,0xc);
-            MSG_WriteBit1(param_2);
-          }
-          MSG_WriteBigString(param_2,pcVar10);
-          iVar13 = iVar13 + 1;
-          iVar6 = iVar14;
-        }
-        lVar12 = lVar12 + 1;
-        uVar4 = CCS_GetConfigStringNum(lVar12);
-      }
-    }
-    iVar14 = iVar14 + 1;
-    if (0xeea < iVar14) {
-      if (iVar13 != (int)lVar11) {
-        MyAssertHandler(0xffffffff821db600,0x4ef,0,0xffffffff82000f98,0xffffffff821db51c);
-      }
-      uVar4 = va(0xffffffff821db4e4,lVar11);
-      Com_Printf(0xe,uVar4);
-      __restgprlr_16();
-      return;
-    }
-  } while( true );
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 827CE380  CL_Demo_EndAll  (client_demo/cl_demo_common.cpp:1276)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void CL_Demo_EndAll(void)
 
 {
-  longlong lVar1;
+  LocalClientNum_t LVar1;
   
-  lVar1 = 0;
+  LVar1 = LOCAL_CLIENT_0;
   do {
-    CL_Demo_End(lVar1);
-    lVar1 = lVar1 + 1;
-  } while ((int)lVar1 < 4);
+    CL_Demo_End(LVar1);
+    LVar1 = LVar1 + LOCAL_CLIENT_1;
+  } while ((int)LVar1 < 4);
   return;
 }
 
 
 // 827CCB58  CL_Demo_End  (client_demo/cl_demo_common.cpp:1292)
-
-void CL_Demo_End(void)
-
-{
-  undefined4 uVar1;
-  undefined4 uVar2;
-  ulonglong uVar3;
-  int iVar5;
-  int iVar6;
-  int iVar7;
-  char cVar8;
-  undefined8 uVar4;
-  int iVar9;
-  int *piVar10;
-  undefined4 *_Src;
-  int *piVar11;
-  undefined1 auStack_1f60 [3952];
-  undefined1 local_ff0 [16];
-  undefined8 local_fe0;
-  undefined8 local_fd8;
-  undefined8 local_fd0;
-  undefined8 local_fc8;
-  undefined1 auStack_fc0 [4032];
-  
-  uVar3 = __savegprlr_23();
-  if (3 < (uVar3 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82001158,0x4aa,0,0xffffffff820011a8,uVar3,4);
-  }
-  iVar5 = (&DAT_82b3e54c)[(int)uVar3 * 0x79];
-  if (3 < (uVar3 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82001158,0x4c5,0,0xffffffff820011a8,uVar3,4);
-  }
-  if ((iVar5 < 5) && (*(int *)(&DAT_82b3e4f4 + (int)uVar3 * 0x1e4) == 0)) {
-    if (*(char *)(DAT_8484f0c0 + 0xc) != '\0') {
-      Com_Printf(0xe,0xffffffff821db690,uVar3,iVar5,0);
-      __restgprlr_23();
-      return;
-    }
-  }
-  else if ((DAT_82aa1a9c == 0) ||
-          ((iVar5 = CL_GetLocalClientConnection(uVar3), iVar5 == 0 ||
-           (iVar5 = *(int *)(iVar5 + 0x40250), iVar5 == 0)))) {
-    if (*(char *)(DAT_8484f0c0 + 0xc) != '\0') {
-      Com_Printf(0xe,0xffffffff821db668,uVar3);
-      __restgprlr_23();
-      return;
-    }
-  }
-  else {
-    if (*(char *)(DAT_8484f0c0 + 0xc) != '\0') {
-      Com_Printf(0xe,0xffffffff821db64c,uVar3);
-    }
-    iVar6 = CL_GetLocalClientConnection(uVar3);
-    if (iVar6 != 0) {
-      *(undefined4 *)(iVar6 + 0x40250) = 0;
-    }
-    iVar6 = CL_GetLocalClientConnection(uVar3);
-    if (iVar5 == 1) {
-      local_ff0[0] = 0;
-      CL_Demo_Write(local_ff0,1,uVar3);
-      iVar7 = CL_GetLocalClientGlobals(uVar3);
-      piVar11 = (int *)(iVar6 + 0x43280);
-      _Src = (undefined4 *)(iVar6 + 0x43278);
-      iVar9 = 0;
-      *piVar11 = *(int *)(iVar7 + 0x3388);
-      *_Src = *(undefined4 *)(iVar6 + 0x40258);
-      if (0 < *(int *)(iVar6 + 0x43890)) {
-        piVar10 = (int *)(iVar6 + 0x434e4);
-        do {
-          if (*piVar10 == 0) {
-            *piVar10 = *piVar11;
-          }
-          iVar9 = iVar9 + 1;
-          piVar10 = piVar10 + 6;
-        } while (iVar9 < *(int *)(iVar6 + 0x43890));
-      }
-      CL_Demo_WriteFooter(uVar3,_Src);
-      if (*(int *)(iVar6 + 0x54204) != 0) {
-        if (((*(char *)(iVar6 + 0x54209) == '\0') &&
-            (cVar8 = CL_Demo_FlushToHardDrive
-                               ((uint)*(byte *)(iVar6 + 0x54208) * 0x8000 + iVar6 + 0x44204,
-                                *(int *)(iVar6 + 0x54204),uVar3,1), cVar8 != '\0')) &&
-           (1000 < *piVar11 - *(int *)(iVar6 + 0x4327c))) {
-          memcpy(&local_fe0,_Src,0xf88);
-          uVar1 = *(undefined4 *)(iVar6 + 0x4024c);
-          uVar2 = *(undefined4 *)(iVar6 + 0x40248);
-          uVar4 = CL_ControllerIndexFromClientNum(uVar3);
-          memcpy(auStack_1f60,auStack_fc0,0xf68);
-          CL_Demo_EnumFinishAddingDemoFile
-                    (uVar4,uVar2,iVar6 + 0x40148,uVar1,local_fe0,local_fd8,local_fd0,local_fc8);
-        }
-        else {
-          uVar1 = *(undefined4 *)(iVar6 + 0x5420c);
-          uVar2 = *(undefined4 *)(iVar6 + 0x40248);
-          uVar4 = CL_ControllerIndexFromClientNum(uVar3);
-          CL_Demo_EnumFinishAddingCorruptDemoFile(uVar4,uVar2,iVar6 + 0x40148,uVar1);
-        }
-      }
-    }
-    CL_Demo_CloseFile(uVar3,*(undefined4 *)(iVar6 + 0x4024c));
-    *(undefined4 *)(iVar6 + 0x4024c) = 0;
-    if (iVar5 == 2) {
-      cVar8 = CL_Demo_IsPlaybackMemoryAllocated();
-      if (cVar8 != '\0') {
-        iVar5 = CL_Demo_GetPlaybackData();
-        *(undefined1 *)(iVar5 + 9) = 1;
-      }
-      cVar8 = mjpeg_is_encoding();
-      if (cVar8 != '\0') {
-        mjpeg_close();
-        cVar8 = CL_Demo_IsRenderingCancelled();
-        if (cVar8 != '\0') {
-          CL_Demo_SetPlayingFlag(1);
-          CL_Demo_CancelRendering(0);
-          DCache_DeleteFromCache(1,2);
-        }
-        *(undefined1 *)(iVar6 + 0x54230) = 0;
-      }
-      CL_DisconnectLocalClient(uVar3);
-      cVar8 = CL_Demo_IsPlaybackMemoryAllocated();
-      if (cVar8 != '\0') {
-        iVar5 = CL_Demo_GetPlaybackData();
-        *(undefined1 *)(iVar5 + 9) = 0;
-      }
-    }
-  }
-  __restgprlr_23();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure usercmd_s
 
 // 827CCF48  CL_Demo_Frame  (client_demo/cl_demo_common.cpp:1456)
 
-void CL_Demo_Frame(undefined8 param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void CL_Demo_Frame(int param_1)
 
 {
-  char cVar3;
-  int iVar1;
-  undefined4 *puVar2;
+  bool bVar2;
+  clientDemoPlayback_t *pcVar1;
   
-  cVar3 = CL_Demo_IsPlaybackMemoryAllocated();
-  if (cVar3 != '\0') {
-    iVar1 = CL_Demo_GetPlaybackData();
-    if (*(char *)(iVar1 + 0x51e858) != '\0') {
-      puVar2 = (undefined4 *)CL_Demo_GetPlaybackData();
-      CL_Demo_CopyScoresInformationToCgame(*puVar2);
+  bVar2 = CL_Demo_IsPlaybackMemoryAllocated();
+  if (bVar2) {
+    pcVar1 = CL_Demo_GetPlaybackData();
+    if (pcVar1->pendingScoresCopy != false) {
+      pcVar1 = CL_Demo_GetPlaybackData();
+      CL_Demo_CopyScoresInformationToCgame(pcVar1->localClientNum);
     }
     CL_Demo_UpdateClipTime(param_1);
   }
@@ -1198,30 +883,35 @@ void CL_Demo_Frame(undefined8 param_1)
 
 // 827CCFB0  CL_Demo_PopulateStaticFooterInformation  (client_demo/cl_demo_common.cpp:1476)
 
-void CL_Demo_PopulateStaticFooterInformation(undefined8 param_1,longlong param_2,undefined4 param_3)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CL_Demo_PopulateStaticFooterInformation(int param_1,clientDemoFooter_t *param_2,uint param_3)
 
 {
-  int iVar1;
-  undefined8 uVar2;
-  undefined8 uVar3;
-  undefined4 uVar4;
+  int iVar2;
+  char *pcVar3;
+  ulong64 uVar1;
+  PartyData *pPVar4;
+  team_t tVar5;
   
-  uVar2 = __savegprlr_29();
-  uVar3 = Dvar_GetString(0xffffffff82022f8c);
-  I_strncpyz(param_2 + 0xc,uVar3,0x100);
-  uVar3 = Dvar_GetString(0xffffffff82010974);
-  I_strncpyz(param_2 + 0x10c,uVar3,0x100);
-  uVar3 = Live_GetLocalClientName(uVar2);
-  I_strncpyz(param_2 + 0x20c,uVar3,0x20);
-  iVar1 = (int)param_2;
-  *(undefined4 *)(iVar1 + 0x250) = param_3;
-  uVar2 = Live_GetXuid(uVar2);
-  uVar3 = Lobby_GetPartyData();
-  uVar4 = Party_GetAssignedTeam(uVar3,uVar2);
-  if (3 < *(uint *)(iVar1 + 0x22c)) {
-    MyAssertHandler(0xffffffff821db600,0x5ce,1,0xffffffff821db6e8,*(uint *)(iVar1 + 0x22c),4);
+  iVar2 = __savegprlr_29(param_1);
+  pcVar3 = Dvar_GetString("g_gametype");
+  I_strncpyz((param_2->info).gameType,pcVar3,0x100);
+  pcVar3 = Dvar_GetString("mapname");
+  I_strncpyz((param_2->info).mapName,pcVar3,0x100);
+  pcVar3 = Live_GetLocalClientName(iVar2);
+  I_strncpyz((param_2->info).authorName,pcVar3,0x20);
+  (param_2->info).createTime = param_3;
+  uVar1 = Live_GetXuid(iVar2);
+  pPVar4 = Lobby_GetPartyData();
+  tVar5 = Party_GetAssignedTeam(pPVar4,uVar1);
+  if (TEAM_SPECTATOR < (param_2->info).team) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_common.cpp"
+                    ,0x5ce,1,"footer->info.team doesn\'t index TEAM_NUM_TEAMS\n\t%i not in [0, %i)")
+    ;
   }
-  *(undefined4 *)(iVar1 + 0x22c) = uVar4;
+  (param_2->info).team = tVar5;
   __restgprlr_29();
   return;
 }
@@ -1229,74 +919,79 @@ void CL_Demo_PopulateStaticFooterInformation(undefined8 param_1,longlong param_2
 
 // 827CD070  CL_Demo_GetMaxFps  (client_demo/cl_demo_common.cpp:1501)
 
-undefined4 CL_Demo_GetMaxFps(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int CL_Demo_GetMaxFps(void)
 
 {
-  return *(undefined4 *)(DAT_8484f0ec + 0xc);
+  return (cl_demo_render_fps->current).integer;
 }
 
 
 // 827CD080  CL_Demo_GetRenderSize  (client_demo/cl_demo_common.cpp:1513)
 
-void CL_Demo_GetRenderSize(undefined4 *param_1,int *param_2,undefined4 *param_3)
+void CL_Demo_GetRenderSize(int *param_1,int *param_2,int *param_3)
 
 {
-  undefined4 uVar1;
-  int iVar2;
+  int iVar1;
   
-  if (*(char *)(DAT_836673a4 + 0xc) == '\0') {
-    uVar1 = 0x280;
+  if ((com_wideScreen->current).enabled == false) {
+    iVar1 = 0x280;
   }
   else {
-    uVar1 = *(undefined4 *)(DAT_8484f0b0 + 0xc);
+    iVar1 = (cl_demo_render_width_wide->current).integer;
   }
-  *param_1 = uVar1;
-  if (*(char *)(DAT_8484f0cc + 0xc) != '\0') {
-    *param_2 = (-(uint)(*(char *)(DAT_836673a4 + 0xc) != '\0') & 0x3c) + 0x1e0;
-    *param_3 = *(undefined4 *)(DAT_8484f0ec + 0xc);
+  *param_1 = iVar1;
+  if ((cl_demo_uploadfb->current).enabled != false) {
+    *param_2 = (-(uint)((com_wideScreen->current).enabled != false) & 0x3c) + 0x1e0;
+    *param_3 = (cl_demo_render_fps->current).integer;
     return;
   }
-  if (*(char *)(DAT_836673a4 + 0xc) == '\0') {
-    iVar2 = 0x1e0;
+  if ((com_wideScreen->current).enabled == false) {
+    iVar1 = 0x1e0;
   }
   else {
-    iVar2 = *(int *)(DAT_8484f0f0 + 0xc);
+    iVar1 = (cl_demo_render_height->current).integer;
   }
-  *param_2 = iVar2;
-  *param_3 = *(undefined4 *)(DAT_8484f0ec + 0xc);
+  *param_2 = iVar1;
+  *param_3 = (cl_demo_render_fps->current).integer;
   return;
 }
 
 
 // 827CD128  CL_Demo_CanRecord  (client_demo/cl_demo_common.cpp:1538)
 
-bool CL_Demo_CanRecord(undefined8 param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+bool CL_Demo_CanRecord(LocalClientNum_t param_1)
 
 {
   int iVar1;
-  char cVar2;
+  clientDemoDeviceEnumInfo_t *pcVar2;
+  bool bVar3;
+  char cVar4;
   
-  if (DAT_82aa1a88 == 0) {
-    if (*(int *)(DAT_84545cc4 + 0xc) == 0) {
-      cVar2 = '\0';
+  if (g_generateAllMaps == 0) {
+    if ((theater_active->current).integer == 0) {
+      cVar4 = '\0';
     }
-    else if (*(char *)(DAT_82aa1af8 + 0xc) == '\0') {
-      cVar2 = '\0';
+    else if ((onlinegame->current).enabled == false) {
+      cVar4 = '\0';
     }
     else {
-      cVar2 = *(char *)(DAT_8484f0d4 + 0xc);
+      cVar4 = (cl_demo_enabled->current).enabled;
     }
   }
   else {
-    cVar2 = '\0';
+    cVar4 = '\0';
   }
-  if (cVar2 != '\0') {
-    CL_ControllerIndexFromClientNum(param_1);
-    iVar1 = CL_Demo_GetDeviceEnumInfo();
-    if (iVar1 != 0) {
-      CL_ControllerIndexFromClientNum(param_1);
-      cVar2 = GamerProfile_IsTheaterRecordingDisabled();
-      return cVar2 == '\0';
+  if (cVar4 != '\0') {
+    iVar1 = CL_ControllerIndexFromClientNum(param_1);
+    pcVar2 = CL_Demo_GetDeviceEnumInfo(iVar1);
+    if (pcVar2 != (clientDemoDeviceEnumInfo_t *)0x0) {
+      iVar1 = CL_ControllerIndexFromClientNum(param_1);
+      bVar3 = GamerProfile_IsTheaterRecordingDisabled(iVar1);
+      return !bVar3;
     }
   }
   return false;

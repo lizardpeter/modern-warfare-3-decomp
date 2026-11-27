@@ -2,33 +2,33 @@
 
 // 82562790  TextValue  (script/scr_lex.txt:3)
 
-void TextValue(undefined4 param_1,longlong param_2)
+void TextValue(char *param_1,int param_2)
 
 {
-  DAT_83cacc6c._0_4_ = SL_GetStringOfSize(param_1,0,param_2 + 1,0xf);
+  yylval.val.stringValue = SL_GetStringOfSize(param_1,0,param_2 + 1,0xf);
   return;
 }
 
 
 // 825627C8  StringValue  (script/scr_lex.txt:8)
 
-undefined8 StringValue(char *param_1,longlong param_2)
+int StringValue(char *param_1,int param_2)
 
 {
   char cVar1;
-  int iVar2;
+  longlong lVar2;
   char *pcVar3;
   char local_2010 [8208];
   
-  iVar2 = (int)param_2;
-  if (0x1fff < iVar2) {
-    CompileError(DAT_83ca8c64,0xffffffff82152ae4);
+  lVar2 = (longlong)param_2;
+  if (0x1fff < param_2) {
+    CompileError(g_sourcePos,"max string length exceeded: \"%s\"");
     return 0;
   }
   pcVar3 = local_2010;
-  while (iVar2 != 0) {
+  while (param_2 != 0) {
     if (*param_1 == '\\') {
-      if (param_2 == 1) break;
+      if (lVar2 == 1) break;
       param_1 = param_1 + 1;
       cVar1 = *param_1;
       if (cVar1 == 'n') {
@@ -43,1163 +43,1190 @@ undefined8 StringValue(char *param_1,longlong param_2)
       else {
         *pcVar3 = cVar1;
       }
-      param_2 = param_2 + -2;
+      lVar2 = lVar2 + -2;
     }
     else {
       *pcVar3 = *param_1;
-      param_2 = param_2 + -1;
+      lVar2 = lVar2 + -1;
     }
     pcVar3 = pcVar3 + 1;
     param_1 = param_1 + 1;
-    iVar2 = (int)param_2;
+    param_2 = (int)lVar2;
   }
   *pcVar3 = '\0';
-  DAT_83cacc6c._0_4_ = SL_GetString_(local_2010,DAT_83ca8c59,0xf);
+  yylval.val.stringValue = SL_GetString_(local_2010,(uint)g_parse_user,0xf);
   return 1;
 }
 
 
 // 82561E78  LowerCase  (script/scr_yacc.txt:40)
 
-void LowerCase(undefined8 param_1)
+uint LowerCase(uint param_1)
 
 {
-  SL_ConvertToLowercase(param_1,DAT_83ca8c59,0xf);
-  return;
+  uint uVar1;
+  
+  uVar1 = SL_ConvertToLowercase(param_1,(uint)g_parse_user,0xf);
+  return uVar1;
 }
 
 
 // 82561E88  Scr_CreateFunctionCall1  (script/scr_yacc.txt:49)
 
-void Scr_CreateFunctionCall1
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
+sval_u Scr_CreateFunctionCall1(char *param_1,sval_u param_2,sval_u param_3,sval_u param_4)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
-  undefined8 uVar3;
+  char *pcVar1;
+  sval_u sVar2;
+  sval_u sVar3;
+  sval_u sVar4;
+  int iVar5;
   
-  uVar1 = __savegprlr_27();
-  uVar1 = SL_GetString_(uVar1,DAT_83ca8c59,0xf);
-  uVar1 = node2(0x17,uVar1,param_4);
-  uVar1 = node2(0x15,uVar1,param_4);
-  uVar1 = node2(0x1d,uVar1,param_4);
-  uVar2 = node0(0);
-  uVar3 = node2_(param_2,param_3);
-  uVar2 = prepend_node(uVar3,uVar2);
-  uVar1 = node3(0x1a,uVar1,uVar2,param_4);
-  uVar1 = node1(0x16,uVar1);
-  node2(7,uVar1,param_4);
-  __restgprlr_27();
-  return;
+  pcVar1 = (char *)__savegprlr_27(param_1);
+  sVar2.stringValue = SL_GetString_(pcVar1,(uint)g_parse_user,0xf);
+  sVar2 = node2(0x17,sVar2,param_4);
+  sVar2 = node2(0x15,sVar2,param_4);
+  sVar2 = node2(0x1d,sVar2,param_4);
+  sVar3 = node0(0);
+  sVar4 = node2_(param_2,param_3);
+  sVar3 = prepend_node(sVar4,sVar3);
+  sVar2 = node3(0x1a,sVar2,sVar3,param_4);
+  sVar2 = node1(0x16,sVar2);
+  sVar2 = node2(7,sVar2,param_4);
+  iVar5 = __restgprlr_27(sVar2.type);
+  return (sval_u)iVar5;
 }
 
 
 // 825628D8  IntegerValue  (script/scr_lex.txt:54)
 
-int IntegerValue(char *param_1)
+void IntegerValue(char *param_1)
 
 {
-  int iVar1;
-  
-  iVar1 = sscanf(param_1,"%d",0xffffffff83cacc6c);
-  return iVar1;
+  sscanf(param_1,"%d");
+  return;
 }
 
 
 // 825628F0  FloatValue  (script/scr_lex.txt:58)
 
-int FloatValue(char *param_1)
+void FloatValue(char *param_1)
 
 {
-  int iVar1;
-  
-  iVar1 = sscanf(param_1,"%f",0xffffffff83cacc6c);
-  return iVar1;
+  sscanf(param_1,"%f");
+  return;
 }
 
 
 // 82561F40  Scr_CreateFunctionCall2  (script/scr_yacc.txt:71)
 
-void Scr_CreateFunctionCall2
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-               undefined8 param_5,undefined8 param_6)
+sval_u Scr_CreateFunctionCall2
+                 (char *param_1,sval_u param_2,sval_u param_3,sval_u param_4,sval_u param_5,
+                 sval_u param_6)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
-  undefined8 uVar3;
+  char *pcVar1;
+  sval_u sVar2;
+  sval_u sVar3;
+  sval_u sVar4;
+  int iVar5;
   
-  uVar1 = __savegprlr_25();
-  uVar1 = SL_GetString_(uVar1,DAT_83ca8c59,0xf);
-  uVar1 = node2(0x17,uVar1,param_6);
-  uVar1 = node2(0x15,uVar1,param_6);
-  uVar1 = node2(0x1d,uVar1,param_6);
-  uVar2 = node0(0);
-  uVar3 = node2_(param_2,param_4);
-  uVar2 = prepend_node(uVar3,uVar2);
-  uVar3 = node2_(param_3,param_5);
-  uVar2 = prepend_node(uVar3,uVar2);
-  uVar1 = node3(0x1a,uVar1,uVar2,param_6);
-  uVar1 = node1(0x16,uVar1);
-  node2(7,uVar1,param_6);
-  __restgprlr_25();
-  return;
+  pcVar1 = (char *)__savegprlr_25(param_1);
+  sVar2.stringValue = SL_GetString_(pcVar1,(uint)g_parse_user,0xf);
+  sVar2 = node2(0x17,sVar2,param_6);
+  sVar2 = node2(0x15,sVar2,param_6);
+  sVar2 = node2(0x1d,sVar2,param_6);
+  sVar3 = node0(0);
+  sVar4 = node2_(param_2,param_4);
+  sVar3 = prepend_node(sVar4,sVar3);
+  sVar4 = node2_(param_3,param_5);
+  sVar3 = prepend_node(sVar4,sVar3);
+  sVar2 = node3(0x1a,sVar2,sVar3,param_6);
+  sVar2 = node1(0x16,sVar2);
+  sVar2 = node2(7,sVar2,param_6);
+  iVar5 = __restgprlr_25(sVar2.type);
+  return (sval_u)iVar5;
 }
 
 
 // 82562018  Scr_ConvertVariableToExpression  (script/scr_yacc.txt:94)
 
-void Scr_ConvertVariableToExpression(undefined8 param_1,undefined8 param_2)
+sval_u Scr_ConvertVariableToExpression(sval_u param_1,sval_u param_2)
 
 {
-  undefined8 uVar1;
+  sval_u sVar1;
   
-  uVar1 = node2(0x14,param_1,param_2);
-  node2(7,uVar1,param_2);
-  return;
+  sVar1 = node2(0x14,param_1,param_2);
+  sVar1 = node2(7,sVar1,param_2);
+  return (sval_u)sVar1.type;
 }
 
 
 // 82562060  Scr_ConvertExpressionToPrimitiveExpression  (script/scr_yacc.txt:100)
 
-void Scr_ConvertExpressionToPrimitiveExpression(undefined8 param_1,undefined8 param_2)
+sval_u Scr_ConvertExpressionToPrimitiveExpression(sval_u param_1,sval_u param_2)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
+  sval_u sVar1;
+  sval_u sVar2;
+  int iVar3;
   
-  uVar1 = __savegprlr_29();
-  uVar2 = node0(0);
-  uVar1 = node2_(uVar1,param_2);
-  uVar1 = prepend_node(uVar1,uVar2);
-  node2(0x34,uVar1,param_2);
-  __restgprlr_29();
-  return;
+  sVar1.type = __savegprlr_29(param_1.type);
+  sVar2 = node0(0);
+  sVar1 = node2_(sVar1,param_2);
+  sVar1 = prepend_node(sVar1,sVar2);
+  sVar1 = node2(0x34,sVar1,param_2);
+  iVar3 = __restgprlr_29(sVar1.type);
+  return (sval_u)iVar3;
 }
 
 
 // 825620B0  Scr_CreateForEachStatement  (script/scr_yacc.txt:111)
 
-void Scr_CreateForEachStatement
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-               undefined8 param_5,undefined8 param_6,undefined8 param_7)
+sval_u Scr_CreateForEachStatement
+                 (sval_u param_1,sval_u param_2,sval_u param_3,sval_u param_4,sval_u param_5,
+                 sval_u param_6,sval_u param_7,sval_u param_8,sval_u param_9)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
-  undefined8 uVar3;
-  undefined8 uVar4;
-  undefined8 uVar5;
-  undefined8 uVar6;
-  undefined8 uVar7;
-  undefined1 auStack_b0 [176];
+  sval_u sVar1;
+  sval_u sVar2;
+  sval_u sVar3;
+  sval_u sVar4;
+  sval_u sVar5;
+  sval_u sVar6;
+  sval_u sVar7;
+  int iVar8;
+  sval_u in_stack_fffffef8;
+  char acStack_b0 [176];
   
-  uVar1 = __savegprlr_19();
-  if (DAT_83700fe0 == 0) {
-    MyAssertHandler(0xffffffff8215a280,0x80,0,0xffffffff82000f98,0xffffffff82150bd8);
+  sVar1.type = __savegprlr_19(param_1.type);
+  if (scrCompilePub.parseBuf == (char *)0x0) {
+    MyAssertHandler("./script/scr_yacc.txt",0x80,0,"%s");
   }
-  Com_sprintf(auStack_b0,0x40,0xffffffff8215a27c,DAT_83cacc78);
+  Com_sprintf(acStack_b0,0x40,":%i");
   DAT_83cacc78 = DAT_83cacc78 + 1;
-  uVar2 = SL_GetString_(auStack_b0,DAT_83ca8c59,0xf);
-  SL_AddRefToString();
-  SL_AddRefToString(uVar2);
-  uVar2 = node2(5,uVar2,param_7);
-  uVar3 = node4(2,uVar2,param_3,param_7,param_7);
-  uVar4 = node2(0x14,uVar2,param_7);
-  uVar4 = node2(7,uVar4,param_7);
-  uVar5 = node1(8,uVar4);
-  uVar6 = Scr_CreateFunctionCall1(0xffffffff820a0160,uVar5,param_7,param_5);
-  uVar7 = node1(0x12,uVar1);
-  uVar6 = node4(2,uVar7,uVar6,param_5,param_5);
-  node0(0);
-  uVar7 = linked_list_end();
-  uVar3 = append_node(uVar7,uVar3);
-  uVar3 = append_node(uVar3,uVar6);
-  uVar3 = node3(0x32,uVar3,param_5,param_5);
-  uVar6 = node2(0x14,uVar1,param_6);
-  uVar6 = node2(7,uVar6,param_6);
-  uVar6 = node1(8,uVar6);
-  uVar7 = Scr_CreateFunctionCall1(0xffffffff820a09b4,uVar6,param_6,param_5);
-  uVar7 = node1(0x47,uVar7);
-  uVar4 = Scr_CreateFunctionCall2(0xffffffff820a0150,uVar4,uVar6,param_7,param_6,param_5);
-  uVar1 = node4(2,uVar1,uVar4,param_5,param_5);
-  uVar4 = node0(0);
-  uVar5 = node2_(uVar5,param_7);
-  uVar4 = prepend_node(uVar5,uVar4);
-  uVar4 = node2(0x34,uVar4,param_7);
-  uVar4 = node4(0xf,uVar4,uVar6,param_7,param_6);
-  uVar4 = node2(0x14,uVar4,param_5);
-  uVar4 = node2(7,uVar4,param_5);
-  uVar4 = node4(2,param_2,uVar4,param_5,param_5);
-  node0(0);
-  uVar5 = linked_list_end();
-  uVar4 = append_node(uVar5,uVar4);
-  uVar4 = append_node(uVar4,param_4);
-  uVar4 = node3(0x32,uVar4,param_5,param_5);
-  uVar1 = node8(0x2e,uVar3,uVar7,uVar1,uVar4,param_5,param_5);
-  node0(0);
-  uVar3 = linked_list_end();
-  uVar1 = append_node(uVar3,uVar1);
-  uVar2 = node1(3,uVar2);
-  uVar1 = append_node(uVar1,uVar2);
-  node3(0x32,uVar1,param_5,param_5);
-  __restgprlr_19();
-  return;
+  sVar2.stringValue = SL_GetString_(acStack_b0,(uint)g_parse_user,0xf);
+  SL_AddRefToString(sVar2.stringValue);
+  SL_AddRefToString(sVar2.stringValue);
+  sVar2 = node2(5,sVar2,param_7);
+  sVar3 = node4(2,sVar2,param_3,param_7,param_7);
+  sVar4 = node2(0x14,sVar2,param_7);
+  sVar4 = node2(7,sVar4,param_7);
+  sVar5 = node1(8,sVar4);
+  sVar6 = Scr_CreateFunctionCall1("getfirstarraykey",sVar5,param_7,param_5);
+  sVar7 = node1(0x12,sVar1);
+  sVar6 = node4(2,sVar7,sVar6,param_5,param_5);
+  sVar7 = node0(0);
+  sVar7 = linked_list_end(sVar7);
+  sVar3 = append_node(sVar7,sVar3);
+  sVar3 = append_node(sVar3,sVar6);
+  sVar3 = node3(0x32,sVar3,param_5,param_5);
+  sVar6 = node2(0x14,sVar1,param_6);
+  sVar6 = node2(7,sVar6,param_6);
+  sVar6 = node1(8,sVar6);
+  sVar7 = Scr_CreateFunctionCall1("isdefined",sVar6,param_6,param_5);
+  sVar7 = node1(0x47,sVar7);
+  sVar4 = Scr_CreateFunctionCall2("getnextarraykey",sVar4,sVar6,param_7,param_6,param_5);
+  sVar1 = node4(2,sVar1,sVar4,param_5,param_5);
+  sVar4 = node0(0);
+  sVar5 = node2_(sVar5,param_7);
+  sVar4 = prepend_node(sVar5,sVar4);
+  sVar4 = node2(0x34,sVar4,param_7);
+  sVar4 = node4(0xf,sVar4,sVar6,param_7,param_6);
+  sVar4 = node2(0x14,sVar4,param_5);
+  sVar4 = node2(7,sVar4,param_5);
+  sVar4 = node4(2,param_2,sVar4,param_5,param_5);
+  sVar5 = node0(0);
+  sVar5 = linked_list_end(sVar5);
+  sVar4 = append_node(sVar5,sVar4);
+  sVar4 = append_node(sVar4,param_4);
+  sVar4 = node3(0x32,sVar4,param_5,param_5);
+  sVar1 = node8(0x2e,sVar3,sVar7,sVar1,sVar4,param_5,param_5,g_dummyVal,in_stack_fffffef8);
+  sVar3 = node0(0);
+  sVar3 = linked_list_end(sVar3);
+  sVar1 = append_node(sVar3,sVar1);
+  sVar2 = node1(3,sVar2);
+  sVar1 = append_node(sVar1,sVar2);
+  sVar1 = node3(0x32,sVar1,param_5,param_5);
+  iVar8 = __restgprlr_19(sVar1.type);
+  return (sval_u)iVar8;
 }
 
 
 // 825623F8  Scr_CreateForEachStatementNoKey  (script/scr_yacc.txt:178)
 
-void Scr_CreateForEachStatementNoKey
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-               undefined8 param_5)
+sval_u Scr_CreateForEachStatementNoKey
+                 (sval_u param_1,sval_u param_2,sval_u param_3,sval_u param_4,sval_u param_5,
+                 sval_u param_6,sval_u param_7)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
-  undefined8 uVar3;
-  undefined1 auStack_80 [128];
+  sval_u sVar1;
+  sval_u sVar2;
+  sval_u sVar3;
+  int iVar4;
+  sval_u in_stack_ffffff38;
+  char acStack_80 [128];
   
-  uVar1 = __savegprlr_25();
-  if (DAT_83700fe0 == 0) {
-    MyAssertHandler(0xffffffff8215a280,0xb8,0,0xffffffff82000f98,0xffffffff82150bd8);
+  sVar1.type = __savegprlr_25(param_1.type);
+  if (scrCompilePub.parseBuf == (char *)0x0) {
+    MyAssertHandler("./script/scr_yacc.txt",0xb8,0,"%s");
   }
-  Com_sprintf(auStack_80,0x40,0xffffffff8215a27c,DAT_83cacc78);
-  DAT_83cacc78 = DAT_83cacc78 + 1;
-  uVar2 = SL_GetString_(auStack_80,DAT_83ca8c59,0xf);
-  SL_AddRefToString();
-  uVar2 = node2(5,uVar2,param_5);
-  uVar1 = Scr_CreateForEachStatement(uVar2,uVar1,param_2,param_3,param_4,param_4,param_5);
-  node0(0);
-  uVar3 = linked_list_end();
-  uVar1 = append_node(uVar3,uVar1);
-  uVar2 = node1(3,uVar2);
-  uVar1 = append_node(uVar1,uVar2);
-  node3(0x32,uVar1,param_4,param_4);
-  __restgprlr_25();
-  return;
+  Com_sprintf(acStack_80,0x40,":%i");
+  sVar3.node = (sval_u *)(DAT_83cacc78.type + 1);
+  DAT_83cacc78.node = sVar3.node;
+  sVar2.stringValue = SL_GetString_(acStack_80,(uint)g_parse_user,0xf);
+  SL_AddRefToString(sVar2.stringValue);
+  sVar2 = node2(5,sVar2,param_5);
+  sVar1 = Scr_CreateForEachStatement
+                    (sVar2,sVar1,param_2,param_3,param_4,param_4,param_5,sVar3,in_stack_ffffff38);
+  sVar3 = node0(0);
+  sVar3 = linked_list_end(sVar3);
+  sVar1 = append_node(sVar3,sVar1);
+  sVar2 = node1(3,sVar2);
+  sVar1 = append_node(sVar1,sVar2);
+  sVar1 = node3(0x32,sVar1,param_4,param_4);
+  iVar4 = __restgprlr_25(sVar1.type);
+  return (sval_u)iVar4;
 }
 
 
 // 82562518  Scr_CreateExtractArrayStatement  (script/scr_yacc.txt:203)
 
-void Scr_CreateExtractArrayStatement
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
+sval_u Scr_CreateExtractArrayStatement(sval_u param_1,sval_u param_2,sval_u param_3,sval_u param_4)
 
 {
   undefined4 *puVar1;
   int *piVar2;
-  undefined4 uVar3;
-  int iVar9;
-  undefined8 uVar4;
-  undefined8 uVar5;
-  undefined8 uVar6;
-  undefined8 uVar7;
-  undefined8 uVar8;
-  longlong lVar10;
-  undefined1 auStack_a0 [160];
+  sval_u sVar3;
+  int iVar4;
+  sval_u sVar5;
+  sval_u sVar6;
+  sval_u sVar7;
+  sval_u sVar8;
+  sval_u sVar9;
+  sval_u sVar10;
+  sval_u sVar11;
+  char acStack_a0 [160];
   
-  iVar9 = __savegprlr_22();
-  if (DAT_83700fe0 == 0) {
-    MyAssertHandler(0xffffffff8215a280,0xdd,0,0xffffffff82000f98,0xffffffff82150bd8);
+  iVar4 = __savegprlr_22(param_1.type);
+  if (scrCompilePub.parseBuf == (char *)0x0) {
+    MyAssertHandler("./script/scr_yacc.txt",0xdd,0,"%s");
   }
-  Com_sprintf(auStack_a0,0x40,0xffffffff8215a27c,DAT_83cacc78);
+  Com_sprintf(acStack_a0,0x40,":%i");
   DAT_83cacc78 = DAT_83cacc78 + 1;
-  uVar4 = SL_GetString_(auStack_a0,DAT_83ca8c59,0xf);
-  SL_AddRefToString();
-  uVar5 = node2(5,uVar4,param_4);
-  uVar6 = node4(2,uVar5,param_2,param_4,param_4);
-  node0(0);
-  uVar7 = linked_list_end();
-  uVar6 = append_node(uVar7,uVar6);
-  lVar10 = 0;
-  for (puVar1 = (undefined4 *)**(undefined4 **)(iVar9 + 4); puVar1 != (undefined4 *)0x0;
+  sVar5.stringValue = SL_GetString_(acStack_a0,(uint)g_parse_user,0xf);
+  SL_AddRefToString(sVar5.stringValue);
+  sVar6 = node2(5,sVar5,param_4);
+  sVar7 = node4(2,sVar6,param_2,param_4,param_4);
+  sVar8 = node0(0);
+  sVar8 = linked_list_end(sVar8);
+  sVar7 = append_node(sVar8,sVar7);
+  sVar8.type = 0;
+  for (puVar1 = (undefined4 *)**(undefined4 **)(iVar4 + 4); puVar1 != (undefined4 *)0x0;
       puVar1 = (undefined4 *)puVar1[1]) {
     piVar2 = *(int **)*puVar1;
     if (*piVar2 != 7) {
-      CompileError(param_3,0xffffffff8215a298);
+      CompileError(param_3.stringValue,"bad array extractor syntax");
     }
     piVar2 = (int *)piVar2[1];
     if (*piVar2 != 0x14) {
-      CompileError(param_3,0xffffffff8215a298);
+      CompileError(param_3.stringValue,"bad array extractor syntax");
     }
-    iVar9 = piVar2[1];
-    uVar3 = *(undefined4 *)(iVar9 + 8);
-    uVar7 = node2(9,lVar10,uVar3);
-    uVar7 = node2(7,uVar7,uVar3);
-    lVar10 = lVar10 + 1;
-    SL_AddRefToString(uVar4);
-    uVar8 = node2(0x14,uVar5,uVar3);
-    uVar7 = node4(0xf,uVar8,uVar7,uVar3,uVar3);
-    uVar7 = node2(0x14,uVar7,uVar3);
-    uVar7 = node2(7,uVar7,uVar3);
-    uVar7 = node4(2,iVar9,uVar7,uVar3,uVar3);
-    uVar6 = append_node(uVar6,uVar7);
+    sVar11 = *(sval_u *)(piVar2 + 1);
+    sVar3 = *(sval_u *)(sVar11.type + 8);
+    sVar9 = node2(9,sVar8,sVar3);
+    sVar9 = node2(7,sVar9,sVar3);
+    sVar8.node = (sval_u *)((int)&(sVar8.block)->abortLevel + 1);
+    SL_AddRefToString(sVar5.stringValue);
+    sVar10 = node2(0x14,sVar6,sVar3);
+    sVar9 = node4(0xf,sVar10,sVar9,sVar3,sVar3);
+    sVar9 = node2(0x14,sVar9,sVar3);
+    sVar9 = node2(7,sVar9,sVar3);
+    sVar11 = node4(2,sVar11,sVar9,sVar3,sVar3);
+    sVar7 = append_node(sVar7,sVar11);
   }
-  uVar6 = node3(0x32,uVar6,param_3,param_3);
-  node0(0);
-  uVar4 = linked_list_end();
-  uVar6 = append_node(uVar4,uVar6);
-  uVar4 = node1(3,uVar5);
-  uVar6 = append_node(uVar6,uVar4);
-  node3(0x32,uVar6,param_3,param_3);
-  __restgprlr_22();
-  return;
+  sVar7 = node3(0x32,sVar7,param_3,param_3);
+  sVar8 = node0(0);
+  sVar8 = linked_list_end(sVar8);
+  sVar7 = append_node(sVar8,sVar7);
+  sVar8 = node1(3,sVar6);
+  sVar7 = append_node(sVar7,sVar8);
+  sVar7 = node3(0x32,sVar7,param_3,param_3);
+  iVar4 = __restgprlr_22(sVar7.type);
+  return (sval_u)iVar4;
 }
 
 
 // 82562768  __yy_memcpy  (bison.simple:208)
 
-void __yy_memcpy(undefined1 *param_1,int param_2,longlong param_3)
+void __yy_memcpy(char *param_1,char *param_2,uint param_3)
 
 {
+  int iVar1;
+  longlong lVar2;
+  
+  lVar2 = (longlong)(int)param_3;
   if ((int)param_3 < 1) {
     return;
   }
-  param_2 = param_2 - (int)param_1;
+  iVar1 = (int)param_2 - (int)param_1;
   do {
-    *param_1 = param_1[param_2];
+    *param_1 = param_1[iVar1];
     param_1 = param_1 + 1;
-    param_3 = param_3 + -1;
-  } while (param_3 != 0);
+    lVar2 = lVar2 + -1;
+  } while (lVar2 != 0);
   return;
 }
 
 
 // 82564838  yyparse  (bison.simple:465)
 
-void yyparse(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int yyparse(void)
 
 {
   short sVar1;
-  undefined4 uVar2;
-  undefined4 uVar3;
-  undefined4 uVar4;
-  undefined8 uVar5;
-  undefined8 uVar6;
-  undefined8 uVar7;
-  undefined8 uVar8;
-  undefined4 uVar9;
-  int iVar10;
-  longlong lVar11;
-  longlong lVar12;
-  ulonglong uVar13;
+  sval_u *psVar2;
+  sval_u sVar3;
+  int iVar4;
+  sval_u sVar5;
+  sval_u sVar6;
+  sval_u sVar7;
+  sval_u sVar8;
+  uint uVar9;
+  sval_u sVar10;
+  sval_u sVar11;
+  int iVar12;
+  int iVar13;
   longlong lVar14;
-  int iVar15;
+  longlong lVar15;
   ulonglong uVar16;
-  longlong lVar17;
-  ulonglong uVar18;
-  int iVar19;
-  ulonglong uVar20;
+  short *psVar17;
+  longlong lVar18;
+  ulonglong uVar19;
+  longlong lVar20;
   ulonglong uVar21;
-  longlong lVar22;
-  undefined4 *puVar23;
-  longlong lVar24;
+  int iVar22;
+  ulonglong uVar23;
+  ulonglong uVar24;
   longlong lVar25;
+  longlong lVar26;
+  longlong lVar27;
   ulonglong local_880;
   
-  uVar21 = ZEXT48(&stack0x00000000);
+  uVar24 = ZEXT48(&stack0x00000000);
   __savegprlr();
-  lVar24 = uVar21 - 0x8e0;
-  *(BADSPACEBASE **)(int)lVar24 = register0x0000000c;
-  iVar15 = 0;
-  uVar20 = uVar21 - 0x872;
-  DAT_83cacc8c = 0xfffffffe;
+  lVar26 = uVar24 - 0x8e0;
+  *(BADSPACEBASE **)(int)lVar26 = register0x0000000c;
+  iVar12 = 0;
+  uVar23 = uVar24 - 0x872;
+  yychar = -2;
   local_880 = local_880 & 0xffffffff00000000;
-  DAT_83cacc90 = 0;
-  uVar18 = uVar21 - 0x870;
-  lVar17 = uVar21 - 0x6e0;
-  uVar16 = 200;
-  lVar22 = uVar21 - 0x6e0;
-  uVar21 = 0;
+  yynerrs = 0;
+  uVar21 = uVar24 - 0x870;
+  lVar20 = uVar24 - 0x6e0;
+  uVar19 = 200;
+  lVar25 = uVar24 - 0x6e0;
+  uVar24 = 0;
 LAB_825648b8:
   do {
-    iVar10 = (int)lVar17;
-    iVar19 = (int)uVar18;
-    uVar13 = (uVar16 & 0x7fffffff) * 2;
-    uVar20 = uVar20 + 2;
-    *(undefined2 *)uVar20 = (short)uVar21;
-    if (((uVar13 + uVar18) - 2 & 0xffffffff) <= (uVar20 & 0xffffffff)) {
-      uVar20 = (longlong)((int)(undefined2 *)uVar20 - iVar19 >> 1) + 1;
-      if (9999 < (int)uVar16) {
-        if (DAT_83cacc8c == 0) {
-          CompileError(DAT_83ca8c64,"unexpected end of file found");
-          __restgprlr(2);
-          return;
+    iVar13 = (int)lVar20;
+    iVar22 = (int)uVar21;
+    uVar16 = (uVar19 & 0x7fffffff) * 2;
+    uVar23 = uVar23 + 2;
+    *(undefined2 *)uVar23 = (short)uVar24;
+    if (((uVar16 + uVar21) - 2 & 0xffffffff) <= (uVar23 & 0xffffffff)) {
+      uVar23 = (longlong)((int)(undefined2 *)uVar23 - iVar22 >> 1) + 1;
+      if (9999 < (int)uVar19) {
+        if (yychar == 0) {
+          CompileError(g_sourcePos,"unexpected end of file found");
+          iVar12 = 2;
+          __restgprlr();
+          return iVar12;
         }
-        if (DAT_83cacc8c != 0x101) {
-          CompileError(-(ulonglong)((ulonglong)DAT_83ca8c64 != 0xffffffffffffffff) &
-                       (ulonglong)DAT_83ca8c64,"bad syntax");
+        if (yychar != 0x101) {
+          CompileError(-(uint)((ulonglong)g_sourcePos != 0xffffffffffffffff) & g_sourcePos,
+                       "bad syntax");
         }
-        __restgprlr(2);
-        return;
+        iVar12 = 2;
+        __restgprlr();
+        return iVar12;
       }
-      if (10000 < (int)uVar13) {
-        uVar13 = 10000;
+      if (10000 < (int)uVar16) {
+        uVar16 = 10000;
       }
-      lVar11 = (uVar13 & 0x7fffffff) * 2;
-      uVar16 = (uVar13 & 0x7fffffff) * -2 & 0xfffffff0;
+      lVar14 = (uVar16 & 0x7fffffff) * 2;
+      uVar19 = (uVar16 & 0x7fffffff) * -2 & 0xfffffff0;
       _RtlCheckStack12();
-      lVar12 = (uVar20 & 0x7fffffff) << 1;
-      lVar22 = lVar24 + uVar16;
-      *(undefined4 *)lVar22 = *(undefined4 *)lVar24;
-      uVar18 = lVar22 + 0x60;
-      if (0 < (int)lVar12) {
-        uVar16 = uVar18;
-        lVar24 = lVar12;
+      lVar15 = (uVar23 & 0x7fffffff) << 1;
+      lVar25 = lVar26 + uVar19;
+      *(undefined4 *)lVar25 = *(undefined4 *)lVar26;
+      uVar21 = lVar25 + 0x60;
+      if (0 < (int)lVar15) {
+        uVar19 = uVar21;
+        lVar26 = lVar15;
         do {
-          *(undefined1 *)uVar16 = ((undefined1 *)uVar16)[iVar19 - (int)uVar18];
-          uVar16 = uVar16 + 1;
-          lVar24 = lVar24 + -1;
-        } while (lVar24 != 0);
+          *(undefined1 *)uVar19 = ((undefined1 *)uVar19)[iVar22 - (int)uVar21];
+          uVar19 = uVar19 + 1;
+          lVar26 = lVar26 + -1;
+        } while (lVar26 != 0);
       }
-      uVar16 = (uVar13 & 0x1fffffff) * -8 & 0xfffffff0;
+      uVar19 = (uVar16 & 0x1fffffff) * -8 & 0xfffffff0;
       _RtlCheckStack12();
-      lVar14 = (uVar20 & 0x1fffffff) * 8;
-      lVar24 = lVar22 + uVar16;
-      *(undefined4 *)lVar24 = *(undefined4 *)lVar22;
-      lVar17 = lVar24 + 0x60;
-      if (0 < (int)lVar14) {
-        lVar22 = lVar17;
-        lVar25 = lVar14;
+      lVar18 = (uVar23 & 0x1fffffff) * 8;
+      lVar26 = lVar25 + uVar19;
+      *(undefined4 *)lVar26 = *(undefined4 *)lVar25;
+      lVar20 = lVar26 + 0x60;
+      if (0 < (int)lVar18) {
+        lVar25 = lVar20;
+        lVar27 = lVar18;
         do {
-          *(undefined1 *)lVar22 = ((undefined1 *)lVar22)[iVar10 - (int)lVar17];
-          lVar22 = lVar22 + 1;
-          lVar25 = lVar25 + -1;
-        } while (lVar25 != 0);
+          *(undefined1 *)lVar25 = ((undefined1 *)lVar25)[iVar13 - (int)lVar20];
+          lVar25 = lVar25 + 1;
+          lVar27 = lVar27 + -1;
+        } while (lVar27 != 0);
       }
-      uVar20 = (lVar12 + uVar18) - 2;
-      lVar22 = lVar14 + lVar17 + -8;
-      uVar16 = uVar13;
-      if (((lVar11 + uVar18) - 2 & 0xffffffff) <= (uVar20 & 0xffffffff)) goto LAB_825661e8;
+      uVar23 = (lVar15 + uVar21) - 2;
+      lVar25 = lVar18 + lVar20 + -8;
+      uVar19 = uVar16;
+      if (((lVar14 + uVar21) - 2 & 0xffffffff) <= (uVar23 & 0xffffffff)) goto LAB_825661e8;
     }
-    iVar10 = (int)((uVar21 & 0xffffffff) << 1);
-    sVar1 = *(short *)((int)&DAT_821573e8 + iVar10);
+    iVar13 = (int)((uVar24 & 0xffffffff) << 1);
+    sVar1 = *(short *)((int)yypact + iVar13);
+    iVar4 = (int)lVar26;
     if (sVar1 == -0x8000) {
 LAB_82564d00:
-      uVar13 = (ulonglong)*(short *)(&DAT_82157168 + iVar10);
-      if (*(short *)(&DAT_82157168 + iVar10) == 0) {
+      sVar1 = *(short *)((int)yydefact + iVar13);
+      uVar16 = (ulonglong)sVar1;
+      if (sVar1 == 0) {
 LAB_82564d14:
-        if (iVar15 == 0) {
-          DAT_83cacc90 = DAT_83cacc90 + 1;
-          if (DAT_83cacc8c == 0) {
-            CompileError(DAT_83ca8c64,"unexpected end of file found");
+        if (iVar12 == 0) {
+          yynerrs = yynerrs + 1;
+          if (yychar == 0) {
+            CompileError(g_sourcePos,"unexpected end of file found");
           }
-          else if (DAT_83cacc8c != 0x101) {
-            CompileError(-(ulonglong)((ulonglong)DAT_83ca8c64 != 0xffffffffffffffff) &
-                         (ulonglong)DAT_83ca8c64,"bad syntax");
+          else if (yychar != 0x101) {
+            CompileError(-(uint)((ulonglong)g_sourcePos != 0xffffffffffffffff) & g_sourcePos,
+                         "bad syntax");
           }
         }
-        else if (iVar15 == 3) {
-          if (DAT_83cacc8c == 0) {
+        else if (iVar12 == 3) {
+          if (yychar == 0) {
 LAB_825661e8:
-            __restgprlr(1);
-            return;
+            iVar12 = 1;
+            __restgprlr();
+            return iVar12;
           }
-          DAT_83cacc8c = 0xfffffffe;
+          yychar = -2;
         }
-        iVar15 = 3;
+        iVar12 = 3;
         do {
-          sVar1 = *(short *)((int)&DAT_821573e8 + (int)((uVar21 & 0xffffffff) << 1));
-          if (((sVar1 != -0x8000) && (uVar21 = (longlong)sVar1 + 1, -1 < (longlong)uVar21)) &&
-             (((int)uVar21 < 0x5f2 &&
-              (iVar10 = (int)((uVar21 & 0xffffffff) << 1), *(short *)(&DAT_82158250 + iVar10) == 1))
-             )) {
-            sVar1 = *(short *)(&DAT_82157668 + iVar10);
+          sVar1 = *(short *)((int)yypact + (int)((uVar24 & 0xffffffff) << 1));
+          if (((sVar1 != -0x8000) && (uVar24 = (longlong)sVar1 + 1, -1 < (longlong)uVar24)) &&
+             (((int)uVar24 < 0x5f2 &&
+              (iVar13 = (int)((uVar24 & 0xffffffff) << 1), *(short *)((int)yycheck + iVar13) == 1)))
+             ) {
+            sVar1 = *(short *)((int)yytable + iVar13);
             if (sVar1 < 0) {
               if (sVar1 != -0x8000) goto code_r0x82564ddc;
             }
             else if (sVar1 != 0) {
               if (sVar1 == 0x121) goto LAB_825661dc;
-              lVar22 = lVar22 + 8;
-              *(undefined8 *)lVar22 = DAT_83cacc6c;
-              uVar21 = (longlong)sVar1;
+              lVar25 = lVar25 + 8;
+              *(stype_t *)lVar25 = yylval;
+              uVar24 = (longlong)sVar1;
               goto LAB_825648b8;
             }
           }
-          if ((uVar20 & 0xffffffff) == (uVar18 & 0xffffffff)) goto LAB_825661e8;
-          uVar20 = uVar20 - 2;
-          lVar22 = lVar22 + -8;
-          uVar21 = (ulonglong)*(short *)uVar20;
+          if ((uVar23 & 0xffffffff) == (uVar21 & 0xffffffff)) goto LAB_825661e8;
+          uVar23 = uVar23 - 2;
+          lVar25 = lVar25 + -8;
+          uVar24 = (ulonglong)*(short *)uVar23;
         } while( true );
       }
       goto LAB_82564a48;
     }
-    if (DAT_83cacc8c == 0xfffffffe) {
-      DAT_83cacc8c = yylex();
+    if (yychar == -2) {
+      yychar = yylex();
     }
-    if ((int)DAT_83cacc8c < 1) {
-      lVar11 = 0;
-      DAT_83cacc8c = 0;
+    if (yychar < 1) {
+      lVar14 = 0;
+      yychar = 0;
     }
-    else if (DAT_83cacc8c < 0x15f) {
-      lVar11 = (longlong)(char)(&DAT_82156dc8)[DAT_83cacc8c];
+    else if ((uint)yychar < 0x15f) {
+      lVar14 = (longlong)""[yychar];
     }
     else {
-      lVar11 = 0x7e;
+      lVar14 = 0x7e;
     }
-    uVar13 = sVar1 + lVar11;
-    if ((((longlong)uVar13 < 0) || (0x5f1 < (int)uVar13)) ||
-       (iVar19 = (int)((uVar13 & 0xffffffff) << 1),
-       (int)*(short *)(&DAT_82158250 + iVar19) != (int)lVar11)) goto LAB_82564d00;
-    sVar1 = *(short *)(&DAT_82157668 + iVar19);
-    uVar13 = (ulonglong)sVar1;
+    uVar16 = sVar1 + lVar14;
+    if ((((longlong)uVar16 < 0) || (0x5f1 < (int)uVar16)) ||
+       (iVar22 = (int)((uVar16 & 0xffffffff) << 1),
+       (int)*(short *)((int)yycheck + iVar22) != (int)lVar14)) goto LAB_82564d00;
+    sVar1 = *(short *)((int)yytable + iVar22);
+    uVar16 = (ulonglong)sVar1;
     if (sVar1 < 0) {
       if (sVar1 == -0x8000) goto LAB_82564d14;
-      uVar13 = -uVar13;
+      uVar16 = -uVar16;
       goto LAB_82564a48;
     }
     if (sVar1 == 0) goto LAB_82564d14;
     if (sVar1 == 0x121) {
 LAB_825661dc:
-      __restgprlr(0);
-      return;
+      iVar12 = 0;
+      __restgprlr();
+      return iVar12;
     }
-    if (DAT_83cacc8c != 0) {
-      DAT_83cacc8c = 0xfffffffe;
+    if (yychar != 0) {
+      yychar = -2;
     }
-    lVar22 = lVar22 + 8;
-    *(undefined8 *)lVar22 = DAT_83cacc6c;
-    uVar21 = uVar13;
-    if (iVar15 != 0) {
-      iVar15 = iVar15 + -1;
+    lVar25 = lVar25 + 8;
+    *(stype_t *)lVar25 = yylval;
+    uVar24 = uVar16;
+    if (iVar12 != 0) {
+      iVar12 = iVar12 + -1;
     }
   } while( true );
 code_r0x82564ddc:
-  uVar13 = -(longlong)sVar1;
+  uVar16 = -(longlong)sVar1;
 LAB_82564a48:
-  iVar10 = (int)((uVar13 & 0xffffffff) << 1);
-  uVar21 = (ulonglong)*(short *)(&DAT_82157048 + iVar10);
-  puVar23 = (undefined4 *)lVar22;
-  if (0 < *(short *)(&DAT_82157048 + iVar10)) {
-    local_880 = *(ulonglong *)((int)puVar23 + (8 - (int)((uVar21 & 0xffffffff) << 3)));
+  psVar17 = yyr2;
+  iVar13 = (int)((uVar16 & 0xffffffff) << 1);
+  sVar1 = *(short *)((int)yyr2 + iVar13);
+  uVar24 = (ulonglong)sVar1;
+  psVar2 = (sval_u *)lVar25;
+  if (0 < sVar1) {
+    psVar17 = (short *)((uVar24 & 0x1fffffff) << 3);
+    local_880 = *(ulonglong *)((int)psVar2 + (8 - (int)psVar17));
   }
-  switch((int)uVar13 + -1) {
+  switch((int)uVar16 + -1) {
   case 0:
-    DAT_83cacc84 = node2_(puVar23[-2],*puVar23);
+    yaccResult = node2_(psVar2[-2],*psVar2);
     goto switchD_82564a90_caseD_3b;
   case 1:
-    DAT_83cacc84 = node1(0x47,*puVar23);
+    yaccResult = node1(0x47,*psVar2);
     goto switchD_82564a90_caseD_3b;
   case 2:
   case 3:
-    DAT_83cacc84 = node1(0x59,*puVar23);
+    yaccResult = node1(0x59,*psVar2);
     goto switchD_82564a90_caseD_3b;
   case 4:
-    uVar8 = node_pos(puVar23[1]);
-    uVar9 = node2(7,*puVar23,uVar8);
+    sVar11 = node_pos(psVar2[1].stringValue);
+    sVar11 = node2(7,*psVar2,sVar11);
     break;
   case 5:
-    uVar8 = node_pos(puVar23[-1]);
-    uVar7 = node_pos(puVar23[1]);
-    uVar5 = node_pos(puVar23[-3]);
-    uVar9 = node5(0x35,puVar23[-4],*puVar23,uVar5,uVar7,uVar8);
-    local_880 = (ulonglong)(uint)puVar23[-1];
+    sVar11 = node_pos(psVar2[-1].stringValue);
+    sVar10 = node_pos(psVar2[1].stringValue);
+    sVar7 = node_pos(psVar2[-3].stringValue);
+    sVar11 = node5(0x35,psVar2[-4],*psVar2,sVar7,sVar10,sVar11);
+    local_880 = (ulonglong)psVar2[-1].stringValue;
     break;
   case 6:
-    uVar8 = node_pos(puVar23[-1]);
-    uVar7 = node_pos(puVar23[1]);
-    uVar5 = node_pos(puVar23[-3]);
-    uVar9 = node5(0x36,puVar23[-4],*puVar23,uVar5,uVar7,uVar8);
-    local_880 = (ulonglong)(uint)puVar23[-1];
+    sVar11 = node_pos(psVar2[-1].stringValue);
+    sVar10 = node_pos(psVar2[1].stringValue);
+    sVar7 = node_pos(psVar2[-3].stringValue);
+    sVar11 = node5(0x36,psVar2[-4],*psVar2,sVar7,sVar10,sVar11);
+    local_880 = (ulonglong)psVar2[-1].stringValue;
     break;
   case 7:
-    uVar8 = node_pos(puVar23[-1]);
-    uVar7 = node1_(0x7f);
-    uVar9 = node4(0x37,puVar23[-4],*puVar23,uVar7,uVar8);
-    local_880 = (ulonglong)(uint)puVar23[-1];
+    sVar11 = node_pos(psVar2[-1].stringValue);
+    sVar10 = node1_(0x7f);
+    sVar11 = node4(0x37,psVar2[-4],*psVar2,sVar10,sVar11);
+    local_880 = (ulonglong)psVar2[-1].stringValue;
     break;
   case 8:
-    uVar8 = node_pos(puVar23[-1]);
-    uVar7 = node1_(0x80);
-    uVar9 = node4(0x37,puVar23[-4],*puVar23,uVar7,uVar8);
-    local_880 = (ulonglong)(uint)puVar23[-1];
+    sVar11 = node_pos(psVar2[-1].stringValue);
+    sVar10 = node1_(0x80);
+    sVar11 = node4(0x37,psVar2[-4],*psVar2,sVar10,sVar11);
+    local_880 = (ulonglong)psVar2[-1].stringValue;
     break;
   case 9:
-    uVar8 = node_pos(puVar23[-1]);
-    uVar7 = node1_(0x81);
-    uVar9 = node4(0x37,puVar23[-4],*puVar23,uVar7,uVar8);
-    local_880 = (ulonglong)(uint)puVar23[-1];
+    sVar11 = node_pos(psVar2[-1].stringValue);
+    sVar10 = node1_(0x81);
+    sVar11 = node4(0x37,psVar2[-4],*psVar2,sVar10,sVar11);
+    local_880 = (ulonglong)psVar2[-1].stringValue;
     break;
   case 10:
-    uVar8 = node_pos(puVar23[-1]);
-    uVar7 = node1_(0x82);
-    uVar9 = node4(0x37,puVar23[-4],*puVar23,uVar7,uVar8);
-    local_880 = (ulonglong)(uint)puVar23[-1];
+    sVar11 = node_pos(psVar2[-1].stringValue);
+    sVar10 = node1_(0x82);
+    sVar11 = node4(0x37,psVar2[-4],*psVar2,sVar10,sVar11);
+    local_880 = (ulonglong)psVar2[-1].stringValue;
     break;
   case 0xb:
-    uVar8 = node_pos(puVar23[-1]);
-    uVar7 = node1_(0x83);
-    uVar9 = node4(0x37,puVar23[-4],*puVar23,uVar7,uVar8);
-    local_880 = (ulonglong)(uint)puVar23[-1];
+    sVar11 = node_pos(psVar2[-1].stringValue);
+    sVar10 = node1_(0x83);
+    sVar11 = node4(0x37,psVar2[-4],*psVar2,sVar10,sVar11);
+    local_880 = (ulonglong)psVar2[-1].stringValue;
     break;
   case 0xc:
-    uVar8 = node_pos(puVar23[-1]);
-    uVar7 = node1_(0x84);
-    uVar9 = node4(0x37,puVar23[-4],*puVar23,uVar7,uVar8);
-    local_880 = (ulonglong)(uint)puVar23[-1];
+    sVar11 = node_pos(psVar2[-1].stringValue);
+    sVar10 = node1_(0x84);
+    sVar11 = node4(0x37,psVar2[-4],*psVar2,sVar10,sVar11);
+    local_880 = (ulonglong)psVar2[-1].stringValue;
     break;
   case 0xd:
-    uVar8 = node_pos(puVar23[-1]);
-    uVar7 = node1_(0x85);
-    uVar9 = node4(0x37,puVar23[-4],*puVar23,uVar7,uVar8);
-    local_880 = (ulonglong)(uint)puVar23[-1];
+    sVar11 = node_pos(psVar2[-1].stringValue);
+    sVar10 = node1_(0x85);
+    sVar11 = node4(0x37,psVar2[-4],*psVar2,sVar10,sVar11);
+    local_880 = (ulonglong)psVar2[-1].stringValue;
     break;
   case 0xe:
-    uVar8 = node_pos(puVar23[-1]);
-    uVar7 = node1_(0x86);
-    uVar9 = node4(0x37,puVar23[-4],*puVar23,uVar7,uVar8);
-    local_880 = (ulonglong)(uint)puVar23[-1];
+    sVar11 = node_pos(psVar2[-1].stringValue);
+    sVar10 = node1_(0x86);
+    sVar11 = node4(0x37,psVar2[-4],*psVar2,sVar10,sVar11);
+    local_880 = (ulonglong)psVar2[-1].stringValue;
     break;
   case 0xf:
-    uVar8 = node_pos(puVar23[-1]);
-    uVar7 = node1_(0x87);
-    uVar9 = node4(0x37,puVar23[-4],*puVar23,uVar7,uVar8);
-    local_880 = (ulonglong)(uint)puVar23[-1];
+    sVar11 = node_pos(psVar2[-1].stringValue);
+    sVar10 = node1_(0x87);
+    sVar11 = node4(0x37,psVar2[-4],*psVar2,sVar10,sVar11);
+    local_880 = (ulonglong)psVar2[-1].stringValue;
     break;
   case 0x10:
-    uVar8 = node_pos(puVar23[-1]);
-    uVar7 = node1_(0x88);
-    uVar9 = node4(0x37,puVar23[-4],*puVar23,uVar7,uVar8);
-    local_880 = (ulonglong)(uint)puVar23[-1];
+    sVar11 = node_pos(psVar2[-1].stringValue);
+    sVar10 = node1_(0x88);
+    sVar11 = node4(0x37,psVar2[-4],*psVar2,sVar10,sVar11);
+    local_880 = (ulonglong)psVar2[-1].stringValue;
     break;
   case 0x11:
-    uVar8 = node_pos(puVar23[-1]);
-    uVar7 = node1_(0x89);
-    uVar9 = node4(0x37,puVar23[-4],*puVar23,uVar7,uVar8);
-    local_880 = (ulonglong)(uint)puVar23[-1];
+    sVar11 = node_pos(psVar2[-1].stringValue);
+    sVar10 = node1_(0x89);
+    sVar11 = node4(0x37,psVar2[-4],*psVar2,sVar10,sVar11);
+    local_880 = (ulonglong)psVar2[-1].stringValue;
     break;
   case 0x12:
-    uVar8 = node_pos(puVar23[-1]);
-    uVar7 = node1_(0x8a);
-    uVar9 = node4(0x37,puVar23[-4],*puVar23,uVar7,uVar8);
-    local_880 = (ulonglong)(uint)puVar23[-1];
+    sVar11 = node_pos(psVar2[-1].stringValue);
+    sVar10 = node1_(0x8a);
+    sVar11 = node4(0x37,psVar2[-4],*psVar2,sVar10,sVar11);
+    local_880 = (ulonglong)psVar2[-1].stringValue;
     break;
   case 0x13:
-    uVar8 = node_pos(puVar23[-1]);
-    uVar7 = node1_(0x8b);
-    uVar9 = node4(0x37,puVar23[-4],*puVar23,uVar7,uVar8);
-    local_880 = (ulonglong)(uint)puVar23[-1];
+    sVar11 = node_pos(psVar2[-1].stringValue);
+    sVar10 = node1_(0x8b);
+    sVar11 = node4(0x37,psVar2[-4],*psVar2,sVar10,sVar11);
+    local_880 = (ulonglong)psVar2[-1].stringValue;
     break;
   case 0x14:
-    uVar8 = node_pos(puVar23[-1]);
-    uVar7 = node1_(0x8c);
-    uVar9 = node4(0x37,puVar23[-4],*puVar23,uVar7,uVar8);
-    local_880 = (ulonglong)(uint)puVar23[-1];
+    sVar11 = node_pos(psVar2[-1].stringValue);
+    sVar10 = node1_(0x8c);
+    sVar11 = node4(0x37,psVar2[-4],*psVar2,sVar10,sVar11);
+    local_880 = (ulonglong)psVar2[-1].stringValue;
     break;
   case 0x15:
-    uVar8 = node_pos(puVar23[-1]);
-    uVar7 = node1_(0x8d);
-    uVar9 = node4(0x37,puVar23[-4],*puVar23,uVar7,uVar8);
-    local_880 = (ulonglong)(uint)puVar23[-1];
+    sVar11 = node_pos(psVar2[-1].stringValue);
+    sVar10 = node1_(0x8d);
+    sVar11 = node4(0x37,psVar2[-4],*psVar2,sVar10,sVar11);
+    local_880 = (ulonglong)psVar2[-1].stringValue;
     break;
   case 0x16:
-    uVar8 = node_pos(puVar23[-1]);
-    uVar7 = node1_(0x8e);
-    uVar9 = node4(0x37,puVar23[-4],*puVar23,uVar7,uVar8);
-    local_880 = (ulonglong)(uint)puVar23[-1];
+    sVar11 = node_pos(psVar2[-1].stringValue);
+    sVar10 = node1_(0x8e);
+    sVar11 = node4(0x37,psVar2[-4],*psVar2,sVar10,sVar11);
+    local_880 = (ulonglong)psVar2[-1].stringValue;
     break;
   case 0x17:
-    uVar8 = node_pos(puVar23[1]);
-    uVar9 = node2(0x38,*puVar23,uVar8);
+    sVar11 = node_pos(psVar2[1].stringValue);
+    sVar11 = node2(0x38,*psVar2,sVar11);
     break;
   case 0x18:
-    uVar8 = node_pos(puVar23[1]);
-    uVar9 = node2(0x39,*puVar23,uVar8);
+    sVar11 = node_pos(psVar2[1].stringValue);
+    sVar11 = node2(0x39,*psVar2,sVar11);
     break;
   case 0x19:
-    uVar9 = node1(0x47,*puVar23);
+    sVar11 = node1(0x47,*psVar2);
     break;
   case 0x1a:
   case 99:
   case 0x6f:
   case 0x78:
-    uVar9 = node0(0);
+    sVar11 = node0(0);
     break;
   case 0x1b:
   case 0x1c:
-    uVar9 = SL_ConvertToLowercase(*puVar23,DAT_83ca8c59,0xf);
-    *puVar23 = uVar9;
+    sVar11.stringValue = SL_ConvertToLowercase(psVar2->stringValue,(uint)g_parse_user,0xf);
+    psVar2->stringValue = (uint)sVar11;
     break;
   case 0x1d:
-    uVar9 = SL_ConvertToLowercase(*puVar23,DAT_83ca8c59,0xf);
-    *puVar23 = uVar9;
-    uVar8 = node_pos(puVar23[-3]);
-    uVar9 = node3(0x18,puVar23[-4],*puVar23,uVar8);
-    DAT_83700fbc = DAT_83700fbc + 1;
+    uVar9 = SL_ConvertToLowercase(psVar2->stringValue,(uint)g_parse_user,0xf);
+    psVar2->stringValue = uVar9;
+    sVar11 = node_pos(psVar2[-3].stringValue);
+    sVar11 = node3(0x18,psVar2[-4],*psVar2,sVar11);
+    scrCompilePub.far_function_count = scrCompilePub.far_function_count + 1;
     break;
   case 0x1e:
-    uVar9 = SL_ConvertToLowercase(*puVar23,DAT_83ca8c59,0xf);
-    *puVar23 = uVar9;
-    uVar8 = node_pos(puVar23[1]);
-    uVar9 = node2(0x17,*puVar23,uVar8);
+    uVar9 = SL_ConvertToLowercase(psVar2->stringValue,(uint)g_parse_user,0xf);
+    psVar2->stringValue = uVar9;
+    sVar11 = node_pos(psVar2[1].stringValue);
+    sVar11 = node2(0x17,*psVar2,sVar11);
     break;
   case 0x1f:
-    uVar9 = SL_ConvertToLowercase(*puVar23,DAT_83ca8c59,0xf);
-    *puVar23 = uVar9;
-    uVar8 = node_pos(puVar23[-3]);
-    uVar9 = node3(0x18,puVar23[-4],*puVar23,uVar8);
-    DAT_83700fbc = DAT_83700fbc + 1;
-    local_880 = (ulonglong)(uint)puVar23[-1];
+    uVar9 = SL_ConvertToLowercase(psVar2->stringValue,(uint)g_parse_user,0xf);
+    psVar2->stringValue = uVar9;
+    sVar11 = node_pos(psVar2[-3].stringValue);
+    sVar11 = node3(0x18,psVar2[-4],*psVar2,sVar11);
+    scrCompilePub.far_function_count = scrCompilePub.far_function_count + 1;
+    local_880 = (ulonglong)psVar2[-1].stringValue;
     break;
   case 0x20:
-    uVar9 = SL_ConvertToLowercase(*puVar23,DAT_83ca8c59,0xf);
-    *puVar23 = uVar9;
-    uVar8 = node_pos(puVar23[-1]);
-    uVar9 = node2(0x17,*puVar23,uVar8);
+    uVar9 = SL_ConvertToLowercase(psVar2->stringValue,(uint)g_parse_user,0xf);
+    psVar2->stringValue = uVar9;
+    sVar11 = node_pos(psVar2[-1].stringValue);
+    sVar11 = node2(0x17,*psVar2,sVar11);
     break;
   case 0x21:
   case 0x3a:
-    uVar8 = node_pos(puVar23[1]);
-    uVar9 = node2(0x15,*puVar23,uVar8);
+    sVar11 = node_pos(psVar2[1].stringValue);
+    sVar11 = node2(0x15,*psVar2,sVar11);
     break;
   case 0x22:
-    uVar8 = node_pos(puVar23[-3]);
-    uVar9 = node2(0x19,puVar23[-4],uVar8);
+    sVar11 = node_pos(psVar2[-3].stringValue);
+    sVar11 = node2(0x19,psVar2[-4],sVar11);
     break;
   case 0x23:
-    uVar8 = node_pos(puVar23[1]);
-    uVar9 = node2(0x1d,*puVar23,uVar8);
+    sVar11 = node_pos(psVar2[1].stringValue);
+    sVar11 = node2(0x1d,*psVar2,sVar11);
     break;
   case 0x24:
-    uVar8 = node_pos(puVar23[1]);
-    uVar7 = node_pos(puVar23[-1]);
-    uVar9 = node3(0x21,*puVar23,uVar7,uVar8);
-    local_880 = (ulonglong)(uint)puVar23[1];
+    sVar11 = node_pos(psVar2[1].stringValue);
+    sVar10 = node_pos(psVar2[-1].stringValue);
+    sVar11 = node3(0x21,*psVar2,sVar10,sVar11);
+    local_880 = (ulonglong)psVar2[1].stringValue;
     break;
   case 0x25:
-    uVar8 = node_pos(puVar23[1]);
-    uVar7 = node_pos(puVar23[-1]);
-    uVar9 = node3(0x22,*puVar23,uVar7,uVar8);
-    local_880 = (ulonglong)(uint)puVar23[1];
+    sVar11 = node_pos(psVar2[1].stringValue);
+    sVar10 = node_pos(psVar2[-1].stringValue);
+    sVar11 = node3(0x22,*psVar2,sVar10,sVar11);
+    local_880 = (ulonglong)psVar2[1].stringValue;
     break;
   case 0x26:
-    uVar8 = node_pos(puVar23[-3]);
-    uVar9 = node2(0x23,puVar23[-4],uVar8);
-    local_880 = (ulonglong)(uint)puVar23[-3];
+    sVar11 = node_pos(psVar2[-3].stringValue);
+    sVar11 = node2(0x23,psVar2[-4],sVar11);
+    local_880 = (ulonglong)psVar2[-3].stringValue;
     break;
   case 0x27:
-    uVar8 = node_pos(puVar23[-3]);
-    uVar9 = node3(0x1a,puVar23[-6],puVar23[-2],uVar8);
-    local_880 = (ulonglong)(uint)puVar23[-3];
+    sVar11 = node_pos(psVar2[-3].stringValue);
+    sVar11 = node3(0x1a,psVar2[-6],psVar2[-2],sVar11);
+    local_880 = (ulonglong)psVar2[-3].stringValue;
     break;
   case 0x28:
-    uVar8 = node_pos(puVar23[-3]);
-    uVar7 = node_pos(puVar23[-7]);
-    uVar9 = node5(0x1b,puVar23[-8],puVar23[-6],puVar23[-2],uVar7,uVar8);
-    local_880 = (ulonglong)(uint)puVar23[-3];
+    sVar11 = node_pos(psVar2[-3].stringValue);
+    sVar10 = node_pos(psVar2[-7].stringValue);
+    sVar11 = node5(0x1b,psVar2[-8],psVar2[-6],psVar2[-2],sVar10,sVar11);
+    local_880 = (ulonglong)psVar2[-3].stringValue;
     break;
   case 0x29:
-    uVar8 = node_pos(puVar23[-3]);
-    uVar7 = node_reverse_list(puVar23[-2]);
-    uVar9 = node2(0x48,uVar7,uVar8);
+    sVar11 = node_pos(psVar2[-3].stringValue);
+    sVar10 = node_reverse_list(psVar2[-2]);
+    sVar11 = node2(0x48,sVar10,sVar11);
     break;
   case 0x2a:
-    uVar8 = node_pos(puVar23[-3]);
-    uVar9 = node2(0x34,puVar23[-2],uVar8);
+    sVar11 = node_pos(psVar2[-3].stringValue);
+    sVar11 = node2(0x34,psVar2[-2],sVar11);
     break;
   case 0x2b:
-    uVar8 = node_pos(puVar23[1]);
-    uVar9 = node2(9,*puVar23,uVar8);
+    sVar11 = node_pos(psVar2[1].stringValue);
+    sVar11 = node2(9,*psVar2,sVar11);
     break;
   case 0x2c:
-    uVar8 = node_pos(puVar23[1]);
-    uVar9 = node2(10,*puVar23,uVar8);
+    sVar11 = node_pos(psVar2[1].stringValue);
+    sVar11 = node2(10,*psVar2,sVar11);
     break;
   case 0x2d:
-    uVar8 = node_pos(puVar23[-1]);
-    uVar9 = node2(0xb,*puVar23,uVar8);
+    sVar11 = node_pos(psVar2[-1].stringValue);
+    sVar11 = node2(0xb,*psVar2,sVar11);
     break;
   case 0x2e:
-    uVar8 = node_pos(puVar23[-1]);
-    uVar9 = node2(0xc,*puVar23,uVar8);
+    sVar11 = node_pos(psVar2[-1].stringValue);
+    sVar11 = node2(0xc,*psVar2,sVar11);
     break;
   case 0x2f:
-    uVar8 = node_pos(puVar23[1]);
-    uVar9 = node2(0xd,*puVar23,uVar8);
+    sVar11 = node_pos(psVar2[1].stringValue);
+    sVar11 = node2(0xd,*psVar2,sVar11);
     break;
   case 0x30:
-    uVar8 = node_pos(puVar23[1]);
-    uVar9 = node2(0xe,*puVar23,uVar8);
+    sVar11 = node_pos(psVar2[1].stringValue);
+    sVar11 = node2(0xe,*psVar2,sVar11);
     break;
   case 0x31:
-    uVar9 = node1(0x16,*puVar23);
+    sVar11 = node1(0x16,*psVar2);
     break;
   case 0x32:
-    uVar8 = node_pos(puVar23[1]);
-    uVar9 = node2(0x14,*puVar23,uVar8);
+    sVar11 = node_pos(psVar2[1].stringValue);
+    sVar11 = node2(0x14,*psVar2,sVar11);
     break;
   case 0x33:
-    uVar8 = node_pos(puVar23[1]);
-    uVar9 = node1(0x24,uVar8);
+    sVar11 = node_pos(psVar2[1].stringValue);
+    sVar11 = node1(0x24,sVar11);
     break;
   case 0x34:
-    uVar8 = node_pos(puVar23[1]);
-    uVar9 = node1(0x25,uVar8);
+    sVar11 = node_pos(psVar2[1].stringValue);
+    sVar11 = node1(0x25,sVar11);
     break;
   case 0x35:
-    uVar8 = node_pos(puVar23[1]);
-    uVar9 = node1(0x27,uVar8);
+    sVar11 = node_pos(psVar2[1].stringValue);
+    sVar11 = node1(0x27,sVar11);
     break;
   case 0x36:
-    uVar8 = node_pos(puVar23[1]);
-    uVar9 = node1(0x28,uVar8);
+    sVar11 = node_pos(psVar2[1].stringValue);
+    sVar11 = node1(0x28,sVar11);
     break;
   case 0x37:
-    uVar8 = node_pos(puVar23[1]);
-    uVar9 = node1(0x29,uVar8);
+    sVar11 = node_pos(psVar2[1].stringValue);
+    sVar11 = node1(0x29,sVar11);
     break;
   case 0x38:
-    uVar8 = node_pos(puVar23[1]);
-    uVar9 = node1(0x2a,uVar8);
+    sVar11 = node_pos(psVar2[1].stringValue);
+    sVar11 = node1(0x2a,sVar11);
     break;
   case 0x39:
-    uVar8 = node_pos(puVar23[-1]);
-    uVar9 = node2(0x3a,puVar23[-2],uVar8);
-    local_880 = (ulonglong)(uint)puVar23[1];
+    sVar11 = node_pos(psVar2[-1].stringValue);
+    sVar11 = node2(0x3a,psVar2[-2],sVar11);
+    local_880 = (ulonglong)psVar2[1].stringValue;
     break;
   default:
     goto switchD_82564a90_caseD_3b;
   case 0x3c:
-    uVar9 = SL_ConvertToLowercase(*puVar23,DAT_83ca8c59,0xf);
-    *puVar23 = uVar9;
-    uVar8 = node_pos(puVar23[1]);
-    uVar9 = node2(0x49,*puVar23,uVar8);
+    uVar9 = SL_ConvertToLowercase(psVar2->stringValue,(uint)g_parse_user,0xf);
+    psVar2->stringValue = uVar9;
+    sVar11 = node_pos(psVar2[1].stringValue);
+    sVar11 = node2(0x49,*psVar2,sVar11);
     break;
   case 0x3d:
-    uVar8 = node_pos(puVar23[1]);
-    uVar9 = node1(0x4e,uVar8);
+    sVar11 = node_pos(psVar2[1].stringValue);
+    sVar11 = node1(0x4e,sVar11);
     break;
   case 0x3e:
-    uVar8 = node_pos(puVar23[1]);
-    uVar9 = node1(0x4f,uVar8);
+    sVar11 = node_pos(psVar2[1].stringValue);
+    sVar11 = node1(0x4f,sVar11);
     break;
   case 0x3f:
-    uVar8 = node_pos(puVar23[1]);
-    uVar9 = node1(0x50,uVar8);
+    sVar11 = node_pos(psVar2[1].stringValue);
+    sVar11 = node1(0x50,sVar11);
     break;
   case 0x40:
-    uVar8 = node_pos(puVar23[-5]);
-    uVar9 = node3(0x51,puVar23[-8],puVar23[-2],uVar8);
+    sVar11 = node_pos(psVar2[-5].stringValue);
+    sVar11 = node3(0x51,psVar2[-8],psVar2[-2],sVar11);
     break;
   case 0x41:
-    uVar9 = SL_ConvertToLowercase(*puVar23,DAT_83ca8c59,0xf);
-    *puVar23 = uVar9;
-    uVar8 = node_pos(puVar23[-3]);
-    uVar9 = node3(0x11,puVar23[-4],*puVar23,uVar8);
-    local_880 = (ulonglong)(uint)puVar23[1];
+    uVar9 = SL_ConvertToLowercase(psVar2->stringValue,(uint)g_parse_user,0xf);
+    psVar2->stringValue = uVar9;
+    sVar11 = node_pos(psVar2[-3].stringValue);
+    sVar11 = node3(0x11,psVar2[-4],*psVar2,sVar11);
+    local_880 = (ulonglong)psVar2[1].stringValue;
     break;
   case 0x42:
-    uVar8 = node_pos(puVar23[-1]);
-    uVar7 = node_pos(puVar23[-5]);
-    uVar9 = node4(0xf,puVar23[-6],puVar23[-2],uVar7,uVar8);
-    local_880 = (ulonglong)(uint)puVar23[-3];
+    sVar11 = node_pos(psVar2[-1].stringValue);
+    sVar10 = node_pos(psVar2[-5].stringValue);
+    sVar11 = node4(0xf,psVar2[-6],psVar2[-2],sVar10,sVar11);
+    local_880 = (ulonglong)psVar2[-3].stringValue;
     break;
   case 0x43:
-    uVar9 = SL_ConvertToLowercase(*puVar23,DAT_83ca8c59,0xf);
-    *puVar23 = uVar9;
-    uVar8 = node_pos(puVar23[1]);
-    uVar9 = node2(5,*puVar23,uVar8);
+    uVar9 = SL_ConvertToLowercase(psVar2->stringValue,(uint)g_parse_user,0xf);
+    psVar2->stringValue = uVar9;
+    sVar11 = node_pos(psVar2[1].stringValue);
+    sVar11 = node2(5,*psVar2,sVar11);
     break;
   case 0x44:
-    uVar9 = SL_ConvertToLowercase(*puVar23,DAT_83ca8c59,0xf);
-    *puVar23 = uVar9;
-    uVar8 = node_pos(puVar23[-1]);
-    uVar9 = node2(0x56,*puVar23,uVar8);
+    uVar9 = SL_ConvertToLowercase(psVar2->stringValue,(uint)g_parse_user,0xf);
+    psVar2->stringValue = uVar9;
+    sVar11 = node_pos(psVar2[-1].stringValue);
+    sVar11 = node2(0x56,*psVar2,sVar11);
     break;
   case 0x45:
-    uVar8 = node_pos(puVar23[-3]);
-    uVar9 = node2(0x3b,puVar23[-4],uVar8);
-    local_880 = (ulonglong)(uint)puVar23[1];
+    sVar11 = node_pos(psVar2[-3].stringValue);
+    sVar11 = node2(0x3b,psVar2[-4],sVar11);
+    local_880 = (ulonglong)psVar2[1].stringValue;
     break;
   case 0x46:
-    uVar8 = node_pos(puVar23[1]);
-    uVar7 = node_pos(puVar23[-1]);
-    uVar9 = node4(2,puVar23[-4],*puVar23,uVar7,uVar8);
+    sVar11 = node_pos(psVar2[1].stringValue);
+    sVar10 = node_pos(psVar2[-1].stringValue);
+    sVar11 = node4(2,psVar2[-4],*psVar2,sVar10,sVar11);
     break;
   case 0x47:
-    uVar8 = node_pos(puVar23[1]);
-    uVar7 = node_pos(puVar23[-3]);
-    uVar9 = Scr_CreateExtractArrayStatement(puVar23[-4],*puVar23,uVar7,uVar8);
+    sVar11 = node_pos(psVar2[1].stringValue);
+    sVar10 = node_pos(psVar2[-3].stringValue);
+    sVar11 = Scr_CreateExtractArrayStatement(psVar2[-4],*psVar2,sVar10,sVar11);
     break;
   case 0x48:
-    uVar8 = node_pos(puVar23[-1]);
-    uVar9 = node2(0x1e,*puVar23,uVar8);
+    sVar11 = node_pos(psVar2[-1].stringValue);
+    sVar11 = node2(0x1e,*psVar2,sVar11);
     break;
   case 0x49:
-    uVar8 = node_pos(puVar23[1]);
-    uVar9 = node1(0x1f,uVar8);
+    sVar11 = node_pos(psVar2[1].stringValue);
+    sVar11 = node1(0x1f,sVar11);
     break;
   case 0x4a:
-    uVar8 = node_pos(puVar23[-1]);
-    uVar7 = node_pos(puVar23[1]);
-    uVar9 = node3(0x20,*puVar23,uVar7,uVar8);
+    sVar11 = node_pos(psVar2[-1].stringValue);
+    sVar10 = node_pos(psVar2[1].stringValue);
+    sVar11 = node3(0x20,*psVar2,sVar10,sVar11);
     break;
   case 0x4b:
-    uVar8 = node_pos(puVar23[-1]);
-    uVar9 = node2(0x2f,puVar23[-2],uVar8);
+    sVar11 = node_pos(psVar2[-1].stringValue);
+    sVar11 = node2(0x2f,psVar2[-2],sVar11);
     break;
   case 0x4c:
-    uVar8 = node_pos(puVar23[-1]);
-    uVar9 = node2(0x30,puVar23[-2],uVar8);
+    sVar11 = node_pos(psVar2[-1].stringValue);
+    sVar11 = node2(0x30,psVar2[-2],sVar11);
     break;
   case 0x4d:
-    uVar8 = node_pos(puVar23[-1]);
-    uVar7 = node1_(0x7f);
-    uVar9 = node4(0x31,puVar23[-4],*puVar23,uVar7,uVar8);
+    sVar11 = node_pos(psVar2[-1].stringValue);
+    sVar10 = node1_(0x7f);
+    sVar11 = node4(0x31,psVar2[-4],*psVar2,sVar10,sVar11);
     break;
   case 0x4e:
-    uVar8 = node_pos(puVar23[-1]);
-    uVar7 = node1_(0x80);
-    uVar9 = node4(0x31,puVar23[-4],*puVar23,uVar7,uVar8);
+    sVar11 = node_pos(psVar2[-1].stringValue);
+    sVar10 = node1_(0x80);
+    sVar11 = node4(0x31,psVar2[-4],*psVar2,sVar10,sVar11);
     break;
   case 0x4f:
-    uVar8 = node_pos(puVar23[-1]);
-    uVar7 = node1_(0x81);
-    uVar9 = node4(0x31,puVar23[-4],*puVar23,uVar7,uVar8);
+    sVar11 = node_pos(psVar2[-1].stringValue);
+    sVar10 = node1_(0x81);
+    sVar11 = node4(0x31,psVar2[-4],*psVar2,sVar10,sVar11);
     break;
   case 0x50:
-    uVar8 = node_pos(puVar23[-1]);
-    uVar7 = node1_(0x88);
-    uVar9 = node4(0x31,puVar23[-4],*puVar23,uVar7,uVar8);
+    sVar11 = node_pos(psVar2[-1].stringValue);
+    sVar10 = node1_(0x88);
+    sVar11 = node4(0x31,psVar2[-4],*psVar2,sVar10,sVar11);
     break;
   case 0x51:
-    uVar8 = node_pos(puVar23[-1]);
-    uVar7 = node1_(0x89);
-    uVar9 = node4(0x31,puVar23[-4],*puVar23,uVar7,uVar8);
+    sVar11 = node_pos(psVar2[-1].stringValue);
+    sVar10 = node1_(0x89);
+    sVar11 = node4(0x31,psVar2[-4],*psVar2,sVar10,sVar11);
     break;
   case 0x52:
-    uVar8 = node_pos(puVar23[-1]);
-    uVar7 = node1_(0x8a);
-    uVar9 = node4(0x31,puVar23[-4],*puVar23,uVar7,uVar8);
+    sVar11 = node_pos(psVar2[-1].stringValue);
+    sVar10 = node1_(0x8a);
+    sVar11 = node4(0x31,psVar2[-4],*psVar2,sVar10,sVar11);
     break;
   case 0x53:
-    uVar8 = node_pos(puVar23[-1]);
-    uVar7 = node1_(0x8b);
-    uVar9 = node4(0x31,puVar23[-4],*puVar23,uVar7,uVar8);
+    sVar11 = node_pos(psVar2[-1].stringValue);
+    sVar10 = node1_(0x8b);
+    sVar11 = node4(0x31,psVar2[-4],*psVar2,sVar10,sVar11);
     break;
   case 0x54:
-    uVar8 = node_pos(puVar23[-1]);
-    uVar7 = node1_(0x8c);
-    uVar9 = node4(0x31,puVar23[-4],*puVar23,uVar7,uVar8);
+    sVar11 = node_pos(psVar2[-1].stringValue);
+    sVar10 = node1_(0x8c);
+    sVar11 = node4(0x31,psVar2[-4],*psVar2,sVar10,sVar11);
     break;
   case 0x55:
-    uVar8 = node_pos(puVar23[-1]);
-    uVar7 = node1_(0x8d);
-    uVar9 = node4(0x31,puVar23[-4],*puVar23,uVar7,uVar8);
+    sVar11 = node_pos(psVar2[-1].stringValue);
+    sVar10 = node1_(0x8d);
+    sVar11 = node4(0x31,psVar2[-4],*psVar2,sVar10,sVar11);
     break;
   case 0x56:
-    uVar8 = node_pos(puVar23[-1]);
-    uVar7 = node1_(0x8e);
-    uVar9 = node4(0x31,puVar23[-4],*puVar23,uVar7,uVar8);
+    sVar11 = node_pos(psVar2[-1].stringValue);
+    sVar10 = node1_(0x8e);
+    sVar11 = node4(0x31,psVar2[-4],*psVar2,sVar10,sVar11);
     break;
   case 0x57:
-    uVar8 = node_pos(puVar23[-5]);
-    uVar7 = node_pos(puVar23[-7]);
-    uVar9 = node4(0x3d,puVar23[-8],puVar23[-2],uVar7,uVar8);
+    sVar11 = node_pos(psVar2[-5].stringValue);
+    sVar10 = node_pos(psVar2[-7].stringValue);
+    sVar11 = node4(0x3d,psVar2[-8],psVar2[-2],sVar10,sVar11);
     break;
   case 0x58:
-    uVar8 = node_pos(puVar23[-5]);
-    uVar7 = node_pos(puVar23[-7]);
-    uVar9 = node4(0x3e,puVar23[-8],puVar23[-2],uVar7,uVar8);
+    sVar11 = node_pos(psVar2[-5].stringValue);
+    sVar10 = node_pos(psVar2[-7].stringValue);
+    sVar11 = node4(0x3e,psVar2[-8],psVar2[-2],sVar10,sVar11);
     break;
   case 0x59:
-    uVar8 = node_pos(puVar23[1]);
-    uVar9 = node1(0x3f,uVar8);
+    sVar11 = node_pos(psVar2[1].stringValue);
+    sVar11 = node1(0x3f,sVar11);
     break;
   case 0x5a:
-    uVar8 = node_pos(puVar23[-5]);
-    uVar7 = node_pos(puVar23[-7]);
-    uVar9 = node4(0x40,puVar23[-8],puVar23[-2],uVar7,uVar8);
+    sVar11 = node_pos(psVar2[-5].stringValue);
+    sVar10 = node_pos(psVar2[-7].stringValue);
+    sVar11 = node4(0x40,psVar2[-8],psVar2[-2],sVar10,sVar11);
     break;
   case 0x5b:
-    uVar8 = node_pos(puVar23[-1]);
-    uVar7 = node_pos(puVar23[-7]);
-    uVar9 = node4(0x41,puVar23[-8],puVar23[-2],uVar7,uVar8);
+    sVar11 = node_pos(psVar2[-1].stringValue);
+    sVar10 = node_pos(psVar2[-7].stringValue);
+    sVar11 = node4(0x41,psVar2[-8],psVar2[-2],sVar10,sVar11);
     break;
   case 0x5c:
-    uVar8 = node_pos(puVar23[1]);
-    uVar9 = node1(0x45,uVar8);
+    sVar11 = node_pos(psVar2[1].stringValue);
+    sVar11 = node1(0x45,sVar11);
     break;
   case 0x5d:
-    uVar8 = node_pos(puVar23[1]);
-    uVar9 = node1(0x46,uVar8);
+    sVar11 = node_pos(psVar2[1].stringValue);
+    sVar11 = node1(0x46,sVar11);
     break;
   case 0x5e:
-    uVar8 = node_pos(puVar23[1]);
-    uVar9 = node1(0x52,uVar8);
+    sVar11 = node_pos(psVar2[1].stringValue);
+    sVar11 = node1(0x52,sVar11);
     break;
   case 0x5f:
-    uVar8 = node_pos(puVar23[-5]);
-    uVar9 = node2(0x53,puVar23[-2],uVar8);
+    sVar11 = node_pos(psVar2[-5].stringValue);
+    sVar11 = node2(0x53,psVar2[-2],sVar11);
     break;
   case 0x60:
-    uVar8 = node_pos(puVar23[-5]);
-    uVar9 = node2(0x54,puVar23[-2],uVar8);
+    sVar11 = node_pos(psVar2[-5].stringValue);
+    sVar11 = node2(0x54,psVar2[-2],sVar11);
     break;
   case 0x61:
-    uVar9 = node1(0x1c,*puVar23);
+    sVar11 = node1(0x1c,*psVar2);
     break;
   case 0x66:
-    uVar8 = node_pos(puVar23[1]);
-    uVar7 = node_pos(puVar23[-3]);
-    uVar9 = node3(0x32,puVar23[-2],uVar7,uVar8);
+    sVar11 = node_pos(psVar2[1].stringValue);
+    sVar10 = node_pos(psVar2[-3].stringValue);
+    sVar11 = node3(0x32,psVar2[-2],sVar10,sVar11);
     break;
   case 0x67:
-    uVar8 = node_pos(puVar23[-3]);
-    uVar9 = node4(0x2b,puVar23[-4],*puVar23,uVar8,DAT_83cacc80);
+    sVar11 = node_pos(psVar2[-3].stringValue);
+    sVar11 = node4(0x2b,psVar2[-4],*psVar2,sVar11,g_dummyVal);
     break;
   case 0x68:
-    uVar8 = node_pos(puVar23[-1]);
-    uVar7 = node_pos(puVar23[-7]);
-    uVar9 = node7(0x2c,puVar23[-8],puVar23[-4],*puVar23,uVar7,uVar8,DAT_83cacc80);
+    sVar11 = node_pos(psVar2[-1].stringValue);
+    sVar10 = node_pos(psVar2[-7].stringValue);
+    sVar11 = node7(0x2c,psVar2[-8],psVar2[-4],*psVar2,sVar10,sVar11,g_dummyVal,g_dummyVal);
     break;
   case 0x69:
-    uVar8 = node_pos(puVar23[-7]);
-    uVar7 = node_pos(puVar23[-3]);
-    uVar9 = node5(0x2d,puVar23[-4],*puVar23,uVar7,uVar8,DAT_83cacc80);
+    sVar11 = node_pos(psVar2[-7].stringValue);
+    sVar10 = node_pos(psVar2[-3].stringValue);
+    sVar11 = node5(0x2d,psVar2[-4],*psVar2,sVar10,sVar11,g_dummyVal);
     break;
   case 0x6a:
-    uVar8 = node_pos(puVar23[-0xd]);
-    uVar7 = node_pos(puVar23[-7]);
-    uVar9 = *puVar23;
-    uVar2 = puVar23[-4];
-    uVar3 = puVar23[-8];
-    uVar4 = puVar23[-10];
-    *(undefined4 *)((int)lVar24 + 0x54) = DAT_83cacc80;
-    uVar9 = node8(0x2e,uVar4,uVar3,uVar2,uVar9,uVar7,uVar8);
+    sVar5 = node_pos(psVar2[-0xd].stringValue);
+    sVar6 = node_pos(psVar2[-7].stringValue);
+    sVar3 = g_dummyVal;
+    sVar11 = *psVar2;
+    sVar10 = psVar2[-4];
+    sVar7 = psVar2[-8];
+    sVar8 = psVar2[-10];
+    *(sval_u *)(iVar4 + 0x54) = g_dummyVal;
+    sVar11 = node8(0x2e,sVar8,sVar7,sVar10,sVar11,sVar6,sVar5,sVar3,*(sval_u *)(iVar4 + 8));
     break;
   case 0x6b:
-    node_pos(puVar23[-1]);
-    node_pos(puVar23[-5]);
-    uVar8 = node_pos(puVar23[-3]);
-    uVar7 = node_pos(puVar23[-0xb]);
-    uVar5 = node_pos(puVar23[-0xf]);
-    uVar9 = Scr_CreateForEachStatement
-                      (puVar23[-0xc],puVar23[-8],puVar23[-4],*puVar23,uVar5,uVar7,uVar8);
+    node_pos(psVar2[-1].stringValue);
+    node_pos(psVar2[-5].stringValue);
+    sVar11 = node_pos(psVar2[-3].stringValue);
+    sVar10 = node_pos(psVar2[-0xb].stringValue);
+    sVar7 = node_pos(psVar2[-0xf].stringValue);
+    sVar11 = Scr_CreateForEachStatement
+                       (psVar2[-0xc],psVar2[-8],psVar2[-4],*psVar2,sVar7,sVar10,sVar11,
+                        (sval_u)psVar17,*(sval_u *)(iVar4 + 8));
     break;
   case 0x6c:
-    uVar8 = node_pos(puVar23[-1]);
-    uVar7 = node_pos(puVar23[-5]);
-    uVar5 = node_pos(puVar23[-3]);
-    uVar6 = node_pos(puVar23[-0xb]);
-    uVar9 = Scr_CreateForEachStatementNoKey
-                      (puVar23[-8],puVar23[-4],*puVar23,uVar6,uVar5,uVar7,uVar8);
+    sVar11 = node_pos(psVar2[-1].stringValue);
+    sVar10 = node_pos(psVar2[-5].stringValue);
+    sVar7 = node_pos(psVar2[-3].stringValue);
+    sVar8 = node_pos(psVar2[-0xb].stringValue);
+    sVar11 = Scr_CreateForEachStatementNoKey
+                       (psVar2[-8],psVar2[-4],*psVar2,sVar8,sVar7,sVar10,sVar11);
     break;
   case 0x6d:
-    uVar8 = node_pos(puVar23[-7]);
-    uVar9 = node3(0x42,puVar23[-8],puVar23[-2],uVar8);
+    sVar11 = node_pos(psVar2[-7].stringValue);
+    sVar11 = node3(0x42,psVar2[-8],psVar2[-2],sVar11);
     break;
   case 0x6e:
-    uVar8 = node_pos(puVar23[-3]);
-    uVar9 = node3(0x33,puVar23[-2],uVar8,DAT_83cacc80);
+    sVar11 = node_pos(psVar2[-3].stringValue);
+    sVar11 = node3(0x33,psVar2[-2],sVar11,g_dummyVal);
     break;
   case 0x70:
-    uVar8 = node_pos(puVar23[-3]);
-    uVar9 = node3(0x43,puVar23[-2],uVar8,DAT_83cacc80);
+    sVar11 = node_pos(psVar2[-3].stringValue);
+    sVar11 = node3(0x43,psVar2[-2],sVar11,g_dummyVal);
     break;
   case 0x71:
-    uVar8 = node_pos(puVar23[-1]);
-    uVar9 = node2(0x44,uVar8,DAT_83cacc80);
+    sVar11 = node_pos(psVar2[-1].stringValue);
+    sVar11 = node2(0x44,sVar11,g_dummyVal);
     break;
   case 0x73:
-    uVar9 = append_node(puVar23[-2],*puVar23);
+    sVar11 = append_node(psVar2[-2],*psVar2);
     break;
   case 0x74:
   case 0x7c:
   case 0x89:
   case 0x8c:
-    node0(0);
-    uVar9 = linked_list_end();
+    sVar11 = node0(0);
+    sVar11 = linked_list_end(sVar11);
     break;
   case 0x75:
   case 0x81:
-    uVar8 = node_pos(puVar23[1]);
-    uVar8 = node2_(*puVar23,uVar8);
-    uVar9 = prepend_node(uVar8,puVar23[-4]);
+    sVar11 = node_pos(psVar2[1].stringValue);
+    sVar11 = node2_(*psVar2,sVar11);
+    sVar11 = prepend_node(sVar11,psVar2[-4]);
     break;
   case 0x76:
   case 0x82:
-    uVar8 = node0(0);
-    uVar7 = node_pos(puVar23[1]);
-    uVar7 = node2_(*puVar23,uVar7);
-    uVar9 = prepend_node(uVar7,uVar8);
+    sVar11 = node0(0);
+    sVar10 = node_pos(psVar2[1].stringValue);
+    sVar10 = node2_(*psVar2,sVar10);
+    sVar11 = prepend_node(sVar10,sVar11);
     break;
   case 0x79:
   case 0x7d:
-    uVar9 = SL_ConvertToLowercase(*puVar23,DAT_83ca8c59,0xf);
-    *puVar23 = uVar9;
+    uVar9 = SL_ConvertToLowercase(psVar2->stringValue,(uint)g_parse_user,0xf);
+    psVar2->stringValue = uVar9;
   case 0x7f:
-    uVar8 = node_pos(puVar23[1]);
-    uVar8 = node2_(*puVar23,uVar8);
-    uVar9 = append_node(puVar23[-4],uVar8);
+    sVar11 = node_pos(psVar2[1].stringValue);
+    sVar11 = node2_(*psVar2,sVar11);
+    sVar11 = append_node(psVar2[-4],sVar11);
     break;
   case 0x7a:
-    uVar9 = SL_ConvertToLowercase(*puVar23,DAT_83ca8c59,0xf);
-    *puVar23 = uVar9;
+    uVar9 = SL_ConvertToLowercase(psVar2->stringValue,(uint)g_parse_user,0xf);
+    psVar2->stringValue = uVar9;
   case 0x7e:
   case 0x80:
-    uVar8 = node_pos(puVar23[1]);
-    uVar8 = node2_(*puVar23,uVar8);
-    node0(0);
-    uVar7 = linked_list_end();
-    uVar9 = append_node(uVar7,uVar8);
+    sVar11 = node_pos(psVar2[1].stringValue);
+    sVar11 = node2_(*psVar2,sVar11);
+    sVar10 = node0(0);
+    sVar10 = linked_list_end(sVar10);
+    sVar11 = append_node(sVar10,sVar11);
     break;
   case 0x83:
-    uVar9 = SL_ConvertToLowercase(puVar23[-0xc],DAT_83ca8c59,0xf);
-    puVar23[-0xc] = uVar9;
-    uVar8 = node_pos(puVar23[1]);
-    uVar7 = node_pos(puVar23[-0xb]);
-    uVar9 = node6(0x4a,puVar23[-0xc],puVar23[-8],puVar23[-2],uVar7,uVar8,DAT_83cacc80);
+    uVar9 = SL_ConvertToLowercase(psVar2[-0xc].stringValue,(uint)g_parse_user,0xf);
+    psVar2[-0xc].stringValue = uVar9;
+    sVar11 = node_pos(psVar2[1].stringValue);
+    sVar10 = node_pos(psVar2[-0xb].stringValue);
+    sVar11 = node6(0x4a,psVar2[-0xc],psVar2[-8],psVar2[-2],sVar10,sVar11,g_dummyVal);
     break;
   case 0x84:
-    uVar8 = node_pos(puVar23[-3]);
-    uVar7 = node_pos(puVar23[-7]);
-    uVar9 = node3(0x4d,puVar23[-4],uVar7,uVar8);
+    sVar11 = node_pos(psVar2[-3].stringValue);
+    sVar10 = node_pos(psVar2[-7].stringValue);
+    sVar11 = node3(0x4d,psVar2[-4],sVar10,sVar11);
     break;
   case 0x85:
-    uVar8 = node_pos(puVar23[1]);
-    uVar9 = node1(0x4b,uVar8);
+    sVar11 = node_pos(psVar2[1].stringValue);
+    sVar11 = node1(0x4b,sVar11);
     break;
   case 0x86:
-    uVar8 = node_pos(puVar23[1]);
-    uVar9 = node1(0x4c,uVar8);
+    sVar11 = node_pos(psVar2[1].stringValue);
+    sVar11 = node1(0x4c,sVar11);
     break;
   case 0x87:
-    uVar9 = SL_ConvertToLowercase(puVar23[-6],DAT_83ca8c59,0xf);
-    puVar23[-6] = uVar9;
-    uVar8 = node_pos(puVar23[-1]);
-    uVar7 = node_pos(puVar23[-5]);
-    uVar9 = node4(0x5e,puVar23[-6],puVar23[-2],uVar7,uVar8);
+    uVar9 = SL_ConvertToLowercase(psVar2[-6].stringValue,(uint)g_parse_user,0xf);
+    psVar2[-6].stringValue = uVar9;
+    sVar11 = node_pos(psVar2[-1].stringValue);
+    sVar10 = node_pos(psVar2[-5].stringValue);
+    sVar11 = node4(0x5e,psVar2[-6],psVar2[-2],sVar10,sVar11);
     break;
   case 0x88:
-    uVar9 = append_node(puVar23[-2],*puVar23);
+    sVar11 = append_node(psVar2[-2],*psVar2);
     DAT_83cacc78 = 0;
     break;
   case 0x8a:
-    uVar8 = node_pos(puVar23[-1]);
-    uVar9 = node2(0x5c,*puVar23,uVar8);
-    DAT_83700fbc = DAT_83700fbc + 1;
+    sVar11 = node_pos(psVar2[-1].stringValue);
+    sVar11 = node2(0x5c,*psVar2,sVar11);
+    scrCompilePub.far_function_count = scrCompilePub.far_function_count + 1;
     break;
   case 0x8b:
-    uVar9 = append_node(puVar23[-4],puVar23[-2]);
+    sVar11 = append_node(psVar2[-4],psVar2[-2]);
   }
-  local_880 = CONCAT44(uVar9,local_880._4_4_);
+  local_880 = CONCAT44(sVar11.type,local_880._4_4_);
 switchD_82564a90_caseD_3b:
-  lVar11 = lVar22 + (uVar21 & 0x1fffffff) * -8;
-  uVar20 = uVar20 + (uVar21 & 0x7fffffff) * -2;
-  lVar22 = lVar11 + 8;
-  *(ulonglong *)((int)lVar11 + 8) = local_880;
-  iVar10 = (*(short *)(&DAT_82156f28 + iVar10) + -0x61) * 2;
-  uVar21 = (longlong)*(short *)(&DAT_8215762c + iVar10) + (longlong)*(short *)uVar20;
-  if ((((longlong)uVar21 < 0) || (0x5f1 < (int)uVar21)) ||
-     (iVar19 = (int)((uVar21 & 0xffffffff) << 1),
-     *(short *)(&DAT_82158250 + iVar19) != *(short *)uVar20)) {
-    uVar21 = (longlong)*(short *)(&DAT_821573ac + iVar10);
+  lVar14 = lVar25 + (uVar24 & 0x1fffffff) * -8;
+  uVar23 = uVar23 + (uVar24 & 0x7fffffff) * -2;
+  lVar25 = lVar14 + 8;
+  *(ulonglong *)((int)lVar14 + 8) = local_880;
+  iVar13 = *(short *)((int)yyr1 + iVar13) + -0x61;
+  uVar24 = (longlong)yypgoto[iVar13] + (longlong)*(short *)uVar23;
+  if ((((longlong)uVar24 < 0) || (0x5f1 < (int)uVar24)) ||
+     (iVar22 = (int)((uVar24 & 0xffffffff) << 1),
+     *(short *)((int)yycheck + iVar22) != *(short *)uVar23)) {
+    uVar24 = (longlong)yydefgoto[iVar13];
   }
   else {
-    uVar21 = (longlong)*(short *)(&DAT_82157668 + iVar19);
+    uVar24 = (longlong)*(short *)((int)yytable + iVar22);
   }
   goto LAB_825648b8;
 }
@@ -1207,68 +1234,73 @@ switchD_82564a90_caseD_3b:
 
 // 82562BF8  yyerror  (script/scr_yacc.txt:735)
 
-undefined8 yyerror(void)
+int yyerror(char *param_1)
 
 {
-  ulonglong uVar1;
-  undefined8 uVar2;
+  uint uVar1;
+  char *pcVar2;
   
-  if (DAT_83cacc8c == 0) {
-    uVar2 = 0xffffffff8215a2c0;
-    uVar1 = (ulonglong)DAT_83ca8c64;
+  if (yychar == 0) {
+    pcVar2 = "unexpected end of file found";
+    uVar1 = g_sourcePos;
   }
   else {
-    if (DAT_83cacc8c == 0x101) {
+    if (yychar == 0x101) {
       return 0;
     }
-    uVar2 = 0xffffffff8215a2b4;
-    uVar1 = -(ulonglong)((ulonglong)DAT_83ca8c64 != 0xffffffffffffffff) & (ulonglong)DAT_83ca8c64;
+    pcVar2 = "bad syntax";
+    uVar1 = -(uint)((ulonglong)g_sourcePos != 0xffffffffffffffff) & g_sourcePos;
   }
-  CompileError(uVar1,uVar2);
+  CompileError(uVar1,pcVar2);
   return 0;
 }
 
 
 // 825661F8  ScriptParse  (script/scr_yacc.txt:748)
 
-void ScriptParse(undefined8 param_1,undefined1 param_2)
+void ScriptParse(sval_u *param_1,uchar param_2)
 
 {
-  undefined4 *puVar1;
-  undefined4 *puVar2;
-  undefined4 local_50;
+  uchar uVar1;
+  sval_u *psVar2;
+  int iVar3;
+  sval_u *psVar4;
+  sval_u local_50;
   undefined *local_4c;
   undefined4 local_44;
   undefined4 local_3c;
   undefined4 local_38;
   undefined4 local_30;
   
-  puVar1 = (undefined4 *)__savegprlr_29();
-  puVar2 = &DAT_83cacc84;
+  uVar1 = param_2;
+  psVar2 = (sval_u *)__savegprlr_29(param_1);
+  g_parse_user = uVar1;
+  psVar4 = &yaccResult;
   local_3c = 0;
   local_44 = 0x4000;
   local_4c = &DAT_83ca8c68;
-  DAT_83ca8c64 = 0;
+  g_sourcePos = 0;
   DAT_83cacc88 = 0xffffffff;
-  DAT_83cacc80 = 0;
-  DAT_8299036c = 1;
-  DAT_83ca8c59 = param_2;
-  yy_flush_buffer(&local_50);
-  local_50 = 0;
+  g_dummyVal.type = 0;
+  yy_init = 1;
+  yy_flush_buffer((yy_buffer_state *)&local_50);
+  local_50.type = 0;
   local_38 = 0;
-  puVar2[6] = &local_50;
+  psVar4[6].node = &local_50;
   local_30 = 1;
-  puVar2[8] = 3;
-  yyparse();
-  *puVar1 = DAT_83cacc84;
-  __restgprlr_29();
+  psVar4[8].type = 3;
+  iVar3 = yyparse();
+  *psVar2 = yaccResult;
+  __restgprlr_29(iVar3);
   return;
 }
 
 
 // 82562C68  yywrap  (script/scr_yacc.txt:778)
 
-undefined8 yywrap(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int yywrap(void)
 
 {
   return 1;
@@ -1277,969 +1309,971 @@ undefined8 yywrap(void)
 
 // 82563330  yylex  (script/scr_lex.h:791)
 
-void yylex(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int yylex(void)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  FILE *pFVar3;
-  uint uVar4;
-  ulonglong uVar5;
-  short sVar6;
-  byte *pbVar7;
-  longlong lVar8;
-  int iVar9;
+  _iobuf *p_Var1;
+  uint uVar2;
+  int iVar3;
+  byte *pbVar4;
+  int iVar5;
+  ulonglong uVar6;
+  int iVar7;
+  short sVar8;
+  byte *pbVar9;
   byte *pbVar10;
   byte *pbVar11;
   byte *pbVar12;
-  uint *puVar13;
-  ulonglong uVar14;
+  yy_buffer_state *pyVar13;
   
   __savegprlr_17();
-  puVar13 = DAT_83cacc9c;
-  if (DAT_8299036c != 0) {
-    DAT_8299036c = 0;
-    if (DAT_83cacca4 == 0) {
-      DAT_83cacca4 = 1;
+  pyVar13 = yy_current_buffer;
+  if (yy_init != 0) {
+    yy_init = 0;
+    if (yy_start == 0) {
+      yy_start = 1;
     }
-    uVar2 = ZEXT48(DAT_83cacca8);
-    if (uVar2 == 0) {
-      DAT_83cacca8 = __iob_func();
-      uVar2 = (ulonglong)(int)DAT_83cacca8;
+    if (yyin == (_iobuf *)0x0) {
+      yyin = __iob_func();
     }
-    if (DAT_83caccac == (FILE *)0x0) {
-      pFVar3 = __iob_func();
-      DAT_83caccac = pFVar3 + 1;
-      uVar2 = ZEXT48(DAT_83cacca8);
+    if (yyout == (_iobuf *)0x0) {
+      p_Var1 = __iob_func();
+      yyout = p_Var1 + 1;
     }
-    if (DAT_83cacc9c == (uint *)0x0) {
-      DAT_83cacc9c = (uint *)yy_create_buffer(uVar2,0x4000);
+    if (yy_current_buffer == (yy_buffer_state *)0x0) {
+      yy_current_buffer = yy_create_buffer(yyin,0x4000);
     }
-    DAT_83cacca0 = (byte *)DAT_83cacc9c[2];
-    DAT_83cacc7c = DAT_83cacc9c[4];
-    DAT_83cacca8 = (FILE *)*DAT_83cacc9c;
-    DAT_83ca8c58 = *DAT_83cacca0;
-    puVar13 = DAT_83cacc9c;
+    yy_c_buf_p = yy_current_buffer->yy_buf_pos;
+    yy_n_chars = yy_current_buffer->yy_n_chars;
+    yyin = yy_current_buffer->yy_input_file;
+    yy_hold_char = *yy_c_buf_p;
+    pyVar13 = yy_current_buffer;
   }
 LAB_82563414:
-  uVar2 = (ulonglong)DAT_83cacca4;
-  *DAT_83cacca0 = DAT_83ca8c58;
-  pbVar10 = DAT_83cacca0;
-  pbVar12 = DAT_83cacca0;
-LAB_82563428:
-  uVar5 = (ulonglong)DAT_83cacc98;
-  uVar14 = uVar2;
+  iVar7 = yy_start;
+  *yy_c_buf_p = yy_hold_char;
+  iVar5 = DAT_83cacc98;
+  pbVar11 = (byte *)yy_c_buf_p;
+  pbVar9 = (byte *)yy_c_buf_p;
+LAB_82563430:
   do {
-    lVar8 = (uVar14 & 0x7fffffff) << 1;
-    uVar2 = (ulonglong)*(uint *)(&DAT_82159070 + (uint)*pbVar12 * 4) & 0xff;
-    if (*(short *)(&DAT_82158e38 + (int)lVar8) != 0) {
-      uVar5 = uVar14;
-      DAT_83cacc98 = (uint)uVar14;
-      DAT_83ca8c5c = pbVar12;
+    uVar6 = (ulonglong)(uint)yy_ec[*pbVar11] & 0xff;
+    if (yy_accept[iVar7] != 0) {
+      iVar5 = iVar7;
+      DAT_83cacc98 = iVar7;
+      yy_last_accepting_cpos = (char *)pbVar11;
     }
-    iVar9 = (int)(((longlong)*(short *)(&DAT_82159560 + (int)lVar8) + uVar2 & 0x7fffffff) << 1);
-    if ((int)*(short *)(&DAT_82159e38 + iVar9) != (uint)uVar14) {
+    iVar3 = (int)(((longlong)yy_base[iVar7] + uVar6 & 0x7fffffff) << 1);
+    if (*(short *)((int)yy_chk + iVar3) != iVar7) {
       do {
-        sVar6 = *(short *)(&DAT_821597a8 + (int)lVar8);
-        if (0x11b < sVar6) {
-          uVar2 = (ulonglong)*(uint *)(&DAT_82159470 + (int)(uVar2 << 2)) & 0xff;
+        sVar8 = yy_def[iVar7];
+        iVar7 = (int)sVar8;
+        if (0x11b < sVar8) {
+          uVar6 = (ulonglong)*(uint *)((int)yy_meta + (int)(uVar6 << 2)) & 0xff;
         }
-        lVar8 = ((longlong)sVar6 & 0x7fffffffU) << 1;
-        iVar9 = (int)(((longlong)*(short *)(&DAT_82159560 + (int)lVar8) + uVar2 & 0x7fffffff) << 1);
-      } while (*(short *)(&DAT_82159e38 + iVar9) != sVar6);
+        iVar3 = (int)(((longlong)yy_base[iVar7] + uVar6 & 0x7fffffff) << 1);
+      } while (*(short *)((int)yy_chk + iVar3) != sVar8);
     }
-    pbVar12 = pbVar12 + 1;
-    uVar14 = (ulonglong)*(short *)(&DAT_821599f0 + iVar9);
-    pbVar11 = pbVar10;
-  } while (*(short *)(&DAT_82159560 + (int)((uVar14 & 0xffffffff) << 1)) != 0x1e6);
-LAB_82563508:
-  uVar14 = uVar14 & 0xffffffff;
-  pbVar10 = DAT_83ca8c5c;
+    pbVar11 = pbVar11 + 1;
+    iVar7 = (int)*(short *)((int)yy_nxt + iVar3);
+    pbVar4 = (byte *)yy_last_accepting_cpos;
+    iVar3 = iVar7;
+    pbVar10 = pbVar9;
+  } while (yy_base[iVar7] != 0x1e6);
 LAB_8256350c:
-  sVar6 = *(short *)(&DAT_82158e38 + (int)(uVar14 << 1));
-  if (sVar6 == 0) {
-    sVar6 = *(short *)(&DAT_82158e38 + (int)((uVar5 & 0xffffffff) << 1));
-    pbVar12 = pbVar10;
+  sVar8 = yy_accept[iVar3];
+  pbVar12 = pbVar11;
+  if (sVar8 == 0) {
+    sVar8 = yy_accept[iVar5];
+    pbVar12 = pbVar4;
   }
-  iVar9 = (int)sVar6;
-  DAT_83cacc74 = (int)pbVar12 - (int)pbVar11;
-  DAT_83ca8c58 = *pbVar12;
-  DAT_83ca8c60 = pbVar11;
+  iVar7 = (int)sVar8;
+  yyleng = (int)pbVar12 - (int)pbVar10;
+  yy_hold_char = *pbVar12;
+  yytext = (char *)pbVar10;
   *pbVar12 = 0;
-  pbVar7 = pbVar12;
+  pbVar4 = pbVar12;
   do {
-    iVar1 = DAT_83cacc88;
-    pbVar10 = DAT_83ca8c5c;
-    DAT_83cacca0 = pbVar7;
-    switch(iVar9) {
+    iVar5 = DAT_83cacc98;
+    uVar2 = DAT_83cacc88;
+    pbVar11 = (byte *)yy_last_accepting_cpos;
+    yy_c_buf_p = (char *)pbVar4;
+    switch(iVar7) {
     case 0:
       goto switchD_82563574_caseD_0;
     case 1:
     case 3:
     case 4:
     case 5:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
       goto LAB_82563414;
     case 2:
-      DAT_83cacca4 = 3;
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
+      yy_start = 3;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
       goto LAB_82563414;
     case 6:
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacca4 = 5;
-      DAT_83cacc6c._4_4_ = DAT_83ca8c64;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
+      g_sourcePos = DAT_83cacc88;
+      yy_start = 5;
+      yylval.pos = g_sourcePos;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
       goto LAB_82563414;
     case 7:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      lVar8 = StringValue(DAT_83ca8c60 + 1,DAT_83cacc74 - 2);
-      __restgprlr_17((-(ulonglong)(lVar8 != 0) & 2) + 0x101);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = StringValue(yytext + 1,yyleng + -2);
+      iVar7 = __restgprlr_17((-(ulonglong)(iVar7 != 0) & 2) + 0x101);
+      return iVar7;
     case 8:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      lVar8 = StringValue(DAT_83ca8c60 + 2,DAT_83cacc74 - 3);
-      __restgprlr_17((-(ulonglong)(lVar8 != 0) & 3) + 0x101);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = StringValue(yytext + 2,yyleng + -3);
+      iVar7 = __restgprlr_17((-(ulonglong)(iVar7 != 0) & 3) + 0x101);
+      return iVar7;
     case 9:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x105);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x105);
+      return iVar7;
     case 10:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x106);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x106);
+      return iVar7;
     case 0xb:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x107);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x107);
+      return iVar7;
     case 0xc:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x108);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x108);
+      return iVar7;
     case 0xd:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x109);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x109);
+      return iVar7;
     case 0xe:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x10a);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x10a);
+      return iVar7;
     case 0xf:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x10b);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x10b);
+      return iVar7;
     case 0x10:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x10c);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x10c);
+      return iVar7;
     case 0x11:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x10d);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x10d);
+      return iVar7;
     case 0x12:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x10e);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x10e);
+      return iVar7;
     case 0x13:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x10f);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x10f);
+      return iVar7;
     case 0x14:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x110);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x110);
+      return iVar7;
     case 0x15:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x111);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x111);
+      return iVar7;
     case 0x16:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x112);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x112);
+      return iVar7;
     case 0x17:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x113);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x113);
+      return iVar7;
     case 0x18:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x114);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x114);
+      return iVar7;
     case 0x19:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x115);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x115);
+      return iVar7;
     case 0x1a:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x116);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x116);
+      return iVar7;
     case 0x1b:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x117);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x117);
+      return iVar7;
     case 0x1c:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x118);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x118);
+      return iVar7;
     case 0x1d:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x119);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x119);
+      return iVar7;
     case 0x1e:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x11a);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x11a);
+      return iVar7;
     case 0x1f:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x11b);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x11b);
+      return iVar7;
     case 0x20:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x11c);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x11c);
+      return iVar7;
     case 0x21:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x11d);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x11d);
+      return iVar7;
     case 0x22:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x11e);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x11e);
+      return iVar7;
     case 0x23:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x11f);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x11f);
+      return iVar7;
     case 0x24:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      sscanf((char *)DAT_83ca8c60,"%d",0xffffffff83cacc6c);
-      __restgprlr_17(0x120);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      sscanf(yytext,"%d");
+      iVar7 = __restgprlr_17(0x120);
+      return iVar7;
     case 0x25:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      sscanf((char *)DAT_83ca8c60,"%f",0xffffffff83cacc6c);
-      __restgprlr_17(0x121);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      sscanf(yytext,"%f");
+      iVar7 = __restgprlr_17(0x121);
+      return iVar7;
     case 0x26:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x123);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x123);
+      return iVar7;
     case 0x27:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x122);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x122);
+      return iVar7;
     case 0x28:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x127);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x127);
+      return iVar7;
     case 0x29:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x124);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x124);
+      return iVar7;
     case 0x2a:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x126);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x126);
+      return iVar7;
     case 0x2b:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x125);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x125);
+      return iVar7;
     case 0x2c:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x128);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x128);
+      return iVar7;
     case 0x2d:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x129);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x129);
+      return iVar7;
     case 0x2e:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x12a);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x12a);
+      return iVar7;
     case 0x2f:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(299);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(299);
+      return iVar7;
     case 0x30:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(300);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(300);
+      return iVar7;
     case 0x31:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x12d);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x12d);
+      return iVar7;
     case 0x32:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x12e);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x12e);
+      return iVar7;
     case 0x33:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x12f);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x12f);
+      return iVar7;
     case 0x34:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x130);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x130);
+      return iVar7;
     case 0x35:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x131);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x131);
+      return iVar7;
     case 0x36:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x132);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x132);
+      return iVar7;
     case 0x37:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x133);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x133);
+      return iVar7;
     case 0x38:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x134);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x134);
+      return iVar7;
     case 0x39:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x135);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x135);
+      return iVar7;
     case 0x3a:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x136);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x136);
+      return iVar7;
     case 0x3b:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x137);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x137);
+      return iVar7;
     case 0x3c:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x138);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x138);
+      return iVar7;
     case 0x3d:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x139);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x139);
+      return iVar7;
     case 0x3e:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x13a);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x13a);
+      return iVar7;
     case 0x3f:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x13b);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x13b);
+      return iVar7;
     case 0x40:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x13c);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x13c);
+      return iVar7;
     case 0x41:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x13d);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x13d);
+      return iVar7;
     case 0x42:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x13e);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x13e);
+      return iVar7;
     case 0x43:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x13f);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x13f);
+      return iVar7;
     case 0x44:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x140);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x140);
+      return iVar7;
     case 0x45:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x141);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x141);
+      return iVar7;
     case 0x46:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x142);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x142);
+      return iVar7;
     case 0x47:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x143);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x143);
+      return iVar7;
     case 0x48:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x144);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x144);
+      return iVar7;
     case 0x49:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x145);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x145);
+      return iVar7;
     case 0x4a:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x146);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x146);
+      return iVar7;
     case 0x4b:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x147);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x147);
+      return iVar7;
     case 0x4c:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x148);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x148);
+      return iVar7;
     case 0x4d:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x149);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x149);
+      return iVar7;
     case 0x4e:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x14b);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x14b);
+      return iVar7;
     case 0x4f:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x14c);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x14c);
+      return iVar7;
     case 0x50:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x14d);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x14d);
+      return iVar7;
     case 0x51:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x14e);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x14e);
+      return iVar7;
     case 0x52:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x14f);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x14f);
+      return iVar7;
     case 0x53:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x150);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x150);
+      return iVar7;
     case 0x54:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x151);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x151);
+      return iVar7;
     case 0x55:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x152);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x152);
+      return iVar7;
     case 0x56:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x153);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x153);
+      return iVar7;
     case 0x57:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x154);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x154);
+      return iVar7;
     case 0x58:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x155);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x155);
+      return iVar7;
     case 0x59:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x156);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x156);
+      return iVar7;
     case 0x5a:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x157);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x157);
+      return iVar7;
     case 0x5b:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x158);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x158);
+      return iVar7;
     case 0x5c:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x159);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x159);
+      return iVar7;
     case 0x5d:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x15a);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x15a);
+      return iVar7;
     case 0x5e:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x15b);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x15b);
+      return iVar7;
     case 0x5f:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x15c);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x15c);
+      return iVar7;
     case 0x60:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      __restgprlr_17(0x15d);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      iVar7 = __restgprlr_17(0x15d);
+      return iVar7;
     case 0x61:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      DAT_83cacc6c._0_4_ = SL_GetStringOfSize(DAT_83ca8c60,0,DAT_83cacc74 + 1,0xf);
-      __restgprlr_17(0x102);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      yylval.val.stringValue = SL_GetStringOfSize(yytext,0,yyleng + 1,0xf);
+      iVar7 = __restgprlr_17(0x102);
+      return iVar7;
     case 0x62:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      DAT_83cacc6c._0_4_ = SL_GetStringOfSize(DAT_83ca8c60,0,DAT_83cacc74 + 1,0xf);
-      __restgprlr_17(0x14a);
-      return;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      yylval.val.stringValue = SL_GetStringOfSize(yytext,0,yyleng + 1,0xf);
+      iVar7 = __restgprlr_17(0x14a);
+      return iVar7;
     case 99:
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      CompileError(iVar1,0xffffffff8215a41c,DAT_83ca8c60);
-      __restgprlr_17(0x101);
-      return;
+      g_sourcePos = DAT_83cacc88;
+      yylval.pos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      CompileError(uVar2,"bad token \'%s\'");
+      iVar7 = __restgprlr_17(0x101);
+      return iVar7;
     case 100:
-      DAT_83cacc6c._4_4_ = DAT_83cacc88;
-      DAT_83ca8c64 = DAT_83cacc88;
-      DAT_83cacc88 = DAT_83cacc88 + DAT_83cacc74;
-      fwrite(DAT_83ca8c60,DAT_83cacc74,1,DAT_83caccac);
-      puVar13 = DAT_83cacc9c;
+      yylval.pos = DAT_83cacc88;
+      g_sourcePos = DAT_83cacc88;
+      DAT_83cacc88 = DAT_83cacc88 + yyleng;
+      fwrite(yytext,yyleng,1,yyout);
+      pyVar13 = yy_current_buffer;
       goto LAB_82563414;
     case 0x65:
-      iVar9 = -1 - (int)DAT_83ca8c60;
-      *pbVar12 = DAT_83ca8c58;
-      pFVar3 = DAT_83cacca8;
-      if (puVar13[9] == 0) {
-        DAT_83cacc7c = puVar13[4];
-        puVar13[9] = 1;
-        *puVar13 = (uint)pFVar3;
+      iVar7 = -1 - (int)yytext;
+      *pbVar12 = yy_hold_char;
+      p_Var1 = yyin;
+      if (pyVar13->yy_buffer_status == 0) {
+        yy_n_chars = pyVar13->yy_n_chars;
+        pyVar13->yy_buffer_status = 1;
+        pyVar13->yy_input_file = p_Var1;
       }
-      pbVar10 = DAT_83ca8c60;
-      if (pbVar7 <= (byte *)(puVar13[1] + DAT_83cacc7c)) {
-        pbVar12 = DAT_83ca8c60 + (int)(pbVar12 + iVar9);
-        DAT_83cacca0 = pbVar12;
-        uVar14 = yy_get_previous_state();
-        uVar2 = yy_try_NUL_trans();
-        if ((int)uVar2 == 0) {
-          uVar5 = (ulonglong)DAT_83cacc98;
-          pbVar11 = pbVar10;
-          goto LAB_82563508;
-        }
-        pbVar12 = pbVar12 + 1;
-        goto LAB_82563428;
+      pbVar9 = (byte *)yytext;
+      if (pbVar4 <= pyVar13->yy_ch_buf + yy_n_chars) {
+        pbVar11 = (byte *)(yytext + (int)(pbVar12 + iVar7));
+        yy_c_buf_p = (char *)pbVar11;
+        iVar3 = yy_get_previous_state();
+        iVar7 = yy_try_NUL_trans(iVar3);
+        iVar5 = DAT_83cacc98;
+        pbVar4 = (byte *)yy_last_accepting_cpos;
+        pbVar10 = pbVar9;
+        if (iVar7 == 0) goto LAB_8256350c;
+        pbVar11 = pbVar11 + 1;
+        goto LAB_82563430;
       }
-      uVar4 = yy_get_next_buffer();
-      puVar13 = DAT_83cacc9c;
-      pbVar10 = DAT_83ca8c60;
-      if (uVar4 == 0) {
-        pbVar12 = DAT_83ca8c60 + (int)(pbVar12 + iVar9);
-        DAT_83cacca0 = pbVar12;
-        uVar2 = yy_get_previous_state();
-        puVar13 = DAT_83cacc9c;
-        goto LAB_82563428;
+      uVar2 = yy_get_next_buffer();
+      pyVar13 = yy_current_buffer;
+      pbVar9 = (byte *)yytext;
+      if (uVar2 == 0) {
+        pbVar11 = (byte *)(yytext + (int)(pbVar12 + iVar7));
+        yy_c_buf_p = (char *)pbVar11;
+        iVar7 = yy_get_previous_state();
+        iVar5 = DAT_83cacc98;
+        pyVar13 = yy_current_buffer;
+        goto LAB_82563430;
       }
-      if (uVar4 != 1) {
-        if (2 < uVar4) goto LAB_82563414;
-        pbVar12 = (byte *)(DAT_83cacc9c[1] + DAT_83cacc7c);
-        DAT_83cacca0 = pbVar12;
-        uVar14 = yy_get_previous_state();
-        uVar5 = (ulonglong)DAT_83cacc98;
-        pbVar11 = DAT_83ca8c60;
-        goto LAB_82563508;
+      if (uVar2 != 1) {
+        if (2 < uVar2) goto LAB_82563414;
+        pbVar11 = (byte *)(yy_current_buffer->yy_ch_buf + yy_n_chars);
+        yy_c_buf_p = (char *)pbVar11;
+        iVar3 = yy_get_previous_state();
+        iVar5 = DAT_83cacc98;
+        pbVar4 = (byte *)yy_last_accepting_cpos;
+        pbVar10 = (byte *)yytext;
+        goto LAB_8256350c;
       }
-      uVar4 = DAT_83cacca4 - 1;
+      uVar2 = yy_start - 1;
       DAT_83cacc94 = 0;
-      iVar9 = ((int)uVar4 >> 1) + (uint)((int)uVar4 < 0 && (uVar4 & 1) != 0) + 0x66;
-      pbVar7 = DAT_83ca8c60;
+      iVar7 = ((int)uVar2 >> 1) + (uint)((int)uVar2 < 0 && (uVar2 & 1) != 0) + 0x66;
+      pbVar4 = (byte *)yytext;
       break;
     case 0x66:
     case 0x67:
     case 0x68:
-      __restgprlr_17(0);
-      return;
+      iVar7 = __restgprlr_17(0);
+      return iVar7;
     default:
-      pFVar3 = __iob_func();
-      fprintf(pFVar3 + 2,"%s\n",0xffffffff8215a3e8);
+      p_Var1 = __iob_func();
+      fprintf(p_Var1 + 2,"%s\n");
                     /* WARNING: Subroutine does not return */
       exit(2);
     }
   } while( true );
 switchD_82563574_caseD_0:
-  uVar5 = (ulonglong)DAT_83cacc98;
-  uVar14 = CONCAT44(DAT_83cacc98,DAT_83cacc98);
-  *pbVar12 = DAT_83ca8c58;
-  pbVar12 = pbVar10;
+  *pbVar12 = yy_hold_char;
+  pbVar4 = pbVar11;
+  iVar3 = iVar5;
   goto LAB_8256350c;
 }
 
 
 // 82563128  yy_get_next_buffer  (script/scr_lex.h:1527)
 
-void yy_get_next_buffer(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int yy_get_next_buffer(void)
 
 {
-  void *_Memory;
-  FILE *pFVar1;
-  void *pvVar2;
-  longlong lVar3;
-  ulonglong uVar4;
-  longlong lVar5;
-  ulonglong uVar6;
-  int iVar7;
+  char *pcVar1;
+  uint uVar2;
+  _iobuf *p_Var3;
+  int iVar4;
+  char *pcVar5;
+  longlong lVar6;
+  ulonglong uVar7;
   longlong lVar8;
-  undefined8 uVar9;
+  ulonglong uVar9;
   int iVar10;
   longlong lVar11;
+  undefined8 uVar12;
+  yy_buffer_state *pyVar13;
+  longlong lVar14;
   
   __savegprlr_26();
-  iVar10 = DAT_83cacc9c;
-  uVar4 = (ulonglong)DAT_83cacca0;
-  if (((ulonglong)*(uint *)(DAT_83cacc9c + 4) + (ulonglong)DAT_83cacc7c + 1 & 0xffffffff) < uVar4) {
-    pFVar1 = __iob_func();
-    fprintf(pFVar1 + 2,"%s\n",0xffffffff8215a3b0);
+  pyVar13 = yy_current_buffer;
+  uVar7 = ZEXT48(yy_c_buf_p);
+  if ((ZEXT48(yy_current_buffer->yy_ch_buf) + (ulonglong)(uint)yy_n_chars + 1 & 0xffffffff) < uVar7)
+  {
+    p_Var3 = __iob_func();
+    fprintf(p_Var3 + 2,"%s\n");
                     /* WARNING: Subroutine does not return */
     exit(2);
   }
-  if (*(int *)(DAT_83cacc9c + 0x20) == 0) {
-    __restgprlr_26((DAT_83cacca0 - DAT_83ca8c60 != 1) + '\x01');
-    return;
+  if (yy_current_buffer->yy_fill_buffer == 0) {
+    iVar4 = __restgprlr_26(((int)yy_c_buf_p - (int)yytext != 1) + '\x01');
+    return iVar4;
   }
-  lVar8 = (uVar4 - DAT_83ca8c60) + -1;
-  if (0 < lVar8) {
-    lVar5 = (ulonglong)DAT_83ca8c60 - 1;
-    lVar3 = (ulonglong)*(uint *)(DAT_83cacc9c + 4) - 1;
-    lVar11 = lVar8;
+  lVar11 = (uVar7 - ZEXT48(yytext)) + -1;
+  if (0 < lVar11) {
+    lVar8 = ZEXT48(yytext) - 1;
+    lVar6 = ZEXT48(yy_current_buffer->yy_ch_buf) - 1;
+    lVar14 = lVar11;
     do {
-      lVar5 = lVar5 + 1;
-      lVar3 = lVar3 + 1;
-      *(undefined1 *)lVar3 = *(undefined1 *)lVar5;
-      lVar11 = lVar11 + -1;
-    } while (lVar11 != 0);
+      lVar8 = lVar8 + 1;
+      lVar6 = lVar6 + 1;
+      *(undefined1 *)lVar6 = *(undefined1 *)lVar8;
+      lVar14 = lVar14 + -1;
+    } while (lVar14 != 0);
   }
-  if (*(int *)(iVar10 + 0x24) == 2) {
-    iVar7 = 0;
-    *(undefined4 *)(iVar10 + 0x10) = 0;
-    DAT_83cacc7c = 0;
+  iVar4 = (int)lVar11;
+  if (pyVar13->yy_buffer_status == 2) {
+    iVar10 = 0;
+    pyVar13->yy_n_chars = 0;
+    yy_n_chars = 0;
   }
   else {
-    uVar6 = (ulonglong)*(uint *)(iVar10 + 0xc);
-    lVar5 = uVar6 - lVar8;
-    while (lVar5 = lVar5 + -1, lVar5 < 1) {
-      _Memory = *(void **)(iVar10 + 4);
-      if (*(int *)(iVar10 + 0x14) == 0) {
-        *(undefined4 *)(iVar10 + 4) = 0;
+    uVar9 = (ulonglong)pyVar13->yy_buf_size;
+    lVar8 = uVar9 - lVar11;
+    while (lVar8 + -1 < 1) {
+      pcVar1 = pyVar13->yy_ch_buf;
+      if (pyVar13->yy_is_our_buffer == 0) {
+        pyVar13->yy_ch_buf = (char *)0x0;
 LAB_825632c4:
-        pFVar1 = __iob_func();
-        fprintf(pFVar1 + 2,"%s\n",0xffffffff8215a384);
+        p_Var3 = __iob_func();
+        fprintf(p_Var3 + 2,"%s\n");
                     /* WARNING: Subroutine does not return */
         exit(2);
       }
-      iVar7 = (int)(uVar6 << 1);
-      if (iVar7 < 1) {
-        *(uint *)(iVar10 + 0xc) = ((uint)uVar6 >> 3) + (uint)uVar6;
+      uVar2 = (uint)(uVar9 << 1);
+      if ((int)uVar2 < 1) {
+        pyVar13->yy_buf_size = ((uint)uVar9 >> 3) + (uint)uVar9;
       }
       else {
-        *(int *)(iVar10 + 0xc) = iVar7;
+        pyVar13->yy_buf_size = uVar2;
       }
-      pvVar2 = realloc(_Memory,*(int *)(iVar10 + 0xc) + 2);
-      *(void **)(iVar10 + 4) = pvVar2;
-      if (pvVar2 == (void *)0x0) goto LAB_825632c4;
-      uVar6 = (ulonglong)*(uint *)(iVar10 + 0xc);
-      uVar4 = (longlong)(int)pvVar2 + (uVar4 - ZEXT48(_Memory));
-      DAT_83cacca0 = (uint)uVar4;
-      lVar5 = uVar6 - lVar8;
+      pcVar5 = realloc(pcVar1,pyVar13->yy_buf_size + 2);
+      pyVar13->yy_ch_buf = pcVar5;
+      if (pcVar5 == (char *)0x0) goto LAB_825632c4;
+      uVar9 = (ulonglong)pyVar13->yy_buf_size;
+      uVar7 = (longlong)(int)pcVar5 + (uVar7 - ZEXT48(pcVar1));
+      yy_c_buf_p = (char *)uVar7;
+      lVar8 = uVar9 - lVar11;
     }
-    if (0x2000 < (int)lVar5) {
-      lVar5 = 0x2000;
+    iVar10 = (int)(lVar8 + -1);
+    if (0x2000 < iVar10) {
+      iVar10 = 0x2000;
     }
-    iVar7 = Scr_ScanFile(lVar8 + (ulonglong)*(uint *)(iVar10 + 4),lVar5);
-    iVar10 = DAT_83cacc9c;
-    DAT_83cacc7c = iVar7;
-    *(int *)(DAT_83cacc9c + 0x10) = iVar7;
-    if (iVar7 != 0) {
-      uVar9 = 0;
+    iVar10 = Scr_ScanFile(pyVar13->yy_ch_buf + iVar4,iVar10);
+    pyVar13 = yy_current_buffer;
+    yy_n_chars = iVar10;
+    yy_current_buffer->yy_n_chars = iVar10;
+    if (iVar10 != 0) {
+      uVar12 = 0;
       goto LAB_825632fc;
     }
   }
-  if ((int)lVar8 == 0) {
-    uVar9 = 1;
-    yyrestart(DAT_83cacca8);
-    iVar10 = DAT_83cacc9c;
-    iVar7 = DAT_83cacc7c;
+  if (iVar4 == 0) {
+    uVar12 = 1;
+    yyrestart(yyin);
+    pyVar13 = yy_current_buffer;
+    iVar10 = yy_n_chars;
   }
   else {
-    uVar9 = 2;
-    *(undefined4 *)(iVar10 + 0x24) = 2;
+    uVar12 = 2;
+    pyVar13->yy_buffer_status = 2;
   }
 LAB_825632fc:
-  iVar7 = iVar7 + (int)lVar8;
-  DAT_83cacc7c = iVar7;
-  *(undefined1 *)(iVar7 + *(int *)(iVar10 + 4)) = 0;
-  *(undefined1 *)(iVar7 + *(int *)(iVar10 + 4) + 1) = 0;
-  DAT_83ca8c60 = *(undefined4 *)(iVar10 + 4);
-  __restgprlr_26(uVar9);
-  return;
+  iVar10 = iVar10 + iVar4;
+  yy_n_chars = iVar10;
+  pyVar13->yy_ch_buf[iVar10] = '\0';
+  pyVar13->yy_ch_buf[iVar10 + 1] = '\0';
+  yytext = pyVar13->yy_ch_buf;
+  iVar4 = __restgprlr_26(uVar12);
+  return iVar4;
 }
 
 
 // 82562908  yy_get_previous_state  (script/scr_lex.h:1659)
 
-void yy_get_previous_state(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int yy_get_previous_state(void)
 
 {
   short sVar1;
-  int iVar2;
-  byte *pbVar3;
+  byte *pbVar2;
+  int iVar3;
   ulonglong uVar4;
   int iVar5;
-  int iVar6;
   
-  iVar2 = DAT_83cacca4;
-  for (pbVar3 = DAT_83ca8c60; pbVar3 < DAT_83cacca0; pbVar3 = pbVar3 + 1) {
-    if (*pbVar3 == 0) {
+  iVar3 = yy_start;
+  for (pbVar2 = (byte *)yytext; pbVar2 < yy_c_buf_p; pbVar2 = pbVar2 + 1) {
+    if (*pbVar2 == 0) {
       uVar4 = 1;
     }
     else {
-      uVar4 = (ulonglong)*(uint *)(&DAT_82159070 + (uint)*pbVar3 * 4);
+      uVar4 = (ulonglong)(uint)yy_ec[*pbVar2];
     }
-    iVar6 = iVar2 * 2;
     uVar4 = uVar4 & 0xff;
-    if (*(short *)(&DAT_82158e38 + iVar6) != 0) {
-      DAT_83ca8c5c = pbVar3;
-      DAT_83cacc98 = iVar2;
+    if (yy_accept[iVar3] != 0) {
+      yy_last_accepting_cpos = (char *)pbVar2;
+      DAT_83cacc98 = iVar3;
     }
-    iVar5 = (int)(((longlong)*(short *)(&DAT_82159560 + iVar6) + uVar4 & 0x7fffffff) << 1);
-    if (*(short *)(&DAT_82159e38 + iVar5) != iVar2) {
+    iVar5 = (int)(((longlong)yy_base[iVar3] + uVar4 & 0x7fffffff) << 1);
+    if (*(short *)((int)yy_chk + iVar5) != iVar3) {
       do {
-        sVar1 = *(short *)(&DAT_821597a8 + iVar6);
+        sVar1 = yy_def[iVar3];
+        iVar3 = (int)sVar1;
         if (0x11b < sVar1) {
-          uVar4 = (ulonglong)*(uint *)(&DAT_82159470 + (int)(uVar4 << 2)) & 0xff;
+          uVar4 = (ulonglong)*(uint *)((int)yy_meta + (int)(uVar4 << 2)) & 0xff;
         }
-        iVar6 = sVar1 * 2;
-        iVar5 = (int)(((longlong)*(short *)(&DAT_82159560 + iVar6) + uVar4 & 0x7fffffff) << 1);
-      } while (*(short *)(&DAT_82159e38 + iVar5) != sVar1);
+        iVar5 = (int)(((longlong)yy_base[iVar3] + uVar4 & 0x7fffffff) << 1);
+      } while (*(short *)((int)yy_chk + iVar5) != sVar1);
     }
-    iVar2 = (int)*(short *)(&DAT_821599f0 + iVar5);
+    iVar3 = (int)*(short *)((int)yy_nxt + iVar5);
   }
-  return;
+  return iVar3;
 }
 
 
 // 82562A18  yy_try_NUL_trans  (script/scr_lex.h:1698)
 
-ulonglong yy_try_NUL_trans(int param_1)
+int yy_try_NUL_trans(int param_1)
 
 {
   short sVar1;
   ulonglong uVar2;
   ulonglong uVar3;
-  int iVar4;
   
-  iVar4 = param_1 * 2;
   uVar2 = 1;
-  if (*(short *)(&DAT_82158e38 + iVar4) != 0) {
-    DAT_83ca8c5c = DAT_83cacca0;
+  if (yy_accept[param_1] != 0) {
+    yy_last_accepting_cpos = yy_c_buf_p;
     DAT_83cacc98 = param_1;
   }
-  uVar3 = (ulonglong)*(short *)(&DAT_82159560 + iVar4);
-  if (*(short *)(&DAT_82159e3a + (int)((uVar3 & 0xffffffff) << 1)) != param_1) {
+  uVar3 = (ulonglong)yy_base[param_1];
+  if (*(short *)((int)yy_chk + (int)((uVar3 & 0xffffffff) << 1) + 2) != param_1) {
     do {
-      sVar1 = *(short *)(&DAT_821597a8 + iVar4);
+      sVar1 = yy_def[param_1];
+      param_1 = (int)sVar1;
       if (0x11b < sVar1) {
-        uVar2 = (ulonglong)*(uint *)(&DAT_82159470 + (int)(uVar2 << 2)) & 0xff;
+        uVar2 = (ulonglong)*(uint *)((int)yy_meta + (int)(uVar2 << 2)) & 0xff;
       }
-      iVar4 = sVar1 * 2;
-      uVar3 = (ulonglong)*(short *)(&DAT_82159560 + iVar4);
-    } while (*(short *)(&DAT_82159e38 + (int)((uVar2 + uVar3 & 0xffffffff) << 1)) != sVar1);
+      uVar3 = (ulonglong)yy_base[param_1];
+    } while (*(short *)((int)yy_chk + (int)((uVar2 + uVar3 & 0xffffffff) << 1)) != sVar1);
   }
-  return -(ulonglong)
-          ((longlong)*(short *)(&DAT_821599f0 + (int)((uVar2 + uVar3 & 0xffffffff) << 1)) != 0x11b)
-         & (longlong)*(short *)(&DAT_821599f0 + (int)((uVar2 + uVar3 & 0xffffffff) << 1));
+  sVar1 = *(short *)((int)yy_nxt + (int)((uVar2 + uVar3 & 0xffffffff) << 1));
+  return -(uint)(sVar1 != 0x11b) & (int)sVar1;
 }
 
 
 // 825630A8  yyrestart  (script/scr_lex.h:1845)
 
-void yyrestart(void)
+void yyrestart(_iobuf *param_1)
 
 {
-  undefined4 uVar1;
-  undefined4 *puVar2;
+  _iobuf *p_Var1;
+  yy_buffer_state *pyVar2;
   
-  uVar1 = __savegprlr_29();
-  if (DAT_83cacc9c == 0) {
-    DAT_83cacc9c = yy_create_buffer(DAT_83cacca8,0x4000);
+  p_Var1 = (_iobuf *)__savegprlr_29(param_1);
+  if (yy_current_buffer == (yy_buffer_state *)0x0) {
+    yy_current_buffer = yy_create_buffer(yyin,0x4000);
   }
-  puVar2 = (undefined4 *)yy_flush_buffer();
-  *puVar2 = uVar1;
-  puVar2[8] = 1;
-  puVar2[6] = 0;
-  DAT_83ca8c60 = (undefined1 *)puVar2[2];
-  DAT_83cacc7c = puVar2[4];
-  DAT_83cacca8 = *puVar2;
-  DAT_83ca8c58 = *DAT_83ca8c60;
-  DAT_83cacca0 = DAT_83ca8c60;
+  pyVar2 = yy_current_buffer;
+  yy_flush_buffer(yy_current_buffer);
+  pyVar2->yy_input_file = p_Var1;
+  pyVar2->yy_fill_buffer = 1;
+  pyVar2->yy_is_interactive = 0;
+  yytext = pyVar2->yy_buf_pos;
+  yy_n_chars = pyVar2->yy_n_chars;
+  yyin = pyVar2->yy_input_file;
+  yy_hold_char = *yytext;
+  yy_c_buf_p = yytext;
   __restgprlr_29();
   return;
 }
@@ -2247,90 +2281,93 @@ void yyrestart(void)
 
 // 82562C70  yy_switch_to_buffer  (script/scr_lex.h:1860)
 
-void yy_switch_to_buffer(undefined4 *param_1)
+void yy_switch_to_buffer(yy_buffer_state *param_1)
 
 {
-  if (DAT_83cacc9c == param_1) {
+  if (yy_current_buffer == param_1) {
     return;
   }
-  if (DAT_83cacc9c != (undefined4 *)0x0) {
-    *DAT_83cacca0 = DAT_83ca8c58;
-    DAT_83cacc9c[2] = DAT_83cacca0;
-    DAT_83cacc9c[4] = DAT_83cacc7c;
+  if (yy_current_buffer != (yy_buffer_state *)0x0) {
+    *yy_c_buf_p = yy_hold_char;
+    yy_current_buffer->yy_buf_pos = yy_c_buf_p;
+    yy_current_buffer->yy_n_chars = yy_n_chars;
   }
-  DAT_83ca8c60 = (undefined1 *)param_1[2];
-  DAT_83cacc9c = param_1;
+  yytext = param_1->yy_buf_pos;
+  yy_current_buffer = param_1;
   DAT_83cacc94 = 1;
-  DAT_83cacca0 = DAT_83ca8c60;
-  DAT_83cacca8 = *param_1;
-  DAT_83cacc7c = param_1[4];
-  DAT_83ca8c58 = *DAT_83ca8c60;
+  yy_c_buf_p = yytext;
+  yyin = param_1->yy_input_file;
+  yy_n_chars = param_1->yy_n_chars;
+  yy_hold_char = *yytext;
   return;
 }
 
 
 // 82562AF0  yy_load_buffer_state  (script/scr_lex.h:1889)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void yy_load_buffer_state(void)
 
 {
-  DAT_83ca8c60 = (undefined1 *)DAT_83cacc9c[2];
-  DAT_83cacca8 = *DAT_83cacc9c;
-  DAT_83cacca0 = DAT_83ca8c60;
-  DAT_83cacc7c = DAT_83cacc9c[4];
-  DAT_83ca8c58 = *DAT_83ca8c60;
+  yytext = yy_current_buffer->yy_buf_pos;
+  yyin = yy_current_buffer->yy_input_file;
+  yy_c_buf_p = yytext;
+  yy_n_chars = yy_current_buffer->yy_n_chars;
+  yy_hold_char = *yytext;
   return;
 }
 
 
 // 82562F18  yy_create_buffer  (script/scr_lex.h:1904)
 
-void yy_create_buffer(undefined8 param_1,int param_2)
+yy_buffer_state * yy_create_buffer(_iobuf *param_1,int param_2)
 
 {
-  undefined4 uVar1;
-  undefined4 *puVar2;
-  FILE *pFVar3;
-  void *pvVar4;
-  undefined4 uVar5;
+  _iobuf *p_Var1;
+  yy_buffer_state *pyVar2;
+  char *pcVar3;
+  int iVar4;
   
-  uVar1 = __savegprlr_29();
-  puVar2 = malloc(0x28);
-  if (puVar2 == (undefined4 *)0x0) {
-    pFVar3 = __iob_func();
-    fprintf(pFVar3 + 2,"%s\n",0xffffffff8215a358);
+  p_Var1 = (_iobuf *)__savegprlr_29(param_1);
+  pyVar2 = malloc(0x28);
+  if (pyVar2 == (yy_buffer_state *)0x0) {
+    p_Var1 = __iob_func();
+    fprintf(p_Var1 + 2,"%s\n");
                     /* WARNING: Subroutine does not return */
     exit(2);
   }
-  puVar2[3] = param_2;
-  pvVar4 = malloc(param_2 + 2);
-  puVar2[1] = pvVar4;
-  if (pvVar4 == (void *)0x0) {
-    pFVar3 = __iob_func();
-    fprintf(pFVar3 + 2,"%s\n",0xffffffff8215a358);
+  pyVar2->yy_buf_size = param_2;
+  pcVar3 = malloc(param_2 + 2);
+  pyVar2->yy_ch_buf = pcVar3;
+  if (pcVar3 == (char *)0x0) {
+    p_Var1 = __iob_func();
+    fprintf(p_Var1 + 2,"%s\n");
                     /* WARNING: Subroutine does not return */
     exit(2);
   }
-  uVar5 = 1;
-  puVar2[5] = 1;
-  yy_flush_buffer(puVar2);
-  *puVar2 = uVar1;
-  puVar2[8] = uVar5;
-  puVar2[6] = 0;
-  __restgprlr_29();
-  return;
+  iVar4 = 1;
+  pyVar2->yy_is_our_buffer = 1;
+  yy_flush_buffer(pyVar2);
+  pyVar2->yy_input_file = p_Var1;
+  pyVar2->yy_fill_buffer = iVar4;
+  pyVar2->yy_is_interactive = 0;
+  pyVar2 = (yy_buffer_state *)__restgprlr_29();
+  return pyVar2;
 }
 
 
 // 82562CE0  yy_delete_buffer  (script/scr_lex.h:1934)
 
-void yy_delete_buffer(void *param_1)
+void yy_delete_buffer(yy_buffer_state *param_1)
 
 {
-  if (param_1 != (void *)0x0) {
-    DAT_83cacc9c = (void *)(-(uint)(DAT_83cacc9c != param_1) & (uint)DAT_83cacc9c);
-    if (*(int *)((int)param_1 + 0x14) != 0) {
-      free(*(void **)((int)param_1 + 4));
+  if (param_1 != (yy_buffer_state *)0x0) {
+    yy_current_buffer =
+         (yy_buffer_state *)
+         (-(uint)(ZEXT48(yy_current_buffer) != (longlong)(int)param_1) & (uint)yy_current_buffer);
+    if (param_1->yy_is_our_buffer != 0) {
+      free(param_1->yy_ch_buf);
     }
     free(param_1);
   }
@@ -2340,129 +2377,128 @@ void yy_delete_buffer(void *param_1)
 
 // 82562D48  yy_init_buffer  (script/scr_lex.h:1963)
 
-void yy_init_buffer(undefined4 *param_1,undefined4 param_2)
+void yy_init_buffer(yy_buffer_state *param_1,_iobuf *param_2)
 
 {
-  yy_flush_buffer();
-  *param_1 = param_2;
-  param_1[8] = 1;
-  param_1[6] = 0;
+  yy_flush_buffer(param_1);
+  param_1->yy_input_file = param_2;
+  param_1->yy_fill_buffer = 1;
+  param_1->yy_is_interactive = 0;
   return;
 }
 
 
 // 82562B30  yy_flush_buffer  (script/scr_lex.h:1988)
 
-void yy_flush_buffer(undefined4 *param_1)
+void yy_flush_buffer(yy_buffer_state *param_1)
 
 {
-  undefined4 *puVar1;
+  yy_buffer_state *pyVar1;
   
-  if (param_1 == (undefined4 *)0x0) {
+  if (param_1 == (yy_buffer_state *)0x0) {
     return;
   }
-  param_1[4] = 0;
-  *(undefined1 *)param_1[1] = 0;
-  puVar1 = DAT_83cacc9c;
-  *(undefined1 *)(param_1[1] + 1) = 0;
-  param_1[2] = param_1[1];
-  param_1[7] = 1;
-  param_1[9] = 0;
-  if (param_1 != puVar1) {
+  param_1->yy_n_chars = 0;
+  *param_1->yy_ch_buf = '\0';
+  pyVar1 = yy_current_buffer;
+  param_1->yy_ch_buf[1] = '\0';
+  param_1->yy_buf_pos = param_1->yy_ch_buf;
+  param_1->yy_at_bol = 1;
+  param_1->yy_buffer_status = 0;
+  if (param_1 != pyVar1) {
     return;
   }
-  DAT_83ca8c60 = (undefined1 *)puVar1[2];
-  DAT_83cacca0 = DAT_83ca8c60;
-  DAT_83cacc7c = puVar1[4];
-  DAT_83cacca8 = *puVar1;
-  DAT_83ca8c58 = *DAT_83ca8c60;
+  yytext = pyVar1->yy_buf_pos;
+  yy_c_buf_p = yytext;
+  yy_n_chars = pyVar1->yy_n_chars;
+  yyin = pyVar1->yy_input_file;
+  yy_hold_char = *yytext;
   return;
 }
 
 
 // 82562D80  yy_scan_buffer  (script/scr_lex.h:2019)
 
-undefined8 yy_scan_buffer(int param_1,uint param_2)
+yy_buffer_state * yy_scan_buffer(char *param_1,uint param_2)
 
 {
-  undefined4 *puVar2;
-  FILE *pFVar3;
-  undefined8 uVar1;
+  yy_buffer_state *pyVar1;
+  _iobuf *p_Var2;
   
-  if (((param_2 < 2) || (*(char *)(param_1 + param_2 + -2) != '\0')) ||
-     (*(char *)(param_1 + param_2 + -1) != '\0')) {
-    uVar1 = 0;
+  if (((param_2 < 2) || (param_1[param_2 - 2] != '\0')) || (param_1[param_2 - 1] != '\0')) {
+    pyVar1 = (yy_buffer_state *)0x0;
   }
   else {
-    puVar2 = malloc(0x28);
-    if (puVar2 == (undefined4 *)0x0) {
-      pFVar3 = __iob_func();
-      fprintf(pFVar3 + 2,"%s\n",0xffffffff8215a2e0);
+    pyVar1 = malloc(0x28);
+    if (pyVar1 == (yy_buffer_state *)0x0) {
+      p_Var2 = __iob_func();
+      fprintf(p_Var2 + 2,"%s\n");
                     /* WARNING: Subroutine does not return */
       exit(2);
     }
-    puVar2[1] = param_1;
-    puVar2[2] = param_1;
-    puVar2[5] = 0;
-    puVar2[3] = param_2 - 2;
-    *puVar2 = 0;
-    puVar2[4] = param_2 - 2;
-    puVar2[6] = 0;
-    puVar2[7] = 1;
-    puVar2[8] = 0;
-    puVar2[9] = 0;
-    uVar1 = yy_switch_to_buffer();
+    pyVar1->yy_ch_buf = param_1;
+    pyVar1->yy_buf_pos = param_1;
+    pyVar1->yy_is_our_buffer = 0;
+    pyVar1->yy_buf_size = param_2 - 2;
+    pyVar1->yy_input_file = (_iobuf *)0x0;
+    pyVar1->yy_n_chars = param_2 - 2;
+    pyVar1->yy_is_interactive = 0;
+    pyVar1->yy_at_bol = 1;
+    pyVar1->yy_fill_buffer = 0;
+    pyVar1->yy_buffer_status = 0;
+    yy_switch_to_buffer(pyVar1);
   }
-  return uVar1;
+  return pyVar1;
 }
 
 
 // 82562FC8  yy_scan_string  (script/scr_lex.h:2056)
 
-void yy_scan_string(void)
+yy_buffer_state * yy_scan_string(char *param_1)
 
 {
   char cVar1;
   char *pcVar2;
-  undefined1 *puVar3;
-  FILE *pFVar4;
-  int iVar5;
-  undefined1 *puVar6;
+  char *pcVar3;
+  _iobuf *p_Var4;
+  yy_buffer_state *pyVar5;
+  char *pcVar6;
   int iVar7;
+  int iVar8;
   
-  pcVar2 = (char *)__savegprlr_28();
-  iVar5 = 0;
+  pcVar2 = (char *)__savegprlr_28(param_1);
+  iVar7 = 0;
   cVar1 = *pcVar2;
   while (cVar1 != '\0') {
-    iVar5 = iVar5 + 1;
-    cVar1 = pcVar2[iVar5];
+    iVar7 = iVar7 + 1;
+    cVar1 = pcVar2[iVar7];
   }
-  puVar3 = malloc(iVar5 + 2U);
-  if (puVar3 == (undefined1 *)0x0) {
-    pFVar4 = __iob_func();
-    fprintf(pFVar4 + 2,"%s\n",0xffffffff8215a32c);
+  pcVar3 = malloc(iVar7 + 2U);
+  if (pcVar3 == (char *)0x0) {
+    p_Var4 = __iob_func();
+    fprintf(p_Var4 + 2,"%s\n");
                     /* WARNING: Subroutine does not return */
     exit(2);
   }
-  if (0 < iVar5) {
-    iVar7 = iVar5;
-    puVar6 = puVar3;
+  if (0 < iVar7) {
+    pcVar6 = pcVar3;
+    iVar8 = iVar7;
     do {
-      *puVar6 = puVar6[(int)pcVar2 - (int)puVar3];
-      puVar6 = puVar6 + 1;
-      iVar7 = iVar7 + -1;
-    } while (iVar7 != 0);
+      *pcVar6 = pcVar6[(int)pcVar2 - (int)pcVar3];
+      pcVar6 = pcVar6 + 1;
+      iVar8 = iVar8 + -1;
+    } while (iVar8 != 0);
   }
-  puVar3[iVar5] = 0;
-  puVar3[iVar5 + 1] = 0;
-  iVar5 = yy_scan_buffer(puVar3,iVar5 + 2U);
-  if (iVar5 != 0) {
-    *(undefined4 *)(iVar5 + 0x14) = 1;
-    __restgprlr_28();
-    return;
+  pcVar3[iVar7] = '\0';
+  pcVar3[iVar7 + 1] = '\0';
+  pyVar5 = yy_scan_buffer(pcVar3,iVar7 + 2U);
+  if (pyVar5 != (yy_buffer_state *)0x0) {
+    pyVar5->yy_is_our_buffer = 1;
+    pyVar5 = (yy_buffer_state *)__restgprlr_28();
+    return pyVar5;
   }
-  pFVar4 = __iob_func();
-  fprintf(pFVar4 + 2,"%s\n",0xffffffff8215a30c);
+  p_Var4 = __iob_func();
+  fprintf(p_Var4 + 2,"%s\n");
                     /* WARNING: Subroutine does not return */
   exit(2);
 }
@@ -2470,59 +2506,121 @@ void yy_scan_string(void)
 
 // 82562E50  yy_scan_bytes  (script/scr_lex.h:2074)
 
-void yy_scan_bytes(undefined8 param_1,longlong param_2)
+yy_buffer_state * yy_scan_bytes(char *param_1,int param_2)
 
 {
   int iVar1;
-  undefined1 *puVar2;
-  FILE *pFVar3;
-  undefined1 *puVar4;
-  longlong lVar5;
-  int iVar6;
+  int iVar2;
+  char *pcVar3;
+  _iobuf *p_Var4;
+  yy_buffer_state *pyVar5;
+  char *pcVar6;
+  longlong lVar7;
   
-  iVar1 = __savegprlr_29();
-  lVar5 = param_2 + 2;
-  puVar2 = malloc((size_t)lVar5);
-  if (puVar2 == (undefined1 *)0x0) {
-    pFVar3 = __iob_func();
-    fprintf(pFVar3 + 2,"%s\n",0xffffffff8215a32c);
+  lVar7 = (longlong)param_2;
+  iVar2 = __savegprlr_29(param_1);
+  iVar1 = (int)lVar7;
+  pcVar3 = malloc(iVar1 + 2U);
+  if (pcVar3 == (char *)0x0) {
+    p_Var4 = __iob_func();
+    fprintf(p_Var4 + 2,"%s\n");
                     /* WARNING: Subroutine does not return */
     exit(2);
   }
-  iVar6 = (int)param_2;
-  if (0 < iVar6) {
-    puVar4 = puVar2;
+  if (0 < iVar1) {
+    pcVar6 = pcVar3;
     do {
-      *puVar4 = puVar4[iVar1 - (int)puVar2];
-      puVar4 = puVar4 + 1;
-      param_2 = param_2 + -1;
-    } while (param_2 != 0);
+      *pcVar6 = pcVar6[iVar2 - (int)pcVar3];
+      pcVar6 = pcVar6 + 1;
+      lVar7 = lVar7 + -1;
+    } while (lVar7 != 0);
   }
-  puVar2[iVar6] = 0;
-  puVar2[iVar6 + 1] = 0;
-  iVar1 = yy_scan_buffer(puVar2,lVar5);
-  if (iVar1 == 0) {
-    pFVar3 = __iob_func();
-    fprintf(pFVar3 + 2,"%s\n",0xffffffff8215a30c);
+  pcVar3[iVar1] = '\0';
+  pcVar3[iVar1 + 1] = '\0';
+  pyVar5 = yy_scan_buffer(pcVar3,iVar1 + 2U);
+  if (pyVar5 == (yy_buffer_state *)0x0) {
+    p_Var4 = __iob_func();
+    fprintf(p_Var4 + 2,"%s\n");
                     /* WARNING: Subroutine does not return */
     exit(2);
   }
-  *(undefined4 *)(iVar1 + 0x14) = 1;
-  __restgprlr_29();
-  return;
+  pyVar5->yy_is_our_buffer = 1;
+  pyVar5 = (yy_buffer_state *)__restgprlr_29();
+  return pyVar5;
 }
 
 
 // 82562BA8  yy_fatal_error  (script/scr_lex.h:2167)
 
-void yy_fatal_error(undefined8 param_1)
+void yy_fatal_error(char *param_1)
 
 {
-  FILE *pFVar1;
+  _iobuf *p_Var1;
   
-  pFVar1 = __iob_func();
-  fprintf(pFVar1 + 2,"%s\n",param_1);
+  p_Var1 = __iob_func();
+  fprintf(p_Var1 + 2,"%s\n");
                     /* WARNING: Subroutine does not return */
   exit(2);
+}
+
+
+// 82562BE8  yy_flex_realloc  (script/scr_lex.h:2242)
+
+void * yy_flex_realloc(void *param_1,uint param_2)
+
+{
+  void *pvVar1;
+  void *pvVar2;
+  int iVar3;
+  int *piVar4;
+  ulong uVar5;
+  uint uVar6;
+  ulonglong uVar7;
+  
+  uVar7 = (ulonglong)(int)param_2;
+  pvVar1 = (void *)__savegprlr_27(param_1);
+  uVar6 = (uint)uVar7;
+  if (pvVar1 == (void *)0x0) {
+    pvVar2 = malloc(uVar6);
+  }
+  else {
+    if ((uVar7 & 0xffffffff) == 0) {
+      free(pvVar1);
+    }
+    else {
+      do {
+        if (0xfffff000 < (uVar7 & 0xffffffff)) {
+          _callnewh(uVar6);
+          piVar4 = _errno();
+          *piVar4 = 0xc;
+          goto LAB_8291b238;
+        }
+        if ((uVar7 & 0xffffffff) == 0) {
+          uVar7 = 1;
+        }
+        pvVar2 = GetProcessHeap();
+        uVar6 = (uint)uVar7;
+        pvVar2 = RtlReAllocateHeap(pvVar2,0,pvVar1,uVar6);
+        if (pvVar2 != (void *)0x0) goto LAB_8291b23c;
+        if (_newmode == 0) {
+          piVar4 = _errno();
+          uVar5 = GetLastError();
+          iVar3 = _get_errno_from_oserr(uVar5);
+          *piVar4 = iVar3;
+          goto LAB_8291b23c;
+        }
+        iVar3 = _callnewh(uVar6);
+      } while (iVar3 != 0);
+      piVar4 = _errno();
+      uVar5 = GetLastError();
+      iVar3 = _get_errno_from_oserr(uVar5);
+      *piVar4 = iVar3;
+    }
+LAB_8291b238:
+    pvVar2 = (void *)0x0;
+  }
+LAB_8291b23c:
+  pvVar1 = (void *)__restgprlr_27(pvVar2);
+  return pvVar1;
 }
 

@@ -2,55 +2,65 @@
 
 // 825E4EC0  NetadrToSockadr  (universal/com_net.cpp:20)
 
-void NetadrToSockadr(int *param_1,undefined2 *param_2)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void NetadrToSockadr(netadr_t *param_1,sockaddr *param_2)
 
 {
-  undefined2 uVar1;
-  undefined2 *puVar2;
+  ushort uVar1;
+  char *pcVar2;
   longlong lVar3;
   
-  puVar2 = param_2 + -1;
+  pcVar2 = param_2[-1].sa_data + 0xc;
   lVar3 = 8;
   do {
-    puVar2 = puVar2 + 1;
-    *puVar2 = 0;
+    pcVar2 = pcVar2 + 2;
+    pcVar2[0] = '\0';
+    pcVar2[1] = '\0';
     lVar3 = lVar3 + -1;
   } while (lVar3 != 0);
-  if (*param_1 == 3) {
-    *param_2 = 2;
-    uVar1 = *(undefined2 *)(param_1 + 2);
-    *(undefined4 *)(param_2 + 2) = 0xffffffff;
-    param_2[1] = uVar1;
+  if (param_1->type == NA_BROADCAST) {
+    param_2->sa_family = 2;
+    uVar1 = param_1->port;
+    param_2->sa_data[2] = -1;
+    param_2->sa_data[3] = -1;
+    param_2->sa_data[4] = -1;
+    param_2->sa_data[5] = -1;
+    *(ushort *)param_2->sa_data = uVar1;
     return;
   }
-  if (*param_1 != 4) {
+  if (param_1->type != NA_IP) {
     return;
   }
-  *param_2 = 2;
-  *(int *)(param_2 + 2) = param_1[1];
-  param_2[1] = *(undefined2 *)(param_1 + 2);
+  param_2->sa_family = 2;
+  *(undefined4 *)(param_2->sa_data + 2) = *(undefined4 *)param_1->ip;
+  *(ushort *)param_2->sa_data = param_1->port;
   return;
 }
 
 
 // 825E4F28  SockadrToNetadr  (universal/com_net.cpp:55)
 
-void SockadrToNetadr(short *param_1,undefined4 *param_2)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void SockadrToNetadr(sockaddr *param_1,netadr_t *param_2)
 
 {
-  if (*param_1 != 2) {
+  if (param_1->sa_family != 2) {
     return;
   }
-  *param_2 = 4;
-  param_2[1] = *(undefined4 *)(param_1 + 2);
-  *(short *)(param_2 + 2) = param_1[1];
+  param_2->type = NA_IP;
+  *(undefined4 *)param_2->ip = *(undefined4 *)(param_1->sa_data + 2);
+  param_2->port = *(ushort *)param_1->sa_data;
   return;
 }
 
 
 // 825E4F50  NET_ErrorString  (universal/com_net.cpp:81)
 
-undefined8 NET_ErrorString(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+char * NET_ErrorString(void)
 
 {
   bool bVar1;
@@ -60,94 +70,94 @@ undefined8 NET_ErrorString(void)
   iVar2 = WSAGetLastError();
   if (iVar2 < 0x2744) {
     if (iVar2 == 0x2743) {
-      return 0xffffffff82176314;
+      return "WSAENETUNREACH";
     }
     switch(iVar2 + -0x2714) {
     case 0:
-      return 0xffffffff8217645c;
+      return "WSAEINTR";
     case 5:
-      return 0xffffffff82176450;
+      return "WSAEBADF";
     case 9:
-      return 0xffffffff82176444;
+      return "WSAEACCES";
     case 10:
-      return 0xffffffff82176438;
+      return "WSAEFAULT";
     case 0x12:
-      return 0xffffffff8217642c;
+      return "WSAEINVAL";
     case 0x14:
-      return 0xffffffff82176420;
+      return "WSAEMFILE";
     case 0x1f:
-      return 0xffffffff82176410;
+      return "WSAEWOULDBLOCK";
     case 0x20:
-      return 0xffffffff82176400;
+      return "WSAEINPROGRESS";
     case 0x21:
-      return 0xffffffff821763f4;
+      return "WSAEALREADY";
     case 0x22:
-      return 0xffffffff821763e8;
+      return "WSAENOTSOCK";
     case 0x23:
-      return 0xffffffff821763d8;
+      return "WSAEDESTADDRREQ";
     case 0x24:
-      return 0xffffffff821763cc;
+      return "WSAEMSGSIZE";
     case 0x25:
-      return 0xffffffff821763bc;
+      return "WSAEPROTOTYPE";
     case 0x26:
-      return 0xffffffff821763ac;
+      return "WSAENOPROTOOPT";
     case 0x27:
-      return 0xffffffff82176398;
+      return "WSAEPROTONOSUPPORT";
     case 0x28:
-      return 0xffffffff82176384;
+      return "WSAESOCKTNOSUPPORT";
     case 0x29:
-      return 0xffffffff82176374;
+      return "WSAEOPNOTSUPP";
     case 0x2a:
-      return 0xffffffff82176364;
+      return "WSAEPFNOSUPPORT";
     case 0x2b:
-      return 0xffffffff82176354;
+      return "WSAEAFNOSUPPORT";
     case 0x2c:
-      return 0xffffffff82176344;
+      return "WSAEADDRINUSE";
     case 0x2d:
-      return 0xffffffff82176330;
+      return "WSAEADDRNOTAVAIL";
     case 0x2e:
-      return 0xffffffff82176324;
+      return "WSAENETDOWN";
     }
   }
   else if (iVar2 < 0x2776) {
     if (iVar2 == 0x2775) {
-      return 0xffffffff821761f4;
+      return "WSAEDISCON";
     }
     switch(iVar2 + -0x2744) {
     case 0:
-      return 0xffffffff82176304;
+      return "WSAENETRESET";
     case 1:
-      return 0xffffffff821762ec;
+      return "WSWSAECONNABORTEDAEINTR";
     case 2:
-      return 0xffffffff821762dc;
+      return "WSAECONNRESET";
     case 3:
-      return 0xffffffff821762d0;
+      return "WSAENOBUFS";
     case 4:
-      return 0xffffffff821762c4;
+      return "WSAEISCONN";
     case 5:
-      return 0xffffffff821762b8;
+      return "WSAENOTCONN";
     case 6:
-      return 0xffffffff821762a8;
+      return "WSAESHUTDOWN";
     case 7:
-      return 0xffffffff82176298;
+      return "WSAETOOMANYREFS";
     case 8:
-      return 0xffffffff82176288;
+      return "WSAETIMEDOUT";
     case 9:
-      return 0xffffffff82176278;
+      return "WSAECONNREFUSED";
     case 10:
-      return 0xffffffff8217626c;
+      return "WSAELOOP";
     case 0xb:
-      return 0xffffffff8217625c;
+      return "WSAENAMETOOLONG";
     case 0xc:
-      return 0xffffffff8217624c;
+      return "WSAEHOSTDOWN";
     case 0xd:
-      return 0xffffffff82176200;
+      return "WSAEHOSTUNREACHABLE";
     case 0x27:
-      return 0xffffffff8217623c;
+      return "WSASYSNOTREADY";
     case 0x28:
-      return 0xffffffff82176228;
+      return "WSAVERNOTSUPPORTED";
     case 0x29:
-      return 0xffffffff82176214;
+      return "WSANOTINITIALISED";
     }
   }
   else {
@@ -155,67 +165,69 @@ undefined8 NET_ErrorString(void)
     if ((uVar3 & 0xffffffff) < 4) {
       bVar1 = (int)uVar3 != 0;
       if ((longlong)iVar2 == 0x2afa && bVar1) {
-        return 0xffffffff821761d0;
+        return "WSATRY_AGAIN";
       }
       if (uVar3 != 2 || !bVar1) {
         if (!bVar1) {
-          return 0xffffffff821761e0;
+          return "WSAHOST_NOT_FOUND";
         }
-        return 0xffffffff821761b4;
+        return "WSANO_DATA";
       }
-      return 0xffffffff821761c0;
+      return "WSANO_RECOVERY";
     }
   }
-  return 0xffffffff821761a4;
+  return "UNKNOWN ERROR";
 }
 
 
 // 825E5598  Sys_StringToSockaddr  (universal/com_net.cpp:193)
 
-bool Sys_StringToSockaddr(char *param_1,undefined2 *param_2)
+int Sys_StringToSockaddr(char *param_1,sockaddr *param_2)
 
 {
-  char cVar2;
+  bool bVar2;
   ulong uVar1;
-  undefined2 *puVar3;
+  char *pcVar3;
   longlong lVar4;
   
-  puVar3 = param_2 + -1;
+  pcVar3 = param_2[-1].sa_data + 0xc;
   lVar4 = 8;
   do {
-    puVar3 = puVar3 + 1;
-    *puVar3 = 0;
+    pcVar3 = pcVar3 + 2;
+    pcVar3[0] = '\0';
+    pcVar3[1] = '\0';
     lVar4 = lVar4 + -1;
   } while (lVar4 != 0);
-  param_2[1] = 0;
-  *param_2 = 2;
-  cVar2 = I_isdigit(*param_1);
-  if (cVar2 != '\0') {
+  param_2->sa_data[0] = '\0';
+  param_2->sa_data[1] = '\0';
+  param_2->sa_family = 2;
+  bVar2 = I_isdigit((int)*param_1);
+  if (bVar2) {
     uVar1 = inet_addr(param_1);
-    *(ulong *)(param_2 + 2) = uVar1;
+    *(ulong *)(param_2->sa_data + 2) = uVar1;
   }
-  return cVar2 != '\0';
+  return (int)bVar2;
 }
 
 
 // 825E5620  Sys_StringToAdr  (universal/com_net.cpp:269)
 
-undefined8 Sys_StringToAdr(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+int Sys_StringToAdr(char *param_1,netadr_t *param_2)
 
 {
-  undefined8 uVar1;
-  short local_20;
-  undefined2 local_1e;
-  undefined4 local_1c;
+  int iVar1;
+  sockaddr local_20;
   
-  uVar1 = Sys_StringToSockaddr(param_1,&local_20);
-  if ((int)uVar1 == 0) {
-    return uVar1;
+  iVar1 = Sys_StringToSockaddr(param_1,&local_20);
+  if (iVar1 == 0) {
+    return 0;
   }
-  if (local_20 == 2) {
-    *param_2 = 4;
-    param_2[1] = local_1c;
-    *(undefined2 *)(param_2 + 2) = local_1e;
+  if (local_20.sa_family == 2) {
+    param_2->type = NA_IP;
+    *(undefined4 *)param_2->ip = local_20.sa_data._2_4_;
+    param_2->port = local_20.sa_data._0_2_;
   }
   return 1;
 }

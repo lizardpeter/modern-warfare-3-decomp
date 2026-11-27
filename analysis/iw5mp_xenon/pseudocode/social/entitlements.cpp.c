@@ -2,194 +2,203 @@
 
 // 8293EE98  `dynamic_initializer_for_'g_DWEntitlementTask''  (social/entitlements.cpp:76)
 
-int _dynamic_initializer_for__g_DWEntitlementTask__(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void _dynamic_initializer_for__g_DWEntitlementTask__(void)
 
 {
-  int iVar1;
-  
-  DAT_8451c0d8 = 0;
-  DAT_8451c0dc = 0;
-  DAT_8451c0e0 = 0;
-  DAT_8451c0e4 = 0;
-  iVar1 = atexit(_dynamic_atexit_destructor_for__g_DWEntitlementTask__);
-  return iVar1;
+  g_DWEntitlementTask[0].m_ptr = (bdRemoteTask *)0x0;
+  g_DWEntitlementTask[1].m_ptr = (bdRemoteTask *)0x0;
+  g_DWEntitlementTask[2].m_ptr = (bdRemoteTask *)0x0;
+  g_DWEntitlementTask[3].m_ptr = (bdRemoteTask *)0x0;
+  atexit(_dynamic_atexit_destructor_for__g_DWEntitlementTask__);
+  return;
 }
 
 
 // 8293EED0  `dynamic_initializer_for_'s_keyArchiveValues''  (social/entitlements.cpp:84)
 
-int _dynamic_initializer_for__s_keyArchiveValues__(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void _dynamic_initializer_for__s_keyArchiveValues__(void)
 
 {
-  int iVar1;
-  longlong lVar2;
-  longlong lVar3;
+  bdKeyValuePair (*this) [16];
+  longlong lVar1;
   
-  lVar3 = 0x3f;
-  lVar2 = -0x7bae4328;
+  lVar1 = 0x3f;
+  this = s_keyArchiveValues;
   do {
-    bdKeyValuePair__bdKeyValuePair(lVar2);
-    lVar3 = lVar3 + -1;
-    lVar2 = lVar2 + 0x10;
-  } while (-1 < lVar3);
-  iVar1 = atexit(_dynamic_atexit_destructor_for__s_keyArchiveValues__);
-  return iVar1;
+    bdKeyValuePair::bdKeyValuePair(*this);
+    lVar1 = lVar1 + -1;
+    this = (bdKeyValuePair (*) [16])((int)this + 0x10);
+  } while (-1 < lVar1);
+  atexit(_dynamic_atexit_destructor_for__s_keyArchiveValues__);
+  return;
 }
 
 
 // 8293EF28  `dynamic_initializer_for_'s_entitlementTestTask''  (social/entitlements.cpp:90)
 
-int _dynamic_initializer_for__s_entitlementTestTask__(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void _dynamic_initializer_for__s_entitlementTestTask__(void)
 
 {
-  int iVar1;
-  
-  iVar1 = atexit(_dynamic_atexit_destructor_for__s_entitlementTestTask__);
-  return iVar1;
+  atexit(_dynamic_atexit_destructor_for__s_entitlementTestTask__);
+  return;
 }
 
 
 // 8293EF38  `dynamic_initializer_for_'s_entitlementTestKeyPair''  (social/entitlements.cpp:91)
 
-int _dynamic_initializer_for__s_entitlementTestKeyPair__(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void _dynamic_initializer_for__s_entitlementTestKeyPair__(void)
 
 {
-  int iVar1;
-  longlong lVar2;
-  longlong lVar3;
+  bdKeyValuePair *this;
+  longlong lVar1;
   
-  lVar3 = 0xf;
-  lVar2 = -0x7bae3f18;
+  lVar1 = 0xf;
+  this = s_entitlementTestKeyPair;
   do {
-    bdKeyValuePair__bdKeyValuePair(lVar2);
-    lVar3 = lVar3 + -1;
-    lVar2 = lVar2 + 0x10;
-  } while (-1 < lVar3);
-  iVar1 = atexit(_dynamic_atexit_destructor_for__s_entitlementTestKeyPair__);
-  return iVar1;
+    bdKeyValuePair::bdKeyValuePair(this);
+    lVar1 = lVar1 + -1;
+    this = this + 1;
+  } while (-1 < lVar1);
+  atexit(_dynamic_atexit_destructor_for__s_entitlementTestKeyPair__);
+  return;
 }
 
 
 // 826F8398  Entitlements_FindBitFromConfig  (social/entitlements.cpp:113)
 
-void Entitlements_FindBitFromConfig
-               (undefined8 param_1,undefined8 param_2,undefined2 *param_3,int *param_4)
+bool Entitlements_FindBitFromConfig(char *param_1,char *param_2,ushort *param_3,int *param_4)
 
 {
-  undefined8 uVar1;
-  char *pcVar3;
-  int iVar4;
-  ulonglong uVar2;
-  undefined *local_30 [12];
+  char *pcVar1;
+  char *pcVar2;
+  int iVar3;
+  undefined1 uVar4;
+  char *local_30 [12];
   
-  uVar1 = __savegprlr_28();
-  local_30[0] = &DAT_84513cd8;
-  Com_BeginParseSession(0xffffffff821af0b0);
+  pcVar1 = (char *)__savegprlr_28(param_1);
+  local_30[0] = s_configFileBuffer;
+  Com_BeginParseSession("entitlements");
   Com_SetSpaceDelimited(1);
-  pcVar3 = (char *)Com_ParseOnLine(local_30);
+  pcVar2 = Com_ParseOnLine(local_30);
   do {
-    if (local_30[0] == (undefined *)0x0) {
+    if (local_30[0] == (char *)0x0) {
       Com_EndParseSession();
-      __restgprlr_28(0);
-      return;
+      uVar4 = __restgprlr_28(0);
+      return (bool)uVar4;
     }
-    if (((*pcVar3 != '\0') && (iVar4 = I_stricmp(pcVar3,uVar1), iVar4 == 0)) &&
-       (pcVar3 = (char *)Com_ParseOnLine(local_30), pcVar3 != (char *)0x0)) {
-      iVar4 = atoi(pcVar3);
-      *param_3 = (short)iVar4;
-      pcVar3 = (char *)Com_ParseOnLine(local_30);
-      if (pcVar3 != (char *)0x0) {
-        iVar4 = atoi(pcVar3);
-        *param_4 = iVar4;
-        uVar2 = Com_ParseOnLine(local_30);
-        if (((uVar2 & 0xffffffff) != 0) && (iVar4 = I_stricmp(uVar2,param_2), iVar4 == 0)) {
+    if (((*pcVar2 != '\0') && (iVar3 = I_stricmp(pcVar2,pcVar1), iVar3 == 0)) &&
+       (pcVar2 = Com_ParseOnLine(local_30), pcVar2 != (char *)0x0)) {
+      iVar3 = atoi(pcVar2);
+      *param_3 = (ushort)iVar3;
+      pcVar2 = Com_ParseOnLine(local_30);
+      if (pcVar2 != (char *)0x0) {
+        iVar3 = atoi(pcVar2);
+        *param_4 = iVar3;
+        pcVar2 = Com_ParseOnLine(local_30);
+        if ((pcVar2 != (char *)0x0) && (iVar3 = I_stricmp(pcVar2,param_2), iVar3 == 0)) {
           Com_EndParseSession();
-          __restgprlr_28(1);
-          return;
+          uVar4 = __restgprlr_28(1);
+          return (bool)uVar4;
         }
       }
     }
     Com_SkipRestOfLine(local_30);
-    pcVar3 = (char *)Com_ParseOnLine(local_30);
+    pcVar2 = Com_ParseOnLine(local_30);
   } while( true );
 }
 
 
 // 826F8498  Entitlements_FinishTestCmd  (social/entitlements.cpp:152)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Entitlements_FinishTestCmd(void)
 
 {
-  DAT_84513c76 = 0;
-  Com_Printf(0xe,0xffffffff821af0c0);
+  s_bEntitlementProcessingTest = false;
+  Com_Printf(0xe,
+             "Finished granting entitlement through demonware.\nUnlock will not occur until entitlements are processed again. (periodically, or on game boot, or use Entitlement_ForceProcess.)\n"
+            );
   return;
 }
 
 
 // 826F9D08  Entitlements_CanSetTestValue  (social/entitlements.cpp:159)
 
-undefined8 Entitlements_CanSetTestValue(int param_1)
+bool Entitlements_CanSetTestValue(int param_1)
 
 {
-  char cVar1;
+  bool bVar1;
   
-  cVar1 = Entitlements_CanWeProcessEntitlements(param_1,1);
-  if (cVar1 == '\0') {
-    Com_Printf(0xe,0xffffffff821afaa0);
-    return 0;
+  bVar1 = Entitlements_CanWeProcessEntitlements(param_1,true);
+  if (!bVar1) {
+    Com_Printf(0xe,
+               "Cannot process entitlements right now.  Sorry.  You need to be signed in, in the main menu, and in MP.\n"
+              );
+    return false;
   }
-  if (DAT_84513c76 != '\0') {
-    Com_Printf(0xe,0xffffffff821afa58);
-    return 0;
+  if (s_bEntitlementProcessingTest != false) {
+    Com_Printf(0xe,"Already processing an entitlement request.... Please try again.\n");
+    return false;
   }
-  if ((&DAT_84513c8c)[param_1] != 5) {
-    Com_Printf(0xe,0xffffffff821afa10);
-    return 0;
+  if (s_entitlementTaskStage[param_1] != ENTITLEMENTS_TASK_STAGE_ALL_DONE) {
+    Com_Printf(0xe,"Regular entitlements processing already underway... Please try again.\n");
+    return false;
   }
-  return 1;
+  return true;
 }
 
 
 // 826F9DE8  Entitlements_UnlockBitForCmd  (social/entitlements.cpp:179)
 
-void Entitlements_UnlockBitForCmd(undefined8 param_1,ulonglong param_2,undefined8 param_3)
+void Entitlements_UnlockBitForCmd(char *param_1,bool param_2,char *param_3)
 
 {
-  undefined8 uVar1;
-  int iVar3;
-  char cVar4;
-  undefined8 uVar2;
-  undefined2 local_30 [2];
+  char *pcVar1;
+  int iVar2;
+  bool bVar4;
+  char *pcVar3;
+  ulonglong uVar5;
+  ushort local_30 [2];
   int local_2c [11];
   
-  uVar1 = __savegprlr_28();
-  iVar3 = Cmd_Argc();
-  if (iVar3 != 2) {
-    Com_Printf(0xe,0xffffffff821afb38,param_3);
+  uVar5 = (ulonglong)param_2;
+  pcVar1 = (char *)__savegprlr_28(param_1,uVar5,param_3);
+  iVar2 = Cmd_Argc();
+  if (iVar2 != 2) {
+    Com_Printf(0xe,"Usage: %s \"bottlecap\" ");
     __restgprlr_28();
     return;
   }
-  iVar3 = Cmd_LocalControllerIndex();
-  cVar4 = Entitlements_CanSetTestValue();
-  if (cVar4 != '\0') {
-    uVar2 = Cmd_Argv(1);
-    cVar4 = Entitlements_FindBitFromConfig(uVar1,uVar2,local_30,local_2c);
-    if (cVar4 == '\0') {
-      Com_Printf(0xe,0xffffffff821afb08,uVar1,uVar2);
+  iVar2 = Cmd_LocalControllerIndex();
+  bVar4 = Entitlements_CanSetTestValue(iVar2);
+  if (bVar4) {
+    pcVar3 = Cmd_Argv(1);
+    bVar4 = Entitlements_FindBitFromConfig(pcVar1,pcVar3,local_30,local_2c);
+    if (!bVar4) {
+      Com_Printf(0xe,"Unable to find %s %s in entitlements config.\n");
       __restgprlr_28();
       return;
     }
-    DAT_8451c0ee = local_30[0];
-    DAT_84513c76 = 1;
-    if ((param_2 & 0xff) == 0) {
-      DAT_8451c0f0 = ~(1L << ((longlong)local_2c[0] & 0x7fU));
+    s_bEntitlementProcessingTest = true;
+    s_entitlementTestKeyPair[0].m_index = local_30[0];
+    if ((uVar5 & 0xff) == 0) {
+      s_entitlementTestKeyPair[0].m_value = ~(1L << ((longlong)local_2c[0] & 0x7fU));
     }
     else {
-      DAT_8451c0f0 = 1L << ((longlong)local_2c[0] & 0x7fU);
+      s_entitlementTestKeyPair[0].m_value = 1L << ((longlong)local_2c[0] & 0x7fU);
     }
-    DAT_84513c70 = 1;
-    DAT_8451c0ec = ((int)(param_2 & 0xff) != 0) + '\x04';
-    (&DAT_84513c8c)[iVar3] = 0;
+    s_nEntitlementTestKeyPairs = 1;
+    s_entitlementTestKeyPair[0].m_updateType = ((int)(uVar5 & 0xff) != 0) + '\x04';
+    s_entitlementTaskStage[iVar2] = ENTITLEMENTS_TASK_STAGE_WAITING_TO_GET_KEY_ARCHIVE;
   }
   __restgprlr_28();
   return;
@@ -198,184 +207,210 @@ void Entitlements_UnlockBitForCmd(undefined8 param_1,ulonglong param_2,undefined
 
 // 826F9F08  Entitlements_LockCamoCmd  (social/entitlements.cpp:212)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Entitlements_LockCamoCmd(void)
 
 {
-  Entitlements_UnlockBitForCmd(0xffffffff82088a38,0,0xffffffff821afb50);
+  Entitlements_UnlockBitForCmd("camo",false,"lockCamo");
   return;
 }
 
 
 // 826F9F20  Entitlements_UnlockCamoCmd  (social/entitlements.cpp:213)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Entitlements_UnlockCamoCmd(void)
 
 {
-  Entitlements_UnlockBitForCmd(0xffffffff82088a38,1,0xffffffff821afb5c);
+  Entitlements_UnlockBitForCmd("camo",true,"unlockCamo");
   return;
 }
 
 
 // 826F9F38  Entitlements_LockReticleCmd  (social/entitlements.cpp:214)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Entitlements_LockReticleCmd(void)
 
 {
-  Entitlements_UnlockBitForCmd(0xffffffff821afb68,0,0xffffffff821afb70);
+  Entitlements_UnlockBitForCmd("reticle",false,"lockReticle");
   return;
 }
 
 
 // 826F9F50  Entitlements_UnlockReticleCmd  (social/entitlements.cpp:215)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Entitlements_UnlockReticleCmd(void)
 
 {
-  Entitlements_UnlockBitForCmd(0xffffffff821afb68,1,0xffffffff821afb7c);
+  Entitlements_UnlockBitForCmd("reticle",true,"unlockReticle");
   return;
 }
 
 
 // 826F9F68  Entitlements_LockWeaponCmd  (social/entitlements.cpp:216)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Entitlements_LockWeaponCmd(void)
 
 {
-  Entitlements_UnlockBitForCmd(0xffffffff820267a8,0,0xffffffff821afb8c);
+  Entitlements_UnlockBitForCmd("weapon",false,"lockWeapon");
   return;
 }
 
 
 // 826F9F80  Entitlements_UnlockWeaponCmd  (social/entitlements.cpp:217)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Entitlements_UnlockWeaponCmd(void)
 
 {
-  Entitlements_UnlockBitForCmd(0xffffffff820267a8,1,0xffffffff821afb98);
+  Entitlements_UnlockBitForCmd("weapon",true,"unlockWeapon");
   return;
 }
 
 
 // 826F9F98  Entitlements_LockPerkCmd  (social/entitlements.cpp:218)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Entitlements_LockPerkCmd(void)
 
 {
-  Entitlements_UnlockBitForCmd(0xffffffff82026794,0,0xffffffff821afba8);
+  Entitlements_UnlockBitForCmd("perk",false,"lockPerk");
   return;
 }
 
 
 // 826F9FB0  Entitlements_UnlockPerkCmd  (social/entitlements.cpp:219)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Entitlements_UnlockPerkCmd(void)
 
 {
-  Entitlements_UnlockBitForCmd(0xffffffff82026794,1,0xffffffff821afbb4);
+  Entitlements_UnlockBitForCmd("perk",true,"unlockPerk");
   return;
 }
 
 
 // 826F9FC8  Entitlements_LockTitleCmd  (social/entitlements.cpp:220)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Entitlements_LockTitleCmd(void)
 
 {
-  Entitlements_UnlockBitForCmd(0xffffffff820268e0,0,0xffffffff8208977c);
+  Entitlements_UnlockBitForCmd("title",false,"lockTitle");
   return;
 }
 
 
 // 826F9FE0  Entitlements_UnlockTitleCmd  (social/entitlements.cpp:221)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Entitlements_UnlockTitleCmd(void)
 
 {
-  Entitlements_UnlockBitForCmd(0xffffffff820268e0,1,0xffffffff82089794);
+  Entitlements_UnlockBitForCmd("title",true,"unlockTitle");
   return;
 }
 
 
 // 826F9FF8  Entitlements_LockIconCmd  (social/entitlements.cpp:222)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Entitlements_LockIconCmd(void)
 
 {
-  Entitlements_UnlockBitForCmd(0xffffffff82026910,0,0xffffffff82089788);
+  Entitlements_UnlockBitForCmd("icon",false,"lockIcon");
   return;
 }
 
 
 // 826FA010  Entitlements_UnlockIconCmd  (social/entitlements.cpp:223)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Entitlements_UnlockIconCmd(void)
 
 {
-  Entitlements_UnlockBitForCmd(0xffffffff82026910,1,0xffffffff820897a0);
+  Entitlements_UnlockBitForCmd("icon",true,"unlockIcon");
   return;
 }
 
 
 // 826FA028  Entitlements_AddXPMultiplierTimeForCmd  (social/entitlements.cpp:227)
 
-void Entitlements_AddXPMultiplierTimeForCmd(undefined8 param_1,int param_2,int param_3)
+void Entitlements_AddXPMultiplierTimeForCmd(char *param_1,int param_2,int param_3)
 
 {
-  undefined8 uVar1;
+  char *pcVar1;
   int iVar2;
-  char cVar4;
+  bool bVar4;
   int iVar3;
   
-  uVar1 = __savegprlr_28();
+  pcVar1 = (char *)__savegprlr_28(param_1);
   iVar2 = Cmd_LocalControllerIndex();
-  cVar4 = Entitlements_CanSetTestValue();
-  if (cVar4 == '\0') {
+  bVar4 = Entitlements_CanSetTestValue(iVar2);
+  if (!bVar4) {
 LAB_826fa150:
     __restgprlr_28();
     return;
   }
-  iVar3 = I_stricmp(uVar1,0xffffffff8210fdb0);
+  iVar3 = I_stricmp(pcVar1,"xp");
   if (iVar3 == 0) {
     if (param_2 == 2) {
-      DAT_8451c0ee = 0;
+      s_entitlementTestKeyPair[0].m_index = 0;
     }
     else if (param_2 == 3) {
-      DAT_8451c0ee = 1;
+      s_entitlementTestKeyPair[0].m_index = 1;
     }
     else {
       if (param_2 != 5) {
-        Com_Printf(0xe,0xffffffff821afbd4);
+        Com_Printf(0xe,"Invalid multiplier.  Only supporting 2, 3 or 5 xp multiplier.\n");
         __restgprlr_28();
         return;
       }
-      DAT_8451c0ee = 2;
+      s_entitlementTestKeyPair[0].m_index = 2;
     }
   }
   else {
-    iVar3 = I_stricmp(uVar1,0xffffffff821af224);
+    iVar3 = I_stricmp(pcVar1,"challengeXP");
     if (iVar3 == 0) {
-      DAT_8451c0ee = 10;
+      s_entitlementTestKeyPair[0].m_index = 10;
     }
     else {
-      iVar3 = I_stricmp(uVar1,0xffffffff821af264);
+      iVar3 = I_stricmp(pcVar1,"weaponXP");
       if (iVar3 != 0) {
-        Com_Printf(0xe,0xffffffff821afbc0);
+        Com_Printf(0xe,"Invalid XP type.\n");
         goto LAB_826fa150;
       }
-      DAT_8451c0ee = 0xc;
+      s_entitlementTestKeyPair[0].m_index = 0xc;
     }
   }
-  DAT_8451c0f0 = (longlong)param_3;
-  DAT_8451c0ec = 1;
-  DAT_84513c70 = 1;
-  DAT_84513c76 = 1;
-  (&DAT_84513c8c)[iVar2] = 0;
+  s_entitlementTestKeyPair[0].m_value = (long64)param_3;
+  s_entitlementTestKeyPair[0].m_updateType = '\x01';
+  s_nEntitlementTestKeyPairs = 1;
+  s_bEntitlementProcessingTest = true;
+  s_entitlementTaskStage[iVar2] = ENTITLEMENTS_TASK_STAGE_WAITING_TO_GET_KEY_ARCHIVE;
   __restgprlr_28();
   return;
 }
 
 
 // 826FA158  Entitlements_AddXPMultiplierTimeCmd  (social/entitlements.cpp:270)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Entitlements_AddXPMultiplierTimeCmd(void)
 
@@ -386,85 +421,87 @@ void Entitlements_AddXPMultiplierTimeCmd(void)
   
   iVar1 = Cmd_Argc();
   if (iVar1 != 3) {
-    Com_Printf(0xe,0xffffffff821afc14);
+    Com_Printf(0xe,"Usage: AddXPMultiplierTime <mult> <time (secs)>");
     return;
   }
-  pcVar2 = (char *)Cmd_Argv(1);
+  pcVar2 = Cmd_Argv(1);
   iVar1 = atoi(pcVar2);
-  pcVar2 = (char *)Cmd_Argv(2);
+  pcVar2 = Cmd_Argv(2);
   iVar3 = atoi(pcVar2);
-  Entitlements_AddXPMultiplierTimeForCmd(0xffffffff821789a4,iVar1,iVar3);
+  Entitlements_AddXPMultiplierTimeForCmd("XP",iVar1,iVar3);
   return;
 }
 
 
 // 826FA1E0  Entitlements_AddChallengeXPMultiplierTimeCmd  (social/entitlements.cpp:288)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Entitlements_AddChallengeXPMultiplierTimeCmd(void)
 
 {
   int iVar1;
-  char *_Str;
+  char *pcVar2;
   
   iVar1 = Cmd_Argc();
   if (iVar1 != 2) {
-    Com_Printf(0xe,0xffffffff821afc44);
+    Com_Printf(0xe,"Usage: AddChallengeXPMultiplierTime <time (secs)>");
     return;
   }
-  _Str = (char *)Cmd_Argv(1);
-  iVar1 = atoi(_Str);
-  Entitlements_AddXPMultiplierTimeForCmd(0xffffffff821af224,2,iVar1);
+  pcVar2 = Cmd_Argv(1);
+  iVar1 = atoi(pcVar2);
+  Entitlements_AddXPMultiplierTimeForCmd("challengeXP",2,iVar1);
   return;
 }
 
 
 // 826FA248  Entitlements_AddWeaponXPMultiplierTimeCmd  (social/entitlements.cpp:300)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Entitlements_AddWeaponXPMultiplierTimeCmd(void)
 
 {
   int iVar1;
-  char *_Str;
+  char *pcVar2;
   
   iVar1 = Cmd_Argc();
   if (iVar1 != 2) {
-    Com_Printf(0xe,0xffffffff821afc78);
+    Com_Printf(0xe,"Usage: AddWeaponXPMultiplierTime <time (secs)>");
     return;
   }
-  _Str = (char *)Cmd_Argv(1);
-  iVar1 = atoi(_Str);
-  Entitlements_AddXPMultiplierTimeForCmd(0xffffffff821af264,2,iVar1);
+  pcVar2 = Cmd_Argv(1);
+  iVar1 = atoi(pcVar2);
+  Entitlements_AddXPMultiplierTimeForCmd("weaponXP",2,iVar1);
   return;
 }
 
 
 // 826F84B8  Entitlements_UseXPMultiplierTimeForCmd  (social/entitlements.cpp:312)
 
-void Entitlements_UseXPMultiplierTimeForCmd
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,longlong param_4)
+void Entitlements_UseXPMultiplierTimeForCmd(int param_1,char *param_2,int param_3,int param_4)
 
 {
-  undefined8 uVar1;
-  char cVar4;
-  longlong lVar2;
-  longlong lVar3;
-  longlong lVar5;
-  undefined1 auStack_80 [16];
-  undefined1 auStack_70 [112];
+  int iVar1;
+  bool bVar4;
+  int iVar2;
+  int iVar3;
+  StructuredDataBuffer aSStack_80 [2];
+  char acStack_70 [112];
   
-  __savegprlr_28();
-  uVar1 = Cmd_LocalControllerIndex();
-  cVar4 = LiveStorage_GetPlayerUnlockDataBuffer(auStack_80,uVar1);
-  if (cVar4 != '\0') {
-    Com_sprintf(auStack_70,0x40,0xffffffff821af18c,param_2);
-    lVar2 = LiveStorage_PlayerDataGetArrayIntByIndex(auStack_80,auStack_70,param_3);
-    Com_sprintf(auStack_70,0x40,0xffffffff821af174,param_2);
-    lVar3 = LiveStorage_PlayerDataGetArrayIntByIndex(auStack_80,auStack_70,param_3);
-    lVar5 = lVar3 + param_4;
-    if ((int)lVar2 < (int)(lVar3 + param_4)) {
-      lVar5 = lVar2;
+  __savegprlr_28(param_1,param_2);
+  iVar1 = Cmd_LocalControllerIndex();
+  bVar4 = LiveStorage_GetPlayerUnlockDataBuffer(aSStack_80,iVar1);
+  if (bVar4) {
+    Com_sprintf(acStack_70,0x40,"%sMaxMultiplierTimePlayed");
+    iVar2 = LiveStorage_PlayerDataGetArrayIntByIndex(aSStack_80,acStack_70,param_3);
+    Com_sprintf(acStack_70,0x40,"%sMultiplierTimePlayed");
+    iVar3 = LiveStorage_PlayerDataGetArrayIntByIndex(aSStack_80,acStack_70,param_3);
+    iVar1 = iVar3 + param_4;
+    if (iVar2 < iVar3 + param_4) {
+      iVar1 = iVar2;
     }
-    LiveStorage_PlayerDataSetArrayIntByIndex(auStack_80,auStack_70,param_3,lVar5);
+    LiveStorage_PlayerDataSetArrayIntByIndex(aSStack_80,acStack_70,param_3,iVar1);
   }
   __restgprlr_28();
   return;
@@ -473,41 +510,42 @@ void Entitlements_UseXPMultiplierTimeForCmd
 
 // 826F8570  Entitlements_UseXPMultiplierTimeCmd  (social/entitlements.cpp:336)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Entitlements_UseXPMultiplierTimeCmd(void)
 
 {
-  int iVar2;
-  char *pcVar3;
+  int iVar1;
+  char *pcVar2;
+  int iVar3;
   int iVar4;
-  undefined8 uVar1;
-  undefined8 uVar5;
   
-  iVar2 = Cmd_Argc();
-  if (iVar2 == 3) {
-    pcVar3 = (char *)Cmd_Argv(1);
-    iVar2 = atoi(pcVar3);
-    pcVar3 = (char *)Cmd_Argv(2);
-    iVar4 = atoi(pcVar3);
-    if (iVar2 == 2) {
-      uVar5 = 0;
+  iVar1 = Cmd_Argc();
+  if (iVar1 == 3) {
+    pcVar2 = Cmd_Argv(1);
+    iVar1 = atoi(pcVar2);
+    pcVar2 = Cmd_Argv(2);
+    iVar3 = atoi(pcVar2);
+    if (iVar1 == 2) {
+      iVar1 = 0;
     }
-    else if (iVar2 == 3) {
-      uVar5 = 1;
+    else if (iVar1 == 3) {
+      iVar1 = 1;
     }
     else {
-      if (iVar2 != 5) {
-        uVar5 = 0xffffffff821af1a8;
+      if (iVar1 != 5) {
+        pcVar2 = "UseXPMultiplierTime: Invalid multiplier.  Only supporting 2, 3, or 5.\n";
         goto LAB_826f860c;
       }
-      uVar5 = 2;
+      iVar1 = 2;
     }
-    uVar1 = Cmd_LocalControllerIndex();
-    Entitlements_UseXPMultiplierTimeForCmd(uVar1,0xffffffff821789a4,uVar5,iVar4);
+    iVar4 = Cmd_LocalControllerIndex();
+    Entitlements_UseXPMultiplierTimeForCmd(iVar4,"XP",iVar1,iVar3);
   }
   else {
-    uVar5 = 0xffffffff821af1f0;
+    pcVar2 = "Usage: UseXPMultiplierTime <mult> <time (secs)>\n";
 LAB_826f860c:
-    Com_Printf(0xe,uVar5);
+    Com_Printf(0xe,pcVar2);
   }
   return;
 }
@@ -515,117 +553,124 @@ LAB_826f860c:
 
 // 826F8630  Entitlements_UseChallengeXPMultiplierTimeCmd  (social/entitlements.cpp:367)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Entitlements_UseChallengeXPMultiplierTimeCmd(void)
 
 {
-  int iVar2;
-  char *_Str;
-  undefined8 uVar1;
+  int iVar1;
+  char *pcVar2;
+  int iVar3;
   
-  iVar2 = Cmd_Argc();
-  if (iVar2 != 2) {
-    Com_Printf(0xe,0xffffffff821af230);
+  iVar1 = Cmd_Argc();
+  if (iVar1 != 2) {
+    Com_Printf(0xe,"Usage: UseChallengeXPMultiplierTime <time (secs)>\n");
     return;
   }
-  _Str = (char *)Cmd_Argv(1);
-  iVar2 = atoi(_Str);
-  uVar1 = Cmd_LocalControllerIndex();
-  Entitlements_UseXPMultiplierTimeForCmd(uVar1,0xffffffff821af224,0,iVar2);
+  pcVar2 = Cmd_Argv(1);
+  iVar1 = atoi(pcVar2);
+  iVar3 = Cmd_LocalControllerIndex();
+  Entitlements_UseXPMultiplierTimeForCmd(iVar3,"challengeXP",0,iVar1);
   return;
 }
 
 
 // 826F86B0  Entitlements_UseWeaponXPMultiplierTimeCmd  (social/entitlements.cpp:379)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Entitlements_UseWeaponXPMultiplierTimeCmd(void)
 
 {
-  int iVar2;
-  char *_Str;
-  undefined8 uVar1;
+  int iVar1;
+  char *pcVar2;
+  int iVar3;
   
-  iVar2 = Cmd_Argc();
-  if (iVar2 != 2) {
-    Com_Printf(0xe,0xffffffff821af270);
+  iVar1 = Cmd_Argc();
+  if (iVar1 != 2) {
+    Com_Printf(0xe,"Usage: UseWeaponXPMultiplierTime <time (secs)>\n");
     return;
   }
-  _Str = (char *)Cmd_Argv(1);
-  iVar2 = atoi(_Str);
-  uVar1 = Cmd_LocalControllerIndex();
-  Entitlements_UseXPMultiplierTimeForCmd(uVar1,0xffffffff821af264,0,iVar2);
+  pcVar2 = Cmd_Argv(1);
+  iVar1 = atoi(pcVar2);
+  iVar3 = Cmd_LocalControllerIndex();
+  Entitlements_UseXPMultiplierTimeForCmd(iVar3,"weaponXP",0,iVar1);
   return;
 }
 
 
 // 826FA2B0  Entitlements_UnlockCustomClassesCmd  (social/entitlements.cpp:390)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Entitlements_UnlockCustomClassesCmd(void)
 
 {
   int iVar1;
-  char cVar3;
-  char *_Str;
-  int iVar2;
-  undefined8 uVar4;
+  bool bVar4;
+  char *pcVar2;
+  int iVar3;
   
   iVar1 = Cmd_Argc();
   if (iVar1 == 2) {
     iVar1 = Cmd_LocalControllerIndex();
-    cVar3 = Entitlements_CanSetTestValue();
-    if (cVar3 == '\0') {
+    bVar4 = Entitlements_CanSetTestValue(iVar1);
+    if (!bVar4) {
       return;
     }
-    _Str = (char *)Cmd_Argv(1);
-    iVar2 = atoi(_Str);
-    if ((-1 < iVar2) && (iVar2 < 6)) {
-      DAT_8451c0f0 = (longlong)iVar2;
-      DAT_8451c0ee = 5;
-      DAT_8451c0ec = 0;
-      DAT_84513c70 = 1;
-      (&DAT_84513c8c)[iVar1] = 0;
-      DAT_84513c76 = 1;
+    pcVar2 = Cmd_Argv(1);
+    iVar3 = atoi(pcVar2);
+    if ((-1 < iVar3) && (iVar3 < 6)) {
+      s_entitlementTestKeyPair[0].m_value = (long64)iVar3;
+      s_entitlementTestKeyPair[0].m_index = 5;
+      s_entitlementTestKeyPair[0].m_updateType = '\0';
+      s_nEntitlementTestKeyPairs = 1;
+      s_entitlementTaskStage[iVar1] = ENTITLEMENTS_TASK_STAGE_WAITING_TO_GET_KEY_ARCHIVE;
+      s_bEntitlementProcessingTest = true;
       return;
     }
-    uVar4 = 0xffffffff821afca8;
+    pcVar2 = "Invalid # of unlocked custom classes.  Must be 0 - 5.\n";
   }
   else {
-    uVar4 = 0xffffffff821afce0;
+    pcVar2 = "Usage: UnlockCustomClasses <total # of unlocked custom classes>\n";
   }
-  Com_Printf(0xe,uVar4);
+  Com_Printf(0xe,pcVar2);
   return;
 }
 
 
 // 826FA388  Entitlements_AddPrestigeCoinCmd  (social/entitlements.cpp:422)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Entitlements_AddPrestigeCoinCmd(void)
 
 {
   int iVar1;
-  char cVar3;
-  char *_Str;
-  int iVar2;
+  bool bVar4;
+  char *pcVar2;
+  int iVar3;
   
   iVar1 = Cmd_Argc();
   if (iVar1 != 2) {
-    Com_Printf(0xe,0xffffffff821afd58);
+    Com_Printf(0xe,"Usage: AddPrestigeCoin <# of coins to add>\n");
     return;
   }
   iVar1 = Cmd_LocalControllerIndex();
-  cVar3 = Entitlements_CanSetTestValue();
-  if (cVar3 != '\0') {
-    _Str = (char *)Cmd_Argv(1);
-    iVar2 = atoi(_Str);
-    if (iVar2 < 1) {
-      Com_Printf(0xe,0xffffffff821afd24);
+  bVar4 = Entitlements_CanSetTestValue(iVar1);
+  if (bVar4) {
+    pcVar2 = Cmd_Argv(1);
+    iVar3 = atoi(pcVar2);
+    if (iVar3 < 1) {
+      Com_Printf(0xe,"Invalid # of coins to add to entitlement-prestige.\n");
       return;
     }
-    DAT_8451c0f0 = (longlong)iVar2;
-    DAT_8451c0ee = 0xb;
-    DAT_8451c0ec = 1;
-    DAT_84513c70 = 1;
-    (&DAT_84513c8c)[iVar1] = 0;
-    DAT_84513c76 = 1;
+    s_entitlementTestKeyPair[0].m_value = (long64)iVar3;
+    s_entitlementTestKeyPair[0].m_index = 0xb;
+    s_entitlementTestKeyPair[0].m_updateType = '\x01';
+    s_nEntitlementTestKeyPairs = 1;
+    s_entitlementTaskStage[iVar1] = ENTITLEMENTS_TASK_STAGE_WAITING_TO_GET_KEY_ARCHIVE;
+    s_bEntitlementProcessingTest = true;
   }
   return;
 }
@@ -633,38 +678,40 @@ void Entitlements_AddPrestigeCoinCmd(void)
 
 // 826FA478  Entitlements_ResetAllCmd  (social/entitlements.cpp:454)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Entitlements_ResetAllCmd(void)
 
 {
   int iVar1;
-  char cVar2;
+  bool bVar2;
   ulonglong uVar3;
   short sVar4;
-  undefined4 *puVar5;
+  bdReference<bdRemoteTask> *pbVar5;
   
   iVar1 = Cmd_LocalControllerIndex();
-  cVar2 = Entitlements_CanSetTestValue();
-  if (cVar2 != '\0') {
-    uVar3 = (ulonglong)DAT_84513c88;
-    if ((int)DAT_84513c88 < 1) {
+  bVar2 = Entitlements_CanSetTestValue(iVar1);
+  if (bVar2) {
+    uVar3 = (ulonglong)(uint)s_numKeyPairsToRead;
+    if (s_numKeyPairsToRead < 1) {
       uVar3 = 0x10;
     }
-    DAT_84513c70 = (int)uVar3;
-    if (0 < DAT_84513c70) {
-      puVar5 = &DAT_8451c0dc;
+    s_nEntitlementTestKeyPairs = (int)uVar3;
+    if (0 < s_nEntitlementTestKeyPairs) {
+      pbVar5 = g_DWEntitlementTask + 1;
       sVar4 = 0;
       do {
-        *(undefined8 *)(puVar5 + 5) = 0;
-        *(short *)((int)puVar5 + 0x12) = sVar4;
-        puVar5 = puVar5 + 4;
-        *(undefined1 *)puVar5 = 0;
+        *(undefined8 *)(pbVar5 + 5) = 0;
+        *(short *)((int)&pbVar5[4].m_ptr + 2) = sVar4;
+        pbVar5 = pbVar5 + 4;
+        *(undefined1 *)&pbVar5->m_ptr = 0;
         uVar3 = uVar3 - 1;
         sVar4 = sVar4 + 1;
       } while (uVar3 != 0);
     }
-    DAT_84513c76 = 1;
-    (&DAT_84513c8c)[iVar1] = 0;
-    Com_Printf(0xe,0xffffffff821afd88);
+    s_bEntitlementProcessingTest = true;
+    s_entitlementTaskStage[iVar1] = ENTITLEMENTS_TASK_STAGE_WAITING_TO_GET_KEY_ARCHIVE;
+    Com_Printf(0xe,"CAUTION! User must also reset profile to ensure consistency of stats!");
   }
   return;
 }
@@ -672,16 +719,18 @@ void Entitlements_ResetAllCmd(void)
 
 // 826FA530  Entitlements_ForceProcess  (social/entitlements.cpp:474)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Entitlements_ForceProcess(void)
 
 {
   int iVar1;
-  char cVar2;
+  bool bVar2;
   
   iVar1 = Cmd_LocalControllerIndex();
-  cVar2 = Entitlements_CanSetTestValue();
-  if (cVar2 != '\0') {
-    (&DAT_84513c8c)[iVar1] = 0;
+  bVar2 = Entitlements_CanSetTestValue(iVar1);
+  if (bVar2) {
+    s_entitlementTaskStage[iVar1] = ENTITLEMENTS_TASK_STAGE_WAITING_TO_GET_KEY_ARCHIVE;
   }
   return;
 }
@@ -689,73 +738,75 @@ void Entitlements_ForceProcess(void)
 
 // 826F8730  Entitlements_AddPrestigeCoin  (social/entitlements.cpp:485)
 
-void Entitlements_AddPrestigeCoin(undefined8 param_1)
+void Entitlements_AddPrestigeCoin(int param_1)
 
 {
-  longlong lVar1;
+  int iVar1;
   
-  lVar1 = LiveStorage_PlayerDataGetIntByName(param_1,0xffffffff821af2a0);
-  LiveStorage_PlayerDataSetIntByName(param_1,0xffffffff821af2a0,lVar1 + 1);
+  iVar1 = LiveStorage_PlayerDataGetIntByName(param_1,"prestigeShopTokens");
+  LiveStorage_PlayerDataSetIntByName(param_1,"prestigeShopTokens",iVar1 + 1);
   return;
 }
 
 
 // 826FA580  Entitlements_Shutdown  (social/entitlements.cpp:493)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Entitlements_Shutdown(void)
 
 {
-  uint uVar1;
-  undefined4 *puVar2;
-  uint uVar3;
+  bdRemoteTask *pbVar1;
+  uint uVar2;
+  bdReference<bdRemoteTask> bVar3;
   uint *puVar5;
   longlong lVar4;
-  uint *puVar6;
+  bdReference<bdRemoteTask> *pbVar6;
   char in_RESERVE;
   byte in_cr0;
   
   __savegprlr_29();
-  puVar6 = &DAT_8451c0d8;
+  pbVar6 = g_DWEntitlementTask;
   do {
-    uVar1 = *puVar6;
-    if (uVar1 != 0) {
-      if (uVar1 != 0) {
+    pbVar1 = pbVar6->m_ptr;
+    if (pbVar1 != (bdRemoteTask *)0x0) {
+      if (pbVar1 != (bdRemoteTask *)0x0) {
         do {
-          puVar5 = (uint *)((ulonglong)uVar1 + 4);
+          puVar5 = (uint *)(ZEXT48(pbVar1) + 4);
           if (in_RESERVE != '\0') {
-            uVar3 = storeWordConditionalIndexed((ulonglong)*puVar5 - 1,0,(ulonglong)uVar1 + 4);
-            *puVar5 = uVar3;
+            uVar2 = storeWordConditionalIndexed((ulonglong)*puVar5 - 1,0,ZEXT48(pbVar1) + 4);
+            *puVar5 = uVar2;
             in_cr0 = 2;
           }
         } while (!(bool)(in_cr0 >> 1 & 1));
-        if (*(int *)(uVar1 + 4) == 0) {
-          puVar2 = (undefined4 *)*puVar6;
-          if (puVar2 != (undefined4 *)0x0) {
-            (**(code **)*puVar2)(puVar2,1);
+        if (*(int *)&pbVar1->field_0x4 == 0) {
+          pbVar1 = pbVar6->m_ptr;
+          if (pbVar1 != (bdRemoteTask *)0x0) {
+            (**(code **)pbVar1->_padding_)(pbVar1,1);
           }
         }
       }
-      *puVar6 = 0;
+      pbVar6->m_ptr = (bdRemoteTask *)0x0;
     }
-    puVar2 = DAT_8451c1e8;
-    puVar6 = puVar6 + 1;
-  } while ((int)puVar6 < -0x7bae3f18);
-  if (ZEXT48(DAT_8451c1e8) != 0) {
-    lVar4 = ZEXT48(DAT_8451c1e8) + 4;
+    bVar3.m_ptr = s_entitlementTestTask.m_ptr;
+    pbVar6 = pbVar6 + 1;
+  } while ((int)pbVar6 < -0x7bae3f18);
+  if (ZEXT48(s_entitlementTestTask.m_ptr) != 0) {
+    lVar4 = ZEXT48(s_entitlementTestTask.m_ptr) + 4;
     do {
-      puVar6 = (uint *)lVar4;
+      puVar5 = (uint *)lVar4;
       if (in_RESERVE != '\0') {
-        uVar1 = storeWordConditionalIndexed((ulonglong)*puVar6 - 1,0,lVar4);
-        *puVar6 = uVar1;
+        uVar2 = storeWordConditionalIndexed((ulonglong)*puVar5 - 1,0,lVar4);
+        *puVar5 = uVar2;
         in_cr0 = 2;
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
-    if (puVar2[1] == 0) {
-      if (DAT_8451c1e8 != (undefined4 *)0x0) {
-        (**(code **)*DAT_8451c1e8)(DAT_8451c1e8,1);
+    if (*(int *)&(bVar3.m_ptr)->field_0x4 == 0) {
+      if (s_entitlementTestTask.m_ptr != (bdRemoteTask *)0x0) {
+        (**(code **)(s_entitlementTestTask.m_ptr)->_padding_)(s_entitlementTestTask.m_ptr,1);
       }
     }
-    DAT_8451c1e8 = (undefined4 *)0x0;
+    s_entitlementTestTask.m_ptr = (bdRemoteTask *)0x0;
   }
   __restgprlr_29();
   return;
@@ -764,39 +815,40 @@ void Entitlements_Shutdown(void)
 
 // 826FA680  Entitlements_UserSignedOut  (social/entitlements.cpp:507)
 
-void Entitlements_UserSignedOut(void)
+void Entitlements_UserSignedOut(int param_1)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  int iVar3;
-  longlong lVar4;
+  int *piVar1;
+  int iVar2;
+  ulonglong uVar3;
+  int iVar4;
   longlong lVar5;
+  longlong lVar6;
   
-  uVar2 = __savegprlr_29();
-  iVar1 = (int)((uVar2 & 0x3fffffff) << 2);
-  if ((*(int **)((int)&DAT_8451c0d8 + iVar1) != (int *)0x0) &&
-     (iVar3 = (**(code **)(**(int **)((int)&DAT_8451c0d8 + iVar1) + 4))(), iVar3 == 1)) {
-    bdRemoteTask__cancelTask(*(undefined4 *)((int)&DAT_8451c0d8 + iVar1));
+  uVar3 = __savegprlr_29(param_1);
+  iVar2 = (int)((uVar3 & 0x3fffffff) << 2);
+  piVar1 = *(int **)((int)&g_DWEntitlementTask[0].m_ptr + iVar2);
+  if ((piVar1 != (int *)0x0) && (iVar4 = (**(code **)(*piVar1 + 4))(), iVar4 == 1)) {
+    bdRemoteTask::cancelTask(*(bdRemoteTask **)((int)&g_DWEntitlementTask[0].m_ptr + iVar2));
   }
-  if (DAT_8451c1e8 != 0) {
-    bdRemoteTask__cancelTask();
+  if (s_entitlementTestTask.m_ptr != (bdRemoteTask *)0x0) {
+    bdRemoteTask::cancelTask(s_entitlementTestTask.m_ptr);
   }
-  lVar5 = 0x10;
-  *(undefined4 *)((int)&DAT_84513c8c + iVar1) = 0;
-  *(undefined4 *)((int)&DAT_84513c78 + iVar1) = 0;
-  lVar4 = 0;
-  *(undefined4 *)((int)&DAT_84513ca8 + iVar1) = 0;
-  (&DAT_84513ca0)[(int)uVar2] = 0;
-  (&DAT_84513cb8)[(int)uVar2] = 0;
+  lVar6 = 0x10;
+  *(undefined4 *)((int)s_entitlementTaskStage + iVar2) = 0;
+  *(undefined4 *)((int)&DAT_84513c78 + iVar2) = 0;
+  lVar5 = 0;
+  *(undefined4 *)((int)&DAT_84513ca8 + iVar2) = 0;
+  (&DAT_84513ca0)[(int)uVar3] = 0;
+  s_needToDownloadEntitlements[(int)uVar3] = false;
   do {
-    iVar3 = (int)(((uVar2 & 0xfffffff) * 0x10 + lVar4 & 0xffffffff) << 4);
-    lVar4 = lVar4 + 1;
-    *(undefined2 *)(&DAT_8451bcde + iVar3) = 0;
-    *(undefined8 *)(&DAT_8451bce0 + iVar3) = 0;
-    lVar5 = lVar5 + -1;
-  } while (lVar5 != 0);
-  *(undefined4 *)(&DAT_84513cc0 + iVar1) = 0;
+    iVar4 = (int)(((uVar3 & 0xfffffff) * 0x10 + lVar5 & 0xffffffff) << 4);
+    lVar5 = lVar5 + 1;
+    *(undefined2 *)((int)&s_keyArchiveValues[0][0].m_index + iVar4) = 0;
+    *(undefined8 *)((int)&s_keyArchiveValues[0][0].m_value + iVar4) = 0;
+    lVar6 = lVar6 + -1;
+  } while (lVar6 != 0);
+  *(undefined4 *)((int)s_keyArchiveNum + iVar2) = 0;
   __restgprlr_29();
   return;
 }
@@ -804,84 +856,95 @@ void Entitlements_UserSignedOut(void)
 
 // 826FA758  Entitlements_GetKeyArchive  (social/entitlements.cpp:535)
 
-void Entitlements_GetKeyArchive(void)
+bool Entitlements_GetKeyArchive(int param_1)
 
 {
-  int *piVar1;
-  uint uVar3;
-  void *_DstBuf;
-  char cVar5;
-  int iVar4;
-  undefined8 uVar2;
-  uint uVar6;
-  undefined1 auStack_40 [8];
-  undefined1 local_38 [4];
-  uint uStack_34;
+  bdRemoteTask *pbVar1;
+  ulonglong uVar2;
+  bdKeyArchive *pbVar4;
+  bool bVar7;
+  bdReference<bdRemoteTask> *this;
+  bdReference<bdRemoteTask> bVar5;
+  int iVar6;
+  undefined8 uVar3;
+  undefined1 uVar8;
+  ulonglong uVar9;
+  bdReference<bdRemoteTask> abStack_40 [2];
+  undefined8 local_38;
   
-  uVar3 = __savegprlr_28();
-  if (3 < uVar3) {
-    MyAssertHandler(0xffffffff821af320,0x218,0,0xffffffff82031880,uVar3,4);
+  uVar2 = __savegprlr_28(param_1);
+  if (3 < (uVar2 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\entitlements.cpp",0x218
+                    ,0,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  iVar4 = DAT_84513c88;
-  uVar6 = 0;
-  if (0 < DAT_84513c88) {
+  iVar6 = s_numKeyPairsToRead;
+  uVar9 = 0;
+  if (0 < s_numKeyPairsToRead) {
     do {
-      *(short *)(&DAT_8451bcde + (uVar3 * 0x10 + uVar6) * 0x10) = (short)uVar6;
-      uVar6 = uVar6 + 1 & 0xffff;
-    } while ((int)uVar6 < iVar4);
+      *(short *)((int)&s_keyArchiveValues[0][0].m_index +
+                (int)(((uVar2 & 0xfffffff) * 0x10 + uVar9 & 0xffffffff) << 4)) = (short)uVar9;
+      uVar9 = uVar9 + 1 & 0xffff;
+    } while ((int)uVar9 < iVar6);
   }
-  _DstBuf = (void *)dwGetKeyArchive(uVar3);
-  if (_DstBuf != (void *)0x0) {
-    cVar5 = dwGetOnlineUserID(uVar3,local_38);
-    if (cVar5 != '\0') {
-      iVar4 = bdKeyArchive__read((int)auStack_40,_DstBuf,uStack_34);
-      bdReference<bdRemoteTask>__operator_(&DAT_8451c0d8 + uVar3,iVar4);
-      bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(auStack_40);
-      piVar1 = (int *)(&DAT_8451c0d8)[uVar3];
-      if (piVar1 != (int *)0x0) {
-        iVar4 = (**(code **)(*piVar1 + 4))();
-        uVar2 = 1;
-        if (iVar4 == 1) goto LAB_826fa87c;
-      }
+  pbVar4 = dwGetKeyArchive((int)uVar2);
+  if ((pbVar4 != (bdKeyArchive *)0x0) && (bVar7 = dwGetOnlineUserID((int)uVar2,&local_38), bVar7)) {
+    this = (bdReference<bdRemoteTask> *)
+           ((int)&g_DWEntitlementTask[0].m_ptr + (int)((uVar2 & 0xffffffff) << 2));
+    bVar5 = bdKeyArchive::read((bdKeyArchive *)abStack_40,(longlong)(int)pbVar4,
+                               (bool)(undefined1)local_38,false,(bdKeyValuePair *)0x0,
+                               (int)&s_keyArchiveValues[0][0]._padding_ +
+                               (int)((uVar2 & 0xffffffff) << 8));
+    bdReference<bdRemoteTask>::operator=(this,(bdReference<bdRemoteTask> *)bVar5.m_ptr);
+    bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(abStack_40);
+    pbVar1 = this->m_ptr;
+    if (pbVar1 != (bdRemoteTask *)0x0) {
+      iVar6 = (**(code **)(pbVar1->_padding_ + 4))();
+      uVar3 = 1;
+      if (iVar6 == 1) goto LAB_826fa87c;
     }
   }
-  uVar2 = 0;
+  uVar3 = 0;
 LAB_826fa87c:
-  __restgprlr_28(uVar2);
-  return;
+  uVar8 = __restgprlr_28(uVar3);
+  return (bool)uVar8;
 }
 
 
 // 826F8780  Entitlements_GetConfigFile  (social/entitlements.cpp:566)
 
-void Entitlements_GetConfigFile(undefined8 param_1)
+bool Entitlements_GetConfigFile(int param_1)
 
 {
-  LiveStorage_ReadEntitlementConfigFile(param_1,0xffffffff821af2b4,0xffffffff84513cd8,0x8000);
-  return;
+  bool bVar1;
+  
+  bVar1 = LiveStorage_ReadEntitlementConfigFile
+                    (param_1,"entitlement_config.info",(uchar *)s_configFileBuffer,0x8000);
+  return bVar1;
 }
 
 
 // 826F87A0  Entitlements_RetryGetKeyArchive  (social/entitlements.cpp:573)
 
-void Entitlements_RetryGetKeyArchive(void)
+void Entitlements_RetryGetKeyArchive(int param_1)
 
 {
-  int iVar1;
-  int iVar2;
+  dvar_t *pdVar1;
+  dvar_t *pdVar2;
   int iVar3;
-  int iVar4;
+  uint uVar4;
+  int iVar5;
   
-  iVar2 = __savegprlr_29();
-  iVar1 = DAT_84546d58;
-  iVar4 = DAT_84546d08;
-  iVar3 = (&DAT_84513ca8)[iVar2];
-  (&DAT_84513ca8)[iVar2] = iVar3 + 1;
-  iVar3 = Live_GenerateTimeToRetryInSeconds
-                    ((*(int *)(iVar1 + 0xc) * (iVar3 + 1)) / 1000,*(int *)(iVar4 + 0xc) / 1000);
-  iVar4 = Sys_Milliseconds();
-  (&DAT_84513c8c)[iVar2] = 0;
-  (&DAT_84513c78)[iVar2] = iVar4 + iVar3 * 1000;
+  iVar3 = __savegprlr_29(param_1);
+  pdVar2 = entitlements_key_archive_retry_step;
+  pdVar1 = entitlements_key_archive_max_retry_time;
+  iVar5 = (&DAT_84513ca8)[iVar3];
+  (&DAT_84513ca8)[iVar3] = iVar5 + 1;
+  uVar4 = Live_GenerateTimeToRetryInSeconds
+                    (((pdVar2->current).integer * (iVar5 + 1)) / 1000,
+                     (pdVar1->current).integer / 1000);
+  iVar5 = Sys_Milliseconds();
+  s_entitlementTaskStage[iVar3] = ENTITLEMENTS_TASK_STAGE_WAITING_TO_GET_KEY_ARCHIVE;
+  (&DAT_84513c78)[iVar3] = iVar5 + uVar4 * 1000;
   __restgprlr_29();
   return;
 }
@@ -889,208 +952,219 @@ void Entitlements_RetryGetKeyArchive(void)
 
 // 826F8818  Entitlements_RetryGetConfigFile  (social/entitlements.cpp:581)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Entitlements_RetryGetConfigFile(void)
 
 {
-  int iVar1;
+  uint uVar1;
   int iVar2;
   
   DAT_84513cd0 = DAT_84513cd0 + 1;
-  iVar1 = Live_GenerateTimeToRetryInSeconds
-                    ((*(int *)(DAT_84546d68 + 0xc) * DAT_84513cd0) / 1000,
-                     *(int *)(DAT_84546d70 + 0xc) / 1000);
+  uVar1 = Live_GenerateTimeToRetryInSeconds
+                    (((entitlements_config_file_retry_step->current).integer * DAT_84513cd0) / 1000,
+                     (entitlements_config_file_max_retry_time->current).integer / 1000);
   iVar2 = Sys_Milliseconds();
-  DAT_84513c9c = iVar2 + iVar1 * 1000;
+  s_entitlementConfigFileRetryTime = iVar2 + uVar1 * 1000;
   return;
 }
 
 
 // 826F8898  Entitlements_CanWeProcessEntitlements  (social/entitlements.cpp:588)
 
-undefined8 Entitlements_CanWeProcessEntitlements(undefined8 param_1,char param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+bool Entitlements_CanWeProcessEntitlements(int param_1,bool param_2)
 
 {
-  char cVar3;
-  int iVar2;
-  ulonglong uVar1;
-  undefined4 local_30 [2];
-  undefined1 auStack_28 [16];
+  bool bVar4;
+  StatsSource SVar1;
+  char *pcVar2;
+  int iVar3;
+  LocalClientNum_t local_30 [2];
+  StructuredDataBuffer aSStack_28 [2];
   
-  cVar3 = Live_IsUserSignedInToLive();
-  if (((((cVar3 != '\0') && (cVar3 = CL_AllLocalClientsDisconnected(), cVar3 != '\0')) &&
-       (cVar3 = IsServerRunning(), cVar3 == '\0')) &&
-      ((iVar2 = LiveStorage_GetActiveStatsSource(param_1), iVar2 == 0 &&
-       (cVar3 = LiveStorage_GetPlayerUnlockDataBuffer(auStack_28,param_1), cVar3 != '\0')))) &&
-     (((param_2 == '\0' ||
-       ((uVar1 = UI_GetTopActiveMenuName(0), (uVar1 & 0xffffffff) != 0 &&
-        (iVar2 = I_strcmp(uVar1,0xffffffff8207b5b4), iVar2 == 0)))) ||
-      ((cVar3 = CL_DoesControllerIndexHaveALocalClientNum(param_1,local_30), cVar3 == '\0' ||
-       ((((cVar3 = Menu_IsMenuOpenAndVisible(local_30[0],0xffffffff82057c28), cVar3 != '\0' &&
-          (cVar3 = Menu_IsMenuOpenAndVisible(local_30[0],0xffffffff8203bc8c), cVar3 == '\0')) &&
-         (cVar3 = Menu_IsMenuOpenAndVisible(local_30[0],0xffffffff821af2f4), cVar3 == '\0')) &&
-        ((cVar3 = Menu_IsMenuOpenAndVisible(local_30[0],0xffffffff821af2e4), cVar3 == '\0' &&
-         (cVar3 = Menu_IsMenuOpenAndVisible(local_30[0],0xffffffff821af2cc), cVar3 == '\0'))))))))))
-  {
-    return 1;
+  bVar4 = Live_IsUserSignedInToLive(param_1);
+  if (((((!bVar4) || (bVar4 = CL_AllLocalClientsDisconnected(), !bVar4)) ||
+       (bVar4 = IsServerRunning(), bVar4)) ||
+      ((SVar1 = LiveStorage_GetActiveStatsSource(param_1), SVar1 != STATS_ONLINE ||
+       (bVar4 = LiveStorage_GetPlayerUnlockDataBuffer(aSStack_28,param_1), !bVar4)))) ||
+     (((param_2 &&
+       ((pcVar2 = UI_GetTopActiveMenuName(LOCAL_CLIENT_0), pcVar2 == (char *)0x0 ||
+        (iVar3 = I_strcmp(pcVar2,"main"), iVar3 != 0)))) &&
+      ((bVar4 = CL_DoesControllerIndexHaveALocalClientNum(param_1,local_30), bVar4 &&
+       ((((bVar4 = Menu_IsMenuOpenAndVisible(local_30[0],"menu_xboxlive"), !bVar4 ||
+          (bVar4 = Menu_IsMenuOpenAndVisible(local_30[0],"menu_xboxlive_privatelobby"), bVar4)) ||
+         (bVar4 = Menu_IsMenuOpenAndVisible(local_30[0],"cac_popup"), bVar4)) ||
+        ((bVar4 = Menu_IsMenuOpenAndVisible(local_30[0],"popup_callsign"), bVar4 ||
+         (bVar4 = Menu_IsMenuOpenAndVisible(local_30[0],"menu_online_barracks"), bVar4)))))))))) {
+    bVar4 = false;
   }
-  return 0;
+  else {
+    bVar4 = true;
+  }
+  return bVar4;
 }
 
 
 // 826F8A08  Entitlements_AddXpConsumableToMultiplayerPlayerStats  (social/entitlements.cpp:631)
 
-void Entitlements_AddXpConsumableToMultiplayerPlayerStats
-               (undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4)
+bool Entitlements_AddXpConsumableToMultiplayerPlayerStats
+               (int param_1,int param_2,int param_3,int param_4)
 
 {
-  undefined8 uVar1;
-  int iVar2;
-  undefined1 auStack_90 [8];
-  undefined1 *local_88;
-  undefined1 *local_84;
-  undefined1 auStack_80 [16];
-  undefined1 auStack_70 [32];
-  undefined1 auStack_50 [80];
+  int iVar1;
+  StatsSource SVar2;
+  StructuredDataDef *pSVar3;
+  undefined1 uVar4;
+  ulonglong uVar5;
+  StructuredDataBuffer SStack_90;
+  char *local_88;
+  char *local_84;
+  StructuredDataLookup SStack_80;
+  char acStack_70 [32];
+  char acStack_50 [80];
   
-  uVar1 = __savegprlr_27();
-  if (2 < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821af320,0x279,0,0xffffffff821af368,param_2,3);
+  uVar5 = (ulonglong)param_2;
+  iVar1 = __savegprlr_27(param_1);
+  if (2 < (uVar5 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\entitlements.cpp",0x279
+                    ,0,"index doesn\'t index MAX_ENTITLEMENTS_XP_MULTIPLIER\n\t%i not in [0, %i)");
   }
-  local_88 = auStack_70;
-  local_84 = auStack_50;
-  iVar2 = LiveStorage_GetActiveStatsSource(uVar1);
-  if (iVar2 == 0) {
-    LiveStorage_GetPlayerUnlockDataBuffer(auStack_90,uVar1);
-    uVar1 = StructuredDataDef_GetAsset(0xffffffff8202639c,0x2ffc);
-    StructuredData_InitializeLookup(uVar1,auStack_80);
-    I_strncpyz(auStack_70,0xffffffff821a9ab4,0x20);
-    Com_sprintf(auStack_50,0x20,0xffffffff82013b64,param_2);
-    iVar2 = LiveStorage_DataGetInternalInt(&local_88,2,auStack_90);
-    LiveStorage_DataSetInternalInt(&local_88,2,param_3,auStack_90,0);
-    if (iVar2 < (int)param_3) {
-      LiveStorage_PlayerDataSetArrayBoolByName(auStack_90,0xffffffff82171f4c,0xffffffff821af310,1);
+  local_88 = acStack_70;
+  local_84 = acStack_50;
+  SVar2 = LiveStorage_GetActiveStatsSource(iVar1);
+  if (SVar2 == STATS_ONLINE) {
+    LiveStorage_GetPlayerUnlockDataBuffer(&SStack_90,iVar1);
+    pSVar3 = StructuredDataDef_GetAsset("mp/playerdata.def",0x2ffc);
+    StructuredData_InitializeLookup(pSVar3,&SStack_80);
+    I_strncpyz(acStack_70,"xpMaxMultiplierTimePlayed",0x20);
+    Com_sprintf(acStack_50,0x20,"%d");
+    iVar1 = LiveStorage_DataGetInternalInt(&local_88,2,&SStack_90);
+    LiveStorage_DataSetInternalInt(&local_88,2,param_3,&SStack_90,(uchar *)0x0);
+    if (iVar1 < param_3) {
+      LiveStorage_PlayerDataSetArrayBoolByName(&SStack_90,"newEntitlement","xp_multiplier",true);
     }
-    I_strncpyz(auStack_70,0xffffffff821af300,0x20);
-    Com_sprintf(auStack_50,0x20,0xffffffff82013b64,param_2);
-    LiveStorage_DataSetInternalInt(&local_88,2,param_4,auStack_90,0);
-    __restgprlr_27(1);
-    return;
+    I_strncpyz(acStack_70,"xpMultiplier",0x20);
+    Com_sprintf(acStack_50,0x20,"%d");
+    LiveStorage_DataSetInternalInt(&local_88,2,param_4,&SStack_90,(uchar *)0x0);
+    uVar4 = __restgprlr_27(1);
+    return (bool)uVar4;
   }
-  __restgprlr_27(0);
-  return;
+  uVar4 = __restgprlr_27(0);
+  return (bool)uVar4;
 }
 
 
 // 826F8B70  Entitlements_AddXPToMPPlayerStats  (social/entitlements.cpp:676)
 
-void Entitlements_AddXPToMPPlayerStats
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-               undefined8 param_5)
+bool Entitlements_AddXPToMPPlayerStats
+               (int param_1,int param_2,int param_3,int param_4,char *param_5)
 
 {
-  undefined8 uVar1;
-  ulonglong uVar2;
-  int iVar3;
-  undefined1 auStack_a0 [16];
-  undefined1 auStack_90 [16];
-  undefined1 auStack_80 [128];
+  int iVar1;
+  StructuredDataDef *pSVar2;
+  undefined1 uVar3;
+  StructuredDataBuffer aSStack_a0 [2];
+  StructuredDataLookup SStack_90;
+  char acStack_80 [128];
   
-  uVar1 = __savegprlr_26();
-  LiveStorage_GetPlayerUnlockDataBuffer(auStack_a0,uVar1);
-  uVar2 = StructuredDataDef_GetAsset(0xffffffff8202639c,0x2ffc);
-  if ((uVar2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821af320,0x2b1,0,0xffffffff82000f98,0xffffffff8206070c);
+  iVar1 = __savegprlr_26(param_1);
+  LiveStorage_GetPlayerUnlockDataBuffer(aSStack_a0,iVar1);
+  pSVar2 = StructuredDataDef_GetAsset("mp/playerdata.def",0x2ffc);
+  if (pSVar2 == (StructuredDataDef *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\entitlements.cpp",0x2b1
+                    ,0,"%s");
   }
-  Com_sprintf(auStack_80,0x40,0xffffffff821af3d4,param_5);
-  StructuredData_InitializeLookup(uVar2,auStack_90);
-  StructuredData_LookupWithString(auStack_90,auStack_80);
-  StructuredData_LookupWithInt(auStack_90,param_2);
-  iVar3 = StructuredData_GetInt(auStack_90,auStack_a0);
-  StructuredData_SetInt(auStack_90,auStack_a0,param_3);
-  if (iVar3 < (int)param_3) {
-    Com_sprintf(auStack_80,0x40,0xffffffff821af3c0,param_5);
-    LiveStorage_PlayerDataSetArrayBoolByName(auStack_a0,0xffffffff82171f4c,auStack_80,1);
+  Com_sprintf(acStack_80,0x40,"%sXPMaxMultiplierTimePlayed");
+  StructuredData_InitializeLookup(pSVar2,&SStack_90);
+  StructuredData_LookupWithString(&SStack_90,acStack_80);
+  StructuredData_LookupWithInt(&SStack_90,param_2);
+  iVar1 = StructuredData_GetInt(&SStack_90,aSStack_a0);
+  StructuredData_SetInt(&SStack_90,aSStack_a0,param_3);
+  if (iVar1 < param_3) {
+    Com_sprintf(acStack_80,0x40,"%s_xp_multiplier");
+    LiveStorage_PlayerDataSetArrayBoolByName(aSStack_a0,"newEntitlement",acStack_80,true);
   }
-  Com_sprintf(auStack_80,0x40,0xffffffff821af3b0,param_5);
-  StructuredData_InitializeLookup(uVar2,auStack_90);
-  StructuredData_LookupWithString(auStack_90,auStack_80);
-  StructuredData_LookupWithInt(auStack_90,param_2);
-  StructuredData_SetInt(auStack_90,auStack_a0,param_4);
-  __restgprlr_26(1);
-  return;
+  Com_sprintf(acStack_80,0x40,"%sXPMultiplier");
+  StructuredData_InitializeLookup(pSVar2,&SStack_90);
+  StructuredData_LookupWithString(&SStack_90,acStack_80);
+  StructuredData_LookupWithInt(&SStack_90,param_2);
+  StructuredData_SetInt(&SStack_90,aSStack_a0,param_4);
+  uVar3 = __restgprlr_26(1);
+  return (bool)uVar3;
 }
 
 
 // 826F8CC8  Entitlements_SetTitleUnlocked  (social/entitlements.cpp:718)
 
-undefined8 Entitlements_SetTitleUnlocked(undefined8 param_1,undefined8 param_2)
+bool Entitlements_SetTitleUnlocked(int param_1,char *param_2)
 
 {
-  undefined8 uVar1;
-  char cVar2;
-  int local_20 [2];
+  int iVar1;
+  bool bVar2;
+  StringTable *local_20 [2];
   
-  StringTable_GetAsset(0xffffffff820268f8,local_20);
-  if (local_20[0] == 0) {
-    MyAssertHandler(0xffffffff821af320,0x2d3,0,0xffffffff82000f98,0xffffffff8203aaf0);
+  StringTable_GetAsset("mp/cardTitleTable.csv",local_20);
+  if (local_20[0] == (StringTable *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\entitlements.cpp",0x2d3
+                    ,0,"%s");
   }
-  uVar1 = StringTable_LookupRowNumForValue(local_20[0],0,param_2);
-  if (((int)uVar1 < 0) || (cVar2 = GamerProfile_IsCardTitleUnlocked(param_1,uVar1), cVar2 != '\0'))
-  {
-    uVar1 = 0;
+  iVar1 = StringTable_LookupRowNumForValue(local_20[0],0,param_2);
+  if ((iVar1 < 0) || (bVar2 = GamerProfile_IsCardTitleUnlocked(param_1,iVar1), bVar2)) {
+    bVar2 = false;
   }
   else {
-    LiveStorage_SetPlayerCardItemField(param_1,0xffffffff820269f0,uVar1,1);
-    LiveStorage_SetPlayerCardItemField(param_1,0xffffffff820268e8,uVar1,1);
-    uVar1 = 1;
+    LiveStorage_SetPlayerCardItemField(param_1,"titleNew",iVar1,true);
+    LiveStorage_SetPlayerCardItemField(param_1,"titleUnlocked",iVar1,true);
+    bVar2 = true;
   }
-  return uVar1;
+  return bVar2;
 }
 
 
 // 826F8DB0  Entitlements_SetIconUnlocked  (social/entitlements.cpp:743)
 
-undefined8 Entitlements_SetIconUnlocked(undefined8 param_1,undefined8 param_2)
+bool Entitlements_SetIconUnlocked(int param_1,char *param_2)
 
 {
-  undefined8 uVar1;
-  char cVar2;
-  int local_20 [2];
+  int iVar1;
+  bool bVar2;
+  StringTable *local_20 [2];
   
-  StringTable_GetAsset(0xffffffff82026928,local_20);
-  if (local_20[0] == 0) {
-    MyAssertHandler(0xffffffff821af320,0x2ec,0,0xffffffff82000f98,0xffffffff8203aaf0);
+  StringTable_GetAsset("mp/cardIconTable.csv",local_20);
+  if (local_20[0] == (StringTable *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\entitlements.cpp",0x2ec
+                    ,0,"%s");
   }
-  uVar1 = StringTable_LookupRowNumForValue(local_20[0],0,param_2);
-  if (((int)uVar1 < 0) || (cVar2 = GamerProfile_IsCardIconUnlocked(param_1,uVar1), cVar2 != '\0')) {
-    uVar1 = 0;
+  iVar1 = StringTable_LookupRowNumForValue(local_20[0],0,param_2);
+  if ((iVar1 < 0) || (bVar2 = GamerProfile_IsCardIconUnlocked(param_1,iVar1), bVar2)) {
+    bVar2 = false;
   }
   else {
-    LiveStorage_SetPlayerCardItemField(param_1,0xffffffff820269fc,uVar1,1);
-    LiveStorage_SetPlayerCardItemField(param_1,0xffffffff82026918,uVar1,1);
-    uVar1 = 1;
+    LiveStorage_SetPlayerCardItemField(param_1,"iconNew",iVar1,true);
+    LiveStorage_SetPlayerCardItemField(param_1,"iconUnlocked",iVar1,true);
+    bVar2 = true;
   }
-  return uVar1;
+  return bVar2;
 }
 
 
 // 826F8E98  Entitlements_GetKeyValue  (social/entitlements.cpp:768)
 
-undefined8 Entitlements_GetKeyValue(int param_1,short param_2)
+long64 Entitlements_GetKeyValue(int param_1,ushort param_2)
 
 {
   int iVar1;
-  int iVar2;
   
-  iVar2 = 0;
-  if (0 < *(int *)(&DAT_84513cc0 + param_1 * 4)) {
+  iVar1 = 0;
+  if (0 < s_keyArchiveNum[param_1]) {
     do {
-      iVar1 = (param_1 * 0x10 + iVar2) * 0x10;
-      if (*(short *)(&DAT_8451bcde + iVar1) == param_2) {
-        return *(undefined8 *)(&DAT_8451bce0 + iVar1);
+      if (s_keyArchiveValues[param_1][iVar1].m_index == param_2) {
+        return s_keyArchiveValues[param_1][iVar1].m_value;
       }
-      iVar2 = iVar2 + 1;
-    } while (iVar2 < *(int *)(&DAT_84513cc0 + param_1 * 4));
+      iVar1 = iVar1 + 1;
+    } while (iVar1 < s_keyArchiveNum[param_1]);
   }
   return 0;
 }
@@ -1098,7 +1172,7 @@ undefined8 Entitlements_GetKeyValue(int param_1,short param_2)
 
 // 826FA888  Entitlements_ProcessEntitlements  (social/entitlements.cpp:782)
 
-void Entitlements_ProcessEntitlements(void)
+void Entitlements_ProcessEntitlements(int param_1)
 
 {
   ulonglong uVar1;
@@ -1107,155 +1181,168 @@ void Entitlements_ProcessEntitlements(void)
   ulonglong uVar4;
   char *pcVar6;
   int iVar7;
-  uint uVar8;
-  ulonglong uVar5;
-  int iVar9;
+  int iVar8;
+  uint uVar9;
   int iVar10;
-  byte bVar11;
-  char cVar12;
-  longlong lVar13;
-  byte bVar14;
-  int iVar15;
-  char local_ee;
-  char local_ed;
-  char local_ec;
-  char local_eb;
-  char local_ea;
-  char local_e9;
-  char local_e8;
-  char local_e7 [3];
-  undefined *local_e4;
+  long64 lVar5;
+  bool bVar12;
+  int iVar11;
+  ushort uVar13;
+  int iVar14;
+  byte bVar15;
+  int iVar16;
+  bool local_ee;
+  bool local_ed;
+  bool local_ec;
+  bool local_eb;
+  bool local_ea;
+  bool local_e9;
+  bool local_e8;
+  bool local_e7 [3];
+  char *local_e4;
   int local_e0;
   int local_dc;
   int local_d8;
   char *local_d4;
-  undefined *local_d0;
-  undefined *local_cc;
+  int local_d0;
+  char *local_cc;
   char *local_c8;
   char *local_c4;
   char *local_c0;
-  undefined *local_bc;
+  char *local_bc;
   char *local_b8;
   char *local_b4;
-  undefined1 *local_b0;
+  char *local_b0;
   char *local_ac;
   char *local_a8;
   
-  uVar4 = __savegprlr();
-  local_e4 = &DAT_84513cd8;
-  Com_BeginParseSession(0xffffffff821af0b0);
+  uVar4 = (ulonglong)param_1;
+  __savegprlr();
+  local_e4 = s_configFileBuffer;
+  Com_BeginParseSession("entitlements");
   Com_SetSpaceDelimited(1);
-  bVar14 = 0;
+  bVar15 = 0;
   local_d8 = 0;
-  lVar13 = 1;
+  iVar14 = 1;
   local_e0 = 0;
   local_dc = 0;
   bVar2 = false;
   bVar3 = false;
-  pcVar6 = (char *)Com_ParseOnLine(&local_e4);
-  if (local_e4 != (undefined *)0x0) {
+  pcVar6 = Com_ParseOnLine(&local_e4);
+  iVar7 = (int)uVar4;
+  if (local_e4 != (char *)0x0) {
     local_a8 = "prestigeCoin";
     local_ac = "persistentPerksUnlocked";
     local_b8 = "reticle";
-    local_b0 = &DAT_82026794;
+    local_b0 = "perk";
     local_b4 = "persistentWeaponsUnlocked";
-    local_bc = &DAT_82088a38;
+    local_bc = "camo";
     local_c0 = "customClass";
-    local_d0 = &DAT_84510000;
+    local_d0 = -0x7baf0000;
     local_c4 = "weaponXP";
     local_c8 = "challengeXP";
-    local_cc = &DAT_8210fdb0;
+    local_cc = "xp";
     local_d4 = "consumable";
-    iVar15 = 0x7fffffff;
+    iVar16 = 0x7fffffff;
     do {
       if (*pcVar6 == '\0') goto LAB_826fab48;
-      iVar7 = I_stricmp(pcVar6,local_d4);
-      if (iVar7 == 0) {
-        pcVar6 = (char *)Com_ParseOnLine(&local_e4);
+      iVar8 = I_stricmp(pcVar6,local_d4);
+      if (iVar8 == 0) {
+        pcVar6 = Com_ParseOnLine(&local_e4);
         if (pcVar6 == (char *)0x0) {
-          Com_PrintError(0x10,0xffffffff821afdf8,lVar13);
+          Com_PrintError(0x10,
+                         "Entitlement Config Error: Expecting a consumable key index on line %d\n");
           Com_SkipRestOfLine(&local_e4);
           bVar2 = true;
         }
         else {
-          uVar8 = atoi(pcVar6);
-          uVar1 = (ulonglong)uVar8 & 0xffff;
+          uVar9 = atoi(pcVar6);
+          uVar1 = (ulonglong)uVar9 & 0xffff;
           if ((int)uVar1 < *(int *)(local_d0 + 0x3c88)) {
-            uVar5 = Com_ParseOnLine(&local_e4);
-            if ((uVar5 & 0xffffffff) == 0) {
-              Com_PrintError(0x10,0xffffffff821afe40,lVar13);
+            pcVar6 = Com_ParseOnLine(&local_e4);
+            if (pcVar6 == (char *)0x0) {
+              Com_PrintError(0x10,
+                             "Entitlement Config Error: Expecting a consumable name on line %d\n");
               Com_SkipRestOfLine(&local_e4);
               bVar2 = true;
             }
             else {
-              iVar7 = I_stricmp(uVar5,local_cc);
-              if (iVar7 == 0) {
-                pcVar6 = (char *)Com_ParseOnLine(&local_e4);
+              iVar8 = I_stricmp(pcVar6,local_cc);
+              uVar13 = (ushort)uVar9;
+              if (iVar8 == 0) {
+                pcVar6 = Com_ParseOnLine(&local_e4);
                 if (pcVar6 == (char *)0x0) {
-                  Com_PrintError(0x10,0xffffffff821afe88,lVar13);
+                  Com_PrintError(0x10,
+                                 "Entitlement Config Error: Expecting a consumable xp amount on line %d\n"
+                                );
                   Com_SkipRestOfLine(&local_e4);
                   bVar2 = true;
                   goto LAB_826fab50;
                 }
-                iVar9 = atoi(pcVar6);
-                iVar10 = Entitlements_GetKeyValue(uVar4,uVar1);
-                iVar7 = local_d8;
+                iVar10 = atoi(pcVar6);
+                lVar5 = Entitlements_GetKeyValue(iVar7,uVar13);
+                iVar8 = local_d8;
+                iVar11 = (int)lVar5;
                 if (0x7fffffff <
                     *(longlong *)
-                     (&DAT_8451bce0 + (int)(((uVar4 & 0xfffffff) * 0x10 + uVar1 & 0xffffffff) << 4))
-                   ) {
-                  iVar10 = iVar15;
+                     ((int)&s_keyArchiveValues[0][0].m_value +
+                     (int)(((uVar4 & 0xfffffff) * 0x10 + uVar1 & 0xffffffff) << 4))) {
+                  iVar11 = iVar16;
                 }
-                bVar11 = Entitlements_AddXpConsumableToMultiplayerPlayerStats
-                                   (uVar4,local_d8,iVar10,iVar9);
-                local_d8 = iVar7 + 1;
-                bVar14 = bVar11 | bVar14;
+                bVar12 = Entitlements_AddXpConsumableToMultiplayerPlayerStats
+                                   (iVar7,local_d8,iVar11,iVar10);
+                local_d8 = iVar8 + 1;
+                bVar15 = bVar12 | bVar15;
               }
               else {
-                iVar7 = I_stricmp(uVar5,local_c8);
-                if (iVar7 == 0) {
-                  pcVar6 = (char *)Com_ParseOnLine(&local_e4);
+                iVar8 = I_stricmp(pcVar6,local_c8);
+                if (iVar8 == 0) {
+                  pcVar6 = Com_ParseOnLine(&local_e4);
                   if (pcVar6 == (char *)0x0) {
-                    Com_PrintError(0x10,0xffffffff821afed0,lVar13);
+                    Com_PrintError(0x10,
+                                   "Entitlement Config Error: Expecting a consumable challengeXP amount on line %d.\n"
+                                  );
                     Com_SkipRestOfLine(&local_e4);
                     bVar2 = true;
                     goto LAB_826fab50;
                   }
-                  iVar10 = atoi(pcVar6);
-                  iVar9 = Entitlements_GetKeyValue(uVar4,uVar1);
-                  iVar7 = iVar15;
+                  iVar11 = atoi(pcVar6);
+                  lVar5 = Entitlements_GetKeyValue(iVar7,uVar13);
+                  iVar8 = iVar16;
                   if ((0x7fffffff <
                        *(longlong *)
-                        (&DAT_8451bce0 +
+                        ((int)&s_keyArchiveValues[0][0].m_value +
                         (int)(((uVar4 & 0xfffffff) * 0x10 + uVar1 & 0xffffffff) << 4))) ||
-                     (iVar7 = iVar9, 0 < iVar9)) {
-                    bVar11 = Entitlements_AddXPToMPPlayerStats
-                                       (uVar4,local_e0,iVar7,iVar10,0xffffffff82026780);
-                    bVar14 = bVar11 | bVar14;
+                     (iVar8 = (int)lVar5, 0 < (int)lVar5)) {
+                    bVar12 = Entitlements_AddXPToMPPlayerStats
+                                       (iVar7,local_e0,iVar8,iVar11,"challenge");
+                    bVar15 = bVar12 | bVar15;
                   }
                   local_e0 = local_e0 + 1;
                 }
                 else {
-                  iVar7 = I_stricmp(uVar5,local_c4);
-                  if (iVar7 == 0) {
-                    pcVar6 = (char *)Com_ParseOnLine(&local_e4);
+                  iVar8 = I_stricmp(pcVar6,local_c4);
+                  if (iVar8 == 0) {
+                    pcVar6 = Com_ParseOnLine(&local_e4);
                     if (pcVar6 == (char *)0x0) {
-                      Com_PrintError(0x10,0xffffffff821aff28,lVar13);
+                      Com_PrintError(0x10,
+                                     "Entitlement Config Error: Expecting a consumable weaponXP amount on line %d.\n"
+                                    );
                       Com_SkipRestOfLine(&local_e4);
                       bVar2 = true;
                       goto LAB_826fab50;
                     }
-                    iVar10 = atoi(pcVar6);
-                    iVar9 = Entitlements_GetKeyValue(uVar4,uVar1);
-                    iVar7 = iVar15;
+                    iVar11 = atoi(pcVar6);
+                    lVar5 = Entitlements_GetKeyValue(iVar7,uVar13);
+                    iVar8 = iVar16;
                     if ((0x7fffffff <
                          *(longlong *)
-                          (&DAT_8451bce0 +
+                          ((int)&s_keyArchiveValues[0][0].m_value +
                           (int)(((uVar4 & 0xfffffff) * 0x10 + uVar1 & 0xffffffff) << 4))) ||
-                       (iVar7 = iVar9, 0 < iVar9)) {
-                      bVar11 = Entitlements_AddXPToMPPlayerStats
-                                         (uVar4,local_dc,iVar7,iVar10,0xffffffff820267a8);
-                      bVar14 = bVar11 | bVar14;
+                       (iVar8 = (int)lVar5, 0 < (int)lVar5)) {
+                      bVar12 = Entitlements_AddXPToMPPlayerStats
+                                         (iVar7,local_dc,iVar8,iVar11,"weapon");
+                      bVar15 = bVar12 | bVar15;
                     }
                     local_dc = local_dc + 1;
                   }
@@ -1266,109 +1353,109 @@ LAB_826fab48:
             }
           }
           else {
-            Com_PrintError(0x10,0xffffffff821af5b8,lVar13);
+            Com_PrintError(0x10,
+                           "Entitlement Config Error: Entitlement key index is outside the keys to read range on line %d\n"
+                          );
             Com_SkipRestOfLine(&local_e4);
             bVar2 = true;
           }
         }
       }
       else {
-        iVar7 = I_stricmp(pcVar6,0xffffffff820268e0);
-        if (iVar7 == 0) {
-          cVar12 = Entitlements_ParseTitleOrIcon
-                             (&local_e4,uVar4,&local_ee,0xffffffff820268e0,lVar13);
-          if (cVar12 == '\0') {
+        iVar8 = I_stricmp(pcVar6,"title");
+        if (iVar8 == 0) {
+          bVar12 = Entitlements_ParseTitleOrIcon(&local_e4,iVar7,&local_ee,"title",iVar14);
+          if (!bVar12) {
             bVar2 = true;
           }
-          if (local_ee != '\0') {
-            bVar14 = 1;
+          if (local_ee != false) {
+            bVar15 = 1;
             bVar3 = true;
           }
         }
         else {
-          iVar7 = I_stricmp(pcVar6,0xffffffff82026910);
-          if (iVar7 == 0) {
-            cVar12 = Entitlements_ParseTitleOrIcon
-                               (&local_e4,uVar4,&local_ed,0xffffffff82026910,lVar13);
-            if (cVar12 == '\0') {
+          iVar8 = I_stricmp(pcVar6,"icon");
+          if (iVar8 == 0) {
+            bVar12 = Entitlements_ParseTitleOrIcon(&local_e4,iVar7,&local_ed,"icon",iVar14);
+            if (!bVar12) {
               bVar2 = true;
             }
-            if (local_ed != '\0') {
-              bVar14 = 1;
+            if (local_ed != false) {
+              bVar15 = 1;
               bVar3 = true;
             }
           }
           else {
-            iVar7 = I_stricmp(pcVar6,local_c0);
-            if (iVar7 == 0) {
-              cVar12 = Entitlements_ParseCustomClass(&local_e4,uVar4,&local_ec,lVar13);
-              if (cVar12 == '\0') {
+            iVar8 = I_stricmp(pcVar6,local_c0);
+            if (iVar8 == 0) {
+              bVar12 = Entitlements_ParseCustomClass(&local_e4,iVar7,&local_ec,iVar14);
+              if (!bVar12) {
                 bVar2 = true;
               }
-              if (local_ec != '\0') {
-                bVar14 = 1;
+              if (local_ec != false) {
+                bVar15 = 1;
                 bVar3 = true;
               }
             }
             else {
-              iVar7 = I_stricmp(pcVar6,local_bc);
-              if (iVar7 == 0) {
-                cVar12 = Entitlements_ParseCamo(&local_e4,uVar4,&local_eb,lVar13);
-                if (cVar12 == '\0') {
+              iVar8 = I_stricmp(pcVar6,local_bc);
+              if (iVar8 == 0) {
+                bVar12 = Entitlements_ParseCamo(&local_e4,iVar7,&local_eb,iVar14);
+                if (!bVar12) {
                   bVar2 = true;
                 }
-                if (local_eb != '\0') {
-                  bVar14 = 1;
+                if (local_eb != false) {
+                  bVar15 = 1;
                   bVar3 = true;
                 }
               }
               else {
-                iVar7 = I_stricmp(pcVar6,local_b8);
-                if (iVar7 == 0) {
-                  cVar12 = Entitlements_ParseCustomReticle(&local_e4,uVar4,&local_ea,lVar13);
-                  if (cVar12 == '\0') {
+                iVar8 = I_stricmp(pcVar6,local_b8);
+                if (iVar8 == 0) {
+                  bVar12 = Entitlements_ParseCustomReticle(&local_e4,iVar7,&local_ea,iVar14);
+                  if (!bVar12) {
                     bVar2 = true;
                   }
-                  if (local_ea != '\0') {
-                    bVar14 = 1;
+                  if (local_ea != false) {
+                    bVar15 = 1;
                     bVar3 = true;
                   }
                 }
                 else {
-                  iVar7 = I_stricmp(pcVar6,0xffffffff820267a8);
-                  if (iVar7 == 0) {
-                    cVar12 = Entitlements_ParsePersistentItem
-                                       (&local_e4,uVar4,&local_e9,local_b4,lVar13);
-                    if (cVar12 == '\0') {
+                  iVar8 = I_stricmp(pcVar6,"weapon");
+                  if (iVar8 == 0) {
+                    bVar12 = Entitlements_ParsePersistentItem
+                                       (&local_e4,iVar7,&local_e9,local_b4,iVar14);
+                    if (!bVar12) {
                       bVar2 = true;
                     }
-                    if (local_e9 != '\0') {
-                      bVar14 = 1;
+                    if (local_e9 != false) {
+                      bVar15 = 1;
                       bVar3 = true;
                     }
                   }
                   else {
-                    iVar7 = I_stricmp(pcVar6,local_b0);
-                    if (iVar7 == 0) {
-                      cVar12 = Entitlements_ParsePersistentItem
-                                         (&local_e4,uVar4,&local_e8,local_ac,lVar13);
-                      if (cVar12 == '\0') {
+                    iVar8 = I_stricmp(pcVar6,local_b0);
+                    if (iVar8 == 0) {
+                      bVar12 = Entitlements_ParsePersistentItem
+                                         (&local_e4,iVar7,&local_e8,local_ac,iVar14);
+                      if (!bVar12) {
                         bVar2 = true;
                       }
-                      if (local_e8 != '\0') {
-                        bVar14 = 1;
+                      if (local_e8 != false) {
+                        bVar15 = 1;
                         bVar3 = true;
                       }
                     }
                     else {
-                      iVar7 = I_stricmp(pcVar6,local_a8);
-                      if (iVar7 != 0) goto LAB_826fab48;
-                      cVar12 = Entitlements_ParsePrestigeCoin(&local_e4,uVar4,local_e7,lVar13);
-                      if (cVar12 == '\0') {
+                      iVar8 = I_stricmp(pcVar6,local_a8);
+                      if (iVar8 != 0) goto LAB_826fab48;
+                      bVar12 = Entitlements_ParsePrestigeCoin(&local_e4,iVar7,local_e7,iVar14);
+                      if (!bVar12) {
                         bVar2 = true;
                       }
-                      if (local_e7[0] != '\0') {
-                        bVar14 = 1;
+                      if (local_e7[0] != false) {
+                        bVar15 = 1;
                         bVar3 = true;
                       }
                     }
@@ -1380,20 +1467,20 @@ LAB_826fab48:
         }
       }
 LAB_826fab50:
-      lVar13 = lVar13 + 1;
-      pcVar6 = (char *)Com_ParseOnLine(&local_e4);
-    } while (local_e4 != (undefined *)0x0);
+      iVar14 = iVar14 + 1;
+      pcVar6 = Com_ParseOnLine(&local_e4);
+    } while (local_e4 != (char *)0x0);
   }
   Com_EndParseSession();
   if (bVar2) {
-    Com_Error(0,0xffffffff821afdd0);
+    Com_Error(ERR_FATAL,"\x15Error processing the entitlements.\n");
   }
   if (bVar3) {
-    GamerProfile_UpdateProfileAndSaveIfNeeded(uVar4);
+    GamerProfile_UpdateProfileAndSaveIfNeeded(iVar7);
   }
-  if (bVar14 != 0) {
-    LiveStorage_StatsWriteNeeded(uVar4);
-    LiveStorage_SaveStats(uVar4);
+  if (bVar15 != 0) {
+    LiveStorage_StatsWriteNeeded(iVar7);
+    LiveStorage_SaveStats(iVar7);
   }
   __restgprlr();
   return;
@@ -1402,32 +1489,32 @@ LAB_826fab50:
 
 // 826F8F00  Entitlements_PreProcessConfigFile  (social/entitlements.cpp:1054)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Entitlements_PreProcessConfigFile(void)
 
 {
   bool bVar1;
   char *pcVar2;
   int iVar3;
-  longlong lVar4;
-  undefined *local_60 [24];
+  char *local_60 [24];
   
   __savegprlr_23();
-  local_60[0] = &DAT_84513cd8;
-  Com_BeginParseSession(0xffffffff821af0b0);
+  local_60[0] = s_configFileBuffer;
+  Com_BeginParseSession("entitlements");
   Com_SetSpaceDelimited(1);
   bVar1 = false;
-  lVar4 = 1;
-  pcVar2 = (char *)Com_ParseOnLine(local_60);
+  pcVar2 = Com_ParseOnLine(local_60);
   do {
-    if (local_60[0] == (undefined *)0x0) {
+    if (local_60[0] == (char *)0x0) {
       Com_EndParseSession();
       if (!bVar1) {
         iVar3 = Sys_Milliseconds();
-        DAT_84513cbc = iVar3 + 86400000;
+        s_entitlementConfigFileRefreshTimer = iVar3 + 86400000;
         __restgprlr_23();
         return;
       }
-      Com_Error(0,0xffffffff821af3f0);
+      Com_Error(ERR_FATAL,"\x15Error preprocessing the entitlement config file.\n");
       __restgprlr_23();
       return;
     }
@@ -1436,46 +1523,49 @@ LAB_826f9038:
       Com_SkipRestOfLine(local_60);
     }
     else {
-      iVar3 = I_stricmp(pcVar2,0xffffffff8208cee4);
+      iVar3 = I_stricmp(pcVar2,"version");
       if (iVar3 != 0) {
-        iVar3 = I_stricmp(pcVar2,0xffffffff821af464);
+        iVar3 = I_stricmp(pcVar2,"keys_to_read");
         if (iVar3 == 0) {
-          pcVar2 = (char *)Com_ParseOnLine(local_60);
+          pcVar2 = Com_ParseOnLine(local_60);
           if (pcVar2 == (char *)0x0) {
-            Com_PrintError(0x10,0xffffffff821af478,lVar4);
+            Com_PrintError(0x10,
+                           "Entitlement Config Error: Expect a number of keys to read on line %d\n")
+            ;
             Com_SkipRestOfLine(local_60);
             bVar1 = true;
             goto LAB_826f9040;
           }
-          DAT_84513c88 = atoi(pcVar2);
-          if (0xf < DAT_84513c88) {
-            Com_PrintError(0x10,0xffffffff821af4c0,0x10,lVar4);
+          s_numKeyPairsToRead = atoi(pcVar2);
+          if (0xf < s_numKeyPairsToRead) {
+            Com_PrintError(0x10,
+                           "Entitlement Config Error: Number of keys must be equal or less than %d on line %d\n"
+                          );
             bVar1 = true;
           }
         }
         goto LAB_826f9038;
       }
-      iVar3 = Com_ParseOnLine(local_60);
-      if (iVar3 != 0) goto LAB_826f9038;
-      Com_PrintError(0x10,0xffffffff821af424,lVar4);
+      pcVar2 = Com_ParseOnLine(local_60);
+      if (pcVar2 != (char *)0x0) goto LAB_826f9038;
+      Com_PrintError(0x10,"Entitlement Config Error: Expect a version number on line %d\n");
       Com_SkipRestOfLine(local_60);
       bVar1 = true;
     }
 LAB_826f9040:
-    lVar4 = lVar4 + 1;
-    pcVar2 = (char *)Com_ParseOnLine(local_60);
+    pcVar2 = Com_ParseOnLine(local_60);
   } while( true );
 }
 
 
 // 826F90A0  Entitlement_ConfigFileDownloaded  (social/entitlements.cpp:1137)
 
-void Entitlement_ConfigFileDownloaded(void)
+void Entitlement_ConfigFileDownloaded(int param_1)
 
 {
   Entitlements_PreProcessConfigFile();
-  DAT_84513c75 = 0;
-  DAT_84513c9c = 0;
+  g_gettingConfigFile = false;
+  s_entitlementConfigFileRetryTime = 0;
   DAT_84513c74 = 1;
   return;
 }
@@ -1483,89 +1573,130 @@ void Entitlement_ConfigFileDownloaded(void)
 
 // 826F90E0  Entitlement_ConfigFileDownload_Failed  (social/entitlements.cpp:1148)
 
-void Entitlement_ConfigFileDownload_Failed(void)
+void Entitlement_ConfigFileDownload_Failed(int param_1)
 
 {
   Entitlements_RetryGetConfigFile();
-  DAT_84513c75 = 0;
+  g_gettingConfigFile = false;
   return;
 }
 
 
 // 826F9110  Entitlement_SocialConfigComplete_Callback  (social/entitlements.cpp:1155)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Entitlement_SocialConfigComplete_Callback(void)
 
 {
   int iVar1;
+  char *pcVar2;
   
-  iVar1 = *(int *)(DAT_84546d38 + 0xc);
-  if (-1 < iVar1) {
+  pcVar2 = (char *)(entitlements_delay->current).integer;
+  if (-1 < (int)pcVar2) {
     iVar1 = Sys_Milliseconds();
-    iVar1 = iVar1 + *(int *)(DAT_84546d38 + 0xc);
+    pcVar2 = (entitlements_delay->current).string + iVar1;
   }
-  DAT_84513c9c = iVar1;
+  s_entitlementConfigFileRetryTime = (int)pcVar2;
   return;
 }
 
 
 // 826FAFF0  Entitlements_Init  (social/entitlements.cpp:1164)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Entitlements_Init(void)
 
 {
   __savegprlr_29();
-  DAT_84513ca4 = Dvar_RegisterBool(0xffffffff821b01b0,0,0x2000,0xffffffff821b01c8);
-  DAT_84513cb8 = 0;
+  entitlementSystemOk =
+       Dvar_RegisterBool("entitlementSystemOk",false,0x2000,
+                         "Set by the game to inform that the entitlement system is initialised");
+  s_needToDownloadEntitlements[0] = false;
   DAT_84513ca0 = 0;
   DAT_84513ca8 = 0;
   DAT_84513c78 = 0;
-  DAT_84513c8c = 0;
-  DAT_84513cb9 = 0;
+  s_entitlementTaskStage[0] = ENTITLEMENTS_TASK_STAGE_WAITING_TO_GET_KEY_ARCHIVE;
+  s_needToDownloadEntitlements[1] = false;
   DAT_84513ca1 = 0;
   DAT_84513cac = 0;
   DAT_84513c7c = 0;
-  DAT_84513c90 = 0;
-  DAT_84513cba = 0;
+  s_entitlementTaskStage[1] = ENTITLEMENTS_TASK_STAGE_WAITING_TO_GET_KEY_ARCHIVE;
+  s_needToDownloadEntitlements[2] = false;
   DAT_84513ca2 = 0;
   DAT_84513cb0 = 0;
   DAT_84513c80 = 0;
-  DAT_84513c94 = 0;
-  DAT_84513cbb = 0;
+  s_entitlementTaskStage[2] = ENTITLEMENTS_TASK_STAGE_WAITING_TO_GET_KEY_ARCHIVE;
+  s_needToDownloadEntitlements[3] = false;
   DAT_84513ca3 = 0;
   DAT_84513cb4 = 0;
   DAT_84513c84 = 0;
-  DAT_84513c98 = 0;
-  DAT_84513c9c = 0;
+  s_entitlementTaskStage[3] = ENTITLEMENTS_TASK_STAGE_WAITING_TO_GET_KEY_ARCHIVE;
+  s_entitlementConfigFileRetryTime = 0;
   DAT_84513cd0 = 0;
   DAT_84513c74 = 0;
-  DAT_84513c75 = 0;
-  DAT_84513cbc = 0;
-  SocialConfig_AddCompleteCallback(0xffffffff826f9110);
-  Cmd_AddCommandInternal(0xffffffff821b0198,0xffffffff826f9f08,0xffffffff8451c390);
-  Cmd_AddCommandInternal(0xffffffff821b0180,0xffffffff826f9f20,0xffffffff8451c37c);
-  Cmd_AddCommandInternal(0xffffffff821b0168,0xffffffff826f9f38,0xffffffff8451c368);
-  Cmd_AddCommandInternal(0xffffffff821b014c,0xffffffff826f9f50,0xffffffff8451c354);
-  Cmd_AddCommandInternal(0xffffffff821b0134,0xffffffff826f9f68,0xffffffff8451c340);
-  Cmd_AddCommandInternal(0xffffffff821b0118,0xffffffff826f9f80,0xffffffff8451c32c);
-  Cmd_AddCommandInternal(0xffffffff821b0100,0xffffffff826f9f98,0xffffffff8451c318);
-  Cmd_AddCommandInternal(0xffffffff821b00e8,0xffffffff826f9fb0,0xffffffff8451c304);
-  Cmd_AddCommandInternal(0xffffffff821b00d0,0xffffffff826f9fc8,0xffffffff8451c2f0);
-  Cmd_AddCommandInternal(0xffffffff821b00b8,0xffffffff826f9fe0,0xffffffff8451c2dc);
-  Cmd_AddCommandInternal(0xffffffff821b00a0,0xffffffff826f9ff8,0xffffffff8451c2c8);
-  Cmd_AddCommandInternal(0xffffffff821b0088,0xffffffff826fa010,0xffffffff8451c2b4);
-  Cmd_AddCommandInternal(0xffffffff821b0078,0xffffffff826fa158,0xffffffff8451c2a0);
-  Cmd_AddCommandInternal(0xffffffff821b0060,0xffffffff826fa1e0,0xffffffff8451c28c);
-  Cmd_AddCommandInternal(0xffffffff821b004c,0xffffffff826fa248,0xffffffff8451c278);
-  Cmd_AddCommandInternal(0xffffffff821b003c,0xffffffff826f8570,0xffffffff8451c264);
-  Cmd_AddCommandInternal(0xffffffff821b0024,0xffffffff826f8630,0xffffffff8451c250);
-  Cmd_AddCommandInternal(0xffffffff821b0010,0xffffffff826f86b0,0xffffffff8451c23c);
-  Cmd_AddCommandInternal(0xffffffff821afff0,0xffffffff826fa2b0,0xffffffff8451c228);
-  Cmd_AddCommandInternal(0xffffffff821affd4,0xffffffff826fa388,0xffffffff8451c214);
-  Cmd_AddCommandInternal(0xffffffff821affbc,0xffffffff826fa478,0xffffffff8451c200);
-  Cmd_AddCommandInternal(0xffffffff821affa0,0xffffffff826fa530,0xffffffff8451c1ec);
-  DAT_84513c76 = 0;
-  DAT_84513c70 = 0;
+  g_gettingConfigFile = false;
+  s_entitlementConfigFileRefreshTimer = 0;
+  SocialConfig_AddCompleteCallback(Entitlement_SocialConfigComplete_Callback);
+  Cmd_AddCommandInternal
+            ("entitlement_LockCamo",Entitlements_LockCamoCmd,&Entitlements_LockCamoCmd_VAR);
+  Cmd_AddCommandInternal
+            ("entitlement_UnlockCamo",Entitlements_UnlockCamoCmd,&Entitlements_UnlockCamoCmd_VAR);
+  Cmd_AddCommandInternal
+            ("entitlement_LockReticle",Entitlements_LockReticleCmd,&Entitlements_LockReticleCmd_VAR)
+  ;
+  Cmd_AddCommandInternal
+            ("entitlement_UnlockReticle",Entitlements_UnlockReticleCmd,
+             &Entitlements_UnlockReticleCmd_VAR);
+  Cmd_AddCommandInternal
+            ("entitlement_LockWeapon",Entitlements_LockWeaponCmd,&Entitlements_LockWeaponCmd_VAR);
+  Cmd_AddCommandInternal
+            ("entitlement_UnlockWeapon",Entitlements_UnlockWeaponCmd,
+             &Entitlements_UnlockWeaponCmd_VAR);
+  Cmd_AddCommandInternal
+            ("entitlement_LockPerk",Entitlements_LockPerkCmd,&Entitlements_LockPerkCmd_VAR);
+  Cmd_AddCommandInternal
+            ("entitlement_UnlockPerk",Entitlements_UnlockPerkCmd,&Entitlements_UnlockPerkCmd_VAR);
+  Cmd_AddCommandInternal
+            ("entitlement_LockTitle",Entitlements_LockTitleCmd,&Entitlements_LockTitleCmd_VAR);
+  Cmd_AddCommandInternal
+            ("entitlement_UnlockTitle",Entitlements_UnlockTitleCmd,&Entitlements_UnlockTitleCmd_VAR)
+  ;
+  Cmd_AddCommandInternal
+            ("entitlement_LockIcon",Entitlements_LockIconCmd,&Entitlements_LockIconCmd_VAR);
+  Cmd_AddCommandInternal
+            ("entitlement_UnlockIcon",Entitlements_UnlockIconCmd,&Entitlements_UnlockIconCmd_VAR);
+  Cmd_AddCommandInternal
+            ("AddXPMultTime",Entitlements_AddXPMultiplierTimeCmd,
+             &Entitlements_AddXPMultiplierTimeCmd_VAR);
+  Cmd_AddCommandInternal
+            ("AddChallengeXPMultTime",Entitlements_AddChallengeXPMultiplierTimeCmd,
+             &Entitlements_AddChallengeXPMultiplierTimeCmd_VAR);
+  Cmd_AddCommandInternal
+            ("AddWeaponXPMultTime",Entitlements_AddWeaponXPMultiplierTimeCmd,
+             &Entitlements_AddWeaponXPMultiplierTimeCmd_VAR);
+  Cmd_AddCommandInternal
+            ("UseXPMultTime",Entitlements_UseXPMultiplierTimeCmd,
+             &Entitlements_UseXPMultiplierTimeCmd_VAR);
+  Cmd_AddCommandInternal
+            ("UseChallengeXPMultTime",Entitlements_UseChallengeXPMultiplierTimeCmd,
+             &Entitlements_UseChallengeXPMultiplierTimeCmd_VAR);
+  Cmd_AddCommandInternal
+            ("UseWeaponXPMultTime",Entitlements_UseWeaponXPMultiplierTimeCmd,
+             &Entitlements_UseWeaponXPMultiplierTimeCmd_VAR);
+  Cmd_AddCommandInternal
+            ("entitlement_SetCustomClasses",Entitlements_UnlockCustomClassesCmd,
+             &Entitlements_UnlockCustomClassesCmd_VAR);
+  Cmd_AddCommandInternal
+            ("entitlement_AddPrestigeCoin",Entitlements_AddPrestigeCoinCmd,
+             &Entitlements_AddPrestigeCoinCmd_VAR);
+  Cmd_AddCommandInternal
+            ("entitlement_ResetAll",Entitlements_ResetAllCmd,&Entitlements_ResetAllCmd_VAR);
+  Cmd_AddCommandInternal
+            ("entitlement_ForceProcess",Entitlements_ForceProcess,&Entitlements_ForceProcess_VAR);
+  s_bEntitlementProcessingTest = false;
+  s_nEntitlementTestKeyPairs = 0;
   __restgprlr_29();
   return;
 }
@@ -1573,54 +1704,56 @@ void Entitlements_Init(void)
 
 // 826F9160  Entitlements_Online  (social/entitlements.cpp:1215)
 
-undefined8 Entitlements_Online(undefined8 param_1)
+bool Entitlements_Online(int param_1)
 
 {
   bool bVar1;
-  char cVar3;
-  int iVar2;
-  undefined8 uVar4;
+  bool bVar3;
+  bdLobbyService *this;
+  Status SVar2;
   
-  cVar3 = Live_IsUserSignedInToLive();
-  iVar2 = dwGetLobbyService(param_1);
-  if (iVar2 != 0) {
-    iVar2 = bdLobbyService__getStatus();
+  bVar3 = Live_IsUserSignedInToLive(param_1);
+  this = dwGetLobbyService(param_1);
+  if (this != (bdLobbyService *)0x0) {
+    SVar2 = bdLobbyService::getStatus(this);
     bVar1 = true;
-    if (iVar2 == 2) goto LAB_826f91a4;
+    if (SVar2 == BD_CONNECTED) goto LAB_826f91a4;
   }
   bVar1 = false;
 LAB_826f91a4:
-  if ((cVar3 == '\0') || (uVar4 = 1, !bVar1)) {
-    uVar4 = 0;
+  if ((!bVar3) || (bVar3 = true, !bVar1)) {
+    bVar3 = false;
   }
-  return uVar4;
+  return bVar3;
 }
 
 
 // 826F91E0  Entitlements_IsAllowed  (social/entitlements.cpp:1236)
 
-undefined8 Entitlements_IsAllowed(undefined8 param_1)
+bool Entitlements_IsAllowed(int param_1)
 
 {
-  char cVar1;
+  bool bVar1;
   
-  cVar1 = SocialConfig_Ok();
-  if (((cVar1 != '\0') && (*(int *)(DAT_84546d2c + 0xc) != 0)) &&
-     (cVar1 = Live_IsUserSignedInToLive(param_1), cVar1 != '\0')) {
-    return 1;
+  bVar1 = SocialConfig_Ok();
+  if (((bVar1) && ((entitlements_active->current).integer != 0)) &&
+     (bVar1 = Live_IsUserSignedInToLive(param_1), bVar1)) {
+    return true;
   }
-  return 0;
+  return false;
 }
 
 
 // 826F9250  Entitlements_Start  (social/entitlements.cpp:1242)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Entitlements_Start(void)
 
 {
-  if ((*(int *)(DAT_84546d2c + 0xc) != 0) && (DAT_84513c9c < 0)) {
-    Dvar_SetInt(DAT_84546d38,0);
-    DAT_84513c9c = 0;
+  if (((entitlements_active->current).integer != 0) && (s_entitlementConfigFileRetryTime < 0)) {
+    Dvar_SetInt(entitlements_delay,0);
+    s_entitlementConfigFileRetryTime = 0;
   }
   return;
 }
@@ -1628,140 +1761,157 @@ void Entitlements_Start(void)
 
 // 826FB330  Entitlements_ControllerUpdate  (social/entitlements.cpp:1252)
 
-void Entitlements_ControllerUpdate(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void Entitlements_ControllerUpdate(int param_1)
 
 {
-  uint uVar1;
-  bool bVar2;
+  ENTITLEMENTS_TASK_STAGE EVar1;
+  bdRemoteTask *this;
+  int iVar2;
   int iVar3;
+  bool bVar9;
+  bool bVar10;
   int iVar4;
-  char cVar7;
-  char cVar8;
-  int iVar5;
-  undefined4 uVar6;
-  void *_Buf;
-  undefined4 local_60;
-  undefined1 auStack_5c [4];
-  undefined1 local_58 [4];
-  uint uStack_54;
+  bool bVar11;
+  uint uVar5;
+  bdKeyArchive *pbVar6;
+  bdReference<bdRemoteTask> bVar7;
+  bdLobbyErrorCode bVar8;
+  uint uVar12;
+  LocalClientNum_t local_60;
+  bdReference<bdRemoteTask> bStack_5c;
+  undefined8 local_58;
   
-  iVar3 = __savegprlr_23();
-  bVar2 = false;
-  iVar4 = Sys_Milliseconds();
-  cVar7 = SocialConfig_Ok();
-  if (cVar7 != '\0') {
-    cVar7 = Entitlements_CanWeProcessEntitlements(iVar3,1);
-    if (*(int *)(DAT_84546d2c + 0xc) != 0) {
-      if (((cVar7 != '\0') && (DAT_84513c74 != '\0')) && (DAT_84513cbc < iVar4)) {
+  iVar2 = __savegprlr_23(param_1);
+  bVar11 = false;
+  iVar3 = Sys_Milliseconds();
+  bVar9 = SocialConfig_Ok();
+  if (bVar9) {
+    bVar9 = Entitlements_CanWeProcessEntitlements(iVar2,true);
+    if ((entitlements_active->current).integer != 0) {
+      if (((bVar9) && (DAT_84513c74 != '\0')) && (s_entitlementConfigFileRefreshTimer < iVar3)) {
         DAT_84513c74 = '\0';
-        DAT_84513c75 = '\0';
+        g_gettingConfigFile = false;
       }
-      cVar8 = Entitlements_Online(iVar3);
-      if (((cVar8 != '\0') && (DAT_84513c75 == '\0')) && (DAT_84513c74 == '\0')) {
-        cVar8 = CL_DoesControllerIndexHaveALocalClientNum(iVar3,&local_60);
-        if ((cVar8 != '\0') && (iVar5 = CL_IsCgameInitialized(local_60), iVar5 != 0)) {
-          bVar2 = true;
+      bVar10 = Entitlements_Online(iVar2);
+      if (((bVar10) && (g_gettingConfigFile == false)) && (DAT_84513c74 == '\0')) {
+        bVar10 = CL_DoesControllerIndexHaveALocalClientNum(iVar2,&local_60);
+        if ((bVar10) && (iVar4 = CL_IsCgameInitialized(local_60), iVar4 != 0)) {
+          bVar11 = true;
         }
-        if (((-1 < DAT_84513c9c) && (DAT_84513c9c < iVar4)) && (!bVar2)) {
-          cVar8 = LiveStorage_ReadEntitlementConfigFile
-                            (iVar3,0xffffffff821af2b4,0xffffffff84513cd8,0x8000);
-          if (cVar8 == '\0') {
-            Entitlements_RetryGetConfigFile();
+        if (((-1 < s_entitlementConfigFileRetryTime) && (s_entitlementConfigFileRetryTime < iVar3))
+           && (!bVar11)) {
+          bVar10 = LiveStorage_ReadEntitlementConfigFile
+                             (iVar2,"entitlement_config.info",(uchar *)s_configFileBuffer,0x8000);
+          if (bVar10) {
+            DAT_84513c74 = '\0';
+            g_gettingConfigFile = true;
           }
           else {
-            DAT_84513c74 = '\0';
-            DAT_84513c75 = '\x01';
+            Entitlements_RetryGetConfigFile();
           }
         }
       }
-      if ((DAT_84513c75 == '\0') && (DAT_84513c74 != '\0')) {
-        uVar1 = (&DAT_84513c8c)[iVar3];
-        if (uVar1 < 6) {
-          if (uVar1 == 1) {
-            if ((int *)(&DAT_8451c0d8)[iVar3] != (int *)0x0) {
-              iVar4 = (**(code **)(*(int *)(&DAT_8451c0d8)[iVar3] + 4))();
-              if (iVar4 != 1) {
-                iVar5 = bdRemoteTask__getErrorCode((&DAT_8451c0d8)[iVar3]);
-                if ((iVar4 == 2) && (iVar5 == 0)) {
-                  uVar6 = (&DAT_8451c0d8)[iVar3];
-                  (&DAT_84513ca0)[iVar3] = 1;
-                  uVar6 = bdRemoteTask__getNumResults(uVar6);
-                  bVar2 = DAT_84513c76 == '\0';
-                  *(undefined4 *)(&DAT_84513cc0 + iVar3 * 4) = uVar6;
-                  (&DAT_84513c8c)[iVar3] = (bVar2 ^ 1) + 2;
-                  iVar4 = Sys_Milliseconds();
-                  (&DAT_84513c78)[iVar3] = iVar4 + *(int *)(DAT_84546d78 + 0xc);
-                  __restgprlr_23();
-                  return;
-                }
-                *(undefined4 *)(&DAT_84513cc0 + iVar3 * 4) = 0;
-                Entitlements_RetryGetKeyArchive(iVar3);
+      if ((g_gettingConfigFile == false) && (DAT_84513c74 != '\0')) {
+        EVar1 = s_entitlementTaskStage[iVar2];
+        if (EVar1 < (ENTITLEMENTS_TASK_STAGE_SETTING_KEY_ARCHIVE|
+                    ENTITLEMENTS_TASK_STAGE_WAITING_TO_GIVE_ENTITLEMENTS)) {
+          if (EVar1 == ENTITLEMENTS_TASK_STAGE_GETTING_KEY_ARCHIVE) {
+            if ((g_DWEntitlementTask[iVar2].m_ptr != (bdRemoteTask *)0x0) &&
+               (iVar3 = (**(code **)((g_DWEntitlementTask[iVar2].m_ptr)->_padding_ + 4))(),
+               iVar3 != 1)) {
+              bVar8 = bdRemoteTask::getErrorCode(g_DWEntitlementTask[iVar2].m_ptr);
+              if ((iVar3 == 2) && (bVar8 == BD_NO_ERROR)) {
+                this = g_DWEntitlementTask[iVar2].m_ptr;
+                (&DAT_84513ca0)[iVar2] = 1;
+                uVar5 = bdRemoteTask::getNumResults(this);
+                uVar12 = (uint)s_bEntitlementProcessingTest;
+                s_keyArchiveNum[iVar2] = uVar5;
+                s_entitlementTaskStage[iVar2] =
+                     ((uint)LZCOUNT(uVar12) >> 5 ^ 1) +
+                     ENTITLEMENTS_TASK_STAGE_WAITING_TO_GIVE_ENTITLEMENTS;
+                iVar3 = Sys_Milliseconds();
+                (&DAT_84513c78)[iVar2] = (entitlements_cool_off_time->current).string + iVar3;
                 __restgprlr_23();
                 return;
               }
-            }
-          }
-          else if (uVar1 == 2) {
-            if (cVar7 != '\0') {
-              Entitlements_ProcessEntitlements(iVar3);
-              (&DAT_84513c8c)[iVar3] = 5;
-              Dvar_SetBoolByName(0xffffffff821b01b0,1);
+              s_keyArchiveNum[iVar2] = 0;
+              Entitlements_RetryGetKeyArchive(iVar2);
               __restgprlr_23();
               return;
             }
           }
-          else if (uVar1 == 3) {
-            if (((cVar7 != '\0') && (_Buf = (void *)dwGetKeyArchive(iVar3), _Buf != (void *)0x0)) &&
-               (cVar7 = dwGetOnlineUserID(iVar3,local_58), cVar7 != '\0')) {
-              if (DAT_84513c70 < 1) {
-                MyAssertHandler(0xffffffff821af320,0x579,0,0xffffffff82000f98,0xffffffff821b0250);
-              }
-              iVar4 = bdKeyArchive__write((int)auStack_5c,_Buf,uStack_54);
-              bdReference<bdRemoteTask>__operator_(0xffffffff8451c1e8,iVar4);
-              bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(auStack_5c);
-              if ((DAT_8451c1e8 != (int *)0x0) &&
-                 (iVar4 = (**(code **)(*DAT_8451c1e8 + 4))(), iVar4 == 1)) {
-                Com_Printf(0xe,0xffffffff821b0210);
-                (&DAT_84513c8c)[iVar3] = 4;
-                __restgprlr_23();
-                return;
-              }
+          else if (EVar1 == ENTITLEMENTS_TASK_STAGE_WAITING_TO_GIVE_ENTITLEMENTS) {
+            if (bVar9) {
+              Entitlements_ProcessEntitlements(iVar2);
+              s_entitlementTaskStage[iVar2] = ENTITLEMENTS_TASK_STAGE_ALL_DONE;
+              Dvar_SetBoolByName("entitlementSystemOk",true);
+              __restgprlr_23();
+              return;
             }
           }
-          else if (uVar1 == 4) {
-            if (DAT_8451c1e8 != (int *)0x0) {
-              iVar4 = (**(code **)(*DAT_8451c1e8 + 4))();
-              if (((iVar4 != 1) && (iVar5 = bdRemoteTask__getErrorCode(DAT_8451c1e8), iVar4 == 2))
-                 && (iVar5 == 0)) {
-                DAT_84513c76 = '\0';
-                (&DAT_84513c8c)[iVar3] = 5;
-                Com_Printf(0xe,0xffffffff821af0c0);
-              }
-            }
-          }
-          else if (uVar1 == 0) {
-            cVar7 = Entitlements_Online(iVar3);
-            if (cVar7 != '\0') {
-              cVar7 = CL_DoesControllerIndexHaveALocalClientNum(iVar3,&local_60);
-              if ((cVar7 != '\0') && (iVar5 = CL_IsCgameInitialized(local_60), iVar5 != 0)) {
-                bVar2 = true;
-              }
-              if (((int)(&DAT_84513c78)[iVar3] < iVar4) && (!bVar2)) {
-                cVar7 = Entitlements_GetKeyArchive(iVar3);
-                if (cVar7 != '\0') {
-                  (&DAT_84513c8c)[iVar3] = 1;
-                  (&DAT_84513cb8)[iVar3] = 0;
+          else if (EVar1 == ENTITLEMENTS_TASK_STAGE_WAITING_TO_SEND_CMD) {
+            if (bVar9) {
+              pbVar6 = dwGetKeyArchive(iVar2);
+              if ((pbVar6 != (bdKeyArchive *)0x0) &&
+                 (bVar11 = dwGetOnlineUserID(iVar2,&local_58), bVar11)) {
+                if (s_nEntitlementTestKeyPairs < 1) {
+                  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\entitlements.cpp"
+                                  ,0x579,0,"%s");
+                }
+                bVar7 = bdKeyArchive::write((bdKeyArchive *)&bStack_5c,(longlong)(int)pbVar6,
+                                            (bool)(undefined1)local_58,(bdKeyValuePair *)0x0,
+                                            0x8451c0e8);
+                bdReference<bdRemoteTask>::operator=
+                          (&s_entitlementTestTask,(bdReference<bdRemoteTask> *)bVar7.m_ptr);
+                bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(&bStack_5c);
+                if ((s_entitlementTestTask.m_ptr != (bdRemoteTask *)0x0) &&
+                   (iVar3 = (**(code **)((s_entitlementTestTask.m_ptr)->_padding_ + 4))(),
+                   iVar3 == 1)) {
+                  Com_Printf(0xe,"Sending request to demonware... Please wait for confirmation.\n");
+                  s_entitlementTaskStage[iVar2] = ENTITLEMENTS_TASK_STAGE_SETTING_KEY_ARCHIVE;
                   __restgprlr_23();
                   return;
                 }
-                Entitlements_RetryGetKeyArchive(iVar3);
+              }
+            }
+          }
+          else if (EVar1 == ENTITLEMENTS_TASK_STAGE_SETTING_KEY_ARCHIVE) {
+            if ((((s_entitlementTestTask.m_ptr != (bdRemoteTask *)0x0) &&
+                 (iVar3 = (**(code **)((s_entitlementTestTask.m_ptr)->_padding_ + 4))(), iVar3 != 1)
+                 ) && (bVar8 = bdRemoteTask::getErrorCode(s_entitlementTestTask.m_ptr), iVar3 == 2))
+               && (bVar8 == BD_NO_ERROR)) {
+              s_bEntitlementProcessingTest = false;
+              s_entitlementTaskStage[iVar2] = ENTITLEMENTS_TASK_STAGE_ALL_DONE;
+              Com_Printf(0xe,
+                         "Finished granting entitlement through demonware.\nUnlock will not occur until entitlements are processed again. (periodically, or on game boot, or use Entitlement_ForceProcess.)\n"
+                        );
+            }
+          }
+          else if (EVar1 == ENTITLEMENTS_TASK_STAGE_WAITING_TO_GET_KEY_ARCHIVE) {
+            bVar9 = Entitlements_Online(iVar2);
+            if (bVar9) {
+              bVar9 = CL_DoesControllerIndexHaveALocalClientNum(iVar2,&local_60);
+              if ((bVar9) && (iVar4 = CL_IsCgameInitialized(local_60), iVar4 != 0)) {
+                bVar11 = true;
+              }
+              if (((int)(&DAT_84513c78)[iVar2] < iVar3) && (!bVar11)) {
+                bVar11 = Entitlements_GetKeyArchive(iVar2);
+                if (bVar11) {
+                  s_entitlementTaskStage[iVar2] = ENTITLEMENTS_TASK_STAGE_GETTING_KEY_ARCHIVE;
+                  s_needToDownloadEntitlements[iVar2] = false;
+                  __restgprlr_23();
+                  return;
+                }
+                Entitlements_RetryGetKeyArchive(iVar2);
                 __restgprlr_23();
                 return;
               }
             }
           }
-          else if ((cVar7 != '\0') && ((&DAT_84513cb8)[iVar3] != '\0')) {
-            (&DAT_84513c8c)[iVar3] = 0;
+          else if ((bVar9) && (s_needToDownloadEntitlements[iVar2] != false)) {
+            s_entitlementTaskStage[iVar2] = ENTITLEMENTS_TASK_STAGE_WAITING_TO_GET_KEY_ARCHIVE;
             __restgprlr_23();
             return;
           }
@@ -1776,17 +1926,17 @@ void Entitlements_ControllerUpdate(void)
 
 // 826FB7A8  Entitlements_ReProcessEntitlements  (social/entitlements.cpp:1435)
 
-void Entitlements_ReProcessEntitlements(void)
+void Entitlements_ReProcessEntitlements(int param_1)
 
 {
   int iVar1;
-  char cVar2;
+  bool bVar2;
   
-  iVar1 = __savegprlr_29();
-  if ((&DAT_84513c8c)[iVar1] == 5) {
-    cVar2 = Entitlements_CanWeProcessEntitlements(iVar1,0);
-    if (cVar2 == '\0') {
-      (&DAT_84513c8c)[iVar1] = 2;
+  iVar1 = __savegprlr_29(param_1);
+  if (s_entitlementTaskStage[iVar1] == ENTITLEMENTS_TASK_STAGE_ALL_DONE) {
+    bVar2 = Entitlements_CanWeProcessEntitlements(iVar1,false);
+    if (!bVar2) {
+      s_entitlementTaskStage[iVar1] = ENTITLEMENTS_TASK_STAGE_WAITING_TO_GIVE_ENTITLEMENTS;
       __restgprlr_29();
       return;
     }
@@ -1799,375 +1949,420 @@ void Entitlements_ReProcessEntitlements(void)
 
 // 826F92B0  Entitlements_ParseTitleOrIcon  (social/entitlements.cpp:1449)
 
-void Entitlements_ParseTitleOrIcon
-               (undefined8 param_1,undefined8 param_2,undefined1 *param_3,undefined8 param_4,
-               undefined8 param_5)
+bool Entitlements_ParseTitleOrIcon
+               (char **param_1,int param_2,bool *param_3,char *param_4,int param_5)
 
 {
-  undefined8 uVar1;
-  char *pcVar4;
+  char **ppcVar2;
+  char *pcVar3;
+  undefined1 uVar7;
+  uint uVar4;
   uint uVar5;
-  uint uVar6;
-  ulonglong uVar2;
-  undefined8 uVar3;
-  int iVar7;
-  undefined1 uVar8;
+  ulonglong uVar1;
+  int iVar6;
+  bool bVar8;
   
-  uVar1 = __savegprlr_25();
-  *param_3 = 0;
-  pcVar4 = (char *)Com_ParseOnLine();
-  if (pcVar4 == (char *)0x0) {
-    Com_PrintError(0x10,0xffffffff821af618,param_4,param_5);
-    Com_SkipRestOfLine(uVar1);
-    __restgprlr_25(0);
-    return;
+  ppcVar2 = (char **)__savegprlr_25(param_1);
+  *param_3 = false;
+  pcVar3 = Com_ParseOnLine(ppcVar2);
+  if (pcVar3 == (char *)0x0) {
+    Com_PrintError(0x10,"Entitlement Config Error: Expecting a %s key index on line %d\n");
+    Com_SkipRestOfLine(ppcVar2);
+    uVar7 = __restgprlr_25(0);
+    return (bool)uVar7;
   }
-  uVar5 = atoi(pcVar4);
-  if (DAT_84513c88 <= (int)(uVar5 & 0xffff)) {
-    Com_PrintError(0x10,0xffffffff821af5b8,param_5);
-    Com_SkipRestOfLine(uVar1);
-    __restgprlr_25(0);
-    return;
+  uVar4 = atoi(pcVar3);
+  if (s_numKeyPairsToRead <= (int)(uVar4 & 0xffff)) {
+    Com_PrintError(0x10,
+                   "Entitlement Config Error: Entitlement key index is outside the keys to read range on line %d\n"
+                  );
+    Com_SkipRestOfLine(ppcVar2);
+    uVar7 = __restgprlr_25(0);
+    return (bool)uVar7;
   }
-  pcVar4 = (char *)Com_ParseOnLine(uVar1);
-  if (pcVar4 == (char *)0x0) {
-    Com_PrintError(0x10,0xffffffff821af578,param_4,param_5);
-    Com_SkipRestOfLine(uVar1);
-    __restgprlr_25(0);
-    return;
+  pcVar3 = Com_ParseOnLine(ppcVar2);
+  if (pcVar3 == (char *)0x0) {
+    Com_PrintError(0x10,"Entitlement Config Error: Expecting a %s bit index on line %d\n");
+    Com_SkipRestOfLine(ppcVar2);
+    uVar7 = __restgprlr_25(0);
+    return (bool)uVar7;
   }
-  uVar6 = atoi(pcVar4);
-  if (0x3f < ((ulonglong)uVar6 & 0xffff)) {
-    Com_PrintError(0x10,0xffffffff821af538,param_5);
-    Com_SkipRestOfLine(uVar1);
-    __restgprlr_25(0);
-    return;
+  uVar5 = atoi(pcVar3);
+  if (0x3f < ((ulonglong)uVar5 & 0xffff)) {
+    Com_PrintError(0x10,"Entitlement Config Error: Bit index out of range on line %d\n");
+    Com_SkipRestOfLine(ppcVar2);
+    uVar7 = __restgprlr_25(0);
+    return (bool)uVar7;
   }
-  uVar2 = Entitlements_GetKeyValue(param_2,uVar5 & 0xffff);
-  if ((uVar2 & 1L << ((ulonglong)uVar6 & 0x7f)) != 0) {
-    uVar3 = Com_ParseOnLine(uVar1);
-    iVar7 = I_stricmp(param_4,0xffffffff820268e0);
-    if (iVar7 == 0) {
-      uVar8 = Entitlements_SetTitleUnlocked(param_2,uVar3);
+  uVar1 = Entitlements_GetKeyValue(param_2,(ushort)uVar4);
+  if ((uVar1 & 1L << ((ulonglong)uVar5 & 0x7f)) != 0) {
+    pcVar3 = Com_ParseOnLine(ppcVar2);
+    iVar6 = I_stricmp(param_4,"title");
+    if (iVar6 == 0) {
+      bVar8 = Entitlements_SetTitleUnlocked(param_2,pcVar3);
     }
     else {
-      iVar7 = I_stricmp(param_4,0xffffffff82026910);
-      if (iVar7 != 0) {
-        MyAssertHandler(0xffffffff821af320,0x5e1,0,0xffffffff82000f98,0xffffffff821af514);
+      iVar6 = I_stricmp(param_4,"icon");
+      if (iVar6 != 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\entitlements.cpp",
+                        0x5e1,0,"%s");
       }
-      uVar8 = Entitlements_SetIconUnlocked(param_2,uVar3);
+      bVar8 = Entitlements_SetIconUnlocked(param_2,pcVar3);
     }
-    *param_3 = uVar8;
+    *param_3 = bVar8;
   }
-  Com_SkipRestOfLine(uVar1);
-  __restgprlr_25(1);
-  return;
+  Com_SkipRestOfLine(ppcVar2);
+  uVar7 = __restgprlr_25(1);
+  return (bool)uVar7;
 }
 
 
 // 826F9480  Entitlements_ParseCustomClass  (social/entitlements.cpp:1515)
 
-void Entitlements_ParseCustomClass
-               (undefined8 param_1,undefined8 param_2,undefined1 *param_3,undefined8 param_4)
+bool Entitlements_ParseCustomClass(char **param_1,int param_2,bool *param_3,int param_4)
 
 {
-  undefined8 uVar1;
-  char *_Str;
-  uint uVar2;
-  int iVar3;
-  int iVar4;
+  char **ppcVar2;
+  char *pcVar3;
+  undefined1 uVar8;
+  uint uVar4;
+  long64 lVar1;
+  int iVar6;
+  int iVar7;
+  longlong lVar9;
+  longlong lVar10;
+  int iVar5;
   
-  uVar1 = __savegprlr_25();
-  *param_3 = 0;
-  _Str = (char *)Com_ParseOnLine();
-  if (_Str == (char *)0x0) {
-    Com_PrintError(0x10,0xffffffff821af738,param_4);
-    Com_SkipRestOfLine(uVar1);
-    __restgprlr_25(0);
-    return;
+  lVar10 = (longlong)(int)param_3;
+  lVar9 = (longlong)param_2;
+  ppcVar2 = (char **)__savegprlr_25(param_1,lVar9,lVar10,param_4);
+  *(undefined1 *)lVar10 = 0;
+  pcVar3 = Com_ParseOnLine(ppcVar2);
+  if (pcVar3 == (char *)0x0) {
+    Com_PrintError(0x10,"Entitlement Config Error: Expecting a customClass key index on line %d.\n")
+    ;
+    Com_SkipRestOfLine(ppcVar2);
+    uVar8 = __restgprlr_25(0);
+    return (bool)uVar8;
   }
-  uVar2 = atoi(_Str);
-  if (DAT_84513c88 <= (int)(uVar2 & 0xffff)) {
-    Com_PrintError(0x10,0xffffffff821af6d8,param_4);
-    Com_SkipRestOfLine(uVar1);
-    __restgprlr_25(0);
-    return;
+  uVar4 = atoi(pcVar3);
+  if (s_numKeyPairsToRead <= (int)(uVar4 & 0xffff)) {
+    Com_PrintError(0x10,
+                   "Entitlement Config Error: Entitlement key index is outside the keys to read range on line %d.\n"
+                  );
+    Com_SkipRestOfLine(ppcVar2);
+    uVar8 = __restgprlr_25(0);
+    return (bool)uVar8;
   }
-  iVar3 = Entitlements_GetKeyValue(param_2);
-  iVar4 = LiveStorage_PlayerDataGetIntByName(param_2,0xffffffff82088aa0);
-  if (iVar3 < iVar4) {
-    Com_PrintError(0x10,0xffffffff821af658,param_4);
+  iVar5 = (int)lVar9;
+  lVar1 = Entitlements_GetKeyValue(iVar5,(ushort)uVar4);
+  iVar6 = (int)lVar1;
+  iVar7 = LiveStorage_PlayerDataGetIntByName(iVar5,"extraCustomClassesEntitlement");
+  if (iVar6 < iVar7) {
+    Com_PrintError(0x10,
+                   "Entitlements: Suspicious activity: Player data contains more custom classes unlocked through entitlement than demonware says.\n"
+                  );
   }
-  if (iVar3 != iVar4) {
-    LiveStorage_PlayerDataSetIntByName(param_2,0xffffffff82088aa0,iVar3);
-    *param_3 = 1;
+  if (iVar6 != iVar7) {
+    LiveStorage_PlayerDataSetIntByName(iVar5,"extraCustomClassesEntitlement",iVar6);
+    *(undefined1 *)lVar10 = 1;
   }
-  Com_SkipRestOfLine(uVar1);
-  __restgprlr_25(1);
-  return;
+  Com_SkipRestOfLine(ppcVar2);
+  uVar8 = __restgprlr_25(1);
+  return (bool)uVar8;
 }
 
 
 // 826F9590  Entitlements_ParseCamo  (social/entitlements.cpp:1561)
 
-void Entitlements_ParseCamo
-               (undefined8 param_1,undefined8 param_2,undefined1 *param_3,undefined8 param_4)
+bool Entitlements_ParseCamo(char **param_1,int param_2,bool *param_3,int param_4)
 
 {
-  undefined8 uVar1;
-  char *pcVar4;
+  char **ppcVar2;
+  char *pcVar3;
+  undefined1 uVar7;
+  uint uVar4;
   uint uVar5;
-  uint uVar6;
-  ulonglong uVar2;
-  undefined8 uVar3;
-  int iVar7;
-  char cVar8;
-  int local_60 [2];
-  undefined1 auStack_58 [88];
+  ulonglong uVar1;
+  int iVar6;
+  bool bVar8;
+  longlong lVar9;
+  longlong lVar10;
+  StringTable *local_60 [2];
+  StructuredDataBuffer aSStack_58 [11];
   
-  uVar1 = __savegprlr_24();
-  *param_3 = 0;
-  pcVar4 = (char *)Com_ParseOnLine();
-  if (pcVar4 == (char *)0x0) {
-    Com_PrintError(0x10,0xffffffff821af850,param_4);
-    Com_SkipRestOfLine(uVar1);
-    __restgprlr_24(0);
-    return;
+  lVar10 = (longlong)(int)param_3;
+  lVar9 = (longlong)param_2;
+  ppcVar2 = (char **)__savegprlr_24(param_1,lVar9,lVar10,param_4);
+  *(undefined1 *)lVar10 = 0;
+  pcVar3 = Com_ParseOnLine(ppcVar2);
+  if (pcVar3 == (char *)0x0) {
+    Com_PrintError(0x10,"Entitlement Config Error: Expecting a camo key index on line %d.\n");
+    Com_SkipRestOfLine(ppcVar2);
+    uVar7 = __restgprlr_24(0);
+    return (bool)uVar7;
   }
-  uVar5 = atoi(pcVar4);
-  if (DAT_84513c88 <= (int)(uVar5 & 0xffff)) {
-    Com_PrintError(0x10,0xffffffff821af6d8,param_4);
-    Com_SkipRestOfLine(uVar1);
-    __restgprlr_24(0);
-    return;
+  uVar4 = atoi(pcVar3);
+  if (s_numKeyPairsToRead <= (int)(uVar4 & 0xffff)) {
+    Com_PrintError(0x10,
+                   "Entitlement Config Error: Entitlement key index is outside the keys to read range on line %d.\n"
+                  );
+    Com_SkipRestOfLine(ppcVar2);
+    uVar7 = __restgprlr_24(0);
+    return (bool)uVar7;
   }
-  pcVar4 = (char *)Com_ParseOnLine(uVar1);
-  if (pcVar4 == (char *)0x0) {
-    Com_PrintError(0x10,0xffffffff821af808,param_4);
-    Com_SkipRestOfLine(uVar1);
-    __restgprlr_24(0);
-    return;
+  pcVar3 = Com_ParseOnLine(ppcVar2);
+  if (pcVar3 == (char *)0x0) {
+    Com_PrintError(0x10,"Entitlement Config Error: Expecting a camo bit index on line %d.\n");
+    Com_SkipRestOfLine(ppcVar2);
+    uVar7 = __restgprlr_24(0);
+    return (bool)uVar7;
   }
-  uVar6 = atoi(pcVar4);
-  if (0x3f < ((ulonglong)uVar6 & 0xffff)) {
-    Com_PrintError(0x10,0xffffffff821af7c4,param_4);
-    Com_SkipRestOfLine(uVar1);
-    __restgprlr_24(0);
-    return;
+  uVar5 = atoi(pcVar3);
+  if (0x3f < ((ulonglong)uVar5 & 0xffff)) {
+    Com_PrintError(0x10,"Entitlement Config Error: Bit index out of range on line %d.\n");
+    Com_SkipRestOfLine(ppcVar2);
+    uVar7 = __restgprlr_24(0);
+    return (bool)uVar7;
   }
-  uVar2 = Entitlements_GetKeyValue(param_2,uVar5 & 0xffff);
-  if ((uVar2 & 1L << ((ulonglong)uVar6 & 0x7f)) != 0) {
-    uVar3 = Com_ParseOnLine(uVar1);
-    StringTable_GetAsset(0xffffffff821af7b0,local_60);
-    if (local_60[0] == 0) {
-      MyAssertHandler(0xffffffff821af320,0x64e,0,0xffffffff82000f98,0xffffffff821af7a4);
+  uVar1 = Entitlements_GetKeyValue((int)lVar9,(ushort)uVar4);
+  if ((uVar1 & 1L << ((ulonglong)uVar5 & 0x7f)) != 0) {
+    pcVar3 = Com_ParseOnLine(ppcVar2);
+    StringTable_GetAsset("mp/camoTable.csv",local_60);
+    if (local_60[0] == (StringTable *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\entitlements.cpp",
+                      0x64e,0,"%s");
     }
-    uVar3 = StringTable_LookupRowNumForValue(local_60[0],1,uVar3);
-    if (-1 < (int)uVar3) {
-      pcVar4 = (char *)StringTable_GetColumnValueForRow(local_60[0],uVar3,6);
-      iVar7 = atoi(pcVar4);
-      if (iVar7 < 0) {
-        MyAssertHandler(0xffffffff821af320,0x658,0,0xffffffff82000f98,0xffffffff821af794);
+    iVar6 = StringTable_LookupRowNumForValue(local_60[0],1,pcVar3);
+    if (-1 < iVar6) {
+      pcVar3 = StringTable_GetColumnValueForRow(local_60[0],iVar6,6);
+      iVar6 = atoi(pcVar3);
+      if (iVar6 < 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\entitlements.cpp",
+                        0x658,0,"%s");
       }
-      LiveStorage_GetPlayerUnlockDataBuffer(auStack_58,param_2);
-      cVar8 = LiveStorage_PlayerDataGetArrayBoolByIndex(auStack_58,0xffffffff821af784,iVar7);
-      if (cVar8 == '\0') {
-        LiveStorage_PlayerDataSetArrayBoolByIndex(auStack_58,0xffffffff821af784,iVar7,1);
-        *param_3 = 1;
+      LiveStorage_GetPlayerUnlockDataBuffer(aSStack_58,(int)lVar9);
+      bVar8 = LiveStorage_PlayerDataGetArrayBoolByIndex(aSStack_58,"unlockedCamo",iVar6);
+      if (!bVar8) {
+        LiveStorage_PlayerDataSetArrayBoolByIndex(aSStack_58,"unlockedCamo",iVar6,true);
+        *(undefined1 *)lVar10 = 1;
       }
     }
   }
-  Com_SkipRestOfLine(uVar1);
-  __restgprlr_24(1);
-  return;
+  Com_SkipRestOfLine(ppcVar2);
+  uVar7 = __restgprlr_24(1);
+  return (bool)uVar7;
 }
 
 
 // 826F97C0  Entitlements_ParseCustomReticle  (social/entitlements.cpp:1642)
 
-void Entitlements_ParseCustomReticle
-               (undefined8 param_1,undefined8 param_2,undefined1 *param_3,undefined8 param_4)
+bool Entitlements_ParseCustomReticle(char **param_1,int param_2,bool *param_3,int param_4)
 
 {
-  undefined8 uVar1;
+  char **ppcVar2;
   char *pcVar3;
+  undefined1 uVar7;
   uint uVar4;
   uint uVar5;
+  long64 lVar1;
   int iVar6;
-  undefined8 uVar2;
-  char cVar7;
-  int local_60 [2];
-  undefined1 auStack_58 [88];
+  bool bVar8;
+  longlong lVar9;
+  longlong lVar10;
+  StringTable *local_60 [2];
+  StructuredDataBuffer aSStack_58 [11];
   
-  uVar1 = __savegprlr_24();
-  *param_3 = 0;
-  pcVar3 = (char *)Com_ParseOnLine();
+  lVar10 = (longlong)(int)param_3;
+  lVar9 = (longlong)param_2;
+  ppcVar2 = (char **)__savegprlr_24(param_1,lVar9,lVar10,param_4);
+  *(undefined1 *)lVar10 = 0;
+  pcVar3 = Com_ParseOnLine(ppcVar2);
   if (pcVar3 == (char *)0x0) {
-    Com_PrintError(0x10,0xffffffff821af8d0,param_4);
-    Com_SkipRestOfLine(uVar1);
-    __restgprlr_24(0);
-    return;
+    Com_PrintError(0x10,
+                   "Entitlement Config Error: Expecting a custom reticle key index on line %d.\n");
+    Com_SkipRestOfLine(ppcVar2);
+    uVar7 = __restgprlr_24(0);
+    return (bool)uVar7;
   }
   uVar4 = atoi(pcVar3);
-  if (DAT_84513c88 <= (int)(uVar4 & 0xffff)) {
-    Com_PrintError(0x10,0xffffffff821af6d8,param_4);
-    Com_SkipRestOfLine(uVar1);
-    __restgprlr_24(0);
-    return;
+  if (s_numKeyPairsToRead <= (int)(uVar4 & 0xffff)) {
+    Com_PrintError(0x10,
+                   "Entitlement Config Error: Entitlement key index is outside the keys to read range on line %d.\n"
+                  );
+    Com_SkipRestOfLine(ppcVar2);
+    uVar7 = __restgprlr_24(0);
+    return (bool)uVar7;
   }
-  pcVar3 = (char *)Com_ParseOnLine(uVar1);
+  pcVar3 = Com_ParseOnLine(ppcVar2);
   if (pcVar3 == (char *)0x0) {
-    Com_PrintError(0x10,0xffffffff821af808,param_4);
-    Com_SkipRestOfLine(uVar1);
-    __restgprlr_24(0);
-    return;
+    Com_PrintError(0x10,"Entitlement Config Error: Expecting a camo bit index on line %d.\n");
+    Com_SkipRestOfLine(ppcVar2);
+    uVar7 = __restgprlr_24(0);
+    return (bool)uVar7;
   }
   uVar5 = atoi(pcVar3);
   if (0x3f < ((ulonglong)uVar5 & 0xffff)) {
-    Com_PrintError(0x10,0xffffffff821af7c4,param_4);
-    Com_SkipRestOfLine(uVar1);
-    __restgprlr_24(0);
-    return;
+    Com_PrintError(0x10,"Entitlement Config Error: Bit index out of range on line %d.\n");
+    Com_SkipRestOfLine(ppcVar2);
+    uVar7 = __restgprlr_24(0);
+    return (bool)uVar7;
   }
-  iVar6 = Entitlements_GetKeyValue(param_2,uVar4 & 0xffff);
-  if (((longlong)iVar6 & 1L << ((ulonglong)uVar5 & 0x7f)) != 0) {
-    uVar2 = Com_ParseOnLine(uVar1);
-    StringTable_GetAsset(0xffffffff821af8b8,local_60);
-    if (local_60[0] == 0) {
-      MyAssertHandler(0xffffffff821af320,0x6a0,0,0xffffffff82000f98,0xffffffff821af8a8);
+  lVar1 = Entitlements_GetKeyValue((int)lVar9,(ushort)uVar4);
+  if (((longlong)(int)lVar1 & 1L << ((ulonglong)uVar5 & 0x7f)) != 0) {
+    pcVar3 = Com_ParseOnLine(ppcVar2);
+    StringTable_GetAsset("mp/reticleTable.csv",local_60);
+    if (local_60[0] == (StringTable *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\entitlements.cpp",
+                      0x6a0,0,"%s");
     }
-    uVar2 = StringTable_LookupRowNumForValue(local_60[0],1,uVar2);
-    if (-1 < (int)uVar2) {
-      pcVar3 = (char *)StringTable_GetColumnValueForRow(local_60[0],uVar2,6);
+    iVar6 = StringTable_LookupRowNumForValue(local_60[0],1,pcVar3);
+    if (-1 < iVar6) {
+      pcVar3 = StringTable_GetColumnValueForRow(local_60[0],iVar6,6);
       iVar6 = atoi(pcVar3);
       if (iVar6 < 0) {
-        MyAssertHandler(0xffffffff821af320,0x6aa,0,0xffffffff82000f98,0xffffffff821af794);
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\entitlements.cpp",
+                        0x6aa,0,"%s");
       }
-      LiveStorage_GetPlayerUnlockDataBuffer(auStack_58,param_2);
-      cVar7 = LiveStorage_PlayerDataGetArrayBoolByIndex(auStack_58,0xffffffff821af894,iVar6);
-      if (cVar7 == '\0') {
-        LiveStorage_PlayerDataSetArrayBoolByIndex(auStack_58,0xffffffff821af894,iVar6,1);
-        *param_3 = 1;
+      LiveStorage_GetPlayerUnlockDataBuffer(aSStack_58,(int)lVar9);
+      bVar8 = LiveStorage_PlayerDataGetArrayBoolByIndex(aSStack_58,"unlockedReticles",iVar6);
+      if (!bVar8) {
+        LiveStorage_PlayerDataSetArrayBoolByIndex(aSStack_58,"unlockedReticles",iVar6,true);
+        *(undefined1 *)lVar10 = 1;
       }
     }
   }
-  Com_SkipRestOfLine(uVar1);
-  __restgprlr_24(1);
-  return;
+  Com_SkipRestOfLine(ppcVar2);
+  uVar7 = __restgprlr_24(1);
+  return (bool)uVar7;
 }
 
 
 // 826F99F8  Entitlements_ParsePersistentItem  (social/entitlements.cpp:1724)
 
-void Entitlements_ParsePersistentItem
-               (undefined8 param_1,undefined8 param_2,undefined1 *param_3,undefined8 param_4,
-               undefined8 param_5)
+bool Entitlements_ParsePersistentItem
+               (char **param_1,int param_2,bool *param_3,char *param_4,int param_5)
 
 {
-  undefined8 uVar1;
+  char **ppcVar2;
   char *pcVar3;
+  undefined1 uVar6;
   uint uVar4;
   uint uVar5;
-  int iVar6;
-  undefined8 uVar2;
-  char cVar7;
-  undefined1 auStack_50 [80];
+  long64 lVar1;
+  bool bVar7;
+  StructuredDataBuffer aSStack_50 [10];
   
-  uVar1 = __savegprlr_25();
-  *param_3 = 0;
-  pcVar3 = (char *)Com_ParseOnLine();
+  ppcVar2 = (char **)__savegprlr_25(param_1);
+  *param_3 = false;
+  pcVar3 = Com_ParseOnLine(ppcVar2);
   if (pcVar3 == (char *)0x0) {
-    Com_PrintError(0x10,0xffffffff821af8d0,param_5);
-    Com_SkipRestOfLine(uVar1);
-    __restgprlr_25(0);
-    return;
+    Com_PrintError(0x10,
+                   "Entitlement Config Error: Expecting a custom reticle key index on line %d.\n");
+    Com_SkipRestOfLine(ppcVar2);
+    uVar6 = __restgprlr_25(0);
+    return (bool)uVar6;
   }
   uVar4 = atoi(pcVar3);
-  if (DAT_84513c88 <= (int)(uVar4 & 0xffff)) {
-    Com_PrintError(0x10,0xffffffff821af6d8,param_5);
-    Com_SkipRestOfLine(uVar1);
-    __restgprlr_25(0);
-    return;
+  if (s_numKeyPairsToRead <= (int)(uVar4 & 0xffff)) {
+    Com_PrintError(0x10,
+                   "Entitlement Config Error: Entitlement key index is outside the keys to read range on line %d.\n"
+                  );
+    Com_SkipRestOfLine(ppcVar2);
+    uVar6 = __restgprlr_25(0);
+    return (bool)uVar6;
   }
-  pcVar3 = (char *)Com_ParseOnLine(uVar1);
+  pcVar3 = Com_ParseOnLine(ppcVar2);
   if (pcVar3 == (char *)0x0) {
-    Com_PrintError(0x10,0xffffffff821af808,param_5);
-    Com_SkipRestOfLine(uVar1);
-    __restgprlr_25(0);
-    return;
+    Com_PrintError(0x10,"Entitlement Config Error: Expecting a camo bit index on line %d.\n");
+    Com_SkipRestOfLine(ppcVar2);
+    uVar6 = __restgprlr_25(0);
+    return (bool)uVar6;
   }
   uVar5 = atoi(pcVar3);
   if (0x3f < ((ulonglong)uVar5 & 0xffff)) {
-    Com_PrintError(0x10,0xffffffff821af7c4,param_5);
-    Com_SkipRestOfLine(uVar1);
-    __restgprlr_25(0);
-    return;
+    Com_PrintError(0x10,"Entitlement Config Error: Bit index out of range on line %d.\n");
+    Com_SkipRestOfLine(ppcVar2);
+    uVar6 = __restgprlr_25(0);
+    return (bool)uVar6;
   }
-  iVar6 = Entitlements_GetKeyValue(param_2,uVar4 & 0xffff);
-  if (((longlong)iVar6 & 1L << ((ulonglong)uVar5 & 0x7f)) != 0) {
-    uVar2 = Com_ParseOnLine(uVar1);
-    LiveStorage_GetPlayerUnlockDataBuffer(auStack_50,param_2);
-    cVar7 = LiveStorage_PlayerDataGetArrayBoolByName(auStack_50,param_4,uVar2);
-    if (cVar7 == '\0') {
-      LiveStorage_PlayerDataSetArrayBoolByName(auStack_50,param_4,uVar2,1);
-      *param_3 = 1;
+  lVar1 = Entitlements_GetKeyValue(param_2,(ushort)uVar4);
+  if (((longlong)(int)lVar1 & 1L << ((ulonglong)uVar5 & 0x7f)) != 0) {
+    pcVar3 = Com_ParseOnLine(ppcVar2);
+    LiveStorage_GetPlayerUnlockDataBuffer(aSStack_50,param_2);
+    bVar7 = LiveStorage_PlayerDataGetArrayBoolByName(aSStack_50,param_4,pcVar3);
+    if (!bVar7) {
+      LiveStorage_PlayerDataSetArrayBoolByName(aSStack_50,param_4,pcVar3,true);
+      *param_3 = true;
     }
   }
-  Com_SkipRestOfLine(uVar1);
-  __restgprlr_25(1);
-  return;
+  Com_SkipRestOfLine(ppcVar2);
+  uVar6 = __restgprlr_25(1);
+  return (bool)uVar6;
 }
 
 
 // 826F9B90  Entitlements_ParsePrestigeCoin  (social/entitlements.cpp:1793)
 
-void Entitlements_ParsePrestigeCoin
-               (undefined8 param_1,undefined8 param_2,undefined1 *param_3,undefined8 param_4)
+bool Entitlements_ParsePrestigeCoin(char **param_1,int param_2,bool *param_3,int param_4)
 
 {
-  undefined8 uVar1;
-  char *_Str;
+  char **ppcVar2;
+  char *pcVar3;
+  undefined1 uVar9;
   uint uVar4;
+  long64 lVar1;
+  int iVar6;
+  int iVar7;
+  int iVar8;
+  longlong lVar10;
+  longlong lVar11;
   int iVar5;
-  longlong lVar2;
-  longlong lVar3;
   
-  uVar1 = __savegprlr_24();
-  *param_3 = 0;
-  _Str = (char *)Com_ParseOnLine();
-  if (_Str == (char *)0x0) {
-    Com_PrintError(0x10,0xffffffff821af9c0,param_4);
-    Com_SkipRestOfLine(uVar1);
-    __restgprlr_24(0);
-    return;
+  lVar11 = (longlong)(int)param_3;
+  lVar10 = (longlong)param_2;
+  ppcVar2 = (char **)__savegprlr_24(param_1,lVar10,lVar11,param_4);
+  *(undefined1 *)lVar11 = 0;
+  pcVar3 = Com_ParseOnLine(ppcVar2);
+  if (pcVar3 == (char *)0x0) {
+    Com_PrintError(0x10,
+                   "Entitlement Config Error: Expecting a prestige coin key index on line %d.\n");
+    Com_SkipRestOfLine(ppcVar2);
+    uVar9 = __restgprlr_24(0);
+    return (bool)uVar9;
   }
-  uVar4 = atoi(_Str);
-  if (DAT_84513c88 <= (int)(uVar4 & 0xffff)) {
-    Com_PrintError(0x10,0xffffffff821af6d8,param_4);
-    Com_SkipRestOfLine(uVar1);
-    __restgprlr_24(0);
-    return;
+  uVar4 = atoi(pcVar3);
+  if (s_numKeyPairsToRead <= (int)(uVar4 & 0xffff)) {
+    Com_PrintError(0x10,
+                   "Entitlement Config Error: Entitlement key index is outside the keys to read range on line %d.\n"
+                  );
+    Com_SkipRestOfLine(ppcVar2);
+    uVar9 = __restgprlr_24(0);
+    return (bool)uVar9;
   }
-  iVar5 = Entitlements_GetKeyValue(param_2);
-  if (iVar5 != 0) {
-    lVar2 = LiveStorage_PlayerDataGetIntByName(param_2,0xffffffff821af9a0);
-    if (iVar5 < (int)lVar2) {
-      Com_PrintError(0x10,0xffffffff821af920,param_4);
-      Com_SkipRestOfLine(uVar1);
-      __restgprlr_24(1);
-      return;
+  iVar5 = (int)lVar10;
+  lVar1 = Entitlements_GetKeyValue(iVar5,(ushort)uVar4);
+  iVar6 = (int)lVar1;
+  if (iVar6 != 0) {
+    iVar7 = LiveStorage_PlayerDataGetIntByName(iVar5,"prestigeShopTokensEntitlement");
+    if (iVar6 < iVar7) {
+      Com_PrintError(0x10,
+                     "Entitlements: Suspicious activity: Player data contains more prestige coins unlocked through entitlement than demonware says.\n"
+                    );
+      Com_SkipRestOfLine(ppcVar2);
+      uVar9 = __restgprlr_24(1);
+      return (bool)uVar9;
     }
-    if (iVar5 != (int)lVar2) {
-      lVar3 = LiveStorage_PlayerDataGetIntByName(param_2,0xffffffff821af2a0);
-      LiveStorage_PlayerDataSetIntByName(param_2,0xffffffff821af9a0,(longlong)iVar5);
-      LiveStorage_PlayerDataSetIntByName
-                (param_2,0xffffffff821af2a0,(lVar3 - lVar2) + (longlong)iVar5);
-      *param_3 = 1;
+    if (iVar6 != iVar7) {
+      iVar8 = LiveStorage_PlayerDataGetIntByName(iVar5,"prestigeShopTokens");
+      LiveStorage_PlayerDataSetIntByName(iVar5,"prestigeShopTokensEntitlement",iVar6);
+      LiveStorage_PlayerDataSetIntByName(iVar5,"prestigeShopTokens",(iVar8 - iVar7) + iVar6);
+      *(undefined1 *)lVar11 = 1;
     }
   }
-  Com_SkipRestOfLine(uVar1);
-  __restgprlr_24(1);
-  return;
+  Com_SkipRestOfLine(ppcVar2);
+  uVar9 = __restgprlr_24(1);
+  return (bool)uVar9;
 }
 
 
@@ -2179,24 +2374,26 @@ void Entitlements_Fetch(int param_1)
   if ((&DAT_84513ca0)[param_1] == '\0') {
     return;
   }
-  (&DAT_84513cb8)[param_1] = 1;
+  s_needToDownloadEntitlements[param_1] = true;
   return;
 }
 
 
 // 829407A0  `dynamic_atexit_destructor_for_'s_entitlementTestKeyPair''  (line unknown)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void _dynamic_atexit_destructor_for__s_entitlementTestKeyPair__(void)
 
 {
   longlong lVar1;
-  longlong lVar2;
+  bdReference<bdRemoteTask> *this;
   
   lVar1 = 0xf;
-  lVar2 = -0x7bae3e18;
+  this = &s_entitlementTestTask;
   do {
-    lVar2 = lVar2 + -0x10;
-    bdTaskResult___bdTaskResult(lVar2);
+    this = this + -4;
+    bdTaskResult::~bdTaskResult((bdTaskResult *)this);
     lVar1 = lVar1 + -1;
   } while (-1 < lVar1);
   return;
@@ -2204,6 +2401,8 @@ void _dynamic_atexit_destructor_for__s_entitlementTestKeyPair__(void)
 
 
 // 829407F0  `dynamic_atexit_destructor_for_'g_DWEntitlementTask''  (line unknown)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_atexit_destructor_for__g_DWEntitlementTask__(void)
 
@@ -2214,16 +2413,16 @@ void _dynamic_atexit_destructor_for__g_DWEntitlementTask__(void)
   longlong lVar4;
   uint *puVar5;
   longlong lVar6;
-  uint *puVar7;
+  bdKeyValuePair *pbVar7;
   char in_RESERVE;
   byte in_cr0;
   
   __savegprlr_29();
   lVar6 = 3;
-  puVar7 = (uint *)&DAT_8451c0e8;
+  pbVar7 = s_entitlementTestKeyPair;
   do {
-    puVar7 = puVar7 + -1;
-    uVar2 = *puVar7;
+    pbVar7 = (bdKeyValuePair *)((int)&pbVar7[-1].m_value + 4);
+    uVar2 = pbVar7->_padding_;
     if ((ulonglong)uVar2 != 0) {
       lVar4 = (ulonglong)uVar2 + 4;
       do {
@@ -2235,11 +2434,11 @@ void _dynamic_atexit_destructor_for__g_DWEntitlementTask__(void)
         }
       } while (!(bool)(in_cr0 >> 1 & 1));
       if (*(int *)(uVar2 + 4) == 0) {
-        puVar1 = (undefined4 *)*puVar7;
+        puVar1 = (undefined4 *)pbVar7->_padding_;
         if (puVar1 != (undefined4 *)0x0) {
           (**(code **)*puVar1)(puVar1,1);
         }
-        *puVar7 = 0;
+        pbVar7->_padding_ = 0;
       }
     }
     lVar6 = lVar6 + -1;
@@ -2252,17 +2451,19 @@ void _dynamic_atexit_destructor_for__g_DWEntitlementTask__(void)
 
 // 82940880  `dynamic_atexit_destructor_for_'s_keyArchiveValues''  (line unknown)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void _dynamic_atexit_destructor_for__s_keyArchiveValues__(void)
 
 {
   longlong lVar1;
-  longlong lVar2;
+  bdReference<bdRemoteTask> *this;
   
   lVar1 = 0x3f;
-  lVar2 = -0x7bae3f28;
+  this = g_DWEntitlementTask;
   do {
-    lVar2 = lVar2 + -0x10;
-    bdTaskResult___bdTaskResult(lVar2);
+    this = this + -4;
+    bdTaskResult::~bdTaskResult((bdTaskResult *)this);
     lVar1 = lVar1 + -1;
   } while (-1 < lVar1);
   return;
@@ -2271,10 +2472,12 @@ void _dynamic_atexit_destructor_for__s_keyArchiveValues__(void)
 
 // 829408D0  `dynamic_atexit_destructor_for_'s_entitlementTestTask''  (line unknown)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void _dynamic_atexit_destructor_for__s_entitlementTestTask__(void)
 
 {
-  bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(0xffffffff8451c1e8);
+  bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(&s_entitlementTestTask);
   return;
 }
 

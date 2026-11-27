@@ -2,14 +2,14 @@
 
 // 828B50A0  XapiFormatTimeOut  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/xapiformattimeout.c:47)
 
-longlong * XapiFormatTimeOut(longlong *param_1,uint param_2)
+_LARGE_INTEGER * XapiFormatTimeOut(_LARGE_INTEGER *param_1,ulong param_2)
 
 {
   if (param_2 == 0xffffffff) {
-    param_1 = (longlong *)0x0;
+    param_1 = (_LARGE_INTEGER *)0x0;
   }
   else {
-    *param_1 = (ulonglong)param_2 * -10000;
+    param_1->QuadPart = (ulonglong)param_2 * -10000;
   }
   return param_1;
 }

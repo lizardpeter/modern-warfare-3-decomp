@@ -2,25 +2,49 @@
 
 // 826E0F58  Turret_PlaceSentry_RegisterDvars  (turret/turret_placement.cpp:65)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Turret_PlaceSentry_RegisterDvars(void)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
-  undefined8 uVar3;
+  ushort uVar1;
+  IMAGE_DOS_HEADER *pIVar2;
+  char *pcVar3;
+  double dVar4;
+  double dVar5;
+  double dVar6;
   
-  DAT_844cf244 = Dvar_RegisterBool(0xffffffff821a7fb8,0,0,0xffffffff821a7fd0);
-  uVar3 = 0x47efffffe0000000;
-  uVar2 = 0;
-  uVar1 = 0x4034000000000000;
-  DAT_844cf254 = Dvar_RegisterVec3(0x4031000000000000,0x4034000000000000,0x4024000000000000,0,
-                                   0x47efffffe0000000,0xffffffff821a7f6c);
-  DAT_844cf240 = Dvar_RegisterFloat(uVar1,uVar2,uVar3,0xffffffff821a7f48);
-  DAT_844cf258 = Dvar_RegisterFloat(0x403e000000000000,uVar2,uVar3,0xffffffff821a7eb4);
-  DAT_844cf248 = Dvar_RegisterFloat(0x4014000000000000,uVar2,uVar3,0xffffffff821a7e88);
-  DAT_844cf250 = Dvar_RegisterFloat(0x4045000000000000,uVar2,uVar3,0xffffffff821a7dcc);
-  DAT_844cf24c = Dvar_RegisterFloat(uVar1,uVar2,uVar3,0xffffffff821a7d8c);
-  DAT_844cf25c = Dvar_RegisterFloat(0x3fe6666660000000,uVar2,uVar3,0xffffffff821a7d3c);
+  sentry_placement_debug =
+       Dvar_RegisterBool("sentry_placement_debug",false,0,"Enables sentry placement debug lines");
+  pIVar2 = &IMAGE_DOS_HEADER_82000000;
+  uVar1 = 0;
+  dVar6 = 3.4028234663852886e+38;
+  dVar5 = 0.0;
+  dVar4 = 20.0;
+  sentry_placement_feet_offset =
+       Dvar_RegisterVec3("sentry_placement_feet_offset",17.0,20.0,10.0,0.0,3.4028235e+38,0,
+                         IMAGE_DOS_HEADER_82000000.e_magic);
+  sentry_placement_feet_trace_dist_z =
+       Dvar_RegisterFloat("sentry_placement_feet_trace_dist_z",(float)dVar4,(float)dVar5,
+                          (float)dVar6,uVar1,pIVar2->e_magic);
+  pIVar2 = &IMAGE_DOS_HEADER_82000000;
+  uVar1 = 0;
+  sentry_placement_trace_radius =
+       Dvar_RegisterFloat("sentry_placement_trace_radius",30.0,(float)dVar5,(float)dVar6,0,
+                          IMAGE_DOS_HEADER_82000000.e_magic);
+  sentry_placement_trace_radius_canon_safety =
+       Dvar_RegisterFloat("sentry_placement_trace_radius_canon_safety",5.0,(float)dVar5,(float)dVar6
+                          ,uVar1,pIVar2->e_magic);
+  pcVar3 = "";
+  uVar1 = 0;
+  sentry_placement_trace_dist =
+       Dvar_RegisterFloat("sentry_placement_trace_dist",42.0,(float)dVar5,(float)dVar6,0,"");
+  sentry_placement_trace_pitch =
+       Dvar_RegisterFloat("sentry_placement_trace_pitch",(float)dVar4,(float)dVar5,(float)dVar6,
+                          uVar1,pcVar3);
+  sentry_placement_trace_min_normal =
+       Dvar_RegisterFloat("sentry_placement_trace_min_normal",(float)0x3f333333,(float)dVar5,
+                          (float)dVar6,0,IMAGE_DOS_HEADER_82000000.e_magic);
   return;
 }
 
@@ -28,18 +52,31 @@ void Turret_PlaceSentry_RegisterDvars(void)
 // 826E1120  Turret_PlaceSentry_Trace  (turret/turret_placement.cpp:85)
 
 void Turret_PlaceSentry_Trace
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-               undefined8 param_5,undefined8 param_6,undefined8 param_7)
+               (turret_handler param_1,trace_t *param_2,float *param_3,float *param_4,
+               Bounds *param_5,int param_6,int param_7)
 
 {
   uint uVar1;
+  longlong lVar2;
+  longlong lVar3;
+  longlong lVar4;
+  longlong lVar5;
+  longlong lVar6;
+  longlong lVar7;
   
-  uVar1 = __savegprlr_25();
+  lVar7 = (longlong)param_7;
+  lVar6 = (longlong)param_6;
+  lVar5 = (longlong)(int)param_5;
+  lVar4 = (longlong)(int)param_4;
+  lVar3 = (longlong)(int)param_3;
+  lVar2 = (longlong)(int)param_2;
+  uVar1 = __savegprlr_25(param_1,lVar2,lVar3,lVar4,lVar5,lVar6,lVar7);
   if (1 < uVar1) {
-    MyAssertHandler(0xffffffff821a7ff8,0x56,0,0xffffffff821a8040,uVar1,2);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\turret\\turret_placement.cpp",
+                    0x56,0,"handler doesn\'t index TURRET_HANDLER_COUNT\n\t%i not in [0, %i)");
   }
-  (*(code *)(&PTR_CG_TraceCapsule_829987b8)[uVar1])(param_2,param_3,param_4,param_5,param_6,param_7)
-  ;
+  (*turretTraceHandlers[uVar1])
+            ((trace_t *)lVar2,(float *)lVar3,(float *)lVar4,(Bounds *)lVar5,(int)lVar6,(int)lVar7);
   __restgprlr_25();
   return;
 }
@@ -47,9 +84,9 @@ void Turret_PlaceSentry_Trace
 
 // 826E11B0  Turret_PlaceSentry_UpdateFooting  (turret/turret_placement.cpp:122)
 
-void Turret_PlaceSentry_UpdateFooting
-               (undefined8 param_1,undefined4 param_2,ulonglong param_3,ulonglong param_4,
-               ulonglong param_5)
+int Turret_PlaceSentry_UpdateFooting
+              (turret_handler param_1,int param_2,trace_t *param_3,float *param_4,
+              float (*param_5) [3])
 
 {
   char cVar1;
@@ -62,26 +99,30 @@ void Turret_PlaceSentry_UpdateFooting
   float fVar8;
   float fVar9;
   float fVar10;
-  undefined4 *puVar11;
-  int iVar12;
-  uint uVar13;
-  float *pfVar14;
-  float *pfVar15;
-  longlong lVar16;
+  float *pfVar11;
+  dvar_t *pdVar12;
+  ulonglong uVar13;
+  int iVar14;
+  ulonglong uVar15;
+  float *pfVar16;
   ulonglong uVar17;
   float *pfVar18;
   float *pfVar19;
-  uint uVar20;
-  longlong lVar21;
+  ulonglong uVar20;
+  float *pfVar21;
   float *pfVar22;
-  float *pfVar23;
-  double dVar24;
-  double dVar25;
+  uint uVar23;
+  float *pfVar24;
+  float *pfVar25;
   double dVar26;
+  double dVar27;
+  double dVar28;
+  uint uStack00000014;
+  int iStack0000001c;
   undefined4 local_130;
   char *local_12c;
-  undefined4 *local_128;
-  undefined4 *local_124;
+  float *local_128;
+  float *local_124;
   float local_120;
   float local_11c;
   float local_118;
@@ -109,119 +150,132 @@ void Turret_PlaceSentry_UpdateFooting
   float local_b8;
   float local_b4;
   
-  uVar13 = __savegprlr();
+  uVar17 = (ulonglong)(int)param_5;
+  uVar20 = (ulonglong)(int)param_4;
+  uVar15 = (ulonglong)(int)param_3;
+  uVar13 = (ulonglong)(int)param_1;
+  __savegprlr();
+  uStack00000014 = (uint)uVar13;
   local_12c = "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\turret\\turret_placement.cpp";
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821a7ff8,0x85,0,0xffffffff82000f98,0xffffffff8202b910);
+  iStack0000001c = param_2;
+  if ((uVar15 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\turret\\turret_placement.cpp",
+                    0x85,0,"%s");
   }
-  if ((param_4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821a7ff8,0x86,0,0xffffffff82000f98,0xffffffff8219f474);
+  if ((uVar20 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\turret\\turret_placement.cpp",
+                    0x86,0,"%s");
   }
-  if ((param_5 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821a7ff8,0x87,0,0xffffffff82000f98,0xffffffff821a81d8);
+  if ((uVar17 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\turret\\turret_placement.cpp",
+                    0x87,0,"%s");
   }
-  pfVar14 = (float *)param_4;
-  local_130 = *pfVar14;
+  pfVar16 = (float *)uVar20;
+  local_130 = *pfVar16;
   if (((((uint)local_130 & 0x7f800000) == 0x7f800000) ||
-      (local_130 = pfVar14[1], ((uint)local_130 & 0x7f800000) == 0x7f800000)) ||
-     (local_130 = pfVar14[2], ((uint)local_130 & 0x7f800000) == 0x7f800000)) {
-    MyAssertHandler(0xffffffff821a7ff8,0x88,0,0xffffffff82000f98,0xffffffff821a8188);
+      (local_130 = pfVar16[1], ((uint)local_130 & 0x7f800000) == 0x7f800000)) ||
+     (local_130 = pfVar16[2], ((uint)local_130 & 0x7f800000) == 0x7f800000)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\turret\\turret_placement.cpp",
+                    0x88,0,"%s");
   }
-  pfVar15 = (float *)param_5;
-  local_130 = *pfVar15;
+  pfVar18 = (float *)uVar17;
+  local_130 = *pfVar18;
   if (((((uint)local_130 & 0x7f800000) == 0x7f800000) ||
-      (local_130 = pfVar15[1], ((uint)local_130 & 0x7f800000) == 0x7f800000)) ||
-     (local_130 = pfVar15[2], ((uint)local_130 & 0x7f800000) == 0x7f800000)) {
-    MyAssertHandler(0xffffffff821a7ff8,0x89,0,0xffffffff82000f98,0xffffffff821a8130);
+      (local_130 = pfVar18[1], ((uint)local_130 & 0x7f800000) == 0x7f800000)) ||
+     (local_130 = pfVar18[2], ((uint)local_130 & 0x7f800000) == 0x7f800000)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\turret\\turret_placement.cpp",
+                    0x89,0,"%s");
   }
-  local_130 = pfVar15[3];
-  lVar16 = param_5 + 0xc;
+  local_130 = pfVar18[3];
+  pfVar19 = pfVar18 + 3;
   if (((((uint)local_130 & 0x7f800000) == 0x7f800000) ||
-      (local_130 = pfVar15[4], ((uint)local_130 & 0x7f800000) == 0x7f800000)) ||
-     (local_130 = pfVar15[5], ((uint)local_130 & 0x7f800000) == 0x7f800000)) {
-    MyAssertHandler(0xffffffff821a7ff8,0x8a,0,0xffffffff82000f98,0xffffffff821a80d8);
+      (local_130 = pfVar18[4], ((uint)local_130 & 0x7f800000) == 0x7f800000)) ||
+     (local_130 = pfVar18[5], ((uint)local_130 & 0x7f800000) == 0x7f800000)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\turret\\turret_placement.cpp",
+                    0x8a,0,"%s");
   }
-  local_130 = pfVar15[6];
-  lVar21 = param_5 + 0x18;
+  local_130 = pfVar18[6];
+  pfVar24 = pfVar18 + 6;
   if (((((uint)local_130 & 0x7f800000) == 0x7f800000) ||
-      (local_130 = pfVar15[7], ((uint)local_130 & 0x7f800000) == 0x7f800000)) ||
-     (local_130 = pfVar15[8], ((uint)local_130 & 0x7f800000) == 0x7f800000)) {
-    MyAssertHandler(0xffffffff821a7ff8,0x8b,0,0xffffffff82000f98,0xffffffff821a8080);
+      (local_130 = pfVar18[7], ((uint)local_130 & 0x7f800000) == 0x7f800000)) ||
+     (local_130 = pfVar18[8], ((uint)local_130 & 0x7f800000) == 0x7f800000)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\turret\\turret_placement.cpp",
+                    0x8b,0,"%s");
   }
-  fVar2 = *pfVar15;
-  fVar3 = pfVar15[1];
-  fVar4 = pfVar15[2];
-  pfVar19 = &fStack_114;
-  pfVar22 = (float *)lVar21;
-  fVar5 = *pfVar22;
-  fVar6 = *(float *)(DAT_844cf254 + 0xc);
-  uVar17 = 0;
-  fVar7 = *(float *)(DAT_844cf254 + 0x10);
+  fVar2 = *pfVar18;
+  fVar3 = pfVar18[1];
+  fVar4 = pfVar18[2];
+  pfVar22 = &fStack_114;
+  fVar5 = *pfVar24;
+  fVar6 = (sentry_placement_feet_offset->current).value;
   uVar20 = 0;
-  fVar8 = pfVar15[7];
-  pfVar23 = &local_e0;
-  fVar9 = pfVar15[8];
-  fVar10 = *(float *)(DAT_844cf254 + 0x14);
-  local_e0 = fVar5 * fVar10 + *(float *)lVar16 * fVar7 + fVar2 * fVar6 + *pfVar14;
-  local_dc = fVar8 * fVar10 + pfVar15[4] * fVar7 + fVar3 * fVar6 + pfVar14[1];
-  local_d8 = fVar9 * fVar10 + pfVar15[5] * fVar7 + fVar4 * fVar6 + pfVar14[2];
-  fVar6 = *(float *)(DAT_844cf254 + 0xc) * -2.0;
+  fVar7 = (sentry_placement_feet_offset->current).vector[1];
+  uVar23 = 0;
+  fVar8 = pfVar18[7];
+  pfVar25 = &local_e0;
+  fVar9 = pfVar18[8];
+  fVar10 = (sentry_placement_feet_offset->current).vector[2];
+  local_e0 = fVar5 * fVar10 + *pfVar19 * fVar7 + fVar2 * fVar6 + *pfVar16;
+  local_dc = fVar8 * fVar10 + pfVar18[4] * fVar7 + fVar3 * fVar6 + pfVar16[1];
+  local_d8 = fVar9 * fVar10 + pfVar18[5] * fVar7 + fVar4 * fVar6 + pfVar16[2];
+  fVar6 = (sentry_placement_feet_offset->current).value * -2.0;
   local_d4 = fVar2 * fVar6 + local_e0;
   local_d0 = fVar3 * fVar6 + local_dc;
   local_cc = fVar4 * fVar6 + local_d8;
-  fVar6 = *(float *)(DAT_844cf254 + 0x10) * -2.0;
-  local_c8 = *(float *)lVar16 * fVar6 + local_d4;
-  local_c4 = pfVar15[4] * fVar6 + local_d0;
-  local_c0 = pfVar15[5] * fVar6 + local_cc;
-  fVar6 = *(float *)(DAT_844cf254 + 0xc) * 2.0;
-  dVar25 = 0.0;
+  fVar6 = (sentry_placement_feet_offset->current).vector[1] * -2.0;
+  local_c8 = *pfVar19 * fVar6 + local_d4;
+  local_c4 = pfVar18[4] * fVar6 + local_d0;
+  local_c0 = pfVar18[5] * fVar6 + local_cc;
+  fVar6 = (sentry_placement_feet_offset->current).value * 2.0;
+  dVar27 = 0.0;
   local_bc = fVar2 * fVar6 + local_c8;
   local_b8 = fVar3 * fVar6 + local_c4;
   local_b4 = fVar4 * fVar6 + local_c0;
-  dVar26 = -1.0;
-  local_124 = &DAT_821817f8;
-  local_128 = &DAT_821817e8;
+  dVar28 = -1.0;
+  local_124 = colorGreen;
+  local_128 = colorRed;
   do {
-    pfVar18 = pfVar23 + 2;
-    fVar2 = (float)((double)*(float *)(DAT_844cf240 + 0xc) * dVar26);
-    local_120 = fVar5 * fVar2 + *pfVar23;
-    local_11c = fVar8 * fVar2 + pfVar23[1];
-    local_118 = fVar9 * fVar2 + pfVar23[2];
-    if (1 < uVar13) {
-      MyAssertHandler(local_12c,0x56,0,0xffffffff821a8040,uVar13,2);
+    pfVar21 = pfVar25 + 2;
+    fVar2 = (float)((double)(sentry_placement_feet_trace_dist_z->current).value * dVar28);
+    local_120 = fVar5 * fVar2 + *pfVar25;
+    local_11c = fVar8 * fVar2 + pfVar25[1];
+    local_118 = fVar9 * fVar2 + pfVar25[2];
+    if (1 < uStack00000014) {
+      MyAssertHandler(local_12c,0x56,0,
+                      "handler doesn\'t index TURRET_HANDLER_COUNT\n\t%i not in [0, %i)");
     }
-    (*(code *)(&PTR_CG_TraceCapsule_829987b8)[uVar13])
-              (param_3,pfVar23,&local_120,0xffffffff82174a3c,param_2,0x2810011);
-    iVar12 = DAT_844cf254;
-    if (((float *)param_3)[7] == 0.0) {
-      cVar1 = *(char *)(DAT_844cf244 + 0xc);
-      pfVar19[1] = (float)dVar25;
-      uVar17 = uVar17 + 1;
-      *(undefined1 *)((int)&local_130 + uVar20) = 0;
-      puVar11 = local_128;
+    (**(code **)((int)turretTraceHandlers + (int)((uVar13 & 0xffffffff) << 2)))
+              (uVar15,pfVar25,&local_120,0xffffffff82174a3c,iStack0000001c,0x2810011);
+    pdVar12 = sentry_placement_feet_offset;
+    if (((float *)uVar15)[7] == 0.0) {
+      cVar1 = (sentry_placement_debug->current).enabled;
+      pfVar22[1] = (float)dVar27;
+      uVar20 = uVar20 + 1;
+      *(undefined1 *)((int)&local_130 + uVar23) = 0;
+      pfVar11 = local_128;
     }
     else {
-      fVar2 = *(float *)param_3;
-      cVar1 = *(char *)(DAT_844cf244 + 0xc);
-      fVar3 = *(float *)(DAT_844cf240 + 0xc);
-      *(undefined1 *)((int)&local_130 + uVar20) = 1;
-      pfVar19[1] = fVar3 * fVar2 - *(float *)(iVar12 + 0x14);
-      puVar11 = local_124;
+      fVar2 = *(float *)uVar15;
+      cVar1 = (sentry_placement_debug->current).enabled;
+      fVar3 = (sentry_placement_feet_trace_dist_z->current).value;
+      *(undefined1 *)((int)&local_130 + uVar23) = 1;
+      pfVar22[1] = fVar3 * fVar2 - (pdVar12->current).vector[2];
+      pfVar11 = local_124;
     }
     if (cVar1 != '\0') {
-      G_DebugLine(pfVar23,&local_120,puVar11,0);
+      G_DebugLine(pfVar25,&local_120,pfVar11,0);
     }
-    pfVar19 = pfVar19 + 1;
-    uVar20 = uVar20 + 1;
-    fVar2 = (float)((double)*pfVar19 * dVar26);
-    fVar5 = *pfVar22;
-    fVar8 = pfVar15[7];
-    fVar9 = pfVar15[8];
-    *pfVar23 = fVar5 * fVar2 + *pfVar23;
-    pfVar23[1] = fVar8 * fVar2 + pfVar23[1];
-    pfVar23 = pfVar23 + 3;
-    *pfVar18 = fVar9 * fVar2 + *pfVar18;
-  } while (uVar20 < 4);
+    pfVar22 = pfVar22 + 1;
+    uVar23 = uVar23 + 1;
+    fVar2 = (float)((double)*pfVar22 * dVar28);
+    fVar5 = *pfVar24;
+    fVar8 = pfVar18[7];
+    fVar9 = pfVar18[8];
+    *pfVar25 = fVar5 * fVar2 + *pfVar25;
+    pfVar25[1] = fVar8 * fVar2 + pfVar25[1];
+    pfVar25 = pfVar25 + 3;
+    *pfVar21 = fVar9 * fVar2 + *pfVar21;
+  } while (uVar23 < 4);
   fVar2 = local_110;
   if (local_130._0_1_ == '\0') {
     fVar2 = local_108;
@@ -240,18 +294,18 @@ void Turret_PlaceSentry_UpdateFooting
   local_100 = local_e0 - local_c8;
   local_fc = local_dc - local_c4;
   local_f8 = local_d8 - local_c0;
-  dVar24 = (double)((fVar3 + local_104) * 0.5);
-  dVar25 = (double)((fVar2 + fVar4) * 0.5);
+  dVar26 = (double)((fVar3 + local_104) * 0.5);
+  dVar27 = (double)((fVar2 + fVar4) * 0.5);
   local_f4 = local_d4 - local_bc;
   local_f0 = local_d0 - local_b8;
   local_ec = local_cc - local_b4;
-  if ((float)(dVar25 - dVar24) < 0.0) {
-    dVar25 = dVar24;
+  if ((float)(dVar27 - dVar26) < 0.0) {
+    dVar27 = dVar26;
   }
-  fVar2 = (float)(dVar25 * dVar26);
-  *pfVar14 = fVar5 * fVar2 + *pfVar14;
-  pfVar14[1] = pfVar15[7] * fVar2 + pfVar14[1];
-  pfVar14[2] = fVar2 * pfVar15[8] + pfVar14[2];
+  fVar2 = (float)(dVar27 * dVar28);
+  *pfVar16 = fVar5 * fVar2 + *pfVar16;
+  pfVar16[1] = pfVar18[7] * fVar2 + pfVar16[1];
+  pfVar16[2] = fVar2 * pfVar18[8] + pfVar16[2];
   Vec3Cross(&local_100,&local_f4,&local_110);
   fVar3 = SQRT(local_110 * local_110 + local_108 * local_108 + local_10c * local_10c);
   fVar2 = 1.0;
@@ -259,34 +313,41 @@ void Turret_PlaceSentry_UpdateFooting
     fVar2 = fVar3;
   }
   fVar2 = 1.0 / fVar2;
-  *pfVar22 = local_110 * fVar2;
-  pfVar15[7] = local_10c * fVar2;
-  pfVar15[8] = local_108 * fVar2;
-  Vec3Cross(lVar21,param_5,lVar16);
-  Vec3Cross(lVar16,lVar21,param_5);
-  __restgprlr(-((ulonglong)(1 < uVar17) - 1));
-  return;
+  *pfVar24 = local_110 * fVar2;
+  pfVar18[7] = local_10c * fVar2;
+  pfVar18[8] = local_108 * fVar2;
+  Vec3Cross(pfVar24,pfVar18,pfVar19);
+  Vec3Cross(pfVar19,pfVar24,pfVar18);
+  iVar14 = -((1 < uVar20) - 1);
+  __restgprlr();
+  return iVar14;
 }
 
 
 // 826E1840  Turret_PlaceSentry_Internal  (turret/turret_placement.cpp:216)
 
-void Turret_PlaceSentry_Internal
-               (undefined8 param_1,undefined8 param_2,ulonglong param_3,float *param_4,
-               undefined8 param_5,int param_6,ulonglong param_7,ulonglong param_8)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+int Turret_PlaceSentry_Internal
+              (turret_handler param_1,LocalClientNum_t param_2,int param_3,float *param_4,
+              float *param_5,float *param_6,float *param_7,float *param_8)
 
 {
   float fVar1;
-  undefined4 *puVar2;
-  int iVar3;
-  int iVar4;
-  undefined8 uVar5;
-  short sVar7;
+  float *pfVar2;
+  dvar_t *pdVar3;
+  dvar_t *pdVar4;
+  dvar_t *pdVar5;
+  turret_handler tVar6;
   ushort uVar8;
-  int iVar6;
-  float *pfVar9;
-  double dVar10;
-  double dVar11;
+  int iVar7;
+  ulonglong uVar9;
+  float *pfVar10;
+  float *pfVar11;
+  ulonglong uVar12;
+  ulonglong uVar13;
+  double dVar14;
+  double dVar15;
   float local_150;
   float local_14c;
   float local_148;
@@ -296,115 +357,115 @@ void Turret_PlaceSentry_Internal
   float local_130;
   float local_12c;
   float local_128;
-  float local_120;
-  float local_11c;
-  float local_118;
-  float local_114;
-  float local_110;
-  float local_10c;
+  Bounds local_120;
   float local_108;
   float local_104;
   float local_100;
   float local_f0;
   float local_ec;
   float local_e8;
-  undefined1 auStack_e4 [12];
-  undefined4 local_d8;
-  undefined4 local_d4;
+  float afStack_e4 [3];
+  float local_d8;
+  float local_d4;
   float local_d0;
-  undefined4 local_c8;
-  undefined4 local_c4;
+  float local_c8;
+  float local_c4;
   undefined4 local_c0;
-  float local_b0;
-  undefined4 local_ac;
-  undefined4 local_a8;
-  float local_a4;
-  char local_82;
-  char local_81;
+  trace_t local_b0 [3];
   
-  uVar5 = __savegprlr_21();
-  if (0x11 < (param_3 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821a7ff8,0xe4,0,0xffffffff821a81e0,param_3,0x12);
+  uVar13 = (ulonglong)(int)param_8;
+  uVar12 = (ulonglong)(int)param_7;
+  uVar9 = (ulonglong)param_3;
+  tVar6 = __savegprlr_21(param_1,param_2);
+  if (0x11 < (uVar9 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\turret\\turret_placement.cpp",
+                    0xe4,0,"moverEntNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
   }
-  if ((param_7 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821a7ff8,0xe5,0,0xffffffff82000f98,0xffffffff8219f474);
+  if ((uVar12 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\turret\\turret_placement.cpp",
+                    0xe5,0,"%s");
   }
-  if ((param_8 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821a7ff8,0xe6,0,0xffffffff82000f98,0xffffffff8219f468);
+  if ((uVar13 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\turret\\turret_placement.cpp",
+                    0xe6,0,"%s");
   }
-  dVar11 = 0.0;
-  puVar2 = (undefined4 *)param_8;
-  puVar2[1] = 0;
-  iVar6 = DAT_844cf248;
-  *puVar2 = 0;
-  iVar4 = DAT_844cf250;
-  puVar2[2] = 0;
-  iVar3 = DAT_844cf24c;
-  puVar2[1] = *(undefined4 *)(param_6 + 4);
-  local_c4 = *(undefined4 *)(param_6 + 4);
-  dVar10 = (double)(*(float *)(iVar6 + 0xc) + *(float *)(iVar4 + 0xc));
-  local_c8 = *(undefined4 *)(iVar3 + 0xc);
+  dVar15 = 0.0;
+  pfVar2 = (float *)uVar13;
+  pfVar2[1] = 0.0;
+  pdVar3 = sentry_placement_trace_radius_canon_safety;
+  *pfVar2 = 0.0;
+  pdVar5 = sentry_placement_trace_dist;
+  pfVar2[2] = 0.0;
+  pdVar4 = sentry_placement_trace_pitch;
+  pfVar2[1] = param_6[1];
+  local_c4 = param_6[1];
+  dVar14 = (double)((pdVar3->current).value + (pdVar5->current).value);
+  local_c8 = (float)(pdVar4->current).integer;
   local_c0 = 0;
-  AngleVectors(&local_c8,&local_130,0,0);
-  local_150 = (float)((double)local_130 * dVar10 + (double)*param_4);
-  local_14c = (float)((double)local_12c * dVar10 + (double)param_4[1]);
-  local_148 = (float)((double)local_128 * dVar10 + (double)(param_4[2] + 60.0));
+  AngleVectors(&local_c8,&local_130,(float *)0x0,(float *)0x0);
+  pfVar10 = colorBlue;
+  local_150 = (float)((double)local_130 * dVar14 + (double)*param_4);
+  local_14c = (float)((double)local_12c * dVar14 + (double)param_4[1]);
+  local_148 = (float)((double)local_128 * dVar14 + (double)(param_4[2] + 60.0));
   local_138 = local_148 - 60.0;
-  local_108 = (float)((double)local_130 * (double)*(float *)(DAT_844cf258 + 0xc) + (double)local_150
-                     );
-  local_104 = (float)((double)local_12c * (double)*(float *)(DAT_844cf258 + 0xc) + (double)local_14c
-                     );
-  local_120 = (float)dVar11;
-  local_11c = (float)dVar11;
-  local_118 = (float)dVar11;
-  local_114 = (float)dVar11;
-  local_110 = (float)dVar11;
-  local_10c = (float)dVar11;
+  local_108 = (float)((double)local_130 * (double)(sentry_placement_trace_radius->current).value +
+                     (double)local_150);
+  local_104 = (float)((double)local_12c * (double)(sentry_placement_trace_radius->current).value +
+                     (double)local_14c);
+  local_120.midPoint[0] = (float)dVar15;
+  local_120.midPoint[1] = (float)dVar15;
+  local_120.midPoint[2] = (float)dVar15;
+  local_120.halfSize[0] = (float)dVar15;
+  local_120.halfSize[1] = (float)dVar15;
+  local_120.halfSize[2] = (float)dVar15;
   local_140 = local_150;
   local_13c = local_14c;
   local_100 = local_148;
-  if (*(char *)(DAT_844cf244 + 0xc) != '\0') {
-    G_DebugLine(param_5,&local_108,0xffffffff82181818,0);
+  if ((sentry_placement_debug->current).enabled != false) {
+    G_DebugLine(param_5,&local_108,colorBlue,0);
   }
-  Turret_PlaceSentry_Trace(uVar5,&local_b0,param_5,&local_108,&local_120,param_3,0x2810011);
-  pfVar9 = (float *)param_7;
-  if (((local_81 == '\0') && (local_82 == '\0')) &&
-     (sVar7 = Trace_GetEntityHitId(&local_b0), sVar7 == 0x7ff)) {
-    local_114 = *(float *)(DAT_844cf258 + 0xc);
-    local_110 = local_114;
-    local_10c = local_114;
-    if (*(char *)(DAT_844cf244 + 0xc) != '\0') {
-      G_DebugLine(&local_150,&local_140,0xffffffff82181818,0);
-      G_DebugBox((double)*(float *)(param_6 + 4),&local_150,&local_120);
-      G_DebugBox((double)*(float *)(param_6 + 4),&local_140,&local_120);
+  iVar7 = (int)uVar9;
+  Turret_PlaceSentry_Trace(tVar6,local_b0,param_5,&local_108,&local_120,iVar7,0x2810011);
+  pfVar11 = (float *)uVar12;
+  if (((local_b0[0].startsolid == false) && (local_b0[0].allsolid == false)) &&
+     (uVar8 = Trace_GetEntityHitId(local_b0), uVar8 == 0x7ff)) {
+    local_120.halfSize[0] = (float)(sentry_placement_trace_radius->current).integer;
+    local_120.halfSize[1] = local_120.halfSize[0];
+    local_120.halfSize[2] = local_120.halfSize[0];
+    if ((sentry_placement_debug->current).enabled != false) {
+      G_DebugLine(&local_150,&local_140,colorBlue,0);
+      G_DebugBox(&local_150,&local_120,param_6[1],pfVar10,-0x7de7e7c8,0);
+      G_DebugBox(&local_140,&local_120,param_6[1],pfVar10,-0x7de7e808,0);
     }
-    Turret_PlaceSentry_Trace(uVar5,&local_b0,&local_150,&local_140,&local_120,param_3,0x2810011);
-    *pfVar9 = (local_140 - local_150) * local_b0 + local_150;
-    pfVar9[1] = (local_13c - local_14c) * local_b0 + local_14c;
-    fVar1 = (local_138 - local_148) * local_b0 + local_148;
-    pfVar9[2] = fVar1;
-    if (((local_81 == '\0') && (local_82 == '\0')) && (*(float *)(DAT_844cf25c + 0xc) <= local_a4))
-    {
-      pfVar9[2] = fVar1 - *(float *)(DAT_844cf258 + 0xc);
-      uVar8 = Trace_GetEntityHitId(&local_b0);
+    Turret_PlaceSentry_Trace(tVar6,local_b0,&local_150,&local_140,&local_120,iVar7,0x2810011);
+    *pfVar11 = (local_140 - local_150) * local_b0[0].fraction + local_150;
+    pfVar11[1] = (local_13c - local_14c) * local_b0[0].fraction + local_14c;
+    fVar1 = (local_138 - local_148) * local_b0[0].fraction + local_148;
+    pfVar11[2] = fVar1;
+    if (((local_b0[0].startsolid == false) && (local_b0[0].allsolid == false)) &&
+       ((sentry_placement_trace_min_normal->current).value <= local_b0[0].normal[2])) {
+      pfVar11[2] = fVar1 - (sentry_placement_trace_radius->current).value;
+      uVar8 = Trace_GetEntityHitId(local_b0);
       if (0x7ff < uVar8) {
-        MyAssertHandler(0xffffffff821a7ff8,0x12d,0,0xffffffff8219f3e8,uVar8,0x800);
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\turret\\turret_placement.cpp"
+                        ,0x12d,0,"hitEntId doesn\'t index MAX_GENTITIES\n\t%i not in [0, %i)");
       }
       if (uVar8 == 0x7fe) {
         local_f0 = local_130;
         local_ec = local_12c;
         local_e8 = local_128;
-        local_d8 = local_ac;
-        local_d4 = local_a8;
-        local_d0 = local_a4;
-        Vec3Cross(&local_d8,&local_f0,auStack_e4);
-        Vec3Cross(auStack_e4,&local_d8,&local_f0);
-        AxisToAngles(&local_f0,param_8);
-        iVar6 = Turret_PlaceSentry_UpdateFooting(uVar5,param_3,&local_b0,param_7,&local_f0);
-        if (iVar6 != 0) {
-          AxisToAngles(&local_f0,param_8);
-          __restgprlr_21(1);
-          return;
+        local_d8 = local_b0[0].normal[0];
+        local_d4 = local_b0[0].normal[1];
+        local_d0 = local_b0[0].normal[2];
+        Vec3Cross(&local_d8,&local_f0,afStack_e4);
+        Vec3Cross(afStack_e4,&local_d8,&local_f0);
+        AxisToAngles((float (*) [3])&local_f0,pfVar2);
+        iVar7 = Turret_PlaceSentry_UpdateFooting
+                          (tVar6,iVar7,local_b0,pfVar11,(float (*) [3])&local_f0);
+        if (iVar7 != 0) {
+          AxisToAngles((float (*) [3])&local_f0,pfVar2);
+          iVar7 = __restgprlr_21(1);
+          return iVar7;
         }
       }
       goto LAB_826e1c70;
@@ -413,156 +474,49 @@ void Turret_PlaceSentry_Internal
   }
   else {
     fVar1 = param_4[2];
-    *pfVar9 = local_150;
-    pfVar9[1] = local_14c;
+    *pfVar11 = local_150;
+    pfVar11[1] = local_14c;
   }
-  pfVar9[2] = fVar1;
+  pfVar11[2] = fVar1;
 LAB_826e1c70:
-  __restgprlr_21(0);
-  return;
+  iVar7 = __restgprlr_21(0);
+  return iVar7;
 }
 
 
 // 826E1C88  Turret_PlaceSentry_Client  (turret/turret_placement.cpp:339)
-
-void Turret_PlaceSentry_Client
-               (undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4)
-
-{
-  uint uVar1;
-  undefined4 *puVar2;
-  ulonglong uVar3;
-  int iVar4;
-  char cVar6;
-  int *piVar5;
-  undefined4 local_80;
-  undefined4 local_7c;
-  float local_78;
-  int local_70;
-  int local_6c;
-  int local_68;
-  undefined4 local_60;
-  undefined4 local_5c;
-  undefined4 local_58;
-  
-  uVar3 = __savegprlr_24();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821a7ff8,0x15f,0,0xffffffff82000f98,0xffffffff821a82d8);
-  }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821a7ff8,0x160,0,0xffffffff82000f98,0xffffffff8219f474);
-  }
-  if ((param_4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821a7ff8,0x161,0,0xffffffff82000f98,0xffffffff8219f468);
-  }
-  puVar2 = (undefined4 *)param_2;
-  if (*(char *)(puVar2 + 0x1c) != '\0') {
-    uVar1 = puVar2[0x1e];
-    if ((ulonglong)DAT_82aa1ae8 <= (uVar3 & 0xffffffff)) {
-      MyAssertHandler(0xffffffff821a7ff8,0x171,0,0xffffffff8200d150,uVar3);
-    }
-    iVar4 = CG_GetLocalClientGlobals(uVar3);
-    if (iVar4 == 0) {
-      MyAssertHandler(0xffffffff821a7ff8,0x173,0,0xffffffff82000f98,0xffffffff82002798);
-    }
-    if (0x11 < uVar1) {
-      MyAssertHandler(0xffffffff821a7ff8,0x176,0,0xffffffff821a829c,uVar1,0x12);
-    }
-    if (((uVar1 == *(uint *)(iVar4 + 0x150)) && (*(int *)(iVar4 + 0x6b9a0) == 0)) &&
-       (cVar6 = BG_IsThirdPersonMode(iVar4), cVar6 == '\0')) {
-      local_80 = *(undefined4 *)(iVar4 + 0x1c);
-      local_7c = *(undefined4 *)(iVar4 + 0x20);
-      local_78 = *(float *)(iVar4 + 0x168) + *(float *)(iVar4 + 0x24);
-      local_60 = *(undefined4 *)(iVar4 + 0x1c);
-      local_5c = *(undefined4 *)(iVar4 + 0x20);
-      local_58 = *(undefined4 *)(iVar4 + 0x24);
-      local_70 = *(int *)(iVar4 + 0x158);
-      local_6c = *(int *)(iVar4 + 0x15c);
-      local_68 = *(int *)(iVar4 + 0x160);
-    }
-    else {
-      iVar4 = CG_GetEntity(uVar3,uVar1);
-      if (iVar4 == 0) {
-        MyAssertHandler(0xffffffff821a7ff8,0x188,1,0xffffffff82000f98,0xffffffff821a8290);
-      }
-      piVar5 = (int *)CG_GetClientInfo(uVar3,iVar4);
-      if ((piVar5 == (int *)0x0) || (*piVar5 == 0)) {
-        Com_PrintWarning(0x11,0xffffffff821a8220,*puVar2,uVar1);
-        goto LAB_826e1f68;
-      }
-      local_80 = *(undefined4 *)(iVar4 + 0x14);
-      local_70 = piVar5[0x107];
-      local_6c = piVar5[0x108];
-      local_68 = piVar5[0x109];
-      local_5c = *(undefined4 *)(iVar4 + 0x18);
-      local_58 = *(undefined4 *)(iVar4 + 0x1c);
-      local_7c = *(undefined4 *)(iVar4 + 0x18);
-      if ((*(uint *)(iVar4 + 0xcc) & 8) == 0) {
-        if ((*(uint *)(iVar4 + 0xcc) & 4) == 0) {
-          local_78 = 60.0;
-        }
-        else {
-          local_78 = 40.0;
-        }
-      }
-      else {
-        local_78 = 11.0;
-      }
-      local_78 = *(float *)(iVar4 + 0x1c) + local_78;
-      local_60 = local_80;
-    }
-    Turret_PlaceSentry_Internal(0,uVar3,uVar1,&local_60,&local_80,&local_70,param_3,param_4);
-    __restgprlr_24();
-    return;
-  }
-LAB_826e1f68:
-  __restgprlr_24();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 826E1F70  Turret_PlaceSentry_MakeSolid  (turret/turret_placement.cpp:434)
-
-void Turret_PlaceSentry_MakeSolid(int param_1)
-
-{
-  if (param_1 == 0) {
-    MyAssertHandler(0xffffffff821a7ff8,0x1bb,0,0xffffffff82000f98,0xffffffff82002614);
-  }
-  *(byte *)(param_1 + 0x102) = *(byte *)(param_1 + 0x102) | 4;
-  *(uint *)(param_1 + 0x11c) = *(uint *)(param_1 + 0x11c) & 0xfffffffe | 0x2040;
-  *(undefined4 *)(param_1 + 0x104) = 0;
-  *(undefined4 *)(param_1 + 0x108) = 0;
-  *(undefined4 *)(param_1 + 0x10c) = 0x41e00000;
-  *(undefined4 *)(param_1 + 0x110) = 0x41600000;
-  *(undefined4 *)(param_1 + 0x114) = 0x41600000;
-  *(undefined4 *)(param_1 + 0x118) = 0x41e00000;
-  SV_LinkEntity(param_1);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 826E2020  Turret_PlaceSentry_Server  (turret/turret_placement.cpp:486)
 
-void Turret_PlaceSentry_Server(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+int Turret_PlaceSentry_Server(playerState_s *param_1,float *param_2,float *param_3)
 
 {
   int iVar1;
-  undefined4 local_30;
+  float local_30;
   undefined4 local_2c;
   float local_28;
   
-  iVar1 = __savegprlr_29();
+  iVar1 = __savegprlr_29(param_1);
   if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff821a7ff8,0x1e9,0,0xffffffff82000f98,0xffffffff82001fdc);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\turret\\turret_placement.cpp",
+                    0x1e9,0,"%s");
   }
-  local_30 = *(undefined4 *)(iVar1 + 0x1c);
+  local_30 = *(float *)(iVar1 + 0x1c);
   local_28 = *(float *)(iVar1 + 0x24) + *(float *)(iVar1 + 0x168);
   local_2c = *(undefined4 *)(iVar1 + 0x20);
-  Turret_PlaceSentry_Internal
-            (1,0xffffffffffffffff,*(undefined4 *)(iVar1 + 0x150),iVar1 + 0x1c,&local_30,
-             iVar1 + 0x158,param_2,param_3);
-  __restgprlr_29();
-  return;
+  iVar1 = Turret_PlaceSentry_Internal
+                    (TURRET_HANDLER_SERVER,LOCAL_CLIENT_INVALID,*(int *)(iVar1 + 0x150),
+                     (float *)(iVar1 + 0x1c),&local_30,(float *)(iVar1 + 0x158),param_2,param_3);
+  iVar1 = __restgprlr_29(iVar1);
+  return iVar1;
 }
 

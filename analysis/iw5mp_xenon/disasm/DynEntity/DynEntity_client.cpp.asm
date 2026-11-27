@@ -340,11 +340,263 @@ LAB_8240bc4c:
   8240C000  7D8802A6             mfspr r12,LR
   8240C004  4850A6B1             bl 0x829166b4
   8240C008  3980FFB0             li r12,-0x50
+  8240C00C  13C161CF             stvx128 v126,r1,r12
+  8240C010  3980FFC0             li r12,-0x40
+  8240C014  13E161CF             stvx128 v127,r1,r12
+  8240C018  9421FF20             stwu r1,-0xe0(r1)
+  8240C01C  A0630024             lhz r3,0x24(r3)
+  8240C020  7C9B2378             or r27,r4,r4
+  8240C024  483609CD             bl 0x8276c9f0
+  8240C028  3BE30018             addi r31,r3,0x18
+  8240C02C  3BA00010             li r29,0x10
+  8240C030  3B9F000C             addi r28,r31,0xc
+  8240C034  7C7E1B78             or r30,r3,r3
+  8240C038  38810060             addi r4,r1,0x60
+  8240C03C  13C0FC07             lvlx128 v62,0,r31
+  8240C040  7F63DB78             or r3,r27,r27
+  8240C044  13FDFC47             lvrx128 v63,r29,r31
+  8240C048  13BDE447             lvrx128 v61,r29,r28
+  8240C04C  17FEFAFD             vor128 v127,v62,v63
+  8240C050  1380E407             lvlx128 v60,0,r28
+  8240C054  17DCEAFD             vor128 v126,v60,v61
+  8240C058  481CF699             bl 0x825db6f0
+  8240C05C  39010060             addi r8,r1,0x60
+  8240C060  1B7F0774             vspltisw128 v59,-0x1
+  8240C064  38E10060             addi r7,r1,0x60
+  8240C068  18E2FF33             vspltw128 v7,v127,0x2
+  8240C06C  397B0010             addi r11,r27,0x10
+  8240C070  1B40F737             vspltw128 v58,v126,0x0
+  8240C074  38C10078             addi r6,r1,0x78
+  8240C078  18C1FF33             vspltw128 v6,v127,0x1
+  8240C07C  38A10078             addi r5,r1,0x78
+  8240C080  1B3BD8F5             vslw128 v57,v59,v59
+  8240C084  3C808405             lis r4,-0x7bfb
+  8240C088  12DD4447             lvrx128 v54,r29,r8
+  8240C08C  12A03C07             lvlx128 v53,0,r7
+  8240C090  3861006C             addi r3,r1,0x6c
+  8240C094  3884F950             subi r4,r4,0x6b0
+  8240C098  129D5C47             lvrx128 v52,r29,r11
+  8240C09C  12405C07             lvlx128 v50,0,r11
+  8240C0A0  1675B2F5             vor128 v51,v53,v54
+  8240C0A4  123D3447             lvrx128 v49,r29,r6
+  8240C0A8  1612A2F5             vor128 v48,v50,v52
+  8240C0AC  11E02C07             lvlx128 v47,0,r5
+  8240C0B0  3BE1006C             addi r31,r1,0x6c
+  8240C0B4  15CF8AF5             vor128 v46,v47,v49
+  8240C0B8  11BD1C47             lvrx128 v45,r29,r3
+  8240C0BC  13E020C7             lvx128 v63,0,r4
+  8240C0C0  1B1BD8F5             vslw128 v56,v59,v59
+  8240C0C4  1413FA31             vand128 v0,v51,v63
+  8240C0C8  1961F733             vspltw128 v11,v126,0x1
+  8240C0CC  1530FA31             vand128 v9,v48,v63
+  8240C0D0  18A0FF33             vspltw128 v5,v127,0x0
+  8240C0D4  15AEFA31             vand128 v13,v46,v63
+  8240C0D8  1180FC07             lvlx128 v44,0,r31
+  8240C0DC  156C6AF5             vor128 v43,v44,v45
+  8240C0E0  1942F733             vspltw128 v10,v126,0x2
+  8240C0E4  1540CA55             vandc128 v42,v0,v57
+  8240C0E8  39200004             li r9,0x4
+  8240C0EC  1AFBD8F5             vslw128 v55,v59,v59
+  8240C0F0  39400008             li r10,0x8
+  8240C0F4  112D49EE             vmaddfp v9,v13,v7,v9
+  8240C0F8  150DC251             vandc128 v8,v13,v56
+  8240C0FC  158BFA31             vand128 v12,v43,v63
+  8240C100  397E000C             addi r11,r30,0xc
+  8240C104  14FA50B1             vmulfp128 v7,v58,v42
+  8240C108  15ACBA51             vandc128 v13,v12,v55
+  8240C10C  11864B2E             vmaddfp v12,v6,v12,v9
+  8240C110  11AB3B6E             vmaddfp v13,v11,v13,v7
+  8240C114  1005602E             vmaddfp v0,v5,v0,v12
+  8240C118  11AA6A2E             vmaddfp v13,v10,v8,v13
+  8240C11C  19200734             vspltw128 v41,v0,0x0
+  8240C120  19010734             vspltw128 v40,v0,0x1
+  8240C124  18E20734             vspltw128 v39,v0,0x2
+  8240C128  18C06F34             vspltw128 v38,v13,0x0
+  8240C12C  18A16F34             vspltw128 v37,v13,0x1
+  8240C130  18826F34             vspltw128 v36,v13,0x2
+  8240C134  1120F187             stvewx128 v41,0,r30
+  8240C138  111E4987             stvewx128 v40,r30,r9
+  8240C13C  10FE5187             stvewx128 v39,r30,r10
+  8240C140  10C05987             stvewx128 v38,0,r11
+  8240C144  10AB4987             stvewx128 v37,r11,r9
+  8240C148  108B5187             stvewx128 v36,r11,r10
+  8240C14C  C1BE0020             lfs f13,0x20(r30)
+  8240C150  FD406A10             fabs f10,f13
+  8240C154  C01E0028             lfs f0,0x28(r30)
+  8240C158  C19E0018             lfs f12,0x18(r30)
+  8240C15C  C17E001C             lfs f11,0x1c(r30)
+  8240C160  FD205A10             fabs f9,f11
+  8240C164  C11E002C             lfs f8,0x2c(r30)
+  8240C168  FCE06210             fabs f7,f12
+  8240C16C  C0DE0024             lfs f6,0x24(r30)
+  8240C170  ECAA402A             fadds f5,f10,f8
+  8240C174  EC89002A             fadds f4,f9,f0
+  8240C178  EC67302A             fadds f3,f7,f6
+  8240C17C  EC440132             fmuls f2,f4,f4
+  8240C180  EC25117A             fmadds f1,f5,f5,f2
+  8240C184  EC0308FA             fmadds f0,f3,f3,f1
+  8240C188  EC20002C             fsqrts f1,f0
+  8240C18C  382100E0             addi r1,r1,0xe0
+  8240C190  3800FFB0             li r0,-0x50
+  8240C194  13C100CF             lvx128 v126,r1,r0
+  8240C198  3800FFC0             li r0,-0x40
+  8240C19C  13E100CF             lvx128 v127,r1,r0
+  8240C1A0  4850A564             b 0x82916704
 
 ; 8240C1A8  DynEntCl_LinkModel  (DynEntity/DynEntity_client.cpp:132)
   8240C1A8  7D8802A6             mfspr r12,LR
   8240C1AC  4850A509             bl 0x829166b4
   8240C1B0  3980FFB0             li r12,-0x50
+  8240C1B4  13C161CF             stvx128 v126,r1,r12
+  8240C1B8  3980FFC0             li r12,-0x40
+  8240C1BC  13E161CF             stvx128 v127,r1,r12
+  8240C1C0  9421FEE0             stwu r1,-0x120(r1)
+  8240C1C4  38800000             li r4,0x0
+  8240C1C8  7C7E1B78             or r30,r3,r3
+  8240C1CC  4BFF2FF5             bl 0x823ff1c0
+  8240C1D0  3D60835A             lis r11,-0x7ca6
+  8240C1D4  7C7F1B78             or r31,r3,r3
+  8240C1D8  3BAB2880             addi r29,r11,0x2880
+  8240C1DC  A11D00C4             lhz r8,0xc4(r29)
+  8240C1E0  7F1E4040             cmplw cr6,r30,r8
+  8240C1E4  41980024             blt cr6,0x8240c208
+  8240C1E8  3D608206             lis r11,-0x7dfa
+  8240C1EC  3D408206             lis r10,-0x7dfa
+  8240C1F0  38CBCCA8             subi r6,r11,0x3358
+  8240C1F4  386AF8A8             subi r3,r10,0x758
+  8240C1F8  7FC7F378             or r7,r30,r30
+  8240C1FC  38A00000             li r5,0x0
+  8240C200  38800044             li r4,0x44
+  8240C204  481C82FD             bl 0x825d4500
+LAB_8240c208:
+  8240C208  83FF0020             lwz r31,0x20(r31)
+  8240C20C  57CA2834             rlwinm r10,r30,0x5,0x0,0x1a
+  8240C210  817D00D0             lwz r11,0xd0(r29)
+  8240C214  2B1F0000             cmplwi cr6,r31,0x0
+  8240C218  7FAA5A14             add r29,r10,r11
+  8240C21C  409A0028             bne cr6,0x8240c244
+  8240C220  3D608206             lis r11,-0x7dfa
+  8240C224  3D408200             lis r10,-0x7e00
+  8240C228  3D208206             lis r9,-0x7dfa
+  8240C22C  38EBCE78             subi r7,r11,0x3188
+  8240C230  38CA0F98             addi r6,r10,0xf98
+  8240C234  3869FE00             subi r3,r9,0x200
+  8240C238  38A00000             li r5,0x0
+  8240C23C  38800094             li r4,0x94
+  8240C240  481C82C1             bl 0x825d4500
+LAB_8240c244:
+  8240C244  7FE3FB78             or r3,r31,r31
+  8240C248  48224ED9             bl 0x82631120
+  8240C24C  D03D001C             stfs f1,0x1c(r29)
+  8240C250  38810080             addi r4,r1,0x80
+  8240C254  7FE3FB78             or r3,r31,r31
+  8240C258  48224ED1             bl 0x82631128
+  8240C25C  3BE00010             li r31,0x10
+  8240C260  39610080             addi r11,r1,0x80
+  8240C264  39410080             addi r10,r1,0x80
+  8240C268  3921008C             addi r9,r1,0x8c
+  8240C26C  3901008C             addi r8,r1,0x8c
+  8240C270  388100A0             addi r4,r1,0xa0
+  8240C274  13FF5C47             lvrx128 v63,r31,r11
+  8240C278  7FA3EB78             or r3,r29,r29
+  8240C27C  13C05407             lvlx128 v62,0,r10
+  8240C280  13BF4C47             lvrx128 v61,r31,r9
+  8240C284  17FEFAFD             vor128 v127,v62,v63
+  8240C288  13804407             lvlx128 v60,0,r8
+  8240C28C  17DCEAFD             vor128 v126,v60,v61
+  8240C290  481CF461             bl 0x825db6f0
+  8240C294  38E100B8             addi r7,r1,0xb8
+  8240C298  1B7F0774             vspltisw128 v59,-0x1
+  8240C29C  38C100B8             addi r6,r1,0xb8
+  8240C2A0  18C2FF33             vspltw128 v6,v127,0x2
+  8240C2A4  397D0010             addi r11,r29,0x10
+  8240C2A8  1B40F737             vspltw128 v58,v126,0x0
+  8240C2AC  3CA08405             lis r5,-0x7bfb
+  8240C2B0  18A1FF33             vspltw128 v5,v127,0x1
+  8240C2B4  388100A0             addi r4,r1,0xa0
+  8240C2B8  1B3BD8F5             vslw128 v57,v59,v59
+  8240C2BC  3925F950             subi r9,r5,0x6b0
+  8240C2C0  12DF3C47             lvrx128 v54,r31,r7
+  8240C2C4  12A03407             lvlx128 v53,0,r6
+  8240C2C8  386100A0             addi r3,r1,0xa0
+  8240C2CC  129F5C47             lvrx128 v52,r31,r11
+  8240C2D0  1675B2F5             vor128 v51,v53,v54
+  8240C2D4  12405C07             lvlx128 v50,0,r11
+  8240C2D8  390100AC             addi r8,r1,0xac
+  8240C2DC  1632A2F5             vor128 v49,v50,v52
+  8240C2E0  121F2447             lvrx128 v48,r31,r4
+  8240C2E4  13E048C7             lvx128 v63,0,r9
+  8240C2E8  38A100AC             addi r5,r1,0xac
+  8240C2EC  11E01C07             lvlx128 v47,0,r3
+  8240C2F0  15B3FA31             vand128 v13,v51,v63
+  8240C2F4  15AF82F5             vor128 v45,v47,v48
+  8240C2F8  1961F733             vspltw128 v11,v126,0x1
+  8240C2FC  1531FA31             vand128 v9,v49,v63
+  8240C300  11DF4447             lvrx128 v46,r31,r8
+  8240C304  1B1BD8F5             vslw128 v56,v59,v59
+  8240C308  1880FF33             vspltw128 v4,v127,0x0
+  8240C30C  150DCA51             vandc128 v8,v13,v57
+  8240C310  11802C07             lvlx128 v44,0,r5
+  8240C314  140DFA31             vand128 v0,v45,v63
+  8240C318  1942F733             vspltw128 v10,v126,0x2
+  8240C31C  11AD49AE             vmaddfp v13,v13,v6,v9
+  8240C320  156C72F5             vor128 v43,v44,v46
+  8240C324  1AFBD8F5             vslw128 v55,v59,v59
+  8240C328  3BA10060             addi r29,r1,0x60
+  8240C32C  39400004             li r10,0x4
+  8240C330  1540C255             vandc128 v42,v0,v56
+  8240C334  39210060             addi r9,r1,0x60
+  8240C338  158BFA31             vand128 v12,v43,v63
+  8240C33C  3B810060             addi r28,r1,0x60
+  8240C340  39600008             li r11,0x8
+  8240C344  3B61006C             addi r27,r1,0x6c
+  8240C348  153A50B1             vmulfp128 v9,v58,v42
+  8240C34C  3901006C             addi r8,r1,0x6c
+  8240C350  14ECBA51             vandc128 v7,v12,v55
+  8240C354  11A56B2E             vmaddfp v13,v5,v12,v13
+  8240C358  118B49EE             vmaddfp v12,v11,v7,v9
+  8240C35C  1004682E             vmaddfp v0,v4,v0,v13
+  8240C360  11AA622E             vmaddfp v13,v10,v8,v12
+  8240C364  19200734             vspltw128 v41,v0,0x0
+  8240C368  19010734             vspltw128 v40,v0,0x1
+  8240C36C  18E20734             vspltw128 v39,v0,0x2
+  8240C370  1120E987             stvewx128 v41,0,r29
+  8240C374  18C06F34             vspltw128 v38,v13,0x0
+  8240C378  11095187             stvewx128 v40,r9,r10
+  8240C37C  18A16F34             vspltw128 v37,v13,0x1
+  8240C380  18826F34             vspltw128 v36,v13,0x2
+  8240C384  10FC5987             stvewx128 v39,r28,r11
+  8240C388  38E1006C             addi r7,r1,0x6c
+  8240C38C  10C0D987             stvewx128 v38,0,r27
+  8240C390  10A85187             stvewx128 v37,r8,r10
+  8240C394  38C10058             addi r6,r1,0x58
+  8240C398  38A10050             addi r5,r1,0x50
+  8240C39C  7FC4F378             or r4,r30,r30
+  8240C3A0  38600000             li r3,0x0
+  8240C3A4  10875987             stvewx128 v36,r7,r11
+  8240C3A8  C0010060             lfs f0,0x60(r1)
+  8240C3AC  C1A1006C             lfs f13,0x6c(r1)
+  8240C3B0  C1810064             lfs f12,0x64(r1)
+  8240C3B4  C1610070             lfs f11,0x70(r1)
+  8240C3B8  ED2C5828             fsubs f9,f12,f11
+  8240C3BC  ED406828             fsubs f10,f0,f13
+  8240C3C0  D1410050             stfs f10,0x50(r1)
+  8240C3C4  ED0D002A             fadds f8,f13,f0
+  8240C3C8  D1210054             stfs f9,0x54(r1)
+  8240C3CC  ECEB602A             fadds f7,f11,f12
+  8240C3D0  D1010058             stfs f8,0x58(r1)
+  8240C3D4  D0E1005C             stfs f7,0x5c(r1)
+  8240C3D8  480069F1             bl 0x82412dc8
+  8240C3DC  38A10060             addi r5,r1,0x60
+  8240C3E0  38800000             li r4,0x0
+  8240C3E4  7FC3F378             or r3,r30,r30
+  8240C3E8  48369469             bl 0x82775850
+  8240C3EC  38210120             addi r1,r1,0x120
+  8240C3F0  3800FFB0             li r0,-0x50
+  8240C3F4  13C100CF             lvx128 v126,r1,r0
+  8240C3F8  3800FFC0             li r0,-0x40
+  8240C3FC  13E100CF             lvx128 v127,r1,r0
+  8240C400  4850A304             b 0x82916704
 
 ; 8240C408  DynEntCl_LinkBrush  (DynEntity/DynEntity_client.cpp:172)
   8240C408  7D8802A6             mfspr r12,LR
@@ -4532,7 +4784,7 @@ LAB_82410040:
   82410074  C00A13F8             lfs f0,0x13f8(r10)
   82410078  C3EB000C             lfs f31,0xc(r11)
 
-; 824102C8  std::_Push_heap<DynEntSortStruct_*,int,DynEntSortStruct,bool_(__cdecl*)(DynEntSortStruct_const_&,DynEntSortStruct_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2455)
+; 824102C8  _Push_heap<DynEntSortStruct_*,int,DynEntSortStruct,bool_(__cdecl*)(DynEntSortStruct_const_&,DynEntSortStruct_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2455)
   824102C8  7D8802A6             mfspr r12,LR
   824102CC  485063E1             bl 0x829166ac
   824102D0  9421FF70             stwu r1,-0x90(r1)
@@ -4578,7 +4830,7 @@ LAB_82410350:
   82410368  38210090             addi r1,r1,0x90
   8241036C  48506390             b 0x829166fc
 
-; 82410370  std::_Adjust_heap<DynEntSortStruct_*,int,DynEntSortStruct,bool_(__cdecl*)(DynEntSortStruct_const_&,DynEntSortStruct_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2565)
+; 82410370  _Adjust_heap<DynEntSortStruct_*,int,DynEntSortStruct,bool_(__cdecl*)(DynEntSortStruct_const_&,DynEntSortStruct_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2565)
   82410370  7D8802A6             mfspr r12,LR
   82410374  48506339             bl 0x829166ac
   82410378  9421FF70             stwu r1,-0x90(r1)
@@ -4667,7 +4919,7 @@ LAB_82410494:
   824104AC  38210090             addi r1,r1,0x90
   824104B0  4850624C             b 0x829166fc
 
-; 824104B8  std::_Make_heap<DynEntSortStruct_*,int,DynEntSortStruct,bool_(__cdecl*)(DynEntSortStruct_const_&,DynEntSortStruct_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2658)
+; 824104B8  _Make_heap<DynEntSortStruct_*,int,DynEntSortStruct,bool_(__cdecl*)(DynEntSortStruct_const_&,DynEntSortStruct_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2658)
   824104B8  7D8802A6             mfspr r12,LR
   824104BC  485061ED             bl 0x829166a8
   824104C0  9421FF60             stwu r1,-0xa0(r1)
@@ -4740,7 +4992,7 @@ LAB_824105b4:
   824105B4  382100A0             addi r1,r1,0xa0
   824105B8  48506140             b 0x829166f8
 
-; 82410AD8  std::_Sort_heap<DynEntSortStruct_*,bool_(__cdecl*)(DynEntSortStruct_const_&,DynEntSortStruct_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2700)
+; 82410AD8  _Sort_heap<DynEntSortStruct_*,bool_(__cdecl*)(DynEntSortStruct_const_&,DynEntSortStruct_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2700)
   82410AD8  7D8802A6             mfspr r12,LR
   82410ADC  48505BE1             bl 0x829166bc
   82410AE0  9421FF80             stwu r1,-0x80(r1)
@@ -4775,7 +5027,7 @@ LAB_82410b4c:
   82410B4C  38210080             addi r1,r1,0x80
   82410B50  48505BBC             b 0x8291670c
 
-; 82410728  std::_Insertion_sort1<DynEntSortStruct_*,bool_(__cdecl*)(DynEntSortStruct_const_&,DynEntSortStruct_const_&),DynEntSortStruct>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3650)
+; 82410728  _Insertion_sort1<DynEntSortStruct_*,bool_(__cdecl*)(DynEntSortStruct_const_&,DynEntSortStruct_const_&),DynEntSortStruct>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3650)
   82410728  7D8802A6             mfspr r12,LR
   8241072C  48505F81             bl 0x829166ac
   82410730  9421FF60             stwu r1,-0xa0(r1)
@@ -4849,7 +5101,7 @@ LAB_82410820:
   82410820  382100A0             addi r1,r1,0xa0
   82410824  48505ED8             b 0x829166fc
 
-; 824105C0  std::_Med3<DynEntSortStruct_*,bool_(__cdecl*)(DynEntSortStruct_const_&,DynEntSortStruct_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3683)
+; 824105C0  _Med3<DynEntSortStruct_*,bool_(__cdecl*)(DynEntSortStruct_const_&,DynEntSortStruct_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3683)
   824105C0  7D8802A6             mfspr r12,LR
   824105C4  485060F5             bl 0x829166b8
   824105C8  9421FF80             stwu r1,-0x80(r1)
@@ -4902,7 +5154,7 @@ LAB_82410678:
   82410678  38210080             addi r1,r1,0x80
   8241067C  4850608C             b 0x82916708
 
-; 82410680  std::_Median<DynEntSortStruct_*,bool_(__cdecl*)(DynEntSortStruct_const_&,DynEntSortStruct_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3695)
+; 82410680  _Median<DynEntSortStruct_*,bool_(__cdecl*)(DynEntSortStruct_const_&,DynEntSortStruct_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3695)
   82410680  7D8802A6             mfspr r12,LR
   82410684  4850602D             bl 0x829166b0
   82410688  9421FF70             stwu r1,-0x90(r1)
@@ -4947,7 +5199,7 @@ LAB_82410714:
   82410720  38210090             addi r1,r1,0x90
   82410724  48505FDC             b 0x82916700
 
-; 82410828  std::_Unguarded_partition<DynEntSortStruct_*,bool_(__cdecl*)(DynEntSortStruct_const_&,DynEntSortStruct_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3712)
+; 82410828  _Unguarded_partition<DynEntSortStruct_*,bool_(__cdecl*)(DynEntSortStruct_const_&,DynEntSortStruct_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3712)
   82410828  7D8802A6             mfspr r12,LR
   8241082C  48505E79             bl 0x829166a4
   82410830  9421FF60             stwu r1,-0xa0(r1)
@@ -5137,7 +5389,7 @@ LAB_82410ac0:
   82410ACC  382100A0             addi r1,r1,0xa0
   82410AD0  48505C24             b 0x829166f4
 
-; 82410B58  std::_Sort<DynEntSortStruct_*,int,bool_(__cdecl*)(DynEntSortStruct_const_&,DynEntSortStruct_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3771)
+; 82410B58  _Sort<DynEntSortStruct_*,int,bool_(__cdecl*)(DynEntSortStruct_const_&,DynEntSortStruct_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3771)
   82410B58  7D8802A6             mfspr r12,LR
   82410B5C  48505B55             bl 0x829166b0
   82410B60  9421FF70             stwu r1,-0x90(r1)

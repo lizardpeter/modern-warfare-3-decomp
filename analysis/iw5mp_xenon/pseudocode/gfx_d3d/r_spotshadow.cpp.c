@@ -2,7 +2,7 @@
 
 // 8277B808  R_SetViewParmsForLight  (gfx_d3d/r_spotshadow.cpp:18)
 
-void R_SetViewParmsForLight(undefined8 param_1,longlong param_2)
+void R_SetViewParmsForLight(GfxLight *param_1,GfxViewParms *param_2,float param_3)
 
 {
   float fVar1;
@@ -10,85 +10,91 @@ void R_SetViewParmsForLight(undefined8 param_1,longlong param_2)
   float fVar3;
   float fVar4;
   int iVar5;
-  int iVar7;
-  longlong lVar6;
-  longlong lVar8;
-  longlong lVar9;
-  longlong lVar10;
+  float (*pafVar6) [3];
+  float (*pafVar7) [3];
+  float (*pafVar8) [3];
+  float (*pafVar9) [3];
   double extraout_f1;
+  double dVar10;
   double dVar11;
   double dVar12;
   double dVar13;
   double dVar14;
-  double dVar15;
   
-  iVar7 = __savegprlr_28();
-  iVar5 = (int)param_2;
-  *(float *)(iVar5 + 0x10c) = -*(float *)(iVar7 + 0x10);
-  *(float *)(iVar5 + 0x110) = -*(float *)(iVar7 + 0x14);
-  *(float *)(iVar5 + 0x114) = -*(float *)(iVar7 + 0x18);
-  lVar10 = param_2 + 0x10c;
-  dVar15 = 1.0;
-  dVar13 = extraout_f1;
-  if (ABS(*(float *)(iVar7 + 0x24) * *(float *)(iVar7 + 0x18) +
-          *(float *)(iVar7 + 0x20) * *(float *)(iVar7 + 0x14) +
-          *(float *)(iVar7 + 0x1c) * *(float *)(iVar7 + 0x10)) <= 0.99) {
-    lVar9 = param_2 + 0x118;
-    Vec3Cross(iVar7 + 0x1c,lVar10,lVar9);
-    fVar2 = *(float *)(iVar5 + 0x11c);
-    fVar3 = *(float *)(iVar5 + 0x118);
-    fVar4 = *(float *)(iVar5 + 0x120);
-    lVar8 = param_2 + 0x124;
+  iVar5 = __savegprlr_28((double)param_3,param_1);
+  (param_2->camera).axis[0][0] = -*(float *)(iVar5 + 0x10);
+  (param_2->camera).axis[0][1] = -*(float *)(iVar5 + 0x14);
+  (param_2->camera).axis[0][2] = -*(float *)(iVar5 + 0x18);
+  pafVar7 = (param_2->camera).axis;
+  dVar14 = 1.0;
+  dVar12 = extraout_f1;
+  if (ABS(*(float *)(iVar5 + 0x24) * *(float *)(iVar5 + 0x18) +
+          *(float *)(iVar5 + 0x20) * *(float *)(iVar5 + 0x14) +
+          *(float *)(iVar5 + 0x1c) * *(float *)(iVar5 + 0x10)) <= 0.99) {
+    pafVar8 = (param_2->camera).axis + 1;
+    Vec3Cross((float *)(iVar5 + 0x1c),*pafVar7,*pafVar8);
+    fVar2 = (param_2->camera).axis[1][1];
+    fVar3 = (param_2->camera).axis[1][0];
+    fVar4 = (param_2->camera).axis[1][2];
+    pafVar9 = (param_2->camera).axis + 2;
     dVar11 = (double)SQRT(fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2);
-    dVar14 = dVar15;
+    dVar13 = dVar14;
     if (-dVar11 < 0.0) {
-      dVar14 = dVar11;
+      dVar13 = dVar11;
     }
-    fVar1 = (float)(dVar15 / dVar14);
-    *(float *)(iVar5 + 0x118) = fVar3 * fVar1;
-    *(float *)(iVar5 + 0x11c) = fVar2 * fVar1;
-    *(float *)(iVar5 + 0x120) = fVar4 * fVar1;
-    lVar6 = lVar10;
+    fVar1 = (float)(dVar14 / dVar13);
+    (param_2->camera).axis[1][0] = fVar3 * fVar1;
+    (param_2->camera).axis[1][1] = fVar2 * fVar1;
+    (param_2->camera).axis[1][2] = fVar4 * fVar1;
+    pafVar6 = pafVar7;
   }
   else {
-    PerpendicularVector(lVar10,param_2 + 0x124);
-    lVar8 = param_2 + 0x118;
-    lVar6 = param_2 + 0x124;
-    lVar9 = lVar10;
+    pafVar6 = (param_2->camera).axis + 2;
+    PerpendicularVector(*pafVar7,*pafVar6);
+    pafVar9 = (param_2->camera).axis + 1;
+    pafVar8 = pafVar7;
   }
-  Vec3Cross(lVar6,lVar9,lVar8);
-  *(undefined4 *)(iVar5 + 0x100) = *(undefined4 *)(iVar7 + 0x28);
-  *(undefined4 *)(iVar5 + 0x104) = *(undefined4 *)(iVar7 + 0x2c);
-  *(undefined4 *)(iVar5 + 0x108) = *(undefined4 *)(iVar7 + 0x30);
-  MatrixForViewerNoOrigin(lVar10,param_2);
-  dVar14 = 0.0;
-  *(undefined4 *)(iVar5 + 0x130) = 0;
-  *(undefined4 *)(iVar5 + 0x134) = 0;
-  *(float *)(iVar5 + 0x13c) = (float)dVar15;
-  *(float *)(iVar5 + 0x138) = (float)dVar15;
-  if (*(char *)(iVar7 + 1) == '\0') {
-    MyAssertHandler(0xffffffff821cf900,0x2f,0,0xffffffff82000f98,0xffffffff821cf8e4);
+  Vec3Cross(*pafVar6,*pafVar8,*pafVar9);
+  (param_2->camera).origin[0] = *(float *)(iVar5 + 0x28);
+  (param_2->camera).origin[1] = *(float *)(iVar5 + 0x2c);
+  (param_2->camera).origin[2] = *(float *)(iVar5 + 0x30);
+  MatrixForViewerNoOrigin(pafVar7,(float (*) [4])param_2);
+  dVar13 = 0.0;
+  (param_2->camera).subWindowMins[0] = 0.0;
+  (param_2->camera).subWindowMins[1] = 0.0;
+  (param_2->camera).subWindowMaxs[1] = (float)dVar14;
+  (param_2->camera).subWindowMaxs[0] = (float)dVar14;
+  if (*(char *)(iVar5 + 1) == '\0') {
+    pafVar7 = (float (*) [3])
+              "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_spotshadow.cpp";
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_spotshadow.cpp",0x2f
+                    ,0,"%s");
   }
-  dVar11 = (double)*(float *)(iVar7 + 0x38);
-  if ((dVar11 <= dVar14) || (dVar15 <= dVar11)) {
-    MyAssertHandler(0xffffffff821cf900,0x30,0,0xffffffff821cf87c,0xffffffff821cf8a0,dVar11);
+  if (((double)*(float *)(iVar5 + 0x38) <= dVar13) || (dVar14 <= (double)*(float *)(iVar5 + 0x38)))
+  {
+    pafVar7 = (float (*) [3])
+              "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_spotshadow.cpp";
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_spotshadow.cpp",0x30
+                    ,0,"%s\n\t(light->cosHalfFovOuter) = %g");
   }
-  dVar11 = (double)*(float *)(iVar7 + 0x38);
-  dVar14 = 0.9990000128746033;
+  dVar11 = (double)*(float *)(iVar5 + 0x38);
+  dVar13 = 0.9990000128746033;
   if ((float)(dVar11 - 0.9990000128746033) < 0.0) {
-    dVar14 = dVar11;
+    dVar13 = dVar11;
   }
-  dVar12 = 0.0010000000474974513;
+  dVar10 = 0.0010000000474974513;
   if ((float)(0.0010000000474974513 - dVar11) < 0.0) {
-    dVar12 = dVar14;
+    dVar10 = dVar13;
   }
-  dVar14 = (double)(float)((double)SQRT(-(float)(dVar12 * dVar12 - dVar15)) / dVar12);
+  fVar2 = (float)((double)SQRT(-(float)(dVar10 * dVar10 - dVar14)) / dVar10);
+  dVar13 = (double)fVar2;
   FinitePerspectiveMatrix
-            (dVar14,dVar14,(double)(float)(dVar13 + dVar15),(double)*(float *)(iVar7 + 0x34));
+            (fVar2,fVar2,(float)(dVar12 + dVar14),*(float *)(iVar5 + 0x34),(float (*) [4])pafVar7);
   R_SetupViewProjectionMatrices(param_2);
-  *(float *)(iVar5 + 0x140) = (float)dVar14;
-  *(float *)(iVar5 + 0x144) = (float)dVar14;
-  *(undefined4 *)(iVar5 + 0x14c) = *(undefined4 *)(iVar5 + 0x78);
+  fVar2 = (param_2->projectionMatrix).m[3][2];
+  (param_2->camera).tanHalfFovX = (float)dVar13;
+  (param_2->camera).tanHalfFovY = (float)dVar13;
+  (param_2->camera).depthHackNearClip = fVar2;
   __restgprlr_28();
   return;
 }
@@ -96,16 +102,16 @@ void R_SetViewParmsForLight(undefined8 param_1,longlong param_2)
 
 // 8277BA40  R_CalcSpotShadowTexcoordVBase  (gfx_d3d/r_spotshadow.cpp:61)
 
-double R_CalcSpotShadowTexcoordVBase(uint param_1,uint param_2)
+float R_CalcSpotShadowTexcoordVBase(uint param_1,uint param_2)
 
 {
-  return (double)((1.0 / (float)param_2) * (float)param_1);
+  return (1.0 / (float)param_2) * (float)param_1;
 }
 
 
 // 8277BA80  R_GetSpotShadowLookupMatrix  (gfx_d3d/r_spotshadow.cpp:66)
 
-void R_GetSpotShadowLookupMatrix(undefined8 param_1,ulonglong param_2,uint param_3,float *param_4)
+void R_GetSpotShadowLookupMatrix(GfxViewParms *param_1,uint param_2,uint param_3,GfxMatrix *param_4)
 
 {
   float fVar1;
@@ -130,9 +136,11 @@ void R_GetSpotShadowLookupMatrix(undefined8 param_1,ulonglong param_2,uint param
   float fVar20;
   float fVar21;
   int iVar22;
-  undefined8 *puVar23;
-  undefined8 *puVar24;
-  longlong lVar25;
+  ulonglong uVar23;
+  ulonglong uVar24;
+  undefined8 *puVar25;
+  undefined8 *puVar26;
+  longlong lVar27;
   undefined8 uStack_e8;
   float local_e0;
   float fStack_dc;
@@ -147,24 +155,28 @@ void R_GetSpotShadowLookupMatrix(undefined8 param_1,ulonglong param_2,uint param
   float local_b8;
   float local_b4;
   
-  __savegprlr_28();
+  uVar24 = (ulonglong)(int)param_3;
+  uVar23 = (ulonglong)(int)param_2;
+  __savegprlr_28(param_1);
   iVar22 = __savefpr_18();
-  if (param_3 == 0) {
-    MyAssertHandler(0xffffffff821cf900,0x4e);
+  if ((uVar24 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_spotshadow.cpp",0x4e
+                    ,(int)uVar24,"%s");
   }
-  puVar23 = &uStack_e8;
-  puVar24 = (undefined8 *)(iVar22 + 0x78);
-  lVar25 = 8;
-  fVar17 = (float)(param_2 & 0xffffffff) * (1.0 / (float)param_3);
-  fVar1 = 1.0 / (float)param_3 + fVar17;
-  fVar21 = (fVar17 - fVar1) * 0.5;
-  fVar17 = (fVar1 + fVar17) * 0.5;
+  puVar25 = &uStack_e8;
+  puVar26 = (undefined8 *)(iVar22 + 0x78);
+  lVar27 = 8;
+  fVar17 = 1.0 / (float)(uVar24 & 0xffffffff);
+  fVar1 = (float)(uVar23 & 0xffffffff) * fVar17;
+  fVar17 = fVar17 + fVar1;
+  fVar21 = (fVar1 - fVar17) * 0.5;
+  fVar17 = (fVar17 + fVar1) * 0.5;
   do {
-    puVar24 = puVar24 + 1;
-    puVar23 = puVar23 + 1;
-    *puVar23 = *puVar24;
-    lVar25 = lVar25 + -1;
-  } while (lVar25 != 0);
+    puVar26 = puVar26 + 1;
+    puVar25 = puVar25 + 1;
+    *puVar25 = *puVar26;
+    lVar27 = lVar27 + -1;
+  } while (lVar27 != 0);
   fVar18 = -*(float *)(iVar22 + 0x104);
   fVar1 = *(float *)(iVar22 + 0x94);
   fVar19 = -*(float *)(iVar22 + 0x108);
@@ -184,24 +196,24 @@ void R_GetSpotShadowLookupMatrix(undefined8 param_1,ulonglong param_2,uint param
   fVar14 = *(float *)(iVar22 + 0xb0);
   fVar15 = *(float *)(iVar22 + 0xbc);
   fVar16 = *(float *)(iVar22 + 0xb8);
-  param_4[3] = local_d4;
-  param_4[7] = local_c4;
-  param_4[0xb] = local_b4;
-  param_4[1] = fStack_dc * fVar21 + local_d4 * fVar17;
-  param_4[5] = local_cc * fVar21 + local_c4 * fVar17;
-  param_4[4] = (local_c4 + local_d0) * 0.5;
-  *param_4 = (local_d4 + local_e0) * 0.5;
-  param_4[9] = local_bc * fVar21 + local_b4 * fVar17;
-  param_4[8] = (local_b4 + local_c0) * 0.5;
-  param_4[2] = local_d8;
-  param_4[6] = local_c8;
-  param_4[10] = local_b8;
+  param_4->m[0][3] = local_d4;
+  param_4->m[1][3] = local_c4;
+  param_4->m[2][3] = local_b4;
+  param_4->m[0][1] = fStack_dc * fVar21 + local_d4 * fVar17;
+  param_4->m[1][1] = local_cc * fVar21 + local_c4 * fVar17;
+  param_4->m[1][0] = (local_c4 + local_d0) * 0.5;
+  param_4->m[0][0] = (local_d4 + local_e0) * 0.5;
+  param_4->m[2][1] = local_bc * fVar21 + local_b4 * fVar17;
+  param_4->m[2][0] = (local_b4 + local_c0) * 0.5;
+  param_4->m[0][2] = local_d8;
+  param_4->m[1][2] = local_c8;
+  param_4->m[2][2] = local_b8;
   fVar15 = fVar11 * fVar20 + fVar7 * fVar19 + fVar3 * fVar18 + fVar15;
-  param_4[0xf] = fVar15;
-  param_4[0xe] = fVar12 * fVar20 + fVar8 * fVar19 + fVar4 * fVar18 + fVar16;
-  param_4[0xd] = fVar15 * fVar17 +
-                 (fVar9 * fVar20 + fVar5 * fVar19 + fVar1 * fVar18 + fVar13) * fVar21;
-  param_4[0xc] = (fVar15 + fVar10 * fVar20 + fVar6 * fVar19 + fVar2 * fVar18 + fVar14) * 0.5;
+  param_4->m[3][3] = fVar15;
+  param_4->m[3][2] = fVar12 * fVar20 + fVar8 * fVar19 + fVar4 * fVar18 + fVar16;
+  param_4->m[3][1] =
+       fVar15 * fVar17 + (fVar9 * fVar20 + fVar5 * fVar19 + fVar1 * fVar18 + fVar13) * fVar21;
+  param_4->m[3][0] = (fVar15 + fVar10 * fVar20 + fVar6 * fVar19 + fVar2 * fVar18 + fVar14) * 0.5;
   __restfpr_18();
   __restgprlr_28();
   return;
@@ -210,52 +222,62 @@ void R_GetSpotShadowLookupMatrix(undefined8 param_1,ulonglong param_2,uint param
 
 // 8277BC98  R_AddSpotShadowEntCmd  (gfx_d3d/r_spotshadow.cpp:128)
 
-void R_AddSpotShadowEntCmd(void)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+void R_AddSpotShadowEntCmd(void *param_1)
 
 {
-  undefined4 uVar1;
+  GfxSceneEntity *pGVar1;
   int iVar2;
-  undefined4 *puVar4;
-  ulonglong uVar3;
-  undefined4 uVar5;
-  char cVar6;
-  int local_40;
-  undefined4 local_3c [15];
+  undefined4 *puVar3;
+  DObjAnimMat *pDVar4;
+  cpose_t *pcVar5;
+  bool bVar6;
+  Bounds *pBVar7;
+  GfxSceneEntity *local_40;
+  Bounds local_3c [2];
   
-  puVar4 = (undefined4 *)__savegprlr_27();
-  if (puVar4 == (undefined4 *)0x0) {
-    MyAssertHandler(0xffffffff821cf900,0x89,0,0xffffffff82000f98,0xffffffff8200b0fc);
+  puVar3 = (undefined4 *)__savegprlr_27(param_1);
+  if (puVar3 == (undefined4 *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_spotshadow.cpp",0x89
+                    ,0,"%s");
   }
-  uVar1 = *puVar4;
-  uVar3 = R_UpdateSceneEntBounds(uVar1,&local_40,local_3c,1);
-  if ((uVar3 & 0xffffffff) == 0) {
-    if (local_40 == 0) {
+  pGVar1 = (GfxSceneEntity *)*puVar3;
+  pBVar7 = local_3c;
+  pDVar4 = R_UpdateSceneEntBounds(pGVar1,&local_40,(DObj **)pBVar7,1);
+  if (pDVar4 == (DObjAnimMat *)0x0) {
+    if (local_40 == (GfxSceneEntity *)0x0) {
 LAB_8277bdc8:
       __restgprlr_27();
       return;
     }
-    uVar5 = *(undefined4 *)(local_40 + 0x70);
+    pcVar5 = (local_40->info).pose;
   }
   else {
-    if (local_40 == 0) {
-      MyAssertHandler(0xffffffff821cf900,0x95,0,0xffffffff82000f98,0xffffffff821bc334);
+    if (local_40 == (GfxSceneEntity *)0x0) {
+      pBVar7 = (Bounds *)0x0;
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_spotshadow.cpp",
+                      0x95,0,"%s");
     }
-    iVar2 = puVar4[1];
+    iVar2 = puVar3[1];
     if (iVar2 == 0) {
-      MyAssertHandler(0xffffffff821cf900,0x98,0,0xffffffff82000f98,0xffffffff821cf950);
+      pBVar7 = (Bounds *)0x0;
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_spotshadow.cpp",
+                      0x98,0,"%s");
     }
     sync(1);
-    cVar6 = CullBoxFromCone((double)*(float *)(iVar2 + 0x38),iVar2 + 0x28,iVar2 + 0x10);
-    uVar5 = *(undefined4 *)(local_40 + 0x70);
-    if (cVar6 == '\0') {
-      CG_CullIn(uVar5);
-      R_SkinSceneDObj(uVar1,local_40,local_3c[0],uVar3);
-      R_AddSceneDObj(*(uint *)(local_40 + 0x68) >> 0xd & 0xfff,
-                     (ulonglong)*(uint *)(iVar2 + 0x44) + 3);
+    bVar6 = CullBoxFromCone((float *)(iVar2 + 0x28),(float *)(iVar2 + 0x10),*(float *)(iVar2 + 0x38)
+                            ,pBVar7);
+    pcVar5 = (local_40->info).pose;
+    if (!bVar6) {
+      CG_CullIn(pcVar5);
+      R_SkinSceneDObj(pGVar1,local_40,(DObj *)local_3c[0].midPoint[0],pDVar4);
+      R_AddSceneDObj(*(uint *)&local_40->field4_0x68 >> 0xd & 0xfff,*(int *)(iVar2 + 0x44) + 3);
       goto LAB_8277bdc8;
     }
   }
-  CG_UsedDObjCalcPose(uVar5);
+  CG_UsedDObjCalcPose(pcVar5);
   __restgprlr_27();
   return;
 }
@@ -263,58 +285,67 @@ LAB_8277bdc8:
 
 // 8277BDD0  R_AddSpotShadowModelEntities  (gfx_d3d/r_spotshadow.cpp:177)
 
-void R_AddSpotShadowModelEntities(undefined8 param_1,undefined8 param_2,int param_3)
+/* WARNING: Enum "WorkerCmdType": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void R_AddSpotShadowModelEntities(uint param_1,uint param_2,GfxLight *param_3)
 
 {
   uint uVar1;
-  undefined8 uVar2;
+  uint uVar2;
   int iVar3;
-  uint *puVar4;
+  GfxSceneEntity_u_104 *pGVar4;
   int iVar5;
-  uint *local_70;
-  int local_6c;
+  GfxSceneModel_u_44 *pGVar6;
+  GfxSceneEntity *local_70;
+  GfxLight *local_6c;
   
-  uVar2 = __savegprlr_20();
+  uVar2 = __savegprlr_20(param_1);
   iVar5 = 0;
   local_6c = param_3;
-  if (0 < DAT_847c44f0) {
-    puVar4 = &DAT_847c4564;
+  if (0 < scene.sceneDObjCount) {
+    pGVar4 = &scene.sceneDObj[0].field4_0x68;
     do {
-      local_70 = puVar4 + -0x1a;
-      if ((*puVar4 & 0x41) == 0) {
-        uVar1 = *puVar4 >> 0xd & 0xfff;
-        if (uVar1 == DAT_84613768) {
-          MyAssertHandler(0xffffffff821cf900,0xc0,0,0xffffffff82000f98,0xffffffff821bc89c);
+      local_70 = (GfxSceneEntity *)(pGVar4 + -0xd);
+      if ((*(uint *)pGVar4 & 0x41) == 0) {
+        uVar1 = *(uint *)pGVar4 >> 0xd & 0xfff;
+        if (uVar1 == gfxCfg.entnumNone) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_spotshadow.cpp"
+                          ,0xc0,0,"%s");
         }
         iVar3 = R_IsEntityVisibleToPrimaryLight(uVar2,uVar1,param_2);
         if (iVar3 != 0) {
-          R_AddWorkerCmd(6,&local_70);
+          R_AddWorkerCmd(WRKCMD_SPOT_SHADOW_ENT,&local_70);
         }
       }
       iVar5 = iVar5 + 1;
-      puVar4 = puVar4 + 0x1e;
-    } while (iVar5 < DAT_847c44f0);
+      pGVar4 = pGVar4 + 0xf;
+    } while (iVar5 < scene.sceneDObjCount);
   }
-  if (DAT_847ee938 == 0) {
-    MyAssertHandler(0xffffffff821cf900,0xc6,0,0xffffffff82000f98,0xffffffff821bc850);
+  if (scene.sceneDObjModelCountValidRead == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_spotshadow.cpp",0xc6
+                    ,0,"%s");
   }
   iVar5 = 0;
-  if (0 < DAT_847d46d0) {
-    puVar4 = &DAT_847d4700;
+  if (0 < scene.sceneDObjModelCount) {
+    pGVar6 = &scene.sceneModel[0].field4_0x2c;
     do {
-      if ((*puVar4 & 0x41) == 0) {
-        uVar1 = *puVar4 >> 0xd & 0xfff;
-        if (uVar1 == DAT_84613768) {
-          MyAssertHandler(0xffffffff821cf900,0xd1,0,0xffffffff82000f98,0xffffffff821bc89c);
+      if ((*(uint *)pGVar6 & 0x41) == 0) {
+        uVar1 = *(uint *)pGVar6 >> 0xd & 0xfff;
+        if (uVar1 == gfxCfg.entnumNone) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_spotshadow.cpp"
+                          ,0xd1,0,"%s");
         }
         iVar3 = R_IsEntityVisibleToPrimaryLight(uVar2,uVar1,param_2);
         if (iVar3 != 0) {
-          *(undefined1 *)((&DAT_847ee8f8)[*(int *)(param_3 + 0x44)] + uVar1) = 1;
+          scene.dpvs.entVisData[param_3->spotShadowIndex + 3][uVar1] = '\x01';
         }
       }
       iVar5 = iVar5 + 1;
-      puVar4 = puVar4 + 0x12;
-    } while (iVar5 < DAT_847d46d0);
+      pGVar6 = pGVar6 + 9;
+    } while (iVar5 < scene.sceneDObjModelCount);
   }
   __restgprlr_20();
   return;
@@ -322,222 +353,17 @@ void R_AddSpotShadowModelEntities(undefined8 param_1,undefined8 param_2,int para
 
 
 // 8277C270  R_AddSpotShadowsForLight  (gfx_d3d/r_spotshadow.cpp:217)
-
-void R_AddSpotShadowsForLight(undefined8 param_1,ulonglong param_2,ulonglong param_3)
-
-{
-  float fVar1;
-  uint uVar2;
-  int iVar3;
-  int iVar4;
-  int iVar5;
-  char *pcVar6;
-  uint uVar7;
-  uint uVar8;
-  double extraout_f1;
-  double dVar9;
-  
-  iVar3 = __savegprlr_22();
-  dVar9 = extraout_f1;
-  if (DAT_84628b00 == 0) {
-    MyAssertHandler(0xffffffff821cf900,0xe2,0,0xffffffff82000f98,0xffffffff821b90d8);
-  }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821cf900,0xe4,0,0xffffffff82000f98,0xffffffff8207d5a0);
-  }
-  pcVar6 = (char *)param_2;
-  if ((*pcVar6 != '\x02') && (*pcVar6 != '\x03')) {
-    MyAssertHandler(0xffffffff821cf900,0xe5,0,0xffffffff82083930,0xffffffff82083948);
-  }
-  uVar2 = *(uint *)(DAT_84628b00 + 0x2800);
-  if (3 < uVar2) {
-    MyAssertHandler(0xffffffff821cf900,0xe8,0,0xffffffff821cfa48,uVar2,4);
-  }
-  *(int *)(DAT_84628b00 + 0x2800) = *(int *)(DAT_84628b00 + 0x2800) + 1;
-  *(uint *)(pcVar6 + 0x44) = uVar2;
-  iVar5 = uVar2 * 0x1d0 + DAT_84628b00;
-  if ((int)param_3 != (int)(param_3 & 0xff)) {
-    MyAssertHandler(0xffffffff82016410,0x1ce,0,0xffffffff8201645c,param_3,param_3 & 0xff);
-  }
-  *(float *)(iVar5 + 0x2850) = (float)dVar9;
-  *(char *)(iVar5 + 0x29c0) = (char)param_3;
-  *(char **)(iVar5 + 0x29c4) = pcVar6;
-  if ((DAT_84618158 == 0) || (1 < uVar2)) {
-    uVar7 = 0x200;
-    iVar4 = 0xd;
-    uVar8 = 4;
-  }
-  else {
-    uVar7 = 0x400;
-    iVar4 = 0xc;
-    uVar8 = 2;
-  }
-  *(uint *)(iVar5 + 0x2868) = uVar7;
-  *(uint *)(iVar5 + 0x286c) = uVar7;
-  *(undefined4 *)(iVar5 + 0x2860) = 0;
-  *(uint *)(iVar5 + 0x2864) = uVar7 * uVar2;
-  *(undefined4 *)(iVar5 + 0x285c) = (&DAT_84762080)[iVar4 * 5];
-  *(int *)(iVar5 + 0x29c8) = iVar4;
-  dVar9 = 0.0;
-  if (*(char *)(DAT_845aa770 + 0xc) == '\0') {
-    fVar1 = *(float *)(DAT_845aa894 + 0xc);
-    *(float *)(iVar5 + 0x29cc) = fVar1 / (float)uVar7;
-    *(float *)(iVar5 + 0x29d4) = (fVar1 * 2.0) / (float)uVar7;
-    *(float *)(iVar5 + 0x29d8) =
-         (fVar1 * -1.0) / (float)((longlong)(int)uVar8 * (longlong)(int)uVar7);
-    *(float *)(iVar5 + 0x29d0) =
-         (fVar1 * 2.0) / (float)((longlong)(int)uVar8 * (longlong)(int)uVar7);
-  }
-  else {
-    *(undefined4 *)(iVar5 + 0x29cc) = 0;
-    *(undefined4 *)(iVar5 + 0x29d0) = 0;
-    *(undefined4 *)(iVar5 + 0x29d4) = 0;
-    *(undefined4 *)(iVar5 + 0x29d8) = 0;
-  }
-  iVar4 = R_IsPrimaryLight(param_3);
-  if (iVar4 == 0) {
-    dVar9 = (double)DAT_847b9714;
-  }
-  R_SetViewParmsForLight(dVar9,param_2,iVar5 + 0x2870);
-  R_GetSpotShadowLookupMatrix(iVar5 + 0x2870,uVar2,uVar8,iVar5 + 0x2810);
-  *(uint *)(iVar5 + 0x2858) = uVar8;
-  iVar4 = uVar2 * 0x1f8 + iVar3 + 0x30b8;
-  *(float *)(iVar5 + 0x2854) = (1.0 / (float)uVar8) * (float)uVar2;
-  R_InitDrawList(iVar4,0,0xffffffff821cfa38);
-  iVar5 = R_IsPrimaryLight(param_3);
-  if (iVar5 == 0) {
-    if (*(int *)(DAT_84628b00 + 0x23e8) != 0) {
-      if (*(int *)(DAT_84628b00 + 0x23e8) != 1) {
-        MyAssertHandler(0xffffffff821cf900,0x152,0,0xffffffff82000f98,0xffffffff821c6938);
-      }
-      if (*(int *)(DAT_84628b00 + 0x23e4) != 0) {
-        MyAssertHandler(0xffffffff821cf900,0x155,0,0xffffffff82000f98,0xffffffff821cf9fc);
-      }
-      *(int *)(DAT_84628b00 + 0x23e4) = iVar4;
-    }
-    __restgprlr_22();
-    return;
-  }
-  R_AddSpotShadowModelEntities(*(undefined4 *)(iVar3 + 0x930),param_3,param_2);
-  __restgprlr_22();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0
 
 // 8277BFA0  R_GenerateSortedPrimarySpotShadowDrawSurfs  (gfx_d3d/r_spotshadow.cpp:349)
-
-void R_GenerateSortedPrimarySpotShadowDrawSurfs
-               (undefined8 param_1,undefined8 param_2,ulonglong param_3)
-
-{
-  undefined8 uVar1;
-  
-  uVar1 = __savegprlr_28();
-  if ((ulonglong)*(uint *)(DAT_8461658c + 0x20) <= (param_3 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821cf900,0x15e,0,0xffffffff821cf978,param_3);
-  }
-  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff821cdaac);
-  R_AddAllBspDrawSurfacesSpotShadow(uVar1,param_2,param_3);
-  PIXEndNamedEvent();
-  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff821cf95c);
-  R_AddAllStaticModelSurfacesSpotShadow(uVar1,param_2,param_3);
-  PIXEndNamedEvent();
-  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff821cdb94);
-  R_AddAllSceneEntSurfacesSpotShadow(param_2,param_3);
-  PIXEndNamedEvent();
-  __restgprlr_28();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0
 
 // 8277C068  R_EmitSpotShadowMapSurfs  (gfx_d3d/r_spotshadow.cpp:367)
-
-void R_EmitSpotShadowMapSurfs(void)
-
-{
-  int iVar1;
-  undefined4 *puVar2;
-  int iVar3;
-  int iVar4;
-  undefined8 in_r8;
-  undefined8 in_r9;
-  undefined4 *puVar5;
-  ulonglong uVar6;
-  int iVar7;
-  undefined4 *puVar8;
-  
-  iVar4 = __savegprlr_21();
-  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff821cf9e0);
-  if (DAT_84628b00 == 0) {
-    MyAssertHandler(0xffffffff821cf900,0x178,0,0xffffffff82000f98,0xffffffff821b90d8);
-  }
-  uVar6 = 0;
-  if (*(int *)(DAT_84628b00 + 0x2800) != 0) {
-    iVar7 = 0;
-    puVar8 = (undefined4 *)(iVar4 + 0x3118);
-    puVar5 = &DAT_847b963c;
-    do {
-      Profile_Begin(0x45);
-      iVar3 = DAT_84628b00;
-      puVar8[-4] = 2;
-      puVar8[-3] = iVar4;
-      iVar1 = *(int *)(iVar7 + iVar3 + 0x29c4);
-      puVar8[-2] = *(undefined4 *)(iVar1 + 0x28);
-      puVar8[-1] = *(undefined4 *)(iVar1 + 0x2c);
-      *puVar8 = *(undefined4 *)(iVar1 + 0x30);
-      if (puVar8[2] != 0) {
-        MyAssertHandler(0xffffffff821cf900,0x18d,0,0xffffffff82000f98,0xffffffff821cf9c8,in_r8,in_r9
-                        ,iVar7 + iVar3 + 0x2810);
-      }
-      puVar2 = puVar5 + 0xb;
-      puVar5 = puVar5 + 1;
-      R_EmitDrawSurfListAndAddDrawCommands(*puVar2,*puVar5,puVar8 + -0x18,0);
-      R_DrawSurfs_SetupIteratorList_PrimarySortKey(puVar8 + -0x18,puVar8 + 6);
-      R_AddDrawCall(iVar4,uVar6 + 0x14,0x20);
-      Profile_EndInternal(0);
-      uVar6 = uVar6 + 1;
-      iVar7 = iVar7 + 0x1d0;
-      puVar8 = puVar8 + 0x7e;
-    } while ((uVar6 & 0xffffffff) < (ulonglong)*(uint *)(DAT_84628b00 + 0x2800));
-  }
-  PIXEndNamedEvent();
-  __restgprlr_21();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0
 
 // 8277C1C0  R_GenerateAllSortedSpotShadowDrawSurfs  (gfx_d3d/r_spotshadow.cpp:428)
-
-void R_GenerateAllSortedSpotShadowDrawSurfs(void)
-
-{
-  undefined1 uVar1;
-  undefined8 uVar2;
-  int iVar3;
-  int iVar4;
-  ulonglong uVar5;
-  
-  uVar2 = __savegprlr_27();
-  if (DAT_84628b00 == 0) {
-    MyAssertHandler(0xffffffff821cf900,0x1b0,0,0xffffffff82000f98,0xffffffff821b90d8);
-  }
-  uVar5 = 0;
-  if (*(int *)(DAT_84628b00 + 0x2800) != 0) {
-    iVar4 = 0;
-    iVar3 = DAT_84628b00;
-    do {
-      uVar1 = *(undefined1 *)(iVar3 + 0x29c0);
-      iVar3 = R_IsPrimaryLight(uVar1);
-      if (iVar3 != 0) {
-        R_GenerateSortedPrimarySpotShadowDrawSurfs(uVar2,uVar5,uVar1);
-      }
-      iVar4 = iVar4 + 0x1d0;
-      uVar5 = uVar5 + 1;
-      iVar3 = iVar4 + DAT_84628b00;
-    } while ((uVar5 & 0xffffffff) < (ulonglong)*(uint *)(DAT_84628b00 + 0x2800));
-  }
-  R_EmitSpotShadowMapSurfs(uVar2);
-  __restgprlr_27();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0

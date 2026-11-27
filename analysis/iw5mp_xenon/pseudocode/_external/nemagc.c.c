@@ -2,17 +2,17 @@
 
 // 828CC940  nemAgcCalc  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/nemagc.c:30)
 
-undefined2 nemAgcCalc(int param_1,short param_2)
+short nemAgcCalc(void *param_1,short param_2)
 
 {
   float fVar1;
   double dVar2;
-  undefined2 uStack_a;
+  short sStack_a;
   
   if (param_2 < 1) {
     param_2 = 0xb0;
   }
-  fVar1 = (float)(longlong)param_2 - *(float *)(param_1 + 4);
+  fVar1 = (float)(longlong)param_2 - *(float *)((int)param_1 + 4);
   if ((16.0 < fVar1) || (fVar1 < -16.0)) {
     if (-16.0 <= fVar1) {
       fVar1 = fVar1 - 16.0;
@@ -27,16 +27,16 @@ undefined2 nemAgcCalc(int param_1,short param_2)
         if (-(float)dVar2 < -1.0592537) {
           fVar1 = -1.0592537;
         }
-        uStack_a = (undefined2)(int)((fVar1 + 1.0) * 4000.0);
-        return uStack_a;
+        sStack_a = (short)(int)((fVar1 + 1.0) * 4000.0);
+        return sStack_a;
       }
       dVar2 = pow(10.0,(double)(fVar1 * 0.01764706));
       fVar1 = (float)dVar2;
       if (1.0592537 < (float)dVar2) {
         fVar1 = 1.0592537;
       }
-      uStack_a = (undefined2)(int)((fVar1 - 1.0) * 4000.0);
-      return uStack_a;
+      sStack_a = (short)(int)((fVar1 - 1.0) * 4000.0);
+      return sStack_a;
     }
   }
   return 0;
@@ -45,7 +45,7 @@ undefined2 nemAgcCalc(int param_1,short param_2)
 
 // 828CCA80  nemAgcMeanEngLevel  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/nemagc.c:75)
 
-void nemAgcMeanEngLevel(ulonglong param_1,int *param_2)
+void nemAgcMeanEngLevel(uchar param_1,void *param_2)
 
 {
   float fVar1;
@@ -58,17 +58,17 @@ void nemAgcMeanEngLevel(ulonglong param_1,int *param_2)
   float *pfVar8;
   ulonglong uVar9;
   
-  uVar3 = (param_1 & 0xffffffff) >> 3 & 0x1f;
+  uVar3 = ((longlong)(char)param_1 & 0xffffffffU) >> 3 & 0x1f;
   iVar6 = (int)(uVar3 << 2);
-  *(float *)(iVar6 + *param_2) = (*(float *)(iVar6 + *param_2) - 1.0) * 0.96875 + 1.0;
-  iVar7 = *param_2;
+  *(float *)(iVar6 + *(int *)param_2) = (*(float *)(iVar6 + *(int *)param_2) - 1.0) * 0.96875 + 1.0;
+  iVar7 = *(int *)param_2;
   fVar1 = *(float *)(iVar7 + iVar6);
   if (uVar3 != 0) {
     iVar6 = 0;
     uVar9 = uVar3;
     do {
       *(float *)(iVar6 + iVar7) = *(float *)(iVar6 + iVar7) * 0.96875;
-      iVar7 = *param_2;
+      iVar7 = *(int *)param_2;
       fVar1 = *(float *)(iVar6 + iVar7) + fVar1;
       iVar6 = iVar6 + 4;
       uVar9 = uVar9 - 1;
@@ -81,7 +81,7 @@ void nemAgcMeanEngLevel(ulonglong param_1,int *param_2)
     do {
       iVar6 = (int)lVar5;
       *(float *)(iVar6 + iVar7) = *(float *)(iVar6 + iVar7) * 0.96875;
-      iVar7 = *param_2;
+      iVar7 = *(int *)param_2;
       fVar1 = *(float *)(iVar6 + iVar7) + fVar1;
       lVar5 = lVar5 + 4;
       lVar4 = lVar4 + -1;
@@ -89,53 +89,53 @@ void nemAgcMeanEngLevel(ulonglong param_1,int *param_2)
   }
   iVar6 = 0;
   pfVar8 = (float *)(iVar7 + -4);
-  param_2[1] = 0;
+  *(undefined4 *)((int)param_2 + 4) = 0;
   lVar5 = 0x21;
   do {
     lVar4 = (longlong)iVar6;
     pfVar8 = pfVar8 + 1;
     iVar6 = iVar6 + 1;
-    fVar2 = (float)lVar4 * *pfVar8 * (1.0 / fVar1) + (float)param_2[1];
-    param_2[1] = (int)fVar2;
+    fVar2 = (float)lVar4 * *pfVar8 * (1.0 / fVar1) + *(float *)((int)param_2 + 4);
+    *(float *)((int)param_2 + 4) = fVar2;
     lVar5 = lVar5 + -1;
   } while (lVar5 != 0);
-  *(undefined2 *)(param_2 + 2) = 0;
-  param_2[1] = (int)(fVar2 * 8.0);
+  *(undefined2 *)((int)param_2 + 8) = 0;
+  *(float *)((int)param_2 + 4) = fVar2 * 8.0;
   return;
 }
 
 
 // 828CCB88  nemAgcGetMeanEnergy  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/nemagc.c:114)
 
-double nemAgcGetMeanEnergy(int param_1)
+float nemAgcGetMeanEnergy(void *param_1)
 
 {
-  return (double)*(float *)(param_1 + 4);
+  return *(float *)((int)param_1 + 4);
 }
 
 
 // 828CCB90  nemAgcUpdateCounter  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/nemagc.c:119)
 
-void nemAgcUpdateCounter(int *param_1)
+void nemAgcUpdateCounter(void *param_1)
 
 {
   int iVar1;
   short sVar3;
   int iVar2;
   
-  if (*(short *)(param_1 + 2) < 0x55) {
+  if (*(short *)((int)param_1 + 8) < 0x55) {
     iVar2 = 0;
     do {
       iVar1 = iVar2 * 4;
       sVar3 = (short)iVar2 + 1;
       iVar2 = (int)sVar3;
-      *(float *)(iVar1 + *param_1) = *(float *)(iVar1 + *param_1) * 0.992;
+      *(float *)(iVar1 + *(int *)param_1) = *(float *)(iVar1 + *(int *)param_1) * 0.992;
     } while (sVar3 < 0x21);
   }
   else {
-    *(undefined2 *)(param_1 + 2) = 0x54;
+    *(undefined2 *)((int)param_1 + 8) = 0x54;
   }
-  *(short *)(param_1 + 2) = *(short *)(param_1 + 2) + 1;
+  *(short *)((int)param_1 + 8) = *(short *)((int)param_1 + 8) + 1;
   return;
 }
 

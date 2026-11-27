@@ -2,6 +2,8 @@
 
 // 8258C7B0  TRACK_ui_atoms  (ui/ui_atoms.cpp:27)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void TRACK_ui_atoms(void)
 
 {
@@ -11,51 +13,137 @@ void TRACK_ui_atoms(void)
 
 // 8258C7B8  UI_DrawHandlePic  (ui/ui_atoms.cpp:33)
 
-void UI_DrawHandlePic(undefined8 param_1,undefined8 param_2,double param_3,double param_4)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void UI_DrawHandlePic(ScreenPlacement *param_1,float param_2,float param_3,float param_4,
+                     float param_5,int param_6,int param_7,float *param_8,Material *param_9)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
-  undefined8 uVar3;
-  undefined8 uVar4;
-  undefined8 uVar5;
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  float fVar5;
   
-  uVar1 = 0;
-  uVar5 = 0x3ff0000000000000;
-  uVar3 = uVar1;
-  uVar4 = uVar5;
-  if (param_3 < 0.0) {
-    param_3 = -param_3;
-    uVar3 = uVar5;
-    uVar4 = uVar1;
-  }
-  uVar2 = uVar5;
+  fVar1 = 0.0;
+  fVar2 = 1.0;
+  fVar4 = fVar1;
+  fVar5 = fVar2;
   if (param_4 < 0.0) {
     param_4 = -param_4;
-    uVar2 = uVar1;
-    uVar1 = uVar5;
+    fVar4 = fVar2;
+    fVar5 = fVar1;
   }
-  CL_DrawStretchPic(param_1,param_2,param_3,param_4,uVar3,uVar1,uVar4,uVar2);
+  fVar3 = fVar2;
+  if (param_5 < 0.0) {
+    param_5 = -param_5;
+    fVar3 = fVar1;
+    fVar1 = fVar2;
+  }
+  CL_DrawStretchPic(param_1,param_2,param_3,param_4,param_5,param_6,param_7,fVar4,fVar1,fVar5,fVar3,
+                    param_8,param_9);
   return;
+}
+
+
+// 8258C838  UI_LoadBarProgress_FastFile  (ui/ui_atoms.cpp:80)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+float UI_LoadBarProgress_FastFile(void)
+
+{
+  float fVar1;
+  long lVar2;
+  long lVar3;
+  int iVar4;
+  
+  iVar4 = g_loadedSize;
+  lVar2 = g_totalSize;
+  if (g_totalSize == 0) {
+    fVar1 = 0.0;
+  }
+  else {
+    if (g_loadedSize < 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_fastfile_load.cpp"
+                      ,0x16b,0,"%s");
+    }
+    if (lVar2 < iVar4) {
+      iVar4 = lVar2;
+    }
+    lVar3 = g_loadedExternalBytes;
+    if (g_totalExternalBytes < g_loadedExternalBytes) {
+      lVar3 = g_totalExternalBytes;
+    }
+    fVar1 = (float)((double)(longlong)(lVar3 + iVar4) /
+                   (double)(longlong)(g_totalExternalBytes + lVar2));
+  }
+  return fVar1;
+}
+
+
+// 8258C840  UI_LoadBarProgress  (ui/ui_atoms.cpp:87)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+float UI_LoadBarProgress(void)
+
+{
+  float fVar1;
+  long lVar2;
+  long lVar3;
+  int iVar4;
+  
+  iVar4 = g_loadedSize;
+  lVar2 = g_totalSize;
+  if (g_totalSize == 0) {
+    fVar1 = 0.0;
+  }
+  else {
+    if (g_loadedSize < 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_fastfile_load.cpp"
+                      ,0x16b,0,"%s");
+    }
+    if (lVar2 < iVar4) {
+      iVar4 = lVar2;
+    }
+    lVar3 = g_loadedExternalBytes;
+    if (g_totalExternalBytes < g_loadedExternalBytes) {
+      lVar3 = g_totalExternalBytes;
+    }
+    fVar1 = (float)((double)(longlong)(lVar3 + iVar4) /
+                   (double)(longlong)(g_totalExternalBytes + lVar2));
+  }
+  return fVar1;
 }
 
 
 // 8258C848  UI_DrawLoadBar  (ui/ui_atoms.cpp:93)
 
-void UI_DrawLoadBar(undefined8 param_1,undefined8 param_2,double param_3,undefined8 param_4)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void UI_DrawLoadBar(ScreenPlacement *param_1,float param_2,float param_3,float param_4,float param_5
+                   ,int param_6,int param_7,float *param_8,Material *param_9)
 
 {
-  undefined8 uVar1;
-  undefined8 extraout_f1;
+  ScreenPlacement *pSVar1;
+  double extraout_f1;
   double dVar2;
-  undefined8 uVar3;
+  double dVar3;
+  double dVar4;
+  double dVar5;
+  float fVar6;
+  Material *in_stack_00000054;
   
-  __savegprlr_28();
-  uVar1 = __savefpr_28();
-  uVar3 = extraout_f1;
-  dVar2 = (double)DB_GetLoadedFraction();
-  CL_DrawStretchPic(uVar3,param_2,(double)(float)(dVar2 * param_3),param_4,0,0,dVar2,
-                    0x3ff0000000000000,uVar1);
+  dVar4 = (double)param_5;
+  dVar2 = (double)param_3;
+  dVar3 = (double)param_4;
+  __savegprlr_28((double)param_2,param_1);
+  pSVar1 = (ScreenPlacement *)__savefpr_28();
+  dVar5 = extraout_f1;
+  fVar6 = DB_GetLoadedFraction();
+  CL_DrawStretchPic(pSVar1,(float)dVar5,(float)dVar2,(float)((double)fVar6 * dVar3),(float)dVar4,
+                    param_6,param_7,0.0,0.0,fVar6,1.0,param_8,in_stack_00000054);
   __restfpr_28();
   __restgprlr_28();
   return;
@@ -64,11 +152,15 @@ void UI_DrawLoadBar(undefined8 param_1,undefined8 param_2,double param_3,undefin
 
 // 8258C8D8  UI_FillRectPhysical  (ui/ui_atoms.cpp:120)
 
-void UI_FillRectPhysical(void)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void UI_FillRectPhysical(float param_1,float param_2,float param_3,float param_4,float *param_5)
 
 {
-  if (DAT_83f7a9d0 != 0) {
-    CL_DrawStretchPicPhysical();
+  Material *in_r4;
+  
+  if (sharedUiInfo.assets.whiteMaterial != (Material *)0x0) {
+    CL_DrawStretchPicPhysical(param_1,param_2,param_3,param_4,0.0,0.0,0.0,0.0,param_5,in_r4);
   }
   return;
 }
@@ -76,11 +168,15 @@ void UI_FillRectPhysical(void)
 
 // 8258C928  UI_FillRect  (ui/ui_atoms.cpp:134)
 
-void UI_FillRect(void)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void UI_FillRect(ScreenPlacement *param_1,float param_2,float param_3,float param_4,float param_5,
+                int param_6,int param_7,float *param_8)
 
 {
-  if (DAT_83f7a9d0 != 0) {
-    CL_DrawStretchPic();
+  if (sharedUiInfo.assets.whiteMaterial != (Material *)0x0) {
+    CL_DrawStretchPic(param_1,param_2,param_3,param_4,param_5,param_6,param_7,0.0,0.0,0.0,0.0,
+                      param_8,(Material *)&IMAGE_DOS_HEADER_82000000);
   }
   return;
 }

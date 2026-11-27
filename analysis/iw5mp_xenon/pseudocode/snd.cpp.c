@@ -2,30 +2,33 @@
 
 // 82846AF0  MemFile_ReadVec3  (universal/memfile.h:204)
 
-void MemFile_ReadVec3(undefined8 param_1,uint *param_2)
+void MemFile_ReadVec3(MemoryFile *param_1,float *param_2)
 
 {
-  undefined8 uVar1;
-  uint local_40;
-  uint local_3c;
+  MemoryFile *pMVar1;
+  float local_40;
+  float local_3c;
   
-  uVar1 = __savegprlr_26();
-  MemFile_ReadData(uVar1,4,&local_40);
+  pMVar1 = (MemoryFile *)__savegprlr_26(param_1);
+  MemFile_ReadData(pMVar1,4,&local_40);
   local_3c = local_40;
-  if ((local_40 & 0x7f800000) == 0x7f800000) {
-    MyAssertHandler(0xffffffff82188090,0xc6,0,0xffffffff82000f98,0xffffffff820606fc);
+  if (((uint)local_40 & 0x7f800000) == 0x7f800000) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal/memfile.h",0xc6,0,
+                    "%s");
   }
   *param_2 = local_40;
-  MemFile_ReadData(uVar1,4,&local_40);
+  MemFile_ReadData(pMVar1,4,&local_40);
   local_3c = local_40;
-  if ((local_40 & 0x7f800000) == 0x7f800000) {
-    MyAssertHandler(0xffffffff82188090,0xc6,0,0xffffffff82000f98,0xffffffff820606fc);
+  if (((uint)local_40 & 0x7f800000) == 0x7f800000) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal/memfile.h",0xc6,0,
+                    "%s");
   }
   param_2[1] = local_40;
-  MemFile_ReadData(uVar1,4,&local_40);
+  MemFile_ReadData(pMVar1,4,&local_40);
   local_3c = local_40;
-  if ((local_40 & 0x7f800000) == 0x7f800000) {
-    MyAssertHandler(0xffffffff82188090,0xc6,0,0xffffffff82000f98,0xffffffff820606fc);
+  if (((uint)local_40 & 0x7f800000) == 0x7f800000) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal/memfile.h",0xc6,0,
+                    "%s");
   }
   param_2[2] = local_40;
   __restgprlr_26();
@@ -34,518 +37,230 @@ void MemFile_ReadVec3(undefined8 param_1,uint *param_2)
 
 
 // 82846C00  TRACK_snd  (snd.cpp:349)
-
-void TRACK_snd(void)
-
-{
-  track_static_alloc_internal(0xffffffff8487d9c8,0xf8cc,0xffffffff821ef044,0xd);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82846C20  SND_DebugAliasPrint  (snd.cpp:357)
 
-void SND_DebugAliasPrint(char param_1,undefined4 *param_2,undefined8 param_3)
+void SND_DebugAliasPrint(bool param_1,snd_alias_t *param_2,char *param_3)
 
 {
   int iVar1;
   
-  if ((param_1 != '\0') &&
-     (iVar1 = I_stricmp(*(undefined4 *)(DAT_8487cfac + 0xc),*param_2), iVar1 == 0)) {
-    Com_DPrintf(9,0xffffffff821ef04c,*param_2,param_3);
+  if ((param_1) &&
+     (iVar1 = I_stricmp((snd_debugAlias->current).string,param_2->aliasName), iVar1 == 0)) {
+    Com_DPrintf(9,"^5SND_DEBUG_ALIAS (%s): %s\n");
   }
   return;
 }
 
 
 // 82846C98  SND_GetEntChannelCount  (snd.cpp:396)
-
-undefined4 SND_GetEntChannelCount(void)
-
-{
-  return DAT_84888110;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82846CB0  SND_InitOcclusionInfoEntry  (snd.cpp:543)
-
-void SND_InitOcclusionInfoEntry(uint param_1,undefined4 param_2)
-
-{
-  undefined4 uVar1;
-  
-  if (0x7f < param_1) {
-    MyAssertHandler(0xffffffff821ef068,0x222,0,0xffffffff821ef0a0,param_1,0x80);
-  }
-  uVar1 = DAT_84886ae8;
-  (&DAT_8488d5a0)[param_1 * 6] = param_2;
-  (&DAT_8488d5b0)[param_1 * 6] = 0;
-  (&DAT_8488d5a8)[param_1 * 6] = 0;
-  (&DAT_8488d5b4)[param_1 * 6] = 0;
-  (&DAT_8488d5a4)[param_1 * 6] = 0;
-  (&DAT_8487cfb8)[param_1] = uVar1;
-  (&DAT_8488d5ac)[param_1 * 6] = 0;
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82846D70  SND_GetEntityOcclusionInfo  (snd.cpp:566)
-
-void SND_GetEntityOcclusionInfo(void)
-
-{
-  ushort uVar1;
-  uint uVar2;
-  int iVar3;
-  int *piVar4;
-  uint uVar5;
-  uint uVar6;
-  int iVar7;
-  uint uVar8;
-  
-  uVar2 = __savegprlr_25();
-  if (0xbff < uVar2) {
-    MyAssertHandler(0xffffffff821ef068,0x23e,0,0xffffffff821ef0e4,uVar2,0xc00);
-  }
-  iVar3 = DAT_84886ae8;
-  uVar1 = (&DAT_8488e1a0)[uVar2];
-  if ((&DAT_8488d5a0)[(uint)uVar1 * 6] == uVar2) {
-    (&DAT_8487cfb8)[uVar1] = DAT_84886ae8;
-    __restgprlr_25(&DAT_8488d5a0 + (uint)uVar1 * 6);
-    return;
-  }
-  iVar7 = 0x7fffffff;
-  uVar8 = 0;
-  piVar4 = &DAT_8487cfbc;
-  uVar5 = 2;
-  do {
-    if (piVar4[-1] - DAT_84886ae8 < iVar7) {
-      uVar8 = uVar5 - 2;
-      iVar7 = piVar4[-1] - DAT_84886ae8;
-    }
-    if (*piVar4 - DAT_84886ae8 < iVar7) {
-      uVar8 = uVar5 - 1;
-      iVar7 = *piVar4 - DAT_84886ae8;
-    }
-    if (piVar4[1] - DAT_84886ae8 < iVar7) {
-      iVar7 = piVar4[1] - DAT_84886ae8;
-      uVar8 = uVar5;
-    }
-    if (piVar4[2] - DAT_84886ae8 < iVar7) {
-      uVar8 = uVar5 + 1;
-      iVar7 = piVar4[2] - DAT_84886ae8;
-    }
-    piVar4 = piVar4 + 4;
-    uVar6 = uVar5 + 2;
-    uVar5 = uVar5 + 4;
-  } while (uVar6 < 0x80);
-  (&DAT_8488e1a0)[uVar2] = (short)uVar8;
-  if (0x7f < uVar8) {
-    MyAssertHandler(0xffffffff821ef068,0x222,0,0xffffffff821ef0a0,uVar8,0x80);
-    iVar3 = DAT_84886ae8;
-  }
-  (&DAT_8487cfb8)[uVar8] = iVar3;
-  (&DAT_8488d5a0)[uVar8 * 6] = uVar2;
-  (&DAT_8488d5a8)[uVar8 * 6] = 0;
-  (&DAT_8488d5b0)[uVar8 * 6] = 0;
-  (&DAT_8488d5a4)[uVar8 * 6] = 0;
-  (&DAT_8488d5b4)[uVar8 * 6] = 0;
-  (&DAT_8488d5ac)[uVar8 * 6] = 0;
-  __restgprlr_25();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82846F18  SND_HasFreeVoice  (snd.cpp:605)
-
-void SND_HasFreeVoice(void)
-
-{
-  undefined8 uVar1;
-  int iVar2;
-  longlong lVar3;
-  int *piVar4;
-  longlong lVar5;
-  
-  uVar1 = __savegprlr_27();
-  iVar2 = (int)uVar1;
-  if ((iVar2 < 0) || (DAT_84888110 <= iVar2)) {
-    MyAssertHandler(0xffffffff821ef068,0x261,0,0xffffffff8218a1b4,0xffffffff8218a1cc,uVar1);
-  }
-  if ((int)(&DAT_84886b50)[iVar2 * 0x15] < 1) {
-    MyAssertHandler(0xffffffff821ef068,0x262,0,0xffffffff821ef124,0xffffffff821ef158);
-  }
-  lVar3 = 0;
-  piVar4 = &DAT_84889f24;
-  lVar5 = 7;
-  do {
-    if ((piVar4[-4] == 1) && (iVar2 == *piVar4)) {
-      lVar3 = lVar3 + 1;
-    }
-    if ((piVar4[0x2c] == 1) && (iVar2 == piVar4[0x30])) {
-      lVar3 = lVar3 + 1;
-    }
-    piVar4 = piVar4 + 0x60;
-    lVar5 = lVar5 + -1;
-  } while (lVar5 != 0);
-  __restgprlr_27(((~((ulonglong)(uint)(&DAT_84886b50)[iVar2 * 0x15] ^
-                    (ulonglong)(uint)(&DAT_84886b54)[iVar2 * 0x15] + lVar3) & 0xffffffff) >> 0x1f) +
-                 (ulonglong)
-                 ((ulonglong)(uint)(&DAT_84886b50)[iVar2 * 0x15] <=
-                 (ulonglong)(uint)(&DAT_84886b54)[iVar2 * 0x15] + lVar3) & 1);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82847038  SND_AddVoice  (snd.cpp:626)
-
-void SND_AddVoice(void)
-
-{
-  int iVar2;
-  undefined8 uVar1;
-  
-  iVar2 = __savegprlr_28();
-  if ((iVar2 < 0) || (DAT_84888110 <= iVar2)) {
-    MyAssertHandler(0xffffffff821ef068,0x273,0,0xffffffff8218a1b4,0xffffffff8218a1cc,iVar2);
-  }
-  if ((int)(&DAT_84886b50)[iVar2 * 0x15] <= (int)(&DAT_84886b54)[iVar2 * 0x15]) {
-    uVar1 = va(0xffffffff821ef1dc,&DAT_84886b08 + iVar2 * 0x54);
-    MyAssertHandler(0xffffffff821ef068,0x274,0,0xffffffff820011f4,0xffffffff821ef188,uVar1);
-  }
-  (&DAT_84886b54)[iVar2 * 0x15] = (&DAT_84886b54)[iVar2 * 0x15] + 1;
-  __restgprlr_28();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82847110  SND_RemoveVoice  (snd.cpp:635)
-
-void SND_RemoveVoice(void)
-
-{
-  undefined8 uVar1;
-  int iVar2;
-  
-  uVar1 = __savegprlr_29();
-  iVar2 = (int)uVar1;
-  if ((iVar2 < 0) || (DAT_84888110 <= iVar2)) {
-    MyAssertHandler(0xffffffff821ef068,0x27c,0,0xffffffff8218a1b4,0xffffffff8218a1cc,uVar1);
-  }
-  if ((int)(&DAT_84886b54)[iVar2 * 0x15] < 1) {
-    MyAssertHandler(0xffffffff821ef068,0x27d,0,0xffffffff821ef210,0xffffffff821ef244);
-  }
-  (&DAT_84886b54)[iVar2 * 0x15] = (&DAT_84886b54)[iVar2 * 0x15] + -1;
-  __restgprlr_29();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 828471C0  SND_GetPriority  (snd.cpp:644)
-
-undefined4 SND_GetPriority(undefined8 param_1)
-
-{
-  int iVar1;
-  
-  iVar1 = (int)param_1;
-  if ((iVar1 < 0) || (DAT_84888110 <= iVar1)) {
-    MyAssertHandler(0xffffffff821ef068,0x285,0,0xffffffff8218a1b4,0xffffffff8218a1cc,param_1);
-  }
-  return (&DAT_84886b48)[iVar1 * 0x15];
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82847250  SND_IsRestricted  (snd.cpp:651)
-
-undefined1 SND_IsRestricted(undefined8 param_1)
-
-{
-  int iVar1;
-  
-  iVar1 = (int)param_1;
-  if ((iVar1 < 0) || (DAT_84888110 <= iVar1)) {
-    MyAssertHandler(0xffffffff821ef068,0x28c,0,0xffffffff8218a1b4,0xffffffff8218a1cc,param_1);
-  }
-  return (&DAT_84886b4d)[iVar1 * 0x54];
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 828472E0  SND_IsAliasChannel3D  (snd.cpp:658)
-
-undefined1 SND_IsAliasChannel3D(undefined8 param_1)
-
-{
-  int iVar1;
-  
-  iVar1 = (int)param_1;
-  if ((iVar1 < 0) || (DAT_84888110 <= iVar1)) {
-    MyAssertHandler(0xffffffff821ef068,0x293,0,0xffffffff8218a1b4,0xffffffff8218a1cc,param_1);
-  }
-  return (&DAT_84886b4c)[iVar1 * 0x54];
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82847370  SND_IsPausable  (snd.cpp:665)
-
-bool SND_IsPausable(undefined8 param_1)
-
-{
-  int iVar1;
-  
-  if (((int)param_1 < 0) || (DAT_84888110 <= (int)param_1)) {
-    MyAssertHandler(0xffffffff821ef068,0x29a,0,0xffffffff8218a1b4,0xffffffff8218a1cc,param_1);
-  }
-  iVar1 = Com_BitCheckAssert(0xffffffff84888008,param_1,8);
-  return iVar1 == 1;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82847410  SND_GetTimescaleLerp  (snd.cpp:672)
-
-double SND_GetTimescaleLerp(int param_1)
-
-{
-  if ((param_1 < 0) || (DAT_84888110 <= param_1)) {
-    MyAssertHandler(0xffffffff821ef068,0x2a1,0,0xffffffff8218a1b4,0xffffffff8218a1cc,param_1);
-  }
-  return (double)(float)(&DAT_84888010)[param_1];
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 828474A0  SND_GetVolModName  (snd.cpp:679)
-
-longlong SND_GetVolModName(ulonglong param_1)
-
-{
-  if ((ulonglong)DAT_8488d1a0 <= (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821ef068,0x2a8,0,0xffffffff821ef278,param_1);
-  }
-  return param_1 * 0x44 + -0x7b775660;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82847520  SND_GetVolModIndexFromName  (snd.cpp:686)
-
-void SND_GetVolModIndexFromName(void)
-
-{
-  ulonglong uVar1;
-  int iVar2;
-  longlong lVar3;
-  longlong lVar4;
-  
-  uVar1 = __savegprlr_28();
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x2af,0,0xffffffff82000f98,0xffffffff82021a74);
-  }
-  lVar3 = 0;
-  if (0 < DAT_8488d1a0) {
-    lVar4 = -0x7b775660;
-    do {
-      iVar2 = I_stricmp(uVar1,lVar4);
-      if (iVar2 == 0) {
-        __restgprlr_28(lVar3);
-        return;
-      }
-      lVar3 = lVar3 + 1;
-      lVar4 = lVar4 + 0x44;
-    } while ((int)lVar3 < DAT_8488d1a0);
-  }
-  __restgprlr_28(0xffffffffffffffff);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 828475D0  SND_GetEntChannelName  (snd.cpp:700)
-
-longlong SND_GetEntChannelName(longlong param_1)
-
-{
-  if (((int)param_1 < 0) || (DAT_84888110 <= (int)param_1)) {
-    MyAssertHandler(0xffffffff821ef068,0x2bd,0,0xffffffff8218a1b4,0xffffffff8218a1cc,param_1);
-  }
-  return param_1 * 0x54 + -0x7b7794f8;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82847660  SND_GetEntChannelFromName  (snd.cpp:707)
-
-void SND_GetEntChannelFromName(void)
-
-{
-  ulonglong uVar1;
-  int iVar2;
-  longlong lVar3;
-  longlong lVar4;
-  
-  uVar1 = __savegprlr_28();
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x2c6,0,0xffffffff82000f98,0xffffffff8200681c);
-  }
-  lVar3 = 0;
-  if (0 < DAT_84888110) {
-    lVar4 = -0x7b7794f8;
-    do {
-      iVar2 = I_stricmp(uVar1,lVar4);
-      if (iVar2 == 0) {
-        __restgprlr_28(lVar3);
-        return;
-      }
-      lVar3 = lVar3 + 1;
-      lVar4 = lVar4 + 0x54;
-    } while ((int)lVar3 < DAT_84888110);
-  }
-  __restgprlr_28(0xffffffffffffffff);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82847710  SND_ValidateEnvEffectsPriorityValue  (snd.cpp:725)
 
-void SND_ValidateEnvEffectsPriorityValue(undefined8 param_1,ulonglong param_2)
+bool SND_ValidateEnvEffectsPriorityValue(char *param_1,int *param_2)
 
 {
-  ulonglong uVar1;
+  char *pcVar1;
   int iVar2;
-  int iVar3;
-  undefined4 *puVar4;
-  char **ppcVar6;
-  longlong lVar5;
-  undefined4 local_40;
+  undefined1 uVar3;
+  ulonglong uVar4;
+  int iVar5;
+  char **ppcVar7;
+  longlong lVar6;
   char *local_3c [15];
   
-  uVar1 = __savegprlr_28();
-  local_40 = 0x82003484;
+  uVar4 = (ulonglong)(int)param_2;
+  pcVar1 = (char *)__savegprlr_28(param_1);
   local_3c[0] = "level";
   local_3c[1] = "shellshock";
   local_3c[2] = "remotecamera";
   local_3c[3] = "painvision";
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x2e3,0,0xffffffff82000f98,0xffffffff821ef300);
+  if (pcVar1 == (char *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x2e3,0,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x2e4,0,0xffffffff82000f98,0xffffffff82144114);
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x2e4,0,"%s");
   }
-  iVar3 = 1;
-  ppcVar6 = local_3c;
+  iVar5 = 1;
+  ppcVar7 = local_3c;
   do {
-    iVar2 = I_stricmp(uVar1,*ppcVar6);
+    iVar2 = I_stricmp(pcVar1,*ppcVar7);
     if (iVar2 == 0) {
-      *(int *)param_2 = iVar3;
-      __restgprlr_28(1);
-      return;
+      *(int *)uVar4 = iVar5;
+      uVar3 = __restgprlr_28(1);
+      return (bool)uVar3;
     }
-    iVar3 = iVar3 + 1;
-    ppcVar6 = ppcVar6 + 1;
-  } while (iVar3 < 5);
-  Com_Printf(9,0xffffffff821ef2b8,uVar1);
-  puVar4 = &local_40;
-  lVar5 = 4;
+    iVar5 = iVar5 + 1;
+    ppcVar7 = ppcVar7 + 1;
+  } while (iVar5 < 5);
+  Com_Printf(9,"invalid priority string \'%s\', it must be one of the following strings:\n");
+  lVar6 = 4;
   do {
-    puVar4 = puVar4 + 1;
-    Com_Printf(9,0xffffffff82039718,*puVar4);
-    lVar5 = lVar5 + -1;
-  } while (lVar5 != 0);
-  *(int *)param_2 = 0;
-  __restgprlr_28(0);
-  return;
+    Com_Printf(9,"  %s\n");
+    lVar6 = lVar6 + -1;
+  } while (lVar6 != 0);
+  *(int *)uVar4 = 0;
+  uVar3 = __restgprlr_28(0);
+  return (bool)uVar3;
 }
 
 
 // 82847848  SND_RoomtypeFromString  (snd.cpp:761)
 
-void SND_RoomtypeFromString(void)
+int SND_RoomtypeFromString(char *param_1)
 
 {
-  undefined *puVar1;
-  ulonglong uVar2;
+  char *pcVar1;
+  char *pcVar2;
   int iVar3;
-  undefined **ppuVar4;
-  undefined **ppuVar5;
-  int iVar6;
+  int iVar4;
+  char **ppcVar5;
+  char **ppcVar6;
   
-  uVar2 = __savegprlr_29();
-  if ((uVar2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x2fc,0,0xffffffff82000f98,0xffffffff820181d4);
+  pcVar2 = (char *)__savegprlr_29(param_1);
+  if (pcVar2 == (char *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x2fc,0,"%s");
   }
-  iVar6 = 0;
-  ppuVar5 = &PTR_s_generic_829a6570;
-  ppuVar4 = ppuVar5;
-  puVar1 = PTR_s_generic_829a6570;
+  iVar4 = 0;
+  ppcVar6 = snd_roomStrings;
+  ppcVar5 = ppcVar6;
+  pcVar1 = snd_roomStrings[0];
   while( true ) {
-    if (puVar1 == (undefined *)0x0) {
-      Com_Printf(9,0xffffffff821ef330,uVar2);
-      iVar6 = 0;
-      puVar1 = PTR_s_generic_829a6570;
-      while (puVar1 != (undefined *)0x0) {
-        if (**ppuVar5 != '\0') {
-          Com_Printf(9,0xffffffff82039718);
+    if (pcVar1 == (char *)0x0) {
+      Com_Printf(9,"invalid roomtype string \'%s\', it must be one of the following strings:\n");
+      iVar4 = 0;
+      pcVar2 = snd_roomStrings[0];
+      while (pcVar2 != (char *)0x0) {
+        if (**ppcVar6 != '\0') {
+          Com_Printf(9,"  %s\n");
         }
-        iVar6 = iVar6 + 1;
-        ppuVar5 = &PTR_s_generic_829a6570 + iVar6;
-        puVar1 = *ppuVar5;
+        iVar4 = iVar4 + 1;
+        ppcVar6 = snd_roomStrings + iVar4;
+        pcVar2 = *ppcVar6;
       }
-      __restgprlr_29(0);
-      return;
+      iVar4 = __restgprlr_29(0);
+      return iVar4;
     }
-    iVar3 = I_stricmp(uVar2,*ppuVar4);
+    iVar3 = I_stricmp(pcVar2,*ppcVar5);
     if (iVar3 == 0) break;
-    iVar6 = iVar6 + 1;
-    ppuVar4 = &PTR_s_generic_829a6570 + iVar6;
-    puVar1 = *ppuVar4;
+    iVar4 = iVar4 + 1;
+    ppcVar5 = snd_roomStrings + iVar4;
+    pcVar1 = *ppcVar5;
   }
-  __restgprlr_29(iVar6);
-  return;
+  iVar4 = __restgprlr_29(iVar4);
+  return iVar4;
 }
 
 
 // 82856170  SND_SetEnvironmentEffects_f  (snd.cpp:785)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void SND_SetEnvironmentEffects_f(void)
 
 {
-  int iVar2;
-  undefined8 uVar1;
-  char cVar4;
+  int iVar1;
+  char *pcVar2;
+  bool bVar4;
   char *pcVar3;
+  int in_r5;
   double dVar5;
   double dVar6;
   double dVar7;
   double dVar8;
-  undefined4 local_40 [12];
+  int local_40 [12];
   
   __savefpr_28();
-  iVar2 = Cmd_Argc();
-  if (iVar2 == 6) {
-    uVar1 = Cmd_Argv(1);
-    cVar4 = SND_ValidateEnvEffectsPriorityValue(uVar1,local_40);
-    if (cVar4 != '\0') {
-      uVar1 = Cmd_Argv(2);
-      iVar2 = SND_RoomtypeFromString();
-      if ((iVar2 != 0) || (iVar2 = I_stricmp(uVar1,PTR_s_generic_829a6570), iVar2 == 0)) {
-        pcVar3 = (char *)Cmd_Argv(3);
+  iVar1 = Cmd_Argc();
+  if (iVar1 == 6) {
+    pcVar2 = Cmd_Argv(1);
+    bVar4 = SND_ValidateEnvEffectsPriorityValue(pcVar2,local_40);
+    if (bVar4) {
+      pcVar2 = Cmd_Argv(2);
+      iVar1 = SND_RoomtypeFromString(pcVar2);
+      if ((iVar1 != 0) || (iVar1 = I_stricmp(pcVar2,snd_roomStrings[0]), iVar1 == 0)) {
+        pcVar3 = Cmd_Argv(3);
         dVar5 = atof(pcVar3);
         dVar8 = (double)(float)dVar5;
         dVar5 = 0.0;
         if ((dVar8 < 0.0) || (dVar7 = 1.0, 1.0 < dVar8)) {
-          Com_Printf(dVar8,9,0xffffffff821f2080,dVar8);
+          Com_Printf(9,"invalid \'drylevel\' %g, must be in the range of 0.0-1.0\n");
         }
         else {
-          pcVar3 = (char *)Cmd_Argv(4);
+          pcVar3 = Cmd_Argv(4);
           dVar6 = atof(pcVar3);
           dVar6 = (double)(float)dVar6;
           if ((dVar6 < dVar5) || (dVar7 < dVar6)) {
-            Com_Printf(dVar6,9,0xffffffff821f20b8,dVar6);
+            Com_Printf(9,"invalid \'wetlevel\' %g, must be in the range of 0.0-1.0\n");
           }
           else {
-            pcVar3 = (char *)Cmd_Argv(5);
-            iVar2 = atoi(pcVar3);
-            if (iVar2 < 0) {
-              Com_Printf(9,0xffffffff821f20f0,iVar2);
+            pcVar3 = Cmd_Argv(5);
+            iVar1 = atoi(pcVar3);
+            if (iVar1 < 0) {
+              Com_Printf(9,"invalid \'fademsec\' %i, must be greater than or equal to zero\n");
             }
             else {
-              SND_SetEnvironmentEffects(dVar8,dVar6,local_40[0],uVar1);
+              SND_SetEnvironmentEffects(local_40[0],pcVar2,(float)dVar8,(float)dVar6,in_r5);
             }
           }
         }
@@ -553,7 +268,9 @@ void SND_SetEnvironmentEffects_f(void)
     }
   }
   else {
-    Com_Printf(9,0xffffffff821f2130);
+    Com_Printf(9,
+               "USAGE: snd_setEnvironmentEffects <const char *priority> <const char *roomstring> <float drylevel> <float wetlevel> <int fademsec>\n"
+              );
   }
   __restfpr_28();
   return;
@@ -562,30 +279,31 @@ void SND_SetEnvironmentEffects_f(void)
 
 // 828562E8  SND_DeactivateEnvironmentEffects_f  (snd.cpp:833)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void SND_DeactivateEnvironmentEffects_f(void)
 
 {
-  int iVar2;
-  undefined8 uVar1;
-  char cVar3;
-  char *_Str;
-  undefined4 local_10 [4];
+  int iVar1;
+  char *pcVar2;
+  bool bVar3;
+  int local_10 [4];
   
-  iVar2 = Cmd_Argc();
-  if (iVar2 != 3) {
-    Com_Printf(9,0xffffffff821f21b8);
+  iVar1 = Cmd_Argc();
+  if (iVar1 != 3) {
+    Com_Printf(9,"USAGE: snd_deactivateEnvironmentEffects <int priority> <int fademsec>\n");
     return;
   }
-  uVar1 = Cmd_Argv(1);
-  cVar3 = SND_ValidateEnvEffectsPriorityValue(uVar1,local_10);
-  if (cVar3 != '\0') {
-    _Str = (char *)Cmd_Argv(2);
-    iVar2 = atoi(_Str);
-    if (iVar2 < 0) {
-      Com_Printf(9,0xffffffff821f20f0);
+  pcVar2 = Cmd_Argv(1);
+  bVar3 = SND_ValidateEnvEffectsPriorityValue(pcVar2,local_10);
+  if (bVar3) {
+    pcVar2 = Cmd_Argv(2);
+    iVar1 = atoi(pcVar2);
+    if (iVar1 < 0) {
+      Com_Printf(9,"invalid \'fademsec\' %i, must be greater than or equal to zero\n");
       return;
     }
-    SND_DeactivateEnvironmentEffects(local_10[0],iVar2);
+    SND_DeactivateEnvironmentEffects(local_10[0],iVar1);
   }
   return;
 }
@@ -593,150 +311,162 @@ void SND_DeactivateEnvironmentEffects_f(void)
 
 // 82847948  SND_EqTypeFromString  (snd.cpp:858)
 
-void SND_EqTypeFromString(void)
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
+SND_EQTYPE SND_EqTypeFromString(char *param_1)
 
 {
-  undefined *puVar1;
-  ulonglong uVar2;
+  char *pcVar1;
+  char *pcVar2;
   int iVar3;
-  undefined **ppuVar4;
-  undefined **ppuVar5;
-  int iVar6;
+  SND_EQTYPE SVar4;
+  char **ppcVar5;
+  char **ppcVar6;
+  int iVar7;
   
-  uVar2 = __savegprlr_29();
-  if ((uVar2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x35d,0,0xffffffff82000f98,0xffffffff821ef3c0);
+  pcVar2 = (char *)__savegprlr_29(param_1);
+  if (pcVar2 == (char *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x35d,0,"%s");
   }
-  iVar6 = 0;
-  ppuVar5 = &PTR_s_lowpass_829a6558;
-  ppuVar4 = ppuVar5;
-  puVar1 = PTR_s_lowpass_829a6558;
+  iVar7 = 0;
+  ppcVar6 = snd_eqTypeStrings;
+  ppcVar5 = ppcVar6;
+  pcVar1 = snd_eqTypeStrings[0];
   while( true ) {
-    if (puVar1 == (undefined *)0x0) {
-      Com_Printf(9,0xffffffff821ef378,uVar2);
-      iVar6 = 0;
-      puVar1 = PTR_s_lowpass_829a6558;
-      while (puVar1 != (undefined *)0x0) {
-        if (**ppuVar5 != '\0') {
-          Com_Printf(9,0xffffffff82039718);
+    if (pcVar1 == (char *)0x0) {
+      Com_Printf(9,"invalid eq type string \'%s\', it must be one of the following strings:\n");
+      iVar7 = 0;
+      pcVar2 = snd_eqTypeStrings[0];
+      while (pcVar2 != (char *)0x0) {
+        if (**ppcVar6 != '\0') {
+          Com_Printf(9,"  %s\n");
         }
-        iVar6 = iVar6 + 1;
-        ppuVar5 = &PTR_s_lowpass_829a6558 + iVar6;
-        puVar1 = *ppuVar5;
+        iVar7 = iVar7 + 1;
+        ppcVar6 = snd_eqTypeStrings + iVar7;
+        pcVar2 = *ppcVar6;
       }
-      __restgprlr_29(5);
-      return;
+      SVar4 = __restgprlr_29(5);
+      return SVar4;
     }
-    iVar3 = I_stricmp(uVar2,*ppuVar4);
+    iVar3 = I_stricmp(pcVar2,*ppcVar5);
     if (iVar3 == 0) break;
-    iVar6 = iVar6 + 1;
-    ppuVar4 = &PTR_s_lowpass_829a6558 + iVar6;
-    puVar1 = *ppuVar4;
+    iVar7 = iVar7 + 1;
+    ppcVar5 = snd_eqTypeStrings + iVar7;
+    pcVar1 = *ppcVar5;
   }
-  __restgprlr_29(iVar6);
-  return;
+  SVar4 = __restgprlr_29(iVar7);
+  return SVar4;
 }
 
 
 // 82847A48  SND_ParseChannelAndBand_f  (snd.cpp:881)
 
-void SND_ParseChannelAndBand_f(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+bool SND_ParseChannelAndBand_f(int *param_1,int *param_2,int *param_3)
 
 {
-  int *piVar2;
-  undefined8 uVar1;
+  int *piVar1;
+  char *pcVar2;
   int iVar3;
-  char *pcVar4;
+  undefined1 uVar4;
+  ulonglong uVar5;
+  ulonglong uVar6;
   
-  piVar2 = (int *)__savegprlr_27();
-  if (piVar2 == (int *)0x0) {
-    MyAssertHandler(0xffffffff821ef068,0x374,0,0xffffffff82000f98,0xffffffff821ef474);
+  uVar6 = (ulonglong)(int)param_3;
+  uVar5 = (ulonglong)(int)param_2;
+  piVar1 = (int *)__savegprlr_27(param_1);
+  if (piVar1 == (int *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x374,0,"%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x375,0,0xffffffff82000f98,0xffffffff82134960);
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x375,0,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x376,0,0xffffffff82000f98,0xffffffff821ef46c);
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x376,0,"%s");
   }
-  uVar1 = Cmd_Argv(1);
-  iVar3 = SND_GetEntChannelFromName();
-  *piVar2 = iVar3;
+  pcVar2 = Cmd_Argv(1);
+  iVar3 = SND_GetEntChannelFromName(pcVar2);
+  *piVar1 = iVar3;
   if (iVar3 == -1) {
-    Com_Printf(9,0xffffffff821ef428,uVar1);
-    __restgprlr_27(0);
-    return;
+    Com_Printf(9,"Unknown channel name (%s), please check channel definitions file\n");
+    uVar4 = __restgprlr_27(0);
+    return (bool)uVar4;
   }
-  pcVar4 = (char *)Cmd_Argv(2);
-  iVar3 = atoi(pcVar4);
-  *(int *)param_2 = iVar3;
+  pcVar2 = Cmd_Argv(2);
+  iVar3 = atoi(pcVar2);
+  *(int *)uVar5 = iVar3;
   if ((iVar3 < 0) || (1 < iVar3)) {
-    Com_Printf(9,0xffffffff821ef3cc,iVar3,2);
-    __restgprlr_27(0);
-    return;
+    Com_Printf(9,"invalid \'eqIndex\' %i, must be >= 0 and < %i\n");
+    uVar4 = __restgprlr_27(0);
+    return (bool)uVar4;
   }
-  pcVar4 = (char *)Cmd_Argv(3);
-  iVar3 = atoi(pcVar4);
-  *(int *)param_3 = iVar3;
+  pcVar2 = Cmd_Argv(3);
+  iVar3 = atoi(pcVar2);
+  *(int *)uVar6 = iVar3;
   if ((-1 < iVar3) && (iVar3 < 3)) {
-    __restgprlr_27(1);
-    return;
+    uVar4 = __restgprlr_27(1);
+    return (bool)uVar4;
   }
-  Com_Printf(9,0xffffffff821ef3fc,iVar3,3);
-  __restgprlr_27(0);
-  return;
+  Com_Printf(9,"invalid \'band\' %i, must be >= 0 and < %i\n");
+  uVar4 = __restgprlr_27(0);
+  return (bool)uVar4;
 }
 
 
 // 82847BB0  SND_SetEq_f  (snd.cpp:914)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
 void SND_SetEq_f(void)
 
 {
-  int iVar2;
-  char cVar4;
-  undefined8 uVar1;
-  char *pcVar3;
+  int iVar1;
+  bool bVar4;
+  char *pcVar2;
+  SND_EQTYPE SVar3;
   double dVar5;
   double dVar6;
   double dVar7;
   double dVar8;
-  undefined4 local_40;
-  undefined4 local_3c;
-  undefined4 local_38 [10];
+  int local_40;
+  int local_3c;
+  int local_38 [10];
   
-  iVar2 = Cmd_Argc();
-  if (iVar2 == 8) {
-    cVar4 = SND_ParseChannelAndBand_f(local_38,&local_3c,&local_40);
-    if (cVar4 != '\0') {
-      Cmd_Argv(4);
-      uVar1 = SND_EqTypeFromString();
-      if ((int)uVar1 != 5) {
-        pcVar3 = (char *)Cmd_Argv(5);
-        dVar5 = atof(pcVar3);
+  iVar1 = Cmd_Argc();
+  if (iVar1 == 8) {
+    bVar4 = SND_ParseChannelAndBand_f(local_38,&local_3c,&local_40);
+    if (bVar4) {
+      pcVar2 = Cmd_Argv(4);
+      SVar3 = SND_EqTypeFromString(pcVar2);
+      if (SVar3 != SND_EQTYPE_COUNT) {
+        pcVar2 = Cmd_Argv(5);
+        dVar5 = atof(pcVar2);
         dVar7 = (double)(float)dVar5;
-        pcVar3 = (char *)Cmd_Argv(6);
-        dVar5 = atof(pcVar3);
+        pcVar2 = Cmd_Argv(6);
+        dVar5 = atof(pcVar2);
         dVar8 = (double)(float)dVar5;
         dVar5 = 0.0;
         if ((dVar8 < 0.0) || (20000.0 < dVar8)) {
-          Com_Printf(dVar8,9,0xffffffff821ef480,dVar8,20000);
+          Com_Printf(9,"invalid \'freq\' %f, must be >= 0 and <= %i\n");
         }
         else {
-          pcVar3 = (char *)Cmd_Argv(7);
-          dVar6 = atof(pcVar3);
-          dVar6 = (double)(float)dVar6;
-          if (dVar5 < dVar6) {
-            SND_SetEqParams(dVar7,dVar8,local_38[0],local_3c,local_40,uVar1);
+          pcVar2 = Cmd_Argv(7);
+          dVar6 = atof(pcVar2);
+          if (dVar5 < (double)(float)dVar6) {
+            SND_SetEqParams(local_38[0],local_3c,local_40,SVar3,(float)dVar7,(float)dVar8,
+                            (float)dVar6);
           }
           else {
-            Com_Printf(dVar6,9,0xffffffff821ef4ac,dVar6);
+            Com_Printf(9,"invalid \'q\' %f, must be > 0\n");
           }
         }
       }
     }
   }
   else {
-    Com_Printf(9,0xffffffff821ef4d0);
+    Com_Printf(9,
+               "USAGE: snd_setEq <const char *channelName> <int eqIndex> <int band> <const char *type> <float gain> <float freq> <float q>\n"
+              );
     SND_PrintEqParams();
   }
   return;
@@ -745,32 +475,37 @@ void SND_SetEq_f(void)
 
 // 82847D00  SND_SetEqFreq_f  (snd.cpp:959)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void SND_SetEqFreq_f(void)
 
 {
-  int iVar1;
-  char cVar2;
-  char *_String;
-  double dVar3;
-  undefined4 local_20;
-  undefined4 local_1c;
-  undefined4 local_18 [6];
+  float fVar1;
+  int iVar2;
+  bool bVar4;
+  char *pcVar3;
+  double dVar5;
+  int local_20;
+  int local_1c;
+  int local_18 [6];
   
-  iVar1 = Cmd_Argc();
-  if (iVar1 != 5) {
-    Com_Printf(9,0xffffffff821ef578);
+  iVar2 = Cmd_Argc();
+  if (iVar2 != 5) {
+    Com_Printf(9,
+               "USAGE: snd_setEqFreq <const char *channelName> <int eqIndex> <int band> <float freq>\n"
+              );
     return;
   }
-  cVar2 = SND_ParseChannelAndBand_f(local_18,&local_1c,&local_20);
-  if (cVar2 != '\0') {
-    _String = (char *)Cmd_Argv(4);
-    dVar3 = atof(_String);
-    dVar3 = (double)(float)dVar3;
-    if ((0.0 <= dVar3) && (dVar3 <= 20000.0)) {
-      SND_SetEqFreq(local_18[0],local_1c,local_20);
+  bVar4 = SND_ParseChannelAndBand_f(local_18,&local_1c,&local_20);
+  if (bVar4) {
+    pcVar3 = Cmd_Argv(4);
+    dVar5 = atof(pcVar3);
+    fVar1 = (float)dVar5;
+    if ((0.0 <= fVar1) && (fVar1 <= 20000.0)) {
+      SND_SetEqFreq(local_18[0],local_1c,local_20,fVar1);
       return;
     }
-    Com_Printf(9,0xffffffff821ef54c,dVar3,20000);
+    Com_Printf(9,"invalid \'freq\' %f, must be >= 0 and < %i\n");
   }
   return;
 }
@@ -778,27 +513,33 @@ void SND_SetEqFreq_f(void)
 
 // 82847DD0  SND_SetEqType_f  (snd.cpp:986)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
 void SND_SetEqType_f(void)
 
 {
-  int iVar2;
-  char cVar3;
-  undefined8 uVar1;
-  undefined4 local_20;
-  undefined4 local_1c;
-  undefined4 local_18 [6];
+  int iVar1;
+  bool bVar4;
+  char *pcVar2;
+  SND_EQTYPE SVar3;
+  int local_20;
+  int local_1c;
+  int local_18 [6];
   
-  iVar2 = Cmd_Argc();
-  if (iVar2 != 5) {
-    Com_Printf(9,0xffffffff821ef5d0);
+  iVar1 = Cmd_Argc();
+  if (iVar1 != 5) {
+    Com_Printf(9,
+               "USAGE: snd_setEqType <const char *channelName> <int eqIndex> <int band> <const char *type>\n"
+              );
     return;
   }
-  cVar3 = SND_ParseChannelAndBand_f(local_18,&local_1c,&local_20);
-  if (cVar3 != '\0') {
-    Cmd_Argv(4);
-    uVar1 = SND_EqTypeFromString();
-    if ((int)uVar1 != 5) {
-      SND_SetEqType(local_18[0],local_1c,local_20,uVar1);
+  bVar4 = SND_ParseChannelAndBand_f(local_18,&local_1c,&local_20);
+  if (bVar4) {
+    pcVar2 = Cmd_Argv(4);
+    SVar3 = SND_EqTypeFromString(pcVar2);
+    if (SVar3 != SND_EQTYPE_COUNT) {
+      SND_SetEqType(local_18[0],local_1c,local_20,SVar3);
     }
   }
   return;
@@ -807,27 +548,31 @@ void SND_SetEqType_f(void)
 
 // 82847E60  SND_SetEqGain_f  (snd.cpp:1010)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void SND_SetEqGain_f(void)
 
 {
   int iVar1;
-  char cVar2;
-  char *_String;
-  double dVar3;
-  undefined4 local_20;
-  undefined4 local_1c;
-  undefined4 local_18 [6];
+  bool bVar3;
+  char *pcVar2;
+  double dVar4;
+  int local_20;
+  int local_1c;
+  int local_18 [6];
   
   iVar1 = Cmd_Argc();
   if (iVar1 != 5) {
-    Com_Printf(9,0xffffffff821ef630);
+    Com_Printf(9,
+               "USAGE: snd_setEqGain <const char *channelName> <int eqIndex> <int band> <float gain>\n"
+              );
     return;
   }
-  cVar2 = SND_ParseChannelAndBand_f(local_18,&local_1c,&local_20);
-  if (cVar2 != '\0') {
-    _String = (char *)Cmd_Argv(4);
-    dVar3 = atof(_String);
-    SND_SetEqGain((double)(float)dVar3,local_18[0],local_1c,local_20);
+  bVar3 = SND_ParseChannelAndBand_f(local_18,&local_1c,&local_20);
+  if (bVar3) {
+    pcVar2 = Cmd_Argv(4);
+    dVar4 = atof(pcVar2);
+    SND_SetEqGain(local_18[0],local_1c,local_20,(float)dVar4);
   }
   return;
 }
@@ -835,31 +580,34 @@ void SND_SetEqGain_f(void)
 
 // 82847EE8  SND_SetEqQ_f  (snd.cpp:1031)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void SND_SetEqQ_f(void)
 
 {
   int iVar1;
-  char cVar2;
-  char *_String;
-  double dVar3;
-  undefined4 local_20;
-  undefined4 local_1c;
-  undefined4 local_18 [6];
+  bool bVar3;
+  char *pcVar2;
+  double dVar4;
+  int local_20;
+  int local_1c;
+  int local_18 [6];
   
   iVar1 = Cmd_Argc();
   if (iVar1 != 5) {
-    Com_Printf(9,0xffffffff821ef688);
+    Com_Printf(9,"USAGE: snd_setEqQ <const char *channelName> <int eqIndex> <int band> <float q>\n")
+    ;
     return;
   }
-  cVar2 = SND_ParseChannelAndBand_f(local_18,&local_1c,&local_20);
-  if (cVar2 != '\0') {
-    _String = (char *)Cmd_Argv(4);
-    dVar3 = atof(_String);
-    if ((double)(float)dVar3 <= 0.0) {
-      Com_Printf(9,0xffffffff821ef4ac,(double)(float)dVar3);
+  bVar3 = SND_ParseChannelAndBand_f(local_18,&local_1c,&local_20);
+  if (bVar3) {
+    pcVar2 = Cmd_Argv(4);
+    dVar4 = atof(pcVar2);
+    if ((float)dVar4 <= 0.0) {
+      Com_Printf(9,"invalid \'q\' %f, must be > 0\n");
       return;
     }
-    SND_SetEqQ(local_18[0],local_1c,local_20);
+    SND_SetEqQ(local_18[0],local_1c,local_20,(float)dVar4);
   }
   return;
 }
@@ -867,40 +615,44 @@ void SND_SetEqQ_f(void)
 
 // 82859638  SND_DeactivateEq_f  (snd.cpp:1058)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void SND_DeactivateEq_f(void)
 
 {
-  int iVar2;
-  char *pcVar3;
-  int iVar4;
-  undefined8 uVar1;
+  int iVar1;
+  char *pcVar2;
+  int iVar3;
+  char *pcVar4;
   
-  iVar2 = Cmd_Argc();
-  if ((iVar2 < 2) || (4 < iVar2)) {
-    Com_Printf(9,0xffffffff821f2958);
+  iVar1 = Cmd_Argc();
+  if ((iVar1 < 2) || (4 < iVar1)) {
+    Com_Printf(9,
+               "USAGE: snd_deactivateEq <int eqIndex> [(optional) const char *channelName] [(optional) int band]\n"
+              );
   }
   else {
-    pcVar3 = (char *)Cmd_Argv(1);
-    iVar4 = atoi(pcVar3);
-    if ((iVar4 < 0) || (1 < iVar4)) {
-      Com_Printf(9,0xffffffff821ef3cc,iVar4,2);
+    pcVar2 = Cmd_Argv(1);
+    iVar3 = atoi(pcVar2);
+    if ((iVar3 < 0) || (1 < iVar3)) {
+      Com_Printf(9,"invalid \'eqIndex\' %i, must be >= 0 and < %i\n");
     }
-    else if (iVar2 == 2) {
-      SND_DeactivateAllEq(iVar4);
+    else if (iVar1 == 2) {
+      SND_DeactivateAllEq(iVar3);
     }
-    else if (iVar2 == 3) {
-      uVar1 = Cmd_Argv(2);
-      SND_DeactivateChannelEq(uVar1,iVar4);
+    else if (iVar1 == 3) {
+      pcVar2 = Cmd_Argv(2);
+      SND_DeactivateChannelEq(pcVar2,iVar3);
     }
-    else if (iVar2 == 4) {
-      uVar1 = Cmd_Argv(2);
-      pcVar3 = (char *)Cmd_Argv(3);
-      iVar2 = atoi(pcVar3);
-      if ((iVar2 < 0) || (2 < iVar2)) {
-        Com_Printf(9,0xffffffff821ef3fc,iVar2,3);
+    else if (iVar1 == 4) {
+      pcVar2 = Cmd_Argv(2);
+      pcVar4 = Cmd_Argv(3);
+      iVar1 = atoi(pcVar4);
+      if ((iVar1 < 0) || (2 < iVar1)) {
+        Com_Printf(9,"invalid \'band\' %i, must be >= 0 and < %i\n");
       }
       else {
-        SND_DeactivateEq(uVar1,iVar4);
+        SND_DeactivateEq(pcVar2,iVar3,iVar1);
       }
     }
   }
@@ -909,91 +661,37 @@ void SND_DeactivateEq_f(void)
 
 
 // 82856390  SND_SoloChannel_f  (snd.cpp:1107)
-
-void SND_SoloChannel_f(void)
-
-{
-  int iVar3;
-  undefined8 uVar1;
-  undefined8 uVar2;
-  longlong lVar4;
-  undefined8 uVar5;
-  undefined8 uVar6;
-  
-  __savegprlr_29();
-  iVar3 = Cmd_Argc();
-  if (iVar3 == 2) {
-    uVar1 = Cmd_Argv(1);
-    lVar4 = 0;
-    if (0 < DAT_84888110) {
-      uVar5 = 0;
-      uVar6 = 0x3ff0000000000000;
-      do {
-        uVar2 = SND_GetEntChannelName(lVar4);
-        iVar3 = I_stricmp(uVar1,uVar2);
-        uVar2 = uVar5;
-        if (iVar3 == 0) {
-          uVar2 = uVar6;
-        }
-        SND_SetChannelVolume(uVar2,lVar4);
-        lVar4 = lVar4 + 1;
-      } while ((int)lVar4 < DAT_84888110);
-    }
-    __restgprlr_29();
-    return;
-  }
-  Com_Printf(9,0xffffffff821f2200);
-  __restgprlr_29();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82856468  SND_ClearSoloChannel_f  (snd.cpp:1134)
-
-void SND_ClearSoloChannel_f(void)
-
-{
-  int iVar1;
-  longlong lVar2;
-  undefined8 uVar3;
-  
-  iVar1 = Cmd_Argc();
-  if (iVar1 == 1) {
-    lVar2 = 0;
-    if (0 < DAT_84888110) {
-      uVar3 = 0x3ff0000000000000;
-      do {
-        SND_SetChannelVolume(uVar3,lVar2);
-        lVar2 = lVar2 + 1;
-      } while ((int)lVar2 < DAT_84888110);
-    }
-  }
-  else {
-    Com_Printf(9,0xffffffff821f2230);
-  }
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82847FA8  SND_DrawOnlyChannel_f  (snd.cpp:1155)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void SND_DrawOnlyChannel_f(void)
 
 {
   int iVar1;
+  char *pcVar2;
   
   iVar1 = Cmd_Argc();
   if (iVar1 != 2) {
-    Com_Printf(9,0xffffffff821ef6d8);
+    Com_Printf(9,"USAGE: snd_drawOnlyChannel <string channelName>\n");
     return;
   }
-  Cmd_Argv(1);
-  DAT_8487cf9c = SND_GetEntChannelFromName();
+  pcVar2 = Cmd_Argv(1);
+  snd_drawOnlyChannel = SND_GetEntChannelFromName(pcVar2);
   return;
 }
 
 
 // 82848008  SND_ClearDrawOnlyChannel_f  (snd.cpp:1174)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void SND_ClearDrawOnlyChannel_f(void)
 
@@ -1002,372 +700,91 @@ void SND_ClearDrawOnlyChannel_f(void)
   
   iVar1 = Cmd_Argc();
   if (iVar1 != 1) {
-    Com_Printf(9,0xffffffff821ef70c);
+    Com_Printf(9,"USAGE: snd_clearDrawOnlyChannel\n");
     return;
   }
-  DAT_8487cf9c = 0xffffffff;
+  snd_drawOnlyChannel = -1;
   return;
 }
 
 
 // 82848060  SND_DumpTimeScale_f  (snd.cpp:1190)
-
-void SND_DumpTimeScale_f(void)
-
-{
-  float *pfVar1;
-  longlong lVar2;
-  longlong lVar3;
-  
-  __savegprlr_24();
-  lVar3 = 0;
-  if (0 < DAT_84888110) {
-    lVar2 = -0x7b7794f8;
-    pfVar1 = (float *)&DAT_8488800c;
-    do {
-      if (((int)lVar3 < 0) || (DAT_84888110 <= (int)lVar3)) {
-        MyAssertHandler(0xffffffff821ef068,0x2a1,0,0xffffffff8218a1b4,0xffffffff8218a1cc,lVar3);
-      }
-      pfVar1 = pfVar1 + 1;
-      Com_Printf(9,0xffffffff821ef730,lVar2,(double)*pfVar1);
-      lVar3 = lVar3 + 1;
-      lVar2 = lVar2 + 0x54;
-    } while ((int)lVar3 < DAT_84888110);
-  }
-  __restgprlr_24();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82848128  SND_AnyActiveListeners  (snd.cpp:1199)
-
-undefined8 SND_AnyActiveListeners(void)
-
-{
-  char *pcVar1;
-  
-  pcVar1 = &DAT_84886a30;
-  do {
-    if (*pcVar1 != '\0') {
-      return 1;
-    }
-    pcVar1 = pcVar1 + 0x3c;
-  } while ((int)pcVar1 < -0x7b7794e0);
-  return 0;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82848168  SND_DistSqToNearestListener  (snd.cpp:1213)
-
-double SND_DistSqToNearestListener(float *param_1)
-
-{
-  double dVar1;
-  double dVar2;
-  
-  dVar1 = 3.4028234663852886e+38;
-  if ((DAT_84886a30 != '\0') &&
-     (dVar2 = (double)((DAT_848869fc - param_1[1]) * (DAT_848869fc - param_1[1]) +
-                      (DAT_848869f8 - *param_1) * (DAT_848869f8 - *param_1) +
-                      (DAT_84886a00 - param_1[2]) * (DAT_84886a00 - param_1[2])),
-     (float)(dVar2 - 3.4028234663852886e+38) < 0.0)) {
-    dVar1 = dVar2;
-  }
-  if ((DAT_84886a6c != '\0') &&
-     (dVar2 = (double)((DAT_84886a38 - param_1[1]) * (DAT_84886a38 - param_1[1]) +
-                      (DAT_84886a34 - *param_1) * (DAT_84886a34 - *param_1) +
-                      (DAT_84886a3c - param_1[2]) * (DAT_84886a3c - param_1[2])),
-     (float)(dVar2 - dVar1) < 0.0)) {
-    dVar1 = dVar2;
-  }
-  if ((DAT_84886aa8 != '\0') &&
-     (dVar2 = (double)((DAT_84886a74 - param_1[1]) * (DAT_84886a74 - param_1[1]) +
-                      (DAT_84886a70 - *param_1) * (DAT_84886a70 - *param_1) +
-                      (DAT_84886a78 - param_1[2]) * (DAT_84886a78 - param_1[2])),
-     (float)(dVar2 - dVar1) < 0.0)) {
-    dVar1 = dVar2;
-  }
-  if (DAT_84886ae4 == '\0') {
-    return dVar1;
-  }
-  dVar2 = (double)((DAT_84886ab0 - param_1[1]) * (DAT_84886ab0 - param_1[1]) +
-                  (DAT_84886aac - *param_1) * (DAT_84886aac - *param_1) +
-                  (DAT_84886ab4 - param_1[2]) * (DAT_84886ab4 - param_1[2]));
-  if ((float)(dVar2 - dVar1) < 0.0) {
-    dVar1 = dVar2;
-  }
-  return dVar1;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82848310  SND_GetListenerIndexNearestToOrigin  (snd.cpp:1232)
-
-undefined8 SND_GetListenerIndexNearestToOrigin(float *param_1)
-
-{
-  float fVar1;
-  float fVar2;
-  undefined8 uVar3;
-  
-  uVar3 = 0;
-  fVar1 = 3.4028235e+38;
-  if ((DAT_84886a30 != '\0') &&
-     (fVar2 = (DAT_848869fc - param_1[1]) * (DAT_848869fc - param_1[1]) +
-              (DAT_848869f8 - *param_1) * (DAT_848869f8 - *param_1) +
-              (DAT_84886a00 - param_1[2]) * (DAT_84886a00 - param_1[2]), fVar2 < 3.4028235e+38)) {
-    fVar1 = fVar2;
-  }
-  if ((DAT_84886a6c != '\0') &&
-     (fVar2 = (DAT_84886a38 - param_1[1]) * (DAT_84886a38 - param_1[1]) +
-              (DAT_84886a34 - *param_1) * (DAT_84886a34 - *param_1) +
-              (DAT_84886a3c - param_1[2]) * (DAT_84886a3c - param_1[2]), fVar2 < fVar1)) {
-    uVar3 = 1;
-    fVar1 = fVar2;
-  }
-  if ((DAT_84886aa8 != '\0') &&
-     (fVar2 = (DAT_84886a74 - param_1[1]) * (DAT_84886a74 - param_1[1]) +
-              (DAT_84886a70 - *param_1) * (DAT_84886a70 - *param_1) +
-              (DAT_84886a78 - param_1[2]) * (DAT_84886a78 - param_1[2]), fVar2 < fVar1)) {
-    uVar3 = 2;
-    fVar1 = fVar2;
-  }
-  if (DAT_84886ae4 == '\0') {
-    return uVar3;
-  }
-  if (fVar1 <= (DAT_84886ab0 - param_1[1]) * (DAT_84886ab0 - param_1[1]) +
-               (DAT_84886aac - *param_1) * (DAT_84886aac - *param_1) +
-               (DAT_84886ab4 - param_1[2]) * (DAT_84886ab4 - param_1[2])) {
-    return uVar3;
-  }
-  return 3;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82856510  SND_DisconnectListener  (snd.cpp:1258)
-
-void SND_DisconnectListener(void)
-
-{
-  int iVar1;
-  ulonglong uVar2;
-  void *pvVar3;
-  char cVar4;
-  longlong lVar5;
-  
-  uVar2 = __savegprlr_29();
-  if (3 < (uVar2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821ef068,0x4ee,0,0xffffffff820011a8,uVar2,4);
-  }
-  iVar1 = (int)uVar2;
-  cVar4 = (&DAT_84886a30)[iVar1 * 0x3c];
-  if ((iVar1 != 0) && ((cVar4 == '\0' || (cVar4 = '\x01', DAT_84886a30 != '\0')))) {
-    cVar4 = '\0';
-  }
-  if ((iVar1 != 1) && ((cVar4 == '\0' || (cVar4 = '\x01', DAT_84886a6c != '\0')))) {
-    cVar4 = '\0';
-  }
-  if ((iVar1 != 2) && ((cVar4 == '\0' || (cVar4 = '\x01', DAT_84886aa8 != '\0')))) {
-    cVar4 = '\0';
-  }
-  if ((iVar1 != 3) && ((cVar4 == '\0' || (cVar4 = '\x01', DAT_84886ae4 != '\0')))) {
-    cVar4 = '\0';
-  }
-  pvVar3 = memset(&DAT_848869f8 + iVar1 * 0xf,0,0x3c);
-  if ((cVar4 != '\0') && (DAT_8487d9c8 != '\0')) {
-    Sys_EnterCriticalSection(0x2a);
-    lVar5 = 0;
-    if (0 < DAT_8488a994) {
-      do {
-        cVar4 = SND_Is2DChannelFree(lVar5);
-        if (cVar4 == '\0') {
-          SND_Stop2DChannel(lVar5);
-        }
-        lVar5 = lVar5 + 1;
-      } while ((int)lVar5 < DAT_8488a994);
-    }
-    lVar5 = 8;
-    if (8 < DAT_8488a998 + 8) {
-      do {
-        cVar4 = SND_Is3DChannelFree(lVar5);
-        if (cVar4 == '\0') {
-          SND_Stop3DChannel(lVar5);
-        }
-        lVar5 = lVar5 + 1;
-      } while ((int)lVar5 < DAT_8488a998 + 8);
-    }
-    lVar5 = 0x28;
-    if (0x28 < DAT_8488a99c + 0x28) {
-      do {
-        cVar4 = SND_IsStreamChannelFree(lVar5);
-        if (cVar4 == '\0') {
-          SND_StopStreamChannel(lVar5);
-        }
-        lVar5 = lVar5 + 1;
-      } while ((int)lVar5 < DAT_8488a99c + 0x28);
-    }
-    lVar5 = 1;
-    do {
-      SND_DeactivateEnvironmentEffects(lVar5,0);
-      lVar5 = lVar5 + 1;
-    } while ((int)lVar5 < 5);
-    lVar5 = 1;
-    do {
-      SND_DeactivateChannelVolumes(lVar5,0);
-      lVar5 = lVar5 + 1;
-    } while ((int)lVar5 < 4);
-    SND_DeactivateAllFilters();
-    pvVar3 = (void *)Sys_LeaveCriticalSection(0x2a);
-  }
-  __restgprlr_29(pvVar3);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 828484D8  SND_SetListener  (snd.cpp:1281)
-
-void SND_SetListener(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined4 param_4,
-                    ulonglong param_5,ulonglong param_6,float *param_7)
-
-{
-  float fVar1;
-  float fVar2;
-  float fVar3;
-  uint uVar4;
-  undefined4 *puVar5;
-  int iVar6;
-  undefined8 uVar7;
-  double dVar8;
-  
-  uVar4 = __savegprlr_24();
-  if (DAT_8487d9c8 != '\0') {
-    if ((param_5 & 0xffffffff) == 0) {
-      MyAssertHandler(0xffffffff821ef068,0x505,0,0xffffffff82000f98,0xffffffff82004854);
-    }
-    if ((param_6 & 0xffffffff) == 0) {
-      MyAssertHandler(0xffffffff821ef068,0x506,0,0xffffffff82000f98,0xffffffff8201cc90);
-    }
-    if (3 < uVar4) {
-      MyAssertHandler(0xffffffff821ef068,0x507,0,0xffffffff820011a8,uVar4,4);
-    }
-    iVar6 = uVar4 * 0x3c;
-    uVar7 = AxisCopy(param_6,&DAT_84886a04 + iVar6);
-    puVar5 = (undefined4 *)param_5;
-    (&DAT_848869f8)[uVar4 * 0xf] = *puVar5;
-    (&DAT_848869fc)[uVar4 * 0xf] = puVar5[1];
-    (&DAT_84886a00)[uVar4 * 0xf] = puVar5[2];
-    fVar1 = *param_7;
-    fVar2 = param_7[2];
-    fVar3 = param_7[1];
-    (&DAT_84886a2c)[uVar4 * 0xf] = param_4;
-    (&DAT_84886a30)[iVar6] = 1;
-    fVar1 = SQRT(fVar2 * fVar2 + fVar1 * fVar1 + fVar3 * fVar3);
-    dVar8 = (double)fVar1;
-    *(float *)(&DAT_84886a28 + iVar6) = fVar1;
-    if (dVar8 < 0.0) {
-      MyAssertHandler(uVar7,param_2,dVar8,0xffffffff821ef068,0x510,0,0xffffffff82000f98,
-                      0xffffffff821ef73c);
-    }
-  }
-  __restgprlr_24();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82848648  SND_SaveListeners  (snd.cpp:1301)
 
-void * SND_SaveListeners(void *param_1)
+void SND_SaveListeners(snd_listener *param_1)
 
 {
-  void *pvVar1;
-  
-  if (param_1 == (void *)0x0) {
-    MyAssertHandler(0xffffffff821ef068,0x516,0,0xffffffff82000f98,0xffffffff821ef770);
+  if (param_1 == (snd_listener *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x516,0,"%s");
   }
-  pvVar1 = memcpy(param_1,&DAT_848869f8,0xf0);
-  return pvVar1;
+  memcpy();
+  return;
 }
 
 
 // 828486B8  SND_RestoreListeners  (snd.cpp:1309)
 
-void * SND_RestoreListeners(void *param_1)
+void SND_RestoreListeners(snd_listener *param_1)
 
 {
-  void *pvVar1;
-  
-  if (param_1 == (void *)0x0) {
-    MyAssertHandler(0xffffffff821ef068,0x51e,0,0xffffffff82000f98,0xffffffff821ef770);
+  if (param_1 == (snd_listener *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x51e,0,"%s");
   }
-  pvVar1 = memcpy(&DAT_848869f8,param_1,0xf0);
-  return pvVar1;
-}
-
-
-// 82848728  SND_SetPlaybackIdNotPlayed  (snd.cpp:1317)
-
-undefined8 SND_SetPlaybackIdNotPlayed(int param_1)
-
-{
-  if ((param_1 < 0) || (0x35 < param_1)) {
-    MyAssertHandler(0xffffffff821ef068,0x526,0,0xffffffff82000f98,0xffffffff821ef77c);
-  }
-  (&DAT_84888134)[param_1 * 0x30] = 0xffffffff;
-  return 0xffffffffffffffff;
-}
-
-
-// 828487B0  SND_AcquirePlaybackId  (snd.cpp:1327)
-
-void SND_AcquirePlaybackId(undefined8 param_1,undefined4 param_2)
-
-{
-  int iVar1;
-  
-  iVar1 = __savegprlr_27();
-  if ((iVar1 < 0) || (0x35 < iVar1)) {
-    MyAssertHandler(0xffffffff821ef068,0x532,0,0xffffffff82000f98,0xffffffff821ef77c);
-  }
-  if ((&DAT_84888114)[iVar1 * 0x30] == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x536,0,0xffffffff82000f98,0xffffffff821ef7b8);
-  }
-  if ((&DAT_84888184)[iVar1 * 0x30] == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x537,0,0xffffffff82000f98,0xffffffff821ef7a4);
-  }
-  if ((*(uint *)((&DAT_84888184)[iVar1 * 0x30] + 0x3c) & 1) == 0) {
-    *(undefined4 *)(&DAT_84888130 + iVar1 * 0xc0) = param_2;
-    (&DAT_84888134)[iVar1 * 0x30] = DAT_8487d9cc;
-    DAT_8487d9cc = DAT_8487d9cc + 1;
-  }
-  else {
-    *(undefined4 *)(&DAT_84888130 + iVar1 * 0xc0) = 0;
-    (&DAT_84888134)[iVar1 * 0x30] = 0;
-  }
-  if (DAT_8487d9cc < 1) {
-    DAT_8487d9cc = 1;
-  }
-  __restgprlr_27((&DAT_84888134)[iVar1 * 0x30]);
+  memcpy();
   return;
 }
 
 
+// 82848728  SND_SetPlaybackIdNotPlayed  (snd.cpp:1317)
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
+
+// 828487B0  SND_AcquirePlaybackId  (snd.cpp:1327)
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
+
 // 828488D0  DoLengthNotify  (snd.cpp:1356)
 
-void DoLengthNotify(undefined8 param_1,undefined8 param_2,ulonglong param_3)
+void DoLengthNotify(int param_1,void *param_2,SndLengthId param_3,ushort param_4,int param_5,
+                   int param_6)
 
 {
-  undefined8 uVar1;
+  char *pcVar1;
   
-  if ((param_3 & 0xffffffff) == 0) {
-    CG_SubtitleSndLengthNotify();
+  if (param_3 == SndLengthNotify_Subtitle) {
+    CG_SubtitleSndLengthNotify(param_1,param_2);
   }
   else {
-    if ((param_3 & 0xffffffff) == 1) {
-      CG_EntityCustomSndLengthNotify();
+    if (param_3 == SndLengthNotify_EntityCustom) {
+      CG_EntityCustomSndLengthNotify(param_1,param_2);
       return;
     }
-    if (DAT_84013128 == 0) {
-      uVar1 = va(0xffffffff821ef7f0,param_3);
-      MyAssertHandler(0xffffffff821ef068,0x55f,0,uVar1);
+    if (alwaysfails == 0) {
+      pcVar1 = va("Unknown snd length notify id: %i\n");
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x55f,0,pcVar1);
       return;
     }
   }
@@ -1377,37 +794,38 @@ void DoLengthNotify(undefined8 param_1,undefined8 param_2,ulonglong param_3)
 
 // 82848958  SND_DoAllLengthNotify  (snd.cpp:1381)
 
-void SND_DoAllLengthNotify(void)
+void SND_DoAllLengthNotify(sndLengthNotifyInfo *param_1)
 
 {
   uint uVar1;
-  uint *puVar3;
-  undefined8 uVar2;
+  uint *puVar2;
+  char *pcVar3;
   int iVar4;
   uint *puVar5;
   
-  puVar3 = (uint *)__savegprlr_24();
+  puVar2 = (uint *)__savegprlr_24(param_1);
   iVar4 = 0;
-  puVar5 = puVar3;
-  if (0 < (int)puVar3[8]) {
+  puVar5 = puVar2;
+  if (0 < (int)puVar2[8]) {
     do {
       uVar1 = *puVar5;
       if (1 < uVar1) {
-        MyAssertHandler(0xffffffff821ef068,0x56c,0,0xffffffff821ef814,uVar1,2);
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x56c,0,
+                        "id doesn\'t index SndLengthNotifyCount\n\t%i not in [0, %i)");
       }
       if (uVar1 == 0) {
-        CG_SubtitleSndLengthNotify(0,puVar5[4]);
+        CG_SubtitleSndLengthNotify(0,(void *)puVar5[4]);
       }
       else if (uVar1 == 1) {
-        CG_EntityCustomSndLengthNotify(0);
+        CG_EntityCustomSndLengthNotify(0,(void *)puVar5[4]);
       }
-      else if (DAT_84013128 == 0) {
-        uVar2 = va(0xffffffff821ef7f0,uVar1);
-        MyAssertHandler(0xffffffff821ef068,0x55f,0,uVar2);
+      else if (alwaysfails == 0) {
+        pcVar3 = va("Unknown snd length notify id: %i\n");
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x55f,0,pcVar3);
       }
       iVar4 = iVar4 + 1;
       puVar5 = puVar5 + 1;
-    } while (iVar4 < (int)puVar3[8]);
+    } while (iVar4 < (int)puVar2[8]);
   }
   __restgprlr_24();
   return;
@@ -1415,297 +833,79 @@ void SND_DoAllLengthNotify(void)
 
 
 // 82848A30  SND_AddLengthNotifyInternal  (snd.cpp:1403)
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
-void SND_AddLengthNotifyInternal
-               (undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4)
+// 82848C78  SND_AddLengthNotify  (snd.cpp:1473)
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
-{
-  undefined4 *puVar1;
-  int iVar3;
-  undefined8 uVar2;
-  int iVar4;
-  int iVar5;
-  int *piVar6;
-  uint *puVar7;
-  ulonglong uVar8;
-  
-  iVar3 = __savegprlr_25();
-  if (1 < (param_3 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821ef068,0x580,0,0xffffffff821ef814,param_3,2);
-  }
-  if ((iVar3 == -1) || (iVar3 == 0)) {
-LAB_82848c60:
-    iVar3 = 0;
-  }
-  else {
-    iVar4 = 0;
-    piVar6 = &DAT_848881f4;
-    do {
-      if (piVar6[-0x30] == iVar3) break;
-      if (*piVar6 == iVar3) {
-        iVar4 = iVar4 + 1;
-        break;
-      }
-      if (piVar6[0x30] == iVar3) {
-        iVar4 = iVar4 + 2;
-        break;
-      }
-      if (piVar6[0x60] == iVar3) {
-        iVar4 = iVar4 + 3;
-        break;
-      }
-      if (piVar6[0x90] == iVar3) {
-        iVar4 = iVar4 + 4;
-        break;
-      }
-      if (piVar6[0xc0] == iVar3) {
-        iVar4 = iVar4 + 5;
-        break;
-      }
-      piVar6 = piVar6 + 0x120;
-      iVar4 = iVar4 + 6;
-    } while ((int)piVar6 < -0x7b77558c);
-    if (iVar4 == 0x36) goto LAB_82848c60;
-    iVar5 = iVar4 * 0xc0;
-    uVar2 = va(0xffffffff821ef8a4,param_3);
-    puVar1 = (undefined4 *)(&DAT_84888184)[iVar4 * 0x30];
-    iVar3 = I_stricmp(*(undefined4 *)(DAT_8487cfac + 0xc),*puVar1);
-    if (iVar3 == 0) {
-      Com_DPrintf(9,0xffffffff821ef04c,*puVar1,uVar2);
-    }
-    iVar3 = *(int *)(&DAT_84888130 + iVar5);
-    if (iVar3 < 0) {
-      uVar8 = 0;
-      if (0 < *(int *)(&DAT_84888158 + iVar5)) {
-        puVar7 = (uint *)(&DAT_84888148 + iVar5);
-        do {
-          if ((puVar7[-4] == (uint)param_3) && ((ulonglong)*puVar7 == (param_2 & 0xffffffff)))
-          goto LAB_82848c70;
-          uVar8 = uVar8 + 1;
-          puVar7 = puVar7 + 1;
-        } while ((int)uVar8 < *(int *)(&DAT_84888158 + iVar5));
-        if (3 < (uVar8 & 0xffffffff)) {
-          MyAssertHandler(0xffffffff821ef068,0x5b0,0,0xffffffff821ef858,uVar8,4);
-        }
-      }
-      *(int *)(&DAT_84888158 + iVar5) = *(int *)(&DAT_84888158 + iVar5) + 1;
-      *(uint *)((int)&DAT_84888114 + (int)((uVar8 + 9 & 0xffffffff) << 2) + iVar5) = (uint)param_3;
-      *(int *)((int)&DAT_84888114 + (int)((uVar8 + 0xd & 0xffffffff) << 2) + iVar5) = (int)param_2;
-      if ((param_4 & 0xffff) != 0) {
-        MyAssertHandler(0xffffffff821ef068,0x5bb,0,0xffffffff82000f98,0xffffffff821ef850);
-        __restgprlr_25();
-        return;
-      }
-      goto LAB_82848c70;
-    }
-  }
-  DoLengthNotify(iVar3,param_2,param_3);
-LAB_82848c70:
-  __restgprlr_25();
-  return;
-}
+// 82848C80  SND_AddLengthNotifyLocalSound  (snd.cpp:1479)
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
+// 82848C88  SND_AddLengthNotifyForClient  (snd.cpp:1485)
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82848C90  SND_GetKnownLength  (snd.cpp:1493)
-
-undefined8 SND_GetKnownLength(int param_1,int *param_2)
-
-{
-  int iVar1;
-  int *piVar2;
-  
-  if (param_2 == (int *)0x0) {
-    MyAssertHandler(0xffffffff821ef068,0x5d8,0,0xffffffff82000f98,0xffffffff821ef8c0);
-  }
-  iVar1 = 0;
-  *param_2 = 0;
-  if ((param_1 != -1) && (param_1 != 0)) {
-    piVar2 = &DAT_848881f4;
-    do {
-      if (piVar2[-0x30] == param_1) break;
-      if (*piVar2 == param_1) {
-        iVar1 = iVar1 + 1;
-        break;
-      }
-      if (piVar2[0x30] == param_1) {
-        iVar1 = iVar1 + 2;
-        break;
-      }
-      if (piVar2[0x60] == param_1) {
-        iVar1 = iVar1 + 3;
-        break;
-      }
-      if (piVar2[0x90] == param_1) {
-        iVar1 = iVar1 + 4;
-        break;
-      }
-      if (piVar2[0xc0] == param_1) {
-        iVar1 = iVar1 + 5;
-        break;
-      }
-      piVar2 = piVar2 + 0x120;
-      iVar1 = iVar1 + 6;
-    } while ((int)piVar2 < -0x7b77558c);
-    if ((iVar1 == 0x36) || (*(int *)(&DAT_84888130 + iVar1 * 0xc0) < 0)) {
-      return 0;
-    }
-    *param_2 = *(int *)(&DAT_84888130 + iVar1 * 0xc0);
-  }
-  return 1;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82848DD8  SND_LengthNotify  (snd.cpp:1522)
-
-void SND_LengthNotify(undefined8 param_1,undefined8 param_2)
-
-{
-  uint uVar1;
-  int iVar3;
-  undefined8 uVar2;
-  int iVar4;
-  undefined4 *puVar5;
-  
-  iVar3 = __savegprlr_22();
-  if ((iVar3 < 0) || (0x35 < iVar3)) {
-    MyAssertHandler(0xffffffff821ef068,0x5f8,0,0xffffffff82000f98,0xffffffff821ef77c);
-  }
-  iVar4 = iVar3 * 0xc0;
-  uVar2 = va(0xffffffff821ef8c8,param_2,*(undefined4 *)(&DAT_84888158 + iVar4));
-  puVar5 = (undefined4 *)(&DAT_84888184)[iVar3 * 0x30];
-  iVar3 = I_stricmp(*(undefined4 *)(DAT_8487cfac + 0xc),*puVar5);
-  if (iVar3 == 0) {
-    Com_DPrintf(9,0xffffffff821ef04c,*puVar5,uVar2);
-  }
-  *(int *)(&DAT_84888130 + iVar4) = (int)param_2;
-  iVar3 = 0;
-  if (0 < *(int *)(&DAT_84888158 + iVar4)) {
-    puVar5 = (undefined4 *)(&DAT_84888148 + iVar4);
-    do {
-      uVar1 = puVar5[-4];
-      if (1 < uVar1) {
-        MyAssertHandler(0xffffffff821ef068,0x604,0,0xffffffff821ef814,uVar1,2);
-      }
-      if (uVar1 == 0) {
-        CG_SubtitleSndLengthNotify(param_2,*puVar5);
-      }
-      else if (uVar1 == 1) {
-        CG_EntityCustomSndLengthNotify(param_2);
-      }
-      else if (DAT_84013128 == 0) {
-        uVar2 = va(0xffffffff821ef7f0,uVar1);
-        MyAssertHandler(0xffffffff821ef068,0x55f,0,uVar2);
-      }
-      iVar3 = iVar3 + 1;
-      puVar5 = puVar5 + 1;
-    } while (iVar3 < *(int *)(&DAT_84888158 + iVar4));
-  }
-  *(undefined4 *)(&DAT_84888158 + iVar4) = 0;
-  __restgprlr_22();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82848F60  SND_IsMasterPriority  (snd.cpp:1565)
-
-char SND_IsMasterPriority(byte param_1)
-
-{
-  return -((param_1 < DAT_8488694c) + -1);
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82848F90  SND_GetMasterPriority  (snd.cpp:1571)
-
-void SND_GetMasterPriority(void)
-
-{
-  int iVar1;
-  undefined1 local_30 [48];
-  
-  iVar1 = __savegprlr_29();
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x626,0,0xffffffff82000f98,0xffffffff821ef904);
-  }
-  if (*(int *)(iVar1 + 0x70) == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x627,0,0xffffffff82000f98,0xffffffff821ef8f0);
-  }
-  local_30[0] = *(undefined1 *)(iVar1 + 0xb4);
-  DevSoundMixer_ApplyMasterPriorityOffset(*(undefined4 *)(iVar1 + 0x70),local_30);
-  __restgprlr_29(local_30[0]);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82849020  SND_GetMasterPercent  (snd.cpp:1588)
-
-void SND_GetMasterPercent(void)
-
-{
-  int iVar1;
-  float local_30 [12];
-  
-  iVar1 = __savegprlr_29();
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x637,0,0xffffffff82000f98,0xffffffff821ef904);
-  }
-  if (*(int *)(iVar1 + 0x70) == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x638,0,0xffffffff82000f98,0xffffffff821ef8f0);
-  }
-  local_30[0] = *(float *)(*(int *)(iVar1 + 0x70) + 0x44);
-  DevSoundMixer_ApplyGroupMasterPercentModifier(*(int *)(iVar1 + 0x70),local_30);
-  __restgprlr_29((double)local_30[0]);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 828490B0  SND_GetSlavePercent  (snd.cpp:1605)
-
-double SND_GetSlavePercent(int param_1)
-
-{
-  float local_20 [4];
-  
-  if (param_1 == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x649,0,0xffffffff82000f98,0xffffffff8201d9d0);
-  }
-  local_20[0] = *(float *)(param_1 + 0x48);
-  DevSoundMixer_ApplyGroupSlavePercentModifier(param_1,local_20);
-  return (double)((1.0 - DAT_84886950) * local_20[0]);
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82849140  SND_ApplyMasterPriorityVolumeInternal  (snd.cpp:1623)
 
-void SND_ApplyMasterPriorityVolumeInternal(undefined8 param_1,undefined8 param_2,ulonglong param_3)
+void SND_ApplyMasterPriorityVolumeInternal(snd_alias_t *param_1,float param_2,float *param_3)
 
 {
-  ulonglong uVar1;
+  snd_alias_t *psVar1;
+  ulonglong in_r5;
   double extraout_f1;
   double dVar2;
   double dVar3;
   double dVar4;
+  float fVar5;
   
-  uVar1 = __savegprlr_28();
-  dVar3 = extraout_f1;
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x65b,0,0xffffffff82000f98,0xffffffff8201d9d0);
+  psVar1 = (snd_alias_t *)__savegprlr_28((double)param_2,param_1,param_3);
+  dVar2 = extraout_f1;
+  if (psVar1 == (snd_alias_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x65b,0,"%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x65c,0,0xffffffff82000f98,0xffffffff82025684);
+  if ((in_r5 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x65c,0,"%s");
   }
   dVar4 = 0.0;
-  if (0.0 < dVar3) {
-    dVar2 = (double)SND_GetSlavePercent(uVar1);
-    dVar2 = (double)(*(float *)param_3 * (float)(dVar2 * dVar3 + (double)(float)(1.0 - dVar3)));
-    dVar3 = 1.0;
-    if ((float)(dVar2 - 1.0) < 0.0) {
-      dVar3 = dVar2;
+  if (0.0 < dVar2) {
+    fVar5 = SND_GetSlavePercent(psVar1);
+    dVar3 = (double)(*(float *)in_r5 * (float)((double)fVar5 * dVar2 + (double)(float)(1.0 - dVar2))
+                    );
+    dVar2 = 1.0;
+    if ((float)(dVar3 - 1.0) < 0.0) {
+      dVar2 = dVar3;
     }
-    if (-dVar2 < 0.0) {
-      dVar4 = dVar3;
+    if (-dVar3 < 0.0) {
+      dVar4 = dVar2;
     }
-    *(float *)param_3 = (float)dVar4;
+    *(float *)in_r5 = (float)dVar4;
   }
   __restgprlr_28();
   return;
@@ -1713,67 +913,30 @@ void SND_ApplyMasterPriorityVolumeInternal(undefined8 param_1,undefined8 param_2
 
 
 // 82849210  SND_ApplyStartAliasMasterPriorityVolume  (snd.cpp:1641)
-
-void SND_ApplyStartAliasMasterPriorityVolume(undefined8 param_1,ulonglong param_2)
-
-{
-  int *piVar1;
-  
-  piVar1 = (int *)__savegprlr_28();
-  if (piVar1 == (int *)0x0) {
-    MyAssertHandler(0xffffffff821ef068,0x66a,0,0xffffffff82000f98,0xffffffff821ef910);
-  }
-  if (*piVar1 == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x66b,0,0xffffffff82000f98,0xffffffff8218a690);
-  }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x66c,0,0xffffffff82000f98,0xffffffff82025684);
-  }
-  SND_ApplyMasterPriorityVolumeInternal((double)(float)piVar1[0x13],*piVar1);
-  __restgprlr_28();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure SndStartAliasInfo
 
 // 828492C0  SND_ApplyChannelMasterPriorityVolume  (snd.cpp:1651)
-
-void SND_ApplyChannelMasterPriorityVolume(undefined8 param_1,ulonglong param_2)
-
-{
-  int iVar1;
-  
-  iVar1 = __savegprlr_28();
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x674,0,0xffffffff82000f98,0xffffffff821ef904);
-  }
-  if (*(int *)(iVar1 + 0x70) == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x675,0,0xffffffff82000f98,0xffffffff821ef8f0);
-  }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x676,0,0xffffffff82000f98,0xffffffff82025684);
-  }
-  SND_ApplyMasterPriorityVolumeInternal
-            ((double)*(float *)(iVar1 + 0xb8),*(undefined4 *)(iVar1 + 0x70));
-  __restgprlr_28();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82849370  SND_ApplyGroupVolumeModifier  (snd.cpp:1661)
 
-void SND_ApplyGroupVolumeModifier(undefined8 param_1,ulonglong param_2)
+void SND_ApplyGroupVolumeModifier(snd_alias_t *param_1,float *param_2)
 
 {
-  ulonglong uVar1;
+  snd_alias_t *psVar1;
+  ulonglong uVar2;
   
-  uVar1 = __savegprlr_28();
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x67e,0,0xffffffff82000f98,0xffffffff8201d9d0);
+  uVar2 = (ulonglong)(int)param_2;
+  psVar1 = (snd_alias_t *)__savegprlr_28(param_1);
+  if (psVar1 == (snd_alias_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x67e,0,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x67f,0,0xffffffff82000f98,0xffffffff82025684);
+  if ((uVar2 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x67f,0,"%s");
   }
-  DevSoundMixer_ApplyGroupVolumeModifier(uVar1,param_2);
+  DevSoundMixer_ApplyGroupVolumeModifier(psVar1,(float *)uVar2);
   __restgprlr_28();
   return;
 }
@@ -1781,52 +944,60 @@ void SND_ApplyGroupVolumeModifier(undefined8 param_1,ulonglong param_2)
 
 // 828493F0  SND_Attenuate  (snd.cpp:1672)
 
-void SND_Attenuate(undefined8 param_1,double param_2,double param_3)
+float SND_Attenuate(SndCurve *param_1,float param_2,float param_3,float param_4)
 
 {
-  ulonglong uVar1;
+  SndCurve *pSVar1;
   double extraout_f1;
-  undefined8 uVar2;
+  double dVar2;
   double dVar3;
+  undefined8 uVar4;
+  double dVar5;
+  float fVar6;
   
-  __savegprlr_29();
-  uVar1 = __savefpr_28();
-  dVar3 = extraout_f1;
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x689,0,0xffffffff82000f98,0xffffffff821ef934);
+  dVar3 = (double)param_4;
+  dVar2 = (double)param_3;
+  __savegprlr_29((double)param_2,param_1);
+  pSVar1 = (SndCurve *)__savefpr_28();
+  dVar5 = extraout_f1;
+  if (pSVar1 == (SndCurve *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x689,0,"%s");
   }
-  dVar3 = (double)(float)(dVar3 - param_2);
-  uVar2 = 0;
-  if (dVar3 <= 0.0) {
+  dVar5 = (double)(float)(dVar5 - dVar2);
+  uVar4 = 0;
+  if (dVar5 <= 0.0) {
     __restfpr_28(0x3ff0000000000000);
-    __restgprlr_29();
-    return;
+    dVar5 = (double)__restgprlr_29();
+    return (float)dVar5;
   }
-  if (param_3 <= param_2) {
-    MyAssertHandler(0xffffffff821ef068,0x68f,0,0xffffffff82000f98,0xffffffff821ef920);
+  if (dVar3 <= dVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x68f,0,"%s");
   }
-  if (1.0 <= (float)(dVar3 / (double)(float)(param_3 - param_2))) {
-    __restfpr_28(uVar2);
-    __restgprlr_29();
-    return;
+  fVar6 = (float)(dVar5 / (double)(float)(dVar3 - dVar2));
+  if (1.0 <= fVar6) {
+    __restfpr_28(uVar4);
+    dVar5 = (double)__restgprlr_29();
+    return (float)dVar5;
   }
-  Com_GetVolumeFalloffCurveValue(uVar1);
-  __restfpr_28();
-  __restgprlr_29();
-  return;
+  fVar6 = Com_GetVolumeFalloffCurveValue(pSVar1,fVar6);
+  __restfpr_28((double)fVar6);
+  dVar5 = (double)__restgprlr_29();
+  return (float)dVar5;
 }
 
 
 // 828494E0  SND_GetCurrent3DPosition  (snd.cpp:1690)
 
-void SND_GetCurrent3DPosition(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+void SND_GetCurrent3DPosition(SndEntHandle param_1,float *param_2,float *param_3)
 
 {
   float fVar1;
   float fVar2;
   float fVar3;
-  undefined8 uVar4;
-  float *pfVar5;
+  SndEntHandle SVar4;
+  ulonglong uVar5;
+  float *pfVar6;
+  ulonglong uVar7;
   float local_70;
   float local_6c;
   float local_68;
@@ -1840,1044 +1011,109 @@ void SND_GetCurrent3DPosition(undefined8 param_1,ulonglong param_2,ulonglong par
   float local_44;
   float local_40;
   
-  uVar4 = __savegprlr_27();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x69e,0,0xffffffff82000f98,0xffffffff82084eec);
+  uVar7 = (ulonglong)(int)param_3;
+  uVar5 = (ulonglong)(int)param_2;
+  SVar4 = (SndEntHandle)__savegprlr_27();
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x69e,0,"%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x69f,0,0xffffffff82000f98,0xffffffff821ef948);
+  if ((uVar7 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x69f,0,"%s");
   }
-  CG_GetSoundEntityOrientation(uVar4,&local_70,&local_60);
-  pfVar5 = (float *)param_2;
-  fVar1 = *pfVar5;
-  fVar2 = pfVar5[1];
-  fVar3 = pfVar5[2];
-  pfVar5 = (float *)param_3;
-  *pfVar5 = local_48 * fVar3 + local_54 * fVar2 + local_60 * fVar1 + local_70;
-  pfVar5[1] = local_44 * fVar3 + local_50 * fVar2 + local_5c * fVar1 + local_6c;
-  pfVar5[2] = local_40 * fVar3 + local_4c * fVar2 + local_58 * fVar1 + local_68;
+  CG_GetSoundEntityOrientation(SVar4,&local_70,(float (*) [3])&local_60);
+  pfVar6 = (float *)uVar5;
+  fVar1 = *pfVar6;
+  fVar2 = pfVar6[1];
+  fVar3 = pfVar6[2];
+  pfVar6 = (float *)uVar7;
+  *pfVar6 = local_48 * fVar3 + local_54 * fVar2 + local_60 * fVar1 + local_70;
+  pfVar6[1] = local_44 * fVar3 + local_50 * fVar2 + local_5c * fVar1 + local_6c;
+  pfVar6[2] = local_40 * fVar3 + local_4c * fVar2 + local_58 * fVar1 + local_68;
   __restgprlr_27();
   return;
 }
 
 
 // 828495D8  SND_ResetChannelInfo  (snd.cpp:1706)
-
-void SND_ResetChannelInfo(void)
-
-{
-  int iVar1;
-  int iVar2;
-  
-  iVar1 = __savegprlr_28();
-  iVar2 = iVar1 * 0xc0;
-  if (((int)(&DAT_84888124)[iVar1 * 0x30] < 0) ||
-     (DAT_84888110 <= (int)(&DAT_84888124)[iVar1 * 0x30])) {
-    MyAssertHandler(0xffffffff821ef068,0x6ab,0,0xffffffff821ef950,0xffffffff821ef980);
-  }
-  if (*(int *)(&DAT_84888130 + iVar2) != 0) {
-    if ((&DAT_84888184)[iVar1 * 0x30] == 0) {
-      MyAssertHandler(0xffffffff821ef068,0x6af,0,0xffffffff82000f98,0xffffffff8218a034);
-    }
-    SND_LengthNotify(iVar1,0);
-  }
-  (&DAT_848881b0)[iVar2] = 0;
-  *(undefined4 *)(&DAT_84888128 + iVar2) = 0;
-  (&DAT_84888114)[iVar1 * 0x30] = 0;
-  (&DAT_84888184)[iVar1 * 0x30] = 0;
-  __restgprlr_28();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 828567B0  SND_SetChannelStartInfo  (snd.cpp:1726)
-
-void SND_SetChannelStartInfo(undefined8 param_1,int *param_2)
-
-{
-  uint uVar1;
-  float fVar2;
-  float fVar3;
-  float fVar4;
-  int iVar5;
-  char cVar7;
-  int iVar6;
-  undefined1 uVar9;
-  undefined4 *puVar8;
-  longlong lVar10;
-  double dVar11;
-  float local_88;
-  float local_84;
-  float local_80;
-  float local_70;
-  float local_6c;
-  float local_68;
-  float local_64;
-  float local_60;
-  float local_5c;
-  float local_58;
-  float local_54;
-  float local_50;
-  
-  iVar5 = __savegprlr_26();
-  if ((iVar5 < 0) || (0x35 < iVar5)) {
-    MyAssertHandler(0xffffffff821ef068,0x6c2,0,0xffffffff82000f98,0xffffffff821ef77c);
-  }
-  if ((param_2[0x11] < 0) || (2 < param_2[0x11])) {
-    MyAssertHandler(0xffffffff821ef068,0x6c3,0,0xffffffff821f23dc,0xffffffff821f2408);
-  }
-  if (*param_2 == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x6c4,0,0xffffffff82000f98,0xffffffff821f23c0);
-  }
-  if (param_2[1] == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x6c5,0,0xffffffff82000f98,0xffffffff821f23a4);
-  }
-  if (param_2[0xf] < 0) {
-    MyAssertHandler(0xffffffff821ef068,0x6c6,0,0xffffffff821f2350,0xffffffff821f237c);
-  }
-  iVar6 = iVar5 * 0xc0;
-  dVar11 = 0.0;
-  if (param_2[3] != 0xffff) {
-    cVar7 = SND_IsAliasChannel3D(*(int *)(*param_2 + 0x3c) >> 9 & 0x3f);
-    if (cVar7 != '\0') {
-      CG_GetSoundEntityOrientation(param_2[3],&local_88,&local_70);
-      if ((param_2[4] & 0x7f800000U) == 0x7f800000) {
-LAB_82856964:
-        MyAssertHandler(0xffffffff821ef068,0x6d6,0,0xffffffff82000f98,0xffffffff821f22d8);
-      }
-      else {
-        if ((param_2[5] & 0x7f800000U) == 0x7f800000) goto LAB_82856964;
-        if ((param_2[6] & 0x7f800000U) == 0x7f800000) goto LAB_82856964;
-      }
-      local_88 = (float)param_2[4] - local_88;
-      local_84 = (float)param_2[5] - local_84;
-      local_80 = (float)param_2[6] - local_80;
-      fVar4 = local_68 * local_80 + local_6c * local_84 + local_70 * local_88;
-      fVar3 = local_5c * local_80 + local_60 * local_84 + local_64 * local_88;
-      *(float *)(&DAT_848881a4 + iVar6) = fVar4;
-      fVar2 = local_50 * local_80 + local_54 * local_84 + local_58 * local_88;
-      *(float *)(&DAT_848881a8 + iVar6) = fVar3;
-      *(float *)(&DAT_848881ac + iVar6) = fVar2;
-      if (((uint)fVar4 & 0x7f800000) != 0x7f800000) {
-        if (((uint)fVar3 & 0x7f800000) != 0x7f800000) {
-          if (((uint)fVar2 & 0x7f800000) != 0x7f800000) goto LAB_82856a60;
-        }
-      }
-      MyAssertHandler(0xffffffff821ef068,0x6db,0,0xffffffff82000f98,0xffffffff821f2270);
-      goto LAB_82856a60;
-    }
-  }
-  *(float *)(&DAT_848881a4 + iVar6) = (float)dVar11;
-  *(float *)(&DAT_848881a8 + iVar6) = (float)dVar11;
-  *(float *)(&DAT_848881ac + iVar6) = (float)dVar11;
-LAB_82856a60:
-  (&DAT_84888120)[iVar5 * 0x30] = param_2[3];
-  (&DAT_84888124)[iVar5 * 0x30] = *(int *)(*param_2 + 0x3c) >> 9 & 0x3f;
-  *(int *)(&DAT_84888160 + iVar6) = param_2[10];
-  (&DAT_84888164)[iVar5 * 0x30] = param_2[0xb];
-  *(int *)(&DAT_8488815c + iVar6) = param_2[8];
-  SND_InitParameter((double)(float)param_2[7],&DAT_84888168 + iVar5 * 0x30);
-  SND_InitParameter((double)(float)param_2[0xc],&DAT_84888178 + iVar6);
-  uVar1 = param_2[9];
-  *(uint *)(&DAT_84888174 + iVar6) = uVar1;
-  if ((uVar1 & 0x7f800000) == 0x7f800000) {
-    MyAssertHandler(0xffffffff821ef068,0x6e9,0,0xffffffff82000f98,0xffffffff821f2250);
-  }
-  (&DAT_84888184)[iVar5 * 0x30] = *param_2;
-  (&DAT_84888188)[iVar5 * 0x30] = param_2[1];
-  *(int *)(&DAT_84888194 + iVar6) = param_2[2];
-  *(int *)(&DAT_84888128 + iVar6) = param_2[0xf];
-  (&DAT_8488812c)[iVar5 * 0x30] = DAT_84886aec;
-  if ((*(char *)((int)param_2 + 0x49) == '\0') &&
-     ((DAT_8487d9ca == '\0' ||
-      (cVar7 = SND_IsPausable(*(int *)(*param_2 + 0x3c) >> 9 & 0x3f), cVar7 == '\0')))) {
-    uVar9 = 0;
-  }
-  else {
-    uVar9 = 1;
-  }
-  uVar1 = (&DAT_84888120)[iVar5 * 0x30];
-  (&DAT_848881b0)[iVar6] = uVar9;
-  (&DAT_848881c8)[iVar6] = *(undefined1 *)(param_2 + 0x12);
-  *(int *)(&DAT_848881cc + iVar6) = param_2[0x13];
-  *(int *)(&DAT_848881d0 + iVar6) = param_2[0x11];
-  (&DAT_848881c4)[iVar5 * 0x30] = param_2[0x10];
-  if (uVar1 == 0xffff) {
-    SND_InitParameter(dVar11,iVar6 + -0x7b777e4c);
-    *(undefined4 *)(&DAT_848881c0 + iVar6) = 0;
-  }
-  else {
-    if (uVar1 >> 0x14 == 0x7fe) {
-      *(undefined4 *)(&DAT_848881c0 + iVar6) = 0;
-      SND_SoundOcclusionTrace(&DAT_84888114 + iVar5 * 0x30,0);
-    }
-    else {
-      iVar6 = SND_GetEntityOcclusionInfo();
-      *(undefined4 *)(iVar6 + 0x14) = 0;
-    }
-    SND_ForceToGoalOcclusion(&DAT_84888114 + iVar5 * 0x30);
-  }
-  puVar8 = &DAT_84888134 + iVar5 * 0x30;
-  lVar10 = 9;
-  do {
-    puVar8 = puVar8 + 1;
-    *puVar8 = 0;
-    lVar10 = lVar10 + -1;
-  } while (lVar10 != 0);
-  __restgprlr_26();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure SndStartAliasInfo
 
 // 828496E0  SND_SetSoundFileChannelInfo  (snd.cpp:1814)
-
-void SND_SetSoundFileChannelInfo
-               (undefined8 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
-
-{
-  int iVar1;
-  
-  iVar1 = __savegprlr_28();
-  if ((iVar1 < 0) || (0x35 < iVar1)) {
-    MyAssertHandler(0xffffffff821ef068,0x717,0,0xffffffff82000f98,0xffffffff821ef77c);
-  }
-  (&DAT_84888114)[iVar1 * 0x30] = param_4;
-  *(undefined4 *)(&DAT_84888118 + iVar1 * 0xc0) = param_2;
-  (&DAT_8488811c)[iVar1 * 0x30] = param_3;
-  __restgprlr_28();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82849770  SND_ComputeStartAliasMixVolume  (snd.cpp:1824)
-
-void SND_ComputeStartAliasMixVolume(undefined8 param_1,ulonglong param_2)
-
-{
-  int iVar1;
-  int *piVar2;
-  double dVar3;
-  double dVar4;
-  double dVar5;
-  float local_60 [24];
-  
-  piVar2 = (int *)__savegprlr_26();
-  if (piVar2 == (int *)0x0) {
-    MyAssertHandler(0xffffffff821ef068,0x723,0,0xffffffff82000f98,0xffffffff821ef910);
-  }
-  if ((ulonglong)DAT_84888110 <= (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821ef068,0x724,0,0xffffffff8218a700,param_2);
-  }
-  dVar5 = (double)(float)piVar2[7];
-  dVar4 = 0.0;
-  dVar3 = 1.0;
-  if ((dVar5 < 0.0) || (1.0 < dVar5)) {
-    MyAssertHandler(dVar5,0xffffffff821ef068,0x727,0,0xffffffff821efa14,0xffffffff821ef9e8,dVar5);
-  }
-  iVar1 = (int)((param_2 + (param_2 & 0x7fffffff) * 2 & 0xffffffff) << 2);
-  dVar5 = (double)(float)((double)*(float *)(iVar1 + DAT_84886910) * dVar5);
-  if ((dVar5 < dVar4) || (dVar3 < dVar5)) {
-    MyAssertHandler(dVar5,0xffffffff821ef068,0x729,0,0xffffffff821efa14,0xffffffff821ef9e8,dVar5);
-  }
-  dVar5 = (double)(float)((double)*(float *)((int)&DAT_848859fc + iVar1) * dVar5);
-  if ((dVar5 < dVar4) || (dVar3 < dVar5)) {
-    MyAssertHandler(dVar5,0xffffffff821ef068,0x72b,0,0xffffffff821efa14,0xffffffff821ef9e8,dVar5);
-  }
-  dVar5 = (double)(float)((double)(float)(&DAT_8488cba0)[*(int *)(*piVar2 + 0x24) * 3] * dVar5);
-  if ((dVar5 < dVar4) || (dVar3 < dVar5)) {
-    MyAssertHandler(dVar5,0xffffffff821ef068,0x72d,0,0xffffffff821efa14,0xffffffff821ef9e8,dVar5);
-  }
-  local_60[0] = (float)((double)DAT_848859ec * dVar5);
-  dVar5 = (double)local_60[0];
-  if ((dVar5 < dVar4) || (dVar3 < dVar5)) {
-    MyAssertHandler(0xffffffff821ef068,0x733,0,0xffffffff821efa14,0xffffffff821ef9e8,dVar5);
-  }
-  SND_ApplyStartAliasMasterPriorityVolume(piVar2,local_60);
-  dVar5 = (double)local_60[0];
-  if ((dVar5 < dVar4) || (dVar3 < dVar5)) {
-    MyAssertHandler(dVar5,0xffffffff821ef068,0x736,0,0xffffffff821efa14,0xffffffff821ef9e8,dVar5);
-  }
-  piVar2[10] = (int)(float)dVar5;
-  __restgprlr_26();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure SndStartAliasInfo
 
 // 828499E0  SND_Get3DDistanceAttenuation  (snd.cpp:1852)
-
-void SND_Get3DDistanceAttenuation
-               (undefined8 param_1,double param_2,undefined8 param_3,ulonglong param_4)
-
-{
-  float *pfVar1;
-  int iVar2;
-  double extraout_f1;
-  double dVar3;
-  double dVar4;
-  
-  pfVar1 = (float *)__savegprlr_28();
-  dVar3 = extraout_f1;
-  if ((param_4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x741,0,0xffffffff82000f98,0xffffffff8206b0dc);
-  }
-  dVar4 = 0.0;
-  if (dVar3 < 0.0) {
-    MyAssertHandler(0xffffffff821ef068,0x742,0,0xffffffff82000f98,0xffffffff821efa50);
-  }
-  if (param_2 < dVar4) {
-    MyAssertHandler(0xffffffff821ef068,0x743,0,0xffffffff82000f98,0xffffffff821efa40);
-  }
-  if (param_2 <= dVar3) {
-    MyAssertHandler(0xffffffff821ef068,0x744,0,0xffffffff82000f98,0xffffffff821efa2c);
-  }
-  iVar2 = SND_GetListenerIndexNearestToOrigin(pfVar1);
-  SND_Attenuate((double)SQRT(((float)(&DAT_848869fc)[iVar2 * 0xf] - pfVar1[1]) *
-                             ((float)(&DAT_848869fc)[iVar2 * 0xf] - pfVar1[1]) +
-                             ((float)(&DAT_848869f8)[iVar2 * 0xf] - *pfVar1) *
-                             ((float)(&DAT_848869f8)[iVar2 * 0xf] - *pfVar1) +
-                             ((float)(&DAT_84886a00)[iVar2 * 0xf] - pfVar1[2]) *
-                             ((float)(&DAT_84886a00)[iVar2 * 0xf] - pfVar1[2])),dVar3,param_2,
-                param_4);
-  __restgprlr_28();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82849B28  SND_FindReplaceableChannel  (snd.cpp:1871)
-
-void SND_FindReplaceableChannel
-               (undefined8 param_1,undefined8 param_2,ulonglong param_3,undefined8 param_4)
-
-{
-  undefined4 *puVar1;
-  int *piVar2;
-  int iVar3;
-  int iVar4;
-  ulonglong uVar5;
-  int iVar6;
-  int iVar8;
-  longlong lVar7;
-  double dVar9;
-  double dVar10;
-  double dVar11;
-  double dVar12;
-  double dVar13;
-  
-  __savegprlr_22();
-  piVar2 = (int *)__savefpr_27();
-  if (piVar2 == (int *)0x0) {
-    MyAssertHandler(0xffffffff821ef068,0x758,0,0xffffffff82000f98,0xffffffff821ef910);
-  }
-  iVar8 = (int)param_3;
-  if ((iVar8 < 0) || (0x35 < iVar8)) {
-    MyAssertHandler(0xffffffff821ef068,0x759,0,0xffffffff821efbcc,0xffffffff821efbe0,param_3);
-  }
-  iVar6 = (int)param_4;
-  if ((iVar6 < 0) || (0x36 - iVar8 < iVar6)) {
-    MyAssertHandler(0xffffffff821ef068,0x75a,0,0xffffffff8216c964,0xffffffff821efb88,param_4);
-  }
-  if (((int)param_2 < 0) || (DAT_84888110 <= (int)param_2)) {
-    MyAssertHandler(0xffffffff821ef068,0x75b,0,0xffffffff8218a1b4,0xffffffff8218a1cc,param_2);
-  }
-  if (*piVar2 == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x75c,0,0xffffffff82000f98,0xffffffff8218a690);
-  }
-  dVar9 = (double)(float)piVar2[10];
-  dVar13 = 0.0;
-  dVar12 = 1.0;
-  if ((dVar9 < 0.0) || (1.0 < dVar9)) {
-    MyAssertHandler(0xffffffff821ef068,0x75d,0,0xffffffff821efb10,0xffffffff821efb38,dVar9);
-  }
-  dVar9 = (double)(float)piVar2[0xb];
-  if ((dVar9 < dVar13) || (dVar12 < dVar9)) {
-    MyAssertHandler(0xffffffff821ef068,0x75e,0,0xffffffff821efa98,0xffffffff821efac0,dVar9);
-  }
-  iVar3 = SND_GetPriority(param_2);
-  dVar13 = 9.999999747378752e-05;
-  dVar9 = (double)((float)(longlong)iVar3 * (float)piVar2[10] * (float)piVar2[0xb]);
-  if (dVar9 <= 9.999999747378752e-05) {
-    __restfpr_27(0xffffffffffffffff);
-    __restgprlr_22();
-    return;
-  }
-  uVar5 = 0xffffffffffffffff;
-  iVar3 = *(int *)(*piVar2 + 4);
-  if (iVar8 < iVar8 + iVar6) {
-    lVar7 = (param_3 + (param_3 & 0x7fffffff) * 2 & 0x3ffffff) * 0x40 + -0x7b777edc;
-    do {
-      puVar1 = (undefined4 *)lVar7;
-      iVar4 = puVar1[0x18];
-      if (iVar4 == 0) {
-        MyAssertHandler(0xffffffff821ef068,0x76d,0,0xffffffff82000f98,0xffffffff8201d9d0);
-      }
-      if (puVar1[-4] == 0) {
-        MyAssertHandler(0xffffffff821ef068,0x76e,0,0xffffffff82000f98,0xffffffff821efa60);
-      }
-      if (((puVar1[-4] == 2) && ((*(uint *)(iVar4 + 0x3c) & 1) == 0)) &&
-         (dVar10 = (double)SND_GetChannelFractionPlayed(param_3,0), dVar12 <= dVar10)) {
-LAB_82849e74:
-        __restfpr_27(param_3);
-        __restgprlr_22();
-        return;
-      }
-      if ((iVar3 != 0) || (*(int *)(iVar4 + 4) == 0)) {
-        dVar11 = (double)(float)puVar1[0xf];
-        dVar10 = (double)(float)puVar1[0x10];
-        iVar4 = SND_GetPriority(*puVar1);
-        dVar10 = (double)(float)((double)(float)((double)(longlong)iVar4 * dVar11) * dVar10);
-        if (dVar10 <= dVar13) goto LAB_82849e74;
-        if (dVar10 <= dVar9) {
-          uVar5 = param_3;
-          dVar9 = dVar10;
-        }
-      }
-      param_3 = param_3 + 1;
-      lVar7 = lVar7 + 0xc0;
-    } while ((int)param_3 < iVar8 + iVar6);
-  }
-  __restfpr_27(uVar5);
-  __restgprlr_22();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure SndStartAliasInfo
 
 // 82849E88  SND_FindFree2DChannel  (snd.cpp:1937)
-
-void SND_FindFree2DChannel(undefined8 param_1,undefined8 param_2)
-
-{
-  undefined4 *puVar1;
-  undefined4 uVar2;
-  undefined4 *puVar5;
-  undefined8 uVar3;
-  char cVar8;
-  int iVar6;
-  undefined8 uVar4;
-  int iVar7;
-  longlong lVar9;
-  double dVar10;
-  
-  puVar5 = (undefined4 *)__savegprlr_22();
-  uVar3 = SND_GetEntChannelName(param_2);
-  uVar3 = va(0xffffffff821efcf4,uVar3);
-  puVar1 = (undefined4 *)*puVar5;
-  cVar8 = SND_HasFreeVoice(param_2);
-  if ((cVar8 == '\0') &&
-     (iVar6 = I_stricmp(*(undefined4 *)(DAT_8487cfac + 0xc),*puVar1), iVar6 == 0)) {
-    Com_DPrintf(9,0xffffffff821ef04c,*puVar1,uVar3);
-  }
-  cVar8 = SND_HasFreeVoice(param_2);
-  if (cVar8 == '\0') {
-    __restgprlr_22(0xffffffffffffffff);
-    return;
-  }
-  lVar9 = 0;
-  if (0 < DAT_8488a994) {
-    do {
-      cVar8 = SND_Is2DChannelFree(lVar9);
-      if (cVar8 != '\0') {
-        __restgprlr_22(lVar9);
-        return;
-      }
-      lVar9 = lVar9 + 1;
-    } while ((int)lVar9 < DAT_8488a994);
-  }
-  iVar6 = SND_FindReplaceableChannel(puVar5,param_2,0);
-  if (-1 < iVar6) {
-    cVar8 = SND_Is2DChannelFree();
-    if (cVar8 == '\0') {
-      uVar3 = SND_GetPriority((&DAT_84888124)[iVar6 * 0x30]);
-      uVar2 = *(undefined4 *)(&DAT_84888184)[iVar6 * 0x30];
-      uVar4 = SND_GetPriority(param_2);
-      uVar3 = va(0xffffffff821efccc,uVar4,uVar2,uVar3);
-      uVar2 = *puVar5;
-      cVar8 = SND_Is2DChannelFree(iVar6);
-      SND_DebugAliasPrint(cVar8 == '\0',uVar2,uVar3);
-      uVar3 = SND_GetPriority(param_2);
-      uVar2 = *(undefined4 *)*puVar5;
-      uVar4 = SND_GetPriority((&DAT_84888124)[iVar6 * 0x30]);
-      uVar3 = va(0xffffffff821efca0,uVar4,uVar2,uVar3);
-      uVar2 = (&DAT_84888184)[iVar6 * 0x30];
-      cVar8 = SND_Is2DChannelFree(iVar6);
-      SND_DebugAliasPrint(cVar8 == '\0',uVar2,uVar3);
-      if (*(char *)(DAT_8487cfa8 + 0xc) != '\0') {
-        if (((*(uint *)((&DAT_84888184)[iVar6 * 0x30] + 0x3c) & 1) != 0) ||
-           (dVar10 = (double)SND_GetChannelFractionPlayed(iVar6,0), 1.0 <= dVar10)) {
-          uVar3 = SND_GetPriority(param_2);
-          uVar2 = *(undefined4 *)*puVar5;
-          dVar10 = (double)SND_GetChannelFractionPlayed(iVar6,0);
-          dVar10 = (double)(float)(dVar10 * 100.0);
-          uVar4 = SND_GetPriority((&DAT_84888124)[iVar6 * 0x30]);
-          Com_Printf(dVar10,0xe,0xffffffff821efc30,*(undefined4 *)(&DAT_84888184)[iVar6 * 0x30],
-                     uVar4,dVar10,uVar2,uVar3);
-        }
-      }
-    }
-    SND_Stop2DChannel(iVar6);
-  }
-  puVar5 = (undefined4 *)*puVar5;
-  if ((iVar6 < 0) && (iVar7 = I_stricmp(*(undefined4 *)(DAT_8487cfac + 0xc),*puVar5), iVar7 == 0)) {
-    Com_DPrintf(9,0xffffffff821ef04c,*puVar5,0xffffffff821efc1c);
-  }
-  __restgprlr_22(iVar6);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure SndStartAliasInfo
 
 // 8284A188  SND_FindFree3DChannel  (snd.cpp:1972)
-
-void SND_FindFree3DChannel(undefined8 param_1,undefined8 param_2)
-
-{
-  undefined4 uVar1;
-  undefined4 *puVar4;
-  char cVar7;
-  int iVar5;
-  undefined8 uVar2;
-  undefined8 uVar3;
-  int iVar6;
-  double dVar8;
-  undefined8 uVar9;
-  undefined8 uVar10;
-  
-  puVar4 = (undefined4 *)__savegprlr_23();
-  cVar7 = SND_HasFreeVoice(param_2);
-  if (cVar7 == '\0') {
-    __restgprlr_23(0xffffffffffffffff);
-    return;
-  }
-  iVar6 = 0;
-  if (0 < DAT_8488a998) {
-    do {
-      iVar5 = iVar6 + 8;
-      cVar7 = SND_Is3DChannelFree(iVar5);
-      if (cVar7 != '\0') goto LAB_8284a44c;
-      iVar6 = iVar6 + 1;
-    } while (iVar6 < DAT_8488a998);
-  }
-  iVar5 = SND_FindReplaceableChannel(puVar4,param_2,8);
-  if (-1 < iVar5) {
-    cVar7 = SND_Is3DChannelFree();
-    if (cVar7 == '\0') {
-      uVar2 = SND_GetPriority((&DAT_84888124)[iVar5 * 0x30]);
-      uVar1 = *(undefined4 *)(&DAT_84888184)[iVar5 * 0x30];
-      uVar3 = SND_GetPriority(param_2);
-      uVar2 = va(0xffffffff821efccc,uVar3,uVar1,uVar2);
-      uVar1 = *puVar4;
-      cVar7 = SND_Is3DChannelFree(iVar5);
-      SND_DebugAliasPrint(cVar7 == '\0',uVar1,uVar2);
-      uVar2 = SND_GetPriority(param_2);
-      uVar1 = *(undefined4 *)*puVar4;
-      uVar3 = SND_GetPriority((&DAT_84888124)[iVar5 * 0x30]);
-      uVar2 = va(0xffffffff821efca0,uVar3,uVar1,uVar2);
-      uVar1 = (&DAT_84888184)[iVar5 * 0x30];
-      cVar7 = SND_Is3DChannelFree(iVar5);
-      SND_DebugAliasPrint(cVar7 == '\0',uVar1,uVar2);
-      if (*(char *)(DAT_8487cfa8 + 0xc) != '\0') {
-        if (((*(uint *)((&DAT_84888184)[iVar5 * 0x30] + 0x3c) & 1) != 0) ||
-           (dVar8 = (double)SND_GetChannelFractionPlayed(iVar5,0), 1.0 <= dVar8)) {
-          uVar9 = SND_DistSqToNearestListener(puVar4 + 4);
-          uVar2 = SND_GetPriority(param_2);
-          uVar1 = *(undefined4 *)*puVar4;
-          uVar10 = SND_DistSqToNearestListener(&DAT_84888198 + iVar5 * 0xc0);
-          dVar8 = (double)SND_GetChannelFractionPlayed(iVar5,0);
-          dVar8 = (double)(float)(dVar8 * 100.0);
-          uVar3 = SND_GetPriority((&DAT_84888124)[iVar5 * 0x30]);
-          Com_DPrintf(dVar8,uVar10,uVar9,0xe,0xffffffff821efd20,
-                      *(undefined4 *)(&DAT_84888184)[iVar5 * 0x30],uVar3,dVar8,uVar10,uVar1,uVar2);
-        }
-      }
-    }
-    SND_Stop3DChannel(iVar5);
-  }
-  puVar4 = (undefined4 *)*puVar4;
-  if ((iVar5 < 0) && (iVar6 = I_stricmp(*(undefined4 *)(DAT_8487cfac + 0xc),*puVar4), iVar6 == 0)) {
-    Com_DPrintf(9,0xffffffff821ef04c,*puVar4,0xffffffff821efc1c);
-  }
-LAB_8284a44c:
-  __restgprlr_23(iVar5);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure SndStartAliasInfo
 
 // 8284A468  SND_FindFreeStreamChannel  (snd.cpp:2006)
-
-void SND_FindFreeStreamChannel(undefined8 param_1,undefined8 param_2)
-
-{
-  undefined4 uVar1;
-  undefined4 *puVar2;
-  float fVar3;
-  float fVar4;
-  float fVar5;
-  float fVar6;
-  float fVar7;
-  float fVar8;
-  uint uVar9;
-  int *piVar12;
-  char cVar15;
-  int iVar13;
-  undefined8 uVar10;
-  undefined8 uVar11;
-  int iVar14;
-  longlong lVar16;
-  double dVar17;
-  undefined8 uVar18;
-  
-  __savegprlr_23();
-  piVar12 = (int *)__savefpr_27();
-  cVar15 = SND_HasFreeVoice(param_2);
-  if (cVar15 == '\0') {
-    __restfpr_27(0xffffffffffffffff);
-    __restgprlr_23();
-    return;
-  }
-  lVar16 = 6;
-  if (6 < (int)DAT_8488a99c) {
-    do {
-      cVar15 = SND_IsStreamChannelFree(lVar16 + 0x28);
-      if (cVar15 != '\0') {
-        __restfpr_27(lVar16 + 0x28);
-        __restgprlr_23();
-        return;
-      }
-      lVar16 = lVar16 + 1;
-    } while ((int)lVar16 < (int)DAT_8488a99c);
-  }
-  iVar13 = SND_FindReplaceableChannel(piVar12,param_2,0x2e,(ulonglong)DAT_8488a99c - 6);
-  if (-1 < iVar13) {
-    iVar14 = iVar13 * 0xc0;
-    if ((&DAT_84888184)[iVar13 * 0x30] == *piVar12) {
-      uVar9 = (uint)piVar12[3] >> 0x12 & 3;
-      fVar3 = (float)(&DAT_848869fc)[uVar9 * 0xf] - (float)piVar12[5];
-      fVar4 = (float)(&DAT_848869fc)[uVar9 * 0xf] - *(float *)(&DAT_8488819c + iVar14);
-      fVar5 = (float)(&DAT_84886a00)[uVar9 * 0xf] - (float)piVar12[6];
-      fVar7 = (float)(&DAT_848869f8)[uVar9 * 0xf] - (float)piVar12[4];
-      fVar6 = (float)(&DAT_84886a00)[uVar9 * 0xf] - *(float *)(&DAT_848881a0 + iVar14);
-      fVar8 = (float)(&DAT_848869f8)[uVar9 * 0xf] - *(float *)(&DAT_84888198 + iVar14);
-      if (fVar8 * fVar8 + fVar6 * fVar6 + fVar4 * fVar4 <=
-          fVar7 * fVar7 + fVar5 * fVar5 + fVar3 * fVar3) {
-        iVar13 = -1;
-        goto LAB_8284a7a0;
-      }
-    }
-    SND_StopStreamChannel(iVar13);
-    cVar15 = SND_IsStreamChannelFree(iVar13);
-    if (cVar15 == '\0') {
-      uVar10 = SND_GetPriority((&DAT_84888124)[iVar13 * 0x30]);
-      uVar1 = *(undefined4 *)(&DAT_84888184)[iVar13 * 0x30];
-      uVar11 = SND_GetPriority(param_2);
-      uVar10 = va(0xffffffff821efccc,uVar11,uVar1,uVar10);
-      SND_DebugAliasPrint(1,*piVar12,uVar10);
-      uVar10 = SND_GetPriority(param_2);
-      uVar1 = *(undefined4 *)*piVar12;
-      uVar11 = SND_GetPriority((&DAT_84888124)[iVar13 * 0x30]);
-      uVar10 = va(0xffffffff821efca0,uVar11,uVar1,uVar10);
-      SND_DebugAliasPrint(1,(&DAT_84888184)[iVar13 * 0x30],uVar10);
-      if (*(char *)(DAT_8487cfa8 + 0xc) != '\0') {
-        if (((*(uint *)((&DAT_84888184)[iVar13 * 0x30] + 0x3c) & 1) != 0) ||
-           (dVar17 = (double)SND_GetChannelFractionPlayed(iVar13,0), 1.0 <= dVar17)) {
-          SND_GetListenerIndexNearestToOrigin(piVar12 + 4);
-          uVar10 = SND_GetPriority(param_2);
-          uVar1 = *(undefined4 *)*piVar12;
-          uVar18 = SND_DistSqToNearestListener(&DAT_84888198 + iVar14);
-          dVar17 = (double)SND_GetChannelFractionPlayed(iVar13,0);
-          dVar17 = (double)(float)(dVar17 * 100.0);
-          uVar11 = SND_GetPriority((&DAT_84888124)[iVar13 * 0x30]);
-          Com_DPrintf(dVar17,uVar18,9,0xffffffff821efda8,
-                      *(undefined4 *)(&DAT_84888184)[iVar13 * 0x30],uVar11,dVar17,uVar18,uVar1,
-                      uVar10);
-        }
-      }
-    }
-  }
-LAB_8284a7a0:
-  puVar2 = (undefined4 *)*piVar12;
-  if ((iVar13 < 0) && (iVar14 = I_stricmp(*(undefined4 *)(DAT_8487cfac + 0xc),*puVar2), iVar14 == 0)
-     ) {
-    Com_DPrintf(9,0xffffffff821ef04c,*puVar2,0xffffffff821efc1c);
-  }
-  __restfpr_27(iVar13);
-  __restgprlr_23();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure SndStartAliasInfo
 
 // 8284A7F8  SND_StopEntityChannel  (snd.cpp:2061)
-
-void SND_StopEntityChannel(undefined8 param_1,int param_2)
-
-{
-  undefined4 *puVar1;
-  int iVar2;
-  char cVar4;
-  int iVar3;
-  longlong lVar5;
-  int *piVar6;
-  
-  iVar2 = __savegprlr_23();
-  lVar5 = 8;
-  if (8 < DAT_8488a998 + 8) {
-    piVar6 = &DAT_84888724;
-    do {
-      if (((piVar6[-1] == iVar2) && (*piVar6 == param_2)) &&
-         (cVar4 = SND_Is3DChannelFree(lVar5), cVar4 == '\0')) {
-        SND_DebugAliasPrint(1,piVar6[0x18],0xffffffff821efe30);
-        SND_Stop3DChannel(lVar5);
-      }
-      lVar5 = lVar5 + 1;
-      piVar6 = piVar6 + 0x30;
-    } while ((int)lVar5 < DAT_8488a998 + 8);
-  }
-  lVar5 = 0x28;
-  if (0x28 < DAT_8488a99c + 0x28) {
-    piVar6 = &DAT_84889f24;
-    do {
-      if (((piVar6[-1] == iVar2) && (*piVar6 == param_2)) &&
-         (cVar4 = SND_IsStreamChannelFree(lVar5), cVar4 == '\0')) {
-        puVar1 = (undefined4 *)piVar6[0x18];
-        iVar3 = I_stricmp(*(undefined4 *)(DAT_8487cfac + 0xc),*puVar1);
-        if (iVar3 == 0) {
-          Com_DPrintf(9,0xffffffff821ef04c,*puVar1,0xffffffff821efe30);
-        }
-        SND_StopStreamChannel(lVar5);
-      }
-      lVar5 = lVar5 + 1;
-      piVar6 = piVar6 + 0x30;
-    } while ((int)lVar5 < DAT_8488a99c + 0x28);
-  }
-  lVar5 = 0;
-  if (0 < DAT_8488a994) {
-    piVar6 = &DAT_84888124;
-    do {
-      if (((piVar6[-1] == iVar2) && (*piVar6 == param_2)) &&
-         (cVar4 = SND_Is2DChannelFree(lVar5), cVar4 == '\0')) {
-        puVar1 = (undefined4 *)piVar6[0x18];
-        iVar3 = I_stricmp(*(undefined4 *)(DAT_8487cfac + 0xc),*puVar1);
-        if (iVar3 == 0) {
-          Com_DPrintf(9,0xffffffff821ef04c,*puVar1,0xffffffff821efe30);
-        }
-        SND_Stop2DChannel(lVar5);
-      }
-      lVar5 = lVar5 + 1;
-      piVar6 = piVar6 + 0x30;
-    } while ((int)lVar5 < DAT_8488a994);
-  }
-  __restgprlr_23();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 8284AA00  SND_StartAliasSample  (snd.cpp:2097)
-
-void SND_StartAliasSample(undefined8 param_1,ulonglong param_2)
-
-{
-  int iVar1;
-  bool bVar2;
-  int *piVar3;
-  char cVar4;
-  char *pcVar5;
-  undefined1 auStack_b0 [176];
-  
-  piVar3 = (int *)__savegprlr_28();
-  if (*piVar3 == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x834,0,0xffffffff82000f98,0xffffffff8218a690);
-  }
-  if ((*(uint *)(*piVar3 + 0x3c) & 0x180) != 0x80) {
-    MyAssertHandler(0xffffffff821ef068,0x835,0,0xffffffff82000f98,0xffffffff8218a648);
-  }
-  if (piVar3[1] == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x836,0,0xffffffff82000f98,0xffffffff8218a578);
-  }
-  if ((*(uint *)(piVar3[1] + 0x3c) & 0x180) != 0x80) {
-    MyAssertHandler(0xffffffff821ef068,0x837,0,0xffffffff82000f98,0xffffffff8218a530);
-  }
-  iVar1 = *piVar3;
-  if (*(char *)(*(int *)(iVar1 + 0x14) + 1) == '\0') {
-    Com_GetSoundFileName(iVar1,auStack_b0,0x80);
-    Com_DPrintf(9,0xffffffff821efee8,auStack_b0,*(undefined4 *)*piVar3);
-    if ((param_2 & 0xffffffff) != 0) {
-      *(undefined4 *)param_2 = 0xffffffff;
-    }
-  }
-  else {
-    cVar4 = SND_IsAliasChannel3D(*(int *)(iVar1 + 0x3c) >> 9 & 0x3f);
-    if (cVar4 == '\0') {
-      if (*(char *)(DAT_8487cfb4 + 0xc) != '\0') {
-        SND_StartAlias2DSample(piVar3,param_2);
-        __restgprlr_28();
-        return;
-      }
-    }
-    else if (*(char *)(DAT_8487cfa0 + 0xc) != '\0') {
-      pcVar5 = &DAT_84886a30;
-      do {
-        if (*pcVar5 != '\0') {
-          bVar2 = true;
-          goto LAB_8284ab90;
-        }
-        pcVar5 = pcVar5 + 0x3c;
-      } while ((int)pcVar5 < -0x7b7794e0);
-      bVar2 = false;
-LAB_8284ab90:
-      if (!bVar2) {
-        Com_Error(1,0xffffffff821efe48,*(undefined4 *)*piVar3);
-        __restgprlr_28(0xffffffffffffffff);
-        return;
-      }
-      SND_StartAlias3DSample(piVar3,param_2);
-      __restgprlr_28();
-      return;
-    }
-  }
-  __restgprlr_28(0xffffffffffffffff);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure SndStartAliasInfo
 
 // 8284AC08  SND_StartAliasStream  (snd.cpp:2149)
-
-void SND_StartAliasStream(undefined8 param_1,ulonglong param_2)
-
-{
-  float fVar1;
-  uint uVar2;
-  bool bVar3;
-  int *piVar5;
-  char cVar7;
-  undefined8 uVar4;
-  int iVar6;
-  char *pcVar8;
-  double dVar9;
-  
-  piVar5 = (int *)__savegprlr_27();
-  if (*piVar5 == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x86b,0,0xffffffff82000f98,0xffffffff8218a690);
-  }
-  if ((*(uint *)(*piVar5 + 0x3c) & 0x180) != 0x100) {
-    MyAssertHandler(0xffffffff821ef068,0x86c,0,0xffffffff82000f98,0xffffffff8218a928);
-  }
-  if (piVar5[1] == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x86d,0,0xffffffff82000f98,0xffffffff8218a578);
-  }
-  if ((*(uint *)(piVar5[1] + 0x3c) & 0x180) != 0x100) {
-    MyAssertHandler(0xffffffff821ef068,0x86e,0,0xffffffff82000f98,0xffffffff8218a8e0);
-  }
-  uVar2 = *(int *)(*piVar5 + 0x3c) >> 9 & 0x3f;
-  SND_ComputeStartAliasMixVolume(piVar5,uVar2);
-  cVar7 = SND_IsAliasChannel3D(uVar2);
-  if (cVar7 == '\0') {
-    piVar5[0xb] = 0x3f800000;
-  }
-  else {
-    fVar1 = (float)piVar5[2];
-    iVar6 = *piVar5;
-    dVar9 = (double)SND_Get3DDistanceAttenuation
-                              ((double)(*(float *)(piVar5[1] + 0x30) * fVar1 +
-                                       *(float *)(iVar6 + 0x30) * (1.0 - fVar1)),
-                               (double)(*(float *)(piVar5[1] + 0x34) * fVar1 +
-                                       *(float *)(iVar6 + 0x34) * (1.0 - fVar1)),piVar5 + 4,
-                               *(undefined4 *)(iVar6 + 0x5c));
-    piVar5[0xb] = (int)(float)dVar9;
-  }
-  uVar4 = SND_FindFreeStreamChannel(piVar5,uVar2);
-  iVar6 = (int)uVar4;
-  if ((param_2 & 0xffffffff) != 0) {
-    *(int *)param_2 = iVar6;
-  }
-  if (-1 < iVar6) {
-    if ((iVar6 < 0x28) || (DAT_8488a99c + 0x28 <= iVar6)) {
-      MyAssertHandler(0xffffffff821ef068,0x885,0,0xffffffff8200aef4,0xffffffff821eff38,uVar4);
-    }
-    if (*(char *)(DAT_8488fd6c + 0xc) != '\0') {
-      cVar7 = SND_IsAliasChannel3D(*(int *)(*piVar5 + 0x3c) >> 9 & 0x3f);
-      if (cVar7 != '\0') {
-        pcVar8 = &DAT_84886a30;
-        do {
-          if (*pcVar8 != '\0') {
-            bVar3 = true;
-            goto LAB_8284ae38;
-          }
-          pcVar8 = pcVar8 + 0x3c;
-        } while ((int)pcVar8 < -0x7b7794e0);
-        bVar3 = false;
-LAB_8284ae38:
-        if (!bVar3) {
-          Com_Error(1,0xffffffff821efe48,*(undefined4 *)*piVar5);
-        }
-      }
-      SND_StartAliasStreamOnChannel(piVar5,uVar4);
-      __restgprlr_27();
-      return;
-    }
-  }
-  __restgprlr_27(0xffffffffffffffff);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure SndStartAliasInfo
 
 // 8284AE78  SND_StartAliasVoiced  (snd.cpp:2192)
-
-undefined8 SND_StartAliasVoiced(void)
-
-{
-  return 0xffffffffffffffff;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure SndStartAliasInfo
 
 // 8284AE80  SND_Archive  (snd.cpp:2200)
-
-void SND_Archive(void)
-
-{
-  undefined4 *puVar1;
-  int iVar2;
-  int iVar3;
-  undefined4 uVar4;
-  
-  iVar2 = __savegprlr_26();
-  puVar1 = *(undefined4 **)(iVar2 + 0x70);
-  if (puVar1 != (undefined4 *)0x0) {
-    iVar3 = DB_FindXAssetHeader(9,*puVar1,1);
-    if (iVar3 == 0) {
-      MyAssertHandler(0xffffffff821ef068,0x8a0,0,0xffffffff82000f98,0xffffffff82176e88);
-    }
-    uVar4 = SND_GetAliasOffset(puVar1);
-    *(undefined4 *)(iVar2 + 0x78) = uVar4;
-    *(int *)(iVar2 + 0x70) = iVar3;
-  }
-  puVar1 = *(undefined4 **)(iVar2 + 0x74);
-  if (puVar1 != (undefined4 *)0x0) {
-    iVar3 = DB_FindXAssetHeader(9,*puVar1,1);
-    if (iVar3 == 0) {
-      MyAssertHandler(0xffffffff821ef068,0x8aa,0,0xffffffff82000f98,0xffffffff82176e88);
-    }
-    uVar4 = SND_GetAliasOffset(puVar1);
-    *(undefined4 *)(iVar2 + 0x7c) = uVar4;
-    *(int *)(iVar2 + 0x74) = iVar3;
-  }
-  __restgprlr_26();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 8284AF50  SND_Unarchive  (snd.cpp:2227)
-
-void SND_Unarchive(void)
-
-{
-  undefined4 *puVar1;
-  int iVar2;
-  undefined4 uVar3;
-  
-  iVar2 = __savegprlr_27();
-  puVar1 = *(undefined4 **)(iVar2 + 0x70);
-  if (puVar1 != (undefined4 *)0x0) {
-    if (puVar1[1] == 0) {
-      MyAssertHandler(0xffffffff821ef068,0x8b9,0,0xffffffff82000f98,0xffffffff821eff88);
-    }
-    uVar3 = SND_GetAliasWithOffset(*puVar1,*(undefined4 *)(iVar2 + 0x78));
-    *(undefined4 *)(iVar2 + 0x70) = uVar3;
-  }
-  puVar1 = *(undefined4 **)(iVar2 + 0x74);
-  if (puVar1 != (undefined4 *)0x0) {
-    if (puVar1[1] == 0) {
-      MyAssertHandler(0xffffffff821ef068,0x8c4,0,0xffffffff82000f98,0xffffffff821eff88);
-    }
-    uVar3 = SND_GetAliasWithOffset(*puVar1,*(undefined4 *)(iVar2 + 0x7c));
-    *(undefined4 *)(iVar2 + 0x74) = uVar3;
-  }
-  __restgprlr_27();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 8284B000  DB_SaveSounds  (snd.cpp:2255)
-
-void DB_SaveSounds(void)
-
-{
-  undefined4 *puVar1;
-  int iVar2;
-  int iVar3;
-  int *piVar4;
-  
-  __savegprlr_25();
-  piVar4 = &DAT_84888184;
-  do {
-    puVar1 = (undefined4 *)*piVar4;
-    if (puVar1 != (undefined4 *)0x0) {
-      iVar2 = DB_FindXAssetHeader(9,*puVar1,1);
-      if (iVar2 == 0) {
-        MyAssertHandler(0xffffffff821ef068,0x8a0,0,0xffffffff82000f98,0xffffffff82176e88);
-      }
-      iVar3 = SND_GetAliasOffset(puVar1);
-      piVar4[2] = iVar3;
-      *piVar4 = iVar2;
-    }
-    puVar1 = (undefined4 *)piVar4[1];
-    if (puVar1 != (undefined4 *)0x0) {
-      iVar2 = DB_FindXAssetHeader(9,*puVar1,1);
-      if (iVar2 == 0) {
-        MyAssertHandler(0xffffffff821ef068,0x8aa,0,0xffffffff82000f98,0xffffffff82176e88);
-      }
-      iVar3 = SND_GetAliasOffset(puVar1);
-      piVar4[3] = iVar3;
-      piVar4[1] = iVar2;
-    }
-    piVar4 = piVar4 + 0x30;
-  } while ((int)piVar4 < -0x7b7755fc);
-  __restgprlr_25();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
 
 // 8284B0F0  DB_LoadSounds  (snd.cpp:2264)
-
-void DB_LoadSounds(void)
-
-{
-  undefined4 *puVar1;
-  int iVar2;
-  int *piVar3;
-  
-  __savegprlr_24();
-  piVar3 = &DAT_84888184;
-  do {
-    puVar1 = (undefined4 *)*piVar3;
-    if (puVar1 != (undefined4 *)0x0) {
-      if (puVar1[1] == 0) {
-        MyAssertHandler(0xffffffff821ef068,0x8b9,0,0xffffffff82000f98,0xffffffff821eff88);
-      }
-      iVar2 = SND_GetAliasWithOffset(*puVar1,piVar3[2]);
-      *piVar3 = iVar2;
-    }
-    puVar1 = (undefined4 *)piVar3[1];
-    if (puVar1 != (undefined4 *)0x0) {
-      if (puVar1[1] == 0) {
-        MyAssertHandler(0xffffffff821ef068,0x8c4,0,0xffffffff82000f98,0xffffffff821eff88);
-      }
-      iVar2 = SND_GetAliasWithOffset(*puVar1,piVar3[3]);
-      piVar3[1] = iVar2;
-    }
-    piVar3 = piVar3 + 0x30;
-  } while ((int)piVar3 < -0x7b7755fc);
-  __restgprlr_24();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 8284B1D0  SND_ChoosePitchAndVolume  (snd.cpp:2275)
 
 void SND_ChoosePitchAndVolume
-               (undefined8 param_1,double param_2,undefined8 param_3,ulonglong param_4,
-               undefined8 param_5,undefined8 param_6,ulonglong param_7,ulonglong param_8)
+               (snd_alias_t *param_1,snd_alias_t *param_2,float param_3,float param_4,float *param_5
+               ,float *param_6)
 
 {
-  float fVar1;
+  int iVar1;
   int iVar2;
-  int iVar3;
+  ulonglong uVar3;
+  ulonglong in_r7;
+  ulonglong in_r8;
   double extraout_f1;
   double dVar4;
   double dVar5;
@@ -2885,46 +1121,50 @@ void SND_ChoosePitchAndVolume
   double dVar7;
   double dVar8;
   double dVar9;
+  double dVar10;
+  float fVar11;
   
-  __savegprlr_26();
-  iVar3 = __savefpr_26();
-  dVar4 = extraout_f1;
-  if (iVar3 == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x8e9,0,0xffffffff82000f98,0xffffffff8218a210);
+  dVar4 = (double)param_4;
+  uVar3 = (ulonglong)(int)param_2;
+  __savegprlr_26((double)param_3,param_1,uVar3,param_5,param_6);
+  iVar2 = __savefpr_26();
+  dVar5 = extraout_f1;
+  if (iVar2 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x8e9,0,"%s");
   }
-  if ((param_4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x8ea,0,0xffffffff82000f98,0xffffffff8218a208);
+  if ((uVar3 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x8ea,0,"%s");
   }
-  if ((param_7 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x8eb,0,0xffffffff82000f98,0xffffffff82025684);
+  if ((in_r7 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x8eb,0,"%s");
   }
-  if ((param_8 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x8ec,0,0xffffffff82000f98,0xffffffff82077858);
+  if ((in_r8 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x8ec,0,"%s");
   }
-  iVar2 = (int)param_4;
-  dVar8 = 1.0;
-  fVar1 = (float)(1.0 - dVar4);
-  dVar9 = (double)(*(float *)(iVar3 + 0x1c) * fVar1 +
-                  (float)((double)*(float *)(iVar2 + 0x1c) * dVar4));
-  dVar7 = (double)(*(float *)(iVar3 + 0x20) * fVar1 +
-                  (float)((double)*(float *)(iVar2 + 0x20) * dVar4));
-  dVar6 = (double)(*(float *)(iVar3 + 0x28) * fVar1 +
-                  (float)((double)*(float *)(iVar2 + 0x28) * dVar4));
-  dVar5 = (double)(*(float *)(iVar3 + 0x2c) * fVar1 +
-                  (float)((double)*(float *)(iVar2 + 0x2c) * dVar4));
-  dVar4 = (double)random();
-  dVar4 = (double)(float)((double)(float)(dVar4 * (double)(float)(dVar7 - dVar9) + dVar9) * param_2)
-  ;
-  if ((float)(dVar4 - dVar8) < 0.0) {
-    dVar8 = dVar4;
+  iVar1 = (int)uVar3;
+  dVar9 = 1.0;
+  fVar11 = (float)(1.0 - dVar5);
+  dVar10 = (double)(*(float *)(iVar2 + 0x1c) * fVar11 +
+                   (float)((double)*(float *)(iVar1 + 0x1c) * dVar5));
+  dVar8 = (double)(*(float *)(iVar2 + 0x20) * fVar11 +
+                  (float)((double)*(float *)(iVar1 + 0x20) * dVar5));
+  dVar7 = (double)(*(float *)(iVar2 + 0x28) * fVar11 +
+                  (float)((double)*(float *)(iVar1 + 0x28) * dVar5));
+  dVar6 = (double)(*(float *)(iVar2 + 0x2c) * fVar11 +
+                  (float)((double)*(float *)(iVar1 + 0x2c) * dVar5));
+  fVar11 = random();
+  dVar5 = (double)(float)((double)(float)((double)fVar11 * (double)(float)(dVar8 - dVar10) + dVar10)
+                         * dVar4);
+  if ((float)(dVar5 - dVar9) < 0.0) {
+    dVar9 = dVar5;
   }
-  dVar7 = 0.0;
-  if (-dVar4 < 0.0) {
-    dVar7 = dVar8;
+  dVar4 = 0.0;
+  if (-dVar5 < 0.0) {
+    dVar4 = dVar9;
   }
-  *(float *)param_7 = (float)dVar7;
-  dVar4 = (double)random();
-  *(float *)param_8 = (float)(dVar4 * (double)(float)(dVar5 - dVar6) + dVar6);
+  *(float *)in_r7 = (float)dVar4;
+  fVar11 = random();
+  *(float *)in_r8 = (float)((double)fVar11 * (double)(float)(dVar6 - dVar7) + dVar7);
   __restfpr_26();
   __restgprlr_26();
   return;
@@ -2932,574 +1172,200 @@ void SND_ChoosePitchAndVolume
 
 
 // 8284B338  SND_SetPitch_Internal  (snd.cpp:2299)
-
-void SND_SetPitch_Internal(undefined8 param_1,undefined8 param_2,ulonglong param_3)
-
-{
-  uint uVar1;
-  double extraout_f1;
-  double dVar2;
-  
-  uVar1 = __savegprlr_29();
-  dVar2 = extraout_f1;
-  if (0x35 < uVar1) {
-    MyAssertHandler(0xffffffff821ef068,0x900,0,0xffffffff821effd8,uVar1,0x36);
-  }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x901,0,0xffffffff82000f98,0xffffffff821effc0);
-  }
-  dVar2 = floor((double)((float)((double)(DAT_8487d9d8 * (float)(&DAT_848881c4)[uVar1 * 0x30] +
-                                         (1.0 - (float)(&DAT_848881c4)[uVar1 * 0x30])) * dVar2) *
-                         (float)(longlong)(int)(&DAT_8488811c)[uVar1 * 0x30] + 0.5));
-  (*(code *)param_3)(uVar1,(int)dVar2);
-  __restgprlr_29();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 8284B440  SND_Set3DChannelPitch  (snd.cpp:2318)
 
-void SND_Set3DChannelPitch(undefined8 param_1,undefined8 param_2)
+void SND_Set3DChannelPitch(int param_1,float param_2)
 
 {
-  SND_SetPitch_Internal(param_1,param_2,0xffffffff8263c2d8);
+  _func___cdecl_void_int_int *in_r4;
+  
+  SND_SetPitch_Internal(param_1,param_2,in_r4);
   return;
 }
 
 
 // 8284B450  SND_Set2DChannelPitch  (snd.cpp:2324)
 
-void SND_Set2DChannelPitch(undefined8 param_1,undefined8 param_2)
+void SND_Set2DChannelPitch(int param_1,float param_2)
 
 {
-  SND_SetPitch_Internal(param_1,param_2,0xffffffff8263c180);
+  _func___cdecl_void_int_int *in_r4;
+  
+  SND_SetPitch_Internal(param_1,param_2,in_r4);
   return;
 }
 
 
 // 8284B460  SND_SetStreamChannelPitch  (snd.cpp:2330)
 
-void SND_SetStreamChannelPitch(undefined8 param_1,undefined8 param_2)
+void SND_SetStreamChannelPitch(int param_1,float param_2)
 
 {
-  SND_SetPitch_Internal(param_1,param_2,0xffffffff8263c430);
+  _func___cdecl_void_int_int *in_r4;
+  
+  SND_SetPitch_Internal(param_1,param_2,in_r4);
   return;
 }
 
 
 // 8284B470  SND_ContinueLoopingSound_Internal  (snd.cpp:2336)
-
-void SND_ContinueLoopingSound_Internal(undefined8 param_1,double param_2,double param_3)
-
-{
-  float fVar1;
-  float fVar2;
-  int iVar3;
-  int iVar4;
-  float fVar5;
-  int iVar6;
-  undefined8 uVar7;
-  int iVar8;
-  double extraout_f1;
-  double dVar9;
-  double dVar10;
-  double dVar11;
-  double dVar12;
-  double dVar13;
-  double dVar14;
-  
-  __savegprlr_28();
-  uVar7 = __savefpr_27();
-  iVar8 = (int)uVar7;
-  dVar14 = extraout_f1;
-  if ((iVar8 < 0) || (0x35 < iVar8)) {
-    MyAssertHandler(0xffffffff821ef068,0x923,0,0xffffffff821f004c,0xffffffff821f0068,uVar7);
-  }
-  dVar12 = 0.0;
-  dVar13 = 1.0;
-  if ((dVar14 < 0.0) || (1.0 < dVar14)) {
-    MyAssertHandler(dVar14,0xffffffff821ef068,0x924,0,0xffffffff8200ab18,0xffffffff821f002c,dVar14);
-  }
-  iVar6 = iVar8 * 0xc0;
-  if ((&DAT_84888184)[iVar8 * 0x30] == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x927,0,0xffffffff82000f98,0xffffffff821f0020);
-  }
-  if ((&DAT_84888188)[iVar8 * 0x30] == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x928,0,0xffffffff82000f98,0xffffffff821f0014);
-  }
-  iVar3 = (&DAT_84888184)[iVar8 * 0x30];
-  iVar4 = (&DAT_84888188)[iVar8 * 0x30];
-  if (iVar3 != iVar4) {
-    fVar1 = *(float *)(iVar4 + 0x1c);
-    fVar2 = *(float *)(iVar3 + 0x1c);
-    *(float *)(&DAT_84888170 + iVar6) = (float)dVar12;
-    fVar1 = (float)((double)(fVar2 * (float)(dVar13 - dVar14) + (float)((double)fVar1 * dVar14)) *
-                   param_2);
-    dVar11 = (double)fVar1;
-    (&DAT_84888168)[iVar8 * 0x30] = fVar1;
-    dVar10 = dVar13;
-    if ((float)(dVar11 - dVar13) < 0.0) {
-      dVar10 = dVar11;
-    }
-    dVar9 = dVar12;
-    if (-dVar11 < 0.0) {
-      dVar9 = dVar10;
-    }
-    (&DAT_84888168)[iVar8 * 0x30] = (float)dVar9;
-    (&DAT_8488816c)[iVar8 * 0x30] = (float)dVar9;
-    fVar1 = *(float *)(iVar3 + 0x28);
-    fVar2 = *(float *)(iVar4 + 0x28);
-    *(float *)(&DAT_84888180 + iVar6) = (float)dVar12;
-    fVar1 = (float)((double)(fVar1 * (float)(dVar13 - dVar14) + (float)((double)fVar2 * dVar14)) *
-                   param_3);
-    *(float *)(&DAT_84888178 + iVar6) = fVar1;
-    fVar2 = 2.0;
-    if (fVar1 - 2.0 < 0.0) {
-      fVar2 = fVar1;
-    }
-    fVar5 = 0.001;
-    if (0.001 - fVar1 < 0.0) {
-      fVar5 = fVar2;
-    }
-    *(float *)(&DAT_84888178 + iVar6) = fVar5;
-    *(float *)(&DAT_8488817c + iVar6) = fVar5;
-  }
-  (&DAT_8488812c)[iVar8 * 0x30] = DAT_84886aec;
-  *(float *)(&DAT_84888194 + iVar6) = (float)dVar14;
-  __restfpr_27();
-  __restgprlr_28();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 8284B658  SND_ContinueLoopingSound  (snd.cpp:2368)
-
-void SND_ContinueLoopingSound
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-               int *param_5)
-
-{
-  int *piVar1;
-  char cVar2;
-  int in_r8;
-  undefined8 in_r9;
-  undefined4 *puVar3;
-  ulonglong in_r10;
-  int *piVar4;
-  int iVar5;
-  int iVar6;
-  longlong lVar7;
-  int *piVar8;
-  undefined8 extraout_f1;
-  undefined8 uVar9;
-  
-  piVar1 = (int *)__savegprlr_20();
-  lVar7 = 8;
-  piVar4 = (int *)in_r10;
-  uVar9 = extraout_f1;
-  if (8 < DAT_8488a998 + 8) {
-    piVar8 = &DAT_84888784;
-    iVar5 = DAT_8488a998;
-    do {
-      if ((piVar8[-0x19] == in_r8) &&
-         (cVar2 = SND_Is3DChannelFree(lVar7), iVar5 = DAT_8488a998, cVar2 == '\0')) {
-        if (*piVar8 == 0) {
-          MyAssertHandler(0xffffffff821ef068,0x949,0,0xffffffff82000f98,0xffffffff821f00b0);
-        }
-        if (piVar8[1] == 0) {
-          MyAssertHandler(0xffffffff821ef068,0x94a,0,0xffffffff82000f98,0xffffffff821f00cc);
-        }
-        iVar5 = DAT_8488a998;
-        if ((((((int *)*piVar8)[0xf] & 1U) != 0) && (*(int *)*piVar8 == *piVar1)) &&
-           (*(int *)piVar8[1] == *param_5)) {
-          SND_ContinueLoopingSound_Internal(uVar9,param_2,param_3,lVar7);
-          SND_Set3DPosition(lVar7,in_r9);
-          if ((in_r10 & 0xffffffff) != 0) {
-            *piVar4 = (int)lVar7;
-          }
-          goto LAB_8284b9a0;
-        }
-      }
-      lVar7 = lVar7 + 1;
-      piVar8 = piVar8 + 0x30;
-    } while ((int)lVar7 < iVar5 + 8);
-  }
-  lVar7 = 0;
-  if (0 < DAT_8488a994) {
-    piVar8 = &DAT_84888184;
-    iVar5 = DAT_8488a994;
-    do {
-      if ((piVar8[-0x19] == in_r8) &&
-         (cVar2 = SND_Is2DChannelFree(lVar7), iVar5 = DAT_8488a994, cVar2 == '\0')) {
-        if (*piVar8 == 0) {
-          MyAssertHandler(0xffffffff821ef068,0x961,0,0xffffffff82000f98,0xffffffff821f00b0);
-        }
-        if (piVar8[1] == 0) {
-          MyAssertHandler(0xffffffff821ef068,0x962,0,0xffffffff82000f98,0xffffffff821f00cc);
-        }
-        iVar5 = DAT_8488a994;
-        if ((((((int *)*piVar8)[0xf] & 1U) != 0) && (*(int *)*piVar8 == *piVar1)) &&
-           (*(int *)piVar8[1] == *param_5)) {
-          SND_ContinueLoopingSound_Internal(uVar9,param_2,param_3,lVar7);
-          if ((in_r10 & 0xffffffff) != 0) {
-            *piVar4 = (int)lVar7;
-            __restgprlr_20(1);
-            return;
-          }
-LAB_8284b9a0:
-          __restgprlr_20(1);
-          return;
-        }
-      }
-      lVar7 = lVar7 + 1;
-      piVar8 = piVar8 + 0x30;
-    } while ((int)lVar7 < iVar5);
-  }
-  iVar5 = 0x28;
-  if (0x28 < DAT_8488a99c + 0x28) {
-    piVar8 = &DAT_84889f84;
-    iVar6 = DAT_8488a99c;
-    do {
-      if ((piVar8[-0x19] == in_r8) &&
-         (cVar2 = SND_IsStreamChannelFree(iVar5), iVar6 = DAT_8488a99c, cVar2 == '\0')) {
-        if (*piVar8 == 0) {
-          MyAssertHandler(0xffffffff821ef068,0x978,0,0xffffffff82000f98,0xffffffff821f00b0);
-        }
-        if (piVar8[1] == 0) {
-          MyAssertHandler(0xffffffff821ef068,0x979,0,0xffffffff82000f98,0xffffffff821f00cc);
-        }
-        iVar6 = DAT_8488a99c;
-        if ((((((int *)*piVar8)[0xf] & 1U) != 0) && (*(int *)*piVar8 == *piVar1)) &&
-           (*(int *)piVar8[1] == *param_5)) {
-          SND_ContinueLoopingSound_Internal(uVar9,param_2,param_3,iVar5);
-          puVar3 = (undefined4 *)in_r9;
-          iVar6 = iVar5 * 0xc0;
-          *(undefined4 *)(&DAT_84888198 + iVar6) = *puVar3;
-          *(undefined4 *)(&DAT_8488819c + iVar6) = puVar3[1];
-          *(undefined4 *)(&DAT_848881a0 + iVar6) = puVar3[2];
-          if ((in_r10 & 0xffffffff) != 0) {
-            *piVar4 = iVar5;
-          }
-          __restgprlr_20(1);
-          return;
-        }
-      }
-      iVar5 = iVar5 + 1;
-      piVar8 = piVar8 + 0x30;
-    } while (iVar5 < iVar6 + 0x28);
-  }
-  __restgprlr_20(0);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 8284BA58  SND_IsNullSoundFile  (snd.cpp:2447)
 
-ulonglong SND_IsNullSoundFile(char *param_1)
+int SND_IsNullSoundFile(SoundFile *param_1)
 
 {
-  char cVar1;
-  ulonglong uVar2;
-  int iVar3;
+  uchar uVar1;
+  int iVar2;
   
-  cVar1 = *param_1;
-  if (cVar1 == '\x03') {
+  uVar1 = param_1->type;
+  if (uVar1 == '\x03') {
     return 0;
   }
-  if (cVar1 == '\x02') {
-    uVar2 = StreamFileNameIsNullSound(param_1 + 4);
-    return uVar2;
+  if (uVar1 == '\x02') {
+    iVar2 = StreamFileNameIsNullSound(&(param_1->u).streamSnd.filename);
+    return iVar2;
   }
-  if (cVar1 != '\x01') {
-    MyAssertHandler(0xffffffff821ef068,0x997,0,0xffffffff821f00e8,cVar1,1);
+  if (uVar1 != '\x01') {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x997,0,
+                    "soundFile->type == SAT_LOADED\n\t%i, %i");
   }
-  iVar3 = I_stricmp(0xffffffff8205b0bc,**(undefined4 **)(param_1 + 4));
-  return (ulonglong)(iVar3 == 0);
+  iVar2 = I_stricmp("null",((param_1->u).loadSnd)->name);
+  return (uint)LZCOUNT(iVar2) >> 5;
 }
 
 
 // 8284BB10  InRange  (snd.cpp:2464)
-
-void InRange(undefined8 param_1,int param_2,undefined8 param_3,undefined8 param_4)
-
-{
-  float *pfVar1;
-  int iVar2;
-  int iVar4;
-  char cVar6;
-  int iVar5;
-  undefined8 uVar3;
-  double extraout_f1;
-  double dVar7;
-  double dVar8;
-  double dVar9;
-  
-  iVar4 = __savegprlr_27();
-  dVar7 = extraout_f1;
-  if (*(int *)(iVar4 + 0x5c) != *(int *)(param_2 + 0x5c)) {
-    MyAssertHandler(0xffffffff821ef068,0x9a8,0,0xffffffff82000f98,0xffffffff821f01e4);
-  }
-  if (*(int *)(iVar4 + 0x5c) == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x9a9,0,0xffffffff82000f98,0xffffffff821f01c8);
-  }
-  cVar6 = SND_IsAliasChannel3D(*(int *)(iVar4 + 0x3c) >> 9 & 0x3f);
-  if ((cVar6 == '\0') && ((*(uint *)(iVar4 + 0x3c) & 0x40) == 0)) {
-    __restgprlr_27(1);
-    return;
-  }
-  dVar8 = (double)(*(float *)(iVar4 + 0x34) * (float)(1.0 - dVar7) +
-                  (float)((double)*(float *)(param_2 + 0x34) * dVar7));
-  dVar7 = (double)(*(float *)(iVar4 + 0x30) * (float)(1.0 - dVar7) +
-                  (float)((double)*(float *)(param_2 + 0x30) * dVar7));
-  iVar5 = SND_GetListenerIndexNearestToOrigin(param_4);
-  pfVar1 = (float *)param_4;
-  iVar2 = iVar5 * 0x3c;
-  dVar9 = (double)(((float)(&DAT_848869fc)[iVar5 * 0xf] - pfVar1[1]) *
-                   ((float)(&DAT_848869fc)[iVar5 * 0xf] - pfVar1[1]) +
-                  ((float)(&DAT_848869f8)[iVar5 * 0xf] - *pfVar1) *
-                  ((float)(&DAT_848869f8)[iVar5 * 0xf] - *pfVar1) +
-                  ((float)(&DAT_84886a00)[iVar5 * 0xf] - pfVar1[2]) *
-                  ((float)(&DAT_84886a00)[iVar5 * 0xf] - pfVar1[2]));
-  if (*(float *)(&DAT_84886a28 + iVar2) < 0.0) {
-    MyAssertHandler(0xffffffff821ef068,0x9b4,0,0xffffffff82000f98,0xffffffff821f0198);
-  }
-  if (((((*(uint *)(iVar4 + 0x3c) & 0x40) != 0) && (dVar9 < (double)(float)(dVar7 * dVar7))) ||
-      ((double)(float)(dVar8 * dVar8) < dVar9)) ||
-     (iVar5 = 1, *(float *)(&DAT_84886a28 + iVar2) < *(float *)(iVar4 + 0x38))) {
-    iVar5 = 0;
-  }
-  if (**(char **)(DAT_8487cfac + 0xc) != '\0') {
-    uVar3 = va((double)(float)SQRT(dVar9),dVar7,dVar8,0xffffffff821f0110,
-               **(undefined4 **)(iVar4 + 0x5c),(double)(float)SQRT(dVar9),dVar7,dVar8,
-               (double)*(float *)(&DAT_84886a28 + iVar2),(double)*(float *)(iVar4 + 0x38));
-    SND_DebugAliasPrint(iVar5 == 0,iVar4,uVar3);
-  }
-  __restgprlr_27(iVar5);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 8284BD70  SND_PlaySecondaryAlias  (snd.cpp:2498)
 
 void SND_PlaySecondaryAlias
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
+               (snd_alias_t *param_1,float param_2,float param_3,float param_4,SndEntHandle param_5,
+               float *param_6,int param_7,bool param_8,float param_9,snd_alias_system_t param_10,
+               int param_11)
 
 {
-  undefined4 *puVar1;
-  int iVar2;
-  char cVar3;
-  undefined8 extraout_f1;
-  undefined8 uVar4;
+  int iVar1;
+  snd_alias_t *psVar2;
+  bool bVar4;
+  int iVar3;
+  SndEntHandle SVar5;
+  int iVar6;
+  undefined1 uVar7;
+  double extraout_f1;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  int *in_stack_0000005c;
   int in_stack_00000064;
+  int in_stack_ffffff38;
   
-  __savegprlr_26();
-  puVar1 = (undefined4 *)__savefpr_28();
-  if (puVar1[2] != 0) {
-    uVar4 = extraout_f1;
-    iVar2 = Com_PickSoundAlias();
-    if (iVar2 == 0) {
-      Com_PrintError(9,0xffffffff821f0370,puVar1[2]);
+  dVar10 = (double)param_9;
+  dVar8 = (double)param_3;
+  dVar9 = (double)param_4;
+  uVar7 = (undefined1)param_10;
+  iVar6 = (int)param_8;
+  SVar5 = (SndEntHandle)(longlong)(int)param_6;
+  __savegprlr_26((double)param_2,param_1);
+  iVar1 = __savefpr_28();
+  iVar3 = 0;
+  if (*(char **)(iVar1 + 8) != (char *)0x0) {
+    dVar11 = extraout_f1;
+    psVar2 = Com_PickSoundAlias(*(char **)(iVar1 + 8));
+    if (psVar2 == (snd_alias_t *)0x0) {
+      Com_PrintError(9,"Error: unable to find \'%s\' alias\n");
       __restfpr_28();
       __restgprlr_26();
       return;
     }
-    if ((puVar1[0xf] & 1) == 0) {
-      if ((*(uint *)(iVar2 + 0x3c) & 1) != 0) {
-        Com_PrintError(9,0xffffffff821f0310,*puVar1,puVar1[2]);
+    if ((*(uint *)(iVar1 + 0x3c) & 1) == 0) {
+      if ((psVar2->flags & 1U) != 0) {
+        Com_PrintError(9,
+                       "Error: a non-looping alias cannot have a looping secondary alias.\nAlias sequence: \'%s\'->\'%s\'\n"
+                      );
         __restfpr_28();
         __restgprlr_26();
         return;
       }
     }
-    else if (((*(uint *)(iVar2 + 0x3c) & 1) != 0) &&
-            (cVar3 = Com_AliasNameRefersToSingleAlias(puVar1[2]), cVar3 == '\0')) {
-      Com_PrintError(9,0xffffffff821f0290,*puVar1,puVar1[2]);
+    else if (((psVar2->flags & 1U) != 0) &&
+            (bVar4 = Com_AliasNameRefersToSingleAlias(*(char **)(iVar1 + 8)), !bVar4)) {
+      Com_PrintError(9,
+                     "Error: a looping alias cannot have a looping secondary aliasName that refers to multiple aliases.\nAlias sequence: \'%s\'->\'%s\'\n"
+                    );
       __restfpr_28();
       __restgprlr_26();
       return;
     }
     if (10 < in_stack_00000064) {
-      Com_PrintError(9,0xffffffff821f0220,10,*puVar1,puVar1[2]);
+      Com_PrintError(9,
+                     "Error: exceeded max number of secondary aliases (%i).  Possible infinite loop.\nAlias sequence: \'%s\'->\'%s\'\n"
+                    );
       __restfpr_28();
       __restgprlr_26();
       return;
     }
-    SND_PlaySoundAlias_Internal(uVar4,param_2,param_3,param_4,iVar2,iVar2);
+    iVar3 = SND_PlaySoundAlias_Internal
+                      (psVar2,psVar2,(float)dVar11,(float)dVar8,(float)dVar9,SVar5,(float *)param_7,
+                       in_stack_0000005c,iVar6,(bool)uVar7,(float)dVar10,SASYS_UI,in_stack_ffffff38)
+    ;
   }
-  __restfpr_28();
+  __restfpr_28(iVar3);
   __restgprlr_26();
   return;
 }
 
 
 // 8284BF08  SND_PlaySoundAlias_Internal  (snd.cpp:2630)
-
-void SND_PlaySoundAlias_Internal
-               (undefined8 param_1,undefined8 param_2,double param_3,double param_4,
-               undefined8 param_5,ulonglong param_6)
-
-{
-  uint uVar1;
-  uint uVar3;
-  char cVar5;
-  int iVar4;
-  undefined8 uVar2;
-  undefined8 in_r8;
-  ulonglong in_r9;
-  undefined4 *puVar6;
-  ulonglong in_r10;
-  longlong lVar7;
-  double extraout_f1;
-  double dVar8;
-  double dVar9;
-  double dVar10;
-  undefined4 in_stack_00000054;
-  char in_stack_0000005f;
-  undefined4 in_stack_0000006c;
-  uint local_e0;
-  undefined4 local_dc;
-  float local_d8;
-  undefined4 local_d4;
-  undefined4 local_d0;
-  undefined4 local_cc;
-  undefined4 local_c8;
-  undefined4 local_c4;
-  undefined4 local_c0;
-  float local_bc;
-  float local_b0;
-  undefined4 local_ac;
-  undefined4 local_a8;
-  undefined4 local_a4;
-  float local_a0;
-  undefined4 local_9c;
-  byte local_98;
-  undefined1 local_97;
-  float local_94;
-  
-  __savegprlr_20();
-  uVar3 = __savefpr_27();
-  dVar10 = extraout_f1;
-  if (uVar3 == 0) {
-    MyAssertHandler(0xffffffff821ef068,0xa4b,0,0xffffffff82000f98,0xffffffff8218a210);
-  }
-  if ((param_6 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821ef068,0xa4c,0,0xffffffff82000f98,0xffffffff8218a208);
-  }
-  if ((in_r9 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821ef068,0xa4d,0,0xffffffff82000f98,0xffffffff8212a780);
-  }
-  lVar7 = -1;
-  if (DAT_8487d9c8 != '\0') {
-    if ((in_r10 & 0xffffffff) != 0) {
-      *(undefined4 *)in_r10 = 0xffffffff;
-    }
-    cVar5 = InRange(dVar10,uVar3,param_6);
-    if (cVar5 != '\0') {
-      cVar5 = SND_ContinueLoopingSound(dVar10,param_2,param_3,uVar3,param_6);
-      if (cVar5 != '\0') {
-        SND_PlaySecondaryAlias(dVar10,param_2,param_3,param_4,uVar3);
-        __restfpr_27(0);
-        __restgprlr_20();
-        return;
-      }
-      uVar1 = *(int *)(uVar3 + 0x3c) >> 9 & 0x3f;
-      cVar5 = SND_IsRestricted(uVar1);
-      if (cVar5 != '\0') {
-        SND_StopEntityChannel(in_r8,uVar1);
-      }
-      iVar4 = SND_IsNullSoundFile(*(undefined4 *)(uVar3 + 0x14));
-      if (iVar4 != 0) goto LAB_8284bfd4;
-      SND_ChoosePitchAndVolume(dVar10,param_2,uVar3,param_6);
-      local_bc = local_b0;
-      local_c0 = local_c4;
-      if (((uint)local_b0 & 0x7f800000) == 0x7f800000) {
-        MyAssertHandler(0xffffffff821ef068,0xa77,0,0xffffffff82000f98,0xffffffff821f03bc);
-      }
-      local_a4 = *(undefined4 *)(uVar3 + 0x58);
-      puVar6 = (undefined4 *)in_r9;
-      local_d0 = *puVar6;
-      local_b0 = (float)((double)local_b0 * param_3);
-      local_cc = puVar6[1];
-      local_c8 = puVar6[2];
-      local_dc = (undefined4)param_6;
-      local_d4 = (undefined4)in_r8;
-      dVar9 = 0.0;
-      local_ac = in_stack_00000054;
-      local_d8 = (float)dVar10;
-      local_a8 = 0;
-      local_e0 = uVar3;
-      dVar8 = (double)SND_GetTimescaleLerp(uVar1);
-      local_a0 = (float)(dVar8 * param_4);
-      local_9c = in_stack_0000006c;
-      local_97 = 0;
-      local_98 = 0xff;
-      if (in_stack_0000005f == '\0') {
-        local_98 = *(byte *)(uVar3 + 0x40);
-      }
-      if (local_98 < DAT_8488694c) {
-        local_94 = 1.0;
-      }
-      else {
-        local_94 = (float)dVar9;
-      }
-      uVar1 = *(int *)(uVar3 + 0x3c) >> 7 & 3;
-      if (uVar1 == 1) {
-        lVar7 = SND_StartAliasSample(&local_e0,in_r10);
-      }
-      else if (uVar1 == 2) {
-        lVar7 = SND_StartAliasStream(&local_e0,in_r10);
-      }
-      else {
-        if ((uVar1 != 3) && (DAT_84013128 == 0)) {
-          uVar2 = va(0xffffffff821f039c);
-          MyAssertHandler(0xffffffff821ef068,0xa9d,0,uVar2);
-        }
-        lVar7 = -1;
-      }
-    }
-    SND_PlaySecondaryAlias(dVar10,param_2,param_3,param_4,uVar3);
-    SND_DebugAliasPrint((lVar7 + 1) - (lVar7 + (ulonglong)(lVar7 + 1 == 0)),uVar3,0xffffffff821f0394
-                       );
-    __restfpr_27(lVar7);
-    __restgprlr_20();
-    return;
-  }
-LAB_8284bfd4:
-  __restfpr_27(0xffffffffffffffff);
-  __restgprlr_20();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure SndStartAliasInfo
 
 // 8284C2D0  SND_SetParamValue  (snd.cpp:2813)
 
-void SND_SetParamValue(undefined8 param_1,double param_2,double param_3)
+void SND_SetParamValue(snd_param_info_t *param_1,float param_2,float param_3,float param_4,
+                      int param_5)
 
 {
   float *pfVar1;
   int in_r7;
   double extraout_f1;
   double dVar2;
+  double dVar3;
+  double dVar4;
   
-  pfVar1 = (float *)__savegprlr_28();
-  dVar2 = extraout_f1;
+  dVar3 = (double)param_4;
+  dVar2 = (double)param_3;
+  pfVar1 = (float *)__savegprlr_28((double)param_2,param_1,param_5);
+  dVar4 = extraout_f1;
   if (extraout_f1 < 0.0) {
-    MyAssertHandler(0xffffffff821ef068,0xafe,0,0xffffffff82000f98,0xffffffff821f03e0);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xafe,0,"%s");
   }
   if (pfVar1 == (float *)0x0) {
-    MyAssertHandler(0xffffffff821ef068,0xaff,0,0xffffffff82000f98,0xffffffff82021a7c);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xaff,0,"%s");
   }
   if (in_r7 < 1) {
     in_r7 = 1;
   }
-  if ((float)(dVar2 - param_3) < 0.0) {
-    param_3 = dVar2;
+  if ((float)(dVar4 - dVar3) < 0.0) {
+    dVar3 = dVar4;
   }
-  if ((float)(param_2 - dVar2) < 0.0) {
-    param_2 = param_3;
+  if ((float)(dVar2 - dVar4) < 0.0) {
+    dVar2 = dVar3;
   }
-  pfVar1[1] = (float)param_2;
-  pfVar1[2] = (float)(param_2 - (double)*pfVar1) / (float)(longlong)in_r7;
+  pfVar1[1] = (float)dVar2;
+  pfVar1[2] = (float)(dVar2 - (double)*pfVar1) / (float)(longlong)in_r7;
   __restgprlr_28();
   return;
 }
@@ -3507,35 +1373,42 @@ void SND_SetParamValue(undefined8 param_1,double param_2,double param_3)
 
 // 8284C3B8  SND_ScaleParamValue  (snd.cpp:2860)
 
-void SND_ScaleParamValue(undefined8 param_1,double param_2,double param_3,double param_4)
+void SND_ScaleParamValue(snd_param_info_t *param_1,float param_2,float param_3,float param_4,
+                        int param_5,float param_6)
 
 {
   float *pfVar1;
   int in_r7;
   double dVar2;
   double extraout_f1;
+  double dVar3;
+  double dVar4;
+  double dVar5;
   
-  __savegprlr_28();
+  dVar5 = (double)param_6;
+  dVar4 = (double)param_4;
+  dVar3 = (double)param_3;
+  __savegprlr_28((double)param_2,param_1,param_5);
   pfVar1 = (float *)__savefpr_28();
   dVar2 = extraout_f1;
   if (extraout_f1 < 0.0) {
-    MyAssertHandler(0xffffffff821ef068,0xb2d,0,0xffffffff82000f98,0xffffffff821f03e0);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xb2d,0,"%s");
   }
   if (pfVar1 == (float *)0x0) {
-    MyAssertHandler(0xffffffff821ef068,0xb2e,0,0xffffffff82000f98,0xffffffff82021a7c);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xb2e,0,"%s");
   }
   if (in_r7 < 1) {
     in_r7 = 1;
   }
-  dVar2 = (double)(float)(dVar2 * param_4);
-  if ((float)(dVar2 - param_3) < 0.0) {
-    param_3 = dVar2;
+  dVar2 = (double)(float)(dVar2 * dVar5);
+  if ((float)(dVar2 - dVar4) < 0.0) {
+    dVar4 = dVar2;
   }
-  if ((float)(param_2 - dVar2) < 0.0) {
-    param_2 = param_3;
+  if ((float)(dVar3 - dVar2) < 0.0) {
+    dVar3 = dVar4;
   }
-  pfVar1[1] = (float)param_2;
-  pfVar1[2] = (float)(param_2 - (double)*pfVar1) / (float)(longlong)in_r7;
+  pfVar1[1] = (float)dVar3;
+  pfVar1[2] = (float)(dVar3 - (double)*pfVar1) / (float)(longlong)in_r7;
   __restfpr_28();
   __restgprlr_28();
   return;
@@ -3543,346 +1416,160 @@ void SND_ScaleParamValue(undefined8 param_1,double param_2,double param_3,double
 
 
 // 8284C4A0  SND_ScalePitch  (snd.cpp:2872)
-
-void SND_ScalePitch(undefined8 param_1,int param_2)
-
-{
-  SND_ScaleParamValue(param_1,0x3f50624de0000000,0x4000000000000000,
-                      (double)*(float *)(param_2 + 0x60),param_2 + 100);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 8284C4C0  SND_SetPitch  (snd.cpp:2878)
-
-void SND_SetPitch(undefined8 param_1,longlong param_2)
-
-{
-  SND_SetParamValue(param_1,0x3f50624de0000000,0x4000000000000000,param_2 + 100);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 8284C4E0  SND_ScaleVolume  (snd.cpp:2884)
-
-void SND_ScaleVolume(double param_1,int param_2)
-
-{
-  double dVar1;
-  double dVar2;
-  
-  dVar2 = 4.0;
-  if ((float)(param_1 - 4.0) < 0.0) {
-    dVar2 = param_1;
-  }
-  dVar1 = 0.0;
-  if (-param_1 < 0.0) {
-    dVar1 = dVar2;
-  }
-  SND_ScaleParamValue(dVar1,0,0x3ff0000000000000,(double)*(float *)(param_2 + 0x48),param_2 + 0x54);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 8284C518  SND_SetVolume  (snd.cpp:2895)
-
-void SND_SetVolume(undefined8 param_1,longlong param_2)
-
-{
-  SND_SetParamValue(param_1,0,0x3ff0000000000000,param_2 + 0x54);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 8284C538  SND_ChangeParameterOnEntInternal  (snd.cpp:2905)
-
-void SND_ChangeParameterOnEntInternal
-               (undefined8 param_1,undefined8 param_2,int param_3,ulonglong param_4)
-
-{
-  int iVar1;
-  undefined4 *puVar2;
-  undefined8 extraout_f1;
-  undefined8 uVar3;
-  
-  iVar1 = __savegprlr_27();
-  uVar3 = extraout_f1;
-  if (param_3 < 0) {
-    MyAssertHandler(0xffffffff821ef068,0xb5d,0,0xffffffff82000f98,0xffffffff8216001c);
-  }
-  if ((param_4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821ef068,0xb5e,0,0xffffffff82000f98,0xffffffff821f03f0);
-  }
-  puVar2 = &DAT_84888114;
-  do {
-    if (puVar2[3] == iVar1) {
-      (*(code *)param_4)(uVar3,puVar2);
-    }
-    puVar2 = puVar2 + 0x30;
-  } while ((int)puVar2 < -0x7b77566c);
-  __restgprlr_27();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 8284C610  SND_ScalePitchOnEnt  (snd.cpp:2929)
-
-void SND_ScalePitchOnEnt(void)
-
-{
-  SND_ChangeParameterOnEntInternal();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 8284C620  SND_SetPitchOnEnt  (snd.cpp:2946)
-
-void SND_SetPitchOnEnt(void)
-
-{
-  SND_ChangeParameterOnEntInternal();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 8284C630  SND_ScaleVolumeOnEnt  (snd.cpp:2963)
-
-void SND_ScaleVolumeOnEnt(void)
-
-{
-  SND_ChangeParameterOnEntInternal();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 8284C640  SND_SetVolumeOnEnt  (snd.cpp:2980)
-
-void SND_SetVolumeOnEnt(void)
-
-{
-  SND_ChangeParameterOnEntInternal();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 8284C650  SND_SetVolModValue  (snd.cpp:2997)
-
-void SND_SetVolModValue(void)
-
-{
-  ulonglong uVar1;
-  undefined8 extraout_f1;
-  undefined8 uVar2;
-  
-  uVar1 = __savegprlr_29();
-  uVar2 = extraout_f1;
-  if ((ulonglong)DAT_8488d1a0 <= (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821ef068,0xbb6,0,0xffffffff821f0408,uVar1);
-  }
-  SND_SetParamValue(uVar2,0,0x3ff0000000000000,
-                    (uVar1 + (uVar1 & 0x7fffffff) * 2 & 0x3fffffff) * 4 + -0x7b773460);
-  __restgprlr_29();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 8284C6F8  SND_StopSoundsInternal  (snd.cpp:3010)
-
-void SND_StopSoundsInternal(undefined8 param_1,ulonglong param_2,int param_3)
-
-{
-  undefined4 *puVar1;
-  int iVar2;
-  char cVar4;
-  int iVar3;
-  bool bVar5;
-  undefined8 uVar6;
-  code *pcVar7;
-  int *piVar8;
-  longlong lVar9;
-  
-  iVar2 = __savegprlr_19();
-  if (DAT_8487d9c8 != '\0') {
-    piVar8 = &DAT_84888188;
-    pcVar7 = (code *)0x0;
-    lVar9 = 0;
-    do {
-      if ((piVar8[-0x1a] == iVar2) && ((param_3 == -1 || (piVar8[-0x19] == param_3)))) {
-        iVar3 = (int)lVar9;
-        if ((iVar3 < 0) || (DAT_8488a994 <= iVar3)) {
-          if ((iVar3 < 8) || (DAT_8488a998 + 8 <= iVar3)) {
-            if ((0x27 < iVar3) && (iVar3 < DAT_8488a99c + 0x28)) {
-              cVar4 = SND_IsStreamChannelFree(lVar9);
-              if (cVar4 != '\0') goto LAB_8284c900;
-              pcVar7 = SND_StopStreamChannel;
-            }
-          }
-          else {
-            cVar4 = SND_Is3DChannelFree(lVar9);
-            if (cVar4 != '\0') goto LAB_8284c900;
-            pcVar7 = SND_Stop3DChannel;
-          }
-        }
-        else {
-          cVar4 = SND_Is2DChannelFree(lVar9);
-          if (cVar4 != '\0') goto LAB_8284c900;
-          pcVar7 = SND_Stop2DChannel;
-        }
-        if (pcVar7 == (code *)0x0) {
-          MyAssertHandler(0xffffffff821ef068,0xbeb,1,0xffffffff82000f98,0xffffffff82189d10);
-        }
-        if ((param_2 & 0xffffffff) == 0) {
-          puVar1 = (undefined4 *)piVar8[-1];
-          uVar6 = 0xffffffff821f0464;
-          bVar5 = true;
-        }
-        else {
-          if ((((undefined4 *)piVar8[-1] == (undefined4 *)0x0) ||
-              (iVar3 = I_stricmp(*(undefined4 *)piVar8[-1],param_2), iVar3 != 0)) &&
-             (((undefined4 *)*piVar8 == (undefined4 *)0x0 ||
-              (iVar3 = I_stricmp(*(undefined4 *)*piVar8,param_2), iVar3 != 0)))) goto LAB_8284c900;
-          puVar1 = (undefined4 *)piVar8[-1];
-          iVar3 = I_stricmp(*puVar1,param_2);
-          SND_DebugAliasPrint(iVar3 == 0,puVar1,0xffffffff821f0448);
-          puVar1 = (undefined4 *)*piVar8;
-          iVar3 = I_stricmp(*puVar1,param_2);
-          bVar5 = iVar3 == 0;
-          uVar6 = 0xffffffff821f0448;
-        }
-        SND_DebugAliasPrint(bVar5,puVar1,uVar6);
-        (*pcVar7)(lVar9);
-      }
-LAB_8284c900:
-      piVar8 = piVar8 + 0x30;
-      lVar9 = lVar9 + 1;
-    } while ((int)piVar8 < -0x7b7755f8);
-  }
-  __restgprlr_19();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 8284C920  SND_StopSoundAliasOnEnt  (snd.cpp:3073)
 
-void SND_StopSoundAliasOnEnt(undefined8 param_1,undefined8 param_2)
+void SND_StopSoundAliasOnEnt(SndEntHandle param_1,char *param_2)
 
 {
-  SND_StopSoundsInternal(param_1,param_2,0xffffffffffffffff);
+  SND_StopSoundsInternal(param_1,param_2,-1);
   return;
 }
 
 
 // 8284C928  SND_StopSoundChannelOnEnt  (snd.cpp:3079)
-
-void SND_StopSoundChannelOnEnt(undefined8 param_1,ulonglong param_2)
-
-{
-  undefined8 uVar1;
-  
-  uVar1 = __savegprlr_29();
-  if ((int)param_2 == -1) {
-    MyAssertHandler(0xffffffff821ef068,0xc08,0,0xffffffff82000f98,0xffffffff821f04c4);
-  }
-  if ((ulonglong)DAT_84888110 <= (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821ef068,0xc09,0,0xffffffff821f0480,param_2);
-  }
-  SND_StopSoundsInternal(uVar1,0,param_2);
-  __restgprlr_29();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 8284C9C0  SND_StopSoundsOnEnt  (snd.cpp:3087)
 
-void SND_StopSoundsOnEnt(undefined8 param_1)
+void SND_StopSoundsOnEnt(SndEntHandle param_1)
 
 {
-  SND_StopSoundsInternal(param_1,0,0xffffffffffffffff);
+  SND_StopSoundsInternal(param_1,(char *)0x0,-1);
   return;
 }
 
 
 // 8284C9D0  SND_InitFXSounds  (snd.cpp:3093)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void SND_InitFXSounds(void)
 
 {
-  DAT_8488fd60 = 0;
+  g_FXPlaySoundCount = 0;
   return;
 }
 
 
 // 8284C9E0  SND_AddPlayFXSoundAlias  (snd.cpp:3099)
 
-void SND_AddPlayFXSoundAlias(undefined4 param_1,undefined4 param_2,undefined4 *param_3)
+/* WARNING: Struct "AsyncPlaySound": ignoring overlapping field "sndEnt" */
+
+void SND_AddPlayFXSoundAlias(snd_alias_t *param_1,SndEntHandle param_2,float *param_3)
 
 {
-  int iVar1;
-  int iVar2;
-  int iVar3;
+  AsyncPlaySound *pAVar1;
+  uint uVar2;
   
-  iVar2 = DAT_8488fd60;
-  if (DAT_8488fd60 == 0x20) {
-    Com_PrintError(0x14,0xffffffff821f04e8,0x20);
+  uVar2 = g_FXPlaySoundCount;
+  if (g_FXPlaySoundCount == 0x20) {
+    Com_PrintError(0x14,"ERROR: too many FX sounds %d\n");
     return;
   }
-  iVar3 = DAT_8488fd60 * 0x14;
-  iVar1 = DAT_8488fd60 * 5;
-  DAT_8488fd60 = DAT_8488fd60 + 1;
-  (&DAT_8488f9a0)[iVar1] = param_1;
-  (&DAT_8488f9a4)[iVar2 * 5] = param_2;
-  *(undefined4 *)(&DAT_8488f9a8 + iVar3) = *param_3;
-  *(undefined4 *)(&DAT_8488f9ac + iVar3) = param_3[1];
-  *(undefined4 *)(&DAT_8488f9b0 + iVar3) = param_3[2];
+  pAVar1 = g_FXPlaySounds + g_FXPlaySoundCount;
+  g_FXPlaySoundCount = g_FXPlaySoundCount + 1;
+  (pAVar1->field0_0x0)._padding_ = (int)param_1;
+  g_FXPlaySounds[uVar2].field0_0x0.field1_0x4.origin[0] = param_2._4_4_;
+  g_FXPlaySounds[uVar2].field0_0x0.field1_0x4.origin[1] = *param_3;
+  g_FXPlaySounds[uVar2].field0_0x0.field1_0x4.origin[2] = param_3[1];
+  *(float *)&g_FXPlaySounds[uVar2].field_0x10 = param_3[2];
   return;
 }
 
 
 // 8284CA48  Snd_AssertAliasValid  (snd.cpp:3118)
-
-void Snd_AssertAliasValid(int param_1)
-
-{
-  if (param_1 == 0) {
-    MyAssertHandler(0xffffffff821ef068,0xc2f,0,0xffffffff82000f98,0xffffffff8201d9d0);
-  }
-  if (DAT_84888110 <= (*(int *)(param_1 + 0x3c) >> 9 & 0x3fU)) {
-    MyAssertHandler(0xffffffff821ef068,0xc30,0,0xffffffff821f0508);
-  }
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82856BF8  SND_PlayFXSounds  (snd.cpp:3126)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Struct "AsyncPlaySound": ignoring overlapping field "sndEnt" */
 
 void SND_PlayFXSounds(void)
 
 {
   int iVar1;
-  uint uVar2;
-  undefined *puVar3;
-  undefined8 uVar4;
-  undefined8 uVar5;
+  snd_alias_t *psVar2;
+  SndEntHandle in_r5;
+  undefined8 in_r6;
+  undefined8 uVar3;
+  uint uVar4;
+  int iVar5;
+  double dVar6;
+  double dVar7;
+  int in_stack_ffffff28;
   
   __savegprlr_22();
-  uVar2 = 0;
-  if (DAT_8488fd60 != 0) {
-    uVar5 = 0x3ff0000000000000;
-    puVar3 = &DAT_8488f9a8;
-    uVar4 = 0;
+  uVar4 = 0;
+  if (g_FXPlaySoundCount != 0) {
+    uVar3 = 0xffffffff82000000;
+    dVar7 = 1.0;
+    iVar5 = -0x7b770658;
+    dVar6 = 0.0;
     do {
-      iVar1 = *(int *)(puVar3 + -8);
-      if (puVar3 == (undefined *)0x0) {
-        MyAssertHandler(0xffffffff821ef068,0xc46,0,0xffffffff82000f98,0xffffffff8212a780);
+      iVar1 = *(int *)(iVar5 + -4);
+      psVar2 = *(snd_alias_t **)(iVar5 + -8);
+      if (iVar5 == 0) {
+        in_r5 = (SndEntHandle)0x0;
+        in_r6 = 0xffffffff82000f98;
+        uVar3 = 0xffffffff8212a780;
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xc46,0,"%s");
       }
-      if (iVar1 != 0) {
-        SND_PlaySoundAlias_Internal(uVar4,uVar5,uVar5,uVar5,iVar1,iVar1);
+      if (psVar2 != (snd_alias_t *)0x0) {
+        SND_PlaySoundAlias_Internal
+                  (psVar2,psVar2,(float)dVar6,(float)dVar7,(float)dVar7,in_r5,(float *)in_r6,
+                   (int *)uVar3,iVar1,SUB41(iVar5,0),(float)dVar7,SASYS_UI,in_stack_ffffff28);
       }
-      uVar2 = uVar2 + 1;
-      puVar3 = puVar3 + 0x14;
-    } while (uVar2 < DAT_8488fd60);
+      uVar4 = uVar4 + 1;
+      iVar5 = iVar5 + 0x14;
+    } while (uVar4 < g_FXPlaySoundCount);
   }
-  DAT_8488fd60 = 0;
+  g_FXPlaySoundCount = 0;
   __restgprlr_22();
   return;
 }
@@ -3890,1269 +1577,627 @@ void SND_PlayFXSounds(void)
 
 // 8284CAE8  SND_PlaySoundAlias  (snd.cpp:3141)
 
-void SND_PlaySoundAlias(undefined8 param_1,undefined8 param_2,int param_3)
+int SND_PlaySoundAlias(snd_alias_t *param_1,SndEntHandle param_2,float *param_3,int param_4,
+                      snd_alias_system_t param_5)
 
 {
-  ulonglong uVar1;
+  snd_alias_t *psVar1;
+  int iVar2;
+  SndEntHandle SVar3;
+  SndEntHandle SVar4;
+  char *pcVar5;
+  int in_stack_ffffff58;
   
-  uVar1 = __savegprlr_27();
-  if (param_3 == 0) {
-    MyAssertHandler(0xffffffff821ef068,0xc46);
+  iVar2 = param_2._4_4_;
+  SVar3 = (SndEntHandle)(longlong)(int)param_3;
+  pcVar5 = (char *)param_4;
+  psVar1 = (snd_alias_t *)__savegprlr_27(param_1);
+  SVar4 = SVar3;
+  if (((ulonglong)SVar3 & 0xffffffff) == 0) {
+    pcVar5 = "%s";
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xc46,SVar3._4_4_,"%s"
+                   );
   }
-  if ((uVar1 & 0xffffffff) == 0) {
-    __restgprlr_27(0xffffffffffffffff);
-    return;
+  if (psVar1 == (snd_alias_t *)0x0) {
+    iVar2 = __restgprlr_27(0xffffffffffffffff);
+    return iVar2;
   }
-  SND_PlaySoundAlias_Internal(0,0x3ff0000000000000,0x3ff0000000000000,uVar1,uVar1);
-  __restgprlr_27();
-  return;
+  iVar2 = SND_PlaySoundAlias_Internal
+                    (psVar1,psVar1,0.0,1.0,1.0,SVar4,(float *)pcVar5,
+                     (int *)&IMAGE_DOS_HEADER_82000000,iVar2,SVar3._7_1_,1.0,SASYS_UI,
+                     in_stack_ffffff58);
+  iVar2 = __restgprlr_27(iVar2);
+  return iVar2;
 }
 
 
 // 8284CB90  SND_PlayScaledSoundAlias  (snd.cpp:3151)
 
-void SND_PlayScaledSoundAlias(undefined8 param_1,undefined8 param_2)
+int SND_PlayScaledSoundAlias
+              (snd_alias_t *param_1,float param_2,float param_3,SndEntHandle param_4,float *param_5,
+              int param_6,snd_alias_system_t param_7)
 
 {
-  ulonglong uVar1;
-  ulonglong in_r7;
-  undefined8 extraout_f1;
-  undefined8 uVar2;
+  snd_alias_t *psVar1;
+  int iVar2;
+  SndEntHandle SVar3;
+  char *pcVar4;
+  ulonglong uVar5;
+  double extraout_f1;
+  double dVar6;
+  double dVar7;
+  int in_stack_ffffff48;
   
-  uVar1 = __savegprlr_27();
-  uVar2 = extraout_f1;
-  if ((in_r7 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821ef068,0xc50,0,0xffffffff82000f98,0xffffffff8212a780);
+  dVar6 = (double)param_3;
+  uVar5 = (ulonglong)(int)param_7;
+  SVar3 = (SndEntHandle)(longlong)(int)param_5;
+  psVar1 = (snd_alias_t *)__savegprlr_27((double)param_2,param_1);
+  dVar7 = extraout_f1;
+  pcVar4 = (char *)param_6;
+  if ((uVar5 & 0xffffffff) == 0) {
+    pcVar4 = "%s";
+    SVar3 = (SndEntHandle)0x0;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xc50,0,"%s");
   }
-  if ((uVar1 & 0xffffffff) == 0) {
-    __restgprlr_27(0xffffffffffffffff);
-    return;
+  if (psVar1 == (snd_alias_t *)0x0) {
+    iVar2 = __restgprlr_27(0xffffffffffffffff);
+    return iVar2;
   }
-  SND_PlaySoundAlias_Internal(0,uVar2,param_2,0x3ff0000000000000,uVar1,uVar1);
-  __restgprlr_27();
-  return;
+  iVar2 = SND_PlaySoundAlias_Internal
+                    (psVar1,psVar1,0.0,(float)dVar7,(float)dVar6,SVar3,(float *)pcVar4,
+                     (int *)&IMAGE_DOS_HEADER_82000000,param_6,SUB81(uVar5,0),1.0,SASYS_UI,
+                     in_stack_ffffff48);
+  iVar2 = __restgprlr_27(iVar2);
+  return iVar2;
 }
 
 
 // 8284CC60  SND_PlaySoundAliasWithPitch  (snd.cpp:3161)
 
-void SND_PlaySoundAliasWithPitch(void)
+int SND_PlaySoundAliasWithPitch
+              (snd_alias_t *param_1,float param_2,SndEntHandle param_3,float *param_4,int param_5,
+              snd_alias_system_t param_6)
 
 {
-  ulonglong uVar1;
-  ulonglong in_r6;
-  undefined8 extraout_f1;
-  undefined8 uVar2;
+  snd_alias_t *psVar1;
+  int iVar2;
+  SndEntHandle SVar3;
+  SndEntHandle SVar4;
+  ulonglong uVar5;
+  char *pcVar6;
+  double extraout_f1;
+  double dVar7;
+  int in_stack_ffffff58;
   
-  uVar1 = __savegprlr_27();
-  uVar2 = extraout_f1;
-  if ((in_r6 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821ef068,0xc5a,0,0xffffffff82000f98,0xffffffff8212a780);
+  uVar5 = (ulonglong)param_5;
+  SVar3 = (SndEntHandle)(longlong)(int)param_4;
+  psVar1 = (snd_alias_t *)__savegprlr_27((double)param_2,param_1);
+  pcVar6 = (char *)uVar5;
+  SVar4 = SVar3;
+  dVar7 = extraout_f1;
+  if ((uVar5 & 0xffffffff) == 0) {
+    pcVar6 = "%s";
+    SVar4 = (SndEntHandle)0x0;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xc5a,0,"%s");
   }
-  if ((uVar1 & 0xffffffff) == 0) {
-    __restgprlr_27(0xffffffffffffffff);
-    return;
+  if (psVar1 == (snd_alias_t *)0x0) {
+    iVar2 = __restgprlr_27(0xffffffffffffffff);
+    return iVar2;
   }
-  SND_PlaySoundAlias_Internal(0,0x3ff0000000000000,uVar2,uVar1,uVar1);
-  __restgprlr_27();
-  return;
+  iVar2 = SND_PlaySoundAlias_Internal
+                    (psVar1,psVar1,0.0,1.0,(float)dVar7,SVar4,(float *)pcVar6,
+                     (int *)&IMAGE_DOS_HEADER_82000000,SVar3._4_4_,SUB81(uVar5,0),1.0,SASYS_UI,
+                     in_stack_ffffff58);
+  iVar2 = __restgprlr_27(iVar2);
+  return iVar2;
 }
 
 
 // 8284CD20  SND_PlaySoundAliasAsMaster  (snd.cpp:3171)
 
-void SND_PlaySoundAliasAsMaster(undefined8 param_1,undefined8 param_2,int param_3)
+int SND_PlaySoundAliasAsMaster
+              (snd_alias_t *param_1,SndEntHandle param_2,float *param_3,int param_4,
+              snd_alias_system_t param_5)
 
 {
-  ulonglong uVar1;
+  snd_alias_t *psVar1;
+  int iVar2;
+  SndEntHandle SVar3;
+  SndEntHandle SVar4;
+  int in_stack_ffffff58;
   
-  uVar1 = __savegprlr_27();
-  if (param_3 == 0) {
-    MyAssertHandler(0xffffffff821ef068,0xc64);
+  iVar2 = param_2._4_4_;
+  SVar3 = (SndEntHandle)(longlong)(int)param_3;
+  psVar1 = (snd_alias_t *)__savegprlr_27(param_1);
+  SVar4 = SVar3;
+  if (((ulonglong)SVar3 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xc64,SVar3._4_4_,"%s"
+                   );
   }
-  if ((uVar1 & 0xffffffff) == 0) {
-    __restgprlr_27(0xffffffffffffffff);
-    return;
+  if (psVar1 == (snd_alias_t *)0x0) {
+    iVar2 = __restgprlr_27(0xffffffffffffffff);
+    return iVar2;
   }
-  SND_PlaySoundAlias_Internal(0,0x3ff0000000000000,0x3ff0000000000000,uVar1,uVar1);
-  __restgprlr_27();
-  return;
+  iVar2 = SND_PlaySoundAlias_Internal
+                    (psVar1,psVar1,0.0,1.0,1.0,SVar4,(float *)0x1,(int *)0x0,iVar2,SVar3._7_1_,1.0,
+                     SASYS_UI,in_stack_ffffff58);
+  iVar2 = __restgprlr_27(iVar2);
+  return iVar2;
 }
 
 
 // 8284CDD0  SND_ValidateSoundAliasBlend  (snd.cpp:3181)
 
-void SND_ValidateSoundAliasBlend(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+bool SND_ValidateSoundAliasBlend(snd_alias_t *param_1,snd_alias_t *param_2,bool param_3)
 
 {
   uint uVar1;
   uint uVar2;
-  undefined4 *puVar3;
-  undefined4 *puVar4;
+  int iVar3;
+  int iVar4;
   uint uVar5;
   ulonglong uVar6;
-  undefined8 uVar7;
+  undefined1 uVar7;
+  ulonglong uVar8;
+  char *pcVar9;
+  ulonglong uVar10;
   
-  uVar6 = __savegprlr_27();
+  uVar10 = (ulonglong)param_3;
+  uVar8 = (ulonglong)(int)param_2;
+  uVar6 = __savegprlr_27(param_1);
   if ((uVar6 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821ef068,0xc6e,0,0xffffffff82000f98,0xffffffff8218a210);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xc6e,0,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821ef068,0xc6f,0,0xffffffff82000f98,0xffffffff8218a208);
+  if ((uVar8 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xc6f,0,"%s");
   }
-  if ((uVar6 & 0xffffffff) == (param_2 & 0xffffffff)) goto LAB_8284ce48;
-  puVar3 = (undefined4 *)uVar6;
-  puVar4 = (undefined4 *)param_2;
-  if (puVar3[5] == puVar4[5]) {
-    if ((float)puVar3[0xe] == (float)puVar4[0xe]) {
-      if (puVar3[0x17] == puVar4[0x17]) {
-        if (puVar3[0x1b] == puVar4[0x1b]) {
-          uVar1 = puVar3[0xf];
-          uVar2 = puVar4[0xf];
+  if ((uVar6 & 0xffffffff) == (uVar8 & 0xffffffff)) goto LAB_8284ce48;
+  iVar3 = (int)uVar6;
+  iVar4 = (int)uVar8;
+  if (*(int *)(iVar3 + 0x14) == *(int *)(iVar4 + 0x14)) {
+    if (*(float *)(iVar3 + 0x38) == *(float *)(iVar4 + 0x38)) {
+      if (*(int *)(iVar3 + 0x5c) == *(int *)(iVar4 + 0x5c)) {
+        if (*(int *)(iVar3 + 0x6c) == *(int *)(iVar4 + 0x6c)) {
+          uVar1 = *(uint *)(iVar3 + 0x3c);
+          uVar2 = *(uint *)(iVar4 + 0x3c);
           uVar5 = uVar1 & 1;
           if (uVar5 == (uVar2 & 1)) {
             if (((uVar2 ^ uVar1) & 0x180) == 0) {
               if (((uVar2 ^ uVar1) & 0x7e00) == 0) {
                 if (((uVar2 ^ uVar1) & 8) == 0) {
                   if (((uVar2 ^ uVar1) & 0x10) == 0) {
-                    if (*(char *)(puVar3 + 0x10) == *(char *)(puVar4 + 0x10)) {
-                      if ((float)puVar3[0x11] == (float)puVar4[0x11]) {
-                        if ((float)puVar3[0x12] == (float)puVar4[0x12]) {
-                          if (puVar3[0x16] == puVar4[0x16]) {
+                    if (*(char *)(iVar3 + 0x40) == *(char *)(iVar4 + 0x40)) {
+                      if (*(float *)(iVar3 + 0x44) == *(float *)(iVar4 + 0x44)) {
+                        if (*(float *)(iVar3 + 0x48) == *(float *)(iVar4 + 0x48)) {
+                          if (*(int *)(iVar3 + 0x58) == *(int *)(iVar4 + 0x58)) {
                             if (uVar5 == 0) {
 LAB_8284d0e4:
-                              if ((puVar3[2] == 0) && (puVar4[2] == 0)) {
+                              if ((*(int *)(iVar3 + 8) == 0) && (*(int *)(iVar4 + 8) == 0)) {
 LAB_8284ce48:
-                                __restgprlr_27(1);
-                                return;
+                                uVar7 = __restgprlr_27(1);
+                                return (bool)uVar7;
                               }
-                              if ((param_3 & 0xff) == 0) goto LAB_8284d120;
-                              uVar7 = 0xffffffff821f0570;
+                              if ((uVar10 & 0xff) == 0) goto LAB_8284d120;
+                              pcVar9 = 
+                              "\x15tried to blend between sound aliases \'%s\' and \'%s\', but one or both has a secondary alias.\n"
+                              ;
                             }
-                            else if (((float)puVar3[10] == (float)puVar3[0xb]) &&
-                                    ((float)puVar4[10] == (float)puVar4[0xb])) {
+                            else if ((*(float *)(iVar3 + 0x28) == *(float *)(iVar3 + 0x2c)) &&
+                                    (*(float *)(iVar4 + 0x28) == *(float *)(iVar4 + 0x2c))) {
                               if ((uVar5 == 0) ||
-                                 (((float)puVar3[7] == (float)puVar3[8] &&
-                                  ((float)puVar4[7] == (float)puVar4[8])))) goto LAB_8284d0e4;
-                              if ((param_3 & 0xff) == 0) goto LAB_8284d120;
-                              uVar7 = 0xffffffff821f05d0;
+                                 ((*(float *)(iVar3 + 0x1c) == *(float *)(iVar3 + 0x20) &&
+                                  (*(float *)(iVar4 + 0x1c) == *(float *)(iVar4 + 0x20)))))
+                              goto LAB_8284d0e4;
+                              if ((uVar10 & 0xff) == 0) goto LAB_8284d120;
+                              pcVar9 = 
+                              "\x15tried to blend between sound aliases \'%s\' and \'%s\', but they are looping and at least one of them has a random volume\n"
+                              ;
                             }
                             else {
-                              if ((param_3 & 0xff) == 0) goto LAB_8284d120;
-                              uVar7 = 0xffffffff821f0648;
+                              if ((uVar10 & 0xff) == 0) goto LAB_8284d120;
+                              pcVar9 = 
+                              "\x15tried to blend between sound aliases \'%s\' and \'%s\', but they are looping and at least one of them has a random pitch\n"
+                              ;
                             }
                           }
                           else {
-                            if ((param_3 & 0xff) == 0) goto LAB_8284d120;
-                            uVar7 = 0xffffffff821f06c0;
+                            if ((uVar10 & 0xff) == 0) goto LAB_8284d120;
+                            pcVar9 = 
+                            "\x15tried to blend between sound aliases \'%s\' and \'%s\', but they do not have the same start delay.\n"
+                            ;
                           }
                         }
                         else {
-                          if ((param_3 & 0xff) == 0) goto LAB_8284d120;
-                          uVar7 = 0xffffffff821f0728;
+                          if ((uVar10 & 0xff) == 0) goto LAB_8284d120;
+                          pcVar9 = 
+                          "\x15tried to blend between sound aliases \'%s\' and \'%s\', but they do not have the same slave percentages.\n"
+                          ;
                         }
                       }
                       else {
-                        if ((param_3 & 0xff) == 0) goto LAB_8284d120;
-                        uVar7 = 0xffffffff821f0790;
+                        if ((uVar10 & 0xff) == 0) goto LAB_8284d120;
+                        pcVar9 = 
+                        "\x15tried to blend between sound aliases \'%s\' and \'%s\', but they do not have the same master percentages.\n"
+                        ;
                       }
                     }
                     else {
-                      if ((param_3 & 0xff) == 0) goto LAB_8284d120;
-                      uVar7 = 0xffffffff821f07f8;
+                      if ((uVar10 & 0xff) == 0) goto LAB_8284d120;
+                      pcVar9 = 
+                      "\x15tried to blend between sound aliases \'%s\' and \'%s\', but they do not have the same master priority\n"
+                      ;
                     }
                   }
                   else {
-                    if ((param_3 & 0xff) == 0) goto LAB_8284d120;
-                    uVar7 = 0xffffffff821f0860;
+                    if ((uVar10 & 0xff) == 0) goto LAB_8284d120;
+                    pcVar9 = 
+                    "\x15tried to blend between sound aliases \'%s\' and \'%s\', but they don\'t use the same nowetlevel setting\n"
+                    ;
                   }
                 }
                 else {
-                  if ((param_3 & 0xff) == 0) goto LAB_8284d120;
-                  uVar7 = 0xffffffff821f08c8;
+                  if ((uVar10 & 0xff) == 0) goto LAB_8284d120;
+                  pcVar9 = 
+                  "\x15tried to blend between sound aliases \'%s\' and \'%s\', but they don\'t use the same fulldrylevel setting\n"
+                  ;
                 }
               }
               else {
-                if ((param_3 & 0xff) == 0) goto LAB_8284d120;
-                uVar7 = 0xffffffff821f0930;
+                if ((uVar10 & 0xff) == 0) goto LAB_8284d120;
+                pcVar9 = 
+                "\x15tried to blend between sound aliases \'%s\' and \'%s\', but they don\'t use the same channel\n"
+                ;
               }
             }
             else {
-              if ((param_3 & 0xff) == 0) goto LAB_8284d120;
-              uVar7 = 0xffffffff821f0990;
+              if ((uVar10 & 0xff) == 0) goto LAB_8284d120;
+              pcVar9 = 
+              "\x15tried to blend between sound aliases \'%s\' and \'%s\', but they are not both loaded or both streamed\n"
+              ;
             }
           }
           else {
-            if ((param_3 & 0xff) == 0) goto LAB_8284d120;
-            uVar7 = 0xffffffff821f09f8;
+            if ((uVar10 & 0xff) == 0) goto LAB_8284d120;
+            pcVar9 = 
+            "\x15tried to blend between sound aliases \'%s\' and \'%s\', but they do not have the same looping status\n"
+            ;
           }
         }
         else {
-          if ((param_3 & 0xff) == 0) goto LAB_8284d120;
-          uVar7 = 0xffffffff821f0a60;
+          if ((uVar10 & 0xff) == 0) goto LAB_8284d120;
+          pcVar9 = 
+          "\x15tried to blend between sound aliases \'%s\' and \'%s\', but they do not have the same speaker map\n"
+          ;
         }
       }
       else {
-        if ((param_3 & 0xff) == 0) goto LAB_8284d120;
-        uVar7 = 0xffffffff821f0ac0;
+        if ((uVar10 & 0xff) == 0) goto LAB_8284d120;
+        pcVar9 = 
+        "\x15tried to blend between sound aliases \'%s\' and \'%s\', but they do not have the same volume falloff curve\n"
+        ;
       }
     }
     else {
-      if ((param_3 & 0xff) == 0) goto LAB_8284d120;
-      uVar7 = 0xffffffff821f0b30;
+      if ((uVar10 & 0xff) == 0) goto LAB_8284d120;
+      pcVar9 = 
+      "\x15tried to blend between sound aliases \'%s\' and \'%s\', but they do not have the same velocity min.\n"
+      ;
     }
   }
   else {
-    if ((param_3 & 0xff) == 0) goto LAB_8284d120;
-    uVar7 = 0xffffffff821f0b98;
+    if ((uVar10 & 0xff) == 0) goto LAB_8284d120;
+    pcVar9 = 
+    "\x15tried to blend between sound aliases \'%s\' and \'%s\', but they don\'t use the same sound file\n"
+    ;
   }
-  Com_Error(1,uVar7,*puVar3,*puVar4);
+  Com_Error(ERR_DROP,pcVar9);
 LAB_8284d120:
-  __restgprlr_27(0);
-  return;
+  uVar7 = __restgprlr_27(0);
+  return (bool)uVar7;
 }
 
 
 // 8284D130  SND_PlayBlendedSoundAliases  (snd.cpp:3307)
 
-void SND_PlayBlendedSoundAliases
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,ulonglong param_4)
+int SND_PlayBlendedSoundAliases
+              (snd_alias_t *param_1,snd_alias_t *param_2,float param_3,float param_4,
+              SndEntHandle param_5,float *param_6,int param_7,snd_alias_system_t param_8)
 
 {
-  ulonglong uVar1;
-  ulonglong in_r8;
-  undefined8 extraout_f1;
-  undefined8 uVar2;
+  snd_alias_t *psVar1;
+  int iVar2;
+  ulonglong uVar3;
+  SndEntHandle SVar4;
+  char *pcVar5;
+  ulonglong uVar6;
+  double extraout_f1;
+  double dVar7;
+  double dVar8;
+  int in_stack_ffffff48;
   
-  uVar1 = __savegprlr_26();
-  uVar2 = extraout_f1;
-  if ((in_r8 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821ef068,0xcec,0,0xffffffff82000f98,0xffffffff8212a780);
+  dVar7 = (double)param_4;
+  uVar6 = (ulonglong)(int)param_8;
+  uVar3 = (ulonglong)(int)param_2;
+  pcVar5 = (char *)param_6;
+  psVar1 = (snd_alias_t *)__savegprlr_26((double)param_3,param_1);
+  dVar8 = extraout_f1;
+  if ((uVar6 & 0xffffffff) == 0) {
+    pcVar5 = "%s";
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xcec,0,"%s");
   }
-  if (((uVar1 & 0xffffffff) != 0) && ((param_4 & 0xffffffff) != 0)) {
-    SND_ValidateSoundAliasBlend(uVar1,param_4,1);
-    SND_PlaySoundAlias_Internal(uVar2,param_2,0x3ff0000000000000,uVar1,param_4);
-    __restgprlr_26();
-    return;
+  if ((psVar1 != (snd_alias_t *)0x0) && ((uVar3 & 0xffffffff) != 0)) {
+    SVar4 = (SndEntHandle)0x1;
+    SND_ValidateSoundAliasBlend(psVar1,(snd_alias_t *)uVar3,true);
+    iVar2 = SND_PlaySoundAlias_Internal
+                      (psVar1,(snd_alias_t *)uVar3,(float)dVar8,(float)dVar7,1.0,SVar4,
+                       (float *)pcVar5,(int *)&IMAGE_DOS_HEADER_82000000,param_7,SUB81(uVar6,0),1.0,
+                       SASYS_UI,in_stack_ffffff48);
+    iVar2 = __restgprlr_26(iVar2);
+    return iVar2;
   }
-  __restgprlr_26(0xffffffffffffffff);
-  return;
+  iVar2 = __restgprlr_26(0xffffffffffffffff);
+  return iVar2;
 }
 
 
 // 8284D218  SND_PlayBlendedSoundAliasesWithPitch  (snd.cpp:3318)
 
-void SND_PlayBlendedSoundAliasesWithPitch
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-               ulonglong param_5)
+int SND_PlayBlendedSoundAliasesWithPitch
+              (snd_alias_t *param_1,snd_alias_t *param_2,float param_3,float param_4,float param_5,
+              SndEntHandle param_6,float *param_7,int param_8,snd_alias_system_t param_9)
 
 {
-  ulonglong uVar1;
+  snd_alias_t *psVar1;
+  int iVar2;
+  ulonglong uVar3;
+  SndEntHandle SVar4;
   ulonglong in_r9;
-  undefined8 extraout_f1;
-  undefined8 uVar2;
+  double extraout_f1;
+  double dVar5;
+  double dVar6;
+  double dVar7;
+  float *in_stack_00000054;
+  int in_stack_ffffff48;
   
-  uVar1 = __savegprlr_27();
-  uVar2 = extraout_f1;
+  dVar6 = (double)param_5;
+  dVar5 = (double)param_4;
+  uVar3 = (ulonglong)(int)param_2;
+  psVar1 = (snd_alias_t *)__savegprlr_27((double)param_3,param_1,uVar3,param_6,param_7,param_8);
+  dVar7 = extraout_f1;
   if ((in_r9 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821ef068,0xcf7,0,0xffffffff82000f98,0xffffffff8212a780);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xcf7,0,"%s");
   }
-  if (((uVar1 & 0xffffffff) != 0) && ((param_5 & 0xffffffff) != 0)) {
-    SND_ValidateSoundAliasBlend(uVar1,param_5,1);
-    SND_PlaySoundAlias_Internal(uVar2,param_2,param_3,0x3ff0000000000000,uVar1,param_5);
-    __restgprlr_27();
-    return;
+  if ((psVar1 != (snd_alias_t *)0x0) && ((uVar3 & 0xffffffff) != 0)) {
+    SVar4 = (SndEntHandle)0x1;
+    SND_ValidateSoundAliasBlend(psVar1,(snd_alias_t *)uVar3,true);
+    iVar2 = SND_PlaySoundAlias_Internal
+                      (psVar1,(snd_alias_t *)uVar3,(float)dVar7,(float)dVar5,(float)dVar6,SVar4,
+                       in_stack_00000054,(int *)&IMAGE_DOS_HEADER_82000000,param_9,SUB81(in_r9,0),
+                       1.0,SASYS_UI,in_stack_ffffff48);
+    iVar2 = __restgprlr_27(iVar2);
+    return iVar2;
   }
-  __restgprlr_27(0xffffffffffffffff);
-  return;
+  iVar2 = __restgprlr_27(0xffffffffffffffff);
+  return iVar2;
 }
 
 
 // 8284D310  SND_PlayLocalSoundAlias  (snd.cpp:3329)
-
-void SND_PlayLocalSoundAlias(undefined8 param_1,undefined8 param_2,ulonglong param_3)
-
-{
-  ulonglong uVar1;
-  
-  uVar1 = __savegprlr_28();
-  if (2 < (param_3 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821ef068,0xd2b,0,0xffffffff821f0c48,param_3,3);
-  }
-  if (3 < (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821ef068,0xd2c,0,0xffffffff821f0bf8,uVar1,4);
-  }
-  SND_PlaySoundAlias_Internal(0,0x3ff0000000000000,0x3ff0000000000000,param_2,param_2);
-  __restgprlr_28();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 8284D3E8  SND_PlayLocalSoundAliasFromList  (snd.cpp:3391)
 
-undefined8 SND_PlayLocalSoundAliasFromList(undefined8 param_1,ulonglong param_2,undefined8 param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+int SND_PlayLocalSoundAliasFromList
+              (LocalClientNum_t param_1,snd_alias_list_t *param_2,snd_alias_system_t param_3)
 
 {
-  ulonglong uVar1;
-  undefined8 uVar2;
+  snd_alias_t *psVar1;
+  int iVar2;
   
-  if (((param_2 & 0xffffffff) == 0) ||
-     (uVar1 = Com_PickSoundAliasFromList(param_2), (uVar1 & 0xffffffff) == 0)) {
-    uVar2 = 0xffffffffffffffff;
+  if ((param_2 == (snd_alias_list_t *)0x0) ||
+     (psVar1 = Com_PickSoundAliasFromList(param_2), psVar1 == (snd_alias_t *)0x0)) {
+    iVar2 = -1;
   }
   else {
-    uVar2 = SND_PlayLocalSoundAlias(param_1,uVar1,param_3);
+    iVar2 = SND_PlayLocalSoundAlias(param_1,psVar1,param_3);
   }
-  return uVar2;
+  return iVar2;
 }
 
 
 // 8284D450  SND_PlayLocalSoundAliasByName  (snd.cpp:3405)
 
-undefined8 SND_PlayLocalSoundAliasByName(undefined8 param_1,ulonglong param_2,undefined8 param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+int SND_PlayLocalSoundAliasByName(LocalClientNum_t param_1,char *param_2,snd_alias_system_t param_3)
 
 {
-  ulonglong uVar1;
-  undefined8 uVar2;
+  snd_alias_t *psVar1;
+  int iVar2;
   
-  if (((param_2 & 0xffffffff) == 0) ||
-     (uVar1 = Com_PickSoundAlias(param_2), (uVar1 & 0xffffffff) == 0)) {
-    uVar2 = 0xffffffffffffffff;
+  if ((param_2 == (char *)0x0) ||
+     (psVar1 = Com_PickSoundAlias(param_2), psVar1 == (snd_alias_t *)0x0)) {
+    iVar2 = -1;
   }
   else {
-    uVar2 = SND_PlayLocalSoundAlias(param_1,uVar1,param_3);
+    iVar2 = SND_PlayLocalSoundAlias(param_1,psVar1,param_3);
   }
-  return uVar2;
+  return iVar2;
 }
 
 
 // 8284D4B8  SND_SetPauseSettings  (snd.cpp:3419)
-
-void SND_SetPauseSettings(undefined4 *param_1)
-
-{
-  if (param_1 == (undefined4 *)0x0) {
-    MyAssertHandler(0xffffffff821ef068,0xd5e,0,0xffffffff82000f98,0xffffffff821f0c7c);
-    DAT_84888008 = uRam00000000;
-    DAT_8488800c = uRam00000004;
-    return;
-  }
-  DAT_84888008 = *param_1;
-  DAT_8488800c = param_1[1];
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 8284D570  SND_SetTimeScaleLerp  (snd.cpp:3430)
-
-void SND_SetTimeScaleLerp(double param_1,uint param_2)
-
-{
-  if (0x3f < param_2) {
-    MyAssertHandler(0xffffffff821ef068,0xd67,0,0xffffffff82188c28,param_2,0x40);
-  }
-  if ((param_1 < 0.0) || (1.0 < param_1)) {
-    MyAssertHandler(0xffffffff821ef068,0xd68,0,0xffffffff82000f98,0xffffffff821f0c8c);
-  }
-  (&DAT_84888010)[param_2] = (float)param_1;
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 8284D638  SND_ResetTimeScaleDefaults  (snd.cpp:3439)
-
-void SND_ResetTimeScaleDefaults(void)
-
-{
-  undefined4 *puVar1;
-  longlong lVar2;
-  
-  puVar1 = &DAT_8488800c;
-  lVar2 = 0x40;
-  do {
-    puVar1 = puVar1 + 1;
-    *puVar1 = 0x3f800000;
-    lVar2 = lVar2 + -1;
-  } while (lVar2 != 0);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 8284D660  SND_ResetPauseDefaults  (snd.cpp:3448)
-
-void SND_ResetPauseDefaults(void)
-
-{
-  int iVar1;
-  char *pcVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
-  
-  __savegprlr_26();
-  uVar4 = 0;
-  uVar3 = 1;
-  pcVar2 = &DAT_84886b4e;
-  DAT_84888008 = 0xffffffff;
-  DAT_8488800c = 0xffffffff;
-  do {
-    if (*pcVar2 == '\0') {
-      if (0x3f < (uVar4 & 0xffffffff)) {
-        MyAssertHandler(0xffffffff82003098,0x1a,0,0xffffffff82003058,uVar4,0x40);
-      }
-      iVar1 = (int)uVar4 >> 5;
-      (&DAT_84888008)[iVar1] = (&DAT_84888008)[iVar1] & ~(uint)uVar3;
-    }
-    pcVar2 = pcVar2 + 0x54;
-    uVar4 = uVar4 + 1;
-    uVar3 = (uVar3 & 0x7fffffff) << 1 | uVar3 >> 0x1f;
-  } while ((int)pcVar2 < -0x7b777fb2);
-  __restgprlr_26();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 8284D718  SND_PauseSounds  (snd.cpp:3462)
-
-void SND_PauseSounds(void)
-
-{
-  uint uVar1;
-  uint uVar2;
-  char cVar3;
-  int *piVar4;
-  longlong lVar5;
-  
-  __savegprlr_22();
-  if ((DAT_8487d9c8 != '\0') && (DAT_8487d9ca == '\0')) {
-    lVar5 = 0;
-    if (0 < DAT_8488a994) {
-      piVar4 = &DAT_84888184;
-      do {
-        cVar3 = SND_Is2DChannelFree(lVar5);
-        if ((cVar3 == '\0') &&
-           (cVar3 = SND_IsPausable(*(int *)(*piVar4 + 0x3c) >> 9 & 0x3f), cVar3 != '\0')) {
-          SND_Pause2DChannel(lVar5);
-        }
-        lVar5 = lVar5 + 1;
-        piVar4 = piVar4 + 0x30;
-      } while ((int)lVar5 < DAT_8488a994);
-    }
-    lVar5 = 8;
-    if (8 < DAT_8488a998 + 8) {
-      piVar4 = &DAT_84888784;
-      do {
-        cVar3 = SND_Is3DChannelFree(lVar5);
-        if ((cVar3 == '\0') &&
-           (cVar3 = SND_IsPausable(*(int *)(*piVar4 + 0x3c) >> 9 & 0x3f), cVar3 != '\0')) {
-          SND_Pause3DChannel(lVar5);
-        }
-        lVar5 = lVar5 + 1;
-        piVar4 = piVar4 + 0x30;
-      } while ((int)lVar5 < DAT_8488a998 + 8);
-    }
-    lVar5 = 0x28;
-    if (0x28 < DAT_8488a99c + 0x28) {
-      piVar4 = &DAT_84889f84;
-      do {
-        cVar3 = SND_IsStreamChannelFree(lVar5);
-        if (cVar3 == '\0') {
-          uVar1 = *(int *)(*piVar4 + 0x3c) >> 9;
-          uVar2 = uVar1 & 0x3f;
-          if (DAT_84888110 <= (int)uVar2) {
-            MyAssertHandler(0xffffffff821ef068,0x29a,0,0xffffffff8218a1b4,0xffffffff8218a1cc,uVar2);
-          }
-          if (0x3f < uVar2) {
-            MyAssertHandler(0xffffffff82003098,0xc,0,0xffffffff82003058,uVar2,0x40);
-          }
-          if ((1 << (uVar1 & 0x1f) & (&DAT_84888008)[(int)uVar2 >> 5]) != 0) {
-            SND_PauseStreamChannel(lVar5);
-          }
-        }
-        lVar5 = lVar5 + 1;
-        piVar4 = piVar4 + 0x30;
-      } while ((int)lVar5 < DAT_8488a99c + 0x28);
-    }
-    DAT_8487d9ca = '\x01';
-    DAT_8487d9dc = DAT_84886ae8;
-  }
-  __restgprlr_22();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 8284D980  SND_UnpauseSounds  (snd.cpp:3495)
-
-void SND_UnpauseSounds(void)
-
-{
-  char cVar1;
-  longlong lVar2;
-  char *pcVar3;
-  longlong lVar4;
-  
-  __savegprlr_28();
-  if ((DAT_8487d9c8 != '\0') && (DAT_8487d9ca != '\0')) {
-    lVar4 = 0;
-    lVar2 = (ulonglong)DAT_84886ae8 - (ulonglong)DAT_8487d9dc;
-    if (0 < DAT_8488a994) {
-      pcVar3 = &DAT_848881b0;
-      do {
-        cVar1 = SND_Is2DChannelFree(lVar4);
-        if ((cVar1 == '\0') && (*pcVar3 != '\0')) {
-          SND_Unpause2DChannel(lVar4,lVar2);
-        }
-        lVar4 = lVar4 + 1;
-        pcVar3 = pcVar3 + 0xc0;
-      } while ((int)lVar4 < DAT_8488a994);
-    }
-    lVar4 = 8;
-    if (8 < DAT_8488a998 + 8) {
-      pcVar3 = &DAT_848887b0;
-      do {
-        cVar1 = SND_Is3DChannelFree(lVar4);
-        if ((cVar1 == '\0') && (*pcVar3 != '\0')) {
-          SND_Unpause3DChannel(lVar4,lVar2);
-        }
-        lVar4 = lVar4 + 1;
-        pcVar3 = pcVar3 + 0xc0;
-      } while ((int)lVar4 < DAT_8488a998 + 8);
-    }
-    lVar4 = 0x28;
-    if (0x28 < DAT_8488a99c + 0x28) {
-      pcVar3 = &DAT_84889fb0;
-      do {
-        cVar1 = SND_IsStreamChannelFree(lVar4);
-        if ((cVar1 == '\0') && (*pcVar3 != '\0')) {
-          SND_UnpauseStreamChannel(lVar4,lVar2);
-        }
-        lVar4 = lVar4 + 1;
-        pcVar3 = pcVar3 + 0xc0;
-      } while ((int)lVar4 < DAT_8488a99c + 0x28);
-    }
-    DAT_8487d9ca = '\0';
-    DAT_8487d9dc = 0;
-  }
-  __restgprlr_28();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82856CF0  SND_StartBackground  (snd.cpp:3531)
-
-void SND_StartBackground(undefined8 param_1,double param_2,undefined8 param_3,ulonglong param_4,
-                        ulonglong param_5,undefined8 param_6,undefined8 param_7,undefined8 param_8,
-                        undefined4 param_9)
-
-{
-  undefined4 *puVar1;
-  int iVar2;
-  int iVar3;
-  float fVar4;
-  uint uVar5;
-  int iVar6;
-  char cVar7;
-  float *pfVar8;
-  ulonglong uVar9;
-  int iVar10;
-  longlong lVar11;
-  double extraout_f1;
-  double dVar12;
-  double dVar13;
-  double dVar14;
-  double dVar15;
-  double dVar16;
-  double dVar17;
-  double dVar18;
-  undefined4 *local_160;
-  undefined4 *local_15c;
-  float local_158;
-  undefined4 local_154;
-  undefined4 local_150;
-  undefined4 local_14c;
-  undefined4 local_148;
-  float local_144;
-  float local_140;
-  float local_13c;
-  float local_138;
-  float local_134;
-  float local_130;
-  undefined4 local_12c;
-  float local_128;
-  undefined4 local_124;
-  float local_120;
-  undefined4 local_11c;
-  byte local_118;
-  undefined1 local_117;
-  float local_114;
-  undefined1 auStack_110 [272];
-  
-  __savegprlr_21();
-  iVar6 = __savefpr_26();
-  dVar13 = extraout_f1;
-  if (((int)param_4 < 0) || (5 < (int)param_4)) {
-    MyAssertHandler(0xffffffff821ef068,0xdd3,0,0xffffffff821f0cd0,0xffffffff821f0ce4,param_4);
-  }
-  dVar17 = 0.0;
-  dVar15 = 1.0;
-  if ((param_2 < 0.0) || (1.0 < param_2)) {
-    MyAssertHandler(param_2,0xffffffff821ef068,0xdd4,0,0xffffffff821753e0,0xffffffff821f2624,param_2
-                   );
-  }
-  if ((param_5 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821ef068,0xdd5,0,0xffffffff82000f98,0xffffffff8201d9d0);
-  }
-  if (dVar13 < dVar17) {
-    MyAssertHandler(dVar13,0xffffffff821ef068,0xdd6,0,0xffffffff821f25ec,0xffffffff821f2608,dVar13);
-  }
-  iVar10 = (int)param_7;
-  if (iVar10 < 0) {
-    MyAssertHandler(0xffffffff821ef068,0xdd7,0,0xffffffff821f0cac,0xffffffff821f0cc0,param_7);
-  }
-  puVar1 = (undefined4 *)param_5;
-  uVar5 = (int)puVar1[0xf] >> 9 & 0x3f;
-  cVar7 = SND_IsAliasChannel3D(uVar5);
-  if (cVar7 != '\0') {
-    Com_GetSoundFileName(param_5,auStack_110,0x80);
-    Com_Error(1,0xffffffff821f2578,*puVar1,auStack_110);
-  }
-  if ((puVar1[0xf] & 0x180) != 0x100) {
-    Com_GetSoundFileName(param_5,auStack_110,0x80);
-    Com_Error(1,0xffffffff821f2518,*puVar1,auStack_110);
-  }
-  dVar18 = (double)(float)puVar1[7];
-  dVar12 = (double)random();
-  dVar16 = (double)(float)puVar1[10];
-  dVar18 = (double)(float)(dVar12 * (double)(float)((double)(float)puVar1[8] - dVar18) + dVar18);
-  dVar12 = (double)random();
-  uVar9 = param_4 + 0x28;
-  dVar12 = (double)(float)(dVar12 * (double)(float)((double)(float)puVar1[0xb] - dVar16) + dVar16);
-  if (((int)uVar9 < 0x28) || (DAT_8488a99c + 0x28 <= (int)uVar9)) {
-    MyAssertHandler(0xffffffff821ef068,0xde9,0,0xffffffff82038868,0xffffffff821f24c0,uVar9);
-  }
-  cVar7 = SND_IsStreamChannelFree(uVar9);
-  if (cVar7 == '\0') {
-    SND_StopStreamChannel(uVar9);
-  }
-  lVar11 = (uVar9 + (uVar9 & 0x7fffffff) * 2 & 0x3ffffff) * 0x40;
-  iVar2 = (int)lVar11;
-  *(float *)(&DAT_84888174 + iVar2) = (float)dVar12;
-  if (((uint)(float)dVar12 & 0x7f800000) == 0x7f800000) {
-    MyAssertHandler(0xffffffff821ef068,0xdef,0,0xffffffff82000f98,0xffffffff82194564);
-  }
-  SND_InitParameter(dVar12,lVar11 + -0x7b777e88);
-  dVar16 = (double)(float)(dVar18 * dVar13);
-  *(float *)(&DAT_8488815c + iVar2) = (float)dVar18;
-  dVar13 = dVar15;
-  if ((float)(dVar16 - dVar15) < 0.0) {
-    dVar13 = dVar16;
-  }
-  dVar14 = dVar17;
-  if (-dVar16 < 0.0) {
-    dVar14 = dVar13;
-  }
-  *(float *)((int)&DAT_8488816c + iVar2) = (float)dVar14;
-  iVar3 = (int)((param_4 & 0x1fffffff) << 3);
-  *(float *)(&DAT_84886914 + iVar3) = (float)dVar14;
-  SND_InitParameter(dVar17,lVar11 + -0x7b777e4c);
-  pfVar8 = (float *)((int)&DAT_84888168 + iVar2);
-  if (iVar10 < 1) {
-    *pfVar8 = *(float *)((int)&DAT_8488816c + iVar2);
-    *(float *)(&DAT_84886918 + iVar3) = (float)dVar17;
-    *(float *)(&DAT_84888170 + iVar2) = (float)dVar17;
-  }
-  else {
-    fVar4 = *(float *)((int)&DAT_8488816c + iVar2) / (float)(longlong)iVar10;
-    *(float *)(&DAT_84888170 + iVar2) = fVar4;
-    *(float *)(&DAT_84886918 + iVar3) = fVar4;
-    *pfVar8 = (float)dVar17;
-  }
-  local_144 = *pfVar8;
-  dVar13 = (double)local_144;
-  local_158 = (float)dVar17;
-  local_154 = 0xffff;
-  local_150 = (&DAT_848869f8)[iVar6 * 0xf];
-  local_14c = (&DAT_848869fc)[iVar6 * 0xf];
-  local_148 = (&DAT_84886a00)[iVar6 * 0xf];
-  local_160 = puVar1;
-  local_15c = puVar1;
-  if ((dVar13 < dVar17) || (dVar15 < dVar13)) {
-    MyAssertHandler(0xffffffff821ef068,0xe16,0,0xffffffff821f2454,0xffffffff821f2478,dVar13);
-  }
-  local_124 = puVar1[0x16];
-  local_140 = (float)dVar18;
-  local_13c = (float)dVar12;
-  local_12c = 0;
-  local_138 = (float)dVar18;
-  local_134 = (float)dVar15;
-  local_130 = (float)dVar12;
-  local_128 = (float)param_2;
-  dVar13 = (double)SND_GetTimescaleLerp(uVar5);
-  local_118 = *(byte *)(puVar1 + 0x10);
-  local_120 = (float)dVar13;
-  local_117 = 0;
-  if (DAT_8488694c <= local_118) {
-    dVar15 = dVar17;
-  }
-  local_114 = (float)dVar15;
-  local_11c = param_9;
-  if (*(char *)(DAT_8488fd6c + 0xc) != '\0') {
-    lVar11 = SND_StartAliasStreamOnChannel(&local_160,uVar9);
-    SND_DebugAliasPrint((lVar11 + 1) - (lVar11 + (ulonglong)(lVar11 + 1 == 0)),param_5,
-                        0xffffffff821f0394);
-  }
-  __restfpr_26();
-  __restgprlr_21();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure SndStartAliasInfo
 
 // 8284DB20  SND_StopBackground  (snd.cpp:3637)
-
-void SND_StopBackground(undefined8 param_1,undefined8 param_2)
-
-{
-  float fVar1;
-  int iVar2;
-  char cVar3;
-  int iVar4;
-  
-  iVar2 = __savegprlr_29();
-  if ((iVar2 < 0) || (5 < iVar2)) {
-    MyAssertHandler(0xffffffff821ef068,0xe36,0,0xffffffff821f0cd0,0xffffffff821f0ce4,iVar2);
-  }
-  iVar4 = (int)param_2;
-  if (iVar4 < 0) {
-    MyAssertHandler(0xffffffff821ef068,0xe37,0,0xffffffff821f0cac,0xffffffff821f0cc0,param_2);
-  }
-  cVar3 = SND_IsStreamChannelFree(iVar2 + 0x28);
-  if (cVar3 == '\0') {
-    if (iVar4 == 0) {
-      SND_StopStreamChannel(iVar2 + 0x28);
-      __restgprlr_29();
-      return;
-    }
-    iVar2 = iVar2 * 8;
-    fVar1 = *(float *)(&DAT_84886914 + iVar2);
-    if (0.0 < fVar1) {
-      *(undefined4 *)(&DAT_84886914 + iVar2) = 0;
-      *(float *)(&DAT_84886918 + iVar2) = -(fVar1 / (float)(longlong)iVar4);
-    }
-  }
-  __restgprlr_29();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 8284DC28  SND_GetMusicTrack  (snd.cpp:3657)
 
-bool SND_GetMusicTrack(ulonglong param_1)
+int SND_GetMusicTrack(int param_1)
 
 {
-  if (1 < (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821ef068,0xe4c,0,0xffffffff821f0d0c,param_1,2);
+  if (1 < (uint)param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xe4c,0,
+                    "number doesn\'t index SND_NUM_MUSIC_TRACKS\n\t%i not in [0, %i)");
   }
-  return param_1 != 0;
+  return (uint)(param_1 != 0);
 }
 
 
 // 8284DC88  SND_GetAmbientTrack  (snd.cpp:3669)
 
-char SND_GetAmbientTrack(ulonglong param_1)
+int SND_GetAmbientTrack(int param_1)
 
 {
-  if (1 < (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821ef068,0xe58,0,0xffffffff821f0d4c,param_1,2);
+  if (1 < (uint)param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xe58,0,
+                    "number doesn\'t index SND_NUM_AMBIENT_TRACKS\n\t%i not in [0, %i)");
   }
-  return (-(param_1 != 0) & 2U) + 2;
+  return (-(uint)(param_1 != 0) & 2) + 2;
 }
 
 
 // 8284DCF0  SND_SetBackgroundTrackVolumeScale  (snd.cpp:3681)
-
-void SND_SetBackgroundTrackVolumeScale(undefined8 param_1,undefined8 param_2,undefined8 param_3)
-
-{
-  int iVar1;
-  char cVar2;
-  int iVar3;
-  int iVar4;
-  int iVar5;
-  float *pfVar6;
-  int iVar7;
-  double dVar8;
-  double extraout_f1;
-  double dVar9;
-  double dVar10;
-  double dVar11;
-  double dVar12;
-  double dVar13;
-  
-  iVar1 = __savegprlr_25();
-  dVar11 = extraout_f1;
-  if ((((iVar1 != 2) && (iVar1 != 4)) && (iVar1 != 0)) && (iVar1 != 1)) {
-    MyAssertHandler(0xffffffff821ef068,0xe6a,0,0xffffffff821f0cd0,0xffffffff821f0de0,iVar1);
-  }
-  dVar12 = 0.0;
-  if (dVar11 < 0.0) {
-    MyAssertHandler(dVar11,0xffffffff821ef068,0xe6b,0,0xffffffff821f0db0,0xffffffff821f0dc8,dVar11);
-  }
-  iVar5 = (int)param_3;
-  if (iVar5 < 0) {
-    MyAssertHandler(0xffffffff821ef068,0xe6c,0,0xffffffff821f0d8c,0xffffffff821f0da0,param_3);
-  }
-  iVar3 = 1;
-  if ((iVar1 == 2) || (iVar1 == 4)) {
-    iVar3 = 2;
-  }
-  iVar4 = 0;
-  if (iVar3 != 0) {
-    pfVar6 = (float *)(&DAT_84886918 + iVar1 * 8);
-    dVar13 = 1.0;
-    do {
-      iVar7 = iVar1 + 0x28 + iVar4;
-      cVar2 = SND_IsStreamChannelFree(iVar7);
-      if (cVar2 == '\0') {
-        dVar10 = (double)(float)((double)*(float *)(&DAT_8488815c + iVar7 * 0xc0) * dVar11);
-        dVar9 = dVar13;
-        if ((float)(dVar10 - dVar13) < 0.0) {
-          dVar9 = dVar10;
-        }
-        dVar8 = dVar12;
-        if (-dVar10 < 0.0) {
-          dVar8 = dVar9;
-        }
-        if (iVar5 == 0) {
-          *pfVar6 = (float)dVar12;
-        }
-        else {
-          *pfVar6 = (float)(dVar8 - (double)(float)(&DAT_84888168)[iVar7 * 0x30]) /
-                    (float)(longlong)iVar5;
-        }
-        pfVar6[-1] = (float)dVar8;
-      }
-      iVar4 = iVar4 + 1;
-      pfVar6 = pfVar6 + 2;
-    } while (iVar4 < iVar3);
-  }
-  __restgprlr_25();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 8284DEB8  SND_GetNumFreeMusicTracks  (snd.cpp:3724)
 
-void SND_GetNumFreeMusicTracks(void)
+int SND_GetNumFreeMusicTracks(int *param_1)
 
 {
-  int *piVar1;
-  char cVar2;
-  longlong lVar3;
-  ulonglong uVar4;
+  uint *puVar1;
+  bool bVar3;
+  int iVar2;
+  longlong lVar4;
+  ulonglong uVar5;
   
-  piVar1 = (int *)__savegprlr_26();
-  *piVar1 = -1;
-  lVar3 = 0;
-  uVar4 = 0;
+  puVar1 = (uint *)__savegprlr_26(param_1);
+  *puVar1 = 0xffffffff;
+  lVar4 = 0;
+  uVar5 = 0;
   do {
-    if (1 < (uVar4 & 0xffffffff)) {
-      MyAssertHandler(0xffffffff821ef068,0xe4c,0,0xffffffff821f0d0c,uVar4,2);
+    if (1 < (uVar5 & 0xffffffff)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xe4c,0,
+                      "number doesn\'t index SND_NUM_MUSIC_TRACKS\n\t%i not in [0, %i)");
     }
-    cVar2 = SND_IsStreamChannelFree(-(ulonglong)(uVar4 == 0) + 0x29);
-    if (cVar2 != '\0') {
-      *piVar1 = (int)-(ulonglong)(uVar4 == 0) + 1;
-      lVar3 = lVar3 + 1;
+    bVar3 = SND_IsStreamChannelFree((uVar5 != 0) + 0x28);
+    if (bVar3) {
+      *puVar1 = (uint)(uVar5 != 0);
+      lVar4 = lVar4 + 1;
     }
-    uVar4 = uVar4 + 1;
-  } while ((int)uVar4 < 2);
-  __restgprlr_26(lVar3);
-  return;
+    uVar5 = uVar5 + 1;
+  } while ((int)uVar5 < 2);
+  iVar2 = __restgprlr_26(lVar4);
+  return iVar2;
 }
 
 
 // 8284DF48  SND_GetNumFreeAmbientTracks  (snd.cpp:3748)
 
-void SND_GetNumFreeAmbientTracks(void)
+int SND_GetNumFreeAmbientTracks(int *param_1)
 
 {
   uint uVar1;
   int *piVar2;
-  char cVar3;
-  longlong lVar4;
-  ulonglong uVar5;
+  bool bVar4;
+  int iVar3;
+  longlong lVar5;
+  ulonglong uVar6;
   
-  piVar2 = (int *)__savegprlr_26();
+  piVar2 = (int *)__savegprlr_26(param_1);
   *piVar2 = -1;
-  lVar4 = 0;
-  uVar5 = 0;
+  lVar5 = 0;
+  uVar6 = 0;
   do {
-    if (1 < (uVar5 & 0xffffffff)) {
-      MyAssertHandler(0xffffffff821ef068,0xe58,0,0xffffffff821f0d4c,uVar5,2);
+    if (1 < (uVar6 & 0xffffffff)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xe58,0,
+                      "number doesn\'t index SND_NUM_AMBIENT_TRACKS\n\t%i not in [0, %i)");
     }
-    uVar1 = -(uint)(uVar5 != 0) & 2;
-    cVar3 = SND_IsStreamChannelFree(uVar1 + 0x2a);
-    if (cVar3 != '\0') {
+    uVar1 = -(uint)(uVar6 != 0) & 2;
+    bVar4 = SND_IsStreamChannelFree(uVar1 + 0x2a);
+    if (bVar4) {
       *piVar2 = uVar1 + 2;
-      lVar4 = lVar4 + 1;
+      lVar5 = lVar5 + 1;
     }
-    uVar5 = uVar5 + 1;
-  } while ((int)uVar5 < 2);
-  __restgprlr_26(lVar4);
-  return;
+    uVar6 = uVar6 + 1;
+  } while ((int)uVar6 < 2);
+  iVar3 = __restgprlr_26(lVar5);
+  return iVar3;
 }
 
 
 // 8284DFE0  SND_IsAliasPlayingOnTrack  (snd.cpp:3772)
-
-void SND_IsAliasPlayingOnTrack(undefined8 param_1,longlong param_2)
-
-{
-  ulonglong uVar1;
-  char cVar4;
-  int iVar3;
-  undefined8 uVar2;
-  ulonglong uVar5;
-  
-  uVar1 = __savegprlr_29();
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821ef068,0xec0,0,0xffffffff82000f98,0xffffffff821f0e6c);
-  }
-  iVar3 = (int)param_2;
-  if ((((iVar3 != 2) && (iVar3 != 4)) && (iVar3 != 0)) && (iVar3 != 1)) {
-    MyAssertHandler(0xffffffff821ef068,0xec1,0,0xffffffff821f0cd0,0xffffffff821f0de0,param_2);
-  }
-  uVar5 = param_2 + 0x28;
-  cVar4 = SND_IsStreamChannelFree(uVar5);
-  if (cVar4 == '\0') {
-    iVar3 = I_strcmp(**(undefined4 **)
-                       ((int)&DAT_84888184 +
-                       (int)((uVar5 + (uVar5 & 0x7fffffff) * 2 & 0xffffffff) << 6)),uVar1);
-    uVar2 = 1;
-    if (iVar3 == 0) goto LAB_8284e0c0;
-  }
-  uVar2 = 0;
-LAB_8284e0c0:
-  __restgprlr_29(uVar2);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82857198  SND_PlayMusicAlias  (snd.cpp:3796)
-
-void SND_PlayMusicAlias(undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4,
-                       longlong param_5)
-
-{
-  undefined8 uVar1;
-  int iVar3;
-  undefined8 uVar2;
-  char cVar4;
-  uint uVar5;
-  double extraout_f1;
-  undefined8 uVar6;
-  double dVar7;
-  uint local_70 [28];
-  
-  uVar1 = __savegprlr_22();
-  if ((DAT_8487d9c8 == '\0') || ((param_2 & 0xffffffff) == 0)) goto LAB_82857458;
-  uVar6 = 0;
-  dVar7 = extraout_f1;
-  if (extraout_f1 < 0.0) {
-    MyAssertHandler(0xffffffff821ef068,0xede,0,0xffffffff821f0db0,0xffffffff821f0dc8,extraout_f1);
-  }
-  if ((int)param_4 < 0) {
-    MyAssertHandler(0xffffffff821ef068,0xedf,0,0xffffffff821f0d8c,0xffffffff821f0da0,param_4);
-  }
-  if ((DAT_84886948 != 0) && (DAT_84886948 != 1)) {
-    MyAssertHandler(0xffffffff821ef068,0xee0,0,0xffffffff82000f98,0xffffffff821f2648);
-  }
-  local_70[0] = 0xffffffff;
-  iVar3 = SND_GetNumFreeMusicTracks(local_70);
-  uVar5 = local_70[0];
-  if (iVar3 == 2) {
-    if ((int)param_5 != 0) {
-LAB_82857350:
-      if (local_70[0] == 0xffffffff) {
-        MyAssertHandler(0xffffffff821ef068,0xf06,0,0xffffffff82000f98,0xffffffff8207902c);
-      }
-      SND_StopBackground(DAT_84886948,param_4);
-    }
-LAB_8285740c:
-    if (uVar5 == 0xffffffff) {
-      MyAssertHandler(0xffffffff821ef068,0xf17,0,0xffffffff82000f98,0xffffffff8207902c);
-    }
-  }
-  else {
-    if ((int)param_5 == 0) {
-      do {
-        uVar2 = SND_GetMusicTrack(param_5);
-        cVar4 = SND_IsAliasPlayingOnTrack(*(undefined4 *)param_2,uVar2);
-        if (cVar4 != '\0') {
-          SND_GetMusicTrack(param_5);
-          SND_SetBackgroundTrackVolumeScale(dVar7);
-          __restgprlr_22();
-          return;
-        }
-        param_5 = param_5 + 1;
-      } while ((int)param_5 < 2);
-      uVar5 = local_70[0];
-      if (iVar3 == 0) {
-        uVar5 = (uint)(DAT_84886948 == 0);
-        cVar4 = SND_IsStreamChannelFree(uVar5 + 0x28);
-        if (cVar4 == '\0') {
-          SND_StopStreamChannel(uVar5 + 0x28);
-        }
-      }
-      goto LAB_8285740c;
-    }
-    if (iVar3 != 0) goto LAB_82857350;
-    if (DAT_84886948 == 0) {
-      cVar4 = SND_IsStreamChannelFree(0x29);
-      if (cVar4 == '\0') {
-        SND_StopStreamChannel(0x29);
-      }
-      SND_StopBackground(0,param_4);
-      uVar5 = 1;
-    }
-    else {
-      cVar4 = SND_IsStreamChannelFree(0x28);
-      if (cVar4 == '\0') {
-        SND_StopStreamChannel(0x28);
-      }
-      SND_StopBackground(1,param_4);
-      uVar5 = 0;
-    }
-  }
-  DAT_84886948 = uVar5;
-  SND_StartBackground(dVar7,uVar6,uVar1,DAT_84886948,param_2);
-LAB_82857458:
-  __restgprlr_22();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82857468  SND_PlayAmbientAlias  (snd.cpp:3872)
-
-void SND_PlayAmbientAlias
-               (undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4,
-               int param_5)
-
-{
-  float fVar1;
-  float fVar2;
-  undefined4 *puVar3;
-  int iVar4;
-  bool bVar5;
-  undefined8 uVar6;
-  int iVar7;
-  char cVar8;
-  undefined4 *puVar9;
-  int iVar10;
-  float *pfVar11;
-  undefined4 **ppuVar12;
-  ulonglong uVar13;
-  int iVar15;
-  longlong lVar14;
-  undefined8 extraout_f1;
-  double dVar16;
-  double dVar17;
-  double dVar18;
-  undefined8 uVar19;
-  double dVar20;
-  uint local_a0 [2];
-  undefined4 *local_98;
-  undefined4 local_94;
-  longlong local_90;
-  
-  __savegprlr_21();
-  uVar6 = __savefpr_28();
-  if ((DAT_8487d9c8 == '\0') || ((param_2 & 0xffffffff) == 0)) goto LAB_828578cc;
-  iVar10 = (int)param_4;
-  uVar19 = extraout_f1;
-  if (iVar10 < 0) {
-    MyAssertHandler(0xffffffff821ef068,0xf32,0,0xffffffff821f0d8c,0xffffffff821f0da0,param_4);
-  }
-  if ((DAT_84886944 != 2) && (DAT_84886944 != 4)) {
-    MyAssertHandler(0xffffffff821ef068,0xf33,0,0xffffffff82000f98,0xffffffff821f26a0);
-  }
-  local_a0[0] = 0xffffffff;
-  iVar7 = SND_GetNumFreeAmbientTracks(local_a0);
-  puVar9 = (undefined4 *)param_2;
-  if (iVar7 != 2) {
-    uVar13 = 0;
-    do {
-      if (1 < (uVar13 & 0xffffffff)) {
-        MyAssertHandler(0xffffffff821ef068,0xe58,0,0xffffffff821f0d4c,uVar13,2);
-      }
-      cVar8 = SND_IsAliasPlayingOnTrack(*puVar9,(-(uVar13 != 0) & 2U) + 2);
-      if (cVar8 != '\0') {
-        SND_GetAmbientTrack(uVar13);
-        SND_SetBackgroundTrackVolumeScale(uVar19);
-        __restfpr_28();
-        __restgprlr_21();
-        return;
-      }
-      uVar13 = uVar13 + 1;
-    } while ((int)uVar13 < 2);
-  }
-  if (puVar9[2] == 0) {
-    local_94 = 0;
-  }
-  else {
-    local_94 = Com_PickSoundAlias();
-  }
-  dVar20 = 0.0;
-  dVar16 = dVar20;
-  local_98 = puVar9;
-  if ((puVar9[0xf] & 0x20) != 0) {
-    dVar16 = (double)random();
-  }
-  if (param_5 == 0) {
-    if (iVar7 != 0) goto LAB_82857848;
-    uVar13 = 4;
-    if (DAT_84886944 != 2) {
-      uVar13 = 2;
-    }
-    cVar8 = SND_IsStreamChannelFree(uVar13 + 0x28);
-    if (cVar8 == '\0') {
-      SND_StopStreamChannel(uVar13 + 0x28);
-    }
-LAB_8285784c:
-    if ((int)uVar13 == -1) {
-      MyAssertHandler(0xffffffff821ef068,0xf9c,0,0xffffffff82000f98,0xffffffff8207902c);
-    }
-  }
-  else {
-    if (iVar7 != 0) {
-      iVar7 = 0;
-      ppuVar12 = &local_98;
-      do {
-        iVar15 = DAT_84886944 + iVar7 + 0x28;
-        cVar8 = SND_IsStreamChannelFree(iVar15);
-        if (cVar8 == '\0') {
-          iVar4 = (&DAT_84888184)[iVar15 * 0x30];
-          if (*(int *)(iVar4 + 0x14) == puVar9[5]) {
-            if ((((((*(uint *)(iVar4 + 0x3c) ^ puVar9[0xf]) & 1) != 0) ||
-                 (*(float *)(iVar4 + 0x28) != (float)puVar9[10])) ||
-                (*(float *)(iVar4 + 0x2c) != (float)puVar9[0xb])) ||
-               (bVar5 = true, ((*(uint *)(iVar4 + 0x3c) ^ puVar9[0xf]) & 0x7e00) != 0))
-            goto LAB_82857788;
-          }
-          else {
-LAB_82857788:
-            bVar5 = false;
-          }
-          if (bVar5) {
-            puVar3 = *ppuVar12;
-            (&DAT_84888184)[iVar15 * 0x30] = puVar3;
-            (&DAT_84888188)[iVar15 * 0x30] = puVar3;
-            dVar18 = (double)(float)puVar3[7];
-            dVar17 = (double)random();
-            iVar15 = (DAT_84886944 + iVar7) * 8;
-            fVar1 = (float)(dVar17 * (double)(float)((double)(float)puVar3[8] - dVar18) + dVar18);
-            pfVar11 = (float *)(&DAT_84886914 + iVar15);
-            if (iVar10 == 0) {
-              *(float *)(&DAT_84886918 + iVar15) = (float)dVar20;
-              *pfVar11 = fVar1;
-            }
-            else {
-              local_90 = (longlong)iVar10;
-              fVar2 = *pfVar11;
-              *pfVar11 = fVar1;
-              *(float *)(&DAT_84886918 + iVar15) = (fVar1 - fVar2) / (float)local_90;
-            }
-          }
-          else {
-            SND_StopBackground(DAT_84886944 + iVar7,param_4);
-          }
-        }
-        iVar7 = iVar7 + 1;
-        ppuVar12 = ppuVar12 + 1;
-      } while (iVar7 < 2);
-LAB_82857848:
-      uVar13 = (ulonglong)local_a0[0];
-      goto LAB_8285784c;
-    }
-    if (DAT_84886944 == 2) {
-      cVar8 = SND_IsStreamChannelFree(0x2c);
-      if (cVar8 == '\0') {
-        SND_StopStreamChannel(0x2c);
-      }
-      cVar8 = SND_IsStreamChannelFree(0x2d);
-      if (cVar8 == '\0') {
-        SND_StopStreamChannel(0x2d);
-      }
-      SND_StopBackground(2,param_4);
-      SND_StopBackground(3,param_4);
-      uVar13 = 4;
-    }
-    else {
-      cVar8 = SND_IsStreamChannelFree(0x2a);
-      if (cVar8 == '\0') {
-        SND_StopStreamChannel(0x2a);
-      }
-      cVar8 = SND_IsStreamChannelFree(0x2b);
-      if (cVar8 == '\0') {
-        SND_StopStreamChannel(0x2b);
-      }
-      SND_StopBackground(4,param_4);
-      SND_StopBackground(5,param_4);
-      uVar13 = 2;
-    }
-  }
-  lVar14 = 0;
-  ppuVar12 = &local_98;
-  DAT_84886944 = (uint)uVar13;
-  do {
-    if (*ppuVar12 != (undefined4 *)0x0) {
-      SND_StartBackground(uVar19,dVar16,uVar6,uVar13 + lVar14);
-      uVar13 = (ulonglong)DAT_84886944;
-    }
-    lVar14 = lVar14 + 1;
-    ppuVar12 = ppuVar12 + 1;
-  } while ((int)lVar14 < 2);
-LAB_828578cc:
-  __restfpr_28();
-  __restgprlr_21();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 8284E0C8  SND_StopMusic  (snd.cpp:4011)
-
-void SND_StopMusic(undefined8 param_1)
-
-{
-  if (DAT_8487d9c8 != '\0') {
-    SND_StopBackground(0,param_1);
-    SND_StopBackground(1,param_1);
-  }
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 8284E118  SND_StopMusicAlias  (snd.cpp:4021)
 
-void SND_StopMusicAlias(undefined8 param_1,undefined8 param_2)
+void SND_StopMusicAlias(char *param_1,int param_2)
 
 {
-  ulonglong uVar1;
-  char cVar2;
+  char *pcVar1;
+  bool bVar2;
   ulonglong uVar3;
   
-  uVar1 = __savegprlr_27();
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821ef068,0xfb6,0,0xffffffff82000f98,0xffffffff821f0e6c);
+  pcVar1 = (char *)__savegprlr_27(param_1);
+  if (pcVar1 == (char *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xfb6,0,"%s");
   }
-  if ((int)param_2 < 0) {
-    MyAssertHandler(0xffffffff821ef068,0xfb7,0,0xffffffff821f0d8c,0xffffffff821f0da0,param_2);
+  if (param_2 < 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xfb7,0,
+                    "%s\n\t(fadeTime) = %i");
   }
   uVar3 = 0;
   while( true ) {
     if (1 < (uVar3 & 0xffffffff)) {
-      MyAssertHandler(0xffffffff821ef068,0xe4c,0,0xffffffff821f0d0c,uVar3,2);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xe4c,0,
+                      "number doesn\'t index SND_NUM_MUSIC_TRACKS\n\t%i not in [0, %i)");
     }
-    cVar2 = SND_IsAliasPlayingOnTrack(uVar1,uVar3 != 0);
-    if (cVar2 != '\0') break;
+    bVar2 = SND_IsAliasPlayingOnTrack(pcVar1,(uint)(uVar3 != 0));
+    if (bVar2) break;
     uVar3 = uVar3 + 1;
     if (1 < (int)uVar3) {
       __restgprlr_27();
@@ -5160,55 +2205,44 @@ void SND_StopMusicAlias(undefined8 param_1,undefined8 param_2)
     }
   }
   if (1 < (uVar3 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821ef068,0xe4c,0,0xffffffff821f0d0c,uVar3,2);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xe4c,0,
+                    "number doesn\'t index SND_NUM_MUSIC_TRACKS\n\t%i not in [0, %i)");
   }
-  SND_StopBackground(uVar3 != 0,param_2);
+  SND_StopBackground((uint)(uVar3 != 0),param_2);
   __restgprlr_27();
   return;
 }
 
 
 // 8284E228  SND_StopAmbient  (snd.cpp:4037)
-
-void SND_StopAmbient(undefined8 param_1)
-
-{
-  if (DAT_8487d9c8 != '\0') {
-    if ((int)param_1 < 0) {
-      MyAssertHandler(0xffffffff821ef068,0xfc9,0,0xffffffff821f0cac,0xffffffff821f0cc0,param_1);
-    }
-    SND_StopBackground(2,param_1);
-    SND_StopBackground(3,param_1);
-    SND_StopBackground(4,param_1);
-    SND_StopBackground(5,param_1);
-  }
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 8284E2C0  SND_StopAmbientAlias  (snd.cpp:4051)
 
-void SND_StopAmbientAlias(undefined8 param_1,undefined8 param_2)
+void SND_StopAmbientAlias(char *param_1,int param_2)
 
 {
-  ulonglong uVar1;
-  char cVar2;
+  char *pcVar1;
+  bool bVar2;
   ulonglong uVar3;
   
-  uVar1 = __savegprlr_27();
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821ef068,0xfd4,0,0xffffffff82000f98,0xffffffff821f0e6c);
+  pcVar1 = (char *)__savegprlr_27(param_1);
+  if (pcVar1 == (char *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xfd4,0,"%s");
   }
-  if ((int)param_2 < 0) {
-    MyAssertHandler(0xffffffff821ef068,0xfd5,0,0xffffffff821f0d8c,0xffffffff821f0da0,param_2);
+  if (param_2 < 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xfd5,0,
+                    "%s\n\t(fadeTime) = %i");
   }
   uVar3 = 0;
   while( true ) {
     if (1 < (uVar3 & 0xffffffff)) {
-      MyAssertHandler(0xffffffff821ef068,0xe58,0,0xffffffff821f0d4c,uVar3,2);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xe58,0,
+                      "number doesn\'t index SND_NUM_AMBIENT_TRACKS\n\t%i not in [0, %i)");
     }
-    cVar2 = SND_IsAliasPlayingOnTrack(uVar1,(-(uVar3 != 0) & 2U) + 2);
-    if (cVar2 != '\0') break;
+    bVar2 = SND_IsAliasPlayingOnTrack(pcVar1,(-(uint)(uVar3 != 0) & 2) + 2);
+    if (bVar2) break;
     uVar3 = uVar3 + 1;
     if (1 < (int)uVar3) {
       __restgprlr_27();
@@ -5216,362 +2250,65 @@ void SND_StopAmbientAlias(undefined8 param_1,undefined8 param_2)
     }
   }
   if (1 < (uVar3 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821ef068,0xe58,0,0xffffffff821f0d4c,uVar3,2);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xe58,0,
+                    "number doesn\'t index SND_NUM_AMBIENT_TRACKS\n\t%i not in [0, %i)");
   }
-  SND_StopBackground((-(uVar3 != 0) & 2U) + 2,param_2);
+  SND_StopBackground((-(uint)(uVar3 != 0) & 2) + 2,param_2);
   if (1 < (uVar3 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821ef068,0xe58,0,0xffffffff821f0d4c,uVar3,2);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xe58,0,
+                    "number doesn\'t index SND_NUM_AMBIENT_TRACKS\n\t%i not in [0, %i)");
   }
-  SND_StopBackground((-(uVar3 != 0) & 2U) + 3,param_2);
+  SND_StopBackground((-(uint)(uVar3 != 0) & 2) + 3,param_2);
   __restgprlr_27();
   return;
 }
 
 
 // 82857928  SND_FadeAllSounds  (snd.cpp:4067)
-
-void SND_FadeAllSounds(undefined8 param_1,int param_2)
-
-{
-  double dVar1;
-  double dVar2;
-  
-  dVar1 = (double)__savegprlr_29();
-  dVar2 = 0.0;
-  if (dVar1 < 0.0) {
-    MyAssertHandler(0xffffffff821ef068,0xfe4,0,0xffffffff82000f98,0xffffffff821f271c);
-  }
-  if (param_2 < 0) {
-    MyAssertHandler(0xffffffff821ef068,0xfe5,0,0xffffffff82000f98,0xffffffff821f270c);
-  }
-  DAT_848859f8 = (float)(dVar1 - (double)DAT_848859f0);
-  DAT_848859f4 = (float)dVar1;
-  if (param_2 != 0) {
-    DAT_848859f8 = DAT_848859f8 / (float)(longlong)param_2;
-    __restgprlr_29();
-    return;
-  }
-  if (dVar1 == dVar2) {
-    SND_StopSounds(0);
-  }
-  __restgprlr_29();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 8284E420  SND_SetChannelVolume  (snd.cpp:4116)
-
-void SND_SetChannelVolume(undefined8 param_1,undefined8 param_2,int param_3)
-
-{
-  int iVar1;
-  int iVar2;
-  double extraout_f1;
-  double dVar3;
-  
-  iVar1 = __savegprlr_27();
-  dVar3 = extraout_f1;
-  iVar2 = CL_GetLocalClientActiveCount();
-  if (iVar2 < 2) {
-    if ((iVar1 < 0) || (DAT_84888110 <= iVar1)) {
-      MyAssertHandler(0xffffffff821ef068,0x101a,0,0xffffffff82000f98,0xffffffff821f0ec0);
-    }
-    if ((dVar3 < 0.0) || (1.0 < dVar3)) {
-      MyAssertHandler(0xffffffff821ef068,0x101b,0,0xffffffff82000f98,0xffffffff821f0e90);
-    }
-    if (param_3 < 0) {
-      MyAssertHandler(0xffffffff821ef068,0x101c,0,0xffffffff82000f98,0xffffffff821f0e80);
-    }
-    if (param_3 < 1) {
-      param_3 = 1;
-    }
-    (&DAT_84885a00)[iVar1 * 3] = (float)dVar3;
-    (&DAT_84885a04)[iVar1 * 3] =
-         (float)(dVar3 - (double)(float)(&DAT_848859fc)[iVar1 * 3]) / (float)(longlong)param_3;
-  }
-  __restgprlr_27();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 8284E560  SND_SetChannelVolumes  (snd.cpp:4138)
-
-void SND_SetChannelVolumes(undefined8 param_1,ulonglong param_2,int param_3)
-
-{
-  float fVar1;
-  undefined4 *puVar2;
-  int iVar3;
-  int iVar4;
-  char *pcVar5;
-  undefined4 *puVar6;
-  longlong lVar7;
-  float *pfVar8;
-  double dVar9;
-  double dVar10;
-  double dVar11;
-  double dVar12;
-  
-  iVar3 = __savegprlr_22();
-  iVar4 = CL_GetLocalClientActiveCount();
-  puVar2 = DAT_84886910;
-  if (iVar4 < 2) {
-    if ((iVar3 < 1) || (3 < iVar3)) {
-      MyAssertHandler(0xffffffff821ef068,0x1033,0,0xffffffff8205e330,0xffffffff821f0f40,iVar3);
-    }
-    if ((param_2 & 0xffffffff) == 0) {
-      MyAssertHandler(0xffffffff821ef068,0x1034,0,0xffffffff82000f98,0xffffffff821f0f2c);
-    }
-    if (param_3 < 0) {
-      MyAssertHandler(0xffffffff821ef068,0x1035,0,0xffffffff82000f98,0xffffffff821f0e80);
-    }
-    puVar6 = &DAT_84885d00 + iVar3 * 0xc1;
-    (&DAT_84886000)[iVar3 * 0x304] = 1;
-    if (param_3 < 1) {
-      param_3 = 1;
-    }
-    iVar4 = 0;
-    if (0 < DAT_84888110) {
-      dVar11 = 1.0;
-      dVar12 = 0.0;
-      lVar7 = param_2 - 4;
-      pfVar8 = (float *)(&DAT_84885d08 + iVar3 * 0xc1);
-      dVar10 = (double)(longlong)param_3;
-      do {
-        dVar9 = (double)*(float *)((int)lVar7 + 4);
-        if ((dVar9 < dVar12) || (dVar11 < dVar9)) {
-          MyAssertHandler(0xffffffff821ef068,0x103f,0,0xffffffff82000f98,0xffffffff821f0ef4);
-        }
-        pfVar8[-1] = *(float *)((int)lVar7 + 4);
-        iVar4 = iVar4 + 1;
-        fVar1 = *(float *)((-8 - (int)puVar6) + (int)pfVar8 + (int)DAT_84886910);
-        pfVar8[-2] = fVar1;
-        lVar7 = lVar7 + 4;
-        *pfVar8 = (float)((double)(*(float *)lVar7 - fVar1) / dVar10);
-        pfVar8 = pfVar8 + 3;
-      } while (iVar4 < DAT_84888110);
-    }
-    puVar2 = DAT_84886910;
-    if (puVar6 != DAT_84886910) {
-      puVar2 = puVar6;
-      if (iVar3 + 1 < 4) {
-        pcVar5 = &DAT_84886000 + (iVar3 + 1) * 0x304;
-        do {
-          puVar2 = DAT_84886910;
-          if (*pcVar5 != '\0') break;
-          pcVar5 = pcVar5 + 0x304;
-          puVar2 = puVar6;
-        } while ((int)pcVar5 < -0x7b7793f0);
-      }
-    }
-  }
-  DAT_84886910 = puVar2;
-  __restgprlr_22();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 8284E780  SND_DeactivateChannelVolumes  (snd.cpp:4179)
-
-void SND_DeactivateChannelVolumes(undefined8 param_1,int param_2)
-
-{
-  longlong lVar1;
-  int iVar2;
-  int iVar3;
-  longlong lVar4;
-  int iVar5;
-  ulonglong uVar6;
-  
-  lVar1 = __savegprlr_26();
-  if ((DAT_8487d9c8 != '\0') && (iVar2 = CL_GetLocalClientActiveCount(), iVar2 < 2)) {
-    if (((int)lVar1 < 1) || (3 < (int)lVar1)) {
-      MyAssertHandler(0xffffffff821ef068,0x105f,0,0xffffffff8205e330,0xffffffff821f0f40,lVar1);
-    }
-    if (param_2 < 0) {
-      MyAssertHandler(0xffffffff821ef068,0x1060,0,0xffffffff82000f98,0xffffffff821f0e80);
-    }
-    uVar6 = lVar1 * 0x304 - 0x7b77a300;
-    iVar2 = (int)uVar6;
-    *(undefined1 *)(iVar2 + 0x300) = 0;
-    if ((uVar6 & 0xffffffff) == (ulonglong)DAT_84886910) {
-      lVar1 = lVar1 + -1;
-      if (-1 < lVar1) {
-        lVar4 = lVar1 * 0x304 + -0x7b77a000;
-        do {
-          if (*(char *)lVar4 != '\0') {
-            if (-1 < (int)lVar1) goto LAB_8284e8a0;
-            break;
-          }
-          lVar1 = lVar1 + -1;
-          lVar4 = lVar4 + -0x304;
-        } while (-1 < lVar1);
-      }
-      MyAssertHandler(0xffffffff821ef068,0x106d,0,0xffffffff82000f98,0xffffffff821f0f8c);
-LAB_8284e8a0:
-      if (param_2 < 1) {
-        param_2 = 1;
-      }
-      uVar6 = lVar1 * 0x304 - 0x7b77a300;
-      iVar3 = 0;
-      DAT_84886910 = (uint)uVar6;
-      if (0 < DAT_84888110) {
-        iVar5 = 0;
-        while( true ) {
-          *(undefined4 *)(iVar5 + (int)uVar6) = *(undefined4 *)(iVar5 + iVar2);
-          iVar3 = iVar3 + 1;
-          *(float *)(iVar5 + DAT_84886910 + 8) =
-               (*(float *)(iVar5 + DAT_84886910 + 4) - *(float *)(iVar5 + iVar2)) /
-               (float)(longlong)param_2;
-          iVar5 = iVar5 + 0xc;
-          if (DAT_84888110 <= iVar3) break;
-          uVar6 = (ulonglong)DAT_84886910;
-        }
-      }
-    }
-  }
-  __restgprlr_26();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 8284E958  SND_UpdateLoopingSounds  (snd.cpp:4249)
-
-void SND_UpdateLoopingSounds(void)
-
-{
-  char cVar1;
-  longlong lVar2;
-  int *piVar3;
-  
-  __savegprlr_26();
-  if ((DAT_8487d9c8 != '\0') && (DAT_8487d9ca == '\0')) {
-    Profile_Begin(0x14e);
-    lVar2 = 8;
-    if (8 < DAT_8488a998 + 8) {
-      piVar3 = &DAT_84888784;
-      do {
-        cVar1 = SND_Is3DChannelFree(lVar2);
-        if (cVar1 == '\0') {
-          if (*piVar3 == 0) {
-            MyAssertHandler(0xffffffff821ef068,0x10ac,0,0xffffffff82000f98,0xffffffff821f00b0);
-          }
-          if (((*(uint *)(*piVar3 + 0x3c) & 1) != 0) && (piVar3[-0x16] != DAT_84886aec)) {
-            SND_Stop3DChannel(lVar2);
-          }
-        }
-        lVar2 = lVar2 + 1;
-        piVar3 = piVar3 + 0x30;
-      } while ((int)lVar2 < DAT_8488a998 + 8);
-    }
-    lVar2 = 0;
-    if (0 < DAT_8488a994) {
-      piVar3 = &DAT_84888184;
-      do {
-        cVar1 = SND_Is2DChannelFree(lVar2);
-        if (cVar1 == '\0') {
-          if (*piVar3 == 0) {
-            MyAssertHandler(0xffffffff821ef068,0x10b7,0,0xffffffff82000f98,0xffffffff821f00b0);
-          }
-          if (((*(uint *)(*piVar3 + 0x3c) & 1) != 0) && (piVar3[-0x16] != DAT_84886aec)) {
-            SND_Stop2DChannel(lVar2);
-          }
-        }
-        lVar2 = lVar2 + 1;
-        piVar3 = piVar3 + 0x30;
-      } while ((int)lVar2 < DAT_8488a994);
-    }
-    lVar2 = 0x28;
-    if (0x28 < DAT_8488a99c + 0x28) {
-      piVar3 = &DAT_84889f84;
-      do {
-        cVar1 = SND_IsStreamChannelFree(lVar2);
-        if (cVar1 == '\0') {
-          if (*piVar3 == 0) {
-            MyAssertHandler(0xffffffff821ef068,0x10c2,0,0xffffffff82000f98,0xffffffff821f00b0);
-          }
-          if (((*(uint *)(*piVar3 + 0x3c) & 1) != 0) && (piVar3[-0x16] != DAT_84886aec)) {
-            SND_StopStreamChannel(lVar2);
-          }
-        }
-        lVar2 = lVar2 + 1;
-        piVar3 = piVar3 + 0x30;
-      } while ((int)lVar2 < DAT_8488a99c + 0x28);
-    }
-    DAT_84886aec = DAT_84886ae8;
-    Profile_EndInternal(0);
-  }
-  __restgprlr_26();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 8284EBD8  SND_UpdateBackgroundVolume  (snd.cpp:4311)
-
-void SND_UpdateBackgroundVolume(undefined8 param_1,int param_2)
-
-{
-  float fVar1;
-  int iVar2;
-  int iVar3;
-  float fVar4;
-  undefined4 uVar5;
-  ulonglong uVar6;
-  char cVar7;
-  ulonglong uVar8;
-  
-  uVar6 = __savegprlr_26();
-  if (((int)uVar6 < 0) || (5 < (int)uVar6)) {
-    MyAssertHandler(0xffffffff821ef068,0x10db,0,0xffffffff821f0cd0,0xffffffff821f0ce4,uVar6);
-  }
-  uVar8 = uVar6 + 0x28;
-  iVar2 = (int)((uVar8 + (uVar8 & 0x7fffffff) * 2 & 0x3ffffff) << 6);
-  cVar7 = SND_IsAliasChannel3D(*(int *)(*(int *)((int)&DAT_84888184 + iVar2) + 0x3c) >> 9 & 0x3f);
-  if (cVar7 != '\0') {
-    MyAssertHandler(0xffffffff821ef068,0x10de,0,0xffffffff82000f98,0xffffffff821f0fb0);
-  }
-  uVar5 = DAT_84886aec;
-  iVar3 = (int)((uVar6 & 0x1fffffff) << 3);
-  fVar4 = (float)(longlong)param_2 * *(float *)(&DAT_84886918 + iVar3) +
-          *(float *)((int)&DAT_84888168 + iVar2);
-  fVar1 = *(float *)(&DAT_84886914 + iVar3);
-  if (*(float *)(&DAT_84886918 + iVar3) <= 0.0) {
-    if ((fVar4 < fVar1) && (fVar4 = fVar1, fVar1 == 0.0)) {
-      SND_StopStreamChannel(uVar8);
-      __restgprlr_26(0);
-      return;
-    }
-  }
-  else if (fVar1 < fVar4) {
-    fVar4 = fVar1;
-  }
-  *(float *)((int)&DAT_84888168 + iVar2) = fVar4;
-  *(undefined4 *)((int)&DAT_8488812c + iVar2) = uVar5;
-  *(float *)((int)&DAT_8488816c + iVar2) = *(float *)(&DAT_84886914 + iVar3);
-  *(undefined4 *)(&DAT_84888170 + iVar2) = *(undefined4 *)(&DAT_84886918 + iVar3);
-  __restgprlr_26(1);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 8284ED58  SND_InitParameter  (snd.cpp:4348)
 
-void SND_InitParameter(double param_1,float *param_2)
+void SND_InitParameter(snd_param_info_t *param_1,float param_2)
 
 {
-  if (param_2 == (float *)0x0) {
-    MyAssertHandler(0xffffffff821ef068,0x10fd,0,0xffffffff82000f98,0xffffffff821f100c);
+  double dVar1;
+  
+  dVar1 = (double)param_2;
+  if (param_1 == (snd_param_info_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x10fd,0,"%s");
   }
-  *param_2 = (float)param_1;
-  param_2[1] = (float)param_1;
-  param_2[2] = 1.0;
+  param_1->value = (float)dVar1;
+  param_1->goalvalue = (float)dVar1;
+  param_1->goalrate = 1.0;
   return;
 }
 
 
 // 8284EDD0  SND_UpdateParameter  (snd.cpp:4364)
 
-void SND_UpdateParameter(undefined8 param_1,undefined8 param_2)
+void SND_UpdateParameter(snd_param_info_t *param_1,int param_2)
 
 {
   float fVar1;
@@ -5579,19 +2316,20 @@ void SND_UpdateParameter(undefined8 param_1,undefined8 param_2)
   float *pfVar3;
   double dVar4;
   
-  pfVar3 = (float *)__savegprlr_29();
+  pfVar3 = (float *)__savegprlr_29(param_1);
   if (pfVar3 == (float *)0x0) {
-    MyAssertHandler(0xffffffff821ef068,0x1113,0,0xffffffff82000f98,0xffffffff821f100c);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1113,0,"%s");
   }
-  if ((int)param_2 < 0) {
-    MyAssertHandler(0xffffffff821ef068,0x1114,0,0xffffffff821f1050,0xffffffff821f1064,param_2);
+  if (param_2 < 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1114,0,
+                    "%s\n\t(dt_msec) = %i");
   }
   dVar4 = 0.0;
-  if ((double)*pfVar3 < 0.0) {
-    MyAssertHandler(0xffffffff821ef068,0x1115,0,0xffffffff821f1018,0xffffffff821f1034,
-                    (double)*pfVar3);
+  if (*pfVar3 < 0.0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1115,0,
+                    "%s\n\t(paramInfo->value) = %g");
   }
-  fVar1 = (float)((double)(longlong)(int)param_2 * (double)pfVar3[2] + (double)*pfVar3);
+  fVar1 = (float)((double)(longlong)param_2 * (double)pfVar3[2] + (double)*pfVar3);
   fVar2 = pfVar3[1];
   *pfVar3 = fVar1;
   if (dVar4 <= (double)pfVar3[2]) {
@@ -5612,844 +2350,165 @@ void SND_UpdateParameter(undefined8 param_1,undefined8 param_2)
 
 
 // 82857A30  SND_UpdateMasterVolumes  (snd.cpp:4438)
-
-void SND_UpdateMasterVolumes(void)
-
-{
-  undefined8 uVar1;
-  char cVar2;
-  longlong lVar3;
-  int iVar4;
-  longlong lVar5;
-  double dVar6;
-  
-  uVar1 = __savegprlr_28();
-  lVar3 = 0;
-  if (0 < DAT_84888110) {
-    lVar5 = 0;
-    do {
-      if ((DAT_8487d9ca == '\0') || (cVar2 = SND_IsPausable(lVar3), cVar2 == '\0')) {
-        SND_UpdateParameter(lVar5 + -0x7b77a604,uVar1);
-        SND_UpdateParameter(lVar5 + (ulonglong)DAT_84886910,uVar1);
-      }
-      lVar3 = lVar3 + 1;
-      lVar5 = lVar5 + 0xc;
-    } while ((int)lVar3 < DAT_84888110);
-  }
-  if ((DAT_8487d9ca == '\0') && (iVar4 = 0, 0 < DAT_8488d1a0)) {
-    lVar3 = -0x7b773460;
-    do {
-      SND_UpdateParameter(lVar3,uVar1);
-      iVar4 = iVar4 + 1;
-      lVar3 = lVar3 + 0xc;
-    } while (iVar4 < DAT_8488d1a0);
-  }
-  dVar6 = 0.0;
-  if (DAT_848859f8 == 0.0) {
-    if (*(char *)(DAT_8487d9b8 + 0xb) == '\0') goto LAB_82857bd0;
-  }
-  else {
-    SND_UpdateParameter(0xffffffff848859f0,uVar1);
-    if (((double)DAT_848859f0 == dVar6) && ((double)DAT_848859f8 == dVar6)) {
-      SND_StopSounds(0);
-    }
-  }
-  Dvar_ClearModified(DAT_8487d9b8);
-  DAT_848859ec = *(float *)(DAT_8487d9b8 + 0xc) * DAT_848859f0 * 0.4;
-LAB_82857bd0:
-  __restgprlr_28();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 8284EEE8  SND_Is2DChannelPlaying  (snd.cpp:4481)
-
-undefined8 SND_Is2DChannelPlaying(int param_1)
-
-{
-  char cVar1;
-  
-  if ((param_1 < 0) || (DAT_8488a994 <= param_1)) {
-    MyAssertHandler(0xffffffff821ef068,0x1182,0,0xffffffff8200aef4,0xffffffff821f1074,param_1);
-  }
-  cVar1 = SND_Is2DChannelFree(param_1);
-  if ((cVar1 == '\0') && (*(int *)(&DAT_84888128 + param_1 * 0xc0) < 0)) {
-    return 1;
-  }
-  return 0;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 8284EFA8  SND_Is3DChannelPlaying  (snd.cpp:4489)
-
-undefined8 SND_Is3DChannelPlaying(int param_1)
-
-{
-  char cVar1;
-  
-  if ((param_1 < 8) || (DAT_8488a998 + 8 <= param_1)) {
-    MyAssertHandler(0xffffffff821ef068,0x118a,0,0xffffffff8200aef4,0xffffffff821f10a8,param_1);
-  }
-  cVar1 = SND_Is3DChannelFree(param_1);
-  if ((cVar1 == '\0') && (*(int *)(&DAT_84888128 + param_1 * 0xc0) < 0)) {
-    return 1;
-  }
-  return 0;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 8284F068  SND_IsStreamChannelPlaying  (snd.cpp:4497)
-
-undefined8 SND_IsStreamChannelPlaying(int param_1)
-
-{
-  char cVar1;
-  
-  if ((param_1 < 0x28) || (DAT_8488a99c + 0x28 <= param_1)) {
-    MyAssertHandler(0xffffffff821ef068,0x1192,0,0xffffffff8200aef4,0xffffffff821eff38,param_1);
-  }
-  cVar1 = SND_IsStreamChannelFree(param_1);
-  if ((cVar1 == '\0') && (*(int *)(&DAT_84888128 + param_1 * 0xc0) < 0)) {
-    return 1;
-  }
-  return 0;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 8284F128  SND_UpdatePerChannelMasterSettings  (snd.cpp:4505)
-
-void SND_UpdatePerChannelMasterSettings
-               (undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4,
-               ulonglong param_5)
-
-{
-  byte bVar1;
-  ulonglong uVar2;
-  char cVar3;
-  byte bVar4;
-  longlong lVar5;
-  double dVar6;
-  
-  uVar2 = __savegprlr_25();
-  if (0x35 < (uVar2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821ef068,0x119f,0,0xffffffff821f1168,uVar2,0x36);
-  }
-  if (0x36 < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821ef068,0x11a0,0,0xffffffff821f1128,param_2,0x37);
-  }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x11a1,0,0xffffffff82000f98,0xffffffff821f1118);
-  }
-  if ((param_4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x11a2,0,0xffffffff82000f98,0xffffffff821f1100);
-  }
-  if ((param_5 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x11a3,0,0xffffffff82000f98,0xffffffff821f10e8);
-  }
-  if ((int)uVar2 < (int)param_2) {
-    lVar5 = (uVar2 + (uVar2 & 0x7fffffff) * 2 & 0x3ffffff) * 0x40 + -0x7b777eec;
-    do {
-      cVar3 = (*(code *)param_3)(uVar2);
-      if (cVar3 != '\0') {
-        bVar4 = SND_GetMasterPriority(lVar5);
-        if (bVar4 != 0) {
-          bVar1 = *(byte *)param_4;
-          if (bVar1 < bVar4) {
-            *(byte *)param_4 = bVar4;
-            dVar6 = (double)SND_GetMasterPercent(lVar5);
-          }
-          else if ((bVar4 != bVar1) ||
-                  (dVar6 = (double)SND_GetMasterPercent(lVar5), dVar6 <= (double)*(float *)param_5))
-          goto LAB_8284f2a4;
-          *(float *)param_5 = (float)dVar6;
-        }
-      }
-LAB_8284f2a4:
-      uVar2 = uVar2 + 1;
-      lVar5 = lVar5 + 0xc0;
-    } while ((int)uVar2 < (int)param_2);
-  }
-  __restgprlr_25();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 8284F2C0  SND_UpdatePerChannelSlaveLerp  (snd.cpp:4546)
-
-void SND_UpdatePerChannelSlaveLerp
-               (undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4)
-
-{
-  uint uVar2;
-  char cVar3;
-  ulonglong uVar1;
-  float *pfVar4;
-  double extraout_f1;
-  double dVar5;
-  double dVar6;
-  undefined8 uVar7;
-  undefined8 uVar8;
-  double dVar9;
-  double dVar10;
-  
-  __savegprlr_24();
-  uVar2 = __savefpr_27();
-  dVar6 = extraout_f1;
-  if (0x35 < uVar2) {
-    MyAssertHandler(0xffffffff821ef068,0x11c8,0,0xffffffff821f1168,uVar2,0x36);
-  }
-  if (0x36 < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821ef068,0x11c9,0,0xffffffff821f1128,param_2,0x37);
-  }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x11ca,0,0xffffffff82000f98,0xffffffff821f1118);
-  }
-  if ((int)uVar2 < (int)param_2) {
-    pfVar4 = (float *)(&DAT_848881cc + uVar2 * 0xc0);
-    uVar8 = 0;
-    uVar7 = 0x3ff0000000000000;
-    dVar9 = 0.0;
-    dVar10 = 1.0;
-    do {
-      cVar3 = (*(code *)param_3)(uVar2);
-      if (cVar3 != '\0') {
-        uVar1 = SND_GetMasterPriority(pfVar4 + -0x2e);
-        if (((param_4 & 0xff) == 0) || ((param_4 & 0xff) <= (uVar1 & 0xff))) {
-          dVar5 = (double)(float)((double)*pfVar4 - dVar6);
-          if ((double)(float)((double)*pfVar4 - dVar6) < 0.0) {
-            dVar5 = dVar9;
-          }
-          *pfVar4 = (float)dVar5;
-        }
-        else {
-          dVar5 = (double)(float)((double)*pfVar4 + dVar6);
-          if ((float)(dVar10 - (double)(float)((double)*pfVar4 + dVar6)) < 0.0) {
-            dVar5 = dVar10;
-          }
-          *pfVar4 = (float)dVar5;
-        }
-        dVar5 = (double)*pfVar4;
-        if ((dVar5 < dVar9) || (dVar10 < dVar5)) {
-          MyAssertHandler(dVar5,uVar8,uVar7,0xffffffff821ef068,0x11d9,0,0xffffffff821f11a8,dVar5,
-                          uVar8,uVar7);
-        }
-      }
-      uVar2 = uVar2 + 1;
-      pfVar4 = pfVar4 + 0x30;
-    } while ((int)uVar2 < (int)param_2);
-  }
-  __restfpr_27();
-  __restgprlr_24();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 8284F498  SND_UpdateMasterSlaveLerp  (snd.cpp:4575)
-
-void SND_UpdateMasterSlaveLerp(int param_1)
-
-{
-  float fVar1;
-  undefined1 uVar2;
-  double dVar3;
-  double dVar4;
-  double dVar5;
-  double dVar6;
-  undefined1 local_30 [4];
-  float local_2c;
-  longlong local_28;
-  
-  local_30[0] = 0;
-  local_2c = 0.0;
-  SND_UpdatePerChannelMasterSettings
-            (8,(ulonglong)DAT_8488a998 + 8,0xffffffff8284efa8,local_30,&local_2c);
-  SND_UpdatePerChannelMasterSettings
-            (0x28,(ulonglong)DAT_8488a99c + 0x28,0xffffffff8284f068,local_30,&local_2c);
-  SND_UpdatePerChannelMasterSettings(0,DAT_8488a994,0xffffffff8284eee8,local_30,&local_2c);
-  uVar2 = local_30[0];
-  if (*(int *)(DAT_8488fd64 + 0xc) < 1) {
-    fVar1 = 1.0;
-  }
-  else {
-    local_28 = (longlong)param_1;
-    fVar1 = (float)local_28 / (float)(longlong)*(int *)(DAT_8488fd64 + 0xc);
-  }
-  dVar6 = (double)fVar1;
-  DAT_8488694c = local_30[0];
-  dVar3 = (double)local_2c;
-  dVar4 = (double)DAT_84886950;
-  if (dVar4 <= dVar3) {
-    dVar5 = (double)(float)(dVar4 + dVar6);
-    dVar4 = dVar3 - dVar5;
-  }
-  else {
-    dVar5 = (double)(float)(dVar4 - dVar6);
-    dVar4 = dVar5 - dVar3;
-  }
-  if ((float)dVar4 < 0.0) {
-    dVar5 = dVar3;
-  }
-  DAT_84886950 = (float)dVar5;
-  SND_UpdatePerChannelSlaveLerp(dVar6,8,(ulonglong)DAT_8488a998 + 8,0xffffffff8284efa8,local_30[0]);
-  SND_UpdatePerChannelSlaveLerp(dVar6,0x28,(ulonglong)DAT_8488a99c + 0x28,0xffffffff8284f068,uVar2);
-  SND_UpdatePerChannelSlaveLerp(dVar6,0,DAT_8488a994,0xffffffff8284eee8,uVar2);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 8284F670  SND_UpdateAllChannels  (snd.cpp:4615)
-
-void SND_UpdateAllChannels(void)
-
-{
-  undefined8 uVar1;
-  char cVar2;
-  int iVar3;
-  int *piVar4;
-  longlong lVar5;
-  
-  uVar1 = __savegprlr_28();
-  SND_UpdateMasterSlaveLerp();
-  lVar5 = 8;
-  if (8 < DAT_8488a998 + 8) {
-    do {
-      cVar2 = SND_Is3DChannelFree(lVar5);
-      if (cVar2 == '\0') {
-        SND_Update3DChannel(lVar5,uVar1);
-      }
-      lVar5 = lVar5 + 1;
-    } while ((int)lVar5 < DAT_8488a998 + 8);
-  }
-  lVar5 = 0x28;
-  if (0x28 < DAT_8488a99c + 0x28) {
-    piVar4 = &DAT_84889f14;
-    iVar3 = DAT_8488a99c;
-    do {
-      if (*piVar4 != 0) {
-        SND_UpdateStreamChannel(lVar5,uVar1);
-        iVar3 = DAT_8488a99c;
-      }
-      lVar5 = lVar5 + 1;
-      piVar4 = piVar4 + 0x30;
-    } while ((int)lVar5 < iVar3 + 0x28);
-  }
-  lVar5 = 0;
-  if (0 < DAT_8488a994) {
-    do {
-      cVar2 = SND_Is2DChannelFree(lVar5);
-      if (cVar2 == '\0') {
-        SND_Update2DChannel(lVar5,uVar1);
-      }
-      lVar5 = lVar5 + 1;
-    } while ((int)lVar5 < DAT_8488a994);
-  }
-  __restgprlr_28();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 8284F798  SND_EnvironmentEffectsOverridden  (snd.cpp:4644)
-
-bool SND_EnvironmentEffectsOverridden(void)
-
-{
-  return DAT_84886990 == '\0';
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 8284F7B8  SND_SetEnvironmentEffects  (snd.cpp:4650)
-
-void SND_SetEnvironmentEffects
-               (undefined8 param_1,double param_2,undefined8 param_3,ulonglong param_4,
-               undefined8 param_5,undefined8 param_6,int param_7)
-
-{
-  float fVar1;
-  undefined4 *puVar2;
-  int iVar3;
-  int iVar4;
-  undefined4 uVar5;
-  char *pcVar6;
-  undefined4 *puVar7;
-  double extraout_f1;
-  double dVar8;
-  double dVar9;
-  double dVar10;
-  
-  __savegprlr_27();
-  iVar3 = __savefpr_28();
-  dVar10 = extraout_f1;
-  iVar4 = CL_GetLocalClientActiveCount();
-  if (iVar4 < 2) {
-    if ((iVar3 < 1) || (4 < iVar3)) {
-      MyAssertHandler(0xffffffff821ef068,0x1234,0,0xffffffff8205e330,0xffffffff821f1230,iVar3);
-    }
-    if ((param_4 & 0xffffffff) == 0) {
-      MyAssertHandler(0xffffffff821ef068,0x1235,0,0xffffffff82000f98,0xffffffff821f1224);
-    }
-    if (param_7 < 0) {
-      MyAssertHandler(0xffffffff821ef068,0x1236,0,0xffffffff82000f98,0xffffffff821f0e80);
-    }
-    dVar9 = 0.0;
-    dVar8 = 1.0;
-    if ((dVar10 < 0.0) || (1.0 < dVar10)) {
-      MyAssertHandler(0xffffffff821ef068,0x1237,0,0xffffffff82000f98,0xffffffff821f1204);
-    }
-    if ((param_2 < dVar9) || (dVar8 < param_2)) {
-      MyAssertHandler(0xffffffff821ef068,0x1238,0,0xffffffff82000f98,0xffffffff821f11e4);
-    }
-    if (DAT_8487d9c8 != '\0') {
-      puVar7 = &DAT_84886954 + iVar3 * 8;
-      (&DAT_84886970)[iVar3 * 0x20] = 1;
-      uVar5 = SND_RoomtypeFromString(param_4);
-      *puVar7 = uVar5;
-      if (param_7 < 1) {
-        param_7 = 1;
-      }
-      (&DAT_8488695c)[iVar3 * 8] = (float)dVar10;
-      (&DAT_84886958)[iVar3 * 8] = DAT_848869f4[1];
-      fVar1 = (float)DAT_848869f4[1];
-      (&DAT_84886968)[iVar3 * 8] = (float)param_2;
-      (&DAT_84886960)[iVar3 * 8] = (float)(dVar10 - (double)fVar1) / (float)(longlong)param_7;
-      (&DAT_84886964)[iVar3 * 8] = DAT_848869f4[4];
-      (&DAT_8488696c)[iVar3 * 8] =
-           (float)(param_2 - (double)(float)DAT_848869f4[4]) / (float)(longlong)param_7;
-      puVar2 = DAT_848869f4;
-      if (puVar7 != DAT_848869f4) {
-        puVar2 = puVar7;
-        if (iVar3 + 1 < 5) {
-          pcVar6 = &DAT_84886970 + (iVar3 + 1) * 0x20;
-          do {
-            if (*pcVar6 != '\0') goto LAB_8284fa00;
-            pcVar6 = pcVar6 + 0x20;
-          } while ((int)pcVar6 < -0x7b7795f0);
-        }
-      }
-      DAT_848869f4 = puVar2;
-      SND_SetRoomtype();
-    }
-  }
-LAB_8284fa00:
-  __restfpr_28();
-  __restgprlr_27();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 8284FA10  SND_DeactivateEnvironmentEffects  (snd.cpp:4703)
-
-void SND_DeactivateEnvironmentEffects(undefined8 param_1,int param_2)
-
-{
-  ulonglong uVar1;
-  int iVar2;
-  longlong lVar3;
-  ulonglong uVar4;
-  
-  uVar1 = __savegprlr_26();
-  iVar2 = CL_GetLocalClientActiveCount();
-  if (iVar2 < 2) {
-    if (((int)uVar1 < 1) || (4 < (int)uVar1)) {
-      MyAssertHandler(0xffffffff821ef068,0x1268,0,0xffffffff8205e330,0xffffffff821f1230,uVar1);
-    }
-    if (param_2 < 0) {
-      MyAssertHandler(0xffffffff821ef068,0x1269,0,0xffffffff82000f98,0xffffffff821f0e80);
-    }
-    uVar4 = (uVar1 & 0x7ffffff) * 0x20 - 0x7b7796ac;
-    iVar2 = (int)uVar4;
-    *(undefined1 *)(iVar2 + 0x1c) = 0;
-    if ((uVar4 & 0xffffffff) == ZEXT48(DAT_848869f4)) {
-      uVar1 = uVar1 - 1;
-      if (-1 < (longlong)uVar1) {
-        lVar3 = (uVar1 & 0x7ffffff) * 0x20 + -0x7b779690;
-        do {
-          if (*(char *)lVar3 != '\0') {
-            if (-1 < (int)uVar1) goto LAB_8284fb24;
-            break;
-          }
-          uVar1 = uVar1 - 1;
-          lVar3 = lVar3 + -0x20;
-        } while (-1 < (longlong)uVar1);
-      }
-      MyAssertHandler(0xffffffff821ef068,0x1276,0,0xffffffff82000f98,0xffffffff821f127c);
-LAB_8284fb24:
-      if (param_2 < 1) {
-        param_2 = 1;
-      }
-      DAT_848869f4 = (undefined4 *)((int)&DAT_84886954 + (int)((uVar1 & 0xffffffff) << 5));
-      SND_SetRoomtype(*DAT_848869f4);
-      DAT_848869f4[1] = *(undefined4 *)(iVar2 + 4);
-      DAT_848869f4[3] = ((float)DAT_848869f4[2] - *(float *)(iVar2 + 4)) / (float)(longlong)param_2;
-      DAT_848869f4[4] = *(undefined4 *)(iVar2 + 0x10);
-      DAT_848869f4[6] =
-           ((float)DAT_848869f4[5] - *(float *)(iVar2 + 0x10)) / (float)(longlong)param_2;
-    }
-  }
-  __restgprlr_26();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 8284FBD8  SND_UpdateReverbs  (snd.cpp:4741)
-
-void SND_UpdateReverbs(void)
-
-{
-  char cVar1;
-  longlong lVar2;
-  
-  lVar2 = 8;
-  if (8 < DAT_8488a998 + 8) {
-    do {
-      cVar1 = SND_Is3DChannelFree(lVar2);
-      if (cVar1 == '\0') {
-        SND_Update3DChannelReverb(lVar2);
-      }
-      lVar2 = lVar2 + 1;
-    } while ((int)lVar2 < DAT_8488a998 + 8);
-  }
-  lVar2 = 0;
-  if (0 < DAT_8488a994) {
-    do {
-      cVar1 = SND_Is2DChannelFree(lVar2);
-      if (cVar1 == '\0') {
-        SND_Update2DChannelReverb(lVar2);
-      }
-      lVar2 = lVar2 + 1;
-    } while ((int)lVar2 < DAT_8488a994);
-  }
-  lVar2 = 0x28;
-  if (0x28 < DAT_8488a99c + 0x28) {
-    do {
-      cVar1 = SND_IsStreamChannelFree(lVar2);
-      if (cVar1 == '\0') {
-        SND_UpdateStreamChannelReverb(lVar2);
-      }
-      lVar2 = lVar2 + 1;
-    } while ((int)lVar2 < DAT_8488a99c + 0x28);
-  }
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 8284FD00  SND_UpdateRoomEffects  (snd.cpp:4770)
-
-void SND_UpdateRoomEffects(int param_1)
-
-{
-  float fVar1;
-  
-  fVar1 = *(float *)(DAT_848869f4 + 0xc);
-  if ((fVar1 == 0.0) && (*(float *)(DAT_848869f4 + 0x18) == 0.0)) {
-    return;
-  }
-  if (fVar1 != 0.0) {
-    *(float *)(DAT_848869f4 + 4) = (float)(longlong)param_1 * fVar1 + *(float *)(DAT_848869f4 + 4);
-    fVar1 = *(float *)(DAT_848869f4 + 8);
-    if (0.0 <= *(float *)(DAT_848869f4 + 0xc)) {
-      if (*(float *)(DAT_848869f4 + 4) < fVar1) goto LAB_8284fdb0;
-    }
-    else if (fVar1 < *(float *)(DAT_848869f4 + 4)) goto LAB_8284fdb0;
-    *(float *)(DAT_848869f4 + 4) = fVar1;
-    *(undefined4 *)(DAT_848869f4 + 0xc) = 0;
-  }
-LAB_8284fdb0:
-  if (*(float *)(DAT_848869f4 + 0x18) == 0.0) {
-    return;
-  }
-  *(float *)(DAT_848869f4 + 0x10) =
-       (float)(longlong)param_1 * *(float *)(DAT_848869f4 + 0x18) + *(float *)(DAT_848869f4 + 0x10);
-  fVar1 = *(float *)(DAT_848869f4 + 0x14);
-  if (0.0 <= *(float *)(DAT_848869f4 + 0x18)) {
-    if (*(float *)(DAT_848869f4 + 0x10) < fVar1) {
-      return;
-    }
-  }
-  else if (fVar1 < *(float *)(DAT_848869f4 + 0x10)) {
-    return;
-  }
-  *(float *)(DAT_848869f4 + 0x10) = fVar1;
-  *(undefined4 *)(DAT_848869f4 + 0x18) = 0;
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 8284FE28  SND_SetEqForChannel  (snd.cpp:4823)
 
-void SND_SetEqForChannel(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4
-                        ,undefined8 param_5,undefined8 param_6,undefined8 param_7)
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
+void SND_SetEqForChannel(int param_1,int param_2,int param_3,SND_EQTYPE param_4,float param_5,
+                        float param_6,float param_7)
 
 {
-  ulonglong uVar1;
-  undefined8 extraout_f1;
-  undefined8 uVar2;
+  uint uVar1;
+  double extraout_f1;
+  double dVar2;
+  double dVar3;
+  double dVar4;
   
-  uVar1 = __savegprlr_28();
-  uVar2 = extraout_f1;
-  if (0x3f < (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821ef068,0x12d8,0,0xffffffff82188c28,uVar1,0x40);
+  dVar3 = (double)param_7;
+  dVar2 = (double)param_6;
+  uVar1 = __savegprlr_28((double)param_5,param_1);
+  dVar4 = extraout_f1;
+  if (0x3f < uVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x12d8,0,
+                    "entchannel doesn\'t index SND_MAX_ENTCHANNELS\n\t%i not in [0, %i)");
   }
-  SND_SetEqParams(uVar2,param_2,param_3,uVar1,param_5,param_6,param_7);
+  SND_SetEqParams(uVar1,param_2,param_3,param_4,(float)dVar4,(float)dVar2,(float)dVar3);
   __restgprlr_28();
   return;
 }
 
 
 // 82857BE0  SND_SetPainVisionEq  (snd.cpp:4832)
-
-void SND_SetPainVisionEq(void)
-
-{
-  ulonglong uVar1;
-  int iVar2;
-  undefined **ppuVar3;
-  undefined8 uVar4;
-  undefined8 uVar5;
-  undefined8 uVar6;
-  undefined8 uVar7;
-  undefined8 uVar8;
-  
-  __savegprlr_20();
-  __savefpr_27();
-  ppuVar3 = &PTR_s_physics_829a6500;
-  uVar5 = 0xc018000000000000;
-  uVar4 = 0x408f400000000000;
-  uVar8 = 0x3ff0000000000000;
-  uVar6 = 0x40a5e00000000000;
-  uVar7 = 0xc028000000000000;
-  do {
-    uVar1 = SND_GetEntChannelFromName(*ppuVar3);
-    iVar2 = (int)uVar1;
-    if (iVar2 == -1) {
-      MyAssertHandler(0xffffffff821ef068,0x12e8,0,0xffffffff8218a1b4,0xffffffff821f2728,
-                      0xffffffffffffffff);
-LAB_82857c94:
-      MyAssertHandler(0xffffffff821ef068,0x12e9,0,0xffffffff82188c28,uVar1,0x40);
-      MyAssertHandler(0xffffffff821ef068,0x133c,0,0xffffffff82188c28,uVar1,0x40);
-    }
-    else if (0x3f < (uVar1 & 0xffffffff)) goto LAB_82857c94;
-    (&DAT_84886b58)[iVar2 * 0x15] = 0;
-    if (0x3f < (uVar1 & 0xffffffff)) {
-      MyAssertHandler(0xffffffff821ef068,0x12d8,0,0xffffffff82188c28,uVar1,0x40);
-    }
-    SND_SetEqParams(uVar7,uVar6,uVar8,uVar1,0,0,3);
-    if (0x3f < (uVar1 & 0xffffffff)) {
-      MyAssertHandler(0xffffffff821ef068,0x12d8,0,0xffffffff82188c28,uVar1,0x40);
-    }
-    SND_SetEqParams(uVar5,uVar4,uVar8,uVar1,0,1,3);
-    if (0x3f < (uVar1 & 0xffffffff)) {
-      MyAssertHandler(0xffffffff821ef068,0x13a8,0,0xffffffff82188c28,uVar1,0x40);
-      MyAssertHandler(0xffffffff821ef068,0x132a,0,0xffffffff82188c28,uVar1,0x40);
-    }
-    if ((&DAT_84886b58)[iVar2 * 0x15] == 0) {
-      if (0x3f < (uVar1 & 0xffffffff)) {
-        MyAssertHandler(0xffffffff821ef068,0x133c,0,0xffffffff82188c28,uVar1,0x40);
-      }
-      (&DAT_84886b58)[iVar2 * 0x15] = 2;
-      SND_DisableEq(uVar1,0,2);
-    }
-    ppuVar3 = ppuVar3 + 1;
-    if (-0x7d659ac1 < (int)ppuVar3) {
-      __restfpr_27();
-      __restgprlr_20();
-      return;
-    }
-  } while( true );
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82857E08  SND_ClearPainVisionEq  (snd.cpp:4854)
-
-void SND_ClearPainVisionEq(void)
-
-{
-  ulonglong uVar1;
-  undefined **ppuVar2;
-  int *piVar3;
-  longlong lVar4;
-  
-  __savegprlr_21();
-  ppuVar2 = &PTR_s_physics_829a6500;
-  piVar3 = &DAT_8488fc28;
-  do {
-    if (*piVar3 == 5) {
-      uVar1 = SND_GetEntChannelFromName(*ppuVar2);
-      lVar4 = 0;
-      do {
-        if (0x3f < (uVar1 & 0xffffffff)) {
-          MyAssertHandler(0xffffffff821ef068,0x13a8,0,0xffffffff82188c28,uVar1,0x40);
-          MyAssertHandler(0xffffffff821ef068,0x132a,0,0xffffffff82188c28,uVar1,0x40);
-        }
-        if ((&DAT_84886b58)[(int)uVar1 * 0x15] == 0) {
-          if (0x3f < (uVar1 & 0xffffffff)) {
-            MyAssertHandler(0xffffffff821ef068,0x133c,0,0xffffffff82188c28,uVar1,0x40);
-          }
-          (&DAT_84886b58)[(int)uVar1 * 0x15] = 2;
-          SND_DisableEq(uVar1,0,lVar4);
-        }
-        lVar4 = lVar4 + 1;
-      } while ((int)lVar4 < 3);
-    }
-    else {
-      SND_SetOcclusionFilter
-                ((double)(float)piVar3[-1],(double)(float)piVar3[1],(double)(float)piVar3[2],
-                 piVar3[-2]);
-    }
-    piVar3 = piVar3 + 5;
-    ppuVar2 = ppuVar2 + 1;
-  } while ((int)piVar3 < -0x7b770298);
-  __restgprlr_21();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 8284FEC0  SND_GetEqTypeFromName  (snd.cpp:4883)
 
-void SND_GetEqTypeFromName(void)
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
+SND_EQTYPE SND_GetEqTypeFromName(char *param_1)
 
 {
-  undefined8 uVar1;
+  char *pcVar1;
   int iVar2;
-  longlong lVar3;
-  undefined **ppuVar4;
+  SND_EQTYPE SVar3;
+  longlong lVar4;
+  char **ppcVar5;
   
-  uVar1 = __savegprlr_28();
-  ppuVar4 = &PTR_s_lowpass_829a6540;
-  lVar3 = 0;
+  pcVar1 = (char *)__savegprlr_28(param_1);
+  ppcVar5 = eqTypenames;
+  lVar4 = 0;
   do {
-    iVar2 = I_stricmp(uVar1,*ppuVar4);
+    iVar2 = I_stricmp(pcVar1,*ppcVar5);
     if (iVar2 == 0) {
-      __restgprlr_28(lVar3);
-      return;
+      SVar3 = __restgprlr_28(lVar4);
+      return SVar3;
     }
-    ppuVar4 = ppuVar4 + 1;
-    lVar3 = lVar3 + 1;
-  } while ((int)ppuVar4 < -0x7d659aac);
-  __restgprlr_28(5);
-  return;
+    ppcVar5 = ppcVar5 + 1;
+    lVar4 = lVar4 + 1;
+  } while ((int)ppcVar5 < -0x7d659aac);
+  SVar3 = __restgprlr_28(5);
+  return SVar3;
 }
 
 
 // 8284FF20  SND_IsEntChanInEqMode  (snd.cpp:4905)
-
-bool SND_IsEntChanInEqMode(ulonglong param_1)
-
-{
-  if (0x3f < (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821ef068,0x132a,0,0xffffffff82188c28,param_1,0x40);
-  }
-  return (&DAT_84886b58)[(int)param_1 * 0x15] == 0;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 8284FF98  SND_IsEntChanInOcclusionMode  (snd.cpp:4914)
-
-bool SND_IsEntChanInOcclusionMode(ulonglong param_1)
-
-{
-  if (0x3f < (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821ef068,0x1333,0,0xffffffff82188c28,param_1,0x40);
-  }
-  return (&DAT_84886b58)[(int)param_1 * 0x15] == 1;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82850010  SND_SetEntChanFilterMode  (snd.cpp:4923)
-
-void SND_SetEntChanFilterMode(ulonglong param_1,undefined4 param_2)
-
-{
-  if (0x3f < (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821ef068,0x133c,0,0xffffffff82188c28,param_1,0x40);
-  }
-  (&DAT_84886b58)[(int)param_1 * 0x15] = param_2;
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82850088  SND_SetOcclusionFilter  (snd.cpp:4931)
-
-void SND_SetOcclusionFilter
-               (undefined8 param_1,double param_2,double param_3,undefined8 param_4,
-               undefined8 param_5,undefined8 param_6)
-
-{
-  ulonglong uVar1;
-  int iVar2;
-  int iVar3;
-  undefined **ppuVar5;
-  longlong lVar4;
-  int iVar6;
-  double extraout_f1;
-  double dVar7;
-  double dVar8;
-  
-  __savegprlr_25();
-  uVar1 = __savefpr_28();
-  dVar8 = extraout_f1;
-  if (0x3f < (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821ef068,0x1347,0,0xffffffff82188c28,uVar1,0x40);
-  }
-  dVar7 = 0.0;
-  if ((dVar8 < 0.0) || (20000.0 < dVar8)) {
-    MyAssertHandler(dVar8,0xffffffff821ef068,0x1348,0,0xffffffff8218949c,0xffffffff821894ac,dVar8);
-  }
-  if (param_3 <= dVar7) {
-    MyAssertHandler(param_3,0xffffffff821ef068,0x1349,0,0xffffffff82189484,0xffffffff82189494,
-                    param_3);
-  }
-  iVar3 = 0;
-  ppuVar5 = &PTR_s_physics_829a6500;
-  do {
-    iVar2 = SND_GetEntChannelFromName(*ppuVar5);
-    iVar6 = (int)uVar1;
-    if (iVar2 == iVar6) {
-      (&DAT_8488fc20)[iVar3 * 5] = iVar6;
-      (&DAT_8488fc28)[iVar3 * 5] = (int)param_6;
-      (&DAT_8488fc24)[iVar3 * 5] = (float)dVar8;
-      (&DAT_8488fc2c)[iVar3 * 5] = (float)param_2;
-      (&DAT_8488fc30)[iVar3 * 5] = (float)param_3;
-      break;
-    }
-    ppuVar5 = ppuVar5 + 1;
-    iVar3 = iVar3 + 1;
-  } while ((int)ppuVar5 < -0x7d659ac0);
-  if (0x3f < (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821ef068,0x133c,0,0xffffffff82188c28,uVar1,0x40);
-  }
-  lVar4 = 1;
-  (&DAT_84886b58)[iVar6 * 0x15] = 1;
-  SND_SetEqParams(param_2,dVar8,param_3,uVar1,0,0,param_6);
-  do {
-    SND_DisableEq(uVar1,1,lVar4);
-    lVar4 = lVar4 + 1;
-  } while ((int)lVar4 < 3);
-  __restfpr_28();
-  __restgprlr_25();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82850260  SND_SetEqEntChannel  (snd.cpp:4967)
 
-void SND_SetEqEntChannel(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4
-                        ,undefined8 param_5,undefined8 param_6,undefined8 param_7)
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
+void SND_SetEqEntChannel(int param_1,int param_2,int param_3,SND_EQTYPE param_4,float param_5,
+                        float param_6,float param_7)
 
 {
-  undefined8 uVar1;
-  char cVar2;
-  undefined8 extraout_f1;
-  undefined8 uVar3;
+  int iVar1;
+  bool bVar2;
+  double extraout_f1;
+  double dVar3;
+  double dVar4;
+  double dVar5;
   
-  uVar1 = __savegprlr_28();
-  if ((int)uVar1 != -1) {
-    uVar3 = extraout_f1;
-    cVar2 = SND_IsEntChanInOcclusionMode();
-    if (((cVar2 != '\0') && ((int)param_5 != 0)) && ((int)param_6 != 0)) {
-      SND_DisableEq(uVar1,0,0);
+  dVar4 = (double)param_7;
+  dVar3 = (double)param_6;
+  iVar1 = __savegprlr_28((double)param_5,param_1);
+  if (iVar1 != -1) {
+    dVar5 = extraout_f1;
+    bVar2 = SND_IsEntChanInOcclusionMode(iVar1);
+    if (((bVar2) && (param_2 != 0)) && (param_3 != 0)) {
+      SND_DisableEq(iVar1,0,0);
     }
-    SND_SetEntChanFilterMode(uVar1,0);
-    SND_SetEqForChannel(uVar3,param_2,param_3,uVar1,param_5,param_6,param_7);
+    SND_SetEntChanFilterMode(iVar1,EQ_MODE);
+    SND_SetEqForChannel(iVar1,param_2,param_3,param_4,(float)dVar5,(float)dVar3,(float)dVar4);
   }
   __restgprlr_28();
   return;
@@ -6458,118 +2517,59 @@ void SND_SetEqEntChannel(undefined8 param_1,undefined8 param_2,undefined8 param_
 
 // 82850310  SND_SetEq  (snd.cpp:4983)
 
-void SND_SetEq(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-              undefined8 param_5,undefined8 param_6,undefined8 param_7)
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
+void SND_SetEq(char *param_1,int param_2,int param_3,SND_EQTYPE param_4,float param_5,float param_6,
+              float param_7)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
-  undefined8 extraout_f1;
-  undefined8 uVar3;
+  char *pcVar1;
+  int iVar2;
+  double extraout_f1;
+  double dVar3;
+  double dVar4;
+  double dVar5;
   
-  uVar1 = __savegprlr_28();
-  uVar3 = extraout_f1;
-  uVar2 = SND_GetEntChannelFromName();
-  if ((int)uVar2 == -1) {
-    Com_PrintError(9,0xffffffff821ef428,uVar1);
+  dVar4 = (double)param_7;
+  dVar3 = (double)param_6;
+  pcVar1 = (char *)__savegprlr_28((double)param_5,param_1);
+  dVar5 = extraout_f1;
+  iVar2 = SND_GetEntChannelFromName(pcVar1);
+  if (iVar2 == -1) {
+    Com_PrintError(9,"Unknown channel name (%s), please check channel definitions file\n");
     __restgprlr_28();
     return;
   }
-  SND_SetEqEntChannel(uVar3,param_2,param_3,uVar2,param_5,param_6,param_7);
+  SND_SetEqEntChannel(iVar2,param_2,param_3,param_4,(float)dVar5,(float)dVar3,(float)dVar4);
   __restgprlr_28();
   return;
 }
 
 
 // 828503A8  SND_DeactivateAllEq  (snd.cpp:4997)
-
-void SND_DeactivateAllEq(void)
-
-{
-  undefined8 uVar1;
-  int *piVar2;
-  ulonglong uVar3;
-  longlong lVar4;
-  
-  uVar1 = __savegprlr_24();
-  uVar3 = 0;
-  piVar2 = &DAT_84886b58;
-  do {
-    if (0x3f < (uVar3 & 0xffffffff)) {
-      MyAssertHandler(0xffffffff821ef068,0x132a,0,0xffffffff82188c28,uVar3,0x40);
-    }
-    if (*piVar2 == 0) {
-      if (0x3f < (uVar3 & 0xffffffff)) {
-        MyAssertHandler(0xffffffff821ef068,0x133c,0,0xffffffff82188c28,uVar3,0x40);
-      }
-      lVar4 = 0;
-      *piVar2 = 2;
-      do {
-        SND_DisableEq(uVar3,uVar1,lVar4);
-        lVar4 = lVar4 + 1;
-      } while ((int)lVar4 < 3);
-    }
-    piVar2 = piVar2 + 0x15;
-    uVar3 = uVar3 + 1;
-  } while ((int)piVar2 < -0x7b777fa8);
-  __restgprlr_24();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82857F30  SND_DeactivateChannelEq  (snd.cpp:5014)
-
-void SND_DeactivateChannelEq(undefined8 param_1,undefined8 param_2)
-
-{
-  undefined8 uVar1;
-  ulonglong uVar2;
-  int iVar3;
-  longlong lVar4;
-  
-  uVar1 = __savegprlr_24();
-  uVar2 = SND_GetEntChannelFromName();
-  iVar3 = (int)uVar2;
-  if (iVar3 == -1) {
-    Com_PrintError(9,0xffffffff821ef428,uVar1);
-    __restgprlr_24();
-    return;
-  }
-  lVar4 = 0;
-  do {
-    if (0x3f < (uVar2 & 0xffffffff)) {
-      MyAssertHandler(0xffffffff821ef068,0x13a8,0,0xffffffff82188c28,uVar2,0x40);
-      MyAssertHandler(0xffffffff821ef068,0x132a,0,0xffffffff82188c28,uVar2,0x40);
-    }
-    if ((&DAT_84886b58)[iVar3 * 0x15] == 0) {
-      if (0x3f < (uVar2 & 0xffffffff)) {
-        MyAssertHandler(0xffffffff821ef068,0x133c,0,0xffffffff82188c28,uVar2,0x40);
-      }
-      (&DAT_84886b58)[iVar3 * 0x15] = 2;
-      SND_DisableEq(uVar2,param_2,lVar4);
-    }
-    lVar4 = lVar4 + 1;
-  } while ((int)lVar4 < 3);
-  __restgprlr_24();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82850478  SND_DeactivateEqForChannel  (snd.cpp:5031)
 
-void SND_DeactivateEqForChannel(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+void SND_DeactivateEqForChannel(int param_1,int param_2,int param_3)
 
 {
-  ulonglong uVar1;
-  char cVar2;
+  uint uVar1;
+  bool bVar2;
   
-  uVar1 = __savegprlr_29();
-  if (0x3f < (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821ef068,0x13a8,0,0xffffffff82188c28,uVar1,0x40);
+  uVar1 = __savegprlr_29(param_1);
+  if (0x3f < uVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x13a8,0,
+                    "entchannel doesn\'t index SND_MAX_ENTCHANNELS\n\t%i not in [0, %i)");
   }
-  cVar2 = SND_IsEntChanInEqMode(uVar1);
-  if (cVar2 != '\0') {
-    SND_SetEntChanFilterMode(uVar1,2);
+  bVar2 = SND_IsEntChanInEqMode(uVar1);
+  if (bVar2) {
+    SND_SetEntChanFilterMode(uVar1,NONE);
     SND_DisableEq(uVar1,param_2,param_3);
   }
   __restgprlr_29();
@@ -6579,30 +2579,31 @@ void SND_DeactivateEqForChannel(undefined8 param_1,undefined8 param_2,undefined8
 
 // 828504F8  SND_DeactivateOcclusionFilter  (snd.cpp:5043)
 
-void SND_DeactivateOcclusionFilter(void)
+void SND_DeactivateOcclusionFilter(int param_1)
 
 {
-  ulonglong uVar1;
-  char cVar2;
-  longlong lVar3;
-  longlong lVar4;
+  uint uVar1;
+  bool bVar2;
+  int iVar3;
+  int iVar4;
   
-  uVar1 = __savegprlr_29();
-  if (0x3f < (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821ef068,0x13b7,0,0xffffffff82188c28,uVar1,0x40);
+  uVar1 = __savegprlr_29(param_1);
+  if (0x3f < uVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x13b7,0,
+                    "entchannel doesn\'t index SND_MAX_ENTCHANNELS\n\t%i not in [0, %i)");
   }
-  cVar2 = SND_IsEntChanInOcclusionMode(uVar1);
-  if (cVar2 != '\0') {
-    SND_SetEntChanFilterMode(uVar1,2);
-    lVar3 = 0;
+  bVar2 = SND_IsEntChanInOcclusionMode(uVar1);
+  if (bVar2) {
+    SND_SetEntChanFilterMode(uVar1,NONE);
+    iVar3 = 0;
     do {
-      lVar4 = 0;
+      iVar4 = 0;
       do {
-        SND_DisableEq(uVar1,lVar3,lVar4);
-        lVar4 = lVar4 + 1;
-      } while ((int)lVar4 < 3);
-      lVar3 = lVar3 + 1;
-    } while ((int)lVar3 < 2);
+        SND_DisableEq(uVar1,iVar3,iVar4);
+        iVar4 = iVar4 + 1;
+      } while (iVar4 < 3);
+      iVar3 = iVar3 + 1;
+    } while (iVar3 < 2);
   }
   __restgprlr_29();
   return;
@@ -6610,1773 +2611,317 @@ void SND_DeactivateOcclusionFilter(void)
 
 
 // 82850590  SND_DeactivateAllFilters  (snd.cpp:5061)
-
-void SND_DeactivateAllFilters(void)
-
-{
-  undefined4 *puVar1;
-  ulonglong uVar2;
-  longlong lVar3;
-  longlong lVar4;
-  
-  __savegprlr_24();
-  uVar2 = 0;
-  puVar1 = &DAT_84886b58;
-  do {
-    if (0x3f < (uVar2 & 0xffffffff)) {
-      MyAssertHandler(0xffffffff821ef068,0x133c,0,0xffffffff82188c28,uVar2,0x40);
-    }
-    lVar3 = 0;
-    *puVar1 = 2;
-    do {
-      lVar4 = 0;
-      do {
-        SND_DisableEq(uVar2,lVar3,lVar4);
-        lVar4 = lVar4 + 1;
-      } while ((int)lVar4 < 3);
-      lVar3 = lVar3 + 1;
-    } while ((int)lVar3 < 2);
-    puVar1 = puVar1 + 0x15;
-    uVar2 = uVar2 + 1;
-  } while ((int)puVar1 < -0x7b777fa8);
-  __restgprlr_24();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82850640  SND_DeactivateEq  (snd.cpp:5077)
 
-void SND_DeactivateEq(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+void SND_DeactivateEq(char *param_1,int param_2,int param_3)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
+  char *pcVar1;
+  int iVar2;
   
-  uVar1 = __savegprlr_29();
-  uVar2 = SND_GetEntChannelFromName();
-  if ((int)uVar2 == -1) {
-    Com_PrintError(9,0xffffffff821ef428,uVar1);
+  pcVar1 = (char *)__savegprlr_29(param_1);
+  iVar2 = SND_GetEntChannelFromName(pcVar1);
+  if (iVar2 == -1) {
+    Com_PrintError(9,"Unknown channel name (%s), please check channel definitions file\n");
     __restgprlr_29();
     return;
   }
-  SND_DeactivateEqForChannel(uVar2,param_2,param_3);
+  SND_DeactivateEqForChannel(iVar2,param_2,param_3);
   __restgprlr_29();
   return;
 }
 
 
 // 82850698  SND_SetWhizbyNumVariations  (snd.cpp:5093)
-
-void SND_SetWhizbyNumVariations(undefined4 *param_1)
-
-{
-  if (param_1 == (undefined4 *)0x0) {
-    MyAssertHandler(0xffffffff821ef068,0x13e6,0,0xffffffff82000f98,0xffffffff821f1298);
-  }
-  DAT_8488d1bc = *param_1;
-  DAT_8488d1c0 = param_1[1];
-  DAT_8488d1c4 = param_1[2];
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82850728  SND_SetWhizbySpread  (snd.cpp:5105)
-
-void SND_SetWhizbySpread(undefined4 *param_1)
-
-{
-  if (param_1 == (undefined4 *)0x0) {
-    MyAssertHandler(0xffffffff821ef068,0x13f2,0,0xffffffff82000f98,0xffffffff8200e094);
-  }
-  DAT_8488d1b0 = *param_1;
-  DAT_8488d1b4 = param_1[1];
-  DAT_8488d1b8 = param_1[2];
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 828507B8  SND_SetWhizbyRadius  (snd.cpp:5118)
-
-void SND_SetWhizbyRadius(undefined4 *param_1)
-
-{
-  if (param_1 == (undefined4 *)0x0) {
-    MyAssertHandler(0xffffffff821ef068,0x13ff,0,0xffffffff82000f98,0xffffffff82012784);
-  }
-  DAT_8488d1a4 = *param_1;
-  DAT_8488d1a8 = param_1[1];
-  DAT_8488d1ac = param_1[2];
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82850848  SND_GetWhizbyRadius  (snd.cpp:5130)
-
-double SND_GetWhizbyRadius(uint param_1)
-
-{
-  if (2 < param_1) {
-    MyAssertHandler(0xffffffff821ef068,0x140b,0,0xffffffff821f12a8,param_1,3);
-  }
-  return (double)(float)(&DAT_8488d1a4)[param_1];
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 828508B8  SND_GetWhizbySpread  (snd.cpp:5228)
-
-void SND_GetWhizbySpread(void)
-
-{
-  float fVar1;
-  ulonglong uVar2;
-  int iVar3;
-  int iVar4;
-  double dVar5;
-  double extraout_f1;
-  double dVar6;
-  double dVar7;
-  double dVar8;
-  
-  __savegprlr_29();
-  uVar2 = __savefpr_28();
-  dVar8 = extraout_f1;
-  if (2 < (uVar2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821ef068,0x1472,0,0xffffffff821f12a8,uVar2,3);
-  }
-  dVar6 = 0.0;
-  if ((int)uVar2 == 1) {
-    dVar7 = (double)DAT_8488d1a8;
-    dVar5 = (double)DAT_8488d1a4;
-    if (dVar7 == dVar5) {
-      MyAssertHandler(0xffffffff821ef068,0x1483,0,0xffffffff82000f98,0xffffffff821f1308);
-      dVar7 = (double)DAT_8488d1a8;
-      dVar5 = (double)DAT_8488d1a4;
-    }
-    iVar4 = 0xf7ec;
-    iVar3 = 0xf7f0;
-    fVar1 = (float)(dVar8 - dVar5) / (float)(dVar7 - dVar5);
-  }
-  else {
-    if ((int)uVar2 == 2) {
-      dVar6 = 0.0;
-      dVar7 = (double)DAT_8488d1b8;
-      dVar8 = dVar6;
-      dVar5 = dVar7;
-      goto LAB_82850a6c;
-    }
-    dVar5 = (double)DAT_8488d1a4;
-    if (dVar5 == 0.0) {
-      MyAssertHandler(0xffffffff821ef068,0x147d,0,0xffffffff82000f98,0xffffffff821f1360);
-      dVar5 = (double)DAT_8488d1a4;
-    }
-    fVar1 = (float)(dVar8 / dVar5);
-    iVar4 = 0xf7e8;
-    iVar3 = 0xf7ec;
-  }
-  dVar8 = (double)fVar1;
-  dVar7 = (double)*(float *)(&DAT_8487d9c8 + iVar3);
-  dVar5 = (double)*(float *)(&DAT_8487d9c8 + iVar4);
-  if ((dVar8 < dVar6) || (1.0 < dVar8)) {
-    MyAssertHandler(0xffffffff821ef068,0x148f,0,0xffffffff82000f98,0xffffffff821f12e0);
-  }
-LAB_82850a6c:
-  dVar8 = (double)(float)((double)(float)(dVar7 - dVar5) * dVar8 + dVar5);
-  if (dVar8 < 0.0) {
-    dVar8 = dVar6;
-  }
-  __restfpr_28(dVar8);
-  __restgprlr_29();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82850A88  SND_ResetWhizbyType  (snd.cpp:5273)
-
-void SND_ResetWhizbyType(uint param_1)
-
-{
-  if (2 < param_1) {
-    MyAssertHandler(0xffffffff821ef068,0x149a,0,0xffffffff821f12a8,param_1,3);
-  }
-  (&DAT_8488d1c8)[param_1] = (&DAT_8488d1bc)[param_1];
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82850B00  SND_InitWhizbyVariations  (snd.cpp:5284)
-
-void SND_InitWhizbyVariations(void)
-
-{
-  int iVar1;
-  int *piVar2;
-  int iVar3;
-  
-  iVar1 = 0;
-  piVar2 = &DAT_8488d1bc;
-  do {
-    iVar3 = 0;
-    if (0 < *piVar2) {
-      do {
-        (&DAT_8488d1d4)[iVar1 + iVar3] = iVar3;
-        iVar3 = iVar3 + 1;
-      } while (iVar3 < *piVar2);
-    }
-    iVar1 = iVar1 + 0x10;
-    piVar2[3] = *piVar2;
-    piVar2 = piVar2 + 1;
-  } while ((int)piVar2 < -0x7b772e38);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82850B70  SND_GetNextWhizbyVariationIndex  (snd.cpp:5299)
-
-void SND_GetNextWhizbyVariationIndex(void)
-
-{
-  uint uVar1;
-  undefined4 uVar2;
-  int iVar3;
-  int iVar4;
-  int iVar5;
-  ulonglong uVar6;
-  longlong lVar7;
-  longlong lVar8;
-  
-  uVar6 = __savegprlr_26();
-  if (2 < (uVar6 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821ef068,0x14b6,0,0xffffffff8202ad54,uVar6,3);
-  }
-  iVar3 = (int)((uVar6 & 0x3fffffff) << 2);
-  if (*(int *)((int)&DAT_8488d1c8 + iVar3) == 0) {
-    SND_ResetWhizbyType(uVar6);
-  }
-  uVar1 = *(uint *)((int)&DAT_8488d1c8 + iVar3);
-  if (uVar1 == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x14c8,0,0xffffffff82000f98,0xffffffff821f1394);
-  }
-  lVar7 = irand(0,(ulonglong)uVar1);
-  lVar8 = (uVar6 & 0xfffffff) * 0x10;
-  iVar4 = (int)((lVar8 + lVar7 & 0xffffffffU) << 2);
-  iVar5 = (int)((lVar8 + (ulonglong)uVar1 & 0xffffffff) << 2);
-  uVar2 = *(undefined4 *)((int)&DAT_8488d1d0 + iVar5);
-  *(undefined4 *)((int)&DAT_8488d1d0 + iVar5) = *(undefined4 *)((int)&DAT_8488d1d4 + iVar4);
-  *(undefined4 *)((int)&DAT_8488d1d4 + iVar4) = uVar2;
-  *(int *)((int)&DAT_8488d1c8 + iVar3) = *(int *)((int)&DAT_8488d1c8 + iVar3) + -1;
-  __restgprlr_26();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82850C58  SND_SaveWhizbyData  (snd.cpp:5342)
-
-void SND_SaveWhizbyData(undefined8 param_1)
-
-{
-  undefined4 local_20 [2];
-  
-  MemFile_WriteFloat((double)DAT_8488d1a4);
-  MemFile_WriteFloat((double)DAT_8488d1a8,param_1);
-  MemFile_WriteFloat((double)DAT_8488d1ac,param_1);
-  MemFile_WriteFloat((double)DAT_8488d1b0,param_1);
-  MemFile_WriteFloat((double)DAT_8488d1b4,param_1);
-  MemFile_WriteFloat((double)DAT_8488d1b8,param_1);
-  local_20[0] = DAT_8488d1c8;
-  MemFile_WriteData(param_1,4,local_20);
-  local_20[0] = DAT_8488d1cc;
-  MemFile_WriteData(param_1,4,local_20);
-  local_20[0] = DAT_8488d1d0;
-  MemFile_WriteData(param_1,4,local_20);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82850D68  SND_RestoreWhizbyData  (snd.cpp:5366)
-
-void SND_RestoreWhizbyData(void)
-
-{
-  undefined8 uVar1;
-  uint local_40;
-  uint local_3c [15];
-  
-  uVar1 = __savegprlr_26();
-  MemFile_ReadData(uVar1,4,&local_40);
-  local_3c[0] = local_40;
-  if ((local_40 & 0x7f800000) == 0x7f800000) {
-    MyAssertHandler(0xffffffff82188090,0xc6,0,0xffffffff82000f98,0xffffffff820606fc);
-  }
-  DAT_8488d1a4 = local_40;
-  MemFile_ReadData(uVar1,4,&local_40);
-  local_3c[0] = local_40;
-  if ((local_40 & 0x7f800000) == 0x7f800000) {
-    MyAssertHandler(0xffffffff82188090,0xc6,0,0xffffffff82000f98,0xffffffff820606fc);
-  }
-  DAT_8488d1a8 = local_40;
-  MemFile_ReadData(uVar1,4,&local_40);
-  local_3c[0] = local_40;
-  if ((local_40 & 0x7f800000) == 0x7f800000) {
-    MyAssertHandler(0xffffffff82188090,0xc6,0,0xffffffff82000f98,0xffffffff820606fc);
-  }
-  DAT_8488d1ac = local_40;
-  MemFile_ReadData(uVar1,4,&local_40);
-  local_3c[0] = local_40;
-  if ((local_40 & 0x7f800000) == 0x7f800000) {
-    MyAssertHandler(0xffffffff82188090,0xc6,0,0xffffffff82000f98,0xffffffff820606fc);
-  }
-  DAT_8488d1b0 = local_40;
-  MemFile_ReadData(uVar1,4,&local_40);
-  local_3c[0] = local_40;
-  if ((local_40 & 0x7f800000) == 0x7f800000) {
-    MyAssertHandler(0xffffffff82188090,0xc6,0,0xffffffff82000f98,0xffffffff820606fc);
-  }
-  DAT_8488d1b4 = local_40;
-  MemFile_ReadData(uVar1,4,&local_40);
-  local_3c[0] = local_40;
-  if ((local_40 & 0x7f800000) == 0x7f800000) {
-    MyAssertHandler(0xffffffff82188090,0xc6,0,0xffffffff82000f98,0xffffffff820606fc);
-  }
-  DAT_8488d1b8 = local_40;
-  MemFile_ReadData(uVar1,4,local_3c);
-  DAT_8488d1c8 = local_3c[0];
-  MemFile_ReadData(uVar1,4,local_3c);
-  DAT_8488d1cc = local_3c[0];
-  MemFile_ReadData(uVar1,4,local_3c);
-  DAT_8488d1d0 = local_3c[0];
-  __restgprlr_26();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82850FE0  SND_SaveEntityOcclusion  (snd.cpp:5389)
-
-void SND_SaveEntityOcclusion(void)
-
-{
-  int iVar1;
-  undefined8 uVar2;
-  int *piVar3;
-  undefined4 *puVar5;
-  undefined2 *puVar6;
-  longlong lVar4;
-  int local_40 [16];
-  
-  uVar2 = __savegprlr_26();
-  iVar1 = DAT_84886ae8;
-  piVar3 = &DAT_8487cfb4;
-  puVar5 = &DAT_8488d5a4;
-  do {
-    local_40[0] = puVar5[-1];
-    MemFile_WriteData(uVar2,4,local_40);
-    MemFile_WriteData(uVar2,0xc,puVar5);
-    local_40[0] = puVar5[3];
-    MemFile_WriteData(uVar2,4,local_40);
-    local_40[0] = puVar5[4];
-    MemFile_WriteData(uVar2,4,local_40);
-    piVar3 = piVar3 + 1;
-    local_40[0] = *piVar3 - iVar1;
-    MemFile_WriteData(uVar2,4,local_40);
-    puVar5 = puVar5 + 6;
-  } while ((int)puVar5 < -0x7b771e5c);
-  puVar6 = &DAT_8488e1a0;
-  do {
-    local_40[0] = CONCAT22(*puVar6,local_40[0]._2_2_);
-    MemFile_WriteData(uVar2,2,local_40);
-    puVar6 = puVar6 + 1;
-  } while ((int)puVar6 < -0x7b770660);
-  lVar4 = -0x7b7703e0;
-  do {
-    MemFile_WriteData(uVar2,0x14,lVar4);
-    lVar4 = lVar4 + 0x14;
-  } while ((int)lVar4 < -0x7b7702a0);
-  piVar3 = &DAT_84886b58;
-  do {
-    local_40[0] = *piVar3;
-    MemFile_WriteData(uVar2,4,local_40);
-    piVar3 = piVar3 + 0x15;
-  } while ((int)piVar3 < -0x7b777fa8);
-  __restgprlr_26();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82851138  SND_RestoreEntityOcclusion  (snd.cpp:5427)
-
-void SND_RestoreEntityOcclusion(void)
-
-{
-  int iVar1;
-  undefined8 uVar2;
-  int *piVar3;
-  undefined4 *puVar5;
-  undefined2 *puVar6;
-  longlong lVar4;
-  undefined4 local_50;
-  undefined4 local_4c;
-  undefined4 local_48;
-  int local_44 [17];
-  
-  uVar2 = __savegprlr_26();
-  iVar1 = DAT_84886ae8;
-  piVar3 = &DAT_8487cfb4;
-  puVar5 = &DAT_8488d5a4;
-  do {
-    MemFile_ReadData(uVar2,4,&local_50);
-    puVar5[-1] = local_50;
-    MemFile_ReadData(uVar2,0xc,puVar5);
-    MemFile_ReadData(uVar2,4,&local_4c);
-    puVar5[3] = local_4c;
-    MemFile_ReadData(uVar2,4,&local_48);
-    puVar5[4] = local_48;
-    MemFile_ReadData(uVar2,4,local_44);
-    puVar5 = puVar5 + 6;
-    piVar3 = piVar3 + 1;
-    *piVar3 = local_44[0] + iVar1;
-  } while ((int)puVar5 < -0x7b771e5c);
-  puVar6 = &DAT_8488e1a0;
-  do {
-    MemFile_ReadData(uVar2,2,&local_50);
-    *puVar6 = local_50._0_2_;
-    puVar6 = puVar6 + 1;
-  } while ((int)puVar6 < -0x7b770660);
-  lVar4 = -0x7b7703e0;
-  do {
-    MemFile_ReadData(uVar2,0x14,lVar4);
-    lVar4 = lVar4 + 0x14;
-  } while ((int)lVar4 < -0x7b7702a0);
-  piVar3 = &DAT_84886b58;
-  do {
-    MemFile_ReadData(uVar2,4,local_44);
-    *piVar3 = local_44[0];
-    piVar3 = piVar3 + 0x15;
-  } while ((int)piVar3 < -0x7b777fa8);
-  __restgprlr_26();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82851290  SND_UpdateTimeScale  (snd.cpp:5490)
-
-void SND_UpdateTimeScale(void)
-
-{
-  char cVar2;
-  int iVar1;
-  float *pfVar3;
-  longlong lVar4;
-  double dVar5;
-  double dVar6;
-  double dVar7;
-  double dVar8;
-  double dVar9;
-  
-  __savegprlr_29();
-  __savefpr_27();
-  dVar6 = (double)Com_GetTimescaleForSnd();
-  dVar7 = 0.0;
-  dVar8 = 1.0;
-  if (dVar6 <= 0.0) {
-    dVar6 = dVar8;
-  }
-  dVar5 = (double)DAT_8487d9d8;
-  if (dVar6 != dVar5) {
-    if (dVar6 == 0.0) {
-      MyAssertHandler(0xffffffff821ef068,0x157d,0,0xffffffff82000f98,0xffffffff8208c628);
-      dVar5 = (double)DAT_8487d9d8;
-    }
-    if (dVar5 == dVar7) {
-      MyAssertHandler(0xffffffff821ef068,0x157e,0,0xffffffff82000f98,0xffffffff821f13ac);
-      dVar5 = (double)DAT_8487d9d8;
-    }
-    DAT_8487d9d8 = (float)dVar6;
-    dVar5 = (double)(float)(dVar6 / dVar5);
-    lVar4 = 8;
-    dVar6 = 0.5;
-    if (8 < DAT_8488a998 + 8) {
-      pfVar3 = (float *)&DAT_848887c4;
-      do {
-        cVar2 = SND_Is3DChannelFree(lVar4);
-        if ((cVar2 == '\0') && (dVar9 = (double)*pfVar3, dVar9 != dVar7)) {
-          iVar1 = SND_Get3DChannelPlaybackRate(lVar4);
-          dVar9 = floor((double)(float)((double)((float)(longlong)iVar1 *
-                                                (float)(dVar9 * dVar5 +
-                                                       (double)(float)(dVar8 - dVar9))) + dVar6));
-          SND_Set3DChannelPlaybackRate(lVar4,(int)dVar9);
-        }
-        lVar4 = lVar4 + 1;
-        pfVar3 = pfVar3 + 0x30;
-      } while ((int)lVar4 < DAT_8488a998 + 8);
-    }
-    lVar4 = 0x28;
-    if (0x28 < DAT_8488a99c + 0x28) {
-      pfVar3 = (float *)&DAT_84889fc4;
-      do {
-        cVar2 = SND_IsStreamChannelFree(lVar4);
-        if ((cVar2 == '\0') && (dVar9 = (double)*pfVar3, dVar9 != dVar7)) {
-          iVar1 = SND_GetStreamChannelPlaybackRate(lVar4);
-          dVar9 = floor((double)(float)((double)((float)(longlong)iVar1 *
-                                                (float)(dVar9 * dVar5 +
-                                                       (double)(float)(dVar8 - dVar9))) + dVar6));
-          SND_SetStreamChannelPlaybackRate(lVar4,(int)dVar9);
-        }
-        lVar4 = lVar4 + 1;
-        pfVar3 = pfVar3 + 0x30;
-      } while ((int)lVar4 < DAT_8488a99c + 0x28);
-    }
-    lVar4 = 0;
-    if (0 < DAT_8488a994) {
-      pfVar3 = (float *)&DAT_848881c4;
-      do {
-        cVar2 = SND_Is2DChannelFree(lVar4);
-        if ((cVar2 == '\0') && (dVar9 = (double)*pfVar3, dVar9 != dVar7)) {
-          iVar1 = SND_Get2DChannelPlaybackRate(lVar4);
-          dVar9 = floor((double)(float)((double)((float)(longlong)iVar1 *
-                                                (float)(dVar9 * dVar5 +
-                                                       (double)(float)(dVar8 - dVar9))) + dVar6));
-          SND_Set2DChannelPlaybackRate(lVar4,(int)dVar9);
-        }
-        lVar4 = lVar4 + 1;
-        pfVar3 = pfVar3 + 0x30;
-      } while ((int)lVar4 < DAT_8488a994);
-    }
-  }
-  __restfpr_27();
-  __restgprlr_29();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82851558  FontSizeForDistance  (snd.cpp:5534)
 
-double FontSizeForDistance(double param_1)
+float FontSizeForDistance(float param_1)
 
 {
   if (param_1 < 10.0) {
-    return 0.05000000074505806;
+    return 0.05;
   }
-  return (double)(float)(param_1 * 0.0017500000540167093);
+  return param_1 * 0.00175;
 }
 
 
 // 82858038  DebugDrawWorldSound3D  (snd.cpp:5543)
-
-void DebugDrawWorldSound3D
-               (undefined8 param_1,int param_2,int param_3,ulonglong param_4,ulonglong param_5)
-
-{
-  float fVar1;
-  float fVar2;
-  float fVar3;
-  uint uVar4;
-  int iVar5;
-  int iVar7;
-  int iVar8;
-  char cVar9;
-  undefined8 uVar6;
-  undefined1 *puVar10;
-  undefined *puVar11;
-  char *pcVar12;
-  undefined8 uVar13;
-  longlong lVar14;
-  double dVar15;
-  double dVar16;
-  double dVar17;
-  double dVar18;
-  float local_1a0;
-  float local_19c;
-  float local_198;
-  longlong local_190;
-  undefined1 uStack_181;
-  char local_180 [384];
-  
-  __savegprlr_21();
-  iVar7 = __savefpr_28();
-  if ((iVar7 < 0) || (0x35 < iVar7)) {
-    MyAssertHandler(0xffffffff821ef068,0x15b2,0,0xffffffff821f2800,0xffffffff821f2810,iVar7);
-  }
-  if ((&DAT_84888184)[iVar7 * 0x30] == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x15b5,0,0xffffffff82000f98,0xffffffff821ef8f0);
-  }
-  SND_GetCurrent3DPosition((&DAT_84888120)[iVar7 * 0x30],&DAT_848881a4 + iVar7 * 0xc0,&local_1a0);
-  iVar8 = SND_GetListenerIndexNearestToOrigin(&local_1a0);
-  iVar5 = iVar8 * 0x3c;
-  dVar15 = (double)local_198;
-  dVar16 = (double)SQRT(((float)(&DAT_848869f8)[iVar8 * 0xf] - local_1a0) *
-                        ((float)(&DAT_848869f8)[iVar8 * 0xf] - local_1a0) +
-                        (float)((double)(float)(&DAT_84886a00)[iVar8 * 0xf] - dVar15) *
-                        (float)((double)(float)(&DAT_84886a00)[iVar8 * 0xf] - dVar15) +
-                        ((float)(&DAT_848869fc)[iVar8 * 0xf] - local_19c) *
-                        ((float)(&DAT_848869fc)[iVar8 * 0xf] - local_19c));
-  if (10.0 <= dVar16) {
-    fVar1 = (float)(dVar16 * 0.0017500000540167093);
-  }
-  else {
-    fVar1 = 0.05;
-  }
-  dVar17 = (double)fVar1;
-  if (param_2 != 3) {
-    if ((param_4 & 0xffffffff) == 0) {
-      MyAssertHandler(0xffffffff821ef068,0x15c1,0,0xffffffff82000f98,0xffffffff821f27f4);
-      dVar15 = (double)local_198;
-    }
-    if ((param_5 & 0xffffffff) == 0) {
-      MyAssertHandler(0xffffffff821ef068,0x15c2,0,0xffffffff82000f98,0xffffffff821f27e0);
-      dVar15 = (double)local_198;
-    }
-    local_19c = local_19c - (float)(&DAT_848869fc)[iVar8 * 0xf];
-    fVar1 = (float)(dVar15 - (double)(float)(&DAT_84886a00)[iVar8 * 0xf]);
-    local_1a0 = local_1a0 - (float)(&DAT_848869f8)[iVar8 * 0xf];
-    fVar2 = SQRT(local_1a0 * local_1a0 + fVar1 * fVar1 + local_19c * local_19c);
-    fVar3 = 1.0;
-    if (-fVar2 < 0.0) {
-      fVar3 = fVar2;
-    }
-    fVar3 = 1.0 / fVar3;
-    fVar1 = *(float *)(&DAT_84886a0c + iVar5) * fVar1 * fVar3 +
-            *(float *)(&DAT_84886a08 + iVar5) * local_19c * fVar3 +
-            *(float *)(&DAT_84886a04 + iVar5) * fVar3 * local_1a0;
-    if (*(float *)param_5 < fVar1) {
-      *(int *)param_4 = iVar7;
-      *(float *)param_5 = fVar1;
-    }
-  }
-  if ((uint)(&DAT_84888120)[iVar7 * 0x30] >> 0x14 == 0x7fe) {
-    uVar13 = 0xffffffff821817f8;
-  }
-  else {
-    uVar13 = 0xffffffff82181888;
-    local_190 = (longlong)*(int *)(((uint)(&DAT_84888120)[iVar7 * 0x30] >> 0x14) * 4 + param_3);
-    local_198 = (float)((double)local_190 + dVar15);
-  }
-  cVar9 = SND_GetIsGoalOccluded(&DAT_84888114 + iVar7 * 0x30);
-  if (cVar9 != '\0') {
-    uVar13 = 0xffffffff821817e8;
-  }
-  if (param_2 != 1) {
-    if (param_2 != 2) {
-      if (param_2 == 3) {
-        dVar17 = (double)(float)(dVar17 * 0.8500000238418579);
-        uVar6 = va(0xffffffff821f27d4,*(undefined4 *)(&DAT_84888184)[iVar7 * 0x30],
-                   (uint)(&DAT_84888120)[iVar7 * 0x30] >> 0x14);
-        uVar4 = (uint)(&DAT_84888120)[iVar7 * 0x30] >> 0x12 & 0x3ffc;
-        if (*(int *)(uVar4 + param_3) == 0) {
-          CL_AddDebugStarWithText(&local_1a0,uVar13,0xffffffff82181918);
-        }
-        else {
-          CL_AddDebugString(dVar17,&local_1a0,0xffffffff82181918,uVar4,uVar6,0,1);
-        }
-        if (*(int *)((&DAT_84888184)[iVar7 * 0x30] + 0x14) == 0) {
-          MyAssertHandler(0xffffffff821ef068,0x15f5,0,0xffffffff82000f98,0xffffffff821f27b8);
-        }
-        dVar18 = (double)(float)(dVar17 * 12.0);
-        local_198 = (float)((double)local_198 - dVar18);
-        uVar13 = SND_GetEntChannelName((&DAT_84888124)[iVar7 * 0x30]);
-        va(0xffffffff821f27a8,uVar13);
-        CL_AddDebugString(dVar17,&local_1a0,0xffffffff82181918);
-        local_198 = (float)((double)local_198 - dVar18);
-        puVar10 = &uStack_181;
-        puVar11 = &UNK_821f279f;
-        lVar14 = 7;
-        do {
-          puVar11 = puVar11 + 1;
-          puVar10 = puVar10 + 1;
-          *puVar10 = *puVar11;
-          lVar14 = lVar14 + -1;
-        } while (lVar14 != 0);
-        pcVar12 = local_180;
-        do {
-          cVar9 = *pcVar12;
-          pcVar12 = pcVar12 + 1;
-        } while (cVar9 != '\0');
-        Com_GetSoundFileName
-                  ((&DAT_84888184)[iVar7 * 0x30],local_180 + (int)(pcVar12 + (-1 - (int)local_180)),
-                   0x100 - (int)(pcVar12 + (-1 - (int)local_180)));
-        CL_AddDebugString(dVar17,&local_1a0,0xffffffff82181918);
-        local_198 = (float)((double)local_198 - dVar18);
-        if ((uint)(&DAT_84888120)[iVar7 * 0x30] >> 0x14 == 0x7fe) {
-          va(0xffffffff821f2790);
-        }
-        else {
-          va(0xffffffff821f277c);
-        }
-        CL_AddDebugString(dVar17,&local_1a0,0xffffffff82181918);
-        local_198 = (float)((double)local_198 - dVar18);
-        va(dVar16,0xffffffff821f2764,dVar16,(double)*(float *)((&DAT_84888184)[iVar7 * 0x30] + 0x34)
-          );
-        CL_AddDebugString(dVar17,&local_1a0,0xffffffff82181918);
-        local_198 = (float)((double)local_198 - dVar18);
-        dVar16 = (double)SND_GetChannelFractionPlayed(iVar7,0);
-        va(0xffffffff821f2754,(double)(float)(dVar16 * 100.0));
-        CL_AddDebugString(dVar17,&local_1a0,0xffffffff82181918);
-        cVar9 = SND_GetIsGoalOccluded(&DAT_84888114 + iVar7 * 0x30);
-        if (cVar9 != '\0') {
-          local_198 = (float)((double)local_198 - dVar18);
-          va(0xffffffff821f2748);
-          CL_AddDebugString(dVar17,&local_1a0,0xffffffff82181918);
-        }
-      }
-      goto LAB_828585d0;
-    }
-    CL_AddDebugString(dVar17,&local_1a0,0xffffffff82181918);
-  }
-  if (*(int *)(((uint)(&DAT_84888120)[iVar7 * 0x30] >> 0x12 & 0x3ffc) + param_3) == 0) {
-    CL_AddDebugStar(&local_1a0,uVar13,1,0);
-  }
-LAB_828585d0:
-  if ((uint)(&DAT_84888120)[iVar7 * 0x30] >> 0x14 != 0x7fe) {
-    *(int *)(((uint)(&DAT_84888120)[iVar7 * 0x30] >> 0x14) * 4 + param_3) =
-         (int)(-(double)(float)(dVar17 * 15.0 - (double)local_198) - dVar15);
-  }
-  __restfpr_28();
-  __restgprlr_21();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82858610  DebugDrawWorldSounds  (snd.cpp:5678)
-
-void DebugDrawWorldSounds(void)
-
-{
-  uint uVar1;
-  undefined8 uVar2;
-  char cVar3;
-  int *piVar4;
-  longlong lVar5;
-  float local_3070;
-  int local_306c [3];
-  undefined1 auStack_3060 [12384];
-  
-  uVar2 = __savegprlr_21();
-  if (DAT_8487d9c8 == '\0') {
-    MyAssertHandler(0xffffffff821ef068,0x1636,0,0xffffffff82000f98,0xffffffff821f2870);
-  }
-  if ((int)uVar2 != 0) {
-    local_306c[0] = -1;
-    local_3070 = -2.0;
-    memset(auStack_3060,0,0x3000);
-    lVar5 = 8;
-    if (8 < DAT_8488a998 + 8) {
-      piVar4 = &DAT_84888784;
-      do {
-        cVar3 = SND_Is3DChannelFree(lVar5);
-        if ((cVar3 == '\0') &&
-           ((DAT_8487cf9c == 0xffffffff || (DAT_8487cf9c == (*(int *)(*piVar4 + 0x3c) >> 9 & 0x3fU))
-            ))) {
-          DebugDrawWorldSound3D(lVar5,uVar2,auStack_3060,local_306c,&local_3070);
-        }
-        lVar5 = lVar5 + 1;
-        piVar4 = piVar4 + 0x30;
-      } while ((int)lVar5 < DAT_8488a998 + 8);
-    }
-    lVar5 = 0x28;
-    if (0x28 < DAT_8488a99c + 0x28) {
-      piVar4 = &DAT_84889f84;
-      do {
-        cVar3 = SND_IsStreamChannelFree(lVar5);
-        if (cVar3 == '\0') {
-          if (*piVar4 == 0) {
-            MyAssertHandler(0xffffffff821ef068,0x164f,0,0xffffffff82000f98,0xffffffff821f2854);
-          }
-          uVar1 = *(int *)(*piVar4 + 0x3c) >> 9 & 0x3f;
-          if (DAT_84888110 <= (int)uVar1) {
-            MyAssertHandler(0xffffffff821ef068,0x293,0,0xffffffff8218a1b4,0xffffffff8218a1cc,uVar1);
-          }
-          if (((&DAT_84886b4c)[uVar1 * 0x54] != '\0') &&
-             ((DAT_8487cf9c == 0xffffffff || (DAT_8487cf9c == uVar1)))) {
-            DebugDrawWorldSound3D(lVar5,uVar2,auStack_3060,local_306c,&local_3070);
-          }
-        }
-        lVar5 = lVar5 + 1;
-        piVar4 = piVar4 + 0x30;
-      } while ((int)lVar5 < DAT_8488a99c + 0x28);
-    }
-    if ((local_306c[0] != -1) && (0.93 <= local_3070)) {
-      DebugDrawWorldSound3D(local_306c[0],3,auStack_3060,0,0);
-    }
-  }
-  __restgprlr_21();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82851588  SND_UpdatePhysics  (snd.cpp:5730)
-
-void SND_UpdatePhysics(void)
-
-{
-  bool bVar1;
-  uint uVar2;
-  char *pcVar3;
-  ulonglong uVar4;
-  undefined *puVar5;
-  
-  __savegprlr_29();
-  Sys_EnterCriticalSection(0x17);
-  uVar2 = DAT_8488d598;
-  pcVar3 = &DAT_84886a30;
-  uVar4 = (ulonglong)DAT_8488d598;
-  DAT_8488d598 = 0;
-  do {
-    if (*pcVar3 != '\0') {
-      bVar1 = true;
-      goto LAB_828515e8;
-    }
-    pcVar3 = pcVar3 + 0x3c;
-  } while ((int)pcVar3 < -0x7b7794e0);
-  bVar1 = false;
-LAB_828515e8:
-  if (bVar1) {
-    if (0x20 < (int)uVar2) {
-      MyAssertHandler(0xffffffff821ef068,0x1674,0,0xffffffff82000f98,0xffffffff821f13bc);
-    }
-    if (0 < (int)uVar2) {
-      puVar5 = &DAT_8488d29c;
-      do {
-        Com_PickSoundAliasFromList(*(undefined4 *)(puVar5 + -4));
-        SND_PlayScaledSoundAlias((double)*(float *)(puVar5 + 0xc),(double)*(float *)(puVar5 + 0x10))
-        ;
-        uVar4 = uVar4 - 1;
-        puVar5 = puVar5 + 0x18;
-      } while (uVar4 != 0);
-    }
-  }
-  Sys_LeaveCriticalSection(0x17);
-  __restgprlr_29();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82851678  SND_ShouldGiveCpuWarning  (snd.cpp:5765)
-
-longlong SND_ShouldGiveCpuWarning(void)
-
-{
-  if (DAT_8487d9e0 < 3) {
-    return 0;
-  }
-  return (longlong)((int)DAT_82b3e54c >> 0x1f) + (ulonglong)(9 < DAT_82b3e54c);
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 828516B8  SND_FadeInAfterLoad  (snd.cpp:5776)
-
-void SND_FadeInAfterLoad(void)
-
-{
-  float fVar1;
-  int iVar2;
-  int iVar3;
-  float *pfVar4;
-  
-  if (*(int *)(DAT_8488fd68 + 0xc) == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x1691,0,0xffffffff82000f98,0xffffffff821f13d8);
-  }
-  iVar2 = DAT_8488fd68;
-  iVar3 = 0;
-  if (0 < DAT_84888110) {
-    pfVar4 = (float *)&DAT_848859f8;
-    do {
-      fVar1 = pfVar4[1];
-      pfVar4[1] = 0.0;
-      iVar3 = iVar3 + 1;
-      pfVar4[2] = fVar1;
-      pfVar4 = pfVar4 + 3;
-      *pfVar4 = fVar1 / (float)(longlong)*(int *)(iVar2 + 0xc);
-    } while (iVar3 < DAT_84888110);
-  }
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82851790  SND_ExistsPendingRestore  (snd.cpp:5833)
-
-bool SND_ExistsPendingRestore(void)
-
-{
-  return DAT_848859e4 != 0;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82858890  SND_Update  (snd.cpp:5839)
-
-void SND_Update(void)
-
-{
-  longlong lVar1;
-  char cVar4;
-  longlong lVar2;
-  longlong lVar3;
-  ulonglong uVar5;
-  char cVar6;
-  undefined8 in_MSR;
-  char in_RESERVE;
-  byte in_cr0;
-  undefined1 auStack_70 [12];
-  int local_64;
-  
-  __savegprlr_24();
-  if ((DAT_8487d9c8 == '\0') || (DAT_82aa1c0c == 0)) goto LAB_82858c28;
-  Profile_Begin(0x14e);
-  DAT_8487d9e0 = SND_GetDriverCPUPercentage();
-  if (*(char *)(DAT_8365e12c + 0xc) != '\0') {
-    if (DAT_8487d9e0 < 3) {
-      uVar5 = 0;
-    }
-    else {
-      uVar5 = (longlong)((int)DAT_82b3e54c >> 0x1f) + (ulonglong)(9 < DAT_82b3e54c);
-    }
-    if ((uVar5 & 0xff) != 0) {
-      StatMon_Warning(2,3000,0xffffffff8201e074);
-    }
-  }
-  lVar1 = Sys_Milliseconds();
-  lVar1 = lVar1 - (ulonglong)DAT_84886ae8;
-  DAT_84886ae8 = DAT_84886ae8 + (int)lVar1;
-  SND_DriverPreUpdate(lVar1);
-  cVar6 = DAT_8487d9ca;
-  if ((DAT_848859e4 == 0) || (cVar4 = Sys_IsMainThread(), cVar4 != '\0')) {
-    if (*(int *)(DAT_83666158 + 0xc) == 0) {
-      cVar4 = CL_Demo_IsTimeStopped();
-      cVar6 = '\0';
-      if (cVar4 == '\0') goto LAB_828589bc;
-    }
-    cVar6 = '\x01';
-  }
-LAB_828589bc:
-  SND_UpdateMasterVolumes(lVar1);
-  if (cVar6 == '\0') {
-    if ((DAT_848859e4 != 0) && (cVar4 = Sys_IsMainThread(), cVar4 != '\0')) {
-      if (DAT_8487d9ca == '\0') {
-        MyAssertHandler(0xffffffff821ef068,0x16fc,0,0xffffffff82000f98,0xffffffff821f1a84);
-      }
-      if (DAT_848859e4 == 0) {
-        MyAssertHandler(0xffffffff821ef068,0x16fd,0,0xffffffff82000f98,0xffffffff821f28f4);
-      }
-      SV_WaitServer();
-      Com_CheckError();
-      do {
-        uVar5 = (ulonglong)DAT_83f1e19c;
-        if (in_RESERVE != '\0') {
-          DAT_83f1e19c = storeWordConditionalIndexed(uVar5 + 1,0,0xffffffff83f1e19c);
-          in_cr0 = 2;
-        }
-      } while (!(bool)(in_cr0 >> 1 & 1));
-      if ((int)(uVar5 + 1) != 1) {
-        MyAssertHandler(0xffffffff821ef068,0x1702,0,0xffffffff820837d8,0xffffffff8208cad0,
-                        DAT_83f1e19c,in_MSR);
-      }
-      MemFile_InitForReading(auStack_70,DAT_848859e4,0xffffffff8487d9e4,DAT_848859e8);
-      SND_Restore(auStack_70);
-      MemFile_MoveToSegment(auStack_70,0xffffffffffffffff);
-      if (local_64 != DAT_848859e4) {
-        MyAssertHandler(0xffffffff821ef068,0x170b,0,0xffffffff82000f98,0xffffffff821f28cc);
-      }
-      sync(1);
-      DAT_848859e4 = 0;
-      do {
-        uVar5 = (ulonglong)DAT_83f1e19c;
-        if (in_RESERVE != '\0') {
-          DAT_83f1e19c = storeWordConditionalIndexed(uVar5 - 1,0,0xffffffff83f1e19c);
-          in_cr0 = 2;
-        }
-      } while (!(bool)(in_cr0 >> 1 & 1));
-      if ((int)(uVar5 - 1) != 0) {
-        MyAssertHandler(0xffffffff821ef068,0x170f,0,0xffffffff820837d8,0xffffffff8208ca80,
-                        DAT_83f1e19c,in_MSR);
-      }
-      R_BeginRemoteScreenUpdate();
-      lVar2 = Sys_Milliseconds();
-      Com_Printf(0x10,0xffffffff821f28b8);
-      Sys_WaitForStream(0);
-      lVar3 = Sys_Milliseconds();
-      Com_Printf(0x10,0xffffffff821f289c,lVar3 - lVar2);
-      R_EndRemoteScreenUpdate();
-      SND_FadeInAfterLoad();
-    }
-    SND_UpdateTimeScale();
-    SND_UpdateRoomEffects(lVar1);
-  }
-  if (cVar6 != DAT_8487d9ca) {
-    if (cVar6 == '\0') {
-      SND_UnpauseSounds();
-    }
-    else {
-      SND_PauseSounds();
-    }
-  }
-  if (cVar6 != DAT_8487d9ca) {
-    MyAssertHandler(0xffffffff821ef068,0x1730,0,0xffffffff82000f98,0xffffffff821f2884);
-  }
-  SND_UpdateAllChannels(lVar1);
-  SND_UpdatePhysics();
-  SND_DriverPostUpdate(lVar1);
-  DebugDrawWorldSounds(*(undefined4 *)(DAT_8487d9b4 + 0xc));
-  Profile_EndInternal(0);
-LAB_82858c28:
-  __restgprlr_24();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 828517B0  SND_IsAmbientChannel  (snd.cpp:5953)
 
-undefined8 SND_IsAmbientChannel(int param_1)
+bool SND_IsAmbientChannel(int param_1)
 
 {
-  undefined8 uVar1;
+  bool bVar1;
   
-  if ((param_1 < 0x2a) || (uVar1 = 1, 0x2d < param_1)) {
-    uVar1 = 0;
+  if ((param_1 < 0x2a) || (bVar1 = true, 0x2d < param_1)) {
+    bVar1 = false;
   }
-  return uVar1;
+  return bVar1;
 }
 
 
 // 828517D0  SND_IsMusicChannel  (snd.cpp:5960)
 
-undefined8 SND_IsMusicChannel(int param_1)
+bool SND_IsMusicChannel(int param_1)
 
 {
-  undefined8 uVar1;
+  bool bVar1;
   
-  if ((param_1 == 0x28) || (uVar1 = 0, param_1 == 0x29)) {
-    uVar1 = 1;
+  if ((param_1 == 0x28) || (bVar1 = false, param_1 == 0x29)) {
+    bVar1 = true;
   }
-  return uVar1;
+  return bVar1;
 }
 
 
 // 828517F0  SND_StopSounds  (snd.cpp:5967)
-
-void SND_StopSounds(void)
-
-{
-  bool bVar1;
-  ulonglong uVar2;
-  char cVar3;
-  longlong lVar4;
-  int iVar5;
-  
-  uVar2 = __savegprlr_29();
-  if (DAT_8487d9c8 != '\0') {
-    Sys_EnterCriticalSection(0x2a);
-    if ((uVar2 & 8) == 0) {
-      lVar4 = 0;
-      if (0 < DAT_8488a994) {
-        do {
-          cVar3 = SND_Is2DChannelFree(lVar4);
-          if (cVar3 == '\0') {
-            SND_Stop2DChannel(lVar4);
-          }
-          lVar4 = lVar4 + 1;
-        } while ((int)lVar4 < DAT_8488a994);
-      }
-      lVar4 = 8;
-      if (8 < DAT_8488a998 + 8) {
-        do {
-          cVar3 = SND_Is3DChannelFree(lVar4);
-          if (cVar3 == '\0') {
-            SND_Stop3DChannel(lVar4);
-          }
-          lVar4 = lVar4 + 1;
-        } while ((int)lVar4 < DAT_8488a998 + 8);
-      }
-    }
-    lVar4 = 0x28;
-    if (0x28 < DAT_8488a99c + 0x28) {
-      do {
-        cVar3 = SND_IsStreamChannelFree(lVar4);
-        if (cVar3 == '\0') {
-          iVar5 = (int)lVar4;
-          if ((uVar2 & 2) != 0) {
-            if ((iVar5 == 0x28) || (bVar1 = false, iVar5 == 0x29)) {
-              bVar1 = true;
-            }
-            if (bVar1) goto LAB_82851960;
-          }
-          if ((uVar2 & 4) != 0) {
-            if ((iVar5 < 0x2a) || (bVar1 = true, 0x2d < iVar5)) {
-              bVar1 = false;
-            }
-            if (bVar1) goto LAB_82851960;
-          }
-          SND_StopStreamChannel(lVar4);
-        }
-LAB_82851960:
-        lVar4 = lVar4 + 1;
-      } while ((int)lVar4 < DAT_8488a99c + 0x28);
-    }
-    if ((uVar2 & 1) == 0) {
-      lVar4 = 1;
-      do {
-        SND_DeactivateEnvironmentEffects(lVar4,0);
-        lVar4 = lVar4 + 1;
-      } while ((int)lVar4 < 5);
-    }
-    if ((uVar2 & 0x10) == 0) {
-      lVar4 = 1;
-      do {
-        SND_DeactivateChannelVolumes(lVar4,0);
-        lVar4 = lVar4 + 1;
-      } while ((int)lVar4 < 4);
-    }
-    SND_DeactivateAllFilters();
-    Sys_LeaveCriticalSection(0x2a);
-  }
-  __restgprlr_29();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 828519E0  RelativeToListener  (snd.cpp:6063)
 
-void RelativeToListener(double param_1,double param_2,double param_3,float *param_4)
+void RelativeToListener(snd_listener *param_1,float param_2,float param_3,float param_4,
+                       float *param_5)
 
 {
   float *in_r7;
+  double dVar1;
   float local_50;
   float local_4c;
   undefined4 local_48;
   float local_40;
   float local_3c;
   float local_38;
-  undefined1 auStack_30 [4];
+  float fStack_30;
   float local_2c;
   
-  local_4c = (float)-param_1;
-  local_50 = (float)-param_2;
+  dVar1 = (double)param_4;
+  local_4c = -param_2;
+  local_50 = -param_3;
   local_48 = 0;
-  AxisToAngles(param_4 + 3,auStack_30);
+  AxisToAngles((param_1->orient).axis,&fStack_30);
   local_4c = local_2c + local_4c;
-  AngleVectors(&local_50,&local_40,0,0);
-  *in_r7 = (float)((double)local_40 * param_3);
-  in_r7[1] = (float)((double)local_3c * param_3);
-  in_r7[2] = (float)((double)local_38 * param_3);
-  *in_r7 = *param_4 + (float)((double)local_40 * param_3);
-  in_r7[1] = param_4[1] + (float)((double)local_3c * param_3);
-  in_r7[2] = param_4[2] + (float)((double)local_38 * param_3);
+  AngleVectors(&local_50,&local_40,(float *)0x0,(float *)0x0);
+  *in_r7 = (float)((double)local_40 * dVar1);
+  in_r7[1] = (float)((double)local_3c * dVar1);
+  in_r7[2] = (float)((double)local_38 * dVar1);
+  *in_r7 = (param_1->orient).origin[0] + (float)((double)local_40 * dVar1);
+  in_r7[1] = (param_1->orient).origin[1] + (float)((double)local_3c * dVar1);
+  in_r7[2] = (param_1->orient).origin[2] + (float)((double)local_38 * dVar1);
   return;
 }
 
 
 // 82851AB8  SND_PlayLocal_f  (snd.cpp:6081)
-
-void SND_PlayLocal_f(void)
-
-{
-  float fVar1;
-  longlong lVar2;
-  char *pcVar4;
-  undefined4 *puVar5;
-  undefined8 uVar3;
-  ulonglong uVar6;
-  double dVar7;
-  double dVar8;
-  double dVar9;
-  double dVar10;
-  float local_50;
-  float local_4c;
-  float local_48;
-  
-  __savefpr_28();
-  dVar9 = 0.0;
-  dVar10 = 100.0;
-  dVar7 = dVar9;
-  dVar8 = dVar9;
-  lVar2 = Cmd_Argc();
-  uVar6 = lVar2 - 2;
-  if ((uVar6 & 0xffffffff) < 4) {
-    if ((int)uVar6 != 0) {
-      if (lVar2 != 3) {
-        if (uVar6 != 2) {
-          pcVar4 = (char *)Cmd_Argv(4);
-          dVar7 = atof(pcVar4);
-          dVar9 = (double)(float)dVar7;
-        }
-        pcVar4 = (char *)Cmd_Argv(3);
-        dVar7 = atof(pcVar4);
-        dVar7 = (double)(float)dVar7;
-      }
-      pcVar4 = (char *)Cmd_Argv(2);
-      dVar10 = atof(pcVar4);
-      dVar10 = (double)(float)dVar10;
-    }
-    Cmd_Argv(1);
-    Com_PickSoundAlias();
-    Cmd_Argv(1);
-    puVar5 = (undefined4 *)Com_PickSoundAlias();
-    if (puVar5 == (undefined4 *)0x0) {
-      uVar3 = Cmd_Argv(1);
-      Com_PrintError(0xe,0xffffffff821f14a4,uVar3);
-    }
-    else if ((puVar5[0xf] & 1) == 0) {
-      RelativeToListener(dVar7,dVar9,dVar10,0xffffffff848869f8);
-      SND_PlaySoundAlias_Internal(dVar8,0x3ff0000000000000,0x3ff0000000000000,puVar5,puVar5);
-      dVar9 = (double)local_48;
-      dVar8 = (double)local_4c;
-      dVar7 = (double)local_50;
-      uVar3 = Cmd_Argv(1);
-      Com_Printf(dVar7,dVar8,dVar9,0xe,0xffffffff821f1440,uVar3,dVar7,dVar8,dVar9);
-      if (400.0 <= dVar10) {
-        fVar1 = 1.5;
-      }
-      else {
-        fVar1 = 0.5;
-      }
-      dVar7 = (double)fVar1;
-      uVar3 = Cmd_Argv(1);
-      CL_AddDebugStarWithText(dVar7,&local_50,0xffffffff821f1430,0xffffffff821f1430,uVar3);
-    }
-    else {
-      Com_PrintError(0xe,0xffffffff821f1478,*puVar5);
-    }
-  }
-  else {
-    uVar3 = Cmd_Argv(0);
-    Com_Printf(0,0xffffffff821f1400,uVar3);
-  }
-  __restfpr_28();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82851D00  SND_BooleanFromString  (snd.cpp:6159)
 
-void SND_BooleanFromString
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,ulonglong param_4)
+bool SND_BooleanFromString(char *param_1,char *param_2,char *param_3,bool param_4)
 
 {
   char *pcVar1;
   int iVar2;
+  undefined1 uVar3;
+  longlong lVar4;
+  longlong lVar5;
+  longlong lVar6;
   
-  pcVar1 = (char *)__savegprlr_28();
+  lVar6 = (longlong)param_4;
+  lVar5 = (longlong)(int)param_3;
+  lVar4 = (longlong)(int)param_2;
+  pcVar1 = (char *)__savegprlr_28(param_1,lVar4,lVar5,lVar6);
   if (*pcVar1 != '\0') {
-    iVar2 = I_stricmp();
+    iVar2 = I_stricmp(pcVar1,(char *)lVar4);
     if (iVar2 == 0) {
-      __restgprlr_28(1);
-      return;
+      uVar3 = __restgprlr_28(1);
+      return (bool)uVar3;
     }
-    iVar2 = I_stricmp(pcVar1,param_3);
+    iVar2 = I_stricmp(pcVar1,(char *)lVar5);
     if (iVar2 == 0) {
-      __restgprlr_28();
-      return;
+      uVar3 = __restgprlr_28();
+      return (bool)uVar3;
     }
-    Com_PrintError(9,0xffffffff821f14c8,pcVar1,param_2,param_3,param_4 & 0xff);
+    Com_PrintError(9,"unknown value (%s), should be either \'%s\' or \'%s\'.  using default: %d.\n")
+    ;
   }
-  __restgprlr_28(param_4);
-  return;
+  uVar3 = __restgprlr_28(lVar6);
+  return (bool)uVar3;
 }
 
 
 // 82851D88  SND_ParseVolumeModGroupFile  (snd.cpp:6191)
-
-void SND_ParseVolumeModGroupFile(void)
-
-{
-  char cVar1;
-  char *pcVar2;
-  char *pcVar3;
-  double dVar4;
-  double dVar5;
-  int in_stack_00000014;
-  
-  in_stack_00000014 = __savegprlr_24();
-  if (in_stack_00000014 == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x1832,0,0xffffffff82000f98,0xffffffff8200e484);
-  }
-  DAT_8488d1a0 = 0;
-  Com_BeginParseSession(0xffffffff821f15bc);
-  Com_SetCSV(1);
-  dVar5 = 0.0;
-  while( true ) {
-    if (0x80 < DAT_8488d1a0 + 1) {
-      Com_EndParseSession();
-      Com_Error(1,0xffffffff821f1510,0x80,0xffffffff821f15bc);
-    }
-    pcVar2 = (char *)Com_Parse(&stack0x00000014);
-    if (in_stack_00000014 == 0) break;
-    if ((*pcVar2 == '\0') || (pcVar3 = pcVar2, *pcVar2 == '#')) {
-      Com_SkipRestOfLine(&stack0x00000014);
-    }
-    else {
-      do {
-        cVar1 = *pcVar3;
-        pcVar3 = pcVar3 + 1;
-      } while (cVar1 != '\0');
-      if ((char *)0x40 < pcVar3 + (-1 - (int)pcVar2)) {
-        Com_EndParseSession();
-        Com_Error(1,0xffffffff821f1548,0x40,pcVar2,0xffffffff821f15bc);
-      }
-      pcVar2 = pcVar2 + -1;
-      pcVar3 = (char *)((int)&DAT_8488a99c + DAT_8488d1a0 * 0x44 + 3);
-      do {
-        pcVar2 = pcVar2 + 1;
-        cVar1 = *pcVar2;
-        pcVar3 = pcVar3 + 1;
-        *pcVar3 = cVar1;
-      } while (cVar1 != '\0');
-      pcVar2 = (char *)Com_ParseOnLine(&stack0x00000014);
-      if (*pcVar2 == '\0') {
-        Com_EndParseSession();
-        Com_Error(1,0xffffffff821f1588,0xffffffff821f15bc);
-      }
-      dVar4 = atof(pcVar2);
-      (&DAT_8488a9e0)[DAT_8488d1a0 * 0x11] = (float)dVar4;
-      (&DAT_8488cba0)[DAT_8488d1a0 * 3] = (&DAT_8488a9e0)[DAT_8488d1a0 * 0x11];
-      (&DAT_8488cba4)[DAT_8488d1a0 * 3] = (&DAT_8488a9e0)[DAT_8488d1a0 * 0x11];
-      (&DAT_8488cba8)[DAT_8488d1a0 * 3] = (float)dVar5;
-      DAT_8488d1a0 = DAT_8488d1a0 + 1;
-    }
-  }
-  Com_EndParseSession();
-  __restgprlr_24();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82852010  SND_ParseEntChannelFile  (snd.cpp:6262)
-
-void SND_ParseEntChannelFile(void)
-
-{
-  char cVar1;
-  int iVar2;
-  char *pcVar3;
-  int iVar4;
-  undefined8 uVar5;
-  undefined1 *puVar6;
-  char *pcVar7;
-  undefined1 uVar8;
-  char cStack_d1;
-  char local_d0 [208];
-  
-  iVar2 = __savegprlr_15();
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x187b,0,0xffffffff82000f98,0xffffffff8200e484);
-  }
-  DAT_84888110 = 0;
-  Com_BeginParseSession(0xffffffff821f1744);
-  Com_SetCSV(1);
-  pcVar3 = (char *)Com_Parse(&stack0x00000000 + 0x14);
-  if (iVar2 != 0) {
-    do {
-      if ((*pcVar3 != '\0') && (pcVar7 = pcVar3, *pcVar3 != '#')) {
-        do {
-          cVar1 = *pcVar7;
-          pcVar7 = pcVar7 + 1;
-        } while (cVar1 != '\0');
-        if ((char *)0x40 < pcVar7 + (-1 - (int)pcVar3)) {
-          Com_EndParseSession();
-          Com_Error(1,0xffffffff821f15e0,0x40,pcVar3,0xffffffff821f1744);
-        }
-        iVar4 = -(int)pcVar3;
-        do {
-          cVar1 = *pcVar3;
-          local_d0[(int)(pcVar3 + iVar4)] = cVar1;
-          pcVar3 = pcVar3 + 1;
-        } while (cVar1 != '\0');
-        pcVar3 = (char *)Com_ParseOnLine(&stack0x00000000 + 0x14);
-        if (*pcVar3 == '\0') {
-          (&DAT_84886b48)[DAT_84888110 * 0x15] = 0;
-        }
-        else {
-          iVar4 = atoi(pcVar3);
-          (&DAT_84886b48)[DAT_84888110 * 0x15] = iVar4;
-        }
-        pcVar3 = (char *)Com_ParseOnLine(&stack0x00000000 + 0x14);
-        if (*pcVar3 == '\0') {
-LAB_82852224:
-          uVar8 = 0;
-        }
-        else {
-          iVar4 = I_stricmp(pcVar3,0xffffffff821f161c);
-          if (iVar4 != 0) {
-            iVar4 = I_stricmp(pcVar3,0xffffffff821f1618);
-            if (iVar4 != 0) {
-              Com_PrintError(9,0xffffffff821f14c8,pcVar3,0xffffffff821f161c,0xffffffff821f1618,0);
-            }
-            goto LAB_82852224;
-          }
-          uVar8 = 1;
-        }
-        (&DAT_84886b4c)[DAT_84888110 * 0x54] = uVar8;
-        pcVar3 = (char *)Com_ParseOnLine(&stack0x00000000 + 0x14);
-        if ((*pcVar3 == '\0') || (iVar4 = I_stricmp(pcVar3,0xffffffff821f1630), iVar4 == 0)) {
-LAB_828522a4:
-          uVar8 = 1;
-        }
-        else {
-          iVar4 = I_stricmp(pcVar3,0xffffffff821f1620);
-          if (iVar4 != 0) {
-            Com_PrintError(9,0xffffffff821f14c8,pcVar3,0xffffffff821f1630,0xffffffff821f1620,1);
-            goto LAB_828522a4;
-          }
-          uVar8 = 0;
-        }
-        (&DAT_84886b4d)[DAT_84888110 * 0x54] = uVar8;
-        pcVar3 = (char *)Com_ParseOnLine(&stack0x00000000 + 0x14);
-        if ((*pcVar3 == '\0') || (iVar4 = I_stricmp(pcVar3,0xffffffff8202f334), iVar4 == 0)) {
-LAB_82852324:
-          uVar8 = 1;
-        }
-        else {
-          iVar4 = I_stricmp(pcVar3,0xffffffff821f163c);
-          if (iVar4 != 0) {
-            Com_PrintError(9,0xffffffff821f14c8,pcVar3,0xffffffff8202f334,0xffffffff821f163c,1);
-            goto LAB_82852324;
-          }
-          uVar8 = 0;
-        }
-        (&DAT_84886b4e)[DAT_84888110 * 0x54] = uVar8;
-        pcVar3 = (char *)Com_ParseOnLine(&stack0x00000000 + 0x14);
-        if (*pcVar3 == '\0') {
-          iVar4 = 0x36;
-        }
-        else {
-          iVar4 = atoi(pcVar3);
-          if (iVar4 < 1) {
-            puVar6 = &stack0x00000000 + -0xd0;
-            uVar5 = 0xffffffff821f1648;
-          }
-          else {
-            if (iVar4 < 0x37) goto LAB_828523b0;
-            uVar5 = 0xffffffff821f16a8;
-            pcVar3 = &stack0x00000000 + -0xd0;
-            puVar6 = (undefined1 *)0x36;
-          }
-          iVar4 = 0x36;
-          Com_PrintError(9,uVar5,puVar6,pcVar3,0xffffffff821f1744,0x36);
-        }
-LAB_828523b0:
-        pcVar3 = &stack0x00000000 + -0xd1;
-        pcVar7 = (char *)(DAT_84888110 * 0x54 + -0x7b7794f9);
-        do {
-          pcVar3 = pcVar3 + 1;
-          cVar1 = *pcVar3;
-          pcVar7 = pcVar7 + 1;
-          *pcVar7 = cVar1;
-        } while (cVar1 != '\0');
-        (&DAT_84886b50)[DAT_84888110 * 0x15] = iVar4;
-        (&DAT_84886b54)[DAT_84888110 * 0x15] = 0;
-        DAT_84888110 = DAT_84888110 + 1;
-        if (0x40 < DAT_84888110) {
-          Com_EndParseSession();
-          Com_Error(1,0xffffffff821f1704,0x40);
-        }
-      }
-      Com_SkipRestOfLine(&stack0x00000000 + 0x14);
-      pcVar3 = (char *)Com_Parse(&stack0x00000000 + 0x14);
-    } while (iVar2 != 0);
-  }
-  Com_EndParseSession();
-  __restgprlr_15();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82858C30  SND_InitEntChannels  (snd.cpp:6348)
-
-void SND_InitEntChannels(void)
-
-{
-  undefined8 uVar1;
-  ulonglong uVar2;
-  int iVar3;
-  undefined1 auStack_20 [8];
-  
-  LargeLocal__LargeLocal(auStack_20,0x18000);
-  uVar1 = LargeLocal__GetBuf(auStack_20);
-  uVar2 = Com_LoadRawTextFile(0xffffffff821f1744,uVar1,0x18000);
-  if ((uVar2 & 0xffffffff) == 0) {
-    Com_Error(1,0xffffffff821f2908,0xffffffff821f1744);
-  }
-  SND_ParseEntChannelFile(uVar2);
-  BG_RegisterShockVolumeDvars();
-  iVar3 = 0;
-  if (0 < DAT_84888110) {
-    do {
-      iVar3 = iVar3 + 1;
-      (&DAT_84886b58)[DAT_84888110 * 0x15] = 2;
-    } while (iVar3 < DAT_84888110);
-  }
-  SND_InitPainVisionOcclusionEntChanInfo();
-  LargeLocal___LargeLocal(auStack_20);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82852488  SND_InitAmbientConfigStrings  (snd.cpp:6371)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void SND_InitAmbientConfigStrings(void)
 
 {
-  DAT_8487d1b8 = 0;
-  DAT_8487d9b0 = 0;
-  DAT_8487d5b0 = 0;
-  DAT_8487d5b4 = 0;
-  DAT_8487d9ac = 0;
+  g_sndAmbientConfigStrings.string[0].value[0] = '\0';
+  g_sndAmbientConfigStrings.generationCount = 0;
+  g_sndAmbientConfigStrings.string[0].generation = 0;
+  g_sndAmbientConfigStrings.string[1].value[0] = '\0';
+  g_sndAmbientConfigStrings.string[1].generation = 0;
   return;
 }
 
 
 // 828524B8  SND_InitVolumeModGroups  (snd.cpp:6382)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void SND_InitVolumeModGroups(void)
 
 {
-  undefined8 uVar1;
-  ulonglong uVar2;
-  undefined1 auStack_20 [8];
+  char *pcVar1;
+  LargeLocal LStack_20;
   
-  LargeLocal__LargeLocal(auStack_20,0x18000);
-  uVar1 = LargeLocal__GetBuf(auStack_20);
-  uVar2 = Com_LoadRawTextFile(0xffffffff821f15bc,uVar1,0x18000);
-  if ((uVar2 & 0xffffffff) == 0) {
-    Com_Error(1,0xffffffff821f1760,0xffffffff821f15bc);
+  LargeLocal::LargeLocal(&LStack_20,0x18000);
+  pcVar1 = LargeLocal::GetBuf(&LStack_20);
+  pcVar1 = Com_LoadRawTextFile("soundaliases/volumemodgroups.svmod",pcVar1,0x18000);
+  if (pcVar1 == (char *)0x0) {
+    Com_Error(ERR_DROP,"unable to load volume mod group file [%s].\n");
   }
-  SND_ParseVolumeModGroupFile(uVar2);
-  LargeLocal___LargeLocal(auStack_20);
+  SND_ParseVolumeModGroupFile(pcVar1);
+  LargeLocal::~LargeLocal(&LStack_20);
   return;
 }
 
 
 // 82858D18  SND_Reset  (snd.cpp:6395)
-
-void SND_Reset(void)
-
-{
-  int iVar1;
-  int iVar2;
-  int iVar3;
-  int iVar4;
-  float *pfVar5;
-  float *pfVar6;
-  double dVar7;
-  double dVar8;
-  
-  __savegprlr_26();
-  SND_StopSounds(0);
-  iVar2 = *(int *)(DAT_8488fd74 + 0xc);
-  if (iVar2 == 0) {
-    iVar2 = 1;
-  }
-  iVar1 = 0;
-  dVar8 = 1.0;
-  if (0 < DAT_84888110) {
-    iVar4 = 0;
-    do {
-      iVar1 = iVar1 + 1;
-      *(undefined4 *)((int)&DAT_848859fc + iVar4) = 0x3f800000;
-      *(undefined4 *)((int)&DAT_84885a00 + iVar4) = 0x3f800000;
-      *(undefined4 *)((int)&DAT_84885a04 + iVar4) = 0;
-      *(undefined4 *)(iVar4 + DAT_84886910) = 0;
-      iVar3 = iVar4 + DAT_84886910;
-      iVar4 = iVar4 + 0xc;
-      *(float *)(iVar3 + 8) = *(float *)(iVar3 + 4) * (float)(1.0 / (double)(longlong)iVar2);
-    } while (iVar1 < DAT_84888110);
-  }
-  pfVar6 = (float *)&DAT_8488cba0;
-  pfVar5 = (float *)&DAT_8488a9e0;
-  do {
-    dVar7 = (double)*pfVar5;
-    if (pfVar6 == (float *)0x0) {
-      MyAssertHandler(0xffffffff821ef068,0x10fd,0,0xffffffff82000f98,0xffffffff821f100c);
-    }
-    *pfVar6 = (float)dVar7;
-    pfVar5 = pfVar5 + 0x11;
-    pfVar6[1] = (float)dVar7;
-    pfVar6[2] = (float)dVar8;
-    pfVar6 = pfVar6 + 3;
-  } while ((int)pfVar5 < -0x7b773420);
-  SND_InitOcclusionInfo();
-  __restgprlr_26();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82859758  SND_Init  (snd.cpp:6435)
-
-void SND_Init(void)
-
-{
-  char cVar1;
-  undefined4 *puVar2;
-  int iVar3;
-  int iVar4;
-  float *pfVar5;
-  longlong lVar6;
-  double dVar7;
-  double dVar8;
-  
-  __savegprlr_24();
-  Com_Printf(9,0xffffffff821f2f30);
-  DAT_8487d9c0 = Dvar_RegisterBool(0xffffffff821f2eec,0,0,0xffffffff821f2f00);
-  dVar8 = 0.0;
-  DAT_8487d9b8 = Dvar_RegisterFloat(0x3fe99999a0000000,0,0xffffffff8203a670);
-  DAT_8488fd68 = Dvar_RegisterInt(0xffffffff821f2e84,500,1,2000,4,0xffffffff821f2e98);
-  DAT_8488fd64 = Dvar_RegisterInt(0xffffffff821f2e70,500,0,5000,4,0xffffffff821f2e00);
-  DAT_8487cfb4 = Dvar_RegisterBool(0xffffffff821f2ddc,1,4,0xffffffff821f2dec);
-  DAT_8487cfa0 = Dvar_RegisterBool(0xffffffff821f2db8,1,4,0xffffffff821f2dc8);
-  DAT_8488fd6c = Dvar_RegisterBool(0xffffffff821f2da4,1,4,0xffffffff821f2d8c);
-  DAT_8488d59c = Dvar_RegisterBool(0xffffffff821f2d5c,1,4,0xffffffff821f2d70);
-  DAT_8487cfa4 = Dvar_RegisterBool(0xffffffff821f2d30,1,0,0xffffffff821f2d40);
-  DAT_8487d9b4 = Dvar_RegisterEnum(0xffffffff821f2cf8,0xffffffff829a64ec,0,4,0xffffffff821f2d04);
-  DAT_8488fd74 = Dvar_RegisterInt(0xffffffff821f2ce4,0xfa,0,5000,4,0xffffffff821f2c90);
-  dVar7 = 1.0;
-  DAT_8487cf98 = Dvar_RegisterFloat(0x3feb333340000000,dVar8,0x3ff0000000000000,0xffffffff821f2c50);
-  DAT_8487d9c4 = Dvar_RegisterBool(0xffffffff821f2be8,0,4,0xffffffff821f2bf8);
-  DAT_8488fd70 = Dvar_RegisterBool(0xffffffff821f2ba4,0,4,0xffffffff821f2bb8);
-  DAT_8487cfa8 = Dvar_RegisterBool(0xffffffff821f2b40,0,4,0xffffffff821f2b58);
-  DAT_8487cfac = Dvar_RegisterString(0xffffffff821f2af8,0xffffffff820068af,4,0xffffffff821f2b08);
-  DAT_8488d294 = Dvar_RegisterInt(0xffffffff821f2ae4,0x96,0,0x7fffffff,0x44,0xffffffff821f2ab4);
-  DAT_8487cfb0 = Dvar_RegisterInt(0xffffffff821f2a68,500,0,0x7fffffff,0x44,0xffffffff821f2a80);
-  DAT_84886954 = 0;
-  DAT_84886970 = 1;
-  DAT_84886958 = (float)dVar7;
-  DAT_84886964 = (float)dVar8;
-  DAT_8488695c = (float)dVar7;
-  DAT_84886960 = (float)dVar8;
-  DAT_84886968 = (float)dVar8;
-  DAT_848869f4 = &DAT_84886954;
-  DAT_8488696c = (float)dVar8;
-  cVar1 = SND_InitDriver();
-  if (cVar1 != '\0') {
-    SND_InitEntChannels();
-    SND_InitVolumeModGroups();
-    DAT_8487d9cc = 1;
-    SND_InitParameter(dVar7,0xffffffff848859f0);
-    iVar3 = 0;
-    DAT_84886910 = &DAT_84885d00;
-    if (0 < DAT_84888110) {
-      iVar4 = 0;
-      do {
-        if ((float *)((int)&DAT_848859fc + iVar4) == (float *)0x0) {
-          MyAssertHandler(0xffffffff821ef068,0x10fd,0,0xffffffff82000f98,0xffffffff821f100c);
-        }
-        *(float *)((int)&DAT_848859fc + iVar4) = (float)dVar7;
-        *(float *)((int)&DAT_84885a00 + iVar4) = (float)dVar7;
-        *(float *)((int)&DAT_84885a04 + iVar4) = (float)dVar7;
-        pfVar5 = (float *)(iVar4 + (int)DAT_84886910);
-        if (pfVar5 == (float *)0x0) {
-          MyAssertHandler(0xffffffff821ef068,0x10fd,0,0xffffffff82000f98,0xffffffff821f100c);
-        }
-        pfVar5[2] = (float)dVar7;
-        iVar3 = iVar3 + 1;
-        *pfVar5 = (float)dVar7;
-        pfVar5[1] = (float)dVar7;
-        iVar4 = iVar4 + 0xc;
-      } while (iVar3 < DAT_84888110);
-    }
-    DAT_84885cfc = 1;
-    *(undefined1 *)(DAT_84886910 + 0xc0) = 1;
-    DAT_84886ae8 = Sys_Milliseconds();
-    DAT_8488694c = 0;
-    DAT_84886950 = (float)dVar8;
-    DAT_848859ec = *(float *)(DAT_8487d9b8 + 0xc) * 0.4;
-    lVar6 = 0x40;
-    DAT_8488d1a4 = 0x42200000;
-    DAT_8488d1a8 = 0x42a00000;
-    DAT_8488d1b4 = 0x44160000;
-    DAT_8487d9b0 = 0;
-    DAT_8488d1ac = 0x43200000;
-    DAT_8488d1b0 = 0x43c80000;
-    DAT_8488d1b8 = 0x447a0000;
-    DAT_8487d1b8 = 0;
-    puVar2 = &DAT_8488800c;
-    DAT_8487d5b0 = 0;
-    DAT_8487d5b4 = 0;
-    DAT_8487d9ac = 0;
-    DAT_84886aec = DAT_84886ae8;
-    do {
-      puVar2 = puVar2 + 1;
-      *puVar2 = 0x3f800000;
-      lVar6 = lVar6 + -1;
-    } while (lVar6 != 0);
-    SND_ResetPauseDefaults();
-    DAT_8488d598 = 0;
-    Cmd_AddCommandInternal(0xffffffff821f181c,0xffffffff82856170,0xffffffff8488febc);
-    Cmd_AddCommandInternal(0xffffffff821f17f8,0xffffffff828562e8,0xffffffff8488fea8);
-    Cmd_AddCommandInternal(0xffffffff821f17e8,0xffffffff82851ab8,0xffffffff8488fe94);
-    Cmd_AddCommandInternal(0xffffffff821f17dc,0xffffffff82847bb0,0xffffffff8488fe80);
-    Cmd_AddCommandInternal(0xffffffff821f17cc,0xffffffff82847d00,0xffffffff8488fe6c);
-    Cmd_AddCommandInternal(0xffffffff821f17bc,0xffffffff82847e60,0xffffffff8488fe58);
-    Cmd_AddCommandInternal(0xffffffff821f17b0,0xffffffff82847ee8,0xffffffff8488fe44);
-    Cmd_AddCommandInternal(0xffffffff821f17a0,0xffffffff82847dd0,0xffffffff8488fe30);
-    Cmd_AddCommandInternal(0xffffffff821f178c,0xffffffff82859638,0xffffffff8488fe1c);
-    DAT_8487cf9c = 0xffffffff;
-    Cmd_AddCommandInternal(0xffffffff821f2a58,0xffffffff82856390,0xffffffff8488fe08);
-    Cmd_AddCommandInternal(0xffffffff821f2a40,0xffffffff82856468,0xffffffff8488fdf4);
-    Cmd_AddCommandInternal(0xffffffff821f2a2c,0xffffffff82847fa8,0xffffffff8488fde0);
-    Cmd_AddCommandInternal(0xffffffff821f2a10,0xffffffff82848008,0xffffffff8488fdcc);
-    Cmd_AddCommandInternal(0xffffffff821f29f4,0xffffffff82848060,0xffffffff8488fdb8);
-    Com_Printf(9,0xffffffff821f29bc);
-  }
-  __restgprlr_24();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82852548  SND_Shutdown  (snd.cpp:6603)
-
-void SND_Shutdown(void)
-
-{
-  Voice_Shutdown(0xffffffff844c7860);
-  Voice_Shutdown(0xffffffff844c6c08);
-  if (DAT_8487d9c8 != '\0') {
-    SND_StopSounds(0);
-    SND_ShutdownDriver();
-    memset(&DAT_8487d9c8,0,0xf8cc);
-    Cmd_RemoveCommand(0xffffffff821f181c);
-    Cmd_RemoveCommand(0xffffffff821f17f8);
-    Cmd_RemoveCommand(0xffffffff821f17e8);
-    Cmd_RemoveCommand(0xffffffff821f17dc);
-    Cmd_RemoveCommand(0xffffffff821f17cc);
-    Cmd_RemoveCommand(0xffffffff821f17bc);
-    Cmd_RemoveCommand(0xffffffff821f17b0);
-    Cmd_RemoveCommand(0xffffffff821f17a0);
-    Cmd_RemoveCommand(0xffffffff821f178c);
-  }
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82852628  SND_ShutdownChannels  (snd.cpp:6646)
 
-void * SND_ShutdownChannels(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void SND_ShutdownChannels(void)
 
 {
-  void *pvVar1;
-  
-  SND_StopSounds(0);
-  pvVar1 = memset(&DAT_84888114,0,0x2880);
-  return pvVar1;
+  SND_StopSounds(SND_STOP_ALL);
+  memset();
+  return;
 }
 
 
 // 82852668  SND_ErrorCleanup  (snd.cpp:6654)
-
-void SND_ErrorCleanup(void)
-
-{
-  sync(1);
-  DAT_848859e4 = 0;
-  DAT_82aa1c10 = 0;
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82852698  SND_SaveSoundAlias  (snd.cpp:6663)
 
-void SND_SaveSoundAlias(undefined4 *param_1,undefined8 param_2)
+void SND_SaveSoundAlias(snd_alias_t *param_1,MemoryFile *param_2)
 
 {
+  int iVar1;
   undefined2 local_20 [4];
   
-  MemFile_WriteCString(param_2,*param_1);
-  local_20[0] = SND_GetAliasOffset(param_1);
+  MemFile_WriteCString(param_2,param_1->aliasName);
+  iVar1 = SND_GetAliasOffset(param_1);
+  local_20[0] = (undefined2)iVar1;
   MemFile_WriteData(param_2,2,local_20);
   return;
 }
@@ -8384,67 +2929,72 @@ void SND_SaveSoundAlias(undefined4 *param_1,undefined8 param_2)
 
 // 828526F8  SND_RestoreSoundAlias  (snd.cpp:6670)
 
-ulonglong SND_RestoreSoundAlias(undefined8 param_1)
+snd_alias_t * SND_RestoreSoundAlias(MemoryFile *param_1)
 
 {
-  char *pcVar2;
-  ulonglong uVar1;
-  undefined2 local_20 [4];
+  char *pcVar1;
+  snd_alias_t *psVar2;
+  ushort local_20 [4];
   
-  pcVar2 = (char *)MemFile_ReadCString();
-  if (*pcVar2 == '\0') {
-    uVar1 = 0;
+  pcVar1 = MemFile_ReadCString(param_1);
+  if (*pcVar1 == '\0') {
+    psVar2 = (snd_alias_t *)0x0;
   }
   else {
     MemFile_ReadData(param_1,2,local_20);
-    uVar1 = SND_GetAliasWithOffset(pcVar2,local_20[0]);
-    if ((uVar1 & 0xffffffff) == 0) {
-      MyAssertHandler(0xffffffff821ef068,0x1a18,0,0xffffffff82000f98,0xffffffff8201d9d0);
+    psVar2 = SND_GetAliasWithOffset(pcVar1,(uint)local_20[0]);
+    if (psVar2 == (snd_alias_t *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1a18,0,"%s");
     }
   }
-  return uVar1;
+  return psVar2;
 }
 
 
 // 82852798  SND_SaveLengthNotifyInfo  (snd.cpp:6686)
 
-void SND_SaveLengthNotifyInfo(undefined8 param_1,ulonglong param_2)
+void SND_SaveLengthNotifyInfo(sndLengthNotifyInfo *param_1,MemoryFile *param_2)
 
 {
-  undefined4 *puVar1;
+  snd_alias_t *psVar1;
   int *piVar2;
-  undefined2 uVar3;
+  MemoryFile *pMVar3;
   int iVar4;
-  int *piVar5;
+  ulonglong uVar5;
+  int iVar6;
+  int *piVar7;
   undefined1 local_40 [4];
   int local_3c [15];
   
-  piVar2 = (int *)__savegprlr_27();
+  uVar5 = (ulonglong)(int)param_2;
+  piVar2 = (int *)__savegprlr_27(param_1);
   if (piVar2 == (int *)0x0) {
-    MyAssertHandler(0xffffffff821ef068,0x1a1f,0,0xffffffff82000f98,0xffffffff82021a7c);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1a1f,0,"%s");
   }
   if (3 < (uint)piVar2[8]) {
-    MyAssertHandler(0xffffffff821ef068,0x1a20,0,0xffffffff821f1838,piVar2[8],4);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1a20,0,
+                    "info->count doesn\'t index SND_LENGTHNOTIFY_COUNT\n\t%i not in [0, %i)");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x1a21,0,0xffffffff82000f98,0xffffffff82001348);
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1a21,0,"%s");
   }
   local_3c[0] = piVar2[8];
-  MemFile_WriteData(param_2,4,local_3c);
-  if ((piVar2[8] != 0) && (iVar4 = 0, piVar5 = piVar2, 0 < piVar2[8])) {
+  pMVar3 = (MemoryFile *)uVar5;
+  MemFile_WriteData(pMVar3,4,local_3c);
+  if ((piVar2[8] != 0) && (iVar6 = 0, piVar7 = piVar2, 0 < piVar2[8])) {
     do {
-      local_40[0] = (undefined1)*piVar5;
-      MemFile_WriteData(param_2,1,local_40);
-      if (*piVar5 == 0) {
-        puVar1 = (undefined4 *)piVar5[4];
-        MemFile_WriteCString(param_2,*puVar1);
-        uVar3 = SND_GetAliasOffset(puVar1);
-        local_3c[0] = CONCAT22(uVar3,local_3c[0]._2_2_);
-        MemFile_WriteData(param_2,2,local_3c);
+      local_40[0] = (undefined1)*piVar7;
+      MemFile_WriteData(pMVar3,1,local_40);
+      if (*piVar7 == 0) {
+        psVar1 = (snd_alias_t *)piVar7[4];
+        MemFile_WriteCString(pMVar3,psVar1->aliasName);
+        iVar4 = SND_GetAliasOffset(psVar1);
+        local_3c[0] = CONCAT22((short)iVar4,local_3c[0]._2_2_);
+        MemFile_WriteData(pMVar3,2,local_3c);
       }
-      iVar4 = iVar4 + 1;
-      piVar5 = piVar5 + 1;
-    } while (iVar4 < piVar2[8]);
+      iVar6 = iVar6 + 1;
+      piVar7 = piVar7 + 1;
+    } while (iVar6 < piVar2[8]);
   }
   __restgprlr_27();
   return;
@@ -8453,44 +3003,48 @@ void SND_SaveLengthNotifyInfo(undefined8 param_1,ulonglong param_2)
 
 // 828528C8  SND_RestoreLengthNotifyInfo  (snd.cpp:6719)
 
-void SND_RestoreLengthNotifyInfo(undefined8 param_1,ulonglong param_2)
+void SND_RestoreLengthNotifyInfo(MemoryFile *param_1,sndLengthNotifyInfo *param_2)
 
 {
   int iVar1;
   byte bVar2;
-  ulonglong uVar3;
-  uint uVar4;
+  MemoryFile *pMVar3;
+  snd_alias_t *psVar4;
   int iVar5;
+  ulonglong uVar6;
   byte local_50 [4];
   uint local_4c [19];
   
-  uVar3 = __savegprlr_25();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x1a40,0,0xffffffff82000f98,0xffffffff82021a7c);
+  uVar6 = (ulonglong)(int)param_2;
+  pMVar3 = (MemoryFile *)__savegprlr_25(param_1);
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1a40,0,"%s");
   }
-  if ((uVar3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x1a41,0,0xffffffff82000f98,0xffffffff82001348);
+  if (pMVar3 == (MemoryFile *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1a41,0,"%s");
   }
-  MemFile_ReadData(uVar3,4,local_4c);
-  iVar1 = (int)param_2;
+  MemFile_ReadData(pMVar3,4,local_4c);
+  iVar1 = (int)uVar6;
   *(uint *)(iVar1 + 0x20) = local_4c[0];
   if (3 < local_4c[0]) {
-    MyAssertHandler(0xffffffff821ef068,0x1a47,0,0xffffffff821f1838,local_4c[0],4);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1a47,0,
+                    "info->count doesn\'t index SND_LENGTHNOTIFY_COUNT\n\t%i not in [0, %i)");
   }
   if ((*(int *)(iVar1 + 0x20) != 0) && (iVar5 = 0, 0 < *(int *)(iVar1 + 0x20))) {
     do {
-      MemFile_ReadData(uVar3,1,local_50);
+      MemFile_ReadData(pMVar3,1,local_50);
       bVar2 = local_50[0];
       if (1 < local_50[0]) {
-        MyAssertHandler(0xffffffff821ef068,0x1a4e,0,0xffffffff821ef814,local_50[0],2);
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1a4e,0,
+                        "id doesn\'t index SndLengthNotifyCount\n\t%i not in [0, %i)");
       }
-      *(uint *)param_2 = (uint)bVar2;
+      *(uint *)uVar6 = (uint)bVar2;
       if (bVar2 == 0) {
-        uVar4 = SND_RestoreSoundAlias(uVar3);
-        ((uint *)param_2)[4] = uVar4;
+        psVar4 = SND_RestoreSoundAlias(pMVar3);
+        ((uint *)uVar6)[4] = (uint)psVar4;
       }
       iVar5 = iVar5 + 1;
-      param_2 = param_2 + 4;
+      uVar6 = uVar6 + 4;
     } while (iVar5 < *(int *)(iVar1 + 0x20));
   }
   __restgprlr_25();
@@ -8500,20 +3054,20 @@ void SND_RestoreLengthNotifyInfo(undefined8 param_1,ulonglong param_2)
 
 // 82852A00  SND_CopySndLengthInfo  (snd.cpp:6758)
 
-void SND_CopySndLengthInfo(int param_1,int param_2)
+void SND_CopySndLengthInfo(sndLengthNotifyInfo *param_1,sndLengthNotifyInfo *param_2)
 
 {
-  undefined4 *puVar1;
-  undefined4 *puVar2;
+  int *piVar1;
+  int *piVar2;
   longlong lVar3;
   
-  puVar2 = (undefined4 *)(param_1 + -4);
-  puVar1 = (undefined4 *)(param_2 + -4);
+  piVar2 = &param_1[-1].count;
+  piVar1 = &param_2[-1].count;
   lVar3 = 9;
   do {
-    puVar2 = puVar2 + 1;
-    puVar1 = puVar1 + 1;
-    *puVar1 = *puVar2;
+    piVar2 = piVar2 + 1;
+    piVar1 = piVar1 + 1;
+    *piVar1 = *piVar2;
     lVar3 = lVar3 + -1;
   } while (lVar3 != 0);
   return;
@@ -8521,1281 +3075,100 @@ void SND_CopySndLengthInfo(int param_1,int param_2)
 
 
 // 82852A20  SND_SaveVolMods  (snd.cpp:6764)
-
-void SND_SaveVolMods(void)
-
-{
-  undefined8 uVar1;
-  int iVar2;
-  longlong lVar3;
-  
-  uVar1 = __savegprlr_28();
-  iVar2 = 0;
-  if (0 < DAT_8488d1a0) {
-    lVar3 = -0x7b773460;
-    do {
-      MemFile_WriteData(uVar1,0xc,lVar3);
-      iVar2 = iVar2 + 1;
-      lVar3 = lVar3 + 0xc;
-    } while (iVar2 < DAT_8488d1a0);
-  }
-  __restgprlr_28();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82852A90  SND_SaveChannelVolumes  (snd.cpp:6773)
-
-void SND_SaveChannelVolumes(undefined8 param_1)
-
-{
-  MemFile_WriteData(param_1,0x304,0xffffffff848859fc);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82852AA8  SND_RestoreVolMods  (snd.cpp:6779)
-
-void SND_RestoreVolMods(void)
-
-{
-  undefined8 uVar1;
-  int iVar2;
-  longlong lVar3;
-  
-  uVar1 = __savegprlr_28();
-  iVar2 = 0;
-  if (0 < DAT_8488d1a0) {
-    lVar3 = -0x7b773460;
-    do {
-      MemFile_ReadData(uVar1,0xc,lVar3);
-      iVar2 = iVar2 + 1;
-      lVar3 = lVar3 + 0xc;
-    } while (iVar2 < DAT_8488d1a0);
-  }
-  __restgprlr_28();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82852B18  SND_RestoreChannelVolumes  (snd.cpp:6788)
-
-void SND_RestoreChannelVolumes(undefined8 param_1)
-
-{
-  MemFile_ReadData(param_1,0x304,0xffffffff848859fc);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82852B30  SND_SaveChanInfo  (snd.cpp:6794)
-
-void SND_SaveChanInfo(undefined8 param_1,undefined8 param_2)
-
-{
-  int iVar1;
-  undefined4 local_30 [12];
-  
-  iVar1 = __savegprlr_29();
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x1a8b,0,0xffffffff82000f98,0xffffffff821ef904);
-  }
-  if (*(uint *)(iVar1 + 0xc) != (*(uint *)(iVar1 + 0xc) & 0xffff)) {
-    MyAssertHandler(0xffffffff821ef068,0x1a8c,0,0xffffffff821f18d4,0xffffffff821f18f8,
-                    *(undefined4 *)(iVar1 + 0xc));
-  }
-  if (*(uint *)(iVar1 + 0x10) != (*(uint *)(iVar1 + 0x10) & 0xff)) {
-    MyAssertHandler(0xffffffff821ef068,0x1a8d,0,0xffffffff821f187c,0xffffffff821f189c,
-                    *(undefined4 *)(iVar1 + 0x10));
-  }
-  local_30[0] = CONCAT22((short)*(undefined4 *)(iVar1 + 0xc),local_30[0]._2_2_);
-  MemFile_WriteData(param_2,2,local_30);
-  local_30[0] = CONCAT13((char)*(undefined4 *)(iVar1 + 0x10),local_30[0]._1_3_);
-  MemFile_WriteData(param_2,1,local_30);
-  local_30[0] = CONCAT13(*(undefined1 *)(iVar1 + 0xb4),local_30[0]._1_3_);
-  MemFile_WriteData(param_2,1,local_30);
-  MemFile_WriteFloat((double)*(float *)(iVar1 + 0xb8),param_2);
-  MemFile_WriteFloat((double)*(float *)(iVar1 + 0xb0),param_2);
-  local_30[0] = *(undefined4 *)(iVar1 + 0x14);
-  MemFile_WriteData(param_2,4,local_30);
-  MemFile_WriteFloat((double)*(float *)(iVar1 + 0x60),param_2);
-  MemFile_WriteFloat((double)*(float *)(iVar1 + 100),param_2);
-  MemFile_WriteFloat((double)*(float *)(iVar1 + 0x68),param_2);
-  MemFile_WriteFloat((double)*(float *)(iVar1 + 0x6c),param_2);
-  MemFile_WriteFloat((double)*(float *)(iVar1 + 0x4c),param_2);
-  MemFile_WriteFloat((double)*(float *)(iVar1 + 0x50),param_2);
-  MemFile_WriteFloat((double)*(float *)(iVar1 + 0x48),param_2);
-  MemFile_WriteFloat((double)*(float *)(iVar1 + 0x54),param_2);
-  MemFile_WriteFloat((double)*(float *)(iVar1 + 0x58),param_2);
-  MemFile_WriteFloat((double)*(float *)(iVar1 + 0x5c),param_2);
-  MemFile_WriteFloat((double)*(float *)(iVar1 + 0x80),param_2);
-  local_30[0] = *(undefined4 *)(iVar1 + 0xac);
-  MemFile_WriteData(param_2,4,local_30);
-  MemFile_WriteData(param_2,0xc,iVar1 + 0x90);
-  SND_SaveLengthNotifyInfo(iVar1 + 0x24,param_2);
-  __restgprlr_29();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82852D18  SND_RestoreChanInfo  (snd.cpp:6837)
-
-void SND_RestoreChanInfo(undefined8 param_1,undefined8 param_2)
-
-{
-  void *_Dst;
-  byte local_50 [4];
-  uint local_4c;
-  uint local_48 [18];
-  
-  _Dst = (void *)__savegprlr_26();
-  memset(_Dst,0,0xc0);
-  MemFile_ReadData(param_2,2,&local_4c);
-  *(uint *)((int)_Dst + 0xc) = local_4c >> 0x10;
-  MemFile_ReadData(param_2,1,local_50);
-  *(uint *)((int)_Dst + 0x10) = (uint)local_50[0];
-  MemFile_ReadData(param_2,1,&local_4c);
-  *(undefined1 *)((int)_Dst + 0xb4) = local_4c._0_1_;
-  MemFile_ReadData(param_2,4,local_48);
-  local_4c = local_48[0];
-  if ((local_48[0] & 0x7f800000) == 0x7f800000) {
-    MyAssertHandler(0xffffffff82188090,0xc6,0,0xffffffff82000f98,0xffffffff820606fc);
-  }
-  *(uint *)((int)_Dst + 0xb8) = local_48[0];
-  MemFile_ReadData(param_2,4,local_48);
-  local_4c = local_48[0];
-  if ((local_48[0] & 0x7f800000) == 0x7f800000) {
-    MyAssertHandler(0xffffffff82188090,0xc6,0,0xffffffff82000f98,0xffffffff820606fc);
-  }
-  *(uint *)((int)_Dst + 0xb0) = local_48[0];
-  MemFile_ReadData(param_2,4,&local_4c);
-  *(uint *)((int)_Dst + 0x14) = local_4c;
-  MemFile_ReadData(param_2,4,local_48);
-  local_4c = local_48[0];
-  if ((local_48[0] & 0x7f800000) == 0x7f800000) {
-    MyAssertHandler(0xffffffff82188090,0xc6,0,0xffffffff82000f98,0xffffffff820606fc);
-  }
-  *(uint *)((int)_Dst + 0x60) = local_48[0];
-  MemFile_ReadData(param_2,4,local_48);
-  local_4c = local_48[0];
-  if ((local_48[0] & 0x7f800000) == 0x7f800000) {
-    MyAssertHandler(0xffffffff82188090,0xc6,0,0xffffffff82000f98,0xffffffff820606fc);
-  }
-  *(uint *)((int)_Dst + 100) = local_48[0];
-  MemFile_ReadData(param_2,4,local_48);
-  local_4c = local_48[0];
-  if ((local_48[0] & 0x7f800000) == 0x7f800000) {
-    MyAssertHandler(0xffffffff82188090,0xc6,0,0xffffffff82000f98,0xffffffff820606fc);
-  }
-  *(uint *)((int)_Dst + 0x68) = local_48[0];
-  MemFile_ReadData(param_2,4,local_48);
-  local_4c = local_48[0];
-  if ((local_48[0] & 0x7f800000) == 0x7f800000) {
-    MyAssertHandler(0xffffffff82188090,0xc6,0,0xffffffff82000f98,0xffffffff820606fc);
-  }
-  *(uint *)((int)_Dst + 0x6c) = local_48[0];
-  MemFile_ReadData(param_2,4,local_48);
-  local_4c = local_48[0];
-  if ((local_48[0] & 0x7f800000) == 0x7f800000) {
-    MyAssertHandler(0xffffffff82188090,0xc6,0,0xffffffff82000f98,0xffffffff820606fc);
-  }
-  *(uint *)((int)_Dst + 0x4c) = local_48[0];
-  MemFile_ReadData(param_2,4,local_48);
-  local_4c = local_48[0];
-  if ((local_48[0] & 0x7f800000) == 0x7f800000) {
-    MyAssertHandler(0xffffffff82188090,0xc6,0,0xffffffff82000f98,0xffffffff820606fc);
-  }
-  *(uint *)((int)_Dst + 0x50) = local_48[0];
-  MemFile_ReadData(param_2,4,local_48);
-  local_4c = local_48[0];
-  if ((local_48[0] & 0x7f800000) == 0x7f800000) {
-    MyAssertHandler(0xffffffff82188090,0xc6,0,0xffffffff82000f98,0xffffffff820606fc);
-  }
-  *(uint *)((int)_Dst + 0x48) = local_48[0];
-  MemFile_ReadData(param_2,4,local_48);
-  local_4c = local_48[0];
-  if ((local_48[0] & 0x7f800000) == 0x7f800000) {
-    MyAssertHandler(0xffffffff82188090,0xc6,0,0xffffffff82000f98,0xffffffff820606fc);
-  }
-  *(uint *)((int)_Dst + 0x54) = local_48[0];
-  MemFile_ReadData(param_2,4,local_48);
-  local_4c = local_48[0];
-  if ((local_48[0] & 0x7f800000) == 0x7f800000) {
-    MyAssertHandler(0xffffffff82188090,0xc6,0,0xffffffff82000f98,0xffffffff820606fc);
-  }
-  *(uint *)((int)_Dst + 0x58) = local_48[0];
-  MemFile_ReadData(param_2,4,local_48);
-  local_4c = local_48[0];
-  if ((local_48[0] & 0x7f800000) == 0x7f800000) {
-    MyAssertHandler(0xffffffff82188090,0xc6,0,0xffffffff82000f98,0xffffffff820606fc);
-  }
-  *(uint *)((int)_Dst + 0x5c) = local_48[0];
-  MemFile_ReadData(param_2,4,local_48);
-  local_4c = local_48[0];
-  if ((local_48[0] & 0x7f800000) == 0x7f800000) {
-    MyAssertHandler(0xffffffff82188090,0xc6,0,0xffffffff82000f98,0xffffffff820606fc);
-  }
-  *(uint *)((int)_Dst + 0x80) = local_48[0];
-  MemFile_ReadData(param_2,4,local_48);
-  *(uint *)((int)_Dst + 0xac) = local_48[0];
-  MemFile_ReadVec3(param_2,(int)_Dst + 0x90);
-  SND_RestoreLengthNotifyInfo(param_2,(int)_Dst + 0x24);
-  __restgprlr_26();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82853198  SND_Save3DChannel  (snd.cpp:6876)
-
-void SND_Save3DChannel(undefined8 param_1,undefined8 param_2)
-
-{
-  int iVar1;
-  char cVar3;
-  int iVar2;
-  undefined1 auStack_40 [64];
-  
-  iVar1 = __savegprlr_28();
-  if ((iVar1 < 8) || (DAT_8488a998 + 8 <= iVar1)) {
-    MyAssertHandler(0xffffffff821ef068,0x1adf,0,0xffffffff821f004c,0xffffffff821f1938,iVar1);
-  }
-  cVar3 = SND_Is3DChannelFree(iVar1);
-  if (cVar3 == '\0') {
-    if (*(int *)(&DAT_848881d0 + iVar1 * 0xc0) == 1) {
-      iVar2 = SND_Get3DChannelLength(iVar1);
-      if ((iVar2 != 0) && (iVar2 = SND_Get3DChannelPlaybackRate(iVar1), iVar2 != 0)) {
-        SND_Get3DChannelSaveInfo(iVar1,auStack_40);
-        SND_SaveSoundAlias((&DAT_84888184)[iVar1 * 0x30],param_2);
-        SND_SaveSoundAlias((&DAT_84888188)[iVar1 * 0x30],param_2);
-        SND_SaveChanInfo(&DAT_84888114 + iVar1 * 0x30,param_2);
-        MemFile_WriteData(param_2,0x18,auStack_40);
-      }
-    }
-  }
-  __restgprlr_28();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 828532B0  SND_Restore3DChannel  (snd.cpp:6899)
-
-void SND_Restore3DChannel(void)
-
-{
-  bool bVar1;
-  undefined8 uVar2;
-  uint uVar3;
-  int iVar4;
-  char cVar5;
-  undefined4 *puVar6;
-  undefined4 *puVar7;
-  char *pcVar8;
-  longlong lVar9;
-  int local_180 [4];
-  uint local_170;
-  int local_16c;
-  undefined4 local_168;
-  undefined4 local_164;
-  undefined4 local_160;
-  undefined4 local_15c;
-  undefined4 local_158;
-  undefined4 local_154;
-  undefined4 local_150;
-  undefined4 local_14c;
-  undefined4 local_140;
-  undefined4 local_13c;
-  float local_138;
-  undefined4 local_134;
-  undefined4 local_130;
-  undefined4 local_12c;
-  undefined1 local_128;
-  undefined1 local_127;
-  undefined4 local_124;
-  float local_120 [3];
-  undefined4 local_114;
-  undefined4 local_110;
-  undefined4 local_10c;
-  undefined1 auStack_100 [12];
-  undefined4 local_f4;
-  undefined4 local_ec;
-  undefined4 uStack_e0;
-  undefined1 local_dc [36];
-  undefined4 local_b8;
-  undefined4 local_ac;
-  undefined4 local_a0;
-  undefined4 local_9c;
-  undefined4 local_80;
-  undefined4 local_70;
-  undefined4 local_6c;
-  undefined4 local_68;
-  undefined4 local_50;
-  undefined1 local_4c;
-  undefined4 local_48;
-  
-  uVar2 = __savegprlr_26();
-  if (DAT_8487d9ca == '\0') {
-    MyAssertHandler(0xffffffff821ef068,0x1afc,0,0xffffffff82000f98,0xffffffff821f1a84);
-  }
-  uVar3 = SND_RestoreSoundAlias(uVar2);
-  if (uVar3 == 0) {
-    __restgprlr_26();
-    return;
-  }
-  iVar4 = SND_RestoreSoundAlias(uVar2);
-  if (iVar4 == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x1b03,0,0xffffffff82000f98,0xffffffff8218a208);
-  }
-  SND_RestoreChanInfo(auStack_100,uVar2);
-  MemFile_ReadData(uVar2,0x18,local_120);
-  if ((uint)**(byte **)(uVar3 + 0x14) != (*(int *)(uVar3 + 0x3c) >> 7 & 3U)) {
-    MyAssertHandler(0xffffffff821ef068,0x1b08,0,0xffffffff82000f98,0xffffffff821f1a40);
-  }
-  if ((uint)**(byte **)(iVar4 + 0x14) != (*(int *)(iVar4 + 0x3c) >> 7 & 3U)) {
-    MyAssertHandler(0xffffffff821ef068,0x1b09,0,0xffffffff82000f98,0xffffffff821f19f8);
-  }
-  pcVar8 = *(char **)(uVar3 + 0x14);
-  if ((((pcVar8 == *(char **)(iVar4 + 0x14)) && (pcVar8[1] != '\0')) && (*pcVar8 == '\x01')) &&
-     (cVar5 = SND_ValidateSoundAliasBlend(uVar3,iVar4,0), cVar5 != '\0')) {
-    pcVar8 = &DAT_84886a30;
-    do {
-      if (*pcVar8 != '\0') {
-        bVar1 = true;
-        goto LAB_82853448;
-      }
-      pcVar8 = pcVar8 + 0x3c;
-    } while ((int)pcVar8 < -0x7b7794e0);
-    bVar1 = false;
-LAB_82853448:
-    if (!bVar1) {
-      MyAssertHandler(0xffffffff821ef068,0x1b0e,0,0xffffffff82000f98,0xffffffff821f19dc);
-    }
-    local_13c = 0;
-    local_134 = local_ec;
-    local_164 = local_f4;
-    local_12c = 1;
-    local_127 = 1;
-    local_180[0] = -1;
-    local_128 = local_4c;
-    local_168 = local_80;
-    local_160 = local_114;
-    local_15c = local_110;
-    local_158 = local_10c;
-    local_154 = local_ac;
-    local_150 = local_b8;
-    local_140 = local_9c;
-    local_14c = local_a0;
-    local_138 = local_120[0];
-    local_124 = local_48;
-    local_130 = local_50;
-    local_170 = uVar3;
-    local_16c = iVar4;
-    if ((*(char *)(DAT_8487cfa0 + 0xc) != '\0') &&
-       (iVar4 = SND_StartAlias3DSample(&local_170,local_180), iVar4 != -1)) {
-      if ((local_180[0] < 8) || (DAT_8488a998 + 8 <= local_180[0])) {
-        MyAssertHandler(0xffffffff821ef068,0x1b2e,0,0xffffffff82038868,0xffffffff821f1998);
-      }
-      uVar2 = va(0xffffffff821f1980,(double)local_120[0]);
-      SND_DebugAliasPrint(1,local_170,uVar2);
-      puVar6 = &uStack_e0;
-      lVar9 = 9;
-      iVar4 = local_180[0] * 0xc0;
-      puVar7 = &DAT_84888134 + local_180[0] * 0x30;
-      *(undefined4 *)(&DAT_848881a4 + iVar4) = local_70;
-      *(undefined4 *)(&DAT_848881a8 + iVar4) = local_6c;
-      *(undefined4 *)(&DAT_848881ac + iVar4) = local_68;
-      do {
-        puVar6 = puVar6 + 1;
-        puVar7 = puVar7 + 1;
-        *puVar7 = *puVar6;
-        lVar9 = lVar9 + -1;
-      } while (lVar9 != 0);
-      __restgprlr_26(1);
-      return;
-    }
-    SND_DoAllLengthNotify(local_dc);
-  }
-  __restgprlr_26(1);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82853620  SND_Save2DChannel  (snd.cpp:6975)
-
-void SND_Save2DChannel(undefined8 param_1,undefined8 param_2)
-
-{
-  int iVar1;
-  char cVar3;
-  int iVar2;
-  undefined1 auStack_40 [64];
-  
-  iVar1 = __savegprlr_28();
-  if ((iVar1 < 0) || (DAT_8488a994 <= iVar1)) {
-    MyAssertHandler(0xffffffff821ef068,0x1b42,0,0xffffffff821f004c,0xffffffff821f1a94,iVar1);
-  }
-  cVar3 = SND_Is2DChannelFree(iVar1);
-  if (cVar3 == '\0') {
-    if (*(int *)(&DAT_848881d0 + iVar1 * 0xc0) == 1) {
-      iVar2 = SND_Get2DChannelLength(iVar1);
-      if ((iVar2 != 0) && (iVar2 = SND_Get2DChannelPlaybackRate(iVar1), iVar2 != 0)) {
-        SND_Get2DChannelSaveInfo(iVar1,auStack_40);
-        SND_SaveSoundAlias((&DAT_84888184)[iVar1 * 0x30],param_2);
-        SND_SaveSoundAlias((&DAT_84888188)[iVar1 * 0x30],param_2);
-        SND_SaveChanInfo(&DAT_84888114 + iVar1 * 0x30,param_2);
-        MemFile_WriteData(param_2,0x10,auStack_40);
-      }
-    }
-  }
-  __restgprlr_28();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82853738  SND_Restore2DChannel  (snd.cpp:6998)
-
-void SND_Restore2DChannel(void)
-
-{
-  char *pcVar1;
-  undefined8 uVar2;
-  uint uVar3;
-  int iVar4;
-  char cVar5;
-  undefined4 *puVar6;
-  undefined4 *puVar7;
-  longlong lVar8;
-  int local_170 [4];
-  float local_160 [4];
-  uint local_150;
-  int local_14c;
-  undefined4 local_148;
-  undefined4 local_144;
-  undefined4 local_134;
-  undefined4 local_130;
-  undefined4 local_12c;
-  undefined4 local_120;
-  undefined4 local_11c;
-  float local_118;
-  undefined4 local_114;
-  undefined4 local_110;
-  undefined4 local_10c;
-  undefined1 local_108;
-  undefined1 local_107;
-  undefined4 local_104;
-  undefined1 auStack_100 [12];
-  undefined4 local_f4;
-  undefined4 local_ec;
-  undefined4 uStack_e0;
-  undefined1 local_dc [36];
-  undefined4 local_b8;
-  undefined4 local_ac;
-  undefined4 local_a0;
-  undefined4 local_9c;
-  undefined4 local_80;
-  undefined4 local_70;
-  undefined4 local_6c;
-  undefined4 local_68;
-  undefined4 local_50;
-  undefined1 local_4c;
-  undefined4 local_48;
-  
-  uVar2 = __savegprlr_26();
-  if (DAT_8487d9ca == '\0') {
-    MyAssertHandler(0xffffffff821ef068,0x1b5f,0,0xffffffff82000f98,0xffffffff821f1a84);
-  }
-  uVar3 = SND_RestoreSoundAlias(uVar2);
-  if (uVar3 == 0) {
-    __restgprlr_26();
-    return;
-  }
-  iVar4 = SND_RestoreSoundAlias(uVar2);
-  if (iVar4 == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x1b66,0,0xffffffff82000f98,0xffffffff8218a208);
-  }
-  SND_RestoreChanInfo(auStack_100,uVar2);
-  MemFile_ReadData(uVar2,0x10,local_160);
-  if ((uint)**(byte **)(uVar3 + 0x14) != (*(int *)(uVar3 + 0x3c) >> 7 & 3U)) {
-    MyAssertHandler(0xffffffff821ef068,0x1b6b,0,0xffffffff82000f98,0xffffffff821f1a40);
-  }
-  if ((uint)**(byte **)(iVar4 + 0x14) != (*(int *)(iVar4 + 0x3c) >> 7 & 3U)) {
-    MyAssertHandler(0xffffffff821ef068,0x1b6c,0,0xffffffff82000f98,0xffffffff821f19f8);
-  }
-  pcVar1 = *(char **)(uVar3 + 0x14);
-  if ((((pcVar1 == *(char **)(iVar4 + 0x14)) && (pcVar1[1] != '\0')) && (*pcVar1 == '\x01')) &&
-     (cVar5 = SND_ValidateSoundAliasBlend(uVar3,iVar4,0), cVar5 != '\0')) {
-    local_144 = local_f4;
-    local_11c = 0;
-    local_114 = local_ec;
-    local_108 = local_4c;
-    local_148 = local_80;
-    local_10c = 1;
-    local_134 = local_ac;
-    local_107 = 1;
-    local_130 = local_b8;
-    local_170[0] = -1;
-    local_120 = local_9c;
-    local_12c = local_a0;
-    local_118 = local_160[0];
-    local_104 = local_48;
-    local_110 = local_50;
-    local_150 = uVar3;
-    local_14c = iVar4;
-    if ((*(char *)(DAT_8487cfb4 + 0xc) != '\0') &&
-       (iVar4 = SND_StartAlias2DSample(&local_150,local_170), iVar4 != -1)) {
-      if ((local_170[0] < 0) || (DAT_8488a994 <= local_170[0])) {
-        MyAssertHandler(0xffffffff821ef068,0x1b8e,0,0xffffffff82038868,0xffffffff821f1ad0);
-      }
-      uVar2 = va(0xffffffff821f1980,(double)local_160[0]);
-      SND_DebugAliasPrint(1,local_150,uVar2);
-      SND_Set2DChannelFromSaveInfo(local_170[0],local_160);
-      puVar6 = &uStack_e0;
-      lVar8 = 9;
-      iVar4 = local_170[0] * 0xc0;
-      puVar7 = &DAT_84888134 + local_170[0] * 0x30;
-      *(undefined4 *)(&DAT_848881a4 + iVar4) = local_70;
-      *(undefined4 *)(&DAT_848881a8 + iVar4) = local_6c;
-      *(undefined4 *)(&DAT_848881ac + iVar4) = local_68;
-      do {
-        puVar6 = puVar6 + 1;
-        puVar7 = puVar7 + 1;
-        *puVar7 = *puVar6;
-        lVar8 = lVar8 + -1;
-      } while (lVar8 != 0);
-      __restgprlr_26(1);
-      return;
-    }
-    SND_DoAllLengthNotify(local_dc);
-  }
-  __restgprlr_26(1);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82853A38  SND_SaveStreamChannel  (snd.cpp:7072)
-
-void SND_SaveStreamChannel(undefined8 param_1,undefined8 param_2)
-
-{
-  bool bVar1;
-  int iVar2;
-  char cVar3;
-  undefined1 auStack_50 [80];
-  
-  iVar2 = __savegprlr_28();
-  if ((iVar2 < 0x28) || (DAT_8488a99c + 0x28 <= iVar2)) {
-    MyAssertHandler(0xffffffff821ef068,0x1ba4,0,0xffffffff821f004c,0xffffffff821f1b08,iVar2);
-  }
-  if (iVar2 < 0x2e) {
-    if ((iVar2 < 0x2a) || (bVar1 = true, 0x2d < iVar2)) {
-      bVar1 = false;
-    }
-    if (bVar1) goto LAB_82853b30;
-    cVar3 = SND_IsStreamChannelFree(iVar2);
-    if (cVar3 != '\0') {
-      MemFile_WriteCString(param_2,0xffffffff820068af);
-      __restgprlr_28();
-      return;
-    }
-  }
-  else {
-    cVar3 = SND_IsStreamChannelFree(iVar2);
-    if (cVar3 != '\0') goto LAB_82853b30;
-  }
-  if (*(int *)(&DAT_848881d0 + iVar2 * 0xc0) == 1) {
-    SND_GetStreamChannelSaveInfo(iVar2,auStack_50);
-    SND_SaveSoundAlias((&DAT_84888184)[iVar2 * 0x30],param_2);
-    SND_SaveSoundAlias((&DAT_84888188)[iVar2 * 0x30],param_2);
-    SND_SaveChanInfo(&DAT_84888114 + iVar2 * 0x30,param_2);
-    MemFile_WriteData(param_2,0x20,auStack_50);
-  }
-LAB_82853b30:
-  __restgprlr_28();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82853B88  SND_RestoreStreamChannel  (snd.cpp:7111)
-
-void SND_RestoreStreamChannel(undefined8 param_1,undefined8 param_2)
-
-{
-  int iVar2;
-  undefined4 *puVar3;
-  int iVar4;
-  char cVar5;
-  undefined8 uVar1;
-  undefined4 *puVar6;
-  longlong lVar7;
-  double dVar8;
-  int in_stack_00000014;
-  undefined4 *local_170;
-  int local_16c;
-  undefined4 local_168;
-  undefined4 local_164;
-  undefined4 local_160;
-  undefined4 local_15c;
-  undefined4 local_158;
-  undefined4 local_154;
-  undefined4 local_150;
-  undefined4 local_14c;
-  undefined4 local_148;
-  undefined4 local_144;
-  undefined4 local_140;
-  undefined4 local_13c;
-  float local_138;
-  undefined4 local_134;
-  undefined4 local_130;
-  undefined4 local_12c;
-  undefined1 local_128;
-  undefined1 local_127;
-  undefined4 local_124;
-  float local_120;
-  int local_11c;
-  undefined4 local_10c;
-  undefined4 local_108;
-  undefined4 local_104;
-  undefined1 auStack_100 [12];
-  undefined4 local_f4;
-  undefined4 local_ec;
-  undefined4 uStack_e0;
-  undefined1 local_dc [36];
-  undefined4 local_b8;
-  undefined4 local_b4;
-  undefined4 local_b0;
-  undefined4 local_ac;
-  undefined4 local_a0;
-  undefined4 local_9c;
-  undefined4 local_80;
-  undefined4 local_70;
-  undefined4 local_6c;
-  undefined4 local_68;
-  undefined4 local_50;
-  undefined1 local_4c;
-  undefined4 local_48;
-  
-  iVar2 = __savegprlr_25();
-  in_stack_00000014 = iVar2;
-  if (DAT_8487d9ca == '\0') {
-    MyAssertHandler(0xffffffff821ef068,0x1bcf,0,0xffffffff82000f98,0xffffffff821f1a84);
-  }
-  puVar3 = (undefined4 *)SND_RestoreSoundAlias(param_2);
-  if (puVar3 == (undefined4 *)0x0) {
-    __restgprlr_25();
-    return;
-  }
-  iVar4 = SND_RestoreSoundAlias(param_2);
-  if (iVar4 == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x1bd6,0,0xffffffff82000f98,0xffffffff8218a208);
-  }
-  SND_RestoreChanInfo(auStack_100,param_2);
-  MemFile_ReadData(param_2,0x20,&local_120);
-  if ((((puVar3[0xf] & 0x180) != 0x100) || ((*(uint *)(iVar4 + 0x3c) & 0x180) != 0x100)) ||
-     (cVar5 = SND_ValidateSoundAliasBlend(puVar3,iVar4,0), cVar5 == '\0')) goto LAB_82853ed8;
-  local_164 = local_f4;
-  local_13c = 0;
-  local_134 = local_ec;
-  local_12c = 1;
-  local_128 = local_4c;
-  local_127 = 1;
-  local_168 = local_80;
-  local_160 = local_10c;
-  local_15c = local_108;
-  local_158 = local_104;
-  local_154 = local_ac;
-  local_150 = local_b8;
-  local_148 = local_b4;
-  local_144 = local_b0;
-  local_140 = local_9c;
-  local_14c = local_a0;
-  local_138 = local_120;
-  local_130 = local_50;
-  local_124 = local_48;
-  local_170 = puVar3;
-  local_16c = iVar4;
-  if (iVar2 < 0) {
-    iVar4 = SND_StartAliasStream(&local_170,&stack0x00000014);
-    iVar2 = in_stack_00000014;
-LAB_82853dc4:
-    if ((iVar4 != -1) && (cVar5 = SND_IsStreamChannelFree(iVar2), cVar5 == '\0')) {
-      uVar1 = va(0xffffffff821f1980,(double)local_120);
-      SND_DebugAliasPrint(1,local_170,uVar1);
-      SND_SetStreamChannelFromSaveInfo(iVar2,&local_120);
-      iVar4 = iVar2 * 0xc0;
-      dVar8 = floor((double)(*(float *)(&DAT_84888178 + iVar4) * (float)(longlong)local_11c *
-                             DAT_8487d9d8 + 0.5));
-      SND_SetStreamChannelPlaybackRate(iVar2,(int)dVar8);
-      puVar3 = &uStack_e0;
-      puVar6 = &DAT_84888134 + iVar2 * 0x30;
-      *(undefined4 *)(&DAT_848881a4 + iVar4) = local_70;
-      *(undefined4 *)(&DAT_848881a8 + iVar4) = local_6c;
-      lVar7 = 9;
-      *(undefined4 *)(&DAT_848881ac + iVar4) = local_68;
-      do {
-        puVar3 = puVar3 + 1;
-        puVar6 = puVar6 + 1;
-        *puVar6 = *puVar3;
-        lVar7 = lVar7 + -1;
-      } while (lVar7 != 0);
-      __restgprlr_25(1);
-      return;
-    }
-  }
-  else {
-    cVar5 = SND_IsAliasChannel3D((int)puVar3[0xf] >> 9 & 0x3f);
-    if ((cVar5 != '\0') || (0x2d < iVar2)) {
-      uVar1 = va(0xffffffff821f1be0,*puVar3,(int)puVar3[0xf] >> 9 & 0x3f,iVar2 + -0x28);
-      MyAssertHandler(0xffffffff821ef068,0x1bfc,0,0xffffffff820011f4,0xffffffff821f1b60,uVar1);
-    }
-    if (*(char *)(DAT_8488fd6c + 0xc) != '\0') {
-      iVar4 = SND_StartAliasStreamOnChannel(&local_170,iVar2);
-      goto LAB_82853dc4;
-    }
-  }
-  SND_DoAllLengthNotify(local_dc);
-LAB_82853ed8:
-  __restgprlr_25(1);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82853EE8  SND_Save  (snd.cpp:7192)
-
-void SND_Save(void)
-
-{
-  undefined8 uVar1;
-  longlong lVar2;
-  
-  uVar1 = __savegprlr_28();
-  lVar2 = -0x7b779ffc;
-  do {
-    MemFile_WriteData(uVar1,0x304,lVar2);
-    lVar2 = lVar2 + 0x304;
-  } while ((int)lVar2 < -0x7b7796f0);
-  lVar2 = -0x7b77968c;
-  do {
-    MemFile_WriteData(uVar1,0x20,lVar2);
-    lVar2 = lVar2 + 0x20;
-  } while ((int)lVar2 < -0x7b77960c);
-  MemFile_WriteData(uVar1,0x7fc,0xffffffff8487d1b8);
-  MemFile_WriteData(uVar1,0x108,0xffffffff84888008);
-  SND_SaveEq(uVar1);
-  MemFile_WriteData(uVar1,0x304,0xffffffff848859fc);
-  SND_SaveVolMods(uVar1);
-  SND_SaveWhizbyData(uVar1);
-  SND_SaveEntityOcclusion(uVar1);
-  MemFile_WriteData(uVar1,8,0xffffffff84886914);
-  MemFile_WriteData(uVar1,8,0xffffffff8488691c);
-  if (DAT_8487d9c8 != '\0') {
-    lVar2 = 8;
-    if (8 < DAT_8488a998 + 8) {
-      do {
-        SND_Save3DChannel(lVar2,uVar1);
-        lVar2 = lVar2 + 1;
-      } while ((int)lVar2 < DAT_8488a998 + 8);
-    }
-  }
-  MemFile_WriteCString(uVar1,0xffffffff820068af);
-  if ((DAT_8487d9c8 != '\0') && (lVar2 = 0, 0 < DAT_8488a994)) {
-    do {
-      SND_Save2DChannel(lVar2,uVar1);
-      lVar2 = lVar2 + 1;
-    } while ((int)lVar2 < DAT_8488a994);
-  }
-  MemFile_WriteCString(uVar1,0xffffffff820068af);
-  if (DAT_8487d9c8 != '\0') {
-    lVar2 = 0x28;
-    if (0x28 < DAT_8488a99c + 0x28) {
-      do {
-        SND_SaveStreamChannel(lVar2,uVar1);
-        lVar2 = lVar2 + 1;
-      } while ((int)lVar2 < DAT_8488a99c + 0x28);
-    }
-  }
-  MemFile_WriteCString(uVar1,0xffffffff820068af);
-  __restgprlr_28();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 828540F8  SND_Restore  (snd.cpp:7254)
-
-void SND_Restore(void)
-
-{
-  bool bVar1;
-  undefined8 uVar2;
-  char cVar3;
-  longlong lVar4;
-  longlong lVar5;
-  
-  uVar2 = __savegprlr_29();
-  if (DAT_8487d9c8 != '\0') {
-    if (DAT_8487d9ca == '\0') {
-      MyAssertHandler(0xffffffff821ef068,0x1c5f,0,0xffffffff82000f98,0xffffffff821f1a84);
-    }
-    lVar4 = -0x7b779ffc;
-    do {
-      MemFile_ReadData(uVar2,0x304,lVar4);
-      lVar4 = lVar4 + 0x304;
-    } while ((int)lVar4 < -0x7b7796f0);
-    if (DAT_84886000 != '\0') {
-      DAT_84886910 = &DAT_84885d00;
-    }
-    if (DAT_84886304 != '\0') {
-      DAT_84886910 = (undefined4 *)&DAT_84886004;
-    }
-    if (DAT_84886608 != '\0') {
-      DAT_84886910 = (undefined4 *)&DAT_84886308;
-    }
-    if (DAT_8488690c != '\0') {
-      DAT_84886910 = (undefined4 *)&DAT_8488660c;
-    }
-    lVar4 = -0x7b77968c;
-    do {
-      MemFile_ReadData(uVar2,0x20,lVar4);
-      lVar4 = lVar4 + 0x20;
-    } while ((int)lVar4 < -0x7b77960c);
-    MemFile_ReadData(uVar2,0x7fc,0xffffffff8487d1b8);
-    MemFile_ReadData(uVar2,0x108,0xffffffff84888008);
-    SND_RestoreEq(uVar2);
-    MemFile_ReadData(uVar2,0x304,0xffffffff848859fc);
-    SND_RestoreVolMods(uVar2);
-    SND_RestoreWhizbyData(uVar2);
-    SND_RestoreEntityOcclusion(uVar2);
-    if (DAT_84886970 != '\0') {
-      DAT_848869f4 = &DAT_84886954;
-    }
-    if (DAT_84886990 != '\0') {
-      DAT_848869f4 = (undefined4 *)&DAT_84886974;
-    }
-    if (DAT_848869b0 != '\0') {
-      DAT_848869f4 = (undefined4 *)&DAT_84886994;
-    }
-    if (DAT_848869d0 != '\0') {
-      DAT_848869f4 = &DAT_848869b4;
-    }
-    if (DAT_848869f0 != '\0') {
-      DAT_848869f4 = &DAT_848869d4;
-    }
-    SND_SetRoomtype(*DAT_848869f4);
-    MemFile_ReadData(uVar2,8,0xffffffff84886914);
-    MemFile_ReadData(uVar2,8,0xffffffff8488691c);
-    do {
-      cVar3 = SND_Restore3DChannel(uVar2);
-    } while (cVar3 != '\0');
-    do {
-      cVar3 = SND_Restore2DChannel(uVar2);
-    } while (cVar3 != '\0');
-    lVar5 = 0x28;
-    lVar4 = 6;
-    do {
-      if (((int)lVar5 < 0x2a) || (bVar1 = true, 0x2d < (int)lVar5)) {
-        bVar1 = false;
-      }
-      if (!bVar1) {
-        SND_RestoreStreamChannel(lVar5,uVar2);
-      }
-      lVar4 = lVar4 + -1;
-      lVar5 = lVar5 + 1;
-    } while (lVar4 != 0);
-    do {
-      cVar3 = SND_RestoreStreamChannel(0xffffffffffffffff,uVar2);
-    } while (cVar3 != '\0');
-  }
-  __restgprlr_29();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82854438  SND_RestoreEventually  (snd.cpp:7344)
-
-void SND_RestoreEventually(void)
-
-{
-  int *piVar1;
-  void *pvVar2;
-  
-  piVar1 = (int *)__savegprlr_28();
-  if (*(int *)(DAT_83666158 + 0xc) == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x1cb3,0,0xffffffff82000f98,0xffffffff821f1c60);
-  }
-  SND_StopSounds(6);
-  SND_PauseSounds();
-  if (DAT_8487d9ca == '\0') {
-    MyAssertHandler(0xffffffff821ef068,0x1cb8,0,0xffffffff82000f98,0xffffffff821f1a84);
-  }
-  DAT_848859e4 = 0;
-  if (0x8000 < piVar1[6]) {
-    Sys_Error(0xffffffff821f1c2c);
-  }
-  DAT_848859e4 = piVar1[6];
-  DAT_848859e8 = *(undefined1 *)((int)piVar1 + 0x1e);
-  pvVar2 = memcpy(&DAT_8487d9e4,(void *)(piVar1[5] + *piVar1),piVar1[6]);
-  __restgprlr_28(pvVar2);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82854530  SND_GetSoundOverlayMasterPriority  (snd.cpp:7366)
-
-void SND_GetSoundOverlayMasterPriority(undefined8 param_1,ulonglong param_2)
-
-{
-  int iVar1;
-  undefined1 uVar2;
-  double dVar3;
-  
-  iVar1 = __savegprlr_28();
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x1cc7,0,0xffffffff82000f98,0xffffffff82021a7c);
-  }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x1cc8,0,0xffffffff82000f98,0xffffffff821ef904);
-  }
-  *(undefined4 *)(iVar1 + 0x110) = *(undefined4 *)((int)param_2 + 0xb8);
-  dVar3 = (double)SND_GetSlavePercent(*(undefined4 *)((int)param_2 + 0x70));
-  *(float *)(iVar1 + 0x114) = (float)dVar3;
-  uVar2 = SND_GetMasterPriority(param_2);
-  *(undefined1 *)(iVar1 + 0x118) = uVar2;
-  __restgprlr_28();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 828545C8  SND_GetSoundOverlay2D  (snd.cpp:7377)
-
-void SND_GetSoundOverlay2D(undefined8 param_1,ulonglong param_2)
-
-{
-  undefined4 uVar1;
-  int iVar3;
-  char cVar5;
-  undefined8 uVar2;
-  int iVar4;
-  longlong lVar6;
-  int *piVar7;
-  double dVar8;
-  double dVar9;
-  double dVar10;
-  
-  iVar3 = __savegprlr_19();
-  if ((int)DAT_8488a994 < (int)param_2) {
-    param_2 = (ulonglong)DAT_8488a994;
-  }
-  lVar6 = 0;
-  if (0 < (int)param_2) {
-    piVar7 = &DAT_8488811c;
-    dVar9 = 1.0;
-    dVar10 = 0.0;
-    iVar3 = iVar3 + 0xc0;
-    do {
-      cVar5 = SND_Is2DChannelFree(lVar6);
-      if ((cVar5 == '\0') && (piVar7[-2] == 2)) {
-        if (*piVar7 < 1) {
-          MyAssertHandler(0xffffffff821ef068,0x1ce2,0,0xffffffff82000f98,0xffffffff821f1c7c);
-        }
-        if (piVar7[0x1a] == 0) {
-          MyAssertHandler(0xffffffff821ef068,0x1ce3,0,0xffffffff82000f98,0xffffffff821f1cb0);
-        }
-        Com_GetSoundFileName(piVar7[0x1a],iVar3 + -0xc0,0x80);
-        Com_sprintf(iVar3 + -0x40,0x40,0xffffffff82000f98,*(undefined4 *)piVar7[0x1a]);
-        uVar2 = SND_GetEntChannelName(piVar7[2]);
-        Com_sprintf(iVar3,0x40,0xffffffff82000f98,uVar2);
-        iVar4 = SND_Get2DChannelPlaybackRate(lVar6);
-        if (iVar4 == 0) {
-          iVar4 = *piVar7;
-        }
-        *(float *)(iVar3 + 0x4c) = (float)((double)(longlong)iVar4 / (double)(longlong)*piVar7);
-        *(int *)(iVar3 + 0x40) = piVar7[0x13];
-        dVar8 = (double)SND_Get2DChannelVolume(lVar6);
-        *(float *)(iVar3 + 0x44) = (float)dVar8;
-        if ((double)DAT_848859ec != dVar10) {
-          *(float *)(iVar3 + 0x44) = (float)(dVar8 / (double)DAT_848859ec);
-        }
-        *(undefined1 *)(iVar3 + 0x59) = 0;
-        *(undefined4 *)(iVar3 + 0x48) = 0xffffffff;
-        uVar1 = *(undefined4 *)(piVar7[0x1a] + 0x24);
-        *(float *)(iVar3 + 0x60) = (float)dVar9;
-        *(undefined4 *)(iVar3 + 0x5c) = uVar1;
-        SND_GetSoundOverlayMasterPriority(iVar3 + -0xc0,piVar7 + -2);
-      }
-      else {
-        *(undefined1 *)(iVar3 + -0xc0) = 0;
-      }
-      lVar6 = lVar6 + 1;
-      piVar7 = piVar7 + 0x30;
-      iVar3 = iVar3 + 0x124;
-    } while ((int)lVar6 < (int)param_2);
-  }
-  __restgprlr_19(param_2);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82858E80  SND_GetSoundOverlay3D  (snd.cpp:7426)
-
-void SND_GetSoundOverlay3D(undefined8 param_1,ulonglong param_2)
-
-{
-  int iVar2;
-  char cVar4;
-  undefined8 uVar1;
-  int iVar3;
-  undefined1 uVar5;
-  ulonglong uVar6;
-  longlong lVar7;
-  int *piVar8;
-  double dVar9;
-  double dVar10;
-  double dVar11;
-  double dVar12;
-  undefined1 auStack_b0 [176];
-  
-  iVar2 = __savegprlr_17();
-  if ((int)DAT_8488a998 < (int)param_2) {
-    param_2 = (ulonglong)DAT_8488a998;
-  }
-  if (0 < (int)param_2) {
-    piVar8 = &DAT_8488871c;
-    dVar10 = 1.0;
-    dVar11 = 0.0;
-    lVar7 = 8;
-    iVar2 = iVar2 + 0xc0;
-    uVar6 = param_2;
-    do {
-      cVar4 = SND_Is3DChannelFree(lVar7);
-      if ((cVar4 == '\0') && (piVar8[-2] == 2)) {
-        if (*piVar8 < 1) {
-          MyAssertHandler(0xffffffff821ef068,0x1d15,0,0xffffffff82000f98,0xffffffff821f1c7c);
-        }
-        if (piVar8[0x1a] == 0) {
-          MyAssertHandler(0xffffffff821ef068,0x1d16,0,0xffffffff82000f98,0xffffffff821f1cb0);
-        }
-        Com_GetSoundFileName(piVar8[0x1a],iVar2 + -0xc0,0x80);
-        Com_sprintf(iVar2 + -0x40,0x40,0xffffffff82000f98,*(undefined4 *)piVar8[0x1a]);
-        uVar1 = SND_GetEntChannelName(piVar8[2]);
-        Com_sprintf(iVar2,0x40,0xffffffff82000f98,uVar1);
-        iVar3 = SND_Get3DChannelPlaybackRate(lVar7);
-        if (iVar3 == 0) {
-          iVar3 = *piVar8;
-        }
-        *(float *)(iVar2 + 0x4c) = (float)((double)(longlong)iVar3 / (double)(longlong)*piVar8);
-        *(int *)(iVar2 + 0x40) = piVar8[0x13];
-        dVar9 = (double)SND_Get3DChannelVolume(lVar7);
-        *(float *)(iVar2 + 0x44) = (float)dVar9;
-        if ((double)DAT_848859ec != dVar11) {
-          *(float *)(iVar2 + 0x44) = (float)(dVar9 / (double)DAT_848859ec);
-        }
-        SND_GetSoundOverlayMasterPriority(iVar2 + -0xc0,piVar8 + -2);
-        SND_GetCurrent3DPosition(piVar8[1],piVar8 + 0x22,auStack_b0);
-        dVar9 = (double)SND_DistSqToNearestListener(auStack_b0);
-        dVar12 = (double)(float)SQRT(dVar9);
-        *(int *)(iVar2 + 0x48) = (int)SQRT(dVar9);
-        uVar5 = SND_GetIsGoalOccluded(piVar8 + -2);
-        *(undefined1 *)(iVar2 + 0x59) = uVar5;
-        iVar3 = piVar8[0x1a];
-        if (**(char **)(iVar3 + 0x6c) == '\0') {
-          *(float *)(iVar2 + 0x60) = (float)dVar10;
-          *(undefined4 *)(iVar2 + 0x48) = 0xffffffff;
-          *(undefined4 *)(iVar2 + 0x5c) = *(undefined4 *)(piVar8[0x1a] + 0x24);
-        }
-        else {
-          dVar9 = (double)SND_Attenuate(dVar12,(double)*(float *)(iVar3 + 0x30),
-                                        (double)*(float *)(iVar3 + 0x34),
-                                        *(undefined4 *)(iVar3 + 0x5c));
-          *(float *)(iVar2 + 0x44) = (float)(dVar9 * (double)*(float *)(iVar2 + 0x44));
-          *(int *)(iVar2 + 0x60) = piVar8[0x12];
-          *(undefined4 *)(iVar2 + 0x5c) = *(undefined4 *)(piVar8[0x1a] + 0x24);
-        }
-      }
-      else {
-        *(undefined1 *)(iVar2 + -0xc0) = 0;
-      }
-      uVar6 = uVar6 - 1;
-      lVar7 = lVar7 + 1;
-      piVar8 = piVar8 + 0x30;
-      iVar2 = iVar2 + 0x124;
-    } while (uVar6 != 0);
-  }
-  __restgprlr_17(param_2);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82859110  SND_GetSoundOverlayStream  (snd.cpp:7497)
-
-void SND_GetSoundOverlayStream(undefined8 param_1,ulonglong param_2)
-
-{
-  int iVar2;
-  char cVar4;
-  undefined8 uVar1;
-  int iVar3;
-  undefined1 uVar5;
-  ulonglong uVar6;
-  longlong lVar7;
-  int *piVar8;
-  double dVar9;
-  double dVar10;
-  double dVar11;
-  double dVar12;
-  undefined1 auStack_b0 [176];
-  
-  iVar2 = __savegprlr_17();
-  if ((int)DAT_8488a99c < (int)param_2) {
-    param_2 = (ulonglong)DAT_8488a99c;
-  }
-  if (0 < (int)param_2) {
-    piVar8 = &DAT_84889f84;
-    dVar11 = 1.0;
-    dVar12 = 0.0;
-    lVar7 = 0x28;
-    iVar2 = iVar2 + 0xc0;
-    uVar6 = param_2;
-    do {
-      cVar4 = SND_IsStreamChannelFree(lVar7);
-      if (cVar4 == '\0') {
-        if (piVar8[-0x1c] != 2) goto LAB_828593b8;
-        if (piVar8[-0x1a] < 1) {
-          MyAssertHandler(0xffffffff821ef068,0x1d63,0,0xffffffff82000f98,0xffffffff821f1c7c);
-        }
-        if (*piVar8 == 0) {
-          MyAssertHandler(0xffffffff821ef068,0x1d66,0,0xffffffff82000f98,0xffffffff821f1cb0);
-        }
-        Com_GetSoundFileName(*piVar8,iVar2 + -0xc0,0x80);
-        Com_sprintf(iVar2 + -0x40,0x40,0xffffffff82000f98,*(undefined4 *)*piVar8);
-        uVar1 = SND_GetEntChannelName(piVar8[-0x18]);
-        Com_sprintf(iVar2,0x40,0xffffffff82000f98,uVar1);
-        iVar3 = SND_GetStreamChannelPlaybackRate(lVar7);
-        *(float *)(iVar2 + 0x4c) =
-             (float)((double)(longlong)iVar3 / (double)(longlong)piVar8[-0x1a]);
-        *(int *)(iVar2 + 0x40) = piVar8[-7];
-        dVar9 = (double)SND_GetStreamChannelVolume(lVar7);
-        *(float *)(iVar2 + 0x44) = (float)dVar9;
-        if ((double)DAT_848859ec != dVar12) {
-          *(float *)(iVar2 + 0x44) = (float)(dVar9 / (double)DAT_848859ec);
-        }
-        SND_GetSoundOverlayMasterPriority(iVar2 + -0xc0,piVar8 + -0x1c);
-        dVar9 = dVar12;
-        cVar4 = SND_IsAliasChannel3D(*(int *)(*piVar8 + 0x3c) >> 9 & 0x3f);
-        if (cVar4 == '\0') {
-          *(undefined1 *)(iVar2 + 0x59) = 0;
-          *(undefined4 *)(iVar2 + 0x48) = 0xffffffff;
-        }
-        else {
-          SND_GetCurrent3DPosition(piVar8[-0x19],piVar8 + 8,auStack_b0);
-          dVar10 = (double)SND_DistSqToNearestListener(auStack_b0);
-          dVar9 = (double)(float)SQRT(dVar10);
-          *(int *)(iVar2 + 0x48) = (int)SQRT(dVar10);
-          uVar5 = SND_GetIsGoalOccluded(piVar8 + -0x1c);
-          *(undefined1 *)(iVar2 + 0x59) = uVar5;
-        }
-        if (**(char **)(*piVar8 + 0x6c) == '\0') {
-          *(float *)(iVar2 + 0x60) = (float)dVar11;
-          *(undefined4 *)(iVar2 + 0x48) = 0xffffffff;
-          *(undefined4 *)(iVar2 + 0x5c) = *(undefined4 *)(*piVar8 + 0x24);
-        }
-        else {
-          cVar4 = SND_IsAliasChannel3D(*(int *)(*piVar8 + 0x3c) >> 9 & 0x3f);
-          if (cVar4 != '\0') {
-            iVar3 = *piVar8;
-            dVar9 = (double)SND_Attenuate(dVar9,(double)*(float *)(iVar3 + 0x30),
-                                          (double)*(float *)(iVar3 + 0x34),
-                                          *(undefined4 *)(iVar3 + 0x5c));
-            *(float *)(iVar2 + 0x44) = (float)(dVar9 * (double)*(float *)(iVar2 + 0x44));
-            *(int *)(iVar2 + 0x60) = piVar8[-8];
-          }
-          *(undefined4 *)(iVar2 + 0x5c) = *(undefined4 *)(*piVar8 + 0x24);
-        }
-      }
-      else {
-LAB_828593b8:
-        *(undefined1 *)(iVar2 + -0xc0) = 0;
-      }
-      uVar6 = uVar6 - 1;
-      lVar7 = lVar7 + 1;
-      piVar8 = piVar8 + 0x30;
-      iVar2 = iVar2 + 0x124;
-    } while (uVar6 != 0);
-  }
-  __restgprlr_17(param_2);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 828593E8  SND_GetSoundOverlay  (snd.cpp:7593)
-
-void SND_GetSoundOverlay(undefined8 param_1,ulonglong param_2,undefined8 param_3,ulonglong param_4,
-                        ulonglong param_5,ulonglong param_6)
-
-{
-  longlong lVar1;
-  
-  lVar1 = __savegprlr_24();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x1daa,0,0xffffffff82000f98,0xffffffff82021a7c);
-  }
-  if ((int)param_3 < 1) {
-    MyAssertHandler(0xffffffff821ef068,0x1dab,0,0xffffffff82000f98,0xffffffff821f2948);
-  }
-  if ((param_4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x1dac,0,0xffffffff82000f98,0xffffffff821f2944);
-  }
-  if ((param_5 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x1dad,0,0xffffffff82000f98,0xffffffff82025664);
-  }
-  if ((param_6 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x1dae,0,0xffffffff82000f98,0xffffffff821f2934);
-  }
-  if (DAT_8487d9c8 != '\0') {
-    *(undefined4 *)param_4 = DAT_8487d9e0;
-    *(undefined1 *)param_5 = DAT_8488694c;
-    *(undefined4 *)param_6 = DAT_84886950;
-    if ((lVar1 - 1U & 0xffffffff) < 6) {
-      if ((int)(lVar1 - 1U) != 0) {
-        if (lVar1 == 2) {
-LAB_8285955c:
-          SND_GetSoundOverlayStream(param_2,param_3);
-          __restgprlr_24();
-          return;
-        }
-        if (lVar1 != 3) {
-          if (lVar1 == 4) goto LAB_82859548;
-          if (lVar1 == 5) goto LAB_8285955c;
-        }
-        SND_GetSoundOverlay2D(param_2,param_3);
-        __restgprlr_24();
-        return;
-      }
-LAB_82859548:
-      SND_GetSoundOverlay3D(param_2,param_3);
-      __restgprlr_24();
-      return;
-    }
-  }
-  __restgprlr_24(0);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 828547D0  StopChannel  (snd.cpp:7624)
 
-void StopChannel(undefined8 param_1)
+void StopChannel(int param_1)
 
 {
-  int iVar1;
-  
-  iVar1 = (int)param_1;
-  if ((iVar1 < 0) || (0x35 < iVar1)) {
-    MyAssertHandler(0xffffffff821ef068,0x1dca,0,0xffffffff821f1cd0,0xffffffff821f1ce8,param_1);
+  if ((param_1 < 0) || (0x35 < param_1)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1dca,0,
+                    "%s\n\t(chanId) = %i");
   }
-  if (0x27 < iVar1) {
+  if (0x27 < param_1) {
     SND_StopStreamChannel(param_1);
     return;
   }
-  if (7 < iVar1) {
-    SND_Stop3DChannel();
+  if (7 < param_1) {
+    SND_Stop3DChannel(param_1);
     return;
   }
   SND_Stop2DChannel(param_1);
@@ -9804,224 +3177,96 @@ void StopChannel(undefined8 param_1)
 
 
 // 82854880  SND_StopChannelAndPlayChainAlias  (snd.cpp:7638)
-
-void SND_StopChannelAndPlayChainAlias(void)
-
-{
-  undefined4 uVar1;
-  int iVar2;
-  int iVar3;
-  undefined1 auStack_30 [48];
-  
-  iVar2 = __savegprlr_29();
-  if ((iVar2 < 0) || (0x35 < iVar2)) {
-    MyAssertHandler(0xffffffff821ef068,0x1ddc,0,0xffffffff821f1cd0,0xffffffff821f1ce8,iVar2);
-  }
-  if ((&DAT_84888184)[iVar2 * 0x30] == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x1ddf,0,0xffffffff82000f98,0xffffffff821ef8f0);
-  }
-  if (*(int *)((&DAT_84888184)[iVar2 * 0x30] + 0xc) != 0) {
-    uVar1 = (&DAT_84888120)[iVar2 * 0x30];
-    SND_GetCurrent3DPosition(uVar1,&DAT_848881a4 + iVar2 * 0xc0,auStack_30);
-    iVar3 = Com_PickSoundAlias(*(undefined4 *)((&DAT_84888184)[iVar2 * 0x30] + 0xc));
-    if (iVar3 != (&DAT_84888184)[iVar2 * 0x30]) {
-      StopChannel(iVar2);
-      if (iVar3 != 0) {
-        SND_PlaySoundAlias(iVar3,uVar1,auStack_30,0,1);
-      }
-      __restgprlr_29();
-      return;
-    }
-    Com_PrintError(9,0xffffffff821f1d30,*(undefined4 *)((&DAT_84888184)[iVar2 * 0x30] + 0xc));
-  }
-  StopChannel(iVar2);
-  __restgprlr_29();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 828549B0  SND_StopChannelAndPlayChainAliasIfTimeExpired  (snd.cpp:7678)
-
-undefined8 SND_StopChannelAndPlayChainAliasIfTimeExpired(int param_1)
-
-{
-  double dVar1;
-  
-  if ((((*(int *)((&DAT_84888184)[param_1 * 0x30] + 0xc) != 0) &&
-       ((&DAT_84888114)[param_1 * 0x30] == 2)) &&
-      ((*(uint *)((&DAT_84888184)[param_1 * 0x30] + 0x3c) & 1) == 0)) &&
-     (dVar1 = (double)SND_GetChannelFractionPlayed(param_1,0), 1.0 <= dVar1)) {
-    SND_StopChannelAndPlayChainAlias(param_1);
-    return 1;
-  }
-  return 0;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82854A60  SND_AddPhysicsSound  (snd.cpp:7707)
 
-void SND_AddPhysicsSound(double param_1,double param_2,int param_3,undefined4 *param_4)
+void SND_AddPhysicsSound(snd_alias_list_t *param_1,float *param_2,float param_3,float param_4)
 
 {
   int iVar1;
+  double dVar2;
+  double dVar3;
   
-  if (param_3 == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x1e1c,0,0xffffffff82000f98,0xffffffff82176e88);
+  dVar2 = (double)param_3;
+  dVar3 = (double)param_4;
+  if (param_1 == (snd_alias_list_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1e1c,0,"%s");
   }
-  Sys_EnterCriticalSection(0x17);
-  if (DAT_8488d598 < 0x20) {
-    (&DAT_8488d298)[DAT_8488d598 * 6] = param_3;
-    iVar1 = DAT_8488d598 * 0x18;
-    *(undefined4 *)(&DAT_8488d29c + iVar1) = *param_4;
-    *(undefined4 *)(&DAT_8488d2a0 + iVar1) = param_4[1];
-    *(undefined4 *)(&DAT_8488d2a4 + iVar1) = param_4[2];
-    (&DAT_8488d2a8)[DAT_8488d598 * 6] = (float)param_1;
-    (&DAT_8488d2ac)[DAT_8488d598 * 6] = (float)param_2;
-    DAT_8488d598 = DAT_8488d598 + 1;
+  Sys_EnterCriticalSection(CRITSECT_AUDIO_PHYSICS);
+  if (g_sndPhysics.count < 0x20) {
+    g_sndPhysics.info[g_sndPhysics.count].aliasList = param_1;
+    iVar1 = g_sndPhysics.count;
+    g_sndPhysics.info[g_sndPhysics.count].org[0] = *param_2;
+    g_sndPhysics.info[iVar1].org[1] = param_2[1];
+    g_sndPhysics.info[iVar1].org[2] = param_2[2];
+    g_sndPhysics.info[g_sndPhysics.count].volume = (float)dVar2;
+    g_sndPhysics.info[g_sndPhysics.count].pitch = (float)dVar3;
+    g_sndPhysics.count = g_sndPhysics.count + 1;
   }
-  Sys_LeaveCriticalSection(0x17);
+  Sys_LeaveCriticalSection(CRITSECT_AUDIO_PHYSICS);
   return;
 }
 
 
 // 82854B78  SND_GetVolume  (snd.cpp:7731)
-
-double SND_GetVolume(void)
-
-{
-  return (double)DAT_848859ec;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82854B90  SND_GetVolumeNormalized  (snd.cpp:7737)
-
-double SND_GetVolumeNormalized(void)
-
-{
-  return (double)(DAT_848859ec * 2.5);
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82854BB8  SND_InitOcclusionInfo  (snd.cpp:7745)
-
-void SND_InitOcclusionInfo(void)
-
-{
-  undefined4 *puVar1;
-  ulonglong uVar2;
-  float *pfVar3;
-  double dVar4;
-  
-  __savegprlr_23();
-  puVar1 = &DAT_8487cfb4;
-  dVar4 = 0.0;
-  uVar2 = 0;
-  pfVar3 = (float *)&DAT_8488d5a4;
-  do {
-    if (0x7f < (uVar2 & 0xffffffff)) {
-      MyAssertHandler(0xffffffff821ef068,0x222,0,0xffffffff821ef0a0,uVar2,0x80);
-    }
-    pfVar3[1] = (float)dVar4;
-    *pfVar3 = (float)dVar4;
-    pfVar3[3] = 0.0;
-    pfVar3[2] = (float)dVar4;
-    pfVar3[4] = 0.0;
-    pfVar3[-1] = -NAN;
-    pfVar3 = pfVar3 + 6;
-    uVar2 = uVar2 + 1;
-    puVar1 = puVar1 + 1;
-    *puVar1 = DAT_84886ae8;
-  } while ((int)pfVar3 < -0x7b771e5c);
-  __restgprlr_23();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82854C78  SND_InitPainVisionOcclusionEntChanInfo  (snd.cpp:8152)
-
-void SND_InitPainVisionOcclusionEntChanInfo(void)
-
-{
-  undefined *puVar1;
-  int iVar2;
-  undefined **ppuVar3;
-  float *pfVar4;
-  float fVar5;
-  longlong lVar6;
-  double dVar7;
-  double dVar8;
-  
-  __savegprlr_21();
-  ppuVar3 = &PTR_s_physics_829a6500;
-  pfVar4 = (float *)0x8488fc1c;
-  dVar8 = 0.0;
-  dVar7 = 20000.0;
-  do {
-    puVar1 = *ppuVar3;
-    if (puVar1 == (undefined *)0x0) {
-      MyAssertHandler(0xffffffff821ef068,0x2c6,0,0xffffffff82000f98,0xffffffff8200681c);
-    }
-    fVar5 = 0.0;
-    if (0 < DAT_84888110) {
-      lVar6 = -0x7b7794f8;
-      do {
-        iVar2 = I_stricmp(puVar1,lVar6);
-        if (iVar2 == 0) goto LAB_82854d50;
-        fVar5 = (float)((int)fVar5 + 1);
-        lVar6 = lVar6 + 0x54;
-      } while ((int)fVar5 < DAT_84888110);
-    }
-    fVar5 = -NAN;
-LAB_82854d50:
-    ppuVar3 = ppuVar3 + 1;
-    pfVar4[2] = (float)dVar7;
-    pfVar4[4] = (float)dVar8;
-    pfVar4[1] = fVar5;
-    pfVar4[3] = 7.00649e-45;
-    pfVar4 = pfVar4 + 5;
-    *pfVar4 = (float)dVar8;
-    if (-0x7d659ac1 < (int)ppuVar3) {
-      __restgprlr_21();
-      return;
-    }
-  } while( true );
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82854D88  SND_SetAmbientConfigString  (snd.cpp:8168)
 
-void SND_SetAmbientConfigString(undefined8 param_1,ulonglong param_2)
+void SND_SetAmbientConfigString(int param_1,char *param_2)
 
 {
   char cVar1;
   int iVar2;
-  ulonglong uVar3;
-  char *pcVar5;
+  uint uVar3;
   ulonglong uVar4;
+  char *pcVar6;
+  ulonglong uVar5;
   
-  uVar3 = __savegprlr_28();
-  if (1 < (uVar3 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821ef068,0x1fe9,0,0xffffffff821f1dc8,uVar3,2);
+  uVar4 = (ulonglong)(int)param_2;
+  uVar3 = __savegprlr_28(param_1);
+  if (1 < uVar3) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1fe9,0,
+                    "index doesn\'t index MAX_AMBIENT_STRINGS\n\t%i not in [0, %i)");
   }
-  uVar4 = param_2;
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x1fea,0,0xffffffff82000f98,0xffffffff821f1db8);
+  uVar5 = uVar4;
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1fea,0,"%s");
   }
   do {
-    pcVar5 = (char *)uVar4;
+    pcVar6 = (char *)uVar5;
+    uVar5 = uVar5 + 1;
+  } while (*pcVar6 != '\0');
+  if (0x3f7 < ((uVar5 - uVar4) - 1 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1feb,0,"%s");
+  }
+  iVar2 = (int)uVar4;
+  do {
+    cVar1 = *(char *)uVar4;
+    ((char *)uVar4)[(int)&g_sndAmbientConfigStrings + (uVar3 * 0x3fc - iVar2)] = cVar1;
     uVar4 = uVar4 + 1;
-  } while (*pcVar5 != '\0');
-  if (0x3f7 < ((uVar4 - param_2) - 1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821ef068,0x1feb,0,0xffffffff82000f98,0xffffffff821f1d84);
-  }
-  iVar2 = (int)param_2;
-  do {
-    cVar1 = *(char *)param_2;
-    ((char *)param_2)[(int)(&DAT_8487d1b8 + ((int)uVar3 * 0x3fc - iVar2))] = cVar1;
-    param_2 = param_2 + 1;
   } while (cVar1 != '\0');
-  (&DAT_8487d5b0)[(int)uVar3 * 0xff] = DAT_8487d9b0;
-  DAT_8487d9b0 = DAT_8487d9b0 + 1;
+  g_sndAmbientConfigStrings.string[uVar3].generation = g_sndAmbientConfigStrings.generationCount;
+  g_sndAmbientConfigStrings.generationCount = g_sndAmbientConfigStrings.generationCount + 1;
   __restgprlr_28();
   return;
 }
@@ -10029,19 +3274,22 @@ void SND_SetAmbientConfigString(undefined8 param_1,ulonglong param_2)
 
 // 82854E90  SND_GetAmbientConfigString  (snd.cpp:8179)
 
-longlong SND_GetAmbientConfigString(ulonglong param_1)
+char * SND_GetAmbientConfigString(int param_1)
 
 {
-  if (1 < (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821ef068,0x1ff4,0,0xffffffff821f1dc8,param_1,2);
+  if (1 < (uint)param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1ff4,0,
+                    "index doesn\'t index MAX_AMBIENT_STRINGS\n\t%i not in [0, %i)");
   }
-  return param_1 * 0x3fc + -0x7b782e48;
+  return g_sndAmbientConfigStrings.string[param_1].value;
 }
 
 
 // 82854EF8  SND_GetOldestAmbientTrack  (snd.cpp:8187)
 
-undefined8 SND_GetOldestAmbientTrack(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int SND_GetOldestAmbientTrack(void)
 
 {
   return 1;
@@ -10049,638 +3297,208 @@ undefined8 SND_GetOldestAmbientTrack(void)
 
 
 // 82854F00  SND_UpdateOcclusionLerp  (snd.cpp:8196)
-
-void SND_UpdateOcclusionLerp(undefined8 param_1,undefined8 param_2,int param_3)
-
-{
-  int iVar1;
-  
-  iVar1 = __savegprlr_27();
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x2007,0,0xffffffff82000f98,0xffffffff821ef904);
-  }
-  if ((int)param_2 < 0) {
-    MyAssertHandler(0xffffffff821ef068,0x2008,0,0xffffffff82000f98,0xffffffff821f1e04);
-  }
-  if (*(int *)(iVar1 + 0xc) == 0xffff) {
-    MyAssertHandler(0xffffffff821ef068,0x2009,0,0xffffffff82000f98,0xffffffff821893b8);
-  }
-  if (*(uint *)(iVar1 + 0xc) >> 0x14 == 0x7fe) {
-    SND_UpdateParameter(iVar1 + 0xa0,param_2);
-    __restgprlr_27();
-    return;
-  }
-  iVar1 = SND_GetEntityOcclusionInfo();
-  if (*(int *)(iVar1 + 0x10) < param_3) {
-    *(int *)(iVar1 + 0x10) = param_3;
-    SND_UpdateParameter(iVar1 + 4,param_2);
-  }
-  __restgprlr_27();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82854FE8  SND_GetCurrentOcclusionLerp  (snd.cpp:8224)
-
-double SND_GetCurrentOcclusionLerp(int param_1)
-
-{
-  int iVar1;
-  
-  if (param_1 == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x2024,0,0xffffffff82000f98,0xffffffff821ef904);
-  }
-  if (*(uint *)(param_1 + 0xc) == 0xffff) {
-    return 0.0;
-  }
-  if (*(uint *)(param_1 + 0xc) >> 0x14 == 0x7fe) {
-    return (double)*(float *)(param_1 + 0xa0);
-  }
-  iVar1 = SND_GetEntityOcclusionInfo();
-  return (double)*(float *)(iVar1 + 4);
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82859580  SND_IsFilterEnabled  (snd.cpp:8250)
-
-void SND_IsFilterEnabled(undefined8 param_1,undefined8 param_2)
-
-{
-  int iVar1;
-  char cVar3;
-  int iVar2;
-  
-  iVar1 = __savegprlr_29();
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x203d,0,0xffffffff82000f98,0xffffffff821ef904);
-  }
-  cVar3 = SND_IsEntChanInEqMode(*(undefined4 *)(iVar1 + 0x10));
-  if ((cVar3 == '\0') &&
-     ((cVar3 = SND_IsEntChanInOcclusionMode(*(undefined4 *)(iVar1 + 0x10)), cVar3 == '\0' ||
-      (iVar2 = SND_SoundOcclusionTrace(iVar1,param_2), iVar2 == 0)))) {
-    cVar3 = SND_GetIsOccluded(iVar1);
-    if (cVar3 != '\0') {
-      SND_SetIsOccluded(iVar1,0);
-    }
-    __restgprlr_29(0);
-    return;
-  }
-  __restgprlr_29(1);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82855090  SND_GetIsTimeForOcclusionTrace  (snd.cpp:8281)
-
-void SND_GetIsTimeForOcclusionTrace(undefined8 param_1,ulonglong param_2)
-
-{
-  uint uVar1;
-  int iVar2;
-  
-  iVar2 = __savegprlr_28();
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x205d,0,0xffffffff82000f98,0xffffffff821ef904);
-  }
-  if (*(int *)(iVar2 + 0xc) == 0xffff) {
-    MyAssertHandler(0xffffffff821ef068,0x205e,0,0xffffffff82000f98,0xffffffff821893b8);
-  }
-  if ((int)param_2 < 0) {
-    MyAssertHandler(0xffffffff821ef068,0x205f,0,0xffffffff821f1e14,0xffffffff821f1e2c,param_2);
-  }
-  if (*(uint *)(iVar2 + 0xc) >> 0x14 == 0x7fe) {
-    uVar1 = *(uint *)(iVar2 + 0xac);
-  }
-  else {
-    iVar2 = SND_GetEntityOcclusionInfo();
-    uVar1 = *(uint *)(iVar2 + 0x14);
-  }
-  __restgprlr_28(((~(param_2 ^ uVar1) & 0xffffffff) >> 0x1f) + (ulonglong)(param_2 <= uVar1) & 1);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82855168  SND_SetNextOcclusionTime  (snd.cpp:8306)
-
-void SND_SetNextOcclusionTime(undefined8 param_1,undefined8 param_2)
-
-{
-  int iVar1;
-  int iVar2;
-  
-  iVar1 = __savegprlr_28();
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x2075,0,0xffffffff82000f98,0xffffffff821ef904);
-  }
-  if (*(int *)(iVar1 + 0xc) == 0xffff) {
-    MyAssertHandler(0xffffffff821ef068,0x2076,0,0xffffffff82000f98,0xffffffff821893b8);
-  }
-  iVar2 = (int)param_2;
-  if (iVar2 < 0) {
-    MyAssertHandler(0xffffffff821ef068,0x2077,0,0xffffffff821f1e40,0xffffffff821f1e60,param_2);
-  }
-  if (*(uint *)(iVar1 + 0xc) >> 0x14 == 0x7fe) {
-    *(int *)(iVar1 + 0xac) = iVar2;
-    __restgprlr_28();
-    return;
-  }
-  iVar1 = SND_GetEntityOcclusionInfo();
-  *(int *)(iVar1 + 0x14) = iVar2;
-  __restgprlr_28();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82855230  SND_GetIsOccluded  (snd.cpp:8328)
-
-bool SND_GetIsOccluded(int param_1)
-
-{
-  float fVar1;
-  int iVar2;
-  
-  if (param_1 == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x208c,0,0xffffffff82000f98,0xffffffff821ef904);
-  }
-  if (*(uint *)(param_1 + 0xc) == 0xffff) {
-    return false;
-  }
-  if (*(uint *)(param_1 + 0xc) >> 0x14 == 0x7fe) {
-    fVar1 = *(float *)(param_1 + 0xa0);
-  }
-  else {
-    iVar2 = SND_GetEntityOcclusionInfo();
-    fVar1 = *(float *)(iVar2 + 4);
-  }
-  return 0.0 < fVar1;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 828552E0  SND_SetGoalOcclusionLerp  (snd.cpp:8364)
-
-void SND_SetGoalOcclusionLerp(void)
-
-{
-  int iVar1;
-  double extraout_f1;
-  undefined8 uVar2;
-  undefined8 uVar3;
-  double dVar4;
-  
-  iVar1 = __savegprlr_29();
-  dVar4 = extraout_f1;
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x20af,0,0xffffffff82000f98,0xffffffff821ef904);
-  }
-  if (*(int *)(iVar1 + 0xc) == 0xffff) {
-    MyAssertHandler(0xffffffff821ef068,0x20b0,0,0xffffffff82000f98,0xffffffff821893b8);
-  }
-  uVar2 = 0;
-  uVar3 = 0x3ff0000000000000;
-  if ((dVar4 < 0.0) || (1.0 < dVar4)) {
-    MyAssertHandler(0xffffffff821ef068,0x20b1,0,0xffffffff82000f98,0xffffffff821f1e80);
-  }
-  if (*(uint *)(iVar1 + 0xc) >> 0x14 == 0x7fe) {
-    iVar1 = iVar1 + 0xa0;
-  }
-  else {
-    iVar1 = SND_GetEntityOcclusionInfo();
-    iVar1 = iVar1 + 4;
-  }
-  SND_SetParamValue(dVar4,uVar2,uVar3,iVar1);
-  __restgprlr_29();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 828553E8  SND_GetGoalOcclusionLerp  (snd.cpp:8386)
-
-void SND_GetGoalOcclusionLerp(void)
-
-{
-  int iVar1;
-  
-  iVar1 = __savegprlr_29();
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x20c6,0,0xffffffff82000f98,0xffffffff821ef904);
-  }
-  if (*(int *)(iVar1 + 0xc) == 0xffff) {
-    MyAssertHandler(0xffffffff821ef068,0x20c7,0,0xffffffff82000f98,0xffffffff821893b8);
-  }
-  if (*(uint *)(iVar1 + 0xc) >> 0x14 == 0x7fe) {
-    __restgprlr_29((double)*(float *)(iVar1 + 0xa4));
-    return;
-  }
-  iVar1 = SND_GetEntityOcclusionInfo();
-  __restgprlr_29((double)*(float *)(iVar1 + 8));
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82855480  SND_GetIsGoalOccluded  (snd.cpp:8412)
-
-bool SND_GetIsGoalOccluded(int param_1)
-
-{
-  double dVar1;
-  
-  if (param_1 == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x20dd,0,0xffffffff82000f98,0xffffffff821ef904);
-  }
-  if (*(int *)(param_1 + 0xc) == 0xffff) {
-    return false;
-  }
-  dVar1 = (double)SND_GetGoalOcclusionLerp(param_1);
-  return (float)(1.0 - dVar1) < 0.001;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82855528  SND_ForceToGoalOcclusion  (snd.cpp:8425)
-
-void SND_ForceToGoalOcclusion(void)
-
-{
-  int iVar1;
-  
-  iVar1 = __savegprlr_29();
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x20ec,0,0xffffffff82000f98,0xffffffff821ef904);
-  }
-  if (*(int *)(iVar1 + 0xc) == 0xffff) {
-    MyAssertHandler(0xffffffff821ef068,0x20ed,0,0xffffffff82000f98,0xffffffff821893b8);
-  }
-  if (*(uint *)(iVar1 + 0xc) >> 0x14 == 0x7fe) {
-    *(undefined4 *)(iVar1 + 0xa0) = *(undefined4 *)(iVar1 + 0xa4);
-    *(undefined4 *)(iVar1 + 0xa8) = 0x3f800000;
-    __restgprlr_29();
-    return;
-  }
-  iVar1 = SND_GetEntityOcclusionInfo();
-  *(undefined4 *)(iVar1 + 4) = *(undefined4 *)(iVar1 + 8);
-  *(undefined4 *)(iVar1 + 0xc) = 0x3f800000;
-  __restgprlr_29();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 828555E0  SND_SetIsOccluded  (snd.cpp:8448)
-
-void SND_SetIsOccluded(undefined8 param_1,ulonglong param_2)
-
-{
-  int iVar1;
-  char cVar2;
-  undefined8 uVar3;
-  double dVar4;
-  
-  iVar1 = __savegprlr_28();
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x2105,0,0xffffffff82000f98,0xffffffff821ef904);
-  }
-  if (*(int *)(iVar1 + 0xc) == 0xffff) {
-    MyAssertHandler(0xffffffff821ef068,0x2106,0,0xffffffff82000f98,0xffffffff821893b8);
-  }
-  cVar2 = SND_GetIsOccluded(iVar1);
-  dVar4 = (double)SND_GetGoalOcclusionLerp(iVar1);
-  if (cVar2 == '\0') {
-LAB_82855694:
-    if (((param_2 & 0xff) == 0) || (uVar3 = 0x3ff0000000000000, dVar4 == 1.0)) goto LAB_828556bc;
-  }
-  else if (((param_2 & 0xff) != 0) || (uVar3 = 0, dVar4 == 0.0)) {
-    if (cVar2 != '\0') goto LAB_828556bc;
-    goto LAB_82855694;
-  }
-  SND_SetGoalOcclusionLerp(uVar3,iVar1);
-LAB_828556bc:
-  __restgprlr_28();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 828556C8  SND_IsEntEqEnabled  (snd.cpp:8490)
-
-undefined8 SND_IsEntEqEnabled(void)
-
-{
-  return 1;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 828556D0  SND_GetTargetOcclusionPosition  (snd.cpp:8514)
-
-void SND_GetTargetOcclusionPosition(undefined8 param_1,undefined8 param_2)
-
-{
-  ulonglong uVar1;
-  int iVar2;
-  undefined1 auStack_50 [80];
-  
-  iVar2 = __savegprlr_28();
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x2143,0,0xffffffff82000f98,0xffffffff821ef904);
-  }
-  if (*(int *)(iVar2 + 0xc) == 0xffff) {
-    MyAssertHandler(0xffffffff821ef068,0x2144,0,0xffffffff82000f98,0xffffffff821893b8);
-  }
-  uVar1 = (ulonglong)(*(uint *)(iVar2 + 0xc) >> 0x14);
-  if (uVar1 < 0x800) {
-    SND_GetCurrent3DPosition(*(undefined4 *)(iVar2 + 0xc),iVar2 + 0x90,param_2);
-  }
-  else {
-    CG_CopyClientSideSoundEntityOrientation(uVar1 - 0x800,param_2,auStack_50);
-  }
-  *(float *)((int)param_2 + 8) = *(float *)((int)param_2 + 8) + 10.0;
-  __restgprlr_28();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82855790  SND_IsTraceEntity  (snd.cpp:8548)
-
-void SND_IsTraceEntity(undefined8 param_1,ulonglong param_2)
-
-{
-  uint uVar1;
-  int iVar2;
-  
-  iVar2 = __savegprlr_28();
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x2167,0,0xffffffff82000f98,0xffffffff821ef904);
-  }
-  if (*(int *)(iVar2 + 0xc) == 0xffff) {
-    MyAssertHandler(0xffffffff821ef068,0x2168,0,0xffffffff82000f98,0xffffffff821893b8);
-  }
-  if (3 < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821ef068,0x2169,0,0xffffffff820011a8,param_2,4);
-  }
-  if (*(uint *)(iVar2 + 0xc) >> 0x14 < 0x800) {
-    iVar2 = CG_GetEntity(param_2);
-    if (iVar2 == 0) {
-      MyAssertHandler(0xffffffff821ef068,0x2178,0,0xffffffff82000f98,0xffffffff82002118);
-    }
-    uVar1 = *(uint *)(iVar2 + 200);
-    switch(uVar1) {
-    case 0:
-    case 1:
-    case 3:
-    case 4:
-    case 5:
-    case 6:
-    case 7:
-    case 0xb:
-    case 0xc:
-    case 0xd:
-    case 0xe:
-      break;
-    default:
-      __restgprlr_28((longlong)((int)uVar1 >> 0x1f) + (ulonglong)(0x11 < uVar1) & 0xff);
-      return;
-    }
-  }
-  __restgprlr_28(1);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 828558F8  SND_PerformOcclusionTrace  (snd.cpp:8604)
-
-void SND_PerformOcclusionTrace(undefined8 param_1,ulonglong param_2)
-
-{
-  int iVar2;
-  char cVar3;
-  undefined8 uVar1;
-  undefined4 local_98;
-  undefined4 local_94;
-  float local_90;
-  undefined1 auStack_88 [24];
-  undefined1 auStack_70 [28];
-  int local_54;
-  
-  iVar2 = __savegprlr_27();
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x21a4,0,0xffffffff82000f98,0xffffffff821ef904);
-  }
-  if (*(int *)(iVar2 + 0xc) == 0xffff) {
-    MyAssertHandler(0xffffffff821ef068,0x21a5,0,0xffffffff82000f98,0xffffffff821893b8);
-  }
-  if (3 < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821ef068,0x21a6,0,0xffffffff820011a8,param_2,4);
-  }
-  cVar3 = SND_IsTraceEntity(iVar2,param_2);
-  if (cVar3 != '\0') {
-    SND_GetTargetOcclusionPosition(iVar2,auStack_88);
-    iVar2 = CG_GetPredictedPlayerState(param_2);
-    if (iVar2 == 0) {
-      MyAssertHandler(0xffffffff821ef068,0x21af,0,0xffffffff82000f98,0xffffffff82001fdc);
-    }
-    if (*(int *)(iVar2 + 0xac) == 0x7ff) {
-      local_98 = *(undefined4 *)(iVar2 + 0x1c);
-      local_94 = *(undefined4 *)(iVar2 + 0x20);
-      local_90 = *(float *)(iVar2 + 0x24);
-    }
-    else {
-      local_98 = *(undefined4 *)(iVar2 + 0xb4);
-      local_94 = *(undefined4 *)(iVar2 + 0xb8);
-      local_90 = *(float *)(iVar2 + 0xbc);
-    }
-    local_90 = (float)(longlong)*(int *)(iVar2 + 0x164) + local_90;
-    CG_WorldTrace(auStack_70,&local_98,auStack_88,0xffffffff82174a3c,1);
-    uVar1 = 1;
-    if (local_54 != 0) goto LAB_82855a74;
-  }
-  uVar1 = 0;
-LAB_82855a74:
-  __restgprlr_27(uVar1);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82855A80  SND_SoundOcclusionTrace  (snd.cpp:8653)
-
-void SND_SoundOcclusionTrace(undefined8 param_1,undefined8 param_2)
-
-{
-  int iVar1;
-  char cVar3;
-  int iVar2;
-  ulonglong uVar4;
-  longlong lVar5;
-  char in_RESERVE;
-  byte in_cr0;
-  
-  iVar1 = __savegprlr_27();
-  if (*(int *)(iVar1 + 0xc) == 0xffff) {
-    __restgprlr_27(0);
-    return;
-  }
-  Profile2_UpdateEntry(5);
-  do {
-    if (in_RESERVE != '\0') {
-      DAT_84184e0c = storeWordConditionalIndexed((ulonglong)DAT_84184e0c + 1,0,0xffffffff84184e0c);
-      in_cr0 = 2;
-    }
-  } while (!(bool)(in_cr0 >> 1 & 1));
-  Profile_Begin(0x153);
-  cVar3 = SND_GetIsTimeForOcclusionTrace(iVar1,DAT_84886ae8);
-  if (cVar3 == '\0') {
-    SND_UpdateOcclusionLerp(iVar1,param_2,DAT_84886ae8);
-    uVar4 = SND_GetIsOccluded(iVar1);
-  }
-  else {
-    uVar4 = 0;
-    lVar5 = 0;
-    do {
-      cVar3 = CL_IsLocalClientActive(lVar5);
-      if (((cVar3 != '\0') && (iVar2 = CL_GetLocalClientConnectionState(lVar5), 9 < iVar2)) &&
-         (uVar4 = SND_PerformOcclusionTrace(iVar1,lVar5), (uVar4 & 0xff) == 0)) break;
-      lVar5 = lVar5 + 1;
-    } while ((int)lVar5 < 4);
-    SND_SetNextOcclusionTime
-              (iVar1,(ulonglong)*(uint *)(DAT_8488d294 + 0xc) + (ulonglong)DAT_84886ae8);
-  }
-  SND_SetIsOccluded(iVar1,uVar4);
-  Profile_EndInternal(0);
-  Profile2_UpdateEntry(5);
-  do {
-    if (in_RESERVE != '\0') {
-      DAT_84184e0c = storeWordConditionalIndexed((ulonglong)DAT_84184e0c - 1,0,0xffffffff84184e0c);
-      in_cr0 = 2;
-    }
-  } while (!(bool)(in_cr0 >> 1 & 1));
-  __restgprlr_27(uVar4 & 0xff);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure snd_channel_info_t
 
 // 82855BF8  SND_ParsePresetFileAndSetSoundOcclusion  (snd.cpp:8707)
 
-void SND_ParsePresetFileAndSetSoundOcclusion(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
+bool SND_ParsePresetFileAndSetSoundOcclusion(StringTable *param_1,char *param_2)
 
 {
+  StringTable *pSVar1;
+  char *pcVar2;
   int iVar3;
-  undefined8 uVar1;
-  int iVar4;
-  undefined8 uVar2;
-  char *_String;
-  longlong lVar5;
-  longlong lVar6;
-  double dVar7;
-  double dVar8;
+  SND_EQTYPE SVar4;
+  undefined1 uVar5;
+  ulonglong uVar6;
+  longlong lVar7;
+  SND_EQTYPE SVar8;
   double dVar9;
   double dVar10;
   double dVar11;
+  double dVar12;
+  double dVar13;
   
-  __savegprlr_20();
-  iVar3 = __savefpr_28();
-  if (iVar3 == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x220e,0,0xffffffff82000f98,0xffffffff820362e8);
+  uVar6 = (ulonglong)(int)param_2;
+  __savegprlr_20(param_1);
+  pSVar1 = (StringTable *)__savefpr_28();
+  if (pSVar1 == (StringTable *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x220e,0,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821ef068,0x220f,0,0xffffffff82000f98,0xffffffff821f202c);
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x220f,0,"%s");
   }
-  lVar5 = 0;
-  lVar6 = 0;
-  if (0 < *(int *)(iVar3 + 8)) {
-    dVar9 = 20000.0;
-    dVar10 = 0.0;
+  lVar7 = 0;
+  SVar8 = SND_EQTYPE_FIRST;
+  if (0 < pSVar1->rowCount) {
+    dVar11 = 20000.0;
+    dVar12 = 0.0;
     do {
-      uVar1 = StringTable_GetColumnValueForRow(iVar3,lVar6,0);
-      iVar4 = I_stricmp(uVar1,param_2);
-      if (iVar4 == 0) {
-        uVar1 = StringTable_GetColumnValueForRow(iVar3,lVar6,1);
-        uVar2 = SND_GetEntChannelFromName();
-        if ((int)uVar2 == -1) {
-          Com_PrintWarning(9,0xffffffff821f1ed8,0xffffffff820260d8,param_2,uVar1);
+      pcVar2 = StringTable_GetColumnValueForRow(pSVar1,SVar8,0);
+      iVar3 = I_stricmp(pcVar2,(char *)uVar6);
+      if (iVar3 == 0) {
+        pcVar2 = StringTable_GetColumnValueForRow(pSVar1,SVar8,1);
+        iVar3 = SND_GetEntChannelFromName(pcVar2);
+        if (iVar3 == -1) {
+          Com_PrintWarning(9,
+                           "WARNING: In occlusion preset file, \'%s\', preset \'%s\' has invalid channel: \'%s\'.\n"
+                          );
         }
         else {
-          uVar1 = StringTable_GetColumnValueForRow(iVar3,lVar6,2);
-          dVar7 = atof((char *)uVar1);
-          dVar7 = (double)(float)dVar7;
-          if ((dVar7 < dVar10) || (dVar9 < dVar7)) {
-            Com_PrintWarning(9,0xffffffff821f1f30,0xffffffff820260d8,param_2,uVar1);
+          pcVar2 = StringTable_GetColumnValueForRow(pSVar1,SVar8,2);
+          dVar9 = atof(pcVar2);
+          dVar9 = (double)(float)dVar9;
+          if ((dVar9 < dVar12) || (dVar11 < dVar9)) {
+            Com_PrintWarning(9,
+                             "WARNING: In occlusion preset file, \'%s\', preset \'%s\' has invalid frequency: \'%s\'.\n"
+                            );
           }
           else {
-            uVar1 = StringTable_GetColumnValueForRow(iVar3,lVar6,3);
-            iVar4 = SND_GetEqTypeFromName();
-            if (iVar4 == 5) {
-              Com_PrintWarning(9,0xffffffff821f1f88,0xffffffff820260d8,param_2,uVar1);
+            pcVar2 = StringTable_GetColumnValueForRow(pSVar1,SVar8,3);
+            SVar4 = SND_GetEqTypeFromName(pcVar2);
+            if (SVar4 == SND_EQTYPE_COUNT) {
+              Com_PrintWarning(9,
+                               "WARNING: In occlusion preset file, \'%s\', preset \'%s\' has invalid eq type: \'%s\'.\n"
+                              );
             }
             else {
-              _String = (char *)StringTable_GetColumnValueForRow(iVar3,lVar6,4);
-              dVar8 = atof(_String);
-              dVar11 = (double)(float)dVar8;
-              uVar1 = StringTable_GetColumnValueForRow(iVar3,lVar6,5);
-              dVar8 = atof((char *)uVar1);
-              if (dVar10 < (double)(float)dVar8) {
-                lVar5 = 1;
-                SND_SetOcclusionFilter(dVar7,dVar11,uVar2);
+              pcVar2 = StringTable_GetColumnValueForRow(pSVar1,SVar8,4);
+              dVar10 = atof(pcVar2);
+              dVar13 = (double)(float)dVar10;
+              SVar4 = SVar8;
+              pcVar2 = StringTable_GetColumnValueForRow(pSVar1,SVar8,5);
+              dVar10 = atof(pcVar2);
+              if (dVar12 < (double)(float)dVar10) {
+                lVar7 = 1;
+                SND_SetOcclusionFilter(iVar3,(float)dVar9,SVar4,(float)dVar13,(float)dVar10);
               }
               else {
-                Com_PrintError(9,0xffffffff821f1fe0,0xffffffff820260d8,param_2,uVar1);
+                Com_PrintError(9,
+                               "WARNING: In occlusion preset file, \'%s\', preset \'%s\' has invalid q: \'%s\'.\n"
+                              );
               }
             }
           }
         }
       }
-      else if (lVar5 != 0) break;
-      lVar6 = lVar6 + 1;
-    } while ((int)lVar6 < *(int *)(iVar3 + 8));
+      else if (lVar7 != 0) break;
+      SVar8 = SVar8 + SND_EQTYPE_HIGHPASS;
+    } while ((int)SVar8 < pSVar1->rowCount);
   }
-  __restfpr_28(lVar5);
-  __restgprlr_20();
-  return;
+  __restfpr_28(lVar7);
+  uVar5 = __restgprlr_20();
+  return (bool)uVar5;
 }
 
 
 // 82855E48  SND_GetCurrentOcclusionPreset  (snd.cpp:8793)
 
-undefined8 SND_GetCurrentOcclusionPreset(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+char * SND_GetCurrentOcclusionPreset(void)
 
 {
-  return 0xffffffff8488fd78;
+  return g_curOcclusionPresetName;
 }
 
 
 // 82855E58  SND_SetSoundOcclusionPreset  (snd.cpp:8799)
 
-void SND_SetSoundOcclusionPreset(undefined8 param_1,int param_2)
+void SND_SetSoundOcclusionPreset(char *param_1,int param_2)
 
 {
-  char *pcVar1;
-  char cVar2;
-  char *pcVar3;
-  undefined4 local_30 [12];
+  char cVar1;
+  char *pcVar2;
+  bool bVar3;
+  char *pcVar4;
+  StringTable *local_30 [12];
   
-  pcVar1 = (char *)__savegprlr_28();
-  pcVar3 = pcVar1;
+  pcVar2 = (char *)__savegprlr_28(param_1);
+  pcVar4 = pcVar2;
   do {
-    cVar2 = *pcVar3;
-    *(char *)((int)DAT_8488fd78 + ((int)pcVar3 - (int)pcVar1)) = cVar2;
-    pcVar3 = pcVar3 + 1;
-  } while (cVar2 != '\0');
+    cVar1 = *pcVar4;
+    g_curOcclusionPresetName[(int)pcVar4 - (int)pcVar2] = cVar1;
+    pcVar4 = pcVar4 + 1;
+  } while (cVar1 != '\0');
   SND_InitOcclusionInfo();
   SND_InitPainVisionOcclusionEntChanInfo();
-  StringTable_GetAsset(0xffffffff820260d8,local_30);
-  cVar2 = SND_ParsePresetFileAndSetSoundOcclusion(local_30[0],pcVar1);
-  if (cVar2 == '\0') {
+  StringTable_GetAsset("soundtables/mp_common_occlusion.csv",local_30);
+  bVar3 = SND_ParsePresetFileAndSetSoundOcclusion(local_30[0],pcVar2);
+  if (!bVar3) {
     if (param_2 != 0) {
-      cVar2 = SND_ParsePresetFileAndSetSoundOcclusion(local_30[0],0xffffffff8200352c);
-      if (cVar2 == '\0') {
-        Com_PrintError(9,0xffffffff821f2038,0xffffffff820260d8,0xffffffff8200352c);
+      bVar3 = SND_ParsePresetFileAndSetSoundOcclusion(local_30[0],"default");
+      if (!bVar3) {
+        Com_PrintError(9,
+                       "WARNING: In occlusion preset file, \'%s\', preset \'%s\' does not exist.\n")
+        ;
       }
-      DAT_8488fd78[0] = 'd';
-      DAT_8488fd78[1] = 'e';
-      DAT_8488fd78[2] = 'f';
-      DAT_8488fd78[3] = 'a';
-      DAT_8488fd78[4] = 'u';
-      DAT_8488fd78[5] = 'l';
-      DAT_8488fd78[6] = 't';
-      DAT_8488fd78[7] = '\0';
+      builtin_strncpy(g_curOcclusionPresetName,"default",8);
       __restgprlr_28();
       return;
     }
-    Com_PrintError(9,0xffffffff821f2038,0xffffffff820260d8,pcVar1);
+    Com_PrintError(9,"WARNING: In occlusion preset file, \'%s\', preset \'%s\' does not exist.\n");
   }
   __restgprlr_28();
   return;
@@ -10689,7 +3507,7 @@ void SND_SetSoundOcclusionPreset(undefined8 param_1,int param_2)
 
 // 82855F38  SND_SV_InRange  (snd.cpp:8839)
 
-void SND_SV_InRange(undefined8 param_1,float *param_2,longlong param_3,undefined8 param_4)
+int SND_SV_InRange(uint param_1,float *param_2,float (*param_3) [3],int param_4)
 
 {
   float fVar1;
@@ -10710,43 +3528,45 @@ void SND_SV_InRange(undefined8 param_1,float *param_2,longlong param_3,undefined
   float fVar16;
   int iVar17;
   float fVar18;
-  int iVar19;
-  char cVar20;
-  undefined4 uVar21;
-  ulonglong uVar22;
-  longlong lVar23;
-  undefined8 uVar24;
+  uint uVar19;
+  char *pcVar20;
+  snd_alias_t *psVar21;
+  int iVar22;
+  bool bVar23;
+  ulonglong uVar24;
   longlong lVar25;
-  int iVar26;
+  longlong lVar26;
+  undefined8 uVar27;
+  longlong lVar28;
   
-  iVar19 = (int)param_4;
-  uVar21 = (undefined4)((ulonglong)param_4 >> 0x20);
-  __savegprlr_28();
-  uVar4 = iVar19 / 5 + (iVar19 >> 0x1f);
-  uVar22 = (longlong)(int)uVar4 + (ulonglong)(uVar4 >> 0x1f);
-  lVar25 = CONCAT44(uVar21,iVar19) - (uVar22 + (uVar22 & 0x3fffffff) * 4);
-  SL_ConvertToString();
-  iVar19 = Com_PickSoundAlias();
-  if (iVar19 == 0) {
-    __restgprlr_28();
-    return;
+  lVar28 = (longlong)param_4;
+  lVar26 = (longlong)(int)param_3;
+  uVar19 = __savegprlr_28(param_1);
+  uVar4 = (int)lVar28 / 5 + ((int)lVar28 >> 0x1f);
+  uVar24 = (longlong)(int)uVar4 + (ulonglong)(uVar4 >> 0x1f);
+  lVar28 = lVar28 - (uVar24 + (uVar24 & 0x3fffffff) * 4);
+  pcVar20 = SL_ConvertToString(uVar19);
+  psVar21 = Com_PickSoundAlias(pcVar20);
+  if (psVar21 == (snd_alias_t *)0x0) {
+    iVar22 = __restgprlr_28();
+    return iVar22;
   }
-  cVar20 = SND_IsAliasChannel3D(*(int *)(iVar19 + 0x3c) >> 9 & 0x3f);
-  if ((cVar20 == '\0') && ((*(uint *)(iVar19 + 0x3c) & 0x40) == 0)) {
-    __restgprlr_28(1);
-    return;
+  bVar23 = SND_IsAliasChannel3D(psVar21->flags >> 9 & 0x3f);
+  if ((!bVar23) && ((psVar21->flags & 0x40U) == 0)) {
+    iVar22 = __restgprlr_28(1);
+    return iVar22;
   }
-  uVar22 = 0;
-  iVar26 = (int)lVar25;
+  uVar24 = 0;
+  iVar22 = (int)lVar28;
   fVar18 = 3.4028235e+38;
-  if (3 < iVar26) {
+  if (3 < iVar22) {
     fVar1 = *param_2;
     fVar2 = param_2[1];
-    lVar23 = param_3 + -4;
+    lVar25 = lVar26 + -4;
     fVar3 = param_2[2];
     do {
-      iVar17 = (int)lVar23;
-      uVar22 = uVar22 + 4;
+      iVar17 = (int)lVar25;
+      uVar24 = uVar24 + 4;
       fVar13 = *(float *)(iVar17 + 0xc) - fVar3;
       fVar14 = *(float *)(iVar17 + 0x18) - fVar3;
       fVar5 = *(float *)(iVar17 + 4) - fVar1;
@@ -10757,8 +3577,8 @@ void SND_SV_InRange(undefined8 param_1,float *param_2,longlong param_3,undefined
       fVar7 = *(float *)(iVar17 + 0x1c) - fVar1;
       fVar8 = *(float *)(iVar17 + 0x28) - fVar1;
       fVar11 = *(float *)(iVar17 + 0x20) - fVar2;
-      lVar23 = lVar23 + 0x30;
-      fVar16 = *(float *)lVar23 - fVar3;
+      lVar25 = lVar25 + 0x30;
+      fVar16 = *(float *)lVar25 - fVar3;
       fVar12 = *(float *)(iVar17 + 0x2c) - fVar2;
       fVar5 = fVar9 * fVar9 + fVar5 * fVar5 + fVar13 * fVar13;
       fVar6 = fVar10 * fVar10 + fVar6 * fVar6 + fVar14 * fVar14;
@@ -10776,33 +3596,33 @@ void SND_SV_InRange(undefined8 param_1,float *param_2,longlong param_3,undefined
       if (fVar8 - fVar18 < 0.0) {
         fVar18 = fVar8;
       }
-    } while ((int)uVar22 < iVar26 + -3);
+    } while ((int)uVar24 < iVar22 + -3);
   }
-  if ((int)uVar22 < iVar26) {
-    lVar25 = lVar25 - uVar22;
-    lVar23 = (uVar22 + (uVar22 & 0x7fffffff) * 2 & 0x3fffffff) * 4 + param_3 + -4;
+  if ((int)uVar24 < iVar22) {
+    lVar28 = lVar28 - uVar24;
+    lVar26 = (uVar24 + (uVar24 & 0x7fffffff) * 2 & 0x3fffffff) * 4 + lVar26 + -4;
     do {
-      iVar26 = (int)lVar23;
-      fVar1 = *(float *)(iVar26 + 4) - *param_2;
-      lVar23 = lVar23 + 0xc;
-      fVar2 = *(float *)(iVar26 + 8) - param_2[1];
-      fVar3 = *(float *)lVar23 - param_2[2];
+      iVar22 = (int)lVar26;
+      fVar1 = *(float *)(iVar22 + 4) - *param_2;
+      lVar26 = lVar26 + 0xc;
+      fVar2 = *(float *)(iVar22 + 8) - param_2[1];
+      fVar3 = *(float *)lVar26 - param_2[2];
       fVar1 = fVar2 * fVar2 + fVar1 * fVar1 + fVar3 * fVar3;
       if (fVar1 - fVar18 < 0.0) {
         fVar18 = fVar1;
       }
-      lVar25 = lVar25 + -1;
-    } while (lVar25 != 0);
+      lVar28 = lVar28 + -1;
+    } while (lVar28 != 0);
   }
-  if ((*(uint *)(iVar19 + 0x3c) & 0x40) == 0) {
+  if ((psVar21->flags & 0x40U) == 0) {
 LAB_82856140:
-    uVar24 = 1;
-    if (fVar18 <= *(float *)(iVar19 + 0x34) * *(float *)(iVar19 + 0x34)) goto LAB_82856158;
+    uVar27 = 1;
+    if (fVar18 <= psVar21->distMax * psVar21->distMax) goto LAB_82856158;
   }
-  else if (*(float *)(iVar19 + 0x30) * *(float *)(iVar19 + 0x30) <= fVar18) goto LAB_82856140;
-  uVar24 = 0;
+  else if (psVar21->distMin * psVar21->distMin <= fVar18) goto LAB_82856140;
+  uVar27 = 0;
 LAB_82856158:
-  __restgprlr_28(uVar24);
-  return;
+  iVar22 = __restgprlr_28(uVar27);
+  return iVar22;
 }
 

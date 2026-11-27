@@ -2,15 +2,23 @@
 
 // 828A9140  XEnumerate  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xenum.c:27)
 
-void XEnumerate(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-               undefined8 param_5)
+ulong XEnumerate(void *param_1,void *param_2,ulong param_3,ulong *param_4,_XOVERLAPPED *param_5)
 
 {
   undefined8 uVar1;
+  ulong uVar2;
+  longlong lVar3;
+  longlong lVar4;
+  longlong lVar5;
+  longlong lVar6;
   
-  uVar1 = __savegprlr_27();
-  uVar1 = XamEnumerate(uVar1,0,param_2,param_3,param_4,param_5);
-  __restgprlr_27(uVar1);
-  return;
+  lVar6 = (longlong)(int)param_5;
+  lVar5 = (longlong)(int)param_4;
+  lVar4 = (longlong)(int)param_3;
+  lVar3 = (longlong)(int)param_2;
+  uVar1 = __savegprlr_27(param_1,lVar3,lVar4,lVar5,lVar6);
+  uVar1 = XamEnumerate(uVar1,0,lVar3,lVar4,lVar5,lVar6);
+  uVar2 = __restgprlr_27(uVar1);
+  return uVar2;
 }
 

@@ -2,15 +2,15 @@
 
 // 828A2EB0  CloseHandle  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/closehandle.c:66)
 
-BOOL CloseHandle(HANDLE hObject)
+int CloseHandle(void *param_1)
 
 {
-  int iVar1;
+  long lVar1;
   
-  iVar1 = (**(code **)(PTR_DAT_829a8580 + 4))(hObject);
-  if (iVar1 < 0) {
-    RtlSetLastNTError();
+  lVar1 = (*_fileIoHooks->NtClose)(param_1);
+  if (lVar1 < 0) {
+    RtlSetLastNTError(lVar1);
   }
-  return (BOOL)(iVar1 >= 0);
+  return (int)(lVar1 >= 0);
 }
 

@@ -2,10 +2,12 @@
 
 // 827AAEA8  TRACK_rb_showcollision  (gfx_d3d/rb_showcollision.cpp:23)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void TRACK_rb_showcollision(void)
 
 {
-  track_static_alloc_internal(0xffffffff84848750,0x4000,0xffffffff821d7ea8,0);
+  track_static_alloc_internal(debugLineVerts,0x4000,"debugLineVerts",0);
   return;
 }
 
@@ -14,7 +16,7 @@ void TRACK_rb_showcollision(void)
 
 /* WARNING: Removing unreachable block (ram,0x827aaffc) */
 
-void BuildFrustumPlanes(undefined8 param_1,ulonglong param_2)
+void BuildFrustumPlanes(GfxViewParms *param_1,cplane_s *param_2)
 
 {
   float fVar1;
@@ -22,202 +24,128 @@ void BuildFrustumPlanes(undefined8 param_1,ulonglong param_2)
   float fVar3;
   float *pfVar4;
   int iVar5;
-  undefined8 *puVar6;
-  undefined1 uVar7;
-  float *pfVar8;
-  longlong lVar9;
+  ulonglong uVar6;
+  undefined8 *puVar7;
+  undefined1 uVar8;
+  float *pfVar9;
   longlong lVar10;
-  double dVar11;
+  longlong lVar11;
   double dVar12;
+  double dVar13;
   float local_f0;
   float local_ec;
   float local_e8 [2];
-  undefined1 local_e0 [48];
-  undefined1 auStack_b0 [16];
-  undefined1 local_a0 [8];
-  float local_98 [38];
+  GfxMatrix local_e0;
+  DpvsPlane local_a0 [10];
   
-  iVar5 = __savegprlr_25();
+  uVar6 = (ulonglong)(int)param_2;
+  iVar5 = __savegprlr_25(param_1);
   if (iVar5 == 0) {
-    MyAssertHandler(0xffffffff821d7f00,0x3f,0,0xffffffff82000f98,0xffffffff8201dd50);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_showcollision.cpp",
+                    0x3f,0,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821d7f00,0x40,0,0xffffffff82000f98,0xffffffff820821c4);
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_showcollision.cpp",
+                    0x40,0,"%s");
   }
-  pfVar8 = local_e8;
-  puVar6 = (undefined8 *)(iVar5 + 0x78);
-  lVar10 = 8;
+  pfVar9 = local_e8;
+  puVar7 = (undefined8 *)(iVar5 + 0x78);
+  lVar11 = 8;
   do {
-    puVar6 = puVar6 + 1;
-    pfVar8 = pfVar8 + 2;
-    *(undefined8 *)pfVar8 = *puVar6;
-    lVar10 = lVar10 + -1;
-  } while (lVar10 != 0);
+    puVar7 = puVar7 + 1;
+    pfVar9 = pfVar9 + 2;
+    *(undefined8 *)pfVar9 = *puVar7;
+    lVar11 = lVar11 + -1;
+  } while (lVar11 != 0);
   local_f0 = -*(float *)(iVar5 + 0x100);
   local_ec = -*(float *)(iVar5 + 0x104);
   local_e8[0] = -*(float *)(iVar5 + 0x108);
-  dVar12 = 1.0;
+  dVar13 = 1.0;
   local_e8[1] = 1.0;
-  MatrixTransformVector44(&local_f0,iVar5 + 0x80,auStack_b0);
-  R_FrustumClipPlanes(local_e0,0xffffffff821d7e58,5,local_a0);
-  lVar9 = param_2 + 0xc;
-  pfVar8 = local_98;
-  lVar10 = 5;
-  dVar11 = -1.0;
+  MatrixTransformVector44(&local_f0,(float (*) [4])(iVar5 + 0x80),local_e0.m[3]);
+  R_FrustumClipPlanes(&local_e0,frustumSidePlanes,5,local_a0);
+  lVar10 = uVar6 + 0xc;
+  pfVar9 = local_a0[0].coeffs + 2;
+  lVar11 = 5;
+  dVar12 = -1.0;
   do {
-    fVar1 = pfVar8[1];
-    fVar2 = pfVar8[-2];
-    fVar3 = *pfVar8;
-    pfVar4 = (float *)lVar9;
-    pfVar4[-2] = pfVar8[-1];
+    fVar1 = pfVar9[1];
+    pfVar4 = (float *)lVar10;
+    fVar2 = ((DpvsPlane *)(pfVar9 + -2))->coeffs[0];
+    fVar3 = *pfVar9;
+    pfVar4[-2] = pfVar9[-1];
     pfVar4[-3] = fVar2;
     pfVar4[-1] = fVar3;
     *pfVar4 = fVar1;
-    fVar1 = *(float *)(lVar9 + -0xc);
-    *pfVar4 = (float)((double)*pfVar4 * dVar11);
-    if ((double)fVar1 == dVar12) {
-      uVar7 = 0;
+    fVar1 = ((cplane_s *)(pfVar4 + -3))->normal[0];
+    *pfVar4 = (float)((double)*pfVar4 * dVar12);
+    if ((double)fVar1 == dVar13) {
+      uVar8 = 0;
     }
-    else if ((double)pfVar4[-2] == dVar12) {
-      uVar7 = 1;
+    else if ((double)pfVar4[-2] == dVar13) {
+      uVar8 = 1;
     }
     else {
-      uVar7 = 2;
-      if ((double)pfVar4[-1] != dVar12) {
-        uVar7 = 3;
+      uVar8 = 2;
+      if ((double)pfVar4[-1] != dVar13) {
+        uVar8 = 3;
       }
     }
-    *(undefined1 *)(pfVar4 + 1) = uVar7;
-    SetPlaneSignbits(lVar9 + -0xc);
-    lVar10 = lVar10 + -1;
-    pfVar8 = pfVar8 + 4;
-    lVar9 = lVar9 + 0x14;
-  } while (lVar10 != 0);
+    *(undefined1 *)(pfVar4 + 1) = uVar8;
+    SetPlaneSignbits((cplane_s *)(pfVar4 + -3));
+    lVar11 = lVar11 + -1;
+    pfVar9 = pfVar9 + 4;
+    lVar10 = lVar10 + 0x14;
+  } while (lVar11 != 0);
   __restgprlr_25();
   return;
 }
 
 
 // 827AB088  RB_DrawCollisionPoly  (gfx_d3d/rb_showcollision.cpp:87)
-
-void RB_DrawCollisionPoly(undefined8 param_1,ulonglong param_2,undefined8 param_3)
-
-{
-  int iVar1;
-  short sVar2;
-  longlong lVar3;
-  int iVar4;
-  ulonglong uVar5;
-  short sVar6;
-  ulonglong uVar7;
-  longlong lVar8;
-  longlong lVar9;
-  undefined4 local_50 [20];
-  
-  lVar3 = __savegprlr_24();
-  iVar4 = (int)lVar3;
-  if (iVar4 < 3) {
-    MyAssertHandler(0xffffffff821d7f00,0x5e,0,0xffffffff82000f98,0xffffffff821d7f48);
-  }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821d7f00,0x5f,0,0xffffffff82000f98,0xffffffff82133c84);
-  }
-  if ((*(int *)(DAT_845aa674 + 0xc) == 2) || (*(int *)(DAT_845aa674 + 0xc) == 0)) {
-    R_ConvertColorToBytes(param_3,local_50);
-    RB_BeginSurface(DAT_8461652c,4,7);
-    uVar7 = lVar3 - 2;
-    RB_CheckTessOverflow(lVar3,uVar7 + (uVar7 & 0x7fffffff) * 2);
-    lVar8 = 0;
-    uVar5 = param_2;
-    if (0 < iVar4) {
-      do {
-        RB_SetPolyVert(uVar5,local_50[0],(ulonglong)DAT_8483400c + lVar8);
-        lVar8 = lVar8 + 1;
-        uVar5 = uVar5 + 0xc;
-      } while ((int)lVar8 < iVar4);
-    }
-    sVar6 = 2;
-    if (2 < iVar4) {
-      iVar1 = DAT_84834008 << 1;
-      do {
-        *(short *)(&DAT_84832800 + iVar1) = (short)DAT_8483400c;
-        *(short *)(&DAT_84832802 + DAT_84834008 * 2) = (short)DAT_8483400c + sVar6;
-        sVar2 = (short)DAT_8483400c + sVar6;
-        sVar6 = sVar6 + 1;
-        *(short *)(&DAT_84832804 + DAT_84834008 * 2) = sVar2 + -1;
-        DAT_84834008 = DAT_84834008 + 3;
-        iVar1 = DAT_84834008 * 2;
-        uVar7 = uVar7 - 1;
-      } while (uVar7 != 0);
-    }
-    DAT_8483400c = DAT_8483400c + iVar4;
-    RB_EndTessSurface();
-  }
-  if ((*(int *)(DAT_845aa674 + 0xc) == 1) || (*(int *)(DAT_845aa674 + 0xc) == 0)) {
-    R_ConvertColorToBytes(param_3,local_50);
-    uVar5 = 0;
-    if (0 < iVar4) {
-      lVar8 = ((lVar3 - 1U) + (lVar3 - 1U & 0x7fffffff) * 2 & 0x3fffffff) << 2;
-      lVar9 = 0;
-      do {
-        uVar5 = RB_AddDebugLine(lVar8 + param_2,lVar9 + param_2,local_50[0],
-                                *(undefined1 *)(DAT_845aa5a8 + 0xc),uVar5,0x400,0xffffffff84848750);
-        lVar3 = lVar3 + -1;
-        lVar8 = lVar9;
-        lVar9 = lVar9 + 0xc;
-      } while (lVar3 != 0);
-    }
-    RB_EndDebugLines(*(undefined1 *)(DAT_845aa5a8 + 0xc),
-                     (longlong)((int)uVar5 >> 1) + (ulonglong)((int)uVar5 < 0 && (uVar5 & 1) != 0),
-                     0xffffffff84848750);
-  }
-  __restgprlr_24();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
 
 // 827AB318  RB_ShowCollision  (gfx_d3d/rb_showcollision.cpp:137)
 
-void RB_ShowCollision(ulonglong param_1)
+void RB_ShowCollision(GfxViewParms *param_1)
 
 {
-  undefined4 uVar1;
-  undefined1 auStack_90 [80];
+  int iVar1;
+  cplane_s acStack_90 [4];
   float local_40;
   float local_3c;
   float local_38;
   float local_34;
-  float local_2c;
-  float local_28;
-  float local_24;
-  float local_20;
-  undefined1 local_1c;
+  cplane_s local_2c;
   
-  if ((param_1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821d7f00,0x8f,0,0xffffffff82000f98,0xffffffff8201dd50);
+  if (param_1 == (GfxViewParms *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_showcollision.cpp",
+                    0x8f,0,"%s");
   }
-  if (*(int *)(DAT_845aa798 + 0xc) != 0) {
-    uVar1 = *(undefined4 *)(&DAT_829a3250 + *(int *)(DAT_845aa798 + 0xc) * 4);
-    BuildFrustumPlanes(param_1,auStack_90);
-    local_2c = local_40 * -1.0;
-    local_28 = local_3c * -1.0;
-    local_24 = local_38 * -1.0;
-    local_20 = -local_34 - *(float *)(DAT_845aa874 + 0xc);
-    if (local_2c == 1.0) {
-      local_1c = 0;
+  if ((r_showCollision->current).integer != 0) {
+    iVar1 = showCollisionContentMasks[(r_showCollision->current).integer];
+    BuildFrustumPlanes(param_1,acStack_90);
+    local_2c.normal[0] = local_40 * -1.0;
+    local_2c.normal[1] = local_3c * -1.0;
+    local_2c.normal[2] = local_38 * -1.0;
+    local_2c.dist = -local_34 - (r_showCollisionDist->current).value;
+    if (local_2c.normal[0] == 1.0) {
+      local_2c.type = '\0';
     }
-    else if (local_28 == 1.0) {
-      local_1c = 1;
+    else if (local_2c.normal[1] == 1.0) {
+      local_2c.type = '\x01';
     }
     else {
-      local_1c = 2;
-      if (local_24 != 1.0) {
-        local_1c = 3;
+      local_2c.type = '\x02';
+      if (local_2c.normal[2] != 1.0) {
+        local_2c.type = '\x03';
       }
     }
     SetPlaneSignbits(&local_2c);
-    if ((*(int *)(DAT_845aa5c4 + 0xc) == 1) || (*(int *)(DAT_845aa5c4 + 0xc) == 0)) {
-      CM_ShowBrushCollision(uVar1,auStack_90,6,0xffffffff827ab088);
+    if (((r_showCollisionGroups->current).integer == 1) ||
+       ((r_showCollisionGroups->current).integer == 0)) {
+      CM_ShowBrushCollision(iVar1,acStack_90,6,RB_DrawCollisionPoly);
     }
     RB_EndSurfaceIfNeeded();
   }

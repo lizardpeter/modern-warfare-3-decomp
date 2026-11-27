@@ -2,20 +2,20 @@
 
 // 8291B3F0  feof  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/feoferr.c:43)
 
-int feof(FILE *_File)
+int feof(_iobuf *param_1)
 
 {
   int *piVar1;
   uint uVar2;
   
-  if (_File == (FILE *)0x0) {
+  if (param_1 == (_iobuf *)0x0) {
     piVar1 = _errno();
     *piVar1 = 0x16;
     _invalid_parameter_noinfo();
     uVar2 = 0;
   }
   else {
-    uVar2 = _File->_flag & 0x10;
+    uVar2 = param_1->_flag & 0x10;
   }
   return uVar2;
 }
@@ -23,20 +23,20 @@ int feof(FILE *_File)
 
 // 8291B438  ferror  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/feoferr.c:70)
 
-int ferror(FILE *_File)
+int ferror(_iobuf *param_1)
 
 {
   int *piVar1;
   uint uVar2;
   
-  if (_File == (FILE *)0x0) {
+  if (param_1 == (_iobuf *)0x0) {
     piVar1 = _errno();
     *piVar1 = 0x16;
     _invalid_parameter_noinfo();
     uVar2 = 0;
   }
   else {
-    uVar2 = _File->_flag & 0x20;
+    uVar2 = param_1->_flag & 0x20;
   }
   return uVar2;
 }

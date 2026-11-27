@@ -2,25 +2,29 @@
 
 // 8241F6C0  Glass_WriteActivePiece  (EffectsCore/fx_glass_archive.cpp:19)
 
-void Glass_WriteActivePiece(undefined8 param_1,undefined8 param_2,ulonglong param_3)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void Glass_WriteActivePiece(FxGlassSystem *param_1,MemoryFile *param_2,uint param_3)
 
 {
-  uint uVar1;
+  int iVar1;
   int iVar2;
-  longlong lVar3;
-  longlong lVar4;
+  int iVar3;
+  ulonglong uVar4;
+  void *pvVar5;
   
-  iVar2 = __savegprlr_29();
-  lVar3 = (param_3 & 0x7ffffff) * 0x20;
-  uVar1 = *(uint *)(iVar2 + 0x38);
-  lVar4 = (ulonglong)*(uint *)(iVar2 + 0x3c) +
-          (param_3 + (param_3 & 0x1fffffff) * 8 & 0x3fffffff) * 4;
-  MemFile_WriteData(param_2,0x20,(ulonglong)*(uint *)(iVar2 + 0x34) + lVar3);
-  MemFile_WriteData(param_2,0x20,(ulonglong)uVar1 + lVar3);
-  MemFile_WriteData(param_2,0x24,lVar4);
-  iVar2 = *(int *)((int)lVar4 + 4);
-  if (iVar2 != 0) {
-    Phys_ObjSave(iVar2,param_2);
+  uVar4 = (ulonglong)(int)param_3;
+  iVar3 = __savegprlr_29(param_1);
+  iVar2 = (int)((uVar4 & 0xffffffff) << 5);
+  iVar1 = *(int *)(iVar3 + 0x38);
+  pvVar5 = (void *)(*(int *)(iVar3 + 0x3c) +
+                   (int)((uVar4 + (uVar4 & 0x1fffffff) * 8 & 0xffffffff) << 2));
+  MemFile_WriteData(param_2,0x20,(void *)(*(int *)(iVar3 + 0x34) + iVar2));
+  MemFile_WriteData(param_2,0x20,(void *)(iVar1 + iVar2));
+  MemFile_WriteData(param_2,0x24,pvVar5);
+  iVar1 = *(int *)((int)pvVar5 + 4);
+  if (iVar1 != 0) {
+    Phys_ObjSave(iVar1,param_2);
   }
   __restgprlr_29();
   return;
@@ -29,32 +33,36 @@ void Glass_WriteActivePiece(undefined8 param_1,undefined8 param_2,ulonglong para
 
 // 8241FA58  Glass_Save  (EffectsCore/fx_glass_archive.cpp:38)
 
-void Glass_Save(undefined8 param_1)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void Glass_Save(MemoryFile *param_1)
 
 {
   int iVar1;
   undefined1 local_20 [4];
-  int local_1c;
+  uint local_1c;
   
-  iVar1 = DB_AssetCount(0x12);
+  iVar1 = DB_AssetCount(ASSET_TYPE_FXWORLD);
   if (iVar1 != 1) {
-    MyAssertHandler(0xffffffff82063290,0x2b,0,0xffffffff82000f98,0xffffffff8202b60c);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_archive.cpp"
+                    ,0x2b,0,"%s");
   }
   local_20[0] = 0x67;
   MemFile_WriteData(param_1,1,local_20);
   local_20[0] = 0x67;
   MemFile_WriteData(param_1,1,local_20);
-  if (DAT_8333cad8 != 0) {
-    Glass_CompactData(0xffffffff8333cac4);
-    local_1c = DAT_8333caec;
+  if (fxWorld.glassSys.initPieceCount != 0) {
+    Glass_CompactData(&fxWorld.glassSys);
+    local_1c = fxWorld.glassSys.geoDataCount;
     MemFile_WriteData(param_1,4,&local_1c);
-    if (DAT_8333caec != 0) {
-      MemFile_WriteData(param_1,DAT_8333caec << 2,DAT_8333cb04);
+    if (fxWorld.glassSys.geoDataCount != 0) {
+      MemFile_WriteData(param_1,fxWorld.glassSys.geoDataCount << 2,fxWorld.glassSys.geoData);
     }
-    local_1c = DAT_8333cae0;
+    local_1c = fxWorld.glassSys.activePieceCount;
     MemFile_WriteData(param_1,4,&local_1c);
     Glass_ForEachPiece<MemoryFile_*,void_(__cdecl*)(FxGlassSystem_*___restrict,MemoryFile_*___restrict,unsigned_int)>
-              (0xffffffff8333cac4,param_1,0xffffffff8241f6c0);
+              (&fxWorld.glassSys,param_1,Glass_WriteActivePiece);
   }
   return;
 }
@@ -62,152 +70,163 @@ void Glass_Save(undefined8 param_1)
 
 // 8241F740  Glass_Restore  (EffectsCore/fx_glass_archive.cpp:65)
 
-void Glass_Restore(void)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "PhysWorld": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void Glass_Restore(MemoryFile *param_1)
 
 {
   uint uVar1;
-  undefined8 uVar2;
-  int iVar3;
-  undefined4 uVar4;
-  ulonglong uVar5;
-  longlong lVar6;
-  ulonglong uVar7;
-  int iVar8;
-  int iVar9;
-  int iVar10;
-  int iVar11;
-  ulonglong uVar12;
+  uint uVar2;
+  MemoryFile *pMVar3;
+  int iVar4;
+  int iVar5;
+  int iVar6;
+  int iVar7;
+  void *pvVar8;
+  void *pvVar9;
+  uint uVar10;
   char in_RESERVE;
   byte in_cr0;
   char local_70;
   char local_6f [3];
   uint local_6c [27];
   
-  uVar2 = __savegprlr_20();
-  iVar3 = DB_AssetCount(0x12);
-  if (iVar3 != 1) {
-    MyAssertHandler(0xffffffff82063290,0x4d,0,0xffffffff82000f98,0xffffffff8202b60c);
+  pMVar3 = (MemoryFile *)__savegprlr_20(param_1);
+  iVar4 = DB_AssetCount(ASSET_TYPE_FXWORLD);
+  if (iVar4 != 1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_archive.cpp"
+                    ,0x4d,0,"%s");
   }
-  MemFile_ReadData(uVar2,1,&local_70);
-  MemFile_ReadData(uVar2,1,local_6f);
-  if ((local_70 != 'g') || (local_6f[0] != 'g')) {
-    Com_PrintError(0xe,0xffffffff82063218,0x67,0x67,local_70,local_6f[0]);
-    Sys_Error(0xffffffff82038a98);
+  MemFile_ReadData(pMVar3,1,&local_70);
+  MemFile_ReadData(pMVar3,1,local_6f);
+  if ((local_70 == 'g') && (local_6f[0] == 'g')) {
+    if (fxWorld.glassSys.initPieceCount != 0) {
+      Glass_FreeAllPieces();
+      if (fxWorld.glassSys.activePieceCount != 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_archive.cpp"
+                        ,0x5d,0,"%s");
+      }
+      (fxWorld.glassSys.pieceDynamics)->fallTime = -0x30303031;
+      (fxWorld.glassSys.pieceStates)->texCoordOrigin[0] = -6.9730053e+09;
+      (fxWorld.glassSys.piecePlaces)->nextFree = 0xcfcfcfcf;
+      MemFile_ReadData(pMVar3,4,local_6c);
+      fxWorld.glassSys.geoDataCount = local_6c[0];
+      if (local_6c[0] != 0) {
+        MemFile_ReadData(pMVar3,local_6c[0] << 2,fxWorld.glassSys.geoData);
+      }
+      MemFile_ReadData(pMVar3,4,local_6c);
+      if (fxWorld.glassSys.pieceLimit < local_6c[0]) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_archive.cpp"
+                        ,0x6b,0,"activeCount <= glassSys->pieceLimit\n\t%i, %i");
+      }
+      uVar10 = 0;
+      if (local_6c[0] != 0) {
+        iVar4 = 0;
+        iVar7 = 0;
+        iVar6 = 0;
+        do {
+          pvVar8 = (void *)((int)(fxWorld.glassSys.pieceStates)->texCoordOrigin + iVar7);
+          pvVar9 = (void *)((int)(fxWorld.glassSys.pieceDynamics)->vel + iVar6 + -0xc);
+          MemFile_ReadData(pMVar3,0x20,(void *)(iVar7 + (int)fxWorld.glassSys.piecePlaces));
+          MemFile_ReadData(pMVar3,0x20,pvVar8);
+          MemFile_ReadData(pMVar3,0x24,pvVar9);
+          *(float *)(iVar4 + (int)fxWorld.glassSys.halfThickness) =
+               fxWorld.glassSys.defs[*(byte *)((int)pvVar8 + 0x10)].halfThickness;
+          if (*(int *)((int)pvVar9 + 4) == 0) {
+            Glass_LinkPiece_Static(&fxWorld.glassSys,uVar10);
+          }
+          else {
+            iVar5 = Phys_ObjLoad(PHYS_WORLD_FX,pMVar3);
+            *(int *)((int)pvVar9 + 4) = iVar5;
+            do {
+              if (in_RESERVE != '\0') {
+                g_glassPhysObjCount =
+                     storeWordConditionalIndexed
+                               ((ulonglong)(uint)g_glassPhysObjCount + 1,0,0xffffffff8427b920);
+                in_cr0 = 2;
+              }
+            } while (!(bool)(in_cr0 >> 1 & 1));
+            *(undefined4 *)((int)pvVar9 + 8) = 0;
+            Glass_AddPiecePhysicsObject
+                      (&fxWorld.glassSys,uVar10,
+                       fxWorld.glassSys.defs + *(byte *)((int)pvVar8 + 0x10),true);
+            Glass_LinkPiece_Dynamic(&fxWorld.glassSys,uVar10);
+          }
+          uVar1 = uVar10 >> 3 & 0x1ffffffc;
+          uVar2 = uVar10 & 0x1f;
+          uVar10 = uVar10 + 1;
+          iVar6 = iVar6 + 0x24;
+          iVar7 = iVar7 + 0x20;
+          iVar4 = iVar4 + 4;
+          *(uint *)(uVar1 + (int)fxWorld.glassSys.isInUse) =
+               *(uint *)(&g_bitShift + uVar2 * 4) | *(uint *)(uVar1 + (int)fxWorld.glassSys.isInUse)
+          ;
+        } while (uVar10 < local_6c[0]);
+      }
+      if (uVar10 < fxWorld.glassSys.pieceLimit - 1) {
+        iVar4 = uVar10 << 5;
+        do {
+          uVar10 = uVar10 + 1;
+          *(uint *)(iVar4 + (int)fxWorld.glassSys.piecePlaces) = uVar10;
+          iVar4 = iVar4 + 0x20;
+        } while (uVar10 < fxWorld.glassSys.pieceLimit - 1);
+      }
+      fxWorld.glassSys.piecePlaces[uVar10]._s_0.frame.quat[0] = 9.18341e-41;
+      fxWorld.glassSys.activePieceCount = local_6c[0];
+      fxWorld.glassSys.firstFreePiece = local_6c[0];
+    }
+    __restgprlr_20();
+    return;
   }
-  if (DAT_8333cad8 != 0) {
-    Glass_FreeAllPieces();
-    if (DAT_8333cae0 != 0) {
-      MyAssertHandler(0xffffffff82063290,0x5d,0,0xffffffff82000f98,0xffffffff820631f8);
-    }
-    *DAT_8333cb00 = 0xcfcfcfcf;
-    *DAT_8333cafc = 0xcfcfcfcf;
-    *DAT_8333caf8 = 0xcfcfcfcf;
-    MemFile_ReadData(uVar2,4,local_6c);
-    DAT_8333caec = local_6c[0];
-    if (local_6c[0] != 0) {
-      MemFile_ReadData(uVar2,local_6c[0] << 2,DAT_8333cb04);
-    }
-    MemFile_ReadData(uVar2,4,local_6c);
-    uVar5 = (ulonglong)DAT_8333cad0;
-    uVar7 = (ulonglong)local_6c[0];
-    if (uVar5 < uVar7) {
-      MyAssertHandler(0xffffffff82063290,0x6b,0,0xffffffff820631cc,uVar7);
-      uVar5 = (ulonglong)DAT_8333cad0;
-    }
-    uVar12 = 0;
-    if (uVar7 != 0) {
-      iVar3 = 0;
-      iVar9 = 0;
-      iVar8 = 0;
-      do {
-        iVar10 = iVar9 + (int)DAT_8333cafc;
-        iVar11 = iVar8 + (int)DAT_8333cb00;
-        MemFile_ReadData(uVar2,0x20,iVar9 + (int)DAT_8333caf8);
-        MemFile_ReadData(uVar2,0x20,iVar10);
-        MemFile_ReadData(uVar2,0x24,iVar11);
-        *(undefined4 *)(iVar3 + DAT_8333cb18) =
-             *(undefined4 *)((uint)*(byte *)(iVar10 + 0x10) * 0x2c + DAT_8333caf4);
-        if (*(int *)(iVar11 + 4) == 0) {
-          Glass_LinkPiece_Static(0xffffffff8333cac4,uVar12);
-        }
-        else {
-          uVar4 = Phys_ObjLoad(1,uVar2);
-          *(undefined4 *)(iVar11 + 4) = uVar4;
-          do {
-            if (in_RESERVE != '\0') {
-              DAT_8427b920 = storeWordConditionalIndexed
-                                       ((ulonglong)DAT_8427b920 + 1,0,0xffffffff8427b920);
-              in_cr0 = 2;
-            }
-          } while (!(bool)(in_cr0 >> 1 & 1));
-          *(undefined4 *)(iVar11 + 8) = 0;
-          Glass_AddPiecePhysicsObject
-                    (0xffffffff8333cac4,uVar12,(uint)*(byte *)(iVar10 + 0x10) * 0x2c + DAT_8333caf4,
-                     1);
-          Glass_LinkPiece_Dynamic(0xffffffff8333cac4,uVar12);
-        }
-        uVar1 = (uint)((uVar12 & 0xffffffff) >> 3) & 0x1ffffffc;
-        uVar5 = uVar12 & 0xffffffff;
-        uVar12 = uVar12 + 1;
-        iVar8 = iVar8 + 0x24;
-        iVar9 = iVar9 + 0x20;
-        iVar3 = iVar3 + 4;
-        *(uint *)(uVar1 + DAT_8333cb08) =
-             *(uint *)((int)&DAT_82992400 + ((uint)(uVar5 << 2) & 0x7c)) |
-             *(uint *)(uVar1 + DAT_8333cb08);
-      } while ((uVar12 & 0xffffffff) < uVar7);
-      uVar5 = (ulonglong)DAT_8333cad0;
-    }
-    if ((uVar12 & 0xffffffff) < (uVar5 - 1 & 0xffffffff)) {
-      lVar6 = (uVar12 & 0x7ffffff) << 5;
-      do {
-        uVar12 = uVar12 + 1;
-        *(int *)((int)lVar6 + (int)DAT_8333caf8) = (int)uVar12;
-        lVar6 = lVar6 + 0x20;
-      } while ((uVar12 & 0xffffffff) < (ulonglong)(DAT_8333cad0 - 1));
-    }
-    *(undefined4 *)((int)((uVar12 & 0xffffffff) << 5) + (int)DAT_8333caf8) = 0xffff;
-    DAT_8333cae0 = local_6c[0];
-    DAT_8333cae4 = local_6c[0];
-  }
-  __restgprlr_20();
-  return;
+  Com_PrintError(0xe,
+                 "Glass_Restore() expected 0x%x and 0x%x to guarantee beginning of glass section, but found 0x%x and 0x%x instead.\n"
+                );
+                    /* WARNING: Subroutine does not return */
+  Sys_Error("GAME_ERR_SAVEGAME_BAD");
 }
 
 
 // 8241FBC0  Glass_ForEachPiece<MemoryFile_*,void_(__cdecl*)(FxGlassSystem_*___restrict,MemoryFile_*___restrict,unsigned_int)>  (EffectsCore/fx_glass_api.h:80)
 
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
 void Glass_ForEachPiece<MemoryFile_*,void_(__cdecl*)(FxGlassSystem_*___restrict,MemoryFile_*___restrict,unsigned_int)>
-               (undefined8 param_1,undefined8 param_2,code *param_3)
+               (FxGlassSystem *param_1,MemoryFile *param_2,
+               _func___cdecl_void_FxGlassSystem_ptr_MemoryFile_ptr_uint *param_3)
 
 {
   uint uVar1;
-  int iVar2;
-  int iVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  uint uVar6;
+  FxGlassSystem *pFVar2;
+  longlong lVar3;
+  int iVar4;
+  uint uVar5;
+  ulonglong uVar6;
+  uint uVar7;
   
-  iVar2 = __savegprlr_20();
-  uVar1 = *(uint *)(iVar2 + 0x10);
-  uVar4 = 0;
+  lVar3 = (longlong)(int)param_2;
+  pFVar2 = (FxGlassSystem *)__savegprlr_20(param_1,lVar3);
+  uVar1 = pFVar2->pieceWordCount;
+  uVar5 = 0;
   if (uVar1 != 0) {
-    iVar3 = 0;
+    iVar4 = 0;
     do {
-      uVar6 = *(uint *)(iVar3 + *(int *)(iVar2 + 0x44));
-      if (uVar6 != 0) {
+      uVar7 = *(uint *)(iVar4 + (int)pFVar2->isInUse);
+      if (uVar7 != 0) {
         do {
-          uVar5 = LZCOUNT(uVar6);
-          if (0x20 < uVar5) {
-            MyAssertHandler(0xffffffff82003018,0x475,0,0xffffffff8205cbd0,uVar5,0x21);
+          uVar6 = LZCOUNT(uVar7);
+          if (0x20 < uVar6) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.h",
+                            0x475,0,"count doesn\'t index 33\n\t%i not in [0, %i)");
           }
-          uVar6 = uVar6 & ~*(uint *)((int)&DAT_82992400 + (int)(uVar5 << 2));
-          (*param_3)(iVar2,param_2,(uVar4 & 0x7ffffff) << 5 | uVar5);
-        } while (uVar6 != 0);
+          uVar7 = uVar7 & ~*(uint *)(&g_bitShift + (int)(uVar6 << 2));
+          (*param_3)(pFVar2,(MemoryFile *)lVar3,uVar5 << 5 | (uint)uVar6);
+        } while (uVar7 != 0);
       }
-      uVar4 = uVar4 + 1;
-      iVar3 = iVar3 + 4;
-    } while ((uVar4 & 0xffffffff) < (ulonglong)uVar1);
+      uVar5 = uVar5 + 1;
+      iVar4 = iVar4 + 4;
+    } while (uVar5 < uVar1);
   }
   __restgprlr_20();
   return;
@@ -216,14 +235,14 @@ void Glass_ForEachPiece<MemoryFile_*,void_(__cdecl*)(FxGlassSystem_*___restrict,
 
 // 8241FB68  Glass_Archive  (EffectsCore/fx_glass_archive.cpp:146)
 
-void Glass_Archive(undefined8 param_1)
+void Glass_Archive(MemoryFile *param_1)
 
 {
-  char cVar1;
+  bool bVar1;
   
-  cVar1 = MemFile_IsWriting();
-  if (cVar1 != '\0') {
-    Glass_Save();
+  bVar1 = MemFile_IsWriting(param_1);
+  if (bVar1) {
+    Glass_Save(param_1);
     return;
   }
   Glass_Restore(param_1);

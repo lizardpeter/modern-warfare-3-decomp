@@ -2060,7 +2060,7 @@ LAB_82700ec8:
   82701014  7D8803A6             mtspr LR,r12
   82701018  4E800020             blr
 
-; 82701020  PublicProfileInfo::PublicProfileInfo  (social/playercard_cache.cpp:1132)
+; 82701020  PublicProfileInfo  (social/playercard_cache.cpp:1132)
   82701020  7D8802A6             mfspr r12,LR
   82701024  9181FFF8             stw r12,-0x8(r1)
   82701028  FBE1FFF0             std r31,-0x10(r1)
@@ -2077,7 +2077,7 @@ LAB_82700ec8:
   82701054  EBE1FFF0             ld r31,-0x10(r1)
   82701058  4E800020             blr
 
-; 82701060  PublicProfileInfo::serialize  (social/playercard_cache.cpp:1136)
+; 82701060  serialize  (social/playercard_cache.cpp:1136)
   82701060  7D8802A6             mfspr r12,LR
   82701064  9181FFF8             stw r12,-0x8(r1)
   82701068  FBC1FFE8             std r30,-0x18(r1)
@@ -2097,7 +2097,7 @@ LAB_82700ec8:
   827010A0  EBE1FFF0             ld r31,-0x10(r1)
   827010A4  4E800020             blr
 
-; 82701650  PublicProfileInfo::deserialize  (social/playercard_cache.cpp:1142)
+; 82701650  deserialize  (social/playercard_cache.cpp:1142)
   82701650  7D8802A6             mfspr r12,LR
   82701654  9181FFF8             stw r12,-0x8(r1)
   82701658  FBC1FFE8             std r30,-0x18(r1)
@@ -2149,14 +2149,14 @@ LAB_827016e4:
   82701700  EBE1FFF0             ld r31,-0x10(r1)
   82701704  4E800020             blr
 
-; 827010A8  PublicProfileInfo::sizeOf  (social/playercard_cache.cpp:1150)
+; 827010A8  sizeOf  (social/playercard_cache.cpp:1150)
   827010A8  38600058             li r3,0x58
   827010AC  4E800020             blr
 
-; 826FF908  PublicProfileInfo::~PublicProfileInfo  (line unknown)
+; 826FF908  ~PublicProfileInfo  (line unknown)
   826FF908  4820C468             b 0x8290bd70
 
-; 82701708  PublicProfileInfo::`scalar_deleting_destructor'  (line unknown)
+; 82701708  `scalar_deleting_destructor'  (line unknown)
   82701708  7D8802A6             mfspr r12,LR
   8270170C  9181FFF8             stw r12,-0x8(r1)
   82701710  FBC1FFE8             std r30,-0x18(r1)

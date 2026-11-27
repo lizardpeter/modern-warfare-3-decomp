@@ -2,51 +2,61 @@
 
 // 828CA858  nemAgcVadMain  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/ncivad.c:494)
 
-void nemAgcVadMain(undefined8 param_1,double param_2)
+ushort nemAgcVadMain(void *param_1,float param_2,float param_3)
 
 {
-  short sVar1;
   int iVar2;
-  undefined2 uVar4;
+  ulonglong uVar1;
+  short sVar4;
   int iVar3;
+  short sVar5;
+  ushort uVar6;
+  void *pvVar7;
   double extraout_f1;
-  undefined8 uVar5;
-  double dVar6;
-  double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  float fVar12;
+  undefined1 uStack_39;
   
-  iVar2 = __savefpr_28();
+  dVar10 = (double)param_3;
+  iVar2 = __savefpr_28((double)param_2,param_1);
   *(float *)(iVar2 + 0xc) = (float)extraout_f1;
-  *(float *)(iVar2 + 0x10) = (float)param_2;
-  dVar7 = extraout_f1;
-  uVar5 = nemAgcGetMeanEnergy(*(undefined4 *)(iVar2 + 8));
-  sVar1 = *(short *)(iVar2 + 0x16);
+  *(float *)(iVar2 + 0x10) = (float)dVar10;
+  uVar1 = ZEXT48(*(void **)(iVar2 + 8));
+  dVar11 = extraout_f1;
+  fVar12 = nemAgcGetMeanEnergy(*(void **)(iVar2 + 8));
+  dVar8 = (double)fVar12;
+  sVar5 = *(short *)(iVar2 + 0x16);
   if (*(short *)(iVar2 + 0x18) == 0) {
     *(undefined2 *)(iVar2 + 0x18) = 1;
   }
   if (*(short *)(iVar2 + 0x1a) == 0) {
     *(undefined2 *)(iVar2 + 0x1a) = 0x5a;
   }
-  dVar6 = log10((double)(float)(dVar7 + 1.0));
-  dVar6 = (double)((float)dVar6 * 28.333334);
-  nemVadBlockDec(dVar7);
-  uVar5 = nemVadSpkrDec(dVar6,uVar5);
-  uVar5 = nemVadUpdateNoiseFlr(dVar7,uVar5,*(undefined4 *)(iVar2 + 4));
-  uVar4 = nemVadTransmit(dVar6,uVar5,*(undefined2 *)(iVar2 + 0x18),*(undefined2 *)(iVar2 + 0x1a),
-                         *(undefined4 *)(iVar2 + 4));
-  *(undefined2 *)(iVar2 + 0x1c) = uVar4;
-  iVar3 = nemVadVoicingDec(param_2,*(undefined4 *)(iVar2 + 4),
-                           ((longlong)sVar1 & 0xffffffffU) >> 0x1f ^ 1);
+  dVar9 = log10((double)(float)(dVar11 + 1.0));
+  pvVar7 = *(void **)(iVar2 + 4);
+  dVar9 = (double)((float)dVar9 * 28.333334);
+  nemVadBlockDec((float)dVar11,(void *)uVar1);
+  nemVadSpkrDec((float)dVar9,(float)dVar8,(short)uVar1,pvVar7);
+  nemVadUpdateNoiseFlr((float)dVar11,(void *)uVar1);
+  sVar4 = nemVadTransmit((float)dVar9,(short)uVar1,*(ushort *)(iVar2 + 0x18),
+                         (void *)(uint)*(ushort *)(iVar2 + 0x1a));
+  *(short *)(iVar2 + 0x1c) = sVar4;
+  iVar3 = nemVadVoicingDec(*(void **)(iVar2 + 4),(ushort)(sVar5 >> 0xf) >> 0xf ^ 1,(float)dVar10);
   if (iVar3 == 0) {
-    nemAgcUpdateCounter(*(undefined4 *)(iVar2 + 8));
+    nemAgcUpdateCounter(*(void **)(iVar2 + 8));
   }
   else {
-    nemAgcMeanEngLevel((longlong)(dVar6 + 0.5) & 0xff,*(undefined4 *)(iVar2 + 8));
+    uStack_39 = (uchar)(longlong)(dVar9 + 0.5);
+    nemAgcMeanEngLevel(uStack_39,*(void **)(iVar2 + 8));
     if (*(char *)(iVar2 + 0x1e) != '\0') {
-      uVar4 = nemAgcCalc(*(undefined4 *)(iVar2 + 8),*(undefined2 *)(iVar2 + 0x16));
-      *(undefined2 *)(iVar2 + 0x14) = uVar4;
+      sVar5 = nemAgcCalc(*(void **)(iVar2 + 8),*(short *)(iVar2 + 0x16));
+      *(short *)(iVar2 + 0x14) = sVar5;
     }
   }
-  __restfpr_28(0);
-  return;
+  uVar6 = __restfpr_28(0);
+  return uVar6;
 }
 

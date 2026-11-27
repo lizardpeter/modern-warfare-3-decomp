@@ -2,373 +2,393 @@
 
 // 8293E8D0  `dynamic_initializer_for_'overlappedTasks''  (DW/dwCounter.cpp:27)
 
-int _dynamic_initializer_for__overlappedTasks__(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void _dynamic_initializer_for__overlappedTasks__(void)
 
 {
-  int iVar1;
-  undefined4 *puVar2;
-  longlong lVar3;
+  team_t *ptVar1;
+  longlong lVar2;
   
-  lVar3 = 0x20;
-  puVar2 = (undefined4 *)0x844f0148;
+  lVar2 = 0x20;
+  ptVar1 = &theaterPlayerCard.team;
   do {
-    puVar2 = puVar2 + 0x28;
-    *puVar2 = 0;
-    lVar3 = lVar3 + -1;
-  } while (lVar3 != 0);
-  iVar1 = atexit(_dynamic_atexit_destructor_for__overlappedTasks__);
-  return iVar1;
+    ptVar1 = ptVar1 + 0x28;
+    *ptVar1 = TEAM_FREE;
+    lVar2 = lVar2 + -1;
+  } while (lVar2 != 0);
+  atexit(_dynamic_atexit_destructor_for__overlappedTasks__);
+  return;
 }
 
 
 // 8293E900  `dynamic_initializer_for_'s_localCounters''  (DW/dwCounter.cpp:45)
 
-int _dynamic_initializer_for__s_localCounters__(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void _dynamic_initializer_for__s_localCounters__(void)
 
 {
-  int iVar1;
-  longlong lVar2;
-  longlong lVar3;
+  bdCounterValue *this;
+  longlong lVar1;
   
-  lVar3 = 0x3f;
-  lVar2 = -0x7bb0e620;
+  lVar1 = 0x3f;
+  this = s_localCounters;
   do {
-    bdCounterValue__bdCounterValue(lVar2);
-    lVar3 = lVar3 + -1;
-    lVar2 = lVar2 + 0x10;
-  } while (-1 < lVar3);
-  iVar1 = atexit(_dynamic_atexit_destructor_for__s_localCounters__);
-  return iVar1;
+    bdCounterValue::bdCounterValue(this);
+    lVar1 = lVar1 + -1;
+    this = this + 1;
+  } while (-1 < lVar1);
+  atexit(_dynamic_atexit_destructor_for__s_localCounters__);
+  return;
 }
 
 
 // 8293E958  `dynamic_initializer_for_'s_uploadCounters''  (DW/dwCounter.cpp:46)
 
-int _dynamic_initializer_for__s_uploadCounters__(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void _dynamic_initializer_for__s_uploadCounters__(void)
 
 {
-  int iVar1;
-  longlong lVar2;
-  longlong lVar3;
+  bdCounterValue *this;
+  longlong lVar1;
   
-  lVar3 = 0x3f;
-  lVar2 = -0x7bb0e220;
+  lVar1 = 0x3f;
+  this = s_uploadCounters;
   do {
-    bdCounterValue__bdCounterValue(lVar2);
-    lVar3 = lVar3 + -1;
-    lVar2 = lVar2 + 0x10;
-  } while (-1 < lVar3);
-  iVar1 = atexit(_dynamic_atexit_destructor_for__s_uploadCounters__);
-  return iVar1;
+    bdCounterValue::bdCounterValue(this);
+    lVar1 = lVar1 + -1;
+    this = this + 1;
+  } while (-1 < lVar1);
+  atexit(_dynamic_atexit_destructor_for__s_uploadCounters__);
+  return;
 }
 
 
 // 8293E9B0  `dynamic_initializer_for_'s_serverCounters''  (DW/dwCounter.cpp:47)
 
-int _dynamic_initializer_for__s_serverCounters__(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void _dynamic_initializer_for__s_serverCounters__(void)
 
 {
-  int iVar1;
-  longlong lVar2;
-  longlong lVar3;
+  bdCounterValue *this;
+  longlong lVar1;
   
-  lVar3 = 0x3f;
-  lVar2 = -0x7bb0ea20;
+  lVar1 = 0x3f;
+  this = s_serverCounters;
   do {
-    bdCounterValue__bdCounterValue(lVar2);
-    lVar3 = lVar3 + -1;
-    lVar2 = lVar2 + 0x10;
-  } while (-1 < lVar3);
-  iVar1 = atexit(_dynamic_atexit_destructor_for__s_serverCounters__);
-  return iVar1;
+    bdCounterValue::bdCounterValue(this);
+    lVar1 = lVar1 + -1;
+    this = this + 1;
+  } while (-1 < lVar1);
+  atexit(_dynamic_atexit_destructor_for__s_serverCounters__);
+  return;
 }
 
 
 // 826E7578  dwCounterTaskComplete  (DW/dwCounter.cpp:55)
 
-undefined8 dwCounterTaskComplete(int param_1)
+taskCompleteResults dwCounterTaskComplete(overlappedTask *param_1)
 
 {
-  int iVar3;
-  undefined8 uVar1;
-  undefined8 uVar2;
-  undefined1 auStack_60 [72];
+  bdCounter *pbVar1;
+  bdStatus bVar2;
+  bdLobbyErrorCode bVar3;
+  taskCompleteResults tVar4;
+  char acStack_60 [72];
   
-  if (((param_1 == 0) || (*(int *)(param_1 + 8) == 0)) ||
-     (iVar3 = dwGetCounter(*(undefined1 *)(param_1 + 0x95)), iVar3 == 0)) {
-    Com_Printf(0x10,0xffffffff821a9eb0);
-    uVar1 = 2;
+  if (((param_1 == (overlappedTask *)0x0) || ((param_1->u).remoteTask.m_ptr == (bdRemoteTask *)0x0))
+     || (pbVar1 = dwGetCounter((uint)param_1->controllerIndex), pbVar1 == (bdCounter *)0x0)) {
+    Com_Printf(0x10,"Failed to retrieve stats read status\n");
+    tVar4 = TASK_ERROR;
   }
   else {
-    dwLobbyPump(*(undefined1 *)(param_1 + 0x95));
-    uVar1 = (**(code **)(**(int **)(param_1 + 8) + 4))();
-    uVar2 = bdRemoteTask__getErrorCode(*(undefined4 *)(param_1 + 8));
-    if ((int)uVar2 != 0) {
-      dwLobbyErrorCodeToString(uVar2,auStack_60,0x40);
-      Com_PrintError(0x19,0xffffffff821a9ed8,uVar2,auStack_60);
+    dwLobbyPump((uint)param_1->controllerIndex);
+    bVar2 = (**(code **)(((param_1->u).remoteTask.m_ptr)->_padding_ + 4))();
+    bVar3 = bdRemoteTask::getErrorCode((param_1->u).remoteTask.m_ptr);
+    if (bVar3 != BD_NO_ERROR) {
+      dwLobbyErrorCodeToString(bVar3,acStack_60,0x40);
+      Com_PrintError(0x19,"DW read stats error %i - \'%s\'\n");
     }
-    uVar1 = dwTaskStatusConvert(uVar1,uVar2);
+    tVar4 = dwTaskStatusConvert(bVar2,bVar3);
   }
-  return uVar1;
+  return tVar4;
 }
 
 
 // 826E7650  LiveCounter_IncrementCounters  (DW/dwCounter.cpp:85)
 
-void LiveCounter_IncrementCounters(void)
+bool LiveCounter_IncrementCounters(int param_1)
 
 {
-  undefined4 uVar1;
-  int iVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
-  char cVar7;
-  int iVar5;
-  int *piVar6;
-  ulonglong uVar8;
-  longlong *plVar9;
+  uint uVar1;
+  bdRemoteTask *pbVar2;
+  uint uVar3;
+  bdCounterValue *pbVar4;
+  undefined1 uVar7;
+  bool bVar8;
+  overlappedTask *poVar5;
+  bdReference<bdRemoteTask> bVar6;
+  ulonglong uVar9;
   longlong lVar10;
-  longlong *plVar11;
-  undefined8 *puVar12;
-  longlong lVar13;
+  long64 *plVar11;
+  long64 *plVar12;
+  uint uVar13;
   ulonglong uVar14;
-  undefined1 auStack_40 [64];
+  bdReference<bdRemoteTask> abStack_40 [16];
   
-  uVar3 = __savegprlr_27();
-  lVar13 = 0;
-  if (3 < (uVar3 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821a9d3c,0x5b,0,0xffffffff82031880,uVar3,4);
+  uVar3 = __savegprlr_27(param_1);
+  uVar13 = 0;
+  if (3 < uVar3) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwCounter.cpp",0x5b,0,
+                    "controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  uVar4 = dwGetCounter(uVar3);
-  if ((uVar4 & 0xffffffff) == 0) {
+  pbVar4 = (bdCounterValue *)dwGetCounter(uVar3);
+  if (pbVar4 == (bdCounterValue *)0x0) {
 LAB_826e77bc:
-    __restgprlr_27(0);
-    return;
+    uVar7 = __restgprlr_27(0);
+    return (bool)uVar7;
   }
-  uVar8 = (ulonglong)DAT_82998b30;
-  if (0 < (int)DAT_82998b30) {
-    plVar11 = &DAT_844f1de8;
-    plVar9 = &DAT_844f19e8;
-    uVar14 = uVar8;
+  uVar9 = (ulonglong)(uint)s_countersCount;
+  if (0 < s_countersCount) {
+    plVar11 = &s_uploadCounters[0].m_counterValue;
+    plVar12 = &s_localCounters[0].m_counterValue;
+    uVar14 = uVar9;
     do {
-      lVar10 = *plVar9;
+      lVar10 = *plVar12;
       if (lVar10 != 0) {
-        uVar1 = *(undefined4 *)((int)plVar9 + -4);
+        uVar1 = *(uint *)((int)plVar12 + -4);
         *plVar11 = lVar10;
-        *(undefined4 *)((int)plVar11 + -4) = uVar1;
+        *(uint *)((int)plVar11 + -4) = uVar1;
         if (50000 < lVar10) {
           *plVar11 = 50000;
         }
-        lVar13 = lVar13 + 1;
+        uVar13 = uVar13 + 1;
         plVar11 = plVar11 + 2;
       }
-      plVar9 = plVar9 + 2;
+      plVar12 = plVar12 + 2;
       uVar14 = uVar14 - 1;
     } while (uVar14 != 0);
-    if ((int)lVar13 != 0) {
-      puVar12 = (undefined8 *)0x844f19d8;
+    if (uVar13 != 0) {
+      plVar12 = &s_serverCounters[0x3f].m_counterValue;
       do {
-        puVar12 = puVar12 + 2;
-        *puVar12 = 0;
-        uVar8 = uVar8 - 1;
-      } while (uVar8 != 0);
-      cVar7 = TaskManager_TaskIsInProgressForController(0xffffffff844f01d8,0,uVar3);
-      if (cVar7 == '\0') {
-        iVar5 = TaskManager_GetOpenTaskSlot(0xffffffff844f01d8,uVar3,0);
-        if (iVar5 != 0) {
-          piVar6 = (int *)bdCounter__incrementCounters(auStack_40,uVar4,0xffffffff844f1de0,lVar13);
-          iVar2 = *piVar6;
-          bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(auStack_40);
-          if (iVar2 != 0) {
-            bdReference<bdRemoteTask>__operator_(iVar5 + 8,iVar2);
-            DAT_844f01c8 = (int)lVar13;
-            *(int **)(iVar5 + 0x98) = &DAT_844f01c8;
-            __restgprlr_27(1);
-            return;
+        plVar12 = plVar12 + 2;
+        *plVar12 = 0;
+        uVar9 = uVar9 - 1;
+      } while (uVar9 != 0);
+      bVar8 = TaskManager_TaskIsInProgressForController(&overlappedTasks,0,uVar3);
+      if (!bVar8) {
+        poVar5 = TaskManager_GetOpenTaskSlot(&overlappedTasks,uVar3,0);
+        if (poVar5 != (overlappedTask *)0x0) {
+          bVar6 = bdCounter::incrementCounters((bdCounter *)abStack_40,pbVar4,0x844f1de0);
+          pbVar2 = (bdRemoteTask *)(bVar6.m_ptr)->_padding_;
+          bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(abStack_40);
+          if (pbVar2 != (bdRemoteTask *)0x0) {
+            bdReference<bdRemoteTask>::operator=(&(poVar5->u).remoteTask,pbVar2);
+            s_numEntriesUploaded = uVar13;
+            poVar5->data = &s_numEntriesUploaded;
+            uVar7 = __restgprlr_27(1);
+            return (bool)uVar7;
           }
-          dwHandleTaskError(iVar5,5);
+          dwHandleTaskError(poVar5,BD_START_TASK_FAILED);
         }
-        Com_PrintWarning(0x10,0xffffffff821a9ef8);
+        Com_PrintWarning(0x10,"Couldn\'t allocate dw task for bdCounter upload.");
         goto LAB_826e77bc;
       }
     }
   }
-  __restgprlr_27(1);
-  return;
+  uVar7 = __restgprlr_27(1);
+  return (bool)uVar7;
 }
 
 
 // 826E77F0  LiveCounter_IncrementCountersComplete  (DW/dwCounter.cpp:151)
 
-void LiveCounter_IncrementCountersComplete(void)
+taskCompleteResults LiveCounter_IncrementCountersComplete(int param_1)
 
 {
-  int iVar1;
-  uint uVar3;
-  undefined8 uVar2;
+  overlappedTask *poVar1;
+  uint uVar2;
+  taskCompleteResults tVar3;
   int iVar4;
-  longlong *plVar5;
-  int *piVar6;
+  long64 *plVar5;
+  uint *puVar6;
   ulonglong uVar7;
-  undefined *puVar8;
+  int iVar8;
   
-  uVar3 = __savegprlr_29();
-  iVar4 = uVar3 * 0xa0;
-  puVar8 = &DAT_844f01e0 + iVar4;
-  if (0x1f < uVar3) {
-    MyAssertHandler(0xffffffff821a9d3c,0x9b,0,0xffffffff82092698,uVar3,0x20);
+  uVar2 = __savegprlr_29(param_1);
+  poVar1 = overlappedTasks.tasks + uVar2;
+  if (0x1f < uVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwCounter.cpp",0x9b,0,
+                    "slot doesn\'t index MAX_OVERLAPPED_TASKS_PER_SET\n\t%i not in [0, %i)");
   }
-  if ((&DAT_844f0274)[iVar4] == '\0') {
-    MyAssertHandler(0xffffffff821a9d3c,0x9c,0,0xffffffff82000f98,0xffffffff821a9f8c);
+  if (overlappedTasks.tasks[uVar2].active == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwCounter.cpp",0x9c,0,"%s")
+    ;
   }
-  if ((&DAT_844f0270)[uVar3 * 0x28] != 0) {
-    MyAssertHandler(0xffffffff821a9d3c,0x9d,0,0xffffffff82000f98,0xffffffff821a9f68);
+  if (overlappedTasks.tasks[uVar2].type != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwCounter.cpp",0x9d,0,"%s")
+    ;
   }
-  uVar2 = dwCounterTaskComplete(puVar8);
-  iVar1 = DAT_82998b30;
-  if ((int)uVar2 != 0) {
-    if ((int)uVar2 == 1) {
-      Com_Printf(0x10,0xffffffff821a9f4c);
-      TaskManager_ClearTask(puVar8);
-      __restgprlr_29(uVar2);
-      return;
+  tVar3 = dwCounterTaskComplete(poVar1);
+  iVar4 = s_countersCount;
+  if (tVar3 != TASK_NOTCOMPLETE) {
+    if (tVar3 == TASK_COMPLETE) {
+      Com_Printf(0x10,"Uploaded global counters.\n");
+      TaskManager_ClearTask(poVar1);
+      tVar3 = __restgprlr_29(1);
+      return tVar3;
     }
-    uVar7 = (ulonglong)**(uint **)(&DAT_844f0278 + iVar4);
-    if (0 < (int)**(uint **)(&DAT_844f0278 + iVar4)) {
-      plVar5 = &DAT_844f1de8;
+    uVar2 = *(uint *)overlappedTasks.tasks[uVar2].data;
+    uVar7 = (ulonglong)uVar2;
+    if (0 < (int)uVar2) {
+      plVar5 = &s_uploadCounters[0].m_counterValue;
       do {
-        iVar4 = 0;
-        if (0 < iVar1) {
-          piVar6 = &DAT_844f19e4;
+        iVar8 = 0;
+        if (0 < iVar4) {
+          puVar6 = &s_localCounters[0].m_counterID;
           do {
-            if (*piVar6 == *(int *)((int)plVar5 + -4)) {
-              (&DAT_844f19e8)[iVar4 * 2] = *plVar5 + (&DAT_844f19e8)[iVar4 * 2];
+            if (*puVar6 == *(uint *)((int)plVar5 + -4)) {
+              s_localCounters[iVar8].m_counterValue =
+                   *plVar5 + s_localCounters[iVar8].m_counterValue;
               break;
             }
-            iVar4 = iVar4 + 1;
-            piVar6 = piVar6 + 4;
-          } while (iVar4 < iVar1);
+            iVar8 = iVar8 + 1;
+            puVar6 = puVar6 + 4;
+          } while (iVar8 < iVar4);
         }
         plVar5 = plVar5 + 2;
         uVar7 = uVar7 - 1;
       } while (uVar7 != 0);
     }
-    DAT_844f01ce = 1;
+    s_countersReadyForUpload = true;
     iVar4 = Sys_Milliseconds();
-    DAT_844f01d0 = iVar4 + *(int *)(DAT_844f01c4 + 0xc) * 60000;
-    Com_PrintError(0x10,0xffffffff821a9f28);
-    TaskManager_ClearTask(puVar8);
+    s_nextCounterUploadTime = iVar4 + (counterUploadInterval->current).integer * 60000;
+    Com_PrintError(0x10,"Failed to upload global counters.\n");
+    TaskManager_ClearTask(poVar1);
   }
-  __restgprlr_29(uVar2);
-  return;
+  tVar3 = __restgprlr_29(tVar3);
+  return tVar3;
 }
 
 
 // 826E79C0  LiveCounter_GetCounterTotals  (DW/dwCounter.cpp:199)
 
-void LiveCounter_GetCounterTotals(void)
+bool LiveCounter_GetCounterTotals(int param_1)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
-  char cVar5;
-  int *piVar4;
-  undefined1 auStack_30 [48];
+  bdRemoteTask *pbVar1;
+  uint uVar2;
+  bdCounterValue *pbVar3;
+  bool bVar6;
+  overlappedTask *poVar4;
+  undefined1 uVar7;
+  bdReference<bdRemoteTask> bVar5;
+  bdReference<bdRemoteTask> abStack_30 [12];
   
-  uVar2 = __savegprlr_29();
-  uVar3 = dwGetCounter();
-  if ((uVar3 & 0xffffffff) == 0) {
+  uVar2 = __savegprlr_29(param_1);
+  pbVar3 = (bdCounterValue *)dwGetCounter(uVar2);
+  if (pbVar3 == (bdCounterValue *)0x0) {
 LAB_826e7a5c:
-    __restgprlr_29(0);
-    return;
+    uVar7 = __restgprlr_29(0);
+    return (bool)uVar7;
   }
-  if (3 < (uVar2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821a9d3c,0xcf,0,0xffffffff82031880,uVar2,4);
+  if (3 < uVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwCounter.cpp",0xcf,0,
+                    "controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  cVar5 = TaskManager_TaskIsInProgressForController(0xffffffff844f01d8,1,uVar2);
-  if (cVar5 == '\0') {
-    uVar2 = TaskManager_GetOpenTaskSlot(0xffffffff844f01d8,uVar2,1);
-    if ((uVar2 & 0xffffffff) == 0) {
-      Com_PrintWarning(0x10,0xffffffff821a9f98);
+  bVar6 = TaskManager_TaskIsInProgressForController(&overlappedTasks,1,uVar2);
+  if (!bVar6) {
+    poVar4 = TaskManager_GetOpenTaskSlot(&overlappedTasks,uVar2,1);
+    if (poVar4 == (overlappedTask *)0x0) {
+      Com_PrintWarning(0x10,"Couldn\'t allocate dw task for bdCounter download");
       goto LAB_826e7a5c;
     }
-    piVar4 = (int *)bdCounter__getCounterTotals(auStack_30,uVar3,0xffffffff844f15e0,DAT_82998b30);
-    iVar1 = *piVar4;
-    bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(auStack_30);
-    if (iVar1 == 0) {
-      dwHandleTaskError(uVar2,5);
-      __restgprlr_29(0);
-      return;
+    bVar5 = bdCounter::getCounterTotals((bdCounter *)abStack_30,pbVar3,0x844f15e0);
+    pbVar1 = (bdRemoteTask *)(bVar5.m_ptr)->_padding_;
+    bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(abStack_30);
+    if (pbVar1 == (bdRemoteTask *)0x0) {
+      dwHandleTaskError(poVar4,BD_START_TASK_FAILED);
+      uVar7 = __restgprlr_29(0);
+      return (bool)uVar7;
     }
-    bdReference<bdRemoteTask>__operator_(uVar2 + 8,iVar1);
+    bdReference<bdRemoteTask>::operator=(&(poVar4->u).remoteTask,pbVar1);
   }
-  __restgprlr_29(1);
-  return;
+  uVar7 = __restgprlr_29(1);
+  return (bool)uVar7;
 }
 
 
 // 826E7AD0  LiveCounter_GetCounterTotalsComplete  (DW/dwCounter.cpp:236)
 
-void LiveCounter_GetCounterTotalsComplete(void)
+taskCompleteResults LiveCounter_GetCounterTotalsComplete(int param_1)
 
 {
+  overlappedTask *poVar1;
   uint uVar2;
-  undefined8 uVar1;
-  undefined *puVar3;
+  taskCompleteResults tVar3;
   
-  uVar2 = __savegprlr_29();
-  puVar3 = &DAT_844f01e0 + uVar2 * 0xa0;
+  uVar2 = __savegprlr_29(param_1);
+  poVar1 = overlappedTasks.tasks + uVar2;
   if (0x1f < uVar2) {
-    MyAssertHandler(0xffffffff821a9d3c,0xf0,0,0xffffffff82092698,uVar2,0x20);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwCounter.cpp",0xf0,0,
+                    "slot doesn\'t index MAX_OVERLAPPED_TASKS_PER_SET\n\t%i not in [0, %i)");
   }
-  if ((&DAT_844f0274)[uVar2 * 0xa0] == '\0') {
-    MyAssertHandler(0xffffffff821a9d3c,0xf1,0,0xffffffff82000f98,0xffffffff821a9f8c);
+  if (overlappedTasks.tasks[uVar2].active == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwCounter.cpp",0xf1,0,"%s")
+    ;
   }
-  if ((&DAT_844f0270)[uVar2 * 0x28] != 1) {
-    MyAssertHandler(0xffffffff821a9d3c,0xf2,0,0xffffffff82000f98,0xffffffff821aa01c);
+  if (overlappedTasks.tasks[uVar2].type != 1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwCounter.cpp",0xf2,0,"%s")
+    ;
   }
-  uVar1 = dwCounterTaskComplete(puVar3);
-  if ((int)uVar1 != 0) {
-    if ((int)uVar1 == 1) {
-      Com_Printf(0x10,0xffffffff821a9ff8);
-      TaskManager_ClearTask(puVar3);
-      __restgprlr_29(uVar1);
-      return;
+  tVar3 = dwCounterTaskComplete(poVar1);
+  if (tVar3 != TASK_NOTCOMPLETE) {
+    if (tVar3 == TASK_COMPLETE) {
+      Com_Printf(0x10,"Downloaded all global counters.\n");
+      TaskManager_ClearTask(poVar1);
+      tVar3 = __restgprlr_29(1);
+      return tVar3;
     }
-    Com_PrintError(0x10,0xffffffff821a9fcc);
-    TaskManager_ClearTask(puVar3);
+    Com_PrintError(0x10,"Failed to download all global counters.\n");
+    TaskManager_ClearTask(poVar1);
   }
-  __restgprlr_29(uVar1);
-  return;
+  tVar3 = __restgprlr_29(tVar3);
+  return tVar3;
 }
 
 
 // 826E7BE0  LiveCounter_IncrementCounter_f  (DW/dwCounter.cpp:263)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void LiveCounter_IncrementCounter_f(void)
 
 {
-  int iVar3;
-  undefined8 uVar1;
-  char *_Str;
-  undefined8 uVar2;
+  int iVar1;
+  char *pcVar2;
+  char *pcVar3;
+  int iVar4;
   
-  iVar3 = Cmd_Argc();
-  if (iVar3 == 3) {
-    uVar1 = Cmd_Argv(1);
-    _Str = (char *)Cmd_Argv(2);
-    iVar3 = atoi(_Str);
-    uVar2 = LiveCounter_CounterStringToID(uVar1);
-    if ((int)uVar2 == -1) {
-      Com_PrintError(0x10,0xffffffff8207c7ac,uVar1);
+  iVar1 = Cmd_Argc();
+  if (iVar1 == 3) {
+    pcVar2 = Cmd_Argv(1);
+    pcVar3 = Cmd_Argv(2);
+    iVar1 = atoi(pcVar3);
+    iVar4 = LiveCounter_CounterStringToID(pcVar2);
+    if (iVar4 == -1) {
+      Com_PrintError(0x10,"Invalid counter string id: %s\n");
     }
     else {
-      LiveCounter_IncrementCounterValue(uVar2,iVar3);
+      LiveCounter_IncrementCounterValue(iVar4,(longlong)iVar1);
     }
   }
   else {
-    Com_PrintError(0x10,0xffffffff821aa040);
+    Com_PrintError(0x10,
+                   "Invalid param count. usage: incrementCounter( <counter id>, <increment value> )\n"
+                  );
   }
   return;
 }
@@ -376,18 +396,19 @@ void LiveCounter_IncrementCounter_f(void)
 
 // 826E7C78  LiveCounter_IncrementCounterValueByName  (DW/dwCounter.cpp:287)
 
-void LiveCounter_IncrementCounterValueByName(int param_1,undefined8 param_2)
+void LiveCounter_IncrementCounterValueByName(char *param_1,ulong64 param_2)
 
 {
-  undefined8 uVar1;
+  int iVar1;
   
-  if (param_1 == 0) {
-    MyAssertHandler(0xffffffff821a9d3c,0x122,0,0xffffffff82000f98,0xffffffff821a9df0);
+  if (param_1 == (char *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwCounter.cpp",0x122,0,"%s"
+                   );
     return;
   }
-  uVar1 = LiveCounter_CounterStringToID();
-  if ((int)uVar1 != -1) {
-    LiveCounter_IncrementCounterValue(uVar1,param_2);
+  iVar1 = LiveCounter_CounterStringToID(param_1);
+  if (iVar1 != -1) {
+    LiveCounter_IncrementCounterValue(iVar1,param_2);
   }
   return;
 }
@@ -395,36 +416,37 @@ void LiveCounter_IncrementCounterValueByName(int param_1,undefined8 param_2)
 
 // 826E7050  LiveCounter_IncrementCounterValue  (DW/dwCounter.cpp:305)
 
-void LiveCounter_IncrementCounterValue(undefined8 param_1,longlong param_2)
+void LiveCounter_IncrementCounterValue(int param_1,long64 param_2)
 
 {
   bool bVar1;
-  int iVar2;
-  int *piVar3;
-  int iVar4;
+  uint uVar2;
+  int iVar3;
+  uint *puVar4;
   
-  iVar2 = __savegprlr_29();
-  if ((DAT_844f01cd != '\0') && (param_2 != 0)) {
-    if (iVar2 == 0) {
-      MyAssertHandler(0xffffffff821a9d3c,0x138,0,0xffffffff82000f98,0xffffffff821a9d78);
+  uVar2 = __savegprlr_29(param_1);
+  if ((s_countersInit != false) && (param_2 != 0)) {
+    if (uVar2 == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwCounter.cpp",0x138,0,
+                      "%s");
     }
-    iVar4 = 0;
-    if (0 < DAT_82998b30) {
-      piVar3 = &DAT_844f19e4;
-      while (*piVar3 != iVar2) {
-        iVar4 = iVar4 + 1;
-        piVar3 = piVar3 + 4;
-        if (DAT_82998b30 <= iVar4) {
+    iVar3 = 0;
+    if (0 < s_countersCount) {
+      puVar4 = &s_localCounters[0].m_counterID;
+      while (*puVar4 != uVar2) {
+        iVar3 = iVar3 + 1;
+        puVar4 = puVar4 + 4;
+        if (s_countersCount <= iVar3) {
           __restgprlr_29();
           return;
         }
       }
-      bVar1 = DAT_844f01ce == '\0';
-      (&DAT_844f19e8)[iVar4 * 2] = param_2 + (&DAT_844f19e8)[iVar4 * 2];
+      bVar1 = s_countersReadyForUpload == false;
+      s_localCounters[iVar3].m_counterValue = param_2 + s_localCounters[iVar3].m_counterValue;
       if (bVar1) {
-        DAT_844f01ce = '\x01';
-        iVar2 = Sys_Milliseconds();
-        DAT_844f01d0 = iVar2 + *(int *)(DAT_844f01c4 + 0xc) * 60000;
+        s_countersReadyForUpload = true;
+        iVar3 = Sys_Milliseconds();
+        s_nextCounterUploadTime = iVar3 + (counterUploadInterval->current).integer * 60000;
       }
     }
   }
@@ -435,46 +457,49 @@ void LiveCounter_IncrementCounterValue(undefined8 param_1,longlong param_2)
 
 // 826E7148  LiveCounter_GetCounterTotalValue  (DW/dwCounter.cpp:332)
 
-undefined8 LiveCounter_GetCounterTotalValue(int param_1)
+long64 LiveCounter_GetCounterTotalValue(int param_1)
 
 {
-  if (DAT_844f01cd == '\0') {
+  if (!s_countersInit) {
     return 0;
   }
-  DAT_844f01cf = 1;
-  return (&DAT_844f15e8)[param_1 * 2];
+  s_countersRequested = true;
+  return s_serverCounters[param_1].m_counterValue;
 }
 
 
 // 826E7188  LiveCounter_CounterStringToID  (DW/dwCounter.cpp:342)
 
-int LiveCounter_CounterStringToID(ulonglong param_1)
+int LiveCounter_CounterStringToID(char *param_1)
 
 {
   char cVar1;
-  char *_Str;
-  int iVar2;
-  char *pcVar3;
-  int local_20 [2];
+  char *pcVar2;
+  int iVar3;
+  char *pcVar4;
+  StringTable *local_20 [2];
   
-  if ((param_1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821a9d3c,0x157,0,0xffffffff82000f98,0xffffffff821a9df0);
+  if (param_1 == (char *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwCounter.cpp",0x157,0,"%s"
+                   );
   }
   else {
-    StringTable_GetAsset(0xffffffff821a9dd8,local_20);
-    if (local_20[0] == 0) {
-      Com_PrintError(0x10,0xffffffff821a9d88,0xffffffff821a9dd8);
+    StringTable_GetAsset("mp/globalcounters.csv",local_20);
+    if (local_20[0] == (StringTable *)0x0) {
+      Com_PrintError(0x10,
+                     "Could not find global counter value as string table \'%s\' could not be found.\n"
+                    );
     }
     else {
-      _Str = (char *)StringTable_Lookup(local_20[0],1,param_1,0);
-      pcVar3 = _Str;
+      pcVar2 = StringTable_Lookup(local_20[0],1,param_1,0);
+      pcVar4 = pcVar2;
       do {
-        cVar1 = *pcVar3;
-        pcVar3 = pcVar3 + 1;
+        cVar1 = *pcVar4;
+        pcVar4 = pcVar4 + 1;
       } while (cVar1 != '\0');
-      if ((int)pcVar3 - (int)_Str != 1) {
-        iVar2 = atoi(_Str);
-        return iVar2;
+      if ((int)pcVar4 - (int)pcVar2 != 1) {
+        iVar3 = atoi(pcVar2);
+        return iVar3;
       }
     }
   }
@@ -484,34 +509,28 @@ int LiveCounter_CounterStringToID(ulonglong param_1)
 
 // 826E7260  LiveCounter_DumpLive_f  (DW/dwCounter.cpp:367)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void LiveCounter_DumpLive_f(void)
 
 {
-  undefined4 *puVar1;
-  undefined8 uVar2;
-  int iVar3;
-  undefined8 *puVar4;
-  int local_40 [16];
+  char *pcVar1;
+  int iVar2;
+  StringTable *local_40 [16];
   
   __savegprlr_27();
-  StringTable_GetAsset(0xffffffff821a9dd8,local_40);
-  Com_Printf(0,0xffffffff821a9e14);
-  iVar3 = 0;
-  if (0 < DAT_82998b30) {
-    puVar4 = (undefined8 *)0x844f15d8;
+  StringTable_GetAsset("mp/globalcounters.csv",local_40);
+  Com_Printf(0,"id counter: counter value, counter name\n");
+  iVar2 = 0;
+  if (0 < s_countersCount) {
     do {
-      if (local_40[0] == 0) {
-        uVar2 = 0;
+      if (local_40[0] != (StringTable *)0x0) {
+        pcVar1 = va("%d");
+        StringTable_Lookup(local_40[0],0,pcVar1,1);
       }
-      else {
-        uVar2 = va(0xffffffff82013b64,*(undefined4 *)((int)puVar4 + 0xc));
-        uVar2 = StringTable_Lookup(local_40[0],0,uVar2,1);
-      }
-      puVar1 = (undefined4 *)((int)puVar4 + 0xc);
-      puVar4 = puVar4 + 2;
-      Com_Printf(0,0xffffffff821a9e04,*puVar1,*puVar4,uVar2);
-      iVar3 = iVar3 + 1;
-    } while (iVar3 < DAT_82998b30);
+      Com_Printf(0,"%d: %I64i, %s\n");
+      iVar2 = iVar2 + 1;
+    } while (iVar2 < s_countersCount);
   }
   __restgprlr_27();
   return;
@@ -520,33 +539,28 @@ void LiveCounter_DumpLive_f(void)
 
 // 826E7320  LiveCounter_DumpQueue_f  (DW/dwCounter.cpp:387)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void LiveCounter_DumpQueue_f(void)
 
 {
-  undefined8 uVar1;
+  char *pcVar1;
   int iVar2;
-  int iVar3;
-  int local_50 [20];
+  StringTable *local_50 [20];
   
   __savegprlr_25();
-  StringTable_GetAsset(0xffffffff821a9dd8,local_50);
-  Com_Printf(0,0xffffffff821a9e14);
+  StringTable_GetAsset("mp/globalcounters.csv",local_50);
+  Com_Printf(0,"id counter: counter value, counter name\n");
   iVar2 = 0;
-  if (0 < DAT_82998b30) {
-    iVar3 = 0;
+  if (0 < s_countersCount) {
     do {
-      if (local_50[0] == 0) {
-        uVar1 = 0;
+      if (local_50[0] != (StringTable *)0x0) {
+        pcVar1 = va("%d");
+        StringTable_Lookup(local_50[0],0,pcVar1,1);
       }
-      else {
-        uVar1 = va(0xffffffff82013b64,*(undefined4 *)((int)&DAT_844f15e4 + iVar3));
-        uVar1 = StringTable_Lookup(local_50[0],0,uVar1,1);
-      }
-      Com_Printf(0,0xffffffff821a9e04,*(undefined4 *)((int)&DAT_844f19e4 + iVar3),
-                 *(undefined8 *)((int)&DAT_844f19e8 + iVar3),uVar1);
+      Com_Printf(0,"%d: %I64i, %s\n");
       iVar2 = iVar2 + 1;
-      iVar3 = iVar3 + 0x10;
-    } while (iVar2 < DAT_82998b30);
+    } while (iVar2 < s_countersCount);
   }
   __restgprlr_25();
   return;
@@ -555,52 +569,56 @@ void LiveCounter_DumpQueue_f(void)
 
 // 826E73F8  LiveCounter_SetupCounters  (DW/dwCounter.cpp:408)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void LiveCounter_SetupCounters(void)
 
 {
-  int iVar2;
-  undefined8 uVar1;
+  int iVar1;
+  char *pcVar2;
   int iVar3;
-  longlong lVar4;
+  int iVar4;
   int iVar5;
-  int local_70 [28];
+  StringTable *local_70 [28];
   
   __savegprlr_20();
-  if (DAT_844f01cd != '\x01') {
-    StringTable_GetAsset(0xffffffff821a9dd8,local_70);
-    if (local_70[0] == 0) {
-      Com_PrintError(0x10,0xffffffff821a9d88,0xffffffff821a9dd8);
-      DAT_844f01cd = '\0';
+  if (s_countersInit != true) {
+    StringTable_GetAsset("mp/globalcounters.csv",local_70);
+    if (local_70[0] == (StringTable *)0x0) {
+      Com_PrintError(0x10,
+                     "Could not find global counter value as string table \'%s\' could not be found.\n"
+                    );
+      s_countersInit = false;
     }
-    iVar2 = StringTable_GetRowCount(local_70[0]);
-    if ((iVar2 != 0) && (iVar2 < 0x40)) {
-      lVar4 = 0;
-      DAT_82998b30 = iVar2;
-      if (0 < iVar2) {
+    iVar1 = StringTable_GetRowCount(local_70[0]);
+    if ((iVar1 != 0) && (iVar1 < 0x40)) {
+      iVar4 = 0;
+      s_countersCount = iVar1;
+      if (0 < iVar1) {
         iVar5 = 0;
         do {
-          uVar1 = StringTable_GetColumnValueForRow(local_70[0],lVar4,0);
-          iVar3 = atoi((char *)uVar1);
+          pcVar2 = StringTable_GetColumnValueForRow(local_70[0],iVar4,0);
+          iVar3 = atoi(pcVar2);
           if (iVar3 == 0) {
-            Com_PrintError(0x10,0xffffffff821a9e74,0xffffffff821a9dd8,uVar1);
+            Com_PrintError(0x10,"Global counter string table \'%s\' has an invalid value: %s.\n");
           }
           else {
-            *(int *)((int)&DAT_844f19e4 + iVar5) = iVar3;
-            *(int *)((int)&DAT_844f15e4 + iVar5) = iVar3;
-            *(undefined8 *)((int)&DAT_844f19e8 + iVar5) = 0;
-            *(undefined8 *)((int)&DAT_844f1de8 + iVar5) = 0;
-            *(undefined8 *)((int)&DAT_844f15e8 + iVar5) = 0xffffffffffffffff;
+            *(int *)((int)&s_localCounters[0].m_counterID + iVar5) = iVar3;
+            *(int *)((int)&s_serverCounters[0].m_counterID + iVar5) = iVar3;
+            *(undefined8 *)((int)&s_localCounters[0].m_counterValue + iVar5) = 0;
+            *(undefined8 *)((int)&s_uploadCounters[0].m_counterValue + iVar5) = 0;
+            *(undefined8 *)((int)&s_serverCounters[0].m_counterValue + iVar5) = 0xffffffffffffffff;
           }
-          lVar4 = lVar4 + 1;
+          iVar4 = iVar4 + 1;
           iVar5 = iVar5 + 0x10;
-        } while ((int)lVar4 < iVar2);
+        } while (iVar4 < iVar1);
       }
-      DAT_844f01cd = 1;
+      s_countersInit = true;
       __restgprlr_20();
       return;
     }
-    Com_PrintError(0x10,0xffffffff821a9e40,0xffffffff821a9dd8);
-    DAT_844f01cd = '\0';
+    Com_PrintError(0x10,"Global counter string table \'%s\' had no values.\n");
+    s_countersInit = false;
   }
   __restgprlr_20();
   return;
@@ -609,39 +627,42 @@ void LiveCounter_SetupCounters(void)
 
 // 826E7CF8  LiveCounter_CheckOngoingTasks  (DW/dwCounter.cpp:459)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void LiveCounter_CheckOngoingTasks(void)
 
 {
-  undefined8 uVar1;
-  int iVar2;
-  longlong lVar3;
+  char *pcVar1;
+  taskCompleteResults tVar2;
+  int iVar3;
   int *piVar4;
   
   __savegprlr_25();
-  lVar3 = 0;
-  piVar4 = &DAT_844f0270;
+  iVar3 = 0;
+  piVar4 = &overlappedTasks.tasks[0].type;
   do {
-    if (*(char *)(piVar4 + 1) != '\0') {
+    if (*(bool *)(piVar4 + 1) != false) {
       if (*piVar4 == 0) {
-        iVar2 = LiveCounter_IncrementCountersComplete(lVar3);
+        tVar2 = LiveCounter_IncrementCountersComplete(iVar3);
       }
       else {
         if (*piVar4 != 1) {
-          if (DAT_84013128 == 0) {
-            uVar1 = va(0xffffffff821a28a0);
-            MyAssertHandler(0xffffffff821a9d3c,0x1ef,0,uVar1);
+          if (alwaysfails == 0) {
+            pcVar1 = va("Unknown live leaderboard task type %i\n");
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwCounter.cpp",
+                            0x1ef,0,pcVar1);
           }
           goto LAB_826e7db0;
         }
-        iVar2 = LiveCounter_GetCounterTotalsComplete(lVar3);
+        tVar2 = LiveCounter_GetCounterTotalsComplete(iVar3);
       }
-      if ((iVar2 != 0) && (iVar2 != 1)) {
-        Com_Printf(0x10,0xffffffff821a2754);
+      if ((tVar2 != TASK_NOTCOMPLETE) && (tVar2 != TASK_COMPLETE)) {
+        Com_Printf(0x10,"Error uploading leaderboard stats\n");
       }
     }
 LAB_826e7db0:
     piVar4 = piVar4 + 0x28;
-    lVar3 = lVar3 + 1;
+    iVar3 = iVar3 + 1;
     if (-0x7bb0e991 < (int)piVar4) {
       __restgprlr_25();
       return;
@@ -652,41 +673,46 @@ LAB_826e7db0:
 
 // 826E7DD0  LiveCounter_Update  (DW/dwCounter.cpp:502)
 
-void LiveCounter_Update(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void LiveCounter_Update(int param_1)
 
 {
-  undefined8 uVar1;
-  int iVar2;
-  char cVar3;
+  int iVar1;
+  DWOnlineStatus DVar2;
+  LocalClientNum_t LVar3;
+  int iVar4;
+  bool bVar5;
   
-  uVar1 = __savegprlr_29();
-  iVar2 = dwGetLogOnStatus();
-  if (iVar2 == 2) {
-    if (DAT_844f01cc == '\0') {
-      DAT_844f01cc = '\x01';
+  iVar1 = __savegprlr_29(param_1);
+  DVar2 = dwGetLogOnStatus(iVar1);
+  if (DVar2 == DW_LIVE_CONNECTED) {
+    if (s_countersLoaded == false) {
+      s_countersLoaded = true;
       LiveCounter_SetupCounters();
     }
-    if (DAT_844f01cd != '\0') {
-      CL_LocalClientNumFromControllerIndex(uVar1);
-      iVar2 = CL_IsCgameInitialized();
-      if (iVar2 != 1) {
+    if (s_countersInit != false) {
+      LVar3 = CL_LocalClientNumFromControllerIndex(iVar1);
+      iVar4 = CL_IsCgameInitialized(LVar3);
+      if (iVar4 != 1) {
         LiveCounter_CheckOngoingTasks();
-        iVar2 = Sys_Milliseconds();
-        if ((DAT_844f01d4 < iVar2) && (DAT_844f01cf == '\x01')) {
-          DAT_844f01cf = '\0';
-          LiveCounter_GetCounterTotals(uVar1);
-          iVar2 = Sys_Milliseconds();
-          DAT_844f01d4 = iVar2 + *(int *)(DAT_844f01c0 + 0xc) * 60000;
+        iVar4 = Sys_Milliseconds();
+        if ((s_nextCounterDownloadTime < iVar4) && (s_countersRequested == true)) {
+          s_countersRequested = false;
+          LiveCounter_GetCounterTotals(iVar1);
+          iVar4 = Sys_Milliseconds();
+          s_nextCounterDownloadTime = iVar4 + (counterDownloadInterval->current).integer * 60000;
         }
-        if ((DAT_844f01ce == '\x01') && (iVar2 = Sys_Milliseconds(), DAT_844f01d0 < iVar2)) {
-          cVar3 = LiveCounter_IncrementCounters(uVar1);
-          if (cVar3 != '\0') {
-            DAT_844f01ce = 0;
+        if ((s_countersReadyForUpload == true) &&
+           (iVar4 = Sys_Milliseconds(), s_nextCounterUploadTime < iVar4)) {
+          bVar5 = LiveCounter_IncrementCounters(iVar1);
+          if (bVar5) {
+            s_countersReadyForUpload = false;
             __restgprlr_29();
             return;
           }
-          iVar2 = Sys_Milliseconds();
-          DAT_844f01d0 = iVar2 + *(int *)(DAT_844f01c4 + 0xc) * 60000;
+          iVar1 = Sys_Milliseconds();
+          s_nextCounterUploadTime = iVar1 + (counterUploadInterval->current).integer * 60000;
         }
       }
     }
@@ -698,52 +724,63 @@ void LiveCounter_Update(void)
 
 // 826E7EE8  LiveCounter_Init  (DW/dwCounter.cpp:545)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void LiveCounter_Init(void)
 
 {
-  TaskManager_ConstructTaskSet(0xffffffff844f01d8,0xffffffff821aa170);
-  Cmd_AddCommandInternal(0xffffffff8209f8e8,0xffffffff826e7be0,0xffffffff844f2208);
-  Cmd_AddCommandInternal(0xffffffff821aa15c,0xffffffff826e7260,0xffffffff844f21f4);
-  Cmd_AddCommandInternal(0xffffffff821aa148,0xffffffff826e7320,0xffffffff844f21e0);
-  DAT_844f01c4 = Dvar_RegisterInt(0xffffffff821aa130,0xf,1,0x7fffffff,0,0xffffffff821aa0f0);
-  DAT_844f01c0 = Dvar_RegisterInt(0xffffffff821aa094,0xf,1,0x7fffffff,0,0xffffffff821aa0b0);
+  TaskManager_ConstructTaskSet(&overlappedTasks,"LiveCounter_Init");
+  Cmd_AddCommandInternal
+            ("incrementcounter",LiveCounter_IncrementCounter_f,&LiveCounter_IncrementCounter_f_VAR);
+  Cmd_AddCommandInternal("dumplivecounters",LiveCounter_DumpLive_f,&LiveCounter_DumpLive_f_VAR);
+  Cmd_AddCommandInternal("dumpqueuecounters",LiveCounter_DumpQueue_f,&LiveCounter_DumpQueue_f_VAR);
+  counterUploadInterval =
+       Dvar_RegisterInt("counterUploadInterval",0xf,1,0x7fffffff,0,
+                        "Number of minutes before all the global counters are uploaded");
+  counterDownloadInterval =
+       Dvar_RegisterInt("counterDownloadInterval",0xf,1,0x7fffffff,0,
+                        "Number of minutes before all the global counters are downloaded");
   return;
 }
 
 
 // 826E7550  LiveCounter_ClearDWOverlappedTasks  (DW/dwCounter.cpp:561)
 
-void LiveCounter_ClearDWOverlappedTasks(undefined8 param_1)
+void LiveCounter_ClearDWOverlappedTasks(int param_1)
 
 {
-  TaskManager_ClearOverlappedTasksForController(0xffffffff844f01e0,param_1);
+  TaskManager_ClearOverlappedTasksForController(overlappedTasks.tasks,param_1);
   return;
 }
 
 
 // 826E7568  LiveCounter_Shutdown  (DW/dwCounter.cpp:567)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void LiveCounter_Shutdown(void)
 
 {
-  TaskManager_DestructTaskSet(0xffffffff844f01d8);
+  TaskManager_DestructTaskSet(&overlappedTasks);
   return;
 }
 
 
 // 829402D0  `dynamic_atexit_destructor_for_'s_uploadCounters''  (line unknown)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void _dynamic_atexit_destructor_for__s_uploadCounters__(void)
 
 {
   longlong lVar1;
-  longlong lVar2;
+  cmd_function_s *this;
   
   lVar1 = 0x3f;
-  lVar2 = -0x7bb0de20;
+  this = &LiveCounter_DumpQueue_f_VAR;
   do {
-    lVar2 = lVar2 + -0x10;
-    bdTaskResult___bdTaskResult(lVar2);
+    this = (cmd_function_s *)&this[-1].name;
+    bdTaskResult::~bdTaskResult((bdTaskResult *)this);
     lVar1 = lVar1 + -1;
   } while (-1 < lVar1);
   return;
@@ -752,17 +789,19 @@ void _dynamic_atexit_destructor_for__s_uploadCounters__(void)
 
 // 82940320  `dynamic_atexit_destructor_for_'s_serverCounters''  (line unknown)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void _dynamic_atexit_destructor_for__s_serverCounters__(void)
 
 {
   longlong lVar1;
-  longlong lVar2;
+  bdCounterValue *this;
   
   lVar1 = 0x3f;
-  lVar2 = -0x7bb0e620;
+  this = s_localCounters;
   do {
-    lVar2 = lVar2 + -0x10;
-    bdTaskResult___bdTaskResult(lVar2);
+    this = this + -1;
+    bdTaskResult::~bdTaskResult((bdTaskResult *)this);
     lVar1 = lVar1 + -1;
   } while (-1 < lVar1);
   return;
@@ -771,17 +810,19 @@ void _dynamic_atexit_destructor_for__s_serverCounters__(void)
 
 // 82940370  `dynamic_atexit_destructor_for_'s_localCounters''  (line unknown)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void _dynamic_atexit_destructor_for__s_localCounters__(void)
 
 {
   longlong lVar1;
-  longlong lVar2;
+  bdCounterValue *this;
   
   lVar1 = 0x3f;
-  lVar2 = -0x7bb0e220;
+  this = s_uploadCounters;
   do {
-    lVar2 = lVar2 + -0x10;
-    bdTaskResult___bdTaskResult(lVar2);
+    this = this + -1;
+    bdTaskResult::~bdTaskResult((bdTaskResult *)this);
     lVar1 = lVar1 + -1;
   } while (-1 < lVar1);
   return;
@@ -790,10 +831,12 @@ void _dynamic_atexit_destructor_for__s_localCounters__(void)
 
 // 829403C0  `dynamic_atexit_destructor_for_'overlappedTasks''  (line unknown)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void _dynamic_atexit_destructor_for__overlappedTasks__(void)
 
 {
-  OverlappedTaskSet___OverlappedTaskSet(0xffffffff844f01d8);
+  OverlappedTaskSet::~OverlappedTaskSet(&overlappedTasks);
   return;
 }
 

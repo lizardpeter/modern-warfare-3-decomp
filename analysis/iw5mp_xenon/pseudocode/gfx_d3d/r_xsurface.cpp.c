@@ -2,6 +2,8 @@
 
 // 8278CA88  TRACK_r_xsurface  (gfx_d3d/r_xsurface.cpp:15)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void TRACK_r_xsurface(void)
 
 {
@@ -11,132 +13,153 @@ void TRACK_r_xsurface(void)
 
 // 8278CA90  XSurfaceGetNumVerts  (gfx_d3d/r_xsurface.cpp:21)
 
-undefined2 XSurfaceGetNumVerts(int param_1)
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+int XSurfaceGetNumVerts(XSurface *param_1)
 
 {
-  if (param_1 == 0) {
-    MyAssertHandler(0xffffffff821d4500,0x16,0,0xffffffff82000f98,0xffffffff8213828c);
+  if (param_1 == (XSurface *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_xsurface.cpp",0x16,0
+                    ,"%s");
   }
-  return *(undefined2 *)(param_1 + 2);
+  return (int)(ushort)(param_1->field0_0x0)._padding_;
 }
 
 
 // 8278CAE8  XSurfaceGetNumTris  (gfx_d3d/r_xsurface.cpp:28)
 
-undefined2 XSurfaceGetNumTris(int param_1)
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+int XSurfaceGetNumTris(XSurface *param_1)
 
 {
-  if (param_1 == 0) {
-    MyAssertHandler(0xffffffff821d4500,0x1d,0,0xffffffff82000f98,0xffffffff8213828c);
+  if (param_1 == (XSurface *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_xsurface.cpp",0x1d,0
+                    ,"%s");
   }
-  return *(undefined2 *)(param_1 + 4);
+  return (int)*(ushort *)&(param_1->field0_0x0)._padding_;
 }
 
 
 // 8278CB40  XSurfaceGetModelVertDeclForSurfaceFlags  (gfx_d3d/r_xsurface.cpp:35)
 
-char XSurfaceGetModelVertDeclForSurfaceFlags(uint param_1)
+MaterialVertexDeclType XSurfaceGetModelVertDeclForSurfaceFlags(uint param_1)
 
 {
-  bool bVar1;
+  uint uVar1;
   
   if ((param_1 & 0x20) == 0) {
-    return '\x01';
+    return VERTDECL_PACKED;
   }
-  bVar1 = (param_1 & 0x18) != 0;
+  uVar1 = (param_1 & 0x18) == 0 ^ 1;
   if ((param_1 & 0x40) != 0) {
-    return bVar1 + '\x06';
+    return uVar1 + VERTDECL_QUANTIZED_SKINNED_MODEL;
   }
-  return bVar1 + '\x02';
+  return uVar1 + VERTDECL_QUANTIZED;
 }
 
 
 // 8278CB80  XSurfaceGetModelVertDecl  (gfx_d3d/r_xsurface.cpp:87)
 
-char XSurfaceGetModelVertDecl(int param_1)
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+MaterialVertexDeclType XSurfaceGetModelVertDecl(XSurface *param_1)
 
 {
-  byte bVar1;
-  bool bVar2;
+  uint uVar1;
+  int iVar2;
   
-  bVar1 = *(byte *)(param_1 + 1);
-  if ((bVar1 & 0x20) == 0) {
-    return '\x01';
+  iVar2 = (param_1->field0_0x0)._padding_;
+  if ((iVar2 & 0x200000) == 0) {
+    return VERTDECL_PACKED;
   }
-  bVar2 = (bVar1 & 0x18) != 0;
-  if ((bVar1 & 0x40) != 0) {
-    return bVar2 + '\x06';
+  uVar1 = (iVar2 & 0x180000) == 0 ^ 1;
+  if ((iVar2 & 0x400000) != 0) {
+    return uVar1 + VERTDECL_QUANTIZED_SKINNED_MODEL;
   }
-  return bVar2 + '\x02';
+  return uVar1 + VERTDECL_QUANTIZED;
 }
 
 
 // 8278CBC8  XSurfaceGetModelSkinnedCachedVertDeclForSurfaceFlags  (gfx_d3d/r_xsurface.cpp:93)
 
-char XSurfaceGetModelSkinnedCachedVertDeclForSurfaceFlags(uint param_1)
+MaterialVertexDeclType XSurfaceGetModelSkinnedCachedVertDeclForSurfaceFlags(uint param_1)
 
 {
   if ((param_1 & 0x20) != 0) {
-    return ((param_1 & 0x18) != 0) + '\x04';
+    return ((uint)LZCOUNT(param_1 & 0x18) >> 5 ^ 1) + VERTDECL_QUANTIZED_SKINNED_CACHED_MODEL;
   }
-  return '\x01';
+  return VERTDECL_PACKED;
 }
 
 
 // 8278CBF8  XSurfaceGetModelSkinnedCachedVertDecl  (gfx_d3d/r_xsurface.cpp:127)
 
-char XSurfaceGetModelSkinnedCachedVertDecl(int param_1)
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+MaterialVertexDeclType XSurfaceGetModelSkinnedCachedVertDecl(XSurface *param_1)
 
 {
-  if ((*(byte *)(param_1 + 1) & 0x20) != 0) {
-    return ((*(byte *)(param_1 + 1) & 0x18) != 0) + '\x04';
+  byte bVar1;
+  
+  bVar1 = *(byte *)((int)&(param_1->field0_0x0)._padding_ + 1);
+  if ((bVar1 & 0x20) != 0) {
+    return ((uint)LZCOUNT(bVar1 & 0x18) >> 5 ^ 1) + VERTDECL_QUANTIZED_SKINNED_CACHED_MODEL;
   }
-  return '\x01';
+  return VERTDECL_PACKED;
 }
 
 
 // 8278CC28  XSurfaceGetMaterialNamePrefix  (gfx_d3d/r_xsurface.cpp:133)
 
-void XSurfaceGetMaterialNamePrefix(int param_1,undefined1 *param_2,uint param_3)
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+void XSurfaceGetMaterialNamePrefix(XSurface *param_1,char *param_2,uint param_3)
 
 {
-  byte bVar1;
-  undefined1 uVar2;
+  int iVar1;
+  char cVar2;
   int iVar3;
   
   if (param_3 < 0x10) {
-    MyAssertHandler(0xffffffff821d4500,0x89,0,0xffffffff82000f98,0xffffffff821d4544);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_xsurface.cpp",0x89,0
+                    ,"%s");
   }
-  bVar1 = *(byte *)(param_1 + 1);
+  iVar1 = (param_1->field0_0x0)._padding_;
   iVar3 = 1;
-  *param_2 = 0x6d;
-  if ((bVar1 & 0x20) != 0) {
+  *param_2 = 'm';
+  if ((iVar1 & 0x200000) != 0) {
     iVar3 = 2;
-    param_2[1] = 0x71;
+    param_2[1] = 'q';
   }
-  if ((bVar1 & 0x18) == 0) {
-    uVar2 = 99;
+  if ((iVar1 & 0x180000) == 0) {
+    cVar2 = 'c';
   }
   else {
-    if ((bVar1 & 8) == 0) goto LAB_8278ccc4;
-    uVar2 = 0x67;
+    if ((iVar1 & 0x80000) == 0) goto LAB_8278ccc4;
+    cVar2 = 'g';
   }
-  param_2[iVar3] = uVar2;
+  param_2[iVar3] = cVar2;
   iVar3 = iVar3 + 1;
 LAB_8278ccc4:
-  param_2[iVar3] = 0x2f;
-  param_2[iVar3 + 1] = 0;
+  param_2[iVar3] = '/';
+  param_2[iVar3 + 1] = '\0';
   return;
 }
 
 
 // 8278CCF0  XSurfaceGetVert0Size  (gfx_d3d/r_xsurface.cpp:164)
 
-longlong XSurfaceGetVert0Size(int param_1)
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+int XSurfaceGetVert0Size(XSurface *param_1)
 
 {
-  if ((*(byte *)(param_1 + 1) & 0x20) != 0) {
-    return (-(ulonglong)((*(byte *)(param_1 + 1) & 0x18) != 0) & 0xfffffffc) + 0x18;
+  int iVar1;
+  
+  iVar1 = (param_1->field0_0x0)._padding_;
+  if ((iVar1 & 0x200000) != 0) {
+    return (-(uint)((iVar1 & 0x180000) != 0) & 0xfffffffc) + 0x18;
   }
   return 0x20;
 }

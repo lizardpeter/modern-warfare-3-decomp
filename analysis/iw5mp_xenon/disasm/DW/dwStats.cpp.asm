@@ -866,7 +866,7 @@ LAB_826ee61c:
   826EE630  382100B0             addi r1,r1,0xb0
   826EE634  482280D8             b 0x8291670c
 
-; 826ED958  NamedStatsResult::NamedStatsResult  (DW/dwStats.cpp:457)
+; 826ED958  NamedStatsResult  (DW/dwStats.cpp:457)
   826ED958  7D8802A6             mfspr r12,LR
   826ED95C  9181FFF8             stw r12,-0x8(r1)
   826ED960  FBE1FFF0             std r31,-0x10(r1)
@@ -887,13 +887,13 @@ LAB_826ee61c:
   826ED99C  EBE1FFF0             ld r31,-0x10(r1)
   826ED9A0  4E800020             blr
 
-; 826ED9A8  NamedStatsResult::~NamedStatsResult  (DW/dwStats.cpp:461)
+; 826ED9A8  ~NamedStatsResult  (DW/dwStats.cpp:461)
   826ED9A8  3D60821B             lis r11,-0x7de5
   826ED9AC  394BC928             subi r10,r11,0x36d8
   826ED9B0  91430000             stw r10,0x0(r3)
   826ED9B4  4820F5E4             b 0x828fcf98
 
-; 826ED9B8  NamedStatsResult::serialize  (DW/dwStats.cpp:465)
+; 826ED9B8  serialize  (DW/dwStats.cpp:465)
   826ED9B8  7D8802A6             mfspr r12,LR
   826ED9BC  9181FFF8             stw r12,-0x8(r1)
   826ED9C0  FBC1FFE8             std r30,-0x18(r1)
@@ -917,7 +917,7 @@ LAB_826ee61c:
   826EDA08  EBE1FFF0             ld r31,-0x10(r1)
   826EDA0C  4E800020             blr
 
-; 826EE638  NamedStatsResult::deserialize  (DW/dwStats.cpp:472)
+; 826EE638  deserialize  (DW/dwStats.cpp:472)
   826EE638  7D8802A6             mfspr r12,LR
   826EE63C  9181FFF8             stw r12,-0x8(r1)
   826EE640  FBC1FFE8             std r30,-0x18(r1)
@@ -964,7 +964,7 @@ LAB_826ee6b8:
   826EE6D4  EBE1FFF0             ld r31,-0x10(r1)
   826EE6D8  4E800020             blr
 
-; 826EDA10  NamedStatsResult::sizeOf  (DW/dwStats.cpp:480)
+; 826EDA10  sizeOf  (DW/dwStats.cpp:480)
   826EDA10  38600020             li r3,0x20
   826EDA14  4E800020             blr
 
@@ -1256,7 +1256,7 @@ LAB_826eeae0:
   826EEAF4  382100B0             addi r1,r1,0xb0
   826EEAF8  48227C14             b 0x8291670c
 
-; 826EEB00  NamedStatsResult::`scalar_deleting_destructor'  (line unknown)
+; 826EEB00  `scalar_deleting_destructor'  (line unknown)
   826EEB00  7D8802A6             mfspr r12,LR
   826EEB04  9181FFF8             stw r12,-0x8(r1)
   826EEB08  FBC1FFE8             std r30,-0x18(r1)

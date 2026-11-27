@@ -2,7 +2,7 @@
 
 // 824CFAF8  CM_CalcTraceExtents  (qcommon/cm_tracebox.cpp:11)
 
-void CM_CalcTraceExtents(float *param_1)
+void CM_CalcTraceExtents(TraceExtents *param_1)
 
 {
   float fVar1;
@@ -11,111 +11,149 @@ void CM_CalcTraceExtents(float *param_1)
   float fVar4;
   float fVar5;
   
-  fVar2 = param_1[0x14] - param_1[0x10];
+  fVar2 = param_1->end[0] - param_1->start[0];
+  fVar5 = param_1->end[1] - param_1->start[1];
+  fVar4 = param_1->end[2] - param_1->start[2];
   fVar1 = 0.0;
-  *param_1 = (param_1[0x10] + param_1[0x14]) * 0.5;
+  param_1->midPoint[0] = (param_1->start[0] + param_1->end[0]) * 0.5;
   fVar3 = fVar2 * 0.5;
-  param_1[1] = (param_1[0x15] + param_1[0x11]) * 0.5;
+  param_1->midPoint[1] = (param_1->end[1] + param_1->start[1]) * 0.5;
   fVar2 = ABS(fVar2);
-  param_1[2] = (param_1[0x12] + param_1[0x16]) * 0.5;
-  param_1[4] = fVar3;
-  param_1[5] = (param_1[0x15] - param_1[0x11]) * 0.5;
-  param_1[6] = (param_1[0x16] - param_1[0x12]) * 0.5;
-  param_1[8] = ABS(fVar3);
-  fVar4 = ABS(param_1[0x15] - param_1[0x11]);
-  fVar3 = ABS(param_1[0x16] - param_1[0x12]);
-  param_1[9] = ABS(param_1[5]);
-  param_1[10] = ABS(param_1[6]);
-  fVar5 = fVar1;
+  param_1->midPoint[2] = (param_1->start[2] + param_1->end[2]) * 0.5;
+  param_1->halfDelta[0] = fVar3;
+  param_1->halfDelta[1] = fVar5 * 0.5;
+  param_1->halfDelta[2] = fVar4 * 0.5;
+  param_1->halfDeltaAbs[0] = ABS(fVar3);
+  fVar5 = ABS(fVar5);
+  fVar4 = ABS(fVar4);
+  param_1->halfDeltaAbs[1] = ABS(param_1->halfDelta[1]);
+  param_1->halfDeltaAbs[2] = ABS(param_1->halfDelta[2]);
+  fVar3 = fVar1;
   if (1e-06 <= fVar2) {
-    fVar5 = 1.0 / fVar2;
+    fVar3 = 1.0 / fVar2;
   }
-  param_1[0xc] = fVar5;
+  param_1->invDeltaAbs[0] = fVar3;
   fVar2 = fVar1;
+  if (1e-06 <= fVar5) {
+    fVar2 = 1.0 / fVar5;
+  }
+  param_1->invDeltaAbs[1] = fVar2;
   if (1e-06 <= fVar4) {
-    fVar2 = 1.0 / fVar4;
+    fVar1 = 1.0 / fVar4;
   }
-  param_1[0xd] = fVar2;
-  if (1e-06 <= fVar3) {
-    fVar1 = 1.0 / fVar3;
-  }
-  param_1[0xe] = fVar1;
-  param_1[3] = 0.0;
-  param_1[7] = 0.0;
-  param_1[0xb] = 0.0;
-  param_1[0x13] = 0.0;
-  param_1[0x17] = 0.0;
+  param_1->invDeltaAbs[2] = fVar1;
+  param_1->midPointPad = 0.0;
+  param_1->halfDeltaPad = 0.0;
+  param_1->halfDeltaAbsPad = 0.0;
+  param_1->startPad = 0.0;
+  param_1->endPad = 0.0;
   return;
 }
 
 
 // 824CFC28  CM_TraceBox_Float4  (qcommon/cm_tracebox.cpp:43)
 
-/* WARNING: Control flow encountered bad instruction data */
-
-void CM_TraceBox_Float4(void)
+int CM_TraceBox_Float4(TraceExtents *param_1,Bounds *param_2,float param_3)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs36 [16];
+  longlong lVar1;
+  byte in_cr6;
+  undefined1 auVar2 [16];
+  undefined1 auVar3 [16];
+  undefined1 auVar4 [16];
+  undefined1 auVar5 [16];
+  undefined1 auVar6 [16];
+  undefined1 auVar7 [16];
+  undefined1 auVar8 [16];
+  undefined1 auVar9 [16];
+  undefined1 auVar10 [16];
+  undefined1 auVar11 [16];
   
-  altv300_21(in_vs32,in_vs36);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  lVar1 = (longlong)(int)param_2;
+  auVar11 = loadVectorLeftIndexed(lVar1);
+  auVar10 = vectorSplatImmediateSignedWord(0xff);
+  auVar9 = loadVectorLeftIndexed(ZEXT48(&stack0x00000000) + 0x24);
+  auVar3 = vectorSplatWord(auVar9,0);
+  auVar9 = *(undefined1 (*) [16])((uint)param_1->halfDelta & 0xfffffff0);
+  auVar2 = vectorMultiplyAddFloatingPoint
+                     (auVar3,auVar9,*(undefined1 (*) [16])((uint)param_1->start & 0xfffffff0));
+  auVar8 = loadVectorRightIndexed(lVar1 + 0x10);
+  auVar6 = loadVectorLeftIndexed(lVar1 + 0xc);
+  auVar5 = loadVectorRightIndexed(lVar1 + 0x1c);
+  auVar7 = vectorShiftLeftWord128(auVar10,auVar10);
+  auVar4 = *(undefined1 (*) [16])((uint)param_1->halfDeltaAbs & 0xfffffff0);
+  auVar5 = (auVar6 | auVar5) & (undefined1  [16])g_keepXYZ.field0_0x0;
+  auVar3 = vectorMultiplyAddFloatingPoint(auVar3,auVar4,auVar5);
+  auVar2 = vectorSubtractFloatingPoint128
+                     (auVar2,(auVar11 | auVar8) & (undefined1  [16])g_keepXYZ.field0_0x0);
+  vectorCompareGreaterThanFloatingPoint128(auVar2 & ~auVar7,auVar3);
+  if (!(bool)(in_cr6 >> 1 & 1)) {
+    return 1;
+  }
+  auVar10 = vectorShiftLeftWord128(auVar10,auVar10);
+  auVar8 = vectorPermute128(auVar9,auVar9,(undefined1  [16])g_YZXW.field0_0x0);
+  auVar6 = vectorPermute128(auVar9,auVar9,(undefined1  [16])g_ZXYW.field0_0x0);
+  auVar9 = vectorPermute128(auVar2,auVar2,(undefined1  [16])g_YZXW.field0_0x0);
+  auVar3 = vectorPermute128(auVar2,auVar2,(undefined1  [16])g_ZXYW.field0_0x0);
+  auVar7 = vectorPermute128(auVar4,auVar4,(undefined1  [16])g_YZXW.field0_0x0);
+  auVar2 = vectorPermute128(auVar5,auVar5,(undefined1  [16])g_ZXYW.field0_0x0);
+  auVar6 = vectorMultiplyFloatingPoint(auVar6,auVar9);
+  auVar9 = vectorPermute(auVar4,auVar4,(undefined1  [16])g_ZXYW.field0_0x0);
+  auVar4 = vectorMultiplyFloatingPoint(auVar8,auVar3);
+  auVar3 = vectorPermute(auVar5,auVar5,(undefined1  [16])g_YZXW.field0_0x0);
+  auVar2 = vectorMultiplyFloatingPoint(auVar2,auVar7);
+  auVar5 = vectorSubtractFloatingPoint128(auVar4,auVar6);
+  auVar9 = vectorMultiplyAddFloatingPoint(auVar3,auVar9,auVar2);
+  vectorCompareGreaterThanFloatingPoint128(auVar5 & ~auVar10,auVar9);
+  return ~((uint)in_cr6 << 4) >> 5 & 1;
 }
 
 
 // 824CFAF0  __lvx  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/vectorintrinsics.h:98)
 
-/* WARNING: Control flow encountered bad instruction data */
-
-void __lvx(void)
+__vector4 * __lvx(__vector4 *__return_storage_ptr__,void *param_1,int param_2)
 
 {
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  return __return_storage_ptr__;
 }
 
 
 // 824CFD10  CM_TraceBox_NoFloat4  (qcommon/cm_tracebox.cpp:101)
 
-undefined8 CM_TraceBox_NoFloat4(double param_1,int param_2,float *param_3)
+int CM_TraceBox_NoFloat4(TraceExtents *param_1,Bounds *param_2,float param_3)
 
 {
-  double dVar1;
-  double dVar2;
-  double dVar3;
-  double dVar4;
-  double dVar5;
-  double dVar6;
-  double dVar7;
-  double dVar8;
-  double dVar9;
-  double dVar10;
-  double dVar11;
-  double dVar12;
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  float fVar5;
+  float fVar6;
+  float fVar7;
+  float fVar8;
+  float fVar9;
+  float fVar10;
+  float fVar11;
+  float fVar12;
   
-  dVar5 = (double)*(float *)(param_2 + 0x10);
-  dVar4 = (double)*(float *)(param_2 + 0x20);
-  dVar3 = (double)param_3[3];
-  dVar2 = (double)((float)(dVar5 * param_1 + (double)*(float *)(param_2 + 0x40)) - *param_3);
-  if (ABS(dVar2) <= (double)(float)(dVar4 * param_1 + dVar3)) {
-    dVar9 = (double)*(float *)(param_2 + 0x14);
-    dVar8 = (double)*(float *)(param_2 + 0x24);
-    dVar7 = (double)param_3[4];
-    dVar6 = (double)((float)(dVar9 * param_1 + (double)*(float *)(param_2 + 0x44)) - param_3[1]);
-    if (ABS(dVar6) <= (double)(float)(dVar8 * param_1 + dVar7)) {
-      dVar1 = (double)*(float *)(param_2 + 0x18);
-      dVar12 = (double)*(float *)(param_2 + 0x28);
-      dVar11 = (double)param_3[5];
-      dVar10 = (double)((float)(dVar1 * param_1 + (double)*(float *)(param_2 + 0x48)) - param_3[2]);
-      if (((ABS(dVar10) <= (double)(float)(dVar12 * param_1 + dVar11)) &&
-          (ABS((float)(dVar9 * dVar10 - (double)(float)(dVar1 * dVar6))) <=
-           (float)(dVar12 * dVar7 + (double)(float)(dVar11 * dVar8)))) &&
-         (ABS((float)(dVar1 * dVar2 - (double)(float)(dVar5 * dVar10))) <=
-          (float)(dVar12 * dVar3 + (double)(float)(dVar11 * dVar4)))) {
-        if ((float)(dVar8 * dVar3 + (double)(float)(dVar7 * dVar4)) <
-            ABS((float)(dVar5 * dVar6 - (double)(float)(dVar9 * dVar2)))) {
+  fVar1 = param_1->halfDelta[0];
+  fVar2 = param_1->halfDeltaAbs[0];
+  fVar3 = param_2->halfSize[0];
+  fVar10 = (fVar1 * param_3 + param_1->start[0]) - param_2->midPoint[0];
+  if (ABS(fVar10) <= fVar2 * param_3 + fVar3) {
+    fVar4 = param_1->halfDelta[1];
+    fVar5 = param_1->halfDeltaAbs[1];
+    fVar6 = param_2->halfSize[1];
+    fVar11 = (fVar4 * param_3 + param_1->start[1]) - param_2->midPoint[1];
+    if (ABS(fVar11) <= fVar5 * param_3 + fVar6) {
+      fVar7 = param_1->halfDelta[2];
+      fVar8 = param_1->halfDeltaAbs[2];
+      fVar9 = param_2->halfSize[2];
+      fVar12 = (fVar7 * param_3 + param_1->start[2]) - param_2->midPoint[2];
+      if (((ABS(fVar12) <= fVar8 * param_3 + fVar9) &&
+          (ABS(fVar4 * fVar12 - fVar7 * fVar11) <= fVar8 * fVar6 + fVar9 * fVar5)) &&
+         (ABS(fVar7 * fVar10 - fVar1 * fVar12) <= fVar8 * fVar3 + fVar9 * fVar2)) {
+        if (fVar5 * fVar3 + fVar6 * fVar2 < ABS(fVar1 * fVar11 - fVar4 * fVar10)) {
           return 1;
         }
         return 0;
@@ -126,9 +164,69 @@ undefined8 CM_TraceBox_NoFloat4(double param_1,int param_2,float *param_3)
 }
 
 
+// 824CFE00  CM_TraceBox  (qcommon/cm_tracebox.cpp:129)
+
+/* int __cdecl CM_TraceBox(struct TraceExtents const *,struct Bounds const *,float) */
+
+int CM_TraceBox(TraceExtents *param_1,Bounds *param_2,float param_3)
+
+{
+  longlong lVar1;
+  byte in_cr6;
+  undefined1 auVar2 [16];
+  undefined1 auVar3 [16];
+  undefined1 auVar4 [16];
+  undefined1 auVar5 [16];
+  undefined1 auVar6 [16];
+  undefined1 auVar7 [16];
+  undefined1 auVar8 [16];
+  undefined1 auVar9 [16];
+  undefined1 auVar10 [16];
+  undefined1 auVar11 [16];
+  
+  lVar1 = (longlong)(int)param_2;
+  auVar11 = loadVectorLeftIndexed(lVar1);
+  auVar10 = vectorSplatImmediateSignedWord(0xff);
+  auVar9 = loadVectorLeftIndexed(ZEXT48(&stack0x00000000) + 0x24);
+  auVar3 = vectorSplatWord(auVar9,0);
+  auVar9 = *(undefined1 (*) [16])((uint)param_1->halfDelta & 0xfffffff0);
+  auVar2 = vectorMultiplyAddFloatingPoint
+                     (auVar3,auVar9,*(undefined1 (*) [16])((uint)param_1->start & 0xfffffff0));
+  auVar8 = loadVectorRightIndexed(lVar1 + 0x10);
+  auVar6 = loadVectorLeftIndexed(lVar1 + 0xc);
+  auVar5 = loadVectorRightIndexed(lVar1 + 0x1c);
+  auVar7 = vectorShiftLeftWord128(auVar10,auVar10);
+  auVar4 = *(undefined1 (*) [16])((uint)param_1->halfDeltaAbs & 0xfffffff0);
+  auVar5 = (auVar6 | auVar5) & (undefined1  [16])g_keepXYZ.field0_0x0;
+  auVar3 = vectorMultiplyAddFloatingPoint(auVar3,auVar4,auVar5);
+  auVar2 = vectorSubtractFloatingPoint128
+                     (auVar2,(auVar11 | auVar8) & (undefined1  [16])g_keepXYZ.field0_0x0);
+  vectorCompareGreaterThanFloatingPoint128(auVar2 & ~auVar7,auVar3);
+  if (!(bool)(in_cr6 >> 1 & 1)) {
+    return 1;
+  }
+  auVar10 = vectorShiftLeftWord128(auVar10,auVar10);
+  auVar8 = vectorPermute128(auVar9,auVar9,(undefined1  [16])g_YZXW.field0_0x0);
+  auVar6 = vectorPermute128(auVar9,auVar9,(undefined1  [16])g_ZXYW.field0_0x0);
+  auVar9 = vectorPermute128(auVar2,auVar2,(undefined1  [16])g_YZXW.field0_0x0);
+  auVar3 = vectorPermute128(auVar2,auVar2,(undefined1  [16])g_ZXYW.field0_0x0);
+  auVar7 = vectorPermute128(auVar4,auVar4,(undefined1  [16])g_YZXW.field0_0x0);
+  auVar2 = vectorPermute128(auVar5,auVar5,(undefined1  [16])g_ZXYW.field0_0x0);
+  auVar6 = vectorMultiplyFloatingPoint(auVar6,auVar9);
+  auVar9 = vectorPermute(auVar4,auVar4,(undefined1  [16])g_ZXYW.field0_0x0);
+  auVar4 = vectorMultiplyFloatingPoint(auVar8,auVar3);
+  auVar3 = vectorPermute(auVar5,auVar5,(undefined1  [16])g_YZXW.field0_0x0);
+  auVar2 = vectorMultiplyFloatingPoint(auVar2,auVar7);
+  auVar5 = vectorSubtractFloatingPoint128(auVar4,auVar6);
+  auVar9 = vectorMultiplyAddFloatingPoint(auVar3,auVar9,auVar2);
+  vectorCompareGreaterThanFloatingPoint128(auVar5 & ~auVar10,auVar9);
+  return ~((uint)in_cr6 << 4) >> 5 & 1;
+}
+
+
 // 824CFE08  CM_TraceSphere  (qcommon/cm_tracebox.cpp:154)
 
-void CM_TraceSphere(undefined8 param_1,double param_2,undefined8 param_3,float *param_4)
+int CM_TraceSphere(TraceExtents *param_1,float *param_2,float param_3,float param_4)
 
 {
   float fVar1;
@@ -145,39 +243,42 @@ void CM_TraceSphere(undefined8 param_1,double param_2,undefined8 param_3,float *
   double dVar11;
   double dVar12;
   double dVar13;
+  double dVar14;
   
-  iVar4 = __savefpr_22();
-  dVar13 = (double)(*(float *)(iVar4 + 0x54) - *(float *)(iVar4 + 0x44));
-  dVar12 = (double)(*(float *)(iVar4 + 0x58) - *(float *)(iVar4 + 0x48));
-  dVar11 = (double)(*(float *)(iVar4 + 0x50) - *(float *)(iVar4 + 0x40));
-  dVar9 = (double)(*param_4 - *(float *)(iVar4 + 0x40));
-  dVar8 = (double)(param_4[1] - *(float *)(iVar4 + 0x44));
-  dVar10 = 0.0;
-  dVar7 = (double)(param_4[2] - *(float *)(iVar4 + 0x48));
-  dVar5 = (double)(float)(dVar11 * dVar11 +
-                         (double)(float)(dVar12 * dVar12 + (double)(float)(dVar13 * dVar13)));
-  dVar6 = 1.0;
-  if (-dVar5 < 0.0) {
-    dVar6 = dVar5;
-  }
-  dVar5 = extraout_f1;
-  if (dVar6 == 0.0) {
-    MyAssertHandler(0xffffffff82082df0,0xa6,0,0xffffffff82000f98,0xffffffff82082e34);
-  }
-  dVar6 = (double)(float)((double)(float)(dVar12 * dVar7 +
-                                         (double)(float)(dVar11 * dVar9 +
-                                                        (double)(float)(dVar13 * dVar8))) / dVar6);
-  if ((float)(dVar6 - param_2) < 0.0) {
-    param_2 = dVar6;
-  }
+  dVar5 = (double)param_4;
+  iVar4 = __savefpr_22((double)param_3,param_1);
+  dVar14 = (double)(*(float *)(iVar4 + 0x54) - *(float *)(iVar4 + 0x44));
+  dVar13 = (double)(*(float *)(iVar4 + 0x58) - *(float *)(iVar4 + 0x48));
+  dVar12 = (double)(*(float *)(iVar4 + 0x50) - *(float *)(iVar4 + 0x40));
+  dVar10 = (double)(*param_2 - *(float *)(iVar4 + 0x40));
+  dVar9 = (double)(param_2[1] - *(float *)(iVar4 + 0x44));
+  dVar11 = 0.0;
+  dVar8 = (double)(param_2[2] - *(float *)(iVar4 + 0x48));
+  dVar6 = (double)(float)(dVar12 * dVar12 +
+                         (double)(float)(dVar13 * dVar13 + (double)(float)(dVar14 * dVar14)));
+  dVar7 = 1.0;
   if (-dVar6 < 0.0) {
-    dVar10 = param_2;
+    dVar7 = dVar6;
   }
-  dVar10 = -dVar10;
-  fVar1 = (float)(dVar13 * dVar10 + dVar8);
-  fVar2 = (float)(dVar12 * dVar10 + dVar7);
-  fVar3 = (float)(dVar10 * dVar11 + dVar9);
-  __restfpr_22((float)(dVar5 * dVar5) <= fVar3 * fVar3 + fVar2 * fVar2 + fVar1 * fVar1);
-  return;
+  dVar6 = extraout_f1;
+  if (dVar7 == 0.0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_tracebox.cpp",0xa6,
+                    0,"%s");
+  }
+  dVar7 = (double)(float)((double)(float)(dVar13 * dVar8 +
+                                         (double)(float)(dVar12 * dVar10 +
+                                                        (double)(float)(dVar14 * dVar9))) / dVar7);
+  if ((float)(dVar7 - dVar5) < 0.0) {
+    dVar5 = dVar7;
+  }
+  if (-dVar7 < 0.0) {
+    dVar11 = dVar5;
+  }
+  dVar11 = -dVar11;
+  fVar1 = (float)(dVar14 * dVar11 + dVar9);
+  fVar2 = (float)(dVar13 * dVar11 + dVar8);
+  fVar3 = (float)(dVar11 * dVar12 + dVar10);
+  iVar4 = __restfpr_22((float)(dVar6 * dVar6) <= fVar3 * fVar3 + fVar2 * fVar2 + fVar1 * fVar1);
+  return iVar4;
 }
 

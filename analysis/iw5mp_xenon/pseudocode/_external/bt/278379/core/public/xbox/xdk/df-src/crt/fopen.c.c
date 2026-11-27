@@ -2,57 +2,57 @@
 
 // 82919BA8  _fsopen  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/fopen.c:50)
 
-FILE * _fsopen(char *_Filename,char *_Mode,int _ShFlag)
+_iobuf * _fsopen(char *param_1,char *param_2,int param_3)
 
 {
-  char *_Filename_00;
-  int *piVar1;
-  FILE *pFVar2;
-  longlong lVar3;
+  char *pcVar1;
+  int *piVar2;
+  _iobuf *p_Var3;
+  longlong lVar4;
   
-  lVar3 = (longlong)(int)_Mode;
-  _Filename_00 = (char *)__savegprlr_26(_Filename);
-  if (_Filename_00 != (char *)0x0) {
-    if (lVar3 != lVar3 + -1 + (ulonglong)(lVar3 == 0)) {
-      if (*(char *)lVar3 != '\0') {
-        pFVar2 = _getstream();
-        if (pFVar2 == (FILE *)0x0) {
-          piVar1 = _errno();
-          pFVar2 = (FILE *)0x0;
-          *piVar1 = 0x18;
+  lVar4 = (longlong)(int)param_2;
+  pcVar1 = (char *)__savegprlr_26(param_1);
+  if (pcVar1 != (char *)0x0) {
+    if (lVar4 != lVar4 + -1 + (ulonglong)(lVar4 == 0)) {
+      if (*(char *)lVar4 != '\0') {
+        p_Var3 = _getstream();
+        if (p_Var3 == (_iobuf *)0x0) {
+          piVar2 = _errno();
+          p_Var3 = (_iobuf *)0x0;
+          *piVar2 = 0x18;
         }
-        else if (*_Filename_00 == '\0') {
-          piVar1 = _errno();
-          *piVar1 = 0x16;
-          __jump_unwind(&stack0x00000000,0xffffffff82919ca0);
-          pFVar2 = (FILE *)0x0;
+        else if (*pcVar1 == '\0') {
+          piVar2 = _errno();
+          *piVar2 = 0x16;
+          __jump_unwind();
+          p_Var3 = (_iobuf *)0x0;
         }
         else {
-          pFVar2 = _openfile(_Filename_00,(char *)lVar3,_ShFlag,pFVar2);
+          p_Var3 = _openfile(pcVar1,(char *)lVar4,param_3,p_Var3);
           FUN_82919ccc();
         }
         goto LAB_82919ca4;
       }
     }
   }
-  piVar1 = _errno();
-  *piVar1 = 0x16;
+  piVar2 = _errno();
+  *piVar2 = 0x16;
   _invalid_parameter_noinfo();
-  pFVar2 = (FILE *)0x0;
+  p_Var3 = (_iobuf *)0x0;
 LAB_82919ca4:
-  pFVar2 = (FILE *)__restgprlr_26(pFVar2);
-  return pFVar2;
+  p_Var3 = (_iobuf *)__restgprlr_26(p_Var3);
+  return p_Var3;
 }
 
 
 // 82919D08  fopen  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/fopen.c:124)
 
-FILE * fopen(char *_Filename,char *_Mode)
+_iobuf * fopen(char *param_1,char *param_2)
 
 {
-  FILE *pFVar1;
+  _iobuf *p_Var1;
   
-  pFVar1 = _fsopen(_Filename,_Mode,0x40);
-  return pFVar1;
+  p_Var1 = _fsopen(param_1,param_2,0x40);
+  return p_Var1;
 }
 

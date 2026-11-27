@@ -2,31 +2,31 @@
 
 // 828C7E28  QuanGainSC3  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/codegain.c:85)
 
-longlong QuanGainSC3(double param_1)
+int QuanGainSC3(float param_1)
 
 {
   float fVar1;
   float fVar2;
-  longlong lVar3;
+  int iVar3;
   float *pfVar4;
-  longlong lVar5;
+  int iVar5;
   longlong lVar6;
   
-  lVar3 = 0;
-  lVar5 = 1;
-  pfVar4 = (float *)&DAT_822040c4;
+  iVar3 = 0;
+  iVar5 = 1;
+  pfVar4 = GainCodeBook;
   lVar6 = 0x3f;
-  fVar1 = (float)(param_1 - -2.678464889526367) * (float)(param_1 - -2.678464889526367);
+  fVar1 = (param_1 - -2.678465) * (param_1 - -2.678465);
   do {
-    fVar2 = (float)(param_1 - (double)*pfVar4) * (float)(param_1 - (double)*pfVar4);
-    if (fVar2 < fVar1) {
-      lVar3 = lVar5;
-      fVar1 = fVar2;
-    }
-    lVar5 = lVar5 + 1;
     pfVar4 = pfVar4 + 1;
+    fVar2 = (param_1 - *pfVar4) * (param_1 - *pfVar4);
+    if (fVar2 < fVar1) {
+      fVar1 = fVar2;
+      iVar3 = iVar5;
+    }
+    iVar5 = iVar5 + 1;
     lVar6 = lVar6 + -1;
   } while (lVar6 != 0);
-  return lVar3;
+  return iVar3;
 }
 

@@ -1360,25 +1360,25 @@ LAB_8258c3a0:
   8258C3BC  7C0903A6             mtspr CTR,r0
 switchD:
   8258C3C0  4E800420             bctr
-caseD_0:
+caseD_b4:
   8258C3F4  386000A5             li r3,0xa5
   8258C3F8  4800028C             b 0x8258c684
-caseD_4:
+caseD_b8:
   8258C3FC  386000A8             li r3,0xa8
   8258C400  48000284             b 0x8258c684
-caseD_6:
+caseD_ba:
   8258C404  386000AA             li r3,0xaa
   8258C408  4800027C             b 0x8258c684
-caseD_8:
+caseD_bc:
   8258C40C  386000A3             li r3,0xa3
   8258C410  48000274             b 0x8258c684
-caseD_a:
+caseD_be:
   8258C414  386000BD             li r3,0xbd
   8258C418  4800026C             b 0x8258c684
-caseD_b:
+caseD_bf:
   8258C41C  386000AF             li r3,0xaf
   8258C420  48000264             b 0x8258c684
-caseD_1:
+caseD_b5:
   8258C424  2B0300E0             cmplwi cr6,r3,0xe0
   8258C428  4198025C             blt cr6,0x8258c684
   8258C42C  2B0300FF             cmplwi cr6,r3,0xff

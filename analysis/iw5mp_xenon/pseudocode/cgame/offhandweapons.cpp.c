@@ -2,696 +2,194 @@
 
 // 82328B00  CG_OffhandRegisterDvars  (cgame/offhandweapons.cpp:40)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void CG_OffhandRegisterDvars(void)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
+  ushort in_r4;
+  char *in_r5;
+  double dVar1;
+  double dVar2;
   
-  uVar2 = 0x403e000000000000;
-  uVar1 = 0;
-  DAT_82a77208 = Dvar_RegisterFloat(0x4000000000000000,0,0x403e000000000000,0xffffffff8202bfa0);
-  DAT_82a77200 = Dvar_RegisterFloat(0x3fe0000000000000,uVar1,uVar2,0xffffffff8202bf20);
+  dVar2 = 30.0;
+  dVar1 = 0.0;
+  DAT_82a77208 = Dvar_RegisterFloat("hud_flash_time_offhand",2.0,0.0,30.0,in_r4,in_r5);
+  hud_flash_period_offhand =
+       Dvar_RegisterFloat("hud_flash_period_offhand",0.5,(float)dVar1,(float)dVar2,0,
+                          IMAGE_DOS_HEADER_82000000.e_magic);
   return;
 }
 
 
 // 82328BA8  GetBestOffhand  (cgame/offhandweapons.cpp:50)
 
-void GetBestOffhand(undefined8 param_1,undefined8 param_2)
+/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
+
+Weapon GetBestOffhand(playerState_s *param_1,int param_2)
 
 {
-  char cVar1;
+  Weapon WVar1;
   
-  cVar1 = BG_GetFirstAvailableOffhand();
-  if (cVar1 == '\0') {
-    BG_GetFirstEquippedOffhand(param_1,param_2);
+  WVar1 = BG_GetFirstAvailableOffhand(param_1,param_2);
+  if (((ulonglong)WVar1 & 0xff) == 0) {
+    WVar1 = BG_GetFirstEquippedOffhand(param_1,param_2);
   }
-  return;
+  return WVar1;
 }
 
 
 // 82328BF8  IsOffHandDisplayVisible  (cgame/offhandweapons.cpp:65)
-
-ulonglong IsOffHandDisplayVisible(int param_1)
-
-{
-  if ((*(int *)(param_1 + 4) < 8) && ((*(uint *)(param_1 + 0x374) & 0x80) == 0)) {
-    return (~(ulonglong)*(uint *)(param_1 + 0xf8) & 0xffffffff) >> 0x15 & 1;
-  }
-  return 0;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 82328C30  CG_DrawOffHandIcon  (cgame/offhandweapons.cpp:96)
-
-void CG_DrawOffHandIcon(undefined8 param_1,ulonglong param_2,undefined8 param_3,ulonglong param_4,
-                       undefined8 param_5,undefined8 param_6,undefined8 param_7)
-
-{
-  float *pfVar1;
-  undefined8 uVar2;
-  int iVar3;
-  char cVar5;
-  uint uVar4;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  int iVar8;
-  double dVar9;
-  double dVar10;
-  double dVar11;
-  double dVar12;
-  
-  __savegprlr_23();
-  uVar2 = __savefpr_28();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8202c000,0x68,0,0xffffffff82000f98,0xffffffff8200fd5c);
-  }
-  if ((param_4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8202c000,0x69,0,0xffffffff82000f98,0xffffffff8200240c);
-  }
-  uVar7 = 0;
-  iVar3 = CG_GetLocalClientGlobals(uVar2);
-  if (*(int *)(iVar3 + 4) < 8) {
-    if ((*(uint *)(iVar3 + 0x374) & 0x80) == 0) {
-      uVar6 = (~(ulonglong)*(uint *)(iVar3 + 0xf8) & 0xffffffff) >> 0x15 & 1;
-    }
-    else {
-      uVar6 = 0;
-    }
-  }
-  else {
-    uVar6 = 0;
-  }
-  if ((uVar6 == 0) || (*(float *)((int)param_4 + 0xc) == 0.0)) goto LAB_82328e80;
-  if ((int)param_7 == 0) {
-    iVar8 = (int)param_6;
-    if (iVar8 == 0) goto LAB_82328e80;
-    if (iVar8 < 1) {
-      MyAssertHandler(0xffffffff8202c000,0x83,0,0xffffffff82000f98,0xffffffff8202bfdc);
-    }
-    if (5 < iVar8) {
-      MyAssertHandler(0xffffffff8202c000,0x84,0,0xffffffff82000f98,0xffffffff8202bfb8);
-    }
-    cVar5 = GetBestOffhand(iVar3,param_6);
-    if (cVar5 == '\0') goto LAB_82328e80;
-    uVar4 = *(uint *)(iVar3 + 0x79420);
-    if (((uVar4 & 0xff) != 0) &&
-       (uVar4 = BG_GetAlternateWeapon(uVar4,0),
-       *(int *)((&DAT_829d84a0)[uVar4 & 0xff] + 0x40) == iVar8)) {
-      uVar7 = (ulonglong)*(uint *)(iVar3 + 0x79420);
-    }
-    if ((uVar7 & 0xff) == 0) {
-      uVar7 = GetBestOffhand(iVar3,param_6);
-    }
-    if ((uVar7 & 0xff) == 0) goto LAB_82328e80;
-    BG_GetAlternateWeapon(uVar7,0);
-  }
-  else {
-    iVar3 = CG_MaterialHandleForIndex(uVar2,param_7);
-    if (iVar3 == 0) goto LAB_82328e80;
-  }
-  pfVar1 = (float *)param_2;
-  dVar12 = (double)pfVar1[3];
-  dVar11 = (double)pfVar1[2];
-  dVar10 = (double)pfVar1[1];
-  dVar9 = (double)*pfVar1;
-  ScrPlace_GetActivePlacement(uVar2);
-  UI_DrawHandlePic(dVar9,dVar10,dVar11,dVar12);
-LAB_82328e80:
-  __restfpr_28();
-  __restgprlr_23();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 82328E90  OffHandFlash  (cgame/offhandweapons.cpp:163)
-
-void OffHandFlash(undefined8 param_1,ulonglong param_2,ulonglong param_3)
-
-{
-  int iVar1;
-  int iVar2;
-  undefined4 *puVar3;
-  undefined4 *puVar4;
-  int iVar5;
-  double dVar6;
-  
-  iVar2 = __savegprlr_26();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8202c000,0xa8,0,0xffffffff82000f98,0xffffffff8202c080);
-  }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8202c000,0xa9,0,0xffffffff82000f98,0xffffffff8202c074);
-  }
-  if (DAT_82a77208 == 0) {
-    MyAssertHandler(0xffffffff8202c000,0xaa,0,0xffffffff82000f98,0xffffffff8202bfa0);
-  }
-  if (DAT_82a77200 == 0) {
-    MyAssertHandler(0xffffffff8202c000,0xab,0,0xffffffff82000f98,0xffffffff8202bf20);
-  }
-  iVar5 = DAT_82a77200;
-  puVar3 = (undefined4 *)param_2;
-  puVar4 = (undefined4 *)param_3;
-  *puVar4 = *puVar3;
-  puVar4[1] = puVar3[1];
-  iVar1 = DAT_82a77208;
-  puVar4[2] = puVar3[2];
-  puVar4[3] = puVar3[3];
-  dVar6 = (double)((float)(longlong)(*(int *)(iVar2 + 0x6b98c) - *(int *)(iVar2 + 0x7981c)) * 0.001)
-  ;
-  if (dVar6 < (double)*(float *)(iVar1 + 0xc)) {
-    if (*(float *)(iVar5 + 0xc) <= 0.0) {
-      MyAssertHandler(0xffffffff8202c000,0xb2,0,0xffffffff82000f98,0xffffffff8202c044);
-      iVar5 = DAT_82a77200;
-    }
-    dVar6 = cos((double)((float)(dVar6 / (double)*(float *)(iVar5 + 0xc)) * 6.2831855));
-    puVar4[3] = (float)puVar3[3] * ((float)dVar6 + 1.0) * 0.5;
-  }
-  __restgprlr_26();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 82329050  CalcOffHandAmmo  (cgame/offhandweapons.cpp:192)
 
-void CalcOffHandAmmo(undefined8 param_1,int param_2)
+/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+int CalcOffHandAmmo(playerState_s *param_1,int param_2)
 
 {
-  int iVar1;
+  playerState_s *ppVar3;
+  uint uVar4;
+  Weapon WVar1;
   int iVar5;
-  ulonglong uVar2;
-  uint uVar6;
-  longlong lVar3;
-  uint uVar7;
-  longlong lVar4;
-  longlong lVar8;
-  uint *puVar9;
-  ulonglong uVar10;
+  Weapon WVar2;
+  longlong lVar6;
+  longlong lVar7;
+  uint *puVar8;
+  ulonglong uVar9;
   
-  iVar5 = __savegprlr_21();
-  lVar8 = 0;
-  if ((DAT_8337367c == 0) || (*(char *)(DAT_8337367c + 0xc) == '\0')) {
-    puVar9 = (uint *)(iVar5 + 0x274);
-    lVar3 = 0xf;
+  ppVar3 = (playerState_s *)__savegprlr_21(param_1);
+  lVar6 = 0;
+  if ((g_giveAll == (dvar_t *)0x0) || ((g_giveAll->current).enabled == false)) {
+    puVar8 = (uint *)(ppVar3->field0_0x0).weaponsEquipped;
+    lVar7 = 0xf;
     do {
-      uVar6 = *puVar9;
-      if ((uVar6 & 0xff) != 0) {
-        uVar7 = BG_GetAlternateWeapon(uVar6,0);
-        iVar1 = (&DAT_829d84a0)[uVar7 & 0xff];
-        if (iVar1 == 0) {
-          MyAssertHandler(0xffffffff8202c000,0xe3,0,0xffffffff82000f98,0xffffffff8200a88c);
+      WVar1.data = 0;
+      WVar1._4_4_ = *puVar8;
+      if ((*puVar8 & 0xff) != 0) {
+        WVar2 = BG_GetAlternateWeapon(WVar1,false);
+        iVar5 = *(int *)((int)bg_weaponDefs + ((uint)(((ulonglong)WVar2 & 0xffffffff) << 2) & 0x3fc)
+                        );
+        if (iVar5 == 0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\offhandweapons.cpp"
+                          ,0xe3,0,"%s");
         }
-        if (*(int *)(iVar1 + 0x40) == param_2) {
-          lVar4 = BG_GetAmmoInClipForWeapon(iVar5,uVar6,0,0);
-          lVar8 = lVar4 + lVar8;
+        if (*(int *)(iVar5 + 0x40) == param_2) {
+          iVar5 = BG_GetAmmoInClipForWeapon(ppVar3,WVar1,false,WEAPON_HAND_DEFAULT);
+          lVar6 = iVar5 + lVar6;
         }
       }
-      lVar3 = lVar3 + -1;
-      puVar9 = puVar9 + 1;
-    } while (lVar3 != 0);
+      lVar7 = lVar7 + -1;
+      puVar8 = puVar8 + 1;
+    } while (lVar7 != 0);
   }
   else {
-    uVar2 = BG_GetNumWeapons();
-    uVar10 = 1;
-    if (1 < (uVar2 & 0xffffffff)) {
+    uVar4 = BG_GetNumWeapons();
+    uVar9 = 1;
+    if (1 < uVar4) {
       do {
-        uVar6 = BG_GetAlternateWeapon(uVar10 & 0xffffffff000000ff,0);
-        iVar1 = (&DAT_829d84a0)[uVar6 & 0xff];
-        if (iVar1 == 0) {
-          MyAssertHandler(0xffffffff8202c000,0xd3,0,0xffffffff82000f98,0xffffffff8200a88c);
+        WVar1 = BG_GetAlternateWeapon((Weapon)(uVar9 & 0xffffffff000000ff),false);
+        iVar5 = *(int *)((int)bg_weaponDefs + ((uint)(((ulonglong)WVar1 & 0xffffffff) << 2) & 0x3fc)
+                        );
+        if (iVar5 == 0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\offhandweapons.cpp"
+                          ,0xd3,0,"%s");
         }
-        if (*(int *)(iVar1 + 0x40) == param_2) {
-          lVar3 = BG_GetAmmoInClipForWeapon(iVar5,uVar10 & 0xffffffff000000ff,0,0);
-          lVar8 = lVar3 + lVar8;
+        if (*(int *)(iVar5 + 0x40) == param_2) {
+          iVar5 = BG_GetAmmoInClipForWeapon
+                            (ppVar3,(Weapon)(uVar9 & 0xffffffff000000ff),false,WEAPON_HAND_DEFAULT);
+          lVar6 = iVar5 + lVar6;
         }
-        uVar10 = uVar10 + 1;
-      } while ((uVar10 & 0xffffffff) < (uVar2 & 0xffffffff));
-      __restgprlr_21(lVar8);
-      return;
+        uVar9 = uVar9 + 1;
+      } while ((uVar9 & 0xffffffff) < (ulonglong)uVar4);
+      iVar5 = __restgprlr_21(lVar6);
+      return iVar5;
     }
   }
-  __restgprlr_21(lVar8);
-  return;
+  iVar5 = __restgprlr_21(lVar6);
+  return iVar5;
 }
 
 
 // 823291E0  CG_GetOffHandAmmo  (cgame/offhandweapons.cpp:241)
 
-undefined8 CG_GetOffHandAmmo(int param_1,undefined8 param_2)
+/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
+
+int CG_GetOffHandAmmo(playerState_s *param_1,OffhandClass param_2)
 
 {
-  undefined8 uVar1;
-  char cVar2;
+  Weapon WVar1;
+  int iVar2;
   
-  if ((((int)param_2 == *(int *)(param_1 + 0x368)) && (*(int *)(param_1 + 0x538) != 0)) ||
-     (((int)param_2 == *(int *)(param_1 + 0x36c) && (*(int *)(param_1 + 0x53c) != 0)))) {
-    uVar1 = 1;
+  if (((param_2 ==
+        *(OffhandClass *)((int)&(param_1->field0_0x0).throwbackWeapon._s_0.field0_0x0 + 3)) &&
+      (param_1->weaponHudIconOverrides[0] != 0)) ||
+     ((param_2 == *(OffhandClass *)((int)&(param_1->field0_0x0).throwbackWeapon + 7) &&
+      (param_1->weaponHudIconOverrides[1] != 0)))) {
+    iVar2 = 1;
   }
   else {
-    cVar2 = BG_GetFirstAvailableOffhand(param_1,param_2);
-    if (cVar2 == '\0') {
-      cVar2 = BG_GetFirstEquippedOffhand(param_1,param_2);
+    WVar1 = BG_GetFirstAvailableOffhand(param_1,param_2);
+    if (((ulonglong)WVar1 & 0xff) == 0) {
+      WVar1 = BG_GetFirstEquippedOffhand(param_1,param_2);
     }
-    if (cVar2 == '\0') {
-      uVar1 = 0;
+    if (((ulonglong)WVar1 & 0xff) == 0) {
+      iVar2 = 0;
     }
     else {
-      uVar1 = CalcOffHandAmmo(param_1,param_2);
+      iVar2 = CalcOffHandAmmo(param_1,param_2);
     }
   }
-  return uVar1;
+  return iVar2;
 }
 
 
 // 82329290  CG_GetOffHandPrimaryAmmo  (cgame/offhandweapons.cpp:258)
-
-undefined8 CG_GetOffHandPrimaryAmmo(void)
-
-{
-  int iVar1;
-  int iVar3;
-  undefined8 uVar2;
-  ulonglong uVar4;
-  
-  iVar3 = CG_GetLocalClientGlobals();
-  if (*(int *)(iVar3 + 4) < 8) {
-    if ((*(uint *)(iVar3 + 0x374) & 0x80) == 0) {
-      uVar4 = (~(ulonglong)*(uint *)(iVar3 + 0xf8) & 0xffffffff) >> 0x15 & 1;
-    }
-    else {
-      uVar4 = 0;
-    }
-  }
-  else {
-    uVar4 = 0;
-  }
-  if ((uVar4 != 0) && (iVar1 = *(int *)(iVar3 + 0x368), iVar1 != 0)) {
-    if (5 < iVar1) {
-      MyAssertHandler(0xffffffff8202c000,0x114,0,0xffffffff8202c08c,0xffffffff8202c0a4,iVar1);
-    }
-    uVar2 = CG_GetOffHandAmmo(iVar3,iVar1);
-    return uVar2;
-  }
-  return 0;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 82329358  CG_GetOffHandSecondaryAmmo  (cgame/offhandweapons.cpp:286)
-
-undefined8 CG_GetOffHandSecondaryAmmo(void)
-
-{
-  int iVar1;
-  int iVar3;
-  undefined8 uVar2;
-  ulonglong uVar4;
-  
-  iVar3 = CG_GetLocalClientGlobals();
-  if (*(int *)(iVar3 + 4) < 8) {
-    if ((*(uint *)(iVar3 + 0x374) & 0x80) == 0) {
-      uVar4 = (~(ulonglong)*(uint *)(iVar3 + 0xf8) & 0xffffffff) >> 0x15 & 1;
-    }
-    else {
-      uVar4 = 0;
-    }
-  }
-  else {
-    uVar4 = 0;
-  }
-  if ((uVar4 != 0) && (iVar1 = *(int *)(iVar3 + 0x36c), iVar1 != 0)) {
-    if (5 < iVar1) {
-      MyAssertHandler(0xffffffff8202c000,0x130,0,0xffffffff8202c08c,0xffffffff8202c0a4,iVar1);
-    }
-    uVar2 = CG_GetOffHandAmmo(iVar3,iVar1);
-    return uVar2;
-  }
-  return 0;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 82329420  CG_DrawOffHandHighlight  (cgame/offhandweapons.cpp:314)
-
-void CG_DrawOffHandHighlight
-               (undefined8 param_1,ulonglong param_2,undefined8 param_3,ulonglong param_4,
-               undefined8 param_5,undefined8 param_6)
-
-{
-  undefined4 *puVar1;
-  float *pfVar2;
-  undefined8 uVar3;
-  int iVar4;
-  char cVar7;
-  uint uVar5;
-  int iVar6;
-  ulonglong uVar8;
-  double dVar9;
-  double dVar10;
-  double dVar11;
-  double dVar12;
-  undefined4 local_80;
-  undefined4 local_7c;
-  undefined4 local_78;
-  float local_74;
-  undefined1 auStack_70 [112];
-  
-  __savegprlr_25();
-  uVar3 = __savefpr_28();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8202c000,0x140,0,0xffffffff82000f98,0xffffffff8200fd5c);
-  }
-  if ((param_4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8202c000,0x141,0,0xffffffff82000f98,0xffffffff8200240c);
-  }
-  iVar6 = (int)param_6;
-  if (iVar6 != 0) {
-    if (iVar6 < 1) {
-      MyAssertHandler(0xffffffff8202c000,0x146,0,0xffffffff82000f98,0xffffffff8202bfdc);
-    }
-    if (5 < iVar6) {
-      MyAssertHandler(0xffffffff8202c000,0x147,0,0xffffffff82000f98,0xffffffff8202bfb8);
-    }
-    iVar4 = CG_GetLocalClientGlobals(uVar3);
-    if (*(int *)(iVar4 + 4) < 8) {
-      if ((*(uint *)(iVar4 + 0x374) & 0x80) == 0) {
-        uVar8 = (~(ulonglong)*(uint *)(iVar4 + 0xf8) & 0xffffffff) >> 0x15 & 1;
-      }
-      else {
-        uVar8 = 0;
-      }
-    }
-    else {
-      uVar8 = 0;
-    }
-    if (uVar8 != 0) {
-      cVar7 = BG_GetFirstAvailableOffhand(iVar4,param_6);
-      if (cVar7 == '\0') {
-        cVar7 = BG_GetFirstEquippedOffhand(iVar4,param_6);
-      }
-      if (cVar7 != '\0') {
-        if ((*(uint *)(iVar4 + 0x79420) & 0xff) != 0) {
-          puVar1 = (undefined4 *)param_4;
-          local_74 = (float)puVar1[3];
-          if (local_74 != 0.0) {
-            uVar5 = BG_GetAlternateWeapon(*(uint *)(iVar4 + 0x79420),0);
-            if (iVar6 == *(int *)((&DAT_829d84a0)[uVar5 & 0xff] + 0x40)) {
-              iVar6 = CalcOffHandAmmo(iVar4,param_6);
-              if (iVar6 == 0) {
-                local_80 = 0x3f63d70a;
-                local_7c = 0x3e3851ec;
-                local_78 = 0x3c23d70a;
-              }
-              else {
-                local_80 = *puVar1;
-                local_7c = puVar1[1];
-                local_78 = puVar1[2];
-              }
-              OffHandFlash(iVar4,&local_80,auStack_70);
-              pfVar2 = (float *)param_2;
-              dVar12 = (double)pfVar2[3];
-              dVar11 = (double)pfVar2[2];
-              dVar10 = (double)pfVar2[1];
-              dVar9 = (double)*pfVar2;
-              ScrPlace_GetActivePlacement(uVar3);
-              UI_DrawHandlePic(dVar9,dVar10,dVar11,dVar12);
-            }
-          }
-        }
-      }
-    }
-  }
-  __restfpr_28();
-  __restgprlr_25();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 82329670  CG_DrawOffHandAmmo  (cgame/offhandweapons.cpp:363)
-
-void CG_DrawOffHandAmmo(undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4,
-                       ulonglong param_5,undefined8 param_6,undefined8 param_7)
-
-{
-  undefined8 uVar1;
-  int iVar3;
-  char cVar4;
-  undefined8 uVar2;
-  ulonglong uVar5;
-  undefined8 extraout_f1;
-  double dVar6;
-  double dVar7;
-  undefined8 uVar8;
-  
-  uVar1 = __savegprlr_24();
-  uVar8 = extraout_f1;
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8202c000,0x171,0,0xffffffff82000f98,0xffffffff8200fd5c);
-  }
-  if ((param_5 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8202c000,0x172,0,0xffffffff82000f98,0xffffffff8200240c);
-  }
-  iVar3 = (int)param_7;
-  if (iVar3 != 0) {
-    if (iVar3 < 1) {
-      MyAssertHandler(0xffffffff8202c000,0x177,0,0xffffffff82000f98,0xffffffff8202bfdc);
-    }
-    if (5 < iVar3) {
-      MyAssertHandler(0xffffffff8202c000,0x178,0,0xffffffff82000f98,0xffffffff8202bfb8);
-    }
-    iVar3 = CG_GetLocalClientGlobals(uVar1);
-    if (*(int *)(iVar3 + 4) < 8) {
-      if ((*(uint *)(iVar3 + 0x374) & 0x80) == 0) {
-        uVar5 = (~(ulonglong)*(uint *)(iVar3 + 0xf8) & 0xffffffff) >> 0x15 & 1;
-      }
-      else {
-        uVar5 = 0;
-      }
-    }
-    else {
-      uVar5 = 0;
-    }
-    if (uVar5 != 0) {
-      cVar4 = BG_GetFirstAvailableOffhand(iVar3,param_7);
-      if (cVar4 == '\0') {
-        cVar4 = BG_GetFirstEquippedOffhand(iVar3,param_7);
-      }
-      if ((cVar4 != '\0') && (*(float *)((int)param_5 + 0xc) != 0.0)) {
-        uVar2 = CalcOffHandAmmo(iVar3,param_7);
-        uVar2 = va(0xffffffff8200c28c,uVar2);
-        dVar7 = (double)((float *)param_2)[1];
-        dVar6 = (double)*(float *)param_2;
-        uVar1 = ScrPlace_GetActivePlacement(uVar1);
-        UI_DrawText(dVar6,dVar7,uVar8,uVar1,uVar2,0x7fffffff,param_3);
-      }
-    }
-  }
-  __restgprlr_24();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 823298A0  CG_DrawOffHandName  (cgame/offhandweapons.cpp:406)
-
-void CG_DrawOffHandName(undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4,
-                       ulonglong param_5,undefined8 param_6,ulonglong param_7)
-
-{
-  undefined8 uVar1;
-  int iVar3;
-  char cVar4;
-  undefined8 uVar2;
-  ulonglong uVar5;
-  undefined8 extraout_f1;
-  double dVar6;
-  double dVar7;
-  undefined8 uVar8;
-  
-  uVar1 = __savegprlr_24();
-  uVar8 = extraout_f1;
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8202c000,0x19b,0,0xffffffff82000f98,0xffffffff8200fd5c);
-  }
-  if ((param_5 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8202c000,0x19c,0,0xffffffff82000f98,0xffffffff8200240c);
-  }
-  iVar3 = CG_GetLocalClientGlobals(uVar1);
-  if (*(int *)(iVar3 + 4) < 8) {
-    if ((*(uint *)(iVar3 + 0x374) & 0x80) == 0) {
-      uVar5 = (~(ulonglong)*(uint *)(iVar3 + 0xf8) & 0xffffffff) >> 0x15 & 1;
-    }
-    else {
-      uVar5 = 0;
-    }
-  }
-  else {
-    uVar5 = 0;
-  }
-  if (uVar5 != 0) {
-    cVar4 = BG_GetFirstAvailableOffhand(iVar3,param_7);
-    if (cVar4 == '\0') {
-      cVar4 = BG_GetFirstEquippedOffhand(iVar3,param_7);
-    }
-    if ((cVar4 != '\0') && (*(float *)((int)param_5 + 0xc) != 0.0)) {
-      uVar2 = UI_SafeTranslateString
-                        (*(undefined4 *)
-                          ((int)&PTR_DAT_82964308 + (int)((param_7 & 0xffffffff) << 2)));
-      dVar7 = (double)((float *)param_2)[1];
-      dVar6 = (double)*(float *)param_2;
-      uVar1 = ScrPlace_GetActivePlacement(uVar1);
-      UI_DrawText(dVar6,dVar7,uVar8,uVar1,uVar2,0x7fffffff,param_3);
-    }
-  }
-  __restgprlr_24();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 82329D60  CG_SwitchOffHandCmd  (cgame/offhandweapons.cpp:437)
-
-void CG_SwitchOffHandCmd(void)
-
-{
-  int iVar1;
-  undefined8 uVar2;
-  int iVar4;
-  uint uVar5;
-  ulonglong uVar3;
-  
-  uVar2 = __savegprlr_29();
-  iVar4 = CG_GetLocalClientGlobals();
-  if ((*(uint *)(iVar4 + 0x79420) & 0xff) != 0) {
-    uVar5 = BG_GetAlternateWeapon(*(uint *)(iVar4 + 0x79420),0);
-    iVar1 = (&DAT_829d84a0)[uVar5 & 0xff];
-    if (*(int *)(iVar1 + 0x40) == 0) {
-      MyAssertHandler(0xffffffff8202c000,0x1c0,0,0xffffffff82000f98,0xffffffff8202c12c);
-    }
-    uVar3 = BG_GetFirstAvailableOffhand(iVar4,*(undefined4 *)(iVar1 + 0x40));
-    if ((uVar3 & 0xff) != 0) {
-      CG_SetEquippedOffHand(uVar2,uVar3);
-    }
-  }
-  __restgprlr_29();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 82329A58  CG_PrepOffHand  (cgame/offhandweapons.cpp:461)
-
-void CG_PrepOffHand(undefined8 param_1,undefined4 *param_2,ulonglong param_3,ulonglong param_4)
-
-{
-  int iVar1;
-  ulonglong uVar2;
-  undefined8 uVar3;
-  ulonglong uVar4;
-  uint uVar5;
-  
-  uVar3 = __savegprlr_27();
-  if (param_2[1] == 1) {
-    uVar2 = param_3 & 0xff;
-    if ((uVar2 == 0) || (uVar4 = BG_GetNumWeapons(), (uVar4 & 0xffffffff) <= uVar2)) {
-      MyAssertHandler(0xffffffff8202c000,0x1d7,0,0xffffffff8202c0c8,0xffffffff8202c0e8,uVar2);
-    }
-    uVar5 = BG_GetAlternateWeapon(param_3,0);
-    if ((param_4 & 0xff) == 0) {
-      iVar1 = *(int *)((&DAT_829d84a0)[uVar5 & 0xff] + 100);
-    }
-    else {
-      iVar1 = *(int *)((&DAT_829d84a0)[uVar5 & 0xff] + 0x68);
-    }
-    if (iVar1 != 0) {
-      CG_PlayEntitySoundAlias(uVar3,*param_2);
-    }
-  }
-  __restgprlr_27();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 82329B10  CG_UseOffHand  (cgame/offhandweapons.cpp:492)
-
-void CG_UseOffHand(undefined8 param_1,longlong param_2,ulonglong param_3,undefined8 param_4,
-                  ulonglong param_5)
-
-{
-  int iVar1;
-  undefined8 uVar2;
-  ulonglong uVar3;
-  longlong lVar4;
-  ulonglong uVar5;
-  int *piVar7;
-  undefined2 uVar9;
-  longlong lVar6;
-  int iVar8;
-  undefined1 auStack_50 [80];
-  
-  uVar2 = __savegprlr_25();
-  iVar1 = (int)param_2;
-  if (*(int *)(iVar1 + 200) != 1) {
-LAB_82329c80:
-    __restgprlr_25();
-    return;
-  }
-  uVar5 = param_3 & 0xff;
-  if ((uVar5 == 0) || (uVar3 = BG_GetNumWeapons(), (uVar3 & 0xffffffff) <= uVar5)) {
-    MyAssertHandler(0xffffffff8202c000,0x1f6,0,0xffffffff8202c0c8,0xffffffff8202c0e8,uVar5);
-  }
-  if ((param_5 & 0xff) == 0) {
-    uVar5 = BG_FireSound(param_3,param_4);
-    if ((uVar5 & 0xffffffff) != 0) {
-      CG_PlayEntitySoundAlias(uVar2,*(undefined4 *)(iVar1 + 0xc4),uVar5);
-    }
-    goto LAB_82329c80;
-  }
-  lVar4 = CG_GetLocalClientGlobals(uVar2);
-  uVar5 = BG_FireSoundPlayer(param_3,param_4);
-  if ((uVar5 & 0xffffffff) == 0) goto LAB_82329c80;
-  piVar7 = (int *)CG_GetLocalClientViewModelHand(uVar2,0);
-  uVar9 = BG_GetWeaponFlashTagname(param_3,param_4);
-  if (*(int *)(iVar1 + 0xc4) == *(int *)((int)lVar4 + 0x150)) {
-    iVar8 = *piVar7;
-    CG_UpdateViewModelPose(iVar8,uVar2);
-    if (iVar8 != 0) {
-      lVar6 = lVar4 + 0x106fa8;
-LAB_82329c14:
-      iVar8 = CG_DObjGetWorldTagPos(lVar6,iVar8,uVar9,auStack_50);
-      if (iVar8 != 0) goto LAB_82329c40;
-    }
-  }
-  else {
-    iVar8 = *piVar7;
-    lVar6 = param_2;
-    if (iVar8 != 0) goto LAB_82329c14;
-  }
-  BG_EvaluateTrajectory(param_2 + 0xd0,*(undefined4 *)((int)lVar4 + 0x6b98c),auStack_50);
-LAB_82329c40:
-  CG_PlaySoundAlias(uVar2,*(undefined4 *)(iVar1 + 0xc4),auStack_50,uVar5);
-  __restgprlr_25();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure LerpEntityStatePlayer
 
 // 82329C88  CG_SetEquippedOffHand  (cgame/offhandweapons.cpp:555)
-
-void CG_SetEquippedOffHand(undefined8 param_1,ulonglong param_2)
-
-{
-  uint uVar2;
-  undefined8 uVar1;
-  int iVar3;
-  undefined1 auStack_420 [1032];
-  
-  if ((param_2 & 0xff) != 0) {
-    uVar2 = BG_GetAlternateWeapon(param_2,0);
-    if (*(int *)((&DAT_829d84a0)[uVar2 & 0xff] + 0x40) == 0) {
-      uVar1 = BG_GetWeaponName(param_2,auStack_420,0x400);
-      uVar1 = va(0xffffffff8200dc8c,uVar1);
-      MyAssertHandler(0xffffffff8202c000,0x231,0,0xffffffff820011f4,0xffffffff8200dc28,uVar1);
-    }
-  }
-  iVar3 = CG_GetLocalClientGlobals(param_1);
-  *(int *)(iVar3 + 0x79420) = (int)param_2;
-  CG_MenuShowNotify(param_1,3);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0

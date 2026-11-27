@@ -2,9 +2,9 @@
 
 // 824C9430  CM_SetupTraceCapsuleWork  (qcommon/cm_trace.cpp:74)
 
-void CM_SetupTraceCapsuleWork
-               (undefined8 param_1,float *param_2,float *param_3,ulonglong param_4,float *param_5,
-               undefined8 param_6,undefined8 param_7)
+bool CM_SetupTraceCapsuleWork
+               (TraceCapsuleWork *param_1,float *param_2,float *param_3,Bounds *param_4,
+               float *param_5,float *param_6,float (*param_7) [3])
 
 {
   float fVar1;
@@ -12,10 +12,11 @@ void CM_SetupTraceCapsuleWork
   float fVar3;
   float fVar4;
   float *pfVar5;
-  float *pfVar6;
-  float *pfVar7;
-  longlong lVar8;
-  double dVar9;
+  undefined1 uVar6;
+  ulonglong uVar7;
+  float *pfVar8;
+  longlong lVar9;
+  double dVar10;
   float local_80;
   float local_7c;
   float local_78;
@@ -23,26 +24,24 @@ void CM_SetupTraceCapsuleWork
   float local_6c;
   float local_68;
   
-  pfVar5 = (float *)__savegprlr_23();
-  if ((param_4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8208249c,0x4f,0,0xffffffff82000f98,0xffffffff82002044);
+  uVar7 = (ulonglong)(int)param_4;
+  pfVar5 = (float *)__savegprlr_23(param_1);
+  if ((uVar7 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",0x4f,0,
+                    "%s");
   }
-  pfVar6 = (float *)param_4;
-  local_80 = *param_2 + *pfVar6;
-  local_7c = param_2[1] + pfVar6[1];
-  local_78 = param_2[2] + pfVar6[2];
-  local_70 = *param_3 + *pfVar6;
-  local_6c = param_3[1] + pfVar6[1];
-  pfVar7 = (float *)param_6;
-  local_68 = param_3[2] + pfVar6[2];
-  dVar9 = 0.0;
-  if ((*pfVar7 == 0.0) && (pfVar7[1] == 0.0)) {
-    lVar8 = 0;
-    if (pfVar7[2] == 0.0) goto LAB_824c9518;
+  pfVar8 = (float *)uVar7;
+  local_80 = *param_2 + *pfVar8;
+  local_7c = param_2[1] + pfVar8[1];
+  local_78 = param_2[2] + pfVar8[2];
+  local_70 = *param_3 + *pfVar8;
+  local_6c = param_3[1] + pfVar8[1];
+  local_68 = param_3[2] + pfVar8[2];
+  dVar10 = 0.0;
+  if (((*param_6 != 0.0) || (param_6[1] != 0.0)) || (lVar9 = 0, param_6[2] != 0.0)) {
+    lVar9 = 1;
   }
-  lVar8 = 1;
-LAB_824c9518:
-  if (lVar8 == 0) {
+  if (lVar9 == 0) {
     *pfVar5 = local_80 - *param_5;
     pfVar5[1] = local_7c - param_5[1];
     pfVar5[2] = local_78 - param_5[2];
@@ -61,16 +60,17 @@ LAB_824c9518:
     Vec3Rotate(&local_80,param_7,pfVar5);
     Vec3Rotate(&local_70,param_7,pfVar5 + 3);
   }
-  if ((double)pfVar6[3] != (double)pfVar6[4]) {
-    MyAssertHandler(0xffffffff8208249c,99,0,0xffffffff82082448,(double)pfVar6[3],(double)pfVar6[4]);
+  if (pfVar8[3] != pfVar8[4]) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",99,0,
+                    "bounds->halfSize[0] == bounds->halfSize[1]\n\t%g, %g");
   }
-  if ((double)pfVar6[5] < (double)pfVar6[3]) {
-    MyAssertHandler(0xffffffff8208249c,100,0,0xffffffff82082414,(double)pfVar6[3],(double)pfVar6[5])
-    ;
+  if (pfVar8[5] < pfVar8[3]) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",100,0,
+                    "bounds->halfSize[0] <= bounds->halfSize[2]\n\t%g, %g");
   }
-  fVar1 = pfVar6[3];
+  fVar1 = pfVar8[3];
   pfVar5[0x10] = fVar1;
-  pfVar5[0x11] = pfVar6[5] - fVar1;
+  pfVar5[0x11] = pfVar8[5] - fVar1;
   fVar1 = pfVar5[3] - *pfVar5;
   pfVar5[6] = fVar1;
   fVar2 = pfVar5[4] - pfVar5[1];
@@ -94,41 +94,41 @@ LAB_824c9518:
   pfVar5[0xd] = fVar1 + fVar4;
   pfVar5[0xf] = fVar1 + fVar3;
   pfVar5[0xe] = fVar2 + fVar1;
-  if ((double)pfVar5[0x11] < dVar9) {
-    MyAssertHandler(0xffffffff8208249c,0x6d,0,0xffffffff82000f98,0xffffffff82082488);
+  if ((double)pfVar5[0x11] < dVar10) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",0x6d,0,
+                    "%s");
   }
   pfVar5[0xf] = pfVar5[0xf] + pfVar5[0x11];
-  __restgprlr_23(lVar8);
-  return;
+  uVar6 = __restgprlr_23(lVar9);
+  return (bool)uVar6;
 }
 
 
 // 824C9428  __lvx  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/vectorintrinsics.h:98)
 
-/* WARNING: Control flow encountered bad instruction data */
-
-void __lvx(void)
+__vector4 * __lvx(__vector4 *__return_storage_ptr__,void *param_1,int param_2)
 
 {
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  return __return_storage_ptr__;
 }
 
 
 // 824C97C0  Trace_GetEntityHitId  (qcommon/cm_trace.cpp:117)
 
-undefined2 Trace_GetEntityHitId(int param_1)
+ushort Trace_GetEntityHitId(trace_t *param_1)
 
 {
-  int iVar1;
+  TraceHitType TVar1;
   
-  if (param_1 == 0) {
-    MyAssertHandler(0xffffffff8208249c,0x76,0,0xffffffff82000f98,0xffffffff8202b910);
+  if (param_1 == (trace_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",0x76,0,
+                    "%s");
   }
-  iVar1 = *(int *)(param_1 + 0x1c);
-  if (((iVar1 != 2) && (iVar1 != 3)) && (iVar1 != 4)) {
-    if (iVar1 == 1) {
-      return *(undefined2 *)(param_1 + 0x20);
+  TVar1 = param_1->hitType;
+  if (((TVar1 != TRACE_HITTYPE_DYNENT_MODEL) && (TVar1 != TRACE_HITTYPE_DYNENT_BRUSH)) &&
+     (TVar1 != TRACE_HITTYPE_GLASS)) {
+    if (TVar1 == TRACE_HITTYPE_ENTITY) {
+      return param_1->hitId;
     }
     return 0x7ff;
   }
@@ -138,80 +138,94 @@ undefined2 Trace_GetEntityHitId(int param_1)
 
 // 824C9878  Trace_GetDynEntHitId  (qcommon/cm_trace.cpp:129)
 
-void Trace_GetDynEntHitId(undefined8 param_1,ulonglong param_2)
+ushort Trace_GetDynEntHitId(trace_t *param_1,DynEntityDrawType *param_2)
 
 {
   int iVar1;
+  ushort uVar2;
+  ulonglong uVar3;
   
-  iVar1 = __savegprlr_28();
+  uVar3 = (ulonglong)(int)param_2;
+  iVar1 = __savegprlr_28(param_1);
   if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff8208249c,0x82,0,0xffffffff82000f98,0xffffffff8202b910);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",0x82,0,
+                    "%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8208249c,0x84,0,0xffffffff82000f98,0xffffffff820824dc);
+  if ((uVar3 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",0x84,0,
+                    "%s");
   }
   if (*(int *)(iVar1 + 0x1c) == 2) {
-    *(undefined4 *)param_2 = 0;
-    __restgprlr_28(*(undefined2 *)(iVar1 + 0x20));
-    return;
+    *(undefined4 *)uVar3 = 0;
+    uVar2 = __restgprlr_28(*(undefined2 *)(iVar1 + 0x20));
+    return uVar2;
   }
   if (*(int *)(iVar1 + 0x1c) == 3) {
-    *(undefined4 *)param_2 = 1;
-    __restgprlr_28(*(undefined2 *)(iVar1 + 0x20));
-    return;
+    *(undefined4 *)uVar3 = 1;
+    uVar2 = __restgprlr_28(*(undefined2 *)(iVar1 + 0x20));
+    return uVar2;
   }
-  __restgprlr_28(0xffffffffffffffff);
-  return;
+  uVar2 = __restgprlr_28(0xffffffffffffffff);
+  return uVar2;
 }
 
 
 // 824C9930  Trace_GetGlassHitId  (qcommon/cm_trace.cpp:151)
 
-void Trace_GetGlassHitId(void)
+ushort Trace_GetGlassHitId(trace_t *param_1)
 
 {
   int iVar1;
+  ushort uVar2;
   
-  iVar1 = __savegprlr_29();
+  iVar1 = __savegprlr_29(param_1);
   if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff8208249c,0x98,0,0xffffffff82000f98,0xffffffff8202b910);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",0x98,0,
+                    "%s");
   }
   if (*(int *)(iVar1 + 0x1c) == 4) {
     if (*(short *)(iVar1 + 0x20) == 0) {
-      MyAssertHandler(0xffffffff8208249c,0x9c,0,0xffffffff82000f98,0xffffffff820824e8);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",0x9c,0
+                      ,"%s");
     }
-    __restgprlr_29(*(undefined2 *)(iVar1 + 0x20));
-    return;
+    uVar2 = __restgprlr_29(*(undefined2 *)(iVar1 + 0x20));
+    return uVar2;
   }
-  __restgprlr_29(0);
-  return;
+  uVar2 = __restgprlr_29(0);
+  return uVar2;
 }
 
 
 // 824C99C0  CM_GetTraceThreadInfo  (qcommon/cm_trace.cpp:171)
 
-void CM_GetTraceThreadInfo(void)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+void CM_GetTraceThreadInfo(TraceThreadInfo *param_1)
 
 {
   int iVar1;
   undefined4 *puVar2;
   undefined4 *puVar3;
   
-  puVar2 = (undefined4 *)__savegprlr_28();
+  puVar2 = (undefined4 *)__savegprlr_28(param_1);
   if (puVar2 == (undefined4 *)0x0) {
-    MyAssertHandler(0xffffffff8208249c,0xae,0,0xffffffff82000f98,0xffffffff82082538);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",0xae,0,
+                    "%s");
   }
-  puVar3 = (undefined4 *)Sys_GetValue(3);
+  puVar3 = Sys_GetValue(3);
   if (puVar3 == (undefined4 *)0x0) {
-    MyAssertHandler(0xffffffff8208249c,0xb7,0,0xffffffff82000f98,0xffffffff8200e26c);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",0xb7,0,
+                    "%s");
   }
   puVar3[1] = puVar3[1] + 1;
   *puVar2 = *puVar3;
   puVar2[1] = puVar3[1];
   iVar1 = puVar3[2];
   puVar2[2] = iVar1;
-  if ((iVar1 == 0) && (DAT_835a2900 != 0)) {
-    MyAssertHandler(0xffffffff8208249c,0xbe,0,0xffffffff82000f98,0xffffffff820824fc);
+  if ((iVar1 == 0) && (cm.partitionCount != 0)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",0xbe,0,
+                    "%s");
   }
   __restgprlr_28();
   return;
@@ -220,43 +234,51 @@ void CM_GetTraceThreadInfo(void)
 
 // 824C9AA0  CM_BrushModelIsValid  (qcommon/cm_trace.cpp:195)
 
-byte CM_BrushModelIsValid(ulonglong param_1)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+bool CM_BrushModelIsValid(uint param_1)
 
 {
-  return -(param_1 < DAT_835a2910) & 1;
+  return (bool)(-((ulonglong)(longlong)(int)param_1 < (ulonglong)cm.numSubModels) & 1);
 }
 
 
 // 824C9AC0  CM_GetBrushModel  (qcommon/cm_trace.cpp:201)
 
-longlong CM_GetBrushModel(ulonglong param_1)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+cmodel_t * CM_GetBrushModel(uint param_1)
 
 {
-  if ((ulonglong)DAT_835a2910 <= (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8208249c,0xca,0,0xffffffff82081cc8,param_1);
+  if (cm.numSubModels <= param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",0xca,0,
+                    "bmodelIndex doesn\'t index cm.numSubModels\n\t%i not in [0, %i)");
   }
-  return (param_1 + (param_1 & 0x1fffffff) * 8 & 0x1fffffff) * 8 + (ulonglong)DAT_835a2914;
+  return cm.cmodels + param_1;
 }
 
 
 // 824C9B38  CM_ContentsOfBrushModel  (qcommon/cm_trace.cpp:208)
 
-uint CM_ContentsOfBrushModel(uint param_1)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+int CM_ContentsOfBrushModel(uint param_1)
 
 {
-  int iVar1;
-  
-  if (DAT_835a2910 <= param_1) {
-    MyAssertHandler(0xffffffff8208249c,0xd3,0,0xffffffff82081cc8,param_1);
+  if (cm.numSubModels <= param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",0xd3,0,
+                    "bmodelIndex doesn\'t index cm.numSubModels\n\t%i not in [0, %i)");
   }
-  iVar1 = param_1 * 0x48 + DAT_835a2914;
-  return *(uint *)(iVar1 + 0x28) | *(uint *)(iVar1 + 0x24);
+  return cm.cmodels[param_1].leaf.terrainContents | cm.cmodels[param_1].leaf.brushContents;
 }
 
 
 // 824C9BC0  RotatePoint  (qcommon/cm_trace.cpp:236)
 
-void RotatePoint(float *param_1,float *param_2)
+void RotatePoint(float *param_1,float (*param_2) [3])
 
 {
   float fVar1;
@@ -266,27 +288,27 @@ void RotatePoint(float *param_1,float *param_2)
   fVar1 = *param_1;
   fVar2 = param_1[1];
   fVar3 = param_1[2];
-  *param_1 = param_2[2] * fVar3 + param_2[1] * fVar2 + *param_2 * fVar1;
-  param_1[1] = param_2[5] * fVar3 + param_2[4] * fVar2 + param_2[3] * fVar1;
-  param_1[2] = param_2[8] * fVar3 + param_2[7] * fVar2 + param_2[6] * fVar1;
+  *param_1 = (*param_2)[2] * fVar3 + (*param_2)[1] * fVar2 + (*param_2)[0] * fVar1;
+  param_1[1] = param_2[1][2] * fVar3 + param_2[1][1] * fVar2 + param_2[1][0] * fVar1;
+  param_1[2] = param_2[2][2] * fVar3 + param_2[2][1] * fVar2 + param_2[2][0] * fVar1;
   return;
 }
 
 
 // 824C9C28  TransposeMatrix  (qcommon/cm_trace.cpp:252)
 
-void TransposeMatrix(undefined4 *param_1,undefined4 *param_2)
+void TransposeMatrix(float (*param_1) [3],float (*param_2) [3])
 
 {
-  *param_2 = *param_1;
-  param_2[1] = param_1[3];
-  param_2[2] = param_1[6];
-  param_2[3] = param_1[1];
-  param_2[4] = param_1[4];
-  param_2[5] = param_1[7];
-  param_2[6] = param_1[2];
-  param_2[7] = param_1[5];
-  param_2[8] = param_1[8];
+  (*param_2)[0] = (*param_1)[0];
+  (*param_2)[1] = param_1[1][0];
+  (*param_2)[2] = param_1[2][0];
+  param_2[1][0] = (*param_1)[1];
+  param_2[1][1] = param_1[1][1];
+  param_2[1][2] = param_1[2][1];
+  param_2[2][0] = (*param_1)[2];
+  param_2[2][1] = param_1[1][2];
+  param_2[2][2] = param_1[2][2];
   return;
 }
 
@@ -295,102 +317,112 @@ void TransposeMatrix(undefined4 *param_1,undefined4 *param_2)
 
 /* WARNING: Removing unreachable block (ram,0x824c9e60) */
 
-void CM_TestBoxInBrush(undefined8 param_1,ulonglong param_2,undefined8 param_3)
+void CM_TestBoxInBrush(traceWork_t *param_1,uint param_2,trace_t *param_3)
 
 {
   float fVar1;
-  ushort uVar2;
-  int iVar3;
-  float fVar4;
-  int iVar5;
+  ClipInfo *pCVar2;
+  cbrush_t *pcVar3;
+  cplane_s *pcVar4;
+  uint uVar5;
   int iVar6;
-  int iVar7;
-  char cVar8;
-  float *pfVar9;
-  undefined4 *puVar10;
-  ulonglong uVar11;
+  bool bVar7;
+  Bounds *pBVar8;
+  cbrushside_t *pcVar9;
+  ulonglong uVar10;
+  double dVar11;
   double dVar12;
-  double dVar13;
   
-  iVar7 = __savegprlr();
-  if ((((*(uint *)(iVar7 + 0x40) & 0x7f800000) == 0x7f800000) ||
-      ((*(uint *)(iVar7 + 0x44) & 0x7f800000) == 0x7f800000)) ||
-     ((*(uint *)(iVar7 + 0x48) & 0x7f800000) == 0x7f800000)) {
-    MyAssertHandler(0xffffffff8208249c,0x128,0,0xffffffff82000f98,0xffffffff820826c0);
+  uVar10 = (ulonglong)(int)param_2;
+  __savegprlr();
+  if (((((uint)(param_1->extents).start[0] & 0x7f800000) == 0x7f800000) ||
+      (((uint)(param_1->extents).start[1] & 0x7f800000) == 0x7f800000)) ||
+     (((uint)(param_1->extents).start[2] & 0x7f800000) == 0x7f800000)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",0x128,0,
+                    "%s");
   }
-  if ((((*(uint *)(iVar7 + 0x50) & 0x7f800000) == 0x7f800000) ||
-      ((*(uint *)(iVar7 + 0x54) & 0x7f800000) == 0x7f800000)) ||
-     ((*(uint *)(iVar7 + 0x58) & 0x7f800000) == 0x7f800000)) {
-    MyAssertHandler(0xffffffff8208249c,0x129,0,0xffffffff82000f98,0xffffffff82082660);
+  if (((((uint)(param_1->extents).end[0] & 0x7f800000) == 0x7f800000) ||
+      (((uint)(param_1->extents).end[1] & 0x7f800000) == 0x7f800000)) ||
+     (((uint)(param_1->extents).end[2] & 0x7f800000) == 0x7f800000)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",0x129,0,
+                    "%s");
   }
-  iVar3 = *(int *)(iVar7 + 0xac);
-  if (iVar3 == 0) {
-    MyAssertHandler(0xffffffff8208249c,300,0,0xffffffff82000f98,0xffffffff82021a7c);
+  pCVar2 = param_1->info;
+  if (pCVar2 == (ClipInfo *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",300,0,
+                    "%s");
   }
-  fVar4 = *(float *)(*(int *)(iVar3 + 0x3c) + (int)((param_2 & 0xffffffff) << 2));
-  if ((((*(uint *)(iVar7 + 0xa4) & (uint)fVar4) != 0) &&
-      (pfVar9 = (float *)(*(int *)(iVar3 + 0x38) + (int)param_2 * 0x18),
-      ABS(*(float *)(iVar7 + 0x8c) - *pfVar9) < *(float *)(iVar7 + 0x98) + pfVar9[3])) &&
-     ((ABS(*(float *)(iVar7 + 0x90) - pfVar9[1]) < *(float *)(iVar7 + 0x9c) + pfVar9[4] &&
-      (ABS(*(float *)(iVar7 + 0x94) - pfVar9[2]) < *(float *)(iVar7 + 0xa0) + pfVar9[5])))) {
-    iVar6 = (int)param_2 * 0x24;
-    iVar5 = *(int *)(iVar3 + 0x34) + iVar6;
-    uVar2 = *(ushort *)(*(int *)(iVar3 + 0x34) + iVar6);
-    uVar11 = (ulonglong)uVar2;
-    puVar10 = *(undefined4 **)(iVar5 + 4);
-    dVar12 = 0.0;
-    if (uVar2 != 0) {
+  uVar5 = *(uint *)((int)pCVar2->brushContents + (int)((uVar10 & 0xffffffff) << 2));
+  if ((((param_1->contents & uVar5) != 0) &&
+      (iVar6 = (int)uVar10, pBVar8 = pCVar2->brushBounds + iVar6,
+      ABS((param_1->bounds).midPoint[0] - pBVar8->midPoint[0]) <
+      (param_1->bounds).halfSize[0] + pBVar8->halfSize[0])) &&
+     ((ABS((param_1->bounds).midPoint[1] - pBVar8->midPoint[1]) <
+       (param_1->bounds).halfSize[1] + pBVar8->halfSize[1] &&
+      (ABS((param_1->bounds).midPoint[2] - pBVar8->midPoint[2]) <
+       (param_1->bounds).halfSize[2] + pBVar8->halfSize[2])))) {
+    pcVar3 = pCVar2->brushes;
+    uVar10 = (ulonglong)pcVar3[iVar6].numsides;
+    pcVar9 = pcVar3[iVar6].sides;
+    dVar11 = 0.0;
+    if (pcVar3[iVar6].numsides != 0) {
       do {
-        pfVar9 = (float *)*puVar10;
-        if (((uint)pfVar9[3] & 0x7f800000) == 0x7f800000) {
-          MyAssertHandler(0xffffffff8208249c,0x14f,0,0xffffffff82000f98,0xffffffff82082560);
+        pcVar4 = pcVar9->plane;
+        if (((uint)pcVar4->dist & 0x7f800000) == 0x7f800000) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",
+                          0x14f,0,"%s");
         }
-        if ((*(uint *)(iVar7 + 0xb0) & 0x7f800000) == 0x7f800000) {
-          MyAssertHandler(0xffffffff8208249c,0x150,0,0xffffffff82000f98,0xffffffff82082578);
+        if (((uint)param_1->radius & 0x7f800000) == 0x7f800000) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",
+                          0x150,0,"%s");
         }
-        if (((((uint)*pfVar9 & 0x7f800000) == 0x7f800000) ||
-            (((uint)pfVar9[1] & 0x7f800000) == 0x7f800000)) ||
-           (((uint)pfVar9[2] & 0x7f800000) == 0x7f800000)) {
-          MyAssertHandler(0xffffffff8208249c,0x153,0,0xffffffff82000f98,0xffffffff82082590);
+        if (((((uint)pcVar4->normal[0] & 0x7f800000) == 0x7f800000) ||
+            (((uint)pcVar4->normal[1] & 0x7f800000) == 0x7f800000)) ||
+           (((uint)pcVar4->normal[2] & 0x7f800000) == 0x7f800000)) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",
+                          0x153,0,"%s");
         }
-        if (((((uint)*(float *)(iVar7 + 0xb4) & 0x7f800000) == 0x7f800000) ||
-            ((*(uint *)(iVar7 + 0xb8) & 0x7f800000) == 0x7f800000)) ||
-           ((*(uint *)(iVar7 + 0xbc) & 0x7f800000) == 0x7f800000)) {
-          MyAssertHandler(0xffffffff8208249c,0x154,0,0xffffffff82000f98,0xffffffff820825f0);
+        if (((((uint)param_1->offset[0] & 0x7f800000) == 0x7f800000) ||
+            (((uint)param_1->offset[1] & 0x7f800000) == 0x7f800000)) ||
+           (((uint)param_1->offset[2] & 0x7f800000) == 0x7f800000)) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",
+                          0x154,0,"%s");
         }
-        fVar1 = ABS(pfVar9[2] * *(float *)(iVar7 + 0xbc) +
-                    *(float *)(iVar7 + 0xb8) * pfVar9[1] + *pfVar9 * *(float *)(iVar7 + 0xb4)) +
-                *(float *)(iVar7 + 0xb0) + pfVar9[3];
-        dVar13 = (double)fVar1;
+        fVar1 = ABS(pcVar4->normal[2] * param_1->offset[2] +
+                    param_1->offset[1] * pcVar4->normal[1] + pcVar4->normal[0] * param_1->offset[0])
+                + param_1->radius + pcVar4->dist;
+        dVar12 = (double)fVar1;
         if (((uint)fVar1 & 0x7f800000) == 0x7f800000) {
-          MyAssertHandler(0xffffffff8208249c,0x157,0,0xffffffff82000f98,0xffffffff82082644);
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",
+                          0x157,0,"%s");
         }
-        fVar1 = (float)((double)(pfVar9[2] * *(float *)(iVar7 + 0x48) +
-                                *(float *)(iVar7 + 0x44) * pfVar9[1] +
-                                *pfVar9 * *(float *)(iVar7 + 0x40)) - dVar13);
-        dVar13 = (double)fVar1;
+        fVar1 = (float)((double)(pcVar4->normal[2] * (param_1->extents).start[2] +
+                                (param_1->extents).start[1] * pcVar4->normal[1] +
+                                pcVar4->normal[0] * (param_1->extents).start[0]) - dVar12);
+        dVar12 = (double)fVar1;
         if (((uint)fVar1 & 0x7f800000) == 0x7f800000) {
-          MyAssertHandler(0xffffffff8208249c,0x15b,0,0xffffffff82000f98,0xffffffff82082654);
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",
+                          0x15b,0,"%s");
         }
-        if (dVar12 < dVar13) goto LAB_824ca138;
-        uVar11 = uVar11 - 1;
-        puVar10 = puVar10 + 2;
-      } while (uVar11 != 0);
+        if (dVar11 < dVar12) goto LAB_824ca138;
+        uVar10 = uVar10 - 1;
+        pcVar9 = pcVar9 + 1;
+      } while (uVar10 != 0);
     }
-    if (*(short *)(iVar5 + 2) != 0) {
-      if (**(int **)(iVar7 + 0xdc) == 0) {
-        MyAssertHandler(0xffffffff8208249c,0x164,0,0xffffffff82000f98,0xffffffff82082544);
+    if (pcVar3[iVar6].glassPieceIndex != 0) {
+      if (param_1->callbacks->isGlassSolid == (_func___cdecl_bool_uint *)0x0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",
+                        0x164,0,"%s");
       }
-      cVar8 = (*(code *)**(undefined4 **)(iVar7 + 0xdc))((ulonglong)*(ushort *)(iVar5 + 2) - 1);
-      if (cVar8 == '\0') goto LAB_824ca138;
+      bVar7 = (*param_1->callbacks->isGlassSolid)(pcVar3[iVar6].glassPieceIndex - 1);
+      if (!bVar7) goto LAB_824ca138;
     }
-    pfVar9 = (float *)param_3;
-    *pfVar9 = (float)dVar12;
-    pfVar9[5] = fVar4;
-    *(undefined1 *)((int)pfVar9 + 0x2f) = 1;
-    *(undefined1 *)((int)pfVar9 + 0x2e) = 1;
-    pfVar9[4] = 0.0;
-    Trace_SetHitId(param_3,1,0x7fe);
+    param_3->fraction = (float)dVar11;
+    param_3->contents = uVar5;
+    param_3->startsolid = true;
+    param_3->allsolid = true;
+    param_3->surfaceFlags = 0;
+    Trace_SetHitId(param_3,TRACE_HITTYPE_ENTITY,0x7fe);
   }
 LAB_824ca138:
   __restgprlr();
@@ -400,54 +432,55 @@ LAB_824ca138:
 
 // 824CA148  CM_TestInLeafBrushNode_r  (qcommon/cm_trace.cpp:379)
 
-void CM_TestInLeafBrushNode_r(undefined8 param_1,ulonglong param_2,undefined8 param_3)
+void CM_TestInLeafBrushNode_r(traceWork_t *param_1,cLeafBrushNode_s *param_2,trace_t *param_3)
 
 {
   byte bVar1;
   short sVar2;
   ushort uVar3;
   byte *pbVar4;
-  int iVar5;
+  traceWork_t *ptVar5;
   int iVar6;
-  int iVar7;
-  undefined2 *puVar8;
+  ushort *puVar7;
+  ulonglong uVar8;
   
-  iVar6 = __savegprlr_27();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8208249c,0x183,0,0xffffffff82000f98,0xffffffff8206f7e8);
+  uVar8 = (ulonglong)(int)param_2;
+  ptVar5 = (traceWork_t *)__savegprlr_27(param_1);
+  if ((uVar8 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",0x183,0,
+                    "%s");
   }
-  if ((*(uint *)((int)param_2 + 4) & *(uint *)(iVar6 + 0xa4)) != 0) {
+  if ((*(uint *)((int)uVar8 + 4) & ptVar5->contents) != 0) {
     do {
-      pbVar4 = (byte *)param_2;
+      pbVar4 = (byte *)uVar8;
       sVar2 = *(short *)(pbVar4 + 2);
-      iVar5 = (int)param_3;
       if (sVar2 != 0) {
         if (0 < sVar2) {
-          puVar8 = *(undefined2 **)(pbVar4 + 8);
-          iVar7 = 0;
+          puVar7 = *(ushort **)(pbVar4 + 8);
+          iVar6 = 0;
           if (0 < sVar2) goto LAB_824ca290;
           break;
         }
-        CM_TestInLeafBrushNode_r(iVar6,param_2 + 0x14,param_3);
-        if (*(char *)(iVar5 + 0x2e) != '\0') break;
+        CM_TestInLeafBrushNode_r(ptVar5,(cLeafBrushNode_s *)(pbVar4 + 0x14),param_3);
+        if (param_3->allsolid != false) break;
       }
       bVar1 = *pbVar4;
-      iVar7 = iVar6 + 0x8c;
-      if (*(float *)((uint)bVar1 * 4 + iVar7) - *(float *)((bVar1 + 3) * 4 + iVar7) <=
+      if ((ptVar5->bounds).midPoint[bVar1] - (ptVar5->bounds).halfSize[bVar1] <=
           *(float *)(pbVar4 + 8)) {
         if (*(float *)(pbVar4 + 8) <=
-            *(float *)((bVar1 + 3) * 4 + iVar7) + *(float *)((uint)bVar1 * 4 + iVar7)) {
+            (ptVar5->bounds).halfSize[bVar1] + (ptVar5->bounds).midPoint[bVar1]) {
           CM_TestInLeafBrushNode_r
-                    (iVar6,(ulonglong)*(ushort *)(pbVar4 + 0x10) * 0x14 + param_2,param_3);
-          if (*(char *)(iVar5 + 0x2e) != '\0') break;
+                    (ptVar5,(cLeafBrushNode_s *)(pbVar4 + (uint)*(ushort *)(pbVar4 + 0x10) * 0x14),
+                     param_3);
+          if (param_3->allsolid != false) break;
         }
         uVar3 = *(ushort *)(pbVar4 + 0x12);
       }
       else {
         uVar3 = *(ushort *)(pbVar4 + 0x10);
       }
-      param_2 = (ulonglong)uVar3 * 0x14 + param_2;
-      if ((*(uint *)((int)param_2 + 4) & *(uint *)(iVar6 + 0xa4)) == 0) {
+      uVar8 = (ulonglong)uVar3 * 0x14 + uVar8;
+      if ((*(uint *)((int)uVar8 + 4) & ptVar5->contents) == 0) {
         __restgprlr_27();
         return;
       }
@@ -455,12 +488,12 @@ void CM_TestInLeafBrushNode_r(undefined8 param_1,ulonglong param_2,undefined8 pa
   }
   goto LAB_824ca2c4;
   while( true ) {
-    iVar7 = iVar7 + 1;
-    puVar8 = puVar8 + 1;
-    if (*(short *)(pbVar4 + 2) <= iVar7) break;
+    iVar6 = iVar6 + 1;
+    puVar7 = puVar7 + 1;
+    if (*(short *)(pbVar4 + 2) <= iVar6) break;
 LAB_824ca290:
-    CM_TestBoxInBrush(iVar6,*puVar8,param_3);
-    if (*(char *)(iVar5 + 0x2e) != '\0') break;
+    CM_TestBoxInBrush(ptVar5,(uint)*puVar7,param_3);
+    if (param_3->allsolid != false) break;
   }
 LAB_824ca2c4:
   __restgprlr_27();
@@ -470,72 +503,73 @@ LAB_824ca2c4:
 
 // 824CA2D0  CM_TestInLeafBrushNode  (qcommon/cm_trace.cpp:445)
 
-void CM_TestInLeafBrushNode(undefined8 param_1,longlong param_2,undefined8 param_3)
+int CM_TestInLeafBrushNode(traceWork_t *param_1,cLeaf_t *param_2,trace_t *param_3)
 
 {
-  int iVar1;
+  float fVar1;
   float fVar2;
   float fVar3;
-  float fVar4;
+  traceWork_t *ptVar4;
   int iVar5;
+  longlong lVar6;
   
-  iVar5 = __savegprlr_25();
-  iVar1 = (int)param_2;
-  if (*(int *)(iVar1 + 0x24) == 0) {
-    MyAssertHandler(0xffffffff8208249c,0x1bf,0,0xffffffff82000f98,0xffffffff82082734);
+  lVar6 = (longlong)(int)param_2;
+  ptVar4 = (traceWork_t *)__savegprlr_25(param_1);
+  iVar5 = (int)lVar6;
+  if (*(int *)(iVar5 + 0x24) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",0x1bf,0,
+                    "%s");
   }
-  if (*(int *)(iVar5 + 0xac) == 0) {
-    MyAssertHandler(0xffffffff8208249c,0x1c0,0,0xffffffff82000f98,0xffffffff82082728);
+  if (ptVar4->info == (ClipInfo *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",0x1c0,0,
+                    "%s");
   }
-  if ((float *)(iVar5 + 0x8c) == (float *)0x0) {
-    MyAssertHandler(0xffffffff82082340,0x223,0,0xffffffff82000f98,0xffffffff82025b34);
+  if (&ptVar4->bounds == (Bounds *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/bounds_inline.h"
+                    ,0x223,0,"%s");
   }
-  if ((param_2 + 0xcU & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82082340,0x224,0,0xffffffff82000f98,0xffffffff82025b30);
+  if ((lVar6 + 0xcU & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/bounds_inline.h"
+                    ,0x224,0,"%s");
   }
-  fVar2 = 0.0;
-  fVar3 = fVar2;
-  if (ABS(*(float *)(iVar5 + 0x8c) - *(float *)(param_2 + 0xcU)) -
-      (*(float *)(iVar5 + 0x98) + *(float *)(iVar1 + 0x18)) < 0.0) {
-    fVar3 = 1.0;
+  fVar1 = 0.0;
+  fVar2 = fVar1;
+  if (ABS((ptVar4->bounds).midPoint[0] - *(float *)(lVar6 + 0xcU)) -
+      ((ptVar4->bounds).halfSize[0] + *(float *)(iVar5 + 0x18)) < 0.0) {
+    fVar2 = 1.0;
   }
-  fVar4 = fVar2;
-  if (ABS(*(float *)(iVar5 + 0x90) - *(float *)(iVar1 + 0x10)) -
-      (*(float *)(iVar5 + 0x9c) + *(float *)(iVar1 + 0x1c)) < 0.0) {
-    fVar4 = fVar3;
+  fVar3 = fVar1;
+  if (ABS((ptVar4->bounds).midPoint[1] - *(float *)(iVar5 + 0x10)) -
+      ((ptVar4->bounds).halfSize[1] + *(float *)(iVar5 + 0x1c)) < 0.0) {
+    fVar3 = fVar2;
   }
-  if (ABS(*(float *)(iVar5 + 0x94) - *(float *)(iVar1 + 0x14)) -
-      (*(float *)(iVar5 + 0xa0) + *(float *)(iVar1 + 0x20)) < 0.0) {
-    fVar2 = fVar4;
+  if (ABS((ptVar4->bounds).midPoint[2] - *(float *)(iVar5 + 0x14)) -
+      ((ptVar4->bounds).halfSize[2] + *(float *)(iVar5 + 0x20)) < 0.0) {
+    fVar1 = fVar3;
   }
-  if (fVar2 != 0.0) {
-    CM_TestInLeafBrushNode_r
-              (iVar5,(ulonglong)*(uint *)(*(int *)(iVar5 + 0xac) + 0x24) +
-                     ((ulonglong)*(uint *)(iVar1 + 0x24) +
-                      ((ulonglong)*(uint *)(iVar1 + 0x24) & 0x3fffffff) * 4 & 0x3fffffff) * 4,
-               param_3);
-    __restgprlr_25(*(undefined1 *)((int)param_3 + 0x2e));
-    return;
+  if (fVar1 != 0.0) {
+    CM_TestInLeafBrushNode_r(ptVar4,ptVar4->info->leafbrushNodes + *(int *)(iVar5 + 0x24),param_3);
+    iVar5 = __restgprlr_25(param_3->allsolid);
+    return iVar5;
   }
-  __restgprlr_25(0);
-  return;
+  iVar5 = __restgprlr_25(0);
+  return iVar5;
 }
 
 
 // 824CA478  CM_TestInLeaf  (qcommon/cm_trace.cpp:464)
 
-void CM_TestInLeaf(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+void CM_TestInLeaf(traceWork_t *param_1,cLeaf_t *param_2,trace_t *param_3)
 
 {
-  int iVar1;
+  traceWork_t *ptVar1;
   int iVar2;
   
-  iVar1 = __savegprlr_29();
-  if (((*(uint *)((int)param_2 + 4) & *(uint *)(iVar1 + 0xa4)) == 0) ||
-     (iVar2 = CM_TestInLeafBrushNode(), iVar2 == 0)) {
-    if ((*(uint *)((int)param_2 + 8) & *(uint *)(iVar1 + 0xa4)) != 0) {
-      CM_MeshTestInLeaf(iVar1,param_2,param_3);
-    }
+  ptVar1 = (traceWork_t *)__savegprlr_29(param_1);
+  if ((((param_2->brushContents & ptVar1->contents) == 0) ||
+      (iVar2 = CM_TestInLeafBrushNode(ptVar1,param_2,param_3), iVar2 == 0)) &&
+     ((param_2->terrainContents & ptVar1->contents) != 0)) {
+    CM_MeshTestInLeaf(ptVar1,param_2,param_3);
   }
   __restgprlr_29();
   return;
@@ -544,7 +578,7 @@ void CM_TestInLeaf(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 // 824CA4E0  CM_TestCapsuleInCapsule  (qcommon/cm_trace.cpp:490)
 
-void CM_TestCapsuleInCapsule(undefined8 param_1,float *param_2,float *param_3)
+void CM_TestCapsuleInCapsule(TraceCapsuleWork *param_1,Bounds *param_2,trace_t *param_3)
 
 {
   float fVar1;
@@ -562,54 +596,52 @@ void CM_TestCapsuleInCapsule(undefined8 param_1,float *param_2,float *param_3)
   double dVar13;
   double dVar14;
   
-  pfVar6 = (float *)__savefpr_24();
-  fVar1 = param_2[5];
+  pfVar6 = (float *)__savefpr_24(param_1);
+  fVar1 = param_2->halfSize[2];
   dVar14 = (double)pfVar6[1];
-  fVar3 = pfVar6[0x11] + pfVar6[2];
-  dVar13 = (double)param_2[1];
-  fVar4 = pfVar6[2] - pfVar6[0x11];
-  fVar2 = param_2[2];
+  fVar4 = pfVar6[0x11] + pfVar6[2];
+  dVar13 = (double)param_2->midPoint[1];
+  fVar5 = pfVar6[2] - pfVar6[0x11];
+  fVar2 = param_2->midPoint[2];
   dVar12 = (double)*pfVar6;
-  dVar11 = (double)*param_2;
-  fVar5 = param_2[3];
-  if (fVar1 - param_2[3] < 0.0) {
-    fVar5 = fVar1;
+  dVar11 = (double)param_2->midPoint[0];
+  fVar3 = param_2->halfSize[0];
+  if (fVar1 - param_2->halfSize[0] < 0.0) {
+    fVar3 = fVar1;
   }
-  fVar1 = fVar1 - fVar5;
-  dVar10 = (double)((pfVar6[0x10] + fVar5) * (pfVar6[0x10] + fVar5));
-  fVar5 = (fVar2 + fVar1) - fVar3;
-  if (((double)((float)(dVar11 - dVar12) * (float)(dVar11 - dVar12) +
-               fVar5 * fVar5 + (float)(dVar13 - dVar14) * (float)(dVar13 - dVar14)) < dVar10) ||
-     (fVar5 = (fVar2 + fVar1) - fVar4,
+  fVar1 = fVar1 - fVar3;
+  dVar10 = (double)((pfVar6[0x10] + fVar3) * (pfVar6[0x10] + fVar3));
+  fVar3 = (fVar2 + fVar1) - fVar4;
+  if (((((double)((float)(dVar11 - dVar12) * (float)(dVar11 - dVar12) +
+                 fVar3 * fVar3 + (float)(dVar13 - dVar14) * (float)(dVar13 - dVar14)) < dVar10) ||
+       (fVar3 = (fVar2 + fVar1) - fVar5,
+       (double)((float)(dVar11 - dVar12) * (float)(dVar11 - dVar12) +
+               fVar3 * fVar3 + (float)(dVar13 - dVar14) * (float)(dVar13 - dVar14)) < dVar10)) ||
+      (fVar4 = (fVar2 - fVar1) - fVar4,
+      (double)((float)(dVar11 - dVar12) * (float)(dVar11 - dVar12) +
+              fVar4 * fVar4 + (float)(dVar13 - dVar14) * (float)(dVar13 - dVar14)) < dVar10)) ||
+     (fVar5 = (fVar2 - fVar1) - fVar5,
      (double)((float)(dVar11 - dVar12) * (float)(dVar11 - dVar12) +
              fVar5 * fVar5 + (float)(dVar13 - dVar14) * (float)(dVar13 - dVar14)) < dVar10)) {
-LAB_824ca564:
-    param_3[4] = 0.0;
-    *param_3 = 0.0;
+    param_3->surfaceFlags = 0;
+    param_3->fraction = 0.0;
   }
   else {
-    fVar3 = (fVar2 - fVar1) - fVar3;
-    if ((double)((float)(dVar11 - dVar12) * (float)(dVar11 - dVar12) +
-                fVar3 * fVar3 + (float)(dVar13 - dVar14) * (float)(dVar13 - dVar14)) < dVar10)
-    goto LAB_824ca564;
-    fVar4 = (fVar2 - fVar1) - fVar4;
-    if ((double)((float)(dVar11 - dVar12) * (float)(dVar11 - dVar12) +
-                fVar4 * fVar4 + (float)(dVar13 - dVar14) * (float)(dVar13 - dVar14)) < dVar10)
-    goto LAB_824ca564;
     dVar9 = (double)(pfVar6[0x11] + fVar1);
     dVar8 = (double)(pfVar6[2] - fVar2);
     dVar7 = 0.0;
     if (dVar9 < 0.0) {
-      MyAssertHandler(0xffffffff8208249c,0x22a,0,0xffffffff82000f98,0xffffffff82082748);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",0x22a,
+                      0,"%s");
     }
     if ((dVar9 < ABS(dVar8)) ||
        (dVar10 <= (double)((float)(dVar14 - dVar13) * (float)(dVar14 - dVar13) +
                           (float)(dVar12 - dVar11) * (float)(dVar12 - dVar11)))) goto LAB_824ca660;
-    *param_3 = (float)dVar7;
-    param_3[4] = 0.0;
+    param_3->fraction = (float)dVar7;
+    param_3->surfaceFlags = 0;
   }
-  *(undefined1 *)((int)param_3 + 0x2f) = 1;
-  *(undefined1 *)((int)param_3 + 0x2e) = 1;
+  param_3->startsolid = true;
+  param_3->allsolid = true;
 LAB_824ca660:
   __restfpr_24();
   return;
@@ -618,54 +650,49 @@ LAB_824ca660:
 
 // 824CA680  CM_PositionTest  (qcommon/cm_trace.cpp:580)
 
-void CM_PositionTest(undefined8 param_1,undefined8 param_2)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+void CM_PositionTest(traceWork_t *param_1,trace_t *param_2)
 
 {
-  int iVar1;
+  traceWork_t *ptVar1;
   int iVar2;
   int iVar3;
   ushort *puVar4;
-  int iVar5;
-  int local_870 [3];
-  ushort *local_864;
-  undefined4 local_860;
-  undefined4 local_85c;
-  undefined4 local_858;
-  float local_854;
-  float local_850;
-  float local_84c;
+  cLeaf_t *pcVar5;
+  leafList_t local_870;
   ushort local_840 [1056];
   
-  iVar1 = __savegprlr_26();
-  if (*(char *)((int)param_2 + 0x2e) == '\0') {
-    local_864 = local_840;
-    local_860 = *(undefined4 *)(iVar1 + 0x40);
-    local_85c = *(undefined4 *)(iVar1 + 0x44);
-    local_870[0] = 0;
-    local_870[1] = 0x400;
-    local_858 = *(undefined4 *)(iVar1 + 0x48);
-    local_854 = *(float *)(iVar1 + 0x60) + 1.0;
-    local_850 = *(float *)(iVar1 + 100) + 1.0;
-    local_84c = *(float *)(iVar1 + 0x68) + 1.0;
-    local_870[2] = 0;
-    CM_BoxLeafnums_r(local_870,0);
-    if (local_870[0] != 0) {
+  ptVar1 = (traceWork_t *)__savegprlr_26(param_1);
+  if (param_2->allsolid == false) {
+    local_870.list = local_840;
+    local_870.bounds.midPoint[0] = (ptVar1->extents).start[0];
+    local_870.bounds.midPoint[1] = (ptVar1->extents).start[1];
+    local_870.count = 0;
+    local_870.maxcount = 0x400;
+    local_870.bounds.midPoint[2] = (ptVar1->extents).start[2];
+    local_870.bounds.halfSize[0] = ptVar1->size[0] + 1.0;
+    local_870.bounds.halfSize[1] = ptVar1->size[1] + 1.0;
+    local_870.bounds.halfSize[2] = ptVar1->size[2] + 1.0;
+    local_870.overflowed = 0;
+    CM_BoxLeafnums_r(&local_870,0);
+    if (local_870.count != 0) {
       iVar3 = 0;
-      *(undefined **)(iVar1 + 0xac) = &DAT_835a2888;
-      if (0 < local_870[0]) {
+      ptVar1->info = &cm.info;
+      if (0 < local_870.count) {
         puVar4 = local_840;
         do {
-          if (*(char *)((int)param_2 + 0x2e) != '\0') break;
-          iVar5 = (uint)*puVar4 * 0x28 + DAT_835a28e0;
-          if (((*(uint *)(iVar5 + 4) & *(uint *)(iVar1 + 0xa4)) == 0) ||
-             (iVar2 = CM_TestInLeafBrushNode(iVar1,iVar5,param_2), iVar2 == 0)) {
-            if ((*(uint *)(iVar5 + 8) & *(uint *)(iVar1 + 0xa4)) != 0) {
-              CM_MeshTestInLeaf(iVar1,iVar5,param_2);
-            }
+          if (param_2->allsolid != false) break;
+          pcVar5 = cm.leafs + *puVar4;
+          if ((((pcVar5->brushContents & ptVar1->contents) == 0) ||
+              (iVar2 = CM_TestInLeafBrushNode(ptVar1,pcVar5,param_2), iVar2 == 0)) &&
+             ((pcVar5->terrainContents & ptVar1->contents) != 0)) {
+            CM_MeshTestInLeaf(ptVar1,pcVar5,param_2);
           }
           iVar3 = iVar3 + 1;
           puVar4 = puVar4 + 1;
-        } while (iVar3 < local_870[0]);
+        } while (iVar3 < local_870.count);
       }
     }
   }
@@ -676,22 +703,58 @@ void CM_PositionTest(undefined8 param_1,undefined8 param_2)
 
 // 824CA7C8  intersect_line_aabb  (qcommon/cm_trace.cpp:688)
 
-/* WARNING: Control flow encountered bad instruction data */
-
-void intersect_line_aabb(void)
+bool intersect_line_aabb(traceWork_t *param_1,__vector4 param_2,__vector4 param_3)
 
 {
-  undefined1 in_vs32 [16];
-  undefined1 in_vs35 [16];
-  undefined1 in_vs40 [16];
-  undefined1 in_vs41 [16];
-  undefined1 in_vs42 [16];
+  byte in_cr6;
+  undefined1 in_vs33 [16];
+  undefined1 in_vs34 [16];
+  undefined1 auVar1 [16];
+  undefined1 auVar2 [16];
+  undefined1 auVar3 [16];
+  undefined1 auVar4 [16];
+  undefined1 auVar5 [16];
+  undefined1 auVar6 [16];
+  undefined1 auVar7 [16];
+  undefined1 auVar8 [16];
+  undefined1 auVar9 [16];
   
-  altv207_13(in_vs35,in_vs42);
-  altv207_13(in_vs32,in_vs40);
-  altv207_13(in_vs35,in_vs41);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  auVar6 = *(undefined1 (*) [16])((uint)(param_1->extents).start & 0xfffffff0) &
+           (undefined1  [16])g_keepXYZ.field0_0x0;
+  auVar8 = *(undefined1 (*) [16])((uint)(param_1->extents).end & 0xfffffff0) &
+           (undefined1  [16])g_keepXYZ.field0_0x0;
+  auVar5 = vectorMaximumFloatingPoint128(auVar8,auVar6);
+  auVar4 = vectorMinimumFloatingPoint128(auVar8,auVar6);
+  auVar5 = vectorSubtractFloatingPoint128(in_vs33,auVar5);
+  auVar4 = vectorSubtractFloatingPoint128(auVar4,in_vs34);
+  auVar4 = vectorMaximumFloatingPoint128(auVar4,auVar5);
+  vectorCompareGreaterThanFloatingPoint128(auVar4,(undefined1  [16])g_zero.field0_0x0);
+  if (!(bool)(in_cr6 >> 1 & 1)) {
+    return false;
+  }
+  auVar3 = vectorAddFloatingPoint128(in_vs34,in_vs33);
+  auVar2 = vectorSubtractFloatingPoint128(in_vs34,in_vs33);
+  auVar9 = vectorSubtractFloatingPoint128(auVar8,auVar6);
+  auVar5 = vectorSplatImmediateSignedWord(0xff);
+  auVar4 = vectorShiftLeftWord128(auVar5,auVar5);
+  auVar1 = vectorShiftLeftWord128(auVar5,auVar5);
+  auVar5 = vectorMultiplyFloatingPoint(auVar3,(undefined1  [16])g_oneHalf.field0_0x0);
+  auVar8 = vectorMultiplyFloatingPoint(auVar2,(undefined1  [16])g_oneHalf.field0_0x0);
+  auVar2 = vectorPermute128(auVar9,auVar9,(undefined1  [16])g_YZXW.field0_0x0);
+  auVar7 = auVar9 & ~auVar4;
+  auVar4 = vectorPermute128(auVar7,auVar7,(undefined1  [16])g_YZXW.field0_0x0);
+  auVar3 = vectorSubtractFloatingPoint128(auVar6,auVar5);
+  auVar5 = vectorPermute128(auVar8,auVar8,(undefined1  [16])g_YZXW.field0_0x0);
+  auVar5 = vectorMultiplyFloatingPoint(auVar5,auVar7);
+  auVar6 = vectorPermute128(auVar3,auVar3,(undefined1  [16])g_YZXW.field0_0x0);
+  auVar2 = vectorMultiplyFloatingPoint(auVar3,auVar2);
+  auVar6 = vectorMultiplyFloatingPoint(auVar6,auVar9);
+  auVar4 = vectorMultiplyAddFloatingPoint(auVar8,auVar4,auVar5);
+  auVar5 = vectorSubtractFloatingPoint128(auVar2,auVar6);
+  auVar4 = vectorSubtractFloatingPoint128(auVar4,auVar5 & ~auVar1);
+  vectorCompareGreaterThanFloatingPoint128
+            ((undefined1  [16])g_zero.field0_0x0,auVar4 & (undefined1  [16])g_keepXYZ.field0_0x0);
+  return (bool)(in_cr6 >> 1 & 1);
 }
 
 
@@ -700,24 +763,24 @@ void intersect_line_aabb(void)
 /* WARNING: Removing unreachable block (ram,0x824cb344) */
 /* WARNING: Removing unreachable block (ram,0x824cae10) */
 
-void CM_TraceThroughBrush(undefined8 param_1,ulonglong param_2,float *param_3)
+void CM_TraceThroughBrush(traceWork_t *param_1,uint param_2,trace_t *param_3)
 
 {
   float fVar1;
   ushort uVar2;
   bool bVar3;
-  int iVar4;
-  char cVar5;
-  float *pfVar6;
-  ulonglong uVar7;
-  float **ppfVar8;
-  ushort *puVar9;
-  int iVar10;
-  longlong lVar11;
-  uint *puVar12;
-  float *pfVar13;
-  double dVar14;
-  double dVar15;
+  trace_t *ptVar4;
+  int iVar5;
+  char cVar6;
+  undefined4 *puVar7;
+  ulonglong uVar8;
+  float **ppfVar9;
+  ushort *puVar10;
+  int iVar11;
+  float *pfVar12;
+  longlong lVar13;
+  uint *puVar14;
+  float *pfVar15;
   double dVar16;
   double dVar17;
   double dVar18;
@@ -730,259 +793,285 @@ void CM_TraceThroughBrush(undefined8 param_1,ulonglong param_2,float *param_3)
   double dVar25;
   double dVar26;
   double dVar27;
+  double dVar28;
+  double dVar29;
+  trace_t *ptStack00000024;
   float **local_16c;
   uint local_168;
   float *local_138 [2];
   ushort *local_130;
-  float local_12c;
+  uint local_12c;
   int local_128;
   float local_120 [72];
   
+  uVar8 = (ulonglong)(int)param_2;
   __savegprlr();
-  iVar4 = __savefpr_18();
-  iVar10 = *(int *)(iVar4 + 0xac);
-  local_128 = iVar10;
-  if (iVar10 == 0) {
-    MyAssertHandler(0xffffffff8208249c,0x2f7,0,0xffffffff82000f98,0xffffffff82021a7c);
+  iVar5 = __savefpr_18();
+  iVar11 = *(int *)(iVar5 + 0xac);
+  ptStack00000024 = param_3;
+  local_128 = iVar11;
+  if (iVar11 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",0x2f7,0,
+                    "%s");
   }
-  if ((ulonglong)*(ushort *)(iVar10 + 0x30) <= (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8208249c,0x2f8,0,0xffffffff82000f98,0xffffffff820828e8);
+  if ((ulonglong)*(ushort *)(iVar11 + 0x30) <= (uVar8 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",0x2f8,0,
+                    "%s");
   }
-  local_12c = *(float *)(*(int *)(iVar10 + 0x3c) + (int)((param_2 & 0xffffffff) << 2));
-  if ((*(uint *)(iVar4 + 0xa4) & (uint)local_12c) != 0) {
-    if ((((*(uint *)(iVar4 + 0x40) & 0x7f800000) == 0x7f800000) ||
-        ((*(uint *)(iVar4 + 0x44) & 0x7f800000) == 0x7f800000)) ||
-       ((*(uint *)(iVar4 + 0x48) & 0x7f800000) == 0x7f800000)) {
-      MyAssertHandler(0xffffffff8208249c,0x2fe,0,0xffffffff82000f98,0xffffffff820826c0);
+  local_12c = *(uint *)(*(int *)(iVar11 + 0x3c) + (int)((uVar8 & 0xffffffff) << 2));
+  if ((*(uint *)(iVar5 + 0xa4) & local_12c) != 0) {
+    if ((((*(uint *)(iVar5 + 0x40) & 0x7f800000) == 0x7f800000) ||
+        ((*(uint *)(iVar5 + 0x44) & 0x7f800000) == 0x7f800000)) ||
+       ((*(uint *)(iVar5 + 0x48) & 0x7f800000) == 0x7f800000)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",0x2fe,
+                      0,"%s");
     }
-    if ((((*(uint *)(iVar4 + 0x50) & 0x7f800000) == 0x7f800000) ||
-        ((*(uint *)(iVar4 + 0x54) & 0x7f800000) == 0x7f800000)) ||
-       ((*(uint *)(iVar4 + 0x58) & 0x7f800000) == 0x7f800000)) {
-      MyAssertHandler(0xffffffff8208249c,0x2ff,0,0xffffffff82000f98,0xffffffff82082660);
+    if ((((*(uint *)(iVar5 + 0x50) & 0x7f800000) == 0x7f800000) ||
+        ((*(uint *)(iVar5 + 0x54) & 0x7f800000) == 0x7f800000)) ||
+       ((*(uint *)(iVar5 + 0x58) & 0x7f800000) == 0x7f800000)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",0x2ff,
+                      0,"%s");
     }
-    if ((((*(uint *)(iVar4 + 0x30) & 0x7f800000) == 0x7f800000) ||
-        ((*(uint *)(iVar4 + 0x34) & 0x7f800000) == 0x7f800000)) ||
-       ((*(uint *)(iVar4 + 0x38) & 0x7f800000) == 0x7f800000)) {
-      MyAssertHandler(0xffffffff8208249c,0x300,0,0xffffffff82000f98,0xffffffff82082870);
+    if ((((*(uint *)(iVar5 + 0x30) & 0x7f800000) == 0x7f800000) ||
+        ((*(uint *)(iVar5 + 0x34) & 0x7f800000) == 0x7f800000)) ||
+       ((*(uint *)(iVar5 + 0x38) & 0x7f800000) == 0x7f800000)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",0x300,
+                      0,"%s");
     }
-    dVar17 = (double)*param_3;
-    lVar11 = (ulonglong)*(uint *)(iVar10 + 0x38) +
-             (param_2 + (param_2 & 0x7fffffff) * 2 & 0x1fffffff) * 8;
-    puVar9 = (ushort *)(*(int *)(iVar10 + 0x34) + (int)param_2 * 0x24);
-    dVar22 = 0.0;
-    puVar12 = (uint *)lVar11;
+    dVar19 = (double)param_3->fraction;
+    lVar13 = (ulonglong)*(uint *)(iVar11 + 0x38) +
+             (uVar8 + (uVar8 & 0x7fffffff) * 2 & 0x1fffffff) * 8;
+    puVar10 = (ushort *)(*(int *)(iVar11 + 0x34) + (int)uVar8 * 0x24);
+    dVar24 = 0.0;
+    puVar14 = (uint *)lVar13;
     local_168 = 0;
     local_16c = (float **)0x0;
     bVar3 = true;
-    dVar14 = dVar22;
-    dVar15 = dVar22;
-    dVar18 = dVar22;
-    dVar23 = dVar22;
-    local_130 = puVar9;
-    if ((((*puVar12 & 0x7f800000) == 0x7f800000) || ((puVar12[1] & 0x7f800000) == 0x7f800000)) ||
-       ((puVar12[2] & 0x7f800000) == 0x7f800000)) {
-      MyAssertHandler(0xffffffff8208249c,0x317,0,0xffffffff82000f98,0xffffffff8202be10);
+    dVar16 = dVar24;
+    dVar17 = dVar24;
+    dVar20 = dVar24;
+    dVar25 = dVar24;
+    local_130 = puVar10;
+    if ((((*puVar14 & 0x7f800000) == 0x7f800000) || ((puVar14[1] & 0x7f800000) == 0x7f800000)) ||
+       ((puVar14[2] & 0x7f800000) == 0x7f800000)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",0x317,
+                      0,"%s");
     }
-    if ((((puVar12[3] & 0x7f800000) == 0x7f800000) || ((puVar12[4] & 0x7f800000) == 0x7f800000)) ||
-       ((puVar12[5] & 0x7f800000) == 0x7f800000)) {
-      MyAssertHandler(0xffffffff8208249c,0x318,0,0xffffffff82000f98,0xffffffff8202bda8);
+    if ((((puVar14[3] & 0x7f800000) == 0x7f800000) || ((puVar14[4] & 0x7f800000) == 0x7f800000)) ||
+       ((puVar14[5] & 0x7f800000) == 0x7f800000)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",0x318,
+                      0,"%s");
     }
-    if ((((*(uint *)(iVar4 + 0xc0) & 0x7f800000) == 0x7f800000) ||
-        ((*(uint *)(iVar4 + 0xc4) & 0x7f800000) == 0x7f800000)) ||
-       ((*(uint *)(iVar4 + 200) & 0x7f800000) == 0x7f800000)) {
-      MyAssertHandler(0xffffffff8208249c,0x319,0,0xffffffff82000f98,0xffffffff82082808);
+    if ((((*(uint *)(iVar5 + 0xc0) & 0x7f800000) == 0x7f800000) ||
+        ((*(uint *)(iVar5 + 0xc4) & 0x7f800000) == 0x7f800000)) ||
+       ((*(uint *)(iVar5 + 200) & 0x7f800000) == 0x7f800000)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",0x319,
+                      0,"%s");
     }
-    dVar16 = 0.125;
-    dVar21 = 2.0;
-    dVar19 = -1.0;
-    iVar10 = 0;
-    dVar20 = 1.0;
-    pfVar6 = (float *)(iVar4 + 0x20);
+    dVar18 = 0.125;
+    dVar23 = 2.0;
+    dVar21 = -1.0;
+    iVar11 = 0;
+    dVar22 = 1.0;
+    pfVar12 = (float *)(iVar5 + 0x20);
     do {
-      pfVar13 = (float *)lVar11;
-      if (*(char *)(iVar4 + 0xe0 + iVar10) == '\0') {
-        dVar24 = dVar20;
-        if (pfVar6[0x14] < 0.0) {
-          dVar24 = dVar19;
+      pfVar15 = (float *)lVar13;
+      if (*(char *)(iVar5 + 0xe0 + iVar11) == '\0') {
+        dVar26 = dVar22;
+        if (pfVar12[0x14] < 0.0) {
+          dVar26 = dVar21;
         }
-        dVar26 = (double)(float)((double)(pfVar6[-8] - *pfVar13) * dVar24);
-        dVar25 = (double)((*pfVar6 - pfVar6[0x28]) - pfVar13[3]);
-        dVar27 = (double)(float)(dVar26 + dVar25);
-        if (((uint)(float)(dVar26 + dVar25) & 0x7f800000) == 0x7f800000) {
-          MyAssertHandler(0xffffffff8208249c,0x32d,0,0xffffffff82000f98,0xffffffff820827d4);
+        dVar28 = (double)(float)((double)(pfVar12[-8] - *pfVar15) * dVar26);
+        dVar27 = (double)((*pfVar12 - pfVar12[0x28]) - pfVar15[3]);
+        dVar29 = (double)(float)(dVar28 + dVar27);
+        if (((uint)(float)(dVar28 + dVar27) & 0x7f800000) == 0x7f800000) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",
+                          0x32d,0,"%s");
         }
-        if (dVar23 < dVar27) {
-          dVar27 = (double)((float)((double)*pfVar6 * dVar21 - dVar27) * pfVar6[4]);
-          if (dVar27 <= dVar18) goto LAB_824cac88;
+        if (dVar25 < dVar29) {
+          dVar29 = (double)((float)((double)*pfVar12 * dVar23 - dVar29) * pfVar12[4]);
+          if (dVar29 <= dVar20) goto LAB_824cac88;
           bVar3 = false;
-          if ((float)(dVar27 - dVar17) < 0.0) {
-            dVar17 = dVar27;
+          if ((float)(dVar29 - dVar19) < 0.0) {
+            dVar19 = dVar29;
           }
         }
-        dVar27 = (double)(float)(dVar25 - dVar26);
-        if (((uint)(float)(dVar25 - dVar26) & 0x7f800000) == 0x7f800000) {
-          MyAssertHandler(0xffffffff8208249c,0x33b,0,0xffffffff82000f98,0xffffffff820827ec);
+        dVar29 = (double)(float)(dVar27 - dVar28);
+        if (((uint)(float)(dVar27 - dVar28) & 0x7f800000) == 0x7f800000) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",
+                          0x33b,0,"%s");
         }
-        if (dVar23 < dVar27) {
-          if ((float)((double)(float)((double)*pfVar6 * dVar17) * dVar21) <=
-              (float)(dVar27 - dVar16)) goto LAB_824cac88;
-          dVar25 = (double)(pfVar6[4] * (float)(dVar27 - dVar16));
-          if ((dVar18 < dVar25) || (dVar25 = dVar18, local_16c == (float **)0x0)) {
+        if (dVar25 < dVar29) {
+          if ((float)((double)(float)((double)*pfVar12 * dVar19) * dVar23) <=
+              (float)(dVar29 - dVar18)) goto LAB_824cac88;
+          dVar27 = (double)(pfVar12[4] * (float)(dVar29 - dVar18));
+          if ((dVar20 < dVar27) || (dVar27 = dVar20, local_16c == (float **)0x0)) {
             local_138[0] = local_120;
             local_16c = local_138;
-            uVar2 = puVar9[((dVar24 < dVar23) + 2) * 3 + iVar10];
-            local_120[0] = (float)dVar23;
-            local_120[1] = (float)dVar23;
-            local_120[2] = (float)dVar23;
-            *(float *)(((int)local_120 - (int)puVar12) + (int)pfVar13) = (float)-dVar24;
-            dVar15 = (double)local_120[0];
-            dVar14 = (double)local_120[1];
+            uVar2 = puVar10[((dVar26 < dVar25) + 2) * 3 + iVar11];
+            local_120[0] = (float)dVar25;
+            local_120[1] = (float)dVar25;
+            local_120[2] = (float)dVar25;
+            *(float *)(((int)local_120 - (int)puVar14) + (int)pfVar15) = (float)-dVar26;
+            dVar17 = (double)local_120[0];
+            dVar16 = (double)local_120[1];
             local_168 = (uint)uVar2;
-            dVar22 = (double)local_120[2];
-            dVar18 = dVar25;
+            dVar24 = (double)local_120[2];
+            dVar20 = dVar27;
           }
         }
       }
-      else if (dVar23 <= (double)(ABS(pfVar6[-8] - *pfVar13) - (pfVar6[0x28] + pfVar13[3])))
+      else if (dVar25 <= (double)(ABS(pfVar12[-8] - *pfVar15) - (pfVar12[0x28] + pfVar15[3])))
       goto LAB_824cac88;
-      iVar10 = iVar10 + 1;
-      lVar11 = lVar11 + 4;
-      pfVar6 = pfVar6 + 1;
-    } while (iVar10 < 3);
-    uVar7 = (ulonglong)*puVar9;
-    ppfVar8 = *(float ***)(puVar9 + 2);
-    if (*puVar9 != 0) {
+      iVar11 = iVar11 + 1;
+      lVar13 = lVar13 + 4;
+      pfVar12 = pfVar12 + 1;
+    } while (iVar11 < 3);
+    uVar8 = (ulonglong)*puVar10;
+    ppfVar9 = *(float ***)(puVar10 + 2);
+    if (*puVar10 != 0) {
       do {
-        pfVar6 = *ppfVar8;
-        if (((uint)pfVar6[3] & 0x7f800000) == 0x7f800000) {
-          MyAssertHandler(0xffffffff8208249c,0x361,0,0xffffffff82000f98,0xffffffff82082560);
+        pfVar12 = *ppfVar9;
+        if (((uint)pfVar12[3] & 0x7f800000) == 0x7f800000) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",
+                          0x361,0,"%s");
         }
-        if ((*(uint *)(iVar4 + 0xb0) & 0x7f800000) == 0x7f800000) {
-          MyAssertHandler(0xffffffff8208249c,0x362,0,0xffffffff82000f98,0xffffffff82082578);
+        if ((*(uint *)(iVar5 + 0xb0) & 0x7f800000) == 0x7f800000) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",
+                          0x362,0,"%s");
         }
-        if (((((uint)*pfVar6 & 0x7f800000) == 0x7f800000) ||
-            (((uint)pfVar6[1] & 0x7f800000) == 0x7f800000)) ||
-           (((uint)pfVar6[2] & 0x7f800000) == 0x7f800000)) {
-          MyAssertHandler(0xffffffff8208249c,0x365,0,0xffffffff82000f98,0xffffffff82082590);
+        if (((((uint)*pfVar12 & 0x7f800000) == 0x7f800000) ||
+            (((uint)pfVar12[1] & 0x7f800000) == 0x7f800000)) ||
+           (((uint)pfVar12[2] & 0x7f800000) == 0x7f800000)) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",
+                          0x365,0,"%s");
         }
-        if (((((uint)*(float *)(iVar4 + 0xb4) & 0x7f800000) == 0x7f800000) ||
-            ((*(uint *)(iVar4 + 0xb8) & 0x7f800000) == 0x7f800000)) ||
-           ((*(uint *)(iVar4 + 0xbc) & 0x7f800000) == 0x7f800000)) {
-          MyAssertHandler(0xffffffff8208249c,0x366,0,0xffffffff82000f98,0xffffffff820825f0);
+        if (((((uint)*(float *)(iVar5 + 0xb4) & 0x7f800000) == 0x7f800000) ||
+            ((*(uint *)(iVar5 + 0xb8) & 0x7f800000) == 0x7f800000)) ||
+           ((*(uint *)(iVar5 + 0xbc) & 0x7f800000) == 0x7f800000)) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",
+                          0x366,0,"%s");
         }
-        fVar1 = ABS(*(float *)(iVar4 + 0xbc) * pfVar6[2] +
-                    *(float *)(iVar4 + 0xb8) * pfVar6[1] + *pfVar6 * *(float *)(iVar4 + 0xb4)) +
-                *(float *)(iVar4 + 0xb0) + pfVar6[3];
-        dVar19 = (double)fVar1;
+        fVar1 = ABS(*(float *)(iVar5 + 0xbc) * pfVar12[2] +
+                    *(float *)(iVar5 + 0xb8) * pfVar12[1] + *pfVar12 * *(float *)(iVar5 + 0xb4)) +
+                *(float *)(iVar5 + 0xb0) + pfVar12[3];
+        dVar21 = (double)fVar1;
         if (((uint)fVar1 & 0x7f800000) == 0x7f800000) {
-          MyAssertHandler(0xffffffff8208249c,0x369,0,0xffffffff82000f98,0xffffffff82082644);
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",
+                          0x369,0,"%s");
         }
-        fVar1 = (float)((double)(*(float *)(iVar4 + 0x48) * pfVar6[2] +
-                                *(float *)(iVar4 + 0x40) * *pfVar6 +
-                                *(float *)(iVar4 + 0x44) * pfVar6[1]) - dVar19);
-        dVar20 = (double)fVar1;
-        dVar19 = (double)(float)((double)(*(float *)(iVar4 + 0x58) * pfVar6[2] +
-                                         *(float *)(iVar4 + 0x54) * pfVar6[1] +
-                                         *pfVar6 * *(float *)(iVar4 + 0x50)) - dVar19);
+        fVar1 = (float)((double)(*(float *)(iVar5 + 0x48) * pfVar12[2] +
+                                *(float *)(iVar5 + 0x40) * *pfVar12 +
+                                *(float *)(iVar5 + 0x44) * pfVar12[1]) - dVar21);
+        dVar22 = (double)fVar1;
+        dVar21 = (double)(float)((double)(*(float *)(iVar5 + 0x58) * pfVar12[2] +
+                                         *(float *)(iVar5 + 0x54) * pfVar12[1] +
+                                         *pfVar12 * *(float *)(iVar5 + 0x50)) - dVar21);
         if (((uint)fVar1 & 0x7f800000) == 0x7f800000) {
-          MyAssertHandler(0xffffffff8208249c,0x36e,0,0xffffffff82000f98,0xffffffff82082654,
-                          0x7f800000,fVar1,iVar4 + 0x40);
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",
+                          0x36e,0,"%s");
         }
-        if (((uint)(float)dVar19 & 0x7f800000) == 0x7f800000) {
-          MyAssertHandler(0xffffffff8208249c,0x36f,0,0xffffffff82000f98,0xffffffff820827a0);
+        if (((uint)(float)dVar21 & 0x7f800000) == 0x7f800000) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",
+                          0x36f,0,"%s");
         }
-        if (dVar20 <= dVar23) {
-          if (dVar23 < dVar19) {
-            dVar19 = (double)(float)(dVar20 - dVar19);
-            if (dVar23 <= dVar19) {
-              MyAssertHandler(0xffffffff8208249c,0x38f,0,0xffffffff82000f98,0xffffffff820827c8);
+        if (dVar22 <= dVar25) {
+          if (dVar25 < dVar21) {
+            dVar21 = (double)(float)(dVar22 - dVar21);
+            if (dVar25 <= dVar21) {
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp"
+                              ,0x38f,0,"%s");
             }
-            if (((double)(float)(dVar19 * dVar17) < dVar20) &&
-               (dVar17 = (double)(float)(dVar20 / dVar19), dVar17 <= dVar18)) goto LAB_824cac88;
+            if (((double)(float)(dVar21 * dVar19) < dVar22) &&
+               (dVar19 = (double)(float)(dVar22 / dVar21), dVar19 <= dVar20)) goto LAB_824cac88;
             bVar3 = false;
           }
         }
         else {
-          dVar21 = dVar20;
-          if ((float)(dVar16 - dVar20) < 0.0) {
-            dVar21 = dVar16;
+          dVar23 = dVar22;
+          if ((float)(dVar18 - dVar22) < 0.0) {
+            dVar23 = dVar18;
           }
-          if (dVar21 <= dVar19) goto LAB_824cac88;
-          if (dVar23 < dVar19) {
+          if (dVar23 <= dVar21) goto LAB_824cac88;
+          if (dVar25 < dVar21) {
             bVar3 = false;
           }
-          local_138[0] = (float *)(float)(dVar20 - dVar19);
-          dVar19 = (double)(float)local_138[0];
+          local_138[0] = (float *)(float)(dVar22 - dVar21);
+          dVar21 = (double)(float)local_138[0];
           if (((uint)local_138[0] & 0x7f800000) == 0x7f800000) {
-            MyAssertHandler(0xffffffff8208249c,0x37a,0,0xffffffff82000f98,0xffffffff820827ac);
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",
+                            0x37a,0,"%s");
           }
-          if (dVar19 <= dVar23) {
-            MyAssertHandler(0xffffffff8208249c,0x37c,0,0xffffffff82000f98,0xffffffff820827bc);
+          if (dVar21 <= dVar25) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",
+                            0x37c,0,"%s");
           }
-          if ((double)(float)(dVar20 - dVar16) <= (double)(float)(dVar19 * dVar18)) {
+          if ((double)(float)(dVar22 - dVar18) <= (double)(float)(dVar21 * dVar20)) {
             if (local_16c != (float **)0x0) goto LAB_824cb1c0;
           }
           else {
-            dVar18 = (double)(float)((double)(float)(dVar20 - dVar16) / dVar19);
-            if (dVar17 <= dVar18) goto LAB_824cac88;
+            dVar20 = (double)(float)((double)(float)(dVar22 - dVar18) / dVar21);
+            if (dVar19 <= dVar20) goto LAB_824cac88;
           }
-          dVar15 = (double)*pfVar6;
-          dVar14 = (double)pfVar6[1];
-          dVar22 = (double)pfVar6[2];
-          local_168 = (uint)*(ushort *)(ppfVar8 + 1);
-          local_16c = ppfVar8;
+          dVar17 = (double)*pfVar12;
+          dVar16 = (double)pfVar12[1];
+          dVar24 = (double)pfVar12[2];
+          local_168 = (uint)*(ushort *)(ppfVar9 + 1);
+          local_16c = ppfVar9;
         }
 LAB_824cb1c0:
-        uVar7 = uVar7 - 1;
-        ppfVar8 = ppfVar8 + 2;
-      } while (uVar7 != 0);
+        uVar8 = uVar8 - 1;
+        ppfVar9 = ppfVar9 + 2;
+      } while (uVar8 != 0);
     }
-    puVar9 = local_130;
+    puVar10 = local_130;
     if (local_130[1] != 0) {
-      if (**(int **)(iVar4 + 0xdc) == 0) {
-        MyAssertHandler(0xffffffff8208249c,0x39c,0,0xffffffff82000f98,0xffffffff82082544);
+      if (**(int **)(iVar5 + 0xdc) == 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",
+                        0x39c,0,"%s");
       }
-      cVar5 = (*(code *)**(undefined4 **)(iVar4 + 0xdc))((ulonglong)puVar9[1] - 1);
-      if (cVar5 == '\0') goto LAB_824cac88;
+      cVar6 = (*(code *)**(undefined4 **)(iVar5 + 0xdc))((ulonglong)puVar10[1] - 1);
+      if (cVar6 == '\0') goto LAB_824cac88;
     }
-    param_3[5] = local_12c;
+    ptVar4 = ptStack00000024;
+    ptStack00000024->contents = local_12c;
     if (local_16c != (float **)0x0) {
-      if ((dVar18 < dVar23) || ((double)*param_3 < dVar18)) {
-        MyAssertHandler(dVar18,0xffffffff8208249c,0x3b4,1,0xffffffff82082760,dVar18,0,
-                        (double)*param_3);
+      if ((dVar20 < dVar25) || ((double)ptStack00000024->fraction < dVar20)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",
+                        0x3b4,1,"enterFrac not in [0.0f, trace->fraction]\n\t%g not in [%g, %g]");
       }
-      *param_3 = (float)dVar18;
-      param_3[2] = (float)dVar14;
-      param_3[3] = (float)dVar22;
-      param_3[1] = (float)dVar15;
-      pfVar6 = (float *)(local_168 * 0xc + *(int *)(local_128 + 0xc));
-      param_3[4] = pfVar6[1];
-      param_3[6] = *pfVar6;
-      *(undefined1 *)(param_3 + 0xc) = 0;
-      uVar2 = puVar9[1];
+      ptVar4->fraction = (float)dVar20;
+      ptVar4->normal[1] = (float)dVar16;
+      ptVar4->normal[2] = (float)dVar24;
+      ptVar4->normal[0] = (float)dVar17;
+      puVar7 = (undefined4 *)(local_168 * 0xc + *(int *)(local_128 + 0xc));
+      ptVar4->surfaceFlags = puVar7[1];
+      ptVar4->material = (char *)*puVar7;
+      ptVar4->walkable = false;
+      uVar2 = puVar10[1];
       if (uVar2 != 0) {
-        *(ushort *)(param_3 + 8) = uVar2;
-        param_3[7] = 5.60519e-45;
-        param_3[9] = *param_3;
+        ptVar4->hitId = uVar2;
+        ptVar4->hitType = TRACE_HITTYPE_GLASS;
+        ptVar4->fractionForHitType = ptVar4->fraction;
         __restfpr_18();
         __restgprlr();
         return;
       }
-      param_3[9] = *param_3;
-      *(undefined2 *)(param_3 + 8) = 0x7fe;
-      param_3[7] = 1.4013e-45;
+      ptVar4->fractionForHitType = ptVar4->fraction;
+      ptVar4->hitId = 0x7fe;
+      ptVar4->hitType = TRACE_HITTYPE_ENTITY;
       __restfpr_18();
       __restgprlr();
       return;
     }
-    *(undefined1 *)((int)param_3 + 0x2f) = 1;
+    ptStack00000024->startsolid = true;
     if (bVar3) {
-      *param_3 = (float)dVar23;
-      param_3[9] = (float)dVar23;
-      *(undefined1 *)((int)param_3 + 0x2e) = 1;
-      param_3[4] = 0.0;
-      param_3[7] = 1.4013e-45;
-      *(undefined2 *)(param_3 + 8) = 0x7fe;
+      ptStack00000024->fraction = (float)dVar25;
+      ptStack00000024->fractionForHitType = (float)dVar25;
+      ptStack00000024->allsolid = true;
+      ptStack00000024->surfaceFlags = 0;
+      ptStack00000024->hitType = TRACE_HITTYPE_ENTITY;
+      ptStack00000024->hitId = 0x7fe;
       __restfpr_18();
       __restgprlr();
       return;
@@ -997,57 +1086,95 @@ LAB_824cac88:
 
 // 824CB3A8  CM_TraceThroughBrushes  (qcommon/cm_trace.cpp:967)
 
-/* WARNING: Control flow encountered bad instruction data */
-
-void CM_TraceThroughBrushes(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+void CM_TraceThroughBrushes(traceWork_t *param_1,ushort *param_2,int param_3,trace_t *param_4)
 
 {
-  int iVar1;
-  uint uVar2;
-  int iVar3;
-  double dVar4;
-  undefined1 in_vs32 [16];
-  undefined1 in_vs57 [16];
-  undefined1 in_vs58 [16];
-  undefined1 auVar5 [16];
+  ushort uVar1;
+  ClipInfo *pCVar2;
+  traceWork_t *ptVar3;
+  int iVar4;
+  longlong lVar5;
+  bool bVar6;
+  ulonglong uVar7;
+  ulonglong uVar8;
+  uint uVar10;
+  longlong lVar9;
+  double dVar11;
+  undefined1 auVar12 [16];
+  undefined1 auVar13 [16];
+  undefined1 auVar14 [16];
+  undefined1 auVar15 [16];
+  undefined1 auVar16 [16];
+  undefined1 auVar17 [16];
+  trace_t *ptStack0000002c;
+  __vector4_u_0 in_stack_ffffff08;
+  __vector4_u_0 in_stack_ffffff18;
   
-  iVar1 = __savegprlr();
-  iVar3 = *(int *)(iVar1 + 0xac);
-  if (iVar3 == 0) {
-    MyAssertHandler(0xffffffff8208249c,0x3da,0,0xffffffff82000f98,0xffffffff82021a7c);
+  uVar7 = (ulonglong)param_3;
+  uVar8 = (ulonglong)(int)param_2;
+  lVar5 = (longlong)(int)param_1;
+  __savegprlr();
+  ptVar3 = (traceWork_t *)lVar5;
+  pCVar2 = ptVar3->info;
+  uVar10 = (int)((uVar7 & 0xffffffff) << 1) + (int)uVar8;
+  ptStack0000002c = param_4;
+  if (pCVar2 == (ClipInfo *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",0x3da,0,
+                    "%s");
   }
-  if ((param_2 & 0xffffffff) !=
-      (ulonglong)(uint)((int)((param_3 & 0xffffffff) << 1) + (int)(ushort *)param_2)) {
-    dVar4 = 0.0;
-    uVar2 = (uint)*(ushort *)param_2;
-    if (*(ushort *)(iVar3 + 0x30) <= uVar2) {
-      MyAssertHandler(0xffffffff8208249c,0x3e0,0,0xffffffff82000f98,0xffffffff820828e8);
-    }
-    iVar3 = uVar2 * 0x18 + *(int *)(iVar3 + 0x38);
-    if ((double)*(float *)(iVar1 + 0xc0) < dVar4) {
-      MyAssertHandler(0xffffffff8208249c,0x3f3,0,0xffffffff82000f98,0xffffffff82082904);
-    }
-    if ((double)*(float *)(iVar1 + 0xc4) < dVar4) {
-      MyAssertHandler(0xffffffff8208249c,0x3f4,0,0xffffffff82000f98,0xffffffff82082920);
-    }
-    if ((double)*(float *)(iVar1 + 200) < dVar4) {
-      MyAssertHandler(0xffffffff8208249c,0x3f5,0,0xffffffff82000f98,0xffffffff8208293c);
-    }
-    if ((double)*(float *)(iVar3 + 0xc) < dVar4) {
-      MyAssertHandler(0xffffffff8208249c,0x3f7,0,0xffffffff82000f98,0xffffffff82082958);
-    }
-    if ((double)*(float *)(iVar3 + 0x10) < dVar4) {
-      MyAssertHandler(0xffffffff8208249c,0x3f8,0,0xffffffff82000f98,0xffffffff82082974);
-    }
-    if ((double)*(float *)(iVar3 + 0x14) < dVar4) {
-      MyAssertHandler(0xffffffff8208249c,0x3f9,0,0xffffffff82000f98,0xffffffff82082990);
-    }
-    auVar5 = altv300_21(in_vs32,in_vs58);
-    altv300_21(in_vs32,auVar5);
-    altv300_23(in_vs57,in_vs58);
-    altv300_23(in_vs57,auVar5);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-    halt_baddata();
+  if ((uVar8 & 0xffffffff) != (ulonglong)uVar10) {
+    dVar11 = 0.0;
+    do {
+      uVar1 = *(ushort *)uVar8;
+      if ((ulonglong)pCVar2->numBrushes <= (ulonglong)uVar1) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",
+                        0x3e0,0,"%s");
+      }
+      lVar9 = (ulonglong)uVar1 * 0x18 + ZEXT48(pCVar2->brushBounds);
+      if ((double)*(float *)(lVar5 + 0xc0) < dVar11) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",
+                        0x3f3,0,"%s");
+      }
+      if ((double)ptVar3->radiusOffset[1] < dVar11) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",
+                        0x3f4,0,"%s");
+      }
+      if ((double)ptVar3->radiusOffset[2] < dVar11) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",
+                        0x3f5,0,"%s");
+      }
+      iVar4 = (int)lVar9;
+      if ((double)*(float *)(iVar4 + 0xc) < dVar11) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",
+                        0x3f7,0,"%s");
+      }
+      if ((double)*(float *)(iVar4 + 0x10) < dVar11) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",
+                        0x3f8,0,"%s");
+      }
+      if ((double)*(float *)(iVar4 + 0x14) < dVar11) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",
+                        0x3f9,0,"%s");
+      }
+      auVar17 = loadVectorLeftIndexed(lVar5 + 0xc0);
+      auVar16 = loadVectorLeftIndexed(lVar9 + 0xc);
+      auVar15 = loadVectorRightIndexed(lVar5 + 0xd0);
+      auVar14 = loadVectorRightIndexed(lVar9 + 0x1c);
+      auVar13 = loadVectorLeftIndexed(lVar9);
+      auVar12 = loadVectorRightIndexed(lVar9 + 0x10);
+      auVar14 = vectorAddFloatingPoint128
+                          ((auVar16 | auVar14) & (undefined1  [16])g_keepXYZ.field0_0x0,
+                           (auVar17 | auVar15) & (undefined1  [16])g_keepXYZ.field0_0x0);
+      auVar12 = (auVar13 | auVar12) & (undefined1  [16])g_keepXYZ.field0_0x0;
+      vectorAddFloatingPoint128(auVar12,auVar14);
+      vectorSubtractFloatingPoint128(auVar12,auVar14);
+      bVar6 = intersect_line_aabb(ptVar3,(__vector4)in_stack_ffffff08._s_2,
+                                  (__vector4)in_stack_ffffff18._s_2);
+      if (bVar6) {
+        CM_TraceThroughBrush(ptVar3,(uint)uVar1,ptStack0000002c);
+      }
+      uVar8 = uVar8 + 2;
+    } while ((uVar8 & 0xffffffff) != (ulonglong)uVar10);
   }
   __restgprlr();
   return;
@@ -1057,652 +1184,22 @@ void CM_TraceThroughBrushes(undefined8 param_1,ulonglong param_2,ulonglong param
 // 824CB600  CM_TraceThroughLeafBrushNode_r  (qcommon/cm_trace.cpp:1042)
 
 void CM_TraceThroughLeafBrushNode_r
-               (undefined8 param_1,ulonglong param_2,float *param_3,undefined8 param_4,
-               undefined8 param_5)
+               (traceWork_t *param_1,cLeafBrushNode_s *param_2,float *param_3,float *param_4,
+               trace_t *param_5)
 
 {
   float fVar1;
   byte bVar2;
-  short sVar3;
-  byte *pbVar4;
-  float *pfVar5;
+  byte *pbVar3;
+  float fVar4;
+  float fVar5;
   float fVar6;
   float fVar7;
-  float fVar8;
-  float fVar9;
-  int iVar10;
-  longlong lVar11;
+  traceWork_t *ptVar8;
+  int iVar9;
+  longlong lVar10;
+  ulonglong uVar11;
   ulonglong uVar12;
-  double dVar13;
-  double dVar14;
-  undefined8 uVar15;
-  double dVar16;
-  double dVar17;
-  undefined8 uVar18;
-  double dVar19;
-  double dVar20;
-  double dVar21;
-  double dVar22;
-  float local_b0 [4];
-  float local_a0;
-  float local_9c;
-  float local_98;
-  float local_94;
-  
-  __savegprlr_24();
-  iVar10 = __savefpr_23();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8208249c,0x425,0,0xffffffff82000f98,0xffffffff8206f7e8);
-  }
-  local_b0[0] = *param_3;
-  local_b0[1] = param_3[1];
-  local_b0[2] = param_3[2];
-  local_b0[3] = param_3[3];
-  dVar13 = (double)local_b0[3];
-  if ((*(uint *)((int)param_2 + 4) & *(uint *)(iVar10 + 0xa4)) == 0) {
-LAB_824cb978:
-    __restfpr_23();
-    __restgprlr_24();
-    return;
-  }
-  uVar15 = 0x3ff0000080000000;
-  dVar19 = 1.0000004768371582;
-  uVar18 = 0;
-  dVar21 = 1.0;
-  dVar16 = 4.76837158203125e-07;
-  dVar20 = 0.0;
-  dVar17 = 0.125;
-  do {
-    pbVar4 = (byte *)param_2;
-    sVar3 = *(short *)(pbVar4 + 2);
-    if (sVar3 != 0) {
-      if (0 < sVar3) {
-        CM_TraceThroughBrushes(iVar10,*(undefined4 *)(pbVar4 + 8),sVar3,param_5);
-        goto LAB_824cb978;
-      }
-      CM_TraceThroughLeafBrushNode_r(iVar10,param_2 + 0x14,local_b0,param_4,param_5);
-      dVar13 = (double)local_b0[3];
-    }
-    bVar2 = *pbVar4;
-    pfVar5 = (float *)param_4;
-    fVar6 = local_b0[bVar2] - *(float *)(pbVar4 + 8);
-    fVar1 = pfVar5[bVar2] - *(float *)(pbVar4 + 8);
-    dVar14 = (double)(fVar1 - fVar6);
-    fVar7 = (float)((double)*(float *)((bVar2 + 0x18) * 4 + iVar10) + dVar17) -
-            *(float *)(pbVar4 + 0xc);
-    fVar8 = fVar6;
-    if (dVar14 < 0.0) {
-      fVar8 = fVar1;
-    }
-    fVar9 = fVar6;
-    if (fVar6 - fVar1 < 0.0) {
-      fVar9 = fVar1;
-    }
-    if (fVar8 < fVar7) {
-      if (-fVar7 < fVar9) {
-        if ((double)*(float *)param_5 <= dVar13) goto LAB_824cb978;
-        if (ABS(dVar14) <= dVar16) {
-          uVar12 = 0;
-          dVar22 = dVar20;
-          dVar14 = dVar21;
-        }
-        else {
-          fVar1 = (float)(dVar21 / ABS(dVar14));
-          dVar22 = dVar21;
-          fVar8 = -fVar6;
-          if (dVar14 < 0.0) {
-            dVar22 = dVar20;
-            fVar8 = fVar6;
-          }
-          uVar12 = (ulonglong)(uint)(int)dVar22;
-          dVar14 = (double)((fVar8 + fVar7) * fVar1);
-          dVar22 = (double)((fVar8 - fVar7) * fVar1);
-          if (dVar14 < dVar20) {
-            MyAssertHandler(dVar14,uVar18,0xffffffff8208249c,0x467,0,0xffffffff820829ac,dVar14,
-                            uVar18);
-            dVar13 = (double)local_b0[3];
-          }
-        }
-        if ((float)(dVar21 - dVar14) < 0.0) {
-          dVar14 = dVar21;
-        }
-        local_a0 = (float)((double)(float)((double)*pfVar5 - (double)local_b0[0]) * dVar14 +
-                          (double)local_b0[0]);
-        local_9c = (float)((double)(float)((double)pfVar5[1] - (double)local_b0[1]) * dVar14 +
-                          (double)local_b0[1]);
-        local_98 = (float)((double)(float)((double)pfVar5[2] - (double)local_b0[2]) * dVar14 +
-                          (double)local_b0[2]);
-        local_94 = (float)((double)(float)((double)pfVar5[3] - dVar13) * dVar14 + dVar13);
-        CM_TraceThroughLeafBrushNode_r
-                  (iVar10,(ulonglong)*(ushort *)(pbVar4 + (int)((uVar12 + 8 & 0xffffffff) << 1)) *
-                          0x14 + param_2,local_b0,&local_a0,param_5);
-        if (dVar19 < dVar22) {
-          MyAssertHandler(dVar22,uVar15,0xffffffff8208249c,0x471,0,0xffffffff820829c4,dVar22,uVar15)
-          ;
-        }
-        if (dVar22 < 0.0) {
-          dVar22 = dVar20;
-        }
-        local_b0[3] = (float)((double)(float)((double)pfVar5[3] - (double)local_b0[3]) * dVar22 +
-                             (double)local_b0[3]);
-        dVar13 = (double)local_b0[3];
-        local_b0[0] = (float)((double)(float)((double)*pfVar5 - (double)local_b0[0]) * dVar22 +
-                             (double)local_b0[0]);
-        local_b0[1] = (float)((double)(float)((double)pfVar5[1] - (double)local_b0[1]) * dVar22 +
-                             (double)local_b0[1]);
-        local_b0[2] = (float)((double)(float)((double)pfVar5[2] - (double)local_b0[2]) * dVar22 +
-                             (double)local_b0[2]);
-        lVar11 = (ulonglong)*(ushort *)(pbVar4 + (int)((9 - uVar12 & 0xffffffff) << 1)) * 0x14;
-      }
-      else {
-        lVar11 = (ulonglong)*(ushort *)(pbVar4 + 0x12) * 0x14;
-      }
-    }
-    else {
-      if (fVar9 <= -fVar7) goto LAB_824cb978;
-      lVar11 = (ulonglong)*(ushort *)(pbVar4 + 0x10) * 0x14;
-    }
-    param_2 = lVar11 + param_2;
-    if ((*(uint *)((int)param_2 + 4) & *(uint *)(iVar10 + 0xa4)) == 0) {
-      __restfpr_23();
-      __restgprlr_24();
-      return;
-    }
-  } while( true );
-}
-
-
-// 824CB988  CM_TraceThroughLeafBrushNode  (qcommon/cm_trace.cpp:1156)
-
-void CM_TraceThroughLeafBrushNode(undefined8 param_1,int param_2,undefined8 param_3)
-
-{
-  int iVar1;
-  int iVar2;
-  float *pfVar3;
-  double dVar4;
-  undefined4 local_70;
-  undefined4 local_6c;
-  undefined4 local_68;
-  float local_64;
-  undefined4 local_60;
-  undefined4 local_5c;
-  undefined4 local_58;
-  undefined4 local_54;
-  undefined4 local_50;
-  undefined4 local_4c;
-  undefined4 local_48;
-  float local_44;
-  float local_40;
-  float local_3c;
-  
-  iVar1 = __savegprlr_27();
-  if (*(int *)(param_2 + 0x24) == 0) {
-    MyAssertHandler(0xffffffff8208249c,0x48a,0,0xffffffff82000f98,0xffffffff82082734);
-  }
-  if (*(int *)(iVar1 + 0xac) == 0) {
-    MyAssertHandler(0xffffffff8208249c,0x48b,0,0xffffffff82000f98,0xffffffff82082728);
-  }
-  local_44 = *(float *)(param_2 + 0x18) + *(float *)(iVar1 + 0xc0);
-  local_40 = *(float *)(param_2 + 0x1c) + *(float *)(iVar1 + 0xc4);
-  local_50 = *(undefined4 *)(param_2 + 0xc);
-  local_3c = *(float *)(param_2 + 0x20) + *(float *)(iVar1 + 200);
-  local_4c = *(undefined4 *)(param_2 + 0x10);
-  local_48 = *(undefined4 *)(param_2 + 0x14);
-  pfVar3 = (float *)param_3;
-  iVar2 = CM_TraceBox((double)*pfVar3,iVar1,&local_50);
-  if (iVar2 != 0) {
-    __restgprlr_27(0);
-    return;
-  }
-  local_70 = *(undefined4 *)(iVar1 + 0x50);
-  local_6c = *(undefined4 *)(iVar1 + 0x54);
-  local_68 = *(undefined4 *)(iVar1 + 0x58);
-  local_64 = *pfVar3;
-  local_60 = *(undefined4 *)(iVar1 + 0x40);
-  local_5c = *(undefined4 *)(iVar1 + 0x44);
-  local_58 = *(undefined4 *)(iVar1 + 0x48);
-  dVar4 = 0.0;
-  local_54 = 0;
-  CM_TraceThroughLeafBrushNode_r
-            (iVar1,(ulonglong)*(uint *)(*(int *)(iVar1 + 0xac) + 0x24) +
-                   ((ulonglong)*(uint *)(param_2 + 0x24) +
-                    ((ulonglong)*(uint *)(param_2 + 0x24) & 0x3fffffff) * 4 & 0x3fffffff) * 4,
-             &local_60,&local_70,param_3);
-  __restgprlr_27((double)*pfVar3 == dVar4);
-  return;
-}
-
-
-// 824CBB10  CM_TraceThroughLeaf  (qcommon/cm_trace.cpp:1186)
-
-void CM_TraceThroughLeaf(undefined8 param_1,undefined8 param_2,undefined8 param_3)
-
-{
-  ushort *puVar1;
-  int iVar2;
-  char cVar3;
-  int iVar4;
-  double dVar5;
-  
-  iVar2 = __savegprlr_27();
-  dVar5 = 0.0;
-  if (*(float *)param_3 == 0.0) goto LAB_824cbbf8;
-  puVar1 = (ushort *)param_2;
-  if ((*(uint *)(puVar1 + 2) & *(uint *)(iVar2 + 0xa4)) == 0) {
-LAB_824cbb80:
-    if ((*(uint *)(puVar1 + 4) & *(uint *)(iVar2 + 0xa4)) == 0) goto LAB_824cbbf8;
-    Profile_Begin(0x26);
-    iVar4 = 0;
-    if (puVar1[1] != 0) {
-      do {
-        if ((double)*(float *)param_3 == dVar5) break;
-        CM_TraceThroughAabbTree
-                  (iVar2,((ulonglong)((uint)*puVar1 + iVar4) & 0x7ffffff) * 0x20 +
-                         (ulonglong)DAT_835a290c,param_3);
-        iVar4 = iVar4 + 1;
-      } while (iVar4 < (int)(uint)puVar1[1]);
-    }
-  }
-  else {
-    Profile_Begin(0x25);
-    cVar3 = CM_TraceThroughLeafBrushNode(iVar2,param_2,param_3);
-    if (cVar3 == '\0') {
-      Profile_EndInternal(0);
-      goto LAB_824cbb80;
-    }
-  }
-  Profile_EndInternal(0);
-LAB_824cbbf8:
-  __restgprlr_27();
-  return;
-}
-
-
-// 824CBC08  CM_TraceSphereThroughSphere  (qcommon/cm_trace.cpp:1234)
-
-void CM_TraceSphereThroughSphere
-               (undefined8 param_1,float *param_2,float *param_3,float *param_4,undefined8 param_5,
-               float param_6,float *param_7)
-
-{
-  float fVar1;
-  float fVar2;
-  float fVar3;
-  int iVar4;
-  double extraout_f1;
-  double dVar5;
-  double dVar6;
-  double dVar7;
-  double dVar8;
-  double dVar9;
-  double dVar10;
-  double dVar11;
-  double dVar12;
-  double dVar13;
-  double dVar14;
-  
-  __savegprlr_29();
-  iVar4 = __savefpr_22();
-  dVar14 = (double)(*param_2 - *param_4);
-  dVar13 = (double)(param_2[1] - param_4[1]);
-  dVar12 = (double)(param_2[2] - param_4[2]);
-  fVar1 = (float)((double)*(float *)(iVar4 + 0x40) + extraout_f1);
-  dVar7 = 0.0;
-  dVar10 = (double)(float)(dVar14 * dVar14);
-  dVar9 = (double)(float)(dVar13 * dVar13);
-  dVar8 = (double)(float)(dVar12 * dVar12);
-  fVar1 = fVar1 * fVar1;
-  dVar5 = (double)((float)((double)(float)(dVar10 + dVar9) + dVar8) - fVar1);
-  if (dVar5 <= 0.0) {
-    *param_7 = 0.0;
-    *(undefined1 *)(param_7 + 0xc) = 0;
-    *(undefined1 *)((int)param_7 + 0x2f) = 1;
-    fVar3 = SQRT((float)((double)(float)(dVar8 + dVar10) + dVar9));
-    fVar2 = 1.0;
-    if (-fVar3 < 0.0) {
-      fVar2 = fVar3;
-    }
-    dVar5 = (double)(1.0 / fVar2);
-    param_7[1] = (float)(dVar5 * dVar14);
-    param_7[2] = (float)(dVar13 * dVar5);
-    param_7[3] = (float)(dVar12 * dVar5);
-    param_7[5] = param_6;
-    param_7[4] = 0.0;
-    if ((*param_3 - *param_4) * (*param_3 - *param_4) +
-        (param_3[2] - param_4[2]) * (param_3[2] - param_4[2]) +
-        (param_3[1] - param_4[1]) * (param_3[1] - param_4[1]) <= fVar1) {
-      *(undefined1 *)((int)param_7 + 0x2e) = 1;
-    }
-    __restfpr_22(0);
-    __restgprlr_29();
-    return;
-  }
-  dVar11 = (double)(float)((double)*(float *)(iVar4 + 0x20) * dVar12 +
-                          (double)(float)((double)*(float *)(iVar4 + 0x1c) * dVar13 +
-                                         (double)(float)((double)*(float *)(iVar4 + 0x18) * dVar14))
-                          );
-  if (dVar11 < 0.0) {
-    dVar6 = (double)*(float *)(iVar4 + 0x24);
-    if (dVar6 <= 0.0) {
-      MyAssertHandler(dVar6,0xffffffff8208249c,0x4f6,0,0xffffffff820829f8,0xffffffff82081fb0,dVar6);
-    }
-    dVar5 = (double)(float)(dVar11 * dVar11 - (double)(float)(dVar6 * dVar5));
-    if (dVar7 <= dVar5) {
-      dVar9 = (double)SQRT((float)((double)(float)(dVar8 + dVar10) + dVar9));
-      dVar8 = 1.0;
-      if (-dVar9 < 0.0) {
-        dVar8 = dVar9;
-      }
-      dVar5 = (double)((float)((double)(float)(-dVar11 - (double)(float)SQRT(dVar5)) / dVar6) +
-                      (float)((double)(float)(dVar9 * 0.125) / dVar11));
-      dVar8 = (double)(float)(1.0 / dVar8);
-      dVar10 = (double)(float)(dVar8 * dVar14);
-      dVar9 = (double)(float)(dVar8 * dVar13);
-      dVar8 = (double)(float)(dVar12 * dVar8);
-      if (dVar5 < (double)*param_7) {
-        if (dVar5 < 0.0) {
-          dVar5 = dVar7;
-        }
-        *param_7 = (float)dVar5;
-        if ((dVar5 < dVar7) || (1.0 < dVar5)) {
-          MyAssertHandler(0xffffffff8208249c,0x503,1,0xffffffff82081df8,0xffffffff82081e14,dVar5);
-        }
-        param_7[1] = (float)dVar10;
-        param_7[2] = (float)dVar9;
-        param_7[3] = (float)dVar8;
-        param_7[5] = param_6;
-        *(undefined1 *)(param_7 + 0xc) = 0;
-        param_7[4] = 0.0;
-        __restfpr_22(0);
-        __restgprlr_29();
-        return;
-      }
-    }
-  }
-  __restfpr_22(1);
-  __restgprlr_29();
-  return;
-}
-
-
-// 824CBE70  CM_TraceCylinderThroughCylinder  (qcommon/cm_trace.cpp:1301)
-
-void CM_TraceCylinderThroughCylinder
-               (undefined8 param_1,double param_2,undefined8 param_3,float *param_4,
-               undefined8 param_5,undefined8 param_6,float param_7,float *param_8)
-
-{
-  float fVar1;
-  float *pfVar2;
-  double extraout_f1;
-  double dVar3;
-  double dVar4;
-  double dVar5;
-  double dVar6;
-  double dVar7;
-  double dVar8;
-  double dVar9;
-  double dVar10;
-  double dVar11;
-  double dVar12;
-  
-  __savegprlr_24();
-  pfVar2 = (float *)__savefpr_23();
-  dVar8 = (double)(*pfVar2 - *param_4);
-  dVar7 = (double)(pfVar2[1] - param_4[1]);
-  dVar12 = 0.0;
-  dVar5 = (double)(pfVar2[2] - param_4[2]);
-  dVar9 = (double)(float)(dVar7 * dVar7 + (double)(float)(dVar8 * dVar8));
-  dVar4 = -(double)(float)((double)(float)((double)pfVar2[0x10] + param_2) *
-                           (double)(float)((double)pfVar2[0x10] + param_2) - dVar9);
-  if (0.0 < dVar4) {
-    dVar5 = (double)pfVar2[6];
-    dVar11 = (double)(float)((double)pfVar2[7] * dVar7 + (double)(float)(dVar5 * dVar8));
-    if (dVar11 < 0.0) {
-      dVar6 = (double)(float)(dVar5 * dVar5 + (double)(float)((double)pfVar2[7] * (double)pfVar2[7])
-                             );
-      dVar5 = extraout_f1;
-      if (dVar6 <= 0.0) {
-        MyAssertHandler(dVar6,0xffffffff8208249c,0x543,0,0xffffffff82081fa0,0xffffffff82081fb0,dVar6
-                       );
-      }
-      dVar4 = (double)(float)(dVar11 * dVar11 - (double)(float)(dVar6 * dVar4));
-      if (dVar12 <= dVar4) {
-        dVar3 = (double)(float)SQRT(dVar9);
-        dVar10 = 1.0;
-        dVar9 = dVar10;
-        if (-dVar3 < 0.0) {
-          dVar9 = dVar3;
-        }
-        dVar3 = (double)(float)((double)(float)(dVar3 * 0.125) / dVar11);
-        dVar9 = (double)(float)(1.0 / dVar9);
-        dVar4 = (double)(float)((double)(float)((double)(float)(-dVar11 - (double)(float)SQRT(dVar4)
-                                                               ) / dVar6) + dVar3);
-        dVar11 = (double)(float)(dVar9 * dVar8);
-        dVar8 = (double)(float)(dVar9 * dVar7);
-        dVar7 = (double)(float)(dVar9 * dVar12);
-        if (dVar4 < (double)*param_8) {
-          dVar9 = (double)(float)((double)pfVar2[0x11] + dVar5);
-          dVar5 = (double)(((float)(dVar4 - dVar3) * pfVar2[8] + pfVar2[2]) - param_4[2]);
-          if (dVar9 < dVar12) {
-            MyAssertHandler(0xffffffff8208249c,0x552,0,0xffffffff82000f98,0xffffffff82082a14);
-          }
-          if (ABS(dVar5) <= dVar9) {
-            if (dVar4 < 0.0) {
-              dVar4 = dVar12;
-            }
-            *param_8 = (float)dVar4;
-            if ((dVar4 < dVar12) || (dVar10 < dVar4)) {
-              MyAssertHandler(0xffffffff8208249c,0x557,1,0xffffffff82081df8,0xffffffff82081e14,dVar4
-                             );
-            }
-            param_8[1] = (float)dVar11;
-            param_8[2] = (float)dVar8;
-            param_8[3] = (float)dVar7;
-            param_8[5] = param_7;
-            param_8[4] = 0.0;
-            *(undefined1 *)(param_8 + 0xc) = 0;
-            __restfpr_23(0);
-            __restgprlr_24();
-            return;
-          }
-        }
-      }
-    }
-  }
-  else {
-    dVar4 = (double)(float)((double)pfVar2[0x11] + extraout_f1);
-    if (dVar4 < 0.0) {
-      MyAssertHandler(0xffffffff8208249c,0x52a,0,0xffffffff82000f98,0xffffffff82082a14);
-    }
-    if (ABS(dVar5) <= dVar4) {
-      *param_8 = (float)dVar12;
-      *(undefined1 *)(param_8 + 0xc) = 0;
-      *(undefined1 *)((int)param_8 + 0x2f) = 1;
-      fVar1 = 1.0;
-      if (-(float)SQRT(dVar9) < 0.0) {
-        fVar1 = (float)SQRT(dVar9);
-      }
-      dVar5 = (double)(1.0 / fVar1);
-      param_8[3] = (float)(dVar5 * dVar12);
-      param_8[1] = (float)(dVar5 * dVar8);
-      param_8[2] = (float)(dVar7 * dVar5);
-      param_8[5] = param_7;
-      param_8[4] = 0.0;
-      dVar5 = (double)(pfVar2[5] - param_4[2]);
-      if (dVar4 < dVar12) {
-        MyAssertHandler(0xffffffff8208249c,0x537,0,0xffffffff82000f98,0xffffffff82082a14);
-      }
-      if (ABS(dVar5) <= dVar4) {
-        *(undefined1 *)((int)param_8 + 0x2e) = 1;
-      }
-      __restfpr_23(0);
-      __restgprlr_24();
-      return;
-    }
-  }
-  __restfpr_23(1);
-  __restgprlr_24();
-  return;
-}
-
-
-// 824CC168  CM_TraceCapsuleThroughCapsule  (qcommon/cm_trace.cpp:1387)
-
-void CM_TraceCapsuleThroughCapsule
-               (undefined8 param_1,ulonglong param_2,undefined8 param_3,float *param_4)
-
-{
-  float fVar1;
-  undefined4 *puVar2;
-  int iVar3;
-  float *pfVar4;
-  undefined4 *puVar5;
-  undefined4 *puVar6;
-  double dVar7;
-  double dVar8;
-  double dVar9;
-  double dVar10;
-  double dVar11;
-  double dVar12;
-  double dVar13;
-  double dVar14;
-  double dVar15;
-  double dVar16;
-  float local_f0;
-  float local_ec;
-  float local_e8;
-  undefined4 local_e0;
-  undefined4 local_dc;
-  float local_d8;
-  undefined4 local_d0;
-  undefined4 local_cc;
-  float local_c8;
-  float local_c0;
-  float local_bc;
-  float local_b8;
-  undefined4 local_b0;
-  undefined4 local_ac;
-  float local_a8;
-  undefined4 local_a0;
-  undefined4 local_9c;
-  float local_98;
-  
-  __savegprlr_25();
-  puVar2 = (undefined4 *)__savefpr_22();
-  if ((float *)(puVar2 + 10) == (float *)0x0) {
-    MyAssertHandler(0xffffffff82082340,0x2af,0,0xffffffff82000f98,0xffffffff82025b34);
-  }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82082340,0x2b0,0,0xffffffff82000f98,0xffffffff82025b30);
-  }
-  pfVar4 = (float *)param_2;
-  fVar1 = *pfVar4;
-  dVar8 = (double)pfVar4[3];
-  dVar14 = 1.0;
-  dVar7 = (double)pfVar4[5];
-  dVar10 = 0.0;
-  dVar9 = dVar10;
-  if (ABS((float)puVar2[10] - fVar1) - ((float)((double)(float)puVar2[0xd] + dVar8) + 1.0) < 0.0) {
-    dVar9 = dVar14;
-  }
-  dVar11 = dVar10;
-  if (ABS((float)puVar2[0xb] - pfVar4[1]) - ((float)puVar2[0xe] + pfVar4[4] + 1.0) < 0.0) {
-    dVar11 = dVar9;
-  }
-  dVar9 = dVar10;
-  if (ABS((float)puVar2[0xc] - pfVar4[2]) - ((float)((double)(float)puVar2[0xf] + dVar7) + 1.0) <
-      0.0) {
-    dVar9 = dVar11;
-  }
-  if (dVar9 != 0.0) {
-    local_d8 = (float)puVar2[0x11];
-    local_c8 = (float)puVar2[2] - local_d8;
-    dVar13 = (double)local_c8;
-    local_98 = local_d8 + (float)puVar2[2];
-    dVar12 = (double)local_98;
-    local_d0 = *puVar2;
-    local_a8 = (float)puVar2[5] + local_d8;
-    dVar9 = (double)local_a8;
-    local_cc = puVar2[1];
-    local_d8 = (float)puVar2[5] - local_d8;
-    dVar11 = (double)local_d8;
-    local_e0 = puVar2[3];
-    local_dc = puVar2[4];
-    local_ec = pfVar4[1];
-    if ((float)(dVar7 - dVar8) < 0.0) {
-      dVar8 = dVar7;
-    }
-    dVar16 = (double)(float)(dVar7 - dVar8);
-    local_e8 = (float)((double)pfVar4[2] + dVar16);
-    dVar15 = (double)local_e8;
-    local_b8 = (float)((double)pfVar4[2] - dVar16);
-    dVar7 = (double)local_b8;
-    local_f0 = fVar1;
-    local_c0 = fVar1;
-    local_bc = local_ec;
-    local_b0 = local_e0;
-    local_ac = local_dc;
-    local_a0 = local_d0;
-    local_9c = local_cc;
-    if (dVar13 <= dVar15) {
-      if ((dVar12 < dVar7) &&
-         (((iVar3 = CM_TraceSphereThroughSphere(dVar8,puVar2,&local_a0,&local_b0,&local_c0),
-           iVar3 == 0 &&
-           ((double)(float)((double)(float)(dVar14 - (double)*param_4) * dVar12 +
-                           (double)(float)((double)*param_4 * dVar9)) <= dVar7)) ||
-          ((double)(float)puVar2[8] <= dVar10)))) goto LAB_824cc438;
-    }
-    else {
-      iVar3 = CM_TraceSphereThroughSphere(dVar8,puVar2,&local_d0,&local_e0,&local_f0);
-      if (((iVar3 == 0) &&
-          (dVar15 <= (double)(float)((double)(float)(dVar14 - (double)*param_4) * dVar13 +
-                                    (double)(float)((double)*param_4 * dVar11)))) ||
-         (dVar10 <= (double)(float)puVar2[8])) goto LAB_824cc438;
-    }
-    iVar3 = CM_TraceCylinderThroughCylinder(dVar16,dVar8,puVar2,param_2);
-    if (iVar3 != 0) {
-      if (dVar11 <= dVar15) {
-        if ((dVar7 <= dVar9) || (dVar12 < dVar7)) goto LAB_824cc438;
-        pfVar4 = &local_c0;
-        puVar6 = &local_b0;
-        puVar5 = &local_a0;
-      }
-      else {
-        if (dVar15 < dVar13) goto LAB_824cc438;
-        pfVar4 = &local_f0;
-        puVar6 = &local_e0;
-        puVar5 = &local_d0;
-      }
-      CM_TraceSphereThroughSphere(dVar8,puVar2,puVar5,puVar6,pfVar4);
-    }
-  }
-LAB_824cc438:
-  __restfpr_22();
-  __restgprlr_25();
-  return;
-}
-
-
-// 824CC448  CM_TraceThroughTree  (qcommon/cm_trace.cpp:1638)
-
-void CM_TraceThroughTree(undefined8 param_1,longlong param_2,float *param_3,float *param_4,
-                        undefined8 param_5)
-
-{
-  float fVar1;
-  byte bVar2;
-  float *pfVar3;
-  int iVar4;
-  int iVar5;
-  int iVar6;
-  uint uVar7;
-  double dVar8;
-  double dVar9;
-  double dVar10;
-  double dVar11;
-  double dVar12;
   double dVar13;
   double dVar14;
   double dVar15;
@@ -1717,122 +1214,793 @@ void CM_TraceThroughTree(undefined8 param_1,longlong param_2,float *param_3,floa
   float local_98;
   float local_94;
   
-  __savegprlr_21();
-  iVar6 = __savefpr_26();
+  uVar12 = (ulonglong)(int)param_2;
+  __savegprlr_24(param_1);
+  ptVar8 = (traceWork_t *)__savefpr_23();
+  if ((uVar12 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",0x425,0,
+                    "%s");
+  }
+  dVar13 = (double)param_3[3];
   local_b0[0] = *param_3;
-  dVar13 = (double)local_b0[0];
   local_b0[1] = param_3[1];
-  dVar12 = (double)local_b0[1];
   local_b0[2] = param_3[2];
-  dVar11 = (double)local_b0[2];
   local_b0[3] = param_3[3];
-  dVar10 = (double)local_b0[3];
-  if (-1 < (int)param_2) {
-    dVar19 = 1.0;
-    dVar16 = 4.76837158203125e-07;
-    dVar18 = 0.0;
-    dVar17 = 0.125;
-    do {
-      iVar5 = (int)param_2 * 8;
-      iVar4 = iVar5 + DAT_835a28d8;
-      pfVar3 = *(float **)(iVar5 + DAT_835a28d8);
-      bVar2 = *(byte *)(pfVar3 + 4);
-      if (bVar2 < 3) {
-        dVar8 = (double)(local_b0[bVar2] - pfVar3[3]);
-        dVar14 = (double)(param_4[bVar2] - pfVar3[3]);
-        dVar20 = (double)(float)((double)*(float *)((bVar2 + 0x18) * 4 + iVar6) + dVar17);
+  if ((*(uint *)((int)uVar12 + 4) & ptVar8->contents) == 0) {
+LAB_824cb978:
+    __restfpr_23();
+    __restgprlr_24();
+    return;
+  }
+  dVar17 = 1.0000004768371582;
+  dVar19 = 1.0;
+  dVar15 = 4.76837158203125e-07;
+  dVar18 = 0.0;
+  dVar16 = 0.125;
+  do {
+    pbVar3 = (byte *)uVar12;
+    iVar9 = (int)*(short *)(pbVar3 + 2);
+    if (iVar9 != 0) {
+      if (0 < iVar9) {
+        CM_TraceThroughBrushes(ptVar8,*(ushort **)(pbVar3 + 8),iVar9,param_5);
+        goto LAB_824cb978;
       }
-      else {
-        dVar8 = (double)((float)((double)pfVar3[2] * dVar11 +
-                                (double)(float)((double)*pfVar3 * dVar13 +
-                                               (double)(float)((double)pfVar3[1] * dVar12))) -
-                        pfVar3[3]);
-        dVar14 = (double)((float)((double)param_4[2] * (double)pfVar3[2] +
-                                 (double)(float)((double)param_4[1] * (double)pfVar3[1] +
-                                                (double)(float)((double)*pfVar3 * (double)*param_4))
-                                 ) - pfVar3[3]);
-        dVar20 = dVar17;
-        if (*(char *)(iVar6 + 0xa8) == '\0') {
-          dVar20 = (double)(float)((double)*(float *)(iVar6 + 0xcc) + dVar17);
-        }
-      }
-      dVar15 = (double)(float)(dVar14 - dVar8);
-      dVar9 = dVar8;
-      if (dVar15 < 0.0) {
-        dVar9 = dVar14;
-      }
-      if (dVar9 < dVar20) {
-        dVar9 = dVar8;
-        if ((float)(dVar8 - dVar14) < 0.0) {
-          dVar9 = dVar14;
-        }
-        if (-dVar20 < dVar9) {
-          if ((double)*(float *)param_5 <= dVar10) goto LAB_824cc764;
-          if (ABS(dVar15) <= dVar16) {
-            uVar7 = 0;
-            dVar20 = dVar18;
-            dVar8 = dVar19;
-          }
-          else {
-            fVar1 = (float)(dVar19 / ABS(dVar15));
-            dVar9 = -dVar8;
-            dVar14 = dVar19;
-            if (dVar15 < 0.0) {
-              dVar9 = dVar8;
-              dVar14 = dVar18;
-            }
-            uVar7 = (uint)dVar14;
-            dVar8 = (double)((float)(dVar9 + dVar20) * fVar1);
-            dVar20 = (double)((float)(dVar9 - dVar20) * fVar1);
-            if (dVar8 < dVar18) {
-              MyAssertHandler(0xffffffff8208249c,0x6c1,0,0xffffffff82000f98,0xffffffff82082a28);
-              dVar10 = (double)local_b0[3];
-              dVar11 = (double)local_b0[2];
-              dVar12 = (double)local_b0[1];
-              dVar13 = (double)local_b0[0];
-            }
-          }
-          if ((float)(dVar19 - dVar8) < 0.0) {
-            dVar8 = dVar19;
-          }
-          local_a0 = (float)((double)(float)((double)*param_4 - dVar13) * dVar8 + dVar13);
-          local_9c = (float)((double)(float)((double)param_4[1] - dVar12) * dVar8 + dVar12);
-          local_98 = (float)((double)(float)((double)param_4[2] - dVar11) * dVar8 + dVar11);
-          local_94 = (float)((double)(float)((double)param_4[3] - dVar10) * dVar8 + dVar10);
-          CM_TraceThroughTree(iVar6,*(undefined2 *)((uVar7 + 2) * 2 + iVar4),local_b0,&local_a0,
-                              param_5);
-          if (dVar19 < dVar20) {
-            MyAssertHandler(dVar8,0xffffffff8208249c,0x6cc,0,0xffffffff82082a34,0xffffffff8202ba28,
-                            dVar8);
-          }
-          if (dVar20 < 0.0) {
-            dVar20 = dVar18;
-          }
-          local_b0[0] = (float)((double)(float)((double)*param_4 - (double)local_b0[0]) * dVar20 +
-                               (double)local_b0[0]);
-          dVar13 = (double)local_b0[0];
-          local_b0[1] = (float)((double)(float)((double)param_4[1] - (double)local_b0[1]) * dVar20 +
-                               (double)local_b0[1]);
-          dVar12 = (double)local_b0[1];
-          local_b0[2] = (float)((double)(float)((double)param_4[2] - (double)local_b0[2]) * dVar20 +
-                               (double)local_b0[2]);
-          dVar11 = (double)local_b0[2];
-          local_b0[3] = (float)((double)(float)((double)param_4[3] - (double)local_b0[3]) * dVar20 +
-                               (double)local_b0[3]);
-          dVar10 = (double)local_b0[3];
-          param_2 = (longlong)*(short *)(((uVar7 ^ 1) + 2) * 2 + iVar4);
+      CM_TraceThroughLeafBrushNode_r
+                (ptVar8,(cLeafBrushNode_s *)(pbVar3 + 0x14),local_b0,param_4,param_5);
+      dVar13 = (double)local_b0[3];
+    }
+    bVar2 = *pbVar3;
+    fVar4 = local_b0[bVar2] - *(float *)(pbVar3 + 8);
+    fVar1 = param_4[bVar2] - *(float *)(pbVar3 + 8);
+    dVar14 = (double)(fVar1 - fVar4);
+    fVar5 = (float)((double)ptVar8->size[bVar2] + dVar16) - *(float *)(pbVar3 + 0xc);
+    fVar6 = fVar4;
+    if (dVar14 < 0.0) {
+      fVar6 = fVar1;
+    }
+    fVar7 = fVar4;
+    if (fVar4 - fVar1 < 0.0) {
+      fVar7 = fVar1;
+    }
+    if (fVar6 < fVar5) {
+      if (-fVar5 < fVar7) {
+        if ((double)param_5->fraction <= dVar13) goto LAB_824cb978;
+        if (ABS(dVar14) <= dVar15) {
+          uVar11 = 0;
+          dVar20 = dVar18;
+          dVar14 = dVar19;
         }
         else {
-          param_2 = (longlong)*(short *)(iVar4 + 6);
+          fVar1 = (float)(dVar19 / ABS(dVar14));
+          dVar20 = dVar19;
+          fVar6 = -fVar4;
+          if (dVar14 < 0.0) {
+            dVar20 = dVar18;
+            fVar6 = fVar4;
+          }
+          uVar11 = (ulonglong)(uint)(int)dVar20;
+          dVar14 = (double)((fVar6 + fVar5) * fVar1);
+          dVar20 = (double)((fVar6 - fVar5) * fVar1);
+          if (dVar14 < dVar18) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",
+                            0x467,0,"frac >= 0.0f\n\t%g, %g");
+            dVar13 = (double)local_b0[3];
+          }
+        }
+        if ((float)(dVar19 - dVar14) < 0.0) {
+          dVar14 = dVar19;
+        }
+        local_a0 = (float)((double)(float)((double)*param_4 - (double)local_b0[0]) * dVar14 +
+                          (double)local_b0[0]);
+        local_9c = (float)((double)(float)((double)param_4[1] - (double)local_b0[1]) * dVar14 +
+                          (double)local_b0[1]);
+        local_98 = (float)((double)(float)((double)param_4[2] - (double)local_b0[2]) * dVar14 +
+                          (double)local_b0[2]);
+        local_94 = (float)((double)(float)((double)param_4[3] - dVar13) * dVar14 + dVar13);
+        CM_TraceThroughLeafBrushNode_r
+                  (ptVar8,(cLeafBrushNode_s *)
+                          (pbVar3 + (uint)*(ushort *)
+                                           (pbVar3 + (int)((uVar11 + 8 & 0xffffffff) << 1)) * 0x14),
+                   local_b0,&local_a0,param_5);
+        if (dVar17 < dVar20) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",
+                          0x471,0,"frac2 <= 1.0f + TRACE_EPSILON\n\t%g, %g");
+        }
+        if (dVar20 < 0.0) {
+          dVar20 = dVar18;
+        }
+        local_b0[3] = (float)((double)(float)((double)param_4[3] - (double)local_b0[3]) * dVar20 +
+                             (double)local_b0[3]);
+        dVar13 = (double)local_b0[3];
+        local_b0[0] = (float)((double)(float)((double)*param_4 - (double)local_b0[0]) * dVar20 +
+                             (double)local_b0[0]);
+        local_b0[1] = (float)((double)(float)((double)param_4[1] - (double)local_b0[1]) * dVar20 +
+                             (double)local_b0[1]);
+        local_b0[2] = (float)((double)(float)((double)param_4[2] - (double)local_b0[2]) * dVar20 +
+                             (double)local_b0[2]);
+        lVar10 = (ulonglong)*(ushort *)(pbVar3 + (int)((9 - uVar11 & 0xffffffff) << 1)) * 0x14;
+      }
+      else {
+        lVar10 = (ulonglong)*(ushort *)(pbVar3 + 0x12) * 0x14;
+      }
+    }
+    else {
+      if (fVar7 <= -fVar5) goto LAB_824cb978;
+      lVar10 = (ulonglong)*(ushort *)(pbVar3 + 0x10) * 0x14;
+    }
+    uVar12 = lVar10 + uVar12;
+    if ((*(uint *)((int)uVar12 + 4) & ptVar8->contents) == 0) {
+      __restfpr_23();
+      __restgprlr_24();
+      return;
+    }
+  } while( true );
+}
+
+
+// 824CB988  CM_TraceThroughLeafBrushNode  (qcommon/cm_trace.cpp:1156)
+
+bool CM_TraceThroughLeafBrushNode(traceWork_t *param_1,cLeaf_t *param_2,trace_t *param_3)
+
+{
+  traceWork_t *ptVar1;
+  int iVar2;
+  undefined1 uVar3;
+  double dVar4;
+  float local_70;
+  float local_6c;
+  float local_68;
+  float local_64;
+  float local_60;
+  float local_5c;
+  float local_58;
+  undefined4 local_54;
+  Bounds local_50 [3];
+  
+  ptVar1 = (traceWork_t *)__savegprlr_27(param_1);
+  if (param_2->leafBrushNode == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",0x48a,0,
+                    "%s");
+  }
+  if (ptVar1->info == (ClipInfo *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",0x48b,0,
+                    "%s");
+  }
+  local_50[0].halfSize[0] = (param_2->bounds).halfSize[0] + ptVar1->radiusOffset[0];
+  local_50[0].halfSize[1] = (param_2->bounds).halfSize[1] + ptVar1->radiusOffset[1];
+  local_50[0].midPoint[0] = (param_2->bounds).midPoint[0];
+  local_50[0].halfSize[2] = (param_2->bounds).halfSize[2] + ptVar1->radiusOffset[2];
+  local_50[0].midPoint[1] = (param_2->bounds).midPoint[1];
+  local_50[0].midPoint[2] = (param_2->bounds).midPoint[2];
+  iVar2 = CM_TraceBox((TraceExtents *)ptVar1,local_50,param_3->fraction);
+  if (iVar2 != 0) {
+    uVar3 = __restgprlr_27(0);
+    return (bool)uVar3;
+  }
+  local_70 = (ptVar1->extents).end[0];
+  local_6c = (ptVar1->extents).end[1];
+  local_68 = (ptVar1->extents).end[2];
+  local_64 = param_3->fraction;
+  local_60 = (ptVar1->extents).start[0];
+  local_5c = (ptVar1->extents).start[1];
+  local_58 = (ptVar1->extents).start[2];
+  dVar4 = 0.0;
+  local_54 = 0;
+  CM_TraceThroughLeafBrushNode_r
+            (ptVar1,ptVar1->info->leafbrushNodes + param_2->leafBrushNode,&local_60,&local_70,
+             param_3);
+  uVar3 = __restgprlr_27((double)param_3->fraction == dVar4);
+  return (bool)uVar3;
+}
+
+
+// 824CBB10  CM_TraceThroughLeaf  (qcommon/cm_trace.cpp:1186)
+
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+void CM_TraceThroughLeaf(traceWork_t *param_1,cLeaf_t *param_2,trace_t *param_3)
+
+{
+  traceWork_t *ptVar1;
+  bool bVar3;
+  traceWork_t *ptVar2;
+  int iVar4;
+  double dVar5;
+  
+  ptVar1 = (traceWork_t *)__savegprlr_27(param_1);
+  dVar5 = 0.0;
+  ptVar2 = ptVar1;
+  if (param_3->fraction == 0.0) goto LAB_824cbbf8;
+  if ((param_2->brushContents & ptVar1->contents) == 0) {
+LAB_824cbb80:
+    if ((param_2->terrainContents & ptVar1->contents) == 0) goto LAB_824cbbf8;
+    Profile_Begin(0x26);
+    iVar4 = 0;
+    if (param_2->collAabbCount != 0) {
+      do {
+        if ((double)param_3->fraction == dVar5) break;
+        CM_TraceThroughAabbTree
+                  (ptVar1,cm.aabbTrees + (uint)param_2->firstCollAabbIndex + iVar4,param_3);
+        iVar4 = iVar4 + 1;
+      } while (iVar4 < (int)(uint)param_2->collAabbCount);
+    }
+  }
+  else {
+    Profile_Begin(0x25);
+    bVar3 = CM_TraceThroughLeafBrushNode(ptVar1,param_2,param_3);
+    if (!bVar3) {
+      ptVar2 = (traceWork_t *)Profile_EndInternal((double *)0x0);
+      goto LAB_824cbb80;
+    }
+  }
+  ptVar2 = (traceWork_t *)Profile_EndInternal((double *)0x0);
+LAB_824cbbf8:
+  __restgprlr_27(ptVar2);
+  return;
+}
+
+
+// 824CBC08  CM_TraceSphereThroughSphere  (qcommon/cm_trace.cpp:1234)
+
+int CM_TraceSphereThroughSphere
+              (TraceCapsuleWork *param_1,float *param_2,float *param_3,float *param_4,float param_5,
+              int param_6,trace_t *param_7)
+
+{
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  int iVar4;
+  float *in_r9;
+  double extraout_f1;
+  double dVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  double dVar14;
+  
+  __savegprlr_29((double)param_5,param_1);
+  iVar4 = __savefpr_22();
+  dVar14 = (double)(*param_2 - *param_4);
+  dVar13 = (double)(param_2[1] - param_4[1]);
+  dVar12 = (double)(param_2[2] - param_4[2]);
+  fVar1 = (float)((double)*(float *)(iVar4 + 0x40) + extraout_f1);
+  dVar7 = 0.0;
+  dVar10 = (double)(float)(dVar14 * dVar14);
+  dVar9 = (double)(float)(dVar13 * dVar13);
+  dVar8 = (double)(float)(dVar12 * dVar12);
+  fVar1 = fVar1 * fVar1;
+  dVar5 = (double)((float)((double)(float)(dVar10 + dVar9) + dVar8) - fVar1);
+  if (dVar5 <= 0.0) {
+    *in_r9 = 0.0;
+    *(undefined1 *)(in_r9 + 0xc) = 0;
+    *(undefined1 *)((int)in_r9 + 0x2f) = 1;
+    fVar3 = SQRT((float)((double)(float)(dVar8 + dVar10) + dVar9));
+    fVar2 = 1.0;
+    if (-fVar3 < 0.0) {
+      fVar2 = fVar3;
+    }
+    dVar5 = (double)(1.0 / fVar2);
+    in_r9[1] = (float)(dVar5 * dVar14);
+    in_r9[2] = (float)(dVar13 * dVar5);
+    in_r9[3] = (float)(dVar12 * dVar5);
+    in_r9[5] = (float)param_7;
+    in_r9[4] = 0.0;
+    if ((*param_3 - *param_4) * (*param_3 - *param_4) +
+        (param_3[2] - param_4[2]) * (param_3[2] - param_4[2]) +
+        (param_3[1] - param_4[1]) * (param_3[1] - param_4[1]) <= fVar1) {
+      *(undefined1 *)((int)in_r9 + 0x2e) = 1;
+    }
+    __restfpr_22(0);
+    iVar4 = __restgprlr_29();
+    return iVar4;
+  }
+  dVar11 = (double)(float)((double)*(float *)(iVar4 + 0x20) * dVar12 +
+                          (double)(float)((double)*(float *)(iVar4 + 0x1c) * dVar13 +
+                                         (double)(float)((double)*(float *)(iVar4 + 0x18) * dVar14))
+                          );
+  if (dVar11 < 0.0) {
+    dVar6 = (double)*(float *)(iVar4 + 0x24);
+    if (dVar6 <= 0.0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",0x4f6,
+                      0,"%s\n\t(work->deltaLenSq) = %g");
+    }
+    dVar5 = (double)(float)(dVar11 * dVar11 - (double)(float)(dVar6 * dVar5));
+    if (dVar7 <= dVar5) {
+      dVar9 = (double)SQRT((float)((double)(float)(dVar8 + dVar10) + dVar9));
+      dVar8 = 1.0;
+      if (-dVar9 < 0.0) {
+        dVar8 = dVar9;
+      }
+      dVar5 = (double)((float)((double)(float)(-dVar11 - (double)(float)SQRT(dVar5)) / dVar6) +
+                      (float)((double)(float)(dVar9 * 0.125) / dVar11));
+      dVar8 = (double)(float)(1.0 / dVar8);
+      dVar10 = (double)(float)(dVar8 * dVar14);
+      dVar9 = (double)(float)(dVar8 * dVar13);
+      dVar8 = (double)(float)(dVar12 * dVar8);
+      if (dVar5 < (double)*in_r9) {
+        if (dVar5 < 0.0) {
+          dVar5 = dVar7;
+        }
+        *in_r9 = (float)dVar5;
+        if ((dVar5 < dVar7) || (1.0 < dVar5)) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",
+                          0x503,1,"%s\n\t(trace->fraction) = %g");
+        }
+        in_r9[1] = (float)dVar10;
+        in_r9[2] = (float)dVar9;
+        in_r9[3] = (float)dVar8;
+        in_r9[5] = (float)param_7;
+        *(undefined1 *)(in_r9 + 0xc) = 0;
+        in_r9[4] = 0.0;
+        __restfpr_22(0);
+        iVar4 = __restgprlr_29();
+        return iVar4;
+      }
+    }
+  }
+  __restfpr_22(1);
+  iVar4 = __restgprlr_29();
+  return iVar4;
+}
+
+
+// 824CBE70  CM_TraceCylinderThroughCylinder  (qcommon/cm_trace.cpp:1301)
+
+int CM_TraceCylinderThroughCylinder
+              (TraceCapsuleWork *param_1,float *param_2,float param_3,float param_4,int param_5,
+              trace_t *param_6)
+
+{
+  float fVar1;
+  float *pfVar2;
+  int iVar3;
+  longlong lVar4;
+  float *pfVar5;
+  float in_r7;
+  float *in_r8;
+  double extraout_f1;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  double dVar14;
+  double dVar15;
+  
+  dVar7 = (double)param_4;
+  lVar4 = (longlong)(int)param_2;
+  __savegprlr_24((double)param_3,param_1,lVar4,param_5,param_6);
+  pfVar5 = (float *)lVar4;
+  pfVar2 = (float *)__savefpr_23();
+  dVar11 = (double)(*pfVar2 - *pfVar5);
+  dVar10 = (double)(pfVar2[1] - pfVar5[1]);
+  dVar15 = 0.0;
+  dVar8 = (double)(pfVar2[2] - pfVar5[2]);
+  dVar12 = (double)(float)(dVar10 * dVar10 + (double)(float)(dVar11 * dVar11));
+  dVar7 = -(double)(float)((double)(float)((double)pfVar2[0x10] + dVar7) *
+                           (double)(float)((double)pfVar2[0x10] + dVar7) - dVar12);
+  if (0.0 < dVar7) {
+    dVar8 = (double)pfVar2[6];
+    dVar14 = (double)(float)((double)pfVar2[7] * dVar10 + (double)(float)(dVar8 * dVar11));
+    if (dVar14 < 0.0) {
+      dVar9 = (double)(float)(dVar8 * dVar8 + (double)(float)((double)pfVar2[7] * (double)pfVar2[7])
+                             );
+      dVar8 = extraout_f1;
+      if (dVar9 <= 0.0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",
+                        0x543,0,"%s\n\t(a) = %g");
+      }
+      dVar7 = (double)(float)(dVar14 * dVar14 - (double)(float)(dVar9 * dVar7));
+      if (dVar15 <= dVar7) {
+        dVar6 = (double)(float)SQRT(dVar12);
+        dVar13 = 1.0;
+        dVar12 = dVar13;
+        if (-dVar6 < 0.0) {
+          dVar12 = dVar6;
+        }
+        dVar6 = (double)(float)((double)(float)(dVar6 * 0.125) / dVar14);
+        dVar12 = (double)(float)(1.0 / dVar12);
+        dVar7 = (double)(float)((double)(float)((double)(float)(-dVar14 - (double)(float)SQRT(dVar7)
+                                                               ) / dVar9) + dVar6);
+        dVar14 = (double)(float)(dVar12 * dVar11);
+        dVar11 = (double)(float)(dVar12 * dVar10);
+        dVar10 = (double)(float)(dVar12 * dVar15);
+        if (dVar7 < (double)*in_r8) {
+          dVar12 = (double)(float)((double)pfVar2[0x11] + dVar8);
+          dVar8 = (double)(((float)(dVar7 - dVar6) * pfVar2[8] + pfVar2[2]) - pfVar5[2]);
+          if (dVar12 < dVar15) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",
+                            0x552,0,"%s");
+          }
+          if (ABS(dVar8) <= dVar12) {
+            if (dVar7 < 0.0) {
+              dVar7 = dVar15;
+            }
+            *in_r8 = (float)dVar7;
+            if ((dVar7 < dVar15) || (dVar13 < dVar7)) {
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp"
+                              ,0x557,1,"%s\n\t(trace->fraction) = %g");
+            }
+            in_r8[1] = (float)dVar14;
+            in_r8[2] = (float)dVar11;
+            in_r8[3] = (float)dVar10;
+            in_r8[5] = in_r7;
+            in_r8[4] = 0.0;
+            *(undefined1 *)(in_r8 + 0xc) = 0;
+            __restfpr_23(0);
+            iVar3 = __restgprlr_24();
+            return iVar3;
+          }
+        }
+      }
+    }
+  }
+  else {
+    dVar7 = (double)(float)((double)pfVar2[0x11] + extraout_f1);
+    if (dVar7 < 0.0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",0x52a,
+                      0,"%s");
+    }
+    if (ABS(dVar8) <= dVar7) {
+      *in_r8 = (float)dVar15;
+      *(undefined1 *)(in_r8 + 0xc) = 0;
+      *(undefined1 *)((int)in_r8 + 0x2f) = 1;
+      fVar1 = 1.0;
+      if (-(float)SQRT(dVar12) < 0.0) {
+        fVar1 = (float)SQRT(dVar12);
+      }
+      dVar8 = (double)(1.0 / fVar1);
+      in_r8[3] = (float)(dVar8 * dVar15);
+      in_r8[1] = (float)(dVar8 * dVar11);
+      in_r8[2] = (float)(dVar10 * dVar8);
+      in_r8[5] = in_r7;
+      in_r8[4] = 0.0;
+      dVar8 = (double)(pfVar2[5] - pfVar5[2]);
+      if (dVar7 < dVar15) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",
+                        0x537,0,"%s");
+      }
+      if (ABS(dVar8) <= dVar7) {
+        *(undefined1 *)((int)in_r8 + 0x2e) = 1;
+      }
+      __restfpr_23(0);
+      iVar3 = __restgprlr_24();
+      return iVar3;
+    }
+  }
+  __restfpr_23(1);
+  iVar3 = __restgprlr_24();
+  return iVar3;
+}
+
+
+// 824CC168  CM_TraceCapsuleThroughCapsule  (qcommon/cm_trace.cpp:1387)
+
+void CM_TraceCapsuleThroughCapsule
+               (TraceCapsuleWork *param_1,Bounds *param_2,int param_3,trace_t *param_4)
+
+{
+  float fVar1;
+  float fVar2;
+  int iVar3;
+  int iVar4;
+  TraceCapsuleWork *pTVar5;
+  int iVar6;
+  ulonglong uVar7;
+  float *pfVar8;
+  trace_t *ptVar9;
+  trace_t *ptVar10;
+  char *in_r7;
+  trace_t *ptVar11;
+  double dVar12;
+  double dVar13;
+  double dVar14;
+  double dVar15;
+  double dVar16;
+  double dVar17;
+  double dVar18;
+  double dVar19;
+  double dVar20;
+  double dVar21;
+  undefined1 local_f0 [20];
+  float local_dc;
+  char *local_d8;
+  float local_d0;
+  float local_cc;
+  float local_c8;
+  undefined1 local_c0 [20];
+  float local_ac;
+  char *local_a8;
+  float local_a0;
+  float local_9c;
+  float local_98;
+  
+  uVar7 = (ulonglong)(int)param_2;
+  __savegprlr_25(param_1);
+  pTVar5 = (TraceCapsuleWork *)__savefpr_22();
+  ptVar9 = (trace_t *)param_3;
+  ptVar10 = param_4;
+  if (&pTVar5->bounds == (Bounds *)0x0) {
+    in_r7 = "b0";
+    ptVar9 = (trace_t *)0x0;
+    ptVar10 = (trace_t *)"%s";
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/bounds_inline.h"
+                    ,0x2af,0,"%s");
+  }
+  if ((uVar7 & 0xffffffff) == 0) {
+    in_r7 = "b1";
+    ptVar9 = (trace_t *)0x0;
+    ptVar10 = (trace_t *)"%s";
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/bounds_inline.h"
+                    ,0x2b0,0,"%s");
+  }
+  pfVar8 = (float *)uVar7;
+  fVar1 = *pfVar8;
+  dVar13 = (double)pfVar8[3];
+  dVar19 = 1.0;
+  dVar12 = (double)pfVar8[5];
+  dVar15 = 0.0;
+  dVar14 = dVar15;
+  if (ABS((pTVar5->bounds).midPoint[0] - fVar1) -
+      ((float)((double)(pTVar5->bounds).halfSize[0] + dVar13) + 1.0) < 0.0) {
+    dVar14 = dVar19;
+  }
+  dVar16 = dVar15;
+  if (ABS((pTVar5->bounds).midPoint[1] - pfVar8[1]) -
+      ((pTVar5->bounds).halfSize[1] + pfVar8[4] + 1.0) < 0.0) {
+    dVar16 = dVar14;
+  }
+  dVar14 = dVar15;
+  if (ABS((pTVar5->bounds).midPoint[2] - pfVar8[2]) -
+      ((float)((double)(pTVar5->bounds).halfSize[2] + dVar12) + 1.0) < 0.0) {
+    dVar14 = dVar16;
+  }
+  if (dVar14 != 0.0) {
+    fVar2 = pTVar5->offsetZ;
+    local_c8 = pTVar5->start[2] - fVar2;
+    dVar18 = (double)local_c8;
+    local_98 = fVar2 + pTVar5->start[2];
+    dVar17 = (double)local_98;
+    local_d0 = pTVar5->start[0];
+    local_a8 = (char *)(pTVar5->end[2] + fVar2);
+    dVar14 = (double)(float)local_a8;
+    local_cc = pTVar5->start[1];
+    local_d8 = (char *)(pTVar5->end[2] - fVar2);
+    dVar16 = (double)(float)local_d8;
+    local_f0._16_4_ = pTVar5->end[0];
+    local_dc = pTVar5->end[1];
+    local_f0._4_4_ = pfVar8[1];
+    if ((float)(dVar12 - dVar13) < 0.0) {
+      dVar13 = dVar12;
+    }
+    dVar21 = (double)(float)(dVar12 - dVar13);
+    local_f0._8_4_ = (undefined4)((double)pfVar8[2] + dVar21);
+    dVar20 = (double)(float)local_f0._8_4_;
+    local_c0._8_4_ = (undefined4)((double)pfVar8[2] - dVar21);
+    dVar12 = (double)(float)local_c0._8_4_;
+    local_f0._0_4_ = fVar1;
+    local_c0._0_4_ = fVar1;
+    local_c0._4_4_ = local_f0._4_4_;
+    local_c0._16_4_ = local_f0._16_4_;
+    local_ac = local_dc;
+    local_a0 = local_d0;
+    local_9c = local_cc;
+    if (dVar18 <= dVar20) {
+      if (dVar17 < dVar12) {
+        ptVar10 = (trace_t *)local_c0;
+        ptVar9 = (trace_t *)(local_c0 + 0x10);
+        iVar6 = CM_TraceSphereThroughSphere
+                          (pTVar5,&local_a0,(float *)ptVar9,(float *)ptVar10,(float)dVar13,
+                           (int)in_r7,(trace_t *)param_3);
+        if (((iVar6 == 0) &&
+            ((double)(float)((double)(float)(dVar19 - (double)param_4->fraction) * dVar17 +
+                            (double)(float)((double)param_4->fraction * dVar14)) <= dVar12)) ||
+           ((double)pTVar5->delta[2] <= dVar15)) goto LAB_824cc438;
+      }
+    }
+    else {
+      ptVar10 = (trace_t *)local_f0;
+      ptVar9 = (trace_t *)(local_f0 + 0x10);
+      iVar6 = CM_TraceSphereThroughSphere
+                        (pTVar5,&local_d0,(float *)ptVar9,(float *)ptVar10,(float)dVar13,(int)in_r7,
+                         (trace_t *)param_3);
+      if (((iVar6 == 0) &&
+          (dVar20 <= (double)(float)((double)(float)(dVar19 - (double)param_4->fraction) * dVar18 +
+                                    (double)(float)((double)param_4->fraction * dVar16)))) ||
+         (dVar15 <= (double)pTVar5->delta[2])) goto LAB_824cc438;
+    }
+    ptVar11 = (trace_t *)param_3;
+    iVar6 = CM_TraceCylinderThroughCylinder
+                      (pTVar5,pfVar8,(float)dVar21,(float)dVar13,(int)ptVar9,ptVar10);
+    if (iVar6 != 0) {
+      if (dVar16 <= dVar20) {
+        if ((dVar12 <= dVar14) || (dVar17 < dVar12)) goto LAB_824cc438;
+        iVar6 = -0xc0;
+        iVar3 = -0xb0;
+        iVar4 = -0xa0;
+      }
+      else {
+        if (dVar20 < dVar18) goto LAB_824cc438;
+        iVar6 = -0xf0;
+        iVar3 = -0xe0;
+        iVar4 = -0xd0;
+      }
+      CM_TraceSphereThroughSphere
+                (pTVar5,(float *)(&stack0x00000000 + iVar4),(float *)(&stack0x00000000 + iVar3),
+                 (float *)(&stack0x00000000 + iVar6),(float)dVar13,(int)ptVar11,(trace_t *)param_3);
+    }
+  }
+LAB_824cc438:
+  __restfpr_22();
+  __restgprlr_25();
+  return;
+}
+
+
+// 824CC448  CM_TraceThroughTree  (qcommon/cm_trace.cpp:1638)
+
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+void CM_TraceThroughTree(traceWork_t *param_1,int param_2,float *param_3,float *param_4,
+                        trace_t *param_5)
+
+{
+  float fVar1;
+  byte bVar2;
+  cplane_s *pcVar3;
+  int iVar4;
+  cNode_t *pcVar5;
+  traceWork_t *ptVar6;
+  longlong lVar7;
+  uint uVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  double dVar14;
+  double dVar15;
+  double dVar16;
+  double dVar17;
+  double dVar18;
+  double dVar19;
+  double dVar20;
+  double dVar21;
+  float local_b0 [4];
+  float local_a0;
+  float local_9c;
+  float local_98;
+  float local_94;
+  
+  lVar7 = (longlong)param_2;
+  __savegprlr_21(param_1);
+  ptVar6 = (traceWork_t *)__savefpr_26();
+  dVar14 = (double)*param_3;
+  dVar13 = (double)param_3[1];
+  dVar12 = (double)param_3[2];
+  dVar11 = (double)param_3[3];
+  local_b0[0] = *param_3;
+  local_b0[1] = param_3[1];
+  local_b0[2] = param_3[2];
+  local_b0[3] = param_3[3];
+  if (-1 < (int)lVar7) {
+    dVar20 = 1.0;
+    dVar17 = 4.76837158203125e-07;
+    dVar19 = 0.0;
+    dVar18 = 0.125;
+    do {
+      pcVar5 = cm.nodes;
+      iVar4 = (int)lVar7;
+      pcVar3 = cm.nodes[iVar4].plane;
+      bVar2 = pcVar3->type;
+      if (bVar2 < 3) {
+        dVar9 = (double)(local_b0[bVar2] - pcVar3->dist);
+        dVar15 = (double)(param_4[bVar2] - pcVar3->dist);
+        dVar21 = (double)(float)((double)ptVar6->size[bVar2] + dVar18);
+      }
+      else {
+        dVar9 = (double)((float)((double)pcVar3->normal[2] * dVar12 +
+                                (double)(float)((double)pcVar3->normal[0] * dVar14 +
+                                               (double)(float)((double)pcVar3->normal[1] * dVar13)))
+                        - pcVar3->dist);
+        dVar15 = (double)((float)((double)param_4[2] * (double)pcVar3->normal[2] +
+                                 (double)(float)((double)param_4[1] * (double)pcVar3->normal[1] +
+                                                (double)(float)((double)pcVar3->normal[0] *
+                                                               (double)*param_4))) - pcVar3->dist);
+        dVar21 = dVar18;
+        if (ptVar6->isPoint == false) {
+          dVar21 = (double)(float)((double)ptVar6->boundingRadius + dVar18);
+        }
+      }
+      dVar16 = (double)(float)(dVar15 - dVar9);
+      dVar10 = dVar9;
+      if (dVar16 < 0.0) {
+        dVar10 = dVar15;
+      }
+      if (dVar10 < dVar21) {
+        dVar10 = dVar9;
+        if ((float)(dVar9 - dVar15) < 0.0) {
+          dVar10 = dVar15;
+        }
+        if (-dVar21 < dVar10) {
+          if ((double)param_5->fraction <= dVar11) goto LAB_824cc764;
+          if (ABS(dVar16) <= dVar17) {
+            uVar8 = 0;
+            dVar21 = dVar19;
+            dVar9 = dVar20;
+          }
+          else {
+            fVar1 = (float)(dVar20 / ABS(dVar16));
+            dVar10 = -dVar9;
+            dVar15 = dVar20;
+            if (dVar16 < 0.0) {
+              dVar10 = dVar9;
+              dVar15 = dVar19;
+            }
+            uVar8 = (uint)dVar15;
+            dVar9 = (double)((float)(dVar10 + dVar21) * fVar1);
+            dVar21 = (double)((float)(dVar10 - dVar21) * fVar1);
+            if (dVar9 < dVar19) {
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp"
+                              ,0x6c1,0,"%s");
+              dVar11 = (double)local_b0[3];
+              dVar12 = (double)local_b0[2];
+              dVar13 = (double)local_b0[1];
+              dVar14 = (double)local_b0[0];
+            }
+          }
+          if ((float)(dVar20 - dVar9) < 0.0) {
+            dVar9 = dVar20;
+          }
+          local_a0 = (float)((double)(float)((double)*param_4 - dVar14) * dVar9 + dVar14);
+          local_9c = (float)((double)(float)((double)param_4[1] - dVar13) * dVar9 + dVar13);
+          local_98 = (float)((double)(float)((double)param_4[2] - dVar12) * dVar9 + dVar12);
+          local_94 = (float)((double)(float)((double)param_4[3] - dVar11) * dVar9 + dVar11);
+          CM_TraceThroughTree(ptVar6,(int)pcVar5[iVar4].children[uVar8],local_b0,&local_a0,param_5);
+          if (dVar20 < dVar21) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",
+                            0x6cc,0,"%s\n\t(frac) = %g");
+          }
+          if (dVar21 < 0.0) {
+            dVar21 = dVar19;
+          }
+          local_b0[0] = (float)((double)(float)((double)*param_4 - (double)local_b0[0]) * dVar21 +
+                               (double)local_b0[0]);
+          dVar14 = (double)local_b0[0];
+          local_b0[1] = (float)((double)(float)((double)param_4[1] - (double)local_b0[1]) * dVar21 +
+                               (double)local_b0[1]);
+          dVar13 = (double)local_b0[1];
+          local_b0[2] = (float)((double)(float)((double)param_4[2] - (double)local_b0[2]) * dVar21 +
+                               (double)local_b0[2]);
+          dVar12 = (double)local_b0[2];
+          local_b0[3] = (float)((double)(float)((double)param_4[3] - (double)local_b0[3]) * dVar21 +
+                               (double)local_b0[3]);
+          dVar11 = (double)local_b0[3];
+          lVar7 = (longlong)pcVar5[iVar4].children[uVar8 ^ 1];
+        }
+        else {
+          lVar7 = (longlong)cm.nodes[iVar4].children[1];
         }
       }
       else {
-        param_2 = (longlong)*(short *)(iVar4 + 4);
+        lVar7 = (longlong)cm.nodes[iVar4].children[0];
       }
-    } while (-1 < (int)param_2);
+    } while (-1 < (int)lVar7);
   }
-  CM_TraceThroughLeaf(iVar6,(ulonglong)DAT_835a28e0 +
-                            (param_2 + 1U + (param_2 + 1U & 0x3fffffff) * 4 & 0x1fffffff) * -8,
+  CM_TraceThroughLeaf(ptVar6,(cLeaf_t *)
+                             ((int)cm.leafs -
+                             (int)((lVar7 + 1U + (lVar7 + 1U & 0x3fffffff) * 4 & 0xffffffff) << 3)),
                       param_5);
 LAB_824cc764:
   __restfpr_26();
@@ -1843,278 +2011,302 @@ LAB_824cc764:
 
 // 824CC788  CM_SetAxialCullOnly  (qcommon/cm_trace.cpp:1757)
 
-void CM_SetAxialCullOnly(int param_1)
+void CM_SetAxialCullOnly(traceWork_t *param_1)
 
 {
-  *(bool *)(param_1 + 0xa9) =
-       *(float *)(param_1 + 0xa0) * 2.0 * *(float *)(param_1 + 0x9c) * 2.0 *
-       *(float *)(param_1 + 0x98) * 2.0 <
-       *(float *)(param_1 + 0x68) * *(float *)(param_1 + 100) * *(float *)(param_1 + 0x60) *
-       *(float *)(param_1 + 0x7c) * 16.0;
+  param_1->axialCullOnly =
+       (param_1->bounds).halfSize[2] * 2.0 * (param_1->bounds).halfSize[1] * 2.0 *
+       (param_1->bounds).halfSize[0] * 2.0 <
+       param_1->size[2] * param_1->size[1] * param_1->size[0] * param_1->deltaLen * 16.0;
   return;
 }
 
 
 // 824CC7F8  CM_BrushModelTraceSetup  (qcommon/cm_trace.cpp:1774)
 
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
 void CM_BrushModelTraceSetup
-               (undefined8 param_1,float *param_2,float *param_3,ulonglong param_4,
-               undefined4 param_5,undefined4 param_6)
+               (traceWork_t *param_1,float *param_2,float *param_3,Bounds *param_4,int param_5,
+               CM_WorldTraceCallbacks *param_6)
 
 {
   float fVar1;
   float fVar2;
   float *pfVar3;
   float fVar4;
-  int iVar6;
-  undefined8 uVar5;
+  TraceExtents *pTVar5;
+  ulonglong uVar6;
   double dVar7;
   double dVar8;
   double dVar9;
   double dVar10;
   
-  iVar6 = __savegprlr_24();
-  if (DAT_835a28d4 == 0) {
-    MyAssertHandler(0xffffffff8208249c,0x6f1,0,0xffffffff82000f98,0xffffffff8208247c);
+  uVar6 = (ulonglong)(int)param_4;
+  pTVar5 = (TraceExtents *)__savegprlr_24(param_1);
+  if (cm.numNodes == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",0x6f1,0,
+                    "%s");
   }
-  if ((param_4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8208249c,0x6f2,0,0xffffffff82000f98,0xffffffff82002044);
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",0x6f2,0,
+                    "%s");
   }
   if (((((uint)*param_3 & 0x7f800000) == 0x7f800000) ||
       (((uint)param_3[1] & 0x7f800000) == 0x7f800000)) ||
      (((uint)param_3[2] & 0x7f800000) == 0x7f800000)) {
-    MyAssertHandler(0xffffffff8208249c,0x6f3,0,0xffffffff82000f98,0xffffffff8202abfc);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",0x6f3,0,
+                    "%s");
   }
   Profile_Begin(0x1f);
-  *(undefined4 *)(iVar6 + 0xa4) = param_5;
-  *(undefined4 *)(iVar6 + 0xdc) = param_6;
-  pfVar3 = (float *)param_4;
-  *(float *)(iVar6 + 0x60) = pfVar3[3];
-  *(float *)(iVar6 + 100) = pfVar3[4];
-  *(float *)(iVar6 + 0x68) = pfVar3[5];
-  dVar9 = 0.0;
-  *(undefined4 *)(iVar6 + 0x6c) = 0;
-  *(float *)(iVar6 + 0x40) = *param_2 + *pfVar3;
-  *(float *)(iVar6 + 0x44) = param_2[1] + pfVar3[1];
-  *(float *)(iVar6 + 0x48) = param_2[2] + pfVar3[2];
+  pTVar5[1].start[1] = (float)param_5;
+  pTVar5[2].halfDeltaPad = (float)param_6;
+  pfVar3 = (float *)uVar6;
+  pTVar5[1].midPoint[0] = pfVar3[3];
+  pTVar5[1].midPoint[1] = pfVar3[4];
+  pTVar5[1].midPoint[2] = pfVar3[5];
+  dVar10 = 0.0;
+  pTVar5[1].midPointPad = 0.0;
+  pTVar5->start[0] = *param_2 + *pfVar3;
+  pTVar5->start[1] = param_2[1] + pfVar3[1];
+  pTVar5->start[2] = param_2[2] + pfVar3[2];
   fVar1 = *param_3;
   fVar2 = *pfVar3;
-  *(float *)(iVar6 + 0x50) = fVar1 + fVar2;
-  *(float *)(iVar6 + 0x54) = param_3[1] + pfVar3[1];
-  *(float *)(iVar6 + 0x58) = param_3[2] + pfVar3[2];
-  *(float *)(iVar6 + 0x70) = (fVar1 + fVar2) - *(float *)(iVar6 + 0x40);
-  *(float *)(iVar6 + 0x74) = *(float *)(iVar6 + 0x54) - *(float *)(iVar6 + 0x44);
-  *(float *)(iVar6 + 0x78) = *(float *)(iVar6 + 0x58) - *(float *)(iVar6 + 0x48);
-  CM_CalcTraceExtents(iVar6);
-  fVar1 = *(float *)(iVar6 + 0x78) * *(float *)(iVar6 + 0x78) +
-          *(float *)(iVar6 + 0x70) * *(float *)(iVar6 + 0x70) +
-          *(float *)(iVar6 + 0x74) * *(float *)(iVar6 + 0x74);
-  *(float *)(iVar6 + 0x80) = fVar1;
-  *(float *)(iVar6 + 0x7c) = SQRT(fVar1);
-  fVar1 = *(float *)(iVar6 + 0x74) * *(float *)(iVar6 + 0x74) +
-          *(float *)(iVar6 + 0x70) * *(float *)(iVar6 + 0x70);
-  *(float *)(iVar6 + 0x88) = fVar1;
-  *(float *)(iVar6 + 0x84) = SQRT(fVar1);
-  *(bool *)(iVar6 + 0xe0) = (double)*(float *)(iVar6 + 0x70) == dVar9;
-  *(bool *)(iVar6 + 0xe1) = (double)*(float *)(iVar6 + 0x74) == dVar9;
-  *(bool *)(iVar6 + 0xe2) = (double)*(float *)(iVar6 + 0x78) == dVar9;
-  dVar9 = (double)*(float *)(iVar6 + 0x60);
+  pTVar5->end[0] = fVar1 + fVar2;
+  pTVar5->end[1] = param_3[1] + pfVar3[1];
+  pTVar5->end[2] = param_3[2] + pfVar3[2];
+  pTVar5[1].halfDelta[0] = (fVar1 + fVar2) - pTVar5->start[0];
+  pTVar5[1].halfDelta[1] = pTVar5->end[1] - pTVar5->start[1];
+  pTVar5[1].halfDelta[2] = pTVar5->end[2] - pTVar5->start[2];
+  CM_CalcTraceExtents(pTVar5);
+  fVar1 = pTVar5[1].halfDelta[2] * pTVar5[1].halfDelta[2] +
+          pTVar5[1].halfDelta[0] * pTVar5[1].halfDelta[0] +
+          pTVar5[1].halfDelta[1] * pTVar5[1].halfDelta[1];
+  pTVar5[1].halfDeltaAbs[0] = fVar1;
+  pTVar5[1].halfDeltaPad = SQRT(fVar1);
+  fVar1 = pTVar5[1].halfDelta[1] * pTVar5[1].halfDelta[1] +
+          pTVar5[1].halfDelta[0] * pTVar5[1].halfDelta[0];
+  pTVar5[1].halfDeltaAbs[2] = fVar1;
+  pTVar5[1].halfDeltaAbs[1] = SQRT(fVar1);
+  *(bool *)pTVar5[2].halfDeltaAbs = (double)pTVar5[1].halfDelta[0] == dVar10;
+  *(bool *)((int)pTVar5[2].halfDeltaAbs + 1) = (double)pTVar5[1].halfDelta[1] == dVar10;
+  *(bool *)((int)pTVar5[2].halfDeltaAbs + 2) = (double)pTVar5[1].halfDelta[2] == dVar10;
   dVar10 = 0.009999999776482582;
-  if (0.01 <= (float)(dVar9 - (double)*(float *)(iVar6 + 0x68))) {
-    uVar5 = va(0xffffffff82082ad0,dVar9,(double)*(float *)(iVar6 + 0x68));
-    MyAssertHandler(0xffffffff8208249c,0x70e,0,0xffffffff820011f4,0xffffffff82082a9c,uVar5);
+  if (0.01 <= pTVar5[1].midPoint[0] - pTVar5[1].midPoint[2]) {
+    va("tw->size[0]: %f, tw->size[2]: %f");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",0x70e,0,
+                    "%s\n\t%s");
   }
-  if (dVar10 <= (double)(float)((double)*(float *)(iVar6 + 100) - (double)*(float *)(iVar6 + 0x68)))
-  {
-    uVar5 = va(0xffffffff82082a78,(double)*(float *)(iVar6 + 100),(double)*(float *)(iVar6 + 0x68));
-    MyAssertHandler(0xffffffff8208249c,0x70f,0,0xffffffff820011f4,0xffffffff82082a44,uVar5);
+  if (dVar10 <= (double)(pTVar5[1].midPoint[1] - pTVar5[1].midPoint[2])) {
+    va("tw->size[1]: %f, tw->size[2]: %f");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",0x70f,0,
+                    "%s\n\t%s");
   }
-  fVar1 = *(float *)(iVar6 + 0x60);
+  fVar1 = pTVar5[1].midPoint[0];
   fVar2 = fVar1;
-  if (*(float *)(iVar6 + 100) - fVar1 < 0.0) {
-    fVar2 = *(float *)(iVar6 + 100);
+  if (pTVar5[1].midPoint[1] - fVar1 < 0.0) {
+    fVar2 = pTVar5[1].midPoint[1];
   }
-  *(float *)(iVar6 + 0xb0) = fVar2;
-  *(float *)(iVar6 + 0xcc) =
-       SQRT(*(float *)(iVar6 + 0x68) * *(float *)(iVar6 + 0x68) +
-            fVar1 * fVar1 + *(float *)(iVar6 + 100) * *(float *)(iVar6 + 100));
-  fVar1 = (*(float *)(iVar6 + 0x50) + *(float *)(iVar6 + 0x40)) * 0.5;
-  *(float *)(iVar6 + 0x8c) = fVar1;
-  fVar2 = (*(float *)(iVar6 + 0x44) + *(float *)(iVar6 + 0x54)) * 0.5;
-  *(float *)(iVar6 + 0x90) = fVar2;
-  fVar4 = (*(float *)(iVar6 + 0x48) + *(float *)(iVar6 + 0x58)) * 0.5;
-  *(float *)(iVar6 + 0x94) = fVar4;
-  dVar8 = ABS((double)(*(float *)(iVar6 + 0x40) - fVar1));
-  *(float *)(iVar6 + 0x98) = (float)dVar8;
-  dVar7 = ABS((double)(*(float *)(iVar6 + 0x44) - fVar2));
-  *(float *)(iVar6 + 0x9c) = (float)dVar7;
-  dVar10 = ABS((double)(*(float *)(iVar6 + 0x48) - fVar4));
-  *(float *)(iVar6 + 0xa0) = (float)dVar10;
-  dVar9 = (double)*(float *)(iVar6 + 0xb0);
-  *(float *)(iVar6 + 0x98) = (float)(dVar9 + dVar8);
-  *(float *)(iVar6 + 0x9c) = (float)(dVar7 + dVar9);
-  *(float *)(iVar6 + 0xa0) = (float)(dVar9 + dVar10);
-  __restgprlr_24((double)(float)(dVar9 + dVar8),dVar9,dVar8,dVar7,dVar10);
+  pTVar5[1].end[0] = fVar2;
+  pTVar5[2].midPointPad =
+       SQRT(pTVar5[1].midPoint[2] * pTVar5[1].midPoint[2] +
+            fVar1 * fVar1 + pTVar5[1].midPoint[1] * pTVar5[1].midPoint[1]);
+  fVar1 = (pTVar5->end[0] + pTVar5->start[0]) * 0.5;
+  pTVar5[1].halfDeltaAbsPad = fVar1;
+  fVar2 = (pTVar5->start[1] + pTVar5->end[1]) * 0.5;
+  pTVar5[1].invDeltaAbs[0] = fVar2;
+  fVar4 = (pTVar5->start[2] + pTVar5->end[2]) * 0.5;
+  pTVar5[1].invDeltaAbs[1] = fVar4;
+  dVar9 = ABS((double)(pTVar5->start[0] - fVar1));
+  pTVar5[1].invDeltaAbs[2] = (float)dVar9;
+  dVar8 = ABS((double)(pTVar5->start[1] - fVar2));
+  pTVar5[1].invDeltaAbsPad = (float)dVar8;
+  dVar7 = ABS((double)(pTVar5->start[2] - fVar4));
+  pTVar5[1].start[0] = (float)dVar7;
+  dVar10 = (double)pTVar5[1].end[0];
+  pTVar5[1].invDeltaAbs[2] = (float)(dVar10 + dVar9);
+  pTVar5[1].invDeltaAbsPad = (float)(dVar8 + dVar10);
+  pTVar5[1].start[0] = (float)(dVar10 + dVar7);
+  __restgprlr_24((double)(float)(dVar10 + dVar9),dVar10,dVar9,dVar8,dVar7);
   return;
 }
 
 
 // 824CCBF0  CM_BrushModelTraceFinish  (qcommon/cm_trace.cpp:1821)
 
-void CM_BrushModelTraceFinish(undefined8 param_1,undefined8 param_2,ulonglong param_3)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+void CM_BrushModelTraceFinish(traceWork_t *param_1,trace_t *param_2,uint param_3)
 
 {
   float fVar1;
   float fVar2;
-  float *pfVar3;
-  int iVar5;
-  longlong lVar4;
-  double dVar6;
-  double dVar7;
-  undefined4 local_70;
-  undefined4 local_6c;
-  undefined4 local_68;
+  float fVar3;
+  int iVar4;
+  cLeaf_t *pcVar5;
+  traceWork_t *ptVar6;
+  traceWork_t *ptVar7;
+  int iVar8;
+  ulonglong uVar9;
+  double dVar10;
+  double dVar11;
+  float local_70;
+  float local_6c;
+  float local_68;
   float local_64;
-  undefined4 local_60;
-  undefined4 local_5c;
-  undefined4 local_58;
+  float local_60;
+  float local_5c;
+  float local_58;
   float local_54;
   
-  iVar5 = __savegprlr_25();
-  lVar4 = CM_SetAxialCullOnly();
-  CM_GetTraceThreadInfo(lVar4 + 0xd0);
-  pfVar3 = (float *)param_2;
-  if (pfVar3[4] == -NAN) {
-    MyAssertHandler(0xffffffff8208249c,0x734,0,0xffffffff82000f98,0xffffffff82082b50);
+  uVar9 = (ulonglong)(int)param_3;
+  ptVar6 = (traceWork_t *)__savegprlr_25(param_1);
+  ptVar7 = ptVar6;
+  CM_SetAxialCullOnly(ptVar6);
+  CM_GetTraceThreadInfo(&ptVar7->threadInfo);
+  if (param_2->surfaceFlags == -1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",0x734,0,
+                    "%s");
   }
-  fVar2 = pfVar3[4];
-  dVar6 = (double)*pfVar3;
-  pfVar3[4] = -NAN;
-  dVar7 = 0.0;
-  if (*(float *)(iVar5 + 0x7c) == 0.0) {
-    *(undefined1 *)(iVar5 + 0xa8) = 0;
-    if ((param_3 & 0xffffffff) == 0) {
-      CM_PositionTest(iVar5,param_2);
+  iVar8 = param_2->surfaceFlags;
+  dVar10 = (double)param_2->fraction;
+  param_2->surfaceFlags = -1;
+  dVar11 = 0.0;
+  if (ptVar6->deltaLen == 0.0) {
+    ptVar6->isPoint = false;
+    if ((uVar9 & 0xffffffff) == 0) {
+      CM_PositionTest(ptVar6,param_2);
     }
     else {
-      if (*(char *)((int)pfVar3 + 0x2e) == '\0') {
-        lVar4 = (param_3 + (param_3 & 0x1fffffff) * 8 & 0x1fffffff) * 8 + (ulonglong)DAT_835a2914;
-        *(undefined4 *)(iVar5 + 0xac) = *(undefined4 *)((int)lVar4 + 0x1c);
-        CM_TestInLeaf(iVar5,lVar4 + 0x20,param_2);
+      if (param_2->allsolid == false) {
+        iVar4 = (int)((uVar9 + (uVar9 & 0x1fffffff) * 8 & 0xffffffff) << 3);
+        pcVar5 = &(cm.cmodels)->leaf;
+        ptVar6->info = *(ClipInfo **)((int)((cm.cmodels)->leaf).bounds.midPoint + iVar4 + -0x10);
+        CM_TestInLeaf(ptVar6,(cLeaf_t *)((int)(pcVar5->bounds).midPoint + iVar4 + -0xc),param_2);
       }
-      if (((uint)*pfVar3 & 0x7f800000) == 0x7f800000) {
-        MyAssertHandler(0xffffffff8208249c,0x75f,0,0xffffffff82000f98,0xffffffff8202bd88);
+      if (((uint)param_2->fraction & 0x7f800000) == 0x7f800000) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",
+                        0x75f,0,"%s");
       }
     }
   }
   else {
-    if (*(float *)(iVar5 + 0x60) < 0.0) {
-      MyAssertHandler(0xffffffff8208249c,0x76b,0,0xffffffff82000f98,0xffffffff82082b3c);
+    if (ptVar6->size[0] < 0.0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",0x76b,
+                      0,"%s");
     }
-    if ((double)*(float *)(iVar5 + 100) < dVar7) {
-      MyAssertHandler(0xffffffff8208249c,0x76c,0,0xffffffff82000f98,0xffffffff82082b28);
+    if ((double)ptVar6->size[1] < dVar11) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",0x76c,
+                      0,"%s");
     }
-    if ((double)*(float *)(iVar5 + 0x68) < dVar7) {
-      MyAssertHandler(0xffffffff8208249c,0x76d,0,0xffffffff82000f98,0xffffffff82082b14);
+    if ((double)ptVar6->size[2] < dVar11) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",0x76d,
+                      0,"%s");
     }
-    *(bool *)(iVar5 + 0xa8) =
-         (double)(*(float *)(iVar5 + 0x68) + *(float *)(iVar5 + 100) + *(float *)(iVar5 + 0x60)) ==
-         dVar7;
-    fVar1 = *(float *)(iVar5 + 0xb0);
-    *(float *)(iVar5 + 0xc0) = ABS(*(float *)(iVar5 + 0xb4)) + fVar1;
-    *(float *)(iVar5 + 0xc4) = ABS(*(float *)(iVar5 + 0xb8)) + fVar1;
-    *(float *)(iVar5 + 200) = ABS(*(float *)(iVar5 + 0xbc)) + fVar1;
-    if ((param_3 & 0xffffffff) == 0) {
-      local_70 = *(undefined4 *)(iVar5 + 0x40);
-      local_6c = *(undefined4 *)(iVar5 + 0x44);
-      local_68 = *(undefined4 *)(iVar5 + 0x48);
-      local_60 = *(undefined4 *)(iVar5 + 0x50);
-      local_5c = *(undefined4 *)(iVar5 + 0x54);
-      local_58 = *(undefined4 *)(iVar5 + 0x58);
-      local_54 = *pfVar3;
-      *(undefined **)(iVar5 + 0xac) = &DAT_835a2888;
-      local_64 = (float)dVar7;
-      CM_TraceThroughTree(iVar5,0,&local_70,&local_60,param_2);
+    ptVar6->isPoint = (double)(ptVar6->size[2] + ptVar6->size[1] + ptVar6->size[0]) == dVar11;
+    fVar1 = ptVar6->offset[1];
+    fVar2 = ptVar6->offset[2];
+    fVar3 = ptVar6->radius;
+    ptVar6->radiusOffset[0] = ABS(ptVar6->offset[0]) + fVar3;
+    ptVar6->radiusOffset[1] = ABS(fVar1) + fVar3;
+    ptVar6->radiusOffset[2] = ABS(fVar2) + fVar3;
+    if ((uVar9 & 0xffffffff) == 0) {
+      local_70 = (ptVar6->extents).start[0];
+      local_6c = (ptVar6->extents).start[1];
+      local_68 = (ptVar6->extents).start[2];
+      local_60 = (ptVar6->extents).end[0];
+      local_5c = (ptVar6->extents).end[1];
+      local_58 = (ptVar6->extents).end[2];
+      local_54 = param_2->fraction;
+      ptVar6->info = &cm.info;
+      local_64 = (float)dVar11;
+      CM_TraceThroughTree(ptVar6,0,&local_70,&local_60,param_2);
     }
     else {
-      lVar4 = (param_3 + (param_3 & 0x1fffffff) * 8 & 0x1fffffff) * 8 + (ulonglong)DAT_835a2914;
-      *(undefined4 *)(iVar5 + 0xac) = *(undefined4 *)((int)lVar4 + 0x1c);
-      CM_TraceThroughLeaf(iVar5,lVar4 + 0x20,param_2);
+      iVar4 = (int)((uVar9 + (uVar9 & 0x1fffffff) * 8 & 0xffffffff) << 3);
+      pcVar5 = &(cm.cmodels)->leaf;
+      ptVar6->info = *(ClipInfo **)((int)((cm.cmodels)->leaf).bounds.midPoint + iVar4 + -0x10);
+      CM_TraceThroughLeaf(ptVar6,(cLeaf_t *)((int)(pcVar5->bounds).midPoint + iVar4 + -0xc),param_2)
+      ;
     }
   }
-  if ((*(char *)(pfVar3 + 0xc) == '\0') && (*(char *)((int)pfVar3 + 0x2f) == '\0')) {
-    *(bool *)(pfVar3 + 0xc) = (float)0x3f333333 <= pfVar3[3];
+  if ((param_2->walkable == false) && (param_2->startsolid == false)) {
+    param_2->walkable = (float)0x3f333333 <= param_2->normal[2];
   }
-  if (dVar6 < (double)*pfVar3) {
-    MyAssertHandler(0xffffffff8208249c,0x7a3,0,0xffffffff82000f98,0xffffffff82082af4);
+  if (dVar10 < (double)param_2->fraction) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",0x7a3,0,
+                    "%s");
   }
-  if (((double)*pfVar3 < dVar6) && (pfVar3[4] == -NAN)) {
-    MyAssertHandler(0xffffffff8208249c,0x7a5,0,0xffffffff82000f98,0xffffffff82082b50);
+  if (((double)param_2->fraction < dVar10) && (param_2->surfaceFlags == -1)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",0x7a5,0,
+                    "%s");
   }
-  if (pfVar3[4] == -NAN) {
-    pfVar3[4] = fVar2;
+  if (param_2->surfaceFlags == -1) {
+    param_2->surfaceFlags = iVar8;
   }
-  Profile_EndInternal(0);
-  __restgprlr_25();
+  iVar8 = Profile_EndInternal((double *)0x0);
+  __restgprlr_25(iVar8);
   return;
 }
 
 
 // 824CCF48  CM_BrushModelTraceRotatedCapsule  (qcommon/cm_trace.cpp:1967)
 
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
 void CM_BrushModelTraceRotatedCapsule
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-               float *param_5,ulonglong param_6,undefined8 param_7,undefined8 param_8)
+               (trace_t *param_1,float *param_2,float *param_3,Bounds *param_4,float *param_5,
+               uint param_6,int param_7,CM_WorldTraceCallbacks *param_8)
 
 {
   int iVar1;
-  undefined8 uVar2;
-  double dVar3;
+  trace_t *ptVar2;
+  ulonglong uVar3;
   double dVar4;
-  undefined1 auStack_150 [104];
-  float local_e8;
-  float local_b8;
-  float local_b4;
-  float local_b0;
-  undefined4 local_a4;
-  float local_a0;
-  float local_9c;
-  float local_98;
-  float local_94;
+  double dVar5;
+  traceWork_t tStack_150;
   
-  uVar2 = __savegprlr_22();
+  uVar3 = (ulonglong)(int)param_6;
+  ptVar2 = (trace_t *)__savegprlr_22(param_1);
   if (0.002 <= ABS((param_5[2] * param_5[2] + *param_5 * *param_5 + param_5[1] * param_5[1]) - 1.0))
   {
-    MyAssertHandler(0xffffffff8208249c,0x7b2,0,0xffffffff82000f98,0xffffffff82082ba4);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",0x7b2,0,
+                    "%s");
   }
-  local_a4 = 0;
-  CM_BrushModelTraceSetup(auStack_150,param_2,param_3,param_4,param_7,param_8);
-  if (local_e8 < local_a0) {
-    MyAssertHandler(0xffffffff8208249c,0x7ba,0,0xffffffff82000f98,0xffffffff82082b8c);
+  tStack_150.info = (ClipInfo *)0x0;
+  CM_BrushModelTraceSetup(&tStack_150,param_2,param_3,param_4,param_7,param_8);
+  if (tStack_150.size[2] < tStack_150.radius) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",0x7ba,0,
+                    "%s");
   }
-  dVar4 = 0.0;
-  if (((local_a0 < local_e8) &&
-      (((iVar1 = (int)((param_6 + (param_6 & 0x1fffffff) * 8 & 0xffffffff) << 3) + DAT_835a2914,
-        *param_5 != 0.0 || (param_5[1] != 0.0)) && ((*(uint *)(iVar1 + 0x28) & (uint)param_7) != 0))
-      )) && (*(short *)(iVar1 + 0x22) != 0)) {
-    R_WarnOncePerFrame(0x46);
+  dVar5 = 0.0;
+  if (((tStack_150.radius < tStack_150.size[2]) &&
+      (((iVar1 = (int)((uVar3 + (uVar3 & 0x1fffffff) * 8 & 0xffffffff) << 3), *param_5 != 0.0 ||
+        (param_5[1] != 0.0)) &&
+       ((*(uint *)((int)((cm.cmodels)->leaf).bounds.midPoint + iVar1 + -4) & param_7) != 0)))) &&
+     (*(short *)((int)((cm.cmodels)->leaf).bounds.midPoint + iVar1 + -10) != 0)) {
+    R_WarnOncePerFrame(R_WARN_ROTATED_CAPSULE_TRACE);
   }
-  dVar3 = (double)(local_e8 - local_a0);
-  if ((double)param_5[2] < dVar4) {
-    dVar3 = -dVar3;
+  dVar4 = (double)(tStack_150.size[2] - tStack_150.radius);
+  if ((double)param_5[2] < dVar5) {
+    dVar4 = -dVar4;
   }
-  local_98 = (float)(dVar3 * (double)param_5[1]);
-  local_9c = (float)((double)*param_5 * dVar3);
-  local_94 = (float)((double)param_5[2] * dVar3);
-  dVar3 = (double)local_94;
-  if (dVar3 < dVar4) {
-    MyAssertHandler(0xffffffff8208249c,0x7cc,0,0xffffffff82000f98,0xffffffff82082b78);
-    dVar3 = (double)local_94;
+  tStack_150.offset[1] = (float)(dVar4 * (double)param_5[1]);
+  tStack_150.offset[0] = (float)((double)*param_5 * dVar4);
+  tStack_150.offset[2] = (float)((double)param_5[2] * dVar4);
+  dVar4 = (double)tStack_150.offset[2];
+  if (dVar4 < dVar5) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",0x7cc,0,
+                    "%s");
+    dVar4 = (double)tStack_150.offset[2];
   }
-  local_b0 = (float)(ABS(dVar3) + (double)local_b0);
-  local_b8 = ABS(local_9c) + local_b8;
-  local_b4 = ABS(local_98) + local_b4;
-  CM_BrushModelTraceFinish(auStack_150,uVar2,param_6);
+  tStack_150.bounds.halfSize[2] = (float)(ABS(dVar4) + (double)tStack_150.bounds.halfSize[2]);
+  tStack_150.bounds.halfSize[0] = ABS(tStack_150.offset[0]) + tStack_150.bounds.halfSize[0];
+  tStack_150.bounds.halfSize[1] = ABS(tStack_150.offset[1]) + tStack_150.bounds.halfSize[1];
+  CM_BrushModelTraceFinish(&tStack_150,ptVar2,(uint)uVar3);
   __restgprlr_22();
   return;
 }
@@ -2122,59 +2314,56 @@ void CM_BrushModelTraceRotatedCapsule
 
 // 824CD170  CM_BrushModelTraceVerticalCapsule  (qcommon/cm_trace.cpp:2012)
 
-void CM_BrushModelTraceVerticalCapsule(undefined8 param_1)
+void CM_BrushModelTraceVerticalCapsule
+               (trace_t *param_1,float *param_2,float *param_3,Bounds *param_4,uint param_5,
+               int param_6,CM_WorldTraceCallbacks *param_7)
 
 {
-  undefined8 in_r7;
-  undefined1 auStack_110 [104];
-  float local_a8;
-  float local_70;
-  undefined4 local_64;
-  float local_60;
-  undefined4 local_5c;
-  undefined4 local_58;
-  float local_54;
+  traceWork_t tStack_110;
   
-  local_64 = 0;
-  CM_BrushModelTraceSetup(auStack_110);
-  local_54 = local_a8 - local_60;
-  local_5c = 0;
-  local_58 = 0;
-  if (local_54 < 0.0) {
-    MyAssertHandler(0xffffffff8208249c,0x7e8,0,0xffffffff82000f98,0xffffffff82082b78);
+  tStack_110.info = (ClipInfo *)0x0;
+  CM_BrushModelTraceSetup(&tStack_110,param_2,param_3,param_4,param_6,param_7);
+  tStack_110.offset[2] = tStack_110.size[2] - tStack_110.radius;
+  tStack_110.offset[0] = 0.0;
+  tStack_110.offset[1] = 0.0;
+  if (tStack_110.offset[2] < 0.0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",0x7e8,0,
+                    "%s");
   }
-  local_70 = local_70 + local_54;
-  CM_BrushModelTraceFinish(auStack_110,param_1,in_r7);
+  tStack_110.bounds.halfSize[2] = tStack_110.bounds.halfSize[2] + tStack_110.offset[2];
+  CM_BrushModelTraceFinish(&tStack_110,param_1,param_5);
   return;
 }
 
 
 // 824CD228  CM_WorldTrace  (qcommon/cm_trace.cpp:2032)
 
-void CM_WorldTrace(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-                  undefined8 param_5,undefined8 param_6)
+void CM_WorldTrace(trace_t *param_1,float *param_2,float *param_3,Bounds *param_4,int param_5,
+                  CM_WorldTraceCallbacks *param_6)
 
 {
-  float *_Dst;
-  double dVar1;
+  trace_t *ptVar1;
   double dVar2;
+  double dVar3;
   
-  _Dst = (float *)__savegprlr_26();
-  memset(_Dst,0,0x34);
-  dVar2 = 1.0;
-  *_Dst = 1.0;
-  CM_BrushModelTraceVerticalCapsule(_Dst,param_2,param_3,param_4,0,param_5,param_6);
-  if (*_Dst < 0.0) {
-    MyAssertHandler(0xffffffff8208249c,0x7f4,0,0xffffffff82000f98,0xffffffff82082be0);
+  ptVar1 = (trace_t *)__savegprlr_26(param_1);
+  memset();
+  dVar3 = 1.0;
+  ptVar1->fraction = 1.0;
+  CM_BrushModelTraceVerticalCapsule(ptVar1,param_2,param_3,param_4,0,param_5,param_6);
+  if (ptVar1->fraction < 0.0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",0x7f4,0,
+                    "%s");
   }
-  if (1.01 <= *_Dst) {
-    MyAssertHandler(0xffffffff8208249c,0x7f5,0,0xffffffff82000f98,0xffffffff82082bc4);
+  if (1.01 <= ptVar1->fraction) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",0x7f5,0,
+                    "%s");
   }
-  dVar1 = (double)*_Dst;
-  if ((float)(dVar2 - (double)*_Dst) < 0.0) {
-    dVar1 = dVar2;
+  dVar2 = (double)ptVar1->fraction;
+  if ((float)(dVar3 - (double)ptVar1->fraction) < 0.0) {
+    dVar2 = dVar3;
   }
-  *_Dst = (float)dVar1;
+  ptVar1->fraction = (float)dVar2;
   __restgprlr_26();
   return;
 }
@@ -2182,40 +2371,44 @@ void CM_WorldTrace(undefined8 param_1,undefined8 param_2,undefined8 param_3,unde
 
 // 824CD318  CM_WorldTraceSimple_IsGlassSolid  (qcommon/cm_trace.cpp:2043)
 
-undefined8 CM_WorldTraceSimple_IsGlassSolid(void)
+bool CM_WorldTraceSimple_IsGlassSolid(uint param_1)
 
 {
-  return 1;
+  return true;
 }
 
 
 // 824CD320  CM_WorldTraceSimple  (qcommon/cm_trace.cpp:2049)
 
-void CM_WorldTraceSimple(void)
+void CM_WorldTraceSimple(trace_t *param_1,float *param_2,float *param_3,Bounds *param_4,int param_5)
 
 {
-  CM_WorldTrace();
+  CM_WorldTraceCallbacks local_10 [4];
+  
+  local_10[0].isGlassSolid = CM_WorldTraceSimple_IsGlassSolid;
+  CM_WorldTrace(param_1,param_2,param_3,param_4,param_5,local_10);
   return;
 }
 
 
 // 824CD350  BrushModelIsGlassSolid  (qcommon/cm_trace.cpp:2058)
 
-undefined8 BrushModelIsGlassSolid(void)
+bool BrushModelIsGlassSolid(uint param_1)
 
 {
-  if (DAT_84013128 == 0) {
-    MyAssertHandler(0xffffffff8208249c,0x80b,0,0xffffffff82082bfc);
+  if (alwaysfails == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",0x80b,0,
+                    "Glass should not be in brushmodels");
   }
-  return 0;
+  return false;
 }
 
 
 // 824CD3A0  CM_TransformedBrushModelTraceRotated  (qcommon/cm_trace.cpp:2072)
 
 void CM_TransformedBrushModelTraceRotated
-               (undefined8 param_1,float *param_2,float *param_3,ulonglong param_4,
-               undefined8 param_5,undefined8 param_6,float *param_7,float *param_8)
+               (trace_t *param_1,float *param_2,float *param_3,Bounds *param_4,uint param_5,
+               int param_6,float *param_7,float (*param_8) [3])
 
 {
   float fVar1;
@@ -2234,9 +2427,10 @@ void CM_TransformedBrushModelTraceRotated
   float fVar14;
   float fVar15;
   float fVar16;
-  float *pfVar17;
-  double dVar18;
-  code *local_110 [2];
+  trace_t *ptVar17;
+  ulonglong uVar18;
+  double dVar19;
+  CM_WorldTraceCallbacks local_110 [2];
   float local_108;
   float local_104;
   float local_100;
@@ -2246,42 +2440,39 @@ void CM_TransformedBrushModelTraceRotated
   float local_e8;
   float local_e4;
   float local_e0;
-  undefined4 local_d0;
-  undefined4 local_cc;
-  undefined4 local_c8;
-  float local_c4;
-  float local_c0;
-  float local_bc;
+  Bounds local_d0 [8];
   
-  __savegprlr_24();
-  pfVar17 = (float *)__savefpr_18();
-  if ((param_4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8208249c,0x821,0,0xffffffff82000f98,0xffffffff82002044);
+  uVar18 = (ulonglong)(int)param_4;
+  __savegprlr_24(param_1);
+  ptVar17 = (trace_t *)__savefpr_18();
+  if ((uVar18 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",0x821,0,
+                    "%s");
   }
-  pfVar10 = (float *)param_4;
-  local_110[0] = BrushModelIsGlassSolid;
-  fVar1 = param_8[1];
+  pfVar10 = (float *)uVar18;
+  local_110[0].isGlassSolid = BrushModelIsGlassSolid;
+  fVar1 = (*param_8)[1];
   fVar11 = (param_2[1] + pfVar10[1]) - param_7[1];
-  fVar2 = *param_8;
-  fVar3 = param_8[4];
+  fVar2 = (*param_8)[0];
+  fVar3 = param_8[1][1];
   fVar13 = (*param_2 + *pfVar10) - *param_7;
-  fVar4 = param_8[3];
+  fVar4 = param_8[1][0];
   fVar12 = (param_3[1] + pfVar10[1]) - param_7[1];
   fVar14 = (*param_3 + *pfVar10) - *param_7;
-  fVar5 = param_8[7];
-  fVar6 = param_8[6];
+  fVar5 = param_8[2][1];
+  fVar6 = param_8[2][0];
   fVar15 = (param_2[2] + pfVar10[2]) - param_7[2];
-  local_c4 = pfVar10[3];
-  fVar7 = param_8[2];
-  fVar8 = param_8[5];
-  fVar9 = param_8[8];
-  local_d0 = 0;
-  local_cc = 0;
-  local_c8 = 0;
-  local_c0 = pfVar10[4];
-  local_bc = pfVar10[5];
+  local_d0[0].halfSize[0] = pfVar10[3];
+  fVar7 = (*param_8)[2];
+  fVar8 = param_8[1][2];
+  fVar9 = param_8[2][2];
+  local_d0[0].midPoint[0] = 0.0;
+  local_d0[0].midPoint[1] = 0.0;
+  local_d0[0].midPoint[2] = 0.0;
+  local_d0[0].halfSize[1] = pfVar10[4];
+  local_d0[0].halfSize[2] = pfVar10[5];
   local_108 = (fVar2 + fVar1) * 0.0 + fVar7;
-  dVar18 = (double)*pfVar17;
+  dVar19 = (double)ptVar17->fraction;
   local_104 = (fVar4 + fVar3) * 0.0 + fVar8;
   local_100 = (fVar6 + fVar5) * 0.0 + fVar9;
   fVar16 = (param_3[2] + pfVar10[2]) - param_7[2];
@@ -2292,23 +2483,23 @@ void CM_TransformedBrushModelTraceRotated
   local_f0 = fVar15 * fVar9 + fVar11 * fVar5 + fVar6 * fVar13;
   local_e0 = fVar16 * fVar9 + fVar14 * fVar6 + fVar12 * fVar5;
   CM_BrushModelTraceRotatedCapsule
-            (pfVar17,&local_f8,&local_e8,&local_d0,&local_108,param_5,param_6,local_110);
-  if ((double)*pfVar17 < dVar18) {
-    fVar1 = param_8[1];
-    fVar2 = param_8[2];
-    fVar3 = pfVar17[1];
-    fVar4 = param_8[4];
-    fVar5 = param_8[5];
-    fVar6 = pfVar17[2];
-    fVar7 = param_8[7];
-    fVar8 = param_8[8];
-    fVar9 = pfVar17[3];
-    pfVar17[1] = param_8[6] * fVar9 + param_8[3] * fVar6 + *param_8 * fVar3;
-    pfVar17[2] = fVar7 * fVar9 + fVar4 * fVar6 + fVar1 * fVar3;
+            (ptVar17,&local_f8,&local_e8,local_d0,&local_108,param_5,param_6,local_110);
+  if ((double)ptVar17->fraction < dVar19) {
+    fVar1 = (*param_8)[1];
+    fVar2 = (*param_8)[2];
+    fVar3 = ptVar17->normal[0];
+    fVar4 = param_8[1][1];
+    fVar5 = param_8[1][2];
+    fVar6 = ptVar17->normal[1];
+    fVar7 = param_8[2][1];
+    fVar8 = param_8[2][2];
+    fVar9 = ptVar17->normal[2];
+    ptVar17->normal[0] = param_8[2][0] * fVar9 + param_8[1][0] * fVar6 + (*param_8)[0] * fVar3;
+    ptVar17->normal[1] = fVar7 * fVar9 + fVar4 * fVar6 + fVar1 * fVar3;
     fVar1 = fVar8 * fVar9 + fVar5 * fVar6 + fVar2 * fVar3;
-    pfVar17[3] = fVar1;
-    if (*(char *)((int)pfVar17 + 0x2f) == '\0') {
-      *(bool *)(pfVar17 + 0xc) = (float)0x3f333333 <= fVar1;
+    ptVar17->normal[2] = fVar1;
+    if (ptVar17->startsolid == false) {
+      ptVar17->walkable = (float)0x3f333333 <= fVar1;
     }
   }
   __restfpr_18();
@@ -2320,46 +2511,44 @@ void CM_TransformedBrushModelTraceRotated
 // 824CD620  CM_TransformedBrushModelTrace  (qcommon/cm_trace.cpp:2123)
 
 void CM_TransformedBrushModelTrace
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,ulonglong param_4,
-               undefined8 param_5,undefined8 param_6,undefined8 param_7,undefined8 param_8)
+               (trace_t *param_1,float *param_2,float *param_3,Bounds *param_4,uint param_5,
+               int param_6,float *param_7,float *param_8)
 
 {
-  undefined8 uVar1;
-  float *pfVar2;
-  float *pfVar3;
-  float *pfVar4;
-  code *local_a0 [2];
+  trace_t *ptVar1;
+  ulonglong uVar2;
+  CM_WorldTraceCallbacks local_a0 [2];
   float local_98;
   float local_94;
   float local_90;
   float local_88;
   float local_84;
   float local_80;
-  undefined1 auStack_70 [112];
+  float afStack_70 [28];
   
-  uVar1 = __savegprlr_24();
-  if ((param_4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8208249c,0x851,0,0xffffffff82000f98,0xffffffff82002044);
+  uVar2 = (ulonglong)(int)param_4;
+  ptVar1 = (trace_t *)__savegprlr_24(param_1);
+  if ((uVar2 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",0x851,0,
+                    "%s");
   }
-  pfVar4 = (float *)param_8;
-  if (((*pfVar4 == 0.0) && (pfVar4[1] == 0.0)) && (pfVar4[2] == 0.0)) {
-    pfVar3 = (float *)param_7;
-    pfVar4 = (float *)param_2;
-    pfVar2 = (float *)param_3;
-    local_88 = *pfVar4 - *pfVar3;
-    local_98 = *pfVar2 - *pfVar3;
-    local_a0[0] = BrushModelIsGlassSolid;
-    local_84 = pfVar4[1] - pfVar3[1];
-    local_80 = pfVar4[2] - pfVar3[2];
-    local_94 = pfVar2[1] - pfVar3[1];
-    local_90 = pfVar2[2] - pfVar3[2];
-    CM_BrushModelTraceVerticalCapsule(uVar1,&local_88,&local_98,param_4,param_5,param_6,local_a0);
+  if (((*param_8 == 0.0) && (param_8[1] == 0.0)) && (param_8[2] == 0.0)) {
+    local_88 = *param_2 - *param_7;
+    local_98 = *param_3 - *param_7;
+    local_a0[0].isGlassSolid = BrushModelIsGlassSolid;
+    local_84 = param_2[1] - param_7[1];
+    local_80 = param_2[2] - param_7[2];
+    local_94 = param_3[1] - param_7[1];
+    local_90 = param_3[2] - param_7[2];
+    CM_BrushModelTraceVerticalCapsule
+              (ptVar1,&local_88,&local_98,(Bounds *)uVar2,param_5,param_6,local_a0);
     __restgprlr_24();
     return;
   }
-  AnglesToAxis(param_8,auStack_70);
+  AnglesToAxis(param_8,(float (*) [3])afStack_70);
   CM_TransformedBrushModelTraceRotated
-            (uVar1,param_2,param_3,param_4,param_5,param_6,param_7,auStack_70);
+            (ptVar1,param_2,param_3,(Bounds *)uVar2,param_5,param_6,param_7,
+             (float (*) [3])afStack_70);
   __restgprlr_24();
   return;
 }
@@ -2367,60 +2556,67 @@ void CM_TransformedBrushModelTrace
 
 // 824CD768  CM_TransformedCapsuleTrace  (qcommon/cm_trace.cpp:2150)
 
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
 void CM_TransformedCapsuleTrace
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-               undefined8 param_5,undefined8 param_6,undefined8 param_7,undefined8 param_8)
+               (trace_t *param_1,float *param_2,float *param_3,Bounds *param_4,Bounds *param_5,
+               int param_6,float *param_7,float *param_8)
 
 {
-  float fVar1;
-  float *pfVar2;
-  char cVar3;
+  trace_t *ptVar1;
+  bool bVar3;
+  int iVar2;
   double dVar4;
   float local_100;
   float local_fc;
   float local_f8;
-  undefined1 auStack_f0 [48];
-  undefined1 auStack_c0 [36];
-  float local_9c;
+  float afStack_f0 [12];
+  TraceCapsuleWork aTStack_c0 [2];
   
-  pfVar2 = (float *)__savegprlr_20();
+  ptVar1 = (trace_t *)__savegprlr_20(param_1);
   Profile_Begin(0x1f);
-  if (DAT_835a28d4 == 0) {
-    MyAssertHandler(0xffffffff8208249c,0x872,0,0xffffffff82000f98,0xffffffff8208247c);
+  if (cm.numNodes == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",0x872,0,
+                    "%s");
   }
-  if (pfVar2[4] == -NAN) {
-    MyAssertHandler(0xffffffff8208249c,0x874,0,0xffffffff82000f98,0xffffffff82082b50);
+  if (ptVar1->surfaceFlags == -1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",0x874,0,
+                    "%s");
   }
-  fVar1 = pfVar2[4];
-  pfVar2[4] = -NAN;
-  cVar3 = CM_SetupTraceCapsuleWork(auStack_c0,param_2,param_3,param_4,param_7,param_8,auStack_f0);
-  dVar4 = (double)*pfVar2;
-  if (local_9c == 0.0) {
-    CM_TestCapsuleInCapsule(auStack_c0,param_5,pfVar2);
+  iVar2 = ptVar1->surfaceFlags;
+  ptVar1->surfaceFlags = -1;
+  bVar3 = CM_SetupTraceCapsuleWork
+                    (aTStack_c0,param_2,param_3,param_4,param_7,param_8,(float (*) [3])afStack_f0);
+  dVar4 = (double)ptVar1->fraction;
+  if (aTStack_c0[0].deltaLenSq == 0.0) {
+    CM_TestCapsuleInCapsule(aTStack_c0,param_5,ptVar1);
   }
   else {
-    CM_TraceCapsuleThroughCapsule(auStack_c0,param_5,param_6,pfVar2);
-    if ((cVar3 != '\0') && ((double)*pfVar2 < dVar4)) {
-      local_100 = pfVar2[1];
-      local_fc = pfVar2[2];
-      local_f8 = pfVar2[3];
-      Vec3RotateTranspose(&local_100,auStack_f0,pfVar2 + 1);
+    CM_TraceCapsuleThroughCapsule(aTStack_c0,param_5,param_6,ptVar1);
+    if ((bVar3) && ((double)ptVar1->fraction < dVar4)) {
+      local_100 = ptVar1->normal[0];
+      local_fc = ptVar1->normal[1];
+      local_f8 = ptVar1->normal[2];
+      Vec3RotateTranspose(&local_100,(float (*) [3])afStack_f0,ptVar1->normal);
     }
-    if ((*(char *)(pfVar2 + 0xc) == '\0') && (*(char *)((int)pfVar2 + 0x2f) == '\0')) {
-      *(bool *)(pfVar2 + 0xc) = (float)0x3f333333 <= pfVar2[3];
+    if ((ptVar1->walkable == false) && (ptVar1->startsolid == false)) {
+      ptVar1->walkable = (float)0x3f333333 <= ptVar1->normal[2];
     }
   }
-  if (dVar4 < (double)*pfVar2) {
-    MyAssertHandler(0xffffffff8208249c,0x88d,0,0xffffffff82000f98,0xffffffff82082af4);
+  if (dVar4 < (double)ptVar1->fraction) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",0x88d,0,
+                    "%s");
   }
-  if (((double)*pfVar2 < dVar4) && (pfVar2[4] == -NAN)) {
-    MyAssertHandler(0xffffffff8208249c,0x88f,0,0xffffffff82000f98,0xffffffff82082b50);
+  if (((double)ptVar1->fraction < dVar4) && (ptVar1->surfaceFlags == -1)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",0x88f,0,
+                    "%s");
   }
-  if (pfVar2[4] == -NAN) {
-    pfVar2[4] = fVar1;
+  if (ptVar1->surfaceFlags == -1) {
+    ptVar1->surfaceFlags = iVar2;
   }
-  Profile_EndInternal(0);
-  __restgprlr_20();
+  iVar2 = Profile_EndInternal((double *)0x0);
+  __restgprlr_20(iVar2);
   return;
 }
 
@@ -2428,16 +2624,16 @@ void CM_TransformedCapsuleTrace
 // 824CD968  CM_TransformedBrushModelTraceExternal  (qcommon/cm_trace.cpp:2201)
 
 void CM_TransformedBrushModelTraceExternal
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-               undefined8 param_5,undefined8 param_6,undefined8 param_7,undefined8 param_8)
+               (trace_t *param_1,float *param_2,float *param_3,Bounds *param_4,uint param_5,
+               int param_6,float *param_7,float *param_8)
 
 {
-  undefined4 *_Dst;
+  trace_t *ptVar1;
   
-  _Dst = (undefined4 *)__savegprlr_24();
-  memset(_Dst,0,0x34);
-  *_Dst = 0x3f800000;
-  CM_TransformedBrushModelTrace(_Dst,param_2,param_3,param_4,param_5,param_6,param_7,param_8);
+  ptVar1 = (trace_t *)__savegprlr_24(param_1);
+  memset();
+  ptVar1->fraction = 1.0;
+  CM_TransformedBrushModelTrace(ptVar1,param_2,param_3,param_4,param_5,param_6,param_7,param_8);
   __restgprlr_24();
   return;
 }
@@ -2446,16 +2642,16 @@ void CM_TransformedBrushModelTraceExternal
 // 824CD9D8  CM_TransformedCapsuleTraceExternal  (qcommon/cm_trace.cpp:2209)
 
 void CM_TransformedCapsuleTraceExternal
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-               undefined8 param_5,undefined8 param_6,undefined8 param_7,undefined8 param_8)
+               (trace_t *param_1,float *param_2,float *param_3,Bounds *param_4,Bounds *param_5,
+               int param_6,float *param_7,float *param_8)
 
 {
-  undefined4 *_Dst;
+  trace_t *ptVar1;
   
-  _Dst = (undefined4 *)__savegprlr_24();
-  memset(_Dst,0,0x34);
-  *_Dst = 0x3f800000;
-  CM_TransformedCapsuleTrace(_Dst,param_2,param_3,param_4,param_5,param_6,param_7,param_8);
+  ptVar1 = (trace_t *)__savegprlr_24(param_1);
+  memset();
+  ptVar1->fraction = 1.0;
+  CM_TransformedCapsuleTrace(ptVar1,param_2,param_3,param_4,param_5,param_6,param_7,param_8);
   __restgprlr_24();
   return;
 }
@@ -2464,21 +2660,23 @@ void CM_TransformedCapsuleTraceExternal
 // 824CDA48  CM_SightTraceThroughBrush  (qcommon/cm_trace.cpp:2231)
 
 /* WARNING: Removing unreachable block (ram,0x824cdd30) */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
 
-void CM_SightTraceThroughBrush(undefined8 param_1,ulonglong param_2)
+int CM_SightTraceThroughBrush(traceWork_t *param_1,uint param_2)
 
 {
   float fVar1;
-  undefined *puVar2;
+  int iVar2;
   int iVar3;
   char cVar4;
-  ulonglong uVar5;
-  int iVar6;
-  longlong lVar7;
-  float *pfVar8;
-  ushort *puVar9;
-  double dVar10;
-  double dVar11;
+  uint uVar5;
+  ulonglong uVar6;
+  ulonglong uVar7;
+  int iVar8;
+  longlong lVar9;
+  float *pfVar10;
+  ushort *puVar11;
   double dVar12;
   double dVar13;
   double dVar14;
@@ -2487,190 +2685,213 @@ void CM_SightTraceThroughBrush(undefined8 param_1,ulonglong param_2)
   double dVar17;
   double dVar18;
   double dVar19;
+  double dVar20;
+  double dVar21;
+  uint uStack0000001c;
   undefined4 *local_130;
   
+  uVar7 = (ulonglong)(int)param_2;
   __savegprlr();
   iVar3 = __savefpr_22();
+  uVar5 = (uint)uVar7;
+  uStack0000001c = uVar5;
   if (((((uint)*(float *)(iVar3 + 0x40) & 0x7f800000) == 0x7f800000) ||
       ((*(uint *)(iVar3 + 0x44) & 0x7f800000) == 0x7f800000)) ||
      ((*(uint *)(iVar3 + 0x48) & 0x7f800000) == 0x7f800000)) {
-    MyAssertHandler(0xffffffff8208249c,0x8ce,0,0xffffffff82000f98,0xffffffff820826c0);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",0x8ce,0,
+                    "%s");
   }
   if (((((uint)*(float *)(iVar3 + 0x50) & 0x7f800000) == 0x7f800000) ||
       ((*(uint *)(iVar3 + 0x54) & 0x7f800000) == 0x7f800000)) ||
      ((*(uint *)(iVar3 + 0x58) & 0x7f800000) == 0x7f800000)) {
-    MyAssertHandler(0xffffffff8208249c,0x8cf,0,0xffffffff82000f98,0xffffffff82082660);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",0x8cf,0,
+                    "%s");
   }
-  puVar2 = *(undefined **)(iVar3 + 0xac);
-  if (puVar2 == (undefined *)0x0) {
-    MyAssertHandler(0xffffffff8208249c,0x8d3,0,0xffffffff82000f98,0xffffffff82021a7c);
+  iVar2 = *(int *)(iVar3 + 0xac);
+  if (iVar2 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",0x8d3,0,
+                    "%s");
   }
-  if ((*(uint *)(*(int *)(puVar2 + 0x3c) + (int)((param_2 & 0xffffffff) << 2)) &
+  if ((*(uint *)(*(int *)(iVar2 + 0x3c) + (int)((uVar7 & 0xffffffff) << 2)) &
       *(uint *)(iVar3 + 0xa4)) == 0) {
 LAB_824cdb9c:
-    __restfpr_22(0);
+    iVar3 = __restfpr_22(0);
     __restgprlr();
-    return;
+    return iVar3;
   }
-  iVar6 = 0;
-  dVar10 = 0.0;
-  dVar14 = 1.0;
-  lVar7 = (ulonglong)*(uint *)(puVar2 + 0x38) +
-          (param_2 + (param_2 & 0x7fffffff) * 2 & 0x1fffffff) * 8;
-  dVar12 = 0.125;
-  dVar15 = 2.0;
-  pfVar8 = (float *)(iVar3 + 0x20);
-  dVar13 = -1.0;
-  dVar11 = dVar10;
-  dVar18 = dVar14;
+  iVar8 = 0;
+  dVar12 = 0.0;
+  dVar16 = 1.0;
+  lVar9 = (ulonglong)*(uint *)(iVar2 + 0x38) + (uVar7 + (uVar7 & 0x7fffffff) * 2 & 0x1fffffff) * 8;
+  dVar14 = 0.125;
+  dVar17 = 2.0;
+  pfVar10 = (float *)(iVar3 + 0x20);
+  dVar15 = -1.0;
+  dVar13 = dVar12;
+  dVar20 = dVar16;
   do {
-    dVar16 = dVar18;
-    if (pfVar8[0x14] < 0.0) {
-      dVar16 = dVar13;
+    dVar18 = dVar20;
+    if (pfVar10[0x14] < 0.0) {
+      dVar18 = dVar15;
     }
-    dVar17 = (double)(float)((double)(pfVar8[-8] - *(float *)lVar7) * dVar16);
-    dVar16 = (double)((*pfVar8 - pfVar8[0x28]) - ((float *)lVar7)[3]);
-    dVar19 = (double)(float)(dVar16 + dVar17);
-    if (((uint)(float)(dVar16 + dVar17) & 0x7f800000) == 0x7f800000) {
-      MyAssertHandler(0xffffffff8208249c,0x8ea,0,0xffffffff82000f98,0xffffffff820827d4);
+    dVar19 = (double)(float)((double)(pfVar10[-8] - *(float *)lVar9) * dVar18);
+    dVar18 = (double)((*pfVar10 - pfVar10[0x28]) - ((float *)lVar9)[3]);
+    dVar21 = (double)(float)(dVar18 + dVar19);
+    if (((uint)(float)(dVar18 + dVar19) & 0x7f800000) == 0x7f800000) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",0x8ea,
+                      0,"%s");
     }
-    if (dVar10 < dVar19) {
-      dVar19 = (double)((float)((double)*pfVar8 * dVar15 - dVar19) * pfVar8[4]);
-      if (dVar19 <= dVar11) goto LAB_824cdb9c;
-      if ((float)(dVar19 - dVar14) < 0.0) {
-        dVar14 = dVar19;
+    if (dVar12 < dVar21) {
+      dVar21 = (double)((float)((double)*pfVar10 * dVar17 - dVar21) * pfVar10[4]);
+      if (dVar21 <= dVar13) goto LAB_824cdb9c;
+      if ((float)(dVar21 - dVar16) < 0.0) {
+        dVar16 = dVar21;
       }
     }
-    dVar19 = (double)(float)(dVar16 - dVar17);
-    if (((uint)(float)(dVar16 - dVar17) & 0x7f800000) == 0x7f800000) {
-      MyAssertHandler(0xffffffff8208249c,0x8f7,0,0xffffffff82000f98,0xffffffff820827ec);
+    dVar21 = (double)(float)(dVar18 - dVar19);
+    if (((uint)(float)(dVar18 - dVar19) & 0x7f800000) == 0x7f800000) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",0x8f7,
+                      0,"%s");
     }
-    if (dVar10 < dVar19) {
-      if ((float)((double)(float)((double)*pfVar8 * dVar14) * dVar15) <= (float)(dVar19 - dVar12))
+    if (dVar12 < dVar21) {
+      if ((float)((double)(float)((double)*pfVar10 * dVar16) * dVar17) <= (float)(dVar21 - dVar14))
       goto LAB_824cdb9c;
-      dVar16 = (double)(pfVar8[4] * (float)(dVar19 - dVar12));
-      if ((float)(dVar11 - dVar16) < 0.0) {
-        dVar11 = dVar16;
+      dVar18 = (double)(pfVar10[4] * (float)(dVar21 - dVar14));
+      if ((float)(dVar13 - dVar18) < 0.0) {
+        dVar13 = dVar18;
       }
     }
-    iVar6 = iVar6 + 1;
-    lVar7 = lVar7 + 4;
-    pfVar8 = pfVar8 + 1;
-  } while (iVar6 < 3);
-  puVar9 = (ushort *)(*(int *)(puVar2 + 0x34) + (int)param_2 * 0x24);
-  local_130 = *(undefined4 **)(puVar9 + 2);
-  uVar5 = (ulonglong)*puVar9;
-  if (*puVar9 != 0) {
+    iVar8 = iVar8 + 1;
+    lVar9 = lVar9 + 4;
+    pfVar10 = pfVar10 + 1;
+  } while (iVar8 < 3);
+  puVar11 = (ushort *)(*(int *)(iVar2 + 0x34) + uVar5 * 0x24);
+  local_130 = *(undefined4 **)(puVar11 + 2);
+  uVar6 = (ulonglong)*puVar11;
+  if (*puVar11 != 0) {
     do {
-      pfVar8 = (float *)*local_130;
-      if (((uint)pfVar8[3] & 0x7f800000) == 0x7f800000) {
-        MyAssertHandler(0xffffffff8208249c,0x90d,0,0xffffffff82000f98,0xffffffff82082560);
+      pfVar10 = (float *)*local_130;
+      if (((uint)pfVar10[3] & 0x7f800000) == 0x7f800000) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",
+                        0x90d,0,"%s");
       }
       if ((*(uint *)(iVar3 + 0xb0) & 0x7f800000) == 0x7f800000) {
-        MyAssertHandler(0xffffffff8208249c,0x90e,0,0xffffffff82000f98,0xffffffff82082578);
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",
+                        0x90e,0,"%s");
       }
-      if (((((uint)*pfVar8 & 0x7f800000) == 0x7f800000) ||
-          (((uint)pfVar8[1] & 0x7f800000) == 0x7f800000)) ||
-         (((uint)pfVar8[2] & 0x7f800000) == 0x7f800000)) {
-        MyAssertHandler(0xffffffff8208249c,0x911,0,0xffffffff82000f98,0xffffffff82082590);
+      if (((((uint)*pfVar10 & 0x7f800000) == 0x7f800000) ||
+          (((uint)pfVar10[1] & 0x7f800000) == 0x7f800000)) ||
+         (((uint)pfVar10[2] & 0x7f800000) == 0x7f800000)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",
+                        0x911,0,"%s");
       }
-      if ((double)*(float *)(iVar3 + 0xb4) != dVar10) {
-        MyAssertHandler(0xffffffff8208249c,0x912,0,0xffffffff82000f98,0xffffffff82082c20);
+      if ((double)*(float *)(iVar3 + 0xb4) != dVar12) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",
+                        0x912,0,"%s");
       }
-      if ((double)*(float *)(iVar3 + 0xb8) != dVar10) {
-        MyAssertHandler(0xffffffff8208249c,0x913,0,0xffffffff82000f98,0xffffffff82082c34);
+      if ((double)*(float *)(iVar3 + 0xb8) != dVar12) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",
+                        0x913,0,"%s");
       }
       if ((*(uint *)(iVar3 + 0xbc) & 0x7f800000) == 0x7f800000) {
-        MyAssertHandler(0xffffffff8208249c,0x914,0,0xffffffff82000f98,0xffffffff82082c48);
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",
+                        0x914,0,"%s");
       }
-      fVar1 = ABS(*(float *)(iVar3 + 0xbc) * pfVar8[2]) + *(float *)(iVar3 + 0xb0) + pfVar8[3];
-      dVar18 = (double)fVar1;
+      fVar1 = ABS(*(float *)(iVar3 + 0xbc) * pfVar10[2]) + *(float *)(iVar3 + 0xb0) + pfVar10[3];
+      dVar20 = (double)fVar1;
       if (((uint)fVar1 & 0x7f800000) == 0x7f800000) {
-        MyAssertHandler(0xffffffff8208249c,0x917,0,0xffffffff82000f98,0xffffffff82082644);
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",
+                        0x917,0,"%s");
       }
-      fVar1 = (float)((double)(pfVar8[2] * *(float *)(iVar3 + 0x48) +
-                              *pfVar8 * *(float *)(iVar3 + 0x40) +
-                              *(float *)(iVar3 + 0x44) * pfVar8[1]) - dVar18);
-      dVar12 = (double)fVar1;
-      dVar18 = (double)(float)((double)(pfVar8[2] * *(float *)(iVar3 + 0x58) +
-                                       pfVar8[1] * *(float *)(iVar3 + 0x54) +
-                                       *(float *)(iVar3 + 0x50) * *pfVar8) - dVar18);
+      fVar1 = (float)((double)(pfVar10[2] * *(float *)(iVar3 + 0x48) +
+                              *pfVar10 * *(float *)(iVar3 + 0x40) +
+                              *(float *)(iVar3 + 0x44) * pfVar10[1]) - dVar20);
+      dVar14 = (double)fVar1;
+      dVar20 = (double)(float)((double)(pfVar10[2] * *(float *)(iVar3 + 0x58) +
+                                       pfVar10[1] * *(float *)(iVar3 + 0x54) +
+                                       *(float *)(iVar3 + 0x50) * *pfVar10) - dVar20);
       if (((uint)fVar1 & 0x7f800000) == 0x7f800000) {
-        MyAssertHandler(0xffffffff8208249c,0x91c,0,0xffffffff82000f98,0xffffffff82082654);
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",
+                        0x91c,0,"%s");
       }
-      if (((uint)(float)dVar18 & 0x7f800000) == 0x7f800000) {
-        MyAssertHandler(0xffffffff8208249c,0x91d,0,0xffffffff82000f98,0xffffffff820827a0);
+      if (((uint)(float)dVar20 & 0x7f800000) == 0x7f800000) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",
+                        0x91d,0,"%s");
       }
-      if (dVar12 <= dVar10) {
-        if (dVar10 < dVar18) {
-          dVar18 = (double)(float)(dVar12 - dVar18);
-          if (dVar10 <= dVar18) {
-            MyAssertHandler(0xffffffff8208249c,0x930,0,0xffffffff82000f98,0xffffffff820827c8);
+      if (dVar14 <= dVar12) {
+        if (dVar12 < dVar20) {
+          dVar20 = (double)(float)(dVar14 - dVar20);
+          if (dVar12 <= dVar20) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",
+                            0x930,0,"%s");
           }
-          if ((double)(float)(dVar18 * dVar14) < dVar12) {
-            dVar14 = (double)(float)(dVar12 / dVar18);
+          if ((double)(float)(dVar20 * dVar16) < dVar14) {
+            dVar16 = (double)(float)(dVar14 / dVar20);
             goto LAB_824ce094;
           }
         }
       }
       else {
-        dVar13 = (double)(float)(dVar12 - dVar18);
-        if (((uint)(float)(dVar12 - dVar18) & 0x7f800000) == 0x7f800000) {
-          MyAssertHandler(0xffffffff8208249c,0x922,0,0xffffffff82000f98,0xffffffff820827ac);
+        dVar15 = (double)(float)(dVar14 - dVar20);
+        if (((uint)(float)(dVar14 - dVar20) & 0x7f800000) == 0x7f800000) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",
+                          0x922,0,"%s");
         }
-        if (dVar10 < dVar18) goto LAB_824cdb9c;
-        if (dVar13 <= dVar10) {
-          MyAssertHandler(0xffffffff8208249c,0x925,0,0xffffffff82000f98,0xffffffff820827bc);
+        if (dVar12 < dVar20) goto LAB_824cdb9c;
+        if (dVar15 <= dVar12) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",
+                          0x925,0,"%s");
         }
-        if ((double)(float)(dVar13 * dVar11) < dVar12) {
-          dVar11 = (double)(float)(dVar12 / dVar13);
+        if ((double)(float)(dVar15 * dVar13) < dVar14) {
+          dVar13 = (double)(float)(dVar14 / dVar15);
 LAB_824ce094:
-          if (dVar14 <= dVar11) goto LAB_824cdb9c;
+          if (dVar16 <= dVar13) goto LAB_824cdb9c;
         }
       }
-      uVar5 = uVar5 - 1;
+      uVar6 = uVar6 - 1;
       local_130 = local_130 + 2;
-    } while (uVar5 != 0);
-    param_2 = param_2 & 0xffffffff;
+    } while (uVar6 != 0);
+    uVar7 = (ulonglong)uStack0000001c;
   }
-  if (puVar9[1] != 0) {
+  if (puVar11[1] != 0) {
     if (**(int **)(iVar3 + 0xdc) == 0) {
-      MyAssertHandler(0xffffffff8208249c,0x93d,0,0xffffffff82000f98,0xffffffff82082544);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",0x93d,
+                      0,"%s");
     }
-    cVar4 = (*(code *)**(undefined4 **)(iVar3 + 0xdc))((ulonglong)puVar9[1] - 1);
+    cVar4 = (*(code *)**(undefined4 **)(iVar3 + 0xdc))((ulonglong)puVar11[1] - 1);
     if (cVar4 == '\0') goto LAB_824cdb9c;
   }
-  lVar7 = param_2 + 1;
-  if (puVar2 != &DAT_835a2888) {
-    lVar7 = -1;
+  lVar9 = uVar7 + 1;
+  if (iVar2 != -0x7ca5d778) {
+    lVar9 = -1;
   }
-  __restfpr_22(lVar7);
+  iVar3 = __restfpr_22(lVar9);
   __restgprlr();
-  return;
+  return iVar3;
 }
 
 
 // 824CE148  CM_SightTraceThroughLeafBrushNode_r  (qcommon/cm_trace.cpp:2382)
 
-void CM_SightTraceThroughLeafBrushNode_r
-               (undefined8 param_1,ulonglong param_2,float *param_3,undefined8 param_4)
+int CM_SightTraceThroughLeafBrushNode_r
+              (traceWork_t *param_1,cLeafBrushNode_s *param_2,float *param_3,float *param_4)
 
 {
   float fVar1;
   byte bVar2;
   short sVar3;
   byte *pbVar4;
-  float *pfVar5;
+  float fVar5;
   float fVar6;
   float fVar7;
   float fVar8;
-  float fVar9;
+  traceWork_t *ptVar9;
+  int iVar10;
   int iVar11;
-  undefined8 uVar10;
   longlong lVar12;
   ulonglong uVar13;
-  int iVar14;
-  undefined2 *puVar15;
+  ushort *puVar14;
+  ulonglong uVar15;
   double dVar16;
   double dVar17;
   double dVar18;
@@ -2683,50 +2904,51 @@ void CM_SightTraceThroughLeafBrushNode_r
   float local_94;
   float local_90;
   
-  __savegprlr_23();
-  iVar11 = __savefpr_25();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8208249c,0x961,0,0xffffffff82000f98,0xffffffff8206f7e8);
+  uVar15 = (ulonglong)(int)param_2;
+  __savegprlr_23(param_1);
+  ptVar9 = (traceWork_t *)__savefpr_25();
+  if ((uVar15 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",0x961,0,
+                    "%s");
   }
   local_a8[0] = *param_3;
   local_a8[1] = param_3[1];
   local_a8[2] = param_3[2];
-  if ((*(uint *)((int)param_2 + 4) & *(uint *)(iVar11 + 0xa4)) != 0) {
+  if ((*(uint *)((int)uVar15 + 4) & ptVar9->contents) != 0) {
     dVar17 = 1.000100016593933;
     dVar21 = 1.0;
     dVar18 = 4.76837158203125e-07;
     dVar20 = 0.0;
     dVar19 = 0.125;
     do {
-      pbVar4 = (byte *)param_2;
+      pbVar4 = (byte *)uVar15;
       sVar3 = *(short *)(pbVar4 + 2);
       if (sVar3 != 0) {
         if (0 < sVar3) {
-          puVar15 = *(undefined2 **)(pbVar4 + 8);
-          iVar14 = 0;
+          puVar14 = *(ushort **)(pbVar4 + 8);
+          iVar11 = 0;
           if (sVar3 < 1) break;
           goto LAB_824ce46c;
         }
-        uVar10 = CM_SightTraceThroughLeafBrushNode_r(iVar11,param_2 + 0x14,local_a8,param_4);
-        if ((int)uVar10 != 0) goto LAB_824ce49c;
+        iVar10 = CM_SightTraceThroughLeafBrushNode_r
+                           (ptVar9,(cLeafBrushNode_s *)(pbVar4 + 0x14),local_a8,param_4);
+        if (iVar10 != 0) goto LAB_824ce49c;
       }
       bVar2 = *pbVar4;
-      pfVar5 = (float *)param_4;
-      fVar6 = local_a8[bVar2] - *(float *)(pbVar4 + 8);
-      fVar1 = pfVar5[bVar2] - *(float *)(pbVar4 + 8);
-      dVar16 = (double)(fVar1 - fVar6);
-      fVar7 = (float)((double)*(float *)((bVar2 + 0x18) * 4 + iVar11) + dVar19) -
-              *(float *)(pbVar4 + 0xc);
-      fVar8 = fVar6;
+      fVar5 = local_a8[bVar2] - *(float *)(pbVar4 + 8);
+      fVar1 = param_4[bVar2] - *(float *)(pbVar4 + 8);
+      dVar16 = (double)(fVar1 - fVar5);
+      fVar6 = (float)((double)ptVar9->size[bVar2] + dVar19) - *(float *)(pbVar4 + 0xc);
+      fVar7 = fVar5;
       if (dVar16 < 0.0) {
+        fVar7 = fVar1;
+      }
+      fVar8 = fVar5;
+      if (fVar5 - fVar1 < 0.0) {
         fVar8 = fVar1;
       }
-      fVar9 = fVar6;
-      if (fVar6 - fVar1 < 0.0) {
-        fVar9 = fVar1;
-      }
-      if (fVar8 < fVar7) {
-        if (-fVar7 < fVar9) {
+      if (fVar7 < fVar6) {
+        if (-fVar6 < fVar8) {
           if (ABS(dVar16) <= dVar18) {
             uVar13 = 0;
             dVar22 = dVar20;
@@ -2735,44 +2957,46 @@ void CM_SightTraceThroughLeafBrushNode_r
           else {
             fVar1 = (float)(dVar21 / ABS(dVar16));
             dVar22 = dVar21;
-            fVar8 = -fVar6;
+            fVar7 = -fVar5;
             if (dVar16 < 0.0) {
               dVar22 = dVar20;
-              fVar8 = fVar6;
+              fVar7 = fVar5;
             }
             uVar13 = (ulonglong)(uint)(int)dVar22;
-            dVar16 = (double)((fVar8 + fVar7) * fVar1);
-            dVar22 = (double)((fVar8 - fVar7) * fVar1);
+            dVar16 = (double)((fVar7 + fVar6) * fVar1);
+            dVar22 = (double)((fVar7 - fVar6) * fVar1);
             if (dVar16 < dVar20) {
-              MyAssertHandler(0xffffffff8208249c,0x9a4,0,0xffffffff82000f98,0xffffffff82082a28);
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp"
+                              ,0x9a4,0,"%s");
             }
           }
           if ((float)(dVar21 - dVar16) < 0.0) {
             dVar16 = dVar21;
           }
-          local_98 = (float)((double)(float)((double)*pfVar5 - (double)local_a8[0]) * dVar16 +
+          local_98 = (float)((double)(float)((double)*param_4 - (double)local_a8[0]) * dVar16 +
                             (double)local_a8[0]);
-          local_94 = (float)((double)(float)((double)pfVar5[1] - (double)local_a8[1]) * dVar16 +
+          local_94 = (float)((double)(float)((double)param_4[1] - (double)local_a8[1]) * dVar16 +
                             (double)local_a8[1]);
-          local_90 = (float)((double)(float)((double)pfVar5[2] - (double)local_a8[2]) * dVar16 +
+          local_90 = (float)((double)(float)((double)param_4[2] - (double)local_a8[2]) * dVar16 +
                             (double)local_a8[2]);
-          uVar10 = CM_SightTraceThroughLeafBrushNode_r
-                             (iVar11,(ulonglong)
-                                     *(ushort *)(pbVar4 + (int)((uVar13 + 8 & 0xffffffff) << 1)) *
-                                     0x14 + param_2,local_a8,&local_98);
-          if ((int)uVar10 != 0) goto LAB_824ce49c;
+          iVar10 = CM_SightTraceThroughLeafBrushNode_r
+                             (ptVar9,(cLeafBrushNode_s *)
+                                     (pbVar4 + (uint)*(ushort *)
+                                                      (pbVar4 + (int)((uVar13 + 8 & 0xffffffff) << 1
+                                                                     )) * 0x14),local_a8,&local_98);
+          if (iVar10 != 0) goto LAB_824ce49c;
           if (dVar17 < dVar22) {
-            MyAssertHandler(dVar22,0xffffffff8208249c,0x9af,0,0xffffffff8202ba38,0xffffffff82082c60,
-                            dVar22);
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",
+                            0x9af,0,"%s\n\t(frac2) = %g");
           }
           if (dVar22 < 0.0) {
             dVar22 = dVar20;
           }
-          local_a8[0] = (float)((double)(float)((double)*pfVar5 - (double)local_a8[0]) * dVar22 +
+          local_a8[0] = (float)((double)(float)((double)*param_4 - (double)local_a8[0]) * dVar22 +
                                (double)local_a8[0]);
-          local_a8[1] = (float)((double)(float)((double)pfVar5[1] - (double)local_a8[1]) * dVar22 +
+          local_a8[1] = (float)((double)(float)((double)param_4[1] - (double)local_a8[1]) * dVar22 +
                                (double)local_a8[1]);
-          local_a8[2] = (float)((double)(float)((double)pfVar5[2] - (double)local_a8[2]) * dVar22 +
+          local_a8[2] = (float)((double)(float)((double)param_4[2] - (double)local_a8[2]) * dVar22 +
                                (double)local_a8[2]);
           lVar12 = (ulonglong)*(ushort *)(pbVar4 + (int)((9 - uVar13 & 0xffffffff) << 1)) * 0x14;
         }
@@ -2781,137 +3005,138 @@ void CM_SightTraceThroughLeafBrushNode_r
         }
       }
       else {
-        if (fVar9 <= -fVar7) break;
+        if (fVar8 <= -fVar6) break;
         lVar12 = (ulonglong)*(ushort *)(pbVar4 + 0x10) * 0x14;
       }
-      param_2 = lVar12 + param_2;
-      if ((*(uint *)((int)param_2 + 4) & *(uint *)(iVar11 + 0xa4)) == 0) {
+      uVar15 = lVar12 + uVar15;
+      if ((*(uint *)((int)uVar15 + 4) & ptVar9->contents) == 0) {
         __restfpr_25(0);
-        __restgprlr_23();
-        return;
+        iVar11 = __restgprlr_23();
+        return iVar11;
       }
     } while( true );
   }
   goto LAB_824ce498;
   while( true ) {
-    iVar14 = iVar14 + 1;
-    puVar15 = puVar15 + 1;
-    if (*(short *)(pbVar4 + 2) <= iVar14) break;
+    iVar11 = iVar11 + 1;
+    puVar14 = puVar14 + 1;
+    if (*(short *)(pbVar4 + 2) <= iVar11) break;
 LAB_824ce46c:
-    uVar10 = CM_SightTraceThroughBrush(iVar11,*puVar15);
-    if ((int)uVar10 != 0) goto LAB_824ce49c;
+    iVar10 = CM_SightTraceThroughBrush(ptVar9,(uint)*puVar14);
+    if (iVar10 != 0) goto LAB_824ce49c;
   }
 LAB_824ce498:
-  uVar10 = 0;
+  iVar10 = 0;
 LAB_824ce49c:
-  __restfpr_25(uVar10);
-  __restgprlr_23();
-  return;
+  __restfpr_25(iVar10);
+  iVar11 = __restgprlr_23();
+  return iVar11;
 }
 
 
 // 824CE4B0  CM_SightTraceThroughLeafBrushNode  (qcommon/cm_trace.cpp:2497)
 
-void CM_SightTraceThroughLeafBrushNode(undefined8 param_1,int param_2)
+int CM_SightTraceThroughLeafBrushNode(traceWork_t *param_1,cLeaf_t *param_2)
 
 {
-  int iVar1;
+  traceWork_t *ptVar1;
   int iVar2;
-  undefined4 local_40;
-  undefined4 local_3c;
-  undefined4 local_38;
-  float local_34;
-  float local_30;
-  float local_2c;
+  Bounds local_40 [2];
   
-  iVar1 = __savegprlr_28();
-  if (*(int *)(param_2 + 0x24) == 0) {
-    MyAssertHandler(0xffffffff8208249c,0x9c4,0,0xffffffff82000f98,0xffffffff82082734);
+  ptVar1 = (traceWork_t *)__savegprlr_28(param_1);
+  if (param_2->leafBrushNode == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",0x9c4,0,
+                    "%s");
   }
-  if (*(int *)(iVar1 + 0xac) == 0) {
-    MyAssertHandler(0xffffffff8208249c,0x9c5,0,0xffffffff82000f98,0xffffffff82082728);
+  if (ptVar1->info == (ClipInfo *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",0x9c5,0,
+                    "%s");
   }
-  local_34 = *(float *)(param_2 + 0x18) + *(float *)(iVar1 + 0x60);
-  local_30 = *(float *)(param_2 + 0x1c) + *(float *)(iVar1 + 100);
-  local_40 = *(undefined4 *)(param_2 + 0xc);
-  local_2c = *(float *)(param_2 + 0x20) + *(float *)(iVar1 + 0x68);
-  local_3c = *(undefined4 *)(param_2 + 0x10);
-  local_38 = *(undefined4 *)(param_2 + 0x14);
-  iVar2 = CM_TraceBox(0x3ff0000000000000,iVar1,&local_40);
+  local_40[0].halfSize[0] = (param_2->bounds).halfSize[0] + ptVar1->size[0];
+  local_40[0].halfSize[1] = (param_2->bounds).halfSize[1] + ptVar1->size[1];
+  local_40[0].midPoint[0] = (param_2->bounds).midPoint[0];
+  local_40[0].halfSize[2] = (param_2->bounds).halfSize[2] + ptVar1->size[2];
+  local_40[0].midPoint[1] = (param_2->bounds).midPoint[1];
+  local_40[0].midPoint[2] = (param_2->bounds).midPoint[2];
+  iVar2 = CM_TraceBox((TraceExtents *)ptVar1,local_40,1.0);
   if (iVar2 != 0) {
-    __restgprlr_28(0);
-    return;
+    iVar2 = __restgprlr_28(0);
+    return iVar2;
   }
-  CM_SightTraceThroughLeafBrushNode_r
-            (iVar1,(ulonglong)*(uint *)(*(int *)(iVar1 + 0xac) + 0x24) +
-                   ((ulonglong)*(uint *)(param_2 + 0x24) +
-                    ((ulonglong)*(uint *)(param_2 + 0x24) & 0x3fffffff) * 4 & 0x3fffffff) * 4,
-             iVar1 + 0x40,iVar1 + 0x50);
-  __restgprlr_28();
-  return;
+  iVar2 = CM_SightTraceThroughLeafBrushNode_r
+                    (ptVar1,ptVar1->info->leafbrushNodes + param_2->leafBrushNode,
+                     (ptVar1->extents).start,(ptVar1->extents).end);
+  iVar2 = __restgprlr_28(iVar2);
+  return iVar2;
 }
 
 
 // 824CE5C8  CM_SightTraceThroughLeaf  (qcommon/cm_trace.cpp:2518)
 
-void CM_SightTraceThroughLeaf(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+int CM_SightTraceThroughLeaf(traceWork_t *param_1,cLeaf_t *param_2,trace_t *param_3)
 
 {
-  ushort *puVar1;
-  int iVar3;
-  undefined8 uVar2;
-  longlong lVar4;
-  double dVar5;
+  traceWork_t *ptVar1;
+  int iVar2;
+  longlong lVar3;
+  double dVar4;
   
-  iVar3 = __savegprlr_26();
-  if (*(int *)(iVar3 + 0xac) == 0) {
-    MyAssertHandler(0xffffffff8208249c,0x9da,0,0xffffffff82000f98,0xffffffff82082728);
+  ptVar1 = (traceWork_t *)__savegprlr_26(param_1);
+  if (ptVar1->info == (ClipInfo *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",0x9da,0,
+                    "%s");
   }
-  puVar1 = (ushort *)param_2;
-  if ((*(uint *)(puVar1 + 2) & *(uint *)(iVar3 + 0xa4)) != 0) {
+  if ((param_2->brushContents & ptVar1->contents) != 0) {
     Profile_Begin(0x27);
-    uVar2 = CM_SightTraceThroughLeafBrushNode(iVar3,param_2);
-    Profile_EndInternal(0);
-    if ((int)uVar2 != 0) {
-      __restgprlr_26(uVar2);
-      return;
+    iVar2 = CM_SightTraceThroughLeafBrushNode(ptVar1,param_2);
+    Profile_EndInternal((double *)0x0);
+    if (iVar2 != 0) {
+      iVar2 = __restgprlr_26(iVar2);
+      return iVar2;
     }
   }
-  dVar5 = 1.0;
-  if (*(float *)param_3 != 1.0) {
-    MyAssertHandler(0xffffffff8208249c,0x9e5,0,0xffffffff82000f98,0xffffffff82082c74);
+  dVar4 = 1.0;
+  if (param_3->fraction != 1.0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",0x9e5,0,
+                    "%s");
   }
-  if ((*(uint *)(puVar1 + 4) & *(uint *)(iVar3 + 0xa4)) != 0) {
+  if ((param_2->terrainContents & ptVar1->contents) != 0) {
     Profile_Begin(0x28);
-    lVar4 = 0;
-    if (puVar1[1] != 0) {
+    lVar3 = 0;
+    if (param_2->collAabbCount != 0) {
       do {
         CM_SightTraceThroughAabbTree
-                  (iVar3,((ulonglong)*puVar1 + lVar4 & 0x7ffffff) * 0x20 + (ulonglong)DAT_835a290c,
-                   param_3);
-        if ((double)*(float *)param_3 != dVar5) {
-          Profile_EndInternal(0);
-          if (*(undefined **)(iVar3 + 0xac) != &DAT_835a2888) {
-            __restgprlr_26(0xffffffffffffffff);
-            return;
+                  (ptVar1,(CollisionAabbTree *)
+                          ((int)(cm.aabbTrees)->midPoint +
+                          (int)(((ulonglong)param_2->firstCollAabbIndex + lVar3 & 0xffffffff) << 5))
+                   ,param_3);
+        if ((double)param_3->fraction != dVar4) {
+          Profile_EndInternal((double *)0x0);
+          if (ptVar1->info != &cm.info) {
+            iVar2 = __restgprlr_26(0xffffffffffffffff);
+            return iVar2;
           }
-          __restgprlr_26((ulonglong)*puVar1 + (ulonglong)DAT_835a28b8 + lVar4 + 1);
-          return;
+          iVar2 = __restgprlr_26((ulonglong)param_2->firstCollAabbIndex +
+                                 (ulonglong)cm.info.numBrushes + lVar3 + 1);
+          return iVar2;
         }
-        lVar4 = lVar4 + 1;
-      } while ((int)lVar4 < (int)(uint)puVar1[1]);
+        lVar3 = lVar3 + 1;
+      } while ((int)lVar3 < (int)(uint)param_2->collAabbCount);
     }
-    Profile_EndInternal(0);
+    Profile_EndInternal((double *)0x0);
   }
-  __restgprlr_26(0);
-  return;
+  iVar2 = __restgprlr_26(0);
+  return iVar2;
 }
 
 
 // 824CE768  CM_SightTraceSphereThroughSphere  (qcommon/cm_trace.cpp:2562)
 
-undefined8
-CM_SightTraceSphereThroughSphere(double param_1,int param_2,float *param_3,float *param_4)
+int CM_SightTraceSphereThroughSphere
+              (TraceCapsuleWork *param_1,float *param_2,float *param_3,float param_4)
 
 {
   float fVar1;
@@ -2920,21 +3145,20 @@ CM_SightTraceSphereThroughSphere(double param_1,int param_2,float *param_3,float
   float fVar4;
   float fVar5;
   
-  fVar2 = *param_3 - *param_4;
-  fVar3 = param_3[1] - param_4[1];
-  fVar4 = param_3[2] - param_4[2];
-  fVar1 = (float)((double)*(float *)(param_2 + 0x40) + param_1);
-  fVar1 = -(fVar1 * fVar1 - (fVar3 * fVar3 + fVar2 * fVar2 + fVar4 * fVar4));
-  if (fVar1 <= 0.0) {
+  fVar1 = *param_2 - *param_3;
+  fVar3 = param_2[1] - param_3[1];
+  fVar4 = param_2[2] - param_3[2];
+  fVar2 = param_1->radius + param_4;
+  fVar2 = -(fVar2 * fVar2 - (fVar3 * fVar3 + fVar1 * fVar1 + fVar4 * fVar4));
+  if (fVar2 <= 0.0) {
     return 0;
   }
-  fVar5 = *(float *)(param_2 + 0x20) * fVar4 +
-          *(float *)(param_2 + 0x1c) * fVar3 + *(float *)(param_2 + 0x18) * fVar2;
+  fVar5 = param_1->delta[2] * fVar4 + param_1->delta[1] * fVar3 + param_1->delta[0] * fVar1;
   if (fVar5 < 0.0) {
-    fVar1 = fVar5 * fVar5 - *(float *)(param_2 + 0x24) * fVar1;
-    if (0.0 <= fVar1) {
-      if ((fVar5 * 0.125) / SQRT(fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2) +
-          (-fVar5 - SQRT(fVar1)) / *(float *)(param_2 + 0x24) < 1.0) {
+    fVar2 = fVar5 * fVar5 - param_1->deltaLenSq * fVar2;
+    if (0.0 <= fVar2) {
+      if ((fVar5 * 0.125) / SQRT(fVar4 * fVar4 + fVar3 * fVar3 + fVar1 * fVar1) +
+          (-fVar5 - SQRT(fVar2)) / param_1->deltaLenSq < 1.0) {
         return 0;
       }
       return 1;
@@ -2946,8 +3170,8 @@ CM_SightTraceSphereThroughSphere(double param_1,int param_2,float *param_3,float
 
 // 824CE848  CM_SightTraceCylinderThroughCylinder  (qcommon/cm_trace.cpp:2604)
 
-undefined8
-CM_SightTraceCylinderThroughCylinder(double param_1,double param_2,float *param_3,float *param_4)
+int CM_SightTraceCylinderThroughCylinder
+              (TraceCapsuleWork *param_1,float *param_2,float param_3,float param_4)
 
 {
   float fVar1;
@@ -2955,67 +3179,68 @@ CM_SightTraceCylinderThroughCylinder(double param_1,double param_2,float *param_
   float fVar3;
   float fVar4;
   float fVar5;
-  undefined8 uVar6;
+  int iVar6;
   double dVar7;
   double dVar8;
   
-  fVar2 = *param_3 - *param_4;
-  fVar3 = param_3[1] - param_4[1];
-  dVar7 = (double)(param_3[2] - param_4[2]);
-  fVar4 = fVar3 * fVar3 + fVar2 * fVar2;
-  fVar5 = -((float)((double)param_3[0x10] + param_2) * (float)((double)param_3[0x10] + param_2) -
-           fVar4);
-  if (0.0 < fVar5) {
-    fVar1 = param_3[6];
-    fVar2 = param_3[7] * fVar3 + fVar1 * fVar2;
-    if (fVar2 < 0.0) {
-      fVar3 = param_3[7] * param_3[7] + fVar1 * fVar1;
-      fVar5 = fVar2 * fVar2 - fVar3 * fVar5;
-      if (0.0 <= fVar5) {
-        fVar4 = (fVar2 * 0.125) / SQRT(fVar4);
-        fVar2 = (-fVar2 - SQRT(fVar5)) / fVar3 + fVar4;
+  fVar3 = param_1->start[0] - *param_2;
+  fVar4 = param_1->start[1] - param_2[1];
+  fVar2 = param_1->radius + param_4;
+  dVar7 = (double)(param_1->start[2] - param_2[2]);
+  fVar5 = fVar4 * fVar4 + fVar3 * fVar3;
+  fVar2 = -(fVar2 * fVar2 - fVar5);
+  if (0.0 < fVar2) {
+    fVar1 = param_1->delta[0];
+    fVar3 = param_1->delta[1] * fVar4 + fVar1 * fVar3;
+    if (fVar3 < 0.0) {
+      fVar4 = param_1->delta[1] * param_1->delta[1] + fVar1 * fVar1;
+      fVar2 = fVar3 * fVar3 - fVar4 * fVar2;
+      if (0.0 <= fVar2) {
+        fVar5 = (fVar3 * 0.125) / SQRT(fVar5);
+        fVar2 = (-fVar3 - SQRT(fVar2)) / fVar4 + fVar5;
         if (fVar2 < 1.0) {
-          dVar8 = (double)(float)((double)param_3[0x11] + param_1);
-          dVar7 = (double)(((fVar2 - fVar4) * param_3[8] + param_3[2]) - param_4[2]);
+          dVar8 = (double)(param_1->offsetZ + param_3);
+          dVar7 = (double)(((fVar2 - fVar5) * param_1->delta[2] + param_1->start[2]) - param_2[2]);
           if (dVar8 < 0.0) {
-            uVar6 = 0xa59;
+            iVar6 = 0xa59;
             goto LAB_824ce958;
           }
           goto LAB_824ce978;
         }
       }
     }
-    uVar6 = 1;
+    iVar6 = 1;
   }
   else {
-    dVar8 = (double)(float)((double)param_3[0x11] + param_1);
+    dVar8 = (double)(param_1->offsetZ + param_3);
     if (dVar8 < 0.0) {
-      uVar6 = 0xa41;
+      iVar6 = 0xa41;
 LAB_824ce958:
-      MyAssertHandler(0xffffffff8208249c,uVar6,0,0xffffffff82000f98,0xffffffff82082a14);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",iVar6,
+                      0,"%s");
     }
 LAB_824ce978:
-    uVar6 = 1;
+    iVar6 = 1;
     if (ABS(dVar7) <= dVar8) {
-      uVar6 = 0;
+      iVar6 = 0;
     }
   }
-  return uVar6;
+  return iVar6;
 }
 
 
 // 824CE9A8  CM_SightTraceCapsuleThroughCapsule  (qcommon/cm_trace.cpp:2664)
 
-void CM_SightTraceCapsuleThroughCapsule(undefined8 param_1,ulonglong param_2)
+int CM_SightTraceCapsuleThroughCapsule(TraceCapsuleWork *param_1,Bounds *param_2)
 
 {
   float fVar1;
   float fVar2;
-  undefined4 *puVar4;
+  TraceCapsuleWork *pTVar4;
   int iVar5;
   undefined8 uVar3;
-  float *pfVar6;
-  double dVar7;
+  ulonglong uVar6;
+  float *pfVar7;
   double dVar8;
   double dVar9;
   double dVar10;
@@ -3024,128 +3249,136 @@ void CM_SightTraceCapsuleThroughCapsule(undefined8 param_1,ulonglong param_2)
   double dVar13;
   double dVar14;
   double dVar15;
+  double dVar16;
   float local_c0;
   float local_bc;
   float local_b8;
-  undefined4 local_b0;
-  undefined4 local_ac;
+  float local_b0;
+  float local_ac;
   float local_a8;
   float local_a0;
   float local_9c;
   float local_98;
-  undefined4 local_90;
-  undefined4 local_8c;
+  float local_90;
+  float local_8c;
   float local_88;
   
-  __savegprlr_27();
-  puVar4 = (undefined4 *)__savefpr_23();
-  if ((float *)(puVar4 + 10) == (float *)0x0) {
-    MyAssertHandler(0xffffffff82082340,0x2af,0,0xffffffff82000f98,0xffffffff82025b34);
+  uVar6 = (ulonglong)(int)param_2;
+  __savegprlr_27(param_1);
+  pTVar4 = (TraceCapsuleWork *)__savefpr_23();
+  if (&pTVar4->bounds == (Bounds *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/bounds_inline.h"
+                    ,0x2af,0,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82082340,0x2b0,0,0xffffffff82000f98,0xffffffff82025b30);
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/bounds_inline.h"
+                    ,0x2b0,0,"%s");
   }
-  pfVar6 = (float *)param_2;
-  fVar1 = *pfVar6;
-  dVar8 = (double)pfVar6[3];
-  dVar7 = (double)pfVar6[5];
-  dVar12 = 0.0;
-  dVar9 = dVar12;
-  if (ABS((float)puVar4[10] - fVar1) - ((float)((double)(float)puVar4[0xd] + dVar8) + 1.0) < 0.0) {
-    dVar9 = 1.0;
+  pfVar7 = (float *)uVar6;
+  fVar1 = *pfVar7;
+  dVar9 = (double)pfVar7[3];
+  dVar8 = (double)pfVar7[5];
+  dVar13 = 0.0;
+  dVar10 = dVar13;
+  if (ABS((pTVar4->bounds).midPoint[0] - fVar1) -
+      ((float)((double)(pTVar4->bounds).halfSize[0] + dVar9) + 1.0) < 0.0) {
+    dVar10 = 1.0;
   }
-  dVar10 = dVar12;
-  if (ABS((float)puVar4[0xb] - pfVar6[1]) - ((float)puVar4[0xe] + pfVar6[4] + 1.0) < 0.0) {
-    dVar10 = dVar9;
+  dVar11 = dVar13;
+  if (ABS((pTVar4->bounds).midPoint[1] - pfVar7[1]) -
+      ((pTVar4->bounds).halfSize[1] + pfVar7[4] + 1.0) < 0.0) {
+    dVar11 = dVar10;
   }
-  dVar9 = dVar12;
-  if (ABS((float)puVar4[0xc] - pfVar6[2]) - ((float)((double)(float)puVar4[0xf] + dVar7) + 1.0) <
-      0.0) {
-    dVar9 = dVar10;
+  dVar10 = dVar13;
+  if (ABS((pTVar4->bounds).midPoint[2] - pfVar7[2]) -
+      ((float)((double)(pTVar4->bounds).halfSize[2] + dVar8) + 1.0) < 0.0) {
+    dVar10 = dVar11;
   }
-  if (dVar9 != 0.0) {
-    fVar2 = (float)puVar4[0x11];
-    local_a8 = (float)puVar4[2] - fVar2;
-    dVar13 = (double)local_a8;
-    local_88 = fVar2 + (float)puVar4[2];
-    dVar11 = (double)local_88;
-    local_b0 = *puVar4;
-    dVar9 = (double)((float)puVar4[5] + fVar2);
-    local_ac = puVar4[1];
-    dVar10 = (double)((float)puVar4[5] - fVar2);
-    local_bc = pfVar6[1];
-    if ((float)(dVar7 - dVar8) < 0.0) {
-      dVar8 = dVar7;
+  if (dVar10 != 0.0) {
+    fVar2 = pTVar4->offsetZ;
+    local_a8 = pTVar4->start[2] - fVar2;
+    dVar14 = (double)local_a8;
+    local_88 = fVar2 + pTVar4->start[2];
+    dVar12 = (double)local_88;
+    local_b0 = pTVar4->start[0];
+    dVar10 = (double)(pTVar4->end[2] + fVar2);
+    local_ac = pTVar4->start[1];
+    dVar11 = (double)(pTVar4->end[2] - fVar2);
+    local_bc = pfVar7[1];
+    if ((float)(dVar8 - dVar9) < 0.0) {
+      dVar9 = dVar8;
     }
-    dVar15 = (double)(float)(dVar7 - dVar8);
-    local_b8 = (float)((double)pfVar6[2] + dVar15);
-    dVar14 = (double)local_b8;
-    local_98 = (float)((double)pfVar6[2] - dVar15);
-    dVar7 = (double)local_98;
+    dVar16 = (double)(float)(dVar8 - dVar9);
+    local_b8 = (float)((double)pfVar7[2] + dVar16);
+    dVar15 = (double)local_b8;
+    local_98 = (float)((double)pfVar7[2] - dVar16);
+    dVar8 = (double)local_98;
     local_c0 = fVar1;
     local_a0 = fVar1;
     local_9c = local_bc;
     local_90 = local_b0;
     local_8c = local_ac;
-    if (dVar13 <= dVar14) {
-      if (dVar11 < dVar7) {
-        iVar5 = CM_SightTraceSphereThroughSphere(dVar8,puVar4,&local_90,&local_a0);
+    if (dVar14 <= dVar15) {
+      if (dVar12 < dVar8) {
+        iVar5 = CM_SightTraceSphereThroughSphere(pTVar4,&local_90,&local_a0,(float)dVar9);
         if (iVar5 == 0) goto LAB_824cebec;
-        if ((double)(float)puVar4[8] <= dVar12) goto LAB_824cec30;
+        if ((double)pTVar4->delta[2] <= dVar13) goto LAB_824cec30;
       }
     }
     else {
-      iVar5 = CM_SightTraceSphereThroughSphere(dVar8,puVar4,&local_b0,&local_c0);
+      iVar5 = CM_SightTraceSphereThroughSphere(pTVar4,&local_b0,&local_c0,(float)dVar9);
       if (iVar5 == 0) goto LAB_824cebec;
-      if (dVar12 <= (double)(float)puVar4[8]) {
+      if (dVar13 <= (double)pTVar4->delta[2]) {
         __restfpr_23(0);
-        __restgprlr_27();
-        return;
+        iVar5 = __restgprlr_27();
+        return iVar5;
       }
     }
-    iVar5 = CM_SightTraceCylinderThroughCylinder(dVar15,dVar8,puVar4,param_2);
+    iVar5 = CM_SightTraceCylinderThroughCylinder(pTVar4,pfVar7,(float)dVar16,(float)dVar9);
     if (iVar5 == 0) {
 LAB_824cebec:
       __restfpr_23(1);
-      __restgprlr_27();
-      return;
+      iVar5 = __restgprlr_27();
+      return iVar5;
     }
-    if (dVar10 <= dVar14) {
-      if ((dVar9 < dVar7) && (dVar7 <= dVar11)) {
-        iVar5 = CM_SightTraceSphereThroughSphere(dVar8,puVar4,&local_90,&local_a0);
+    if (dVar11 <= dVar15) {
+      if ((dVar10 < dVar8) && (dVar8 <= dVar12)) {
+        iVar5 = CM_SightTraceSphereThroughSphere(pTVar4,&local_90,&local_a0,(float)dVar9);
         uVar3 = 1;
         if (iVar5 == 0) goto LAB_824cec34;
       }
     }
-    else if ((dVar13 <= dVar14) &&
-            (iVar5 = CM_SightTraceSphereThroughSphere(dVar8,puVar4,&local_b0,&local_c0), iVar5 == 0)
-            ) goto LAB_824cebec;
+    else if ((dVar14 <= dVar15) &&
+            (iVar5 = CM_SightTraceSphereThroughSphere(pTVar4,&local_b0,&local_c0,(float)dVar9),
+            iVar5 == 0)) goto LAB_824cebec;
   }
 LAB_824cec30:
   uVar3 = 0;
 LAB_824cec34:
   __restfpr_23(uVar3);
-  __restgprlr_27();
-  return;
+  iVar5 = __restgprlr_27();
+  return iVar5;
 }
 
 
 // 824CEC48  CM_SightTraceThroughTree  (qcommon/cm_trace.cpp:2760)
 
-void CM_SightTraceThroughTree
-               (undefined8 param_1,longlong param_2,float *param_3,float *param_4,undefined8 param_5
-               )
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+int CM_SightTraceThroughTree
+              (traceWork_t *param_1,int param_2,float *param_3,float *param_4,trace_t *param_5)
 
 {
   float fVar1;
   byte bVar2;
-  float *pfVar3;
-  int iVar4;
-  int iVar5;
+  cplane_s *pcVar3;
+  cNode_t *pcVar4;
+  traceWork_t *ptVar5;
   int iVar6;
-  uint uVar7;
-  double dVar8;
-  double dVar9;
+  int iVar7;
+  longlong lVar8;
+  uint uVar9;
   double dVar10;
   double dVar11;
   double dVar12;
@@ -3156,333 +3389,317 @@ void CM_SightTraceThroughTree
   double dVar17;
   double dVar18;
   double dVar19;
+  double dVar20;
+  double dVar21;
   float local_b8 [4];
   float local_a8;
   float local_a4;
   float local_a0;
   
-  __savegprlr_21();
-  iVar5 = __savefpr_26();
+  lVar8 = (longlong)param_2;
+  __savegprlr_21(param_1);
+  ptVar5 = (traceWork_t *)__savefpr_26();
+  dVar14 = (double)*param_3;
+  dVar13 = (double)param_3[1];
+  dVar12 = (double)param_3[2];
   local_b8[0] = *param_3;
-  dVar12 = (double)local_b8[0];
   local_b8[1] = param_3[1];
-  dVar11 = (double)local_b8[1];
   local_b8[2] = param_3[2];
-  dVar10 = (double)local_b8[2];
-  if (-1 < (int)param_2) {
-    dVar18 = 1.0;
-    dVar15 = 4.76837158203125e-07;
-    dVar17 = 0.0;
-    dVar16 = 0.125;
+  if (-1 < (int)lVar8) {
+    dVar20 = 1.0;
+    dVar17 = 4.76837158203125e-07;
+    dVar19 = 0.0;
+    dVar18 = 0.125;
     do {
-      iVar6 = (int)param_2 * 8;
-      iVar4 = iVar6 + DAT_835a28d8;
-      pfVar3 = *(float **)(iVar6 + DAT_835a28d8);
-      bVar2 = *(byte *)(pfVar3 + 4);
+      pcVar4 = cm.nodes;
+      iVar7 = (int)lVar8;
+      pcVar3 = cm.nodes[iVar7].plane;
+      bVar2 = pcVar3->type;
       if (bVar2 < 3) {
-        dVar8 = (double)(local_b8[bVar2] - pfVar3[3]);
-        dVar13 = (double)(param_4[bVar2] - pfVar3[3]);
-        dVar19 = (double)(float)((double)*(float *)((bVar2 + 0x18) * 4 + iVar5) + dVar16);
+        dVar10 = (double)(local_b8[bVar2] - pcVar3->dist);
+        dVar15 = (double)(param_4[bVar2] - pcVar3->dist);
+        dVar21 = (double)(float)((double)ptVar5->size[bVar2] + dVar18);
       }
       else {
-        dVar8 = (double)((float)((double)pfVar3[2] * dVar10 +
-                                (double)(float)((double)*pfVar3 * dVar12 +
-                                               (double)(float)((double)pfVar3[1] * dVar11))) -
-                        pfVar3[3]);
-        dVar13 = (double)((float)((double)param_4[2] * (double)pfVar3[2] +
-                                 (double)(float)((double)param_4[1] * (double)pfVar3[1] +
-                                                (double)(float)((double)*pfVar3 * (double)*param_4))
-                                 ) - pfVar3[3]);
-        dVar19 = dVar16;
-        if (*(char *)(iVar5 + 0xa8) == '\0') {
-          dVar19 = (double)(float)((double)*(float *)(iVar5 + 0xcc) + dVar16);
+        dVar10 = (double)((float)((double)pcVar3->normal[2] * dVar12 +
+                                 (double)(float)((double)pcVar3->normal[0] * dVar14 +
+                                                (double)(float)((double)pcVar3->normal[1] * dVar13))
+                                 ) - pcVar3->dist);
+        dVar15 = (double)((float)((double)param_4[2] * (double)pcVar3->normal[2] +
+                                 (double)(float)((double)param_4[1] * (double)pcVar3->normal[1] +
+                                                (double)(float)((double)pcVar3->normal[0] *
+                                                               (double)*param_4))) - pcVar3->dist);
+        dVar21 = dVar18;
+        if (ptVar5->isPoint == false) {
+          dVar21 = (double)(float)((double)ptVar5->boundingRadius + dVar18);
         }
       }
-      dVar14 = (double)(float)(dVar13 - dVar8);
-      dVar9 = dVar8;
-      if (dVar14 < 0.0) {
-        dVar9 = dVar13;
+      dVar16 = (double)(float)(dVar15 - dVar10);
+      dVar11 = dVar10;
+      if (dVar16 < 0.0) {
+        dVar11 = dVar15;
       }
-      if (dVar9 < dVar19) {
-        dVar9 = dVar8;
-        if ((float)(dVar8 - dVar13) < 0.0) {
-          dVar9 = dVar13;
+      if (dVar11 < dVar21) {
+        dVar11 = dVar10;
+        if ((float)(dVar10 - dVar15) < 0.0) {
+          dVar11 = dVar15;
         }
-        if (-dVar19 < dVar9) {
-          if (ABS(dVar14) <= dVar15) {
-            uVar7 = 0;
-            dVar19 = dVar17;
-            dVar8 = dVar18;
+        if (-dVar21 < dVar11) {
+          if (ABS(dVar16) <= dVar17) {
+            uVar9 = 0;
+            dVar21 = dVar19;
+            dVar10 = dVar20;
           }
           else {
-            fVar1 = (float)(dVar18 / ABS(dVar14));
-            dVar9 = -dVar8;
-            dVar13 = dVar18;
-            if (dVar14 < 0.0) {
-              dVar9 = dVar8;
-              dVar13 = dVar17;
+            fVar1 = (float)(dVar20 / ABS(dVar16));
+            dVar11 = -dVar10;
+            dVar15 = dVar20;
+            if (dVar16 < 0.0) {
+              dVar11 = dVar10;
+              dVar15 = dVar19;
             }
-            uVar7 = (uint)dVar13;
-            dVar8 = (double)((float)(dVar9 + dVar19) * fVar1);
-            dVar19 = (double)((float)(dVar9 - dVar19) * fVar1);
-            if (dVar8 < dVar17) {
-              MyAssertHandler(0xffffffff8208249c,0xb18,0,0xffffffff82000f98,0xffffffff82082a28);
-              dVar10 = (double)local_b8[2];
-              dVar11 = (double)local_b8[1];
-              dVar12 = (double)local_b8[0];
+            uVar9 = (uint)dVar15;
+            dVar10 = (double)((float)(dVar11 + dVar21) * fVar1);
+            dVar21 = (double)((float)(dVar11 - dVar21) * fVar1);
+            if (dVar10 < dVar19) {
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp"
+                              ,0xb18,0,"%s");
+              dVar12 = (double)local_b8[2];
+              dVar13 = (double)local_b8[1];
+              dVar14 = (double)local_b8[0];
             }
           }
-          if ((float)(dVar18 - dVar8) < 0.0) {
-            dVar8 = dVar18;
+          if ((float)(dVar20 - dVar10) < 0.0) {
+            dVar10 = dVar20;
           }
-          local_a8 = (float)((double)(float)((double)*param_4 - dVar12) * dVar8 + dVar12);
-          local_a4 = (float)((double)(float)((double)param_4[1] - dVar11) * dVar8 + dVar11);
-          local_a0 = (float)((double)(float)((double)param_4[2] - dVar10) * dVar8 + dVar10);
+          local_a8 = (float)((double)(float)((double)*param_4 - dVar14) * dVar10 + dVar14);
+          local_a4 = (float)((double)(float)((double)param_4[1] - dVar13) * dVar10 + dVar13);
+          local_a0 = (float)((double)(float)((double)param_4[2] - dVar12) * dVar10 + dVar12);
           iVar6 = CM_SightTraceThroughTree
-                            (iVar5,*(undefined2 *)((uVar7 + 2) * 2 + iVar4),local_b8,&local_a8,
-                             param_5);
+                            (ptVar5,(int)pcVar4[iVar7].children[uVar9],local_b8,&local_a8,param_5);
           if (iVar6 != 0) goto LAB_824cef30;
-          if (dVar18 < dVar19) {
-            MyAssertHandler(dVar19,0xffffffff8208249c,0xb24,0,0xffffffff8202ba38,0xffffffff8202ba28,
-                            dVar19);
+          if (dVar20 < dVar21) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",
+                            0xb24,0,"%s\n\t(frac2) = %g");
           }
-          if (dVar19 < 0.0) {
-            dVar19 = dVar17;
+          if (dVar21 < 0.0) {
+            dVar21 = dVar19;
           }
-          local_b8[0] = (float)((double)(float)((double)*param_4 - (double)local_b8[0]) * dVar19 +
+          local_b8[0] = (float)((double)(float)((double)*param_4 - (double)local_b8[0]) * dVar21 +
                                (double)local_b8[0]);
-          dVar12 = (double)local_b8[0];
-          local_b8[1] = (float)((double)(float)((double)param_4[1] - (double)local_b8[1]) * dVar19 +
+          dVar14 = (double)local_b8[0];
+          local_b8[1] = (float)((double)(float)((double)param_4[1] - (double)local_b8[1]) * dVar21 +
                                (double)local_b8[1]);
-          dVar11 = (double)local_b8[1];
-          local_b8[2] = (float)((double)(float)((double)param_4[2] - (double)local_b8[2]) * dVar19 +
+          dVar13 = (double)local_b8[1];
+          local_b8[2] = (float)((double)(float)((double)param_4[2] - (double)local_b8[2]) * dVar21 +
                                (double)local_b8[2]);
-          dVar10 = (double)local_b8[2];
-          param_2 = (longlong)*(short *)(((uVar7 ^ 1) + 2) * 2 + iVar4);
+          dVar12 = (double)local_b8[2];
+          lVar8 = (longlong)pcVar4[iVar7].children[uVar9 ^ 1];
         }
         else {
-          param_2 = (longlong)*(short *)(iVar4 + 6);
+          lVar8 = (longlong)cm.nodes[iVar7].children[1];
         }
       }
       else {
-        param_2 = (longlong)*(short *)(iVar4 + 4);
+        lVar8 = (longlong)cm.nodes[iVar7].children[0];
       }
-    } while (-1 < (int)param_2);
+    } while (-1 < (int)lVar8);
   }
-  CM_SightTraceThroughLeaf
-            (iVar5,(ulonglong)DAT_835a28e0 +
-                   (param_2 + 1U + (param_2 + 1U & 0x3fffffff) * 4 & 0x1fffffff) * -8,param_5);
+  iVar6 = CM_SightTraceThroughLeaf
+                    (ptVar5,(cLeaf_t *)
+                            ((int)cm.leafs -
+                            (int)((lVar8 + 1U + (lVar8 + 1U & 0x3fffffff) * 4 & 0xffffffff) << 3)),
+                     param_5);
 LAB_824cef30:
-  __restfpr_26();
-  __restgprlr_21();
-  return;
+  __restfpr_26(iVar6);
+  iVar7 = __restgprlr_21();
+  return iVar7;
 }
 
 
 // 824CEF50  CM_BrushModelSightTrace  (qcommon/cm_trace.cpp:2867)
 
-void CM_BrushModelSightTrace
-               (undefined8 param_1,float *param_2,float *param_3,ulonglong param_4,ulonglong param_5
-               ,undefined4 param_6,undefined4 param_7)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+int CM_BrushModelSightTrace
+              (int param_1,float *param_2,float *param_3,Bounds *param_4,uint param_5,int param_6,
+              CM_WorldTraceCallbacks *param_7)
 
 {
-  int iVar2;
-  undefined8 uVar1;
+  int iVar1;
+  ulonglong uVar2;
   float *pfVar3;
-  longlong lVar4;
+  ulonglong uVar4;
   double dVar5;
   double dVar6;
-  double dVar7;
-  double dVar8;
-  double dVar9;
-  double dVar10;
-  undefined1 auStack_1a0 [64];
-  float local_160;
-  float local_15c;
-  float local_158;
-  float local_150;
-  float local_14c;
-  float local_148;
-  float local_140;
-  float local_13c;
-  float local_138;
-  undefined4 local_134;
-  float local_130;
-  float local_12c;
-  float local_128;
-  float local_124;
-  float local_120;
-  float local_11c;
-  float local_118;
-  float local_114;
-  float local_110;
-  float local_10c;
-  float local_108;
-  float local_104;
-  float local_100;
-  undefined4 local_fc;
-  undefined1 local_f8;
-  undefined *local_f4;
-  float local_f0;
-  float local_ec;
-  float local_e8;
-  float local_e4;
-  float local_e0;
-  float local_dc;
-  float local_d8;
-  float local_d4;
-  undefined1 auStack_d0 [12];
-  undefined4 local_c4;
-  undefined4 local_b0 [11];
-  undefined1 local_82;
-  undefined1 local_81;
+  traceWork_t tStack_1a0;
+  trace_t local_b0 [3];
   
-  iVar2 = __savegprlr_21();
-  if (DAT_835a28d4 == 0) {
-    MyAssertHandler(0xffffffff8208249c,0xb39,0,0xffffffff82000f98,0xffffffff8208247c);
+  uVar4 = (ulonglong)(int)param_5;
+  uVar2 = (ulonglong)(int)param_4;
+  iVar1 = __savegprlr_21(param_1);
+  if (cm.numNodes == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",0xb39,0,
+                    "%s");
   }
-  if ((param_4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8208249c,0xb3a,0,0xffffffff82000f98,0xffffffff82002044);
+  if ((uVar2 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",0xb3a,0,
+                    "%s");
   }
   Profile_Begin(0x20);
-  PIXBeginNamedEvent_Copy_NoVarArgs(0,0xffffffff82082d64);
-  pfVar3 = (float *)param_4;
-  local_f4 = (undefined *)0x0;
-  local_81 = 0;
-  local_15c = param_2[1] + pfVar3[1];
-  local_158 = param_2[2] + pfVar3[2];
-  local_82 = 0;
-  local_14c = param_3[1] + pfVar3[1];
-  local_b0[0] = 0x3f800000;
-  local_160 = *param_2 + *pfVar3;
-  local_150 = *param_3 + *pfVar3;
-  dVar10 = 0.0;
-  local_148 = param_3[2] + pfVar3[2];
-  local_140 = pfVar3[3];
-  local_13c = pfVar3[4];
-  local_134 = 0;
-  local_138 = pfVar3[5];
-  local_12c = local_14c - local_15c;
-  local_130 = local_150 - local_160;
-  local_128 = local_148 - local_158;
-  local_fc = param_6;
-  local_c4 = param_7;
-  CM_CalcTraceExtents(auStack_1a0);
-  dVar8 = (double)local_138;
-  dVar9 = 0.009999999776482582;
-  dVar5 = (double)local_140;
-  local_118 = local_130 * local_130 + local_12c * local_12c;
-  local_120 = local_128 * local_128 + local_130 * local_130 + local_12c * local_12c;
-  local_11c = SQRT(local_118);
-  local_124 = SQRT(local_120);
-  if (0.01 <= (float)(dVar5 - dVar8)) {
-    uVar1 = va(dVar5,0xffffffff82082d44,dVar5,dVar8);
-    MyAssertHandler(0xffffffff8208249c,0xb5e,0,0xffffffff820011f4,0xffffffff82082d10,uVar1);
-    dVar8 = (double)local_138;
-    dVar5 = (double)local_140;
+  PIXBeginNamedEvent_Copy_NoVarArgs(0,"brush model sight trace");
+  pfVar3 = (float *)uVar2;
+  tStack_1a0.info = (ClipInfo *)0x0;
+  local_b0[0].startsolid = false;
+  tStack_1a0.extents.start[1] = param_2[1] + pfVar3[1];
+  tStack_1a0.extents.start[2] = param_2[2] + pfVar3[2];
+  local_b0[0].allsolid = false;
+  tStack_1a0.extents.end[1] = param_3[1] + pfVar3[1];
+  local_b0[0].fraction = 1.0;
+  tStack_1a0.extents.start[0] = *param_2 + *pfVar3;
+  tStack_1a0.extents.end[0] = *param_3 + *pfVar3;
+  dVar6 = 0.0;
+  tStack_1a0.extents.end[2] = param_3[2] + pfVar3[2];
+  tStack_1a0.size[0] = pfVar3[3];
+  tStack_1a0.size[1] = pfVar3[4];
+  tStack_1a0.sizePad = 0.0;
+  tStack_1a0.size[2] = pfVar3[5];
+  tStack_1a0.delta[1] = tStack_1a0.extents.end[1] - tStack_1a0.extents.start[1];
+  tStack_1a0.delta[0] = tStack_1a0.extents.end[0] - tStack_1a0.extents.start[0];
+  tStack_1a0.delta[2] = tStack_1a0.extents.end[2] - tStack_1a0.extents.start[2];
+  tStack_1a0.contents = param_6;
+  tStack_1a0.callbacks = param_7;
+  CM_CalcTraceExtents(&tStack_1a0.extents);
+  dVar5 = 0.009999999776482582;
+  tStack_1a0.delta2DLenSq =
+       tStack_1a0.delta[0] * tStack_1a0.delta[0] + tStack_1a0.delta[1] * tStack_1a0.delta[1];
+  tStack_1a0.deltaLenSq =
+       tStack_1a0.delta[2] * tStack_1a0.delta[2] + tStack_1a0.delta[0] * tStack_1a0.delta[0] +
+       tStack_1a0.delta[1] * tStack_1a0.delta[1];
+  tStack_1a0.delta2DLen = SQRT(tStack_1a0.delta2DLenSq);
+  tStack_1a0.deltaLen = SQRT(tStack_1a0.deltaLenSq);
+  if (0.01 <= tStack_1a0.size[0] - tStack_1a0.size[2]) {
+    va("tw.size[0]: %f, tw.size[2]: %f");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",0xb5e,0,
+                    "%s\n\t%s");
   }
-  dVar7 = (double)local_13c;
-  if (dVar9 <= (double)(float)(dVar7 - dVar8)) {
-    uVar1 = va(0xffffffff82082cf0,dVar7,dVar8);
-    MyAssertHandler(0xffffffff8208249c,0xb5f,0,0xffffffff820011f4,0xffffffff82082cbc,uVar1);
-    dVar8 = (double)local_138;
-    dVar7 = (double)local_13c;
-    dVar5 = (double)local_140;
+  if (dVar5 <= (double)(tStack_1a0.size[1] - tStack_1a0.size[2])) {
+    va("tw.size[1]: %f, tw.size[2]: %f");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",0xb5f,0,
+                    "%s\n\t%s");
   }
-  local_ec = (float)dVar10;
-  local_e8 = (float)dVar10;
-  local_114 = (local_150 + local_160) * 0.5;
-  local_110 = (local_14c + local_15c) * 0.5;
-  local_10c = (local_148 + local_158) * 0.5;
-  dVar9 = dVar5;
-  if ((float)(dVar7 - dVar5) < 0.0) {
-    dVar9 = dVar7;
+  tStack_1a0.offset[0] = (float)dVar6;
+  tStack_1a0.offset[1] = (float)dVar6;
+  tStack_1a0.bounds.midPoint[0] = (tStack_1a0.extents.end[0] + tStack_1a0.extents.start[0]) * 0.5;
+  tStack_1a0.bounds.midPoint[1] = (tStack_1a0.extents.end[1] + tStack_1a0.extents.start[1]) * 0.5;
+  tStack_1a0.bounds.midPoint[2] = (tStack_1a0.extents.end[2] + tStack_1a0.extents.start[2]) * 0.5;
+  tStack_1a0.radius = tStack_1a0.size[0];
+  if (tStack_1a0.size[1] - tStack_1a0.size[0] < 0.0) {
+    tStack_1a0.radius = tStack_1a0.size[1];
   }
-  local_f0 = (float)dVar9;
-  local_e4 = (float)(dVar8 - dVar9);
-  dVar6 = (double)local_e4;
-  local_d4 = SQRT((float)(dVar5 * dVar5 +
-                         (double)(float)(dVar7 * dVar7 + (double)(float)(dVar8 * dVar8))));
-  local_108 = (float)(ABS((double)(local_160 - local_114)) + dVar9);
-  local_104 = (float)(ABS((double)(local_15c - local_110)) + dVar9);
-  local_100 = (float)(ABS((double)(local_158 - local_10c)) + dVar9);
-  if (dVar6 < dVar10) {
-    MyAssertHandler(0xffffffff8208249c,0xb6d,0,0xffffffff82000f98,0xffffffff82082b78);
-    dVar6 = (double)local_e4;
+  tStack_1a0.offset[2] = tStack_1a0.size[2] - tStack_1a0.radius;
+  dVar5 = (double)tStack_1a0.offset[2];
+  tStack_1a0.boundingRadius =
+       SQRT(tStack_1a0.size[0] * tStack_1a0.size[0] +
+            tStack_1a0.size[1] * tStack_1a0.size[1] + tStack_1a0.size[2] * tStack_1a0.size[2]);
+  tStack_1a0.bounds.halfSize[0] =
+       ABS(tStack_1a0.extents.start[0] - tStack_1a0.bounds.midPoint[0]) + tStack_1a0.radius;
+  tStack_1a0.bounds.halfSize[1] =
+       ABS(tStack_1a0.extents.start[1] - tStack_1a0.bounds.midPoint[1]) + tStack_1a0.radius;
+  tStack_1a0.bounds.halfSize[2] =
+       ABS(tStack_1a0.extents.start[2] - tStack_1a0.bounds.midPoint[2]) + tStack_1a0.radius;
+  if (dVar5 < dVar6) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",0xb6d,0,
+                    "%s");
+    dVar5 = (double)tStack_1a0.offset[2];
   }
-  local_100 = (float)((double)local_100 + dVar6);
-  CM_SetAxialCullOnly(auStack_1a0);
-  if ((double)local_140 < dVar10) {
-    MyAssertHandler(0xffffffff8208249c,0xb75,0,0xffffffff82000f98,0xffffffff82082cac);
+  tStack_1a0.bounds.halfSize[2] = (float)((double)tStack_1a0.bounds.halfSize[2] + dVar5);
+  CM_SetAxialCullOnly(&tStack_1a0);
+  if ((double)tStack_1a0.size[0] < dVar6) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",0xb75,0,
+                    "%s");
   }
-  if ((double)local_13c < dVar10) {
-    MyAssertHandler(0xffffffff8208249c,0xb76,0,0xffffffff82000f98,0xffffffff82082c9c);
+  if ((double)tStack_1a0.size[1] < dVar6) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",0xb76,0,
+                    "%s");
   }
-  if ((double)local_138 < dVar10) {
-    MyAssertHandler(0xffffffff8208249c,0xb77,0,0xffffffff82000f98,0xffffffff82082c8c);
+  if ((double)tStack_1a0.size[2] < dVar6) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",0xb77,0,
+                    "%s");
   }
-  local_f8 = (double)(local_13c + local_138 + local_140) == dVar10;
-  if ((double)local_e4 < dVar10) {
-    MyAssertHandler(0xffffffff8208249c,0xb7b,0,0xffffffff82000f98,0xffffffff82082b78);
+  tStack_1a0.isPoint =
+       (double)(tStack_1a0.size[1] + tStack_1a0.size[2] + tStack_1a0.size[0]) == dVar6;
+  if ((double)tStack_1a0.offset[2] < dVar6) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",0xb7b,0,
+                    "%s");
   }
-  local_d8 = local_e4 + local_f0;
-  local_e0 = local_f0;
-  local_dc = local_f0;
-  CM_GetTraceThreadInfo(auStack_d0);
-  if ((param_5 & 0xffffffff) == 0) {
-    local_f4 = &DAT_835a2888;
-    if (((iVar2 < 1) || ((int)(uint)DAT_835a28b8 <= iVar2 + -1)) ||
-       (uVar1 = CM_SightTraceThroughBrush(auStack_1a0), (int)uVar1 == 0)) {
-      uVar1 = CM_SightTraceThroughTree(auStack_1a0,0,&local_160,&local_150,local_b0);
+  tStack_1a0.radiusOffset[2] = tStack_1a0.offset[2] + tStack_1a0.radius;
+  tStack_1a0.radiusOffset[0] = tStack_1a0.radius;
+  tStack_1a0.radiusOffset[1] = tStack_1a0.radius;
+  CM_GetTraceThreadInfo(&tStack_1a0.threadInfo);
+  if ((uVar4 & 0xffffffff) == 0) {
+    tStack_1a0.info = &cm.info;
+    if (((iVar1 < 1) || ((int)(uint)cm.info.numBrushes <= (int)(iVar1 - 1U))) ||
+       (iVar1 = CM_SightTraceThroughBrush(&tStack_1a0,iVar1 - 1U), iVar1 == 0)) {
+      iVar1 = CM_SightTraceThroughTree
+                        (&tStack_1a0,0,tStack_1a0.extents.start,tStack_1a0.extents.end,local_b0);
     }
   }
   else {
-    lVar4 = (param_5 + (param_5 & 0x1fffffff) * 8 & 0x1fffffff) * 8 + (ulonglong)DAT_835a2914;
-    local_f4 = *(undefined **)((int)lVar4 + 0x1c);
-    uVar1 = CM_SightTraceThroughLeaf(auStack_1a0,lVar4 + 0x20,local_b0);
+    iVar1 = (int)((uVar4 + (uVar4 & 0x1fffffff) * 8 & 0xffffffff) << 3);
+    tStack_1a0.info = *(ClipInfo **)((int)((cm.cmodels)->leaf).bounds.midPoint + iVar1 + -0x10);
+    iVar1 = CM_SightTraceThroughLeaf
+                      (&tStack_1a0,
+                       (cLeaf_t *)((int)((cm.cmodels)->leaf).bounds.midPoint + iVar1 + -0xc),
+                       local_b0);
   }
   PIXEndNamedEvent();
-  Profile_EndInternal(0);
-  __restgprlr_21(uVar1);
-  return;
+  Profile_EndInternal((double *)0x0);
+  iVar1 = __restgprlr_21(iVar1);
+  return iVar1;
 }
 
 
 // 824CF420  CM_GetBrushBoundsForHitNum  (qcommon/cm_trace.cpp:2981)
 
-void CM_GetBrushBoundsForHitNum(int param_1,undefined4 *param_2)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+void CM_GetBrushBoundsForHitNum(int param_1,Bounds *param_2)
 
 {
-  int iVar1;
-  undefined4 *puVar2;
-  int iVar3;
-  longlong lVar4;
+  CollisionAabbTree *pCVar1;
+  float *pfVar2;
+  float *pfVar3;
+  int iVar4;
+  longlong lVar5;
   
   if (param_1 < 1) {
-    MyAssertHandler(0xffffffff8208249c,0xba6,0,0xffffffff82082d7c,0xffffffff82082d90,param_1);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",0xba6,0,
+                    "%s\n\t(hitNum) = %i");
   }
-  param_1 = param_1 + -1;
-  if (param_1 < (int)(uint)DAT_835a28b8) {
-    param_2 = param_2 + -1;
-    lVar4 = 6;
-    puVar2 = (undefined4 *)(param_1 * 0x18 + DAT_835a28c0 + -4);
+  pCVar1 = cm.aabbTrees;
+  if (param_1 + -1 < (int)(uint)cm.info.numBrushes) {
+    pfVar2 = param_2[-1].halfSize + 2;
+    lVar5 = 6;
+    pfVar3 = cm.info.brushBounds[param_1 + -2].halfSize + 2;
     do {
-      puVar2 = puVar2 + 1;
-      param_2 = param_2 + 1;
-      *param_2 = *puVar2;
-      lVar4 = lVar4 + -1;
-    } while (lVar4 != 0);
+      pfVar3 = pfVar3 + 1;
+      pfVar2 = pfVar2 + 1;
+      *pfVar2 = *pfVar3;
+      lVar5 = lVar5 + -1;
+    } while (lVar5 != 0);
   }
   else {
-    iVar3 = (param_1 - (uint)DAT_835a28b8) * 0x20;
-    iVar1 = iVar3 + DAT_835a290c;
-    *param_2 = *(undefined4 *)(iVar3 + DAT_835a290c);
-    param_2[1] = *(undefined4 *)(iVar1 + 4);
-    param_2[2] = *(undefined4 *)(iVar1 + 8);
-    iVar3 = iVar3 + DAT_835a290c;
-    param_2[3] = *(undefined4 *)(iVar3 + 0x10);
-    param_2[4] = *(undefined4 *)(iVar3 + 0x14);
-    param_2[5] = *(undefined4 *)(iVar3 + 0x18);
+    iVar4 = (param_1 + -1) - (uint)cm.info.numBrushes;
+    param_2->midPoint[0] = cm.aabbTrees[iVar4].midPoint[0];
+    param_2->midPoint[1] = pCVar1[iVar4].midPoint[1];
+    param_2->midPoint[2] = pCVar1[iVar4].midPoint[2];
+    pCVar1 = cm.aabbTrees;
+    param_2->halfSize[0] = cm.aabbTrees[iVar4].halfSize[0];
+    param_2->halfSize[1] = pCVar1[iVar4].halfSize[1];
+    param_2->halfSize[2] = pCVar1[iVar4].halfSize[2];
   }
   return;
 }
@@ -3490,33 +3707,28 @@ void CM_GetBrushBoundsForHitNum(int param_1,undefined4 *param_2)
 
 // 824CF520  CM_TransformedBrushModelSightTrace  (qcommon/cm_trace.cpp:3007)
 
-void CM_TransformedBrushModelSightTrace
-               (undefined8 param_1,float *param_2,float *param_3,ulonglong param_4,
-               undefined8 param_5,undefined8 param_6,float *param_7,undefined8 param_8)
+int CM_TransformedBrushModelSightTrace
+              (int param_1,float *param_2,float *param_3,Bounds *param_4,uint param_5,int param_6,
+              float *param_7,float *param_8)
 
 {
   float *pfVar1;
-  undefined8 uVar2;
-  float *pfVar3;
+  int iVar2;
+  ulonglong uVar3;
   double dVar4;
   double dVar5;
   double dVar6;
   double dVar7;
   double dVar8;
   double dVar9;
-  code *local_f0 [2];
+  CM_WorldTraceCallbacks local_f0 [2];
   float local_e8;
   float local_e4;
   float local_e0;
   float local_d8;
   float local_d4;
   float local_d0;
-  undefined4 local_c0;
-  undefined4 local_bc;
-  undefined4 local_b8;
-  float local_b4;
-  float local_b0;
-  float local_ac;
+  Bounds local_c0;
   float local_a0;
   float local_9c;
   float local_98;
@@ -3527,21 +3739,22 @@ void CM_TransformedBrushModelSightTrace
   float local_84;
   float local_80;
   
-  __savegprlr_24();
-  uVar2 = __savefpr_26();
-  if ((param_4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8208249c,0xbc6,0,0xffffffff82000f98,0xffffffff82002044);
+  uVar3 = (ulonglong)(int)param_4;
+  __savegprlr_24(param_1);
+  iVar2 = __savefpr_26();
+  if ((uVar3 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",0xbc6,0,
+                    "%s");
   }
-  pfVar1 = (float *)param_4;
-  local_f0[0] = BrushModelIsGlassSolid;
+  pfVar1 = (float *)uVar3;
+  local_f0[0].isGlassSolid = BrushModelIsGlassSolid;
   local_d4 = (param_2[1] + pfVar1[1]) - param_7[1];
   dVar9 = (double)local_d4;
-  pfVar3 = (float *)param_8;
   local_e4 = (param_3[1] + pfVar1[1]) - param_7[1];
   dVar7 = (double)local_e4;
-  local_b4 = pfVar1[3];
-  local_b0 = pfVar1[4];
-  local_ac = pfVar1[5];
+  local_c0.halfSize[0] = pfVar1[3];
+  local_c0.halfSize[1] = pfVar1[4];
+  local_c0.halfSize[2] = pfVar1[5];
   local_d8 = (*param_2 + *pfVar1) - *param_7;
   dVar5 = (double)local_d8;
   local_d0 = (param_2[2] + pfVar1[2]) - param_7[2];
@@ -3550,11 +3763,11 @@ void CM_TransformedBrushModelSightTrace
   dVar4 = (double)local_e8;
   local_e0 = (param_3[2] + pfVar1[2]) - param_7[2];
   dVar6 = (double)local_e0;
-  local_c0 = 0;
-  local_bc = 0;
-  local_b8 = 0;
-  if (((*pfVar3 != 0.0) || (pfVar3[1] != 0.0)) || (pfVar3[2] != 0.0)) {
-    AnglesToAxis(param_8,&local_a0);
+  local_c0.midPoint[0] = 0.0;
+  local_c0.midPoint[1] = 0.0;
+  local_c0.midPoint[2] = 0.0;
+  if (((*param_8 != 0.0) || (param_8[1] != 0.0)) || (param_8[2] != 0.0)) {
+    AnglesToAxis(param_8,(float (*) [3])&local_a0);
     local_d8 = (float)((double)local_98 * dVar8 +
                       (double)(float)((double)local_9c * dVar9 +
                                      (double)(float)((double)local_a0 * dVar5)));
@@ -3574,135 +3787,75 @@ void CM_TransformedBrushModelSightTrace
                       (double)(float)((double)local_94 * dVar4 +
                                      (double)(float)((double)local_90 * dVar7)));
   }
-  CM_BrushModelSightTrace(uVar2,&local_d8,&local_e8,&local_c0,param_5,param_6,local_f0);
-  __restfpr_26();
-  __restgprlr_24();
-  return;
+  iVar2 = CM_BrushModelSightTrace(iVar2,&local_d8,&local_e8,&local_c0,param_5,param_6,local_f0);
+  __restfpr_26(iVar2);
+  iVar2 = __restgprlr_24();
+  return iVar2;
 }
 
 
 // 824CF720  CM_TransformedCapsuleSightTrace  (qcommon/cm_trace.cpp:3045)
 
-void CM_TransformedCapsuleSightTrace
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-               undefined8 param_5,undefined8 param_6)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+int CM_TransformedCapsuleSightTrace
+              (float *param_1,float *param_2,Bounds *param_3,Bounds *param_4,float *param_5,
+              float *param_6)
 
 {
-  undefined8 uVar1;
-  undefined1 auStack_b0 [48];
-  undefined1 auStack_80 [128];
+  float *pfVar1;
+  int iVar2;
+  float afStack_b0 [12];
+  TraceCapsuleWork TStack_80;
   
-  uVar1 = __savegprlr_26();
-  if (DAT_835a28d4 == 0) {
-    MyAssertHandler(0xffffffff8208249c,0xbea,0,0xffffffff82000f98,0xffffffff8208247c);
+  pfVar1 = (float *)__savegprlr_26(param_1);
+  if (cm.numNodes == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trace.cpp",0xbea,0,
+                    "%s");
   }
   Profile_Begin(0x20);
-  CM_SetupTraceCapsuleWork(auStack_80,uVar1,param_2,param_3,param_5,param_6,auStack_b0);
-  uVar1 = CM_SightTraceCapsuleThroughCapsule(auStack_80,param_4);
-  Profile_EndInternal(0);
-  __restgprlr_26(uVar1);
-  return;
+  CM_SetupTraceCapsuleWork
+            (&TStack_80,pfVar1,param_2,param_3,param_5,param_6,(float (*) [3])afStack_b0);
+  iVar2 = CM_SightTraceCapsuleThroughCapsule(&TStack_80,param_4);
+  Profile_EndInternal((double *)0x0);
+  iVar2 = __restgprlr_26(iVar2);
+  return iVar2;
 }
 
 
 // 824CF7C8  CM_GetClipMapPtr  (qcommon/cm_trace.cpp:3096)
 
-undefined8 CM_GetClipMapPtr(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+void * CM_GetClipMapPtr(void)
 
 {
-  return 0xffffffff835a2880;
+  return &cm;
+}
+
+
+// 824CF7D8  CM_IsGlassSolid  (qcommon/cm_trace.cpp:3105)
+
+bool CM_IsGlassSolid(uint param_1)
+
+{
+  byte bVar1;
+  
+  CG_Glass_BeginRead();
+  if (0x3ff < param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_glass.cpp",0x2d,0,
+                    "pieceIndex doesn\'t index ARRAY_COUNT( cg_glassData.glassPieces )\n\t%i not in [0, %i)"
+                   );
+  }
+  bVar1 = cg_glassData.glassPieces[param_1].state;
+  CG_Glass_EndRead();
+  return (bool)(-(bVar1 < 2) & 1);
 }
 
 
 // 824CF7E0  CM_TraceCmd  (qcommon/cm_trace.cpp:3127)
-
-void * CM_TraceCmd(int *param_1)
-
-{
-  int iVar1;
-  void *pvVar2;
-  undefined8 *puVar3;
-  uint *puVar4;
-  longlong lVar5;
-  double dVar6;
-  code *local_7c;
-  undefined8 uStack_78;
-  float local_70 [14];
-  int local_38;
-  int local_34;
-  int local_30;
-  int local_2c;
-  int local_28;
-  int local_24;
-  
-  DAT_835a59a8 = param_1;
-  if (param_1[0x38] != 0) {
-    param_1[0x38] = (int)(param_1 + 0x48);
-  }
-  puVar3 = &uStack_78;
-  local_7c = CM_IsGlassSolid;
-  lVar5 = 10;
-  do {
-    puVar3 = puVar3 + 1;
-    *puVar3 = 0;
-    lVar5 = lVar5 + -1;
-  } while (lVar5 != 0);
-  local_70[0] = 1.0;
-  if (-1 < param_1[0x4b]) {
-    puVar4 = (uint *)(param_1 + 5);
-    iVar1 = CG_CalcTraceEndIfNotCulled
-                      (param_1[0x12],param_1[0x13],param_1 + 0xf,param_1[0x4b],param_1[0x4c],puVar4)
-    ;
-    if (iVar1 == 0) {
-      local_70[0] = 0.0;
-      goto LAB_824cfa48;
-    }
-    if ((((*puVar4 & 0x7f800000) == 0x7f800000) || ((param_1[6] & 0x7f800000U) == 0x7f800000)) ||
-       ((param_1[7] & 0x7f800000U) == 0x7f800000)) {
-      MyAssertHandler(0xffffffff8208249c,0xc72,0,0xffffffff82000f98,0xffffffff82082da0);
-    }
-    param_1[0x34] = *puVar4;
-    param_1[0x35] = param_1[6];
-    param_1[0x36] = param_1[7];
-    CM_CalcTraceExtents(param_1 + 0x20);
-  }
-  dVar6 = 0.0;
-  if (((((((param_1[1] & 1U) == 0) ||
-         (CM_BrushModelTraceVerticalCapsule
-                    (local_70,param_1 + 2,param_1 + 5,param_1 + 8,0,param_1[0xe],&local_7c),
-         (double)local_70[0] != dVar6)) &&
-        (((param_1[1] & 2U) == 0 ||
-         (CM_PointTraceStaticModels(local_70,param_1 + 2,param_1 + 5,param_1[0xe]),
-         (double)local_70[0] != dVar6)))) &&
-       (((param_1[1] & 4U) == 0 ||
-        (CG_ClipMoveToEntities(param_1 + 0x20,local_70), (double)local_70[0] != dVar6)))) &&
-      (((param_1[1] & 8U) == 0 ||
-       (CM_ClipMoveToEntities(param_1 + 0x20,local_70), (double)local_70[0] != dVar6)))) &&
-     (((((param_1[1] & 0x20U) == 0 ||
-        (CG_PointTraceToEntities(param_1 + 0x20,local_70), (double)local_70[0] != dVar6)) &&
-       (((param_1[1] & 0x40U) == 0 ||
-        (CM_PointTraceToEntities(param_1 + 0x20,local_70), (double)local_70[0] != dVar6)))) &&
-      ((param_1[1] & 0x10U) != 0)))) {
-    DynEntCl_ClipMoveTrace(param_1 + 0x20,local_70);
-  }
-LAB_824cfa48:
-  local_38 = param_1[2];
-  local_34 = param_1[3];
-  local_30 = param_1[4];
-  local_2c = param_1[5];
-  local_28 = param_1[6];
-  local_24 = param_1[7];
-  pvVar2 = memcpy((void *)*param_1,local_70,0x34);
-  iVar1 = *param_1;
-  *(int *)(iVar1 + 0x38) = local_38;
-  *(int *)(iVar1 + 0x3c) = local_34;
-  *(int *)(iVar1 + 0x40) = local_30;
-  iVar1 = *param_1;
-  *(int *)(iVar1 + 0x44) = local_2c;
-  *(int *)(iVar1 + 0x48) = local_28;
-  *(int *)(iVar1 + 0x4c) = local_24;
-  sync(1);
-  *(undefined4 *)(*param_1 + 0x34) = 2;
-  return pvVar2;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s

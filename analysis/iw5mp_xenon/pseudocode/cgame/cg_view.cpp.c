@@ -2,875 +2,156 @@
 
 // 82309C58  TRACK_cg_view  (cgame/cg_view.cpp:317)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void TRACK_cg_view(void)
 
 {
-  track_static_alloc_internal(0xffffffff82963d28,0x180,0xffffffff82026d44,10);
-  track_static_alloc_internal(0xffffffff82a76ff8,0x150,0xffffffff82026d34,9);
+  track_static_alloc_internal(clientViewParamsArray,0x180,"clientViewParamsArray",10);
+  track_static_alloc_internal(s_testEffect,0x150,"s_testEffect",9);
   return;
 }
 
 
 // 82309CB0  CG_PlayTestFx  (cgame/cg_view.cpp:326)
-
-void CG_PlayTestFx(void)
-
-{
-  undefined4 uVar1;
-  int iVar3;
-  undefined8 uVar2;
-  int iVar4;
-  int iVar5;
-  undefined4 local_50;
-  undefined4 local_4c;
-  undefined4 local_48;
-  undefined4 local_44;
-  undefined4 local_40;
-  undefined4 local_3c;
-  undefined4 local_38;
-  undefined4 local_34;
-  undefined4 local_30;
-  
-  iVar3 = __savegprlr_29();
-  iVar5 = iVar3 * 0x54;
-  uVar2 = FX_Register(&DAT_82a76ff8 + iVar5);
-  local_50 = 0;
-  local_4c = 0;
-  local_48 = 0x3f800000;
-  local_44 = 0x3f800000;
-  local_40 = 0;
-  local_3c = 0;
-  local_38 = 0;
-  local_34 = 0x3f800000;
-  local_30 = 0;
-  iVar4 = CG_GetLocalClientGlobals(iVar3);
-  uVar1 = *(undefined4 *)(iVar4 + 0x6b98c);
-  FX_PlayOrientedEffect(iVar3,uVar2,uVar1,&DAT_82a77038 + iVar5,&local_50);
-  *(undefined4 *)(&DAT_82a77044 + iVar5) = uVar1;
-  __restgprlr_29();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 82309D48  CG_UpdateTestFX  (cgame/cg_view.cpp:345)
-
-void CG_UpdateTestFX(int param_1)
-
-{
-  int iVar1;
-  int iVar2;
-  
-  iVar2 = param_1 * 0x54;
-  if (0 < *(int *)(&DAT_82a77048 + iVar2)) {
-    iVar1 = CG_GetLocalClientGlobals();
-    if (*(int *)(&DAT_82a77044 + iVar2) + *(int *)(&DAT_82a77048 + iVar2) <
-        *(int *)(iVar1 + 0x6b98c)) {
-      CG_PlayTestFx(param_1);
-    }
-  }
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 82309DC0  CG_FxSetTestPosition  (cgame/cg_view.cpp:359)
-
-void CG_FxSetTestPosition(void)
-
-{
-  float fVar1;
-  undefined8 uVar2;
-  int iVar3;
-  int iVar4;
-  double dVar5;
-  double dVar6;
-  double dVar7;
-  
-  uVar2 = Cmd_LocalClientNum();
-  iVar3 = CG_GetLocalClientGlobals();
-  iVar4 = CG_GetLocalClientGlobals(uVar2);
-  if (*(int *)(iVar4 + 0x335c) != 0) {
-    iVar4 = (int)uVar2 * 0x54;
-    fVar1 = *(float *)(iVar3 + 0x6b9d4) * 100.0 + *(float *)(iVar3 + 0x6b9c8);
-    dVar7 = (double)fVar1;
-    *(float *)(&DAT_82a77038 + iVar4) = fVar1;
-    fVar1 = *(float *)(iVar3 + 0x6b9d8) * 100.0 + *(float *)(iVar3 + 0x6b9cc);
-    dVar6 = (double)fVar1;
-    *(float *)(&DAT_82a7703c + iVar4) = fVar1;
-    fVar1 = *(float *)(iVar3 + 0x6b9dc) * 100.0 + *(float *)(iVar3 + 0x6b9d0);
-    dVar5 = (double)fVar1;
-    *(float *)(&DAT_82a77040 + iVar4) = fVar1;
-    Com_Printf(dVar7,dVar6,dVar5,0x15,0xffffffff82026d5c,dVar7,dVar6,dVar5);
-  }
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 82309EA0  CG_FxTest  (cgame/cg_view.cpp:377)
-
-void CG_FxTest(void)
-
-{
-  int iVar2;
-  int iVar3;
-  undefined8 uVar1;
-  char *_String;
-  int iVar4;
-  undefined *puVar5;
-  double dVar6;
-  
-  iVar2 = Cmd_LocalClientNum();
-  iVar3 = CG_GetLocalClientGlobals();
-  if (*(int *)(iVar3 + 0x335c) != 0) {
-    iVar3 = Cmd_Argc();
-    if (iVar3 < 2) {
-      Com_Printf(0x15,0xffffffff82026dc8);
-    }
-    iVar4 = iVar2 * 0x54;
-    puVar5 = &DAT_82a76ff8 + iVar4;
-    uVar1 = Cmd_Argv(1);
-    I_strncpyz(puVar5,uVar1,0x40);
-    iVar3 = I_strncmp(puVar5,0xffffffff82026dc4,3);
-    if (iVar3 == 0) {
-      Com_PrintError(1,0xffffffff82026d9c);
-    }
-    else {
-      Com_Printf(0x15,0xffffffff82026d8c,puVar5);
-      CG_PlayTestFx(iVar2);
-      iVar2 = Cmd_Argc();
-      if (iVar2 == 3) {
-        _String = (char *)Cmd_Argv(2);
-        dVar6 = atof(_String);
-        *(int *)(&DAT_82a77048 + iVar4) = (int)(dVar6 * 1000.0);
-      }
-      else {
-        *(undefined4 *)(&DAT_82a77048 + iVar4) = 0;
-      }
-    }
-  }
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 82309FB0  CG_MissileRegisterDvars  (cgame/cg_view.cpp:414)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void CG_MissileRegisterDvars(void)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
-  undefined8 uVar3;
-  undefined8 uVar4;
+  ushort in_r4;
+  ushort uVar1;
+  char *pcVar2;
+  IMAGE_DOS_HEADER *pIVar3;
+  double dVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
   
-  uVar4 = 0;
-  uVar1 = 0x4056800000000000;
-  uVar2 = 0x3fe6666660000000;
-  DAT_82a76f0c = Dvar_RegisterVec3(0x3fa99999a0000000,0x3fe6666660000000,0x3fb1eb8520000000,0,
-                                   0x4056800000000000,0xffffffff82027014);
-  uVar3 = 0x47efffffe0000000;
-  DAT_82a76fd8 = Dvar_RegisterVec3(0x4045000000000000,uVar2,0x4059000000000000,uVar4,
-                                   0x47efffffe0000000,0xffffffff82026fc8);
-  DAT_82a76f9c = Dvar_RegisterVec2(0x408f400000000000,0x40af400000000000,uVar4,uVar3,
-                                   0xffffffff82026fa4);
-  DAT_82a76fe4 = Dvar_RegisterVec3(0x3fcc49ba60000000,0x3fc3333340000000,0x4000000000000000,uVar4,
-                                   uVar1,0xffffffff82026f38);
-  DAT_82a76f54 = Dvar_RegisterVec3(0x403f000000000000,uVar1,0x3fe0000000000000,uVar4,uVar3,
-                                   0xffffffff82026eb0);
-  DAT_82a76f38 = Dvar_RegisterVec2(0x409f400000000000,0x40b3880000000000,uVar4,uVar3,
-                                   0xffffffff82026e8c);
-  DAT_82a76f8c = Dvar_RegisterFloat(0x402e000000000000,0x3ff0000000000000,0x405e000000000000,
-                                    0xffffffff82026e28);
+  dVar7 = 0.0;
+  pcVar2 = "the motion tracker after being detected";
+  dVar4 = 90.0;
+  dVar5 = 0.699999988079071;
+  cameraShakeRemoteMissile_Angles =
+       Dvar_RegisterVec3("cameraShakeRemoteMissile_Angles",0.05,(float)0x3f333333,0.07,0.0,90.0,
+                         in_r4,"the motion tracker after being detected");
+  dVar6 = 3.4028234663852886e+38;
+  cameraShakeRemoteMissile_Freqs =
+       Dvar_RegisterVec3("cameraShakeRemoteMissile_Freqs",42.0,(float)dVar5,100.0,(float)dVar7,
+                         3.4028235e+38,0,pcVar2);
+  cameraShakeRemoteMissile_SpeedRange =
+       Dvar_RegisterVec2("cameraShakeRemoteMissile_SpeedRange",1000.0,4000.0,(float)dVar7,
+                         (float)dVar6,0,g_zones[0xef].name + 0x12);
+  pIVar3 = &IMAGE_DOS_HEADER_82000000;
+  uVar1 = 0;
+  cameraShakeRemoteHelo_Angles =
+       Dvar_RegisterVec3("cameraShakeRemoteHelo_Angles",0.221,0.15,2.0,(float)dVar7,(float)dVar4,0,
+                         IMAGE_DOS_HEADER_82000000.e_magic);
+  cameraShakeRemoteHelo_Freqs =
+       Dvar_RegisterVec3("cameraShakeRemoteHelo_Freqs",31.0,(float)dVar4,0.5,(float)dVar7,
+                         (float)dVar6,uVar1,pIVar3->e_magic);
+  cameraShakeRemoteHelo_SpeedRange =
+       Dvar_RegisterVec2("cameraShakeRemoteHelo_SpeedRange",2000.0,5000.0,(float)dVar7,(float)dVar6,
+                         0,g_zones[0xef].name + 0x12);
+  missileRemoteFOV =
+       Dvar_RegisterFloat("missileRemoteFOV",15.0,1.0,120.0,0,IMAGE_DOS_HEADER_82000000.e_magic);
   return;
 }
 
 
 // 8230A1A0  ThirdPersonViewTrace  (cgame/cg_view.cpp:429)
-
-void ThirdPersonViewTrace
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-               float *param_5)
-
-{
-  int iVar1;
-  float *pfVar2;
-  float *pfVar3;
-  int iVar4;
-  float local_a0;
-  float local_9c;
-  float local_98;
-  undefined4 local_90;
-  undefined4 local_8c;
-  undefined4 local_88;
-  undefined4 local_84;
-  undefined4 local_80;
-  undefined4 local_7c;
-  float local_70 [11];
-  char local_41;
-  
-  iVar4 = __savegprlr_27();
-  iVar1 = *(int *)(iVar4 + 0xac);
-  if (iVar1 == 0x7ff) {
-    iVar1 = *(int *)(iVar4 + 0x150);
-  }
-  local_90 = 0;
-  local_8c = 0;
-  local_88 = 0;
-  local_84 = 0x40800000;
-  local_80 = 0x40800000;
-  local_7c = 0x40800000;
-  CG_TraceCapsule(local_70,param_2,param_3,&local_90,iVar1,param_4);
-  pfVar2 = (float *)param_2;
-  if (local_41 != '\0') {
-    *param_5 = *pfVar2;
-    param_5[1] = pfVar2[1];
-    param_5[2] = pfVar2[2] + 15.0;
-    __restgprlr_27();
-    return;
-  }
-  pfVar3 = (float *)param_3;
-  if (local_70[0] == 1.0) {
-    *param_5 = *pfVar3;
-    param_5[1] = pfVar3[1];
-    param_5[2] = pfVar3[2];
-    __restgprlr_27();
-    return;
-  }
-  local_a0 = (*pfVar3 - *pfVar2) * local_70[0] + *pfVar2;
-  local_9c = (pfVar3[1] - pfVar2[1]) * local_70[0] + pfVar2[1];
-  local_98 = (1.0 - local_70[0]) * 32.0 + (pfVar3[2] - pfVar2[2]) * local_70[0] + pfVar2[2];
-  CG_TraceCapsule(local_70,param_2,&local_a0,&local_90,iVar1,param_4);
-  *param_5 = (local_a0 - *pfVar2) * local_70[0] + *pfVar2;
-  param_5[1] = (local_9c - pfVar2[1]) * local_70[0] + pfVar2[1];
-  param_5[2] = (local_98 - pfVar2[2]) * local_70[0] + pfVar2[2];
-  __restgprlr_27();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 8230A330  CG_OffsetChaseCamView  (cgame/cg_view.cpp:474)
-
-void CG_OffsetChaseCamView(void)
-
-{
-  float fVar1;
-  float fVar2;
-  undefined8 uVar3;
-  int iVar4;
-  int iVar5;
-  float *pfVar6;
-  double dVar7;
-  double dVar8;
-  double dVar9;
-  double dVar10;
-  double dVar11;
-  float local_a0;
-  float local_9c;
-  undefined4 local_98;
-  float local_90;
-  float local_8c;
-  float local_88;
-  float local_80;
-  float local_7c;
-  float local_78;
-  undefined4 local_70;
-  float local_6c;
-  undefined4 local_68;
-  undefined1 auStack_60 [16];
-  undefined1 auStack_50 [56];
-  
-  uVar3 = __savefpr_28();
-  iVar4 = CG_GetLocalClientGlobals();
-  if ((*(uint *)(iVar4 + 0x10) & 0x800) == 0) {
-    MyAssertHandler(0xffffffff82027068,0x1e5,0,0xffffffff82000f98,0xffffffff820270a4);
-  }
-  iVar5 = CL_GetLocalClientGlobals(uVar3);
-  local_a0 = *(float *)(iVar5 + 0x35ec);
-  local_9c = *(float *)(iVar5 + 0x35f0);
-  local_98 = *(undefined4 *)(iVar5 + 0x35f4);
-  local_70 = *(undefined4 *)(iVar5 + 0x35ec);
-  local_6c = *(float *)(iVar5 + 0x35f0);
-  local_68 = *(undefined4 *)(iVar5 + 0x35f4);
-  if (*(int *)(DAT_82a382dc + 0xc) == 1) {
-    local_6c = *(float *)(iVar4 + 460000) + local_6c;
-    local_9c = *(float *)(iVar4 + 460000) + local_9c;
-  }
-  dVar10 = 0.0027777778450399637;
-  dVar8 = (double)(local_9c * 0.0027777778);
-  dVar9 = 0.5;
-  dVar7 = floor((double)(float)(dVar8 + 0.5));
-  dVar10 = (double)(float)((double)local_6c * dVar10);
-  dVar11 = 360.0;
-  local_9c = (float)(dVar8 - (double)(float)dVar7) * 360.0;
-  dVar7 = floor((double)(float)(dVar10 + dVar9));
-  local_6c = (float)((double)(float)(dVar10 - (double)(float)dVar7) * dVar11);
-  AngleVectors(&local_a0,&local_80,0,0);
-  pfVar6 = (float *)(iVar4 + 0x6b9c8);
-  local_90 = *pfVar6;
-  local_8c = *(float *)(iVar4 + 0x6b9cc);
-  local_88 = *(float *)(iVar4 + 0x6b9d0);
-  fVar1 = (local_80 * 512.0 + local_90) - *pfVar6;
-  fVar2 = (local_7c * 512.0 + *(float *)(iVar4 + 0x6b9cc)) - *(float *)(iVar4 + 0x6b9cc);
-  dVar7 = (double)SQRT(fVar2 * fVar2 + fVar1 * fVar1);
-  if ((float)(dVar7 - 1.0) < 0.0) {
-    dVar7 = 1.0;
-  }
-  dVar7 = atan2((double)((local_78 * 512.0 + *(float *)(iVar4 + 0x6b9d0)) -
-                        *(float *)(iVar4 + 0x6b9d0)),dVar7);
-  local_a0 = (float)dVar7 * -57.295776;
-  local_9c = local_9c - *(float *)(DAT_82a3d6a4 + 0xc);
-  AngleVectors(&local_a0,&local_80,auStack_50,auStack_60);
-  fVar1 = -*(float *)(DAT_82a3d468 + 0xc);
-  local_90 = fVar1 * local_80 + local_90;
-  local_8c = local_7c * fVar1 + local_8c;
-  local_88 = local_78 * fVar1 + local_88;
-  ThirdPersonViewTrace(iVar4,pfVar6,&local_90,0x2810011,pfVar6);
-  AnglesToAxis(&local_70,iVar4 + 0x6b9d4);
-  __restfpr_28();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 8230A5B0  CG_GetCorpseViewPosition  (cgame/cg_view.cpp:523)
-
-void CG_GetCorpseViewPosition(undefined8 param_1,undefined8 param_2,ulonglong param_3)
-
-{
-  uint uVar1;
-  undefined8 uVar2;
-  int iVar4;
-  ulonglong uVar3;
-  undefined4 *puVar5;
-  
-  uVar2 = __savegprlr_28();
-  iVar4 = CG_GetLocalClientGlobals();
-  if (7 < *(int *)(iVar4 + 4)) {
-    uVar1 = *(uint *)(iVar4 + 0xa8);
-    if (-1 < (int)uVar1) {
-      if (7 < uVar1) {
-        MyAssertHandler(0xffffffff82027068,0x212,0,0xffffffff820270e0,uVar1,8);
-      }
-      if ((int)*(uint *)(iVar4 + 0xa8) < 8) {
-        iVar4 = CG_GetEntity(uVar2,(ulonglong)*(uint *)(iVar4 + 0xa8) + 0x12);
-        if ((*(uint *)(iVar4 + 0x1c4) & 1) != 0) {
-          if ((param_3 & 0xff) == 0) {
-            puVar5 = (undefined4 *)param_2;
-            *puVar5 = *(undefined4 *)(iVar4 + 0x14);
-            puVar5[1] = *(undefined4 *)(iVar4 + 0x18);
-            puVar5[2] = *(undefined4 *)(iVar4 + 0x1c);
-          }
-          else {
-            uVar3 = Com_GetClientDObj(*(undefined4 *)(iVar4 + 0xc4),uVar2);
-            if ((uVar3 & 0xffffffff) != 0) {
-              CG_DObjGetWorldTagPos(iVar4,uVar3,DAT_835a0d66,param_2);
-              __restgprlr_28();
-              return;
-            }
-          }
-        }
-      }
-    }
-  }
-  __restgprlr_28();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 8230A6A0  CG_OffsetThirdPersonView  (cgame/cg_view.cpp:557)
-
-void CG_OffsetThirdPersonView(void)
-
-{
-  float fVar1;
-  undefined8 uVar2;
-  int iVar3;
-  float *pfVar4;
-  double dVar5;
-  double dVar6;
-  double dVar7;
-  float local_98;
-  float local_94;
-  undefined4 local_90;
-  float local_88;
-  float local_84;
-  float local_80;
-  float local_78;
-  float local_74;
-  float local_70;
-  float local_68;
-  float local_64;
-  undefined4 local_60;
-  undefined1 auStack_58 [16];
-  undefined1 auStack_48 [72];
-  
-  uVar2 = __savegprlr_29();
-  iVar3 = CG_GetLocalClientGlobals();
-  if (*(int *)(iVar3 + 0xac) == 0x7ff) {
-    fVar1 = *(float *)(iVar3 + 0x168);
-  }
-  else {
-    fVar1 = 20.0;
-  }
-  *(float *)(iVar3 + 0x6b9d0) = *(float *)(iVar3 + 0x6b9d0) + fVar1;
-  pfVar4 = (float *)(iVar3 + 0x6b9c8);
-  CG_GetCorpseViewPosition(uVar2,pfVar4,1);
-  if (((*(uint *)(iVar3 + 0x10) & 0x800) != 0) && (*(int *)(iVar3 + 0xa04) == 0)) {
-    CG_OffsetChaseCamView(uVar2);
-    __restgprlr_29();
-    return;
-  }
-  local_98 = *(float *)(iVar3 + 0x704dc);
-  local_94 = *(float *)(iVar3 + 460000);
-  local_90 = *(undefined4 *)(iVar3 + 0x704e4);
-  local_68 = *(float *)(iVar3 + 0x704dc);
-  local_64 = *(float *)(iVar3 + 460000);
-  local_60 = *(undefined4 *)(iVar3 + 0x704e4);
-  if (7 < *(int *)(iVar3 + 4)) {
-    local_64 = (float)(longlong)*(int *)(iVar3 + 0x1a0);
-    local_94 = (float)(longlong)*(int *)(iVar3 + 0x1a0);
-  }
-  if (45.0 < local_68) {
-    local_68 = 45.0;
-  }
-  AngleVectors(&local_68,&local_78,0,0);
-  local_88 = *pfVar4;
-  local_84 = *(float *)(iVar3 + 0x6b9cc);
-  local_98 = local_98 * 0.5;
-  local_80 = *(float *)(iVar3 + 0x6b9d0) + 8.0;
-  dVar7 = (double)(local_78 * 512.0 + local_88);
-  dVar6 = (double)(local_74 * 512.0 + *(float *)(iVar3 + 0x6b9cc));
-  dVar5 = (double)(local_70 * 512.0 + *(float *)(iVar3 + 0x6b9d0));
-  local_94 = local_94 - *(float *)(DAT_82a3d6a4 + 0xc);
-  AngleVectors(&local_98,&local_78,auStack_48,auStack_58);
-  fVar1 = -*(float *)(DAT_82a3d468 + 0xc);
-  local_88 = fVar1 * local_78 + local_88;
-  local_84 = local_74 * fVar1 + local_84;
-  local_80 = local_70 * fVar1 + local_80;
-  ThirdPersonViewTrace(iVar3,pfVar4,&local_88,0x2810011,pfVar4);
-  fVar1 = (float)(dVar6 - (double)*(float *)(iVar3 + 0x6b9cc));
-  dVar6 = (double)SQRT(fVar1 * fVar1 +
-                       (float)(dVar7 - (double)*pfVar4) * (float)(dVar7 - (double)*pfVar4));
-  if (dVar6 < 1.0) {
-    dVar6 = 1.0;
-  }
-  dVar6 = atan2((double)(float)(dVar5 - (double)*(float *)(iVar3 + 0x6b9d0)),dVar6);
-  local_98 = (float)dVar6 * -57.295776;
-  AnglesToAxis(&local_98,iVar3 + 0x6b9d4);
-  __restgprlr_29();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 8230A950  CG_UpdateThirdPersonMode  (cgame/cg_view.cpp:635)
-
-void CG_UpdateThirdPersonMode(undefined8 param_1,ulonglong param_2)
-
-{
-  float fVar1;
-  float fVar2;
-  float fVar3;
-  float fVar4;
-  undefined8 uVar5;
-  int iVar6;
-  int iVar7;
-  double dVar8;
-  double dVar9;
-  double dVar10;
-  double dVar11;
-  double dVar12;
-  double dVar13;
-  double dVar14;
-  float local_130;
-  float local_12c;
-  float local_128;
-  float local_120;
-  float local_11c;
-  float local_118;
-  float local_110;
-  float local_10c;
-  float local_108;
-  float local_100;
-  float local_fc;
-  float local_f0;
-  float local_ec;
-  float local_e8;
-  float local_e4;
-  float local_e0;
-  float local_dc;
-  float local_d8;
-  float local_d4;
-  float local_d0;
-  undefined4 local_c0;
-  undefined4 local_bc;
-  undefined4 local_b8;
-  undefined4 local_b4;
-  undefined4 local_b0;
-  undefined4 local_ac;
-  float local_a8;
-  float local_a4;
-  float local_a0;
-  longlong local_98;
-  float local_90 [36];
-  
-  __savegprlr_29();
-  uVar5 = __savefpr_26();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82027068,0x28b,0,0xffffffff82000f98,0xffffffff82027150);
-  }
-  iVar6 = CG_GetLocalClientGlobals(uVar5);
-  local_98 = (longlong)*(int *)(iVar6 + 0x6b988);
-  dVar13 = (double)((float)local_98 * 0.001);
-  AnglesToAxis(param_2,&local_f0);
-  CG_GetPlayerViewOrigin(uVar5,iVar6,&local_110);
-  local_130 = local_110;
-  dVar9 = 0.0;
-  local_c0 = 0;
-  local_bc = 0;
-  local_b8 = 0;
-  local_b4 = 0x40800000;
-  local_b0 = 0x40800000;
-  local_ac = 0x40800000;
-  local_12c = local_10c;
-  local_128 = local_108;
-  iVar7 = DAT_829c7d08;
-  if ((*(uint *)(iVar6 + 0xf8) & 0x3800) != 0) {
-    iVar7 = DAT_829c7ddc;
-  }
-  dVar11 = (double)*(float *)(iVar7 + 0x14);
-  dVar8 = (double)*(float *)(iVar7 + 0x10);
-  dVar10 = (double)*(float *)(iVar7 + 0xc);
-  dVar14 = 1.0;
-  dVar12 = dVar14;
-  if ((*(uint *)(iVar6 + 0x10) & 0x20000) != 0) {
-    dVar12 = -1.0;
-  }
-  dVar13 = (double)DiffTrack(dVar12,(double)*(float *)(iVar6 + 0x70520),(double)DAT_82963ea8,dVar13)
-  ;
-  *(float *)(iVar6 + 0x70520) = (float)dVar13;
-  dVar13 = (double)(float)(dVar13 * dVar8);
-  iVar7 = BG_UsingSniperScope(iVar6);
-  if (iVar7 != 0) {
-    dVar11 = dVar9;
-    dVar13 = dVar9;
-  }
-  dVar9 = (double)*(float *)(iVar6 + 0x378);
-  fVar1 = (float)((double)(float)(dVar13 - (double)*(float *)(DAT_829c547c + 0x10)) * dVar9 +
-                 (double)*(float *)(DAT_829c547c + 0x10));
-  fVar2 = (float)((double)(float)(dVar11 - (double)*(float *)(DAT_829c547c + 0x14)) * dVar9 +
-                 (double)*(float *)(DAT_829c547c + 0x14));
-  dVar9 = (double)(float)((double)(float)(dVar10 - (double)*(float *)(DAT_829c547c + 0xc)) * dVar9 +
-                         (double)*(float *)(DAT_829c547c + 0xc));
-  local_12c = local_d4 * fVar2 + local_e0 * fVar1 + local_12c;
-  local_128 = local_d0 * fVar2 + local_dc * fVar1 + local_128;
-  local_130 = local_d8 * fVar2 + local_e4 * fVar1 + local_130;
-  CG_TraceCapsule(local_90,&local_110,&local_130,&local_c0,*(undefined4 *)(iVar6 + 0x150),0x2810011)
-  ;
-  local_120 = (local_130 - local_110) * local_90[0] + local_110;
-  local_11c = (local_12c - local_10c) * local_90[0] + local_10c;
-  local_118 = (local_128 - local_108) * local_90[0] + local_108;
-  local_130 = (float)((double)local_f0 * dVar9 + (double)local_120);
-  local_12c = (float)((double)local_ec * dVar9 + (double)local_11c);
-  local_128 = (float)((double)local_e8 * dVar9 + (double)local_118);
-  CG_TraceCapsule(local_90,&local_120,&local_130,&local_c0,*(undefined4 *)(iVar6 + 0x150),0x2810011)
-  ;
-  local_130 = (local_130 - local_120) * local_90[0] + local_120;
-  local_12c = (local_12c - local_11c) * local_90[0] + local_11c;
-  local_128 = (local_128 - local_118) * local_90[0] + local_118;
-  local_120 = local_f0 * 8192.0 + local_130;
-  local_11c = local_ec * 8192.0 + local_12c;
-  local_118 = local_e8 * 8192.0 + local_128;
-  CG_LocationalTrace(local_90,&local_130,&local_120,*(undefined4 *)(iVar6 + 0x150),0x2806831);
-  local_11c = (local_11c - local_12c) * local_90[0] + local_12c;
-  local_118 = (local_118 - local_128) * local_90[0] + local_128;
-  local_120 = (local_120 - local_130) * local_90[0] + local_130;
-  local_10c = local_11c - local_10c;
-  local_108 = local_118 - local_108;
-  local_110 = local_120 - local_110;
-  dVar13 = (double)SQRT(local_110 * local_110 + local_108 * local_108 + local_10c * local_10c);
-  dVar9 = dVar14;
-  if (-dVar13 < 0.0) {
-    dVar9 = dVar13;
-  }
-  local_a0 = (float)(dVar14 / dVar9);
-  local_a8 = local_a0 * local_110;
-  local_a4 = local_10c * local_a0;
-  local_a0 = local_108 * local_a0;
-  vectoangles(&local_a8,&local_100);
-  AnglesSubtract(&local_100,param_2,&local_100);
-  fVar1 = -30.0 - local_100;
-  fVar3 = -30.0 - local_fc;
-  fVar2 = 30.0;
-  if (local_100 - 30.0 < 0.0) {
-    fVar2 = local_100;
-  }
-  fVar4 = 30.0;
-  if (local_fc - 30.0 < 0.0) {
-    fVar4 = local_fc;
-  }
-  local_100 = -30.0;
-  if (fVar1 < 0.0) {
-    local_100 = fVar2;
-  }
-  local_fc = -30.0;
-  if (fVar3 < 0.0) {
-    local_fc = fVar4;
-  }
-  dVar8 = 0.0027777778450399637;
-  dVar11 = 0.5;
-  dVar13 = (double)((*(float *)param_2 + local_100) * 0.0027777778);
-  dVar9 = floor((double)(float)(dVar13 + 0.5));
-  dVar12 = 360.0;
-  *(float *)(iVar6 + 0x70518) = (float)(dVar13 - (double)(float)dVar9) * 360.0;
-  dVar13 = (double)(float)((double)(((float *)param_2)[1] + local_fc) * dVar8);
-  dVar9 = floor((double)(float)(dVar13 + dVar11));
-  *(float *)(iVar6 + 0x7051c) = (float)((double)(float)(dVar13 - (double)(float)dVar9) * dVar12);
-  *(float *)(iVar6 + 0x6b9c8) = local_130;
-  *(float *)(iVar6 + 0x6b9cc) = local_12c;
-  *(float *)(iVar6 + 0x6b9d0) = local_128;
-  __restfpr_26();
-  __restgprlr_29();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 8230ADF8  CG_CalcVrect  (cgame/cg_view.cpp:729)
-
-void CG_CalcVrect(undefined8 param_1)
-
-{
-  int iVar1;
-  undefined4 *puVar2;
-  
-  iVar1 = CG_GetLocalClientGlobals();
-  puVar2 = (undefined4 *)CG_GetLocalClientStaticGlobals(param_1);
-  *(undefined4 *)(iVar1 + 0x6b9b0) = *puVar2;
-  *(undefined4 *)(iVar1 + 0x6b9b4) = puVar2[1];
-  *(undefined4 *)(iVar1 + 0x6b9b8) = puVar2[2];
-  *(undefined4 *)(iVar1 + 0x6b9bc) = puVar2[3];
-  *(undefined1 *)(iVar1 + 0x704d0) = 0;
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 8230AE88  CG_SmoothCameraZ  (cgame/cg_view.cpp:748)
-
-void CG_SmoothCameraZ(int param_1)
-
-{
-  int iVar1;
-  float fVar2;
-  longlong lVar3;
-  int iVar4;
-  
-  if (*(float *)(param_1 + 0x10804c) == 0.0) {
-    return;
-  }
-  lVar3 = (ulonglong)*(uint *)(param_1 + 0x6b98c) - (ulonglong)*(uint *)(param_1 + 0x108048);
-  if (-1 < lVar3) {
-    fVar2 = 1.0;
-    iVar1 = (int)(*(float *)(DAT_82a3d4c0 + 0xc) * 1000.0);
-    iVar4 = (int)lVar3;
-    if (iVar4 < iVar1) {
-      fVar2 = (float)(longlong)iVar4 / (float)(longlong)iVar1;
-    }
-    *(float *)(param_1 + 0x6b9d0) =
-         -((1.0 - fVar2) * *(float *)(param_1 + 0x10804c) - *(float *)(param_1 + 0x6b9d0));
-    return;
-  }
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 8230AF48  CG_KickAngles  (cgame/cg_view.cpp:774)
-
-void CG_KickAngles(void)
-
-{
-  int iVar1;
-  float *pfVar2;
-  longlong lVar3;
-  ulonglong uVar4;
-  undefined8 uVar5;
-  int iVar6;
-  ulonglong uVar7;
-  longlong lVar8;
-  longlong lVar9;
-  double dVar10;
-  double dVar11;
-  double dVar12;
-  double dVar13;
-  double dVar14;
-  double dVar15;
-  double dVar16;
-  double dVar17;
-  double dVar18;
-  double dVar19;
-  double dVar20;
-  double dVar21;
-  double dVar22;
-  
-  __savegprlr_19();
-  lVar3 = __savefpr_21();
-  uVar4 = BG_GetViewmodelWeapon();
-  iVar1 = (int)lVar3;
-  uVar7 = (ulonglong)*(uint *)(iVar1 + 0x6b988);
-  if (0 < (int)*(uint *)(iVar1 + 0x6b988)) {
-    dVar15 = -10.0;
-    dVar20 = 10.0;
-    dVar16 = 0.05999999865889549;
-    dVar19 = 2400.0;
-    dVar13 = 0.5;
-    dVar17 = 1.0;
-    dVar18 = -1.0;
-    dVar22 = 0.0;
-    dVar14 = 0.0010000000474974513;
-    do {
-      iVar6 = (int)uVar7;
-      if (iVar6 < 6) {
-        if (iVar6 == 0) {
-          MyAssertHandler(0xffffffff82027068,0x31e,0,0xffffffff82000f98,0xffffffff8202715c);
-        }
-      }
-      else {
-        iVar6 = 5;
-      }
-      lVar8 = 3;
-      dVar21 = (double)(float)((double)(longlong)iVar6 * dVar14);
-      lVar9 = lVar3 + 0x79788;
-      do {
-        pfVar2 = (float *)lVar9;
-        dVar10 = (double)*pfVar2;
-        if ((double)pfVar2[-3] == dVar22) {
-          if (dVar10 != dVar22) {
-LAB_8230b070:
-            dVar12 = dVar17;
-            if (dVar22 < dVar10) {
-              dVar12 = dVar18;
-            }
-            if ((uVar4 & 0xff) == 0) {
-              dVar10 = (double)(float)(dVar12 * dVar19);
-            }
-            else if ((double)*(float *)(iVar1 + 0x378) <= dVar13) {
-              uVar5 = BG_UsingAlternate(lVar3);
-              dVar10 = (double)BG_HipViewKickCenterSpeed(uVar4,uVar5);
-              dVar10 = (double)(float)(dVar10 * dVar12);
-            }
-            else {
-              uVar5 = BG_UsingAlternate(lVar3);
-              dVar10 = (double)BG_AdsViewKickCenterSpeed(uVar4,uVar5);
-              dVar10 = (double)(float)(dVar10 * dVar12);
-            }
-            iVar6 = BG_UsingSniperScope(lVar3);
-            if (iVar6 != 0) {
-              if (lVar3 == -0x4ec) {
-                MyAssertHandler(0xffffffff82000fa8,0x4f,0,0xffffffff82000f98,0xffffffff82000f9c);
-              }
-              if ((*(uint *)(iVar1 + 0x4f0) & 0x100) != 0) {
-                dVar10 = (double)(float)((double)*(float *)(DAT_829d7ef0 + 0xc) * dVar10);
-              }
-            }
-            pfVar2[-3] = (float)(dVar10 * dVar21 + (double)pfVar2[-3]);
-            goto LAB_8230b12c;
-          }
-        }
-        else {
-          if (dVar10 != dVar22) goto LAB_8230b070;
-LAB_8230b12c:
-          dVar10 = (double)(float)((double)pfVar2[-3] * dVar21);
-          dVar12 = (double)*pfVar2;
-          if ((double)(float)(dVar12 * dVar10) < dVar22) {
-            dVar10 = (double)(float)(dVar10 * dVar16);
-          }
-          dVar11 = (double)(float)(dVar12 + dVar10);
-          if ((double)(float)(dVar11 * dVar12) < dVar22) {
-            *pfVar2 = (float)dVar22;
-          }
-          else {
-            *pfVar2 = (float)(dVar12 + dVar10);
-            if (dVar11 != dVar22) {
-              if (ABS(dVar11) <= dVar20) goto LAB_8230b198;
-              if (dVar11 <= dVar22) {
-                *pfVar2 = (float)dVar15;
-              }
-              else {
-                *pfVar2 = (float)dVar20;
-              }
-            }
-          }
-          pfVar2[-3] = (float)dVar22;
-        }
-LAB_8230b198:
-        lVar8 = lVar8 + -1;
-        lVar9 = lVar9 + 4;
-      } while (lVar8 != 0);
-      uVar7 = uVar7 - 5;
-    } while (0 < (longlong)uVar7);
-  }
-  __restfpr_21();
-  __restgprlr_19();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 82312958  CG_CrosshairOffset  (cgame/cg_view.cpp:881)
-
-void CG_CrosshairOffset(int param_1)
-
-{
-  int iVar1;
-  float *pfVar2;
-  double dVar3;
-  
-  if (param_1 == 0) {
-    MyAssertHandler(0xffffffff82027068,0x375,0,0xffffffff82000f98,0xffffffff82002798);
-  }
-  pfVar2 = (float *)(param_1 + 0x704dc);
-  *(float *)(param_1 + 0x704e8) = *pfVar2;
-  *(undefined4 *)(param_1 + 0x704ec) = *(undefined4 *)(param_1 + 460000);
-  *(undefined4 *)(param_1 + 0x704f0) = *(undefined4 *)(param_1 + 0x704e4);
-  iVar1 = *(int *)(param_1 + 4);
-  if ((((iVar1 != 4) && (iVar1 != 5)) && (iVar1 != 6)) &&
-     ((*(int *)(param_1 + 0x6b9a0) == 0 && ((*(uint *)(param_1 + 0xf8) & 0x200000) == 0)))) {
-    dVar3 = (double)CG_GetCrosshairVerticalOffset(param_1);
-    dVar3 = atan((double)(float)(dVar3 * (double)*(float *)(param_1 + 0x6b9c4)));
-    *pfVar2 = *pfVar2 + (float)dVar3 * 57.295776;
-  }
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 8230B1C0  Dive_UpdateViewAngles  (cgame/cg_view.cpp:923)
 
-void Dive_UpdateViewAngles(undefined8 param_1,float *param_2,int param_3,int param_4)
+/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
+
+void Dive_UpdateViewAngles
+               (playerState_s *param_1,PlayerDiveView *param_2,int param_3,float *param_4)
 
 {
-  int iVar1;
-  char cVar2;
-  double dVar3;
-  double dVar4;
+  float fVar1;
+  dvar_t *pdVar2;
+  playerState_s *ppVar3;
+  bool bVar4;
   double dVar5;
+  double dVar6;
+  float fVar7;
   
-  iVar1 = __savegprlr_29();
-  dVar5 = (double)((float)(longlong)param_3 * 0.001);
-  cVar2 = BG_Diving();
-  if (cVar2 == '\0') {
-    dVar4 = (double)param_2[1];
-    dVar3 = 0.0;
-    iVar1 = DAT_829d7f1c;
-    if (dVar4 == 0.0) goto LAB_8230b2c4;
+  ppVar3 = (playerState_s *)__savegprlr_29(param_1);
+  dVar6 = (double)((float)(longlong)param_3 * 0.001);
+  bVar4 = BG_Diving(ppVar3);
+  if (bVar4) {
+    bVar4 = BG_Diving(ppVar3);
+    if (bVar4) {
+      dVar5 = atan2((double)*(float *)&(ppVar3->field0_0x0).field_0x2c,
+                    (double)*(float *)&(ppVar3->field0_0x0).field_0x28);
+      param_2->diveYaw = (float)dVar5 * 57.295776;
+    }
+    fVar7 = param_2->roll;
+    fVar1 = (perk_diveViewRollTarget->current).value;
+    pdVar2 = perk_diveViewRollSpeed;
   }
   else {
-    cVar2 = BG_Diving(iVar1);
-    if (cVar2 != '\0') {
-      dVar3 = atan2((double)*(float *)(iVar1 + 0x2c),(double)*(float *)(iVar1 + 0x28));
-      *param_2 = (float)dVar3 * 57.295776;
-    }
-    dVar4 = (double)param_2[1];
-    dVar3 = (double)*(float *)(DAT_829d7ef4 + 0xc);
-    iVar1 = DAT_829d7f20;
+    fVar7 = param_2->roll;
+    fVar1 = 0.0;
+    pdVar2 = perk_diveViewRollResetSpeed;
+    if (fVar7 == 0.0) goto LAB_8230b2c4;
   }
-  dVar5 = (double)DiffTrackAngle(dVar3,dVar4,(double)*(float *)(iVar1 + 0xc),dVar5);
-  param_2[1] = (float)dVar5;
-  dVar5 = cos((double)(((*param_2 + 90.0) - *(float *)(param_4 + 4)) * 0.017453292));
-  *(float *)(param_4 + 8) = (float)dVar5 * param_2[1] + *(float *)(param_4 + 8);
+  fVar7 = DiffTrackAngle(fVar1,fVar7,(pdVar2->current).value,(float)dVar6);
+  param_2->roll = fVar7;
+  dVar6 = cos((double)(((param_2->diveYaw + 90.0) - param_4[1]) * 0.017453292));
+  param_4[2] = (float)dVar6 * param_2->roll + param_4[2];
 LAB_8230b2c4:
   __restgprlr_29();
   return;
@@ -878,792 +159,318 @@ LAB_8230b2c4:
 
 
 // 8230B2D0  CG_OffsetFirstPersonView  (cgame/cg_view.cpp:964)
-
-void CG_OffsetFirstPersonView(void)
-
-{
-  float fVar1;
-  int iVar2;
-  float *pfVar3;
-  float *pfVar4;
-  double dVar5;
-  double dVar6;
-  float local_88;
-  float local_84;
-  float local_80;
-  float local_78;
-  float local_74;
-  float local_70;
-  int local_60;
-  int local_5c;
-  int local_58;
-  undefined4 local_54;
-  undefined4 local_50;
-  float local_4c;
-  float local_48;
-  undefined4 local_44;
-  
-  iVar2 = __savegprlr_26();
-  if (7 < *(int *)(iVar2 + 4)) {
-    MyAssertHandler(0xffffffff82027068,0x3d0,0,0xffffffff82000f98,0xffffffff82027174);
-  }
-  if ((*(int *)(iVar2 + 4) != 6) && ((*(uint *)(iVar2 + 0xf8) & 0x3800) == 0)) {
-    if (*(int *)(iVar2 + 0x79754) == 0) {
-      local_5c = 0;
-    }
-    else {
-      local_5c = *(int *)(iVar2 + 0x79754) - *(int *)(iVar2 + 0xa04);
-    }
-    local_44 = *(undefined4 *)(iVar2 + 0x3308);
-    pfVar4 = (float *)(iVar2 + 0x79778);
-    local_58 = *(int *)(iVar2 + 0x6b98c) - *(int *)(iVar2 + 0xa04);
-    local_50 = *(undefined4 *)(iVar2 + 0x79774);
-    local_54 = *(undefined4 *)(iVar2 + 0x79770);
-    local_4c = *pfVar4;
-    *(float *)(iVar2 + 0x6b9d0) = *(float *)(iVar2 + 0x168) + *(float *)(iVar2 + 0x6b9d0);
-    local_48 = (float)(longlong)*(int *)(iVar2 + 0x6b988) * 0.001;
-    local_60 = iVar2;
-    BG_CalculateViewMovement_Angles(&local_60,&local_88);
-    pfVar3 = (float *)(iVar2 + 0x704dc);
-    *pfVar3 = local_88 + *pfVar3;
-    *(float *)(iVar2 + 460000) = *(float *)(iVar2 + 460000) + local_84;
-    *(float *)(iVar2 + 0x704e4) = *(float *)(iVar2 + 0x704e4) + local_80;
-    Dive_UpdateViewAngles(iVar2,iVar2 + 0x79864,*(int *)(iVar2 + 0x6b988),pfVar3);
-    dVar6 = (double)((float)(*(uint *)(iVar2 + 0x18) & 0xff) * 0.024639944 + 6.2831855);
-    dVar5 = (double)BG_CalculateViewMovement_VerticalBobFactor(dVar6,(double)*pfVar4,iVar2);
-    *(float *)(iVar2 + 0x6b9d0) = (float)((double)*(float *)(iVar2 + 0x6b9d0) + dVar5);
-    dVar5 = (double)BG_CalculateViewMovement_HorizontalBobFactor(dVar6,(double)*pfVar4,iVar2);
-    AngleVectors(pfVar3,0,&local_78,0);
-    *(float *)(iVar2 + 0x6b9c8) =
-         (float)((double)local_78 * dVar5 + (double)*(float *)(iVar2 + 0x6b9c8));
-    *(float *)(iVar2 + 0x6b9cc) =
-         (float)((double)local_74 * dVar5 + (double)*(float *)(iVar2 + 0x6b9cc));
-    *(float *)(iVar2 + 0x6b9d0) =
-         (float)((double)local_70 * dVar5 + (double)*(float *)(iVar2 + 0x6b9d0));
-    fVar1 = (float)(longlong)(*(int *)(iVar2 + 0x6b98c) - *(int *)(iVar2 + 0x6b9a8));
-    if (0.0 < fVar1) {
-      if (150.0 <= fVar1) {
-        if (fVar1 < 450.0) {
-          *(float *)(iVar2 + 0x6b9d0) =
-               -((fVar1 - 150.0) * 0.0033333334 - 1.0) * *(float *)(iVar2 + 0x6b9a4) +
-               *(float *)(iVar2 + 0x6b9d0);
-        }
-      }
-      else {
-        *(float *)(iVar2 + 0x6b9d0) =
-             fVar1 * 0.006666667 * *(float *)(iVar2 + 0x6b9a4) + *(float *)(iVar2 + 0x6b9d0);
-      }
-    }
-    fVar1 = *(float *)(iVar2 + 0x24) + 8.0;
-    if (*(float *)(iVar2 + 0x6b9d0) < fVar1) {
-      *(float *)(iVar2 + 0x6b9d0) = fVar1;
-    }
-  }
-  __restgprlr_26();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 8230B5E0  CG_GetMissileCamActive  (cgame/cg_view.cpp:1075)
-
-bool CG_GetMissileCamActive(void)
-
-{
-  int iVar1;
-  
-  iVar1 = CG_GetLocalClientGlobals();
-  return *(char *)(iVar1 + 0x108039) != '\0';
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 8230B618  CG_ClientHasAntiJammer  (cgame/cg_view.cpp:1086)
-
-uint CG_ClientHasAntiJammer(void)
-
-{
-  longlong lVar1;
-  
-  lVar1 = CG_GetLocalClientGlobals();
-  if (lVar1 == -0x4ec) {
-    MyAssertHandler(0xffffffff82000fa8,0x4f,0,0xffffffff82000f98,0xffffffff82000f9c);
-    return uRam00000004 >> 0xd & 1;
-  }
-  return *(uint *)((int)lVar1 + 0x4f0) >> 0xd & 1;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 8230B690  CG_GetRadarIsJammed  (cgame/cg_view.cpp:1098)
-
-undefined8 CG_GetRadarIsJammed(void)
-
-{
-  int iVar1;
-  
-  iVar1 = CG_GetLocalClientGlobals();
-  if ((*(int *)(iVar1 + 0x1f8) == 0) && (*(float *)(iVar1 + 0x10844c) <= 0.0)) {
-    if (*(float *)(iVar1 + 0x108450) <= 0.0) {
-      return 0;
-    }
-    if (*(float *)(DAT_82a76fa0 + 0xc) < *(float *)(iVar1 + 0x108450)) {
-      return 0;
-    }
-  }
-  return 1;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 8230B708  CG_GetRadarJamLevel  (cgame/cg_view.cpp:1120)
-
-double CG_GetRadarJamLevel(undefined8 param_1)
-
-{
-  float fVar1;
-  int iVar2;
-  char cVar3;
-  
-  iVar2 = CG_GetLocalClientGlobals();
-  cVar3 = CG_ClientHasAntiJammer(param_1);
-  if (cVar3 == '\0') {
-    fVar1 = *(float *)(iVar2 + 0x10844c);
-  }
-  else {
-    fVar1 = 0.0;
-  }
-  return (double)fVar1;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 8230B770  CG_UpdateRadarJamLevel  (cgame/cg_view.cpp:1165)
-
-void CG_UpdateRadarJamLevel(undefined8 param_1)
-
-{
-  float fVar1;
-  int iVar2;
-  float fVar3;
-  int iVar4;
-  char cVar5;
-  float *pfVar6;
-  double dVar7;
-  double dVar8;
-  double dVar9;
-  double dVar10;
-  
-  iVar4 = CG_GetLocalClientGlobals();
-  cVar5 = CG_GetRadarIsJammed(param_1);
-  if (cVar5 != '\0') {
-    dVar9 = 0.0;
-    fVar1 = *(float *)(DAT_82a76f40 + 0xc);
-    fVar3 = *(float *)(DAT_82a76fa0 + 0xc) - fVar1;
-    if (fVar3 != 0.0) {
-      pfVar6 = (float *)(iVar4 + 0x108450);
-      if (*pfVar6 == -1.0) {
-        *pfVar6 = *(float *)(DAT_82a76fa0 + 0xc);
-      }
-      else if (*pfVar6 < fVar1) {
-        *pfVar6 = fVar1;
-      }
-      dVar10 = 1.0;
-      dVar8 = (double)(1.0 - (*pfVar6 - fVar1) / fVar3);
-      if (*(char *)(DAT_82a76f74 + 0xc) != '\0') {
-        dVar8 = sin((double)(float)(dVar8 * 1.5707963705062866));
-        dVar8 = (double)(float)dVar8;
-      }
-      iVar2 = *(int *)(iVar4 + 0x200);
-      if (*(int *)(DAT_829c7d0c + 0xc) < iVar2) {
-        if (*(int *)(DAT_829c5474 + 0xc) < iVar2) {
-          dVar7 = dVar9;
-          if (iVar2 <= *(int *)(DAT_829c7d84 + 0xc)) {
-            dVar7 = (double)*(float *)(DAT_829c7e30 + 0xc);
-          }
-        }
-        else {
-          dVar7 = (double)*(float *)(DAT_829c405c + 0xc);
-        }
-      }
-      else {
-        dVar7 = (double)*(float *)(DAT_829c7d54 + 0xc);
-      }
-      pfVar6 = (float *)(iVar4 + 0x10844c);
-      if ((float)(dVar8 - dVar7) < 0.0) {
-        dVar8 = dVar7;
-      }
-      dVar7 = (double)(float)(dVar8 - (double)*pfVar6);
-      if ((float)(dVar7 * dVar7) < 0.01) {
-        *pfVar6 = (float)dVar8;
-      }
-      if (dVar8 != (double)*pfVar6) {
-        *pfVar6 = (float)(dVar7 * 0.06666667014360428 + (double)*pfVar6);
-      }
-      dVar8 = (double)*pfVar6;
-      if ((float)(dVar8 - dVar10) < 0.0) {
-        dVar10 = dVar8;
-      }
-      if (-dVar8 < 0.0) {
-        dVar9 = dVar10;
-      }
-      *pfVar6 = (float)dVar9;
-    }
-  }
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 8230B940  CG_IsRadarEnabled  (cgame/cg_view.cpp:1238)
-
-bool CG_IsRadarEnabled(void)
-
-{
-  int iVar1;
-  
-  iVar1 = CG_GetLocalClientGlobals();
-  return *(int *)(iVar1 + 500) == 1;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 8230B970  CG_IsEMPJammed  (cgame/cg_view.cpp:1251)
-
-uint CG_IsEMPJammed(void)
-
-{
-  longlong lVar1;
-  uint uVar2;
-  
-  lVar1 = CG_GetLocalClientGlobals();
-  if (lVar1 == -0x4ec) {
-    MyAssertHandler(0xffffffff82000fa8,0x4f,0,0xffffffff82000f98,0xffffffff82000f9c);
-  }
-  if ((*(uint *)((int)lVar1 + 0x4f0) & 0x2000) == 0) {
-    uVar2 = *(uint *)((int)lVar1 + 0x10) >> 10 & 1;
-  }
-  else {
-    uVar2 = 0;
-  }
-  return uVar2;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 8230B9F0  CG_GetADS  (cgame/cg_view.cpp:1268)
-
-double CG_GetADS(void)
-
-{
-  int iVar1;
-  
-  iVar1 = CG_GetLocalClientGlobals();
-  return (double)*(float *)(iVar1 + 0x378);
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 8230BA18  CG_GetCrosshairVerticalOffset  (cgame/cg_view.cpp:1280)
 
-double CG_GetCrosshairVerticalOffset(ulonglong param_1)
+/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
+
+float CG_GetCrosshairVerticalOffset(playerState_s *param_1)
 
 {
-  double dVar1;
+  float fVar1;
   
-  if ((param_1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82027068,0x501,0,0xffffffff82000f98,0xffffffff82001fdc);
+  if (param_1 == (playerState_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_view.cpp",0x501,0,
+                    "%s");
   }
-  if (*(char *)(DAT_829c54cc + 0xc) != '\0') {
-    dVar1 = (double)BG_GetThirdPersonCrosshairOffset(param_1);
-    return dVar1;
+  if ((camera_thirdPerson->current).enabled != false) {
+    fVar1 = BG_GetThirdPersonCrosshairOffset(param_1);
+    return fVar1;
   }
-  return (double)*(float *)(DAT_82a76fb8 + 0xc);
+  return (cg_crosshairVerticalOffset->current).value;
 }
 
 
 // 8230BAA8  CG_GetViewFov  (cgame/cg_view.cpp:1292)
-
-void CG_GetViewFov(void)
-
-{
-  undefined8 uVar1;
-  int iVar3;
-  ulonglong uVar2;
-  char cVar4;
-  double dVar5;
-  double dVar6;
-  double dVar7;
-  double dVar8;
-  
-  __savegprlr_25();
-  uVar1 = __savefpr_28();
-  if (DAT_82a3d668 == 0) {
-    MyAssertHandler(0xffffffff82027068,0x514,0,0xffffffff82000f98,0xffffffff8201c9ec);
-  }
-  if (DAT_82a3ce38 == 0) {
-    MyAssertHandler(0xffffffff82027068,0x515,0,0xffffffff82000f98,0xffffffff8201c9bc);
-  }
-  if (DAT_82a3822c == 0) {
-    MyAssertHandler(0xffffffff82027068,0x516,0,0xffffffff82000f98,0xffffffff8201c98c);
-  }
-  iVar3 = CG_GetLocalClientGlobals(uVar1);
-  uVar2 = BG_GetViewmodelWeapon();
-  if (*(int *)(iVar3 + 4) == 6) {
-    dVar8 = 90.0;
-  }
-  else if (((*(uint *)(iVar3 + 0x14) & 4) == 0) || ((uVar2 & 0xff) == 0)) {
-    if (*(char *)(iVar3 + 0x108039) == '\0') {
-      dVar8 = (double)*(float *)(DAT_82a3d668 + 0xc);
-      dVar6 = 1.0;
-      dVar7 = 160.0;
-      if ((dVar8 < 1.0) || (160.0 < dVar8)) {
-        MyAssertHandler(dVar8,0xffffffff82027068,0x532,1,0xffffffff820271f4,0xffffffff82027208,dVar8
-                       );
-      }
-      cVar4 = BG_IsAimDownSight(uVar2,*(uint *)(iVar3 + 0x374) >> 0xf & 1);
-      if (cVar4 != '\0') {
-        dVar5 = (double)BG_GetVariableZoomLevelForEquippedWeapon(iVar3,uVar2);
-        if (dVar5 == 0.0) {
-          dVar5 = (double)BG_ADSZoomFov(uVar2,*(uint *)(iVar3 + 0x374) >> 0xf & 1);
-          dVar7 = dVar8;
-          if ((float)(dVar5 - dVar8) < 0.0) {
-            dVar7 = dVar5;
-          }
-        }
-        else {
-          if ((dVar5 < dVar6) || (dVar7 < dVar5)) {
-            MyAssertHandler(dVar5,0xffffffff82027068,0x53b,1,0xffffffff820271ac,0xffffffff820271c4,
-                            dVar5);
-          }
-          dVar7 = dVar8;
-          if ((float)(dVar5 - dVar8) < 0.0) {
-            dVar7 = dVar5;
-          }
-        }
-        dVar5 = (double)CG_GetWeaponZoom(iVar3,uVar2);
-        dVar8 = (double)(float)((double)(float)(dVar6 - dVar5) * dVar8 +
-                               (double)(float)(dVar5 * dVar7));
-      }
-    }
-    else {
-      dVar8 = (double)*(float *)(DAT_82a76f8c + 0xc);
-    }
-  }
-  else {
-    dVar8 = (double)BG_ADSZoomFov(uVar2,*(uint *)(iVar3 + 0x374) >> 0xf & 1);
-  }
-  if (((*(uint *)(iVar3 + 0xf8) & 0x3800) != 0) || ((*(uint *)(iVar3 + 0x10) & 0x80000) != 0)) {
-    dVar8 = (double)*(float *)(iVar3 + 0x108454);
-  }
-  dVar8 = (double)(float)((double)*(float *)(DAT_82a3ce38 + 0xc) * dVar8);
-  cVar4 = BG_IsThirdPersonMode(iVar3);
-  if (cVar4 != '\0') {
-    dVar8 = (double)(float)((double)*(float *)(DAT_829c7e98 + 0xc) * dVar8);
-  }
-  cVar4 = VehicleCam_IsDriveCam(uVar1);
-  if (cVar4 != '\0') {
-    dVar8 = (double)VehicleCam_ScaleFov(dVar8,iVar3);
-  }
-  cVar4 = CL_Demo_IsFollowCamera(uVar1);
-  if ((cVar4 != '\0') || (cVar4 = CL_Demo_IsFreeCamera(uVar1), cVar4 != '\0')) {
-    dVar8 = (double)*(float *)(DAT_82a3d668 + 0xc);
-  }
-  dVar6 = (double)*(float *)(DAT_82a3822c + 0xc);
-  if ((float)((double)*(float *)(DAT_82a3822c + 0xc) - dVar8) < 0.0) {
-    dVar6 = dVar8;
-  }
-  if ((float)(170.0 - dVar6) < 0.0) {
-    dVar6 = 170.0;
-  }
-  __restfpr_28(dVar6);
-  __restgprlr_25();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 8230BDC0  CG_UpdateFov  (cgame/cg_view.cpp:1432)
-
-void CG_UpdateFov(double param_1,undefined8 param_2)
-
-{
-  undefined8 in_r0;
-  int iVar1;
-  int iVar2;
-  double dVar3;
-  
-  if (DAT_82a77160 != 0) {
-    if (DAT_84013128 == 0) {
-      MyAssertHandler(0xffffffff82027068,0x59d,0,0xffffffff82027234);
-    }
-    trapWord(0x1f,in_r0,0x16);
-  }
-  iVar1 = CG_GetLocalClientGlobals(param_2);
-  iVar2 = CG_GetLocalClientStaticGlobals(param_2);
-  TanHalfAngles(param_1,(double)(*(float *)(iVar2 + 0x14) * *(float *)(iVar2 + 0x10)));
-  dVar3 = tan((double)((float)(param_1 * 0.01745329238474369) * 0.5));
-  *(float *)(iVar1 + 0x76584) = (float)dVar3 * 1.5696856;
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 8230BEB0  CG_CalcFov  (cgame/cg_view.cpp:1485)
 
-void CG_CalcFov(undefined8 param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CG_CalcFov(LocalClientNum_t param_1)
 
 {
-  CG_GetViewFov();
-  CG_UpdateFov(param_1);
+  float fVar1;
+  
+  fVar1 = CG_GetViewFov(param_1);
+  CG_UpdateFov(param_1,fVar1);
   return;
 }
 
 
 // 8230BEE8  CG_GetViewZoomScale  (cgame/cg_view.cpp:1494)
-
-double CG_GetViewZoomScale(void)
-
-{
-  int iVar1;
-  
-  iVar1 = CG_GetLocalClientGlobals();
-  return (double)((*(float *)(iVar1 + 0x6b9c4) / *(float *)(DAT_82a3ce38 + 0xc)) * 2.118673);
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 8230BF30  CG_CalcCubemapViewValues  (cgame/cg_view.cpp:1507)
-
-void CG_CalcCubemapViewValues(int param_1)
-
-{
-  *(undefined4 *)(param_1 + 0x6b9c8) = *(undefined4 *)(param_1 + 0x1c);
-  *(undefined4 *)(param_1 + 0x6b9cc) = *(undefined4 *)(param_1 + 0x20);
-  *(undefined4 *)(param_1 + 0x6b9d0) = *(undefined4 *)(param_1 + 0x24);
-  *(float *)(param_1 + 0x6b9d0) = *(float *)(param_1 + 0x168) + *(float *)(param_1 + 0x6b9d0);
-  R_CalcCubeMapViewValues
-            (param_1 + 0x6b9b0,*(undefined4 *)(param_1 + 0x3340),*(undefined4 *)(param_1 + 0x3344));
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 8230BF80  CG_CalcTurretViewValues  (cgame/cg_view.cpp:1523)
-
-void CG_CalcTurretViewValues(void)
-
-{
-  undefined8 uVar1;
-  int iVar3;
-  int iVar4;
-  ulonglong uVar2;
-  int iVar5;
-  char cVar7;
-  uint uVar6;
-  float *pfVar8;
-  double dVar9;
-  
-  uVar1 = __savegprlr_27();
-  iVar3 = CG_GetLocalClientGlobals();
-  if ((*(uint *)(iVar3 + 0xf8) & 0x3800) != 0) {
-    if (*(int *)(iVar3 + 0x1b8) == 0) {
-      MyAssertHandler(0xffffffff82027068,0x5ff,0,0xffffffff82000f98,0xffffffff820272c4);
-    }
-    if (*(int *)(iVar3 + 0x1bc) == 0x7ff) {
-      MyAssertHandler(0xffffffff82027068,0x600,0,0xffffffff82000f98,0xffffffff82001fb4);
-    }
-    iVar4 = CG_GetEntity(uVar1,*(undefined4 *)(iVar3 + 0x1bc));
-    uVar2 = Com_GetClientDObj(*(undefined4 *)(iVar4 + 0xc4),uVar1);
-    if (((uVar2 & 0xffffffff) != 0) && ((*(uint *)(iVar4 + 0xcc) & 0x3800) != 0)) {
-      if (*(char *)(iVar4 + 3) != '\0') {
-        MyAssertHandler(0xffffffff82027068,0x60c,0,0xffffffff82027284,0xffffffff820272a4);
-      }
-      DObjLock(uVar2);
-      DObjSkelReset(uVar2);
-      pfVar8 = (float *)(iVar3 + 0x704dc);
-      *(undefined1 *)(iVar4 + 0x38) = 1;
-      *(float **)(iVar4 + 0x2c) = pfVar8;
-      DObjUnlock(uVar2);
-      iVar5 = CG_DObjGetWorldTagPos(iVar4,uVar2,DAT_835a0c60,iVar3 + 0x6b9c8);
-      if (iVar5 == 0) {
-        Com_Error(1,0xffffffff82027264);
-      }
-      cVar7 = CL_Demo_IsTimeStopped();
-      if (((cVar7 == '\0') && (*(int *)(iVar3 + 0x1b8) == 2)) && (*(int *)(iVar3 + 0x6b9a0) == 0)) {
-        uVar6 = BG_GetAlternateWeapon(*(undefined4 *)(iVar4 + 0x18c),0);
-        iVar5 = (&DAT_829d84a0)[uVar6 & 0xff];
-        dVar9 = (double)crandom();
-        *pfVar8 = (float)(dVar9 * (double)*(float *)(iVar5 + 0x680) + (double)*pfVar8);
-        uVar6 = BG_GetAlternateWeapon(*(undefined4 *)(iVar4 + 0x18c),0);
-        iVar4 = (&DAT_829d84a0)[uVar6 & 0xff];
-        dVar9 = (double)crandom();
-        *(float *)(iVar3 + 460000) =
-             (float)(dVar9 * (double)*(float *)(iVar4 + 0x67c) + (double)*(float *)(iVar3 + 460000))
-        ;
-      }
-    }
-  }
-  __restgprlr_27();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 8230C168  CG_ApplyViewAnimation  (cgame/cg_view.cpp:1589)
-
-void CG_ApplyViewAnimation(void)
-
-{
-  undefined8 uVar1;
-  int iVar2;
-  char cVar5;
-  int iVar3;
-  int *piVar4;
-  longlong lVar6;
-  undefined4 *puVar7;
-  
-  uVar1 = __savegprlr_23();
-  iVar2 = CG_GetLocalClientGlobals();
-  if ((((((*(uint *)(iVar2 + 0xf8) & 0x203800) == 0) && (*(int *)(iVar2 + 4) != 5)) &&
-       (*(int *)(iVar2 + 4) != 6)) &&
-      ((*(int *)(iVar2 + 0x6b9a0) == 0 && (cVar5 = BG_IsThirdPersonMode(), cVar5 == '\0')))) &&
-     (cVar5 = BG_GetViewmodelWeapon(iVar2), cVar5 != '\0')) {
-    puVar7 = (undefined4 *)(iVar2 + 0x6b9d4);
-    *(undefined4 *)(iVar2 + 0x797b4) = *puVar7;
-    *(undefined4 *)(iVar2 + 0x797b8) = *(undefined4 *)(iVar2 + 0x6b9d8);
-    *(undefined4 *)(iVar2 + 0x797bc) = *(undefined4 *)(iVar2 + 0x6b9dc);
-    *(undefined4 *)(iVar2 + 0x797c0) = *(undefined4 *)(iVar2 + 0x6b9e0);
-    *(undefined4 *)(iVar2 + 0x797c4) = *(undefined4 *)(iVar2 + 0x6b9e4);
-    lVar6 = 0;
-    *(undefined4 *)(iVar2 + 0x797c8) = *(undefined4 *)(iVar2 + 0x6b9e8);
-    *(undefined4 *)(iVar2 + 0x797cc) = *(undefined4 *)(iVar2 + 0x6b9ec);
-    *(undefined4 *)(iVar2 + 0x797d0) = *(undefined4 *)(iVar2 + 0x6b9f0);
-    *(undefined4 *)(iVar2 + 0x797d4) = *(undefined4 *)(iVar2 + 0x6b9f4);
-    *(undefined4 *)(iVar2 + 0x797d8) = *(undefined4 *)(iVar2 + 0x6b9c8);
-    *(undefined4 *)(iVar2 + 0x797dc) = *(undefined4 *)(iVar2 + 0x6b9cc);
-    *(undefined4 *)(iVar2 + 0x797e0) = *(undefined4 *)(iVar2 + 0x6b9d0);
-    iVar3 = BG_PlayerLastWeaponHandForViewWeapon(iVar2);
-    if (-1 < iVar3) {
-      while( true ) {
-        piVar4 = (int *)CG_GetLocalClientViewModelHand(uVar1,lVar6);
-        if (*piVar4 == 0) break;
-        CG_UpdateViewModelPose(*piVar4,uVar1);
-        iVar3 = CG_DObjGetWorldTagMatrix
-                          (iVar2 + 0x106fa8,*piVar4,DAT_835a0c62,puVar7,
-                           (undefined4 *)(iVar2 + 0x6b9c8));
-        if ((iVar3 == 0) ||
-           ((AxisToAngles(puVar7,iVar2 + 0x704dc), (int)lVar6 == 0 && (*(int *)(iVar2 + 0x24c) != 0)
-            ))) break;
-        lVar6 = lVar6 + 1;
-        iVar3 = BG_PlayerLastWeaponHandForViewWeapon(iVar2);
-        if (iVar3 < (int)lVar6) break;
-      }
-    }
-  }
-  __restgprlr_23();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 8230C330  CG_CalcVehicleViewValues  (cgame/cg_view.cpp:1643)
-
-void CG_CalcVehicleViewValues(undefined8 param_1,undefined8 param_2)
-
-{
-  undefined8 uVar1;
-  int iVar3;
-  int iVar4;
-  ulonglong uVar2;
-  int iVar5;
-  float *pfVar6;
-  float local_180;
-  float local_17c;
-  float local_178;
-  undefined4 local_170;
-  undefined4 local_16c;
-  undefined4 local_168;
-  undefined4 local_164;
-  undefined4 local_160;
-  undefined4 local_15c;
-  undefined4 local_158;
-  undefined4 local_154;
-  undefined4 local_150;
-  undefined4 local_14c;
-  undefined4 local_148;
-  undefined4 local_144;
-  undefined4 local_140;
-  undefined4 local_13c;
-  undefined4 local_138;
-  undefined4 local_134;
-  undefined1 auStack_130 [16];
-  undefined4 local_120;
-  undefined4 local_11c;
-  undefined4 local_118;
-  undefined4 local_114;
-  undefined4 local_110;
-  undefined4 local_10c;
-  undefined4 local_108;
-  undefined4 local_104;
-  undefined4 local_100;
-  undefined1 auStack_fc [12];
-  undefined1 auStack_f0 [48];
-  undefined1 auStack_c0 [48];
-  undefined1 auStack_90 [36];
-  undefined4 local_6c;
-  undefined4 local_68;
-  undefined4 local_64;
-  undefined1 auStack_60 [96];
-  
-  uVar1 = __savegprlr_26();
-  iVar3 = CG_GetLocalClientGlobals();
-  if (((*(uint *)(iVar3 + 0xf8) & 0x200000) != 0) && (*(int *)(iVar3 + 0x1bc) != 0x7ff)) {
-    iVar4 = CG_GetEntity(uVar1);
-    uVar2 = Com_GetClientDObj(*(undefined4 *)(iVar4 + 0xc4),uVar1);
-    if (((uVar2 & 0xffffffff) != 0) &&
-       ((iVar5 = CG_DObjGetWorldTagMatrix(iVar4,uVar2,DAT_835a0d0c,&local_120,auStack_fc),
-        iVar5 != 0 &&
-        (iVar4 = CG_DObjGetWorldTagMatrix(iVar4,uVar2,DAT_835a0c60,auStack_90,&local_6c), iVar4 != 0
-        )))) {
-      local_160 = local_120;
-      local_15c = local_11c;
-      local_158 = local_118;
-      local_154 = local_114;
-      local_150 = local_110;
-      local_14c = local_10c;
-      local_148 = local_108;
-      local_144 = local_104;
-      local_140 = local_100;
-      local_13c = local_6c;
-      local_138 = local_68;
-      local_134 = local_64;
-      if (*(int *)(iVar3 + 0x76588) != 0) {
-        MatrixTranspose(&local_160,iVar3 + 0x7658c);
-        *(int *)(iVar3 + 0x76588) = 0;
-      }
-      iVar4 = iVar3 + 0x7658c;
-      MatrixMultiply(iVar4,&local_160,auStack_c0);
-      MatrixTranspose(&local_160,iVar4);
-      local_170 = 0;
-      local_16c = 0;
-      local_168 = 0;
-      local_164 = 0x3f800000;
-      AxisToQuat(auStack_c0,auStack_130);
-      QuatLerp((double)*(float *)(DAT_82a38320 + 0xc),&local_170,auStack_130);
-      QuatToAxis(auStack_130,auStack_c0);
-      AnglesToAxis(param_2,auStack_60);
-      MatrixMultiply(auStack_60,auStack_c0,auStack_f0);
-      AxisToAngles(auStack_f0,&local_180);
-      pfVar6 = (float *)param_2;
-      *pfVar6 = local_180;
-      pfVar6[1] = local_17c;
-      local_180 = local_180 - *(float *)(iVar3 + 0x60);
-      local_17c = local_17c - *(float *)(iVar3 + 100);
-      local_178 = pfVar6[2] - *(float *)(iVar3 + 0x68);
-      CL_SetViewAngles(uVar1,&local_180);
-      MatrixMultiply(auStack_60,iVar4,auStack_f0);
-      AxisToAngles(auStack_f0,&local_180);
-      pfVar6[2] = -local_178;
-    }
-  }
-  __restgprlr_26();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 8230C578  CG_ViewRegisterDvars  (cgame/cg_view.cpp:1826)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void CG_ViewRegisterDvars(void)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
-  undefined8 uVar3;
-  undefined8 uVar4;
-  undefined8 uVar5;
-  undefined8 uVar6;
-  undefined8 uVar7;
-  undefined8 uVar8;
-  undefined8 uVar9;
-  undefined8 uVar10;
-  undefined8 uVar11;
+  ushort uVar1;
+  char *pcVar2;
+  double dVar3;
+  double dVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
   
   __savegprlr_27();
   __savefpr_21();
-  DAT_82a76fb0 = Dvar_RegisterBool(0xffffffff82028394,0,4,0xffffffff820283a0);
-  uVar3 = 0x402e000000000000;
-  uVar6 = 0x4064000000000000;
-  DAT_82a76f94 = Dvar_RegisterFloat(0x402e000000000000,0x3fb99999a0000000,0x4064000000000000,
-                                    0xffffffff82028354);
-  uVar9 = 0x4010000000000000;
-  uVar8 = 0x4024000000000000;
-  DAT_82a76f50 = Dvar_RegisterFloat(0x4010000000000000,0x4010000000000000,0x4024000000000000,
-                                    0xffffffff820282e8);
-  uVar11 = 0;
-  uVar2 = 0x4000000000000000;
-  DAT_82a76f44 = Dvar_RegisterFloat(0x4000000000000000,0,uVar8,0xffffffff820282d0);
-  uVar10 = 0x47efffffe0000000;
-  uVar7 = 0x4059000000000000;
-  DAT_82a76f7c = Dvar_RegisterFloat(0x4059000000000000,uVar11,0x47efffffe0000000,0xffffffff8202827c)
+  uVar1 = 0;
+  mp_paused = Dvar_RegisterBool("mp_paused",false,4,
+                                "If true ignore server time advancing.  Handy for taking hi-res screen shots."
+                               );
+  pcVar2 = "bind <key> [command] : attach a command to a key\n";
+  dVar5 = 15.0;
+  dVar8 = 160.0;
+  DAT_82a76f94 = Dvar_RegisterFloat("cg_heliKillCamFov",15.0,0.1,160.0,uVar1,
+                                    "bind <key> [command] : attach a command to a key\n");
+  uVar1 = 0;
+  dVar11 = 4.0;
+  dVar10 = 10.0;
+  DAT_82a76f50 = Dvar_RegisterFloat("cg_heliKillCamNearBlur",4.0,4.0,10.0,0,pcVar2);
+  pcVar2 = "bind <key> [command] : attach a command to a key\n";
+  dVar13 = 0.0;
+  dVar4 = 2.0;
+  DAT_82a76f44 = Dvar_RegisterFloat("cg_heliKillCamFarBlur",2.0,0.0,(float)dVar10,uVar1,
+                                    "bind <key> [command] : attach a command to a key\n");
+  uVar1 = 0;
+  dVar12 = 3.4028234663852886e+38;
+  dVar9 = 100.0;
+  DAT_82a76f7c = Dvar_RegisterFloat("cg_heliKillCamFarBlurStart",100.0,(float)dVar13,3.4028235e+38,0
+                                    ,pcVar2);
+  dVar6 = 300.0;
+  cg_heliKillCamFarBlurDist =
+       Dvar_RegisterFloat("cg_heliKillCamFarBlurDist",300.0,(float)dVar13,(float)dVar12,uVar1,pcVar2
+                         );
+  DAT_82a76f1c = Dvar_RegisterFloat("cg_heliKillCamNearBlurStart",(float)dVar13,(float)dVar13,
+                                    (float)dVar12,uVar1,pcVar2);
+  pcVar2 = "c\\cgame_mp\\cg_local_mp.h";
+  uVar1 = 0;
+  dVar3 = 10000.0;
+  DAT_82a76f14 = Dvar_RegisterFloat("cg_heliKillCamNearBlurEnd",(float)dVar9,(float)dVar13,10000.0,0
+                                    ,"c\\cgame_mp\\cg_local_mp.h");
+  dVar7 = 50.0;
+  DAT_82a76f24 = Dvar_RegisterFloat("cg_airstrikeKillCamFov",50.0,0.1,(float)dVar8,uVar1,pcVar2);
+  DAT_82a7715c = Dvar_RegisterFloat("cg_airstrikeKillCamNearBlur",(float)dVar11,(float)dVar11,
+                                    (float)dVar10,uVar1,pcVar2);
+  DAT_82a77154 = Dvar_RegisterFloat("cg_airstrikeKillCamFarBlur",(float)dVar4,(float)dVar13,
+                                    (float)dVar10,uVar1,pcVar2);
+  pcVar2 = "bind <key> [command] : attach a command to a key\n";
+  uVar1 = 0;
+  DAT_82a76fc4 = Dvar_RegisterFloat("cg_airstrikeKillCamFarBlurStart",(float)dVar9,(float)dVar13,
+                                    (float)dVar12,0,
+                                    "bind <key> [command] : attach a command to a key\n");
+  cg_airstrikeKillCamFarBlurDist =
+       Dvar_RegisterFloat("cg_airstrikeKillCamFarBlurDist",(float)dVar6,(float)dVar13,(float)dVar12,
+                          uVar1,pcVar2);
+  DAT_82a76f30 = Dvar_RegisterFloat("cg_airstrikeKillCamNearBlurStart",(float)dVar13,(float)dVar13,
+                                    (float)dVar12,uVar1,pcVar2);
+  DAT_82a76f20 = Dvar_RegisterFloat("cg_airstrikeKillCamNearBlurEnd",(float)dVar9,(float)dVar13,
+                                    (float)dVar3,uVar1,pcVar2);
+  pcVar2 = "bind <key> [command] : attach a command to a key\n";
+  uVar1 = 0;
+  dVar11 = -3.4028234663852886e+38;
+  dVar4 = 5.0;
+  DAT_82a76f78 = Dvar_RegisterFloat("cg_explosiveKillCamUpDist",5.0,-3.4028235e+38,(float)dVar12,0,
+                                    "bind <key> [command] : attach a command to a key\n");
+  DAT_82a76f90 = Dvar_RegisterFloat("cg_explosiveKillCamBackDist",35.0,(float)dVar11,(float)dVar12,
+                                    uVar1,pcVar2);
+  DAT_82a76fd4 = Dvar_RegisterFloat("cg_explosiveKillCamWallOutDist",(float)dVar10,(float)dVar11,
+                                    (float)dVar12,uVar1,pcVar2);
+  pcVar2 = "the motion tracker after being detected";
+  uVar1 = 0;
+  dVar3 = 30.0;
+  DAT_82a76fcc = Dvar_RegisterFloat("cg_explosiveKillCamWallSideDist",30.0,(float)dVar11,
+                                    (float)dVar12,0,"the motion tracker after being detected");
+  DAT_82a76f68 = Dvar_RegisterFloat("cg_explosiveKillCamGroundUpDist",(float)dVar5,(float)dVar11,
+                                    (float)dVar12,uVar1,pcVar2);
+  DAT_82a76ff0 = Dvar_RegisterFloat("cg_explosiveKillCamGroundBackDist",(float)dVar3,(float)dVar11,
+                                    (float)dVar12,uVar1,pcVar2);
+  pcVar2 = "the motion tracker after being detected";
+  DAT_82a76f5c = Dvar_RegisterFloat("cg_rocketKillCamUpDist",(float)dVar10,(float)dVar11,
+                                    (float)dVar12,uVar1,"the motion tracker after being detected");
+  uVar1 = 0;
+  DAT_82a76f64 = Dvar_RegisterFloat("cg_rocketKillCamBackDist",70.0,(float)dVar11,(float)dVar12,0,
+                                    pcVar2);
+  dVar3 = 60.0;
+  cg_remoteMissileKillCamUpDist =
+       Dvar_RegisterFloat("cg_remoteMissileKillCamUpDist",60.0,(float)dVar11,(float)dVar12,uVar1,
+                          pcVar2);
+  pcVar2 = "the motion tracker after being detected";
+  DAT_82a76fec = Dvar_RegisterFloat("cg_remoteMissileKillCamBackDist",(float)dVar6,(float)dVar11,
+                                    (float)dVar12,uVar1,"the motion tracker after being detected");
+  uVar1 = 0;
+  dVar5 = 350.0;
+  DAT_82a76fc8 = Dvar_RegisterFloat("cg_explosiveKillCamStopDist",350.0,(float)dVar11,(float)dVar12,
+                                    0,pcVar2);
+  DAT_82a76f48 = Dvar_RegisterFloat("cg_explosiveKillCamStopDecelDist",(float)dVar9,(float)dVar11,
+                                    (float)dVar12,uVar1,pcVar2);
+  DAT_82a77158 = Dvar_RegisterFloat("cg_turretKillCamUpDist",(float)dVar10,(float)dVar11,
+                                    (float)dVar12,uVar1,pcVar2);
+  pcVar2 = "the motion tracker after being detected";
+  DAT_82a76f58 = Dvar_RegisterFloat("cg_turretKillCamBackDist",(float)dVar10,(float)dVar11,
+                                    (float)dVar12,uVar1,"the motion tracker after being detected");
+  uVar1 = 0;
+  cg_turretKillCamFov =
+       Dvar_RegisterFloat("cg_turretKillCamFov",(float)dVar7,0.1,(float)dVar8,0,pcVar2);
+  DAT_82a76f88 = Dvar_RegisterFloat("cg_turretRemoteKillCamUpDist",40.0,(float)dVar11,(float)dVar12,
+                                    uVar1,pcVar2);
+  DAT_82a76fe0 = Dvar_RegisterFloat("cg_turretRemoteKillCamBackDist",(float)dVar9,(float)dVar11,
+                                    (float)dVar12,uVar1,pcVar2);
+  pcVar2 = "the motion tracker after being detected";
+  DAT_82a76f4c = Dvar_RegisterFloat("cg_turretRemoteKillCamFov",(float)dVar7,0.1,(float)dVar8,uVar1,
+                                    "the motion tracker after being detected");
+  uVar1 = 0;
+  DAT_82a76f28 = Dvar_RegisterFloat("cg_javelinKillCamCloseZDist",128.0,(float)dVar13,(float)dVar12,
+                                    0,pcVar2);
+  DAT_82a76fc0 = Dvar_RegisterFloat("cg_javelinKillCamPassTime",(float)dVar4,(float)dVar13,
+                                    (float)dVar12,uVar1,pcVar2);
+  pcVar2 = "the motion tracker after being detected";
+  uVar1 = 0;
+  dVar4 = 180.0;
+  cg_javelinKillCamFov =
+       Dvar_RegisterFloat("cg_javelinKillCamFov",(float)dVar3,(float)dVar13,180.0,0,
+                          "the motion tracker after being detected");
+  DAT_82a77148 = Dvar_RegisterFloat("cg_javelinKillCamPassDist",(float)dVar7,(float)dVar13,
+                                    (float)dVar4,uVar1,pcVar2);
+  DAT_82a76f98 = Dvar_RegisterFloat("cg_javelinKillCamUpDist",200.0,(float)dVar13,(float)dVar12,
+                                    uVar1,pcVar2);
+  pcVar2 = "the motion tracker after being detected";
+  uVar1 = 0;
+  DAT_82a7714c = Dvar_RegisterFloat("cg_javelinKillCamDownDist",150.0,(float)dVar13,(float)dVar12,0,
+                                    "the motion tracker after being detected");
+  DAT_82a76fb4 = Dvar_RegisterFloat("cg_javelinKillCamLookLerpDist",3000.0,(float)dVar13,
+                                    (float)dVar12,uVar1,pcVar2);
+  cg_crosshairTraceAsync =
+       Dvar_RegisterBool("cg_crosshairTraceAsync",true,4,
+                         "Enable run crosshair trace asynchronously.");
+  uVar1 = 1;
+  cg_playerNameTraceAsync =
+       Dvar_RegisterBool("cg_playerNameTraceAsync",true,4,
+                         "Enable run player name trace asynchronously.");
+  dVar3 = -1.0;
+  dVar6 = 1.0;
+  cg_crosshairVerticalOffset =
+       Dvar_RegisterFloat("cg_crosshairVerticalOffset",(float)dVar13,-1.0,1.0,uVar1,
+                          "the motion tracker after being detected");
+  uVar1 = 0x11f8;
+  pcVar2 = (char *)0x16;
+  RemoteCameraSounds_RoomType =
+       Dvar_RegisterEnum("RemoteCameraSounds_RoomType",(char **)&bg_soundRoomTypes,0x16,4,"");
+  RemoteCameraSounds_DryLevel =
+       Dvar_RegisterFloat("RemoteCameraSounds_DryLevel",0.1,(float)dVar13,(float)dVar6,uVar1,pcVar2)
   ;
-  uVar4 = 0x4072c00000000000;
-  DAT_82a76f3c = Dvar_RegisterFloat(0x4072c00000000000,uVar11,uVar10,0xffffffff82028260);
-  DAT_82a76f1c = Dvar_RegisterFloat(uVar11,uVar11,uVar10,0xffffffff82028244);
-  uVar1 = 0x40c3880000000000;
-  DAT_82a76f14 = Dvar_RegisterFloat(uVar7,uVar11,0x40c3880000000000,0xffffffff82028228);
-  uVar5 = 0x4049000000000000;
-  DAT_82a76f24 = Dvar_RegisterFloat(0x4049000000000000,0x3fb99999a0000000,uVar6,0xffffffff820281e8);
-  DAT_82a7715c = Dvar_RegisterFloat(uVar9,uVar9,uVar8,0xffffffff820281cc);
-  DAT_82a77154 = Dvar_RegisterFloat(uVar2,uVar11,uVar8,0xffffffff820281b0);
-  DAT_82a76fc4 = Dvar_RegisterFloat(uVar7,uVar11,uVar10,0xffffffff8202815c);
-  DAT_82a76fa8 = Dvar_RegisterFloat(uVar4,uVar11,uVar10,0xffffffff8202813c);
-  DAT_82a76f30 = Dvar_RegisterFloat(uVar11,uVar11,uVar10,0xffffffff82028118);
-  DAT_82a76f20 = Dvar_RegisterFloat(uVar7,uVar11,uVar1,0xffffffff820280f8);
-  uVar9 = 0xc7efffffe0000000;
-  uVar2 = 0x4014000000000000;
-  DAT_82a76f78 = Dvar_RegisterFloat(0x4014000000000000,0xc7efffffe0000000,uVar10,0xffffffff82028094)
-  ;
-  DAT_82a76f90 = Dvar_RegisterFloat(0x4041800000000000,uVar9,uVar10,0xffffffff82028034);
-  DAT_82a76fd4 = Dvar_RegisterFloat(uVar8,uVar9,uVar10,0xffffffff82028014);
-  uVar1 = 0x403e000000000000;
-  DAT_82a76fcc = Dvar_RegisterFloat(0x403e000000000000,uVar9,uVar10,0xffffffff82027f4c);
-  DAT_82a76f68 = Dvar_RegisterFloat(uVar3,uVar9,uVar10,0xffffffff82027ed0);
-  DAT_82a76ff0 = Dvar_RegisterFloat(uVar1,uVar9,uVar10,0xffffffff82027eac);
-  DAT_82a76f5c = Dvar_RegisterFloat(uVar8,uVar9,uVar10,0xffffffff82027df4);
-  DAT_82a76f64 = Dvar_RegisterFloat(0x4051800000000000,uVar9,uVar10,0xffffffff82027d98);
-  uVar1 = 0x404e000000000000;
-  DAT_82a76f2c = Dvar_RegisterFloat(0x404e000000000000,uVar9,uVar10,0xffffffff82027d78);
-  DAT_82a76fec = Dvar_RegisterFloat(uVar4,uVar9,uVar10,0xffffffff82027cc8);
-  uVar3 = 0x4075e00000000000;
-  DAT_82a76fc8 = Dvar_RegisterFloat(0x4075e00000000000,uVar9,uVar10,0xffffffff82027c50);
-  DAT_82a76f48 = Dvar_RegisterFloat(uVar7,uVar9,uVar10,0xffffffff82027bcc);
-  DAT_82a77158 = Dvar_RegisterFloat(uVar8,uVar9,uVar10,0xffffffff82027bb4);
-  DAT_82a76f58 = Dvar_RegisterFloat(uVar8,uVar9,uVar10,0xffffffff82027b18);
-  DAT_82a76f84 = Dvar_RegisterFloat(uVar5,0x3fb99999a0000000,uVar6,0xffffffff82027ae0);
-  DAT_82a76f88 = Dvar_RegisterFloat(0x4044000000000000,uVar9,uVar10,0xffffffff82027a78);
-  DAT_82a76fe0 = Dvar_RegisterFloat(uVar7,uVar9,uVar10,0xffffffff82027a58);
-  DAT_82a76f4c = Dvar_RegisterFloat(uVar5,0x3fb99999a0000000,uVar6,0xffffffff820279c4);
-  DAT_82a76f28 = Dvar_RegisterFloat(0x4060000000000000,uVar11,uVar10,0xffffffff82027970);
-  DAT_82a76fc0 = Dvar_RegisterFloat(uVar2,uVar11,uVar10,0xffffffff82027954);
-  uVar2 = 0x4066800000000000;
-  DAT_82a76f60 = Dvar_RegisterFloat(uVar1,uVar11,0x4066800000000000,0xffffffff820278dc);
-  DAT_82a77148 = Dvar_RegisterFloat(uVar5,uVar11,uVar2,0xffffffff8202788c);
-  DAT_82a76f98 = Dvar_RegisterFloat(0x4069000000000000,uVar11,uVar10,0xffffffff82027874);
-  DAT_82a7714c = Dvar_RegisterFloat(0x4062c00000000000,uVar11,uVar10,0xffffffff820277e8);
-  DAT_82a76fb4 = Dvar_RegisterFloat(0x40a7700000000000,uVar11,uVar10,0xffffffff82027748);
-  DAT_82a1ed84 = Dvar_RegisterBool(0xffffffff82027704,1,4,0xffffffff8202771c);
-  DAT_82a1ed80 = Dvar_RegisterBool(0xffffffff820276bc,1,4,0xffffffff820276d4);
-  uVar1 = 0xbff0000000000000;
-  uVar4 = 0x3ff0000000000000;
-  DAT_82a76fb8 = Dvar_RegisterFloat(uVar11,0xbff0000000000000,0x3ff0000000000000,0xffffffff82027664)
-  ;
-  DAT_82a76ff4 = Dvar_RegisterEnum(0xffffffff82027648,0xffffffff829611f8,0x16,4,0xffffffff820068af);
-  DAT_82a76f08 = Dvar_RegisterFloat(0x3fb99999a0000000,uVar11,uVar4,0xffffffff8202762c);
-  DAT_82a76f34 = Dvar_RegisterFloat(0x3fe0000000000000,uVar11,uVar4,0xffffffff82027610);
-  DAT_82a76f40 = Dvar_RegisterFloat(uVar3,uVar11,uVar10,0xffffffff82027600);
-  DAT_82a76fa0 = Dvar_RegisterFloat(0x4089000000000000,uVar4,uVar10,0xffffffff820275f0);
-  DAT_82a76f74 = Dvar_RegisterBool(0xffffffff820275dc,0,4,0xffffffff820068af);
-  DAT_82a76f70 = Dvar_RegisterInt(0xffffffff82027578,0xfa,0,10000,0x44,0xffffffff82027590);
-  DAT_82a77150 = Dvar_RegisterInt(0xffffffff82027500,0xfa,0,10000,0x44,0xffffffff82027520);
-  DAT_82a76fbc = Dvar_RegisterVec4(0x3f967cf1c0000000,uVar4,uVar11,uVar11,uVar11,uVar4,
-                                   0xffffffff820274b0);
-  DAT_82a76f6c = Dvar_RegisterFloat(0x3fb0c726a0000000,uVar11,uVar4,0xffffffff82027478);
-  DAT_82a76f10 = Dvar_RegisterFloat(0x4011c31500000000,uVar11,0x4040000000000000,0xffffffff8202742c)
-  ;
-  DAT_82a76fdc = Dvar_RegisterBool(0xffffffff820273c0,0,4,0xffffffff820273d8);
-  DAT_82a76fa4 = Dvar_RegisterVec3(uVar11,uVar11,uVar11,0xc066800000000000,uVar2,0xffffffff820273ac)
-  ;
-  DAT_82a76fd0 = Dvar_RegisterVec3(uVar11,uVar11,uVar11,0xc08f400000000000,0x408f400000000000,
-                                   0xffffffff82027364);
-  DAT_82a76f80 = Dvar_RegisterFloat(uVar1,uVar1,0x40f86a0000000000,0xffffffff820272ec);
-  DAT_82a76fac = Dvar_RegisterVec3(uVar11,uVar11,uVar11,uVar9,uVar10,0xffffffff820272e0);
-  DAT_82a76fe8 = Dvar_RegisterVec3(uVar11,uVar11,uVar11,uVar9,uVar10,0xffffffff820272d4);
+  pcVar2 = "the motion tracker after being detected";
+  RemoteCameraSounds_WetLevel =
+       Dvar_RegisterFloat("RemoteCameraSounds_WetLevel",0.5,(float)dVar13,(float)dVar6,uVar1,
+                          "the motion tracker after being detected");
+  uVar1 = 0;
+  radarjamDistMin =
+       Dvar_RegisterFloat("radarjamDistMin",(float)dVar5,(float)dVar13,(float)dVar12,0,pcVar2);
+  radarjamDistMax =
+       Dvar_RegisterFloat("radarjamDistMax",800.0,(float)dVar6,(float)dVar12,uVar1,pcVar2);
+  radarjamSinCurve = Dvar_RegisterBool("radarjamSinCurve",false,4,"");
+  DAT_82a76f70 = Dvar_RegisterInt("thermalBlurFactorScope",0xfa,0,10000,0x44,
+                                  "Amount of blur to use when drawing blur through a weapon\'s thermal scope."
+                                 );
+  pcVar2 = (char *)0x0;
+  uVar1 = 0xfa;
+  thermalBlurFactorNoScope =
+       Dvar_RegisterInt("thermalBlurFactorNoScope",0xfa,0,10000,0x44,
+                        "Amount of blur to use when drawing blur that is NOT through a weapon\'s thermal scope."
+                       );
+  cg_waterSheeting_distortionScaleFactor =
+       Dvar_RegisterVec4("cg_waterSheeting_distortionScaleFactor",0.021961,(float)dVar6,
+                         (float)dVar13,(float)dVar13,(float)dVar13,(float)dVar6,uVar1,pcVar2);
+  pcVar2 = "the motion tracker after being detected";
+  uVar1 = 0;
+  DAT_82a76f6c = Dvar_RegisterFloat("cg_waterSheeting_magnitude",0.0655388,(float)dVar13,
+                                    (float)dVar6,0,"the motion tracker after being detected");
+  DAT_82a76f10 = Dvar_RegisterFloat("cg_waterSheeting_radius",4.44051,(float)dVar13,32.0,uVar1,
+                                    pcVar2);
+  pcVar2 = &DAT_00000004;
+  uVar1 = 0;
+  DAT_82a76fdc = Dvar_RegisterBool("cg_camAngleOverride",false,4,
+                                   "If true angle offsets override the actual view angles instead of modifying them."
+                                  );
+  DAT_82a76fa4 = Dvar_RegisterVec3("cg_camAngleOffset",(float)dVar13,(float)dVar13,(float)dVar13,
+                                   -180.0,(float)dVar4,uVar1,pcVar2);
+  pcVar2 = "the motion tracker after being detected";
+  cg_camOffset = Dvar_RegisterVec3("cg_camOffset",(float)dVar13,(float)dVar13,(float)dVar13,-1000.0,
+                                   1000.0,uVar1,"the motion tracker after being detected");
+  uVar1 = 0;
+  cg_traceProfilingDist =
+       Dvar_RegisterFloat("cg_traceProfilingDist",(float)dVar3,(float)dVar3,100000.0,0,pcVar2);
+  viewposNow = Dvar_RegisterVec3("viewposNow",(float)dVar13,(float)dVar13,(float)dVar13,
+                                 (float)dVar11,(float)dVar12,uVar1,pcVar2);
+  viewangNow = Dvar_RegisterVec3("viewangNow",(float)dVar13,(float)dVar13,(float)dVar13,
+                                 (float)dVar11,(float)dVar12,uVar1,pcVar2);
   __restfpr_21();
   __restgprlr_27();
   return;
@@ -1671,174 +478,95 @@ void CG_ViewRegisterDvars(void)
 
 
 // 8230CFF8  CG_UpdateKillCamEntityViewOffset  (cgame/cg_view.cpp:1965)
-
-void CG_UpdateKillCamEntityViewOffset(void)
-
-{
-  int iVar1;
-  
-  __savegprlr_29();
-  iVar1 = CG_GetLocalClientGlobals();
-  if (*(int *)(iVar1 + 0x7a708) == 0) {
-    MyAssertHandler(0xffffffff82027068,0x7b1,0,0xffffffff82000f98,0xffffffff82028420);
-  }
-  if (*(int *)(iVar1 + 0x7a718) == 0) {
-    MyAssertHandler(0xffffffff82027068,0x7b2,0,0xffffffff82000f98,0xffffffff820283f0);
-  }
-  *(undefined4 *)(iVar1 + 0x6b9fc) = *(undefined4 *)(iVar1 + 0x7a720);
-  *(undefined4 *)(iVar1 + 0x6ba00) = *(undefined4 *)(iVar1 + 0x7a724);
-  *(undefined4 *)(iVar1 + 0x6ba04) = *(undefined4 *)(iVar1 + 0x7a728);
-  __restgprlr_29();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 8230D0B0  CG_GetPlayerKillCamEntityLookAt  (cgame/cg_view.cpp:1977)
-
-void CG_GetPlayerKillCamEntityLookAt(undefined8 param_1,ulonglong param_2)
-
-{
-  undefined8 uVar1;
-  int iVar2;
-  undefined4 *puVar3;
-  
-  uVar1 = __savegprlr_28();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82027068,0x7bc,0,0xffffffff82000f98,0xffffffff82028438);
-  }
-  iVar2 = CG_GetLocalClientGlobals(uVar1);
-  if (*(int *)(iVar2 + 0x7a708) == 0) {
-    MyAssertHandler(0xffffffff82027068,0x7bf,0,0xffffffff82000f98,0xffffffff82028420);
-  }
-  if (*(int *)(iVar2 + 0x7a718) == 0) {
-    MyAssertHandler(0xffffffff82027068,0x7c0,0,0xffffffff82000f98,0xffffffff820283f0);
-  }
-  puVar3 = (undefined4 *)param_2;
-  *puVar3 = *(undefined4 *)(iVar2 + 0x7a740);
-  puVar3[1] = *(undefined4 *)(iVar2 + 0x7a744);
-  puVar3[2] = *(undefined4 *)(iVar2 + 0x7a748);
-  __restgprlr_28();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 8230D190  CG_GetKillCamEntityOrgAngles  (cgame/cg_view.cpp:1991)
-
-void CG_GetKillCamEntityOrgAngles(undefined8 param_1,ulonglong param_2,ulonglong param_3)
-
-{
-  undefined8 uVar1;
-  int iVar2;
-  undefined4 *puVar3;
-  
-  uVar1 = __savegprlr_27();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82027068,0x7ca,0,0xffffffff82000f98,0xffffffff82004854);
-  }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82027068,0x7cb,0,0xffffffff82000f98,0xffffffff8200b100);
-  }
-  iVar2 = CG_GetLocalClientGlobals(uVar1);
-  if (*(int *)(iVar2 + 0x7a708) == 0) {
-    MyAssertHandler(0xffffffff82027068,0x7ce,0,0xffffffff82000f98,0xffffffff82028420);
-  }
-  if (*(int *)(iVar2 + 0x7a718) == 0) {
-    MyAssertHandler(0xffffffff82027068,1999,0,0xffffffff82000f98,0xffffffff820283f0);
-  }
-  puVar3 = (undefined4 *)param_2;
-  *puVar3 = *(undefined4 *)(iVar2 + 0x7a720);
-  puVar3[1] = *(undefined4 *)(iVar2 + 0x7a724);
-  puVar3[2] = *(undefined4 *)(iVar2 + 0x7a728);
-  puVar3 = (undefined4 *)param_3;
-  *puVar3 = *(undefined4 *)(iVar2 + 0x7a72c);
-  puVar3[1] = *(undefined4 *)(iVar2 + 0x7a730);
-  puVar3[2] = *(undefined4 *)(iVar2 + 0x7a734);
-  __restgprlr_27();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 8230D2B8  LookAtAxisAndDistance  (cgame/cg_view.cpp:2007)
 
-double LookAtAxisAndDistance(float *param_1,float *param_2,float *param_3)
+float LookAtAxisAndDistance(float *param_1,float *param_2,float (*param_3) [3])
 
 {
   float fVar1;
   float fVar2;
   float fVar3;
   float fVar4;
-  undefined8 uVar5;
-  float *pfVar6;
+  float (*pafVar5) [3];
+  double dVar6;
   double dVar7;
   double dVar8;
   double dVar9;
-  double dVar10;
   
   fVar2 = *param_2 - *param_1;
-  *param_3 = fVar2;
+  (*param_3)[0] = fVar2;
   fVar3 = param_2[1] - param_1[1];
-  param_3[1] = fVar3;
+  (*param_3)[1] = fVar3;
   fVar4 = param_2[2] - param_1[2];
-  dVar10 = 1.0;
-  param_3[2] = fVar4;
-  pfVar6 = param_3 + 3;
-  dVar9 = (double)SQRT(fVar4 * fVar4 + fVar2 * fVar2 + fVar3 * fVar3);
-  dVar7 = dVar10;
-  if (-dVar9 < 0.0) {
-    dVar7 = dVar9;
-  }
-  fVar1 = (float)(1.0 / dVar7);
-  param_3[1] = fVar3 * fVar1;
-  fVar2 = fVar2 * fVar1;
-  *param_3 = fVar2;
-  param_3[2] = fVar4 * fVar1;
-  param_3[4] = fVar2;
-  param_3[5] = 0.0;
-  fVar3 = -(fVar3 * fVar1);
-  param_3[3] = fVar3;
-  if ((fVar3 == 0.0) && (fVar2 == 0.0)) {
-    *pfVar6 = 1.0;
-  }
-  fVar2 = param_3[4];
-  fVar3 = *pfVar6;
-  fVar4 = param_3[5];
-  dVar8 = (double)SQRT(fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2);
-  dVar7 = dVar10;
+  dVar9 = 1.0;
+  (*param_3)[2] = fVar4;
+  pafVar5 = param_3 + 1;
+  dVar8 = (double)SQRT(fVar4 * fVar4 + fVar2 * fVar2 + fVar3 * fVar3);
+  dVar6 = dVar9;
   if (-dVar8 < 0.0) {
-    dVar7 = dVar8;
+    dVar6 = dVar8;
   }
-  fVar1 = (float)(1.0 / dVar7);
-  *pfVar6 = fVar3 * fVar1;
-  param_3[4] = fVar2 * fVar1;
-  param_3[5] = fVar4 * fVar1;
-  Vec3Cross(param_3,pfVar6,param_3 + 6);
-  fVar2 = param_3[6] * param_3[6];
-  if (0.002 <= ABS((float)((double)(param_3[7] * param_3[7] + param_3[8] * param_3[8] + fVar2) -
-                          dVar10))) {
-    uVar5 = va(0xffffffff82015f2c,(double)param_3[6],(double)param_3[7],(double)param_3[8],
-               (double)SQRT(param_3[7] * param_3[7] + param_3[8] * param_3[8] + fVar2));
-    MyAssertHandler(0xffffffff82027068,0x7e1,0,0xffffffff820011f4,0xffffffff82028444,uVar5);
+  fVar1 = (float)(1.0 / dVar6);
+  (*param_3)[1] = fVar3 * fVar1;
+  fVar2 = fVar2 * fVar1;
+  (*param_3)[0] = fVar2;
+  (*param_3)[2] = fVar4 * fVar1;
+  param_3[1][1] = fVar2;
+  param_3[1][2] = 0.0;
+  fVar3 = -(fVar3 * fVar1);
+  param_3[1][0] = fVar3;
+  if ((fVar3 == 0.0) && (fVar2 == 0.0)) {
+    (*pafVar5)[0] = 1.0;
   }
-  return dVar9;
+  fVar2 = param_3[1][1];
+  fVar3 = (*pafVar5)[0];
+  fVar4 = param_3[1][2];
+  dVar7 = (double)SQRT(fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2);
+  dVar6 = dVar9;
+  if (-dVar7 < 0.0) {
+    dVar6 = dVar7;
+  }
+  fVar1 = (float)(1.0 / dVar6);
+  (*pafVar5)[0] = fVar3 * fVar1;
+  param_3[1][1] = fVar2 * fVar1;
+  param_3[1][2] = fVar4 * fVar1;
+  Vec3Cross(*param_3,*pafVar5,param_3[2]);
+  if (0.002 <= ABS((float)((double)(param_3[2][1] * param_3[2][1] + param_3[2][2] * param_3[2][2] +
+                                   param_3[2][0] * param_3[2][0]) - dVar9))) {
+    va("(%g %g %g) len %g");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_view.cpp",0x7e1,0,
+                    "%s\n\t%s");
+  }
+  return (float)dVar8;
 }
 
 
 // 8230D4B8  LookAtBothPoints  (cgame/cg_view.cpp:2023)
 
-double LookAtBothPoints(float *param_1,float *param_2,float *param_3,float *param_4)
+float LookAtBothPoints(float *param_1,float *param_2,float *param_3,float (*param_4) [3])
 
 {
   float fVar1;
   float fVar2;
   float fVar3;
   float fVar4;
-  undefined8 uVar5;
-  float *pfVar6;
+  float (*pafVar5) [3];
+  double dVar6;
   double dVar7;
   double dVar8;
   double dVar9;
   double dVar10;
-  double dVar11;
   float local_70;
   float local_6c;
   float local_68;
@@ -1858,19 +586,19 @@ double LookAtBothPoints(float *param_1,float *param_2,float *param_3,float *para
   local_38 = param_2[2] - param_3[2];
   local_50 = *param_1 - *param_3;
   local_40 = *param_2 - *param_3;
-  dVar11 = 1.0;
-  dVar9 = (double)SQRT(local_50 * local_50 + local_48 * local_48 + local_4c * local_4c);
-  dVar8 = (double)SQRT(local_40 * local_40 + local_38 * local_38 + local_3c * local_3c);
-  dVar10 = dVar11;
-  if (-dVar9 < 0.0) {
-    dVar10 = dVar9;
-  }
-  dVar7 = dVar11;
+  dVar10 = 1.0;
+  dVar8 = (double)SQRT(local_50 * local_50 + local_48 * local_48 + local_4c * local_4c);
+  dVar7 = (double)SQRT(local_40 * local_40 + local_38 * local_38 + local_3c * local_3c);
+  dVar9 = dVar10;
   if (-dVar8 < 0.0) {
-    dVar7 = dVar8;
+    dVar9 = dVar8;
   }
-  fVar1 = (float)(1.0 / dVar10);
-  fVar2 = (float)(1.0 / dVar7);
+  dVar6 = dVar10;
+  if (-dVar7 < 0.0) {
+    dVar6 = dVar7;
+  }
+  fVar1 = (float)(1.0 / dVar9);
+  fVar2 = (float)(1.0 / dVar6);
   local_50 = fVar1 * local_50;
   local_40 = fVar2 * local_40;
   local_3c = local_3c * fVar2;
@@ -1880,33 +608,33 @@ double LookAtBothPoints(float *param_1,float *param_2,float *param_3,float *para
   local_70 = (local_40 + local_50) * 0.5;
   local_6c = (local_3c + local_4c) * 0.5;
   fVar1 = (local_38 + local_48) * 0.5;
-  dVar8 = (double)SQRT(fVar1 * fVar1 + local_6c * local_6c + local_70 * local_70);
-  dVar10 = dVar11;
-  if (-dVar8 < 0.0) {
-    dVar10 = dVar8;
+  dVar7 = (double)SQRT(fVar1 * fVar1 + local_6c * local_6c + local_70 * local_70);
+  dVar9 = dVar10;
+  if (-dVar7 < 0.0) {
+    dVar9 = dVar7;
   }
-  local_68 = (float)(1.0 / dVar10);
+  local_68 = (float)(1.0 / dVar9);
   local_70 = local_68 * local_70;
   local_6c = local_6c * local_68;
   local_68 = local_68 * fVar1;
-  dVar10 = (double)(local_48 * local_68 + local_6c * local_4c + local_70 * local_50);
+  dVar9 = (double)(local_48 * local_68 + local_6c * local_4c + local_70 * local_50);
   fVar1 = local_70;
   fVar2 = local_6c;
   fVar4 = local_68;
-  if ((dVar10 < 0.9848077893257141) &&
-     (fVar1 = local_50, fVar2 = local_4c, fVar4 = local_48, 0.8660253882408142 <= dVar10)) {
+  if ((dVar9 < 0.9848077893257141) &&
+     (fVar1 = local_50, fVar2 = local_4c, fVar4 = local_48, 0.8660253882408142 <= dVar9)) {
     Vec3Cross(&local_50,&local_40,&local_60);
-    dVar7 = (double)SQRT(local_60 * local_60 + local_58 * local_58 + local_5c * local_5c);
-    dVar8 = dVar11;
-    if (-dVar7 < 0.0) {
-      dVar8 = dVar7;
+    dVar6 = (double)SQRT(local_60 * local_60 + local_58 * local_58 + local_5c * local_5c);
+    dVar7 = dVar10;
+    if (-dVar6 < 0.0) {
+      dVar7 = dVar6;
     }
-    fVar1 = (float)(dVar11 / dVar8);
+    fVar1 = (float)(dVar10 / dVar7);
     local_60 = local_60 * fVar1;
     local_5c = local_5c * fVar1;
     local_58 = local_58 * fVar1;
-    RotatePointAroundVector(0x4024000000000000,&local_70,&local_60,&local_50);
-    fVar4 = (float)(dVar10 - 0.9848077893257141) * -8.418756;
+    RotatePointAroundVector(&local_70,&local_60,&local_50,10.0);
+    fVar4 = (float)(dVar9 - 0.9848077893257141) * -8.418756;
     fVar1 = (local_50 - local_70) * fVar4 + local_70;
     fVar2 = (local_4c - local_6c) * fVar4 + local_6c;
     fVar4 = (local_48 - local_68) * fVar4 + local_68;
@@ -1921,103 +649,247 @@ double LookAtBothPoints(float *param_1,float *param_2,float *param_3,float *para
     local_6c = (fVar2 - local_4c) * fVar3 + local_4c;
     local_68 = (fVar4 - local_48) * fVar3 + local_48;
   }
-  pfVar6 = param_4 + 3;
-  dVar8 = (double)SQRT(local_68 * local_68 + local_6c * local_6c + local_70 * local_70);
-  dVar10 = dVar11;
-  if (-dVar8 < 0.0) {
-    dVar10 = dVar8;
+  pafVar5 = param_4 + 1;
+  dVar7 = (double)SQRT(local_68 * local_68 + local_6c * local_6c + local_70 * local_70);
+  dVar9 = dVar10;
+  if (-dVar7 < 0.0) {
+    dVar9 = dVar7;
   }
-  fVar1 = (float)(dVar11 / dVar10);
-  param_4[1] = local_6c * fVar1;
-  param_4[2] = fVar1 * local_68;
+  fVar1 = (float)(dVar10 / dVar9);
+  (*param_4)[1] = local_6c * fVar1;
+  (*param_4)[2] = fVar1 * local_68;
   fVar2 = fVar1 * local_70;
-  *param_4 = fVar2;
-  param_4[4] = fVar2;
-  param_4[5] = 0.0;
+  (*param_4)[0] = fVar2;
+  param_4[1][1] = fVar2;
+  param_4[1][2] = 0.0;
   fVar1 = -(local_6c * fVar1);
-  param_4[3] = fVar1;
+  param_4[1][0] = fVar1;
   if ((fVar1 == 0.0) && (fVar2 == 0.0)) {
-    *pfVar6 = (float)dVar11;
+    (*pafVar5)[0] = (float)dVar10;
   }
-  fVar1 = param_4[4];
-  fVar2 = *pfVar6;
-  fVar4 = param_4[5];
-  dVar8 = (double)SQRT(fVar4 * fVar4 + fVar2 * fVar2 + fVar1 * fVar1);
-  dVar10 = dVar11;
-  if (-dVar8 < 0.0) {
-    dVar10 = dVar8;
+  fVar1 = param_4[1][1];
+  fVar2 = (*pafVar5)[0];
+  fVar4 = param_4[1][2];
+  dVar7 = (double)SQRT(fVar4 * fVar4 + fVar2 * fVar2 + fVar1 * fVar1);
+  dVar9 = dVar10;
+  if (-dVar7 < 0.0) {
+    dVar9 = dVar7;
   }
-  fVar3 = (float)(dVar11 / dVar10);
-  *pfVar6 = fVar2 * fVar3;
-  param_4[4] = fVar1 * fVar3;
-  param_4[5] = fVar4 * fVar3;
-  Vec3Cross(param_4,pfVar6,param_4 + 6);
-  dVar10 = (double)param_4[8];
-  fVar1 = param_4[6] * param_4[6];
-  if (0.002 <= ABS((float)((double)(param_4[7] * param_4[7] + (float)(dVar10 * dVar10) + fVar1) -
-                          dVar11))) {
-    uVar5 = va(0xffffffff82015f2c,(double)param_4[6],(double)param_4[7],dVar10,
-               (double)SQRT(param_4[7] * param_4[7] + param_4[8] * param_4[8] + fVar1));
-    MyAssertHandler(0xffffffff82027068,0x829,0,0xffffffff820011f4,0xffffffff82028460,uVar5);
+  fVar3 = (float)(dVar10 / dVar9);
+  (*pafVar5)[0] = fVar2 * fVar3;
+  param_4[1][1] = fVar1 * fVar3;
+  param_4[1][2] = fVar4 * fVar3;
+  Vec3Cross(*param_4,*pafVar5,param_4[2]);
+  if (0.002 <= ABS((float)((double)(param_4[2][1] * param_4[2][1] + param_4[2][2] * param_4[2][2] +
+                                   param_4[2][0] * param_4[2][0]) - dVar10))) {
+    va("(%g %g %g) len %g");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_view.cpp",0x829,0,
+                    "%s\n\t%s");
   }
-  return dVar9;
+  return (float)dVar8;
 }
 
 
 // 8230D8C8  CG_UpdateHelicopterKillCamDof  (cgame/cg_view.cpp:2100)
 
-void CG_UpdateHelicopterKillCamDof(double param_1,undefined8 param_2,int param_3)
+void CG_UpdateHelicopterKillCamDof(float param_1,GfxDepthOfField *param_2)
 
 {
   int iVar1;
   int iVar2;
-  int iVar3;
+  dvar_t *pdVar3;
   int iVar4;
   int iVar5;
+  int in_r4;
   
   iVar5 = DAT_82a76f7c;
   iVar4 = DAT_82a76f44;
-  iVar3 = DAT_82a76f3c;
+  pdVar3 = cg_heliKillCamFarBlurDist;
   iVar2 = DAT_82a76f1c;
   iVar1 = DAT_82a76f14;
-  *(undefined4 *)(param_3 + 0x18) = *(undefined4 *)(DAT_82a76f50 + 0xc);
-  *(undefined4 *)(param_3 + 0x1c) = *(undefined4 *)(iVar4 + 0xc);
-  *(undefined4 *)(param_3 + 8) = *(undefined4 *)(iVar2 + 0xc);
-  *(float *)(param_3 + 0xc) = (float)(param_1 - (double)*(float *)(iVar1 + 0xc));
-  *(float *)(param_3 + 0x10) = (float)((double)*(float *)(iVar5 + 0xc) + param_1);
-  *(float *)(param_3 + 0x14) =
-       (float)((double)(*(float *)(iVar3 + 0xc) + *(float *)(iVar5 + 0xc)) + param_1);
+  *(undefined4 *)(in_r4 + 0x18) = *(undefined4 *)(DAT_82a76f50 + 0xc);
+  *(undefined4 *)(in_r4 + 0x1c) = *(undefined4 *)(iVar4 + 0xc);
+  *(undefined4 *)(in_r4 + 8) = *(undefined4 *)(iVar2 + 0xc);
+  *(float *)(in_r4 + 0xc) = param_1 - *(float *)(iVar1 + 0xc);
+  *(float *)(in_r4 + 0x10) = *(float *)(iVar5 + 0xc) + param_1;
+  *(float *)(in_r4 + 0x14) = (pdVar3->current).value + *(float *)(iVar5 + 0xc) + param_1;
   return;
 }
 
 
 // 8230D930  CG_UpdateHelicopterKillCam  (cgame/cg_view.cpp:2112)
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
-void CG_UpdateHelicopterKillCam(void)
+// 8230DC90  CG_UpdateAirstrikeKillCamDof  (cgame/cg_view.cpp:2170)
+
+void CG_UpdateAirstrikeKillCamDof(float param_1,GfxDepthOfField *param_2)
+
+{
+  int iVar1;
+  int iVar2;
+  dvar_t *pdVar3;
+  int iVar4;
+  int iVar5;
+  int in_r4;
+  
+  iVar5 = DAT_82a77154;
+  iVar4 = DAT_82a76fc4;
+  pdVar3 = cg_airstrikeKillCamFarBlurDist;
+  iVar2 = DAT_82a76f30;
+  iVar1 = DAT_82a76f20;
+  *(undefined4 *)(in_r4 + 0x18) = *(undefined4 *)(DAT_82a7715c + 0xc);
+  *(undefined4 *)(in_r4 + 0x1c) = *(undefined4 *)(iVar5 + 0xc);
+  *(undefined4 *)(in_r4 + 8) = *(undefined4 *)(iVar2 + 0xc);
+  *(undefined4 *)(in_r4 + 0xc) = *(undefined4 *)(iVar1 + 0xc);
+  *(float *)(in_r4 + 0x10) = param_1 + *(float *)(iVar4 + 0xc);
+  *(float *)(in_r4 + 0x14) = (pdVar3->current).value + param_1 + *(float *)(iVar4 + 0xc);
+  return;
+}
+
+
+// 8230DCF8  CG_UpdateAirstrikeKillCam  (cgame/cg_view.cpp:2182)
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+// 8230DEA8  CG_UpdateTurretKillCam  (cgame/cg_view.cpp:2221)
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+// 8230E238  ComputeJavelinLookAtAxis  (cgame/cg_view.cpp:2302)
+
+void ComputeJavelinLookAtAxis(float *param_1,float *param_2,float *param_3,float (*param_4) [3])
 
 {
   float fVar1;
-  int iVar2;
-  int iVar3;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  float *pfVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  
+  pfVar5 = (float *)__savegprlr_24(param_1);
+  dVar9 = 1.0;
+  dVar8 = 0.0020000000949949026;
+  if (0.002 <= ABS((param_3[1] * param_3[1] + param_3[2] * param_3[2] + *param_3 * *param_3) - 1.0))
+  {
+    va("(%g %g %g) len %g");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_view.cpp",0x8ff,0,
+                    "%s\n\t%s");
+  }
+  fVar2 = *param_2 - *pfVar5;
+  (*param_4)[0] = fVar2;
+  fVar3 = param_2[1] - pfVar5[1];
+  (*param_4)[1] = fVar3;
+  fVar4 = param_2[2] - pfVar5[2];
+  (*param_4)[2] = fVar4;
+  dVar7 = (double)SQRT(fVar4 * fVar4 + fVar2 * fVar2 + fVar3 * fVar3);
+  dVar6 = dVar9;
+  if (-dVar7 < 0.0) {
+    dVar6 = dVar7;
+  }
+  fVar1 = (float)(dVar9 / dVar6);
+  (*param_4)[0] = fVar2 * fVar1;
+  (*param_4)[2] = fVar4 * fVar1;
+  (*param_4)[1] = fVar3 * fVar1;
+  param_4[1][0] = -*param_3;
+  param_4[1][1] = -param_3[1];
+  param_4[1][2] = -param_3[2];
+  Vec3Cross(*param_4,param_4[1],param_4[2]);
+  if (dVar8 <= ABS((double)(float)((double)(param_4[2][1] * param_4[2][1] +
+                                            param_4[2][2] * param_4[2][2] +
+                                           param_4[2][0] * param_4[2][0]) - dVar9))) {
+    va("(%g %g %g) len %g");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_view.cpp",0x905,0,
+                    "%s\n\t%s");
+  }
+  __restgprlr_24();
+  return;
+}
+
+
+// 8230E468  CG_UpdateJavelinKillCam  (cgame/cg_view.cpp:2314)
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
+
+// 8230E8D0  RewindTrace  (cgame/cg_view.cpp:2412)
+
+void RewindTrace(trace_t *param_1,float *param_2,float *param_3,float param_4)
+
+{
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  
+  if (param_1->fraction == 1.0) {
+    return;
+  }
+  fVar1 = *param_3 - *param_2;
+  fVar2 = param_3[1] - param_2[1];
+  fVar3 = param_3[2] - param_2[2];
+  fVar4 = param_1->normal[2] * fVar3 + param_1->normal[1] * fVar2 + param_1->normal[0] * fVar1;
+  if (0.0 <= fVar4) {
+    return;
+  }
+  fVar1 = (fVar4 * param_4) / (fVar2 * fVar2 + fVar1 * fVar1 + fVar3 * fVar3) + param_1->fraction;
+  param_1->fraction = fVar1;
+  if (0.0 <= fVar1) {
+    return;
+  }
+  param_1->fraction = 0.0;
+  return;
+}
+
+
+// 8230E960  DebugTraceLine  (cgame/cg_view.cpp:2435)
+
+void DebugTraceLine(float *param_1,float *param_2,float param_3,float *param_4)
+
+{
+  float *in_r6;
+  float local_20;
+  float local_1c;
+  float local_18;
+  
+  if (param_3 < 1.0) {
+    local_20 = (*param_2 - *param_1) * param_3 + *param_1;
+    local_1c = (param_2[1] - param_1[1]) * param_3 + param_1[1];
+    local_18 = (param_2[2] - param_1[2]) * param_3 + param_1[2];
+    CG_DebugLine(param_1,&local_20,in_r6,0,3000);
+    return;
+  }
+  CG_DebugLine(param_1,param_2,in_r6,0,3000);
+  return;
+}
+
+
+// 8230E9F8  CG_KillcamCameraTrace  (cgame/cg_view.cpp:2451)
+
+void CG_KillcamCameraTrace
+               (float *param_1,float *param_2,float *param_3,int param_4,
+               KillCamEntityRestState param_5,float *param_6)
+
+{
+  float fVar1;
+  float *pfVar2;
+  bool bVar3;
   int iVar4;
-  int iVar5;
-  int iVar6;
-  undefined8 uVar7;
-  int iVar9;
-  undefined8 uVar8;
+  double dVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
   double dVar10;
   double dVar11;
   double dVar12;
   double dVar13;
-  double dVar14;
-  double dVar15;
-  double dVar16;
-  double dVar17;
-  double dVar18;
-  double dVar19;
-  double dVar20;
-  double dVar21;
-  double dVar22;
+  float local_e0;
+  float local_dc;
+  float local_d8;
   float local_d0;
   float local_cc;
   float local_c8;
@@ -2027,696 +899,126 @@ void CG_UpdateHelicopterKillCam(void)
   float local_b0;
   float local_ac;
   float local_a8;
-  float local_a0;
-  float local_9c;
-  float local_98;
+  trace_t local_a0 [3];
   
-  __savegprlr_27();
-  uVar7 = __savefpr_20();
-  iVar9 = CG_GetLocalClientGlobals();
-  if (*(int *)(iVar9 + 0x7a708) == 0) {
-    MyAssertHandler(0xffffffff82027068,0x84f,0,0xffffffff82000f98,0xffffffff82028420);
+  pfVar2 = (float *)__savegprlr_23(param_1);
+  if ((_S1 & 1) == 0) {
+    _S1 = _S1 | 1;
+    CAM_BOUNDS.halfSize[0] = 5.0;
+    CAM_BOUNDS.halfSize[1] = 5.0;
+    CAM_BOUNDS.halfSize[2] = 5.0;
   }
-  if (*(int *)(iVar9 + 0x7a718) == 0) {
-    MyAssertHandler(0xffffffff82027068,0x850,0,0xffffffff82000f98,0xffffffff820283f0);
-  }
-  CG_GetKillCamEntityOrgAngles(uVar7,&local_b0,&local_a0);
-  CG_GetPlayerKillCamEntityLookAt(uVar7,&local_c0);
-  dVar16 = (double)local_ac;
-  local_ac = (float)((double)local_bc - dVar16);
-  dVar15 = (double)local_b0;
-  local_b8 = local_b8 - 100.0;
-  dVar18 = (double)(*(float *)(iVar9 + 0x7a74c) + local_a8);
-  local_b0 = (float)((double)local_c0 - dVar15);
-  dVar22 = 1.0;
-  local_a8 = (float)((double)local_b8 - dVar18);
-  dVar17 = (double)*(float *)(iVar9 + 0x7a750);
-  dVar21 = (double)*(float *)(iVar9 + 0x7a754);
-  dVar11 = (double)SQRT(local_b0 * local_b0 + local_a8 * local_a8 + local_ac * local_ac);
-  dVar10 = dVar22;
-  if (-dVar11 < 0.0) {
-    dVar10 = dVar11;
-  }
-  fVar1 = (float)(1.0 / dVar10);
-  local_b0 = fVar1 * local_b0;
-  dVar14 = (double)local_b0;
-  local_ac = local_ac * fVar1;
-  dVar13 = (double)local_ac;
-  local_a8 = local_a8 * fVar1;
-  dVar12 = (double)local_a8;
-  Vec3Cross(0xffffffff82181d7c,&local_b0,&local_d0);
-  dVar11 = (double)SQRT(local_d0 * local_d0 + local_c8 * local_c8 + local_cc * local_cc);
-  dVar10 = dVar22;
-  if (-dVar11 < 0.0) {
-    dVar10 = dVar11;
-  }
-  fVar1 = (float)(dVar22 / dVar10);
-  local_d0 = local_d0 * fVar1;
-  local_cc = local_cc * fVar1;
-  local_c8 = local_c8 * fVar1;
-  Vec3Cross(&local_b0,&local_d0,&local_a0);
-  dVar20 = (double)local_9c;
-  dVar19 = (double)local_a0;
-  dVar11 = (double)local_98;
-  dVar10 = (double)(float)(dVar11 * dVar11 +
-                          (double)(float)(dVar19 * dVar19 + (double)(float)(dVar20 * dVar20)));
-  if (0.002 <= ABS((float)(dVar10 - dVar22))) {
-    uVar8 = va(dVar19,dVar20,dVar11,0xffffffff82015f2c,dVar19,dVar20,dVar11,
-               (double)(float)SQRT(dVar10));
-    MyAssertHandler(0xffffffff82027068,0x863,0,0xffffffff820011f4,0xffffffff820284a8,uVar8);
-  }
-  dVar17 = -dVar17;
-  local_98 = (float)(dVar11 * dVar21 + (double)(float)(dVar12 * dVar17 + dVar18));
-  local_9c = (float)(dVar20 * dVar21 + (double)(float)(dVar13 * dVar17 + dVar16));
-  local_a0 = (float)(dVar19 * dVar21 + (double)(float)(dVar17 * dVar14 + dVar15));
-  *(float *)(iVar9 + 0x6b9d0) = local_98;
-  *(float *)(iVar9 + 0x6b9c8) = local_a0;
-  *(float *)(iVar9 + 0x6b9cc) = local_9c;
-  dVar10 = (double)LookAtAxisAndDistance(&local_a0,&local_c0,iVar9 + 0x6b9d4);
-  if (dVar10 <= 0.0) {
-    MyAssertHandler(0xffffffff82027068,0x86a,0,0xffffffff82000f98,0xffffffff82028498);
-  }
-  iVar6 = DAT_82a76f7c;
-  iVar5 = DAT_82a76f44;
-  iVar4 = DAT_82a76f3c;
-  iVar3 = DAT_82a76f1c;
-  iVar2 = DAT_82a76f14;
-  *(undefined4 *)(iVar9 + 0x6ba2c) = *(undefined4 *)(DAT_82a76f50 + 0xc);
-  *(undefined4 *)(iVar9 + 0x6ba30) = *(undefined4 *)(iVar5 + 0xc);
-  *(undefined4 *)(iVar9 + 0x6ba1c) = *(undefined4 *)(iVar3 + 0xc);
-  *(float *)(iVar9 + 0x6ba20) = (float)(dVar10 - (double)*(float *)(iVar2 + 0xc));
-  *(float *)(iVar9 + 0x6ba24) = (float)(dVar10 + (double)*(float *)(iVar6 + 0xc));
-  *(float *)(iVar9 + 0x6ba28) =
-       (float)((double)*(float *)(iVar4 + 0xc) + dVar10) + *(float *)(iVar6 + 0xc);
-  AxisToAngles(iVar9 + 0x6b9d4,iVar9 + 0x704dc);
-  CG_UpdateFov((double)*(float *)(DAT_82a76f94 + 0xc),uVar7);
-  __restfpr_20();
-  __restgprlr_27();
-  return;
-}
-
-
-// 8230DC90  CG_UpdateAirstrikeKillCamDof  (cgame/cg_view.cpp:2170)
-
-void CG_UpdateAirstrikeKillCamDof(double param_1,undefined8 param_2,int param_3)
-
-{
-  int iVar1;
-  int iVar2;
-  int iVar3;
-  int iVar4;
-  int iVar5;
-  
-  iVar5 = DAT_82a77154;
-  iVar4 = DAT_82a76fc4;
-  iVar3 = DAT_82a76fa8;
-  iVar2 = DAT_82a76f30;
-  iVar1 = DAT_82a76f20;
-  *(undefined4 *)(param_3 + 0x18) = *(undefined4 *)(DAT_82a7715c + 0xc);
-  *(undefined4 *)(param_3 + 0x1c) = *(undefined4 *)(iVar5 + 0xc);
-  *(undefined4 *)(param_3 + 8) = *(undefined4 *)(iVar2 + 0xc);
-  *(undefined4 *)(param_3 + 0xc) = *(undefined4 *)(iVar1 + 0xc);
-  *(float *)(param_3 + 0x10) = (float)(param_1 + (double)*(float *)(iVar4 + 0xc));
-  *(float *)(param_3 + 0x14) =
-       (float)((double)*(float *)(iVar3 + 0xc) + param_1) + *(float *)(iVar4 + 0xc);
-  return;
-}
-
-
-// 8230DCF8  CG_UpdateAirstrikeKillCam  (cgame/cg_view.cpp:2182)
-
-void CG_UpdateAirstrikeKillCam(void)
-
-{
-  float fVar1;
-  int iVar2;
-  int iVar3;
-  int iVar4;
-  int iVar5;
-  undefined8 uVar6;
-  int iVar7;
-  float local_60;
-  float local_5c;
-  float local_58;
-  float local_50;
-  float local_4c;
-  float local_48;
-  undefined1 auStack_40 [64];
-  
-  uVar6 = __savegprlr_28();
-  iVar7 = CG_GetLocalClientGlobals();
-  if (*(int *)(iVar7 + 0x7a708) == 0) {
-    MyAssertHandler(0xffffffff82027068,0x891,0,0xffffffff82000f98,0xffffffff82028420);
-  }
-  if (*(int *)(iVar7 + 0x7a718) == 0) {
-    MyAssertHandler(0xffffffff82027068,0x892,0,0xffffffff82000f98,0xffffffff820283f0);
-  }
-  CG_GetPlayerKillCamEntityLookAt(uVar6,&local_50);
-  CG_GetKillCamEntityOrgAngles(uVar6,&local_60,auStack_40);
-  LookAtAxisAndDistance(&local_60,&local_50,iVar7 + 0x6b9d4);
-  iVar5 = DAT_82a7715c;
-  iVar4 = DAT_82a77154;
-  *(float *)(iVar7 + 0x6b9c8) = local_60;
-  iVar3 = DAT_82a76f30;
-  *(float *)(iVar7 + 0x6b9cc) = local_5c;
-  *(float *)(iVar7 + 0x6b9d0) = local_58;
-  iVar2 = DAT_82a76f20;
-  *(undefined4 *)(iVar7 + 0x6ba2c) = *(undefined4 *)(iVar5 + 0xc);
-  *(undefined4 *)(iVar7 + 0x6ba30) = *(undefined4 *)(iVar4 + 0xc);
-  iVar5 = DAT_82a76fc4;
-  iVar4 = DAT_82a76fa8;
-  *(undefined4 *)(iVar7 + 0x6ba1c) = *(undefined4 *)(iVar3 + 0xc);
-  *(undefined4 *)(iVar7 + 0x6ba20) = *(undefined4 *)(iVar2 + 0xc);
-  fVar1 = SQRT((local_50 - local_60) * (local_50 - local_60) +
-               (local_48 - local_58) * (local_48 - local_58) +
-               (local_4c - local_5c) * (local_4c - local_5c));
-  *(float *)(iVar7 + 0x6ba24) = *(float *)(iVar5 + 0xc) + fVar1;
-  *(float *)(iVar7 + 0x6ba28) = *(float *)(iVar4 + 0xc) + *(float *)(iVar5 + 0xc) + fVar1;
-  AxisToAngles(iVar7 + 0x6b9d4,iVar7 + 0x704dc);
-  CG_ShakeCamera(uVar6);
-  CG_PerturbCamera(iVar7);
-  CG_UpdateFov((double)*(float *)(DAT_82a76f24 + 0xc),uVar6);
-  __restgprlr_28();
-  return;
-}
-
-
-// 8230DEA8  CG_UpdateTurretKillCam  (cgame/cg_view.cpp:2221)
-
-void CG_UpdateTurretKillCam(void)
-
-{
-  float fVar1;
-  float fVar2;
-  undefined8 uVar3;
-  int iVar5;
-  int iVar6;
-  ulonglong uVar4;
-  int iVar7;
-  undefined4 *puVar8;
-  float local_d0;
-  float local_cc;
-  float local_c8;
-  float local_c0;
-  float local_bc;
-  undefined4 local_b8;
-  float local_b0;
-  float local_ac;
-  float local_a8;
-  float local_a0;
-  float local_9c;
-  float local_98;
-  float local_90;
-  float local_8c;
-  float local_88;
-  float local_80;
-  float local_7c;
-  float local_78;
-  float local_70 [28];
-  
-  uVar3 = __savegprlr_27();
-  iVar5 = CG_GetLocalClientGlobals();
-  if (*(int *)(iVar5 + 0x7a708) == 0) {
-    MyAssertHandler(0xffffffff82027068,0x8b8,0,0xffffffff82000f98,0xffffffff82028420);
-  }
-  if (*(int *)(iVar5 + 0x7a718) == 0) {
-    MyAssertHandler(0xffffffff82027068,0x8b9,0,0xffffffff82000f98,0xffffffff820283f0);
-  }
-  CG_GetKillCamEntityOrgAngles(uVar3,&local_d0,&local_c0);
-  puVar8 = (undefined4 *)(iVar5 + 0x7a710);
-  iVar6 = CG_GetEntity(uVar3,*puVar8);
-  if ((*(uint *)(iVar6 + 0x1c4) & 1) != 0) {
-    if (*(char *)(iVar6 + 0x39) == '\0') {
-      local_c0 = *(float *)(iVar6 + 0x2c) + local_c0;
-      local_bc = *(float *)(iVar6 + 0x30) + local_bc;
-    }
-    else {
-      local_bc = *(float *)(iVar6 + 0x30);
-      local_c0 = *(float *)(iVar6 + 0x2c);
-      local_b8 = 0;
-    }
-    uVar4 = Com_GetClientDObj(*(undefined4 *)(iVar6 + 0xc4),uVar3);
-    if (((uVar4 & 0xffffffff) == 0) ||
-       (iVar7 = CG_DObjGetWorldTagPos(iVar6,uVar4,DAT_835a0c5e,&local_80), iVar7 == 0)) {
-      Com_PrintWarning(0xe,0xffffffff820284c0,*puVar8,uVar3);
-    }
-    else {
-      local_d0 = local_80;
-      local_cc = local_7c;
-      local_c8 = local_78;
-    }
-  }
-  AngleVectors(&local_c0,&local_a0,0,&local_90);
-  if (((*(uint *)(iVar6 + 0x1c4) & 1) == 0) || (*(char *)(iVar6 + 0x39) == '\0')) {
-    fVar2 = -*(float *)(DAT_82a76f58 + 0xc);
-    fVar1 = *(float *)(DAT_82a77158 + 0xc);
-    local_d0 = fVar1 * local_90 + fVar2 * local_a0 + local_d0;
-    local_cc = local_8c * fVar1 + local_9c * fVar2 + local_cc;
-    local_c8 = local_88 * fVar1 + local_98 * fVar2 + local_c8;
-  }
-  else {
-    fVar2 = -*(float *)(DAT_82a76fe0 + 0xc);
-    fVar1 = *(float *)(DAT_82a76f88 + 0xc);
-    local_b0 = local_90 * fVar1 + local_a0 * fVar2 + local_d0;
-    local_ac = local_8c * fVar1 + local_9c * fVar2 + local_cc;
-    local_a8 = local_88 * fVar1 + local_98 * fVar2 + local_c8;
-    CG_TraceCapsule(local_70,&local_d0,&local_b0,0xffffffff82174a3c,*puVar8,0x31);
-    local_cc = (local_ac - local_cc) * local_70[0] + local_cc;
-    local_c8 = (local_a8 - local_c8) * local_70[0] + local_c8;
-    local_d0 = (local_b0 - local_d0) * local_70[0] + local_d0;
-  }
-  *(float *)(iVar5 + 0x6b9c8) = local_d0;
-  *(float *)(iVar5 + 0x6b9cc) = local_cc;
-  *(float *)(iVar5 + 0x6b9d0) = local_c8;
-  *(float *)(iVar5 + 0x704dc) = local_c0;
-  *(float *)(iVar5 + 460000) = local_bc;
-  *(undefined4 *)(iVar5 + 0x704e4) = local_b8;
-  AnglesToAxis(&local_c0,iVar5 + 0x6b9d4);
-  CG_ShakeCamera(uVar3);
-  CG_PerturbCamera(iVar5);
-  if (((*(uint *)(iVar6 + 0x1c4) & 1) != 0) && (*(char *)(iVar6 + 0x39) != '\0')) {
-    CG_UpdateFov((double)*(float *)(DAT_82a76f4c + 0xc),uVar3);
-    __restgprlr_27();
-    return;
-  }
-  CG_UpdateFov((double)*(float *)(DAT_82a76f84 + 0xc),uVar3);
-  __restgprlr_27();
-  return;
-}
-
-
-// 8230E238  ComputeJavelinLookAtAxis  (cgame/cg_view.cpp:2302)
-
-void ComputeJavelinLookAtAxis(undefined8 param_1,float *param_2,float *param_3,longlong param_4)
-
-{
-  float fVar1;
-  float fVar2;
-  float fVar3;
-  float fVar4;
-  float *pfVar6;
-  undefined8 uVar5;
-  float *pfVar7;
-  double dVar8;
-  double dVar9;
-  double dVar10;
-  double dVar11;
-  double dVar12;
-  
-  pfVar6 = (float *)__savegprlr_24();
-  dVar8 = (double)*param_3;
-  dVar12 = 1.0;
-  dVar11 = 0.0020000000949949026;
-  if (0.002 <= ABS((param_3[1] * param_3[1] + param_3[2] * param_3[2] + (float)(dVar8 * dVar8)) -
-                   1.0)) {
-    dVar10 = (double)param_3[2];
-    dVar9 = (double)param_3[1];
-    uVar5 = va(dVar8,dVar9,dVar10,0xffffffff82015f2c,dVar8,dVar9,dVar10,
-               (double)SQRT((float)(dVar9 * dVar9 + (double)(float)(dVar10 * dVar10)) +
-                            (float)(dVar8 * dVar8)));
-    MyAssertHandler(0xffffffff82027068,0x8ff,0,0xffffffff820011f4,0xffffffff82028504,uVar5);
-  }
-  fVar2 = *param_2 - *pfVar6;
-  pfVar7 = (float *)param_4;
-  *pfVar7 = fVar2;
-  fVar3 = param_2[1] - pfVar6[1];
-  pfVar7[1] = fVar3;
-  fVar4 = param_2[2] - pfVar6[2];
-  pfVar7[2] = fVar4;
-  dVar9 = (double)SQRT(fVar4 * fVar4 + fVar2 * fVar2 + fVar3 * fVar3);
-  dVar8 = dVar12;
-  if (-dVar9 < 0.0) {
-    dVar8 = dVar9;
-  }
-  fVar1 = (float)(dVar12 / dVar8);
-  *pfVar7 = fVar2 * fVar1;
-  pfVar7[2] = fVar4 * fVar1;
-  pfVar7[1] = fVar3 * fVar1;
-  pfVar7[3] = -*param_3;
-  pfVar7[4] = -param_3[1];
-  pfVar7[5] = -param_3[2];
-  Vec3Cross(param_4,param_4 + 0xc,param_4 + 0x18);
-  fVar2 = pfVar7[6] * pfVar7[6];
-  if (dVar11 <= ABS((double)(float)((double)(pfVar7[7] * pfVar7[7] + pfVar7[8] * pfVar7[8] + fVar2)
-                                   - dVar12))) {
-    uVar5 = va(0xffffffff82015f2c,(double)*(float *)(param_4 + 0x18),(double)pfVar7[7],
-               (double)pfVar7[8],(double)SQRT(pfVar7[7] * pfVar7[7] + pfVar7[8] * pfVar7[8] + fVar2)
-              );
-    MyAssertHandler(0xffffffff82027068,0x905,0,0xffffffff820011f4,0xffffffff82028444,uVar5);
-  }
-  __restgprlr_24();
-  return;
-}
-
-
-// 8230E468  CG_UpdateJavelinKillCam  (cgame/cg_view.cpp:2314)
-
-void CG_UpdateJavelinKillCam(undefined8 param_1,int param_2)
-
-{
-  float fVar1;
-  float fVar2;
-  float fVar3;
-  float fVar4;
-  undefined8 uVar5;
-  int iVar6;
-  int iVar7;
-  float *pfVar8;
-  double dVar9;
-  double dVar10;
-  double dVar11;
-  double dVar12;
-  double dVar13;
-  double dVar14;
-  double dVar15;
-  double dVar16;
-  float local_130;
-  float local_12c;
-  float local_128;
-  undefined8 local_120;
-  float local_118;
-  float local_110;
-  float local_10c;
-  float local_108;
-  float local_100;
-  undefined4 local_fc;
-  undefined4 local_f8;
-  float local_f0;
-  float local_ec;
-  float local_e8;
-  float local_e0;
-  float local_dc;
-  float local_d8;
-  undefined1 auStack_d0 [8];
-  float local_c8;
-  undefined1 auStack_c0 [16];
-  undefined1 auStack_b0 [16];
-  undefined1 auStack_a0 [16];
-  undefined1 auStack_90 [144];
-  
-  __savegprlr_27();
-  uVar5 = __savefpr_25();
-  iVar6 = CG_GetLocalClientGlobals();
-  if (*(int *)(iVar6 + 0x7a708) == 0) {
-    MyAssertHandler(0xffffffff82027068,0x919,0,0xffffffff82000f98,0xffffffff82028420);
-  }
-  if (*(int *)(iVar6 + 0x7a718) == 0) {
-    MyAssertHandler(0xffffffff82027068,0x91a,0,0xffffffff82000f98,0xffffffff820283f0);
-  }
-  CG_GetKillCamEntityOrgAngles(uVar5,&local_130,&local_100);
-  iVar7 = CG_GetEntity(uVar5,*(undefined4 *)(iVar6 + 0x7a710));
-  CG_GetPlayerKillCamEntityLookAt(uVar5,auStack_d0);
-  if (*(int *)(iVar7 + 0xd0) == 5) {
-    dVar13 = (double)local_130;
-    pfVar8 = (float *)(iVar6 + 0x704dc);
-    dVar12 = (double)local_12c;
-    dVar14 = (double)local_128;
-    *pfVar8 = local_100;
-    *(undefined4 *)(iVar6 + 460000) = local_fc;
-    *(undefined4 *)(iVar6 + 0x704e4) = local_f8;
-    dVar9 = (double)crandom();
-    dVar15 = 5.0;
-    *pfVar8 = (float)(dVar9 * 5.0 + (double)*pfVar8);
-    dVar9 = (double)crandom();
-    *(float *)(iVar6 + 460000) = (float)(dVar9 * dVar15 + (double)*(float *)(iVar6 + 460000));
-    AnglesToAxis(pfVar8,iVar6 + 0x6b9d4);
-    goto LAB_8230e888;
-  }
-  local_120 = (longlong)(*(int *)(iVar6 + 0x6b98c) - *(int *)(iVar7 + 0x118));
-  dVar15 = (double)((float)local_120 * 0.001);
-  AngleVectors(&local_100,&local_110,auStack_b0,&local_f0);
-  AngleVectors(iVar6 + 0x7a72c,&local_e0,0,0);
-  dVar9 = 0.0;
-  fVar1 = local_108 * 1.0 + local_10c * 0.0 + local_110 * 0.0;
-  if (fVar1 <= 0.0) {
-LAB_8230e734:
-    dVar15 = (double)local_128;
-    dVar16 = 1.0;
-    if (param_2 == 8) {
-      dVar14 = (double)*(float *)(DAT_82a76f98 + 0xc);
-      dVar10 = dVar14 * 0.0 + (double)local_130;
-      dVar11 = dVar14 * 0.0 + (double)local_12c;
-    }
-    else {
-      fVar1 = (fVar1 + 1.0) * 0.5;
-      dVar14 = (double)((1.0 - fVar1) * *(float *)(DAT_82a7714c + 0xc) +
-                       *(float *)(DAT_82a76f98 + 0xc) * fVar1);
-      dVar10 = dVar14 * 0.0 + (double)local_130;
-      dVar11 = dVar14 * 0.0 + (double)local_12c;
-    }
-    local_118 = (float)(dVar14 * 1.0 + dVar15);
-    dVar14 = (double)local_118;
-    dVar13 = (double)(float)dVar10;
-    dVar12 = (double)(float)dVar11;
-    local_120 = CONCAT44((float)dVar10,(float)dVar11);
-    iVar7 = iVar6 + 0x6b9d4;
-    ComputeJavelinLookAtAxis(&local_120,&local_130,auStack_b0,iVar7);
-    dVar11 = (double)local_c8;
-    if ((dVar9 < (double)*(float *)(DAT_82a76fb4 + 0xc)) || (param_2 == 8)) {
-      LookAtAxisAndDistance(&local_120,auStack_d0,auStack_90);
-      AxisToQuat(auStack_90,auStack_c0);
-      dVar10 = (double)(float)(dVar16 - (double)((float)(dVar15 - dVar11) /
-                                                *(float *)(DAT_82a76fb4 + 0xc)));
-      dVar15 = dVar16;
-      if ((float)(dVar10 - dVar16) < 0.0) {
-        dVar15 = dVar10;
-      }
-      if (-dVar10 < 0.0) {
-        dVar9 = dVar15;
-      }
-      if (param_2 == 8) {
-        dVar9 = dVar16;
-      }
-      AxisToQuat(iVar7,auStack_a0);
-      QuatLerp(dVar9,auStack_a0,auStack_c0);
-      QuatToAxis(auStack_c0,iVar7);
-    }
-    dVar9 = (double)(float)((double)*(float *)(DAT_82a76f28 + 0xc) + dVar11);
-    if (dVar14 < dVar9) {
-      dVar14 = dVar9;
-    }
-  }
-  else {
-    if (fVar1 < local_d8 * 1.0 + local_dc * 0.0 + local_e0 * 0.0) goto LAB_8230e734;
-    dVar9 = (double)((float)(dVar15 / (double)*(float *)(DAT_82a76fc0 + 0xc)) * 6.2831855);
-    if ((float)(4.71238899230957 - dVar9) < 0.0) {
-      dVar9 = 4.71238899230957;
-    }
-    dVar9 = sin(dVar9);
-    fVar1 = *(float *)(DAT_82a76f98 + 0xc) * -(float)dVar9;
-    fVar2 = (1.0 - ABS(-(float)dVar9)) * *(float *)(DAT_82a77148 + 0xc);
-    fVar3 = local_f0 * fVar2 + fVar1 * local_110 + local_130;
-    dVar13 = (double)fVar3;
-    fVar4 = local_ec * fVar2 + local_10c * fVar1 + local_12c;
-    dVar12 = (double)fVar4;
-    local_120 = CONCAT44(fVar3,fVar4);
-    local_118 = local_e8 * fVar2 + local_108 * fVar1 + local_128;
-    dVar14 = (double)local_118;
-    ComputeJavelinLookAtAxis(&local_120,&local_130,auStack_b0,iVar6 + 0x6b9d4);
-  }
-  AxisToAngles(iVar6 + 0x6b9d4,iVar6 + 0x704dc);
-LAB_8230e888:
-  iVar7 = DAT_82a76f60;
-  *(float *)(iVar6 + 0x6b9cc) = (float)dVar12;
-  *(float *)(iVar6 + 0x6b9c8) = (float)dVar13;
-  *(float *)(iVar6 + 0x6b9d0) = (float)dVar14;
-  CG_UpdateFov((double)*(float *)(iVar7 + 0xc),uVar5);
-  CG_ShakeCamera(uVar5);
-  CG_PerturbCamera(iVar6);
-  __restfpr_25();
-  __restgprlr_27();
-  return;
-}
-
-
-// 8230E8D0  RewindTrace  (cgame/cg_view.cpp:2412)
-
-void RewindTrace(double param_1,float *param_2,float *param_3,float *param_4)
-
-{
-  float fVar1;
-  float fVar2;
-  float fVar3;
-  double dVar4;
-  
-  if (*param_2 == 1.0) {
-    return;
-  }
-  fVar1 = *param_4 - *param_3;
-  fVar2 = param_4[1] - param_3[1];
-  fVar3 = param_4[2] - param_3[2];
-  dVar4 = (double)(param_2[3] * fVar3 + param_2[2] * fVar2 + param_2[1] * fVar1);
-  if (0.0 <= dVar4) {
-    return;
-  }
-  fVar1 = (float)(dVar4 * param_1) / (fVar2 * fVar2 + fVar1 * fVar1 + fVar3 * fVar3) + *param_2;
-  *param_2 = fVar1;
-  if (0.0 <= fVar1) {
-    return;
-  }
-  *param_2 = 0.0;
-  return;
-}
-
-
-// 8230E960  DebugTraceLine  (cgame/cg_view.cpp:2435)
-
-void DebugTraceLine(double param_1,float *param_2,float *param_3,undefined8 param_4,
-                   undefined8 param_5)
-
-{
-  float local_20;
-  float local_1c;
-  float local_18;
-  
-  if (param_1 < 1.0) {
-    local_20 = (float)((double)(float)((double)*param_3 - (double)*param_2) * param_1 +
-                      (double)*param_2);
-    local_1c = (float)((double)(float)((double)param_3[1] - (double)param_2[1]) * param_1 +
-                      (double)param_2[1]);
-    local_18 = (float)((double)(float)((double)param_3[2] - (double)param_2[2]) * param_1 +
-                      (double)param_2[2]);
-    CG_DebugLine(param_2,&local_20,param_5,0,3000);
-    return;
-  }
-  CG_DebugLine(param_2,param_3,param_5,0,3000);
-  return;
-}
-
-
-// 8230E9F8  CG_KillcamCameraTrace  (cgame/cg_view.cpp:2451)
-
-void CG_KillcamCameraTrace(undefined8 param_1,float *param_2,undefined8 param_3,longlong param_4)
-
-{
-  float fVar1;
-  ulonglong uVar2;
-  float *pfVar3;
-  char cVar4;
-  longlong lVar5;
-  int iVar6;
-  double dVar7;
-  double dVar8;
-  double dVar9;
-  double dVar10;
-  double dVar11;
-  double dVar12;
-  double dVar13;
-  double dVar14;
-  double dVar15;
-  float local_e0;
-  float local_dc;
-  float local_d8;
-  float local_d0;
-  float local_cc;
-  float local_c8;
-  float local_a0;
-  float local_9c;
-  float local_98;
-  float local_94;
-  char local_71;
-  
-  uVar2 = ZEXT48(&stack0x00000000);
-  pfVar3 = (float *)__savegprlr_23();
-  if ((DAT_82a7717c & 1) == 0) {
-    DAT_82a7717c = DAT_82a7717c | 1;
-    DAT_82a77170 = 0x40a00000;
-    DAT_82a77174 = 0x40a00000;
-    DAT_82a77178 = 0x40a00000;
-  }
-  cVar4 = Dvar_GetBool(0xffffffff8202853c);
-  local_e0 = *pfVar3;
-  local_dc = pfVar3[1];
-  local_d8 = pfVar3[2];
-  pfVar3 = (float *)param_4;
-  *pfVar3 = *param_2;
-  pfVar3[1] = param_2[1];
-  pfVar3[2] = param_2[2];
-  CG_TraceCapsule(uVar2 - 0xa0,uVar2 - 0xe0,param_4,0xffffffff82a77164,param_3,0x811);
-  iVar6 = 0;
-  dVar13 = 1.0;
-  if (local_71 != '\0') {
-    dVar14 = 6.0;
+  bVar3 = Dvar_GetBool("cg_killcamdebug");
+  local_e0 = *pfVar2;
+  local_dc = pfVar2[1];
+  local_d8 = pfVar2[2];
+  *(float *)param_4 = *param_2;
+  *(float *)(param_4 + 4) = param_2[1];
+  *(float *)(param_4 + 8) = param_2[2];
+  pfVar2 = (float *)param_4;
+  CG_TraceCapsule(local_a0,&local_e0,(float *)param_4,&CAM_BOUNDS,(int)param_3,0x811);
+  iVar4 = 0;
+  dVar11 = 1.0;
+  if (local_a0[0].startsolid != false) {
+    dVar12 = 6.0;
     do {
-      if (cVar4 != '\0') {
-        lVar5 = param_4;
-        if ((double)local_a0 < dVar13) {
-          lVar5 = uVar2 - 0xc0;
+      if (bVar3) {
+        dVar5 = (double)local_a0[0].fraction;
+        local_b0 = local_e0;
+        local_ac = local_dc;
+        local_a8 = local_d8;
+        pfVar2 = (float *)param_4;
+        if (dVar5 < dVar11) {
+          local_c0 = (float)((double)(float)((double)*(float *)param_4 - (double)local_e0) * dVar5 +
+                            (double)local_e0);
+          local_bc = (float)((double)(float)((double)*(float *)(param_4 + 4) - (double)local_dc) *
+                             dVar5 + (double)local_dc);
+          local_b8 = (float)((double)(float)((double)*(float *)(param_4 + 8) - (double)local_d8) *
+                             dVar5 + (double)local_d8);
+          pfVar2 = &local_c0;
         }
-        CG_DebugLine(uVar2 - 0xe0,lVar5,0xffffffff821818e8,0,3000);
+        CG_DebugLine(&local_e0,pfVar2,colorDkGrey,0,3000);
       }
-      CG_TraceCapsule(uVar2 - 0xa0,uVar2 - 0xe0,param_4,0xffffffff82028524,param_3,0x811);
-      if ((double)local_a0 == dVar13) {
-        dVar7 = (double)local_d8 + dVar14;
+      CG_TraceCapsule(local_a0,&local_e0,(float *)param_4,&THIN_BOUNDS,(int)param_3,0x811);
+      if ((double)local_a0[0].fraction == dVar11) {
+        dVar5 = (double)local_d8 + dVar12;
       }
       else {
-        local_e0 = (float)((double)local_9c * dVar14 + (double)local_e0);
-        local_dc = (float)((double)local_98 * dVar14 + (double)local_dc);
-        dVar7 = (double)local_94 * dVar14 + (double)local_d8;
+        local_e0 = (float)((double)local_a0[0].normal[0] * dVar12 + (double)local_e0);
+        local_dc = (float)((double)local_a0[0].normal[1] * dVar12 + (double)local_dc);
+        dVar5 = (double)local_a0[0].normal[2] * dVar12 + (double)local_d8;
       }
-      local_d8 = (float)dVar7;
-      CG_TraceCapsule(uVar2 - 0xa0,uVar2 - 0xe0,param_4,0xffffffff82a77164,param_3,0x811);
-      if (cVar4 != '\0') {
-        CG_DebugLine(uVar2 - 0xb0,uVar2 - 0xe0,0xffffffff82181888,0,3000);
+      local_d8 = (float)dVar5;
+      pfVar2 = (float *)param_4;
+      CG_TraceCapsule(local_a0,&local_e0,(float *)param_4,&CAM_BOUNDS,(int)param_3,0x811);
+      if (bVar3) {
+        pfVar2 = colorLtCyan;
+        CG_DebugLine(&local_b0,&local_e0,colorLtCyan,0,3000);
       }
-      iVar6 = iVar6 + 1;
-    } while ((iVar6 < 3) && (local_71 != '\0'));
+      iVar4 = iVar4 + 1;
+    } while ((iVar4 < 3) && (local_a0[0].startsolid != false));
   }
-  if (cVar4 != '\0') {
-    DebugTraceLine((double)local_a0,uVar2 - 0xe0,param_4);
+  if (bVar3) {
+    DebugTraceLine(&local_e0,(float *)param_4,local_a0[0].fraction,pfVar2);
   }
-  if (local_71 != '\0') {
-    *pfVar3 = local_e0;
-    pfVar3[1] = local_dc;
-    pfVar3[2] = local_d8;
+  if (local_a0[0].startsolid != false) {
+    *(float *)param_4 = local_e0;
+    *(float *)(param_4 + 4) = local_dc;
+    *(float *)(param_4 + 8) = local_d8;
     __restgprlr_23();
     return;
   }
-  dVar14 = (double)local_a0;
-  if (dVar14 < dVar13) {
-    dVar7 = (double)*pfVar3;
-    dVar12 = (double)pfVar3[1];
-    iVar6 = 0;
-    dVar11 = (double)pfVar3[2];
-    dVar15 = 0.10000000149011612;
-    local_d0 = (float)((double)(float)(dVar7 - (double)local_e0) * dVar14 + (double)local_e0);
-    dVar9 = (double)local_d0;
-    local_cc = (float)((double)(float)(dVar12 - (double)local_dc) * dVar14 + (double)local_dc);
-    dVar10 = (double)local_cc;
-    local_c8 = (float)((double)(float)(dVar11 - (double)local_d8) * dVar14 + (double)local_d8);
-    dVar14 = (double)local_c8;
+  dVar12 = (double)local_a0[0].fraction;
+  if (dVar12 < dVar11) {
+    dVar5 = (double)*(float *)param_4;
+    dVar10 = (double)*(float *)(param_4 + 4);
+    iVar4 = 0;
+    dVar9 = (double)*(float *)(param_4 + 8);
+    dVar13 = 0.10000000149011612;
+    local_d0 = (float)((double)(float)(dVar5 - (double)local_e0) * dVar12 + (double)local_e0);
+    dVar7 = (double)local_d0;
+    local_cc = (float)((double)(float)(dVar10 - (double)local_dc) * dVar12 + (double)local_dc);
+    dVar8 = (double)local_cc;
+    local_c8 = (float)((double)(float)(dVar9 - (double)local_d8) * dVar12 + (double)local_d8);
+    dVar12 = (double)local_c8;
     do {
-      fVar1 = -((float)(dVar11 - dVar14) * local_94 -
-               (float)(dVar15 - (double)((float)(dVar12 - dVar10) * local_98 +
-                                        (float)(dVar7 - dVar9) * local_9c)));
-      *pfVar3 = (float)((double)(fVar1 * local_9c + (float)(dVar7 - dVar9)) + dVar9);
-      pfVar3[1] = (float)((double)(local_98 * fVar1 + (float)(dVar12 - dVar10)) + dVar10);
-      pfVar3[2] = (float)((double)(local_94 * fVar1 + (float)(dVar11 - dVar14)) + dVar14);
-      CG_TraceCapsule(uVar2 - 0xa0,uVar2 - 0xd0,param_4,0xffffffff82a77164,param_3,0x811);
-      if (cVar4 != '\0') {
-        DebugTraceLine((double)local_a0,uVar2 - 0xd0,param_4);
+      fVar1 = -((float)(dVar9 - dVar12) * local_a0[0].normal[2] -
+               (float)(dVar13 - (double)((float)(dVar10 - dVar8) * local_a0[0].normal[1] +
+                                        (float)(dVar5 - dVar7) * local_a0[0].normal[0])));
+      *(float *)param_4 =
+           (float)((double)(fVar1 * local_a0[0].normal[0] + (float)(dVar5 - dVar7)) + dVar7);
+      *(float *)(param_4 + 4) =
+           (float)((double)(local_a0[0].normal[1] * fVar1 + (float)(dVar10 - dVar8)) + dVar8);
+      *(float *)(param_4 + 8) =
+           (float)((double)(local_a0[0].normal[2] * fVar1 + (float)(dVar9 - dVar12)) + dVar12);
+      pfVar2 = (float *)param_4;
+      CG_TraceCapsule(local_a0,&local_d0,(float *)param_4,&CAM_BOUNDS,(int)param_3,0x811);
+      if (bVar3) {
+        DebugTraceLine(&local_d0,(float *)param_4,local_a0[0].fraction,pfVar2);
       }
-      dVar8 = (double)local_a0;
-      dVar10 = (double)local_cc;
-      if (dVar8 == dVar13) {
-        dVar14 = (double)local_c8;
-        dVar9 = (double)local_d0;
+      dVar6 = (double)local_a0[0].fraction;
+      dVar8 = (double)local_cc;
+      if (dVar6 == dVar11) {
+        dVar12 = (double)local_c8;
+        dVar7 = (double)local_d0;
         break;
       }
-      iVar6 = iVar6 + 1;
-      dVar7 = (double)*pfVar3;
-      dVar12 = (double)pfVar3[1];
-      dVar11 = (double)pfVar3[2];
-      local_d0 = (float)((double)(float)(dVar7 - (double)local_d0) * dVar8 + (double)local_d0);
-      dVar9 = (double)local_d0;
-      local_cc = (float)((double)(float)(dVar12 - dVar10) * dVar8 + dVar10);
-      dVar10 = (double)local_cc;
-      local_c8 = (float)((double)(float)(dVar11 - (double)local_c8) * dVar8 + (double)local_c8);
-      dVar14 = (double)local_c8;
-    } while (iVar6 < 3);
-    *pfVar3 = (float)((double)(float)((double)*pfVar3 - dVar9) * dVar8 + dVar9);
-    pfVar3[1] = (float)((double)(float)((double)pfVar3[1] - dVar10) * dVar8 + dVar10);
-    pfVar3[2] = (float)((double)(float)((double)pfVar3[2] - dVar14) * dVar8 + dVar14);
+      iVar4 = iVar4 + 1;
+      dVar5 = (double)*(float *)param_4;
+      dVar10 = (double)*(float *)(param_4 + 4);
+      dVar9 = (double)*(float *)(param_4 + 8);
+      local_d0 = (float)((double)(float)(dVar5 - (double)local_d0) * dVar6 + (double)local_d0);
+      dVar7 = (double)local_d0;
+      local_cc = (float)((double)(float)(dVar10 - dVar8) * dVar6 + dVar8);
+      dVar8 = (double)local_cc;
+      local_c8 = (float)((double)(float)(dVar9 - (double)local_c8) * dVar6 + (double)local_c8);
+      dVar12 = (double)local_c8;
+    } while (iVar4 < 3);
+    *(float *)param_4 = (float)((double)(float)((double)*(float *)param_4 - dVar7) * dVar6 + dVar7);
+    *(float *)(param_4 + 4) =
+         (float)((double)(float)((double)*(float *)(param_4 + 4) - dVar8) * dVar6 + dVar8);
+    *(float *)(param_4 + 8) =
+         (float)((double)(float)((double)*(float *)(param_4 + 8) - dVar12) * dVar6 + dVar12);
   }
   __restgprlr_23();
   return;
@@ -2724,1477 +1026,244 @@ void CG_KillcamCameraTrace(undefined8 param_1,float *param_2,undefined8 param_3,
 
 
 // 8230EE00  CG_UpdateExplosiveKillCam  (cgame/cg_view.cpp:2582)
-
-void CG_UpdateExplosiveKillCam
-               (undefined8 param_1,double param_2,double param_3,double param_4,undefined8 param_5,
-               int param_6)
-
-{
-  float fVar1;
-  float fVar2;
-  float fVar3;
-  float fVar4;
-  int iVar5;
-  int iVar6;
-  int iVar7;
-  int iVar8;
-  int iVar9;
-  undefined8 uVar10;
-  int iVar12;
-  undefined8 uVar11;
-  int *piVar13;
-  bool bVar14;
-  double extraout_f1;
-  double dVar15;
-  double dVar16;
-  double dVar17;
-  double dVar18;
-  double dVar19;
-  double dVar20;
-  double dVar21;
-  double dVar22;
-  double dVar23;
-  double dVar24;
-  double dVar25;
-  double dVar26;
-  double dVar27;
-  double dVar28;
-  double dVar29;
-  double dVar30;
-  double dVar31;
-  undefined8 local_1c0;
-  float local_1b8;
-  float local_1b0;
-  float local_1ac;
-  float local_1a8;
-  float local_1a0;
-  float local_19c;
-  float local_198;
-  float local_190;
-  float local_18c;
-  float local_188;
-  float local_180;
-  float local_17c;
-  float local_178;
-  float local_170;
-  float local_16c;
-  float local_168;
-  float local_160;
-  float local_15c;
-  float local_158;
-  float local_150 [84];
-  
-  __savegprlr_16();
-  uVar10 = __savefpr();
-  dVar16 = extraout_f1;
-  iVar12 = CG_GetLocalClientGlobals();
-  if (*(int *)(iVar12 + 0x7a708) == 0) {
-    MyAssertHandler(0xffffffff82027068,0xa24,0,0xffffffff82000f98,0xffffffff82028420);
-  }
-  if (*(int *)(iVar12 + 0x7a718) == 0) {
-    MyAssertHandler(0xffffffff82027068,0xa25,0,0xffffffff82000f98,0xffffffff820283f0);
-  }
-  CG_GetPlayerKillCamEntityLookAt(uVar10,&local_190);
-  CG_GetKillCamEntityOrgAngles(uVar10,&local_1b0,&local_170);
-  piVar13 = (int *)(iVar12 + 0x7a758);
-  dVar23 = 0.0;
-  iVar5 = *piVar13;
-  if ((iVar5 == 0) || (*(int *)(iVar12 + 0x6b98c) <= iVar5)) {
-    dVar24 = (double)local_1b0;
-    dVar15 = (double)local_1ac;
-    dVar30 = (double)local_1a8;
-  }
-  else {
-    local_1c0 = (longlong)(*(int *)(iVar12 + 0x6b98c) - iVar5);
-    dVar30 = (double)local_1c0;
-    if (dVar30 <= 0.0) {
-      MyAssertHandler(dVar30,0xffffffff82027068,0xa33,0,0xffffffff82028794,0xffffffff820287a4,dVar30
-                     );
-    }
-    dVar15 = (double)*(float *)(iVar12 + 0x7a75c);
-    if (dVar30 < dVar15) {
-      if (dVar15 <= dVar23) {
-        MyAssertHandler(0xffffffff82027068,0xa3b,0,0xffffffff82028738,0xffffffff82028768,dVar15);
-      }
-      dVar31 = (double)(-0.5 / *(float *)(iVar12 + 0x7a75c));
-      dVar24 = (double)(float)((double)(float)((double)(float)(dVar31 * (double)*(float *)(iVar12 + 
-                                                  0x7a76c)) * dVar30 +
-                                              (double)*(float *)(iVar12 + 0x7a76c)) * dVar30 +
-                              (double)*(float *)(iVar12 + 0x7a760));
-      dVar15 = (double)(float)((double)(float)((double)(float)((double)*(float *)(iVar12 + 0x7a770)
-                                                              * dVar31) * dVar30 +
-                                              (double)*(float *)(iVar12 + 0x7a770)) * dVar30 +
-                              (double)*(float *)(iVar12 + 0x7a764));
-      dVar30 = (double)(float)((double)(float)((double)(float)((double)*(float *)(iVar12 + 0x7a774)
-                                                              * dVar31) * dVar30 +
-                                              (double)*(float *)(iVar12 + 0x7a774)) * dVar30 +
-                              (double)*(float *)(iVar12 + 0x7a768));
-    }
-    else {
-      fVar2 = (float)(dVar15 * 0.5);
-      dVar24 = (double)(fVar2 * *(float *)(iVar12 + 0x7a76c) + *(float *)(iVar12 + 0x7a760));
-      dVar15 = (double)(*(float *)(iVar12 + 0x7a770) * fVar2 + *(float *)(iVar12 + 0x7a764));
-      dVar30 = (double)(*(float *)(iVar12 + 0x7a774) * fVar2 + *(float *)(iVar12 + 0x7a768));
-    }
-  }
-  dVar22 = (double)local_190;
-  dVar29 = (double)(float)(dVar22 - dVar24);
-  dVar21 = (double)local_18c;
-  dVar20 = (double)local_188;
-  dVar27 = (double)(float)(dVar21 - dVar15);
-  dVar31 = (double)(float)(dVar20 - dVar30);
-  local_1c0 = CONCAT44((float)dVar24,(float)dVar15);
-  local_1b8 = (float)dVar30;
-  if (((dVar29 == dVar23) && (dVar27 == dVar23)) && (dVar31 == dVar23)) {
-    MyAssertHandler(0xffffffff82027068,0xa49,0,0xffffffff82000f98,0xffffffff82028720);
-  }
-  if (dVar23 < dVar31) {
-    dVar31 = dVar23;
-  }
-  dVar26 = 1.0;
-  dVar25 = 0.0020000000949949026;
-  dVar18 = (double)SQRT((float)(dVar31 * dVar31 +
-                               (double)(float)(dVar29 * dVar29 + (double)(float)(dVar27 * dVar27))))
-  ;
-  dVar17 = dVar26;
-  if (-dVar18 < 0.0) {
-    dVar17 = dVar18;
-  }
-  dVar17 = (double)(float)(1.0 / dVar17);
-  local_198 = (float)(dVar17 * dVar31);
-  dVar31 = (double)local_198;
-  local_1a0 = (float)(dVar17 * dVar29);
-  dVar18 = (double)local_1a0;
-  local_19c = (float)(dVar17 * dVar27);
-  dVar29 = (double)local_19c;
-  dVar27 = (double)(float)(dVar18 * dVar18);
-  fVar2 = (float)((double)(float)(dVar29 * dVar29 + (double)(float)(dVar31 * dVar31)) + dVar27);
-  if (0.002 <= ABS(fVar2 - 1.0)) {
-    uVar11 = va(dVar18,dVar29,dVar31,0xffffffff82015f2c,dVar18,dVar29,dVar31,(double)SQRT(fVar2));
-    MyAssertHandler(0xffffffff82027068,0xa4f,0,0xffffffff820011f4,0xffffffff82028704,uVar11);
-  }
-  dVar17 = -dVar29;
-  if ((dVar17 == dVar23) && (dVar18 == dVar23)) {
-    dVar17 = dVar26;
-  }
-  dVar19 = (double)SQRT((float)(dVar17 * dVar17 + dVar27));
-  dVar27 = dVar26;
-  if (-dVar19 < 0.0) {
-    dVar27 = dVar19;
-  }
-  dVar27 = (double)(float)(dVar26 / dVar27);
-  local_180 = (float)(dVar27 * dVar17);
-  local_17c = (float)(dVar27 * dVar18);
-  local_178 = (float)(dVar27 * dVar23);
-  Vec3Cross(&local_1a0,&local_180,&local_170);
-  dVar28 = (double)local_16c;
-  dVar19 = (double)local_170;
-  dVar17 = (double)local_168;
-  dVar27 = (double)(float)(dVar17 * dVar17 +
-                          (double)(float)(dVar19 * dVar19 + (double)(float)(dVar28 * dVar28)));
-  if (dVar25 <= ABS((double)(float)(dVar27 - dVar26))) {
-    uVar11 = va(dVar19,dVar28,dVar17,0xffffffff82015f2c,dVar19,dVar28,dVar17,
-                (double)(float)SQRT(dVar27));
-    MyAssertHandler(0xffffffff82027068,0xa56,0,0xffffffff820011f4,0xffffffff820284a8,uVar11);
-  }
-  if (*(int *)(iVar12 + 0x7a738) == 3) {
-    local_1a0 = (float)dVar24;
-    local_19c = (float)dVar15;
-    local_198 = (float)dVar30;
-    local_1c0 = CONCAT44((float)(dVar18 * 5.0 + dVar24),(float)(dVar29 * 5.0 + dVar15));
-    local_1b8 = (float)(dVar31 * 5.0 + dVar30);
-  }
-  else if (*(int *)(iVar12 + 0x7a738) == 2) {
-    dVar16 = -(double)(float)param_4;
-    local_1a0 = (float)(dVar16 * dVar18 + (double)(float)(dVar19 * param_3 + dVar24));
-    local_19c = (float)(dVar16 * dVar29 + (double)(float)(dVar28 * param_3 + dVar15));
-    local_198 = (float)(dVar16 * dVar31 + (double)(float)(dVar17 * param_3 + dVar30));
-  }
-  else {
-    param_2 = -param_2;
-    local_1a0 = (float)(param_2 * dVar18 + (double)(float)(dVar19 * dVar16 + dVar24));
-    local_19c = (float)(param_2 * dVar29 + (double)(float)(dVar28 * dVar16 + dVar15));
-    local_198 = (float)(param_2 * dVar31 + (double)(float)(dVar17 * dVar16 + dVar30));
-  }
-  CG_KillcamCameraTrace(&local_1c0,&local_1a0,*(undefined4 *)(iVar12 + 0x150),iVar12 + 0x6b9c8);
-  dVar16 = (double)LookAtBothPoints(&local_190,&local_1b0,iVar12 + 0x6b9c8,iVar12 + 0x6b9d4);
-  if (((param_6 == 5) || (param_6 == 8)) || (param_6 == 4)) {
-    fVar2 = (float)((double)local_1a8 - dVar20);
-    fVar3 = *(float *)(DAT_82a76fc8 + 0xc);
-    bVar14 = (float)((double)local_1ac - dVar21) * (float)((double)local_1ac - dVar21) +
-             (float)((double)local_1b0 - dVar22) * (float)((double)local_1b0 - dVar22) +
-             fVar2 * fVar2 < fVar3 * fVar3;
-    if ((param_6 == 8) && (fVar2 < fVar3)) {
-      bVar14 = true;
-    }
-    if (((bVar14) && (*piVar13 == 0)) && (*(char *)(iVar12 + 0x7a70c) != '\0')) {
-      fVar2 = *(float *)(iVar12 + 0x7a778);
-      local_1c0 = CONCAT44(fVar2,local_1c0._4_4_);
-      if (((((uint)fVar2 & 0x7f800000) == 0x7f800000) ||
-          (local_1c0 = CONCAT44(*(uint *)(iVar12 + 0x7a77c),local_1c0._4_4_),
-          (*(uint *)(iVar12 + 0x7a77c) & 0x7f800000) == 0x7f800000)) ||
-         (local_1c0 = CONCAT44(*(uint *)(iVar12 + 0x7a780),local_1c0._4_4_),
-         (*(uint *)(iVar12 + 0x7a780) & 0x7f800000) == 0x7f800000)) {
-        MyAssertHandler(0xffffffff82027068,0xa8d,0,0xffffffff82000f98,0xffffffff82028670);
-      }
-      local_1c0 = CONCAT44(local_1b0,local_1c0._4_4_);
-      if (((((uint)local_1b0 & 0x7f800000) == 0x7f800000) ||
-          (local_1c0 = CONCAT44(local_1ac,local_1c0._4_4_),
-          ((uint)local_1ac & 0x7f800000) == 0x7f800000)) ||
-         (local_1c0 = CONCAT44(local_1a8,local_1c0._4_4_),
-         ((uint)local_1a8 & 0x7f800000) == 0x7f800000)) {
-        MyAssertHandler(0xffffffff82027068,0xa8e,0,0xffffffff82000f98,0xffffffff82028610);
-      }
-      *piVar13 = *(int *)(iVar12 + 0x6b98c);
-      *(float *)(iVar12 + 0x7a760) = local_1b0;
-      *(float *)(iVar12 + 0x7a764) = local_1ac;
-      *(float *)(iVar12 + 0x7a768) = local_1a8;
-      if (*(int *)(iVar12 + 0x6b988) < 1) {
-        *(float *)(iVar12 + 0x7a76c) = (float)dVar23;
-        *(float *)(iVar12 + 0x7a770) = (float)dVar23;
-        *(float *)(iVar12 + 0x7a774) = (float)dVar23;
-        dVar30 = dVar23;
-        dVar15 = dVar23;
-        dVar24 = dVar23;
-        dVar31 = dVar23;
-      }
-      else {
-        fVar3 = local_1b0 - *(float *)(iVar12 + 0x7a778);
-        *(float *)(iVar12 + 0x7a76c) = fVar3;
-        *(float *)(iVar12 + 0x7a770) = local_1ac - *(float *)(iVar12 + 0x7a77c);
-        *(float *)(iVar12 + 0x7a774) = local_1a8 - *(float *)(iVar12 + 0x7a780);
-        iVar5 = *(int *)(iVar12 + 0x6b988);
-        fVar2 = (float)(dVar26 / (double)(longlong)iVar5);
-        fVar3 = fVar2 * fVar3;
-        local_1c0 = CONCAT44(fVar3,iVar5);
-        *(float *)(iVar12 + 0x7a76c) = fVar3;
-        *(float *)(iVar12 + 0x7a770) = fVar2 * *(float *)(iVar12 + 0x7a770);
-        *(float *)(iVar12 + 0x7a774) = fVar2 * *(float *)(iVar12 + 0x7a774);
-        if (((((uint)fVar3 & 0x7f800000) == 0x7f800000) ||
-            (local_1c0 = CONCAT44(*(uint *)(iVar12 + 0x7a770),iVar5),
-            (*(uint *)(iVar12 + 0x7a770) & 0x7f800000) == 0x7f800000)) ||
-           (local_1c0 = CONCAT44(*(uint *)(iVar12 + 0x7a774),iVar5),
-           (*(uint *)(iVar12 + 0x7a774) & 0x7f800000) == 0x7f800000)) {
-          MyAssertHandler(0xffffffff82027068,0xa96,0,0xffffffff82000f98,0xffffffff82028588);
-        }
-        fVar2 = *(float *)(iVar12 + 0x7a774);
-        fVar3 = *(float *)(iVar12 + 0x7a770);
-        fVar4 = *(float *)(iVar12 + 0x7a76c);
-        dVar24 = (double)SQRT(fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2);
-        dVar30 = dVar26;
-        if (-dVar24 < 0.0) {
-          dVar30 = dVar24;
-        }
-        fVar1 = (float)(dVar26 / dVar30);
-        fVar4 = fVar4 * fVar1;
-        dVar31 = (double)fVar4;
-        local_1c0 = CONCAT44(fVar4,local_1c0._4_4_);
-        fVar3 = fVar1 * fVar3;
-        dVar15 = (double)fVar3;
-        fVar1 = fVar1 * fVar2;
-        dVar30 = (double)fVar1;
-        if (((((uint)fVar4 & 0x7f800000) == 0x7f800000) ||
-            (local_1c0 = CONCAT44(fVar3,local_1c0._4_4_), ((uint)fVar3 & 0x7f800000) == 0x7f800000))
-           || (local_1c0 = CONCAT44(fVar1,local_1c0._4_4_), ((uint)fVar1 & 0x7f800000) == 0x7f800000
-              )) {
-          MyAssertHandler(0xffffffff82027068,0xa99,0,0xffffffff82000f98,0xffffffff8202854c);
-        }
-      }
-      dVar20 = (double)*(float *)(DAT_82a76f48 + 0xc);
-      if (dVar23 < dVar24) {
-        local_160 = (float)(dVar20 * dVar31 + (double)local_1b0);
-        local_15c = (float)(dVar20 * dVar15 + (double)local_1ac);
-        local_158 = (float)(dVar20 * dVar30 + (double)local_1a8);
-        CG_TraceCapsule(local_150,&local_1b0,&local_160,0xffffffff82174a3c,
-                        *(undefined4 *)(iVar12 + 0x150),0x811);
-        *(float *)(iVar12 + 0x7a75c) =
-             (float)((double)(float)((double)local_150[0] * dVar20) / dVar24) * 2.0;
-      }
-      else {
-        *(float *)(iVar12 + 0x7a75c) = (float)dVar23;
-      }
-    }
-  }
-  iVar9 = DAT_82a77154;
-  iVar8 = DAT_82a76fc4;
-  iVar7 = DAT_82a76fa8;
-  iVar6 = DAT_82a76f30;
-  iVar5 = DAT_82a76f20;
-  *(undefined4 *)(iVar12 + 0x6ba2c) = *(undefined4 *)(DAT_82a7715c + 0xc);
-  *(undefined4 *)(iVar12 + 0x6ba30) = *(undefined4 *)(iVar9 + 0xc);
-  *(undefined4 *)(iVar12 + 0x6ba1c) = *(undefined4 *)(iVar6 + 0xc);
-  *(undefined4 *)(iVar12 + 0x6ba20) = *(undefined4 *)(iVar5 + 0xc);
-  *(float *)(iVar12 + 0x6ba24) = (float)((double)*(float *)(iVar8 + 0xc) + dVar16);
-  *(float *)(iVar12 + 0x6ba28) =
-       (float)((double)(*(float *)(iVar7 + 0xc) + *(float *)(iVar8 + 0xc)) + dVar16);
-  AxisToAngles(iVar12 + 0x6b9d4,iVar12 + 0x704dc);
-  CG_ShakeCamera(uVar10);
-  CG_PerturbCamera(iVar12);
-  CG_UpdateFov((double)*(float *)(DAT_82a76f24 + 0xc),uVar10);
-  __restfpr();
-  __restgprlr_16();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 8230F7B0  CG_KillCamEntityEnabled  (cgame/cg_view.cpp:2755)
-
-bool CG_KillCamEntityEnabled(void)
-
-{
-  int iVar1;
-  
-  iVar1 = CG_GetLocalClientGlobals();
-  if (*(int *)(iVar1 + 0x7a708) == 0) {
-    return false;
-  }
-  return *(int *)(iVar1 + 0x7a718) != 0;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 8230F810  CG_KillCamDefaultView  (cgame/cg_view.cpp:2768)
-
-undefined8 CG_KillCamDefaultView(void)
-
-{
-  int iVar2;
-  undefined8 uVar1;
-  
-  iVar2 = CG_GetLocalClientGlobals();
-  if (*(int *)(iVar2 + 0x7a708) == 0) {
-    return 0;
-  }
-  iVar2 = *(int *)(iVar2 + 0x7a718);
-  if (((iVar2 == 1) || (iVar2 == 3)) || (uVar1 = 0, iVar2 == 6)) {
-    uVar1 = 1;
-  }
-  return uVar1;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 8230F888  CG_CacheKillCamEntityPose  (cgame/cg_view.cpp:2793)
-
-void CG_CacheKillCamEntityPose(void)
-
-{
-  undefined8 uVar1;
-  int iVar2;
-  int iVar3;
-  
-  uVar1 = __savegprlr_27();
-  iVar2 = CG_GetLocalClientGlobals();
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff82027068,0xaee,0,0xffffffff82000f98,0xffffffff82002798);
-  }
-  if (*(int *)(iVar2 + 0x7a708) == 0) {
-    MyAssertHandler(0xffffffff82027068,0xaef,0,0xffffffff82000f98,0xffffffff82028420);
-  }
-  if (*(int *)(iVar2 + 0x7a71c) != 0x7ff) {
-    if (*(int *)(iVar2 + 0x7a718) == 0) {
-      MyAssertHandler(0xffffffff82027068,0xaf5,0,0xffffffff82000f98,0xffffffff820283f0);
-    }
-    iVar3 = CG_GetEntity(uVar1,*(int *)(iVar2 + 0x7a71c));
-    if ((*(uint *)(iVar3 + 0x1c4) & 1) == 0) {
-      MyAssertHandler(0xffffffff82027068,0xaf8,0,0xffffffff82000f98,0xffffffff82012adc);
-    }
-    *(undefined4 *)(iVar2 + 0x7a720) = *(undefined4 *)(iVar3 + 0x14);
-    *(undefined4 *)(iVar2 + 0x7a724) = *(undefined4 *)(iVar3 + 0x18);
-    *(undefined4 *)(iVar2 + 0x7a728) = *(undefined4 *)(iVar3 + 0x1c);
-    *(undefined4 *)(iVar2 + 0x7a72c) = *(undefined4 *)(iVar3 + 0x20);
-    *(undefined4 *)(iVar2 + 0x7a730) = *(undefined4 *)(iVar3 + 0x24);
-    *(undefined4 *)(iVar2 + 0x7a734) = *(undefined4 *)(iVar3 + 0x28);
-  }
-  __restgprlr_27();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 8230F9D0  CG_CacheKillCamLookAtEntityOrigin  (cgame/cg_view.cpp:2816)
-
-void CG_CacheKillCamLookAtEntityOrigin(void)
-
-{
-  undefined8 uVar1;
-  int iVar2;
-  int iVar3;
-  
-  uVar1 = __savegprlr_28();
-  iVar2 = CG_GetLocalClientGlobals();
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff82027068,0xb05,0,0xffffffff82000f98,0xffffffff82002798);
-  }
-  if (*(int *)(iVar2 + 0x7a708) == 0) {
-    MyAssertHandler(0xffffffff82027068,0xb06,0,0xffffffff82000f98,0xffffffff82028420);
-  }
-  if (*(int *)(iVar2 + 0x7a73c) != 0x7ff) {
-    iVar3 = CG_GetEntity(uVar1);
-    if ((*(uint *)(iVar3 + 0x1c4) & 1) != 0) {
-      if (*(char *)(iVar3 + 2) != '\x01') {
-        MyAssertHandler(0xffffffff82027068,0xb10,0,0xffffffff82000f98,0xffffffff820287b4);
-      }
-      *(undefined4 *)(iVar2 + 0x7a740) = *(undefined4 *)(iVar3 + 0x14);
-      *(undefined4 *)(iVar2 + 0x7a744) = *(undefined4 *)(iVar3 + 0x18);
-      *(undefined4 *)(iVar2 + 0x7a748) = *(undefined4 *)(iVar3 + 0x1c);
-      *(float *)(iVar2 + 0x7a748) = *(float *)(iVar2 + 0x7a748) + 50.0;
-    }
-  }
-  __restgprlr_28();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 8230FAE8  UpdateKillCamEntityCache  (cgame/cg_view.cpp:2839)
-
-void UpdateKillCamEntityCache(undefined8 param_1)
-
-{
-  int iVar1;
-  
-  iVar1 = CG_GetLocalClientGlobals();
-  if (*(int *)(iVar1 + 0x7a708) != 0) {
-    CG_CacheKillCamEntityPose(param_1);
-    CG_CacheKillCamLookAtEntityOrigin(param_1);
-  }
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 8230FB38  LerpKillCamView  (cgame/cg_view.cpp:2856)
-
-void LerpKillCamView(void)
-
-{
-  int iVar1;
-  float fVar2;
-  undefined8 uVar3;
-  int iVar4;
-  int iVar5;
-  int *piVar6;
-  float *pfVar7;
-  double dVar8;
-  double dVar9;
-  double dVar10;
-  double dVar11;
-  double dVar12;
-  double dVar13;
-  double dVar14;
-  double dVar15;
-  double dVar16;
-  longlong local_100 [2];
-  float local_f0;
-  float local_ec;
-  float local_e8;
-  float local_e0 [11];
-  char local_b1;
-  
-  __savegprlr_19();
-  uVar3 = __savefpr_25();
-  iVar4 = CG_GetLocalClientGlobals();
-  if (*(int *)(iVar4 + 0x7a708) == 0) goto LAB_8230ff6c;
-  piVar6 = (int *)(iVar4 + 0x7a784);
-  if (*(int *)(iVar4 + 0x6b98c) < *piVar6) {
-    if (*piVar6 <= *(int *)(iVar4 + 0x6b990)) {
-      MyAssertHandler(0xffffffff82027068,0xb36,0,0xffffffff820287f0);
-    }
-    local_100[0] = (longlong)*(int *)(iVar4 + 0x6b988);
-    dVar8 = 0.0;
-    dVar16 = (double)(float)((double)local_100[0] /
-                            (double)(longlong)(*piVar6 - *(int *)(iVar4 + 0x6b990)));
-    dVar12 = dVar8;
-    dVar14 = dVar8;
-    if ((((*(int *)(iVar4 + 0x7a710) != 0x7ff) && (*(char *)(iVar4 + 0x7a70c) != '\0')) &&
-        (iVar5 = CG_GetEntity(uVar3), (*(uint *)(iVar5 + 0x1c4) & 1) != 0)) &&
-       (iVar1 = *(int *)(iVar4 + 0x6b988), 0 < iVar1)) {
-      fVar2 = 1.0 / (float)(longlong)iVar1;
-      dVar14 = (double)(fVar2 * (*(float *)(iVar5 + 0x14) - *(float *)(iVar4 + 0x7a778)));
-      dVar12 = (double)((*(float *)(iVar5 + 0x18) - *(float *)(iVar4 + 0x7a77c)) * fVar2);
-      dVar8 = (double)((*(float *)(iVar5 + 0x1c) - *(float *)(iVar4 + 0x7a780)) * fVar2);
-    }
-    pfVar7 = (float *)(iVar4 + 0x6b9c8);
-    local_100[0] = (longlong)(*piVar6 - *(int *)(iVar4 + 0x6b98c));
-    dVar9 = (double)local_100[0];
-    local_f0 = (float)(dVar9 * dVar14 + (double)*(float *)(iVar4 + 0x6b9c8));
-    local_ec = (float)(dVar12 * dVar9 + (double)*(float *)(iVar4 + 0x6b9cc));
-    local_e8 = (float)(dVar8 * dVar9 + (double)*(float *)(iVar4 + 0x6b9d0));
-    CG_TraceCapsule(local_e0,pfVar7,&local_f0,0xffffffff820287d8,*(undefined4 *)(iVar4 + 0x150),
-                    0x811);
-    dVar12 = (double)*pfVar7;
-    if (local_b1 == '\0') {
-      dVar14 = (double)local_e0[0];
-      local_f0 = (float)((double)(float)((double)local_f0 - dVar12) * dVar14 + dVar12);
-      dVar12 = (double)local_f0;
-      local_ec = (float)((double)(float)((double)local_ec - (double)*(float *)(iVar4 + 0x6b9cc)) *
-                         dVar14 + (double)*(float *)(iVar4 + 0x6b9cc));
-      local_e8 = (float)((double)(float)((double)local_e8 - (double)*(float *)(iVar4 + 0x6b9d0)) *
-                         dVar14 + (double)*(float *)(iVar4 + 0x6b9d0));
-    }
-    else {
-      local_ec = *(float *)(iVar4 + 0x6b9cc);
-      local_e8 = *(float *)(iVar4 + 0x6b9d0);
-      local_f0 = *pfVar7;
-    }
-    dVar15 = 0.0027777778450399637;
-    dVar13 = 0.5;
-    *pfVar7 = (float)((double)(float)(dVar12 - (double)*(float *)(iVar4 + 0x7a794)) * dVar16 +
-                     (double)*(float *)(iVar4 + 0x7a794));
-    *(float *)(iVar4 + 0x6b9cc) =
-         (float)((double)(float)((double)local_ec - (double)*(float *)(iVar4 + 0x7a798)) * dVar16 +
-                (double)*(float *)(iVar4 + 0x7a798));
-    *(float *)(iVar4 + 0x6b9d0) =
-         (float)((double)(float)((double)local_e8 - (double)*(float *)(iVar4 + 0x7a79c)) * dVar16 +
-                (double)*(float *)(iVar4 + 0x7a79c));
-    dVar10 = (double)*(float *)(iVar4 + 0x7a788);
-    dVar8 = (double)((float)((double)*(float *)(iVar4 + 0x704dc) - dVar10) * 0.0027777778);
-    dVar12 = floor((double)(float)(dVar8 + 0.5));
-    dVar14 = (double)*(float *)(iVar4 + 0x7a78c);
-    dVar11 = 360.0;
-    dVar9 = (double)(float)((double)(float)((double)*(float *)(iVar4 + 460000) - dVar14) * dVar15);
-    *(float *)(iVar4 + 0x704dc) =
-         (float)((double)(float)((double)(float)(dVar8 - (double)(float)dVar12) * dVar16) * 360.0 +
-                dVar10);
-    dVar12 = floor((double)(float)(dVar9 + dVar13));
-    dVar8 = (double)*(float *)(iVar4 + 0x7a790);
-    dVar10 = (double)(float)((double)(float)((double)*(float *)(iVar4 + 0x704e4) - dVar8) * dVar15);
-    *(float *)(iVar4 + 460000) =
-         (float)((double)(float)((double)(float)(dVar9 - (double)(float)dVar12) * dVar16) * dVar11 +
-                dVar14);
-    dVar12 = floor((double)(float)(dVar10 + dVar13));
-    *(float *)(iVar4 + 0x704e4) =
-         (float)((double)(float)((double)(float)(dVar10 - (double)(float)dVar12) * dVar16) * dVar11
-                + dVar8);
-    AnglesToAxis(iVar4 + 0x704dc,iVar4 + 0x6b9d4);
-    *(undefined4 *)(iVar4 + 0x6b9a0) = 1;
-  }
-  if (*(int *)(iVar4 + 0x7a718) == 0) goto LAB_8230ff6c;
-  CG_GetKillCamEntityOrgAngles(uVar3,iVar4 + 0x7a778,local_100);
-  local_100[0] = CONCAT44(*(uint *)(iVar4 + 0x7a778),local_100[0]._4_4_);
-  if ((*(uint *)(iVar4 + 0x7a778) & 0x7f800000) == 0x7f800000) {
-LAB_8230ff48:
-    MyAssertHandler(0xffffffff82027068,0xb5f,0,0xffffffff82000f98,0xffffffff82028670);
-  }
-  else {
-    local_100[0] = CONCAT44(*(uint *)(iVar4 + 0x7a77c),local_100[0]._4_4_);
-    if ((*(uint *)(iVar4 + 0x7a77c) & 0x7f800000) == 0x7f800000) goto LAB_8230ff48;
-    local_100[0] = CONCAT44(*(uint *)(iVar4 + 0x7a780),local_100[0]._4_4_);
-    if ((*(uint *)(iVar4 + 0x7a780) & 0x7f800000) == 0x7f800000) goto LAB_8230ff48;
-  }
-  *(undefined1 *)(iVar4 + 0x7a70c) = 1;
-LAB_8230ff6c:
-  *(undefined4 *)(iVar4 + 0x7a788) = *(undefined4 *)(iVar4 + 0x704dc);
-  *(undefined4 *)(iVar4 + 0x7a78c) = *(undefined4 *)(iVar4 + 460000);
-  *(undefined4 *)(iVar4 + 0x7a790) = *(undefined4 *)(iVar4 + 0x704e4);
-  *(undefined4 *)(iVar4 + 0x7a794) = *(undefined4 *)(iVar4 + 0x6b9c8);
-  *(undefined4 *)(iVar4 + 0x7a798) = *(undefined4 *)(iVar4 + 0x6b9cc);
-  *(undefined4 *)(iVar4 + 0x7a79c) = *(undefined4 *)(iVar4 + 0x6b9d0);
-  __restfpr_25();
-  __restgprlr_19();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 8230FFC0  CG_UpdateKillCamEntity  (cgame/cg_view.cpp:2924)
 
-void CG_UpdateKillCamEntity(longlong param_1,undefined8 param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CG_UpdateKillCamEntity(KillCamEntityType param_1,LocalClientNum_t param_2)
 
 {
   bool bVar1;
+  longlong lVar2;
+  double in_f5;
+  double in_f6;
   
-  if (7 < (param_1 - 1U & 0xffffffff)) {
-    if (DAT_84013128 != 0) {
+  lVar2 = (longlong)(int)param_1;
+  if (7 < (lVar2 - 1U & 0xffffffff)) {
+    if (alwaysfails != 0) {
       return;
     }
-    MyAssertHandler(0xffffffff82027068,0xb97,0,0xffffffff8202882c);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_view.cpp",0xb97,0,
+                    "unreachable");
     return;
   }
-  bVar1 = (int)(param_1 - 1U) != 0;
-  if (param_1 == 2 && bVar1) {
+  bVar1 = (int)(lVar2 - 1U) != 0;
+  if (lVar2 == 2 && bVar1) {
     CG_UpdateAirstrikeKillCam(param_2);
     return;
   }
-  if ((param_1 == 3 && bVar1) || (param_1 == 4 && bVar1)) {
+  if ((lVar2 == 3 && bVar1) || (lVar2 == 4 && bVar1)) {
     CG_UpdateExplosiveKillCam
-              ((double)*(float *)(DAT_82a76f78 + 0xc),(double)*(float *)(DAT_82a76f90 + 0xc),
-               (double)*(float *)(DAT_82a76f68 + 0xc),(double)*(float *)(DAT_82a76ff0 + 0xc),param_2
-               ,param_1);
+              (param_2,param_1,*(float *)(DAT_82a76f78 + 0xc),*(float *)(DAT_82a76f90 + 0xc),
+               *(float *)(DAT_82a76f68 + 0xc),*(float *)(DAT_82a76ff0 + 0xc),(float)in_f5,
+               (float)in_f6);
     return;
   }
-  if (param_1 == 5 && bVar1) {
+  if (lVar2 == 5 && bVar1) {
     CG_UpdateExplosiveKillCam
-              ((double)*(float *)(DAT_82a76f5c + 0xc),(double)*(float *)(DAT_82a76f64 + 0xc),0,
-               param_2,param_1);
+              (param_2,param_1,*(float *)(DAT_82a76f5c + 0xc),*(float *)(DAT_82a76f64 + 0xc),0.0,0.0
+               ,(float)in_f5,(float)in_f6);
     return;
   }
-  if (param_1 != 6 || !bVar1) {
-    if (param_1 == 7 && bVar1) {
+  if (lVar2 != 6 || !bVar1) {
+    if (lVar2 == 7 && bVar1) {
       CG_UpdateJavelinKillCam(param_2,param_1);
       return;
     }
     if (!bVar1) {
-      CG_UpdateHelicopterKillCam();
+      CG_UpdateHelicopterKillCam(param_2,param_2);
       return;
     }
     CG_UpdateExplosiveKillCam
-              ((double)*(float *)(DAT_82a76f2c + 0xc),(double)*(float *)(DAT_82a76fec + 0xc),0,
-               param_2,param_1);
+              (param_2,param_1,(cg_remoteMissileKillCamUpDist->current).value,
+               *(float *)(DAT_82a76fec + 0xc),0.0,0.0,(float)in_f5,(float)in_f6);
     return;
   }
-  CG_UpdateTurretKillCam();
+  CG_UpdateTurretKillCam(param_2);
   return;
 }
 
 
 // 823100C8  CalcLinkedViewValues  (cgame/cg_view.cpp:2975)
-
-void CalcLinkedViewValues(undefined8 param_1,undefined8 param_2)
-
-{
-  int iVar1;
-  
-  iVar1 = CG_GetLocalClientGlobals();
-  if ((((*(int *)(iVar1 + 4) == 1) || (*(int *)(iVar1 + 4) == 9)) ||
-      ((*(uint *)(iVar1 + 0x14) & 4) != 0)) && ((*(uint *)(iVar1 + 0xf8) & 0x203800) == 0)) {
-    BG_ApplyLinkAngles(iVar1 + 0x1c0,param_2);
-  }
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 82310138  RemoteEyesShake  (cgame/cg_view.cpp:2999)
-
-void RemoteEyesShake(undefined8 param_1,ulonglong param_2)
-
-{
-  int iVar1;
-  int iVar4;
-  int iVar5;
-  double dVar6;
-  double dVar7;
-  double dVar8;
-  double dVar9;
-  double dVar10;
-  double dVar11;
-  double dVar12;
-  double dVar13;
-  int iVar2;
-  int iVar3;
-  
-  __savegprlr_28();
-  iVar5 = __savefpr_25();
-  if (iVar5 == 0) {
-    MyAssertHandler(0xffffffff82027068,0xbc4,0,0xffffffff82000f98,0xffffffff82002798);
-  }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82027068,0xbc5,0,0xffffffff82000f98,0xffffffff8202888c);
-  }
-  iVar4 = (int)param_2;
-  iVar1 = DAT_82a76f38;
-  iVar2 = DAT_82a76f54;
-  iVar3 = DAT_82a76fe4;
-  if ((*(int *)(iVar4 + 200) != 0xc) &&
-     (iVar1 = DAT_82a76f9c, iVar2 = DAT_82a76fd8, iVar3 = DAT_82a76f0c, *(int *)(iVar4 + 200) != 4))
-  {
-    Com_PrintWarning(0xe,0xffffffff82028838);
-    iVar1 = DAT_82a76f9c;
-    iVar2 = DAT_82a76fd8;
-    iVar3 = DAT_82a76f0c;
-  }
-  dVar11 = (double)*(float *)(iVar3 + 0x14);
-  dVar12 = (double)*(float *)(iVar3 + 0x10);
-  dVar13 = (double)*(float *)(iVar3 + 0xc);
-  dVar6 = (double)*(float *)(iVar1 + 0x10);
-  dVar9 = (double)*(float *)(iVar2 + 0x14);
-  dVar10 = (double)*(float *)(iVar2 + 0x10);
-  dVar7 = (double)*(float *)(iVar1 + 0xc);
-  if ((double)*(float *)(iVar1 + 0xc) < 0.0) {
-    dVar7 = 0.0;
-  }
-  if (dVar6 <= dVar7) {
-    dVar6 = (double)(float)(dVar7 + 1.0);
-  }
-  dVar8 = (double)SQRT(*(float *)(iVar4 + 0xf0) * *(float *)(iVar4 + 0xf0) +
-                       *(float *)(iVar4 + 0xe8) * *(float *)(iVar4 + 0xe8) +
-                       *(float *)(iVar4 + 0xec) * *(float *)(iVar4 + 0xec));
-  if ((dVar7 <= dVar8) && (dVar7 = dVar8, dVar6 < dVar8)) {
-    dVar7 = dVar6;
-  }
-  dVar6 = (double)(float)(dVar7 / dVar6);
-  dVar7 = 1.0;
-  if ((float)(dVar6 - 1.0) < 0.0) {
-    dVar7 = dVar6;
-  }
-  dVar8 = 0.0;
-  if (-dVar6 < 0.0) {
-    dVar8 = dVar7;
-  }
-  dVar6 = (double)((float)(longlong)*(int *)(iVar5 + 0x6ba08) * 0.001 * 3.1415927);
-  dVar7 = sin((double)(float)(dVar6 * (double)*(float *)(iVar2 + 0xc)));
-  *(float *)(iVar5 + 0x704dc) =
-       (float)((double)(float)((double)(float)dVar7 * dVar8) * dVar13 +
-              (double)*(float *)(iVar5 + 0x704dc));
-  dVar7 = sin((double)(float)(dVar6 * dVar10));
-  *(float *)(iVar5 + 460000) =
-       (float)((double)(float)((double)(float)dVar7 * dVar8) * dVar12 +
-              (double)*(float *)(iVar5 + 460000));
-  dVar7 = sin((double)(float)(dVar6 * dVar9));
-  *(float *)(iVar5 + 0x704e4) =
-       (float)((double)(float)((double)(float)dVar7 * dVar8) * dVar11 +
-              (double)*(float *)(iVar5 + 0x704e4));
-  __restfpr_25();
-  __restgprlr_28();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure LerpEntityStatePlayer
 
 // 82310350  RemoteViewTurret  (cgame/cg_view.cpp:3067)
-
-void RemoteViewTurret(undefined8 param_1,ulonglong param_2)
-
-{
-  int iVar1;
-  int iVar2;
-  int iVar3;
-  char cVar5;
-  uint uVar4;
-  double dVar6;
-  
-  iVar3 = __savegprlr_27();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82027068,0xbfc,0,0xffffffff82000f98,0xffffffff82002118);
-  }
-  iVar2 = (int)param_2;
-  if (*(int *)(iVar2 + 200) != 0xb) {
-    MyAssertHandler(0xffffffff82027068,0xbfd,0,0xffffffff82000f98,0xffffffff82012a64);
-  }
-  cVar5 = CL_Demo_IsTimeStopped();
-  if ((cVar5 == '\0') && ((*(uint *)(iVar2 + 0xcc) & 0x800000) != 0)) {
-    uVar4 = BG_GetAlternateWeapon(*(undefined4 *)(iVar2 + 0x18c),0);
-    iVar1 = (&DAT_829d84a0)[uVar4 & 0xff];
-    dVar6 = (double)crandom();
-    *(float *)(iVar3 + 0x704dc) =
-         (float)(dVar6 * (double)*(float *)(iVar1 + 0x680) + (double)*(float *)(iVar3 + 0x704dc));
-    uVar4 = BG_GetAlternateWeapon(*(undefined4 *)(iVar2 + 0x18c),0);
-    iVar2 = (&DAT_829d84a0)[uVar4 & 0xff];
-    dVar6 = (double)crandom();
-    *(float *)(iVar3 + 460000) =
-         (float)(dVar6 * (double)*(float *)(iVar2 + 0x67c) + (double)*(float *)(iVar3 + 460000));
-  }
-  __restgprlr_27();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure LerpEntityStatePlayer
 
 // 82310450  GetWeaponviewEyeValues  (cgame/cg_view.cpp:3087)
-
-void GetWeaponviewEyeValues(void)
-
-{
-  undefined8 uVar1;
-  int iVar4;
-  int iVar5;
-  ulonglong uVar2;
-  longlong lVar3;
-  char cVar6;
-  undefined1 auStack_70 [112];
-  
-  uVar1 = __savegprlr_25();
-  iVar4 = CG_GetLocalClientGlobals();
-  if ((*(uint *)(iVar4 + 0x14) & 4) == 0) {
-    MyAssertHandler(0xffffffff82027068,0xc1a,0,0xffffffff82000f98,0xffffffff82028944);
-  }
-  if (*(int *)(iVar4 + 0x1d8) == 0x7ff) {
-    MyAssertHandler(0xffffffff82027068,0xc1b,0,0xffffffff82000f98,0xffffffff82028920);
-  }
-  iVar5 = CG_GetEntity(uVar1,*(undefined4 *)(iVar4 + 0x1d8));
-  if ((*(uint *)(iVar5 + 0x1c4) & 1) == 0) {
-    Com_PrintWarning(0xe,0xffffffff820288d8,*(undefined4 *)(iVar4 + 0x1d8),uVar1);
-    __restgprlr_25(0);
-    return;
-  }
-  uVar2 = Com_GetClientDObj(*(undefined4 *)(iVar5 + 0xc4),uVar1);
-  if ((uVar2 & 0xffffffff) == 0) {
-    Com_PrintWarning(0xe,0xffffffff8202889c,*(undefined4 *)(iVar4 + 0x1d8),uVar1);
-    __restgprlr_25(0);
-    return;
-  }
-  lVar3 = CG_DObjGetWorldTagPos(iVar5,uVar2,DAT_835a0c60,iVar4 + 0x6b9c8);
-  if ((int)lVar3 == 0) {
-    lVar3 = CG_DObjGetWorldTagMatrix(iVar5,uVar2,DAT_835a0c5c,auStack_70,iVar4 + 0x6b9c8);
-  }
-  if (*(int *)(iVar5 + 200) == 0xc) {
-    RemoteEyesShake(iVar4,iVar5);
-  }
-  if ((*(int *)(iVar5 + 200) == 0xb) &&
-     (((((*(uint *)(iVar4 + 0x10) & 0x1000) != 0 || (*(int *)(iVar4 + 0x7a708) != 0)) ||
-       ((*(uint *)(iVar4 + 0x10) & 0x800) != 0)) ||
-      (cVar6 = CL_Demo_IsPlaying(uVar1), cVar6 != '\0')))) {
-    RemoteViewTurret(iVar4,iVar5);
-  }
-  __restgprlr_25(lVar3 != 0);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 82310620  GetRemoteEyeValues  (cgame/cg_view.cpp:3143)
-
-void GetRemoteEyeValues(void)
-
-{
-  undefined8 uVar1;
-  int iVar6;
-  int iVar7;
-  ulonglong uVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
-  int iVar8;
-  undefined8 uVar5;
-  char cVar9;
-  undefined1 auStack_a0 [48];
-  undefined1 auStack_70 [112];
-  
-  uVar1 = __savegprlr_26();
-  iVar6 = CG_GetLocalClientGlobals();
-  if ((*(uint *)(iVar6 + 0x10) & 2) == 0) {
-    MyAssertHandler(0xffffffff82027068,0xc54,0,0xffffffff82000f98,0xffffffff82028a58);
-  }
-  if (*(int *)(iVar6 + 0x44) != 0x7ff) {
-    iVar7 = CG_GetEntity(uVar1);
-    uVar2 = Com_GetClientDObj(*(undefined4 *)(iVar7 + 0xc4),uVar1);
-    if ((uVar2 & 0xffffffff) != 0) {
-      uVar3 = CL_GetConfigString((ulonglong)*(uint *)(iVar6 + 0x48) + 0xcd4);
-      if ((uVar3 & 0xffffffff) != 0) {
-        uVar4 = SL_FindString(uVar3);
-        if ((uVar4 & 0xffffffff) == 0) {
-          Com_PrintWarning(0xe,0xffffffff820289b8,uVar3);
-          __restgprlr_26(0);
-          return;
-        }
-        iVar8 = CG_DObjGetWorldTagMatrix(iVar7,uVar2,uVar4,auStack_a0,iVar6 + 0x6b9c8);
-        if (iVar8 == 0) {
-          Com_PrintWarning(0xe,0xffffffff82028968,uVar3,*(undefined4 *)(iVar7 + 0xc4));
-          iVar8 = CG_DObjGetWorldTagMatrix(iVar7,uVar2,DAT_835a0c5c,auStack_a0,iVar6 + 0x6b9c8);
-          if (iVar8 == 0) goto LAB_823106c4;
-        }
-        if ((*(uint *)(iVar6 + 0x10) & 0x1000) == 0) {
-          AxisToAngles(auStack_a0,iVar6 + 0x704dc);
-        }
-        else {
-          if (*(char *)(iVar6 + 0x108420) == '\0') {
-            AxisToAngles(auStack_a0,iVar6 + 0x108424);
-            *(char *)(iVar6 + 0x108420) = '\x01';
-          }
-          uVar5 = CL_GetCurrentCmdNumber(uVar1);
-          iVar8 = CL_GetUserCmd(uVar1,uVar5,auStack_70);
-          if (iVar8 != 0) {
-            BG_UpdateClientControlledMissile
-                      (iVar6 + 0x108424,auStack_70,*(undefined4 *)(iVar6 + 0x6b988));
-          }
-          *(undefined4 *)(iVar6 + 0x704dc) = *(undefined4 *)(iVar6 + 0x108424);
-          *(undefined4 *)(iVar6 + 460000) = *(undefined4 *)(iVar6 + 0x108428);
-          *(undefined4 *)(iVar6 + 0x704e4) = *(undefined4 *)(iVar6 + 0x10842c);
-        }
-        cVar9 = CL_Demo_IsFollowCamera(uVar1);
-        if (((cVar9 == '\0') && (cVar9 = CL_Demo_IsFreeCamera(uVar1), cVar9 == '\0')) &&
-           (*(int *)(iVar7 + 200) == 4)) {
-          RemoteEyesShake(iVar6,iVar7);
-          *(undefined1 *)(iVar6 + 0x108039) = 1;
-        }
-        __restgprlr_26(1);
-        return;
-      }
-      Com_PrintWarning(0xe,0xffffffff82028a08);
-    }
-  }
-LAB_823106c4:
-  __restgprlr_26(0);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 82310870  CalcRemoteEyesViewValues  (cgame/cg_view.cpp:3227)
-
-bool CalcRemoteEyesViewValues(undefined8 param_1)
-
-{
-  int iVar1;
-  char cVar2;
-  
-  iVar1 = CG_GetLocalClientGlobals();
-  if ((*(uint *)(iVar1 + 0x14) & 4) != 0) {
-    cVar2 = GetWeaponviewEyeValues(param_1);
-    return cVar2 != '\0';
-  }
-  if ((*(uint *)(iVar1 + 0x10) & 2) != 0) {
-    cVar2 = GetRemoteEyeValues(param_1);
-    return cVar2 != '\0';
-  }
-  return false;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 82310910  CG_TweakCamera  (cgame/cg_view.cpp:3253)
-
-void CG_TweakCamera(int param_1)
-
-{
-  int iVar1;
-  float *pfVar2;
-  
-  iVar1 = DAT_82a76fa4;
-  pfVar2 = (float *)(param_1 + 0x704dc);
-  if (*(char *)(DAT_82a76fdc + 0xc) == '\0') {
-    *pfVar2 = *(float *)(DAT_82a76fa4 + 0xc) + *pfVar2;
-    *(float *)(param_1 + 460000) = *(float *)(iVar1 + 0x10) + *(float *)(param_1 + 460000);
-    *(float *)(param_1 + 0x704e4) = *(float *)(iVar1 + 0x14) + *(float *)(param_1 + 0x704e4);
-  }
-  else {
-    *pfVar2 = *(float *)(DAT_82a76fa4 + 0xc);
-    *(undefined4 *)(param_1 + 460000) = *(undefined4 *)(iVar1 + 0x10);
-    *(undefined4 *)(param_1 + 0x704e4) = *(undefined4 *)(iVar1 + 0x14);
-  }
-  iVar1 = DAT_82a76fd0;
-  *(float *)(param_1 + 0x6b9c8) = *(float *)(param_1 + 0x6b9c8) + *(float *)(DAT_82a76fd0 + 0xc);
-  *(float *)(param_1 + 0x6b9cc) = *(float *)(iVar1 + 0x10) + *(float *)(param_1 + 0x6b9cc);
-  *(float *)(param_1 + 0x6b9d0) = *(float *)(iVar1 + 0x14) + *(float *)(param_1 + 0x6b9d0);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 823109C0  CG_TraceProfiling  (cgame/cg_view.cpp:3265)
-
-void CG_TraceProfiling(int param_1)
-
-{
-  float fVar1;
-  undefined8 local_90;
-  float local_88;
-  float local_84;
-  float local_80;
-  float local_78;
-  float local_74;
-  float local_70;
-  float local_68;
-  float local_64;
-  float local_60;
-  undefined1 auStack_50 [56];
-  
-  if (DAT_82a76f80 == 0) {
-    MyAssertHandler(0xffffffff82027068,0xcc8,0,0xffffffff82000f98,0xffffffff820272ec);
-  }
-  if (0.0 <= *(float *)(DAT_82a76f80 + 0xc)) {
-    PIXBeginNamedEvent_Copy_NoVarArgs(0,0xffffffff82028a88);
-    Profile_Begin(0x2e);
-    AngleVectors(param_1 + 0x704dc,&local_78,0,0);
-    local_88 = *(float *)(param_1 + 0x6b9c8);
-    local_84 = *(float *)(param_1 + 0x6b9cc);
-    local_80 = *(float *)(param_1 + 0x6b9d0);
-    fVar1 = *(float *)(DAT_82a76f80 + 0xc);
-    local_68 = local_78 * fVar1 + local_88;
-    local_64 = local_74 * fVar1 + local_84;
-    local_60 = local_70 * fVar1 + local_80;
-    CG_LocationalTrace(auStack_50,&local_88,&local_68,0x7ff,0x2806831);
-    Profile_EndInternal(&local_90);
-    PIXEndNamedEvent();
-    Com_Printf_NoFilter(0xffffffff82028a7c,local_90);
-  }
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 82310AF8  GetZNearDvar  (cgame/cg_view.cpp:3291)
 
-undefined8 GetZNearDvar(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+float GetZNearDvar(void)
 
 {
-  return 0;
+  return 0.0;
 }
 
 
 // 82310B08  GetZNear  (cgame/cg_view.cpp:3310)
-
-undefined8 GetZNear(int param_1)
-
-{
-  char cVar2;
-  int iVar1;
-  
-  if (param_1 == 0) {
-    MyAssertHandler(0xffffffff82027068,0xcf2,0,0xffffffff82000f98,0xffffffff82002798);
-  }
-  cVar2 = CL_Demo_IsFollowCamera(*(undefined4 *)(param_1 + 0x3338));
-  if ((((cVar2 == '\0') &&
-       (cVar2 = CL_Demo_IsFreeCamera(*(undefined4 *)(param_1 + 0x3338)), cVar2 == '\0')) &&
-      (iVar1 = CG_KillCamDefaultView(*(undefined4 *)(param_1 + 0x3338)), iVar1 == 0)) &&
-     (((cVar2 = VehicleCam_IsRemoteControlCam(*(undefined4 *)(param_1 + 0x3338)), cVar2 == '\0' &&
-       (cVar2 = VehicleCam_IsPlayerControlCam(*(undefined4 *)(param_1 + 0x3338)), cVar2 == '\0')) &&
-      (((*(uint *)(param_1 + 0x10) & 2) != 0 || ((*(uint *)(param_1 + 0x14) & 8) != 0)))))) {
-    return 0x4059000000000000;
-  }
-  return 0;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 82312A58  CalcViewValues  (cgame/cg_view.cpp:3347)
-
-void CalcViewValues(void)
-
-{
-  int iVar1;
-  undefined8 uVar2;
-  int iVar5;
-  undefined8 uVar3;
-  char cVar6;
-  char cVar7;
-  undefined8 uVar4;
-  int *piVar8;
-  undefined4 *puVar9;
-  float *pfVar10;
-  double dVar11;
-  double dVar12;
-  double dVar13;
-  float local_90 [2];
-  longlong local_88;
-  
-  uVar2 = __savegprlr_19();
-  iVar5 = CG_GetLocalClientGlobals();
-  dVar11 = (double)GetZNear();
-  *(float *)(iVar5 + 0x6b9f8) = (float)dVar11;
-  piVar8 = (int *)(iVar5 + 0x6b98c);
-  *(int *)(iVar5 + 0x704d4) = (int)uVar2;
-  *(int *)(iVar5 + 0x6ba08) = *piVar8;
-  dVar11 = (double)CG_GetBlurRadius(uVar2);
-  dVar12 = (double)CL_GetMenuBlurRadius(uVar2);
-  dVar13 = 0.0;
-  *(float *)(iVar5 + 0x6ba0c) =
-       SQRT((float)(dVar11 * dVar11 +
-                   (double)(*(float *)(&DAT_82a2f848 + (int)uVar2 * 0x2284) *
-                            *(float *)(&DAT_82a2f848 + (int)uVar2 * 0x2284) +
-                           (float)(dVar12 * dVar12))));
-  *(bool *)(iVar5 + 0x6ba10) = 0.0 < dVar12;
-  *(undefined1 *)(iVar5 + 0x108039) = 0;
-  *(char *)(iVar5 + 0x704d3) = *(char *)(iVar5 + 0x108045);
-  if (*(int *)(iVar5 + 0x3340) != 0) {
-    *(undefined4 *)(iVar5 + 0x6b9c8) = *(undefined4 *)(iVar5 + 0x1c);
-    *(undefined4 *)(iVar5 + 0x6b9cc) = *(undefined4 *)(iVar5 + 0x20);
-    *(undefined4 *)(iVar5 + 0x6b9d0) = *(undefined4 *)(iVar5 + 0x24);
-    *(float *)(iVar5 + 0x6b9d0) = *(float *)(iVar5 + 0x168) + *(float *)(iVar5 + 0x6b9d0);
-    R_CalcCubeMapViewValues
-              (iVar5 + 0x6b9b0,*(undefined4 *)(iVar5 + 0x3340),*(undefined4 *)(iVar5 + 0x3344));
-    __restgprlr_19();
-    return;
-  }
-  CG_CalcVrect(uVar2);
-  *(float *)(iVar5 + 0x704f4) = *(float *)(iVar5 + 0x1c);
-  *(undefined4 *)(iVar5 + 0x704f8) = *(undefined4 *)(iVar5 + 0x20);
-  *(undefined4 *)(iVar5 + 0x704fc) = *(undefined4 *)(iVar5 + 0x24);
-  *(float *)(iVar5 + 0x70500) = *(float *)(iVar5 + 0x1c);
-  *(undefined4 *)(iVar5 + 0x70504) = *(undefined4 *)(iVar5 + 0x20);
-  *(undefined4 *)(iVar5 + 0x70508) = *(undefined4 *)(iVar5 + 0x24);
-  *(undefined4 *)(iVar5 + 0x7050c) = *(undefined4 *)(iVar5 + 0x158);
-  *(undefined4 *)(iVar5 + 0x70510) = *(undefined4 *)(iVar5 + 0x15c);
-  *(undefined4 *)(iVar5 + 0x70514) = *(undefined4 *)(iVar5 + 0x160);
-  if (*(int *)(iVar5 + 4) != 6) {
-    cVar6 = CG_KillCamEntityEnabled(uVar2);
-    if (cVar6 != '\0') {
-      uVar3 = CG_NightVision(uVar2,local_90);
-      CG_UpdateKillCamEntity(*(undefined4 *)(iVar5 + 0x7a718),uVar2);
-      CG_VisionSetApplyToRefdef
-                ((double)local_90[0],0x3ff0000000000000,uVar2,iVar5 + 0x6b9b0,iVar5 + 0x107060,uVar3
-                );
-      __restgprlr_19();
-      return;
-    }
-    cVar6 = '\0';
-    dVar11 = (double)BG_GetSpeed(iVar5,*piVar8);
-    pfVar10 = (float *)(iVar5 + 0x6b9c8);
-    *(float *)(iVar5 + 0x79778) = (float)dVar11;
-    *pfVar10 = *(float *)(iVar5 + 0x1c);
-    *(undefined4 *)(iVar5 + 0x6b9cc) = *(undefined4 *)(iVar5 + 0x20);
-    *(undefined4 *)(iVar5 + 0x6b9d0) = *(undefined4 *)(iVar5 + 0x24);
-    if ((*(char *)(iVar5 + 0x108045) == '\0') &&
-       (((iVar1 = *(int *)(iVar5 + 4), iVar1 == 0 || (iVar1 == 2)) || (iVar1 == 3)))) {
-      CG_SmoothCameraZ(iVar5);
-    }
-    puVar9 = (undefined4 *)(iVar5 + 0x704dc);
-    *puVar9 = *(undefined4 *)(iVar5 + 0x158);
-    *(undefined4 *)(iVar5 + 460000) = *(undefined4 *)(iVar5 + 0x15c);
-    *(undefined4 *)(iVar5 + 0x704e4) = *(undefined4 *)(iVar5 + 0x160);
-    cVar7 = VehicleCam_IsDriveCam(uVar2);
-    if (cVar7 == '\0') {
-      CG_CalcVehicleViewValues(uVar2,puVar9);
-    }
-    CalcLinkedViewValues(uVar2,puVar9);
-    uVar3 = 0x3ff0000000000000;
-    if (((*(int *)(iVar5 + 4) != 1) && (*(int *)(iVar5 + 4) != 9)) &&
-       (dVar11 = (double)*(float *)(DAT_82a3d5d8 + 0xc), dVar13 < dVar11)) {
-      local_88 = (longlong)(*piVar8 - *(int *)(iVar5 + 0x3324));
-      dVar11 = (double)(float)((double)(float)(dVar11 - (double)local_88) / dVar11);
-      if ((dVar11 <= dVar13) || (1.0 <= dVar11)) {
-        *(undefined4 *)(iVar5 + 0x3324) = 0;
-      }
-      else {
-        *pfVar10 = (float)((double)*(float *)(iVar5 + 0x3328) * dVar11 + (double)*pfVar10);
-        iVar1 = DAT_82a3d648;
-        *(float *)(iVar5 + 0x6b9cc) =
-             (float)((double)*(float *)(iVar5 + 0x332c) * dVar11 +
-                    (double)*(float *)(iVar5 + 0x6b9cc));
-        *(float *)(iVar5 + 0x6b9d0) =
-             (float)(dVar11 * (double)*(float *)(iVar5 + 0x3330) +
-                    (double)*(float *)(iVar5 + 0x6b9d0));
-        if (*(int *)(iVar1 + 0xc) != 0) {
-          Com_Printf(0x11,0xffffffff82028e28,dVar11,
-                     (double)(float)((double)*(float *)(iVar5 + 0x3328) * dVar11),
-                     (double)(float)((double)*(float *)(iVar5 + 0x332c) * dVar11),
-                     (double)(float)(dVar11 * (double)*(float *)(iVar5 + 0x3330)));
-        }
-      }
-    }
-    CG_CalcTurretViewValues(uVar2);
-    if (((*(uint *)(iVar5 + 0x10) & 2) != 0) || ((*(uint *)(iVar5 + 0x14) & 4) != 0)) {
-      cVar6 = CalcRemoteEyesViewValues(uVar2);
-    }
-    if (cVar6 == '\0') {
-      *(undefined1 *)(iVar5 + 0x108420) = 0;
-      CG_TweakCamera(iVar5);
-      CG_TraceProfiling();
-      if (*(int *)(iVar5 + 0x6b9a0) == 0) {
-        CG_OffsetFirstPersonView(iVar5);
-      }
-      CG_CrosshairOffset(iVar5);
-    }
-    CG_ShakeCamera(uVar2);
-    cVar7 = VehicleCam_IsDriveCam(uVar2);
-    if (cVar7 == '\0') {
-      cVar7 = VehicleCam_IsRemoteControlCam(uVar2);
-      if (cVar7 == '\0') {
-        cVar7 = VehicleCam_IsPlayerControlCam(uVar2);
-        if (cVar7 != '\0') {
-          VehicleCam_UpdatePlayerControlCam(uVar2,iVar5,pfVar10,puVar9);
-        }
-      }
-      else {
-        VehicleCam_UpdateRemoteControlCam(uVar2,iVar5,pfVar10,puVar9);
-      }
-    }
-    else {
-      VehicleCam_UpdateDriveCam(uVar2,iVar5,pfVar10,puVar9);
-      CG_TweakCamera(iVar5);
-    }
-    *(float *)(iVar5 + 0x704f4) = *pfVar10;
-    *(undefined4 *)(iVar5 + 0x704f8) = *(undefined4 *)(iVar5 + 0x6b9cc);
-    *(undefined4 *)(iVar5 + 0x704fc) = *(undefined4 *)(iVar5 + 0x6b9d0);
-    *(undefined4 *)(iVar5 + 0x7050c) = *(undefined4 *)(iVar5 + 0x704e8);
-    *(undefined4 *)(iVar5 + 0x70510) = *(undefined4 *)(iVar5 + 0x704ec);
-    *(undefined4 *)(iVar5 + 0x70514) = *(undefined4 *)(iVar5 + 0x704f0);
-    AnglesToAxis(puVar9,iVar5 + 0x6b9d4);
-    if (cVar6 == '\0') {
-      CG_ApplyViewAnimation(uVar2);
-      if (*(int *)(iVar5 + 0x6b9a0) == 0) {
-        cVar6 = BG_IsThirdPersonMode(iVar5);
-        if (cVar6 != '\0') {
-          CG_UpdateThirdPersonMode(uVar2,(undefined4 *)(iVar5 + 0x704e8));
-        }
-      }
-      else {
-        CG_OffsetThirdPersonView(uVar2);
-      }
-      CG_PerturbCamera(iVar5);
-    }
-    *(float *)(iVar5 + 0x70500) = *pfVar10;
-    *(undefined4 *)(iVar5 + 0x70504) = *(undefined4 *)(iVar5 + 0x6b9cc);
-    *(undefined4 *)(iVar5 + 0x70508) = *(undefined4 *)(iVar5 + 0x6b9d0);
-    uVar4 = CG_NightVision(uVar2,local_90);
-    CG_VisionSetApplyToRefdef
-              ((double)local_90[0],uVar3,uVar2,iVar5 + 0x6b9b0,iVar5 + 0x107060,uVar4);
-    CG_GetViewFov(uVar2);
-    CG_UpdateFov(uVar2);
-    if (*(int *)(iVar5 + 4) == 4) {
-      CG_ModelPreviewerUpdateView(pfVar10,iVar5 + 0x6b9d4,puVar9,(float *)(iVar5 + 0x6b9f8));
-    }
-    __restgprlr_19();
-    return;
-  }
-  uVar3 = CG_NightVision(uVar2,local_90);
-  *(float *)(iVar5 + 0x6b9c8) = *(float *)(iVar5 + 0x1c);
-  *(undefined4 *)(iVar5 + 0x6b9cc) = *(undefined4 *)(iVar5 + 0x20);
-  *(undefined4 *)(iVar5 + 0x6b9d0) = *(undefined4 *)(iVar5 + 0x24);
-  *(undefined4 *)(iVar5 + 0x704dc) = *(undefined4 *)(iVar5 + 0x158);
-  *(undefined4 *)(iVar5 + 460000) = *(undefined4 *)(iVar5 + 0x15c);
-  *(undefined4 *)(iVar5 + 0x704e4) = *(undefined4 *)(iVar5 + 0x160);
-  AnglesToAxis((undefined4 *)(iVar5 + 0x704dc),iVar5 + 0x6b9d4);
-  CG_VisionSetApplyToRefdef
-            ((double)local_90[0],0x3ff0000000000000,uVar2,iVar5 + 0x6b9b0,iVar5 + 0x107060,uVar3);
-  CG_GetViewFov(uVar2);
-  CG_UpdateFov(uVar2);
-  __restgprlr_19();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 82310C00  SetViewNowDvar  (cgame/cg_view.cpp:3576)
-
-void SetViewNowDvar(int param_1)
-
-{
-  if ((((double)*(float *)(DAT_82a76fac + 0xc) != (double)*(float *)(param_1 + 0x6b9c8)) ||
-      (*(float *)(DAT_82a76fac + 0x10) != *(float *)(param_1 + 0x6b9cc))) ||
-     (*(float *)(DAT_82a76fac + 0x14) != *(float *)(param_1 + 0x6b9d0))) {
-    Dvar_SetVec3((double)*(float *)(param_1 + 0x6b9c8),(double)*(float *)(param_1 + 0x6b9cc),
-                 (double)*(float *)(param_1 + 0x6b9d0));
-  }
-  if (((*(float *)(DAT_82a76fe8 + 0xc) != *(float *)(param_1 + 0x6b9d4)) ||
-      (*(float *)(DAT_82a76fe8 + 0x10) != *(float *)(param_1 + 0x6b9d8))) ||
-     (*(float *)(DAT_82a76fe8 + 0x14) != *(float *)(param_1 + 0x6b9dc))) {
-    Dvar_SetVec3((double)*(float *)(param_1 + 460000),(double)*(float *)(param_1 + 0x704dc),0);
-  }
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 82310CE8  CG_UpdateEntInfo  (cgame/cg_view.cpp:3700)
-
-void CG_UpdateEntInfo(void)
-
-{
-  undefined4 uVar1;
-  undefined8 uVar2;
-  int iVar4;
-  ulonglong uVar3;
-  ulonglong uVar5;
-  int iVar6;
-  
-  uVar2 = __savegprlr_27();
-  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff82028a9c);
-  Profile_Begin(0xc);
-  iVar4 = CG_GetLocalClientGlobals(uVar2);
-  uVar5 = (ulonglong)*(uint *)(*(int *)(iVar4 + 0x335c) + 0x330c);
-  if (uVar5 != 0) {
-    iVar6 = 0;
-    do {
-      uVar1 = *(undefined4 *)(iVar6 + *(int *)(iVar4 + 0x335c) + 0x3314);
-      uVar3 = Com_GetClientDObj(uVar1,uVar2);
-      if ((uVar3 & 0xffffffff) != 0) {
-        CG_DObjUpdateInfo(iVar4,uVar3,1);
-        CG_ProcessClientNoteTracks(iVar4,uVar1);
-      }
-      uVar5 = uVar5 - 1;
-      iVar6 = iVar6 + 0x100;
-    } while (uVar5 != 0);
-  }
-  Profile_EndInternal(0);
-  PIXEndNamedEvent();
-  __restgprlr_27();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 82310D90  UpdateThirdPerson  (cgame/cg_view.cpp:3784)
-
-void UpdateThirdPerson(void)
-
-{
-  undefined8 uVar1;
-  int iVar2;
-  uint uVar3;
-  int iVar4;
-  char cVar5;
-  uint *puVar6;
-  int *piVar7;
-  bool bVar8;
-  
-  uVar1 = __savegprlr_27();
-  iVar2 = CG_GetLocalClientGlobals();
-  if (((*(uint *)(*(int *)(iVar2 + 0x335c) + 0x10) & 0x800) == 0) ||
-     (*(int *)(iVar2 + 0x7a708) != 0)) {
-    *(uint *)(iVar2 + 0x6b9a0) = (uint)*(byte *)(DAT_82a38258 + 0xc);
-  }
-  else {
-    puVar6 = (uint *)(iVar2 + 0x6b9a0);
-    *puVar6 = (uint)*(byte *)(DAT_82a38270 + 0xc);
-    uVar3 = CL_Demo_IsPlaying(uVar1);
-    *puVar6 = (uint)LZCOUNT(uVar3 & 0xff) >> 5 & *puVar6;
-  }
-  piVar7 = (int *)(iVar2 + 0x6b9a0);
-  if (((*piVar7 != 0) || (7 < *(int *)(*(int *)(iVar2 + 0x335c) + 4))) ||
-     (iVar4 = 0, (*(uint *)(*(int *)(iVar2 + 0x335c) + 0x10) & 2) != 0)) {
-    iVar4 = 1;
-  }
-  *piVar7 = iVar4;
-  iVar4 = CG_GetLocalClientGlobals(uVar1);
-  bVar8 = false;
-  if (*(int *)(iVar4 + 0x7a708) != 0) {
-    bVar8 = *(int *)(iVar4 + 0x7a718) != 0;
-  }
-  if (bVar8) {
-    *piVar7 = 1;
-  }
-  if ((*(uint *)(*(int *)(iVar2 + 0x335c) + 0x14) & 4) != 0) {
-    *piVar7 = 1;
-  }
-  cVar5 = CL_Demo_IsFollowCamera(uVar1);
-  if ((cVar5 != '\0') || (cVar5 = CL_Demo_IsFreeCamera(uVar1), cVar5 != '\0')) {
-    *piVar7 = 1;
-  }
-  __restgprlr_27();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 82313118  CG_InitView  (cgame/cg_view.cpp:3849)
 
-void CG_InitView(undefined8 param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CG_InitView(LocalClientNum_t param_1)
 
 {
-  R_ClearCachedSceneLightIsUsed();
+  float fVar1;
+  
+  R_ClearCachedSceneLightIsUsed(param_1);
   UpdateThirdPerson(param_1);
-  DAT_82a382e4 = (undefined4)param_1;
+  g_cgameClientNum = param_1;
   CG_ClearSavedPlayerState(param_1);
   CG_SetupPlayerState(param_1);
   CL_InvalidateSkeletonCache();
   CG_PredictPlayerState(param_1);
   CG_UpdateViewWeaponAnim(param_1);
-  CG_GetViewFov(param_1);
-  CG_UpdateFov(param_1);
+  fVar1 = CG_GetViewFov(param_1);
+  CG_UpdateFov(param_1,fVar1);
   return;
 }
 
 
 // 82310EE8  CG_GetLocalClientViewParams  (cgame/cg_view.cpp:3873)
 
-void CG_GetLocalClientViewParams(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+ClientViewParams * CG_GetLocalClientViewParams(LocalClientNum_t param_1)
 
 {
-  ulonglong uVar1;
-  longlong lVar2;
-  ulonglong uVar3;
+  LocalClientNum_t LVar1;
+  uint uVar2;
+  int iVar3;
+  ClientViewParams *pCVar4;
+  ulonglong uVar5;
+  uint uVar6;
   
-  __savegprlr_29();
-  uVar1 = CL_LocalActiveIndexFromClientNum();
-  lVar2 = CL_GetLocalClientActiveCount();
-  uVar3 = lVar2 - 1;
-  if (3 < (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82027068,0xf28,0,0xffffffff82028b50,uVar1,4);
+  LVar1 = __savegprlr_29(param_1);
+  uVar2 = CL_LocalActiveIndexFromClientNum(LVar1);
+  iVar3 = CL_GetLocalClientActiveCount();
+  uVar6 = iVar3 - 1;
+  if (3 < uVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_view.cpp",0xf28,0,
+                    "activeClientIndex doesn\'t index ARRAY_COUNT( clientViewParamsArray[0] )\n\t%i not in [0, %i)"
+                   );
   }
-  if (3 < (uVar3 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82027068,0xf29,0,0xffffffff82028ae8,uVar3,4);
+  if (3 < uVar6) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_view.cpp",0xf29,0,
+                    "activeClientCountArrayIndex doesn\'t index ARRAY_COUNT( clientViewParamsArray )\n\t%i not in [0, %i)"
+                   );
   }
-  if ((int)uVar3 < (int)uVar1) {
-    MyAssertHandler(0xffffffff82027068,0xf2a,0,0xffffffff82028aac,uVar1,uVar3);
+  if ((int)uVar6 < (int)uVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_view.cpp",0xf2a,0,
+                    "activeClientIndex <= activeClientCountArrayIndex\n\t%i, %i");
   }
-  uVar1 = (uVar3 & 0x3fffffff) * 4 + uVar1;
-  __restgprlr_29((uVar1 + (uVar1 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + -0x7d69c2d8);
-  return;
+  uVar5 = ((ulonglong)uVar6 & 0x3fffffff) * 4 + (longlong)(int)uVar2;
+  pCVar4 = (ClientViewParams *)
+           __restgprlr_29((uVar5 + (uVar5 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + -0x7d69c2d8);
+  return pCVar4;
 }
 
 
 // 82310FB0  CG_SetScreenView  (cgame/cg_view.cpp:3926)
-
-void CG_SetScreenView(undefined8 param_1,ulonglong param_2,longlong param_3)
-
-{
-  int iVar1;
-  int iVar2;
-  int iVar3;
-  int iVar4;
-  undefined8 uVar5;
-  int *piVar6;
-  ulonglong uVar7;
-  int local_50;
-  int local_4c;
-  float local_48 [2];
-  longlong local_40;
-  
-  uVar5 = __savegprlr_27();
-  uVar7 = param_3 - 1;
-  if (3 < (uVar7 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82027068,0xf66,0,0xffffffff82028c70,uVar7,4);
-  }
-  if (3 < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82027068,0xf67,0,0xffffffff82028b50,param_2,4);
-  }
-  if ((int)param_3 <= (int)param_2) {
-    MyAssertHandler(0xffffffff82027068,0xf68,0,0xffffffff82028c3c,param_2,param_3);
-  }
-  iVar4 = ((int)uVar7 * 4 + (int)param_2) * 0x18;
-  CL_GetScreenDimensions(&local_50,&local_4c,local_48);
-  piVar6 = (int *)CG_GetLocalClientStaticGlobals(uVar5);
-  *piVar6 = (int)((float)(longlong)local_50 * *(float *)(&DAT_82963d28 + iVar4) + 0.5);
-  piVar6[1] = (int)(*(float *)(&DAT_82963d2c + iVar4) * (float)(longlong)local_4c + 0.5);
-  piVar6[2] = (int)((float)(longlong)local_50 * *(float *)(&DAT_82963d30 + iVar4) + 0.5);
-  local_40 = (longlong)local_4c;
-  piVar6[3] = (int)((float)local_40 * *(float *)(&DAT_82963d34 + iVar4) + 0.5);
-  if ((*piVar6 < 0) || (local_50 <= *piVar6)) {
-    MyAssertHandler(0xffffffff82027068,0xf8d,1,0xffffffff82028bf4,0xffffffff82028c0c);
-  }
-  if ((piVar6[1] < 0) || (local_4c <= piVar6[1])) {
-    MyAssertHandler(0xffffffff82027068,0xf8e,1,0xffffffff82028bac,0xffffffff82028bc4);
-  }
-  if (piVar6[2] < 1) {
-    MyAssertHandler(0xffffffff82027068,0xf8f,1,0xffffffff8201de04,0xffffffff8201de20);
-  }
-  if (piVar6[3] < 1) {
-    MyAssertHandler(0xffffffff82027068,0xf90,1,0xffffffff8201ddd0,0xffffffff8201ddec);
-  }
-  piVar6[4] = (int)((local_48[0] / *(float *)(&DAT_82963d34 + iVar4)) *
-                   *(float *)(&DAT_82963d30 + iVar4));
-  if (local_48[0] <= 1.3333334) {
-    iVar4 = *(int *)(&DAT_82963d38 + iVar4);
-  }
-  else {
-    iVar4 = *(int *)(&DAT_82963d3c + iVar4);
-  }
-  piVar6[5] = iVar4;
-  iVar4 = piVar6[3];
-  iVar1 = piVar6[2];
-  iVar2 = piVar6[1];
-  iVar3 = *piVar6;
-  uVar5 = ScrPlace_GetViewPlacementAddress(uVar5);
-  ScrPlace_SetupViewport(uVar5,iVar3,iVar2,iVar1,iVar4);
-  __restgprlr_27();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure clientInfo_t
 
 // 82311278  GetCeilingHeight  (cgame/cg_view.cpp:4007)
-
-void GetCeilingHeight(int param_1)
-
-{
-  undefined4 local_60;
-  undefined4 local_5c;
-  float local_58;
-  float local_50 [14];
-  
-  local_60 = *(undefined4 *)(param_1 + 0x1c);
-  local_5c = *(undefined4 *)(param_1 + 0x20);
-  local_58 = *(float *)(param_1 + 0x24) + 1024.0;
-  CG_TraceCapsule(local_50,param_1 + 0x1c,&local_60,0xffffffff8200c2a0,0x7ff,1);
-  if (local_50[0] < 1.0) {
-    *(float *)(param_1 + 0x6b9ac) =
-         ((local_58 - *(float *)(param_1 + 0x24)) * local_50[0] + *(float *)(param_1 + 0x24)) -
-         *(float *)(param_1 + 0x24);
-  }
-  else {
-    *(undefined4 *)(param_1 + 0x6b9ac) = 0x7f7fffff;
-  }
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 82311340  DumpAnims  (cgame/cg_view.cpp:4032)
 
-void DumpAnims(undefined8 param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+void DumpAnims(LocalClientNum_t param_1)
 
 {
-  ulonglong uVar1;
-  undefined8 uVar2;
+  DObj *pDVar1;
+  char *pcVar2;
   
-  if ((*(int *)(DAT_82a3d5c4 + 0xc) < -1) || (0x7ff < *(int *)(DAT_82a3d5c4 + 0xc))) {
-    MyAssertHandler(0xffffffff82027068,0xfc3,0,0xffffffff82028cd8,0xffffffff82028d08);
+  if (((cg_dumpAnims->current).integer < -1) || (0x7ff < (cg_dumpAnims->current).integer)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_view.cpp",0xfc3,0,
+                    "%s\n\t(cg_dumpAnims->current.integer) = %i");
   }
-  if (((-1 < *(int *)(DAT_82a3d5c4 + 0xc)) && (*(int *)(DAT_82a3d69c + 0xc) == 0)) &&
-     (uVar1 = Com_GetClientDObj(*(int *)(DAT_82a3d5c4 + 0xc),param_1), (uVar1 & 0xffffffff) != 0)) {
-    uVar2 = va(0xffffffff82028ccc,param_1);
-    DObjDisplayAnim(uVar1,uVar2);
+  if (((-1 < (cg_dumpAnims->current).integer) && ((cg_paused->current).integer == 0)) &&
+     (pDVar1 = Com_GetClientDObj((cg_dumpAnims->current).integer,param_1), pDVar1 != (DObj *)0x0)) {
+    pcVar2 = va("client %d:\n");
+    DObjDisplayAnim(pDVar1,pcVar2);
   }
   return;
 }
@@ -4202,22 +1271,28 @@ void DumpAnims(undefined8 param_1)
 
 // 82311408  DumpDObj  (cgame/cg_view.cpp:4057)
 
-void DumpDObj(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+void DumpDObj(LocalClientNum_t param_1)
 
 {
-  undefined8 uVar1;
-  int iVar2;
+  int iVar1;
+  LocalClientNum_t LVar2;
+  DObj *pDVar3;
   
-  uVar1 = __savegprlr_29();
-  iVar2 = *(int *)(DAT_82a3d49c + 0xc);
-  if ((iVar2 < -1) || (0x7ff < iVar2)) {
-    MyAssertHandler(0xffffffff82027068,0xfdf,0,0xffffffff82028d5c,0xffffffff82028d70,iVar2);
+  LVar2 = __savegprlr_29(param_1);
+  iVar1 = (cg_dobjdump->current).integer;
+  if ((iVar1 < -1) || (0x7ff < iVar1)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_view.cpp",0xfdf,0,
+                    "%s\n\t(dumpDObj) = %i");
   }
-  if (-1 < iVar2) {
-    Dvar_SetInt(DAT_82a3d49c,0xffffffffffffffff);
-    iVar2 = Com_GetClientDObj(iVar2,uVar1);
-    if (iVar2 != 0) {
-      DObjDumpInfo();
+  if (-1 < iVar1) {
+    Dvar_SetInt(cg_dobjdump,-1);
+    pDVar3 = Com_GetClientDObj(iVar1,LVar2);
+    if (pDVar3 != (DObj *)0x0) {
+      DObjDumpInfo(pDVar3);
     }
   }
   __restgprlr_29();
@@ -4226,1147 +1301,135 @@ void DumpDObj(void)
 
 
 // 82311490  ThermalScoped  (cgame/cg_view.cpp:4077)
-
-undefined8 ThermalScoped(undefined8 param_1,int param_2)
-
-{
-  char cVar2;
-  undefined8 uVar1;
-  
-  cVar2 = CG_PlayerUsingThermalTurret();
-  if (cVar2 != '\0') {
-    return 1;
-  }
-  if ((((*(uint *)(param_2 + 0xf8) & 0x3800) == 0) &&
-      (cVar2 = CG_GetWeapReticleZoom(param_2,0), cVar2 != '\0')) &&
-     (*(int *)(param_2 + 0x6b9a0) == 0)) {
-    uVar1 = BG_GetViewmodelWeapon(param_2);
-    uVar1 = BG_HasThermalScope(uVar1,*(uint *)(param_2 + 0x374) >> 0xf & 1);
-    return uVar1;
-  }
-  return 0;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 82311548  CG_IsThermalVisionOn  (cgame/cg_view.cpp:4100)
-
-bool CG_IsThermalVisionOn(undefined8 param_1)
-
-{
-  char cVar3;
-  int iVar1;
-  int iVar2;
-  
-  cVar3 = CL_Demo_IsFollowCamera();
-  if ((cVar3 == '\0') && (cVar3 = CL_Demo_IsFreeCamera(param_1), cVar3 == '\0')) {
-    iVar1 = CG_GetLocalClientGlobals(param_1);
-    if (iVar1 == 0) {
-      MyAssertHandler(0xffffffff82027068,0x100d,0,0xffffffff82000f98,0xffffffff82002798);
-    }
-    cVar3 = CG_IsEMPJammed(param_1);
-    if ((cVar3 == '\0') && (iVar2 = CG_KillCamDefaultView(param_1), iVar2 == 0)) {
-      if ((*(uint *)(iVar1 + 0x10) & 8) == 0) {
-        cVar3 = ThermalScoped(param_1,iVar1);
-        return cVar3 != '\0';
-      }
-      if ((*(int *)(iVar1 + 0x7a708) == 0) || ((*(uint *)(iVar1 + 0x10) & 0x100000) == 0)) {
-        return true;
-      }
-    }
-  }
-  return false;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 82311650  CG_IsKillstreakThermalVisionOn  (cgame/cg_view.cpp:4137)
-
-undefined8 CG_IsKillstreakThermalVisionOn(void)
-
-{
-  bool bVar1;
-  int iVar2;
-  undefined8 uVar3;
-  
-  iVar2 = CG_GetLocalClientGlobals();
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff82027068,0x102f,0,0xffffffff82000f98,0xffffffff82002798);
-  }
-  if (((*(uint *)(iVar2 + 0x10) & 2) != 0) || (bVar1 = false, (*(uint *)(iVar2 + 0x14) & 4) != 0)) {
-    bVar1 = true;
-  }
-  if (((*(uint *)(iVar2 + 0x10) >> 3 & 1) == 0) || (uVar3 = 1, !bVar1)) {
-    uVar3 = 0;
-  }
-  return uVar3;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 823116F8  GetThermalBlurFactor  (cgame/cg_view.cpp:4155)
-
-undefined4 GetThermalBlurFactor(undefined8 param_1)
-
-{
-  int iVar1;
-  char cVar3;
-  undefined4 uVar2;
-  
-  iVar1 = CG_GetLocalClientGlobals();
-  cVar3 = ThermalScoped(param_1,iVar1);
-  if (cVar3 == '\0') {
-    if ((*(uint *)(iVar1 + 0x10) & 8) == 0) {
-      uVar2 = 0;
-    }
-    else {
-      uVar2 = *(undefined4 *)(DAT_82a77150 + 0xc);
-    }
-  }
-  else {
-    uVar2 = *(undefined4 *)(DAT_82a76f70 + 0xc);
-  }
-  return uVar2;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 82311780  CG_DrawShellshockBlend  (cgame/cg_view.cpp:4170)
-
-void CG_DrawShellshockBlend(void)
-
-{
-  int iVar1;
-  undefined8 uVar2;
-  int iVar5;
-  char cVar6;
-  undefined8 uVar3;
-  undefined8 uVar4;
-  bool bVar7;
-  
-  uVar2 = __savegprlr_29();
-  iVar5 = CG_GetLocalClientGlobals();
-  if (*(int *)(iVar5 + 0x7a708) == 0) {
-    bVar7 = false;
-  }
-  else {
-    bVar7 = *(int *)(iVar5 + 0x7a718) != 0;
-  }
-  if (((bVar7) || (cVar6 = CL_Demo_IsFollowCamera(uVar2), cVar6 != '\0')) ||
-     (cVar6 = CL_Demo_IsFreeCamera(uVar2), cVar6 != '\0')) goto LAB_823118a8;
-  iVar5 = CG_GetLocalClientGlobals(uVar2);
-  if ((*(char *)(iVar5 + 0x108038) == '\0') && (*(char *)(DAT_82a382f0 + 0xc) == '\0'))
-  goto LAB_823118a8;
-  iVar1 = *(int *)(*(int *)(iVar5 + 0x79820) + 0x10);
-  if ((*(char *)(DAT_82a382f0 + 0xc) == '\0') ||
-     (uVar3 = CG_GetShellShockBlendTime(uVar2), (int)uVar3 < 1)) {
-LAB_82311878:
-    uVar3 = 0;
-  }
-  else {
-    if (iVar1 == 1) {
-      CG_DrawShellShockSavedScreenBlendFlashed(uVar2);
-      __restgprlr_29();
-      return;
-    }
-    if (iVar1 != 0) goto LAB_82311878;
-  }
-  if ((*(char *)(iVar5 + 0x108038) != '\0') &&
-     (uVar4 = GetThermalBlurFactor(uVar2), (int)uVar3 < (int)uVar4)) {
-    uVar3 = uVar4;
-  }
-  CG_DrawShellShockSavedScreenBlendBlurred(uVar2,uVar3);
-LAB_823118a8:
-  __restgprlr_29();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 823118B0  CG_SetView  (cgame/cg_view.cpp:4218)
 
-void CG_SetView(undefined4 param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CG_SetView(LocalClientNum_t param_1)
 
 {
-  DAT_82a382e4 = param_1;
+  g_cgameClientNum = param_1;
   return;
 }
 
 
 // 823118C0  UpdateTurretZoom  (cgame/cg_view.cpp:4227)
-
-void UpdateTurretZoom(void)
-
-{
-  int iVar1;
-  int iVar4;
-  ulonglong uVar2;
-  uint uVar5;
-  char cVar6;
-  undefined8 uVar3;
-  double dVar7;
-  double dVar8;
-  double dVar9;
-  undefined1 auStack_60 [28];
-  char local_44;
-  
-  iVar4 = __savegprlr_29();
-  if (iVar4 == 0) {
-    MyAssertHandler(0xffffffff82027068,0x108f,0,0xffffffff82000f98,0xffffffff82002798);
-  }
-  uVar2 = CG_PlayerTurretWeapon(iVar4,*(undefined4 *)(iVar4 + 0x3338));
-  if ((uVar2 & 0xff) != 0) {
-    uVar5 = BG_GetAlternateWeapon(uVar2,0);
-    iVar1 = (&DAT_829d84a0)[uVar5 & 0xff];
-    cVar6 = CG_PlayerUsingScopedTurret(*(undefined4 *)(iVar4 + 0x3338));
-    if ((cVar6 != '\0') && (*(int *)(iVar1 + 0x41c) == 2)) {
-      uVar3 = CL_GetCurrentCmdNumber(*(undefined4 *)(iVar4 + 0x3338));
-      CL_GetUserCmd(*(undefined4 *)(iVar4 + 0x3338),uVar3,auStack_60);
-      dVar7 = (double)*(float *)(iVar1 + 0x6dc);
-      dVar8 = (double)*(float *)(iVar4 + 0x108454);
-      dVar9 = (double)(float)((double)((float)(longlong)*(int *)(iVar4 + 0x6b988) * 0.001 *
-                                      (float)(longlong)local_44 * -0.007874016) *
-                              (double)*(float *)(iVar1 + 0x6d8) + dVar8);
-      if ((dVar9 < dVar7) || (dVar7 = (double)*(float *)(iVar1 + 0x6e0), dVar7 < dVar9)) {
-        dVar9 = dVar7;
-      }
-      if ((0.0 < ABS((float)(dVar9 - dVar8))) && (*(int *)(iVar1 + 0x84) != 0)) {
-        CG_PlayClientSoundAlias(*(undefined4 *)(iVar4 + 0x3338));
-      }
-      *(float *)(iVar4 + 0x108454) = (float)dVar9;
-      __restgprlr_29();
-      return;
-    }
-    *(float *)(iVar4 + 0x108454) =
-         (1.0 - *(float *)(iVar4 + 0x378)) * *(float *)(iVar1 + 0x6d0) +
-         *(float *)(iVar1 + 0x6d4) * *(float *)(iVar4 + 0x378);
-  }
-  __restgprlr_29();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 82311A68  CG_UpdateAdsDofValue  (cgame/cg_view.cpp:4282)
 
-double CG_UpdateAdsDofValue(double param_1,double param_2,double param_3,double param_4)
+float CG_UpdateAdsDofValue(float param_1,float param_2,float param_3,float param_4)
 
 {
-  double dVar1;
-  double dVar2;
+  float fVar1;
+  float fVar2;
   
-  dVar2 = (double)(float)((double)(float)(param_3 * 20.0) * param_4);
+  fVar1 = param_3 * 20.0 * param_4;
   if (param_2 < param_1) {
-    dVar1 = (double)((float)(param_1 - param_2) * 0.5);
-    if ((dVar2 < dVar1) || (dVar2 = 1.0, dVar1 < 1.0)) {
-      dVar1 = dVar2;
+    fVar2 = (param_1 - param_2) * 0.5;
+    if ((fVar1 < fVar2) || (fVar1 = 1.0, fVar2 < 1.0)) {
+      fVar2 = fVar1;
     }
-    if (param_2 <= (double)(float)(param_1 - dVar1)) {
-      return (double)(float)(param_1 - dVar1);
+    if (param_2 <= param_1 - fVar2) {
+      return param_1 - fVar2;
     }
     return param_2;
   }
   if (param_2 <= param_1) {
     return param_1;
   }
-  dVar1 = (double)((float)(param_2 - param_1) * 0.5);
-  if ((dVar2 < dVar1) || (dVar2 = 1.0, dVar1 < 1.0)) {
-    dVar1 = dVar2;
+  fVar2 = (param_2 - param_1) * 0.5;
+  if ((fVar1 < fVar2) || (fVar1 = 1.0, fVar2 < 1.0)) {
+    fVar2 = fVar1;
   }
-  if ((double)(float)(dVar1 + param_1) <= param_2) {
-    return (double)(float)(dVar1 + param_1);
+  if (fVar2 + param_1 <= param_2) {
+    return fVar2 + param_1;
   }
   return param_2;
 }
 
 
 // 82311B08  CG_UpdateAdsDof  (cgame/cg_view.cpp:4328)
-
-void CG_UpdateAdsDof(undefined8 param_1,ulonglong param_2)
-
-{
-  int iVar1;
-  float fVar2;
-  float fVar3;
-  float fVar4;
-  int iVar5;
-  ulonglong uVar6;
-  int iVar8;
-  int iVar9;
-  ulonglong uVar7;
-  longlong lVar10;
-  float *pfVar11;
-  double dVar12;
-  double dVar13;
-  double dVar14;
-  double dVar15;
-  double dVar16;
-  double dVar17;
-  double dVar18;
-  float local_e8;
-  float local_e4;
-  float local_e0;
-  float local_d0 [52];
-  
-  __savegprlr_19();
-  uVar6 = __savefpr_27();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82027068,0x10f6,0,0xffffffff82000f98,0xffffffff82028d98);
-  }
-  iVar8 = CG_GetLocalClientGlobals(uVar6);
-  dVar15 = 0.0;
-  iVar1 = (int)param_2;
-  if ((*(float *)(iVar8 + 0x378) == 0.0) && (*(int *)(iVar8 + 4) < 8)) {
-    *(undefined4 *)(iVar1 + 8) = 0;
-    *(undefined4 *)(iVar1 + 0xc) = 0;
-    *(undefined4 *)(iVar1 + 0x1c) = 0;
-    *(undefined4 *)(iVar1 + 0x10) = 0x459c4000;
-    *(undefined4 *)(iVar1 + 0x14) = 0x459c4000;
-    *(undefined4 *)(iVar1 + 0x18) = 0x40c00000;
-    __restfpr_27();
-    __restgprlr_19();
-    return;
-  }
-  dVar18 = 10000.0;
-  dVar17 = -1.0;
-  iVar9 = AimAssist_GetScreenTargetCount(uVar6);
-  lVar10 = 0;
-  dVar16 = 30.0;
-  dVar14 = 50.0;
-  if (0 < iVar9) {
-    do {
-      uVar7 = AimAssist_GetScreenTargetEntity(uVar6,lVar10);
-      if (0x7ff < (uVar7 & 0xffffffff)) {
-        MyAssertHandler(0xffffffff820100f8,0x6b4,0,0xffffffff820012f4,uVar7,0x800);
-      }
-      if ((ulonglong)DAT_82a38328 <= (uVar6 & 0xffffffff)) {
-        MyAssertHandler(0xffffffff820100f8,0x6b9,0,0xffffffff820012b0,uVar6);
-      }
-      iVar5 = ((int)uVar6 * 0x800 + (int)uVar7) * 0x1ec + DAT_82a3ce28;
-      fVar2 = *(float *)(iVar8 + 0x20) - *(float *)(iVar5 + 0x18);
-      fVar3 = *(float *)(iVar8 + 0x24) - *(float *)(iVar5 + 0x1c);
-      fVar4 = *(float *)(iVar8 + 0x1c) - *(float *)(iVar5 + 0x14);
-      dVar12 = (double)SQRT(fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2);
-      dVar13 = (double)(float)(dVar12 - dVar16);
-      if (dVar13 < dVar18) {
-        dVar18 = dVar13;
-      }
-      dVar12 = (double)(float)(dVar12 + dVar16);
-      if (dVar17 < dVar12) {
-        dVar17 = dVar12;
-      }
-      lVar10 = lVar10 + 1;
-    } while ((int)lVar10 < iVar9);
-    if (dVar18 <= dVar17) {
-      dVar12 = dVar14;
-      if ((dVar14 <= dVar18) && (dVar12 = dVar18, 512.0 < dVar18)) {
-        dVar12 = 512.0;
-      }
-      dVar18 = 2500.0;
-      if ((2500.0 < dVar17) || (dVar18 = 1000.0, dVar17 < 1000.0)) {
-        dVar17 = dVar18;
-      }
-      goto LAB_82311d44;
-    }
-  }
-  dVar12 = 256.0;
-  dVar17 = 2500.0;
-LAB_82311d44:
-  pfVar11 = (float *)(iVar8 + 0x6b9c8);
-  local_e8 = *(float *)(iVar8 + 0x6b9d4) * 8192.0 + *pfVar11;
-  local_e4 = *(float *)(iVar8 + 0x6b9d8) * 8192.0 + *(float *)(iVar8 + 0x6b9cc);
-  local_e0 = *(float *)(iVar8 + 0x6b9dc) * 8192.0 + *(float *)(iVar8 + 0x6b9d0);
-  CG_TraceCapsule(local_d0,pfVar11,&local_e8,0xffffffff82174a3c,*(undefined4 *)(iVar8 + 0x150),
-                  0x806c31);
-  local_e8 = (local_e8 - *pfVar11) * local_d0[0] + *pfVar11;
-  local_e4 = (local_e4 - *(float *)(iVar8 + 0x6b9cc)) * local_d0[0] + *(float *)(iVar8 + 0x6b9cc);
-  local_e0 = (local_e0 - *(float *)(iVar8 + 0x6b9d0)) * local_d0[0] + *(float *)(iVar8 + 0x6b9d0);
-  fVar2 = local_e4 - *(float *)(iVar8 + 0x6b9cc);
-  fVar3 = local_e0 - *(float *)(iVar8 + 0x6b9d0);
-  dVar18 = (double)SQRT((local_e8 - *pfVar11) * (local_e8 - *pfVar11) +
-                        fVar3 * fVar3 + fVar2 * fVar2);
-  if (dVar18 < dVar12) {
-    dVar12 = (double)(float)(dVar18 - dVar16);
-  }
-  if (dVar12 < 1.0) {
-    dVar12 = 1.0;
-  }
-  if (dVar17 < dVar18) {
-    dVar17 = dVar18;
-  }
-  dVar18 = (double)(float)(dVar17 * 4.0);
-  if ((*(float *)(iVar8 + 0x378) != 1.0) && (*(int *)(iVar8 + 4) < 8)) {
-    *(float *)(iVar1 + 8) =
-         (float)((double)(float)(1.0 - (double)*(float *)(iVar8 + 0x378)) * dVar15 +
-                (double)*(float *)(iVar8 + 0x378));
-    *(float *)(iVar1 + 0xc) =
-         (float)((double)(float)(1.0 - (double)*(float *)(iVar8 + 0x378)) * dVar15 +
-                (double)(float)((double)*(float *)(iVar8 + 0x378) * dVar12));
-    *(float *)(iVar1 + 0x10) =
-         (float)(1.0 - (double)*(float *)(iVar8 + 0x378)) * 5000.0 +
-         (float)((double)*(float *)(iVar8 + 0x378) * dVar17);
-    *(float *)(iVar1 + 0x14) =
-         (float)(1.0 - (double)*(float *)(iVar8 + 0x378)) * 5000.0 +
-         (float)((double)*(float *)(iVar8 + 0x378) * dVar18);
-    *(float *)(iVar1 + 0x18) = ((1.0 - *(float *)(iVar8 + 0x378)) + *(float *)(iVar8 + 0x378)) * 6.0
-    ;
-    *(float *)(iVar1 + 0x1c) =
-         (float)((double)((1.0 - *(float *)(iVar8 + 0x378)) + *(float *)(iVar8 + 0x378)) * dVar15);
-    __restfpr_27();
-    __restgprlr_19();
-    return;
-  }
-  dVar14 = (double)CG_UpdateAdsDofValue
-                             ((double)*(float *)(iVar1 + 8),0x3ff0000000000000,dVar14,
-                              (double)((float)(longlong)*(int *)(iVar8 + 0x6b988) * 0.001));
-  *(float *)(iVar1 + 8) = (float)dVar14;
-  dVar14 = (double)CG_UpdateAdsDofValue((double)*(float *)(iVar1 + 0xc),dVar12);
-  *(float *)(iVar1 + 0xc) = (float)dVar14;
-  dVar17 = (double)CG_UpdateAdsDofValue((double)*(float *)(iVar1 + 0x10),dVar17,0x4079000000000000);
-  *(float *)(iVar1 + 0x10) = (float)dVar17;
-  dVar17 = (double)CG_UpdateAdsDofValue((double)*(float *)(iVar1 + 0x14),dVar18);
-  *(float *)(iVar1 + 0x14) = (float)dVar17;
-  dVar17 = (double)CG_UpdateAdsDofValue
-                             ((double)*(float *)(iVar1 + 0x18),0x4018000000000000,0x3fb99999a0000000
-                             );
-  *(float *)(iVar1 + 0x18) = (float)dVar17;
-  dVar15 = (double)CG_UpdateAdsDofValue((double)*(float *)(iVar1 + 0x1c),dVar15);
-  *(float *)(iVar1 + 0x1c) = (float)dVar15;
-  __restfpr_27();
-  __restgprlr_19();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 82311FB0  CG_UpdateSceneDepthOfField  (cgame/cg_view.cpp:4448)
-
-void CG_UpdateSceneDepthOfField(void)
-
-{
-  int iVar1;
-  undefined8 uVar2;
-  int iVar3;
-  int iVar4;
-  char cVar5;
-  bool bVar6;
-  
-  uVar2 = __savegprlr_29();
-  iVar3 = CG_GetLocalClientGlobals();
-  iVar1 = *(int *)(iVar3 + 0x3358);
-  iVar4 = CG_GetLocalClientGlobals(uVar2);
-  if (*(int *)(iVar4 + 0x7a708) == 0) {
-    bVar6 = false;
-  }
-  else {
-    bVar6 = *(int *)(iVar4 + 0x7a718) != 0;
-  }
-  if (!bVar6) {
-    cVar5 = CL_Demo_IsFollowCamera(uVar2);
-    if ((cVar5 == '\0') && (cVar5 = CL_Demo_IsFreeCamera(uVar2), cVar5 == '\0')) {
-      cVar5 = BG_IsThirdPersonMode(iVar1);
-      if ((((cVar5 != '\0') || (*(float *)(iVar1 + 0x564) != 0.0)) ||
-          (*(float *)(iVar1 + 0x568) != 0.0)) ||
-         ((*(float *)(iVar1 + 0x56c) != 0.0 || (*(float *)(iVar1 + 0x570) != 0.0)))) {
-        *(undefined4 *)(iVar3 + 0x6ba1c) = *(undefined4 *)(iVar1 + 0x564);
-        *(undefined4 *)(iVar3 + 0x6ba20) = *(undefined4 *)(iVar1 + 0x568);
-        *(undefined4 *)(iVar3 + 0x6ba24) = *(undefined4 *)(iVar1 + 0x56c);
-        *(undefined4 *)(iVar3 + 0x6ba28) = *(undefined4 *)(iVar1 + 0x570);
-        *(undefined4 *)(iVar3 + 0x6ba2c) = *(undefined4 *)(iVar1 + 0x574);
-        *(undefined4 *)(iVar3 + 0x6ba30) = *(undefined4 *)(iVar1 + 0x578);
-        __restgprlr_29();
-        return;
-      }
-      CG_UpdateAdsDof(uVar2,iVar3 + 0x6ba14);
-      if ((double)*(float *)(iVar3 + 0x6ba2c) < 4.0) {
-        MyAssertHandler(0xffffffff82027068,0x1182,0,0xffffffff82028d9c,0xffffffff82028dc8,
-                        (double)*(float *)(iVar3 + 0x6ba2c));
-        __restgprlr_29();
-        return;
-      }
-    }
-    else {
-      *(undefined4 *)(iVar3 + 0x6ba1c) = 0;
-      *(undefined4 *)(iVar3 + 0x6ba20) = 0;
-      *(undefined4 *)(iVar3 + 0x6ba24) = 0x459c4000;
-      *(undefined4 *)(iVar3 + 0x6ba28) = 0x459c4000;
-      *(undefined4 *)(iVar3 + 0x6ba2c) = 0x40c00000;
-      *(undefined4 *)(iVar3 + 0x6ba30) = 0;
-    }
-  }
-  __restgprlr_29();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 823121B8  CG_UpdateWaterSheetingFX  (cgame/cg_view.cpp:4500)
-
-void CG_UpdateWaterSheetingFX(int param_1)
-
-{
-  if (*(int *)(param_1 + 0x3358) == 0) {
-    return;
-  }
-  if (*(char *)(param_1 + 0x6bb1c) == '\0') {
-    return;
-  }
-  if (*(int *)(param_1 + 0x6bb18) < 1) {
-    return;
-  }
-  *(int *)(param_1 + 0x6bb14) = *(int *)(param_1 + 0x6b98c);
-  if (*(int *)(param_1 + 0x6b98c) - *(int *)(param_1 + 0x6bb10) <= *(int *)(param_1 + 0x6bb18)) {
-    return;
-  }
-  *(char *)(param_1 + 0x6bb1c) = '\0';
-  *(undefined1 *)(param_1 + 0x6bb1d) = 0;
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 82312238  CG_StartWaterSheetFX  (cgame/cg_view.cpp:4520)
-
-void CG_StartWaterSheetFX(undefined8 param_1,int param_2)
-
-{
-  int iVar1;
-  int iVar2;
-  int iVar3;
-  int iVar4;
-  
-  __savegprlr_28();
-  iVar4 = CG_GetLocalClientGlobals();
-  iVar3 = DAT_82a76fbc;
-  iVar2 = DAT_82a76f6c;
-  iVar1 = DAT_82a76f10;
-  *(undefined1 *)(iVar4 + 0x6bb1c) = 1;
-  *(undefined1 *)(iVar4 + 0x6bb1d) = 1;
-  *(undefined4 *)(iVar4 + 0x6bb10) = *(undefined4 *)(iVar4 + 0x6b98c);
-  *(undefined4 *)(iVar4 + 0x6bafc) = *(undefined4 *)(iVar1 + 0xc);
-  *(undefined4 *)(iVar4 + 0x6bb00) = *(undefined4 *)(iVar2 + 0xc);
-  *(undefined4 *)(iVar4 + 0x6baf0) = *(undefined4 *)(iVar3 + 0xc);
-  *(undefined4 *)(iVar4 + 0x6baf4) = *(undefined4 *)(iVar3 + 0x10);
-  *(undefined4 *)(iVar4 + 0x6baf8) = 0x3e99999a;
-  if (-1 < param_2) {
-    *(int *)(iVar4 + 0x6bb18) = param_2;
-    __restgprlr_28();
-    return;
-  }
-  *(undefined4 *)(iVar4 + 0x6bb18) = 3000;
-  __restgprlr_28();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 82312320  CG_StopWaterSheetFX  (cgame/cg_view.cpp:4536)
-
-void CG_StopWaterSheetFX(void)
-
-{
-  int iVar1;
-  
-  iVar1 = CG_GetLocalClientGlobals();
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff82027068,0x11ba,0,0xffffffff82000f98,0xffffffff82002798);
-  }
-  *(undefined1 *)(iVar1 + 0x6bb1c) = 0;
-  *(undefined1 *)(iVar1 + 0x6bb1d) = 0;
-  *(undefined4 *)(iVar1 + 0x6bafc) = 0;
-  *(undefined4 *)(iVar1 + 0x6bb18) = 0;
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 823123B8  UpdateRemoteCamSounds  (cgame/cg_view.cpp:4592)
-
-void UpdateRemoteCamSounds(void)
-
-{
-  int iVar1;
-  
-  iVar1 = CG_GetLocalClientGlobals();
-  if ((*(uint *)(iVar1 + 0x10) & 0x20) == 0) {
-    SND_DeactivateEnvironmentEffects(3,0);
-    return;
-  }
-  SND_SetEnvironmentEffects
-            ((double)*(float *)(DAT_82a76f08 + 0xc),(double)*(float *)(DAT_82a76f34 + 0xc),3,
-             (&PTR_s_generic_829611f8)[*(int *)(DAT_82a76ff4 + 0xc)],*(int *)(DAT_82a76ff4 + 0xc),
-             0xffffffff829611f8,0);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 82312440  CL_SetForceSunShadows  (cgame/cg_view.cpp:4619)
-
-void CL_SetForceSunShadows(undefined8 param_1,undefined1 param_2)
-
-{
-  int iVar1;
-  
-  iVar1 = CG_GetLocalClientGlobals();
-  *(undefined1 *)(iVar1 + 0x704d2) = param_2;
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 82312478  UpdateLocSelInfo  (cgame/cg_view.cpp:4701)
-
-void UpdateLocSelInfo(undefined8 param_1,int param_2)
-
-{
-  char cVar1;
-  
-  if (param_2 == 0) {
-    MyAssertHandler(0xffffffff82027068,0x125e,0,0xffffffff82000f98,0xffffffff82002798);
-  }
-  cVar1 = CL_Demo_IsThirdPersonCamera(param_1);
-  if (cVar1 == '\0') {
-    if (((*(int *)(param_2 + 0x208) == 0) || ((*(uint *)(param_2 + 0x10) & 0x800) != 0)) ||
-       (*(int *)(param_2 + 4) == 5)) {
-      cVar1 = Key_IsCatcherActive(param_1,8);
-      if (cVar1 != '\0') {
-        Key_RemoveCatcher(param_1,0xfffffffffffffff7);
-      }
-    }
-    else {
-      cVar1 = Key_IsCatcherActive(param_1,8);
-      if (cVar1 != '\0') {
-        return;
-      }
-      Key_AddCatcher(param_1,8);
-    }
-    *(undefined4 *)(param_2 + 0x79878) = 0;
-    *(undefined4 *)(param_2 + 0x79874) = 0x3f000000;
-    *(undefined4 *)(param_2 + 0x79870) = 0x3f000000;
-  }
-  else {
-    cVar1 = Key_IsCatcherActive(param_1,8);
-    if (cVar1 != '\0') {
-      Key_RemoveCatcher(param_1,0xfffffffffffffff7);
-    }
-  }
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 823125C0  CG_PrefetchPlayerCards  (cgame/cg_view.cpp:5261)
-
-void CG_PrefetchPlayerCards(void)
-
-{
-  uint uVar1;
-  ulonglong uVar2;
-  int iVar3;
-  longlong lVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  uint *puVar7;
-  uint *puVar8;
-  
-  __savegprlr_23();
-  iVar3 = CG_GetLocalClientGlobals();
-  lVar4 = 0x12;
-  puVar8 = (uint *)(iVar3 + 0x1084ec);
-  puVar7 = (uint *)(iVar3 + 0x1010c4);
-  do {
-    if (puVar7[-0x14f] != 0) {
-      uVar6 = (ulonglong)puVar8[-1];
-      uVar5 = (ulonglong)*puVar8;
-      if ((uVar6 == 0) || ((uint)*(ushort *)(puVar8 + -2) != *puVar7)) {
-        uVar6 = PlayerCards_GetIconMaterialByIndex(*puVar7);
-        puVar8[-1] = (uint)uVar6;
-        uVar1 = *puVar7;
-        *(short *)(puVar8 + -2) = (short)uVar1;
-        if ((uVar1 & 0xffff) != *puVar7) {
-          MyAssertHandler(0xffffffff82027068,0x14a7,0,0xffffffff82000f98,0xffffffff82028df4);
-        }
-      }
-      uVar2 = CONCAT44(puVar7[1],puVar7[1]);
-      if (*(char *)((int)puVar7 + 0xd) == '\x01') {
-        uVar2 = CONCAT44(puVar7[10],puVar7[10]);
-      }
-      if ((uVar5 == 0) || ((ulonglong)*(ushort *)((int)puVar8 + -6) != (uVar2 & 0xffff))) {
-        uVar5 = PlayerCards_GetTitleBackgroundByIndex(uVar2 & 0xffff);
-        *(short *)((int)puVar8 + -6) = (short)uVar2;
-        *puVar8 = (uint)uVar5;
-      }
-      DB_TouchMaterial(uVar6);
-      DB_TouchMaterial(uVar5);
-    }
-    lVar4 = lVar4 + -1;
-    puVar7 = puVar7 + 0x164;
-    puVar8 = puVar8 + 3;
-  } while (lVar4 != 0);
-  __restgprlr_23();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 823126D8  UpdateKickAngles  (cgame/cg_view.cpp:5315)
-
-void UpdateKickAngles(int param_1)
-
-{
-  char cVar1;
-  
-  if (param_1 == 0) {
-    MyAssertHandler(0xffffffff82027068,0x14c4,0,0xffffffff82000f98,0xffffffff82002798);
-  }
-  cVar1 = CL_Demo_IsFollowCamera(*(undefined4 *)(param_1 + 0x3338));
-  if (((cVar1 == '\0') &&
-      (cVar1 = CL_Demo_IsFreeCamera(*(undefined4 *)(param_1 + 0x3338)), cVar1 == '\0')) &&
-     ((*(uint *)(param_1 + 0x10) & 0x1000) != 0)) {
-    CG_KickAngles(param_1);
-    return;
-  }
-  *(undefined4 *)(param_1 + 0x7977c) = 0;
-  *(undefined4 *)(param_1 + 0x79780) = 0;
-  *(undefined4 *)(param_1 + 0x79784) = 0;
-  *(undefined4 *)(param_1 + 0x79790) = 0;
-  *(undefined4 *)(param_1 + 0x7978c) = 0;
-  *(undefined4 *)(param_1 + 0x79788) = 0;
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 823127B0  CG_DoNormalStreaming  (cgame/cg_view.cpp:5341)
 
-ulonglong CG_DoNormalStreaming(int param_1)
+/* WARNING: Struct "playerState_s": ignoring multiple overlapping fields */
+
+int CG_DoNormalStreaming(playerState_s *param_1)
 
 {
-  if ((*(int *)(param_1 + 4) != 0) && (*(int *)(param_1 + 4) != 1)) {
+  int iVar1;
+  
+  iVar1 = (param_1->field0_0x0).remoteEyesEnt;
+  if ((iVar1 != 0) && (iVar1 != 1)) {
     return 0;
   }
-  return (~(ulonglong)*(uint *)(param_1 + 0x10) & 0xffffffff) >> 0xb & 1;
+  return ~*(uint *)&(param_1->field0_0x0).field_0x10 >> 0xb & 1;
 }
 
 
 // 823127E0  CG_SetClientEntCollision  (cgame/cg_view.cpp:5355)
-
-/* WARNING: Removing unreachable block (ram,0x82312918) */
-/* WARNING: Removing unreachable block (ram,0x82312888) */
-/* WARNING: Removing unreachable block (ram,0x823128cc) */
-/* WARNING: Removing unreachable block (ram,0x823128e0) */
-/* WARNING: Removing unreachable block (ram,0x82312908) */
-
-void CG_SetClientEntCollision(undefined8 param_1,ulonglong param_2)
-
-{
-  undefined8 uVar1;
-  int iVar2;
-  byte *pbVar3;
-  
-  uVar1 = __savegprlr_29();
-  iVar2 = CG_GetLocalClientGlobals();
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff82027068,0x14f3,0,0xffffffff82000f98,0xffffffff82002798);
-  }
-  pbVar3 = (byte *)(iVar2 + 0x1085c0);
-  if ((ulonglong)*pbVar3 != (param_2 & 0xff)) {
-    if ((param_2 & 0xff) != 0) {
-      CG_LinkEntity();
-      iVar2 = CG_GetEntity(uVar1,*(undefined4 *)(iVar2 + 0x150));
-      if (iVar2 != 0) {
-        *(undefined4 *)(iVar2 + 0x160) = 0x66010f;
-      }
-      *pbVar3 = 1;
-      __restgprlr_29();
-      return;
-    }
-    CG_UnlinkEntity(uVar1,*(undefined4 *)(iVar2 + 0x150));
-    *pbVar3 = 0;
-  }
-  __restgprlr_29();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 82313188  CG_DrawActiveFrame  (cgame/cg_view.cpp:5403)
-
-void CG_DrawActiveFrame(undefined8 param_1,undefined8 param_2,undefined4 param_3,undefined4 param_4,
-                       undefined4 param_5,undefined4 param_6,undefined4 param_7)
-
-{
-  bool bVar1;
-  float fVar2;
-  int iVar3;
-  undefined4 uVar4;
-  undefined4 uVar5;
-  float fVar6;
-  float fVar7;
-  float fVar8;
-  float fVar9;
-  uint uVar11;
-  char cVar17;
-  int iVar12;
-  int iVar13;
-  longlong lVar10;
-  char *pcVar14;
-  uint uVar15;
-  int iVar16;
-  undefined8 uVar18;
-  undefined1 uVar19;
-  int *in_r13;
-  int iVar20;
-  uint *puVar21;
-  int *piVar22;
-  float *pfVar23;
-  uint *puVar24;
-  undefined4 *puVar25;
-  int iVar26;
-  undefined4 local_a8 [2];
-  longlong local_a0;
-  
-  uVar11 = __savegprlr();
-  cVar17 = Sys_IsMainThread();
-  if (cVar17 == '\0') {
-    MyAssertHandler(0xffffffff82027068,0x152f,0,0xffffffff82000f98,0xffffffff82010b48);
-  }
-  R_ClearScene();
-  R_ClearSceneView(uVar11);
-  CG_LaserClearAll();
-  FX_BeginMarks(uVar11,param_2);
-  FX_BeginUpdateView(uVar11);
-  ScrPlace_BeginDisplayView();
-  CG_SetCollWorldLocalClientNum(uVar11);
-  iVar12 = CG_GetLocalClientGlobals(uVar11);
-  iVar13 = DAT_82a76fb0;
-  puVar21 = (uint *)(iVar12 + 0x6b98c);
-  puVar24 = (uint *)(iVar12 + 0x6b990);
-  iVar16 = iVar12 + 0x6b9b0;
-  bVar1 = DAT_82a76fb0 == 0;
-  DAT_82a3d5f8 = iVar16;
-  *puVar24 = *puVar21;
-  if (bVar1) {
-    MyAssertHandler(0xffffffff82027068,0x1543,0,0xffffffff82000f98,0xffffffff82028394);
-    iVar13 = DAT_82a76fb0;
-  }
-  if (*(char *)(iVar13 + 0xc) == '\0') {
-    *puVar21 = (uint)param_2;
-  }
-  uVar15 = *puVar21;
-  *(undefined4 *)(iVar12 + 0x333c) = param_3;
-  piVar22 = (int *)(iVar12 + 0x6b988);
-  *(undefined4 *)(iVar12 + 0x3340) = param_4;
-  *(undefined4 *)(iVar12 + 0x3344) = param_5;
-  *(undefined4 *)(iVar12 + 0x334c) = param_6;
-  bVar1 = false;
-  *(uint *)(iVar12 + 0x100b60) = uVar15;
-  iVar13 = (int)((ulonglong)uVar15 - (ulonglong)*puVar24);
-  *piVar22 = iVar13;
-  if ((longlong)((ulonglong)uVar15 - (ulonglong)*puVar24) < 0) {
-    *puVar24 = uVar15;
-    *piVar22 = 0;
-    cVar17 = CL_Demo_IsPlaying(uVar11);
-    if (cVar17 != '\0') {
-      bVar1 = true;
-    }
-  }
-  CG_AddLagometerFrameInfo(iVar12);
-  iVar3 = *in_r13;
-  *(int *)(iVar12 + 0x100b68) = *piVar22;
-  *(undefined4 *)(iVar12 + 0x108450) = 0xbf800000;
-  if (*(int *)(iVar3 + 8) != 0) {
-    MyAssertHandler(0xffffffff82027068,0x156d,0,0xffffffff8201dfa4,0xffffffff8201df98);
-  }
-  iVar20 = iVar12 + 0x7a7a0;
-  *(int *)(iVar3 + 8) = iVar20;
-  iVar26 = *(int *)(iVar12 + 0x7a708);
-  CG_ProcessSnapshots(uVar11);
-  if (((iVar13 < 0) && (!bVar1)) && (*(int *)(iVar12 + 0x7a708) == iVar26)) {
-    FX_RewindTo(uVar11,*puVar21,0);
-  }
-  if (*(int *)(iVar12 + 0x334c) == 0) {
-    if (*(int *)(iVar3 + 8) == iVar20) goto LAB_82313e6c;
-    uVar18 = 0x157e;
-  }
-  else if ((*(int *)(iVar12 + 0x335c) == 0) ||
-          ((*(uint *)(*(int *)(iVar12 + 0x335c) + 0x3300) & 2) != 0)) {
-    if (*(int *)(iVar3 + 8) == iVar20) goto LAB_82313e6c;
-    uVar18 = 0x1586;
-  }
-  else {
-    cVar17 = CL_IsServerLoadingMap();
-    if (cVar17 == '\0') {
-      CL_SetWaitingOnServerToLoadMap(uVar11,0);
-      if (*(int *)(iVar3 + 8) != iVar20) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_view.cpp",0x1595,
-                        0,"%s\n\t(bgs) = %p",0xffffffff8201dee4);
-      }
-      if (*(int *)(iVar12 + 0x3358) == 0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_view.cpp",0x1597,
-                        0,0xffffffff82000f98,0xffffffff82015cb8);
-      }
-      if (*(int *)(iVar12 + 0x335c) == 0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_view.cpp",0x1598,
-                        0,0xffffffff82000f98,0xffffffff82002858);
-      }
-      DAT_82a382e4 = uVar11;
-      CG_SetupPlayerState(uVar11);
-      iVar13 = R_ExistsWorkerCmdsOfType(7);
-      if (iVar13 != 0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_view.cpp",0x15a2,
-                        0,0xffffffff82000f98,0xffffffff82028fa8);
-      }
-      iVar13 = R_ExistsWorkerCmdsOfType(8);
-      if (iVar13 != 0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_view.cpp",0x15a3,
-                        0,0xffffffff82000f98,0xffffffff82028f74);
-      }
-      CL_ResetSkeletonCache();
-      pfVar23 = (float *)(iVar12 + 0x6b9c8);
-      *pfVar23 = *(float *)(iVar12 + 0x6b9fc);
-      *(undefined4 *)(iVar12 + 0x6b9cc) = *(undefined4 *)(iVar12 + 0x6ba00);
-      *(undefined4 *)(iVar12 + 0x6b9d0) = *(undefined4 *)(iVar12 + 0x6ba04);
-      *(uint *)(iVar12 + 0x6ba08) = *puVar21;
-      cVar17 = CL_Demo_IsFollowCamera(uVar11);
-      if ((cVar17 != '\0') || (cVar17 = CL_Demo_IsFreeCamera(uVar11), cVar17 != '\0')) {
-        CL_Demo_CalcViewValues(uVar11);
-      }
-      R_SetLodOrigin(0x3ff0000000000000,iVar16);
-      CG_MotionTrackerIncreaseRadarTime(uVar11);
-      FX_Update0(uVar11,*puVar21);
-      iVar13 = *(int *)(iVar12 + 0x3358);
-      if (*(int *)(iVar13 + 0x554) == 0) {
-        uVar4 = *(undefined4 *)(iVar12 + 0x7984c);
-        uVar5 = *(undefined4 *)(iVar12 + 0x79848);
-      }
-      else {
-        uVar4 = *(undefined4 *)(iVar13 + 0x55c);
-        uVar5 = *(undefined4 *)(iVar13 + 0x558);
-      }
-      uVar18 = BG_GetShellshockParms();
-      CG_StartShellShock(iVar12,uVar18,uVar5,uVar4);
-      CG_UpdateShellShock(uVar11,*(undefined4 *)(iVar12 + 0x79820),*(undefined4 *)(iVar12 + 0x79824)
-                          ,*(undefined4 *)(iVar12 + 0x79828));
-      UpdateThirdPerson(uVar11);
-      if ((*(int *)(iVar12 + 0x6b9a0) == 0) || (uVar18 = 1, *(int *)(iVar12 + 0xac) == 0x7ff)) {
-        uVar18 = 0;
-      }
-      CG_SetClientEntCollision(uVar11,uVar18);
-      CG_ClearHudGrenades(iVar12);
-      CG_UpdateEntInfo(uVar11);
-      lVar10 = CG_AddPacketEntities(uVar11,local_a8);
-      CG_UpdateRadarJamLevel(uVar11);
-      CG_UpdateRumble(uVar11);
-      CG_TriggerUpdate(uVar11);
-      CG_VisionSetsUpdate(uVar11,iVar12 + 0x107060,*puVar21);
-      cVar17 = CL_IsFirstActiveLocalClient(uVar11);
-      if (cVar17 != '\0') {
-        R_UpdateSound();
-        PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff82028f60);
-        CG_PrePredictAllPlayerState();
-        PIXEndNamedEvent();
-        CL_SyncGpu(0);
-        DB_StreamTabulationEnd(1);
-      }
-      R_ToggleSmpFrame();
-      CL_Demo_ClearCameraModeChanged();
-      CL_Input(uVar11);
-      CG_ModelPreviewerFrame(iVar12);
-      CG_AddModelPreviewerModel(uVar11,*piVar22);
-      PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff82028f50);
-      CG_PredictPlayerState(uVar11);
-      CG_UpdateWeaponViewmodels(uVar11);
-      if (0 < (int)*(uint *)(iVar12 + 0x154)) {
-        pcVar14 = (char *)CL_GetConfigString((ulonglong)*(uint *)(iVar12 + 0x154) + 0x404);
-        if ((pcVar14 == (char *)0x0) || (*pcVar14 == '\0')) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_view.cpp",
-                          0x160b,0,0xffffffff82000f98,0xffffffff82028f34);
-        }
-        uVar18 = R_RegisterModel(pcVar14);
-        CG_UpdateHandViewmodels(uVar11,uVar18);
-      }
-      DAT_82a3d588 = 0;
-      CG_TransitionPlayerState(uVar11,iVar12,iVar12 + 0x10807c);
-      if (0 < (int)lVar10) {
-        puVar25 = local_a8;
-        do {
-          CG_AddPacketEntity(uVar11,*puVar25);
-          if (DAT_82a3d568 != 0) {
-            uVar18 = CG_GetEntity(uVar11,*puVar25);
-            CG_CheckEntEvents(uVar11,uVar18,0);
-          }
-          lVar10 = lVar10 + -1;
-          puVar25 = puVar25 + 1;
-        } while (lVar10 != 0);
-      }
-      if ((0 < DAT_82a3d588) && (*(int *)(iVar12 + 0x1bc) != 0x7ff)) {
-        iVar13 = CG_GetEntity(uVar11);
-        if (iVar13 == 0) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_view.cpp",
-                          0x1626,0,0xffffffff82000f98,0xffffffff82028f24);
-        }
-        uVar18 = BG_GetWeaponFlashTagname
-                           (*(undefined4 *)(iVar13 + 0x18c),*(int *)(iVar13 + 400) != 0);
-        iVar26 = 0;
-        if (0 < DAT_82a3d588) {
-          do {
-            CG_HandleTurretFire(uVar11,iVar13,0x36,0,uVar18,0);
-            iVar26 = iVar26 + 1;
-          } while (iVar26 < DAT_82a3d588);
-        }
-      }
-      iVar13 = CG_ShouldProcessPlayerEntity(uVar11);
-      if (iVar13 != 0) {
-        CG_ProcessPlayerEntity(uVar11);
-      }
-      FX_Update1(uVar11);
-      cVar17 = CL_IsFirstActiveLocalClient(uVar11);
-      if (cVar17 != '\0') {
-        DynEntCl_ProcessEntities();
-        Phys_RunToTimeDelayed(0,*puVar21);
-        local_a0 = (longlong)*piVar22;
-        Hinge_UpdateAll((double)((float)local_a0 * 0.001));
-      }
-      if (*(int *)(DAT_82a3824c + 0xc) != 0) {
-        R_UpdateImageDeltaStats();
-      }
-      CL_Demo_IsThirdPersonCamera(uVar11);
-      R_UpdateFrameFog();
-      cVar17 = CG_IsThermalVisionOn(uVar11);
-      pcVar14 = (char *)(iVar12 + 0x108038);
-      *pcVar14 = cVar17;
-      if (cVar17 != '\0') {
-        DAT_832ee01c = 1;
-      }
-      R_SetThermalView(*pcVar14,*(undefined4 *)(iVar12 + 0x10847c));
-      UpdateRemoteCamSounds(uVar11);
-      UpdateLocSelInfo(uVar11,iVar12);
-      UpdateKickAngles(iVar12);
-      CL_SendCmd(uVar11);
-      PIXEndNamedEvent();
-      UpdateTurretZoom(iVar12);
-      PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff82028f18);
-      CG_UpdateViewWeaponAnim(uVar11);
-      PIXEndNamedEvent();
-      PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff82028f0c);
-      iVar13 = CG_GetLocalClientGlobals(uVar11);
-      if (*(int *)(iVar13 + 0x7a708) != 0) {
-        CG_CacheKillCamEntityPose(uVar11);
-        CG_CacheKillCamLookAtEntityOrigin(uVar11);
-      }
-      CalcViewValues(uVar11);
-      SetViewNowDvar(iVar12);
-      LerpKillCamView(uVar11);
-      cVar17 = CL_Demo_IsFollowCamera(uVar11);
-      if ((cVar17 != '\0') || (cVar17 = CL_Demo_IsFreeCamera(uVar11), cVar17 != '\0')) {
-        CL_Demo_CalcViewValues(uVar11);
-      }
-      *(float *)(iVar12 + 0x108054) = *pfVar23;
-      *(undefined4 *)(iVar12 + 0x108058) = *(undefined4 *)(iVar12 + 0x6b9cc);
-      *(undefined4 *)(iVar12 + 0x10805c) = *(undefined4 *)(iVar12 + 0x6b9d0);
-      CG_ViewmodelShieldHitsProcess(uVar11);
-      CG_AddViewWeapon(uVar11);
-      CG_UpdateScissor(uVar11);
-      if ((*(char *)(iVar12 + 0x108039) != '\0') || (*pcVar14 != '\0')) {
-        R_DisableFogThisFrame();
-      }
-      PIXEndNamedEvent();
-      PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff82028efc);
-      R_GetFarPlaneDist();
-      FX_Update2(uVar11,iVar16,(float *)(iVar12 + 0x6b9c0));
-      SND_SetListener(uVar11,*(undefined4 *)(iVar12 + 0x150),pfVar23,iVar12 + 0x6b9d4,iVar12 + 0x28)
-      ;
-      CG_SetRumbleReceiver(uVar11,*(undefined4 *)(iVar12 + 0x150),pfVar23);
-      CG_UpdateTestFX(uVar11);
-      GetCeilingHeight(iVar12);
-      if (uVar11 == 0) {
-        DumpAnims(0);
-        DumpDObj(0);
-      }
-      PIXEndNamedEvent();
-      PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff82028eec);
-      R_EndDObjScene();
-      cVar17 = CG_MotionTrackerOnWeapon(uVar11);
-      if (cVar17 != '\0') {
-        CG_MotionTrackerPreFXDraw(uVar11);
-      }
-      CG_LaserDrawAll(uVar11);
-      FX_Update3(uVar11);
-      FX_RunPhysicsDelayed(uVar11);
-      PIXEndNamedEvent();
-      PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff82028ed8);
-      AimAssist_UpdateScreenTargets
-                ((double)*(float *)(iVar12 + 0x6b9c0),(double)*(float *)(iVar12 + 0x6b9c4),uVar11,
-                 iVar12 + 0x704f4,iVar12 + 0x70500,iVar12 + 0x7050c);
-      PIXEndNamedEvent();
-      CG_UpdateSceneDepthOfField(uVar11);
-      CG_UpdateWaterSheetingFX(iVar12);
-      uVar15 = BG_GetNumWeapons();
-      if (uVar15 <= *(byte *)(iVar12 + 0x76ecf)) {
-        lVar10 = BG_GetNumWeapons();
-        Com_PrintWarning(0x11,0xffffffff82028e98,*(undefined1 *)(iVar12 + 0x76ecf),lVar10 + -1);
-        *(undefined4 *)(iVar12 + 0x76ecc) = 0;
-        iVar13 = 0;
-        puVar21 = (uint *)(iVar12 + 0x274);
-        *(undefined4 *)(iVar12 + 0x76ed0) = 0;
-        do {
-          uVar15 = *puVar21;
-          if (((uVar15 & 0xff) != 0) && (iVar16 = BG_PlayerHasWeapon(iVar12,uVar15), iVar16 != 0)) {
-            iVar16 = BG_GetEquippedWeaponState(iVar12,uVar15);
-            if (iVar16 == 0) {
-              uVar19 = 0;
-            }
-            else {
-              uVar19 = *(undefined1 *)(iVar16 + 2);
-            }
-            cVar17 = CG_SelectWeapon(uVar11,uVar15,uVar19);
-            if (cVar17 != '\0') break;
-          }
-          iVar13 = iVar13 + 1;
-          puVar21 = puVar21 + 1;
-        } while (iVar13 < 0xf);
-      }
-      CG_PrefetchPlayerCards(uVar11);
-      PlayercardCache_TouchMaterials(uVar11);
-      DB_TouchMaterial(DAT_82a383e4);
-      if (0x11 < uVar11) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_view.cpp",0x16f7,
-                        0,0xffffffff82028e58,uVar11,0x12);
-      }
-      iVar13 = uVar11 * 0xc;
-      *(float *)(&DAT_832ee198 + iVar13) = *pfVar23;
-      *(undefined4 *)(&DAT_832ee19c + iVar13) = *(undefined4 *)(iVar12 + 0x6b9cc);
-      *(undefined4 *)(&DAT_832ee1a0 + iVar13) = *(undefined4 *)(iVar12 + 0x6b9d0);
-      (&DAT_832ee09a)[uVar11] = 1;
-      fVar2 = *(float *)(iVar12 + 0x20);
-      fVar9 = *(float *)(iVar12 + 0x24) + *(float *)(iVar12 + 0x168);
-      fVar6 = fVar2 - *(float *)(iVar12 + 0x6b9cc);
-      fVar7 = fVar9 - *(float *)(iVar12 + 0x6b9d0);
-      fVar8 = *(float *)(iVar12 + 0x1c) - *pfVar23;
-      if (4194304.0 < fVar8 * fVar8 + fVar7 * fVar7 + fVar6 * fVar6) {
-        *(float *)(&DAT_832ee270 + iVar13) = *(float *)(iVar12 + 0x1c);
-        *(float *)(&DAT_832ee274 + iVar13) = fVar2;
-        *(float *)(&DAT_832ee278 + iVar13) = fVar9;
-        (&DAT_832ee0ac)[uVar11] = 1;
-      }
-      if (((*(int *)(iVar12 + 4) == 0) || (*(int *)(iVar12 + 4) == 1)) &&
-         ((*(uint *)(iVar12 + 0x10) & 0x800) == 0)) {
-        *(undefined1 *)(iVar12 + 0x1084e0) = 0;
-      }
-      else if (*(char *)(iVar12 + 0x1084e0) != '\0') {
-        *(undefined4 *)(&DAT_832ee0c0 + iVar13) = *(undefined4 *)(iVar12 + 0x1084d4);
-        *(undefined4 *)(&DAT_832ee0c4 + iVar13) = *(undefined4 *)(iVar12 + 0x1084d8);
-        *(undefined4 *)(&DAT_832ee0c8 + iVar13) = *(undefined4 *)(iVar12 + 0x1084dc);
-        sync(1);
-      }
-      (&DAT_832ee088)[uVar11] = *(undefined1 *)(iVar12 + 0x1084e0);
-      CG_DrawActive(uVar11,param_7);
-      CL_Demo_DrawDebugInformation(uVar11);
-      AimTarget_FinishProcessingEntities(uVar11);
-      if (*(int *)(iVar3 + 8) != iVar20) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_view.cpp",0x1720,
-                        0,"%s\n\t(bgs) = %p",0xffffffff8201dee4);
-      }
-      *(undefined4 *)(iVar3 + 8) = 0;
-      SND_PlayFXSounds();
-      *(undefined1 *)(iVar12 + 0x108045) = 0;
-      CL_Demo_SetJumpTimeFlag(0);
-      __restgprlr(1);
-      return;
-    }
-    if (*(int *)(iVar3 + 8) == iVar20) goto LAB_82313e6c;
-    uVar18 = 0x158e;
-  }
-  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_view.cpp",uVar18,0,
-                  0xffffffff8201dfa4,0xffffffff8201dee4);
-LAB_82313e6c:
-  *(undefined4 *)(iVar3 + 8) = 0;
-  __restgprlr(0);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0

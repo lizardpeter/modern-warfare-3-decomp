@@ -2,90 +2,103 @@
 
 // 824D1D78  TRACK_cm_world  (qcommon/cm_world.cpp:89)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void TRACK_cm_world(void)
 
 {
-  track_static_alloc_internal(0xffffffff835a59b0,0x601c,0xffffffff82082ef4,0x19);
+  track_static_alloc_internal(&cm_world,0x601c,"cm_world",0x19);
   return;
 }
 
 
 // 824D1D98  CM_AllocWorldSector  (qcommon/cm_world.cpp:116)
 
-void CM_AllocWorldSector(undefined8 param_1,float *param_2)
+ushort CM_AllocWorldSector(float *param_1,float *param_2)
 
 {
-  int iVar1;
-  float *pfVar2;
+  float *pfVar1;
+  ushort uVar2;
   uint uVar3;
   bool bVar4;
   float local_60 [24];
   
-  pfVar2 = (float *)__savegprlr_23();
-  uVar3 = (uint)DAT_835a59c8;
+  pfVar1 = (float *)__savegprlr_23(param_1);
+  uVar3 = (uint)cm_world.freeHead;
   if (uVar3 != 0) {
-    local_60[0] = *param_2 - *pfVar2;
-    local_60[1] = param_2[1] - pfVar2[1];
+    local_60[0] = *param_2 - *pfVar1;
+    local_60[1] = param_2[1] - pfVar1[1];
     bVar4 = local_60[0] <= local_60[1];
     if (512.0 < local_60[bVar4]) {
-      iVar1 = uVar3 * 0x18;
-      if ((&DAT_835a59cc)[uVar3 * 6] != 0) {
-        MyAssertHandler(0xffffffff82082fb0,0x88,0,0xffffffff82000f98,0xffffffff82082f8c);
+      if (cm_world.sectors[uVar3].contents.contentsEntities != 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_world.cpp",0x88
+                        ,0,"%s");
       }
-      if (*(int *)(&DAT_835a59d0 + iVar1) != 0) {
-        MyAssertHandler(0xffffffff82082fb0,0x89,0,0xffffffff82000f98,0xffffffff82082f64);
+      if (cm_world.sectors[uVar3].contents.linkcontentsEntities != 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_world.cpp",0x89
+                        ,0,"%s");
       }
-      if (*(short *)(&DAT_835a59d4 + iVar1) != 0) {
-        MyAssertHandler(0xffffffff82082fb0,0x8a,0,0xffffffff82000f98,0xffffffff82082f48);
+      if (cm_world.sectors[uVar3].contents.entities != 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_world.cpp",0x8a
+                        ,0,"%s");
       }
-      DAT_835a59c8 = *(ushort *)(&DAT_835a59de + iVar1);
-      *(ushort *)(&DAT_835a59dc + iVar1) = (ushort)bVar4;
-      *(float *)(&DAT_835a59d8 + iVar1) = (pfVar2[bVar4] + param_2[bVar4]) * 0.5;
-      if (*(short *)(&DAT_835a59e0 + iVar1) != 0) {
-        MyAssertHandler(0xffffffff82082fb0,0x93,0,0xffffffff82000f98,0xffffffff82082f24);
+      cm_world.freeHead = cm_world.sectors[uVar3].tree.u.parent;
+      uVar2 = cm_world.sectors[uVar3].tree.child[0];
+      cm_world.sectors[uVar3].tree.axis = (ushort)bVar4;
+      cm_world.sectors[uVar3].tree.dist = (pfVar1[bVar4] + param_2[bVar4]) * 0.5;
+      if (uVar2 != 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_world.cpp",0x93
+                        ,0,"%s");
       }
-      if (*(short *)(&DAT_835a59e2 + iVar1) != 0) {
-        MyAssertHandler(0xffffffff82082fb0,0x94,0,0xffffffff82000f98,0xffffffff82082f00);
+      if (cm_world.sectors[uVar3].tree.child[1] != 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_world.cpp",0x94
+                        ,0,"%s");
       }
-      __restgprlr_23(uVar3);
-      return;
+      uVar2 = __restgprlr_23(uVar3);
+      return uVar2;
     }
   }
-  __restgprlr_23(0);
-  return;
+  uVar2 = __restgprlr_23(0);
+  return uVar2;
 }
 
 
 // 824D1F40  CM_ClearWorld  (qcommon/cm_world.cpp:162)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void CM_ClearWorld(void)
 
 {
-  short *psVar1;
-  short sVar2;
+  <unnamed_type_u> *p<Var1;
+  ushort uVar2;
   longlong lVar3;
   
   __savegprlr_29();
-  memset(&DAT_835a59b0,0,0x601c);
-  CM_BrushModelBounds(0,0xffffffff835a59b0);
-  sVar2 = 2;
-  DAT_835a59c8 = 2;
-  psVar1 = (short *)0x835a59f6;
+  memset();
+  CM_BrushModelBounds(0,&cm_world.bounds);
+  uVar2 = 2;
+  cm_world.freeHead = 2;
+  p<Var1 = &cm_world.sectors[1].tree.u;
   lVar3 = 0x3fd;
   do {
-    sVar2 = sVar2 + 1;
-    psVar1 = psVar1 + 0xc;
-    *psVar1 = sVar2;
+    uVar2 = uVar2 + 1;
+    p<Var1 = p<Var1 + 0xc;
+    p<Var1->parent = uVar2;
     lVar3 = lVar3 + -1;
   } while (lVar3 != 0);
-  DAT_835ab9c6 = 0;
-  DAT_835a59f4 = (ushort)(DAT_835a59bc <= DAT_835a59c0);
-  DAT_835a59f0 = (&DAT_835a59b0)[DAT_835a59bc <= DAT_835a59c0];
-  if (DAT_835a59f8 != 0) {
-    MyAssertHandler(0xffffffff82082fb0,0xb4,0,0xffffffff82000f98,0xffffffff82083020);
+  cm_world.sectors[0x3ff].tree.u.parent = 0;
+  cm_world.sectors[1].tree.axis =
+       (ushort)(cm_world.bounds.halfSize[0] <= cm_world.bounds.halfSize[1]);
+  cm_world.sectors[1].tree.dist =
+       cm_world.bounds.midPoint[cm_world.bounds.halfSize[0] <= cm_world.bounds.halfSize[1]];
+  if (cm_world.sectors[1].tree.child[0] != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_world.cpp",0xb4,0,
+                    "%s");
   }
-  if (DAT_835a59fa != 0) {
-    MyAssertHandler(0xffffffff82082fb0,0xb5,0,0xffffffff82000f98,0xffffffff82082ff0);
+  if (cm_world.sectors[1].tree.child[1] != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_world.cpp",0xb5,0,
+                    "%s");
   }
   __restgprlr_29();
   return;
@@ -94,10 +107,12 @@ void CM_ClearWorld(void)
 
 // 824D2030  CM_LinkWorld  (qcommon/cm_world.cpp:192)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void CM_LinkWorld(void)
 
 {
-  ProfLoad_Begin(0xffffffff82083050);
+  ProfLoad_Begin("CM_LinkWorld");
   CM_ClearWorld();
   ProfLoad_End();
   return;
@@ -105,151 +120,20 @@ void CM_LinkWorld(void)
 
 
 // 824D2060  CM_ValidateEntity  (qcommon/cm_world.cpp:286)
-
-void CM_ValidateEntity(void)
-
-{
-  int iVar1;
-  undefined *puVar2;
-  uint uVar3;
-  undefined *puVar4;
-  
-  puVar2 = (undefined *)__savegprlr_25();
-  uVar3 = 1;
-  do {
-    while( true ) {
-      if (uVar3 == 0) {
-        MyAssertHandler(0xffffffff82082fb0,0x129,0,0xffffffff82000f98,0xffffffff820830bc);
-      }
-      iVar1 = uVar3 * 0x18;
-      if (*(float *)(&DAT_835a59d8 + iVar1) <
-          *(float *)(puVar2 + (*(ushort *)(&DAT_835a59dc + iVar1) + 2) * 4)) break;
-      if ((*(float *)(&DAT_835a59d8 + iVar1) <=
-           *(float *)(puVar2 + (*(ushort *)(&DAT_835a59dc + iVar1) + 4) * 4)) ||
-         (uVar3 = (uint)*(ushort *)(&DAT_835a59e2 + iVar1), uVar3 == 0)) goto LAB_824d2124;
-    }
-    uVar3 = (uint)*(ushort *)(&DAT_835a59e0 + iVar1);
-  } while (uVar3 != 0);
-LAB_824d2124:
-  if (*(short *)(&DAT_835a59d4 + iVar1) == 0) {
-    MyAssertHandler(0xffffffff82082fb0,0x146,0,0xffffffff82000f98,0xffffffff8208308c);
-  }
-  for (puVar4 = &DAT_83cf04e4 + (uint)*(ushort *)(&DAT_835a59d4 + iVar1) * 0x18; puVar4 != puVar2;
-      puVar4 = &DAT_83cf04e4 + (uint)*(ushort *)(puVar4 + 2) * 0x18) {
-    if (puVar2 <= puVar4) {
-      MyAssertHandler(0xffffffff82082fb0,0x14b,0,0xffffffff82000f98,0xffffffff82083060);
-    }
-    if (*(short *)(puVar4 + 2) == 0) {
-      MyAssertHandler(0xffffffff82082fb0,0x14c,0,0xffffffff82000f98,0xffffffff8208306c);
-    }
-  }
-  __restgprlr_25();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 824D21F8  CM_ValidateEntities  (qcommon/cm_world.cpp:345)
-
-void CM_ValidateEntities(void)
-
-{
-  ushort uVar1;
-  int iVar2;
-  undefined *puVar3;
-  uint uVar4;
-  undefined *puVar5;
-  
-  puVar3 = (undefined *)__savegprlr_21();
-  if (puVar3 == (undefined *)0x0) {
-    MyAssertHandler(0xffffffff82082fb0,0x15c,0,0xffffffff82000f98,0xffffffff82076250);
-  }
-  do {
-    uVar4 = 1;
-    do {
-      if (uVar4 == 0) {
-        MyAssertHandler(0xffffffff82082fb0,0x129,0,0xffffffff82000f98,0xffffffff820830bc);
-      }
-      iVar2 = uVar4 * 0x18;
-      if (*(float *)(puVar3 + (*(ushort *)(&DAT_835a59dc + iVar2) + 2) * 4) <=
-          *(float *)(&DAT_835a59d8 + iVar2)) {
-        if (*(float *)(&DAT_835a59d8 + iVar2) <=
-            *(float *)(puVar3 + (*(ushort *)(&DAT_835a59dc + iVar2) + 4) * 4)) break;
-        uVar1 = *(ushort *)(&DAT_835a59e2 + iVar2);
-      }
-      else {
-        uVar1 = *(ushort *)(&DAT_835a59e0 + iVar2);
-      }
-      uVar4 = (uint)uVar1;
-    } while (uVar4 != 0);
-    if (*(short *)(&DAT_835a59d4 + iVar2) == 0) {
-      MyAssertHandler(0xffffffff82082fb0,0x146,0,0xffffffff82000f98,0xffffffff8208308c);
-    }
-    for (puVar5 = &DAT_83cf04e4 + (uint)*(ushort *)(&DAT_835a59d4 + iVar2) * 0x18; puVar5 != puVar3;
-        puVar5 = &DAT_83cf04e4 + (uint)*(ushort *)(puVar5 + 2) * 0x18) {
-      if (puVar3 <= puVar5) {
-        MyAssertHandler(0xffffffff82082fb0,0x14b,0,0xffffffff82000f98,0xffffffff82083060);
-      }
-      if (*(short *)(puVar5 + 2) == 0) {
-        MyAssertHandler(0xffffffff82082fb0,0x14c,0,0xffffffff82000f98,0xffffffff8208306c);
-      }
-    }
-    if (*(ushort *)(puVar3 + 2) == 0) {
-      __restgprlr_21();
-      return;
-    }
-    puVar3 = &DAT_83cf04e4 + (uint)*(ushort *)(puVar3 + 2) * 0x18;
-  } while( true );
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 824D23C8  CM_ValidateTree  (qcommon/cm_world.cpp:438)
-
-void CM_ValidateTree(void)
-
-{
-  ushort uVar1;
-  int iVar2;
-  int iVar3;
-  int iVar4;
-  uint uVar5;
-  uint uVar6;
-  
-  uVar5 = __savegprlr_27();
-  if ((uVar5 & 0xffff) != 0) {
-    iVar4 = (uVar5 & 0xffff) + (uVar5 & 0xffff) * 2;
-    iVar3 = iVar4 * 8;
-    uVar5 = (&DAT_835a59cc)[(uint)*(ushort *)(&DAT_835a59e0 + iVar3) * 6] |
-            (&DAT_835a59cc)[(uint)*(ushort *)(&DAT_835a59e2 + iVar3) * 6];
-    uVar6 = *(uint *)(&DAT_835a59d0 + (uint)*(ushort *)(&DAT_835a59e0 + iVar3) * 0x18) |
-            *(uint *)(&DAT_835a59d0 + (uint)*(ushort *)(&DAT_835a59e2 + iVar3) * 0x18);
-    if (*(ushort *)(&DAT_835a59d4 + iVar3) != 0) {
-      iVar2 = (uint)*(ushort *)(&DAT_835a59d4 + iVar3) * 0x18;
-      uVar6 = *(uint *)(&DAT_83cf04e8 + iVar2) | uVar6;
-      uVar5 = *(uint *)(((iVar2 + -0x18) / 0x18) * 0x280 + DAT_83cfc500 + 0x11c) | uVar5;
-      uVar1 = *(ushort *)(&DAT_83cf04e6 + iVar2);
-      while (uVar1 != 0) {
-        iVar2 = (uint)uVar1 * 0x18;
-        uVar6 = *(uint *)(&DAT_83cf04e8 + iVar2) | uVar6;
-        uVar5 = *(uint *)(((iVar2 + -0x18) / 0x18) * 0x280 + DAT_83cfc500 + 0x11c) | uVar5;
-        uVar1 = *(ushort *)(&DAT_83cf04e6 + iVar2);
-      }
-      CM_ValidateEntities();
-    }
-    CM_ValidateTree(*(undefined2 *)(&DAT_835a59e0 + iVar3));
-    CM_ValidateTree(*(undefined2 *)(&DAT_835a59e2 + iVar3));
-    if ((&DAT_835a59cc)[iVar4 * 2] != uVar5) {
-      MyAssertHandler(0xffffffff82082fb0,0x1df,0,0xffffffff82000f98,0xffffffff820830fc);
-    }
-    if (*(uint *)(&DAT_835a59d0 + iVar3) != uVar6) {
-      MyAssertHandler(0xffffffff82082fb0,0x1e0,0,0xffffffff82000f98,0xffffffff820830c8);
-    }
-  }
-  __restgprlr_27();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 824D2580  CM_ValidateWorld  (qcommon/cm_world.cpp:491)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void CM_ValidateWorld(void)
 
@@ -260,69 +144,39 @@ void CM_ValidateWorld(void)
 
 
 // 824D2588  CM_RemoveEntityFromNode  (qcommon/cm_world.cpp:499)
-
-void CM_RemoveEntityFromNode(undefined8 param_1,int param_2)
-
-{
-  ushort uVar1;
-  int iVar2;
-  undefined *puVar3;
-  undefined *puVar4;
-  ushort *puVar5;
-  
-  puVar3 = (undefined *)__savegprlr_26();
-  if (*(short *)(param_2 + 8) == 0) {
-    MyAssertHandler(0xffffffff82082fb0,0x1f6,0,0xffffffff82000f98,0xffffffff82083128);
-  }
-  if (&DAT_83cf04fc + (*(ushort *)(param_2 + 8) - 1) * 0x18 == puVar3) {
-    *(undefined2 *)(param_2 + 8) = *(undefined2 *)(puVar3 + 2);
-    __restgprlr_26();
-    return;
-  }
-  iVar2 = (uint)*(ushort *)(param_2 + 8) * 0x18;
-  puVar5 = (ushort *)(&DAT_83cf04e6 + iVar2);
-  puVar4 = &DAT_83cf04fc + (*(ushort *)(&DAT_83cf04e6 + iVar2) - 1) * 0x18;
-  while (puVar4 != puVar3) {
-    if (*puVar5 == 0) {
-      MyAssertHandler(0xffffffff82082fb0,0x205,0,0xffffffff82000f98,0xffffffff8208306c);
-    }
-    uVar1 = *puVar5;
-    puVar5 = (ushort *)(&DAT_83cf04e6 + (uint)uVar1 * 0x18);
-    puVar4 = &DAT_83cf04fc + (*(ushort *)(&DAT_83cf04e6 + (uint)uVar1 * 0x18) - 1) * 0x18;
-  }
-  *puVar5 = *(ushort *)(puVar3 + 2);
-  __restgprlr_26();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 824D26C8  CM_IsNodeEmpty  (qcommon/cm_world.cpp:525)
 
-undefined8 CM_IsNodeEmpty(int param_1)
+bool CM_IsNodeEmpty(worldSector_s *param_1)
 
 {
-  undefined8 uVar1;
+  bool bVar1;
   
-  if (((*(short *)(param_1 + 8) != 0) || (*(short *)(param_1 + 0x14) != 0)) ||
-     (uVar1 = 1, *(short *)(param_1 + 0x16) != 0)) {
-    uVar1 = 0;
+  if ((((param_1->contents).entities != 0) || ((param_1->tree).child[0] != 0)) ||
+     (bVar1 = true, (param_1->tree).child[1] != 0)) {
+    bVar1 = false;
   }
-  return uVar1;
+  return bVar1;
 }
 
 
 // 824D2700  CM_FreeNewlyEmptyNodes  (qcommon/cm_world.cpp:535)
 
-void CM_FreeNewlyEmptyNodes(undefined8 param_1,ulonglong param_2)
+worldSector_s * CM_FreeNewlyEmptyNodes(worldSector_s *param_1,ushort param_2)
 
 {
   undefined4 *puVar1;
   int iVar2;
   bool bVar3;
   longlong lVar4;
-  ulonglong uVar5;
+  worldSector_s *pwVar5;
+  ulonglong uVar6;
+  ulonglong uVar7;
   
-  lVar4 = __savegprlr_25();
+  uVar6 = (ulonglong)(short)param_2;
+  lVar4 = __savegprlr_25(param_1);
   while( true ) {
     puVar1 = (undefined4 *)lVar4;
     if (((*(short *)(puVar1 + 2) != 0) || (*(short *)(puVar1 + 5) != 0)) ||
@@ -330,447 +184,179 @@ void CM_FreeNewlyEmptyNodes(undefined8 param_1,ulonglong param_2)
       bVar3 = false;
     }
     if (!bVar3) goto LAB_824d2818;
-    uVar5 = (ulonglong)*(ushort *)((int)puVar1 + 0x12);
+    uVar7 = (ulonglong)*(ushort *)((int)puVar1 + 0x12);
     *puVar1 = 0;
     puVar1[1] = 0;
-    if (uVar5 == 0) break;
-    *(undefined2 *)((int)puVar1 + 0x12) = DAT_835a59c8;
-    DAT_835a59c8 = (undefined2)param_2;
-    lVar4 = uVar5 * 0x18 + -0x7ca5a634;
+    if (uVar7 == 0) break;
+    *(ushort *)((int)puVar1 + 0x12) = cm_world.freeHead;
+    cm_world.freeHead = (ushort)uVar6;
+    lVar4 = uVar7 * 0x18 + -0x7ca5a634;
     iVar2 = (int)lVar4;
-    if ((ulonglong)*(ushort *)(iVar2 + 0x14) == (param_2 & 0xffff)) {
+    if ((ulonglong)*(ushort *)(iVar2 + 0x14) == (uVar6 & 0xffff)) {
       *(undefined2 *)(iVar2 + 0x14) = 0;
-      param_2 = uVar5;
+      uVar6 = uVar7;
     }
     else {
-      if ((ulonglong)*(ushort *)(iVar2 + 0x16) != (param_2 & 0xffff)) {
-        MyAssertHandler(0xffffffff82082fb0,0x235,0,0xffffffff82000f98,0xffffffff8208315c);
+      if ((ulonglong)*(ushort *)(iVar2 + 0x16) != (uVar6 & 0xffff)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_world.cpp",
+                        0x235,0,"%s");
       }
       *(undefined2 *)(iVar2 + 0x16) = 0;
-      param_2 = uVar5;
+      uVar6 = uVar7;
     }
   }
-  if ((param_2 & 0xffff) != 1) {
-    MyAssertHandler(0xffffffff82082fb0,0x224,0,0xffffffff82000f98,0xffffffff82083140);
+  if ((uVar6 & 0xffff) != 1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_world.cpp",0x224,0,
+                    "%s");
   }
 LAB_824d2818:
-  __restgprlr_25(lVar4);
-  return;
+  pwVar5 = (worldSector_s *)__restgprlr_25(lVar4);
+  return pwVar5;
 }
 
 
 // 824D2828  CM_UpdateNodeContentsAfterUnlink  (qcommon/cm_world.cpp:577)
-
-void CM_UpdateNodeContentsAfterUnlink(uint *param_1)
-
-{
-  ushort uVar1;
-  int iVar2;
-  uint uVar3;
-  uint uVar4;
-  
-  while( true ) {
-    uVar3 = (&DAT_835a59cc)[(uint)*(ushort *)(param_1 + 5) * 6] |
-            (&DAT_835a59cc)[(uint)*(ushort *)((int)param_1 + 0x16) * 6];
-    uVar4 = *(uint *)(&DAT_835a59d0 + (uint)*(ushort *)(param_1 + 5) * 0x18) |
-            *(uint *)(&DAT_835a59d0 + (uint)*(ushort *)((int)param_1 + 0x16) * 0x18);
-    if (*(ushort *)(param_1 + 2) != 0) {
-      iVar2 = (uint)*(ushort *)(param_1 + 2) * 0x18;
-      uVar4 = *(uint *)(&DAT_83cf04e8 + iVar2) | uVar4;
-      uVar3 = *(uint *)(((iVar2 + -0x18) / 0x18) * 0x280 + DAT_83cfc500 + 0x11c) | uVar3;
-      uVar1 = *(ushort *)(&DAT_83cf04e6 + iVar2);
-      while (uVar1 != 0) {
-        iVar2 = (uint)uVar1 * 0x18;
-        uVar4 = *(uint *)(&DAT_83cf04e8 + iVar2) | uVar4;
-        uVar3 = *(uint *)(((iVar2 + -0x18) / 0x18) * 0x280 + DAT_83cfc500 + 0x11c) | uVar3;
-        uVar1 = *(ushort *)(&DAT_83cf04e6 + iVar2);
-      }
-    }
-    if ((*param_1 == uVar3) && (param_1[1] == uVar4)) break;
-    *param_1 = uVar3;
-    param_1[1] = uVar4;
-    if (*(ushort *)((int)param_1 + 0x12) == 0) {
-      return;
-    }
-    param_1 = &DAT_835a59cc + (uint)*(ushort *)((int)param_1 + 0x12) * 6;
-  }
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 824D2990  CM_UnlinkEntity  (qcommon/cm_world.cpp:625)
 
-void CM_UnlinkEntity(ushort *param_1)
+void CM_UnlinkEntity(svEntity_s *param_1)
 
 {
-  ulonglong uVar1;
-  longlong lVar2;
+  ushort uVar1;
+  worldSector_s *pwVar2;
   
-  param_1[2] = 0;
-  param_1[3] = 0;
-  param_1[4] = 0;
-  param_1[5] = 0;
-  param_1[6] = 0;
-  param_1[7] = 0;
-  param_1[8] = 0;
-  param_1[9] = 0;
-  param_1[10] = 0;
-  param_1[0xb] = 0;
-  uVar1 = (ulonglong)*param_1;
+  param_1->linkcontents = 0;
+  param_1->linkmin[0] = 0.0;
+  param_1->linkmin[1] = 0.0;
+  param_1->linkmax[0] = 0.0;
+  param_1->linkmax[1] = 0.0;
+  uVar1 = param_1->worldSector;
   if (uVar1 != 0) {
-    *param_1 = 0;
-    lVar2 = uVar1 * 0x18 + -0x7ca5a634;
-    CM_RemoveEntityFromNode(param_1,lVar2);
-    CM_FreeNewlyEmptyNodes(lVar2,uVar1);
-    CM_UpdateNodeContentsAfterUnlink();
+    param_1->worldSector = 0;
+    CM_RemoveEntityFromNode(param_1,cm_world.sectors + uVar1);
+    pwVar2 = CM_FreeNewlyEmptyNodes(cm_world.sectors + uVar1,uVar1);
+    CM_UpdateNodeContentsAfterUnlink(pwVar2);
   }
   return;
 }
 
 
 // 824D2A28  CM_AddEntityToNode  (qcommon/cm_world.cpp:654)
-
-void CM_AddEntityToNode(undefined2 *param_1,int param_2)
-
-{
-  ushort uVar1;
-  ushort *puVar2;
-  
-  puVar2 = (ushort *)(&DAT_835a59d4 + param_2 * 0x18);
-  uVar1 = *puVar2;
-  while (uVar1 - 1 <= (uint)((int)(param_1 + 0x3e187d82) / 0x18)) {
-    puVar2 = (ushort *)(&DAT_83cf04e6 + (uint)*puVar2 * 0x18);
-    uVar1 = *puVar2;
-  }
-  *param_1 = (short)param_2;
-  param_1[1] = *puVar2;
-  *puVar2 = (short)((int)(param_1 + 0x3e187d82) / 0x18) + 1;
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 824D2AB0  CM_SortNode  (qcommon/cm_world.cpp:699)
-
-void CM_SortNode(undefined8 param_1,undefined8 param_2,undefined8 param_3)
-
-{
-  ushort uVar1;
-  int iVar2;
-  int iVar3;
-  int iVar4;
-  ushort uVar5;
-  ulonglong uVar6;
-  int iVar7;
-  uint uVar8;
-  ushort *puVar9;
-  undefined *puVar10;
-  double dVar11;
-  
-  iVar4 = __savegprlr_20();
-  iVar7 = iVar4 * 0x18;
-  puVar9 = (ushort *)(&DAT_835a59d4 + iVar7);
-  uVar8 = (uint)*(ushort *)(&DAT_835a59d4 + iVar7);
-  dVar11 = (double)*(float *)(&DAT_835a59d8 + iVar7);
-  uVar1 = *(ushort *)(&DAT_835a59dc + iVar7);
-  if (uVar8 != 0) {
-    do {
-      iVar2 = uVar8 * 0x18;
-      puVar10 = &DAT_83cf04e4 + iVar2;
-      if ((double)*(float *)(puVar10 + (uVar1 + 2) * 4) <= dVar11) {
-        if ((double)*(float *)(puVar10 + (uVar1 + 4) * 4) < dVar11) {
-          uVar6 = (ulonglong)*(ushort *)(&DAT_835a59e2 + iVar7);
-          if (uVar6 != 0) goto LAB_824d2bb0;
-          uVar5 = CM_AllocWorldSector(param_2,param_3);
-          uVar6 = (ulonglong)uVar5;
-          if (uVar6 != 0) {
-            *(ushort *)(&DAT_835a59e2 + iVar7) = uVar5;
-            goto LAB_824d2b9c;
-          }
-        }
-LAB_824d2c20:
-        uVar5 = *(ushort *)(&DAT_83cf04e6 + iVar2);
-        puVar9 = (ushort *)(&DAT_83cf04e6 + iVar2);
-      }
-      else {
-        uVar6 = (ulonglong)*(ushort *)(&DAT_835a59e0 + iVar7);
-        if (uVar6 == 0) {
-          uVar5 = CM_AllocWorldSector(param_2,param_3);
-          uVar6 = (ulonglong)uVar5;
-          if (uVar6 == 0) goto LAB_824d2c20;
-          *(ushort *)(&DAT_835a59e0 + iVar7) = uVar5;
-LAB_824d2b9c:
-          *(short *)(&DAT_835a59de + (int)uVar6 * 0x18) = (short)iVar4;
-        }
-LAB_824d2bb0:
-        uVar5 = *(ushort *)(&DAT_83cf04e6 + iVar2);
-        *puVar9 = uVar5;
-        CM_AddEntityToNode(puVar10);
-        iVar3 = (int)((uVar6 + (uVar6 & 0x7fffffff) * 2 & 0x1fffffff) << 3);
-        uVar8 = *(uint *)(((iVar2 + -0x18) / 0x18) * 0x280 + DAT_83cfc500 + 0x11c);
-        *(uint *)(&DAT_835a59d0 + iVar3) =
-             *(uint *)(&DAT_83cf04e8 + iVar2) | *(uint *)(&DAT_835a59d0 + iVar3);
-        *(uint *)((int)&DAT_835a59cc + iVar3) = uVar8 | *(uint *)((int)&DAT_835a59cc + iVar3);
-      }
-      uVar8 = (uint)uVar5;
-    } while (uVar8 != 0);
-  }
-  __restgprlr_20();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 824D2C40  CM_LoadedMapEnts  (qcommon/cm_world.cpp:840)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void CM_LoadedMapEnts(void)
 
 {
-  DAT_835ab9d0 = 1;
+  g_loadedMapEnts = 1;
   return;
 }
 
 
 // 824D2C50  CM_LinkEntity  (qcommon/cm_world.cpp:854)
-
-void CM_LinkEntity(undefined8 param_1,undefined4 *param_2,undefined4 *param_3,uint param_4)
-
-{
-  float fVar1;
-  ushort uVar2;
-  uint uVar3;
-  uint uVar4;
-  uint uVar5;
-  ushort *puVar6;
-  uint uVar7;
-  uint uVar8;
-  int iVar9;
-  uint uVar10;
-  float local_60 [24];
-  
-  puVar6 = (ushort *)__savegprlr_23();
-  if (param_4 == 0) {
-    CM_UnlinkEntity();
-    __restgprlr_23();
-    return;
-  }
-  if (((DAT_835ab9d0 != 0) && (*puVar6 != 0)) && (*(uint *)(puVar6 + 2) != param_4)) {
-    Com_PrintWarning(0,0xffffffff820831d4);
-    CM_UnlinkEntity(puVar6);
-  }
-  if ((*puVar6 != 0) && (*(uint *)(puVar6 + 2) != param_4)) {
-    MyAssertHandler(0xffffffff82082fb0,0x371,0,0xffffffff82000f98,0xffffffff82083188);
-  }
-  iVar9 = ((int)(puVar6 + 0x3e187d82) / 0x18) * 0x280 + DAT_83cfc500;
-  if (iVar9 == 0) {
-    MyAssertHandler(0xffffffff82082fb0,0x374,0,0xffffffff82000f98,0xffffffff82083180);
-  }
-  uVar3 = *(uint *)(iVar9 + 0x11c);
-  if (uVar3 == 0) {
-    MyAssertHandler(0xffffffff82082fb0,0x377,0,0xffffffff82000f98,0xffffffff820605a0);
-  }
-  uVar8 = (uint)*puVar6;
-  do {
-    local_60[2] = DAT_835a59b0 - DAT_835a59bc;
-    local_60[0] = DAT_835a59bc + DAT_835a59b0;
-    local_60[3] = DAT_835a59b4 - DAT_835a59c0;
-    local_60[1] = DAT_835a59c0 + DAT_835a59b4;
-    uVar7 = 1;
-    do {
-      while( true ) {
-        uVar10 = uVar7;
-        iVar9 = uVar10 * 0x18;
-        uVar7 = (uint)*(ushort *)(&DAT_835a59dc + iVar9);
-        fVar1 = *(float *)(&DAT_835a59d8 + iVar9);
-        uVar4 = (&DAT_835a59cc)[uVar10 * 6];
-        uVar5 = *(uint *)(&DAT_835a59d0 + iVar9);
-        (&DAT_835a59cc)[uVar10 * 6] = uVar4 | uVar3;
-        *(uint *)(&DAT_835a59d0 + iVar9) = uVar5 | param_4;
-        if (fVar1 < (float)param_2[uVar7]) break;
-        if (fVar1 <= (float)param_3[uVar7]) {
-          if (((uVar10 == uVar8) && ((uVar4 & ~uVar3) == 0)) && ((uVar5 & ~param_4) == 0)) {
-            *(uint *)(puVar6 + 2) = param_4;
-            *(undefined4 *)(puVar6 + 4) = *param_2;
-            *(undefined4 *)(puVar6 + 6) = param_2[1];
-            *(undefined4 *)(puVar6 + 8) = *param_3;
-            *(undefined4 *)(puVar6 + 10) = param_3[1];
-            __restgprlr_23();
-            return;
-          }
-          goto LAB_824d2e64;
-        }
-        uVar2 = *(ushort *)(&DAT_835a59e2 + iVar9);
-        local_60[uVar7] = fVar1;
-        uVar7 = (uint)uVar2;
-        if (uVar2 == 0) goto LAB_824d2e64;
-      }
-      uVar2 = *(ushort *)(&DAT_835a59e0 + iVar9);
-      local_60[uVar7 + 2] = fVar1;
-      uVar7 = (uint)uVar2;
-    } while (uVar2 != 0);
-LAB_824d2e64:
-    if (uVar8 == 0) {
-      CM_AddEntityToNode(puVar6,uVar10);
-LAB_824d2ed4:
-      *(uint *)(puVar6 + 2) = param_4;
-      *(undefined4 *)(puVar6 + 4) = *param_2;
-      *(undefined4 *)(puVar6 + 6) = param_2[1];
-      *(undefined4 *)(puVar6 + 8) = *param_3;
-      *(undefined4 *)(puVar6 + 10) = param_3[1];
-      CM_SortNode(uVar10,local_60 + 2,local_60);
-      __restgprlr_23();
-      return;
-    }
-    if (((uVar10 == uVar8) && ((uVar4 & ~uVar3) == 0)) && ((uVar5 & ~param_4) == 0))
-    goto LAB_824d2ed4;
-    uVar8 = 0;
-    CM_UnlinkEntity(puVar6);
-  } while( true );
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 824D2F10  CM_AreaEntities_r  (qcommon/cm_world.cpp:1072)
-
-void CM_AreaEntities_r(undefined8 param_1,undefined8 param_2)
-
-{
-  int iVar1;
-  float fVar2;
-  ushort uVar3;
-  int iVar4;
-  int *piVar5;
-  float fVar6;
-  int iVar7;
-  float fVar8;
-  uint uVar9;
-  char cVar10;
-  int iVar11;
-  
-  uVar9 = __savegprlr_25();
-  piVar5 = (int *)param_2;
-  if ((piVar5[4] & (&DAT_835a59cc)[uVar9 * 6]) != 0) {
-    do {
-      iVar7 = uVar9 * 0x18;
-      uVar3 = *(ushort *)(&DAT_835a59d4 + iVar7);
-      while (uVar3 != 0) {
-        iVar4 = (uint)uVar3 * 0x18;
-        iVar1 = (iVar4 + -0x18) / 0x18;
-        iVar11 = iVar1 * 0x280 + DAT_83cfc500;
-        if (((*(uint *)(iVar11 + 0x11c) & piVar5[4]) != 0) &&
-           (cVar10 = Bounds_OverlapOrTouch(iVar11 + 0x120,*piVar5), cVar10 != '\0')) {
-          if (piVar5[2] == piVar5[3]) {
-            Com_DPrintf(0x10,0xffffffff820831f4);
-            goto LAB_824d30a8;
-          }
-          *(int *)(piVar5[2] * 4 + piVar5[1]) = iVar1;
-          piVar5[2] = piVar5[2] + 1;
-        }
-        uVar3 = *(ushort *)(&DAT_83cf04e6 + iVar4);
-      }
-      fVar6 = *(float *)(&DAT_835a59d8 + iVar7) -
-              *(float *)((uint)*(ushort *)(&DAT_835a59dc + iVar7) * 4 + *piVar5);
-      fVar2 = *(float *)((*(ushort *)(&DAT_835a59dc + iVar7) + 3) * 4 + *piVar5);
-      fVar8 = -fVar2;
-      if (fVar2 <= fVar6) {
-        if (fVar6 <= fVar8) break;
-        uVar9 = (uint)*(ushort *)(&DAT_835a59e2 + iVar7);
-      }
-      else if (fVar6 <= fVar8) {
-        uVar9 = (uint)*(ushort *)(&DAT_835a59e0 + iVar7);
-      }
-      else {
-        uVar9 = (uint)*(ushort *)(&DAT_835a59e2 + iVar7);
-        CM_AreaEntities_r(*(undefined2 *)(&DAT_835a59e0 + iVar7),param_2);
-      }
-      if ((piVar5[4] & (&DAT_835a59cc)[uVar9 * 6]) == 0) {
-        __restgprlr_25();
-        return;
-      }
-    } while( true );
-  }
-LAB_824d30a8:
-  __restgprlr_25();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 824D30B0  CM_AreaEntities  (qcommon/cm_world.cpp:1141)
 
-void CM_AreaEntities(undefined8 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
+int CM_AreaEntities(Bounds *param_1,int *param_2,int param_3,int param_4)
 
 {
-  undefined4 uVar1;
-  undefined4 local_40;
-  undefined4 local_3c;
-  undefined4 local_38;
-  undefined4 local_34;
-  undefined4 local_30;
+  Bounds *pBVar1;
+  int iVar2;
+  areaParms_t local_40 [3];
   
-  uVar1 = __savegprlr_28();
+  pBVar1 = (Bounds *)__savegprlr_28(param_1);
   Profile_Begin(0x21);
-  local_38 = 0;
-  local_40 = uVar1;
-  local_3c = param_2;
-  local_34 = param_3;
-  local_30 = param_4;
-  if (DAT_835a59cc != 0) {
-    MyAssertHandler(0xffffffff82082fb0,0x47f,0,0xffffffff82000f98,0xffffffff82083210);
+  local_40[0].count = 0;
+  local_40[0].bounds = pBVar1;
+  local_40[0].list = param_2;
+  local_40[0].maxcount = param_3;
+  local_40[0].contentmask = param_4;
+  if (cm_world.sectors[0].contents.contentsEntities != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_world.cpp",0x47f,0,
+                    "%s");
   }
-  CM_AreaEntities_r(1,&local_40);
-  Profile_EndInternal(0);
-  __restgprlr_28(local_38);
-  return;
+  CM_AreaEntities_r(1,local_40);
+  Profile_EndInternal((double *)0x0);
+  iVar2 = __restgprlr_28(local_40[0].count);
+  return iVar2;
 }
 
 
 // 824D3148  CM_PointTraceStaticModels_r  (qcommon/cm_world.cpp:1170)
 
-void CM_PointTraceStaticModels_r(undefined8 param_1,int param_2,undefined8 param_3)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+void CM_PointTraceStaticModels_r(locTraceWork_t *param_1,uint param_2,trace_t *param_3)
 
 {
-  uint *puVar1;
-  int iVar2;
-  uint uVar3;
-  uint uVar4;
-  int iVar5;
-  int iVar6;
+  SModelAabbNode *pSVar1;
+  locTraceWork_t *plVar2;
+  int iVar3;
+  int iVar4;
+  uint uVar5;
+  uint uVar6;
   int iVar7;
+  cStaticModel_s *pcVar8;
   
-  puVar1 = (uint *)__savegprlr_25();
-  iVar5 = param_2 * 0x1c + DAT_835a2940;
-  uVar3 = (uint)*(ushort *)(iVar5 + 0x18);
-  if (uVar3 < DAT_835a28cc) {
-    uVar3 = *(ushort *)(iVar5 + 0x1a) + uVar3;
-    if (DAT_835a28cc < uVar3) {
-      MyAssertHandler(0xffffffff82082fb0,0x4ab,0,0xffffffff82000f98,0xffffffff82083250);
+  plVar2 = (locTraceWork_t *)__savegprlr_25(param_1);
+  pSVar1 = cm.smodelNodes;
+  uVar5 = (uint)cm.smodelNodes[param_2].firstChild;
+  if (uVar5 < cm.numStaticModels) {
+    uVar5 = cm.smodelNodes[param_2].childCount + uVar5;
+    if (cm.numStaticModels < uVar5) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_world.cpp",0x4ab,
+                      0,"%s");
     }
-    uVar4 = (uint)*(ushort *)(iVar5 + 0x18);
-    if (uVar4 != uVar3) {
-      iVar5 = uVar4 * 0x4c;
-      iVar6 = uVar3 - uVar4;
+    uVar6 = (uint)pSVar1[param_2].firstChild;
+    if (uVar6 != uVar5) {
+      iVar7 = uVar6 * 0x4c;
+      iVar3 = uVar5 - uVar6;
       do {
-        iVar7 = iVar5 + DAT_835a28d0;
-        uVar3 = XModelGetContents(*(undefined4 *)(iVar5 + DAT_835a28d0));
-        if (((uVar3 & *puVar1) != 0) &&
-           (iVar2 = CM_TraceBox((double)*(float *)param_3,puVar1 + 4,iVar7 + 0x34), iVar2 == 0)) {
-          CM_TraceStaticModel(iVar7,param_3,puVar1 + 0x14,puVar1 + 0x18,*puVar1);
+        pcVar8 = (cStaticModel_s *)((int)(cm.staticModelList)->origin + iVar7 + -4);
+        uVar5 = XModelGetContents(*(XModel **)((int)(cm.staticModelList)->origin + iVar7 + -4));
+        if (((uVar5 & plVar2->contents) != 0) &&
+           (iVar4 = CM_TraceBox(&plVar2->extents,&pcVar8->absBounds,param_3->fraction), iVar4 == 0))
+        {
+          CM_TraceStaticModel(pcVar8,param_3,(plVar2->extents).start,(plVar2->extents).end,
+                              plVar2->contents);
         }
-        iVar6 = iVar6 + -1;
-        iVar5 = iVar5 + 0x4c;
-      } while (iVar6 != 0);
+        iVar3 = iVar3 + -1;
+        iVar7 = iVar7 + 0x4c;
+      } while (iVar3 != 0);
     }
   }
   else {
-    iVar6 = uVar3 - DAT_835a28cc;
-    iVar5 = (uint)*(ushort *)(iVar5 + 0x1a) + iVar6;
-    if (iVar6 != iVar5) {
-      iVar7 = iVar6 * 0x1c;
+    uVar5 = uVar5 - cm.numStaticModels;
+    uVar6 = cm.smodelNodes[param_2].childCount + uVar5;
+    if (uVar5 != uVar6) {
+      iVar7 = uVar5 * 0x1c;
       do {
-        iVar2 = CM_TraceBox((double)*(float *)param_3,puVar1 + 4,iVar7 + DAT_835a2940);
-        if (iVar2 == 0) {
-          CM_PointTraceStaticModels_r(puVar1,iVar6,param_3);
+        iVar3 = CM_TraceBox(&plVar2->extents,
+                            (Bounds *)((int)((cm.smodelNodes)->bounds).midPoint + iVar7),
+                            param_3->fraction);
+        if (iVar3 == 0) {
+          CM_PointTraceStaticModels_r(plVar2,uVar5,param_3);
         }
-        iVar6 = iVar6 + 1;
+        uVar5 = uVar5 + 1;
         iVar7 = iVar7 + 0x1c;
-      } while (iVar6 != iVar5);
+      } while (uVar5 != uVar6);
       __restgprlr_25();
       return;
     }
@@ -782,805 +368,341 @@ void CM_PointTraceStaticModels_r(undefined8 param_1,int param_2,undefined8 param
 
 // 824D3298  CM_PointTraceStaticModels  (qcommon/cm_world.cpp:1272)
 
-void CM_PointTraceStaticModels
-               (undefined8 param_1,undefined4 *param_2,undefined4 *param_3,undefined4 param_4)
+void CM_PointTraceStaticModels(trace_t *param_1,float *param_2,float *param_3,int param_4)
 
 {
-  undefined8 uVar1;
-  undefined4 local_a0 [4];
-  undefined1 auStack_90 [64];
-  undefined4 local_50;
-  undefined4 local_4c;
-  undefined4 local_48;
-  undefined4 local_40;
-  undefined4 local_3c;
-  undefined4 local_38;
+  trace_t *ptVar1;
+  int iVar2;
+  locTraceWork_t local_a0;
   
-  uVar1 = __savegprlr_28();
+  ptVar1 = (trace_t *)__savegprlr_28(param_1);
   Profile_Begin(0x133);
-  local_50 = *param_2;
-  local_4c = param_2[1];
-  local_48 = param_2[2];
-  local_40 = *param_3;
-  local_3c = param_3[1];
-  local_38 = param_3[2];
-  local_a0[0] = param_4;
-  CM_CalcTraceExtents(auStack_90);
-  CM_PointTraceStaticModels_r(local_a0,0,uVar1);
-  Profile_EndInternal(0);
-  __restgprlr_28();
+  local_a0.extents.start[0] = *param_2;
+  local_a0.extents.start[1] = param_2[1];
+  local_a0.extents.start[2] = param_2[2];
+  local_a0.extents.end[0] = *param_3;
+  local_a0.extents.end[1] = param_3[1];
+  local_a0.extents.end[2] = param_3[2];
+  local_a0.contents = param_4;
+  CM_CalcTraceExtents(&local_a0.extents);
+  CM_PointTraceStaticModels_r(&local_a0,0,ptVar1);
+  iVar2 = Profile_EndInternal((double *)0x0);
+  __restgprlr_28(iVar2);
   return;
 }
 
 
 // 824D3318  CM_PointSightTraceStaticModelsBBox_r  (qcommon/cm_world.cpp:1308)
 
-void CM_PointSightTraceStaticModelsBBox_r(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+int CM_PointSightTraceStaticModelsBBox_r(uint param_1,TraceExtents *param_2,int param_3)
 
 {
-  int iVar2;
+  cStaticModel_s *pcVar1;
+  SModelAabbNode *pSVar2;
   int iVar3;
-  undefined8 uVar1;
-  uint uVar4;
-  int iVar5;
+  int iVar4;
+  uint uVar5;
   uint uVar6;
   uint uVar7;
-  int iVar8;
-  undefined8 uVar9;
+  double dVar8;
   
-  iVar2 = __savegprlr_25();
-  iVar2 = iVar2 * 0x1c + DAT_835a2940;
-  uVar6 = (uint)*(ushort *)(iVar2 + 0x18);
-  if (uVar6 < DAT_835a28cc) {
-    uVar6 = *(ushort *)(iVar2 + 0x1a) + uVar6;
-    if (DAT_835a28cc < uVar6) {
-      MyAssertHandler(0xffffffff82082fb0,0x531,0,0xffffffff82000f98,0xffffffff82083250);
+  iVar3 = __savegprlr_25(param_1);
+  pSVar2 = cm.smodelNodes;
+  uVar6 = (uint)cm.smodelNodes[iVar3].firstChild;
+  if (uVar6 < cm.numStaticModels) {
+    uVar6 = cm.smodelNodes[iVar3].childCount + uVar6;
+    if (cm.numStaticModels < uVar6) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_world.cpp",0x531,
+                      0,"%s");
     }
-    uVar7 = (uint)*(ushort *)(iVar2 + 0x18);
+    uVar7 = (uint)pSVar2[iVar3].firstChild;
     if (uVar7 != uVar6) {
-      iVar2 = uVar7 * 0x4c;
-      uVar9 = 0x3ff0000000000000;
+      iVar3 = uVar7 * 0x4c;
+      dVar8 = 1.0;
       while( true ) {
-        iVar5 = iVar2 + DAT_835a28d0;
-        uVar4 = XModelGetContents(*(undefined4 *)(iVar2 + DAT_835a28d0));
-        if (((uVar4 & (uint)param_3) != 0) &&
-           (iVar5 = CM_TraceBox(uVar9,param_2,iVar5 + 0x34), iVar5 == 0)) break;
+        pcVar1 = cm.staticModelList;
+        uVar5 = XModelGetContents(*(XModel **)((int)(cm.staticModelList)->origin + iVar3 + -4));
+        if (((uVar5 & param_3) != 0) &&
+           (iVar4 = CM_TraceBox(param_2,(Bounds *)((int)(pcVar1->absBounds).midPoint + iVar3),
+                                (float)dVar8), iVar4 == 0)) break;
         uVar7 = uVar7 + 1;
-        iVar2 = iVar2 + 0x4c;
+        iVar3 = iVar3 + 0x4c;
         if (uVar7 == uVar6) {
-          __restgprlr_25(0xffffffffffffffff);
-          return;
+          iVar3 = __restgprlr_25(0xffffffffffffffff);
+          return iVar3;
         }
       }
-      __restgprlr_25(uVar7);
-      return;
+      iVar3 = __restgprlr_25(uVar7);
+      return iVar3;
     }
   }
   else {
-    iVar5 = uVar6 - DAT_835a28cc;
-    iVar2 = (uint)*(ushort *)(iVar2 + 0x1a) + iVar5;
-    if (iVar5 != iVar2) {
-      iVar8 = iVar5 * 0x1c;
-      uVar9 = 0x3ff0000000000000;
+    uVar6 = uVar6 - cm.numStaticModels;
+    uVar7 = cm.smodelNodes[iVar3].childCount + uVar6;
+    if (uVar6 != uVar7) {
+      iVar3 = uVar6 * 0x1c;
+      dVar8 = 1.0;
       do {
-        iVar3 = CM_TraceBox(uVar9,param_2,iVar8 + DAT_835a2940);
-        if ((iVar3 == 0) &&
-           (uVar1 = CM_PointSightTraceStaticModelsBBox_r(iVar5,param_2,param_3), -1 < (int)uVar1))
+        iVar4 = CM_TraceBox(param_2,(Bounds *)((int)((cm.smodelNodes)->bounds).midPoint + iVar3),
+                            (float)dVar8);
+        if ((iVar4 == 0) &&
+           (iVar4 = CM_PointSightTraceStaticModelsBBox_r(uVar6,param_2,param_3), -1 < iVar4))
         goto LAB_824d33c4;
-        iVar5 = iVar5 + 1;
-        iVar8 = iVar8 + 0x1c;
-      } while (iVar5 != iVar2);
+        uVar6 = uVar6 + 1;
+        iVar3 = iVar3 + 0x1c;
+      } while (uVar6 != uVar7);
     }
   }
-  uVar1 = 0xffffffffffffffff;
+  iVar4 = -1;
 LAB_824d33c4:
-  __restgprlr_25(uVar1);
-  return;
+  iVar3 = __restgprlr_25(iVar4);
+  return iVar3;
 }
 
 
 // 824D3480  CM_PointSightTraceStaticModelsBBox  (qcommon/cm_world.cpp:1409)
 
-void CM_PointSightTraceStaticModelsBBox(undefined4 *param_1,undefined4 *param_2,undefined8 param_3)
+int CM_PointSightTraceStaticModelsBBox(float *param_1,float *param_2,int param_3)
 
 {
-  undefined1 auStack_70 [64];
-  undefined4 local_30;
-  undefined4 local_2c;
-  undefined4 local_28;
-  undefined4 local_20;
-  undefined4 local_1c;
-  undefined4 local_18;
+  int iVar1;
+  TraceExtents TStack_70;
   
-  local_30 = *param_1;
-  local_20 = *param_2;
-  local_1c = param_2[1];
-  local_18 = param_2[2];
-  local_2c = param_1[1];
-  local_28 = param_1[2];
-  CM_CalcTraceExtents(auStack_70);
-  CM_PointSightTraceStaticModelsBBox_r(0,auStack_70,param_3);
-  return;
+  TStack_70.start[0] = *param_1;
+  TStack_70.end[0] = *param_2;
+  TStack_70.end[1] = param_2[1];
+  TStack_70.end[2] = param_2[2];
+  TStack_70.start[1] = param_1[1];
+  TStack_70.start[2] = param_1[2];
+  CM_CalcTraceExtents(&TStack_70);
+  iVar1 = CM_PointSightTraceStaticModelsBBox_r(0,&TStack_70,param_3);
+  return iVar1;
 }
 
 
 // 824D34F8  CM_PointTraceStaticModelsComplete_r  (qcommon/cm_world.cpp:1439)
 
-void CM_PointTraceStaticModelsComplete_r(undefined8 param_1,int param_2)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+int CM_PointTraceStaticModelsComplete_r(staticmodeltrace_t *param_1,uint param_2)
 
 {
-  int iVar1;
-  int iVar2;
-  uint uVar3;
+  SModelAabbNode *pSVar1;
+  staticmodeltrace_t *psVar2;
+  int iVar3;
   int iVar4;
-  int iVar5;
+  uint uVar5;
   uint uVar6;
   uint uVar7;
-  int iVar8;
-  undefined8 uVar9;
+  cStaticModel_s *pcVar8;
+  double dVar9;
   
-  iVar1 = __savegprlr_26();
-  iVar8 = param_2 * 0x1c + DAT_835a2940;
-  uVar6 = (uint)*(ushort *)(iVar8 + 0x18);
-  if (uVar6 < DAT_835a28cc) {
-    uVar6 = *(ushort *)(iVar8 + 0x1a) + uVar6;
-    if (DAT_835a28cc < uVar6) {
-      MyAssertHandler(0xffffffff82082fb0,0x5b2,0,0xffffffff82000f98,0xffffffff82083250);
+  psVar2 = (staticmodeltrace_t *)__savegprlr_26(param_1);
+  pSVar1 = cm.smodelNodes;
+  uVar6 = (uint)cm.smodelNodes[param_2].firstChild;
+  if (uVar6 < cm.numStaticModels) {
+    uVar6 = cm.smodelNodes[param_2].childCount + uVar6;
+    if (cm.numStaticModels < uVar6) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_world.cpp",0x5b2,
+                      0,"%s");
     }
-    uVar7 = (uint)*(ushort *)(iVar8 + 0x18);
+    uVar7 = (uint)pSVar1[param_2].firstChild;
     if (uVar7 != uVar6) {
-      iVar8 = uVar7 * 0x4c;
-      uVar9 = 0x3ff0000000000000;
+      iVar4 = uVar7 * 0x4c;
+      dVar9 = 1.0;
       do {
-        iVar5 = iVar8 + DAT_835a28d0;
-        uVar3 = XModelGetContents(*(undefined4 *)(iVar8 + DAT_835a28d0));
-        if ((((uVar3 & *(uint *)(iVar1 + 0x60)) != 0) &&
-            (iVar4 = CM_TraceBox(uVar9,iVar1,iVar5 + 0x34), iVar4 == 0)) &&
-           (iVar5 = CM_TraceStaticModelComplete
-                              (iVar5,iVar1 + 0x40,iVar1 + 0x50,*(undefined4 *)(iVar1 + 0x60)),
-           iVar5 == 0)) goto LAB_824d35a8;
+        pcVar8 = (cStaticModel_s *)((int)(cm.staticModelList)->origin + iVar4 + -4);
+        uVar5 = XModelGetContents(*(XModel **)((int)(cm.staticModelList)->origin + iVar4 + -4));
+        if ((((uVar5 & psVar2->contents) != 0) &&
+            (iVar3 = CM_TraceBox((TraceExtents *)psVar2,&pcVar8->absBounds,(float)dVar9), iVar3 == 0
+            )) && (iVar3 = CM_TraceStaticModelComplete
+                                     (pcVar8,(psVar2->extents).start,(psVar2->extents).end,
+                                      psVar2->contents), iVar3 == 0)) goto LAB_824d35a8;
         uVar7 = uVar7 + 1;
-        iVar8 = iVar8 + 0x4c;
+        iVar4 = iVar4 + 0x4c;
       } while (uVar7 != uVar6);
     }
   }
   else {
-    iVar5 = uVar6 - DAT_835a28cc;
-    iVar8 = (uint)*(ushort *)(iVar8 + 0x1a) + iVar5;
-    if (iVar5 != iVar8) {
-      iVar4 = iVar5 * 0x1c;
-      uVar9 = 0x3ff0000000000000;
-      while ((iVar2 = CM_TraceBox(uVar9,iVar1,iVar4 + DAT_835a2940), iVar2 != 0 ||
-             (iVar2 = CM_PointTraceStaticModelsComplete_r(iVar1,iVar5), iVar2 != 0))) {
-        iVar5 = iVar5 + 1;
+    uVar6 = uVar6 - cm.numStaticModels;
+    uVar7 = cm.smodelNodes[param_2].childCount + uVar6;
+    if (uVar6 != uVar7) {
+      iVar4 = uVar6 * 0x1c;
+      dVar9 = 1.0;
+      while ((iVar3 = CM_TraceBox((TraceExtents *)psVar2,
+                                  (Bounds *)((int)((cm.smodelNodes)->bounds).midPoint + iVar4),
+                                  (float)dVar9), iVar3 != 0 ||
+             (iVar3 = CM_PointTraceStaticModelsComplete_r(psVar2,uVar6), iVar3 != 0))) {
+        uVar6 = uVar6 + 1;
         iVar4 = iVar4 + 0x1c;
-        if (iVar5 == iVar8) {
-          __restgprlr_26(1);
-          return;
+        if (uVar6 == uVar7) {
+          iVar4 = __restgprlr_26(1);
+          return iVar4;
         }
       }
 LAB_824d35a8:
-      __restgprlr_26(0);
-      return;
+      iVar4 = __restgprlr_26(0);
+      return iVar4;
     }
   }
-  __restgprlr_26(1);
-  return;
+  iVar4 = __restgprlr_26(1);
+  return iVar4;
 }
 
 
 // 824D3678  CM_PointTraceStaticModelsComplete  (qcommon/cm_world.cpp:1536)
 
-void CM_PointTraceStaticModelsComplete(undefined8 param_1,undefined4 *param_2,undefined4 param_3)
+int CM_PointTraceStaticModelsComplete(float *param_1,float *param_2,int param_3)
 
 {
-  undefined4 *puVar2;
-  undefined8 uVar1;
-  undefined1 auStack_90 [64];
-  undefined4 local_50;
-  undefined4 local_4c;
-  undefined4 local_48;
-  undefined4 local_40;
-  undefined4 local_3c;
-  undefined4 local_38;
-  undefined4 local_30;
+  float *pfVar1;
+  int iVar2;
+  staticmodeltrace_t sStack_90;
   
-  puVar2 = (undefined4 *)__savegprlr_29();
+  pfVar1 = (float *)__savegprlr_29(param_1);
   Profile_Begin(0x133);
-  local_50 = *puVar2;
-  local_4c = puVar2[1];
-  local_48 = puVar2[2];
-  local_40 = *param_2;
-  local_3c = param_2[1];
-  local_38 = param_2[2];
-  local_30 = param_3;
-  CM_CalcTraceExtents(auStack_90);
-  uVar1 = CM_PointTraceStaticModelsComplete_r(auStack_90,0);
-  Profile_EndInternal(0);
-  __restgprlr_29(uVar1);
-  return;
+  sStack_90.extents.start[0] = *pfVar1;
+  sStack_90.extents.start[1] = pfVar1[1];
+  sStack_90.extents.start[2] = pfVar1[2];
+  sStack_90.extents.end[0] = *param_2;
+  sStack_90.extents.end[1] = param_2[1];
+  sStack_90.extents.end[2] = param_2[2];
+  sStack_90.contents = param_3;
+  CM_CalcTraceExtents(&sStack_90.extents);
+  iVar2 = CM_PointTraceStaticModelsComplete_r(&sStack_90,0);
+  Profile_EndInternal((double *)0x0);
+  iVar2 = __restgprlr_29(iVar2);
+  return iVar2;
 }
 
 
 // 824D36F8  CM_GetTraceGlobals  (qcommon/cm_world.cpp:1594)
-
-void CM_GetTraceGlobals(undefined4 *param_1,undefined4 *param_2,undefined4 *param_3)
-
-{
-  *param_1 = &DAT_835a59cc;
-  *param_2 = &DAT_83cf04fc;
-  *param_3 = DAT_83cfc500;
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 824D3730  CM_GetWorldSector  (qcommon/cm_world.cpp:1601)
 
-longlong CM_GetWorldSector(ulonglong param_1)
+worldSector_s * CM_GetWorldSector(int param_1)
 
 {
-  return (param_1 + (param_1 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + -0x7ca5a634;
+  return cm_world.sectors + param_1;
 }
 
 
 // 824D3750  CM_GetSVEntity  (qcommon/cm_world.cpp:1606)
-
-longlong CM_GetSVEntity(ulonglong param_1)
-
-{
-  return (param_1 + (param_1 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + -0x7c30fb04;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 824D3770  CM_ClipMoveToEntities_r  (qcommon/cm_world.cpp:1616)
-
-void CM_ClipMoveToEntities_r
-               (undefined8 param_1,ulonglong param_2,float *param_3,float *param_4,
-               undefined8 param_5)
-
-{
-  float fVar1;
-  ushort uVar2;
-  int iVar3;
-  int iVar4;
-  float fVar5;
-  float fVar6;
-  float fVar7;
-  int iVar8;
-  uint uVar10;
-  ulonglong uVar9;
-  longlong lVar11;
-  double dVar12;
-  double dVar13;
-  double dVar14;
-  double dVar15;
-  double dVar16;
-  float local_b0 [4];
-  float local_a0;
-  float local_9c;
-  float local_98;
-  float local_94;
-  
-  __savegprlr_20();
-  iVar8 = __savefpr_28();
-  local_b0[0] = *param_3;
-  local_b0[1] = param_3[1];
-  local_b0[2] = param_3[2];
-  local_b0[3] = param_3[3];
-  dVar12 = (double)local_b0[3];
-  lVar11 = ((param_2 & 0xffff) + (param_2 & 0xffff) * 2) * 8 + -0x7ca5a634;
-  uVar10 = *(uint *)(iVar8 + 0x98);
-  if ((*(uint *)lVar11 & uVar10) != 0) {
-    dVar15 = 1.0;
-    dVar14 = 0.0;
-    do {
-      iVar4 = (int)lVar11;
-      if ((*(uint *)(iVar4 + 4) & uVar10) == 0) break;
-      uVar10 = (uint)*(ushort *)(iVar4 + 8);
-      if (uVar10 != 0) {
-        do {
-          iVar3 = uVar10 * 0x18;
-          if ((*(uint *)(&DAT_83cf04e8 + iVar3) & *(uint *)(iVar8 + 0x98)) != 0) {
-            SV_ClipMoveToEntity(iVar8,&DAT_83cf04e4 + iVar3,uVar10 - 1,param_5);
-          }
-          uVar10 = (uint)*(ushort *)(&DAT_83cf04e6 + iVar3);
-        } while (uVar10 != 0);
-        dVar12 = (double)local_b0[3];
-      }
-      uVar2 = *(ushort *)(iVar4 + 0x10);
-      fVar5 = local_b0[uVar2] - *(float *)(iVar4 + 0xc);
-      fVar6 = param_4[uVar2] - *(float *)(iVar4 + 0xc);
-      fVar1 = *(float *)((uVar2 + 6) * 4 + iVar8);
-      dVar13 = (double)(fVar6 - fVar5);
-      fVar7 = fVar5;
-      if (dVar13 < 0.0) {
-        fVar7 = fVar6;
-      }
-      if (fVar7 < fVar1) {
-        fVar7 = fVar5;
-        if (fVar5 - fVar6 < 0.0) {
-          fVar7 = fVar6;
-        }
-        if (-fVar1 < fVar7) {
-          if ((double)*(float *)param_5 <= dVar12) break;
-          if (dVar13 == dVar14) {
-            uVar9 = 0;
-            dVar16 = dVar15;
-            dVar13 = dVar14;
-          }
-          else {
-            dVar16 = dVar15;
-            fVar6 = -fVar5;
-            if (dVar13 < 0.0) {
-              dVar16 = dVar14;
-              fVar6 = fVar5;
-            }
-            uVar9 = (ulonglong)(uint)(int)dVar16;
-            dVar16 = (double)((fVar6 + fVar1) * (float)(dVar15 / ABS(dVar13)));
-            dVar13 = (double)((fVar6 - fVar1) * (float)(dVar15 / ABS(dVar13)));
-            if (dVar16 < dVar14) {
-              MyAssertHandler(0xffffffff82082fb0,0x69f,0,0xffffffff82000f98,0xffffffff82082a28);
-              dVar12 = (double)local_b0[3];
-            }
-          }
-          if ((float)(dVar15 - dVar16) < 0.0) {
-            dVar16 = dVar15;
-          }
-          local_a0 = (float)((double)(float)((double)*param_4 - (double)local_b0[0]) * dVar16 +
-                            (double)local_b0[0]);
-          local_9c = (float)((double)(float)((double)param_4[1] - (double)local_b0[1]) * dVar16 +
-                            (double)local_b0[1]);
-          local_98 = (float)((double)(float)((double)param_4[2] - (double)local_b0[2]) * dVar16 +
-                            (double)local_b0[2]);
-          local_94 = (float)((double)(float)((double)param_4[3] - dVar12) * dVar16 + dVar12);
-          CM_ClipMoveToEntities_r
-                    (iVar8,*(undefined2 *)((int)((uVar9 + 10 & 0xffffffff) << 1) + iVar4),local_b0,
-                     &local_a0,param_5);
-          if (dVar15 < dVar13) {
-            MyAssertHandler(dVar13,0xffffffff82082fb0,0x6a9,0,0xffffffff8202ba38,0xffffffff82083270,
-                            dVar13);
-          }
-          if (dVar13 < 0.0) {
-            dVar13 = dVar14;
-          }
-          uVar9 = (ulonglong)*(ushort *)((int)((0xb - uVar9 & 0xffffffff) << 1) + iVar4);
-          local_b0[0] = (float)((double)(float)((double)*param_4 - (double)local_b0[0]) * dVar13 +
-                               (double)local_b0[0]);
-          local_b0[1] = (float)((double)(float)((double)param_4[1] - (double)local_b0[1]) * dVar13 +
-                               (double)local_b0[1]);
-          local_b0[2] = (float)((double)(float)((double)param_4[2] - (double)local_b0[2]) * dVar13 +
-                               (double)local_b0[2]);
-          local_b0[3] = (float)((double)(float)((double)param_4[3] - (double)local_b0[3]) * dVar13 +
-                               (double)local_b0[3]);
-          dVar12 = (double)local_b0[3];
-        }
-        else {
-          uVar9 = (ulonglong)*(ushort *)(iVar4 + 0x16);
-        }
-      }
-      else {
-        uVar9 = (ulonglong)*(ushort *)(iVar4 + 0x14);
-      }
-      uVar10 = *(uint *)(iVar8 + 0x98);
-      lVar11 = uVar9 * 0x18 + -0x7ca5a634;
-    } while ((*(uint *)((int)&DAT_835a59cc + (int)(uVar9 * 0x18)) & uVar10) != 0);
-  }
-  __restfpr_28();
-  __restgprlr_20();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 824D3AA0  CM_ClipMoveToEntities  (qcommon/cm_world.cpp:1721)
 
-void CM_ClipMoveToEntities(int param_1,float *param_2)
+void CM_ClipMoveToEntities(moveclip_t *param_1,trace_t *param_2)
 
 {
-  undefined4 local_40;
-  undefined4 local_3c;
-  undefined4 local_38;
+  float local_40;
+  float local_3c;
+  float local_38;
   undefined4 local_34;
-  undefined4 local_30;
-  undefined4 local_2c;
-  undefined4 local_28;
+  float local_30;
+  float local_2c;
+  float local_28;
   float local_24;
   
   Profile_Begin(0x138);
-  if (1.0 < (double)*param_2) {
-    MyAssertHandler(0xffffffff82082fb0,0x6bf,0,0xffffffff82081df8,0xffffffff82083280,
-                    (double)*param_2);
+  if (1.0 < param_2->fraction) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_world.cpp",0x6bf,0,
+                    "%s\n\t(trace->fraction) = %g");
   }
-  local_40 = *(undefined4 *)(param_1 + 0x70);
-  local_3c = *(undefined4 *)(param_1 + 0x74);
-  local_38 = *(undefined4 *)(param_1 + 0x78);
-  local_30 = *(undefined4 *)(param_1 + 0x80);
-  local_2c = *(undefined4 *)(param_1 + 0x84);
-  local_28 = *(undefined4 *)(param_1 + 0x88);
-  local_24 = *param_2;
+  local_40 = (param_1->extents).start[0];
+  local_3c = (param_1->extents).start[1];
+  local_38 = (param_1->extents).start[2];
+  local_30 = (param_1->extents).end[0];
+  local_2c = (param_1->extents).end[1];
+  local_28 = (param_1->extents).end[2];
+  local_24 = param_2->fraction;
   local_34 = 0;
   CM_ClipMoveToEntities_r(param_1,1,&local_40,&local_30,param_2);
-  Profile_EndInternal(0);
+  Profile_EndInternal((double *)0x0);
   return;
 }
 
 
 // 824D3B80  CM_ClipSightTraceToEntities_r  (qcommon/cm_world.cpp:1743)
-
-void CM_ClipSightTraceToEntities_r
-               (undefined8 param_1,ulonglong param_2,float *param_3,float *param_4)
-
-{
-  float fVar1;
-  ushort uVar2;
-  int iVar3;
-  int iVar4;
-  float fVar5;
-  float fVar6;
-  float fVar7;
-  int iVar9;
-  undefined8 uVar8;
-  uint uVar10;
-  ulonglong uVar11;
-  longlong lVar12;
-  double dVar13;
-  double dVar14;
-  double dVar15;
-  double dVar16;
-  float local_a8 [4];
-  float local_98;
-  float local_94;
-  float local_90;
-  
-  __savegprlr_21();
-  iVar9 = __savefpr_28();
-  local_a8[0] = *param_3;
-  local_a8[1] = param_3[1];
-  local_a8[2] = param_3[2];
-  lVar12 = ((param_2 & 0xffff) + (param_2 & 0xffff) * 2) * 8 + -0x7ca5a634;
-  uVar10 = *(uint *)(iVar9 + 0x44);
-  if ((*(uint *)lVar12 & uVar10) != 0) {
-    dVar15 = 1.0;
-    dVar14 = 0.0;
-    do {
-      iVar4 = (int)lVar12;
-      if ((*(uint *)(iVar4 + 4) & uVar10) == 0) break;
-      uVar2 = *(ushort *)(iVar4 + 8);
-      while (uVar2 != 0) {
-        iVar3 = (uint)uVar2 * 0x18;
-        uVar8 = SV_ClipSightToEntity(iVar9,&DAT_83cf04e4 + iVar3);
-        if ((int)uVar8 != 0) goto LAB_824d3e40;
-        uVar2 = *(ushort *)(&DAT_83cf04e6 + iVar3);
-      }
-      uVar2 = *(ushort *)(iVar4 + 0x10);
-      fVar5 = local_a8[uVar2] - *(float *)(iVar4 + 0xc);
-      fVar6 = param_4[uVar2] - *(float *)(iVar4 + 0xc);
-      fVar1 = *(float *)((uVar2 + 6) * 4 + iVar9);
-      dVar13 = (double)(fVar6 - fVar5);
-      fVar7 = fVar5;
-      if (dVar13 < 0.0) {
-        fVar7 = fVar6;
-      }
-      if (fVar7 < fVar1) {
-        fVar7 = fVar5;
-        if (fVar5 - fVar6 < 0.0) {
-          fVar7 = fVar6;
-        }
-        if (-fVar1 < fVar7) {
-          if (dVar13 == dVar14) {
-            uVar11 = 0;
-            dVar13 = dVar14;
-            dVar16 = dVar15;
-          }
-          else {
-            dVar16 = dVar15;
-            fVar6 = -fVar5;
-            if (dVar13 < 0.0) {
-              dVar16 = dVar14;
-              fVar6 = fVar5;
-            }
-            uVar11 = (ulonglong)(uint)(int)dVar16;
-            dVar16 = (double)((fVar6 + fVar1) * (float)(dVar15 / ABS(dVar13)));
-            dVar13 = (double)((fVar6 - fVar1) * (float)(dVar15 / ABS(dVar13)));
-            if (dVar16 < dVar14) {
-              MyAssertHandler(0xffffffff82082fb0,0x714,0,0xffffffff82000f98,0xffffffff82082a28);
-            }
-          }
-          if ((float)(dVar15 - dVar16) < 0.0) {
-            dVar16 = dVar15;
-          }
-          local_98 = (float)((double)(float)((double)*param_4 - (double)local_a8[0]) * dVar16 +
-                            (double)local_a8[0]);
-          local_94 = (float)((double)(float)((double)param_4[1] - (double)local_a8[1]) * dVar16 +
-                            (double)local_a8[1]);
-          local_90 = (float)((double)(float)((double)param_4[2] - (double)local_a8[2]) * dVar16 +
-                            (double)local_a8[2]);
-          uVar8 = CM_ClipSightTraceToEntities_r
-                            (iVar9,*(undefined2 *)((int)((uVar11 + 10 & 0xffffffff) << 1) + iVar4),
-                             local_a8,&local_98);
-          if ((int)uVar8 != 0) goto LAB_824d3e40;
-          if (dVar15 < dVar13) {
-            MyAssertHandler(dVar13,0xffffffff82082fb0,0x71f,0,0xffffffff8202ba38,0xffffffff82083270,
-                            dVar13);
-          }
-          if (dVar13 < 0.0) {
-            dVar13 = dVar14;
-          }
-          uVar11 = (ulonglong)*(ushort *)((int)((0xb - uVar11 & 0xffffffff) << 1) + iVar4);
-          local_a8[0] = (float)((double)(float)((double)*param_4 - (double)local_a8[0]) * dVar13 +
-                               (double)local_a8[0]);
-          local_a8[1] = (float)((double)(float)((double)param_4[1] - (double)local_a8[1]) * dVar13 +
-                               (double)local_a8[1]);
-          local_a8[2] = (float)((double)(float)((double)param_4[2] - (double)local_a8[2]) * dVar13 +
-                               (double)local_a8[2]);
-        }
-        else {
-          uVar11 = (ulonglong)*(ushort *)(iVar4 + 0x16);
-        }
-      }
-      else {
-        uVar11 = (ulonglong)*(ushort *)(iVar4 + 0x14);
-      }
-      uVar10 = *(uint *)(iVar9 + 0x44);
-      lVar12 = uVar11 * 0x18 + -0x7ca5a634;
-    } while ((*(uint *)((int)&DAT_835a59cc + (int)(uVar11 * 0x18)) & uVar10) != 0);
-  }
-  uVar8 = 0;
-LAB_824d3e40:
-  __restfpr_28(uVar8);
-  __restgprlr_21();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 824D3E60  CM_ClipSightTraceToEntities  (qcommon/cm_world.cpp:1838)
 
-undefined8 CM_ClipSightTraceToEntities(longlong param_1)
+int CM_ClipSightTraceToEntities(sightclip_t *param_1)
 
 {
-  undefined8 uVar1;
+  int iVar1;
   
   Profile_Begin(0x24);
-  uVar1 = CM_ClipSightTraceToEntities_r(param_1,1,param_1 + 0x24,param_1 + 0x30);
-  Profile_EndInternal(0);
-  return uVar1;
+  iVar1 = CM_ClipSightTraceToEntities_r(param_1,1,param_1->start,param_1->end);
+  Profile_EndInternal((double *)0x0);
+  return iVar1;
 }
 
 
 // 824D3EB8  CM_PointTraceToEntities_r  (qcommon/cm_world.cpp:1853)
-
-void CM_PointTraceToEntities_r
-               (undefined8 param_1,ulonglong param_2,float *param_3,float *param_4,
-               undefined8 param_5)
-
-{
-  ushort uVar1;
-  uint uVar2;
-  int iVar3;
-  int iVar4;
-  longlong lVar5;
-  double dVar6;
-  double dVar7;
-  double dVar8;
-  double dVar9;
-  double dVar10;
-  float local_a0 [4];
-  float local_90;
-  float local_8c;
-  float local_88;
-  float local_84;
-  
-  __savegprlr_21();
-  iVar4 = __savefpr_28();
-  local_a0[0] = *param_3;
-  local_a0[1] = param_3[1];
-  local_a0[2] = param_3[2];
-  local_a0[3] = param_3[3];
-  lVar5 = ((param_2 & 0xffff) + (param_2 & 0xffff) * 2) * 8 + -0x7ca5a634;
-  uVar2 = *(uint *)(iVar4 + 100);
-  if ((*(uint *)lVar5 & uVar2) != 0) {
-    dVar8 = 1.0;
-    dVar9 = 0.0;
-    do {
-      iVar3 = (int)lVar5;
-      if ((*(int *)(iVar4 + 0x68) == 0) && ((*(uint *)(iVar3 + 4) & uVar2) == 0)) break;
-      uVar1 = *(ushort *)(iVar3 + 8);
-      while (uVar2 = (uint)uVar1, uVar2 != 0) {
-        SV_PointTraceToEntity(iVar4,&DAT_83cf04e4 + uVar2 * 0x18,uVar2 - 1,param_5);
-        uVar1 = *(ushort *)(&DAT_83cf04e6 + uVar2 * 0x18);
-      }
-      dVar6 = (double)(local_a0[*(ushort *)(iVar3 + 0x10)] - *(float *)(iVar3 + 0xc));
-      dVar10 = (double)(param_4[*(ushort *)(iVar3 + 0x10)] - *(float *)(iVar3 + 0xc));
-      if ((double)(float)(dVar10 * dVar6) < dVar9) {
-        if (*(float *)param_5 <= local_a0[3]) break;
-        dVar6 = (double)(float)(dVar6 / (double)(float)(dVar6 - dVar10));
-        if (dVar6 < dVar9) {
-          MyAssertHandler(0xffffffff82082fb0,0x76b,0,0xffffffff82000f98,0xffffffff82082a28);
-        }
-        if (dVar8 < dVar6) {
-          MyAssertHandler(0xffffffff82082fb0,0x76c,0,0xffffffff82000f98,0xffffffff8208329c);
-        }
-        dVar7 = dVar8;
-        if (dVar10 < 0.0) {
-          dVar7 = dVar9;
-        }
-        local_90 = (float)((double)(float)((double)*param_4 - (double)local_a0[0]) * dVar6 +
-                          (double)local_a0[0]);
-        local_8c = (float)((double)(float)((double)param_4[1] - (double)local_a0[1]) * dVar6 +
-                          (double)local_a0[1]);
-        local_88 = (float)((double)(float)((double)param_4[2] - (double)local_a0[2]) * dVar6 +
-                          (double)local_a0[2]);
-        local_84 = (float)((double)(float)((double)param_4[3] - (double)local_a0[3]) * dVar6 +
-                          (double)local_a0[3]);
-        CM_PointTraceToEntities_r
-                  (iVar4,*(undefined2 *)
-                          ((int)(((ulonglong)(uint)(int)dVar7 + 10 & 0xffffffff) << 1) + iVar3),
-                   local_a0,&local_90,param_5);
-        local_a0[0] = local_90;
-        local_a0[1] = local_8c;
-        uVar1 = *(ushort *)((int)((0xb - (ulonglong)(uint)(int)dVar7 & 0xffffffff) << 1) + iVar3);
-        local_a0[2] = local_88;
-        local_a0[3] = local_84;
-      }
-      else {
-        if ((float)(dVar10 - dVar6) < 0.0) {
-          dVar6 = dVar10;
-        }
-        dVar10 = dVar8;
-        if (dVar6 < 0.0) {
-          dVar10 = dVar9;
-        }
-        uVar1 = *(ushort *)((0xb - (int)dVar10) * 2 + iVar3);
-      }
-      uVar2 = *(uint *)(iVar4 + 100);
-      lVar5 = (ulonglong)uVar1 * 0x18 + -0x7ca5a634;
-    } while ((*(uint *)((int)&DAT_835a59cc + (int)((ulonglong)uVar1 * 0x18)) & uVar2) != 0);
-  }
-  __restfpr_28();
-  __restgprlr_21();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 824D4158  CM_PointTraceToEntities  (qcommon/cm_world.cpp:1920)
 
-void CM_PointTraceToEntities(int param_1,float *param_2)
+void CM_PointTraceToEntities(pointtrace_t *param_1,trace_t *param_2)
 
 {
-  undefined4 local_40;
-  undefined4 local_3c;
-  undefined4 local_38;
+  float local_40;
+  float local_3c;
+  float local_38;
   undefined4 local_34;
-  undefined4 local_30;
-  undefined4 local_2c;
-  undefined4 local_28;
+  float local_30;
+  float local_2c;
+  float local_28;
   float local_24;
   
   Profile_Begin(0x137);
-  if (1.0 < (double)*param_2) {
-    MyAssertHandler(0xffffffff82082fb0,0x786,0,0xffffffff82081df8,0xffffffff82083280,
-                    (double)*param_2);
+  if (1.0 < param_2->fraction) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_world.cpp",0x786,0,
+                    "%s\n\t(trace->fraction) = %g");
   }
-  local_40 = *(undefined4 *)(param_1 + 0x40);
-  local_3c = *(undefined4 *)(param_1 + 0x44);
-  local_38 = *(undefined4 *)(param_1 + 0x48);
-  local_30 = *(undefined4 *)(param_1 + 0x50);
-  local_2c = *(undefined4 *)(param_1 + 0x54);
-  local_28 = *(undefined4 *)(param_1 + 0x58);
-  local_24 = *param_2;
+  local_40 = (param_1->extents).start[0];
+  local_3c = (param_1->extents).start[1];
+  local_38 = (param_1->extents).start[2];
+  local_30 = (param_1->extents).end[0];
+  local_2c = (param_1->extents).end[1];
+  local_28 = (param_1->extents).end[2];
+  local_24 = param_2->fraction;
   local_34 = 0;
   CM_PointTraceToEntities_r(param_1,1,&local_40,&local_30,param_2);
-  Profile_EndInternal(0);
+  Profile_EndInternal((double *)0x0);
   return;
 }
 
 
 // 824D4238  CM_PointSightTraceToEntities_r  (qcommon/cm_world.cpp:1942)
-
-void CM_PointSightTraceToEntities_r
-               (undefined8 param_1,uint param_2,undefined8 param_3,undefined8 param_4)
-
-{
-  ushort uVar1;
-  float *pfVar2;
-  float *pfVar3;
-  int iVar4;
-  int iVar6;
-  int iVar7;
-  undefined8 uVar5;
-  double dVar8;
-  double dVar9;
-  double dVar10;
-  double dVar11;
-  float local_68;
-  float local_64;
-  float local_60;
-  
-  __savegprlr_26();
-  iVar6 = __savefpr_28();
-  iVar7 = (param_2 & 0xffff) + (param_2 & 0xffff) * 2;
-  iVar4 = iVar7 * 8;
-  if ((((&DAT_835a59cc)[iVar7 * 2] & *(uint *)(iVar6 + 0x20)) != 0) &&
-     ((*(uint *)(&DAT_835a59d0 + iVar4) & *(uint *)(iVar6 + 0x20)) != 0)) {
-    dVar10 = 0.0;
-    pfVar2 = (float *)param_3;
-    pfVar3 = (float *)param_4;
-    dVar8 = (double)(pfVar2[*(ushort *)(&DAT_835a59dc + iVar4)] - *(float *)(&DAT_835a59d8 + iVar4))
-    ;
-    dVar11 = (double)(pfVar3[*(ushort *)(&DAT_835a59dc + iVar4)] - *(float *)(&DAT_835a59d8 + iVar4)
-                     );
-    if ((float)(dVar11 * dVar8) < 0.0) {
-      dVar8 = (double)(float)(dVar8 / (double)(float)(dVar8 - dVar11));
-      if (dVar8 < 0.0) {
-        MyAssertHandler(0xffffffff82082fb0,0x7b3,0,0xffffffff82000f98,0xffffffff82082a28);
-      }
-      dVar9 = 1.0;
-      if (1.0 < dVar8) {
-        MyAssertHandler(0xffffffff82082fb0,0x7b4,0,0xffffffff82000f98,0xffffffff8208329c);
-      }
-      if (dVar11 < 0.0) {
-        dVar9 = dVar10;
-      }
-      local_68 = (float)((double)(float)((double)*pfVar3 - (double)*pfVar2) * dVar8 +
-                        (double)*pfVar2);
-      local_64 = (float)((double)(float)((double)pfVar3[1] - (double)pfVar2[1]) * dVar8 +
-                        (double)pfVar2[1]);
-      local_60 = (float)((double)(float)((double)pfVar3[2] - (double)pfVar2[2]) * dVar8 +
-                        (double)pfVar2[2]);
-      uVar5 = CM_PointSightTraceToEntities_r
-                        (iVar6,*(undefined2 *)
-                                ((int)&DAT_835a59cc +
-                                (int)(((ulonglong)(uint)(int)dVar9 + 10 & 0xffffffff) << 1) + iVar4)
-                         ,param_3,&local_68);
-      if (((int)uVar5 != 0) ||
-         (uVar5 = CM_PointSightTraceToEntities_r
-                            (iVar6,*(undefined2 *)
-                                    ((int)&DAT_835a59cc +
-                                    (int)((0xb - (ulonglong)(uint)(int)dVar9 & 0xffffffff) << 1) +
-                                    iVar4),&local_68,param_4), (int)uVar5 != 0)) goto LAB_824d4464;
-    }
-    else {
-      if ((float)(dVar11 - dVar8) < 0.0) {
-        dVar8 = dVar11;
-      }
-      dVar11 = 1.0;
-      if (dVar8 < 0.0) {
-        dVar11 = dVar10;
-      }
-      iVar7 = CM_PointSightTraceToEntities_r
-                        (iVar6,*(undefined2 *)((int)&DAT_835a59cc + (0xb - (int)dVar11) * 2 + iVar4)
-                         ,param_3,param_4);
-      if (iVar7 != 0) {
-        __restfpr_28();
-        __restgprlr_26();
-        return;
-      }
-    }
-    uVar1 = *(ushort *)(&DAT_835a59d4 + iVar4);
-    while (uVar1 != 0) {
-      iVar4 = (uint)uVar1 * 0x18;
-      uVar5 = SV_PointSightTraceToEntity(iVar6,&DAT_83cf04e4 + iVar4);
-      if ((int)uVar5 != 0) goto LAB_824d4464;
-      uVar1 = *(ushort *)(&DAT_83cf04e6 + iVar4);
-    }
-  }
-  uVar5 = 0;
-LAB_824d4464:
-  __restfpr_28(uVar5);
-  __restgprlr_26();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 824D4478  CM_PointSightTraceToEntities  (qcommon/cm_world.cpp:2003)
 
-undefined8 CM_PointSightTraceToEntities(longlong param_1)
+int CM_PointSightTraceToEntities(sightpointtrace_t *param_1)
 
 {
-  undefined8 uVar1;
+  int iVar1;
   
   Profile_Begin(0x23);
-  uVar1 = CM_PointSightTraceToEntities_r(param_1,1,param_1,param_1 + 0xc);
-  Profile_EndInternal(0);
-  return uVar1;
+  iVar1 = CM_PointSightTraceToEntities_r(param_1,1,param_1->start,param_1->end);
+  Profile_EndInternal((double *)0x0);
+  return iVar1;
 }
 

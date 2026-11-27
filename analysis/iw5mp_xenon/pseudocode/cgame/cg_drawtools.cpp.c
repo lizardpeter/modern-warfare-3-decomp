@@ -2,141 +2,18 @@
 
 // 822C2750  CG_DrawRotatedPicPhysical  (cgame/cg_drawtools.cpp:25)
 
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
 void CG_DrawRotatedPicPhysical
-               (undefined8 param_1,double param_2,double param_3,double param_4,double param_5)
+               (ScreenPlacement *param_1,float param_2,float param_3,float param_4,float param_5,
+               float param_6,float *param_7,Material *param_8)
 
 {
   float fVar1;
-  float fVar2;
-  float fVar3;
-  float *pfVar4;
-  undefined8 in_r10;
-  int iVar5;
-  double extraout_f1;
-  double dVar6;
-  double dVar7;
-  double dVar8;
-  double dVar9;
-  double dVar10;
-  double dVar11;
-  double dVar12;
-  double dVar13;
-  float local_b0;
-  float local_ac;
-  float local_a8;
-  float local_a4;
-  float local_a0 [40];
-  
-  __savegprlr_25();
-  pfVar4 = (float *)__savefpr_24();
-  dVar11 = (double)(float)(param_5 * 0.01745329238474369);
-  dVar7 = extraout_f1;
-  dVar6 = sin(dVar11);
-  dVar8 = (double)(float)dVar6;
-  dVar6 = cos(dVar11);
-  dVar11 = (double)(float)dVar6;
-  dVar12 = 0.5;
-  dVar9 = (double)((float)(param_3 * 0.5) / DAT_82b5c7fc);
-  dVar6 = (double)ScrPlace_HiResGetScaleX();
-  dVar9 = (double)(pfVar4[4] * (float)(dVar9 / dVar6));
-  dVar12 = (double)((float)(param_4 * dVar12) / DAT_82b5c7fc);
-  dVar6 = (double)ScrPlace_HiResGetScaleY();
-  dVar13 = (double)(float)(dVar7 / (double)DAT_82b5c7fc);
-  dVar6 = (double)((float)(dVar12 / dVar6) * pfVar4[5]);
-  dVar7 = (double)ScrPlace_HiResGetScaleX();
-  dVar10 = (double)(float)(param_2 / (double)DAT_82b5c7fc);
-  dVar13 = (double)(float)((double)pfVar4[4] * (double)(float)(dVar13 / dVar7) + dVar9);
-  dVar7 = (double)ScrPlace_HiResGetScaleY();
-  dVar12 = (double)(float)(dVar9 * dVar8);
-  dVar9 = (double)(float)(dVar9 * dVar11);
-  iVar5 = 0;
-  dVar8 = (double)(float)(dVar6 * dVar8);
-  dVar11 = (double)(float)(dVar6 * dVar11);
-  dVar7 = (double)(float)((double)(float)(dVar10 / dVar7) * (double)pfVar4[5] + dVar6);
-  do {
-    dVar10 = (double)(-(float)((double)*(float *)((int)&DAT_820156f4 + iVar5) * dVar8 -
-                              (double)(float)((double)*(float *)((int)&DAT_820156f0 + iVar5) * dVar9
-                                             + dVar13)) * DAT_82b5c7fc);
-    dVar6 = (double)ScrPlace_HiResGetScaleX();
-    fVar3 = DAT_82b5c7fc;
-    fVar1 = *(float *)((int)&DAT_820156f0 + iVar5);
-    fVar2 = *(float *)((int)&DAT_820156f4 + iVar5);
-    *(float *)((int)local_a0 + iVar5) = (float)(dVar6 * dVar10) * *pfVar4;
-    dVar10 = (double)((float)((double)(float)((double)fVar2 * dVar11 +
-                                             (double)(float)((double)fVar1 * dVar12)) + dVar7) *
-                     fVar3);
-    dVar6 = (double)ScrPlace_HiResGetScaleY();
-    *(float *)((int)local_a0 + iVar5 + 4) = pfVar4[1] * (float)(dVar6 * dVar10);
-    iVar5 = iVar5 + 8;
-  } while (iVar5 < 0x20);
-  Material_GetDefault2DTextureCoordsForAtlasing(in_r10,&local_a4,&local_ac,&local_a8,&local_b0);
-  R_AddCmdDrawQuadPicST
-            ((double)local_a4,(double)local_a8,(double)local_ac,(double)local_b0,local_a0);
-  __restfpr_24();
-  __restgprlr_25();
-  return;
-}
-
-
-// 822C28F8  CG_DrawRotatedPic  (cgame/cg_drawtools.cpp:70)
-
-void CG_DrawRotatedPic(double param_1,double param_2,double param_3,double param_4,
-                      undefined8 param_5,undefined8 param_6)
-
-{
-  float fStack0000001c;
-  float fStack00000024;
-  float fStack0000002c;
-  float fStack00000034;
-  
-  fStack0000001c = (float)param_1;
-  fStack00000024 = (float)param_2;
-  fStack0000002c = (float)param_3;
-  fStack00000034 = (float)param_4;
-  ScrPlace_ApplyRect(param_6,&stack0x0000001c,&stack0x00000024,&stack0x0000002c,&stack0x00000034);
-  CG_DrawRotatedPicPhysical
-            ((double)fStack0000001c,(double)fStack00000024,(double)fStack0000002c,
-             (double)fStack00000034,param_5,param_6);
-  return;
-}
-
-
-// 822C2978  CG_DrawRotatedPicWithoutSplitScreenScaling  (cgame/cg_drawtools.cpp:77)
-
-void CG_DrawRotatedPicWithoutSplitScreenScaling
-               (double param_1,double param_2,double param_3,double param_4,undefined8 param_5,
-               undefined8 param_6)
-
-{
-  float fStack0000001c;
-  float fStack00000024;
-  float fStack0000002c;
-  float fStack00000034;
-  
-  fStack0000001c = (float)param_1;
-  fStack00000024 = (float)param_2;
-  fStack0000002c = (float)param_3;
-  fStack00000034 = (float)param_4;
-  ScrPlace_ApplyRectWithoutSplitScreenScaling
-            (param_6,&stack0x0000001c,&stack0x00000024,&stack0x0000002c,&stack0x00000034);
-  CG_DrawRotatedPicPhysical
-            ((double)fStack0000001c,(double)fStack00000024,(double)fStack0000002c,
-             (double)fStack00000034,param_5,param_6);
-  return;
-}
-
-
-// 822C29F8  CG_DrawRotatedQuadPic  (cgame/cg_drawtools.cpp:88)
-
-void CG_DrawRotatedQuadPic(undefined8 param_1,double param_2,double param_3)
-
-{
-  int iVar1;
   float *pfVar2;
-  longlong in_r6;
-  undefined8 in_r9;
-  longlong lVar3;
-  float *pfVar4;
+  Material *pMVar3;
+  Material *in_r10;
+  int iVar4;
   double extraout_f1;
   double dVar5;
   double dVar6;
@@ -146,55 +23,225 @@ void CG_DrawRotatedQuadPic(undefined8 param_1,double param_2,double param_3)
   double dVar10;
   double dVar11;
   double dVar12;
+  float fVar13;
+  float fVar14;
   float local_b0;
-  float local_ac;
+  undefined1 local_ac [4];
   float local_a8;
-  float local_a4;
+  undefined1 local_a4 [4];
+  float local_a0 [40];
+  
+  dVar6 = (double)param_6;
+  dVar8 = (double)param_4;
+  dVar11 = (double)param_5;
+  dVar9 = (double)param_3;
+  __savegprlr_25((double)param_2,param_1,param_7,param_8);
+  pfVar2 = (float *)__savefpr_24();
+  dVar10 = (double)(float)(dVar6 * 0.01745329238474369);
+  dVar6 = extraout_f1;
+  dVar5 = sin(dVar10);
+  dVar7 = (double)(float)dVar5;
+  dVar5 = cos(dVar10);
+  dVar5 = (double)(float)dVar5;
+  dVar10 = 0.5;
+  dVar8 = (double)((float)(dVar8 * 0.5) / cg_hudSplitscreenScale);
+  fVar13 = ScrPlace_HiResGetScaleX();
+  dVar8 = (double)(pfVar2[4] * (float)(dVar8 / (double)fVar13));
+  dVar11 = (double)((float)(dVar11 * dVar10) / cg_hudSplitscreenScale);
+  fVar13 = ScrPlace_HiResGetScaleY();
+  dVar12 = (double)(float)(dVar6 / (double)cg_hudSplitscreenScale);
+  dVar6 = (double)((float)(dVar11 / (double)fVar13) * pfVar2[5]);
+  fVar13 = ScrPlace_HiResGetScaleX();
+  dVar10 = (double)(float)(dVar9 / (double)cg_hudSplitscreenScale);
+  dVar12 = (double)(float)((double)pfVar2[4] * (double)(float)(dVar12 / (double)fVar13) + dVar8);
+  fVar13 = ScrPlace_HiResGetScaleY();
+  dVar11 = (double)(float)(dVar8 * dVar7);
+  dVar8 = (double)(float)(dVar8 * dVar5);
+  iVar4 = 0;
+  dVar9 = (double)(float)(dVar6 * dVar7);
+  dVar5 = (double)(float)(dVar6 * dVar5);
+  dVar6 = (double)(float)((double)(float)(dVar10 / (double)fVar13) * (double)pfVar2[5] + dVar6);
+  do {
+    dVar7 = (double)(-(float)((double)*(float *)((int)sign[0] + iVar4 + 4) * dVar9 -
+                             (double)(float)((double)*(float *)((int)sign[0] + iVar4) * dVar8 +
+                                            dVar12)) * cg_hudSplitscreenScale);
+    fVar14 = ScrPlace_HiResGetScaleX();
+    fVar13 = *(float *)((int)sign[0] + iVar4);
+    fVar1 = *(float *)((int)sign[0] + iVar4 + 4);
+    *(float *)((int)local_a0 + iVar4) = (float)((double)fVar14 * dVar7) * *pfVar2;
+    dVar7 = (double)((float)((double)(float)((double)fVar1 * dVar5 +
+                                            (double)(float)((double)fVar13 * dVar11)) + dVar6) *
+                    cg_hudSplitscreenScale);
+    fVar13 = ScrPlace_HiResGetScaleY();
+    *(float *)((int)local_a0 + iVar4 + 4) = pfVar2[1] * (float)((double)fVar13 * dVar7);
+    iVar4 = iVar4 + 8;
+  } while (iVar4 < 0x20);
+  pMVar3 = (Material *)local_ac;
+  pfVar2 = (float *)local_a4;
+  Material_GetDefault2DTextureCoordsForAtlasing(in_r10,pfVar2,(float *)pMVar3,&local_a8,&local_b0);
+  R_AddCmdDrawQuadPicST
+            ((float (*) [2])local_a0,(float)local_a4,local_a8,(float)local_ac,local_b0,pfVar2,pMVar3
+            );
+  __restfpr_24();
+  __restgprlr_25();
+  return;
+}
+
+
+// 822C28F8  CG_DrawRotatedPic  (cgame/cg_drawtools.cpp:70)
+
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void CG_DrawRotatedPic(ScreenPlacement *param_1,float param_2,float param_3,float param_4,
+                      float param_5,int param_6,int param_7,float param_8,float *param_9,
+                      Material *param_10)
+
+{
+  float *pfVar1;
+  Material *pMVar2;
+  int in_r8;
+  int in_r9;
+  double dVar3;
+  float fStack0000001c;
+  float fStack00000024;
+  undefined4 uStack0000002c;
+  undefined4 uStack00000034;
+  
+  dVar3 = (double)param_8;
+  pMVar2 = (Material *)&stack0x00000024;
+  pfVar1 = &stack0x0000001c;
+  fStack0000001c = param_2;
+  fStack00000024 = param_3;
+  uStack0000002c = param_4;
+  uStack00000034 = param_5;
+  ScrPlace_ApplyRect(param_1,pfVar1,(float *)pMVar2,(float *)&stack0x0000002c,
+                     (float *)&stack0x00000034,in_r8,in_r9);
+  CG_DrawRotatedPicPhysical
+            (param_1,fStack0000001c,fStack00000024,(float)uStack0000002c,(float)uStack00000034,
+             (float)dVar3,pfVar1,pMVar2);
+  return;
+}
+
+
+// 822C2978  CG_DrawRotatedPicWithoutSplitScreenScaling  (cgame/cg_drawtools.cpp:77)
+
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void CG_DrawRotatedPicWithoutSplitScreenScaling
+               (ScreenPlacement *param_1,float param_2,float param_3,float param_4,float param_5,
+               int param_6,int param_7,float param_8,float *param_9,Material *param_10)
+
+{
+  float *pfVar1;
+  Material *pMVar2;
+  int in_r8;
+  int in_r9;
+  double dVar3;
+  float fStack0000001c;
+  float fStack00000024;
+  undefined4 uStack0000002c;
+  undefined4 uStack00000034;
+  
+  dVar3 = (double)param_8;
+  pMVar2 = (Material *)&stack0x00000024;
+  pfVar1 = &stack0x0000001c;
+  fStack0000001c = param_2;
+  fStack00000024 = param_3;
+  uStack0000002c = param_4;
+  uStack00000034 = param_5;
+  ScrPlace_ApplyRectWithoutSplitScreenScaling
+            (param_1,pfVar1,(float *)pMVar2,(float *)&stack0x0000002c,(float *)&stack0x00000034,
+             in_r8,in_r9);
+  CG_DrawRotatedPicPhysical
+            (param_1,fStack0000001c,fStack00000024,(float)uStack0000002c,(float)uStack00000034,
+             (float)dVar3,pfVar1,pMVar2);
+  return;
+}
+
+
+// 822C29F8  CG_DrawRotatedQuadPic  (cgame/cg_drawtools.cpp:88)
+
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void CG_DrawRotatedQuadPic
+               (ScreenPlacement *param_1,float param_2,float param_3,float (*param_4) [2],
+               float param_5,float *param_6,Material *param_7)
+
+{
+  int iVar1;
+  float *pfVar2;
+  Material *pMVar3;
+  Material *in_r9;
+  longlong lVar4;
+  float *pfVar6;
+  longlong lVar5;
+  double extraout_f1;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  double dVar14;
+  float fVar15;
+  float local_b0;
+  undefined1 local_ac [4];
+  float local_a8;
+  undefined1 local_a4 [4];
   float afStack_a0 [40];
   
-  __savegprlr_24();
+  dVar9 = (double)param_5;
+  dVar8 = (double)param_3;
+  lVar5 = (longlong)(int)param_7;
+  __savegprlr_24((double)param_2,param_1,param_4,param_6);
   pfVar2 = (float *)__savefpr_25();
-  dVar11 = (double)(float)(param_3 * 0.01745329238474369);
-  dVar10 = extraout_f1;
-  dVar5 = sin(dVar11);
-  dVar12 = (double)(float)dVar5;
-  dVar5 = cos(dVar11);
-  dVar5 = (double)(float)dVar5;
-  iVar1 = (int)in_r6;
-  lVar3 = 4;
+  dVar13 = (double)(float)(dVar9 * 0.01745329238474369);
+  dVar9 = extraout_f1;
+  dVar7 = sin(dVar13);
+  dVar14 = (double)(float)dVar7;
+  dVar7 = cos(dVar13);
+  dVar7 = (double)(float)dVar7;
+  iVar1 = (int)lVar5;
+  lVar4 = 4;
   do {
-    dVar7 = (double)(float)(dVar10 / (double)DAT_82b5c7fc);
-    dVar11 = (double)ScrPlace_HiResGetScaleX();
-    pfVar4 = (float *)in_r6;
-    dVar8 = (double)(*pfVar4 / DAT_82b5c7fc);
-    dVar6 = (double)(pfVar2[4] * (float)(dVar7 / dVar11));
-    dVar11 = (double)ScrPlace_HiResGetScaleX();
-    dVar9 = (double)(pfVar4[1] / DAT_82b5c7fc);
-    dVar7 = (double)(pfVar2[4] * (float)(dVar8 / dVar11));
-    dVar11 = (double)ScrPlace_HiResGetScaleY();
-    dVar7 = (double)(-(float)((double)(pfVar2[5] * (float)(dVar9 / dVar11)) * dVar12 -
-                             (double)(float)(dVar7 * dVar5 + dVar6)) * DAT_82b5c7fc);
-    dVar11 = (double)ScrPlace_HiResGetScaleX();
-    dVar6 = (double)(float)(param_2 / (double)DAT_82b5c7fc);
-    *(float *)(((int)afStack_a0 - iVar1) + (int)pfVar4) = *pfVar2 * (float)(dVar11 * dVar7);
-    dVar11 = (double)ScrPlace_HiResGetScaleY();
-    dVar7 = (double)(*pfVar4 / DAT_82b5c7fc);
-    dVar6 = (double)(pfVar2[5] * (float)(dVar6 / dVar11));
-    dVar11 = (double)ScrPlace_HiResGetScaleX();
-    dVar8 = (double)(pfVar4[1] / DAT_82b5c7fc);
-    dVar7 = (double)(pfVar2[4] * (float)(dVar7 / dVar11));
-    dVar11 = (double)ScrPlace_HiResGetScaleY();
-    dVar7 = (double)((float)((double)(float)((double)(pfVar2[5] * (float)(dVar8 / dVar11)) * dVar5 +
-                                            (double)(float)(dVar7 * dVar12)) + dVar6) * DAT_82b5c7fc
-                    );
-    dVar11 = (double)ScrPlace_HiResGetScaleY();
-    lVar3 = lVar3 + -1;
-    *(float *)((int)afStack_a0 + (4 - iVar1) + (int)pfVar4) = pfVar2[1] * (float)(dVar11 * dVar7);
-    in_r6 = in_r6 + 8;
-  } while (lVar3 != 0);
-  Material_GetDefault2DTextureCoordsForAtlasing(in_r9,&local_a4,&local_ac,&local_a8,&local_b0);
+    dVar13 = (double)(float)(dVar9 / (double)cg_hudSplitscreenScale);
+    fVar15 = ScrPlace_HiResGetScaleX();
+    pfVar6 = (float *)lVar5;
+    dVar11 = (double)(*pfVar6 / cg_hudSplitscreenScale);
+    dVar10 = (double)(pfVar2[4] * (float)(dVar13 / (double)fVar15));
+    fVar15 = ScrPlace_HiResGetScaleX();
+    dVar12 = (double)(pfVar6[1] / cg_hudSplitscreenScale);
+    dVar13 = (double)(pfVar2[4] * (float)(dVar11 / (double)fVar15));
+    fVar15 = ScrPlace_HiResGetScaleY();
+    dVar13 = (double)(-(float)((double)(pfVar2[5] * (float)(dVar12 / (double)fVar15)) * dVar14 -
+                              (double)(float)(dVar13 * dVar7 + dVar10)) * cg_hudSplitscreenScale);
+    fVar15 = ScrPlace_HiResGetScaleX();
+    dVar10 = (double)(float)(dVar8 / (double)cg_hudSplitscreenScale);
+    *(float *)(((int)afStack_a0 - iVar1) + (int)pfVar6) = *pfVar2 * (float)((double)fVar15 * dVar13)
+    ;
+    fVar15 = ScrPlace_HiResGetScaleY();
+    dVar13 = (double)(*pfVar6 / cg_hudSplitscreenScale);
+    dVar10 = (double)(pfVar2[5] * (float)(dVar10 / (double)fVar15));
+    fVar15 = ScrPlace_HiResGetScaleX();
+    dVar11 = (double)(pfVar6[1] / cg_hudSplitscreenScale);
+    dVar13 = (double)(pfVar2[4] * (float)(dVar13 / (double)fVar15));
+    fVar15 = ScrPlace_HiResGetScaleY();
+    dVar13 = (double)((float)((double)(float)((double)(pfVar2[5] * (float)(dVar11 / (double)fVar15))
+                                              * dVar7 + (double)(float)(dVar13 * dVar14)) + dVar10)
+                     * cg_hudSplitscreenScale);
+    fVar15 = ScrPlace_HiResGetScaleY();
+    lVar4 = lVar4 + -1;
+    *(float *)((int)afStack_a0 + (4 - iVar1) + (int)pfVar6) =
+         pfVar2[1] * (float)((double)fVar15 * dVar13);
+    lVar5 = lVar5 + 8;
+  } while (lVar4 != 0);
+  pMVar3 = (Material *)local_ac;
+  pfVar2 = (float *)local_a4;
+  Material_GetDefault2DTextureCoordsForAtlasing(in_r9,pfVar2,(float *)pMVar3,&local_a8,&local_b0);
   R_AddCmdDrawQuadPicST
-            ((double)local_a4,(double)local_a8,(double)local_ac,(double)local_b0,afStack_a0);
+            ((float (*) [2])afStack_a0,(float)local_a4,local_a8,(float)local_ac,local_b0,pfVar2,
+             pMVar3);
   __restfpr_25();
   __restgprlr_24();
   return;
@@ -203,17 +250,22 @@ void CG_DrawRotatedQuadPic(undefined8 param_1,double param_2,double param_3)
 
 // 822C2BA0  CG_DrawVLine  (cgame/cg_drawtools.cpp:112)
 
-void CG_DrawVLine(double param_1,double param_2,double param_3,double param_4,undefined8 param_5)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void CG_DrawVLine(ScreenPlacement *param_1,float param_2,float param_3,float param_4,float param_5,
+                 int param_6,int param_7,float *param_8,Material *param_9)
 
 {
   float fVar1;
   float fVar2;
-  undefined8 in_r10;
+  int in_r8;
+  int in_r9;
+  float *in_r10;
   float fStack0000001c;
   float fStack00000024;
   float fStack0000002c;
   float fStack00000034;
-  undefined4 in_stack_00000054;
+  Material *in_stack_00000054;
   float local_30;
   float local_2c;
   float local_28;
@@ -223,11 +275,12 @@ void CG_DrawVLine(double param_1,double param_2,double param_3,double param_4,un
   float local_18;
   float local_14;
   
-  fStack0000001c = (float)param_1;
-  fStack00000024 = (float)param_2;
-  fStack0000002c = (float)param_3;
-  fStack00000034 = (float)param_4;
-  ScrPlace_ApplyRect(param_5,&stack0x0000001c,&stack0x00000024,&stack0x0000002c,&stack0x00000034);
+  fStack0000001c = param_2;
+  fStack00000024 = param_3;
+  fStack0000002c = param_4;
+  fStack00000034 = param_5;
+  ScrPlace_ApplyRect(param_1,&stack0x0000001c,&stack0x00000024,&stack0x0000002c,&stack0x00000034,
+                     in_r8,in_r9);
   fVar1 = fStack00000034 * 0.5;
   fVar2 = fStack0000002c * 0.5;
   local_14 = fVar1 + fStack00000024;
@@ -239,27 +292,32 @@ void CG_DrawVLine(double param_1,double param_2,double param_3,double param_4,un
   local_24 = fVar1 * 1.0 + local_14;
   local_1c = fVar1 * 1.0 + local_14;
   local_14 = fVar1 * -1.0 + local_14;
-  R_AddCmdDrawQuadPic(&local_30,in_r10,in_stack_00000054);
+  R_AddCmdDrawQuadPic((float (*) [2])&local_30,in_r10,in_stack_00000054);
   return;
 }
 
 
 // 822C2C88  CG_Draw2DLine  (cgame/cg_drawtools.cpp:146)
 
-void CG_Draw2DLine(undefined8 param_1,double param_2,double param_3,double param_4,double param_5)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void CG_Draw2DLine(ScreenPlacement *param_1,float param_2,float param_3,float param_4,float param_5,
+                  float param_6,int param_7,int param_8,float *param_9,Material *param_10)
 
 {
-  float fVar1;
-  undefined8 uVar2;
-  double dVar3;
-  double extraout_f1;
+  ScreenPlacement *pSVar1;
+  longlong lVar2;
+  int iVar3;
   double dVar4;
+  double extraout_f1;
   double dVar5;
   double dVar6;
   double dVar7;
   double dVar8;
-  undefined4 in_stack_00000054;
-  undefined4 in_stack_0000005c;
+  double dVar9;
+  float fVar10;
+  float *in_stack_00000054;
+  Material *in_stack_0000005c;
   float local_80;
   float local_7c;
   float local_78;
@@ -273,30 +331,40 @@ void CG_Draw2DLine(undefined8 param_1,double param_2,double param_3,double param
   float local_58;
   float local_54;
   
-  __savegprlr_29();
-  uVar2 = __savefpr_27();
-  if ((extraout_f1 != param_3) || (param_2 != param_4)) {
-    dVar4 = (double)ScrPlace_ApplyXWithoutSplitScreenScaling(uVar2);
-    dVar5 = (double)ScrPlace_ApplyXWithoutSplitScreenScaling(param_3,uVar2);
-    dVar6 = (double)ScrPlace_ApplyYWithoutSplitScreenScaling(param_2,uVar2);
-    dVar7 = (double)ScrPlace_ApplyYWithoutSplitScreenScaling(param_4,uVar2);
-    local_78 = (float)(dVar5 - dVar4);
+  dVar9 = (double)param_6;
+  dVar7 = (double)param_5;
+  dVar4 = (double)param_3;
+  dVar8 = (double)param_4;
+  lVar2 = (longlong)param_7;
+  __savegprlr_29((double)param_2,param_1,lVar2,param_8,param_9,param_10);
+  iVar3 = (int)lVar2;
+  pSVar1 = (ScreenPlacement *)__savefpr_27();
+  if ((extraout_f1 != dVar8) || (dVar4 != dVar7)) {
+    fVar10 = ScrPlace_ApplyXWithoutSplitScreenScaling(pSVar1,(float)extraout_f1,iVar3);
+    dVar5 = (double)fVar10;
+    fVar10 = ScrPlace_ApplyXWithoutSplitScreenScaling(pSVar1,(float)dVar8,iVar3);
+    dVar8 = (double)fVar10;
+    fVar10 = ScrPlace_ApplyYWithoutSplitScreenScaling(pSVar1,(float)dVar4,iVar3);
+    dVar6 = (double)fVar10;
+    fVar10 = ScrPlace_ApplyYWithoutSplitScreenScaling(pSVar1,(float)dVar7,iVar3);
+    dVar7 = (double)fVar10;
+    local_78 = (float)(dVar8 - dVar5);
     local_74 = (float)(dVar7 - dVar6);
     Vec2NormalizeTo(&local_78,&local_80);
-    fVar1 = -local_7c;
-    local_7c = (float)(param_5 * 0.5) * local_80;
-    dVar3 = (double)local_7c;
-    local_80 = (float)(param_5 * 0.5) * fVar1;
-    dVar8 = (double)local_80;
-    local_6c = (float)(dVar3 + dVar6);
-    local_64 = (float)(dVar3 + dVar7);
-    local_5c = (float)(dVar7 - dVar3);
-    local_54 = (float)(dVar6 - dVar3);
-    local_70 = (float)(dVar8 + dVar4);
-    local_68 = (float)(dVar8 + dVar5);
-    local_60 = (float)(dVar5 - dVar8);
-    local_58 = (float)(dVar4 - dVar8);
-    R_AddCmdDrawQuadPic(&local_70,in_stack_00000054,in_stack_0000005c);
+    fVar10 = -local_7c;
+    local_7c = (float)(dVar9 * 0.5) * local_80;
+    dVar4 = (double)local_7c;
+    local_80 = (float)(dVar9 * 0.5) * fVar10;
+    dVar9 = (double)local_80;
+    local_6c = (float)(dVar4 + dVar6);
+    local_64 = (float)(dVar4 + dVar7);
+    local_5c = (float)(dVar7 - dVar4);
+    local_54 = (float)(dVar6 - dVar4);
+    local_70 = (float)(dVar9 + dVar5);
+    local_68 = (float)(dVar9 + dVar8);
+    local_60 = (float)(dVar8 - dVar9);
+    local_58 = (float)(dVar5 - dVar9);
+    R_AddCmdDrawQuadPic((float (*) [2])&local_70,in_stack_00000054,in_stack_0000005c);
   }
   __restfpr_27();
   __restgprlr_29();
@@ -306,12 +374,14 @@ void CG_Draw2DLine(undefined8 param_1,double param_2,double param_3,double param
 
 // 822C2DB8  CG_Draw2DTri  (cgame/cg_drawtools.cpp:181)
 
-void CG_Draw2DTri(undefined8 param_1,float *param_2,float *param_3,float *param_4,undefined8 param_5
-                 ,undefined8 param_6,undefined8 param_7,undefined8 param_8)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void CG_Draw2DTri(ScreenPlacement *param_1,float *param_2,float *param_3,float *param_4,int param_5,
+                 int param_6,float *param_7,Material *param_8)
 
 {
-  undefined8 uVar1;
-  double dVar2;
+  ScreenPlacement *pSVar1;
+  float *pfVar2;
   float local_70;
   float local_6c;
   float local_68;
@@ -321,22 +391,17 @@ void CG_Draw2DTri(undefined8 param_1,float *param_2,float *param_3,float *param_
   float local_58;
   float local_54;
   
-  uVar1 = __savegprlr_24();
-  dVar2 = (double)ScrPlace_ApplyX((double)*param_2);
-  local_70 = (float)dVar2;
-  dVar2 = (double)ScrPlace_ApplyY((double)param_2[1],uVar1);
-  local_6c = (float)dVar2;
-  dVar2 = (double)ScrPlace_ApplyX((double)*param_3,uVar1);
-  local_68 = (float)dVar2;
-  dVar2 = (double)ScrPlace_ApplyY((double)param_3[1],uVar1);
-  local_64 = (float)dVar2;
-  dVar2 = (double)ScrPlace_ApplyX((double)*param_4,uVar1);
-  local_60 = (float)dVar2;
-  dVar2 = (double)ScrPlace_ApplyY((double)param_4[1],uVar1);
-  local_5c = (float)dVar2;
+  pSVar1 = (ScreenPlacement *)__savegprlr_24(param_1);
+  pfVar2 = param_2;
+  local_70 = ScrPlace_ApplyX(pSVar1,*param_2,(int)param_2);
+  local_6c = ScrPlace_ApplyY(pSVar1,param_2[1],(int)pfVar2);
+  local_68 = ScrPlace_ApplyX(pSVar1,*param_3,(int)pfVar2);
+  local_64 = ScrPlace_ApplyY(pSVar1,param_3[1],(int)pfVar2);
+  local_60 = ScrPlace_ApplyX(pSVar1,*param_4,(int)pfVar2);
+  local_5c = ScrPlace_ApplyY(pSVar1,param_4[1],(int)pfVar2);
   local_58 = local_70;
   local_54 = local_6c;
-  R_AddCmdDrawQuadPic(&local_70,param_7,param_8);
+  R_AddCmdDrawQuadPic((float (*) [2])&local_70,param_7,param_8);
   __restgprlr_24();
   return;
 }
@@ -344,25 +409,33 @@ void CG_Draw2DTri(undefined8 param_1,float *param_2,float *param_3,float *param_
 
 // 822C2E80  CG_DrawStringExt  (cgame/cg_drawtools.cpp:203)
 
-void CG_DrawStringExt(undefined8 param_1,double param_2,double param_3)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+void CG_DrawStringExt(ScreenPlacement *param_1,float param_2,float param_3,char *param_4,
+                     float *param_5,int param_6,int param_7,float param_8,int param_9)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
-  undefined8 in_r6;
+  ScreenPlacement *pSVar1;
+  Font_s *pFVar2;
+  longlong lVar3;
   longlong in_r9;
-  undefined8 extraout_f1;
-  double dVar3;
-  undefined8 uVar4;
+  double extraout_f1;
+  double dVar4;
   double dVar5;
+  double dVar6;
+  double dVar7;
   
-  uVar1 = __savegprlr_28();
-  dVar3 = (double)(float)(param_3 * 0.800000011920929 + param_2);
-  dVar5 = (double)(float)(param_3 * 0.02083333395421505);
-  uVar4 = extraout_f1;
-  uVar2 = UI_GetFontHandle(dVar5,uVar1,5);
-  UI_DrawText(uVar4,dVar3,dVar5,uVar1,in_r6,0x7fffffff,uVar2,-(ulonglong)(in_r9 != 0) & 3,
-              -(ulonglong)(in_r9 != 0),1,1);
+  dVar5 = (double)param_8;
+  dVar4 = (double)param_3;
+  lVar3 = (longlong)param_6;
+  pSVar1 = (ScreenPlacement *)
+           __savegprlr_28((double)param_2,param_1,param_4,param_5,lVar3,param_7,param_9);
+  dVar6 = (double)(float)(dVar5 * 0.800000011920929 + dVar4);
+  dVar7 = (double)(float)(dVar5 * 0.02083333395421505);
+  dVar4 = extraout_f1;
+  pFVar2 = UI_GetFontHandle(pSVar1,5,(float)(dVar5 * 0.02083333395421505));
+  UI_DrawText(pSVar1,(char *)lVar3,0x7fffffff,pFVar2,(float)dVar4,(float)dVar6,
+              -(uint)(in_r9 != 0) & 3,-(uint)(in_r9 != 0),(float)dVar7,(float *)0x1,1);
   __restgprlr_28();
   return;
 }
@@ -370,102 +443,157 @@ void CG_DrawStringExt(undefined8 param_1,double param_2,double param_3)
 
 // 822C2F40  CG_DrawDevString  (cgame/cg_drawtools.cpp:221)
 
-void CG_DrawDevString(undefined8 param_1,double param_2,double param_3,double param_4)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+
+int CG_DrawDevString(ScreenPlacement *param_1,float param_2,float param_3,float param_4,
+                    float param_5,char *param_6,float *param_7,int param_8,Font_s *param_9)
 
 {
   uint uVar1;
-  undefined8 uVar2;
-  int iVar4;
-  undefined8 uVar3;
-  undefined8 in_r8;
+  ScreenPlacement *pSVar2;
+  int iVar3;
+  char *pcVar4;
+  char *in_r8;
+  char *pcVar5;
   uint in_r10;
   double extraout_f1;
-  double dVar5;
   double dVar6;
-  undefined4 in_stack_00000054;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  Font_s *in_stack_00000054;
   
-  __savegprlr_24();
-  uVar2 = __savefpr_27();
+  dVar7 = (double)param_5;
+  dVar6 = (double)param_4;
+  dVar10 = (double)param_3;
+  pcVar4 = (char *)param_9;
+  __savegprlr_24((double)param_2,param_1,param_6,param_7,param_8);
+  pSVar2 = (ScreenPlacement *)__savefpr_27();
   uVar1 = in_r10 & 3;
-  dVar6 = extraout_f1;
+  pcVar5 = in_r8;
+  dVar9 = extraout_f1;
   if (((uVar1 != 1) && (uVar1 != 2)) && (uVar1 != 3)) {
-    MyAssertHandler(0xffffffff82015838,0xec,0,0xffffffff82000f98,0xffffffff820157b8);
+    pcVar4 = 
+    "(align & CG_ALIGN_X) == CG_ALIGN_LEFT || (align & CG_ALIGN_X) == CG_ALIGN_RIGHT || (align & CG_ALIGN_X) == CG_ALIGN_CENTER"
+    ;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_drawtools.cpp",0xec,0
+                    ,"%s");
   }
-  dVar5 = 0.5;
+  dVar8 = 0.5;
   if (uVar1 == 2) {
-    iVar4 = R_TextWidth(in_r8,0,in_stack_00000054);
-    dVar6 = -(double)(float)((double)(longlong)iVar4 * param_3 - dVar6);
+    iVar3 = R_TextWidth(in_r8,0,in_stack_00000054);
+    dVar9 = -(double)(float)((double)(longlong)iVar3 * dVar6 - dVar9);
   }
   else if (uVar1 == 3) {
-    iVar4 = R_TextWidth(in_r8,0,in_stack_00000054);
-    dVar6 = -(double)(float)((double)(float)((double)(longlong)iVar4 * param_3) * dVar5 - dVar6);
+    iVar3 = R_TextWidth(in_r8,0,in_stack_00000054);
+    dVar9 = -(double)(float)((double)(float)((double)(longlong)iVar3 * dVar6) * dVar8 - dVar9);
   }
   in_r10 = in_r10 & 0xc;
   if (((in_r10 != 4) && (in_r10 != 8)) && (in_r10 != 0xc)) {
-    MyAssertHandler(0xffffffff82015838,0xf8,0,0xffffffff82000f98,0xffffffff82015738);
+    pcVar4 = 
+    "(align & CG_ALIGN_Y) == CG_ALIGN_TOP || (align & CG_ALIGN_Y) == CG_ALIGN_BOTTOM || (align & CG_ALIGN_Y) == CG_ALIGN_MIDDLE"
+    ;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_drawtools.cpp",0xf8,0
+                    ,"%s");
   }
-  uVar3 = R_TextHeight(in_stack_00000054);
+  iVar3 = R_TextHeight(in_stack_00000054);
   if (in_r10 == 4) {
-    param_2 = (double)(float)((double)(longlong)(int)uVar3 * param_4 + param_2);
+    dVar10 = (double)(float)((double)(longlong)iVar3 * dVar7 + dVar10);
   }
   else if (in_r10 == 0xc) {
-    param_2 = (double)(float)((double)(float)((double)(longlong)(int)uVar3 * param_4) * dVar5 +
-                             param_2);
+    dVar10 = (double)(float)((double)(float)((double)(longlong)iVar3 * dVar7) * dVar8 + dVar10);
   }
-  CL_DrawText(dVar6,param_2,param_3,param_4,uVar2,in_r8,0x7fffffff,in_stack_00000054);
-  __restfpr_27(uVar3);
-  __restgprlr_24();
-  return;
+  CL_DrawText(pSVar2,in_r8,0x7fffffff,in_stack_00000054,(float)dVar9,(float)dVar10,(int)pcVar4,
+              (int)pcVar5,(float)dVar6,(float)dVar7,(float *)0x1,1);
+  __restfpr_27(iVar3);
+  iVar3 = __restgprlr_24();
+  return iVar3;
 }
 
 
 // 822C4260  CG_DrawBigDevString  (cgame/cg_drawtools.cpp:272)
 
-void CG_DrawBigDevString(undefined8 param_1,undefined8 param_2)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+int CG_DrawBigDevString(ScreenPlacement *param_1,float param_2,float param_3,char *param_4,
+                       float param_5,int param_6)
 
 {
-  CG_DrawDevString(param_1,param_2,0x3ff0000000000000);
-  return;
+  int iVar1;
+  int in_r6;
+  
+  iVar1 = CG_DrawDevString(param_1,param_2,param_3,1.0,1.0,param_4,(float *)param_6,in_r6,
+                           (Font_s *)&cgMedia);
+  return iVar1;
 }
 
 
 // 822C3110  CG_DrawBigDevStringColor  (cgame/cg_drawtools.cpp:281)
 
-void CG_DrawBigDevStringColor(undefined8 param_1,undefined8 param_2)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+int CG_DrawBigDevStringColor
+              (ScreenPlacement *param_1,float param_2,float param_3,char *param_4,float *param_5,
+              int param_6)
 
 {
-  CG_DrawDevString(param_1,param_2,0x3ff0000000000000);
-  return;
+  int iVar1;
+  
+  iVar1 = CG_DrawDevString(param_1,param_2,param_3,1.0,1.0,param_4,param_5,param_6,
+                           (Font_s *)&cgMedia);
+  return iVar1;
 }
 
 
 // 822C42B8  CG_DrawSmallDevString  (cgame/cg_drawtools.cpp:287)
 
-void CG_DrawSmallDevString(undefined8 param_1,undefined8 param_2)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+int CG_DrawSmallDevString
+              (ScreenPlacement *param_1,float param_2,float param_3,char *param_4,float param_5,
+              int param_6)
 
 {
-  CG_DrawDevString(param_1,param_2,0x3ff0000000000000);
-  return;
+  int iVar1;
+  int in_r6;
+  
+  iVar1 = CG_DrawDevString(param_1,param_2,param_3,1.0,1.0,param_4,(float *)param_6,in_r6,
+                           (Font_s *)&cgMedia);
+  return iVar1;
 }
 
 
 // 822C3158  CG_DrawSmallDevStringColor  (cgame/cg_drawtools.cpp:296)
 
-void CG_DrawSmallDevStringColor(undefined8 param_1,undefined8 param_2)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+
+int CG_DrawSmallDevStringColor
+              (ScreenPlacement *param_1,float param_2,float param_3,char *param_4,float *param_5,
+              int param_6)
 
 {
-  CG_DrawDevString(param_1,param_2,0x3ff0000000000000);
-  return;
+  int iVar1;
+  
+  iVar1 = CG_DrawDevString(param_1,param_2,param_3,1.0,1.0,param_4,param_5,param_6,
+                           (Font_s *)&cgMedia);
+  return iVar1;
 }
 
 
 // 822C31A0  CG_FadeAlpha  (cgame/cg_drawtools.cpp:303)
 
-double CG_FadeAlpha(int param_1,int param_2,int param_3,int param_4)
+float CG_FadeAlpha(int param_1,int param_2,int param_3,int param_4)
 
 {
-  if ((0 < param_4) && (param_3 = param_3 - (param_1 - param_2), param_3 < param_4)) {
-    return (double)((float)(longlong)param_3 / (float)(longlong)param_4);
+  int iVar1;
+  
+  if ((0 < param_4) && (iVar1 = param_3 - (param_1 - param_2), iVar1 < param_4)) {
+    return (float)(longlong)iVar1 / (float)(longlong)param_4;
   }
   return 1.0;
 }
@@ -473,58 +601,60 @@ double CG_FadeAlpha(int param_1,int param_2,int param_3,int param_4)
 
 // 822C31F8  CG_FadeColor  (cgame/cg_drawtools.cpp:317)
 
-undefined4 * CG_FadeColor(int param_1,int param_2,int param_3,int param_4)
+float * CG_FadeColor(int param_1,int param_2,int param_3,int param_4)
 
 {
+  int iVar1;
+  
   if ((param_2 == 0) || (param_3 <= param_1 - param_2)) {
-    return (undefined4 *)0x0;
+    return (float *)0x0;
   }
-  if ((0 < param_4) && (param_3 = param_3 - (param_1 - param_2), param_3 < param_4)) {
-    DAT_82a2189c = 0x3f800000;
-    DAT_82a21898 = 0x3f800000;
-    DAT_82a21894 = 0x3f800000;
-    DAT_82a218a0 = (float)(longlong)param_3 / (float)(longlong)param_4;
-    return &DAT_82a21894;
+  if ((0 < param_4) && (iVar1 = param_3 - (param_1 - param_2), iVar1 < param_4)) {
+    color[2] = 1.0;
+    color[1] = 1.0;
+    color[0] = 1.0;
+    color[3] = (float)(longlong)iVar1 / (float)(longlong)param_4;
+    return color;
   }
-  DAT_82a218a0 = 1.0;
-  DAT_82a2189c = 0x3f800000;
-  DAT_82a21898 = 0x3f800000;
-  DAT_82a21894 = 0x3f800000;
-  return &DAT_82a21894;
+  color[3] = 1.0;
+  color[2] = 1.0;
+  color[1] = 1.0;
+  color[0] = 1.0;
+  return color;
 }
 
 
 // 822C3298  CG_GetColorForHealth  (cgame/cg_drawtools.cpp:342)
 
-void CG_GetColorForHealth(int param_1,undefined8 param_2,undefined4 *param_3)
+void CG_GetColorForHealth(int param_1,int param_2,float *param_3)
 
 {
   if (param_1 < 1) {
-    *param_3 = 0;
-    param_3[1] = 0;
-    param_3[2] = 0;
-    param_3[3] = 0x3f800000;
+    *param_3 = 0.0;
+    param_3[1] = 0.0;
+    param_3[2] = 0.0;
+    param_3[3] = 1.0;
     return;
   }
-  *param_3 = 0x3f800000;
-  param_3[3] = 0x3f800000;
+  *param_3 = 1.0;
+  param_3[3] = 1.0;
   if (param_1 < 100) {
     if (param_1 < 0x42) {
-      param_3[2] = 0;
+      param_3[2] = 0.0;
     }
     else {
       param_3[2] = (float)(longlong)(param_1 + -0x42) * 0.030303031;
     }
   }
   else {
-    param_3[2] = 0x3f800000;
+    param_3[2] = 1.0;
   }
   if (0x3c < param_1) {
-    param_3[1] = 0x3f800000;
+    param_3[1] = 1.0;
     return;
   }
   if (param_1 < 0x1e) {
-    param_3[1] = 0;
+    param_3[1] = 0.0;
     return;
   }
   param_3[1] = (float)(longlong)(param_1 + -0x1e) * 0.033333335;
@@ -533,151 +663,71 @@ void CG_GetColorForHealth(int param_1,undefined8 param_2,undefined4 *param_3)
 
 
 // 822C3370  CG_MiniMapChanged  (cgame/cg_drawtools.cpp:386)
-
-void CG_MiniMapChanged(undefined8 param_1)
-
-{
-  float fVar1;
-  float fVar2;
-  float fVar3;
-  int iVar5;
-  undefined8 uVar4;
-  undefined4 uVar6;
-  char *pcVar7;
-  double dVar8;
-  double dVar9;
-  undefined4 local_30 [6];
-  
-  local_30[0] = CL_GetConfigString(0x3fa);
-  iVar5 = CG_GetLocalClientGlobals(param_1);
-  uVar4 = Com_Parse(local_30);
-  uVar6 = Material_RegisterHandle(uVar4,7);
-  *(undefined4 *)(iVar5 + 0x797f4) = uVar6;
-  pcVar7 = (char *)Com_Parse(local_30);
-  dVar8 = atof(pcVar7);
-  *(float *)(iVar5 + 0x797f8) = (float)dVar8;
-  pcVar7 = (char *)Com_Parse(local_30);
-  dVar8 = atof(pcVar7);
-  *(float *)(iVar5 + 0x797fc) = (float)dVar8;
-  pcVar7 = (char *)Com_Parse(local_30);
-  dVar8 = atof(pcVar7);
-  dVar9 = (double)(float)dVar8;
-  pcVar7 = (char *)Com_Parse(local_30);
-  dVar8 = atof(pcVar7);
-  fVar1 = (float)(dVar9 - (double)*(float *)(iVar5 + 0x797f8));
-  fVar2 = (float)dVar8 - *(float *)(iVar5 + 0x797fc);
-  fVar3 = fVar1 * *(float *)(iVar5 + 0x797f0) + fVar2 * -*(float *)(iVar5 + 0x797ec);
-  *(float *)(iVar5 + 0x79800) = fVar3;
-  fVar1 = fVar1 * -*(float *)(iVar5 + 0x797ec) + fVar2 * -*(float *)(iVar5 + 0x797f0);
-  *(float *)(iVar5 + 0x79804) = fVar1;
-  if (fVar3 == 0.0) {
-    *(float *)(iVar5 + 0x79800) = 1000.0;
-  }
-  if (fVar1 == 0.0) {
-    *(float *)(iVar5 + 0x79804) = 1000.0;
-  }
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 822C34B8  CG_NorthDirectionChanged  (cgame/cg_drawtools.cpp:425)
-
-void CG_NorthDirectionChanged(void)
-
-{
-  undefined8 uVar1;
-  char *_String;
-  int iVar2;
-  double dVar3;
-  double _X;
-  
-  uVar1 = __savegprlr_29();
-  _String = (char *)CL_GetConfigString(0x3f9);
-  iVar2 = CG_GetLocalClientGlobals(uVar1);
-  dVar3 = atof(_String);
-  *(float *)(iVar2 + 0x797e8) = (float)dVar3;
-  _X = (double)((float)dVar3 * 0.017453292);
-  dVar3 = sin(_X);
-  *(float *)(iVar2 + 0x797f0) = (float)dVar3;
-  dVar3 = cos(_X);
-  *(float *)(iVar2 + 0x797ec) = (float)dVar3;
-  CG_MiniMapChanged(uVar1);
-  __restgprlr_29();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 822C3550  CG_ThermalBodyMaterialChanged  (cgame/cg_drawtools.cpp:439)
-
-void CG_ThermalBodyMaterialChanged(void)
-
-{
-  int iVar1;
-  char *pcVar2;
-  undefined4 uVar3;
-  undefined4 local_20 [4];
-  
-  iVar1 = CG_GetLocalClientGlobals();
-  local_20[0] = CL_GetConfigString(0x3fb);
-  pcVar2 = (char *)Com_Parse(local_20);
-  if (*pcVar2 == '\0') {
-    *(undefined4 *)(iVar1 + 0x10847c) = 0;
-    return;
-  }
-  uVar3 = Material_RegisterHandle(pcVar2,8);
-  *(undefined4 *)(iVar1 + 0x10847c) = uVar3;
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 822C35D8  CG_DebugLine  (cgame/cg_drawtools.cpp:498)
 
-void CG_DebugLine(void)
+void CG_DebugLine(float *param_1,float *param_2,float *param_3,int param_4,int param_5)
 
 {
-  CL_AddDebugLine();
+  CL_AddDebugLine(param_1,param_2,param_3,param_4,param_5,0);
   return;
 }
 
 
 // 822C35E0  CG_DebugStar  (cgame/cg_drawtools.cpp:504)
 
-void CG_DebugStar(void)
+void CG_DebugStar(float *param_1,float *param_2,int param_3)
 
 {
-  CL_AddDebugStar();
+  CL_AddDebugStar(param_1,param_2,param_3,0);
   return;
 }
 
 
 // 822C35E8  CG_DebugStarWithText  (cgame/cg_drawtools.cpp:510)
 
-void CG_DebugStarWithText(void)
+void CG_DebugStarWithText
+               (float *param_1,float *param_2,float *param_3,char *param_4,float param_5,int param_6
+               )
 
 {
-  CL_AddDebugStarWithText();
+  int in_r8;
+  
+  CL_AddDebugStarWithText(param_1,param_2,param_3,param_4,param_5,param_6,in_r8);
   return;
 }
 
 
 // 822C35F0  CG_DebugBox  (cgame/cg_drawtools.cpp:516)
 
-void CG_DebugBox(undefined8 param_1,float *param_2,undefined8 param_3,undefined8 param_4,
-                undefined8 param_5,undefined8 param_6)
+void CG_DebugBox(float *param_1,Bounds *param_2,float param_3,float *param_4,int param_5,int param_6
+                )
 
 {
   float fVar1;
   int *piVar2;
   float *pfVar3;
-  longlong lVar4;
-  int *piVar5;
+  float *pfVar4;
+  int in_r8;
+  longlong lVar5;
+  int *piVar6;
   double extraout_f1;
-  double dVar6;
   double dVar7;
   double dVar8;
   double dVar9;
   double dVar10;
   double dVar11;
+  double dVar12;
   float local_f0 [4];
   float local_e0;
   float local_dc;
@@ -700,20 +750,22 @@ void CG_DebugBox(undefined8 param_1,float *param_2,undefined8 param_3,undefined8
   float local_98;
   float local_94;
   
-  __savegprlr_27();
+  lVar5 = (longlong)(int)param_2;
+  __savegprlr_27((double)param_3,param_1,lVar5,param_4);
+  pfVar4 = (float *)lVar5;
   pfVar3 = (float *)__savefpr_21();
-  dVar11 = (double)(float)(extraout_f1 * 0.01745329238474369);
-  dVar6 = sin(dVar11);
-  dVar10 = (double)(float)dVar6;
-  dVar6 = cos(dVar11);
-  dVar8 = (double)(float)dVar6;
-  dVar7 = (double)(param_2[1] - param_2[4]);
-  dVar6 = (double)(param_2[1] + param_2[4]);
-  dVar11 = (double)(*param_2 - param_2[3]);
-  dVar9 = (double)(*param_2 + param_2[3]);
-  local_c4 = param_2[2] - param_2[5];
+  dVar12 = (double)(float)(extraout_f1 * 0.01745329238474369);
+  dVar7 = sin(dVar12);
+  dVar11 = (double)(float)dVar7;
+  dVar7 = cos(dVar12);
+  dVar9 = (double)(float)dVar7;
+  dVar8 = (double)(pfVar4[1] - pfVar4[4]);
+  dVar7 = (double)(pfVar4[1] + pfVar4[4]);
+  dVar12 = (double)(*pfVar4 - pfVar4[3]);
+  dVar10 = (double)(*pfVar4 + pfVar4[3]);
+  local_c4 = pfVar4[2] - pfVar4[5];
   local_94 = pfVar3[2];
-  fVar1 = param_2[2] + param_2[5];
+  fVar1 = pfVar4[2] + pfVar4[5];
   local_9c = *pfVar3;
   local_98 = pfVar3[1];
   local_f0[2] = local_94 + local_c4;
@@ -721,33 +773,33 @@ void CG_DebugBox(undefined8 param_1,float *param_2,undefined8 param_3,undefined8
   local_d0 = local_94 + local_c4;
   local_c4 = local_94 + local_c4;
   local_b8 = local_94 + fVar1;
-  local_f0[0] = local_9c + (float)(dVar11 * dVar8 - (double)(float)(dVar7 * dVar10));
-  local_f0[3] = local_9c + (float)(dVar9 * dVar8 - (double)(float)(dVar7 * dVar10));
-  local_cc = local_9c + (float)(dVar9 * dVar8 - (double)(float)(dVar6 * dVar10));
-  local_f0[1] = local_98 + (float)(dVar11 * dVar10 + (double)(float)(dVar7 * dVar8));
-  local_e0 = local_98 + (float)(dVar9 * dVar10 + (double)(float)(dVar7 * dVar8));
-  local_d8 = local_9c + (float)(dVar11 * dVar8 - (double)(float)(dVar6 * dVar10));
-  local_d4 = local_98 + (float)(dVar11 * dVar10 + (double)(float)(dVar6 * dVar8));
-  lVar4 = 0xc;
-  piVar5 = (int *)&UNK_82015884;
+  local_f0[0] = local_9c + (float)(dVar12 * dVar9 - (double)(float)(dVar8 * dVar11));
+  local_f0[3] = local_9c + (float)(dVar10 * dVar9 - (double)(float)(dVar8 * dVar11));
+  local_cc = local_9c + (float)(dVar10 * dVar9 - (double)(float)(dVar7 * dVar11));
+  local_f0[1] = local_98 + (float)(dVar12 * dVar11 + (double)(float)(dVar8 * dVar9));
+  local_e0 = local_98 + (float)(dVar10 * dVar11 + (double)(float)(dVar8 * dVar9));
+  local_d8 = local_9c + (float)(dVar12 * dVar9 - (double)(float)(dVar7 * dVar11));
+  local_d4 = local_98 + (float)(dVar12 * dVar11 + (double)(float)(dVar7 * dVar9));
+  lVar5 = 0xc;
+  piVar6 = (int *)&UNK_82015884;
   local_ac = local_94 + fVar1;
-  local_c8 = local_98 + (float)(dVar9 * dVar10 + (double)(float)(dVar6 * dVar8));
-  local_c0 = local_9c + (float)(dVar11 * dVar8 - (double)(float)(dVar7 * dVar10));
-  local_bc = local_98 + (float)(dVar11 * dVar10 + (double)(float)(dVar7 * dVar8));
+  local_c8 = local_98 + (float)(dVar10 * dVar11 + (double)(float)(dVar7 * dVar9));
+  local_c0 = local_9c + (float)(dVar12 * dVar9 - (double)(float)(dVar8 * dVar11));
+  local_bc = local_98 + (float)(dVar12 * dVar11 + (double)(float)(dVar8 * dVar9));
   local_a0 = local_94 + fVar1;
   local_94 = local_94 + fVar1;
-  local_b4 = local_9c + (float)(dVar9 * dVar8 - (double)(float)(dVar7 * dVar10));
-  local_b0 = local_98 + (float)(dVar9 * dVar10 + (double)(float)(dVar7 * dVar8));
-  local_a4 = local_98 + (float)(dVar11 * dVar10 + (double)(float)(dVar6 * dVar8));
-  local_a8 = local_9c + (float)(dVar11 * dVar8 - (double)(float)(dVar6 * dVar10));
-  local_9c = local_9c + (float)(dVar9 * dVar8 - (double)(float)(dVar6 * dVar10));
-  local_98 = local_98 + (float)(dVar9 * dVar10 + (double)(float)(dVar6 * dVar8));
+  local_b4 = local_9c + (float)(dVar10 * dVar9 - (double)(float)(dVar8 * dVar11));
+  local_b0 = local_98 + (float)(dVar10 * dVar11 + (double)(float)(dVar8 * dVar9));
+  local_a4 = local_98 + (float)(dVar12 * dVar11 + (double)(float)(dVar7 * dVar9));
+  local_a8 = local_9c + (float)(dVar12 * dVar9 - (double)(float)(dVar7 * dVar11));
+  local_9c = local_9c + (float)(dVar10 * dVar9 - (double)(float)(dVar7 * dVar11));
+  local_98 = local_98 + (float)(dVar10 * dVar11 + (double)(float)(dVar7 * dVar9));
   do {
-    piVar2 = piVar5 + 1;
-    piVar5 = piVar5 + 2;
-    CL_AddDebugLine(local_f0 + *piVar2 * 3,local_f0 + *piVar5 * 3,param_4,param_5,param_6,0);
-    lVar4 = lVar4 + -1;
-  } while (lVar4 != 0);
+    piVar2 = piVar6 + 1;
+    piVar6 = piVar6 + 2;
+    CL_AddDebugLine(local_f0 + *piVar2 * 3,local_f0 + *piVar6 * 3,(float *)param_5,param_6,in_r8,0);
+    lVar5 = lVar5 + -1;
+  } while (lVar5 != 0);
   __restfpr_21();
   __restgprlr_27();
   return;
@@ -756,8 +808,8 @@ void CG_DebugBox(undefined8 param_1,float *param_2,undefined8 param_3,undefined8
 
 // 822C3858  CG_DebugBoxOriented  (cgame/cg_drawtools.cpp:558)
 
-void CG_DebugBoxOriented(undefined8 param_1,float *param_2,undefined8 param_3,undefined8 param_4,
-                        undefined8 param_5,undefined8 param_6)
+void CG_DebugBoxOriented(float *param_1,Bounds *param_2,float (*param_3) [3],float *param_4,
+                        int param_5,int param_6)
 
 {
   float fVar1;
@@ -775,31 +827,30 @@ void CG_DebugBoxOriented(undefined8 param_1,float *param_2,undefined8 param_3,un
   float local_d0;
   float local_cc;
   float local_c8;
-  undefined1 local_c0 [8];
-  float local_b8 [46];
+  float local_c0 [48];
   
-  pfVar4 = (float *)__savegprlr_23();
+  pfVar4 = (float *)__savegprlr_23(param_1);
   dVar11 = -1.0;
   dVar12 = 1.0;
   uVar7 = 0;
-  pfVar8 = local_b8;
+  pfVar8 = local_c0 + 2;
   do {
     dVar10 = dVar11;
     if ((uVar7 & 1) != 0) {
       dVar10 = dVar12;
     }
     pfVar5 = pfVar8 + -2;
-    pfVar8[-2] = (float)((double)param_2[3] * dVar10 + (double)*param_2);
+    pfVar8[-2] = (float)((double)param_2->halfSize[0] * dVar10 + (double)param_2->midPoint[0]);
     dVar10 = dVar11;
     if ((uVar7 & 2) != 0) {
       dVar10 = dVar12;
     }
-    pfVar8[-1] = (float)((double)param_2[4] * dVar10 + (double)param_2[1]);
+    pfVar8[-1] = (float)((double)param_2->halfSize[1] * dVar10 + (double)param_2->midPoint[1]);
     dVar10 = dVar11;
     if ((uVar7 & 4) != 0) {
       dVar10 = dVar12;
     }
-    *pfVar8 = (float)((double)param_2[5] * dVar10 + (double)param_2[2]);
+    *pfVar8 = (float)((double)param_2->halfSize[2] * dVar10 + (double)param_2->midPoint[2]);
     MatrixTransformVector(pfVar5,param_3,&local_d0);
     fVar1 = *pfVar4;
     uVar7 = uVar7 + 1;
@@ -814,11 +865,11 @@ void CG_DebugBoxOriented(undefined8 param_1,float *param_2,undefined8 param_3,un
     pfVar8 = pfVar8 + 3;
   } while (uVar7 < 8);
   lVar6 = 0xc;
-  piVar9 = (int *)&UNK_820158e4;
+  piVar9 = iEdgePairs[0xb] + 1;
   do {
     piVar3 = piVar9 + 1;
     piVar9 = piVar9 + 2;
-    CL_AddDebugLine(local_c0 + *piVar3 * 0xc,local_c0 + *piVar9 * 0xc,param_4,param_5,param_6,0);
+    CL_AddDebugLine(local_c0 + *piVar3 * 3,local_c0 + *piVar9 * 3,param_4,param_5,param_6,0);
     lVar6 = lVar6 + -1;
   } while (lVar6 != 0);
   __restgprlr_23();
@@ -828,8 +879,8 @@ void CG_DebugBoxOriented(undefined8 param_1,float *param_2,undefined8 param_3,un
 
 // 822C39F0  CG_DebugCircle  (cgame/cg_drawtools.cpp:595)
 
-void CG_DebugCircle(undefined8 param_1,undefined8 param_2,float *param_3,undefined8 param_4,
-                   undefined8 param_5,undefined8 param_6)
+void CG_DebugCircle(float *param_1,float param_2,float *param_3,float *param_4,int param_5,
+                   int param_6)
 
 {
   float fVar1;
@@ -837,12 +888,12 @@ void CG_DebugCircle(undefined8 param_1,undefined8 param_2,float *param_3,undefin
   float fVar3;
   float *pfVar4;
   float *pfVar5;
+  int in_r8;
   uint uVar6;
-  undefined1 *puVar7;
-  float *pfVar8;
+  float *pfVar7;
   double extraout_f1;
+  double dVar8;
   double dVar9;
-  double _X;
   double dVar10;
   double dVar11;
   double dVar12;
@@ -858,13 +909,13 @@ void CG_DebugCircle(undefined8 param_1,undefined8 param_2,float *param_3,undefin
   float local_13c;
   float local_138;
   float fStack_134;
-  undefined1 local_130 [304];
+  float local_130 [76];
   
-  __savegprlr_26();
+  __savegprlr_26((double)param_2,param_1,param_3);
   pfVar5 = (float *)__savefpr_26();
-  local_14c = param_3[1];
-  local_150 = *param_3;
-  fVar1 = param_3[2];
+  local_14c = param_4[1];
+  local_150 = *param_4;
+  fVar1 = param_4[2];
   fVar2 = SQRT(fVar1 * fVar1 + local_150 * local_150 + local_14c * local_14c);
   local_148 = 1.0;
   if (-fVar2 < 0.0) {
@@ -876,40 +927,40 @@ void CG_DebugCircle(undefined8 param_1,undefined8 param_2,float *param_3,undefin
   local_148 = local_148 * fVar1;
   dVar15 = extraout_f1;
   PerpendicularVector(&local_150,&local_140);
-  Vec3Cross(&local_150,&local_140,&local_160);
+  Vec3Cross(&local_150,&local_140,(float *)&local_160);
   uVar6 = 0;
-  pfVar8 = &fStack_134;
+  pfVar7 = &fStack_134;
   dVar14 = 0.39269909262657166;
   dVar13 = (double)local_158;
   dVar12 = (double)local_160._4_4_;
   dVar11 = (double)local_160._0_4_;
   do {
     local_160 = (ulonglong)uVar6;
-    _X = (double)(float)((double)local_160 * dVar14);
-    dVar9 = sin(_X);
-    dVar10 = (double)(float)((double)(float)dVar9 * dVar15);
-    dVar9 = cos(_X);
+    dVar9 = (double)(float)((double)local_160 * dVar14);
+    dVar8 = sin(dVar9);
+    dVar10 = (double)(float)((double)(float)dVar8 * dVar15);
+    dVar8 = cos(dVar9);
     fVar1 = (float)(dVar11 * dVar10 + (double)*pfVar5);
     fVar2 = pfVar5[1];
     fVar3 = pfVar5[2];
-    pfVar8[1] = fVar1;
+    pfVar7[1] = fVar1;
     uVar6 = uVar6 + 1;
-    pfVar8[2] = (float)(dVar12 * dVar10 + (double)fVar2);
-    pfVar8[3] = (float)(dVar13 * dVar10 + (double)fVar3);
-    fVar2 = (float)((double)(float)dVar9 * dVar15);
-    pfVar8[1] = local_140 * fVar2 + fVar1;
-    pfVar8[2] = local_13c * fVar2 + pfVar8[2];
-    pfVar4 = pfVar8 + 3;
-    pfVar8 = pfVar8 + 3;
-    *pfVar8 = local_138 * fVar2 + *pfVar4;
+    pfVar7[2] = (float)(dVar12 * dVar10 + (double)fVar2);
+    pfVar7[3] = (float)(dVar13 * dVar10 + (double)fVar3);
+    fVar2 = (float)((double)(float)dVar8 * dVar15);
+    pfVar7[1] = local_140 * fVar2 + fVar1;
+    pfVar7[2] = local_13c * fVar2 + pfVar7[2];
+    pfVar4 = pfVar7 + 3;
+    pfVar7 = pfVar7 + 3;
+    *pfVar7 = local_138 * fVar2 + *pfVar4;
   } while (uVar6 < 0x10);
   uVar6 = 0;
-  puVar7 = local_130;
+  pfVar5 = local_130;
   do {
     uVar6 = uVar6 + 1;
-    CL_AddDebugLine(puVar7,local_130 + ((uVar6 & 0xf) + (uVar6 & 0xf) * 2) * 4,param_4,param_5,
-                    param_6,0);
-    puVar7 = puVar7 + 0xc;
+    CL_AddDebugLine(pfVar5,local_130 + (uVar6 & 0xf) + (uVar6 & 0xf) * 2,(float *)param_5,param_6,
+                    in_r8,0);
+    pfVar5 = pfVar5 + 3;
   } while (uVar6 < 0x10);
   __restfpr_26();
   __restgprlr_26();
@@ -919,60 +970,63 @@ void CG_DebugCircle(undefined8 param_1,undefined8 param_2,float *param_3,undefin
 
 // 822C3B98  CG_DebugArc  (cgame/cg_drawtools.cpp:629)
 
-void CG_DebugArc(undefined8 param_1,double param_2,double param_3)
+void CG_DebugArc(float *param_1,float param_2,float param_3,float param_4,float *param_5,int param_6
+                ,int param_7)
 
 {
   float fVar1;
   float fVar2;
   float *pfVar3;
-  undefined1 *puVar4;
-  undefined8 in_r7;
-  undefined8 in_r8;
-  undefined8 in_r9;
-  float *pfVar5;
-  uint uVar7;
-  longlong lVar6;
+  float *in_r7;
+  int in_r8;
+  int in_r9;
+  float *pfVar4;
+  uint uVar6;
+  longlong lVar5;
   double extraout_f1;
+  double dVar7;
   double dVar8;
   double dVar9;
-  double _X;
   double dVar10;
   double dVar11;
   double dVar12;
+  double dVar13;
   float fStack_134;
-  undefined1 local_130 [304];
+  float local_130 [76];
   
-  __savegprlr_26();
+  dVar13 = (double)param_3;
+  dVar8 = (double)param_4;
+  __savegprlr_26((double)param_2,param_1,param_5,param_6,param_7);
   pfVar3 = (float *)__savefpr_26();
-  dVar12 = (double)((float)(param_3 - param_2) * 0.06666667);
+  dVar12 = (double)((float)(dVar8 - dVar13) * 0.06666667);
   if (dVar12 < 0.0) {
-    param_2 = (double)(float)(param_2 - 360.0);
-    dVar12 = (double)((float)(param_3 - param_2) * 0.06666667);
+    dVar13 = (double)(float)(dVar13 - 360.0);
+    dVar12 = (double)((float)(dVar8 - dVar13) * 0.06666667);
   }
-  uVar7 = 0;
-  pfVar5 = &fStack_134;
-  dVar10 = 0.01745329238474369;
-  dVar11 = extraout_f1;
+  uVar6 = 0;
+  pfVar4 = &fStack_134;
+  dVar11 = 0.01745329238474369;
+  dVar8 = extraout_f1;
   do {
-    _X = (double)(float)((double)(float)((double)uVar7 * dVar12 + param_2) * dVar10);
-    dVar8 = sin(_X);
-    dVar9 = (double)(float)dVar8;
-    dVar8 = cos(_X);
+    dVar10 = (double)(float)((double)(float)((double)uVar6 * dVar12 + dVar13) * dVar11);
+    dVar7 = sin(dVar10);
+    dVar9 = (double)(float)dVar7;
+    dVar7 = cos(dVar10);
     fVar1 = *pfVar3;
-    uVar7 = uVar7 + 1;
+    uVar6 = uVar6 + 1;
     fVar2 = pfVar3[2];
-    pfVar5[2] = (float)(dVar9 * dVar11 + (double)pfVar3[1]);
-    pfVar5[1] = (float)((double)(float)dVar8 * dVar11 + (double)fVar1);
-    pfVar5 = pfVar5 + 3;
-    *pfVar5 = fVar2;
-  } while (uVar7 < 0x10);
-  lVar6 = 0xf;
-  puVar4 = local_130;
+    pfVar4[2] = (float)(dVar9 * dVar8 + (double)pfVar3[1]);
+    pfVar4[1] = (float)((double)(float)dVar7 * dVar8 + (double)fVar1);
+    pfVar4 = pfVar4 + 3;
+    *pfVar4 = fVar2;
+  } while (uVar6 < 0x10);
+  lVar5 = 0xf;
+  pfVar3 = local_130;
   do {
-    CL_AddDebugLine(puVar4,puVar4 + 0xc,in_r7,in_r8,in_r9,0);
-    lVar6 = lVar6 + -1;
-    puVar4 = puVar4 + 0xc;
-  } while (lVar6 != 0);
+    CL_AddDebugLine(pfVar3,pfVar3 + 3,in_r7,in_r8,in_r9,0);
+    lVar5 = lVar5 + -1;
+    pfVar3 = pfVar3 + 3;
+  } while (lVar5 != 0);
   __restfpr_26();
   __restgprlr_26();
   return;
@@ -980,228 +1034,89 @@ void CG_DebugArc(undefined8 param_1,double param_2,double param_3)
 
 
 // 822C3CB0  CG_WorldDirToScreenPosReal  (cgame/cg_drawtools.cpp:662)
-
-void CG_WorldDirToScreenPosReal(undefined8 param_1,int param_2,ulonglong param_3,ulonglong param_4)
-
-{
-  float fVar1;
-  float fVar2;
-  undefined8 uVar3;
-  int iVar4;
-  float *pfVar5;
-  float local_50;
-  float local_4c;
-  float local_48;
-  
-  uVar3 = __savegprlr_26();
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82015838,0x29f,0,0xffffffff82000f98,0xffffffff82015960);
-  }
-  if ((param_4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82015838,0x2a0,0,0xffffffff82000f98,0xffffffff82015950);
-  }
-  iVar4 = CG_GetLocalClientGlobals(uVar3);
-  MatrixTransposeTransformVector(param_3,iVar4 + 0x6b9d4,&local_50);
-  pfVar5 = (float *)param_4;
-  if (0.0 < local_50) {
-    *pfVar5 = -((local_4c / *(float *)(iVar4 + 0x6b9c0)) * (1.0 / local_50) - 1.0) *
-              *(float *)(param_2 + 0x20) * 0.5;
-    pfVar5[1] = -((local_48 / *(float *)(iVar4 + 0x6b9c4)) * (1.0 / local_50) - 1.0) *
-                *(float *)(param_2 + 0x24) * 0.5;
-    __restgprlr_26(1);
-    return;
-  }
-  local_4c = -local_4c;
-  local_48 = -local_48;
-  *pfVar5 = local_4c;
-  pfVar5[1] = local_48;
-  if (local_4c == 0.0) {
-    *pfVar5 = *(float *)(param_2 + 0x20) * 0.5;
-    fVar1 = *(float *)(param_2 + 0x24) * 2.0;
-    if (local_48 < 0.0) {
-      fVar1 = -*(float *)(param_2 + 0x24);
-    }
-    pfVar5[1] = fVar1;
-    __restgprlr_26(0);
-    return;
-  }
-  if (local_48 == 0.0) {
-    fVar1 = *(float *)(param_2 + 0x20) * 2.0;
-    if (local_4c < 0.0) {
-      fVar1 = -*(float *)(param_2 + 0x20);
-    }
-    *pfVar5 = fVar1;
-    pfVar5[1] = *(float *)(param_2 + 0x24) * 0.5;
-    __restgprlr_26(0);
-    return;
-  }
-  fVar2 = ABS(*(float *)(param_2 + 0x24) / local_48);
-  fVar1 = ABS(*(float *)(param_2 + 0x20) / local_4c);
-  if (fVar2 - fVar1 < 0.0) {
-    fVar1 = fVar2;
-  }
-  *pfVar5 = local_4c * fVar1;
-  pfVar5[1] = local_48 * fVar1;
-  *pfVar5 = *(float *)(param_2 + 0x20) * 0.5 + local_4c * fVar1;
-  pfVar5[1] = *(float *)(param_2 + 0x24) * 0.5 + local_48 * fVar1;
-  __restgprlr_26(0);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 822C3EB0  CG_WorldPosToScreenPosReal  (cgame/cg_drawtools.cpp:716)
-
-void CG_WorldPosToScreenPosReal
-               (undefined8 param_1,undefined8 param_2,float *param_3,undefined8 param_4)
-
-{
-  float fVar1;
-  float fVar2;
-  undefined8 uVar3;
-  int iVar4;
-  float local_40;
-  float local_3c;
-  float local_38;
-  
-  uVar3 = __savegprlr_28();
-  iVar4 = CG_GetLocalClientGlobals();
-  local_40 = *param_3 - *(float *)(iVar4 + 0x6b9c8);
-  local_3c = param_3[1] - *(float *)(iVar4 + 0x6b9cc);
-  local_38 = param_3[2] - *(float *)(iVar4 + 0x6b9d0);
-  fVar2 = SQRT(local_3c * local_3c + local_38 * local_38 + local_40 * local_40);
-  fVar1 = 1.0;
-  if (-fVar2 < 0.0) {
-    fVar1 = fVar2;
-  }
-  fVar1 = 1.0 / fVar1;
-  local_40 = fVar1 * local_40;
-  local_3c = fVar1 * local_3c;
-  local_38 = local_38 * fVar1;
-  CG_WorldDirToScreenPosReal(uVar3,param_2,&local_40,param_4);
-  __restgprlr_28();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 822C3F60  CG_WorldDirToScreenPosVirtualCentered  (cgame/cg_drawtools.cpp:732)
 
-void CG_WorldDirToScreenPosVirtualCentered(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+bool CG_WorldDirToScreenPosVirtualCentered(LocalClientNum_t param_1,float *param_2,float *param_3)
 
 {
   float fVar1;
   float fVar2;
-  undefined8 uVar3;
-  int iVar4;
-  float *pfVar5;
+  LocalClientNum_t LVar3;
+  ScreenPlacement *pSVar4;
+  bool bVar5;
+  undefined1 uVar6;
+  ulonglong uVar7;
+  ulonglong uVar8;
+  float *pfVar9;
   
-  uVar3 = __savegprlr_27();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82015838,0x2e0,0,0xffffffff82000f98,0xffffffff82015960);
+  uVar8 = (ulonglong)(int)param_3;
+  uVar7 = (ulonglong)(int)param_2;
+  LVar3 = __savegprlr_27(param_1);
+  if ((uVar7 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_drawtools.cpp",0x2e0,
+                    0,"%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82015838,0x2e1,0,0xffffffff82000f98,0xffffffff82015950);
+  if ((uVar8 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_drawtools.cpp",0x2e1,
+                    0,"%s");
   }
-  iVar4 = ScrPlace_GetActivePlacement(uVar3);
-  CG_WorldDirToScreenPosReal(uVar3,iVar4,param_2,param_3);
-  pfVar5 = (float *)param_3;
-  fVar1 = -(*(float *)(iVar4 + 0x20) * 0.5 - *pfVar5);
-  *pfVar5 = fVar1;
-  fVar2 = -(*(float *)(iVar4 + 0x24) * 0.5 - pfVar5[1]);
-  pfVar5[1] = fVar2;
-  *pfVar5 = *(float *)(iVar4 + 0x10) * fVar1;
-  pfVar5[1] = *(float *)(iVar4 + 0x14) * fVar2;
-  __restgprlr_27();
-  return;
+  pSVar4 = ScrPlace_GetActivePlacement(LVar3);
+  pfVar9 = (float *)uVar8;
+  bVar5 = CG_WorldDirToScreenPosReal(LVar3,pSVar4,(float *)uVar7,pfVar9);
+  fVar1 = -(pSVar4->realViewportSize[0] * 0.5 - *pfVar9);
+  *pfVar9 = fVar1;
+  fVar2 = -(pSVar4->realViewportSize[1] * 0.5 - pfVar9[1]);
+  pfVar9[1] = fVar2;
+  *pfVar9 = pSVar4->scaleRealToVirtual[0] * fVar1;
+  pfVar9[1] = pSVar4->scaleRealToVirtual[1] * fVar2;
+  uVar6 = __restgprlr_27(bVar5);
+  return (bool)uVar6;
 }
 
 
 // 822C4040  CG_TeamColor  (cgame/cg_drawtools.cpp:752)
 
-void CG_TeamColor(ulonglong param_1,undefined8 param_2,undefined8 param_3)
+void CG_TeamColor(int param_1,char *param_2,float *param_3)
 
 {
-  undefined8 uVar1;
-  undefined1 auStack_30 [32];
+  char *pcVar1;
+  char acStack_30 [32];
   
-  if ((param_1 & 0xffffffff) < 4) {
-    if ((int)param_1 == 0) {
-      uVar1 = 0xffffffff82015994;
+  if ((uint)param_1 < 4) {
+    if (param_1 == 0) {
+      pcVar1 = "%s_Free";
     }
     else if (param_1 == 1) {
-      uVar1 = 0xffffffff8201598c;
+      pcVar1 = "%s_Axis";
     }
     else if (param_1 == 2) {
-      uVar1 = 0xffffffff82015980;
+      pcVar1 = "%s_Allies";
     }
     else {
-      uVar1 = 0xffffffff8201599c;
+      pcVar1 = "%s_Spectator";
     }
-    Com_sprintf(auStack_30,0x20,uVar1);
-    Dvar_GetUnpackedColorByName(auStack_30,param_3);
+    Com_sprintf(acStack_30,0x20,pcVar1);
+    Dvar_GetUnpackedColorByName(acStack_30,param_3);
     return;
   }
-  if (DAT_84013128 == 0) {
-    uVar1 = va(0xffffffff8201596c,param_1,param_3,param_2);
-    MyAssertHandler(0xffffffff82015838,0x302,0,uVar1);
+  if (alwaysfails == 0) {
+    pcVar1 = va("Unknown team: %i");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_drawtools.cpp",0x302,
+                    0,pcVar1);
   }
   return;
 }
 
 
 // 822C4118  CG_RelativeTeamColor  (cgame/cg_drawtools.cpp:779)
-
-void CG_RelativeTeamColor
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-               undefined8 param_5)
-
-{
-  int iVar1;
-  int iVar2;
-  bool bVar3;
-  int iVar4;
-  undefined8 uVar5;
-  int iVar6;
-  char cVar7;
-  undefined1 auStack_70 [112];
-  
-  uVar5 = __savegprlr_24();
-  iVar6 = CG_GetLocalClientGlobals();
-  if (0x11 < *(uint *)(iVar6 + 0x3334)) {
-    MyAssertHandler(0xffffffff82015838,0x314,0,0xffffffff82012648,*(uint *)(iVar6 + 0x3334),0x12);
-  }
-  iVar1 = *(int *)(iVar6 + 0x3334);
-  iVar4 = (int)param_2;
-  CL_ControllerIndexFromClientNum(uVar5);
-  cVar7 = GamerProfile_IsColorBlind();
-  if (cVar7 == '\0') {
-    param_4 = param_3;
-  }
-  iVar2 = *(int *)(iVar4 * 0x590 + iVar6 + 0x100bb4);
-  if (iVar2 == 3) {
-    uVar5 = 0xffffffff8201599c;
-    param_4 = param_3;
-    goto LAB_822c423c;
-  }
-  if (iVar4 != *(int *)(iVar6 + 0x3334)) {
-    iVar1 = *(int *)(iVar1 * 0x590 + iVar6 + 0x100bb4);
-    if ((iVar1 == 0) || (bVar3 = true, iVar1 != iVar2)) {
-      bVar3 = false;
-    }
-    if (!bVar3) {
-      uVar5 = 0xffffffff820159c4;
-      goto LAB_822c423c;
-    }
-    if ((iVar4 != *(int *)(iVar6 + 0x3334)) &&
-       (iVar6 = CL_ClientIsInMyParty(uVar5,param_2), iVar6 != 0)) {
-      uVar5 = 0xffffffff820159b8;
-      goto LAB_822c423c;
-    }
-  }
-  uVar5 = 0xffffffff820159ac;
-LAB_822c423c:
-  Com_sprintf(auStack_70,0x20,uVar5,param_4);
-  Dvar_GetUnpackedColorByName(auStack_70,param_5);
-  __restgprlr_24();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0

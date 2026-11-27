@@ -2,7 +2,7 @@
 
 // 824D67D8  Com_CanPrimaryLightAffectPoint  (qcommon/com_bsp.cpp:18)
 
-void Com_CanPrimaryLightAffectPoint(undefined8 param_1,ulonglong param_2)
+bool Com_CanPrimaryLightAffectPoint(ComPrimaryLight *param_1,float *param_2)
 
 {
   float fVar1;
@@ -13,27 +13,33 @@ void Com_CanPrimaryLightAffectPoint(undefined8 param_1,ulonglong param_2)
   float fVar6;
   float fVar7;
   char *pcVar9;
+  undefined1 uVar10;
   undefined8 uVar8;
+  ulonglong uVar11;
   
-  pcVar9 = (char *)__savegprlr_28();
+  uVar11 = (ulonglong)(int)param_2;
+  pcVar9 = (char *)__savegprlr_28(param_1);
   if (pcVar9 == (char *)0x0) {
-    MyAssertHandler(0xffffffff82083994,0x18,0,0xffffffff82000f98,0xffffffff8207d5a0);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_bsp.cpp",0x18,0,
+                    "%s");
   }
   if ((*pcVar9 != '\x02') && (*pcVar9 != '\x03')) {
-    MyAssertHandler(0xffffffff82083994,0x19,0,0xffffffff82083930,0xffffffff82083948);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_bsp.cpp",0x19,0,
+                    "%s\n\t(light->type) = %i");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82083994,0x1a,0,0xffffffff82000f98,0xffffffff8206e8a0);
+  if ((uVar11 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_bsp.cpp",0x1a,0,
+                    "%s");
   }
-  pfVar4 = (float *)param_2;
+  pfVar4 = (float *)uVar11;
   fVar3 = *(float *)(pcVar9 + 0x2c) - pfVar4[1];
   fVar5 = *(float *)(pcVar9 + 0x30) - pfVar4[2];
   fVar6 = *(float *)(pcVar9 + 0x28) - *pfVar4;
   fVar7 = fVar6 * fVar6 + fVar5 * fVar5 + fVar3 * fVar3;
   if (*(float *)(pcVar9 + 0x34) * *(float *)(pcVar9 + 0x34) <= fVar7) {
 LAB_824d68b8:
-    __restgprlr_28(0);
-    return;
+    uVar10 = __restgprlr_28(0);
+    return (bool)uVar10;
   }
   if (*pcVar9 != '\x03') {
     fVar1 = *(float *)(pcVar9 + 0x38);
@@ -44,8 +50,8 @@ LAB_824d68b8:
       if ((fVar2 != 1.0) &&
          (fVar1 = fVar1 * fVar2 - SQRT(-(fVar1 * fVar1 - 1.0) * -(fVar2 * fVar2 - 1.0)),
          fVar1 <= 0.0)) {
-        __restgprlr_28(fVar3 <= fVar1 * *(float *)(pcVar9 + 0x34));
-        return;
+        uVar10 = __restgprlr_28(fVar3 <= fVar1 * *(float *)(pcVar9 + 0x34));
+        return (bool)uVar10;
       }
       if (fVar3 <= 0.0) goto LAB_824d68b8;
       uVar8 = 0;
@@ -54,8 +60,8 @@ LAB_824d68b8:
   }
   uVar8 = 1;
 LAB_824d693c:
-  __restgprlr_28(uVar8);
-  return;
+  uVar10 = __restgprlr_28(uVar8);
+  return (bool)uVar10;
 }
 
 
@@ -71,17 +77,19 @@ uint Com_FindClosestPrimaryLight(float *param_1)
   uint uVar5;
   float *pfVar6;
   
-  if (DAT_835f15dc == 0) {
-    MyAssertHandler(0xffffffff82083994,0x40,0,0xffffffff82000f98,0xffffffff82015af4);
+  if (comWorld.isInUse == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_bsp.cpp",0x40,0,
+                    "%s");
   }
   uVar3 = 0;
   uVar5 = 1;
   fVar1 = 3.4028235e+38;
-  if (1 < DAT_835f15e0) {
-    if (3 < (int)(DAT_835f15e0 - 1)) {
-      pfVar6 = (float *)(DAT_835f15e4 + 0x80);
+  if (1 < comWorld.primaryLightCount) {
+    uVar3 = 0;
+    if (3 < (int)(comWorld.primaryLightCount - 1)) {
+      pfVar6 = comWorld.primaryLights[1].origin + 2;
       do {
-        if ((*(char *)(pfVar6 + -0xc) != '\x01') &&
+        if ((((ComPrimaryLight *)(pfVar6 + -0xc))->type != '\x01') &&
            (fVar2 = (pfVar6[-1] - param_1[1]) * (pfVar6[-1] - param_1[1]) +
                     (pfVar6[-2] - *param_1) * (pfVar6[-2] - *param_1) +
                     (*pfVar6 - param_1[2]) * (*pfVar6 - param_1[2]), fVar2 < fVar1)) {
@@ -111,13 +119,13 @@ uint Com_FindClosestPrimaryLight(float *param_1)
         }
         uVar5 = uVar5 + 4;
         pfVar6 = pfVar6 + 0x50;
-      } while (uVar5 < DAT_835f15e0 - 3);
+      } while (uVar5 < comWorld.primaryLightCount - 3);
     }
-    if (uVar5 < DAT_835f15e0) {
-      iVar4 = DAT_835f15e0 - uVar5;
-      pfVar6 = (float *)(uVar5 * 0x50 + DAT_835f15e4 + 0x30);
+    if (uVar5 < comWorld.primaryLightCount) {
+      iVar4 = comWorld.primaryLightCount - uVar5;
+      pfVar6 = comWorld.primaryLights[uVar5].origin + 2;
       do {
-        if ((*(char *)(pfVar6 + -0xc) != '\x01') &&
+        if ((((ComPrimaryLight *)(pfVar6 + -0xc))->type != '\x01') &&
            (fVar2 = (pfVar6[-1] - param_1[1]) * (pfVar6[-1] - param_1[1]) +
                     (pfVar6[-2] - *param_1) * (pfVar6[-2] - *param_1) +
                     (*pfVar6 - param_1[2]) * (*pfVar6 - param_1[2]), fVar2 < fVar1)) {
@@ -136,15 +144,16 @@ uint Com_FindClosestPrimaryLight(float *param_1)
 
 // 824D6BE0  Com_UnloadWorld  (qcommon/com_bsp.cpp:88)
 
-void Com_UnloadWorld(int param_1)
+void Com_UnloadWorld(ComWorld *param_1)
 
 {
-  if (*(int *)(param_1 + 4) == 0) {
-    MyAssertHandler(0xffffffff82083994,0x5a,0,0xffffffff82000f98,0xffffffff820839d4);
-    *(undefined4 *)(param_1 + 4) = 0;
+  if (param_1->isInUse == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_bsp.cpp",0x5a,0,
+                    "%s");
+    param_1->isInUse = 0;
     return;
   }
-  *(undefined4 *)(param_1 + 4) = 0;
+  param_1->isInUse = 0;
   return;
 }
 

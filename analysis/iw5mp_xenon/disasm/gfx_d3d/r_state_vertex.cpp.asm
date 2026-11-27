@@ -189,16 +189,12 @@ LAB_82782d1c:
 LAB_82782d28:
   82782D28  3D60821D             lis r11,-0x7de3
   82782D2C  3BCB1AF8             addi r30,r11,0x1af8
-LAB_82782d30:
   82782D30  7FE3FB78             or r3,r31,r31
   82782D34  4BFC58CD             bl 0x82748600
   82782D38  7C651B78             or r5,r3,r3
   82782D3C  3880037C             li r4,0x37c
   82782D40  7FC3F378             or r3,r30,r30
   82782D44  4BECB68D             bl 0x8264e3d0
-  82782D48  817D3128             lwz r11,0x3128(r29)
-  82782D4C  2F0B0000             cmpwi cr6,r11,0x0
-  82782D50  409AFFE0             bne cr6,0x82782d30
 LAB_82782d54:
   82782D54  2B1C0000             cmplwi cr6,r28,0x0
   82782D58  409A0024             bne cr6,0x82782d7c
@@ -361,9 +357,6 @@ LAB_82782f90:
   82782F9C  3880037C             li r4,0x37c
   82782FA0  7E83A378             or r3,r20,r20
   82782FA4  4BECB42D             bl 0x8264e3d0
-  82782FA8  81763128             lwz r11,0x3128(r22)
-  82782FAC  2F0B0000             cmpwi cr6,r11,0x0
-  82782FB0  409AFFE0             bne cr6,0x82782f90
 LAB_82782fb4:
   82782FB4  2B1E0000             cmplwi cr6,r30,0x0
   82782FB8  409A001C             bne cr6,0x82782fd4

@@ -7,7 +7,8 @@ void __unwind_72212(void)
 {
   int in_r12;
   
-  bdReference<bdConnection>___bdReference<bdConnection>(*(undefined4 *)(in_r12 + 0x1c));
+  bdReference<bdConnection>::~bdReference<bdConnection>
+            (*(bdReference<bdConnection> **)(in_r12 + 0x1c));
   return;
 }
 
@@ -17,9 +18,9 @@ void __unwind_72212(void)
 void __unwind_72213(void)
 
 {
-  longlong in_r12;
+  int in_r12;
   
-  bdReference<bdMessage>___bdReference<bdMessage>(in_r12 + -0x40);
+  bdReference<bdMessage>::~bdReference<bdMessage>((bdReference<bdMessage> *)(in_r12 + -0x40));
   return;
 }
 
@@ -29,9 +30,9 @@ void __unwind_72213(void)
 void __unwind_72216(void)
 
 {
-  longlong in_r12;
+  int in_r12;
   
-  bdReceivedMessage___bdReceivedMessage(in_r12 + -0x30);
+  bdReceivedMessage::~bdReceivedMessage((bdReceivedMessage *)(in_r12 + -0x30));
   return;
 }
 

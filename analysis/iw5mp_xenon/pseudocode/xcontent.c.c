@@ -2,68 +2,89 @@
 
 // 828A9F58  XContentCreate  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xcontent.c:29)
 
-void XContentCreate(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-                   undefined8 param_5,undefined8 param_6)
+ulong XContentCreate(ulong param_1,char *param_2,_XCONTENT_DATA *param_3,ulong param_4,
+                    ulong *param_5,ulong *param_6,_XOVERLAPPED *param_7)
 
 {
-  undefined8 uVar1;
+  ulong uVar1;
+  _XOVERLAPPED *in_stack_ffffff58;
   
-  uVar1 = __savegprlr_25();
-  uVar1 = XContentCreateEx(uVar1,param_2,param_3,param_4,param_5,param_6,0,0);
-  __restgprlr_25(uVar1);
-  return;
+  uVar1 = __savegprlr_25(param_1);
+  uVar1 = XContentCreateEx(uVar1,param_2,param_3,param_4,param_5,param_6,0,(_ULARGE_INTEGER)0x0,
+                           in_stack_ffffff58);
+  uVar1 = __restgprlr_25(uVar1);
+  return uVar1;
 }
 
 
 // 828A9C08  XContentCreateEx  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xcontent.c:56)
 
-void XContentCreateEx(undefined8 param_1,undefined8 param_2,ulonglong param_3,ulonglong param_4,
-                     undefined8 param_5,undefined8 param_6,undefined8 param_7,undefined8 param_8)
+ulong XContentCreateEx(ulong param_1,char *param_2,_XCONTENT_DATA *param_3,ulong param_4,
+                      ulong *param_5,ulong *param_6,ulong param_7,_ULARGE_INTEGER param_8,
+                      _XOVERLAPPED *param_9)
 
 {
   uint uVar1;
   undefined8 uVar2;
+  ulong uVar3;
+  longlong lVar4;
+  ulonglong uVar5;
+  longlong lVar6;
+  longlong lVar7;
+  longlong lVar8;
+  ulonglong uVar9;
   
-  uVar2 = __savegprlr_24();
-  if (((param_3 & 0xffffffff) != 0) && (*(int *)param_3 != 0)) {
-    if ((param_4 & 0x90) != 0x90) {
-      uVar1 = ((int *)param_3)[1];
-      if ((uVar1 == 1) && ((param_4 & 0x80) == 0)) {
-        param_4 = param_4 | 0x10;
+  lVar8 = (longlong)(int)param_7;
+  lVar7 = (longlong)(int)param_6;
+  lVar6 = (longlong)(int)param_5;
+  uVar9 = (ulonglong)(int)param_4;
+  uVar5 = (ulonglong)(int)param_3;
+  lVar4 = (longlong)(int)param_2;
+  uVar2 = __savegprlr_24(param_1,lVar4,uVar5,uVar9,lVar6,lVar7,lVar8);
+  if (((uVar5 & 0xffffffff) != 0) && (*(int *)uVar5 != 0)) {
+    if ((uVar9 & 0x90) != 0x90) {
+      uVar1 = ((int *)uVar5)[1];
+      if ((uVar1 == 1) && ((uVar9 & 0x80) == 0)) {
+        uVar9 = uVar9 | 0x10;
       }
-      if (((uVar1 & 0xffffff00) == 0) || ((param_4 & 0xf) == 3)) {
-        uVar2 = XamContentCreateEx(uVar2,param_2,param_3,param_4,param_5,param_6,param_7,param_8);
+      if (((uVar1 & 0xffffff00) == 0) || ((uVar9 & 0xf) == 3)) {
+        uVar2 = XamContentCreateEx(uVar2,lVar4,uVar5,uVar9,lVar6,lVar7,lVar8,param_8.QuadPart);
         goto LAB_828a9cc8;
       }
     }
   }
   uVar2 = 0x57;
 LAB_828a9cc8:
-  __restgprlr_24(uVar2);
-  return;
+  uVar3 = __restgprlr_24(uVar2);
+  return uVar3;
 }
 
 
 // 828A9CD0  XContentDelete  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xcontent.c:116)
 
-void XContentDelete(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+ulong XContentDelete(ulong param_1,_XCONTENT_DATA *param_2,_XOVERLAPPED *param_3)
 
 {
   undefined8 uVar1;
+  ulong uVar2;
+  longlong lVar3;
+  longlong lVar4;
   
-  uVar1 = __savegprlr_29();
-  uVar1 = XamContentDelete(uVar1,param_2,param_3);
-  __restgprlr_29(uVar1);
-  return;
+  lVar4 = (longlong)(int)param_3;
+  lVar3 = (longlong)(int)param_2;
+  uVar1 = __savegprlr_29(param_1,lVar3,lVar4);
+  uVar1 = XamContentDelete(uVar1,lVar3,lVar4);
+  uVar2 = __restgprlr_29(uVar1);
+  return uVar2;
 }
 
 
 // 828A9D10  XContentClose  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xcontent.c:143)
 
-undefined8 XContentClose(undefined8 param_1,undefined8 param_2)
+ulong XContentClose(char *param_1,_XOVERLAPPED *param_2)
 
 {
-  undefined8 uVar1;
+  ulong uVar1;
   
   uVar1 = XamContentClose(param_1,param_2);
   return uVar1;
@@ -72,26 +93,39 @@ undefined8 XContentClose(undefined8 param_1,undefined8 param_2)
 
 // 828A9D60  XContentCreateEnumerator  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xcontent.c:237)
 
-void XContentCreateEnumerator
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-               undefined8 param_5,undefined8 param_6,undefined8 param_7)
+ulong XContentCreateEnumerator
+                (ulong param_1,ulong param_2,ulong param_3,ulong param_4,ulong param_5,
+                ulong *param_6,void **param_7)
 
 {
   undefined8 uVar1;
+  ulong uVar2;
+  longlong lVar3;
+  longlong lVar4;
+  longlong lVar5;
+  longlong lVar6;
+  longlong lVar7;
+  longlong lVar8;
   
-  uVar1 = __savegprlr_25();
-  uVar1 = XamContentCreateEnumerator(uVar1,param_2,param_3,param_4,param_5,param_6,param_7);
-  __restgprlr_25(uVar1);
-  return;
+  lVar8 = (longlong)(int)param_7;
+  lVar7 = (longlong)(int)param_6;
+  lVar6 = (longlong)(int)param_5;
+  lVar5 = (longlong)(int)param_4;
+  lVar4 = (longlong)(int)param_3;
+  lVar3 = (longlong)(int)param_2;
+  uVar1 = __savegprlr_25(param_1,lVar3,lVar4,lVar5,lVar6,lVar7,lVar8);
+  uVar1 = XamContentCreateEnumerator(uVar1,lVar3,lVar4,lVar5,lVar6,lVar7,lVar8);
+  uVar2 = __restgprlr_25(uVar1);
+  return uVar2;
 }
 
 
 // 828A9DC0  XContentGetDeviceState  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xcontent.c:274)
 
-undefined8 XContentGetDeviceState(undefined8 param_1,undefined8 param_2)
+ulong XContentGetDeviceState(ulong param_1,_XOVERLAPPED *param_2)
 
 {
-  undefined8 uVar1;
+  ulong uVar1;
   
   uVar1 = XamContentGetDeviceState(param_1,param_2);
   return uVar1;
@@ -100,10 +134,10 @@ undefined8 XContentGetDeviceState(undefined8 param_1,undefined8 param_2)
 
 // 828A9E10  XContentGetDeviceData  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xcontent.c:294)
 
-undefined8 XContentGetDeviceData(undefined8 param_1,undefined8 param_2)
+ulong XContentGetDeviceData(ulong param_1,_XDEVICE_DATA *param_2)
 
 {
-  undefined8 uVar1;
+  ulong uVar1;
   
   uVar1 = XamContentGetDeviceData(param_1,param_2);
   return uVar1;
@@ -112,21 +146,26 @@ undefined8 XContentGetDeviceData(undefined8 param_1,undefined8 param_2)
 
 // 828A9E60  XContentGetDeviceName  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xcontent.c:305)
 
-void XContentGetDeviceName(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+ulong XContentGetDeviceName(ulong param_1,ushort *param_2,ulong param_3)
 
 {
   undefined8 uVar1;
+  ulong uVar2;
+  longlong lVar3;
+  longlong lVar4;
   
-  uVar1 = __savegprlr_29();
-  uVar1 = XamContentGetDeviceName(uVar1,param_2,param_3);
-  __restgprlr_29(uVar1);
-  return;
+  lVar4 = (longlong)(int)param_3;
+  lVar3 = (longlong)(int)param_2;
+  uVar1 = __savegprlr_29(param_1,lVar3,lVar4);
+  uVar1 = XamContentGetDeviceName(uVar1,lVar3,lVar4);
+  uVar2 = __restgprlr_29(uVar1);
+  return uVar2;
 }
 
 
 // 828A9EA0  XContentCalculateSize  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xcontent.c:416)
 
-longlong XContentCalculateSize(ulonglong param_1,ulonglong param_2)
+ulong64 XContentCalculateSize(ulong64 param_1,ulong param_2)
 
 {
   ulonglong uVar1;
@@ -134,7 +173,7 @@ longlong XContentCalculateSize(ulonglong param_1,ulonglong param_2)
   ulonglong uVar3;
   ulonglong uVar4;
   
-  uVar1 = (((param_2 & 0x3ffffff) * 0x40 + 0x103f & 0x7ffff000) * 2 +
+  uVar1 = ((((ulonglong)param_2 & 0x3ffffff) * 0x40 + 0x103f & 0x7ffff000) * 2 +
            ((param_1 & 0xffffffff) + 0xfff & 0xfffff000) & 0xffffffff) >> 0xc;
   uVar4 = (uVar1 + 0xa9) / 0xaa;
   if (uVar4 < 2) {

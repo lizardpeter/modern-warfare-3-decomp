@@ -2,63 +2,69 @@
 
 // 827E3320  db_inflate_flush  (db_zlib/db_infutil.c:29)
 
-void db_inflate_flush(undefined8 param_1,int param_2,ulonglong param_3)
+int db_inflate_flush(db_inflate_blocks_state *param_1,db_z_stream_s *param_2,int param_3)
 
 {
-  void *pvVar1;
-  void *pvVar2;
-  uint uVar3;
+  uint uVar1;
+  uint uVar2;
+  int iVar3;
   int iVar4;
-  int iVar5;
-  void *_Dst;
-  uint uVar6;
+  longlong lVar5;
+  int iVar6;
+  ulonglong uVar7;
+  int iVar8;
+  uint uVar9;
+  uint uVar10;
   
-  iVar4 = __savegprlr_26();
-  pvVar1 = *(void **)(iVar4 + 0x30);
-  pvVar2 = *(void **)(iVar4 + 0x34);
-  _Dst = *(void **)(param_2 + 0xc);
-  if (pvVar2 < pvVar1) {
-    pvVar2 = *(void **)(iVar4 + 0x2c);
+  uVar7 = (ulonglong)param_3;
+  lVar5 = (longlong)(int)param_2;
+  iVar4 = __savegprlr_26(param_1,lVar5,uVar7);
+  uVar1 = *(uint *)(iVar4 + 0x30);
+  uVar10 = *(uint *)(iVar4 + 0x34);
+  iVar3 = (int)lVar5;
+  iVar8 = *(int *)(iVar3 + 0xc);
+  if (uVar10 < uVar1) {
+    uVar10 = *(uint *)(iVar4 + 0x2c);
   }
-  uVar3 = *(uint *)(param_2 + 0x10);
-  uVar6 = (int)pvVar2 - (int)pvVar1;
-  if (uVar3 < (uint)((int)pvVar2 - (int)pvVar1)) {
-    uVar6 = uVar3;
+  uVar2 = *(uint *)(iVar3 + 0x10);
+  uVar9 = uVar10 - uVar1;
+  if (uVar2 < uVar10 - uVar1) {
+    uVar9 = uVar2;
   }
-  if (uVar6 != 0) {
-    param_3 = -(ulonglong)(param_3 != 0xfffffffffffffffb) & param_3;
+  if (uVar9 != 0) {
+    uVar7 = -(ulonglong)(uVar7 != 0xfffffffffffffffb) & uVar7;
   }
-  *(uint *)(param_2 + 0x10) = uVar3 - uVar6;
-  *(uint *)(param_2 + 0x14) = *(int *)(param_2 + 0x14) + uVar6;
-  if (_Dst != (void *)0x0) {
-    memcpy(_Dst,pvVar1,uVar6);
-    _Dst = (void *)(uVar6 + (int)_Dst);
+  *(uint *)(iVar3 + 0x10) = uVar2 - uVar9;
+  *(uint *)(iVar3 + 0x14) = *(int *)(iVar3 + 0x14) + uVar9;
+  if (iVar8 != 0) {
+    memcpy();
+    iVar8 = uVar9 + iVar8;
   }
-  iVar5 = uVar6 + (int)pvVar1;
-  if (iVar5 == *(int *)(iVar4 + 0x2c)) {
-    pvVar1 = *(void **)(iVar4 + 0x28);
+  iVar6 = uVar9 + uVar1;
+  if (iVar6 == *(int *)(iVar4 + 0x2c)) {
+    iVar6 = *(int *)(iVar4 + 0x28);
     if (*(int *)(iVar4 + 0x34) == *(int *)(iVar4 + 0x2c)) {
-      *(void **)(iVar4 + 0x34) = pvVar1;
+      *(int *)(iVar4 + 0x34) = iVar6;
     }
-    uVar3 = *(uint *)(param_2 + 0x10);
-    uVar6 = *(int *)(iVar4 + 0x34) - (int)pvVar1;
-    if (uVar3 < uVar6) {
-      uVar6 = uVar3;
+    uVar1 = *(uint *)(iVar3 + 0x10);
+    uVar10 = *(int *)(iVar4 + 0x34) - iVar6;
+    if (uVar1 < uVar10) {
+      uVar10 = uVar1;
     }
-    if (uVar6 != 0) {
-      param_3 = -(ulonglong)(param_3 != 0xfffffffffffffffb) & param_3;
+    if (uVar10 != 0) {
+      uVar7 = -(ulonglong)(uVar7 != 0xfffffffffffffffb) & uVar7;
     }
-    *(uint *)(param_2 + 0x10) = uVar3 - uVar6;
-    *(uint *)(param_2 + 0x14) = *(int *)(param_2 + 0x14) + uVar6;
-    if (_Dst != (void *)0x0) {
-      memcpy(_Dst,pvVar1,uVar6);
-      _Dst = (void *)(uVar6 + (int)_Dst);
+    *(uint *)(iVar3 + 0x10) = uVar1 - uVar10;
+    *(uint *)(iVar3 + 0x14) = *(int *)(iVar3 + 0x14) + uVar10;
+    if (iVar8 != 0) {
+      memcpy();
+      iVar8 = uVar10 + iVar8;
     }
-    iVar5 = uVar6 + (int)pvVar1;
+    iVar6 = uVar10 + iVar6;
   }
-  *(void **)(param_2 + 0xc) = _Dst;
-  *(int *)(iVar4 + 0x30) = iVar5;
-  __restgprlr_26(param_3);
-  return;
+  *(int *)(iVar3 + 0xc) = iVar8;
+  *(int *)(iVar4 + 0x30) = iVar6;
+  iVar8 = __restgprlr_26(uVar7);
+  return iVar8;
 }
 

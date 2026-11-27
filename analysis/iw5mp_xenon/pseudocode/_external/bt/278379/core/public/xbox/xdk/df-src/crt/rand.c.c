@@ -2,13 +2,13 @@
 
 // 82918420  srand  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/rand.c:36)
 
-void srand(uint _Seed)
+void srand(uint param_1)
 
 {
-  _ptiddata p_Var1;
+  _tiddata *p_Var1;
   
   p_Var1 = _getptd();
-  p_Var1->_holdrand = _Seed;
+  p_Var1->_holdrand = param_1;
   return;
 }
 
@@ -20,7 +20,7 @@ void srand(uint _Seed)
 int rand(void)
 
 {
-  _ptiddata p_Var1;
+  _tiddata *p_Var1;
   uint uVar2;
   
   p_Var1 = _getptd();

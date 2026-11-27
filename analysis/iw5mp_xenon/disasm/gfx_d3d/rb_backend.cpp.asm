@@ -277,13 +277,30 @@ LAB_827924bc:
   8278CFA4  3901FFE8             subi r8,r1,0x18
   8278CFA8  D0630008             stfs f3,0x8(r3)
   8278CFAC  3CE08405             lis r7,-0x7bfb
-  8278CFB0  13E95C47             vcmpneh. v31,v9,v11
+  8278CFB0  13E95C47             lvrx128 v63,r9,r11
   8278CFB4  3966A0E0             subi r11,r6,0x5f20
   8278CFB8  3924A0F0             subi r9,r4,0x5f10
   8278CFBC  D083000C             stfs f4,0xc(r3)
   8278CFC0  38A7F950             subi r5,r7,0x6b0
   8278CFC4  81410064             lwz r10,0x64(r1)
-  8278CFC8  13C04407             vcmpneb. v30,v0,v8
+  8278CFC8  13C04407             lvlx128 v62,0,r8
+  8278CFCC  17BEFAF5             vor128 v61,v62,v63
+  8278CFD0  11A058C3             lvx128 v13,0,r11
+  8278CFD4  3901FFE0             subi r8,r1,0x20
+  8278CFD8  118048C3             lvx128 v12,0,r9
+  8278CFDC  13E028C7             lvx128 v63,0,r5
+  8278CFE0  141DFA31             vand128 v0,v61,v63
+  8278CFE4  11A06B2E             vmaddfp v13,v0,v12,v13
+  8278CFE8  18096ED0             vpkd3d128 v0,v13,0x9,0x3
+  8278CFEC  1B800734             vspltw128 v60,v0,0x0
+  8278CFF0  13804187             stvewx128 v60,0,r8
+  8278CFF4  80E1FFE0             lwz r7,-0x20(r1)
+  8278CFF8  90E3001C             stw r7,0x1c(r3)
+  8278CFFC  80CA0000             lwz r6,0x0(r10)
+  8278D000  90C30010             stw r6,0x10(r3)
+  8278D004  D1030014             stfs f8,0x14(r3)
+  8278D008  D1230018             stfs f9,0x18(r3)
+  8278D00C  4E800020             blr
 
 ; 827924D0  RB_DrawStretchPic  (gfx_d3d/rb_backend.cpp:339)
   827924D0  7D8802A6             mfspr r12,LR
@@ -3726,7 +3743,7 @@ LAB_8278dc74:
   8278DCA8  80630004             lwz r3,0x4(r3)
   8278DCAC  4801C794             b 0x827aa440
 
-; 8279AC50  GfxDrawSurfTessCallback::Tess  (gfx_d3d/rb_backend.cpp:1636)
+; 8279AC50  Tess  (gfx_d3d/rb_backend.cpp:1636)
   8279AC50  7D8802A6             mfspr r12,LR
   8279AC54  4817BA5D             bl 0x829166b0
   8279AC58  9421FF70             stwu r1,-0x90(r1)
@@ -10340,8 +10357,53 @@ LAB_82796420:
   82796450  3884A0E0             subi r4,r4,0x5f20
   82796454  38E8FFF8             subi r7,r8,0x8
   82796458  395AFFF0             subi r10,r26,0x10
-  8279645C  13E0E8C7             vcmpequd v31,v0,v29
+  8279645C  13E0E8C7             lvx128 v63,0,r29
   82796460  3919FFF4             subi r8,r25,0xc
+  82796464  116058C3             lvx128 v11,0,r11
+  82796468  38600010             li r3,0x10
+  8279646C  118020C3             lvx128 v12,0,r4
+LAB_82796470:
+  82796470  38810058             addi r4,r1,0x58
+  82796474  C1A80014             lfs f13,0x14(r8)
+  82796478  C1880010             lfs f12,0x10(r8)
+  8279647C  39610058             addi r11,r1,0x58
+  82796480  C408000C             lfsu f0,0xc(r8)
+  82796484  3FA00001             lis r29,0x1
+  82796488  D0010058             stfs f0,0x58(r1)
+  8279648C  3B810050             addi r28,r1,0x50
+  82796490  D1A10060             stfs f13,0x60(r1)
+  82796494  63BD180C             ori r29,r29,0x180c
+  82796498  D181005C             stfs f12,0x5c(r1)
+  8279649C  13A02407             lvlx128 v61,0,r4
+  827964A0  13C35C47             lvrx128 v62,r3,r11
+  827964A4  C167000C             lfs f11,0xc(r7)
+  827964A8  7D69E82E             lwzx r11,r9,r29
+  827964AC  C14A001C             lfs f10,0x1c(r10)
+  827964B0  C12A0018             lfs f9,0x18(r10)
+  827964B4  7D6B3214             add r11,r11,r6
+  827964B8  C10A0014             lfs f8,0x14(r10)
+  827964BC  179DF2F5             vor128 v60,v61,v62
+  827964C0  556B2834             rlwinm r11,r11,0x5,0x0,0x1a
+  827964C4  C4070008             lfsu f0,0x8(r7)
+  827964C8  38C60001             addi r6,r6,0x1
+  827964CC  7D6B4A14             add r11,r11,r9
+  827964D0  C5AA0010             lfsu f13,0x10(r10)
+  827964D4  141CFA31             vand128 v0,v60,v63
+  827964D8  D1AB0000             stfs f13,0x0(r11)
+  827964DC  11A062EE             vmaddfp v13,v0,v11,v12
+  827964E0  D10B0004             stfs f8,0x4(r11)
+  827964E4  D12B0008             stfs f9,0x8(r11)
+  827964E8  D14B000C             stfs f10,0xc(r11)
+  827964EC  18096ED0             vpkd3d128 v0,v13,0x9,0x3
+  827964F0  1B600734             vspltw128 v59,v0,0x0
+  827964F4  1360E187             stvewx128 v59,0,r28
+  827964F8  80810050             lwz r4,0x50(r1)
+  827964FC  908B001C             stw r4,0x1c(r11)
+  82796500  84850004             lwzu r4,0x4(r5)
+  82796504  908B0010             stw r4,0x10(r11)
+  82796508  D00B0014             stfs f0,0x14(r11)
+  8279650C  D16B0018             stfs f11,0x18(r11)
+  82796510  4200FF60             bdnz 0x82796470
 LAB_82796514:
   82796514  3D600001             lis r11,0x1
   82796518  3D400001             lis r10,0x1

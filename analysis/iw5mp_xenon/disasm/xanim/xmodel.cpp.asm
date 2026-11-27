@@ -31,6 +31,8 @@ LAB_826310d0:
   826310F0  4E800020             blr
 
 ; 82631088  __lvx  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/vectorintrinsics.h:98)
+  82631088  102320C3             lvx128 v1,r3,r4
+  8263108C  4E800020             blr
 
 ; 826310F8  XModelPrecache_FastFile  (xanim/xmodel.cpp:327)
   826310F8  7C641B78             or r4,r3,r3
@@ -1272,6 +1274,109 @@ LAB_82632e20:
   826315A8  2B0B0000             cmplwi cr6,r11,0x0
   826315AC  3961007C             addi r11,r1,0x7c
   826315B0  39000008             li r8,0x8
+  826315B4  118030C3             lvx128 v12,0,r6
+  826315B8  11A050C3             lvx128 v13,0,r10
+  826315BC  419A00C8             beq cr6,0x82631684
+LAB_826315c0:
+  826315C0  7D444A14             add r10,r4,r9
+  826315C4  3BA10050             addi r29,r1,0x50
+  826315C8  394A044C             addi r10,r10,0x44c
+  826315CC  39290001             addi r9,r9,0x1
+  826315D0  5546083C             rlwinm r6,r10,0x1,0x0,0x1e
+  826315D4  7CC61A2E             lhzx r6,r6,r3
+  826315D8  54CA103E             rlwinm r10,r6,0x2,0x0,0x1f
+  826315DC  7D465214             add r10,r6,r10
+  826315E0  554A103A             rlwinm r10,r10,0x2,0x0,0x1d
+  826315E4  7D4A2A14             add r10,r10,r5
+  826315E8  A0CA0000             lhz r6,0x0(r10)
+  826315EC  7CC60734             extsh r6,r6
+  826315F0  F8C10058             std r6,0x58(r1)
+  826315F4  C9A10058             lfd f13,0x58(r1)
+  826315F8  FD806E9C             fcfid f12,f13
+  826315FC  FD606018             frsp f11,f12
+  82631600  ED4B0032             fmuls f10,f11,f0
+  82631604  D14BFFF4             stfs f10,-0xc(r11)
+  82631608  A0CA0002             lhz r6,0x2(r10)
+  8263160C  7CC60734             extsh r6,r6
+  82631610  F8C10060             std r6,0x60(r1)
+  82631614  C9210060             lfd f9,0x60(r1)
+  82631618  FD004E9C             fcfid f8,f9
+  8263161C  FCE04018             frsp f7,f8
+  82631620  ECC70032             fmuls f6,f7,f0
+  82631624  D0CBFFF8             stfs f6,-0x8(r11)
+  82631628  A0CA0004             lhz r6,0x4(r10)
+  8263162C  7CC60734             extsh r6,r6
+  82631630  F8C10068             std r6,0x68(r1)
+  82631634  C8A10068             lfd f5,0x68(r1)
+  82631638  FC802E9C             fcfid f4,f5
+  8263163C  FC602018             frsp f3,f4
+  82631640  EC430032             fmuls f2,f3,f0
+  82631644  D04BFFFC             stfs f2,-0x4(r11)
+  82631648  814A0008             lwz r10,0x8(r10)
+  8263164C  91410050             stw r10,0x50(r1)
+  82631650  13E0EC07             lvlx128 v63,0,r29
+  82631654  1BC0FF35             vspltw128 v62,v63,0x0
+  82631658  1808F7F1             vupkd3d128 v0,v62,0x8
+  8263165C  1000636E             vmaddfp v0,v0,v13,v12
+  82631660  1BA00734             vspltw128 v61,v0,0x0
+  82631664  1B810734             vspltw128 v60,v0,0x1
+  82631668  1B620734             vspltw128 v59,v0,0x2
+  8263166C  13A05987             stvewx128 v61,0,r11
+  82631670  138B3987             stvewx128 v60,r11,r7
+  82631674  136B4187             stvewx128 v59,r11,r8
+  82631678  396B0018             addi r11,r11,0x18
+  8263167C  4200FF44             bdnz 0x826315c0
+  82631680  4800015C             b 0x826317dc
+LAB_82631684:
+  82631684  7D444A14             add r10,r4,r9
+  82631688  3BA10050             addi r29,r1,0x50
+  8263168C  394A044C             addi r10,r10,0x44c
+  82631690  39290001             addi r9,r9,0x1
+  82631694  5546083C             rlwinm r6,r10,0x1,0x0,0x1e
+  82631698  7CC61A2E             lhzx r6,r6,r3
+  8263169C  54CA083E             rlwinm r10,r6,0x1,0x0,0x1f
+  826316A0  7D465214             add r10,r6,r10
+  826316A4  554A1838             rlwinm r10,r10,0x3,0x0,0x1c
+  826316A8  7D4A2A14             add r10,r10,r5
+  826316AC  A0CA0000             lhz r6,0x0(r10)
+  826316B0  7CC60734             extsh r6,r6
+  826316B4  F8C10068             std r6,0x68(r1)
+  826316B8  C9A10068             lfd f13,0x68(r1)
+  826316BC  FD806E9C             fcfid f12,f13
+  826316C0  FD606018             frsp f11,f12
+  826316C4  ED4B0032             fmuls f10,f11,f0
+  826316C8  D14BFFF4             stfs f10,-0xc(r11)
+  826316CC  A0CA0002             lhz r6,0x2(r10)
+  826316D0  7CC60734             extsh r6,r6
+  826316D4  F8C10060             std r6,0x60(r1)
+  826316D8  C9210060             lfd f9,0x60(r1)
+  826316DC  FD004E9C             fcfid f8,f9
+  826316E0  FCE04018             frsp f7,f8
+  826316E4  ECC70032             fmuls f6,f7,f0
+  826316E8  D0CBFFF8             stfs f6,-0x8(r11)
+  826316EC  A0CA0004             lhz r6,0x4(r10)
+  826316F0  7CC60734             extsh r6,r6
+  826316F4  F8C10058             std r6,0x58(r1)
+  826316F8  C8A10058             lfd f5,0x58(r1)
+  826316FC  FC802E9C             fcfid f4,f5
+  82631700  FC602018             frsp f3,f4
+  82631704  EC430032             fmuls f2,f3,f0
+  82631708  D04BFFFC             stfs f2,-0x4(r11)
+  8263170C  814A0008             lwz r10,0x8(r10)
+  82631710  91410050             stw r10,0x50(r1)
+  82631714  1340EC07             lvlx128 v58,0,r29
+  82631718  1B20D735             vspltw128 v57,v58,0x0
+  8263171C  1808CFF1             vupkd3d128 v0,v57,0x8
+  82631720  1000636E             vmaddfp v0,v0,v13,v12
+  82631724  1B000734             vspltw128 v56,v0,0x0
+  82631728  1AE10734             vspltw128 v55,v0,0x1
+  8263172C  1AC20734             vspltw128 v54,v0,0x2
+  82631730  13005987             stvewx128 v56,0,r11
+  82631734  12EB3987             stvewx128 v55,r11,r7
+  82631738  12CB4187             stvewx128 v54,r11,r8
+  8263173C  396B0018             addi r11,r11,0x18
+  82631740  4200FF44             bdnz 0x82631684
+  82631744  48000098             b 0x826317dc
 LAB_82631748:
   82631748  7CBF5214             add r5,r31,r10
   8263174C  80C30020             lwz r6,0x20(r3)
@@ -1280,6 +1385,48 @@ LAB_82631748:
   82631758  388AA110             subi r4,r10,0x5ef0
   8263175C  3948A100             subi r10,r8,0x5f00
   82631760  39000008             li r8,0x8
+  82631764  118020C3             lvx128 v12,0,r4
+  82631768  11A050C3             lvx128 v13,0,r10
+LAB_8263176c:
+  8263176C  7D454A14             add r10,r5,r9
+  82631770  38810050             addi r4,r1,0x50
+  82631774  394A044C             addi r10,r10,0x44c
+  82631778  39290001             addi r9,r9,0x1
+  8263177C  554A083C             rlwinm r10,r10,0x1,0x0,0x1e
+  82631780  7D4A1A2E             lhzx r10,r10,r3
+  82631784  554A283E             rlwinm r10,r10,0x5,0x0,0x1f
+  82631788  7D4A3214             add r10,r10,r6
+  8263178C  C00A0000             lfs f0,0x0(r10)
+  82631790  D00BFFF4             stfs f0,-0xc(r11)
+  82631794  C1AA0004             lfs f13,0x4(r10)
+  82631798  D1ABFFF8             stfs f13,-0x8(r11)
+  8263179C  C18A0008             lfs f12,0x8(r10)
+  826317A0  D18BFFFC             stfs f12,-0x4(r11)
+  826317A4  814A0018             lwz r10,0x18(r10)
+  826317A8  91410050             stw r10,0x50(r1)
+  826317AC  12A02407             lvlx128 v53,0,r4
+  826317B0  1A80AF35             vspltw128 v52,v53,0x0
+  826317B4  1808A7F1             vupkd3d128 v0,v52,0x8
+  826317B8  1000636E             vmaddfp v0,v0,v13,v12
+  826317BC  1A600734             vspltw128 v51,v0,0x0
+  826317C0  1A410734             vspltw128 v50,v0,0x1
+  826317C4  1A220734             vspltw128 v49,v0,0x2
+  826317C8  12605987             stvewx128 v51,0,r11
+  826317CC  124B3987             stvewx128 v50,r11,r7
+  826317D0  122B4187             stvewx128 v49,r11,r8
+  826317D4  396B0018             addi r11,r11,0x18
+  826317D8  4200FF94             bdnz 0x8263176c
+LAB_826317dc:
+  826317DC  397F0001             addi r11,r31,0x1
+  826317E0  81430024             lwz r10,0x24(r3)
+  826317E4  38810070             addi r4,r1,0x70
+  826317E8  80630028             lwz r3,0x28(r3)
+  826317EC  556907BE             rlwinm r9,r11,0x0,0x1e,0x1f
+  826317F0  913E0000             stw r9,0x0(r30)
+  826317F4  7D4903A6             mtspr CTR,r10
+  826317F8  4E800421             bctrl
+  826317FC  382100E0             addi r1,r1,0xe0
+  82631800  482E4F0C             b 0x8291670c
 
 ; 82633948  XSurfaceVisitTrianglesInAabb_ProcessTriangles  (xanim/xmodel.cpp:1167)
   82633948  7D8802A6             mfspr r12,LR
@@ -1776,7 +1923,121 @@ LAB_826318ac:
   826318C8  38A00008             li r5,0x8
   826318CC  7D7EEA14             add r11,r30,r29
   826318D0  7F1E5800             cmpw cr6,r30,r11
-  826318D4  13FB2C07             vcmpneb. v31,v27,v5
+  826318D4  13FB2C07             lvlx128 v63,r27,r5
+  826318D8  1BC0FF35             vspltw128 v62,v63,0x0
+  826318DC  419A0314             beq cr6,0x82631bf0
+  826318E0  57DD083C             rlwinm r29,r30,0x1,0x0,0x1e
+  826318E4  7FDE5850             subf r30,r30,r11
+  826318E8  3D400000             lis r10,0x0
+  826318EC  3D608218             lis r11,-0x7de8
+  826318F0  61598000             ori r25,r10,0x8000
+  826318F4  3B400010             li r26,0x10
+  826318F8  388BA030             subi r4,r11,0x5fd0
+LAB_826318fc:
+  826318FC  81780024             lwz r11,0x24(r24)
+  82631900  7D4BEA2E             lhzx r10,r11,r29
+  82631904  2B0A8000             cmplwi cr6,r10,0x8000
+  82631908  41980010             blt cr6,0x82631918
+  8263190C  39600002             li r11,0x2
+  82631910  7D595050             subf r10,r25,r10
+  82631914  48000008             b 0x8263191c
+LAB_82631918:
+  82631918  39600001             li r11,0x1
+LAB_8263191c:
+  8263191C  5549083C             rlwinm r9,r10,0x1,0x0,0x1e
+  82631920  811B000C             lwz r8,0xc(r27)
+  82631924  2F0B0000             cmpwi cr6,r11,0x0
+  82631928  7D4A4A14             add r10,r10,r9
+  8263192C  554A083C             rlwinm r10,r10,0x1,0x0,0x1e
+  82631930  7D4A4214             add r10,r10,r8
+  82631934  419A0144             beq cr6,0x82631a78
+  82631938  13BCD0C7             lvx128 v61,r28,r26
+  8263193C  7D6903A6             mtspr CTR,r11
+  82631940  1380E0C7             lvx128 v60,0,r28
+  82631944  391C0030             addi r8,r28,0x30
+  82631948  38FC0020             addi r7,r28,0x20
+  8263194C  1B63EAD5             vpermwi128 v59,v61,0x63
+  82631950  396AFFFE             subi r11,r10,0x2
+  82631954  1B47EB15             vpermwi128 v58,v61,0x87
+LAB_82631958:
+  82631958  A0CB0002             lhz r6,0x2(r11)
+  8263195C  141AD2F1             vor128 v0,v58,v58
+  82631960  A2EB0004             lhz r23,0x4(r11)
+  82631964  132038C7             lvx128 v57,0,r7
+  82631968  A54B0006             lhzu r10,0x6(r11)
+  8263196C  7D2619D6             mullw r9,r6,r3
+  82631970  13E020C7             lvx128 v63,0,r4
+  82631974  1579CAF1             vor128 v11,v57,v57
+  82631978  118040C3             lvx128 v12,0,r8
+  8263197C  7D465378             or r6,r10,r10
+  82631980  7D49FA14             add r10,r9,r31
+  82631984  7D3719D6             mullw r9,r23,r3
+  82631988  13055447             lvrx128 v56,r5,r10
+  8263198C  12E05407             lvlx128 v55,0,r10
+  82631990  12D8C235             vsldoi128 v54,v56,v56,0x8
+  82631994  7CC619D6             mullw r6,r6,r3
+  82631998  16B7B2F5             vor128 v53,v55,v54
+  8263199C  1A80AFA5             vupkhsb128 v52,v53
+  826319A0  1266FC07             lvlx128 v51,r6,r31
+  826319A4  1A40A2B5             vcsxwfp128 v50,v52,0x0
+  826319A8  7D49FA14             add r10,r9,r31
+  826319AC  7D26FA14             add r9,r6,r31
+  826319B0  12255447             lvrx128 v49,r5,r10
+  826319B4  12054C47             lvrx128 v48,r5,r9
+  826319B8  11F18A35             vsldoi128 v47,v49,v49,0x8
+  826319BC  11C05407             lvlx128 v46,0,r10
+  826319C0  11B08235             vsldoi128 v45,v48,v48,0x8
+  826319C4  1592F0B5             vmulfp128 v44,v50,v62
+  826319C8  156E7AF5             vor128 v43,v46,v47
+  826319CC  15536AF5             vor128 v42,v51,v45
+  826319D0  19205FA5             vupkhsb128 v41,v43
+  826319D4  190057A5             vupkhsb128 v40,v42
+  826319D8  18E04AB5             vcsxwfp128 v39,v41,0x0
+  826319DC  18C042B5             vcsxwfp128 v38,v40,0x0
+  826319E0  14ACE075             vsubfp128 v37,v44,v60
+  826319E4  1487F0B5             vmulfp128 v36,v39,v62
+  826319E8  1466F0B5             vmulfp128 v35,v38,v62
+  826319EC  18472B15             vpermwi128 v34,v37,0x87
+  826319F0  19A32AD1             vpermwi128 v13,v37,0x63
+  826319F4  155B10B1             vmulfp128 v10,v59,v34
+  826319F8  142C2075             vsubfp128 v33,v44,v36
+  826319FC  140C1875             vsubfp128 v32,v44,v35
+  82631A00  1140536F             vnmsubfp v10,v0,v13,v10
+  82631A04  1B070B15             vpermwi128 v56,v33,0x87
+  82631A08  1AE302D5             vpermwi128 v55,v32,0x63
+  82631A0C  19A30AD1             vpermwi128 v13,v33,0x63
+  82631A10  18070311             vpermwi128 v0,v32,0x87
+  82631A14  1537C0B1             vmulfp128 v9,v55,v56
+  82631A18  16CA0995             vmsum3fp128 v54,v10,v33
+  82631A1C  16AA0195             vmsum3fp128 v53,v10,v32
+  82631A20  11404B6F             vnmsubfp v10,v0,v13,v9
+  82631A24  1A96F925             vcmpgtfp128 v52,v54,v63
+  82631A28  1676A875             vsubfp128 v51,v54,v53
+  82631A2C  1A5FA925             vcmpgtfp128 v50,v63,v53
+  82631A30  163D51B4             vmsum3fp128 v49,v61,v10
+  82631A34  100A5484             vor v0,v10,v10
+  82631A38  160551B4             vmsum3fp128 v48,v37,v10
+  82631A3C  15F988B5             vmulfp128 v47,v57,v49
+  82631A40  19D19925             vcmpgtfp128 v46,v49,v51
+  82631A44  19A08E35             vrefp128 v45,v49
+  82631A48  1990F925             vcmpgtfp128 v44,v48,v63
+  82631A4C  19707925             vcmpgtfp128 v43,v48,v47
+  82631A50  155272F5             vor128 v42,v50,v46
+  82631A54  15B068B1             vmulfp128 v13,v48,v45
+  82631A58  153452F5             vor128 v41,v52,v42
+  82631A5C  150B6275             vandc128 v40,v43,v44
+  82631A60  15484A71             vandc128 v10,v40,v41
+  82631A64  112C02AA             vsel v9,v12,v0,v10
+  82631A68  100B6AAA             vsel v0,v11,v13,v10
+  82631A6C  112041C3             stvx128 v9,0,r8
+  82631A70  100039C3             stvx128 v0,0,r7
+  82631A74  4200FEE4             bdnz 0x82631958
+LAB_82631a78:
+  82631A78  37DEFFFF             subic. r30,r30,0x1
+  82631A7C  3BBD0002             addi r29,r29,0x2
+  82631A80  4082FE7C             bne 0x826318fc
+  82631A84  382100A0             addi r1,r1,0xa0
+  82631A88  482E4C6C             b 0x829166f4
 LAB_82631a8c:
   82631A8C  7D7EEA14             add r11,r30,r29
   82631A90  80BB001C             lwz r5,0x1c(r27)
@@ -1807,11 +2068,67 @@ LAB_82631ad8:
   82631AE8  556B083C             rlwinm r11,r11,0x1,0x0,0x1e
   82631AEC  7D6B4214             add r11,r11,r8
   82631AF0  419A00F4             beq cr6,0x82631be4
-  82631AF4  13DCD0C7             vcmpequd v30,v28,v26
+  82631AF4  13DCD0C7             lvx128 v62,r28,r26
   82631AF8  7D2903A6             mtspr CTR,r9
-  82631AFC  13A0E0C7             vcmpequd v29,v0,v28
+  82631AFC  13A0E0C7             lvx128 v61,0,r28
   82631B00  395C0030             addi r10,r28,0x30
   82631B04  393C0020             addi r9,r28,0x20
+  82631B08  1B83F2D5             vpermwi128 v60,v62,0x63
+  82631B0C  396BFFFE             subi r11,r11,0x2
+  82631B10  1B67F315             vpermwi128 v59,v62,0x87
+LAB_82631b14:
+  82631B14  A10B0002             lhz r8,0x2(r11)
+  82631B18  159BDAF1             vor128 v12,v59,v59
+  82631B1C  A0EB0004             lhz r7,0x4(r11)
+  82631B20  10E048C7             lvx128 v39,0,r9
+  82631B24  551E283E             rlwinm r30,r8,0x5,0x0,0x1f
+  82631B28  A50B0006             lhzu r8,0x6(r11)
+  82631B2C  54E7283E             rlwinm r7,r7,0x5,0x0,0x1f
+  82631B30  13E020C7             lvx128 v63,0,r4
+  82631B34  5506283E             rlwinm r6,r8,0x5,0x0,0x1f
+  82631B38  15A73AF1             vor128 v13,v39,v39
+  82631B3C  7D072A14             add r8,r7,r5
+  82631B40  116050C3             lvx128 v11,0,r10
+  82631B44  7CE62A14             add r7,r6,r5
+  82631B48  10DE28C7             lvx128 v38,r30,r5
+  82631B4C  14A6E875             vsubfp128 v37,v38,v61
+  82631B50  108628C7             lvx128 v36,r6,r5
+  82631B54  106040C7             lvx128 v35,0,r8
+  82631B58  14462075             vsubfp128 v34,v38,v36
+  82631B5C  14261875             vsubfp128 v33,v38,v35
+  82631B60  18072B15             vpermwi128 v32,v37,0x87
+  82631B64  19432AD1             vpermwi128 v10,v37,0x63
+  82631B68  1B4312D5             vpermwi128 v58,v34,0x63
+  82631B6C  1B270B15             vpermwi128 v57,v33,0x87
+  82631B70  151C00B1             vmulfp128 v8,v60,v32
+  82631B74  18030AD1             vpermwi128 v0,v33,0x63
+  82631B78  19271311             vpermwi128 v9,v34,0x87
+  82631B7C  14FAC8B1             vmulfp128 v7,v58,v57
+  82631B80  110C42AF             vnmsubfp v8,v12,v10,v8
+  82631B84  1189382F             vnmsubfp v12,v9,v0,v7
+  82631B88  16E80995             vmsum3fp128 v55,v8,v33
+  82631B8C  16C81195             vmsum3fp128 v54,v8,v34
+  82631B90  170C62D4             vor128 v56,v12,v12
+  82631B94  16BEC1B5             vmsum3fp128 v53,v62,v56
+  82631B98  1685C1B5             vmsum3fp128 v52,v37,v56
+  82631B9C  1A77F925             vcmpgtfp128 v51,v55,v63
+  82631BA0  1657B075             vsubfp128 v50,v55,v54
+  82631BA4  1A3FB125             vcmpgtfp128 v49,v63,v54
+  82631BA8  1607A8B5             vmulfp128 v48,v39,v53
+  82631BAC  19E0AE35             vrefp128 v47,v53
+  82631BB0  19D4F925             vcmpgtfp128 v46,v52,v63
+  82631BB4  19B59125             vcmpgtfp128 v45,v53,v50
+  82631BB8  19948125             vcmpgtfp128 v44,v52,v48
+  82631BBC  141478B1             vmulfp128 v0,v52,v47
+  82631BC0  15716AF5             vor128 v43,v49,v45
+  82631BC4  15335AF5             vor128 v41,v51,v43
+  82631BC8  154C7275             vandc128 v42,v44,v46
+  82631BCC  154A4A71             vandc128 v10,v42,v41
+  82631BD0  112B62AA             vsel v9,v11,v12,v10
+  82631BD4  118D02AA             vsel v12,v13,v0,v10
+  82631BD8  112051C3             stvx128 v9,0,r10
+  82631BDC  118049C3             stvx128 v12,0,r9
+  82631BE0  4200FF34             bdnz 0x82631b14
 LAB_82631be4:
   82631BE4  37FFFFFF             subic. r31,r31,0x1
   82631BE8  38630002             addi r3,r3,0x2
@@ -1976,15 +2293,99 @@ LAB_82631d90:
   82631E40  4BFA26C1             bl 0x825d4500
 LAB_82631e44:
   82631E44  39400010             li r10,0x10
-  82631E48  13E0FC07             vcmpneb. v31,v0,v31
+  82631E48  13E0FC07             lvlx128 v63,0,r31
   82631E4C  3B7D000C             addi r27,r29,0xc
-  82631E50  13C0F407             vcmpneb. v30,v0,v30
+  82631E50  13C0F407             lvlx128 v62,0,r30
   82631E54  3D208405             lis r9,-0x7bfb
   82631E58  3D608200             lis r11,-0x7e00
   82631E5C  3909F950             subi r8,r9,0x6b0
-  82631E60  13AAFC47             vcmpneh. v29,v10,v31
+  82631E60  13AAFC47             lvrx128 v61,r10,r31
   82631E64  38A10080             addi r5,r1,0x80
-  82631E68  138AF447             vcmpneh. v28,v10,v30
+  82631E68  138AF447             lvrx128 v60,r10,r30
+  82631E6C  177FEAF5             vor128 v59,v63,v61
+  82631E70  1340DC07             lvlx128 v58,0,r27
+  82631E74  173EE2F5             vor128 v57,v62,v60
+  82631E78  38E10090             addi r7,r1,0x90
+  82631E7C  1B00D735             vspltw128 v56,v58,0x0
+  82631E80  13E040C7             lvx128 v63,0,r8
+  82631E84  38C10070             addi r6,r1,0x70
+  82631E88  16FBFA35             vand128 v55,v59,v63
+  82631E8C  3AEB0F10             addi r23,r11,0xf10
+  82631E90  16D9FA35             vand128 v54,v57,v63
+  82631E94  396100A0             addi r11,r1,0xa0
+  82631E98  3D408218             lis r10,-0x7de8
+  82631E9C  3860FFFF             li r3,-0x1
+  82631EA0  12E031C7             stvx128 v55,0,r6
+  82631EA4  388A7620             addi r4,r10,0x7620
+  82631EA8  12C029C7             stvx128 v54,0,r5
+  82631EAC  130039C7             stvx128 v56,0,r7
+  82631EB0  12A0BC07             lvlx128 v53,0,r23
+  82631EB4  1A80AF35             vspltw128 v52,v53,0x0
+  82631EB8  128059C7             stvx128 v52,0,r11
+  82631EBC  A0B90006             lhz r5,0x6(r25)
+  82631EC0  4826F7D1             bl 0x828a1690
+  82631EC4  39210070             addi r9,r1,0x70
+  82631EC8  91210054             stw r9,0x54(r1)
+  82631ECC  7FAAEB78             or r10,r29,r29
+  82631ED0  7FC9F378             or r9,r30,r30
+  82631ED4  7FE8FB78             or r8,r31,r31
+  82631ED8  7F87E378             or r7,r28,r28
+  82631EDC  38C100B0             addi r6,r1,0xb0
+  82631EE0  38A00000             li r5,0x0
+  82631EE4  7F04C378             or r4,r24,r24
+  82631EE8  7F43D378             or r3,r26,r26
+  82631EEC  4BFFFD0D             bl 0x82631bf8
+  82631EF0  4826F851             bl 0x828a1740
+  82631EF4  390100A0             addi r8,r1,0xa0
+  82631EF8  1A600774             vspltisw128 v51,0x0
+  82631EFC  38E00004             li r7,0x4
+  82631F00  38C00008             li r6,0x8
+  82631F04  38A10090             addi r5,r1,0x90
+  82631F08  38810090             addi r4,r1,0x90
+  82631F0C  13E040C7             lvx128 v63,0,r8
+  82631F10  38610060             addi r3,r1,0x60
+  82631F14  165FF9B5             vmsum3fp128 v50,v63,v63
+  82631F18  3D608200             lis r11,-0x7e00
+  82631F1C  1A209675             vrsqrtefp128 v49,v50
+  82631F20  15B292F1             vor128 v13,v50,v50
+  82631F24  19929821             vcmpeqfp128 v12,v50,v51
+  82631F28  141F88B1             vmulfp128 v0,v63,v49
+  82631F2C  11806B2A             vsel v12,v0,v13,v12
+  82631F30  1A006734             vspltw128 v48,v12,0x0
+  82631F34  19E16734             vspltw128 v47,v12,0x1
+  82631F38  19C26734             vspltw128 v46,v12,0x2
+  82631F3C  1200E987             stvewx128 v48,0,r29
+  82631F40  11FD3987             stvewx128 v47,r29,r7
+  82631F44  11DD3187             stvewx128 v46,r29,r6
+  82631F48  11A028C7             lvx128 v45,0,r5
+  82631F4C  1180DC07             lvlx128 v44,0,r27
+  82631F50  19606735             vspltw128 v43,v44,0x0
+  82631F54  1BED5AE5             vminfp128 v63,v45,v43
+  82631F58  1940FF35             vspltw128 v42,v63,0x0
+  82631F5C  13E021C7             stvx128 v63,0,r4
+  82631F60  11401987             stvewx128 v42,0,r3
+  82631F64  C00B13F8             lfs f0,0x13f8(r11)
+  82631F68  C0210060             lfs f1,0x60(r1)
+  82631F6C  D03D000C             stfs f1,0xc(r29)
+  82631F70  FF010000             fcmpu cr6,f1,f0
+  82631F74  41980010             blt cr6,0x82631f84
+  82631F78  C0170000             lfs f0,0x0(r23)
+  82631F7C  FF010000             fcmpu cr6,f1,f0
+  82631F80  4099002C             ble cr6,0x82631fac
+LAB_82631f84:
+  82631F84  D8210038             stfd f1,0x38(r1)
+  82631F88  E9010038             ld r8,0x38(r1)
+  82631F8C  3D608218             lis r11,-0x7de8
+  82631F90  3D408203             lis r10,-0x7dfd
+  82631F94  38EB75CC             addi r7,r11,0x75cc
+  82631F98  38CABA4C             subi r6,r10,0x45b4
+  82631F9C  7EC3B378             or r3,r22,r22
+  82631FA0  38A00001             li r5,0x1
+  82631FA4  388006CC             li r4,0x6cc
+  82631FA8  4BFA2559             bl 0x825d4500
+LAB_82631fac:
+  82631FAC  38210170             addi r1,r1,0x170
+  82631FB0  482E4740             b 0x829166f0
 
 ; 82631FB8  XSurfaceTraceLineVerts  (xanim/xmodel.cpp:1747)
   82631FB8  7D8802A6             mfspr r12,LR
@@ -2064,12 +2465,316 @@ LAB_8263207c:
   826320D4  4BFA242D             bl 0x825d4500
 LAB_826320d8:
   826320D8  39600010             li r11,0x10
-  826320DC  13E0BC07             vcmpneb. v31,v0,v23
+  826320DC  13E0BC07             lvlx128 v63,0,r23
   826320E0  3D408405             lis r10,-0x7bfb
-  826320E4  13C0E407             vcmpneb. v30,v0,v28
-  826320E8  13A0DC07             vcmpneb. v29,v0,v27
+  826320E4  13C0E407             lvlx128 v62,0,r28
+  826320E8  13A0DC07             lvlx128 v61,0,r27
   826320EC  893E0001             lbz r9,0x1(r30)
   826320F0  390AF950             subi r8,r10,0x6b0
+  826320F4  1B60FF3D             vspltw128 v123,v63,0x0
+  826320F8  1380EC07             lvlx128 v60,0,r29
+  826320FC  552706B4             rlwinm r7,r9,0x0,0x1a,0x1a
+  82632100  136BE447             lvrx128 v59,r11,r28
+  82632104  3B200008             li r25,0x8
+  82632108  134BDC47             lvrx128 v58,r11,r27
+  8263210C  173EDAF5             vor128 v57,v62,v59
+  82632110  171DD2F5             vor128 v56,v61,v58
+  82632114  2B070000             cmplwi cr6,r7,0x0
+  82632118  13E040C7             lvx128 v63,0,r8
+  8263211C  17FBDEFF             vor128 v127,v123,v123
+  82632120  1BC0E73D             vspltw128 v126,v60,0x0
+  82632124  1799FA3D             vand128 v124,v57,v63
+  82632128  17B8FA3D             vand128 v125,v56,v63
+  8263212C  419A0200             beq cr6,0x8263232c
+  82632130  7FC3F378             or r3,r30,r30
+  82632134  83BE001C             lwz r29,0x1c(r30)
+  82632138  4815ABB9             bl 0x8278ccf0
+  8263213C  570B083C             rlwinm r11,r24,0x1,0x0,0x1e
+  82632140  12FECC07             lvlx128 v55,r30,r25
+  82632144  7D785A14             add r11,r24,r11
+  82632148  1BC0BF35             vspltw128 v62,v55,0x0
+  8263214C  556B083C             rlwinm r11,r11,0x1,0x0,0x1e
+  82632150  2F0B0200             cmpwi cr6,r11,0x200
+  82632154  40990010             ble cr6,0x82632164
+  82632158  39600200             li r11,0x200
+  8263215C  38E00200             li r7,0x200
+  82632160  48000008             b 0x82632168
+LAB_82632164:
+  82632164  38E00000             li r7,0x0
+LAB_82632168:
+  82632168  39400000             li r10,0x0
+  8263216C  2F0B0000             cmpwi cr6,r11,0x0
+  82632170  40990020             ble cr6,0x82632190
+  82632174  396BFFFF             subi r11,r11,0x1
+  82632178  556BC9FE             rlwinm r11,r11,0x19,0x7,0x1f
+  8263217C  396B0001             addi r11,r11,0x1
+  82632180  7D6903A6             mtspr CTR,r11
+LAB_82632184:
+  82632184  7C0AFA2C             dcbt r10,r31
+  82632188  394A0080             addi r10,r10,0x80
+  8263218C  4200FFF8             bdnz 0x82632184
+LAB_82632190:
+  82632190  A17F0000             lhz r11,0x0(r31)
+  82632194  A13A0002             lhz r9,0x2(r26)
+  82632198  7D4B19D6             mullw r10,r11,r3
+  8263219C  7D6919D6             mullw r11,r9,r3
+  826321A0  7D0AEA14             add r8,r10,r29
+  826321A4  2F0B0200             cmpwi cr6,r11,0x200
+  826321A8  40990010             ble cr6,0x826321b8
+  826321AC  39600200             li r11,0x200
+  826321B0  39200200             li r9,0x200
+  826321B4  48000008             b 0x826321bc
+LAB_826321b8:
+  826321B8  39200000             li r9,0x0
+LAB_826321bc:
+  826321BC  39400000             li r10,0x0
+  826321C0  2F0B0000             cmpwi cr6,r11,0x0
+  826321C4  40990020             ble cr6,0x826321e4
+  826321C8  396BFFFF             subi r11,r11,0x1
+  826321CC  556BC9FE             rlwinm r11,r11,0x19,0x7,0x1f
+  826321D0  396B0001             addi r11,r11,0x1
+  826321D4  7D6903A6             mtspr CTR,r11
+LAB_826321d8:
+  826321D8  7C0A422C             dcbt r10,r8
+  826321DC  394A0080             addi r10,r10,0x80
+  826321E0  4200FFF8             bdnz 0x826321d8
+LAB_826321e4:
+  826321E4  2F180000             cmpwi cr6,r24,0x0
+  826321E8  409902DC             ble cr6,0x826324c4
+  826321EC  3D608218             lis r11,-0x7de8
+  826321F0  1BA3EAD7             vpermwi128 v61,v125,0x63
+  826321F4  7F0903A6             mtspr CTR,r24
+  826321F8  1B87EB17             vpermwi128 v60,v125,0x87
+  826321FC  394BA030             subi r10,r11,0x5fd0
+  82632200  13E050C7             lvx128 v63,0,r10
+LAB_82632204:
+  82632204  7C07FA2C             dcbt r7,r31
+  82632208  A17F0000             lhz r11,0x0(r31)
+  8263220C  7D6B19D6             mullw r11,r11,r3
+  82632210  7D6BEA14             add r11,r11,r29
+  82632214  7C095A2C             dcbt r9,r11
+  82632218  12D95C47             lvrx128 v54,r25,r11
+  8263221C  395F0004             addi r10,r31,0x4
+  82632220  12A05C07             lvlx128 v53,0,r11
+  82632224  141CE2F1             vor128 v0,v60,v60
+  82632228  1296B235             vsldoi128 v52,v54,v54,0x8
+  8263222C  159EF6F3             vor128 v12,v126,v126
+  82632230  157FFEF3             vor128 v11,v127,v127
+  82632234  3BFF0006             addi r31,r31,0x6
+  82632238  A10AFFFE             lhz r8,-0x2(r10)
+  8263223C  1675A2F5             vor128 v51,v53,v52
+  82632240  A0CA0000             lhz r6,0x0(r10)
+  82632244  7D6819D6             mullw r11,r8,r3
+  82632248  1A409FA5             vupkhsb128 v50,v51
+  8263224C  1A2092B5             vcsxwfp128 v49,v50,0x0
+  82632250  7D4619D6             mullw r10,r6,r3
+  82632254  1611F0B5             vmulfp128 v48,v49,v62
+  82632258  7D6BEA14             add r11,r11,r29
+  8263225C  7D4AEA14             add r10,r10,r29
+  82632260  11F95C47             lvrx128 v47,r25,r11
+  82632264  11D95447             lvrx128 v46,r25,r10
+  82632268  11AF7A35             vsldoi128 v45,v47,v47,0x8
+  8263226C  11805C07             lvlx128 v44,0,r11
+  82632270  116E7235             vsldoi128 v43,v46,v46,0x8
+  82632274  11405407             lvlx128 v42,0,r10
+  82632278  152C6AF5             vor128 v41,v44,v45
+  8263227C  1510E077             vsubfp128 v40,v48,v124
+  82632280  14EA5AF5             vor128 v39,v42,v43
+  82632284  18C04FA5             vupkhsb128 v38,v41
+  82632288  18A03FA5             vupkhsb128 v37,v39
+  8263228C  188032B5             vcsxwfp128 v36,v38,0x0
+  82632290  18602AB5             vcsxwfp128 v35,v37,0x0
+  82632294  18474315             vpermwi128 v34,v40,0x87
+  82632298  19A342D1             vpermwi128 v13,v40,0x63
+  8263229C  155D10B1             vmulfp128 v10,v61,v34
+  826322A0  1424F0B5             vmulfp128 v33,v36,v62
+  826322A4  1403F0B5             vmulfp128 v32,v35,v62
+  826322A8  1140536F             vnmsubfp v10,v0,v13,v10
+  826322AC  17700875             vsubfp128 v59,v48,v33
+  826322B0  17500075             vsubfp128 v58,v48,v32
+  826322B4  1B27DB15             vpermwi128 v57,v59,0x87
+  826322B8  170AD995             vmsum3fp128 v56,v10,v59
+  826322BC  1AE3D2D5             vpermwi128 v55,v58,0x63
+  826322C0  16CAD195             vmsum3fp128 v54,v10,v58
+  826322C4  19A3DAD1             vpermwi128 v13,v59,0x63
+  826322C8  1807D311             vpermwi128 v0,v58,0x87
+  826322CC  1557C8B1             vmulfp128 v10,v55,v57
+  826322D0  1AB8F925             vcmpgtfp128 v53,v56,v63
+  826322D4  1140536F             vnmsubfp v10,v0,v13,v10
+  826322D8  1698B075             vsubfp128 v52,v56,v54
+  826322DC  1A7FB125             vcmpgtfp128 v51,v63,v54
+  826322E0  165D55B4             vmsum3fp128 v50,v125,v10
+  826322E4  100A5484             vor v0,v10,v10
+  826322E8  162851B4             vmsum3fp128 v49,v40,v10
+  826322EC  161F94B5             vmulfp128 v48,v127,v50
+  826322F0  19F2A125             vcmpgtfp128 v47,v50,v52
+  826322F4  19D1F925             vcmpgtfp128 v46,v49,v63
+  826322F8  19A09635             vrefp128 v45,v50
+  826322FC  19918125             vcmpgtfp128 v44,v49,v48
+  82632300  15737AF5             vor128 v43,v51,v47
+  82632304  15B168B1             vmulfp128 v13,v49,v45
+  82632308  15555AF5             vor128 v42,v53,v43
+  8263230C  152C7275             vandc128 v41,v44,v46
+  82632310  15495271             vandc128 v10,v41,v42
+  82632314  17CA52DC             vor128 v126,v10,v10
+  82632318  17EA52DC             vor128 v127,v10,v10
+  8263231C  17CC035C             vsel128 v126,v12,v0
+  82632320  17EB6B5C             vsel128 v127,v11,v13
+  82632324  4200FEE0             bdnz 0x82632204
+  82632328  4800019C             b 0x826324c4
+LAB_8263232c:
+  8263232C  570B083C             rlwinm r11,r24,0x1,0x0,0x1e
+  82632330  813E001C             lwz r9,0x1c(r30)
+  82632334  7D785A14             add r11,r24,r11
+  82632338  556B083C             rlwinm r11,r11,0x1,0x0,0x1e
+  8263233C  2F0B0200             cmpwi cr6,r11,0x200
+  82632340  40990010             ble cr6,0x82632350
+  82632344  39600200             li r11,0x200
+  82632348  38C00200             li r6,0x200
+  8263234C  48000008             b 0x82632354
+LAB_82632350:
+  82632350  38C00000             li r6,0x0
+LAB_82632354:
+  82632354  39400000             li r10,0x0
+  82632358  2F0B0000             cmpwi cr6,r11,0x0
+  8263235C  40990020             ble cr6,0x8263237c
+  82632360  396BFFFF             subi r11,r11,0x1
+  82632364  556BC9FE             rlwinm r11,r11,0x19,0x7,0x1f
+  82632368  396B0001             addi r11,r11,0x1
+  8263236C  7D6903A6             mtspr CTR,r11
+LAB_82632370:
+  82632370  7C0AFA2C             dcbt r10,r31
+  82632374  394A0080             addi r10,r10,0x80
+  82632378  4200FFF8             bdnz 0x82632370
+LAB_8263237c:
+  8263237C  A17F0000             lhz r11,0x0(r31)
+  82632380  A11A0002             lhz r8,0x2(r26)
+  82632384  556A283E             rlwinm r10,r11,0x5,0x0,0x1f
+  82632388  550B283E             rlwinm r11,r8,0x5,0x0,0x1f
+  8263238C  7CEA4A14             add r7,r10,r9
+  82632390  2F0B0200             cmpwi cr6,r11,0x200
+  82632394  40990010             ble cr6,0x826323a4
+  82632398  39600200             li r11,0x200
+  8263239C  39000200             li r8,0x200
+  826323A0  48000008             b 0x826323a8
+LAB_826323a4:
+  826323A4  39000000             li r8,0x0
+LAB_826323a8:
+  826323A8  39400000             li r10,0x0
+  826323AC  2F0B0000             cmpwi cr6,r11,0x0
+  826323B0  40990020             ble cr6,0x826323d0
+  826323B4  396BFFFF             subi r11,r11,0x1
+  826323B8  556BC9FE             rlwinm r11,r11,0x19,0x7,0x1f
+  826323BC  396B0001             addi r11,r11,0x1
+  826323C0  7D6903A6             mtspr CTR,r11
+LAB_826323c4:
+  826323C4  7C0A3A2C             dcbt r10,r7
+  826323C8  394A0080             addi r10,r10,0x80
+  826323CC  4200FFF8             bdnz 0x826323c4
+LAB_826323d0:
+  826323D0  2F180000             cmpwi cr6,r24,0x0
+  826323D4  409900F0             ble cr6,0x826324c4
+  826323D8  3D608218             lis r11,-0x7de8
+  826323DC  1BC3EAD7             vpermwi128 v62,v125,0x63
+  826323E0  7F0903A6             mtspr CTR,r24
+  826323E4  1BA7EB17             vpermwi128 v61,v125,0x87
+  826323E8  394BA030             subi r10,r11,0x5fd0
+  826323EC  13E050C7             lvx128 v63,0,r10
+LAB_826323f0:
+  826323F0  7C06FA2C             dcbt r6,r31
+  826323F4  A17F0000             lhz r11,0x0(r31)
+  826323F8  556B283E             rlwinm r11,r11,0x5,0x0,0x1f
+  826323FC  7D6B4A14             add r11,r11,r9
+  82632400  7C085A2C             dcbt r8,r11
+  82632404  395F0004             addi r10,r31,0x4
+  82632408  110058C7             lvx128 v40,0,r11
+  8263240C  14E8E077             vsubfp128 v39,v40,v124
+  82632410  153DEAF1             vor128 v9,v61,v61
+  82632414  157EF6F3             vor128 v11,v126,v126
+  82632418  3BFF0006             addi r31,r31,0x6
+  8263241C  15BFFEF3             vor128 v13,v127,v127
+  82632420  A0EAFFFE             lhz r7,-0x2(r10)
+  82632424  A0AA0000             lhz r5,0x0(r10)
+  82632428  54E4283E             rlwinm r4,r7,0x5,0x0,0x1f
+  8263242C  54A3283E             rlwinm r3,r5,0x5,0x0,0x1f
+  82632430  10C448C7             lvx128 v38,r4,r9
+  82632434  10A348C7             lvx128 v37,r3,r9
+  82632438  14883075             vsubfp128 v36,v40,v38
+  8263243C  14682875             vsubfp128 v35,v40,v37
+  82632440  18473B15             vpermwi128 v34,v39,0x87
+  82632444  19433AD1             vpermwi128 v10,v39,0x63
+  82632448  14FE10B1             vmulfp128 v7,v62,v34
+  8263244C  18272315             vpermwi128 v33,v36,0x87
+  82632450  18031AD5             vpermwi128 v32,v35,0x63
+  82632454  180322D1             vpermwi128 v0,v36,0x63
+  82632458  19871B11             vpermwi128 v12,v35,0x87
+  8263245C  150008B1             vmulfp128 v8,v32,v33
+  82632460  10E93AAF             vnmsubfp v7,v9,v10,v7
+  82632464  114C402F             vnmsubfp v10,v12,v0,v8
+  82632468  17872195             vmsum3fp128 v60,v7,v36
+  8263246C  17671995             vmsum3fp128 v59,v7,v35
+  82632470  175D55B4             vmsum3fp128 v58,v125,v10
+  82632474  118A5484             vor v12,v10,v10
+  82632478  172751B4             vmsum3fp128 v57,v39,v10
+  8263247C  1B1CF925             vcmpgtfp128 v56,v60,v63
+  82632480  16FCD875             vsubfp128 v55,v60,v59
+  82632484  1ADFD925             vcmpgtfp128 v54,v63,v59
+  82632488  16BFD4B5             vmulfp128 v53,v127,v58
+  8263248C  1A99F925             vcmpgtfp128 v52,v57,v63
+  82632490  1A7AB925             vcmpgtfp128 v51,v58,v55
+  82632494  1A40D635             vrefp128 v50,v58
+  82632498  1A39A925             vcmpgtfp128 v49,v57,v53
+  8263249C  16169AF5             vor128 v48,v54,v51
+  826324A0  141990B1             vmulfp128 v0,v57,v50
+  826324A4  15F882F5             vor128 v47,v56,v48
+  826324A8  15D1A275             vandc128 v46,v49,v52
+  826324AC  154E7A71             vandc128 v10,v46,v47
+  826324B0  17CA52DC             vor128 v126,v10,v10
+  826324B4  17EA52DC             vor128 v127,v10,v10
+  826324B8  17CB635C             vsel128 v126,v11,v12
+  826324BC  17ED035C             vsel128 v127,v13,v0
+  826324C0  4200FF30             bdnz 0x826323f0
+LAB_826324c4:
+  826324C4  15BEF5B7             vmsum3fp128 v45,v126,v126
+  826324C8  19800774             vspltisw128 v44,0x0
+  826324CC  197FDEE7             vminfp128 v43,v127,v123
+  826324D0  39600004             li r11,0x4
+  826324D4  39410050             addi r10,r1,0x50
+  826324D8  19405F35             vspltw128 v42,v43,0x0
+  826324DC  19206E75             vrsqrtefp128 v41,v45
+  826324E0  140D6AF1             vor128 v0,v45,v45
+  826324E4  198D6021             vcmpeqfp128 v12,v45,v44
+  826324E8  15BE4CB1             vmulfp128 v13,v126,v41
+  826324EC  118D032A             vsel v12,v13,v0,v12
+  826324F0  19006734             vspltw128 v40,v12,0x0
+  826324F4  18E16734             vspltw128 v39,v12,0x1
+  826324F8  18C26734             vspltw128 v38,v12,0x2
+  826324FC  1100B187             stvewx128 v40,0,r22
+  82632500  10F65987             stvewx128 v39,r22,r11
+  82632504  10D6C987             stvewx128 v38,r22,r25
+  82632508  11405187             stvewx128 v42,0,r10
+  8263250C  C0210050             lfs f1,0x50(r1)
+  82632510  FF01F800             fcmpu cr6,f1,f31
+  82632514  D0370000             stfs f1,0x0(r23)
+  82632518  4198000C             blt cr6,0x82632524
+  8263251C  FF01F000             fcmpu cr6,f1,f30
+  82632520  40990024             ble cr6,0x82632544
+LAB_82632524:
+  82632524  D8210038             stfd f1,0x38(r1)
+  82632528  7E679B78             or r7,r19,r19
+  8263252C  7E86A378             or r6,r20,r20
+  82632530  7EA3AB78             or r3,r21,r21
+  82632534  38A00001             li r5,0x1
+  82632538  388007C3             li r4,0x7c3
+  8263253C  E9010038             ld r8,0x38(r1)
+  82632540  4BFA1FC1             bl 0x825d4500
+LAB_82632544:
+  82632544  38210130             addi r1,r1,0x130
+  82632548  3981FF80             subi r12,r1,0x80
+  8263254C  482E5DA9             bl 0x829182f4
+  82632550  CBC1FF80             lfd f30,-0x80(r1)
+  82632554  CBE1FF88             lfd f31,-0x78(r1)
+  82632558  482E418C             b 0x829166e4
 
 ; 82632560  XSurfaceTraceLine  (xanim/xmodel.cpp:1992)
   82632560  548A083C             rlwinm r10,r4,0x1,0x0,0x1e

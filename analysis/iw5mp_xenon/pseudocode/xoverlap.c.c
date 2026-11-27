@@ -2,7 +2,7 @@
 
 // 828A5050  XCancelOverlapped  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xoverlap.c:40)
 
-undefined8 XCancelOverlapped(undefined8 param_1)
+ulong XCancelOverlapped(_XOVERLAPPED *param_1)
 
 {
   XMsgCancelIORequest(param_1,1);

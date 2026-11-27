@@ -2,88 +2,101 @@
 
 // 82291C50  BG_GetPlayerAnimTypeName  (bgame/bg_weapons_load_obj.cpp:175)
 
-undefined4 BG_GetPlayerAnimTypeName(int param_1)
+char * BG_GetPlayerAnimTypeName(int param_1)
 
 {
-  return (&DAT_829d7f58)[param_1];
+  return g_playerAnimTypeNames[param_1];
 }
 
 
 // 82291C68  BG_GetPlayerAnimTypeIndexHold  (bgame/bg_weapons_load_obj.cpp:183)
 
-undefined4 BG_GetPlayerAnimTypeIndexHold(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+uint BG_GetPlayerAnimTypeIndexHold(void)
 
 {
-  return DAT_829d7f48;
+  return g_playerAnimTypeIndexHold;
 }
 
 
 // 82291C78  TRACK_bg_weapons_load_obj  (bgame/bg_weapons_load_obj.cpp:2697)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void TRACK_bg_weapons_load_obj(void)
 
 {
-  track_static_alloc_internal(0xffffffff82961930,0x14,0xffffffff8200e124,9);
-  track_static_alloc_internal(0xffffffff82961944,0x30,0xffffffff8200e110,9);
-  track_static_alloc_internal(0xffffffff829d7f58,0x100,0xffffffff8200e0f8,9);
-  track_static_alloc_internal(0xffffffff82961974,0x18,0xffffffff8200e0dc,9);
+  track_static_alloc_internal(szWeapTypeNames,0x14,"szWeapTypeNames",9);
+  track_static_alloc_internal(szWeapClassNames,0x30,"szWeapClassNames",9);
+  track_static_alloc_internal(g_playerAnimTypeNames,0x100,"g_playerAnimTypeNames",9);
+  track_static_alloc_internal(szWeapInventoryTypeNames,0x18,"szWeapInventoryTypeNames",9);
   return;
 }
 
 
 // 82291D08  BG_GetWeaponTypeName  (bgame/bg_weapons_load_obj.cpp:2718)
 
-undefined4 BG_GetWeaponTypeName(uint param_1)
+char * BG_GetWeaponTypeName(weapType_t param_1)
 
 {
-  if (4 < param_1) {
-    MyAssertHandler(0xffffffff8200e138,0xa9f,0,0xffffffff8200e180,param_1,5);
+  if (WEAPTYPE_RIOTSHIELD < param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_load_obj.cpp"
+                    ,0xa9f,0,
+                    "type doesn\'t index ARRAY_COUNT( szWeapTypeNames )\n\t%i not in [0, %i)");
   }
-  return *(undefined4 *)(&DAT_82961930 + param_1 * 4);
+  return szWeapTypeNames[param_1];
 }
 
 
 // 82291D70  BG_GetWeaponClassName  (bgame/bg_weapons_load_obj.cpp:2726)
 
-undefined4 BG_GetWeaponClassName(uint param_1)
+char * BG_GetWeaponClassName(weapClass_t param_1)
 
 {
-  if (0xb < param_1) {
-    MyAssertHandler(0xffffffff8200e138,0xaa7,0,0xffffffff8200e1c8,param_1,0xc);
+  if (WEAPCLASS_ITEM < param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_load_obj.cpp"
+                    ,0xaa7,0,
+                    "type doesn\'t index ARRAY_COUNT( szWeapClassNames )\n\t%i not in [0, %i)");
   }
-  return *(undefined4 *)(&DAT_82961944 + param_1 * 4);
+  return szWeapClassNames[param_1];
 }
 
 
 // 82291DD8  BG_GetWeaponInventoryTypeName  (bgame/bg_weapons_load_obj.cpp:2734)
 
-undefined4 BG_GetWeaponInventoryTypeName(uint param_1)
+char * BG_GetWeaponInventoryTypeName(weapInventoryType_t param_1)
 
 {
-  if (5 < param_1) {
-    MyAssertHandler(0xffffffff8200e138,0xaaf,0,0xffffffff8200e210,param_1,6);
+  if (WEAPINVENTORY_SCAVENGER < param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_load_obj.cpp"
+                    ,0xaaf,0,
+                    "type doesn\'t index ARRAY_COUNT( szWeapInventoryTypeNames )\n\t%i not in [0, %i)"
+                   );
   }
-  return *(undefined4 *)(&DAT_82961974 + param_1 * 4);
+  return szWeapInventoryTypeNames[param_1];
 }
 
 
 // 82291E40  BG_LoadWeaponStrings  (bgame/bg_weapons_load_obj.cpp:2743)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void BG_LoadWeaponStrings(void)
 
 {
-  undefined4 *puVar1;
-  ulonglong uVar2;
+  int *piVar1;
+  uint uVar2;
   
   __savegprlr_29();
   uVar2 = 0;
   if (DAT_829d7f4c != 0) {
-    puVar1 = (undefined4 *)0x829d7f54;
+    piVar1 = &surfaceTypeSoundListCount;
     do {
-      puVar1 = puVar1 + 1;
-      BG_InitWeaponString(uVar2,*puVar1);
+      piVar1 = piVar1 + 1;
+      BG_InitWeaponString(uVar2,(char *)*piVar1);
       uVar2 = uVar2 + 1;
-    } while ((uVar2 & 0xffffffff) < (ulonglong)DAT_829d7f4c);
+    } while (uVar2 < DAT_829d7f4c);
   }
   __restgprlr_29();
   return;
@@ -92,106 +105,99 @@ void BG_LoadWeaponStrings(void)
 
 // 82291E90  Weapon_GetStringArrayIndex  (bgame/bg_weapons_load_obj.cpp:2753)
 
-void Weapon_GetStringArrayIndex(undefined8 param_1,ulonglong param_2,int param_3)
+int Weapon_GetStringArrayIndex(char *param_1,char **param_2,int param_3)
 
 {
-  ulonglong uVar1;
+  char *pcVar1;
   int iVar2;
   longlong lVar3;
+  ulonglong uVar4;
   
-  uVar1 = __savegprlr_27();
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8200e138,0xac4,0,0xffffffff82000f98,0xffffffff8200e26c);
+  uVar4 = (ulonglong)(int)param_2;
+  pcVar1 = (char *)__savegprlr_27(param_1);
+  if (pcVar1 == (char *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_load_obj.cpp"
+                    ,0xac4,0,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8200e138,0xac5,0,0xffffffff82000f98,0xffffffff8200e260);
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_load_obj.cpp"
+                    ,0xac5,0,"%s");
   }
   lVar3 = 0;
   if (0 < param_3) {
     do {
-      iVar2 = I_stricmp(uVar1,*(undefined4 *)param_2);
+      iVar2 = I_stricmp(pcVar1,(char *)*(undefined4 *)uVar4);
       if (iVar2 == 0) {
-        __restgprlr_27(lVar3);
-        return;
+        iVar2 = __restgprlr_27(lVar3);
+        return iVar2;
       }
       lVar3 = lVar3 + 1;
-      param_2 = param_2 + 4;
+      uVar4 = uVar4 + 4;
     } while ((int)lVar3 < param_3);
   }
-  __restgprlr_27(0xffffffffffffffff);
-  return;
+  iVar2 = __restgprlr_27(0xffffffffffffffff);
+  return iVar2;
 }
 
 
 // 82291F48  BG_LoadPlayerAnimTypes  (bgame/bg_weapons_load_obj.cpp:2778)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void BG_LoadPlayerAnimTypes(void)
 
 {
   char cVar1;
-  undefined8 uVar2;
+  char *pcVar2;
   char *pcVar3;
-  int iVar4;
-  char *pcVar5;
-  uint local_40 [2];
-  undefined1 auStack_38 [56];
+  char *pcVar4;
+  char *local_40 [2];
+  LargeLocal aLStack_38 [7];
   
   __savegprlr_28();
-  LargeLocal__LargeLocal(auStack_38,0x18000);
-  uVar2 = LargeLocal__GetBuf(auStack_38);
+  LargeLocal::LargeLocal(aLStack_38,0x18000);
+  pcVar2 = LargeLocal::GetBuf(aLStack_38);
   DAT_829d7f4c = 0;
-  local_40[0] = Com_LoadRawTextFile(0xffffffff8200e2d8,uVar2,0x18000);
-  if (local_40[0] == 0) {
-    Com_Error(1,0xffffffff8200e2bc,0xffffffff8200e2d8);
+  local_40[0] = Com_LoadRawTextFile("mp/playeranimtypes.txt",pcVar2,0x18000);
+  if (local_40[0] == (char *)0x0) {
+    Com_Error(ERR_DROP,"\x15Couldn\'t load file \'%s\'");
   }
-  Com_BeginParseSession(0xffffffff82003a08);
-  pcVar3 = (char *)Com_Parse(local_40);
-  while ((pcVar3 != (char *)0x0 && (*pcVar3 != '\0'))) {
-    pcVar5 = pcVar3;
+  Com_BeginParseSession("BG_AnimParseAnimScript");
+  pcVar2 = Com_Parse(local_40);
+  while ((pcVar2 != (char *)0x0 && (*pcVar2 != '\0'))) {
+    pcVar4 = pcVar2;
     if (0x3f < DAT_829d7f4c) {
-      Com_Error(1,0xffffffff8200e27c);
+      Com_Error(ERR_DROP,"\x15Player anim type array size exceeded");
     }
     do {
-      cVar1 = *pcVar5;
-      pcVar5 = pcVar5 + 1;
+      cVar1 = *pcVar4;
+      pcVar4 = pcVar4 + 1;
     } while (cVar1 != '\0');
-    iVar4 = Hunk_Alloc((int)pcVar5 - (int)pcVar3,0xffffffff8200e2a4,9);
-    pcVar3 = pcVar3 + -1;
-    pcVar5 = (char *)(iVar4 + -1);
-    (&DAT_829d7f58)[DAT_829d7f4c] = iVar4;
+    pcVar3 = Hunk_Alloc((int)pcVar4 - (int)pcVar2,"BG_LoadPlayerAnimTypes",9);
+    pcVar2 = pcVar2 + -1;
+    pcVar4 = pcVar3 + -1;
+    g_playerAnimTypeNames[DAT_829d7f4c] = pcVar3;
     do {
-      pcVar3 = pcVar3 + 1;
-      cVar1 = *pcVar3;
-      pcVar5 = pcVar5 + 1;
-      *pcVar5 = cVar1;
+      pcVar2 = pcVar2 + 1;
+      cVar1 = *pcVar2;
+      pcVar4 = pcVar4 + 1;
+      *pcVar4 = cVar1;
     } while (cVar1 != '\0');
     DAT_829d7f4c = DAT_829d7f4c + 1;
-    pcVar3 = (char *)Com_Parse(local_40);
+    pcVar2 = Com_Parse(local_40);
   }
   Com_EndParseSession();
-  DAT_829d7f48 = Weapon_GetStringArrayIndex(0xffffffff8200e274,0xffffffff829d7f58,DAT_829d7f4c);
-  LargeLocal___LargeLocal(auStack_38);
+  g_playerAnimTypeIndexHold = Weapon_GetStringArrayIndex("hold",g_playerAnimTypeNames,DAT_829d7f4c);
+  LargeLocal::~LargeLocal(aLStack_38);
   __restgprlr_28();
   return;
 }
 
 
 // 822920B8  BG_LoadDefaultWeaponCompleteDef_FastFile  (bgame/bg_weapons_load_obj.cpp:4549)
-
-void BG_LoadDefaultWeaponCompleteDef_FastFile(void)
-
-{
-  DB_FindXAssetHeader(0x1b,0xffffffff82003484,1);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0
 
 // 822920D0  BG_LoadDefaultWeaponCompleteDef  (bgame/bg_weapons_load_obj.cpp:4556)
-
-void BG_LoadDefaultWeaponCompleteDef(void)
-
-{
-  DB_FindXAssetHeader(0x1b,0xffffffff82003484,1);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxWorldDraw_s_0

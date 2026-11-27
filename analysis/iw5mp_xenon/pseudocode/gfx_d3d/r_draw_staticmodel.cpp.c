@@ -2,668 +2,169 @@
 
 // 82736358  __lvx  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/vectorintrinsics.h:98)
 
-/* WARNING: Control flow encountered bad instruction data */
-
-void __lvx(void)
+__vector4 * __lvx(__vector4 *__return_storage_ptr__,void *param_1,int param_2)
 
 {
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  return __return_storage_ptr__;
 }
 
 
 // 82736360  __stvx  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/vectorintrinsics.h:104)
 
-/* WARNING: Control flow encountered bad instruction data */
-
-void __stvx(void)
+void __stvx(__vector4 param_1,void *param_2,int param_3)
 
 {
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+  undefined4 *puVar1;
+  undefined4 in_vr1_32_0;
+  undefined4 in_vr1_32_1;
+  undefined4 in_vr1_32_2;
+  undefined4 in_vr1_32_3;
+  
+  puVar1 = (undefined4 *)((int)param_2 + param_3 & 0xfffffff0);
+  *puVar1 = in_vr1_32_0;
+  puVar1[1] = in_vr1_32_1;
+  puVar1[2] = in_vr1_32_2;
+  puVar1[3] = in_vr1_32_3;
+  return;
 }
 
 
 // 827364B0  R_GetNextStaticModelArray  (gfx_d3d/r_draw_staticmodel.cpp:188)
-
-void R_GetNextStaticModelArray(void)
-
-{
-  ushort uVar1;
-  ushort uVar2;
-  int iVar3;
-  ushort *puVar4;
-  uint uVar5;
-  int *piVar6;
-  int *piVar7;
-  
-  piVar6 = (int *)__savegprlr_28();
-  iVar3 = *piVar6;
-  puVar4 = *(ushort **)(iVar3 + 4);
-  uVar1 = *puVar4;
-  *(ushort **)(iVar3 + 4) = puVar4 + 1;
-  if (*(ushort **)(iVar3 + 8) < puVar4 + 1) {
-    MyAssertHandler(0xffffffff821be9d8,0x8e,0,0xffffffff82000f98,0xffffffff821bea24);
-  }
-  uVar5 = uVar1 >> 2 & 0x3ffc;
-  piVar7 = (int *)(uVar5 + piVar6[6]);
-  if (*(int *)(uVar5 + piVar6[6]) == 0) {
-    MyAssertHandler(0xffffffff821bea58,0xcf,0,0xffffffff82000f98,0xffffffff821beaa4);
-  }
-  iVar3 = *piVar7;
-  uVar2 = *(ushort *)(piVar7 + 1);
-  piVar6[0xb] = (int)piVar7 + 6;
-  piVar6[9] = (uVar1 & 0xf) * 0x80 + iVar3;
-  piVar6[10] = (uint)uVar2;
-  __restgprlr_28();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GPUTEXTURE_FETCH_CONSTANT_s_0_s_0
 
 // 82737618  R_DrawStaticModelsEngine<GfxSModelArrayCallback_NoPrepass,GfxCmdBufPrimState_*>  (gfx_d3d/r_draw_staticmodel.cpp:227)
-
-void R_DrawStaticModelsEngine<GfxSModelArrayCallback_NoPrepass,GfxCmdBufPrimState_*>
-               (undefined8 param_1,undefined8 param_2)
-
-{
-  int iVar1;
-  int iVar2;
-  DWORD DVar3;
-  longlong lVar4;
-  
-  iVar2 = __savegprlr_24();
-  lVar4 = (ulonglong)(*(ushort *)(iVar2 + 0x14) >> 0xc) + 1;
-  do {
-    iVar1 = *(int *)(iVar2 + 0x30);
-    DVar3 = GetCurrentProcessorNumber();
-    if (iVar1 != *(int *)(&DAT_846177e4 + DVar3 * 4)) {
-      MyAssertHandler(0xffffffff821bdad0,0x496,0,0xffffffff82000f98,0xffffffff821bdb14);
-    }
-    if (iVar1 != 0) {
-      if ((longlong)((ulonglong)*(uint *)(iVar1 + 0x20) - (ulonglong)*(uint *)(iVar1 + 4)) < 0) {
-        R_CmdBufReserveMemory(iVar1);
-      }
-    }
-    R_GetNextStaticModelArray(iVar2);
-    GfxSModelArrayCallback_NoPrepass__Callback(iVar2,param_2);
-    lVar4 = lVar4 + -1;
-  } while (lVar4 != 0);
-  __restgprlr_24();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GPUTEXTURE_FETCH_CONSTANT_s_0_s_0
 
 // 827376D0  R_DrawStaticModelsEngine<GfxSModelArrayCallback_NonOptimized,GfxCmdBufContext>  (gfx_d3d/r_draw_staticmodel.cpp:227)
-
-void R_DrawStaticModelsEngine<GfxSModelArrayCallback_NonOptimized,GfxCmdBufContext>
-               (undefined8 param_1,undefined8 param_2)
-
-{
-  int iVar1;
-  int iVar2;
-  DWORD DVar3;
-  longlong lVar4;
-  
-  iVar2 = __savegprlr_24();
-  lVar4 = (ulonglong)(*(ushort *)(iVar2 + 0x14) >> 0xc) + 1;
-  do {
-    iVar1 = *(int *)(iVar2 + 0x30);
-    DVar3 = GetCurrentProcessorNumber();
-    if (iVar1 != *(int *)(&DAT_846177e4 + DVar3 * 4)) {
-      MyAssertHandler(0xffffffff821bdad0,0x496,0,0xffffffff82000f98,0xffffffff821bdb14);
-    }
-    if (iVar1 != 0) {
-      if ((longlong)((ulonglong)*(uint *)(iVar1 + 0x20) - (ulonglong)*(uint *)(iVar1 + 4)) < 0) {
-        R_CmdBufReserveMemory(iVar1);
-      }
-    }
-    R_GetNextStaticModelArray(iVar2);
-    R_DrawStaticModelArray_NonOptimized(iVar2,param_2);
-    lVar4 = lVar4 + -1;
-  } while (lVar4 != 0);
-  __restgprlr_24();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GPUTEXTURE_FETCH_CONSTANT_s_0_s_0
 
 // 82736570  R_SetStaticModelVertexBuffer  (gfx_d3d/r_draw_staticmodel.cpp:255)
-
-void R_SetStaticModelVertexBuffer(undefined8 param_1,ulonglong param_2)
-
-{
-  int iVar2;
-  undefined8 uVar1;
-  undefined4 uVar3;
-  
-  iVar2 = __savegprlr_26();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821bea58,0x107,0,0xffffffff82000f98,0xffffffff821beabc);
-  }
-  uVar1 = XSurfaceGetVert0Size(param_2);
-  if (param_2 + 0x20 == 0) {
-    MyAssertHandler(0xffffffff821bea58,0x10f,0,0xffffffff82000f98,0xffffffff821ba234);
-  }
-  uVar3 = XSurfaceGetModelVertDecl(param_2);
-  *(undefined4 *)(iVar2 + 200) = uVar3;
-  R_UpdateVertexDecl(iVar2);
-  R_SetStreamSource(iVar2 + 0xc0,param_2 + 0x20,0,uVar1);
-  __restgprlr_26();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GPUTEXTURE_FETCH_CONSTANT_s_0_s_0
 
 // 82736618  R_SetupStaticModelPrim  (gfx_d3d/r_draw_staticmodel.cpp:287)
-
-void R_SetupStaticModelPrim(undefined8 param_1,uint *param_2,undefined8 param_3)
-
-{
-  int iVar1;
-  int iVar2;
-  
-  iVar1 = __savegprlr_26();
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff821bea58,0x122,0,0xffffffff82000f98,0xffffffff821beabc);
-  }
-  iVar2 = iVar1 + 0x48;
-  *param_2 = (uint)*(ushort *)(iVar1 + 2);
-  param_2[1] = (uint)*(ushort *)(iVar1 + 4);
-  param_2[2] = 0;
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff821bea58,299,0,0xffffffff82000f98,0xffffffff821ba260);
-  }
-  if (*(int *)((int)param_3 + 4) != iVar2) {
-    R_ChangeIndices(param_3,iVar2);
-  }
-  __restgprlr_26();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GPU_TESSELLATORPACKET_s_0_s_0
 
 // 82736368  D3DTag_Index  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/d3d9.h:615)
 
-int D3DTag_Index(int param_1)
+/* WARNING: Enum "_D3DTAG": Some values do not have unique names */
+
+ulong D3DTag_Index(_D3DTAG param_1)
 
 {
-  return param_1 >> 0x10;
+  return (int)(char)param_1 >> 0x10;
 }
 
 
 // 82737940  R_DirtyCodeConstantBlock  (gfx_d3d/r_state.h:618)
-
-void R_DirtyCodeConstantBlock(undefined8 param_1,ulonglong param_2)
-
-{
-  int iVar1;
-  
-  iVar1 = __savegprlr_29();
-  if (0x3f < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821bda94,0x26c,0,0xffffffff821be968,param_2,0x40);
-  }
-  param_2 = param_2 & 0xfffffffc;
-  if (0x3f < param_2 + 3) {
-    MyAssertHandler(0xffffffff821bda94,0x26f,0,0xffffffff821be910,param_2 + 3,0x40);
-  }
-  *(undefined8 *)((int)((param_2 + 0x22 & 0xffffffff) << 3) + iVar1) = 0;
-  *(undefined8 *)((int)((param_2 + 0x23 & 0xffffffff) << 3) + iVar1) = 0;
-  *(undefined8 *)((int)((param_2 + 0x24 & 0xffffffff) << 3) + iVar1) = 0;
-  *(undefined8 *)((int)((param_2 + 0x25 & 0xffffffff) << 3) + iVar1) = 0;
-  __restgprlr_29();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GPUTEXTURE_FETCH_CONSTANT_s_0_s_0
 
 // 82736370  D3DTag_SubsetMask  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/d3d9.h:623)
 
-ulonglong D3DTag_SubsetMask(ulonglong param_1,longlong param_2,longlong param_3)
+/* WARNING: Enum "_D3DTAG": Some values do not have unique names */
+
+ulong64 D3DTag_SubsetMask(_D3DTAG param_1,ulong param_2,ulong param_3)
 
 {
-  return (ulonglong)(-0x8000000000000000 >> (param_3 - param_2 & 0x7fU)) >>
-         ((param_1 & 0xff) + param_2 & 0x7f);
+  return (ulonglong)
+         (-0x8000000000000000 >> ((longlong)(int)param_3 - (longlong)(int)param_2 & 0x7fU)) >>
+         ((ulonglong)param_1 + (longlong)(int)param_2 & 0x7f);
 }
 
 
 // 82736398  D3DTag_ShaderConstantMask  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/d3d9.h:631)
 
-ulonglong D3DTag_ShaderConstantMask(ulonglong param_1,longlong param_2)
+ulong64 D3DTag_ShaderConstantMask(ulong param_1,ulong param_2)
 
 {
-  ulonglong uVar1;
-  
-  uVar1 = (param_1 & 0xffffffff) >> 2;
   return (ulonglong)
-         (-0x8000000000000000 >> ((((param_1 + param_2) - 1 & 0xffffffff) >> 2) - uVar1 & 0x7f)) >>
-         (uVar1 & 0x7f);
+         (-0x8000000000000000 >>
+         (((((longlong)(int)param_1 + (longlong)(int)param_2) - 1U & 0xffffffff) >> 2) -
+          (ulonglong)(param_1 >> 2) & 0x7f)) >> ((ulonglong)(param_1 >> 2) & 0x7f);
 }
 
 
 // 827363C8  D3DTagCollection_Set  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/d3d9.h:648)
 
-void D3DTagCollection_Set(int param_1,int param_2,ulonglong param_3)
+void D3DTagCollection_Set(_D3DTAGCOLLECTION *param_1,ulong param_2,ulong64 param_3)
 
 {
-  *(ulonglong *)(param_2 * 8 + param_1) = *(ulonglong *)(param_2 * 8 + param_1) | param_3;
+  param_1->m_Mask[param_2] = param_1->m_Mask[param_2] | param_3;
   return;
 }
 
 
 // 827363E0  D3DTagCollection_Clear  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/d3d9.h:660)
 
-void D3DTagCollection_Clear(int param_1,int param_2,ulonglong param_3)
+void D3DTagCollection_Clear(_D3DTAGCOLLECTION *param_1,ulong param_2,ulong64 param_3)
 
 {
-  *(ulonglong *)(param_2 * 8 + param_1) = *(ulonglong *)(param_2 * 8 + param_1) & ~param_3;
+  param_1->m_Mask[param_2] = param_1->m_Mask[param_2] & ~param_3;
   return;
 }
 
 
 // 827379F0  R_ChangeIndices  (gfx_d3d/r_state.h:773)
-
-void R_ChangeIndices(undefined8 param_1,ulonglong param_2)
-
-{
-  int iVar1;
-  int *piVar2;
-  
-  piVar2 = (int *)__savegprlr_27();
-  if ((param_2 & 0xffffffff) == (ulonglong)(uint)piVar2[1]) {
-    MyAssertHandler(0xffffffff821bda94,0x308,0,0xffffffff82000f98,0xffffffff821be9bc);
-  }
-  iVar1 = *piVar2;
-  piVar2[1] = (int)param_2;
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff821bda94,0x30c,0,0xffffffff82000f98,0xffffffff821bd9f4);
-  }
-  do {
-    D3DDevice_SetIndices(iVar1,param_2);
-  } while (DAT_84013128 != 0);
-  __restgprlr_27();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GPU_TESSELLATORPACKET_s_0_s_0
 
 // 827366C0  R_DrawStaticModelArray_UnlitNoPrepass  (gfx_d3d/r_draw_staticmodel.cpp:880)
-
-/* WARNING: Control flow encountered bad instruction data */
-
-void R_DrawStaticModelArray_UnlitNoPrepass(undefined8 param_1,ulonglong param_2)
-
-{
-  int iVar1;
-  undefined1 in_vs32 [16];
-  undefined1 in_vs43 [16];
-  undefined1 auVar2 [16];
-  undefined1 auStack_108 [264];
-  
-  __savegprlr();
-  iVar1 = __savevmx_123();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821bea58,900,0,0xffffffff82000f98,0xffffffff821bebc4);
-  }
-  if (*(int *)(iVar1 + 4) != 2) {
-    MyAssertHandler(0xffffffff821bea58,0x385,0,0xffffffff821beb60,0xffffffff821beb88);
-  }
-  R_SetupStaticModelPrim(*(undefined4 *)(iVar1 + 0x24),auStack_108,param_2);
-  auVar2 = altv300_21(in_vs32,in_vs43);
-  altv300_23(auVar2,in_vs43);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GPU_TESSELLATORPACKET_s_0_s_0
 
 // 827369C0  R_DrawStaticModelArray_LitNoPrepass  (gfx_d3d/r_draw_staticmodel.cpp:1049)
-
-/* WARNING: Control flow encountered bad instruction data */
-
-void R_DrawStaticModelArray_LitNoPrepass(undefined8 param_1,ulonglong param_2)
-
-{
-  int iVar1;
-  undefined1 in_vs32 [16];
-  undefined1 in_vs36 [16];
-  undefined1 in_vs41 [16];
-  undefined1 in_vs43 [16];
-  undefined1 in_vs56 [16];
-  undefined1 auStack_100 [256];
-  
-  __savegprlr();
-  iVar1 = __savevmx_123();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821bea58,0x432,0,0xffffffff82000f98,0xffffffff821bebc4);
-  }
-  if (*(int *)(iVar1 + 4) != 1) {
-    MyAssertHandler(0xffffffff821bea58,0x433,0,0xffffffff821beb60,0xffffffff821bedb8);
-  }
-  R_SetupStaticModelPrim(*(undefined4 *)(iVar1 + 0x24),auStack_100,param_2);
-  altv207_13(in_vs32,in_vs41);
-  altv300_21(in_vs32,in_vs43);
-  altv300_23(in_vs56,in_vs43);
-  altv207_13(in_vs32,in_vs36);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GPU_TESSELLATORPACKET_s_0_s_0
 
 // 82736ED8  R_DrawStaticModelArray_AmbientNoPrepass  (gfx_d3d/r_draw_staticmodel.cpp:1324)
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GPUTEXTURE_FETCH_CONSTANT_s_0_s_0
 
-/* WARNING: Control flow encountered bad instruction data */
-
-void R_DrawStaticModelArray_AmbientNoPrepass(undefined8 param_1,ulonglong param_2)
-
-{
-  int iVar1;
-  undefined1 in_vs32 [16];
-  undefined1 in_vs43 [16];
-  undefined1 auVar2 [16];
-  undefined1 auStack_110 [272];
-  
-  __savegprlr();
-  iVar1 = __savevmx_122();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821bea58,0x542,0,0xffffffff82000f98,0xffffffff821bebc4);
-  }
-  if (*(int *)(iVar1 + 4) != 3) {
-    MyAssertHandler(0xffffffff821bea58,0x543,0,0xffffffff821beb60,0xffffffff821bedf4);
-  }
-  R_SetupStaticModelPrim(*(undefined4 *)(iVar1 + 0x24),auStack_110,param_2);
-  auVar2 = altv300_21(in_vs32,in_vs43);
-  altv300_23(auVar2,in_vs43);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
-}
-
-
-// 82737A90  GfxSModelArrayCallback_NoPrepass::Callback  (gfx_d3d/r_draw_staticmodel.cpp:1530)
-
-void GfxSModelArrayCallback_NoPrepass__Callback(undefined8 param_1,undefined8 param_2)
-
-{
-  int iVar1;
-  int iVar3;
-  undefined4 uVar4;
-  undefined8 uVar2;
-  ulonglong uVar5;
-  
-  iVar3 = __savegprlr_29();
-  uVar5 = (ulonglong)*(uint *)(iVar3 + 0x24);
-  uVar4 = XSurfaceGetModelVertDecl(uVar5);
-  *(undefined4 *)((int)param_2 + 8) = uVar4;
-  R_UpdateVertexDecl(*(undefined4 *)(iVar3 + 0x34));
-  uVar2 = XSurfaceGetVert0Size(uVar5);
-  R_SetStreamSource(param_2,uVar5 + 0x20,0,uVar2);
-  iVar1 = *(int *)(iVar3 + 4);
-  if (iVar1 == 2) {
-    R_DrawStaticModelArray_UnlitNoPrepass(iVar3,param_2);
-    __restgprlr_29();
-    return;
-  }
-  if (iVar1 == 1) {
-    R_DrawStaticModelArray_LitNoPrepass(iVar3,param_2);
-    __restgprlr_29();
-    return;
-  }
-  if (iVar1 == 3) {
-    R_DrawStaticModelArray_AmbientNoPrepass(iVar3,param_2);
-    __restgprlr_29();
-    return;
-  }
-  if (iVar1 != 0) {
-    MyAssertHandler(0xffffffff821bea58,0x62c,0,0xffffffff821beb60,0xffffffff821bee34);
-  }
-  __restgprlr_29();
-  return;
-}
-
+// 82737A90  Callback  (gfx_d3d/r_draw_staticmodel.cpp:1530)
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GPUTEXTURE_FETCH_CONSTANT_s_0_s_0
 
 // 827372F8  R_InitStaticModelDrawStreamNonOptimized  (gfx_d3d/r_draw_staticmodel.cpp:2026)
-
-void R_InitStaticModelDrawStreamNonOptimized
-               (undefined8 param_1,ulonglong param_2,undefined4 *param_3,int param_4)
-
-{
-  undefined4 uVar1;
-  undefined4 uVar2;
-  undefined2 uVar3;
-  int iVar4;
-  undefined2 *puVar5;
-  undefined2 *puVar6;
-  int iVar7;
-  undefined4 *puVar8;
-  DWORD DVar9;
-  undefined2 *puVar10;
-  
-  puVar8 = (undefined4 *)__savegprlr_25();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821bea58,0x7ec,0,0xffffffff82000f98,0xffffffff82015cf8);
-  }
-  iVar4 = *(int *)(param_4 + 0xf8);
-  iVar7 = (int)param_2;
-  uVar1 = *(undefined4 *)(iVar7 + 0xc);
-  uVar2 = *(undefined4 *)(iVar7 + 0x10);
-  puVar5 = (undefined2 *)param_3[1];
-  puVar8[2] = *(undefined4 *)(iVar7 + 8);
-  puVar8[3] = uVar1;
-  puVar6 = (undefined2 *)param_3[2];
-  puVar8[4] = uVar2;
-  puVar8[1] = (uint)*(byte *)(iVar4 + 100);
-  *puVar8 = param_3;
-  uVar3 = *puVar5;
-  param_3[1] = puVar5 + 1;
-  if (puVar6 < puVar5 + 1) {
-    MyAssertHandler(0xffffffff821be9d8,0x8e,0,0xffffffff82000f98,0xffffffff821bea24);
-  }
-  puVar5 = (undefined2 *)param_3[1];
-  puVar6 = (undefined2 *)param_3[2];
-  puVar10 = puVar5 + 1;
-  *(undefined2 *)(puVar8 + 5) = uVar3;
-  param_3[1] = puVar10;
-  uVar3 = *puVar5;
-  if (puVar6 < puVar10) {
-    MyAssertHandler(0xffffffff821be9d8,0x8e,0,0xffffffff82000f98,0xffffffff821bea24);
-  }
-  uVar1 = *param_3;
-  *(undefined2 *)((int)puVar8 + 0x16) = uVar3;
-  puVar8[6] = uVar1;
-  puVar8[7] = *(undefined4 *)(param_4 + 0x74);
-  puVar8[8] = (uint)*(byte *)(*(int *)(param_4 + 0xf8) + 99);
-  DVar9 = GetCurrentProcessorNumber();
-  uVar1 = *(undefined4 *)(&DAT_846177e4 + DVar9 * 4);
-  puVar8[0xd] = param_4;
-  puVar8[0xc] = uVar1;
-  __restgprlr_25();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0
 
 // 82737430  R_DrawStaticModel_SetPlacement  (gfx_d3d/r_draw_staticmodel.cpp:2058)
-
-/* WARNING: Control flow encountered bad instruction data */
-
-void R_DrawStaticModel_SetPlacement(void)
-
-{
-  undefined1 in_vs32 [16];
-  undefined1 in_vs42 [16];
-  undefined1 in_vs43 [16];
-  
-  __savegprlr_26();
-  altv300_21(in_vs32,in_vs43);
-  altv300_23(in_vs42,in_vs43);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0
 
 // 82737570  R_DrawStaticModelArray_NonOptimized  (gfx_d3d/r_draw_staticmodel.cpp:2078)
-
-void R_DrawStaticModelArray_NonOptimized(undefined8 param_1,ulonglong param_2)
-
-{
-  undefined4 uVar1;
-  uint uVar2;
-  uint uVar3;
-  int iVar4;
-  longlong lVar5;
-  ushort *puVar6;
-  uint uVar7;
-  undefined4 uStack00000018;
-  undefined1 auStack_60 [96];
-  
-  iVar4 = __savegprlr_24();
-  lVar5 = (param_2 & 0xffffffff) + 0xc0;
-  uVar1 = *(undefined4 *)(iVar4 + 0x24);
-  R_SetupStaticModelPrim(uVar1,auStack_60,lVar5);
-  R_SetStaticModelVertexBuffer(param_2 & 0xffffffff,uVar1);
-  uVar7 = 0;
-  uStack00000018 = (undefined4)(param_2 >> 0x20);
-  puVar6 = (ushort *)(*(int *)(iVar4 + 0x2c) + -2);
-  uVar2 = *(uint *)(iVar4 + 0x28);
-  uVar3 = *(uint *)(DAT_8461658c + 0x284);
-  do {
-    puVar6 = puVar6 + 1;
-    R_DrawStaticModel_SetPlacement
-              ((ulonglong)*puVar6 * 0x2c + (ulonglong)uVar3,uStack00000018,uVar1);
-    R_SetupPassPerPrimArgs(param_2);
-    R_DrawIndexedPrimitive(lVar5,auStack_60);
-    uVar7 = uVar7 + 1;
-  } while (uVar7 < uVar2);
-  __restgprlr_24();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GPUTEXTURE_FETCH_CONSTANT_s_0_s_0
 
 // 82737798  R_DrawStaticModelSurfLit  (gfx_d3d/r_draw_staticmodel.cpp:2220)
-
-void R_DrawStaticModelSurfLit(undefined8 param_1,int param_2,undefined8 param_3)
-
-{
-  undefined8 uVar1;
-  undefined1 auStack_60 [4];
-  int local_5c;
-  undefined4 local_44;
-  
-  uVar1 = __savegprlr_29();
-  *(undefined8 *)(param_2 + 0x150) = 0;
-  *(undefined8 *)(param_2 + 0x158) = 0;
-  *(undefined8 *)(param_2 + 0x160) = 0;
-  *(undefined8 *)(param_2 + 0x168) = 0;
-  *(undefined8 *)(param_2 + 0x130) = 0;
-  *(undefined8 *)(param_2 + 0x138) = 0;
-  *(undefined8 *)(param_2 + 0x140) = 0;
-  *(undefined8 *)(param_2 + 0x148) = 0;
-  if ((*(byte *)(*(int *)(param_2 + 0xf8) + 99) & 1) != 0) {
-    R_SetSamplerState(param_2,1,0x72);
-  }
-  R_InitStaticModelDrawStreamNonOptimized(auStack_60,param_3,uVar1,param_2);
-  if (local_5c == 0) {
-    R_WarnOncePerFrame(0x39,**(undefined4 **)(*(int *)(param_2 + 0xf8) + 0x5c),
-                       **(undefined4 **)(param_2 + 0xec));
-  }
-  R_DrawStaticModelsEngine<GfxSModelArrayCallback_NoPrepass,GfxCmdBufPrimState_*>
-            (auStack_60,param_2 + 0xc0);
-  *(undefined4 *)(param_2 + 0x74) = local_44;
-  __restgprlr_29();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0
 
 // 82737858  R_DrawStaticModelSurf  (gfx_d3d/r_draw_staticmodel.cpp:2253)
-
-void R_DrawStaticModelSurf(undefined8 param_1,undefined8 param_2,int *param_3)
-
-{
-  int iVar1;
-  undefined8 uVar2;
-  undefined8 uStack00000018;
-  undefined1 auStack_50 [4];
-  int local_4c;
-  int local_34;
-  
-  uStack00000018._4_4_ = (int)param_2;
-  iVar1 = uStack00000018._4_4_;
-  uStack00000018 = param_2;
-  if (*param_3 == 0x21) {
-    R_InitStaticModelDrawStreamNonOptimized(auStack_50,param_3,param_1,iVar1);
-    R_DrawStaticModelsEngine<GfxSModelArrayCallback_NonOptimized,GfxCmdBufContext>
-              (auStack_50,param_2);
-    if (*(int *)(iVar1 + 0x74) == local_34) {
-      return;
-    }
-    uVar2 = 0x8d7;
-  }
-  else {
-    R_InitStaticModelDrawStreamNonOptimized(auStack_50,param_3,param_1,iVar1);
-    if (local_4c == 0) {
-      R_WarnOncePerFrame(0x39,**(undefined4 **)(*(int *)(iVar1 + 0xf8) + 0x5c),
-                         **(undefined4 **)(iVar1 + 0xec));
-    }
-    R_DrawStaticModelsEngine<GfxSModelArrayCallback_NoPrepass,GfxCmdBufPrimState_*>
-              (auStack_50,iVar1 + 0xc0);
-    if (*(int *)(iVar1 + 0x74) == local_34) {
-      return;
-    }
-    uVar2 = 0x8e5;
-  }
-  MyAssertHandler(0xffffffff821bea58,uVar2,0,0xffffffff82000f98,0xffffffff821bee70);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GfxVertexBufferState_s_0_s_0_s_0
 
 // 827363F8  D3DDevice_SetStreamSource_Inline  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/d3d9.h:2778)
-
-void D3DDevice_SetStreamSource_Inline(void)
-
-{
-  D3DDevice_SetStreamSource();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GPU_TESSELLATORPACKET_s_0_s_0
 
 // 82736420  D3DDevice_SetTexture_Inline  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/d3d9.h:2799)
-
-void D3DDevice_SetTexture_Inline(void)
-
-{
-  D3DDevice_SetTexture();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GPUTEXTURE_FETCH_CONSTANT_s_0_s_0
 
 // 82736438  D3DDevice_GpuOwnVertexShaderConstantF  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/d3d9.h:3408)
-
-void D3DDevice_GpuOwnVertexShaderConstantF(ulonglong *param_1,ulonglong param_2,longlong param_3)
-
-{
-  ulonglong uVar1;
-  
-  uVar1 = (param_2 & 0xffffffff) >> 2;
-  *param_1 = *param_1 &
-             ~((ulonglong)
-               (-0x8000000000000000 >>
-               ((((param_2 + param_3) - 1 & 0xffffffff) >> 2) - uVar1 & 0x7f)) >> (uVar1 & 0x7f));
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GPU_TESSELLATORPACKET_s_0_s_0
 
 // 82736470  D3DDevice_GpuDisownVertexShaderConstantF  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/d3d9.h:3464)
-
-void D3DDevice_GpuDisownVertexShaderConstantF(ulonglong *param_1,ulonglong param_2,longlong param_3)
-
-{
-  ulonglong uVar1;
-  
-  uVar1 = (param_2 & 0xffffffff) >> 2;
-  *param_1 = (ulonglong)
-             (-0x8000000000000000 >> ((((param_2 + param_3) - 1 & 0xffffffff) >> 2) - uVar1 & 0x7f))
-             >> (uVar1 & 0x7f) | *param_1;
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GPU_TESSELLATORPACKET_s_0_s_0
 
 // 827364A8  D3DDevice_GpuEndShaderConstantF4  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/d3d9.h:3497)
-
-void D3DDevice_GpuEndShaderConstantF4(void)
-
-{
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure GPU_TESSELLATORPACKET_s_0_s_0

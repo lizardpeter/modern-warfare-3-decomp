@@ -34,6 +34,9 @@ LAB_828a283c:
   828A2860  100D0484             vor v0,v13,v0
   828A2864  1000020C             vspltb v0,v0,0x0
   828A2868  41820010             beq 0x828a2878
+  828A286C  7C00ED0E             stvlx v0,0,r29
+  828A2870  7FEBF850             subf r31,r11,r31
+  828A2874  7D4BEA14             add r10,r11,r29
 LAB_828a2878:
   828A2878  57EBE13E             rlwinm r11,r31,0x1c,0x4,0x1f
   828A287C  7F0B4840             cmplw cr6,r11,r9
@@ -45,6 +48,10 @@ LAB_828a2888:
   828A2890  80CB84B8             lwz r6,-0x7b48(r11)
   828A2894  419A0014             beq cr6,0x828a28a8
   828A2898  7D2903A6             mtspr CTR,r9
+LAB_828a289c:
+  828A289C  100051C3             stvx128 v0,0,r10
+  828A28A0  7D465214             add r10,r6,r10
+  828A28A4  4200FFF8             bdnz 0x828a289c
 LAB_828a28a8:
   828A28A8  552B2036             rlwinm r11,r9,0x4,0x0,0x1b
   828A28AC  57C9063F             rlwinm. r9,r30,0x0,0x18,0x1f
@@ -55,7 +62,7 @@ LAB_828a28a8:
   828A28C0  419A00B4             beq cr6,0x828a2974
   828A28C4  7D6903A6             mtspr CTR,r11
 LAB_828a28c8:
-  828A28C8  7C2057EC             dcbzl 0,r10
+  828A28C8  7C2057EC             dcbz128 0,r10
   828A28CC  394A0080             addi r10,r10,0x80
   828A28D0  4200FFF8             bdnz 0x828a28c8
   828A28D4  480000A0             b 0x828a2974
@@ -71,7 +78,7 @@ LAB_828a28e8:
   828A28F4  7D0903A6             mtspr CTR,r8
 LAB_828a28f8:
   828A28F8  55283830             rlwinm r8,r9,0x7,0x0,0x18
-  828A28FC  7C2857EC             dcbzl r8,r10
+  828A28FC  7C2857EC             dcbz128 r8,r10
   828A2900  39290001             addi r9,r9,0x1
   828A2904  4200FFF4             bdnz 0x828a28f8
 LAB_828a2908:
@@ -79,13 +86,31 @@ LAB_828a2908:
   828A290C  2B0B0000             cmplwi cr6,r11,0x0
   828A2910  419A0064             beq cr6,0x828a2974
   828A2914  7D6903A6             mtspr CTR,r11
+LAB_828a2918:
   828A2918  39090004             addi r8,r9,0x4
   828A291C  7F085840             cmplw cr6,r8,r11
   828A2920  4098000C             bge cr6,0x828a292c
   828A2924  39000200             li r8,0x200
-  828A2928  7C2857EC             dcbzl r8,r10
+  828A2928  7C2857EC             dcbz128 r8,r10
 LAB_828a292c:
   828A292C  39000010             li r8,0x10
+  828A2930  100051C3             stvx128 v0,0,r10
+  828A2934  38A00020             li r5,0x20
+  828A2938  38800030             li r4,0x30
+  828A293C  38600040             li r3,0x40
+  828A2940  3BE00050             li r31,0x50
+  828A2944  100A41C3             stvx128 v0,r10,r8
+  828A2948  3BC00060             li r30,0x60
+  828A294C  39000070             li r8,0x70
+  828A2950  100A29C3             stvx128 v0,r10,r5
+  828A2954  100A21C3             stvx128 v0,r10,r4
+  828A2958  39290001             addi r9,r9,0x1
+  828A295C  100A19C3             stvx128 v0,r10,r3
+  828A2960  100AF9C3             stvx128 v0,r10,r31
+  828A2964  100AF1C3             stvx128 v0,r10,r30
+  828A2968  100A41C3             stvx128 v0,r10,r8
+  828A296C  394A0080             addi r10,r10,0x80
+  828A2970  4200FFA8             bdnz 0x828a2918
 LAB_828a2974:
   828A2974  556B3830             rlwinm r11,r11,0x7,0x0,0x18
   828A2978  7D6B3850             subf r11,r11,r7
@@ -93,6 +118,13 @@ LAB_828a2974:
   828A2980  4198001C             blt cr6,0x828a299c
   828A2984  5569E13E             rlwinm r9,r11,0x1c,0x4,0x1f
   828A2988  7D2903A6             mtspr CTR,r9
+LAB_828a298c:
+  828A298C  100051C3             stvx128 v0,0,r10
+  828A2990  7D465214             add r10,r6,r10
+  828A2994  396BFFF0             subi r11,r11,0x10
+  828A2998  4200FFF4             bdnz 0x828a298c
+LAB_828a299c:
+  828A299C  7C0A5D4E             stvrx v0,r10,r11
 LAB_828a29a0:
   828A29A0  7DCE7378             or r14,r14,r14
   828A29A4  7FA3EB78             or r3,r29,r29

@@ -2,214 +2,219 @@
 
 // 828C5750  MPpResetPCMBuffer  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/micproxy.c:180)
 
-void MPpResetPCMBuffer(void)
+undefined4 MPpResetPCMBuffer(MICPROXY *param_1)
 
 {
   uint uVar1;
   int iVar2;
-  undefined4 uVar3;
-  int iVar4;
-  int *piVar5;
-  int iVar6;
-  undefined8 uVar7;
-  ulonglong uVar8;
+  ulong uVar3;
+  void *pvVar4;
+  void *pvVar5;
+  undefined4 uVar6;
+  int *piVar7;
+  undefined8 uVar8;
   ulonglong uVar9;
-  longlong lVar10;
-  ulonglong uVar11;
-  int iVar12;
+  ulonglong uVar10;
+  longlong lVar11;
+  ulonglong uVar12;
+  int iVar13;
   
-  iVar2 = __savegprlr_25();
+  iVar2 = __savegprlr_25(param_1);
   uVar1 = *(uint *)(iVar2 + 0x88);
-  iVar12 = *(int *)(iVar2 + 0xc);
+  iVar13 = *(int *)(iVar2 + 0xc);
+  uVar9 = 0;
   uVar8 = 0;
-  uVar7 = 0;
   if (uVar1 != 0) {
-    uVar11 = (ulonglong)uVar1;
-    piVar5 = (int *)(iVar2 + 0x50);
-    uVar9 = uVar8;
+    uVar12 = (ulonglong)uVar1;
+    piVar7 = (int *)(iVar2 + 0x50);
+    uVar10 = uVar9;
     do {
-      uVar8 = (ulonglong)*(uint *)(*(int *)(*piVar5 + 0x18) + 0x18);
-      if (uVar8 < uVar9) {
-        uVar8 = uVar9;
+      uVar9 = (ulonglong)*(uint *)(*(int *)(*piVar7 + 0x18) + 0x18);
+      if (uVar9 < uVar10) {
+        uVar9 = uVar10;
       }
-      piVar5 = piVar5 + 1;
-      uVar11 = uVar11 - 1;
-      uVar9 = uVar8;
-    } while (uVar11 != 0);
+      piVar7 = piVar7 + 1;
+      uVar12 = uVar12 - 1;
+      uVar10 = uVar9;
+    } while (uVar12 != 0);
     if (uVar1 != 0) {
-      uVar11 = (ulonglong)*(uint *)(iVar2 + 0x88);
-      piVar5 = (int *)(iVar2 + 0x50);
+      uVar12 = (ulonglong)*(uint *)(iVar2 + 0x88);
+      piVar7 = (int *)(iVar2 + 0x50);
       do {
-        uVar1 = *(uint *)(*(int *)(*piVar5 + 0x18) + 0x14);
+        uVar1 = *(uint *)(*(int *)(*piVar7 + 0x18) + 0x14);
         trapWord(6,(ulonglong)uVar1,0);
-        if (uVar8 != (longlong)(int)((uVar8 & 0xffffffff) / (ulonglong)uVar1) * (longlong)(int)uVar1
+        if (uVar9 != (longlong)(int)((uVar9 & 0xffffffff) / (ulonglong)uVar1) * (longlong)(int)uVar1
            ) {
-          uVar8 = (longlong)(int)uVar1 * (longlong)(int)uVar8;
+          uVar9 = (longlong)(int)uVar1 * (longlong)(int)uVar9;
         }
-        piVar5 = piVar5 + 1;
-        uVar11 = uVar11 - 1;
-      } while (uVar11 != 0);
+        piVar7 = piVar7 + 1;
+        uVar12 = uVar12 - 1;
+      } while (uVar12 != 0);
     }
   }
-  iVar6 = *(int *)(iVar2 + 8);
-  lVar10 = (longlong)(int)uVar8 * (longlong)iVar12;
-  if (iVar6 == 0) {
-    uVar3 = XMemAlloc(lVar10,0x608a2002);
-    *(undefined4 *)(iVar2 + 8) = uVar3;
-    uVar3 = XMemAlloc(iVar12 * 0x1c,0x618a0009);
-    *(undefined4 *)(iVar2 + 0x84) = uVar3;
-    iVar4 = XMemAlloc(iVar12 << 3,0x618a0003);
-    iVar6 = *(int *)(iVar2 + 8);
-    *(int *)(iVar2 + 0x60) = iVar4;
-    if (((iVar6 == 0) || (*(int *)(iVar2 + 0x84) == 0)) || (iVar4 == 0)) {
-      uVar7 = 0xffffffff8007000e;
-      if (*(int *)(iVar2 + 0x60) != 0) {
-        XMemFree(*(int *)(iVar2 + 0x60),0x618a0003);
+  pvVar4 = *(void **)(iVar2 + 8);
+  lVar11 = (longlong)(int)uVar9 * (longlong)iVar13;
+  uVar3 = (ulong)lVar11;
+  if (pvVar4 == (void *)0x0) {
+    pvVar4 = XMemAlloc(uVar3,0x608a2002);
+    *(void **)(iVar2 + 8) = pvVar4;
+    pvVar4 = XMemAlloc(iVar13 * 0x1c,0x618a0009);
+    *(void **)(iVar2 + 0x84) = pvVar4;
+    pvVar5 = XMemAlloc(iVar13 << 3,0x618a0003);
+    pvVar4 = *(void **)(iVar2 + 8);
+    *(void **)(iVar2 + 0x60) = pvVar5;
+    if (((pvVar4 == (void *)0x0) || (*(int *)(iVar2 + 0x84) == 0)) || (pvVar5 == (void *)0x0)) {
+      uVar8 = 0xffffffff8007000e;
+      if (*(void **)(iVar2 + 0x60) != (void *)0x0) {
+        XMemFree(*(void **)(iVar2 + 0x60),0x618a0003);
         *(undefined4 *)(iVar2 + 0x60) = 0;
       }
-      if (*(int *)(iVar2 + 0x84) != 0) {
-        XMemFree(*(int *)(iVar2 + 0x84),0x618a0009);
+      if (*(void **)(iVar2 + 0x84) != (void *)0x0) {
+        XMemFree(*(void **)(iVar2 + 0x84),0x618a0009);
         *(undefined4 *)(iVar2 + 0x84) = 0;
       }
-      if (*(int *)(iVar2 + 8) != 0) {
-        XMemFree(*(int *)(iVar2 + 8),0x608a2002);
+      if (*(void **)(iVar2 + 8) != (void *)0x0) {
+        XMemFree(*(void **)(iVar2 + 8),0x608a2002);
         *(undefined4 *)(iVar2 + 8) = 0;
       }
       goto LAB_828c58b4;
     }
   }
-  XMemSet(iVar6,0,lVar10);
-  XMemSet(*(undefined4 *)(iVar2 + 0x84),0,iVar12 * 0x1c);
-  XMemSet(*(undefined4 *)(iVar2 + 0x60),0,iVar12 * 8);
-  lVar10 = (ulonglong)*(uint *)(iVar2 + 8) + lVar10;
-  piVar5 = (int *)(*(int *)(iVar2 + 0x60) + iVar12 * 8);
-  iVar2 = *(int *)(iVar2 + 0x84) + iVar12 * 0x1c;
-  for (; iVar12 != 0; iVar12 = iVar12 + -1) {
-    lVar10 = lVar10 - uVar8;
-    *(int *)(iVar2 + -0x14) = (int)lVar10;
-    *(int *)(iVar2 + -0x10) = (int)uVar8;
-    piVar5 = piVar5 + -2;
-    *piVar5 = iVar2 + -0x1c;
+  XMemSet(pvVar4,0,uVar3);
+  XMemSet(*(void **)(iVar2 + 0x84),0,iVar13 * 0x1c);
+  XMemSet(*(void **)(iVar2 + 0x60),0,iVar13 * 8);
+  lVar11 = (ulonglong)*(uint *)(iVar2 + 8) + lVar11;
+  piVar7 = (int *)(*(int *)(iVar2 + 0x60) + iVar13 * 8);
+  iVar2 = *(int *)(iVar2 + 0x84) + iVar13 * 0x1c;
+  for (; iVar13 != 0; iVar13 = iVar13 + -1) {
+    lVar11 = lVar11 - uVar9;
+    *(int *)(iVar2 + -0x14) = (int)lVar11;
+    *(int *)(iVar2 + -0x10) = (int)uVar9;
+    piVar7 = piVar7 + -2;
+    *piVar7 = iVar2 + -0x1c;
     iVar2 = iVar2 + -0x1c;
   }
 LAB_828c58b4:
-  __restgprlr_25(uVar7);
-  return;
+  uVar6 = __restgprlr_25(uVar8);
+  return uVar6;
 }
 
 
 // 828C5938  MPpVADPass  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/micproxy.c:320)
 
-void MPpVADPass(undefined8 param_1,int param_2,int param_3)
+int MPpVADPass(MICPROXY *param_1,MPPACKET *param_2,int param_3)
 
 {
-  int iVar1;
-  int iVar2;
-  ulonglong uVar3;
-  int *piVar4;
-  ulonglong uVar5;
-  short *psVar6;
+  ulong uVar1;
+  uchar *puVar2;
+  uint uVar3;
+  ulonglong uVar4;
+  int *piVar5;
+  int iVar6;
   ulonglong uVar7;
-  ulonglong uVar8;
-  uint *puVar9;
+  short *psVar8;
+  ulonglong uVar9;
   ulonglong uVar10;
+  uint *puVar11;
+  ulonglong uVar12;
   
-  piVar4 = (int *)__savegprlr_22();
-  iVar1 = *(int *)(param_2 + 8);
-  iVar2 = piVar4[0x24];
-  puVar9 = (uint *)(piVar4 + 0x24);
-  uVar7 = (ulonglong)(uint)piVar4[0x25];
-  uVar8 = 0;
-  uVar3 = (ulonglong)(*(uint *)(param_2 + 0xc) >> 1);
-  if (*(int *)(*piVar4 + 0x28) != 0) {
-    if ((*(uint *)(piVar4[1] + 0xc4) & 1) != 0) {
-      XMemSet(iVar1,0,*(uint *)(param_2 + 0xc));
+  piVar5 = (int *)__savegprlr_22(param_1);
+  uVar1 = (param_2->field0_0x0).XMediaPacket.Length;
+  puVar2 = (param_2->field0_0x0).XMediaPacket.Buffer;
+  iVar6 = piVar5[0x24];
+  puVar11 = (uint *)(piVar5 + 0x24);
+  uVar9 = (ulonglong)(uint)piVar5[0x25];
+  uVar10 = 0;
+  uVar4 = (ulonglong)(uVar1 >> 1);
+  if (*(int *)(*piVar5 + 0x28) != 0) {
+    if ((*(uint *)(piVar5[1] + 0xc4) & 1) != 0) {
+      XMemSet(puVar2,0,uVar1);
     }
-    (**(code **)(*piVar4 + 0x28))
-              (*(undefined4 *)piVar4[1],*(undefined4 *)(param_2 + 8),*(undefined4 *)(param_2 + 0xc),
-               puVar9);
+    (**(code **)(*piVar5 + 0x28))
+              (*(undefined4 *)piVar5[1],(param_2->field0_0x0).XMediaPacket.Buffer,
+               (param_2->field0_0x0).XMediaPacket.Length,puVar11);
     param_3 = 0;
   }
-  if (*(int *)(*piVar4 + 0x20) == 0) {
-    if (((*(uint *)(param_2 + 0x10) & 0xf0000000) == 0x40000000) &&
-       (8 < (*(uint *)(param_2 + 0x10) & 0xff))) {
-      uVar7 = uVar7 + 200;
+  if (*(int *)(*piVar5 + 0x20) == 0) {
+    uVar3 = (param_2->field0_0x0).XMediaPacket.Resrvd;
+    if (((uVar3 & 0xf0000000) == 0x40000000) && (8 < (uVar3 & 0xff))) {
+      uVar9 = uVar9 + 200;
     }
-    if ((param_3 == 1) || ((*(uint *)(piVar4[1] + 0xc4) & 1) != 0)) {
-      *puVar9 = 0;
+    if ((param_3 == 1) || ((*(uint *)(piVar5[1] + 0xc4) & 1) != 0)) {
+      *puVar11 = 0;
     }
     else {
-      if (uVar3 != 0) {
-        psVar6 = (short *)(iVar1 + -2);
-        uVar10 = uVar3;
+      if (uVar4 != 0) {
+        psVar8 = (short *)(puVar2 + -2);
+        uVar12 = uVar4;
         do {
-          psVar6 = psVar6 + 1;
-          uVar5 = (ulonglong)((int)*psVar6 >> 0x1f);
-          uVar8 = (((longlong)*psVar6 ^ uVar5) - uVar5) + uVar8;
-          uVar10 = uVar10 - 1;
-        } while (uVar10 != 0);
+          psVar8 = psVar8 + 1;
+          uVar7 = (ulonglong)((int)*psVar8 >> 0x1f);
+          uVar10 = (((longlong)*psVar8 ^ uVar7) - uVar7) + uVar10;
+          uVar12 = uVar12 - 1;
+        } while (uVar12 != 0);
       }
-      trapWord(6,uVar3,0);
-      *puVar9 = -(uint)(uVar7 < (uVar8 & 0xffffffff) / uVar3) & 1;
+      trapWord(6,uVar4,0);
+      *puVar11 = -(uint)(uVar9 < (uVar10 & 0xffffffff) / uVar4) & 1;
     }
-    if (*puVar9 == 1) {
-      piVar4[0x26] = 500;
-      piVar4[0x25] = 300;
+    if (*puVar11 == 1) {
+      piVar5[0x26] = 500;
+      piVar5[0x25] = 300;
     }
-    else if (piVar4[0x26] < 1) {
-      piVar4[0x25] = 600;
+    else if (piVar5[0x26] < 1) {
+      piVar5[0x25] = 600;
     }
     else {
-      *puVar9 = 1;
-      piVar4[0x26] = piVar4[0x26] - (int)((uVar3 * 1000 & 0xffffffff) / 16000);
+      *puVar11 = 1;
+      piVar5[0x26] = piVar5[0x26] - (int)((uVar4 * 1000 & 0xffffffff) / 16000);
     }
   }
-  if (((*puVar9 == 1) && (iVar2 == 0)) || (30000 < (uint)piVar4[0x27])) {
-    piVar4[0x27] = 0;
-    *(char *)(piVar4 + 0x23) = *(char *)(piVar4 + 0x23) + '\x01';
-    memcpy(piVar4 + 6,&DAT_822026d8,0x36);
+  if (((*puVar11 == 1) && (iVar6 == 0)) || (30000 < (uint)piVar5[0x27])) {
+    piVar5[0x27] = 0;
+    *(char *)(piVar5 + 0x23) = *(char *)(piVar5 + 0x23) + '\x01';
+    memcpy();
   }
-  if (*puVar9 == 1) {
-    piVar4[0x27] = (int)((uVar3 * 1000 & 0xffffffff) / 16000) + piVar4[0x27];
+  if (*puVar11 == 1) {
+    piVar5[0x27] = (int)((uVar4 * 1000 & 0xffffffff) / 16000) + piVar5[0x27];
   }
-  __restgprlr_22();
-  return;
+  iVar6 = __restgprlr_22();
+  return iVar6;
 }
 
 
 // 828C5B18  MPpSubmitMicPacket  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/micproxy.c:531)
 
-void MPpSubmitMicPacket(undefined8 param_1,undefined4 *param_2)
+void MPpSubmitMicPacket(MICPROXY *param_1,PACKET_CONTEXT *param_2)
 
 {
-  undefined4 *puVar1;
+  XMEDIAPACKET *pXVar1;
   int iVar2;
   int iVar3;
   
-  iVar2 = __savegprlr_29();
-  puVar1 = (undefined4 *)*param_2;
+  iVar2 = __savegprlr_29(param_1);
+  pXVar1 = param_2->Packet;
   iVar3 = -0x7fffbffb;
-  if (puVar1[5] == 0) {
-    puVar1[3] = (uint)puVar1[3] >> 2;
+  if (pXVar1->Format == XMEDIAFORMAT_PCM) {
+    pXVar1->Length = pXVar1->Length >> 2;
   }
-  puVar1[5] = *(undefined4 *)(*(int *)(iVar2 + 4) + 0x8c);
+  pXVar1->Format = *(XMEDIAFORMAT *)(*(int *)(iVar2 + 4) + 0x8c);
   if (*(int *)(*(int *)(iVar2 + 4) + 8) != 0) {
     if ((*(uint *)(*(int *)(iVar2 + 4) + 0xc4) & 0xf0000) != 0) {
-      iVar3 = XamVoiceSubmitPacket(*(undefined4 *)(*(int *)(iVar2 + 4) + 8),1,puVar1);
+      iVar3 = XamVoiceSubmitPacket(*(undefined4 *)(*(int *)(iVar2 + 4) + 8),1,pXVar1);
     }
   }
   if ((*(int *)(*(int *)(iVar2 + 4) + 8) == 0) || (iVar3 < 0)) {
-    *puVar1 = 0xc0000001;
-    puVar1[1] = puVar1[3];
+    pXVar1->Status = -0x3fffffff;
+    pXVar1->Offset = pXVar1->Length;
   }
-  param_2[1] = 0;
+  param_2->Next = (PACKET_CONTEXT *)0x0;
   if (*(int *)(iVar2 + 0x78) == 0) {
-    *(undefined4 **)(iVar2 + 0x74) = param_2;
+    *(PACKET_CONTEXT **)(iVar2 + 0x74) = param_2;
   }
   else {
-    *(undefined4 **)(*(int *)(iVar2 + 0x78) + 4) = param_2;
+    *(PACKET_CONTEXT **)(*(int *)(iVar2 + 0x78) + 4) = param_2;
   }
-  *(undefined4 **)(iVar2 + 0x78) = param_2;
+  *(PACKET_CONTEXT **)(iVar2 + 0x78) = param_2;
   __restgprlr_29();
   return;
 }
@@ -217,29 +222,32 @@ void MPpSubmitMicPacket(undefined8 param_1,undefined4 *param_2)
 
 // 828C5BE8  MPpSubmitCodecPacket  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/micproxy.c:617)
 
-void MPpSubmitCodecPacket(undefined8 param_1,ulonglong param_2,undefined4 *param_3)
+void MPpSubmitCodecPacket(MICPROXY *param_1,ulong param_2,PACKET_CONTEXT *param_3)
 
 {
-  undefined4 *puVar1;
+  XMEDIAPACKET *pXVar1;
   int iVar2;
   int iVar3;
+  ulonglong uVar4;
   
-  iVar2 = __savegprlr_28();
-  puVar1 = (undefined4 *)*param_3;
-  iVar3 = CodecSubmit(*(undefined4 *)((int)((param_2 + 0x14 & 0xffffffff) << 2) + iVar2),2,puVar1);
+  uVar4 = (ulonglong)(int)param_2;
+  iVar2 = __savegprlr_28(param_1);
+  pXVar1 = param_3->Packet;
+  iVar3 = CodecSubmit(*(CODEC_PROCESSOR **)((int)((uVar4 + 0x14 & 0xffffffff) << 2) + iVar2),2,
+                      pXVar1);
   if (iVar3 < 0) {
-    *puVar1 = 0;
-    puVar1[1] = puVar1[3];
+    pXVar1->Status = 0;
+    pXVar1->Offset = pXVar1->Length;
   }
-  param_3[1] = 0;
-  iVar2 = (int)((param_2 & 0xffffffff) << 3) + iVar2;
+  param_3->Next = (PACKET_CONTEXT *)0x0;
+  iVar2 = (int)((uVar4 & 0xffffffff) << 3) + iVar2;
   if (*(int *)(iVar2 + 0x68) == 0) {
-    *(undefined4 **)(iVar2 + 100) = param_3;
+    *(PACKET_CONTEXT **)(iVar2 + 100) = param_3;
   }
   else {
-    *(undefined4 **)(*(int *)(iVar2 + 0x68) + 4) = param_3;
+    *(PACKET_CONTEXT **)(*(int *)(iVar2 + 0x68) + 4) = param_3;
   }
-  *(undefined4 **)(iVar2 + 0x68) = param_3;
+  *(PACKET_CONTEXT **)(iVar2 + 0x68) = param_3;
   __restgprlr_28();
   return;
 }
@@ -247,71 +255,73 @@ void MPpSubmitCodecPacket(undefined8 param_1,ulonglong param_2,undefined4 *param
 
 // 828C6298  MicProxyRegister  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/micproxy.c:666)
 
-void MicProxyRegister(void)
+undefined4 MicProxyRegister(MICPROXY *param_1,ulong param_2)
 
 {
-  int iVar1;
-  DWORD DVar2;
-  longlong lVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
+  MICPROXY *pMVar1;
+  ulong uVar2;
+  undefined4 uVar3;
+  PACKET_CONTEXT *pPVar4;
+  uint uVar5;
   
-  iVar1 = __savegprlr_29();
-  uVar5 = (ulonglong)*(uint *)(iVar1 + 0xc);
-  MicProxyUnregister();
-  MPpResetPCMBuffer(iVar1);
-  while ((uVar5 & 0xffffffff) != 0) {
-    uVar5 = uVar5 - 1;
-    uVar4 = (*(uint *)(iVar1 + 0xc) - uVar5) - 1;
-    if ((uVar4 & 0xffffffff) < (ulonglong)*(uint *)(iVar1 + 0xc)) {
-      lVar3 = (ulonglong)*(uint *)(iVar1 + 0x60) + (uVar4 & 0x1fffffff) * 8;
+  pMVar1 = (MICPROXY *)__savegprlr_29(param_1,param_2);
+  uVar2 = pMVar1->NumPackets;
+  MicProxyUnregister(pMVar1);
+  MPpResetPCMBuffer(pMVar1);
+  while (uVar2 != 0) {
+    uVar2 = uVar2 - 1;
+    uVar5 = (pMVar1->NumPackets - uVar2) - 1;
+    if (uVar5 < pMVar1->NumPackets) {
+      pPVar4 = pMVar1->Contexts[2] + uVar5;
     }
     else {
-      lVar3 = 0;
+      pPVar4 = (PACKET_CONTEXT *)0x0;
     }
-    MPpSubmitMicPacket(iVar1,lVar3);
+    MPpSubmitMicPacket(pMVar1,pPVar4);
   }
-  *(undefined1 *)(iVar1 + 0x8c) = 0;
-  *(undefined4 *)(iVar1 + 0x90) = 0;
-  *(undefined4 *)(iVar1 + 0x94) = 600;
-  *(undefined4 *)(iVar1 + 0x98) = 0;
-  *(undefined4 *)(iVar1 + 0x9c) = 0;
-  DVar2 = GetTickCount();
-  *(DWORD *)(iVar1 + 0x10) = DVar2;
-  __restgprlr_29(0);
-  return;
+  pMVar1->Talkspurt = '\0';
+  pMVar1->VoiceDetected = 0;
+  pMVar1->Sensitivity = 600;
+  pMVar1->Hangtime = 0;
+  pMVar1->Talktime = 0;
+  uVar2 = GetTickCount();
+  pMVar1->LastPacketTime = uVar2;
+  uVar3 = __restgprlr_29(0);
+  return uVar3;
 }
 
 
 // 828C5C68  MicProxyUnregister  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/micproxy.c:746)
 
-void MicProxyUnregister(void)
+void MicProxyUnregister(MICPROXY *param_1)
 
 {
   int iVar1;
   int iVar2;
-  uint uVar3;
-  undefined4 *puVar4;
-  int *piVar5;
+  int iVar3;
+  uint uVar4;
+  undefined4 *puVar5;
+  int *piVar6;
   
-  iVar2 = __savegprlr_27();
-  uVar3 = 0;
+  iVar2 = __savegprlr_27(param_1);
+  uVar4 = 0;
+  iVar3 = iVar2;
   if (*(int *)(iVar2 + 0x88) != 0) {
-    piVar5 = (int *)(iVar2 + 100);
-    puVar4 = (undefined4 *)(iVar2 + 0x50);
+    piVar6 = (int *)(iVar2 + 100);
+    puVar5 = (undefined4 *)(iVar2 + 0x50);
     do {
-      CodecFlush(*puVar4,0,0,0);
-      while (iVar1 = *piVar5, iVar1 != 0) {
-        if (iVar1 == piVar5[1]) {
-          piVar5[1] = 0;
+      iVar3 = CodecFlush((CODEC_PROCESSOR *)*puVar5,(XMEDIAPACKET **)0x0,(XMEDIAPACKET **)0x0,0);
+      while (iVar1 = *piVar6, iVar1 != 0) {
+        if (iVar1 == piVar6[1]) {
+          piVar6[1] = 0;
         }
-        *piVar5 = *(int *)(iVar1 + 4);
+        *piVar6 = *(int *)(iVar1 + 4);
         *(undefined4 *)(iVar1 + 4) = 0;
       }
-      uVar3 = uVar3 + 1;
-      puVar4 = puVar4 + 1;
-      piVar5 = piVar5 + 2;
-    } while (uVar3 < *(uint *)(iVar2 + 0x88));
+      uVar4 = uVar4 + 1;
+      puVar5 = puVar5 + 1;
+      piVar6 = piVar6 + 2;
+    } while (uVar4 < *(uint *)(iVar2 + 0x88));
   }
   while( true ) {
     iVar1 = *(int *)(iVar2 + 0x74);
@@ -322,313 +332,322 @@ void MicProxyUnregister(void)
     *(int *)(iVar2 + 0x74) = *(int *)(iVar1 + 4);
     *(undefined4 *)(iVar1 + 4) = 0;
   }
-  __restgprlr_27();
+  __restgprlr_27(iVar3);
   return;
 }
 
 
 // 828C5D28  MicProxyProcess  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/micproxy.c:808)
 
-void MicProxyProcess(void)
+/* WARNING: Type propagation algorithm not settling */
+
+undefined4 MicProxyProcess(MICPROXY *param_1)
 
 {
-  undefined2 uVar1;
-  undefined4 *puVar2;
-  void *_Src;
-  int iVar3;
-  uint uVar4;
-  int *piVar5;
-  DWORD DVar6;
-  size_t _Size;
-  byte *pbVar7;
-  undefined2 *puVar8;
-  uint uVar9;
-  int iVar11;
-  int *piVar12;
-  longlong lVar10;
-  undefined8 uVar13;
-  undefined8 uVar14;
-  longlong lVar15;
+  short sVar1;
+  MPPACKET *pMVar2;
+  XMEDIAFORMAT XVar3;
+  uchar *puVar4;
+  XMEDIAPACKET *pXVar5;
+  XMEDIAPACKET *pXVar6;
+  uint uVar7;
+  MICPROXY *pMVar8;
+  ulong uVar9;
+  int iVar10;
+  undefined4 uVar11;
+  PACKET_CONTEXT *pPVar12;
+  byte *pbVar13;
+  short *psVar14;
+  uint uVar15;
+  ulong uVar17;
+  int *piVar18;
   longlong lVar16;
-  int *piVar17;
-  ulonglong uVar18;
-  ulonglong uVar19;
-  int *piVar20;
-  int *piVar21;
-  uint uVar22;
+  int iVar19;
+  PACKET_QUEUE *pPVar20;
+  PACKET_CONTEXT **ppPVar21;
+  int iVar22;
+  PACKET_CONTEXT *pPVar23;
+  CODEC_PROCESSOR **ppCVar24;
+  uint uVar25;
   
-  piVar5 = (int *)__savegprlr_15();
-  uVar13 = 0;
-  uVar22 = 0;
-  uVar14 = 0;
-  DVar6 = GetTickCount();
-  puVar2 = (undefined4 *)piVar5[0x1d];
-  piVar21 = piVar5 + 0x1d;
-  piVar5[5] = piVar5[5] + (DVar6 - piVar5[4]);
-  while (puVar2 != (undefined4 *)0x0) {
-    piVar12 = (int *)*puVar2;
-    if ((((*piVar12 == 0x103) || (piVar12[6] != 0)) || ((uint)piVar5[3] <= uVar22)) ||
-       (piVar5[5] < 0x14)) break;
-    iVar11 = piVar12[5];
-    if (*piVar12 == 0) {
-      if (iVar11 == 1) {
-        _Src = (void *)piVar12[2];
-        uVar18 = ZEXT48(_Src);
-        uVar4 = piVar12[3] << 1;
-        uVar9 = uVar4 | (uint)piVar12[3] >> 0x1f;
-        uVar19 = (longlong)((int)uVar9 >> 2) + (ulonglong)((int)uVar9 < 0 && (uVar4 & 2) != 0);
-        lVar16 = uVar19 * 3 + uVar18;
-        _Size = (size_t)uVar19;
-        memcpy((void *)lVar16,_Src,_Size);
-        lVar15 = uVar19 * 7 + uVar18;
-        memcpy((void *)lVar15,(void *)(_Size + (int)_Src),_Size);
-        lVar10 = (uVar19 & 0x7fffffff) << 1;
-        g726adpcm(1,lVar16,uVar18,lVar10,piVar5 + 6);
-        g726adpcm(1,lVar15,(uVar19 & 0x3fffffff) * 4 + uVar18,lVar10,piVar5 + 6);
+  pMVar8 = (MICPROXY *)__savegprlr_15(param_1);
+  iVar10 = 0;
+  uVar25 = 0;
+  iVar19 = 0;
+  uVar9 = GetTickCount();
+  pPVar12 = pMVar8->Queues[2].Head;
+  pPVar20 = pMVar8->Queues + 2;
+  pMVar8->Delta = pMVar8->Delta + (uVar9 - pMVar8->LastPacketTime);
+  while (pPVar12 != (PACKET_CONTEXT *)0x0) {
+    pMVar2 = (MPPACKET *)pPVar12->Packet;
+    iVar22 = (pMVar2->field0_0x0).XMediaPacket.Status;
+    if ((((iVar22 == 0x103) || (pMVar2->NumCodecsPending != 0)) || (pMVar8->NumPackets <= uVar25))
+       || (pMVar8->Delta < 0x14)) break;
+    XVar3 = (pMVar2->field0_0x0).XMediaPacket.Format;
+    if (iVar22 == 0) {
+      if (XVar3 == XMEDIAFORMAT_G726) {
+        uVar15 = (pMVar2->field0_0x0).XMediaPacket.Length;
+        puVar4 = (pMVar2->field0_0x0).XMediaPacket.Buffer;
+        uVar7 = uVar15 << 1;
+        uVar15 = uVar7 | uVar15 >> 0x1f;
+        iVar22 = ((int)uVar15 >> 2) + (uint)((int)uVar15 < 0 && (uVar7 & 2) != 0);
+        memcpy();
+        memcpy();
+        g726adpcm(1,(char *)(puVar4 + iVar22 * 3),(char *)puVar4,iVar22 * 2,&pMVar8->g726State);
+        g726adpcm(1,(char *)(puVar4 + iVar22 * 7),(char *)(puVar4 + iVar22 * 4),iVar22 * 2,
+                  &pMVar8->g726State);
 LAB_828c5ed0:
-        piVar12[5] = 0;
-        iVar11 = piVar12[3] << 2;
-        piVar12[3] = iVar11;
+        (pMVar2->field0_0x0).XMediaPacket.Format = XMEDIAFORMAT_PCM;
+        uVar17 = (pMVar2->field0_0x0).XMediaPacket.Length << 2;
+        (pMVar2->field0_0x0).XMediaPacket.Length = uVar17;
         goto LAB_828c5ee0;
       }
-      if (iVar11 == 2) {
-        iVar11 = piVar12[3];
-        pbVar7 = (byte *)(piVar12[2] + iVar11);
-        puVar8 = (undefined2 *)(iVar11 * 4 + piVar12[2]);
-        for (; iVar11 != 0; iVar11 = iVar11 + -1) {
-          pbVar7 = pbVar7 + -1;
-          uVar1 = *(undefined2 *)(&DAT_829afc10 + (uint)*pbVar7 * 2);
-          puVar8[-1] = uVar1;
-          puVar8 = puVar8 + -2;
-          *puVar8 = uVar1;
+      if (XVar3 == XMEDIAFORMAT_ULAW) {
+        uVar17 = (pMVar2->field0_0x0).XMediaPacket.Length;
+        puVar4 = (pMVar2->field0_0x0).XMediaPacket.Buffer;
+        pbVar13 = puVar4 + uVar17;
+        psVar14 = (short *)(puVar4 + uVar17 * 4);
+        for (; uVar17 != 0; uVar17 = uVar17 - 1) {
+          pbVar13 = pbVar13 + -1;
+          sVar1 = g_uLawToLinear16[*pbVar13];
+          psVar14[-1] = sVar1;
+          psVar14 = psVar14 + -2;
+          *psVar14 = sVar1;
         }
         goto LAB_828c5ed0;
       }
     }
     else {
-      if ((iVar11 == 1) || (iVar11 == 2)) {
-        piVar12[5] = 0;
-        piVar12[3] = piVar12[3] << 2;
+      if ((XVar3 == XMEDIAFORMAT_G726) || (XVar3 == XMEDIAFORMAT_ULAW)) {
+        (pMVar2->field0_0x0).XMediaPacket.Format = XMEDIAFORMAT_PCM;
+        (pMVar2->field0_0x0).XMediaPacket.Length = (pMVar2->field0_0x0).XMediaPacket.Length << 2;
       }
-      XMemSet(piVar12[2],0,piVar12[3]);
-      iVar11 = piVar12[3];
-      uVar14 = 1;
-      *piVar12 = 0;
+      XMemSet((pMVar2->field0_0x0).XMediaPacket.Buffer,0,(pMVar2->field0_0x0).XMediaPacket.Length);
+      uVar17 = (pMVar2->field0_0x0).XMediaPacket.Length;
+      iVar19 = 1;
+      (pMVar2->field0_0x0).XMediaPacket.Status = 0;
 LAB_828c5ee0:
-      piVar12[1] = iVar11;
+      (pMVar2->field0_0x0).XMediaPacket.Offset = uVar17;
     }
-    MPpVADPass(piVar5,piVar12,uVar14);
-    if ((piVar5[0x24] == 1) && (uVar18 = 0, piVar5[0x22] != 0)) {
-      piVar17 = piVar5 + 0x16;
+    MPpVADPass(pMVar8,pMVar2,iVar19);
+    if ((pMVar8->VoiceDetected == 1) && (uVar17 = 0, pMVar8->NumCodecs != 0)) {
+      ppPVar21 = pMVar8->Contexts;
       do {
-        uVar9 = ((int)piVar12 - piVar5[0x21]) / 0x1c;
-        if (uVar9 < (uint)piVar5[3]) {
-          piVar20 = (int *)(uVar9 * 8 + *piVar17);
+        uVar15 = ((int)pMVar2 - (int)pMVar8->CodecPackets[2]) / 0x1c;
+        if (uVar15 < pMVar8->NumPackets) {
+          pPVar23 = *ppPVar21 + uVar15;
         }
         else {
-          piVar20 = (int *)0x0;
+          pPVar23 = (PACKET_CONTEXT *)0x0;
         }
-        iVar11 = *piVar20;
-        XMemSet(iVar11,0,0x18);
-        *(int *)(iVar11 + 8) = piVar12[2];
-        *(int *)(iVar11 + 0xc) = piVar12[3];
-        MPpSubmitCodecPacket(piVar5,uVar18,piVar20);
-        uVar18 = uVar18 + 1;
-        piVar17 = piVar17 + 1;
-        piVar12[6] = piVar12[6] + 1;
-      } while ((uVar18 & 0xffffffff) < (ulonglong)(uint)piVar5[0x22]);
+        pXVar5 = pPVar23->Packet;
+        XMemSet(pXVar5,0,0x18);
+        pXVar5->Buffer = (pMVar2->field0_0x0).XMediaPacket.Buffer;
+        pXVar5->Length = (pMVar2->field0_0x0).XMediaPacket.Length;
+        MPpSubmitCodecPacket(pMVar8,uVar17,pPVar23);
+        uVar17 = uVar17 + 1;
+        ppPVar21 = ppPVar21 + 1;
+        pMVar2->NumCodecsPending = pMVar2->NumCodecsPending + 1;
+      } while (uVar17 < pMVar8->NumCodecs);
     }
-    iVar11 = *piVar21;
-    if (iVar11 != 0) {
-      if (iVar11 == piVar5[0x1e]) {
-        piVar5[0x1e] = 0;
+    pPVar23 = pPVar20->Head;
+    if (pPVar23 != (PACKET_CONTEXT *)0x0) {
+      if (pPVar23 == pMVar8->Queues[2].Tail) {
+        pMVar8->Queues[2].Tail = (PACKET_CONTEXT *)0x0;
       }
-      *piVar21 = *(int *)(iVar11 + 4);
-      *(undefined4 *)(iVar11 + 4) = 0;
+      pPVar20->Head = pPVar23->Next;
+      pPVar23->Next = (PACKET_CONTEXT *)0x0;
     }
-    if (piVar12[6] == 0) {
-      MPpSubmitMicPacket(piVar5,puVar2);
+    if (pMVar2->NumCodecsPending == 0) {
+      MPpSubmitMicPacket(pMVar8,pPVar12);
     }
-    uVar22 = uVar22 + 1;
-    puVar2 = (undefined4 *)*piVar21;
-    piVar5[5] = piVar5[5] + -0x14;
+    uVar25 = uVar25 + 1;
+    pPVar12 = pPVar20->Head;
+    pMVar8->Delta = pMVar8->Delta + -0x14;
   }
-  uVar22 = 0;
-  piVar5[4] = DVar6;
-  if (piVar5[0x22] != 0) {
-    piVar21 = piVar5 + 0x14;
+  uVar25 = 0;
+  pMVar8->LastPacketTime = uVar9;
+  if (pMVar8->NumCodecs != 0) {
+    ppCVar24 = pMVar8->Codecs;
     do {
-      iVar11 = *(int *)piVar5[1] * 3 + *(int *)(*(int *)(*piVar21 + 0x18) + 0xc);
-      uVar13 = CodecProcess(*piVar21,*(undefined4 *)((iVar11 + 0x158) * 4 + *piVar5),
-                            *(undefined4 *)((iVar11 + 0x14c) * 4 + *piVar5));
-      uVar9 = 0;
-      piVar12 = (int *)(*piVar21 + 0x10);
+      uVar9 = pMVar8->LocalTalker->Port;
+      uVar17 = (*ppCVar24)->CodecType->CodecTypeIndex;
+      iVar10 = CodecProcess(*ppCVar24,pMVar8->XHVEngine->MaxLocalWork[uVar9][uVar17],
+                            pMVar8->XHVEngine->PrevLocalWork[uVar9][uVar17]);
+      uVar15 = 0;
+      piVar18 = (*ppCVar24)->Running;
       do {
-        if ((piVar12[-2] != 0) && (*piVar12 == 1)) goto LAB_828c6080;
-        uVar9 = uVar9 + 1;
-        piVar12 = piVar12 + 1;
-      } while (uVar9 < 2);
-      piVar5[0x24] = 0;
+        if (((PACKET_PROCESSOR *)piVar18[-2] != (PACKET_PROCESSOR *)0x0) && (*piVar18 == 1))
+        goto LAB_828c6080;
+        uVar15 = uVar15 + 1;
+        piVar18 = piVar18 + 1;
+      } while (uVar15 < 2);
+      pMVar8->VoiceDetected = 0;
 LAB_828c6080:
-      uVar22 = uVar22 + 1;
-      piVar21 = piVar21 + 1;
-    } while (uVar22 < (uint)piVar5[0x22]);
-    if ((int)uVar13 < 0) goto LAB_828c618c;
+      uVar25 = uVar25 + 1;
+      ppCVar24 = ppCVar24 + 1;
+    } while (uVar25 < pMVar8->NumCodecs);
+    if (iVar10 < 0) goto LAB_828c618c;
   }
-  uVar22 = 0;
-  if (piVar5[0x22] != 0) {
+  uVar25 = 0;
+  if (pMVar8->NumCodecs != 0) {
     do {
-      piVar12 = piVar5 + uVar22 * 2;
-      piVar17 = piVar12 + 0x19;
-      piVar21 = (int *)piVar12[0x19];
-      while (piVar21 != (int *)0x0) {
-        piVar21 = (int *)*piVar21;
-        if (uVar22 == 2) {
-          uVar9 = ((int)piVar21 - piVar5[0x21]) / 0x1c;
+      pPVar20 = pMVar8->Queues + uVar25;
+      pPVar12 = pMVar8->Queues[uVar25].Head;
+      while (pPVar12 != (PACKET_CONTEXT *)0x0) {
+        pXVar5 = pPVar12->Packet;
+        if (uVar25 == 2) {
+          uVar15 = ((int)pXVar5 - (int)pMVar8->CodecPackets[2]) / 0x1c;
         }
         else {
-          uVar9 = ((int)piVar21 - piVar5[uVar22 + 0x1f]) / 0x18;
+          uVar15 = ((int)pXVar5 - (int)pMVar8->CodecPackets[uVar25]) / 0x18;
         }
-        if (uVar9 < (uint)piVar5[3]) {
-          piVar20 = (int *)(uVar9 * 8 + piVar5[0x18]);
+        if (uVar15 < pMVar8->NumPackets) {
+          pPVar12 = pMVar8->Contexts[2] + uVar15;
         }
         else {
-          piVar20 = (int *)0x0;
+          pPVar12 = (PACKET_CONTEXT *)0x0;
         }
-        iVar11 = *piVar20;
-        if ((*piVar21 == 0x103) || (*(int *)(iVar11 + 0x18) == 0)) break;
-        iVar3 = *piVar17;
-        if (iVar3 != 0) {
-          if (iVar3 == piVar12[0x1a]) {
-            piVar12[0x1a] = 0;
+        pXVar6 = pPVar12->Packet;
+        if ((pXVar5->Status == 0x103) || (pXVar6[1].Status == 0)) break;
+        pPVar23 = pPVar20->Head;
+        if (pPVar23 != (PACKET_CONTEXT *)0x0) {
+          if (pPVar23 == pMVar8->Queues[uVar25].Tail) {
+            pMVar8->Queues[uVar25].Tail = (PACKET_CONTEXT *)0x0;
           }
-          *piVar17 = *(int *)(iVar3 + 4);
-          *(undefined4 *)(iVar3 + 4) = 0;
+          pPVar20->Head = pPVar23->Next;
+          pPVar23->Next = (PACKET_CONTEXT *)0x0;
         }
-        lVar10 = (ulonglong)*(uint *)(iVar11 + 0x18) - 1;
-        *(int *)(iVar11 + 0x18) = (int)lVar10;
-        if (lVar10 == 0) {
-          MPpSubmitMicPacket(piVar5);
+        lVar16 = (ulonglong)(uint)pXVar6[1].Status - 1;
+        pXVar6[1].Status = (long)lVar16;
+        if (lVar16 == 0) {
+          MPpSubmitMicPacket(pMVar8,pPVar12);
         }
-        piVar21 = (int *)*piVar17;
+        pPVar12 = pPVar20->Head;
       }
-      uVar22 = uVar22 + 1;
-    } while (uVar22 < (uint)piVar5[0x22]);
+      uVar25 = uVar25 + 1;
+    } while (uVar25 < pMVar8->NumCodecs);
   }
 LAB_828c618c:
-  __restgprlr_15(uVar13);
-  return;
+  uVar11 = __restgprlr_15(iVar10);
+  return uVar11;
 }
 
 
 // 828C6328  MicProxyCreate  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/micproxy.c:1294)
 
-void MicProxyCreate(undefined8 param_1,undefined4 param_2,ulonglong param_3,void *param_4,
-                   ulonglong param_5,undefined4 *param_6)
+undefined4
+MicProxyCreate(XHVENGINE *param_1,LOCALTALKER *param_2,ulong param_3,CODEC_PROCESSOR **param_4,
+              ulong param_5,MICPROXY **param_6)
 
 {
-  undefined4 *puVar1;
-  undefined4 uVar4;
-  longlong lVar2;
-  int iVar5;
-  longlong lVar3;
-  int iVar6;
-  int iVar7;
-  int *piVar8;
-  ulonglong uVar9;
+  XHVENGINE *pXVar1;
+  MICPROXY *pMVar2;
+  void *pvVar3;
+  int iVar4;
+  undefined4 uVar5;
+  longlong lVar6;
+  ulonglong uVar7;
+  int iVar8;
+  int iVar9;
+  int *piVar10;
+  ulonglong uVar11;
+  ulonglong uVar12;
   
-  uVar4 = __savegprlr_25();
-  lVar2 = XMemAlloc(0xa0,0x618a800d);
-  if (lVar2 == 0) {
+  uVar11 = (ulonglong)(int)param_5;
+  uVar7 = (ulonglong)(int)param_3;
+  lVar6 = (longlong)(int)param_2;
+  pXVar1 = (XHVENGINE *)__savegprlr_25(param_1,lVar6,uVar7,param_4);
+  pMVar2 = XMemAlloc(0xa0,0x618a800d);
+  if ((longlong)(int)pMVar2 == 0) {
 LAB_828c6440:
-    lVar3 = -0x7ff8fff2;
+    iVar4 = -0x7ff8fff2;
   }
   else {
-    puVar1 = (undefined4 *)lVar2;
-    puVar1[3] = (int)param_3;
-    puVar1[0x22] = (int)param_5;
-    *puVar1 = uVar4;
-    puVar1[1] = param_2;
-    memcpy(puVar1 + 0x14,param_4,(size_t)((param_5 & 0xffffffff) << 2));
-    if ((param_5 & 0xffffffff) != 0) {
-      lVar3 = (param_5 + 0x16 & 0x3fffffff) * 4 + lVar2;
+    pMVar2->NumPackets = (ulong)uVar7;
+    pMVar2->NumCodecs = (ulong)uVar11;
+    pMVar2->XHVEngine = pXVar1;
+    pMVar2->LocalTalker = (LOCALTALKER *)lVar6;
+    memcpy();
+    if ((uVar11 & 0xffffffff) != 0) {
+      lVar6 = (uVar11 + 0x16 & 0x3fffffff) * 4 + (longlong)(int)pMVar2;
       do {
-        param_5 = param_5 - 1;
-        iVar5 = XMemAlloc(param_3 * 0x18,0x618a0009);
-        *(int *)((int)lVar3 + 0x20) = iVar5;
-        if (iVar5 == 0) goto LAB_828c6440;
-        iVar5 = XMemAlloc((param_3 & 0x1fffffff) << 3,0x618a0003);
-        piVar8 = (int *)(lVar3 + -4);
-        *piVar8 = iVar5;
-        if (iVar5 == 0) goto LAB_828c6440;
-        if ((param_3 & 0xffffffff) != 0) {
-          iVar5 = 0;
-          iVar7 = 0;
-          uVar9 = param_3;
+        uVar11 = uVar11 - 1;
+        pvVar3 = XMemAlloc((ulong)uVar7 * 0x18,0x618a0009);
+        *(void **)((int)lVar6 + 0x20) = pvVar3;
+        if (pvVar3 == (void *)0x0) goto LAB_828c6440;
+        pvVar3 = XMemAlloc((ulong)((uVar7 & 0xffffffff) << 3),0x618a0003);
+        piVar10 = (int *)(lVar6 + -4);
+        *piVar10 = (int)pvVar3;
+        if (pvVar3 == (void *)0x0) goto LAB_828c6440;
+        if ((uVar7 & 0xffffffff) != 0) {
+          iVar4 = 0;
+          iVar9 = 0;
+          uVar12 = uVar7;
           do {
-            iVar6 = *(int *)((int)lVar3 + 0x20) + iVar7;
-            iVar7 = iVar7 + 0x18;
-            *(int *)(*piVar8 + iVar5) = iVar6;
-            iVar5 = iVar5 + 8;
-            uVar9 = uVar9 - 1;
-          } while (uVar9 != 0);
+            iVar8 = *(int *)((int)lVar6 + 0x20) + iVar9;
+            iVar9 = iVar9 + 0x18;
+            *(int *)(*piVar10 + iVar4) = iVar8;
+            iVar4 = iVar4 + 8;
+            uVar12 = uVar12 - 1;
+          } while (uVar12 != 0);
         }
-        lVar3 = lVar3 + -4;
-      } while ((param_5 & 0xffffffff) != 0);
+        lVar6 = lVar6 + -4;
+      } while ((uVar11 & 0xffffffff) != 0);
     }
-    lVar3 = MPpResetPCMBuffer(lVar2);
-    if (-1 < lVar3) goto LAB_828c6430;
+    iVar4 = MPpResetPCMBuffer(pMVar2);
+    if (-1 < iVar4) goto LAB_828c6430;
   }
-  MicProxyDestroy(lVar2);
-  lVar2 = 0;
+  MicProxyDestroy(pMVar2);
+  pMVar2 = (MICPROXY *)0x0;
 LAB_828c6430:
-  *param_6 = (int)lVar2;
-  __restgprlr_25(lVar3);
-  return;
+  *param_6 = pMVar2;
+  uVar5 = __restgprlr_25(iVar4);
+  return uVar5;
 }
 
 
 // 828C6198  MicProxyDestroy  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/micproxy.c:1415)
 
-void MicProxyDestroy(void)
+void MicProxyDestroy(MICPROXY *param_1)
 
 {
-  int iVar1;
+  void *pvVar1;
   uint uVar2;
-  int *piVar3;
+  undefined4 *puVar3;
   
-  iVar1 = __savegprlr_28();
-  if (iVar1 != 0) {
+  pvVar1 = (void *)__savegprlr_28(param_1);
+  if (pvVar1 != (void *)0x0) {
     uVar2 = 0;
-    if (*(int *)(iVar1 + 0x88) != 0) {
-      piVar3 = (int *)(iVar1 + 0x7c);
+    if (*(int *)((int)pvVar1 + 0x88) != 0) {
+      puVar3 = (undefined4 *)((int)pvVar1 + 0x7c);
       do {
-        CodecFlush(piVar3[-0xb],0,0,0);
-        if (*piVar3 != 0) {
-          XMemFree(*piVar3,0x618a0009);
-          *piVar3 = 0;
+        CodecFlush((CODEC_PROCESSOR *)puVar3[-0xb],(XMEDIAPACKET **)0x0,(XMEDIAPACKET **)0x0,0);
+        if ((void *)*puVar3 != (void *)0x0) {
+          XMemFree((void *)*puVar3,0x618a0009);
+          *puVar3 = 0;
         }
-        if (piVar3[-9] != 0) {
-          XMemFree(piVar3[-9],0x618a0003);
-          piVar3[-9] = 0;
+        if ((void *)puVar3[-9] != (void *)0x0) {
+          XMemFree((void *)puVar3[-9],0x618a0003);
+          puVar3[-9] = 0;
         }
         uVar2 = uVar2 + 1;
-        piVar3 = piVar3 + 1;
-      } while (uVar2 < *(uint *)(iVar1 + 0x88));
+        puVar3 = puVar3 + 1;
+      } while (uVar2 < *(uint *)((int)pvVar1 + 0x88));
     }
-    if (*(int *)(iVar1 + 0x60) != 0) {
-      XMemFree(*(int *)(iVar1 + 0x60),0x618a0003);
-      *(undefined4 *)(iVar1 + 0x60) = 0;
+    if (*(void **)((int)pvVar1 + 0x60) != (void *)0x0) {
+      XMemFree(*(void **)((int)pvVar1 + 0x60),0x618a0003);
+      *(undefined4 *)((int)pvVar1 + 0x60) = 0;
     }
-    if (*(int *)(iVar1 + 0x84) != 0) {
-      XMemFree(*(int *)(iVar1 + 0x84),0x618a0009);
-      *(undefined4 *)(iVar1 + 0x84) = 0;
+    if (*(void **)((int)pvVar1 + 0x84) != (void *)0x0) {
+      XMemFree(*(void **)((int)pvVar1 + 0x84),0x618a0009);
+      *(undefined4 *)((int)pvVar1 + 0x84) = 0;
     }
-    if (*(int *)(iVar1 + 8) != 0) {
-      XMemFree(*(int *)(iVar1 + 8),0x608a2002);
-      *(undefined4 *)(iVar1 + 8) = 0;
+    if (*(void **)((int)pvVar1 + 8) != (void *)0x0) {
+      XMemFree(*(void **)((int)pvVar1 + 8),0x608a2002);
+      *(undefined4 *)((int)pvVar1 + 8) = 0;
     }
-    XMemFree(iVar1,0x618a800d);
+    XMemFree(pvVar1,0x618a800d);
   }
   __restgprlr_28();
   return;

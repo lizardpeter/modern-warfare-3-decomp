@@ -2,14 +2,14 @@
 
 // 8291D040  strspn  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/strspn.c:111)
 
-size_t strspn(char *_Str,char *_Control)
+uint strspn(char *param_1,char *param_2)
 
 {
   byte bVar1;
   byte bVar2;
   undefined1 *puVar3;
   uint uVar4;
-  size_t sVar5;
+  uint uVar5;
   longlong lVar6;
   undefined1 uStack_21;
   byte local_20 [32];
@@ -21,23 +21,23 @@ size_t strspn(char *_Str,char *_Control)
     *puVar3 = 0;
     lVar6 = lVar6 + -1;
   } while (lVar6 != 0);
-  bVar1 = *_Control;
+  bVar1 = *param_2;
   while (bVar1 != 0) {
-    _Control = _Control + 1;
-    bVar2 = *_Control;
+    param_2 = param_2 + 1;
+    bVar2 = *param_2;
     local_20[bVar1 >> 3] = (byte)(1 << (bVar1 & 7)) | local_20[bVar1 >> 3];
     bVar1 = bVar2;
   }
-  bVar1 = *_Str;
+  bVar1 = *param_1;
   if (bVar1 == 0) {
     return 0;
   }
-  sVar5 = 0;
+  uVar5 = 0;
   uVar4 = 1 << (bVar1 & 7) & (uint)local_20[bVar1 >> 3];
   while (uVar4 != 0) {
-    sVar5 = sVar5 + 1;
-    uVar4 = 1 << ((byte)_Str[sVar5] & 7) & (uint)local_20[(byte)_Str[sVar5] >> 3];
+    uVar5 = uVar5 + 1;
+    uVar4 = 1 << ((byte)param_1[uVar5] & 7) & (uint)local_20[(byte)param_1[uVar5] >> 3];
   }
-  return sVar5;
+  return uVar5;
 }
 

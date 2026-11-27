@@ -374,7 +374,7 @@ LAB_828b8e2c:
   828B8E30  38210320             addi r1,r1,0x320
   828B8E34  4805D8C8             b 0x829166fc
 
-; 828B8888  CArgumentList::AddArgument  (<external>/Xenon/XDK-Main-FEB11/core/private/inc/xonp.h:452)
+; 828B8888  AddArgument  (<external>/Xenon/XDK-Main-FEB11/core/private/inc/xonp.h:452)
   828B8888  81430200             lwz r10,0x200(r3)
   828B888C  39200004             li r9,0x4
   828B8890  78880020             rldicl r8,r4,0x0,0x20

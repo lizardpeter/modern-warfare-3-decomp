@@ -2,290 +2,48 @@
 
 // 822A59A0  TRACK_cg_camerashake  (cgame/cg_camerashake.cpp:36)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void TRACK_cg_camerashake(void)
 
 {
-  track_static_alloc_internal(0xffffffff829d8b10,0x250,0xffffffff8201031c,9);
+  track_static_alloc_internal(s_cameraShakeSet,0x250,"s_cameraShakeSet",9);
   return;
 }
 
 
 // 822A59C0  CG_UpdateCameraShake  (cgame/cg_camerashake.cpp:43)
-
-void CG_UpdateCameraShake(undefined8 param_1,uint *param_2)
-
-{
-  float fVar1;
-  float fVar2;
-  float fVar3;
-  int iVar4;
-  char cVar5;
-  longlong lVar6;
-  double dVar7;
-  double dVar8;
-  double dVar9;
-  double dVar10;
-  
-  __savegprlr_27();
-  iVar4 = __savefpr_28();
-  if ((param_2[2] & 0x7f800000) == 0x7f800000) {
-    MyAssertHandler(0xffffffff82010420,0x31,0,0xffffffff82000f98,0xffffffff82010408);
-  }
-  if ((param_2[3] & 0x7f800000) == 0x7f800000) {
-    MyAssertHandler(0xffffffff82010420,0x32,0,0xffffffff82000f98,0xffffffff820103f0);
-  }
-  if ((param_2[1] & 0x7f800000) == 0x7f800000) {
-    MyAssertHandler(0xffffffff82010420,0x33,0,0xffffffff82000f98,0xffffffff820103d8);
-  }
-  cVar5 = CL_Demo_IsTimeStopped();
-  if ((cVar5 == '\0') &&
-     (lVar6 = (ulonglong)*(uint *)(iVar4 + 0x6b98c) - (ulonglong)*param_2, -1 < lVar6)) {
-    dVar7 = (double)(float)param_2[2];
-    dVar10 = (double)(longlong)(int)lVar6;
-    if (dVar10 < dVar7) {
-      dVar8 = 0.0;
-      if (dVar7 <= 0.0) {
-        MyAssertHandler(0xffffffff82010420,0x3e,0,0xffffffff820103a4,0xffffffff820103c0,dVar7);
-      }
-      if ((double)(float)param_2[1] <= dVar8) {
-        MyAssertHandler(0xffffffff82010420,0x3f,0,0xffffffff82010374,0xffffffff8201038c,
-                        (double)(float)param_2[1]);
-      }
-      dVar9 = 1.0;
-      dVar7 = dVar9;
-      if (dVar8 < (double)(float)param_2[3]) {
-        fVar1 = *(float *)(iVar4 + 0x6b9d0) - (float)param_2[6];
-        fVar2 = *(float *)(iVar4 + 0x6b9c8) - (float)param_2[4];
-        fVar3 = *(float *)(iVar4 + 0x6b9cc) - (float)param_2[5];
-        dVar7 = (double)(1.0 - (float)((double)SQRT(fVar3 * fVar3 + fVar2 * fVar2 + fVar1 * fVar1) /
-                                      (double)(float)param_2[3]));
-      }
-      dVar10 = (double)(float)(dVar10 / (double)(float)param_2[2]);
-      if ((dVar10 < dVar8) || (1.0 <= dVar10)) {
-        MyAssertHandler(dVar10,0xffffffff82010420,0x4e,0,0xffffffff82010330,0xffffffff82010348,
-                        dVar10);
-      }
-      fVar1 = (float)(dVar9 - dVar10) * (float)param_2[1];
-      dVar10 = (double)fVar1;
-      if (dVar8 < dVar10) {
-        if (dVar7 < dVar8) {
-          param_2[7] = (uint)(float)(dVar7 / dVar10);
-          param_2[8] = (uint)fVar1;
-          __restfpr_28(1);
-          __restgprlr_27();
-          return;
-        }
-        param_2[7] = (uint)(float)(dVar10 * dVar7);
-        param_2[8] = (uint)fVar1;
-        __restfpr_28(1);
-        __restgprlr_27();
-        return;
-      }
-    }
-  }
-  __restfpr_28(0);
-  __restgprlr_27();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 822A5C58  CG_StartShakeCamera  (cgame/cg_camerashake.cpp:96)
-
-void CG_StartShakeCamera(undefined8 param_1,double param_2,undefined8 param_3,undefined8 param_4,
-                        int param_5,undefined4 *param_6)
-
-{
-  int iVar1;
-  int iVar2;
-  int *piVar3;
-  int *piVar4;
-  int iVar5;
-  longlong lVar6;
-  double extraout_f1;
-  double dVar7;
-  double dVar8;
-  undefined8 local_78;
-  int local_70;
-  float local_6c;
-  float local_68;
-  float local_64;
-  undefined4 local_60;
-  undefined4 local_5c;
-  undefined4 local_58;
-  float local_54;
-  float local_50;
-  
-  iVar1 = __savegprlr_27();
-  dVar7 = 0.0;
-  dVar8 = extraout_f1;
-  if (extraout_f1 <= 0.0) {
-    MyAssertHandler(0xffffffff82010420,0x68,0,0xffffffff82000f98,0xffffffff8201048c);
-  }
-  if (param_5 < 1) {
-    MyAssertHandler(0xffffffff82010420,0x69,0,0xffffffff82000f98,0xffffffff8201047c);
-  }
-  iVar2 = CG_GetLocalClientGlobals(iVar1);
-  local_60 = *param_6;
-  local_70 = *(int *)(iVar2 + 0x6b98c);
-  local_5c = param_6[1];
-  local_58 = param_6[2];
-  local_54 = (float)dVar7;
-  local_50 = (float)dVar7;
-  local_6c = (float)dVar8;
-  local_68 = (float)(longlong)param_5;
-  local_64 = (float)param_2;
-  CG_UpdateCameraShake(iVar2,&local_70);
-  iVar1 = iVar1 * 0x94;
-  iVar2 = *(int *)(iVar2 + 0x6b98c);
-  iVar5 = 0;
-  piVar4 = (int *)(&DAT_829d8b10 + iVar1);
-  piVar3 = piVar4;
-  do {
-    if (iVar2 < *piVar3) {
-LAB_822a5e2c:
-      piVar3 = (int *)((int)&local_78 + 4);
-      lVar6 = 9;
-      piVar4 = piVar4 + iVar5 * 9 + -1;
-      do {
-        piVar3 = piVar3 + 1;
-        piVar4 = piVar4 + 1;
-        *piVar4 = *piVar3;
-        lVar6 = lVar6 + -1;
-      } while (lVar6 != 0);
-      __restgprlr_27();
-      return;
-    }
-    local_78 = (longlong)iVar2;
-    if ((float)(longlong)*piVar3 + (float)piVar3[2] <= (float)local_78) goto LAB_822a5e2c;
-    iVar5 = iVar5 + 1;
-    piVar3 = piVar3 + 9;
-  } while (iVar5 < 4);
-  dVar8 = (double)local_54;
-  if (iVar5 != 4) {
-    MyAssertHandler(0xffffffff82010420,0x85,0,0xffffffff82000f98,0xffffffff82010464);
-  }
-  if ((double)*(float *)(&DAT_829d8b2c + iVar1) < dVar8) {
-    iVar5 = 0;
-    dVar8 = (double)*(float *)(&DAT_829d8b2c + iVar1);
-  }
-  if ((double)*(float *)(&DAT_829d8b50 + iVar1) < dVar8) {
-    iVar5 = 1;
-    dVar8 = (double)*(float *)(&DAT_829d8b50 + iVar1);
-  }
-  if ((double)*(float *)(&DAT_829d8b74 + iVar1) < dVar8) {
-    iVar5 = 2;
-    dVar8 = (double)*(float *)(&DAT_829d8b74 + iVar1);
-  }
-  if (dVar8 <= (double)*(float *)(&DAT_829d8b98 + iVar1)) {
-    if (iVar5 == 4) goto LAB_822a5ea4;
-  }
-  else {
-    iVar5 = 3;
-  }
-  piVar3 = (int *)((int)&local_78 + 4);
-  lVar6 = 9;
-  piVar4 = piVar4 + iVar5 * 9 + -1;
-  do {
-    piVar3 = piVar3 + 1;
-    piVar4 = piVar4 + 1;
-    *piVar4 = *piVar3;
-    lVar6 = lVar6 + -1;
-  } while (lVar6 != 0);
-LAB_822a5ea4:
-  __restgprlr_27();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 822A5EB8  CG_ShakeCamera  (cgame/cg_camerashake.cpp:173)
-
-void CG_ShakeCamera(void)
-
-{
-  int iVar1;
-  int iVar2;
-  int iVar3;
-  longlong lVar4;
-  float *pfVar5;
-  double dVar6;
-  double dVar7;
-  double dVar8;
-  double dVar9;
-  double dVar10;
-  
-  __savegprlr_28();
-  iVar1 = __savefpr_28();
-  iVar2 = CG_GetLocalClientGlobals();
-  iVar1 = iVar1 * 0x94;
-  dVar7 = 0.0;
-  pfVar5 = (float *)(&DAT_829d8b2c + iVar1);
-  lVar4 = 4;
-  dVar8 = (double)((float)(longlong)*(int *)(iVar2 + 0x6b98c) * 0.0016666667);
-  dVar9 = dVar7;
-  dVar10 = dVar7;
-  do {
-    iVar3 = CG_UpdateCameraShake(iVar2,pfVar5 + -7);
-    if ((iVar3 != 0) && (dVar10 < (double)*pfVar5)) {
-      dVar9 = (double)pfVar5[1];
-      dVar10 = (double)*pfVar5;
-    }
-    lVar4 = lVar4 + -1;
-    pfVar5 = pfVar5 + 9;
-  } while (lVar4 != 0);
-  dVar6 = (double)*(float *)(iVar2 + 0x797e4);
-  if (dVar10 < dVar6) {
-    dVar9 = dVar6;
-    dVar10 = dVar6;
-  }
-  if (dVar10 <= dVar7) {
-    dVar9 = (double)crandom();
-    *(float *)(&DAT_829d8ba0 + iVar1) = (float)(dVar9 * 3.1415927410125732);
-    __restfpr_28();
-    __restgprlr_28();
-    return;
-  }
-  if (1.0 < dVar10) {
-    dVar10 = 1.0;
-  }
-  dVar7 = sin((double)(float)(dVar8 * 25.132741928100586 + (double)*(float *)(&DAT_829d8ba0 + iVar1)
-                             ));
-  *(float *)(iVar2 + 0x704dc) =
-       *(float *)(iVar2 + 0x704dc) +
-       (float)((double)(float)((double)(float)dVar7 * dVar9) * dVar10) * 18.0;
-  dVar7 = sin((double)(float)(dVar8 * 47.1238899230957 + (double)*(float *)(&DAT_829d8ba0 + iVar1)))
-  ;
-  *(float *)(iVar2 + 460000) =
-       (float)((double)(float)((double)(float)dVar7 * dVar9) * dVar10) * 16.0 +
-       *(float *)(iVar2 + 460000);
-  dVar7 = sin((double)(float)(dVar8 * 37.69911193847656 + (double)*(float *)(&DAT_829d8ba0 + iVar1))
-             );
-  *(float *)(iVar2 + 0x704e4) =
-       *(float *)(iVar2 + 0x704e4) +
-       (float)((double)(float)((double)(float)dVar7 * dVar9) * dVar10) * 10.0;
-  __restfpr_28();
-  __restgprlr_28();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure cg_s_s_0_s_0
 
 // 822A6090  CG_ArchiveCameraShake  (cgame/cg_camerashake.cpp:232)
 
-void CG_ArchiveCameraShake(longlong param_1,undefined8 param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CG_ArchiveCameraShake(LocalClientNum_t param_1,MemoryFile *param_2)
 
 {
-  MemFile_ArchiveData(param_2,0x94,param_1 * 0x94 + -0x7d6274f0);
+  MemFile_ArchiveData(param_2,0x94,s_cameraShakeSet + param_1);
   return;
 }
 
 
 // 822A60B0  CG_ClearCameraShakes  (cgame/cg_camerashake.cpp:241)
 
-void * CG_ClearCameraShakes(int param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CG_ClearCameraShakes(LocalClientNum_t param_1)
 
 {
-  void *pvVar1;
-  
-  pvVar1 = memset(&DAT_829d8b10 + param_1 * 0x94,0,0x90);
-  return pvVar1;
+  memset();
+  return;
 }
 

@@ -2,7 +2,7 @@
 
 // 82918B90  fmod  (<external>/bt/278379/vctools/crt/src/fpw32/tran/fmod.c:62)
 
-double fmod(double _X,double _Y)
+double fmod(double param_1,double param_2)
 
 {
   ulonglong uVar1;
@@ -13,18 +13,18 @@ double fmod(double _X,double _Y)
   ulonglong uVar6;
   double local_10;
   
-  if (((ulonglong)_X >> 0x30 & 0x7ff0) != 0x7ff0) {
-    if (((ulonglong)_Y >> 0x30 & 0x7ff0) != 0x7ff0) {
-      if ((ulonglong)ABS(_X) < (ulonglong)ABS(_Y)) {
-        return _X;
+  if (((ulonglong)param_1 >> 0x30 & 0x7ff0) != 0x7ff0) {
+    if (((ulonglong)param_2 >> 0x30 & 0x7ff0) != 0x7ff0) {
+      if ((ulonglong)ABS(param_1) < (ulonglong)ABS(param_2)) {
+        return param_1;
       }
-      uVar2 = (ulonglong)_Y >> 0x34 & 0x7ff;
-      local_10 = (double)((ulonglong)_X & 0x8000000000000000);
-      uVar6 = (ulonglong)_X >> 0x34 & 0x7ff;
-      uVar4 = ((ulonglong)_Y & 0xfffffffffffff) << 0xb;
+      uVar2 = (ulonglong)param_2 >> 0x34 & 0x7ff;
+      local_10 = (double)((ulonglong)param_1 & 0x8000000000000000);
+      uVar6 = (ulonglong)param_1 >> 0x34 & 0x7ff;
+      uVar4 = ((ulonglong)param_2 & 0xfffffffffffff) << 0xb;
       if (uVar2 == 0) {
-        if (((ulonglong)_Y & 0xfffffffffffff) == 0) {
-          return DAT_829b0420;
+        if (((ulonglong)param_2 & 0xfffffffffffff) == 0) {
+          return _d_ind.dbl;
         }
         uVar1 = uVar4 << (longlong)(int)LZCOUNT(uVar4);
         uVar2 = 1 - (longlong)(int)LZCOUNT(uVar4);
@@ -32,10 +32,10 @@ double fmod(double _X,double _Y)
       else {
         uVar1 = uVar4 | 0x8000000000000000;
       }
-      uVar4 = ((ulonglong)_X & 0xfffffffffffff) << 0xb;
+      uVar4 = ((ulonglong)param_1 & 0xfffffffffffff) << 0xb;
       if (uVar6 == 0) {
-        if (((ulonglong)_X & 0xfffffffffffff) == 0) {
-          return _X;
+        if (((ulonglong)param_1 & 0xfffffffffffff) == 0) {
+          return param_1;
         }
         uVar5 = uVar4 << (longlong)(int)LZCOUNT(uVar4);
         uVar6 = 1 - (longlong)(int)LZCOUNT(uVar4);
@@ -67,13 +67,13 @@ double fmod(double _X,double _Y)
       }
       return local_10;
     }
-    if (_Y == INFINITY) {
-      return _X;
+    if (param_2 == INFINITY) {
+      return param_1;
     }
-    if (_Y == -INFINITY) {
-      return _X;
+    if (param_2 == -INFINITY) {
+      return param_1;
     }
   }
-  return DAT_829b0420;
+  return _d_ind.dbl;
 }
 

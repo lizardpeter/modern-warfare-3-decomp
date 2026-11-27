@@ -2,3204 +2,412 @@
 
 // 8245C3E0  Scr_GetWeaponHandIndex  (game/g_client_script_cmd.cpp:70)
 
-undefined8 Scr_GetWeaponHandIndex(ulonglong param_1)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+PlayerHandIndex Scr_GetWeaponHandIndex(uint param_1)
 
 {
-  ulonglong uVar1;
-  uint uVar2;
+  uint uVar1;
   
   uVar1 = Scr_GetNumParam();
-  if ((param_1 & 0xffffffff) < (uVar1 & 0xffffffff)) {
-    uVar2 = Scr_GetConstString(param_1);
-    if (uVar2 == DAT_835a0c0e) {
-      return 0;
+  if (param_1 < uVar1) {
+    uVar1 = Scr_GetConstString(param_1);
+    if (uVar1 == scr_const.right) {
+      return WEAPON_HAND_DEFAULT;
     }
-    if (uVar2 == DAT_835a0bf0) {
-      return 1;
+    if (uVar1 == scr_const.left) {
+      return WEAPON_HAND_LEFT;
     }
-    Scr_ParamError(1,0xffffffff8206d194);
+    Scr_ParamError(1,"weapon hand must be \'right\' or \'left\'");
   }
-  return 0;
+  return WEAPON_HAND_DEFAULT;
 }
 
 
 // 8245C260  BG_SetPerk  (bgame/bg_perks.h:91)
 
-void BG_SetPerk(undefined8 param_1,ulonglong param_2)
+void BG_SetPerk(uint *param_1,uint param_2)
 
 {
   ulonglong uVar1;
   int iVar2;
   int iVar3;
+  ulonglong uVar4;
   
-  iVar3 = __savegprlr_28();
+  uVar4 = (ulonglong)(int)param_2;
+  iVar3 = __savegprlr_28(param_1);
   if (iVar3 == 0) {
-    MyAssertHandler(0xffffffff82000fa8,0x5f,0,0xffffffff82000f98,0xffffffff82000f9c);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\../bgame/bg_perks.h",
+                    0x5f,0,"%s");
   }
-  if (0x31 < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82000fa8,0x60,0,0xffffffff82000f60,param_2,0x32);
+  if (0x31 < (uVar4 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\../bgame/bg_perks.h",
+                    0x60,0,"perkIndex doesn\'t index PERK_COUNT\n\t%i not in [0, %i)");
   }
-  uVar1 = (param_2 & 0xffffffff) >> 5;
+  uVar1 = (uVar4 & 0xffffffff) >> 5;
   if (1 < uVar1) {
-    MyAssertHandler(0xffffffff82000fa8,99,0,0xffffffff82000f20,uVar1,2);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\../bgame/bg_perks.h",99,
+                    0,"arrayIndex doesn\'t index PERK_ARRAY_COUNT\n\t%i not in [0, %i)");
   }
   iVar2 = (int)(uVar1 << 2);
-  *(uint *)(iVar2 + iVar3) = 1 << ((uint)param_2 & 0x1f) | *(uint *)(iVar2 + iVar3);
+  *(uint *)(iVar2 + iVar3) = 1 << ((uint)uVar4 & 0x1f) | *(uint *)(iVar2 + iVar3);
   __restgprlr_28();
   return;
 }
 
 
 // 8245C468  G_GetNeededStartAmmo  (game/g_client_script_cmd.cpp:91)
-
-void G_GetNeededStartAmmo(undefined8 param_1,ulonglong param_2,ulonglong param_3)
-
-{
-  int iVar5;
-  char cVar8;
-  ulonglong uVar1;
-  int iVar6;
-  int iVar7;
-  longlong lVar2;
-  longlong lVar3;
-  longlong lVar4;
-  longlong lVar9;
-  uint *puVar10;
-  ulonglong uVar11;
-  
-  iVar5 = __savegprlr_21();
-  if (iVar5 == 0) {
-    MyAssertHandler(0xffffffff8206d1d0,0x61,0,0xffffffff82000f98,0xffffffff8206c32c);
-  }
-  if (*(int *)(iVar5 + 0x158) == 0) {
-    MyAssertHandler(0xffffffff8206d1d0,0x62,0,0xffffffff82000f98,0xffffffff8206d1bc);
-  }
-  if (((param_3 & 0xff) != 0) && (cVar8 = BG_HasUnderbarrelAmmo(param_2), cVar8 == '\0')) {
-    __restgprlr_21(0);
-    return;
-  }
-  iVar5 = *(int *)(iVar5 + 0x158);
-  uVar1 = BG_GetAmmoNotInClip(iVar5,param_2,param_3);
-  iVar6 = BG_AmmoForWeapon(param_2,param_3);
-  puVar10 = (uint *)(iVar5 + 0x274);
-  lVar9 = 0xf;
-  do {
-    uVar11 = (ulonglong)*puVar10;
-    if (((((*puVar10 & 0xff) != 0) && (uVar11 != (param_2 & 0xffffffff))) &&
-        (((param_3 & 0xff) == 0 || (cVar8 = BG_HasUnderbarrelAmmo(uVar11), cVar8 != '\0')))) &&
-       (iVar7 = BG_AmmoForWeapon(uVar11,param_3), iVar7 == iVar6)) {
-      lVar2 = BG_StartAmmo(uVar11,param_3);
-      lVar3 = BG_GetAmmoInClipForWeapon(iVar5,uVar11,param_3,0);
-      lVar3 = lVar2 - lVar3;
-      iVar7 = BG_PlayerDualWieldingWeapon(iVar5,uVar11);
-      if (iVar7 != 0) {
-        lVar4 = BG_GetAmmoInClipForWeapon(iVar5,uVar11,param_3,1);
-        lVar3 = (lVar3 + lVar2) - lVar4;
-      }
-      uVar1 = uVar1 - lVar3;
-    }
-    lVar9 = lVar9 + -1;
-    puVar10 = puVar10 + 1;
-  } while (lVar9 != 0);
-  lVar9 = BG_GetAmmoInClipForWeapon(iVar5,param_2,param_3,0);
-  lVar9 = lVar9 + (((uVar1 & 0xffffffff) >> 0x1f) - 1 & uVar1);
-  iVar6 = BG_PlayerDualWieldingWeapon(iVar5,param_2);
-  if (iVar6 != 0) {
-    lVar2 = BG_GetAmmoInClipForWeapon(iVar5,param_2,param_3,1);
-    lVar9 = lVar2 + lVar9;
-  }
-  lVar2 = BG_StartAmmo(param_2,param_3);
-  __restgprlr_21(lVar2 - lVar9);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 8245C320  BG_UnsetPerk  (bgame/bg_perks.h:107)
 
-void BG_UnsetPerk(undefined8 param_1,ulonglong param_2)
+void BG_UnsetPerk(uint *param_1,uint param_2)
 
 {
   ulonglong uVar1;
   int iVar2;
   int iVar3;
+  ulonglong uVar4;
   
-  iVar3 = __savegprlr_28();
+  uVar4 = (ulonglong)(int)param_2;
+  iVar3 = __savegprlr_28(param_1);
   if (iVar3 == 0) {
-    MyAssertHandler(0xffffffff82000fa8,0x6f,0,0xffffffff82000f98,0xffffffff82000f9c);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\../bgame/bg_perks.h",
+                    0x6f,0,"%s");
   }
-  if (0x31 < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82000fa8,0x70,0,0xffffffff82000f60,param_2,0x32);
+  if (0x31 < (uVar4 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\../bgame/bg_perks.h",
+                    0x70,0,"perkIndex doesn\'t index PERK_COUNT\n\t%i not in [0, %i)");
   }
-  uVar1 = (param_2 & 0xffffffff) >> 5;
+  uVar1 = (uVar4 & 0xffffffff) >> 5;
   if (1 < uVar1) {
-    MyAssertHandler(0xffffffff82000fa8,0x73,0,0xffffffff82000f20,uVar1,2);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\../bgame/bg_perks.h",
+                    0x73,0,"arrayIndex doesn\'t index PERK_ARRAY_COUNT\n\t%i not in [0, %i)");
   }
   iVar2 = (int)(uVar1 << 2);
-  *(uint *)(iVar2 + iVar3) = *(uint *)(iVar2 + iVar3) & ~(1 << ((uint)param_2 & 0x1f));
+  *(uint *)(iVar2 + iVar3) = *(uint *)(iVar2 + iVar3) & ~(1 << ((uint)uVar4 & 0x1f));
   __restgprlr_28();
   return;
 }
 
 
 // 8245C650  InitializeAmmo  (game/g_client_script_cmd.cpp:144)
-
-void InitializeAmmo(undefined8 param_1,undefined8 param_2,int param_3)
-
-{
-  int iVar2;
-  undefined8 uVar1;
-  char cVar3;
-  
-  iVar2 = __savegprlr_27();
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff8206d1d0,0x93,0,0xffffffff82000f98,0xffffffff8206c32c);
-  }
-  if (*(int *)(iVar2 + 0x158) == 0) {
-    MyAssertHandler(0xffffffff8206d1d0,0x94,0,0xffffffff82000f98,0xffffffff8206d1bc);
-  }
-  uVar1 = G_GetNeededStartAmmo(iVar2,param_2,0);
-  if ((int)uVar1 < 1) {
-    if (param_3 == 0) {
-      Fill_Clip(*(undefined4 *)(iVar2 + 0x158),param_2,0,uVar1);
-    }
-  }
-  else {
-    Add_Ammo(iVar2,param_2,0,uVar1,param_3 == 0);
-  }
-  cVar3 = BG_HasUnderbarrelAmmo(param_2);
-  if (cVar3 != '\0') {
-    uVar1 = G_GetNeededStartAmmo(iVar2,param_2,1);
-    if (0 < (int)uVar1) {
-      Add_Ammo(iVar2,param_2,1,uVar1,param_3 == 0);
-      __restgprlr_27();
-      return;
-    }
-    if (param_3 == 0) {
-      Fill_Clip(*(undefined4 *)(iVar2 + 0x158),param_2,1,uVar1);
-    }
-  }
-  __restgprlr_27();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 8245C788  PlayerCmd_giveWeapon  (game/g_client_script_cmd.cpp:184)
-
-void PlayerCmd_giveWeapon(void)
-
-{
-  undefined4 uVar1;
-  uint uVar6;
-  undefined8 uVar2;
-  ulonglong uVar3;
-  undefined8 uVar4;
-  ulonglong uVar5;
-  int iVar7;
-  char cVar9;
-  int iVar8;
-  undefined4 *puVar10;
-  undefined8 uVar11;
-  short sStack00000016;
-  char acStack_90 [63];
-  undefined1 local_51;
-  
-  uVar6 = __savegprlr_24();
-  sStack00000016 = (short)uVar6;
-  if (sStack00000016 == 0) {
-    uVar6 = uVar6 >> 0x10;
-    if (0x7ff < uVar6) {
-      MyAssertHandler(0xffffffff8206d1d0,0xc6,0,0xffffffff82000f98);
-    }
-    puVar10 = &DAT_83373680 + uVar6 * 0xa0;
-    if ((&DAT_833737d8)[uVar6 * 0xa0] == 0) {
-      va(0xffffffff8206d370,uVar6);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar10 = (undefined4 *)0x0;
-  }
-  uVar2 = Scr_GetString(0);
-  uVar3 = G_GetWeaponForName();
-  Scr_VerifyWeapon(uVar3,uVar2);
-  if (puVar10[0x56] == 0) {
-    MyAssertHandler(0xffffffff8206d1d0,0xcf,0,0xffffffff82000f98);
-  }
-  uVar1 = puVar10[0x56];
-  uVar6 = BG_GetAlternateWeapon(uVar3,0);
-  iVar8 = (&DAT_829d84a0)[uVar6 & 0xff];
-  uVar4 = BG_PlayerHasWeapon(uVar1,uVar3);
-  uVar6 = Scr_GetNumParam();
-  if (1 < uVar6) {
-    uVar5 = Scr_GetInt(1);
-    if (-1 < (int)uVar5) {
-      if ((int)uVar5 < 0x10) {
-        uVar5 = -(ulonglong)(*(int *)((int)((uVar5 & 0xffffffff) << 2) + *(int *)(iVar8 + 4)) != 0)
-                & uVar5;
-      }
-      else {
-        uVar5 = 0;
-      }
-      uVar3 = (uVar5 & 0xf) << 8 | uVar3 & 0xfffffffffffff0ff;
-    }
-  }
-  if (*(int *)(((uint)((uVar3 & 0xffffffff) >> 6) & 0x3c) + *(int *)(iVar8 + 4)) == 0) {
-    va(0xffffffff8206d318,uVar2,(uVar3 & 0xffffffff) >> 8 & 0xf);
-    Scr_Error();
-  }
-  if ((*(char *)(iVar8 + 0x782) == '\0') && (uVar6 = Scr_GetNumParam(), 2 < uVar6)) {
-    iVar7 = Scr_GetInt(2);
-    uVar11 = 1;
-    if (iVar7 != 0) goto LAB_8245c940;
-  }
-  uVar11 = 0;
-LAB_8245c940:
-  uVar6 = Scr_GetNumParam();
-  if (3 < uVar6) {
-    uVar5 = Scr_GetInt(3);
-    uVar3 = (-(ulonglong)(uVar5 < 8) & uVar5 & 7) << 0x15 | uVar3 & 0xffffffffff1fffff;
-  }
-  if ((*(int *)(iVar8 + 0x38) == 1) &&
-     (cVar9 = BG_PlayerCanPickUpWeaponOffhandClass(uVar3,uVar1), cVar9 == '\0')) {
-    Com_PrintWarning(0x18,0xffffffff8206d290,uVar2);
-  }
-  if (*(int *)(iVar8 + 0x38) == 3) {
-    va(0xffffffff8206d260,uVar2);
-    Scr_Error();
-  }
-  iVar8 = G_GivePlayerWeapon(uVar1,uVar3,uVar11);
-  if (iVar8 != 0) {
-    _snprintf(acStack_90,0x40,"%c \"%i\"",0x44,1);
-    local_51 = 0;
-    SV_GameSendServerCommand((int)(puVar10 + 0x1f323260) / 0x280,0,acStack_90);
-    InitializeAmmo(puVar10,uVar3,uVar4);
-    __restgprlr_24();
-    return;
-  }
-  uVar2 = va(0xffffffff8206d218,uVar2);
-  Scr_ParamError(0,uVar2);
-  __restgprlr_24();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 8245CA50  PlayerCmd_takeWeapon  (game/g_client_script_cmd.cpp:275)
-
-void PlayerCmd_takeWeapon(void)
-
-{
-  uint uVar3;
-  undefined8 uVar1;
-  undefined8 uVar2;
-  undefined4 *puVar4;
-  short sStack00000016;
-  
-  uVar3 = __savegprlr_29();
-  sStack00000016 = (short)uVar3;
-  if (sStack00000016 == 0) {
-    uVar3 = uVar3 >> 0x10;
-    if (0x7ff < uVar3) {
-      MyAssertHandler(0xffffffff8206d1d0,0x117,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar4 = &DAT_83373680 + uVar3 * 0xa0;
-    if ((&DAT_833737d8)[uVar3 * 0xa0] == 0) {
-      va(0xffffffff8206d370,uVar3);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar4 = (undefined4 *)0x0;
-  }
-  uVar1 = Scr_GetString(0);
-  uVar2 = G_GetWeaponForName();
-  Scr_VerifyWeapon(uVar2,uVar1);
-  G_TakePlayerWeapon(puVar4[0x56],uVar2);
-  __restgprlr_29();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 8245CB18  PlayerCmd_takeAllWeapons  (game/g_client_script_cmd.cpp:300)
-
-void PlayerCmd_takeAllWeapons(void)
-
-{
-  uint uVar1;
-  uint uVar2;
-  uint uVar3;
-  undefined4 *puVar4;
-  short sStack00000016;
-  
-  uVar2 = __savegprlr_25();
-  sStack00000016 = (short)uVar2;
-  if (sStack00000016 == 0) {
-    uVar2 = uVar2 >> 0x10;
-    if (0x7ff < uVar2) {
-      MyAssertHandler(0xffffffff8206d1d0,0x130,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar4 = &DAT_83373680 + uVar2 * 0xa0;
-    if ((&DAT_833737d8)[uVar2 * 0xa0] == 0) {
-      va(0xffffffff8206d370,uVar2);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar4 = (undefined4 *)0x0;
-  }
-  uVar2 = 0x274;
-  *(undefined4 *)(puVar4[0x56] + 0x370) = 0;
-  do {
-    uVar1 = *(uint *)(puVar4[0x56] + uVar2);
-    if ((uVar1 & 0xff) != 0) {
-      uVar3 = BG_GetAlternateWeapon(uVar1,0);
-      if (*(int *)((&DAT_829d84a0)[uVar3 & 0xff] + 0x38) == 3) {
-        MyAssertHandler(0xffffffff8206d1d0,0x13b,0,0xffffffff82000f98,0xffffffff8200ec38);
-      }
-      G_TakePlayerWeapon(puVar4[0x56],uVar1);
-    }
-    uVar2 = uVar2 + 4;
-  } while (uVar2 < 0x2b0);
-  __restgprlr_25();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 8245CC48  PlayerCmd_getCurrentWeapon  (game/g_client_script_cmd.cpp:333)
-
-void PlayerCmd_getCurrentWeapon(uint param_1)
-
-{
-  uint uVar1;
-  ulonglong uVar2;
-  int iVar4;
-  longlong lVar3;
-  undefined4 *puVar5;
-  uint uStack00000014;
-  
-  uVar2 = ZEXT48(&stack0x00000000);
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff8206d1d0,0x152,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar5 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar5 = (undefined4 *)0x0;
-  }
-  iVar4 = ClientPlaying(puVar5);
-  if (iVar4 != 0) {
-    uVar1 = *(uint *)(puVar5[0x56] + 0x370);
-    if ((uVar1 & 0xff) != 0) {
-      if ((*(uint *)(puVar5[0x56] + 0x374) >> 0xf & 1) == 0) {
-        lVar3 = BG_GetWeaponNameComplete(uVar1,0,uVar2 - 0x420,0x400);
-      }
-      else {
-        BG_GetWeaponNameComplete(uVar1,0,uVar2 - 0x41c,0x3fc);
-        lVar3 = uVar2 - 0x420;
-      }
-      goto LAB_8245cd6c;
-    }
-  }
-  lVar3 = -0x7dffcb7c;
-LAB_8245cd6c:
-  Scr_AddString(lVar3);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 8245CD88  PlayerCmd_getCurrentPrimaryWeapon  (game/g_client_script_cmd.cpp:403)
-
-void PlayerCmd_getCurrentPrimaryWeapon(void)
-
-{
-  uint uVar1;
-  int iVar2;
-  uint uVar3;
-  undefined4 *puVar4;
-  short sStack00000016;
-  undefined1 auStack_430 [1072];
-  
-  uVar1 = __savegprlr_28();
-  sStack00000016 = (short)uVar1;
-  if (sStack00000016 == 0) {
-    uVar1 = uVar1 >> 0x10;
-    if (0x7ff < uVar1) {
-      MyAssertHandler(0xffffffff8206d1d0,0x198,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar4 = &DAT_83373680 + uVar1 * 0xa0;
-    if ((&DAT_833737d8)[uVar1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,uVar1);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar4 = (undefined4 *)0x0;
-  }
-  iVar2 = ClientPlaying(puVar4);
-  if (iVar2 != 0) {
-    iVar2 = puVar4[0x56];
-    uVar1 = *(uint *)(iVar2 + 0x370);
-    if ((uVar1 & 0xff) != 0) {
-      uVar3 = BG_GetAlternateWeapon(uVar1,0);
-      if (*(int *)((&DAT_829d84a0)[uVar3 & 0xff] + 0x38) == 3) {
-        MyAssertHandler(0xffffffff8206d1d0,0x1a6,0,0xffffffff82000f98,0xffffffff8200ec38);
-      }
-      BG_GetWeaponNameComplete(uVar1,*(uint *)(iVar2 + 0x374) >> 0xf & 1,auStack_430,0x400);
-      Scr_AddString();
-      __restgprlr_28();
-      return;
-    }
-  }
-  Scr_AddString(0xffffffff82003484);
-  __restgprlr_28();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 8245CEC8  PlayerCmd_getCurrentWeaponClipAmmo  (game/g_client_script_cmd.cpp:451)
-
-void PlayerCmd_getCurrentWeaponClipAmmo(uint param_1)
-
-{
-  int iVar1;
-  undefined8 uVar2;
-  undefined4 *puVar3;
-  uint uStack00000014;
-  
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff8206d1d0,0x1c7,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar3 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar3 = (undefined4 *)0x0;
-  }
-  iVar1 = puVar3[0x56];
-  if (*(char *)(iVar1 + 0x373) != '\0') {
-    uVar2 = Scr_GetWeaponHandIndex(0);
-    BG_GetAmmoInClipForWeapon
-              (iVar1,*(undefined4 *)(iVar1 + 0x370),*(uint *)(iVar1 + 0x374) >> 0xf & 1,uVar2);
-  }
-  Scr_AddInt();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 8245CFB8  PlayerCmd_getCurrentOffhand  (game/g_client_script_cmd.cpp:482)
-
-void PlayerCmd_getCurrentOffhand(uint param_1)
-
-{
-  int iVar2;
-  undefined8 uVar1;
-  undefined4 *puVar3;
-  uint uStack00000014;
-  undefined1 auStack_420 [1032];
-  
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff8206d1d0,0x1e5,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar3 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar3 = (undefined4 *)0x0;
-  }
-  iVar2 = ClientPlaying(puVar3);
-  if (iVar2 != 0) {
-    if (*(char *)(puVar3[0x56] + 0x367) != '\0') {
-      uVar1 = BG_GetWeaponName(*(undefined4 *)(puVar3[0x56] + 0x364),auStack_420,0x400);
-      goto LAB_8245d094;
-    }
-  }
-  uVar1 = 0xffffffff82003484;
-LAB_8245d094:
-  Scr_AddString(uVar1);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 8245D0B0  PlayerCmd_setOffhandPrimaryClass  (game/g_client_script_cmd.cpp:530)
-
-void PlayerCmd_setOffhandPrimaryClass(uint param_1)
-
-{
-  int iVar1;
-  uint uVar2;
-  uint uVar3;
-  undefined **ppuVar4;
-  undefined4 *puVar5;
-  uint uStack00000014;
-  
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff8206d1d0,0x216,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar5 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar5 = (undefined4 *)0x0;
-  }
-  iVar1 = Scr_GetNumParam();
-  if (iVar1 != 1) {
-    Scr_Error(0xffffffff8206d414);
-  }
-  uVar2 = Scr_GetConstString(0);
-  uVar3 = 0;
-  ppuVar4 = &PTR_DAT_82969180;
-  do {
-    if (uVar2 == *(ushort *)*ppuVar4) {
-      *(uint *)(puVar5[0x56] + 0x368) = uVar3;
-      return;
-    }
-    uVar3 = uVar3 + 1;
-    ppuVar4 = ppuVar4 + 1;
-  } while (uVar3 < 6);
-  Scr_Error(0xffffffff8206d3b0);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 8245D1D0  PlayerCmd_getOffhandPrimaryClass  (game/g_client_script_cmd.cpp:564)
-
-void PlayerCmd_getOffhandPrimaryClass(void)
-
-{
-  uint uVar1;
-  undefined4 *puVar2;
-  short sStack00000016;
-  
-  uVar1 = __savegprlr_29();
-  sStack00000016 = (short)uVar1;
-  if (sStack00000016 == 0) {
-    uVar1 = uVar1 >> 0x10;
-    if (0x7ff < uVar1) {
-      MyAssertHandler(0xffffffff8206d1d0,0x235,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar2 = &DAT_83373680 + uVar1 * 0xa0;
-    if ((&DAT_833737d8)[uVar1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,uVar1);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar2 = (undefined4 *)0x0;
-  }
-  if (5 < *(uint *)(puVar2[0x56] + 0x368)) {
-    MyAssertHandler(0xffffffff8206d1d0,0x237,0,0xffffffff8206d438,*(uint *)(puVar2[0x56] + 0x368),6)
-    ;
-  }
-  Scr_AddConstString(*(undefined2 *)(&PTR_DAT_82969180)[*(int *)(puVar2[0x56] + 0x368)]);
-  __restgprlr_29();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 8245D2C0  PlayerCmd_setOffhandSecondaryClass  (game/g_client_script_cmd.cpp:584)
-
-void PlayerCmd_setOffhandSecondaryClass(uint param_1)
-
-{
-  int iVar1;
-  uint uVar2;
-  uint uVar3;
-  undefined **ppuVar4;
-  undefined4 *puVar5;
-  uint uStack00000014;
-  
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff8206d1d0,0x24c,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar5 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar5 = (undefined4 *)0x0;
-  }
-  iVar1 = Scr_GetNumParam();
-  if (iVar1 != 1) {
-    Scr_Error(0xffffffff8206d414);
-  }
-  uVar2 = Scr_GetConstString(0);
-  uVar3 = 0;
-  ppuVar4 = &PTR_DAT_82969180;
-  do {
-    if (uVar2 == *(ushort *)*ppuVar4) {
-      *(uint *)(puVar5[0x56] + 0x36c) = uVar3;
-      return;
-    }
-    uVar3 = uVar3 + 1;
-    ppuVar4 = ppuVar4 + 1;
-  } while (uVar3 < 6);
-  Scr_Error(0xffffffff8206d4b0);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 8245D3E0  PlayerCmd_getOffhandSecondaryClass  (game/g_client_script_cmd.cpp:618)
-
-void PlayerCmd_getOffhandSecondaryClass(void)
-
-{
-  uint uVar1;
-  undefined4 *puVar2;
-  short sStack00000016;
-  
-  uVar1 = __savegprlr_29();
-  sStack00000016 = (short)uVar1;
-  if (sStack00000016 == 0) {
-    uVar1 = uVar1 >> 0x10;
-    if (0x7ff < uVar1) {
-      MyAssertHandler(0xffffffff8206d1d0,0x26b,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar2 = &DAT_83373680 + uVar1 * 0xa0;
-    if ((&DAT_833737d8)[uVar1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,uVar1);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar2 = (undefined4 *)0x0;
-  }
-  if (5 < *(uint *)(puVar2[0x56] + 0x36c)) {
-    MyAssertHandler(0xffffffff8206d1d0,0x26d,0,0xffffffff8206d518,*(uint *)(puVar2[0x56] + 0x36c),6)
-    ;
-  }
-  Scr_AddConstString(*(undefined2 *)(&PTR_DAT_82969180)[*(int *)(puVar2[0x56] + 0x36c)]);
-  __restgprlr_29();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 8245D4D0  PlayerCmd_hasWeapon  (game/g_client_script_cmd.cpp:638)
-
-void PlayerCmd_hasWeapon(void)
-
-{
-  bool bVar1;
-  uint uVar4;
-  char *pcVar5;
-  ulonglong uVar2;
-  int iVar6;
-  undefined8 uVar3;
-  undefined4 *puVar7;
-  short sStack00000016;
-  
-  uVar4 = __savegprlr_29();
-  sStack00000016 = (short)uVar4;
-  if (sStack00000016 == 0) {
-    uVar4 = uVar4 >> 0x10;
-    if (0x7ff < uVar4) {
-      MyAssertHandler(0xffffffff8206d1d0,0x283,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar7 = &DAT_83373680 + uVar4 * 0xa0;
-    if ((&DAT_833737d8)[uVar4 * 0xa0] == 0) {
-      va(0xffffffff8206d370,uVar4);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar7 = (undefined4 *)0x0;
-  }
-  pcVar5 = (char *)Scr_GetString(0);
-  if ((((*pcVar5 != 'a') || (pcVar5[1] != 'l')) || (pcVar5[2] != 't')) ||
-     (bVar1 = true, pcVar5[3] != '_')) {
-    bVar1 = false;
-  }
-  if (bVar1) {
-    pcVar5 = pcVar5 + 4;
-  }
-  uVar2 = G_GetWeaponForName(pcVar5);
-  Scr_VerifyWeapon(uVar2,pcVar5);
-  if ((uVar2 & 0xff) != 0) {
-    iVar6 = BG_PlayerHasWeapon(puVar7[0x56],uVar2);
-    uVar3 = 1;
-    if (iVar6 != 0) goto LAB_8245d5f8;
-  }
-  uVar3 = 0;
-LAB_8245d5f8:
-  Scr_AddBool(uVar3);
-  __restgprlr_29();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 8245D608  Player_SwitchToWeapon  (game/g_client_script_cmd.cpp:661)
-
-void Player_SwitchToWeapon(undefined8 param_1,ulonglong param_2)
-
-{
-  bool bVar1;
-  undefined4 *puVar3;
-  char *pcVar4;
-  undefined8 uVar2;
-  int iVar5;
-  int iVar6;
-  
-  puVar3 = (undefined4 *)__savegprlr_27();
-  if (puVar3 == (undefined4 *)0x0) {
-    MyAssertHandler(0xffffffff8206d1d0,0x29b,0,0xffffffff82000f98,0xffffffff8206bbec);
-  }
-  pcVar4 = (char *)Scr_GetString(0);
-  if ((((*pcVar4 != 'a') || (pcVar4[1] != 'l')) || (pcVar4[2] != 't')) ||
-     (bVar1 = true, pcVar4[3] != '_')) {
-    bVar1 = false;
-  }
-  if (bVar1) {
-    pcVar4 = pcVar4 + 4;
-  }
-  uVar2 = G_GetWeaponForName(pcVar4);
-  Scr_VerifyWeapon(uVar2,pcVar4);
-  iVar5 = BG_PlayerHasWeapon(puVar3[0x56],uVar2);
-  if (iVar5 != 0) {
-    if ((param_2 & 0xff) != 0) {
-      *(undefined4 *)(puVar3[0x56] + 0x370) = 0;
-    }
-    G_SelectWeapon(*puVar3,uVar2);
-    iVar5 = puVar3[0x56];
-    iVar6 = BG_GetEquippedWeaponIndex(iVar5,uVar2);
-    if (-1 < iVar6) {
-      iVar5 = iVar6 * 0xc + iVar5;
-      if (iVar5 != -0x2b0) {
-        *(bool *)(iVar5 + 0x2b2) = bVar1;
-      }
-    }
-    Scr_AddBool(1);
-    __restgprlr_27();
-    return;
-  }
-  Scr_AddBool(0);
-  __restgprlr_27();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 8245D740  PlayerCmd_switchToWeapon  (game/g_client_script_cmd.cpp:716)
-
-void PlayerCmd_switchToWeapon(uint param_1)
-
-{
-  undefined4 *puVar1;
-  uint uStack00000014;
-  
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff8206d1d0,0x2cd,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar1 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar1 = (undefined4 *)0x0;
-  }
-  Player_SwitchToWeapon(puVar1,0);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 8245D808  PlayerCmd_switchToWeaponImmediate  (game/g_client_script_cmd.cpp:735)
-
-void PlayerCmd_switchToWeaponImmediate(uint param_1)
-
-{
-  undefined4 *puVar1;
-  uint uStack00000014;
-  
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff8206d1d0,0x2e0,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar1 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar1 = (undefined4 *)0x0;
-  }
-  Player_SwitchToWeapon(puVar1,1);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 8245D8D0  PlayerCmd_switchToOffhand  (game/g_client_script_cmd.cpp:753)
-
-void PlayerCmd_switchToOffhand(void)
-
-{
-  uint uVar3;
-  undefined8 uVar1;
-  undefined8 uVar2;
-  char cVar5;
-  int iVar4;
-  undefined4 *puVar6;
-  short sStack00000016;
-  undefined1 auStack_430 [1072];
-  
-  uVar3 = __savegprlr_28();
-  sStack00000016 = (short)uVar3;
-  uVar3 = uVar3 >> 0x10;
-  if (sStack00000016 == 0) {
-    if (0x7ff < uVar3) {
-      MyAssertHandler(0xffffffff8206d1d0,0x2f8,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar6 = &DAT_83373680 + uVar3 * 0xa0;
-    if ((&DAT_833737d8)[uVar3 * 0xa0] == 0) {
-      va(0xffffffff8206d370,uVar3);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar6 = (undefined4 *)0x0;
-  }
-  uVar1 = Scr_GetString(0);
-  uVar2 = G_GetWeaponForName();
-  Scr_VerifyWeapon(uVar2,uVar1);
-  cVar5 = BG_ValidateWeaponNumberOffhand(uVar2);
-  if (cVar5 == '\0') {
-    uVar1 = BG_GetWeaponName(uVar2,auStack_430,0x400);
-    va(0xffffffff8206d590,uVar1);
-    Scr_Error();
-  }
-  iVar4 = BG_PlayerHasWeapon(puVar6[0x56],uVar2);
-  if (iVar4 != 0) {
-    G_SetEquippedOffHand(uVar3,uVar2);
-    Scr_AddBool(1);
-    __restgprlr_28();
-    return;
-  }
-  Scr_AddBool(0);
-  __restgprlr_28();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 8245DA00  PlayerCmd_giveStartAmmo  (game/g_client_script_cmd.cpp:792)
-
-void PlayerCmd_giveStartAmmo(void)
-
-{
-  uint uVar3;
-  undefined8 uVar1;
-  undefined8 uVar2;
-  int iVar4;
-  undefined4 *puVar5;
-  short sStack00000016;
-  
-  uVar3 = __savegprlr_29();
-  sStack00000016 = (short)uVar3;
-  if (sStack00000016 == 0) {
-    uVar3 = uVar3 >> 0x10;
-    if (0x7ff < uVar3) {
-      MyAssertHandler(0xffffffff8206d1d0,0x31c,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar5 = &DAT_83373680 + uVar3 * 0xa0;
-    if ((&DAT_833737d8)[uVar3 * 0xa0] == 0) {
-      va(0xffffffff8206d370,uVar3);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar5 = (undefined4 *)0x0;
-  }
-  uVar1 = Scr_GetString(0);
-  uVar2 = G_GetWeaponForName();
-  Scr_VerifyWeapon(uVar2,uVar1);
-  iVar4 = BG_PlayerHasWeapon(puVar5[0x56],uVar2);
-  if (iVar4 != 0) {
-    InitializeAmmo(puVar5,uVar2,0);
-  }
-  __restgprlr_29();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 8245DAE0  PlayerCmd_giveMaxAmmo  (game/g_client_script_cmd.cpp:822)
-
-void PlayerCmd_giveMaxAmmo(void)
-
-{
-  undefined4 uVar1;
-  uint uVar5;
-  char *pcVar6;
-  undefined8 uVar2;
-  int iVar7;
-  longlong lVar3;
-  longlong lVar4;
-  longlong lVar8;
-  undefined4 *puVar9;
-  short sStack00000016;
-  
-  uVar5 = __savegprlr_26();
-  sStack00000016 = (short)uVar5;
-  if (sStack00000016 == 0) {
-    uVar5 = uVar5 >> 0x10;
-    if (0x7ff < uVar5) {
-      MyAssertHandler(0xffffffff8206d1d0,0x33f,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar9 = &DAT_83373680 + uVar5 * 0xa0;
-    if ((&DAT_833737d8)[uVar5 * 0xa0] == 0) {
-      va(0xffffffff8206d370,uVar5);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar9 = (undefined4 *)0x0;
-  }
-  uVar1 = puVar9[0x56];
-  pcVar6 = (char *)Scr_GetString(0);
-  if ((((*pcVar6 != 'a') || (pcVar6[1] != 'l')) || (pcVar6[2] != 't')) ||
-     (lVar8 = 1, pcVar6[3] != '_')) {
-    lVar8 = 0;
-  }
-  if (lVar8 != 0) {
-    pcVar6 = pcVar6 + 4;
-  }
-  uVar2 = G_GetWeaponForName(pcVar6);
-  Scr_VerifyWeapon(uVar2,pcVar6);
-  iVar7 = BG_PlayerHasWeapon(uVar1,uVar2);
-  if (iVar7 != 0) {
-    lVar3 = BG_GetAmmoPlayerMax(uVar1,uVar2,lVar8,0);
-    lVar4 = BG_GetAmmoNotInClip(uVar1,uVar2,lVar8);
-    if (0 < lVar3 - lVar4) {
-      Add_Ammo(puVar9,uVar2,lVar8,lVar3 - lVar4,0);
-    }
-  }
-  __restgprlr_26();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 8245DC48  PlayerCmd_getFractionStartAmmo  (game/g_client_script_cmd.cpp:863)
-
-void PlayerCmd_getFractionStartAmmo(void)
-
-{
-  undefined4 uVar1;
-  uint uVar3;
-  char *pcVar4;
-  undefined8 uVar2;
-  int iVar5;
-  int iVar6;
-  longlong lVar7;
-  undefined4 *puVar8;
-  short sStack00000016;
-  
-  uVar3 = __savegprlr_28();
-  sStack00000016 = (short)uVar3;
-  if (sStack00000016 == 0) {
-    uVar3 = uVar3 >> 0x10;
-    if (0x7ff < uVar3) {
-      MyAssertHandler(0xffffffff8206d1d0,0x368,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar8 = &DAT_83373680 + uVar3 * 0xa0;
-    if ((&DAT_833737d8)[uVar3 * 0xa0] == 0) {
-      va(0xffffffff8206d370,uVar3);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar8 = (undefined4 *)0x0;
-  }
-  uVar1 = puVar8[0x56];
-  pcVar4 = (char *)Scr_GetString(0);
-  if ((((*pcVar4 != 'a') || (pcVar4[1] != 'l')) || (pcVar4[2] != 't')) ||
-     (lVar7 = 1, pcVar4[3] != '_')) {
-    lVar7 = 0;
-  }
-  if (lVar7 != 0) {
-    pcVar4 = pcVar4 + 4;
-  }
-  uVar2 = G_GetWeaponForName(pcVar4);
-  Scr_VerifyWeapon(uVar2,pcVar4);
-  iVar5 = BG_PlayerHasWeapon(uVar1,uVar2);
-  if (iVar5 != 0) {
-    iVar5 = BG_StartAmmo(uVar2,lVar7);
-    iVar6 = BG_GetAmmoNotInClip(uVar1,uVar2,lVar7);
-    if (0 < iVar5) {
-      if (iVar6 < 1) {
-        Scr_AddFloat(0);
-        __restgprlr_28();
-        return;
-      }
-      Scr_AddFloat((double)(float)((double)(longlong)iVar6 / (double)(longlong)iVar5));
-      __restgprlr_28();
-      return;
-    }
-  }
-  Scr_AddFloat(0x3ff0000000000000);
-  __restgprlr_28();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 8245DDF0  PlayerCmd_getFractionMaxAmmo  (game/g_client_script_cmd.cpp:917)
-
-void PlayerCmd_getFractionMaxAmmo(void)
-
-{
-  undefined4 uVar1;
-  uint uVar3;
-  char *pcVar4;
-  undefined8 uVar2;
-  int iVar5;
-  int iVar6;
-  longlong lVar7;
-  undefined4 *puVar8;
-  short sStack00000016;
-  
-  uVar3 = __savegprlr_26();
-  sStack00000016 = (short)uVar3;
-  if (sStack00000016 == 0) {
-    uVar3 = uVar3 >> 0x10;
-    if (0x7ff < uVar3) {
-      MyAssertHandler(0xffffffff8206d1d0,0x39f,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar8 = &DAT_83373680 + uVar3 * 0xa0;
-    if ((&DAT_833737d8)[uVar3 * 0xa0] == 0) {
-      va(0xffffffff8206d370,uVar3);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar8 = (undefined4 *)0x0;
-  }
-  pcVar4 = (char *)Scr_GetString(0);
-  if ((((*pcVar4 != 'a') || (pcVar4[1] != 'l')) || (pcVar4[2] != 't')) ||
-     (lVar7 = 1, pcVar4[3] != '_')) {
-    lVar7 = 0;
-  }
-  if (lVar7 != 0) {
-    pcVar4 = pcVar4 + 4;
-  }
-  uVar2 = G_GetWeaponForName(pcVar4);
-  Scr_VerifyWeapon(uVar2,pcVar4);
-  if (puVar8[0x56] == 0) {
-    MyAssertHandler(0xffffffff8206d1d0,0x3a8,0,0xffffffff82000f98,0xffffffff8206d1bc);
-  }
-  uVar1 = puVar8[0x56];
-  iVar5 = BG_PlayerHasWeapon(uVar1,uVar2);
-  if (iVar5 != 0) {
-    uVar3 = BG_GetAlternateWeapon(uVar2,lVar7);
-    if (*(char *)((&DAT_829d84a0)[uVar3 & 0xff] + 0x77a) == '\0') {
-      iVar5 = BG_MaxAmmo(uVar2,lVar7);
-      iVar6 = BG_GetAmmoNotInClip(uVar1,uVar2,lVar7);
-      if (iVar5 < 1) goto LAB_8245e05c;
-      if (0 < iVar6) {
-        Scr_AddFloat((double)(float)((double)(longlong)iVar6 / (double)(longlong)iVar5));
-        __restgprlr_26();
-        return;
-      }
-    }
-    else {
-      iVar5 = BG_GetAmmoInClipForWeapon(uVar1,uVar2,lVar7,0);
-      iVar6 = BG_GetClipSize(uVar1,uVar2,lVar7);
-      if (iVar6 < 1) goto LAB_8245e05c;
-      if (0 < iVar5) {
-        iVar6 = BG_GetClipSize(uVar1,uVar2,lVar7);
-        Scr_AddFloat((double)(float)((double)(longlong)iVar5 / (double)(longlong)iVar6));
-        __restgprlr_26();
-        return;
-      }
-    }
-    Scr_AddFloat(0);
-    __restgprlr_26();
-    return;
-  }
-LAB_8245e05c:
-  Scr_AddFloat(0x3ff0000000000000);
-  __restgprlr_26();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 8245E070  PlayerCmd_isDualWielding  (game/g_client_script_cmd.cpp:990)
-
-void PlayerCmd_isDualWielding(uint param_1)
-
-{
-  undefined4 *puVar1;
-  uint uStack00000014;
-  
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff8206d1d0,0x3df,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar1 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar1 = (undefined4 *)0x0;
-  }
-  Scr_AddInt(*(int *)(puVar1[0x56] + 0x390) == 1);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 8245E148  PlayerCmd_isReloading  (game/g_client_script_cmd.cpp:1011)
-
-void PlayerCmd_isReloading(void)
-
-{
-  int iVar1;
-  uint uVar3;
-  undefined8 uVar2;
-  undefined4 *puVar4;
-  short sStack00000016;
-  
-  uVar3 = __savegprlr_28();
-  sStack00000016 = (short)uVar3;
-  if (sStack00000016 == 0) {
-    uVar3 = uVar3 >> 0x10;
-    if (0x7ff < uVar3) {
-      MyAssertHandler(0xffffffff8206d1d0,0x3f6,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar4 = &DAT_83373680 + uVar3 * 0xa0;
-    if ((&DAT_833737d8)[uVar3 * 0xa0] == 0) {
-      va(0xffffffff8206d370,uVar3);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar4 = (undefined4 *)0x0;
-  }
-  if (puVar4[0x56] == 0) {
-    MyAssertHandler(0xffffffff8206d1d0,0x3f8,0,0xffffffff82000f98,0xffffffff8206d1bc);
-  }
-  iVar1 = *(int *)(puVar4[0x56] + 0x24c);
-  if ((((((iVar1 == 8) || (iVar1 == 10)) || (iVar1 == 0xc)) || ((iVar1 == 0xb || (iVar1 == 9)))) ||
-      ((iVar1 = *(int *)(puVar4[0x56] + 0x268), iVar1 == 8 || ((iVar1 == 10 || (iVar1 == 0xc))))))
-     || ((iVar1 == 0xb || (uVar2 = 0, iVar1 == 9)))) {
-    uVar2 = 1;
-  }
-  Scr_AddInt(uVar2);
-  __restgprlr_28();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 8245E280  PlayerCmd_isSwitchingWeapon  (game/g_client_script_cmd.cpp:1038)
-
-void PlayerCmd_isSwitchingWeapon(void)
-
-{
-  int iVar1;
-  uint uVar3;
-  undefined8 uVar2;
-  undefined4 *puVar4;
-  short sStack00000016;
-  
-  uVar3 = __savegprlr_28();
-  sStack00000016 = (short)uVar3;
-  if (sStack00000016 == 0) {
-    uVar3 = uVar3 >> 0x10;
-    if (0x7ff < uVar3) {
-      MyAssertHandler(0xffffffff8206d1d0,0x411,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar4 = &DAT_83373680 + uVar3 * 0xa0;
-    if ((&DAT_833737d8)[uVar3 * 0xa0] == 0) {
-      va(0xffffffff8206d370,uVar3);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar4 = (undefined4 *)0x0;
-  }
-  if (puVar4[0x56] == 0) {
-    MyAssertHandler(0xffffffff8206d1d0,0x413,0,0xffffffff82000f98,0xffffffff8206d1bc);
-  }
-  iVar1 = *(int *)(puVar4[0x56] + 0x24c);
-  if ((((((iVar1 == 1) || (iVar1 == 2)) || (iVar1 == 3)) || ((iVar1 == 4 || (iVar1 == 5)))) ||
-      ((iVar1 = *(int *)(puVar4[0x56] + 0x268), iVar1 == 1 || ((iVar1 == 2 || (iVar1 == 3)))))) ||
-     ((iVar1 == 4 || (uVar2 = 0, iVar1 == 5)))) {
-    uVar2 = 1;
-  }
-  Scr_AddInt(uVar2);
-  __restgprlr_28();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 8245E3B8  PlayerCmd_setOrigin  (game/g_client_script_cmd.cpp:1066)
-
-void PlayerCmd_setOrigin(uint param_1)
-
-{
-  undefined4 *puVar1;
-  uint uStack00000014;
-  undefined1 auStack_30 [24];
-  
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff8206d1d0,0x42d,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar1 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar1 = (undefined4 *)0x0;
-  }
-  Scr_GetVector(0,auStack_30);
-  SetClientOrigin(puVar1,auStack_30);
-  SV_LinkEntity(puVar1);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 8245E490  PlayerCmd_SetVelocity  (game/g_client_script_cmd.cpp:1092)
-
-void PlayerCmd_SetVelocity(uint param_1)
-
-{
-  int iVar1;
-  undefined4 *puVar2;
-  uint uStack00000014;
-  undefined4 local_30;
-  undefined4 local_2c;
-  undefined4 local_28;
-  
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff8206d1d0,0x447,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar2 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar2 = (undefined4 *)0x0;
-  }
-  Scr_GetVector(0,&local_30);
-  iVar1 = puVar2[0x56];
-  *(undefined4 *)(iVar1 + 0x28) = local_30;
-  *(undefined4 *)(iVar1 + 0x2c) = local_2c;
-  *(undefined4 *)(iVar1 + 0x30) = local_28;
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 8245E570  PlayerCmd_GetVelocity  (game/g_client_script_cmd.cpp:1114)
-
-void PlayerCmd_GetVelocity(uint param_1)
-
-{
-  longlong lVar1;
-  undefined4 *puVar2;
-  uint uStack00000014;
-  
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff8206d1d0,0x45b,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar2 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar2 = (undefined4 *)0x0;
-  }
-  if ((int)puVar2[0x67] < 1) {
-    lVar1 = -0x7de86028;
-  }
-  else {
-    lVar1 = (ulonglong)(uint)puVar2[0x56] + 0x28;
-  }
-  Scr_AddVector(lVar1);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 8245E650  PlayerCmd_setAngles  (game/g_client_script_cmd.cpp:1136)
-
-void PlayerCmd_setAngles(uint param_1)
-
-{
-  undefined4 *puVar1;
-  uint uStack00000014;
-  undefined1 auStack_30 [24];
-  
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff8206d1d0,0x473,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar1 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar1 = (undefined4 *)0x0;
-  }
-  Scr_GetVector(0,auStack_30);
-  SetClientViewAngle(puVar1,auStack_30);
-  if (puVar1[0x85] == 0) {
-    puVar1[0x51] = 0;
-  }
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 8245E738  PlayerCmd_getAngles  (game/g_client_script_cmd.cpp:1162)
-
-void PlayerCmd_getAngles(uint param_1)
-
-{
-  undefined4 *puVar1;
-  uint uStack00000014;
-  
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff8206d1d0,0x48b,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar1 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar1 = (undefined4 *)0x0;
-  }
-  Scr_AddVector((ulonglong)(uint)puVar1[0x56] + 0x158);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 8245E800  PlayerCmd_getViewHeight  (game/g_client_script_cmd.cpp:1180)
-
-void PlayerCmd_getViewHeight(uint param_1)
-
-{
-  undefined4 *puVar1;
-  uint uStack00000014;
-  
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff8206d1d0,0x49d,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar1 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar1 = (undefined4 *)0x0;
-  }
-  Scr_AddFloat((double)*(float *)(puVar1[0x56] + 0x168));
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 8245E8C8  PlayerCmd_EnableMouseSteer  (game/g_client_script_cmd.cpp:1199)
 
-void PlayerCmd_EnableMouseSteer(void)
+void PlayerCmd_EnableMouseSteer(scr_entref_t param_1)
 
 {
-  Scr_Error(0xffffffff8206d5b4);
+  Scr_Error("EnableMouseSteer not supported in MP");
   return;
 }
 
 
 // 8245E8D8  PlayerCmd_getNormalizedMovement  (game/g_client_script_cmd.cpp:1235)
-
-void PlayerCmd_getNormalizedMovement(uint param_1)
-
-{
-  undefined4 *puVar1;
-  uint uStack00000014;
-  float local_28;
-  float local_24;
-  undefined4 local_20;
-  
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff8206d1d0,0x4d6,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar1 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar1 = (undefined4 *)0x0;
-  }
-  local_28 = (float)(longlong)*(char *)(puVar1[0x56] + 0x334c) * 0.007874016;
-  local_20 = 0;
-  local_24 = (float)(longlong)*(char *)(puVar1[0x56] + 0x334d) * 0.007874016;
-  Scr_AddVector(&local_28);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 8245E9F0  PlayerCmd_getNormalizedCameraMovement  (game/g_client_script_cmd.cpp:1264)
-
-void PlayerCmd_getNormalizedCameraMovement(uint param_1)
-
-{
-  undefined8 uVar1;
-  uint uStack00000014;
-  undefined1 auStack_20 [16];
-  
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff8206d1d0,0x4f3,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    if ((&DAT_833737d8)[param_1 * 0xa0] != 0) goto LAB_8245ea84;
-    uVar1 = va(0xffffffff8206d370,param_1);
-  }
-  else {
-    uVar1 = 0xffffffff8206d360;
-  }
-  Scr_ObjectError(uVar1);
-LAB_8245ea84:
-  Scr_Error(0xffffffff8206d5dc);
-  Scr_AddVector(auStack_20);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 8245EAB0  PlayerCmd_useButtonPressed  (game/g_client_script_cmd.cpp:1292)
-
-void PlayerCmd_useButtonPressed(uint param_1)
-
-{
-  undefined4 *puVar1;
-  uint uStack00000014;
-  
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff8206d1d0,0x50d,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar1 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar1 = (undefined4 *)0x0;
-  }
-  Scr_AddInt(((*(uint *)(puVar1[0x56] + 0x3614) | *(uint *)(puVar1[0x56] + 0x3608)) & 0x28) != 0);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 8245EB98  PlayerCmd_attackButtonPressed  (game/g_client_script_cmd.cpp:1313)
-
-void PlayerCmd_attackButtonPressed(uint param_1)
-
-{
-  undefined4 *puVar1;
-  uint uStack00000014;
-  
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff8206d1d0,0x522,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar1 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar1 = (undefined4 *)0x0;
-  }
-  Scr_AddInt(((*(uint *)(puVar1[0x56] + 0x3614) | *(uint *)(puVar1[0x56] + 0x3608)) & 1) != 0);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 8245EC78  PlayerCmd_adsButtonPressed  (game/g_client_script_cmd.cpp:1370)
-
-void PlayerCmd_adsButtonPressed(uint param_1)
-
-{
-  undefined4 *puVar1;
-  uint uStack00000014;
-  
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff8206d1d0,0x55b,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar1 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar1 = (undefined4 *)0x0;
-  }
-  Scr_AddInt(((*(uint *)(puVar1[0x56] + 0x3614) | *(uint *)(puVar1[0x56] + 0x3608)) & 0x800) != 0);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 8245ED58  PlayerCmd_meleeButtonPressed  (game/g_client_script_cmd.cpp:1391)
-
-void PlayerCmd_meleeButtonPressed(uint param_1)
-
-{
-  undefined4 *puVar1;
-  uint uStack00000014;
-  
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff8206d1d0,0x570,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar1 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar1 = (undefined4 *)0x0;
-  }
-  Scr_AddInt(((*(uint *)(puVar1[0x56] + 0x3614) | *(uint *)(puVar1[0x56] + 0x3608)) & 4) != 0);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 8245EE38  PlayerCmd_fragButtonPressed  (game/g_client_script_cmd.cpp:1412)
-
-void PlayerCmd_fragButtonPressed(uint param_1)
-
-{
-  undefined4 *puVar1;
-  uint uStack00000014;
-  
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff8206d1d0,0x585,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar1 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar1 = (undefined4 *)0x0;
-  }
-  Scr_AddInt(((*(uint *)(puVar1[0x56] + 0x3614) | *(uint *)(puVar1[0x56] + 0x3608)) & 0x4000) != 0);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 8245EF18  PlayerCmd_secondaryOffhandButtonPressed  (game/g_client_script_cmd.cpp:1433)
-
-void PlayerCmd_secondaryOffhandButtonPressed(uint param_1)
-
-{
-  undefined4 *puVar1;
-  uint uStack00000014;
-  
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff8206d1d0,0x59a,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar1 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar1 = (undefined4 *)0x0;
-  }
-  Scr_AddInt(((*(uint *)(puVar1[0x56] + 0x3614) | *(uint *)(puVar1[0x56] + 0x3608)) & 0x8000) != 0);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 8245EFF8  G_AddCommandNotify  (game/g_client_script_cmd.cpp:1444)
-
-void G_AddCommandNotify(ulonglong param_1,undefined8 param_2)
-
-{
-  int iVar1;
-  
-  iVar1 = Scr_IsSystemActive(1);
-  if (iVar1 != 0) {
-    Scr_Notify((param_1 + (param_1 & 0x3fffffff) * 4 & 0x1ffffff) * 0x80 + -0x7cc8c980,param_2,0);
-  }
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 8245F060  PlayerCmd_playerADS  (game/g_client_script_cmd.cpp:1463)
-
-void PlayerCmd_playerADS(uint param_1)
-
-{
-  undefined4 *puVar1;
-  uint uStack00000014;
-  
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff8206d1d0,0x5b8,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar1 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar1 = (undefined4 *)0x0;
-  }
-  Scr_AddFloat((double)*(float *)(puVar1[0x56] + 0x378));
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 8245F128  PlayerCmd_isOnGround  (game/g_client_script_cmd.cpp:1481)
-
-void PlayerCmd_isOnGround(uint param_1)
-
-{
-  undefined8 uVar1;
-  undefined4 *puVar2;
-  uint uStack00000014;
-  
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff8206d1d0,0x5ca,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar2 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar2 = (undefined4 *)0x0;
-  }
-  uVar1 = 1;
-  if (((*(uint *)(puVar2[0x56] + 0xf8) & 0x3800) == 0) && (*(int *)(puVar2[0x56] + 0x6c) == 0x7ff))
-  {
-    uVar1 = 0;
-  }
-  Scr_AddInt(uVar1);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 8245F210  PlayerCmd_isUsingTurret  (game/g_client_script_cmd.cpp:1508)
-
-void PlayerCmd_isUsingTurret(uint param_1)
-
-{
-  undefined8 uVar1;
-  undefined4 *puVar2;
-  uint uStack00000014;
-  
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff8206d1d0,0x5e5,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar2 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar2 = (undefined4 *)0x0;
-  }
-  if (((*(uint *)(puVar2[0x56] + 0xf8) & 0x3800) == 0) ||
-     (uVar1 = 1, (*(uint *)(puVar2[0x56] + 0xf8) & 0x2000) != 0)) {
-    uVar1 = 0;
-  }
-  Scr_AddInt(uVar1);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 8245F2F8  PlayerCmd_SetViewmodel  (game/g_client_script_cmd.cpp:1539)
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
-void PlayerCmd_SetViewmodel(void)
+// 8245F420  PlayerCmd_SetSpreadOverride  (game/g_client_script_cmd.cpp:1578)
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+// 8245F558  PlayerCmd_ResetSpreadOverride  (game/g_client_script_cmd.cpp:1618)
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+// 8245F648  PlayerCmd_SetAimSpreadMovementScale  (game/g_client_script_cmd.cpp:1641)
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+// 8245F770  PlayerCmd_GetViewmodel  (game/g_client_script_cmd.cpp:1672)
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+// 8245F838  PlayerCmd_OpenPopupMenu  (game/g_client_script_cmd.cpp:1698)
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+// 8245F970  PlayerCmd_OpenPopupMenuNoMouse  (game/g_client_script_cmd.cpp:1743)
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+// 8245FAA8  PlayerCmd_ClosePopupMenu  (game/g_client_script_cmd.cpp:1787)
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+// 8245FB90  PlayerCmd_OpenMenu  (game/g_client_script_cmd.cpp:1817)
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+// 8245FCC8  PlayerCmd_CloseMenu  (game/g_client_script_cmd.cpp:1862)
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+// 8245FE00  PlayerCmd_ShowHudSplash  (game/g_client_script_cmd.cpp:1909)
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+// 8245FF58  PlayerCmd_FreezeControls  (game/g_client_script_cmd.cpp:1954)
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+// 82460038  PlayerCmd_DisableUsability  (game/g_client_script_cmd.cpp:1975)
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+// 82460100  PlayerCmd_EnableUsability  (game/g_client_script_cmd.cpp:1992)
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+// 824601C8  PlayerCmd_DisableWeapons  (game/g_client_script_cmd.cpp:2009)
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+// 82460290  PlayerCmd_EnableWeapons  (game/g_client_script_cmd.cpp:2026)
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+// 82460358  PlayerCmd_DisableOffhandWeapons  (game/g_client_script_cmd.cpp:2044)
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+// 82460420  PlayerCmd_EnableOffhandWeapons  (game/g_client_script_cmd.cpp:2061)
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+// 824604E8  PlayerCmd_DisableWeaponSwitch  (game/g_client_script_cmd.cpp:2079)
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+// 824605B0  PlayerCmd_EnableWeaponSwitch  (game/g_client_script_cmd.cpp:2096)
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+// 82460678  PlayerCmd_SetWeaponAmmoClip  (game/g_client_script_cmd.cpp:2116)
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+// 824608C0  PlayerCmd_SetWeaponAmmoStock  (game/g_client_script_cmd.cpp:2182)
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+// 82460AF8  PlayerCmd_GetWeaponAmmoClip  (game/g_client_script_cmd.cpp:2247)
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+// 82460C28  PlayerCmd_GetWeaponAmmoStock  (game/g_client_script_cmd.cpp:2280)
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+// 82460D80  PlayerCmd_AnyAmmoForWeaponModes  (game/g_client_script_cmd.cpp:2316)
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+// 82460EE8  PlayerCmd_SetClientDvar  (game/g_client_script_cmd.cpp:2357)
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+// 824610C0  PlayerCmd_SetClientDvars  (game/g_client_script_cmd.cpp:2424)
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+// 824612F0  PlayerCmd_SetWhizbySpreads  (game/g_client_script_cmd.cpp:2563)
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
+
+// 82461448  PlayerCmd_SetWhizbyRadii  (game/g_client_script_cmd.cpp:2600)
+
+void PlayerCmd_SetWhizbyRadii(scr_entref_t param_1)
 
 {
   uint uVar1;
   char *pcVar2;
-  undefined4 *puVar3;
-  short sStack00000016;
+  scr_entref_t sStack00000014;
   
-  uVar1 = __savegprlr_28();
-  sStack00000016 = (short)uVar1;
-  if (sStack00000016 == 0) {
-    uVar1 = uVar1 >> 0x10;
-    if (0x7ff < uVar1) {
-      MyAssertHandler(0xffffffff8206d1d0,0x607,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar3 = &DAT_83373680 + uVar1 * 0xa0;
-    if ((&DAT_833737d8)[uVar1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,uVar1);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar3 = (undefined4 *)0x0;
-  }
-  pcVar2 = (char *)Scr_GetString(0);
-  if ((pcVar2 == (char *)0x0) || (*pcVar2 == '\0')) {
-    Scr_ParamError(0,0xffffffff8206d638);
-  }
-  uVar1 = G_ModelIndex(pcVar2);
-  if (uVar1 != (uVar1 & 0xffff)) {
-    MyAssertHandler(0xffffffff8206d1d0,0x614,0,0xffffffff82000f98,0xffffffff8206d60c);
-    *(uint *)(puVar3[0x56] + 0x33c4) = uVar1;
-    __restgprlr_28();
-    return;
-  }
-  *(uint *)(puVar3[0x56] + 0x33c4) = uVar1;
-  __restgprlr_28();
-  return;
-}
-
-
-// 8245F420  PlayerCmd_SetSpreadOverride  (game/g_client_script_cmd.cpp:1578)
-
-void PlayerCmd_SetSpreadOverride(uint param_1)
-
-{
-  int iVar2;
-  undefined8 uVar1;
-  undefined4 *puVar3;
-  uint uStack00000014;
-  
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff8206d1d0,0x62d,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar3 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar3 = (undefined4 *)0x0;
-  }
-  iVar2 = Scr_GetNumParam();
-  if (iVar2 == 1) {
-    iVar2 = Scr_GetInt(0);
-    if (iVar2 < 1) {
-      Scr_ParamError(0,0xffffffff8206d684);
-    }
-    else if (iVar2 < 0x40) {
-      *(int *)(puVar3[0x56] + 900) = iVar2;
-      *(undefined4 *)(puVar3[0x56] + 0x388) = 2;
-    }
-    else {
-      uVar1 = va(0xffffffff8206d65c,0x40);
-      Scr_ParamError(0,uVar1);
-    }
-  }
-  else {
-    Scr_Error(0xffffffff8206d6ac);
-  }
-  return;
-}
-
-
-// 8245F558  PlayerCmd_ResetSpreadOverride  (game/g_client_script_cmd.cpp:1618)
-
-void PlayerCmd_ResetSpreadOverride(uint param_1)
-
-{
-  int iVar1;
-  undefined4 *puVar2;
-  uint uStack00000014;
-  
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff8206d1d0,0x653,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar2 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar2 = (undefined4 *)0x0;
-  }
-  *(undefined4 *)(puVar2[0x56] + 0x388) = 1;
-  *(undefined4 *)(puVar2[0x56] + 0x37c) = 0x437f0000;
-  iVar1 = Scr_GetNumParam();
-  if (iVar1 != 0) {
-    Scr_Error(0xffffffff8206d6dc);
-  }
-  return;
-}
-
-
-// 8245F648  PlayerCmd_SetAimSpreadMovementScale  (game/g_client_script_cmd.cpp:1641)
-
-void PlayerCmd_SetAimSpreadMovementScale(uint param_1)
-
-{
-  int iVar1;
-  undefined4 *puVar2;
-  double dVar3;
-  uint uStack00000014;
-  
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff8206d1d0,0x66c,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar2 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar2 = (undefined4 *)0x0;
-  }
-  iVar1 = Scr_GetNumParam();
-  if (iVar1 != 1) {
-    Scr_Error(0xffffffff8206d750);
-  }
-  dVar3 = (double)Scr_GetFloat(0);
-  if ((dVar3 < 0.0) || (1.0 < dVar3)) {
-    Scr_ParamError(0,0xffffffff8206d708);
-    *(float *)(puVar2[0x56] + 0x38c) = (float)dVar3;
-  }
-  else {
-    *(float *)(puVar2[0x56] + 0x38c) = (float)dVar3;
-  }
-  return;
-}
-
-
-// 8245F770  PlayerCmd_GetViewmodel  (game/g_client_script_cmd.cpp:1672)
-
-void PlayerCmd_GetViewmodel(uint param_1)
-
-{
-  undefined4 *puVar1;
-  uint uStack00000014;
-  
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff8206d1d0,0x68b,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar1 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar1 = (undefined4 *)0x0;
-  }
-  G_ModelName(*(undefined4 *)(puVar1[0x56] + 0x33c4));
-  Scr_AddConstString();
-  return;
-}
-
-
-// 8245F838  PlayerCmd_OpenPopupMenu  (game/g_client_script_cmd.cpp:1698)
-
-void PlayerCmd_OpenPopupMenu(void)
-
-{
-  uint uVar2;
-  undefined8 uVar1;
-  undefined4 *puVar3;
-  short sStack00000016;
-  char acStack_70 [63];
-  undefined1 local_31;
-  
-  uVar2 = __savegprlr_27();
-  sStack00000016 = (short)uVar2;
-  uVar2 = uVar2 >> 0x10;
-  if (sStack00000016 == 0) {
-    if (0x7ff < uVar2) {
-      MyAssertHandler(0xffffffff8206d1d0,0x6a8,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar3 = &DAT_83373680 + uVar2 * 0xa0;
-    if ((&DAT_833737d8)[uVar2 * 0xa0] == 0) {
-      va(0xffffffff8206d370,uVar2);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar3 = (undefined4 *)0x0;
-  }
-  uVar1 = 0;
-  if (*(int *)(puVar3[0x56] + 0x332c) == 2) {
-    Scr_GetString(0);
-    uVar1 = GScr_GetScriptMenuIndex();
-    if (((int)uVar1 < 0) || (0x1f < (int)uVar1)) {
-      MyAssertHandler(0xffffffff8206d1d0,0x6b2,0,0xffffffff82000f98,0xffffffff8206d798);
-    }
-    _snprintf(acStack_70,0x40,"%c %i",0x6f,uVar1);
-    local_31 = 0;
-    SV_GameSendServerCommand(uVar2,1,acStack_70);
-    uVar1 = 1;
-  }
-  Scr_AddInt(uVar1);
-  __restgprlr_27();
-  return;
-}
-
-
-// 8245F970  PlayerCmd_OpenPopupMenuNoMouse  (game/g_client_script_cmd.cpp:1743)
-
-void PlayerCmd_OpenPopupMenuNoMouse(void)
-
-{
-  uint uVar2;
-  undefined8 uVar1;
-  undefined4 *puVar3;
-  short sStack00000016;
-  char acStack_70 [63];
-  undefined1 local_31;
-  
-  uVar2 = __savegprlr_27();
-  sStack00000016 = (short)uVar2;
-  uVar2 = uVar2 >> 0x10;
-  if (sStack00000016 == 0) {
-    if (0x7ff < uVar2) {
-      MyAssertHandler(0xffffffff8206d1d0,0x6d5,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar3 = &DAT_83373680 + uVar2 * 0xa0;
-    if ((&DAT_833737d8)[uVar2 * 0xa0] == 0) {
-      va(0xffffffff8206d370,uVar2);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar3 = (undefined4 *)0x0;
-  }
-  uVar1 = 0;
-  if (*(int *)(puVar3[0x56] + 0x332c) == 2) {
-    Scr_GetString(0);
-    uVar1 = GScr_GetScriptMenuIndex();
-    if (((int)uVar1 < 0) || (0x1f < (int)uVar1)) {
-      MyAssertHandler(0xffffffff8206d1d0,0x6df,0,0xffffffff82000f98,0xffffffff8206d798);
-    }
-    _snprintf(acStack_70,0x40,"%c %i 1",0x6f,uVar1);
-    local_31 = 0;
-    SV_GameSendServerCommand(uVar2,1,acStack_70);
-    uVar1 = 1;
-  }
-  Scr_AddInt(uVar1);
-  __restgprlr_27();
-  return;
-}
-
-
-// 8245FAA8  PlayerCmd_ClosePopupMenu  (game/g_client_script_cmd.cpp:1787)
-
-void PlayerCmd_ClosePopupMenu(uint param_1)
-
-{
-  uint uVar1;
-  undefined8 uVar2;
-  uint uStack00000014;
-  char acStack_60 [63];
-  undefined1 local_21;
-  
-  uStack00000014._2_2_ = (short)param_1;
-  uVar1 = param_1 >> 0x10;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    if (0x7ff < uVar1) {
-      MyAssertHandler(0xffffffff8206d1d0,0x700,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    if ((&DAT_833737d8)[uVar1 * 0xa0] != 0) goto LAB_8245fb44;
-    uVar2 = va(0xffffffff8206d370,uVar1);
-  }
-  else {
-    uVar2 = 0xffffffff8206d360;
-  }
-  Scr_ObjectError(uVar2);
-LAB_8245fb44:
-  _snprintf(acStack_60,0x40,"%c",0x70);
-  local_21 = 0;
-  SV_GameSendServerCommand(uVar1,1,acStack_60);
-  return;
-}
-
-
-// 8245FB90  PlayerCmd_OpenMenu  (game/g_client_script_cmd.cpp:1817)
-
-void PlayerCmd_OpenMenu(void)
-
-{
-  uint uVar2;
-  undefined8 uVar1;
-  undefined4 *puVar3;
-  short sStack00000016;
-  char acStack_70 [63];
-  undefined1 local_31;
-  
-  uVar2 = __savegprlr_27();
-  sStack00000016 = (short)uVar2;
-  uVar2 = uVar2 >> 0x10;
-  if (sStack00000016 == 0) {
-    if (0x7ff < uVar2) {
-      MyAssertHandler(0xffffffff8206d1d0,0x71f,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar3 = &DAT_83373680 + uVar2 * 0xa0;
-    if ((&DAT_833737d8)[uVar2 * 0xa0] == 0) {
-      va(0xffffffff8206d370,uVar2);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar3 = (undefined4 *)0x0;
-  }
-  uVar1 = 0;
-  if (*(int *)(puVar3[0x56] + 0x332c) == 2) {
-    Scr_GetString(0);
-    uVar1 = GScr_GetScriptMenuIndex();
-    if (((int)uVar1 < 0) || (0x1f < (int)uVar1)) {
-      MyAssertHandler(0xffffffff8206d1d0,0x729,0,0xffffffff82000f98,0xffffffff8206d798);
-    }
-    _snprintf(acStack_70,0x40,"%c %i",0x73,uVar1);
-    local_31 = 0;
-    SV_GameSendServerCommand(uVar2,1,acStack_70);
-    uVar1 = 1;
-  }
-  Scr_AddInt(uVar1);
-  __restgprlr_27();
-  return;
-}
-
-
-// 8245FCC8  PlayerCmd_CloseMenu  (game/g_client_script_cmd.cpp:1862)
-
-void PlayerCmd_CloseMenu(void)
-
-{
-  uint uVar2;
-  undefined8 uVar1;
-  undefined4 *puVar3;
-  short sStack00000016;
-  char acStack_70 [63];
-  undefined1 local_31;
-  
-  uVar2 = __savegprlr_27();
-  sStack00000016 = (short)uVar2;
-  uVar2 = uVar2 >> 0x10;
-  if (sStack00000016 == 0) {
-    if (0x7ff < uVar2) {
-      MyAssertHandler(0xffffffff8206d1d0,0x74c,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar3 = &DAT_83373680 + uVar2 * 0xa0;
-    if ((&DAT_833737d8)[uVar2 * 0xa0] == 0) {
-      va(0xffffffff8206d370,uVar2);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar3 = (undefined4 *)0x0;
-  }
-  uVar1 = 0;
-  if (*(int *)(puVar3[0x56] + 0x332c) == 2) {
-    Scr_GetString(0);
-    uVar1 = GScr_GetScriptMenuIndex();
-    if (((int)uVar1 < 0) || (0x1f < (int)uVar1)) {
-      MyAssertHandler(0xffffffff8206d1d0,0x755,0,0xffffffff82000f98,0xffffffff8206d798);
-    }
-    _snprintf(acStack_70,0x40,"%c %i",0x74,uVar1);
-    local_31 = 0;
-    SV_GameSendServerCommand(uVar2,1,acStack_70);
-    uVar1 = 1;
-  }
-  Scr_AddInt(uVar1);
-  __restgprlr_27();
-  return;
-}
-
-
-// 8245FE00  PlayerCmd_ShowHudSplash  (game/g_client_script_cmd.cpp:1909)
-
-void PlayerCmd_ShowHudSplash(void)
-
-{
-  uint uVar5;
-  undefined8 uVar1;
-  ulonglong uVar2;
-  undefined8 uVar3;
-  undefined8 uVar4;
-  undefined4 *puVar6;
-  short sStack00000016;
-  undefined4 local_40 [16];
-  
-  uVar5 = __savegprlr_27();
-  sStack00000016 = (short)uVar5;
-  if (sStack00000016 == 0) {
-    uVar5 = uVar5 >> 0x10;
-    if (0x7ff < uVar5) {
-      MyAssertHandler(0xffffffff8206d1d0,0x77c,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar6 = &DAT_83373680 + uVar5 * 0xa0;
-    if ((&DAT_833737d8)[uVar5 * 0xa0] == 0) {
-      va(0xffffffff8206d370,uVar5);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar6 = (undefined4 *)0x0;
-  }
-  uVar1 = Scr_GetString(0);
-  uVar2 = Scr_GetInt(1);
-  if (4 < (uVar2 & 0xffffffff)) {
-    Scr_Error(0xffffffff8206d820);
-  }
-  uVar5 = Scr_GetNumParam();
-  if (uVar5 < 3) {
-    uVar3 = 0;
-  }
-  else {
-    uVar3 = Scr_GetInt(2);
-  }
-  StringTable_GetAsset(0xffffffff8201cbd0,local_40);
-  uVar4 = StringTable_LookupRowNumForValue(local_40[0],0,uVar1);
-  Com_Printf(0x19,0xffffffff8206d7e0,uVar1,*puVar6,uVar2);
-  uVar1 = va(0xffffffff8206d7d4,0x75,uVar2,uVar4,uVar3);
-  SV_GameSendServerCommand(*puVar6,0,uVar1);
-  __restgprlr_27();
-  return;
-}
-
-
-// 8245FF58  PlayerCmd_FreezeControls  (game/g_client_script_cmd.cpp:1954)
-
-void PlayerCmd_FreezeControls(uint param_1)
-
-{
-  uint uVar1;
-  int iVar2;
-  uint uVar3;
-  undefined4 *puVar4;
-  uint uStack00000014;
-  
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff8206d1d0,0x7a3,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar4 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar4 = (undefined4 *)0x0;
-  }
-  iVar2 = Scr_GetInt(0);
-  uVar1 = *(uint *)(puVar4[0x56] + 0x35f8);
-  uVar3 = uVar1 | 4;
-  if (iVar2 == 0) {
-    uVar3 = uVar1 & 0xfffffffb;
-  }
-  *(uint *)(puVar4[0x56] + 0x35f8) = uVar3;
-  return;
-}
-
-
-// 82460038  PlayerCmd_DisableUsability  (game/g_client_script_cmd.cpp:1975)
-
-void PlayerCmd_DisableUsability(uint param_1)
-
-{
-  undefined4 *puVar1;
-  uint uStack00000014;
-  
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff8206d1d0,0x7b8,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar1 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar1 = (undefined4 *)0x0;
-  }
-  *(uint *)(puVar1[0x56] + 0x35f8) = *(uint *)(puVar1[0x56] + 0x35f8) | 8;
-  return;
-}
-
-
-// 82460100  PlayerCmd_EnableUsability  (game/g_client_script_cmd.cpp:1992)
-
-void PlayerCmd_EnableUsability(uint param_1)
-
-{
-  undefined4 *puVar1;
-  uint uStack00000014;
-  
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff8206d1d0,0x7c9,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar1 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar1 = (undefined4 *)0x0;
-  }
-  *(uint *)(puVar1[0x56] + 0x35f8) = *(uint *)(puVar1[0x56] + 0x35f8) & 0xfffffff7;
-  return;
-}
-
-
-// 824601C8  PlayerCmd_DisableWeapons  (game/g_client_script_cmd.cpp:2009)
-
-void PlayerCmd_DisableWeapons(uint param_1)
-
-{
-  undefined4 *puVar1;
-  uint uStack00000014;
-  
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff8206d1d0,0x7da,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar1 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar1 = (undefined4 *)0x0;
-  }
-  *(uint *)(puVar1[0x56] + 0x374) = *(uint *)(puVar1[0x56] + 0x374) | 0x80;
-  return;
-}
-
-
-// 82460290  PlayerCmd_EnableWeapons  (game/g_client_script_cmd.cpp:2026)
-
-void PlayerCmd_EnableWeapons(uint param_1)
-
-{
-  undefined4 *puVar1;
-  uint uStack00000014;
-  
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff8206d1d0,0x7eb,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar1 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar1 = (undefined4 *)0x0;
-  }
-  *(uint *)(puVar1[0x56] + 0x374) = *(uint *)(puVar1[0x56] + 0x374) & 0xffffff7f;
-  return;
-}
-
-
-// 82460358  PlayerCmd_DisableOffhandWeapons  (game/g_client_script_cmd.cpp:2044)
-
-void PlayerCmd_DisableOffhandWeapons(uint param_1)
-
-{
-  undefined4 *puVar1;
-  uint uStack00000014;
-  
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff8206d1d0,0x7fd,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar1 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar1 = (undefined4 *)0x0;
-  }
-  *(uint *)(puVar1[0x56] + 0x374) = *(uint *)(puVar1[0x56] + 0x374) | 0x1000;
-  return;
-}
-
-
-// 82460420  PlayerCmd_EnableOffhandWeapons  (game/g_client_script_cmd.cpp:2061)
-
-void PlayerCmd_EnableOffhandWeapons(uint param_1)
-
-{
-  undefined4 *puVar1;
-  uint uStack00000014;
-  
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff8206d1d0,0x80e,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar1 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar1 = (undefined4 *)0x0;
-  }
-  *(uint *)(puVar1[0x56] + 0x374) = *(uint *)(puVar1[0x56] + 0x374) & 0xffffefff;
-  return;
-}
-
-
-// 824604E8  PlayerCmd_DisableWeaponSwitch  (game/g_client_script_cmd.cpp:2079)
-
-void PlayerCmd_DisableWeaponSwitch(uint param_1)
-
-{
-  undefined4 *puVar1;
-  uint uStack00000014;
-  
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff8206d1d0,0x820,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar1 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar1 = (undefined4 *)0x0;
-  }
-  *(uint *)(puVar1[0x56] + 0x374) = *(uint *)(puVar1[0x56] + 0x374) | 0x800;
-  return;
-}
-
-
-// 824605B0  PlayerCmd_EnableWeaponSwitch  (game/g_client_script_cmd.cpp:2096)
-
-void PlayerCmd_EnableWeaponSwitch(uint param_1)
-
-{
-  undefined4 *puVar1;
-  uint uStack00000014;
-  
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff8206d1d0,0x831,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar1 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar1 = (undefined4 *)0x0;
-  }
-  *(uint *)(puVar1[0x56] + 0x374) = *(uint *)(puVar1[0x56] + 0x374) & 0xfffff7ff;
-  return;
-}
-
-
-// 82460678  PlayerCmd_SetWeaponAmmoClip  (game/g_client_script_cmd.cpp:2116)
-
-void PlayerCmd_SetWeaponAmmoClip(void)
-
-{
-  int iVar1;
-  uint uVar6;
-  char *pcVar7;
-  undefined8 uVar2;
-  undefined8 uVar3;
-  undefined8 uVar4;
-  undefined8 uVar5;
-  int iVar8;
-  longlong lVar9;
-  undefined4 *puVar10;
-  short sStack00000016;
-  
-  uVar6 = __savegprlr_25();
-  sStack00000016 = (short)uVar6;
-  if (sStack00000016 == 0) {
-    uVar6 = uVar6 >> 0x10;
-    if (0x7ff < uVar6) {
-      MyAssertHandler(0xffffffff8206d1d0,0x84e,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar10 = &DAT_83373680 + uVar6 * 0xa0;
-    if ((&DAT_833737d8)[uVar6 * 0xa0] == 0) {
-      va(0xffffffff8206d370,uVar6);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar10 = (undefined4 *)0x0;
-  }
-  pcVar7 = (char *)Scr_GetString(0);
-  if ((((*pcVar7 != 'a') || (pcVar7[1] != 'l')) || (pcVar7[2] != 't')) ||
-     (lVar9 = 1, pcVar7[3] != '_')) {
-    lVar9 = 0;
-  }
-  if (lVar9 != 0) {
-    pcVar7 = pcVar7 + 4;
-  }
-  uVar2 = Scr_GetInt(1);
-  uVar3 = G_GetWeaponForName(pcVar7);
-  Scr_VerifyWeapon(uVar3,pcVar7);
-  if (puVar10[0x56] == 0) {
-    MyAssertHandler(0xffffffff8206d1d0,0x857,0,0xffffffff82000f98,0xffffffff8206d1bc);
-  }
-  iVar1 = puVar10[0x56];
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff8206d1d0,0x859,0,0xffffffff82000f98,0xffffffff82001fdc);
-  }
-  uVar4 = BG_ClipForWeapon(uVar3,lVar9);
-  if ((int)uVar4 != 0) {
-    uVar5 = BG_GetClipSize(iVar1,uVar3,lVar9);
-    if ((int)uVar2 < 0) {
-      uVar2 = 0;
-    }
-    else if ((int)uVar5 < (int)uVar2) {
-      uVar2 = uVar5;
-    }
-    uVar6 = Scr_GetNumParam();
-    if (uVar6 < 2) {
-      BG_SetClipAmmo(iVar1,uVar4,0,uVar2);
-      iVar8 = BG_PlayerDualWieldingWeapon(iVar1,uVar3);
-      if (iVar8 == 0) goto LAB_824608b4;
-    }
-    else {
-      uVar5 = Scr_GetWeaponHandIndex(2);
-      if (((int)uVar5 != 1) || (iVar8 = BG_PlayerDualWieldingWeapon(iVar1,uVar3), iVar8 != 0)) {
-        BG_SetClipAmmo(iVar1,uVar4,uVar5,uVar2);
-        __restgprlr_25();
-        return;
-      }
-      uVar2 = 0;
-    }
-    BG_SetClipAmmo(iVar1,uVar4,1,uVar2);
-  }
-LAB_824608b4:
-  __restgprlr_25();
-  return;
-}
-
-
-// 824608C0  PlayerCmd_SetWeaponAmmoStock  (game/g_client_script_cmd.cpp:2182)
-
-void PlayerCmd_SetWeaponAmmoStock(void)
-
-{
-  undefined4 uVar1;
-  uint uVar6;
-  char *pcVar7;
-  ulonglong uVar2;
-  undefined8 uVar3;
-  int iVar8;
-  undefined8 uVar4;
-  ulonglong uVar5;
-  longlong lVar9;
-  undefined4 *puVar10;
-  short sStack00000016;
-  
-  uVar6 = __savegprlr_26();
-  sStack00000016 = (short)uVar6;
-  if (sStack00000016 == 0) {
-    uVar6 = uVar6 >> 0x10;
-    if (0x7ff < uVar6) {
-      MyAssertHandler(0xffffffff8206d1d0,0x88e,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar10 = &DAT_83373680 + uVar6 * 0xa0;
-    if ((&DAT_833737d8)[uVar6 * 0xa0] == 0) {
-      va(0xffffffff8206d370,uVar6);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar10 = (undefined4 *)0x0;
-  }
-  uVar6 = Scr_GetNumParam();
-  if (2 < uVar6) {
-    Scr_Error(0xffffffff8206d850);
-  }
-  pcVar7 = (char *)Scr_GetString(0);
-  if ((((*pcVar7 != 'a') || (pcVar7[1] != 'l')) || (pcVar7[2] != 't')) ||
-     (lVar9 = 1, pcVar7[3] != '_')) {
-    lVar9 = 0;
-  }
-  if (lVar9 != 0) {
-    pcVar7 = pcVar7 + 4;
-  }
-  uVar2 = Scr_GetInt(1);
-  uVar3 = G_GetWeaponForName(pcVar7);
-  uVar1 = puVar10[0x56];
-  Scr_VerifyWeapon(uVar3,pcVar7);
-  iVar8 = BG_WeaponIsClipOnly(uVar3,lVar9);
-  if (iVar8 == 0) {
-    iVar8 = BG_AmmoForWeapon(uVar3,lVar9);
-    if (iVar8 != 0) {
-      uVar5 = BG_GetAmmoPlayerMax(uVar1,uVar3,lVar9,0);
-      if ((int)uVar2 < (int)uVar5) {
-        uVar5 = uVar2;
-      }
-      BG_SetGlobalAmmo(uVar1,uVar3,lVar9,
-                       ((uVar5 & 0xffffffff) >> 0x1f) - (ulonglong)(uVar5 != 0) & uVar5,0,-uVar5);
-    }
-  }
-  else {
-    uVar4 = BG_ClipForWeapon();
-    if ((int)uVar4 != 0) {
-      uVar5 = BG_GetClipSize(uVar1,uVar3,lVar9);
-      if ((int)uVar2 < (int)uVar5) {
-        uVar5 = uVar2;
-      }
-      uVar2 = ((uVar5 & 0xffffffff) >> 0x1f) - (ulonglong)(uVar5 != 0) & uVar5;
-      BG_SetClipAmmo(uVar1,uVar4,0,uVar2,0,-uVar5);
-      iVar8 = BG_PlayerDualWieldingWeapon(uVar1,uVar3);
-      if (iVar8 != 0) {
-        BG_SetClipAmmo(uVar1,uVar4,1,uVar2);
-        __restgprlr_26();
-        return;
-      }
-    }
-  }
-  __restgprlr_26();
-  return;
-}
-
-
-// 82460AF8  PlayerCmd_GetWeaponAmmoClip  (game/g_client_script_cmd.cpp:2247)
-
-void PlayerCmd_GetWeaponAmmoClip(void)
-
-{
-  uint uVar3;
-  char *pcVar4;
-  undefined8 uVar1;
-  undefined8 uVar2;
-  longlong lVar5;
-  undefined4 *puVar6;
-  short sStack00000016;
-  
-  uVar3 = __savegprlr_28();
-  sStack00000016 = (short)uVar3;
-  if (sStack00000016 == 0) {
-    uVar3 = uVar3 >> 0x10;
-    if (0x7ff < uVar3) {
-      MyAssertHandler(0xffffffff8206d1d0,0x8cd,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar6 = &DAT_83373680 + uVar3 * 0xa0;
-    if ((&DAT_833737d8)[uVar3 * 0xa0] == 0) {
-      va(0xffffffff8206d370,uVar3);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar6 = (undefined4 *)0x0;
-  }
-  pcVar4 = (char *)Scr_GetString(0);
-  if ((((*pcVar4 != 'a') || (pcVar4[1] != 'l')) || (pcVar4[2] != 't')) ||
-     (lVar5 = 1, pcVar4[3] != '_')) {
-    lVar5 = 0;
-  }
-  if (lVar5 != 0) {
-    pcVar4 = pcVar4 + 4;
-  }
-  uVar1 = G_GetWeaponForName(pcVar4);
-  Scr_VerifyWeapon(uVar1,pcVar4);
-  uVar2 = Scr_GetWeaponHandIndex(1);
-  BG_GetAmmoInClipForWeapon(puVar6[0x56],uVar1,lVar5,uVar2);
-  Scr_AddInt();
-  __restgprlr_28();
-  return;
-}
-
-
-// 82460C28  PlayerCmd_GetWeaponAmmoStock  (game/g_client_script_cmd.cpp:2280)
-
-void PlayerCmd_GetWeaponAmmoStock(void)
-
-{
-  uint uVar2;
-  char *pcVar3;
-  undefined8 uVar1;
-  int iVar4;
-  longlong lVar5;
-  undefined4 *puVar6;
-  short sStack00000016;
-  
-  uVar2 = __savegprlr_28();
-  sStack00000016 = (short)uVar2;
-  if (sStack00000016 == 0) {
-    uVar2 = uVar2 >> 0x10;
-    if (0x7ff < uVar2) {
-      MyAssertHandler(0xffffffff8206d1d0,0x8ed,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar6 = &DAT_83373680 + uVar2 * 0xa0;
-    if ((&DAT_833737d8)[uVar2 * 0xa0] == 0) {
-      va(0xffffffff8206d370,uVar2);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar6 = (undefined4 *)0x0;
-  }
-  uVar2 = Scr_GetNumParam();
-  if (1 < uVar2) {
-    Scr_Error(0xffffffff8206d850);
-  }
-  pcVar3 = (char *)Scr_GetString(0);
-  if ((((*pcVar3 != 'a') || (pcVar3[1] != 'l')) || (pcVar3[2] != 't')) ||
-     (lVar5 = 1, pcVar3[3] != '_')) {
-    lVar5 = 0;
-  }
-  if (lVar5 != 0) {
-    pcVar3 = pcVar3 + 4;
-  }
-  uVar1 = G_GetWeaponForName(pcVar3);
-  Scr_VerifyWeapon(uVar1,pcVar3);
-  iVar4 = BG_WeaponIsClipOnly(uVar1,lVar5);
-  if (iVar4 != 0) {
-    BG_GetAmmoInClipBothHandsForWeapon();
-    Scr_AddInt();
-    __restgprlr_28();
-    return;
-  }
-  BG_GetAmmoNotInClip(puVar6[0x56],uVar1,lVar5);
-  Scr_AddInt();
-  __restgprlr_28();
-  return;
-}
-
-
-// 82460D80  PlayerCmd_AnyAmmoForWeaponModes  (game/g_client_script_cmd.cpp:2316)
-
-void PlayerCmd_AnyAmmoForWeaponModes(void)
-
-{
-  bool bVar1;
-  uint uVar3;
-  char *pcVar4;
-  undefined8 uVar2;
-  int iVar5;
-  char cVar6;
-  undefined4 *puVar7;
-  short sStack00000016;
-  
-  uVar3 = __savegprlr_28();
-  sStack00000016 = (short)uVar3;
-  if (sStack00000016 == 0) {
-    uVar3 = uVar3 >> 0x10;
-    if (0x7ff < uVar3) {
-      MyAssertHandler(0xffffffff8206d1d0,0x912,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar7 = &DAT_83373680 + uVar3 * 0xa0;
-    if ((&DAT_833737d8)[uVar3 * 0xa0] == 0) {
-      va(0xffffffff8206d370,uVar3);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar7 = (undefined4 *)0x0;
-  }
-  pcVar4 = (char *)Scr_GetString(0);
-  if ((((*pcVar4 != 'a') || (pcVar4[1] != 'l')) || (pcVar4[2] != 't')) ||
-     (bVar1 = true, pcVar4[3] != '_')) {
-    bVar1 = false;
-  }
-  if (bVar1) {
-    pcVar4 = pcVar4 + 4;
-  }
-  uVar2 = G_GetWeaponForName(pcVar4);
-  Scr_VerifyWeapon(uVar2,pcVar4);
-  iVar5 = BG_WeaponAmmo(puVar7[0x56],uVar2,0);
-  if ((bVar1) && (cVar6 = BG_GetAltWeapon(uVar2), cVar6 != '\0')) {
-    iVar5 = BG_WeaponAmmo(puVar7[0x56],uVar2,1);
-  }
-  Scr_AddInt(iVar5 != 0);
-  __restgprlr_28();
-  return;
-}
-
-
-// 82460EE8  PlayerCmd_SetClientDvar  (game/g_client_script_cmd.cpp:2357)
-
-void PlayerCmd_SetClientDvar(void)
-
-{
-  char *pcVar1;
-  uint uVar4;
-  undefined8 uVar2;
-  int iVar5;
-  longlong lVar3;
-  undefined1 *puVar6;
-  char cVar7;
-  short sStack00000016;
-  char local_840 [1024];
-  undefined1 auStack_440 [1088];
-  
-  uVar4 = __savegprlr_26();
-  sStack00000016 = (short)uVar4;
-  uVar4 = uVar4 >> 0x10;
-  if (sStack00000016 == 0) {
-    if (0x7ff < uVar4) {
-      MyAssertHandler(0xffffffff8206d1d0,0x941,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    if ((&DAT_833737d8)[uVar4 * 0xa0] != 0) goto LAB_82460f7c;
-    uVar2 = va(0xffffffff8206d370,uVar4);
-  }
-  else {
-    uVar2 = 0xffffffff8206d360;
-  }
-  Scr_ObjectError(uVar2);
-LAB_82460f7c:
-  uVar2 = Scr_GetString(0);
-  iVar5 = Scr_GetType(1);
-  if (iVar5 == 3) {
-    lVar3 = Scr_GetNumParam();
-    Scr_ConstructMessageString(1,lVar3 + -1,0xffffffff8206d8e4,auStack_440,0x400);
-    puVar6 = auStack_440;
-  }
-  else {
-    puVar6 = (undefined1 *)Scr_GetString(1);
-  }
-  cVar7 = Dvar_IsValidName(uVar2);
-  if (cVar7 == '\0') {
-    va(0xffffffff8206d8c8,uVar2);
-    Scr_Error();
-    __restgprlr_26();
-    return;
-  }
-  iVar5 = Dvar_FindVar(uVar2);
-  if ((iVar5 != 0) && ((*(ushort *)(iVar5 + 8) & 0x1018) != 0)) {
-    va(0xffffffff8206d898,uVar2);
-    Scr_Error();
-  }
-  memset(local_840,0,0x400);
-  iVar5 = 0;
-  do {
-    pcVar1 = local_840 + iVar5;
-    if (pcVar1[(int)puVar6 - (int)local_840] == '\0') break;
-    cVar7 = I_CleanChar();
-    *pcVar1 = cVar7;
-    if (cVar7 == '\"') {
-      *pcVar1 = '\'';
-    }
-    iVar5 = iVar5 + 1;
-  } while (iVar5 < 0x3ff);
-  uVar2 = va(0xffffffff8206d88c,0x71,uVar2,local_840);
-  SV_GameSendServerCommand(uVar4,1,uVar2);
-  __restgprlr_26();
-  return;
-}
-
-
-// 824610C0  PlayerCmd_SetClientDvars  (game/g_client_script_cmd.cpp:2424)
-
-void PlayerCmd_SetClientDvars(void)
-
-{
-  uint uVar5;
-  undefined8 uVar1;
-  ulonglong uVar2;
-  int iVar6;
-  undefined8 uVar3;
-  char cVar7;
-  ulonglong uVar4;
-  char *pcVar8;
-  short sStack00000016;
-  undefined1 local_850;
-  undefined1 local_84f;
-  char local_450 [1104];
-  
-  uVar5 = __savegprlr_23();
-  sStack00000016 = (short)uVar5;
-  uVar5 = uVar5 >> 0x10;
-  if (sStack00000016 == 0) {
-    if (0x7ff < uVar5) {
-      MyAssertHandler(0xffffffff8206d1d0,0x983,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    if ((&DAT_833737d8)[uVar5 * 0xa0] != 0) goto LAB_82461154;
-    uVar1 = va(0xffffffff8206d370,uVar5);
-  }
-  else {
-    uVar1 = 0xffffffff8206d360;
-  }
-  Scr_ObjectError(uVar1);
-LAB_82461154:
-  uVar2 = Scr_GetNumParam();
-  if ((uVar2 & 1) != 0) {
-    Scr_Error(0xffffffff8206d920);
-  }
-  uVar2 = 0;
-  local_850 = 0x71;
-  local_84f = 0;
-  iVar6 = Scr_GetNumParam();
-  if (iVar6 != 0) {
-    do {
-      uVar1 = Scr_GetString(uVar2);
-      uVar3 = Scr_GetString(uVar2 + 1);
-      cVar7 = Dvar_IsValidName(uVar1);
-      if (cVar7 == '\0') {
-        va(0xffffffff8206d8f8,uVar1);
-        Scr_Error();
-        __restgprlr_23();
-        return;
-      }
-      iVar6 = Dvar_FindVar(uVar1);
-      if ((iVar6 != 0) && ((*(ushort *)(iVar6 + 8) & 0x1018) != 0)) {
-        va(0xffffffff8206d898,uVar1);
-        Scr_Error();
-      }
-      I_strncpyz(local_450,uVar3,0x400);
-      pcVar8 = local_450;
-      cVar7 = local_450[0];
-      while (cVar7 != '\0') {
-        cVar7 = I_CleanChar(*pcVar8);
-        *pcVar8 = cVar7;
-        if (cVar7 == '\"') {
-          *pcVar8 = '\'';
-        }
-        pcVar8 = pcVar8 + 1;
-        cVar7 = *pcVar8;
-      }
-      I_strncat(&local_850,0x400,0xffffffff820034a0);
-      I_strncat(&local_850,0x400,uVar1);
-      I_strncat(&local_850,0x400,0xffffffff8206d91c);
-      I_strncat(&local_850,0x400,local_450);
-      I_strncat(&local_850,0x400,0xffffffff8202f54c);
-      uVar2 = uVar2 + 2;
-      uVar4 = Scr_GetNumParam();
-    } while ((uVar2 & 0xffffffff) < (uVar4 & 0xffffffff));
-  }
-  SV_GameSendServerCommand(uVar5,1,&local_850);
-  __restgprlr_23();
-  return;
-}
-
-
-// 824612F0  PlayerCmd_SetWhizbySpreads  (game/g_client_script_cmd.cpp:2563)
-
-void PlayerCmd_SetWhizbySpreads(uint param_1)
-
-{
-  uint uVar1;
-  undefined8 uVar2;
-  int iVar3;
-  double dVar4;
-  double dVar5;
-  double dVar6;
-  double dVar7;
-  uint uStack00000014;
-  
-  uStack00000014._2_2_ = (short)param_1;
-  uVar1 = param_1 >> 0x10;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    if (0x7ff < uVar1) {
-      MyAssertHandler(0xffffffff8206d1d0,0xa07,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    if ((&DAT_833737d8)[uVar1 * 0xa0] != 0) goto LAB_82461394;
-    uVar2 = va(0xffffffff8206d370,uVar1);
-  }
-  else {
-    uVar2 = 0xffffffff8206d360;
-  }
-  Scr_ObjectError(uVar2);
-LAB_82461394:
-  iVar3 = Scr_GetNumParam();
-  if (iVar3 != 3) {
-    Scr_Error(0xffffffff8206d9a0);
-  }
-  dVar5 = (double)Scr_GetFloat(0);
-  dVar6 = (double)Scr_GetFloat(1);
-  dVar7 = (double)Scr_GetFloat(2);
-  dVar4 = 1.0;
-  if ((float)(dVar7 - 1.0) < 0.0) {
-    dVar7 = dVar4;
-  }
-  if ((float)(dVar6 - 1.0) < 0.0) {
-    dVar6 = dVar4;
-  }
-  if ((float)(dVar5 - 1.0) < 0.0) {
-    dVar5 = dVar4;
-  }
-  uVar2 = va(0xffffffff8206d994,0x52,dVar5,dVar6,dVar7);
-  SV_GameSendServerCommand(uVar1,1,uVar2);
-  return;
-}
-
-
-// 82461448  PlayerCmd_SetWhizbyRadii  (game/g_client_script_cmd.cpp:2600)
-
-void PlayerCmd_SetWhizbyRadii(undefined4 param_1)
-
-{
-  int iVar2;
-  undefined8 uVar1;
-  double dVar3;
-  double dVar4;
-  double dVar5;
-  double dVar6;
-  undefined2 uStack00000014;
-  
-  _uStack00000014 = param_1;
-  iVar2 = Scr_GetNumParam();
-  if (iVar2 != 3) {
-    Scr_Error(0xffffffff8206d9cc);
-  }
-  dVar3 = (double)Scr_GetFloat(0);
-  if (dVar3 < 0.0) {
-    dVar3 = 0.0;
-  }
-  dVar6 = 0.009999999776482582;
-  dVar5 = (double)(float)(dVar3 + 0.009999999776482582);
-  dVar4 = (double)Scr_GetFloat(1);
-  if ((float)(dVar4 - dVar5) < 0.0) {
-    dVar4 = dVar5;
-  }
-  dVar6 = (double)(float)(dVar4 + dVar6);
-  dVar5 = (double)Scr_GetFloat(2);
-  if ((float)(dVar5 - dVar6) < 0.0) {
-    dVar5 = dVar6;
-  }
-  uVar1 = va(dVar3,dVar4,0xffffffff8206d994,0x53,dVar3,dVar4,dVar5);
-  SV_GameSendServerCommand(uStack00000014,1,uVar1);
+  sStack00000014 = param_1;
+  uVar1 = Scr_GetNumParam();
+  if (uVar1 != 3) {
+    Scr_Error("SetWhizbyRadii: must have 3 parameters.\n");
+  }
+  Scr_GetFloat(0);
+  Scr_GetFloat(1);
+  Scr_GetFloat(2);
+  pcVar2 = va("%c %g %g %g");
+  SV_GameSendServerCommand((uint)sStack00000014 >> 0x10,SV_CMD_RELIABLE,pcVar2);
   return;
 }
 
 
 // 82461528  PlayerCmd_SetReverb  (game/g_client_script_cmd.cpp:2637)
 
-void PlayerCmd_SetReverb(void)
+void PlayerCmd_SetReverb(scr_entref_t param_1)
 
 {
   return;
@@ -3208,7 +416,7 @@ void PlayerCmd_SetReverb(void)
 
 // 82461530  PlayerCmd_DeactivateReverb  (game/g_client_script_cmd.cpp:2701)
 
-void PlayerCmd_DeactivateReverb(void)
+void PlayerCmd_DeactivateReverb(scr_entref_t param_1)
 
 {
   return;
@@ -3216,1139 +424,190 @@ void PlayerCmd_DeactivateReverb(void)
 
 
 // 82461538  PlayerCmd_SetVolMod  (game/g_client_script_cmd.cpp:2754)
-
-void PlayerCmd_SetVolMod(void)
-
-{
-  uint uVar3;
-  undefined8 uVar1;
-  int iVar4;
-  undefined8 uVar2;
-  double dVar5;
-  double dVar6;
-  double dVar7;
-  double dVar8;
-  short sStack00000016;
-  
-  uVar3 = __savegprlr_29();
-  sStack00000016 = (short)uVar3;
-  uVar3 = uVar3 >> 0x10;
-  if (sStack00000016 == 0) {
-    if (0x7ff < uVar3) {
-      MyAssertHandler(0xffffffff8206d1d0,0xac8,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    if ((&DAT_833737d8)[uVar3 * 0xa0] != 0) goto LAB_824615d4;
-    uVar1 = va(0xffffffff8206d370,uVar3);
-  }
-  else {
-    uVar1 = 0xffffffff8206d360;
-  }
-  Scr_ObjectError(uVar1);
-LAB_824615d4:
-  dVar8 = 0.0;
-  dVar7 = dVar8;
-  iVar4 = Scr_GetNumParam();
-  if (iVar4 != 2) {
-    if (iVar4 != 3) {
-      Scr_Error(0xffffffff8206da30);
-      __restgprlr_29();
-      return;
-    }
-    dVar5 = (double)Scr_GetFloat(2);
-    dVar8 = dVar7;
-    if (-dVar5 < 0.0) {
-      dVar8 = dVar5;
-    }
-  }
-  uVar1 = Scr_GetString(0);
-  uVar2 = SND_GetVolModIndexFromName();
-  if ((int)uVar2 == -1) {
-    uVar1 = va(0xffffffff8206da04,uVar1);
-    Scr_ParamError(0,uVar1);
-  }
-  dVar6 = (double)Scr_GetFloat(1);
-  dVar5 = 1.0;
-  if ((float)(dVar6 - 1.0) < 0.0) {
-    dVar5 = dVar6;
-  }
-  if (-dVar6 < 0.0) {
-    dVar7 = dVar5;
-  }
-  uVar1 = va(dVar7,dVar8,0xffffffff8206d9f8,0x57,uVar2,dVar7,dVar8);
-  SV_GameSendServerCommand(uVar3,1,uVar1);
-  __restgprlr_29();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 824616C0  PlayerCmd_SetChannelVolume  (game/g_client_script_cmd.cpp:2806)
-
-void PlayerCmd_SetChannelVolume(void)
-
-{
-  uint uVar3;
-  undefined8 uVar1;
-  int iVar4;
-  undefined8 uVar2;
-  double dVar5;
-  double dVar6;
-  double dVar7;
-  short sStack00000016;
-  
-  uVar3 = __savegprlr_29();
-  sStack00000016 = (short)uVar3;
-  uVar3 = uVar3 >> 0x10;
-  if (sStack00000016 == 0) {
-    if (0x7ff < uVar3) {
-      MyAssertHandler(0xffffffff8206d1d0,0xafc,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    if ((&DAT_833737d8)[uVar3 * 0xa0] != 0) goto LAB_82461760;
-    uVar1 = va(0xffffffff8206d370,uVar3);
-  }
-  else {
-    uVar1 = 0xffffffff8206d360;
-  }
-  Scr_ObjectError(uVar1);
-LAB_82461760:
-  dVar6 = 0.0;
-  dVar7 = dVar6;
-  iVar4 = Scr_GetNumParam();
-  if (iVar4 != 2) {
-    if (iVar4 != 3) {
-      Scr_Error(0xffffffff8206db18);
-      __restgprlr_29();
-      return;
-    }
-    dVar6 = (double)Scr_GetFloat(2);
-    if (dVar6 < dVar7) {
-      uVar1 = va(0xffffffff8206dae0,dVar6);
-      Scr_ParamError(2,uVar1);
-    }
-  }
-  uVar1 = Scr_GetString(0);
-  uVar2 = SND_GetEntChannelFromName();
-  if ((int)uVar2 == -1) {
-    uVar1 = va(0xffffffff8206daac,uVar1);
-    Scr_ParamError(0,uVar1);
-  }
-  dVar5 = (double)Scr_GetFloat(1);
-  if (dVar5 < dVar7) {
-    uVar1 = va(0xffffffff8206da7c,dVar5);
-    Scr_ParamError(1,uVar1);
-  }
-  uVar1 = va(dVar5,dVar6,0xffffffff8206d9f8,0x45,uVar2,dVar5,dVar6);
-  SV_GameSendServerCommand(uVar3,1,uVar1);
-  __restgprlr_29();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 82461890  PlayerCmd_SetChannelVolumes  (game/g_client_script_cmd.cpp:2864)
-
-void PlayerCmd_SetChannelVolumes(void)
-
-{
-  uint uVar3;
-  undefined8 uVar1;
-  int iVar4;
-  undefined8 uVar2;
-  uint uVar5;
-  undefined8 uVar6;
-  short sStack00000016;
-  
-  uVar3 = __savegprlr_29();
-  sStack00000016 = (short)uVar3;
-  uVar3 = uVar3 >> 0x10;
-  if (sStack00000016 == 0) {
-    if (0x7ff < uVar3) {
-      MyAssertHandler(0xffffffff8206d1d0,0xb36,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    if ((&DAT_833737d8)[uVar3 * 0xa0] != 0) goto LAB_82461928;
-    uVar1 = va(0xffffffff8206d370,uVar3);
-  }
-  else {
-    uVar1 = 0xffffffff8206d360;
-  }
-  Scr_ObjectError(uVar1);
-LAB_82461928:
-  uVar1 = 0;
-  iVar4 = Scr_GetNumParam();
-  if (iVar4 != 2) {
-    if (iVar4 != 3) {
-      Scr_Error(0xffffffff8206dbf8);
-      __restgprlr_29();
-      return;
-    }
-    uVar1 = Scr_GetFloat(2);
-  }
-  uVar2 = Scr_GetString(1);
-  uVar2 = G_FindConfigstringIndex(uVar2,0xba4,0x10,0,0);
-  uVar5 = Scr_GetConstString(0);
-  uVar6 = 1;
-  if (uVar5 != DAT_835a0c2a) {
-    if (uVar5 == DAT_835a0c2c) {
-      uVar6 = 2;
-    }
-    else if (uVar5 == DAT_835a0c2e) {
-      uVar6 = 3;
-    }
-    else {
-      Scr_Error(0xffffffff8206db80);
-    }
-  }
-  uVar1 = va(uVar1,0xffffffff8206db70,0x79,uVar6,uVar2,uVar1);
-  SV_GameSendServerCommand(uVar3,1,uVar1);
-  __restgprlr_29();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 82461A20  PlayerCmd_DeactivateChannelVolumes  (game/g_client_script_cmd.cpp:2919)
-
-void PlayerCmd_DeactivateChannelVolumes(uint param_1)
-
-{
-  uint uVar1;
-  undefined8 uVar2;
-  int iVar3;
-  uint uVar4;
-  undefined8 uVar5;
-  uint uStack00000014;
-  
-  uStack00000014._2_2_ = (short)param_1;
-  uVar1 = param_1 >> 0x10;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    if (0x7ff < uVar1) {
-      MyAssertHandler(0xffffffff8206d1d0,0xb6c,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    if ((&DAT_833737d8)[uVar1 * 0xa0] != 0) goto LAB_82461ac0;
-    uVar2 = va(0xffffffff8206d370,uVar1);
-  }
-  else {
-    uVar2 = 0xffffffff8206d360;
-  }
-  Scr_ObjectError(uVar2);
-LAB_82461ac0:
-  uVar2 = 0;
-  iVar3 = Scr_GetNumParam();
-  if (iVar3 != 1) {
-    if (iVar3 != 2) {
-      Scr_Error(0xffffffff8206dce0);
-      return;
-    }
-    uVar2 = Scr_GetFloat(1);
-  }
-  uVar4 = Scr_GetConstString(0);
-  uVar5 = 1;
-  if (uVar4 != DAT_835a0c2a) {
-    if (uVar4 == DAT_835a0c2c) {
-      uVar5 = 2;
-    }
-    else if (uVar4 == DAT_835a0c2e) {
-      uVar5 = 3;
-    }
-    else {
-      Scr_Error(0xffffffff8206db80);
-    }
-  }
-  uVar2 = va(uVar2,0xffffffff8206dccc,0x7a,uVar5,uVar2);
-  SV_GameSendServerCommand(uVar1,1,uVar2);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 82461B98  ScrCmd_PlayLocalSound  (game/g_client_script_cmd.cpp:2972)
-
-void ScrCmd_PlayLocalSound(void)
-
-{
-  uint uVar3;
-  undefined8 uVar1;
-  ulonglong uVar2;
-  short sStack00000016;
-  char acStack_60 [63];
-  undefined1 local_21;
-  
-  uVar3 = __savegprlr_29();
-  sStack00000016 = (short)uVar3;
-  uVar3 = uVar3 >> 0x10;
-  if (sStack00000016 == 0) {
-    if (0x7ff < uVar3) {
-      MyAssertHandler(0xffffffff8206d1d0,0xba6,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    if ((&DAT_833737d8)[uVar3 * 0xa0] != 0) goto LAB_82461c2c;
-    uVar1 = va(0xffffffff8206d370,uVar3);
-  }
-  else {
-    uVar1 = 0xffffffff8206d360;
-  }
-  Scr_ObjectError(uVar1);
-LAB_82461c2c:
-  uVar1 = Scr_GetString(0);
-  uVar2 = G_SoundAliasIndex();
-  if ((uVar2 & 0xffff) == 0) {
-    uVar1 = va(0xffffffff8206ddf8,uVar1);
-    Scr_ParamError(0,uVar1);
-  }
-  _snprintf(acStack_60,0x40,"%c %i",0x6e,uVar2 & 0xffff);
-  local_21 = 0;
-  SV_GameSendServerCommand(uVar3,0,acStack_60);
-  __restgprlr_29();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 82461CA0  ScrCmd_StopLocalSound  (game/g_client_script_cmd.cpp:3037)
-
-void ScrCmd_StopLocalSound(uint param_1)
-
-{
-  uint uVar1;
-  undefined8 uVar2;
-  ulonglong uVar3;
-  uint uStack00000014;
-  char acStack_60 [63];
-  undefined1 local_21;
-  
-  uStack00000014._2_2_ = (short)param_1;
-  uVar1 = param_1 >> 0x10;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    if (0x7ff < uVar1) {
-      MyAssertHandler(0xffffffff8206d1d0,0xbe4,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    if ((&DAT_833737d8)[uVar1 * 0xa0] != 0) goto LAB_82461d3c;
-    uVar2 = va(0xffffffff8206d370,uVar1);
-  }
-  else {
-    uVar2 = 0xffffffff8206d360;
-  }
-  Scr_ObjectError(uVar2);
-LAB_82461d3c:
-  Scr_GetString(0);
-  uVar3 = G_SoundAliasIndex();
-  _snprintf(acStack_60,0x40,"%c %i",0x68,uVar3 & 0xffff);
-  local_21 = 0;
-  SV_GameSendServerCommand(uVar1,0,acStack_60);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 82461D98  PlayerCmd_BeginLocationSelection  (game/g_client_script_cmd.cpp:3085)
-
-void PlayerCmd_BeginLocationSelection(void)
-
-{
-  uint uVar2;
-  undefined8 uVar1;
-  uint uVar3;
-  uint uVar4;
-  undefined4 *puVar5;
-  double dVar6;
-  double dVar7;
-  short sStack00000016;
-  
-  uVar2 = __savegprlr_27();
-  sStack00000016 = (short)uVar2;
-  if (sStack00000016 == 0) {
-    uVar2 = uVar2 >> 0x10;
-    if (0x7ff < uVar2) {
-      MyAssertHandler(0xffffffff8206d1d0,0xc14,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar5 = &DAT_83373680 + uVar2 * 0xa0;
-    if ((&DAT_833737d8)[uVar2 * 0xa0] == 0) {
-      va(0xffffffff8206d370,uVar2);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar5 = (undefined4 *)0x0;
-  }
-  if (puVar5[0x56] == 0) {
-    MyAssertHandler(0xffffffff8206d1d0,0xc16,0,0xffffffff82000f98,0xffffffff8206d1bc);
-  }
-  if (*(int *)(puVar5[0x56] + 0x332c) == 0) {
-    MyAssertHandler(0xffffffff8206d1d0,0xc18,0,0xffffffff82000f98,0xffffffff8206dedc);
-  }
-  Scr_GetString(0);
-  uVar1 = GScr_GetLocSelIndex();
-  uVar2 = (uint)uVar1;
-  if (((int)uVar2 < 1) || (4 < (int)uVar2)) {
-    MyAssertHandler(0xffffffff8206d1d0,0xc1d,0,0xffffffff8206de98,uVar1,1,4);
-  }
-  uVar3 = Scr_GetInt(1);
-  uVar4 = Scr_GetNumParam();
-  if (uVar4 < 3) {
-    dVar6 = 0.15000000596046448;
-  }
-  else {
-    dVar6 = (double)Scr_GetFloat(2);
-    dVar7 = 0.0;
-    if (dVar6 <= 0.0) {
-      Scr_ParamError(2,0xffffffff8206de60);
-    }
-    if ((double)DAT_8358335c <= dVar7) {
-      dVar6 = (double)ClampFloat((double)(float)(dVar6 * 0.0010000000474974513),dVar7,
-                                 0x3ff0000000000000);
-    }
-    else {
-      dVar6 = (double)ClampFloat((double)(float)(dVar6 / (double)DAT_8358335c),dVar7,
-                                 0x3ff0000000000000);
-    }
-  }
-  dVar6 = floor((double)(float)(dVar6 * 31.0 + 0.5));
-  uVar4 = (uint)dVar6;
-  if (0x1f < uVar4) {
-    MyAssertHandler(0xffffffff8206d1d0,0xc37,0,0xffffffff8206de18,uVar4,0x20);
-  }
-  *(uint *)(puVar5[0x56] + 0x208) = uVar2 & 3;
-  *(uint *)(puVar5[0x56] + 0x208) = (uVar4 & 0x1f) << 2 | *(uint *)(puVar5[0x56] + 0x208);
-  *(uint *)(puVar5[0x56] + 0x208) = (uVar3 & 1) << 7 | *(uint *)(puVar5[0x56] + 0x208);
-  __restgprlr_27();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure gclient_s_s_0_s_0_s_0
 
 // 82462008  PlayerCmd_EndLocationSelection  (game/g_client_script_cmd.cpp:3146)
-
-void PlayerCmd_EndLocationSelection(void)
-
-{
-  uint uVar1;
-  undefined4 *puVar2;
-  short sStack00000016;
-  
-  uVar1 = __savegprlr_28();
-  sStack00000016 = (short)uVar1;
-  if (sStack00000016 == 0) {
-    uVar1 = uVar1 >> 0x10;
-    if (0x7ff < uVar1) {
-      MyAssertHandler(0xffffffff8206d1d0,0xc4b,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar2 = &DAT_83373680 + uVar1 * 0xa0;
-    if ((&DAT_833737d8)[uVar1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,uVar1);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar2 = (undefined4 *)0x0;
-  }
-  if (puVar2[0x56] == 0) {
-    MyAssertHandler(0xffffffff8206d1d0,0xc4d,0,0xffffffff82000f98,0xffffffff8206d1bc);
-  }
-  if (*(int *)(puVar2[0x56] + 0x332c) == 0) {
-    MyAssertHandler(0xffffffff8206d1d0,0xc4f,0,0xffffffff82000f98,0xffffffff8206dedc);
-  }
-  *(undefined4 *)(puVar2[0x56] + 0x208) = 0;
-  __restgprlr_28();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 82462110  PlayerCmd_AllowADS  (game/g_client_script_cmd.cpp:3171)
-
-void PlayerCmd_AllowADS(uint param_1)
-
-{
-  int iVar1;
-  int iVar2;
-  undefined4 *puVar3;
-  uint uStack00000014;
-  
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff8206d1d0,0xc64,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar3 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar3 = (undefined4 *)0x0;
-  }
-  iVar1 = Scr_GetNumParam();
-  if (iVar1 == 1) {
-    iVar2 = Scr_GetInt(0);
-    iVar1 = puVar3[0x56];
-    if (iVar2 == 0) {
-      *(uint *)(iVar1 + 0x374) = *(uint *)(iVar1 + 0x374) | 0x20;
-      PM_ExitAimDownSight(puVar3[0x56]);
-    }
-    else {
-      *(uint *)(iVar1 + 0x374) = *(uint *)(iVar1 + 0x374) & 0xffffffdf;
-    }
-  }
-  else {
-    Scr_Error(0xffffffff8206df10);
-  }
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 82462218  PlayerCmd_AllowJump  (game/g_client_script_cmd.cpp:3204)
-
-void PlayerCmd_AllowJump(uint param_1)
-
-{
-  uint uVar1;
-  int iVar2;
-  uint uVar3;
-  undefined4 *puVar4;
-  uint uStack00000014;
-  
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff8206d1d0,0xc85,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar4 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar4 = (undefined4 *)0x0;
-  }
-  iVar2 = Scr_GetInt(0);
-  uVar1 = *(uint *)(puVar4[0x56] + 0xc);
-  uVar3 = uVar1 & 0xfffbffff;
-  if (iVar2 == 0) {
-    uVar3 = uVar1 | 0x40000;
-  }
-  *(uint *)(puVar4[0x56] + 0xc) = uVar3;
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 824622F8  PlayerCmd_AllowSprint  (game/g_client_script_cmd.cpp:3226)
-
-void PlayerCmd_AllowSprint(uint param_1)
-
-{
-  uint uVar1;
-  int iVar2;
-  uint uVar3;
-  undefined4 *puVar4;
-  uint uStack00000014;
-  
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff8206d1d0,0xc9b,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar4 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar4 = (undefined4 *)0x0;
-  }
-  iVar2 = Scr_GetInt(0);
-  uVar1 = *(uint *)(puVar4[0x56] + 0xc);
-  uVar3 = uVar1 & 0xfffdffff;
-  if (iVar2 == 0) {
-    uVar3 = uVar1 | 0x20000;
-  }
-  *(uint *)(puVar4[0x56] + 0xc) = uVar3;
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 824623D8  PlayerCmd_SetActionSlot  (game/g_client_script_cmd.cpp:3254)
-
-void PlayerCmd_SetActionSlot(void)
-
-{
-  uint uVar4;
-  longlong lVar1;
-  int iVar5;
-  undefined8 uVar2;
-  int iVar6;
-  undefined8 uVar3;
-  undefined4 uVar7;
-  undefined4 *puVar8;
-  short sStack00000016;
-  
-  uVar4 = __savegprlr_28();
-  sStack00000016 = (short)uVar4;
-  if (sStack00000016 == 0) {
-    uVar4 = uVar4 >> 0x10;
-    if (0x7ff < uVar4) {
-      MyAssertHandler(0xffffffff8206d1d0,0xcba,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar8 = &DAT_83373680 + uVar4 * 0xa0;
-    if ((&DAT_833737d8)[uVar4 * 0xa0] == 0) {
-      va(0xffffffff8206d370,uVar4);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar8 = (undefined4 *)0x0;
-  }
-  lVar1 = Scr_GetInt(0);
-  iVar5 = (int)lVar1;
-  if ((iVar5 < 1) || (4 < iVar5)) {
-    va(0xffffffff8206df38,lVar1,4);
-    Scr_Error();
-  }
-  else {
-    uVar2 = Scr_GetString(1);
-    iVar6 = I_stricmp(uVar2,0xffffffff820267a8);
-    if (iVar6 == 0) {
-      uVar2 = Scr_GetString(2);
-      uVar3 = BG_FindWeaponForName();
-      Scr_VerifyWeapon(uVar3,uVar2);
-      *(undefined4 *)((int)((lVar1 + 0x145U & 0xffffffff) << 2) + puVar8[0x56]) = 1;
-      *(int *)((int)((lVar1 + 0x149U & 0xffffffff) << 2) + puVar8[0x56]) = (int)uVar3;
-    }
-    else {
-      iVar6 = I_stricmp(uVar2,0xffffffff8200e038);
-      if (iVar6 == 0) {
-        uVar7 = 2;
-      }
-      else {
-        iVar6 = I_stricmp(uVar2,0xffffffff8206dffc);
-        if (iVar6 == 0) {
-          uVar7 = 3;
-        }
-        else {
-          iVar6 = I_stricmp(uVar2,0xffffffff820068af);
-          if (iVar6 != 0) {
-            Scr_Error(0xffffffff8206df68);
-            __restgprlr_28();
-            return;
-          }
-          uVar7 = 0;
-        }
-      }
-      *(undefined4 *)((int)((lVar1 + 0x145U & 0xffffffff) << 2) + puVar8[0x56]) = uVar7;
-    }
-    if ((iVar5 == 3) && (*(int *)(puVar8[0x56] + 0x520) != 2)) {
-      Scr_Error(0xffffffff8206dfb0);
-      __restgprlr_28();
-      return;
-    }
-  }
-  __restgprlr_28();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 824625C0  PlayerCmd_GetWeaponsListAll  (game/g_client_script_cmd.cpp:3320)
-
-void PlayerCmd_GetWeaponsListAll(void)
-
-{
-  uint uVar1;
-  char cVar2;
-  longlong lVar3;
-  uint *puVar4;
-  undefined4 *puVar5;
-  short sStack00000016;
-  undefined1 local_440;
-  undefined1 local_43f;
-  undefined1 local_43e;
-  undefined1 local_43d;
-  undefined1 auStack_43c [1084];
-  
-  uVar1 = __savegprlr_25();
-  sStack00000016 = (short)uVar1;
-  if (sStack00000016 == 0) {
-    uVar1 = uVar1 >> 0x10;
-    if (0x7ff < uVar1) {
-      MyAssertHandler(0xffffffff8206d1d0,0xcff,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar5 = &DAT_83373680 + uVar1 * 0xa0;
-    if ((&DAT_833737d8)[uVar1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,uVar1);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar5 = (undefined4 *)0x0;
-  }
-  Scr_MakeArray();
-  lVar3 = 0xf;
-  puVar4 = (uint *)(puVar5[0x56] + 0x274);
-  do {
-    uVar1 = *puVar4;
-    if ((uVar1 & 0xff) != 0) {
-      BG_GetWeaponNameComplete(uVar1,0,&local_440,0x400);
-      Scr_AddString();
-      Scr_AddArray();
-      cVar2 = BG_GetAltWeapon(uVar1);
-      if (cVar2 != '\0') {
-        local_440 = 0x61;
-        local_43f = 0x6c;
-        local_43e = 0x74;
-        local_43d = 0x5f;
-        BG_GetWeaponNameComplete(uVar1,0,auStack_43c,0x3fc);
-        Scr_AddString(&local_440);
-        Scr_AddArray();
-      }
-    }
-    lVar3 = lVar3 + -1;
-    puVar4 = puVar4 + 1;
-  } while (lVar3 != 0);
-  __restgprlr_25();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 82462700  BuildWeaponsListForType  (game/g_client_script_cmd.cpp:3358)
-
-void BuildWeaponsListForType(undefined8 param_1,int param_2)
-
-{
-  uint uVar1;
-  uint uVar2;
-  char cVar3;
-  longlong lVar4;
-  uint *puVar5;
-  undefined4 *puVar6;
-  short sStack00000016;
-  undefined1 local_450;
-  undefined1 local_44f;
-  undefined1 local_44e;
-  undefined1 local_44d;
-  undefined1 auStack_44c [1100];
-  
-  uVar1 = __savegprlr_23();
-  sStack00000016 = (short)uVar1;
-  if (sStack00000016 == 0) {
-    uVar1 = uVar1 >> 0x10;
-    if (0x7ff < uVar1) {
-      MyAssertHandler(0xffffffff8206d1d0,0xd26,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar6 = &DAT_83373680 + uVar1 * 0xa0;
-    if ((&DAT_833737d8)[uVar1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,uVar1);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar6 = (undefined4 *)0x0;
-  }
-  Scr_MakeArray();
-  lVar4 = 0xf;
-  puVar5 = (uint *)(puVar6[0x56] + 0x274);
-  do {
-    uVar1 = *puVar5;
-    if ((uVar1 & 0xff) != 0) {
-      uVar2 = BG_GetAlternateWeapon(uVar1,0);
-      if (*(int *)((&DAT_829d84a0)[uVar2 & 0xff] + 0x38) == param_2) {
-        BG_GetWeaponNameComplete(uVar1,0,&local_450,0x400);
-        Scr_AddString();
-        Scr_AddArray();
-      }
-      cVar3 = BG_GetAltWeapon(uVar1);
-      if (cVar3 != '\0') {
-        uVar2 = BG_GetAlternateWeapon(uVar1,1);
-        if (*(int *)((&DAT_829d84a0)[uVar2 & 0xff] + 0x38) == param_2) {
-          local_450 = 0x61;
-          local_44f = 0x6c;
-          local_44e = 0x74;
-          local_44d = 0x5f;
-          BG_GetWeaponNameComplete(uVar1,0,auStack_44c,0x3fc);
-          Scr_AddString(&local_450);
-          Scr_AddArray();
-        }
-      }
-    }
-    lVar4 = lVar4 + -1;
-    puVar5 = puVar5 + 1;
-  } while (lVar4 != 0);
-  __restgprlr_23();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 82462888  PlayerCmd_GetWeaponsListPrimaries  (game/g_client_script_cmd.cpp:3414)
 
-void PlayerCmd_GetWeaponsListPrimaries(undefined8 param_1)
+void PlayerCmd_GetWeaponsListPrimaries(scr_entref_t param_1)
 
 {
-  BuildWeaponsListForType(param_1,0);
+  BuildWeaponsListForType(param_1,WEAPINVENTORY_PRIMARY);
   return;
 }
 
 
 // 82462890  PlayerCmd_GetWeaponsListOffhands  (game/g_client_script_cmd.cpp:3430)
 
-void PlayerCmd_GetWeaponsListOffhands(undefined8 param_1)
+void PlayerCmd_GetWeaponsListOffhands(scr_entref_t param_1)
 
 {
-  BuildWeaponsListForType(param_1,1);
+  BuildWeaponsListForType(param_1,WEAPINVENTORY_OFFHAND);
   return;
 }
 
 
 // 82462898  PlayerCmd_GetWeaponsListItems  (game/g_client_script_cmd.cpp:3446)
 
-void PlayerCmd_GetWeaponsListItems(undefined8 param_1)
+void PlayerCmd_GetWeaponsListItems(scr_entref_t param_1)
 
 {
-  BuildWeaponsListForType(param_1,2);
+  BuildWeaponsListForType(param_1,WEAPINVENTORY_ITEM);
   return;
 }
 
 
 // 824628A0  PlayerCmd_GetWeaponsListExclusives  (game/g_client_script_cmd.cpp:3462)
 
-void PlayerCmd_GetWeaponsListExclusives(undefined8 param_1)
+void PlayerCmd_GetWeaponsListExclusives(scr_entref_t param_1)
 
 {
-  BuildWeaponsListForType(param_1,4);
+  BuildWeaponsListForType(param_1,WEAPINVENTORY_EXCLUSIVE);
   return;
 }
 
 
 // 824628A8  PlayerCmd_GetWeaponsList  (game/g_client_script_cmd.cpp:3490)
-
-void PlayerCmd_GetWeaponsList(void)
-
-{
-  uint uVar3;
-  ulonglong uVar1;
-  undefined8 uVar2;
-  uint uVar4;
-  char cVar5;
-  int iVar6;
-  ulonglong uVar7;
-  undefined **ppuVar8;
-  ulonglong uVar9;
-  longlong lVar10;
-  uint *puVar11;
-  undefined4 *puVar12;
-  ulonglong uVar13;
-  short sStack00000016;
-  undefined1 local_460;
-  undefined1 local_45f;
-  undefined1 local_45e;
-  undefined1 local_45d;
-  undefined1 auStack_45c [1116];
-  
-  uVar3 = __savegprlr_22();
-  sStack00000016 = (short)uVar3;
-  if (sStack00000016 == 0) {
-    uVar3 = uVar3 >> 0x10;
-    if (0x7ff < uVar3) {
-      MyAssertHandler(0xffffffff8206d1d0,0xdac,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar12 = &DAT_83373680 + uVar3 * 0xa0;
-    if ((&DAT_833737d8)[uVar3 * 0xa0] == 0) {
-      va(0xffffffff8206d370,uVar3);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar12 = (undefined4 *)0x0;
-  }
-  uVar1 = Scr_GetNumParam();
-  if ((uVar1 & 0xffffffff) == 0) {
-    Scr_Error(0xffffffff8206e030);
-  }
-  uVar9 = 0;
-  uVar13 = 0;
-  if ((uVar1 & 0xffffffff) != 0) {
-    do {
-      uVar3 = Scr_GetConstString(uVar13);
-      iVar6 = 0;
-      uVar7 = 1;
-      ppuVar8 = &PTR_DAT_82969198;
-      do {
-        if (uVar3 == *(ushort *)*ppuVar8) {
-          uVar9 = uVar7 | uVar9;
-          break;
-        }
-        ppuVar8 = ppuVar8 + 1;
-        iVar6 = iVar6 + 1;
-        uVar7 = (uVar7 & 0x7fffffff) << 1 | uVar7 >> 0x1f;
-      } while ((int)ppuVar8 < -0x7d696e50);
-      if (iVar6 == 6) {
-        uVar2 = SL_ConvertToString();
-        va(0xffffffff8206e008,uVar2);
-        Scr_Error();
-      }
-      uVar13 = uVar13 + 1;
-    } while ((uVar13 & 0xffffffff) < (uVar1 & 0xffffffff));
-  }
-  Scr_MakeArray();
-  lVar10 = 0xf;
-  puVar11 = (uint *)(puVar12[0x56] + 0x274);
-  do {
-    uVar3 = *puVar11;
-    if ((uVar3 & 0xff) != 0) {
-      uVar4 = BG_GetAlternateWeapon(uVar3,0);
-      if ((1 << (*(uint *)((&DAT_829d84a0)[uVar4 & 0xff] + 0x38) & 0x3f) & (uint)uVar9) != 0) {
-        BG_GetWeaponNameComplete(uVar3,0,&local_460,0x400);
-        Scr_AddString();
-        Scr_AddArray();
-      }
-      if (((uVar9 & 3) != 0) && (cVar5 = BG_GetAltWeapon(uVar3), cVar5 != '\0')) {
-        local_460 = 0x61;
-        local_45f = 0x6c;
-        local_45e = 0x74;
-        local_45d = 0x5f;
-        BG_GetWeaponNameComplete(uVar3,0,auStack_45c,0x3fc);
-        Scr_AddString(&local_460);
-        Scr_AddArray();
-      }
-    }
-    lVar10 = lVar10 + -1;
-    puVar11 = puVar11 + 1;
-  } while (lVar10 != 0);
-  __restgprlr_22();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 82462AD0  Scr_VisionSyncWithPlayer  (game/g_client_script_cmd.cpp:3573)
-
-void Scr_VisionSyncWithPlayer(void)
-
-{
-  uint uVar1;
-  uint uVar3;
-  undefined4 *puVar4;
-  int iVar5;
-  undefined8 uVar2;
-  longlong lVar6;
-  longlong lVar7;
-  short sStack00000016;
-  
-  uVar3 = __savegprlr_27();
-  sStack00000016 = (short)uVar3;
-  if (sStack00000016 == 0) {
-    uVar3 = uVar3 >> 0x10;
-    if (0x7ff < uVar3) {
-      MyAssertHandler(0xffffffff8206d1d0,0xdfb,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar4 = &DAT_83373680 + uVar3 * 0xa0;
-    if ((&DAT_833737d8)[uVar3 * 0xa0] == 0) {
-      va(0xffffffff8206d370,uVar3);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar4 = (undefined4 *)0x0;
-  }
-  uVar3 = puVar4[0x56];
-  puVar4 = (undefined4 *)Scr_GetEntity(0);
-  uVar1 = puVar4[0x56];
-  lVar7 = (ulonglong)uVar3 + 0x37b8;
-  lVar6 = 1;
-  do {
-    iVar5 = I_strncmp(lVar7,((ulonglong)uVar1 - (ulonglong)uVar3) + lVar7,0x40);
-    if (iVar5 != 0) {
-      uVar2 = va(0xffffffff8206e084,lVar6 + 0x4a,lVar7);
-      SV_GameSendServerCommand(*puVar4,1,uVar2);
-    }
-    lVar6 = lVar6 + 1;
-    lVar7 = lVar7 + 0x40;
-  } while ((int)lVar6 < 6);
-  __restgprlr_27();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 82462BE0  VisionSetForPlayer  (game/g_client_script_cmd.cpp:3595)
-
-void VisionSetForPlayer(undefined8 param_1,ulonglong param_2)
-
-{
-  uint uVar2;
-  int iVar3;
-  undefined8 uVar1;
-  int iVar4;
-  undefined4 *puVar5;
-  double dVar6;
-  short sStack00000016;
-  
-  uVar2 = __savegprlr_28();
-  if ((int)param_2 == 5) {
-    MyAssertHandler(0xffffffff8206d1d0,0xe13,0,0xffffffff82000f98,0xffffffff8202376c);
-  }
-  sStack00000016 = (short)uVar2;
-  if (sStack00000016 == 0) {
-    uVar2 = uVar2 >> 0x10;
-    if (0x7ff < uVar2) {
-      MyAssertHandler(0xffffffff8206d1d0,0xe1b,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar5 = &DAT_83373680 + uVar2 * 0xa0;
-    if ((&DAT_833737d8)[uVar2 * 0xa0] == 0) {
-      va(0xffffffff8206d370,uVar2);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar5 = (undefined4 *)0x0;
-  }
-  iVar4 = 1000;
-  iVar3 = Scr_GetNumParam();
-  if (iVar3 != 1) {
-    if (iVar3 != 2) {
-      Scr_Error(0xffffffff8206e0a8);
-      __restgprlr_28();
-      return;
-    }
-    dVar6 = (double)Scr_GetFloat(1);
-    dVar6 = floor((double)((float)(dVar6 * 1000.0) + 0.5));
-    iVar4 = (int)dVar6;
-  }
-  uVar1 = Scr_GetString(0);
-  uVar2 = puVar5[0x56];
-  *(int *)((int)((param_2 + 0xdd8 & 0xffffffff) << 2) + uVar2) = iVar4;
-  I_strncpyz((param_2 & 0x3ffffff) * 0x40 + (ulonglong)uVar2 + 0x3778,uVar1,0x40);
-  uVar1 = va(0xffffffff8206e090,"JKLMN"[(int)param_2],uVar1,iVar4);
-  SV_GameSendServerCommand(*puVar5,1,uVar1);
-  __restgprlr_28();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 82462D78  Scr_VisionSetNakedForPlayer  (game/g_client_script_cmd.cpp:3651)
 
-void Scr_VisionSetNakedForPlayer(undefined8 param_1)
+void Scr_VisionSetNakedForPlayer(scr_entref_t param_1)
 
 {
-  VisionSetForPlayer(param_1,0);
+  VisionSetForPlayer(param_1,VISIONSET_NORMAL);
   return;
 }
 
 
 // 82462D80  Scr_VisionSetNightForPlayer  (game/g_client_script_cmd.cpp:3700)
 
-void Scr_VisionSetNightForPlayer(undefined8 param_1)
+void Scr_VisionSetNightForPlayer(scr_entref_t param_1)
 
 {
-  VisionSetForPlayer(param_1,1);
+  VisionSetForPlayer(param_1,VISIONSET_NIGHT);
   return;
 }
 
 
 // 82462D88  Scr_VisionSetMissileCamForPlayer  (game/g_client_script_cmd.cpp:3717)
 
-void Scr_VisionSetMissileCamForPlayer(undefined8 param_1)
+void Scr_VisionSetMissileCamForPlayer(scr_entref_t param_1)
 
 {
-  VisionSetForPlayer(param_1,2);
+  VisionSetForPlayer(param_1,VISIONSET_MISSILECAM);
   return;
 }
 
 
 // 82462D90  Scr_VisionSetThermalForPlayer  (game/g_client_script_cmd.cpp:3734)
 
-void Scr_VisionSetThermalForPlayer(undefined8 param_1)
+void Scr_VisionSetThermalForPlayer(scr_entref_t param_1)
 
 {
-  VisionSetForPlayer(param_1,3);
+  VisionSetForPlayer(param_1,VISIONSET_THERMAL);
   return;
 }
 
 
 // 82462D98  Scr_VisionSetPainForPlayer  (game/g_client_script_cmd.cpp:3751)
 
-void Scr_VisionSetPainForPlayer(undefined8 param_1)
+void Scr_VisionSetPainForPlayer(scr_entref_t param_1)
 
 {
-  VisionSetForPlayer(param_1,4);
+  VisionSetForPlayer(param_1,VISIONSET_PAIN);
   return;
 }
 
 
 // 82462DA0  Scr_SetBlurForPlayer  (game/g_client_script_cmd.cpp:3768)
-
-void Scr_SetBlurForPlayer(uint param_1)
-
-{
-  undefined8 uVar1;
-  undefined4 *puVar2;
-  double dVar3;
-  double dVar4;
-  double dVar5;
-  uint uStack00000014;
-  
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff8206d1d0,0xebd,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar2 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar2 = (undefined4 *)0x0;
-  }
-  dVar3 = (double)Scr_GetFloat(0);
-  dVar4 = (double)Scr_GetFloat(1);
-  dVar5 = 0.0;
-  if (dVar4 < 0.0) {
-    Scr_ParamError(1,0xffffffff8206e128);
-  }
-  if (dVar3 < dVar5) {
-    Scr_ParamError(0,0xffffffff8206e104);
-  }
-  uVar1 = va(dVar3,0xffffffff8206e0f4,0x69,(int)(dVar4 * 1000.0),dVar3,0,1);
-  SV_GameSendServerCommand(puVar2[0x24],1,uVar1);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 82462F10  Scr_GetPlayerWeaponModel  (game/g_client_script_cmd.cpp:3805)
 
-void Scr_GetPlayerWeaponModel(void)
+void Scr_GetPlayerWeaponModel(scr_entref_t param_1)
 
 {
-  Scr_AddString(0xffffffff820068af);
+  Scr_AddString("");
   return;
 }
 
 
 // 82462F20  Scr_GetPlayerKnifeModel  (game/g_client_script_cmd.cpp:3835)
 
-void Scr_GetPlayerKnifeModel(void)
+void Scr_GetPlayerKnifeModel(scr_entref_t param_1)
 
 {
-  Scr_AddString(0xffffffff820068af);
+  Scr_AddString("");
   return;
 }
 
 
 // 82462F30  Scr_UpdatePlayerModelWithWeapons  (game/g_client_script_cmd.cpp:3959)
 
-void Scr_UpdatePlayerModelWithWeapons(void)
+void Scr_UpdatePlayerModelWithWeapons(scr_entref_t param_1)
 
 {
   return;
@@ -4356,145 +615,45 @@ void Scr_UpdatePlayerModelWithWeapons(void)
 
 
 // 82462F38  PlayerCmd_CanPlayerPlaceSentry  (game/g_client_script_cmd.cpp:4232)
-
-void PlayerCmd_CanPlayerPlaceSentry(void)
-
-{
-  uint uVar2;
-  undefined8 uVar1;
-  undefined4 *puVar3;
-  short sStack00000016;
-  undefined1 auStack_50 [16];
-  undefined1 auStack_40 [64];
-  
-  uVar2 = __savegprlr_28();
-  sStack00000016 = (short)uVar2;
-  if (sStack00000016 == 0) {
-    uVar2 = uVar2 >> 0x10;
-    if (0x7ff < uVar2) {
-      MyAssertHandler(0xffffffff8206d1d0,0x108d,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar3 = &DAT_83373680 + uVar2 * 0xa0;
-    if ((&DAT_833737d8)[uVar2 * 0xa0] == 0) {
-      va(0xffffffff8206d370,uVar2);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar3 = (undefined4 *)0x0;
-  }
-  if (puVar3[0x56] == 0) {
-    MyAssertHandler(0xffffffff8206d1d0,0x108f,0,0xffffffff82000f98,0xffffffff8206d1bc);
-  }
-  uVar1 = Turret_PlaceSentry_Server(puVar3[0x56],auStack_50,auStack_40);
-  Scr_MakeArray();
-  Scr_AddBool(uVar1);
-  Scr_AddArrayStringIndexed(DAT_835a0c14);
-  Scr_AddVector(auStack_50);
-  Scr_AddArrayStringIndexed(DAT_835a0bfe);
-  Scr_AddVector(auStack_40);
-  Scr_AddArrayStringIndexed(DAT_835a0b8e);
-  __restgprlr_28();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 82463058  PlayerCmd_CanPlayerPlaceTank  (game/g_client_script_cmd.cpp:4272)
-
-void PlayerCmd_CanPlayerPlaceTank(void)
-
-{
-  uint uVar1;
-  int iVar2;
-  undefined4 *puVar3;
-  undefined8 uVar4;
-  undefined8 uVar5;
-  undefined8 uVar6;
-  undefined8 uVar7;
-  undefined8 uVar8;
-  undefined8 uVar9;
-  short sStack00000016;
-  undefined1 auStack_70 [16];
-  undefined1 auStack_60 [96];
-  
-  __savegprlr_28();
-  uVar1 = __savefpr_27();
-  sStack00000016 = (short)uVar1;
-  if (sStack00000016 == 0) {
-    uVar1 = uVar1 >> 0x10;
-    if (0x7ff < uVar1) {
-      MyAssertHandler(0xffffffff8206d1d0,0x10b5,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar3 = &DAT_83373680 + uVar1 * 0xa0;
-    if ((&DAT_833737d8)[uVar1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,uVar1);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar3 = (undefined4 *)0x0;
-  }
-  if (puVar3[0x56] == 0) {
-    Scr_Error(0xffffffff8206e1b4);
-  }
-  iVar2 = Scr_GetNumParam();
-  if (iVar2 != 6) {
-    Scr_Error(0xffffffff8206e140);
-  }
-  if (puVar3[0x56] == 0) {
-    MyAssertHandler(0xffffffff8206d1d0,0x10be,0,0xffffffff82000f98,0xffffffff8206d1bc);
-  }
-  uVar4 = Scr_GetFloat(5);
-  uVar5 = Scr_GetFloat(4);
-  uVar6 = Scr_GetFloat(3);
-  uVar7 = Scr_GetFloat(2);
-  uVar8 = Scr_GetFloat(1);
-  uVar9 = Scr_GetFloat(0);
-  uVar4 = G_CanPlayerPlaceTank(uVar9,uVar8,uVar7,uVar6,uVar5,uVar4,puVar3);
-  Scr_MakeArray();
-  Scr_AddBool(uVar4);
-  Scr_AddArrayStringIndexed(DAT_835a0c14);
-  Scr_AddVector(auStack_70);
-  Scr_AddArrayStringIndexed(DAT_835a0bfe);
-  Scr_AddVector(auStack_60);
-  Scr_AddArrayStringIndexed(DAT_835a0b8e);
-  __restfpr_27();
-  __restgprlr_28();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 82463218  PlayerCmd_GetPerkSlotIndex  (game/g_client_script_cmd.cpp:4307)
 
-void PlayerCmd_GetPerkSlotIndex(undefined8 param_1)
+uint PlayerCmd_GetPerkSlotIndex(char *param_1)
 
 {
   char *pcVar1;
+  char *pcVar2;
+  uint uVar3;
   
-  pcVar1 = (char *)Perk_GetSlotIndexName();
+  pcVar1 = Perk_GetSlotIndexName(param_1);
   if (*pcVar1 == '\0') {
-    va(0xffffffff8206e1f0,param_1);
-    Scr_Error();
+    pcVar2 = va("Perk slot index not found for \'%s\' in perktable.csv\n");
+    Scr_Error(pcVar2);
   }
-  Perk_GetSlotIndex(pcVar1);
-  return;
+  uVar3 = Perk_GetSlotIndex(pcVar1);
+  return uVar3;
 }
 
 
 // 82463278  PlayerCmd_GetPerkIndex  (game/g_client_script_cmd.cpp:4323)
 
-undefined4 PlayerCmd_GetPerkIndex(undefined8 param_1)
+uint PlayerCmd_GetPerkIndex(char *param_1)
 
 {
-  char cVar1;
-  undefined4 local_20 [4];
+  bool bVar2;
+  char *pcVar1;
+  uint local_20 [4];
   
-  cVar1 = Perk_GetIndex(param_1,local_20);
-  if (cVar1 == '\0') {
-    va(0xffffffff8206e228,param_1);
-    Scr_Error();
+  bVar2 = Perk_GetIndex(param_1,local_20);
+  if (!bVar2) {
+    pcVar1 = va("Perk index not found for \'%s\' in perktable.csv\n");
+    Scr_Error(pcVar1);
   }
   return local_20[0];
 }
@@ -4502,28 +661,28 @@ undefined4 PlayerCmd_GetPerkIndex(undefined8 param_1)
 
 // 824632D0  PlayerCmd_GetPerkInfo  (game/g_client_script_cmd.cpp:4337)
 
-void PlayerCmd_GetPerkInfo(undefined8 param_1,undefined4 *param_2,undefined4 *param_3)
+void PlayerCmd_GetPerkInfo(char *param_1,uint *param_2,uint *param_3)
 
 {
-  undefined8 uVar1;
-  char cVar4;
+  char *pcVar1;
+  bool bVar4;
   char *pcVar2;
-  undefined4 uVar3;
-  undefined4 local_30 [12];
+  uint uVar3;
+  uint local_30 [12];
   
-  uVar1 = __savegprlr_29();
-  cVar4 = Perk_GetIndex(uVar1,local_30);
-  if (cVar4 == '\0') {
-    va(0xffffffff8206e228,uVar1);
-    Scr_Error();
+  pcVar1 = (char *)__savegprlr_29(param_1);
+  bVar4 = Perk_GetIndex(pcVar1,local_30);
+  if (!bVar4) {
+    pcVar2 = va("Perk index not found for \'%s\' in perktable.csv\n");
+    Scr_Error(pcVar2);
   }
   *param_2 = local_30[0];
-  pcVar2 = (char *)Perk_GetSlotIndexName(uVar1);
-  if (*pcVar2 == '\0') {
-    va(0xffffffff8206e1f0,uVar1);
-    Scr_Error();
+  pcVar1 = Perk_GetSlotIndexName(pcVar1);
+  if (*pcVar1 == '\0') {
+    pcVar2 = va("Perk slot index not found for \'%s\' in perktable.csv\n");
+    Scr_Error(pcVar2);
   }
-  uVar3 = Perk_GetSlotIndex(pcVar2);
+  uVar3 = Perk_GetSlotIndex(pcVar1);
   *param_3 = uVar3;
   __restgprlr_29();
   return;
@@ -4531,929 +690,142 @@ void PlayerCmd_GetPerkInfo(undefined8 param_1,undefined4 *param_2,undefined4 *pa
 
 
 // 82463358  PlayerCmd_SetPerk  (game/g_client_script_cmd.cpp:4357)
-
-void PlayerCmd_SetPerk(void)
-
-{
-  uint uVar3;
-  int iVar4;
-  undefined8 uVar1;
-  int iVar5;
-  ulonglong uVar2;
-  undefined4 *puVar6;
-  short sStack00000016;
-  uint local_40;
-  undefined4 local_3c [15];
-  
-  uVar3 = __savegprlr_26();
-  sStack00000016 = (short)uVar3;
-  if (sStack00000016 == 0) {
-    uVar3 = uVar3 >> 0x10;
-    if (0x7ff < uVar3) {
-      MyAssertHandler(0xffffffff8206d1d0,0x110d,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar6 = &DAT_83373680 + uVar3 * 0xa0;
-    if ((&DAT_833737d8)[uVar3 * 0xa0] == 0) {
-      va(0xffffffff8206d370,uVar3);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar6 = (undefined4 *)0x0;
-  }
-  iVar4 = Scr_GetNumParam();
-  if (iVar4 != 3) {
-    Scr_Error(0xffffffff8206e2d8);
-  }
-  uVar1 = Scr_GetString(0);
-  iVar4 = Scr_GetInt(1);
-  iVar5 = Scr_GetInt(2);
-  PlayerCmd_GetPerkInfo(uVar1,local_3c,&local_40);
-  if (iVar5 != 0) {
-    if (8 < local_40) {
-      va(0xffffffff8206e290,uVar1);
-      Scr_Error();
-      MyAssertHandler(0xffffffff8206d1d0,0x111f,0,0xffffffff82000f98,0xffffffff8206e26c);
-    }
-    *(undefined4 *)((local_40 + 0x13d) * 4 + puVar6[0x56]) = local_3c[0];
-  }
-  if (iVar4 != 0) {
-    uVar2 = BG_GetPerkCodeIndexForName(uVar1);
-    if ((uVar2 & 0xffffffff) == 0x32) {
-      va(0xffffffff8206e258,uVar1);
-      Scr_Error();
-    }
-    BG_SetPerk((ulonglong)(uint)puVar6[0x56] + 0x4ec,uVar2);
-    BG_SetPerk((ulonglong)(uint)puVar6[0x56] + 0x3440,uVar2);
-  }
-  __restgprlr_26();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 824634F8  PlayerCmd_HasPerk  (game/g_client_script_cmd.cpp:4415)
-
-void PlayerCmd_HasPerk(void)
-
-{
-  uint uVar3;
-  int iVar4;
-  undefined8 uVar1;
-  ulonglong uVar2;
-  undefined1 uVar5;
-  undefined4 *puVar6;
-  short sStack00000016;
-  uint local_30;
-  int local_2c [11];
-  
-  uVar3 = __savegprlr_29();
-  sStack00000016 = (short)uVar3;
-  if (sStack00000016 == 0) {
-    uVar3 = uVar3 >> 0x10;
-    if (0x7ff < uVar3) {
-      MyAssertHandler(0xffffffff8206d1d0,0x1146,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar6 = &DAT_83373680 + uVar3 * 0xa0;
-    if ((&DAT_833737d8)[uVar3 * 0xa0] == 0) {
-      va(0xffffffff8206d370,uVar3);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar6 = (undefined4 *)0x0;
-  }
-  iVar4 = Scr_GetNumParam();
-  if (iVar4 != 2) {
-    Scr_Error(0xffffffff8206e314);
-  }
-  uVar1 = Scr_GetString(0);
-  iVar4 = Scr_GetInt(1);
-  if (iVar4 != 0) {
-    uVar2 = BG_GetPerkCodeIndexForName();
-    if ((uVar2 & 0xffffffff) == 0x32) {
-      va(0xffffffff8206e258,uVar1);
-      Scr_Error();
-    }
-    uVar5 = BG_HasPerk((ulonglong)(uint)puVar6[0x56] + 0x4ec,uVar2);
-    Scr_AddBool(uVar5);
-    __restgprlr_29();
-    return;
-  }
-  PlayerCmd_GetPerkInfo(uVar1,local_2c,&local_30);
-  if ((8 < local_30) || (uVar1 = 1, *(int *)((local_30 + 0x13d) * 4 + puVar6[0x56]) != local_2c[0]))
-  {
-    uVar1 = 0;
-  }
-  Scr_AddBool(uVar1);
-  __restgprlr_29();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 82463658  PlayerCmd_UnsetPerk  (game/g_client_script_cmd.cpp:4460)
-
-void PlayerCmd_UnsetPerk(void)
-
-{
-  int iVar1;
-  uint uVar4;
-  int iVar5;
-  undefined8 uVar2;
-  ulonglong uVar3;
-  undefined4 *puVar6;
-  short sStack00000016;
-  uint local_30;
-  int local_2c [11];
-  
-  uVar4 = __savegprlr_29();
-  sStack00000016 = (short)uVar4;
-  if (sStack00000016 == 0) {
-    uVar4 = uVar4 >> 0x10;
-    if (0x7ff < uVar4) {
-      MyAssertHandler(0xffffffff8206d1d0,0x1173,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar6 = &DAT_83373680 + uVar4 * 0xa0;
-    if ((&DAT_833737d8)[uVar4 * 0xa0] == 0) {
-      va(0xffffffff8206d370,uVar4);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar6 = (undefined4 *)0x0;
-  }
-  iVar5 = Scr_GetNumParam();
-  if (iVar5 != 2) {
-    Scr_Error(0xffffffff8206e344);
-  }
-  uVar2 = Scr_GetString(0);
-  iVar5 = Scr_GetInt(1);
-  PlayerCmd_GetPerkInfo(uVar2,local_2c,&local_30);
-  if (local_30 < 9) {
-    iVar1 = (local_30 + 0x13d) * 4;
-    if (*(int *)(iVar1 + puVar6[0x56]) == local_2c[0]) {
-      *(undefined4 *)(iVar1 + puVar6[0x56]) = 0;
-    }
-  }
-  if (iVar5 != 0) {
-    uVar3 = BG_GetPerkCodeIndexForName(uVar2);
-    if ((uVar3 & 0xffffffff) == 0x32) {
-      va(0xffffffff8206e258,uVar2);
-      Scr_Error();
-    }
-    BG_UnsetPerk((ulonglong)(uint)puVar6[0x56] + 0x4ec,uVar3);
-    BG_UnsetPerk((ulonglong)(uint)puVar6[0x56] + 0x3440,uVar3);
-  }
-  __restgprlr_29();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 824637B8  PlayerCmd_ClearPerks  (game/g_client_script_cmd.cpp:4506)
-
-void PlayerCmd_ClearPerks(void)
-
-{
-  int iVar1;
-  uint uVar2;
-  undefined4 *puVar3;
-  undefined4 *puVar4;
-  longlong lVar5;
-  short sStack00000016;
-  
-  uVar2 = __savegprlr_26();
-  sStack00000016 = (short)uVar2;
-  if (sStack00000016 == 0) {
-    uVar2 = uVar2 >> 0x10;
-    if (0x7ff < uVar2) {
-      MyAssertHandler(0xffffffff8206d1d0,0x119b,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar4 = &DAT_83373680 + uVar2 * 0xa0;
-    if ((&DAT_833737d8)[uVar2 * 0xa0] == 0) {
-      va(0xffffffff8206d370,uVar2);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar4 = (undefined4 *)0x0;
-  }
-  lVar5 = 9;
-  puVar3 = (undefined4 *)(puVar4[0x56] + 0x4f0);
-  do {
-    puVar3 = puVar3 + 1;
-    *puVar3 = 0;
-    lVar5 = lVar5 + -1;
-  } while (lVar5 != 0);
-  iVar1 = puVar4[0x56];
-  puVar3 = (undefined4 *)(iVar1 + 0x4ec);
-  if (puVar3 == (undefined4 *)0x0) {
-    MyAssertHandler(0xffffffff82000fa8,0x7c,0,0xffffffff82000f98,0xffffffff82000f9c);
-  }
-  *puVar3 = 0;
-  *(undefined4 *)(iVar1 + 0x4f0) = 0;
-  iVar1 = puVar4[0x56];
-  puVar4 = (undefined4 *)(iVar1 + 0x3440);
-  if (puVar4 == (undefined4 *)0x0) {
-    MyAssertHandler(0xffffffff82000fa8,0x7c,0,0xffffffff82000f98,0xffffffff82000f9c);
-  }
-  *puVar4 = 0;
-  *(undefined4 *)(iVar1 + 0x3444) = 0;
-  __restgprlr_26();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 824638E8  PlayerCmd_Noclip  (game/g_client_script_cmd.cpp:4532)
-
-void PlayerCmd_Noclip(uint param_1)
-
-{
-  undefined4 *puVar1;
-  uint uStack00000014;
-  
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff8206d1d0,0x11b6,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar1 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar1 = (undefined4 *)0x0;
-  }
-  Cmd_Noclip_f(puVar1);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 824639A8  PlayerCmd_UFO  (game/g_client_script_cmd.cpp:4554)
-
-void PlayerCmd_UFO(uint param_1)
-
-{
-  undefined4 *puVar1;
-  uint uStack00000014;
-  
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff8206d1d0,0x11cc,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar1 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar1 = (undefined4 *)0x0;
-  }
-  Cmd_UFO_f(puVar1);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 82463A68  GScr_notifyOnPlayerCommand  (game/g_client_script_cmd.cpp:4575)
-
-void GScr_notifyOnPlayerCommand(void)
-
-{
-  int iVar3;
-  int iVar4;
-  undefined8 uVar1;
-  undefined8 uVar2;
-  
-  iVar3 = GetEntity();
-  if ((iVar3 == 0) || (*(int *)(iVar3 + 0x158) == 0)) {
-    Scr_ObjectError(0xffffffff8206e378);
-  }
-  else {
-    iVar4 = Scr_GetNumParam();
-    if (iVar4 != 2) {
-      Scr_Error(0xffffffff8206e3b0);
-    }
-    uVar1 = Scr_GetString(0);
-    uVar2 = Scr_GetString(1);
-    Cmd_RegisterNotification(*(undefined4 *)(iVar3 + 0x90),uVar2,uVar1);
-  }
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 82463B00  PlayerCmd_CanMantle  (game/g_client_script_cmd.cpp:4614)
-
-void PlayerCmd_CanMantle(uint param_1)
-
-{
-  char cVar1;
-  undefined4 *puVar2;
-  uint uStack00000014;
-  undefined1 auStack_50 [56];
-  
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff8206d1d0,0x1209,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar2 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar2 = (undefined4 *)0x0;
-  }
-  cVar1 = Mantle_CanMantle(puVar2[0x56],1,puVar2[99],auStack_50);
-  Scr_AddBool(cVar1 != '\0');
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 82463BE8  PlayerCmd_ForceMantle  (game/g_client_script_cmd.cpp:4637)
-
-void PlayerCmd_ForceMantle(uint param_1)
-
-{
-  undefined4 *puVar1;
-  uint uStack00000014;
-  
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff8206d1d0,0x121e,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar1 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar1 = (undefined4 *)0x0;
-  }
-  Mantle_ForceMantle(puVar1[0x56]);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 82463CA8  PlayerCmd_IsMantling  (game/g_client_script_cmd.cpp:4654)
-
-void PlayerCmd_IsMantling(uint param_1)
-
-{
-  undefined4 *puVar1;
-  uint uStack00000014;
-  
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff8206d1d0,0x122f,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar1 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar1 = (undefined4 *)0x0;
-  }
-  Scr_AddBool(*(uint *)(puVar1[0x56] + 0xc) >> 2 & 1);
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 82463D70  PlayerCmd_PlayFX  (game/g_client_script_cmd.cpp:4676)
-
-void PlayerCmd_PlayFX(void)
-
-{
-  undefined4 uVar3;
-  undefined8 uVar1;
-  undefined8 uVar2;
-  int iVar4;
-  undefined1 *puVar5;
-  undefined1 *puVar6;
-  uint uVar7;
-  ushort uStack00000014;
-  short sStack00000016;
-  undefined1 auStack_60 [16];
-  undefined1 auStack_50 [16];
-  undefined1 auStack_40 [64];
-  
-  uVar3 = __savegprlr_28();
-  sStack00000016 = (short)uVar3;
-  uStack00000014 = (ushort)((uint)uVar3 >> 0x10);
-  uVar7 = (uint)uStack00000014;
-  if (sStack00000016 == 0) {
-    if (0x7ff < uVar7) {
-      MyAssertHandler(0xffffffff8206d1d0,0x124c,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    if ((&DAT_833737d8)[uVar7 * 0xa0] == 0) {
-      uVar1 = va(0xffffffff8206d370,uVar7);
-      goto LAB_82463e04;
-    }
-  }
-  else {
-    uVar1 = 0xffffffff8206d360;
-LAB_82463e04:
-    Scr_ObjectError(uVar1);
-  }
-  uVar1 = Scr_GetNumParam();
-  iVar4 = (int)uVar1;
-  if ((iVar4 < 2) || (4 < iVar4)) {
-    Scr_Error(0xffffffff8206e424);
-  }
-  uVar2 = Scr_GetInt(0);
-  Scr_GetVector(1,auStack_60);
-  if (iVar4 < 3) {
-    puVar5 = (undefined1 *)0x0;
-  }
-  else {
-    if ((iVar4 != 3) && (iVar4 != 4)) {
-      MyAssertHandler(0xffffffff8206d1d0,0x1259,1,0xffffffff8206e3e8,0xffffffff8206e400,uVar1);
-    }
-    Scr_GetVector(2,auStack_50);
-    if (3 < iVar4) {
-      Scr_GetVector(3,auStack_40);
-      puVar6 = auStack_40;
-      puVar5 = auStack_50;
-      goto LAB_82463ebc;
-    }
-    puVar5 = auStack_50;
-  }
-  puVar6 = (undefined1 *)0x0;
-LAB_82463ebc:
-  iVar4 = Scr_PlayFXInternal(uVar2,auStack_60,puVar5,puVar6);
-  *(int *)(iVar4 + 0xfc) = ~(1 << (uStack00000014 & 0x1f));
-  Scr_AddEntity();
-  __restgprlr_28();
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 82463EE8  PlayerCmd_PlayerRecoilScaleOn  (game/g_client_script_cmd.cpp:4740)
-
-void PlayerCmd_PlayerRecoilScaleOn(uint param_1)
-
-{
-  int iVar1;
-  int iVar2;
-  undefined4 *puVar3;
-  uint uStack00000014;
-  
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff8206d1d0,0x1288,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar3 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar3 = (undefined4 *)0x0;
-  }
-  iVar1 = puVar3[0x56];
-  iVar2 = Scr_GetInt(0);
-  if ((iVar2 < 0) || (100 < iVar2)) {
-    va(0xffffffff8206e444,0,100);
-    Scr_Error();
-  }
-  *(int *)(iVar1 + 0x32dc) = iVar2;
-  *(uint *)(iVar1 + 0x374) = *(uint *)(iVar1 + 0x374) | 0x400;
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 82463FE8  PlayerCmd_PlayerRecoilScaleOff  (game/g_client_script_cmd.cpp:4767)
-
-void PlayerCmd_PlayerRecoilScaleOff(uint param_1)
-
-{
-  undefined4 *puVar1;
-  uint uStack00000014;
-  
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff8206d1d0,0x12a0,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar1 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar1 = (undefined4 *)0x0;
-  }
-  *(uint *)(puVar1[0x56] + 0x374) = *(uint *)(puVar1[0x56] + 0x374) & 0xfffffbff;
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 824640B0  PlayerCmd_WeaponLockStart  (game/g_client_script_cmd.cpp:4785)
-
-void PlayerCmd_WeaponLockStart(uint param_1)
-
-{
-  int iVar1;
-  undefined4 *puVar2;
-  undefined4 *puVar3;
-  uint uStack00000014;
-  
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff8206d1d0,0x12b4,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar3 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar3 = (undefined4 *)0x0;
-  }
-  iVar1 = Scr_GetNumParam();
-  if (iVar1 == 0) {
-    Scr_Error(0xffffffff8206d414);
-    return;
-  }
-  iVar1 = Scr_GetType(0);
-  if (iVar1 == 1) {
-    iVar1 = Scr_GetPointerType(0);
-    if (iVar1 == 0x16) {
-      puVar2 = (undefined4 *)Scr_GetEntity(0);
-      *(undefined4 *)(puVar3[0x56] + 0x4c4) = *puVar2;
-      *(uint *)(puVar3[0x56] + 0x4c0) = *(uint *)(puVar3[0x56] + 0x4c0) & 0xffffffbf;
-      goto LAB_824641ec;
-    }
-  }
-  else if (iVar1 == 4) {
-    *(uint *)(puVar3[0x56] + 0x4c0) = *(uint *)(puVar3[0x56] + 0x4c0) | 0x40;
-    Scr_GetVector(0,(ulonglong)(uint)puVar3[0x56] + 0x4c8);
-    goto LAB_824641ec;
-  }
-  Scr_Error(0xffffffff8206e46c);
-LAB_824641ec:
-  *(uint *)(puVar3[0x56] + 0x4c0) = *(uint *)(puVar3[0x56] + 0x4c0) | 1;
-  *(uint *)(puVar3[0x56] + 0x4c0) = *(uint *)(puVar3[0x56] + 0x4c0) & 0xfffffffd;
-  *(uint *)(puVar3[0x56] + 0x4c0) = *(uint *)(puVar3[0x56] + 0x4c0) & 0xfffffffb;
-  *(uint *)(puVar3[0x56] + 0x4c0) = *(uint *)(puVar3[0x56] + 0x4c0) & 0xfffffff7;
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 82464248  PlayerCmd_WeaponLockFinalize  (game/g_client_script_cmd.cpp:4835)
-
-void PlayerCmd_WeaponLockFinalize(uint param_1)
-
-{
-  uint uVar1;
-  int iVar2;
-  undefined4 *puVar3;
-  undefined4 *puVar4;
-  uint uStack00000014;
-  
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff8206d1d0,0x12e7,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar4 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar4 = (undefined4 *)0x0;
-  }
-  uVar1 = Scr_GetNumParam();
-  if (uVar1 == 0) {
-    Scr_Error(0xffffffff8206d414);
-    return;
-  }
-  iVar2 = Scr_GetType(0);
-  if (iVar2 == 1) {
-    iVar2 = Scr_GetPointerType(0);
-    if (iVar2 == 0x16) {
-      puVar3 = (undefined4 *)Scr_GetEntity(0);
-      *(undefined4 *)(puVar4[0x56] + 0x4c4) = *puVar3;
-      *(uint *)(puVar4[0x56] + 0x4c0) = *(uint *)(puVar4[0x56] + 0x4c0) & 0xffffffbf;
-      goto LAB_82464388;
-    }
-  }
-  else if (iVar2 == 4) {
-    *(uint *)(puVar4[0x56] + 0x4c0) = *(uint *)(puVar4[0x56] + 0x4c0) | 0x40;
-    Scr_GetVector(0,(ulonglong)(uint)puVar4[0x56] + 0x4c8);
-    goto LAB_82464388;
-  }
-  Scr_Error(0xffffffff8206e46c);
-LAB_82464388:
-  *(uint *)(puVar4[0x56] + 0x4c0) = *(uint *)(puVar4[0x56] + 0x4c0) | 1;
-  *(uint *)(puVar4[0x56] + 0x4c0) = *(uint *)(puVar4[0x56] + 0x4c0) | 2;
-  iVar2 = puVar4[0x56];
-  if (uVar1 < 2) {
-    *(undefined4 *)(iVar2 + 0x3904) = 0;
-    *(undefined4 *)(iVar2 + 0x3908) = 0;
-    *(undefined4 *)(iVar2 + 0x390c) = 0;
-  }
-  else {
-    Scr_GetVector(1,iVar2 + 0x3904);
-  }
-  if ((uVar1 < 3) || (iVar2 = Scr_GetInt(2), iVar2 == 0)) {
-    iVar2 = puVar4[0x56];
-    uVar1 = *(uint *)(iVar2 + 0x4c0) | 8;
-  }
-  else {
-    iVar2 = puVar4[0x56];
-    uVar1 = *(uint *)(iVar2 + 0x4c0) | 4;
-  }
-  *(uint *)(iVar2 + 0x4c0) = uVar1;
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 82464428  PlayerCmd_WeaponLockFree  (game/g_client_script_cmd.cpp:4902)
-
-void PlayerCmd_WeaponLockFree(uint param_1)
-
-{
-  undefined4 *puVar1;
-  uint uStack00000014;
-  
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff8206d1d0,0x1327,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar1 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar1 = (undefined4 *)0x0;
-  }
-  *(uint *)(puVar1[0x56] + 0x4c0) = *(uint *)(puVar1[0x56] + 0x4c0) & 0xfffffffe;
-  *(uint *)(puVar1[0x56] + 0x4c0) = *(uint *)(puVar1[0x56] + 0x4c0) & 0xfffffffd;
-  *(undefined4 *)(puVar1[0x56] + 0x4c4) = 0x7ff;
-  *(uint *)(puVar1[0x56] + 0x4c0) = *(uint *)(puVar1[0x56] + 0x4c0) & 0xfffffffb;
-  *(uint *)(puVar1[0x56] + 0x4c0) = *(uint *)(puVar1[0x56] + 0x4c0) & 0xfffffff7;
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 82464530  PlayerCmd_WeaponLockTargetTooClose  (game/g_client_script_cmd.cpp:4925)
-
-void PlayerCmd_WeaponLockTargetTooClose(uint param_1)
-
-{
-  uint uVar1;
-  int iVar2;
-  uint uVar3;
-  undefined4 *puVar4;
-  uint uStack00000014;
-  
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff8206d1d0,0x133e,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar4 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar4 = (undefined4 *)0x0;
-  }
-  iVar2 = Scr_GetInt(0);
-  uVar1 = *(uint *)(puVar4[0x56] + 0x4c0);
-  uVar3 = uVar1 | 0x10;
-  if (iVar2 == 0) {
-    uVar3 = uVar1 & 0xffffffef;
-  }
-  *(uint *)(puVar4[0x56] + 0x4c0) = uVar3;
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 82464610  PlayerCmd_WeaponLockNoClearance  (game/g_client_script_cmd.cpp:4947)
-
-void PlayerCmd_WeaponLockNoClearance(uint param_1)
-
-{
-  uint uVar1;
-  int iVar2;
-  uint uVar3;
-  undefined4 *puVar4;
-  uint uStack00000014;
-  
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff8206d1d0,0x1354,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar4 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar4 = (undefined4 *)0x0;
-  }
-  iVar2 = Scr_GetInt(0);
-  uVar1 = *(uint *)(puVar4[0x56] + 0x4c0);
-  uVar3 = uVar1 | 0x20;
-  if (iVar2 == 0) {
-    uVar3 = uVar1 & 0xffffffdf;
-  }
-  *(uint *)(puVar4[0x56] + 0x4c0) = uVar3;
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 824646F0  PlayerCmd_SetViewKickScale  (game/g_client_script_cmd.cpp:4968)
-
-void PlayerCmd_SetViewKickScale(uint param_1)
-
-{
-  undefined8 uVar1;
-  undefined4 *puVar2;
-  double dVar3;
-  double dVar4;
-  uint uStack00000014;
-  
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff8206d1d0,0x1369,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar2 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar2 = (undefined4 *)0x0;
-  }
-  dVar3 = (double)Scr_GetFloat(0);
-  dVar4 = 0.0;
-  if (0.0 <= dVar3) {
-    *(float *)(puVar2[0x56] + 0x560) = (float)dVar3;
-  }
-  else {
-    uVar1 = va(0xffffffff8206e49c,dVar3);
-    Scr_ParamError(0,uVar1);
-    *(float *)(puVar2[0x56] + 0x560) = (float)dVar4;
-  }
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 82464800  PlayerCmd_GetViewKickScale  (game/g_client_script_cmd.cpp:4992)
-
-void PlayerCmd_GetViewKickScale(uint param_1)
-
-{
-  undefined4 *puVar1;
-  uint uStack00000014;
-  
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff8206d1d0,0x1381,0,0xffffffff82000f98,0xffffffff8206d38c);
-    }
-    puVar1 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
-    }
-  }
-  else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar1 = (undefined4 *)0x0;
-  }
-  Scr_AddFloat((double)*(float *)(puVar1[0x56] + 0x560));
-  return;
-}
-
+// decompile failed: 
+Low-level Error: Field field0_0x0 does not fit in structure entityState_s
 
 // 824648C8  PlayerCommon_GetMethod  (game/g_client_script_cmd.cpp:5208)
 
-void PlayerCommon_GetMethod(undefined8 param_1,undefined4 *param_2)
+uint PlayerCommon_GetMethod(char **param_1,int *param_2)
 
 {
   char cVar1;
   char cVar2;
-  char *pcVar3;
-  undefined4 *puVar4;
-  int iVar5;
-  int *piVar6;
-  char *pcVar7;
-  longlong lVar8;
-  uint uVar9;
+  uint *puVar3;
+  uint *puVar4;
+  undefined4 *puVar5;
+  uint uVar6;
+  int iVar7;
+  BuiltinMethodDef *pBVar8;
+  char *pcVar9;
   char *pcVar10;
+  longlong lVar11;
+  uint *puVar12;
   
-  puVar4 = (undefined4 *)__savegprlr_28();
-  if (puVar4 == (undefined4 *)0x0) {
-    lVar8 = 0x79;
-    pcVar10 = ", %i)";
+  puVar5 = (undefined4 *)__savegprlr_28(param_1);
+  if (puVar5 == (undefined4 *)0x0) {
+    lVar11 = 0x79;
+    puVar12 = (uint *)0x8206cbdc;
     do {
-      pcVar7 = pcVar10 + 0x10;
-      pcVar3 = pcVar10 + 0x14;
-      pcVar10 = pcVar10 + 0xc;
-      Scr_RegisterFunction(*(undefined4 *)pcVar7,*(undefined4 *)pcVar3,*(undefined4 *)pcVar10);
-      lVar8 = lVar8 + -1;
-    } while (lVar8 != 0);
-    __restgprlr_28(0);
-    return;
+      puVar3 = puVar12 + 4;
+      puVar4 = puVar12 + 5;
+      puVar12 = puVar12 + 3;
+      Scr_RegisterFunction(*puVar3,*puVar4,*puVar12);
+      lVar11 = lVar11 + -1;
+    } while (lVar11 != 0);
+    uVar6 = __restgprlr_28(0);
+    return uVar6;
   }
-  piVar6 = &DAT_8206cbe8;
-  iVar5 = 0;
-  uVar9 = 0;
+  pBVar8 = methods;
+  iVar7 = 0;
+  uVar6 = 0;
   do {
-    pcVar10 = (&PTR_s_attach_8298e238)[*piVar6 + -0x8000];
-    pcVar7 = (char *)*puVar4;
+    pcVar9 = *(char **)(&g_scr_meth_names + (pBVar8->name - 0x8000) * 4);
+    pcVar10 = (char *)*puVar5;
     do {
-      cVar1 = *pcVar7;
-      cVar2 = *pcVar10;
+      cVar1 = *pcVar10;
+      cVar2 = *pcVar9;
       if (cVar1 == '\0') break;
-      pcVar7 = pcVar7 + 1;
       pcVar10 = pcVar10 + 1;
+      pcVar9 = pcVar9 + 1;
     } while (cVar1 == cVar2);
     if (cVar1 == cVar2) {
-      *puVar4 = (&PTR_s_attach_8298e238)[(&DAT_8206cbe8)[iVar5 * 3] + -0x8000];
-      *param_2 = (&DAT_8206cbf0)[iVar5 * 3];
-      __restgprlr_28((&DAT_8206cbe8)[iVar5 * 3]);
-      return;
+      *puVar5 = *(undefined4 *)(&g_scr_meth_names + (methods[iVar7].name - 0x8000) * 4);
+      *param_2 = methods[iVar7].type;
+      uVar6 = __restgprlr_28(methods[iVar7].name);
+      return uVar6;
     }
-    uVar9 = uVar9 + 0xc;
-    iVar5 = iVar5 + 1;
-    piVar6 = piVar6 + 3;
-    if (0x5ab < uVar9) {
-      __restgprlr_28(0);
-      return;
+    uVar6 = uVar6 + 0xc;
+    iVar7 = iVar7 + 1;
+    pBVar8 = pBVar8 + 1;
+    if (0x5ab < uVar6) {
+      uVar6 = __restgprlr_28(0);
+      return uVar6;
     }
   } while( true );
 }

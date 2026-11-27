@@ -2,32 +2,39 @@
 
 // 8244EF68  FXIW_UpdateSpotLightEffectPartial  (EffectsCore/fx_update_spot.cpp:20)
 
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 void FXIW_UpdateSpotLightEffectPartial
-               (undefined8 param_1,undefined8 param_2,ulonglong param_3,undefined8 param_4,
-               undefined8 param_5)
+               (FxSystem *param_1,FxEffect *param_2,ushort param_3,int param_4,int param_5)
 
 {
-  int iVar1;
-  int iVar2;
-  byte *pbVar3;
+  FxSystem *pFVar1;
+  FxElem *pFVar2;
+  FxUpdateResult FVar3;
+  ulonglong uVar4;
   
-  iVar2 = __savegprlr_25();
-  if (*(int *)(iVar2 + 0x78) != 1) {
-    MyAssertHandler(0xffffffff8206a968,0x2e,0,0xffffffff82000f98,0xffffffff8206a93c);
+  uVar4 = (ulonglong)(short)param_3;
+  pFVar1 = (FxSystem *)__savegprlr_25(param_1);
+  if (pFVar1->activeSpotLightEffectCount != 1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_spot.cpp"
+                    ,0x2e,0,"%s");
   }
-  if ((param_3 & 0xffff) != (ulonglong)*(ushort *)(iVar2 + 0x80)) {
-    MyAssertHandler(0xffffffff8206a968,0x2f,0,0xffffffff82000f98,0xffffffff8206a908);
+  if ((uVar4 & 0xffff) != (ulonglong)pFVar1->activeSpotLightEffectHandle) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_spot.cpp"
+                    ,0x2f,0,"%s");
   }
-  iVar1 = *(int *)((int)param_2 + 0x30);
-  if ((int)param_5 < iVar1) {
-    MyAssertHandler(0xffffffff8206a968,0x30,0,0xffffffff82069fac,(double)(longlong)iVar1,
-                    (double)(longlong)(int)param_5);
+  if (param_5 < param_2->msecLastUpdate) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_spot.cpp"
+                    ,0x30,0,"localEffect->msecLastUpdate <= msecUpdateEnd\n\t%g, %g");
   }
-  if (*(int *)(iVar2 + 0x7c) != 0) {
-    pbVar3 = (byte *)FX_ElemFromHandle(iVar2,*(undefined2 *)(iVar2 + 0x82));
-    iVar2 = FXW_UpdateElement(iVar2,param_2,param_3,pbVar3,*(undefined2 *)(iVar2 + 0x82),param_4,
-                              param_5);
-    *pbVar3 = (iVar2 == 0) << 1 | *pbVar3 & 0xfd;
+  if (pFVar1->activeSpotLightElemCount != 0) {
+    pFVar2 = FX_ElemFromHandle(pFVar1,pFVar1->activeSpotLightElemHandle);
+    FVar3 = FXW_UpdateElement(pFVar1,param_2,(ushort)uVar4,pFVar2,pFVar1->activeSpotLightElemHandle,
+                              param_4,param_5);
+    (pFVar2->field0_0x0).defer =
+         (FVar3 == FX_UPDATE_REMOVE) << 1 | (pFVar2->field0_0x0).defer & 0xfd;
   }
   __restgprlr_25();
   return;
@@ -36,29 +43,30 @@ void FXIW_UpdateSpotLightEffectPartial
 
 // 8244F0A0  FXIW_UpdateSpotLightForDraw  (EffectsCore/fx_update_spot.cpp:62)
 
-void FXIW_UpdateSpotLightForDraw(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void FXIW_UpdateSpotLightForDraw(FxSystem *param_1,FxEffect *param_2,ushort param_3)
 
 {
-  int iVar1;
-  int iVar2;
-  undefined4 *puVar3;
+  FxSystem *pFVar1;
+  FxBolt *pFVar2;
   
-  iVar2 = __savegprlr_29();
-  iVar1 = (int)param_2;
-  if (((*(uint *)(iVar1 + 4) & 0x1fff) != 0) && (*(int *)(iVar1 + 0x30) <= *(int *)(iVar2 + 0x88)))
-  {
-    if (*(char *)(iVar1 + 0x26) == -1) {
-      *(undefined2 *)(iVar2 + 0x84) = 0xfff;
+  pFVar1 = (FxSystem *)__savegprlr_29(param_1);
+  if (((param_2->status & 0x1fffU) != 0) && (param_2->msecLastUpdate <= pFVar1->msecNow)) {
+    if (param_2->bolt == 0xff) {
+      pFVar1->activeSpotLightBoltDobj = 0xfff;
     }
     else {
-      puVar3 = (undefined4 *)FX_BoltFromHandle(iVar2);
-      *(ushort *)(iVar2 + 0x84) = (ushort)((uint)*puVar3 >> 0x14);
+      pFVar2 = FX_BoltFromHandle(pFVar1,param_2->bolt);
+      pFVar1->activeSpotLightBoltDobj = (ushort)((uint)*(undefined4 *)&pFVar2->field0_0x0 >> 0x14);
     }
-    if (*(char *)(iVar1 + 0x26) != -1) {
-      FXW_UpdateEffectBolt(iVar2,param_2);
+    if (param_2->bolt != 0xff) {
+      FXW_UpdateEffectBolt(pFVar1,param_2);
     }
     FXIW_UpdateSpotLightEffectPartial
-              (iVar2,param_2,param_3,*(undefined4 *)(iVar1 + 0x30),*(undefined4 *)(iVar2 + 0x88));
+              (pFVar1,param_2,param_3,param_2->msecLastUpdate,pFVar1->msecNow);
   }
   __restgprlr_29();
   return;
@@ -67,22 +75,28 @@ void FXIW_UpdateSpotLightForDraw(undefined8 param_1,undefined8 param_2,undefined
 
 // 8244F140  FXW_UpdateSpotLightForDraw  (EffectsCore/fx_update_spot.cpp:92)
 
-void FXW_UpdateSpotLightForDraw(void)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void FXW_UpdateSpotLightForDraw(FxSystem *param_1)
 
 {
-  int iVar2;
-  undefined8 uVar1;
+  FxSystem *pFVar1;
+  FxEffect *pFVar2;
   
-  iVar2 = __savegprlr_29();
-  if ((*(uint *)(iVar2 + 0xb4) & 1) != 0) {
-    MyAssertHandler(0xffffffff8206a968,100,0,0xffffffff82000f98,0xffffffff8206a9b4);
+  pFVar1 = (FxSystem *)__savegprlr_29(param_1);
+  if ((pFVar1->systemFlags & 1) != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_spot.cpp"
+                    ,100,0,"%s");
   }
-  if (0 < *(int *)(iVar2 + 0x78)) {
-    if (*(int *)(iVar2 + 0x78) != 1) {
-      MyAssertHandler(0xffffffff8206a968,0x73,0,0xffffffff82000f98,0xffffffff82061560);
+  if (0 < pFVar1->activeSpotLightEffectCount) {
+    if (pFVar1->activeSpotLightEffectCount != 1) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_spot.cpp"
+                      ,0x73,0,"%s");
     }
-    uVar1 = FX_EffectFromHandle(iVar2,*(undefined2 *)(iVar2 + 0x80));
-    FXIW_UpdateSpotLightForDraw(iVar2,uVar1,*(undefined2 *)(iVar2 + 0x80));
+    pFVar2 = FX_EffectFromHandle(pFVar1,pFVar1->activeSpotLightEffectHandle);
+    FXIW_UpdateSpotLightForDraw(pFVar1,pFVar2,pFVar1->activeSpotLightEffectHandle);
   }
   __restgprlr_29();
   return;
@@ -91,24 +105,31 @@ void FXW_UpdateSpotLightForDraw(void)
 
 // 8244F1E0  FXIW_FinalizeSpotLightElem  (EffectsCore/fx_update_spot.cpp:125)
 
-void FXIW_FinalizeSpotLightElem(undefined8 param_1,undefined8 param_2,ulonglong param_3)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void FXIW_FinalizeSpotLightElem(FxSystem *param_1,FxEffect *param_2,ushort param_3)
 
 {
-  int iVar1;
-  byte *pbVar2;
+  FxSystem *pFVar1;
+  FxElem *pFVar2;
+  ulonglong uVar3;
   
-  iVar1 = __savegprlr_27();
-  if (*(int *)(iVar1 + 0x78) != 1) {
-    MyAssertHandler(0xffffffff8206a968,0x92,0,0xffffffff82000f98,0xffffffff8206a93c);
+  uVar3 = (ulonglong)(short)param_3;
+  pFVar1 = (FxSystem *)__savegprlr_27(param_1);
+  if (pFVar1->activeSpotLightEffectCount != 1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_spot.cpp"
+                    ,0x92,0,"%s");
   }
-  if ((param_3 & 0xffff) != (ulonglong)*(ushort *)(iVar1 + 0x80)) {
-    MyAssertHandler(0xffffffff8206a968,0x93,0,0xffffffff82000f98,0xffffffff8206a908);
+  if ((uVar3 & 0xffff) != (ulonglong)pFVar1->activeSpotLightEffectHandle) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_spot.cpp"
+                    ,0x93,0,"%s");
   }
-  if (*(int *)(iVar1 + 0x7c) != 0) {
-    pbVar2 = (byte *)FX_ElemFromHandle(iVar1,*(undefined2 *)(iVar1 + 0x82));
-    if ((*pbVar2 & 2) != 0) {
-      FXW_FreeSpotLightElem(iVar1,*(undefined2 *)(iVar1 + 0x82),param_2);
-    }
+  if ((pFVar1->activeSpotLightElemCount != 0) &&
+     (pFVar2 = FX_ElemFromHandle(pFVar1,pFVar1->activeSpotLightElemHandle),
+     ((pFVar2->field0_0x0).defer & 2) != 0)) {
+    FXW_FreeSpotLightElem(pFVar1,pFVar1->activeSpotLightElemHandle,param_2);
   }
   __restgprlr_27();
   return;
@@ -117,14 +138,18 @@ void FXIW_FinalizeSpotLightElem(undefined8 param_1,undefined8 param_2,ulonglong 
 
 // 8244F2A0  FXIW_FinalizeSpotLightEffect  (EffectsCore/fx_update_spot.cpp:160)
 
-void FXIW_FinalizeSpotLightEffect(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void FXIW_FinalizeSpotLightEffect(FxSystem *param_1,FxEffect *param_2,ushort param_3)
 
 {
-  undefined8 uVar1;
+  FxSystem *pFVar1;
   
-  uVar1 = __savegprlr_29();
-  FXW_UpdateEffect(uVar1,0,param_2,param_3);
-  FXIW_FinalizeSpotLightElem(uVar1,param_2,param_3);
+  pFVar1 = (FxSystem *)__savegprlr_29(param_1);
+  FXW_UpdateEffect(pFVar1,0,param_2,param_3);
+  FXIW_FinalizeSpotLightElem(pFVar1,param_2,param_3);
   __restgprlr_29();
   return;
 }
@@ -132,25 +157,31 @@ void FXIW_FinalizeSpotLightEffect(undefined8 param_1,undefined8 param_2,undefine
 
 // 8244F2E0  FXW_FinalizeSpotLight  (EffectsCore/fx_update_spot.cpp:167)
 
-void FXW_FinalizeSpotLight(void)
+/* WARNING: Struct "MaterialInfo": ignoring multiple overlapping fields */
+/* WARNING: Struct "XSurface": ignoring multiple overlapping fields */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void FXW_FinalizeSpotLight(FxSystem *param_1)
 
 {
-  undefined2 uVar1;
-  int iVar3;
-  undefined8 uVar2;
+  ushort uVar1;
+  FxSystem *pFVar2;
+  FxEffect *pFVar3;
   
-  iVar3 = __savegprlr_29();
-  if ((*(uint *)(iVar3 + 0xb4) & 1) != 0) {
-    MyAssertHandler(0xffffffff8206a968,0xaf,0,0xffffffff82000f98,0xffffffff8206a9b4);
+  pFVar2 = (FxSystem *)__savegprlr_29(param_1);
+  if ((pFVar2->systemFlags & 1) != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_spot.cpp"
+                    ,0xaf,0,"%s");
   }
-  if (0 < *(int *)(iVar3 + 0x78)) {
-    if (*(int *)(iVar3 + 0x78) != 1) {
-      MyAssertHandler(0xffffffff8206a968,0xbe,0,0xffffffff82000f98,0xffffffff82061560);
+  if (0 < pFVar2->activeSpotLightEffectCount) {
+    if (pFVar2->activeSpotLightEffectCount != 1) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_spot.cpp"
+                      ,0xbe,0,"%s");
     }
-    uVar2 = FX_EffectFromHandle(iVar3,*(undefined2 *)(iVar3 + 0x80));
-    uVar1 = *(undefined2 *)(iVar3 + 0x80);
-    FXW_UpdateEffect(iVar3,0,uVar2,uVar1);
-    FXIW_FinalizeSpotLightElem(iVar3,uVar2,uVar1);
+    pFVar3 = FX_EffectFromHandle(pFVar2,pFVar2->activeSpotLightEffectHandle);
+    uVar1 = pFVar2->activeSpotLightEffectHandle;
+    FXW_UpdateEffect(pFVar2,0,pFVar3,uVar1);
+    FXIW_FinalizeSpotLightElem(pFVar2,pFVar3,uVar1);
   }
   __restgprlr_29();
   return;

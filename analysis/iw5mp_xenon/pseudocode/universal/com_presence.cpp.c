@@ -2,7 +2,9 @@
 
 // 825E60C8  Live_GetMapCount  (universal/com_presence.cpp:81)
 
-undefined8 Live_GetMapCount(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int Live_GetMapCount(void)
 
 {
   return 0x10;
@@ -11,7 +13,9 @@ undefined8 Live_GetMapCount(void)
 
 // 825E60D0  Live_GetGameTypeCount  (universal/com_presence.cpp:87)
 
-undefined8 Live_GetGameTypeCount(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int Live_GetGameTypeCount(void)
 
 {
   return 0x10;
@@ -20,41 +24,42 @@ undefined8 Live_GetGameTypeCount(void)
 
 // 825E60D8  Live_GetMapIndex  (universal/com_presence.cpp:156)
 
-void Live_GetMapIndex(void)
+int Live_GetMapIndex(char *param_1)
 
 {
-  undefined8 uVar1;
+  char *pcVar1;
   int iVar2;
-  char *pcVar3;
-  int iVar4;
+  int iVar3;
+  char *pcVar4;
   
-  uVar1 = __savegprlr_29();
-  pcVar3 = "mp_alpha";
-  iVar4 = 0;
+  pcVar1 = (char *)__savegprlr_29(param_1);
+  pcVar4 = "mp_alpha";
+  iVar3 = 0;
   do {
-    iVar2 = I_stricmp(uVar1,pcVar3);
+    iVar2 = I_stricmp(pcVar1,pcVar4);
     if (iVar2 == 0) {
-      __restgprlr_29(iVar4);
-      return;
+      iVar3 = __restgprlr_29(iVar3);
+      return iVar3;
     }
-    iVar4 = iVar4 + 1;
-    pcVar3 = "mp_alpha" + iVar4 * 0x28;
-  } while ("mp_alpha"[iVar4 * 0x28] != '\0');
-  __restgprlr_29(0xffffffffffffffff);
-  return;
+    iVar3 = iVar3 + 1;
+    pcVar4 = &mapRichPresenceInfo + iVar3 * 0x28;
+  } while ((&mapRichPresenceInfo)[iVar3 * 0x28] != '\0');
+  iVar3 = __restgprlr_29(0xffffffffffffffff);
+  return iVar3;
 }
 
 
 // 825E6140  Live_GetMapSource  (universal/com_presence.cpp:185)
 
-undefined4 Live_GetMapSource(int param_1)
+int Live_GetMapSource(int param_1)
 
 {
-  if (((-1 < param_1) && (*(char *)(DAT_8404fa60 + 0xc) == '\0')) && (DAT_82aa1a88 == 0)) {
+  if (((-1 < param_1) && ((disableDLC->current).enabled == false)) && (g_generateAllMaps == 0)) {
     if (0x10 < param_1) {
-      MyAssertHandler(0xffffffff82176b60,0xc3,0,0xffffffff82046a38,0xffffffff82176ba8,param_1);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_presence.cpp",
+                      0xc3,0,"%s\n\t(mapIndex) = %i");
     }
-    return *(undefined4 *)(&DAT_82176674 + param_1 * 0x28);
+    return *(int *)(&DAT_82176674 + param_1 * 0x28);
   }
   return 2;
 }
