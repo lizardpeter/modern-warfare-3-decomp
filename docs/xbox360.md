@@ -61,7 +61,9 @@ from nearly every prologue (`mflr r12; bl __savegprlr_NN`) and epilogue. As sepa
 of its own, so Ghidra's "Non-Returning Functions - Discovered" analyzer marks them non-returning and every caller
 stops after its prologue: the first run cut 8,396 `iw5mp_xenon` functions to 8 bytes and dropped 3,493 more.
 `ApplySymbols.java` marks the helpers returning and turns that analyzer off for PowerPC builds (known non-returning
-functions are still applied). Check after each Xbox 360 analysis that Ghidra's sizes agree with the PDB's.
+functions are still applied). With the fix, Ghidra has all 29,938 functions of `iw5mp_xenon` and agrees with the PDB's size on 27,468 of 28,517
+sized ones; 1,047 end early (after a call Ghidra knows doesn't return or a tail branch, at an undecoded VMX128
+instruction, or at a `bctr` jump table). Check after each Xbox 360 analysis that Ghidra's sizes agree with the PDB's.
 
 ## Layouts
 
