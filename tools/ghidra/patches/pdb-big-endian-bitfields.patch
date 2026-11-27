@@ -1,0 +1,346 @@
+diff -ru a/Ghidra/Features/PDB/src/main/java/ghidra/app/util/bin/format/pdb/DefaultCompositeMember.java b/Ghidra/Features/PDB/src/main/java/ghidra/app/util/bin/format/pdb/DefaultCompositeMember.java
+--- a/Ghidra/Features/PDB/src/main/java/ghidra/app/util/bin/format/pdb/DefaultCompositeMember.java
++++ b/Ghidra/Features/PDB/src/main/java/ghidra/app/util/bin/format/pdb/DefaultCompositeMember.java
+@@ -150,13 +150,15 @@
+ 	 * @param componentOffset member offset within parent
+ 	 * @param baseDataType bitfield base datatype
+ 	 * @param bitSize bitfield size in bits
+-	 * @param bitOffsetWithinBaseType offset of bitfield within base type
++	 * @param bitOffsetWithinBaseType offset of bitfield within base type, in allocation order
++	 * @param lsbFirst allocation order of the run the filler belongs to
+ 	 * @throws InvalidDataTypeException invalid baseDataType for bitfield
+ 	 */
+ 	private DefaultCompositeMember(int componentOffset, DataType baseDataType, int bitSize,
+-			int bitOffsetWithinBaseType) throws InvalidDataTypeException {
++			int bitOffsetWithinBaseType, boolean lsbFirst) throws InvalidDataTypeException {
+ 		memberName = PADDING_COMPONENT_NAME;
+-		memberDataType = new PdbBitField(baseDataType, bitSize, bitOffsetWithinBaseType);
++		memberDataType =
++			PdbBitField.createFiller(baseDataType, bitSize, bitOffsetWithinBaseType, lsbFirst);
+ 		memberIsZeroLengthArray = false;
+ 		memberOffset = componentOffset;
+ 		memberType = MemberType.MEMBER;
+@@ -873,7 +875,7 @@
+ 	private static DataTypeComponent insertMinimalStructureBitfield(Structure struct,
+ 			int memberOffset, String memberName, PdbBitField bitfieldDt, String comment) {
+ 		try {
+-			int baseOffsetAdjustment = bitfieldDt.getBitOffsetWithinBase() / 8;
++			int baseOffsetAdjustment = bitfieldDt.getStorageOffsetWithinBase();
+ 			return struct.insertBitFieldAt(memberOffset + baseOffsetAdjustment,
+ 				bitfieldDt.getStorageSize(), bitfieldDt.getBitOffset(),
+ 				bitfieldDt.getBaseDataType(), bitfieldDt.getDeclaredBitSize(), memberName, comment);
+@@ -930,9 +932,13 @@
+ 		}
+ 
+ 		PdbBitField newBitField = (PdbBitField) newMember.getDataType();
++		if (existingMember instanceof DefaultCompositeMember m &&
++			m.memberDataType instanceof PdbBitField existingBitField &&
++			existingBitField.isLsbFirst() != newBitField.isLsbFirst()) {
++			return false;
++		}
+ 
+-		// NOTE: assumes little-endian bitfield packing
+-		// TODO: Add support for big-endian
++		// bit offsets in allocation order (see PdbBitField)
+ 
+ 		int consumed;
+ 		if (existingMember instanceof BitFieldGroupCompositeMember) {
+@@ -941,7 +947,12 @@
+ 		else {
+ 			DefaultCompositeMember m = (DefaultCompositeMember) existingMember;
+ 			BitFieldDataType conflictBitField = (BitFieldDataType) m.memberDataType;
+-			consumed = conflictBitField.getBitOffset() + conflictBitField.getBitSize();
++			// the offset within the base type, not getBitOffset() (the shift within the bit-field's minimal
++			// storage, counted from the other end on big-endian targets)
++			int start = conflictBitField instanceof PdbBitField pdbBitField &&
++				pdbBitField.getBitOffsetWithinBase() >= 0 ? pdbBitField.getBitOffsetWithinBase()
++						: conflictBitField.getBitOffset();
++			consumed = start + conflictBitField.getBitSize();
+ 		}
+ 
+ 		int relativeBitOffset = 0;
+@@ -965,8 +976,7 @@
+ 			throw new AssertException();
+ 		}
+ 
+-		// NOTE: assumes little-endian bitfield packing
+-		// TODO: Add support for big-endian
++		// bit offsets in allocation order (see PdbBitField)
+ 
+ 		int nextBitOffset = 0;
+ 		if (bfGroup != null) {
+@@ -980,10 +990,10 @@
+ 			// if bit-offset was specified padding may be required
+ 
+ 			int fillerBitSize = bitOffsetWithinBase - nextBitOffset;
+-			// bitOffset = bitOffset; will need adjustment for big-endian
+ 
+ 			return new DefaultCompositeMember(nextBitFieldMember.memberOffset,
+-				nextBitfieldDt.getBaseDataType(), fillerBitSize, nextBitOffset);
++				nextBitfieldDt.getBaseDataType(), fillerBitSize, nextBitOffset,
++				nextBitfieldDt.isLsbFirst());
+ 		}
+ 		return null;
+ 	}
+@@ -1121,7 +1131,8 @@
+ 			if (parent != null) {
+ 				parent.sizeChanged(this);
+ 			}
+-			if (member.memberIsZeroLengthArray && !member.transformIntoStructureContainer()) {
++			if ((member.memberIsZeroLengthArray || member.isOffsetBitField()) &&
++				!member.transformIntoStructureContainer()) {
+ 				return false;
+ 			}
+ 			return true;
+@@ -1358,12 +1369,12 @@
+ 		DefaultCompositeMember rootMember =
+ 			new DefaultCompositeMember(isClass, editComposite, errorConsumer);
+ 
++		List<DefaultCompositeMember> built = new ArrayList<>();
+ 		for (PdbMember m : members) {
+ 			monitor.checkCancelled();
+ 			try {
+-				if (!rootMember.addMember(m, monitor)) {
+-					return false;
+-				}
++				built.add(new DefaultCompositeMember(m, rootMember.dataTypeManager, errorConsumer,
++					monitor));
+ 			}
+ 			catch (DataTypeDependencyException e) {
+ 				String message = "Failed to resolve datatype dependency for " +
+@@ -1377,10 +1388,94 @@
+ 			}
+ 		}
+ 
++		setBitFieldAllocationOrder(built);
++
++		for (DefaultCompositeMember m : built) {
++			monitor.checkCancelled();
++			if (!rootMember.addMember(m)) {
++				return false;
++			}
++		}
++
+ 		rootMember.finalizeDataType(preferredCompositeSize, packingDisabled);
+ 		return true;
+ 	}
+ 
++	/**
++	 * Give each run of bit-fields its allocation order. A PDB lists members in declaration order and
++	 * records each bit-field's position from the least significant bit of its base type, so a run of
++	 * bit-fields sharing one storage unit (same offset and base size) whose positions decrease was allocated
++	 * from the most significant bit, and one whose positions increase from the least significant bit. Only
++	 * big-endian targets allocate either way (e.g. the Xbox 360's MSVC, whose default is the most significant
++	 * bit, with #pragma bitfield_order(lsb_to_msb) in its system headers). The pragma covers whole
++	 * declarations, so a run of a single bit-field takes the order of the composite's other runs, or the
++	 * target's default if it has none.
++	 * @param members composite members in declaration order
++	 */
++	private static void setBitFieldAllocationOrder(List<DefaultCompositeMember> members) {
++		List<int[]> runs = new ArrayList<>(); // [start, end)
++		Boolean compositeLsbFirst = null;
++		int i = 0;
++		while (i < members.size()) {
++			if (!(members.get(i).memberDataType instanceof PdbBitField first) ||
++				first.getPdbBitPosition() < 0) {
++				i++;
++				continue;
++			}
++			int end = i + 1;
++			while (end < members.size() &&
++				members.get(end).memberDataType instanceof PdbBitField next &&
++				members.get(end).memberOffset == members.get(i).memberOffset &&
++				next.getBaseTypeSize() == first.getBaseTypeSize() && next.getPdbBitPosition() >= 0) {
++				end++;
++			}
++			runs.add(new int[] { i, end });
++			if (end - i > 1 && compositeLsbFirst == null) {
++				PdbBitField second = (PdbBitField) members.get(i + 1).memberDataType;
++				compositeLsbFirst = second.getPdbBitPosition() > first.getPdbBitPosition();
++			}
++			i = end;
++		}
++		for (int[] run : runs) {
++			Boolean lsbFirst = compositeLsbFirst;
++			if (run[1] - run[0] > 1) {
++				PdbBitField first = (PdbBitField) members.get(run[0]).memberDataType;
++				PdbBitField second = (PdbBitField) members.get(run[0] + 1).memberDataType;
++				lsbFirst = second.getPdbBitPosition() > first.getPdbBitPosition();
++			}
++			if (lsbFirst == null) {
++				continue; // a lone bit-field in a composite with no other run: the target's default
++			}
++			for (int k = run[0]; k < run[1]; k++) {
++				DefaultCompositeMember m = members.get(k);
++				try {
++					m.memberDataType = ((PdbBitField) m.memberDataType).withAllocationOrder(lsbFirst);
++				}
++				catch (InvalidDataTypeException e) {
++					throw new AssertException(e); // same parameters as the PDB's own bit-field
++				}
++			}
++		}
++	}
++
++	/**
++	 * A bit-field a union can't hold directly. A union places a bit-field member at its first byte, at the
++	 * least significant end of its storage on little-endian targets and the most significant end on big-endian
++	 * ones; a bit-field anywhere else (e.g. bits 0-2 of a big-endian byte, or bits 3-5 of a little-endian one)
++	 * can only be held inside a structure, at its storage offset and shift.
++	 * @return true if this member is such a bit-field
++	 */
++	private boolean isOffsetBitField() {
++		if (!(memberDataType instanceof PdbBitField pdbBitField)) {
++			return false;
++		}
++		int unionShift = pdbBitField.getDataOrganization().isBigEndian()
++				? pdbBitField.getStorageSize() * 8 - pdbBitField.getBitSize()
++				: 0;
++		return pdbBitField.getStorageOffsetWithinBase() != 0 ||
++			pdbBitField.getBitOffset() != unionShift;
++	}
++
+ 	void setBitFieldGroup(BitFieldGroupCompositeMember group) {
+ 		bitFieldGroup = group;
+ 	}
+diff -ru a/Ghidra/Features/PDB/src/main/java/ghidra/app/util/bin/format/pdb/PdbBitField.java b/Ghidra/Features/PDB/src/main/java/ghidra/app/util/bin/format/pdb/PdbBitField.java
+--- a/Ghidra/Features/PDB/src/main/java/ghidra/app/util/bin/format/pdb/PdbBitField.java
++++ b/Ghidra/Features/PDB/src/main/java/ghidra/app/util/bin/format/pdb/PdbBitField.java
+@@ -24,42 +24,120 @@
+  */
+ public class PdbBitField extends BitFieldDataType {
+ 
++	// Two views of the bit position:
++	//  - pdbBitPosition: where the bit-field is, as the PDB records it (distance of its lowest bit from the
++	//    least significant bit of the base type); this alone, with the target's endianness, places it
++	//  - bitOffsetWithinBaseType: its offset in allocation order, which the composite reconstruction uses to
++	//    group bit-fields and fill gaps between them. Allocation runs from the least significant bit on
++	//    little-endian targets; on big-endian ones from the most significant bit by default, or from the least
++	//    significant bit where a type was declared so (MSVC's #pragma bitfield_order(lsb_to_msb), used by the
++	//    Xbox 360's headers), which DefaultCompositeMember decides per run of bit-fields from the member order
++	private int pdbBitPosition;
+ 	private int bitOffsetWithinBaseType;
+-
+-	// TODO: add support for big-endian
++	private boolean lsbFirst;
+ 
+ 	/**
+ 	 * Construct a PDB bitfield (not intended for direct use by DataTypeManager)
+ 	 * @param baseDataType fielfield base datatype cloned for target datatype manager
+ 	 * @param bitSize bitfield size in bits
+-	 * @param bitOffsetWithinBaseType bit offset within baseDataType or -1 if unknown
++	 * @param pdbBitPosition bit position as the PDB records it (from the least significant bit of
++	 * baseDataType) or -1 if unknown
+ 	 * @throws InvalidDataTypeException if invalid bitfield parameters are specified
+ 	 */
+-	protected PdbBitField(DataType baseDataType, int bitSize, int bitOffsetWithinBaseType)
++	protected PdbBitField(DataType baseDataType, int bitSize, int pdbBitPosition)
++			throws InvalidDataTypeException {
++		this(baseDataType, bitSize, pdbBitPosition, !isBigEndian(baseDataType));
++	}
++
++	private PdbBitField(DataType baseDataType, int bitSize, int pdbBitPosition, boolean lsbFirst)
+ 			throws InvalidDataTypeException {
+-		super(baseDataType, bitSize,
+-			getMinimalBitOffset(baseDataType, bitSize, bitOffsetWithinBaseType));
++		super(baseDataType, bitSize, pdbBitPosition < 0 ? 0 : pdbBitPosition % 8);
+ 		if (bitSize < 1) {
+ 			throw new InvalidDataTypeException("invalid PDB bit size: " + bitSize);
+ 		}
+-		if (bitOffsetWithinBaseType < -1) {
+-			throw new InvalidDataTypeException(
+-				"invalid PDB bit offset: " + bitOffsetWithinBaseType);
++		if (pdbBitPosition < -1) {
++			throw new InvalidDataTypeException("invalid PDB bit offset: " + pdbBitPosition);
+ 		}
+-		this.bitOffsetWithinBaseType = bitOffsetWithinBaseType;
++		this.pdbBitPosition = pdbBitPosition;
++		this.lsbFirst = lsbFirst || !isBigEndian(baseDataType);
++		if (pdbBitPosition < 0) {
++			bitOffsetWithinBaseType = -1;
++		}
++		else if (this.lsbFirst) {
++			bitOffsetWithinBaseType = pdbBitPosition;
++		}
++		else {
++			bitOffsetWithinBaseType = getBaseTypeSize() * 8 - pdbBitPosition - bitSize;
++		}
++	}
++
++	/**
++	 * Get this bit-field in the given allocation order (only differs on big-endian targets)
++	 * @param lsbFirstOrder true if allocated from the least significant bit
++	 * @return bit-field in that allocation order, at the same position
++	 * @throws InvalidDataTypeException if invalid bitfield parameters are specified
++	 */
++	PdbBitField withAllocationOrder(boolean lsbFirstOrder) throws InvalidDataTypeException {
++		if (lsbFirstOrder == lsbFirst || !isBigEndian(getBaseDataType())) {
++			return this;
++		}
++		return new PdbBitField(getBaseDataType(), getDeclaredBitSize(), pdbBitPosition, lsbFirstOrder);
++	}
++
++	/**
++	 * Create a filler bit-field occupying bits [allocationOffset, allocationOffset + bitSize) in allocation
++	 * order
++	 * @param baseDataType base datatype
++	 * @param bitSize filler size in bits
++	 * @param allocationOffset offset in allocation order
++	 * @param lsbFirstOrder allocation order of the run the filler belongs to
++	 * @return filler bit-field
++	 * @throws InvalidDataTypeException if invalid bitfield parameters are specified
++	 */
++	static PdbBitField createFiller(DataType baseDataType, int bitSize, int allocationOffset,
++			boolean lsbFirstOrder) throws InvalidDataTypeException {
++		boolean lsb = lsbFirstOrder || !isBigEndian(baseDataType);
++		int position = lsb ? allocationOffset
++				: baseDataType.getLength() * 8 - allocationOffset - bitSize;
++		return new PdbBitField(baseDataType, bitSize, position, lsb);
++	}
++
++	private static boolean isBigEndian(DataType baseDataType) {
++		return baseDataType.getDataOrganization().isBigEndian();
+ 	}
+ 
+-	private static int getMinimalBitOffset(DataType baseDataType, int bitSize,
+-			int bitOffsetWithinBaseType) {
+-		if (bitOffsetWithinBaseType < 0) {
+-			return 0;
++	/**
++	 * Get the bit position as the PDB records it (from the least significant bit of the base type)
++	 * @return bit position or -1 if unknown
++	 */
++	public int getPdbBitPosition() {
++		return pdbBitPosition;
++	}
++
++	/**
++	 * Is this bit-field's run allocated from the least significant bit (always true on little-endian)
++	 * @return true if allocated from the least significant bit
++	 */
++	public boolean isLsbFirst() {
++		return lsbFirst;
++	}
++
++	/**
++	 * Get the byte offset within the base type of this bit-field's minimal storage (its getStorageSize() bytes,
++	 * in which getBitOffset() is the shift from the least significant bit)
++	 * @return storage byte offset within the base type
++	 */
++	public int getStorageOffsetWithinBase() {
++		int position = Math.max(pdbBitPosition, 0);
++		if (isBigEndian(getBaseDataType())) {
++			// the least significant bit is in the base type's last byte
++			return getBaseTypeSize() - 1 - (position + getBitSize() - 1) / 8;
+ 		}
+-		// assumes little endian packing (lsb first)
+-		return bitOffsetWithinBaseType % 8;
++		return position / 8;
+ 	}
+ 
+ 	/**
+-	 * Get the bit offset within the full base type
++	 * Get the bit offset within the full base type, in allocation order (see {@link #isLsbFirst()})
+ 	 * @return base type bit offset or -1 if unknown
+ 	 */
+ 	public int getBitOffsetWithinBase() {

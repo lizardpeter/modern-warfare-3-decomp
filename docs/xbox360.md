@@ -72,15 +72,54 @@ words, which no PowerPC defines (data in `.text`).
 
 ### Ghidra's PDB analyzer
 
-Ghidra's PDB Universal analyzer reads these PDBs without CodeView (the PDB is given to it explicitly), but on
-`iw5mp_xenon` it failed at once with an `ArrayIndexOutOfBoundsException` in `DefaultCompositeMember.isGoodAlignment`,
-which aborted the whole PDB step: no PDB types, prototypes or locals reached the project. The bug is Ghidra's
-(still on master as of 2026-11-25): checking whether packing moved a struct's members, it walks the packed test
-copy's components while indexing the original's defined components, without comparing their counts. The Xbox 360
-GPU register unions (big-endian bit-fields, which Ghidra already warns it can't align) give the copy a different
-count. A different count means the layout moved, so the check now returns false
-(`tools/ghidra/patches/pdb-isGoodAlignment-bounds.patch`, applied by `tools/ghidra/patch_ghidra.sh` to the installed
-release in CI). With it, the PDB step runs to completion and applies the PDB's types and prototypes.
+Ghidra's PDB Universal analyzer reads these PDBs without CodeView (the PDB is given to it explicitly). Two Ghidra
+bugs kept it from applying them; both are fixed by patches to the installed release
+(`tools/ghidra/patches/`, applied by `tools/ghidra/patch_ghidra.sh` in CI), still present on Ghidra master as of
+2026-11-25.
+
+**The crash** (`pdb-isGoodAlignment-bounds.patch`). On `iw5mp_xenon` the analyzer failed at once with an
+`ArrayIndexOutOfBoundsException` in `DefaultCompositeMember.isGoodAlignment`, aborting the whole PDB step: no PDB
+types, prototypes or locals reached the project. Checking whether packing moved a struct's members, it walks the
+packed copy's components while indexing the original's defined components, without comparing their counts. A
+different count means the layout moved, so the check now returns false.
+
+**Big-endian bit-fields** (`pdb-big-endian-bitfields.patch`). With the crash fixed, the analyzer ran for 3 h 40 m
+and applied the PDB, but 5,749 functions (19%) then failed to decompile with "Field ... does not fit in structure":
+`entityState_s`, `usercmd_s`, `cg_s`, the GPU packet and register types, everything holding a bit-field. Ghidra's
+PDB code is little-endian only (it says so: "TODO: Add support for big-endian"):
+
+- A PDB records a bit-field's position from the least significant bit of its base type, on every target. Ghidra
+  turned that into a byte as `position / 8`; on big-endian bit 0 is in the base type's last byte, so bit-fields
+  landed in the wrong bytes.
+- It groups bit-fields that share a storage unit by expecting each to start where the previous one ended,
+  counting from the least significant bit. Xenon's MSVC allocates from the most significant bit: `Weapon` lists
+  `padding` (bit 24), `scopeVariation` (21), ... `weaponIdx` (0), positions decreasing in declaration order (IW
+  declared the fields in reverse on Xbox so `weaponIdx` stays in the low byte, which the code reads with
+  `clrlwi r, r, 24`). Every such field looked like an overlap, and the fallback built nested unions and structs
+  too large for their parent.
+- Some Xbox 360 system headers declare `#pragma bitfield_order(lsb_to_msb)` (the GPU packet types, the schema
+  and audio descriptors): there positions increase. The order is a property of the declaration, not the
+  compiler.
+
+The patch keeps the PDB's position for placement (the byte and shift follow from it and the endianness alone, for
+either order), works out each run of bit-fields' allocation order from the member order (decreasing positions:
+from the most significant bit; increasing: from the least; a single bit-field takes its composite's other runs'
+order, or the target's default), gives padding fillers their run's order, and lets a union hold a bit-field it
+can't place directly (bits 0-2 of a big-endian byte, say) inside a structure, as it already did for zero-length
+arrays.
+
+`tools/ghidra/xenon/pdb_layouts.py` tests it in a minute instead of a four-hour analysis: every composite with
+bit-fields in `iw5mp_xenon`'s PDB and every type they use (2,530; 32 C++ classes with bases or vtables aside) is
+rebuilt with Ghidra's own reconstruction (`TestPdbLayouts.java`) and compared with the PDB, member by member and
+bit by bit:
+
+| | stock Ghidra 12.1.4 | patched |
+|---|---|---|
+| big-endian (Xenon language) | 617 of 2,530 | 2,530 of 2,530 |
+| little-endian (x86) | 1,744 of 2,530 | 2,530 of 2,530 |
+
+On little-endian no composite stock Ghidra rebuilt correctly is changed, so PC PDBs can't regress.
+`xenon-language.yml` runs the test on both.
 
 `ApplySymbols.java` still runs first: it creates and names every function the PDB, MAP and `.pdata` know, from
 `analysis/<build>/pdb` and `map` (tools/pdb/extract.py, llvm-pdbutil and resymc), independently of Ghidra's PDB
