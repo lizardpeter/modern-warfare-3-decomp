@@ -11,7 +11,8 @@ exception directory (.pdata), the compiler's own record of every non-leaf functi
 (architecture "ppc") get the same table from their own .pdata format: 8 big-endian bytes per function, the
 absolute start address and a packed word (prolog length, function length in instructions, 32-bit and exception
 flags); Xenon code lists nearly every function there, leaves included. Entries whose unwind info
-is chained (UNW_FLAG_CHAININFO) are separated-out parts of another function and are listed with `part_of`, not counted
+is chained (UNW_FLAG_CHAININFO) are separated-out parts of another function and are listed with `part_of` (the function
+at the root of the chain, which can be several entries long), not counted
 as functions. Leaf functions that never touch the stack have no entry; Ghidra's inventory supersedes this table.
 Xbox 360 builds also get xenon_helpers.tsv (the compiler's register save/restore helpers, found by their code) and
 code_refs.tsv (code addresses referred to outside every .pdata function: leaf function candidates).
@@ -99,6 +100,16 @@ def write_pdata(pe, path):
             parts += 1
         rows.append((base + begin, end - begin, part_of))
     rows.sort()
+    # a chained entry's parent can itself be a chained entry (nested shrink-wrapped regions: 140009FEF's parent is
+    # 140009FDE, whose parent is 140009F80); part_of names the function the part belongs to, the root of the chain
+    parent = {f"{va:08X}": p for va, _, p in rows if p}
+    def root(p):
+        seen = set()
+        while p in parent and p not in seen:
+            seen.add(p)
+            p = parent[p]
+        return p
+    rows = [(va, size, root(p) if p else "") for va, size, p in rows]
     with open(path, "w", newline="\n") as f:
         f.write("va\tsize\tpart_of\n")
         for va, size, part_of in rows:

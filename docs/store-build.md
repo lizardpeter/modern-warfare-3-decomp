@@ -19,6 +19,21 @@ Both are plain PE files: normal section entropy, no packer, no Arxan, no Steam. 
 (`MSVCP140`, `VCRUNTIME140`, `VCRUNTIME140_1`, the UCRT api sets), as BO2's and Ghosts' Store builds do. A `.xbld`
 section is the GDK's build marker.
 
+## Ghidra analysis
+
+- **Chained `.pdata` parts are not functions.** The compiler separates cold and shrink-wrapped regions into chained
+  entries (UNW_FLAG_CHAININFO), and a chained entry's parent can itself be chained (nested up to several levels:
+  `140009FEF` → `140009FDE` → `140009F80`). `tools/inventory.py` resolves `part_of` to the root function;
+  `ApplySymbols.java` creates functions only at the 11,507 roots and Ghidra joins the parts to them by flow.
+- **Non-returning discovery is off.** Ghidra's "Non-Returning Functions - Discovered" marked `memcpy`, `memset`,
+  `memmove`, `free`, `sqrtf`, `floor`, `__chkstk` and hundreds of game functions non-returning (one with 1,353
+  callers ends in a plain `ret`), so every caller stopped at the first such call: 3,419 functions shorter than
+  `.pdata`, a quarter of string references outside any function. Known non-returning functions still apply.
+- Result: 10,369 of 11,507 functions are exactly their `.pdata` extent with chained parts (90%); 4 are larger
+  (1 by more than 16 bytes); of the 1,134 smaller, all but 211 differ by alignment padding, and those checked are
+  switch jump tables, which MSVC x64 places in `.text` after the function and Ghidra rightly keeps out of the body.
+  14,220 functions in all, 0 decompile failures.
+
 ## What the port changed (from the imports and strings so far)
 
 - **Renderer:** still **Direct3D 9** (`d3d9.dll`), unlike BO2's Store build (D3D11). Audio through `DSOUND` and

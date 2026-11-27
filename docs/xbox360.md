@@ -38,6 +38,19 @@ down to `SectionAlignment` (64 KB), which Xenon sections don't follow, and so re
 table's first 7,168 entries and ended in junk, 29 rows of which seeded false function starts inside real functions.
 `xenon_read` in `tools/inventory.py` maps through the section headers as written.
 
+### Leaf functions reached by address
+
+A leaf function has no unwind data and so no `.pdata` entry, and Ghidra's PowerPC analysis doesn't turn an address
+built with `lis`+`addi` into a function. A leaf that is never called directly (a command handler passed to
+`Cmd_AddCommand`, a fastfile load callback, a table entry) stayed undefined: the blind ship analysis missed 5,966 of
+its PDB's functions. `tools/inventory.py` writes `code_refs.tsv` (bl targets, lis+addi addresses and data words that
+point into code outside every `.pdata` function, from the exe alone) and `SeedCodeRefs.java` creates functions there
+after Ghidra's own analysis: call targets anywhere (recomputing the body of a function that had absorbed one), the
+others only where no function covers them, since by then jump-table and local labels belong to their functions.
+`iw5mp_xenon_ship` analysed blind: 1,313 functions seeded, 21,573 functions in all, 20,123 of the PDB's functions
+found (was 18,875), 19,537 of them with the PDB's exact size and 8 larger, 0 decompile failures. Most of the 4,612
+still missing have no reference anywhere in the exe (dead code such as `G_GetModel`).
+
 ### Register save/restore helpers, found by their code
 
 `tools/inventory.py` also writes `xenon_helpers.tsv`: every entry point of the compiler's register save/restore

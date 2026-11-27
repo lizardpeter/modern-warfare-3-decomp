@@ -49,9 +49,38 @@ matched against `iw5mp_xenon`, and scored with its own PDB/MAP:
     python tools/match/match.py iw5mp_xenon iw5mp_xenon_ship --same-compiler
     python tools/match/validate.py iw5mp_xenon iw5mp_xenon_ship
 
-That scores the PowerPC scan and the ship configuration's inlining. The cross-architecture step to the Store build
-has no ground truth; to check it, sample matches against reading (prototype and behaviour agree), and check
-consistency (a match's callees match the reference's callees). Record precision here once measured.
+That scores the PowerPC scan and the ship configuration's inlining. Current result: 8,428 of 21,138 ship functions
+matched (39.9%), 8,336 right and 51 wrong by the ship PDB, **99.4% precision**. The ceiling is about 96% (ship
+functions whose name exists in the dev build); coverage is limited by inlining: the ship configuration has 21k
+functions to the dev build's 30k, so call-graph neighbourhoods differ, and it has no assert strings, the dev build's
+densest anchors. What changed the score:
+
+- the register save/restore helpers out of the call graph (`XENON_HELPER`): they are plumbing called from nearly
+  every prologue, made unrelated functions look alike (67 wrong pairs before, 47 after), and the x64 target has
+  nothing like them;
+- `calls`: the only unmatched function on each side calling the same set of at least two matched functions (+200
+  pairs at 98%);
+- correct analyses of both builds (docs/xbox360.md: `.pdata` read through the section headers, helpers found by
+  their code, leaf functions seeded from their references).
+
+Tried and dropped: pairing function-pointer tables by index once two entries agree (37 pairs, 28 right).
+
+### Store build (cross-architecture)
+
+    python tools/match/match.py iw5mp_xenon iw5mp_ship
+
+2,947 of 14,220 Store functions matched (20.7%): 631 by unique strings, 139 by registrations, 104 by registered
+globals, the rest by call-graph propagation (callee 834, caller 823, order 196, calls 108, votes 82). There is no
+ground truth. Consistency check: where both functions of a pair reference strings (870 pairs), 842 share at least one
+(97%); the 28 that don't are mostly inlining differences on reading (`ClientThink_real` holds the inactivity-drop
+strings of a function the Store build inlines into it, `PartyHost_RemovePlayer` the party commands it sends). The
+Store build is 13 years and a platform away from the reference: 4,735 of its 6,779 referenced strings exist in the
+Xbox build, and its PC, GDK and Demonware code has no counterpart.
+
+Two Store-analysis faults cost most of the earlier result (6.9%): Ghidra's non-returning discovery marked `memcpy`,
+`memset`, `free`, `sqrtf`, `__chkstk` and hundreds of returning functions non-returning, truncating their callers,
+and the 7,688 chained `.pdata` parts were created as functions of their own (docs/store-build.md). The matcher reads
+each x64 function over its `.pdata` extent and chained parts.
 
 ## Other sources of names
 

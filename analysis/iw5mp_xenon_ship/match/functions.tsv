@@ -277,6 +277,7 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 820D1E40	iw5mp_xenon	8225F3B8	fast_s_mp_mul_high_digs	_lib/tommath/bn_fast_s_mp_mul_high_digs	caller	0.85	caller of mp_grow with the same 2 matched callees and 1 matched callers
 820D2040	iw5mp_xenon	8225F5B8	hash_memory	_lib/tomcrypt/hash_memory	caller	0.85	caller of tom_game_free with the same 1 matched callees and 1 matched callers
 820D2320	iw5mp_xenon	8225F6D0	key_schedule	_lib/cil library/ cil module	constant	0.85	2 unique constant(s): 0xa5a5a5a5, 0x1234567
+820D26C0	iw5mp_xenon	82260978	tiger_init	_lib/tomcrypt/tiger	constant	0.95	4 unique constant(s): 0x89ab3210, 0x123ba98, 0x7654e187, 0xfedca5b4
 820D2C20	iw5mp_xenon	82260CB0	AngleSubtract	aim_assist/aim_assist.cpp	caller	0.85	caller of floor with the same 1 matched callees and 1 matched callers
 820D2C78	iw5mp_xenon	82260D08	BG_UsingAlternate	aim_assist/aim_assist.cpp	callee	0.85	callee of PM_Weapon_CheckForChangeWeapon with the same 0 matched callees and 2 matched callers
 820D2ED8	iw5mp_xenon	82261690	AimAssist_UpdateAdsLerp	aim_assist/aim_assist.cpp	caller	0.85	caller of CL_Demo_IsPlaying with the same 2 matched callees and 0 matched callers
@@ -807,6 +808,8 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 821114B0	iw5mp_xenon	822B2A90	CG_ScoresUp	cgame_mp/cg_consolecmds_mp.cpp	caller	0.85	caller of CG_IsScoreboardDisplayed with the same 1 matched callees and 5 matched callers
 82111538	iw5mp_xenon	822B2B08	CG_ScoresDown	cgame_mp/cg_consolecmds_mp.cpp	caller	0.85	caller of CL_AddReliableCommand with the same 2 matched callees and 0 matched callers
 821115E8	iw5mp_xenon	822B2BA8	CG_ToggleScores	cgame_mp/cg_consolecmds_mp.cpp	caller	0.85	caller of UI_SetActiveMenu with the same 3 matched callees and 0 matched callers
+821116D8	iw5mp_xenon	822B3040	CG_ShowHud_f	cgame_mp/cg_consolecmds_mp.cpp	named	0.89	registered/tabled under 1 name(s): 'showhud'
+821116E0	iw5mp_xenon	822B3048	CG_HideHud_f	cgame_mp/cg_consolecmds_mp.cpp	named	0.89	registered/tabled under 1 name(s): 'hidehud'
 821116E8	iw5mp_xenon	822B31E8	CG_InitConsoleCommands	cgame_mp/cg_consolecmds_mp.cpp	string	0.90	2 unique string(s): 'hidehud'
 82111788	iw5mp_xenon	822B9518	CG_DrawFlashDamage	cgame/cg_draw_indicators.cpp	callee	0.85	callee of CG_Draw2D with the same 2 matched callees and 1 matched callers
 82111938	iw5mp_xenon	822B96C8	CG_ShouldDrawDamageDirectionIndicators	cgame/cg_draw_indicators.cpp	caller	0.85	caller of CL_Demo_IsFollowCamera with the same 4 matched callees and 1 matched callers
@@ -900,7 +903,7 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 8211A990	iw5mp_xenon	822C74E8	CG_PreProcess_Weapon_GetDObj	cgame_mp/cg_ents_mp.cpp	caller	0.85	caller of BG_GetAlternateWeapon with the same 2 matched callees and 0 matched callers
 8211AD70	iw5mp_xenon	822C7960	CG_DObjCalcBone	cgame_mp/cg_ents_mp.cpp	caller	0.85	caller of CG_DoControllers with the same 2 matched callees and 0 matched callers
 8211AF30	iw5mp_xenon	822C7D38	CG_General	cgame_mp/cg_ents_mp.cpp	caller	0.75	only unmatched caller of CG_CalcLightingOrigin
-8211AFE0	iw5mp_xenon	822C7DA8	CG_Item	cgame_mp/cg_ents_mp.cpp	caller	0.75	only unmatched caller of CG_PreProcess_Weapon_GetDObj
+8211AFE0	iw5mp_xenon	822C7DA8	CG_Item	cgame_mp/cg_ents_mp.cpp	caller	0.75	only unmatched caller of BG_SetWeaponIronSights
 8211B110	iw5mp_xenon	822C7F48	CG_Turret	cgame_mp/cg_ents_mp.cpp	calls	0.82	the only unmatched function on each side calling the same 3 matched functions
 8211B2C0	iw5mp_xenon	822C8108	CG_Missile	cgame_mp/cg_ents_mp.cpp	caller	0.85	caller of BG_GetNumWeapons with the same 3 matched callees and 0 matched callers
 8211B718	iw5mp_xenon	822C8530	CG_ScriptMover	cgame_mp/cg_ents_mp.cpp	caller	0.75	only unmatched caller of UpdatePortableRadarEffect
@@ -1181,7 +1184,7 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 821440C8	iw5mp_xenon	82300148	CG_UpdateShellShock	cgame/cg_shellshock.cpp	caller	0.85	caller of CL_Demo_IsFollowCamera with the same 2 matched callees and 1 matched callers
 82144230	iw5mp_xenon	82300270	CG_GetFlashbangedRemainingTime	cgame/cg_shellshock.cpp	callee	0.85	callee of CG_ApplyFadeAndDrawOverheadNames with the same 0 matched callees and 2 matched callers
 821442E0	iw5mp_xenon	823003F0	CG_CopyCorpseInfo	cgame_mp/cg_snapshot_mp.cpp	string	0.85	1 unique string(s): 'J_Spine4'
-821443F8	iw5mp_xenon	82300598	CG_ShutdownEntity	cgame_mp/cg_snapshot_mp.cpp	callee	0.85	callee of ResetEntity_Internal with the same 1 matched callees and 3 matched callers
+821443F8	iw5mp_xenon	82300598	CG_ShutdownEntity	cgame_mp/cg_snapshot_mp.cpp	callee	0.85	callee of ResetEntity_Internal with the same 0 matched callees and 3 matched callers
 821445F0	iw5mp_xenon	82300808	KillRegisteredProjExplosionFX	cgame_mp/cg_snapshot_mp.cpp	caller	0.75	only unmatched caller of BG_ProjExplosionEffect
 82144710	iw5mp_xenon	82300908	CG_TransitionSnapshot	cgame_mp/cg_snapshot_mp.cpp	caller	0.85	caller of memset with the same 2 matched callees and 1 matched callers
 82144988	iw5mp_xenon	82300D28	ResetEntity_Internal	cgame_mp/cg_snapshot_mp.cpp	callee	0.85	callee of CG_TransitionKillcam with the same 3 matched callees and 1 matched callers
@@ -1452,7 +1455,7 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 82165488	iw5mp_xenon	8232BAA8	CL_AdjustTimeDelta	client_mp/cl_cgame_mp.cpp	callee	0.85	callee of CL_SetCGameTime with the same 1 matched callees and 1 matched callers
 82165650	iw5mp_xenon	8232BCB0	CL_PreFreeLoadMemory	client_mp/cl_cgame_mp.cpp	caller	0.85	caller of CL_Demo_IsPlaying with the same 4 matched callees and 1 matched callers
 82165748	iw5mp_xenon	8232BD98	CL_FreeLoadMemory	client_mp/cl_cgame_mp.cpp	caller	0.85	caller of DB_LoadXAssets with the same 2 matched callees and 1 matched callers
-82165798	iw5mp_xenon	8232BDF0	CL_FirstSnapshot	client_mp/cl_cgame_mp.cpp	callee	0.85	callee of CL_SetCGameTime with the same 2 matched callees and 1 matched callers
+82165798	iw5mp_xenon	8232BDF0	CL_FirstSnapshot	client_mp/cl_cgame_mp.cpp	callee	0.85	callee of CL_SetCGameTime with the same 4 matched callees and 1 matched callers
 821658D0	iw5mp_xenon	8232BEE8	CL_SetCGameTime	client_mp/cl_cgame_mp.cpp	global	0.85	the only function on each side referencing the same 2 named globals
 82165BA0	iw5mp_xenon	8232C1E8	CL_SetADS	client_mp/cl_cgame_mp.cpp	votes	0.85	paired with it at the same place among matched calls in 5 callers
 82165C50	iw5mp_xenon	8232C2A8	CL_DrawRect	client_mp/cl_cgame_mp.cpp	caller	0.85	caller of CL_DrawStretchPicPhysical with the same 2 matched callees and 0 matched callers
@@ -1462,7 +1465,8 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 82165F30	iw5mp_xenon	8232C5D8	CL_IsServerRestarting	client_mp/cl_cgame_mp.cpp	order	0.80	called by CG_DrawDisconnect between the same matched calls
 82165F58	iw5mp_xenon	8232C608	CL_ShouldSendPeerVoiceData	client_mp/cl_cgame_mp.cpp	global	0.95	the only function on each side referencing the same 9 named globals
 821666C8	iw5mp_xenon	8232D240	CL_UpdateColor	client_mp/cl_cgame_mp.cpp	caller	0.75	only unmatched caller of CG_TeamColor
-821667F0	iw5mp_xenon	8232D400	CIN_PlayCinematic	client/cl_cin.cpp	caller	0.85	caller of UI_SetActiveMenu with the same 1 matched callees and 0 matched callers
+821667F0	iw5mp_xenon	8232D400	CIN_PlayCinematic	client/cl_cin.cpp	callee	0.85	callee of CL_PlayCinematic_f with the same 1 matched callees and 1 matched callers
+821668A8	iw5mp_xenon	8232D560	CL_PlayCinematic_f	client/cl_cin.cpp	named	0.89	registered/tabled under 1 name(s): 'cinematic'
 82166950	iw5mp_xenon	8232D738	SCR_StopCinematic	client/cl_cin.cpp	string	0.85	1 unique string(s): 'autocinematic %s\n'
 82166A48	iw5mp_xenon	8232D868	SCR_StopCinematic_ByUserRequest	client/cl_cin.cpp	callee	0.85	callee of CL_StopLogoOrCinematic_ByUserRequest with the same 1 matched callees and 1 matched callers
 82166A98	iw5mp_xenon	8232D8B8	CIN_PlayAttractModeMovie	client/cl_cin.cpp	string	0.90	2 unique string(s): 'video/cin_playlist.txt'
@@ -1528,6 +1532,7 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 8216ED38	iw5mp_xenon	8233E2C0	Key_GetCommandAssignmentInternal	client/cl_keys.cpp	callee	0.85	callee of CL_GetKeyBindingInternal with the same 1 matched callees and 1 matched callers
 8216EE28	iw5mp_xenon	8233E438	Key_GetCommandAssignment	client/cl_keys.cpp	callee	0.85	callee of Item_Bind_HandleKey with the same 1 matched callees and 1 matched callers
 8216EE30	iw5mp_xenon	8233E440	Key_IsCommandBound	client/cl_keys.cpp	caller	0.75	only unmatched caller of Key_GetCommandAssignmentInternal
+8216EF30	iw5mp_xenon	8233E558	Key_Unbindall_f	client/cl_keys.cpp	named	0.89	registered/tabled under 1 name(s): 'unbindall'
 8216F1B8	iw5mp_xenon	8233EDF8	CL_InitKeyCommands	client/cl_keys.cpp	string	0.95	3 unique string(s): 'bind_swap'
 8216F248	iw5mp_xenon	8233EEA0	CL_MouseInputShouldBypassMenus	client/cl_keys.cpp	caller	0.75	only unmatched caller of UI_CheckExecKey
 8216F388	iw5mp_xenon	8233EFE0	Key_ClearStates_Internal	client/cl_keys.cpp	order	0.80	called by Key_ClearStates between the same matched calls
@@ -1564,6 +1569,7 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 821718C8	iw5mp_xenon	82342E90	CL_DisconnectLocalClient_DontDeclineInvite	client_mp/cl_main_mp.cpp	callee	0.85	callee of Live_ConfirmAcceptInvitation with the same 1 matched callees and 1 matched callers
 821718D0	iw5mp_xenon	82342E98	CL_DisconnectLocalClient	client_mp/cl_main_mp.cpp	callee	0.85	callee of CL_Demo_End with the same 1 matched callees and 1 matched callers
 821718D8	iw5mp_xenon	82342EA0	CL_Disconnect_f	client_mp/cl_main_mp.cpp	caller	0.75	only unmatched caller of CL_DisconnectLocalClient_Helper
+82171928	iw5mp_xenon	82342F28	CL_Live_PrivatePartyBackout	client_mp/cl_main_mp.cpp	string	0.85	1 unique string(s): 'partybackout'
 82171998	iw5mp_xenon	823430E8	LoadMapLoadscreen	client_mp/cl_main_mp.cpp	string	0.95	3 unique string(s): 'didyouknow'
 82171A38	iw5mp_xenon	82343330	CL_WasMapAlreadyLoaded	client_mp/cl_main_mp.cpp	caller	0.85	caller of CL_Demo_IsPlaying with the same 1 matched callees and 1 matched callers
 82171BA8	iw5mp_xenon	82343518	CL_DisconnectError	client_mp/cl_main_mp.cpp	string	0.90	2 unique string(s): 'EXE_SERVERQUIT'
@@ -1583,18 +1589,24 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 82172AB8	iw5mp_xenon	82345408	CL_Live_PartyMapVote	client_mp/cl_main_mp.cpp	named	0.89	registered/tabled under 1 name(s): 'xpartyvote'
 82172B30	iw5mp_xenon	82345618	CL_DownloadPlaylist_f	client_mp/cl_main_mp.cpp	named	0.89	registered/tabled under 1 name(s): 'downloadplaylist'
 82172B88	iw5mp_xenon	82345658	CL_ResetViewport_f	client_mp/cl_main_mp.cpp	named	0.89	registered/tabled under 1 name(s): 'resetViewport'
+82172BD8	iw5mp_xenon	823456A8	CL_PrimaryMapVetoed	client_mp/cl_main_mp.cpp	named	0.89	registered/tabled under 1 name(s): 'xplaylistprimaryvetoed'
+82172BF8	iw5mp_xenon	823456D0	CL_Live_ShowFriendsList	client_mp/cl_main_mp.cpp	named	0.89	registered/tabled under 1 name(s): 'xshowfriendslist'
 82172C18	iw5mp_xenon	823456F8	CL_Live_SignInLive	client_mp/cl_main_mp.cpp	string	0.85	1 unique string(s): 'Requiring live signin on an invalid controller index %d'
 82172D40	iw5mp_xenon	823457F0	CL_Live_SignInAny	client_mp/cl_main_mp.cpp	string	0.85	1 unique string(s): 'Requiring signin on an invalid controller index %d'
 82172DC8	iw5mp_xenon	82345860	CL_Live_SetErrorResolveWithControllerAndArgs	client_mp/cl_main_mp.cpp	caller	0.75	only unmatched caller of _itoa
 82172E88	iw5mp_xenon	822DC730	Cmd_LocalControllerIndex	cgame/cg_modelpreviewer.cpp	callee	0.75	only unmatched callee of CL_Live_RequireLiveSignin
-82172F18	iw5mp_xenon	823459C8	CL_Live_RequireLiveSigninInternal	client_mp/cl_main_mp.cpp	caller	0.75	only unmatched caller of Live_HandleOnlineRequirementFailed
+82172F18	iw5mp_xenon	823459C8	CL_Live_RequireLiveSigninInternal	client_mp/cl_main_mp.cpp	calls	0.78	the only unmatched function on each side calling the same 2 matched functions
 82172FC0	iw5mp_xenon	82345AD8	CL_Live_RequireLiveSignin	client_mp/cl_main_mp.cpp	named	0.89	registered/tabled under 1 name(s): 'xrequirelivesignin'
 82173078	iw5mp_xenon	82345B48	CL_Live_RequireLiveSigninForVault	client_mp/cl_main_mp.cpp	string	0.85	1 unique string(s): 'noresolve'
 82173130	iw5mp_xenon	82345BE8	CL_Live_RequireLiveSigninForCommerce	client_mp/cl_main_mp.cpp	string	0.85	1 unique string(s): '@PLATFORM_COMMERCE_NO_ONLINE_ERROR'
-821731D0	iw5mp_xenon	82345C78	CL_Live_RequireAnySigninInternal	client_mp/cl_main_mp.cpp	caller	0.85	caller of UI_ClearCompletionResolve with the same 2 matched callees and 0 matched callers
+821731D0	iw5mp_xenon	82345C78	CL_Live_RequireAnySigninInternal	client_mp/cl_main_mp.cpp	callee	0.85	callee of CL_Live_RequireAnySignin with the same 1 matched callees and 1 matched callers
+82173268	iw5mp_xenon	82345D10	CL_Live_RequireAnySignin	client_mp/cl_main_mp.cpp	named	0.89	registered/tabled under 1 name(s): 'xrequiresignin'
+82173288	iw5mp_xenon	82345D38	CL_Live_CheckEzPatch	client_mp/cl_main_mp.cpp	named	0.89	registered/tabled under 1 name(s): 'xcheckezpatch'
+82173290	iw5mp_xenon	82345D40	CL_Live_CheckEzPatchVersion	client_mp/cl_main_mp.cpp	named	0.89	registered/tabled under 1 name(s): 'xcheckezpatchversion'
 82173298	iw5mp_xenon	82345D48	CL_OpenOnlineServicesDialog	client_mp/cl_main_mp.cpp	named	0.89	registered/tabled under 1 name(s): 'xopenonlineservicesdialog'
 82173308	iw5mp_xenon	82345DA0	CL_Live_CancelConnectingDialog	client_mp/cl_main_mp.cpp	named	0.89	registered/tabled under 1 name(s): 'xcancelconnectingdialog'
 82173348	iw5mp_xenon	82345DE0	CL_Live_RegisterCommands	client_mp/cl_main_mp.cpp	string	0.99	11 unique string(s): 'xplaylistprimaryvetoed'
+821734D0	iw5mp_xenon	82345F68	CL_RunResolveItemDefAction	client_mp/cl_main_mp.cpp	named	0.89	registered/tabled under 1 name(s): 'resolveItemDefAction'
 821734D8	iw5mp_xenon	82348898	CL_InitOnceForAllClients	client_mp/cl_main_mp.cpp	string	0.99	88 unique string(s): 'Print nothing to the console'
 82174010	iw5mp_xenon	82346120	CL_ShutdownOnceForAllClients	client_mp/cl_main_mp.cpp	string	0.95	3 unique string(s): 'recursive CL_ShutdownOnceForAllClients\n'
 82174128	iw5mp_xenon	82346338	CL_Shutdown	client_mp/cl_main_mp.cpp	string	0.85	1 unique string(s): 'recursive shutdown\n'
@@ -1626,8 +1638,10 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 821771E0	iw5mp_xenon	8234BDC8	Live_CheckPlayerIsSignedIn	client_mp/cl_main_xenon_mp.cpp	callee	0.85	callee of PartyHost_StartParty with the same 0 matched callees and 2 matched callers
 82177480	iw5mp_xenon	8234C0F8	CL_Connect	client_mp/cl_main_xenon_mp.cpp	caller	0.85	caller of CL_Disconnect with the same 11 matched callees and 0 matched callers
 82177738	iw5mp_xenon	8234C498	CL_Connect_f	client_mp/cl_main_xenon_mp.cpp	caller	0.75	only unmatched caller of CL_Connect
+82177910	iw5mp_xenon	8234C5D8	CL_Live_ShowMarketplace	client_mp/cl_main_xenon_mp.cpp	named	0.89	registered/tabled under 1 name(s): 'xshowmarketplace'
 82177938	iw5mp_xenon	8234C6A8	CL_UpdateDvarsFromProfile	client_mp/cl_main_xenon_mp.cpp	named	0.89	registered/tabled under 1 name(s): 'updatedvarsfromprofile'
 821779A8	iw5mp_xenon	8234C700	CL_UpdateGamerProfile	client_mp/cl_main_xenon_mp.cpp	named	0.89	registered/tabled under 1 name(s): 'updategamerprofile'
+82177A20	iw5mp_xenon	8234C908	CL_ChooseNextPlaylist	client_mp/cl_main_xenon_mp.cpp	named	0.89	registered/tabled under 1 name(s): 'xplaylistchoosegame'
 82177A40	iw5mp_xenon	8234C9D0	CL_Xenon_RegisterCommands	client_mp/cl_main_xenon_mp.cpp	string	0.99	4 unique string(s): 'xshowmarketplace'
 82177AE8	iw5mp_xenon	8234CB78	CL_Xenon_RegisterDvars	client_mp/cl_main_xenon_mp.cpp	order	0.80	called by CL_InitOnceForAllClients between the same matched calls
 82177AF0	iw5mp_xenon	8234CB80	CL_SetServerInfoByAddress	client_mp/cl_main_xenon_mp.cpp	caller	0.75	only unmatched caller of NET_CompareXNAddr
@@ -1720,7 +1734,11 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 821821B0	iw5mp_xenon	8235CEE0	GamerProfile_RegisterDvars	client/gamerprofile.cpp	string	0.99	8 unique string(s): 'profileMenuOption_gamma'
 82182350	iw5mp_xenon	8235D080	GamerProfile_OptionsMenuDvarsSetup_f	client/gamerprofile.cpp	named	0.89	registered/tabled under 1 name(s): 'profile_menuDvarsSetup'
 82182468	iw5mp_xenon	8235D1D0	GamerProfile_OptionsMenuDvarsFinish_f	client/gamerprofile.cpp	named	0.89	registered/tabled under 1 name(s): 'profile_menuDvarsFinish'
-82182530	iw5mp_xenon	8235D360	SetBindingsConfig	client/gamerprofile.cpp	caller	0.85	caller of Key_ClearStates with the same 1 matched callees and 0 matched callers
+82182530	iw5mp_xenon	8235D360	SetBindingsConfig	client/gamerprofile.cpp	callee	0.75	only unmatched callee of SetButtonsConfig_f
+82182660	iw5mp_xenon	8235D490	SetButtonsConfig_f	client/gamerprofile.cpp	named	0.89	registered/tabled under 1 name(s): 'profile_setButtonsConfig'
+82182668	iw5mp_xenon	8235D498	SetSticksConfig_f	client/gamerprofile.cpp	named	0.89	registered/tabled under 1 name(s): 'profile_setSticksConfig'
+821828E0	iw5mp_xenon	8235DD20	UpdatePatchNotesVersion_f	client/gamerprofile.cpp	named	0.89	registered/tabled under 1 name(s): 'profile_updatePatchNotesVersion'
+821828E8	iw5mp_xenon	8235DD28	UpdateGameInfosVersion_f	client/gamerprofile.cpp	named	0.89	registered/tabled under 1 name(s): 'profile_updateGameInfosVersion'
 82182970	iw5mp_xenon	8235DFC0	GamerProfile_RegisterCommands	client/gamerprofile.cpp	string	0.99	16 unique string(s): 'profile_menuDvarsSetup'
 82182B50	iw5mp_xenon	8235E298	GamerProfile_UpdateSystemDvars	client/gamerprofile.cpp	global	0.95	the only function on each side referencing the same 4 named globals
 82182C30	iw5mp_xenon	8235E488	GamerProfile_GetDataIndexByName	client/gamerprofile.cpp	votes	0.79	paired with it at the same place among matched calls in 3 callers
@@ -1840,7 +1858,7 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 8218CD38	iw5mp_xenon	82370308	Party_GetAssignedTeam	client_mp/partycommon.cpp	caller	0.85	caller of Sys_Milliseconds with the same 1 matched callees and 1 matched callers
 8218D268	iw5mp_xenon	82370940	Party_GetLobbySessionFlags	client_mp/partycommon.cpp	callee	0.85	callee of CL_Live_StartLobby with the same 0 matched callees and 2 matched callers
 8218D2E8	iw5mp_xenon	823709C0	Party_GetMapName	client_mp/partycommon.cpp	callee	0.85	callee of PartyHost_WritePartyStateFullHeader with the same 0 matched callees and 3 matched callers
-8218D348	iw5mp_xenon	82370A98	Party_SetDisplayMapName	client_mp/partycommon.cpp	callee	0.85	callee of CL_Live_StartLobby with the same 0 matched callees and 5 matched callers
+8218D348	iw5mp_xenon	82370A98	Party_SetDisplayMapName	client_mp/partycommon.cpp	calls	0.78	the only unmatched function on each side calling the same 2 matched functions
 8218D3A0	iw5mp_xenon	82370B28	Party_SetDisplayGameType	client_mp/partycommon.cpp	order	0.80	called by PartyHost_StartParty between the same matched calls
 8218D518	iw5mp_xenon	82370D30	Party_SetMapPackFlags	client_mp/partycommon.cpp	callee	0.85	callee of PartyHost_StartParty with the same 0 matched callees and 3 matched callers
 8218D528	iw5mp_xenon	82370D40	Party_RecordVote	client_mp/partycommon.cpp	order	0.80	called by CL_Live_PartyMapVote between the same matched calls
@@ -1853,10 +1871,13 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 8218DB88	iw5mp_xenon	823716D8	Party_GetPartyForSession	client_mp/partycommon.cpp	callee	0.85	callee of Session_IsHost with the same 2 matched callees and 2 matched callers
 8218DC00	iw5mp_xenon	82371778	PartyAtomic_HandleJoinFailed	client_mp/partycommon.cpp	string	0.90	2 unique string(s): 'XBOXLIVE_HOST_JOINING'
 8218DE80	iw5mp_xenon	82371AE0	Party_ClearMembers	client_mp/partycommon.cpp	callee	0.85	callee of PartyAtomicClient_CommitNewPartyState with the same 1 matched callees and 1 matched callers
+8218DE90	iw5mp_xenon	82371AF0	Party_ResetTweakDvars	client_mp/partycommon.cpp	callee	0.85	callee of CL_Live_StartLobby with the same 0 matched callees and 7 matched callers
 8218E0A0	iw5mp_xenon	82371D00	Party_InitTweakDvars	client_mp/partycommon.cpp	string	0.99	62 unique string(s): 'Enable defensive rejoin command'
 8218E628	iw5mp_xenon	82376370	Party_Init	client_mp/partycommon.cpp	string	0.99	66 unique string(s): 'Minimum number of players in a party'
 8218EC50	iw5mp_xenon	82372288	Party_Sleep	client_mp/partycommon.cpp	callee	0.85	callee of PartyHost_StartParty with the same 1 matched callees and 8 matched callers
-8218ED38	iw5mp_xenon	823723B0	Party_ChooseNextPlaylist	client_mp/partycommon.cpp	callee	0.85	callee of PartyHost_StartParty with the same 2 matched callees and 2 matched callers
+8218ECC0	iw5mp_xenon	82372340	Party_SetUpRulesAndUIDVarsForCurrentMap	client_mp/partycommon.cpp	caller	0.75	only unmatched caller of Playlist_RunRules
+8218ED38	iw5mp_xenon	823723B0	Party_ChooseNextPlaylist	client_mp/partycommon.cpp	callee	0.85	callee of PartyHost_StartParty with the same 2 matched callees and 3 matched callers
+8218EEB0	iw5mp_xenon	82372480	Party_PrimaryMapVetoed	client_mp/partycommon.cpp	callee	0.85	callee of CL_PrimaryMapVetoed with the same 1 matched callees and 1 matched callers
 8218F360	iw5mp_xenon	82372B68	Party_IsPlayerInPrivateParty	client_mp/partycommon.cpp	callee	0.85	callee of UI_FeederItemColor with the same 1 matched callees and 2 matched callers
 8218F3E8	iw5mp_xenon	82372BD8	Party_IsPlayerPrivatePartyHost	client_mp/partycommon.cpp	callee	0.85	callee of PartyHost_HandleClientDisconnect_Internal with the same 1 matched callees and 1 matched callers
 8218F480	iw5mp_xenon	82372C68	Party_IsGameHostInPrivateParty	client_mp/partycommon.cpp	caller	0.85	caller of Party_IsPlayerInPrivateParty with the same 1 matched callees and 2 matched callers
@@ -1882,7 +1903,7 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 821913E0	iw5mp_xenon	82377490	Party_IsMemberInfoVisible	client_mp/partycommon.cpp	caller	0.85	caller of Party_IsPlayerInPrivateParty with the same 1 matched callees and 5 matched callers
 82191480	iw5mp_xenon	82377558	Party_AddRecentPlayers	client_mp/partycommon.cpp	caller	0.85	caller of Live_GetXuid with the same 2 matched callees and 1 matched callers
 82191578	iw5mp_xenon	82377650	Party_ShowTeams	client_mp/partycommon.cpp	callee	0.85	callee of PartyHost_AutoStart with the same 0 matched callees and 2 matched callers
-821915D0	iw5mp_xenon	823776A8	Party_HideTeams	client_mp/partycommon.cpp	order	0.80	called by PartyClient_UpdateTeamsVisible between the same matched calls
+821915D0	iw5mp_xenon	823776A8	Party_HideTeams	client_mp/partycommon.cpp	callee	0.85	callee of PartyHost_Frame with the same 0 matched callees and 3 matched callers
 82191740	iw5mp_xenon	82377B00	Party_UpdateStatusString	client_mp/partycommon.cpp	string	0.85	1 unique string(s): '%s:  %d'
 82191820	iw5mp_xenon	82377C70	Party_UpdateUIDvars	client_mp/partycommon.cpp	caller	0.85	caller of Party_UpdateVoteString with the same 2 matched callees and 0 matched callers
 82191870	iw5mp_xenon	82377CF0	Party_Frame	client_mp/partycommon.cpp	caller	0.75	only unmatched caller of PartyHost_Frame
@@ -1928,7 +1949,7 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 82196568	iw5mp_xenon	82382070	PartyHost_MarkPacketReceivedForJoiningPlayer	client_mp/partyhost.cpp	callee	0.85	callee of PartyAtomicHost_HandleMemberJoin with the same 1 matched callees and 1 matched callers
 82196888	iw5mp_xenon	823827B0	PartyHost_HandleCantHearMsg	client_mp/partyhost.cpp	string	0.85	1 unique string(s): '%ivoicefail %i'
 821969A0	iw5mp_xenon	823828C8	PartyHost_HandlePacket	client_mp/partyhost.cpp	caller	0.75	only unmatched caller of PartyHost_HandleHeartbeatAck
-82196B20	iw5mp_xenon	82382C88	PartyHost_ResetState	client_mp/partyhost.cpp	callee	0.85	callee of PartyClient_BecomePartyHost with the same 5 matched callees and 2 matched callers
+82196B20	iw5mp_xenon	82382C88	PartyHost_ResetState	client_mp/partyhost.cpp	caller	0.75	only unmatched caller of Live_SetPartyState
 82196D18	iw5mp_xenon	82382FE8	PartyHost_InitSearchPass	client_mp/partyhost.cpp	callee	0.85	callee of Party_Init with the same 0 matched callees and 2 matched callers
 82196E18	iw5mp_xenon	823830E8	PartyHost_ReadyClients	client_mp/partyhost.cpp	callee	0.85	callee of PartyHost_AutoStart with the same 1 matched callees and 1 matched callers
 82196EB0	iw5mp_xenon	823831E8	PartyHost_ClearConnectivityBitForClient	client_mp/partyhost.cpp	callee	0.85	callee of PartyHost_UpdatePlayerStatus with the same 1 matched callees and 1 matched callers
@@ -2049,17 +2070,23 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 821A2BC8	iw5mp_xenon	8239ABF8	ScrPlace_GetFullPlacement	client/screen_placement.cpp	order	0.80	called by CL_DrawRect between the same matched calls
 821A2D18	iw5mp_xenon	8239AEC0	CL_SetControllerInUse	client/splitscreen.cpp	callee	0.85	callee of LiveStorage_OpenPlayerDataRead with the same 0 matched callees and 6 matched callers
 821A2DE8	iw5mp_xenon	8239B030	CL_LocalClientNumFromControllerIndex	client/splitscreen.cpp	votes	0.95	paired with it at the same place among matched calls in 37 callers
-821A2E88	iw5mp_xenon	8239B1A8	CL_ControllerIndexFromClientNum	client/splitscreen.cpp	votes	0.95	paired with it at the same place among matched calls in 105 callers
+821A2E88	iw5mp_xenon	8239B1A8	CL_ControllerIndexFromClientNum	client/splitscreen.cpp	votes	0.95	paired with it at the same place among matched calls in 106 callers
 821A2EF8	iw5mp_xenon	8239B260	CL_GetLocalClientActiveCount	client/splitscreen.cpp	order	0.80	called by CG_LoadHudMenu between the same matched calls
 821A30D8	iw5mp_xenon	8239B568	CL_ControllerIndexFromActiveClient	client/splitscreen.cpp	callee	0.85	callee of UI_FeederItemText with the same 0 matched callees and 2 matched callers
 821A31D8	iw5mp_xenon	8239B758	CL_GetFirstActiveControllerIndex	client/splitscreen.cpp	callee	0.85	callee of SV_UserinfoChanged with the same 0 matched callees and 4 matched callers
+821A32C0	iw5mp_xenon	8239B8B8	EnoughPlayersToStartSplitscreen	client/splitscreen.cpp	order	0.80	called by CL_UpdateSplitscreenControls between the same matched calls
+821A3328	iw5mp_xenon	8239B920	CL_EnableSplitscreenControls	client/splitscreen.cpp	votes	0.79	paired with it at the same place among matched calls in 3 callers
 821A34A0	iw5mp_xenon	8239BB38	CL_DisableSplitscreenControls	client/splitscreen.cpp	caller	0.75	only unmatched caller of Key_ClearStates
 821A35C8	iw5mp_xenon	8239BCC0	CL_UpdateSplitscreenControls	client/splitscreen.cpp	string	0.85	1 unique string(s): 'Not enough players to start split screen. Use the sign in sc'
 821A36A0	iw5mp_xenon	8239BDF8	CL_IncNoSplitscreenControl_f	client/splitscreen.cpp	named	0.89	registered/tabled under 1 name(s): 'incnosplitscreencontrol'
+821A3718	iw5mp_xenon	8239BE58	CL_DecNoSplitscreenControl	client/splitscreen.cpp	callee	0.85	callee of CL_DecNoSplitscreenControl_f with the same 1 matched callees and 1 matched callers
+821A3780	iw5mp_xenon	8239BF08	CL_DecNoSplitscreenControl_f	client/splitscreen.cpp	named	0.89	registered/tabled under 1 name(s): 'decnosplitscreencontrol'
 821A3818	iw5mp_xenon	8239BFE0	CL_ForceNoSplitscreenControl_f	client/splitscreen.cpp	named	0.89	registered/tabled under 1 name(s): 'forcenosplitscreencontrol'
+821A38D0	iw5mp_xenon	8239C090	CL_ForceSplitscreenControl	client/splitscreen.cpp	caller	0.75	only unmatched caller of CL_EnableSplitscreenControls
 821A3910	iw5mp_xenon	8239C0E8	CL_ForceSplitscreenControl_f	client/splitscreen.cpp	named	0.89	registered/tabled under 1 name(s): 'forcesplitscreencontrol'
 821A39D8	iw5mp_xenon	8239C230	CL_AllSplitScreenPlayersCanSaveProgress	client/splitscreen.cpp	callee	0.85	callee of RunOp with the same 1 matched callees and 2 matched callers
 821A3B38	iw5mp_xenon	8239C460	CL_AnySplitscreenPlayersAreSignedInToLive	client/splitscreen.cpp	caller	0.85	caller of Live_IsUserSignedInToLive with the same 1 matched callees and 1 matched callers
+821A3BC8	iw5mp_xenon	8239C530	CL_ClearControllerMapCmd	client/splitscreen.cpp	named	0.89	registered/tabled under 1 name(s): 'clearcontrollermap'
 821A3BE8	iw5mp_xenon	8239C620	GuestSponsorErrorMessage	client/splitscreen.cpp	string	0.85	1 unique string(s): 'MPUI_GUEST_SPONSOR_ERROR'
 821A3C90	iw5mp_xenon	8239C750	CL_AllLocalClientsDisconnected	client/splitscreen.cpp	votes	0.95	paired with it at the same place among matched calls in 13 callers
 821A3D50	iw5mp_xenon	8239C8A8	CL_AnyLocalClientStateActive	client/splitscreen.cpp	order	0.80	called by CL_InitRenderer between the same matched calls
@@ -2094,6 +2121,7 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 821A6558	iw5mp_xenon	8239FF08	Voice_IsPlayerGloballyMuted	client_mp/voice.cpp	caller	0.85	caller of XUserMuteListQuery with the same 1 matched callees and 0 matched callers
 821A6598	iw5mp_xenon	8239FF88	Voice_IsMemberMuted	client_mp/voice.cpp	order	0.80	called by CL_IsPlayerMuted between the same matched calls
 821A6D00	iw5mp_xenon	823A0D80	InsertPointerMapEntry	database/assetbuf.cpp	string	0.85	1 unique string(s): 'Out of temporary buffer space while copying asset'
+821A7270	iw5mp_xenon	823A18D8	DB_PhysPresetGetName	database/db_assetnames.cpp	named	0.89	registered/tabled under 1 name(s): 'addon_map_ents'
 821A7A90	iw5mp_xenon	823A2428	DBX_AuthLoad_ValidateSignature	database/db_auth.cpp	callee	0.85	callee of DBX_AuthLoad_ProcessHeader with the same 1 matched callees and 1 matched callers
 821A7AF8	iw5mp_xenon	823A2490	DBX_AuthLoad_ProcessHeader	database/db_auth.cpp	string	0.85	1 unique string(s): 'IWffs100'
 821A7DB8	iw5mp_xenon	823A29C8	DB_AuthLoad_InflateLZX	database/db_auth.cpp	callee	0.85	callee of DBX_AuthLoad_InflateCopyBuffer with the same 1 matched callees and 1 matched callers
@@ -2168,7 +2196,7 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 821F7F20	iw5mp_xenon	82403B28	DB_StreamTabulationCmd	database/db_streaming_tabulate.cpp	callee	0.85	callee of R_ProcessWorkerCmdInternal with the same 0 matched callees and 2 matched callers
 821F80A0	iw5mp_xenon	8240BC70	QuatTransform	DynEntity/DynEntity_client.cpp	callee	0.85	callee of Hinge_UpdateAll with the same 0 matched callees and 2 matched callers
 821F8178	iw5mp_xenon	8240BD90	DynEntCl_RegisterDvars	DynEntity/DynEntity_client.cpp	string	0.99	24 unique string(s): 'dynEnt_bulletForce'
-821F8A50	iw5mp_xenon	8240C880	DynEntCl_ProcessEntities	DynEntity/DynEntity_client.cpp	callee	0.85	callee of CG_DrawActiveFrame with the same 1 matched callees and 1 matched callers
+821F8A50	iw5mp_xenon	8240C880	DynEntCl_ProcessEntities	DynEntity/DynEntity_client.cpp	caller	0.85	caller of Phys_ObjIsAsleep with the same 2 matched callees and 1 matched callers
 821F8BF0	iw5mp_xenon	8240CB90	DynEntCl_Shutdown	DynEntity/DynEntity_client.cpp	callee	0.85	callee of CL_Disconnect with the same 1 matched callees and 3 matched callers
 821F8D70	iw5mp_xenon	8240CDC0	DynEntCl_PointTrace_r	DynEntity/DynEntity_client.cpp	caller	0.75	only unmatched caller of DynEnt_PointTraceToModel
 821F9590	iw5mp_xenon	8240E000	DynEntCl_CylinderEntities	DynEntity/DynEntity_client.cpp	callee	0.85	callee of DynEntCl_JitterEvent with the same 0 matched callees and 2 matched callers
@@ -2227,13 +2255,18 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 822026B8	iw5mp_xenon	8241C030	FX_InterpolateColor	EffectsCore/fx_draw_util.cpp	caller	0.85	caller of floor with the same 1 matched callees and 1 matched callers
 82202768	iw5mp_xenon	8241C0E0	FX_RegisterDvars	EffectsCore/fx_dvars.cpp	string	0.99	77 unique string(s): 'Toggles all effects processing'
 822034C8	iw5mp_xenon	8241D0A0	Glass_AddPiecePhysicsObject	EffectsCore/fx_glass.cpp	callee	0.85	callee of Glass_StartImmediateFall with the same 0 matched callees and 2 matched callers
-82203510	iw5mp_xenon	8241D128	Glass_FreePiecePhysicsJoint	EffectsCore/fx_glass.cpp	callee	0.75	only unmatched callee of Glass_UpdatePhysics
-82203800	iw5mp_xenon	8241D828	Glass_FreePiecePhysicsObject	EffectsCore/fx_glass.cpp	callee	0.85	callee of Glass_SetupPieceFall with the same 1 matched callees and 1 matched callers
+82203510	iw5mp_xenon	8241D128	Glass_FreePiecePhysicsJoint	EffectsCore/fx_glass.cpp	callee	0.85	callee of Glass_UpdatePhysics with the same 0 matched callees and 2 matched callers
+822035B0	iw5mp_xenon	8241D1F8	Glass_PlayEffect	EffectsCore/fx_glass.cpp	order	0.80	called by Glass_UpdateFall between the same matched calls
+82203800	iw5mp_xenon	8241D828	Glass_FreePiecePhysicsObject	EffectsCore/fx_glass.cpp	callee	0.75	only unmatched callee of Glass_UpdatePhysics
 82203860	iw5mp_xenon	8241D8D0	Glass_SetInitialState	EffectsCore/fx_glass.cpp	caller	0.85	caller of memset with the same 2 matched callees and 0 matched callers
+82203AA8	iw5mp_xenon	8241DC80	Glass_SetupPriority	EffectsCore/fx_glass.cpp	global	0.85	the only function on each side referencing the same 2 named globals
+82203C50	iw5mp_xenon	8241DFE8	Glass_FreePiece	EffectsCore/fx_glass.cpp	votes	0.79	paired with it at the same place among matched calls in 3 callers
+82203DB0	iw5mp_xenon	8241E258	Glass_MakeRoomForNewPieces_r	EffectsCore/fx_glass.cpp	callee	0.85	callee of Glass_MakeRoomForNewPieces with the same 1 matched callees and 1 matched callers
 82203F28	iw5mp_xenon	8241E3D0	Glass_CompactData	EffectsCore/fx_glass.cpp	callee	0.85	callee of Glass_MakeRoomForNewPieces with the same 0 matched callees and 2 matched callers
 82204188	iw5mp_xenon	8241E700	Glass_MakeRoomForNewPieces	EffectsCore/fx_glass.cpp	global-or-caller	0.90	the only function on each side referencing the same 3 named globals; or its only caller Glass_DestroyInitialPiece with it inlined
 822042F8	iw5mp_xenon	8241E870	Glass_DestroyInitialPiece	EffectsCore/fx_glass.cpp	caller	0.75	only unmatched caller of Glass_MakeRoomForNewPieces
 82204368	iw5mp_xenon	8241DF28	Glass_GetPieceIndexForInitialPiece	EffectsCore/fx_glass.cpp	callee	0.75	only unmatched callee of Glass_DestroyInitialPiece
+82204488	iw5mp_xenon	8241F1B8	std::_Partition<PiecePriority *,PartitionPriorityPred>	EffectsCore/fx_glass.cpp	order	0.80	called by Glass_MakeRoomForNewPieces_r between the same matched calls
 822045D8	iw5mp_xenon	8241F740	Glass_Restore	EffectsCore/fx_glass_archive.cpp	caller	0.85	caller of MemFile_ReadData with the same 4 matched callees and 0 matched callers
 822048C8	iw5mp_xenon	8241FB68	Glass_Archive	EffectsCore/fx_glass_archive.cpp	callee	0.85	callee of CL_ArchiveClientStateMP with the same 1 matched callees and 1 matched callers
 82204920	iw5mp_xenon	8241FC80	Glass_QuantizeVertex	EffectsCore/fx_glass_crack.cpp	caller	0.85	caller of floor with the same 1 matched callees and 1 matched callers
@@ -2246,6 +2279,9 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 82207218	iw5mp_xenon	824224E8	Glass_StartDelayedFall	EffectsCore/fx_glass_crack.cpp	caller	0.75	only unmatched caller of Glass_SetupPieceFall
 822080E0	iw5mp_xenon	824234F8	Glass_MakeFinalPiece	EffectsCore/fx_glass_crack.cpp	callee	0.85	callee of Glass_CreateCracks with the same 1 matched callees and 1 matched callers
 822087C8	iw5mp_xenon	82423DA8	Glass_PickSeedDirForLoop	EffectsCore/fx_glass_crack.cpp	order	0.80	called by Glass_PickSeedDir between the same matched calls
+82208A38	iw5mp_xenon	82424480	Glass_GetVertexForPos	EffectsCore/fx_glass_crack.cpp	callee	0.85	callee of Glass_DestroyPiece with the same 1 matched callees and 2 matched callers
+82208B20	iw5mp_xenon	82424588	Glass_PlaySingleShatterEffect	EffectsCore/fx_glass_crack.cpp	caller	0.75	only unmatched caller of Glass_PlayEffect
+82208BD8	iw5mp_xenon	82424640	Glass_PlayShatterEffects	EffectsCore/fx_glass_crack.cpp	calls	0.78	the only unmatched function on each side calling the same 2 matched functions
 82208FB0	iw5mp_xenon	82424A40	Glass_ConsiderBreakingPiece	EffectsCore/fx_glass_crack.cpp	order	0.80	called by Glass_FinalizeShard between the same matched calls
 82209088	iw5mp_xenon	82424B48	Glass_FinalizeShard	EffectsCore/fx_glass_crack.cpp	caller	0.85	caller of memcpy with the same 2 matched callees and 0 matched callers
 82209328	iw5mp_xenon	82424EF8	Glass_DoCrackWalk	EffectsCore/fx_glass_crack.cpp	caller	0.75	only unmatched caller of Glass_SetCrackEdgeDelta
@@ -2253,7 +2289,7 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 82209DF8	iw5mp_xenon	82425BB0	Glass_SnapSeedDirToEdge	EffectsCore/fx_glass_crack.cpp	callee	0.85	callee of Glass_PickSeedDir with the same 1 matched callees and 1 matched callers
 82209F88	iw5mp_xenon	82425DB8	Glass_PickSeedDir	EffectsCore/fx_glass_crack.cpp	order	0.80	called by Glass_CreateCracks between the same matched calls
 8220A068	iw5mp_xenon	82425E98	Glass_CreateCracks	EffectsCore/fx_glass_crack.cpp	caller	0.85	caller of sin with the same 3 matched callees and 0 matched callers
-8220A400	iw5mp_xenon	82426260	Glass_CrackPiece	EffectsCore/fx_glass_crack.cpp	callee	0.85	callee of Glass_DestroyPiece with the same 2 matched callees and 1 matched callers
+8220A400	iw5mp_xenon	82426260	Glass_CrackPiece	EffectsCore/fx_glass_crack.cpp	callee	0.85	callee of Glass_DestroyPiece with the same 3 matched callees and 1 matched callers
 8220A5A0	iw5mp_xenon	824263E8	Glass_GetVertexForImpact	EffectsCore/fx_glass_crack.cpp	callee	0.85	callee of Glass_DestroyPiece with the same 0 matched callees and 2 matched callers
 8220A6A8	iw5mp_xenon	82426578	Glass_DestroySimplePiece	EffectsCore/fx_glass_crack.cpp	caller	0.85	caller of Glass_CompactData with the same 2 matched callees and 0 matched callers
 8220A800	iw5mp_xenon	82426740	Glass_DestroyPiece	EffectsCore/fx_glass_crack.cpp	global-or-caller	0.95	the only function on each side referencing the same 5 named globals; or its only caller Glass_DestroyInitialPiece with it inlined
@@ -2266,9 +2302,12 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 8220DED8	iw5mp_xenon	8242AFD8	Glass_LinkPiece_Static	EffectsCore/fx_glass_dpvs.cpp	callee	0.85	callee of Glass_SetupDynamics with the same 0 matched callees and 2 matched callers
 8220E030	iw5mp_xenon	8242B108	Glass_LinkPiece_Dynamic	EffectsCore/fx_glass_dpvs.cpp	order	0.80	called by Glass_UpdateFall between the same matched calls
 82210C40	iw5mp_xenon	82410B58	std::_Sort<DynEntSortStruct *,int,bool (__cdecl*)(DynEntSortStruct const &,DynEntSortStruct const &)>	DynEntity/DynEntity_client.cpp	order	0.80	called by DynEntCl_GetClosestEntities between the same matched calls
+82210E58	iw5mp_xenon	8242EA98	Glass_DoesPieceContainPoint	EffectsCore/fx_glass_trace.cpp	callee	0.85	callee of Glass_GetVertexForImpact with the same 0 matched callees and 2 matched callers
+82210FA0	iw5mp_xenon	8242EC20	Glass_TraceAgainstPiece	EffectsCore/fx_glass_trace.cpp	caller	0.85	caller of floor with the same 2 matched callees and 0 matched callers
 82211220	iw5mp_xenon	8242EEB0	Glass_TraceLine	EffectsCore/fx_glass_trace.cpp	caller	0.75	only unmatched caller of Glass_DestroySimplePiece
 82211FA0	iw5mp_xenon	8242FD88	Glass_UpdateFall	EffectsCore/fx_glass_update.cpp	global-or-caller	0.90	the only function on each side referencing the same 3 named globals; or its only caller Glass_UpdatePiece with it inlined
-82212438	iw5mp_xenon	82430298	Glass_UpdatePhysics	EffectsCore/fx_glass_update.cpp	caller	0.75	only unmatched caller of Glass_StartDelayedFall
+82212438	iw5mp_xenon	82430298	Glass_UpdatePhysics	EffectsCore/fx_glass_update.cpp	callee	0.75	only unmatched callee of Glass_UpdatePiece
+82212540	iw5mp_xenon	824303A0	Glass_UpdatePiece	EffectsCore/fx_glass_update.cpp	caller	0.75	only unmatched caller of Glass_UpdateFall
 82213960	iw5mp_xenon	82432CC8	FX_ImpactMark_Generate_AddEntityBrush	EffectsCore/fx_marks.cpp	callee	0.85	callee of FX_ImpactMark_Generate with the same 1 matched callees and 1 matched callers
 82214368	iw5mp_xenon	82433D40	FX_ClearViewmodelMarks	EffectsCore/fx_marks.cpp	callee	0.85	callee of CG_TransitionKillcam with the same 0 matched callees and 3 matched callers
 82214868	iw5mp_xenon	824346E0	FX_GenerateMarkVertsForMark_MatrixFromAnim	EffectsCore/fx_marks.cpp	caller	0.85	caller of MatrixMultiply43 with the same 2 matched callees and 0 matched callers
@@ -2532,6 +2571,7 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 8223E390	iw5mp_xenon	82477830	WeaponPickup_AddWeapon	game/g_items.cpp	caller	0.85	caller of BG_PlayerHasWeapon with the same 5 matched callees and 0 matched callers
 8223E780	iw5mp_xenon	82477D38	WeaponPickup_Grab	game/g_items.cpp	caller	0.75	only unmatched caller of WeaponPickup_AddWeapon
 8223E918	iw5mp_xenon	824780B8	Touch_Item	game/g_items.cpp	string	0.85	1 unique string(s): 'Weapon;%s;%d;%s;%s\n'
+8223EA90	iw5mp_xenon	82478258	Touch_Item_Auto	game/g_items.cpp	caller	0.85	caller of Touch_Item with the same 1 matched callees and 0 matched callers
 8223EAB0	iw5mp_xenon	82478278	G_ResetEntityParsePoint	game/g_load_utils.cpp	callee	0.85	callee of G_LoadStructs with the same 0 matched callees and 2 matched callers
 8223EAF8	iw5mp_xenon	824782C0	G_EntityParseToken	game/g_load_utils.cpp	caller	0.85	caller of Com_Parse with the same 1 matched callees and 1 matched callers
 8223EB58	iw5mp_xenon	82478320	G_GetEntityToken	game/g_load_utils.cpp	callee	0.85	callee of G_ParseSpawnVars2 with the same 1 matched callees and 1 matched callers
@@ -2547,7 +2587,7 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 8223FE90	iw5mp_xenon	82479EB0	G_FreeEntities	game_mp/g_main_mp.cpp	caller	0.85	caller of G_FreeEntity with the same 2 matched callees and 1 matched callers
 8223FFF0	iw5mp_xenon	8247A158	G_ExitAfterToolComplete	game_mp/g_main_mp.cpp	order	0.80	called by Vehicle_Create between the same matched calls
 82240000	iw5mp_xenon	8247A2C0	G_CheckLoadGame	game_mp/g_main_mp.cpp	caller	0.75	only unmatched caller of G_LoadGame
-82240060	iw5mp_xenon	8247A368	G_ClearLowHunk	game_mp/g_main_mp.cpp	caller	0.75	only unmatched caller of Scr_FreeScripts
+82240060	iw5mp_xenon	8247A368	G_ClearLowHunk	game_mp/g_main_mp.cpp	callee	0.85	callee of G_PreLoadGame with the same 1 matched callees and 1 matched callers
 822400A0	iw5mp_xenon	8247CF98	G_ShutdownGame	game_mp/g_main_mp.cpp	calls	0.78	the only unmatched function on each side calling the same 2 matched functions
 822401A0	iw5mp_xenon	8247A3A8	SendScoreboardMessageToAllIntermissionClients	game_mp/g_main_mp.cpp	caller	0.85	caller of SendScoreboard with the same 1 matched callees and 0 matched callers
 822402F8	iw5mp_xenon	8247A500	CalculateRanks	game_mp/g_main_mp.cpp	caller	0.85	caller of qsort with the same 1 matched callees and 2 matched callers
@@ -2654,7 +2694,9 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 8224EF60	iw5mp_xenon	8248E2D0	GScr_SnapToTargetEntity	game/g_scr_main.cpp	caller	0.75	only unmatched caller of GScr_Turret_SnapToTarget
 8224F9C8	iw5mp_xenon	8248EC48	GScr_SetDefaultDropPitch	game/g_scr_main.cpp	caller	0.85	caller of Scr_GetNumParam with the same 4 matched callees and 0 matched callers
 8224FA40	iw5mp_xenon	8248ECE8	GScr_RestoreDefaultDropPitch	game/g_scr_main.cpp	calls	0.82	the only unmatched function on each side calling the same 3 matched functions
+822508E0	iw5mp_xenon	8248FB18	ScrCmd_SetModel	game/g_scr_main.cpp	caller	0.75	only unmatched caller of G_DObjUpdate
 82250A08	iw5mp_xenon	8248FC28	GScr_SpawnTurret	game/g_scr_main.cpp	caller	0.85	caller of Scr_GetString with the same 3 matched callees and 0 matched callers
+82250CD0	iw5mp_xenon	8248FF00	ScrCmd_moveShieldModel	game/g_scr_main.cpp	caller	0.75	only unmatched caller of G_EntChangeAttachTag
 822516E8	iw5mp_xenon	824908C8	ScrLinkTo_Internal	game/g_scr_main.cpp	caller	0.75	only unmatched caller of G_EntLinkToWithOffset
 82251A58	iw5mp_xenon	82490CF8	PlayerLinkTo_Internal	game/g_scr_main.cpp	caller	0.85	caller of Scr_GetNumParam with the same 7 matched callees and 0 matched callers
 82251E18	iw5mp_xenon	824910F0	ScrCmd_PlayerLinkToAbsolute	game/g_scr_main.cpp	caller	0.85	caller of Scr_GetNumParam with the same 5 matched callees and 0 matched callers
@@ -2707,6 +2749,7 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 822565F8	iw5mp_xenon	82495EA0	GScr_WeaponHasThermalScope	game/g_scr_main.cpp	caller	0.85	caller of Scr_GetString with the same 5 matched callees and 0 matched callers
 822567D0	iw5mp_xenon	82496130	Scr_PrecacheItem	game/g_scr_main.cpp	caller	0.75	only unmatched caller of G_FindItem
 82256DC0	iw5mp_xenon	82496988	GScr_RadiusDamageInternal	game/g_scr_main.cpp	caller	0.85	caller of Scr_GetString with the same 6 matched callees and 0 matched callers
+82256FF0	iw5mp_xenon	82496C68	GScr_RadiusDamage	game/g_scr_main.cpp	caller	0.85	caller of GScr_RadiusDamageInternal with the same 1 matched callees and 0 matched callers
 82257068	iw5mp_xenon	82496C98	GScr_GlassRadiusDamage	game/g_scr_main.cpp	caller	0.85	caller of Scr_Error with the same 4 matched callees and 0 matched callers
 82257128	iw5mp_xenon	82496D70	GScr_Detonate	game/g_scr_main.cpp	caller	0.75	only unmatched caller of G_ExplodeMissile
 82257318	iw5mp_xenon	82497008	GScr_ShellShock	game/g_scr_main.cpp	caller	0.75	only unmatched caller of G_GetRandomSeed
@@ -2790,6 +2833,7 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 82261058	iw5mp_xenon	824A3298	GScr_GetSystemTime	game_mp/g_scr_main_mp.cpp	caller	0.85	caller of Scr_AddInt with the same 2 matched callees and 0 matched callers
 822612D0	iw5mp_xenon	824A35D0	GScr_SetMapCenter	game_mp/g_scr_main_mp.cpp	caller	0.85	caller of Scr_GetNumParam with the same 4 matched callees and 0 matched callers
 82261310	iw5mp_xenon	824A3618	GScr_SetGameEndTime	game_mp/g_scr_main_mp.cpp	caller	0.85	caller of Scr_GetNumParam with the same 4 matched callees and 0 matched callers
+822617F0	iw5mp_xenon	824A3C38	GScr_EndLobby	game_mp/g_scr_main_mp.cpp	string	0.85	1 unique string(s): 'xpartydisbandafterround\n'
 82261850	iw5mp_xenon	824A3CB8	GScr_StartRagdoll	game_mp/g_scr_main_mp.cpp	caller	0.85	caller of Scr_GetNumParam with the same 3 matched callees and 0 matched callers
 82261988	iw5mp_xenon	824A3DF8	ScrCmd_PlayerForceDeathAnim	game_mp/g_scr_main_mp.cpp	caller	0.85	caller of Scr_GetString with the same 5 matched callees and 0 matched callers
 82261B98	iw5mp_xenon	824A4040	GScr_IncrementCounter	game_mp/g_scr_main_mp.cpp	caller	0.85	caller of Scr_GetString with the same 2 matched callees and 0 matched callers
@@ -2812,6 +2856,7 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 82263000	iw5mp_xenon	824A5978	Reached_ScriptMover	game/g_scr_mover.cpp	caller	0.85	caller of floor with the same 4 matched callees and 0 matched callers
 82263530	iw5mp_xenon	824A6110	ScriptMover_SetupPhysicsLaunchClient	game/g_scr_mover.cpp	caller	0.85	caller of Scr_Error with the same 2 matched callees and 0 matched callers
 82263C48	iw5mp_xenon	824A6BD8	SP_script_brushmodel	game/g_scr_mover.cpp	named	0.89	registered/tabled under 1 name(s): 'script_brushmodel'
+82263D18	iw5mp_xenon	824A6CE0	SP_script_model	game/g_scr_mover.cpp	named	0.89	registered/tabled under 1 name(s): 'script_model'
 82263DA8	iw5mp_xenon	824A6D70	SP_script_origin	game/g_scr_mover.cpp	named	0.89	registered/tabled under 1 name(s): 'script_origin'
 82264DF8	iw5mp_xenon	824A8100	ScriptEntCmd_PhysicsLaunchClient	game/g_scr_mover.cpp	caller	0.75	only unmatched caller of ScriptMover_SetupPhysicsLaunchClient
 82264F10	iw5mp_xenon	824A8240	ScriptEntCmd_PhysicsLaunchServer	game/g_scr_mover.cpp	caller	0.75	only unmatched caller of G_EntEnablePhysics
@@ -2876,7 +2921,8 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 8226B8A8	iw5mp_xenon	824B18F8	G_random	game_mp/g_utils_mp.cpp	order	0.80	called by G_FireRocket between the same matched calls
 8226B8F0	iw5mp_xenon	824B1940	G_crandom	game_mp/g_utils_mp.cpp	callee	0.85	callee of Item_SetDefaultVelocity with the same 0 matched callees and 3 matched callers
 8226B9A8	iw5mp_xenon	824B1A60	G_DObjUpdate_Internal	game_mp/g_utils_mp.cpp	callee	0.75	only unmatched callee of G_DObjUpdate
-8226BB18	iw5mp_xenon	824B1CE0	G_DObjUpdate	game_mp/g_utils_mp.cpp	callee	0.85	callee of VEH_InitModelAndValidateTags with the same 0 matched callees and 2 matched callers
+8226BB18	iw5mp_xenon	824B1CE0	G_DObjUpdate	game_mp/g_utils_mp.cpp	callee	0.85	callee of VEH_InitModelAndValidateTags with the same 0 matched callees and 3 matched callers
+8226BFA8	iw5mp_xenon	824B20B8	G_EntChangeAttachTag	game_mp/g_utils_mp.cpp	caller	0.85	caller of G_DObjUpdate with the same 1 matched callees and 0 matched callers
 8226C278	iw5mp_xenon	824B23B8	G_TempEntity	game_mp/g_utils_mp.cpp	caller	0.85	caller of G_Spawn with the same 2 matched callees and 4 matched callers
 8226C3F0	iw5mp_xenon	824B25C8	G_srand	game_mp/g_utils_mp.cpp	callee	0.85	callee of G_InitGame with the same 0 matched callees and 2 matched callers
 8226C688	iw5mp_xenon	824B2F10	Melee_Trace	game/g_weapon.cpp	caller	0.85	caller of memcpy with the same 2 matched callees and 1 matched callers
@@ -2988,7 +3034,7 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 82282B00	iw5mp_xenon	824D3298	CM_PointTraceStaticModels	qcommon/cm_world.cpp	callee	0.85	callee of CM_TraceCmd with the same 1 matched callees and 1 matched callers
 822837D8	iw5mp_xenon	824D4238	CM_PointSightTraceToEntities_r	qcommon/cm_world.cpp	caller	0.75	only unmatched caller of SV_PointSightTraceToEntity
 82283A70	iw5mp_xenon	824D45F8	Cbuf_Init	qcommon/cmd.cpp	callee	0.85	callee of Com_Init_Try_Block_Function with the same 0 matched callees and 2 matched callers
-82283B40	iw5mp_xenon	824D46E0	Cbuf_AddText	qcommon/cmd.cpp	order	0.80	called by CIN_PlayAttractModeMovie between the same matched calls
+82283B40	iw5mp_xenon	824D46E0	Cbuf_AddText	qcommon/cmd.cpp	callee	0.75	only unmatched callee of GScr_EndLobby
 82283C58	iw5mp_xenon	824D4810	Cbuf_AddCall	qcommon/cmd.cpp	callee	0.85	callee of SV_KickClient with the same 0 matched callees and 3 matched callers
 82283CD0	iw5mp_xenon	824D48A0	Cbuf_InsertText	qcommon/cmd.cpp	order	0.80	called by Com_UpdateAllGamePadCheats between the same matched calls
 82283E10	iw5mp_xenon	824D4AC0	Cbuf_ExecuteBufferInternal	qcommon/cmd.cpp	calls	0.78	the only unmatched function on each side calling the same 2 matched functions
@@ -3048,10 +3094,12 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 822880D8	iw5mp_xenon	824DB350	FS_FileRead	qcommon/com_fileaccess.cpp	callee	0.85	callee of FS_ReadFile with the same 1 matched callees and 1 matched callers
 822882C8	iw5mp_xenon	824DB698	FS_FileGetFileSize	qcommon/com_fileaccess.cpp	callee	0.85	callee of CL_Demo_EnumUpdateMetaInformation with the same 1 matched callees and 2 matched callers
 82288358	iw5mp_xenon	824DB728	ComGroups_GetGroupID	qcommon/com_groups_dw.cpp	callee	0.75	only unmatched callee of ComGroups_GetCount
-822884E8	iw5mp_xenon	824DB978	ComGroups_JoinGroup	qcommon/com_groups_dw.cpp	callee	0.85	callee of ComGroups_RegisterPlayer with the same 0 matched callees and 3 matched callers
+822884E8	iw5mp_xenon	824DB978	ComGroups_JoinGroup	qcommon/com_groups_dw.cpp	callee	0.85	callee of ComGroups_RegisterPlayer with the same 0 matched callees and 4 matched callers
 82288628	iw5mp_xenon	824DBB20	ComGroups_LeaveGroup	qcommon/com_groups_dw.cpp	callee	0.75	only unmatched callee of ComGroups_UpdateGroupMemberships
 82288760	iw5mp_xenon	824DBCC8	ComGroups_GetCount	qcommon/com_groups_dw.cpp	callee	0.85	callee of UI_DrawPlaylistDescription with the same 0 matched callees and 2 matched callers
 82288828	iw5mp_xenon	824DBD90	ComGroups_RegisterPlayer	qcommon/com_groups_dw.cpp	string	0.85	1 unique string(s): 'online/mp'
+82288880	iw5mp_xenon	824DBE10	ComGroups_JoinGroup_f	qcommon/com_groups_dw.cpp	named	0.89	registered/tabled under 1 name(s): 'joinLiveGroup'
+822888C8	iw5mp_xenon	824DBE50	ComGroups_LeaveGroup_f	qcommon/com_groups_dw.cpp	named	0.89	registered/tabled under 1 name(s): 'leaveLiveGroup'
 82288910	iw5mp_xenon	824DC018	ComGroups_Init	qcommon/com_groups_dw.cpp	string	0.99	7 unique string(s): 'ComGroups_Init'
 82288AA0	iw5mp_xenon	824DC1F0	ComGroups_UpdateGroupMemberships	qcommon/com_groups_dw.cpp	string	0.99	5 unique string(s): 'matchtype/private'
 82288CE8	iw5mp_xenon	824DC4F8	ComGroups_SetGroups	qcommon/com_groups_dw.cpp	caller	0.75	only unmatched caller of ComGroups_UpdateGroupMemberships
@@ -3073,6 +3121,9 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 82289DA8	iw5mp_xenon	824DFC28	LiveStorage_ShouldReadOnlineStats	qcommon/com_storage.cpp	callee	0.85	callee of LiveStorage_ReadStatsCmd with the same 2 matched callees and 1 matched callers
 82289E70	iw5mp_xenon	824DFCF0	LiveStorage_ShouldReadOfflineStats	qcommon/com_storage.cpp	callee	0.85	callee of LiveStorage_CheckForLostDevice with the same 1 matched callees and 2 matched callers
 82289F10	iw5mp_xenon	824DFDA0	LiveStorage_ClientUsingOnlineStatsOffline	qcommon/com_storage.cpp	caller	0.85	caller of LiveStorage_GetActiveStatsSource with the same 2 matched callees and 1 matched callers
+82289F88	iw5mp_xenon	824DFE58	LiveStorage_SetPostDownloadCommand	qcommon/com_storage.cpp	callee	0.85	callee of UI_RunMenuScript with the same 0 matched callees and 2 matched callers
+8228A010	iw5mp_xenon	824DFF00	LiveStorage_ExecPostDownloadCommand	qcommon/com_storage.cpp	caller	0.85	caller of Cbuf_AddText with the same 2 matched callees and 0 matched callers
+8228A080	iw5mp_xenon	824DFF70	LiveStorage_StatsDownloadCancelCmd	qcommon/com_storage.cpp	named	0.89	registered/tabled under 1 name(s): 'statsdownloadcancel'
 8228A1A8	iw5mp_xenon	824E0108	LiveStorage_OpenPlayerDataRead	qcommon/com_storage.cpp	string	0.95	3 unique string(s): 'incnosplitscreencontrol LiveStorage_OpenPlayerDataRead\n'
 8228A288	iw5mp_xenon	824E0250	LiveStorage_SetLookedUpDataFromString	qcommon/com_storage.cpp	callee	0.85	callee of LiveStorage_CustomClassesSetCmd_Internal with the same 0 matched callees and 3 matched callers
 8228A4C8	iw5mp_xenon	824E0508	LiveStorage_DoWeHaveStatsForSource	qcommon/com_storage.cpp	order	0.80	called by LiveStorage_SplitScreenReselectSaveDevice between the same matched calls
@@ -3088,9 +3139,11 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 8228AC50	iw5mp_xenon	824E0FB0	ShowPopupGettingData	qcommon/com_storage.cpp	callee	0.85	callee of UI_RunMenuScript with the same 2 matched callees and 4 matched callers
 8228AD10	iw5mp_xenon	824E10E0	LiveStorage_ShowPopupGettingDataIfNeeded	qcommon/com_storage.cpp	caller	0.85	caller of ShowPopupGettingData with the same 2 matched callees and 1 matched callers
 8228AE80	iw5mp_xenon	824E1340	LiveStorage_GetAndResetLastPlayTime	qcommon/com_storage.cpp	caller	0.85	caller of LiveStorage_DataGetInternalInt with the same 2 matched callees and 0 matched callers
+8228AF78	iw5mp_xenon	824E1438	LiveStorage_FilterCacheDirtyCmd	qcommon/com_storage.cpp	named	0.89	registered/tabled under 1 name(s): 'challengeFilterCacheDirty'
 8228B290	iw5mp_xenon	824E7600	LiveStorage_GetPlayerUnlockDataBuffer	qcommon/com_storage.cpp	callee	0.75	only unmatched callee of LiveStorage_PlayerDataSetIntByName
 8228B338	iw5mp_xenon	824E1940	LiveStorage_StatsWriteNeeded	qcommon/com_storage.cpp	callee	0.85	callee of LiveStorage_CustomClassesSetCmd_Internal with the same 1 matched callees and 6 matched callers
 8228B418	iw5mp_xenon	826568B8	LiveStorage_WritingStats	xenon/xenon_storage.cpp	callee	0.85	callee of Live_GetStatusFlags with the same 1 matched callees and 1 matched callers
+8228B430	iw5mp_xenon	824ED118	LiveStorage_UploadStatsCmd	qcommon/com_storage.cpp	named	0.89	registered/tabled under 1 name(s): 'uploadStats'
 8228B450	iw5mp_xenon	824E1A38	LiveStorage_ReadStatsCmd	qcommon/com_storage.cpp	named	0.89	registered/tabled under 1 name(s): 'readStats'
 8228B4E8	iw5mp_xenon	824E1AC0	LiveStorage_ReselectSaveDeviceCmd	qcommon/com_storage.cpp	named	0.89	registered/tabled under 1 name(s): 'reselectSaveDevice'
 8228B5A8	iw5mp_xenon	824E1B80	LiveStorage_PlayerDataGetArrayBoolByName	qcommon/com_storage.cpp	callee	0.85	callee of LiveStorage_CheckECACAgainstUnlocks with the same 1 matched callees and 1 matched callers
@@ -3156,6 +3209,8 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 82290168	iw5mp_xenon	824E7CE8	LiveStorage_CheckPeriodicChallengeUpdate	qcommon/com_storage.cpp	string	0.90	2 unique string(s): 'ch_daily_%d'
 822904D8	iw5mp_xenon	824E8158	LiveStorage_IsWaitingOnStats	qcommon/com_storage.cpp	callee	0.85	callee of CL_Live_CheckSplitscreenOnlineStats with the same 0 matched callees and 4 matched callers
 82290548	iw5mp_xenon	824E81F0	LiveStorage_CustomClassesSetCmd_Internal	qcommon/com_storage.cpp	string	0.85	1 unique string(s): 'LiveStorage_CustomClassesSetCmd'
+822906B0	iw5mp_xenon	824E83A8	LiveStorage_CustomClassesSetCmd	qcommon/com_storage.cpp	named	0.89	registered/tabled under 1 name(s): 'setCustomClasses'
+822906C0	iw5mp_xenon	824E83B8	LiveStorage_PrivateMatchCustomClassesSetCmd	qcommon/com_storage.cpp	named	0.89	registered/tabled under 1 name(s): 'setPrivateMatchCustomClasses'
 822906D0	iw5mp_xenon	824E8BC8	LiveStorage_PlayerDataSetIntByName	qcommon/com_storage.cpp	string	0.85	1 unique string(s): 'Cannot set data "%s" to %i: we don\'t have stats yet\n'
 82290780	iw5mp_xenon	824E8C58	LiveStorage_PlayerDataGetString	qcommon/com_storage.cpp	callee	0.85	callee of ValidateKillstreakType with the same 1 matched callees and 2 matched callers
 82290800	iw5mp_xenon	824E8CB8	LiveStorage_PlayerDataGetStringByName	qcommon/com_storage.cpp	callee	0.75	only unmatched callee of Live_GetPlayerCardNameplateHandle
@@ -3191,6 +3246,7 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 82293930	iw5mp_xenon	824EC970	LiveStorage_ReadXuidFromStats	qcommon/com_storage.cpp	caller	0.85	caller of LiveStorage_PlayerDataGetIntByName with the same 1 matched callees and 1 matched callers
 82293990	iw5mp_xenon	824EC9D0	LiveStorage_WriteXuidToStats	qcommon/com_storage.cpp	caller	0.85	caller of LiveStorage_PlayerDataSetIntByName with the same 1 matched callees and 1 matched callers
 822939F8	iw5mp_xenon	824ECB58	LiveStorage_StatsInit	qcommon/com_storage.cpp	caller	0.75	only unmatched caller of LiveStorage_CheckPeriodicChallengeUpdate
+82293AC8	iw5mp_xenon	824ECC70	LiveStorage_StatsInitCmd	qcommon/com_storage.cpp	named	0.89	registered/tabled under 1 name(s): 'defaultStatsInit'
 82293AE8	iw5mp_xenon	824ECF60	SetPercentComplete	qcommon/com_storage.cpp	caller	0.85	caller of LiveStorage_GetActiveStatsSource with the same 3 matched callees and 0 matched callers
 82293BA8	iw5mp_xenon	824ED020	LiveStorage_EndGame	qcommon/com_storage.cpp	caller	0.85	caller of LiveStorage_DoWeHaveStats with the same 3 matched callees and 1 matched callers
 82294080	iw5mp_xenon	824ED740	LiveStorage_PlaylistFetchComplete	qcommon/com_storage.cpp	string	0.85	1 unique string(s): 'Insufficient space for playlists'
@@ -3209,7 +3265,7 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 82295590	iw5mp_xenon	824EF1B8	LiveStorage_CS_AllocatedAllMemory	qcommon/com_storage_contentserver.cpp	order	0.80	called by LiveStorage_CS_Init between the same matched calls
 82295638	iw5mp_xenon	824EF260	LiveStorage_CS_AllocDCacheMemory	qcommon/com_storage_contentserver.cpp	caller	0.75	only unmatched caller of DCache_Init
 82295738	iw5mp_xenon	824EF360	LiveStorage_CS_InitDemonware	qcommon/com_storage_contentserver.cpp	string	0.85	1 unique string(s): 'Cannot spawn content server thread.\n'
-822958A0	iw5mp_xenon	824EF4C8	LiveStorage_CS_CancelTask	qcommon/com_storage_contentserver.cpp	callee	0.85	callee of UI_AbortScreenshotDownload_f with the same 0 matched callees and 2 matched callers
+822958A0	iw5mp_xenon	824EF4C8	LiveStorage_CS_CancelTask	qcommon/com_storage_contentserver.cpp	callee	0.75	only unmatched callee of UI_AbortScreenshotDownload_f
 822958B0	iw5mp_xenon	824EF4D8	LiveStorage_CS_Shutdown	qcommon/com_storage_contentserver.cpp	callee	0.75	only unmatched callee of LiveStorage_RemoteConsoleCheckPump
 82295928	iw5mp_xenon	824EF5A0	LiveStorage_CS_IsAvailable	qcommon/com_storage_contentserver.cpp	order	0.80	called by OnlineVault_AbortOperationForAllControllers between the same matched calls
 82295990	iw5mp_xenon	824EF618	LiveStorage_CS_IsInited	qcommon/com_storage_contentserver.cpp	order	0.80	called by CL_Demo_SaveRenderedMovie between the same matched calls
@@ -3283,14 +3339,14 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 8229C408	iw5mp_xenon	824F9918	Com_EnterError	qcommon/common.cpp	caller	0.75	only unmatched caller of R_ReleaseDeviceOwnershipForStreaming
 8229C510	iw5mp_xenon	824F9B58	Com_Close	qcommon/common.cpp	caller	0.85	caller of Phys_ShutdownCommon with the same 3 matched callees and 0 matched callers
 8229C560	iw5mp_xenon	824F9BB8	Field_Clear	qcommon/common.cpp	caller	0.85	caller of memset with the same 1 matched callees and 2 matched callers
-8229C650	iw5mp_xenon	824F9D90	Com_XAnimCreateSmallTree	qcommon/common.cpp	callee	0.85	callee of ReadField with the same 0 matched callees and 3 matched callers
+8229C650	iw5mp_xenon	824F9D90	Com_XAnimCreateSmallTree	qcommon/common.cpp	callee	0.85	callee of ReadField with the same 0 matched callees and 2 matched callers
 8229C7B0	iw5mp_xenon	824F9FC0	Com_LocalizedFloatToString	qcommon/common.cpp	caller	0.85	caller of _snprintf with the same 1 matched callees and 1 matched callers
 8229C8D8	iw5mp_xenon	824FA118	NetAdr_SetType	qcommon/common.cpp	callee	0.85	callee of PartyHost_SetupParty with the same 0 matched callees and 2 matched callers
 8229C8E0	iw5mp_xenon	824FA168	Com_ShutdownInternal	qcommon/common.cpp	callee	0.85	callee of Com_ErrorCleanup with the same 2 matched callees and 1 matched callers
 8229C9B8	iw5mp_xenon	824FA310	Com_Shutdown	qcommon/common.cpp	caller	0.85	caller of CL_InitRenderer with the same 4 matched callees and 1 matched callers
 8229CA38	iw5mp_xenon	824FBC78	Com_ErrorCleanup	qcommon/common.cpp	string	0.85	1 unique string(s): 'EXE_DISCONNECTEDFROMOWNLISTENSERVER'
 8229CE40	iw5mp_xenon	824FA368	Com_Error	qcommon/common.cpp	callee	0.75	only unmatched callee of AddEntHandleInfo
-8229D0E0	iw5mp_xenon	824FA878	Com_EventLoop	qcommon/common.cpp	callee	0.85	callee of Com_StartHunkUsers with the same 1 matched callees and 2 matched callers
+8229D0E0	iw5mp_xenon	824FA878	Com_EventLoop	qcommon/common.cpp	callee	0.85	callee of Com_StartHunkUsers with the same 2 matched callees and 2 matched callers
 8229D1E0	iw5mp_xenon	824FAE60	Com_Init_Try_Block_Function	qcommon/common.cpp	string	0.99	13 unique string(s): '$hunk'
 8229D5E8	iw5mp_xenon	824FB490	Com_StartHunkUsers	qcommon/common.cpp	string	0.85	1 unique string(s): 'Failed init after: %s'
 8229D6F0	iw5mp_xenon	824FC2F0	Com_Init	qcommon/common.cpp	string	0.85	1 unique string(s): 'Error during initialization:\n%s\n'
@@ -3518,6 +3574,7 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 822C1FF8	iw5mp_xenon	8256BB38	SV_SendClientGameStateInternal	server_mp/sv_client_mp.cpp	string	0.85	1 unique string(s): 'Invalid line in the config string csv - config string indice'
 822C2478	iw5mp_xenon	8256C508	SV_SendClientGameState	server_mp/sv_client_mp.cpp	string	0.85	1 unique string(s): 'EXE_NEEDSTATS'
 822C25D8	iw5mp_xenon	8256C838	SV_ClientEnterWorld	server_mp/sv_client_mp.cpp	caller	0.85	caller of memcpy with the same 1 matched callees and 2 matched callers
+822C2808	iw5mp_xenon	8256CBB8	SV_EndClientMatchDataSend_f	server_mp/sv_client_mp.cpp	named	0.89	registered/tabled under 1 name(s): 'matchdatadone'
 822C2898	iw5mp_xenon	8256CE98	SV_UserinfoChanged	server_mp/sv_client_mp.cpp	string	0.85	1 unique string(s): 'New XUID claiming client num'
 822C2E38	iw5mp_xenon	8256D770	SV_UpdateUserinfo_f	server_mp/sv_client_mp.cpp	named	0.89	registered/tabled under 1 name(s): 'userinfo'
 822C2ED8	iw5mp_xenon	8256D840	SV_DoneMigration_f	server_mp/sv_client_mp.cpp	named	0.89	registered/tabled under 1 name(s): 'mdone'
@@ -3591,7 +3648,7 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 822CB8E8	iw5mp_xenon	8257BAC0	SendToClient	server_mp/sv_migration.cpp	callee	0.85	callee of SendStartMessage with the same 1 matched callees and 3 matched callers
 822CB998	iw5mp_xenon	8257BC10	SendStartMessage	server_mp/sv_migration.cpp	string	0.85	1 unique string(s): 'mstart'
 822CBAA8	iw5mp_xenon	8257BDC8	SendBlock	server_mp/sv_migration.cpp	string	0.85	1 unique string(s): 'mdata'
-822CBB70	iw5mp_xenon	8257BFA0	SendSave	server_mp/sv_migration.cpp	caller	0.85	caller of SaveMemory_GetSaveHandle with the same 1 matched callees and 0 matched callers
+822CBB70	iw5mp_xenon	8257BFA0	SendSave	server_mp/sv_migration.cpp	callee	0.85	callee of HandleHeaderAckMsg with the same 1 matched callees and 1 matched callers
 822CBC58	iw5mp_xenon	8257C100	SendMigrateTo	server_mp/sv_migration.cpp	caller	0.85	caller of va with the same 6 matched callees and 0 matched callers
 822CBD58	iw5mp_xenon	8257C258	SendHeader	server_mp/sv_migration.cpp	string	0.85	1 unique string(s): 'mhead'
 822CBE28	iw5mp_xenon	8257C368	PickNewHost	server_mp/sv_migration.cpp	string	0.90	2 unique string(s): 'disconnect EXE_MIGRATIONABORTED_BACKOUT'
@@ -3604,6 +3661,7 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 822CC918	iw5mp_xenon	8257D350	SV_MigrationUpdateCount	server_mp/sv_migration.cpp	caller	0.85	caller of Sys_Milliseconds with the same 1 matched callees and 1 matched callers
 822CC950	iw5mp_xenon	8257D388	SV_MigrationFrame	server_mp/sv_migration.cpp	caller	0.85	caller of PickNewHost with the same 3 matched callees and 0 matched callers
 822CCA20	iw5mp_xenon	8257D478	HandleRatingMsg	server_mp/sv_migration.cpp	named	0.89	registered/tabled under 1 name(s): 'mrate'
+822CCC28	iw5mp_xenon	8257D788	HandleHeaderAckMsg	server_mp/sv_migration.cpp	named	0.89	registered/tabled under 1 name(s): 'mhack'
 822CCCB0	iw5mp_xenon	8257D898	SV_MigrationPacket	server_mp/sv_migration.cpp	callee	0.85	callee of SV_ConnectionlessPacket with the same 2 matched callees and 1 matched callers
 822CD5B8	iw5mp_xenon	8257E958	SV_SaveSnapshotForArchivedTime	server_mp/sv_snapshot_build_mp.cpp	caller	0.85	caller of memset with the same 3 matched callees and 0 matched callers
 822CD780	iw5mp_xenon	8257EC38	SV_BuildClientSnapshot	server_mp/sv_snapshot_build_mp.cpp	calls	0.78	the only unmatched function on each side calling the same 2 matched functions
@@ -3832,6 +3890,7 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 822E7130	iw5mp_xenon	825A7480	UI_GetTalkerClientNum	ui_mp/ui_main_mp.cpp	caller	0.85	caller of Party_InParty with the same 1 matched callees and 2 matched callers
 822E71E8	iw5mp_xenon	825A7538	UI_DrawTalkerNum	ui_mp/ui_main_mp.cpp	caller	0.85	caller of UI_TextHeight with the same 4 matched callees and 1 matched callers
 822E7308	iw5mp_xenon	825A7680	UI_DrawReservedSlots	ui_mp/ui_main_mp.cpp	caller	0.85	caller of va with the same 2 matched callees and 1 matched callers
+822E73D0	iw5mp_xenon	825A7748	UI_ServersQsortCompare	ui_mp/ui_main_mp.cpp	caller	0.85	caller of LAN_CompareServers with the same 1 matched callees and 0 matched callers
 822E7460	iw5mp_xenon	825A77D8	UI_CheckExecKey	ui_mp/ui_main_mp.cpp	caller	0.75	only unmatched caller of Menu_GetFocused
 822E7500	iw5mp_xenon	825A78A0	UI_VerifyLanguage	ui_mp/ui_main_mp.cpp	string	0.85	1 unique string(s): 'ui_languagechanged'
 822E7570	iw5mp_xenon	825A7910	UI_GetOpenOrCloseMenuOnDvarArgs	ui_mp/ui_main_mp.cpp	caller	0.85	caller of String_Parse with the same 1 matched callees and 1 matched callers
@@ -3848,7 +3907,7 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 822E7E70	iw5mp_xenon	825A86E0	UI_FeederMaterialAnimation	ui_mp/ui_main_mp.cpp	global	0.95	the only function on each side referencing the same 4 named globals
 822E7FF0	iw5mp_xenon	825A88C0	UI_FeederItemText_TeamAndEnemyMembers	ui_mp/ui_main_mp.cpp	callee	0.85	callee of UI_FeederItemText with the same 1 matched callees and 1 matched callers
 822E8290	iw5mp_xenon	825A8B60	UI_FeederItemText_LobbyMembers	ui_mp/ui_main_mp.cpp	callee	0.85	callee of UI_FeederItemText with the same 5 matched callees and 1 matched callers
-822E8808	iw5mp_xenon	825A90D8	UI_FeederDoubleClick	ui_mp/ui_main_mp.cpp	caller	0.85	caller of Party_InParty with the same 3 matched callees and 1 matched callers
+822E8808	iw5mp_xenon	825A90D8	UI_FeederDoubleClick	ui_mp/ui_main_mp.cpp	caller	0.85	caller of Party_InParty with the same 4 matched callees and 1 matched callers
 822E8940	iw5mp_xenon	825A9210	UI_FeederItemEnabled	ui_mp/ui_main_mp.cpp	callee	0.85	callee of UI_FeederData with the same 0 matched callees and 2 matched callers
 822E8A00	iw5mp_xenon	825A92D0	MapIsPresentInRotation	ui_mp/ui_main_mp.cpp	callee	0.85	callee of UI_FeederItemImage with the same 3 matched callees and 1 matched callers
 822E8AB8	iw5mp_xenon	825A9388	UI_FeederItemImage	ui_mp/ui_main_mp.cpp	string	0.95	3 unique string(s): 'box_check'
@@ -3971,7 +4030,7 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 822F5150	iw5mp_xenon	825B8388	PlaylistFeeder_OpenMenu	ui/ui_playlists.cpp	callee	0.85	callee of UI_RunMenuScript with the same 1 matched callees and 1 matched callers
 822F5158	iw5mp_xenon	825B8390	PlaylistFeeder_CloseMenu	ui/ui_playlists.cpp	callee	0.85	callee of UI_RunMenuScript with the same 1 matched callees and 1 matched callers
 822F5168	iw5mp_xenon	825B83A0	PlaylistFeeder_DoAction	ui/ui_playlists.cpp	callee	0.85	callee of UI_RunMenuScript with the same 1 matched callees and 1 matched callers
-822F52F8	iw5mp_xenon	825B8518	PlaylistFeeder_DoubleClick	ui/ui_playlists.cpp	callee	0.85	callee of UI_FeederDoubleClick with the same 2 matched callees and 1 matched callers
+822F52F8	iw5mp_xenon	825B8518	PlaylistFeeder_DoubleClick	ui/ui_playlists.cpp	caller	0.75	only unmatched caller of Live_ShowMarketplaceUI
 822F53F0	iw5mp_xenon	825B85F8	PlaylistFeeder_GetFirstPlaylistNum	ui/ui_playlists.cpp	caller	0.85	caller of CL_GetFirstActiveControllerIndex with the same 1 matched callees and 0 matched callers
 822F54A8	iw5mp_xenon	825B86F0	Playlist_ValidatePlaylistNum	ui/ui_playlists.cpp	caller	0.85	caller of Dvar_SetInt with the same 2 matched callees and 2 matched callers
 822F5570	iw5mp_xenon	825B87E8	Playlist_GetPlaylistIdForNum	ui/ui_playlists.cpp	caller	0.75	only unmatched caller of Playlist_ValidatePlaylistNum
@@ -4026,8 +4085,17 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 822F8F18	iw5mp_xenon	825BD078	Script_SetGameMode	ui/ui_shared.cpp	string	0.85	1 unique string(s): 'SetGameMode: Must specify game mode\n'
 822F9050	iw5mp_xenon	825BD1F0	Script_ExecFirstActiveClient	ui/ui_shared.cpp	named	0.89	registered/tabled under 1 name(s): 'execfirstclient'
 822F90E0	iw5mp_xenon	825BD250	Script_ExecNow	ui/ui_shared.cpp	named	0.89	registered/tabled under 1 name(s): 'execnow'
-822F91A0	iw5mp_xenon	825BD2B8	Script_ConditionalExecHandler	ui/ui_shared.cpp	caller	0.85	caller of String_Parse with the same 4 matched callees and 0 matched callers
-822F9260	iw5mp_xenon	825BD378	Script_ConditionalResponseHandler	ui/ui_shared.cpp	caller	0.85	caller of va with the same 2 matched callees and 0 matched callers
+822F91A0	iw5mp_xenon	825BD2B8	Script_ConditionalExecHandler	ui/ui_shared.cpp	callee	0.75	only unmatched callee of Script_ExecOnDvarStringValue
+822F9260	iw5mp_xenon	825BD378	Script_ConditionalResponseHandler	ui/ui_shared.cpp	callee	0.75	only unmatched callee of Script_RespondOnDvarStringValue
+822F9448	iw5mp_xenon	825BD560	Script_ExecOnDvarStringValue	ui/ui_shared.cpp	named	0.89	registered/tabled under 1 name(s): 'execOnDvarStringValue'
+822F9468	iw5mp_xenon	825BD580	Script_ExecOnDvarIntValue	ui/ui_shared.cpp	named	0.89	registered/tabled under 1 name(s): 'execOnDvarIntValue'
+822F9488	iw5mp_xenon	825BD5A0	Script_ExecOnDvarFloatValue	ui/ui_shared.cpp	named	0.89	registered/tabled under 1 name(s): 'execOnDvarFloatValue'
+822F94A8	iw5mp_xenon	825BD5C0	Script_ExecNowOnDvarStringValue	ui/ui_shared.cpp	named	0.89	registered/tabled under 1 name(s): 'execNowOnDvarStringValue'
+822F94C8	iw5mp_xenon	825BD5E0	Script_ExecNowOnDvarIntValue	ui/ui_shared.cpp	named	0.89	registered/tabled under 1 name(s): 'execNowOnDvarIntValue'
+822F94E8	iw5mp_xenon	825BD600	Script_ExecNowOnDvarFloatValue	ui/ui_shared.cpp	named	0.89	registered/tabled under 1 name(s): 'execNowOnDvarFloatValue'
+822F9508	iw5mp_xenon	825BD620	Script_RespondOnDvarStringValue	ui/ui_shared.cpp	named	0.89	registered/tabled under 1 name(s): 'scriptMenuRespondOnDvarStringValue'
+822F9518	iw5mp_xenon	825BD630	Script_RespondOnDvarIntValue	ui/ui_shared.cpp	named	0.89	registered/tabled under 1 name(s): 'scriptMenuRespondOnDvarIntValue'
+822F9528	iw5mp_xenon	825BD640	Script_RespondOnDvarFloatValue	ui/ui_shared.cpp	named	0.89	registered/tabled under 1 name(s): 'scriptMenuRespondOnDvarFloatValue'
 822F9538	iw5mp_xenon	825BD650	Script_ParseLocalVarInParens	ui/ui_shared.cpp	string	0.95	3 unique string(s): 'SetPlayerData: Error at argument %d: no opening parenthesis '
 822F97B8	iw5mp_xenon	825BD988	Script_ParseTableLookup	ui/ui_shared.cpp	string	0.95	3 unique string(s): 'tablelookup'
 822F9AE8	iw5mp_xenon	825BDD48	Script_ParseKeyboard	ui/ui_shared.cpp	string	0.95	3 unique string(s): 'keyboard'
@@ -4044,6 +4112,8 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 822FA8F8	iw5mp_xenon	825BEC88	Script_UseCustomMapRotation	ui/ui_shared.cpp	string	0.85	1 unique string(s): 'UseCustomMapRotation: argument 1 not recognized as bool\n'
 822FAB50	iw5mp_xenon	825BEEB8	Script_UseIntermissionTimer	ui/ui_shared.cpp	string	0.99	4 unique string(s): 'UseIntermissionTimer: argument 2 not recognized as bool\n'
 822FAE20	iw5mp_xenon	825BF160	Script_StopIntermissionTimer	ui/ui_shared.cpp	string	0.95	3 unique string(s): 'StopIntermissionTimer called while not in lobby'
+822FAF70	iw5mp_xenon	825BF2B0	Script_ResetStatsConfirm	ui/ui_shared.cpp	named	0.89	registered/tabled under 1 name(s): 'resetStatsConfirm'
+822FAF78	iw5mp_xenon	825BF2B8	Script_ResetStatsCancel	ui/ui_shared.cpp	named	0.89	registered/tabled under 1 name(s): 'resetStatsCancel'
 822FAFA0	iw5mp_xenon	825BF2E0	Script_SetCardIcon_Internal	ui/ui_shared.cpp	string	0.85	1 unique string(s): 'SetCardIcon: no closing parenthesis found\n'
 822FB098	iw5mp_xenon	825BF3C0	Script_SetCardTitle_Internal	ui/ui_shared.cpp	string	0.85	1 unique string(s): 'SetCardTitle: no closing parenthesis found\n'
 822FB190	iw5mp_xenon	825BF4A0	Script_SetCardTitleNew_Internal	ui/ui_shared.cpp	string	0.90	2 unique string(s): 'SetCardTitleNew: no comma found after title index\n'
@@ -4068,16 +4138,21 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 822FC5B8	iw5mp_xenon	825C0850	Script_FeederTop	ui/ui_shared.cpp	named	0.89	registered/tabled under 1 name(s): 'feederTop'
 822FC648	iw5mp_xenon	825C08E0	UI_MuteMenusStart	ui/ui_shared.cpp	callee	0.85	callee of Live_ConfirmAcceptInvitation with the same 0 matched callees and 2 matched callers
 822FC658	iw5mp_xenon	825C08F0	UI_MuteMenusEnd	ui/ui_shared.cpp	order	0.80	called by Live_ConfirmAcceptInvitation between the same matched calls
-822FC668	iw5mp_xenon	825C0900	UI_SilentReturnToMainMenu	ui/ui_shared.cpp	callee	0.85	callee of Live_HandleOnlineRequirementFailed with the same 1 matched callees and 1 matched callers
+822FC668	iw5mp_xenon	825C0900	UI_SilentReturnToMainMenu	ui/ui_shared.cpp	caller	0.85	caller of UI_SetActiveMenu with the same 1 matched callees and 0 matched callers
 822FC6D0	iw5mp_xenon	825C0968	Script_ShowGamerCard	ui/ui_shared.cpp	string	0.85	1 unique string(s): 'MPUI_CANT_SHOW_GAMERCARD'
+822FC778	iw5mp_xenon	825C0A40	Script_ShowCoopGamerCard	ui/ui_shared.cpp	named	0.89	registered/tabled under 1 name(s): 'showCoopGamerCard'
+822FC780	iw5mp_xenon	825C0A48	Script_ShowSplitscreenGamerCard	ui/ui_shared.cpp	named	0.89	registered/tabled under 1 name(s): 'showSplitscreenGamerCard'
 822FC788	iw5mp_xenon	825C0A50	Script_ReportPlayerOffensive	ui/ui_shared.cpp	string	0.85	1 unique string(s): 'MENU_REPORT_OFFENSIVE_SUBMIT'
 822FC808	iw5mp_xenon	825C0AD0	Script_ReportPlayerExploiting	ui/ui_shared.cpp	string	0.85	1 unique string(s): 'MENU_REPORT_EXPLOITING_SUBMIT'
 822FC888	iw5mp_xenon	825C0B50	Script_ReportPlayerCheating	ui/ui_shared.cpp	string	0.85	1 unique string(s): 'MENU_REPORT_CHEATING_SUBMIT'
 822FC908	iw5mp_xenon	825C0BD0	Script_ReportPlayerBoosting	ui/ui_shared.cpp	string	0.85	1 unique string(s): 'MENU_REPORT_BOOSTING_SUBMIT'
+822FC988	iw5mp_xenon	825C0C50	Script_StorePopupXuid	ui/ui_shared.cpp	named	0.89	registered/tabled under 1 name(s): 'storePopupXuid'
 822FC9B0	iw5mp_xenon	825C0C80	Script_KickPlayer	ui/ui_shared.cpp	named	0.89	registered/tabled under 1 name(s): 'kickPlayer'
 822FCAB0	iw5mp_xenon	825C0DE0	Script_MakeHost	ui/ui_shared.cpp	caller	0.75	only unmatched caller of PartyMigrate_AskArbitratorToChangeHost
 822FCB68	iw5mp_xenon	825C0F48	Script_ResolveError	ui/ui_shared.cpp	named	0.89	registered/tabled under 1 name(s): 'resolveError'
 822FCBE0	iw5mp_xenon	825C0FC0	Script_RunCompletionResolve	ui/ui_shared.cpp	named	0.89	registered/tabled under 1 name(s): 'runCompletionResolve'
+822FCC58	iw5mp_xenon	825C1038	Script_ClearCompletionResolve	ui/ui_shared.cpp	named	0.89	registered/tabled under 1 name(s): 'clearCompletionResolve'
+822FCC70	iw5mp_xenon	825C1050	Script_HandleTransition	ui/ui_shared.cpp	caller	0.75	only unmatched caller of MenuParse_ParseLerp
 822FCC78	iw5mp_xenon	825C1058	Script_PlayMenuVideo	ui/ui_shared.cpp	string	0.99	5 unique string(s): 'playVideoMenu: no opening parenthesis found\n'
 822FCF50	iw5mp_xenon	825C12F8	Script_SetBackgroundVideo	ui/ui_shared.cpp	string	0.90	2 unique string(s): 'setBackgroundVideo: no opening parenthesis found\n'
 822FD0C0	iw5mp_xenon	825C1468	Script_PartyAbortWaiting	ui/ui_shared.cpp	named	0.89	registered/tabled under 1 name(s): 'partyAbortWaiting'
@@ -4089,7 +4164,7 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 822FD770	iw5mp_xenon	825C1F28	Script_AntiCheatBanCheck	ui/ui_shared.cpp	named	0.89	registered/tabled under 1 name(s): 'anticheat_bancheck'
 822FD7D8	iw5mp_xenon	825C1FB0	Item_RunScript	ui/ui_shared.cpp	string	0.85	1 unique string(s): 'uiscript'
 822FD900	iw5mp_xenon	825C2170	Item_HandleEvent	ui/ui_shared.cpp	string	0.90	2 unique string(s): 'Unexpected event handler type %d'
-822FDB70	iw5mp_xenon	825C2548	Item_IsDisabled	ui/ui_shared.cpp	caller	0.85	caller of Item_EnableShowViaDvar with the same 1 matched callees and 2 matched callers
+822FDB70	iw5mp_xenon	825C2548	Item_IsDisabled	ui/ui_shared.cpp	caller	0.85	caller of Item_EnableShowViaDvar with the same 1 matched callees and 3 matched callers
 822FDC90	iw5mp_xenon	825C2768	Item_Slider_ThumbPosition	ui/ui_shared.cpp	callee	0.85	callee of Item_Slider_Paint with the same 3 matched callees and 1 matched callers
 822FDE48	iw5mp_xenon	825C2900	Item_YesNo_HandleKey	ui/ui_shared.cpp	order	0.80	called by Item_HandleKey between the same matched calls
 822FDFE0	iw5mp_xenon	825C2AF0	Item_Multi_FindDvarByValue	ui/ui_shared.cpp	caller	0.85	caller of atof with the same 2 matched callees and 0 matched callers
@@ -4154,9 +4229,9 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 82302EA0	iw5mp_xenon	825C8B18	UI_GetMapIdForNum	ui/ui_shared.cpp	callee	0.85	callee of UI_FeederItemImage with the same 0 matched callees and 2 matched callers
 82302FA0	iw5mp_xenon	825C8C18	UI_GetMapLoadNameForCurrentIndex	ui/ui_shared.cpp	callee	0.85	callee of UI_FeederItemColor with the same 0 matched callees and 2 matched callers
 823031C8	iw5mp_xenon	825C8E50	UI_FeederItemText_Maps	ui/ui_shared.cpp	callee	0.85	callee of UI_FeederItemText with the same 1 matched callees and 1 matched callers
-82303378	iw5mp_xenon	825C9078	UI_GetResolveItemDefAction	ui/ui_shared.cpp	caller	0.85	caller of String_Parse with the same 4 matched callees and 0 matched callers
-82303450	iw5mp_xenon	825C9200	UI_RunResolveItemDefAction	ui/ui_shared.cpp	votes	0.79	paired with it at the same place among matched calls in 3 callers
-823034F0	iw5mp_xenon	825C92F0	UI_HasResolveWithMenu	ui/ui_shared.cpp	caller	0.85	caller of UI_GetResolveItemDefAction with the same 1 matched callees and 0 matched callers
+82303378	iw5mp_xenon	825C9078	UI_GetResolveItemDefAction	ui/ui_shared.cpp	caller	0.85	caller of String_Parse with the same 4 matched callees and 1 matched callers
+82303450	iw5mp_xenon	825C9200	UI_RunResolveItemDefAction	ui/ui_shared.cpp	callee	0.75	only unmatched callee of CL_RunResolveItemDefAction
+823034F0	iw5mp_xenon	825C92F0	UI_HasResolveWithMenu	ui/ui_shared.cpp	caller	0.75	only unmatched caller of UI_GetResolveItemDefAction
 82303570	iw5mp_xenon	825C9370	Menu_ShowItemByName	ui/ui_shared.cpp	caller	0.75	only unmatched caller of Menu_ItemsMatchingGroup
 82303C40	iw5mp_xenon	825C9F70	Menus_CloseRequest	ui/ui_shared.cpp	callee	0.85	callee of Script_Close with the same 3 matched callees and 5 matched callers
 82303D20	iw5mp_xenon	825CA098	Menus_ForceCloseByName	ui/ui_shared.cpp	caller	0.85	caller of Menus_FindByName with the same 1 matched callees and 0 matched callers
@@ -4218,7 +4293,7 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 82308B30	iw5mp_xenon	825CFA30	Item_ListBox_HandleKey	ui/ui_shared.cpp	caller	0.75	only unmatched caller of UI_OverrideCursorPos
 823090C0	iw5mp_xenon	825D0078	Item_TextField_HandleKey	ui/ui_shared.cpp	caller	0.85	caller of Item_HandleEvent with the same 5 matched callees and 0 matched callers
 82309758	iw5mp_xenon	825D08D8	Item_HandleKey	ui/ui_shared.cpp	callee	0.85	callee of Menu_HandleKey with the same 1 matched callees and 1 matched callers
-82309838	iw5mp_xenon	825D09B8	Menu_HandleKey	ui/ui_shared.cpp	caller	0.85	caller of Item_HandleEvent with the same 4 matched callees and 0 matched callers
+82309838	iw5mp_xenon	825D09B8	Menu_HandleKey	ui/ui_shared.cpp	caller	0.85	caller of Item_HandleEvent with the same 5 matched callees and 0 matched callers
 8230A3F0	iw5mp_xenon	825D1050	Menu_PaintAll_AppendToVisibleList	ui/ui_shared.cpp	callee	0.85	callee of Menu_PaintAll_Internal with the same 1 matched callees and 1 matched callers
 8230A4A8	iw5mp_xenon	825D1108	Menu_PaintAll_Internal	ui/ui_shared.cpp	caller	0.85	caller of memcpy with the same 3 matched callees and 1 matched callers
 8230A6A8	iw5mp_xenon	825D1488	Menu_PaintViewport	ui/ui_shared.cpp	callee	0.85	callee of CG_Draw2D with the same 1 matched callees and 1 matched callers
@@ -4348,6 +4423,7 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 82319DA8	iw5mp_xenon	825EC7A0	StructuredData_UpdateVersion	universal/com_structureddatadef.cpp	calls	0.82	the only unmatched function on each side calling the same 3 matched functions
 8231A008	iw5mp_xenon	825ECAF8	StructuredData_NavigateFromCmd	universal/com_structureddatadef.cpp	callee	0.85	callee of LiveStorage_CustomClassesSetCmd_Internal with the same 1 matched callees and 1 matched callers
 8231A0D0	iw5mp_xenon	825ECC60	StructuredData_ValidateRegisterDvars	universal/com_structureddatadef_integrity.cpp	string	0.99	27 unique string(s): 'True if individual stat validation failure results in clampi'
+8231A370	iw5mp_xenon	825ECF00	StructuredData_ValidateResetDvars	universal/com_structureddatadef_integrity.cpp	order	0.80	called by Party_SetUpRulesAndUIDVarsForCurrentMap between the same matched calls
 8231A678	iw5mp_xenon	825ED4F8	StructuredData_ClampValueInt	universal/com_structureddatadef_integrity.cpp	callee	0.85	callee of StructuredData_ValidateInt with the same 1 matched callees and 1 matched callers
 8231A768	iw5mp_xenon	825ED668	StructuredData_CompareSpecial_XP	universal/com_structureddatadef_integrity.cpp	caller	0.75	only unmatched caller of StructuredData_ClampValueInt
 8231A800	iw5mp_xenon	825ED700	StructuredData_ValidateInt	universal/com_structureddatadef_integrity.cpp	caller	0.75	only unmatched caller of StructuredData_SetInt
@@ -4382,7 +4458,7 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 82326368	iw5mp_xenon	825FDDF0	Dvar_GetBool	universal/dvar.cpp	callee	0.85	callee of UI_OverrideCursorPos with the same 0 matched callees and 3 matched callers
 823263D0	iw5mp_xenon	825FDEB0	Dvar_GetInt	universal/dvar.cpp	callee	0.85	callee of UI_VerifyLanguage with the same 0 matched callees and 2 matched callers
 82326528	iw5mp_xenon	825FE100	Dvar_GetString	universal/dvar.cpp	callee	0.85	callee of CG_StartClientSideEffects with the same 0 matched callees and 11 matched callers
-823265A8	iw5mp_xenon	825FE1B8	Dvar_GetVariantString	universal/dvar.cpp	votes	0.79	paired with it at the same place among matched calls in 3 callers
+823265A8	iw5mp_xenon	825FE1B8	Dvar_GetVariantString	universal/dvar.cpp	votes	0.82	paired with it at the same place among matched calls in 4 callers
 823265F8	iw5mp_xenon	825FE208	Dvar_GetVariantStringToBuffer	universal/dvar.cpp	caller	0.85	caller of Dvar_FindMalleableVar with the same 1 matched callees and 1 matched callers
 82326658	iw5mp_xenon	825FE2B8	Dvar_GetVariantStringWithDefault	universal/dvar.cpp	caller	0.85	caller of Dvar_FindMalleableVar with the same 1 matched callees and 2 matched callers
 823266B0	iw5mp_xenon	825FE310	Dvar_GetUnpackedColor	universal/dvar.cpp	callee	0.85	callee of CG_DrawOverheadNames with the same 0 matched callees and 5 matched callers
@@ -4397,7 +4473,7 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 82327D60	iw5mp_xenon	82600910	Dvar_SetColorFromSource	universal/dvar.cpp	caller	0.85	caller of floor with the same 2 matched callees and 0 matched callers
 82327F58	iw5mp_xenon	82600B38	Dvar_SetInt	universal/dvar.cpp	callee	0.75	only unmatched callee of Entitlements_Start
 82327F60	iw5mp_xenon	82600B40	Dvar_SetFloat	universal/dvar.cpp	callee	0.85	callee of GamerProfile_OptionsMenuDvarsSetup_f with the same 0 matched callees and 3 matched callers
-82327F80	iw5mp_xenon	82600B60	Dvar_SetString	universal/dvar.cpp	callee	0.75	only unmatched callee of Facebook_CreatePassword_Asterisks
+82327F80	iw5mp_xenon	82600B60	Dvar_SetString	universal/dvar.cpp	callee	0.75	only unmatched callee of Script_ClearCompletionResolve
 82327F88	iw5mp_xenon	82600B68	Dvar_SetColor	universal/dvar.cpp	caller	0.85	caller of Dvar_SetColorFromSource with the same 1 matched callees and 0 matched callers
 82327F90	iw5mp_xenon	82600B70	Dvar_SetFromStringFromSource	universal/dvar.cpp	callee	0.75	only unmatched callee of Dvar_SetFromString
 82328060	iw5mp_xenon	82600C80	Dvar_SetFromString	universal/dvar.cpp	order	0.80	called by Script_SetGameMode between the same matched calls
@@ -4424,7 +4500,7 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 8232ABB0	iw5mp_xenon	826044B0	SegmentSentinelReadAndVerify	universal/memfile.cpp	string	0.85	1 unique string(s): 'Corrupt Savegame - Expected sentinel sequence, but found: { '
 8232AD88	iw5mp_xenon	82604580	MemFile_MoveToSegment	universal/memfile.cpp	caller	0.75	only unmatched caller of SegmentSentinelReadAndVerify
 8232AEC8	iw5mp_xenon	82604F10	MemFile_ReadCString	universal/memfile.cpp	callee	0.85	callee of ReadField with the same 2 matched callees and 1 matched callers
-8232B098	iw5mp_xenon	826051A8	MemFile_InitForReading	universal/memfile.cpp	caller	0.85	caller of MemFile_MoveToSegment with the same 1 matched callees and 1 matched callers
+8232B098	iw5mp_xenon	826051A8	MemFile_InitForReading	universal/memfile.cpp	order	0.80	called by G_PreLoadGame between the same matched calls
 8232B0E0	iw5mp_xenon	82605490	MemFile_StartSegment	universal/memfile.cpp	string	0.85	1 unique string(s): 'MemFile_StartSegment: Out of memory'
 8232B208	iw5mp_xenon	826056B8	MemFile_InitForWriting	universal/memfile.cpp	callee	0.85	callee of SV_MigrationSave with the same 1 matched callees and 1 matched callers
 8232B250	iw5mp_xenon	82605700	PMem_EnableSoundAlloc	universal/physicalmemory.cpp	callee	0.85	callee of R_Cinematic_BinkOpenPath with the same 0 matched callees and 2 matched callers
@@ -4546,7 +4622,7 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 8233BF78	iw5mp_xenon	82622558	XAnimEnsureGoalWeightParent	xanim/xanim.cpp	callee	0.85	callee of XAnimAllocInfoIndex with the same 1 matched callees and 1 matched callers
 8233C1C8	iw5mp_xenon	826228E8	XAnimClearTreeGoalWeightsInternal	xanim/xanim.cpp	callee	0.75	only unmatched callee of XAnimClearTreeGoalWeights
 8233C2B8	iw5mp_xenon	82622988	XAnimClearTreeGoalWeights	xanim/xanim.cpp	callee	0.85	callee of ResetWeaponAnimTrees with the same 0 matched callees and 2 matched callers
-8233C388	iw5mp_xenon	82622AF8	XAnimClearGoalWeightKnobInternal	xanim/xanim.cpp	callee	0.85	callee of XAnimSetGoalWeightKnobAll with the same 0 matched callees and 4 matched callers
+8233C388	iw5mp_xenon	82622AF8	XAnimClearGoalWeightKnobInternal	xanim/xanim.cpp	callee	0.85	callee of XAnimSetGoalWeightKnobAll with the same 0 matched callees and 3 matched callers
 8233C640	iw5mp_xenon	82622F98	XAnimSetGoalWeightNode	xanim/xanim.cpp	callee	0.85	callee of XAnimSetGoalWeight with the same 0 matched callees and 3 matched callers
 8233CD28	iw5mp_xenon	82623760	XAnimIsPrimitive	xanim/xanim.cpp	callee	0.85	callee of BG_FinalizePlayerAnims with the same 0 matched callees and 2 matched callers
 8233CEE0	iw5mp_xenon	82623E40	XAnimAddNotetrackTimesToScriptArray	xanim/xanim.cpp	callee	0.85	callee of GScr_GetNotetrackTimes with the same 1 matched callees and 1 matched callers
@@ -4561,7 +4637,7 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 8233E568	iw5mp_xenon	826272F0	XAnimSetGoalWeight	xanim/xanim.cpp	callee	0.85	callee of StartWeaponAnim with the same 0 matched callees and 2 matched callers
 8233E6B8	iw5mp_xenon	826274F8	XAnimSetCompleteGoalWeight	xanim/xanim.cpp	callee	0.85	callee of CG_PreProcess_GetDObj with the same 2 matched callees and 1 matched callers
 8233E7E0	iw5mp_xenon	826276D8	XAnimSetCompleteGoalWeightRel	xanim/xanim.cpp	caller	0.85	caller of XAnimAllocInfoIndex with the same 2 matched callees and 1 matched callers
-8233F0A0	iw5mp_xenon	82628858	XAnimSetCompleteGoalWeightKnob	xanim/xanim.cpp	caller	0.85	caller of XAnimAllocInfoIndex with the same 2 matched callees and 0 matched callers
+8233F0A0	iw5mp_xenon	82628858	XAnimSetCompleteGoalWeightKnob	xanim/xanim.cpp	caller	0.75	only unmatched caller of XAnimAllocInfoIndex
 8233F1D8	iw5mp_xenon	82628A08	XAnimSetGoalWeightKnob	xanim/xanim.cpp	caller	0.85	caller of XAnimAllocInfoIndex with the same 2 matched callees and 1 matched callers
 8233F310	iw5mp_xenon	82628BD0	XAnimSetGoalWeightKnobAll	xanim/xanim.cpp	callee	0.85	callee of CG_Turret_PreControllers with the same 1 matched callees and 1 matched callers
 8233F438	iw5mp_xenon	82628DA8	XAnimSetCompleteGoalWeightKnobAll	xanim/xanim.cpp	caller	0.85	caller of XAnimGetInfoIndex with the same 2 matched callees and 0 matched callers
@@ -4649,7 +4725,7 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 82353028	iw5mp_xenon	82646E70	Live_LaunchEliteStore	xenon/xenon_live.cpp	callee	0.85	callee of UI_RunMenuScript with the same 1 matched callees and 2 matched callers
 82353100	iw5mp_xenon	82646F40	Live_IsEliteAppPresent	xenon/xenon_live.cpp	caller	0.75	only unmatched caller of XEnumerateCrossTitle
 823531B8	iw5mp_xenon	82647010	Live_AreWeAcceptingInvite	xenon/xenon_live.cpp	callee	0.85	callee of Live_CheckPlaylistVersionUpdate with the same 0 matched callees and 3 matched callers
-823531E8	iw5mp_xenon	82647040	Live_ShowMarketplaceUI	xenon/xenon_live.cpp	order	0.80	called by UI_FeederDoubleClick between the same matched calls
+823531E8	iw5mp_xenon	82647040	Live_ShowMarketplaceUI	xenon/xenon_live.cpp	callee	0.85	callee of UIScript_ClearError with the same 0 matched callees and 2 matched callers
 82353280	iw5mp_xenon	826470D0	Live_CanHostServer	xenon/xenon_live.cpp	callee	0.85	callee of CL_Live_StartLobby with the same 0 matched callees and 3 matched callers
 823532F0	iw5mp_xenon	82647198	Live_GetUploadSpeed	xenon/xenon_live.cpp	order	0.80	called by PartyMigrate_SelectOurNominee between the same matched calls
 823533E0	iw5mp_xenon	82647378	Live_GetOurBandwidth	xenon/xenon_live.cpp	callee	0.85	callee of Live_CheckNotifications with the same 2 matched callees and 1 matched callers
@@ -4675,7 +4751,7 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 82354AE8	iw5mp_xenon	826498B0	Live_UserIsGuest	xenon/xenon_live.cpp	order	0.80	called by CL_Live_RequireLiveSigninForCommerce between the same matched calls
 82354B80	iw5mp_xenon	82649950	Live_CanUserPlayOnline	xenon/xenon_live.cpp	callee	0.85	callee of CL_Live_SignInLive with the same 0 matched callees and 4 matched callers
 82354CB8	iw5mp_xenon	82649AF8	Live_CanUserAccessOnlineVault	xenon/xenon_live.cpp	callee	0.85	callee of CG_DrawDemoControls with the same 0 matched callees and 3 matched callers
-82354DB0	iw5mp_xenon	82649C20	Live_CanUserPlayAny	xenon/xenon_live.cpp	caller	0.85	caller of Live_UserIsGuest with the same 1 matched callees and 1 matched callers
+82354DB0	iw5mp_xenon	82649C20	Live_CanUserPlayAny	xenon/xenon_live.cpp	callee	0.85	callee of CL_Live_RequireAnySigninInternal with the same 1 matched callees and 1 matched callers
 82354F48	iw5mp_xenon	82649DE8	Live_CalculateControllerVoiceCommunicationSetting	xenon/xenon_live.cpp	caller	0.85	caller of XUserCheckPrivilege with the same 1 matched callees and 1 matched callers
 82355170	iw5mp_xenon	8264A680	Live_StartAcceptingInvitation_Internal	xenon/xenon_live.cpp	caller	0.75	only unmatched caller of UI_ShowAcceptInviteWarning
 823552C8	iw5mp_xenon	8264A860	Live_StartAcceptingInvitation	xenon/xenon_live.cpp	caller	0.75	only unmatched caller of XInviteGetAcceptedInfo
@@ -4810,8 +4886,8 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 82372020	iw5mp_xenon	826715B0	Phys_ContactEffects	physics/phys_ode.cpp	caller	0.75	only unmatched caller of Phys_ApplyContactJitter
 823735C8	iw5mp_xenon	82673B60	Phys_RunToTimeDelayed	physics/phys_ode.cpp	order	0.80	called by CG_DrawActiveFrame between the same matched calls
 82373600	iw5mp_xenon	82673B98	Phys_EndFrame	physics/phys_ode.cpp	caller	0.85	caller of R_WaitWorkerCmdsOfType with the same 1 matched callees and 7 matched callers
-82373648	iw5mp_xenon	82673C28	Phys_ObjGetInterpolatedState	physics/phys_ode.cpp	caller	0.85	caller of Phys_ObjGetPosition with the same 2 matched callees and 3 matched callers
-82373800	iw5mp_xenon	82674028	Phys_ObjIsAsleep	physics/phys_ode.cpp	callee	0.75	only unmatched callee of Item_RunWeaponPhysics
+82373648	iw5mp_xenon	82673C28	Phys_ObjGetInterpolatedState	physics/phys_ode.cpp	caller	0.85	caller of Phys_ObjGetPosition with the same 2 matched callees and 2 matched callers
+82373800	iw5mp_xenon	82674028	Phys_ObjIsAsleep	physics/phys_ode.cpp	callee	0.85	callee of Item_RunWeaponPhysics with the same 0 matched callees and 2 matched callers
 823739B8	iw5mp_xenon	82674418	Phys_LoadAllObjsInWorld	physics/phys_ode.cpp	order	0.80	called by Phys_ArchiveState between the same matched calls
 82373A68	iw5mp_xenon	826744D0	Phys_ArchiveState	physics/phys_ode.cpp	order	0.80	called by G_LoadLevelState between the same matched calls
 82373B38	iw5mp_xenon	82674660	Phys_ObjFromSaveIndex	physics/phys_ode.cpp	callee	0.85	callee of ReadField with the same 1 matched callees and 1 matched callers
@@ -4824,7 +4900,7 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 823757A8	iw5mp_xenon	826777A0	Phys_ObjSetCollisionFromXModel	physics/phys_ode.cpp	caller	0.75	only unmatched caller of Phys_ObjAddGeomCollmap
 82375860	iw5mp_xenon	82677858	Phys_ObjSetCollisionFromDObj	physics/phys_ode.cpp	callee	0.85	callee of G_LoadLevelState with the same 0 matched callees and 2 matched callers
 82375920	iw5mp_xenon	82677918	G_PhysObjSetCollisionFromModelIndex	physics/phys_ode.cpp	caller	0.75	only unmatched caller of G_GetModelBounds
-82375A18	iw5mp_xenon	82677A10	Phys_ObjDestroy	physics/phys_ode.cpp	callee	0.85	callee of G_FreeEntity with the same 0 matched callees and 4 matched callers
+82375A18	iw5mp_xenon	82677A10	Phys_ObjDestroy	physics/phys_ode.cpp	callee	0.75	only unmatched callee of Item_RunWeaponPhysics
 82376408	iw5mp_xenon	82678850	Phys_InitCommon	physics/phys_ode.cpp	string	0.99	83 unique string(s): 'Enable physics worker cmds.'
 82376E30	iw5mp_xenon	826793F0	Phys_ObjCreateAxis	physics/phys_ode.cpp	caller	0.85	caller of AxisToQuat with the same 1 matched callees and 2 matched callers
 823770D8	iw5mp_xenon	82679BB0	PhysVeh_RemoveStability	physics/phys_vehicle.cpp	callee	0.85	callee of PhysVeh_Crash with the same 2 matched callees and 1 matched callers
@@ -4832,7 +4908,7 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 82377380	iw5mp_xenon	82679F38	PhysVeh_Launch	physics/phys_vehicle.cpp	caller	0.85	caller of G_random with the same 3 matched callees and 0 matched callers
 823774B8	iw5mp_xenon	8267A0B8	PhysVeh_Impact	physics/phys_vehicle.cpp	caller	0.85	caller of Scr_AddVector with the same 2 matched callees and 0 matched callers
 82377648	iw5mp_xenon	8267A3C0	PhysVeh_FinalizeWheels	physics/phys_vehicle.cpp	callee	0.85	callee of Vehicle_InitPhysVeh with the same 0 matched callees and 2 matched callers
-82377AA0	iw5mp_xenon	8267A938	PhysVeh_Destroy	physics/phys_vehicle.cpp	callee	0.85	callee of Vehicle_FreeEntity with the same 1 matched callees and 1 matched callers
+82377AA0	iw5mp_xenon	8267A938	PhysVeh_Destroy	physics/phys_vehicle.cpp	caller	0.85	caller of Phys_ObjDestroy with the same 1 matched callees and 1 matched callers
 82377B00	iw5mp_xenon	8267A9E8	PhysVeh_InitDef	physics/phys_vehicle.cpp	calls	0.78	the only unmatched function on each side calling the same 2 matched functions
 82377E38	iw5mp_xenon	8267AF88	PhysVeh_SetState	physics/phys_vehicle.cpp	order	0.80	called by Vehicle_Teleport between the same matched calls
 82377FD0	iw5mp_xenon	8267B360	PhysVeh_GetAngularVelocity	physics/phys_vehicle.cpp	caller	0.75	only unmatched caller of Phys_ObjGetAngularVelocityRaw
@@ -4851,7 +4927,7 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 8238B490	iw5mp_xenon	8269BA38	ODE_BodyInit	physics/ode/src/ode.cpp	caller	0.85	caller of dMassSetZero with the same 1 matched callees and 1 matched callers
 8238F1D0	iw5mp_xenon	826A12B8	WaitForPhysics	physics/ode/src/util.cpp	caller	0.75	only unmatched caller of R_WaitWorkerCmdsOnlyOfType
 8238F580	iw5mp_xenon	826A23D8	Ragdoll_GetUnusedBody	ragdoll/ragdoll.cpp	caller	0.85	caller of memset with the same 2 matched callees and 0 matched callers
-8238FB40	iw5mp_xenon	826A2DA0	Ragdoll_Remove	ragdoll/ragdoll.cpp	caller	0.85	caller of Ragdoll_BodyNewState with the same 1 matched callees and 2 matched callers
+8238FB40	iw5mp_xenon	826A2DA0	Ragdoll_Remove	ragdoll/ragdoll.cpp	caller	0.85	caller of Ragdoll_BodyNewState with the same 1 matched callees and 1 matched callers
 8238FC08	iw5mp_xenon	826A2F08	Ragdoll_InitDvars	ragdoll/ragdoll.cpp	string-or-caller	0.99	39 unique string(s): 'Turn on ragdoll death animations'; or its only caller Ragdoll_Register with it inlined
 8238FFF8	iw5mp_xenon	826A32F8	Ragdoll_Register	ragdoll/ragdoll.cpp	string	0.85	1 unique string(s): 'exec ragdoll.cfg'
 82390038	iw5mp_xenon	826A33A0	Ragdoll_Init	ragdoll/ragdoll.cpp	global	0.85	the only function on each side referencing the same 2 named globals
@@ -4871,7 +4947,7 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 82391E80	iw5mp_xenon	826A59F0	Ragdoll_CreatePhysJoint	ragdoll/ragdoll_update.cpp	caller	0.85	caller of Phys_ObjGetPosition with the same 2 matched callees and 0 matched callers
 82392068	iw5mp_xenon	826A5C80	Ragdoll_CreatePhysJoints	ragdoll/ragdoll_update.cpp	caller	0.75	only unmatched caller of Ragdoll_CreatePhysJoint
 82392168	iw5mp_xenon	826A5E40	Ragdoll_DestroyPhysJoints	ragdoll/ragdoll_update.cpp	caller	0.85	caller of memset with the same 1 matched callees and 1 matched callers
-823921E0	iw5mp_xenon	826A5EE8	Ragdoll_DestroyPhysObjs	ragdoll/ragdoll_update.cpp	caller	0.85	caller of Phys_ObjDestroy with the same 1 matched callees and 1 matched callers
+823921E0	iw5mp_xenon	826A5EE8	Ragdoll_DestroyPhysObjs	ragdoll/ragdoll_update.cpp	caller	0.85	caller of Phys_ObjDestroy with the same 1 matched callees and 2 matched callers
 82392240	iw5mp_xenon	826A5F98	Ragdoll_SnapshotBaseLerpOffsets	ragdoll/ragdoll_update.cpp	caller	0.85	caller of AxisToQuat with the same 2 matched callees and 0 matched callers
 82392498	iw5mp_xenon	826A6320	Ragdoll_CreateBodyPhysics	ragdoll/ragdoll_update.cpp	callee	0.85	callee of Ragdoll_EnterTunnelTest with the same 0 matched callees and 2 matched callers
 82392510	iw5mp_xenon	826A6408	Ragdoll_RemoveBodyPhysics	ragdoll/ragdoll_update.cpp	calls	0.78	the only unmatched function on each side calling the same 2 matched functions
@@ -4880,7 +4956,7 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 82393198	iw5mp_xenon	826A7418	Ragdoll_BoneTrace	ragdoll/ragdoll_update.cpp	caller	0.85	caller of CG_WorldTrace with the same 1 matched callees and 1 matched callers
 82393268	iw5mp_xenon	826A74E8	Ragdoll_TunnelTest	ragdoll/ragdoll_update.cpp	callee	0.85	callee of Ragdoll_EnterTunnelTest with the same 1 matched callees and 1 matched callers
 823935C0	iw5mp_xenon	826A7A08	Ragdoll_IsBodyRootMoving	ragdoll/ragdoll_update.cpp	order	0.80	called by Ragdoll_CheckIdle between the same matched calls
-82393630	iw5mp_xenon	826A7A78	Ragdoll_CheckIdle	ragdoll/ragdoll_update.cpp	caller	0.75	only unmatched caller of Phys_ObjIsAsleep
+82393630	iw5mp_xenon	826A7A78	Ragdoll_CheckIdle	ragdoll/ragdoll_update.cpp	caller	0.85	caller of Phys_ObjIsAsleep with the same 1 matched callees and 0 matched callers
 823936C0	iw5mp_xenon	826A7B08	Ragdoll_EnterDead	ragdoll/ragdoll_update.cpp	calls	0.82	the only unmatched function on each side calling the same 3 matched functions
 82393768	iw5mp_xenon	826A7C38	Ragdoll_ExitDObjWait	ragdoll/ragdoll_update.cpp	caller	0.85	caller of Ragdoll_SnapshotBaseLerpOffsets with the same 1 matched callees and 0 matched callers
 823938B8	iw5mp_xenon	826A7E10	Ragdoll_ExitIdle	ragdoll/ragdoll_update.cpp	caller	0.75	only unmatched caller of Ragdoll_SetCurrentPoseFromSnapshot
@@ -4893,7 +4969,7 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 823948E0	iw5mp_xenon	826A90B8	Ragdoll_UpdateBodyContactCentroids	ragdoll/ragdoll_update.cpp	callee	0.85	callee of Ragdoll_EnterTunnelTest with the same 0 matched callees and 2 matched callers
 82394958	iw5mp_xenon	826A9130	Ragdoll_ExplosionEvent	ragdoll/ragdoll_update.cpp	global	0.95	the only function on each side referencing the same 4 named globals
 82394DB8	iw5mp_xenon	826A96C0	Ragdoll_EnterTunnelTest	ragdoll/ragdoll_update.cpp	calls	0.82	the only unmatched function on each side calling the same 3 matched functions
-82394F30	iw5mp_xenon	826A9870	Ragdoll_EnterIdle	ragdoll/ragdoll_update.cpp	caller	0.85	caller of Ragdoll_SnapshotBonePositions with the same 3 matched callees and 0 matched callers
+82394F30	iw5mp_xenon	826A9870	Ragdoll_EnterIdle	ragdoll/ragdoll_update.cpp	caller	0.85	caller of Ragdoll_SnapshotBonePositions with the same 2 matched callees and 0 matched callers
 82395018	iw5mp_xenon	826A99C0	Ragdoll_UpdateDObjWait	ragdoll/ragdoll_update.cpp	caller	0.85	caller of Ragdoll_BodyNewState with the same 2 matched callees and 0 matched callers
 82395070	iw5mp_xenon	826A9A48	Ragdoll_FilterBonePositions	ragdoll/ragdoll_update.cpp	caller	0.85	caller of Ragdoll_SnapshotBonePositions with the same 1 matched callees and 0 matched callers
 823950A8	iw5mp_xenon	826A9A80	Ragdoll_UpdateRunning	ragdoll/ragdoll_update.cpp	calls	0.78	the only unmatched function on each side calling the same 2 matched functions
@@ -4952,6 +5028,7 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 8239CD50	iw5mp_xenon	826B4318	Vehicle_Think	vehicle/vehicle.cpp	caller	0.85	caller of VEH_SetPosition with the same 4 matched callees and 0 matched callers
 8239D0E0	iw5mp_xenon	826B4840	Vehicle_Pain	vehicle/vehicle.cpp	caller	0.85	caller of BG_GetWeaponType with the same 2 matched callees and 0 matched callers
 8239D170	iw5mp_xenon	826B48D0	Vehicle_Touch	vehicle/vehicle.cpp	calls	0.78	the only unmatched function on each side calling the same 2 matched functions
+8239D428	iw5mp_xenon	826B4C58	Vehicle_Use	vehicle/vehicle.cpp	calls	0.78	the only unmatched function on each side calling the same 2 matched functions
 8239D450	iw5mp_xenon	826B4C80	Vehicle_Die	vehicle/vehicle.cpp	calls	0.78	the only unmatched function on each side calling the same 2 matched functions
 8239D4F8	iw5mp_xenon	826B4D20	Vehicle_SpawnEntity	vehicle/vehicle.cpp	named	0.89	registered/tabled under 1 name(s): 'script_vehicle'
 8239D588	iw5mp_xenon	826B4E80	Vehicle_TrophyTestMissile	vehicle/vehicle.cpp	caller	0.85	caller of G_SetOrigin with the same 2 matched callees and 0 matched callers
@@ -5313,6 +5390,7 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 823C7C20	iw5mp_xenon	826F6680	EliteClan_FeederOnFriendRequest	social/elite_clan.cpp	callee	0.85	callee of UI_RunMenuScript with the same 1 matched callees and 1 matched callers
 823C7FF8	iw5mp_xenon	826F6BB8	EliteClan_GetClanName	social/elite_clan.cpp	string	0.85	1 unique string(s): 'MENU_NO_CLAN_HEADER'
 823C8220	iw5mp_xenon	826F6ED8	PublicTeamProfile::serialize	social/elite_clan.cpp	caller	0.85	caller of bdByteBuffer::writeString with the same 3 matched callees and 0 matched callers
+823C82D8	iw5mp_xenon	826F6F90	PrivateTeamProfile::serialize	social/elite_clan.cpp	caller	0.85	caller of bdByteBuffer::writeString with the same 1 matched callees and 0 matched callers
 823C8510	iw5mp_xenon	826F71C8	EliteClan_SetMOTD	social/elite_clan.cpp	callee	0.85	callee of EliteClan_MessageKeyboardComplete with the same 2 matched callees and 1 matched callers
 823C8668	iw5mp_xenon	826F7350	EliteClan_UpdateMOTD	social/elite_clan.cpp	string	0.85	1 unique string(s): 'popup_update_clan_motd_success'
 823C87A8	iw5mp_xenon	826F74A0	EliteClan_UpdateGettingClan	social/elite_clan.cpp	caller	0.75	only unmatched caller of bdTeams::getMembershipsUser
@@ -5376,6 +5454,7 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 823CDBB0	iw5mp_xenon	826FEA30	Facebook_UpdateFriends	social/fb_friends.cpp	global	0.85	the only function on each side referencing the same 2 named globals
 823CDD78	iw5mp_xenon	826FEC40	Facebook_RefreshFriends	social/fb_friends.cpp	named	0.89	registered/tabled under 1 name(s): 'refreshfacebookfriends'
 823CDF48	iw5mp_xenon	826FEE70	Facebook_RegisterCommands	social/fb_friends.cpp	string	0.99	7 unique string(s): 'editfacebookusername'
+823CE140	iw5mp_xenon	826FF0B0	Facebook_ClearCaption	social/fb_posting.cpp	named	0.89	registered/tabled under 1 name(s): 'clearfacebookcaption'
 823CE158	iw5mp_xenon	826FF0C8	Facebook_ShowErrorPostingPopup	social/fb_posting.cpp	callee	0.85	callee of Facebook_UpdatePostingType with the same 1 matched callees and 1 matched callers
 823CE1C0	iw5mp_xenon	826FF168	Facebook_GetMenuString	social/fb_posting.cpp	string	0.90	2 unique string(s): 'PATCH_MENU_ONLINEVAULT_FACEBOOK_PROCESSING'
 823CE238	iw5mp_xenon	826FF1E0	Facebook_CloseMenu	social/fb_posting.cpp	callee	0.85	callee of Facebook_UpdatePostingType with the same 1 matched callees and 1 matched callers
@@ -5438,6 +5517,7 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 823D4140	iw5mp_xenon	828983D0	D3D::CShaderHacker::GenerateHackedPixelShader	_external/../rtshaderhacker.cpp	calls	0.78	the only unmatched function on each side calling the same 2 matched functions
 823D4330	iw5mp_xenon	82706DA8	MeetPlayer_SetMetPlayerListDownloaded	social/social_meetplayer.cpp	caller	0.85	caller of Live_GetXuid with the same 3 matched callees and 0 matched callers
 823D43E8	iw5mp_xenon	82706E90	MeetPlayer_Initialize	social/social_meetplayer.cpp	string	0.85	1 unique string(s): 'MeetPlayer_Initialize'
+823D44B8	iw5mp_xenon	82706FE8	bdRichPresenceInfo::`default constructor closure'	social/social_presence.cpp	caller	0.85	caller of bdRichPresenceInfo::bdRichPresenceInfo with the same 1 matched callees and 0 matched callers
 823D44F8	iw5mp_xenon	82707098	Social_FormatPresenceStatus	social/social_presence.cpp	string	0.99	8 unique string(s): 'PRESENCE_LOBBY'
 823D4718	iw5mp_xenon	82707308	Social_PresenceNeeded	social/social_presence.cpp	string	0.90	2 unique string(s): 'popup_vault_friends_load'
 823D47F8	iw5mp_xenon	82707418	Social_HasPlatformPresence	social/social_presence.cpp	caller	0.75	only unmatched caller of Xenon_PresenceIndex
@@ -5538,13 +5618,13 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 823DB550	iw5mp_xenon	82713540	Live_ClearForcedLiveSignInByUI	online/live_common.cpp	callee	0.85	callee of CL_Live_SignInLive with the same 0 matched callees and 3 matched callers
 823DB570	iw5mp_xenon	82713560	Live_WasForcedAnySignInByUI	online/live_common.cpp	order	0.80	called by Live_UserSignedInToLive between the same matched calls
 823DB590	iw5mp_xenon	82713580	Live_SetForcedAnySignInByUI	online/live_common.cpp	order	0.80	called by CL_Live_RequireAnySigninInternal between the same matched calls
-823DB5B0	iw5mp_xenon	827135A0	Live_ClearForcedAnySignInByUI	online/live_common.cpp	order	0.80	called by Live_UserSignedOut between the same matched calls
-823DB638	iw5mp_xenon	82713628	Live_GetSocialConfigDialog	online/live_common.cpp	caller	0.85	caller of UI_ClearCompletionResolve with the same 4 matched callees and 0 matched callers
+823DB5B0	iw5mp_xenon	827135A0	Live_ClearForcedAnySignInByUI	online/live_common.cpp	order	0.80	called by Live_UserSignedInToLive between the same matched calls
+823DB638	iw5mp_xenon	82713628	Live_GetSocialConfigDialog	online/live_common.cpp	caller	0.85	caller of UI_ClearCompletionResolve with the same 5 matched callees and 0 matched callers
 823DB738	iw5mp_xenon	82713780	ClosePopupGettingData	online/live_common.cpp	callee	0.85	callee of PartyHost_StartParty with the same 0 matched callees and 3 matched callers
 823DB828	iw5mp_xenon	827138B8	Live_CancelConnectingDialog	online/live_common.cpp	callee	0.75	only unmatched callee of CL_Live_CancelConnectingDialog
 823DB988	iw5mp_xenon	827139C0	Live_ConfirmAcceptInvitation	online/live_common.cpp	global	0.90	the only function on each side referencing the same 3 named globals
 823DBD60	iw5mp_xenon	82713E10	Live_DemonwareDisconnectCleanup	online/live_common.cpp	global	0.90	the only function on each side referencing the same 3 named globals
-823DBE50	iw5mp_xenon	82713F10	Live_GetDesiredOnlineDialog	online/live_common.cpp	caller	0.85	caller of Live_DemonwareDisconnectCleanup with the same 7 matched callees and 0 matched callers
+823DBE50	iw5mp_xenon	82713F10	Live_GetDesiredOnlineDialog	online/live_common.cpp	caller	0.85	caller of Live_DemonwareDisconnectCleanup with the same 8 matched callees and 0 matched callers
 823DBF80	iw5mp_xenon	827140A0	Live_UpdateDesiredDialog	online/live_common.cpp	calls	0.78	the only unmatched function on each side calling the same 2 matched functions
 823DBFE0	iw5mp_xenon	82714100	Live_DisplayActiveDialog	online/live_common.cpp	caller	0.75	only unmatched caller of Live_GetDesiredOnlineDialog
 823DC0C8	iw5mp_xenon	827141C8	Live_DisconnectOnSignInStatusChanged	online/live_common.cpp	string	0.85	1 unique string(s): 'ui_skipMainLockout'
@@ -6107,6 +6187,7 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 8246F0D0	iw5mp_xenon	827E2550	db_inflate	db_zlib/db_inflate.c	string	0.85	1 unique string(s): 'need dictionary'
 8246FEA0	iw5mp_xenon	827E3320	db_inflate_flush	db_zlib/db_infutil.c	caller	0.85	caller of memcpy with the same 1 matched callees and 1 matched callers
 824701D0	iw5mp_xenon	827E3928	mjpeg_get_avi_struct_size	mjpeg/avi.cpp	callee	0.85	callee of CL_Demo_AllocateRenderingMovieMemory with the same 0 matched callees and 2 matched callers
+824702A8	iw5mp_xenon	827E3A08	mjpeg_add_frame	mjpeg/avi.cpp	caller	0.75	only unmatched caller of avi_s::add_frame
 824702C0	iw5mp_xenon	827E3A20	mjpeg_create	mjpeg/avi.cpp	callee	0.85	callee of CL_Demo_RunFirstFrameEvents with the same 1 matched callees and 1 matched callers
 82470308	iw5mp_xenon	827E3A68	mjpeg_close_int	mjpeg/avi.cpp	caller	0.75	only unmatched caller of avi_s::close
 82470318	iw5mp_xenon	827E3A78	mjpeg_allocate_avi_memory	mjpeg/avi.cpp	caller	0.85	caller of memset with the same 1 matched callees and 1 matched callers
@@ -6862,14 +6943,18 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 824F1408	iw5mp_xenon	828CE458	XAUDIO::CXMASourceEffect::~CXMASourceEffect	_external/../xmasourceeffect.cpp	caller	0.75	only unmatched caller of XMAPlaybackDestroy
 824F1480	iw5mp_xenon	828CE4D0	XAUDIO::CXMASourceEffect::SubmitPacket	_external/../xmasourceeffect.cpp	calls	0.78	the only unmatched function on each side calling the same 2 matched functions
 824F15C8	iw5mp_xenon	828CE618	XAUDIO::CXMASourceEffect::CompletePacket	_external/../xmasourceeffect.cpp	constant	0.85	2 unique constant(s): 0x80040002, 0x80040003
+824F1688	iw5mp_xenon	828CE6D8	[thunk]:XAUDIO::CXMASourceEffect::SubmitPacket`adjustor{16}'	_external/../xmasourceeffect.cpp	caller	0.75	only unmatched caller of XAUDIO::CXMASourceEffect::SubmitPacket
 824F16D0	iw5mp_xenon	828FA038	bdLobbyService::getTaskManager	_external/trees/iw5build4-iw/iw5/code_source/DemonWare/bdLobby/bdLobbyService.cpp	votes	0.79	paired with it at the same place among matched calls in 3 callers
 824F1B88	iw5mp_xenon	828CECB0	XAUDIO::CXMASourceEffect::`scalar deleting destructor'	_external/../xmasourceeffect.cpp	caller	0.75	only unmatched caller of XAUDIO::CXMASourceEffect::~CXMASourceEffect
 824F1F98	iw5mp_xenon	828CF0C0	XAUDIO::CXMASourceEffect::Initialize	_external/../xmasourceeffect.cpp	calls	0.78	the only unmatched function on each side calling the same 2 matched functions
 824F2170	iw5mp_xenon	828CF298	XAUDIO::CXMASourceEffect::FlushPackets	_external/../xmasourceeffect.cpp	caller	0.85	caller of XMAPlaybackWaitUntilModifyLockObtained with the same 2 matched callees and 0 matched callers
 824F2270	iw5mp_xenon	828CF398	XAUDIO::CXMASourceEffect::GetPacketPosition	_external/../xmasourceeffect.cpp	caller	0.85	caller of XMAPlaybackWaitUntilModifyLockObtained with the same 2 matched callees and 0 matched callers
 824F23C0	iw5mp_xenon	828CF4E8	XAUDIO::CXMASourceEffect::SetPacketPosition	_external/../xmasourceeffect.cpp	caller	0.85	caller of memcpy with the same 5 matched callees and 0 matched callers
+824F24C8	iw5mp_xenon	828CF608	[thunk]:XAUDIO::CXMASourceEffect::FlushPackets`adjustor{16}'	_external/../xmasourceeffect.cpp	caller	0.75	only unmatched caller of XAUDIO::CXMASourceEffect::FlushPackets
 824F2828	iw5mp_xenon	828CF9D0	XAUDIO::CXMASourceEffect::Start	_external/../xmasourceeffect.cpp	caller	0.85	caller of KeReleaseSpinLockFromRaisedIrql with the same 5 matched callees and 0 matched callers
 824F29E0	iw5mp_xenon	828CFB88	XAUDIO::CXMASourceEffect::Stop	_external/../xmasourceeffect.cpp	caller	0.85	caller of KeReleaseSpinLockFromRaisedIrql with the same 5 matched callees and 0 matched callers
+824F2BC8	iw5mp_xenon	828CFD70	[thunk]:XAUDIO::CXMASourceEffect::Start`adjustor{16}'	_external/../xmasourceeffect.cpp	caller	0.75	only unmatched caller of XAUDIO::CXMASourceEffect::Start
+824F2BD0	iw5mp_xenon	828CFD78	[thunk]:XAUDIO::CXMASourceEffect::Stop`adjustor{16}'	_external/../xmasourceeffect.cpp	caller	0.75	only unmatched caller of XAUDIO::CXMASourceEffect::Stop
 824F2F70	iw5mp_xenon	828D0208	XAUDIO::CXMASourceEffect::SynchronizePackets	_external/../xmasourceeffect.cpp	callee	0.85	callee of XAUDIO::CXMASourceEffect::Process with the same 5 matched callees and 1 matched callers
 824F38E0	iw5mp_xenon	828D0B78	XAUDIO::CXMASourceEffect::SynchronizeSourceBuffers	_external/../xmasourceeffect.cpp	callee	0.85	callee of XAUDIO::CXMASourceEffect::Process with the same 4 matched callees and 1 matched callers
 824F3C20	iw5mp_xenon	828D0EC0	XAUDIO::CXMASourceEffect::Process	_external/../xmasourceeffect.cpp	calls	0.78	the only unmatched function on each side calling the same 2 matched functions
@@ -6963,6 +7048,7 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 824FCE00	iw5mp_xenon	828D2200	XAUDIO::CXenonRenderer::CXenonRenderer	_external/../xenonrenderer.cpp	order	0.80	called by XAUDIO::CMasteringVoice::Initialize between the same matched calls
 824FD8A0	iw5mp_xenon	828D2D18	XAudioMixFrameBufferChannel	_external/../routereffect.cpp	order	0.80	called by XAUDIO::CRouterEffect::Process between the same matched calls
 824FD988	iw5mp_xenon	828D2E00	XAUDIO::CRouterEffect::Process	_external/../routereffect.cpp	caller	0.85	caller of XMemSet with the same 6 matched callees and 0 matched callers
+824FE128	iw5mp_xenon	828D35A8	[thunk]:XAUDIO::CSourceEffect::`vector deleting destructor'	_external/../sourceeffect.cpp	caller	0.75	only unmatched caller of XAUDIO::CSourceEffect::`scalar deleting destructor'
 824FE138	iw5mp_xenon	828D35B8	XAUDIO::CSourceEffect::~CSourceEffect	_external/../sourceeffect.cpp	order	0.80	called by XAUDIO::CXMASourceEffect::~CXMASourceEffect between the same matched calls
 824FE190	iw5mp_xenon	828D3610	XAUDIO::CSourceEffect::`scalar deleting destructor'	_external/../sourceeffect.cpp	caller	0.85	caller of XAUDIO::CXMemMemoryManager::XMemFree with the same 2 matched callees and 0 matched callers
 824FE218	iw5mp_xenon	828D3698	XAUDIO::CSourceEffect::CompletePacket	_external/../sourceeffect.cpp	callee	0.85	callee of XAUDIO::CXMASourceEffect::CompletePacket with the same 1 matched callees and 1 matched callers
@@ -6975,6 +7061,7 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 824FED88	iw5mp_xenon	828DC420	XAUDIO::CSourceStream::CompletePacket	_external/../sourcestream.cpp	caller	0.85	caller of memset with the same 5 matched callees and 0 matched callers
 824FFCC8	iw5mp_xenon	828DD360	XAUDIO::CResampler::Process	_external/../src.cpp	callee	0.85	callee of XAUDIO::CXMASourceEffect::Process with the same 0 matched callees and 2 matched callers
 8250F188	iw5mp_xenon	828EDC10	XAUDIO::CMasteringVoice::~CMasteringVoice	_external/../rendervoice.cpp	caller	0.85	caller of XAUDIO::CVoice::Stop with the same 1 matched callees and 0 matched callers
+8250F258	iw5mp_xenon	828EDCE0	XAUDIO::CMasteringVoice::_RenderCallback	_external/../rendervoice.cpp	caller	0.75	only unmatched caller of XAUDIO::CEngine::Process
 8250F2F8	iw5mp_xenon	828EDDA8	XAUDIO::CMasteringVoice::`scalar deleting destructor'	_external/../rendervoice.cpp	caller	0.75	only unmatched caller of XAUDIO::CMasteringVoice::~CMasteringVoice
 8250F328	iw5mp_xenon	828EDDD8	XAUDIO::CMasteringVoice::Initialize	_external/../rendervoice.cpp	callee	0.85	callee of XAUDIO::CMasteringVoice::CreateObject with the same 1 matched callees and 1 matched callers
 8250F450	iw5mp_xenon	828EDF00	XAUDIO::CMasteringVoice::Process	_external/../rendervoice.cpp	caller	0.85	caller of XAudioFrameBuffer_Prepare with the same 2 matched callees and 0 matched callers
@@ -7011,6 +7098,7 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 82513750	iw5mp_xenon	828F2268	princeton_digital::stereo_room_3dl2_t<float>::stereo_room_3dl2_t<float>	_external/../stereo_room_3dl2_float.cpp	caller	0.85	caller of princeton_digital::stereo_room_t<float>::stereo_room_t<float> with the same 1 matched callees and 0 matched callers
 82513850	iw5mp_xenon	828EC8C0	XAUDIO::CPCMSourceEffect::SubmitPacket	_external/../pcmsourceeffect.cpp	caller	0.75	only unmatched caller of XAUDIO::CSourceStream::SubmitPacket
 82513900	iw5mp_xenon	828ECB18	XAUDIO::CPCMSourceEffect::`scalar deleting destructor'	_external/../pcmsourceeffect.cpp	caller	0.75	only unmatched caller of XAUDIO::CSourceEffect::~CSourceEffect
+82513CF8	iw5mp_xenon	828ECF58	[thunk]:XAUDIO::CPCMSourceEffect::SubmitPacket`adjustor{16}'	_external/../pcmsourceeffect.cpp	caller	0.75	only unmatched caller of XAUDIO::CPCMSourceEffect::SubmitPacket
 825142A0	iw5mp_xenon	828ED508	XAUDIO::CPCMSourceEffect::Process	_external/../pcmsourceeffect.cpp	caller	0.85	caller of memset with the same 2 matched callees and 0 matched callers
 825149A8	iw5mp_xenon	828F23C8	XAUDIO::CPacketQueue::~CPacketQueue	_external/../packetqueue.cpp	order	0.80	called by XAUDIO::CSourceStream::~CSourceStream between the same matched calls
 82514B30	iw5mp_xenon	828B8330	NetDll_XNetStartup_Override	_external/../xnetapi.cpp	caller	0.85	caller of XamGetSystemVersion with the same 1 matched callees and 1 matched callers
@@ -7103,16 +7191,19 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 825197D0	iw5mp_xenon	828BD158	LoopbackInitialize	_external/../loopback.c	caller	0.85	caller of RemoteTalkerRegister with the same 3 matched callees and 0 matched callers
 82519938	iw5mp_xenon	828BD2C0	LoopbackDestroy	_external/../loopback.c	caller	0.75	only unmatched caller of RemoteTalkerDestroy
 82519998	iw5mp_xenon	828BD320	LoopbackCreate	_external/../loopback.c	caller	0.75	only unmatched caller of LoopbackDestroy
+82519A20	iw5mp_xenon	828BD3A8	LoopbackCreateWrapper	_external/../loopback.c	caller	0.75	only unmatched caller of LoopbackCreate
 82519A98	iw5mp_xenon	828BD420	VCpSubmitCodecPacket	_external/../voicechat.c	callee	0.85	callee of VCpProcessRemote with the same 1 matched callees and 1 matched callers
-82519B38	iw5mp_xenon	828BD4C0	VCpProcessLocal	_external/../voicechat.c	caller	0.85	caller of VCpSubmitCodecPacket with the same 1 matched callees and 0 matched callers
+82519B38	iw5mp_xenon	828BD4C0	VCpProcessLocal	_external/../voicechat.c	caller	0.85	caller of VCpSubmitCodecPacket with the same 1 matched callees and 1 matched callers
 82519CF8	iw5mp_xenon	828BD680	VCpProcessRemote	_external/../voicechat.c	caller	0.85	caller of XMemSet with the same 3 matched callees and 0 matched callers
+82519F80	iw5mp_xenon	828BD908	VoiceChatProcess	_external/../voicechat.c	caller	0.75	only unmatched caller of VCpProcessRemote
 82519F98	iw5mp_xenon	828BD920	VoiceChatStop	_external/../voicechat.c	order	0.80	called by VoiceChatStart between the same matched calls
-8251A030	iw5mp_xenon	828BD9B8	VoiceChatInitialize	_external/../voicechat.c	caller	0.85	caller of VCpSubmitCodecPacket with the same 2 matched callees and 0 matched callers
+8251A030	iw5mp_xenon	828BD9B8	VoiceChatInitialize	_external/../voicechat.c	caller	0.85	caller of VCpSubmitCodecPacket with the same 1 matched callees and 0 matched callers
 8251A108	iw5mp_xenon	828BDA90	VoiceChatDestroy	_external/../voicechat.c	caller	0.85	caller of XAudioVoice_Release with the same 1 matched callees and 0 matched callers
 8251A2D0	iw5mp_xenon	828BDC58	VoiceChatSetOutputVoice	_external/../voicechat.c	calls	0.82	the only unmatched function on each side calling the same 3 matched functions
 8251A418	iw5mp_xenon	828BDDA0	VoiceChatSubmitPackets	_external/../voicechat.c	order	0.80	called by RemoteTalkerSubmitChatData between the same matched calls
 8251A4B8	iw5mp_xenon	828BDE40	VoiceChatStart	_external/../voicechat.c	caller	0.75	only unmatched caller of ProcModeStart
 8251A528	iw5mp_xenon	828BDEB0	VoiceChatCreate	_external/../voicechat.c	caller	0.75	only unmatched caller of VoiceChatSetOutputVoice
+8251A600	iw5mp_xenon	828BDF88	VoiceChatCreateWrapper	_external/../voicechat.c	caller	0.75	only unmatched caller of VoiceChatCreate
 8251A768	iw5mp_xenon	828BE100	XHVOutputEffectProcess	_external/../xhvfx.c	caller	0.75	only unmatched caller of LocalTalkerHeadphoneWrite
 8251A8D8	iw5mp_xenon	828BE270	XHVEnginepInitXAudio	_external/../engine.c	calls	0.78	the only unmatched function on each side calling the same 2 matched functions
 8251AD40	iw5mp_xenon	828BE6D8	XHVEngineAddRemoteTalker	_external/../engine.c	callee	0.75	only unmatched callee of LoopbackInitialize
@@ -7167,11 +7258,11 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 8251E2E0	iw5mp_xenon	828C1CC0	JBpQueueInUsePacket	_external/../jitter.c	order	0.80	called by JitterBufSubmitPacket between the same matched calls
 8251E480	iw5mp_xenon	828C1E60	JBpRecomputeParameters	_external/../jitter.c	caller	0.85	caller of PacketQueueLength with the same 1 matched callees and 1 matched callers
 8251E6B8	iw5mp_xenon	828C2098	JBpSubmitCodecPacket	_external/../jitter.c	callee	0.85	callee of JitterBufProcess with the same 1 matched callees and 1 matched callers
-8251E750	iw5mp_xenon	828C2130	JitterBufDestroy	_external/../jitter.c	callee	0.85	callee of VoiceChatDestroy with the same 1 matched callees and 1 matched callers
+8251E750	iw5mp_xenon	828C2130	JitterBufDestroy	_external/../jitter.c	callee	0.85	callee of VoiceChatDestroy with the same 1 matched callees and 2 matched callers
 8251E7C8	iw5mp_xenon	828C21A8	JitterBufProcess	_external/../jitter.c	callee	0.85	callee of VCpProcessRemote with the same 2 matched callees and 1 matched callers
 8251EA40	iw5mp_xenon	828C2420	JitterBufSubmitPacket	_external/../jitter.c	callee	0.75	only unmatched callee of VoiceChatSubmitPackets
 8251EBD0	iw5mp_xenon	828C25B0	JitterBufReset	_external/../jitter.c	order	0.80	called by VoiceChatStart between the same matched calls
-8251EC88	iw5mp_xenon	828C2668	JitterBufCreate	_external/../jitter.c	caller	0.75	only unmatched caller of PacketBufferCreate
+8251EC88	iw5mp_xenon	828C2668	JitterBufCreate	_external/../jitter.c	order	0.80	called by VoiceChatInitialize between the same matched calls
 8251EE08	iw5mp_xenon	828C27E8	LocalTalkerIsHeadsetPresent	_external/../localtalker.c	callee	0.75	only unmatched callee of XHVEngineSetLocalTalkerOutput
 8251EE88	iw5mp_xenon	828C2868	LTpUpdateVoiceSettings	_external/../localtalker.c	caller	0.85	caller of XGetOverlappedResult with the same 1 matched callees and 0 matched callers
 8251F1F0	iw5mp_xenon	828C2BD0	LocalTalkerHeadphoneWrite	_external/../localtalker.c	caller	0.85	caller of memcpy with the same 3 matched callees and 0 matched callers
@@ -7505,7 +7596,7 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 825427E0	iw5mp_xenon	8290FBD0	bdLSPEnumerator::pump	_external/trees/iw5build4-iw/iw5/code_source/DemonWare/bdLobby/bdHTTPWrapper/bdHTTPWrapperBase.cpp	string-or-caller	0.99	6 unique string(s): 'bdLSPEnumerator::pump'; or its only caller bdHTTPWrapperBase::initPump with it inlined
 82542990	iw5mp_xenon	8290FD80	bdHTTPWrapperBase::initPump	_external/trees/iw5build4-iw/iw5/code_source/DemonWare/bdLobby/bdHTTPWrapper/bdHTTPWrapperBase.cpp	caller	0.75	only unmatched caller of bdLSPEnumerator::pump
 825429D0	iw5mp_xenon	8290FE00	bdLobbyConnection::getStatus	_external/trees/iw5build4-iw/iw5/code_source/DemonWare/bdLobby/bdLobbyConnection.cpp	callee	0.85	callee of bdLobbyService::getRichPresence with the same 0 matched callees and 3 matched callers
-82542A80	iw5mp_xenon	82910300	bdByteBuffer::bdByteBuffer	_external/trees/iw5build4-iw/iw5/code_source/DemonWare/bdLobby/bdLobbyConnection.cpp	order	0.80	called by bdTaskByteBuffer::bdTaskByteBuffer between the same matched calls
+82542A80	iw5mp_xenon	82910300	bdByteBuffer::bdByteBuffer	_external/trees/iw5build4-iw/iw5/code_source/DemonWare/bdLobby/bdLobbyConnection.cpp	caller	0.85	caller of bdMemory::allocate with the same 2 matched callees and 1 matched callers
 82542B40	iw5mp_xenon	829103C0	bdLobbyConnection::send	_external/trees/iw5build4-iw/iw5/code_source/DemonWare/bdLobby/bdLobbyConnection.cpp	caller	0.75	only unmatched caller of bdTaskByteBuffer::bdTaskByteBuffer
 82542C78	iw5mp_xenon	829104F8	bdLobbyConnection::callListenersConnect	_external/trees/iw5build4-iw/iw5/code_source/DemonWare/bdLobby/bdLobbyConnection.cpp	callee	0.85	callee of bdLobbyConnection::close with the same 0 matched callees and 3 matched callers
 82542D68	iw5mp_xenon	829105E8	bdLobbyConnection::callListenersDisconnect	_external/trees/iw5build4-iw/iw5/code_source/DemonWare/bdLobby/bdLobbyConnection.cpp	callee	0.85	callee of bdLobbyConnection::close with the same 0 matched callees and 2 matched callers
@@ -7536,9 +7627,10 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 82544BD0	iw5mp_xenon	82912810	bdSessionInvite::bdSessionInvite	_external/trees/iw5build4-iw/iw5/code_source/DemonWare/bdLobby/bdMatchMaking/bdSessionInvite.cpp	caller	0.75	only unmatched caller of bdSessionID::bdSessionID
 82544C98	iw5mp_xenon	829128D8	bdSessionInvite::deserialize	_external/trees/iw5build4-iw/iw5/code_source/DemonWare/bdLobby/bdMatchMaking/bdSessionInvite.cpp	string	0.95	3 unique string(s): 'c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdMa'
 82544DE8	iw5mp_xenon	82912A88	bdTaskByteBuffer::getHeaderStart	_external/trees/iw5build4-iw/iw5/code_source/DemonWare/bdLobby/bdRemoteTaskManager/bdTaskByteBuffer.cpp	callee	0.85	callee of bdLobbyConnection::sendTask with the same 0 matched callees and 2 matched callers
-82544EB8	iw5mp_xenon	82912B58	bdTaskByteBuffer::setupTaskData	_external/trees/iw5build4-iw/iw5/code_source/DemonWare/bdLobby/bdRemoteTaskManager/bdTaskByteBuffer.cpp	caller	0.85	caller of bdMemory::allocate with the same 1 matched callees and 1 matched callers
+82544EB8	iw5mp_xenon	82912B58	bdTaskByteBuffer::setupTaskData	_external/trees/iw5build4-iw/iw5/code_source/DemonWare/bdLobby/bdRemoteTaskManager/bdTaskByteBuffer.cpp	callee	0.75	only unmatched callee of bdTaskByteBuffer::allocateBuffer
 82544F38	iw5mp_xenon	82912BD8	bdTaskByteBuffer::bdTaskByteBuffer	_external/trees/iw5build4-iw/iw5/code_source/DemonWare/bdLobby/bdRemoteTaskManager/bdTaskByteBuffer.cpp	callee	0.85	callee of bdGroup::setGroups with the same 1 matched callees and 51 matched callers
-82545018	iw5mp_xenon	82912CB8	bdTaskByteBuffer::bdTaskByteBuffer	_external/trees/iw5build4-iw/iw5/code_source/DemonWare/bdLobby/bdRemoteTaskManager/bdTaskByteBuffer.cpp	calls	0.78	the only unmatched function on each side calling the same 2 matched functions
+82545018	iw5mp_xenon	82912CB8	bdTaskByteBuffer::bdTaskByteBuffer	_external/trees/iw5build4-iw/iw5/code_source/DemonWare/bdLobby/bdRemoteTaskManager/bdTaskByteBuffer.cpp	caller	0.85	caller of memcpy with the same 2 matched callees and 0 matched callers
+825450C0	iw5mp_xenon	82912D60	bdTaskByteBuffer::allocateBuffer	_external/trees/iw5build4-iw/iw5/code_source/DemonWare/bdLobby/bdRemoteTaskManager/bdTaskByteBuffer.cpp	string	0.90	2 unique string(s): 'bdTaskByteBuffer::allocateBuffer'
 82545110	iw5mp_xenon	82912DB0	bdHTTPWrapper::bdHTTPWrapper	_external/trees/iw5build4-iw/iw5/code_source/DemonWare/bdLobby/bdHTTPWrapper/bdHTTPWrapper.cpp	caller	0.75	only unmatched caller of bdHTTPClient::bdHTTPClient
 82545190	iw5mp_xenon	82912E30	bdHTTPWrapper::run	_external/trees/iw5build4-iw/iw5/code_source/DemonWare/bdLobby/bdHTTPWrapper/bdHTTPWrapper.cpp	caller	0.75	only unmatched caller of bdHTTPClient::performOperation
 82545218	iw5mp_xenon	82912F28	bdHTTPWrapper::_startDownload	_external/trees/iw5build4-iw/iw5/code_source/DemonWare/bdLobby/bdHTTPWrapper/bdHTTPWrapper.cpp	callee	0.85	callee of bdContentStreamingBase::handlePreHTTPComplete with the same 2 matched callees and 1 matched callers
@@ -7561,13 +7653,13 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 82545C18	iw5mp_xenon	82914128	bdConsoleID::serialize	_external/trees/iw5build4-iw/iw5/code_source/DemonWare/bdLobby/bdAntiCheat/bdConsoleID.cpp	string	0.90	2 unique string(s): 'c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdAn'
 82545CE0	iw5mp_xenon	829141F0	bdConsoleID::readConsoleID	_external/trees/iw5build4-iw/iw5/code_source/DemonWare/bdLobby/bdAntiCheat/bdConsoleID.cpp	callee	0.85	callee of bdAntiCheat::reportConsoleID with the same 1 matched callees and 1 matched callers
 82545DC0	iw5mp_xenon	829139E0	bdArray<bdAntiCheatChallengeParam>::defaultConstructArray	_external/trees/iw5build4-iw/iw5/code_source/DemonWare/bdLobby/bdAntiCheat/bdAntiCheatChallenge.cpp	order	0.80	called by bdArray<bdAntiCheatChallengeParam>::setGrow between the same matched calls
-82545E58	iw5mp_xenon	82913A78	bdArray<bdAntiCheatChallengeParam>::copyConstructObjectObject	_external/trees/iw5build4-iw/iw5/code_source/DemonWare/bdLobby/bdAntiCheat/bdAntiCheatChallenge.cpp	caller	0.75	only unmatched caller of bdAntiCheatChallengeParam::bdAntiCheatChallengeParam
-82545ED0	iw5mp_xenon	82913AF0	bdArray<bdAntiCheatChallengeParam>::copyConstructArrayArray	_external/trees/iw5build4-iw/iw5/code_source/DemonWare/bdLobby/bdAntiCheat/bdAntiCheatChallenge.cpp	order	0.80	called by bdArray<bdAntiCheatChallengeParam>::uninitializedCopy between the same matched calls
+82545E58	iw5mp_xenon	82913A78	bdArray<bdAntiCheatChallengeParam>::copyConstructObjectObject	_external/trees/iw5build4-iw/iw5/code_source/DemonWare/bdLobby/bdAntiCheat/bdAntiCheatChallenge.cpp	caller	0.85	caller of bdAntiCheatChallengeParam::bdAntiCheatChallengeParam with the same 1 matched callees and 0 matched callers
+82545ED0	iw5mp_xenon	82913AF0	bdArray<bdAntiCheatChallengeParam>::copyConstructArrayArray	_external/trees/iw5build4-iw/iw5/code_source/DemonWare/bdLobby/bdAntiCheat/bdAntiCheatChallenge.cpp	caller	0.85	caller of bdAntiCheatChallengeParam::bdAntiCheatChallengeParam with the same 1 matched callees and 1 matched callers
 82545F50	iw5mp_xenon	82913B70	bdArray<bdAntiCheatChallengeParam>::destruct	_external/trees/iw5build4-iw/iw5/code_source/DemonWare/bdLobby/bdAntiCheat/bdAntiCheatChallenge.cpp	order	0.80	called by bdArray<bdAntiCheatChallengeParam>::increaseCapacity between the same matched calls
-82545FB0	iw5mp_xenon	82913C48	bdArray<bdAntiCheatChallengeParam>::increaseCapacity	_external/trees/iw5build4-iw/iw5/code_source/DemonWare/bdLobby/bdAntiCheat/bdAntiCheatChallenge.cpp	caller	0.85	caller of bdMemory::allocate with the same 3 matched callees and 0 matched callers
+82545FB0	iw5mp_xenon	82913C48	bdArray<bdAntiCheatChallengeParam>::increaseCapacity	_external/trees/iw5build4-iw/iw5/code_source/DemonWare/bdLobby/bdAntiCheat/bdAntiCheatChallenge.cpp	calls	0.82	the only unmatched function on each side calling the same 3 matched functions
 82546028	iw5mp_xenon	82913CC0	bdArray<bdAntiCheatChallengeParam>::clear	_external/trees/iw5build4-iw/iw5/code_source/DemonWare/bdLobby/bdAntiCheat/bdAntiCheatChallenge.cpp	caller	0.85	caller of bdMemory::deallocate with the same 2 matched callees and 0 matched callers
 82546078	iw5mp_xenon	82913D10	bdArray<bdAntiCheatChallengeParam>::uninitializedCopy	_external/trees/iw5build4-iw/iw5/code_source/DemonWare/bdLobby/bdAntiCheat/bdAntiCheatChallenge.cpp	caller	0.85	caller of bdMemory::allocate with the same 1 matched callees and 1 matched callers
-825460C8	iw5mp_xenon	82913D60	bdArray<bdAntiCheatChallengeParam>::setGrow	_external/trees/iw5build4-iw/iw5/code_source/DemonWare/bdLobby/bdAntiCheat/bdAntiCheatChallenge.cpp	calls	0.78	the only unmatched function on each side calling the same 2 matched functions
+825460C8	iw5mp_xenon	82913D60	bdArray<bdAntiCheatChallengeParam>::setGrow	_external/trees/iw5build4-iw/iw5/code_source/DemonWare/bdLobby/bdAntiCheat/bdAntiCheatChallenge.cpp	caller	0.75	only unmatched caller of bdArray<bdAntiCheatChallengeParam>::copyConstructObjectObject
 82546160	iw5mp_xenon	82913DF8	bdAntiCheatChallenge::bdAntiCheatChallenge	_external/trees/iw5build4-iw/iw5/code_source/DemonWare/bdLobby/bdAntiCheat/bdAntiCheatChallenge.cpp	order	0.80	called by bdAntiCheatChallenges::deserialize between the same matched calls
 82546188	iw5mp_xenon	82913E20	bdAntiCheatChallenge::bdAntiCheatChallenge	_external/trees/iw5build4-iw/iw5/code_source/DemonWare/bdLobby/bdAntiCheat/bdAntiCheatChallenge.cpp	callee	0.75	only unmatched callee of bdArray<bdAntiCheatChallenge>::copyConstructArrayObject
 825461F8	iw5mp_xenon	82913E90	bdAntiCheatChallenge::~bdAntiCheatChallenge	_external/trees/iw5build4-iw/iw5/code_source/DemonWare/bdLobby/bdAntiCheat/bdAntiCheatChallenge.cpp	callee	0.85	callee of bdAntiCheatChallenges::deserialize with the same 1 matched callees and 1 matched callers
@@ -7593,7 +7685,7 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 82547AA8	iw5mp_xenon	82915BB8	bdHTTPClient::performOperation	_external/trees/iw5build4-iw/iw5/code_source/DemonWare/bdLobby/bdHTTPWrapper/bdHTTPClient.cpp	string	0.85	1 unique string(s): 'Failed to send HTTP request with status code %d'
 82547BC0	iw5mp_xenon	82915CD0	bdHTTPClient::performOperation	_external/trees/iw5build4-iw/iw5/code_source/DemonWare/bdLobby/bdHTTPWrapper/bdHTTPClient.cpp	string	0.99	4 unique string(s): 'Starting HTTP operation'
 82547E80	iw5mp_xenon	82915F90	bdAntiCheatChallengeParam::bdAntiCheatChallengeParam	_external/trees/iw5build4-iw/iw5/code_source/DemonWare/bdLobby/bdAntiCheat/bdAntiCheatChallengeParam.cpp	order	0.80	called by bdAntiCheatChallenge::deserialize between the same matched calls
-82547EA0	iw5mp_xenon	82915FB8	bdAntiCheatChallengeParam::bdAntiCheatChallengeParam	_external/trees/iw5build4-iw/iw5/code_source/DemonWare/bdLobby/bdAntiCheat/bdAntiCheatChallengeParam.cpp	caller	0.85	caller of memcpy with the same 2 matched callees and 0 matched callers
+82547EA0	iw5mp_xenon	82915FB8	bdAntiCheatChallengeParam::bdAntiCheatChallengeParam	_external/trees/iw5build4-iw/iw5/code_source/DemonWare/bdLobby/bdAntiCheat/bdAntiCheatChallengeParam.cpp	caller	0.85	caller of bdMemory::allocate with the same 2 matched callees and 0 matched callers
 82547F00	iw5mp_xenon	82916018	bdAntiCheatChallengeParam::~bdAntiCheatChallengeParam	_external/trees/iw5build4-iw/iw5/code_source/DemonWare/bdLobby/bdAntiCheat/bdAntiCheatChallengeParam.cpp	caller	0.85	caller of bdMemory::deallocate with the same 1 matched callees and 1 matched callers
 82547F28	iw5mp_xenon	82916040	bdAntiCheatChallengeParam::operator=	_external/trees/iw5build4-iw/iw5/code_source/DemonWare/bdLobby/bdAntiCheat/bdAntiCheatChallengeParam.cpp	order	0.80	called by bdArray<bdAntiCheatChallengeParam>::setGrow between the same matched calls
 82547FB0	iw5mp_xenon	829160C8	bdAntiCheatChallengeParam::deserialize	_external/trees/iw5build4-iw/iw5/code_source/DemonWare/bdLobby/bdAntiCheat/bdAntiCheatChallengeParam.cpp	caller	0.85	caller of bdReference<bdByteBuffer>::~bdReference<bdByteBuffer> with the same 3 matched callees and 0 matched callers
@@ -7755,6 +7847,8 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 8254F360	iw5mp_xenon	8291CE80	_stricmp	_external/bt/278379/vctools/crt/xb/xbox/stricmpp.asm	order	0.80	called by bdDelimSubstr between the same matched calls
 8254F3B8	iw5mp_xenon	8291DE38	_forcdecpt_l	_external/../../../src/fpw32/conv/cvt.c	caller	0.85	caller of tolower with the same 2 matched callees and 0 matched callers
 8254F528	iw5mp_xenon	8291DFA8	_fassign_l	_external/../../../src/fpw32/conv/cvt.c	calls	0.78	the only unmatched function on each side calling the same 2 matched functions
+8254F588	iw5mp_xenon	8291E008	_fassign	_external/../../../src/fpw32/conv/cvt.c	caller	0.75	only unmatched caller of _fassign_l
+8254F590	iw5mp_xenon	8291E010	_forcdecpt	_external/../../../src/fpw32/conv/cvt.c	caller	0.75	only unmatched caller of _forcdecpt_l
 8254F5A0	iw5mp_xenon	8291E020	_cftoe2_l	_external/../../../src/fpw32/conv/cvt.c	string	0.85	1 unique string(s): 'e+000'
 8254F7F0	iw5mp_xenon	8291E270	_cftoe_l	_external/../../../src/fpw32/conv/cvt.c	calls	0.90	the only unmatched function on each side calling the same 5 matched functions
 8254F8E0	iw5mp_xenon	8291E360	_cftoa_l	_external/../../../src/fpw32/conv/cvt.c	caller	0.85	caller of _invalid_parameter_noinfo with the same 4 matched callees and 0 matched callers
@@ -7852,6 +7946,7 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 82557158	iw5mp_xenon	829239A0	_output_s_l	_external/bt/278379/core/public/xbox/xdk/df-src/crt/outputs.c	caller	0.85	caller of malloc with the same 6 matched callees and 0 matched callers
 82557CA8	iw5mp_xenon	82924840	terminate	_external/../../../src/crtw32/eh/hooks.cpp	caller	0.85	caller of KeBugCheck with the same 2 matched callees and 0 matched callers
 82557D08	iw5mp_xenon	829248A0	_inconsistency	_external/../../../src/crtw32/eh/hooks.cpp	callee	0.85	callee of FindHandlerForForeignException with the same 1 matched callees and 4 matched callers
+82557D70	iw5mp_xenon	82926950	_mtxthreadnotification	_external/bt/278379/core/public/xbox/xdk/df-src/crt/thread.c	caller	0.75	only unmatched caller of _freeptd
 82557D80	iw5mp_xenon	82926960	__StateFromControlPc	_external/../../../src/../xb/xbox/ehstate.cpp	callee	0.75	only unmatched callee of GetCurrentState
 82557E38	iw5mp_xenon	82926A18	GetCurrentState	_external/../../../src/../xb/xbox/ehstate.cpp	order	0.80	called by __FrameUnwindToState between the same matched calls
 82557E78	iw5mp_xenon	82926A58	SetState	_external/../../../src/../xb/xbox/ehstate.cpp	callee	0.85	callee of CatchIt with the same 0 matched callees and 2 matched callers
@@ -7989,6 +8084,7 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 82560C18	iw5mp_xenon	82930220	bdConnection::getAddressHandle	_external/trees/iw5build4-iw/iw5/code_source/DemonWare/bdConnection/bdConnection.cpp	callee	0.85	callee of bdConnectionStore::flush with the same 0 matched callees and 3 matched callers
 82560C20	iw5mp_xenon	82930230	bdConnection::connect	_external/trees/iw5build4-iw/iw5/code_source/DemonWare/bdConnection/bdConnection.cpp	callee	0.75	only unmatched callee of bdUnicastConnection::connect
 82560C90	iw5mp_xenon	829302A0	bdConnection::setAddressHandle	_external/trees/iw5build4-iw/iw5/code_source/DemonWare/bdConnection/bdConnection.cpp	order	0.80	called by bdConnectionStore::receiveAll between the same matched calls
+82560ED8	iw5mp_xenon	82930558	bdUnicastConnection::disconnect	_external/trees/iw5build4-iw/iw5/code_source/DemonWare/bdConnection/bdUnicastConnection.cpp	caller	0.85	caller of bdStopwatch::start with the same 1 matched callees and 0 matched callers
 82560F20	iw5mp_xenon	829305A0	bdUnicastConnection::getStatus	_external/trees/iw5build4-iw/iw5/code_source/DemonWare/bdConnection/bdUnicastConnection.cpp	string	0.90	2 unique string(s): 'Unknown state'
 82560FC0	iw5mp_xenon	82930640	bdUnicastConnection::handleShutdownComplete	_external/trees/iw5build4-iw/iw5/code_source/DemonWare/bdConnection/bdUnicastConnection.cpp	string	0.95	3 unique string(s): 'bdUnicastConnection::handleShutdownComplete'
 82561078	iw5mp_xenon	829306F8	bdUnicastConnection::windowsEmpty	_external/trees/iw5build4-iw/iw5/code_source/DemonWare/bdConnection/bdUnicastConnection.cpp	order	0.80	called by bdUnicastConnection::sendHeartbeatAck between the same matched calls
@@ -8275,6 +8371,9 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 82570C58	iw5mp_xenon	82942458	BinkSetError	_lib/binkxenon/binkread	callee	0.85	callee of R_Cinematic_BinkOpenPath with the same 0 matched callees and 2 matched callers
 82570D58	iw5mp_xenon	82942558	checksound	_lib/binkxenon/binkread	callee	0.85	callee of BinkPause with the same 1 matched callees and 1 matched callers
 825710C0	iw5mp_xenon	829428C0	GotoFrame	_lib/binkxenon/binkread	caller	0.85	caller of RADTimerRead with the same 2 matched callees and 1 matched callers
+825713E8	iw5mp_xenon	82942BE8	bink_suspend_io	_lib/binkxenon/binkread	caller	0.75	only unmatched caller of RADCB_suspend_callback
+825713F8	iw5mp_xenon	82942BF8	bink_try_suspend_io	_lib/binkxenon/binkread	caller	0.75	only unmatched caller of RADCB_try_to_suspend_callback
+82571408	iw5mp_xenon	82942C08	bink_resume_io	_lib/binkxenon/binkread	caller	0.85	caller of RADCB_resume_callback with the same 1 matched callees and 0 matched callers
 82571438	iw5mp_xenon	82942C38	bink_sound_callback	_lib/binkxenon/binkread	caller	0.75	only unmatched caller of checksound
 82571488	iw5mp_xenon	82942C88	BinkGetFrameBuffersInfo	_lib/binkxenon/binkread	caller	0.85	caller of memcpy with the same 1 matched callees and 2 matched callers
 82571560	iw5mp_xenon	82942D60	BinkRegisterFrameBuffers	_lib/binkxenon/binkread	string	0.85	1 unique string(s): '\nERROR!! You are passing a write combined memory address to '
