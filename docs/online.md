@@ -1,10 +1,10 @@
-# Online services in the Store build, and the local replacement
+# Online services in the Store build and enhanced isolation
 
-What the Store multiplayer exe (`iw5mp_ship`) talks to, mapped so the enhanced build can answer it locally: the
-game starts, signs in, connects and plays through its own menus, with no launch options, and nothing leaves the
-machine for Activision's or Xbox's servers. Ported in spirit from black-ops-2-decomp (its P0010, P0013-P0016), whose
-Store build carries the same GDK and DemonWare layers, but built in from the start: no command-line switches and no
-separate service to run.
+The faithful Store multiplayer executable uses GDK and DemonWare. The enhanced build now
+intentionally treats GDK as unavailable: it never loads or forwards to the system runtime,
+even on a machine where Gaming Services is installed. It does not fabricate authorization.
+Startup may stop at the original runtime-unavailable error; playable offline mode is not
+claimed by this change.
 
 ## The GDK (XGameRuntime)
 
@@ -45,45 +45,17 @@ Log-on is `dwLogOnFrame` (1401145C0) per controller, from `Live_ControllerFrame`
 Other hosts: `mw3-stun.us/eu.demonware.net` and `stun.{us,eu,jp,au}.demonware.net` (NAT discovery), XCurl and WinHTTP
 callers.
 
-## The replacement (enhanced build)
+## Enhanced build: fail-closed GDK boundary
 
-Done so far (P0003, P0004):
+- `XGameRuntimeLoadModule` clears the runtime module and returns the runtime-not-found error.
+- Both initialization exports return the same error. Shutdown is a no-op.
+- `QueryApiImpl` rejects every interface with E_NOINTERFACE and clears the output pointer;
+  a null output pointer gets E_POINTER. This applies to XUser, XAsync, XTaskQueue, XStore,
+  XPackage and every other GDK family. No system runtime or entitlement provider is invoked.
+- Existing local provider source is retained for linkage and research, but not exposed by
+  this boundary. No sign-in, license or DLC success is fabricated.
+- The existing libHttpClient XCurl provider still rejects all HTTP operations locally.
 
-- **The local GDK runtime, `iw5_enhanced.dll` itself** (`enhanced/gdk/`). `XGameRuntimeLoadModule` (1403601E0)
-  returns the DLL, which exports `QueryApiImpl`, `InitializeApiImpl(Ex)`, `XErrorReport` and `UninitializeApiImpl`.
-  It loads the system's `xgameruntime.dll` exactly as the original would (System32 only) and:
-  - answers **locally**: XUser (one player, "Unknown Soldier" unless `iw5_enhanced.ini` next to the DLLs says
-    `name=...`; signed in; XUID 0009000000000001; every privilege; an Xbox-style token only for the DemonWare auth
-    URL, "network unreachable" for any Xbox Live URL), XGameSave (`players\<container>\<blob>` in the game folder,
-    written to `.tmp` files and moved into place), XNetworking (connected, nothing pinned), XSystem (RETAIL),
-    XGame (title 66CB4BCA), XGameInvite, XGameEvent, XGameUI;
-  - **forwards** XAsync/XTaskQueue, XStore, XPackage and XGameRuntimeFeature to Gaming Services, unchanged. The
-    game licence (`XStoreQueryGameLicenseAsync`, checked after sign-in) and DLC licences are Microsoft's checks.
-    The one translation: `XStoreCreateContext` gets no user instead of the local player, so the Store uses the
-    account signed in to the Microsoft Store app.
-  - **Without Gaming Services the game doesn't start**, as the original ("Game Runtime is not installed"). The
-    enhanced build never runs the game where the licence check can't run.
-- **No Xbox Live HTTP** (`enhanced/libHttpClient/`). The Xbox services library (XSAPI, statically linked; the game
-  quits if `XblInitialize` fails) sends through libHttpClient's XCurl provider. `CurlProvider::Initialize`
-  (1403D81D0) builds the provider without `curl_global_init` (XCurl never starts, and doesn't load the system runtime
-  itself), and `CurlProvider::PerformAsync` (1403D83C0) returns `E_HC_NO_NETWORK` for every request.
-
-Checked under Wine (with a stand-in for Gaming Services that was then removed, see below): the game starts, the
-local runtime answers every query, the Xbox services initialise, the multiplayer menu comes up, Play signs in the
-local player, and the DemonWare log-on starts and fails with "server not available": there's no local DemonWare
-yet.
-
-Why the stand-in went: without Gaming Services the Store interfaces don't exist, the game's licence query can't run,
-and the game goes on to sign in anyway. A runtime that made that possible would run the game unlicensed on any PC
-without Gaming Services, so the enhanced build requires the system runtime, as the original does. Testing past the
-main menu therefore needs Windows with Gaming Services.
-
-Next:
-
-- **A local DemonWare inside the DLL, started on its own.** Loopback only: `auth3` and `lsg` resolve to 127.0.0.1,
-  the auth request goes to the local auth endpoint instead of https on the internet, and the lobby (TCP 3074) is the
-  original protocol, encrypted with the ticket the local auth issued. It answers what the game asks for after
-  log-on (time, storage and publisher files, stats, teams, counters, profiles, matchmaking for parties, presence,
-  messaging, anti-cheat challenges, event log), each from the reference build's DemonWare.
-- **Everything else cut:** STUN, UPnP and remaining WinHTTP callers fail cleanly, like a machine with no internet;
-  the engine's own UDP networking stays for playing with others.
+This is a GDK-boundary change, not proof of process-wide network isolation. Independent
+WinHTTP, DemonWare, STUN and other native networking paths require separate auditing.
+Neither offline gameplay nor Windows runtime validation is established by this change.

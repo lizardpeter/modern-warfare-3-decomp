@@ -1,11 +1,6 @@
-// enhanced/include/enhanced/gdk.h: the enhanced build's local GDK runtime (docs/online.md).
-//
-// The Store exe reaches the GDK only through QueryApiImpl: each API is a thunk (xgameruntime.lib, named in
-// analysis/iw5mp_ship/gdk/thunks.tsv) that asks for an interface by two GUIDs and calls one vtable slot, passing the
-// API's own arguments after `this`. The enhanced build loads itself as the runtime (XGameRuntimeLoadModule) and
-// answers those queries: XUser, XGameSave, XNetworking and the small APIs locally; the async plumbing (XAsync,
-// XTaskQueue), XStore, XPackage and runtime features from the system's xgameruntime.dll, so the licence and DLC
-// checks are Microsoft's own. Without a system runtime the game doesn't start, as the original.
+// Enhanced GDK ABI declarations (docs/online.md).
+// The enhanced loader and all interface queries now fail closed. Legacy local provider
+// definitions remain for linkage/research but are not exposed through the runtime boundary.
 #pragma once
 
 typedef long HRESULT;
@@ -73,8 +68,7 @@ struct GdkInterface
 	void *const *vtable;
 };
 
-// The async plumbing every local provider completes through: the system runtime's XAsync interface (gdk_async.cpp;
-// slots as thunks.tsv names them).
+// Legacy provider plumbing (not exposed by the isolated runtime).
 HRESULT Gdk_AsyncBegin(XAsyncBlock *async, void *context, const void *identity, const char *identityName,
                        XAsyncProvider *provider);
 HRESULT Gdk_AsyncSchedule(XAsyncBlock *async, u32 delayMs);
@@ -98,7 +92,7 @@ extern GdkInterface g_gdkGameInvite;
 extern GdkInterface g_gdkGameEvent;
 extern GdkInterface g_gdkGameUi;
 
-// The system runtime's XAsync interface, set at initialization.
+// Legacy async pointer; remains null in the isolated runtime.
 extern GdkInterface *g_gdkAsync;
 
 // Settings (iw5_enhanced.ini next to the DLL): the local player's name.

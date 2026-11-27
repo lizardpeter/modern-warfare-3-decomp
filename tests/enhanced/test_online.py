@@ -1,17 +1,13 @@
-"""P0003: the local GDK runtime; P0004: no Xbox Live HTTP (docs/online.md).
+"""P0003: fail-closed GDK isolation; P0004: no Xbox Live HTTP (docs/online.md).
 
-- QueryApiImpl answers XUser and its gamertag interface locally: the local player is "Unknown Soldier", signed in,
-  with the fixed local XUID, every privilege; an interface it doesn't know is E_NOINTERFACE when there's no system
-  runtime to ask.
-- CurlProvider::Initialize builds the same provider object and Result as the original, without starting XCurl
-  (no curl_global_init); PerformAsync sends nothing and returns E_HC_NO_NETWORK.
+No runtime loader, initializer or interface query may succeed, including Store and user
+interfaces. No authorization is fabricated. HTTP provider behavior remains offline.
 """
 import struct
 
 from unicorn import x86_const as X
 
 from harness import SCRATCH
-from test_mouse import dll_static
 
 PATCH = "P0003"  # and P0004 (records/patches.tsv)
 BUILDS = ["iw5mp_ship"]
@@ -31,36 +27,37 @@ STORE_IMPL = guid("5c48dedf-0b67-4492-a4b5-6829b8e796e1")
 
 def query(ctx, first, second):
     """QueryApiImpl(first, second, &out): (hr, interface)."""
-    hr, bufs, _, _ = ctx.m.call(ctx.enhanced("QueryApiImpl"), [first, second, bytes(8)], "int")
+    hr, bufs, _, _ = ctx.m.call(ctx.enhanced("QueryApiImpl"), [first, second, b"\xff" * 8], "int")
     return hr, struct.unpack("<Q", bufs[2])[0]
 
 
-def method(ctx, interface, slot):
-    vtable = struct.unpack("<Q", bytes(ctx.m.mu.mem_read(interface, 8)))[0]
-    return struct.unpack("<Q", bytes(ctx.m.mu.mem_read(vtable + slot, 8)))[0]
-
-
-def check_local_player(ctx):
-    hr, user = query(ctx, USER, USER_IMPL)
-    assert hr == 0 and user, f"XUser interface: {hr:#x}"
-    hr, tag = query(ctx, USER, GAMERTAG)
-    assert hr == 0 and tag, f"XUser gamertag interface: {hr:#x}"
-    player = dll_static("?g_gdkLocalUser@@3UXUser@@A")
-    hr, bufs, _, _ = ctx.m.call(method(ctx, tag, 0x18), [tag, player, 0, 16, bytes(16), bytes(8)], "int")
-    assert hr == 0 and bufs[0].rstrip(b"\0") == b"Unknown Soldier", f"gamertag {hr:#x} {bufs[0]!r}"
-    assert struct.unpack("<Q", bufs[1])[0] == 16
-    hr, bufs, _, _ = ctx.m.call(method(ctx, user, 0x58), [user, player, bytes(8)], "int")
-    assert hr == 0 and struct.unpack("<Q", bufs[0])[0] == 0x0009000000000001, "XUserGetId"
-    hr, bufs, _, _ = ctx.m.call(method(ctx, user, 0x70), [user, player, bytes(4)], "int")
-    assert hr == 0 and bufs[0] == bytes(4), "XUserGetState: signed in"
-    hr, bufs, _, _ = ctx.m.call(method(ctx, user, 0xA0), [user, player, 0, 254, bytes(1), bytes(4)], "int")
-    assert hr == 0 and bufs[0] == b"\1" and bufs[1] == bytes(4), "XUserCheckPrivilege(Multiplayer)"
-
-
-def check_store_without_system_runtime(ctx):
-    hr, out = query(ctx, STORE, STORE_IMPL)
-    assert hr == 0x80004002 - (1 << 32) or hr == 0x80004002, f"XStore without a system runtime: {hr:#x}"
-    assert out == 0
+def check_gdk_isolation(ctx):
+    missing = 0x89240101
+    for name, args in [
+        ("XGameRuntimeLoadModule", []),
+        ("InitializeApiImpl", [25398, 0]),
+        ("InitializeApiImplEx", [25398, 0, 0]),
+    ]:
+        hr, _, _, _ = ctx.m.call(ctx.enhanced(name), args, "uint")
+        assert hr == missing, f"{name}: {hr:#x}"
+    for first, second in [
+        (USER, USER_IMPL), (USER, GAMERTAG), (STORE, STORE_IMPL),
+        *[(guid(value), guid(value)) for value in (
+            "073b7dcb-1fcf-4030-94be-e3c9eb623428",
+            "704c3f58-e629-4cc2-b197-30119f1b1be2",
+            "37e56907-2f10-41e8-b1b2-f2fb72c8acaa",
+            "af406016-e850-4aa8-a82d-2f3dcb0d7f7e",
+            "8836fe87-edb9-4fe3-8dad-05f0d2cd5b40",
+            "e349bd1a-fc20-4e40-b99c-416e40642a9f",
+            "973a344e-24bf-4d0f-8457-562b062c2b29",
+            "0651aae2-4012-4077-bf84-8b9009700e2c",
+            "bbfbdcc7-bfe7-409b-a5ca-edf054960b4d",
+            "dfcd4649-4ff8-4043-ba07-35d607df98b0",
+            "00000000-0000-0000-0000-000000000000",
+        )],
+    ]:
+        hr, out = query(ctx, first, second)
+        assert (hr & 0xffffffff) == 0x80004002 and out == 0, f"QueryApiImpl: {hr:#x}, {out:#x}"
 
 
 ALLOC = SCRATCH + 0x8000
@@ -102,5 +99,5 @@ def check_perform_sends_nothing(ctx):
     assert not writes, "PerformAsync wrote memory"
 
 
-CHECKS = [check_local_player, check_store_without_system_runtime, check_curl_provider_without_xcurl,
+CHECKS = [check_gdk_isolation, check_curl_provider_without_xcurl,
           check_perform_sends_nothing]
