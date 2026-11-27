@@ -241,6 +241,26 @@ def _crt_strncpy(m, mu):
     mu.reg_write(X.UC_X86_REG_RAX, dst)
 
 
+def _xmm_double(mu, reg):
+    return struct.unpack("<d", struct.pack("<Q", mu.reg_read(reg) & MASK64))[0]
+
+
+def _set_xmm_double(mu, x):
+    mu.reg_write(X.UC_X86_REG_XMM0, struct.unpack("<Q", struct.pack("<d", x))[0])
+
+
+def _crt_atan2(mu):
+    """UCRT atan2(y, x), doubles in XMM0 and XMM1: Python's (the platform libm), correctly rounded or within an ulp.
+    Both sides call the same model, so a test compares what each does with the result."""
+    _set_xmm_double(mu, math.atan2(_xmm_double(mu, X.UC_X86_REG_XMM0), _xmm_double(mu, X.UC_X86_REG_XMM1)))
+
+
+def _crt_floor(mu):
+    """UCRT floor: exact; NaN and infinities unchanged, -0.0 kept."""
+    x = _xmm_double(mu, X.UC_X86_REG_XMM0)
+    _set_xmm_double(mu, x if math.isnan(x) or math.isinf(x) or x == 0.0 else float(math.floor(x)))
+
+
 CRT_WRITERS = (_crt_memset, _crt_memmove, _crt_strncpy)
 CRT_MODELS_X64 = {"vcruntime140.dll!memset": _crt_memset, "vcruntime140.dll!memcpy": _crt_memmove,
                   "vcruntime140.dll!memmove": _crt_memmove, "vcruntime140.dll!strchr": _crt_strchr,
@@ -248,7 +268,9 @@ CRT_MODELS_X64 = {"vcruntime140.dll!memset": _crt_memset, "vcruntime140.dll!memc
                   "api-ms-win-crt-convert-l1-1-0.dll!atoi": _crt_atoi,
                   "api-ms-win-crt-string-l1-1-0.dll!tolower": _crt_tolower,
                   "api-ms-win-crt-string-l1-1-0.dll!toupper": _crt_toupper,
-                  "api-ms-win-crt-string-l1-1-0.dll!strncpy": _crt_strncpy}
+                  "api-ms-win-crt-string-l1-1-0.dll!strncpy": _crt_strncpy,
+                  "api-ms-win-crt-math-l1-1-0.dll!atan2": _crt_atan2,
+                  "api-ms-win-crt-math-l1-1-0.dll!floor": _crt_floor}
 
 
 class Machine:

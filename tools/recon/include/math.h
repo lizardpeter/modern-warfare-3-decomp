@@ -1,16 +1,12 @@
 // <math.h>, as far as the reconstruction needs it.
 //
-// Build environment, not game source: it reproduces what the original compiler saw, so the reconstructed code can
-// be written the way the original was.
-//
-// x86 (the VS2010 servers, /arch:SSE2): the float functions VC100 has SSE2 routines for are real functions here,
-// forwarded to the original's ___libm_sse2_* copies by tools/recon/crt_sse2.s (the server calls
-// ___libm_sse2_sinf directly, 90 call sites). atan2f, which has no float routine, is VC100's inline wrapper around
-// the double function; floorf and ceilf are assumed to be too (check the disassembly at their first use). sqrtf and
-// fabsf are intrinsics (below).
-//
-// x64 (the VS2019 Store build): the UCRT's functions, imported by the exe and reached through its import table.
+// Build environment, not game source. The Store build calls the UCRT's math functions through its import table
+// (api-ms-win-crt-math-l1-1-0.dll: atan2, floor, sqrtf, ...), and the hybrid link reaches the same imports.
+// sqrtf and fabsf are intrinsics, as VS2019 treats them: sqrtss / andps (-fno-math-errno keeps sqrtss inline; the
+// Store code calls sqrtf only on its errno path for a negative argument, where both give a NaN).
 #pragma once
+
+#define M_PI 3.14159265358979323846f  // a float: 180.0f / M_PI is 57.2957763671875, the Store build's constant
 
 #ifdef __cplusplus
 extern "C" {
@@ -35,31 +31,20 @@ double fmod(double, double);
 float acosf(float);
 float asinf(float);
 float atanf(float);
+float atan2f(float, float);
 float cosf(float);
 float expf(float);
 float logf(float);
-float log10f(float);
 float powf(float, float);
 float sinf(float);
 float tanf(float);
-
-#ifdef _M_X64
-float atan2f(float, float);
 float floorf(float);
 float ceilf(float);
 float fmodf(float, float);
-#endif
 
 #ifdef __cplusplus
 }
 #endif
 
-#ifndef _M_X64
-static inline float atan2f(float y, float x) { return (float)atan2((double)y, (double)x); }
-static inline float floorf(float x) { return (float)floor((double)x); }
-static inline float ceilf(float x) { return (float)ceil((double)x); }
-#endif
-// Intrinsics, as VC100 treats them: sqrtss / andps in SSE code, fsqrt / fabs where the expression is on the x87
-// stack (X87_MATH, iw5_compiler.h). A function would round its argument and result to float in between.
 #define sqrtf(x) __builtin_sqrtf(x)
 #define fabsf(x) __builtin_fabsf(x)

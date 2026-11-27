@@ -16,3 +16,16 @@ iw5mp_ship	14031AD00	matches	src/universal/q_shared.cpp	I_strncmp
 iw5mp_ship	14031AD50	matches	src/universal/q_shared.cpp	I_strncpyz
 iw5mp_ship	14031AD80	matches	src/universal/q_shared.cpp	I_strnicmp
 iw5mp_ship	14031ADF0	matches	src/universal/q_shared.cpp	Info_NextPair
+iw5mp_ship	14030B160	matches	src/universal/com_math.cpp	Vec2Normalize
+iw5mp_ship	14030BBA0	matches	src/universal/com_math.cpp	vectoyaw
+iw5mp_ship	14030BB60	matches	src/universal/com_math.cpp	vectosignedyaw
+iw5mp_ship	14030B8D0	matches	src/universal/com_math.cpp	vectopitch
+iw5mp_ship	14030BAB0	matches	src/universal/com_math.cpp	vectosignedpitch
+iw5mp_ship	14030B780	matches	src/universal/com_math.cpp	vectoangles
+iw5mp_ship	14030B9A0	matches	src/universal/com_math.cpp	vectosignedangles
+iw5mp_ship	140306CB0	matches	src/universal/com_math.cpp	AnglesSubtract
+iw5mp_ship	140306C50	matches	src/universal/com_math.cpp	AngleNormalize360
+iw5mp_ship	140306C00	matches	src/universal/com_math.cpp	AngleDelta
+iw5mp_ship	140306B30	matches	src/universal/com_math.cpp	AddPointToBounds2D
+iw5mp_ship	140306DA0	matches	src/universal/com_math.cpp	AxisClear
+iw5mp_ship	140306DD0	matches	src/universal/com_math.cpp	AxisCopy

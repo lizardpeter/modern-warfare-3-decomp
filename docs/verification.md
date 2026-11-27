@@ -43,6 +43,14 @@ Store copies of a file's functions sit together, roughly in alphabetical order, 
 hold the rest of the file (docs/store-build.md). Reading also corrects the matcher: its callee pair
 `LiveStorage_SetPostDownloadCommand` at `14031AD50` is `I_strncpyz`.
 
+Second: `src/universal/com_math.cpp`, the angle and vector functions the input code uses and their neighbours (13
+functions, `test_com_math.py`, about 8,700 inputs including signed zeros, denormals, infinities and NaNs with
+payloads), all bit for bit. The Store build's float code is the model, not the Xbox's: it keeps `AngleDelta` and
+friends in float, scales `atan2` by `180.0f / M_PI` computed in float (57.2957763671875) and adds 0 or 360 without a
+branch, so `vectoyaw` returns +0.0 where `if (yaw < 0) yaw += 360` would keep -0.0; `Vec2Normalize`'s divisor is a
+select (`-length >= 0 ? 1 : length`) whose NaN behaviour Ghidra's rendering of the Xbox code hides. Each of those
+changed back fails its test. The harness models `atan2` and `floor` (doubles in XMM registers).
+
 Reconstruct in the reference's original order: each function tagged `// <reference VA>  <file>:<line>` with the
 Store VA once identified. Control flow follows the reference; where the Store build differs (13 years of patches,
 the PC platform layer), the Store build is the truth.
