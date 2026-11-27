@@ -2,3 +2,6 @@
 LIBRARY kernel32.dll
 EXPORTS
 SetProcessInformation
+GetModuleHandleExA
+CreateDirectoryA
+MoveFileExA

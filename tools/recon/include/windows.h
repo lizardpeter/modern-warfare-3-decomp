@@ -229,6 +229,12 @@ WINBASEAPI HINSTANCE WINAPI GetModuleHandleW(const wchar_t *lpModuleName);
 WINBASEAPI DWORD WINAPI GetModuleFileNameW(HINSTANCE hModule, wchar_t *lpFilename, DWORD nSize);
 #define GENERIC_WRITE 0x40000000
 #define FILE_SHARE_READ 0x1
+#define GENERIC_READ 0x80000000
+#define GENERIC_WRITE 0x40000000
+#define OPEN_EXISTING 3
+#ifndef MAX_PATH
+#define MAX_PATH 260
+#endif
 #define CREATE_ALWAYS 2
 #define FILE_ATTRIBUTE_NORMAL 0x80
 #define INVALID_HANDLE_VALUE ((HANDLE)(long long)-1)

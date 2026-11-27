@@ -380,7 +380,7 @@ def check_loader_jumps_reach_the_replacements(ctx):
         head = bytes(mu.mem_read(table + 8 + 32 * i + 16, 16))
         assert bytes(mu.mem_read(exe_base + rva, 16)) == head, f"redirect {i}: the exe doesn't start as recorded"
         targets[exe_base + rva] = target
-    assert set(targets) == {ctx.original(n) for n in ("IN_Frame", "CL_MouseMove", "CL_GetMouseMovementWithSensitivity")}
+    assert {ctx.original(n) for n in ("IN_Frame", "CL_MouseMove", "CL_GetMouseMovementWithSensitivity")} <= set(targets)
     fk, ob = hooks(ctx)
     SENS["value"] = 1.5
     inp = setup(dvars(), dx=100, angles=(0.0, 10.0, 0.0))

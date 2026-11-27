@@ -36,3 +36,5 @@ iw5mp_ship	140336CD0	matches	src/win32/win_input.cpp	IN_Frame
 iw5mp_ship	140336FB0	matches	src/win32/win_input.cpp	IN_RecenterMouse
 iw5mp_ship	140337040	matches	src/win32/win_input.cpp	IN_ShowSystemCursor
 iw5mp_ship	1400C94E0	matches	src/client_mp/cl_input.cpp	CL_MouseEvent
+iw5mp_ship	1403D8190	matches	src/libHttpClient/HTTP/Curl/CurlProvider.cpp	xbox::httpclient::HrFromCurle
+iw5mp_ship	1403D81D0	matches	src/libHttpClient/HTTP/Curl/CurlProvider.cpp	xbox::httpclient::CurlProvider::Initialize
