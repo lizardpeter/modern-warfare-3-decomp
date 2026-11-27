@@ -1,6 +1,7 @@
 target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 140001610	iw5mp_xenon	8293EC38	`dynamic initializer for 's_performanceValue''	DW/dwStats.cpp	caller	0.75	only unmatched caller of bdPerformanceValue::bdPerformanceValue
 1400031A0	iw5mp_xenon	829171C8	_vsnprintf	_external/bt/278379/core/public/xbox/xdk/df-src/crt/vsnprint.c	order	0.80	called by va between the same matched calls
+14001CAD0	iw5mp_xenon	826A9C60	Com_BlockChecksumKey32	_external/trees/iw5build4-iw/iw5/code_source/common/md4.cpp	order	0.80	called by LiveRegionInfo_Pump between the same matched calls
 14001DB80	iw5mp_xenon	82261CC8	AimAssist_Init	aim_assist/aim_assist.cpp	string	0.85	1 unique string(s): 'aim_assist/view_input_%d.graph'
 14001DC20	iw5mp_xenon	8234CB78	CL_Xenon_RegisterDvars	client_mp/cl_main_xenon_mp.cpp	order	0.80	called by CL_InitOnceForAllClients between the same matched calls
 14001DC30	iw5mp_xenon	82264EE8	AimAssist_Setup	aim_assist/aim_assist.cpp	caller	0.85	caller of ScrPlace_GetViewPlacement with the same 1 matched callees and 1 matched callers
@@ -30,8 +31,7 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 140025720	iw5mp_xenon	8226DE48	Jump_Start	bgame/bg_jump.cpp	caller	0.75	only unmatched caller of Jump_CheckDive
 140025B50	iw5mp_xenon	8226D228	Jump_RegisterDvars	bgame/bg_jump.cpp	string	0.99	8 unique string(s): 'jump_height'
 140025C40	iw5mp_xenon	8226DBA8	Jump_CheckDive	bgame/bg_jump.cpp	global-or-caller	0.85	the only function on each side referencing the same 2 named globals; or its only caller Jump_Start with it inlined
-140026030	iw5mp_xenon	82277CE8	Vec3Cross	bgame/bg_pmove.cpp	order	0.80	called by Glass_StartImmediateFall between the same matched calls
-140026720	iw5mp_xenon	8227D7F0	PM_UpdateViewAngles_RangeLimited	bgame/bg_pmove.cpp	callee	0.85	callee of PM_UpdateViewAngles with the same 1 matched callees and 1 matched callers
+140026030	iw5mp_xenon	82277CE8	Vec3Cross	bgame/bg_pmove.cpp	callee	0.75	only unmatched callee of CG_PerturbCamera
 1400269C0	iw5mp_xenon	8226EA70	Mantle_CreateAnims	bgame/bg_mantle.cpp	string	0.99	4 unique string(s): 'Mantle anim [%s] has Z translation %f, should be %f\n'
 140026F40	iw5mp_xenon	82270238	Mantle_IsWeaponInactive	bgame/bg_mantle.cpp	callee	0.85	callee of CG_DrawPlayerWeaponAmmoClipGraphic with the same 0 matched callees and 2 matched callers
 140027200	iw5mp_xenon	8226E390	Mantle_RegisterDvars	bgame/bg_mantle.cpp	string	0.99	14 unique string(s): 'Enable player mantling'
@@ -56,11 +56,10 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 140028870	iw5mp_xenon	82800948	MatchRules_ValidateCustomClass	bgame/bg_matchrules.cpp	string	0.85	2 unique string(s) of its own and 2 of 1 callee(s) it inlined: 'attachmentRestricted'
 140029660	iw5mp_xenon	827FDF98	SaveMatchRulesToDisk	bgame/bg_matchrules.cpp	callee	0.75	only unmatched callee of Script_SaveMatchDataRulesToPlayer
 1400299E0	iw5mp_xenon	827FF018	SaveMatchRulesToDiskAppendToFront	bgame/bg_matchrules.cpp	caller	0.75	only unmatched caller of HeaderCache_FindFile
+14002A080	iw5mp_xenon	827FC6E8	UpdateMatchRulesChecksumAndVersion	bgame/bg_matchrules.cpp	calls	0.78	the only unmatched function on each side calling the same 2 matched functions
 14002A5C0	iw5mp_xenon	82276EA0	BG_AddEventToEntityState	bgame/bg_misc.cpp	order	0.80	called by G_AddEvent between the same matched calls
-14002A600	iw5mp_xenon	82276E70	BG_AddPredictableEventToPlayerstate	bgame/bg_misc.cpp	order	0.80	called by PM_PredictRemoteTurretFire between the same matched calls
 14002A640	iw5mp_xenon	82276E88	BG_AddUnPredictableEventToPlayerstate	bgame/bg_misc.cpp	callee	0.85	callee of Touch_Item with the same 0 matched callees and 2 matched callers
 14002A680	iw5mp_xenon	82275320	BG_ApplyLinkAngles	bgame/bg_misc.cpp	calls	0.86	the only unmatched function on each side calling the same 4 matched functions
-14002A700	iw5mp_xenon	82273160	BG_CanItemBeGrabbed	bgame/bg_misc.cpp	callee	0.85	callee of Touch_Item with the same 0 matched callees and 2 matched callers
 14002B310	iw5mp_xenon	82273350	BG_EvaluateTrajectory	bgame/bg_misc.cpp	callee	0.85	callee of CG_PredictPlayerState with the same 1 matched callees and 1 matched callers
 14002B790	iw5mp_xenon	82273A48	BG_EvaluateTrajectoryDelta	bgame/bg_misc.cpp	caller	0.85	caller of Com_Error with the same 1 matched callees and 2 matched callers
 14002B9E0	iw5mp_xenon	82272750	BG_GetEntityTypeName	bgame/bg_misc.cpp	string	0.85	1 unique string(s): 'Event %s (%i)'
@@ -80,11 +79,12 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 14002EE20	iw5mp_xenon	82276828	BG_UpdateClientControlledMissile	bgame/bg_misc.cpp	global	0.90	the only function on each side referencing the same 3 named globals
 14002EF70	iw5mp_xenon	822727F8	G_FindItem	bgame/bg_misc.cpp	caller	0.85	caller of G_GetWeaponForName with the same 1 matched callees and 0 matched callers
 14002EFB0	iw5mp_xenon	826AAAE0	Vehicle_GetServerDef	vehicle/vehicle.cpp	callee	0.75	only unmatched callee of Vehicle_Touch
-14002F060	iw5mp_xenon	82272D98	WeaponEntCanBeGrabbed	bgame/bg_misc.cpp	order	0.80	called by BG_CanItemBeGrabbed between the same matched calls
+14002F060	iw5mp_xenon	822894B0	BG_TakeWeaponIfEmpty	bgame/bg_weapons.cpp	caller	0.85	caller of BG_PlayerHasWeapon with the same 1 matched callees and 0 matched callers
 14002F490	iw5mp_xenon	82277300	Perks_RegisterDvars	bgame/bg_perks.cpp	string	0.99	59 unique string(s): 'perk_weapSpreadMultiplier'
 14002FD10	iw5mp_xenon	8227F9A8	BG_GetSpeed	bgame/bg_pmove.cpp	callee	0.85	callee of ClientThink_real with the same 0 matched callees and 2 matched callers
 14002FFB0	iw5mp_xenon	8227F360	PM_MeleeChargeMove	bgame/bg_pmove.cpp	caller	0.85	caller of PM_SetMovementDir with the same 1 matched callees and 1 matched callers
-140030A30	iw5mp_xenon	82679F38	PhysVeh_Launch	physics/phys_vehicle.cpp	caller	0.85	caller of G_random with the same 1 matched callees and 0 matched callers
+1400302A0	iw5mp_xenon	8227DC40	PM_UpdateViewAngles_Prone	bgame/bg_pmove.cpp	caller	0.75	only unmatched caller of PM_UpdateViewAngles_PronePitchClamp
+140030A30	iw5mp_xenon	8227DB30	PM_UpdateViewAngles_PronePitchClamp	bgame/bg_pmove.cpp	caller	0.85	caller of AngleDelta with the same 1 matched callees and 0 matched callers
 140033DC0	iw5mp_xenon	822796C8	PM_SetMovementDir	bgame/bg_pmove.cpp	caller	0.85	caller of vectoyaw with the same 2 matched callees and 0 matched callers
 140034930	iw5mp_xenon	8227E138	PM_UpdateViewAngles	bgame/bg_pmove.cpp	caller	0.75	only unmatched caller of TurretUpdateViewClamp
 140036130	iw5mp_xenon	822781E8	PM_trace	bgame/bg_pmove.cpp	callee	0.75	only unmatched callee of Jump_CheckDive
@@ -92,22 +92,21 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 1400373D0	iw5mp_xenon	8227D398	TurretUpdateViewClamp	bgame/bg_pmove.cpp	caller	0.85	caller of AngleNormalize360 with the same 2 matched callees and 0 matched callers
 140038E00	iw5mp_xenon	82285C18	BG_VehicleGroundPlant	bgame/bg_vehicle.cpp	caller	0.85	caller of MatrixTransformVector43 with the same 2 matched callees and 0 matched callers
 140039A90	iw5mp_xenon	82286F48	BG_VehicleMove	bgame/bg_vehicle.cpp	caller	0.75	only unmatched caller of BG_VehicleHelicopterMove
-140039B10	iw5mp_xenon	82284B08	BG_VehicleSlideMove	bgame/bg_vehicle.cpp	callee	0.85	callee of BG_VehicleHelicopterMove with the same 2 matched callees and 1 matched callers
-14003B050	iw5mp_xenon	822854E8	BG_VehicleStepSlideMove	bgame/bg_vehicle.cpp	caller	0.75	only unmatched caller of BG_VehicleSlideMove
+140039B10	iw5mp_xenon	82284B08	BG_VehicleSlideMove	bgame/bg_vehicle.cpp	caller	0.85	caller of Vec3Cross with the same 1 matched callees and 1 matched callers
+14003B050	iw5mp_xenon	822854E8	BG_VehicleStepSlideMove	bgame/bg_vehicle.cpp	calls	0.78	the only unmatched function on each side calling the same 2 matched functions
 14003BFF0	iw5mp_xenon	822872E0	BG_PlayerDualWieldingWeapon	bgame/bg_weapons.cpp	callee	0.85	callee of CG_DrawPlayerWeaponLowAmmoWarning with the same 0 matched callees and 2 matched callers
 14003CB10	iw5mp_xenon	82288E58	PM_BeginWeaponChange	bgame/bg_weapons.cpp	order	0.80	called by PM_Weapon_CheckForChangeWeapon between the same matched calls
-14003D030	iw5mp_xenon	82288BB8	PM_BeginWeaponReload	bgame/bg_weapons.cpp	caller	0.85	caller of BG_GetNumWeapons with the same 1 matched callees and 0 matched callers
-14003D370	iw5mp_xenon	8228D910	PM_PredictRemoteTurretFire	bgame/bg_weapons.cpp	callee	0.85	callee of PM_Weapon with the same 1 matched callees and 1 matched callers
 14003DAD0	iw5mp_xenon	8228E2E8	PM_UpdateAimDownSightLerp	bgame/bg_weapons.cpp	callee	0.85	callee of PmoveSingle with the same 0 matched callees and 2 matched callers
 14003DE20	iw5mp_xenon	82287958	PM_UpdateHoldBreath	bgame/bg_weapons.cpp	global	0.90	the only function on each side referencing the same 3 named globals
 14003DFF0	iw5mp_xenon	82290910	PM_Weapon	bgame/bg_weapons.cpp	caller	0.75	only unmatched caller of PM_Weapon_CheckForOffHand
 14003EAE0	iw5mp_xenon	8228C080	PM_Weapon_CheckGrenadeHold	bgame/bg_weapons.cpp	caller	0.75	only unmatched caller of PM_Weapon_IsHoldingGrenade
 14003F5E0	iw5mp_xenon	8228A5B0	PM_Weapon_CheckForChangeWeapon	bgame/bg_weapons.cpp	caller	0.85	caller of Mantle_IsWeaponInactive with the same 1 matched callees and 1 matched callers
 14003F800	iw5mp_xenon	8228FFB0	PM_Weapon_CheckForOffHand	bgame/bg_weapons.cpp	string	0.90	2 unique string(s): '[%s] Only grenades are currently supported for off hand use\n'
-140040B40	iw5mp_xenon	8228B240	PM_Weapon_FireWeapon	bgame/bg_weapons.cpp	caller	0.85	caller of BG_GetFireTime with the same 2 matched callees and 0 matched callers
+14003FD20	iw5mp_xenon	8228BF30	PM_UpdateGrenadeThrow	bgame/bg_weapons.cpp	caller	0.85	caller of BG_GetWeaponType with the same 1 matched callees and 1 matched callers
 140041080	iw5mp_xenon	8228BE48	PM_Weapon_IsHoldingGrenade	bgame/bg_weapons.cpp	callee	0.85	callee of PM_Weapon_CheckForOffHand with the same 1 matched callees and 1 matched callers
 140041550	iw5mp_xenon	8228F580	PM_Weapon_MeleeInit	bgame/bg_weapons.cpp	caller	0.75	only unmatched caller of PM_UpdateAimDownSightLerp
 1400418B0	iw5mp_xenon	82295A00	BG_PlayerLastWeaponHandForViewWeapon	bgame/bg_weapons_util.cpp	caller	0.85	caller of BG_PlayerDualWieldingWeapon with the same 1 matched callees and 1 matched callers
+140042190	iw5mp_xenon	8228B240	PM_Weapon_FireWeapon	bgame/bg_weapons.cpp	caller	0.85	caller of BG_GetFireTime with the same 2 matched callees and 0 matched callers
 1400424E0	iw5mp_xenon	8228A2E8	WeaponTimeModifiers	bgame/bg_weapons.cpp	global-or-caller	0.85	the only function on each side referencing the same 2 named globals; or its only caller PM_Weapon_WeaponTimeAdjust with it inlined
 140042C10	iw5mp_xenon	82290EE8	BG_GetAmmoPlayerMax	bgame/bg_weapons_ammo.cpp	order	0.80	called by CG_CheckPlayerForLowAmmoSpecific between the same matched calls
 1400431D0	iw5mp_xenon	822918A8	BG_GetTotalAmmoReserve	bgame/bg_weapons_ammo.cpp	callee	0.85	callee of CG_DrawPlayerWeaponAmmoStock with the same 0 matched callees and 2 matched callers
@@ -135,14 +134,13 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 140049E70	iw5mp_xenon	8229D5C0	BG_GetProjectileSpeed	bgame/bg_weapons_util.cpp	callee	0.75	only unmatched callee of Weapon_GrenadeLauncher_Fire
 14004A330	iw5mp_xenon	8229CF80	BG_GetWeaponClass	bgame/bg_weapons_util.cpp	callee	0.75	only unmatched callee of BG_GetExtendedClipAmmoForWeapon
 14004A6C0	iw5mp_xenon	8229F940	BG_GetWeaponFlashTagname	bgame/bg_weapons_util.cpp	callee	0.85	callee of CG_DrawActiveFrame with the same 0 matched callees and 2 matched callers
-14004A6F0	iw5mp_xenon	8229CED0	BG_GetWeaponType	bgame/bg_weapons_util.cpp	order	0.80	called by VehCmd_FireWeapon between the same matched calls
+14004A6F0	iw5mp_xenon	8229CED0	BG_GetWeaponType	bgame/bg_weapons_util.cpp	order	0.80	called by Vehicle_Die between the same matched calls
 14004B710	iw5mp_xenon	82296CB8	BG_IsSilenced	bgame/bg_weapons_util.cpp	order	0.80	called by BG_GetWeaponFlashTagname between the same matched calls
 14004B860	iw5mp_xenon	82294D30	BG_IsWeaponValid	bgame/bg_weapons_util.cpp	callee	0.85	callee of PM_Weapon_CheckForChangeWeapon with the same 2 matched callees and 1 matched callers
 14004C850	iw5mp_xenon	8229D708	BG_ProjectileActivateDist	bgame/bg_weapons_util.cpp	order	0.80	called by G_RunMissileInternal between the same matched calls
 14004D610	iw5mp_xenon	8229EF68	BG_SetWeaponIronSights	bgame/bg_weapons_util.cpp	votes	0.79	paired with it at the same place among matched calls in 3 callers
 14004E300	iw5mp_xenon	8229EA18	BG_UsingSniperScope	bgame/bg_weapons_util.cpp	votes	0.79	paired with it at the same place among matched calls in 3 callers
 14004E470	iw5mp_xenon	82294AC0	BG_ValidateWeaponNumberOffhand	bgame/bg_weapons_util.cpp	caller	0.85	caller of BG_GetNumWeapons with the same 1 matched callees and 1 matched callers
-14004E890	iw5mp_xenon	8229F868	BG_WeaponBulletFire_GetExplRadius	bgame/bg_weapons_util.cpp	callee	0.85	callee of CG_BulletDynEntImpact with the same 0 matched callees and 2 matched callers
 14004F540	iw5mp_xenon	8229E748	BG_WeaponIsDualWield	bgame/bg_weapons_util.cpp	string	0.85	1 unique string(s): 'akimbo'
 1400506D0	iw5mp_xenon	822A0F28	BG_CalculateWeaponMovement_Base	bgame/bg_weapons_view.cpp	caller	0.75	only unmatched caller of BG_CalculateWeaponMovement_Base_Internal_Movement
 1400509E0	iw5mp_xenon	822A0898	BG_CalculateWeaponMovement_Base_Internal_Movement	bgame/bg_weapons_view.cpp	caller	0.85	caller of BG_GetPlayerViewDirection with the same 1 matched callees and 0 matched callers
@@ -179,7 +177,7 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 140056FF0	iw5mp_xenon	822A2840	GetWeapon	cgame/cg_ammocounter.cpp	callee	0.85	callee of CG_DrawPlayerWeaponAmmoClipGraphic with the same 0 matched callees and 3 matched callers
 140057110	iw5mp_xenon	822A5948	CG_BlurGetData	cgame/cg_blur.cpp	callee	0.85	callee of CL_Demo_WriteClipCommands with the same 0 matched callees and 2 matched callers
 1400571A0	iw5mp_xenon	822A5720	CG_ScreenBlur	cgame/cg_blur.cpp	callee	0.85	callee of CG_Draw2D with the same 1 matched callees and 1 matched callers
-140057270	iw5mp_xenon	822A5EB8	CG_ShakeCamera	cgame/cg_camerashake.cpp	callee	0.85	callee of CG_UpdateJavelinKillCam with the same 0 matched callees and 2 matched callers
+140057270	iw5mp_xenon	822A5EB8	CG_ShakeCamera	cgame/cg_camerashake.cpp	constant	0.90	3 unique constant(s): 25.132741928100586f, 47.1238899230957f, 37.69911193847656f
 140057E70	iw5mp_xenon	822A8488	Colorblind_GetMaterialByStringTable	cgame/cg_colorblind_media.cpp	caller	0.85	caller of GamerProfile_IsColorBlind with the same 2 matched callees and 0 matched callers
 140057F20	iw5mp_xenon	822A94B0	CG_CompassCalcDimensions	cgame/cg_compass.cpp	string	0.85	1 unique string(s): 'Compass ownerdraw had width or height of 0'
 1400585B0	iw5mp_xenon	822AB098	CG_CompassDrawPlayer	cgame/cg_compass.cpp	global	0.95	the only function on each side referencing the same 4 named globals
@@ -252,7 +250,7 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 140068C60	iw5mp_xenon	822EFBE8	CG_DamageFeedback	cgame/cg_playerstate.cpp	global-or-caller	0.95	the only function on each side referencing the same 4 named globals; or its only caller CG_TransitionPlayerState with it inlined
 140069310	iw5mp_xenon	822EFE80	CG_Respawn	cgame/cg_playerstate.cpp	caller	0.75	only unmatched caller of CG_ClearOverheadFade
 140069570	iw5mp_xenon	822F0360	CG_TransitionPlayerState	cgame/cg_playerstate.cpp	caller	0.75	only unmatched caller of CG_DamageFeedback
-140069A50	iw5mp_xenon	822FF2B8	CG_PerturbCamera	cgame/cg_shellshock.cpp	callee	0.85	callee of CG_UpdateJavelinKillCam with the same 2 matched callees and 2 matched callers
+140069A50	iw5mp_xenon	822FF2B8	CG_PerturbCamera	cgame/cg_shellshock.cpp	order	0.80	called by CG_UpdateJavelinKillCam between the same matched calls
 14006A200	iw5mp_xenon	823033E0	CG_RegisterSounds	cgame/cg_sound.cpp	string	0.99	65 unique string(s): 'land_damage'
 14006B550	iw5mp_xenon	82302F08	CG_RegisterWhizbySounds	cgame/cg_sound.cpp	string	0.85	1 unique string(s): '%s_%02d'
 14006B700	iw5mp_xenon	82305E48	CG_LoadClientAudioZoneSettings	cgame/cg_trigger.cpp	string-or-caller	0.95	3 unique string(s): 'soundtables/mp_common_zone.csv'; or its only caller CG_StartClientSideTriggers with it inlined
@@ -271,18 +269,20 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 140070E30	iw5mp_xenon	82309FB0	CG_MissileRegisterDvars	cgame/cg_view.cpp	string	0.99	14 unique string(s): 'Remote missile-cam, range to shake the view.'
 140071060	iw5mp_xenon	8230B1C0	Dive_UpdateViewAngles	cgame/cg_view.cpp	global-or-caller	0.90	the only function on each side referencing the same 3 named globals; or its only caller CG_OffsetFirstPersonView with it inlined
 1400713E0	iw5mp_xenon	8230A330	CG_OffsetChaseCamView	cgame/cg_view.cpp	global-or-caller	0.90	the only function on each side referencing the same 3 named globals; or its only caller CG_OffsetThirdPersonView with it inlined
-140072240	iw5mp_xenon	8230DCF8	CG_UpdateAirstrikeKillCam	cgame/cg_view.cpp	caller	0.85	caller of AxisToAngles with the same 3 matched callees and 0 matched callers
-140072990	iw5mp_xenon	8230E468	CG_UpdateJavelinKillCam	cgame/cg_view.cpp	caller	0.85	caller of AxisToAngles with the same 3 matched callees and 0 matched callers
-1400730E0	iw5mp_xenon	8230FFC0	CG_UpdateKillCamEntity	cgame/cg_view.cpp	caller	0.75	only unmatched caller of CG_UpdateJavelinKillCam
+140072240	iw5mp_xenon	8230EE00	CG_UpdateExplosiveKillCam	cgame/cg_view.cpp	caller	0.85	caller of CG_ShakeCamera with the same 3 matched callees and 0 matched callers
+140072990	iw5mp_xenon	8230E468	CG_UpdateJavelinKillCam	cgame/cg_view.cpp	caller	0.85	caller of CG_ShakeCamera with the same 4 matched callees and 0 matched callers
+1400730E0	iw5mp_xenon	8230FFC0	CG_UpdateKillCamEntity	cgame/cg_view.cpp	caller	0.75	only unmatched caller of CG_UpdateExplosiveKillCam
 1400736C0	iw5mp_xenon	8230A950	CG_UpdateThirdPersonMode	cgame/cg_view.cpp	caller	0.85	caller of vectoangles with the same 4 matched callees and 0 matched callers
-140073C20	iw5mp_xenon	8230DEA8	CG_UpdateTurretKillCam	cgame/cg_view.cpp	caller	0.85	caller of AnglesToAxis with the same 4 matched callees and 0 matched callers
+140073C20	iw5mp_xenon	8230DEA8	CG_UpdateTurretKillCam	cgame/cg_view.cpp	caller	0.85	caller of CG_ShakeCamera with the same 1 matched callees and 0 matched callers
 140073FA0	iw5mp_xenon	8230C578	CG_ViewRegisterDvars	cgame/cg_view.cpp	string	0.99	86 unique string(s): 'Helicopter kill camera field of view.'
 140074B20	iw5mp_xenon	82310620	GetRemoteEyeValues	cgame/cg_view.cpp	caller	0.85	caller of BG_UpdateClientControlledMissile with the same 3 matched callees and 0 matched callers
 140074E60	iw5mp_xenon	82312A58	CalcViewValues	cgame/cg_view.cpp	caller	0.75	only unmatched caller of BG_GetSpeed
+140075E40	iw5mp_xenon	8230D4B8	LookAtBothPoints	cgame/cg_view.cpp	constant	0.90	3 unique constant(s): 0.9848077893257141f, -0.949999988079071f, -0.9800000190734863f
 140076220	iw5mp_xenon	82310138	RemoteEyesShake	cgame/cg_view.cpp	global	0.95	the only function on each side referencing the same 6 named globals
 1400764D0	iw5mp_xenon	8230A1A0	ThirdPersonViewTrace	cgame/cg_view.cpp	callee	0.85	callee of CG_OffsetChaseCamView with the same 0 matched callees and 2 matched callers
 1400768D0	iw5mp_xenon	82313E80	CG_RegisterVisionSetsDvars	cgame/cg_visionsets.cpp	string	0.99	5 unique string(s): 'nightVisionFadeInOutTime'
 140076970	iw5mp_xenon	82315BC8	CG_VisionSetApplyToRefdef	cgame/cg_visionsets.cpp	order	0.80	called by CalcViewValues between the same matched calls
+140077CD0	iw5mp_xenon	82314B80	LerpVisionSet	cgame/cg_visionsets.cpp	callee	0.85	callee of CG_VisionSetApplyToRefdef with the same 1 matched callees and 1 matched callers
 140078150	iw5mp_xenon	82323160	CG_ActionSlotDown	cgame/cg_weapons.cpp	caller	0.85	caller of CG_SelectWeapon with the same 3 matched callees and 0 matched callers
 140078330	iw5mp_xenon	8231C930	CG_AddMuzzleFlash	cgame/cg_weapons.cpp	caller	0.85	caller of BG_IsThirdPersonMode with the same 1 matched callees and 0 matched callers
 140078490	iw5mp_xenon	8231CAD8	CG_AddPlayerWeapon	cgame/cg_weapons.cpp	caller	0.75	only unmatched caller of CG_AddMuzzleFlash
@@ -297,10 +297,9 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 14007BAD0	iw5mp_xenon	8231FA00	CG_ExplosiveImpactOnShieldEvent	cgame/cg_weapons.cpp	global	0.85	the only function on each side referencing the same 2 named globals
 14007BB10	iw5mp_xenon	8231FA70	CG_ExplosiveSplashOnShieldEvent	cgame/cg_weapons.cpp	global	0.95	the only function on each side referencing the same 5 named globals
 14007BB70	iw5mp_xenon	826B21C0	VEH_LinkPlayer	vehicle/vehicle.cpp	caller	0.85	caller of Com_Error with the same 2 matched callees and 0 matched callers
-14007C0A0	iw5mp_xenon	8231DB68	CG_FireWeapon_FireSound	cgame/cg_weapons.cpp	caller	0.75	only unmatched caller of BG_IsSilenced
+14007C0A0	iw5mp_xenon	8231DB68	CG_FireWeapon_FireSound	cgame/cg_weapons.cpp	calls	0.78	the only unmatched function on each side calling the same 2 matched functions
 14007C850	iw5mp_xenon	8231B7B8	CG_GetPlayerViewOrigin	cgame/cg_weapons.cpp	caller	0.85	caller of Com_Error with the same 2 matched callees and 0 matched callers
 14007C910	iw5mp_xenon	8231E3A8	CG_GetViewDirection	cgame/cg_weapons.cpp	caller	0.85	caller of BG_GetPlayerViewDirection with the same 1 matched callees and 1 matched callers
-14007C9F0	iw5mp_xenon	823227C8	CG_GetWeaponDisplayName	cgame/cg_weapons.cpp	caller	0.85	caller of BG_GetAltWeapon with the same 1 matched callees and 1 matched callers
 14007CF00	iw5mp_xenon	82325170	CG_OutOfAmmoChange_internal	cgame/cg_weapons.cpp	calls	0.82	the only unmatched function on each side calling the same 3 matched functions
 14007D6B0	iw5mp_xenon	82318F38	CG_PrecacheWeaponAnimations	cgame/cg_weapons.cpp	string	0.85	1 unique string(s): 'WEAPON_CUSTOM_ATTACHMENT'
 14007D830	iw5mp_xenon	823192D0	CG_ProcessWeaponOnAltChange	cgame/cg_weapons.cpp	callee	0.85	callee of ChangeViewmodelDobj with the same 0 matched callees and 2 matched callers
@@ -318,9 +317,7 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 140080E80	iw5mp_xenon	82319340	ChangeViewmodelDobj	cgame/cg_weapons.cpp	caller	0.85	caller of BG_PlayerDualWieldingWeapon with the same 2 matched callees and 1 matched callers
 140081AC0	iw5mp_xenon	82320718	DrawTargetBox	cgame/cg_weapons.cpp	caller	0.85	caller of CL_DrawStretchPicPhysical with the same 2 matched callees and 0 matched callers
 1400829E0	iw5mp_xenon	8231A648	ProcessWeaponNoteTracks	cgame/cg_weapons.cpp	caller	0.75	only unmatched caller of DObjGetClientNotifyList
-140082DF0	iw5mp_xenon	82316FE0	StartWeaponAnim	cgame/cg_weapons.cpp	calls	0.78	the only unmatched function on each side calling the same 2 matched functions
 1400830E0	iw5mp_xenon	82322F88	ToggleWeaponAltMode	cgame/cg_weapons.cpp	callee	0.85	callee of CG_UpdateViewWeaponAnim with the same 1 matched callees and 1 matched callers
-140083310	iw5mp_xenon	82317C18	WeaponRunXModelAnims	cgame/cg_weapons.cpp	callee	0.85	callee of CG_UpdateViewWeaponAnim with the same 1 matched callees and 1 matched callers
 140084B50	iw5mp_xenon	82329670	CG_DrawOffHandAmmo	cgame/offhandweapons.cpp	callee	0.85	callee of CG_OwnerDraw with the same 4 matched callees and 1 matched callers
 140084D20	iw5mp_xenon	82329420	CG_DrawOffHandHighlight	cgame/offhandweapons.cpp	caller	0.85	caller of ScrPlace_GetActivePlacement with the same 4 matched callees and 1 matched callers
 140084F40	iw5mp_xenon	82329D60	CG_SwitchOffHandCmd	cgame/offhandweapons.cpp	caller	0.75	only unmatched caller of BG_GetFirstAvailableOffhand
@@ -350,7 +347,6 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 14008D020	iw5mp_xenon	822BA968	CG_ClearOverheadFade	cgame_mp/cg_draw_mp.cpp	callee	0.85	callee of CG_Init with the same 0 matched callees and 2 matched callers
 14008D040	iw5mp_xenon	822BD8D8	CG_Draw2D	cgame_mp/cg_draw_mp.cpp	caller	0.75	only unmatched caller of CG_CheckTimedMenus
 14008D300	iw5mp_xenon	822BDCD0	CG_DrawActive	cgame_mp/cg_draw_mp.cpp	caller	0.75	only unmatched caller of CL_RenderScene
-14008D3E0	iw5mp_xenon	822BA790	CG_DrawCenterString	cgame_mp/cg_draw_mp.cpp	callee	0.85	callee of CG_OwnerDraw with the same 2 matched callees and 1 matched callers
 14008DB40	iw5mp_xenon	822BAB78	CG_DrawOverheadNames	cgame_mp/cg_draw_mp.cpp	global	0.95	the only function on each side referencing the same 6 named globals
 14008E180	iw5mp_xenon	822BC6B8	CG_DrawVisibleNames	cgame_mp/cg_draw_mp.cpp	global	0.85	the only function on each side referencing the same 2 named globals
 14008E4D0	iw5mp_xenon	822BA6E8	CG_PriorityCenterPrint	cgame_mp/cg_draw_mp.cpp	string	0.85	1 unique string(s): 'Center Print'
@@ -358,11 +354,11 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 14008E590	iw5mp_xenon	822BB4D8	ScanForCrosshairEntity	cgame_mp/cg_draw_mp.cpp	callee	0.85	callee of CG_Draw2D with the same 2 matched callees and 1 matched callers
 14008E8C0	iw5mp_xenon	822C9BE8	UpdatePacketEnt	cgame_mp/cg_ents_mp.cpp	caller	0.75	only unmatched caller of CG_AddPacketEntity
 14008EE00	iw5mp_xenon	822C98D8	CG_AddPacketEntity	cgame_mp/cg_ents_mp.cpp	callee	0.85	callee of CG_DrawActiveFrame with the same 1 matched callees and 1 matched callers
-14008F420	iw5mp_xenon	822C9230	CG_CalcEntityLerpPositions	cgame_mp/cg_ents_mp.cpp	caller	0.85	caller of BG_EvaluateTrajectory with the same 1 matched callees and 2 matched callers
+14008F420	iw5mp_xenon	822C9230	CG_CalcEntityLerpPositions	cgame_mp/cg_ents_mp.cpp	caller	0.85	caller of BG_EvaluateTrajectory with the same 2 matched callees and 2 matched callers
 14008F850	iw5mp_xenon	822C6A08	CG_CreatePhysicsObject	cgame_mp/cg_ents_mp.cpp	caller	0.75	only unmatched caller of Phys_ObjSetCollisionFromDObj
 14008FB10	iw5mp_xenon	822C9638	CG_CalcParentLinkPositions	cgame_mp/cg_ents_mp.cpp	caller	0.85	caller of AxisToAngles with the same 2 matched callees and 1 matched callers
 1400902F0	iw5mp_xenon	822C6748	CG_InterpolateEntityPosition	cgame_mp/cg_ents_mp.cpp	callee	0.85	callee of CG_CalcEntityLerpPositions with the same 1 matched callees and 1 matched callers
-1400905B0	iw5mp_xenon	822C8108	CG_Missile	cgame_mp/cg_ents_mp.cpp	calls	0.78	the only unmatched function on each side calling the same 2 matched functions
+1400905B0	iw5mp_xenon	822C8108	CG_Missile	cgame_mp/cg_ents_mp.cpp	caller	0.75	only unmatched caller of Compass_MissileUpdateInfo
 140090AB0	iw5mp_xenon	822C45F8	CG_Player_PreControllers	cgame_mp/cg_ents_mp.cpp	callee	0.85	callee of ResetEntity_Internal with the same 1 matched callees and 2 matched callers
 140091190	iw5mp_xenon	8247E5D8	MissileLandAnglesFlatMaintainingDirection	game/g_missile.cpp	calls	0.78	the only unmatched function on each side calling the same 2 matched functions
 140091620	iw5mp_xenon	822C55D0	CG_ProcessClientNoteTracks	cgame_mp/cg_ents_mp.cpp	string	0.90	2 unique string(s): 'anim_gunhand = "right"'
@@ -389,8 +385,6 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 14009A870	iw5mp_xenon	822E6628	CG_DrawPlayerAmmoValue	cgame_mp/cg_newDraw_mp.cpp	callee	0.85	callee of CG_OwnerDraw with the same 3 matched callees and 1 matched callers
 14009AE70	iw5mp_xenon	822E7460	CG_DrawPlayerBarHealth	cgame_mp/cg_newDraw_mp.cpp	global	0.85	the only function on each side referencing the same 2 named globals
 14009B1E0	iw5mp_xenon	822E7748	CG_DrawPlayerBarHealthBack	cgame_mp/cg_newDraw_mp.cpp	global	0.95	the only function on each side referencing the same 6 named globals
-14009B7E0	iw5mp_xenon	822E6D48	CG_DrawPlayerWeaponNameBackNoFade	cgame_mp/cg_newDraw_mp.cpp	calls	0.82	the only unmatched function on each side calling the same 3 matched functions
-14009B940	iw5mp_xenon	822E6C30	CG_DrawPlayerWeaponNameNoFade	cgame_mp/cg_newDraw_mp.cpp	calls	0.82	the only unmatched function on each side calling the same 3 matched functions
 14009BAA0	iw5mp_xenon	822E8B60	CG_DrawSpectatorControls	cgame_mp/cg_newDraw_mp.cpp	string	0.85	2 unique string(s) of its own and 2 of 1 callee(s) it inlined: 'PLATFORM_FOLLOWNEXTPLAYER'
 14009BDC0	iw5mp_xenon	822EB6F0	CG_DrawTalkerNum	cgame_mp/cg_newDraw_mp.cpp	caller	0.75	only unmatched caller of CG_RelativeTeamColor
 14009C240	iw5mp_xenon	822E81E0	CG_GetUseString	cgame_mp/cg_newDraw_mp.cpp	string	0.85	1 unique string(s): 'KEY_USE'
@@ -408,8 +402,9 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 14009FB70	iw5mp_xenon	822EE090	CL_ClientIsInMyParty	cgame_mp/cg_players_mp.cpp	callee	0.85	callee of CG_RelativeTeamColor with the same 0 matched callees and 2 matched callers
 14009FBB0	iw5mp_xenon	822F04E0	BG_Player_DoControllers	cgame_mp/cg_pose_mp.cpp	order	0.80	called by G_PlayerController between the same matched calls
 1400A03A0	iw5mp_xenon	8293CFA0	bdTrulyRandomImpl::bdTrulyRandomImpl	_external/trees/iw5build4-iw/iw5/code_source/DemonWare/bdCore/bdUtilities/bdTrulyRandom.cpp	order	0.80	called by bdSingleton<bdTrulyRandomImpl>::getInstance between the same matched calls
+1400A0E80	iw5mp_xenon	822F2FE0	CG_PrePredictAllPlayerState	cgame_mp/cg_predict_mp.cpp	caller	0.85	caller of CG_PredictPlayerState_Internal with the same 1 matched callees and 1 matched callers
 1400A0EF0	iw5mp_xenon	822F2B18	CG_PredictPlayerState	cgame_mp/cg_predict_mp.cpp	global	0.90	the only function on each side referencing the same 3 named globals
-1400A1420	iw5mp_xenon	822F2558	CG_PredictPlayerState_Internal	cgame_mp/cg_predict_mp.cpp	caller	0.75	only unmatched caller of VehicleCl_PredictEntityPushing
+1400A1420	iw5mp_xenon	822F2558	CG_PredictPlayerState_Internal	cgame_mp/cg_predict_mp.cpp	callee	0.85	callee of CG_PredictPlayerState with the same 1 matched callees and 1 matched callers
 1400A2660	iw5mp_xenon	822F5D20	CG_CheckDrawScoreboardLine	cgame_mp/cg_scoreboard_mp.cpp	callee	0.85	callee of CG_DrawScoreboard_ListBanner with the same 0 matched callees and 2 matched callers
 1400A2960	iw5mp_xenon	822F6968	CG_DrawClientScore	cgame_mp/cg_scoreboard_mp.cpp	callee	0.85	callee of CG_DrawTeamOfClientScore with the same 3 matched callees and 1 matched callers
 1400A31B0	iw5mp_xenon	822F7CC8	CenterViewOnClient	cgame_mp/cg_scoreboard_mp.cpp	global	0.90	the only function on each side referencing the same 3 named globals
@@ -528,12 +523,14 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 1400BA160	iw5mp_xenon	827D5A10	CL_Demo_CanStartClipRecord	client_demo/cl_demo_playback.cpp	string	0.90	2 unique string(s): 'MENU_DEMO_MAX_SEGMENTS_REACHED'
 1400BA210	iw5mp_xenon	827D29D0	CL_Demo_CancelRendering	client_demo/cl_demo_playback.cpp	callee	0.85	callee of UI_SetActiveMenu with the same 0 matched callees and 2 matched callers
 1400BA560	iw5mp_xenon	827D4100	CL_Demo_DrawTransitionScreen	client_demo/cl_demo_playback.cpp	callee	0.85	callee of CG_Draw2D with the same 2 matched callees and 1 matched callers
+1400BAAA0	iw5mp_xenon	827D7FB0	CL_Demo_FreeCameraMove	client_demo/cl_demo_playback.cpp	constant	0.85	2 unique constant(s): 0.016666999086737633f, 0.15000298619270325f
+1400BB020	iw5mp_xenon	827D7688	CL_Demo_FreeCameraViewTrace	client_demo/cl_demo_playback.cpp	caller	0.85	caller of Vec3Cross with the same 1 matched callees and 1 matched callers
 1400BB730	iw5mp_xenon	827DAA60	CL_Demo_GenerateKeyFrame	client_demo/cl_demo_playback.cpp	calls	0.90	the only unmatched function on each side calling the same 6 matched functions
 1400BC5E0	iw5mp_xenon	827D4EF8	CL_Demo_GetAdjustedTimeForCodInfoDvar	client_demo/cl_demo_playback.cpp	callee	0.85	callee of CG_ParseCodInfo with the same 2 matched callees and 1 matched callers
 1400BC6A0	iw5mp_xenon	827D5038	CL_Demo_GetAdjustedTimeForConfigString	client_demo/cl_demo_playback.cpp	callee	0.85	callee of CG_SetConfigValues with the same 0 matched callees and 2 matched callers
 1400BC7D0	iw5mp_xenon	827D31F8	CL_Demo_GetClipTime	client_demo/cl_demo_playback.cpp	callee	0.85	callee of CG_DrawDemoControls with the same 0 matched callees and 2 matched callers
 1400BD250	iw5mp_xenon	827D9150	CL_Demo_HiResScreenshot	client_demo/cl_demo_playback.cpp	string	0.85	1 unique string(s): 'MENU_DEMO_SCREENSHOT_CAPTURE_FAILED'
-1400BD390	iw5mp_xenon	827D8C78	CL_Demo_HiResScreenshotInternal	client_demo/cl_demo_playback.cpp	votes	0.79	paired with it at the same place among matched calls in 3 callers
+1400BD390	iw5mp_xenon	827D8C78	CL_Demo_HiResScreenshotInternal	client_demo/cl_demo_playback.cpp	caller	0.75	only unmatched caller of jpeg_screenshot_chunk
 1400BD790	iw5mp_xenon	827D3540	CL_Demo_IsCapturingScreenshot	client_demo/cl_demo_playback.cpp	callee	0.85	callee of UI_SetActiveMenu with the same 0 matched callees and 2 matched callers
 1400BD830	iw5mp_xenon	827D2F50	CL_Demo_IsCompleted	client_demo/cl_demo_playback.cpp	callee	0.85	callee of CG_DrawDemoControls with the same 0 matched callees and 3 matched callers
 1400BD920	iw5mp_xenon	827D2EA0	CL_Demo_IsPaused	client_demo/cl_demo_playback.cpp	callee	0.85	callee of CG_DrawDemoControls with the same 0 matched callees and 3 matched callers
@@ -919,6 +916,7 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 140116A40	iw5mp_xenon	826EC508	dwRecordStringEvents	DW/dwRecordEvent.cpp	caller	0.75	only unmatched caller of bdEventLog::recordEvents
 140116BB0	iw5mp_xenon	826EC858	dwSetTagsEventRecord	DW/dwRecordEvent.cpp	calls	0.82	the only unmatched function on each side calling the same 3 matched functions
 140117040	iw5mp_xenon	826ED6F8	LiveRegionInfo_Pump	DW/dwRegionInfo.cpp	string-or-caller	0.85	1 unique string(s): 'region_info region: %s countrycode: %s country: %s'; or its only caller dwLobbyPump with it inlined
+1401173D0	iw5mp_xenon	826ECEE8	LiveRegionInfo_SetHilbert	DW/dwRegionInfo.cpp	constant	0.85	2 unique constant(s): 2.844444513320923f, 5.688889026641846f
 140117660	iw5mp_xenon	826ED3E0	dwRetrieveRegion	DW/dwRegionInfo.cpp	callee	0.85	callee of LiveRegionInfo_Pump with the same 2 matched callees and 1 matched callers
 1401177C0	iw5mp_xenon	826EE178	dwFetchPerformanceValues	DW/dwStats.cpp	caller	0.75	only unmatched caller of bdMatchMaking::getPerformanceValues
 140117A50	iw5mp_xenon	826EDC40	dwReadStatsByLeaderboardIDs	DW/dwStats.cpp	caller	0.85	caller of dwConnectionErrorHandler with the same 2 matched callees and 0 matched callers
@@ -962,11 +960,11 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 14011BFE0	iw5mp_xenon	826F2FA0	dwLobbyPump	DW/dwUtils-xbox.cpp	caller	0.75	only unmatched caller of LiveRegionInfo_Pump
 14011C0D0	iw5mp_xenon	826F31F8	dwTaskStatusConvert	DW/dwUtils.cpp	callee	0.75	only unmatched callee of dwGetTaskStatus
 14011C0F0	iw5mp_xenon	829111E8	bdSingleton<bdNetImpl>::getInstance	_external/trees/iw5build4-iw/iw5/code_source/DemonWare/bdLobby/bdLobbyConnection.cpp	caller	0.85	caller of bdMemory::allocate with the same 2 matched callees and 0 matched callers
-14011CE40	iw5mp_xenon	8240E0F0	DynEntCl_CreatePhysObj	DynEntity/DynEntity_client.cpp	calls	0.78	the only unmatched function on each side calling the same 2 matched functions
+14011CE40	iw5mp_xenon	826793A8	Phys_ObjCreateAngles	physics/phys_ode.cpp	caller	0.85	caller of Phys_ObjCreate with the same 1 matched callees and 0 matched callers
 14011D130	iw5mp_xenon	8240D2A0	DynEntCl_PointTrace	DynEntity/DynEntity_client.cpp	caller	0.75	only unmatched caller of DynEntCl_PointTrace_r
 14011D740	iw5mp_xenon	8240F628	DynEntCl_ExplosionEvent	DynEntity/DynEntity_client.cpp	order	0.80	called by CG_BulletDynEntImpact between the same matched calls
 14011E3B0	iw5mp_xenon	8240C520	DynEntCl_InitEntities	DynEntity/DynEntity_client.cpp	callee	0.85	callee of CG_Init with the same 1 matched callees and 2 matched callers
-14011E560	iw5mp_xenon	82413378	DynEnt_LoadEntities	DynEntity/DynEntity_load_obj.cpp	caller	0.75	only unmatched caller of DynEnt_SetPhysObjCollision
+14011E560	iw5mp_xenon	8240E0F0	DynEntCl_CreatePhysObj	DynEntity/DynEntity_client.cpp	caller	0.75	only unmatched caller of Phys_ObjCreate
 14011E9E0	iw5mp_xenon	8240C408	DynEntCl_LinkBrush	DynEntity/DynEntity_client.cpp	callee	0.85	callee of DynEntCl_ProcessEntities with the same 0 matched callees and 2 matched callers
 14011EAA0	iw5mp_xenon	8240C1A8	DynEntCl_LinkModel	DynEntity/DynEntity_client.cpp	caller	0.85	caller of UnitQuatToAxis with the same 1 matched callees and 1 matched callers
 14011EDA0	iw5mp_xenon	8240F0C0	DynEntCl_MeleeEvent	DynEntity/DynEntity_client.cpp	caller	0.75	only unmatched caller of CG_GetViewDirection
@@ -992,8 +990,8 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 140129470	iw5mp_xenon	8241D0A0	Glass_AddPiecePhysicsObject	EffectsCore/fx_glass.cpp	callee	0.85	callee of Glass_StartImmediateFall with the same 0 matched callees and 3 matched callers
 1401295A0	iw5mp_xenon	8241E3D0	Glass_CompactData	EffectsCore/fx_glass.cpp	callee	0.85	callee of Glass_MakeRoomForNewPieces with the same 0 matched callees and 2 matched callers
 140129920	iw5mp_xenon	8241E870	Glass_DestroyInitialPiece	EffectsCore/fx_glass.cpp	caller	0.75	only unmatched caller of Glass_MakeRoomForNewPieces
-14012A080	iw5mp_xenon	8241D3E8	Glass_GetInitialPieceAxis	EffectsCore/fx_glass.cpp	callee	0.85	callee of CG_Glass_ApplyChangesToPiece with the same 1 matched callees and 1 matched callers
-14012A0A0	iw5mp_xenon	8241D370	Glass_GetInitialPieceCenter	EffectsCore/fx_glass.cpp	callee	0.85	callee of CG_Glass_ApplyChangesToPiece with the same 0 matched callees and 3 matched callers
+14012A080	iw5mp_xenon	8241D3E8	Glass_GetInitialPieceAxis	EffectsCore/fx_glass.cpp	callee	0.85	callee of CG_Glass_ApplyChangesToPiece with the same 1 matched callees and 2 matched callers
+14012A0A0	iw5mp_xenon	8241D370	Glass_GetInitialPieceCenter	EffectsCore/fx_glass.cpp	callee	0.85	callee of CG_Glass_ApplyChangesToPiece with the same 0 matched callees and 2 matched callers
 14012A0D0	iw5mp_xenon	8241DBE0	Glass_Init	EffectsCore/fx_glass.cpp	caller	0.75	only unmatched caller of Glass_SetInitialState
 14012A0F0	iw5mp_xenon	8241E700	Glass_MakeRoomForNewPieces	EffectsCore/fx_glass.cpp	global	0.90	the only function on each side referencing the same 3 named globals
 14012A8F0	iw5mp_xenon	8241D8D0	Glass_SetInitialState	EffectsCore/fx_glass.cpp	caller	0.85	caller of Com_Memcpy with the same 2 matched callees and 0 matched callers
@@ -1009,16 +1007,19 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 140130310	iw5mp_xenon	82421C60	Glass_SetupPieceFall	EffectsCore/fx_glass_crack.cpp	callee	0.85	callee of Glass_StartImmediateFall with the same 2 matched callees and 1 matched callers
 140130840	iw5mp_xenon	824224E8	Glass_StartDelayedFall	EffectsCore/fx_glass_crack.cpp	caller	0.75	only unmatched caller of Glass_SetupPieceFall
 1401308E0	iw5mp_xenon	82421F68	Glass_StartImmediateFall	EffectsCore/fx_glass_crack.cpp	global	0.85	the only function on each side referencing the same 2 named globals
+140133B90	iw5mp_xenon	8242B228	FX_AddCellGlassSurfacesInFrustumCmd	EffectsCore/fx_glass_dpvs.cpp	caller	0.75	only unmatched caller of Glass_GetPieceDrawFlags
 140133D30	iw5mp_xenon	8242AFB8	FX_ClearGlassVisData	EffectsCore/fx_glass_dpvs.cpp	caller	0.85	caller of Com_Memset with the same 1 matched callees and 1 matched callers
+140133D60	iw5mp_xenon	8242AE00	Glass_GetPieceDrawFlags	EffectsCore/fx_glass_dpvs.cpp	constant-or-caller	0.85	2 unique constant(s): 7.0461542236444075e-06f, 0.0013272296637296677f; or its only caller FX_AddCellGlassSurfacesInFrustumCmd with it inlined
 140133FF0	iw5mp_xenon	8242B108	Glass_LinkPiece_Dynamic	EffectsCore/fx_glass_dpvs.cpp	callee	0.85	callee of Glass_UpdateFall with the same 0 matched callees and 2 matched callers
 1401340D0	iw5mp_xenon	8242AFD8	Glass_LinkPiece_Static	EffectsCore/fx_glass_dpvs.cpp	callee	0.85	callee of Glass_SetupDynamics with the same 0 matched callees and 2 matched callers
 140137D00	iw5mp_xenon	8242EEB0	Glass_TraceLine	EffectsCore/fx_glass_trace.cpp	calls	0.78	the only unmatched function on each side calling the same 2 matched functions
 140138030	iw5mp_xenon	82430298	Glass_UpdatePhysics	EffectsCore/fx_glass_update.cpp	caller	0.75	only unmatched caller of Glass_StartDelayedFall
 140138270	iw5mp_xenon	8242FD88	Glass_UpdateFall	EffectsCore/fx_glass_update.cpp	global-or-caller	0.90	the only function on each side referencing the same 3 named globals; or its only caller Glass_UpdatePiece with it inlined
+14013AE40	iw5mp_xenon	824377C8	FX_CreateImpactMark	EffectsCore/fx_marks.cpp	caller	0.75	only unmatched caller of FX_ImpactMark
+14013D180	iw5mp_xenon	82437588	FX_ImpactMark	EffectsCore/fx_marks.cpp	caller	0.85	caller of RotatePointAroundVector with the same 2 matched callees and 0 matched callers
 14013E6E0	iw5mp_xenon	82438B18	FX_PostLight_Add	EffectsCore/fx_postlight.cpp	order	0.80	called by AddCore between the same matched calls
 1401413B0	iw5mp_xenon	8243C268	FX_SpawnSparkFountain	EffectsCore/fx_sparkfountain.cpp	caller	0.75	only unmatched caller of FX_GetElemAxis
-1401430A0	iw5mp_xenon	82440318	FXIW_SpawnRunner	EffectsCore/fx_spawn_elem_alloc.cpp	caller	0.85	caller of UnitQuatToAxis with the same 2 matched callees and 0 matched callers
-140143350	iw5mp_xenon	824404C8	FXW_SpawnElem	EffectsCore/fx_spawn_elem_alloc.cpp	caller	0.75	only unmatched caller of FXIW_SpawnRunner
+140143350	iw5mp_xenon	824404C8	FXW_SpawnElem	EffectsCore/fx_spawn_elem_alloc.cpp	caller	0.75	only unmatched caller of FX_SpawnModelPhysics
 140143F60	iw5mp_xenon	8243FF18	FX_SpawnModelPhysics	EffectsCore/fx_spawn_elem_alloc.cpp	caller	0.85	caller of Phys_ObjCreate with the same 2 matched callees and 0 matched callers
 140145F20	iw5mp_xenon	82444BB8	FX_GetBoneOrientation	EffectsCore/fx_system_api.cpp	caller	0.75	only unmatched caller of CG_GetDObjOrientation
 140146AC0	iw5mp_xenon	82445558	FX_GetGlassVisInfo	EffectsCore/fx_system_init.cpp	callee	0.75	only unmatched callee of R_AddCellSurfacesAndCullGroupsInFrustumDelayed
@@ -1026,10 +1027,10 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 140148A80	iw5mp_xenon	82448290	FX_UpdatePass0SystemUpdate	EffectsCore/fx_update_api.cpp	global-or-caller	0.90	the only function on each side referencing the same 3 named globals; or its only caller FX_Update0 with it inlined
 140148CC0	iw5mp_xenon	824491E8	FX_Update2	EffectsCore/fx_update_api.cpp	callee	0.85	callee of CG_DrawActiveFrame with the same 1 matched callees and 1 matched callers
 1401497A0	iw5mp_xenon	82449E50	FX_SetPlacement	EffectsCore/fx_update_draw.cpp	caller	0.85	caller of AxisToQuat with the same 2 matched callees and 0 matched callers
-14014C7E0	iw5mp_xenon	8244E460	FXIW_UpdateElement_HandleEmitting	EffectsCore/fx_update_elem.cpp	caller	0.85	caller of AxisToQuat with the same 3 matched callees and 0 matched callers
+14014C7E0	iw5mp_xenon	8244E460	FXIW_UpdateElement_HandleEmitting	EffectsCore/fx_update_elem.cpp	caller	0.85	caller of AxisToQuat with the same 2 matched callees and 0 matched callers
 14014CD20	iw5mp_xenon	8244EA40	FXW_UpdateElement	EffectsCore/fx_update_elem.cpp	caller	0.75	only unmatched caller of FXIW_UpdateElement_HandleEmitting
 14014D810	iw5mp_xenon	82450418	FX_GetElemAxis	EffectsCore/fx_update_util.cpp	callee	0.85	callee of FX_SpawnModelPhysics with the same 1 matched callees and 1 matched callers
-14014E350	iw5mp_xenon	82450040	FX_OrientationPosToWorldPos	EffectsCore/fx_update_util.cpp	callee	0.85	callee of FX_SpawnModelPhysics with the same 0 matched callees and 3 matched callers
+14014E350	iw5mp_xenon	82450040	FX_OrientationPosToWorldPos	EffectsCore/fx_update_util.cpp	callee	0.85	callee of FX_SpawnModelPhysics with the same 0 matched callees and 4 matched callers
 14014EA40	iw5mp_xenon	82450DD8	FX_LoadWorld	EffectsCore/fx_world.cpp	caller	0.85	caller of DB_FindXAssetHeader with the same 1 matched callees and 1 matched callers
 14014EA70	iw5mp_xenon	82452AD8	BulletRicochet	game/bullet.cpp	caller	0.75	only unmatched caller of Bullet_Fire_Internal
 14014EED0	iw5mp_xenon	82453BD8	Bullet_CheckSpreadFireAtPos	game/bullet.cpp	callee	0.85	callee of Bullet_SpreadFireTargets with the same 2 matched callees and 1 matched callers
@@ -1054,7 +1055,7 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 140156A70	iw5mp_xenon	82462BE0	VisionSetForPlayer	game/g_client_script_cmd.cpp	string	0.90	2 unique string(s): 'JKLMN'
 140156D50	iw5mp_xenon	82468058	G_setfog	game/g_cmds.cpp	callee	0.85	callee of G_InitGame with the same 0 matched callees and 2 matched callers
 140156EF0	iw5mp_xenon	8246FB40	G_Glass_DestroyPiece	game/g_glass.cpp	callee	0.85	callee of Missile_PenetrateGlass with the same 1 matched callees and 1 matched callers
-1401570A0	iw5mp_xenon	8246F8E0	G_Glass_PieceStateChanged	game/g_glass.cpp	caller	0.75	only unmatched caller of Glass_GetInitialPieceAxis
+1401570A0	iw5mp_xenon	8246F8E0	G_Glass_PieceStateChanged	game/g_glass.cpp	constant	0.85	2 unique constant(s): -57000.0f, -540000.0f
 140157310	iw5mp_xenon	8246FC28	G_Glass_RadiusDamage	game/g_glass.cpp	order	0.80	called by G_RadiusDamage between the same matched calls
 140157680	iw5mp_xenon	8246FDA8	G_Glass_Update	game/g_glass.cpp	callee	0.85	callee of G_RunFrame with the same 1 matched callees and 1 matched callers
 140157A70	iw5mp_xenon	8246F428	G_InitGlass	game/g_glass.cpp	callee	0.85	callee of G_InitGame with the same 1 matched callees and 1 matched callers
@@ -1086,14 +1087,14 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 14015DCC0	iw5mp_xenon	82478940	G_SpawnString	game/g_load_utils.cpp	callee	0.85	callee of G_LoadStructs with the same 0 matched callees and 2 matched callers
 14015DD10	iw5mp_xenon	8247F078	BounceMissile	game/g_missile.cpp	caller	0.75	only unmatched caller of GrenadeBounceVelocity
 14015ECF0	iw5mp_xenon	82481430	G_ExplodeMissile	game/g_missile.cpp	caller	0.75	only unmatched caller of G_ExplodeMissileInternal
-14015ED00	iw5mp_xenon	82480B80	G_ExplodeMissileInternal	game/g_missile.cpp	caller	0.85	caller of G_FreeEntity with the same 7 matched callees and 0 matched callers
+14015ED00	iw5mp_xenon	82480B80	G_ExplodeMissileInternal	game/g_missile.cpp	caller	0.85	caller of G_FreeEntity with the same 8 matched callees and 0 matched callers
 14015F480	iw5mp_xenon	82485DD0	G_FireGrenade	game/g_missile.cpp	caller	0.85	caller of G_DObjUpdate with the same 2 matched callees and 0 matched callers
 140160460	iw5mp_xenon	8247D5E0	G_RegisterMissileDvars	game/g_missile.cpp	string	0.99	73 unique string(s): 'missileGlassShatterVel'
 140160C60	iw5mp_xenon	82485428	G_RunMissile	game/g_missile.cpp	caller	0.75	only unmatched caller of G_RunMissileInternal
 140160CF0	iw5mp_xenon	82484B20	G_RunMissileInternal	game/g_missile.cpp	caller	0.75	only unmatched caller of MissileTrajectory
 140161790	iw5mp_xenon	8247EC00	GrenadeBounceVelocity	game/g_missile.cpp	global	0.95	the only function on each side referencing the same 5 named globals
 1401619F0	iw5mp_xenon	82484140	GuidedMissileSteering	game/g_missile.cpp	caller	0.75	only unmatched caller of MissileVerticalSteering
-1401624F0	iw5mp_xenon	8247FDB0	MissileImpact	game/g_missile.cpp	caller	0.85	caller of Scr_AddVector with the same 8 matched callees and 0 matched callers
+1401624F0	iw5mp_xenon	8247FDB0	MissileImpact	game/g_missile.cpp	caller	0.85	caller of Scr_AddVector with the same 9 matched callees and 0 matched callers
 1401632F0	iw5mp_xenon	82482EC8	MissileIsReadyForSteering	game/g_missile.cpp	order	0.80	called by MissileTrajectory between the same matched calls
 140163380	iw5mp_xenon	8247DF60	MissileLandAngles	game/g_missile.cpp	caller	0.85	caller of G_rand with the same 2 matched callees and 1 matched callers
 1401635A0	iw5mp_xenon	8247E1C0	MissileLandAnglesFlat	game/g_missile.cpp	caller	0.85	caller of BG_EvaluateTrajectory with the same 3 matched callees and 1 matched callers
@@ -1103,11 +1104,11 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 140163ED0	iw5mp_xenon	82482088	Missile_ApplyAttractorsRepulsors	game/g_missile.cpp	callee	0.85	callee of G_RunMissileInternal with the same 1 matched callees and 1 matched callers
 1401647C0	iw5mp_xenon	82481440	Missile_PenetrateGlass	game/g_missile.cpp	caller	0.85	caller of BG_EvaluateTrajectoryDelta with the same 2 matched callees and 1 matched callers
 140164BD0	iw5mp_xenon	824824F8	RunMissile_Destabilize	game/g_missile.cpp	callee	0.85	callee of G_RunMissileInternal with the same 2 matched callees and 1 matched callers
-140165240	iw5mp_xenon	824872B0	G_MoverPush	game/g_mover.cpp	callee	0.85	callee of G_MoverTeam with the same 4 matched callees and 1 matched callers
+140165240	iw5mp_xenon	824872B0	G_MoverPush	game/g_mover.cpp	caller	0.85	caller of SV_LinkEntity with the same 2 matched callees and 0 matched callers
 140165920	iw5mp_xenon	82487A48	G_MoverTeam	game/g_mover.cpp	order	0.80	called by G_RunMover between the same matched calls
 140165D50	iw5mp_xenon	82487F78	G_RunMover	game/g_mover.cpp	caller	0.85	caller of G_RunThink with the same 1 matched callees and 1 matched callers
-140165D90	iw5mp_xenon	82486988	G_TestEntityPosition	game/g_mover.cpp	caller	0.85	caller of G_TraceCapsule with the same 2 matched callees and 1 matched callers
-140165E70	iw5mp_xenon	82486C58	G_TryPushingEntity	game/g_mover.cpp	caller	0.85	caller of G_TraceCapsule with the same 2 matched callees and 1 matched callers
+140165D90	iw5mp_xenon	82486988	G_TestEntityPosition	game/g_mover.cpp	caller	0.85	caller of Trace_GetEntityHitId with the same 2 matched callees and 1 matched callers
+140165E70	iw5mp_xenon	82486C58	G_TryPushingEntity	game/g_mover.cpp	calls	0.78	the only unmatched function on each side calling the same 2 matched functions
 140166B00	iw5mp_xenon	8248D238	GScr_GetDvarVector	game/g_scr_main.cpp	string	0.80	1 unique string(s) of its own and 1 of 1 callee(s) it inlined: '0.0 0.0 0.0'
 140167390	iw5mp_xenon	8248DF28	GScr_ShootTurret	game/g_scr_main.cpp	caller	0.75	only unmatched caller of Turret_Shoot
 1401675B0	iw5mp_xenon	8248E190	GScr_SetTurretMinimapVisible	game/g_scr_main.cpp	caller	0.75	only unmatched caller of Turret_SetMinimapVisible
@@ -1115,12 +1116,14 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 1401689C0	iw5mp_xenon	8248FB68	GScr_Spawn	game/g_scr_main.cpp	calls	0.78	the only unmatched function on each side calling the same 2 matched functions
 140168A90	iw5mp_xenon	8248FC28	GScr_SpawnTurret	game/g_scr_main.cpp	caller	0.85	caller of Scr_GetString with the same 2 matched callees and 0 matched callers
 140168E70	iw5mp_xenon	82490160	ScrCmd_detachAll	game/g_scr_main.cpp	caller	0.75	only unmatched caller of G_EntDetachAll
+140169F80	iw5mp_xenon	82491D08	ScrCmd_SetContents	game/g_scr_main.cpp	caller	0.85	caller of Scr_AddInt with the same 2 matched callees and 0 matched callers
 14016A950	iw5mp_xenon	82492A20	ScrCmd_SetStance	game/g_scr_main.cpp	caller	0.85	caller of G_AddEvent with the same 2 matched callees and 0 matched callers
 14016ABD0	iw5mp_xenon	82492D80	ScrCmd_GetEye	game/g_scr_main.cpp	caller	0.85	caller of Scr_AddVector with the same 2 matched callees and 0 matched callers
 14016AC30	iw5mp_xenon	82492DD8	Scr_BulletTrace	game/g_scr_main.cpp	caller	0.85	caller of Scr_AddVector with the same 3 matched callees and 0 matched callers
 14016AE70	iw5mp_xenon	82493020	Scr_BulletTracePassed	game/g_scr_main.cpp	caller	0.75	only unmatched caller of G_LocationalTracePassed
 14016AF10	iw5mp_xenon	824A2318	GScr_GetAssignedTeam	game_mp/g_scr_main_mp.cpp	caller	0.85	caller of Scr_AddInt with the same 3 matched callees and 0 matched callers
 14016B170	iw5mp_xenon	82493300	Scr_GetGroundPosition	game/g_scr_main.cpp	caller	0.85	caller of Scr_AddVector with the same 3 matched callees and 0 matched callers
+14016B5B0	iw5mp_xenon	824938D8	GScr_CastInt	game/g_scr_main.cpp	caller	0.85	caller of Scr_GetString with the same 3 matched callees and 0 matched callers
 14016B850	iw5mp_xenon	82493CA8	GScr_AngleClamp360	game/g_scr_main.cpp	caller	0.85	caller of Scr_GetFloat with the same 2 matched callees and 0 matched callers
 14016BC50	iw5mp_xenon	82493FC0	Scr_Distance2D	game/g_scr_main.cpp	caller	0.85	caller of Scr_AddFloat with the same 2 matched callees and 0 matched callers
 14016BF10	iw5mp_xenon	82494298	Scr_VectorToAngles	game/g_scr_main.cpp	caller	0.85	caller of Scr_AddVector with the same 2 matched callees and 0 matched callers
@@ -1129,7 +1132,7 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 14016C710	iw5mp_xenon	82494A08	Scr_StrICmp	game/g_scr_main.cpp	caller	0.85	caller of Scr_AddInt with the same 3 matched callees and 0 matched callers
 14016C8A0	iw5mp_xenon	82494E00	Scr_PrecacheShellShock	game/g_scr_main.cpp	caller	0.85	caller of BG_LoadShellShockDvars with the same 4 matched callees and 0 matched callers
 14016D4F0	iw5mp_xenon	82495C90	GScr_WeaponFireTime	game/g_scr_main.cpp	caller	0.75	only unmatched caller of BG_WeaponIsDualWield
-14016D7D0	iw5mp_xenon	82496020	GScr_IsItemUnlocked	game/g_scr_main.cpp	caller	0.85	caller of LiveStorage_IsItemUnlockedFromTable with the same 2 matched callees and 0 matched callers
+14016D7D0	iw5mp_xenon	82496020	GScr_IsItemUnlocked	game/g_scr_main.cpp	caller	0.85	caller of LiveStorage_IsItemUnlockedFromTable with the same 3 matched callees and 0 matched callers
 14016D8E0	iw5mp_xenon	82496130	Scr_PrecacheItem	game/g_scr_main.cpp	caller	0.75	only unmatched caller of G_FindItem
 14016DED0	iw5mp_xenon	82496C98	GScr_GlassRadiusDamage	game/g_scr_main.cpp	caller	0.75	only unmatched caller of G_Glass_RadiusDamage
 14016DFA0	iw5mp_xenon	82496D70	GScr_Detonate	game/g_scr_main.cpp	caller	0.75	only unmatched caller of G_ExplodeMissile
@@ -1138,9 +1141,8 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 14016E4D0	iw5mp_xenon	82497528	GScr_SetNorthYaw	game/g_scr_main.cpp	caller	0.85	caller of Scr_GetFloat with the same 3 matched callees and 0 matched callers
 14016EB10	iw5mp_xenon	82497CB0	Scr_PlayFxOnTagForClientsInternal	game/g_scr_main.cpp	string-or-caller	0.85	1 unique string(s): '%08x%03d%s'; or its only caller Scr_PlayFXOnTagForClients with it inlined
 140170160	iw5mp_xenon	8249A0B0	GScr_SetMiniMap	game/g_scr_main.cpp	string	0.85	1 unique string(s): '"%s" %f %f %f %f'
-140170F80	iw5mp_xenon	8249B1B8	GScr_GetLocalPlayerProfileData	game/g_scr_main.cpp	caller	0.85	caller of GamerProfile_GetDataByName with the same 2 matched callees and 0 matched callers
+140170F80	iw5mp_xenon	8249B1B8	GScr_GetLocalPlayerProfileData	game/g_scr_main.cpp	caller	0.85	caller of GamerProfile_GetDataByName with the same 3 matched callees and 0 matched callers
 140171240	iw5mp_xenon	8249B4A0	Scr_MagicBullet	game/g_scr_main.cpp	caller	0.75	only unmatched caller of Weapon_RocketLauncher_Fire
-1401718B0	iw5mp_xenon	8249BE98	ScrCmd_WorldPointInReticle_Circle	game/g_scr_main.cpp	caller	0.85	caller of Scr_GetFloat with the same 2 matched callees and 0 matched callers
 1401729E0	iw5mp_xenon	8248FD40	AttachCmd	game/g_scr_main.cpp	calls	0.78	the only unmatched function on each side calling the same 2 matched functions
 140172BB0	iw5mp_xenon	8248BA58	GScr_AllocString	game/g_scr_main.cpp	callee	0.85	callee of GScr_LoadConsts with the same 1 matched callees and 1 matched callers
 140172DC0	iw5mp_xenon	8248F798	GScr_GetScriptMenuIndex	game/g_scr_main.cpp	caller	0.85	caller of SV_GetConfigstring with the same 1 matched callees and 1 matched callers
@@ -1168,8 +1170,8 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 140177E60	iw5mp_xenon	824ACCE8	G_ProcessIPBans	game/g_svcmds.cpp	callee	0.85	callee of G_InitGame with the same 1 matched callees and 1 matched callers
 140178040	iw5mp_xenon	824ACB70	UpdateIPBans	game/g_svcmds.cpp	string	0.85	1 unique string(s): '%i.%i.%i.%i '
 140178110	iw5mp_xenon	824ADC18	Activate_trigger_damage	game/g_trigger.cpp	caller	0.85	caller of G_Trigger with the same 1 matched callees and 2 matched callers
-1401782C0	iw5mp_xenon	824ADE60	G_CheckHitTriggerDamage	game/g_trigger.cpp	callee	0.85	callee of MissileImpact with the same 2 matched callees and 1 matched callers
-140178570	iw5mp_xenon	824AE148	G_GrenadeTouchTriggerDamage	game/g_trigger.cpp	caller	0.85	caller of Scr_AddInt with the same 2 matched callees and 1 matched callers
+1401782C0	iw5mp_xenon	824ADE60	G_CheckHitTriggerDamage	game/g_trigger.cpp	caller	0.85	caller of Scr_AddInt with the same 2 matched callees and 1 matched callers
+140178570	iw5mp_xenon	824AE148	G_GrenadeTouchTriggerDamage	game/g_trigger.cpp	caller	0.85	caller of Scr_AddVector with the same 3 matched callees and 0 matched callers
 1401787D0	iw5mp_xenon	824AD1C0	G_Trigger	game/g_trigger.cpp	callee	0.75	only unmatched callee of hurt_touch
 1401788A0	iw5mp_xenon	824ADDC8	SP_trigger_damage	game/g_trigger.cpp	named	0.89	registered/tabled under 1 name(s): 'trigger_damage'
 140178980	iw5mp_xenon	824AD780	SP_trigger_disk	game/g_trigger.cpp	named	0.89	registered/tabled under 1 name(s): 'trigger_disk'
@@ -1184,7 +1186,7 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 1401793B0	iw5mp_xenon	824B4508	FireWeapon	game/g_weapon.cpp	caller	0.75	only unmatched caller of CalcMuzzlePoints
 140179B30	iw5mp_xenon	824B3788	Weapon_Melee	game/g_weapon.cpp	caller	0.75	only unmatched caller of Weapon_Melee_internal
 140179CC0	iw5mp_xenon	824B43D0	FireWeapon_SendClientEvent	game/g_weapon.cpp	caller	0.85	caller of G_AddEvent with the same 1 matched callees and 1 matched callers
-14017A080	iw5mp_xenon	824B5E40	G_GetShieldBlastDamageProtection	game/g_weapon.cpp	global	0.95	the only function on each side referencing the same 4 named globals
+14017A080	iw5mp_xenon	824B5E40	G_GetShieldBlastDamageProtection	game/g_weapon.cpp	constant	0.85	2 unique constant(s): 0.9660000205039978f, 0.8659999966621399f
 14017A300	iw5mp_xenon	824B5078	G_GetWeaponForName	game/g_weapon.cpp	order	0.80	called by GScr_RadiusDamageInternal between the same matched calls
 14017A960	iw5mp_xenon	824B6138	G_GivePlayerWeapon	game/g_weapon.cpp	callee	0.85	callee of PlayerCmd_giveWeapon with the same 1 matched callees and 1 matched callers
 14017ABE0	iw5mp_xenon	824B5730	G_SelectWeapon	game/g_weapon.cpp	caller	0.85	caller of va with the same 2 matched callees and 1 matched callers
@@ -1198,7 +1200,7 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 14017BC30	iw5mp_xenon	824B38B0	Weapon_Throw_Grenade	game/g_weapon.cpp	caller	0.85	caller of G_FireGrenade with the same 1 matched callees and 0 matched callers
 14017BDF0	iw5mp_xenon	824B76B0	CalcLerpFraction	game/linkto.cpp	callee	0.85	callee of G_SetFixedLinkPlayer with the same 0 matched callees and 2 matched callers
 14017C230	iw5mp_xenon	824B6DB0	G_CalcTagParentAxis	game/linkto.cpp	callee	0.85	callee of G_SetFixedLinkPlayer with the same 2 matched callees and 1 matched callers
-14017C5F0	iw5mp_xenon	824B6B58	G_EntUnlink	game/linkto.cpp	callee	0.85	callee of G_FreeEntity with the same 0 matched callees and 2 matched callers
+14017C5F0	iw5mp_xenon	824B6B58	G_EntUnlink	game/linkto.cpp	callee	0.85	callee of G_FreeEntity with the same 0 matched callees and 3 matched callers
 14017C610	iw5mp_xenon	824B7BF0	G_GeneralLink	game/linkto.cpp	order	0.80	called by G_RunFrameForEntity between the same matched calls
 14017C6F0	iw5mp_xenon	824B7A78	G_InitPlayerLinkAngles	game/linkto.cpp	caller	0.85	caller of AxisToAngles with the same 2 matched callees and 0 matched callers
 14017C7A0	iw5mp_xenon	824B83C0	G_SetFixedLinkPlayer	game/linkto.cpp	caller	0.85	caller of SV_LinkEntity with the same 2 matched callees and 1 matched callers
@@ -1237,7 +1239,7 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 140187930	iw5mp_xenon	824577F0	G_PlayerController	game_mp/g_active_mp.cpp	caller	0.85	caller of Com_GetServerDObjForEnt with the same 2 matched callees and 0 matched callers
 140187B60	iw5mp_xenon	82457030	G_RunClient	game_mp/g_active_mp.cpp	callee	0.75	only unmatched callee of G_RunFrameForEntity
 140187BF0	iw5mp_xenon	824562F8	G_SetLastServerTime	game_mp/g_active_mp.cpp	callee	0.75	only unmatched callee of SV_ClientThink
-140187C30	iw5mp_xenon	824552B0	G_TouchTriggers	game_mp/g_active_mp.cpp	callee	0.85	callee of G_RunFrame with the same 1 matched callees and 1 matched callers
+140187C30	iw5mp_xenon	824552B0	G_TouchTriggers	game_mp/g_active_mp.cpp	caller	0.85	caller of CM_AreaEntities with the same 1 matched callees and 1 matched callers
 140187EA0	iw5mp_xenon	824550D0	G_TouchTriggers_Internal	game_mp/g_active_mp.cpp	caller	0.85	caller of SV_EntityContactBounds with the same 1 matched callees and 1 matched callers
 1401881F0	iw5mp_xenon	82456940	G_UpdateThirdPersonMode	game_mp/g_active_mp.cpp	caller	0.85	caller of G_TraceCapsule with the same 3 matched callees and 1 matched callers
 1401888D0	iw5mp_xenon	824B4A40	FireWeaponMelee	game/g_weapon.cpp	caller	0.75	only unmatched caller of Weapon_Melee
@@ -1261,10 +1263,10 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 14018D600	iw5mp_xenon	824695E0	SendScoreboard	game_mp/g_cmds_mp.cpp	string	0.85	1 unique string(s): '%c %i %i %i %i%s'
 14018D920	iw5mp_xenon	82469950	StopFollowing	game_mp/g_cmds_mp.cpp	constant	0.85	2 unique constant(s): 0xfff77fef, 0xfff3f7c1
 14018DC60	iw5mp_xenon	8246BD50	CanDamage	game_mp/g_combat_mp.cpp	order	0.80	called by G_RadiusDamage between the same matched calls
-14018E870	iw5mp_xenon	8246CA40	FlashbangBlastEnt	game_mp/g_combat_mp.cpp	caller	0.85	caller of Scr_AddVector with the same 3 matched callees and 1 matched callers
-14018EBB0	iw5mp_xenon	8246B880	G_Damage	game_mp/g_combat_mp.cpp	order	0.80	called by VEH_PushEntity between the same matched calls
-14018F380	iw5mp_xenon	824A4AE8	Scr_PlayerKilled	game_mp/g_scr_main_mp.cpp	caller	0.85	caller of Scr_AddInt with the same 3 matched callees and 0 matched callers
-14018F5C0	iw5mp_xenon	8246CBE0	G_FlashbangBlast	game_mp/g_combat_mp.cpp	callee	0.85	callee of MissileImpact with the same 1 matched callees and 2 matched callers
+14018E870	iw5mp_xenon	8246CA40	FlashbangBlastEnt	game_mp/g_combat_mp.cpp	caller	0.85	caller of Scr_AddVector with the same 1 matched callees and 1 matched callers
+14018EBB0	iw5mp_xenon	8246B880	G_Damage	game_mp/g_combat_mp.cpp	order	0.80	called by G_MoverPush between the same matched calls
+14018F5C0	iw5mp_xenon	8246CBE0	G_FlashbangBlast	game_mp/g_combat_mp.cpp	callee	0.85	callee of G_ExplodeMissileInternal with the same 1 matched callees and 2 matched callers
+14018F700	iw5mp_xenon	8246D298	G_GetHitLocationIndexFromString	game_mp/g_combat_mp.cpp	callee	0.85	callee of PlayerCmd_finishPlayerDamage with the same 0 matched callees and 2 matched callers
 14018F7C0	iw5mp_xenon	8246A5B0	G_ParseHitLocDmgTable	game_mp/g_combat_mp.cpp	string	0.95	3 unique string(s): 'info/mp_lochit_dmgtable'
 14018F8D0	iw5mp_xenon	8246CDF0	G_RadiusDamage	game_mp/g_combat_mp.cpp	caller	0.75	only unmatched caller of G_GetShieldBlastDamageProtection
 14018FED0	iw5mp_xenon	8246BC58	G_ShieldNotifyAndDamage	game_mp/g_combat_mp.cpp	order	0.80	called by Weapon_Melee_internal between the same matched calls
@@ -1275,7 +1277,7 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 140190E00	iw5mp_xenon	82479DE8	G_GetSavePersist	game_mp/g_main_mp.cpp	callee	0.85	callee of SV_SetGametype with the same 0 matched callees and 2 matched callers
 140190E10	iw5mp_xenon	8247C8C8	G_InitGame	game_mp/g_main_mp.cpp	string-via-callee	0.89	4 unique string(s): 'scr_%s_scorelimit', which belong(s) to G_RegisterGametypeDvars, inlined into its only caller: 1687 bytes against 184 alone and 1928 with it
 1401914B0	iw5mp_xenon	8247C6C8	G_LocationalTrace	game_mp/g_main_mp.cpp	votes	0.79	paired with it at the same place among matched calls in 3 callers
-1401915C0	iw5mp_xenon	8247C790	G_LocationalTracePassed	game_mp/g_main_mp.cpp	caller	0.75	only unmatched caller of SV_TracePassed
+1401915C0	iw5mp_xenon	8247C790	G_LocationalTracePassed	game_mp/g_main_mp.cpp	callee	0.85	callee of CanDamage with the same 1 matched callees and 1 matched callers
 140191620	iw5mp_xenon	82479640	G_RegisterDebugDvars	game_mp/g_main_mp.cpp	string	0.99	25 unique string(s): 'Turn on debug lines for melee traces'
 1401918D0	iw5mp_xenon	82478A18	G_RegisterServerDemoDvars	game_mp/g_main_mp.cpp	string	0.99	113 unique string(s): 'The current game mode'
 140192530	iw5mp_xenon	8247BD00	G_RunFrame	game_mp/g_main_mp.cpp	caller	0.75	only unmatched caller of ClientEndFrame
@@ -1302,7 +1304,7 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 140196B90	iw5mp_xenon	8249F818	ScrCmd_GetNormalHealth	game_mp/g_scr_main_mp.cpp	caller	0.85	caller of GetEntity with the same 2 matched callees and 0 matched callers
 140196DB0	iw5mp_xenon	8249FBA0	ScrCmd_SetScriptMoverKillCam	game_mp/g_scr_main_mp.cpp	string	0.99	4 unique string(s): 'airstrike'
 140197280	iw5mp_xenon	824A0390	GScr_positionWouldTelefrag	game_mp/g_scr_main_mp.cpp	caller	0.85	caller of Scr_AddInt with the same 2 matched callees and 0 matched callers
-140197370	iw5mp_xenon	824A0498	GScr_CanSpawn	game_mp/g_scr_main_mp.cpp	caller	0.85	caller of G_TraceCapsule with the same 2 matched callees and 0 matched callers
+140197370	iw5mp_xenon	824A0498	GScr_CanSpawn	game_mp/g_scr_main_mp.cpp	caller	0.85	caller of Scr_AddInt with the same 2 matched callees and 0 matched callers
 1401973D0	iw5mp_xenon	824A0510	GScr_PlaceSpawnPoint	game_mp/g_scr_main_mp.cpp	caller	0.85	caller of G_TraceCapsule with the same 2 matched callees and 0 matched callers
 140197950	iw5mp_xenon	824A1028	GScr_AllClientsPrint	game_mp/g_scr_main_mp.cpp	caller	0.85	caller of Scr_GetString with the same 4 matched callees and 0 matched callers
 140197AF0	iw5mp_xenon	824A11A8	GScr_ClientPrint	game_mp/g_scr_main_mp.cpp	caller	0.85	caller of Scr_GetString with the same 5 matched callees and 0 matched callers
@@ -1324,7 +1326,8 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 14019A430	iw5mp_xenon	8249E9A8	GScr_LoadLevelScript	game_mp/g_scr_main_mp.cpp	string-or-caller	0.90	2 unique string(s): 'The current map name'; or its only caller GScr_LoadScripts with it inlined
 14019A680	iw5mp_xenon	8249EB80	Scr_ConstructMessageString	game_mp/g_scr_main_mp.cpp	callee	0.85	callee of PlayerCmd_SetClientDvar with the same 1 matched callees and 2 matched callers
 14019AAF0	iw5mp_xenon	824A51D0	Scr_PlayLoopedFX	game_mp/g_scr_main_mp.cpp	string	0.95	3 unique string(s): 'playLoopedFx called with (0 0 0) up direction'
-14019AF70	iw5mp_xenon	824A4C70	Scr_PlayerLastStand	game_mp/g_scr_main_mp.cpp	caller	0.85	caller of Scr_AddVector with the same 1 matched callees and 1 matched callers
+14019AE20	iw5mp_xenon	824A4AE8	Scr_PlayerKilled	game_mp/g_scr_main_mp.cpp	caller	0.85	caller of Scr_AddVector with the same 5 matched callees and 0 matched callers
+14019AF70	iw5mp_xenon	824A4C70	Scr_PlayerLastStand	game_mp/g_scr_main_mp.cpp	caller	0.85	caller of Scr_AddVector with the same 2 matched callees and 1 matched callers
 14019B120	iw5mp_xenon	824A4ED0	Scr_SpawnFX	game_mp/g_scr_main_mp.cpp	string	0.90	2 unique string(s): 'spawnFx called with (0 0 0) up direction'
 14019C190	iw5mp_xenon	824AB820	G_CallSpawn	game_mp/g_spawn_mp.cpp	string-or-caller	0.85	1 unique string(s): 'info_vehicle_node'; or its only caller G_SpawnEntitiesFromString with it inlined
 14019C350	iw5mp_xenon	824AA1B8	G_CallSpawnEntity	game_mp/g_spawn_mp.cpp	caller	0.75	only unmatched caller of SP_info_notnull
@@ -1350,7 +1353,7 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 14019E970	iw5mp_xenon	824B21F0	G_EntDetachAll	game_mp/g_utils_mp.cpp	caller	0.85	caller of SV_LinkEntity with the same 3 matched callees and 0 matched callers
 14019EB30	iw5mp_xenon	824B0AB8	G_InitGentity	game_mp/g_utils_mp.cpp	callee	0.75	only unmatched callee of G_SpawnPlayerClone
 14019EC70	iw5mp_xenon	824B0EC8	G_FreeEntity	game_mp/g_utils_mp.cpp	named	0.89	registered/tabled under 1 name(s): 'script_struct'
-14019F2D0	iw5mp_xenon	824AF020	G_GetModelBounds	game_mp/g_utils_mp.cpp	callee	0.85	callee of Player_GetUseList with the same 0 matched callees and 2 matched callers
+14019F2D0	iw5mp_xenon	824AF020	G_GetModelBounds	game_mp/g_utils_mp.cpp	callee	0.85	callee of G_MoverPush with the same 0 matched callees and 3 matched callers
 14019F410	iw5mp_xenon	824AE7E8	G_LocalizedStringIndex	game_mp/g_utils_mp.cpp	callee	0.85	callee of HECmd_SetText with the same 1 matched callees and 1 matched callers
 14019F5F0	iw5mp_xenon	824AEDD8	G_ModelIndex	game_mp/g_utils_mp.cpp	callee	0.85	callee of G_RegisterWeapon with the same 1 matched callees and 2 matched callers
 14019F6C0	iw5mp_xenon	824AFF60	G_OverrideModel	game_mp/g_utils_mp.cpp	callee	0.85	callee of VEH_InitModelAndValidateTags with the same 0 matched callees and 2 matched callers
@@ -1366,15 +1369,17 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 14019FFE0	iw5mp_xenon	824B1940	G_crandom	game_mp/g_utils_mp.cpp	callee	0.85	callee of Item_SetDefaultVelocity with the same 0 matched callees and 3 matched callers
 1401A0020	iw5mp_xenon	824B1860	G_flrand	game_mp/g_utils_mp.cpp	votes	0.79	paired with it at the same place among matched calls in 3 callers
 1401A0090	iw5mp_xenon	824B1838	G_rand	game_mp/g_utils_mp.cpp	callee	0.85	callee of SV_GetChallenge with the same 0 matched callees and 2 matched callers
+1401A00B0	iw5mp_xenon	824B18F8	G_random	game_mp/g_utils_mp.cpp	callee	0.85	callee of G_Glass_PieceStateChanged with the same 0 matched callees and 3 matched callers
 1401A00E0	iw5mp_xenon	824B25C8	G_srand	game_mp/g_utils_mp.cpp	callee	0.85	callee of G_InitGame with the same 0 matched callees and 2 matched callers
 1401A0100	iw5mp_xenon	824BB908	SaveMemory_GetSaveHandle	game_mp/savememory_mp.cpp	order	0.80	called by SendHeader between the same matched calls
-1401A0110	iw5mp_xenon	824BB928	SaveMemory_LoadRead	game_mp/savememory_mp.cpp	votes	0.79	paired with it at the same place among matched calls in 3 callers
+1401A0110	iw5mp_xenon	824BB928	SaveMemory_LoadRead	game_mp/savememory_mp.cpp	callee	0.75	only unmatched callee of G_ReadStruct
 1401A5650	iw5mp_xenon	8264B5A0	Live_CheckNotifications_SignInChanged	xenon/xenon_live.cpp	caller	0.85	caller of Live_DisconnectOnSignInStatusChanged with the same 1 matched callees and 0 matched callers
 1401A6430	iw5mp_xenon	827141C8	Live_DisconnectOnSignInStatusChanged	online/live_common.cpp	string	0.85	1 unique string(s): 'ui_skipMainLockout'
 1401A8B60	iw5mp_xenon	8278FCC0	RB_UpdateBackEndDvarOptions	gfx_d3d/rb_backend.cpp	global	0.95	the only function on each side referencing the same 5 named globals
 1401ABDA0	iw5mp_xenon	8278FBA8	RB_EndFrame	gfx_d3d/rb_backend.cpp	global	0.90	the only function on each side referencing the same 3 named globals
 1401AC6F0	iw5mp_xenon	82790838	RB_RegisterBackendAssets	gfx_d3d/rb_backend.cpp	callee	0.85	callee of R_Init with the same 1 matched callees and 1 matched callers
 1401ACFA0	iw5mp_xenon	8278F070	RB_SetGammaRamp	gfx_d3d/rb_backend.cpp	callee	0.75	only unmatched callee of R_SetColorMappings
+1401B1B80	iw5mp_xenon	827A1540	RB_GenerateGaussianFilterChain	gfx_d3d/rb_imagefilter.cpp	constant	0.95	4 unique constant(s): 1.3895604610443115f, 42.220760345458984f, 6.497750282287598f, 0.3295051157474518f
 1401B2720	iw5mp_xenon	827A3EE8	R_AdjustLightColorSamples	gfx_d3d/rb_light.cpp	global	0.85	the only function on each side referencing the same 2 named globals
 1401B5E10	iw5mp_xenon	827A8788	RB_DoResampleAndPostEffects	gfx_d3d/rb_postfx.cpp	caller	0.75	only unmatched caller of RB_DrawDebugPostEffects
 1401B65C0	iw5mp_xenon	827A86C0	RB_DrawDebugPostEffects	gfx_d3d/rb_postfx.cpp	global-or-caller	0.85	the only function on each side referencing the same 2 named globals; or its only caller RB_DoResampleAndPostEffects with it inlined
@@ -1433,6 +1438,7 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 1401E9F30	iw5mp_xenon	8275B640	R_ResetModelLighting	gfx_d3d/r_model_lighting.cpp	callee	0.85	callee of R_Shutdown with the same 1 matched callees and 1 matched callers
 1401EA660	iw5mp_xenon	8275A708	R_ToggleModelLightingFrame	gfx_d3d/r_model_lighting.cpp	global	0.90	the only function on each side referencing the same 3 named globals
 1401F0E60	iw5mp_xenon	82761AF8	GenerateLightGridBasisDirs	gfx_d3d/r_pointlights.cpp	order	0.80	called by R_InitRenderCommands between the same matched calls
+1401F1140	iw5mp_xenon	82762058	R_AddHeroOnlyLightsToGridColors	gfx_d3d/r_pointlights.cpp	constant	0.85	2 unique constant(s): 3.0637256713816896e-05f, 32640.0f
 1401F1980	iw5mp_xenon	82762BF0	R_AddPotentiallyShadowedLight	gfx_d3d/r_primarylights.cpp	global-or-caller	0.95	the only function on each side referencing the same 6 named globals; or its only caller R_ChooseShadowedLights with it inlined
 1401F1D40	iw5mp_xenon	82764328	R_AddShadowsForLight	gfx_d3d/r_primarylights.cpp	caller	0.75	only unmatched caller of R_AddSpotShadowsForLight
 1401F2C80	iw5mp_xenon	82764830	R_LinkDynEntToPrimaryLights	gfx_d3d/r_primarylights.cpp	order	0.80	called by R_LinkDynEnt between the same matched calls
@@ -1471,6 +1477,7 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 1401F9BB0	iw5mp_xenon	82772CF0	R_SetupSunShadowVariables	gfx_d3d/r_scene.cpp	global	0.85	the only function on each side referencing the same 2 named globals
 1401FA630	iw5mp_xenon	82772F18	R_SetupViewInfoVariables	gfx_d3d/r_scene.cpp	callee	0.85	callee of R_GenerateSortedDrawSurfs with the same 1 matched callees and 1 matched callers
 1401FA760	iw5mp_xenon	827319B8	R_AddWorldSurfacesDpvs	gfx_d3d/r_dpvs.cpp	caller	0.75	only unmatched caller of R_AddWorldSurfacesPortalWalk
+1401FAE50	iw5mp_xenon	82770C58	R_UpdateColorManipulation	gfx_d3d/r_scene.cpp	constant-or-caller	0.90	3 unique constant(s): 0.3086000084877014f, 0.6093999743461609f, 0.0820000022649765f; or its only caller R_SetFilmInfo with it inlined
 1401FCBC0	iw5mp_xenon	82779A58	R_UpdateVertexDecl	gfx_d3d/r_shade.cpp	string	0.85	1 unique string(s): "Vertex type %i doesn't have the information used by shader %"
 1401FCC90	iw5mp_xenon	8277ADC0	R_Cmd_LoadSun	gfx_d3d/r_sky.cpp	named	0.89	registered/tabled under 1 name(s): 'r_loadsun'
 1401FCE10	iw5mp_xenon	8277A4D8	R_RegisterSunDvars	gfx_d3d/r_sky.cpp	string	0.99	43 unique string(s): 'name for static sprite; can be any material'
@@ -1486,8 +1493,8 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 14020A110	iw5mp_xenon	8278C0D8	R_AddWorkerCmd	gfx_d3d/r_workercmds.cpp	caller	0.75	only unmatched caller of R_ProcessWorkerCmdInternal
 14020A740	iw5mp_xenon	8278C020	R_InitWorkerThreads	gfx_d3d/r_workercmds.cpp	string	0.85	1 unique string(s): 'Failed to create thread'
 14020A7A0	iw5mp_xenon	8278AFC8	R_ProcessWorkerCmd	gfx_d3d/r_workercmds.cpp	string	0.85	1 unique string(s): '%s %d'
-14020AAD0	iw5mp_xenon	8278ACE0	R_ProcessWorkerCmdInternal	gfx_d3d/r_workercmds.cpp	callee	0.85	callee of R_ProcessWorkerCmd with the same 1 matched callees and 1 matched callers
-14020B010	iw5mp_xenon	8278C7C0	R_WaitWorkerCmdsOfType	gfx_d3d/r_workercmds.cpp	callee	0.85	callee of R_DrawLightsAndObjectsPass1 with the same 0 matched callees and 2 matched callers
+14020AAD0	iw5mp_xenon	8278ACE0	R_ProcessWorkerCmdInternal	gfx_d3d/r_workercmds.cpp	calls	0.78	the only unmatched function on each side calling the same 2 matched functions
+14020B010	iw5mp_xenon	8278C7C0	R_WaitWorkerCmdsOfType	gfx_d3d/r_workercmds.cpp	callee	0.85	callee of R_DrawLightsAndObjectsPass1 with the same 1 matched callees and 2 matched callers
 14020C570	iw5mp_xenon	826E2AA0	IWNet_WriteAndSendCommand	iwnet/iwnet_dispatcher.cpp	string	0.85	1 unique string(s): 'Invalid IWNet command %i'
 14020C700	iw5mp_xenon	826E29F0	IWNet_WriteCommandHeader	iwnet/iwnet_dispatcher.cpp	order	0.80	called by IWNet_WriteStorage_EndWrite between the same matched calls
 14020C830	iw5mp_xenon	826E30C8	IWNet_WriteStorage_EndWrite	iwnet/iwnet_storage.cpp	caller	0.85	caller of MSG_WriteData with the same 3 matched callees and 0 matched callers
@@ -1521,6 +1528,7 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 140214BE0	iw5mp_xenon	827E8FA0	jpeg_encode::begin	mjpeg/jpeg.cpp	callee	0.85	callee of CL_Demo_HiResScreenshotInternal with the same 1 matched callees and 1 matched callers
 140215D80	iw5mp_xenon	827E7328	jpeg_encode::init_quant	mjpeg/jpeg.cpp	order	0.80	called by jpeg_encode::begin between the same matched calls
 140216430	iw5mp_xenon	827E81F8	jpeg_encode::write_header	mjpeg/jpeg.cpp	string-or-caller	0.99	7 unique string(s): 'http://ns.adobe.com/xap/1.0/'; or its only caller jpeg_encode::begin with it inlined
+1402174E0	iw5mp_xenon	827E97C0	jpeg_screenshot_chunk	mjpeg/jpeg_screenshot.cpp	constant-or-caller	0.95	4 unique constant(s): 0.08131200075149536f, 0.41868799924850464f, 0.3312639892101288f, 0.16873599588871002f; or its only caller CL_Demo_HiResScreenshotInternal with it inlined
 140218160	iw5mp_xenon	827ECF18	build_huffman	mjpeg/stb_image.c	string	0.85	1 unique string(s): 'bad code lengths'
 140218730	iw5mp_xenon	827EEDC8	decode_jpeg_header	mjpeg/stb_image.c	caller	0.85	caller of process_frame_header with the same 2 matched callees and 1 matched callers
 140218980	iw5mp_xenon	827EEF00	decode_jpeg_image	mjpeg/stb_image.c	caller	0.75	only unmatched caller of process_scan_header
@@ -1572,18 +1580,20 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 140231D10	iw5mp_xenon	82698C28	dBodyAddForceAtPos	physics/ode/src/ode.cpp	callee	0.85	callee of Phys_ObjAddImpulse with the same 0 matched callees and 2 matched callers
 1402320F0	iw5mp_xenon	82699668	dBodyEnable	physics/ode/src/ode.cpp	callee	0.85	callee of PhysVeh_SetPathConstraintState with the same 0 matched callees and 2 matched callers
 140232520	iw5mp_xenon	82697C98	dBodySetPosition	physics/ode/src/ode.cpp	callee	0.85	callee of Phys_CreateBodyFromState with the same 0 matched callees and 2 matched callers
+140246650	iw5mp_xenon	8266D0B8	Phys_ApplyContactJitter	physics/phys_contacts.cpp	caller	0.85	caller of G_random with the same 2 matched callees and 0 matched callers
 140248090	iw5mp_xenon	82677918	G_PhysObjSetCollisionFromModelIndex	physics/phys_ode.cpp	caller	0.75	only unmatched caller of Phys_ObjAddGeomCollmap
 1402485A0	iw5mp_xenon	82674418	Phys_LoadAllObjsInWorld	physics/phys_ode.cpp	string-or-caller	0.85	1 unique string(s): 'Invalid physics body count (%i) for world %i. Max: %i.  Save'; or its only caller Phys_ArchiveState with it inlined
+140248C30	iw5mp_xenon	826715B0	Phys_ContactEffects	physics/phys_ode.cpp	caller	0.75	only unmatched caller of Phys_ApplyContactJitter
 140249670	iw5mp_xenon	8266F068	Phys_CreateBodyFromState	physics/phys_ode.cpp	global	0.90	the only function on each side referencing the same 3 named globals
 140249B30	iw5mp_xenon	82671478	Phys_DoBodyOncePerFrame	physics/phys_ode.cpp	global	0.85	the only function on each side referencing the same 2 named globals
-14024A040	iw5mp_xenon	8266F518	Phys_GetCenterOfMassFromDObj	physics/phys_ode.cpp	callee	0.85	callee of Player_GetUseList with the same 2 matched callees and 1 matched callers
+14024A040	iw5mp_xenon	8266F518	Phys_GetCenterOfMassFromDObj	physics/phys_ode.cpp	callee	0.85	callee of Player_GetUseList with the same 1 matched callees and 1 matched callers
 14024A260	iw5mp_xenon	82671C08	Phys_GetGravityAccel	physics/phys_ode.cpp	global	0.85	the only function on each side referencing the same 2 named globals
 14024A330	iw5mp_xenon	8266F6E0	Phys_GetTunnelTraceOffsetFromDObj	physics/phys_ode.cpp	order	0.80	called by Item_GetTunnelTraceOffset between the same matched calls
 14024A480	iw5mp_xenon	8266E6F8	Phys_InitClient	physics/phys_ode.cpp	order	0.80	called by CG_Init between the same matched calls
 14024A5D0	iw5mp_xenon	82678850	Phys_InitCommon	physics/phys_ode.cpp	string	0.99	80 unique string(s): 'phys_cfm'
 14024B4F0	iw5mp_xenon	8266FC08	Phys_ObjAddForce	physics/phys_ode.cpp	callee	0.85	callee of PhysVeh_CollideWheels with the same 1 matched callees and 1 matched callers
-14024B540	iw5mp_xenon	82676E68	Phys_ObjAddGeomBox	physics/phys_ode.cpp	callee	0.85	callee of Phys_ObjSetCollisionFromXModel with the same 0 matched callees and 3 matched callers
-14024B750	iw5mp_xenon	826771F0	Phys_ObjAddGeomCollmap	physics/phys_ode.cpp	callee	0.85	callee of Phys_ObjSetCollisionFromXModel with the same 0 matched callees and 3 matched callers
+14024B540	iw5mp_xenon	82676E68	Phys_ObjAddGeomBox	physics/phys_ode.cpp	votes	0.79	paired with it at the same place among matched calls in 3 callers
+14024B750	iw5mp_xenon	826771F0	Phys_ObjAddGeomCollmap	physics/phys_ode.cpp	order	0.80	called by Phys_ObjSetCollisionFromXModel between the same matched calls
 14024BAD0	iw5mp_xenon	8266FC80	Phys_ObjAddImpulse	physics/phys_ode.cpp	callee	0.85	callee of Ragdoll_ExplosionEvent with the same 1 matched callees and 1 matched callers
 14024BB70	iw5mp_xenon	8266FED8	Phys_ObjBulletImpact	physics/phys_ode.cpp	order	0.80	called by PhysVeh_Crash between the same matched calls
 14024BF30	iw5mp_xenon	82676A40	Phys_ObjCreate	physics/phys_ode.cpp	caller	0.85	caller of Phys_CreateBodyFromState with the same 1 matched callees and 0 matched callers
@@ -1661,7 +1671,7 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 140263A40	iw5mp_xenon	824C9378	CM_TransformPoint	qcommon/cm_test.cpp	callee	0.85	callee of SV_PointContents with the same 1 matched callees and 1 matched callers
 140268430	iw5mp_xenon	824C97C0	Trace_GetEntityHitId	qcommon/cm_trace.cpp	callee	0.85	callee of BounceMissile with the same 0 matched callees and 10 matched callers
 140268460	iw5mp_xenon	8246D2E0	G_DebugLine	game/g_debug.cpp	callee	0.75	only unmatched callee of Turret_PlaceSentry_UpdateFooting
-140269E60	iw5mp_xenon	824D30B0	CM_AreaEntities	qcommon/cm_world.cpp	callee	0.85	callee of G_RadiusDamage with the same 0 matched callees and 7 matched callers
+140269E60	iw5mp_xenon	824D30B0	CM_AreaEntities	qcommon/cm_world.cpp	callee	0.85	callee of G_RadiusDamage with the same 0 matched callees and 2 matched callers
 14026A360	iw5mp_xenon	824D3E60	CM_ClipSightTraceToEntities	qcommon/cm_world.cpp	callee	0.85	callee of SV_TracePassed with the same 0 matched callees and 2 matched callers
 14026A660	iw5mp_xenon	824D2C50	CM_LinkEntity	qcommon/cm_world.cpp	caller	0.75	only unmatched caller of CM_UnlinkEntity
 14026A8D0	iw5mp_xenon	824D2030	CM_LinkWorld	qcommon/cm_world.cpp	callee	0.85	callee of G_InitGame with the same 0 matched callees and 2 matched callers
@@ -1826,6 +1836,7 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 140285D80	iw5mp_xenon	8250C9D0	StringToInt64	qcommon/net_chan_mp.cpp	callee	0.85	callee of CG_ConfigStringModified with the same 1 matched callees and 1 matched callers
 140288A90	iw5mp_xenon	82513808	MSG_WriteReliableCommandToBuffer	qcommon/sv_msg_write_mp.cpp	order	0.80	called by CL_AddReliableCommand between the same matched calls
 140288F40	iw5mp_xenon	8251A9B0	Sys_GetValue	qcommon/threads.cpp	callee	0.85	callee of Com_StartHunkUsers with the same 0 matched callees and 3 matched callers
+140289460	iw5mp_xenon	8251AA48	Sys_SetWorkerCmdEvent	qcommon/threads.cpp	callee	0.85	callee of R_ProcessWorkerCmd with the same 0 matched callees and 2 matched callers
 140289590	iw5mp_xenon	8251BFF8	Sys_SpawnRenderThread	qcommon/threads.cpp	callee	0.75	only unmatched callee of R_InitRenderThread
 1402896B0	iw5mp_xenon	8251B090	Sys_SpawnStreamThread	qcommon/threads.cpp	callee	0.75	only unmatched callee of Stream_Init
 140289A70	iw5mp_xenon	8251BA28	Sys_WaitFileRead	qcommon/threads.cpp	caller	0.85	caller of Sys_Milliseconds with the same 1 matched callees and 1 matched callers
@@ -1838,11 +1849,15 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 14028B200	iw5mp_xenon	826A3AE8	Ragdoll_Joint_f	ragdoll/ragdoll_cmds.cpp	named	0.89	registered/tabled under 1 name(s): 'ragdoll_joint'
 14028B340	iw5mp_xenon	826A3BF8	Ragdoll_Limit_f	ragdoll/ragdoll_cmds.cpp	named	0.89	registered/tabled under 1 name(s): 'ragdoll_limit'
 14028B630	iw5mp_xenon	826A3538	Ragdoll_ResetBodiesUsingDef	ragdoll/ragdoll_cmds.cpp	callee	0.85	callee of Ragdoll_Bone_f with the same 0 matched callees and 3 matched callers
+14028BB50	iw5mp_xenon	826A96C0	Ragdoll_EnterTunnelTest	ragdoll/ragdoll_update.cpp	caller	0.75	only unmatched caller of Ragdoll_TunnelTest
+14028BF40	iw5mp_xenon	826A7E10	Ragdoll_ExitIdle	ragdoll/ragdoll_update.cpp	caller	0.75	only unmatched caller of Ragdoll_SetCurrentPoseFromSnapshot
 14028C4B0	iw5mp_xenon	826A7EF8	Ragdoll_BodyNewState	ragdoll/ragdoll_update.cpp	callee	0.85	callee of Ragdoll_ExplosionEvent with the same 0 matched callees and 2 matched callers
+14028C9C0	iw5mp_xenon	826A6320	Ragdoll_CreateBodyPhysics	ragdoll/ragdoll_update.cpp	caller	0.75	only unmatched caller of Ragdoll_CreatePhysObjs
 14028CCB0	iw5mp_xenon	826A5578	Ragdoll_CreatePhysObj	ragdoll/ragdoll_update.cpp	caller	0.75	only unmatched caller of Phys_ObjAddGeomBox
 14028D000	iw5mp_xenon	826A5D58	Ragdoll_CreatePhysObjs	ragdoll/ragdoll_update.cpp	caller	0.75	only unmatched caller of Ragdoll_CreatePhysObj
 14028D760	iw5mp_xenon	826A9130	Ragdoll_ExplosionEvent	ragdoll/ragdoll_update.cpp	global	0.95	the only function on each side referencing the same 4 named globals
 14028E420	iw5mp_xenon	826A52C8	Ragdoll_SetCurrentPoseFromSnapshot	ragdoll/ragdoll_update.cpp	caller	0.75	only unmatched caller of Phys_ObjSetOrientation
+14028F520	iw5mp_xenon	826A74E8	Ragdoll_TunnelTest	ragdoll/ragdoll_update.cpp	caller	0.85	caller of QuatToAxis with the same 1 matched callees and 0 matched callers
 14028F9B0	iw5mp_xenon	826A81D0	Ragdoll_RunToTime	ragdoll/ragdoll_update.cpp	caller	0.75	only unmatched caller of Phys_RunToTimeDelayed
 1402900C0	iw5mp_xenon	8251C780	AnimTreeParseInternal	script/scr_animtree.cpp	string	0.95	8 unique string(s) of its own and 1 of 1 callee(s) it inlined: 'unexpected end of file'
 140290640	iw5mp_xenon	8251CDB0	ConnectScriptToAnim	script/scr_animtree.cpp	callee	0.85	callee of Scr_LoadAnimTreeAtIndex with the same 2 matched callees and 1 matched callers
@@ -1901,11 +1916,11 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 14029AAC0	iw5mp_xenon	82548670	SetVariableValueInternal	script/scr_variable.cpp	callee	0.75	only unmatched callee of SetVariableValue
 14029ABD0	iw5mp_xenon	82528338	EmitThread	script/scr_compiler.cpp	caller	0.75	only unmatched caller of Scr_UsingTree
 14029B260	iw5mp_xenon	82556E10	Scr_AddArrayStringIndexed	script/scr_vm.cpp	callee	0.85	callee of Scr_BulletTrace with the same 1 matched callees and 1 matched callers
-14029B2B0	iw5mp_xenon	825567C8	Scr_AddInt	script/scr_vm.cpp	order	0.80	called by GScr_IsItemUnlocked between the same matched calls
-14029B310	iw5mp_xenon	82556BC0	Scr_AddConstString	script/scr_vm.cpp	votes	0.82	paired with it at the same place among matched calls in 4 callers
+14029B2B0	iw5mp_xenon	825567C8	Scr_AddInt	script/scr_vm.cpp	callee	0.85	callee of PlayerCmd_OpenPopupMenuNoMouse with the same 0 matched callees and 2 matched callers
+14029B310	iw5mp_xenon	82556BC0	Scr_AddConstString	script/scr_vm.cpp	votes	0.79	paired with it at the same place among matched calls in 3 callers
 14029B470	iw5mp_xenon	82556800	Scr_AddFloat	script/scr_vm.cpp	order	0.80	called by ClientThink_real between the same matched calls
-14029B5B0	iw5mp_xenon	82556AC0	Scr_AddString	script/scr_vm.cpp	votes	0.79	paired with it at the same place among matched calls in 3 callers
-14029B690	iw5mp_xenon	825568A0	Scr_AddUndefined	script/scr_vm.cpp	votes	0.82	paired with it at the same place among matched calls in 4 callers
+14029B5B0	iw5mp_xenon	82556AC0	Scr_AddString	script/scr_vm.cpp	order	0.80	called by Vehicle_FinishDamage between the same matched calls
+14029B690	iw5mp_xenon	825568A0	Scr_AddUndefined	script/scr_vm.cpp	votes	0.79	paired with it at the same place among matched calls in 3 callers
 14029B760	iw5mp_xenon	82556C30	Scr_AddVector	script/scr_vm.cpp	callee	0.85	callee of ClientThink_real with the same 0 matched callees and 2 matched callers
 14029B7D0	iw5mp_xenon	82555AD8	Scr_CancelNotifyList	script/scr_vm.cpp	callee	0.75	only unmatched callee of Scr_FreeEntityList
 14029BA10	iw5mp_xenon	82555EC8	IncInParam	script/scr_vm.cpp	callee	0.75	only unmatched callee of Scr_AddInt
@@ -1923,9 +1938,10 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 14029DB80	iw5mp_xenon	82557DF8	VM_Execute	script/scr_vm.cpp	caller	0.75	only unmatched caller of SetVariableFieldValue
 1402A1C50	iw5mp_xenon	825717B8	SV_DObjGetBoneIndex	server/sv_game.cpp	calls	0.78	the only unmatched function on each side calling the same 2 matched functions
 1402A1CD0	iw5mp_xenon	82571A58	SV_DObjGetTree	server/sv_game.cpp	callee	0.85	callee of G_FreeEntity with the same 1 matched callees and 1 matched callers
-1402A1D60	iw5mp_xenon	82570EC0	SV_EntityContactBounds	server/sv_game.cpp	callee	0.85	callee of Vehicle_TryPushingEntity with the same 0 matched callees and 2 matched callers
+1402A1D60	iw5mp_xenon	82570EC0	SV_EntityContactBounds	server/sv_game.cpp	callee	0.85	callee of G_CheckHitTriggerDamage with the same 0 matched callees and 2 matched callers
 1402A1F30	iw5mp_xenon	82572700	SV_GameCommand	server/sv_game.cpp	caller	0.75	only unmatched caller of ConsoleCommand
 1402A1F80	iw5mp_xenon	825708E8	SV_GameSendServerCommand	server/sv_game.cpp	votes	0.82	paired with it at the same place among matched calls in 4 callers
+1402A2010	iw5mp_xenon	825708B8	SV_GetPlayerstateForClientNum	server/sv_game.cpp	callee	0.85	callee of SV_BotUserMove with the same 0 matched callees and 2 matched callers
 1402A2070	iw5mp_xenon	825726B8	SV_InitGameMode	server/sv_game.cpp	string	0.90	2 unique string(s): 'Current gameMode'
 1402A20B0	iw5mp_xenon	82572698	SV_InitGameProgs	server/sv_game.cpp	callee	0.85	callee of SV_SpawnServer with the same 1 matched callees and 1 matched callers
 1402A20D0	iw5mp_xenon	82572240	SV_InitGameVM	server/sv_game.cpp	caller	0.75	only unmatched caller of G_InitGame
@@ -1963,6 +1979,7 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 1402A72F0	iw5mp_xenon	82569EC0	SV_GetChallenge	server_mp/sv_client_mp.cpp	string	0.85	1 unique string(s): 'challengeResponse %i'
 1402A7560	iw5mp_xenon	8256AB20	SV_ICantHear	server_mp/sv_client_mp.cpp	string	0.85	1 unique string(s): 'voicefail %i'
 1402A7640	iw5mp_xenon	8256A958	SV_IHear	server_mp/sv_client_mp.cpp	callee	0.85	callee of SV_ConnectionlessPacket with the same 1 matched callees and 1 matched callers
+1402A7A20	iw5mp_xenon	8256DEF0	SV_ProcessClientThinks	server_mp/sv_client_mp.cpp	caller	0.75	only unmatched caller of SV_ClientThink
 1402A7B50	iw5mp_xenon	8256A328	SV_ReceiveStats	server_mp/sv_client_mp.cpp	string	0.85	1 unique string(s): 'statResponse %i'
 1402A7C90	iw5mp_xenon	8256BB38	SV_SendClientGameStateInternal	server_mp/sv_client_mp.cpp	string	0.85	1 unique string(s): 'Invalid line in the config string csv - config string indice'
 1402A80C0	iw5mp_xenon	8256F1E8	SV_SendClientPlayerData	server_mp/sv_client_mp.cpp	string	0.85	1 unique string(s): 'Too many stats changed at once'
@@ -1989,14 +2006,16 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 1402AC530	iw5mp_xenon	8257A548	SV_HasAssignedTeam_Internal	server_mp/sv_main_mp.cpp	caller	0.85	caller of Lobby_GetPartyData with the same 2 matched callees and 0 matched callers
 1402AC560	iw5mp_xenon	8257A0D0	SV_InitServerThread	server_mp/sv_main_mp.cpp	string	0.85	1 unique string(s): 'Failed to create server thread'
 1402AC5E0	iw5mp_xenon	8257A888	SV_IsBestOfRoundsDone	server_mp/sv_main_mp.cpp	callee	0.85	callee of MatchEnd_Party with the same 1 matched callees and 1 matched callers
-1402AC670	iw5mp_xenon	8257AA60	SV_KeepPointInPlayableBounds	server_mp/sv_main_mp.cpp	order	0.80	called by G_ExplodeMissileInternal between the same matched calls
+1402AC670	iw5mp_xenon	8257AA60	SV_KeepPointInPlayableBounds	server_mp/sv_main_mp.cpp	order	0.80	called by MissileImpact between the same matched calls
 1402AC720	iw5mp_xenon	8257AB00	MatchEnd_Party	server_mp/sv_main_mp.cpp	string-or-caller	0.85	1 unique string(s): 'EXE_MIGRATIONLIMIT'; or its only caller SV_MatchEnd with it inlined
 1402AC8C0	iw5mp_xenon	82577AD0	SV_ConnectionlessPacket	server_mp/sv_main_mp.cpp	string-or-caller	0.85	1 unique string(s): 'getchallenge'; or its only caller SV_PacketEvent with it inlined
 1402ACC80	iw5mp_xenon	82578EC0	SV_PostFrame	server_mp/sv_main_mp.cpp	caller	0.75	only unmatched caller of SV_CheckTimeouts
 1402ACDE0	iw5mp_xenon	82576438	SV_RegisterDvars_ServerMain	server_mp/sv_main_mp.cpp	string	0.99	10 unique string(s): 'Testclients will use the attack button.'
+1402ACE90	iw5mp_xenon	82579710	SV_UpdateBots	server_mp/sv_main_mp.cpp	caller	0.75	only unmatched caller of SV_BotUserMove
 1402ACED0	iw5mp_xenon	82576D40	SV_SendServerCommand	server_mp/sv_main_mp.cpp	callee	0.85	callee of SV_KickClient with the same 0 matched callees and 3 matched callers
 1402AD270	iw5mp_xenon	82579BF0	SV_ServerThread	server_mp/sv_main_mp.cpp	caller	0.75	only unmatched caller of SV_CalcPings
 1402AD5B0	iw5mp_xenon	8257A958	SV_SetWinningTeam	server_mp/sv_main_mp.cpp	caller	0.85	caller of Lobby_GetPartyData with the same 2 matched callees and 0 matched callers
+1402AD610	iw5mp_xenon	82579468	SV_BotUserMove	server_mp/sv_main_mp.cpp	calls	0.78	the only unmatched function on each side calling the same 2 matched functions
 1402ADAE0	iw5mp_xenon	8257D478	HandleRatingMsg	server_mp/sv_migration.cpp	named	0.89	registered/tabled under 1 name(s): 'mrate'
 1402ADC20	iw5mp_xenon	8257D788	HandleHeaderAckMsg	server_mp/sv_migration.cpp	named	0.89	registered/tabled under 1 name(s): 'mhack'
 1402ADDF0	iw5mp_xenon	8257C368	PickNewHost	server_mp/sv_migration.cpp	string	0.90	2 unique string(s): 'disconnect EXE_MIGRATIONABORTED_BACKOUT'
@@ -2372,7 +2391,7 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 1402FC710	iw5mp_xenon	825AA258	UI_Pause	ui_mp/ui_main_mp.cpp	caller	0.85	caller of Key_SetCatcher with the same 1 matched callees and 0 matched callers
 1402FC7C0	iw5mp_xenon	825AC5B8	UI_PopupScriptMenu	ui_mp/ui_main_mp.cpp	calls	0.78	the only unmatched function on each side calling the same 2 matched functions
 1402FC8B0	iw5mp_xenon	825A66C8	UI_DrawBuildNumber	ui_mp/ui_main_mp.cpp	string-or-caller	0.85	1 unique string(s): '%s.%i'; or its only caller UI_RefreshViewport with it inlined
-1402FCB50	iw5mp_xenon	825A4CD8	UI_RegisterDvars	ui_mp/ui_main_mp.cpp	global	0.95	only function referencing 11 global(s) registered under the same name
+1402FCB50	iw5mp_xenon	825A4CD8	UI_RegisterDvars	ui_mp/ui_main_mp.cpp	constant	0.90	3 unique constant(s): 0.3199999928474426f, 0.7699999809265137f, 0.9399999976158142f
 1402FDB20	iw5mp_xenon	825AF3C0	UI_ReplaceConversionInt	ui_mp/ui_main_mp.cpp	order	0.80	called by Live_SyncOnlineDataError between the same matched calls
 1402FDD70	iw5mp_xenon	825AF358	UI_ReplaceConversionString	ui_mp/ui_main_mp.cpp	callee	0.85	callee of CG_DrawCursorhint with the same 0 matched callees and 9 matched callers
 1402FDF30	iw5mp_xenon	825B03D0	UI_RunMenuScript	ui_mp/ui_main_mp.cpp	caller	0.75	only unmatched caller of UI_VerifyLanguage
@@ -2410,7 +2429,7 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 140306DD0	iw5mp_xenon	825DCBA0	AxisCopy	universal/com_math.cpp	order	0.80	called by CG_DamageFeedback between the same matched calls
 1403070E0	iw5mp_xenon	825DCF80	AxisToAngles	universal/com_math.cpp	callee	0.85	callee of BG_UpdateClientControlledMissile with the same 1 matched callees and 2 matched callers
 140307270	iw5mp_xenon	825DECA0	AxisToQuat	universal/com_math.cpp	callee	0.75	only unmatched callee of Phys_ObjCreateAxis
-1403074E0	iw5mp_xenon	825DABF8	MatrixTranspose	universal/com_math.cpp	callee	0.85	callee of BG_UpdateClientControlledMissile with the same 0 matched callees and 2 matched callers
+1403074E0	iw5mp_xenon	825DABF8	MatrixTranspose	universal/com_math.cpp	callee	0.85	callee of BG_UpdateClientControlledMissile with the same 0 matched callees and 4 matched callers
 140307560	iw5mp_xenon	825D86D8	ByteToDir	universal/com_math.cpp	order	0.80	called by CG_Glass_ApplyChangesToPiece between the same matched calls
 140307F50	iw5mp_xenon	825D8220	DiffTrack	universal/com_math.cpp	callee	0.85	callee of PM_UpdateHoldBreath with the same 0 matched callees and 2 matched callers
 140307FB0	iw5mp_xenon	825D8258	DiffTrackAngle	universal/com_math.cpp	callee	0.85	callee of Dive_UpdateViewAngles with the same 0 matched callees and 3 matched callers
@@ -2420,9 +2439,9 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 140309C00	iw5mp_xenon	825DB3B0	MatrixTransposeTransformVector43	universal/com_math.cpp	callee	0.85	callee of Submarine_CalcCollisionAccel with the same 0 matched callees and 3 matched callers
 140309CA0	iw5mp_xenon	825D8BC0	Vec3Rotate	universal/com_math.cpp	order	0.80	called by CM_TransformPoint between the same matched calls
 140309D20	iw5mp_xenon	825DE980	NearestPitchAndYawOnPlane	universal/com_math.cpp	caller	0.85	caller of vectoangles with the same 2 matched callees and 0 matched callers
-140309E90	iw5mp_xenon	824B18F8	G_random	game_mp/g_utils_mp.cpp	callee	0.85	callee of BounceMissile with the same 0 matched callees and 2 matched callers
 14030A380	iw5mp_xenon	825DEEA8	QuatLerp	universal/com_math.cpp	callee	0.85	callee of SetPlayerFixedLinkViewAngles with the same 0 matched callees and 4 matched callers
 14030A730	iw5mp_xenon	825DB5A8	QuatToAxis	universal/com_math.cpp	callee	0.85	callee of SetPlayerFixedLinkViewAngles with the same 0 matched callees and 3 matched callers
+14030A8D0	iw5mp_xenon	825D8EA8	RotatePointAroundVector	universal/com_math.cpp	callee	0.85	callee of LookAtBothPoints with the same 0 matched callees and 2 matched callers
 14030AF60	iw5mp_xenon	825DB6F0	UnitQuatToAxis	universal/com_math.cpp	callee	0.85	callee of Glass_DestroyPiece with the same 0 matched callees and 2 matched callers
 14030B100	iw5mp_xenon	825D8840	Vec2Distance	universal/com_math.cpp	callee	0.75	only unmatched callee of ClampScreenPosToEdges
 14030B140	iw5mp_xenon	825D8868	Vec2DistanceSq	universal/com_math.cpp	callee	0.85	callee of SetupVehicleCollsion with the same 0 matched callees and 2 matched callers
@@ -2459,6 +2478,7 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 14030F3D0	iw5mp_xenon	825E8E68	StructuredData_GetLookupResultType	universal/com_structureddatadef.cpp	votes	0.79	paired with it at the same place among matched calls in 3 callers
 14030F440	iw5mp_xenon	825E8BA8	StructuredData_GetLookupState	universal/com_structureddatadef.cpp	votes	0.79	paired with it at the same place among matched calls in 3 callers
 14030F7B0	iw5mp_xenon	825E88B8	StructuredData_LookupWithString	universal/com_structureddatadef.cpp	callee	0.85	callee of SetWeaponPartNew with the same 0 matched callees and 5 matched callers
+14030FD00	iw5mp_xenon	825E7BC0	StructuredData_SetDataVersion	universal/com_structureddatadef.cpp	callee	0.75	only unmatched callee of UpdateMatchRulesChecksumAndVersion
 1403119D0	iw5mp_xenon	825ECC60	StructuredData_ValidateRegisterDvars	universal/com_structureddatadef_integrity.cpp	string	0.99	27 unique string(s): 'True if individual stat validation failure results in clampi'
 140311F00	iw5mp_xenon	825EE758	StructuredData_ValidateStats_EnumIterate	universal/com_structureddatadef_integrity.cpp	string-or-caller	0.85	1 unique string(s): '[%i %s]'; or its only caller StructuredData_ValidateStats_r with it inlined
 140312220	iw5mp_xenon	825F8D00	StructuredDataDef_LoadDef	universal/com_structureddatadef_obj.cpp	callee	0.85	callee of StructuredDataDef_GetAsset with the same 1 matched callees and 2 matched callers
@@ -2546,7 +2566,7 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 14031D2A0	iw5mp_xenon	826129F8	StreamFileNameGetName	universal/streamfile.cpp	order	0.80	called by Com_GetSoundFileName between the same matched calls
 14031D400	iw5mp_xenon	82613318	TextureAtlas_GetCoords_ByIndex	universal/textureatlas.cpp	callee	0.85	callee of UI_FeederItemText_Searching with the same 0 matched callees and 2 matched callers
 14031DEE0	iw5mp_xenon	826B1B20	Vehicle_UpdatePathConstrainedMove	vehicle/vehicle.cpp	caller	0.75	only unmatched caller of PhysVeh_SetPathConstraintState
-14031E010	iw5mp_xenon	826B58B0	G_CanPlayerPlaceTank	vehicle/vehicle.cpp	caller	0.85	caller of AxisToAngles with the same 2 matched callees and 0 matched callers
+14031E010	iw5mp_xenon	826B58B0	G_CanPlayerPlaceTank	vehicle/vehicle.cpp	caller	0.85	caller of AxisToAngles with the same 3 matched callees and 0 matched callers
 14031EE20	iw5mp_xenon	826AD770	VEH_ClearGround	vehicle/vehicle.cpp	callee	0.85	callee of Submarine_UpdatePlayerMove with the same 0 matched callees and 2 matched callers
 14031F020	iw5mp_xenon	826ADDD0	VEH_GroundPlant	vehicle/vehicle.cpp	order	0.80	called by Vehicle_Teleport between the same matched calls
 14031FBB0	iw5mp_xenon	826AD040	VEH_JoltBody	vehicle/vehicle.cpp	callee	0.85	callee of VehCmd_FireWeapon with the same 1 matched callees and 1 matched callers
@@ -2554,23 +2574,25 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 1403203C0	iw5mp_xenon	826AC858	VEH_ResetWheels	vehicle/vehicle.cpp	caller	0.85	caller of G_DObjGetWorldBoneIndexPos with the same 1 matched callees and 0 matched callers
 140320440	iw5mp_xenon	826AC938	VEH_SetPosition	vehicle/vehicle.cpp	order	0.80	called by G_SpawnHelicopter between the same matched calls
 140320560	iw5mp_xenon	826ADA88	VEH_SlideMove	vehicle/vehicle.cpp	caller	0.85	caller of G_SlideMove with the same 1 matched callees and 1 matched callers
-140320600	iw5mp_xenon	826AF730	VEH_TouchEntities	vehicle/vehicle.cpp	caller	0.85	caller of SV_EntityContactBounds with the same 2 matched callees and 1 matched callers
-140320C70	iw5mp_xenon	826AFC18	VEH_UpdateAim	vehicle/vehicle.cpp	caller	0.85	caller of G_DObjGetWorldBoneIndexPos with the same 5 matched callees and 0 matched callers
+140320600	iw5mp_xenon	826AF730	VEH_TouchEntities	vehicle/vehicle.cpp	caller	0.85	caller of CM_AreaEntities with the same 3 matched callees and 1 matched callers
+140320A40	iw5mp_xenon	826B2410	VEH_UnlinkPlayer	vehicle/vehicle.cpp	caller	0.75	only unmatched caller of G_DObjGetWorldBoneIndexPos
+140320C70	iw5mp_xenon	826AFC18	VEH_UpdateAim	vehicle/vehicle.cpp	caller	0.85	caller of G_DObjGetWorldBoneIndexPos with the same 3 matched callees and 0 matched callers
 1403216C0	iw5mp_xenon	826B0A28	VEH_UpdatePlayerControlledWeapon	vehicle/vehicle.cpp	caller	0.85	caller of G_DObjGetWorldBoneIndexPos with the same 2 matched callees and 0 matched callers
 140321970	iw5mp_xenon	826ABA10	VEH_UpdateSounds	vehicle/vehicle.cpp	callee	0.85	callee of Vehicle_Think with the same 1 matched callees and 1 matched callers
 140321A90	iw5mp_xenon	826B0858	VEH_UpdateSteering	vehicle/vehicle.cpp	callee	0.85	callee of Vehicle_Think with the same 1 matched callees and 1 matched callers
 140321CA0	iw5mp_xenon	826B3E00	Vehicle_SpeedboatBouncing	vehicle/vehicle.cpp	caller	0.75	only unmatched caller of PhysVeh_AddForce
 140322130	iw5mp_xenon	826ACB40	VEH_InitModelAndValidateTags	vehicle/vehicle.cpp	string-or-caller	0.85	1 unique string(s): 'ERROR: default vehicle is missing a required tag!'; or its only caller Vehicle_Create with it inlined
 140322760	iw5mp_xenon	826B3310	Vehicle_Damage	vehicle/vehicle.cpp	caller	0.85	caller of Scr_AddVector with the same 3 matched callees and 0 matched callers
-140322DE0	iw5mp_xenon	8246AEA0	player_die	game_mp/g_combat_mp.cpp	caller	0.75	only unmatched caller of Scr_PlayerKilled
+140322A10	iw5mp_xenon	826B4C80	Vehicle_Die	vehicle/vehicle.cpp	caller	0.85	caller of VEH_JoltBody with the same 2 matched callees and 0 matched callers
+140322DE0	iw5mp_xenon	826B3698	Vehicle_FinishDamage	vehicle/vehicle.cpp	caller	0.85	caller of Scr_AddConstString with the same 2 matched callees and 0 matched callers
 140322FF0	iw5mp_xenon	826AC258	Vehicle_FreeEntity	vehicle/vehicle.cpp	caller	0.75	only unmatched caller of VEH_UpdateSounds
 140323380	iw5mp_xenon	826B2730	Vehicle_InitBoneTags	vehicle/vehicle.cpp	callee	0.85	callee of G_DObjUpdate_Internal with the same 1 matched callees and 1 matched callers
 1403234B0	iw5mp_xenon	826ACE88	Vehicle_InitPhysVeh	vehicle/vehicle.cpp	string	0.99	4 unique string(s): 'Cannot create a physics vehicle for a vehicle without a phys'
 140323710	iw5mp_xenon	826ABBE0	Vehicle_InitSystem	vehicle/vehicle.cpp	callee	0.85	callee of G_InitGame with the same 1 matched callees and 1 matched callers
 140323850	iw5mp_xenon	826B52A0	Vehicle_Knockback	vehicle/vehicle.cpp	callee	0.85	callee of G_RadiusDamage with the same 0 matched callees and 3 matched callers
+140323AF0	iw5mp_xenon	826B4840	Vehicle_Pain	vehicle/vehicle.cpp	caller	0.85	caller of VEH_JoltBody with the same 1 matched callees and 0 matched callers
 140323B50	iw5mp_xenon	826B6248	Vehicle_ReadSaveGame	vehicle/vehicle.cpp	calls	0.78	the only unmatched function on each side calling the same 2 matched functions
 140323D40	iw5mp_xenon	826AABA8	Vehicle_RegisterDvars	vehicle/vehicle.cpp	string	0.99	155 unique string(s): 'Camera modes: 1st person, 3rd person, or both'
-140324E00	iw5mp_xenon	8246EE58	G_LogDebugEntInfoEnd	game/g_debug.cpp	caller	0.85	caller of Com_Memcpy with the same 1 matched callees and 1 matched callers
 140325240	iw5mp_xenon	826ABE28	Vehicle_SetupSystem	vehicle/vehicle.cpp	caller	0.85	caller of SV_LinkEntity with the same 2 matched callees and 1 matched callers
 140325380	iw5mp_xenon	826AC088	Vehicle_ShutdownSystem	vehicle/vehicle.cpp	caller	0.85	caller of VehPath_FreePathPos with the same 1 matched callees and 1 matched callers
 1403253E0	iw5mp_xenon	826B4D20	Vehicle_SpawnEntity	vehicle/vehicle.cpp	named	0.89	registered/tabled under 1 name(s): 'script_vehicle'
@@ -2588,7 +2610,7 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 140328AB0	iw5mp_xenon	826B9168	VehicleCam_UpdateCamInternal	vehicle/vehicle_camera.cpp	caller	0.85	caller of AxisToAngles with the same 4 matched callees and 0 matched callers
 1403299C0	iw5mp_xenon	826BB7F0	VehicleCl_Delete	vehicle/vehicle_client.cpp	caller	0.85	caller of Com_Memset with the same 1 matched callees and 1 matched callers
 140329C00	iw5mp_xenon	826BA1A0	VehicleCl_InitGlobals	vehicle/vehicle_client.cpp	caller	0.85	caller of Com_Memset with the same 2 matched callees and 2 matched callers
-140329CE0	iw5mp_xenon	826BB3C0	VehicleCl_PredictEntityPushing	vehicle/vehicle_client.cpp	caller	0.85	caller of BG_EvaluateTrajectory with the same 3 matched callees and 0 matched callers
+140329CE0	iw5mp_xenon	826BB3C0	VehicleCl_PredictEntityPushing	vehicle/vehicle_client.cpp	callee	0.85	callee of CG_PredictPlayerState_Internal with the same 3 matched callees and 1 matched callers
 140329EA0	iw5mp_xenon	826BBD98	VehicleCl_ProcessEntity	vehicle/vehicle_client.cpp	caller	0.75	only unmatched caller of VehicleCl_UpdateEntity
 14032A090	iw5mp_xenon	826BA140	VehicleCl_RegisterDvars	vehicle/vehicle_client.cpp	string	0.90	2 unique string(s): 'veh_boneControllerLodDist'
 14032A190	iw5mp_xenon	826BAE50	VehicleCl_UpdateBoneControllers	vehicle/vehicle_client.cpp	caller	0.85	caller of MatrixTransformVector43 with the same 3 matched callees and 0 matched callers
@@ -2612,10 +2634,14 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 1403320C0	iw5mp_xenon	826C6C48	VehCmd_AttachPath	vehicle/vehicle_script.cpp	caller	0.85	caller of Vehicle_Teleport with the same 1 matched callees and 0 matched callers
 140332160	iw5mp_xenon	826C6B80	VehCmd_Teleport	vehicle/vehicle_script.cpp	caller	0.75	only unmatched caller of Vehicle_Teleport
 140332220	iw5mp_xenon	826C6D20	VehCmd_GetAttachPos	vehicle/vehicle_script.cpp	calls	0.78	the only unmatched function on each side calling the same 2 matched functions
+140332510	iw5mp_xenon	826C70D0	VehCmd_FinishDamage	vehicle/vehicle_script.cpp	caller	0.75	only unmatched caller of Vehicle_FinishDamage
 140332CB0	iw5mp_xenon	826C7CC0	VehCmd_SetYawSpeedByName	vehicle/vehicle_script.cpp	caller	0.75	only unmatched caller of HeliPath_SetYawSpeedMode
+140332ED0	iw5mp_xenon	826C7FB8	VehCmd_JoltBody	vehicle/vehicle_script.cpp	caller	0.75	only unmatched caller of VEH_JoltBody
 140333190	iw5mp_xenon	826C8330	VehCmd_SetVehicleLookatText	vehicle/vehicle_script.cpp	caller	0.85	caller of Scr_GetNumParam with the same 2 matched callees and 0 matched callers
+140333790	iw5mp_xenon	826C8B48	VehCmd_CanTurretTargetPoint	vehicle/vehicle_script.cpp	caller	0.85	caller of Scr_AddInt with the same 4 matched callees and 0 matched callers
 140333AE0	iw5mp_xenon	826C8F08	VehCmd_SetWeapon	vehicle/vehicle_script.cpp	caller	0.85	caller of Scr_GetString with the same 2 matched callees and 0 matched callers
 140333B10	iw5mp_xenon	826C8F48	VehCmd_FireWeapon	vehicle/vehicle_script.cpp	caller	0.85	caller of Scr_GetFloat with the same 2 matched callees and 0 matched callers
+140334100	iw5mp_xenon	826C96B0	VehCmd_VehicleTurretControlOff	vehicle/vehicle_script.cpp	caller	0.85	caller of VEH_UnlinkPlayer with the same 2 matched callees and 0 matched callers
 1403342C0	iw5mp_xenon	826C9918	VehPhysCmd_Crash	vehicle/vehicle_script.cpp	caller	0.85	caller of G_rand with the same 1 matched callees and 0 matched callers
 1403344B0	iw5mp_xenon	826C9BB8	VehPhysCmd_SetSpeed	vehicle/vehicle_script.cpp	caller	0.75	only unmatched caller of PhysVeh_SetSpeed
 140334B50	iw5mp_xenon	826C69C8	Vehicle_Teleport	vehicle/vehicle_script.cpp	caller	0.75	only unmatched caller of VEH_ResetWheels
@@ -2645,7 +2671,7 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 14033F8B0	iw5mp_xenon	82615FF0	DObjCreateDuplicateParts	xanim/dobj.cpp	string	0.85	1 unique string(s): "dobj for xmodel '%s' has more than %d bones (see console for"
 1403401F0	iw5mp_xenon	82619048	DObjGetBoneIndex	xanim/dobj.cpp	votes	0.82	paired with it at the same place among matched calls in 4 callers
 1403404A0	iw5mp_xenon	82617370	DObjGetFirstModel	xanim/dobj.cpp	order	0.80	called by Phys_ObjSetCollisionFromDObj between the same matched calls
-140340B90	iw5mp_xenon	82617380	DObjGetVisibleBounds	xanim/dobj.cpp	order	0.80	called by Phys_ObjSetCollisionFromDObj between the same matched calls
+140340B90	iw5mp_xenon	82617380	DObjGetVisibleBounds	xanim/dobj.cpp	callee	0.85	callee of Phys_GetTunnelTraceOffsetFromDObj with the same 0 matched callees and 3 matched callers
 140340DE0	iw5mp_xenon	82615E90	DObjInit	xanim/dobj.cpp	caller	0.85	caller of SL_GetStringOfSize with the same 1 matched callees and 2 matched callers
 140340E30	iw5mp_xenon	82619DB8	DObjSetHidePartBits	xanim/dobj.cpp	order	0.80	called by G_EntAttach between the same matched calls
 140343EF0	iw5mp_xenon	8261E340	DObjGetHidePartBits	xanim/dobj_utils.cpp	callee	0.85	callee of G_EntAttach with the same 0 matched callees and 3 matched callers
@@ -2666,7 +2692,7 @@ target_va	ref_build	ref_va	ref_name	source	method	confidence	evidence
 140347550	iw5mp_xenon	82623CA8	XAnimIsLooped	xanim/xanim.cpp	callee	0.85	callee of BG_FinalizePlayerAnims with the same 0 matched callees and 2 matched callers
 14034EC50	iw5mp_xenon	82630D30	XAnimLoadAnimTree	xanim/xanim_readwrite.cpp	callee	0.85	callee of G_LoadLevelState with the same 2 matched callees and 1 matched callers
 14034EEB0	iw5mp_xenon	82632588	XModelGetBoneIndex	xanim/xmodel.cpp	callee	0.85	callee of DObjCreateDuplicateParts with the same 0 matched callees and 2 matched callers
-14034EEF0	iw5mp_xenon	82631128	XModelGetBounds	xanim/xmodel.cpp	order	0.80	called by Phys_ObjSetCollisionFromXModel between the same matched calls
+14034EEF0	iw5mp_xenon	82631128	XModelGetBounds	xanim/xmodel.cpp	callee	0.85	callee of DynEntCl_LinkModel with the same 0 matched callees and 2 matched callers
 14034EFB0	iw5mp_xenon	82631120	XModelGetRadius	xanim/xmodel.cpp	callee	0.85	callee of DynEntCl_LinkModel with the same 0 matched callees and 2 matched callers
 14034EFC0	iw5mp_xenon	82631108	XModelPrecache	xanim/xmodel.cpp	callee	0.75	only unmatched callee of SV_XModelGet
 140355DC0	iw5mp_xenon	8263F360	SND_InitDriver	xenon/snd_driver.cpp	string	0.90	2 unique string(s): 'snd_omnidirectionalPercentage'

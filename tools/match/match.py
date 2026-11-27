@@ -155,6 +155,30 @@ class Build:
         self.const_refs[v].add(va)
         self.fn_consts[va].add(v)
 
+    def _note_float(self, va, value):
+        """A float literal loaded from read-only data, keyed by its single-precision value (a literal can be a double
+        on one side and a float on the other). Values with few fraction bits (0.5, 2.0, 640.0, -0.25) are skipped:
+        they are everywhere. Kept as ("f", value) beside the integer constants."""
+        if value != value or value in (float("inf"), float("-inf")) or abs(value) > 3.4e38:
+            return
+        value = struct.unpack("<f", struct.pack("<f", value))[0]
+        if abs(value) <= 4096 and (value * 16).is_integer():
+            return
+        self.const_refs[("f", value)].add(va)
+        self.fn_consts[va].add(("f", value))
+
+    def _read(self, pe, base, va, n):
+        """n bytes at va through the section headers as written (Xbox 360 sections ignore SectionAlignment), only
+        from initialised, non-executable, read-only data; None otherwise."""
+        for s in pe.sections:
+            lo = base + s.VirtualAddress
+            if lo <= va and va + n <= lo + min(s.SizeOfRawData, s.Misc_VirtualSize):
+                if s.Characteristics & (0x20000000 | 0x80000000):  # executable or writable
+                    return None
+                off = s.PointerToRawData + va - lo
+                return pe.__data__[off:off + n]
+        return None
+
     def _note_address(self, va, target, base, size, code_lo, code_hi, strs, recent, loads_function):
         """A data or code address the function va builds or accesses. Returns the updated recent list."""
         if base <= target < base + size and not code_lo <= target < code_hi and target not in strs:
@@ -246,6 +270,11 @@ class Build:
                     if op == 36 and rd == 3 and call_strings is not None:
                         self._registered_global(call_strings, target, strs)
                         call_strings = None
+                    if op in (48, 49, 50, 51):  # lfs, lfsu, lfd, lfdu: a float literal from read-only data
+                        width = 4 if op < 50 else 8
+                        raw = self._read(pe, base, target, width)
+                        if raw:
+                            self._note_float(va, struct.unpack(">f" if width == 4 else ">d", raw)[0])
                 if target is not None:
                     recent = self._note_address(va, target, base, size, code_lo, code_hi, strs, recent,
                                                 loads_function=op == 14)
@@ -306,6 +335,12 @@ class Build:
                             continue
                     if target is None:
                         continue
+                    if op.type == X86.X86_OP_MEM and not ins.mnemonic.startswith(("cvtsi2", "lea")):
+                        # scalar float literals: movss/mulss/comiss/cvtss2sd ... [rip+x], and the sd forms
+                        width = 4 if ins.mnemonic.endswith("ss") else 8 if ins.mnemonic.endswith("sd") else 0
+                        raw = self._read(pe, base, target, width) if width else None
+                        if raw:
+                            self._note_float(va, struct.unpack("<f" if width == 4 else "<d", raw)[0])
                     recent = self._note_address(va, target, base, size, code_lo, code_hi, strs, recent,
                                                 loads_function=ins.mnemonic in ("lea", "push", "mov"))
 
@@ -478,7 +513,8 @@ def main():
         if len(cby_ref[r]) != 1 or len(vs) < 2:
             continue
         accept_anchored(t, r, "constant", min(0.95, 0.75 + 0.05 * len(vs)),
-               f"{len(vs)} unique constant(s): " + ", ".join(f"{v:#x}" for v in vs[:4]))
+               f"{len(vs)} unique constant(s): " + ", ".join(
+                   f"{v[1]!r}f" if isinstance(v, tuple) else f"{v:#x}" for v in vs[:4]))
 
     # 1c. names attached to functions by registrations (Cmd_AddCommand("name", Func)) and data tables
     nvotes = collections.defaultdict(lambda: collections.defaultdict(list))
