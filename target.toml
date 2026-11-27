@@ -23,6 +23,13 @@ source_roots = ['c:\trees\iw5build4-iw\iw5\code_source\src', '\\infinityward.net
 # Xbox 360 exes carry no CodeView record: the PE timestamp is the PDB's signature (`pdb_signature`), checked by
 # tools/inventory.py together with the PDB's own GUID and age.
 
+# The GDK the Store build was linked with: QueryApiImpl is initialised with version 0x6336 (25398), the 2024
+# (240308) PC GDK's edition. Its static thunk library (xgameruntime.lib, one object, every API a thunk naming the
+# interface GUIDs and vtable slot it calls) names the exe's copies of those thunks: tools/gdk/name_thunks.py.
+[gdk]
+nupkg = { url = "https://api.nuget.org/v3-flatcontainer/microsoft.gdk.pc.240308/10.0.25398.3242/microsoft.gdk.pc.240308.10.0.25398.3242.nupkg", sha256 = "8f39414caac79926b34453f0df64a4e81d5919ba5496af64878f49bca8d69bcc" }
+thunk_lib = "native/240308/GRDK/gamekit/lib/amd64/xgameruntime.lib"
+
 # Final target, multiplayer first.
 [[build]]
 id = "iw5mp_ship"
