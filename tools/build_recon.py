@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Compile the reconstruction into one Windows DLL, hybrid-linked against the Store exe.
 
-    python3 tools/build_recon.py [--build iw5mp_ship]
-    -> build/<build>/recon.dll, recon.symbols.tsv, hybrid.tsv
+    python3 tools/build_recon.py [--build iw5mp_ship]              # the faithful build: src/
+    python3 tools/build_recon.py [--build iw5mp_ship] --enhanced   # the enhanced build: enhanced/ over src/
+    -> build/<build>/[enhanced/]recon.dll, recon.symbols.tsv, hybrid.tsv
 
 Ported from black-ops-2-decomp (its x64 Store path; the slot table comes from black-ops-3-decomp, TLS from
 ghosts-decomp). MW3's references are Xbox 360 builds, which aren't run, so only x64 retail builds are linked.
@@ -20,6 +21,12 @@ ghosts-decomp). MW3's references are Xbox 360 builds, which aren't run, so only 
   exe address directly; the link checks it.
 - Thread-local variables are placed in the DLL's own .tls section at the offset they have in the original's TLS
   template, so the offsets the compiler emits are the original's.
+
+The enhanced build (records/patches.tsv) is the same link with enhanced/ first: a function enhanced/ defines replaces
+src/'s. It is also the DLL loaded into the game (tools/runtime_link.py, runtime/loader): there, a function src/
+defines that the build identifies in the exe is a thunk into the exe's own copy ("exe first"), so the DLL runs only
+the replacements; the redirect table lists each replacement for the loader; and Win32 functions the exe doesn't
+import come from tools/recon/lib/*.def as real imports of the DLL.
 
 This is the `compiles` gate. It is not byte matching: that needs the original compiler.
 """
@@ -49,12 +56,22 @@ SLOT_PREFIX = "iw5x@"  # x64: the slot holding the exe address of a symbol the r
 csv.field_size_limit(1 << 30)
 
 
-def out_dir(build):
-    return ROOT / "build" / build
+def out_dir(build, enhanced=False):
+    return ROOT / "build" / build / ("enhanced" if enhanced else "")
 
 
-def run(*cmd):
-    subprocess.run([str(c) for c in cmd], check=True)
+def run(*cmd, quiet_duplicates=False):
+    if not quiet_duplicates:
+        subprocess.run([str(c) for c in cmd], check=True)
+        return
+    # the enhanced link: its intended duplicates (enhanced/ replacing src/) are not news
+    r = subprocess.run([str(c) for c in cmd], capture_output=True, text=True)
+    noise = ("duplicate symbol", ">>> defined at")
+    out = [l for l in (r.stdout + r.stderr).splitlines() if l.strip() and not any(n in l for n in noise)]
+    if out:
+        print("\n".join(out))
+    if r.returncode:
+        raise subprocess.CalledProcessError(r.returncode, cmd)
 
 
 def nm(obj, *flags):
@@ -182,18 +199,32 @@ def main():
     if arch not in ARCH:
         sys.exit(f"{build}: {arch} builds aren't linked (only the x64 Store builds are run)")
     triple = ARCH[arch]["triple"]
-    BUILD = out_dir(build)
+    enhanced = "--enhanced" in sys.argv
+    BUILD = out_dir(build, enhanced)
     BUILD.mkdir(parents=True, exist_ok=True)
 
-    objs = []
-    for src in sorted((ROOT / "src").rglob("*.cpp")):
-        obj = BUILD / "obj" / src.relative_to(ROOT / "src").with_suffix(".obj")
+    objs, src_objs, enhanced_defs, src_defs = [], [], set(), set()
+    units = [("src", p) for p in sorted((ROOT / "src").rglob("*.cpp"))]
+    if enhanced:
+        units = [("enhanced", p) for p in sorted((ROOT / "enhanced").rglob("*.cpp"))] + units
+    for tree, src in units:
+        obj = BUILD / "obj" / (tree if tree == "enhanced" else "") / src.relative_to(ROOT / tree).with_suffix(".obj")
         obj.parent.mkdir(parents=True, exist_ok=True)
         flags = []
         if not symbols.build_spec(build).get("asserts"):
             flags.append("-DIW5_NO_ASSERTS")  # retail and ship builds compiled their asserts out
+        if enhanced:
+            # enhanced/'s own headers; and one section per function, so the src/ copies an exe-first thunk replaces
+            # are dropped from the DLL (/opt:ref), not left as unnamed code
+            flags += [f"-I{ROOT / 'enhanced' / 'include'}", "-ffunction-sections"]
         compile_unit(src, obj, arch, flags)
         objs.append(obj)
+        defs = {p[2] for p in nm(obj, "--defined-only", "--extern-only") if len(p) == 3 and p[1] in "Tt"}
+        if tree == "enhanced":
+            enhanced_defs |= defs
+        else:
+            src_objs.append(obj)
+            src_defs |= defs
     if not objs:
         sys.exit("no sources under src/")
 
@@ -205,7 +236,7 @@ def main():
     env_objs.append(BUILD / "crt_x64.obj")
 
     defined, exports, rows = set(), [], {}
-    for obj in objs:
+    for obj in objs:  # enhanced/ first: an override is listed once, from enhanced/
         for parts in nm(obj, "--defined-only", "--extern-only"):
             if len(parts) == 3:
                 defined.add(parts[2])
@@ -215,17 +246,29 @@ def main():
     for obj in env_objs:
         defined |= {p[2] for p in nm(obj, "--defined-only", "--extern-only") if len(p) == 3}
     undefined = sorted({p[-1] for o in objs + env_objs for p in nm(o, "--undefined-only")} - defined)
+    # The enhanced build may call Win32 functions the exe doesn't import: real imports of the DLL, from
+    # tools/recon/lib/*.def (the harness stubs recon.dll's imports like the original's)
+    import_libs = []
+    if enhanced:
+        dll_imports = set()
+        for d in sorted((ROOT / "tools" / "recon" / "lib").glob("*.def")):
+            lib = BUILD / f"{d.stem}.lib"
+            run("llvm-dlltool", "-m", "i386:x86-64", "-d", d, "-l", lib)
+            import_libs.append(lib)
+            listed = [l.strip() for l in d.read_text().splitlines()]
+            dll_imports |= {n for n in listed[listed.index("EXPORTS") + 1:] if n and not n.startswith(";")}
+        undefined = [u for u in undefined if u not in dll_imports and not (u.startswith("__imp_") and u[6:] in dll_imports)]
 
     def where(sym):
         return symbols.resolve(build, sym)
 
     # Only functions the Store build identifies are exported (and tested); anything else is a header helper or a
     # function not identified there yet.
-    stray = [e for e in exports if not where(e) and e.lstrip("_") != "fltused"]
+    stray = [e for e in exports if not where(e) and e not in enhanced_defs and e.lstrip("_") != "fltused"]
     if stray:
         print(f"note: {len(stray)} function(s) in src/ are not identified in {build} yet (not exported): "
               + ", ".join(stray[:8]) + (" ..." if len(stray) > 8 else ""))
-    exports = [e for e in exports if where(e)]
+    exports = [e for e in exports if where(e) or e in enhanced_defs]
 
     hybrid = ["symbol\tkind\tva"]
     asm = ["\t.text"]
@@ -280,6 +323,19 @@ def main():
             exe_data.add(u)
             slot(va, f'"{SLOT_PREFIX}{u}"')
         hybrid.append(f"{u}\t{kind}\t{va:08X}")
+    redirects = []
+    if enhanced:
+        import runtime_link
+        for u in sorted(src_defs - enhanced_defs):
+            hit = where(u)
+            if hit and hit[1] == "function":  # exe first: the exe's own copy, ahead of src/'s
+                q = '"' + u + '"'
+                asm += [f"\t.globl {q}", f"{q}:", f"\tjmpq *{slot(hit[0])}(%rip)"]
+                hybrid.append(f"{u}\texe-first\t{hit[0]:08X}")
+        redirects = [(where(u)[0], u) for u in sorted(enhanced_defs) if where(u) and where(u)[1] == "function"]
+        runtime_link.check_targets(build, original_exe(build), pe, redirects)
+        asm += runtime_link.redirect_asm(pe, redirects)
+        asm += ["\t.text"]
     asm += hybrid_entry(exe_base)
     asm += ["\t.data", "\t.p2align 3", "\t.globl iw5_exe_slots_start", "iw5_exe_slots_start:"]
     for label, va in exe_slots:
@@ -300,12 +356,22 @@ def main():
     (BUILD / "hybrid.tsv").write_text("\n".join(hybrid) + "\n")
 
     dll = BUILD / "recon.dll"
+    # enhanced: hybrid.obj's exe-first thunks come before src/'s definitions (/force:multiple keeps the first)
+    ordered = ([o for o in objs if o not in src_objs] + [BUILD / "hybrid.obj"] + src_objs if enhanced
+               else objs + [BUILD / "hybrid.obj"])
     run("lld-link", "/dll", "/nodefaultlib", "/entry:iw5_hybrid_entry", "/base:0x180000000", "/dynamicbase",
-        f"/out:{dll}", *[f"/export:{e}" for e in exports], f"/map:{BUILD / 'recon.map'}",
-        *objs, BUILD / "hybrid.obj", *env_objs)
+        f"/out:{dll}", *[f"/export:{e}" for e in exports],
+        *(["/export:iw5_redirects,DATA", "/export:iw5_redirects_identity,DATA", "/force:multiple"] if enhanced else []),
+        f"/map:{BUILD / 'recon.map'}", *ordered, *env_objs, *import_libs, quiet_duplicates=enhanced)
     check_no_exe_addresses(dll, exe_base, exe_size)
+    if enhanced:
+        import runtime_link
+        n = runtime_link.check_reachable(dll, BUILD / "recon.map", hybrid[1:], [u for _, u in redirects])
+        print(f"runtime: {len(redirects)} exe functions replaced ({', '.join(u for _, u in redirects)}); "
+              f"{n} functions reachable from them, no trap")
     (BUILD / "recon.symbols.tsv").write_text(
-        "symbol\tsource\tva\n" + "".join(f"{e}\t{rows[e]}\t{where(e)[0]:08X}\n" for e in exports))
+        "symbol\tsource\tva\n" + "".join(f"{e}\t{rows[e]}\t{where(e)[0]:08X}\n" if where(e) else f"{e}\t{rows[e]}\t\n"
+                                         for e in exports))
     unresolved = sum(1 for h in hybrid if "\tunresolved" in h)
     print(f"{dll}: {len(exports)} functions from {len(objs)} files; {len(undefined) - unresolved} symbols resolved "
           f"to {build}, {rewritten} data references through {len(exe_slots)} rebased slots"

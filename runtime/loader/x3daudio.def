@@ -1,0 +1,5 @@
+; runtime/loader/x3daudio.def: the exports of the system X3DAudio1_7.dll the game imports (by name)
+LIBRARY X3DAudio1_7.dll
+EXPORTS
+X3DAudioInitialize
+X3DAudioCalculate

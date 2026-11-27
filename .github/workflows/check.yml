@@ -58,3 +58,15 @@ jobs:
         run: IW5_ORIGINALS=/tmp/originals python3 tools/build_recon.py
       - name: Differential tests (matches)
         run: IW5_ORIGINALS=/tmp/originals python3 tests/differential/run.py --check-records
+      - name: Enhanced build (runtime DLLs) and its tests
+        run: |
+          IW5_ORIGINALS=/tmp/originals python3 tools/build_runtime.py
+          IW5_ORIGINALS=/tmp/originals python3 tests/differential/run.py --enhanced
+          IW5_ORIGINALS=/tmp/originals python3 tests/enhanced/run.py
+      - name: The enhanced build for the game folder (docs/enhanced-build.md)
+        uses: actions/upload-artifact@v4
+        with:
+          name: iw5mp_ship-enhanced
+          path: |
+            build/iw5mp_ship/runtime/X3DAudio1_7.dll
+            build/iw5mp_ship/runtime/iw5_enhanced.dll

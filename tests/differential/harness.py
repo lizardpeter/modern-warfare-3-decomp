@@ -261,6 +261,12 @@ def _crt_floor(mu):
     _set_xmm_double(mu, x if math.isnan(x) or math.isinf(x) or x == 0.0 else float(math.floor(x)))
 
 
+def _crt_fmod(mu):
+    """UCRT fmod(x, y): exact (the remainder of two doubles is representable), as Python's math.fmod."""
+    x, y = _xmm_double(mu, X.UC_X86_REG_XMM0), _xmm_double(mu, X.UC_X86_REG_XMM1)
+    _set_xmm_double(mu, math.fmod(x, y) if y != 0.0 and not math.isinf(x) else math.nan)
+
+
 CRT_WRITERS = (_crt_memset, _crt_memmove, _crt_strncpy)
 CRT_MODELS_X64 = {"vcruntime140.dll!memset": _crt_memset, "vcruntime140.dll!memcpy": _crt_memmove,
                   "vcruntime140.dll!memmove": _crt_memmove, "vcruntime140.dll!strchr": _crt_strchr,
@@ -270,7 +276,8 @@ CRT_MODELS_X64 = {"vcruntime140.dll!memset": _crt_memset, "vcruntime140.dll!memc
                   "api-ms-win-crt-string-l1-1-0.dll!toupper": _crt_toupper,
                   "api-ms-win-crt-string-l1-1-0.dll!strncpy": _crt_strncpy,
                   "api-ms-win-crt-math-l1-1-0.dll!atan2": _crt_atan2,
-                  "api-ms-win-crt-math-l1-1-0.dll!floor": _crt_floor}
+                  "api-ms-win-crt-math-l1-1-0.dll!floor": _crt_floor,
+                  "api-ms-win-crt-math-l1-1-0.dll!fmod": _crt_fmod}
 
 
 class Machine:
@@ -442,6 +449,12 @@ class Machine:
             ret = self._ptr(esp)
             mu.reg_write(X.UC_X86_REG_ESP, esp + 4 + 4 * nargs)
             mu.reg_write(X.UC_X86_REG_EIP, ret)
+
+    def patch_code(self, va, code: bytes):
+        """Write code into an image (as a loader's patch would) and drop Unicorn's translations of those bytes:
+        without that, code already run keeps executing as it was translated."""
+        self.mu.mem_write(va, bytes(code))
+        self.mu.ctl_remove_cache(va, va + len(code))
 
     def provide(self, va, fn):
         """Replace the function at va with fn(mu) -> return value in every call (as `fakes` does for one)."""

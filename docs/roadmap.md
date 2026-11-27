@@ -15,8 +15,8 @@ lists what must be decompiled first.
   the online layer's call sites (`bdNet`, the DemonWare hosts, XCurl and WinHTTP callers; docs/store-build.md).
 - **Loading.** A DLL in the game's own folder, never a system file; the Store exe has a fixed base and no
   relocations. Needs: the entry points the replacements hook.
-- **Raw mouse input** with no acceleration or smoothing, handling high DPI and polling rates, and never silently
-  falling back to cursor input; MW2019-style sensitivity and FOV. Needs: `win_input`, `cl_input`.
+- **Raw mouse input and MW2019 sensitivity: done (P0001, P0002;** docs/enhanced-build.md). Next for input: key
+  events on the game's clock (black-ops-2-decomp's P0004) and FOV in MW2019-style horizontal degrees.
 - **Frame rate.** Uncapped, with game behaviour independent of frame rate; refresh rates above 240 Hz. Needs:
   `Com_Frame`, the client frame and `com_maxfps` paths, and every frame-time-dependent calculation (file them in
   `records/bugs.tsv` as `precision`/`limit`).

@@ -200,6 +200,7 @@ typedef struct _RTL_CRITICAL_SECTION
 	HANDLE LockSemaphore;
 	__UINTPTR_TYPE__ SpinCount;
 } CRITICAL_SECTION, *LPCRITICAL_SECTION;
+WINBASEAPI DWORD WINAPI GetLastError();
 WINBASEAPI void WINAPI EnterCriticalSection(LPCRITICAL_SECTION lpCriticalSection);
 WINBASEAPI void WINAPI LeaveCriticalSection(LPCRITICAL_SECTION lpCriticalSection);
 WINBASEAPI BOOL WINAPI TryEnterCriticalSection(LPCRITICAL_SECTION lpCriticalSection);

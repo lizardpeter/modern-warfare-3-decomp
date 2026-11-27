@@ -23,3 +23,8 @@ struct dvar_t
 	DvarValue current;
 };
 static_assert(__builtin_offsetof(dvar_t, current) == 0x10, "dvar_t::current (Store layout)");
+
+#define DVAR_ARCHIVE 0x1  // saved in the config (seta)
+
+const dvar_t *Dvar_RegisterFloat(const char *dvarName, float value, float min, float max, unsigned short flags,
+                                 const char *description);

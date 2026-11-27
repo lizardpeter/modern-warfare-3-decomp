@@ -1,0 +1,7 @@
+; Imports the enhanced build makes that the Store exe doesn't: linked as real DLL imports of the enhanced DLL (the test
+; harness stubs every import of recon.dll like the original's). Anything the exe already imports goes through its
+; import table instead (tools/build_recon.py).
+LIBRARY user32.dll
+EXPORTS
+RegisterRawInputDevices
+GetRawInputData

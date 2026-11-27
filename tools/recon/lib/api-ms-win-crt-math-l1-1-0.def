@@ -1,0 +1,4 @@
+; UCRT math functions the enhanced build uses that the Store exe doesn't import (see user32.def).
+LIBRARY api-ms-win-crt-math-l1-1-0.dll
+EXPORTS
+fmod
