@@ -1,7 +1,7 @@
 """P0003: fail-closed GDK isolation; P0004: no Xbox Live HTTP (docs/online.md).
 
-No runtime loader, initializer or interface query may succeed, including Store and user
-interfaces. No authorization is fabricated. HTTP provider behavior remains offline.
+The runtime bootstrap is local-only. Every interface query fails, including Store and
+user interfaces. No authorization is fabricated. HTTP provider behavior remains offline.
 """
 import struct
 
@@ -31,15 +31,46 @@ def query(ctx, first, second):
     return hr, struct.unpack("<Q", bufs[2])[0]
 
 
-def check_gdk_isolation(ctx):
-    missing = 0x89240101
-    for name, args in [
-        ("XGameRuntimeLoadModule", []),
-        ("InitializeApiImpl", [25398, 0]),
-        ("InitializeApiImplEx", [25398, 0, 0]),
+def check_local_bootstrap(ctx):
+    calls = []
+    module = 0x180000000
+    path = b"C:\\IW5\\iw5_enhanced.dll\0"
+
+    def self_module(m, mu):
+        calls.append("self")
+        assert mu.reg_read(ARGS[0]) == 6
+        mu.mem_write(mu.reg_read(ARGS[2]), struct.pack("<Q", module))
+        mu.reg_write(X.UC_X86_REG_RAX, 1)
+
+    def module_path(m, mu):
+        calls.append("path")
+        assert mu.reg_read(ARGS[0]) == module
+        assert mu.reg_read(ARGS[2]) >= len(path)
+        mu.mem_write(mu.reg_read(ARGS[1]), path)
+        mu.reg_write(X.UC_X86_REG_RAX, len(path) - 1)
+
+    ctx.imports({"kernel32.dll!GetModuleHandleExA": (self_module, 0),
+                 "kernel32.dll!GetModuleFileNameA": (module_path, 0)})
+    for name, args, expected in [
+        ("XGameRuntimeLoadModule", [], ["self"]),
+        ("InitializeApiImpl", [25398, 0], ["self", "path"]),
+        ("InitializeApiImplEx", [25398, 0, 0], ["self", "path"]),
     ]:
+        calls.clear()
         hr, _, _, _ = ctx.m.call(ctx.enhanced(name), args, "uint")
-        assert hr == missing, f"{name}: {hr:#x}"
+        assert hr == 0 and calls == expected, f"{name}: {hr}, {calls}"
+
+    def missing_module(m, mu):
+        mu.reg_write(X.UC_X86_REG_RAX, 0)
+
+    ctx.imports({"kernel32.dll!GetModuleHandleExA": (missing_module, 0)})
+    for name, args in [("XGameRuntimeLoadModule", []), ("InitializeApiImpl", [25398, 0]),
+                       ("InitializeApiImplEx", [25398, 0, 0])]:
+        hr, _, _, _ = ctx.m.call(ctx.enhanced(name), args, "uint")
+        assert hr == 0x89240101, f"{name}: {hr}"
+
+
+def check_gdk_isolation(ctx):
     for first, second in [
         (USER, USER_IMPL), (USER, GAMERTAG), (STORE, STORE_IMPL),
         *[(guid(value), guid(value)) for value in (
@@ -99,5 +130,5 @@ def check_perform_sends_nothing(ctx):
     assert not writes, "PerformAsync wrote memory"
 
 
-CHECKS = [check_gdk_isolation, check_curl_provider_without_xcurl,
+CHECKS = [check_local_bootstrap, check_gdk_isolation, check_curl_provider_without_xcurl,
           check_perform_sends_nothing]

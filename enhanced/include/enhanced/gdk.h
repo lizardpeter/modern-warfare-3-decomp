@@ -1,5 +1,5 @@
 // Enhanced GDK ABI declarations (docs/online.md).
-// The enhanced loader and all interface queries now fail closed. Legacy local provider
+// The enhanced loader resolves itself; all interface queries fail closed. Legacy local provider
 // definitions remain for linkage/research but are not exposed through the runtime boundary.
 #pragma once
 
@@ -62,7 +62,7 @@ struct XTaskQueueRegistrationToken
 typedef void XTaskQueueCallback(void *context, bool canceled);
 typedef void XTaskQueueTerminatedCallback(void *context);
 
-// The interface objects QueryApiImpl hands out: COM-shaped, `this` first.
+// Legacy interface objects: COM-shaped, `this` first; not returned by QueryApiImpl.
 struct GdkInterface
 {
 	void *const *vtable;
@@ -95,7 +95,7 @@ extern GdkInterface g_gdkGameUi;
 // Legacy async pointer; remains null in the isolated runtime.
 extern GdkInterface *g_gdkAsync;
 
-// Settings (iw5_enhanced.ini next to the DLL): the local player's name.
+// Legacy local player name (not exposed by the GDK boundary).
 const char *Gdk_Gamertag();
 // The folder the DLL is in, with a trailing backslash.
 const char *Gdk_GameFolder();

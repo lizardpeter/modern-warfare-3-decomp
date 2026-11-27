@@ -1,6 +1,6 @@
-// Enhanced GDK isolation boundary. The original system runtime is intentionally unavailable.
-// All loader, initialization and interface requests fail locally; no provider or entitlement
-// is synthesized, and no system runtime is opened or queried. See docs/online.md.
+// BO2-style local runtime bootstrap with a fail-closed GDK interface boundary.
+// Only the enhanced DLL itself is resolved; initialization prepares local filesystem
+// state. No system runtime, account, license or external provider is opened or queried.
 #include "enhanced/gdk.h"
 
 #include <windows.h>
@@ -8,13 +8,15 @@
 WINBASEAPI void *WINAPI LocalAlloc(UINT flags, size_t bytes);
 WINBASEAPI void *WINAPI LocalFree(void *mem);
 WINBASEAPI void WINAPI OutputDebugStringA(const char *text);
+WINBASEAPI BOOL WINAPI GetModuleHandleExA(DWORD flags, const char *name, HINSTANCE *module);
+WINBASEAPI DWORD WINAPI GetModuleFileNameA(HINSTANCE module, char *path, DWORD size);
 
 // The exe's runtime module, set by the loader it replaces (records/names.tsv).
 extern HINSTANCE s_xgameRuntimeModule;
 
 namespace
 {
-// Retain the inert provider helpers for the enhanced DLL's existing link contract.
+// Local filesystem state, independent of every GDK interface.
 char s_folder[MAX_PATH];
 char s_gamertag[16] = "Unknown Soldier";
 }  // namespace
@@ -80,26 +82,49 @@ void Gdk_Log(const char *line)
 	OutputDebugStringA(line);
 }
 
-// 1403601E0: behave as though the runtime is absent, even if installed on the host.
+// 1403601E0: resolve the local module only, like T6's enhanced GdkLoadRuntime.
+// Never reuse a potentially foreign module value from the original executable.
 HRESULT XGameRuntimeLoadModule()
 {
+	HINSTANCE self = nullptr;
+	constexpr DWORD fromAddress = 4, unchangedRefcount = 2;
 	s_xgameRuntimeModule = nullptr;
-	return GDK_E_GAMERUNTIME_DLL_NOT_FOUND;
+	if (!GetModuleHandleExA(fromAddress | unchangedRefcount,
+		reinterpret_cast<const char *>(&XGameRuntimeLoadModule), &self) || !self)
+		return GDK_E_GAMERUNTIME_DLL_NOT_FOUND;
+	s_xgameRuntimeModule = self;
+	return GDK_S_OK;
 }
 
-extern "C" HRESULT InitializeApiImplEx(u64, u64, u64)
-{
-	return GDK_E_GAMERUNTIME_DLL_NOT_FOUND;
-}
-
+// Initialization is local housekeeping, not an authorization result. Retain IW5's
+// existing game-folder convention; no XGameSave or other GDK interface is exposed.
 extern "C" HRESULT InitializeApiImpl(u64, u64)
 {
-	return GDK_E_GAMERUNTIME_DLL_NOT_FOUND;
+	s_folder[0] = '\0';
+	HRESULT hr = XGameRuntimeLoadModule();
+	if (hr < 0)
+		return hr;
+	char path[MAX_PATH];
+	DWORD n = GetModuleFileNameA(s_xgameRuntimeModule, path, sizeof(path));
+	if (!n || n >= sizeof(path))
+		return GDK_E_FAIL;
+	while (n && path[n - 1] != '\\' && path[n - 1] != '/')
+		--n;
+	if (!n)
+		return GDK_E_FAIL;
+	Gdk_Copy(s_folder, path, n);
+	s_folder[n] = '\0';
+	return GDK_S_OK;
+}
+
+extern "C" HRESULT InitializeApiImplEx(u64 version, u64 sdk, u64)
+{
+	return InitializeApiImpl(version, sdk);
 }
 
 extern "C" void UninitializeApiImpl()
 {
-	// No runtime was initialized.
+	// There is no external runtime to shut down.
 }
 
 extern "C" void XErrorReport(HRESULT hr, const char *message)

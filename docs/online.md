@@ -1,10 +1,10 @@
 # Online services in the Store build and enhanced isolation
 
 The faithful Store multiplayer executable uses GDK and DemonWare. The enhanced build now
-intentionally treats GDK as unavailable: it never loads or forwards to the system runtime,
-even on a machine where Gaming Services is installed. It does not fabricate authorization.
-Startup may stop at the original runtime-unavailable error; playable offline mode is not
-claimed by this change.
+uses BO2-style self-module bootstrap and local filesystem initialization, while every GDK
+interface is unavailable. It never loads or forwards to the system runtime, even when Gaming
+Services is installed. No authorization is fabricated; a game feature requiring unavailable
+authorization can still fail. Playable offline mode is not claimed by this change.
 
 ## The GDK (XGameRuntime)
 
@@ -47,8 +47,11 @@ callers.
 
 ## Enhanced build: fail-closed GDK boundary
 
-- `XGameRuntimeLoadModule` clears the runtime module and returns the runtime-not-found error.
-- Both initialization exports return the same error. Shutdown is a no-op.
+- `XGameRuntimeLoadModule` resolves the enhanced DLL itself by address, never a system DLL.
+- Both initialization exports initialize the local game-directory path using the enhanced
+  module's filename, or return an error if that fails. Shutdown is a no-op.
+- This mirrors BO2's split between local startup and rejected interface queries, while retaining
+  IW5's existing game-folder convention rather than T6's LOCALAPPDATA path.
 - `QueryApiImpl` rejects every interface with E_NOINTERFACE and clears the output pointer;
   a null output pointer gets E_POINTER. This applies to XUser, XAsync, XTaskQueue, XStore,
   XPackage and every other GDK family. No system runtime or entitlement provider is invoked.
