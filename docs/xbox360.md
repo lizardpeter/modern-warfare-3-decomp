@@ -172,7 +172,10 @@ fixup is only attached when the program's compiler spec defines it). The decompi
 `replaced with injection: xenon_save_restore` at the top of the function, and the data flow is the source's: e.g.
 `AimAssist_LerpConstDvars` asserts on `param_1`/`param_3` and returns
 `(to->current.value - from->current.value) * frac + from->current.value`. The helpers only touch callee-saved
-registers and the caller's own save area, so nothing the function computes is lost.
+registers and the caller's own save area, so nothing the function computes is lost. In the committed analysis all 29,808
+functions decompile with 0 failures, and the helpers appear only in their own definitions (`_lib/libcmt/crtvmx.c`).
+The decompile logs' 321 "Unable to resolve constructor" warnings are all at zero words or ASCII text (paths
+in `.rdata`-like data that flow reaches), not unknown instructions.
 
 ## Layouts
 
